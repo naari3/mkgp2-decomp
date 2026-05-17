@@ -1,8 +1,20 @@
 # mkgp2-decomp
 
+[![Build](https://github.com/naari3/mkgp2-decomp/actions/workflows/build.yml/badge.svg)](https://github.com/naari3/mkgp2-decomp/actions/workflows/build.yml)
+[![matched code](https://img.shields.io/endpoint?url=https%3A%2F%2Fnaari3.github.io%2Fmkgp2-decomp%2Fshield.json)](https://naari3.github.io/mkgp2-decomp/)
+
 Matching decompilation of **Mario Kart Arcade GP2** (Triforce, JP) — `main.dol` only.
 
 Game ID: `GNLJ82` — Namco Bandai / Nintendo, 2007.
+
+## Progress
+
+- Dashboard (GitHub Pages, generated each CI run on `main`):
+  <https://naari3.github.io/mkgp2-decomp/>
+- Per-commit `report.json` is uploaded as the `GNLJ82_report` workflow artifact.
+
+decomp.dev への登録はまだ行っていない。登録手順は `docs/github_actions.md`
+の "decomp.dev integration" に記載済みで、必要になったら有効化する。
 
 ## Scope
 
@@ -15,7 +27,7 @@ Game ID: `GNLJ82` — Namco Bandai / Nintendo, 2007.
 
 ## Status
 
-Bring-up. Not yet matching at any source level.
+Bring-up. Early matching in progress — see the dashboards above for live numbers.
 
 | | Value |
 | --- | --- |

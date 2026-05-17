@@ -37,3 +37,4 @@ compile_commands.json
 # Parallel-decomp orchestrator local state
 .orchestrator/
 .worktrees/
+site/

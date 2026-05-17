@@ -1,46 +1,107 @@
-# GitHub Actions
+# CI / progress publishing
 
-This repository includes [.github.example/workflows/build.yml](/.github.example/workflows/build.yml) as an example CI workflow. To use it for your project, follow the setup instructions below.
+This repo ships two pieces of infrastructure for tracking decomp progress:
 
-- [Build Repository](#build-repository)
-- [Workflow](#workflow)
-- [decomp.dev](#decompdev)
+1. `.github/workflows/build.yml` — builds `main.dol` on every push and PR,
+   uploads `report.json` as an artifact, and (on `main`) renders a static
+   dashboard published to GitHub Pages.
+2. `tools/gen_progress_page.py` — turns `build/<version>/report.json` into a
+   self-contained HTML dashboard (treemap + per-category bars + unit table).
 
-## Build Repository
+Public dashboards:
 
-This repository will be used to build and store the CI build container.
+| | URL | Source |
+| --- | --- | --- |
+| Self-hosted (active) | <https://naari3.github.io/mkgp2-decomp/> | rendered by `tools/gen_progress_page.py` in CI |
+| decomp.dev (not yet registered) | <https://decomp.dev/naari3/mkgp2-decomp> | webhook pulls `GNLJ82_report` artifact once enrolled |
+
+decomp.dev は現状未登録。`build.yml` 側で `GNLJ82_report` artifact は
+既に出ているので、必要になったタイミングで下の "decomp.dev integration"
+セクション通りに登録するだけで連動が始まる。
+
+## Build container
+
+`main.dol` is **not** committed to this repo. CI pulls it from a private
+companion repository (`naari3/mkgp2-decomp-build`) that packages
+`main.dol` + binutils + CodeWarrior into a Docker image at
+`ghcr.io/naari3/mkgp2-decomp-build:main`. This is the
+[dtk-template-build](https://github.com/encounter/dtk-template-build) pattern.
 
 > [!CAUTION]
-> This repository should be **private** to avoid exposing the game's assets.
+> The build repo must stay **private** — the published Docker image embeds
+> `main.dol`. Granting the public repo read access to the GHCR package is the
+> only place where access is shared.
 
-1. [Create a **private** repository from `encounter/dtk-template-build`](https://github.com/new?template_name=dtk-template-build&template_owner=encounter). A common name is your project's repository name with `-build` appended. For example, `tww-build`.
+Setup steps (one-time):
 
-2. Once the repository is created, add your game's assets to the `orig/GAMEID` directory. (Replace `GAMEID` with your game's ID, matching the `orig` layout in your main repository.)  
-    **Only include game files necessary for the build**, such as `sys/main.dol` and any `.rel` or `.sel` files.
+1. Create `naari3/mkgp2-decomp-build` as a **private** repo from the
+   `encounter/dtk-template-build` template.
+2. Place `main.dol` at `orig/GNLJ82/sys/main.dol` (matching SHA-1
+   `ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65`).
+3. Push to `main`. The build repo's workflow builds and pushes
+   `ghcr.io/naari3/mkgp2-decomp-build:main`.
+4. In the GHCR package settings for that image (Packages → mkgp2-decomp-build
+   → Package settings → Manage Actions access), add `naari3/mkgp2-decomp`
+   with the **Read** role so this repo's CI can pull it.
 
-3. Once the build container action completes, visit the package settings:  
-    ![GitHub repository packages](images/github_build_repo_packages.png)  
-    ![GitHub package settings](images/github_package_settings.png)
+After that, every push to `naari3/mkgp2-decomp` will:
 
-4. Under "Manage Actions access", add your project's main repository with the "Read" role:  
-    ![GitHub package Actions access](images/github_package_settings_access.png)
+- Pull the image, run `python configure.py` + `ninja`.
+- Upload `GNLJ82_maps` (link map files) and `GNLJ82_report` (`report.json`).
+- On `main`, render `site/index.html` via `tools/gen_progress_page.py` and
+  deploy it to GitHub Pages.
 
-## Workflow
+## decomp.dev integration
 
-1. Rename `.github.example` to `.github`.
+decomp.dev ingests `report.json` via a GitHub App that listens to
+`workflow_run` webhook events:
 
-2. In `build.yml`, update the `container:` to point to the new [build image](#build-repository).
+1. Install the [decomp.dev GitHub App](https://github.com/apps/decomp-dev) on
+   `naari3/mkgp2-decomp` (read-only access to Actions artifacts).
+2. Visit <https://decomp.dev/manage/new>, pick the repo, fill in the form.
+3. After the next workflow run on `main` finishes, the app pulls the
+   `GNLJ82_report` artifact, parses `report.json`, and updates
+   <https://decomp.dev/naari3/mkgp2-decomp>.
 
-3. In `build.yml`, replace `GAMEID` with your game's ID. (Or list of IDs, for multi-version support.)
+The artifact **must** be named `<version>_report` and contain `report.json` at
+its root — the dtk-template `build.yml` already does this.
 
-4. Commit and push the changes to your repository.
+Useful URLs once registered:
 
-If everything is set up correctly, the workflow will build all versions on every push or pull request.
+- Dashboard: `https://decomp.dev/naari3/mkgp2-decomp`
+- Treemap SVG: `https://decomp.dev/naari3/mkgp2-decomp.svg`
+- Full JSON: `https://decomp.dev/naari3/mkgp2-decomp.json`
+- Shield JSON (for shields.io): `https://decomp.dev/naari3/mkgp2-decomp.json?mode=shield&measure=matched_code`
 
-## decomp.dev
+Available `measure=` values: `matched_code`, `fuzzy_match`, `matched_data`,
+`complete_code`, `matched_functions`. See
+[`crates/web/src/handlers/report.rs`](https://github.com/encounter/decomp.dev/blob/main/crates/web/src/handlers/report.rs)
+in the decomp.dev source for the full list.
 
-Once the build workflow is running on the main branch, you can add your game to <https://decomp.dev>.
+## Self-hosted dashboard (GitHub Pages)
 
-Visit <https://decomp.dev/manage/new>, select your GitHub repository and fill out the required fields.
+If you only want the self-hosted dashboard (no decomp.dev), enable Pages on
+this repo with the **GitHub Actions** source. The `deploy-pages` job in
+`.github/workflows/build.yml` will then publish `site/` after each `main`
+build.
 
-If you have questions or issues, try asking in the [GC/Wii Decompilation Discord](https://discord.gg/hKx3FJJgrV) #decomp.dev channel.
+Locally:
+
+```bash
+python configure.py
+ninja progress build/GNLJ82/report.json
+python tools/gen_progress_page.py build/GNLJ82/report.json --out-dir site
+# open site/index.html
+```
+
+## Troubleshooting
+
+- **`ghcr.io/...:main` not found in CI** — confirm the build repo's image was
+  pushed and that `naari3/mkgp2-decomp` has Read access to the GHCR package
+  (Manage Actions access).
+- **`report.json` artifact missing** — the dtk-template ninja `progress`
+  target depends on `objdiff-cli report generate`, which is auto-downloaded
+  by `configure.py`. A failed download leaves the rule unbuildable; check the
+  `Build` step log.
+- **decomp.dev not updating** — confirm the artifact name ends with
+  `_report` and the GitHub App still has permissions.
