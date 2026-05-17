@@ -40,9 +40,11 @@ extern unsigned int lbl_806D22B4;
 extern unsigned int lbl_806D22B8;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
-extern unsigned int lbl_802E8F48;
-extern unsigned int lbl_802E9650;
-extern unsigned int lbl_80594080;
+/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
+/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
+extern unsigned int lbl_802E8F48[];
+extern unsigned int lbl_802E9650[];
+extern unsigned int lbl_80594080[];
 
 /* --- forward decls --- */
 asm void fn_8002F640(void);

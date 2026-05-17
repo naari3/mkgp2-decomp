@@ -380,8 +380,10 @@ def emit_c_source(group_id: str, data: GroupData, sda_base_map: dict[str, str]) 
         out.append("")
     if data_syms:
         out.append("/* --- extern decls: large-data refs (@ha/@l pairs) --- */")
+        out.append("/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */")
+        out.append("/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */")
         for sym in sorted(data_syms):
-            out.append(f"extern unsigned int {sym};")
+            out.append(f"extern unsigned int {sym}[];")
         out.append("")
 
     # Forward decls of the asm fns so the extabindex initializers can take
