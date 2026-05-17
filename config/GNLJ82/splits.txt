@@ -25,6 +25,10 @@ sysdolphin/baselib/aobj.c:
 sysdolphin/baselib/fobj.c:
 	.text       start:0x802C8CCC end:0x802C8D70
 
+Runtime.PPCEABI.H/global_destructor_chain.c:
+	.text       start:0x80270BE8 end:0x80270C48
+	.dtors      start:0x802E8988 end:0x802E898C
+
 sysdolphin/baselib/jobj.c:
 	.text       start:0x802CDAF8 end:0x802CDB80
 
