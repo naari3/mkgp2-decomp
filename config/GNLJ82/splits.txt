@@ -18,3 +18,6 @@ sysdolphin/baselib/jobj.c:
 
 init/__check_pad3.c:
 	.init       start:0x80003100 end:0x80003140
+
+init/memset.c:
+	.init       start:0x8000540C end:0x8000543C

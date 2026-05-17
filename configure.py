@@ -252,6 +252,7 @@ config.linker_version = "GC/1.3.2"
 # Per-lib compiler (mwcceppc) versions. `config.linker_version` above is only
 # the final linker (mwldeppc); each lib picks its own compiler below.
 mw_version_init = "GC/1.0"      # confirmed against __check_pad3 prologue
+mw_version_init_sdk = "GC/2.7"  # tentative: memset/__fill_mem/memcpy in .init use stwu-first prologue (newer CW)
 mw_version_hsd  = "GC/1.3.2"    # SSBM uses GC/1.2.5n but mkgp2 prologue is stwu-first / lr@0x24 = newer CW
 
 
@@ -297,6 +298,15 @@ config.libs = [
         "progress_category": "game",
         "objects": [
             Object(Matching, "init/__check_pad3.c"),
+        ],
+    },
+    {
+        "lib": "init_sdk",
+        "mw_version": mw_version_init_sdk,
+        "cflags": cflags_base,
+        "progress_category": "sdk",
+        "objects": [
+            Object(Matching, "init/memset.c"),
         ],
     },
     {
