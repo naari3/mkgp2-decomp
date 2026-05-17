@@ -47,7 +47,7 @@ asm void ResourceTable_GetSlotIndex(void);
 asm void fn_801228D4(void);
 asm void ResourceTable_GetFilePathPtr(void);
 asm void ResourceTable_GetGroupKey(void);
-asm void IsValidResourceId(void);
+int IsValidResourceId(int id);
 asm void NokoNokoChallenge_HandleBrakeInput(void);
 
 /* --- asm function bodies (.text order = fn address order) --- */
@@ -642,17 +642,11 @@ asm void ResourceTable_GetGroupKey(void) {
     blr
 }
 
-asm void IsValidResourceId(void) {
-    nofralloc
-    cmpwi r3, -0x1
-    ble IsValidResourceId_L_80122BA8
-    cmpwi r3, 0x2b04
-    bge IsValidResourceId_L_80122BA8
-    li r3, 0x1
-    blr
-    IsValidResourceId_L_80122BA8:
-    li r3, 0x0
-    blr
+int IsValidResourceId(int id) {
+    if (id > -1 && id < 0x2b04) {
+        return 1;
+    }
+    return 0;
 }
 
 asm void NokoNokoChallenge_HandleBrakeInput(void) {
