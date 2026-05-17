@@ -13,8 +13,23 @@ Sections:
 	.sdata2     type:rodata align:16
 	.sbss2      type:bss align:32
 
+sysdolphin/baselib/_hsd_consts.c:
+	.sdata2     start:0x806DCC58 end:0x806DCC68
+
+sysdolphin/baselib/dobj.c:
+	.text       start:0x802BD07C end:0x802BD0FC
+
+sysdolphin/baselib/aobj.c:
+	.text       start:0x802C3BC0 end:0x802C3C00
+
+sysdolphin/baselib/fobj.c:
+	.text       start:0x802C8CCC end:0x802C8D70
+
 sysdolphin/baselib/jobj.c:
 	.text       start:0x802CDAF8 end:0x802CDB80
+
+sysdolphin/baselib/robj.c:
+	.text       start:0x802D7C1C end:0x802D7CA0
 
 init/__check_pad3.c:
 	.init       start:0x80003100 end:0x80003140

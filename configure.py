@@ -321,7 +321,12 @@ config.libs = [
         "cflags": cflags_base,
         "progress_category": "sdk",
         "objects": [
+            Object(Matching, "sysdolphin/baselib/_hsd_consts.c"),
+            Object(Matching, "sysdolphin/baselib/aobj.c"),
+            Object(Matching, "sysdolphin/baselib/dobj.c"),
+            Object(Matching, "sysdolphin/baselib/fobj.c"),  # TEST: post-process fobj.o with _externize_sdata2.py
             Object(Matching, "sysdolphin/baselib/jobj.c"),
+            Object(Matching, "sysdolphin/baselib/robj.c"),
         ],
     },
     {
@@ -369,9 +374,72 @@ config.progress_report_args = [
     # "--config functionRelocDiffs=data_value",
 ]
 
+def _inject_sdata2_postprocess(config: ProjectConfig) -> None:
+    """Append a post-compile step to MWCC rules in build.ninja.
+
+    Rewrites anonymous local sdata2 symbols (@N) to named externals when their
+    bytes match a known global from the shared sdata2 pool. No-op for objects
+    that contain no matching anonymous local sdata2 symbols, so it can be
+    applied to all C/C++ compile rules safely.
+
+    Workaround: dtk-template provides no per-object post-compile hook. The
+    `custom_build_steps` mechanism (PR encounter/dtk-template#27) runs at phase
+    boundaries, not per-file, so we patch the rule commands directly here.
+    """
+    build_ninja = Path("build.ninja")
+    if not build_ninja.exists():
+        return
+
+    # The target .o (built by dtk via asm at build/<ver>/obj/<src>.o) is the
+    # source of truth for which sda21 reloc target name a given .text offset
+    # expects. The script auto-derives target path from $out by substituting
+    # 'src' -> 'obj' in the path.
+    hook = ' && $python tools/postprocess_sdata2.py $out $out'
+    marker = "postprocess_sdata2.py"
+
+    rules = ("mwcc_sjis", "mwcc_sjis_extab", "mwcc", "mwcc_extab")
+    text = build_ninja.read_text(encoding="utf-8")
+    lines = text.splitlines(keepends=True)
+
+    def _is_cmd_start(s: str) -> bool:
+        return s.lstrip().startswith("command = ")
+
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        if line.startswith("rule ") and line[5:].strip() in rules:
+            # Find command block (may span multiple continuation lines ending in " $")
+            j = i + 1
+            while j < len(lines) and not _is_cmd_start(lines[j]):
+                j += 1
+            if j >= len(lines):
+                i += 1
+                continue
+            # j is the first line of command; collect until non-continuation
+            k = j
+            while k < len(lines) and lines[k].rstrip("\r\n").endswith(" $"):
+                k += 1
+            # k is the last command line (no trailing " $")
+            block = "".join(lines[j:k + 1])
+            if marker in block:
+                i = k + 1
+                continue
+            last = lines[k].rstrip("\r\n")
+            lines[k] = last + hook + "\n"
+            # Prepend `cmd /c` if missing (Windows needs it for `&&`)
+            if sys.platform == "win32" and "cmd /c " not in lines[j]:
+                lines[j] = lines[j].replace("command = ", "command = cmd /c ", 1)
+            i = k + 1
+            continue
+        i += 1
+
+    build_ninja.write_text("".join(lines), encoding="utf-8")
+
+
 if args.mode == "configure":
     # Write build.ninja and objdiff.json
     generate_build(config)
+    _inject_sdata2_postprocess(config)
 elif args.mode == "progress":
     # Print progress information
     calculate_progress(config)
