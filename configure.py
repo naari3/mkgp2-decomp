@@ -362,6 +362,10 @@ config.libs = [
             Object(Matching, "game/InputObj.c"),
             Object(Matching, "game/KartMovement.c"),
             Object(Matching, "game/VBlank.c"),
+            # Phase 3a-small: 11-fn dtk reversed-extab group bundle (no extab
+            # entries, just .text). All 11 fns initially asm_fn; promote to
+            # matched 1 fn at a time via sub-agent dispatch.
+            Object(Matching, "game/auto_801223E8_block.c"),
             Object(Matching, "game/Archive_GetCurrent.c"),
         ],
     },
