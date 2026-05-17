@@ -22,8 +22,8 @@
 extern void Alloc();
 extern void DebugPrintf();
 extern void WarpDashMgr_Init();
-extern void dtor_8003AFB8();
-extern void dtor_800AA69C();
+extern void dtor_8003AFB8(void *);
+extern void dtor_800AA69C(void *, short);
 extern void fn_80270CF4();
 extern void fn_80270D6C();
 extern void fn_8027E480();
@@ -40,7 +40,7 @@ extern unsigned int lbl_806D4E00;
 extern unsigned int lbl_806D4E08;
 extern unsigned int lbl_806D4E10;
 extern unsigned int lbl_806D4E18;
-extern unsigned int lbl_806D4E1C;
+extern const float lbl_806D4E1C;
 extern unsigned int lbl_806D4E20;
 
 /* WarpDashMgr instance array: lbl_806CF238 (sdata, size 0x8 = 2 entries). */
@@ -68,18 +68,16 @@ asm void fn_800A9414(void);
 asm void WarpAutoRun_Init(void);
 asm void DashZone_ProcessAutoRun(void);
 asm void WarpAutoRun_GetParam(void);
-asm void WarpAutoRun_OnEnter(void);
+void WarpAutoRun_OnEnter(void *self, float f1, float f2, float f3, float f4, float vx, float vy, float vz);
 asm void WarpZone_CheckEntry(void);
 asm void fn_800A998C(void);
 asm void WarpZone_CalcEdgeVectors(void);
-asm void dtor_800A9CC8(void);
-asm void dtor_800A9D2C(void);
+void *dtor_800A9CC8(void *this, short flag);
+void *dtor_800A9D2C(void *this, short flag);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
+/* dtor_800A9CC8 promoted to C; CW auto-emits its extab/extabindex. */
 #pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_dtor_800A9CC8[8] = {
-    0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 __declspec(section ".extab_user") static const unsigned char extab_dtor_800A9D2C[8] = {
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -143,9 +141,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpZone_CalcEdgeVectors = {
     (void *)&WarpZone_CalcEdgeVectors, 0x00000324, (void *)extab_WarpZone_CalcEdgeVectors
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_800A9CC8 = {
-    (void *)&dtor_800A9CC8, 0x00000064, (void *)extab_dtor_800A9CC8
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_800A9D2C = {
     (void *)&dtor_800A9D2C, 0x00000058, (void *)extab_dtor_800A9D2C
@@ -795,16 +790,12 @@ asm void WarpAutoRun_GetParam(void) {
     blr
 }
 
-asm void WarpAutoRun_OnEnter(void) {
-    nofralloc
-    lfs f0, lbl_806D4E1C(r2)
-    li r0, 0x1
-    stfs f0, 0x8(r3)
-    stfs f5, 0x14(r3)
-    stfs f6, 0x18(r3)
-    stfs f7, 0x1c(r3)
-    stw r0, 0x0(r3)
-    blr
+void WarpAutoRun_OnEnter(void *self, float f1, float f2, float f3, float f4, float vx, float vy, float vz) {
+    *(float *)((char *)self + 0x8) = lbl_806D4E1C;
+    *(float *)((char *)self + 0x14) = vx;
+    *(float *)((char *)self + 0x18) = vy;
+    *(float *)((char *)self + 0x1c) = vz;
+    *(int *)self = 1;
 }
 
 asm void WarpZone_CheckEntry(void) {
@@ -1138,61 +1129,27 @@ asm void WarpZone_CalcEdgeVectors(void) {
     blr
 }
 
-asm void dtor_800A9CC8(void) {
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r4
-    stw r30, 0x8(r1)
-    mr. r30, r3
-    beq dtor_800A9CC8_L_800A9D10
-    lis r4, dtor_80036E40@ha
-    addi r3, r30, 0x4
-    addi r4, r4, dtor_80036E40@l
-    li r5, 0xc
-    li r6, 0x4
-    bl fn_80270CF4
-    extsh. r0, r31
-    ble dtor_800A9CC8_L_800A9D10
-    mr r3, r30
-    bl dtor_8003AFB8
-    dtor_800A9CC8_L_800A9D10:
-    lwz r0, 0x14(r1)
-    mr r3, r30
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+void *dtor_800A9CC8(void *this, short flag) {
+    if (this != 0) {
+        fn_80270CF4((char *)this + 4, &dtor_80036E40, 0xc, 0x4);
+        if (flag > 0) {
+            dtor_8003AFB8(this);
+        }
+    }
+    return this;
 }
 
-asm void dtor_800A9D2C(void) {
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r4
-    stw r30, 0x8(r1)
-    mr. r30, r3
-    beq dtor_800A9D2C_L_800A9D68
-    beq dtor_800A9D2C_L_800A9D58
-    li r4, 0x0
-    bl dtor_800AA69C
-    dtor_800A9D2C_L_800A9D58:
-    extsh. r0, r31
-    ble dtor_800A9D2C_L_800A9D68
-    mr r3, r30
-    bl dtor_8003AFB8
-    dtor_800A9D2C_L_800A9D68:
-    lwz r0, 0x14(r1)
-    mr r3, r30
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+void *dtor_800A9D2C(void *this, short flag) {
+    if (this) {
+        if (this) {
+            dtor_800AA69C(this, 0);
+        }
+        if (flag > 0) {
+            dtor_8003AFB8(this);
+        }
+    }
+    return this;
 }
+#pragma exceptions reset
 
