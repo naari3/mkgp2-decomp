@@ -256,7 +256,7 @@ batch `batch_text_8002f640_bundle` (6-fn auto_fn_8002F640_text group) を Phase 
    - bundle で N 関数中 M 関数を asm_fn にすると、TU の extab entries が N-M 個になり target の N 個と layout が合わず `_eti_init_info` の位置が約 0x14 byte ずれて SHA-1 fail
    - asm_fn 退避を **extab group bundle 内で機能させる前提が崩壊**
 
-### 救済 candidate (未試行、Phase 1b で empirical 検証する想定)
+### 救済 candidate (未試行、Phase 1b で empirical 検証する想定) → **§12 で検証成功**
 
 C 側から手動 extab entry を発出する:
 
@@ -271,20 +271,20 @@ __declspec(section "extabindex") static const struct {
 
 これが動けば asm fn が extab entry を持つことになり SHA-1 通る可能性。1 関数あたり extab body byte 配列 (典型 0x10-0x40 bytes) + extabindex struct (12 bytes 程度) を target asm から手抽出する必要、tool 化可能。
 
-### 結論と影響範囲
+### 結論と影響範囲 (§12 で更新)
 
 現状の asm_fn schema が valid な使用範囲:
 
 - **extab group 外 (singleton fn)** の単独関数で C-matching 困難ケース → 使える
-- **extab group bundle 内** → Phase 1b 救済 candidate (上記 `__declspec(section "extab")` 手法) が動作実証されるまで使えない
+- **extab group bundle 内** → ~~Phase 1b 救済 candidate (上記 `__declspec(section "extab")` 手法) が動作実証されるまで使えない~~ → §12 で動作実証、ただし mwcc は `extab`/`extabindex` 予約名を reject するため `.extab_user`/`.extabindex_user` 経由 + llvm-objcopy rename が必要
 
 このため:
 
-- `docs/large_extab_group_strategy.md` (Phase 3) は asm_fn による mega-bundle pattern を前提に設計されているため、Phase 1b 結果待ちで **設計全体保留** 状態。doc 冒頭に DESIGN SUSPENDED 注記を追加
+- ~~`docs/large_extab_group_strategy.md` (Phase 3) は asm_fn による mega-bundle pattern を前提に設計されているため、Phase 1b 結果待ちで **設計全体保留** 状態。doc 冒頭に DESIGN SUSPENDED 注記を追加~~ → §12 で前提解消、DESIGN SUSPENDED は降ろせる
 - Phase 2 の `tools/extract_fn_asm.py` は依然有用 (singleton 用途と Phase 1b 検証用)、実装計画は維持
 - Phase 1a (extab group 外 singleton への asm_fn 適用) は通常運用に即組み込み可能
 
-### Phase 1b 検証の dispatch 仕様 (案)
+### Phase 1b 検証の dispatch 仕様 (案) → 実際は main 側で手動検証 (§12)
 
 - 小規模 extab group (2-3 fn、各 fn が shallow body) を 1 つ選定
 - 1 関数を C で書き、もう 1 関数を asm_fn + 手動 extab/extabindex で書く
@@ -293,3 +293,48 @@ __declspec(section "extabindex") static const struct {
 - 候補 group: `tools/build_extab_map.py` 出力 + extab_group_size==2 で検索
 
 target extab raw bytes は dtk 出力 `build/GNLJ82/asm/auto_*_text.s` 末尾の `.section "extab"` / `.section "extabindex"` ブロックから取れる。tool 補助は Phase 1b 実装後に検討。
+
+## 12. Phase 1b verify outcome (2026-05-18)
+
+Phase 1b は別 sub 検証ではなく main 側で `src/game/HeapStats.c` (6 fn bundle、全 asm_fn) を完全 scaffold して empirical 検証。**SHA-1 OK 達成**。
+
+### 採用手法
+
+1. **mwcc の section 予約名回避**:
+   - mwcc 1.3.2 は `__declspec(section "extab")` / `__declspec(section "extabindex")` を「unknown section name」で reject
+   - workaround: `#pragma section R ".extab_user"` + `#pragma section R ".extabindex_user"` で別 section 作成 → build 後 llvm-objcopy `--rename-section=.extab_user=extab` / `.extabindex_user=extabindex` で merge
+2. **dtk dol split の `@etb_*` / `@eti_*` symbol auto-regen 対応**:
+   - dtk は build 毎に `symbols.txt` を regenerate し、target の anonymous local extab/extabindex symbol を `@etb_<addr>` / `@eti_<addr>` の形で auto-emit。dtk dol diff はこの symbol が該当 addr に存在することを assert
+   - C source は `@` 始まりの identifier を持てない → C 側で `extab_<fn>` / `extabindex_<fn>` の名前で emit して build 後 llvm-objcopy `--redefine-sym` で `@etb_*` / `@eti_*` に rename
+   - per-TU mapping は `tools/extab_user_renames.json` で管理 (TU 単位の dict)
+3. **build chain 統合** (`tools/project.py`):
+   - 順序: `mwcc` → `tools/postprocess_extab_user.py` (section + symbol rename) → `dtk extab clean`
+   - `dtk extab clean` が `extab`/`extabindex` section を要求するため、rename はその前に実行する必要あり
+   - postprocess は `.extab_user` section も rename target symbol も無い TU では no-op
+4. **mwcc inline asm の制約回避** (§11 で既知):
+   - `lbl@sda21(r0)` syntax 不可 → `extern unsigned int lbl_xxx;` 宣言 + `lbl_xxx(r2)` で auto sda21 reloc
+   - `crclr cr1eq` / `crset cr1eq` 不可 → `crxor 6,6,6` / `creqv 6,6,6` bit-position 表記
+5. **section ordering の独立保証**:
+   - `.text` ordering: 関数定義順 (mwcc は source order 通りに emit) を target の `.text` address 順に並べる
+   - `extab` ordering: 手動 emit 順を target の `extab` 順 (HeapStats では fn address 順とは異なる) に並べる
+   - `extabindex` ordering: 手動 emit 順を target の `extabindex` 順 (HeapStats では fn address 順) に並べる
+   - 3 つの section は独立に order 制御可能 (`__declspec(section "...")` の emit 順 = section 内 layout 順)
+6. **`Object(Matching, ...)` 配線** (`configure.py`):
+   - `extab_padding=b"\x00\x00"` を渡して `mwcc_sjis_extab` build rule (postprocess chain 入り) に routes
+
+### 達成事項
+
+- 6 fn × 5 extab × 5 extabindex (1 fn の `isJapanese` は exception table なし、終了 blr のみ) を 100% byte-identical で 1 TU として build、SHA-1 OK
+- `Object(Matching, "game/HeapStats.c")` 維持、Progress カウントは Matching に加算
+- Phase 1 (a) asm_fn HANDOFF.md schema、(c) `PROTECTED_STATUSES` 保護、(b) Object(Matching) TU 内 C+asm 関数共存 + bundle 全体 SHA-1 OK の 3 つすべて構造として整備完了
+
+### 残課題 (Phase 2 へ)
+
+- target extab raw bytes / extabindex struct 抽出の自動化 (現状 manual で `build/GNLJ82/asm/auto_*_text.s` 末尾を読み起こし)
+- per-TU mapping json (`tools/extab_user_renames.json`) の生成自動化
+- `tools/extract_fn_asm.py` 実装 (Phase 2 既定タスク)、これに extab/extabindex emit 補助も統合する想定
+
+### 影響範囲の更新
+
+- `docs/large_extab_group_strategy.md` の DESIGN SUSPENDED 注記を解除 (mega-bundle pattern の前提 = Object(Matching) で asm_fn 混在 + bundle SHA-1 OK が成立) → 別途 update
+- Phase 1a / Phase 1b は完了。次は Phase 2 (tool 整備) と Phase 3a-small への着手

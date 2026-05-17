@@ -1,12 +1,15 @@
 # Large extab-group strategy (Phase 3)
 
-> **Status: DRAFT — DESIGN SUSPENDED (2026-05-18)**. Phase 1 verify (b) (Object(Matching, ...) で C + asm fn coexistence reaching SHA-1 OK in an extab group bundle) は **構造的制約 3 つで未達成**。詳細: `docs/per_fn_matching_strategy.md` §11。本 doc の核 (mega-bundle pattern = TU 内全関数を asm_fn で scaffold) は **`-Cpp_exceptions on` でも asm-void fn が extab/extabindex entry を発出しない** という mwcc 挙動により、現状の手法では成立しない。
+> **Status: DRAFT (2026-05-18)**. Phase 1b verify 成功 (`src/game/HeapStats.c` 6-fn bundle 全 asm_fn + 手動 extab/extabindex で SHA-1 OK 達成、詳細: `docs/per_fn_matching_strategy.md` §12)。これにより本 doc の核 (mega-bundle pattern = TU 内全関数を asm_fn で scaffold) の前提が成立し、DESIGN SUSPENDED 状態を解除。
 >
-> 本 doc を actionable にするには Phase 1b 救済 candidate (`__declspec(section "extab")` で手動 extab entry 発出、per_fn_matching_strategy.md §11 参照) の empirical 検証が前提。それが動かなければ Phase 3 全体を別アプローチで再設計する (例: 大 group は全 `Object(NonMatching, ...)` で隔離して C decomp の進捗カウントだけ別管理 / 大 group の中で extab 制約を回避する dtk 拡張提案)。
+> ただし手動 extab/extabindex 発出は現状 manual 作業 (`build/<config>/asm/auto_*_text.s` から末尾の `extab` / `extabindex` ブロックを読み起こす)。mega-bundle pattern を実装するには以下の tool 補助が前提:
+> 1. `tools/extract_fn_asm.py` (§4.1) — 関数 asm body 抽出 (Phase 2 既定タスク)
+> 2. 上記 tool の拡張または別 tool で extab/extabindex の raw bytes / 構造の抽出 + `.extab_user`/`.extabindex_user` の C source 生成
+> 3. `tools/extab_user_renames.json` の per-TU mapping 自動生成
 >
-> wall-clock budget の見積もり (Section 2.2 の「1 sub で 1 batch 完了は budget 的に無理」) も依然 empirical 根拠弱、Phase 1b verify と合わせて検証予定。
+> wall-clock budget の見積もり (Section 2.2 の「1 sub で 1 batch 完了は budget 的に無理」) は依然 empirical 根拠弱、Phase 3a-small で実 sub dispatch して計測予定。
 >
-> 計測後の refine 想定箇所 (Phase 1b 成功時): Section 2.2 (Phase 3b mega-bundle pattern の役割分担)、Section 3.1 (`batch_type` enum 候補に `scaffold_only` 追加するか)、Section 5 (Phase 順)、Section 4 に extab/extabindex 生成 tool 追加。
+> 計測後の refine 想定箇所: Section 2.2 (Phase 3b mega-bundle pattern の役割分担)、Section 3.1 (`batch_type` enum 候補に `scaffold_only` 追加するか)、Section 5 (Phase 順)、Section 4 に extab/extabindex 生成 tool 追加。
 
 `docs/per_fn_matching_strategy.md` Phase 3 の詳細展開。**>10 fn の dtk reversed-extab group** にどう取り組むかの設計。
 
