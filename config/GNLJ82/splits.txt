@@ -12,3 +12,6 @@ Sections:
 	.sbss       type:bss align:4
 	.sdata2     type:rodata align:16
 	.sbss2      type:bss align:32
+
+init/__check_pad3.c:
+	.init       start:0x80003100 end:0x80003140
