@@ -37,6 +37,30 @@
 **カバレッジ**: 38 / 7614 functions matched、25 TU 確定 (.init = 9、sysdolphin = 6、
 Runtime.PPCEABI.H = 2、game = 8)。
 
+## なぜ複数 CW が混ざるのか (要件の整理)
+
+これは mkgp2 固有の歪みでも、`dtk-template` / `decomp-toolkit` の不備でもなく、
+**商用 GameCube binary を再現する以上は本質的に発生する**。2007 年の GC タイトル
+の link には:
+
+- 任天堂が配布した古い Dolphin SDK の prebuilt object (GC/1.0〜GC/1.2.5n 頃に
+  ビルドされて、その後の project では再ビルドされず流用)
+- middleware (HSD / MetroTRK / 各社ライブラリ。ベンダーが独自に build した
+  object をそのまま受け取る)
+- project 時点で最新の CW で書かれた game コード / SDK 拡張 (mkgp2 では GC/2.7
+  + GC/1.3.2 が混在)
+
+の object が同じ `mwldeppc` で混ぜて link される。CW の `.o` format は version
+間でほぼ互換なので、混在 link は普通に通る。
+
+`dtk-template` は **per-lib `mw_version`** を素直に持っているので、ここで困る
+ことはない。我々のやっている「lib を CW ごとに分ける」運用は他 GC decomp
+project (mkdd / melee / ogws) でも完全に同じ定石。
+
+唯一の痛みは「未確認の TU 1 つずつに CW を当てる discovery 工程」で、ここは
+**capability 不足ではなく automation 不在の話**。`tools/find_cw_version.py` の
+ような trial loop を書けば 1 TU 30 秒〜1 分に圧縮できる。
+
 ## CW 分布の現状
 
 | mw_version | TU 数 | 由来推定 |
