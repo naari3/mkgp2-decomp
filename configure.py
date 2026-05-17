@@ -338,9 +338,13 @@ config.libs = [
         "cflags": [*cflags_base, "-Cpp_exceptions on"],
         "progress_category": "game",
         "objects": [
-            # 1 TU = 1 dtk reversed-extab group bundle (6 functions). Held as
-            # NonMatching for now: see HANDOFF.md for the Phase 1 verify story.
-            Object(NonMatching, "game/HeapStats.c"),
+            # 1 TU = 1 dtk reversed-extab group bundle (6 functions).
+            # Phase 1b: held as Matching with all 6 fns as asm_fn + manually
+            # emitted extab/extabindex (via __declspec(section ".extab_user")
+            # + tools/postprocess_extab_user.py rename). The extab_padding
+            # kwarg routes this TU through the mwcc_sjis_extab build rule so
+            # the postprocess hook runs.
+            Object(Matching, "game/HeapStats.c", extab_padding=b"\x00\x00"),
         ],
     },
     {

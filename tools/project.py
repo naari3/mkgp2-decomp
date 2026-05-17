@@ -681,13 +681,23 @@ def generate_build_ninja(
     mwcc_pch_sjis_cmd = f"{wrapper_cmd}{sjiswrap} {mwcc} $cflags -MMD -c $in -o $basedir -precompile $basefilestem.mch"
     mwcc_pch_sjis_implicit: List[Optional[Path]] = [*mwcc_implicit, sjiswrap]
 
-    # MWCC with extab post-processing
+    # MWCC with extab post-processing.
+    # Chain: mwcc -> postprocess_extab_user (rename .extab_user/.extabindex_user
+    # to extab/extabindex so dtk extab clean can find them) -> dtk extab clean.
+    # The rename step is a no-op for TUs that don't use the manual-emit pattern.
+    postprocess_extab_user = config.tools_dir / "postprocess_extab_user.py"
     mwcc_extab_cmd = (
-        f'{CHAIN}{mwcc_cmd} && {dtk} extab clean --padding "$extab_padding" $out $out'
+        f'{CHAIN}{mwcc_cmd}'
+        f' && $python {postprocess_extab_user} $out'
+        f' && {dtk} extab clean --padding "$extab_padding" $out $out'
     )
-    mwcc_extab_implicit: List[Optional[Path]] = [*mwcc_implicit, dtk]
-    mwcc_sjis_extab_cmd = f'{CHAIN}{mwcc_sjis_cmd} && {dtk} extab clean --padding "$extab_padding" $out $out'
-    mwcc_sjis_extab_implicit: List[Optional[Path]] = [*mwcc_sjis_implicit, dtk]
+    mwcc_extab_implicit: List[Optional[Path]] = [*mwcc_implicit, dtk, postprocess_extab_user]
+    mwcc_sjis_extab_cmd = (
+        f'{CHAIN}{mwcc_sjis_cmd}'
+        f' && $python {postprocess_extab_user} $out'
+        f' && {dtk} extab clean --padding "$extab_padding" $out $out'
+    )
+    mwcc_sjis_extab_implicit: List[Optional[Path]] = [*mwcc_sjis_implicit, dtk, postprocess_extab_user]
 
     # MWLD
     mwld = compiler_path / "mwldeppc.exe"
