@@ -25,6 +25,9 @@ init/__init_hardware.c:
 init/__flush_cache.c:
 	.init       start:0x80003424 end:0x80003458
 
+init/fn_800053E0.c:
+	.init       start:0x800053E0 end:0x8000540C
+
 init/memset.c:
 	.init       start:0x8000540C end:0x8000543C
 

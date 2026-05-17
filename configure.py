@@ -308,6 +308,7 @@ config.libs = [
         "objects": [
             Object(Matching, "init/__init_hardware.c"),
             Object(Matching, "init/__flush_cache.c"),
+            Object(Matching, "init/fn_800053E0.c"),
             Object(Matching, "init/memset.c"),
             Object(Matching, "init/__fill_mem.c"),
             Object(Matching, "init/memcpy.c"),
