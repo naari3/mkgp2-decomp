@@ -223,7 +223,7 @@ in_progress, interrupted, blocked, skipped, asm_fn   (asm_fn 追加)
 |---|---|---|
 | **Phase 1: 規約と実証** | この doc 承認 → schema 拡張実装 (parse_handoff / apply_handoff / orch_sync) + sub_agent_role.md / orchestrator_role.md 更新 + skill 更新 → T9 verify 再実行 (今の 6-fn bundle を asm_fn 混在で通す) | 中 |
 | **Phase 2: tool 補助** | `tools/extract_fn_asm.py` 追加 (asm 自動切り出し) + report 集計 (matched / asm_fn 別カウント) | 小 |
-| **Phase 3: 大規模 group** | >10 fn group への適用検討。partial coverage (例: 100 fn 中 30 matched + 70 asm_fn で 1 TU 完成) の現実性検証。`tools/build_extab_map.py` の `>10 fn` グループ (621 関数) が対象 | 大 |
+| **Phase 3: 大規模 group** | >10 fn group への適用検討。詳細は `docs/large_extab_group_strategy.md` (Phase 3a small/large + 3b small/large + 3c の 5 段階に細分化、`tools/extract_fn_asm.py` / `scaffold_mega_bundle.py` 等の補助 tool 設計含む) | 大 |
 
 T9-2 と T10 は Phase 1-3 の中に解消される (個別 ticket としては閉じる)。
 
