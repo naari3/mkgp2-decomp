@@ -17,7 +17,7 @@
 ## 制約 (絶対遵守)
 
 1. **作業範囲は割り当て worktree 内のみ**: `cd` して入った後、相対 path で操作。worktree の外のファイルを編集してはならない (main checkout / 他 worktree / `~/` 配下の repo はすべて禁止)
-2. **担当 batch の関数以外の `.c` ファイルを変更しない**: 隣接関数を「ついでに」matching しない (TU 境界の暗黙仮定が壊れる)
+2. **担当 batch の関数以外の既存 `.c` ファイルを変更しない**: 隣接関数を「ついでに」matching しない (TU 境界の暗黙仮定が壊れる)。ただし **新規 `.c` の追加・削除は OK** — 担当関数のための新 TU、NonMatching scaffold (skill 7.5 節 制約C)、dtk auto blob 分割実験用の placeholder TU を含む。試行で作って捨てた scaffold は HANDOFF.md に記録しなくてよい (worktree 削除で消える)
 3. **`configure.py` / `config/GNLJ82/splits.txt` / `config/GNLJ82/symbols.txt` は worktree 内では編集してよい**: build verify のために必須 (`/mkgp2-match` skill の手順 6-9 通り)。**ただし**、その変更は `orch/<batch_id>` branch 限定で main branch には反映しない — 同じ変更を HANDOFF.md の `configure_py` / `splits_txt` / `symbols_txt` セクションにも必ず記述すること。main はそれをもとに main branch に再適用する (sub の orch/* commit は worktree 削除と同時に捨てられる)
 4. **`docs/` を直接編集しない**: 知見追加希望は HANDOFF.md の `docs_notes` セクションへ
 5. **`.orchestrator/` を一切触らない**: state は main の専有領域
@@ -165,6 +165,40 @@ main は HANDOFF.md の **```json ブロック** を parse する。stdlib `json
 - `user_attention`: user 判断要 (例: 「この関数は WIP の理解が必要、放置すべき」) なら
 
 main の parse 実装は `tools/parse_handoff.py`。stdlib `json` のみ依存。
+
+### status ごとの field 要件マトリクス
+
+`results[].status` によって、関連 field の意味と要件が変わる:
+
+| field | `matched` | `nonmatching` | `skipped` | `failed` |
+|---|---|---|---|---|
+| `results[].src_path` | 実 path 必須 | 実 path 必須 | **null 推奨** (sub の試行 path は main で参照不可) | null |
+| `results[].objdiff_percent` | **100.0 必須** | 0-99.99 (達成値) | null | null |
+| `configure_py.add_objects[]` | 必須 (Matching) | 必須 (NonMatching) | **空配列** | 空配列 |
+| `splits_txt.add_entries[]` | 必須 | 必須 | **空配列** | 空配列 |
+| `symbols_txt.set_scope[]` / `set_attr[]` / `rename[]` | 必要なら | 必要なら | **空配列** (sub が worktree で編集した scope/rename は捨てる、main に反映しない) | 空配列 |
+| `build_verified.sha1_ok` | true 必須 | true 必須 (NonMatching 隔離後の sha1) | **true** (元 sha1 維持の確認) | false 可 |
+| `blocked_reason` | null | null/optional | **必須** (なぜ skipped か 1-2 文) | **必須** |
+| commit 動作 | ✓ `orch/<batch_id>` に 1 commit | ✓ 1 commit (NonMatching として) | × no commit | × no commit |
+
+特に重要 (iter 0 baseline で曖昧と判明した点):
+
+- **skipped 時**: sub が試行中に touch した SoT 編集 (symbols.txt の scope 等) は **HANDOFF.md に反映しない**。main は HANDOFF.md だけ見て決めるので、`symbols_txt.set_scope` に書くと main 側で適用されて drift する。worktree の編集は捨てられる (worktree remove で消える) ことを前提に、skipped で main に持ち込みたいものは 0 件にする
+- **`funcs_matched_delta`**: 「main が apply_handoff + ninja を回した後、PROGRESS line の `funcs_matched / total_functions` で増える数」。複数関数 batch なら matched 関数数 (例: 3 関数中 2 matched なら 2)
+- **`results[].objdiff_percent` と `status` の整合**: `matched` で 100.0 未満は assertion 違反 (sub のミス)。`nonmatching` で 100.0 ちょうども assertion 違反 (なぜ NonMatching にしたか不明)
+
+### 試行カウント (results[].notes など任意 field に書く場合)
+
+「試行」 = **approach の質的変更回数**。同じ approach での compile 失敗 retry は試行に含めない。例:
+
+- approach A (extern array open `[]`) で 1 回 compile して 80% → approach B (sized array `[2]`) に切り替えて 100% → 2 試行
+- approach A で compile error → 同じ approach A の syntax fix で compile → match まで 100% → 1 試行
+
+### 自由記述部分について
+
+```json``` フェンスの外の markdown 本文は **parser が無視する**。人間が読む / 次の sub が読む / debug 用のメモを自由に書ける (構造的限界の発見、再 dispatch の risk 通知など)。
+
+複数 ```json``` ブロックがある場合は **最初の 1 つ** だけ採用される (それ以外は無視)。
 
 ## 失敗時の振る舞い
 
