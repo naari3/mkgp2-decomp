@@ -328,13 +328,53 @@ Phase 1b は別 sub 検証ではなく main 側で `src/game/HeapStats.c` (6 fn 
 - `Object(Matching, "game/HeapStats.c")` 維持、Progress カウントは Matching に加算
 - Phase 1 (a) asm_fn HANDOFF.md schema、(c) `PROTECTED_STATUSES` 保護、(b) Object(Matching) TU 内 C+asm 関数共存 + bundle 全体 SHA-1 OK の 3 つすべて構造として整備完了
 
-### 残課題 (Phase 2 へ)
+### 残課題 (Phase 2 へ) → 主要部分は §13 で完了
 
-- target extab raw bytes / extabindex struct 抽出の自動化 (現状 manual で `build/GNLJ82/asm/auto_*_text.s` 末尾を読み起こし)
-- per-TU mapping json (`tools/extab_user_renames.json`) の生成自動化
-- `tools/extract_fn_asm.py` 実装 (Phase 2 既定タスク)、これに extab/extabindex emit 補助も統合する想定
+- ~~target extab raw bytes / extabindex struct 抽出の自動化~~ → §13 `tools/extract_fn_asm.py` で完了
+- ~~per-TU mapping json (`tools/extab_user_renames.json`) の生成自動化~~ → §13 で snippet 出力対応
+- ~~`tools/extract_fn_asm.py` 実装 (Phase 2 既定タスク)、これに extab/extabindex emit 補助も統合~~ → §13 で完了
 
 ### 影響範囲の更新
 
 - `docs/large_extab_group_strategy.md` の DESIGN SUSPENDED 注記を解除 (mega-bundle pattern の前提 = Object(Matching) で asm_fn 混在 + bundle SHA-1 OK が成立) → 別途 update
 - Phase 1a / Phase 1b は完了。次は Phase 2 (tool 整備) と Phase 3a-small への着手
+
+## 13. tools/extract_fn_asm.py 実装 (2026-05-18)
+
+§12 の手順 (mwcc section 予約名回避 / dtk symbol auto-regen / inline asm 制約回避 / section ordering / extern 収集) を 1 tool に集約。dtk-generated `build/<config>/asm/<group>.s` を入力に C source skeleton を生成する。end-to-end verify: tool 単独出力で `src/game/HeapStats.c` を生成 → ninja build で SHA-1 OK 達成 (commit `634b412`)。
+
+### tool が吸収する mwcc inline asm の制約
+
+- `<sym>@sda21(r0)` → `<sym>(r2)` rewrite + extern 自動収集
+- `crclr/crset crNcond` → `crxor/creqv N*4+bit, N*4+bit, N*4+bit` rewrite
+- `.L_<addr>` ローカル label → `<fn_name>_L_<addr>` rewrite (fn 単位 namespace 化、mwcc は `.` 始まりを directive 扱い)
+- `bl <fn>` / `<sym>@ha,@l` 参照から callee と data ref を抽出して `extern void Foo();` / `extern unsigned int <sym>;` 自動 emit
+
+### 出力構造 (target 順)
+
+1. forward decls (`asm void <fn>(void);` × N)、extabindex の `(void*)&<fn>` 参照のため
+2. extern decls 3 group (branch callees / sda21 data / large-data refs)
+3. extab emit (target extab section layout 順、`#pragma section R ".extab_user"` + `__declspec(section ".extab_user") static const unsigned char extab_<fn>[N] = { ... };`)
+4. extabindex emit (target extabindex section layout 順、`#pragma section R ".extabindex_user"` + `__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_<fn> = { ... };`)
+5. asm function bodies (.text address 順、`asm void <fn>(void) { nofralloc ... }`)
+
+### CLI
+
+```sh
+python tools/extract_fn_asm.py <group_id> \
+    --tu <src/path/to.c> \
+    --out-c <src/path/to.c> \
+    --out-renames <renames_snippet.json>
+```
+
+renames snippet は `{ "<tu_path>": { "extab_<fn>": "@etb_<addr>", "extabindex_<fn>": "@eti_<addr>", ... } }` 形式で `tools/extab_user_renames.json` にマージする想定。
+
+### scope 外
+
+- `.c` の new file 作成 / configure.py の Object 追加 / splits.txt entry / state.json 更新は tool 範囲外。caller (orchestrator main or 人手) が組む
+- 関数 callee 型推論 (`extern void Foo()` 一律、戻り値・引数の specificity は user refine)
+- データ extern 型推論 (`extern unsigned int` 一律、mwcc は sda21 vs large-data を section で決めるので codegen 影響なし)
+
+### Hybrid 構成 (HeapStats.c 採用)
+
+`src/game/HeapStats.c` は tool 出力をベースに、先頭の group 説明 comment header (再生成手順 + reference 注記) のみ手で残す Hybrid 構成。tool 再実行で header 以下は上書きされる前提、再生成手順を header 内に書いてある。

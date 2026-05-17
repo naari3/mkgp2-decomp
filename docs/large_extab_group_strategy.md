@@ -1,15 +1,18 @@
 # Large extab-group strategy (Phase 3)
 
-> **Status: DRAFT (2026-05-18)**. Phase 1b verify 成功 (`src/game/HeapStats.c` 6-fn bundle 全 asm_fn + 手動 extab/extabindex で SHA-1 OK 達成、詳細: `docs/per_fn_matching_strategy.md` §12)。これにより本 doc の核 (mega-bundle pattern = TU 内全関数を asm_fn で scaffold) の前提が成立し、DESIGN SUSPENDED 状態を解除。
+> **Status: DRAFT (2026-05-18)**. Phase 1b verify 成功 + `tools/extract_fn_asm.py` 完成。本 doc の核 (mega-bundle pattern = TU 内全関数を asm_fn で scaffold) の前提と tool 整備の両方が成立 (詳細: `docs/per_fn_matching_strategy.md` §12, §13)。
 >
-> ただし手動 extab/extabindex 発出は現状 manual 作業 (`build/<config>/asm/auto_*_text.s` から末尾の `extab` / `extabindex` ブロックを読み起こす)。mega-bundle pattern を実装するには以下の tool 補助が前提:
-> 1. `tools/extract_fn_asm.py` (§4.1) — 関数 asm body 抽出 (Phase 2 既定タスク)
-> 2. 上記 tool の拡張または別 tool で extab/extabindex の raw bytes / 構造の抽出 + `.extab_user`/`.extabindex_user` の C source 生成
-> 3. `tools/extab_user_renames.json` の per-TU mapping 自動生成
+> 完了:
+> 1. `tools/extract_fn_asm.py` — group 全関数の asm body + 手動 extab/extabindex emit + per-TU renames snippet を 1 発生成、mwcc inline asm の制約 (sda21 / crclr / `.L_*` / extern) も全て tool が吸収
+>
+> 残:
+> - scaffold 配線部分 (`.c` の new file 作成、`configure.py` の `Object(Matching, ...)` 追加、`splits.txt` entry、`state.json` 更新) は依然 manual。orchestrator main の cycle に組み込む形で自動化予定 (本 doc §4.2 `tools/scaffold_mega_bundle.py`)
+> - 巨大 TU (>100 fn) の mwcc build 時間実測 (§7 open question)
+> - bisect tool (§4.3) — 現状 `extract_fn_asm.py` は HeapStats 6-fn で end-to-end 動作確認済だが、100+ fn group で 1 関数の抽出ミスがあった場合の犯人特定には別 tool が必要
 >
 > wall-clock budget の見積もり (Section 2.2 の「1 sub で 1 batch 完了は budget 的に無理」) は依然 empirical 根拠弱、Phase 3a-small で実 sub dispatch して計測予定。
 >
-> 計測後の refine 想定箇所: Section 2.2 (Phase 3b mega-bundle pattern の役割分担)、Section 3.1 (`batch_type` enum 候補に `scaffold_only` 追加するか)、Section 5 (Phase 順)、Section 4 に extab/extabindex 生成 tool 追加。
+> 計測後の refine 想定箇所: Section 2.2 (Phase 3b mega-bundle pattern の役割分担)、Section 3.1 (`batch_type` enum 候補に `scaffold_only` 追加するか)、Section 5 (Phase 順)。
 
 `docs/per_fn_matching_strategy.md` Phase 3 の詳細展開。**>10 fn の dtk reversed-extab group** にどう取り組むかの設計。
 
@@ -167,31 +170,36 @@ mega_scaffold 完了の判定は `state.batches` 内に該当 group の mega_sca
 
 ## 4. tools 計画
 
-### 4.1 `tools/extract_fn_asm.py` (必須、Phase 3a 着手前)
+### 4.1 `tools/extract_fn_asm.py` (実装済み 2026-05-18、commit `634b412`)
 
-```
-python tools/extract_fn_asm.py <addr> [--worktree <path>]
-  → stdout に nofralloc <body> blr 形式で出力
-python tools/extract_fn_asm.py --group <gid> --output <path>
-  → group 全関数を 1 ファイルに asm function 形式で出力
+実装は当初設計より広い: 1 group 単位で asm body + 手動 extab/extabindex emit + per-TU renames snippet を 1 発生成し、mwcc inline asm の制約も全て tool 側で吸収する。詳細: `docs/per_fn_matching_strategy.md` §13。
+
+```sh
+python tools/extract_fn_asm.py <group_id> \
+    [--asm-dir build/GNLJ82/asm] \
+    [--tu <src/path/to.c>] \
+    [--out-c <path>] \
+    [--out-renames <path>]
 ```
 
 入力:
-- `build/<config>/asm/<group>.s` の `.fn <name>` 〜 `.endfn` パース
-- 命令行のみ抽出、ヘッダ / セクション切り替え / `.size` 行は捨てる
+- `build/<config>/asm/<group_id>.s` (dtk dol split 出力、1 file = 1 reversed-extab group)
+- `<group_id>` は `auto_fn_8002F640_text` のような basename、または full path
 
-出力:
-```c
-asm void <name>(void) {
-    nofralloc
-    <命令行...>
-}
-```
+出力 3 種:
+1. C source (forward decls + extern decls + extab emit + extabindex emit + asm bodies)
+2. renames snippet (`--out-renames` 指定で per-TU mapping JSON 出力)
+3. stdout (`--out-c` / `--out-renames` 未指定時)
 
-エッジケース:
-- 関数の最後が `blr` でない (例: tail call ジャンプ) → そのまま出力 (asm function は `blr` 強制ではない)
-- nested label (`.L_xxxxxxxx:`) → そのまま保持
-- relocation 表記 (`@ha` / `@l` / `@sda21`) → そのまま保持
+mwcc inline asm rewrite (tool 内で自動):
+- `<sym>@sda21(r0)` → `<sym>(r2)` + extern 自動収集
+- `crclr/crset crNcond` → `crxor/creqv N*4+bit, N*4+bit, N*4+bit`
+- `.L_<addr>` → `<fn_name>_L_<addr>` (mwcc `.`-prefix 回避、fn 単位 namespace 化)
+- `bl <fn>` / `<sym>@ha,@l` → extern `void`/`unsigned int` 自動収集
+
+`@ha` / `@l` relocation 表記はそのまま保持 (mwcc が解釈する)。tail call 等で末尾 `blr` 以外の関数も命令行をそのまま出力 (`nofralloc` のみ強制)。
+
+end-to-end verify: `auto_fn_8002F640_text` (HeapStats 6-fn bundle) で tool 単独出力 → ninja build SHA-1 OK 達成。
 
 ### 4.2 `tools/scaffold_mega_bundle.py` (Phase 3b 着手前)
 
