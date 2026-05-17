@@ -227,8 +227,69 @@ in_progress, interrupted, blocked, skipped, asm_fn   (asm_fn 追加)
 
 T9-2 と T10 は Phase 1-3 の中に解消される (個別 ticket としては閉じる)。
 
-## 10. open question
+## 10. open question (Phase 1 verify 前の仮置き、§11 で更新)
 
-- mkgp2-decomp の cflags に `-Cpp_exceptions off` がある状態で、bundle 内の関数 (auto extab を持つ) を C + asm_fn 混在で書くとき、`-Cpp_exceptions on` を per-TU で付ける必要がある (extab/extabindex section を mwcc に出させるため)。Phase 1 検証で確認。
-- asm function の body 内で参照する extern symbol (`lbl_802E8F48@ha` 等) は C 側の `extern` 宣言を要求するか? mwcc の asm function はおそらく独立 reloc を出すので不要のはず。Phase 1 検証で確認。
-- bundle 内 N 関数すべてが asm_fn になった場合と `Object(NonMatching, ...)` で全体を asm から build した場合とで、生成 .o は byte-identical か? 後者の方が configure.py が短いので、全関数 asm_fn なら NonMatching に倒す方が筋。Phase 1 で「全 asm_fn なら自動 NonMatching 提案」を sub の振る舞いに入れる。
+- mkgp2-decomp の cflags に `-Cpp_exceptions off` がある状態で、bundle 内の関数 (auto extab を持つ) を C + asm_fn 混在で書くとき、`-Cpp_exceptions on` を per-TU で付ける必要がある (extab/extabindex section を mwcc に出させるため)。Phase 1 検証で確認。 → **§11 で部分回答 (cflags はそれ自体動くが、asm-void fn が extab を発出しないので bundle 不成立)**
+- asm function の body 内で参照する extern symbol (`lbl_802E8F48@ha` 等) は C 側の `extern` 宣言を要求するか? mwcc の asm function はおそらく独立 reloc を出すので不要のはず。Phase 1 検証で確認。 → **§11: mwcc inline asm は `@sda21(r0)` syntax を parse 不可、workaround は sym が sdata 居住なら `lbl(r2)` で auto reloc 付与**
+- bundle 内 N 関数すべてが asm_fn になった場合と `Object(NonMatching, ...)` で全体を asm から build した場合とで、生成 .o は byte-identical か? 後者の方が configure.py が短いので、全関数 asm_fn なら NonMatching に倒す方が筋。Phase 1 で「全 asm_fn なら自動 NonMatching 提案」を sub の振る舞いに入れる。 → **§11: 1 個でも asm_fn にすると extab 不整合で SHA-1 fail、全 asm_fn を Matching で通すのは原理的に不可。Phase 1b 救済 candidate 待ち**
+
+## 11. Phase 1 verify outcome (2026-05-18)
+
+batch `batch_text_8002f640_bundle` (6-fn auto_fn_8002F640_text group) を Phase 1 verify として dispatch した結果 (sub agent_id `a636ac0f26c2e0cee`、25.6 min、HANDOFF.md は worktree `.worktrees/batch_text_8002f640_bundle/` に保存):
+
+### 達成
+
+- (a) `results[].status = "asm_fn"` の HANDOFF.md parse 経路は `isJapanese` (3 instr asm body) で exercise → parse 成功
+- (c) `tools/orch_sync.py` `PROTECTED_STATUSES` の保護動作 (asm_fn が SoT-derive で上書きされない) は仕組み上問題なし
+
+### 未達成 — 構造的制約 3 つ
+
+(b) `Object(Matching, ...)` の TU 内で C 関数 + asm 関数共存 + bundle 全体 SHA-1 OK は **以下の制約で達成できなかった**:
+
+1. **mwcc inline asm が `lbl@sda21(r0)` syntax を parse 不可**
+   - workaround: `lbl(r2)` と書くと sym が `.sdata` / `.sdata2` 居住なら mwcc が自動で sda21 reloc を付与 (sub 検証済、動く)
+   - 制約は表面的、書き換えコスト軽
+2. **mwcc inline asm が `crclr cr1eq` / `crset cr1eq` mnemonic を parse 不可**
+   - workaround: `crxor 6,6,6` / `creqv 6,6,6` (bit-position 表記) で書き直し
+   - 制約は表面的、書き換えコスト軽
+3. **致命的: `-Cpp_exceptions on` でも asm-void fn が extab/extabindex section に entry を発出しない**
+   - bundle で N 関数中 M 関数を asm_fn にすると、TU の extab entries が N-M 個になり target の N 個と layout が合わず `_eti_init_info` の位置が約 0x14 byte ずれて SHA-1 fail
+   - asm_fn 退避を **extab group bundle 内で機能させる前提が崩壊**
+
+### 救済 candidate (未試行、Phase 1b で empirical 検証する想定)
+
+C 側から手動 extab entry を発出する:
+
+```c
+__declspec(section "extab") static const unsigned char extab_<fn>[] = { ... };
+__declspec(section "extabindex") static const struct {
+    void *fn_addr;
+    void *extab_addr;
+    /* ... layout per target */
+} extabindex_<fn> = { &<fn>, extab_<fn>, ... };
+```
+
+これが動けば asm fn が extab entry を持つことになり SHA-1 通る可能性。1 関数あたり extab body byte 配列 (典型 0x10-0x40 bytes) + extabindex struct (12 bytes 程度) を target asm から手抽出する必要、tool 化可能。
+
+### 結論と影響範囲
+
+現状の asm_fn schema が valid な使用範囲:
+
+- **extab group 外 (singleton fn)** の単独関数で C-matching 困難ケース → 使える
+- **extab group bundle 内** → Phase 1b 救済 candidate (上記 `__declspec(section "extab")` 手法) が動作実証されるまで使えない
+
+このため:
+
+- `docs/large_extab_group_strategy.md` (Phase 3) は asm_fn による mega-bundle pattern を前提に設計されているため、Phase 1b 結果待ちで **設計全体保留** 状態。doc 冒頭に DESIGN SUSPENDED 注記を追加
+- Phase 2 の `tools/extract_fn_asm.py` は依然有用 (singleton 用途と Phase 1b 検証用)、実装計画は維持
+- Phase 1a (extab group 外 singleton への asm_fn 適用) は通常運用に即組み込み可能
+
+### Phase 1b 検証の dispatch 仕様 (案)
+
+- 小規模 extab group (2-3 fn、各 fn が shallow body) を 1 つ選定
+- 1 関数を C で書き、もう 1 関数を asm_fn + 手動 extab/extabindex で書く
+- bundle 全体を `Object(Matching, ...)` として SHA-1 OK 達成を目標
+- 失敗時 (extab byte 配列推定ミス / extabindex struct layout 違い等) は HANDOFF.md notes で原因記録
+- 候補 group: `tools/build_extab_map.py` 出力 + extab_group_size==2 で検索
+
+target extab raw bytes は dtk 出力 `build/GNLJ82/asm/auto_*_text.s` 末尾の `.section "extab"` / `.section "extabindex"` ブロックから取れる。tool 補助は Phase 1b 実装後に検討。
