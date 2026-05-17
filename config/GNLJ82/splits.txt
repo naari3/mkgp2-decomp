@@ -28,6 +28,9 @@ game/Collision.c:
 game/Clamp.c:
 	.text       start:0x80038778 end:0x800387D8
 
+game/KartMovement.c:
+	.text       start:0x8003F518 end:0x8003F528
+
 Runtime.PPCEABI.H/global_destructor_chain.c:
 	.text       start:0x80270BE8 end:0x80270C48
 	.dtors      start:0x802E8988 end:0x802E898C

@@ -342,6 +342,7 @@ config.libs = [
             Object(Matching, "game/Profiler.c"),
             Object(Matching, "game/Collision.c"),
             Object(Matching, "game/Clamp.c"),
+            Object(Matching, "game/KartMovement.c"),
         ],
     },
     {
