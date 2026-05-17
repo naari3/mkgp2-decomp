@@ -345,7 +345,8 @@ config.libs = [
             # kwarg routes this TU through the mwcc_sjis_extab build rule so
             # the postprocess hook runs.
             Object(Matching, "game/HeapStats.c", extab_padding=b"\x00\x00"),
-        ],
+                    Object(Matching, "game/auto_800A8F4C_block.c", extab_padding=b"\x00\x00"),
+],
     },
     {
         "lib": "game",
