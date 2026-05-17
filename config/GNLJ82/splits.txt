@@ -29,6 +29,12 @@ Runtime.PPCEABI.H/global_destructor_chain.c:
 	.text       start:0x80270BE8 end:0x80270C48
 	.dtors      start:0x802E8988 end:0x802E898C
 
+Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
+	.text       start:0x80271D74 end:0x80271DF0
+	.ctors      start:0x802E88E0 end:0x802E88E4
+	.dtors      start:0x802E8980 end:0x802E8988
+	.sdata      start:0x806D0B78 end:0x806D0B7C
+
 sysdolphin/baselib/jobj.c:
 	.text       start:0x802CDAF8 end:0x802CDB80
 
