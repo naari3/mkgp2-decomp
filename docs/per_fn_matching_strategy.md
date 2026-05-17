@@ -378,3 +378,67 @@ renames snippet は `{ "<tu_path>": { "extab_<fn>": "@etb_<addr>", "extabindex_<
 ### Hybrid 構成 (HeapStats.c 採用)
 
 `src/game/HeapStats.c` は tool 出力をベースに、先頭の group 説明 comment header (再生成手順 + reference 注記) のみ手で残す Hybrid 構成。tool 再実行で header 以下は上書きされる前提、再生成手順を header 内に書いてある。
+
+## 14. Phase 3a-small main wave 知見 (2026-05-18, auto_800A8F4C bundle)
+
+12 並列 sub で auto_800A8F4C bundle (16 fn) を asm_fn → matched promote 試行 (pilot 1 + main wave 12)。**結果: 4 matched (pilot GetInstance + dtor 2 + OnEnter) / 9 asm_fn 退避 (3 not attempted; bundle 内の他 fn は触らない原則のため、各 sub は 1 fn だけ touch)**。各 sub の 5-20 min ぶんの探索結果から、CW 1.3.2 codegen の限界点と既知の通る idiom を抽出する。
+
+### 14.1 bundle 内 fn promote の extab handling: approach A / B / mix
+
+CW が plain C 関数に対して extab/extabindex を **自動 emit する** ため、bundle の既存 manual emit (`__declspec(section ".extab_user")` + objcopy rename) と **二重化して `_eti_init_info` が 0x14 byte シフトし SHA-1 fail** する問題が出る。
+
+2 つの解決策が独立に発見された (`dtor_800A9CC8` / `dtor_800A9D2C`):
+
+- **Approach A** (`dtor_800A9CC8`): C 関数の `extab_<fn>` と `extabindex_<fn>` の手動 emit を **削除** する。CW が自動 emit するのに任せる
+- **Approach B** (`dtor_800A9D2C`): C 関数の body を `#pragma exceptions off` / `#pragma exceptions reset` で囲み、CW の auto-emit を抑制。手動 emit を **そのまま残す**
+
+**mix の動作性** (auto_800A8F4C bundle で実証): 同 bundle 内に approach A の fn と approach B の fn が共存しても SHA-1 OK (各 fn が exactly 1 個の extab/extabindex を生成すれば extab section の linear order は変わらない)。
+
+選択基準:
+- 既存 promoted fn が全部 A → A で統一が無難 (mix は section order が予測しづらい)
+- bundle が C++ scoped object を抱える (extab body に `&dtor_*` ref がある) なら B が向く (`#pragma exceptions off` が C++ 例外 semantics をきっちり切るため)
+
+### 14.2 main wave で発見された hard-block patterns (CW 1.3.2)
+
+C source から target asm を再現できなかった idiom。**再試行の前にこれらを reference しないと同じ罠にハマる**。
+
+| 関数 | パターン | 再現できない理由 | 救済 hypothesis |
+|---|---|---|---|
+| `WarpZone_CalcExitPosition` | DSE が初期 Vec3 stores を消す (target は保持) | CW 1.3.2 dead-store elimination は volatile / address-take でも回避できなかった (4 試行) | 構造体引数 + escape semantics の組合せ未踏 |
+| `WarpZone_FindContaining` | `stwu 0x20` frame + 3 float arg を `0x8/0xc/0x10` に dead-spill + `frsp` で `f5/f6` 生成 | Vec3 値渡し → ABI で pointer に degrade。3 float arg + dead local Vec3 → DSE で消える | `float pos[3]` の address-take index access (未試行)。sibling `fn_800A8F4C` も同 pattern なので解明すれば 2 fn unlock |
+| `WarpDashMgr_Cleanup` | 2x redundant `addic. r0,r30,0xc; beq` + 2x redundant `cmplwi r30,0; beq` (inlined-then-deduplicated smart-ptr dtor chain) | mwcc は C source の `if (x) { if (x) ... }` 二重 guard を即 dedup。3 試行で 90% 止まり、+12 byte 残差 | `.cpp` + class inline destructor として書き直し? |
+| `WarpDashMgr_GetOrCreate` | `stmw r25, 0x14(r1)` inline prologue (`_savegpr_25` helper でない) | `-Cpp_exceptions on` + GPR 7 個保存だと CW は default で `_savegpr_25` 経由になる。extab body の `0x8A800019 / &dtor_8003AFB8` は scoped C++ object を示唆 | bundle 全体を `.cpp` + `class WarpDashMgr { ~WarpDashMgr(); }` に retrofit する必要。1 fn promote の scope を超える |
+| `WarpAutoRun_Init` | `li r0, 0` を lfs base + stw + 直後の `li r0, -1` で reuse | CW 1.3.2 は `r5=0` / `r0=-1` の別レジスタを選ぶ。6 C 変形で 3 byte 一定 diff | r0 を強制的に reuse させる C idiom 未発見 |
+| `DashZone_ProcessAutoRun` | `mgr→r4` register choice + `0.0` re-load at L_xxx | 7 cycles で 13 byte 残差 (4 byte size + register choice + load reissue) | budget 切れ。3-5 cycle 追加で届く可能性 |
+| `WarpAutoRun_GetParam` | `lwz r4, 0x4(r3)` での `r4` reuse + `fmuls f2/f1/f3` の operand 順 | source-level の rewrite で micro register-allocator を control できない。`-use_lmw_stmw on` は sibling fn の percent を regress させた | TU 単位の extra_cflags は副作用大、per-fn flag 機構が無いので諦め |
+| `WarpZone_CheckEntry` | unused float local に `stfs` 単発 (frsp 吸収済み)、target は frsp 2 つ、C source は frsp 3 つ | CW 1.3.2 で `frsp + stfs` を 1 命令の `stfs` に潰す trigger 未特定 (volatile / non-volatile / address-take 全部 probe 済み) | CW idiom catalog が欲しい case |
+| `WarpZone_CalcEdgeVectors` | 804-byte loop body の register allocation | 4 cycle で 78% 止まり、残り 22% は loop register allocation chase | ROI 低 (大規模 fn)、TU-level retrofit 候補 |
+
+### 14.3 main wave で確立した successful idioms
+
+| 関数 | idiom | 説明 |
+|---|---|---|
+| `dtor_800A9CC8` / `dtor_800A9D2C` | `if (this) if (this) { ... }` (2 重 guard) | C++ deleting-destructor で inner subobject が offset-0 にあると、MWCC 1.3.2 は `mr. r31, r3; beq; beq` (重複した cr0.eq 分岐) を emit。C source 側で literal `if (this) if (this)` を書くと dedup されず byte-identical 再現 |
+| `WarpAutoRun_OnEnter` | 7-float-arg force `(self, f1, f2, f3, f4, vx, vy, vz)` | leaf 関数で `stfs f5/f6/f7` を出すために 7 個の float 引数を要求。先頭 4 つは unused だが signature 上必要 |
+| `dtor_800A9D2C` | `#pragma exceptions off` で extab auto-emit 抑制 | §14.1 approach B 参照 |
+| `dtor_800A9CC8` | extab manual 削除で CW auto-emit に委譲 | §14.1 approach A 参照 |
+| `lbl_806CF238[2]` open array | `extern void *lbl_806CF238[2];` (`WarpDashMgr_instances`) | sdata 上の 2-entry pointer array、`(u8 idx != 0) ? 1 : 0` indexing で `lwzx` reproduce — `WarpDashMgr_GetInstance` (pilot) |
+
+### 14.4 sibling pattern unlock の活用
+
+bundle 内に同じ codegen pattern を持つ fn が複数あることがある (例: `WarpZone_FindContaining` + `fn_800A8F4C` の frame-spill idiom)。1 つを解明すれば複数を unlock できる。HANDOFF.md の `notes` に「sibling X is also asm_fn for same reason」と書いておくと、次回 retry の対象が明確になる。
+
+### 14.5 並列 sub dispatch + immediate merge で確立した orchestrator pattern
+
+- 12 並列 sub を 1 wave で dispatch (wall-clock ~21 min、最遅 sub の duration)
+- 各 sub 完了通知ごとに即 `merge_promote.py --batch <id> --no-build` (累積待ち禁止、`.claude/skills/mkgp2-orch/SKILL.md` 「即時 merge」)
+- conflict は `dtor_800A9CC8` + `dtor_800A9D2C` で forward decl 衝突 1 件 (両 approach A / B の forward decl 差) → main が Edit で resolve、両 fn を C prototype に統合
+- 9 asm_fn worktree は merge_promote.py がスキップ (`status != "matched"`) → main が **HANDOFF.md harvest 後** に手動 cleanup (worktree 削除前に notes / blocked_reason を必ず読む、cleanup で context 消失)
+
+### 14.6 PROGRESS 影響
+
+- Round 3 base: 52 / 7614 matched
+- Pilot GetInstance: +1 → 53
+- Main wave (OnEnter + dtor 2): +3 → 56
+- 累計 main wave 試行コスト: ~21 min wall-clock (並列)、~150 min CPU time (12 sub)
+- 結論: bundle 内 1 fn ずつの並列 promote は **C++ scoped object 起因の hard-block 多数** に直面、ROI は singleton dispatch より低い。残り 9 fn は §14.2 の hard-block を 1 つでも解明すれば連鎖的に解ける可能性
