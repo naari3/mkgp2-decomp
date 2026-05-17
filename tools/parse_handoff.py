@@ -107,8 +107,14 @@ def validate(data: dict) -> None:
                         )
 
     sym = data.get("symbols_txt")
-    if sym is not None and not isinstance(sym, dict):
-        raise HandoffParseError("symbols_txt must be object")
+    if sym is not None:
+        if not isinstance(sym, dict):
+            raise HandoffParseError("symbols_txt must be object")
+        for i, r in enumerate(sym.get("rename", []) or []):
+            if not isinstance(r, dict) or "old" not in r or "new" not in r:
+                raise HandoffParseError(
+                    f"symbols_txt.rename[{i}] needs 'old' and 'new'"
+                )
 
 
 def parse(path: Path) -> dict:

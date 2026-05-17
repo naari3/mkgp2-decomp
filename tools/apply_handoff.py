@@ -274,13 +274,77 @@ def update_symbol_attrs(
     )
 
 
+def apply_symbols_rename(
+    src: str,
+    rename_pairs: list[dict],
+    *,
+    skipped: list[str],
+) -> str:
+    """Apply {old, new} renames to symbols.txt.
+
+    For each pair: find the line `<old> = ...` and rewrite the name part to
+    `<new>`. Preserves the rest of the line (section, address, attributes)
+    unchanged. Idempotent: skips if `<old>` not found or `<new>` already
+    present at a different address.
+    """
+    if not rename_pairs:
+        return src
+    lines = src.splitlines()
+    # Index existing names -> line index, addr
+    name_to_line: dict[str, int] = {}
+    name_to_addr: dict[str, str] = {}
+    for i, line in enumerate(lines):
+        m = SYM_LINE_RE.match(line)
+        if not m:
+            continue
+        name_to_line[m.group("name")] = i
+        name_to_addr[m.group("name")] = m.group("addr")
+
+    for pair in rename_pairs:
+        old = pair["old"]
+        new = pair["new"]
+        if old not in name_to_line:
+            if new in name_to_line:
+                # Already renamed in a prior run — idempotency
+                skipped.append(f"symbols_txt rename: {old}->{new} (already applied)")
+            else:
+                skipped.append(f"symbols_txt rename: {old} not found in symbols.txt")
+            continue
+        if new in name_to_line and name_to_addr[new] != name_to_addr[old]:
+            skipped.append(
+                f"symbols_txt rename: {new} already exists at "
+                f"{name_to_addr[new]} (would conflict with {old} at "
+                f"{name_to_addr[old]})"
+            )
+            continue
+        idx = name_to_line[old]
+        line = lines[idx]
+        m = SYM_LINE_RE.match(line)
+        if not m:
+            continue
+        lines[idx] = (
+            f"{new}{m.group('gap')}"
+            f"{m.group('section')}:{m.group('addr')};"
+            f"{m.group('rest')}"
+        )
+        # Update index so a subsequent rename in the same batch works
+        name_to_line[new] = idx
+        name_to_addr[new] = m.group("addr")
+        del name_to_line[old]
+        del name_to_addr[old]
+    return "\n".join(lines) + ("\n" if src.endswith("\n") else "")
+
+
 def apply_symbols_changes(
     src: str,
     set_scope: list[dict],
     set_attr: list[dict],
+    rename: list[dict],
     *,
     skipped: list[str],
 ) -> str:
+    # Renames first so subsequent set_scope/set_attr can target the new name
+    src = apply_symbols_rename(src, rename or [], skipped=skipped)
     if not set_scope and not set_attr:
         return src
     by_name_scope = {item["name"]: item["scope"] for item in (set_scope or [])}
@@ -366,6 +430,7 @@ def main() -> int:
     sym = data.get("symbols_txt") or {}
     sym_scope = sym.get("set_scope") or []
     sym_attr = sym.get("set_attr") or []
+    sym_rename = sym.get("rename") or []
     docs_notes = data.get("docs_notes") or []
 
     cur_configure = CONFIGURE_PATH.read_text(encoding="utf-8") if CONFIGURE_PATH.exists() else ""
@@ -375,7 +440,7 @@ def main() -> int:
     new_configure = apply_configure_objects(cur_configure, cp_add, skipped=skipped)
     new_splits = apply_splits_entries(cur_splits, sp_add, skipped=skipped)
     new_symbols = apply_symbols_changes(
-        cur_symbols, sym_scope, sym_attr, skipped=skipped
+        cur_symbols, sym_scope, sym_attr, sym_rename, skipped=skipped
     )
 
     changes: list[str] = []

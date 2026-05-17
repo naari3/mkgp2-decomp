@@ -133,6 +133,9 @@ main は HANDOFF.md の **```json ブロック** を parse する。stdlib `json
   "symbols_txt": {
     "set_scope": [
       {"name": "__set_debug_bba", "scope": "global"}
+    ],
+    "rename": [
+      {"old": "lbl_806D0F95", "new": "vblank_flag"}
     ]
   },
 
@@ -157,6 +160,7 @@ main は HANDOFF.md の **```json ブロック** を parse する。stdlib `json
 - `configure_py.add_objects[]`: option。空配列なら main は configure.py を編集しない。`object` は `Object(...)` の Python リテラル文字列そのまま
 - `splits_txt.add_entries[]`: option
 - `symbols_txt.set_scope[]` / `symbols_txt.set_attr[]`: option
+- `symbols_txt.rename[]`: option。`{old, new}` の pair。placeholder symbol (`lbl_XXX`, `fn_XXX`, `data_XXX`) を意味的な名前に rename するときに使う。rename は set_scope/set_attr より先に適用されるので、同 batch 内で rename した new 名に対して scope を設定できる
 - `docs_notes[]`: option。各 entry は `{"path": "docs/notes/foo.md", "content": "..."}` で append される
 - `build_verified`: 必須。`sha1_ok: true` なら main が再 verify、false なら failed として merge skip
 - `blocked_reason`: 失敗時のみ
