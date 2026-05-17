@@ -339,6 +339,7 @@ config.libs = [
         "progress_category": "game",
         "objects": [
             Object(Matching, "game/GameMode_Base.c"),
+            Object(Matching, "game/Profiler.c"),
             Object(Matching, "game/Clamp.c"),
         ],
     },
