@@ -43,6 +43,11 @@ extern unsigned int lbl_806D4E18;
 extern unsigned int lbl_806D4E1C;
 extern unsigned int lbl_806D4E20;
 
+/* WarpDashMgr instance array: lbl_806CF238 (sdata, size 0x8 = 2 entries). */
+/* Indexed by `(u8)id != 0` -> 0 or 1, so a 2-element pointer array fits the */
+/* sda21 1-instr base load that the bundle relies on. */
+extern void *lbl_806CF238[2];
+
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
@@ -57,7 +62,7 @@ asm void fn_800A8F4C(void);
 asm void WarpZone_CalcExitPosition(void);
 asm void WarpZone_FindContaining(void);
 asm void WarpDashMgr_Cleanup(void);
-asm void WarpDashMgr_GetInstance(void);
+void *WarpDashMgr_GetInstance(unsigned char id);
 asm void WarpDashMgr_GetOrCreate(void);
 asm void fn_800A9414(void);
 asm void WarpAutoRun_Init(void);
@@ -458,15 +463,8 @@ asm void WarpDashMgr_Cleanup(void) {
     blr
 }
 
-asm void WarpDashMgr_GetInstance(void) {
-    nofralloc
-    clrlwi r4, r3, 24
-    addi r3, r13, -0x7AE8  /* lbl_806CF238 */
-    neg r0, r4
-    or r0, r0, r4
-    rlwinm r0, r0, 3, 29, 29
-    lwzx r3, r3, r0
-    blr
+void *WarpDashMgr_GetInstance(unsigned char id) {
+    return lbl_806CF238[id != 0];
 }
 
 asm void WarpDashMgr_GetOrCreate(void) {
