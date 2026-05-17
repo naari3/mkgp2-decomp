@@ -249,6 +249,10 @@ cflags_rel = [
 
 config.linker_version = "GC/1.3.2"
 
+# Per-lib compiler (mwcceppc) versions. `config.linker_version` above is only
+# the final linker (mwldeppc); each lib picks its own compiler below.
+mw_version_init = "GC/1.0"  # confirmed against __check_pad3 prologue
+
 
 # Helper function for Dolphin libraries
 def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
@@ -287,7 +291,7 @@ config.warn_missing_source = False
 config.libs = [
     {
         "lib": "init",
-        "mw_version": "GC/1.0",
+        "mw_version": mw_version_init,
         "cflags": cflags_base,
         "progress_category": "game",
         "objects": [
