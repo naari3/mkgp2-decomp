@@ -333,6 +333,17 @@ config.libs = [
         ],
     },
     {
+        "lib": "game_extab",
+        "mw_version": "GC/1.3.2",
+        "cflags": [*cflags_base, "-Cpp_exceptions on"],
+        "progress_category": "game",
+        "objects": [
+            # 1 TU = 1 dtk reversed-extab group bundle (6 functions). Held as
+            # NonMatching for now: see HANDOFF.md for the Phase 1 verify story.
+            Object(NonMatching, "game/HeapStats.c"),
+        ],
+    },
+    {
         "lib": "game",
         "mw_version": "GC/1.3.2",
         "cflags": cflags_base,
