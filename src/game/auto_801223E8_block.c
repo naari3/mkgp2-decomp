@@ -31,29 +31,34 @@ extern unsigned int lbl_806D6E44;
 extern unsigned int lbl_806D6E48;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
-extern unsigned int kResourcePathTable;
+extern unsigned int kResourcePathTable[];
 extern unsigned int kResourceTableExt[];
 extern unsigned int kResourceTableMain[];
-extern unsigned int lbl_80355018;
+extern unsigned int lbl_80355018[];
 extern unsigned int lbl_80355068;
 
 /* --- forward decls --- */
 unsigned char ResourceTable_GetFlagsByte(int id);
-asm void ResourceTable_GetScaleXY(void);
-asm void ResourceTable_GetChainNextId(void);
-asm void ResourceTable_GetSizeXY(void);
-asm void ResourceTable_GetOffsetXY(void);
-asm void ResourceTable_GetSlotIndex(void);
+void ResourceTable_GetScaleXY(int id, float *outX, float *outY);
+short ResourceTable_GetChainNextId(int id);
+void ResourceTable_GetSizeXY(int id, float *out_x, float *out_y);
+void ResourceTable_GetOffsetXY(int id, float *outX, float *outY);
+short ResourceTable_GetSlotIndex(int id);
 asm void fn_801228D4(void);
-asm void ResourceTable_GetFilePathPtr(void);
-asm void ResourceTable_GetGroupKey(void);
+const char *ResourceTable_GetFilePathPtr(int id);
+short ResourceTable_GetGroupKey(int id);
 int IsValidResourceId(int id);
 asm void NokoNokoChallenge_HandleBrakeInput(void);
 
 /* --- asm function bodies (.text order = fn address order) --- */
 typedef struct ResourceTableEntry {
     short id;            /* 0x00 */
-    char _pad02[0x22];   /* 0x02..0x23 */
+    char _pad02[0x2];    /* 0x02..0x03 */
+    float offset_x;      /* 0x04 */
+    float offset_y;      /* 0x08 */
+    char _pad0C[0x10];   /* 0x0C..0x1b */
+    float scaleX;        /* 0x1c */
+    float scaleY;        /* 0x20 */
     unsigned char flags; /* 0x24 */
     char _pad25[0x3];    /* 0x25..0x27 (stride 0x28) */
 } ResourceTableEntry;
@@ -94,323 +99,199 @@ check_entry:
     return 4;
 }
 
-asm void ResourceTable_GetScaleXY(void) {
-    nofralloc
-    lfs f0, lbl_806D6E0C(r2)
-    lwz r0, gResTableCacheKey(r13)
-    fmr f1, f0
-    cmpw r3, r0
-    bne ResourceTable_GetScaleXY_L_80122500
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetScaleXY_L_801224E8
-    lwz r6, gResTableCacheIdx(r13)
-    lis r3, kResourceTableMain@ha
-    addi r0, r3, kResourceTableMain@l
-    mulli r3, r6, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetScaleXY_L_80122570
-    ResourceTable_GetScaleXY_L_801224E8:
-    lwz r6, gResTableCacheIdx(r13)
-    lis r3, kResourceTableExt@ha
-    addi r0, r3, kResourceTableExt@l
-    mulli r3, r6, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetScaleXY_L_80122570
-    ResourceTable_GetScaleXY_L_80122500:
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetScaleXY_L_80122524
-    mulli r7, r3, 0x28
-    lis r6, kResourceTableMain@ha
-    stw r3, gResTableCacheIdx(r13)
-    addi r0, r6, kResourceTableMain@l
-    stw r3, gResTableCacheKey(r13)
-    add r3, r0, r7
-    b ResourceTable_GetScaleXY_L_80122570
-    ResourceTable_GetScaleXY_L_80122524:
-    lis r6, kResourceTableExt@ha
-    li r0, 0x4
-    addi r6, r6, kResourceTableExt@l
-    li r8, 0x0
-    mtctr r0
-    ResourceTable_GetScaleXY_L_80122538:
-    lha r0, 0x0(r6)
-    cmpw r3, r0
-    bne ResourceTable_GetScaleXY_L_80122560
-    mulli r7, r8, 0x28
-    lis r6, kResourceTableExt@ha
-    stw r3, gResTableCacheKey(r13)
-    addi r0, r6, kResourceTableExt@l
-    stw r8, gResTableCacheIdx(r13)
-    add r3, r0, r7
-    b ResourceTable_GetScaleXY_L_80122570
-    ResourceTable_GetScaleXY_L_80122560:
-    addi r6, r6, 0x28
-    addi r8, r8, 0x1
-    bdnz ResourceTable_GetScaleXY_L_80122538
-    li r3, 0x0
-    ResourceTable_GetScaleXY_L_80122570:
-    cmplwi r3, 0x0
-    beq ResourceTable_GetScaleXY_L_80122580
-    lfs f0, 0x1c(r3)
-    lfs f1, 0x20(r3)
-    ResourceTable_GetScaleXY_L_80122580:
-    stfs f0, 0x0(r4)
-    stfs f1, 0x0(r5)
-    blr
+void ResourceTable_GetScaleXY(int id, float *outX, float *outY) {
+    ResourceTableEntry *entry;
+    ResourceTableEntry *p;
+    float sx = *(float *)&lbl_806D6E0C;
+    float sy = sx;
+    int i;
+
+    if (id == (int)gResTableCacheKey) {
+        if (id < 0x2b00) {
+            entry = &((ResourceTableEntry *)kResourceTableMain)[gResTableCacheIdx];
+        } else {
+            entry = &((ResourceTableEntry *)kResourceTableExt)[gResTableCacheIdx];
+        }
+    } else if (id < 0x2b00) {
+        gResTableCacheIdx = id;
+        gResTableCacheKey = id;
+        entry = &((ResourceTableEntry *)kResourceTableMain)[id];
+    } else {
+        p = (ResourceTableEntry *)kResourceTableExt;
+        for (i = 0; i < 4; i++) {
+            if (id == p->id) {
+                gResTableCacheKey = id;
+                gResTableCacheIdx = i;
+                entry = &((ResourceTableEntry *)kResourceTableExt)[i];
+                goto check_entry;
+            }
+            p++;
+        }
+        entry = 0;
+    }
+
+check_entry:
+    if (entry != 0) {
+        sx = entry->scaleX;
+        sy = entry->scaleY;
+    }
+    *outX = sx;
+    *outY = sy;
 }
 
-asm void ResourceTable_GetChainNextId(void) {
-    nofralloc
-    lwz r0, gResTableCacheKey(r13)
-    cmpw r3, r0
-    bne ResourceTable_GetChainNextId_L_801225D0
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetChainNextId_L_801225B8
-    lwz r4, gResTableCacheIdx(r13)
-    lis r3, kResourceTableMain@ha
-    addi r0, r3, kResourceTableMain@l
-    mulli r3, r4, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetChainNextId_L_80122640
-    ResourceTable_GetChainNextId_L_801225B8:
-    lwz r4, gResTableCacheIdx(r13)
-    lis r3, kResourceTableExt@ha
-    addi r0, r3, kResourceTableExt@l
-    mulli r3, r4, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetChainNextId_L_80122640
-    ResourceTable_GetChainNextId_L_801225D0:
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetChainNextId_L_801225F4
-    mulli r5, r3, 0x28
-    lis r4, kResourceTableMain@ha
-    stw r3, gResTableCacheIdx(r13)
-    addi r0, r4, kResourceTableMain@l
-    stw r3, gResTableCacheKey(r13)
-    add r3, r0, r5
-    b ResourceTable_GetChainNextId_L_80122640
-    ResourceTable_GetChainNextId_L_801225F4:
-    lis r4, kResourceTableExt@ha
-    li r0, 0x4
-    addi r4, r4, kResourceTableExt@l
-    li r6, 0x0
-    mtctr r0
-    ResourceTable_GetChainNextId_L_80122608:
-    lha r0, 0x0(r4)
-    cmpw r3, r0
-    bne ResourceTable_GetChainNextId_L_80122630
-    mulli r5, r6, 0x28
-    lis r4, kResourceTableExt@ha
-    stw r3, gResTableCacheKey(r13)
-    addi r0, r4, kResourceTableExt@l
-    stw r6, gResTableCacheIdx(r13)
-    add r3, r0, r5
-    b ResourceTable_GetChainNextId_L_80122640
-    ResourceTable_GetChainNextId_L_80122630:
-    addi r4, r4, 0x28
-    addi r6, r6, 0x1
-    bdnz ResourceTable_GetChainNextId_L_80122608
-    li r3, 0x0
-    ResourceTable_GetChainNextId_L_80122640:
-    cmplwi r3, 0x0
-    beq ResourceTable_GetChainNextId_L_80122650
-    lha r3, 0x18(r3)
-    blr
-    ResourceTable_GetChainNextId_L_80122650:
-    li r3, -0x1
-    blr
+short ResourceTable_GetChainNextId(int id) {
+    ResourceTableEntry *entry;
+    ResourceTableEntry *p;
+    int i;
+
+    if (id == (int)gResTableCacheKey) {
+        if (id < 0x2b00) {
+            entry = &((ResourceTableEntry *)kResourceTableMain)[gResTableCacheIdx];
+        } else {
+            entry = &((ResourceTableEntry *)kResourceTableExt)[gResTableCacheIdx];
+        }
+    } else if (id < 0x2b00) {
+        gResTableCacheIdx = id;
+        gResTableCacheKey = id;
+        entry = &((ResourceTableEntry *)kResourceTableMain)[id];
+    } else {
+        p = (ResourceTableEntry *)kResourceTableExt;
+        for (i = 0; i < 4; i++) {
+            if (id == p->id) {
+                gResTableCacheKey = id;
+                gResTableCacheIdx = i;
+                entry = &((ResourceTableEntry *)kResourceTableExt)[i];
+                goto check_entry;
+            }
+            p++;
+        }
+        entry = 0;
+    }
+
+check_entry:
+    if (entry != 0) {
+        return *(short *)((char *)entry + 0x18);
+    }
+    return -1;
 }
 
-asm void ResourceTable_GetSizeXY(void) {
-    nofralloc
-    lfs f0, lbl_806D6E0C(r2)
-    lwz r0, gResTableCacheKey(r13)
-    fmr f1, f0
-    cmpw r3, r0
-    bne ResourceTable_GetSizeXY_L_801226A4
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetSizeXY_L_8012268C
-    lwz r6, gResTableCacheIdx(r13)
-    lis r3, kResourceTableMain@ha
-    addi r0, r3, kResourceTableMain@l
-    mulli r3, r6, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetSizeXY_L_80122714
-    ResourceTable_GetSizeXY_L_8012268C:
-    lwz r6, gResTableCacheIdx(r13)
-    lis r3, kResourceTableExt@ha
-    addi r0, r3, kResourceTableExt@l
-    mulli r3, r6, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetSizeXY_L_80122714
-    ResourceTable_GetSizeXY_L_801226A4:
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetSizeXY_L_801226C8
-    mulli r7, r3, 0x28
-    lis r6, kResourceTableMain@ha
-    stw r3, gResTableCacheIdx(r13)
-    addi r0, r6, kResourceTableMain@l
-    stw r3, gResTableCacheKey(r13)
-    add r3, r0, r7
-    b ResourceTable_GetSizeXY_L_80122714
-    ResourceTable_GetSizeXY_L_801226C8:
-    lis r6, kResourceTableExt@ha
-    li r0, 0x4
-    addi r6, r6, kResourceTableExt@l
-    li r8, 0x0
-    mtctr r0
-    ResourceTable_GetSizeXY_L_801226DC:
-    lha r0, 0x0(r6)
-    cmpw r3, r0
-    bne ResourceTable_GetSizeXY_L_80122704
-    mulli r7, r8, 0x28
-    lis r6, kResourceTableExt@ha
-    stw r3, gResTableCacheKey(r13)
-    addi r0, r6, kResourceTableExt@l
-    stw r8, gResTableCacheIdx(r13)
-    add r3, r0, r7
-    b ResourceTable_GetSizeXY_L_80122714
-    ResourceTable_GetSizeXY_L_80122704:
-    addi r6, r6, 0x28
-    addi r8, r8, 0x1
-    bdnz ResourceTable_GetSizeXY_L_801226DC
-    li r3, 0x0
-    ResourceTable_GetSizeXY_L_80122714:
-    cmplwi r3, 0x0
-    beq ResourceTable_GetSizeXY_L_80122724
-    lfs f0, 0xc(r3)
-    lfs f1, 0x10(r3)
-    ResourceTable_GetSizeXY_L_80122724:
-    stfs f0, 0x0(r4)
-    stfs f1, 0x0(r5)
-    blr
+void ResourceTable_GetSizeXY(int id, float *out_x, float *out_y) {
+    ResourceTableEntry *entry;
+    ResourceTableEntry *p;
+    int i;
+    float x;
+    float y;
+
+    x = *(float *)&lbl_806D6E0C;
+    y = x;
+
+    if (id == (int)gResTableCacheKey) {
+        if (id < 0x2b00) {
+            entry = &((ResourceTableEntry *)kResourceTableMain)[gResTableCacheIdx];
+        } else {
+            entry = &((ResourceTableEntry *)kResourceTableExt)[gResTableCacheIdx];
+        }
+    } else if (id < 0x2b00) {
+        gResTableCacheIdx = id;
+        gResTableCacheKey = id;
+        entry = &((ResourceTableEntry *)kResourceTableMain)[id];
+    } else {
+        p = (ResourceTableEntry *)kResourceTableExt;
+        for (i = 0; i < 4; i++) {
+            if (id == p->id) {
+                gResTableCacheKey = id;
+                gResTableCacheIdx = i;
+                entry = &((ResourceTableEntry *)kResourceTableExt)[i];
+                goto check_entry;
+            }
+            p++;
+        }
+        entry = 0;
+    }
+
+check_entry:
+    if (entry != 0) {
+        x = *(float *)((char *)entry + 0xc);
+        y = *(float *)((char *)entry + 0x10);
+    }
+    *out_x = x;
+    *out_y = y;
 }
 
-asm void ResourceTable_GetOffsetXY(void) {
-    nofralloc
-    lfs f0, lbl_806D6E10(r2)
-    lwz r0, gResTableCacheKey(r13)
-    fmr f1, f0
-    cmpw r3, r0
-    bne ResourceTable_GetOffsetXY_L_8012277C
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetOffsetXY_L_80122764
-    lwz r6, gResTableCacheIdx(r13)
-    lis r3, kResourceTableMain@ha
-    addi r0, r3, kResourceTableMain@l
-    mulli r3, r6, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetOffsetXY_L_801227EC
-    ResourceTable_GetOffsetXY_L_80122764:
-    lwz r6, gResTableCacheIdx(r13)
-    lis r3, kResourceTableExt@ha
-    addi r0, r3, kResourceTableExt@l
-    mulli r3, r6, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetOffsetXY_L_801227EC
-    ResourceTable_GetOffsetXY_L_8012277C:
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetOffsetXY_L_801227A0
-    mulli r7, r3, 0x28
-    lis r6, kResourceTableMain@ha
-    stw r3, gResTableCacheIdx(r13)
-    addi r0, r6, kResourceTableMain@l
-    stw r3, gResTableCacheKey(r13)
-    add r3, r0, r7
-    b ResourceTable_GetOffsetXY_L_801227EC
-    ResourceTable_GetOffsetXY_L_801227A0:
-    lis r6, kResourceTableExt@ha
-    li r0, 0x4
-    addi r6, r6, kResourceTableExt@l
-    li r8, 0x0
-    mtctr r0
-    ResourceTable_GetOffsetXY_L_801227B4:
-    lha r0, 0x0(r6)
-    cmpw r3, r0
-    bne ResourceTable_GetOffsetXY_L_801227DC
-    mulli r7, r8, 0x28
-    lis r6, kResourceTableExt@ha
-    stw r3, gResTableCacheKey(r13)
-    addi r0, r6, kResourceTableExt@l
-    stw r8, gResTableCacheIdx(r13)
-    add r3, r0, r7
-    b ResourceTable_GetOffsetXY_L_801227EC
-    ResourceTable_GetOffsetXY_L_801227DC:
-    addi r6, r6, 0x28
-    addi r8, r8, 0x1
-    bdnz ResourceTable_GetOffsetXY_L_801227B4
-    li r3, 0x0
-    ResourceTable_GetOffsetXY_L_801227EC:
-    cmplwi r3, 0x0
-    beq ResourceTable_GetOffsetXY_L_801227FC
-    lfs f0, 0x4(r3)
-    lfs f1, 0x8(r3)
-    ResourceTable_GetOffsetXY_L_801227FC:
-    stfs f0, 0x0(r4)
-    stfs f1, 0x0(r5)
-    blr
+void ResourceTable_GetOffsetXY(int id, float *outX, float *outY) {
+    ResourceTableEntry *entry;
+    ResourceTableEntry *p;
+    int i;
+    float x = *(float *)&lbl_806D6E10;
+    float y = x;
+
+    if (id == (int)gResTableCacheKey) {
+        if (id < 0x2b00) {
+            entry = &((ResourceTableEntry *)kResourceTableMain)[gResTableCacheIdx];
+        } else {
+            entry = &((ResourceTableEntry *)kResourceTableExt)[gResTableCacheIdx];
+        }
+    } else if (id < 0x2b00) {
+        gResTableCacheIdx = id;
+        gResTableCacheKey = id;
+        entry = &((ResourceTableEntry *)kResourceTableMain)[id];
+    } else {
+        p = (ResourceTableEntry *)kResourceTableExt;
+        for (i = 0; i < 4; i++) {
+            if (id == p->id) {
+                gResTableCacheKey = id;
+                gResTableCacheIdx = i;
+                entry = &((ResourceTableEntry *)kResourceTableExt)[i];
+                goto check_entry;
+            }
+            p++;
+        }
+        entry = 0;
+    }
+
+check_entry:
+    if (entry != 0) {
+        x = entry->offset_x;
+        y = entry->offset_y;
+    }
+    *outX = x;
+    *outY = y;
 }
 
-asm void ResourceTable_GetSlotIndex(void) {
-    nofralloc
-    lwz r0, gResTableCacheKey(r13)
-    cmpw r3, r0
-    bne ResourceTable_GetSlotIndex_L_8012284C
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetSlotIndex_L_80122834
-    lwz r4, gResTableCacheIdx(r13)
-    lis r3, kResourceTableMain@ha
-    addi r0, r3, kResourceTableMain@l
-    mulli r3, r4, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetSlotIndex_L_801228BC
-    ResourceTable_GetSlotIndex_L_80122834:
-    lwz r4, gResTableCacheIdx(r13)
-    lis r3, kResourceTableExt@ha
-    addi r0, r3, kResourceTableExt@l
-    mulli r3, r4, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetSlotIndex_L_801228BC
-    ResourceTable_GetSlotIndex_L_8012284C:
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetSlotIndex_L_80122870
-    mulli r5, r3, 0x28
-    lis r4, kResourceTableMain@ha
-    stw r3, gResTableCacheIdx(r13)
-    addi r0, r4, kResourceTableMain@l
-    stw r3, gResTableCacheKey(r13)
-    add r3, r0, r5
-    b ResourceTable_GetSlotIndex_L_801228BC
-    ResourceTable_GetSlotIndex_L_80122870:
-    lis r4, kResourceTableExt@ha
-    li r0, 0x4
-    addi r4, r4, kResourceTableExt@l
-    li r6, 0x0
-    mtctr r0
-    ResourceTable_GetSlotIndex_L_80122884:
-    lha r0, 0x0(r4)
-    cmpw r3, r0
-    bne ResourceTable_GetSlotIndex_L_801228AC
-    mulli r5, r6, 0x28
-    lis r4, kResourceTableExt@ha
-    stw r3, gResTableCacheKey(r13)
-    addi r0, r4, kResourceTableExt@l
-    stw r6, gResTableCacheIdx(r13)
-    add r3, r0, r5
-    b ResourceTable_GetSlotIndex_L_801228BC
-    ResourceTable_GetSlotIndex_L_801228AC:
-    addi r4, r4, 0x28
-    addi r6, r6, 0x1
-    bdnz ResourceTable_GetSlotIndex_L_80122884
-    li r3, 0x0
-    ResourceTable_GetSlotIndex_L_801228BC:
-    cmplwi r3, 0x0
-    beq ResourceTable_GetSlotIndex_L_801228CC
-    lha r3, 0x14(r3)
-    blr
-    ResourceTable_GetSlotIndex_L_801228CC:
-    li r3, -0x1
-    blr
+short ResourceTable_GetSlotIndex(int id) {
+    ResourceTableEntry *entry;
+    ResourceTableEntry *p;
+    int i;
+
+    if (id == (int)gResTableCacheKey) {
+        if (id < 0x2b00) {
+            entry = &((ResourceTableEntry *)kResourceTableMain)[gResTableCacheIdx];
+        } else {
+            entry = &((ResourceTableEntry *)kResourceTableExt)[gResTableCacheIdx];
+        }
+    } else if (id < 0x2b00) {
+        gResTableCacheIdx = id;
+        gResTableCacheKey = id;
+        entry = &((ResourceTableEntry *)kResourceTableMain)[id];
+    } else {
+        p = (ResourceTableEntry *)kResourceTableExt;
+        for (i = 0; i < 4; i++) {
+            if (id == p->id) {
+                gResTableCacheKey = id;
+                gResTableCacheIdx = i;
+                entry = &((ResourceTableEntry *)kResourceTableExt)[i];
+                goto check_entry;
+            }
+            p++;
+        }
+        entry = 0;
+    }
+
+check_entry:
+    if (entry != 0) {
+        return *(short *)((char *)entry + 0x14);
+    }
+    return -1;
 }
 
 asm void fn_801228D4(void) {
@@ -485,142 +366,81 @@ asm void fn_801228D4(void) {
     blr
 }
 
-asm void ResourceTable_GetFilePathPtr(void) {
-    nofralloc
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetFilePathPtr_L_80122AA8
-    lwz r0, gResTableCacheKey(r13)
-    cmpw r3, r0
-    bne ResourceTable_GetFilePathPtr_L_80122A10
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetFilePathPtr_L_801229F8
-    lwz r4, gResTableCacheIdx(r13)
-    lis r3, kResourceTableMain@ha
-    addi r0, r3, kResourceTableMain@l
-    mulli r3, r4, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetFilePathPtr_L_80122A80
-    ResourceTable_GetFilePathPtr_L_801229F8:
-    lwz r4, gResTableCacheIdx(r13)
-    lis r3, kResourceTableExt@ha
-    addi r0, r3, kResourceTableExt@l
-    mulli r3, r4, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetFilePathPtr_L_80122A80
-    ResourceTable_GetFilePathPtr_L_80122A10:
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetFilePathPtr_L_80122A34
-    mulli r5, r3, 0x28
-    lis r4, kResourceTableMain@ha
-    stw r3, gResTableCacheIdx(r13)
-    addi r0, r4, kResourceTableMain@l
-    stw r3, gResTableCacheKey(r13)
-    add r3, r0, r5
-    b ResourceTable_GetFilePathPtr_L_80122A80
-    ResourceTable_GetFilePathPtr_L_80122A34:
-    lis r4, kResourceTableExt@ha
-    li r0, 0x4
-    addi r4, r4, kResourceTableExt@l
-    li r6, 0x0
-    mtctr r0
-    ResourceTable_GetFilePathPtr_L_80122A48:
-    lha r0, 0x0(r4)
-    cmpw r3, r0
-    bne ResourceTable_GetFilePathPtr_L_80122A70
-    mulli r5, r6, 0x28
-    lis r4, kResourceTableExt@ha
-    stw r3, gResTableCacheKey(r13)
-    addi r0, r4, kResourceTableExt@l
-    stw r6, gResTableCacheIdx(r13)
-    add r3, r0, r5
-    b ResourceTable_GetFilePathPtr_L_80122A80
-    ResourceTable_GetFilePathPtr_L_80122A70:
-    addi r4, r4, 0x28
-    addi r6, r6, 0x1
-    bdnz ResourceTable_GetFilePathPtr_L_80122A48
-    li r3, 0x0
-    ResourceTable_GetFilePathPtr_L_80122A80:
-    cmplwi r3, 0x0
-    beq ResourceTable_GetFilePathPtr_L_80122AA0
-    lha r0, 0x16(r3)
-    lis r3, kResourcePathTable@ha
-    addi r3, r3, kResourcePathTable@l
-    slwi r0, r0, 2
-    lwzx r3, r3, r0
-    blr
-    ResourceTable_GetFilePathPtr_L_80122AA0:
-    li r3, 0x0
-    blr
-    ResourceTable_GetFilePathPtr_L_80122AA8:
-    lis r4, lbl_80355018@ha
-    slwi r0, r3, 2
-    addi r3, r4, lbl_80355018@l
-    subis r3, r3, 0x1
-    add r3, r3, r0
-    lwz r3, 0x5400(r3)
-    blr
+const char *ResourceTable_GetFilePathPtr(int id) {
+    ResourceTableEntry *entry;
+    ResourceTableEntry *p;
+    int i;
+    short path_idx;
+
+    if (id < 0x2b00) {
+        if (id == (int)gResTableCacheKey) {
+            if (id < 0x2b00) {
+                entry = &((ResourceTableEntry *)kResourceTableMain)[gResTableCacheIdx];
+            } else {
+                entry = &((ResourceTableEntry *)kResourceTableExt)[gResTableCacheIdx];
+            }
+        } else if (id < 0x2b00) {
+            gResTableCacheIdx = id;
+            gResTableCacheKey = id;
+            entry = &((ResourceTableEntry *)kResourceTableMain)[id];
+        } else {
+            p = (ResourceTableEntry *)kResourceTableExt;
+            for (i = 0; i < 4; i++) {
+                if (id == p->id) {
+                    gResTableCacheKey = id;
+                    gResTableCacheIdx = i;
+                    entry = &((ResourceTableEntry *)kResourceTableExt)[i];
+                    goto check_entry;
+                }
+                p++;
+            }
+            entry = 0;
+        }
+
+    check_entry:
+        if (entry != 0) {
+            path_idx = *(short *)((char *)entry + 0x16);
+            return (const char *)kResourcePathTable[path_idx];
+        }
+        return 0;
+    }
+    return (const char *)lbl_80355018[id - 0x2b00];
 }
 
-asm void ResourceTable_GetGroupKey(void) {
-    nofralloc
-    lwz r0, gResTableCacheKey(r13)
-    cmpw r3, r0
-    bne ResourceTable_GetGroupKey_L_80122B08
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetGroupKey_L_80122AF0
-    lwz r4, gResTableCacheIdx(r13)
-    lis r3, kResourceTableMain@ha
-    addi r0, r3, kResourceTableMain@l
-    mulli r3, r4, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetGroupKey_L_80122B78
-    ResourceTable_GetGroupKey_L_80122AF0:
-    lwz r4, gResTableCacheIdx(r13)
-    lis r3, kResourceTableExt@ha
-    addi r0, r3, kResourceTableExt@l
-    mulli r3, r4, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetGroupKey_L_80122B78
-    ResourceTable_GetGroupKey_L_80122B08:
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetGroupKey_L_80122B2C
-    mulli r5, r3, 0x28
-    lis r4, kResourceTableMain@ha
-    stw r3, gResTableCacheIdx(r13)
-    addi r0, r4, kResourceTableMain@l
-    stw r3, gResTableCacheKey(r13)
-    add r3, r0, r5
-    b ResourceTable_GetGroupKey_L_80122B78
-    ResourceTable_GetGroupKey_L_80122B2C:
-    lis r4, kResourceTableExt@ha
-    li r0, 0x4
-    addi r4, r4, kResourceTableExt@l
-    li r6, 0x0
-    mtctr r0
-    ResourceTable_GetGroupKey_L_80122B40:
-    lha r0, 0x0(r4)
-    cmpw r3, r0
-    bne ResourceTable_GetGroupKey_L_80122B68
-    mulli r5, r6, 0x28
-    lis r4, kResourceTableExt@ha
-    stw r3, gResTableCacheKey(r13)
-    addi r0, r4, kResourceTableExt@l
-    stw r6, gResTableCacheIdx(r13)
-    add r3, r0, r5
-    b ResourceTable_GetGroupKey_L_80122B78
-    ResourceTable_GetGroupKey_L_80122B68:
-    addi r4, r4, 0x28
-    addi r6, r6, 0x1
-    bdnz ResourceTable_GetGroupKey_L_80122B40
-    li r3, 0x0
-    ResourceTable_GetGroupKey_L_80122B78:
-    cmplwi r3, 0x0
-    beq ResourceTable_GetGroupKey_L_80122B88
-    lha r3, 0x16(r3)
-    blr
-    ResourceTable_GetGroupKey_L_80122B88:
-    li r3, 0x0
-    blr
+short ResourceTable_GetGroupKey(int id) {
+    ResourceTableEntry *entry;
+    ResourceTableEntry *p;
+    int i;
+
+    if (id == (int)gResTableCacheKey) {
+        if (id < 0x2b00) {
+            entry = &((ResourceTableEntry *)kResourceTableMain)[gResTableCacheIdx];
+        } else {
+            entry = &((ResourceTableEntry *)kResourceTableExt)[gResTableCacheIdx];
+        }
+    } else if (id < 0x2b00) {
+        gResTableCacheIdx = id;
+        gResTableCacheKey = id;
+        entry = &((ResourceTableEntry *)kResourceTableMain)[id];
+    } else {
+        p = (ResourceTableEntry *)kResourceTableExt;
+        for (i = 0; i < 4; i++) {
+            if (id == p->id) {
+                gResTableCacheKey = id;
+                gResTableCacheIdx = i;
+                entry = &((ResourceTableEntry *)kResourceTableExt)[i];
+                goto check_entry;
+            }
+            p++;
+        }
+        entry = 0;
+    }
+
+check_entry:
+    if (entry != 0) {
+        return *(short *)((char *)entry + 0x16);
+    }
+    return 0;
 }
 
 int IsValidResourceId(int id) {
