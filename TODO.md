@@ -2,10 +2,10 @@
 
 ライブな次手リスト。完了したら check して push、新しく出てきた課題は下に追記する。
 
-## Status (2026-05-17 commit d8fa749)
+## Status (2026-05-17 commit ef9b456)
 
 - `main.dol` byte-identical rebuild: **OK** (SHA-1 `ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65`)
-- Named symbols: **~1221 / 7613** functions (~16.0%) + 17 named data/BSS objects
+- Named symbols: **~1223 / 7613** functions (~16.1%) + 17 named data/BSS objects
 - Matched C source: **0 / 7613**
 
 ## Symbol seeding
@@ -34,12 +34,11 @@
   - variant 名 (`NORMAL`/`GOLD`/`ORIGINAL`/`ENHANCED`) や `vtable`/`block` のような generic 語が table cell から誤抽出 → reserved list に追加でほぼ救える
   - 真っ当な dup (例: `KartMovement_Init` が 2 アドレスにある) は inline copy / 名前再利用なので別途調査
 
-- [ ] **4 件の collision 真偽確認 + 解消**
-  - `LUT_Sine`: Ghidra 0x80065928 (kept) / 0x80186998 (skipped) — `decompile_function` で両者を見比べて同じ関数を別 address に inline 化したものか、別実装かを確認
-  - `KartMovement_SetPosition`: 0x80057960 (kept) / 0x8019a4a0 (skipped) — 同様
-  - `__DBExceptionDestination`: dtk 0x80255964 / Ghidra 0x8025591c — どちらが正本か、もう一方は何の stub か
-  - `GX_SetCullMode`: dtk 0x80266DA8 / Ghidra 0x802c107c — `GX_SetCullMode` は SDK 標準関数なので 1 つだけのはず、片方は wrapper の可能性
-  - 結果次第で suffix (`_inline` 等) を付けて両方残すか、片方 placeholder のままにするか判断
+- [~] **4 件の collision 真偽確認 + 解消** — 3/4 解消 (commit `ef9b456` + Ghidra rename / save_program 同期)
+  - [x] `LUT_Sine`: 0x80065928 (sin/cos hybrid, kept) / 0x80186998 (12-bit mask の別実装、`LUT_Sin12Bit` に改名)
+  - [x] `KartMovement_SetPosition`: 0x8019A4A0 が真本 (orientMatrix + posXYZ + prevPos 書き込み) / 0x80057960 は別 wrapper、`fn_80057960` に戻した
+  - [x] `GX_SetCullMode`: 0x802C107C が真の public API (cache + dispatch) / 0x80266DA8 は register-level helper、`__GXSetCullMode` に改名
+  - [ ] `__DBExceptionDestination`: dtk 0x80255964 / Ghidra 0x8025591c — **未解消**。symbols.txt で 0x8025591C 側に名前を移そうとしたが dtk の PPCEABI auto-detect heuristic が毎 split で 0x80255964 を `__DBExceptionDestination` に再上書きし、両者で multiply-defined linker error。`symbols_known: false` 下では symbols.txt override が PPCEABI heuristic に勝てない様子。dtk-decomp-toolkit の override mechanism を別 task で調査。
 
 - [ ] **`scope` / `type` の精度向上**
   - 現状 Ghidra 名は `scope` フィールドを書いてない (dtk 既定のまま)
