@@ -2,11 +2,11 @@
 
 ライブな次手リスト。完了したら check して push、新しく出てきた課題は下に追記する。
 
-## Status (2026-05-17 commit ef9b456)
+## Status (2026-05-17 commit 352a33b)
 
 - `main.dol` byte-identical rebuild: **OK** (SHA-1 `ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65`)
 - Named symbols: **~1223 / 7613** functions (~16.1%) + 17 named data/BSS objects
-- Matched C source: **0 / 7613**
+- Matched C source: **1 / 7613** (`__check_pad3`, 64 bytes — commit `9c4efa9`)
 
 ## Symbol seeding
 
@@ -46,21 +46,21 @@
 
 ## Matching に着手
 
-- [ ] **1 関数だけ matching を試す (proof of concept)**
-  - 候補: `__check_pad3 = .init:0x80003100; size:0x40` (boot 直後の小さな関数、CW で書きやすい)
-  - 手順:
-    1. `build/GNLJ82/asm/.init/...s` で disasm を読む
-    2. decomp.me に scratch を作る (compiler は `gc/1.3.2` または同等)
-    3. C ソース起こし → byte-identical を目指す
-    4. matched したら `src/init/__check_pad3.c` 等に保存
-    5. `configure.py` の `config.libs` に該当 lib + object を Matching として登録
-    6. `ninja` で link が通り SHA-1 verify が OK なら 1 関数進捗
+- [x] **1 関数だけ matching を試す (proof of concept)** — `__check_pad3` 達成 (commit `9c4efa9`)
+  - 確立した手順:
+    1. `build/GNLJ82/asm/<seg>/<name>.s` で disasm を読む
+    2. C ソース起こし、`__declspec(section ".init")` で section を明示 (default `.text` を回避)
+    3. `config/GNLJ82/splits.txt` に `<src_path>: <section> start:0xAAA end:0xBBB` を追加
+    4. `config/GNLJ82/symbols.txt` で対象 symbol を `scope:global` に (cross-object 参照のため)
+    5. `configure.py` に lib + Matching object 登録、必要なら `mw_version_xxx` を追加
+    6. `python configure.py && ninja build/GNLJ82/ok` で SHA-1 verify
+  - 学び: init の prologue / 8-byte frame は CW for GameCube 1.0 (`mw_version_init = "GC/1.0"`) でないと一致しない。詳細は `memory/mkgp2-init-uses-cw-1.0.md`
 
-- [ ] **`mw_comment_version` の再評価**
-  - 現状 `config/GNLJ82/config.yml: mw_comment_version: 11` (CW for GameCube 2.7) は仮置き
-  - SMG (2007) と同じく `14` (CW 3.0a3+) が本命候補
-  - SDK ライブラリ関数 (`memset` / `OSReport` / `GX*` 等) を 1 つ matching に持ち込み、`.comment` セクション差分が消える `mw_version` を採用
-  - 同時に `configure.py` の `compilers_tag` も妥当な mwcceppc を選ぶ
+- [~] **`mw_comment_version` の再評価**
+  - 現状 `config/GNLJ82/config.yml: mw_comment_version: 11` (CW for GameCube 2.7) は **依然仮置き**
+  - **init section**: CW for GameCube 1.0 (`mw_comment_version: 8` 相当) で 1 関数 (`__check_pad3`) byte-identical 一致を確認
+  - 残: `.text` 本体や SDK lib (`memset` / `OSReport` / `GX*` 等) の CW version を別途 matching 着手で確認。`.comment` section 差分が consistent に消える組み合わせを探す
+  - 注: `mw_comment_version` (.comment セクションに書く値) と各 lib の `mw_version` (mwcceppc binary 選択) は別で、混在 link 可能。今 init は GC/1.0 / 他はまだ未確認
 
 - [ ] **SDK lib (Dolphin SDK / Runtime.PPCEABI.H) の TU 構成を確立**
   - dtk-template の `Runtime.PPCEABI.H` placeholder を実物 lib に差し替え
