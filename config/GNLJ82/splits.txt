@@ -22,6 +22,9 @@ init/__check_pad3.c:
 init/__init_hardware.c:
 	.init       start:0x80003400 end:0x80003424
 
+init/__flush_cache.c:
+	.init       start:0x80003424 end:0x80003458
+
 init/memset.c:
 	.init       start:0x8000540C end:0x8000543C
 
