@@ -1,0 +1,28 @@
+# Mario Kart Arcade GP2 (GameCube / Triforce, GNLJ82) — main.dol decomp config
+# See config.example.yml for all available options.
+
+name: main
+object: sys/main.dol
+hash: ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65
+object_base: orig/GNLJ82
+
+symbols: config/GNLJ82/symbols.txt
+splits: config/GNLJ82/splits.txt
+
+# CodeWarrior version is not directly identifiable from the stripped main.dol
+# (only "MetroTRK for GAMECUBE v2.0" / "Dolphin SDK" strings survive).
+# Initial guess: 11 (CW for GameCube 2.7+). Re-evaluate after analyzer runs
+# and `.comment` section inspection of any retail SDK symbols.
+#   8  = CW for GameCube 1.0+
+#   10 = CW for GameCube 1.3.2+
+#   11 = CW for GameCube 2.7+
+#   14 = CW for GameCube 3.0a3+
+mw_comment_version: 11
+
+detect_objects: true
+detect_strings: true
+write_asm: true
+symbols_known: false
+fill_gaps: true
+export_all: true
+globalize_symbols: true
