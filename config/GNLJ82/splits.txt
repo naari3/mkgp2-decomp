@@ -50,6 +50,9 @@ init/__init_hardware.c:
 init/__flush_cache.c:
 	.init       start:0x80003424 end:0x80003458
 
+init/fn_80003458.c:
+	.init       start:0x80003458 end:0x80003488
+
 init/fn_80003488.c:
 	.init       start:0x80003488 end:0x800034AC
 
