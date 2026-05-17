@@ -22,6 +22,9 @@ game/GameMode_Base.c:
 game/Profiler.c:
 	.text       start:0x8002FF08 end:0x8002FF48
 
+game/Collision.c:
+	.text       start:0x800364C8 end:0x800364D8
+
 game/Clamp.c:
 	.text       start:0x80038778 end:0x800387D8
 

@@ -340,6 +340,7 @@ config.libs = [
         "objects": [
             Object(Matching, "game/GameMode_Base.c"),
             Object(Matching, "game/Profiler.c"),
+            Object(Matching, "game/Collision.c"),
             Object(Matching, "game/Clamp.c"),
         ],
     },
