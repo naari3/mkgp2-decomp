@@ -28,6 +28,9 @@ game/Collision.c:
 game/Clamp.c:
 	.text       start:0x80038778 end:0x800387D8
 
+game/InputObj.c:
+	.text       start:0x80039154 end:0x800391B4
+
 game/KartMovement.c:
 	.text       start:0x8003F518 end:0x8003F528
 
