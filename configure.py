@@ -347,6 +347,7 @@ config.libs = [
             Object(Matching, "game/InputObj.c"),
             Object(Matching, "game/KartMovement.c"),
             Object(Matching, "game/VBlank.c"),
+            Object(Matching, "game/Archive_GetCurrent.c"),
         ],
     },
     {

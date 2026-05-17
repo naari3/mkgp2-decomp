@@ -31,6 +31,9 @@ game/Profiler.c:
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
 
+game/Archive_GetCurrent.c:
+	.text       start:0x80034A8C end:0x80034A94
+
 game/Collision.c:
 	.text       start:0x800364C8 end:0x800364D8
 
