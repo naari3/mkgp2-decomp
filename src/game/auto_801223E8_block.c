@@ -32,13 +32,13 @@ extern unsigned int lbl_806D6E48;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 extern unsigned int kResourcePathTable;
-extern unsigned int kResourceTableExt;
-extern unsigned int kResourceTableMain;
+extern unsigned int kResourceTableExt[];
+extern unsigned int kResourceTableMain[];
 extern unsigned int lbl_80355018;
 extern unsigned int lbl_80355068;
 
 /* --- forward decls --- */
-asm void ResourceTable_GetFlagsByte(void);
+unsigned char ResourceTable_GetFlagsByte(int id);
 asm void ResourceTable_GetScaleXY(void);
 asm void ResourceTable_GetChainNextId(void);
 asm void ResourceTable_GetSizeXY(void);
@@ -51,66 +51,47 @@ int IsValidResourceId(int id);
 asm void NokoNokoChallenge_HandleBrakeInput(void);
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void ResourceTable_GetFlagsByte(void) {
-    nofralloc
-    lwz r0, gResTableCacheKey(r13)
-    cmpw r3, r0
-    bne ResourceTable_GetFlagsByte_L_8012242C
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetFlagsByte_L_80122414
-    lwz r4, gResTableCacheIdx(r13)
-    lis r3, kResourceTableMain@ha
-    addi r0, r3, kResourceTableMain@l
-    mulli r3, r4, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetFlagsByte_L_8012249C
-    ResourceTable_GetFlagsByte_L_80122414:
-    lwz r4, gResTableCacheIdx(r13)
-    lis r3, kResourceTableExt@ha
-    addi r0, r3, kResourceTableExt@l
-    mulli r3, r4, 0x28
-    add r3, r0, r3
-    b ResourceTable_GetFlagsByte_L_8012249C
-    ResourceTable_GetFlagsByte_L_8012242C:
-    cmpwi r3, 0x2b00
-    bge ResourceTable_GetFlagsByte_L_80122450
-    mulli r5, r3, 0x28
-    lis r4, kResourceTableMain@ha
-    stw r3, gResTableCacheIdx(r13)
-    addi r0, r4, kResourceTableMain@l
-    stw r3, gResTableCacheKey(r13)
-    add r3, r0, r5
-    b ResourceTable_GetFlagsByte_L_8012249C
-    ResourceTable_GetFlagsByte_L_80122450:
-    lis r4, kResourceTableExt@ha
-    li r0, 0x4
-    addi r4, r4, kResourceTableExt@l
-    li r6, 0x0
-    mtctr r0
-    ResourceTable_GetFlagsByte_L_80122464:
-    lha r0, 0x0(r4)
-    cmpw r3, r0
-    bne ResourceTable_GetFlagsByte_L_8012248C
-    mulli r5, r6, 0x28
-    lis r4, kResourceTableExt@ha
-    stw r3, gResTableCacheKey(r13)
-    addi r0, r4, kResourceTableExt@l
-    stw r6, gResTableCacheIdx(r13)
-    add r3, r0, r5
-    b ResourceTable_GetFlagsByte_L_8012249C
-    ResourceTable_GetFlagsByte_L_8012248C:
-    addi r4, r4, 0x28
-    addi r6, r6, 0x1
-    bdnz ResourceTable_GetFlagsByte_L_80122464
-    li r3, 0x0
-    ResourceTable_GetFlagsByte_L_8012249C:
-    cmplwi r3, 0x0
-    beq ResourceTable_GetFlagsByte_L_801224AC
-    lbz r3, 0x24(r3)
-    blr
-    ResourceTable_GetFlagsByte_L_801224AC:
-    li r3, 0x4
-    blr
+typedef struct ResourceTableEntry {
+    short id;            /* 0x00 */
+    char _pad02[0x22];   /* 0x02..0x23 */
+    unsigned char flags; /* 0x24 */
+    char _pad25[0x3];    /* 0x25..0x27 (stride 0x28) */
+} ResourceTableEntry;
+
+unsigned char ResourceTable_GetFlagsByte(int id) {
+    ResourceTableEntry *entry;
+    ResourceTableEntry *p;
+    int i;
+
+    if (id == (int)gResTableCacheKey) {
+        if (id < 0x2b00) {
+            entry = &((ResourceTableEntry *)kResourceTableMain)[gResTableCacheIdx];
+        } else {
+            entry = &((ResourceTableEntry *)kResourceTableExt)[gResTableCacheIdx];
+        }
+    } else if (id < 0x2b00) {
+        gResTableCacheIdx = id;
+        gResTableCacheKey = id;
+        entry = &((ResourceTableEntry *)kResourceTableMain)[id];
+    } else {
+        p = (ResourceTableEntry *)kResourceTableExt;
+        for (i = 0; i < 4; i++) {
+            if (id == p->id) {
+                gResTableCacheKey = id;
+                gResTableCacheIdx = i;
+                entry = &((ResourceTableEntry *)kResourceTableExt)[i];
+                goto check_entry;
+            }
+            p++;
+        }
+        entry = 0;
+    }
+
+check_entry:
+    if (entry != 0) {
+        return entry->flags;
+    }
+    return 4;
 }
 
 asm void ResourceTable_GetScaleXY(void) {
