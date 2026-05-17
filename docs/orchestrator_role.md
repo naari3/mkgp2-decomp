@@ -116,8 +116,13 @@ main は以下の順で処理する:
 8. **Progress 確認**: `build/GNLJ82/report.json` の matched_functions が増えているか確認 (skill 9 節「偽 match の検出」)
 9. **commit**: 関連ファイルをまとめて 1 commit
 10. **worktree 削除**: `git worktree remove --force <path>`
-11. **state.json 更新**: batch.status=merged、functions[].status=matched (SoT sync で自動)
+11. **state.json 更新**: batch.status=merged。functions[].status は以下のルールで:
+    - HANDOFF.md `results[].status == "matched"` の関数 → SoT sync で `matched` に自動昇格 (`Object(Matching, ...)` 由来)
+    - HANDOFF.md `results[].status == "asm_fn"` の関数 → **明示的に `asm_fn` に設定** (SoT からは derive できない、HANDOFF 由来のみ)。`PROTECTED_STATUSES` に入っているので次 cycle の SoT sync で上書きされない
+    - HANDOFF.md `results[].status == "nonmatching"` の関数 → SoT sync で `nonmatching` に自動昇格
 12. **Lock 解放**
+
+`asm_fn` 関数の詳細 (退避判定、bundle 内 partial matching の扱い) は `docs/per_fn_matching_strategy.md`。
 
 build verify が fail した場合:
 - diff を保存して batch.status=failed、blocked_reason に出力 head を記録

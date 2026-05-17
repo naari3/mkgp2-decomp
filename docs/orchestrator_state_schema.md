@@ -86,9 +86,10 @@ key は 16 進アドレス文字列 (`"0x80003100"`)。
 
 ```
 pending → in_progress → matched
-                     ↘  nonmatching (NonMatching として隔離 commit)
-                     ↘  interrupted (sub kill / crash で中断)
-                     ↘  blocked (3 回以上失敗 or 依存未解決)
+                     ↘  asm_fn       (C TU 内に asm fn として inline 化、byte-identical)
+                     ↘  nonmatching  (NonMatching として隔離 commit)
+                     ↘  interrupted  (sub kill / crash で中断)
+                     ↘  blocked      (3 回以上失敗 or 依存未解決)
 
 excluded                  ← 並列 decomp の対象外 (ghidra_named=false 等)
 skipped                   ← user が手動 skip
@@ -98,7 +99,8 @@ skipped                   ← user が手動 skip
 |---|---|
 | `pending` | 並列 decomp 対象、まだ batch 未 assign |
 | `in_progress` | 現在 sub が作業中 |
-| `matched` | `Object(Matching, ...)` で declared 済み |
+| `matched` | `Object(Matching, ...)` で declared 済み、C で書かれて 100% match |
+| `asm_fn` | C TU 内に `asm void fn() { nofralloc ... blr }` として inline 化。`Object(Matching, ...)` 経由で byte-identical。C 化価値ゼロ (後日 retry 可能)。詳細: `docs/per_fn_matching_strategy.md` |
 | `nonmatching` | `Object(NonMatching, ...)` で隔離済み |
 | `interrupted` | sub の kill / crash で中断、recovery 待ち |
 | `blocked` | 失敗が積み重なって blocked。user 介入待ち |
@@ -113,6 +115,8 @@ derive ルール (`tools/init_orchestrator.py` 参照):
 4. それ以外 → `pending`
 
 `matched` / `nonmatching` は cycle 冒頭で **SoT (configure.py + report.json) から再 derive** する。手動編集禁止。
+
+`asm_fn` は HANDOFF.md 由来の per-fn 状態であり、SoT (configure.py 等) からは derive できない (TU 全体は `Object(Matching, ...)` で declare されており、関数単位の状態は HANDOFF.md だけが知っている)。よって `tools/orch_sync.py` の `PROTECTED_STATUSES` に含めて SoT-derive で上書きしない。
 
 ### `batches`
 

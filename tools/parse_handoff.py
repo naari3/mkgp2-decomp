@@ -28,7 +28,7 @@ from pathlib import Path
 
 
 JSON_FENCE = re.compile(r"```json\s*\n(.*?)\n```", re.DOTALL)
-VALID_STATUSES = {"matched", "nonmatching", "skipped", "failed"}
+VALID_STATUSES = {"matched", "asm_fn", "nonmatching", "skipped", "failed"}
 ADDR_HEX = re.compile(r"^0x[0-9a-fA-F]+$")
 
 

@@ -80,8 +80,9 @@ def now_iso() -> str:
 
 
 # Statuses that orch_sync must NOT overwrite even if SoT-derive disagrees.
-# These represent live cycle state that the main agent is managing.
-PROTECTED_STATUSES = {"in_progress", "interrupted", "blocked", "skipped"}
+# These represent live cycle state that the main agent is managing, or per-fn
+# escape-hatch state (asm_fn) that lives in TU but is not "truly matched".
+PROTECTED_STATUSES = {"in_progress", "interrupted", "blocked", "skipped", "asm_fn"}
 
 
 def main() -> int:
