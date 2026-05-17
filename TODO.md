@@ -2,26 +2,31 @@
 
 ライブな次手リスト。完了したら check して push、新しく出てきた課題は下に追記する。
 
-## Status (2026-05-17 commit cf84685)
+## Status (2026-05-17 commit e02be5e)
 
 - `main.dol` byte-identical rebuild: **OK** (SHA-1 `ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65`)
-- Named symbols: **~1080 / 7613** functions (~14%)
+- Named symbols: **~1204 / 7613** functions (~15.8%)
 - Matched C source: **0 / 7613**
 
 ## Symbol seeding
 
-- [ ] **`mkgp2docs/*.md` 79 ファイルから symbol を正規表現 scan**
-  - source: `~/src/github.com/dolphin-emu/dolphin/mkgp2docs/`
-  - 拾うパターン例: `Name @ 0xADDR` / `FUN_<addr> ⇒ Name` / inline コードブロック内の `0x80XXXXXX  Name`
-  - noise が多いので、まず 5-10 ファイルを sample して pattern を確立してから全件回す
-  - `tools/import_symbols_from_mkgp2docs.py` として書く (既存 importer と同じ collision guard を持たせる)
-  - 期待: 数百〜千件追加
+- [x] **`mkgp2docs/*.md` から symbol を正規表現 scan** — 80 md / 124 件 rename (commit `e02be5e`)
+  - `tools/import_symbols_from_mkgp2docs.py` で markdown table と inline `Name (0xADDR)` の両方を拾う
+  - 1681 raw mentions → 923 unique (addr→name) → 124 が placeholder を上書き
+  - 既存命名と一致した 645 件、placeholder 以外で kept 56 件、cross-source collision 7 件
+  - **未消化の 91 アドレス**は下の orphan add task に統合
 
-- [ ] **Ghidra dump にあって symbols.txt に無い 40 アドレスを explicit add**
-  - 現状 `tools/import_symbols_from_ghidra.py` が `ghidra addresses not present in symbols.txt: 40` と報告している
+- [ ] **Orphan address を symbols.txt に explicit add (合計 ~130 件)**
+  - Ghidra dump: `ghidra addresses not present in symbols.txt: 40`
+  - mkgp2docs dump: `mkgp2docs addresses not present in symbols.txt: 91`
   - 大半は BSS object (size 不明) や `.rodata` table。dtk auto-detect が拾えない
   - Ghidra から size / data_type を別途取って `add_symbol` 相当の entry を symbols.txt に挿入
   - `g_DebugPrintfEnable @0x80598a8a` / `kBgmDspFilenameTable @0x8037ce1c` (externals.txt の skip 2 件) もこのバッチで救う
+
+- [ ] **mkgp2docs importer の intra-dump dup を精査**
+  - 現状 113 件の name dup / 109 件の addr conflict が skip されている
+  - variant 名 (`NORMAL`/`GOLD`/`ORIGINAL`/`ENHANCED`) や `vtable`/`block` のような generic 語が table cell から誤抽出 → reserved list に追加でほぼ救える
+  - 真っ当な dup (例: `KartMovement_Init` が 2 アドレスにある) は inline copy / 名前再利用なので別途調査
 
 - [ ] **4 件の collision 真偽確認 + 解消**
   - `LUT_Sine`: Ghidra 0x80065928 (kept) / 0x80186998 (skipped) — `decompile_function` で両者を見比べて同じ関数を別 address に inline 化したものか、別実装かを確認
