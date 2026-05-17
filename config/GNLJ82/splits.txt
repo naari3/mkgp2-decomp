@@ -22,5 +22,8 @@ init/__check_pad3.c:
 init/memset.c:
 	.init       start:0x8000540C end:0x8000543C
 
+init/__fill_mem.c:
+	.init       start:0x8000543C end:0x800054F4
+
 init/memcpy.c:
 	.init       start:0x800054F4 end:0x80005544
