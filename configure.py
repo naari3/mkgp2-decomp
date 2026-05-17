@@ -307,6 +307,7 @@ config.libs = [
         "progress_category": "sdk",
         "objects": [
             Object(Matching, "init/memset.c"),
+            Object(Matching, "init/memcpy.c"),
         ],
     },
     {
