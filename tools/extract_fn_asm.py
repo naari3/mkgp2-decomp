@@ -42,12 +42,20 @@ DEFAULT_ASM_DIR = REPO_ROOT / "build" / "GNLJ82" / "asm"
 DEFAULT_SYMBOLS_TXT = REPO_ROOT / "config" / "GNLJ82" / "symbols.txt"
 
 # `<name> = .<section>:0x<addr>; ...` (dtk symbols.txt format)
-SYMBOLS_LINE_RE = re.compile(r'^\s*([A-Za-z_][A-Za-z0-9_@]*)\s*=\s*\.([A-Za-z0-9_]+)\s*:\s*0x[0-9A-Fa-f]+\s*;')
+SYMBOLS_LINE_RE = re.compile(r'^\s*([A-Za-z_][A-Za-z0-9_@]*)\s*=\s*\.([A-Za-z0-9_]+)\s*:\s*0x([0-9A-Fa-f]+)\s*;')
 
 # Sections whose symbols are accessed via the sda1 base (r13).
 SDA1_SECTIONS = {'sdata', 'sbss'}
 # Sections whose symbols are accessed via the sda2 base (r2).
 SDA2_SECTIONS = {'sdata2', 'sbss2'}
+
+# PowerPC EABI: sda{1,2} base = section_start + 0x8000 (middle, allowing ±32K
+# 16-bit signed offset coverage). mkgp2-decomp GNLJ82 dol info:
+#   .sdata  start: 0x806CED20  ->  sda1 base = 0x806D6D20 (r13)
+#   .sdata2 start: 0x806D2260  ->  sda2 base = 0x806DA260 (r2)
+# Used to compute literal offsets when mwcc rejects `<sym>@sda21` immediates.
+GNLJ82_SDA1_BASE = 0x806D6D20
+GNLJ82_SDA2_BASE = 0x806DA260
 
 INSTR_LINE_RE = re.compile(r"^\s*/\*[^*]*\*/\s*(.*\S)\s*$")
 SECTION_RE = re.compile(r'^\.section\s+(\S+?)(?:,.*)?$')
@@ -64,6 +72,10 @@ SDA21_RE = re.compile(r'\b([A-Za-z_][A-Za-z0-9_]*)@sda21\(r0\)')
 SDA21_LI_RE = re.compile(r'\bli\s+(r\d+)\s*,\s*([A-Za-z_][A-Za-z0-9_]*)@sda21\b')
 CR_FIELD_RE = re.compile(r'\b(crclr|crset)\s+cr(\d)(lt|gt|eq|so|un)\b')
 _CR_BIT_OFFSET = {'lt': 0, 'gt': 1, 'eq': 2, 'so': 3, 'un': 3}
+# Gekko Paired-Single quantization register names (qr0..qr7). mwcc 1.3.2
+# doesn't recognise these mnemonics in the qrW operand of psq_l/psq_st/etc.;
+# rewrite to the bare integer index that the instruction encoding expects.
+QR_REG_RE = re.compile(r'\bqr([0-7])\b')
 
 # Identifier classification (run on the post-rewrite instruction line).
 LOCAL_LABEL_DECL_RE = re.compile(r'^\s*(\.L_[0-9A-Fa-f]+):\s*$')
@@ -276,8 +288,44 @@ def load_sda_base_map(symbols_path: Path) -> dict[str, str]:
     return out
 
 
+def load_sda_offset_map(symbols_path: Path) -> dict[str, tuple[str, int]]:
+    """Build sym -> (base_reg, signed_16bit_offset) map for small-data syms.
+
+    For each .sdata/.sbss/.sdata2/.sbss2 symbol, compute the signed 16-bit
+    offset from the corresponding sda base (r13 or r2). Used to rewrite
+    mwcc-unfriendly `li rD, sym@sda21` instructions into literal
+    `addi rD, base, <offset>` forms — mwcc won't accept symbolic sda21
+    immediates outside memory-displacement contexts, but it accepts literal
+    integer offsets.
+
+    Skips symbols whose computed offset falls outside the signed 16-bit
+    range (those won't fit in a single addi anyway and need addis+addi).
+    """
+    out: dict[str, tuple[str, int]] = {}
+    if not symbols_path.is_file():
+        return out
+    with symbols_path.open(encoding="utf-8") as f:
+        for line in f:
+            m = SYMBOLS_LINE_RE.match(line)
+            if not m:
+                continue
+            sym, section, addr_hex = m.group(1), m.group(2), m.group(3)
+            addr = int(addr_hex, 16)
+            if section in SDA1_SECTIONS:
+                base_reg, base_addr = 'r13', GNLJ82_SDA1_BASE
+            elif section in SDA2_SECTIONS:
+                base_reg, base_addr = 'r2', GNLJ82_SDA2_BASE
+            else:
+                continue
+            offset = addr - base_addr
+            if -0x8000 <= offset <= 0x7FFF:
+                out[sym] = (base_reg, offset)
+    return out
+
+
 def _rewrite_instruction(line: str, sda21_syms: set[str], fn_name: str,
-                          sda_base_map: dict[str, str]) -> str:
+                          sda_base_map: dict[str, str],
+                          sda_offset_map: dict[str, tuple[str, int]]) -> str:
     """Apply mwcc inline-asm syntax fixups and collect sda21 symbols.
 
     - `lbl@sda21(r0)` -> `lbl(r2)` or `lbl(r13)` based on the symbol's
@@ -297,8 +345,21 @@ def _rewrite_instruction(line: str, sda21_syms: set[str], fn_name: str,
     def _sda21_li_sub(m: re.Match) -> str:
         reg = m.group(1)
         sym = m.group(2)
-        sda21_syms.add(sym)
-        return f'addi {reg}, 0, {sym}@sda21'
+        # Resolve to literal `addi rD, base, <offset>` using symbols.txt.
+        # mwcc inline asm rejects `<sym>@sda21` as an immediate (only valid
+        # in memory-displacement context), so we precompute the signed
+        # 16-bit offset from the sda base. Final binary is identical;
+        # the linker reloc is just absent on our side.
+        baseinfo = sda_offset_map.get(sym)
+        if baseinfo is None:
+            # No entry — symbol not in .sdata/.sbss/.sdata2/.sbss2, or offset
+            # out of 16-bit range. Fall back to a form that will fail at
+            # build time (caller sees the error and handles the group manually).
+            return f'addi {reg}, 0, {sym}@sda21  # FIXME: out-of-range sda21'
+        base_reg, offset = baseinfo
+        if offset < 0:
+            return f'addi {reg}, {base_reg}, -0x{-offset:X}  /* {sym} */'
+        return f'addi {reg}, {base_reg}, 0x{offset:X}  /* {sym} */'
     line = SDA21_LI_RE.sub(_sda21_li_sub, line)
 
     def _cr_sub(m: re.Match) -> str:
@@ -310,6 +371,9 @@ def _rewrite_instruction(line: str, sda21_syms: set[str], fn_name: str,
     line = CR_FIELD_RE.sub(_cr_sub, line)
 
     line = LOCAL_LABEL_REF_RE.sub(lambda m: f'{fn_name}_L_{m.group(1)}', line)
+
+    # `qr0` .. `qr7` -> bare integer index (mwcc psq_l/psq_st qrW operand).
+    line = QR_REG_RE.sub(lambda m: m.group(1), line)
 
     return line
 
@@ -334,7 +398,8 @@ def _label_to_c_name(label: str, kind: str, fn_name: str) -> str:
     return f"{kind}_{fn_name}"
 
 
-def emit_c_source(group_id: str, data: GroupData, sda_base_map: dict[str, str]) -> str:
+def emit_c_source(group_id: str, data: GroupData, sda_base_map: dict[str, str],
+                   sda_offset_map: dict[str, tuple[str, int]]) -> str:
     """Build the C source fragment in target section-layout order."""
     # Map etb_label -> fn_name via extabindex entries.
     etb_to_fn: dict[str, str] = {}
@@ -352,7 +417,7 @@ def emit_c_source(group_id: str, data: GroupData, sda_base_map: dict[str, str]) 
     for fn in data.functions:
         new_fn = FnAsm(name=fn.name, scope=fn.scope)
         new_fn.instructions = [
-            _rewrite_instruction(ins, sda21_syms, fn.name, sda_base_map)
+            _rewrite_instruction(ins, sda21_syms, fn.name, sda_base_map, sda_offset_map)
             for ins in fn.instructions
         ]
         rewritten.append(new_fn)
@@ -534,8 +599,9 @@ def main(argv: Optional[list[str]] = None) -> int:
     asm_path = resolve_group_path(args.group, args.asm_dir)
     data = parse_group(asm_path)
     sda_base_map = load_sda_base_map(args.symbols_txt)
+    sda_offset_map = load_sda_offset_map(args.symbols_txt)
 
-    c_src = emit_c_source(asm_path.stem, data, sda_base_map)
+    c_src = emit_c_source(asm_path.stem, data, sda_base_map, sda_offset_map)
     if args.out_c:
         args.out_c.write_text(c_src + "\n", encoding="utf-8")
     else:
