@@ -59,6 +59,9 @@ BYTE4_RE = re.compile(r'^\s*\.4byte\s+(.+)\s*$')
 
 # mwcc inline-asm syntax fixups (docs/per_fn_matching_strategy.md §11)
 SDA21_RE = re.compile(r'\b([A-Za-z_][A-Za-z0-9_]*)@sda21\(r0\)')
+# `li rD, sym@sda21` -> mwcc rejects this form; rewrite to `addi rD, 0, sym@sda21`
+# (mwcc accepts the addi form and emits the sda21 reloc).
+SDA21_LI_RE = re.compile(r'\bli\s+(r\d+)\s*,\s*([A-Za-z_][A-Za-z0-9_]*)@sda21\b')
 CR_FIELD_RE = re.compile(r'\b(crclr|crset)\s+cr(\d)(lt|gt|eq|so|un)\b')
 _CR_BIT_OFFSET = {'lt': 0, 'gt': 1, 'eq': 2, 'so': 3, 'un': 3}
 
@@ -74,9 +77,28 @@ DATA_REL_RE = re.compile(r'\b([A-Za-z_][A-Za-z0-9_]*)@(?:ha|h|l|lo|hi)\b')
 
 @dataclass
 class ExtabEntry:
-    label: str           # "@etb_80005858"
-    addr: int            # 0x80005858
-    raw_bytes: bytes     # entry payload (.4byte values flattened, big-endian)
+    label: str                                       # "@etb_80005858"
+    addr: int                                        # 0x80005858
+    # Each .4byte slot is either a numeric immediate (int, None) or a symbol
+    # reference (None, "dtor_8003AFB8"). cwextab embeds destructor pointers
+    # and typeids as symbolic .4byte entries; emitting these as raw bytes
+    # would lose the link-time relocation.
+    fields: list[tuple[Optional[int], Optional[str]]] = field(default_factory=list)
+
+    @property
+    def is_symbolic(self) -> bool:
+        return any(f[1] is not None for f in self.fields)
+
+    @property
+    def raw_bytes(self) -> bytes:
+        """Flatten numeric-only entries to big-endian bytes; raises if any
+        field is symbolic (caller must check `is_symbolic` first)."""
+        if self.is_symbolic:
+            raise ValueError(f"extab {self.label} has symbolic refs — render as struct")
+        out = bytearray()
+        for val, _ in self.fields:
+            out += val.to_bytes(4, 'big')
+        return bytes(out)
 
 
 @dataclass
@@ -125,7 +147,6 @@ def parse_group(asm_path: Path) -> GroupData:
     data = GroupData()
     current_section: Optional[str] = None
     current_extab: Optional[ExtabEntry] = None
-    current_extab_bytes: bytearray = bytearray()
     current_eti: Optional[dict] = None  # {label, addr, fields:[(val,sym), ...]}
     current_fn: Optional[FnAsm] = None
 
@@ -170,9 +191,7 @@ def parse_group(asm_path: Path) -> GroupData:
                     current_extab = ExtabEntry(
                         label=label,
                         addr=_parse_addr_from_label(label, '@etb_'),
-                        raw_bytes=b'',
                     )
-                    current_extab_bytes = bytearray()
                 elif label.startswith('@eti_'):
                     current_eti = {
                         'label': label,
@@ -184,10 +203,8 @@ def parse_group(asm_path: Path) -> GroupData:
             m_endobj = ENDOBJ_RE.match(stripped)
             if m_endobj:
                 if current_extab is not None:
-                    current_extab.raw_bytes = bytes(current_extab_bytes)
                     data.extab.append(current_extab)
                     current_extab = None
-                    current_extab_bytes = bytearray()
                 elif current_eti is not None:
                     fields = current_eti['fields']
                     if len(fields) != 3:
@@ -228,9 +245,7 @@ def parse_group(asm_path: Path) -> GroupData:
                 if m_b4:
                     val, sym = _parse_4byte_operand(m_b4.group(1))
                     if current_extab is not None:
-                        if val is None:
-                            raise ValueError(f"extab {current_extab.label} has symbolic .4byte {m_b4.group(1)!r}")
-                        current_extab_bytes += val.to_bytes(4, 'big')
+                        current_extab.fields.append((val, sym))
                     else:
                         current_eti['fields'].append((val, sym))
                     continue
@@ -278,6 +293,13 @@ def _rewrite_instruction(line: str, sda21_syms: set[str], fn_name: str,
         base = sda_base_map.get(sym, 'r2')
         return f'{sym}({base})'
     line = SDA21_RE.sub(_sda21_sub, line)
+
+    def _sda21_li_sub(m: re.Match) -> str:
+        reg = m.group(1)
+        sym = m.group(2)
+        sda21_syms.add(sym)
+        return f'addi {reg}, 0, {sym}@sda21'
+    line = SDA21_LI_RE.sub(_sda21_li_sub, line)
 
     def _cr_sub(m: re.Match) -> str:
         op = m.group(1)
@@ -394,27 +416,68 @@ def emit_c_source(group_id: str, data: GroupData, sda_base_map: dict[str, str]) 
         out.append(f"asm void {fn.name}(void);")
     out.append("")
 
-    # extab emit (skip if the group has no extab entries — sda1/text-only groups)
+    # Collect any extab-referenced symbols (cwextab dtor/typeid refs) that
+    # aren't already covered by the asm-body extern groups. Emit as branch-callee
+    # `extern void <sym>();` so they appear in the existing extern block above.
+    extab_symbolic_refs: set[str] = set()
+    for entry in data.extab:
+        for _, sym in entry.fields:
+            if sym is not None:
+                extab_symbolic_refs.add(sym)
+    extab_new_externs = extab_symbolic_refs - callee_syms - sda21_syms - data_syms - own_fn_names
+    if extab_new_externs:
+        out.append("/* --- extern decls: extab symbolic refs (dtors / typeids) --- */")
+        for sym in sorted(extab_new_externs):
+            out.append(f"extern void {sym}();")
+        out.append("")
+
+    # extab emit (skip if the group has no extab entries — sda1/text-only groups).
+    # Two render shapes:
+    #   - numeric-only entries:  `unsigned char [N]` with hex byte literals
+    #   - entries containing symbolic .4byte: anonymous struct with
+    #     `unsigned int` / `void *` fields so the linker resolves the refs.
     if data.extab:
         out.append('/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */')
         out.append('#pragma section R ".extab_user"')
         for entry in data.extab:
             fn_name = etb_to_fn.get(entry.label, f"orphan_{entry.addr:08X}")
             c_name = _label_to_c_name(entry.label, "extab", fn_name)
-            n = len(entry.raw_bytes)
-            out.append(f'__declspec(section ".extab_user") static const unsigned char {c_name}[{n}] = '
-                       f'{_format_byte_array(entry.raw_bytes)};')
+            if not entry.is_symbolic:
+                b = entry.raw_bytes
+                out.append(f'__declspec(section ".extab_user") static const unsigned char {c_name}[{len(b)}] = '
+                           f'{_format_byte_array(b)};')
+            else:
+                field_decls = []
+                inits = []
+                for i, (val, sym) in enumerate(entry.fields):
+                    if sym is not None:
+                        field_decls.append(f'void *f{i};')
+                        inits.append(f'(void *)&{sym}')
+                    else:
+                        field_decls.append(f'unsigned int f{i};')
+                        inits.append(f'0x{val:08X}')
+                fields_str = ' '.join(field_decls)
+                inits_str = ', '.join(inits)
+                out.append(f'__declspec(section ".extab_user") static const struct '
+                           f'{{ {fields_str} }} {c_name} = {{ {inits_str} }};')
         out.append("")
 
     if data.extabindex:
+        # Index extab entries by label so we can pick the right C cast: array
+        # names decay to their address (`(void *)arr`), struct names don't
+        # (`(void *)&obj`). mwcc rejects the latter as "illegal explicit
+        # conversion from 'const struct' to 'void *'".
+        extab_by_label = {e.label: e for e in data.extab}
         out.append('/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */')
         out.append('#pragma section R ".extabindex_user"')
         for eti in data.extabindex:
             c_name = _label_to_c_name(eti.label, "extabindex", eti.fn_name)
             etb_c_name = _label_to_c_name(eti.extab_label, "extab", eti.fn_name)
+            etb_entry = extab_by_label.get(eti.extab_label)
+            etb_ref = f'&{etb_c_name}' if (etb_entry and etb_entry.is_symbolic) else etb_c_name
             out.append(f'__declspec(section ".extabindex_user") static const struct '
                        f'{{ void *fn; unsigned int fn_size; void *extab; }} {c_name} = ' '{')
-            out.append(f'    (void *)&{eti.fn_name}, 0x{eti.fn_size:08X}, (void *){etb_c_name}')
+            out.append(f'    (void *)&{eti.fn_name}, 0x{eti.fn_size:08X}, (void *){etb_ref}')
             out.append("};")
         out.append("")
 
