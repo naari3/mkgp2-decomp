@@ -16,6 +16,12 @@ Sections:
 sysdolphin/baselib/_hsd_consts.c:
 	.sdata2     start:0x806DCC58 end:0x806DCC68
 
+game/GameMode_Base.c:
+	.text       start:0x8002CE3C end:0x8002CE4C
+
+game/Clamp.c:
+	.text       start:0x80038778 end:0x800387D8
+
 Runtime.PPCEABI.H/global_destructor_chain.c:
 	.text       start:0x80270BE8 end:0x80270C48
 	.dtors      start:0x802E8988 end:0x802E898C
