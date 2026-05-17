@@ -1,0 +1,3658 @@
+{
+  "functions": {
+    "0x8000540c": {
+      "name": "memset"
+    },
+    "0x800054f4": {
+      "name": "memmove"
+    },
+    "0x8002be18": {
+      "name": "DebugOverlay_Dispatch"
+    },
+    "0x8002c5e8": {
+      "name": "MainGameLoop"
+    },
+    "0x8002cdc8": {
+      "name": "Vtable_CallSlot2"
+    },
+    "0x8002ce3c": {
+      "name": "GameMode_BaseInit"
+    },
+    "0x8002ce4c": {
+      "name": "OSPanic_Stub"
+    },
+    "0x8002ce9c": {
+      "name": "DebugOutput_Stub"
+    },
+    "0x8002ceec": {
+      "name": "DebugPrintf"
+    },
+    "0x8002d040": {
+      "name": "GetVBlankFlag"
+    },
+    "0x8002d0b0": {
+      "name": "ServiceButton_Handler"
+    },
+    "0x8002d74c": {
+      "name": "SetActiveCamera"
+    },
+    "0x8002dd58": {
+      "name": "BootDispatcher"
+    },
+    "0x8002f7fc": {
+      "name": "HeapStats_DumpForTag"
+    },
+    "0x8002f8cc": {
+      "name": "isJapanese"
+    },
+    "0x8002fd4c": {
+      "name": "DebugTextOutput"
+    },
+    "0x8002fe34": {
+      "name": "OverlayText"
+    },
+    "0x8002ffb8": {
+      "name": "IsDisplayModeEnabled"
+    },
+    "0x800302ec": {
+      "name": "Scene3D_GetCameraPos"
+    },
+    "0x8003031c": {
+      "name": "Scene3D_SetupProjection"
+    },
+    "0x80030bdc": {
+      "name": "Scene3D_Init"
+    },
+    "0x80030fa0": {
+      "name": "clNormal3D_SetFlags"
+    },
+    "0x800316b8": {
+      "name": "JObj_Show"
+    },
+    "0x800316e8": {
+      "name": "JObj_Hide"
+    },
+    "0x800328a8": {
+      "name": "clNormal3D_CountJObjs"
+    },
+    "0x80032aac": {
+      "name": "clNormal3D_Exec"
+    },
+    "0x80033918": {
+      "name": "clNormal3D_SetScale"
+    },
+    "0x80033e4c": {
+      "name": "ResolveJointByName"
+    },
+    "0x80033efc": {
+      "name": "Archive_GetRootJObj"
+    },
+    "0x80034508": {
+      "name": "clNormal3D_Load"
+    },
+    "0x80034798": {
+      "name": "clNormal3D_Construct"
+    },
+    "0x80034834": {
+      "name": "clNormal3D_FlattenJObjTree"
+    },
+    "0x80034a8c": {
+      "name": "Archive_GetCurrent"
+    },
+    "0x80034b50": {
+      "name": "FileLoader_LoadBin"
+    },
+    "0x80034d1c": {
+      "name": "SetResourceLoadingFlag"
+    },
+    "0x80034ec0": {
+      "name": "FileLoader_Open"
+    },
+    "0x80035114": {
+      "name": "Collision_RegisterSpecialFaces"
+    },
+    "0x80035220": {
+      "name": "CollisionFile_FixupPointers"
+    },
+    "0x80035268": {
+      "name": "Terrain_GetGroundHeightWithPenetration"
+    },
+    "0x80035700": {
+      "name": "Terrain_GetGroundHeight"
+    },
+    "0x80035ae4": {
+      "name": "Terrain_RaycastWall"
+    },
+    "0x80035ed4": {
+      "name": "Terrain_FindTriangleAtPosition"
+    },
+    "0x80036154": {
+      "name": "Math_SegmentIntersection2D"
+    },
+    "0x80036278": {
+      "name": "Terrain_WallSegmentTest"
+    },
+    "0x800364c8": {
+      "name": "Collision_SetGlobalData"
+    },
+    "0x800364d8": {
+      "name": "Terrain_StepAndResolve"
+    },
+    "0x80036710": {
+      "name": "Terrain_WallEdgeTest"
+    },
+    "0x800387b8": {
+      "name": "Clamp_Int"
+    },
+    "0x80039020": {
+      "name": "InputMgr_GetPlayer"
+    },
+    "0x8003907c": {
+      "name": "GetInputManager"
+    },
+    "0x80039084": {
+      "name": "InputMgr_Shutdown"
+    },
+    "0x800390e8": {
+      "name": "InputMgr_Init"
+    },
+    "0x80039154": {
+      "name": "InputObj_GetHeldMasked"
+    },
+    "0x80039160": {
+      "name": "InputObj_GetPressedMasked"
+    },
+    "0x8003916c": {
+      "name": "InputObj_IsHeld"
+    },
+    "0x80039184": {
+      "name": "InputObj_IsPressed"
+    },
+    "0x8003919c": {
+      "name": "InputObj_GetBrake"
+    },
+    "0x800391a4": {
+      "name": "InputObj_GetAccelerator"
+    },
+    "0x800391ac": {
+      "name": "InputObj_GetSteering"
+    },
+    "0x800391b4": {
+      "name": "InputObj_ReadRawInput"
+    },
+    "0x800395ec": {
+      "name": "InputObj_Ctor"
+    },
+    "0x80039aac": {
+      "name": "InputObj_GetDefaultFloat"
+    },
+    "0x80039abc": {
+      "name": "InputObj_Update_Stub"
+    },
+    "0x8003a22c": {
+      "name": "clModelM_Construct"
+    },
+    "0x8003a54c": {
+      "name": "model_jobj_ClassInit"
+    },
+    "0x8003aacc": {
+      "name": "Camera_Create"
+    },
+    "0x8003ad4c": {
+      "name": "SoundChannels_ClearAll"
+    },
+    "0x8003afb8": {
+      "name": "MemoryManager_TimedFree"
+    },
+    "0x8003b1fc": {
+      "name": "Alloc"
+    },
+    "0x8003b314": {
+      "name": "Math_Segment2DIntersect"
+    },
+    "0x8003b454": {
+      "name": "Path_LookupCheckpointOffset"
+    },
+    "0x8003b524": {
+      "name": "Path_LookupMaxProgressOffset"
+    },
+    "0x8003b5f4": {
+      "name": "PathManager_GetEntrySubStruct"
+    },
+    "0x8003b668": {
+      "name": "PathManager_RefreshFinishPositions"
+    },
+    "0x8003b6c4": {
+      "name": "PathManager_UpdateAll"
+    },
+    "0x8003cf44": {
+      "name": "PathManager_RegisterCarObject"
+    },
+    "0x8003d1f4": {
+      "name": "PathManager_Init"
+    },
+    "0x8003d2fc": {
+      "name": "LakituStart_SetCountdownHoldFrames"
+    },
+    "0x8003d360": {
+      "name": "LakituStart_UpdateCountdown"
+    },
+    "0x8003dae0": {
+      "name": "LakituStart_Dtor"
+    },
+    "0x8003db40": {
+      "name": "LakituStart_Init"
+    },
+    "0x8003e540": {
+      "name": "ItemHandler_Star"
+    },
+    "0x8003e8bc": {
+      "name": "ItemHandler_Shell"
+    },
+    "0x8003f13c": {
+      "name": "RenderObj_CleanupItem"
+    },
+    "0x8003f364": {
+      "name": "RenderObj_ToggleLapSegment"
+    },
+    "0x8003f498": {
+      "name": "KartMovement_CalcFinishPosition"
+    },
+    "0x8003f518": {
+      "name": "KartMovement_SetRemainingLaps"
+    },
+    "0x8003f528": {
+      "name": "KartMovement_GetVelocityMagnitude"
+    },
+    "0x8003f54c": {
+      "name": "KartMovement_GetVelocityPtr"
+    },
+    "0x8003f5e8": {
+      "name": "KartMovement_CanReceiveItem"
+    },
+    "0x8003f77c": {
+      "name": "RenderObj_UseItem"
+    },
+    "0x8003ffd0": {
+      "name": "KartMovement_EquipItem"
+    },
+    "0x80040600": {
+      "name": "KartMovement_GetCurrentItemId"
+    },
+    "0x80040608": {
+      "name": "KartMovement_ResetOnTimeout"
+    },
+    "0x80040748": {
+      "name": "KartMovement_ResetOnGoal"
+    },
+    "0x80040c24": {
+      "name": "KartReaction_Front"
+    },
+    "0x80040ca0": {
+      "name": "KartReaction_Side"
+    },
+    "0x80040d1c": {
+      "name": "KartReaction_Rear"
+    },
+    "0x800426c8": {
+      "name": "RenderObj_ItemStateMachine"
+    },
+    "0x80044498": {
+      "name": "RenderObj_ItemStateMachine_Timed"
+    },
+    "0x80044578": {
+      "name": "KartDriver_Init"
+    },
+    "0x800461f0": {
+      "name": "Path_CountWaypointsAndSnapGround"
+    },
+    "0x800462d4": {
+      "name": "PathManager_HasPathLoaded"
+    },
+    "0x80046334": {
+      "name": "Path_GetTotalCount"
+    },
+    "0x8004633c": {
+      "name": "Path_GetWaypointPtr"
+    },
+    "0x80046380": {
+      "name": "PathCursor_SetIndex"
+    },
+    "0x800463cc": {
+      "name": "Waypoint_Advance"
+    },
+    "0x800463fc": {
+      "name": "Waypoint_FindBestAhead"
+    },
+    "0x80046680": {
+      "name": "Waypoint_FindNearest"
+    },
+    "0x80046858": {
+      "name": "PathCursor_ResetToPath"
+    },
+    "0x800468b8": {
+      "name": "PathCursor_Free"
+    },
+    "0x800468f4": {
+      "name": "PathCursor_InitFromPath"
+    },
+    "0x800476d4": {
+      "name": "CourseScene_Load"
+    },
+    "0x80048754": {
+      "name": "InputManager_Init"
+    },
+    "0x80048bec": {
+      "name": "NamCam_LoadImage"
+    },
+    "0x80048e0c": {
+      "name": "NamCam_GetImageHandle"
+    },
+    "0x80049afc": {
+      "name": "ISESlot_StopEffect"
+    },
+    "0x80049b40": {
+      "name": "ISESlot_StartCleanup"
+    },
+    "0x80049b68": {
+      "name": "ISESlot_IsActive"
+    },
+    "0x80049b70": {
+      "name": "ISESlot_FrameUpdate"
+    },
+    "0x80049d0c": {
+      "name": "ISESlot_Deactivate"
+    },
+    "0x80049d78": {
+      "name": "ISESlot_Init"
+    },
+    "0x80049f3c": {
+      "name": "CarObject_ResetPhysics"
+    },
+    "0x8004a0a4": {
+      "name": "ItemUse_Gateway"
+    },
+    "0x8004ae28": {
+      "name": "CarObject_HandleObstacleHit"
+    },
+    "0x8004cf64": {
+      "name": "CarObject_UpdateCoinSpeedBonus"
+    },
+    "0x8004d1a8": {
+      "name": "CarObject_ProcessWarpAndDash"
+    },
+    "0x8004d404": {
+      "name": "CarObject_MainUpdate"
+    },
+    "0x8004decc": {
+      "name": "CarObject_FrameUpdate"
+    },
+    "0x8004dfe0": {
+      "name": "CarObject_ApplyInput_AI"
+    },
+    "0x8004e154": {
+      "name": "CarObject_ApplyInput"
+    },
+    "0x8004e618": {
+      "name": "CarObject_Init"
+    },
+    "0x8004effc": {
+      "name": "CarObject_CalcSpeedRatio"
+    },
+    "0x8004f120": {
+      "name": "CarObject_GetTransformMatrix"
+    },
+    "0x8004f12c": {
+      "name": "CarObject_GetKartMovementPtr"
+    },
+    "0x8004f13c": {
+      "name": "CarObject_GetRenderObj"
+    },
+    "0x8004f15c": {
+      "name": "CarObject_IsAirborne"
+    },
+    "0x8004f450": {
+      "name": "CarObject_ApplyDriftBoost"
+    },
+    "0x8004f4f4": {
+      "name": "KartMovement_SetMueScale"
+    },
+    "0x8004f500": {
+      "name": "KartMovement_SetSpeedScale"
+    },
+    "0x8004f640": {
+      "name": "CarObject_SetPosition"
+    },
+    "0x8004f858": {
+      "name": "CarObject_HandleItemEffect"
+    },
+    "0x800502f0": {
+      "name": "ItemEffect_OnHit"
+    },
+    "0x80050410": {
+      "name": "ItemEffect_Dispatch"
+    },
+    "0x80056244": {
+      "name": "SpeedBoost_Apply"
+    },
+    "0x8005771c": {
+      "name": "KartBody_SetWarpTransitFlag"
+    },
+    "0x8005785c": {
+      "name": "TireEffect_ResetSpin"
+    },
+    "0x80057960": {
+      "name": "KartMovement_SetPosition"
+    },
+    "0x80058f5c": {
+      "name": "SoundVolumePan_Update"
+    },
+    "0x800594d4": {
+      "name": "SoundObj_PlaySE_Direct"
+    },
+    "0x8005957c": {
+      "name": "SoundCtrl_SetVolume"
+    },
+    "0x80059e70": {
+      "name": "SoundObj_PlaySE"
+    },
+    "0x8005f5cc": {
+      "name": "IsSpawnTableTerminator"
+    },
+    "0x8005fc48": {
+      "name": "SoundDriver_GetOrCreate"
+    },
+    "0x800604e8": {
+      "name": "ItemBox_ProcessPickup"
+    },
+    "0x80060d40": {
+      "name": "ItemSelect_GetSlotItemId"
+    },
+    "0x80060d80": {
+      "name": "ItemSelect_AddSlotItem"
+    },
+    "0x80060de4": {
+      "name": "ItemSelect_Reset"
+    },
+    "0x80060e7c": {
+      "name": "ItemSelect_Dtor"
+    },
+    "0x80060f2c": {
+      "name": "ItemSelect_Init"
+    },
+    "0x80063f30": {
+      "name": "Camera_RotateByYaw"
+    },
+    "0x80064d2c": {
+      "name": "CalcSoundDirection"
+    },
+    "0x80064ea0": {
+      "name": "CourseBgm_Free"
+    },
+    "0x80064ed0": {
+      "name": "CourseBgm_Load"
+    },
+    "0x800650e0": {
+      "name": "EffectSpeed_Init"
+    },
+    "0x800652d4": {
+      "name": "MediaBoard_SendAndCheck"
+    },
+    "0x80065458": {
+      "name": "InterpolationStep"
+    },
+    "0x80065558": {
+      "name": "EffectSpeed_ApplySpeedScale"
+    },
+    "0x80065658": {
+      "name": "ActionMueScale_Process"
+    },
+    "0x80065688": {
+      "name": "ActionSpeedScale_Process"
+    },
+    "0x800658b4": {
+      "name": "LUT_Cosine"
+    },
+    "0x80065928": {
+      "name": "LUT_Sine"
+    },
+    "0x800662b4": {
+      "name": "DMAChannelManager_Init"
+    },
+    "0x80066350": {
+      "name": "CardRW_ErrorDisplay"
+    },
+    "0x800668fc": {
+      "name": "UI_PageDispatcher"
+    },
+    "0x80067494": {
+      "name": "NetDiag_QualityPage"
+    },
+    "0x80067f74": {
+      "name": "NetDiag_CounterPage"
+    },
+    "0x80068d00": {
+      "name": "NetDiag_PacketPage"
+    },
+    "0x8006ad0c": {
+      "name": "CardCreate_Page"
+    },
+    "0x8006fa1c": {
+      "name": "SpeakerTest_Page"
+    },
+    "0x80070238": {
+      "name": "LampTest_Page"
+    },
+    "0x8007044c": {
+      "name": "CameraTest_Page"
+    },
+    "0x800712d8": {
+      "name": "LampTestIndiv_Page"
+    },
+    "0x800715ac": {
+      "name": "SwitchTest_Page"
+    },
+    "0x80071ae0": {
+      "name": "HandleInitialize_Page"
+    },
+    "0x80071e1c": {
+      "name": "MonitorTest_Page"
+    },
+    "0x8007307c": {
+      "name": "GameSetting_Page"
+    },
+    "0x80073878": {
+      "name": "GameTestTopMenu_Page"
+    },
+    "0x80073c70": {
+      "name": "ServiceMenu_Init"
+    },
+    "0x80073e7c": {
+      "name": "OpenFullServiceMenu"
+    },
+    "0x80073f6c": {
+      "name": "PcbIdToIpAndModify"
+    },
+    "0x800746a8": {
+      "name": "card_backup"
+    },
+    "0x80075690": {
+      "name": "FrameUpdate"
+    },
+    "0x8007593c": {
+      "name": "GameBoot_Init"
+    },
+    "0x80076494": {
+      "name": "SceneModel_Init"
+    },
+    "0x800776cc": {
+      "name": "card_send_track_data"
+    },
+    "0x80077a54": {
+      "name": "card_eject"
+    },
+    "0x80079cdc": {
+      "name": "DrawManager_GetOrCreate"
+    },
+    "0x8007cc9c": {
+      "name": "DrawNamCamImage"
+    },
+    "0x8007e8b0": {
+      "name": "TransitionEffect_GetOrCreate"
+    },
+    "0x8008025c": {
+      "name": "CameraEffect_Apply"
+    },
+    "0x8008299c": {
+      "name": "PCBComm_BuildBroadcastSlot"
+    },
+    "0x80082db8": {
+      "name": "PCBCheck_ProcessLinks"
+    },
+    "0x80083348": {
+      "name": "PCBCheck_RecvLinkData"
+    },
+    "0x80083740": {
+      "name": "PCBComm_SendToAllPeers"
+    },
+    "0x8008398c": {
+      "name": "PCBComm_ComputeSyncState"
+    },
+    "0x80084230": {
+      "name": "PCBComm_UpdateSyncPhase5"
+    },
+    "0x800845bc": {
+      "name": "PCBComm_UpdateSyncPhase1"
+    },
+    "0x80084a84": {
+      "name": "BootPCBCheck_Display"
+    },
+    "0x80084bf4": {
+      "name": "BootPCBCheck_Poll"
+    },
+    "0x80084df8": {
+      "name": "BootPCBCheck_Init"
+    },
+    "0x80084e94": {
+      "name": "PCBComm_PackAndTriggerCardSnapshot"
+    },
+    "0x80084ff0": {
+      "name": "ResetIOPorts"
+    },
+    "0x800850bc": {
+      "name": "SyncSlot_GetHostSend"
+    },
+    "0x800850f0": {
+      "name": "SyncSlot_GetRecv"
+    },
+    "0x800850fc": {
+      "name": "SyncSlot_Reset"
+    },
+    "0x80085280": {
+      "name": "RingBuffer_GetRankSlot"
+    },
+    "0x800852e0": {
+      "name": "RingBuffer_GetEntryHead"
+    },
+    "0x80085310": {
+      "name": "RingBuffer_GetKartSlot"
+    },
+    "0x800854b8": {
+      "name": "PCBComm_ConfirmHostBattle"
+    },
+    "0x80085580": {
+      "name": "PCBComm_ConfirmHostLobby"
+    },
+    "0x800856cc": {
+      "name": "PCBComm_PromoteToClientConfirmed"
+    },
+    "0x8008586c": {
+      "name": "CountPeersInBattleWithRole"
+    },
+    "0x800858ec": {
+      "name": "CountPeersWithRole"
+    },
+    "0x80085dac": {
+      "name": "IsSyncReached"
+    },
+    "0x80085dd8": {
+      "name": "SyncSlot_ApplyCourseChoice"
+    },
+    "0x80086170": {
+      "name": "PCBComm_Process"
+    },
+    "0x800866f8": {
+      "name": "PCBComm_Init"
+    },
+    "0x80086a30": {
+      "name": "TCPConn_PollRecvComplete"
+    },
+    "0x80086b18": {
+      "name": "TCPConn_PollRecv"
+    },
+    "0x80086d6c": {
+      "name": "TCPConn_PollSend"
+    },
+    "0x80086f54": {
+      "name": "TCPConn_ConsumeRxMessage"
+    },
+    "0x80086fdc": {
+      "name": "TCPConn_PeekRxMessage"
+    },
+    "0x8008707c": {
+      "name": "TCPConn_EnqueueMessage"
+    },
+    "0x80087170": {
+      "name": "TCPConn_Reset"
+    },
+    "0x800871d8": {
+      "name": "TCPConn_Poll"
+    },
+    "0x80087530": {
+      "name": "TCPConn_Close"
+    },
+    "0x8008762c": {
+      "name": "TCPConn_Init"
+    },
+    "0x80087894": {
+      "name": "TCPConn_LogError"
+    },
+    "0x800878f8": {
+      "name": "TCPConn_GetChannelDest"
+    },
+    "0x80087930": {
+      "name": "TCPConn_FreeTxBuffer"
+    },
+    "0x80087980": {
+      "name": "TCPConn_AllocTxBuffer"
+    },
+    "0x80087a40": {
+      "name": "IsGlobalTimerExpired"
+    },
+    "0x80087a54": {
+      "name": "Timer_Decrement"
+    },
+    "0x80087a6c": {
+      "name": "FreeMediaBuffers"
+    },
+    "0x80087ad0": {
+      "name": "InitGlobalTimer"
+    },
+    "0x80087c74": {
+      "name": "PCBCheck_StateSet"
+    },
+    "0x80087cc8": {
+      "name": "TCPListen_Poll"
+    },
+    "0x80088700": {
+      "name": "FinalLapBanner_Init"
+    },
+    "0x80088a5c": {
+      "name": "bitpack_write_field"
+    },
+    "0x80088ba8": {
+      "name": "bitpack_get_used_bytes"
+    },
+    "0x80088bb0": {
+      "name": "bitpack_get_used_bits"
+    },
+    "0x80088bb8": {
+      "name": "bitpack_init"
+    },
+    "0x8008a0a0": {
+      "name": "card_task_manager_create"
+    },
+    "0x8008e9a8": {
+      "name": "MemoryHeap_GetStats"
+    },
+    "0x800903d8": {
+      "name": "Card_VerifyChecksum"
+    },
+    "0x80090ff0": {
+      "name": "GetKartParamBlock"
+    },
+    "0x80093c28": {
+      "name": "card_save_trigger"
+    },
+    "0x80096a5c": {
+      "name": "card_rw_state_machine"
+    },
+    "0x8009bac4": {
+      "name": "Input_IsItemButtonPressed"
+    },
+    "0x8009bb28": {
+      "name": "SetKartVariant"
+    },
+    "0x8009bb58": {
+      "name": "SetLocalPcbRole"
+    },
+    "0x8009bb70": {
+      "name": "SetSyncTarget"
+    },
+    "0x8009bb78": {
+      "name": "ItemUse_ResetAllKartUseSlots"
+    },
+    "0x8009bef4": {
+      "name": "GetDisplayContext"
+    },
+    "0x8009bf20": {
+      "name": "GetDisplayBufferIndex"
+    },
+    "0x8009c15c": {
+      "name": "GetRaceContextPtr"
+    },
+    "0x8009c168": {
+      "name": "SetPlayerCarObject"
+    },
+    "0x8009c178": {
+      "name": "SetCourseScene3D"
+    },
+    "0x8009c180": {
+      "name": "GetCourseScene3D"
+    },
+    "0x8009c188": {
+      "name": "SetRaceStartFlag"
+    },
+    "0x8009c1a8": {
+      "name": "IsRaceStarted"
+    },
+    "0x8009c2f0": {
+      "name": "GetCourseBgmEntry"
+    },
+    "0x8009c418": {
+      "name": "GetCourseModelFilename"
+    },
+    "0x8009c4bc": {
+      "name": "GetCourseObjectTable"
+    },
+    "0x8009c51c": {
+      "name": "GetCollisionFilename"
+    },
+    "0x8009c57c": {
+      "name": "GetJointNameTable"
+    },
+    "0x8009c5d0": {
+      "name": "GetCollisionBinFilename"
+    },
+    "0x8009c634": {
+      "name": "GetCourseStartYaw"
+    },
+    "0x8009c688": {
+      "name": "GetStartPosition"
+    },
+    "0x8009c738": {
+      "name": "GetKartStartSlot"
+    },
+    "0x8009c7fc": {
+      "name": "GetKartModelNameEntry"
+    },
+    "0x8009c84c": {
+      "name": "GetCharacterName"
+    },
+    "0x8009c878": {
+      "name": "GetCharacterDataEntry"
+    },
+    "0x8009c8a4": {
+      "name": "GetKartSlotCharId"
+    },
+    "0x8009c900": {
+      "name": "GetKartSlotKartVariant"
+    },
+    "0x8009cb54": {
+      "name": "IsTimerModeEnabled"
+    },
+    "0x8009cb5c": {
+      "name": "SetTimerModeEnabled"
+    },
+    "0x8009cbfc": {
+      "name": "SetCourseParams"
+    },
+    "0x8009d5f8": {
+      "name": "ProcessSystemTick"
+    },
+    "0x8009d6cc": {
+      "name": "RaceContext_InitDefaults"
+    },
+    "0x8009e0d4": {
+      "name": "VSMode_FrameUpdate"
+    },
+    "0x8009f814": {
+      "name": "VSMode_Init"
+    },
+    "0x800a06d0": {
+      "name": "Rand15"
+    },
+    "0x800a06f0": {
+      "name": "Rand_SetSeedDebug"
+    },
+    "0x800a07b4": {
+      "name": "GameModeBase_FrameUpdate2"
+    },
+    "0x800a07ec": {
+      "name": "GameModeBase_FrameUpdate"
+    },
+    "0x800a086c": {
+      "name": "GameModeBase_Dtor"
+    },
+    "0x800a0950": {
+      "name": "GameMode_DispatchSceneInit"
+    },
+    "0x800a0b34": {
+      "name": "GetPlayerCarBySlot"
+    },
+    "0x800a0b60": {
+      "name": "RaceScene_ClearPlayerSlotPointers"
+    },
+    "0x800a0bac": {
+      "name": "CourseData_GetDefaultPathKey_Safe"
+    },
+    "0x800a0bdc": {
+      "name": "GetCourseDataPtr"
+    },
+    "0x800a0be8": {
+      "name": "RaceScene_RenderPass"
+    },
+    "0x800a0ef4": {
+      "name": "RaceScene_FrameUpdate"
+    },
+    "0x800a1a1c": {
+      "name": "RaceScene_Dtor"
+    },
+    "0x800a1d80": {
+      "name": "RaceScene_Init"
+    },
+    "0x800a2b90": {
+      "name": "TaMode_FrameUpdate"
+    },
+    "0x800a38f8": {
+      "name": "TaMode_Dtor"
+    },
+    "0x800a3c38": {
+      "name": "TaMode_Init"
+    },
+    "0x800a45b8": {
+      "name": "ItemObjectManager_PerFrameUpdate"
+    },
+    "0x800a4c18": {
+      "name": "RankingTable_Init"
+    },
+    "0x800a5960": {
+      "name": "calc_title_params"
+    },
+    "0x800a59ac": {
+      "name": "TitleDecode"
+    },
+    "0x800a59f0": {
+      "name": "RankLog_UpdatePerFrame"
+    },
+    "0x800a5cec": {
+      "name": "RankLog_SetRaceResult"
+    },
+    "0x800a5e60": {
+      "name": "RankLog_UpdateTechnicalFlag"
+    },
+    "0x800a5f2c": {
+      "name": "RankLog_OnPlayerDefeated"
+    },
+    "0x800a5fac": {
+      "name": "RankLog_OnMatchEnd"
+    },
+    "0x800a6078": {
+      "name": "RankLog_OnHit"
+    },
+    "0x800a6178": {
+      "name": "RankLog_OnOpponentDefeated"
+    },
+    "0x800a6248": {
+      "name": "RankLog_OnPlayerVictory"
+    },
+    "0x800a6504": {
+      "name": "RankLog_OnRoundComplete"
+    },
+    "0x800a6578": {
+      "name": "race_result_handler"
+    },
+    "0x800a6730": {
+      "name": "RankLog_Reset"
+    },
+    "0x800a67a8": {
+      "name": "RankLog_InitStartRace"
+    },
+    "0x800a6bc8": {
+      "name": "get_title_name"
+    },
+    "0x800a6ddc": {
+      "name": "get_title_name_global"
+    },
+    "0x800a6ffc": {
+      "name": "get_title_result"
+    },
+    "0x800a70fc": {
+      "name": "DetermineTitle"
+    },
+    "0x800a8004": {
+      "name": "CheckTitle_EnhancedKartTA"
+    },
+    "0x800a8538": {
+      "name": "CheckTitle_OriginalKartCoinMilage"
+    },
+    "0x800a8a28": {
+      "name": "DetermineNameId"
+    },
+    "0x800a8d34": {
+      "name": "WarpDashMgr_Init"
+    },
+    "0x800a9084": {
+      "name": "WarpZone_CalcExitPosition"
+    },
+    "0x800a919c": {
+      "name": "WarpZone_FindContaining"
+    },
+    "0x800a92d4": {
+      "name": "WarpDashMgr_Cleanup"
+    },
+    "0x800a9378": {
+      "name": "WarpDashMgr_GetInstance"
+    },
+    "0x800a9394": {
+      "name": "WarpDashMgr_GetOrCreate"
+    },
+    "0x800a9450": {
+      "name": "WarpAutoRun_Init"
+    },
+    "0x800a947c": {
+      "name": "DashZone_ProcessAutoRun"
+    },
+    "0x800a965c": {
+      "name": "WarpAutoRun_GetParam"
+    },
+    "0x800a97fc": {
+      "name": "WarpAutoRun_OnEnter"
+    },
+    "0x800a981c": {
+      "name": "WarpZone_CheckEntry"
+    },
+    "0x800a99a4": {
+      "name": "WarpZone_CalcEdgeVectors"
+    },
+    "0x800a9d84": {
+      "name": "WarpZoneVector_Insert"
+    },
+    "0x800aa484": {
+      "name": "WarpZoneVector_Reserve"
+    },
+    "0x800ab1bc": {
+      "name": "Tachometer_SetCoinCount"
+    },
+    "0x800ab220": {
+      "name": "Tachometer_UpdateDisplaySpeed"
+    },
+    "0x800ab324": {
+      "name": "Tachometer_RenderDigits"
+    },
+    "0x800ab77c": {
+      "name": "Tachometer_Init"
+    },
+    "0x800abae8": {
+      "name": "CourseData_LoadPathTable"
+    },
+    "0x800abdfc": {
+      "name": "CourseData_ResolveByKey"
+    },
+    "0x800abe3c": {
+      "name": "CourseData_GetDefaultPathKey"
+    },
+    "0x800abe48": {
+      "name": "CourseData_GetPath"
+    },
+    "0x800abe70": {
+      "name": "CourseData_GetOrCreate"
+    },
+    "0x800ac894": {
+      "name": "RunGameMain"
+    },
+    "0x800acd60": {
+      "name": "ReverseChallenge_Dtor"
+    },
+    "0x800acfc0": {
+      "name": "ReverseChallenge_Render"
+    },
+    "0x800ad134": {
+      "name": "ReverseChallenge_Update"
+    },
+    "0x800ad910": {
+      "name": "ReverseChallenge_Init"
+    },
+    "0x800afcd8": {
+      "name": "CourseObjectManager_Init"
+    },
+    "0x800d3bd4": {
+      "name": "BuildOrientationFromYaw"
+    },
+    "0x800d63a0": {
+      "name": "GetSpawnPosition"
+    },
+    "0x800d7490": {
+      "name": "ItemAlias_SourceToDest"
+    },
+    "0x800d74dc": {
+      "name": "ItemAlias_DestToSource"
+    },
+    "0x800d7540": {
+      "name": "ItemAlias_HitRemapLookup"
+    },
+    "0x800d76d4": {
+      "name": "GetItemDataEntry"
+    },
+    "0x800d76e8": {
+      "name": "ItemTable_PopulateAliasedSlots"
+    },
+    "0x800d7d08": {
+      "name": "ItemObject_SpawnWithAlias"
+    },
+    "0x800d81e0": {
+      "name": "ItemObjectManager_Init"
+    },
+    "0x800dd940": {
+      "name": "PreloadItemResources"
+    },
+    "0x800def74": {
+      "name": "PreloadEffectResources"
+    },
+    "0x8011dca4": {
+      "name": "ResourceSlot_Load"
+    },
+    "0x8011ee3c": {
+      "name": "SpriteHandle_Destroy"
+    },
+    "0x8011ee88": {
+      "name": "SpriteHandle_RecomputeCull"
+    },
+    "0x8011f050": {
+      "name": "SpriteHandle_SetActiveFlag"
+    },
+    "0x8011f094": {
+      "name": "SpriteLayer_SetResource"
+    },
+    "0x8011f598": {
+      "name": "SpriteHandle_SetCornerAlpha"
+    },
+    "0x8011fad8": {
+      "name": "SpriteHandle_CreateDefault"
+    },
+    "0x8011fb2c": {
+      "name": "SpriteHandle_CreateEx"
+    },
+    "0x80120d80": {
+      "name": "PreloadResource"
+    },
+    "0x80121120": {
+      "name": "SpriteHandlePool_GC"
+    },
+    "0x80121c34": {
+      "name": "Stub_NoOp_80121c34"
+    },
+    "0x80121eac": {
+      "name": "ResCtrl_Init"
+    },
+    "0x801223e8": {
+      "name": "ResourceTable_GetFlagsByte"
+    },
+    "0x801224b4": {
+      "name": "ResourceTable_GetScaleXY"
+    },
+    "0x8012258c": {
+      "name": "ResourceTable_GetChainNextId"
+    },
+    "0x80122658": {
+      "name": "ResourceTable_GetSizeXY"
+    },
+    "0x80122730": {
+      "name": "ResourceTable_GetOffsetXY"
+    },
+    "0x80122808": {
+      "name": "ResourceTable_GetSlotIndex"
+    },
+    "0x801229c4": {
+      "name": "ResourceTable_GetFilePathPtr"
+    },
+    "0x80122ac4": {
+      "name": "ResourceTable_GetGroupKey"
+    },
+    "0x80122b90": {
+      "name": "IsValidResourceId"
+    },
+    "0x80122bb0": {
+      "name": "NokoNokoChallenge_HandleBrakeInput"
+    },
+    "0x80122c0c": {
+      "name": "NokoNokoChallenge_SaveResult"
+    },
+    "0x80122ce4": {
+      "name": "NokoNokoChallenge_CalcResultText"
+    },
+    "0x80122e58": {
+      "name": "NokoNokoChallenge_TransitionToResult"
+    },
+    "0x80122e80": {
+      "name": "NokoNokoChallenge_GetCoinDivisor"
+    },
+    "0x80122efc": {
+      "name": "MiniGame_GetCourseData"
+    },
+    "0x80123050": {
+      "name": "MiniGame_CreateByCourseid"
+    },
+    "0x8012318c": {
+      "name": "IsUraCourseFromSubMode"
+    },
+    "0x801231fc": {
+      "name": "MiniGame_GetTimerValue"
+    },
+    "0x801240b4": {
+      "name": "SuikaBallObj_Render"
+    },
+    "0x801240e4": {
+      "name": "SuikaBallObj_UpdatePhysics"
+    },
+    "0x80124984": {
+      "name": "SuikaBallObj_Init"
+    },
+    "0x80124ae8": {
+      "name": "ChallengeGoalCamera_Update"
+    },
+    "0x80124cf4": {
+      "name": "ChallengeGoalCamera_Init"
+    },
+    "0x801287f8": {
+      "name": "TimeTrial_Render"
+    },
+    "0x801289b8": {
+      "name": "NokoNokoChallenge_Update"
+    },
+    "0x80129674": {
+      "name": "TimeTrial_Destroy"
+    },
+    "0x80129938": {
+      "name": "NokoNokoChallenge_Init"
+    },
+    "0x8012c2cc": {
+      "name": "CGameCoin_Draw"
+    },
+    "0x8012c538": {
+      "name": "CGameCoin_Update"
+    },
+    "0x8012e69c": {
+      "name": "DefeatDemo_Update"
+    },
+    "0x8012ec44": {
+      "name": "BossKoopa_UpdateAnim"
+    },
+    "0x8012f07c": {
+      "name": "KoopaFireball_Update"
+    },
+    "0x8012f45c": {
+      "name": "Shell_UpdateState"
+    },
+    "0x8012f8b4": {
+      "name": "CGameCoin_Destroy"
+    },
+    "0x8012fc58": {
+      "name": "CGameCoin_Init"
+    },
+    "0x801303e4": {
+      "name": "CGameCoin_InitDefeatDemo"
+    },
+    "0x8013068c": {
+      "name": "BossKoopa_Init"
+    },
+    "0x80130a88": {
+      "name": "CGameCoin_InitFields"
+    },
+    "0x80130b5c": {
+      "name": "CoinParticle_Draw"
+    },
+    "0x80130d2c": {
+      "name": "CoinParticle_Update"
+    },
+    "0x80130fdc": {
+      "name": "CoinParticleManager_Destroy"
+    },
+    "0x8013105c": {
+      "name": "CGameCoin_ProcessInput"
+    },
+    "0x801313d0": {
+      "name": "SuikaBall_Render"
+    },
+    "0x801319dc": {
+      "name": "SuikaBall_Update"
+    },
+    "0x80133398": {
+      "name": "SuikaBall_Init"
+    },
+    "0x801341e4": {
+      "name": "BiribiriLand_Render"
+    },
+    "0x8013449c": {
+      "name": "BiribiriLand_Update"
+    },
+    "0x80134a8c": {
+      "name": "BiribiriLand_UpdateObstacles"
+    },
+    "0x80134d68": {
+      "name": "BiribiriLand_Destroy"
+    },
+    "0x80134ff0": {
+      "name": "BiribiriLand_Init"
+    },
+    "0x8013558c": {
+      "name": "RivalRun_Draw"
+    },
+    "0x80135734": {
+      "name": "RivalRun_Update"
+    },
+    "0x80135b7c": {
+      "name": "RivalRun_RivalAIUpdate"
+    },
+    "0x80135efc": {
+      "name": "RivalRun_UpdatePathFollower"
+    },
+    "0x80136148": {
+      "name": "RivalRun_RivalTactics"
+    },
+    "0x801367f4": {
+      "name": "RivalRun_CalcPathDistance"
+    },
+    "0x80136ba8": {
+      "name": "RivalRun_Destroy"
+    },
+    "0x80136ea0": {
+      "name": "RivalRun_Init"
+    },
+    "0x8013732c": {
+      "name": "RivalRun_RivalInit"
+    },
+    "0x80137588": {
+      "name": "RivalRun_PathFollowerInit"
+    },
+    "0x80138ce4": {
+      "name": "CourseObjects_Activate"
+    },
+    "0x80139898": {
+      "name": "CoinSystem_UpdateAll"
+    },
+    "0x8013a5bc": {
+      "name": "CoinSystem_RemoveCoins"
+    },
+    "0x8013a778": {
+      "name": "CoinSystem_Init"
+    },
+    "0x8013c2d4": {
+      "name": "GetTextureByIdAndLang"
+    },
+    "0x8015f210": {
+      "name": "result_screen_update"
+    },
+    "0x801602bc": {
+      "name": "has_title_changed"
+    },
+    "0x80169978": {
+      "name": "SetRumbleMode"
+    },
+    "0x80169a14": {
+      "name": "RumbleUpdate"
+    },
+    "0x80169d60": {
+      "name": "InitRumbleController"
+    },
+    "0x8016c3fc": {
+      "name": "SoundMgr_PlaySE"
+    },
+    "0x8016c730": {
+      "name": "WeatherSystem_Init"
+    },
+    "0x801868ec": {
+      "name": "LookupCos"
+    },
+    "0x80186928": {
+      "name": "LookupSin"
+    },
+    "0x80186998": {
+      "name": "LUT_Sine"
+    },
+    "0x80187d2c": {
+      "name": "NokoNoko_Update"
+    },
+    "0x801884e8": {
+      "name": "NokoNoko_InitEntity"
+    },
+    "0x801887bc": {
+      "name": "NokoNoko_FindNearest"
+    },
+    "0x801888b8": {
+      "name": "NokoNoko_CheckHitAndKill"
+    },
+    "0x80188ae4": {
+      "name": "NokoNoko_CountDefeated"
+    },
+    "0x80188b24": {
+      "name": "NokoNoko_Render"
+    },
+    "0x80188d0c": {
+      "name": "NokoNoko_StopAllAlive"
+    },
+    "0x80188d5c": {
+      "name": "NokoNoko_UpdateAll"
+    },
+    "0x80188e9c": {
+      "name": "NokoNoko_Init"
+    },
+    "0x80190768": {
+      "name": "clStream_setVolume"
+    },
+    "0x80190b3c": {
+      "name": "ClSound_PlayBgmStream"
+    },
+    "0x80192884": {
+      "name": "SoundMgr_Play"
+    },
+    "0x80193264": {
+      "name": "WeatherSystem_PickVariant"
+    },
+    "0x80193300": {
+      "name": "Fog_UpdateFromCourseScene3D"
+    },
+    "0x8019397c": {
+      "name": "ClSound_InitSoundSystem"
+    },
+    "0x80194214": {
+      "name": "ClStream_UpdateAll"
+    },
+    "0x801948c0": {
+      "name": "ClStream_FillChunk"
+    },
+    "0x80194a9c": {
+      "name": "ClStream_IsActive"
+    },
+    "0x80194b8c": {
+      "name": "ClStream_Stop"
+    },
+    "0x80194dd8": {
+      "name": "ClStream_PlayStereo"
+    },
+    "0x80195050": {
+      "name": "ClStream_PlayMono"
+    },
+    "0x80195b94": {
+      "name": "MapWaterEffect_Init"
+    },
+    "0x80196aa0": {
+      "name": "BananaField_Render"
+    },
+    "0x80196c5c": {
+      "name": "BananaField_CheckCollision"
+    },
+    "0x80196d9c": {
+      "name": "BananaPositionData_Init"
+    },
+    "0x80196f60": {
+      "name": "BananaField_TestHitBox"
+    },
+    "0x801998f8": {
+      "name": "DebugOverlay_KartPhysics"
+    },
+    "0x801999e0": {
+      "name": "KartMovement_CalcMaxSpeed"
+    },
+    "0x80199a84": {
+      "name": "KartMovement_CalcCurrentSpeed"
+    },
+    "0x80199b10": {
+      "name": "KartMovement_CalcSpeedWithCoinBonus"
+    },
+    "0x80199bbc": {
+      "name": "KartMovement_RotateByYaw"
+    },
+    "0x8019a4a0": {
+      "name": "KartMovement_SetPosition"
+    },
+    "0x8019a87c": {
+      "name": "KartMovement_SetTravelProgress"
+    },
+    "0x8019b080": {
+      "name": "KartMovement_CollisionUpdate"
+    },
+    "0x8019cd30": {
+      "name": "KartMovement_PhysicsStep"
+    },
+    "0x8019e20c": {
+      "name": "KartMovement_Init"
+    },
+    "0x8019ef90": {
+      "name": "SpeedCurve_UpdateSpeedCap"
+    },
+    "0x8019f114": {
+      "name": "SpeedCurve_LookupFromProgress"
+    },
+    "0x8019f154": {
+      "name": "SpeedCurve_LookupFromSpeed"
+    },
+    "0x8019ff18": {
+      "name": "Sprite_SetAnimTime"
+    },
+    "0x801a0290": {
+      "name": "Sprite_AdvanceAnim"
+    },
+    "0x801a0374": {
+      "name": "Sprite_SetAnimParam"
+    },
+    "0x801a03dc": {
+      "name": "Sprite_SetupAnim"
+    },
+    "0x801a0684": {
+      "name": "Sprite_Destroy"
+    },
+    "0x801a06f8": {
+      "name": "Sprite_CreateWithParams"
+    },
+    "0x801a0a30": {
+      "name": "Sprite_InitWithAnim"
+    },
+    "0x801a16f0": {
+      "name": "SpriteSystem_EnsureInit"
+    },
+    "0x801a8688": {
+      "name": "RaceAnnouncer_TickAndEnqueue"
+    },
+    "0x801ad534": {
+      "name": "VoiceEvent_PushRace"
+    },
+    "0x801b03f0": {
+      "name": "VoiceIntro_PushForRaceMode"
+    },
+    "0x801b0af4": {
+      "name": "VoiceIntro_PushRaceStart"
+    },
+    "0x801b0f88": {
+      "name": "VoiceQueue_Push"
+    },
+    "0x801b3190": {
+      "name": "Voice_TryEnqueueAnnouncerByPhase"
+    },
+    "0x801b3830": {
+      "name": "VoiceSystem_SetCheckpointsForTotalLaps"
+    },
+    "0x801b3914": {
+      "name": "Live_IsConnectReady"
+    },
+    "0x801b3928": {
+      "name": "PlaySoundDSP"
+    },
+    "0x801b3ab0": {
+      "name": "VoiceQueue_Clear"
+    },
+    "0x801b5bac": {
+      "name": "VoiceSystem_BindKartCarObject"
+    },
+    "0x801b5e18": {
+      "name": "Race_PerFrameTickAndAudio"
+    },
+    "0x801b6c94": {
+      "name": "VoiceSystem_Init"
+    },
+    "0x801b7a08": {
+      "name": "clFlowEntry_Init"
+    },
+    "0x801b7b40": {
+      "name": "StartScreenFade"
+    },
+    "0x801b7c88": {
+      "name": "PlayCursorMoveSE"
+    },
+    "0x801b8154": {
+      "name": "SetScreenBrightness"
+    },
+    "0x801b833c": {
+      "name": "InitBGM"
+    },
+    "0x801b8a80": {
+      "name": "SetupBgSprites"
+    },
+    "0x801b8ec0": {
+      "name": "MenuScene_Dispatch"
+    },
+    "0x801ba034": {
+      "name": "GetCourseSelectEntry"
+    },
+    "0x801ba194": {
+      "name": "InitializeFrameSelection"
+    },
+    "0x801ba380": {
+      "name": "clFlowEntry_Update"
+    },
+    "0x801ba7b8": {
+      "name": "clFlowTitle_Init"
+    },
+    "0x801bb30c": {
+      "name": "clFlowCard_Init"
+    },
+    "0x801c23a8": {
+      "name": "clFlowClass_Update"
+    },
+    "0x801c3244": {
+      "name": "clFlowClass_Init"
+    },
+    "0x801c3470": {
+      "name": "CharaSelect_SetupCharacterDisplay"
+    },
+    "0x801c3714": {
+      "name": "GetFrameIdxFromVisualIdx"
+    },
+    "0x801c393c": {
+      "name": "clFlowChara_HandleConfirm"
+    },
+    "0x801c3d48": {
+      "name": "clFlowChara_Update"
+    },
+    "0x801c4ca4": {
+      "name": "clFlowChara_Destructor"
+    },
+    "0x801c4ea8": {
+      "name": "FrameSelection_Init"
+    },
+    "0x801c53a0": {
+      "name": "FrameSelection_Confirm"
+    },
+    "0x801c569c": {
+      "name": "FrameSelection_Draw"
+    },
+    "0x801c5890": {
+      "name": "FrameSelection_Update"
+    },
+    "0x801c5e00": {
+      "name": "clFlowFigure_Init"
+    },
+    "0x801c7360": {
+      "name": "clFlowCup_Draw"
+    },
+    "0x801c772c": {
+      "name": "clFlowCup_Update"
+    },
+    "0x801c88f4": {
+      "name": "clFlowCup_Dtor"
+    },
+    "0x801c8ab4": {
+      "name": "clFlowCup_Init"
+    },
+    "0x801c9c28": {
+      "name": "clFlowRound_Draw"
+    },
+    "0x801c9eac": {
+      "name": "clFlowRound_Update"
+    },
+    "0x801cadbc": {
+      "name": "clFlowRound_Dtor"
+    },
+    "0x801caf34": {
+      "name": "clFlowRound_Init"
+    },
+    "0x801cb620": {
+      "name": "clFlowItemSelect_CommitSlotAnim"
+    },
+    "0x801cbcac": {
+      "name": "clFlowItemSelect_Draw"
+    },
+    "0x801cbd58": {
+      "name": "clFlowItemSelect_Update"
+    },
+    "0x801cc104": {
+      "name": "clFlowItemSelect_Dtor"
+    },
+    "0x801cc2ec": {
+      "name": "clFlowItemSelect_Init"
+    },
+    "0x801cd030": {
+      "name": "clFlowGpPlease_Init"
+    },
+    "0x801ce324": {
+      "name": "clFlowTaPlease_Init"
+    },
+    "0x801cf360": {
+      "name": "clFlowCourse_Update"
+    },
+    "0x801d0c30": {
+      "name": "clFlowCourse_Dtor"
+    },
+    "0x801d0ee0": {
+      "name": "clFlowCourse_Init"
+    },
+    "0x801d1eac": {
+      "name": "ranking_display"
+    },
+    "0x801d43c4": {
+      "name": "card_unpack"
+    },
+    "0x801d5244": {
+      "name": "card_pack"
+    },
+    "0x801d5d68": {
+      "name": "GetCoinMilage"
+    },
+    "0x801d5d70": {
+      "name": "AddCoinMilage"
+    },
+    "0x801d5d98": {
+      "name": "SetKartVariantOnPlayer"
+    },
+    "0x801d6398": {
+      "name": "PlayerData_ResolveUnlockedIdByIndex"
+    },
+    "0x801d7160": {
+      "name": "PlayerData_Construct"
+    },
+    "0x801d7920": {
+      "name": "clFlowKart_UpdateDisplay"
+    },
+    "0x801d7b50": {
+      "name": "clFlowKart_HandleConfirm"
+    },
+    "0x801d7e84": {
+      "name": "clFlowKart_Update"
+    },
+    "0x801d83d4": {
+      "name": "clFlowKart_Init"
+    },
+    "0x801d8d5c": {
+      "name": "GetCourseShortIdByCupAndMirror"
+    },
+    "0x801d9890": {
+      "name": "clFlowKart_SetupTextLayout"
+    },
+    "0x801da838": {
+      "name": "clFlowAttract_Init"
+    },
+    "0x801db548": {
+      "name": "DrawText"
+    },
+    "0x801dbaa8": {
+      "name": "PathFollower_Update"
+    },
+    "0x801dc320": {
+      "name": "PathFollower_Init"
+    },
+    "0x801dc514": {
+      "name": "PathData_GetByContext"
+    },
+    "0x801dc5f8": {
+      "name": "PathFollower_EnsureGlobalAlloc"
+    },
+    "0x801dc888": {
+      "name": "AI_GetHitCooldown"
+    },
+    "0x801dcb18": {
+      "name": "PathVariant_Select"
+    },
+    "0x801dcdcc": {
+      "name": "AI_CalcDistanceSpeedBonus"
+    },
+    "0x801dcf00": {
+      "name": "AI_RollItemUseProbability"
+    },
+    "0x801dd044": {
+      "name": "AI_CheckTargetInRange"
+    },
+    "0x801dd344": {
+      "name": "AI_CheckItemSuppression"
+    },
+    "0x801dd480": {
+      "name": "AI_CalcLapSpeedBonus"
+    },
+    "0x801ddb04": {
+      "name": "RivalAvoidance_CalcPattern"
+    },
+    "0x801ddc5c": {
+      "name": "LateralOffset_GetMagnitude"
+    },
+    "0x801de208": {
+      "name": "clEnemyParam_FillItemListIds"
+    },
+    "0x801de41c": {
+      "name": "AI_GetItemList"
+    },
+    "0x801de448": {
+      "name": "GetKartTuningGPSpeedParams"
+    },
+    "0x801de4d4": {
+      "name": "GetKartTuningSpeedFactor"
+    },
+    "0x801de560": {
+      "name": "GetKartTuningEntry"
+    },
+    "0x801de5e8": {
+      "name": "GetBaseSpeedMin"
+    },
+    "0x801de664": {
+      "name": "GetBaseSpeedMax"
+    },
+    "0x801de73c": {
+      "name": "GetEnemyParam"
+    },
+    "0x801de848": {
+      "name": "DriveBehavior_HandleWpType"
+    },
+    "0x801dec64": {
+      "name": "PathFollower_IsItemLocked"
+    },
+    "0x801dfa40": {
+      "name": "SteeringMgr_Init"
+    },
+    "0x801e5b50": {
+      "name": "AI_UpdateItemEffects"
+    },
+    "0x801e65b8": {
+      "name": "AI_GrantItem"
+    },
+    "0x801e6ba8": {
+      "name": "AI_UseItem"
+    },
+    "0x801e6c5c": {
+      "name": "KartController_SetTargetSpeed"
+    },
+    "0x801e6c94": {
+      "name": "AI_GetLapDifference"
+    },
+    "0x801e6d30": {
+      "name": "AI_GetYaw"
+    },
+    "0x801e6d6c": {
+      "name": "AI_HasItem"
+    },
+    "0x801e6da0": {
+      "name": "AI_GetItemType"
+    },
+    "0x801e6e10": {
+      "name": "KartController_GetRenderObj"
+    },
+    "0x801e6ed4": {
+      "name": "KartController_Update"
+    },
+    "0x801e8140": {
+      "name": "KartController_TimedUpdate"
+    },
+    "0x801e83c8": {
+      "name": "AI_KartInit"
+    },
+    "0x801e8fb8": {
+      "name": "ItemHolder_Init"
+    },
+    "0x801e9070": {
+      "name": "ItemHolder_GetItemType"
+    },
+    "0x801e9078": {
+      "name": "ItemHolder_HasItem"
+    },
+    "0x801e908c": {
+      "name": "ItemHolder_GetEffectCategory"
+    },
+    "0x801e90e0": {
+      "name": "ItemHolder_SetItem"
+    },
+    "0x801e92a0": {
+      "name": "ItemHolder_Update"
+    },
+    "0x801e93ac": {
+      "name": "AI_CalcVSTargetSpeed"
+    },
+    "0x801e9840": {
+      "name": "AI_DecideAndUseItem_PairTracking"
+    },
+    "0x801e9a84": {
+      "name": "AI_CalcTargetSpeed_PairTracking"
+    },
+    "0x801ea2fc": {
+      "name": "AI_UpdateItemUseLogic"
+    },
+    "0x801ea500": {
+      "name": "AI_CalcItemSpeedBonus"
+    },
+    "0x801ea6f0": {
+      "name": "AI_CalcGPTargetSpeed"
+    },
+    "0x801eaca0": {
+      "name": "AI_PerKartUpdate"
+    },
+    "0x801eadc8": {
+      "name": "AI_UpdatePerFrameState"
+    },
+    "0x801eb80c": {
+      "name": "PseudoRandom_Next"
+    },
+    "0x801eb99c": {
+      "name": "RankingMgr_UpdatePositions"
+    },
+    "0x801ebaf4": {
+      "name": "AI_SystemDtor"
+    },
+    "0x801ebc8c": {
+      "name": "AI_SystemInit"
+    },
+    "0x801ebf48": {
+      "name": "ThinkBox_Create"
+    },
+    "0x801ec4b0": {
+      "name": "EnemyRunType2_CalcSteering"
+    },
+    "0x801ec568": {
+      "name": "EnemyRunType2_Init"
+    },
+    "0x801ec5a4": {
+      "name": "EnemyRunType1_CalcSteering"
+    },
+    "0x801ec65c": {
+      "name": "EnemyRunType1_Init"
+    },
+    "0x801ec734": {
+      "name": "PhysicsState_GetSpeed"
+    },
+    "0x801ec73c": {
+      "name": "PhysicsState_GetAngularVelocity"
+    },
+    "0x801ec744": {
+      "name": "PhysicsState_GetOrientMatrixPtr"
+    },
+    "0x801ec764": {
+      "name": "PhysicsState_GetHeading"
+    },
+    "0x801ec76c": {
+      "name": "PhysicsState_GetPositionPtr"
+    },
+    "0x801ec774": {
+      "name": "PhysicsState_GetCollisionKartIdx"
+    },
+    "0x801ec7ac": {
+      "name": "PhysicsState_SetFlag188"
+    },
+    "0x801ec818": {
+      "name": "PhysicsState_SetCollidedObject"
+    },
+    "0x801ec84c": {
+      "name": "PhysicsState_SetPosition"
+    },
+    "0x801ec868": {
+      "name": "PhysicsState_SetGrounded"
+    },
+    "0x801ec870": {
+      "name": "PhysicsState_SetField94"
+    },
+    "0x801ec878": {
+      "name": "PhysicsState_SetField90"
+    },
+    "0x801ec880": {
+      "name": "PhysicsState_SetSpeedImmediate"
+    },
+    "0x801ec894": {
+      "name": "PhysicsState_AccelInterpolate"
+    },
+    "0x801ec99c": {
+      "name": "PhysicsState_SetBrake"
+    },
+    "0x801ec9a4": {
+      "name": "PhysicsState_SetAccel"
+    },
+    "0x801ecb88": {
+      "name": "PhysicsState_KartCollisionCheck"
+    },
+    "0x801ed0e8": {
+      "name": "PhysicsState_WallCollisionCheck"
+    },
+    "0x801edfec": {
+      "name": "KartPhysics_ApplyCollisionForce"
+    },
+    "0x801ee7f0": {
+      "name": "AI_CalcRivalAvoidance"
+    },
+    "0x801eed14": {
+      "name": "KartPhysics_GroundedMovement"
+    },
+    "0x801effa4": {
+      "name": "KartPhysics_UpdateSmoothing"
+    },
+    "0x801f0644": {
+      "name": "EnemyRun_BaseInit"
+    },
+    "0x801f4eb0": {
+      "name": "DebugOverlay_RaceConfig"
+    },
+    "0x801f6454": {
+      "name": "DisplayBuffer_GetByIndex"
+    },
+    "0x801f7b98": {
+      "name": "GX_BeginDraw"
+    },
+    "0x801f7c18": {
+      "name": "GX_EndDraw"
+    },
+    "0x801f8e08": {
+      "name": "wchar_to_card_char"
+    },
+    "0x801f91ec": {
+      "name": "TexMgr_SetTexture"
+    },
+    "0x801f93f8": {
+      "name": "TexMgr_Init"
+    },
+    "0x801f947c": {
+      "name": "TexMgr_Apply"
+    },
+    "0x801f9954": {
+      "name": "CollisionFile_Load"
+    },
+    "0x801fe150": {
+      "name": "UI_PlaySeToggle"
+    },
+    "0x801fe188": {
+      "name": "UI_PlaySeClSound4D"
+    },
+    "0x801fe1ac": {
+      "name": "UI_PlaySeDecide"
+    },
+    "0x80207e3c": {
+      "name": "CollisionTest_CalcPenetration"
+    },
+    "0x80209138": {
+      "name": "CollisionObject_SetPosAndBounds"
+    },
+    "0x80209684": {
+      "name": "CardSnapshot_ResolveCommonItems"
+    },
+    "0x8020aa98": {
+      "name": "ItemDisplay_Stop"
+    },
+    "0x8020ab44": {
+      "name": "ItemDisplay_Start"
+    },
+    "0x8020ac60": {
+      "name": "ItemDisplay_Update"
+    },
+    "0x8020ae50": {
+      "name": "ItemDisplay_Destroy"
+    },
+    "0x8020aea8": {
+      "name": "ItemDisplay_GetOrCreate"
+    },
+    "0x80210a50": {
+      "name": "JumpDistanceMode_PredictLanding"
+    },
+    "0x80210cd4": {
+      "name": "JumpDistanceMode_UpdateGameplay"
+    },
+    "0x80211550": {
+      "name": "JumpDistanceMode_HandlePhysics"
+    },
+    "0x80211e6c": {
+      "name": "JumpDistanceMode_Update"
+    },
+    "0x80213210": {
+      "name": "JumpDistanceMode_Init"
+    },
+    "0x80213a64": {
+      "name": "JumpDistanceMode_InitTimerDisplay"
+    },
+    "0x80213d58": {
+      "name": "JumpDistanceMode_CopyKartMovement"
+    },
+    "0x802143e4": {
+      "name": "MiniGame_CoinChallenge_Destroy"
+    },
+    "0x80214594": {
+      "name": "MiniGame_CoinChallenge_Update"
+    },
+    "0x80214db8": {
+      "name": "MiniGame_CoinChallenge_Init"
+    },
+    "0x802151c8": {
+      "name": "ScoreDisplay_Init"
+    },
+    "0x802161c4": {
+      "name": "SetCoinCount"
+    },
+    "0x802161e4": {
+      "name": "GetCoinCount"
+    },
+    "0x80216204": {
+      "name": "GetEarnedCoins"
+    },
+    "0x8021623c": {
+      "name": "CheckCoinMilestones"
+    },
+    "0x80216540": {
+      "name": "AddCoinsFromExtraStage"
+    },
+    "0x80216568": {
+      "name": "CalcEarnedCoins"
+    },
+    "0x80223798": {
+      "name": "CoinResultScene_Init"
+    },
+    "0x802379f8": {
+      "name": "clFlowItem_Draw"
+    },
+    "0x80237be0": {
+      "name": "clFlowItem_Update"
+    },
+    "0x802381b8": {
+      "name": "clFlowItem_Dtor"
+    },
+    "0x802383a0": {
+      "name": "clFlowItem_Init"
+    },
+    "0x802394dc": {
+      "name": "ItemSelectState_Dtor"
+    },
+    "0x80239764": {
+      "name": "ItemSelectState_Init"
+    },
+    "0x8023a7ac": {
+      "name": "ItemGridState_Init"
+    },
+    "0x8023c8b0": {
+      "name": "IsItemSelectAllowed"
+    },
+    "0x8023d6d4": {
+      "name": "GetCourseSectionType"
+    },
+    "0x8023d918": {
+      "name": "ItemRes_LookupByKey_Thunk"
+    },
+    "0x8023d9f0": {
+      "name": "Item_GetLocalizedAsset"
+    },
+    "0x8023db24": {
+      "name": "Item_GetDescriptorFieldC"
+    },
+    "0x8023db88": {
+      "name": "Item_GetDescriptorField8"
+    },
+    "0x8023dc50": {
+      "name": "Item_GetDescriptorField0"
+    },
+    "0x8023ef38": {
+      "name": "SpriteAnimParamBlock_SetKey"
+    },
+    "0x8023efc4": {
+      "name": "SpriteAnimParamBlock_SetAnimParamCached"
+    },
+    "0x8023f05c": {
+      "name": "SpriteAnimParamBlock_Reload"
+    },
+    "0x8023f254": {
+      "name": "SpriteAnimHandle_Destroy"
+    },
+    "0x8023f444": {
+      "name": "SpriteGroup_CreateOrInit"
+    },
+    "0x8023f65c": {
+      "name": "IsCardValid"
+    },
+    "0x8023faa0": {
+      "name": "LapDisp_SetTotalLaps"
+    },
+    "0x8023faec": {
+      "name": "LapDisp_SetCurrentLap"
+    },
+    "0x80249984": {
+      "name": "RnkDisp_SetPosition"
+    },
+    "0x8024d244": {
+      "name": "BattleScene_InitAndPromoteRole"
+    },
+    "0x80253658": {
+      "name": "HUD_FrameUpdate"
+    },
+    "0x80253b14": {
+      "name": "HUD_RegisterOverlay"
+    },
+    "0x80253e68": {
+      "name": "HUD_SetRacePosition"
+    },
+    "0x80253f34": {
+      "name": "HUD_SetTotalLaps"
+    },
+    "0x80253f84": {
+      "name": "HUD_SetCurrentLap"
+    },
+    "0x8025421c": {
+      "name": "HUD_Init"
+    },
+    "0x80255800": {
+      "name": "OSPanic_SpinForever"
+    },
+    "0x8025591c": {
+      "name": "__DBExceptionDestination"
+    },
+    "0x80255974": {
+      "name": "__OSIsInterruptCommandeered"
+    },
+    "0x80255990": {
+      "name": "OSReport_Stub"
+    },
+    "0x8025604c": {
+      "name": "__OSExceptionInit"
+    },
+    "0x802562f4": {
+      "name": "__OSSetInterruptHandler"
+    },
+    "0x802570f8": {
+      "name": "__OSMachineCheckHandler"
+    },
+    "0x80257598": {
+      "name": "OSSaveFPUContext"
+    },
+    "0x802575a0": {
+      "name": "OSSetCurrentContext"
+    },
+    "0x80257688": {
+      "name": "__OSReturnFromException"
+    },
+    "0x80257768": {
+      "name": "OSClearContext"
+    },
+    "0x80257848": {
+      "name": "OSDumpContext"
+    },
+    "0x80257ce8": {
+      "name": "__OSSetExceptionHandler"
+    },
+    "0x80257f00": {
+      "name": "OSUnhandledException"
+    },
+    "0x80259a1c": {
+      "name": "OSDisableInterrupts"
+    },
+    "0x80259a44": {
+      "name": "OSRestoreInterrupts"
+    },
+    "0x80259ef4": {
+      "name": "__OSExternalInterruptHandler"
+    },
+    "0x8025a9d0": {
+      "name": "thunk_FUN_8025a9d4",
+      "thunk": true
+    },
+    "0x8025a9f0": {
+      "name": "thunk_FUN_8025a9d4",
+      "thunk": true
+    },
+    "0x8025aa10": {
+      "name": "thunk_FUN_8025a9d4",
+      "thunk": true
+    },
+    "0x8025aa30": {
+      "name": "thunk_FUN_8025a9d4",
+      "thunk": true
+    },
+    "0x8025aa3c": {
+      "name": "thunk_FUN_8025a9d4",
+      "thunk": true
+    },
+    "0x8025ba9c": {
+      "name": "__OSInitThreads"
+    },
+    "0x8025bc10": {
+      "name": "__OSIncrementSchedulerDisableCount"
+    },
+    "0x8025bc50": {
+      "name": "__OSDecrementSchedulerDisableCount"
+    },
+    "0x8025c11c": {
+      "name": "__OSCheckDeferredReschedule"
+    },
+    "0x8025cc68": {
+      "name": "OSGetTime"
+    },
+    "0x8025cc80": {
+      "name": "OSGetTick"
+    },
+    "0x8025d100": {
+      "name": "PanicThunk_80255800"
+    },
+    "0x8025d494": {
+      "name": "PSMTXConcat"
+    },
+    "0x8025d9ec": {
+      "name": "PSMTXTrans"
+    },
+    "0x8025da6c": {
+      "name": "PSMTXScale"
+    },
+    "0x8025e288": {
+      "name": "Vec3_Subtract"
+    },
+    "0x8025e2c8": {
+      "name": "Vec3_Normalize"
+    },
+    "0x8025e324": {
+      "name": "Vec3_Magnitude"
+    },
+    "0x8025e368": {
+      "name": "Vec3_Dot"
+    },
+    "0x8025e3ec": {
+      "name": "Vec3_Distance"
+    },
+    "0x80264290": {
+      "name": "GXInit_LoadIdentityTexMtxSlots"
+    },
+    "0x80265300": {
+      "name": "GX_SetVtxDesc"
+    },
+    "0x802659d4": {
+      "name": "GX_ClearVtxDesc"
+    },
+    "0x80265a0c": {
+      "name": "GX_SetVtxAttrFmt"
+    },
+    "0x80265f84": {
+      "name": "GX_SetArray"
+    },
+    "0x80266020": {
+      "name": "GXSetTexCoordGen2"
+    },
+    "0x802666f4": {
+      "name": "GX_DrawDoneAndWait"
+    },
+    "0x80266798": {
+      "name": "GX_ResetVertex"
+    },
+    "0x802682a8": {
+      "name": "GXInitTexObjFilter"
+    },
+    "0x80269fa8": {
+      "name": "GX_CallDisplayList"
+    },
+    "0x8026a304": {
+      "name": "GXLoadPosMtxImm"
+    },
+    "0x8026a3d8": {
+      "name": "GXLoadTexMtxImm"
+    },
+    "0x80271bf4": {
+      "name": "__cvt_ll2flt"
+    },
+    "0x80276e04": {
+      "name": "vsprintf"
+    },
+    "0x8027eb78": {
+      "name": "Atan2"
+    },
+    "0x8029179c": {
+      "name": "acSocket"
+    },
+    "0x80291854": {
+      "name": "acSetTimeOuts"
+    },
+    "0x80291934": {
+      "name": "acSend"
+    },
+    "0x80291a84": {
+      "name": "acSelect"
+    },
+    "0x80291e14": {
+      "name": "acRecv"
+    },
+    "0x80291f64": {
+      "name": "acModifyMyIPaddr"
+    },
+    "0x8029209c": {
+      "name": "acListen"
+    },
+    "0x80292184": {
+      "name": "acInetAddr"
+    },
+    "0x802922a8": {
+      "name": "acGetLastError"
+    },
+    "0x80292380": {
+      "name": "acConnect"
+    },
+    "0x802924f4": {
+      "name": "acClosesocket"
+    },
+    "0x802925cc": {
+      "name": "acBind"
+    },
+    "0x80292720": {
+      "name": "acAccept"
+    },
+    "0x80292e24": {
+      "name": "acPollResponse"
+    },
+    "0x80292ee8": {
+      "name": "acReadResponse"
+    },
+    "0x80294edc": {
+      "name": "DVDConvertPathToEntrynum"
+    },
+    "0x80295244": {
+      "name": "DVDOpen"
+    },
+    "0x802956a8": {
+      "name": "DVDReadAsync"
+    },
+    "0x80295798": {
+      "name": "DVDRead"
+    },
+    "0x802bd4c0": {
+      "name": "HSD_DObj_Disp"
+    },
+    "0x802bd624": {
+      "name": "hsd_dobj_ClassInit"
+    },
+    "0x802bdec8": {
+      "name": "TObj_LoadFromDesc"
+    },
+    "0x802bdff0": {
+      "name": "TObj_AllocAndLoadDesc"
+    },
+    "0x802be1f0": {
+      "name": "TObj_RebuildTransformMtx"
+    },
+    "0x802be3c4": {
+      "name": "TObj_LoadTexMtxList"
+    },
+    "0x802be72c": {
+      "name": "TObj_SetupTexCoordGenList"
+    },
+    "0x802bfd08": {
+      "name": "TObj_SetupTextureList"
+    },
+    "0x802c0894": {
+      "name": "TObj_ClassInit"
+    },
+    "0x802c107c": {
+      "name": "GX_SetCullMode"
+    },
+    "0x802c60fc": {
+      "name": "RenderTarget_Create"
+    },
+    "0x802cb9ec": {
+      "name": "HSD_PObj_DrawDisplayList"
+    },
+    "0x802ccce4": {
+      "name": "HSD_PObj_Disp"
+    },
+    "0x802cd218": {
+      "name": "hsd_pobj_ClassInit"
+    },
+    "0x802ce078": {
+      "name": "HSD_JObjReqAnimAll"
+    },
+    "0x802cfedc": {
+      "name": "HSD_JObjLoadDesc"
+    },
+    "0x802d2444": {
+      "name": "HSD_JObjRemoveAll"
+    },
+    "0x802d6e3c": {
+      "name": "MTXRotEulerXYZ"
+    },
+    "0x802dc89c": {
+      "name": "HSD_ArchiveGetPublicAddress"
+    },
+    "0x802de060": {
+      "name": "HSD_ClassInit"
+    },
+    "0x802e528c": {
+      "name": "__assert"
+    },
+    "0x802e52e8": {
+      "name": "__panic_format"
+    }
+  },
+  "globals": {
+    "0x80190c04": {
+      "name": "AfterStopExistingStreams"
+    },
+    "0x80190c50": {
+      "name": "StartStreamInFreeSlot"
+    },
+    "0x802562cc": {
+      "name": "g_OSDBIntegratorTemplate"
+    },
+    "0x80256324": {
+      "name": "g_OSExceptionPrologTemplate"
+    },
+    "0x802563c0": {
+      "name": "g_OSExceptionCommonDispatcher",
+      "type_hint": "undefined4"
+    },
+    "0x80317854": {
+      "name": "g_kartParamPtrTable",
+      "type_hint": "undefined *"
+    },
+    "0x80317888": {
+      "name": "g_kartParamCcVariantTable",
+      "type_hint": "undefined *"
+    },
+    "0x8032890c": {
+      "name": "kCup0LineBinTable",
+      "type_hint": "char *[4]"
+    },
+    "0x8037ce1c": {
+      "name": "kBgmDspFilenameTable",
+      "type_hint": "char *[42]"
+    },
+    "0x80383c80": {
+      "name": "kVoiceFinalLapCheckpointByTotalLaps",
+      "type_hint": "int[8]"
+    },
+    "0x80383ca0": {
+      "name": "kVoiceMidRaceCheckpointByTotalLaps",
+      "type_hint": "int[8]"
+    },
+    "0x8039ae3c": {
+      "name": "g_frameUnlockThresholds_Partial",
+      "type_hint": "undefined"
+    },
+    "0x8039ae70": {
+      "name": "g_frameUnlockThresholds_Full",
+      "type_hint": "undefined"
+    },
+    "0x8039aea4": {
+      "name": "g_tierTextureIdTable",
+      "type_hint": "undefined"
+    },
+    "0x8039cd58": {
+      "name": "kItemBaseIdTable",
+      "type_hint": "int[121]"
+    },
+    "0x8039cf3c": {
+      "name": "kItemUnlockRemap",
+      "type_hint": "ItemUnlockRemapEntry[3]"
+    },
+    "0x803a01e8": {
+      "name": "kAIBaseSpeedTable_Race",
+      "type_hint": "CupSpeedEntry[192]"
+    },
+    "0x803a07e8": {
+      "name": "kAIBaseSpeedTable_BattleTimeAttack",
+      "type_hint": "CupSpeedEntry[24]"
+    },
+    "0x803bcb48": {
+      "name": "kAILapBonusRules_NonRaceCommon",
+      "type_hint": "AILapBonusRule[5]"
+    },
+    "0x803bcbac": {
+      "name": "kAILapBonusRuleTable_RaceCourse",
+      "type_hint": "AILapBonusRule *[24]"
+    },
+    "0x803bcc0c": {
+      "name": "kAILapBonusRuleTable_RaceFallback",
+      "type_hint": "AILapBonusRule *[192]"
+    },
+    "0x803bcf0c": {
+      "name": "kAILapBonusRuleTable_NonRace",
+      "type_hint": "AILapBonusRule *[104]"
+    },
+    "0x803e0f70": {
+      "name": "g_itemAssetTable_EN",
+      "type_hint": "void *[981]"
+    },
+    "0x803e47e0": {
+      "name": "g_itemAssetTable_JP",
+      "type_hint": "void *[981]"
+    },
+    "0x803f5720": {
+      "name": "kRawGameMap_Raw0",
+      "type_hint": "undefined4"
+    },
+    "0x803f5724": {
+      "name": "kRawGameMap_Game0",
+      "type_hint": "undefined4"
+    },
+    "0x803f5728": {
+      "name": "kRawGameMap_Raw1",
+      "type_hint": "undefined4"
+    },
+    "0x803f572c": {
+      "name": "kRawGameMap_Game1",
+      "type_hint": "undefined4"
+    },
+    "0x803f5730": {
+      "name": "kRawGameMap_Raw2",
+      "type_hint": "undefined4"
+    },
+    "0x803f5734": {
+      "name": "kRawGameMap_Game2",
+      "type_hint": "undefined4"
+    },
+    "0x803f5738": {
+      "name": "kRawGameMap_Raw3",
+      "type_hint": "undefined4"
+    },
+    "0x803f573c": {
+      "name": "kRawGameMap_Game3",
+      "type_hint": "undefined4"
+    },
+    "0x803f5740": {
+      "name": "kRawGameMap_Raw4",
+      "type_hint": "undefined4"
+    },
+    "0x803f5744": {
+      "name": "kRawGameMap_Game4",
+      "type_hint": "undefined4"
+    },
+    "0x803f5754": {
+      "name": "g_InputObjectVtable",
+      "type_hint": "pointer"
+    },
+    "0x803fdf50": {
+      "name": "g_pcbIpTable",
+      "type_hint": "undefined *"
+    },
+    "0x80401ce0": {
+      "name": "g_characterDataTable",
+      "type_hint": "undefined *"
+    },
+    "0x8040e7bc": {
+      "name": "g_GameModeBaseVtable",
+      "type_hint": "pointer"
+    },
+    "0x8040e7d0": {
+      "name": "kRaceParamsTable",
+      "type_hint": "RaceParamsEntry[48]"
+    },
+    "0x8040ea1c": {
+      "name": "g_RaceModeVtable",
+      "type_hint": "pointer"
+    },
+    "0x8041e160": {
+      "name": "g_itemAliasTable",
+      "type_hint": "undefined4"
+    },
+    "0x80422208": {
+      "name": "kResourceTableMain",
+      "type_hint": "ResourceEntry[11008]"
+    },
+    "0x8048da08": {
+      "name": "kResourceTableExt",
+      "type_hint": "ResourceEntry[4]"
+    },
+    "0x80496c70": {
+      "name": "g_charRaceStartVoiceTable",
+      "type_hint": "short[13]"
+    },
+    "0x8049816c": {
+      "name": "g_voicePlayCountTable",
+      "type_hint": "undefined1"
+    },
+    "0x80498170": {
+      "name": "g_voiceWeightTable",
+      "type_hint": "undefined"
+    },
+    "0x8049aad0": {
+      "name": "FrameParam_ARRAY_8049aad0",
+      "type_hint": "TierParam[13]"
+    },
+    "0x8049ac08": {
+      "name": "g_tierCursorPosTable",
+      "type_hint": "undefined"
+    },
+    "0x8049d010": {
+      "name": "kDummyOnePointPath",
+      "type_hint": "undefined"
+    },
+    "0x804e36a8": {
+      "name": "g_PathVariantTable",
+      "type_hint": "undefined4"
+    },
+    "0x804eb6b0": {
+      "name": "g_itemIdToIndexTable",
+      "type_hint": "uint[327]"
+    },
+    "0x80598568": {
+      "name": "g_jvsOperatorBits",
+      "type_hint": "undefined2"
+    },
+    "0x80598570": {
+      "name": "g_jvsSteeringRaw",
+      "type_hint": "undefined2"
+    },
+    "0x80598572": {
+      "name": "g_jvsAccelRaw",
+      "type_hint": "undefined2"
+    },
+    "0x80598574": {
+      "name": "g_jvsBrakeRaw",
+      "type_hint": "undefined2"
+    },
+    "0x80598588": {
+      "name": "g_jvsPlayerButtons",
+      "type_hint": "undefined2"
+    },
+    "0x805985b4": {
+      "name": "g_metricsTable",
+      "type_hint": "float[48]"
+    },
+    "0x80598a8a": {
+      "name": "g_DebugPrintfEnable",
+      "type_hint": "undefined1"
+    },
+    "0x80598aa4": {
+      "name": "g_jvsDebounceEnable",
+      "type_hint": "undefined4"
+    },
+    "0x80598aa8": {
+      "name": "g_displayOffsetY",
+      "type_hint": "undefined4"
+    },
+    "0x80598aac": {
+      "name": "g_displayOffsetX",
+      "type_hint": "undefined4"
+    },
+    "0x805a6118": {
+      "name": "g_pcbSyncTable",
+      "type_hint": "undefined1"
+    },
+    "0x805ac260": {
+      "name": "g_syncedSceneState",
+      "type_hint": "undefined1"
+    },
+    "0x805d2580": {
+      "name": "g_playerData",
+      "type_hint": "undefined4"
+    },
+    "0x805d258e": {
+      "name": "g_sessionWins",
+      "type_hint": "undefined2"
+    },
+    "0x805d2590": {
+      "name": "g_sessionLosses",
+      "type_hint": "undefined2"
+    },
+    "0x805d271b": {
+      "name": "g_currentTitleId",
+      "type_hint": "undefined1"
+    },
+    "0x805d2738": {
+      "name": "g_lastSelectedTier",
+      "type_hint": "undefined1"
+    },
+    "0x805d2ae0": {
+      "name": "g_carObjects",
+      "type_hint": "undefined4"
+    },
+    "0x805d2af0": {
+      "name": "g_itemSelects",
+      "type_hint": "undefined4"
+    },
+    "0x805d2f4e": {
+      "name": "g_prevSessionWins",
+      "type_hint": "undefined2"
+    },
+    "0x805d2f50": {
+      "name": "g_prevSessionLosses",
+      "type_hint": "undefined2"
+    },
+    "0x8065bee8": {
+      "name": "g_SpriteHandlePool",
+      "type_hint": "SpriteHandleSlot[500]"
+    },
+    "0x806786f8": {
+      "name": "ClSound_ActiveStreams",
+      "type_hint": "ClSound_ActiveStreamEntry[4]"
+    },
+    "0x80678718": {
+      "name": "g_ClStreams",
+      "type_hint": "ClStream[6]"
+    },
+    "0x80678d90": {
+      "name": "g_voiceQueue",
+      "type_hint": "VoiceQueueEntry[64]"
+    },
+    "0x80678f10": {
+      "name": "g_raceCurrentSpeakerId",
+      "type_hint": "undefined4"
+    },
+    "0x80678f14": {
+      "name": "g_raceCurrentSpeakerAux",
+      "type_hint": "undefined4"
+    },
+    "0x80678f18": {
+      "name": "g_raceCurrentSpeakerFlag",
+      "type_hint": "undefined4"
+    },
+    "0x80678f20": {
+      "name": "g_raceEntryArray",
+      "type_hint": "RaceEntry_Partial[8]"
+    },
+    "0x80679f70": {
+      "name": "g_OSExceptionHandlerTable",
+      "type_hint": "undefined"
+    },
+    "0x80679fb0": {
+      "name": "g_OSMachineCheckDMAHandler",
+      "type_hint": "undefined4"
+    },
+    "0x8067a430": {
+      "name": "g_DefaultThread",
+      "type_hint": "undefined"
+    },
+    "0x806a14dc": {
+      "name": "g_ammbSocketState",
+      "type_hint": "AmmbSocketSlot[64]"
+    },
+    "0x806cf108": {
+      "name": "g_cupId",
+      "type_hint": "undefined4"
+    },
+    "0x806cf114": {
+      "name": "g_currentSceneState",
+      "type_hint": "undefined4"
+    },
+    "0x806cf118": {
+      "name": "g_kartVariant",
+      "type_hint": "int"
+    },
+    "0x806cf11c": {
+      "name": "g_kartStartSlot",
+      "type_hint": "undefined4"
+    },
+    "0x806cf120": {
+      "name": "g_spawnedKartCount",
+      "type_hint": "undefined4"
+    },
+    "0x806cf124": {
+      "name": "g_rendererGateFlag",
+      "type_hint": "undefined1"
+    },
+    "0x806cf125": {
+      "name": "g_namCamFlag",
+      "type_hint": "undefined1"
+    },
+    "0x806cf160": {
+      "name": "g_randSeedDebugEnable",
+      "type_hint": "undefined1"
+    },
+    "0x806cf16c": {
+      "name": "g_raceResultCode",
+      "type_hint": "undefined4"
+    },
+    "0x806cf170": {
+      "name": "g_sceneTransitionTimer",
+      "type_hint": "undefined4"
+    },
+    "0x806cf1ec": {
+      "name": "g_rankingPosition",
+      "type_hint": "undefined4"
+    },
+    "0x806cf1f0": {
+      "name": "g_raceResult",
+      "type_hint": "undefined4"
+    },
+    "0x806cf1fc": {
+      "name": "g_technicalTitleGrade",
+      "type_hint": "undefined4"
+    },
+    "0x806cf200": {
+      "name": "g_playCount",
+      "type_hint": "undefined4"
+    },
+    "0x806cf210": {
+      "name": "g_maxCoins",
+      "type_hint": "undefined4"
+    },
+    "0x806cf214": {
+      "name": "g_prevRaceResult",
+      "type_hint": "undefined4"
+    },
+    "0x806cf218": {
+      "name": "g_prevPrevRaceResult",
+      "type_hint": "undefined4"
+    },
+    "0x806cf258": {
+      "name": "g_tachometer_maxDisplaySpeed",
+      "type_hint": "float"
+    },
+    "0x806cf458": {
+      "name": "gResTableCacheKey",
+      "type_hint": "undefined4"
+    },
+    "0x806cf45c": {
+      "name": "gResTableCacheIdx",
+      "type_hint": "undefined4"
+    },
+    "0x806cfa28": {
+      "name": "g_weatherSystemInitialized",
+      "type_hint": "undefined1"
+    },
+    "0x806cfd10": {
+      "name": "g_countdownVoiceId",
+      "type_hint": "int"
+    },
+    "0x806cfd14": {
+      "name": "g_currentVoiceStreamHandle",
+      "type_hint": "undefined4"
+    },
+    "0x806cfd18": {
+      "name": "g_currentTAVoiceId",
+      "type_hint": "undefined4"
+    },
+    "0x806cfd1c": {
+      "name": "g_currentVoiceDispatchId",
+      "type_hint": "undefined4"
+    },
+    "0x806cfd20": {
+      "name": "g_currentVoiceSubId",
+      "type_hint": "undefined4"
+    },
+    "0x806cfd24": {
+      "name": "g_voiceFinalLapCheckpoint",
+      "type_hint": "int"
+    },
+    "0x806cfd28": {
+      "name": "g_voiceMidRaceCheckpoint",
+      "type_hint": "int"
+    },
+    "0x806cfd2c": {
+      "name": "g_lastPlayerCurrentCheckpoint",
+      "type_hint": "undefined4"
+    },
+    "0x806cfd30": {
+      "name": "g_lastPlayerIndexCrossingCheckpoint",
+      "type_hint": "undefined4"
+    },
+    "0x806cfd38": {
+      "name": "g_currentRaceEventPlayer",
+      "type_hint": "int"
+    },
+    "0x806cff10": {
+      "name": "g_PathVariantTableCount",
+      "type_hint": "undefined4"
+    },
+    "0x806d0b98": {
+      "name": "g_lcgState",
+      "type_hint": "undefined4"
+    },
+    "0x806d1018": {
+      "name": "g_inputManager",
+      "type_hint": "InputObject * *"
+    },
+    "0x806d1020": {
+      "name": "g_steeringMaxRange",
+      "type_hint": "undefined4"
+    },
+    "0x806d1024": {
+      "name": "g_steeringCenterRaw",
+      "type_hint": "undefined4"
+    },
+    "0x806d1028": {
+      "name": "g_accelCenterRaw",
+      "type_hint": "undefined4"
+    },
+    "0x806d102c": {
+      "name": "g_accelRange",
+      "type_hint": "undefined4"
+    },
+    "0x806d1030": {
+      "name": "g_brakeCenterRaw",
+      "type_hint": "undefined4"
+    },
+    "0x806d1034": {
+      "name": "g_brakeRange",
+      "type_hint": "undefined4"
+    },
+    "0x806d1058": {
+      "name": "g_courseData",
+      "type_hint": "pointer"
+    },
+    "0x806d1068": {
+      "name": "g_pInputState",
+      "type_hint": "pointer"
+    },
+    "0x806d1088": {
+      "name": "g_carObjectCount",
+      "type_hint": "int"
+    },
+    "0x806d108c": {
+      "name": "g_carObjectList",
+      "type_hint": "pointer"
+    },
+    "0x806d1098": {
+      "name": "g_playerCarObject",
+      "type_hint": "pointer"
+    },
+    "0x806d118c": {
+      "name": "g_pcbSyncPhasePerPcb",
+      "type_hint": "undefined1"
+    },
+    "0x806d1190": {
+      "name": "g_pcbCommEnabled",
+      "type_hint": "undefined1"
+    },
+    "0x806d1192": {
+      "name": "g_pcbSyncReady",
+      "type_hint": "undefined1"
+    },
+    "0x806d1194": {
+      "name": "g_confirmFlag",
+      "type_hint": "undefined1"
+    },
+    "0x806d1198": {
+      "name": "g_myPcbId",
+      "type_hint": "undefined4"
+    },
+    "0x806d11b4": {
+      "name": "g_pcbListener",
+      "type_hint": "undefined4"
+    },
+    "0x806d125c": {
+      "name": "g_characterId",
+      "type_hint": "undefined4"
+    },
+    "0x806d1260": {
+      "name": "g_raceStarted",
+      "type_hint": "byte"
+    },
+    "0x806d1268": {
+      "name": "g_longRoundFlag",
+      "type_hint": "undefined4"
+    },
+    "0x806d126c": {
+      "name": "g_courseVariantIdx",
+      "type_hint": "undefined4"
+    },
+    "0x806d1270": {
+      "name": "g_reverseRoundFlag",
+      "type_hint": "undefined4"
+    },
+    "0x806d1274": {
+      "name": "g_courseScene3D",
+      "type_hint": "undefined4"
+    },
+    "0x806d1284": {
+      "name": "g_countdownPhase",
+      "type_hint": "int"
+    },
+    "0x806d1288": {
+      "name": "g_lakituStartAnimDone",
+      "type_hint": "undefined1"
+    },
+    "0x806d1289": {
+      "name": "g_raceEnded",
+      "type_hint": "undefined1"
+    },
+    "0x806d128c": {
+      "name": "g_raceCamera",
+      "type_hint": "undefined4"
+    },
+    "0x806d1294": {
+      "name": "g_gameMode",
+      "type_hint": "GameMode"
+    },
+    "0x806d1298": {
+      "name": "g_roundIndex",
+      "type_hint": "undefined4"
+    },
+    "0x806d12a4": {
+      "name": "g_localPcbRole",
+      "type_hint": "undefined4"
+    },
+    "0x806d12ac": {
+      "name": "g_isCommHost",
+      "type_hint": "undefined1"
+    },
+    "0x806d12b4": {
+      "name": "g_playerRenderObj",
+      "type_hint": "KartDriver_Partial *"
+    },
+    "0x806d12b8": {
+      "name": "g_raceFrameCounterLo2digits",
+      "type_hint": "undefined4"
+    },
+    "0x806d12c5": {
+      "name": "g_isPcbHost",
+      "type_hint": "undefined1"
+    },
+    "0x806d12c8": {
+      "name": "g_humanPlayerCount",
+      "type_hint": "int"
+    },
+    "0x806d12cc": {
+      "name": "g_ccClass",
+      "type_hint": "undefined4"
+    },
+    "0x806d12d0": {
+      "name": "g_consecutiveWinsTier",
+      "type_hint": "undefined4"
+    },
+    "0x806d12d4": {
+      "name": "g_finalLapCoinJumpEnabled",
+      "type_hint": "undefined1"
+    },
+    "0x806d12d5": {
+      "name": "g_nonFirstFinishFlag",
+      "type_hint": "undefined1"
+    },
+    "0x806d12e0": {
+      "name": "g_lakituDropStarted",
+      "type_hint": "byte"
+    },
+    "0x806d1328": {
+      "name": "g_raceHud",
+      "type_hint": "undefined4"
+    },
+    "0x806d132c": {
+      "name": "g_raceTimeRemaining",
+      "type_hint": "float"
+    },
+    "0x806d1330": {
+      "name": "g_lapBonusTimeDelta",
+      "type_hint": "float"
+    },
+    "0x806d1334": {
+      "name": "g_bestLapTime",
+      "type_hint": "float"
+    },
+    "0x806d1338": {
+      "name": "g_currentLapTime",
+      "type_hint": "float"
+    },
+    "0x806d133c": {
+      "name": "g_totalRaceTime",
+      "type_hint": "float"
+    },
+    "0x806d1340": {
+      "name": "g_finalRacePosition",
+      "type_hint": "undefined4"
+    },
+    "0x806d1344": {
+      "name": "g_currentLap",
+      "type_hint": "undefined4"
+    },
+    "0x806d1348": {
+      "name": "g_totalLaps",
+      "type_hint": "int"
+    },
+    "0x806d1354": {
+      "name": "g_finalLapBannerShown",
+      "type_hint": "undefined1"
+    },
+    "0x806d1355": {
+      "name": "g_lapChangePending",
+      "type_hint": "undefined1"
+    },
+    "0x806d1358": {
+      "name": "g_objCollChecker",
+      "type_hint": "undefined4"
+    },
+    "0x806d1360": {
+      "name": "g_rendererActivated",
+      "type_hint": "undefined1"
+    },
+    "0x806d1364": {
+      "name": "g_pathManager",
+      "type_hint": "undefined4"
+    },
+    "0x806d1368": {
+      "name": "g_raceEndExitTimer",
+      "type_hint": "undefined4"
+    },
+    "0x806d136c": {
+      "name": "g_playerKartSlot",
+      "type_hint": "undefined4"
+    },
+    "0x806d1370": {
+      "name": "g_lakituDropOrderIssued",
+      "type_hint": "undefined1"
+    },
+    "0x806d1374": {
+      "name": "g_raceRenderTarget",
+      "type_hint": "undefined4"
+    },
+    "0x806d1378": {
+      "name": "g_raceSceneContextSwitch",
+      "type_hint": "undefined4"
+    },
+    "0x806d137c": {
+      "name": "g_fullThrottleHoldFlag",
+      "type_hint": "undefined1"
+    },
+    "0x806d1380": {
+      "name": "g_prevFrameTimestampHi",
+      "type_hint": "undefined4"
+    },
+    "0x806d1384": {
+      "name": "g_prevFrameTimestampLo",
+      "type_hint": "undefined4"
+    },
+    "0x806d13d4": {
+      "name": "g_stagingTitleId",
+      "type_hint": "undefined4"
+    },
+    "0x806d13d8": {
+      "name": "g_titleParam",
+      "type_hint": "undefined4"
+    },
+    "0x806d13dc": {
+      "name": "g_nameId",
+      "type_hint": "undefined4"
+    },
+    "0x806d13e0": {
+      "name": "g_totalScore",
+      "type_hint": "undefined4"
+    },
+    "0x806d13e4": {
+      "name": "g_totalRaces",
+      "type_hint": "undefined4"
+    },
+    "0x806d13e8": {
+      "name": "g_allCoursesCleared",
+      "type_hint": "undefined1"
+    },
+    "0x806d13f4": {
+      "name": "g_totalDistance",
+      "type_hint": "undefined4"
+    },
+    "0x806d13f8": {
+      "name": "g_matchCount",
+      "type_hint": "undefined4"
+    },
+    "0x806d13fc": {
+      "name": "g_undefeatedStreak",
+      "type_hint": "undefined4"
+    },
+    "0x806d1400": {
+      "name": "g_defeatCount",
+      "type_hint": "undefined4"
+    },
+    "0x806d1410": {
+      "name": "g_gpWinCount",
+      "type_hint": "undefined4"
+    },
+    "0x806d1414": {
+      "name": "g_gpLossCount",
+      "type_hint": "undefined4"
+    },
+    "0x806d1418": {
+      "name": "g_specificDefeatCount",
+      "type_hint": "undefined4"
+    },
+    "0x806d141c": {
+      "name": "g_ghostDefeatCount",
+      "type_hint": "undefined4"
+    },
+    "0x806d142c": {
+      "name": "g_currentRaceScore",
+      "type_hint": "undefined4"
+    },
+    "0x806d1430": {
+      "name": "g_prevRaceScore",
+      "type_hint": "undefined4"
+    },
+    "0x806d1438": {
+      "name": "g_perfectCount",
+      "type_hint": "undefined4"
+    },
+    "0x806d143c": {
+      "name": "g_roundCount",
+      "type_hint": "undefined4"
+    },
+    "0x806d1440": {
+      "name": "g_consecutiveWins",
+      "type_hint": "undefined4"
+    },
+    "0x806d1444": {
+      "name": "g_hitCount",
+      "type_hint": "undefined4"
+    },
+    "0x806d144c": {
+      "name": "g_scoreThreshold",
+      "type_hint": "undefined4"
+    },
+    "0x806d1454": {
+      "name": "g_hazardPassCount",
+      "type_hint": "undefined4"
+    },
+    "0x806d1458": {
+      "name": "g_tachometer_isInitialized",
+      "type_hint": "undefined1"
+    },
+    "0x806d1460": {
+      "name": "g_tachometer_coinTier",
+      "type_hint": "undefined4"
+    },
+    "0x806d1464": {
+      "name": "g_tachometer_coinCount",
+      "type_hint": "undefined4"
+    },
+    "0x806d1470": {
+      "name": "g_tachometer_displaySpeed",
+      "type_hint": "float"
+    },
+    "0x806d15c0": {
+      "name": "g_weatherSystem",
+      "type_hint": "undefined4"
+    },
+    "0x806d16b0": {
+      "name": "ClSound_Initialized",
+      "type_hint": "bool"
+    },
+    "0x806d16d0": {
+      "name": "g_ClStream_Initialized",
+      "type_hint": "byte"
+    },
+    "0x806d16d4": {
+      "name": "g_ClStream_SavedInterruptLevel",
+      "type_hint": "int"
+    },
+    "0x806d16d8": {
+      "name": "g_ClStream_LockDepth",
+      "type_hint": "int"
+    },
+    "0x806d16f0": {
+      "name": "g_voiceStreamVolume",
+      "type_hint": "undefined4"
+    },
+    "0x806d16f8": {
+      "name": "g_voiceStreamTimeHi",
+      "type_hint": "undefined4"
+    },
+    "0x806d16fc": {
+      "name": "g_voiceStreamTimeLo",
+      "type_hint": "undefined4"
+    },
+    "0x806d1700": {
+      "name": "g_voiceStreamStartTimeHi",
+      "type_hint": "undefined4"
+    },
+    "0x806d1704": {
+      "name": "g_voiceStreamStartTimeLo",
+      "type_hint": "undefined4"
+    },
+    "0x806d1708": {
+      "name": "g_voiceStreamLastPollTimeHi",
+      "type_hint": "undefined4"
+    },
+    "0x806d170c": {
+      "name": "g_voiceStreamLastPollTimeLo",
+      "type_hint": "undefined4"
+    },
+    "0x806d1710": {
+      "name": "g_goalFanfareVariant",
+      "type_hint": "undefined4"
+    },
+    "0x806d1718": {
+      "name": "g_voiceLastTime",
+      "type_hint": "longlong"
+    },
+    "0x806d1720": {
+      "name": "g_voiceTickTimeHi",
+      "type_hint": "undefined4"
+    },
+    "0x806d1724": {
+      "name": "g_voiceTickTimeLo",
+      "type_hint": "undefined4"
+    },
+    "0x806d173c": {
+      "name": "g_voiceQueueHead",
+      "type_hint": "int"
+    },
+    "0x806d1740": {
+      "name": "g_voiceQueueTail",
+      "type_hint": "int"
+    },
+    "0x806d1744": {
+      "name": "g_voiceLapTimerScalar",
+      "type_hint": "undefined4"
+    },
+    "0x806d1748": {
+      "name": "g_goalTriggerCheckpoint",
+      "type_hint": "undefined4"
+    },
+    "0x806d174c": {
+      "name": "g_taMinLapPlayerIndex",
+      "type_hint": "undefined4"
+    },
+    "0x806d1754": {
+      "name": "g_voiceCupLongRoundTable",
+      "type_hint": "void *"
+    },
+    "0x806d1758": {
+      "name": "g_voiceTickCounter",
+      "type_hint": "uint"
+    },
+    "0x806d175c": {
+      "name": "g_voiceRaceStartLatched",
+      "type_hint": "undefined1"
+    },
+    "0x806d175d": {
+      "name": "g_voiceSystemInitDone",
+      "type_hint": "byte"
+    },
+    "0x806d1771": {
+      "name": "g_goalFanfareSubState",
+      "type_hint": "undefined1"
+    },
+    "0x806d1772": {
+      "name": "g_voiceQueueMuted",
+      "type_hint": "byte"
+    },
+    "0x806d1773": {
+      "name": "g_bgmStateId",
+      "type_hint": "undefined1"
+    },
+    "0x806d1780": {
+      "name": "g_bgmStateTimeHi",
+      "type_hint": "undefined4"
+    },
+    "0x806d1784": {
+      "name": "g_bgmStateTimeLo",
+      "type_hint": "undefined4"
+    },
+    "0x806d178c": {
+      "name": "g_goalFanfareTriggered",
+      "type_hint": "undefined1"
+    },
+    "0x806d17a8": {
+      "name": "g_goalFanfareStartTimeHi",
+      "type_hint": "undefined4"
+    },
+    "0x806d17ac": {
+      "name": "g_goalFanfareStartTimeLo",
+      "type_hint": "undefined4"
+    },
+    "0x806d17b0": {
+      "name": "g_raceRankingPathObject",
+      "type_hint": "undefined4"
+    },
+    "0x806d17b8": {
+      "name": "g_goalFanfarePlayerIndex",
+      "type_hint": "undefined4"
+    },
+    "0x806d18b0": {
+      "name": "g_clEnemyParam",
+      "type_hint": "clEnemyParamSlots *"
+    },
+    "0x806d1a28": {
+      "name": "g_pItemDisplay",
+      "type_hint": "ItemDisplay *"
+    },
+    "0x806d1a4c": {
+      "name": "g_earnedCoins",
+      "type_hint": "undefined4"
+    },
+    "0x806d1a54": {
+      "name": "g_coinMilageBeforeRace",
+      "type_hint": "undefined4"
+    },
+    "0x806d2420": {
+      "name": "g_fZero",
+      "type_hint": "float"
+    },
+    "0x806d2424": {
+      "name": "g_fOne",
+      "type_hint": "float"
+    },
+    "0x806d2428": {
+      "name": "g_fMinusOne",
+      "type_hint": "float"
+    },
+    "0x806d242c": {
+      "name": "g_pedalThreshold",
+      "type_hint": "float"
+    },
+    "0x806d2430": {
+      "name": "g_steeringThresholdPos",
+      "type_hint": "float"
+    },
+    "0x806d2434": {
+      "name": "g_steeringThresholdNeg",
+      "type_hint": "float"
+    },
+    "0x806d6da0": {
+      "name": "g_glyphClipMinXY",
+      "type_hint": "float"
+    },
+    "0x806d6da4": {
+      "name": "g_glyphClipMaxX",
+      "type_hint": "float"
+    },
+    "0x806d6da8": {
+      "name": "g_glyphClipMaxY",
+      "type_hint": "float"
+    },
+    "0x806d8a80": {
+      "name": "kBgmIdList_Cup1",
+      "type_hint": "BgmIdList"
+    },
+    "0x806d8a88": {
+      "name": "kBgmIdList_Cup2",
+      "type_hint": "BgmIdList"
+    },
+    "0x806d8a90": {
+      "name": "kBgmIdList_Cup3",
+      "type_hint": "BgmIdList"
+    },
+    "0x806d8a98": {
+      "name": "kBgmIdList_Cup4",
+      "type_hint": "BgmIdList"
+    },
+    "0x806d8aa0": {
+      "name": "kBgmIdList_Cup5",
+      "type_hint": "BgmIdList"
+    },
+    "0x806d8aa8": {
+      "name": "kBgmIdList_Cup6",
+      "type_hint": "BgmIdList"
+    },
+    "0x806d8ab0": {
+      "name": "kBgmIdList_Cup7",
+      "type_hint": "BgmIdList"
+    },
+    "0x806d8ab8": {
+      "name": "kBgmIdList_Cup8",
+      "type_hint": "BgmIdList"
+    },
+    "0x806d8ac0": {
+      "name": "kBgmIdList_CupsExtra",
+      "type_hint": "BgmIdList"
+    },
+    "0x806d8ac8": {
+      "name": "kBgmIdList_DefaultFallback",
+      "type_hint": "BgmIdList"
+    },
+    "0x806d8ad4": {
+      "name": "kWeatherInitFloatA",
+      "type_hint": "float"
+    },
+    "0x806d8ad8": {
+      "name": "kWeatherInitFloatB",
+      "type_hint": "float"
+    },
+    "0x806d9b58": {
+      "name": "FLOAT_FULL_ALPHA",
+      "type_hint": "float"
+    },
+    "0x806d9b5c": {
+      "name": "FLOAT_SPRITE_INIT_TIME",
+      "type_hint": "float"
+    },
+    "0x806d9b70": {
+      "name": "FLOAT_ARROW_RIGHT_OFFSET",
+      "type_hint": "float"
+    },
+    "0x806d9b94": {
+      "name": "FLOAT_BRIGHTNESS_DARK",
+      "type_hint": "float"
+    },
+    "0x806d9ba4": {
+      "name": "FLOAT_TEX_POS_X",
+      "type_hint": "float"
+    },
+    "0x806d9bb8": {
+      "name": "FLOAT_ARROW_SCALE",
+      "type_hint": "float"
+    },
+    "0x806d9bd4": {
+      "name": "FLOAT_INIT_Z_DEPTH",
+      "type_hint": "float"
+    },
+    "0x806d9bd8": {
+      "name": "FLOAT_ARROW_LEFT_X",
+      "type_hint": "float"
+    },
+    "0x806d9bdc": {
+      "name": "FLOAT_ARROW_Y",
+      "type_hint": "float"
+    },
+    "0x806d9be0": {
+      "name": "FLOAT_ARROW_LEFT_SCALE_X",
+      "type_hint": "float"
+    },
+    "0x806d9be4": {
+      "name": "FLOAT_ARROW_RIGHT_X",
+      "type_hint": "float"
+    },
+    "0x806d9be8": {
+      "name": "FLOAT_TEX_SCALE",
+      "type_hint": "float"
+    },
+    "0x806d9bec": {
+      "name": "FLOAT_TEX_POS_Y",
+      "type_hint": "float"
+    },
+    "0x806d9bf0": {
+      "name": "FLOAT_NAMCAM_LEFT",
+      "type_hint": "float"
+    },
+    "0x806d9bf4": {
+      "name": "FLOAT_NAMCAM_TOP",
+      "type_hint": "float"
+    },
+    "0x806d9bf8": {
+      "name": "FLOAT_NAMCAM_RIGHT",
+      "type_hint": "float"
+    },
+    "0x806d9bfc": {
+      "name": "FLOAT_NAMCAM_BOTTOM",
+      "type_hint": "float"
+    },
+    "0x806d9c00": {
+      "name": "FLOAT_CURSOR_LEFT_X",
+      "type_hint": "float"
+    },
+    "0x806d9c04": {
+      "name": "FLOAT_CURSOR_Y",
+      "type_hint": "float"
+    },
+    "0x806d9c08": {
+      "name": "FLOAT_CURSOR_RIGHT_X",
+      "type_hint": "float"
+    },
+    "0x806d9c0c": {
+      "name": "FLOAT_DELTA_TIME",
+      "type_hint": "float"
+    },
+    "0x806d9c30": {
+      "name": "DOUBLE_INT2FLOAT_MAGIC",
+      "type_hint": "double"
+    },
+    "0x806d9c3c": {
+      "name": "FLOAT_ANIM_RESET",
+      "type_hint": "float"
+    },
+    "0x806d9c40": {
+      "name": "FLOAT_FOCUSED_SCALE",
+      "type_hint": "float"
+    },
+    "0x806d9c44": {
+      "name": "FLOAT_DELTA_TIME_2X",
+      "type_hint": "float"
+    },
+    "0x806d9c48": {
+      "name": "FLOAT_FADE_OFFSET",
+      "type_hint": "float"
+    },
+    "0x806d9c4c": {
+      "name": "FLOAT_UNFOCUSED_ALPHA",
+      "type_hint": "float"
+    },
+    "0x806d9c50": {
+      "name": "FLOAT_UNFOCUSED_SCALE",
+      "type_hint": "float"
+    },
+    "0x806d9c54": {
+      "name": "FLOAT_TITLE_BASE_X",
+      "type_hint": "float"
+    },
+    "0x806d9c58": {
+      "name": "FLOAT_TITLE_STEP_X",
+      "type_hint": "float"
+    },
+    "0x806d9c5c": {
+      "name": "FLOAT_TITLE_POS_Y",
+      "type_hint": "float"
+    }
+  }
+}
