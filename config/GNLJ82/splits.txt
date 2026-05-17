@@ -16,15 +16,6 @@ Sections:
 sysdolphin/baselib/_hsd_consts.c:
 	.sdata2     start:0x806DCC58 end:0x806DCC68
 
-sysdolphin/baselib/dobj.c:
-	.text       start:0x802BD07C end:0x802BD0FC
-
-sysdolphin/baselib/aobj.c:
-	.text       start:0x802C3BC0 end:0x802C3C00
-
-sysdolphin/baselib/fobj.c:
-	.text       start:0x802C8CCC end:0x802C8D70
-
 Runtime.PPCEABI.H/global_destructor_chain.c:
 	.text       start:0x80270BE8 end:0x80270C48
 	.dtors      start:0x802E8988 end:0x802E898C
@@ -35,8 +26,23 @@ Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
 	.dtors      start:0x802E8980 end:0x802E8988
 	.sdata      start:0x806D0B78 end:0x806D0B7C
 
+sysdolphin/baselib/dobj.c:
+	.text       start:0x802BD07C end:0x802BD0FC
+
+sysdolphin/baselib/aobj.c:
+	.text       start:0x802C3BC0 end:0x802C3C00
+
+sysdolphin/baselib/fobj.c:
+	.text       start:0x802C8CCC end:0x802C8D70
+
 sysdolphin/baselib/jobj.c:
 	.text       start:0x802CDAF8 end:0x802CDB80
+
+sysdolphin/baselib/jobj_anim_all.c:
+	.text       start:0x802CDB80 end:0x802CDE48
+
+sysdolphin/baselib/jobj_anim_misc.c:
+	.text       start:0x802CDE48 end:0x802CDF38
 
 sysdolphin/baselib/robj.c:
 	.text       start:0x802D7C1C end:0x802D7CA0

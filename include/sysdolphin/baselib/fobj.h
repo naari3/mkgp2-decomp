@@ -6,6 +6,9 @@ typedef unsigned short u16;
 typedef signed short   s16;
 typedef unsigned int   u32;
 
+#define TYPE_ROBJ 1
+#define TYPE_JOBJ 12
+
 /* Layout matches SSBM HAL Sysdolphin HSD_FObj. */
 typedef struct HSD_FObj {
     struct HSD_FObj* next;    /* +0x00 */
