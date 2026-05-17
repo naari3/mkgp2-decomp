@@ -54,7 +54,7 @@
     4. `config/GNLJ82/symbols.txt` で対象 symbol を `scope:global` に (cross-object 参照のため)
     5. `configure.py` に lib + Matching object 登録、必要なら `mw_version_xxx` を追加
     6. `python configure.py && ninja build/GNLJ82/ok` で SHA-1 verify
-  - 学び: init の prologue / 8-byte frame は CW for GameCube 1.0 (`mw_version_init = "GC/1.0"`) でないと一致しない。詳細は `docs/notes/mkgp2-init-uses-cw-1.0.md`
+  - 学び: `__check_pad3` の prologue / 8-byte frame は CW for GameCube 1.0 (`mw_version_init = "GC/1.0"`) でないと一致しない。ただし `.init` の他関数 (memset/memcpy/__fill_mem 等) は CW 2.7 と判明 (TU 単位で混在)。詳細は `docs/notes/mkgp2-init-mixed-cw.md`
 
 - [~] **`mw_comment_version` の再評価**
   - 現状 `config/GNLJ82/config.yml: mw_comment_version: 11` (CW for GameCube 2.7) は **依然仮置き**
