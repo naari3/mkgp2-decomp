@@ -47,6 +47,9 @@ RESERVED = {
     "Value", "Field", "Default", "Color", "Note", "Notes", "Count",
     "frame", "stack", "heap", "code",
     "yes", "no", "none", "None", "Yes", "No",
+    # mkgp2-specific cell values that masquerade as identifiers
+    "NORMAL", "GOLD", "ORIGINAL", "ENHANCED", "ORIG_ENH",
+    "vtable", "block",
 }
 
 ADDR_RE_TXT = r"0x8[0-9a-fA-F]{7}"
