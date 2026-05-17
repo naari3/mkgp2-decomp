@@ -2,10 +2,10 @@
 
 ライブな次手リスト。完了したら check して push、新しく出てきた課題は下に追記する。
 
-## Status (2026-05-17 commit e02be5e)
+## Status (2026-05-17 commit d8fa749)
 
 - `main.dol` byte-identical rebuild: **OK** (SHA-1 `ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65`)
-- Named symbols: **~1204 / 7613** functions (~15.8%)
+- Named symbols: **~1221 / 7613** functions (~16.0%) + 17 named data/BSS objects
 - Matched C source: **0 / 7613**
 
 ## Symbol seeding
@@ -16,12 +16,18 @@
   - 既存命名と一致した 645 件、placeholder 以外で kept 56 件、cross-source collision 7 件
   - **未消化の 91 アドレス**は下の orphan add task に統合
 
-- [ ] **Orphan address を symbols.txt に explicit add (合計 ~130 件)**
-  - Ghidra dump: `ghidra addresses not present in symbols.txt: 40`
-  - mkgp2docs dump: `mkgp2docs addresses not present in symbols.txt: 91`
-  - 大半は BSS object (size 不明) や `.rodata` table。dtk auto-detect が拾えない
-  - Ghidra から size / data_type を別途取って `add_symbol` 相当の entry を symbols.txt に挿入
-  - `g_DebugPrintfEnable @0x80598a8a` / `kBgmDspFilenameTable @0x8037ce1c` (externals.txt の skip 2 件) もこのバッチで救う
+- [~] **Orphan address を symbols.txt に explicit add (17 / 127 完了、残り 110 件)**
+  - **正攻法判明**: dtk の `detect_objects:true` で自動形成された大 blob (`lbl_XXXX size:0x1CC` 等) の中に named subset を入れたいときは、enclosing placeholder blob を「head lbl + named entry + tail lbl」に分割する。`tools/add_orphan_symbols.py` がそれを自動でやる。
+  - 完了:
+    - commit `12d2870`: kCup0LineBinTable / kBgmDspFilenameTable / kAILapBonusRules_NonRaceCommon / RaceCourse / RaceFallback / g_ammbSocketState (6 件)
+    - commit `3631d0a`: kAILapBonusRuleTable_NonRace + g_frameUnlockThresholds_{Partial,Full} + g_tierTextureIdTable + g_DebugPrintfEnable + g_jvsDebounceEnable + g_displayOffsetY/X + g_syncedSceneState + g_playerWinsPrev/LossesPrev (11 件)
+  - 残り:
+    - **A 残 9 件**: `kRawGameMap_*` (Game0/Raw1/...) は enclosing `kRawGameMap_Raw0` (size 0x28 の array-base name) の subset。base name を細分化するかは struct 定義との兼ね合いで matching 着手時に判断。
+    - **B 残 12 件**: `g_jvsSteeringRaw/Accel/Brake` (enclosing `g_jvsOperatorBits`)、`g_playerWins/Losses/CurrentTitleId/LastSelectedTier` (enclosing `g_playerData`)、`g_raceCurrentSpeakerAux/Flag` (enclosing `g_raceCurrentSpeakerId`)、`g_voiceWeightTable` (enclosing `g_voicePlayCountTable`)、`g_OSMachineCheckDMAHandler` (enclosing `__OSErrorTable`)、`g_DefaultThread` (no enclosing)。全部 named enclosing で意味付き → struct 定義として処理する方が筋。
+    - **C ~35 件**: mkgp2docs にあるが Ghidra で symbol 化されていない address。size 不明で add 不能。matching 過程で symbol 化が進めば再評価。
+    - **D 4 件**: thunk_FUN_* (Ghidra default 名)。skip。
+    - **E ~10 件**: LAB_*/DAT_* default 名。mid-function jump や placeholder data。skip。
+    - **F 6 件**: 0x84/88/89_xxxx MMIO アドレス (Media Board DMA)、main.dol section 外。書く場所が無い、skip。
 
 - [ ] **mkgp2docs importer の intra-dump dup を精査**
   - 現状 113 件の name dup / 109 件の addr conflict が skip されている
