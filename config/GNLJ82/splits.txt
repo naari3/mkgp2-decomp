@@ -19,8 +19,14 @@ sysdolphin/baselib/_hsd_consts.c:
 game/GameMode_Base.c:
 	.text       start:0x8002CE3C end:0x8002CE4C
 
+game/Camera.c:
+	.text       start:0x8002D74C end:0x8002D760
+
 game/Profiler.c:
 	.text       start:0x8002FF08 end:0x8002FF48
+
+game/Archive.c:
+	.text       start:0x80033EFC end:0x80033F10
 
 game/Collision.c:
 	.text       start:0x800364C8 end:0x800364D8
