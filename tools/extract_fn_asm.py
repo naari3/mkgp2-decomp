@@ -39,6 +39,15 @@ from typing import Optional
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_ASM_DIR = REPO_ROOT / "build" / "GNLJ82" / "asm"
+DEFAULT_SYMBOLS_TXT = REPO_ROOT / "config" / "GNLJ82" / "symbols.txt"
+
+# `<name> = .<section>:0x<addr>; ...` (dtk symbols.txt format)
+SYMBOLS_LINE_RE = re.compile(r'^\s*([A-Za-z_][A-Za-z0-9_@]*)\s*=\s*\.([A-Za-z0-9_]+)\s*:\s*0x[0-9A-Fa-f]+\s*;')
+
+# Sections whose symbols are accessed via the sda1 base (r13).
+SDA1_SECTIONS = {'sdata', 'sbss'}
+# Sections whose symbols are accessed via the sda2 base (r2).
+SDA2_SECTIONS = {'sdata2', 'sbss2'}
 
 INSTR_LINE_RE = re.compile(r"^\s*/\*[^*]*\*/\s*(.*\S)\s*$")
 SECTION_RE = re.compile(r'^\.section\s+(\S+?)(?:,.*)?$')
@@ -229,20 +238,45 @@ def parse_group(asm_path: Path) -> GroupData:
     return data
 
 
-def _rewrite_instruction(line: str, sda21_syms: set[str], fn_name: str) -> str:
+def load_sda_base_map(symbols_path: Path) -> dict[str, str]:
+    """Build sym -> 'r2' | 'r13' map from dtk symbols.txt.
+
+    Symbols in .sdata2 / .sbss2 use the sda2 base (r2); .sdata / .sbss use
+    sda1 (r13). Other sections fall outside the small-data area and don't
+    appear here (sda21 reloc not applicable).
+    """
+    out: dict[str, str] = {}
+    if not symbols_path.is_file():
+        return out
+    with symbols_path.open(encoding="utf-8") as f:
+        for line in f:
+            m = SYMBOLS_LINE_RE.match(line)
+            if not m:
+                continue
+            sym, section = m.group(1), m.group(2)
+            if section in SDA1_SECTIONS:
+                out[sym] = 'r13'
+            elif section in SDA2_SECTIONS:
+                out[sym] = 'r2'
+    return out
+
+
+def _rewrite_instruction(line: str, sda21_syms: set[str], fn_name: str,
+                          sda_base_map: dict[str, str]) -> str:
     """Apply mwcc inline-asm syntax fixups and collect sda21 symbols.
 
-    - `lbl@sda21(r0)` -> `lbl(r2)` (mwcc auto-attaches sda21 reloc when the
-      symbol is declared extern and resides in .sdata/.sdata2; r2 is the
-      sda2 base, r13 is sda1, dtk emits both as r0 hints).
-    - `crclr/crset crNcond` -> `crxor/creqv N*4+bit, N*4+bit, N*4+bit`
-      (mwcc only accepts the bit-position form).
-    - `.L_<addr>` -> `<fn_name>_L_<addr>` (mwcc treats `.`-prefixed labels as
-      assembler directives; we namespace by fn so labels stay unique TU-wide).
+    - `lbl@sda21(r0)` -> `lbl(r2)` or `lbl(r13)` based on the symbol's
+      section in symbols.txt (.sdata2/.sbss2 -> r2, .sdata/.sbss -> r13).
+      mwcc emits the corresponding sda{2,1} reloc which the linker resolves.
+      Unknown symbols default to r2 (sda2 base) with a warning.
+    - `crclr/crset crNcond` -> `crxor/creqv N*4+bit, N*4+bit, N*4+bit`.
+    - `.L_<addr>` -> `<fn_name>_L_<addr>` (mwcc `.`-prefix is a directive).
     """
     def _sda21_sub(m: re.Match) -> str:
-        sda21_syms.add(m.group(1))
-        return f'{m.group(1)}(r2)'
+        sym = m.group(1)
+        sda21_syms.add(sym)
+        base = sda_base_map.get(sym, 'r2')
+        return f'{sym}({base})'
     line = SDA21_RE.sub(_sda21_sub, line)
 
     def _cr_sub(m: re.Match) -> str:
@@ -278,7 +312,7 @@ def _label_to_c_name(label: str, kind: str, fn_name: str) -> str:
     return f"{kind}_{fn_name}"
 
 
-def emit_c_source(group_id: str, data: GroupData) -> str:
+def emit_c_source(group_id: str, data: GroupData, sda_base_map: dict[str, str]) -> str:
     """Build the C source fragment in target section-layout order."""
     # Map etb_label -> fn_name via extabindex entries.
     etb_to_fn: dict[str, str] = {}
@@ -295,7 +329,10 @@ def emit_c_source(group_id: str, data: GroupData) -> str:
     rewritten: list[FnAsm] = []
     for fn in data.functions:
         new_fn = FnAsm(name=fn.name, scope=fn.scope)
-        new_fn.instructions = [_rewrite_instruction(ins, sda21_syms, fn.name) for ins in fn.instructions]
+        new_fn.instructions = [
+            _rewrite_instruction(ins, sda21_syms, fn.name, sda_base_map)
+            for ins in fn.instructions
+        ]
         rewritten.append(new_fn)
 
     # Classify referenced identifiers into callees / data refs / locals.
@@ -355,28 +392,29 @@ def emit_c_source(group_id: str, data: GroupData) -> str:
         out.append(f"asm void {fn.name}(void);")
     out.append("")
 
-    # extab emit
-    out.append('/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */')
-    out.append('#pragma section R ".extab_user"')
-    for entry in data.extab:
-        fn_name = etb_to_fn.get(entry.label, f"orphan_{entry.addr:08X}")
-        c_name = _label_to_c_name(entry.label, "extab", fn_name)
-        n = len(entry.raw_bytes)
-        out.append(f'__declspec(section ".extab_user") static const unsigned char {c_name}[{n}] = '
-                   f'{_format_byte_array(entry.raw_bytes)};')
-    out.append("")
+    # extab emit (skip if the group has no extab entries — sda1/text-only groups)
+    if data.extab:
+        out.append('/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */')
+        out.append('#pragma section R ".extab_user"')
+        for entry in data.extab:
+            fn_name = etb_to_fn.get(entry.label, f"orphan_{entry.addr:08X}")
+            c_name = _label_to_c_name(entry.label, "extab", fn_name)
+            n = len(entry.raw_bytes)
+            out.append(f'__declspec(section ".extab_user") static const unsigned char {c_name}[{n}] = '
+                       f'{_format_byte_array(entry.raw_bytes)};')
+        out.append("")
 
-    # extabindex emit
-    out.append('/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */')
-    out.append('#pragma section R ".extabindex_user"')
-    for eti in data.extabindex:
-        c_name = _label_to_c_name(eti.label, "extabindex", eti.fn_name)
-        etb_c_name = _label_to_c_name(eti.extab_label, "extab", eti.fn_name)
-        out.append(f'__declspec(section ".extabindex_user") static const struct '
-                   f'{{ void *fn; unsigned int fn_size; void *extab; }} {c_name} = ' '{')
-        out.append(f'    (void *)&{eti.fn_name}, 0x{eti.fn_size:08X}, (void *){etb_c_name}')
-        out.append("};")
-    out.append("")
+    if data.extabindex:
+        out.append('/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */')
+        out.append('#pragma section R ".extabindex_user"')
+        for eti in data.extabindex:
+            c_name = _label_to_c_name(eti.label, "extabindex", eti.fn_name)
+            etb_c_name = _label_to_c_name(eti.extab_label, "extab", eti.fn_name)
+            out.append(f'__declspec(section ".extabindex_user") static const struct '
+                       f'{{ void *fn; unsigned int fn_size; void *extab; }} {c_name} = ' '{')
+            out.append(f'    (void *)&{eti.fn_name}, 0x{eti.fn_size:08X}, (void *){etb_c_name}')
+            out.append("};")
+        out.append("")
 
     # asm bodies in .text order (= fn definition source order).
     out.append("/* --- asm function bodies (.text order = fn address order) --- */")
@@ -420,6 +458,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     ap.add_argument("group", help="group id (e.g. auto_fn_8002F640_text) or path to .s")
     ap.add_argument("--asm-dir", type=Path, default=DEFAULT_ASM_DIR,
                     help=f"dtk asm dir (default: {DEFAULT_ASM_DIR})")
+    ap.add_argument("--symbols-txt", type=Path, default=DEFAULT_SYMBOLS_TXT,
+                    help=f"symbols.txt for sda1/sda2 base selection (default: {DEFAULT_SYMBOLS_TXT})")
     ap.add_argument("--out-c", type=Path, help="write C source fragment here (default: stdout)")
     ap.add_argument("--out-renames", type=Path,
                     help="write extab_user_renames.json snippet here (default: stdout if --tu given)")
@@ -428,8 +468,9 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     asm_path = resolve_group_path(args.group, args.asm_dir)
     data = parse_group(asm_path)
+    sda_base_map = load_sda_base_map(args.symbols_txt)
 
-    c_src = emit_c_source(asm_path.stem, data)
+    c_src = emit_c_source(asm_path.stem, data, sda_base_map)
     if args.out_c:
         args.out_c.write_text(c_src + "\n", encoding="utf-8")
     else:
