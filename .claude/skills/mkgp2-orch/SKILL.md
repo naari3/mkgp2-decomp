@@ -79,15 +79,75 @@ description: mkgp2-decomp 並列 decomp orchestrator の main agent 責務分担
 4. **Agent tool 起動**: `Agent(subagent_type='general-purpose', run_in_background=True, prompt=...)`
 5. **state.active_subs に記録**: 通知受信用 (TaskList には現れない、main の self-bookkeeping)
 
-## 同 TU 内多 sub 並列 promote の merge
+## 即時 merge & 知見反映 workflow (同 TU 内多 sub 並列 promote)
 
-12 並列 sub が同 1 TU の別 fn を編集するパターン (Phase 3a-small main wave で確立):
+12 並列 sub が同 1 TU の別 fn を編集するパターン (Phase 3a-small main wave で確立)。**累積待ちでマージしない** — 完了通知ごとに即処理。理由は次節「累積待ち vs 即時 merge」。
 
-- 各 sub は worktree 内で `git commit` (orch/<batch_id> branch)
-- main は `python tools/merge_promote.py --all` で全 batch を sequential 順次 apply
-- 各 apply は `git apply --3way` (base commit が揃っていれば cleanly merge)
-- conflict は extern 同時拡張 / struct field 競合のみ。main が Edit で resolve
-- 全 batch merge 後に `ninja build/GNLJ82/ok` で SHA-1 verify、state.json flip、worktree cleanup
+### 即時 merge の流れ (sub 完了通知ごと)
+
+1. **通知受信 → HANDOFF.md と commit message を即 Read** (worktree cleanup 前):
+   - `worktree/HANDOFF.md` の json blob + 自由記述 markdown 両方
+   - `git -C <worktree> log -1 --format=full HEAD` (sub の commit msg は知見の宝庫、cleanup 前にしか読めない)
+2. **`python tools/merge_promote.py --batch <batch_id> --no-build`** で apply (build verify は最後にまとめる、累積防止)
+3. **conflict が出たら次節「conflict resolution 標準手順」**、出なければ自動で state.json flip + cleanup
+4. **知見反映を同 cycle 内で実施** (次節「知見反映: 各 merge で必須」)
+5. 全 sub 完了後、`ninja build/GNLJ82/ok` を 1 度だけ実行して SHA-1 verify
+
+### 累積待ち vs 即時 merge
+
+| 戦略 | pros | cons |
+|---|---|---|
+| 累積待ち (`--all` を最後に 1 回) | build verify が 1 度で済む | conflict が複数同時発生 → resolve 順序が複雑、main の context 一気に圧迫、各 sub の HANDOFF / commit msg を後でまとめて読むため知見が薄まる |
+| **即時 merge (推奨)** | conflict を context-fresh で resolve、sub の知見を直後に拾える、dispatch との overlap | build verify を `--no-build` で skip + 最後に 1 度 (この工夫で cons はほぼ消える) |
+
+### 知見反映: 各 merge で必須
+
+各 sub が 5-15 min かけて発見した知見 (HANDOFF notes / blocked_reason / commit message に詰まっている) を、worktree cleanup や cycle 跨ぎで失わない。次 cycle で再発見するコストは初回の数倍。
+
+**手順**:
+1. HANDOFF.md `notes` / `blocked_reason` / `docs_notes` を Read
+2. `git log -1 --format=full HEAD` (sub commit msg)
+3. 知見をカテゴリ分類し、**同 cycle で追記** (commit に含める):
+
+| 知見の種類 | 追記先 |
+|---|---|
+| 1 fn matching idiom (例: `if (this) if (this)` for C++ dtor / cache+search 4 分岐 / `> -1` for `>= 0` / `&& early return` 形式 / 7-float-arg force) | `~/.claude/skills/mkgp2-match/SKILL.md` (10 節以降の項目 add) |
+| extab / extabindex 制御 (manual 削除 = approach A / `#pragma exceptions off` = approach B / mix での SHA-1 影響) | `docs/per_fn_matching_strategy.md` (extab section) |
+| bundle 内 promote pattern (forward decl 統合、struct extend、open array extern、approach A/B mix の動作性) | `docs/per_fn_matching_strategy.md` (1.5 節 partial matching) |
+| orchestrator 運用 (3-way merge resolve pattern / worktree base mismatch / parse error trigger 条件) | `.claude/skills/mkgp2-orch/SKILL.md` (本 skill) |
+| Hard-block (CW 1.3.2 register allocator quirk / C++ + exceptions の C 単体不可 / frame-spill idiom 未解明) | `docs/per_fn_matching_strategy.md` 「known hard-block」セクション |
+| TU レベル構造 (bundle を `.cpp` + class に retrofit する必要 / `game_extab` lib の C++ scoped object 要求) | `docs/large_extab_group_strategy.md` |
+
+4. 重複検出: 既存 doc に同 idiom あれば update (追加 commit ref を例文として add)、新規なら append
+5. 「知見反映の追記」を merge commit に含めるか、または直後に別 commit (どちらでも可、cycle を跨がない)
+
+**最大の失敗**: 知見反映を「後でまとめてやる」と先送り → cycle 跨ぎで context 薄れ + worktree cleanup で commit msg / docs_notes が消える → 知見ロス。**absolutely 同 cycle で実施**。
+
+### conflict resolution の標準手順
+
+`merge_promote.py` が conflict 検出 → abort + state.json は flip されない + worktree は残る。main の手で:
+
+1. `git status` で conflict file 確認 (`UU <file>`)
+2. file 内 `<<<<<<<` marker 周辺を Read、両 sub の意図を HANDOFF / commit msg と照合
+3. Edit で resolve (典型パターン):
+   - forward decl 衝突 → 両 sub の C prototype を統合 (例: `void *dtor_XXX(void *this, short flag);` の 2 行に集約)
+   - struct field 衝突 → offset 衝突しない field を merge、同 offset なら片方を捨てて他方に統一
+   - extern signature 衝突 → より specific な signature (引数型あり) を採用
+   - extab approach 衝突 → mix が SHA-1 OK ならそのまま、不可なら片方の approach に統一
+4. `python configure.py && ninja build/GNLJ82/ok` で SHA-1 verify
+5. fail → 両 sub の approach が semantic-conflict → 片方を asm_fn 退避に格下げ (main で C body を asm body に書き戻す、forward decl を `asm void X(void);` に戻す)
+6. OK → `git add` + commit (commit msg に解決の選択理由を必ず記載 — 後の cycle でなぜそれを選んだか追跡可能に)
+7. **手動で merge_promote.py の post-processing を補完**:
+   - state.json の該当 fn を `matched` に flip:
+     ```bash
+     python -c "import json; from datetime import datetime,timezone; p='.orchestrator/state.json'; d=json.load(open(p,encoding='utf-8')); d['functions']['0xXXXX']['status']='matched'; d['functions']['0xXXXX']['last_attempt_at']=datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'); d['functions']['0xXXXX']['notes']='<conflict resolve 詳細>'; open(p,'w',encoding='utf-8').write(json.dumps(d,indent=2,ensure_ascii=False)+'\n')"
+     ```
+   - worktree + branch cleanup: `git worktree remove --force .worktrees/<batch_id> && git branch -D orch/<batch_id>`
+8. **知見反映**: conflict の解決方法と approach mix の動作性を `docs/per_fn_matching_strategy.md` に追記 (次回の自分への引き継ぎ)
+
+**将来の tool 改善余地**: `merge_promote.py` に `--skip-apply <batch_id>` mode を追加すれば 7 の手動 state flip + cleanup を機械化できる。現状は main の自由演算 (頻度低いので未実装)。
+
+## merge_promote.py の現在の scope
 
 ## merge_promote.py の現在の scope
 

@@ -105,6 +105,14 @@ else:
 
 ## CASE 2: merge / cleanup 処理
 
+**即時 merge & 知見反映を厳守** (累積待ちで複数 batch をまとめて処理しない、`.claude/skills/mkgp2-orch/SKILL.md` 「即時 merge & 知見反映 workflow」参照)。
+
+各 batch の merge で 4 ステップ:
+1. `git -C <worktree> log -1 --format=full HEAD` + `Read worktree/HANDOFF.md` で **sub の commit msg / notes / docs_notes / blocked_reason を全部読む** (worktree cleanup 前のみ可)
+2. `python tools/merge_promote.py --batch <id> --no-build` (build verify は最後 1 度に集約)
+3. conflict 出たら main で Edit resolve → SHA-1 verify → 手動で state.json flip + worktree cleanup (skill 「conflict resolution 標準手順」)
+4. **知見を即追記** (skill 「知見反映」表に従って `~/.claude/skills/mkgp2-match/SKILL.md` / `docs/per_fn_matching_strategy.md` / `docs/large_extab_group_strategy.md` / 本 cycle.md / 本 mkgp2-orch skill のいずれかへ。**次 cycle に持ち越さない**)
+
 `status='completed'` な batch を 1 つ pick して merge:
 
 ```python
