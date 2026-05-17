@@ -16,15 +16,13 @@
 
 ## 制約 (絶対遵守)
 
-1. **作業範囲は割り当て worktree 内のみ**: `cd` して入った後、相対 path で操作。worktree の外のファイルを編集してはならない
+1. **作業範囲は割り当て worktree 内のみ**: `cd` して入った後、相対 path で操作。worktree の外のファイルを編集してはならない (main checkout / 他 worktree / `~/` 配下の repo はすべて禁止)
 2. **担当 batch の関数以外の `.c` ファイルを変更しない**: 隣接関数を「ついでに」matching しない (TU 境界の暗黙仮定が壊れる)
-3. **`configure.py` を直接編集しない**: 追加希望は HANDOFF.md の `configure_py` セクションへ
-4. **`config/GNLJ82/splits.txt` を直接編集しない**: 追加希望は HANDOFF.md の `splits_txt` セクションへ
-5. **`config/GNLJ82/symbols.txt` を直接編集しない**: 追加希望は HANDOFF.md の `symbols_txt` セクションへ
-6. **`docs/` を直接編集しない**: 知見追加希望は HANDOFF.md の `docs_notes` セクションへ
-7. **`.orchestrator/` を一切触らない**: state は main の専有領域
-8. **`main` ブランチに直接 commit しない**: 自分の worktree の `orch/<batch_id>` ブランチにのみ commit する
-9. **完了基準**: `build.sha1: OK` + objdiff で対象関数の `match_percent == 100.0`
+3. **`configure.py` / `config/GNLJ82/splits.txt` / `config/GNLJ82/symbols.txt` は worktree 内では編集してよい**: build verify のために必須 (`/mkgp2-match` skill の手順 6-9 通り)。**ただし**、その変更は `orch/<batch_id>` branch 限定で main branch には反映しない — 同じ変更を HANDOFF.md の `configure_py` / `splits_txt` / `symbols_txt` セクションにも必ず記述すること。main はそれをもとに main branch に再適用する (sub の orch/* commit は worktree 削除と同時に捨てられる)
+4. **`docs/` を直接編集しない**: 知見追加希望は HANDOFF.md の `docs_notes` セクションへ
+5. **`.orchestrator/` を一切触らない**: state は main の専有領域
+6. **`main` ブランチに直接 commit しない**: 自分の worktree の `orch/<batch_id>` ブランチにのみ commit する
+7. **完了基準**: `build.sha1: OK` + objdiff で対象関数の `match_percent == 100.0`
 
 ## 作業手順
 
