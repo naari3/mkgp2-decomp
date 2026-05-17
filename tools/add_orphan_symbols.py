@@ -27,23 +27,47 @@ from pathlib import Path
 SYM_PATH = Path("config/GNLJ82/symbols.txt")
 
 # (name, section, addr, size, data_attr_or_None)
+# Note: the first 6 entries here are already in symbols.txt from a prior
+# commit; the script is idempotent (no-op when the address already exists)
+# so re-runs are safe.
 NEW_ENTRIES: list[tuple[str, str, int, int, str | None]] = [
+    # === Already committed (A subset, first pass) ===
     ("kCup0LineBinTable",                 ".rodata", 0x8032890c, 0x10,  "4byte"),
     ("kBgmDspFilenameTable",              ".rodata", 0x8037ce1c, 0xa8,  "4byte"),
     ("kAILapBonusRules_NonRaceCommon",    ".rodata", 0x803bcb48, 0x64,  None),
     ("kAILapBonusRuleTable_RaceCourse",   ".rodata", 0x803bcbac, 0x60,  "4byte"),
     ("kAILapBonusRuleTable_RaceFallback", ".rodata", 0x803bcc0c, 0x300, "4byte"),
-    ("kAILapBonusRuleTable_NonRace",      ".rodata", 0x803bcf0c, 0x1a0, "4byte"),
-    ("kRawGameMap_Game0", ".data", 0x803f5724, 0x4, "4byte"),
-    ("kRawGameMap_Raw1",  ".data", 0x803f5728, 0x4, "4byte"),
-    ("kRawGameMap_Game1", ".data", 0x803f572c, 0x4, "4byte"),
-    ("kRawGameMap_Raw2",  ".data", 0x803f5730, 0x4, "4byte"),
-    ("kRawGameMap_Game2", ".data", 0x803f5734, 0x4, "4byte"),
-    ("kRawGameMap_Raw3",  ".data", 0x803f5738, 0x4, "4byte"),
-    ("kRawGameMap_Game3", ".data", 0x803f573c, 0x4, "4byte"),
-    ("kRawGameMap_Raw4",  ".data", 0x803f5740, 0x4, "4byte"),
-    ("kRawGameMap_Game4", ".data", 0x803f5744, 0x4, "4byte"),
-    ("g_ammbSocketState", ".bss",   0x806a14dc, 0x800, None),
+    ("g_ammbSocketState",                 ".bss",    0x806a14dc, 0x800, None),
+
+    # === A residual (size narrowed to match dtk blob boundary) ===
+    # Ghidra said AILapBonusRule*[104] (0x1A0) but that overflows the
+    # enclosing blob 0x803BCAA8..0x803BD08C by 0x20. Drop to 0x180
+    # (= 96 entries) so it fits, the trailing string table is left intact.
+    ("kAILapBonusRuleTable_NonRace",      ".rodata", 0x803bcf0c, 0x180, "4byte"),
+
+    # === B: named BSS/data scalars, sizes from Ghidra batch query ===
+    ("g_frameUnlockThresholds_Partial",   ".rodata", 0x8039ae3c, 0x1, None),
+    ("g_frameUnlockThresholds_Full",      ".rodata", 0x8039ae70, 0x1, None),
+    ("g_tierTextureIdTable",              ".rodata", 0x8039aea4, 0x1, None),
+    ("g_voiceWeightTable",                ".data",   0x80498170, 0x1, None),
+    ("g_jvsSteeringRaw",                  ".bss",    0x80598570, 0x2, "2byte"),
+    ("g_jvsAccelRaw",                     ".bss",    0x80598572, 0x2, "2byte"),
+    ("g_jvsBrakeRaw",                     ".bss",    0x80598574, 0x2, "2byte"),
+    ("g_DebugPrintfEnable",               ".bss",    0x80598a8a, 0x1, "byte"),
+    ("g_jvsDebounceEnable",               ".bss",    0x80598aa4, 0x4, "4byte"),
+    ("g_displayOffsetY",                  ".bss",    0x80598aa8, 0x4, "4byte"),
+    ("g_displayOffsetX",                  ".bss",    0x80598aac, 0x4, "4byte"),
+    ("g_syncedSceneState",                ".bss",    0x805ac260, 0x1, "byte"),
+    ("g_playerWinsCurrent",               ".bss",    0x805d258e, 0x2, "2byte"),
+    ("g_playerLossesCurrent",             ".bss",    0x805d2590, 0x2, "2byte"),
+    ("g_currentTitleId",                  ".bss",    0x805d271b, 0x1, "byte"),
+    ("g_lastSelectedTier",                ".bss",    0x805d2738, 0x1, "byte"),
+    ("g_playerWinsPrev",                  ".bss",    0x805d2f4e, 0x2, "2byte"),
+    ("g_playerLossesPrev",                ".bss",    0x805d2f50, 0x2, "2byte"),
+    ("g_raceCurrentSpeakerAux",           ".bss",    0x80678f14, 0x4, "4byte"),
+    ("g_raceCurrentSpeakerFlag",          ".bss",    0x80678f18, 0x4, "4byte"),
+    ("g_OSMachineCheckDMAHandler",        ".bss",    0x80679fb0, 0x4, "4byte"),
+    ("g_DefaultThread",                   ".bss",    0x8067a430, 0x1, "byte"),
 ]
 
 SYM_LINE = re.compile(
