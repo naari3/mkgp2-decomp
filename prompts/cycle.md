@@ -195,10 +195,13 @@ for addr in batch['function_addresses']:
         'decompile': decomp,
     })
 
-# worktree 作成
+# worktree 作成 + orig/ populate (.gitignore で worktree から漏れる
+# orig/GNLJ82/sys/main.dol を main checkout から copy する。これを
+# やらないと sub の最初の `ninja build/GNLJ82/main.dol` が
+# "orig/GNLJ82/sys/main.dol not found" で失敗する)
 worktree_path = Path(f'.worktrees/{batch_id}').resolve()
 branch = f'orch/{batch_id}'
-run(f'git worktree add -b {branch} {worktree_path}')
+run(f'python tools/setup_worktree.py {batch_id}')
 
 # sub-agent 起動 (prompt に function info を inline)
 prompt = render_sub_prompt(batch_id, worktree_path, branch, fn_info)
