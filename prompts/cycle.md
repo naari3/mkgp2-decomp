@@ -235,47 +235,84 @@ return
 ## CASE 5: 新規 batch 編成 (main の判断責務)
 
 `pending` batch が枯渇していて、かつ `pending` function がまだ残っているとき。
-main が **Ghidra MCP の xref / callees / namespace** を引いて、関連関数を 1 batch にまとめる。
+main が **(a) extab group bundle 制約**、**(b) Ghidra MCP の xref / callees / namespace** を考慮して、関連関数を 1 batch にまとめる。
+
+**最重要**: pending 関数の ~64% は dtk reversed-extab group 内にいる (4877/7614)。そういう関数を singleton dispatch すると `Conflicting splits within reversed extab group` でほぼ確実に失敗する (iter0 / iter1 で実証済み)。よって seed の `extab_group` を最初に確認して bundle を組む。
 
 ```python
 # 1. pending function から先頭候補を pick (size 小、section 等で優先)
-pending_fns = sorted(
-    [(addr, fn) for addr, fn in state['functions'].items()
-     if fn['status'] == 'pending' and fn.get('batch_id') is None],
+#    extab_group_size が極端に大きい (>10 fn) ものは保留 (現状 dispatch 不能)
+pending_fns = [
+    (addr, fn) for addr, fn in state['functions'].items()
+    if fn['status'] == 'pending' and fn.get('batch_id') is None
+    and (fn.get('extab_group_size') or 1) <= 10  # 10 fn 超は別レーン
+]
+pending_fns.sort(
     key=lambda kv: (kv[1].get('size') or 0xFFFFFFFF, int(kv[0], 16))
 )
 if not pending_fns:
-    # CASE 6 へ fall through
+    # 全部が large extab group か枯渇 — CASE 6 (idle) へ fall through
+    # large group (>10 fn) は HANDOFF_TO_USER.md で user に escalate (一度だけ)
     pass
 else:
     seed_addr, seed_fn = pending_fns[0]
+    seed_group = seed_fn.get('extab_group')   # auto_*_text 名 or None
 
-    # 2. Ghidra MCP で seed の関連関数を引く
-    decomp = mcp__ghidra__decompile_function(program='main.dol', address=seed_addr)
-    # callees: bl で呼んでる関数のアドレス
-    callees = extract_callees_from_decomp(decomp)  # 'FUN_XXX' / 名前付き両方
-    # xref: 隣接アドレス + 同じ namespace の関数
-    namespace = mcp__ghidra__get_function_by_address(
-        program='main.dol', function_address=seed_addr
-    ).get('namespace')
+    # 2. extab group bundle (最優先)
+    if seed_group:
+        # 同 group の全 pending function を bundle
+        extab_map = json.load(open('.orchestrator/extab_groups.json'))
+        group_info = extab_map['groups'][seed_group]
+        # group_info['function_addresses'] は dtk が確定済みの bundle メンバー
+        batch_members = [
+            a for a in group_info['function_addresses']
+            if state['functions'].get(a, {}).get('status') == 'pending'
+        ]
+        # 既に matched な member が混在しているケース (一部 commit 済みの group)
+        # では dtk が再 split を許す保証なし。warn but proceed.
+        already_matched = [
+            a for a in group_info['function_addresses']
+            if state['functions'].get(a, {}).get('status') == 'matched'
+        ]
+        if already_matched:
+            log_event({
+                'event': 'warn', 'batch_seed': seed_addr,
+                'msg': f'extab group {seed_group} has {len(already_matched)} already-matched members; bundle may conflict',
+            })
+        planning_note = {
+            'seed': seed_addr,
+            'extab_group': seed_group,
+            'related_by': ['dtk_reversed_extab_group'],
+            'group_total': len(group_info['function_addresses']),
+            'group_pending': len(batch_members),
+        }
+    else:
+        # 3. Singleton seed: Ghidra MCP で callees / namespace 取って近傍 bundle
+        decomp = mcp__ghidra__decompile_function(program='main.dol', address=seed_addr)
+        callees = extract_callees_from_decomp(decomp)
+        namespace = mcp__ghidra__get_function_by_address(
+            program='main.dol', function_address=seed_addr
+        ).get('namespace')
 
-    # 3. batch grouping 判定 (main の核心ロジック)
-    batch_members = [seed_addr]
-    for addr, fn in pending_fns[1:]:
-        if len(batch_members) >= 5: break
-        # 以下のいずれかを満たせば同 batch に入れる候補:
-        # (a) seed の callee で、かつ pending (= 依存解決のため一緒に作る)
-        # (b) Ghidra 上で同じ namespace (= 同じ概念的グループ)
-        # (c) seed と隣接 address かつ同 section かつ size 小 (= 同 TU の可能性高い)
-        if is_related(addr, fn, seed_addr, seed_fn, callees, namespace):
-            batch_members.append(addr)
+        batch_members = [seed_addr]
+        for addr, fn in pending_fns[1:]:
+            if len(batch_members) >= 5: break
+            # 同 extab_group なら必ず bundle、そうでなければ既存判定
+            if fn.get('extab_group') == seed_group:
+                batch_members.append(addr)
+            elif is_related(addr, fn, seed_addr, seed_fn, callees, namespace):
+                batch_members.append(addr)
+        planning_note = {
+            'seed': seed_addr,
+            'extab_group': None,
+            'namespace': namespace,
+            'related_by': [...],
+        }
 
-    # 4. tu_hint 推定 (任意 — sub が最終決定するので main は hint のみ)
-    tu_hint = guess_tu_hint(batch_members, namespace, seed_fn)
-    # 例: namespace="HSD::Fobj" + section=".text" → "sysdolphin/baselib/fobj_xxx.c"
-    # 推定できなければ None でよい
+    # 4. tu_hint 推定 (任意)
+    tu_hint = guess_tu_hint(batch_members, seed_fn)
 
-    # 5. batch を state に追加 (status=pending、まだ dispatch しない)
+    # 5. batch を state に追加
     batch_id = f"batch_{short_section(seed_fn['section'])}_{int(seed_addr, 16):08x}"
     state['batches'][batch_id] = {
         'status': 'pending',
@@ -290,11 +327,7 @@ else:
         'retry_count': 0,
         'blocked_reason': None,
         'handoff_path': None,
-        'planning_notes': {
-            'seed': seed_addr,
-            'namespace': namespace,
-            'related_by': [...],  # どのルールで bundle したかの記録
-        },
+        'planning_notes': planning_note,
     }
     for addr in batch_members:
         state['functions'][addr]['batch_id'] = batch_id
@@ -302,6 +335,19 @@ else:
     atomic_write_state()
     return   # 次 cycle で CASE 4 が dispatch
 ```
+
+### 大規模 extab group (>10 fn) の扱い
+
+現状 mkgp2 には 269 個の multi-fn extab group があり、うち 100+ 個は 10 fn 超 (最大 937 fn)。これらは 1 batch decomp が現実的でない。
+
+cycle CASE 5 で size > 10 を見つけたら:
+- pending function はそのままにする (status 変えない)
+- 1 度だけ HANDOFF_TO_USER.md に「extab group X (size N) は単独 dispatch 不可、戦略未定」を append
+- 将来の対応: incremental NonMatching scaffold 戦略、または extab group 内の small subset を NonMatching として cap → 進めてから 100% match に昇格
+
+### 既存 matched function を含む extab group の扱い
+
+GetVBlankFlag / Archive_GetCurrent のように既に matched された singleton が extab group メンバーだった場合 (= dtk が再 split を許した稀ケース)、その group は半分 commit 済みの状態になる。新規 bundle が dtk のもとで通るかは未検証 — warn ログを出すが dispatch は試行する。失敗したら CASE 3 (failed batch 再編成) で対応。
 
 ### grouping 判定 (`is_related`) の推奨ルール
 

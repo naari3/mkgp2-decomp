@@ -8,10 +8,11 @@
 
 ```
 .orchestrator/
-├── state.json       # SoT-derived な作業状態。cycle 毎に再 sync
-├── log.jsonl        # append-only イベントログ
-├── locks.json       # 短命な mutex 状態 (現在 lock 中のリソース)
-└── drain.flag       # 存在すれば graceful stop 中 (空ファイル)
+├── state.json          # SoT-derived な作業状態。cycle 毎に再 sync
+├── log.jsonl           # append-only イベントログ
+├── locks.json          # 短命な mutex 状態 (現在 lock 中のリソース)
+├── drain.flag          # 存在すれば graceful stop 中 (空ファイル)
+└── extab_groups.json   # dtk reversed-extab group map (build_extab_map.py 生成)
 ```
 
 ### 役割
@@ -57,6 +58,8 @@ key は 16 進アドレス文字列 (`"0x80003100"`)。
   "has_named_symbol": true,
   "ghidra_named": true,
   "tu_hint": "init/__check_pad3.c",
+  "extab_group": null,
+  "extab_group_size": 1,
   "status": "matched",
   "batch_id": "batch_0001",
   "dependencies": ["0x80003200"],
@@ -71,6 +74,8 @@ key は 16 進アドレス文字列 (`"0x80003100"`)。
 - `has_named_symbol` — symbols.txt の name が placeholder でないか。**orchestrator 対象判定はこの field を使う**。name の由来 (Ghidra / mkgp2docs / externals.txt / 手動) を問わない
 - `ghidra_named` — `tools/ghidra_symbol_dump.json` に当該アドレスがあるか。informational only (rename 同期の cross-check 用)
 - `tu_hint` — 推定 TU パス。configure.py の `Object(...)` で既に declared なら確定値、未配置なら splits.txt range lookup の結果。auto blob 内なら null
+- `extab_group` — dtk reversed extab group の identifier (= `auto_*_text` 単位名)。null なら singleton (単独 split 可能)。null でなければ同 group の全 function を 1 batch に bundle する必要 (CASE 5)。`tools/build_extab_map.py` → `.orchestrator/extab_groups.json` から orch_sync が populate
+- `extab_group_size` — その group に含まれる .fn 総数。1 = singleton。> 1 = bundle 必須。> 10 は現状 1 batch で matching 困難 (escalation 対象)
 - `status` — 後述の state machine 参照
 - `batch_id` — 現在 assigned されている batch (なければ null)
 - `dependencies` — この関数が `bl` で呼ぶ他関数のアドレス (= callee)。init では空、後で sync スクリプトが populate

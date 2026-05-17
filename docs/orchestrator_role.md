@@ -64,15 +64,17 @@ CASE 4: active_subs < 3 かつ pending batch あり → 1 つ dispatch
     - log.jsonl に dispatch event
 
 CASE 5: pending batch 無く pending function あり → main が新規 batch 編成
-  編成処理:
-    - pending function から seed を 1 つ pick (size 小優先)
-    - Ghidra MCP で seed の decompile / namespace / callees を引く
-    - 関連関数 grouping ルール (callee 依存 / 同 namespace / 隣接 address / cyclic dep) で
-      最大 5 関数を bundle
+  編成処理 (extab-aware):
+    - pending function から seed を 1 つ pick (size 小 + extab_group_size <= 10 で絞る)
+    - seed.extab_group が非 null なら、その group の全 pending member を bundle 必須
+      (= dtk reversed-extab group 制約。1 関数だけ抜くと split-error)
+    - seed.extab_group が null なら singleton として Ghidra MCP の callees / namespace
+      で近傍関数を最大 5 個まで bundle
     - tu_hint を推定 (sub が最終決定するので任意)
     - state.batches に追加 (status=pending、dispatch はしない)
     - 次 cycle で CASE 4 が dispatch
-  (詳細ルールと is_related 判定は prompts/cycle.md CASE 5)
+  大規模 group (>10 fn) は別レーン: HANDOFF_TO_USER.md に escalate して放置
+  (詳細ルールは prompts/cycle.md CASE 5、extab map は tools/build_extab_map.py 参照)
 
 CASE 6 (該当なし): "no action" を 1 行 print して return
   ScheduleWakeup で 1200-1800s 後の fallback wake を予約

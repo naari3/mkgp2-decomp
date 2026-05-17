@@ -57,6 +57,7 @@ from init_orchestrator import (  # noqa: E402
 ORCH_DIR = ROOT / ".orchestrator"
 STATE_PATH = ORCH_DIR / "state.json"
 LOG_PATH = ORCH_DIR / "log.jsonl"
+EXTAB_MAP_PATH = ORCH_DIR / "extab_groups.json"
 
 
 def atomic_write_json(path: Path, data: dict) -> None:
@@ -103,6 +104,15 @@ def main() -> int:
     configure_objs = load_configure_objects()
     fuzzy = load_report_fuzzy()
 
+    # extab group map (optional — empty if tools/build_extab_map.py never run)
+    fn_to_group: dict[str, str] = {}
+    group_sizes: dict[str, int] = {}
+    if EXTAB_MAP_PATH.exists():
+        extab = json.loads(EXTAB_MAP_PATH.read_text(encoding="utf-8"))
+        fn_to_group = extab.get("fn_to_group", {})
+        for gid, info in extab.get("groups", {}).items():
+            group_sizes[gid] = len(info.get("function_addresses", []))
+
     ranges: list[tuple[int, int, str]] = []
     for tu, sections in splits.items():
         for _sec, start, end in sections:
@@ -133,6 +143,9 @@ def main() -> int:
             matching_flag=matching_flag,
         )
 
+        extab_group = fn_to_group.get(addr_key)
+        extab_group_size = group_sizes.get(extab_group, 1) if extab_group else 1
+
         if existing is None:
             # Newly discovered function (e.g. after dtk re-detected boundaries)
             new_functions[addr_key] = {
@@ -142,6 +155,8 @@ def main() -> int:
                 "has_named_symbol": has_named_symbol,
                 "ghidra_named": ghidra_named,
                 "tu_hint": tu_hint,
+                "extab_group": extab_group,
+                "extab_group_size": extab_group_size,
                 "status": derived_status,
                 "batch_id": None,
                 "dependencies": [],
@@ -169,6 +184,8 @@ def main() -> int:
             "has_named_symbol": has_named_symbol,
             "ghidra_named": ghidra_named,
             "tu_hint": tu_hint,
+            "extab_group": extab_group,
+            "extab_group_size": extab_group_size,
             "status": final_status,
             "batch_id": existing.get("batch_id"),
             "dependencies": existing.get("dependencies", []),

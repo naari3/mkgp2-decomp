@@ -308,6 +308,8 @@ def main() -> int:
             "has_named_symbol": has_named_symbol,
             "ghidra_named": ghidra_named,
             "tu_hint": tu_hint,
+            "extab_group": None,         # populated by orch_sync from extab_groups.json
+            "extab_group_size": 1,        # default singleton; overridden by orch_sync
             "status": status,
             "batch_id": None,
             "dependencies": [],
