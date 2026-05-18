@@ -215,6 +215,16 @@ game/AI_GetItemType.c:
 game/ItemHolder.c:
 	.text       start:0x801E9070 end:0x801E9094
 
+game/EnemyRunType2_Init.c:
+	extab       start:0x80016C0C end:0x80016C14
+	extabindex  start:0x80028AC0 end:0x80028ACC
+	.text       start:0x801EC568 end:0x801EC5A4
+
+game/EnemyRunType1_Init.c:
+	extab       start:0x80016C1C end:0x80016C24
+	extabindex  start:0x80028AD8 end:0x80028AE4
+	.text       start:0x801EC65C end:0x801EC698
+
 game/PhysicsState.c:
 	.text       start:0x801EC99C end:0x801EC9AC
 

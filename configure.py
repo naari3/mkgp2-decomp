@@ -401,6 +401,8 @@ config.libs = [
             Object(Matching, "game/AI_GetYaw.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/AI_HasItem.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/AI_GetItemType.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/EnemyRunType2_Init.c"),
+            Object(Matching, "game/EnemyRunType1_Init.c"),
             Object(Matching, "game/CourseData_GetDefaultPathKey_Safe.c"),
             Object(Matching, "game/JObj_Visibility.c"),
             Object(Matching, "game/CourseBgm_Free.c"),

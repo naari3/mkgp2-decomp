@@ -719,6 +719,25 @@ mkgp2 全体で **20+ auto_* groups** に同 lwz-first pattern が見られる (
 4. **TU-wide function ordering**: 同 TU 内に複数 fn を並べた時の register pressure 差で scheduler が変化する可能性
 5. **mwcc-2.x compilers**: 1.3.2 固定の確証は確認済みだが、game lib の一部 TU は別 CW 版の可能性 (調査要)
 
+### 16.12 SDA21 trap: 4-byte pointer extern を `[4]` で large-data に追いやる (2026-05-18, batch_text_801ec568_enemyrun_init)
+
+`EnemyRunType1_Init` / `EnemyRunType2_Init` で発見。.data 居住の vtable pointer を `extern void *lbl;` (4-byte single ptr) で宣言すると CW が SDA21 reloc 経路を選ぶが、symbol が `.data` にあって sdata threshold (8B) を超える可能性あり → linker error:
+
+```
+Small data relocation (109) requires that symbol be in a small data section but is in .data
+```
+
+**回避**: extern 宣言で **配列サイズを明示** (sdata threshold > 8B にする) と CW が large-data path (lis/addi base 計算) に切替:
+
+| C source | CW codegen | 結果 |
+|---|---|---|
+| `extern void *lbl_804E4BEC;` | SDA21 reloc (109) | × linker error |
+| `extern void *lbl_804E4BEC[4];` | large-data lis/addi | ✓ target asm 一致 |
+
+`FrameSelection.c` の `extern char lbl[]` と同 idiom。.data / .rodata 居住の symbol を C TU から参照する際は **必ず array form (`[]` または `[N]`)** で書く。
+
+頻出シーン: vtable pointer 参照 (C++ ctor で `*self = &vtable;`)、global pool table reference、constant table reference。`Small data relocation (109)` を見たら array form に切り替える。
+
 ### 適用パターン (asm_fn 退避を即決すべきケース)
 
 以下の特徴を target asm に見つけたら、C 化試行 1-2 回で限界判断し asm_fn 退避を選ぶ:
