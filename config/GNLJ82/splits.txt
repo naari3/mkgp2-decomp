@@ -288,6 +288,11 @@ ui/UI_PlaySeDecide.c:
 	extabindex  start:0x800293B4 end:0x800293C0
 	.text       start:0x801FE1AC end:0x801FE1D0
 
+game/dtor_80209180.c:
+	extab       start:0x8001937C end:0x80019384
+	extabindex  start:0x80029A74 end:0x80029A80
+	.text       start:0x80209180 end:0x802091BC
+
 game/AddCoinsFromExtraStage.c:
 	.text       start:0x80216540 end:0x80216568
 
