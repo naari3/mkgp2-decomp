@@ -38,3 +38,23 @@ With `float x, y, z; x = pos->x; y = pos->y; z = pos->z;` CW produced the invers
 - Diff symptoms: identical instruction count and addressing, but the bottom 5 bits of the fp register field differ across all 3 floats.
 
 Combined with strategic interleaving (e.g. deferring the last load until after the first store) this idiom can pin both regalloc and scheduler down with no other compiler-flag dance.
+
+## Same rule for GPRs (int / pointer locals)
+
+The decl-order coloring rule also applies to general-purpose registers (r3-r10 range), not just fp regs. Observed in `ItemSelect_AddSlotItem` @ 0x80060D80 (batch_text_80060d40_itemselect).
+
+Target asm: `cursor=r6, mode=r7, i=r8`. Required source decl order:
+
+```c
+SlotEntry *cursor;
+int mode;
+int i;
+```
+
+Reordering to `int mode; SlotEntry *cursor; int i;` flipped to `mode=r6, cursor=r7, i=r8` and broke SHA-1.
+
+Mixing types (pointer + int + int) in the decl list does not change the rule — first-declared identifier gets the lowest GPR number in the allocation pool.
+
+### Diff symptom (GPR variant)
+
+Identical instruction count and addressing, but register numbers in `r` fields differ by a consistent offset across the affected variables. Reorder the decl list to match the target's register order.
