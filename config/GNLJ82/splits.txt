@@ -63,6 +63,11 @@ game/LakituStart.c:
 game/KartMovement.c:
 	.text       start:0x8003F518 end:0x8003F528
 
+game/KartMovement_GetVelocityMagnitude.c:
+	extab       start:0x80006160 end:0x80006168
+	extabindex  start:0x8001FDA8 end:0x8001FDB4
+	.text       start:0x8003F528 end:0x8003F54C
+
 game/KartMovement_CanReceiveItem.c:
 	.text       start:0x8003F5E8 end:0x8003F668
 
