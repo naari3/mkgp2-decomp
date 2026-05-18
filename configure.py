@@ -504,6 +504,7 @@ config.libs = [
             Object(Matching, "game/auto_801223E8_block.c"),
             Object(Matching, "game/Archive_GetCurrent.c"),
             Object(Matching, "game/Vec3.c"),
+            Object(Matching, "game/ItemAlias.c"),
         ],
     },
     {
