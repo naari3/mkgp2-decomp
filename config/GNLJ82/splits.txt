@@ -57,6 +57,9 @@ game/Archive_GetCurrent.c:
 resource/ResourceLoading.c:
 	.text       start:0x80034D1C end:0x80034D24
 
+game/CollisionFile_FixupPointers.c:
+	.text       start:0x80035220 end:0x80035268
+
 game/Collision.c:
 	.text       start:0x800364C8 end:0x800364D8
 
