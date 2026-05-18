@@ -60,7 +60,7 @@ sub からの `<task-notification>` (status=completed) を受信したら、cycl
 | 種類 | trigger | 1 cycle あたり |
 |---|---|---|
 | **merge (hook)** | sub completion notification | 受信した数だけ即実行 (cycle counter 対象外) |
-| dispatch / 編成 / 再編成 / cleanup | cycle (/loop fire) | active_subs < 3 上限まで chain |
+| dispatch / 編成 / 再編成 / cleanup | cycle (/loop fire) | active_subs < 6 上限まで chain |
 
 理由:
 - completed batch を「pending merge」として積むと active_subs slot が空いても dispatch hesitate しがち
@@ -85,9 +85,9 @@ sub からの `<task-notification>` (status=completed) を受信したら、cycl
 
 ### parallel dispatch の原則 (anti-pattern 防止)
 
-dispatch cycle は active_subs を**上限まで埋める**ことを目標にする。`while len(active_subs) < 3 and 編成可能 fn あり: 編成 + dispatch を繰り返す`。
+dispatch cycle は active_subs を**上限 (6) まで埋める**ことを目標にする。`while len(active_subs) < 6 and 編成可能 fn あり: 編成 + dispatch を繰り返す`。
 
-「1 batch 編成 → 1 dispatch → return」を 1 cycle とするのは **明確な anti-pattern**。次 cycle まで parallel slot 2 つを遊ばせて user に約 20 min の空白を与える結果になる (実例: 2026-05-18 セッション初回、`batch_init_80003140_bba` の dispatch cycle で 1 sub のみ起動して 2 slot 余らせた)。
+「1 batch 編成 → 1 dispatch → return」を 1 cycle とするのは **明確な anti-pattern**。次 cycle まで parallel slot を遊ばせて user に約 20 min の空白を与える結果になる (実例: 2026-05-18 セッション初回 cap=3 時代、`batch_init_80003140_bba` の dispatch cycle で 1 sub のみ起動して 2 slot 余らせた。cap=6 ならさらに損失が大きい)。
 
 ### conflict 発生時の例外
 

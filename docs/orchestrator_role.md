@@ -29,7 +29,7 @@ sub の作業範囲との境界は `docs/sub_agent_role.md` 参照。
 
 ## Cycle 動作 (merge は cycle 制約外の通知 hook)
 
-`/loop` dynamic mode で発火する。**merge は notification hook として cycle と独立に実行**、cycle は dispatch / 編成 / 失敗 batch 再編成 / cleanup を担当 (active_subs < 3 上限まで chain 可)。
+`/loop` dynamic mode で発火する。**merge は notification hook として cycle と独立に実行**、cycle は dispatch / 編成 / 失敗 batch 再編成 / cleanup を担当 (active_subs < 6 上限まで chain 可)。
 
 旧ルール「1 cycle 1 heavy action」「heavy + light 混在禁止」は 2026-05-18 に撤回。理由は `.claude/skills/mkgp2-orch/SKILL.md` 鉄則 3 参照。
 
@@ -53,7 +53,7 @@ CASE 2 (旧 CASE 3): 失敗 batch の再編成
     - NonMatching で隔離 commit (skill 7.5節 制約C)
     - blocked 化 → HANDOFF_TO_USER.md にエスカレーション
 
-CASE 3 (旧 CASE 4): active_subs < 3 かつ pending batch あり → dispatch
+CASE 3 (旧 CASE 4): active_subs < 6 かつ pending batch あり → dispatch
   dispatch 処理:
     - 次の batch を pick (status=pending、size 小、依存解決済み優先)
     - Ghidra MCP で関数情報を pre-fetch (decompile / xref / 構造体)
@@ -62,7 +62,7 @@ CASE 3 (旧 CASE 4): active_subs < 3 かつ pending batch あり → dispatch
     - state.active_subs に entry 追加
     - state.batches[<bid>].status = dispatched
     - log.jsonl に dispatch event
-  active_subs < 3 を満たす間、cycle 内で連続 dispatch (chain 可)
+  active_subs < 6 を満たす間、cycle 内で連続 dispatch (chain 可)
 
 CASE 4 (旧 CASE 5): pending batch 無く pending function あり → main が新規 batch 編成
   編成処理 (extab-aware):

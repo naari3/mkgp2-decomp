@@ -11,7 +11,7 @@
 
 - **Windows Terminal で 1 タブを open のまま** 維持して main agent を常駐させる (タブを閉じると `claude` プロセスが死に、`/loop` も止まる)
 - main agent は `/loop` dynamic mode で自走する
-- sub-agent は main から最大 3 並列で起動される
+- sub-agent は main から最大 6 並列で起動される
 - `.orchestrator/` と `.worktrees/` は `.gitignore` 済み、commit されない
 
 PC をスリープさせると Windows がプロセスを中断するので、長時間自動運用したいなら電源設定で「スリープしない」 or 「タブの間はスリープしない」を有効化しておく。Screen lock 単独ではプロセスは生き続ける。
@@ -252,7 +252,7 @@ if ((Test-Path $f) -and ((Get-Item $f).LastWriteTime -gt (Get-Date).AddHours(-1)
 
 - `.orchestrator/drain.flag` が立ってないか確認 → あれば delete (or `/mkgp2-orch-start` で自動削除)
 - `state.batches` に `status=pending` の batch があるか確認 → なければ `python tools/plan_batches.py`
-- `state.active_subs` が 3 未満か確認 → 上限に達してれば待つ
+- `state.active_subs` が 6 未満か確認 → 上限に達してれば待つ
 
 ### worktree がディスクを圧迫
 
