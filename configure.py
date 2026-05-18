@@ -475,7 +475,7 @@ config.libs = [
         "cflags": cflags_base,
         "progress_category": "game",
         "objects": [
-            Object(Matching, "util/bitpack.c"),
+            Object(Matching, "util/bitpack.c", extab_padding=b"\x00\x00"),
         ],
     },
     {

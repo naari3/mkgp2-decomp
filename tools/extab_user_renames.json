@@ -64,5 +64,12 @@
   "src/game/SyncSlot.c": {
     "extab_SyncSlot_Reset":      "@etb_80008D84",
     "extabindex_SyncSlot_Reset": "@eti_80021884"
+  },
+
+  "src/util/bitpack.c": {
+    "extab_bitpack_write_field":      "@etb_80008F24",
+    "extab_bitpack_init":             "@etb_80008F2C",
+    "extabindex_bitpack_write_field": "@eti_80021A4C",
+    "extabindex_bitpack_init":        "@eti_80021A58"
   }
 }

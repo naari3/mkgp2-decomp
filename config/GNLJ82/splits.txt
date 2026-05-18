@@ -226,7 +226,9 @@ game/GlobalTimer.c:
 	.text       start:0x80087A40 end:0x80087A6C
 
 util/bitpack.c:
-	.text       start:0x80088BA8 end:0x80088BB8
+	extab       start:0x80008F24 end:0x80008F34
+	extabindex  start:0x80021A4C end:0x80021A64
+	.text       start:0x80088A5C end:0x80088C7C
 
 game/CardTaskWelcome_Dtor.c:
 	extab       start:0x8000900C end:0x80009014
