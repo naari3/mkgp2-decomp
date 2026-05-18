@@ -548,6 +548,11 @@ game/ItemRes_Thunk.c:
 	extabindex  start:0x8002AE54 end:0x8002AE60
 	.text       start:0x8023D918 end:0x8023D938
 
+game/Item_GetDescriptor.c:
+	extab       start:0x8001CBA4 end:0x8001CBB4
+	extabindex  start:0x8002AE84 end:0x8002AE9C
+	.text       start:0x8023DB24 end:0x8023DBEC
+
 game/LapDisp_SetTotalLaps.c:
 	extab       start:0x8001CE2C end:0x8001CE34
 	extabindex  start:0x8002AF98 end:0x8002AFA4
