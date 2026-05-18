@@ -302,6 +302,11 @@ game/TCPConn_LogError.c:
 	extabindex  start:0x800219A4 end:0x800219B0
 	.text       start:0x80087894 end:0x800878C8
 
+game/TCPConn_AllocTxBuffer.c:
+	extab       start:0x80008E9C end:0x80008EA4
+	extabindex  start:0x800219B0 end:0x800219BC
+	.text       start:0x80087980 end:0x80087A40
+
 game/GlobalTimer.c:
 	.text       start:0x80087A40 end:0x80087A6C
 
