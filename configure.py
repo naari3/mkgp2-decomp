@@ -393,6 +393,7 @@ config.libs = [
             Object(Matching, "game/Scene3D_GetCameraPos.c"),
             Object(Matching, "game/CourseData_GetDefaultPathKey_Safe.c"),
             Object(Matching, "game/JObj_Visibility.c"),
+            Object(Matching, "game/CourseBgm_Free.c"),
             # Phase 3a-small: 11-fn dtk reversed-extab group bundle (no extab
             # entries, just .text). All 11 fns initially asm_fn; promote to
             # matched 1 fn at a time via sub-agent dispatch.
