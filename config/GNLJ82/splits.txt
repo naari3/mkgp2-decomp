@@ -144,6 +144,11 @@ game/GlobalTimer.c:
 util/bitpack.c:
 	.text       start:0x80088BA8 end:0x80088BB8
 
+game/dtor_80091284.c:
+	extab       start:0x800093C8 end:0x800093D0
+	extabindex  start:0x80021ED8 end:0x80021EE4
+	.text       start:0x80091284 end:0x800912C0
+
 game/Rand.c:
 	extab       start:0x80009768 end:0x80009770
 	extabindex  start:0x80022274 end:0x80022280
