@@ -16,6 +16,15 @@ Conflict policy:
   thunk_FUN_, ...) are double-filtered out as a safety net even if
   they slipped through the dump's earlier filter.
 
+Phase 4 (src/ sweep):
+- Every function rename in symbols.txt is mirrored in src/**/*.{c,cpp}
+  by replacing `\\bfn_<ADDR>\\b` -> `<new_name>`. Without this, src files
+  defining `fn_<addr>(...)` keep exporting the old symbol while dtk's
+  auto-asm callers reference the new name -> linker `undefined` errors.
+- Addresses whose rename had no `fn_<addr>` ref in src/ are reported
+  as WARN (likely the C body uses an alias-label name like
+  `gTRKInterruptVectorTableEnd` at 0x800053E0; needs manual handling).
+
 Run from the mkgp2-decomp project root.
 """
 from __future__ import annotations
@@ -27,6 +36,8 @@ from pathlib import Path
 
 DUMP_PATH = Path("tools/ghidra_symbol_dump.json")
 SYM_PATH = Path("config/GNLJ82/symbols.txt")
+SRC_DIR = Path("src")
+SRC_GLOBS = ("*.c", "*.cpp")
 
 GHIDRA_DEFAULT_PREFIXES = (
     "fun_", "sub_", "lab_", "dat_", "ptr_",
@@ -117,6 +128,7 @@ def main() -> int:
     already_matching = 0
     kept_non_placeholder = 0
     cross_source_collisions: list[tuple[str, int, int]] = []  # (name, existing_addr, ghidra_addr)
+    rename_pairs: list[tuple[int, str]] = []  # (addr_int, new_name) for Phase 4 src/ sweep
     seen_addrs: set[int] = set()
     out: list[str] = []
     for line in lines:
@@ -151,6 +163,12 @@ def main() -> int:
             continue
         out.append(f"{new_name} = {section}:{addr_str};{rest}")
         renamed += 1
+        # Track for Phase 4 src/ sweep: only addresses we actually renamed need
+        # their C body identifier updated. Limit to .text (function) renames —
+        # globals (.sdata/.bss) live in headers/externs and aren't body-defined
+        # in src/*.c files with `fn_<addr>(` form.
+        if section.startswith(".text") or section.startswith(".init"):
+            rename_pairs.append((addr_int, new_name))
 
     not_in_symbols = sum(1 for a in name_map if a not in seen_addrs)
 
@@ -164,7 +182,88 @@ def main() -> int:
         print(f"  intra-dump dup: {nm}  kept@{a1:#x}  skip@{a2:#x}")
     for nm, a1, a2 in cross_source_collisions[:10]:
         print(f"  cross-source: {nm}  existing@{a1:#x}  ghidra@{a2:#x}")
+
+    # Phase 4: sweep src/ for fn_<ADDR> definitions/refs and rename to match.
+    # Without this, src files defining `fn_<addr>(...)` keep exporting the old
+    # symbol while dtk's auto-asm callers reference the new name -> link error.
+    # Only matters for addresses we just renamed in this run.
+    src_renames = sweep_src_rename(rename_pairs)
+    print(f"src/ sweep: {src_renames['files_changed']} files, "
+          f"{src_renames['replacements']} replacements")
+    for path, n in src_renames["per_file"][:15]:
+        print(f"  {path}: {n}")
+    if src_renames["unswept_renames"]:
+        print(f"WARN: {len(src_renames['unswept_renames'])} symbols.txt renames "
+              f"had no `fn_<addr>` ref in src/. If the function is defined in C "
+              f"under a different name (e.g. an alias label), you must manually "
+              f"rename its C body to match the new symbol name. Examples:")
+        for addr_hex, new_name in src_renames["unswept_renames"][:10]:
+            print(f"  {addr_hex} -> {new_name}")
     return 0
+
+
+def sweep_src_rename(rename_pairs: list[tuple[int, str]]) -> dict:
+    """Sweep src/ for `fn_<ADDR>` identifiers and replace with the new name.
+
+    rename_pairs: list of (address_int, new_name) for renames just performed
+    in symbols.txt. Searches `src/**/*.{c,cpp}` for `\\bfn_<ADDR>\\b` (both
+    upper- and lower-case hex) and replaces in place. Returns stats and the
+    list of addresses whose `fn_<addr>` ref was NOT found anywhere in src/
+    (these usually mean the C body uses a different name like an alias label
+    and needs manual attention to avoid linker `undefined` errors).
+    """
+    if not SRC_DIR.exists():
+        return {"files_changed": 0, "replacements": 0, "per_file": [],
+                "unswept_renames": []}
+
+    # Build {old_token: new_name}. Two case variants per addr (CW asm tends to
+    # emit upper-case, but some sources may use lower-case).
+    rename_map: dict[str, str] = {}
+    for addr_int, new_name in rename_pairs:
+        addr_upper = f"{addr_int:08X}"
+        rename_map[f"fn_{addr_upper}"] = new_name
+        rename_map[f"fn_{addr_upper.lower()}"] = new_name
+
+    per_file: list[tuple[str, int]] = []
+    total_replacements = 0
+    swept_addrs: set[int] = set()
+
+    src_files: list[Path] = []
+    for pat in SRC_GLOBS:
+        src_files.extend(SRC_DIR.rglob(pat))
+
+    for path in src_files:
+        try:
+            txt = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+        new_txt = txt
+        file_replacements = 0
+        for old, new in rename_map.items():
+            if old not in new_txt:
+                continue
+            replaced = re.subn(r"\b" + re.escape(old) + r"\b", new, new_txt)
+            if replaced[1]:
+                new_txt = replaced[0]
+                file_replacements += replaced[1]
+                # Recover the addr from the old token (`fn_XXXXXXXX`)
+                swept_addrs.add(int(old[3:], 16))
+        if file_replacements:
+            path.write_text(new_txt, encoding="utf-8")
+            per_file.append((str(path).replace("\\", "/"), file_replacements))
+            total_replacements += file_replacements
+
+    unswept = [
+        (f"0x{addr:08x}", new_name)
+        for addr, new_name in rename_pairs
+        if addr not in swept_addrs
+    ]
+    return {
+        "files_changed": len(per_file),
+        "replacements": total_replacements,
+        "per_file": per_file,
+        "unswept_renames": unswept,
+    }
 
 
 if __name__ == "__main__":
