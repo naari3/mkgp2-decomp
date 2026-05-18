@@ -448,6 +448,11 @@ game/ItemDisplay_GetOrCreate.c:
 	extabindex  start:0x80029B94 end:0x80029BA0
 	.text       start:0x8020AEA8 end:0x8020AF08
 
+game/dtor_8021617C.c:
+	extab       start:0x8001A50C end:0x8001A514
+	extabindex  start:0x8002A068 end:0x8002A074
+	.text       start:0x8021617C end:0x802161C4
+
 game/AddCoinsFromExtraStage.c:
 	.text       start:0x80216540 end:0x80216568
 
