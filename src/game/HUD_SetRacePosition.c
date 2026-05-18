@@ -5,7 +5,7 @@
  * offset 0x20 (a generic class-instance pointer). The fn_80271340 call
  * looks like a CDispInterface lookup factory: it takes the parent object,
  * an empty key (0), the two sdata vtable pointers (lbl_806D0A50 = clRnkDisp,
- * lbl_806D0A30 = clCDispInterface), and another null arg, and returns the
+ * s_clCDispInterface = clCDispInterface), and another null arg, and returns the
  * RnkDisp slot pointer in r3. That return is then passed to
  * RnkDisp_SetPosition along with the new position value (preserved in r31
  * across the first call).
@@ -15,7 +15,7 @@
  * SDA21 path (target sdata size = 0x8 each).
  */
 
-extern char lbl_806D0A30[8];
+extern char s_clCDispInterface[8];
 extern char lbl_806D0A50[8];
 extern void *fn_80271340(void *self, int a2, void *vtable1, void *vtable2, int a5);
 extern void RnkDisp_SetPosition(void *disp, int newPosition);
@@ -25,7 +25,7 @@ void HUD_SetRacePosition(void *hud, int newPosition) {
     void *disp;
     if (*(void **)((char *)hud + 0x20) != 0) {
         disp = fn_80271340(*(void **)((char *)hud + 0x20), 0,
-                           lbl_806D0A50, lbl_806D0A30, 0);
+                           lbl_806D0A50, s_clCDispInterface, 0);
         RnkDisp_SetPosition(disp, newPosition);
     }
 }

@@ -498,6 +498,11 @@ game/HUD_SetRacePosition.c:
 	extabindex  start:0x8002BA18 end:0x8002BA24
 	.text       start:0x80253E68 end:0x80253EB8
 
+game/HUD_SetTotalLaps.c:
+	extab       start:0x8001F118 end:0x8001F120
+	extabindex  start:0x8002BA30 end:0x8002BA3C
+	.text       start:0x80253F34 end:0x80253F84
+
 Runtime.PPCEABI.H/global_destructor_chain.c:
 	.text       start:0x80270BE8 end:0x80270C48
 	.dtors      start:0x802E8988 end:0x802E898C
