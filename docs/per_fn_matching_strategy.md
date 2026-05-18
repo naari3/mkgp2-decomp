@@ -574,6 +574,20 @@ target asm の特徴 (key insight):
 
 CW 1.3.2 の選択肢は **full unroll** (3 base + fused stwu) or **single base** (1 base + sequential stws) の 2 択で、間の **partial unroll** (1 base no-fuse + pre-computed derived bases for outer loop) を出す source 形が見つからなかった。
 
+### 16.5 accumulator-into-memory: intermediate local で add destination reg を flip (2026-05-18, batch_text_80216540_addcoins_extra)
+
+`AddCoinsFromExtraStage` (`g_earnedCoins += g_extraCoinsToAdd;`) で発見。target asm は `lwz r3, ...; lwz r0, ...; add r3, r3, r0; stw r3, ...` (LHS reg = r3 を destination として再利用)。
+
+| C source | CW 1.3.2 出力 |
+|---|---|
+| `g_earnedCoins = g_earnedCoins + g_extra;` | `lwz r3, lhs; lwz r0, rhs; add r0, r3, r0; stw r0, lhs;` (RHS reg = r0 が destination) |
+| `g_earnedCoins += g_extra;` | 同上 (compound assignment は register allocation を変えない) |
+| `int total = g_earnedCoins; total += g_extra; g_earnedCoins = total;` | `lwz r3, lhs; lwz r0, rhs; add r3, r3, r0; stw r3, lhs;` (LHS reg = r3 が destination) — **byte-identical** |
+
+CW 1.3.2 はメモリ operand 同士の add では **RHS-side register** を destination として選ぶ。target が LHS-side reuse (`add r3, r3, r0`) を要求するときは、明示的な intermediate local 変数 (`int total = lhs;`) を導入すると CW が局所変数を LHS reg に allocate して flip する。
+
+頻出シーン: 単純な global accumulator (`g_total += delta;`)、struct field 更新 (`obj->count += n;`)。target asm の `add rA, rA, rB` の rA が load-reg と一致しているなら、intermediate local pattern を試す。
+
 ### 適用パターン (asm_fn 退避を即決すべきケース)
 
 以下の特徴を target asm に見つけたら、C 化試行 1-2 回で限界判断し asm_fn 退避を選ぶ:
