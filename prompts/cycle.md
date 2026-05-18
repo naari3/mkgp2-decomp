@@ -138,6 +138,36 @@ else:
 
 複数 notification を受信したら順番に処理 (1 件ずつ build verify する。`--no-build` で apply して最後に集約 build する変則は build fail 時の責任所在が曖昧になるので避ける)。
 
+### merge hook 完了後の chain (必須)
+
+各 merge hook の 7 ステップが終わったら、**turn を閉じる前に必ず以下をチェックする**:
+
+```python
+# 全 pending notification を処理し終えた後
+if not Path('.orchestrator/drain.flag').exists():
+    if len(state['active_subs']) < 6:
+        has_pending_batch = any(b['status']=='pending' for b in state['batches'].values())
+        has_pending_fn = any(f['status']=='pending' and f.get('batch_id') is None for f in state['functions'].values())
+        if has_pending_batch or has_pending_fn:
+            # → CASE 3/4 chain (active_subs を上限まで埋める)
+            # 1 batch 編成 + 1 dispatch で turn を閉じない
+            chain_to_dispatch()
+```
+
+つまり「merge hook → active_subs 減 → そのまま turn 終了」を許さない。pending work があるなら **同 turn 内で CASE 4 編成 → CASE 3 dispatch を chain して active_subs を 6 まで埋める**。
+
+理由: 「pending あるのに active_subs=0 で next /loop fire を 1500s 待つ」状態は cycle 設計上発生してはいけない (cycle.md「留意点」section 旧記述)。明示化していないと merge 後そのまま停止する間違いが起きる。
+
+### chain の中断条件
+
+- `.orchestrator/drain.flag` あり → 新規 dispatch しない (CASE 1)
+- 全 pending batch / pending fn が編成不能 (large extab group only 等) → CASE 5 (idle)、ScheduleWakeup
+
+### chain 中の例外
+
+- conflict resolution 中は他の hook を pause (鉄則 2)。chain も pause。
+- 直近 merge で `blocked`/`failed` が発生 → CASE 2 (replan) を先に処理してから dispatch chain
+
 `status='cancelled'` な batch (TaskStop 由来) は cycle 内 cleanup で worktree を削除して terminal:
 
 ```python

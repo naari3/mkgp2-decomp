@@ -83,6 +83,22 @@ sub からの `<task-notification>` (status=completed) を受信したら、cycl
 
 複数 notification が同時/連続で来た場合は **順番に処理して構わない**。各 merge は ~30s-2min で context bloat 軽微。同 cycle に dispatch / 編成も chain 可能。
 
+### merge hook 後の chain (必須)
+
+merge hook の 7 ステップが完了したら、**turn を閉じる前に必ず以下をチェックする**:
+
+```
+全 pending notification 処理後:
+  if drain.flag 無し and active_subs < 6:
+    if pending batch あり or pending fn (batch_id 未割当) あり:
+      → 同 turn 内で CASE 4 編成 → CASE 3 dispatch を chain
+      → active_subs を 6 まで埋める
+```
+
+「merge hook → active_subs 減 → そのまま turn 終了」は **anti-pattern**。pending work があるのに ScheduleWakeup heartbeat (1500s) を待つ状態は cycle 設計上発生してはいけない。
+
+**この rule は cycle の中ではなく hook 後の必須 cleanup として動く** (cycle 制約外、鉄則 3 の延長)。実装上は merge hook 7 ステップを「7+1 ステップ」と見て最後の +1 で chain check する形。
+
 ### parallel dispatch の原則 (anti-pattern 防止)
 
 dispatch cycle は active_subs を**上限 (6) まで埋める**ことを目標にする。`while len(active_subs) < 6 and 編成可能 fn あり: 編成 + dispatch を繰り返す`。
