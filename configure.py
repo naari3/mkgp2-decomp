@@ -361,14 +361,26 @@ config.libs = [
             Object(Matching, "game/Archive.c"),
             Object(Matching, "game/Collision.c"),
             Object(Matching, "game/Clamp.c"),
+            Object(Matching, "game/InputMgr_GetPlayer.c"),
+            Object(Matching, "game/InputMgr.c"),
             Object(Matching, "game/InputObj.c"),
             Object(Matching, "game/KartMovement.c"),
+            Object(Matching, "game/LakituStart.c"),
             Object(Matching, "game/VBlank.c"),
             # Phase 3a-small: 11-fn dtk reversed-extab group bundle (no extab
             # entries, just .text). All 11 fns initially asm_fn; promote to
             # matched 1 fn at a time via sub-agent dispatch.
             Object(Matching, "game/auto_801223E8_block.c"),
             Object(Matching, "game/Archive_GetCurrent.c"),
+        ],
+    },
+    {
+        "lib": "resource",
+        "mw_version": "GC/1.3.2",
+        "cflags": cflags_base,
+        "progress_category": "game",
+        "objects": [
+            Object(Matching, "resource/ResourceLoading.c"),
         ],
     },
     {
