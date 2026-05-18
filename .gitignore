@@ -38,3 +38,7 @@ compile_commands.json
 .orchestrator/
 .worktrees/
 site/
+per_fn.json
+
+# Claude Code local state
+.claude/
