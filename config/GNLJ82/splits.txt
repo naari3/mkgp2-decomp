@@ -356,6 +356,11 @@ ui/CursorSound.c:
 	extabindex  start:0x800278C0 end:0x800278CC
 	.text       start:0x801B7C88 end:0x801B7CAC
 
+game/InitBGM.c:
+	extab       start:0x80012C90 end:0x80012C98
+	extabindex  start:0x800278FC end:0x80027908
+	.text       start:0x801B833C end:0x801B8398
+
 game/dtor_801BA14C.c:
 	extab       start:0x80013114 end:0x8001311C
 	extabindex  start:0x800279BC end:0x800279C8
