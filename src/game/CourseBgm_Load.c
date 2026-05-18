@@ -11,7 +11,7 @@
  *
  * State written:
  *   g_courseBgm      (0x806D10E8) = loaded ptr (or 0)
- *   g_courseBgmSize  (0x806D10EC) = loaded ptr again (companion store —
+ *   g_courseBgmSize  (0x806D10EC) = loaded ptr again (companion store --
  *                                   misleading legacy symbol name)
  *   lbl_806D10E0     (.sbss)      = number of leading zero header slots
  *                                   skipped (stride 16 = 4 ints)
