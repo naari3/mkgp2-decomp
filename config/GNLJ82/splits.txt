@@ -94,6 +94,9 @@ game/auto_800A8F4C_block.c:
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C
 
+game/LiveConn.c:
+	.text       start:0x801B3914 end:0x801B3928
+
 game/ItemHolder.c:
 	.text       start:0x801E9070 end:0x801E9094
 
