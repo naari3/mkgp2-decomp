@@ -578,6 +578,11 @@ game/Item_GetDescriptor.c:
 	extabindex  start:0x8002AE84 end:0x8002AE9C
 	.text       start:0x8023DB24 end:0x8023DBEC
 
+game/Item_GetDescriptorField0.c:
+	extab       start:0x8001CBBC end:0x8001CBC4
+	extabindex  start:0x8002AEA8 end:0x8002AEB4
+	.text       start:0x8023DC50 end:0x8023DCEC
+
 game/LapDisp_SetTotalLaps.c:
 	extab       start:0x8001CE2C end:0x8001CE34
 	extabindex  start:0x8002AF98 end:0x8002AFA4
