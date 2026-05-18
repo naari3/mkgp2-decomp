@@ -383,6 +383,7 @@ config.libs = [
             Object(Matching, "game/ItemDisplay_Stop.c"),
             Object(Matching, "game/ItemDisplay_Destroy.c"),
             Object(Matching, "game/ItemDisplay_GetOrCreate.c"),
+            Object(Matching, "game/ItemSelect.c"),
             Object(Matching, "game/DisplayBuffer_GetByIndex.c"),
             Object(Matching, "game/ProcessSystemTick.c"),
             Object(Matching, "game/NokoNoko_CountDefeated.c"),

@@ -144,6 +144,9 @@ sound/MediaBoard_PollCompletion.c:
 game/SpawnTable.c:
 	.text       start:0x8005F5CC end:0x8005F5D8
 
+game/ItemSelect.c:
+	.text       start:0x80060D40 end:0x80060DE4
+
 game/dtor_8006178C.c:
 	extab       start:0x80007E74 end:0x80007E84
 	extabindex  start:0x80020DEC end:0x80020E04
