@@ -194,6 +194,11 @@ game/ServiceMenu.c:
 	extabindex  start:0x800211C4 end:0x800211D0
 	.text       start:0x80073E7C end:0x80073ECC
 
+game/CourseAuxClass_VtableDtor.c:
+	extab       start:0x800087A0 end:0x800087A8
+	extabindex  start:0x80021578 end:0x80021584
+	.text       start:0x8007D0D4 end:0x8007D11C
+
 game/SyncSlot.c:
 	extab       start:0x80008D84 end:0x80008D8C
 	extabindex  start:0x80021884 end:0x80021890

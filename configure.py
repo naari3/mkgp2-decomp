@@ -395,6 +395,7 @@ config.libs = [
             Object(NonMatching, "game/GameModeBase.cpp"),
             Object(Matching, "game/KartMovement_SetPosition.c"),
             Object(Matching, "game/NamCam_LoadImage.c"),
+            Object(Matching, "game/CourseAuxClass_VtableDtor.c"),
             Object(Matching, "game/LiveConn.c"),
             Object(Matching, "ui/CursorSound.c"),
             Object(Matching, "ui/FrameSelection.c"),
