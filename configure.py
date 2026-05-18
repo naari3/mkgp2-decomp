@@ -381,6 +381,7 @@ config.libs = [
             Object(Matching, "game/PathCursor_Free.c"),
             Object(Matching, "game/dtor_8006178C.c"),
             Object(Matching, "game/dtor_80064CD4.c"),
+            Object(Matching, "game/LakituStart_Dtor.c"),
             Object(Matching, "game/dtor_801EECD8.c"),
             Object(Matching, "game/dtor_801F8214.c"),
             Object(Matching, "game/dtor_80209180.c"),
