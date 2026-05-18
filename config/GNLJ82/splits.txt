@@ -278,6 +278,11 @@ game/NokoNoko.c:
 	extabindex  start:0x80026DB0 end:0x80026DBC
 	.text       start:0x80188D0C end:0x80188DA8
 
+game/WeatherSystem_PickVariant.c:
+	extab       start:0x800122B4 end:0x800122BC
+	extabindex  start:0x80027188 end:0x80027194
+	.text       start:0x80193264 end:0x801932F8
+
 game/KartMovement_SetPosition.c:
 	.text       start:0x8019A4A0 end:0x8019A4E0
 

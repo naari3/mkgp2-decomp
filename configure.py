@@ -421,6 +421,7 @@ config.libs = [
             Object(Matching, "game/AddCoinsFromExtraStage.c"),
             Object(Matching, "game/NokoNokoChallenge_TransitionToResult.c"),
             Object(Matching, "game/SuikaBallObj_Render.c"),
+            Object(Matching, "game/WeatherSystem_PickVariant.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SpriteSystem_EnsureInit.c"),
             Object(Matching, "game/Scene3D_GetCameraPos.c"),
             Object(Matching, "game/LUT_Sin12Bit.c"),
