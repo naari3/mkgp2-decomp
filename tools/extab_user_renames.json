@@ -27,5 +27,10 @@
   "src/game/ItemSelect.c": {
     "extab_ItemSelect_Init":      "@etb_80007DF8",
     "extabindex_ItemSelect_Init": "@eti_80020DB0"
+  },
+
+  "src/game/NokoNokoChallenge.c": {
+    "extab_NokoNokoChallenge_CalcResultText":      "@etb_8000BCE4",
+    "extabindex_NokoNokoChallenge_CalcResultText": "@eti_80024758"
   }
 }

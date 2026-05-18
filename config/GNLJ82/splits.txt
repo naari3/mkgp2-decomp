@@ -242,6 +242,11 @@ game/auto_800A8F4C_block.c:
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C
 
+game/NokoNokoChallenge.c:
+	extab       start:0x8000BCDC end:0x8000BCEC
+	extabindex  start:0x8002474C end:0x80024764
+	.text       start:0x80122C0C end:0x80122E58
+
 game/NokoNokoChallenge_TransitionToResult.c:
 	extab       start:0x8000BCEC end:0x8000BCF4
 	extabindex  start:0x80024764 end:0x80024770
