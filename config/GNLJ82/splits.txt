@@ -263,6 +263,11 @@ game/EnemyRunType1_Init.c:
 game/PhysicsState.c:
 	.text       start:0x801EC99C end:0x801EC9AC
 
+game/dtor_801EECD8.c:
+	extab       start:0x80016D54 end:0x80016D5C
+	extabindex  start:0x80028B80 end:0x80028B8C
+	.text       start:0x801EECD8 end:0x801EED14
+
 ui/UI_PlaySeToggle.c:
 	extab       start:0x80017CD4 end:0x80017CDC
 	extabindex  start:0x8002939C end:0x800293A8
