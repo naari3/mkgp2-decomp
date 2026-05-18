@@ -379,6 +379,7 @@ config.libs = [
             Object(Matching, "game/dtor_8024F40C.c"),
             Object(Matching, "game/dtor_80091284.c"),
             Object(Matching, "game/PathCursor_Free.c"),
+            Object(Matching, "game/PathManager_RefreshFinishPositions.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/dtor_8006178C.c"),
             Object(Matching, "game/dtor_80064CD4.c"),
             Object(Matching, "game/LakituStart_Dtor.c"),
