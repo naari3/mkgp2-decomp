@@ -5,12 +5,12 @@
  *
  * Flow:
  *   1. BootDispatcher(bootScratch)          -- boot 4 段階; bootScratch[0] = test_mode flag
- *   2. fn_8002FF30()                        -- post-boot 中間処理
- *   3. fn_8002CB80(&lbl_80328C94, mode)     -- main scene allocation
+ *   2. DeadCounters_PostBootReset()                        -- post-boot 中間処理
+ *   3. FlowDispatcher_Create(&lbl_80328C94, mode)     -- main scene allocation
  *                                              mode default 3; if test mode -> 12
  *   4. MainGameLoop()                       -- per-frame game loop
- *   5. fn_8002C554(scene, 1)                -- scene shutdown
- *   6. fn_8002DC7C()                        -- 後始末
+ *   5. FlowDispatcher_Dtor(scene, 1)                -- scene shutdown
+ *   6. Game_Shutdown()                        -- 後始末
  *
  * extab/extabindex (auto-emitted by CW with #pragma exceptions on):
  *   extab      @ 0x8000A150 size 0x8
@@ -26,11 +26,11 @@
  */
 
 extern void BootDispatcher(void *scratch);
-extern void fn_8002FF30(void);
-extern void *fn_8002CB80(void *p, int mode);
+extern void DeadCounters_PostBootReset(void);
+extern void *FlowDispatcher_Create(void *p, int mode);
 extern void MainGameLoop(void);
-extern void fn_8002C554(void *scene, int flag);
-extern void fn_8002DC7C(void);
+extern void FlowDispatcher_Dtor(void *scene, int flag);
+extern void Game_Shutdown(void);
 
 extern void *lbl_80328C94[];
 
@@ -41,14 +41,14 @@ void main(void) {
     int mode;
 
     BootDispatcher(bootScratch);
-    fn_8002FF30();
+    DeadCounters_PostBootReset();
     mode = 3;
     if (bootScratch[0] == 1) {
         mode = 12;
     }
-    scene = fn_8002CB80(lbl_80328C94, mode);
+    scene = FlowDispatcher_Create(lbl_80328C94, mode);
     MainGameLoop();
-    fn_8002C554(scene, 1);
-    fn_8002DC7C();
+    FlowDispatcher_Dtor(scene, 1);
+    Game_Shutdown();
 }
 #pragma exceptions reset

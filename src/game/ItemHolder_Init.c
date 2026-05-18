@@ -41,7 +41,7 @@
 
 /* --- extern decls: branch callees (bl/b targets) --- */
 extern void GetRaceContextPtr();
-extern void fn_800A4578(); /* RaceContextSlot_GetIfAlive */
+extern void RaceContextSlot_GetIfAlive(); /* RaceContextSlot_GetIfAlive */
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 extern unsigned int lbl_804E4AF0[]; /* PTR_PTR_804E4AF0 (initial vtable) */
@@ -90,7 +90,7 @@ asm void ItemHolder_Init(void) {
 ItemHolder_Init_L_801E9010:
     bl GetRaceContextPtr
     mr r4, r31
-    bl fn_800A4578
+    bl RaceContextSlot_GetIfAlive
     cmplwi r3, 0x0
     beq ItemHolder_Init_L_801E9038
     lwz r0, 0xb4(r3)

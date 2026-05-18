@@ -9,7 +9,7 @@
  * counters (self[5]=0, self[7]=8). Returns 1 on accepted eject, 0
  * otherwise.
  *
- * Sci2Card_BuildPacket is still under its placeholder name fn_80076910
+ * Sci2Card_BuildPacket is still under its placeholder name Sci2Card_BuildPacket
  * in symbols.txt; this batch renames it to Sci2Card_BuildPacket (the
  * Ghidra-side label, signature already known: 7-arg packet builder
  * with frameType / subCmd / data / dataLen).

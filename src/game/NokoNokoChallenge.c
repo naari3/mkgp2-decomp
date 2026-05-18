@@ -20,8 +20,8 @@ extern void fn_8016C554(int);
 extern void fn_80192208(int);
 extern unsigned char RoundCupIsCompleted(void *, int, int, int);
 extern void fn_801D6558(void *, int, int, int);
-extern void fn_8008DA48(void);
-extern void fn_800A6574(int, int, int);
+extern void PlayStats_OnMissionResult_Stub(void);
+extern void Empty_NokoNokoHook(int, int, int);
 extern int fn_8024F588(void);
 
 asm void NokoNokoChallenge_CalcResultText(void);
@@ -116,7 +116,7 @@ L_80122D7C:
     li r6, 0x1
     bl fn_801D6558
 L_80122D94:
-    bl fn_8008DA48
+    bl PlayStats_OnMissionResult_Stub
     lwz r3, g_cupId(r13)
     cmpwi r3, 0x9
     blt L_80122DAC
@@ -146,7 +146,7 @@ L_80122DEC:
     mr r3, r31
     mr r5, r29
     li r4, 0x0
-    bl fn_800A6574
+    bl Empty_NokoNokoHook
     b L_80122E38
 L_80122E08:
     lis r3, g_playerData@ha
@@ -160,7 +160,7 @@ L_80122E08:
     mr r3, r31
     mr r5, r29
     li r4, -0x1
-    bl fn_800A6574
+    bl Empty_NokoNokoHook
 L_80122E38:
     bl fn_8024F588
     stb r28, 0x20(r3)

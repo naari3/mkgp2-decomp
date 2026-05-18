@@ -52,9 +52,9 @@ struct InputObject;
 extern struct InputObject **g_inputManager;
 extern void *Alloc(int size);
 extern void dtor_8003AFB8(void *p);
-extern void fn_800396E0(void);
-extern void fn_800396E4(void);
-extern void *fn_8003964C(void *self, int arg);
+extern void InputMgr_TeardownStub(void);
+extern void JvsInput_ResetCalibration(void);
+extern void *InputObj_Ctor_Internal(void *self, int arg);
 
 /* forward decls for manual extab emit */
 asm void InputMgr_Shutdown(void);
@@ -151,7 +151,7 @@ asm void InputMgr_Shutdown(void) {
     mtctr r12
     bctrl
 InputMgr_Shutdown_L_800390C0:
-    bl fn_800396E0
+    bl InputMgr_TeardownStub
     mr r3, r31
     bl dtor_8003AFB8
 InputMgr_Shutdown_L_800390CC:
@@ -178,13 +178,13 @@ asm void InputMgr_Init(void) {
     bl Alloc
     mr. r31, r3
     beq InputMgr_Init_L_80039138
-    bl fn_800396E4
+    bl JvsInput_ResetCalibration
     li r3, 0x28
     bl Alloc
     mr. r30, r3
     beq InputMgr_Init_L_80039134
     li r4, 0x0
-    bl fn_8003964C
+    bl InputObj_Ctor_Internal
 InputMgr_Init_L_80039134:
     stw r30, 0x0(r31)
 InputMgr_Init_L_80039138:

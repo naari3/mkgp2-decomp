@@ -51,7 +51,7 @@ int ItemAlias_DestToSource(int destId, unsigned char *foundOut) {
 /* asm_fn 退避: CW 1.3.2 が 5-unrolled 比較で p の displacement を fold して
  * target の inline `addi r4, r4, 0xC` pattern を再現できない。`p += 3; p[1]` /
  * `p[4]` / `(volatile *)` 形を 6+ サイクル試行したが 0x94-0xA4 で停滞、target
- * 0xB8 に届かず。sibling fn_800D75F8 が完全同パターン (5-unroll、offset 0x10
+ * 0xB8 に届かず。sibling ItemAliasTable_LookupSlotIndex が完全同パターン (5-unroll、offset 0x10
  * 反復、inline addi) なので idiom 解明できれば 2 fn 同時に unlock 可能。
  */
 asm void ItemAlias_HitRemapLookup(int srcId) {

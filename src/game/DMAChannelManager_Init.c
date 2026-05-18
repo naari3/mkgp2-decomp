@@ -6,7 +6,7 @@
  * lbl_805987E0 (stride 0x14 = 5 ints). For each slot:
  *   - if slot.id (offset 0) != -1, reset id=-1 and slot[3]=5
  *   - Alloc(0x84) a per-slot object, store ptr at slot[4]
- *   - if alloc succeeded, call TransparentDraw_ResetEntry (fn_80065C5C)
+ *   - if alloc succeeded, call TransparentDraw_ResetEntry (TransparentDraw_ResetEntry)
  *     to prime the freshly allocated 0x84-byte struct
  *
  * Finally sets a few globals (lbl_806CEF20=8, lbl_806D10F4=0,
@@ -26,7 +26,7 @@
  *   So matched the InputMgr_Init / HeapStats pattern: asm void body +
  *   manual extab/extabindex emit. byte-identical SHA-1.
  *
- *   `fn_80065C5C` is TransparentDraw_ResetEntry (not renamed here to
+ *   `TransparentDraw_ResetEntry` is TransparentDraw_ResetEntry (not renamed here to
  *   keep the asm body matching the symbols.txt name dtk dol split
  *   currently emits; future rename pass can flip both at once).
  *
@@ -40,7 +40,7 @@
  */
 
 extern void *Alloc(int size);
-extern void fn_80065C5C(void *self); /* TransparentDraw_ResetEntry */
+extern void TransparentDraw_ResetEntry(void *self); /* TransparentDraw_ResetEntry */
 extern void dtor_8003AFB8(void *p);  /* MemoryManager_TimedFree */
 
 /* sda1 globals (sdata / sbss residents). mwcc inline-asm syntax
@@ -121,7 +121,7 @@ DMAChannelManager_Init_L_800662F8:
     bl Alloc
     mr. r27, r3
     beq DMAChannelManager_Init_L_8006630C
-    bl fn_80065C5C
+    bl TransparentDraw_ResetEntry
 DMAChannelManager_Init_L_8006630C:
     addi r28, r28, 0x1
     stw r27, 0x10(r29)

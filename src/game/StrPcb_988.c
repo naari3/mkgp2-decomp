@@ -3,7 +3,7 @@
  *
  * Body is byte-identical to dtor_80036E40 but the binary contains two
  * separate instances (referenced from distinct vtables), so each lives in
- * its own TU. The pair sits across a wedge (fn_800369C4/fn_800369F8 carry
+ * its own TU. The pair sits across a wedge (QuadFrame_FromPackedCorners/QuadFrame_FromCornerPtrs carry
  * extabindex entries between them) so a single TU with two disjoint .text
  * ranges would trigger a dtk cyclic-dependency error.
  *

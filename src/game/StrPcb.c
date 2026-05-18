@@ -6,7 +6,7 @@
  * dead-code twin dtor_80036988 (see game/StrPcb_988.c) but the two
  * functions live in separate vtable slots so the binary keeps both.
  *
- * Lives in its own TU because of the fn_800369C4/fn_800369F8 wedge
+ * Lives in its own TU because of the QuadFrame_FromPackedCorners/QuadFrame_FromCornerPtrs wedge
  * (extabindex-carrying functions between 0x80036988 and 0x80036E40).
  */
 

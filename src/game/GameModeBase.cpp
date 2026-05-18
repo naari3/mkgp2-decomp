@@ -20,7 +20,7 @@
  *   - GameModeBase_Dtor         (0x800A086C, size 0xE4) — virtual GameModeBase*
  *     (this, freeFlag); dispatched at vtable[+0x10]. Invokes scene->f0(1) at
  *     vtable[+0x8], clears self->scene + g_objCollChecker + lbl_806D10AC,
- *     calls fn_80190660 + fn_80075470 + lbl_806D10AC->f0(1) + fn_802C8B48(0),
+ *     calls fn_80190660 + Backup_PublishShadowCopy_Inline + lbl_806D10AC->f0(1) + fn_802C8B48(0),
  *     decrements g_playerData[0x198] (clamped at 0), then chains
  *     ObjectBase_Dtor (= dtor_8002CDF4) and optional MemoryManager_TimedFree
  *     (= dtor_8003AFB8) under the `freeFlag > 0` delete-self gate.
@@ -56,12 +56,12 @@ struct GameModeBase {
 };
 
 extern "C" {
-extern void fn_80092460(void);
+extern void CardRegister_Session_Tick(void);
 extern void fn_801A1280(void);
 extern void RankLog_UpdatePerFrame(void *);
 extern void *lbl_806D10A0;
 extern int  g_objCollChecker;
-extern void fn_80075470(void);
+extern void Backup_PublishShadowCopy_Inline(void);
 extern void fn_80190660(void);
 extern void fn_802C8B48(int);
 extern void *dtor_8002CDF4(void *self, short freeFlag);  /* ObjectBase_Dtor */
@@ -80,7 +80,7 @@ extern "C" int GameModeBase_FrameUpdate(GameModeBase *self) {
     if (self->scene == 0) {
         return 0;
     }
-    fn_80092460();
+    CardRegister_Session_Tick();
     fn_801A1280();
     ret = self->scene->f1();
     dat = lbl_806D10A0;
@@ -102,7 +102,7 @@ extern "C" GameModeBase *GameModeBase_Dtor(GameModeBase *self, short freeFlag) {
         self->scene = 0;
         g_objCollChecker = 0;
         fn_80190660();
-        fn_80075470();
+        Backup_PublishShadowCopy_Inline();
         if (lbl_806D10AC != 0) {
             lbl_806D10AC->f0(1);
         }

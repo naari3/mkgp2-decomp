@@ -47,10 +47,10 @@ extern unsigned int lbl_802E9650[];
 extern unsigned int lbl_80594080[];
 
 /* --- forward decls --- */
-asm void fn_8002F640(void);
+asm void BootStateStruct_RefreshIfDue(void);
 asm void HeapStats_DumpForTag(void);
 asm void isJapanese(void);
-asm void fn_8002F8D4(void);
+asm void DebugLog_LvIdMsg(void);
 asm void dtor_8002F910(void);
 asm void dtor_8002F978(void);
 
@@ -75,13 +75,13 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_8002F8D4[8
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8002F640 = {
-    (void *)&fn_8002F640, 0x000001BC, (void *)extab_fn_8002F640
+    (void *)&BootStateStruct_RefreshIfDue, 0x000001BC, (void *)extab_fn_8002F640
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_HeapStats_DumpForTag = {
     (void *)&HeapStats_DumpForTag, 0x000000D0, (void *)extab_HeapStats_DumpForTag
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8002F8D4 = {
-    (void *)&fn_8002F8D4, 0x0000003C, (void *)extab_fn_8002F8D4
+    (void *)&DebugLog_LvIdMsg, 0x0000003C, (void *)extab_fn_8002F8D4
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_8002F910 = {
     (void *)&dtor_8002F910, 0x00000068, (void *)extab_dtor_8002F910
@@ -91,7 +91,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void fn_8002F640(void) {
+asm void BootStateStruct_RefreshIfDue(void) {
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -272,7 +272,7 @@ asm void isJapanese(void) {
     blr
 }
 
-asm void fn_8002F8D4(void) {
+asm void DebugLog_LvIdMsg(void) {
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0

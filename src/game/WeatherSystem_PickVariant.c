@@ -3,7 +3,7 @@
  *
  * Pure-function weather variant picker. Returns one byte describing the
  * atmosphere animation to apply.
- *   forcedId == -1 : consult fn_800991F4 gate + g_playerData[0xC] fallback.
+ *   forcedId == -1 : consult Sci2Card_GetByteFlag1224 gate + g_playerData[0xC] fallback.
  *                    Gate returns 0 -> 0x5F (default overcast).
  *   forcedId ==  0 : 0x00  (clear)
  *   forcedId ==  1 : 0x50  (cloudy)
@@ -19,13 +19,13 @@
  * `#pragma exceptions on` to let CW auto-emit them.
  */
 
-extern unsigned char fn_800991F4(void);
+extern unsigned char Sci2Card_GetByteFlag1224(void);
 extern unsigned char g_playerData[0x1DC];
 
 #pragma exceptions on
 unsigned char WeatherSystem_PickVariant(int forcedId) {
     if (forcedId < 0) {
-        if ((fn_800991F4() & 0xFF) == 0) {
+        if ((Sci2Card_GetByteFlag1224() & 0xFF) == 0) {
             return 0x5F;
         }
         forcedId = g_playerData[0xC];

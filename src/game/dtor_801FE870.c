@@ -7,8 +7,8 @@
 /* refine if the real prototype matters for header consumers. */
 extern void DebugPrintf();
 extern void dtor_8003AFB8();
-extern void fn_8002D084();
-extern void fn_8002D08C();
+extern void ServiceValue_Get();
+extern void ServiceEnable_Get();
 extern void fn_801F9888();
 extern void fn_80209FA4();
 extern void fn_8027B394();
@@ -228,10 +228,10 @@ asm void fn_801FE5C8(void) {
     stb r0, 0x67(r3)
     stb r0, 0xa3(r3)
     stb r0, 0xdf(r3)
-    bl fn_8002D08C
+    bl ServiceEnable_Get
     clrlwi. r0, r3, 24
     beq fn_801FE5C8_L_801FE728
-    bl fn_8002D084
+    bl ServiceValue_Get
     clrlwi. r0, r3, 24
     bne fn_801FE5C8_L_801FE728
     li r0, 0x1
@@ -286,10 +286,10 @@ asm void fn_801FE5C8(void) {
     stb r0, 0x64(r31)
     stb r0, 0x65(r31)
     stb r0, 0x66(r31)
-    bl fn_8002D08C
+    bl ServiceEnable_Get
     clrlwi. r0, r3, 24
     beq fn_801FE5C8_L_801FE804
-    bl fn_8002D084
+    bl ServiceValue_Get
     clrlwi. r0, r3, 24
     bne fn_801FE5C8_L_801FE804
     li r0, 0x0

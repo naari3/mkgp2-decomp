@@ -10,22 +10,22 @@
  * AI_GetYaw / Vtable_CallSlot2.cpp pattern).
  */
 
-extern void fn_8002DC3C(void);
+extern void Frame_Begin(void);
 extern void SpriteHandlePool_GC(void);
-extern void fn_8002DA3C(void);
+extern void Frame_PostDraw_BackupBuffer(void);
 extern void Timer_Decrement(void);
 extern void PCBComm_Process(int a, int b);
-extern void fn_8002D978(void);
-extern void fn_8002D7DC(void);
+extern void Frame_PostDrawOverlay(void);
+extern void Frame_UpdatePerFrameState(void);
 
 #pragma exceptions on
 void ProcessSystemTick(void) {
-    fn_8002DC3C();
+    Frame_Begin();
     SpriteHandlePool_GC();
-    fn_8002DA3C();
+    Frame_PostDraw_BackupBuffer();
     Timer_Decrement();
     PCBComm_Process(1, 1);
-    fn_8002D978();
-    fn_8002D7DC();
+    Frame_PostDrawOverlay();
+    Frame_UpdatePerFrameState();
 }
 #pragma exceptions reset

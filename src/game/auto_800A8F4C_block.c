@@ -58,19 +58,19 @@ extern unsigned int lbl_80328474[];
 extern unsigned int lbl_80328480[];
 
 /* --- forward decls --- */
-asm void fn_800A8F4C(void);
+asm void WarpZone_FindContainingOBB(void);
 asm void WarpZone_CalcExitPosition(void);
 asm void WarpZone_FindContaining(void);
 asm void WarpDashMgr_Cleanup(void);
 void *WarpDashMgr_GetInstance(unsigned char id);
 asm void WarpDashMgr_GetOrCreate(void);
-asm void fn_800A9414(void);
+asm void Free_IfOwnedShort(void);
 asm void WarpAutoRun_Init(void);
 asm void DashZone_ProcessAutoRun(void);
 asm void WarpAutoRun_GetParam(void);
 void WarpAutoRun_OnEnter(void *self, float f1, float f2, float f3, float f4, float vx, float vy, float vz);
 asm void WarpZone_CheckEntry(void);
-asm void fn_800A998C(void);
+asm void Field4NotMinusOne(void);
 asm void WarpZone_CalcEdgeVectors(void);
 void *dtor_800A9CC8(void *this, short flag);
 void *dtor_800A9D2C(void *this, short flag);
@@ -113,7 +113,7 @@ __declspec(section ".extab_user") static const unsigned char extab_WarpZone_Calc
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_800A8F4C = {
-    (void *)&fn_800A8F4C, 0x00000138, (void *)extab_fn_800A8F4C
+    (void *)&WarpZone_FindContainingOBB, 0x00000138, (void *)extab_fn_800A8F4C
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpZone_CalcExitPosition = {
     (void *)&WarpZone_CalcExitPosition, 0x00000118, (void *)extab_WarpZone_CalcExitPosition
@@ -128,7 +128,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&WarpDashMgr_GetOrCreate, 0x00000080, (void *)&extab_WarpDashMgr_GetOrCreate
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_800A9414 = {
-    (void *)&fn_800A9414, 0x0000003C, (void *)extab_fn_800A9414
+    (void *)&Free_IfOwnedShort, 0x0000003C, (void *)extab_fn_800A9414
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_DashZone_ProcessAutoRun = {
     (void *)&DashZone_ProcessAutoRun, 0x000001E0, (void *)extab_DashZone_ProcessAutoRun
@@ -147,7 +147,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void fn_800A8F4C(void) {
+asm void WarpZone_FindContainingOBB(void) {
     nofralloc
     stwu r1, -0x20(r1)
     lbz r0, 0x18(r3)
@@ -500,7 +500,7 @@ asm void WarpDashMgr_GetOrCreate(void) {
     blr
 }
 
-asm void fn_800A9414(void) {
+asm void Free_IfOwnedShort(void) {
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -907,7 +907,7 @@ asm void WarpZone_CheckEntry(void) {
     blr
 }
 
-asm void fn_800A998C(void) {
+asm void Field4NotMinusOne(void) {
     nofralloc
     lwz r4, 0x4(r3)
     subfic r3, r4, -0x1

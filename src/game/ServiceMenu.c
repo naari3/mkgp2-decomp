@@ -2,7 +2,7 @@
  * OpenFullServiceMenu @ 0x80073E7C (size 0x50).
  *
  * Trivial wrapper that creates a ServiceMenu instance:
- *   - ServiceButtonExtra_Set(1)  (fn_8002D0A8, sets a global flag)
+ *   - ServiceButtonExtra_Set(1)  (ServiceButtonExtra_Set, sets a global flag)
  *   - SetSyncTarget(0x35)        (raise sync target id)
  *   - p = Alloc(0x28C)           (allocate ServiceMenu state)
  *   - if (p) ServiceMenu_Init(p, -1)

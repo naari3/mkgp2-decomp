@@ -1,10 +1,10 @@
 /*
  * dtk reversed-extab group `auto_fn_800ABD80_text` bundle (1 TU, indivisible).
- * 6 functions sharing one extab group: fn_800ABD80 (asm_fn), the 4
+ * 6 functions sharing one extab group: HitMessageOverlay_Dtor (asm_fn), the 4
  * CourseData lookup fns (primary matching targets of
  * batch_text_800abdfc_coursedata_bundle), and dtor_800ABF10 (asm_fn).
  *
- * fn_800ABD80 / dtor_800ABF10 are out of batch scope and kept as asm_fn
+ * HitMessageOverlay_Dtor / dtor_800ABF10 are out of batch scope and kept as asm_fn
  * so the indivisible group's extab/extabindex layout stays
  * byte-identical to the target.
  *
@@ -31,7 +31,7 @@ extern unsigned int lbl_80419DB0[];
 extern unsigned int lbl_80419DBC[];
 
 /* --- forward decls --- */
-asm void fn_800ABD80(void);
+asm void HitMessageOverlay_Dtor(void);
 int CourseData_ResolveByKey(void *p, unsigned int key);
 void *CourseData_GetDefaultPathKey(void *p);
 void *CourseData_GetPath(void *p, int idx);
@@ -40,7 +40,7 @@ asm void dtor_800ABF10(void);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) ---
  *
- * All three extab-bearing fns in this group are asm_fn (fn_800ABD80,
+ * All three extab-bearing fns in this group are asm_fn (HitMessageOverlay_Dtor,
  * CourseData_GetOrCreate, dtor_800ABF10), so all extab/extabindex
  * entries are manually emitted. CourseData_GetOrCreate's extab encodes
  * a DELETEPOINTER cleanup on r28 at PC 0x70 (calls dtor_8003AFB8 if an
@@ -60,7 +60,7 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_800ABD80 = {
-    (void *)&fn_800ABD80, 0x0000007C, (void *)extab_fn_800ABD80
+    (void *)&HitMessageOverlay_Dtor, 0x0000007C, (void *)extab_fn_800ABD80
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CourseData_GetOrCreate = {
     (void *)&CourseData_GetOrCreate, 0x000000A0, (void *)&extab_CourseData_GetOrCreate
@@ -70,7 +70,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void fn_800ABD80(void) {
+asm void HitMessageOverlay_Dtor(void) {
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0

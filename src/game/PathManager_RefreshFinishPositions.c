@@ -4,7 +4,7 @@
  * 1-fn loop over the 8 player slots of a PathManager (per-slot stride 0x98).
  * For each slot whose field 0x14 (active flag, signed) is >= 0, fetches an
  * id from the KartItem at field 0xA0 via KartItem_GetOrAssignId (still named
- * fn_8003F418 in symbols.txt) and stores it into field 0x68.
+ * KartItem_GetOrAssignId in symbols.txt) and stores it into field 0x68.
  *
  * Singleton dtk reversed-extab group `auto_PathManager_RefreshF_text` — the
  * function has an extab/extabindex entry (Large Frame: Yes / Saved GPR
@@ -13,7 +13,7 @@
  * (same pattern as AI_GetYaw.c, GetCourseSectionType.c).
  */
 
-extern int fn_8003F418(void *kartItem);
+extern int KartItem_GetOrAssignId(void *kartItem);
 
 #pragma exceptions on
 void PathManager_RefreshFinishPositions(int self) {
@@ -25,7 +25,7 @@ void PathManager_RefreshFinishPositions(int self) {
     do {
         if (*(int *)(cursor + 0x14) >= 0) {
             *(int *)(cursor + 0x68) =
-                fn_8003F418(*(void **)(cursor + 0xA0));
+                KartItem_GetOrAssignId(*(void **)(cursor + 0xA0));
         }
         playerIdx++;
         cursor += 0x98;

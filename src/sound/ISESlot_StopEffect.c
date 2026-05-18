@@ -6,17 +6,17 @@
  * `auto_03_80049B40_text` (which holds ISESlot_StartCleanup /
  * ISESlot_IsActive in src/sound/ISESlot.c).
  *
- * The pending handle stored at +0x18 is forwarded to fn_800DD874 along
+ * The pending handle stored at +0x18 is forwarded to ItemObject_SetByteAt0xEC along
  * with the caller-supplied (idx, value) pair (passed transparently in
  * r4/r5 — target codegen never touches them, so we model the function
  * as a 3-arg pass-through).
  *
  * Layout (opaque ISESlot block):
  *   +0x04 : u8   active flag
- *   +0x18 : void * pending effect handle (consumed by fn_800DD874)
+ *   +0x18 : void * pending effect handle (consumed by ItemObject_SetByteAt0xEC)
  */
 
-extern void fn_800DD874(void *handle, int idx, unsigned char value);
+extern void ItemObject_SetByteAt0xEC(void *handle, int idx, unsigned char value);
 
 #pragma exceptions on
 int ISESlot_StopEffect(void *self, int idx, unsigned char value) {
@@ -26,7 +26,7 @@ int ISESlot_StopEffect(void *self, int idx, unsigned char value) {
     }
     handle = *(void **)((char *)self + 0x18);
     if (handle != 0) {
-        fn_800DD874(handle, idx, value);
+        ItemObject_SetByteAt0xEC(handle, idx, value);
     }
     return 1;
 }

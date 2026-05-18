@@ -28,8 +28,8 @@
  * BootNotice_CheckEnterCondition.c).
  */
 
-extern char *fn_8009C1D0(void);          /* GetCourseBgmFilePath */
-extern int  *fn_80034C38(char *path);    /* DVDFile_LoadSync */
+extern char *GetCourseBgmFilePath(void);          /* GetCourseBgmFilePath */
+extern int  *DVDFile_LoadSync(char *path);    /* DVDFile_LoadSync */
 
 extern int  *g_courseBgm;                /* .sbss 0x806D10E8 */
 extern int  *g_courseBgmSize;            /* .sbss 0x806D10EC (ptr companion) */
@@ -43,9 +43,9 @@ void CourseBgm_Load(void) {
     char *path;
     int *p;
 
-    path = fn_8009C1D0();
+    path = GetCourseBgmFilePath();
     if (path != 0) {
-        g_courseBgm = fn_80034C38(path);
+        g_courseBgm = DVDFile_LoadSync(path);
         g_courseBgmSize = g_courseBgm;
         lbl_806D10E0 = 0;
         for (p = g_courseBgm; *p == 0; p += 4) {

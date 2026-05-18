@@ -13,9 +13,9 @@
  *   - Store the constructed instance at lbl_80656F00 (= lbl_80638300 +
  *     0x1EC00, just past the slot array; CW emits @ha + @l + addis +0x2
  *     + stw -0x1400 because 0x1EC00 doesn't fit in 16-bit @l).
- *   - Call fn_800AF46C (AnimStatePool_ZeroInit per Ghidra plate).
+ *   - Call AnimStatePool_ZeroInit (AnimStatePool_ZeroInit per Ghidra plate).
  *   - Stamp lbl_80656F04 = 0.
- *   - Call fn_800D8D8C (ItemHitRegistry_Reset per Ghidra plate).
+ *   - Call ItemHitRegistry_Reset (ItemHitRegistry_Reset per Ghidra plate).
  *
  * Shape decision: asm_fn retreat.
  *
@@ -29,7 +29,7 @@
  *   visible in target). So matched the DMAChannelManager_Init pattern:
  *   asm void body + manual extab/extabindex emit. byte-identical SHA-1.
  *
- *   `fn_800AF46C` and `fn_800D8D8C` are left unrenamed (Ghidra plate
+ *   `AnimStatePool_ZeroInit` and `ItemHitRegistry_Reset` are left unrenamed (Ghidra plate
  *   calls them AnimStatePool_ZeroInit / ItemHitRegistry_Reset but the
  *   semantics are not yet verified in this repo; future rename pass).
  *
@@ -48,8 +48,8 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 extern void Alloc();
 extern void clNormal3D_Construct();
-extern void fn_800AF46C();
-extern void fn_800D8D8C();
+extern void AnimStatePool_ZeroInit();
+extern void ItemHitRegistry_Reset();
 extern void memset();
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
@@ -132,13 +132,13 @@ ItemObjectManager_Init_L_800D8244:
     addi r3, r3, lbl_80638300@l
     addis r3, r3, 0x2
     stw r30, -0x1400(r3)
-    bl fn_800AF46C
+    bl AnimStatePool_ZeroInit
     lis r3, lbl_80638300@ha
     li r0, 0x0
     addi r3, r3, lbl_80638300@l
     addis r3, r3, 0x2
     stw r0, -0x13fc(r3)
-    bl fn_800D8D8C
+    bl ItemHitRegistry_Reset
     lwz r0, 0x14(r1)
     lwz r31, 0xc(r1)
     lwz r30, 0x8(r1)

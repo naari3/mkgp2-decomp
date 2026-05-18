@@ -6,7 +6,7 @@
  *   1. if (this != NULL) demote *this back to the InputObject vtable
  *      (&g_InputObjectVtable @ 0x803F5754) so any subsequent virtual
  *      dispatch sees a cleanly typed base subobject.
- *   2. invoke the InputObject member finalizer fn_80039AC4(this, 0)
+ *   2. invoke the InputObject member finalizer JvsInput_DtorAndFree(this, 0)
  *      to release member-owned resources before the alloc is freed.
  *   3. if the second arg (delete-flag, passed as a short) is > 0, call
  *      `dtor_8003AFB8(this)` (= MemoryManager_TimedFree) to release the
@@ -16,7 +16,7 @@
  *      chains work with the C++ ABI deleting-dtor convention).
  *
  * Frame layout differs from ObjectBase_Dtor: this dtor calls a helper
- * (fn_80039AC4) between the NULL check and the conditional free, so the
+ * (JvsInput_DtorAndFree) between the NULL check and the conditional free, so the
  * `this` pointer and the `flag` argument must both survive across that
  * call -> they spill to r30 and r31 respectively, producing the
  * `Saved GPR range: r30-r31` extab entry (0x10080000 / 0x00000000).
@@ -28,7 +28,7 @@
  * check, which matches a `short` parameter type at the source level.
  */
 
-extern void fn_80039AC4(void *, int);
+extern void JvsInput_DtorAndFree(void *, int);
 extern void dtor_8003AFB8(void *);
 extern char g_InputObjectVtable[]; /* InputObject vtable @ 0x803F5754 */
 
@@ -36,7 +36,7 @@ extern char g_InputObjectVtable[]; /* InputObject vtable @ 0x803F5754 */
 void *InputObj_Ctor(void *this, short flag) {
     if (this != 0) {
         *(char **)this = g_InputObjectVtable;
-        fn_80039AC4(this, 0);
+        JvsInput_DtorAndFree(this, 0);
         if (flag > 0) {
             dtor_8003AFB8(this);
         }

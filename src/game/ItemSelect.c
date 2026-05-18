@@ -33,7 +33,7 @@
  * PCB-sync side effect (when self->mode == 1): if the corresponding
  * debounce-enable flag (lbl_80598A60+0x44 or +0x45) is 1, clear the
  * matching status bit (4 for slot44, 8 for slot45) on the StrPcb
- * singleton (fn_80038574 = StrPcb_GetInstance, fn_80038050 =
+ * singleton (StrPcb_GetInstance = StrPcb_GetInstance, StrPcb_ClearStatusBits =
  * StrPcb_ClearStatusBits).
  *
  * The TU is wired as `extab_padding=b"\x00\x00"` + `extra_cflags=
@@ -63,8 +63,8 @@ extern int lbl_806CF110;
 extern unsigned char lbl_80598A60[0x4A];
 
 /* StrPcb-side helpers (renamed in Ghidra; not yet promoted in symbols.txt) */
-extern void *fn_80038574(void);
-extern void fn_80038050(void *pcb, int mask);
+extern void *StrPcb_GetInstance(void);
+extern void StrPcb_ClearStatusBits(void *pcb, int mask);
 
 /* Heap / child-object helpers */
 extern void *Alloc(int size);
@@ -112,12 +112,12 @@ void ItemSelect_Reset(unsigned char *self, unsigned char newValue) {
         *(int *)(self + 0x80) = 0;
         if (self[0x7c] == 1) {
             if (lbl_80598A60[0x44] == 1) {
-                pcb = fn_80038574();
-                fn_80038050(pcb, 4);
+                pcb = StrPcb_GetInstance();
+                StrPcb_ClearStatusBits(pcb, 4);
             }
             if (lbl_80598A60[0x45] == 1) {
-                pcb = fn_80038574();
-                fn_80038050(pcb, 8);
+                pcb = StrPcb_GetInstance();
+                StrPcb_ClearStatusBits(pcb, 8);
             }
         }
     }
@@ -132,12 +132,12 @@ void *ItemSelect_Dtor(unsigned char *self, short freeSelf) {
         *(int *)(self + 0x80) = 0;
         if (self[0x7c] == 1) {
             if (lbl_80598A60[0x44] == 1) {
-                pcb = fn_80038574();
-                fn_80038050(pcb, 4);
+                pcb = StrPcb_GetInstance();
+                StrPcb_ClearStatusBits(pcb, 4);
             }
             if (lbl_80598A60[0x45] == 1) {
-                pcb = fn_80038574();
-                fn_80038050(pcb, 8);
+                pcb = StrPcb_GetInstance();
+                StrPcb_ClearStatusBits(pcb, 8);
             }
         }
         if (freeSelf > 0) {
@@ -256,18 +256,18 @@ ItemSelect_Init_L_80060FD8:
     lbz r0, 0x44(r3)
     cmplwi r0, 0x1
     bne ItemSelect_Init_L_80061014
-    bl fn_80038574
+    bl StrPcb_GetInstance
     li r4, 0x4
-    bl fn_80038050
+    bl StrPcb_ClearStatusBits
 ItemSelect_Init_L_80061014:
     lis r3, lbl_80598A60@ha
     addi r3, r3, lbl_80598A60@l
     lbz r0, 0x45(r3)
     cmplwi r0, 0x1
     bne ItemSelect_Init_L_80061034
-    bl fn_80038574
+    bl StrPcb_GetInstance
     li r4, 0x8
-    bl fn_80038050
+    bl StrPcb_ClearStatusBits
 ItemSelect_Init_L_80061034:
     lwz r0, 0x24(r1)
     mr r3, r31

@@ -20,8 +20,8 @@
 extern int ItemHolder_GetItemType(void *holder);
 extern void ItemHolder_SetItem(void *holder, int itemId, int flags);
 extern void SoundObj_PlaySE(void *sound, int seId);
-extern void fn_80091438(void *bus, int eventId);
-extern void fn_80058534(void *effect, int eventId);
+extern void ItemEffectBus_ApplyItemEventClear(void *bus, int eventId);
+extern void TornadoEffect_ApplyItemVisual_Primary(void *effect, int eventId);
 
 #pragma exceptions on
 unsigned int AI_GrantItem(int self, int itemId, unsigned char force) {
@@ -34,8 +34,8 @@ unsigned int AI_GrantItem(int self, int itemId, unsigned char force) {
     ItemHolder_SetItem(*(void **)(self + 0x24), itemId, 0);
     SoundObj_PlaySE(*(void **)(self + 0x18), 9);
     if (*(int *)(self + 0xC0) > 0) {
-        fn_80091438(*(void **)(*(int *)(self + 0x10) + 0x304), 0x1A);
-        fn_80058534(*(void **)(self + 0x14), 0x1A);
+        ItemEffectBus_ApplyItemEventClear(*(void **)(*(int *)(self + 0x10) + 0x304), 0x1A);
+        TornadoEffect_ApplyItemVisual_Primary(*(void **)(self + 0x14), 0x1A);
         *(int *)(self + 0xA8) = -1;
         *(int *)(self + 0xC0) = 0;
     }

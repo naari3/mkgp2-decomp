@@ -1,6 +1,6 @@
 typedef float f32;
 
-f32 fn_80038778(f32 v, f32 lo, f32 hi) {
+f32 Saturate_Double(f32 v, f32 lo, f32 hi) {
     if (v > hi) return hi;
     if (v < lo) return lo;
     return v;
