@@ -97,6 +97,9 @@ game/auto_801223E8_block.c:
 game/LiveConn.c:
 	.text       start:0x801B3914 end:0x801B3928
 
+ui/FrameSelection.c:
+	.text       start:0x801BA194 end:0x801BA1A4
+
 game/ItemHolder.c:
 	.text       start:0x801E9070 end:0x801E9094
 
