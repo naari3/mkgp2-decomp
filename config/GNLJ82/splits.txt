@@ -216,6 +216,11 @@ game/GameModeBase_FrameUpdate2.cpp:
 	extabindex  start:0x80022298 end:0x800222A4
 	.text       start:0x800A07B4 end:0x800A07EC
 
+game/GameModeBase.cpp:
+	extab       start:0x80009788 end:0x80009798
+	extabindex  start:0x800222A4 end:0x800222BC
+	.text       start:0x800A07EC end:0x800A0950
+
 game/RaceScene_PlayerSlots.c:
 	.text       start:0x800A0B34 end:0x800A0BAC
 

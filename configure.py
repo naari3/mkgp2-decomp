@@ -388,6 +388,7 @@ config.libs = [
             Object(Matching, "game/ProcessSystemTick.c"),
             Object(Matching, "game/NokoNoko_CountDefeated.c"),
             Object(Matching, "game/NokoNoko.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/GameModeBase.cpp"),
             Object(Matching, "game/KartMovement_SetPosition.c"),
             Object(Matching, "game/NamCam_LoadImage.c"),
             Object(Matching, "game/LiveConn.c"),
