@@ -458,6 +458,7 @@ config.libs = [
             Object(Matching, "game/LookupCos.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/LUT_Sine.c"),
             Object(Matching, "game/LUT_Cosine.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/AI_UseItem.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/AI_GetLapDifference.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/AI_GetYaw.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/AI_HasItem.c", extra_cflags=["-Cpp_exceptions on"]),
