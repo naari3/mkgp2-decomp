@@ -424,17 +424,12 @@ GetVBlankFlag / Archive_GetCurrent のように既に matched された singleto
 
 ```python
 print("no action this cycle")
-# ScheduleWakeup で fallback wake を予約 (180s = 3 分)
-# prompt cache (5 min TTL) 内で再発火、anti-pattern 回復時間も 3 min に抑える
-ScheduleWakeup(
-    delaySeconds=180,
-    reason='idle: no pending batches and no notifications',
-    prompt='<このファイルの内容>',  # 次 cycle で同じ prompt を再発火
-)
+# 次 fire は CronCreate (3min 間隔) が担当。ScheduleWakeup は使わない
+# (cron driver と二重起動になるため)
 # completion check
 if all_terminal(state):
     escalate_to_user('全 batch 完了。orchestrator 終了します。')
-    # CronDelete /loop
+    # CronDelete でこの session の cron を停止
     return
 ```
 
@@ -490,7 +485,7 @@ try:
 except Exception as e:
     log_event({'event': 'error', 'cycle_phase': '<phase>', 'message': str(e)})
     # state.json を破壊していないか確認
-    # ScheduleWakeup で次回 retry
+    # 次回 retry は cron 次回 fire (3min 後) が担当
 ```
 
 state.json への書き込みは必ず `atomic_write_json` を経由する。途中で die しても破損しない。
@@ -507,13 +502,13 @@ in_flight = len(state['active_subs'])
 non_terminal_batches = sum(1 for b in all_batches if b['status'] in ('pending', 'dispatched', 'completed', 'failed'))
 
 if remaining == 0 and in_flight == 0 and non_terminal_batches == 0:
-    escalate_to_user('全 batch 完了。/loop を終了します。')
-    cron_delete()
+    escalate_to_user('全 batch 完了。orchestrator を終了します。')
+    CronDelete(this_session_cron_id)
 ```
 
 ## 留意点
 
 - **merge は通知 hook で即実行** (cycle 制約外、2026-05-18 旧ルール撤回)。cycle (= 编成 / dispatch / 再编成) は active_subs < 6 上限まで chain 可
-- 完了通知 (`<task-notification>`) は受信した順に即 merge。cycle 中でも notification wake 中でも同じ
-- prompt cache は 5 分 TTL (300s)。ScheduleWakeup delay は **180s 統一** (active_subs 有無問わず)。180s < 300s で in-cache、anti-pattern recovery 時間も 3 min に抑える。通知は wake より先に到着して即処理されるため、ScheduleWakeup は安全網。pending work + active_subs==0 は chain で吸収されるので発生しない想定
+- 完了通知 (`<task-notification>`) は受信した順に即 merge。cycle 中でも cron fire 中でも同じ
+- cycle 駆動は **CronCreate (3min 間隔)** が担当 (`/mkgp2-orch-start` で仕込む)。ScheduleWakeup は cron と二重起動になるので使わない。notification は wake より先に到着して即処理されるため、cron は安全網。pending work + active_subs==0 は chain で吸収されるので発生しない想定
 - main agent の context が圧迫されたら、tool 出力をファイル経由で参照する (`Bash` で head/tail）

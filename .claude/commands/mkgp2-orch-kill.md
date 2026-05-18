@@ -14,7 +14,7 @@ main orchestrator の immediate stop 指示。緊急時用。
    ```
    各 TaskStop は kill 通知 (`status: killed`) を即返すが、child process が実際に死ぬまで 10-15 秒の propagation 遅延あり
 
-3. `/loop` の cron を `/cron list` で確認して `CronDelete`
+3. cycle cron を `CronList` で確認して `CronDelete`
 
 4. state.json を更新:
    - 各 active_sub に紐付く batch.status を `interrupted` に
@@ -50,5 +50,5 @@ user に以下を伝える:
 
 ## 注意
 
-- active_subs が 0 件なら kill は noop、`/loop` CronDelete のみ実行
+- active_subs が 0 件なら kill は noop、cycle cron CronDelete のみ実行
 - 強制終了は user が「いますぐ止めたい」と明示した場合のみ。drain で十分なら drain を推奨

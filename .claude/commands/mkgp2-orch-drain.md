@@ -1,5 +1,5 @@
 ---
-description: orchestrator を graceful stop する。既存 sub の完了を待って /loop を終了する
+description: orchestrator を graceful stop する。既存 sub の完了を待って cycle cron を停止する
 ---
 
 main orchestrator agent に対する graceful drain 指示。
@@ -17,13 +17,13 @@ main orchestrator agent に対する graceful drain 指示。
    ```
 
 3. state.json を読み、active_subs の件数を user に報告:
-   - 0 件 → 「即 /loop 終了します」と伝えて `/cron list` から該当 cron を `CronDelete`
-   - 1 件以上 → 「<N> 件の sub の完了を待ちます。完了通知の都度 merge 処理 → 全件終わったら /loop 自動終了」
+   - 0 件 → 「即 cycle cron 停止します」と伝えて `CronList` から該当 cron を `CronDelete`
+   - 1 件以上 → 「<N> 件の sub の完了を待ちます。完了通知の都度 merge 処理 → 全件終わったら cycle cron 自動停止」
 
 4. drain mode の挙動:
    - 以降の cycle は `prompts/cycle.md` の CASE 1 が拾い、新規 dispatch をしない
    - sub からの通知が来たら CASE 2 (merge 処理) のみ実行
-   - active_subs=0 になった cycle で `/loop` CronDelete + session_end ログ
+   - active_subs=0 になった cycle で `CronDelete` (cycle cron 停止) + session_end ログ
 
 ## 注意
 

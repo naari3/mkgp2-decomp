@@ -1,5 +1,5 @@
 ---
-description: orchestrator を起動 / 再開する。state.json の有無で初期化と recovery を自動判定し、/loop dynamic mode を発火する
+description: orchestrator を起動 / 再開する。state.json の有無で初期化と recovery を自動判定し、CronCreate で 3min 間隔の cycle 発火を仕込む
 ---
 
 mkgp2-decomp の並列 decomp orchestrator (main agent) を起動する。あなたは main agent 役。
@@ -46,25 +46,25 @@ if old_sid != new_sid:
 return start_loop()
 ```
 
-## /loop の発火
+## cycle 発火 (CronCreate)
+
+main agent (= 私) が `CronCreate` で 3min 間隔の cycle prompt を仕掛ける。`/loop` は built-in slash command で tool から発火できないので使わない。session-only (`durable=false`) で session 終了時に自動消滅。
+
+cron prompt:
 
 ```
-/loop /mkgp2-orch-cycle
+prompts/cycle.md を Read で完全に読み込み、その「1 cycle 動作」プロトコルを最後まで実行せよ。
+Step 0 (SoT sync) から Step 2 (CASE 判定)、必要なら merge hook と CASE 3/4 chain
+(active_subs < 6 上限まで) を順に処理する。CASE 5 (idle) の ScheduleWakeup は
+cron が代替するので不要 — 次 fire を待つ。drain.flag があれば CASE 1 のみ処理して
+即 return、active_subs=0 なら CronDelete してこの cron を停止せよ。
 ```
 
-dynamic mode (interval 指定なし) で `mkgp2-orch-cycle` skill (= prompts/cycle.md の内容) を発火する。
-
-`mkgp2-orch-cycle` が登録されていない場合は、直接 prompts/cycle.md の内容を inline で `/loop` に渡す:
-
-```
-/loop
-<prompts/cycle.md の中身全部>
-```
+cron schedule: `*/3 * * * *` (3 min 間隔)。10% deterministic jitter + REPL idle 判定で実 fire 間隔は 3-4 min。notification 駆動の即 wake は cron では効かないが、実運用では cron fire 間で task-notification は system-reminder で届いて即 merge される (検証済)。
 
 ## 注意
 
-- 既に `/loop` が走っていないか確認 (`/cron list`)。あれば二重起動になるので一旦削除してから start
-- tmux 内で実行することを user に確認 (誤って通常 session で /loop すると user が気付かない)
+- 既に cron job が走っていないか確認 (`CronList`)。あれば二重起動になるので一旦 `CronDelete` してから start
 - 初回起動の前に `tools/ghidra_symbol_dump.json` が最新か user に確認 (古いと named function を見落とす)
 
 ## 完了報告

@@ -9,8 +9,8 @@
 
 ## 前提
 
-- **Windows Terminal で 1 タブを open のまま** 維持して main agent を常駐させる (タブを閉じると `claude` プロセスが死に、`/loop` も止まる)
-- main agent は `/loop` dynamic mode で自走する
+- **Windows Terminal で 1 タブを open のまま** 維持して main agent を常駐させる (タブを閉じると `claude` プロセスが死に、cycle cron も止まる)
+- main agent は CronCreate (3min 間隔) で自走する
 - sub-agent は main から最大 6 並列で起動される
 - `.orchestrator/` と `.worktrees/` は `.gitignore` 済み、commit されない
 
@@ -41,7 +41,7 @@ claude
 2. なければ `python tools/init_orchestrator.py` で初期化 (functions セクションのみ生成、batches は空)
 3. あれば `session_id` 比較で resume / recovery 判定
 4. `python tools/orch_recover.py --new-session <new_sid>` で orphan recovery
-5. `/loop` を dynamic mode で発火
+5. `CronCreate` で 3min 間隔の cycle prompt 発火を仕込む (session-only、durable=false)
 
 その後 main agent は cycle を回し続ける。3 sub まで並列で dispatch する。
 
@@ -60,7 +60,7 @@ claude
 挙動:
 - `.orchestrator/drain.flag` を立てる
 - 現在 active な sub が完了するまで cycle は merge 処理のみ実行
-- 全 sub 完了 → `/loop` CronDelete → main agent も `/exit` で抜けて OK
+- 全 sub 完了 → cycle cron CronDelete → main agent も `/exit` で抜けて OK
 - state.json は完全に整合した状態で残る
 
 再開は `/mkgp2-orch-start` を再実行するだけ。
@@ -75,7 +75,7 @@ claude
 
 挙動:
 - `state.active_subs` の各 agent_id に `TaskStop`
-- `/loop` CronDelete
+- cycle cron CronDelete
 - 各 sub の worktree は **残す** (途中まで書いた C source を保護)
 - state.json の `in_progress` batch は `interrupted` にマーク
 - HANDOFF_TO_USER.md に interrupted 一覧を append
@@ -92,7 +92,7 @@ Windows Terminal のタブを ✕ で閉じる、または `Ctrl-C` で `claude`
 
 副作用:
 - main session が die → 全 sub も連動 kill (Agent tool の lifecycle が親 session に紐付くため)
-- `/loop` の cron job は残る → 次回 wake 時に noop or 失敗 (新 session で `/cron list` 確認 → `CronDelete`)
+- cycle cron は session-only (durable=false) なので親 session の die と共に消滅 (新 session で `CronList` 確認、残ってたら `CronDelete`)
 - state.json は最後の cycle 終了時点でフリーズ
 
 **再開**: Windows Terminal で新タブを開き `claude` → `/mkgp2-orch-start`。orphan recovery が走り、宙ぶらりんの batch を以下のいずれかに振り分ける:
@@ -236,7 +236,7 @@ if ((Test-Path $f) -and ((Get-Item $f).LastWriteTime -gt (Get-Date).AddHours(-1)
 13:10  介入完了、main に continue 指示
 13:10-17:00  自走
 17:00  /mkgp2-orch-drain
-17:30  全 sub 完了、/loop 終了
+17:30  全 sub 完了、cycle cron 自動停止
        → タブを残したまま帰宅、または exit でタブ閉じる
 翌朝   新タブで claude → /mkgp2-orch-start で再開
 ```
@@ -262,8 +262,8 @@ if ((Test-Path $f) -and ((Get-Item $f).LastWriteTime -gt (Get-Date).AddHours(-1)
 
 ### main agent が応答しない
 
-- `/loop` cron が動いてるか: `/cron list`
-- 動いてなければ `/mkgp2-orch-start` で再発火
+- cycle cron が動いてるか: `CronList`
+- 動いてなければ `/mkgp2-orch-start` で再発火 (cron も再作成される)
 - main agent 自体が hung → Windows Terminal タブで `Ctrl-C` → `exit` → 新タブで `claude` → `/mkgp2-orch-start`
 
 ### state.json が壊れた
