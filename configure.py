@@ -374,6 +374,7 @@ config.libs = [
             Object(Matching, "game/GlobalTimer.c"),
             Object(Matching, "game/PhysicsState.c"),
             Object(Matching, "game/Rand.c"),
+            Object(Matching, "game/RaceScene_PlayerSlots.c"),
             Object(Matching, "game/SpawnTable.c"),
             Object(Matching, "game/VBlank.c"),
             # Phase 3a-small: 11-fn dtk reversed-extab group bundle (no extab

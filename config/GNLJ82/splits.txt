@@ -83,6 +83,9 @@ game/Rand.c:
 	extabindex  start:0x80022274 end:0x80022280
 	.text       start:0x800A06D0 end:0x800A06F0
 
+game/RaceScene_PlayerSlots.c:
+	.text       start:0x800A0B34 end:0x800A0BAC
+
 game/CourseData.c:
 	.text       start:0x800A0BDC end:0x800A0BE8
 
