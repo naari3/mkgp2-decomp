@@ -503,6 +503,7 @@ config.libs = [
             # matched 1 fn at a time via sub-agent dispatch.
             Object(Matching, "game/auto_801223E8_block.c"),
             Object(Matching, "game/Archive_GetCurrent.c"),
+            Object(Matching, "game/Vec3.c"),
         ],
     },
     {
