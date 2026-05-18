@@ -373,7 +373,7 @@ config.libs = [
             Object(Matching, "game/StrPcb.c"),
             Object(Matching, "game/Clamp.c"),
             Object(Matching, "game/InputMgr_GetPlayer.c"),
-            Object(Matching, "game/InputMgr.c"),
+            Object(Matching, "game/InputMgr.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/InputObj.c"),
             Object(Matching, "game/InputObj_Ctor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemHolder.c"),
