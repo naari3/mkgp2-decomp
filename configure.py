@@ -369,6 +369,7 @@ config.libs = [
             Object(Matching, "ui/FrameSelection.c"),
             Object(Matching, "game/KartBody.c"),
             Object(Matching, "game/KartMovement.c"),
+            Object(Matching, "game/KartMovement_CanReceiveItem.c"),
             Object(Matching, "game/KartMovement_GetCurrentItemId.c"),
             Object(Matching, "game/LakituStart.c"),
             Object(Matching, "game/CourseData.c"),

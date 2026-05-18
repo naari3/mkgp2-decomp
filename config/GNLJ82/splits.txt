@@ -63,6 +63,9 @@ game/LakituStart.c:
 game/KartMovement.c:
 	.text       start:0x8003F518 end:0x8003F528
 
+game/KartMovement_CanReceiveItem.c:
+	.text       start:0x8003F5E8 end:0x8003F668
+
 game/KartMovement_GetCurrentItemId.c:
 	.text       start:0x80040600 end:0x80040608
 
