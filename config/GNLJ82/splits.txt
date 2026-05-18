@@ -105,6 +105,11 @@ sound/SoundCtrl_SetVolume.c:
 	extabindex  start:0x800208D0 end:0x800208DC
 	.text       start:0x8005957C end:0x800595B4
 
+sound/MediaBoard_PollCompletion.c:
+	extab       start:0x800076E0 end:0x800076E8
+	extabindex  start:0x800208E8 end:0x800208F4
+	.text       start:0x80059644 end:0x8005967C
+
 game/SpawnTable.c:
 	.text       start:0x8005F5CC end:0x8005F5D8
 

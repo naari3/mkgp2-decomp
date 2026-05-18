@@ -439,6 +439,7 @@ config.libs = [
         "objects": [
             Object(Matching, "sound/ISESlot.c"),
             Object(Matching, "sound/SoundCtrl_SetVolume.c"),
+            Object(Matching, "sound/MediaBoard_PollCompletion.c"),
         ],
     },
     {
