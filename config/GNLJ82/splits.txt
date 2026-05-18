@@ -379,6 +379,11 @@ game/clCGameDemo_Dtor.c:
 	extabindex  start:0x800228D4 end:0x800228E0
 	.text       start:0x800AE6BC end:0x800AE71C
 
+game/ItemObjectManager_Init.c:
+	extab       start:0x8000B334 end:0x8000B34C
+	extabindex  start:0x800239FC end:0x80023A08
+	.text       start:0x800D81E0 end:0x800D8288
+
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C
 

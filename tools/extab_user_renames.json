@@ -95,5 +95,9 @@
   "src/game/BootPCBCheck_Init.c": {
     "extab_BootPCBCheck_Init": "@etb_80008D5C",
     "extabindex_BootPCBCheck_Init": "@eti_80021860"
+  },
+  "src/game/ItemObjectManager_Init.c": {
+    "extab_ItemObjectManager_Init": "@etb_8000B334",
+    "extabindex_ItemObjectManager_Init": "@eti_800239FC"
   }
 }
