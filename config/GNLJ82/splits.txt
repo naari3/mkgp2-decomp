@@ -400,6 +400,11 @@ game/WeatherSystem_PickVariant.c:
 game/KartMovement_SetPosition.c:
 	.text       start:0x8019A4A0 end:0x8019A4E0
 
+game/Sprite_Destroy.c:
+	extab       start:0x800129C0 end:0x800129C8
+	extabindex  start:0x80027548 end:0x80027554
+	.text       start:0x801A0684 end:0x801A06F8
+
 game/SpriteSystem_EnsureInit.c:
 	.text       start:0x801A16F0 end:0x801A1714
 
