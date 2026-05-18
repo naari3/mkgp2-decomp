@@ -259,6 +259,11 @@ game/PCBComm_PromoteToClientConfirmed.c:
 	extabindex  start:0x800218C0 end:0x800218CC
 	.text       start:0x800856CC end:0x800856F4
 
+game/SyncSlot_ApplyCourseChoice.c:
+	extab       start:0x80008DB4 end:0x80008DBC
+	extabindex  start:0x800218CC end:0x800218D8
+	.text       start:0x80085DD8 end:0x80085E3C
+
 game/TCPConn.c:
 	.text       start:0x80086F54 end:0x8008707C
 
