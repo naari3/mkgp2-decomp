@@ -390,6 +390,7 @@ config.libs = [
             Object(Matching, "game/LapDisp_SetTotalLaps.c"),
             Object(Matching, "game/HUD_SetRacePosition.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/HUD_SetTotalLaps.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/HUD_SetCurrentLap.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemDisplay_Stop.c"),
             Object(Matching, "game/ItemDisplay_Destroy.c"),
             Object(Matching, "game/ItemDisplay_GetOrCreate.c"),
