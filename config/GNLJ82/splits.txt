@@ -239,6 +239,11 @@ game/LUT_Sine.c:
 	extabindex  start:0x80020F78 end:0x80020F84
 	.text       start:0x80065928 end:0x80065990
 
+game/DMAChannelManager_Init.c:
+	extab       start:0x800080D8 end:0x800080F0
+	extabindex  start:0x80020FC0 end:0x80020FCC
+	.text       start:0x800662B4 end:0x80066350
+
 game/ServiceMenu.c:
 	extab       start:0x800082A8 end:0x800082C0
 	extabindex  start:0x800211C4 end:0x800211D0

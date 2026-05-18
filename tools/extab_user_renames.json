@@ -8,6 +8,11 @@
     "extabindex_InputMgr_Init":     "@eti_8001FA6C"
   },
 
+  "src/game/DMAChannelManager_Init.c": {
+    "extab_DMAChannelManager_Init":      "@etb_800080D8",
+    "extabindex_DMAChannelManager_Init": "@eti_80020FC0"
+  },
+
   "src/game/dtor_801FE870.c": {
     "extab_dtor_801FE870": "@etb_80017D70",
     "extab_fn_801FE4D0": "@etb_80017D78",
