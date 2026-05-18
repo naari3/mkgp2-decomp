@@ -117,6 +117,11 @@ game/Rand.c:
 game/RaceScene_PlayerSlots.c:
 	.text       start:0x800A0B34 end:0x800A0BAC
 
+game/CourseData_GetDefaultPathKey_Safe.c:
+	extab       start:0x80009814 end:0x8000981C
+	extabindex  start:0x800222D4 end:0x800222E0
+	.text       start:0x800A0BAC end:0x800A0BDC
+
 game/CourseData.c:
 	.text       start:0x800A0BDC end:0x800A0BE8
 
