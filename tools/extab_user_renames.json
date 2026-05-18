@@ -1,75 +1,69 @@
 {
   "_comment": "Per-TU mapping of user-emitted extab/extabindex C symbol names to the anonymous local @etb_/@eti_ names dtk dol split writes into symbols.txt. Used by tools/postprocess_extab_user.py via llvm-objcopy --redefine-sym. Each TU's mapping must cover every manually emitted extab/extabindex symbol in source order; unlisted symbols pass through unchanged (and will trip dtk dol diff).",
-
   "src/game/dtor_801FE870.c": {
-    "extab_dtor_801FE870":      "@etb_80017D70",
-    "extab_fn_801FE4D0":        "@etb_80017D78",
-    "extab_fn_801FE554":        "@etb_80017D80",
-    "extab_fn_801FE588":        "@etb_80017D88",
-    "extab_fn_801FE5C8":        "@etb_80017D90",
-    "extabindex_fn_801FE4D0":   "@eti_80029450",
-    "extabindex_fn_801FE554":   "@eti_8002945C",
-    "extabindex_fn_801FE588":   "@eti_80029468",
-    "extabindex_fn_801FE5C8":   "@eti_80029474",
+    "extab_dtor_801FE870": "@etb_80017D70",
+    "extab_fn_801FE4D0": "@etb_80017D78",
+    "extab_fn_801FE554": "@etb_80017D80",
+    "extab_fn_801FE588": "@etb_80017D88",
+    "extab_fn_801FE5C8": "@etb_80017D90",
+    "extabindex_fn_801FE4D0": "@eti_80029450",
+    "extabindex_fn_801FE554": "@eti_8002945C",
+    "extabindex_fn_801FE588": "@eti_80029468",
+    "extabindex_fn_801FE5C8": "@eti_80029474",
     "extabindex_dtor_801FE870": "@eti_80029480"
   },
-
   "src/game/dtor_801FEA70.c": {
-    "extab_dtor_801FEAB8":      "@etb_80017DF0",
-    "extab_dtor_801FEB48":      "@etb_80017E18",
-    "extab_dtor_801FEA70":      "@etb_80017E40",
+    "extab_dtor_801FEAB8": "@etb_80017DF0",
+    "extab_dtor_801FEB48": "@etb_80017E18",
+    "extab_dtor_801FEA70": "@etb_80017E40",
     "extabindex_dtor_801FEA70": "@eti_800294B0",
     "extabindex_dtor_801FEAB8": "@eti_800294BC",
     "extabindex_dtor_801FEB48": "@eti_800294C8"
   },
-
   "src/game/HeapStats.c": {
-    "extab_dtor_8002F910":               "@etb_80005858",
-    "extab_dtor_8002F978":               "@etb_80005860",
-    "extab_fn_8002F640":                 "@etb_80005868",
-    "extab_HeapStats_DumpForTag":        "@etb_80005870",
-    "extab_fn_8002F8D4":                 "@etb_80005878",
-    "extabindex_fn_8002F640":            "@eti_8001F490",
-    "extabindex_HeapStats_DumpForTag":   "@eti_8001F49C",
-    "extabindex_fn_8002F8D4":            "@eti_8001F4A8",
-    "extabindex_dtor_8002F910":          "@eti_8001F4B4",
-    "extabindex_dtor_8002F978":          "@eti_8001F4C0"
+    "extab_dtor_8002F910": "@etb_80005858",
+    "extab_dtor_8002F978": "@etb_80005860",
+    "extab_fn_8002F640": "@etb_80005868",
+    "extab_HeapStats_DumpForTag": "@etb_80005870",
+    "extab_fn_8002F8D4": "@etb_80005878",
+    "extabindex_fn_8002F640": "@eti_8001F490",
+    "extabindex_HeapStats_DumpForTag": "@eti_8001F49C",
+    "extabindex_fn_8002F8D4": "@eti_8001F4A8",
+    "extabindex_dtor_8002F910": "@eti_8001F4B4",
+    "extabindex_dtor_8002F978": "@eti_8001F4C0"
   },
-
   "src/game/LookupSin.c": {
-    "extab_LookupSin":      "@etb_80011C20",
+    "extab_LookupSin": "@etb_80011C20",
     "extabindex_LookupSin": "@eti_80026CC0"
   },
-
   "src/game/LookupCos.c": {
-    "extab_LookupCos":      "@etb_80011C18",
+    "extab_LookupCos": "@etb_80011C18",
     "extabindex_LookupCos": "@eti_80026CB4"
   },
-
   "src/game/LUT_Cosine.c": {
-    "extab_LUT_Cosine":      "@etb_800080A0",
+    "extab_LUT_Cosine": "@etb_800080A0",
     "extabindex_LUT_Cosine": "@eti_80020F6C"
   },
-
   "src/game/ItemSelect.c": {
-    "extab_ItemSelect_Init":      "@etb_80007DF8",
+    "extab_ItemSelect_Init": "@etb_80007DF8",
     "extabindex_ItemSelect_Init": "@eti_80020DB0"
   },
-
   "src/game/NokoNokoChallenge.c": {
-    "extab_NokoNokoChallenge_CalcResultText":      "@etb_8000BCE4",
+    "extab_NokoNokoChallenge_CalcResultText": "@etb_8000BCE4",
     "extabindex_NokoNokoChallenge_CalcResultText": "@eti_80024758"
   },
-
   "src/game/SyncSlot.c": {
-    "extab_SyncSlot_Reset":      "@etb_80008D84",
+    "extab_SyncSlot_Reset": "@etb_80008D84",
     "extabindex_SyncSlot_Reset": "@eti_80021884"
   },
-
   "src/util/bitpack.c": {
-    "extab_bitpack_write_field":      "@etb_80008F24",
-    "extab_bitpack_init":             "@etb_80008F2C",
+    "extab_bitpack_write_field": "@etb_80008F24",
+    "extab_bitpack_init": "@etb_80008F2C",
     "extabindex_bitpack_write_field": "@eti_80021A4C",
-    "extabindex_bitpack_init":        "@eti_80021A58"
+    "extabindex_bitpack_init": "@eti_80021A58"
+  },
+  "src/game/PathCursor_ResetToPath.c": {
+    "extab_PathCursor_ResetToPath": "@etb_800066C8",
+    "extabindex_PathCursor_ResetToPath": "@eti_80020000"
   }
 }
