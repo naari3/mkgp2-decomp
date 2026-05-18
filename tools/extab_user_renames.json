@@ -13,6 +13,11 @@
     "extabindex_DMAChannelManager_Init": "@eti_80020FC0"
   },
 
+  "src/game/TexMgr_Apply.c": {
+    "extab_TexMgr_Apply":      "@etb_800176C8",
+    "extabindex_TexMgr_Apply": "@eti_800290B4"
+  },
+
   "src/game/dtor_801FE870.c": {
     "extab_dtor_801FE870": "@etb_80017D70",
     "extab_fn_801FE4D0": "@etb_80017D78",

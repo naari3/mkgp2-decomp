@@ -540,6 +540,11 @@ game/dtor_801F8214.c:
 	extabindex  start:0x80029018 end:0x80029024
 	.text       start:0x801F8214 end:0x801F8250
 
+game/TexMgr_Apply.c:
+	extab       start:0x800176C8 end:0x800176D0
+	extabindex  start:0x800290B4 end:0x800290C0
+	.text       start:0x801F947C end:0x801F9518
+
 ui/UI_PlaySeToggle.c:
 	extab       start:0x80017CD4 end:0x80017CDC
 	extabindex  start:0x8002939C end:0x800293A8
