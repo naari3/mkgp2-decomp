@@ -238,6 +238,11 @@ game/ProcessSystemTick.c:
 	extabindex  start:0x800221E4 end:0x800221F0
 	.text       start:0x8009D5F8 end:0x8009D638
 
+game/BtMode_BaseDtor.c:
+	extab       start:0x80009760 end:0x80009768
+	extabindex  start:0x80022268 end:0x80022274
+	.text       start:0x800A0688 end:0x800A06D0
+
 game/Rand.c:
 	extab       start:0x80009768 end:0x80009778
 	extabindex  start:0x80022274 end:0x8002228C
