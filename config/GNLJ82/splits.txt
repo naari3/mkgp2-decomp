@@ -222,6 +222,11 @@ game/SuikaBallObj_Render.c:
 	extabindex  start:0x8002486C end:0x80024878
 	.text       start:0x801240B4 end:0x801240E4
 
+game/RivalRun_PathFollowerInit.c:
+	extab       start:0x8000D220 end:0x8000D228
+	extabindex  start:0x80024C14 end:0x80024C20
+	.text       start:0x80137588 end:0x801375D8
+
 sound/SoundMgr_PlaySE.c:
 	extab       start:0x80010404 end:0x8001040C
 	extabindex  start:0x80026198 end:0x800261A4
