@@ -371,6 +371,7 @@ config.libs = [
             Object(Matching, "ui/FrameSelection.c"),
             Object(Matching, "ui/UISoundClSound4D.c"),
             Object(Matching, "ui/UI_PlaySeDecide.c"),
+            Object(Matching, "game/CarObject_ResetPhysics.c"),
             Object(Matching, "game/KartBody.c"),
             Object(Matching, "game/KartMovement.c"),
             Object(Matching, "game/KartMovement_GetVelocityMagnitude.c"),
