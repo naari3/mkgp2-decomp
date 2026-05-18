@@ -113,6 +113,12 @@ game/InputObj_Ctor.c:
 game/Profiler_RecordFrame.c:
 	.text       start:0x80039CF4 end:0x80039D38
 
+game/MetricsTable.c:
+	extab       start:0x80005E88 end:0x80005EA0
+	extabindex  start:0x8001FB08 end:0x8001FB2C
+	.text       start:0x80039D38 end:0x80039E10
+	.ctors      start:0x802E88F0 end:0x802E88F4
+
 game/SceneRender.c:
 	extab       start:0x80005F18 end:0x80005F20
 	extabindex  start:0x8001FBC8 end:0x8001FBD4
