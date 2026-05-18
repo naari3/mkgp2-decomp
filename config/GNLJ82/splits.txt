@@ -495,6 +495,11 @@ game/DisplayBuffer_GetByIndex.c:
 	extabindex  start:0x80028EBC end:0x80028EC8
 	.text       start:0x801F6454 end:0x801F6494
 
+game/GX_BeginDraw.c:
+	extab       start:0x800175D8 end:0x800175E0
+	extabindex  start:0x80028FC4 end:0x80028FD0
+	.text       start:0x801F7B98 end:0x801F7C18
+
 game/dtor_801F8214.c:
 	extab       start:0x80017630 end:0x80017638
 	extabindex  start:0x80029018 end:0x80029024
