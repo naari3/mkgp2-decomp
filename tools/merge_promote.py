@@ -63,8 +63,23 @@ def base_commit_of(worktree: Path) -> str:
 
 
 def collect_diff(worktree: Path, base: str, files: list[str]) -> bytes:
-    """`git diff <base> -- <files>` against the worktree's working tree."""
-    cmd = ["git", "-C", str(worktree), "diff", base, "--"] + files
+    """`git diff <base> -- <files>` against the worktree's working tree.
+
+    HANDOFF's `src_path` follows configure.py / splits.txt convention (no
+    `src/` prefix, e.g. `init/debug_bba.c`). Actual git tree has them under
+    `src/<src_path>`. Resolve each path against the worktree, preferring
+    the on-disk form. Falls back to the raw value so git diff can report
+    a meaningful error if neither resolves.
+    """
+    resolved: list[str] = []
+    for f in files:
+        if (worktree / f).is_file():
+            resolved.append(f)
+        elif (worktree / "src" / f).is_file():
+            resolved.append(f"src/{f}")
+        else:
+            resolved.append(f)
+    cmd = ["git", "-C", str(worktree), "diff", base, "--"] + resolved
     return subprocess.check_output(cmd)
 
 

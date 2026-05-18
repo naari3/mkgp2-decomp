@@ -37,7 +37,7 @@ description: mkgp2-decomp 並列 decomp orchestrator の main agent 責務分担
 **禁止事項**:
 - `tools/plan_batches.py` 的な「1 fn = 1 batch」自動化を本番 cycle で起動する (`docs/orchestrator_ops.md` L46-48 明示)。判断責務を奪う
 - merge tool に rollback / pre-flight `git apply --check` / `--resume` mode 等の高度な conflict-handling robustness を入れる (main の resolve 余地を奪う)
-- cycle 全体を 1 script にまとめる (1 cycle 1 action 原則を破る、judgment を script に閉じ込める)
+- cycle 全体を 1 script にまとめる (judgment を script に閉じ込める; light chain 可は「main が同 cycle 内で連続判断」する話で、script 化とは別)
 - judgment を tool に閉じ込めて conflict / 失敗時に user に手動 revert を押し付ける
 
 ## 鉄則 2: conflict resolution は main の手で
@@ -53,14 +53,33 @@ description: mkgp2-decomp 並列 decomp orchestrator の main agent 責務分担
 
 参考実績: Round 3 (commit f9b22bb) で 7 sub の merge を main が 7 round 手動 Edit で完了。これが正しいモデル。
 
-## 鉄則 3: 1 cycle 1 action
+## 鉄則 3: 1 cycle 1 heavy action (light は chain 可)
 
-`prompts/cycle.md` の CASE 1-6 のうち、最高優先度の 1 つだけを 1 cycle で実行する。
-- 編成 (CASE 5) と dispatch (CASE 4) は別 cycle
-- merge (CASE 2) と次の dispatch (CASE 4) は別 cycle
-- 複数 batch を 1 cycle で merge してもよい (mechanical) が、merge と編成を混ぜない
+`prompts/cycle.md` の CASE のうち:
 
-理由: 失敗時の rollback 範囲を狭める + context 圧迫を防ぐ + cycle 単位で停止判断できる。
+| 分類 | CASE | 1 cycle あたり |
+|---|---|---|
+| heavy | CASE 2 merge (parse + apply + build verify 1-2 分 + commit) | 最大 1 件 |
+| light | CASE 3 再编成 / CASE 4 dispatch / CASE 5 編成 | chain 可 |
+
+chain 推奨パターン:
+- **CASE 5 → CASE 4 chain**: 新規 batch 編成して即 dispatch (両方 state.json 編集 + Agent invocation のみで context 圧迫は浅い、cycle lag を半分にする)
+- **CASE 4 連続 dispatch**: active_subs < 3 上限まで複数 dispatch
+- **CASE 3 → CASE 4**: 失敗 batch の再编成 → 即 dispatch
+
+**parallel 化の原則 (anti-pattern 防止)**:
+
+dispatch cycle (= CASE 2 merge 無しの cycle) は active_subs を**上限まで埋める**ことを目標にする。`while len(active_subs) < 3 and 編成可能 fn あり: 編成 + dispatch を繰り返す`。
+
+「1 batch 編成 → 1 dispatch → return」を 1 cycle とするのは **明確な anti-pattern**。次 cycle まで parallel slot 2 つを遊ばせて user に約 20 min の空白を与える結果になる (実例: 2026-05-18 セッション初回、`batch_init_80003140_bba` の dispatch cycle で 1 sub のみ起動して 2 slot 余らせた)。
+
+唯一の例外: 直前に CASE 2 (merge) を実行した cycle (heavy + light 混在禁止により、merge した cycle は dispatch せず return)。
+
+chain 不可:
+- **heavy + light の混在**: merge した cycle で続けて編成 / dispatch しない (context が重くなる、SHA-1 verify 後の状態確認に集中)
+- **複数 CASE 2 merge**: 1 件で return、次 cycle で次の merge
+
+理由: heavy action は context / build cycle が重く、複数走らせると失敗時 rollback 範囲が広がる。light は機械的なので chain しても rollback / 観察コストは小さい。
 
 ## sub-agent dispatch の実装パターン
 
@@ -168,7 +187,7 @@ modes: `--batch <id>` / `--all` / `--no-build` / `--no-state` / `--no-cleanup` /
 
 ## 失敗パターン集 (compact 直後 / 新規セッションで陥りやすい)
 
-1. **judgment を tool に閉じ込める**: 「cycle script を作って scaffold + dispatch + merge を 1 つに」と考える → 1 cycle 1 action 原則を破る、dispatch judgment を script 化することで main の責務を放棄する。**正解**: script ではなく main が cycle ごとに `prompts/cycle.md` の手順を判断 + tool 呼び出しで progress
+1. **judgment を tool に閉じ込める**: 「cycle script を作って scaffold + dispatch + merge を 1 つに」と考える → dispatch judgment を script 化することで main の責務を放棄する。**正解**: script ではなく main が cycle ごとに `prompts/cycle.md` の手順を判断 + tool 呼び出しで progress。light chain (CASE 5 → CASE 4 等) は main が同 cycle 内で連続判断する形なので script 化とは別軸
 2. **conflict 自動 rollback を tool に入れる**: stash-based snapshot / `--resume` mode 等を merge tool に追加したくなる → main の resolve 余地を奪う、user に「手動 revert してね」と押し付ける構図になる。**正解**: tool は abort + 詳細 dump、main が Edit で resolve
 3. **compact summary だけ信じて docs 読み直さない**: summary に「タスク #N pending」とあっても、根拠 (なぜそのタスクを作ったか) が落ちている可能性。**正解**: 重要な判断分岐 (新 tool 設計 / cycle script 作成 / 大きな refactor) の前に必ず `docs/orchestrator_ops.md` と `docs/orchestrator_role.md` を Read で確認
 4. **大規模 extab group (>10 fn) を 1 batch で dispatch しようとする**: dtk reversed-extab group 制約で 1 関数だけ抜くと split-error、しかし >10 fn 一括は context 圧迫で sub が破綻。**正解**: HANDOFF_TO_USER.md に escalate + 一旦保留 (大規模 group の incremental NonMatching scaffold は将来課題、`docs/large_extab_group_strategy.md` 参照)
