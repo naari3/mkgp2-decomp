@@ -53,33 +53,45 @@ description: mkgp2-decomp 並列 decomp orchestrator の main agent 責務分担
 
 参考実績: Round 3 (commit f9b22bb) で 7 sub の merge を main が 7 round 手動 Edit で完了。これが正しいモデル。
 
-## 鉄則 3: 1 cycle 1 heavy action (light は chain 可)
+## 鉄則 3: merge は通知 hook (cycle 制約の対象外)
 
-`prompts/cycle.md` の CASE のうち:
+sub からの `<task-notification>` (status=completed) を受信したら、cycle / heavy action カウントを問わず **即 merge** を実行する。pending merge を後続 cycle に積まない。
 
-| 分類 | CASE | 1 cycle あたり |
+| 種類 | trigger | 1 cycle あたり |
 |---|---|---|
-| heavy | CASE 2 merge (parse + apply + build verify 1-2 分 + commit) | 最大 1 件 |
-| light | CASE 3 再编成 / CASE 4 dispatch / CASE 5 編成 | chain 可 |
+| **merge (hook)** | sub completion notification | 受信した数だけ即実行 (cycle counter 対象外) |
+| dispatch / 編成 / 再編成 / cleanup | cycle (/loop fire) | active_subs < 3 上限まで chain |
 
-chain 推奨パターン:
-- **CASE 5 → CASE 4 chain**: 新規 batch 編成して即 dispatch (両方 state.json 編集 + Agent invocation のみで context 圧迫は浅い、cycle lag を半分にする)
-- **CASE 4 連続 dispatch**: active_subs < 3 上限まで複数 dispatch
-- **CASE 3 → CASE 4**: 失敗 batch の再编成 → 即 dispatch
+理由:
+- completed batch を「pending merge」として積むと active_subs slot が空いても dispatch hesitate しがち
+- merge は notification 駆動が自然 (sub 完了 → 即 main checkout 取り込み)
+- 同 recipe の merge を 1/cycle に絞ると loop 待ちが累積、user に空白を与える
 
-**parallel 化の原則 (anti-pattern 防止)**:
+旧ルール (「1 cycle 1 heavy action」「heavy + light 混在禁止」) は 2026-05-18 に撤回。`docs/orchestrator_role.md` Cycle 動作 / `prompts/cycle.md` も同方針。
 
-dispatch cycle (= CASE 2 merge 無しの cycle) は active_subs を**上限まで埋める**ことを目標にする。`while len(active_subs) < 3 and 編成可能 fn あり: 編成 + dispatch を繰り返す`。
+### notification hook の実装
+
+`<task-notification>` を受信したら (cycle 中 / wake 中問わず):
+
+1. HANDOFF.md + `git -C <worktree> log -1 --format=full HEAD` を即 Read (worktree cleanup 前)
+2. `python tools/merge_promote.py --batch <id> --no-build --no-state --no-cleanup` で patch apply
+3. configure.py / splits.txt / symbols.txt を Edit (HANDOFF 指示通り)
+4. `python configure.py && ninja build/GNLJ82/ok` で SHA-1 verify
+5. commit + worktree+branch cleanup
+6. state.json flip (fn → matched, batch → merged, active_subs から sub 削除)
+7. 知見反映 (次節「知見反映: 各 merge で必須」参照)
+
+複数 notification が同時/連続で来た場合は **順番に処理して構わない**。各 merge は ~30s-2min で context bloat 軽微。同 cycle に dispatch / 編成も chain 可能。
+
+### parallel dispatch の原則 (anti-pattern 防止)
+
+dispatch cycle は active_subs を**上限まで埋める**ことを目標にする。`while len(active_subs) < 3 and 編成可能 fn あり: 編成 + dispatch を繰り返す`。
 
 「1 batch 編成 → 1 dispatch → return」を 1 cycle とするのは **明確な anti-pattern**。次 cycle まで parallel slot 2 つを遊ばせて user に約 20 min の空白を与える結果になる (実例: 2026-05-18 セッション初回、`batch_init_80003140_bba` の dispatch cycle で 1 sub のみ起動して 2 slot 余らせた)。
 
-唯一の例外: 直前に CASE 2 (merge) を実行した cycle (heavy + light 混在禁止により、merge した cycle は dispatch せず return)。
+### conflict 発生時の例外
 
-chain 不可:
-- **heavy + light の混在**: merge した cycle で続けて編成 / dispatch しない (context が重くなる、SHA-1 verify 後の状態確認に集中)
-- **複数 CASE 2 merge**: 1 件で return、次 cycle で次の merge
-
-理由: heavy action は context / build cycle が重く、複数走らせると失敗時 rollback 範囲が広がる。light は機械的なので chain しても rollback / 観察コストは小さい。
+merge が conflict / SHA-1 fail を返した場合は hook 即実行から離脱し、cycle 内で resolve する (鉄則 2 「conflict resolution は main の手で」参照)。conflict 解決中は他の hook を pause (state.json の active_subs 整合性のため)。
 
 ## sub-agent dispatch の実装パターン
 
