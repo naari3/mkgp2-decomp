@@ -385,6 +385,7 @@ config.libs = [
             Object(Matching, "game/PhysicsState.c"),
             Object(Matching, "game/Rand.c"),
             Object(Matching, "game/RaceScene_PlayerSlots.c"),
+            Object(Matching, "game/GameModeBase_FrameUpdate2.cpp"),
             Object(Matching, "game/SpawnTable.c"),
             Object(Matching, "game/VBlank.c"),
             Object(Matching, "game/PCBComm_PromoteToClientConfirmed.c"),
