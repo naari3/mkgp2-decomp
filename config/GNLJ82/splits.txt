@@ -157,6 +157,11 @@ game/CourseBgm_Free.c:
 	extabindex  start:0x80020E88 end:0x80020E94
 	.text       start:0x80064EA0 end:0x80064ED0
 
+game/ServiceMenu.c:
+	extab       start:0x800082A8 end:0x800082C0
+	extabindex  start:0x800211C4 end:0x800211D0
+	.text       start:0x80073E7C end:0x80073ECC
+
 game/PCBComm_PromoteToClientConfirmed.c:
 	extab       start:0x80008DAC end:0x80008DB4
 	extabindex  start:0x800218C0 end:0x800218CC

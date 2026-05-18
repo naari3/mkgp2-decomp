@@ -415,6 +415,7 @@ config.libs = [
             Object(Matching, "game/PCBComm_PromoteToClientConfirmed.c"),
             Object(Matching, "game/TCPConn_LogError.c"),
             Object(Matching, "game/TCPConn.c"),
+            Object(Matching, "game/ServiceMenu.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/AddCoinsFromExtraStage.c"),
             Object(Matching, "game/NokoNokoChallenge_TransitionToResult.c"),
             Object(Matching, "game/SuikaBallObj_Render.c"),
