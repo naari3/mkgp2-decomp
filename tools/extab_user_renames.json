@@ -12,5 +12,10 @@
     "extabindex_fn_8002F8D4":            "@eti_8001F4A8",
     "extabindex_dtor_8002F910":          "@eti_8001F4B4",
     "extabindex_dtor_8002F978":          "@eti_8001F4C0"
+  },
+
+  "src/game/LookupSin.c": {
+    "extab_LookupSin":      "@etb_80011C20",
+    "extabindex_LookupSin": "@eti_80026CC0"
   }
 }
