@@ -746,3 +746,36 @@ Small data relocation (109) requires that symbol be in a small data section but 
 - derived base regs (r3 = main+0x10 等) が事前計算されている
 
 これらは CW 1.3.2 の loop unroller heuristic に強く依存し、C source 形からの再現が極めて難しい。bundle 内 1 fn 退避なら他 fn の matching 進捗を守れる。
+
+## 17. Ghidra struct pre-definition path (2026-05-18, batch_text_8020aa98_itemdisp_stop)
+
+Ghidra の decompile が typed `T *self` arg + named field access を既に提示している場合 (= Ghidra 側で struct が apply 済み)、その layout を repo 内 `include/<lib>/<Type>.h` に **事前に書いてから** C source を書く。実例として ItemDisplay_Stop (singleton 60-byte fn + extab 8B + extabindex 12B) は **1 compile cycle で byte-identical** に到達。
+
+### Workflow
+
+1. Ghidra decompile output で struct 名 / field offset / 型を読む (`mcp__ghidra__decompile_function` の生出力で十分。DataTypeManager dump は補助、`run_script_inline` が PyGhidra script provider の class-not-found で失敗するケースあり)
+2. `include/<lib>/<StructName>.h` を作成:
+   - 触れる field だけ named member で記述 (例: `Sprite *sprite; int state; int pendingItemId;`)
+   - **未知 gap は byte array で pad** して total size を Ghidra 計と一致させる (`unsigned char _pad08[0x08];`)
+   - 依存型は forward decl で済ます (`typedef struct Sprite Sprite;`)
+3. C source は `self->field` で field アクセス、offset cast (`*(int*)(p + 0x04)`) は使わない
+4. extab/extabindex を伴う TU なら `#pragma exceptions on / reset` の JObj_Visibility pattern を併用 (CW auto-emit)
+
+### 適用基準
+
+- Ghidra が typed signature を出している (= struct apply 済み)
+- struct size と field offset の主要部分が信頼できる
+- bundle 内の全 fn が同 struct を touch する (header 共有のメリット)
+
+### 利点
+
+- opaque ptr + offset cast より readable
+- 後続の同 TU fn が同じ header を再利用可能
+- field rename / type 修正が 1 箇所で済む
+- struct alignment 起因の不一致が起きにくい (CW が struct definition から正しい alignment を計算する)
+
+### 注意
+
+- 未知 field の padding を `_pad08[N]` のような byte array で埋める。`int _pad08;` のような guess type を入れると alignment が変わる可能性
+- `_Partial` suffix が Ghidra 側にある struct は後続作業で field が追加される前提 — header に「+0x14 以降は未確認」コメントを残す
+- src/ / include/ の C source / header コメントに em-dash 等の非 ASCII を入れると sjiswrap が SJIS encoding error を吐く (build は通るが warning)。ASCII に限定する
