@@ -34,9 +34,12 @@ import argparse
 import datetime as dt
 import json
 import os
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
+
+UNPUSHED_WARN_THRESHOLD = 3
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -228,6 +231,19 @@ def main() -> int:
             print(f"  ... and {len(status_changes) - 20} more")
         for addr in removed_addrs[:10]:
             print(f"  removed: {addr}")
+        try:
+            r = subprocess.run(
+                ["git", "rev-list", "--count", "origin/main..HEAD"],
+                capture_output=True, text=True, check=False, timeout=5,
+            )
+            if r.returncode == 0:
+                n = int(r.stdout.strip() or "0")
+                if n >= UNPUSHED_WARN_THRESHOLD:
+                    print(f"WARN: {n} unpushed commits ahead of origin/main "
+                          f"(threshold {UNPUSHED_WARN_THRESHOLD}). "
+                          f"Run `git push origin main` per cycle.md merge hook step 9.")
+        except (subprocess.TimeoutExpired, ValueError, OSError):
+            pass
     return 0
 
 
