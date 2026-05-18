@@ -21,6 +21,11 @@ game/Vtable_CallSlot2.cpp:
 	extabindex  start:0x8001F3F4 end:0x8001F400
 	.text       start:0x8002CDC8 end:0x8002CDF4
 
+game/ObjectBase.c:
+	extab       start:0x80005700 end:0x80005708
+	extabindex  start:0x8001F400 end:0x8001F40C
+	.text       start:0x8002CDF4 end:0x8002CE3C
+
 game/GameMode_Base.c:
 	.text       start:0x8002CE3C end:0x8002CE4C
 
