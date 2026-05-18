@@ -313,6 +313,16 @@ game/ItemDisplay_Stop.c:
 	extabindex  start:0x80029B4C end:0x80029B58
 	.text       start:0x8020AA98 end:0x8020AAD4
 
+game/ItemDisplay_Destroy.c:
+	extab       start:0x800194A8 end:0x800194B0
+	extabindex  start:0x80029B88 end:0x80029B94
+	.text       start:0x8020AE50 end:0x8020AEA8
+
+game/ItemDisplay_GetOrCreate.c:
+	extab       start:0x800194B0 end:0x800194B8
+	extabindex  start:0x80029B94 end:0x80029BA0
+	.text       start:0x8020AEA8 end:0x8020AF08
+
 game/AddCoinsFromExtraStage.c:
 	.text       start:0x80216540 end:0x80216568
 
