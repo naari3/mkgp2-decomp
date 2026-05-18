@@ -84,6 +84,10 @@
     "extab_PathCursor_ResetToPath": "@etb_800066C8",
     "extabindex_PathCursor_ResetToPath": "@eti_80020000"
   },
+  "src/game/PathCursor_InitFromPath.c": {
+    "extab_PathCursor_InitFromPath": "@etb_800066D8",
+    "extabindex_PathCursor_InitFromPath": "@eti_80020018"
+  },
   "src/game/FreeMediaBuffers.c": {
     "extab_FreeMediaBuffers": "@etb_80008EA4",
     "extabindex_FreeMediaBuffers": "@eti_800219BC"
