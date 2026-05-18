@@ -488,3 +488,36 @@ main 側で wedge を予測できれば dispatch prompt にヒントを書ける
 ### tu_hint との関係
 
 main が提案する `tu_hint: input/InputMgr.c` のような単一 TU 想定は wedge 存在で破綻する。sub-agent の HANDOFF で複数 TU に分割する場合、`results[].src_path` を fn 単位で分け、`configure_py.add_objects[]` / `splits_txt.add_entries[]` も TU 分けて記述する (HANDOFF schema は既にこの形を許容)。
+
+## 16. CW 1.3.2 branchless equality idiom (2026-05-18, batch_text_801e9070_itemholder)
+
+`ItemHolder_HasItem` (`return (x == 1) ? 1 : 0;` で u32 比較を bool 化) を matching する際、CW 1.3.2 は branchless な `subfic / cntlzw / srwi r3, r0, 5` 3 命令 idiom に展開する:
+
+```
+lwz   r0, 0x20(r3)      # x = self->field
+subfic r0, r0, 1         # r0 = 1 - x  (carry-set if x <= 1)
+cntlzw r0, r0            # r0 = leading zeros of (1 - x). 32 if x == 1, else < 32
+srwi  r3, r0, 5          # r3 = r0 >> 5. 1 if x == 1, else 0
+blr
+```
+
+Ghidra decompile は同じ asm を `cntlzw(1 - x) >> 5` の C 形式で表示する。これは「1 - x がゼロなら cntlzw が 32 を返し、32 >> 5 = 1」という属性を利用した SDK 慣用句。
+
+### C 側 idiom 選択
+
+| C source | CW 1.3.2 出力 | 結果 |
+|---|---|---|
+| `return (x == 1) ? 1 : 0;` | subfic/cntlzw/srwi (branchless) | ✓ byte-identical (推奨) |
+| `return x == 1;` | 同上 (`?:` 不要、自動) | ✓ |
+| `return !((x - 1));` | subfic 経由しないので別 asm | × |
+| inline asm / `__cntlzw` | 同上の手動展開 | △ 不要 |
+
+**推奨**: `return x == n;` を最初に試す (CW が自動で branchless 展開)。失敗したら `?: 1 : 0` で明示。それでも 100% 不可なら asm_fn 退避。
+
+### 同種 idiom の派生
+
+- `(x == 0) ? 1 : 0` も branchless 展開される (`cntlzw(x) >> 5`)
+- `(x != 0) ? 1 : 0` → `(unsigned)(x | -x) >> 31` 系 (= sign bit、Hacker's Delight)
+- `x < n` で n が小定数なら subfic + carry 系 idiom (詳細は MWCC オプティマイザ依存)
+
+これらは leaf bool getter で頻出する。Ghidra 側で cntlzw / subfic 系 asm を見つけたら、まず `return x == const;` を試すこと。
