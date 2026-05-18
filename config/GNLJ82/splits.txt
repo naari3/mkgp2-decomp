@@ -273,6 +273,11 @@ game/dtor_801EECD8.c:
 	extabindex  start:0x80028B80 end:0x80028B8C
 	.text       start:0x801EECD8 end:0x801EED14
 
+game/DisplayBuffer_GetByIndex.c:
+	extab       start:0x800174E4 end:0x800174EC
+	extabindex  start:0x80028EBC end:0x80028EC8
+	.text       start:0x801F6454 end:0x801F6494
+
 game/dtor_801F8214.c:
 	extab       start:0x80017630 end:0x80017638
 	extabindex  start:0x80029018 end:0x80029024
