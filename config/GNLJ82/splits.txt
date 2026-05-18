@@ -168,6 +168,11 @@ game/ItemHolder.c:
 game/PhysicsState.c:
 	.text       start:0x801EC99C end:0x801EC9AC
 
+ui/UI_PlaySeToggle.c:
+	extab       start:0x80017CD4 end:0x80017CDC
+	extabindex  start:0x8002939C end:0x800293A8
+	.text       start:0x801FE150 end:0x801FE188
+
 ui/UISoundClSound4D.c:
 	extab       start:0x80017CDC end:0x80017CE4
 	extabindex  start:0x800293A8 end:0x800293B4

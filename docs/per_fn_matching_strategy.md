@@ -649,6 +649,21 @@ target asm が要求するのは `lwz r3, g_x; cmpwi r3, 0; bne L; li r3, 0; L: 
 
 頻出シーン: defensive NULL-guard wrapper、`if (auto = ...; ...)` 系の旧 C89 で書かれた idiom (mkgp2 game コードに頻出するっぽい)。
 
+### 16.9 bool / unsigned char 引数: int に書き換えて clrlwi 除去 (2026-05-18, batch_text_801fe150_ui_playsetoggle)
+
+`UI_PlaySeToggle(bool flag)` で発見。Ghidra decompile が `bool flag` で表示しても、target asm が `cmpwi r3, 0` の直接比較を出していたら C source は **`int flag`** に書き換える。
+
+| C source | CW 1.3.2 出力 |
+|---|---|
+| `void f(bool flag)` または `void f(unsigned char flag)` | `clrlwi. r0, r3, 24; cmpwi cr0, r0, 0; beq L` (lower-byte を抽出してから比較) |
+| `void f(int flag)` | `cmpwi r3, 0; beq L` (直接比較) |
+
+ABI 上 r3 には呼び出し側で zero/sign extension 済みの値が arrive する想定なので、callee 側で `int` で受けて直接比較するのは安全。Ghidra の `bool` 推定は decompiler の artifact (lower-byte が non-zero かを見る形式)。
+
+**判定方法**: target asm に `clrlwi.` や `extsb` が無く、引数 r3 を直接 `cmpwi` してるなら `int` で書く。
+
+頻出シーン: flag 引数を取る短い wrapper / dispatch fn (UI_PlaySeToggle 系の 2-way thunks)。
+
 ### 適用パターン (asm_fn 退避を即決すべきケース)
 
 以下の特徴を target asm に見つけたら、C 化試行 1-2 回で限界判断し asm_fn 退避を選ぶ:

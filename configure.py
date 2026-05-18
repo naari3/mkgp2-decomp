@@ -370,6 +370,7 @@ config.libs = [
             Object(Matching, "game/LiveConn.c"),
             Object(Matching, "ui/CursorSound.c"),
             Object(Matching, "ui/FrameSelection.c"),
+            Object(Matching, "ui/UI_PlaySeToggle.c"),
             Object(Matching, "ui/UISoundClSound4D.c"),
             Object(Matching, "ui/UI_PlaySeDecide.c"),
             Object(Matching, "game/CarObject_ResetPhysics.c"),
