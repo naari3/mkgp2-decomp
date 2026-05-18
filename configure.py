@@ -406,6 +406,7 @@ config.libs = [
             Object(Matching, "game/dtor_8021617C.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/WarpZone_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/LiveConn.c"),
+            Object(Matching, "game/PlaySoundDSP.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "ui/CursorSound.c"),
             Object(Matching, "game/InitBGM.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/dtor_801BA14C.c", extra_cflags=["-Cpp_exceptions on"]),

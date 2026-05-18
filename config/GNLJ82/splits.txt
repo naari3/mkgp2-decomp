@@ -351,6 +351,11 @@ game/SpriteSystem_EnsureInit.c:
 game/LiveConn.c:
 	.text       start:0x801B3914 end:0x801B3928
 
+game/PlaySoundDSP.c:
+	extab       start:0x80012B58 end:0x80012B60
+	extabindex  start:0x800277AC end:0x800277B8
+	.text       start:0x801B3928 end:0x801B3980
+
 ui/CursorSound.c:
 	extab       start:0x80012C58 end:0x80012C60
 	extabindex  start:0x800278C0 end:0x800278CC
