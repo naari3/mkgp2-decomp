@@ -254,6 +254,11 @@ game/BootNotice_CheckEnterCondition.c:
 	extabindex  start:0x80021854 end:0x80021860
 	.text       start:0x80084D98 end:0x80084DF8
 
+game/BootPCBCheck_Init.c:
+	extab       start:0x80008D5C end:0x80008D74
+	extabindex  start:0x80021860 end:0x8002186C
+	.text       start:0x80084DF8 end:0x80084E88
+
 game/SyncSlot.c:
 	extab       start:0x80008D84 end:0x80008D8C
 	extabindex  start:0x80021884 end:0x80021890

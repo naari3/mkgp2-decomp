@@ -77,5 +77,9 @@
   "src/game/FreeMediaBuffers.c": {
     "extab_FreeMediaBuffers": "@etb_80008EA4",
     "extabindex_FreeMediaBuffers": "@eti_800219BC"
+  },
+  "src/game/BootPCBCheck_Init.c": {
+    "extab_BootPCBCheck_Init": "@etb_80008D5C",
+    "extabindex_BootPCBCheck_Init": "@eti_80021860"
   }
 }
