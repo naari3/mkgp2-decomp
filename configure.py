@@ -402,6 +402,7 @@ config.libs = [
             Object(Matching, "game/KartMovement_GetVelocityMagnitude.c"),
             Object(Matching, "game/KartMovement_CanReceiveItem.c"),
             Object(Matching, "game/KartMovement_GetCurrentItemId.c"),
+            Object(Matching, "game/KartReaction.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/LakituStart.c"),
             Object(Matching, "game/CourseData.c"),
             Object(Matching, "game/GlobalTimer.c"),

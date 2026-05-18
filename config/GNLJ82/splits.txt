@@ -105,6 +105,11 @@ game/KartMovement_CanReceiveItem.c:
 game/KartMovement_GetCurrentItemId.c:
 	.text       start:0x80040600 end:0x80040608
 
+game/KartReaction.c:
+	extab       start:0x800061C8 end:0x800061E0
+	extabindex  start:0x8001FE44 end:0x8001FE68
+	.text       start:0x80040C24 end:0x80040D84
+
 game/PathCursor_Free.c:
 	extab       start:0x800066D0 end:0x800066D8
 	extabindex  start:0x8002000C end:0x80020018
