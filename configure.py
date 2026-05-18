@@ -371,6 +371,7 @@ config.libs = [
             Object(Matching, "game/ItemRes_Thunk.c"),
             Object(Matching, "game/dtor_8024F40C.c"),
             Object(Matching, "game/dtor_80091284.c"),
+            Object(Matching, "game/PathCursor_Free.c"),
             Object(Matching, "game/LiveConn.c"),
             Object(Matching, "ui/CursorSound.c"),
             Object(Matching, "ui/FrameSelection.c"),
