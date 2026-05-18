@@ -393,6 +393,7 @@ config.libs = [
             Object(Matching, "game/NokoNokoChallenge_TransitionToResult.c"),
             Object(Matching, "game/SpriteSystem_EnsureInit.c"),
             Object(Matching, "game/Scene3D_GetCameraPos.c"),
+            Object(Matching, "game/LUT_Sin12Bit.c"),
             Object(Matching, "game/CourseData_GetDefaultPathKey_Safe.c"),
             Object(Matching, "game/JObj_Visibility.c"),
             Object(Matching, "game/CourseBgm_Free.c"),
