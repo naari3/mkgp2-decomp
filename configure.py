@@ -374,6 +374,7 @@ config.libs = [
             Object(Matching, "game/InputMgr_GetPlayer.c"),
             Object(Matching, "game/InputMgr.c"),
             Object(Matching, "game/InputObj.c"),
+            Object(Matching, "game/InputObj_Ctor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemHolder.c"),
             Object(Matching, "game/ItemRes_Thunk.c"),
             Object(Matching, "game/dtor_8024F40C.c"),
