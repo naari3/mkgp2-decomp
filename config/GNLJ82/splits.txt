@@ -153,6 +153,11 @@ game/NokoNokoChallenge_TransitionToResult.c:
 	extabindex  start:0x80024764 end:0x80024770
 	.text       start:0x80122E58 end:0x80122E80
 
+game/SuikaBallObj_Render.c:
+	extab       start:0x8000BE88 end:0x8000BE90
+	extabindex  start:0x8002486C end:0x80024878
+	.text       start:0x801240B4 end:0x801240E4
+
 game/LUT_Sin12Bit.c:
 	extab       start:0x80011C30 end:0x80011C38
 	extabindex  start:0x80026CD8 end:0x80026CE4

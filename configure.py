@@ -391,6 +391,7 @@ config.libs = [
             Object(Matching, "game/TCPConn_LogError.c"),
             Object(Matching, "game/AddCoinsFromExtraStage.c"),
             Object(Matching, "game/NokoNokoChallenge_TransitionToResult.c"),
+            Object(Matching, "game/SuikaBallObj_Render.c"),
             Object(Matching, "game/SpriteSystem_EnsureInit.c"),
             Object(Matching, "game/Scene3D_GetCameraPos.c"),
             Object(Matching, "game/LUT_Sin12Bit.c"),
