@@ -274,6 +274,11 @@ game/auto_800A8F4C_block.c:
 	extabindex  start:0x800225B0 end:0x80022640
 	.text       start:0x800A8F4C end:0x800A9D84
 
+game/WarpZone_Dtor.c:
+	extab       start:0x80009F80 end:0x80009F88
+	extabindex  start:0x800226A0 end:0x800226AC
+	.text       start:0x800AA888 end:0x800AA8D0
+
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C
 

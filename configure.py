@@ -399,6 +399,7 @@ config.libs = [
             Object(Matching, "game/NamCam_LoadImage.c"),
             Object(Matching, "game/CourseAuxClass_VtableDtor.c"),
             Object(Matching, "game/dtor_8021617C.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/WarpZone_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/LiveConn.c"),
             Object(Matching, "ui/CursorSound.c"),
             Object(Matching, "game/dtor_801BA14C.c", extra_cflags=["-Cpp_exceptions on"]),
