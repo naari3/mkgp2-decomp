@@ -1,6 +1,6 @@
 __check_pad3 = .init:0x80003100; // type:function size:0x40 scope:global
-__set_debug_bba = .init:0x80003140; // type:function size:0xC scope:local
-__get_debug_bba = .init:0x8000314C; // type:function size:0x8 scope:local
+__set_debug_bba = .init:0x80003140; // type:function size:0xC scope:global
+__get_debug_bba = .init:0x8000314C; // type:function size:0x8 scope:global
 __start = .init:0x80003154; // type:function size:0x15C scope:weak
 __init_registers = .init:0x800032B0; // type:function size:0x90 scope:local
 __init_data = .init:0x80003340; // type:function size:0xC0 scope:local
@@ -38703,7 +38703,7 @@ lbl_806D1B84 = .sbss:0x806D1B84; // type:object size:0x4 data:4byte
 RunQueueBits = .sbss:0x806D1B88; // type:object size:0x4 scope:local data:4byte
 RunQueueHint = .sbss:0x806D1B8C; // type:object size:0x4 scope:local data:4byte
 Reschedule = .sbss:0x806D1B90; // type:object size:0x4 scope:local data:4byte
-Debug_BBA = .sbss:0x806D1B98; // type:object size:0x1 scope:local data:byte
+Debug_BBA = .sbss:0x806D1B98; // type:object size:0x1 scope:global data:byte
 lbl_806D1BA0 = .sbss:0x806D1BA0; // type:object size:0x4 data:4byte
 lbl_806D1BA4 = .sbss:0x806D1BA4; // type:object size:0x4 data:4byte
 lbl_806D1BA8 = .sbss:0x806D1BA8; // type:object size:0x4 data:4byte

@@ -298,6 +298,7 @@ config.libs = [
         "progress_category": "game",
         "objects": [
             Object(Matching, "init/__check_pad3.c"),
+            Object(Matching, "init/debug_bba.c"),
         ],
     },
     {

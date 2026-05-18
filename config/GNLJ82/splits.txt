@@ -93,6 +93,9 @@ sysdolphin/baselib/robj.c:
 init/__check_pad3.c:
 	.init       start:0x80003100 end:0x80003140
 
+init/debug_bba.c:
+	.init       start:0x80003140 end:0x80003154
+
 init/__init_hardware.c:
 	.init       start:0x80003400 end:0x80003424
 
