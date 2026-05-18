@@ -219,6 +219,11 @@ game/CourseAuxClass_VtableDtor.c:
 	extabindex  start:0x80021578 end:0x80021584
 	.text       start:0x8007D0D4 end:0x8007D11C
 
+game/BootNotice_CheckEnterCondition.c:
+	extab       start:0x80008D54 end:0x80008D5C
+	extabindex  start:0x80021854 end:0x80021860
+	.text       start:0x80084D98 end:0x80084DF8
+
 game/SyncSlot.c:
 	extab       start:0x80008D84 end:0x80008D8C
 	extabindex  start:0x80021884 end:0x80021890
