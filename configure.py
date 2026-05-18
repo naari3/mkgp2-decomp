@@ -384,6 +384,7 @@ config.libs = [
             Object(Matching, "game/dtor_801EECD8.c"),
             Object(Matching, "game/dtor_801F8214.c"),
             Object(Matching, "game/dtor_80209180.c"),
+            Object(Matching, "game/dtor_801FE870.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/dtor_801FEA70.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/GetCourseSectionType.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/LapDisp_SetTotalLaps.c"),

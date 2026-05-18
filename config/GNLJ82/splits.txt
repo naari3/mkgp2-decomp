@@ -433,6 +433,11 @@ ui/UI_PlaySeDecide.c:
 	extabindex  start:0x800293B4 end:0x800293C0
 	.text       start:0x801FE1AC end:0x801FE1D0
 
+game/dtor_801FE870.c:
+	extab       start:0x80017D70 end:0x80017D98
+	extabindex  start:0x80029450 end:0x8002948C
+	.text       start:0x801FE4D0 end:0x801FE8B8
+
 game/dtor_801FEA70.c:
 	extab       start:0x80017DF0 end:0x80017E48
 	extabindex  start:0x800294B0 end:0x800294D4
