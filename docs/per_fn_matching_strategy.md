@@ -588,6 +588,28 @@ CW 1.3.2 はメモリ operand 同士の add では **RHS-side register** を des
 
 頻出シーン: 単純な global accumulator (`g_total += delta;`)、struct field 更新 (`obj->count += n;`)。target asm の `add rA, rA, rB` の rA が load-reg と一致しているなら、intermediate local pattern を試す。
 
+### 16.6 vtable indirect-call thunk は C++ virtual fn idiom 必須 (2026-05-18, batch_text_8002cdc8_vtable_callslot2)
+
+`Vtable_CallSlot2` (0x8002CDC8, size 0x2C, `(**(code**)(*self+8))();` 形式の thunk) を matching。
+
+target asm: `lwz r12, 0(r3); lwz r12, 0x8(r12); mtctr r12; bctrl;` (vtable ptr → +0x8 slot を一度 r12 経由で chain)。
+
+| C source | CW 1.3.2 出力 | 結果 |
+|---|---|---|
+| `(*(void(**)())(*(int*)self + 8))();` (plain C fn-ptr chain) | `lwz r3, 0(r3); lwz r12, 8(r3); ...` (r3-then-r12 chain) | × byte-diff |
+| `void(**vtbl)(void) = (void(**)(void))*(int*)self; vtbl[2]();` (intermediate local) | 同上 (CW が local を optimize) | × |
+| C++ virtual fn (`struct VT { virtual void f0(); }; self->f0();`) | `lwz r12, 0(r3); lwz r12, 0x8(r12); ...` (r12-only chain) | ✓ byte-identical |
+
+**mkgp2 vtable layout** (Itanium-like): `+0x0` offset_to_top, `+0x4` typeinfo (metadata 2 slot), `+0x8` 最初の user virtual fn。よって `*self + 0x8` で呼ばれているのは class の **1 個目の virtual fn**。関数名の "Slot2" は byte offset 2 ではなく **0/4/8 の 3 slot 目** (= 1st user virtual fn) を指す。
+
+**実装手順**:
+1. `.cpp` ファイルとして書く (拡張子だけで CW MWCC は C++ コンパイラに切替、`game` lib の C cflags でも OK)
+2. `struct ClassName { virtual void method(); };` で local class 定義 (vtable は TU 内自動生成)
+3. C symbol name 維持のため `extern "C"` で wrap
+4. extab/extabindex 自動 emit は CursorSound 系と同じ `#pragma exceptions on / reset` でも、または `.cpp` の C++ exceptions default ON でも自動
+
+実例: `src/game/Vtable_CallSlot2.cpp` (commit TBD)。同じ pattern で vtable +0xC / +0x10 を呼ぶ thunk が他にも存在する場合は同 idiom 適用可能 (Slot3/Slot4 等)。
+
 ### 適用パターン (asm_fn 退避を即決すべきケース)
 
 以下の特徴を target asm に見つけたら、C 化試行 1-2 回で限界判断し asm_fn 退避を選ぶ:

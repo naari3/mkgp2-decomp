@@ -16,6 +16,11 @@ Sections:
 sysdolphin/baselib/_hsd_consts.c:
 	.sdata2     start:0x806DCC58 end:0x806DCC68
 
+game/Vtable_CallSlot2.cpp:
+	extab       start:0x800056F8 end:0x80005700
+	extabindex  start:0x8001F3F4 end:0x8001F400
+	.text       start:0x8002CDC8 end:0x8002CDF4
+
 game/GameMode_Base.c:
 	.text       start:0x8002CE3C end:0x8002CE4C
 
