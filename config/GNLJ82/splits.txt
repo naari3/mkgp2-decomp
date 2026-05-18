@@ -123,6 +123,11 @@ game/auto_800A8F4C_block.c:
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C
 
+game/NokoNokoChallenge_TransitionToResult.c:
+	extab       start:0x8000BCEC end:0x8000BCF4
+	extabindex  start:0x80024764 end:0x80024770
+	.text       start:0x80122E58 end:0x80122E80
+
 game/LiveConn.c:
 	.text       start:0x801B3914 end:0x801B3928
 
