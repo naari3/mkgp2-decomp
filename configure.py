@@ -492,6 +492,7 @@ config.libs = [
             Object(Matching, "game/PathFollower_EnsureGlobalAlloc.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GetEnemyParam.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CourseData_GetDefaultPathKey_Safe.c"),
+            Object(Matching, "game/CourseData_Lookup.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/JObj_Visibility.c"),
             Object(Matching, "game/CourseBgm_Free.c"),
             Object(Matching, "game/CourseBgm_Load.c", extra_cflags=["-Cpp_exceptions on"]),

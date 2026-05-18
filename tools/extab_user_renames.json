@@ -1,6 +1,15 @@
 {
   "_comment": "Per-TU mapping of user-emitted extab/extabindex C symbol names to the anonymous local @etb_/@eti_ names dtk dol split writes into symbols.txt. Used by tools/postprocess_extab_user.py via llvm-objcopy --redefine-sym. Each TU's mapping must cover every manually emitted extab/extabindex symbol in source order; unlisted symbols pass through unchanged (and will trip dtk dol diff).",
 
+  "src/game/CourseData_Lookup.c": {
+    "extab_dtor_800ABF10":               "@etb_8000A0E8",
+    "extab_fn_800ABD80":                 "@etb_8000A0F0",
+    "extab_CourseData_GetOrCreate":      "@etb_8000A0F8",
+    "extabindex_fn_800ABD80":            "@eti_80022778",
+    "extabindex_CourseData_GetOrCreate": "@eti_80022784",
+    "extabindex_dtor_800ABF10":          "@eti_80022790"
+  },
+
   "src/game/InputMgr.c": {
     "extab_InputMgr_Shutdown":      "@etb_80005DF8",
     "extab_InputMgr_Init":          "@etb_80005E00",
