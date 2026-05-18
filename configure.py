@@ -404,6 +404,7 @@ config.libs = [
             Object(NonMatching, "game/RnkDisp_SetPosition.c"),
             Object(Matching, "game/HUD_SetTotalLaps.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/HUD_SetCurrentLap.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/IsCardValid.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/BootNotice_CheckEnterCondition.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/BootPCBCheck_Init.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/GetTextureByIdAndLang.c", extra_cflags=["-Cpp_exceptions on"]),
