@@ -359,6 +359,7 @@ config.libs = [
             Object(Matching, "game/GameMode_Base.c"),
             Object(Matching, "game/Camera.c"),
             Object(Matching, "game/Profiler.c"),
+            Object(Matching, "game/Profiler_RecordFrame.c"),
             Object(Matching, "game/Archive.c"),
             Object(Matching, "game/CollisionFile_FixupPointers.c"),
             Object(Matching, "game/Collision.c"),
