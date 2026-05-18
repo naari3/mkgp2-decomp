@@ -365,6 +365,7 @@ config.libs = [
             Object(Matching, "game/InputMgr.c"),
             Object(Matching, "game/InputObj.c"),
             Object(Matching, "game/KartMovement.c"),
+            Object(Matching, "game/KartMovement_GetCurrentItemId.c"),
             Object(Matching, "game/LakituStart.c"),
             Object(Matching, "game/VBlank.c"),
             # Phase 3a-small: 11-fn dtk reversed-extab group bundle (no extab
@@ -381,6 +382,24 @@ config.libs = [
         "progress_category": "game",
         "objects": [
             Object(Matching, "resource/ResourceLoading.c"),
+        ],
+    },
+    {
+        "lib": "util",
+        "mw_version": "GC/1.3.2",
+        "cflags": cflags_base,
+        "progress_category": "game",
+        "objects": [
+            Object(Matching, "util/bitpack.c"),
+        ],
+    },
+    {
+        "lib": "sound",
+        "mw_version": "GC/1.3.2",
+        "cflags": cflags_base,
+        "progress_category": "game",
+        "objects": [
+            Object(Matching, "sound/ISESlot.c"),
         ],
     },
     {

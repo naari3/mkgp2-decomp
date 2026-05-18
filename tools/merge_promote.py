@@ -41,7 +41,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 WORKTREES_DIR = REPO_ROOT / ".worktrees"
 STATE_JSON = REPO_ROOT / ".orchestrator" / "state.json"
 
-JSON_FENCE_RE = re.compile(r'```(?:json)?\s*\n(.*?)\n```', re.DOTALL)
+JSON_FENCE_RE = re.compile(r'```json\s*\n(.*?)\n```', re.DOTALL)
 
 
 def parse_handoff(path: Path) -> dict:

@@ -63,6 +63,15 @@ game/LakituStart.c:
 game/KartMovement.c:
 	.text       start:0x8003F518 end:0x8003F528
 
+game/KartMovement_GetCurrentItemId.c:
+	.text       start:0x80040600 end:0x80040608
+
+sound/ISESlot.c:
+	.text       start:0x80049B40 end:0x80049B70
+
+util/bitpack.c:
+	.text       start:0x80088BA8 end:0x80088BB8
+
 game/auto_800A8F4C_block.c:
 	extab       start:0x80009E60 end:0x80009ED0
 	extabindex  start:0x800225B0 end:0x80022640
