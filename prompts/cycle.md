@@ -157,7 +157,7 @@ if not Path('.orchestrator/drain.flag').exists():
 
 つまり「merge hook → active_subs 減 → そのまま turn 終了」を許さない。pending work があるなら **同 turn 内で CASE 4 編成 → CASE 3 dispatch を chain して active_subs を 6 まで埋める**。
 
-理由: 「pending あるのに active_subs=0 で next /loop fire を 1500s 待つ」状態は cycle 設計上発生してはいけない (cycle.md「留意点」section 旧記述)。明示化していないと merge 後そのまま停止する間違いが起きる。
+理由: 「pending あるのに active_subs=0 で next /loop fire を 180s 待つ」状態は cycle 設計上発生してはいけない (cycle.md「留意点」section 旧記述)。明示化していないと merge 後そのまま停止する間違いが起きる。
 
 ### chain の中断条件
 
@@ -424,9 +424,10 @@ GetVBlankFlag / Archive_GetCurrent のように既に matched された singleto
 
 ```python
 print("no action this cycle")
-# ScheduleWakeup で fallback wake を予約 (1200-1800s)
+# ScheduleWakeup で fallback wake を予約 (180s = 3 分)
+# prompt cache (5 min TTL) 内で再発火、anti-pattern 回復時間も 3 min に抑える
 ScheduleWakeup(
-    delaySeconds=1500,
+    delaySeconds=180,
     reason='idle: no pending batches and no notifications',
     prompt='<このファイルの内容>',  # 次 cycle で同じ prompt を再発火
 )
@@ -514,5 +515,5 @@ if remaining == 0 and in_flight == 0 and non_terminal_batches == 0:
 
 - **merge は通知 hook で即実行** (cycle 制約外、2026-05-18 旧ルール撤回)。cycle (= 编成 / dispatch / 再编成) は active_subs < 6 上限まで chain 可
 - 完了通知 (`<task-notification>`) は受信した順に即 merge。cycle 中でも notification wake 中でも同じ
-- prompt cache は 5 分 TTL。ScheduleWakeup delay は active_subs > 0 なら 1200s fallback (通知で先に wake する)、completely idle なら 1500s heartbeat。pending work + active_subs==0 は chain で吸収されるので発生しない想定
+- prompt cache は 5 分 TTL (300s)。ScheduleWakeup delay は **180s 統一** (active_subs 有無問わず)。180s < 300s で in-cache、anti-pattern recovery 時間も 3 min に抑える。通知は wake より先に到着して即処理されるため、ScheduleWakeup は安全網。pending work + active_subs==0 は chain で吸収されるので発生しない想定
 - main agent の context が圧迫されたら、tool 出力をファイル経由で参照する (`Bash` で head/tail）
