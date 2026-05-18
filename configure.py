@@ -389,6 +389,7 @@ config.libs = [
             Object(Matching, "game/PCBComm_PromoteToClientConfirmed.c"),
             Object(Matching, "game/AddCoinsFromExtraStage.c"),
             Object(Matching, "game/NokoNokoChallenge_TransitionToResult.c"),
+            Object(Matching, "game/SpriteSystem_EnsureInit.c"),
             # Phase 3a-small: 11-fn dtk reversed-extab group bundle (no extab
             # entries, just .text). All 11 fns initially asm_fn; promote to
             # matched 1 fn at a time via sub-agent dispatch.

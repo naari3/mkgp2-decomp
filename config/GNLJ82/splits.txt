@@ -128,6 +128,9 @@ game/NokoNokoChallenge_TransitionToResult.c:
 	extabindex  start:0x80024764 end:0x80024770
 	.text       start:0x80122E58 end:0x80122E80
 
+game/SpriteSystem_EnsureInit.c:
+	.text       start:0x801A16F0 end:0x801A1714
+
 game/LiveConn.c:
 	.text       start:0x801B3914 end:0x801B3928
 
