@@ -61,6 +61,11 @@ game/JObj_Visibility.c:
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
 
+game/clNormal3D_Construct.c:
+	extab       start:0x80005BA8 end:0x80005BB0
+	extabindex  start:0x8001F7F0 end:0x8001F7FC
+	.text       start:0x80034798 end:0x80034834
+
 game/Archive_GetCurrent.c:
 	.text       start:0x80034A8C end:0x80034A94
 
