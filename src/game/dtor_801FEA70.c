@@ -7,7 +7,7 @@
  *
  *   dtor_801FEA70 (size 0x48): vtable-setter dtor for class A whose
  *     vtable lives at lbl_804EC1C8 (.data, size 0x14). Writes the
- *     vtable into *this then calls dtor_8003AFB8 (MemoryManager_TimedFree)
+ *     vtable into *this then calls MemoryManager_TimedFree (MemoryManager_TimedFree)
  *     when the deleting-flag is positive.
  *
  *   dtor_801FEAB8 / dtor_801FEB48 (size 0x90 each, byte-identical):
@@ -32,7 +32,7 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void dtor_8003AFB8();
+extern void MemoryManager_TimedFree();
 extern void fn_8027248C();
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
@@ -91,7 +91,7 @@ asm void dtor_801FEA70(void) {
     addi r0, r5, lbl_804EC1C8@l
     stw r0, 0x0(r31)
     ble dtor_801FEA70_L_801FEAA0
-    bl dtor_8003AFB8
+    bl MemoryManager_TimedFree
     dtor_801FEA70_L_801FEAA0:
     lwz r0, 0x14(r1)
     mr r3, r31
@@ -125,7 +125,7 @@ asm void dtor_801FEAB8(void) {
     extsh. r0, r30
     ble dtor_801FEAB8_L_801FEB10
     mr r3, r29
-    bl dtor_8003AFB8
+    bl MemoryManager_TimedFree
     dtor_801FEAB8_L_801FEB10:
     mr r3, r29
     b dtor_801FEAB8_L_801FEB24
@@ -169,7 +169,7 @@ asm void dtor_801FEB48(void) {
     extsh. r0, r30
     ble dtor_801FEB48_L_801FEBA0
     mr r3, r29
-    bl dtor_8003AFB8
+    bl MemoryManager_TimedFree
     dtor_801FEB48_L_801FEBA0:
     mr r3, r29
     b dtor_801FEB48_L_801FEBB4

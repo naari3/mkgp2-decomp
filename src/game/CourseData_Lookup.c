@@ -20,7 +20,7 @@ extern void Alloc();
 extern void CourseData_LoadPathTable();
 extern void DebugPrintf();
 extern void MemoryManager_Free();
-extern void dtor_8003AFB8();
+extern void MemoryManager_TimedFree();
 
 /* --- extern decls: sda21-referenced data --- */
 extern void *g_courseData;
@@ -43,7 +43,7 @@ asm void dtor_800ABF10(void);
  * All three extab-bearing fns in this group are asm_fn (HitMessageOverlay_Dtor,
  * CourseData_GetOrCreate, dtor_800ABF10), so all extab/extabindex
  * entries are manually emitted. CourseData_GetOrCreate's extab encodes
- * a DELETEPOINTER cleanup on r28 at PC 0x70 (calls dtor_8003AFB8 if an
+ * a DELETEPOINTER cleanup on r28 at PC 0x70 (calls MemoryManager_TimedFree if an
  * exception propagates) -- that C++ unwind shape didn't reproduce from
  * plain C with #pragma exceptions on (auto-emitted plain prologue
  * extab, missing the DELETEPOINTER action).
@@ -55,7 +55,7 @@ __declspec(section ".extab_user") static const unsigned char extab_dtor_800ABF10
 __declspec(section ".extab_user") static const unsigned char extab_fn_800ABD80[8] = {
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_CourseData_GetOrCreate = { 0x20080000, 0x00000070, 0x00000010, 0x00000000, 0x8A80001C, (void *)&dtor_8003AFB8 };
+__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_CourseData_GetOrCreate = { 0x20080000, 0x00000070, 0x00000010, 0x00000000, 0x8A80001C, (void *)&MemoryManager_TimedFree };
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
@@ -96,7 +96,7 @@ asm void HitMessageOverlay_Dtor(void) {
     extsh. r0, r31
     ble fn_800ABD80_L_800ABDE0
     mr r3, r30
-    bl dtor_8003AFB8
+    bl MemoryManager_TimedFree
     fn_800ABD80_L_800ABDE0:
     lwz r0, 0x14(r1)
     mr r3, r30
@@ -152,7 +152,7 @@ good:
  * CourseData_LoadPathTable, returns current g_courseData.
  *
  * Held as asm_fn because the target extab encodes a DELETEPOINTER
- * cleanup action on r28 at PC 0x70 (dtor_8003AFB8 -- a C++ unwind shape
+ * cleanup action on r28 at PC 0x70 (MemoryManager_TimedFree -- a C++ unwind shape
  * that didn't reproduce from plain C with #pragma exceptions on).
  */
 asm void CourseData_GetOrCreate(void) {
@@ -215,7 +215,7 @@ asm void dtor_800ABF10(void) {
     addi r0, r5, lbl_80419DBC@l
     stw r0, 0x0(r31)
     ble dtor_800ABF10_L_800ABF40
-    bl dtor_8003AFB8
+    bl MemoryManager_TimedFree
     dtor_800ABF10_L_800ABF40:
     lwz r0, 0x14(r1)
     mr r3, r31

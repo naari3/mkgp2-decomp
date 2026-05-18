@@ -12,13 +12,13 @@
  * is required for this singleton dtk extab group.
  */
 
-extern void dtor_8003AFB8(void *);
+extern void MemoryManager_TimedFree(void *);
 
 #pragma exceptions on
 void *dtor_80036988(void *this, short flag) {
     if (this != 0) {
         if (flag > 0) {
-            dtor_8003AFB8(this);
+            MemoryManager_TimedFree(this);
         }
     }
     return this;

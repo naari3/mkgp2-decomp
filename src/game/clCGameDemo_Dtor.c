@@ -14,7 +14,7 @@
  *      freeing storage (the base layer must not free; this layer owns
  *      the decision).
  *   3. if the second arg (delete-flag, passed as a short) is > 0, call
- *      `dtor_8003AFB8(this)` (= MemoryManager_TimedFree) to release the
+ *      `MemoryManager_TimedFree(this)` (= MemoryManager_TimedFree) to release the
  *      allocation.
  *   4. return this in r3.
  *
@@ -33,7 +33,7 @@
  */
 
 extern void *dtor_8002CDF4(void *this, short flag);  /* ObjectBase_Dtor */
-extern void dtor_8003AFB8(void *);                    /* MemoryManager_TimedFree */
+extern void MemoryManager_TimedFree(void *);                    /* MemoryManager_TimedFree */
 extern char lbl_80419F0C[];                           /* clCGameDemo vtable @ 0x80419F0C */
 
 #pragma exceptions on
@@ -42,7 +42,7 @@ void *clCGameDemo_Dtor(void *this, short flag) {
         *(char **)this = lbl_80419F0C;
         dtor_8002CDF4(this, 0);
         if (flag > 0) {
-            dtor_8003AFB8(this);
+            MemoryManager_TimedFree(this);
         }
     }
     return this;

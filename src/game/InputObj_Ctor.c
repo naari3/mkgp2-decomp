@@ -9,7 +9,7 @@
  *   2. invoke the InputObject member finalizer JvsInput_DtorAndFree(this, 0)
  *      to release member-owned resources before the alloc is freed.
  *   3. if the second arg (delete-flag, passed as a short) is > 0, call
- *      `dtor_8003AFB8(this)` (= MemoryManager_TimedFree) to release the
+ *      `MemoryManager_TimedFree(this)` (= MemoryManager_TimedFree) to release the
  *      allocation. Otherwise leave the storage alive (subobject dtor
  *      called from a parent dtor chain).
  *   4. return this in r3 (this is what makes downstream `bl <this dtor>`
@@ -29,7 +29,7 @@
  */
 
 extern void JvsInput_DtorAndFree(void *, int);
-extern void dtor_8003AFB8(void *);
+extern void MemoryManager_TimedFree(void *);
 extern char g_InputObjectVtable[]; /* InputObject vtable @ 0x803F5754 */
 
 #pragma exceptions on
@@ -38,7 +38,7 @@ void *InputObj_Ctor(void *this, short flag) {
         *(char **)this = g_InputObjectVtable;
         JvsInput_DtorAndFree(this, 0);
         if (flag > 0) {
-            dtor_8003AFB8(this);
+            MemoryManager_TimedFree(this);
         }
     }
     return this;

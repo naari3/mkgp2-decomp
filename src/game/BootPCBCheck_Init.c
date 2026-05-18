@@ -22,7 +22,7 @@
  *
  * The target carries a 24-byte extab with a DELETEPOINTER cleanup for r31
  * (the freshly Alloc'd buffer) calling MemoryManager_TimedFree (=
- * dtor_8003AFB8). The cleanup range covers PC=0..0x44 -- through the
+ * MemoryManager_TimedFree). The cleanup range covers PC=0..0x44 -- through the
  * `bl PCBCheck_StateSet` call, so if any of Alloc / DisplayContext_Init /
  * SetSyncTarget / PCBCheck_StateSet throws, the just-allocated buffer is
  * freed before re-raising. CW 1.3.2 has no concise way to express this
@@ -35,7 +35,7 @@ extern void *Alloc(int size);
 extern void DisplayContext_Init(void);
 extern void SetSyncTarget(int target);
 extern void PCBCheck_StateSet(unsigned int listener);
-extern void dtor_8003AFB8(void *);
+extern void MemoryManager_TimedFree(void *);
 
 extern unsigned int lbl_806D11B8;   // .sbss size 0x4: gate (init done flag, holds buf ptr)
 extern unsigned int lbl_806D11BC;   // .sbss size 0x4: 60s wait counter
@@ -66,7 +66,7 @@ __declspec(section ".extab_user") static const struct {
     unsigned int f4;
     void *f5;
 } extab_BootPCBCheck_Init = {
-    0x08080000, 0x00000044, 0x00000010, 0x00000000, 0x8A80001F, (void *)&dtor_8003AFB8
+    0x08080000, 0x00000044, 0x00000010, 0x00000000, 0x8A80001F, (void *)&MemoryManager_TimedFree
 };
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */

@@ -1,9 +1,9 @@
-extern void dtor_8003AFB8(void *p);
+extern void MemoryManager_TimedFree(void *p);
 
 #pragma exceptions on
 void *PathCursor_Free(void *p, short should_delete) {
     if ((p != 0) && (0 < should_delete)) {
-        dtor_8003AFB8(p);
+        MemoryManager_TimedFree(p);
     }
     return p;
 }

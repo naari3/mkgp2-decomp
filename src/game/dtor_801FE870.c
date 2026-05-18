@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void DebugPrintf();
-extern void dtor_8003AFB8();
+extern void MemoryManager_TimedFree();
 extern void ServiceValue_Get();
 extern void ServiceEnable_Get();
 extern void fn_801F9888();
@@ -96,7 +96,7 @@ asm void fn_801FE4D0(void) {
     extsh. r0, r31
     ble fn_801FE4D0_L_801FE538
     mr r3, r30
-    bl dtor_8003AFB8
+    bl MemoryManager_TimedFree
     fn_801FE4D0_L_801FE538:
     lwz r0, 0x14(r1)
     mr r3, r30
@@ -349,7 +349,7 @@ void *dtor_801FE870(void *self, short flag) {
     if (self != 0) {
         *(char **)self = (char *)lbl_804EC1B8;
         if (flag > 0) {
-            dtor_8003AFB8(self);
+            MemoryManager_TimedFree(self);
         }
     }
     return self;

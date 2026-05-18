@@ -8,7 +8,7 @@
  *      (&lbl_803FE8B8) so any derived chain that follows sees a cleanly
  *      typed base subobject.
  *   2. if the second arg (delete-flag, passed as a short) is > 0, call
- *      `dtor_8003AFB8(this)` (= MemoryManager_TimedFree) to release the
+ *      `MemoryManager_TimedFree(this)` (= MemoryManager_TimedFree) to release the
  *      allocation.
  *   3. return this in r3.
  *
@@ -24,7 +24,7 @@
  *                    block-level rename is owned by separate batch)
  */
 
-extern void dtor_8003AFB8(void *);
+extern void MemoryManager_TimedFree(void *);
 extern char lbl_803FE8B8[];  /* CardTaskWelcome vtable @ 0x803FE8B8 */
 
 #pragma exceptions on
@@ -32,7 +32,7 @@ void *dtor_8008A058(void *this, short flag) {
     if (this != 0) {
         *(char **)this = lbl_803FE8B8;
         if (flag > 0) {
-            dtor_8003AFB8(this);
+            MemoryManager_TimedFree(this);
         }
     }
     return this;

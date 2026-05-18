@@ -5,7 +5,7 @@
  * of `this`, then optionally frees `this` itself when the C++ ABI
  * delete-flag (`flag > 0`) is set. NOT the trivial vtable-demote
  * pattern (which only forwards `this`); this dtor performs two
- * sequential `dtor_8003AFB8` (= MemoryManager_TimedFree) calls and
+ * sequential `MemoryManager_TimedFree` (= MemoryManager_TimedFree) calls and
  * therefore saves r30-r31 (Saved GPR range r30-r31, Large Frame:
  * Yes; see auto_dtor_80064CD4_text.s extab body).
  *
@@ -16,14 +16,14 @@
  * context appears.
  */
 
-extern void dtor_8003AFB8(void *p);
+extern void MemoryManager_TimedFree(void *p);
 
 #pragma exceptions on
 void *dtor_80064CD4(void *this, short flag) {
     if (this != 0) {
-        dtor_8003AFB8(*(void **)this);
+        MemoryManager_TimedFree(*(void **)this);
         if (flag > 0) {
-            dtor_8003AFB8(this);
+            MemoryManager_TimedFree(this);
         }
     }
     return this;

@@ -7,7 +7,7 @@
  *   1. if (this != NULL) demote *this to the parent vtable
  *      (&lbl_804EDB28). Parent class owner not yet identified, so the
  *      function name is kept as placeholder dtor_8021617C.
- *   2. if the short flag arg is > 0, call dtor_8003AFB8(this)
+ *   2. if the short flag arg is > 0, call MemoryManager_TimedFree(this)
  *      (= MemoryManager_TimedFree placeholder) to free the storage.
  *   3. return this in r3 for downstream `bl <this dtor>` chains.
  *
@@ -21,7 +21,7 @@
  * extab @ 0x8001A50C-0x8001A514, extabindex @ 0x8002A068-0x8002A074.
  */
 
-extern void dtor_8003AFB8(void *);
+extern void MemoryManager_TimedFree(void *);
 extern char lbl_804EDB28[];  /* parent-class vtable @ 0x804EDB28 */
 
 #pragma exceptions on
@@ -29,7 +29,7 @@ void *dtor_8021617C(void *this, short flag) {
     if (this != 0) {
         *(char **)this = lbl_804EDB28;
         if (flag > 0) {
-            dtor_8003AFB8(this);
+            MemoryManager_TimedFree(this);
         }
     }
     return this;

@@ -70,7 +70,7 @@ extern void StrPcb_ClearStatusBits(void *pcb, int mask);
 extern void *Alloc(int size);
 extern void fn_8023E808(void *child, int flag);   /* child-obj free */
 extern void fn_8023EA80(void *child, int mode);   /* child-obj init  */
-extern void dtor_8003AFB8(void *self);            /* MemoryManager_TimedFree */
+extern void MemoryManager_TimedFree(void *self);            /* MemoryManager_TimedFree */
 
 /* forward decl needed by manual extabindex emit for ItemSelect_Init */
 void *ItemSelect_Init(void *self, void *vtable, int mode);
@@ -141,7 +141,7 @@ void *ItemSelect_Dtor(unsigned char *self, short freeSelf) {
             }
         }
         if (freeSelf > 0) {
-            dtor_8003AFB8(self);
+            MemoryManager_TimedFree(self);
         }
     }
     return self;
@@ -152,7 +152,7 @@ void *ItemSelect_Dtor(unsigned char *self, short freeSelf) {
 /* --- ItemSelect_Init: manual extab emit (DELETEPOINTER cleanup) ---
  * Mirror of target @etb_80007DF8: size 0x18 with one DELETEPOINTER action
  * covering up to PC=0xAC (the bl fn_8023EA80 call site), destructor =
- * dtor_8003AFB8, pointer register = r29.
+ * MemoryManager_TimedFree, pointer register = r29.
  *
  * Header word 0x18080000:
  *   - 1 PC range (action count)
@@ -172,7 +172,7 @@ __declspec(section ".extab_user") static const struct {
     unsigned int f4;
     void *f5;
 } extab_ItemSelect_Init = {
-    0x18080000, 0x000000AC, 0x00000010, 0x00000000, 0x8A80001D, (void *)&dtor_8003AFB8
+    0x18080000, 0x000000AC, 0x00000010, 0x00000000, 0x8A80001D, (void *)&MemoryManager_TimedFree
 };
 
 #pragma section R ".extabindex_user"

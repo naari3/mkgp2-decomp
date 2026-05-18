@@ -20,7 +20,7 @@
  * Shape decision: asm_fn retreat.
  *
  *   The orig extab carries a DELETEPOINTER PC action at pc=0x64 (= the
- *   `bl clNormal3D_Construct` site) with ptr=r30, dtor=dtor_8003AFB8
+ *   `bl clNormal3D_Construct` site) with ptr=r30, dtor=MemoryManager_TimedFree
  *   (= MemoryManager_TimedFree). That's a C++ unwind cleanup-on-throw
  *   artefact: if the call site throws, free the freshly Alloc'd block.
  *   There is no plain-C surface form for emitting this kind of PC-action
@@ -60,12 +60,12 @@ extern unsigned int lbl_80638300[];
 asm void ItemObjectManager_Init(void);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void dtor_8003AFB8();
+extern void MemoryManager_TimedFree();
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) ---
  * Mirror of:
  *   .obj @etb_8000B334 (size 0x18) Saved GPR r30-r31 + DELETEPOINTER @
- *                                   pc=0x64 ptr=r30 dtor=dtor_8003AFB8
+ *                                   pc=0x64 ptr=r30 dtor=MemoryManager_TimedFree
  *   .obj @eti_800239FC (size 0xC)  -> ItemObjectManager_Init /
  *                                      extab_ItemObjectManager_Init
  *
@@ -85,7 +85,7 @@ __declspec(section ".extab_user") static const struct {
     0x00000010,            /* action @ 0x10 */
     0x00000000,            /* pad */
     0x8A80001E,            /* DELETEPOINTER + end bit, ptr=r30 */
-    (void *)&dtor_8003AFB8
+    (void *)&MemoryManager_TimedFree
 };
 
 #pragma section R ".extabindex_user"

@@ -22,7 +22,7 @@
 extern void Alloc();
 extern void DebugPrintf();
 extern void WarpDashMgr_Init();
-extern void dtor_8003AFB8(void *);
+extern void MemoryManager_TimedFree(void *);
 extern void dtor_800AA69C(void *, short);
 extern void fn_80270CF4();
 extern void fn_80270D6C();
@@ -93,7 +93,7 @@ __declspec(section ".extab_user") static const unsigned char extab_WarpZone_Find
 __declspec(section ".extab_user") static const unsigned char extab_WarpDashMgr_Cleanup[8] = {
     0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_WarpDashMgr_GetOrCreate = { 0x38080000, 0x00000064, 0x00000010, 0x00000000, 0x8A800019, (void *)&dtor_8003AFB8 };
+__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_WarpDashMgr_GetOrCreate = { 0x38080000, 0x00000064, 0x00000010, 0x00000000, 0x8A800019, (void *)&MemoryManager_TimedFree };
 __declspec(section ".extab_user") static const unsigned char extab_fn_800A9414[8] = {
     0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -441,7 +441,7 @@ asm void WarpDashMgr_Cleanup(void) {
     bl dtor_800AA69C
     WarpDashMgr_Cleanup_L_800A933C:
     mr r3, r30
-    bl dtor_8003AFB8
+    bl MemoryManager_TimedFree
     WarpDashMgr_Cleanup_L_800A9344:
     addi r28, r28, 0x1
     stw r31, 0x0(r29)
@@ -510,7 +510,7 @@ asm void Free_IfOwnedShort(void) {
     beq fn_800A9414_L_800A9438
     extsh. r0, r4
     ble fn_800A9414_L_800A9438
-    bl dtor_8003AFB8
+    bl MemoryManager_TimedFree
     fn_800A9414_L_800A9438:
     lwz r0, 0x14(r1)
     mr r3, r31
@@ -1133,7 +1133,7 @@ void *dtor_800A9CC8(void *this, short flag) {
     if (this != 0) {
         fn_80270CF4((char *)this + 4, &dtor_80036E40, 0xc, 0x4);
         if (flag > 0) {
-            dtor_8003AFB8(this);
+            MemoryManager_TimedFree(this);
         }
     }
     return this;
@@ -1146,7 +1146,7 @@ void *dtor_800A9D2C(void *this, short flag) {
             dtor_800AA69C(this, 0);
         }
         if (flag > 0) {
-            dtor_8003AFB8(this);
+            MemoryManager_TimedFree(this);
         }
     }
     return this;

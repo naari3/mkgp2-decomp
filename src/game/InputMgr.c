@@ -12,7 +12,7 @@
  *   InputMgr_Init        @ 0x800390E8 size 0x6C (extab 0x28, Saved-GPR
  *                                                r30-r31 + DELETEPOINTER
  *                                                cleanup of mgr + obj
- *                                                via dtor_8003AFB8)
+ *                                                via MemoryManager_TimedFree)
  *
  * Shape decisions:
  *
@@ -31,7 +31,7 @@
  *     below covers it.
  *
  *   InputMgr_Init: the orig extab carries a DELETEPOINTER cleanup chain
- *     (`mgr` then `obj`, both dtor=dtor_8003AFB8). That's an artifact of
+ *     (`mgr` then `obj`, both dtor=MemoryManager_TimedFree). That's an artifact of
  *     C++ `new T()` semantics with cleanup-on-throw, which has no plain-C
  *     surface form -- a try/catch is also not expressible since the asm
  *     contains no exception-region branches (the extab is descriptive-
@@ -51,7 +51,7 @@ struct InputObject;
 
 extern struct InputObject **g_inputManager;
 extern void *Alloc(int size);
-extern void dtor_8003AFB8(void *p);
+extern void MemoryManager_TimedFree(void *p);
 extern void InputMgr_TeardownStub(void);
 extern void JvsInput_ResetCalibration(void);
 extern void *InputObj_Ctor_Internal(void *self, int arg);
@@ -92,9 +92,9 @@ __declspec(section ".extab_user") static const unsigned int extab_InputMgr_Shutd
  *   0x00000018  -- action @ 0x18
  *   0x00000000  -- pad
  *   0x0A80001E  -- DELETEPOINTER action, ptr=r30
- *   dtor_8003AFB8
+ *   MemoryManager_TimedFree
  *   0x8A80001F  -- DELETEPOINTER + end, ptr=r31
- *   dtor_8003AFB8
+ *   MemoryManager_TimedFree
  */
 __declspec(section ".extab_user") static const struct {
     unsigned int f0;
@@ -109,8 +109,8 @@ __declspec(section ".extab_user") static const struct {
     void *f9;
 } extab_InputMgr_Init = {
     0x10080000, 0x00000034, 0x00020020, 0x0000004C, 0x00000018, 0x00000000,
-    0x0A80001E, (void *)&dtor_8003AFB8,
-    0x8A80001F, (void *)&dtor_8003AFB8
+    0x0A80001E, (void *)&MemoryManager_TimedFree,
+    0x8A80001F, (void *)&MemoryManager_TimedFree
 };
 
 #pragma section R ".extabindex_user"
@@ -153,7 +153,7 @@ asm void InputMgr_Shutdown(void) {
 InputMgr_Shutdown_L_800390C0:
     bl InputMgr_TeardownStub
     mr r3, r31
-    bl dtor_8003AFB8
+    bl MemoryManager_TimedFree
 InputMgr_Shutdown_L_800390CC:
     li r0, 0x0
     stw r0, g_inputManager(r13)

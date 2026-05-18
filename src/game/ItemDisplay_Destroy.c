@@ -28,7 +28,7 @@
 
 extern ItemDisplay *g_pItemDisplay;
 extern void Sprite_Destroy(Sprite *sprite, int flag);
-extern void dtor_8003AFB8(void *this);
+extern void MemoryManager_TimedFree(void *this);
 
 #pragma exceptions on
 void ItemDisplay_Destroy(void) {
@@ -38,7 +38,7 @@ void ItemDisplay_Destroy(void) {
             if (self->sprite) {
                 Sprite_Destroy(self->sprite, 1);
             }
-            dtor_8003AFB8(self);
+            MemoryManager_TimedFree(self);
         }
         g_pItemDisplay = 0;
     }

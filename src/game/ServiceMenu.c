@@ -9,7 +9,7 @@
  *   - return p
  *
  * The target has a DELETEPOINTER extab cleanup for r31 with dtor =
- * MemoryManager_TimedFree (= dtor_8003AFB8). The cleanup covers the
+ * MemoryManager_TimedFree (= MemoryManager_TimedFree). The cleanup covers the
  * `bl ServiceMenu_Init` call, so if Init throws the just-allocated
  * buffer is freed before re-raising.
  *
@@ -23,7 +23,7 @@ extern void ServiceButtonExtra_Set(unsigned char value);
 extern void SetSyncTarget(int target);
 extern void *Alloc(int size);
 extern void ServiceMenu_Init(void *self, int param);
-extern void dtor_8003AFB8(void *);
+extern void MemoryManager_TimedFree(void *);
 
 /* --- forward decl --- */
 void *OpenFullServiceMenu(void);
@@ -49,7 +49,7 @@ __declspec(section ".extab_user") static const struct {
     unsigned int f4;
     void *f5;
 } extab_OpenFullServiceMenu = {
-    0x08080000, 0x00000038, 0x00000010, 0x00000000, 0x8A80001F, (void *)&dtor_8003AFB8
+    0x08080000, 0x00000038, 0x00000010, 0x00000000, 0x8A80001F, (void *)&MemoryManager_TimedFree
 };
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */

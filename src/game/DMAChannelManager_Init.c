@@ -17,7 +17,7 @@
  *
  *   The orig extab carries a DELETEPOINTER PC action at pc=0x58 (= the
  *   `bl TransparentDraw_ResetEntry` site) with ptr=r27, dtor=
- *   dtor_8003AFB8 (= MemoryManager_TimedFree). That's a C++ unwind
+ *   MemoryManager_TimedFree (= MemoryManager_TimedFree). That's a C++ unwind
  *   cleanup-on-throw artefact: if the call site throws, free the
  *   freshly Alloc'd block via the memory manager. There is no plain-C
  *   surface form for emitting this kind of PC-action extab -- `new T`
@@ -41,7 +41,7 @@
 
 extern void *Alloc(int size);
 extern void TransparentDraw_ResetEntry(void *self); /* TransparentDraw_ResetEntry */
-extern void dtor_8003AFB8(void *p);  /* MemoryManager_TimedFree */
+extern void MemoryManager_TimedFree(void *p);  /* MemoryManager_TimedFree */
 
 /* sda1 globals (sdata / sbss residents). mwcc inline-asm syntax
  * `<sym>(r13)` -> auto sda21 reloc requires the symbol to be visible
@@ -59,7 +59,7 @@ asm void DMAChannelManager_Init(void);
 /* --- manual extab/extabindex emit ---
  * Mirror of:
  *   .obj @etb_800080D8 (size 0x18) Saved GPR r27-r31 + DELETEPOINTER @
- *                                   pc=0x58 ptr=r27 dtor=dtor_8003AFB8
+ *                                   pc=0x58 ptr=r27 dtor=MemoryManager_TimedFree
  *   .obj @eti_80020FC0 (size 0xC)  -> DMAChannelManager_Init /
  *                                      extab_DMAChannelManager_Init
  *
@@ -80,7 +80,7 @@ __declspec(section ".extab_user") static const struct {
     0x00000010,            /* action @ 0x10 */
     0x00000000,            /* pad */
     0x8A80001B,            /* DELETEPOINTER + end bit, ptr=r27 */
-    (void *)&dtor_8003AFB8
+    (void *)&MemoryManager_TimedFree
 };
 
 #pragma section R ".extabindex_user"

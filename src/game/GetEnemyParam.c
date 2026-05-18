@@ -7,7 +7,7 @@
  * the address of the items[] array (i.e. &g_clEnemyParam->items[0]).
  *
  * The target has a DELETEPOINTER extab cleanup for r31 with dtor =
- * MemoryManager_TimedFree (= dtor_8003AFB8). The cleanup covers the
+ * MemoryManager_TimedFree (= MemoryManager_TimedFree). The cleanup covers the
  * `bl Alloc` ... `bl DebugPrintf` window, so if DebugPrintf throws the
  * just-allocated buffer is freed before re-raising. Same scoped raw-pointer
  * idiom as OpenFullServiceMenu (game/ServiceMenu.c).
@@ -18,7 +18,7 @@
 
 extern void *Alloc(int size);
 extern void DebugPrintf(const char *fmt, ...);
-extern void dtor_8003AFB8(void *);
+extern void MemoryManager_TimedFree(void *);
 
 struct clEnemyParamSlots {
     int items[6];
@@ -50,7 +50,7 @@ __declspec(section ".extab_user") static const struct {
     unsigned int f4;
     void *f5;
 } extab_GetEnemyParam = {
-    0x08080000, 0x0000003C, 0x00000010, 0x00000000, 0x8A80001F, (void *)&dtor_8003AFB8
+    0x08080000, 0x0000003C, 0x00000010, 0x00000000, 0x8A80001F, (void *)&MemoryManager_TimedFree
 };
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */

@@ -23,7 +23,7 @@
  *     calls fn_80190660 + Backup_PublishShadowCopy_Inline + lbl_806D10AC->f0(1) + fn_802C8B48(0),
  *     decrements g_playerData[0x198] (clamped at 0), then chains
  *     ObjectBase_Dtor (= dtor_8002CDF4) and optional MemoryManager_TimedFree
- *     (= dtor_8003AFB8) under the `freeFlag > 0` delete-self gate.
+ *     (= MemoryManager_TimedFree) under the `freeFlag > 0` delete-self gate.
  *     Best objdiff: 99.47 % (same 8 cycles). Same instruction count; only
  *     diff is the GPR pair chosen for `g_playerData` base/value during the
  *     decrement: target uses base=r4, value=r3 (`addi r4, r3, @l; lbz r3,
@@ -65,7 +65,7 @@ extern void Backup_PublishShadowCopy_Inline(void);
 extern void fn_80190660(void);
 extern void fn_802C8B48(int);
 extern void *dtor_8002CDF4(void *self, short freeFlag);  /* ObjectBase_Dtor */
-extern void  dtor_8003AFB8(void *self);                  /* MemoryManager_TimedFree */
+extern void  MemoryManager_TimedFree(void *self);                  /* MemoryManager_TimedFree */
 extern unsigned char g_playerData[0x1DC];
 extern void *g_GameModeBaseVtable[5];
 }
@@ -117,7 +117,7 @@ extern "C" GameModeBase *GameModeBase_Dtor(GameModeBase *self, short freeFlag) {
         }
         dtor_8002CDF4(self, 0);
         if (freeFlag > 0) {
-            dtor_8003AFB8(self);
+            MemoryManager_TimedFree(self);
         }
     }
     return self;

@@ -11,7 +11,7 @@
  *      (&lbl_803F58E0) so any derived dtor chain that follows sees a
  *      cleanly typed base subobject.
  *   2. if the second arg (delete-flag, passed as a short) is > 0, call
- *      `dtor_8003AFB8(this)` (= MemoryManager_TimedFree) to release the
+ *      `MemoryManager_TimedFree(this)` (= MemoryManager_TimedFree) to release the
  *      allocation. Otherwise leave the storage alive.
  *   3. return this in r3 (C++ ABI deleting-dtor convention).
  *
@@ -25,7 +25,7 @@
  *   dtor_8003A71C -> SceneRender_BaseDtor
  */
 
-extern void dtor_8003AFB8(void *);
+extern void MemoryManager_TimedFree(void *);
 extern char lbl_803F58E0[];  /* SceneRender base vtable @ 0x803F58E0 */
 
 #pragma exceptions on
@@ -33,7 +33,7 @@ void *dtor_8003A71C(void *this, short flag) {
     if (this != 0) {
         *(char **)this = lbl_803F58E0;
         if (flag > 0) {
-            dtor_8003AFB8(this);
+            MemoryManager_TimedFree(this);
         }
     }
     return this;

@@ -7,7 +7,7 @@
  *      (&lbl_8040E76C) so any derived dtor chain that follows sees a
  *      cleanly typed base subobject.
  *   2. if the second arg (delete-flag, passed as a short) is > 0, call
- *      `dtor_8003AFB8(this)` (= MemoryManager_TimedFree) to release the
+ *      `MemoryManager_TimedFree(this)` (= MemoryManager_TimedFree) to release the
  *      allocation. Otherwise leave the storage alive.
  *   3. return this in r3 (C++ ABI deleting-dtor convention).
  *
@@ -24,7 +24,7 @@
  *   dtor_800A0688 -> BtMode_BaseDtor
  */
 
-extern void dtor_8003AFB8(void *);
+extern void MemoryManager_TimedFree(void *);
 extern char lbl_8040E76C[];  /* BtMode base vtable @ 0x8040E76C */
 
 #pragma exceptions on
@@ -32,7 +32,7 @@ void *dtor_800A0688(void *this, short flag) {
     if (this != 0) {
         *(char **)this = lbl_8040E76C;
         if (flag > 0) {
-            dtor_8003AFB8(this);
+            MemoryManager_TimedFree(this);
         }
     }
     return this;

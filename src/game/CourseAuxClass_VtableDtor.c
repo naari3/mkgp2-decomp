@@ -7,7 +7,7 @@
  *      (&lbl_803FE0C8, an 0x18-byte vtable object — exact owner class
  *      not yet identified; no live callers, no other xrefs to
  *      PTR_PTR_803FE0C8 found at audit time).
- *   2. if the short flag arg is > 0, call dtor_8003AFB8(this)
+ *   2. if the short flag arg is > 0, call MemoryManager_TimedFree(this)
  *      (= MemoryManager_TimedFree placeholder) to free the storage.
  *   3. return this in r3 for downstream `bl <this dtor>` chains.
  *
@@ -22,7 +22,7 @@
  *   dtor_8007D0D4 -> CourseAuxClass_VtableDtor
  */
 
-extern void dtor_8003AFB8(void *);
+extern void MemoryManager_TimedFree(void *);
 extern char lbl_803FE0C8[];  /* parent-class vtable @ 0x803FE0C8, size 0x18 */
 
 #pragma exceptions on
@@ -30,7 +30,7 @@ void *dtor_8007D0D4(void *this, short flag) {
     if (this != 0) {
         *(char **)this = lbl_803FE0C8;
         if (flag > 0) {
-            dtor_8003AFB8(this);
+            MemoryManager_TimedFree(this);
         }
     }
     return this;

@@ -12,7 +12,7 @@
  *      unconditionally on non-NULL `self`, even when the inner branch
  *      was skipped.
  *   4. If the delete-flag (short, sign-extended via `extsh.`) is > 0,
- *      release the allocation via `dtor_8003AFB8` (=
+ *      release the allocation via `MemoryManager_TimedFree` (=
  *      MemoryManager_TimedFree). Otherwise leave storage alive (caller
  *      owns it, e.g. embedded sprite member of another object).
  *   5. Return `self` in r3 (preserves the C++ ABI deleting-dtor
@@ -46,7 +46,7 @@
 
 extern int lbl_806D16E4;            /* .sbss live-sprite counter */
 extern void fn_801A12F0(void *);    /* sprite resource release / detach, takes handle */
-extern void dtor_8003AFB8(void *);  /* MemoryManager_TimedFree */
+extern void MemoryManager_TimedFree(void *);  /* MemoryManager_TimedFree */
 
 #pragma exceptions on
 void *Sprite_Destroy(void *self, short deleteFlag) {
@@ -60,7 +60,7 @@ void *Sprite_Destroy(void *self, short deleteFlag) {
         }
         lbl_806D16E4 = lbl_806D16E4 - 1;
         if (deleteFlag > 0) {
-            dtor_8003AFB8(self);
+            MemoryManager_TimedFree(self);
         }
     }
     return self;

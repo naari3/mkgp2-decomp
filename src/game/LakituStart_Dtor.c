@@ -25,7 +25,7 @@
  */
 
 extern void Object_DtorWithGXSync(void *member, int flag);
-extern void dtor_8003AFB8(void *p);
+extern void MemoryManager_TimedFree(void *p);
 
 #pragma exceptions on
 void *LakituStart_Dtor(void *this, short flag) {
@@ -35,7 +35,7 @@ void *LakituStart_Dtor(void *this, short flag) {
             Object_DtorWithGXSync(member, 1);
         }
         if (flag > 0) {
-            dtor_8003AFB8(this);
+            MemoryManager_TimedFree(this);
         }
     }
     return this;

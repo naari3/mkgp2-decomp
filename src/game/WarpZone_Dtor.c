@@ -8,7 +8,7 @@
  *      cleanly typed base subobject. The WarpZone class owns no heap
  *      resources besides self.
  *   2. if the second arg (delete-flag, passed as a short) is > 0, call
- *      `dtor_8003AFB8(this)` (= MemoryManager_TimedFree placeholder) to
+ *      `MemoryManager_TimedFree(this)` (= MemoryManager_TimedFree placeholder) to
  *      release the allocation. Otherwise leave the storage alive.
  *   3. return this in r3 (C++ ABI deleting-dtor convention).
  *
@@ -23,7 +23,7 @@
  *   dtor_800AA888 -> WarpZone_Dtor
  */
 
-extern void dtor_8003AFB8(void *);
+extern void MemoryManager_TimedFree(void *);
 extern char lbl_80411DD0[];  /* WarpZone vtable @ 0x80411DD0 */
 
 #pragma exceptions on
@@ -31,7 +31,7 @@ void *dtor_800AA888(void *this, short flag) {
     if (this != 0) {
         *(char **)this = lbl_80411DD0;
         if (flag > 0) {
-            dtor_8003AFB8(this);
+            MemoryManager_TimedFree(this);
         }
     }
     return this;

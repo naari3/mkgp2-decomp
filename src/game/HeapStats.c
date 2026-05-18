@@ -22,7 +22,7 @@
 extern void DebugPrintf();
 extern void MemoryHeap_GetStats();
 extern void OSGetTick();
-extern void dtor_8003AFB8();
+extern void MemoryManager_TimedFree();
 extern void fn_801DB68C();
 extern void fn_802554DC();
 extern void fn_80293BBC();
@@ -312,7 +312,7 @@ asm void dtor_8002F910(void) {
     extsh. r0, r31
     ble dtor_8002F910_L_8002F95C
     mr r3, r30
-    bl dtor_8003AFB8
+    bl MemoryManager_TimedFree
     dtor_8002F910_L_8002F95C:
     lwz r0, 0x14(r1)
     mr r3, r30
@@ -333,7 +333,7 @@ asm void dtor_8002F978(void) {
     beq dtor_8002F978_L_8002F99C
     extsh. r0, r4
     ble dtor_8002F978_L_8002F99C
-    bl dtor_8003AFB8
+    bl MemoryManager_TimedFree
     dtor_8002F978_L_8002F99C:
     lwz r0, 0x14(r1)
     mr r3, r31
