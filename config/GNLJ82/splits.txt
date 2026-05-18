@@ -182,6 +182,26 @@ ui/CursorSound.c:
 ui/FrameSelection.c:
 	.text       start:0x801BA194 end:0x801BA1A4
 
+game/AI_GetLapDifference.c:
+	extab       start:0x80016510 end:0x80016518
+	extabindex  start:0x80028874 end:0x80028880
+	.text       start:0x801E6C94 end:0x801E6CC8
+
+game/AI_GetYaw.c:
+	extab       start:0x80016528 end:0x80016530
+	extabindex  start:0x80028898 end:0x800288A4
+	.text       start:0x801E6D30 end:0x801E6D64
+
+game/AI_HasItem.c:
+	extab       start:0x80016530 end:0x80016538
+	extabindex  start:0x800288A4 end:0x800288B0
+	.text       start:0x801E6D6C end:0x801E6DA0
+
+game/AI_GetItemType.c:
+	extab       start:0x80016538 end:0x80016540
+	extabindex  start:0x800288B0 end:0x800288BC
+	.text       start:0x801E6DA0 end:0x801E6DD4
+
 game/ItemHolder.c:
 	.text       start:0x801E9070 end:0x801E9094
 

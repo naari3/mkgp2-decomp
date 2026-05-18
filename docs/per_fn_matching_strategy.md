@@ -696,6 +696,29 @@ bool f(int *param_1) {
 
 頻出シーン: pointer NULL-guard + tail-call wrapper、bool/int 返り値の guard 系。`return 0` を見たら `return (loaded_var)` で reuse できないか確認。
 
+### 16.11 stwu vs lwz prologue scheduling hard-block (2026-05-18, batch_text_801e6c94_ai_kartcontroller)
+
+CW 1.3.2 が NULL-guard wrapper の prologue で **stw-first** か **lwz-first** のどちらを出すかが C source からは決定できない widely-seen hard-block。
+
+| 形式 | 順序 |
+|---|---|
+| **stw-first** (再現可能) | `stwu r1, -0x10(r1); mflr r0; stw r0, 0x14(r1); lwz r3, off(r3); cmplwi` |
+| **lwz-first** (再現不能) | `stwu r1, -0x10(r1); mflr r0; lwz r3, off(r3); stw r0, 0x14(r1); cmplwi` |
+
+`AI_GetYaw` / `AI_HasItem` は stw-first → 100% matched。同 batch の `AI_GetLapDifference` / `AI_GetItemType` は target が lwz-first で、10+ C source variant (`int`/`unsigned int`/struct arg、ternary vs if、local var vs inline deref、per-object `-Cpp_exceptions on`、register hint 等) で reproduce 不可。
+
+### 影響範囲
+
+mkgp2 全体で **20+ auto_* groups** に同 lwz-first pattern が見られる (`stwu r1, -0x10(r1) / mflr / lwz r3, off(r3) / stw r0, 0x14(r1)` を grep)。NULL-guard wrapper 系小関数の大量 unblock 候補。
+
+### 未試行の experimentation paths (project-wide focused investigation 候補)
+
+1. **C++ TU wrap** (`.cpp` + `extern "C"`): C++ language flag で scheduler 動作が変わるか
+2. **CW flag deltas**: `-O3,p` vs `-O4,p`、`-inline off`、`-sym on`、`-fp_contract off`
+3. **Source-level inlining hints**: mwcc が支持する場合
+4. **TU-wide function ordering**: 同 TU 内に複数 fn を並べた時の register pressure 差で scheduler が変化する可能性
+5. **mwcc-2.x compilers**: 1.3.2 固定の確証は確認済みだが、game lib の一部 TU は別 CW 版の可能性 (調査要)
+
 ### 適用パターン (asm_fn 退避を即決すべきケース)
 
 以下の特徴を target asm に見つけたら、C 化試行 1-2 回で限界判断し asm_fn 退避を選ぶ:
