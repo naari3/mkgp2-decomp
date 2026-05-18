@@ -289,6 +289,9 @@ game/SyncSlot.c:
 	extabindex  start:0x80021884 end:0x80021890
 	.text       start:0x800850BC end:0x80085154
 
+game/RingBuffer_Getters.c:
+	.text       start:0x80085280 end:0x80085368
+
 game/PCBComm_PromoteToClientConfirmed.c:
 	extab       start:0x80008DAC end:0x80008DB4
 	extabindex  start:0x800218C0 end:0x800218CC
