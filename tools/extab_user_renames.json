@@ -120,5 +120,9 @@
   "src/game/ResetIOPorts.c": {
     "extab_ResetIOPorts": "@etb_80008D7C",
     "extabindex_ResetIOPorts": "@eti_80021878"
+  },
+  "src/game/MemoryManager_TimedFree.c": {
+    "extab_MemoryManager_TimedFree": "@etb_80005FDC",
+    "extabindex_MemoryManager_TimedFree": "@eti_8001FC34"
   }
 }
