@@ -361,6 +361,8 @@ config.libs = [
             Object(Matching, "game/Profiler.c"),
             Object(Matching, "game/Archive.c"),
             Object(Matching, "game/Collision.c"),
+            Object(Matching, "game/StrPcb_988.c"),
+            Object(Matching, "game/StrPcb.c"),
             Object(Matching, "game/Clamp.c"),
             Object(Matching, "game/InputMgr_GetPlayer.c"),
             Object(Matching, "game/InputMgr.c"),

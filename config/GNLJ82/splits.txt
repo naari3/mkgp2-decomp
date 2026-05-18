@@ -60,6 +60,16 @@ resource/ResourceLoading.c:
 game/Collision.c:
 	.text       start:0x800364C8 end:0x800364D8
 
+game/StrPcb_988.c:
+	extab       start:0x80005C90 end:0x80005C98
+	extabindex  start:0x8001F8D4 end:0x8001F8E0
+	.text       start:0x80036988 end:0x800369C4
+
+game/StrPcb.c:
+	extab       start:0x80005CA8 end:0x80005CB0
+	extabindex  start:0x8001F8F8 end:0x8001F904
+	.text       start:0x80036E40 end:0x80036E7C
+
 game/Clamp.c:
 	.text       start:0x80038778 end:0x800387D8
 
