@@ -1,19 +1,73 @@
 {
   "functions": {
+    "0x80003140": {
+      "name": "BootMode4Pending_Set"
+    },
+    "0x8000314c": {
+      "name": "BootMode4Pending_Get"
+    },
+    "0x80003154": {
+      "name": "__start"
+    },
+    "0x800032b0": {
+      "name": "__init_registers"
+    },
+    "0x80003340": {
+      "name": "__init_data"
+    },
+    "0x80003400": {
+      "name": "__init_user"
+    },
+    "0x80003424": {
+      "name": "__flush_cache"
+    },
+    "0x80003458": {
+      "name": "memset_returning_dst"
+    },
+    "0x80003488": {
+      "name": "memcpy_bytewise"
+    },
+    "0x800053e0": {
+      "name": "OSResetSystem_NoArgs"
+    },
     "0x8000540c": {
+      "name": "memset"
+    },
+    "0x8000543c": {
       "name": "memset"
     },
     "0x800054f4": {
       "name": "memmove"
     },
+    "0x8002bca0": {
+      "name": "Flow_TransitionTo"
+    },
     "0x8002be18": {
       "name": "DebugOverlay_Dispatch"
+    },
+    "0x8002c554": {
+      "name": "FlowDispatcher_Dtor"
     },
     "0x8002c5e8": {
       "name": "MainGameLoop"
     },
+    "0x8002cb80": {
+      "name": "FlowDispatcher_Create"
+    },
+    "0x8002ccd8": {
+      "name": "ScopedTimer_End"
+    },
+    "0x8002cd7c": {
+      "name": "WrapInRange"
+    },
+    "0x8002cd9c": {
+      "name": "Scene_Draw"
+    },
     "0x8002cdc8": {
       "name": "Vtable_CallSlot2"
+    },
+    "0x8002cdf4": {
+      "name": "ObjectBase_Dtor"
     },
     "0x8002ce3c": {
       "name": "GameMode_BaseInit"
@@ -27,8 +81,50 @@
     "0x8002ceec": {
       "name": "DebugPrintf"
     },
+    "0x8002cfd0": {
+      "name": "BootConfigFlag_Get"
+    },
+    "0x8002cfd8": {
+      "name": "ServiceLatch_CheckTriggered"
+    },
+    "0x8002d004": {
+      "name": "VBlankValue_Set"
+    },
+    "0x8002d018": {
+      "name": "ServiceLatchAux97_Set"
+    },
+    "0x8002d020": {
+      "name": "VBlankEnable_Set"
+    },
+    "0x8002d038": {
+      "name": "VBlankValue_Get"
+    },
     "0x8002d040": {
       "name": "GetVBlankFlag"
+    },
+    "0x8002d048": {
+      "name": "ServiceValue_Set"
+    },
+    "0x8002d064": {
+      "name": "ServiceLatchAux96_Set"
+    },
+    "0x8002d06c": {
+      "name": "ServiceEnable_Set"
+    },
+    "0x8002d084": {
+      "name": "ServiceValue_Get"
+    },
+    "0x8002d08c": {
+      "name": "ServiceEnable_Get"
+    },
+    "0x8002d094": {
+      "name": "BootStateStruct_Get"
+    },
+    "0x8002d0a0": {
+      "name": "ServiceButtonExtra_Get"
+    },
+    "0x8002d0a8": {
+      "name": "ServiceButtonExtra_Set"
     },
     "0x8002d0b0": {
       "name": "ServiceButton_Handler"
@@ -36,8 +132,29 @@
     "0x8002d74c": {
       "name": "SetActiveCamera"
     },
+    "0x8002d760": {
+      "name": "BackupBuffer_InitAsTexture"
+    },
+    "0x8002d7dc": {
+      "name": "Frame_UpdatePerFrameState"
+    },
+    "0x8002d978": {
+      "name": "Frame_PostDrawOverlay"
+    },
+    "0x8002da3c": {
+      "name": "Frame_PostDraw_BackupBuffer"
+    },
+    "0x8002dc3c": {
+      "name": "Frame_Begin"
+    },
+    "0x8002dc7c": {
+      "name": "Game_Shutdown"
+    },
     "0x8002dd58": {
       "name": "BootDispatcher"
+    },
+    "0x8002f640": {
+      "name": "BootStateStruct_RefreshIfDue"
     },
     "0x8002f7fc": {
       "name": "HeapStats_DumpForTag"
@@ -45,14 +162,62 @@
     "0x8002f8cc": {
       "name": "isJapanese"
     },
+    "0x8002f8d4": {
+      "name": "DebugLog_LvIdMsg"
+    },
+    "0x8002f978": {
+      "name": "Object_DtorMinimal"
+    },
+    "0x8002f9b4": {
+      "name": "SeqMenuScene_DrawDebugList"
+    },
+    "0x8002fa8c": {
+      "name": "SeqMenuScene_HandleInput"
+    },
+    "0x8002fc20": {
+      "name": "SeqMenuScene_Dtor"
+    },
+    "0x8002fc80": {
+      "name": "SeqMenuScene_Init"
+    },
     "0x8002fd4c": {
       "name": "DebugTextOutput"
     },
     "0x8002fe34": {
       "name": "OverlayText"
     },
+    "0x8002ff08": {
+      "name": "DeadCounter_Set_ced48"
+    },
+    "0x8002ff10": {
+      "name": "DeadCounter_Reset_805940ec"
+    },
+    "0x8002ff20": {
+      "name": "DeadCounter_Set_806d0fb8"
+    },
+    "0x8002ff30": {
+      "name": "DeadCounters_PostBootReset"
+    },
+    "0x8002ff7c": {
+      "name": "Cleanup_DtorMinimal"
+    },
     "0x8002ffb8": {
       "name": "IsDisplayModeEnabled"
+    },
+    "0x8002fffc": {
+      "name": "Object_SetByte10_Return1"
+    },
+    "0x80030008": {
+      "name": "CObj_GetLineBufferPtr"
+    },
+    "0x80030010": {
+      "name": "CObj_UpdatePerspParam"
+    },
+    "0x800300d8": {
+      "name": "CObj_ProjectPoint"
+    },
+    "0x80030200": {
+      "name": "CObj_UnprojectPoint"
     },
     "0x800302ec": {
       "name": "Scene3D_GetCameraPos"
@@ -60,11 +225,65 @@
     "0x8003031c": {
       "name": "Scene3D_SetupProjection"
     },
+    "0x800303e8": {
+      "name": "CObj_ApplyViewport"
+    },
+    "0x80030424": {
+      "name": "CObj_LoadIntoGX"
+    },
+    "0x80030460": {
+      "name": "CObj_SetWorldMatrix"
+    },
+    "0x800304e0": {
+      "name": "CObj_LinePath_Step"
+    },
+    "0x80030960": {
+      "name": "CObj_ApplyScissor"
+    },
+    "0x8003099c": {
+      "name": "CObj_LoadProjMatrix"
+    },
+    "0x800309d8": {
+      "name": "CObj_GetProjMatrix_Cached"
+    },
+    "0x80030a10": {
+      "name": "CObj_GetViewMatrix_Cached"
+    },
+    "0x80030a48": {
+      "name": "CObj_GlobalProjPushFrame"
+    },
+    "0x80030a68": {
+      "name": "CObj_DebugVizPathFlush"
+    },
+    "0x80030aa8": {
+      "name": "CObj_RenderPass_Execute"
+    },
+    "0x80030aec": {
+      "name": "Stub_NoOp_80030aec"
+    },
+    "0x80030af0": {
+      "name": "Object_DtorTree_56b8"
+    },
     "0x80030bdc": {
       "name": "Scene3D_Init"
     },
+    "0x80030d24": {
+      "name": "LinkedNode_GetField10_OrFallback"
+    },
+    "0x80030d48": {
+      "name": "JObjTree_TranslateAndMul"
+    },
     "0x80030fa0": {
       "name": "clNormal3D_SetFlags"
+    },
+    "0x80031408": {
+      "name": "Object_SetColorRGBA"
+    },
+    "0x80031488": {
+      "name": "Object_SetColorAlphaOnly"
+    },
+    "0x8003151c": {
+      "name": "JObj_SetScale"
     },
     "0x800316b8": {
       "name": "JObj_Show"
@@ -72,11 +291,95 @@
     "0x800316e8": {
       "name": "JObj_Hide"
     },
+    "0x80031718": {
+      "name": "Object_JObjUpdate_be4"
+    },
+    "0x80031744": {
+      "name": "Object_JObjUpdate_870"
+    },
+    "0x80031770": {
+      "name": "JObj_SetRotationQuat"
+    },
+    "0x8003185c": {
+      "name": "Object_SetJObjRotationZ"
+    },
+    "0x80031924": {
+      "name": "Object_SetJObjRotationY"
+    },
+    "0x800319ec": {
+      "name": "Object_SetJObjRotationX"
+    },
+    "0x80031ab4": {
+      "name": "Object_SetJObjScaleXYZ"
+    },
+    "0x80031b7c": {
+      "name": "Object_SetJObjScaleVec"
+    },
+    "0x80031c50": {
+      "name": "Object_SetJObjField40"
+    },
+    "0x80031cf8": {
+      "name": "Object_SetJObjPositionY"
+    },
+    "0x80031da0": {
+      "name": "Object_SetJObjPositionX"
+    },
+    "0x80031e48": {
+      "name": "Object_SetJObjPositionXYZ"
+    },
+    "0x80031f10": {
+      "name": "Object_SetJObjPositionVec"
+    },
+    "0x80031fe8": {
+      "name": "Object_GetJObjRotationZ"
+    },
+    "0x80032038": {
+      "name": "Object_GetJObjRotationY"
+    },
+    "0x80032088": {
+      "name": "Object_GetJObjRotationX"
+    },
+    "0x800320d8": {
+      "name": "Object_SetByte48"
+    },
+    "0x800320e0": {
+      "name": "Object_GetJObjPositionVec"
+    },
+    "0x80032188": {
+      "name": "Object_GetJObjLocalMatrix"
+    },
+    "0x80032234": {
+      "name": "Object_SetField14_IfValid"
+    },
+    "0x8003227c": {
+      "name": "Object_SetField8_AndDirty"
+    },
+    "0x800322cc": {
+      "name": "Object_GetField8"
+    },
+    "0x800322f8": {
+      "name": "ObjectTree_BlendOrCopy"
+    },
+    "0x80032540": {
+      "name": "ObjectTree_BlendOrCopy_Timed"
+    },
+    "0x8003267c": {
+      "name": "Object_CopyFieldsRotPosScale"
+    },
+    "0x800326d0": {
+      "name": "ObjectTree_BlendQuatLerp"
+    },
     "0x800328a8": {
       "name": "clNormal3D_CountJObjs"
     },
+    "0x80032a70": {
+      "name": "Object_SetField8_10_14"
+    },
     "0x80032aac": {
       "name": "clNormal3D_Exec"
+    },
+    "0x800331e0": {
+      "name": "Object_DriveAnimAndSkin"
     },
     "0x80033918": {
       "name": "clNormal3D_SetScale"
@@ -87,8 +390,29 @@
     "0x80033efc": {
       "name": "Archive_GetRootJObj"
     },
+    "0x80033f10": {
+      "name": "Object_ClearAnimBinding"
+    },
+    "0x80033fe0": {
+      "name": "Object_SetAnimBinding"
+    },
+    "0x80034100": {
+      "name": "Object_BindMatrixSource"
+    },
+    "0x80034220": {
+      "name": "Object_RenderJObjEx"
+    },
+    "0x80034260": {
+      "name": "Object_RenderJObjTree"
+    },
+    "0x800342a4": {
+      "name": "Object_DriveAnimMatrix"
+    },
     "0x80034508": {
       "name": "clNormal3D_Load"
+    },
+    "0x800346e4": {
+      "name": "Object_DtorWithGXSync"
     },
     "0x80034798": {
       "name": "clNormal3D_Construct"
@@ -96,17 +420,50 @@
     "0x80034834": {
       "name": "clNormal3D_FlattenJObjTree"
     },
+    "0x80034a10": {
+      "name": "Object_ReleaseAnimResource"
+    },
+    "0x80034a3c": {
+      "name": "JObj_GetNext"
+    },
+    "0x80034a54": {
+      "name": "JObj_GetChild"
+    },
+    "0x80034a6c": {
+      "name": "DObj_GetNext"
+    },
+    "0x80034a84": {
+      "name": "clRom_GetActiveCount"
+    },
     "0x80034a8c": {
       "name": "Archive_GetCurrent"
+    },
+    "0x80034a94": {
+      "name": "clRom_DtorForce"
     },
     "0x80034b50": {
       "name": "FileLoader_LoadBin"
     },
+    "0x80034c38": {
+      "name": "DVDFile_LoadSync"
+    },
+    "0x80034ca0": {
+      "name": "clRom_DumpListOverlay"
+    },
     "0x80034d1c": {
       "name": "SetResourceLoadingFlag"
     },
+    "0x80034d24": {
+      "name": "clRom_PurgeAll"
+    },
+    "0x80034dfc": {
+      "name": "clRom_Release"
+    },
     "0x80034ec0": {
       "name": "FileLoader_Open"
+    },
+    "0x800350a8": {
+      "name": "Object_ReleaseAnimResource_Impl"
     },
     "0x80035114": {
       "name": "Collision_RegisterSpecialFaces"
@@ -141,11 +498,188 @@
     "0x80036710": {
       "name": "Terrain_WallEdgeTest"
     },
+    "0x80036988": {
+      "name": "ObjectDtor_Trivial_988"
+    },
+    "0x800369c4": {
+      "name": "QuadFrame_FromPackedCorners"
+    },
+    "0x800369f8": {
+      "name": "QuadFrame_FromCornerPtrs"
+    },
+    "0x80036e40": {
+      "name": "StrPcb_Dtor"
+    },
+    "0x80036e7c": {
+      "name": "StrPcb_StateTick"
+    },
+    "0x80036ffc": {
+      "name": "StrPcb_ParseResponse"
+    },
+    "0x800372f4": {
+      "name": "StrPcb_InputTick"
+    },
+    "0x800374f8": {
+      "name": "StrPcb_OutputTick"
+    },
+    "0x80037874": {
+      "name": "StrPcb_TimerTick"
+    },
+    "0x80037ab0": {
+      "name": "StrPcb_BeginTimedNeutral"
+    },
+    "0x80037b68": {
+      "name": "StrPcb_HasError"
+    },
+    "0x80037b9c": {
+      "name": "StrPcb_GetCommErrorFlag"
+    },
+    "0x80037ba4": {
+      "name": "StrPcb_GetErrorCodeString"
+    },
+    "0x80037bd0": {
+      "name": "StrPcb_ResetCommands_Zero"
+    },
+    "0x80037c44": {
+      "name": "StrPcb_ResetCommands_Neutral"
+    },
+    "0x80037cc0": {
+      "name": "StrPcb_WaitForState1"
+    },
+    "0x80037e08": {
+      "name": "StrPcb_RunAndWaitIdle"
+    },
+    "0x80037f64": {
+      "name": "StrPcb_ResetCommands_NeutralDefault"
+    },
+    "0x80037fb4": {
+      "name": "StrPcb_ForceRun_Neutral"
+    },
+    "0x80038050": {
+      "name": "StrPcb_ClearStatusBits"
+    },
+    "0x80038060": {
+      "name": "StrPcb_SetStatusBits"
+    },
+    "0x800380c8": {
+      "name": "StrPcb_SetTimer3c40"
+    },
+    "0x800380f0": {
+      "name": "StrPcb_SetTimer3034_38"
+    },
+    "0x8003811c": {
+      "name": "StrPcb_SetCmdByte2f"
+    },
+    "0x8003812c": {
+      "name": "StrPcb_SetCmdByte2e"
+    },
+    "0x8003813c": {
+      "name": "StrPcb_SetCmdByte2d"
+    },
+    "0x8003814c": {
+      "name": "StrPcb_SetCounterField14"
+    },
+    "0x8003815c": {
+      "name": "StrPcb_GetReceivedPosData"
+    },
+    "0x80038164": {
+      "name": "StrPcb_SetPositionTarget"
+    },
+    "0x80038178": {
+      "name": "StrPcb_IsInErrorState"
+    },
+    "0x8003818c": {
+      "name": "StrPcb_GetIntensityScale"
+    },
+    "0x80038194": {
+      "name": "StrPcb_SetIntensityMode"
+    },
+    "0x800381e4": {
+      "name": "StrPcb_BeginEffect"
+    },
+    "0x80038204": {
+      "name": "StrPcb_DrainInputBuffer"
+    },
+    "0x80038288": {
+      "name": "StrPcb_Init"
+    },
+    "0x80038574": {
+      "name": "StrPcb_GetInstance"
+    },
+    "0x8003857c": {
+      "name": "StrPcb_Shutdown"
+    },
+    "0x800386d0": {
+      "name": "StrPcb_EnsureInstance"
+    },
+    "0x8003871c": {
+      "name": "ObjectDtor_FreeField0_871c"
+    },
+    "0x80038778": {
+      "name": "Saturate_Double"
+    },
+    "0x80038798": {
+      "name": "Clamp_Int"
+    },
     "0x800387b8": {
       "name": "Clamp_Int"
     },
+    "0x800387d8": {
+      "name": "StrPcb_RegisterAtExitCleanup"
+    },
+    "0x80038824": {
+      "name": "ClStrPcb_Dtor"
+    },
+    "0x800388b4": {
+      "name": "ClStrPcb_Mid_Dtor"
+    },
+    "0x80038934": {
+      "name": "STLContainer_GlobalInit_854"
+    },
+    "0x80038980": {
+      "name": "STLContainer_HeaderInit"
+    },
+    "0x800389a0": {
+      "name": "STLContainer_Dtor"
+    },
+    "0x80038a00": {
+      "name": "STLContainer_DisposeRecursive"
+    },
+    "0x80038dc8": {
+      "name": "STLContainer_GetAllocatorSlot"
+    },
+    "0x80038dd0": {
+      "name": "Stub_NoOp_38dd0"
+    },
+    "0x80038dd4": {
+      "name": "ClStrPcb_Base_Dtor"
+    },
+    "0x80038e30": {
+      "name": "SharedPtr_Dtor"
+    },
+    "0x80038ea8": {
+      "name": "SharedPtr_Init"
+    },
+    "0x80038f54": {
+      "name": "Stub_NoOp_38f54"
+    },
+    "0x80038f58": {
+      "name": "Stub_NoOp_38f58"
+    },
+    "0x80038f5c": {
+      "name": "Allocator_Deallocate"
+    },
+    "0x80038f80": {
+      "name": "Stub_NoOp_38f80"
+    },
+    "0x80038f84": {
+      "name": "Mtx4x4_TransposeTo4x3"
+    },
     "0x80039020": {
       "name": "InputMgr_GetPlayer"
+    },
+    "0x8003903c": {
+      "name": "InputObj_TickAndDispatch"
     },
     "0x8003907c": {
       "name": "GetInputManager"
@@ -180,8 +714,35 @@
     "0x800391b4": {
       "name": "InputObj_ReadRawInput"
     },
+    "0x8003951c": {
+      "name": "JvsInput_SetBrakeCalibration"
+    },
+    "0x8003955c": {
+      "name": "JvsInput_SetAccelCalibration"
+    },
+    "0x8003959c": {
+      "name": "JvsInput_SetSteeringCalibration"
+    },
     "0x800395ec": {
       "name": "InputObj_Ctor"
+    },
+    "0x8003964c": {
+      "name": "InputObj_Ctor_Internal"
+    },
+    "0x800396c0": {
+      "name": "JvsInput_TickPoll"
+    },
+    "0x800396e0": {
+      "name": "InputMgr_TeardownStub"
+    },
+    "0x800396e4": {
+      "name": "JvsInput_ResetCalibration"
+    },
+    "0x80039780": {
+      "name": "JvsInput_PollAndUpdate"
+    },
+    "0x80039a34": {
+      "name": "JvsInput_ClearBuffers"
     },
     "0x80039aac": {
       "name": "InputObj_GetDefaultFloat"
@@ -189,23 +750,125 @@
     "0x80039abc": {
       "name": "InputObj_Update_Stub"
     },
+    "0x80039ac4": {
+      "name": "JvsInput_DtorAndFree"
+    },
+    "0x80039b0c": {
+      "name": "JvsInput_SetVtable"
+    },
+    "0x80039b1c": {
+      "name": "MetricsTable_ResetAll"
+    },
+    "0x80039be8": {
+      "name": "MetricsTable_Get"
+    },
+    "0x80039c40": {
+      "name": "MetricsTable_DisplayOverlay"
+    },
+    "0x80039cf4": {
+      "name": "MetricsTable_Accumulate"
+    },
+    "0x80039d38": {
+      "name": "MetricsTable_Init"
+    },
+    "0x80039d90": {
+      "name": "MetricsTable_Shutdown"
+    },
+    "0x80039dc8": {
+      "name": "MetricsTable_DefaultDtor"
+    },
+    "0x80039e10": {
+      "name": "VolumeCalibration_DrawOverlay"
+    },
+    "0x80039edc": {
+      "name": "VolumeCalibration_Tick"
+    },
+    "0x8003a00c": {
+      "name": "VolumeCalibration_Dtor"
+    },
+    "0x8003a0c4": {
+      "name": "VolumeCalibration_Ctor"
+    },
+    "0x8003a154": {
+      "name": "MJObj_SetColorRGBA_Float"
+    },
     "0x8003a22c": {
       "name": "clModelM_Construct"
+    },
+    "0x8003a30c": {
+      "name": "MObj1_ClassInit"
+    },
+    "0x8003a368": {
+      "name": "MObj1_TEVStateInit"
+    },
+    "0x8003a49c": {
+      "name": "MObj_ClassInit"
+    },
+    "0x8003a4f8": {
+      "name": "MObj_InitMember"
     },
     "0x8003a54c": {
       "name": "model_jobj_ClassInit"
     },
+    "0x8003a5a8": {
+      "name": "MJObj_InitMember_RGBA"
+    },
+    "0x8003a608": {
+      "name": "MJObj_SetColorRGBA"
+    },
+    "0x8003a71c": {
+      "name": "SceneRender_BaseDtor"
+    },
+    "0x8003a764": {
+      "name": "SceneRender_SetViewportRect"
+    },
+    "0x8003a780": {
+      "name": "SceneRender_DrawObjectWithLights"
+    },
+    "0x8003a9e8": {
+      "name": "SceneRender_CmdA_8a9e8"
+    },
+    "0x8003aa20": {
+      "name": "SceneRender_CmdB_8aa20"
+    },
+    "0x8003aa58": {
+      "name": "SceneRender_Dtor"
+    },
     "0x8003aacc": {
       "name": "Camera_Create"
+    },
+    "0x8003ac84": {
+      "name": "ClRomTable_PurgeAll"
     },
     "0x8003ad4c": {
       "name": "SoundChannels_ClearAll"
     },
+    "0x8003adfc": {
+      "name": "MemoryManager_AllocTagged"
+    },
+    "0x8003aee8": {
+      "name": "MemoryManager_Free"
+    },
     "0x8003afb8": {
       "name": "MemoryManager_TimedFree"
     },
+    "0x8003b120": {
+      "name": "MemoryManager_Alloc"
+    },
     "0x8003b1fc": {
       "name": "Alloc"
+    },
+    "0x8003b2d8": {
+      "name": "SceneFlow_DefaultGetZero"
+    },
+    "0x8003b2e0": {
+      "name": "SceneFlow_SetCleanupTag"
+    },
+    "0x8003b2e8": {
+      "name": "SceneFlow_InitCleanupList"
+    },
+    "0x8003b30c": {
+      "name": "SceneFlow_SetFlag1048"
     },
     "0x8003b314": {
       "name": "Math_Segment2DIntersect"
@@ -225,14 +888,26 @@
     "0x8003b6c4": {
       "name": "PathManager_UpdateAll"
     },
+    "0x8003cdd8": {
+      "name": "Race_CompareKartProgress"
+    },
+    "0x8003cee4": {
+      "name": "Path_ResetCursorForKart"
+    },
     "0x8003cf44": {
       "name": "PathManager_RegisterCarObject"
+    },
+    "0x8003d158": {
+      "name": "PathParticipantArray_Dtor"
     },
     "0x8003d1f4": {
       "name": "PathManager_Init"
     },
     "0x8003d2fc": {
       "name": "LakituStart_SetCountdownHoldFrames"
+    },
+    "0x8003d304": {
+      "name": "Object_RenderJObjIfWithinRange"
     },
     "0x8003d360": {
       "name": "LakituStart_UpdateCountdown"
@@ -243,17 +918,62 @@
     "0x8003db40": {
       "name": "LakituStart_Init"
     },
+    "0x8003dcd4": {
+      "name": "JObj_IsForwardDotBelowThreshold"
+    },
+    "0x8003ddac": {
+      "name": "JObj_SetExpressionByIndex"
+    },
+    "0x8003df8c": {
+      "name": "KartHand_TickItemAnim"
+    },
+    "0x8003e41c": {
+      "name": "KartItem_BeginQueuedState"
+    },
     "0x8003e540": {
       "name": "ItemHandler_Star"
+    },
+    "0x8003e694": {
+      "name": "KartItem_TickEffectStage_a"
     },
     "0x8003e8bc": {
       "name": "ItemHandler_Shell"
     },
+    "0x8003eb20": {
+      "name": "KartItem_TickEffectStage_b"
+    },
+    "0x8003ed8c": {
+      "name": "KartItem_TickStunStateMachine"
+    },
+    "0x8003ef20": {
+      "name": "KartItem_TickTrailingFx"
+    },
     "0x8003f13c": {
       "name": "RenderObj_CleanupItem"
     },
+    "0x8003f2d8": {
+      "name": "KartItem_BroadcastParamToCarAndISE"
+    },
     "0x8003f364": {
       "name": "RenderObj_ToggleLapSegment"
+    },
+    "0x8003f394": {
+      "name": "KartItem_SetField358"
+    },
+    "0x8003f39c": {
+      "name": "KartItem_SetShortArray34a"
+    },
+    "0x8003f3e4": {
+      "name": "KartItem_SetByte2b8"
+    },
+    "0x8003f3ec": {
+      "name": "KartItem_GetCurrentISESlot"
+    },
+    "0x8003f410": {
+      "name": "KartItem_SetField2ac"
+    },
+    "0x8003f418": {
+      "name": "KartItem_GetOrAssignId"
     },
     "0x8003f498": {
       "name": "KartMovement_CalcFinishPosition"
@@ -267,14 +987,32 @@
     "0x8003f54c": {
       "name": "KartMovement_GetVelocityPtr"
     },
+    "0x8003f554": {
+      "name": "KartItem_SetVec3At338"
+    },
+    "0x8003f584": {
+      "name": "KartItem_IsAtStartSlot"
+    },
+    "0x8003f5c4": {
+      "name": "KartItem_TriggerStateAction"
+    },
     "0x8003f5e8": {
       "name": "KartMovement_CanReceiveItem"
+    },
+    "0x8003f660": {
+      "name": "KartItem_GetField1f0"
+    },
+    "0x8003f668": {
+      "name": "KartItem_CancelAndQueueDefault"
     },
     "0x8003f77c": {
       "name": "RenderObj_UseItem"
     },
     "0x8003ffd0": {
       "name": "KartMovement_EquipItem"
+    },
+    "0x800404c4": {
+      "name": "KartItem_CancelIfNotForced"
     },
     "0x80040600": {
       "name": "KartMovement_GetCurrentItemId"
@@ -285,6 +1023,18 @@
     "0x80040748": {
       "name": "KartMovement_ResetOnGoal"
     },
+    "0x80040890": {
+      "name": "KartItem_TryBeginState25"
+    },
+    "0x800408f8": {
+      "name": "KartItem_TryBeginState21Family_v1"
+    },
+    "0x80040a28": {
+      "name": "KartItem_TryBeginState21Family_v2"
+    },
+    "0x80040b48": {
+      "name": "KartItem_TryBeginState18Family"
+    },
     "0x80040c24": {
       "name": "KartReaction_Front"
     },
@@ -293,6 +1043,69 @@
     },
     "0x80040d1c": {
       "name": "KartReaction_Rear"
+    },
+    "0x80040d84": {
+      "name": "KartDriver_GetJointPosition"
+    },
+    "0x80040dfc": {
+      "name": "KartDriver_GetJointMatrix4x3"
+    },
+    "0x80040e9c": {
+      "name": "KartDriver_GetJointByIdx"
+    },
+    "0x80041748": {
+      "name": "KartDriver_GetKartRootMtx"
+    },
+    "0x8004178c": {
+      "name": "KartDriver_SetJointPosY_Slot3d"
+    },
+    "0x80041858": {
+      "name": "KartDriver_SetJointPosY_Slot3c"
+    },
+    "0x80041924": {
+      "name": "KartDriver_SetJointPosY_Slot3b"
+    },
+    "0x800419f0": {
+      "name": "KartDriver_SetJointPosY_Slot3a"
+    },
+    "0x80041abc": {
+      "name": "KartDriver_SetEulerY_4Joints_LastMirrored"
+    },
+    "0x80041d80": {
+      "name": "KartDriver_SetUniformScale_4Wheels"
+    },
+    "0x80041fe0": {
+      "name": "KartDriver_TriggerSlotC3Action"
+    },
+    "0x80042030": {
+      "name": "KartDriver_TickAction_79234"
+    },
+    "0x80042080": {
+      "name": "KartDriver_TickAction_79244"
+    },
+    "0x800420d0": {
+      "name": "KartDriver_TickAction_79260"
+    },
+    "0x80042120": {
+      "name": "KartDriver_TickAction_79268_AndSetSlot5aEulerZ"
+    },
+    "0x80042238": {
+      "name": "KartDriver_TickAction_78778"
+    },
+    "0x80042288": {
+      "name": "KartDriver_TickAction_78a3c"
+    },
+    "0x800422d8": {
+      "name": "KartDriver_TickAction_78d00"
+    },
+    "0x80042328": {
+      "name": "KartDriver_GetJObjRootIfReady"
+    },
+    "0x80042350": {
+      "name": "KartDriver_Render"
+    },
+    "0x80042610": {
+      "name": "KartDriver_RenderTimed"
     },
     "0x800426c8": {
       "name": "RenderObj_ItemStateMachine"
@@ -303,11 +1116,59 @@
     "0x80044578": {
       "name": "KartDriver_Init"
     },
+    "0x80044d50": {
+      "name": "KartDriver_InitFull"
+    },
+    "0x80045950": {
+      "name": "KartDriver_Dtor"
+    },
+    "0x80045b50": {
+      "name": "KartDriver_Construct"
+    },
+    "0x80045e20": {
+      "name": "KartDriver_New_Full"
+    },
+    "0x80045e88": {
+      "name": "KartDriver_New_Empty"
+    },
+    "0x80045eb8": {
+      "name": "GetItemDataEntry_Bounded"
+    },
+    "0x80045ff8": {
+      "name": "ItemUseStats_GetItemIdIfFlag15"
+    },
+    "0x80046014": {
+      "name": "ItemUseStats_GetItemIdIfFlag14"
+    },
+    "0x80046030": {
+      "name": "ItemUseStats_GetCountBanana"
+    },
+    "0x80046038": {
+      "name": "ItemUseStats_GetCountCat7_9"
+    },
+    "0x80046040": {
+      "name": "ItemUseStats_GetCountShell"
+    },
+    "0x80046048": {
+      "name": "ItemUseStats_GetCountCat5_6_8"
+    },
+    "0x80046050": {
+      "name": "ItemCategoryBudget_Decrement"
+    },
+    "0x80046144": {
+      "name": "ItemUseStats_RegisterUse"
+    },
     "0x800461f0": {
       "name": "Path_CountWaypointsAndSnapGround"
     },
     "0x800462d4": {
       "name": "PathManager_HasPathLoaded"
+    },
+    "0x800462e8": {
+      "name": "PathIndex_AdvanceCircular"
+    },
+    "0x8004632c": {
+      "name": "Path_GetCurrentIndex"
     },
     "0x80046334": {
       "name": "Path_GetTotalCount"
@@ -336,17 +1197,83 @@
     "0x800468f4": {
       "name": "PathCursor_InitFromPath"
     },
+    "0x80046960": {
+      "name": "ObjectChain_RenderInZRange"
+    },
+    "0x80046d84": {
+      "name": "Subsystem36c_DispatchPass4_Timed"
+    },
+    "0x80046e38": {
+      "name": "Subsystem36c_DispatchPass2_Timed"
+    },
+    "0x80046eec": {
+      "name": "CourseEnvironment_RenderObjects"
+    },
+    "0x80047118": {
+      "name": "CourseEnvironment_RenderObjects_Timed"
+    },
+    "0x800471b0": {
+      "name": "CourseEnvironment_UpdateAndCullZones"
+    },
+    "0x80047608": {
+      "name": "CourseEnvironment_UpdateAndCullZones_Timed"
+    },
+    "0x800476a0": {
+      "name": "CourseEnvironment_ResolveJointInSlot0"
+    },
     "0x800476d4": {
       "name": "CourseScene_Load"
+    },
+    "0x80048378": {
+      "name": "CourseEnvironment_ZeroInit"
+    },
+    "0x800484c0": {
+      "name": "CourseEnvironment_Dtor"
     },
     "0x80048754": {
       "name": "InputManager_Init"
     },
+    "0x80048798": {
+      "name": "JObj_EvalIfDirtyAndGetMtxPtr"
+    },
+    "0x80048820": {
+      "name": "JObj_EvalIfDirty"
+    },
+    "0x80048890": {
+      "name": "JObj_NeedsEval"
+    },
+    "0x800488f4": {
+      "name": "Class803f7494_Dtor"
+    },
+    "0x8004893c": {
+      "name": "TrampolineTo_801ba110"
+    },
+    "0x8004895c": {
+      "name": "AcError_LogIfError"
+    },
     "0x80048bec": {
       "name": "NamCam_LoadImage"
     },
+    "0x80048c34": {
+      "name": "Asset_LoadAndDecompressByType"
+    },
     "0x80048e0c": {
       "name": "NamCam_GetImageHandle"
+    },
+    "0x80049628": {
+      "name": "NamCam_TickShutdownCountdown"
+    },
+    "0x80049718": {
+      "name": "NamCam_End"
+    },
+    "0x80049860": {
+      "name": "NamCam_Init"
+    },
+    "0x80049940": {
+      "name": "ItemSpawner_TimedRemapAndSpawn"
+    },
+    "0x80049a90": {
+      "name": "ISESlot_TickIfActiveNotBattle6"
     },
     "0x80049afc": {
       "name": "ISESlot_StopEffect"
@@ -360,20 +1287,80 @@
     "0x80049b70": {
       "name": "ISESlot_FrameUpdate"
     },
+    "0x80049cc4": {
+      "name": "ISESlot_SetByte18c"
+    },
     "0x80049d0c": {
       "name": "ISESlot_Deactivate"
     },
     "0x80049d78": {
       "name": "ISESlot_Init"
     },
+    "0x80049e40": {
+      "name": "ISESlot_Dtor"
+    },
+    "0x80049ec4": {
+      "name": "ISESlot_Construct"
+    },
+    "0x80049edc": {
+      "name": "CoinJumpFlasher_Toggle"
+    },
+    "0x80049f34": {
+      "name": "CoinJumpFlasher_SetArmed"
+    },
     "0x80049f3c": {
       "name": "CarObject_ResetPhysics"
+    },
+    "0x80049f60": {
+      "name": "CoinEvent_PlayResultSE"
+    },
+    "0x80049fdc": {
+      "name": "CoinEvent_PlayAlternatingSE"
+    },
+    "0x8004a04c": {
+      "name": "CoinEvent_PlaySE_0x13"
+    },
+    "0x8004a074": {
+      "name": "DebugOverlay_KartPhysicsForLocalPlayer"
     },
     "0x8004a0a4": {
       "name": "ItemUse_Gateway"
     },
+    "0x8004a238": {
+      "name": "KartItem_OnKartHit"
+    },
+    "0x8004a8b8": {
+      "name": "KartItem_PlayHitSE_DifferentVictim"
+    },
+    "0x8004a918": {
+      "name": "KartItem_ApplyEffectToVictim"
+    },
     "0x8004ae28": {
       "name": "CarObject_HandleObstacleHit"
+    },
+    "0x8004b118": {
+      "name": "KartItem_PlaySE_0x09"
+    },
+    "0x8004b140": {
+      "name": "KartItem_ApplyImpactReflectAndDampVelocity"
+    },
+    "0x8004b394": {
+      "name": "KartItem_TryDropCoinsAndPlaySE"
+    },
+    "0x8004b430": {
+      "name": "KartItem_TryCancelIfDropAllowed"
+    },
+    "0x8004b49c": {
+      "name": "KartItem_ApplyImpactImpulseAndRumble"
+    },
+    "0x8004b9bc": {
+      "name": "KartItem_RenderPipelinedWithEffects"
+    },
+    "0x8004baac": {
+      "name": "KartItem_Tick"
+    },
+    "0x8004c320": {
+      "name": "KartItem_PerFrameStep"
     },
     "0x8004cf64": {
       "name": "CarObject_UpdateCoinSpeedBonus"
@@ -393,11 +1380,26 @@
     "0x8004e154": {
       "name": "CarObject_ApplyInput"
     },
+    "0x8004e2b0": {
+      "name": "KartItem_Dtor"
+    },
     "0x8004e618": {
       "name": "CarObject_Init"
     },
+    "0x8004edd4": {
+      "name": "KartItem_UpdateShadowBillboardAndViewport"
+    },
+    "0x8004efd8": {
+      "name": "KartItem_AdvanceAnim3c"
+    },
     "0x8004effc": {
       "name": "CarObject_CalcSpeedRatio"
+    },
+    "0x8004f040": {
+      "name": "KartItem_GetMaxSpeedWithBonus"
+    },
+    "0x8004f0f8": {
+      "name": "KartItem_GetCurrentSpeedWithBonus"
     },
     "0x8004f120": {
       "name": "CarObject_GetTransformMatrix"
@@ -405,11 +1407,41 @@
     "0x8004f12c": {
       "name": "CarObject_GetKartMovementPtr"
     },
+    "0x8004f134": {
+      "name": "KartItem_GetCarObjectSoundCh"
+    },
     "0x8004f13c": {
       "name": "CarObject_GetRenderObj"
     },
+    "0x8004f144": {
+      "name": "KartItem_GetByte_f4"
+    },
+    "0x8004f14c": {
+      "name": "KartItem_GetBoostArmedAndTimer"
+    },
     "0x8004f15c": {
       "name": "CarObject_IsAirborne"
+    },
+    "0x8004f168": {
+      "name": "KartItem_GetCarObjectState_2bc"
+    },
+    "0x8004f174": {
+      "name": "KartItem_ResetStrPcbToIdle"
+    },
+    "0x8004f1cc": {
+      "name": "KartItem_SetStrPcbIntensityFromSpeed"
+    },
+    "0x8004f238": {
+      "name": "KartItem_SetStrPcbCmd2fFromFloat"
+    },
+    "0x8004f290": {
+      "name": "KartItem_SetStrPcbCmd2eFromFloat"
+    },
+    "0x8004f2e8": {
+      "name": "KartItem_SetStrPcbCmd2dFromFloat"
+    },
+    "0x8004f340": {
+      "name": "KartItem_CancelActiveEffect"
     },
     "0x8004f450": {
       "name": "CarObject_ApplyDriftBoost"
@@ -420,11 +1452,47 @@
     "0x8004f500": {
       "name": "KartMovement_SetSpeedScale"
     },
+    "0x8004f50c": {
+      "name": "KartItem_GetCarVelocityVec3"
+    },
+    "0x8004f540": {
+      "name": "KartItem_SetCarVelocityVec3"
+    },
+    "0x8004f560": {
+      "name": "KartItem_StopCarObjectSE"
+    },
+    "0x8004f584": {
+      "name": "KartItem_TryArmBoostOnLanding"
+    },
+    "0x8004f628": {
+      "name": "KartItem_SetCarObjectField2d4Float"
+    },
+    "0x8004f634": {
+      "name": "KartItem_SetCarObjectField1c8Float"
+    },
     "0x8004f640": {
       "name": "CarObject_SetPosition"
     },
+    "0x8004f668": {
+      "name": "KartItem_ForwardToCarMovement_8019a4e0"
+    },
+    "0x8004f68c": {
+      "name": "KartItem_ForwardToCarMovement_8019a6a4"
+    },
+    "0x8004f6b0": {
+      "name": "KartItem_OnFallOffOrDeath"
+    },
     "0x8004f858": {
       "name": "CarObject_HandleItemEffect"
+    },
+    "0x80050010": {
+      "name": "ItemEffect_SelectAndDispatch_Wrap"
+    },
+    "0x80050030": {
+      "name": "ItemEffect_SelectAndDispatch"
+    },
+    "0x800501b0": {
+      "name": "ItemEffect_GenericHandler"
     },
     "0x800502f0": {
       "name": "ItemEffect_OnHit"
@@ -432,17 +1500,416 @@
     "0x80050410": {
       "name": "ItemEffect_Dispatch"
     },
+    "0x8005094c": {
+      "name": "KartItem_TickActiveEffectsTwoLane"
+    },
+    "0x80050cf0": {
+      "name": "KartItem_TickStatusEffectsByFlag"
+    },
+    "0x80051100": {
+      "name": "ItemEffectDesc_OnApply_BoostLandingSE"
+    },
+    "0x80051184": {
+      "name": "ItemEffectDesc_OnApply_FreezeKartOrSlowdown"
+    },
+    "0x8005125c": {
+      "name": "ItemEffectDesc_OnApply_MushroomBoost"
+    },
+    "0x800512e4": {
+      "name": "ItemEffect_TryStartByCategory_Wrap"
+    },
+    "0x80051304": {
+      "name": "ItemEffect_TryStartByCategory"
+    },
+    "0x80051648": {
+      "name": "ItemEffect_StartCategoryC"
+    },
+    "0x80051834": {
+      "name": "ItemEffect_StartCategoryB"
+    },
+    "0x80051a70": {
+      "name": "ItemEffect_StartCategoryA"
+    },
+    "0x80051cb8": {
+      "name": "ItemTable_FindEntryByIdStride16"
+    },
+    "0x80051cf0": {
+      "name": "ItemTable_FindEntryByIdStride12_v1"
+    },
+    "0x80051d28": {
+      "name": "ItemTable_FindEntryByIdStride12_v2"
+    },
+    "0x80051d60": {
+      "name": "ItemTable_FindEntryByIdStride24"
+    },
+    "0x80051d98": {
+      "name": "ItemTable_FindEntryByIdStride20"
+    },
+    "0x80051dd0": {
+      "name": "CarObject_GetField304Vec3"
+    },
+    "0x80051dec": {
+      "name": "CarObjectManager_RunKartKartCollisionSweep"
+    },
+    "0x80052158": {
+      "name": "CarObjectManager_Dtor"
+    },
+    "0x80052200": {
+      "name": "Bitset_Dtor"
+    },
+    "0x8005225c": {
+      "name": "Bitset_TestBit"
+    },
+    "0x80052288": {
+      "name": "Bitset_SetBit"
+    },
+    "0x800522d0": {
+      "name": "Bitset_Init"
+    },
+    "0x80052494": {
+      "name": "Bitset_MaxSize"
+    },
+    "0x800524a4": {
+      "name": "KartItem_TryDropCoinsAndPlaySE_AdjThunk"
+    },
+    "0x800524bc": {
+      "name": "KartItem_PlayHitSE_DifferentVictim_AdjThunk"
+    },
+    "0x800524c4": {
+      "name": "KartItem_ApplyEffectToVictim_AdjThunk"
+    },
+    "0x800524cc": {
+      "name": "NoOpDtor_FreeIfRequested"
+    },
+    "0x80052508": {
+      "name": "StlList_RemoveByValueField"
+    },
+    "0x800525d4": {
+      "name": "StlList_EraseRange"
+    },
+    "0x80052684": {
+      "name": "StlList_InsertBefore"
+    },
+    "0x8005272c": {
+      "name": "StlList_InitEmpty"
+    },
+    "0x80052744": {
+      "name": "CarObjectManagerBase_Dtor"
+    },
+    "0x8005278c": {
+      "name": "Free_IfOwnedShort_Wrapper"
+    },
+    "0x80052808": {
+      "name": "Wrapper_FreeOwnedHandleAndSelf"
+    },
+    "0x8005285c": {
+      "name": "Wrapper_FreeOwnedHandleAndSelf_dup1"
+    },
+    "0x800528b0": {
+      "name": "TwoSubDtor_Pending_Wrapper"
+    },
+    "0x8005292c": {
+      "name": "EffectSteering_Dtor_Wrapper"
+    },
+    "0x800529a8": {
+      "name": "Wrapper_DtorWithNestedSubObject"
+    },
+    "0x80052a58": {
+      "name": "KartEffectFadeTransit_Dtor_Wrapper"
+    },
+    "0x80052ad4": {
+      "name": "PlayCamera_Dtor_Wrapper"
+    },
+    "0x80052b50": {
+      "name": "VisualEffectHolder_Dtor_Wrapper"
+    },
+    "0x80052bcc": {
+      "name": "InputCmd_Dtor_Wrapper"
+    },
+    "0x80052c48": {
+      "name": "Wrapper_DestroyKartDriver"
+    },
+    "0x80052cc4": {
+      "name": "CarObject_Dtor_Wrapper"
+    },
+    "0x80052d40": {
+      "name": "AudioChannel_DtorWithSeStop_Wrapper"
+    },
+    "0x80052dbc": {
+      "name": "KartMovement_UpdateBoostVisualBlend"
+    },
+    "0x80052f20": {
+      "name": "ItemStateGuard_PruneIfDeadAndReport"
+    },
+    "0x80052f9c": {
+      "name": "ItemStateGuard_IsActive"
+    },
+    "0x80052fb0": {
+      "name": "ItemState_TryArmWithDataCopy"
+    },
+    "0x80053168": {
+      "name": "ItemState_InitKeyframeBufferAndArm"
+    },
+    "0x80053290": {
+      "name": "ItemStateSlotC_TryArm"
+    },
+    "0x800532d4": {
+      "name": "ItemStateSlotC_Init"
+    },
+    "0x8005399c": {
+      "name": "ItemEffectJump_Init"
+    },
+    "0x80053ae0": {
+      "name": "ItemEffectQuake_TryArm"
+    },
+    "0x80053c70": {
+      "name": "ItemEffectQuake_Init"
+    },
+    "0x80053d80": {
+      "name": "ItemEffectDamp_TryArm"
+    },
+    "0x80053e68": {
+      "name": "ItemEffectDamp_Init"
+    },
+    "0x80053e8c": {
+      "name": "ItemEffectImpact_TryArm"
+    },
+    "0x80053ed0": {
+      "name": "ItemEffectImpact_TryArmInit"
+    },
+    "0x8005453c": {
+      "name": "ItemEffectImpact_Init"
+    },
+    "0x80054660": {
+      "name": "KartItemSubObject_Dtor"
+    },
+    "0x800547d8": {
+      "name": "ItemEffectImpact_Dtor"
+    },
+    "0x80054834": {
+      "name": "ItemEffectQuake_Dtor"
+    },
+    "0x80054890": {
+      "name": "ItemEffectJump_Dtor"
+    },
+    "0x800548ec": {
+      "name": "ItemEffectDamp_Dtor"
+    },
+    "0x80054948": {
+      "name": "ItemEffectSpin_Dtor"
+    },
+    "0x800549a4": {
+      "name": "KartItemSubObject_Ctor"
+    },
+    "0x80054b2c": {
+      "name": "KartItemSubObject_SetVtableMaybeFree"
+    },
+    "0x80054b74": {
+      "name": "ItemEffectSpin_Tick"
+    },
+    "0x80054c00": {
+      "name": "ItemEffectSpin_TickWorker"
+    },
+    "0x800550d0": {
+      "name": "ItemEffectDamp_Tick"
+    },
+    "0x80055148": {
+      "name": "ItemEffectJump_Tick"
+    },
+    "0x80055558": {
+      "name": "ItemEffectQuake_Tick"
+    },
+    "0x80055640": {
+      "name": "ItemEffectQuake_TickWorker"
+    },
+    "0x80055c08": {
+      "name": "ItemEffectImpact_Tick"
+    },
+    "0x80055f10": {
+      "name": "OrphanDtorWrapper_dup1"
+    },
+    "0x80055fa0": {
+      "name": "OrphanDtorWrapper_dup2"
+    },
+    "0x80056030": {
+      "name": "OrphanDtorWrapper_dup3"
+    },
+    "0x800560c0": {
+      "name": "OrphanDtorWrapper_dup4"
+    },
+    "0x80056150": {
+      "name": "KartEffectFadeTransit_Tick"
+    },
+    "0x8005623c": {
+      "name": "KartItem_Stub_Returns0"
+    },
     "0x80056244": {
       "name": "SpeedBoost_Apply"
+    },
+    "0x80056308": {
+      "name": "KartEffectFadeTransit_GetActiveValue"
+    },
+    "0x80056310": {
+      "name": "KartEffectFadeTransit_IsActive"
+    },
+    "0x80056324": {
+      "name": "KartEffectFadeTransit_Dtor"
+    },
+    "0x80056360": {
+      "name": "KartEffectFadeTransit_Init"
+    },
+    "0x80056388": {
+      "name": "KartItem_FlushPendingRender"
+    },
+    "0x80056424": {
+      "name": "KartItem_FlushRenderIfReady"
+    },
+    "0x80056464": {
+      "name": "KartItem_FlushPendingRender_v2"
+    },
+    "0x800564e4": {
+      "name": "KartItem_DispatchEffectRenderByState"
+    },
+    "0x800566d4": {
+      "name": "KartItem_RenderCb_Mode7_Pre"
+    },
+    "0x800566f8": {
+      "name": "KartItem_RenderCb_Mode7_Post"
+    },
+    "0x80056794": {
+      "name": "KartItem_RenderCb_DefaultCycle_Pre"
+    },
+    "0x800567b8": {
+      "name": "KartItem_RenderCb_DefaultCycle_Post"
+    },
+    "0x80056838": {
+      "name": "KartItem_RenderCb_Mode3_Pre"
+    },
+    "0x8005685c": {
+      "name": "KartItem_RenderCb_Mode3_Post"
+    },
+    "0x800568dc": {
+      "name": "KartItem_RenderCb_Mode5_Pre"
+    },
+    "0x80056900": {
+      "name": "KartItem_RenderCb_Mode5_Post"
+    },
+    "0x80056980": {
+      "name": "KartItem_RenderCb_Mode6_Pre"
+    },
+    "0x800569a4": {
+      "name": "KartItem_RenderCb_Mode6_Post"
+    },
+    "0x80056a24": {
+      "name": "KartItem_RenderCb_Mode2or4_Pre"
+    },
+    "0x80056a48": {
+      "name": "KartItem_RenderCb_Mode2or4_Post"
+    },
+    "0x80056ac8": {
+      "name": "KartItem_RenderCb_Mode1_Pre"
+    },
+    "0x80056b20": {
+      "name": "KartItem_RenderCb_Mode1_Post"
+    },
+    "0x80056c4c": {
+      "name": "VisualEffectHolder_Dtor"
+    },
+    "0x80056cb0": {
+      "name": "TornadoEffect_InitDetails"
+    },
+    "0x80056ec0": {
+      "name": "TornadoEffect_Ctor"
+    },
+    "0x80056f1c": {
+      "name": "TornadoEffect_RenderCallback"
+    },
+    "0x80056f40": {
+      "name": "TornadoEffect_SubmitRender"
+    },
+    "0x80056fc0": {
+      "name": "TornadoEffect_Tick"
+    },
+    "0x800576d8": {
+      "name": "TornadoEffect_TriggerFlagD2WithTimer"
     },
     "0x8005771c": {
       "name": "KartBody_SetWarpTransitFlag"
     },
+    "0x80057738": {
+      "name": "TornadoEffect_SetColorPairC8CC"
+    },
+    "0x8005778c": {
+      "name": "TornadoEffect_ClearFlagC0AndSetC4"
+    },
+    "0x800577a8": {
+      "name": "TornadoEffect_SetField11c"
+    },
+    "0x800577b0": {
+      "name": "TornadoEffect_SetFlagB4"
+    },
+    "0x800577c8": {
+      "name": "TornadoEffect_SetFlagC0"
+    },
+    "0x800577fc": {
+      "name": "TornadoEffect_SetScalePairB0BC"
+    },
     "0x8005785c": {
       "name": "TireEffect_ResetSpin"
     },
+    "0x800578c4": {
+      "name": "TornadoEffect_SetMatrixRow0_5c"
+    },
+    "0x800578d4": {
+      "name": "TornadoEffect_SetFieldAc"
+    },
+    "0x800578dc": {
+      "name": "TornadoEffect_SetMatrix1c"
+    },
     "0x80057960": {
-      "name": "KartMovement_SetPosition"
+      "name": "fn_80057960"
+    },
+    "0x800579d8": {
+      "name": "TornadoEffect_SetColorY"
+    },
+    "0x80057a00": {
+      "name": "TornadoEffect_GetField114"
+    },
+    "0x80057a08": {
+      "name": "TornadoEffect_SetField114"
+    },
+    "0x80057a18": {
+      "name": "TornadoEffect_TriggerWheelScaleAnim"
+    },
+    "0x80057a4c": {
+      "name": "TornadoEffect_SetColorRGBLerp"
+    },
+    "0x80057a8c": {
+      "name": "TornadoEffect_ComposeRenderMatrix"
+    },
+    "0x80058510": {
+      "name": "TornadoEffect_SetField128AndMaybeClear134"
+    },
+    "0x80058534": {
+      "name": "TornadoEffect_ApplyItemVisual_Primary"
+    },
+    "0x80058994": {
+      "name": "TornadoEffect_ApplyItemVisual_Secondary"
+    },
+    "0x80058c80": {
+      "name": "TornadoEffect_ApplyItemVisual_Compact"
+    },
+    "0x80058ddc": {
+      "name": "TornadoEffect_TriggerField140"
+    },
+    "0x80058de8": {
+      "name": "AudioChannel_DtorWithSeStop"
+    },
+    "0x80058ea4": {
+      "name": "KartAudioChannel_Init"
+    },
+    "0x80058ef4": {
+      "name": "KartAudioChannel_ResetSEsAndSetFlag"
     },
     "0x80058f5c": {
       "name": "SoundVolumePan_Update"
@@ -453,14 +1920,353 @@
     "0x8005957c": {
       "name": "SoundCtrl_SetVolume"
     },
+    "0x800595b4": {
+      "name": "KartAudioChannel_Set24WithSeStop"
+    },
+    "0x80059644": {
+      "name": "KartAudioChannel_SetIntensity"
+    },
+    "0x8005967c": {
+      "name": "KartAudioChannel_PlayColorMatchSE"
+    },
+    "0x8005982c": {
+      "name": "KartItemAudio_PlaySEByItemId"
+    },
     "0x80059e70": {
       "name": "SoundObj_PlaySE"
+    },
+    "0x80059f70": {
+      "name": "KartAudioChannel_StopSE8a"
+    },
+    "0x80059fd4": {
+      "name": "KartAudioChannel_PlayJumpSE"
+    },
+    "0x8005a0bc": {
+      "name": "IsAudioMutedItem"
+    },
+    "0x8005a140": {
+      "name": "KartItemAudio_StopSEByItemId"
+    },
+    "0x8005a314": {
+      "name": "KartItemAudio_PlayHitConfirmSE"
+    },
+    "0x8005a638": {
+      "name": "KartItemAudio_PlayThrowConfirmSE"
+    },
+    "0x8005aa04": {
+      "name": "InputCmd_DetectGesturePattern"
+    },
+    "0x8005ae74": {
+      "name": "InputCmd_TickAndDetectAndClear"
+    },
+    "0x8005af4c": {
+      "name": "InputCmd_PushSample"
+    },
+    "0x8005afe0": {
+      "name": "InputCmd_Dtor"
+    },
+    "0x8005b040": {
+      "name": "InputCmd_Init"
+    },
+    "0x8005b0ec": {
+      "name": "InputCmd_SetCooldown"
+    },
+    "0x8005b0f4": {
+      "name": "InputCmd_GetDetectedFlag"
+    },
+    "0x8005b0fc": {
+      "name": "InputCmd_GetGlobalConfig"
+    },
+    "0x8005b104": {
+      "name": "InputCmd_SetGlobalConfig"
+    },
+    "0x8005b118": {
+      "name": "EffectState_ReleaseAndClear"
+    },
+    "0x8005b168": {
+      "name": "EffectState_HasContent"
+    },
+    "0x8005b17c": {
+      "name": "EffectSpeed_TickAndGet"
+    },
+    "0x8005b288": {
+      "name": "EffectSteering_InitForDelay"
+    },
+    "0x8005b43c": {
+      "name": "ActionDelay_Reset"
+    },
+    "0x8005b490": {
+      "name": "EffectSteering_InitForScale"
+    },
+    "0x8005b628": {
+      "name": "EffectSteering_InitForShake"
+    },
+    "0x8005b880": {
+      "name": "ActionShake_Reset"
+    },
+    "0x8005b8cc": {
+      "name": "EffectSteering_InitForSplit"
+    },
+    "0x8005bab0": {
+      "name": "ActionSplit_Reset"
+    },
+    "0x8005bb00": {
+      "name": "EffectSteering_InputViscosity_SetFieldC"
+    },
+    "0x8005bb0c": {
+      "name": "EffectSteering_InitForViscosity"
+    },
+    "0x8005bd04": {
+      "name": "EffectSteering_InitForViscosity_Uniform"
+    },
+    "0x8005bec4": {
+      "name": "EffectSteering_InitForVibrate_Sub"
+    },
+    "0x8005c0c4": {
+      "name": "ActionVibrate_Reset"
+    },
+    "0x8005c0fc": {
+      "name": "EffectSteering_InitForVibrate"
+    },
+    "0x8005c338": {
+      "name": "EffectSteering_InitForLock"
+    },
+    "0x8005c4e4": {
+      "name": "ActionLock_Reset"
+    },
+    "0x8005c51c": {
+      "name": "EffectSteering_Dtor"
+    },
+    "0x8005c75c": {
+      "name": "ActionLock_Dtor"
+    },
+    "0x8005c7b8": {
+      "name": "ActionVibrate_Dtor"
+    },
+    "0x8005c814": {
+      "name": "ActionViscosity_Dtor"
+    },
+    "0x8005c870": {
+      "name": "ActionSplit_Dtor"
+    },
+    "0x8005c8cc": {
+      "name": "ActionShake_Dtor"
+    },
+    "0x8005c928": {
+      "name": "ActionInputViscosity_Dtor"
+    },
+    "0x8005c984": {
+      "name": "ActionScale_Dtor"
+    },
+    "0x8005c9e0": {
+      "name": "ActionDelay_Dtor"
+    },
+    "0x8005ca64": {
+      "name": "EffectSteering_Ctor"
+    },
+    "0x8005ccbc": {
+      "name": "Action_BaseDtor"
+    },
+    "0x8005cd04": {
+      "name": "ActionDelay_Step"
+    },
+    "0x8005ce1c": {
+      "name": "ActionScale_Reset"
+    },
+    "0x8005ce54": {
+      "name": "ActionScale_Step"
+    },
+    "0x8005ce70": {
+      "name": "ActionInputViscosity_Reset"
+    },
+    "0x8005cea8": {
+      "name": "ActionInputViscosity_Step"
+    },
+    "0x8005cf6c": {
+      "name": "ActionShake_Step"
+    },
+    "0x8005d0dc": {
+      "name": "ActionSplit_Step"
+    },
+    "0x8005d2b8": {
+      "name": "ActionViscosity_Reset"
+    },
+    "0x8005d2f0": {
+      "name": "ActionViscosity_Step"
+    },
+    "0x8005d3d4": {
+      "name": "ActionVibrate_Step"
+    },
+    "0x8005d504": {
+      "name": "ActionLock_Step"
+    },
+    "0x8005d564": {
+      "name": "OrphanDtorWrapper_8005d564"
+    },
+    "0x8005d5f4": {
+      "name": "OrphanDtorWrapper_8005d5f4"
+    },
+    "0x8005d684": {
+      "name": "OrphanDtorWrapper_8005d684"
+    },
+    "0x8005d714": {
+      "name": "OrphanDtorWrapper_8005d714"
+    },
+    "0x8005d7a4": {
+      "name": "OrphanDtorWrapper_8005d7a4"
+    },
+    "0x8005d834": {
+      "name": "OrphanDtorWrapper_8005d834"
+    },
+    "0x8005d8c4": {
+      "name": "OrphanDtorWrapper_8005d8c4"
+    },
+    "0x8005d954": {
+      "name": "clItemBoxResponder_DebrisArray_Dtor"
+    },
+    "0x8005d9d4": {
+      "name": "clItemBoxResponder_DebrisParticle_Dtor"
+    },
+    "0x8005da18": {
+      "name": "clItemBoxResponder_Rebind"
+    },
+    "0x8005db3c": {
+      "name": "clItemBoxResponder_DrawDebris"
+    },
+    "0x8005dba0": {
+      "name": "clItemBoxResponder_DrawDebrisParticle"
+    },
+    "0x8005e330": {
+      "name": "clItemBoxResponder_TickDebris"
+    },
+    "0x8005e46c": {
+      "name": "clItemBoxResponder_SpawnDebris"
+    },
+    "0x8005e924": {
+      "name": "clItemBox_StepFn_Bobbing"
+    },
+    "0x8005e9d0": {
+      "name": "clItemBox_StepFn_PopOut"
+    },
+    "0x8005ea74": {
+      "name": "clItemBox_ResetTimer"
+    },
+    "0x8005ea80": {
+      "name": "clItemBox_IsPickedUp"
+    },
+    "0x8005ea94": {
+      "name": "clItemBox_TransitionToDebris"
+    },
+    "0x8005ed18": {
+      "name": "clItemBox_Draw"
+    },
+    "0x8005ee24": {
+      "name": "clItemBox_Tick"
+    },
+    "0x8005eeb0": {
+      "name": "clItemBox_Dtor"
+    },
+    "0x8005ef38": {
+      "name": "clItemBox_Ctor_XYZ"
+    },
+    "0x8005f050": {
+      "name": "clItemBox_Ctor_GroundSnap"
+    },
+    "0x8005f194": {
+      "name": "clItemBoxManager_UnbindCurrent"
+    },
+    "0x8005f214": {
+      "name": "clItemBoxManager_Bind"
+    },
+    "0x8005f318": {
+      "name": "clItemBoxManager_TeardownAssets"
+    },
+    "0x8005f3a4": {
+      "name": "clItemBoxManager_LoadAssets"
+    },
+    "0x8005f53c": {
+      "name": "clItemBoxManager_InitStateTable"
     },
     "0x8005f5cc": {
       "name": "IsSpawnTableTerminator"
     },
+    "0x8005f5d8": {
+      "name": "clItemBox_FactoryCreate"
+    },
+    "0x8005f65c": {
+      "name": "clItemBoxManager_Dtor"
+    },
+    "0x8005f778": {
+      "name": "DoublyLinkedList_ClearAndFree_a"
+    },
+    "0x8005f7f0": {
+      "name": "DoublyLinkedList_ClearAndFree_b"
+    },
+    "0x8005f868": {
+      "name": "clItemBoxManager_UnregisterResponder"
+    },
+    "0x8005f8a8": {
+      "name": "clItemBoxManager_RegisterResponder"
+    },
+    "0x8005f8e8": {
+      "name": "clItemBoxManager_Draw_Inner"
+    },
+    "0x8005f99c": {
+      "name": "clItemBoxManager_Draw"
+    },
+    "0x8005fa34": {
+      "name": "clItemBoxManager_Update_Inner"
+    },
+    "0x8005fbb0": {
+      "name": "clItemBoxManager_Update"
+    },
     "0x8005fc48": {
       "name": "SoundDriver_GetOrCreate"
+    },
+    "0x8005fd38": {
+      "name": "DoublyLinkedList_RemoveByKey"
+    },
+    "0x8005fe04": {
+      "name": "DoublyLinkedList_EraseRange"
+    },
+    "0x8005feb4": {
+      "name": "DoublyLinkedList_PushBefore"
+    },
+    "0x8005ff5c": {
+      "name": "DoublyLinkedList_Init"
+    },
+    "0x8005ff74": {
+      "name": "clItemBoxResponder_BaseSlot_Dtor"
+    },
+    "0x8005ffbc": {
+      "name": "clItemBoxResponder_CmdGetWorldPos"
+    },
+    "0x8005fff0": {
+      "name": "clItemBoxResponder_IsCmdSlotFree"
+    },
+    "0x80060004": {
+      "name": "clItemBoxResponder_CmdSlotCountdown"
+    },
+    "0x8006001c": {
+      "name": "clItemBoxResponder_GetBoundPosVec3"
+    },
+    "0x80060024": {
+      "name": "clItemBoxResponder_Dtor"
+    },
+    "0x800600b0": {
+      "name": "clItemBoxResponder_Ctor"
+    },
+    "0x8006012c": {
+      "name": "ItemSelect_OnDropAllCancel"
+    },
+    "0x800601c0": {
+      "name": "ItemSelect_GiveItemOrQueueDrop"
+    },
+    "0x800602d0": {
+      "name": "ItemSelect_StartRouletteSpin"
+    },
+    "0x800604bc": {
+      "name": "ItemSelect_DrawUIHelperIfActive"
     },
     "0x800604e8": {
       "name": "ItemBox_ProcessPickup"
@@ -480,8 +2286,77 @@
     "0x80060f2c": {
       "name": "ItemSelect_Init"
     },
+    "0x80061054": {
+      "name": "clMiyoshiCardCreate_Draw"
+    },
+    "0x80061394": {
+      "name": "clMiyoshiCardCreate_Tick"
+    },
+    "0x80061668": {
+      "name": "clMiyoshiCardCreate_Dtor"
+    },
+    "0x800616f8": {
+      "name": "clMiyoshiCardCreate_Ctor"
+    },
+    "0x8006178c": {
+      "name": "UnusedTimedFreeStub_8006178c"
+    },
+    "0x800617c8": {
+      "name": "UnusedTimedFreeStub_800617c8"
+    },
+    "0x80061804": {
+      "name": "FinalLapCoinJump_SetEnable"
+    },
+    "0x8006181c": {
+      "name": "ShadowBillboard_LerpMtx4x4"
+    },
+    "0x80061918": {
+      "name": "ShadowBillboard_SetField0xA4"
+    },
+    "0x80061920": {
+      "name": "ShadowBillboard_IsRenderReady"
+    },
+    "0x80061938": {
+      "name": "ShadowBillboard_SetVec3At0x70"
+    },
+    "0x80061954": {
+      "name": "ShadowBillboard_SetField0x6CAndComputeAxis"
+    },
+    "0x80061a88": {
+      "name": "ShadowBillboard_Tick"
+    },
+    "0x8006389c": {
+      "name": "ShadowBillboard_StepSimple"
+    },
+    "0x80063e50": {
+      "name": "ShadowBillboard_SetTargetSaturation"
+    },
+    "0x80063e58": {
+      "name": "ShadowBillboard_TriggerSpinFlash"
+    },
+    "0x80063ee0": {
+      "name": "ShadowBillboard_BeginFadeCleanup"
+    },
+    "0x80063f08": {
+      "name": "ShadowBillboard_BeginBoostScale"
+    },
     "0x80063f30": {
       "name": "Camera_RotateByYaw"
+    },
+    "0x800642b0": {
+      "name": "PlayCamera_Dtor"
+    },
+    "0x8006430c": {
+      "name": "PlayCamera_Init"
+    },
+    "0x80064920": {
+      "name": "Mtx34_Orthonormalize"
+    },
+    "0x80064cd4": {
+      "name": "OrphanFreeStub_Pending_80064cd4"
+    },
+    "0x80064d28": {
+      "name": "NoopRenderHook_Pending_80064d28"
     },
     "0x80064d2c": {
       "name": "CalcSoundDirection"
@@ -492,11 +2367,32 @@
     "0x80064ed0": {
       "name": "CourseBgm_Load"
     },
+    "0x80064f58": {
+      "name": "TwoSubDtor_Pending_80064f58"
+    },
+    "0x80065028": {
+      "name": "EffectSpeedAction_SpeedScale_Dtor"
+    },
+    "0x80065084": {
+      "name": "EffectSpeedAction_MueScale_Dtor"
+    },
     "0x800650e0": {
       "name": "EffectSpeed_Init"
     },
+    "0x8006520c": {
+      "name": "EffectSpeedAction_MueScale_Reset"
+    },
+    "0x8006524c": {
+      "name": "EffectSpeedAction_SpeedScale_Reset"
+    },
+    "0x8006528c": {
+      "name": "EffectSpeedAction_Base_Dtor"
+    },
     "0x800652d4": {
       "name": "MediaBoard_SendAndCheck"
+    },
+    "0x8006533c": {
+      "name": "EffectSpeed_TickTimer"
     },
     "0x80065458": {
       "name": "InterpolationStep"
@@ -510,11 +2406,44 @@
     "0x80065688": {
       "name": "ActionSpeedScale_Process"
     },
+    "0x800656b8": {
+      "name": "TransparentDraw_FreeHandle_A"
+    },
+    "0x80065748": {
+      "name": "TransparentDraw_FreeHandle_B"
+    },
+    "0x800657d8": {
+      "name": "Cosf_LUT_Wrap"
+    },
+    "0x8006584c": {
+      "name": "Sinf_LUT_Wrap"
+    },
     "0x800658b4": {
       "name": "LUT_Cosine"
     },
     "0x80065928": {
       "name": "LUT_Sine"
+    },
+    "0x80065990": {
+      "name": "TransparentDraw_InitEntry"
+    },
+    "0x80065b74": {
+      "name": "TransparentDraw_DestroyEntry"
+    },
+    "0x80065c5c": {
+      "name": "TransparentDraw_ResetEntry"
+    },
+    "0x80065c9c": {
+      "name": "TransparentDraw_SortAndDispatch"
+    },
+    "0x80065fd8": {
+      "name": "TransparentDraw_RemoveByOwner"
+    },
+    "0x8006609c": {
+      "name": "SceneDrawList_RegisterArchive"
+    },
+    "0x80066220": {
+      "name": "SceneDrawList_Reset"
     },
     "0x800662b4": {
       "name": "DMAChannelManager_Init"
@@ -525,17 +2454,74 @@
     "0x800668fc": {
       "name": "UI_PageDispatcher"
     },
+    "0x80066b74": {
+      "name": "BootInfo_Page"
+    },
+    "0x80066e10": {
+      "name": "BackupMemoryInitialize_Page"
+    },
     "0x80067494": {
       "name": "NetDiag_QualityPage"
     },
     "0x80067f74": {
       "name": "NetDiag_CounterPage"
     },
+    "0x8006830c": {
+      "name": "NetDiag_CounterDetailPage"
+    },
     "0x80068d00": {
       "name": "NetDiag_PacketPage"
     },
+    "0x80069720": {
+      "name": "NetDiag_PacketDetailPage"
+    },
+    "0x80069ab0": {
+      "name": "NetDiag_PacketRatioPage"
+    },
+    "0x8006a160": {
+      "name": "OperationTime_Page"
+    },
+    "0x8006a500": {
+      "name": "ClockSetting_Page"
+    },
+    "0x8006aa84": {
+      "name": "CabinetSetting_Page"
+    },
     "0x8006ad0c": {
       "name": "CardCreate_Page"
+    },
+    "0x8006b32c": {
+      "name": "CardRW_Renew_Page"
+    },
+    "0x8006bb04": {
+      "name": "CardRW_HardwareInit_Page"
+    },
+    "0x8006c0f4": {
+      "name": "CardRW_Reprint_Page"
+    },
+    "0x8006c810": {
+      "name": "CardRW_DataRepair_Page"
+    },
+    "0x8006d308": {
+      "name": "CardRW_DataMigrate_Page"
+    },
+    "0x8006db90": {
+      "name": "CardRW_CheckCard_Page"
+    },
+    "0x8006e308": {
+      "name": "CardRW_PrintTest_Page"
+    },
+    "0x8006e7d0": {
+      "name": "CardRW_DispenseTest_Page"
+    },
+    "0x8006ec24": {
+      "name": "CardRW_ReadWriteTest_Page"
+    },
+    "0x8006f200": {
+      "name": "CardRW_CleaningTest_Page"
+    },
+    "0x8006f608": {
+      "name": "CardRW_TestTopMenu_Page"
     },
     "0x8006fa1c": {
       "name": "SpeakerTest_Page"
@@ -545,6 +2531,9 @@
     },
     "0x8007044c": {
       "name": "CameraTest_Page"
+    },
+    "0x80070ea8": {
+      "name": "FlashFadeOverlay_Draw"
     },
     "0x800712d8": {
       "name": "LampTestIndiv_Page"
@@ -558,50 +2547,545 @@
     "0x80071e1c": {
       "name": "MonitorTest_Page"
     },
+    "0x80072074": {
+      "name": "GameSetting_Page_VariantA"
+    },
+    "0x8007270c": {
+      "name": "GameSetting_Page_VariantB"
+    },
     "0x8007307c": {
       "name": "GameSetting_Page"
     },
     "0x80073878": {
       "name": "GameTestTopMenu_Page"
     },
+    "0x80073b00": {
+      "name": "ServiceMenu_Draw"
+    },
+    "0x80073b38": {
+      "name": "ServiceMenu_Tick"
+    },
+    "0x80073bb0": {
+      "name": "ServiceMenu_Dtor"
+    },
     "0x80073c70": {
       "name": "ServiceMenu_Init"
+    },
+    "0x80073e20": {
+      "name": "SmallObj_Dtor_VtableA"
     },
     "0x80073e7c": {
       "name": "OpenFullServiceMenu"
     },
+    "0x80073ecc": {
+      "name": "PostRace_StartScoreEntryFlow"
+    },
+    "0x80073ef8": {
+      "name": "PostRace_StartScoreEntryFlow_WithCardSave"
+    },
+    "0x80073f24": {
+      "name": "SmallObj_Dtor_VtableB"
+    },
     "0x80073f6c": {
       "name": "PcbIdToIpAndModify"
+    },
+    "0x800740bc": {
+      "name": "PcbIdToIp_GetCached"
+    },
+    "0x8007413c": {
+      "name": "PcbIdToIpString"
+    },
+    "0x80074190": {
+      "name": "Backup_LoadFromMemoryOrInit"
+    },
+    "0x80074370": {
+      "name": "Backup_PublishShadowCopy"
+    },
+    "0x8007458c": {
+      "name": "Backup_GetMinutesSinceBoot"
     },
     "0x800746a8": {
       "name": "card_backup"
     },
+    "0x80074910": {
+      "name": "TaRecord_GetEntry_Indexed"
+    },
+    "0x800749d0": {
+      "name": "TaRecord_GetEntry_Current"
+    },
+    "0x80074aa0": {
+      "name": "TaRecord_GetTime_Indexed"
+    },
+    "0x80074b5c": {
+      "name": "TaRecord_GetTime_Current"
+    },
+    "0x80074c28": {
+      "name": "TaRecord_GetLastInsertedRank"
+    },
+    "0x80074c30": {
+      "name": "TaRecord_InsertResult"
+    },
+    "0x80074fa4": {
+      "name": "Backup_ClearBookkeeping"
+    },
+    "0x8007502c": {
+      "name": "Backup_ClearHiScores"
+    },
+    "0x800751f0": {
+      "name": "Backup_ClearAll"
+    },
+    "0x8007526c": {
+      "name": "OperationClock_Commit"
+    },
+    "0x800752cc": {
+      "name": "OperationClock_GetLifetimeSeconds"
+    },
+    "0x80075330": {
+      "name": "ServiceMode_UpdateScheduleGate"
+    },
+    "0x80075470": {
+      "name": "Backup_PublishShadowCopy_Inline"
+    },
     "0x80075690": {
       "name": "FrameUpdate"
+    },
+    "0x800758ec": {
+      "name": "Backup_Shutdown"
     },
     "0x8007593c": {
       "name": "GameBoot_Init"
     },
+    "0x80076370": {
+      "name": "LObjList_ApplyForCObj"
+    },
+    "0x800763e4": {
+      "name": "LObjList_Destroy"
+    },
     "0x80076494": {
       "name": "SceneModel_Init"
+    },
+    "0x8007660c": {
+      "name": "Sci2Card_AllocAndOpenSci2"
+    },
+    "0x80076870": {
+      "name": "Sci2Card_Init"
+    },
+    "0x80076910": {
+      "name": "Sci2Card_BuildPacket"
+    },
+    "0x80076a80": {
+      "name": "Sci2Card_Shutdown"
+    },
+    "0x80076b68": {
+      "name": "Sci2Card_Singleton_GetOrCreate"
+    },
+    "0x80076bb4": {
+      "name": "Sci2Card_Singleton_Get"
+    },
+    "0x80076bbc": {
+      "name": "Sci2Card_Tick"
+    },
+    "0x8007723c": {
+      "name": "Sci2Card_SendCmdPing"
+    },
+    "0x800772d0": {
+      "name": "Sci2Card_SendCmdPrint"
+    },
+    "0x800773f0": {
+      "name": "Sci2Card_SendCmdReset"
+    },
+    "0x80077484": {
+      "name": "Sci2Card_SendCmdLedSet"
+    },
+    "0x80077574": {
+      "name": "Sci2Card_SendCmdRegister"
     },
     "0x800776cc": {
       "name": "card_send_track_data"
     },
+    "0x80077810": {
+      "name": "Sci2Card_GetResponsePayload"
+    },
+    "0x80077840": {
+      "name": "Sci2Card_ForceFailState"
+    },
+    "0x800778c0": {
+      "name": "Sci2Card_SendCmdOptions"
+    },
+    "0x800779ac": {
+      "name": "Sci2Card_SendCmdCleaning"
+    },
     "0x80077a54": {
       "name": "card_eject"
+    },
+    "0x80077afc": {
+      "name": "Sci2Card_SendCmdSpace"
+    },
+    "0x80077ba4": {
+      "name": "Sci2Card_SendCmdRetry"
+    },
+    "0x80077c6c": {
+      "name": "Sci2Card_GetResponseStatus"
+    },
+    "0x80077c9c": {
+      "name": "Sci2Card_IsStatus3Zero"
+    },
+    "0x80077cb0": {
+      "name": "Sci2Card_IsStatus1Zero"
+    },
+    "0x80077cc4": {
+      "name": "Sci2Card_IsStatus1OneTwoThree"
+    },
+    "0x80077cf0": {
+      "name": "Sci2Card_IsStatus3Five"
+    },
+    "0x80077d04": {
+      "name": "Sci2Card_IsStatus2A"
+    },
+    "0x80077d18": {
+      "name": "Sci2Card_IsStatus2Five"
+    },
+    "0x80077d2c": {
+      "name": "Sci2Card_IsStatus2Three"
+    },
+    "0x80077d40": {
+      "name": "Sci2Card_IsStatus2One"
+    },
+    "0x80077d54": {
+      "name": "Sci2Card_IsStatus2Two"
+    },
+    "0x80077d68": {
+      "name": "Sci2Card_IsRetryExhausted"
+    },
+    "0x80077d74": {
+      "name": "Sci2Card_IsStatusOk02"
+    },
+    "0x80077d9c": {
+      "name": "Sci2Card_IsStatusOkNonTerm"
+    },
+    "0x80077de0": {
+      "name": "Sci2Card_ResetRetryCount"
+    },
+    "0x80077dec": {
+      "name": "Sci2Card_IsIdleOrExhausted"
+    },
+    "0x80077e24": {
+      "name": "KartTireFX_ShowGearStageJObjs"
+    },
+    "0x8007842c": {
+      "name": "KartTireFX_ResolveJoints"
+    },
+    "0x80078778": {
+      "name": "KartTireFX_SetRollPair_Joints88_90"
+    },
+    "0x80078a3c": {
+      "name": "KartTireFX_SetRollPair_Joints84_8c"
+    },
+    "0x80078d00": {
+      "name": "KartTireFX_SetVisibleAll4Wheels"
+    },
+    "0x80079224": {
+      "name": "KartTireFX_AddYaw"
+    },
+    "0x80079234": {
+      "name": "KartTireFX_AddPitch"
+    },
+    "0x80079244": {
+      "name": "KartTireFX_AddSpinBoth"
+    },
+    "0x80079260": {
+      "name": "KartTireFX_SetYaw"
+    },
+    "0x80079268": {
+      "name": "KartTireFX_SetPitch"
+    },
+    "0x80079270": {
+      "name": "KartTireFX_ApplyAndRender"
+    },
+    "0x800799d0": {
+      "name": "KartTireFX_Dtor"
+    },
+    "0x80079a44": {
+      "name": "KartTireFX_Ctor"
+    },
+    "0x80079b24": {
+      "name": "clDrawMan_Dtor"
+    },
+    "0x80079bd0": {
+      "name": "clDrawMan_NodePool_Free"
+    },
+    "0x80079c0c": {
+      "name": "clDrawMan_Buckets_Free"
     },
     "0x80079cdc": {
       "name": "DrawManager_GetOrCreate"
     },
+    "0x80079e9c": {
+      "name": "clDrawMan_EndFrame_NoOp"
+    },
+    "0x80079ea0": {
+      "name": "clDrawMan_Buckets_Reset"
+    },
+    "0x80079f18": {
+      "name": "clDrawMan_Buckets_Dispatch"
+    },
+    "0x8007a070": {
+      "name": "clDrawMan_SetMaxClipZ"
+    },
+    "0x8007a078": {
+      "name": "clDrawMan_AddSorted"
+    },
+    "0x8007a4cc": {
+      "name": "clDrawMan_AddSorted_NoDepthBias"
+    },
+    "0x8007a91c": {
+      "name": "clDrawMan_AddSorted_DepthRange"
+    },
+    "0x8007ad78": {
+      "name": "clDrawMan_Base_Dtor"
+    },
+    "0x8007adc0": {
+      "name": "KartItem_FindRearTarget_v1"
+    },
+    "0x8007afc4": {
+      "name": "KartItem_FindRearTarget_v2"
+    },
+    "0x8007b208": {
+      "name": "KartItem_FindRearTarget_v3"
+    },
+    "0x8007b44c": {
+      "name": "ItemEffectMgr_GetPickedSlot"
+    },
+    "0x8007b468": {
+      "name": "ItemEffectState_Init"
+    },
+    "0x8007b534": {
+      "name": "ItemEffectMgr_TickPickLowestTimer"
+    },
+    "0x8007b74c": {
+      "name": "ItemEffectState_DefaultInit"
+    },
+    "0x8007b798": {
+      "name": "SpecialFaceMesh_Dtor"
+    },
+    "0x8007b878": {
+      "name": "SpecialFaceMesh_Ctor"
+    },
+    "0x8007b944": {
+      "name": "SpecialFace_Init"
+    },
+    "0x8007bb08": {
+      "name": "SpecialFace_BuildPlaneAndEdges"
+    },
+    "0x8007be70": {
+      "name": "SpecialFaceMesh_Raycast"
+    },
+    "0x8007bffc": {
+      "name": "SpecialFace_RaycastSegment"
+    },
+    "0x8007c470": {
+      "name": "StrPcbVec_Dtor"
+    },
+    "0x8007c4d0": {
+      "name": "SpecialFaceMesh_RaycastThunk"
+    },
+    "0x8007c4f0": {
+      "name": "SpecialFaceMesh_AddFace"
+    },
+    "0x8007c56c": {
+      "name": "SpecialFaceMesh_GetOrCreate"
+    },
+    "0x8007c5e0": {
+      "name": "SimpleVec_Dtor"
+    },
+    "0x8007c644": {
+      "name": "PtrVec_InsertFill"
+    },
+    "0x8007cabc": {
+      "name": "PtrVec_Reserve"
+    },
+    "0x8007cc54": {
+      "name": "SpecialFaceMeshBase_Dtor"
+    },
     "0x8007cc9c": {
       "name": "DrawNamCamImage"
+    },
+    "0x8007d0d4": {
+      "name": "CourseAuxClass_VtableDtor"
+    },
+    "0x8007d11c": {
+      "name": "GXChannel_PushTransform"
+    },
+    "0x8007d2ac": {
+      "name": "GXChannel_PushChannelColors"
+    },
+    "0x8007d7bc": {
+      "name": "GXChannel_Unbind"
+    },
+    "0x8007d834": {
+      "name": "GXChannel_Bind"
+    },
+    "0x8007d9c4": {
+      "name": "GXChannel_Dtor"
+    },
+    "0x8007da5c": {
+      "name": "GXChannel_Init"
+    },
+    "0x8007dc08": {
+      "name": "DVDLoad_DrawDoneCallback"
+    },
+    "0x8007dc38": {
+      "name": "DVDLoad_AsyncStop"
+    },
+    "0x8007dc8c": {
+      "name": "DVDLoad_AsyncStart"
+    },
+    "0x8007dd00": {
+      "name": "DVDLoad_OpenAllocReadRelocSync"
+    },
+    "0x8007dfd4": {
+      "name": "DVDLoad_GetMaxReadSec"
+    },
+    "0x8007dfdc": {
+      "name": "DVDLoad_GetLastReadSec"
+    },
+    "0x8007dfe4": {
+      "name": "DVDLoad_ReadChunkPathOpen"
+    },
+    "0x8007e178": {
+      "name": "DVDLoad_ReadChunkHandle"
+    },
+    "0x8007e28c": {
+      "name": "DVDLoad_RecordOpStart"
+    },
+    "0x8007e2b8": {
+      "name": "DVDLoad_WaitIfSamePage"
+    },
+    "0x8007e344": {
+      "name": "DVDFile_ProbeExists"
+    },
+    "0x8007e390": {
+      "name": "TransitionEffect_Dtor"
+    },
+    "0x8007e4cc": {
+      "name": "TransitionEffect_Tick"
     },
     "0x8007e8b0": {
       "name": "TransitionEffect_GetOrCreate"
     },
+    "0x8007ea4c": {
+      "name": "TransitionEffect_RenderPass"
+    },
+    "0x8007fa88": {
+      "name": "TransitionEffect_DrawCarRouletteOverlay"
+    },
+    "0x8007fe0c": {
+      "name": "TransitionEffect_DrawCarRouletteAndQuad"
+    },
+    "0x800801f8": {
+      "name": "ShadowBillboard_SetEffectParams"
+    },
     "0x8008025c": {
       "name": "CameraEffect_Apply"
+    },
+    "0x80080330": {
+      "name": "Unknown_FreeOnly_Dtor_80080330"
+    },
+    "0x8008036c": {
+      "name": "Unknown_FreeOnly_Dtor_8008036c"
+    },
+    "0x800803a8": {
+      "name": "Unknown_OwningObjectDtor_800803a8"
+    },
+    "0x80080444": {
+      "name": "Unknown_ObjectDtor_80080444"
+    },
+    "0x800804c0": {
+      "name": "Unknown_OwningPtrDtor_800804c0"
+    },
+    "0x8008051c": {
+      "name": "Unknown_OwningPtrDtor_8008051c"
+    },
+    "0x80080578": {
+      "name": "Unknown_OwningPtrDtor_80080578"
+    },
+    "0x800805d4": {
+      "name": "Unknown_OwningPtrDtor_800805d4"
+    },
+    "0x80080630": {
+      "name": "Unknown_OwningPtrDtor_80080630"
+    },
+    "0x8008068c": {
+      "name": "Jyugemu_Flag_NullifyAndFree_Dtor"
+    },
+    "0x800806d4": {
+      "name": "Jyugemu_Flag_SetKartDriver"
+    },
+    "0x800806f4": {
+      "name": "Jyugemu_Flag_Render"
+    },
+    "0x80080748": {
+      "name": "Jyugemu_Flag_Tick"
+    },
+    "0x80080a14": {
+      "name": "Jyugemu_Flag_Dtor"
+    },
+    "0x80080a74": {
+      "name": "Jyugemu_Flag_Ctor"
+    },
+    "0x80080b20": {
+      "name": "Jyugemu_ReverseFlag_SetState"
+    },
+    "0x80080ba0": {
+      "name": "Jyugemu_ReverseFlag_Render"
+    },
+    "0x80080c10": {
+      "name": "Jyugemu_ReverseFlag_Tick"
+    },
+    "0x80080fac": {
+      "name": "Jyugemu_ReverseFlag_Dtor"
+    },
+    "0x8008100c": {
+      "name": "Jyugemu_ReverseFlag_Ctor"
+    },
+    "0x8008117c": {
+      "name": "Jyugemu_ReverseFlag_SetEnable"
+    },
+    "0x80081184": {
+      "name": "CreditMgr_DrawCoinCreditBanner"
+    },
+    "0x80082134": {
+      "name": "CreditMgr_TryConfirmPlay"
+    },
+    "0x80082288": {
+      "name": "CreditMgr_GetCoinCount"
+    },
+    "0x80082320": {
+      "name": "CreditMgr_GetCoinsPerCredit"
+    },
+    "0x8008242c": {
+      "name": "CreditMgr_GetCreditCount"
+    },
+    "0x800825cc": {
+      "name": "CreditMgr_SetActiveSlot"
+    },
+    "0x800825f0": {
+      "name": "CreditMgr_PollAcceptor"
+    },
+    "0x80082614": {
+      "name": "CreditMgr_AcceptorIsAbsent"
+    },
+    "0x80082640": {
+      "name": "CreditMgr_GetPlayState"
+    },
+    "0x800826cc": {
+      "name": "CreditMgr_PollInsertAndPlay"
+    },
+    "0x80082924": {
+      "name": "CreditMgr_ResetState"
+    },
+    "0x80082960": {
+      "name": "Unknown_FreeOnly_Dtor_80082960"
     },
     "0x8008299c": {
       "name": "PCBComm_BuildBroadcastSlot"
@@ -624,20 +3108,44 @@
     "0x800845bc": {
       "name": "PCBComm_UpdateSyncPhase1"
     },
+    "0x800848c4": {
+      "name": "CommBroadcast_GetKartLap"
+    },
+    "0x800848fc": {
+      "name": "CommBroadcast_SetKartLap"
+    },
+    "0x80084934": {
+      "name": "CommBroadcast_GetKartRankNibble"
+    },
+    "0x800849b8": {
+      "name": "CommBroadcast_SetKartRankNibble"
+    },
+    "0x80084a48": {
+      "name": "CommBroadcast_ScanForMySyncMatch"
+    },
     "0x80084a84": {
       "name": "BootPCBCheck_Display"
     },
     "0x80084bf4": {
       "name": "BootPCBCheck_Poll"
     },
+    "0x80084d98": {
+      "name": "BootNotice_CheckEnterCondition"
+    },
     "0x80084df8": {
       "name": "BootPCBCheck_Init"
+    },
+    "0x80084e88": {
+      "name": "SetPcbScratchFlag_806d11a4"
     },
     "0x80084e94": {
       "name": "PCBComm_PackAndTriggerCardSnapshot"
     },
     "0x80084ff0": {
       "name": "ResetIOPorts"
+    },
+    "0x800850b0": {
+      "name": "PcbSyncTable_Ptr"
     },
     "0x800850bc": {
       "name": "SyncSlot_GetHostSend"
@@ -648,6 +3156,12 @@
     "0x800850fc": {
       "name": "SyncSlot_Reset"
     },
+    "0x80085154": {
+      "name": "CommBroadcast_ClearTable"
+    },
+    "0x800851bc": {
+      "name": "PcbSlot_ResetScratchAreas"
+    },
     "0x80085280": {
       "name": "RingBuffer_GetRankSlot"
     },
@@ -657,14 +3171,41 @@
     "0x80085310": {
       "name": "RingBuffer_GetKartSlot"
     },
+    "0x80085368": {
+      "name": "PcbSlot_GetByIndex"
+    },
+    "0x80085394": {
+      "name": "PcbSlot_GetCharIdByte"
+    },
+    "0x800853c4": {
+      "name": "PcbSlot_IsReadyByIndex"
+    },
+    "0x8008542c": {
+      "name": "PcbSyncTable_LookupValueByState"
+    },
+    "0x80085478": {
+      "name": "PcbSyncTable_GetMyValue"
+    },
+    "0x80085494": {
+      "name": "PcbSyncTable_MyFlagIsSet"
+    },
     "0x800854b8": {
       "name": "PCBComm_ConfirmHostBattle"
     },
     "0x80085580": {
       "name": "PCBComm_ConfirmHostLobby"
     },
+    "0x80085648": {
+      "name": "PcbSync_AnyPeerAtState5"
+    },
     "0x800856cc": {
       "name": "PCBComm_PromoteToClientConfirmed"
+    },
+    "0x800856f4": {
+      "name": "PcbSync_CountPeersAtSyncTargetPair_0_or_1"
+    },
+    "0x800857b0": {
+      "name": "PcbSync_CountPeersAtSyncTargetPair_1_or_2"
     },
     "0x8008586c": {
       "name": "CountPeersInBattleWithRole"
@@ -672,23 +3213,56 @@
     "0x800858ec": {
       "name": "CountPeersWithRole"
     },
+    "0x80085964": {
+      "name": "PcbSync_AnyJoinedPcbHasReadyFlagBit1"
+    },
+    "0x80085a68": {
+      "name": "PcbSync_CountJoinedPcbsAdvancedKarts"
+    },
+    "0x80085bf8": {
+      "name": "PcbSync_CountJoinedPcbs"
+    },
+    "0x80085cac": {
+      "name": "PcbSync_AllKartsInValidSelectState"
+    },
     "0x80085dac": {
       "name": "IsSyncReached"
+    },
+    "0x80085dd0": {
+      "name": "PcbSync_AlwaysZero_Stub"
     },
     "0x80085dd8": {
       "name": "SyncSlot_ApplyCourseChoice"
     },
+    "0x80085e3c": {
+      "name": "DebugOverlay_DumpPcbState"
+    },
+    "0x8008604c": {
+      "name": "DrawLinkErrorOverlay"
+    },
     "0x80086170": {
       "name": "PCBComm_Process"
     },
+    "0x80086610": {
+      "name": "PcbComm_Shutdown"
+    },
     "0x800866f8": {
       "name": "PCBComm_Init"
+    },
+    "0x800869d0": {
+      "name": "FreeIfCountPositive"
+    },
+    "0x80086a0c": {
+      "name": "PcbConn_GetStateName"
     },
     "0x80086a30": {
       "name": "TCPConn_PollRecvComplete"
     },
     "0x80086b18": {
       "name": "TCPConn_PollRecv"
+    },
+    "0x80086ccc": {
+      "name": "PcbConn_TryReceiveAck"
     },
     "0x80086d6c": {
       "name": "TCPConn_PollSend"
@@ -702,6 +3276,9 @@
     "0x8008707c": {
       "name": "TCPConn_EnqueueMessage"
     },
+    "0x80087144": {
+      "name": "PcbConn_RecycleIfOver"
+    },
     "0x80087170": {
       "name": "TCPConn_Reset"
     },
@@ -714,8 +3291,17 @@
     "0x8008762c": {
       "name": "TCPConn_Init"
     },
+    "0x80087760": {
+      "name": "PcbConn_Close"
+    },
+    "0x80087880": {
+      "name": "PcbConn_MarkDisabled"
+    },
     "0x80087894": {
       "name": "TCPConn_LogError"
+    },
+    "0x800878c8": {
+      "name": "PcbConnStateIdToName"
     },
     "0x800878f8": {
       "name": "TCPConn_GetChannelDest"
@@ -738,14 +3324,41 @@
     "0x80087ad0": {
       "name": "InitGlobalTimer"
     },
+    "0x80087c34": {
+      "name": "PcbListener_GetStateName"
+    },
+    "0x80087c58": {
+      "name": "PcbListener_TakeAcceptedSocket"
+    },
     "0x80087c74": {
       "name": "PCBCheck_StateSet"
     },
     "0x80087cc8": {
       "name": "TCPListen_Poll"
     },
+    "0x80088110": {
+      "name": "PcbListener_Dtor"
+    },
+    "0x800881f8": {
+      "name": "PcbListener_Init"
+    },
+    "0x800882b8": {
+      "name": "LapBannerScene_TriggerBannerAnim"
+    },
+    "0x80088304": {
+      "name": "LapBannerScene_RenderIfActive"
+    },
+    "0x80088358": {
+      "name": "LapBannerScene_UpdateAndDriveAnim"
+    },
+    "0x800886a0": {
+      "name": "LapBannerScene_Dtor"
+    },
     "0x80088700": {
       "name": "FinalLapBanner_Init"
+    },
+    "0x80088880": {
+      "name": "bitpack_read_field_by_name"
     },
     "0x80088a5c": {
       "name": "bitpack_write_field"
@@ -759,29 +3372,707 @@
     "0x80088bb8": {
       "name": "bitpack_init"
     },
+    "0x80088c7c": {
+      "name": "cLNormal3DWrap_Mgr_GetPeakActiveCount"
+    },
+    "0x80088c84": {
+      "name": "cLNormal3DWrap_Mgr_ReleaseSlot"
+    },
+    "0x80088d08": {
+      "name": "cLNormal3DWrap_Mgr_AcquireSlot"
+    },
+    "0x8008909c": {
+      "name": "cLNormal3DWrap_Mgr_Dtor"
+    },
+    "0x800891cc": {
+      "name": "cLNormal3DWrap_Mgr_Ctor"
+    },
+    "0x800893b8": {
+      "name": "cLNormal3DWrap_Slot_Dtor"
+    },
+    "0x80089424": {
+      "name": "cLNormal3DWrap_Slot_ResolveJoint"
+    },
+    "0x8008946c": {
+      "name": "cLNormal3DWrap_Slot_SetAnimSpeed"
+    },
+    "0x80089474": {
+      "name": "cLNormal3DWrap_Slot_SetAnimFrame"
+    },
+    "0x8008947c": {
+      "name": "cLNormal3DWrap_Slot_ClearMatrixSource"
+    },
+    "0x80089488": {
+      "name": "cLNormal3DWrap_Slot_SetMatrixSource"
+    },
+    "0x80089490": {
+      "name": "cLNormal3DWrap_Slot_SetRotationQuat"
+    },
+    "0x800894a4": {
+      "name": "cLNormal3DWrap_Slot_AdvanceUVScrollWrapped"
+    },
+    "0x800895a0": {
+      "name": "cLNormal3DWrap_Slot_SetRenderFlags"
+    },
+    "0x800895a8": {
+      "name": "cLNormal3DWrap_Slot_SetRotationZ"
+    },
+    "0x800895b0": {
+      "name": "cLNormal3DWrap_Slot_SetRotationXYZ"
+    },
+    "0x800895c0": {
+      "name": "cLNormal3DWrap_Slot_SetScaleVec3"
+    },
+    "0x800895d0": {
+      "name": "cLNormal3DWrap_Slot_SetPositionXYZ"
+    },
+    "0x800895e0": {
+      "name": "cLNormal3DWrap_Slot_GetOrLoadJointTransform"
+    },
+    "0x8008962c": {
+      "name": "cLNormal3DWrap_Slot_AdvanceAnimFrame"
+    },
+    "0x80089640": {
+      "name": "cLNormal3DWrap_Slot_Render"
+    },
+    "0x80089760": {
+      "name": "ModelHandle_GetArchive"
+    },
+    "0x80089768": {
+      "name": "ModelHandle_GetInstance"
+    },
+    "0x80089770": {
+      "name": "ModelHandle_IncRefcount"
+    },
+    "0x80089780": {
+      "name": "ModelHandle_DecRefcountToZero"
+    },
+    "0x8008979c": {
+      "name": "ModelHandle_Init"
+    },
+    "0x800897b0": {
+      "name": "ModelHandle_SetInstance"
+    },
+    "0x800897b8": {
+      "name": "cLNormal3DWrap_MgrBase_Dtor"
+    },
+    "0x80089834": {
+      "name": "AssocTree_FreeAll"
+    },
+    "0x80089bfc": {
+      "name": "AssocTree_GetHeaderField4"
+    },
+    "0x80089c04": {
+      "name": "Allocator_Identity_VoidVoid"
+    },
+    "0x80089c08": {
+      "name": "AssocTree_Init"
+    },
+    "0x80089c28": {
+      "name": "Allocator_DestroyKey_Noop"
+    },
+    "0x80089c2c": {
+      "name": "Allocator_DestroyValue_Noop"
+    },
+    "0x80089c30": {
+      "name": "Allocator_Deallocate"
+    },
+    "0x80089c54": {
+      "name": "Allocator_DestroyEntry_Noop"
+    },
+    "0x80089c58": {
+      "name": "CardTaskManager_RenderOverlay"
+    },
+    "0x80089e78": {
+      "name": "CardTaskManager_Tick"
+    },
+    "0x80089fa4": {
+      "name": "CardTaskManager_Dtor"
+    },
+    "0x8008a058": {
+      "name": "CardTaskWelcome_Dtor"
+    },
     "0x8008a0a0": {
       "name": "card_task_manager_create"
+    },
+    "0x8008a2a0": {
+      "name": "CardTaskWelcome_New"
+    },
+    "0x8008a310": {
+      "name": "CardTaskWelcome_StepStatus"
+    },
+    "0x8008a404": {
+      "name": "CardTaskWelcome_StepCommCheck"
+    },
+    "0x8008a49c": {
+      "name": "CardTaskWelcome_StepInputCheck"
+    },
+    "0x8008a4c8": {
+      "name": "CardTaskWelcome_DrawStatus"
+    },
+    "0x8008a654": {
+      "name": "CardTaskBase_Dtor"
+    },
+    "0x8008a6d4": {
+      "name": "CardTaskWelcome_StateInit"
+    },
+    "0x8008a72c": {
+      "name": "CardTaskWelcome_TickCounter"
+    },
+    "0x8008a764": {
+      "name": "CardTaskWelcome_DrawByPhase"
+    },
+    "0x8008aa20": {
+      "name": "CardTaskWaitInput_New"
+    },
+    "0x8008aa6c": {
+      "name": "CardTaskWaitInput_Dtor"
+    },
+    "0x8008aac8": {
+      "name": "CardTaskWaitInput_StateInit"
+    },
+    "0x8008aae8": {
+      "name": "CardTaskWaitInput_StepPoll"
+    },
+    "0x8008ac00": {
+      "name": "CardTaskWaitInput_DrawByButtons"
+    },
+    "0x8008ad28": {
+      "name": "CardTaskPrintJob_New"
+    },
+    "0x8008ae00": {
+      "name": "CardTaskPrintJob_StepStart"
+    },
+    "0x8008aef0": {
+      "name": "CardTaskPrintJob_StepNoCardPrinter"
+    },
+    "0x8008af20": {
+      "name": "CardTaskPrintJob_StepWaitFontTransfer"
+    },
+    "0x8008b0a4": {
+      "name": "CardPrinterChecker_State_WaitStatus"
+    },
+    "0x8008b130": {
+      "name": "CardPrinterChecker_State_SetupCleaning"
+    },
+    "0x8008b2d4": {
+      "name": "CardPrinterChecker_State_RemainCardJobEnd"
+    },
+    "0x8008b45c": {
+      "name": "CardPrinterChecker_State_CleaningSelectInput"
+    },
+    "0x8008b5b0": {
+      "name": "CardPrinterChecker_State_ExecCleaning"
+    },
+    "0x8008b670": {
+      "name": "CardPrinterChecker_State_WaitHandle"
+    },
+    "0x8008b6f4": {
+      "name": "CardPrinterChecker_ReadCleaningChoice"
+    },
+    "0x8008b744": {
+      "name": "CardPrinterChecker_dtor"
+    },
+    "0x8008b7e8": {
+      "name": "CardPrinterChecker_State_InitPrinter"
+    },
+    "0x8008b8a0": {
+      "name": "CardPrinterChecker_PostFrame"
+    },
+    "0x8008b8c8": {
+      "name": "CardPrinterChecker_Draw"
+    },
+    "0x8008bf30": {
+      "name": "CameraChecker_Alloc"
+    },
+    "0x8008bfa8": {
+      "name": "CameraChecker_State_Entry"
+    },
+    "0x8008c03c": {
+      "name": "CameraChecker_State_DownloadWait"
+    },
+    "0x8008c1a8": {
+      "name": "CameraChecker_State_WaitButton1000"
+    },
+    "0x8008c230": {
+      "name": "CameraChecker_State_WaitButton2400"
+    },
+    "0x8008c2c0": {
+      "name": "CameraChecker_State_ShutdownTick"
+    },
+    "0x8008c328": {
+      "name": "CameraChecker_Dtor"
+    },
+    "0x8008c398": {
+      "name": "CameraChecker_State_WaitVBlank"
+    },
+    "0x8008c420": {
+      "name": "CardTaskDispatch_WithFrameBudget"
+    },
+    "0x8008c4e8": {
+      "name": "CardTask_NamCamEndTrampoline"
+    },
+    "0x8008c508": {
+      "name": "CameraChecker_Draw"
+    },
+    "0x8008c6fc": {
+      "name": "TexMgr_DrawText_Format"
+    },
+    "0x8008c824": {
+      "name": "TexMgr_DrawText_Format_Variant2"
+    },
+    "0x8008c930": {
+      "name": "DailyClock_GetCurrentSeconds"
+    },
+    "0x8008c974": {
+      "name": "OperationClockState_CommitDelta"
+    },
+    "0x8008ca14": {
+      "name": "OperationClockState_RefreshCurrent"
+    },
+    "0x8008caac": {
+      "name": "OperationClockState_StartTick"
+    },
+    "0x8008cb20": {
+      "name": "OperationClockState_Reset"
+    },
+    "0x8008cb3c": {
+      "name": "PlayStats_AccumulatePlayTime"
+    },
+    "0x8008cc6c": {
+      "name": "PlayStats_AccumulateCcClassPlay"
+    },
+    "0x8008ce58": {
+      "name": "PlayStats_AccumulateFinishByRank"
+    },
+    "0x8008d1b0": {
+      "name": "PlayStats_IncTaBestRecord"
+    },
+    "0x8008d3b0": {
+      "name": "PlayStats_IncTaPlay"
+    },
+    "0x8008d5b0": {
+      "name": "PlayStats_IncVsPlay"
+    },
+    "0x8008d7b0": {
+      "name": "PlayStats_IncVsPeerCount"
+    },
+    "0x8008d87c": {
+      "name": "PlayStats_OnAllItemsUnlocked_Stub"
+    },
+    "0x8008d888": {
+      "name": "PlayStats_IncAllCupsClearedFinalMilestone"
+    },
+    "0x8008d968": {
+      "name": "PlayStats_IncAllCupsCleared3rdMilestone"
+    },
+    "0x8008da48": {
+      "name": "PlayStats_OnMissionResult_Stub"
+    },
+    "0x8008da60": {
+      "name": "PlayStats_OnMissionSceneInit_Stub"
+    },
+    "0x8008da78": {
+      "name": "PlayStats_OnRace1stPlace_Stub"
+    },
+    "0x8008da90": {
+      "name": "PlayStats_OnRaceSceneInit_Stub"
+    },
+    "0x8008daa8": {
+      "name": "PlayStats_IncVs3PlusJoin"
+    },
+    "0x8008dae0": {
+      "name": "PlayStats_IncVs4PJoin"
+    },
+    "0x8008db18": {
+      "name": "PlayStats_IncVs2PlusJoin"
+    },
+    "0x8008db50": {
+      "name": "PlayStats_IncVs2PJoin"
+    },
+    "0x8008db90": {
+      "name": "PlayStats_IncSinglePlayJoin"
+    },
+    "0x8008dbd4": {
+      "name": "PlayStats_IncCreditAdded"
+    },
+    "0x8008dc0c": {
+      "name": "PlayStats_IncCoinInserted"
+    },
+    "0x8008dc44": {
+      "name": "PlayStats_AddTotalPlaySeconds"
+    },
+    "0x8008dc70": {
+      "name": "PlayStats_TickActiveSessionSeconds"
+    },
+    "0x8008dcec": {
+      "name": "PlayStats_EndPlaySession"
+    },
+    "0x8008dd74": {
+      "name": "PlayStats_BeginPlaySession"
+    },
+    "0x8008dde4": {
+      "name": "PlayStats_PublishCoinCreditShadow"
+    },
+    "0x8008de24": {
+      "name": "PlayStats_PublishStatsBlockShadow"
+    },
+    "0x8008de60": {
+      "name": "PlayStats_CopyStatsBlock"
+    },
+    "0x8008e33c": {
+      "name": "PlayStats_Clear"
+    },
+    "0x8008e36c": {
+      "name": "PlayStats_ShutdownStub"
+    },
+    "0x8008e370": {
+      "name": "PlayStats_LoadOrInitForBoot"
+    },
+    "0x8008e3e0": {
+      "name": "TEXBindPaletteEntry_CI"
+    },
+    "0x8008e4e8": {
+      "name": "TEXBindPaletteEntry_RGB"
+    },
+    "0x8008e5bc": {
+      "name": "TEXReleasePalette"
+    },
+    "0x8008e62c": {
+      "name": "TEXGetPaletteEntry"
+    },
+    "0x8008e63c": {
+      "name": "TEXLoadPalette"
+    },
+    "0x8008e940": {
+      "name": "TEXLoadPalette_Retry"
+    },
+    "0x8008e9a0": {
+      "name": "TEXPalette_GetTotalLoadedSize"
     },
     "0x8008e9a8": {
       "name": "MemoryHeap_GetStats"
     },
+    "0x8008e9fc": {
+      "name": "OSCheckHeap"
+    },
+    "0x8008ed50": {
+      "name": "OSDestroyHeap"
+    },
+    "0x8008ed74": {
+      "name": "OSCreateHeap"
+    },
+    "0x8008ede0": {
+      "name": "OSInitAlloc"
+    },
+    "0x8008ee50": {
+      "name": "OSSetCurrentHeap"
+    },
+    "0x8008ee60": {
+      "name": "OSFreeToHeap"
+    },
+    "0x8008ef5c": {
+      "name": "OSAllocFromHeap"
+    },
+    "0x8008f07c": {
+      "name": "CardPrinterChecker_State_CardEjectWait"
+    },
+    "0x8008f154": {
+      "name": "CardPrinterChecker_State_CleaningWait"
+    },
+    "0x8008f264": {
+      "name": "CardPrinterChecker_State_CardResetWait"
+    },
+    "0x8008f328": {
+      "name": "CardPrinterChecker_DrawErrorOverlay"
+    },
+    "0x8008f4cc": {
+      "name": "CardTaskPrintJob_IsRunning_Thunk"
+    },
+    "0x8008f4f4": {
+      "name": "CardTaskPrintJob_IsSuccess"
+    },
+    "0x8008f504": {
+      "name": "MemoryManager_TimedFreeIfActive"
+    },
+    "0x8008f540": {
+      "name": "CardPrinterChecker_StartCleaningJob"
+    },
+    "0x8008f5a4": {
+      "name": "CardTaskPrintJob_InitStateVector"
+    },
+    "0x8008f5d4": {
+      "name": "TexMgr_DrawText_Format_Variant3"
+    },
+    "0x8008f6e0": {
+      "name": "CardPrinterChecker_DrawStatusErrorLabel"
+    },
+    "0x8008f7bc": {
+      "name": "Sci2Card_ClassifyStatusToCode"
+    },
+    "0x8008f874": {
+      "name": "CardPrinterChecker_DrawResponseStatusBytes"
+    },
+    "0x8008f920": {
+      "name": "TexMgr_DrawText_Format_Variant4"
+    },
+    "0x8008fa2c": {
+      "name": "card_unpack_v2"
+    },
+    "0x80090174": {
+      "name": "card_unpack_v1"
+    },
     "0x800903d8": {
       "name": "Card_VerifyChecksum"
+    },
+    "0x8009060c": {
+      "name": "card_unpack_legacy_dispatch"
+    },
+    "0x80090848": {
+      "name": "Items_ResolveOwnedAlias"
+    },
+    "0x800909c4": {
+      "name": "Items_PlayerOwnsAnyAlias"
+    },
+    "0x80090c88": {
+      "name": "CardData_InitDefaults"
     },
     "0x80090ff0": {
       "name": "GetKartParamBlock"
     },
+    "0x8009107c": {
+      "name": "ItemEffectBus_Commit"
+    },
+    "0x80091284": {
+      "name": "ItemEffectBus_FreeIfOwned"
+    },
+    "0x800912c0": {
+      "name": "ItemEffectBus_Init"
+    },
+    "0x80091300": {
+      "name": "ItemEffectBus_ClearByTable8"
+    },
+    "0x800913f8": {
+      "name": "ItemEffectBus_RegisterBonkPosition"
+    },
+    "0x80091438": {
+      "name": "ItemEffectBus_ApplyItemEventClear"
+    },
+    "0x8009185c": {
+      "name": "ItemEffectBus_ApplyItemEventSet"
+    },
+    "0x80091ac4": {
+      "name": "ItemEffectBus_ArmTornadoAndQuery"
+    },
+    "0x80091b9c": {
+      "name": "ItemEffectBus_ApplyItemConfirm"
+    },
+    "0x80091e40": {
+      "name": "ItemEffectBus_ClearMask"
+    },
+    "0x80091e78": {
+      "name": "ItemEffectBus_OrMask"
+    },
+    "0x80091ea8": {
+      "name": "ItemEffectBus_TickTornadoCooldown"
+    },
+    "0x80091f0c": {
+      "name": "ItemEffectBus_SnapshotAndClearSpawnFlags"
+    },
+    "0x80091f58": {
+      "name": "ItemEffectBus_SnapshotAndFullReset"
+    },
+    "0x80091fd4": {
+      "name": "Sci2Card_PollAndAdvanceState"
+    },
+    "0x80092408": {
+      "name": "CardSession_OnServiceTriggerAbort"
+    },
+    "0x80092460": {
+      "name": "CardRegister_Session_Tick"
+    },
+    "0x80092918": {
+      "name": "CardRegister_KickoffArm"
+    },
+    "0x80092948": {
+      "name": "Sci2Card_WaitPingStatus"
+    },
+    "0x80092b18": {
+      "name": "Sci2Card_BeginSpace"
+    },
+    "0x80092b60": {
+      "name": "Sci2Card_WaitCleaningComplete"
+    },
+    "0x80092d04": {
+      "name": "Sci2Card_BeginReset"
+    },
+    "0x80092d4c": {
+      "name": "Sci2Card_WaitResetComplete"
+    },
+    "0x80092f04": {
+      "name": "Sci2Card_BeginCleaning"
+    },
+    "0x80092f4c": {
+      "name": "CardSession_PollFsmStatus"
+    },
+    "0x800930b4": {
+      "name": "CardSavedata_LoadShadow_TriggerUnused"
+    },
+    "0x800934a8": {
+      "name": "CardRW_GetSubState"
+    },
+    "0x800934b0": {
+      "name": "CardSave_Tick"
+    },
+    "0x800934f0": {
+      "name": "CardSave_Tick_PollCleaningResult"
+    },
+    "0x800937d4": {
+      "name": "CardSave_Tick_CaptureAndStart"
+    },
     "0x80093c28": {
       "name": "card_save_trigger"
+    },
+    "0x8009450c": {
+      "name": "CardPrintJob_TickFontTransfer"
+    },
+    "0x800948d4": {
+      "name": "CardPrintJob_KickFontTransfer"
+    },
+    "0x80094950": {
+      "name": "Sci2Card_PrintReceipt_PollState"
+    },
+    "0x80094bcc": {
+      "name": "Sci2Card_PrintReceipt_StartFlow"
+    },
+    "0x80094d80": {
+      "name": "Sci2Card_BuildRetryReceiptLine"
+    },
+    "0x80095388": {
+      "name": "Sci2Card_BuildScoreReceiptLine"
+    },
+    "0x80095c5c": {
+      "name": "Sci2Card_WriteTrackData_PollState"
+    },
+    "0x80095e3c": {
+      "name": "Sci2Card_WriteTrackData_StartFlow"
+    },
+    "0x80095ec8": {
+      "name": "Sci2Card_EjectAndFinalize_Step"
+    },
+    "0x80096034": {
+      "name": "card_rw_state_machine_short"
     },
     "0x80096a5c": {
       "name": "card_rw_state_machine"
     },
+    "0x8009755c": {
+      "name": "card_rw_kick_state_machine"
+    },
+    "0x800975e4": {
+      "name": "card_read_tick"
+    },
+    "0x80097650": {
+      "name": "card_send_read_cmd_init"
+    },
+    "0x800976c0": {
+      "name": "card_read_state_machine"
+    },
+    "0x80098320": {
+      "name": "card_send_read_cmd_init_dup_unused"
+    },
+    "0x8009838c": {
+      "name": "card_is_ejected"
+    },
+    "0x800983a0": {
+      "name": "card_ping_state_machine"
+    },
+    "0x80098710": {
+      "name": "card_send_ping_cmd_init"
+    },
+    "0x80098790": {
+      "name": "card_ping_clear_pending_flag"
+    },
+    "0x800987a8": {
+      "name": "card_cleaning_state_machine"
+    },
+    "0x800989c4": {
+      "name": "card_send_cleaning_cmd_init"
+    },
+    "0x80098a90": {
+      "name": "card_eject_state_machine"
+    },
+    "0x80098dd4": {
+      "name": "card_eject_init"
+    },
+    "0x80098e48": {
+      "name": "card_rw_get_substate"
+    },
+    "0x80098e50": {
+      "name": "card_force_backup_now"
+    },
+    "0x800991d8": {
+      "name": "Sci2Card_FlagReceiptTestEnable"
+    },
+    "0x800991e4": {
+      "name": "Sci2Card_GetReceiptTestFlag"
+    },
+    "0x800991ec": {
+      "name": "Sci2Card_GetUnpackStatusCode"
+    },
+    "0x800991f4": {
+      "name": "Sci2Card_GetByteFlag1224"
+    },
+    "0x800991fc": {
+      "name": "Sci2Card_PollResponseStatusTri"
+    },
+    "0x8009927c": {
+      "name": "Sci2Card_GetPrintErrorCode"
+    },
+    "0x80099284": {
+      "name": "Sci2Card_ResetRetryAndStatus"
+    },
+    "0x800992c0": {
+      "name": "Sci2Card_BuildItemGetReceiptLine"
+    },
+    "0x800997e4": {
+      "name": "Sci2Card_PopulateRankRowByMode"
+    },
+    "0x8009990c": {
+      "name": "Sci2Card_RegisterReceiptBuffersCleanup"
+    },
+    "0x80099958": {
+      "name": "Sci2Card_GetReceiptStringEntry"
+    },
+    "0x8009996c": {
+      "name": "CardPrintJob_GetFontPagePayload"
+    },
+    "0x80099994": {
+      "name": "NameCheck_CardName"
+    },
+    "0x80099ce4": {
+      "name": "NameCheck_ScanBannedWords"
+    },
+    "0x8009b98c": {
+      "name": "TaMode_GetDemoCameraBookend"
+    },
+    "0x8009b9d0": {
+      "name": "RaceScene_GetPerspFovyForCup"
+    },
     "0x8009bac4": {
       "name": "Input_IsItemButtonPressed"
     },
+    "0x8009bb00": {
+      "name": "BattleRoulette_TickAndGetCounter"
+    },
+    "0x8009bb20": {
+      "name": "SetCardVolumeFlagByte"
+    },
     "0x8009bb28": {
       "name": "SetKartVariant"
+    },
+    "0x8009bb30": {
+      "name": "PcbRole_PromoteToClientConfirmed"
     },
     "0x8009bb58": {
       "name": "SetLocalPcbRole"
@@ -792,17 +4083,41 @@
     "0x8009bb78": {
       "name": "ItemUse_ResetAllKartUseSlots"
     },
+    "0x8009bcd8": {
+      "name": "RankSlot_GetByIndex"
+    },
+    "0x8009bd04": {
+      "name": "RankSlot_AppendOrUpdate"
+    },
+    "0x8009bdc0": {
+      "name": "VSMode_SeedRandomItemSequence"
+    },
     "0x8009bef4": {
       "name": "GetDisplayContext"
     },
     "0x8009bf20": {
       "name": "GetDisplayBufferIndex"
     },
+    "0x8009bf38": {
+      "name": "SetRaceResultLatestPtr"
+    },
+    "0x8009bf40": {
+      "name": "RaceResult_StoreLatest"
+    },
+    "0x8009bf58": {
+      "name": "RaceResult_GetRankEntry"
+    },
+    "0x8009bf90": {
+      "name": "RaceResult_InsertSortedRank"
+    },
     "0x8009c15c": {
       "name": "GetRaceContextPtr"
     },
     "0x8009c168": {
       "name": "SetPlayerCarObject"
+    },
+    "0x8009c170": {
+      "name": "GetPlayerCarObject"
     },
     "0x8009c178": {
       "name": "SetCourseScene3D"
@@ -816,8 +4131,20 @@
     "0x8009c1a8": {
       "name": "IsRaceStarted"
     },
+    "0x8009c1d0": {
+      "name": "GetCourseBgmFilePath"
+    },
+    "0x8009c238": {
+      "name": "GetCoinSpawnTable"
+    },
     "0x8009c2f0": {
       "name": "GetCourseBgmEntry"
+    },
+    "0x8009c360": {
+      "name": "CourseVariantTableLookup"
+    },
+    "0x8009c3c4": {
+      "name": "GetFinishLineSegment"
     },
     "0x8009c418": {
       "name": "GetCourseModelFilename"
@@ -855,8 +4182,35 @@
     "0x8009c8a4": {
       "name": "GetKartSlotCharId"
     },
+    "0x8009c8d4": {
+      "name": "RaceSlot_GetDriverId"
+    },
+    "0x8009c8dc": {
+      "name": "RaceSlot_GetDriverId_NoLowerCheck_Dead"
+    },
     "0x8009c900": {
       "name": "GetKartSlotKartVariant"
+    },
+    "0x8009c914": {
+      "name": "EmptyStub_8009c914"
+    },
+    "0x8009c930": {
+      "name": "RaceSlot_SetDriverPtr"
+    },
+    "0x8009c94c": {
+      "name": "RawSlotWriter_Dead"
+    },
+    "0x8009c964": {
+      "name": "RaceSlot_SetItemSlotByte"
+    },
+    "0x8009c990": {
+      "name": "EmptyStub_8009c990"
+    },
+    "0x8009c9b4": {
+      "name": "RaceSlot_InitSlot"
+    },
+    "0x8009ca2c": {
+      "name": "RaceSlot_ResetAll"
     },
     "0x8009cb54": {
       "name": "IsTimerModeEnabled"
@@ -864,26 +4218,83 @@
     "0x8009cb5c": {
       "name": "SetTimerModeEnabled"
     },
+    "0x8009cb68": {
+      "name": "DebugOverlay_GetDaytimeLabel"
+    },
+    "0x8009cb98": {
+      "name": "DebugOverlay_GetLongRoundLabel"
+    },
+    "0x8009cbc4": {
+      "name": "DebugOverlay_GetCupLabel"
+    },
+    "0x8009cbf4": {
+      "name": "SetReverseRoundFlag"
+    },
     "0x8009cbfc": {
       "name": "SetCourseParams"
+    },
+    "0x8009cfdc": {
+      "name": "PlayerData_ApplyItemUnlockById"
+    },
+    "0x8009d00c": {
+      "name": "PlayerData_GetUnlockedItemIdByIndex_U8"
+    },
+    "0x8009d03c": {
+      "name": "PlayerData_ResetForFlow"
+    },
+    "0x8009d07c": {
+      "name": "RaceFlow_ResetState_FullColdInit"
     },
     "0x8009d5f8": {
       "name": "ProcessSystemTick"
     },
+    "0x8009d638": {
+      "name": "RaceContext_Dtor"
+    },
     "0x8009d6cc": {
       "name": "RaceContext_InitDefaults"
+    },
+    "0x8009dc80": {
+      "name": "RaceContext_EnsureSingleton"
+    },
+    "0x8009dce0": {
+      "name": "RaceContext_BaseDtor"
+    },
+    "0x8009dd28": {
+      "name": "KartDriverArray_StaticCtor"
+    },
+    "0x8009dd64": {
+      "name": "RaceScene_RenderFrame"
     },
     "0x8009e0d4": {
       "name": "VSMode_FrameUpdate"
     },
+    "0x8009f47c": {
+      "name": "BtMode_Dtor"
+    },
     "0x8009f814": {
       "name": "VSMode_Init"
+    },
+    "0x800a05d0": {
+      "name": "BtMode_Init"
+    },
+    "0x800a0688": {
+      "name": "BtMode_BaseDtor"
     },
     "0x800a06d0": {
       "name": "Rand15"
     },
     "0x800a06f0": {
       "name": "Rand_SetSeedDebug"
+    },
+    "0x800a073c": {
+      "name": "RandSeedDebug_SetEnable"
+    },
+    "0x800a078c": {
+      "name": "ReplayRandCursor_Advance"
+    },
+    "0x800a07a8": {
+      "name": "ReplayRandCursor_Reset"
     },
     "0x800a07b4": {
       "name": "GameModeBase_FrameUpdate2"
@@ -896,6 +4307,9 @@
     },
     "0x800a0950": {
       "name": "GameMode_DispatchSceneInit"
+    },
+    "0x800a0a84": {
+      "name": "CarObjects_FindByEventType"
     },
     "0x800a0b34": {
       "name": "GetPlayerCarBySlot"
@@ -921,6 +4335,9 @@
     "0x800a1d80": {
       "name": "RaceScene_Init"
     },
+    "0x800a28d4": {
+      "name": "BtMode_RenderFrame"
+    },
     "0x800a2b90": {
       "name": "TaMode_FrameUpdate"
     },
@@ -930,11 +4347,65 @@
     "0x800a3c38": {
       "name": "TaMode_Init"
     },
+    "0x800a4578": {
+      "name": "RaceContextSlot_GetIfAlive"
+    },
     "0x800a45b8": {
       "name": "ItemObjectManager_PerFrameUpdate"
     },
+    "0x800a4a30": {
+      "name": "RaceContextSlot_Free"
+    },
+    "0x800a4aa4": {
+      "name": "RaceContextSlot_AllocItem"
+    },
+    "0x800a4b7c": {
+      "name": "RaceContextSlot_AllocDriver"
+    },
     "0x800a4c18": {
       "name": "RankingTable_Init"
+    },
+    "0x800a4cd4": {
+      "name": "RaceContextArray_Dtor"
+    },
+    "0x800a4d34": {
+      "name": "RaceContextArray_Init"
+    },
+    "0x800a4ed8": {
+      "name": "ISE_ScaleColumnDirectionByMagnitude"
+    },
+    "0x800a4f64": {
+      "name": "ItemObject_TryAcquireTarget"
+    },
+    "0x800a5188": {
+      "name": "Unknown_DeleteIfFlag_800a5188"
+    },
+    "0x800a51f8": {
+      "name": "Terrain_FlagsToTypeId"
+    },
+    "0x800a525c": {
+      "name": "Terrain_ApplyCup2FlagPatch"
+    },
+    "0x800a5284": {
+      "name": "Terrain_GetTractionFactor"
+    },
+    "0x800a52f8": {
+      "name": "Terrain_GetSlipFactor"
+    },
+    "0x800a5384": {
+      "name": "Terrain_FlagsToDebugString"
+    },
+    "0x800a5578": {
+      "name": "VSModeIntro_Dtor"
+    },
+    "0x800a560c": {
+      "name": "DebugStageSelect_UpdateInput"
+    },
+    "0x800a5840": {
+      "name": "VSModeIntro_Ctor"
+    },
+    "0x800a58a0": {
+      "name": "ItemRes_LookupDatPathByKey"
     },
     "0x800a5960": {
       "name": "calc_title_params"
@@ -945,11 +4416,26 @@
     "0x800a59f0": {
       "name": "RankLog_UpdatePerFrame"
     },
+    "0x800a5c88": {
+      "name": "TitleTracker_Dtor"
+    },
+    "0x800a5ce4": {
+      "name": "TitleTracker_OnRaceStart_Stub"
+    },
+    "0x800a5ce8": {
+      "name": "TitleTracker_OnAttract_Stub"
+    },
     "0x800a5cec": {
       "name": "RankLog_SetRaceResult"
     },
+    "0x800a5da0": {
+      "name": "TitleTracker_ResetPerRound"
+    },
     "0x800a5e60": {
       "name": "RankLog_UpdateTechnicalFlag"
+    },
+    "0x800a5e78": {
+      "name": "TitleStats_AccumDistanceCounter"
     },
     "0x800a5f2c": {
       "name": "RankLog_OnPlayerDefeated"
@@ -960,17 +4446,53 @@
     "0x800a6078": {
       "name": "RankLog_OnHit"
     },
+    "0x800a60f8": {
+      "name": "TitleStats_IncPerfectCount"
+    },
     "0x800a6178": {
       "name": "RankLog_OnOpponentDefeated"
     },
     "0x800a6248": {
       "name": "RankLog_OnPlayerVictory"
     },
+    "0x800a62e8": {
+      "name": "TitleStats_IncCurrentRaceScore"
+    },
+    "0x800a6368": {
+      "name": "TitleStats_SetEventFlag_806d1420"
+    },
+    "0x800a63e4": {
+      "name": "TitleStats_MarkAllCoursesClearedIfDistance"
+    },
+    "0x800a6484": {
+      "name": "TitleStats_IncTotalRaces"
+    },
     "0x800a6504": {
       "name": "RankLog_OnRoundComplete"
     },
+    "0x800a6524": {
+      "name": "PlayerData_RefreshDerivedStats"
+    },
+    "0x800a654c": {
+      "name": "TitleStats_CaptureRoundContext"
+    },
+    "0x800a6574": {
+      "name": "Empty_NokoNokoHook"
+    },
     "0x800a6578": {
       "name": "race_result_handler"
+    },
+    "0x800a660c": {
+      "name": "TitleStats_FinalizeRace_PlayCountThenTitle"
+    },
+    "0x800a6658": {
+      "name": "TitleStats_FinalizeRace_WithRankSnapshot"
+    },
+    "0x800a66e8": {
+      "name": "TitleTracker_Empty_PreFinalizeHook"
+    },
+    "0x800a66ec": {
+      "name": "TitleStats_ResetRaceStagingState"
     },
     "0x800a6730": {
       "name": "RankLog_Reset"
@@ -987,20 +4509,83 @@
     "0x800a6ffc": {
       "name": "get_title_result"
     },
+    "0x800a708c": {
+      "name": "TitleTracker_GetOrCreateSingleton"
+    },
     "0x800a70fc": {
       "name": "DetermineTitle"
+    },
+    "0x800a73f4": {
+      "name": "DateTitle_GetMonthSeasonIndex"
+    },
+    "0x800a7500": {
+      "name": "TitleTrackerSingleton_Dtor"
+    },
+    "0x800a7548": {
+      "name": "TaTitle_CheckAllCoursesRecorded"
+    },
+    "0x800a7600": {
+      "name": "TitleCheck_NewClearedRecord_Race"
+    },
+    "0x800a7a7c": {
+      "name": "TitleCheck_CupCleared"
+    },
+    "0x800a7b80": {
+      "name": "TitleCheck_MidpointMilestone"
+    },
+    "0x800a7c6c": {
+      "name": "TitleCheck_FirstPlayToday_TA"
+    },
+    "0x800a7cc8": {
+      "name": "TitleCheck_FirstPlayEver"
+    },
+    "0x800a7d5c": {
+      "name": "TitleCheck_AllRecordsCleared"
+    },
+    "0x800a7dd4": {
+      "name": "TitleCheck_TechGradeMax_NoLoss"
+    },
+    "0x800a7e0c": {
+      "name": "TitleCheck_TechGrade1"
+    },
+    "0x800a7e38": {
+      "name": "TitleCheck_TechGrade0"
+    },
+    "0x800a7e64": {
+      "name": "TitleCheck_ScoreOverQuarterTarget"
     },
     "0x800a8004": {
       "name": "CheckTitle_EnhancedKartTA"
     },
+    "0x800a80cc": {
+      "name": "TitleCheck_HeavyLossWithWin"
+    },
+    "0x800a8494": {
+      "name": "TitleCheck_UndefeatedStreak15"
+    },
+    "0x800a84c0": {
+      "name": "TitleCheck_BattleWinsMilestone"
+    },
     "0x800a8538": {
       "name": "CheckTitle_OriginalKartCoinMilage"
+    },
+    "0x800a8634": {
+      "name": "TitleCheck_NewClearedCountStep"
+    },
+    "0x800a88ac": {
+      "name": "TitleCheck_ConsecutiveWins"
+    },
+    "0x800a8a20": {
+      "name": "TitleCheck_AlwaysFalse"
     },
     "0x800a8a28": {
       "name": "DetermineNameId"
     },
     "0x800a8d34": {
       "name": "WarpDashMgr_Init"
+    },
+    "0x800a8f4c": {
+      "name": "WarpZone_FindContainingOBB"
     },
     "0x800a9084": {
       "name": "WarpZone_CalcExitPosition"
@@ -1017,6 +4602,9 @@
     "0x800a9394": {
       "name": "WarpDashMgr_GetOrCreate"
     },
+    "0x800a9414": {
+      "name": "Free_IfOwnedShort"
+    },
     "0x800a9450": {
       "name": "WarpAutoRun_Init"
     },
@@ -1032,14 +4620,86 @@
     "0x800a981c": {
       "name": "WarpZone_CheckEntry"
     },
+    "0x800a998c": {
+      "name": "Field4NotMinusOne"
+    },
     "0x800a99a4": {
       "name": "WarpZone_CalcEdgeVectors"
+    },
+    "0x800a9cc8": {
+      "name": "StrPcbHolder_Dtor"
+    },
+    "0x800a9d2c": {
+      "name": "DtorWrapper_800a9d2c"
     },
     "0x800a9d84": {
       "name": "WarpZoneVector_Insert"
     },
     "0x800aa484": {
       "name": "WarpZoneVector_Reserve"
+    },
+    "0x800aa69c": {
+      "name": "WarpZoneVector_Dtor"
+    },
+    "0x800aa6fc": {
+      "name": "WarpZoneVector_Clear"
+    },
+    "0x800aa784": {
+      "name": "WarpZoneArray_UninitFillN"
+    },
+    "0x800aa7e4": {
+      "name": "WarpZoneArray_CopyBackward"
+    },
+    "0x800aa804": {
+      "name": "WarpZoneArray_CopyBackwardImpl"
+    },
+    "0x800aa868": {
+      "name": "WarpZone_OperatorAssign_LinkerStub"
+    },
+    "0x800aa888": {
+      "name": "WarpZone_Dtor"
+    },
+    "0x800aa8d0": {
+      "name": "WarpZone_VtableTrim"
+    },
+    "0x800aa8fc": {
+      "name": "ShadowAreaMgr_Dtor"
+    },
+    "0x800aa980": {
+      "name": "ShadowAreaEntry_DtorWithEdges"
+    },
+    "0x800aa9e4": {
+      "name": "ShadowAreaEdge_Dtor"
+    },
+    "0x800aaa20": {
+      "name": "ShadowAreaMgr_Ctor"
+    },
+    "0x800aaac4": {
+      "name": "ShadowAreaMgr_BuildFromArchive"
+    },
+    "0x800aac54": {
+      "name": "ShadowAreaMgr_QueryPoint"
+    },
+    "0x800aada4": {
+      "name": "ShadowAreaMgr_Destroy"
+    },
+    "0x800aadec": {
+      "name": "ShadowAreaMgr_GetOrCreate"
+    },
+    "0x800aae48": {
+      "name": "ShadowAreaEntry_ComputeEdgeNormals"
+    },
+    "0x800ab0dc": {
+      "name": "ShadowAreaEntry_Ctor"
+    },
+    "0x800ab134": {
+      "name": "ShadowAreaEntry_VtableTrim_Dtor"
+    },
+    "0x800ab17c": {
+      "name": "Tachometer_SetMaxSpeedRef"
+    },
+    "0x800ab19c": {
+      "name": "Tachometer_SetDisplaySpeedRef"
     },
     "0x800ab1bc": {
       "name": "Tachometer_SetCoinCount"
@@ -1050,11 +4710,20 @@
     "0x800ab324": {
       "name": "Tachometer_RenderDigits"
     },
+    "0x800ab6bc": {
+      "name": "Tachometer_Destroy"
+    },
     "0x800ab77c": {
       "name": "Tachometer_Init"
     },
+    "0x800ab958": {
+      "name": "ZlibInflate_BufferToBuffer"
+    },
     "0x800abae8": {
       "name": "CourseData_LoadPathTable"
+    },
+    "0x800abd80": {
+      "name": "HitMessageOverlay_Dtor"
     },
     "0x800abdfc": {
       "name": "CourseData_ResolveByKey"
@@ -1068,8 +4737,62 @@
     "0x800abe70": {
       "name": "CourseData_GetOrCreate"
     },
+    "0x800abf10": {
+      "name": "HitMessageOverlay_VtableTrim"
+    },
+    "0x800abf58": {
+      "name": "HitMessageOverlay_Show"
+    },
+    "0x800ac1c4": {
+      "name": "HitMessageOverlay_FrameUpdate"
+    },
+    "0x800ac634": {
+      "name": "HitMessageOverlay_Destroy"
+    },
+    "0x800ac6d0": {
+      "name": "HitMessageOverlay_Init"
+    },
+    "0x800ac7e0": {
+      "name": "TweenInterp_Dtor"
+    },
+    "0x800ac83c": {
+      "name": "TweenInterp_VtableTrim"
+    },
+    "0x800ac884": {
+      "name": "DemoFlow_ResetTwoFlags"
+    },
     "0x800ac894": {
       "name": "RunGameMain"
+    },
+    "0x800ac8fc": {
+      "name": "GameMode_Title_Ctor"
+    },
+    "0x800ac94c": {
+      "name": "GameMode_Title_Dtor"
+    },
+    "0x800ac9dc": {
+      "name": "GameMode_Title_DrawDebugLabel"
+    },
+    "0x800aca10": {
+      "name": "GameMode_StageSelect_Ctor"
+    },
+    "0x800aca60": {
+      "name": "GameMode_StageSelect_Dtor"
+    },
+    "0x800acac8": {
+      "name": "GameMode_StageSelect_DrawDebugLabel"
+    },
+    "0x800acafc": {
+      "name": "GameMode_CharacterSelect_Ctor"
+    },
+    "0x800acbe0": {
+      "name": "GameMode_CharacterSelect_Dtor"
+    },
+    "0x800acc8c": {
+      "name": "GameMode_CharacterSelect_TickStateMachine"
+    },
+    "0x800acd2c": {
+      "name": "GameMode_CharacterSelect_Draw"
     },
     "0x800acd60": {
       "name": "ReverseChallenge_Dtor"
@@ -1083,14 +4806,1202 @@
     "0x800ad910": {
       "name": "ReverseChallenge_Init"
     },
+    "0x800adda0": {
+      "name": "clCGameDemoWC_StubBlr_800adda0"
+    },
+    "0x800adda4": {
+      "name": "clCGameDemoWC_StubBlr_800adda4"
+    },
+    "0x800adda8": {
+      "name": "clCGameDemoWC_StubBlr_800adda8"
+    },
+    "0x800addac": {
+      "name": "clCGameDemoWC_Dtor"
+    },
+    "0x800adef8": {
+      "name": "clACamera_Dtor_WC"
+    },
+    "0x800adf58": {
+      "name": "clCGameDemoWC_Render"
+    },
+    "0x800ae108": {
+      "name": "clCGameDemoWC_Tick"
+    },
+    "0x800ae438": {
+      "name": "clCGameDemoWC_Ctor"
+    },
+    "0x800ae6bc": {
+      "name": "clCGameDemo_Dtor"
+    },
+    "0x800ae724": {
+      "name": "AnimState_GetTotalWeight"
+    },
+    "0x800ae744": {
+      "name": "AnimState_GetTotalScaleZ"
+    },
+    "0x800ae764": {
+      "name": "AnimState_GetTotalScaleY"
+    },
+    "0x800ae784": {
+      "name": "AnimState_GetTotalScaleX"
+    },
+    "0x800ae7a4": {
+      "name": "AnimState_SetGlobalScale"
+    },
+    "0x800ae7ac": {
+      "name": "AnimState_SetEnabledTimers"
+    },
+    "0x800ae854": {
+      "name": "AnimState_Step"
+    },
+    "0x800aed5c": {
+      "name": "AnimState_Init"
+    },
+    "0x800af088": {
+      "name": "AnimState_Reset"
+    },
+    "0x800af15c": {
+      "name": "AnimState_New"
+    },
+    "0x800af240": {
+      "name": "AnimStatePool_Free"
+    },
+    "0x800af2b8": {
+      "name": "AnimStatePool_Alloc"
+    },
+    "0x800af404": {
+      "name": "AnimStatePool_FreeAll"
+    },
+    "0x800af46c": {
+      "name": "AnimStatePool_ZeroInit"
+    },
+    "0x800af4fc": {
+      "name": "DrawEffect_SetFlagsByte"
+    },
+    "0x800af510": {
+      "name": "DrawEffect_Free"
+    },
+    "0x800af54c": {
+      "name": "DrawEffect_SpawnWithMatrix"
+    },
+    "0x800af65c": {
+      "name": "DrawEffect_SpawnWithDescriptor"
+    },
+    "0x800af750": {
+      "name": "DrawEffect_SpawnByType"
+    },
+    "0x800af840": {
+      "name": "DrawEffect_SpawnDirect"
+    },
+    "0x800af904": {
+      "name": "DrawEffect_TickAndCull"
+    },
+    "0x800afa5c": {
+      "name": "VfxSlotMgr_Shutdown"
+    },
+    "0x800afae8": {
+      "name": "VfxSlotMgr_Update"
+    },
     "0x800afcd8": {
       "name": "CourseObjectManager_Init"
+    },
+    "0x800afdb4": {
+      "name": "VfxSlot_ResolveJoint"
+    },
+    "0x800afde0": {
+      "name": "VfxSlot_SetUVScroll"
+    },
+    "0x800afe00": {
+      "name": "VfxSlot_SetMatrixSourceEnabled"
+    },
+    "0x800afe44": {
+      "name": "VfxSlot_SetScaleVec3"
+    },
+    "0x800afe70": {
+      "name": "VfxSlot_SetScaleUniform"
+    },
+    "0x800afea4": {
+      "name": "VfxSlot_SetRotationZ"
+    },
+    "0x800afed0": {
+      "name": "VfxSlot_SetRotationXYZFromVec"
+    },
+    "0x800aff08": {
+      "name": "VfxSlot_SetRotationXYZ"
+    },
+    "0x800aff34": {
+      "name": "VfxSlot_SetPositionFromVec"
+    },
+    "0x800aff6c": {
+      "name": "VfxSlot_SetAnimSpeed"
+    },
+    "0x800aff80": {
+      "name": "VfxSlot_SetAnimFrame"
+    },
+    "0x800aff9c": {
+      "name": "VfxSlot_Release"
+    },
+    "0x800affe0": {
+      "name": "VfxSlot_RegisterDraw"
+    },
+    "0x800b00d8": {
+      "name": "VfxSlot_Render"
+    },
+    "0x800b013c": {
+      "name": "VfxSlot_TickAnim"
+    },
+    "0x800b02cc": {
+      "name": "VfxSlot_BindResource"
+    },
+    "0x800b0378": {
+      "name": "VfxSlot_BindResourceEx"
+    },
+    "0x800b0454": {
+      "name": "VfxLaugh_Tick"
+    },
+    "0x800b05e0": {
+      "name": "VfxLaughInner_Tick"
+    },
+    "0x800b0654": {
+      "name": "VfxSpritePopup_TickType0"
+    },
+    "0x800b07a8": {
+      "name": "VfxSpritePopup_TickType1"
+    },
+    "0x800b08fc": {
+      "name": "VfxBannerSequence_Tick"
+    },
+    "0x800b0b94": {
+      "name": "CelebPop17_SpawnAll"
+    },
+    "0x800b0c0c": {
+      "name": "CelebPop17_Update"
+    },
+    "0x800b0fa4": {
+      "name": "CharaPop12_SpawnAll"
+    },
+    "0x800b1014": {
+      "name": "CharaPop12_Update"
+    },
+    "0x800b1300": {
+      "name": "CourseInteractMover_Update"
+    },
+    "0x800b1444": {
+      "name": "KartAttachedSpin_Update"
+    },
+    "0x800b1670": {
+      "name": "TwinSpriteOverlay_Render"
+    },
+    "0x800b1964": {
+      "name": "TwinSpriteOverlay_AddDraw"
+    },
+    "0x800b19f8": {
+      "name": "TwinSpriteOverlay_Update"
+    },
+    "0x800b1c88": {
+      "name": "KartFadeInEffect_Update"
+    },
+    "0x800b1db0": {
+      "name": "KartBurstShard_Update"
+    },
+    "0x800b1fbc": {
+      "name": "KartBurstShard_SpawnSet"
+    },
+    "0x800b2164": {
+      "name": "CarrotItemEffect_Update"
+    },
+    "0x800b23cc": {
+      "name": "CarrotItemEffect_Render"
+    },
+    "0x800b2a64": {
+      "name": "CarrotItemEffect_AddDraw"
+    },
+    "0x800b2af8": {
+      "name": "KartPair3ArmUpdate"
+    },
+    "0x800b3244": {
+      "name": "EffectActor_BindKartTargetPair"
+    },
+    "0x800b3250": {
+      "name": "KartShellRibbonDraw"
+    },
+    "0x800b3a0c": {
+      "name": "KartShellRibbon_DrawCb"
+    },
+    "0x800b3aa8": {
+      "name": "KartShellRibbon_Update"
+    },
+    "0x800b3c8c": {
+      "name": "TripleBladeRing_Draw"
+    },
+    "0x800b3e38": {
+      "name": "TripleBladeRing_DrawCb"
+    },
+    "0x800b3ed4": {
+      "name": "TripleBladeRing_SetWorldYaw"
+    },
+    "0x800b4094": {
+      "name": "TripleBladeRing_Update"
+    },
+    "0x800b4164": {
+      "name": "ParticleBurst_Draw"
+    },
+    "0x800b4388": {
+      "name": "ParticleBurst_DrawCb"
+    },
+    "0x800b441c": {
+      "name": "ParticleBurst_Update"
+    },
+    "0x800b4804": {
+      "name": "RisingTextSprite_Update"
+    },
+    "0x800b4a58": {
+      "name": "SpawnRisingTextAndBurst"
+    },
+    "0x800b4aac": {
+      "name": "DebrisArray_DrawForward"
+    },
+    "0x800b4ad0": {
+      "name": "DebrisArray_DrawCb"
+    },
+    "0x800b4b20": {
+      "name": "DebrisArray_Update"
+    },
+    "0x800b4c28": {
+      "name": "KartFootEffect_Tick"
+    },
+    "0x800b5020": {
+      "name": "KartFootEffect_Spawn"
+    },
+    "0x800b510c": {
+      "name": "KartFx_MasterTick"
+    },
+    "0x800b53bc": {
+      "name": "DrawEffect_SetFloat110"
+    },
+    "0x800b53cc": {
+      "name": "DrawEffect_SetByte10C"
+    },
+    "0x800b53dc": {
+      "name": "DrawEffect_SetByte104"
+    },
+    "0x800b53ec": {
+      "name": "DrawEffect_SetBytePairD4D5"
+    },
+    "0x800b5400": {
+      "name": "DrawEffect_SetFloat108Avg"
+    },
+    "0x800b541c": {
+      "name": "DrawEffect_SetU32CC"
+    },
+    "0x800b542c": {
+      "name": "DrawEffect_ReleaseCallbackResources"
+    },
+    "0x800b5694": {
+      "name": "FinalLapCoinJump_Tick"
+    },
+    "0x800b5930": {
+      "name": "DrawEffect_Cb_KartVfx_Bind6_YawZ"
+    },
+    "0x800b5b00": {
+      "name": "DrawEffect_Cb_KartVfx_Bind4or5_Variant"
+    },
+    "0x800b5d40": {
+      "name": "DrawEffect_Cb_BurstSpawner_Bind6Then4or5"
+    },
+    "0x800b5e68": {
+      "name": "DrawEffect_Cb_MutekiStar_VfxA"
+    },
+    "0x800b61d4": {
+      "name": "DrawEffect_Cb_MutekiStar_VfxB"
+    },
+    "0x800b6534": {
+      "name": "DrawEffect_Cb_KartVfx_Bind1_Damage"
+    },
+    "0x800b6700": {
+      "name": "KartFx_DispatchByStateBits"
+    },
+    "0x800b69c4": {
+      "name": "DrawEffect_Cb_BurstSpawner_30Frame"
+    },
+    "0x800b6c24": {
+      "name": "DrawEffect_Cb_KartTrail_Bind3E"
+    },
+    "0x800b6e08": {
+      "name": "DrawEffect_Cb_MatrixSourced_Bind63"
+    },
+    "0x800b6fa0": {
+      "name": "DrawEffect_Cb_KartItemStatus_Bind0C"
+    },
+    "0x800b72fc": {
+      "name": "DrawEffect_Cb_KartFire_WithSE99"
+    },
+    "0x800b75b8": {
+      "name": "DrawEffect_Cb_WheelSpark_Bind4D"
+    },
+    "0x800b7864": {
+      "name": "DrawEffect_Cb_KartItem_Bind6E_3Phase"
+    },
+    "0x800b7c24": {
+      "name": "DrawEffect_Cb_DualBurstSpawner_2x4"
+    },
+    "0x800b7c9c": {
+      "name": "DrawEffect_Cb_KartWheel_DualSpawn"
+    },
+    "0x800b8054": {
+      "name": "KartFx_Slot4C_AuxAccelBurstTick"
+    },
+    "0x800b8498": {
+      "name": "KartFx_Slot60_DriftSparkTick"
+    },
+    "0x800b8c30": {
+      "name": "KartFx_DustStreamerPieceTick"
+    },
+    "0x800b90f8": {
+      "name": "KartFx_DustStreamerSpawnerTick"
+    },
+    "0x800b9170": {
+      "name": "KartFx_JumpRingGlowTick"
+    },
+    "0x800b92c4": {
+      "name": "KartFx_JumpDustSmokeTick"
+    },
+    "0x800b94b8": {
+      "name": "KartFx_Slot68_JumpDustSpawner"
+    },
+    "0x800b9570": {
+      "name": "KartFx_RingExplodeRayTick"
+    },
+    "0x800b9758": {
+      "name": "KartFx_RingExplodeSparkTick"
+    },
+    "0x800b9a14": {
+      "name": "KartFx_Slot50_RingExplodeTick"
+    },
+    "0x800b9cb0": {
+      "name": "KartFx_Slot5C_TripleStreakTick"
+    },
+    "0x800ba09c": {
+      "name": "KartFx_Slot57_BoostFlameTick"
+    },
+    "0x800ba288": {
+      "name": "KartFx_JumpLandPuffPieceTick"
+    },
+    "0x800ba50c": {
+      "name": "KartFx_JumpLandPuffTick"
+    },
+    "0x800ba6cc": {
+      "name": "KartFx_FlashOrbitTick"
+    },
+    "0x800ba988": {
+      "name": "KartFx_DriftPuffParticleTick"
+    },
+    "0x800babdc": {
+      "name": "KartFx_DriftPuffTick"
+    },
+    "0x800baf24": {
+      "name": "KartFx_HornBlastTick"
+    },
+    "0x800bb1fc": {
+      "name": "KartFx_DispatchGroupA"
+    },
+    "0x800bbbb8": {
+      "name": "KartFx_DriftSparkParticleTick"
+    },
+    "0x800bc028": {
+      "name": "KartFx_BoostChargeIconTick"
+    },
+    "0x800bc26c": {
+      "name": "KartFx_BurnoutChargeTick"
+    },
+    "0x800bd1bc": {
+      "name": "KartFx_BoostExhaustRayTick"
+    },
+    "0x800bd900": {
+      "name": "EffectVfx10_KartTrail_Tick"
+    },
+    "0x800bdd74": {
+      "name": "EffectVfx9_DriftSpark_Tick"
+    },
+    "0x800be21c": {
+      "name": "EffectVfx16_StarItemBurst_Tick"
+    },
+    "0x800be3a0": {
+      "name": "EffectVfx15_StarItemAura_Tick"
+    },
+    "0x800be5a0": {
+      "name": "EffectVfx13or14_MushroomDust_Tick"
+    },
+    "0x800be8e4": {
+      "name": "EffectVfx13_14_84_85_BoostSpark_Tick"
+    },
+    "0x800bef18": {
+      "name": "EffectVfx134_KartHitBurst_Tick"
+    },
+    "0x800bf174": {
+      "name": "EffectVfx29_30_Item4SubFlame_Tick"
+    },
+    "0x800bf4d4": {
+      "name": "EffectItem4SpawnSubFlamePair_Tick"
+    },
+    "0x800bf5b0": {
+      "name": "EffectItemChainIndicator_Tick"
+    },
+    "0x800c0004": {
+      "name": "EffectVfx6D_KartSmokeSpark_Tick"
+    },
+    "0x800c0398": {
+      "name": "KartFx_DispatchGroupE_StateByte"
+    },
+    "0x800c0b04": {
+      "name": "EffectVfx86_BoostRingCenter_Tick"
+    },
+    "0x800c0c7c": {
+      "name": "EffectVfx84_85_BoostChargeRing_Tick"
+    },
+    "0x800c0f80": {
+      "name": "EffectVfx1C_DriftSparkRing_Tick"
+    },
+    "0x800c1534": {
+      "name": "KartFx_DispatchGroupD_RingBurst"
+    },
+    "0x800c1860": {
+      "name": "EffectVfx55_HornBlastTrio_Tick"
+    },
+    "0x800c1bac": {
+      "name": "EffectVfx83_ItemWingBurst_Tick"
+    },
+    "0x800c2124": {
+      "name": "EffectVfx72_ItemStarAura_Tick"
+    },
+    "0x800c253c": {
+      "name": "KartFx_DispatchGroupB_AuxStarBurst"
+    },
+    "0x800c26ec": {
+      "name": "EffectVfx_KartChildAttached_RenderHook"
+    },
+    "0x800c2788": {
+      "name": "EffectVfx_KartChild_SetRotQuatAndRender"
+    },
+    "0x800c27d4": {
+      "name": "EffectVfx88_DustHelix_Tick"
+    },
+    "0x800c2aac": {
+      "name": "DrawEffect_KartWheel_TripleChildUpdate"
+    },
+    "0x800c2e30": {
+      "name": "DrawEffect_KartWheel_TripleChildSpawn"
+    },
+    "0x800c2f48": {
+      "name": "EffectVfx82_FieldItemDropPuff_Tick"
+    },
+    "0x800c3124": {
+      "name": "EffectVfx4E_TextSplash_Tick"
+    },
+    "0x800c34f8": {
+      "name": "EffectVfx7F_PulseFan_Tick"
+    },
+    "0x800c37c8": {
+      "name": "Effect_SmokeCloud_DriveSubslots"
+    },
+    "0x800c39f8": {
+      "name": "Effect_SmokeCloud_Update"
+    },
+    "0x800c3cc8": {
+      "name": "Effect_KartGlow_Update"
+    },
+    "0x800c3ebc": {
+      "name": "Effect_CompoundRing_PlaceChildren"
+    },
+    "0x800c4204": {
+      "name": "Effect_KartAuraChild_Update"
+    },
+    "0x800c439c": {
+      "name": "Effect_KartAuraCompound_Update"
+    },
+    "0x800c4570": {
+      "name": "Effect_KartWaveGlow_Update"
+    },
+    "0x800c46ac": {
+      "name": "Effect_SmokeRing3_Update"
+    },
+    "0x800c48d8": {
+      "name": "Effect_DustBurst4_Update"
+    },
+    "0x800c4c30": {
+      "name": "Effect_HitFlash_Update"
+    },
+    "0x800c508c": {
+      "name": "Effect_ExplosionPiece_Update"
+    },
+    "0x800c55c0": {
+      "name": "Effect_KartOrbitSpark_Update"
+    },
+    "0x800c57e4": {
+      "name": "Effect_SparkPlain_Update"
+    },
+    "0x800c59e0": {
+      "name": "Effect_StarBurst_Update"
+    },
+    "0x800c5c80": {
+      "name": "Effect_SparkSpray_PlaceChildren"
+    },
+    "0x800c5dac": {
+      "name": "Effect_SparkSprayCompound_Update"
+    },
+    "0x800c5fbc": {
+      "name": "DrawEffect_ApplyScaleAndIntensity"
+    },
+    "0x800c6040": {
+      "name": "VfxEffect_InitVariantAndResetPos"
+    },
+    "0x800c6074": {
+      "name": "Effect_Cluster16_Update"
+    },
+    "0x800c64a8": {
+      "name": "Effect_KartJoint15_Res7B_Update"
+    },
+    "0x800c66bc": {
+      "name": "Effect_KartAttach_Res59_Update"
+    },
+    "0x800c68a8": {
+      "name": "Effect_Burst_Res8F_Update"
+    },
+    "0x800c6a40": {
+      "name": "VfxEffect_UpdateTwoChildSpinAndSound_Helper"
+    },
+    "0x800c6cb0": {
+      "name": "Effect_TwoChild_Res8F_Update"
+    },
+    "0x800c6db4": {
+      "name": "Effect_Spark_Res72_Update"
+    },
+    "0x800c6f94": {
+      "name": "Effect_DriftExplosion_Res7A_JointChain_Update"
+    },
+    "0x800c7230": {
+      "name": "Effect_DriftExplosion_Res79_Update"
+    },
+    "0x800c746c": {
+      "name": "Effect_Res77or78_Variant_Update"
+    },
+    "0x800c7658": {
+      "name": "Effect_Explosion_Compound_Update"
+    },
+    "0x800c7918": {
+      "name": "Effect_KartJoint12_3Stage_Update"
+    },
+    "0x800c7c0c": {
+      "name": "VfxEffect_UpdateChildPosScaleAlpha_Helper"
+    },
+    "0x800c7d14": {
+      "name": "Effect_Res5F_Init"
+    },
+    "0x800c7d80": {
+      "name": "VfxEffect_UpdateChildVisScale_Helper"
+    },
+    "0x800c7e8c": {
+      "name": "Effect_Res7Eor62_Variant_Init"
+    },
+    "0x800c7f38": {
+      "name": "VfxEffect_UpdateChildSpinMatrix_Helper"
+    },
+    "0x800c8038": {
+      "name": "Effect_Res76_MatrixSource_Init"
+    },
+    "0x800c80c0": {
+      "name": "DrawEffect_Cb_RalySmokeVariant_Tick"
+    },
+    "0x800c83fc": {
+      "name": "DrawEffect_Cb_RalySmokeSpawner_4Wheel"
+    },
+    "0x800c8490": {
+      "name": "DrawEffect_Cb_KartItemTrail_4Phase"
+    },
+    "0x800c8b6c": {
+      "name": "DrawEffect_Cb_KartItemTrail_SpawnerSwarm"
+    },
+    "0x800c8cd0": {
+      "name": "DrawEffect_KartItemTrail_ExplodeAndPropagate"
+    },
+    "0x800c8e30": {
+      "name": "DrawEffect_Cb_KartShadow_TwoSlot"
+    },
+    "0x800c8f3c": {
+      "name": "DrawEffect_Cb_KartImpactRing_Tick"
+    },
+    "0x800c9160": {
+      "name": "DrawEffect_KartImpactRing_SpawnFromVfx"
+    },
+    "0x800c92f8": {
+      "name": "DrawEffect_Cb_KartVfx4B_StubInit"
+    },
+    "0x800c9364": {
+      "name": "DrawEffect_Cb_CircleFlare_Tick"
+    },
+    "0x800c9500": {
+      "name": "DrawEffect_Cb_ItemBoxBurstFlash_Tick"
+    },
+    "0x800c95b8": {
+      "name": "DrawEffect_Cb_ItemBoxBurstSpawner"
+    },
+    "0x800c968c": {
+      "name": "DrawEffect_Cb_KartWheelSmokeOrbital_Tick"
+    },
+    "0x800c99f0": {
+      "name": "DrawEffect_KartImpactRing_AdvanceByVfxDelta"
+    },
+    "0x800c9b10": {
+      "name": "DrawEffect_Cb_UVScroll_Tick"
+    },
+    "0x800c9be8": {
+      "name": "DrawEffect_Cb_KartSparkleSpray_Tick"
+    },
+    "0x800c9eb8": {
+      "name": "DrawEffect_Cb_KartSparkleSpray_Spawner"
+    },
+    "0x800ca000": {
+      "name": "DrawEffect_Cb_KartRotatingSparkle_Tick"
+    },
+    "0x800ca1e8": {
+      "name": "DrawEffect_Cb_KartHaloPlate_Init"
+    },
+    "0x800ca2c4": {
+      "name": "DrawEffect_Cb_KartFlatBurst_Tick"
+    },
+    "0x800ca4b0": {
+      "name": "DrawEffect_Cb_KartFlatBurst_Spawner"
+    },
+    "0x800ca5ec": {
+      "name": "DrawEffect_Cb_KartTwoPlaneRing_Tick"
+    },
+    "0x800ca79c": {
+      "name": "DrawEffect_SmokePuff_Update"
+    },
+    "0x800ca8d8": {
+      "name": "DrawEffect_SparkDescend_Update"
+    },
+    "0x800caa7c": {
+      "name": "DrawEffect_Splatter_Update"
+    },
+    "0x800cabec": {
+      "name": "DrawEffect_KartSpark_Update"
+    },
+    "0x800cae78": {
+      "name": "DrawEffect_KartDustRing_Update"
+    },
+    "0x800cb0c8": {
+      "name": "DrawEffect_SmokeRingTimed_Update"
+    },
+    "0x800cb344": {
+      "name": "DrawEffect_KartSparkTier_Update"
+    },
+    "0x800cb620": {
+      "name": "DrawEffect_HitFlash_Update"
+    },
+    "0x800cb778": {
+      "name": "DrawEffect_ItemHitFx_Spawn"
+    },
+    "0x800cb8c0": {
+      "name": "DrawEffect_ItemHitOriented_Spawn"
+    },
+    "0x800cbbd4": {
+      "name": "DrawEffect_ItemHitBurst_Spawn"
+    },
+    "0x800cc130": {
+      "name": "DrawEffect_TrailDot_Spawn"
+    },
+    "0x800cc1dc": {
+      "name": "Effect_DustScatter_Update"
+    },
+    "0x800cc5f0": {
+      "name": "Effect_SpinBurst_Update"
+    },
+    "0x800cc878": {
+      "name": "Effect_ApplyParentToChildPair_DcDe"
+    },
+    "0x800cc97c": {
+      "name": "Effect_TwoChild_Res35_36_Init"
+    },
+    "0x800cca94": {
+      "name": "Effect_ApplyUvScrollAlong_E4"
+    },
+    "0x800ccbe4": {
+      "name": "Effect_BindRes31or34_Init"
+    },
+    "0x800ccc84": {
+      "name": "Effect_TwoChildRotate_FromPhase150"
+    },
+    "0x800cce48": {
+      "name": "Effect_TwoChild_Res3C_3D_Init"
+    },
+    "0x800ccf54": {
+      "name": "Effect_BindRes5Aor5B_AnimSpeed"
+    },
+    "0x800cd070": {
+      "name": "Effect_SeC2_PositionalUpdate"
+    },
+    "0x800cd188": {
+      "name": "Effect_BuildYawPitchScaleMtx_48"
+    },
+    "0x800cd300": {
+      "name": "Effect_BindRes25_Init"
+    },
+    "0x800cd390": {
+      "name": "Effect_TwoChildPlace_AndForward_E4"
+    },
+    "0x800cd4bc": {
+      "name": "Effect_SparkSprayCompound_Init"
+    },
+    "0x800cd5f4": {
+      "name": "Effect_FourSpark_Res65_68_Update"
+    },
+    "0x800cdba0": {
+      "name": "Effect_KartTrailRes3A_Update"
+    },
+    "0x800cde7c": {
+      "name": "CoinJumpFx_UpdateParticleGrid"
+    },
+    "0x800ce2a8": {
+      "name": "CoinJumpFx_SpawnSlots"
+    },
+    "0x800ce4c4": {
+      "name": "DbgMenu_Dtor"
+    },
+    "0x800ce54c": {
+      "name": "DbgMenu_TickSubScene"
+    },
+    "0x800ce584": {
+      "name": "DbgMenu_HandleInput"
+    },
+    "0x800ce778": {
+      "name": "DbgScene00_SpriteViewer_Ctor"
+    },
+    "0x800ce7d0": {
+      "name": "DbgScene01_SprMng2Test_Ctor"
+    },
+    "0x800ce830": {
+      "name": "DbgScene02_MapViewer_Ctor"
+    },
+    "0x800ce8b8": {
+      "name": "DbgScene03_TplTest_Ctor"
+    },
+    "0x800ce950": {
+      "name": "DbgScene04_AnmTest_Ctor"
+    },
+    "0x800ceab4": {
+      "name": "DbgScene05_TplTest2_Ctor"
+    },
+    "0x800ceaf0": {
+      "name": "DbgScene06_SprMng2Test_Ctor"
+    },
+    "0x800cec68": {
+      "name": "DbgScene07_ScrEffTest_Ctor"
+    },
+    "0x800cecfc": {
+      "name": "DbgScene08_AtrTest_Ctor"
+    },
+    "0x800ced78": {
+      "name": "DbgScene09_Flash_Ctor"
+    },
+    "0x800cedcc": {
+      "name": "DbgScene10_TtlTest_Ctor"
+    },
+    "0x800ceea8": {
+      "name": "DbgScene11_Empty_Ctor"
+    },
+    "0x800ceeec": {
+      "name": "DbgScene12_PrzTest_Ctor"
+    },
+    "0x800cef7c": {
+      "name": "DbgScene13_PrxTest2_Ctor"
+    },
+    "0x800cf124": {
+      "name": "TestMenuRaceStart_Ctor"
+    },
+    "0x800cf1d8": {
+      "name": "TestMenuRaceStart_Dtor"
+    },
+    "0x800cf260": {
+      "name": "TestMenuRaceStart_Render"
+    },
+    "0x800cf28c": {
+      "name": "TestMenuRaceStart_Update"
+    },
+    "0x800cf318": {
+      "name": "TestMenuItemDesc_Dtor"
+    },
+    "0x800cf3e0": {
+      "name": "TestMenuItemDesc_Render"
+    },
+    "0x800cf430": {
+      "name": "TestMenuItemDesc_Update"
+    },
+    "0x800cf520": {
+      "name": "TestMenuScrollList_Dtor"
+    },
+    "0x800cf57c": {
+      "name": "TestMenuScrollList_Render"
+    },
+    "0x800cf59c": {
+      "name": "TestMenuScrollList_Update"
+    },
+    "0x800cf6f8": {
+      "name": "TestMenuPageD_Dtor"
+    },
+    "0x800cf758": {
+      "name": "TestMenuPageD_Update"
+    },
+    "0x800cf7a4": {
+      "name": "TestMenuFourSprite_Dtor"
+    },
+    "0x800cf84c": {
+      "name": "TestMenuFourSprite_Render"
+    },
+    "0x800cf86c": {
+      "name": "TestMenuFourSprite_Update"
+    },
+    "0x800cf908": {
+      "name": "TestMenuJointBrowser_Dtor"
+    },
+    "0x800cf998": {
+      "name": "TestMenuJointBrowser_Render"
+    },
+    "0x800cf9c8": {
+      "name": "TestMenuJointBrowser_Update"
+    },
+    "0x800cfbcc": {
+      "name": "TestMenuModelView_Dtor"
+    },
+    "0x800cfc28": {
+      "name": "TestMenuModelView_Render"
+    },
+    "0x800cfdd0": {
+      "name": "TestMenuModelView_Update"
+    },
+    "0x800cfe1c": {
+      "name": "TestMenuFwp_Dtor"
+    },
+    "0x800cfe78": {
+      "name": "TestMenuFwp_Render"
+    },
+    "0x800cfe98": {
+      "name": "TestMenuFwp_Update"
+    },
+    "0x800cff08": {
+      "name": "TestMenuModelText_Dtor"
+    },
+    "0x800cff64": {
+      "name": "TestMenuModelText_Render"
+    },
+    "0x800d00e0": {
+      "name": "DbgScene05_TplTest2_InputCheck"
+    },
+    "0x800d012c": {
+      "name": "DbgScene05_TplTest2_Dtor"
+    },
+    "0x800d019c": {
+      "name": "DbgScene05_TplTest2_SetupBlit"
+    },
+    "0x800d01bc": {
+      "name": "DbgScene05_TplTest2_Update"
+    },
+    "0x800d040c": {
+      "name": "DbgScene05_TplTest2_Reset"
+    },
+    "0x800d04d4": {
+      "name": "DbgScene04_AnmTest_Dtor"
+    },
+    "0x800d0530": {
+      "name": "DbgScene04_AnmTest_Draw"
+    },
+    "0x800d0aa0": {
+      "name": "DbgScene04_AnmTest_InputCheck"
+    },
+    "0x800d0aec": {
+      "name": "DbgScene03_TplTest_Dtor"
+    },
+    "0x800d0c08": {
+      "name": "DbgScene03_TplTest_Draw"
+    },
+    "0x800d0d40": {
+      "name": "DbgScene03_TplTest_UpdateCamera"
+    },
+    "0x800d1700": {
+      "name": "DbgScene03_TplTest_SelectStage"
+    },
+    "0x800d1bdc": {
+      "name": "DbgScene03_TplTest_PollInput"
+    },
+    "0x800d1f7c": {
+      "name": "DbgScene03_TplTest_InputCheck"
+    },
+    "0x800d1fdc": {
+      "name": "DbgScene02_MapViewer_Dtor"
+    },
+    "0x800d204c": {
+      "name": "DbgScene02_MapViewer_SetupBlit"
+    },
+    "0x800d206c": {
+      "name": "DbgScene02_MapViewer_InputCheck"
+    },
+    "0x800d2140": {
+      "name": "DbgScene01_SprMng2Test_Dtor"
+    },
+    "0x800d21b0": {
+      "name": "DbgScene01_SprMng2Test_SetupBlit"
+    },
+    "0x800d21d0": {
+      "name": "DbgScene01_SprMng2Test_InputCheck"
+    },
+    "0x800d24b8": {
+      "name": "DbgScene_PreloadResourceTree"
+    },
+    "0x800d27e4": {
+      "name": "DbgScene_AnimSlot_Init"
+    },
+    "0x800d2850": {
+      "name": "DbgScene_DrawTexturedQuad"
+    },
+    "0x800d2b98": {
+      "name": "DbgScene_BaseObject_Dtor"
+    },
+    "0x800d2bec": {
+      "name": "DbgScene_InitAnimSlotArray"
+    },
+    "0x800d2c28": {
+      "name": "DbgScene_CopyMatrix3x4Transpose"
+    },
+    "0x800d2c8c": {
+      "name": "Mtx_TransposeToMtx44"
+    },
+    "0x800d2d24": {
+      "name": "Vec3_OrthoProjectThenScaleByLen"
+    },
+    "0x800d2ea0": {
+      "name": "AngleStepForward_OrSnap"
+    },
+    "0x800d2f54": {
+      "name": "AngleStepTowards_Shortest"
+    },
+    "0x800d3008": {
+      "name": "Vec3_HorizontalYawTo"
+    },
+    "0x800d3048": {
+      "name": "Vec3_PitchTo"
+    },
+    "0x800d30f4": {
+      "name": "Vec3_HorizontalDistance"
+    },
+    "0x800d3184": {
+      "name": "Vec3_Distance"
+    },
+    "0x800d31fc": {
+      "name": "Mtx44_TransformVec3"
+    },
+    "0x800d3278": {
+      "name": "Mtx44_FromEulerXYZTrans"
     },
     "0x800d3bd4": {
       "name": "BuildOrientationFromYaw"
     },
+    "0x800d3c0c": {
+      "name": "FAbs_FloatAsDouble"
+    },
+    "0x800d3c20": {
+      "name": "Mtx44_GetPitchOfNegX"
+    },
+    "0x800d3dcc": {
+      "name": "Mtx44_GetYawOfPosZ_Padded"
+    },
+    "0x800d3f0c": {
+      "name": "Mtx44_GetPitchOfPosZ_Padded"
+    },
+    "0x800d40b8": {
+      "name": "Mtx44_GetTranslation_RowMajor"
+    },
+    "0x800d40d4": {
+      "name": "Mtx_Lerp"
+    },
+    "0x800d4148": {
+      "name": "Mtx_Copy"
+    },
+    "0x800d44e0": {
+      "name": "Mtx44_GetYawPitchOfPosZ"
+    },
+    "0x800d4690": {
+      "name": "Mtx44_GetPitchOfNegX_Lean"
+    },
+    "0x800d47e8": {
+      "name": "Mtx44_GetYawOfPosZ"
+    },
+    "0x800d48d4": {
+      "name": "Mtx44_GetPitchOfPosZ"
+    },
+    "0x800d4a2c": {
+      "name": "Mtx44_GetTranslation_ColMajor"
+    },
+    "0x800d4a48": {
+      "name": "Mtx44_Lerp"
+    },
+    "0x800d4b0c": {
+      "name": "Mtx44_Inverse_GaussJordan"
+    },
+    "0x800d4d9c": {
+      "name": "Mtx44_Scale_Uniform"
+    },
+    "0x800d4e50": {
+      "name": "Mtx44_Scale_PerAxis"
+    },
+    "0x800d4f04": {
+      "name": "Mtx44_Translate"
+    },
+    "0x800d50fc": {
+      "name": "Matrix4_PreMultiplyTranslation"
+    },
+    "0x800d52e8": {
+      "name": "Matrix4_PreMultiplyRotZ"
+    },
+    "0x800d55f4": {
+      "name": "Matrix4_PreMultiplyRotY"
+    },
+    "0x800d5900": {
+      "name": "Matrix4_PreMultiplyRotX"
+    },
+    "0x800d5c0c": {
+      "name": "Matrix4_Multiply"
+    },
+    "0x800d5d50": {
+      "name": "Matrix4_Identity"
+    },
+    "0x800d5d9c": {
+      "name": "Matrix4_Copy"
+    },
+    "0x800d5e20": {
+      "name": "Vec3_Lerp"
+    },
+    "0x800d5e68": {
+      "name": "Vec3_Normalize_SafeXZY"
+    },
+    "0x800d5eec": {
+      "name": "Vec3_ToYawPitch"
+    },
+    "0x800d5fdc": {
+      "name": "Vec3_ToYaw"
+    },
+    "0x800d6008": {
+      "name": "Vec3_ToPitch"
+    },
+    "0x800d60a0": {
+      "name": "Vec3_HorizontalMagnitude"
+    },
+    "0x800d6118": {
+      "name": "Vec3_Magnitude_Wrapper"
+    },
+    "0x800d6138": {
+      "name": "Vec3_ScaleXZ"
+    },
+    "0x800d615c": {
+      "name": "Vec3_Scale"
+    },
+    "0x800d6188": {
+      "name": "Vec2_RotateZ"
+    },
+    "0x800d6218": {
+      "name": "Vec2_RotateY"
+    },
+    "0x800d62a8": {
+      "name": "Vec2_RotateX"
+    },
+    "0x800d6338": {
+      "name": "Vec3_Subtract_DestFirst"
+    },
+    "0x800d636c": {
+      "name": "Vec3_Add_DestFirst"
+    },
     "0x800d63a0": {
       "name": "GetSpawnPosition"
+    },
+    "0x800d63b0": {
+      "name": "Vec3_Copy"
+    },
+    "0x800d63cc": {
+      "name": "Rand_RangeInt"
+    },
+    "0x800d643c": {
+      "name": "Rand_RangeIntMax"
+    },
+    "0x800d6498": {
+      "name": "Rand_RangeFloat"
+    },
+    "0x800d650c": {
+      "name": "Rand_RangeFloatMax"
+    },
+    "0x800d6568": {
+      "name": "SpriteSlot_SetScale"
+    },
+    "0x800d657c": {
+      "name": "SpriteSlot_SetAnimFrameAndApplyScale"
+    },
+    "0x800d6670": {
+      "name": "JointByName_GetLocalMatrix4x3"
+    },
+    "0x800d6728": {
+      "name": "JointByName_GetMatrix4x4Transposed"
+    },
+    "0x800d67e0": {
+      "name": "JointByName_GetWorldPosition"
+    },
+    "0x800d68d4": {
+      "name": "KartDriver_BuildJoint12EulerTransform"
+    },
+    "0x800d6a00": {
+      "name": "SpriteSlot_SetMatrixSourceEnabled_WithReseed"
+    },
+    "0x800d6b20": {
+      "name": "SpriteSlot_SetTranslateDxDy"
+    },
+    "0x800d6b34": {
+      "name": "SpriteSlot_SetJointScaleByName"
+    },
+    "0x800d6ba8": {
+      "name": "SpriteSlot_SetJointVisibilityByName"
+    },
+    "0x800d6c20": {
+      "name": "SpriteSlot_SetTransform"
+    },
+    "0x800d6cec": {
+      "name": "SpriteSlot_SetScaleUniform"
+    },
+    "0x800d6d20": {
+      "name": "SpriteSlot_SetScaleXYZ"
+    },
+    "0x800d6d4c": {
+      "name": "SpriteSlot_SetRotationQuatFromVec"
+    },
+    "0x800d6d84": {
+      "name": "SpriteSlot_SetRotationQuat"
+    },
+    "0x800d6db0": {
+      "name": "SpriteSlot_SetPositionFromVec"
+    },
+    "0x800d6de8": {
+      "name": "SpriteSlot_Destroy"
+    },
+    "0x800d6e2c": {
+      "name": "SpriteSlot_RegisterDraw"
+    },
+    "0x800d6f40": {
+      "name": "SpriteSlot_Render"
+    },
+    "0x800d6f64": {
+      "name": "SpriteSlot_TickAnim"
+    },
+    "0x800d717c": {
+      "name": "SpriteSlot_InitLoop"
+    },
+    "0x800d7308": {
+      "name": "SpriteSlot_InitNonLoop"
     },
     "0x800d7490": {
       "name": "ItemAlias_SourceToDest"
@@ -1101,23 +6012,545 @@
     "0x800d7540": {
       "name": "ItemAlias_HitRemapLookup"
     },
+    "0x800d75f8": {
+      "name": "ItemAliasTable_LookupSlotIndex"
+    },
+    "0x800d76a4": {
+      "name": "ItemClass_GetFlagByte1"
+    },
+    "0x800d76bc": {
+      "name": "ItemClass_GetFlagByte0"
+    },
     "0x800d76d4": {
       "name": "GetItemDataEntry"
     },
     "0x800d76e8": {
       "name": "ItemTable_PopulateAliasedSlots"
     },
+    "0x800d78fc": {
+      "name": "ItemObject_CheckKartCollision"
+    },
+    "0x800d7acc": {
+      "name": "ItemObject_CheckPairCollision"
+    },
+    "0x800d7c94": {
+      "name": "ItemObject_RaycastWallStub"
+    },
+    "0x800d7cb4": {
+      "name": "ItemObject_GetGroundTypeAt"
+    },
     "0x800d7d08": {
       "name": "ItemObject_SpawnWithAlias"
     },
+    "0x800d7f30": {
+      "name": "SpriteSlot_Container_Free"
+    },
+    "0x800d7f70": {
+      "name": "ItemObject_AllocFromPool"
+    },
+    "0x800d802c": {
+      "name": "ItemObjectManager_Render"
+    },
+    "0x800d80bc": {
+      "name": "ItemObjectManager_Reset"
+    },
+    "0x800d8150": {
+      "name": "ItemObjectManager_Update"
+    },
     "0x800d81e0": {
       "name": "ItemObjectManager_Init"
+    },
+    "0x800d8288": {
+      "name": "ItemObjectManager_RenderImpl"
+    },
+    "0x800d85b8": {
+      "name": "ItemObjectManager_TickActiveItems"
+    },
+    "0x800d8840": {
+      "name": "ItemHitRegistry_RemoveEntry"
+    },
+    "0x800d89d8": {
+      "name": "ItemHitRegistry_AddEntry"
+    },
+    "0x800d8c24": {
+      "name": "ItemHitRegistry_PruneStale"
+    },
+    "0x800d8d8c": {
+      "name": "ItemHitRegistry_Reset"
+    },
+    "0x800d8e20": {
+      "name": "Item_ComputeBiasedTargetPos"
+    },
+    "0x800d8f6c": {
+      "name": "Vec3_AddNormalizedXZ"
+    },
+    "0x800d8ff0": {
+      "name": "Item_PrepareHitRebound"
+    },
+    "0x800d91b8": {
+      "name": "Item_AdvanceTetherToJoint13"
+    },
+    "0x800d9340": {
+      "name": "Item_OrbitAnchorKart"
+    },
+    "0x800d957c": {
+      "name": "Item_AdvanceProjectileGravity"
+    },
+    "0x800d9768": {
+      "name": "Item_AdvanceFallingDrop"
+    },
+    "0x800d98ac": {
+      "name": "Item_AdvanceProjectileSimple"
+    },
+    "0x800d9a44": {
+      "name": "Item_BounceOffWall"
+    },
+    "0x800d9bfc": {
+      "name": "Item_CheckWallCollision"
+    },
+    "0x800d9d50": {
+      "name": "Item_DecayVelocityScalar"
+    },
+    "0x800d9d74": {
+      "name": "Item_HomingScanAndSteer"
+    },
+    "0x800da118": {
+      "name": "Item_AccelClampVelocity"
+    },
+    "0x800da1e4": {
+      "name": "Item_InitLaunchFromKart"
+    },
+    "0x800da63c": {
+      "name": "Item_RenderFlyingFromKart"
+    },
+    "0x800da740": {
+      "name": "Item_RenderCharacterScaledFromJoint12"
+    },
+    "0x800da890": {
+      "name": "Item_RenderHandheldByCharacter"
+    },
+    "0x800dabbc": {
+      "name": "GabyouItem_BuildLocalTransformFromHandJoint"
+    },
+    "0x800dae88": {
+      "name": "ItemObject_DecrementCategoryBudget"
+    },
+    "0x800daebc": {
+      "name": "Item_PropagateHitToAllDrivers"
+    },
+    "0x800db060": {
+      "name": "Item_PropagateHitToDriversInRadius"
+    },
+    "0x800db2b0": {
+      "name": "ItemObject_TargetFirstHomingMatch"
+    },
+    "0x800db3c0": {
+      "name": "Item_SpawnGroundExplosionAndFX"
+    },
+    "0x800db6bc": {
+      "name": "ItemObject_DispatchVtable1C_IfBoundedItem"
+    },
+    "0x800db744": {
+      "name": "ItemObject_DispatchVtable18_GetState"
+    },
+    "0x800db784": {
+      "name": "Item_ComputeYawRelativeApproach"
+    },
+    "0x800db864": {
+      "name": "Item_AdvanceTrackedHomingState"
+    },
+    "0x800dba00": {
+      "name": "Item_ProbeLateralGroundPitch"
+    },
+    "0x800dbba4": {
+      "name": "Item_ProbeForwardGroundPitch"
+    },
+    "0x800dbd48": {
+      "name": "Item_BendVelocityByGroundProbe"
+    },
+    "0x800dbef8": {
+      "name": "GabyouItem_BuildOrUpdateAttachTransform"
+    },
+    "0x800dc418": {
+      "name": "ItemObject_AllocGabyou"
+    },
+    "0x800dc4c8": {
+      "name": "FindNearestDriverWithinConeAndRadius"
+    },
+    "0x800dc638": {
+      "name": "FinalLapCoinJump_CheckActiveForObject"
+    },
+    "0x800dc690": {
+      "name": "KartDriver_GetJoint13_WorldPos"
+    },
+    "0x800dc6d0": {
+      "name": "KartDriver_TransformWorldToLocalY0"
+    },
+    "0x800dc784": {
+      "name": "KartCharacterParam_GetBoostFxSizeFactor"
+    },
+    "0x800dc818": {
+      "name": "KartFxParam_GetConst1p5"
+    },
+    "0x800dc820": {
+      "name": "KartCharacterParam_GetFxSizeFactor"
+    },
+    "0x800dc8b4": {
+      "name": "KartCharacterParam_GetVfxBindHeightOffset"
+    },
+    "0x800dc948": {
+      "name": "KartCharacterParam_GetKinopioBoostBonus"
+    },
+    "0x800dc9dc": {
+      "name": "KartCharacterParam_GetIdentityIndex"
+    },
+    "0x800dca70": {
+      "name": "Item_ApplyHitToTargetDriver"
+    },
+    "0x800dcf88": {
+      "name": "KartItem_QueryEffectStateFromIse"
+    },
+    "0x800dd060": {
+      "name": "KartItem_ApplyEffectToTarget"
+    },
+    "0x800dd1ec": {
+      "name": "ItemTracker_TickLockOnAndApply"
+    },
+    "0x800dd5fc": {
+      "name": "ItemTracker_GetTargetKart"
+    },
+    "0x800dd668": {
+      "name": "ItemTracker_SetTrackPhase"
+    },
+    "0x800dd728": {
+      "name": "ItemTracker_ReleaseLock"
+    },
+    "0x800dd790": {
+      "name": "ItemTracker_AcquireLock"
+    },
+    "0x800dd840": {
+      "name": "ItemObject_GetByteAt0xEC"
+    },
+    "0x800dd874": {
+      "name": "ItemObject_SetByteAt0xEC"
+    },
+    "0x800dd89c": {
+      "name": "ItemObject_SetField168"
+    },
+    "0x800dd8ac": {
+      "name": "ItemObject_SetPair180"
+    },
+    "0x800dd8c0": {
+      "name": "ItemObject_GetPositionPtr"
+    },
+    "0x800dd8d8": {
+      "name": "ItemObject_WritePositionTo"
+    },
+    "0x800dd904": {
+      "name": "ItemObject_WriteVec3At0x190To"
+    },
+    "0x800dd930": {
+      "name": "ItemObject_SetByte18c"
     },
     "0x800dd940": {
       "name": "PreloadItemResources"
     },
     "0x800def74": {
       "name": "PreloadEffectResources"
+    },
+    "0x800df56c": {
+      "name": "ShellPilePiece_Tick"
+    },
+    "0x800df974": {
+      "name": "ShellPile_Spawn"
+    },
+    "0x800dfc9c": {
+      "name": "SoundMgr_StopSE_OrSpecial"
+    },
+    "0x800dfce8": {
+      "name": "SoundMgr_PlaySE_WithChannel"
+    },
+    "0x800dfd28": {
+      "name": "SoundMgr_PlaySE_Positional"
+    },
+    "0x800dfeb8": {
+      "name": "SoundMgr_CountActiveSEInstances"
+    },
+    "0x800dff34": {
+      "name": "ItemObject_TickHornBlastShockwave"
+    },
+    "0x800e03e4": {
+      "name": "ItemObject_Tick_Kind29_LightAttachment"
+    },
+    "0x800e076c": {
+      "name": "ItemObject_Tick_Kind28_BananaTrioChild"
+    },
+    "0x800e0b10": {
+      "name": "ItemObject_Tick_Kind28_BananaTrioSpawner"
+    },
+    "0x800e0de4": {
+      "name": "ItemObject_Tick_Kind27_TimedDrop"
+    },
+    "0x800e10e8": {
+      "name": "ItemObject_Tick_Kind2426_FastDrop"
+    },
+    "0x800e1298": {
+      "name": "ItemObject_Tick_Dispatch24To29"
+    },
+    "0x800e1e70": {
+      "name": "ItemObject_Tick_Dispatch1eTo23"
+    },
+    "0x800e246c": {
+      "name": "ItemObject_Tick_Dispatch16To1d"
+    },
+    "0x800e2cf0": {
+      "name": "ItemObject_Tick_DispatchcTo15"
+    },
+    "0x800e33c4": {
+      "name": "ItemObject_Tick_DispatchShellGroup"
+    },
+    "0x800e3bd4": {
+      "name": "ItemObject_Tick_AwaitInitThenFree"
+    },
+    "0x800e3c30": {
+      "name": "ItemObject_Teresa_TrackToKart_Sub"
+    },
+    "0x800e40c8": {
+      "name": "ItemObject_Teresa_GrabAndArc_Sub"
+    },
+    "0x800e4760": {
+      "name": "ItemObject_Tick_Kind2b_Teresa"
+    },
+    "0x800e4f18": {
+      "name": "ItemObject_Tick_Kind2c_Horn"
+    },
+    "0x800e5380": {
+      "name": "ItemObject_ChainShell_BoundOrbit_Sub"
+    },
+    "0x800e55e4": {
+      "name": "ItemObject_ChainShell_GrabAndArc_Sub"
+    },
+    "0x800e5fc0": {
+      "name": "ItemObject_Tick_Kind2d_ChainShellPair"
+    },
+    "0x800e69e8": {
+      "name": "GabyouItem_OnHitFlush_2Eto31"
+    },
+    "0x800e6c48": {
+      "name": "GabyouItem_OnImpactTick_2Eto31"
+    },
+    "0x800e6f78": {
+      "name": "GabyouItem_Tick_HeldAndHoming_2Eto31"
+    },
+    "0x800e7ec4": {
+      "name": "GabyouItem_Dispatch_2Eto31"
+    },
+    "0x800e8818": {
+      "name": "BananaTriple_StuckOnDriverTick_32to36"
+    },
+    "0x800e8acc": {
+      "name": "BananaTriple_OnImpactTick_32to36"
+    },
+    "0x800e8cac": {
+      "name": "BananaTriple_Tick_HeldAndHoming_32to36"
+    },
+    "0x800e9934": {
+      "name": "BananaTriple_Dispatch_32to36"
+    },
+    "0x800e9e94": {
+      "name": "TaruItem_OnGroundDriftTick_25"
+    },
+    "0x800ea0e8": {
+      "name": "TaruItem_Tick_HeldAndHoming_25"
+    },
+    "0x800ea958": {
+      "name": "TaruItem_Dispatch_25"
+    },
+    "0x800eadb4": {
+      "name": "EggItem_OnGroundDriftTick_3B3C"
+    },
+    "0x800eb01c": {
+      "name": "EggItem_Tick_HeldAndHoming_3B3C"
+    },
+    "0x800eb870": {
+      "name": "EggItem_Dispatch_3B3C"
+    },
+    "0x800ebc00": {
+      "name": "MukadeItem_Tick_HeldAndHoming_3839"
+    },
+    "0x800ec268": {
+      "name": "MukadeItem_TickHeldOrSnake_3839"
+    },
+    "0x800ec828": {
+      "name": "MukadeItem_Dispatch_3839"
+    },
+    "0x800ed010": {
+      "name": "Dossun_State2_Drop"
+    },
+    "0x800ed3c0": {
+      "name": "Dossun_State1And2_HeldOrFly"
+    },
+    "0x800ede8c": {
+      "name": "ItemObject_Tick_Kind3b_Dossun"
+    },
+    "0x800ee120": {
+      "name": "OnchiSpeaker_State2_Active"
+    },
+    "0x800ee620": {
+      "name": "OnchiSpeaker_State2_Flight"
+    },
+    "0x800ee8d8": {
+      "name": "OnchiSpeaker_State1_Held"
+    },
+    "0x800eef34": {
+      "name": "ItemObject_Tick_Kind3c_OnchiSpeaker"
+    },
+    "0x800ef2dc": {
+      "name": "GreenShell_State1_Held"
+    },
+    "0x800efc84": {
+      "name": "ItemObject_Tick_Kind3dTo3f_GreenShell"
+    },
+    "0x800f091c": {
+      "name": "Enraku_State1_Held"
+    },
+    "0x800f0ee0": {
+      "name": "ItemObject_Tick_Kind40_Enraku"
+    },
+    "0x800f17f4": {
+      "name": "KuppaShell_State1_Held"
+    },
+    "0x800f1f84": {
+      "name": "ItemObject_Tick_Kind41_KuppaShell"
+    },
+    "0x800f2620": {
+      "name": "HeartCompoundItem_TickReleasePhase"
+    },
+    "0x800f2910": {
+      "name": "HeartCompoundItem_TickCarryPhase"
+    },
+    "0x800f2b54": {
+      "name": "HeartCompoundItem_Update"
+    },
+    "0x800f2d60": {
+      "name": "GabyouItem_TickActive"
+    },
+    "0x800f33dc": {
+      "name": "GabyouItem_Update"
+    },
+    "0x800f38f8": {
+      "name": "KartImpactRingItem_Update"
+    },
+    "0x800f3b20": {
+      "name": "GabyouTripleChild_TickHitResolve"
+    },
+    "0x800f3dc4": {
+      "name": "GabyouTripleChild_TickActive"
+    },
+    "0x800f4540": {
+      "name": "GabyouTripleChild_Update"
+    },
+    "0x800f4914": {
+      "name": "GabyouTripleParent_Update"
+    },
+    "0x800f4c28": {
+      "name": "ShellItem_TickReboundOrCarry"
+    },
+    "0x800f4e5c": {
+      "name": "ShellItem_TickHitResolve"
+    },
+    "0x800f5068": {
+      "name": "ShellItem_TickActive"
+    },
+    "0x800f583c": {
+      "name": "ShellItem_Update"
+    },
+    "0x800f5b7c": {
+      "name": "PowItem_TickHitResolve"
+    },
+    "0x800f5e20": {
+      "name": "PowItem_TickActive"
+    },
+    "0x800f6c18": {
+      "name": "PowItem_Update"
+    },
+    "0x800f6f54": {
+      "name": "BombItem_TickActive"
+    },
+    "0x800f7584": {
+      "name": "BombItem_Update"
+    },
+    "0x800f7afc": {
+      "name": "TornadoItem_TickActive"
+    },
+    "0x800f869c": {
+      "name": "TornadoLaunch_Tick"
+    },
+    "0x800f8fd8": {
+      "name": "Tornado_HomingChildTick"
+    },
+    "0x800f9148": {
+      "name": "Tornado_LockOnHomingTick"
+    },
+    "0x800f9618": {
+      "name": "Tornado_FlightTick"
+    },
+    "0x800f9fd4": {
+      "name": "TornadoItem_HoldTick"
+    },
+    "0x800fa3d8": {
+      "name": "GabyouItem_ReturnToHandTick"
+    },
+    "0x800fa6dc": {
+      "name": "GabyouItem_FallRecoveryTick"
+    },
+    "0x800fa98c": {
+      "name": "GabyouItem_FlightAndLockOnTick"
+    },
+    "0x800fb818": {
+      "name": "GabyouItem_Tick"
+    },
+    "0x800fbbd4": {
+      "name": "BombItem_DropAndSpawnExplosionTick"
+    },
+    "0x800fbd88": {
+      "name": "BombExplosion_UpdateShockwaveVfx"
+    },
+    "0x800fc6d8": {
+      "name": "BombExplosion_InitOrDestroy"
+    },
+    "0x800fc854": {
+      "name": "BombItem_Tick"
+    },
+    "0x800fccac": {
+      "name": "HandOverItem_HandToHandTick"
+    },
+    "0x800fd648": {
+      "name": "HandOverItem_Tick"
+    },
+    "0x800fd784": {
+      "name": "Item_SpawnHitBurstParticles"
+    },
+    "0x800fd948": {
+      "name": "StarItem_BoundToVictimTick"
+    },
+    "0x800fdf24": {
+      "name": "StarItem_FallRecoveryTick"
+    },
+    "0x800fe1ec": {
+      "name": "StarItem_FlightAndLockOnTick"
+    },
+    "0x800fea94": {
+      "name": "StarItem_Tick"
+    },
+    "0x800fee8c": {
+      "name": "Boomerang_ReturnAndAcquireTargetTick"
+    },
+    "0x800ff18c": {
+      "name": "Boomerang_LaunchAndTickStateMachine"
+    },
+    "0x800ffbb8": {
+      "name": "BoomerangItem_Tick"
     },
     "0x8011dca4": {
       "name": "ResourceSlot_Load"
@@ -1378,7 +6811,7 @@
       "name": "LookupSin"
     },
     "0x80186998": {
-      "name": "LUT_Sine"
+      "name": "LUT_Sin12Bit"
     },
     "0x80187d2c": {
       "name": "NokoNoko_Update"
@@ -1484,6 +6917,9 @@
     },
     "0x8019cd30": {
       "name": "KartMovement_PhysicsStep"
+    },
+    "0x8019e1a8": {
+      "name": "CarObject_Dtor"
     },
     "0x8019e20c": {
       "name": "KartMovement_Init"
@@ -2324,6 +7760,9 @@
     "0x80266798": {
       "name": "GX_ResetVertex"
     },
+    "0x80266da8": {
+      "name": "__GXSetCullMode"
+    },
     "0x802682a8": {
       "name": "GXInitTexObjFilter"
     },
@@ -2402,6 +7841,9 @@
     "0x80295798": {
       "name": "DVDRead"
     },
+    "0x802bd07c": {
+      "name": "HSD_DObjReqAnimAllByFlags"
+    },
     "0x802bd4c0": {
       "name": "HSD_DObj_Disp"
     },
@@ -2432,8 +7874,20 @@
     "0x802c107c": {
       "name": "GX_SetCullMode"
     },
+    "0x802c2348": {
+      "name": "HSD_PObjReqAnimByFlags"
+    },
+    "0x802c3bc0": {
+      "name": "HSD_AObjReqAnim"
+    },
     "0x802c60fc": {
       "name": "RenderTarget_Create"
+    },
+    "0x802c8ccc": {
+      "name": "HSD_FObjReqAnimAll"
+    },
+    "0x802ca80c": {
+      "name": "HSD_MObjReqAnimAllByFlags"
     },
     "0x802cb9ec": {
       "name": "HSD_PObj_DrawDisplayList"
@@ -2444,7 +7898,13 @@
     "0x802cd218": {
       "name": "hsd_pobj_ClassInit"
     },
-    "0x802ce078": {
+    "0x802cdaf8": {
+      "name": "HSD_JObjReqAnimByFlags"
+    },
+    "0x802cdb80": {
+      "name": "HSD_JObjReqAnimAllByFlags"
+    },
+    "0x802cde48": {
       "name": "HSD_JObjReqAnimAll"
     },
     "0x802cfedc": {
@@ -2455,6 +7915,9 @@
     },
     "0x802d6e3c": {
       "name": "MTXRotEulerXYZ"
+    },
+    "0x802d7c1c": {
+      "name": "HSD_RObjReqAnimAllByFlags"
     },
     "0x802dc89c": {
       "name": "HSD_ArchiveGetPublicAddress"

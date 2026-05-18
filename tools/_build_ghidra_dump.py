@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-FN_RAW = Path(r"C:\Users\naari\.claude\projects\C--Users-naari-src-github-com-naari3-mkgp2-patch\c4387ded-1177-4b77-be41-2a7a5f05cf4c\tool-results\mcp-ghidra-list_functions_enhanced-1778987253829.txt")
+FN_RAW = Path(r"C:\Users\naari\.claude\projects\C--Users-naari-src-github-com-naari3-mkgp2-decomp\fee57a42-a9ea-4e43-a78b-7f522607616e\tool-results\mcp-ghidra-list_functions_enhanced-1779128652990.txt")
 GL_RAW = HERE / "_ghidra_dump_globals.txt"
 OUT = HERE / "ghidra_symbol_dump.json"
 
