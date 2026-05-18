@@ -259,6 +259,11 @@ game/ServiceMenu.c:
 	extabindex  start:0x800211C4 end:0x800211D0
 	.text       start:0x80073E7C end:0x80073ECC
 
+game/card_eject.c:
+	extab       start:0x80008418 end:0x80008420
+	extabindex  start:0x800213A4 end:0x800213B0
+	.text       start:0x80077A54 end:0x80077AFC
+
 game/CourseAuxClass_VtableDtor.c:
 	extab       start:0x800087A0 end:0x800087A8
 	extabindex  start:0x80021578 end:0x80021584
