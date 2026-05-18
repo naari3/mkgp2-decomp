@@ -435,6 +435,7 @@ config.libs = [
         "progress_category": "game",
         "objects": [
             Object(Matching, "sound/ISESlot.c"),
+            Object(Matching, "sound/SoundCtrl_SetVolume.c"),
         ],
     },
     {
