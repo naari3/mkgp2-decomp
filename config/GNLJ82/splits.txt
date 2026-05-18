@@ -553,6 +553,11 @@ game/GX_BeginDraw.c:
 	extabindex  start:0x80028FC4 end:0x80028FD0
 	.text       start:0x801F7B98 end:0x801F7C18
 
+game/GX_EndDraw.c:
+	extab       start:0x800175E0 end:0x800175E8
+	extabindex  start:0x80028FD0 end:0x80028FDC
+	.text       start:0x801F7C18 end:0x801F7CD8
+
 game/dtor_801F8214.c:
 	extab       start:0x80017630 end:0x80017638
 	extabindex  start:0x80029018 end:0x80029024

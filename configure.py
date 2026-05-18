@@ -413,6 +413,7 @@ config.libs = [
             Object(Matching, "game/ItemSelect.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/DisplayBuffer_GetByIndex.c"),
             Object(Matching, "game/GX_BeginDraw.c"),
+            Object(Matching, "game/GX_EndDraw.c", extra_cflags=["-sdata 16"]),
             Object(Matching, "game/TexMgr_Apply.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/ProcessSystemTick.c"),
             Object(Matching, "game/NokoNoko_CountDefeated.c"),
