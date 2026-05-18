@@ -162,6 +162,9 @@ game/PCBComm_PromoteToClientConfirmed.c:
 	extabindex  start:0x800218C0 end:0x800218CC
 	.text       start:0x800856CC end:0x800856F4
 
+game/TCPConn.c:
+	.text       start:0x80086F54 end:0x8008707C
+
 game/TCPConn_LogError.c:
 	extab       start:0x80008E94 end:0x80008E9C
 	extabindex  start:0x800219A4 end:0x800219B0

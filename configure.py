@@ -414,6 +414,7 @@ config.libs = [
             Object(Matching, "game/VBlank.c"),
             Object(Matching, "game/PCBComm_PromoteToClientConfirmed.c"),
             Object(Matching, "game/TCPConn_LogError.c"),
+            Object(Matching, "game/TCPConn.c"),
             Object(Matching, "game/AddCoinsFromExtraStage.c"),
             Object(Matching, "game/NokoNokoChallenge_TransitionToResult.c"),
             Object(Matching, "game/SuikaBallObj_Render.c"),
