@@ -126,7 +126,7 @@ else:
 
 **sub の `<task-notification>` を受信したら、cycle 状況に関わらず即実行**。
 
-各 merge は次の 7 ステップ:
+各 merge は次の 9 ステップ:
 1. `git -C <worktree> log -1 --format=full HEAD` + `Read worktree/HANDOFF.md` で **sub の commit msg / notes / docs_notes / blocked_reason を全部読む** (worktree cleanup 前のみ可)
 2. `python tools/merge_promote.py --batch <id> --no-build --no-state --no-cleanup` で patch apply
 3. HANDOFF 指示通り configure.py / splits.txt / symbols.txt を Edit (機械的)
@@ -135,6 +135,7 @@ else:
 6. commit + worktree+branch cleanup
 7. state.json flip (fn → matched, batch → merged, active_subs から sub 削除) + log
 8. **知見を即追記** (skill 「知見反映」表に従って `~/.claude/skills/mkgp2-match/SKILL.md` / `docs/per_fn_matching_strategy.md` / `docs/large_extab_group_strategy.md` / 本 cycle.md / 本 mkgp2-orch skill のいずれかへ)
+9. **`git push origin main`** で remote 公開 (各 merge ごと、累積待ち禁止)
 
 複数 notification を受信したら順番に処理 (1 件ずつ build verify する。`--no-build` で apply して最後に集約 build する変則は build fail 時の責任所在が曖昧になるので避ける)。
 

@@ -80,6 +80,7 @@ sub からの `<task-notification>` (status=completed) を受信したら、cycl
 5. commit + worktree+branch cleanup
 6. state.json flip (fn → matched, batch → merged, active_subs から sub 削除)
 7. 知見反映 (次節「知見反映: 各 merge で必須」参照)
+8. **`git push origin main`** (各 merge ごと、累積待ち禁止)。push 失敗 (rejected / network) は中断扱い、main agent がエスカレーション
 
 複数 notification が同時/連続で来た場合は **順番に処理して構わない**。各 merge は ~30s-2min で context bloat 軽微。同 cycle に dispatch / 編成も chain 可能。
 
