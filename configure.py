@@ -345,6 +345,7 @@ config.libs = [
             # + tools/postprocess_extab_user.py rename). The extab_padding
             # kwarg routes this TU through the mwcc_sjis_extab build rule so
             # the postprocess hook runs.
+            Object(Matching, "game/FlowDispatcher_ScopedTimer.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/HeapStats.c", extab_padding=b"\x00\x00"),
                     Object(Matching, "game/auto_800A8F4C_block.c", extab_padding=b"\x00\x00"),
 ],
@@ -367,7 +368,7 @@ config.libs = [
             Object(Matching, "game/Profiler.c"),
             Object(Matching, "game/Profiler_RecordFrame.c"),
             Object(Matching, "game/MetricsTable.c"),
-            Object(Matching, "game/MemoryManager_TimedFree.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/MemoryManager_TimedFree.cpp", extab_padding=b"\x00\x00"),
             Object(Matching, "game/card_eject.c"),
             Object(Matching, "game/SceneRender.c"),
             Object(Matching, "game/Archive.c"),

@@ -5,12 +5,12 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void DebugPrintf();
-extern void OSFreeToHeap();
-extern void OSGetTick();
-extern void Profiler_RecordFrame();
-extern void fn_8027248C();
-extern void fn_80276D30();
+extern "C" void DebugPrintf();
+extern "C" void OSFreeToHeap();
+extern "C" void OSGetTick();
+extern "C" void Profiler_RecordFrame();
+extern "C" void fn_8027248C();
+extern "C" void fn_80276D30();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806CF010;
@@ -25,14 +25,14 @@ extern unsigned int lbl_802E9DB0[];
 extern unsigned int lbl_802E9DD0[];
 
 /* --- forward decls --- */
-asm void MemoryManager_TimedFree(void);
+extern "C" asm void MemoryManager_TimedFree(void);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void dtor_8002CCD8();
+extern "C" void __dt__11ScopedTimerFv();
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; void *f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; } extab_MemoryManager_TimedFree = { 0x101A0000, 0x00000028, 0x00000040, 0x00000050, 0x00070038, 0x0000007C, 0x00150040, 0x000000E0, 0x00000038, 0x000000E4, 0x00150040, 0x00000144, 0x0000004C, 0x00000000, 0x02000008, (void *)&dtor_8002CCD8, 0x8F000000, 0x0000013C, 0x00000010, 0x8D000010 };
+__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; void *f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; } extab_MemoryManager_TimedFree = { 0x101A0000, 0x00000028, 0x00000040, 0x00000050, 0x00070038, 0x0000007C, 0x00150040, 0x000000E0, 0x00000038, 0x000000E4, 0x00150040, 0x00000144, 0x0000004C, 0x00000000, 0x02000008, (void *)&__dt__11ScopedTimerFv, 0x8F000000, 0x0000013C, 0x00000010, 0x8D000010 };
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
@@ -41,7 +41,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void MemoryManager_TimedFree(void) {
+extern "C" asm void MemoryManager_TimedFree(void) {
     nofralloc
     stwu r1, -0x240(r1)
     mflr r0
@@ -139,4 +139,3 @@ asm void MemoryManager_TimedFree(void) {
     mtlr r0
     blr
 }
-

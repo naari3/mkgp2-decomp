@@ -16,6 +16,11 @@ Sections:
 sysdolphin/baselib/_hsd_consts.c:
 	.sdata2     start:0x806DCC58 end:0x806DCC68
 
+game/FlowDispatcher_ScopedTimer.c:
+	extab       start:0x800056B8 end:0x800056F0
+	extabindex  start:0x8001F3D0 end:0x8001F3E8
+	.text       start:0x8002CB80 end:0x8002CD7C
+
 game/WrapInRange.c:
 	.text       start:0x8002CD7C end:0x8002CD9C
 
@@ -127,7 +132,7 @@ game/SceneRender.c:
 sound/SoundChannels.c:
 	.text       start:0x8003AD4C end:0x8003ADFC
 
-game/MemoryManager_TimedFree.c:
+game/MemoryManager_TimedFree.cpp:
 	extab       start:0x80005FDC end:0x8000602C
 	extabindex  start:0x8001FC34 end:0x8001FC40
 	.text       start:0x8003AFB8 end:0x8003B120
