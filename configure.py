@@ -358,6 +358,7 @@ config.libs = [
             Object(Matching, "game/Vtable_CallSlot2.cpp"),
             Object(Matching, "game/ObjectBase.c"),
             Object(Matching, "game/GameMode_Base.c"),
+            Object(Matching, "game/Debug.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Camera.c"),
             Object(Matching, "game/Profiler.c"),
             Object(Matching, "game/Profiler_RecordFrame.c"),

@@ -29,6 +29,11 @@ game/ObjectBase.c:
 game/GameMode_Base.c:
 	.text       start:0x8002CE3C end:0x8002CE4C
 
+game/Debug.c:
+	extab       start:0x80005708 end:0x80005720
+	extabindex  start:0x8001F40C end:0x8001F430
+	.text       start:0x8002CE4C end:0x8002CFB8
+
 game/VBlank.c:
 	.text       start:0x8002D040 end:0x8002D048
 
