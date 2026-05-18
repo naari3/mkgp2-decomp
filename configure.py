@@ -388,6 +388,7 @@ config.libs = [
             Object(Matching, "game/SpawnTable.c"),
             Object(Matching, "game/VBlank.c"),
             Object(Matching, "game/PCBComm_PromoteToClientConfirmed.c"),
+            Object(Matching, "game/TCPConn_LogError.c"),
             Object(Matching, "game/AddCoinsFromExtraStage.c"),
             Object(Matching, "game/NokoNokoChallenge_TransitionToResult.c"),
             Object(Matching, "game/SpriteSystem_EnsureInit.c"),

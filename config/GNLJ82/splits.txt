@@ -113,6 +113,11 @@ game/PCBComm_PromoteToClientConfirmed.c:
 	extabindex  start:0x800218C0 end:0x800218CC
 	.text       start:0x800856CC end:0x800856F4
 
+game/TCPConn_LogError.c:
+	extab       start:0x80008E94 end:0x80008E9C
+	extabindex  start:0x800219A4 end:0x800219B0
+	.text       start:0x80087894 end:0x800878C8
+
 game/GlobalTimer.c:
 	.text       start:0x80087A40 end:0x80087A6C
 
