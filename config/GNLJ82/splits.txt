@@ -507,6 +507,11 @@ game/GetEnemyParam.c:
 	extabindex  start:0x80028490 end:0x8002849C
 	.text       start:0x801DE73C end:0x801DE7B0
 
+game/AI_GrantItem.c:
+	extab       start:0x800164A8 end:0x800164B0
+	extabindex  start:0x800287FC end:0x80028808
+	.text       start:0x801E65B8 end:0x801E6670
+
 game/AI_UseItem.cpp:
 	extab       start:0x800164F8 end:0x80016500
 	extabindex  start:0x80028850 end:0x8002885C

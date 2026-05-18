@@ -479,6 +479,7 @@ config.libs = [
             Object(Matching, "game/AI_UseItem.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/AI_GetLapDifference.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/AI_GetYaw.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/AI_GrantItem.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/AI_HasItem.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/AI_GetItemType.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Item_GetDescriptor.c", extra_cflags=["-Cpp_exceptions on"]),
