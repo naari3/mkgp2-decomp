@@ -341,6 +341,11 @@ game/WarpZone_Dtor.c:
 	extabindex  start:0x800226A0 end:0x800226AC
 	.text       start:0x800AA888 end:0x800AA8D0
 
+game/main.c:
+	extab       start:0x8000A150 end:0x8000A158
+	extabindex  start:0x800227E4 end:0x800227F0
+	.text       start:0x800AC894 end:0x800AC8FC
+
 game/clCGameDemo_Dtor.c:
 	extab       start:0x8000A460 end:0x8000A468
 	extabindex  start:0x800228D4 end:0x800228E0
