@@ -83,6 +83,12 @@ game/auto_800A8F4C_block.c:
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C
 
+game/ItemHolder.c:
+	.text       start:0x801E9070 end:0x801E9094
+
+game/PhysicsState.c:
+	.text       start:0x801EC99C end:0x801EC9AC
+
 Runtime.PPCEABI.H/global_destructor_chain.c:
 	.text       start:0x80270BE8 end:0x80270C48
 	.dtors      start:0x802E8988 end:0x802E898C

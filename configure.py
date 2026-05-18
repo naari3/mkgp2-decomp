@@ -364,9 +364,11 @@ config.libs = [
             Object(Matching, "game/InputMgr_GetPlayer.c"),
             Object(Matching, "game/InputMgr.c"),
             Object(Matching, "game/InputObj.c"),
+            Object(Matching, "game/ItemHolder.c"),
             Object(Matching, "game/KartMovement.c"),
             Object(Matching, "game/KartMovement_GetCurrentItemId.c"),
             Object(Matching, "game/LakituStart.c"),
+            Object(Matching, "game/PhysicsState.c"),
             Object(Matching, "game/SpawnTable.c"),
             Object(Matching, "game/VBlank.c"),
             # Phase 3a-small: 11-fn dtk reversed-extab group bundle (no extab
