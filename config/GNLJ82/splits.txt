@@ -38,6 +38,11 @@ game/HeapStats.c:
 game/Profiler.c:
 	.text       start:0x8002FF08 end:0x8002FF48
 
+game/Scene3D_GetCameraPos.c:
+	extab       start:0x800058D8 end:0x800058E0
+	extabindex  start:0x8001F550 end:0x8001F55C
+	.text       start:0x800302EC end:0x8003031C
+
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
 
