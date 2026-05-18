@@ -508,6 +508,11 @@ game/LapDisp_SetTotalLaps.c:
 	extabindex  start:0x8002AF98 end:0x8002AFA4
 	.text       start:0x8023FAA0 end:0x8023FAEC
 
+game/LapDisp_SetCurrentLap.c:
+	extab       start:0x8001CE34 end:0x8001CE3C
+	extabindex  start:0x8002AFA4 end:0x8002AFB0
+	.text       start:0x8023FAEC end:0x8023FB4C
+
 game/dtor_8024F40C.c:
 	extab       start:0x8001E958 end:0x8001E960
 	extabindex  start:0x8002B778 end:0x8002B784

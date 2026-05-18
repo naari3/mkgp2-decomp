@@ -390,6 +390,7 @@ config.libs = [
             Object(Matching, "game/dtor_801FEA70.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/GetCourseSectionType.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/LapDisp_SetTotalLaps.c"),
+            Object(Matching, "game/LapDisp_SetCurrentLap.c"),
             Object(Matching, "game/HUD_SetRacePosition.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/HUD_SetTotalLaps.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/HUD_SetCurrentLap.c", extra_cflags=["-Cpp_exceptions on"]),
