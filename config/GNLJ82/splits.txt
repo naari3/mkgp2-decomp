@@ -157,6 +157,16 @@ game/CourseBgm_Free.c:
 	extabindex  start:0x80020E88 end:0x80020E94
 	.text       start:0x80064EA0 end:0x80064ED0
 
+game/LUT_Cosine.c:
+	extab       start:0x800080A0 end:0x800080A8
+	extabindex  start:0x80020F6C end:0x80020F78
+	.text       start:0x800658B4 end:0x80065928
+
+game/LUT_Sine.c:
+	extab       start:0x800080A8 end:0x800080B0
+	extabindex  start:0x80020F78 end:0x80020F84
+	.text       start:0x80065928 end:0x80065990
+
 game/ServiceMenu.c:
 	extab       start:0x800082A8 end:0x800082C0
 	extabindex  start:0x800211C4 end:0x800211D0

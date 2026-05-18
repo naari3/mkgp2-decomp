@@ -17,5 +17,10 @@
   "src/game/LookupSin.c": {
     "extab_LookupSin":      "@etb_80011C20",
     "extabindex_LookupSin": "@eti_80026CC0"
+  },
+
+  "src/game/LUT_Cosine.c": {
+    "extab_LUT_Cosine":      "@etb_800080A0",
+    "extabindex_LUT_Cosine": "@eti_80020F6C"
   }
 }
