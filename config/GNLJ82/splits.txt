@@ -221,6 +221,9 @@ game/LUT_Sin12Bit.c:
 	extabindex  start:0x80026CD8 end:0x80026CE4
 	.text       start:0x80186998 end:0x801869C8
 
+game/NokoNoko_CountDefeated.c:
+	.text       start:0x80188AE4 end:0x80188B24
+
 game/SpriteSystem_EnsureInit.c:
 	.text       start:0x801A16F0 end:0x801A1714
 
