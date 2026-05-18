@@ -164,6 +164,11 @@ game/dtor_80091284.c:
 	extabindex  start:0x80021ED8 end:0x80021EE4
 	.text       start:0x80091284 end:0x800912C0
 
+game/ProcessSystemTick.c:
+	extab       start:0x800095D0 end:0x800095D8
+	extabindex  start:0x800221E4 end:0x800221F0
+	.text       start:0x8009D5F8 end:0x8009D638
+
 game/Rand.c:
 	extab       start:0x80009768 end:0x80009770
 	extabindex  start:0x80022274 end:0x80022280

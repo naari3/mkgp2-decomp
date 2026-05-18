@@ -379,6 +379,7 @@ config.libs = [
             Object(Matching, "game/GetCourseSectionType.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemDisplay_Stop.c"),
             Object(Matching, "game/DisplayBuffer_GetByIndex.c"),
+            Object(Matching, "game/ProcessSystemTick.c"),
             Object(Matching, "game/LiveConn.c"),
             Object(Matching, "ui/CursorSound.c"),
             Object(Matching, "ui/FrameSelection.c"),
