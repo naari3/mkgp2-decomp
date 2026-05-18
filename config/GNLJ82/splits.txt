@@ -69,6 +69,9 @@ game/KartMovement_GetCurrentItemId.c:
 sound/ISESlot.c:
 	.text       start:0x80049B40 end:0x80049B70
 
+game/KartBody.c:
+	.text       start:0x8005771C end:0x80057738
+
 game/SpawnTable.c:
 	.text       start:0x8005F5CC end:0x8005F5D8
 
