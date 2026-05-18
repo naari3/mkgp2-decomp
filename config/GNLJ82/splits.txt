@@ -379,6 +379,11 @@ game/GetTextureByIdAndLang.c:
 	extabindex  start:0x80024D94 end:0x80024DA0
 	.text       start:0x8013C2D4 end:0x8013C334
 
+game/InitRumbleController.c:
+	extab       start:0x800101D0 end:0x800101D8
+	extabindex  start:0x80025FD0 end:0x80025FDC
+	.text       start:0x80169D60 end:0x80169DF0
+
 sound/SoundMgr_PlaySE.c:
 	extab       start:0x80010404 end:0x8001040C
 	extabindex  start:0x80026198 end:0x800261A4
