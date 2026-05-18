@@ -279,6 +279,11 @@ game/BootPCBCheck_Init.c:
 	extabindex  start:0x80021860 end:0x8002186C
 	.text       start:0x80084DF8 end:0x80084E88
 
+game/ResetIOPorts.c:
+	extab       start:0x80008D7C end:0x80008D84
+	extabindex  start:0x80021878 end:0x80021884
+	.text       start:0x80084FF0 end:0x800850B0
+
 game/SyncSlot.c:
 	extab       start:0x80008D84 end:0x80008D8C
 	extabindex  start:0x80021884 end:0x80021890
