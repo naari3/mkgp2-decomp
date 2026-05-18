@@ -224,6 +224,9 @@ game/LUT_Sin12Bit.c:
 game/NokoNoko_CountDefeated.c:
 	.text       start:0x80188AE4 end:0x80188B24
 
+game/KartMovement_SetPosition.c:
+	.text       start:0x8019A4A0 end:0x8019A4E0
+
 game/SpriteSystem_EnsureInit.c:
 	.text       start:0x801A16F0 end:0x801A1714
 
