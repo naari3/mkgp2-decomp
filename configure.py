@@ -366,6 +366,7 @@ config.libs = [
             Object(Matching, "game/InputObj.c"),
             Object(Matching, "game/ItemHolder.c"),
             Object(Matching, "game/LiveConn.c"),
+            Object(Matching, "ui/CursorSound.c"),
             Object(Matching, "ui/FrameSelection.c"),
             Object(Matching, "ui/UISoundClSound4D.c"),
             Object(Matching, "game/KartBody.c"),
