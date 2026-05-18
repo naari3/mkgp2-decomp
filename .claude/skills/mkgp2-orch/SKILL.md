@@ -100,6 +100,7 @@ merge が conflict / SHA-1 fail を返した場合は hook 即実行から離脱
 1. **batch 構成**: どの fn を 1 batch にまとめるか
    - dtk reversed-extab group 内なら group 全 pending member を bundle (= 1 indivisible TU 制約、`prompts/cycle.md` CASE 5 参照)
    - 同 group 内でも asm_fn 状態の fn を 1 つずつ別 sub に promote させる pattern (Round 3 / main wave で実証、本 skill の「同 TU 内多 sub 並列 promote」項参照)
+   - **struct-driven seeding** (2026-05-18 採用、本 skill の「struct-driven TU grouping」項参照): Ghidra MCP で seed fn の引数型 (struct 名) を確認、同 struct を触る pending fn を cluster として 1 batch にまとめる。ライブな struct 情報は Ghidra DataTypeManager (`run_script_inline`) が SoT、repo 内 header は遅延コピー
 2. **worktree 用意**: `python tools/setup_worktree.py <batch_id>` で `.worktrees/<batch_id>/` を作成
 3. **prompt 構築**: sub に何をやらせるか
    - 担当 fn の addr / name / size / asm 行範囲
@@ -110,6 +111,46 @@ merge が conflict / SHA-1 fail を返した場合は hook 即実行から離脱
    - **Ghidra decompile の callee 名は信頼しない**: prompt に `mcp__ghidra__decompile_function` の生出力をそのまま貼ると、Ghidra annotation / placeholder name (例: `MemoryManager_TimedFree`) が実 binary の symbols.txt 名 (例: `dtor_8003AFB8`) と乖離していて sub に誤情報を渡すケース多発 (2026-05-18, dtor pair 3 batch で発覚)。sub に「callee 名は `build/GNLJ82/asm/auto_*_text.s` の bl 先で必ず確認せよ」と明示するか、main 側で predict callee 名を symbols.txt と cross-check してから prompt に書く
 4. **Agent tool 起動**: `Agent(subagent_type='general-purpose', run_in_background=True, prompt=...)`
 5. **state.active_subs に記録**: 通知受信用 (TaskList には現れない、main の self-bookkeeping)
+
+## struct-driven TU grouping (2026-05-18 採用)
+
+**前提**: Phase 1/2 で 34 struct + 元から存在の 18 struct + 未着手の ~40 struct が Ghidra で高確度に解析済み (KartItem 0x380 / 50+ fn、PathManager_Partial 0x4DC、ItemDisplay 0x14、HeapStats 12B 等)。repo 内 header より Ghidra DataTypeManager の方がライブで分厚い情報を持つ。
+
+**main 側 (cycle CASE 4 編成時)**:
+
+1. pending fn から seed を pick (size 小 / 命名済み優先)
+2. `mcp__ghidra__get_function_variables` + `mcp__ghidra__decompile_function` で seed の引数型 (struct 名 / size) を確認
+3. 同 struct を引数 / local 型として touch する pending fn を抽出:
+   - `mcp__ghidra__list_functions_enhanced` の signature filter
+   - もしくは 既知 cluster (KartItem 全 method 等) を Phase 1/2 doc から逆引き
+4. cluster を 1 batch にまとめる (size <= 5 関数 / 0x200 byte 上限は維持、超えるなら struct 内のサブ機能で分割)
+5. tu_hint を `<struct名>.c` 推測 (`game/ItemDisplay.c`, `game/KartItem.c` 等。Phase 1/2 doc に既存 TU 名があればそれを優先)
+
+**sub 側 (dispatch prompt)**:
+
+- struct 名と Ghidra fetch 手順を渡す:
+  ```
+  最初に mcp__ghidra__connect_instance(project="bmp_output") → open_program(/mkgp2_main.dol)
+  mcp__ghidra__run_script_inline で DataTypeManager から <StructName> を dump:
+    from ghidra.program.model.data import StructureDataType
+    cm = currentProgram.getDataTypeManager()
+    s = cm.findDataType("/<StructName>")  # or category path
+    for c in s.getDefinedComponents():
+        println(f"{c.getOffset():#x} {c.getDataType().getName()} {c.getFieldName()}")
+  ```
+- header の置き場所と forward decl 方針を指示 (`include/game/<StructName>.h`、不要な依存は forward decl で済ます)
+- 既存 repo 内 header (例: `include/dolphin/types.h`) に重複する基本型 (u8/u32/f32) は再定義しない
+
+**header の repo 配置**:
+
+- sub が新規 emit したらそのまま `include/game/...` に置く (commit 対象)
+- 同 struct を複数 sub が並列に作るリスクは main 側で排他 (1 struct は 1 batch にまとめる、複数 batch に分けないのが原則)
+- struct alignment / padding の精度: 1 fn が 100% 不到達なら struct layout を疑う (CW alignment は 4B 既定、`#pragma scheduling` 等 lib 別 flag 影響あり) — HANDOFF で残差 dump 報告 → 知見化
+
+**Phase 1/2 doc との関係**:
+
+- Phase 1 audit が「元から存在」と記録した 18 struct (CarObject / KartDriver_Partial / KartMovement / KartParamBlock / RaceScene 等) は **Ghidra にもある = 流用可**。Phase 1/2 で扱わなかった ~40 struct (ItemDescriptor / HeapStats / PathManager_Partial / PhysicsState 等) も Ghidra fetch で取り出せる前提
+- 但し `_Partial` suffix が付くものは「Phase X で確認した範囲だけ」を意味するので、後続作業で field が追加される可能性 (= header を継ぎ足す前提で書く)
 
 ## 即時 merge & 知見反映 workflow (同 TU 内多 sub 並列 promote)
 
