@@ -107,6 +107,7 @@ merge が conflict / SHA-1 fail を返した場合は hook 即実行から離脱
    - 直近の参考 commit (典型例の git show)
    - 制約 (同 TU 他 fn は touch 不可、30 min / 3 試行、100% 不可なら asm_fn 退避)
    - HANDOFF.md JSON schema (status / src_path / build_verified)
+   - **Ghidra decompile の callee 名は信頼しない**: prompt に `mcp__ghidra__decompile_function` の生出力をそのまま貼ると、Ghidra annotation / placeholder name (例: `MemoryManager_TimedFree`) が実 binary の symbols.txt 名 (例: `dtor_8003AFB8`) と乖離していて sub に誤情報を渡すケース多発 (2026-05-18, dtor pair 3 batch で発覚)。sub に「callee 名は `build/GNLJ82/asm/auto_*_text.s` の bl 先で必ず確認せよ」と明示するか、main 側で predict callee 名を symbols.txt と cross-check してから prompt に書く
 4. **Agent tool 起動**: `Agent(subagent_type='general-purpose', run_in_background=True, prompt=...)`
 5. **state.active_subs に記録**: 通知受信用 (TaskList には現れない、main の self-bookkeeping)
 
