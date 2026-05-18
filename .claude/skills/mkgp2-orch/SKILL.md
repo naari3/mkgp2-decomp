@@ -129,9 +129,16 @@ merge が conflict / SHA-1 fail を返した場合は hook 即実行から離脱
 4. **Agent tool 起動**: `Agent(subagent_type='general-purpose', run_in_background=True, prompt=...)`
 5. **state.active_subs に記録**: 通知受信用 (TaskList には現れない、main の self-bookkeeping)
 
-## struct-driven TU grouping (2026-05-18 採用)
+## struct-driven TU grouping (2026-05-18 採用、cluster-first 既定)
 
 **前提**: Phase 1/2 で 34 struct + 元から存在の 18 struct + 未着手の ~40 struct が Ghidra で高確度に解析済み (KartItem 0x380 / 50+ fn、PathManager_Partial 0x4DC、ItemDisplay 0x14、HeapStats 12B 等)。repo 内 header より Ghidra DataTypeManager の方がライブで分厚い情報を持つ。
+
+**重要 (2026-05-18 改訂)**: 単発 fn dispatch を続けると `src/game/` 等にファイル数が線形に発散する (original .cpp は 1 file に複数 fn 入っていたはず)。新規 dispatch は **cluster-first 既定**:
+- seed の周辺 sibling pending fn (同 namespace / 同 struct touch / 同 prefix) を 1 batch にまとめる
+- 1 sub が同 TU 内で複数 fn を sequential match、1 file = 1 TU で完結
+- splits.txt も 1 entry/TU、include header も 1 回拡張
+- 既存の singleton TU (ItemDisplay_Stop / KartMovement_SetPosition 等) は **後でまとめて consolidation pass** で merge (cycle 中に retro 触らない、現 matched 壊すリスク)
+- 単発 fn を許容するのは「周辺に sibling pending 無しの真孤立 case」「struct identity 不明な dtor placeholder」のみ
 
 **main 側 (cycle CASE 4 編成時)**:
 
