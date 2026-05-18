@@ -527,6 +527,7 @@ config.libs = [
             Object(Matching, "sound/SoundCtrl_SetVolume.c"),
             Object(Matching, "sound/MediaBoard_PollCompletion.c"),
             Object(Matching, "sound/SoundChannels.c"),
+            Object(Matching, "sound/SoundObj_PlaySE_Direct.c"),
         ],
     },
     {

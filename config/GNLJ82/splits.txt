@@ -196,6 +196,11 @@ game/CarObject_ResetPhysics.c:
 game/KartBody.c:
 	.text       start:0x8005771C end:0x80057738
 
+sound/SoundObj_PlaySE_Direct.c:
+	extab       start:0x800076C8 end:0x800076D0
+	extabindex  start:0x800208C4 end:0x800208D0
+	.text       start:0x800594D4 end:0x8005957C
+
 sound/SoundCtrl_SetVolume.c:
 	extab       start:0x800076D0 end:0x800076D8
 	extabindex  start:0x800208D0 end:0x800208DC
