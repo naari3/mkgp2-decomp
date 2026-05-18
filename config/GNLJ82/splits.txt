@@ -75,6 +75,14 @@ game/SpawnTable.c:
 util/bitpack.c:
 	.text       start:0x80088BA8 end:0x80088BB8
 
+game/Rand.c:
+	extab       start:0x80009768 end:0x80009770
+	extabindex  start:0x80022274 end:0x80022280
+	.text       start:0x800A06D0 end:0x800A06F0
+
+game/CourseData.c:
+	.text       start:0x800A0BDC end:0x800A0BE8
+
 game/auto_800A8F4C_block.c:
 	extab       start:0x80009E60 end:0x80009ED0
 	extabindex  start:0x800225B0 end:0x80022640
