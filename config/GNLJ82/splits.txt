@@ -43,6 +43,11 @@ game/Scene3D_GetCameraPos.c:
 	extabindex  start:0x8001F550 end:0x8001F55C
 	.text       start:0x800302EC end:0x8003031C
 
+game/JObj_Visibility.c:
+	extab       start:0x80005978 end:0x80005988
+	extabindex  start:0x8001F640 end:0x8001F658
+	.text       start:0x800316B8 end:0x80031718
+
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
 
