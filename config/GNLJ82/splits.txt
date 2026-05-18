@@ -252,6 +252,11 @@ game/PCBComm_PromoteToClientConfirmed.c:
 game/TCPConn.c:
 	.text       start:0x80086F54 end:0x8008707C
 
+game/TCPConn_Reset.c:
+	extab       start:0x80008E6C end:0x80008E74
+	extabindex  start:0x80021968 end:0x80021974
+	.text       start:0x80087170 end:0x800871D8
+
 game/TCPConn_LogError.c:
 	extab       start:0x80008E94 end:0x80008E9C
 	extabindex  start:0x800219A4 end:0x800219B0
