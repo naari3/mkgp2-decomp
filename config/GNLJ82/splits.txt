@@ -150,7 +150,9 @@ game/SpawnTable.c:
 	.text       start:0x8005F5CC end:0x8005F5D8
 
 game/ItemSelect.c:
-	.text       start:0x80060D40 end:0x80060DE4
+	extab       start:0x80007DE8 end:0x80007E10
+	extabindex  start:0x80020D98 end:0x80020DBC
+	.text       start:0x80060D40 end:0x80061054
 
 game/dtor_8006178C.c:
 	extab       start:0x80007E74 end:0x80007E84

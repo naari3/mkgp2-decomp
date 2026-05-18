@@ -22,5 +22,10 @@
   "src/game/LUT_Cosine.c": {
     "extab_LUT_Cosine":      "@etb_800080A0",
     "extabindex_LUT_Cosine": "@eti_80020F6C"
+  },
+
+  "src/game/ItemSelect.c": {
+    "extab_ItemSelect_Init":      "@etb_80007DF8",
+    "extabindex_ItemSelect_Init": "@eti_80020DB0"
   }
 }

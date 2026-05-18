@@ -18,6 +18,14 @@
 
 1. **作業範囲は割り当て worktree 内のみ**: `cd` して入った後、相対 path で操作。worktree の外のファイルを編集してはならない (main checkout / 他 worktree / `~/` 配下の repo はすべて禁止)
 2. **担当 batch の関数以外の既存 `.c` ファイルを変更しない**: 隣接関数を「ついでに」matching しない (TU 境界の暗黙仮定が壊れる)。ただし **新規 `.c` の追加・削除は OK** — 担当関数のための新 TU、NonMatching scaffold (skill 7.5 節 制約C)、dtk auto blob 分割実験用の placeholder TU を含む。試行で作って捨てた scaffold は HANDOFF.md に記録しなくてよい (worktree 削除で消える)
+
+   **例外 (main からの明示許可付き existing TU 拡張)**: prompt 内で `tu_hint` が既存 TU を指し、かつ prompt が「既存 TU への追記 OK (TU 完成 batch)」を明示している場合のみ、担当関数を該当 `.c` に追記してよい。前提:
+   - 担当関数の全 address 範囲が既存 TU の splits.txt range の **隣接末尾** または **TU range 拡張で吸収可能**
+   - 既存関数 (matched) を **編集しない** (新規関数を `.c` 末尾に append のみ)
+   - splits.txt の TU end address を拡張する変更を HANDOFF.md に記載
+   - extab/extabindex の auto-emit と既存 TU の extab layout が衝突しないことを build verify で確認
+
+   この例外で main の merge は configure.py を変更せず、splits.txt の `end:` 更新と src 追記のみで完結する。main から prompt で明示許可なければ通常通り新 TU 作成。
 3. **`configure.py` / `config/GNLJ82/splits.txt` / `config/GNLJ82/symbols.txt` は worktree 内では編集してよい**: build verify のために必須 (`/mkgp2-match` skill の手順 6-9 通り)。**ただし**、その変更は `orch/<batch_id>` branch 限定で main branch には反映しない — 同じ変更を HANDOFF.md の `configure_py` / `splits_txt` / `symbols_txt` セクションにも必ず記述すること。main はそれをもとに main branch に再適用する (sub の orch/* commit は worktree 削除と同時に捨てられる)
 4. **`docs/` を直接編集しない**: 知見追加希望は HANDOFF.md の `docs_notes` セクションへ
 5. **`.orchestrator/` を一切触らない**: state は main の専有領域

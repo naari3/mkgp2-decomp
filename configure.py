@@ -383,7 +383,7 @@ config.libs = [
             Object(Matching, "game/ItemDisplay_Stop.c"),
             Object(Matching, "game/ItemDisplay_Destroy.c"),
             Object(Matching, "game/ItemDisplay_GetOrCreate.c"),
-            Object(Matching, "game/ItemSelect.c"),
+            Object(Matching, "game/ItemSelect.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/DisplayBuffer_GetByIndex.c"),
             Object(Matching, "game/ProcessSystemTick.c"),
             Object(Matching, "game/NokoNoko_CountDefeated.c"),
