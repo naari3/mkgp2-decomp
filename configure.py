@@ -418,6 +418,7 @@ config.libs = [
             Object(Matching, "game/GameModeBase_FrameUpdate2.cpp"),
             Object(Matching, "game/SpawnTable.c"),
             Object(Matching, "game/VBlank.c"),
+            Object(Matching, "game/SyncSlot.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/PCBComm_PromoteToClientConfirmed.c"),
             Object(Matching, "game/TCPConn_LogError.c"),
             Object(Matching, "game/TCPConn.c"),
