@@ -442,3 +442,49 @@ bundle 内に同じ codegen pattern を持つ fn が複数あることがある 
 - Main wave (OnEnter + dtor 2): +3 → 56
 - 累計 main wave 試行コスト: ~21 min wall-clock (並列)、~150 min CPU time (12 sub)
 - 結論: bundle 内 1 fn ずつの並列 promote は **C++ scoped object 起因の hard-block 多数** に直面、ROI は singleton dispatch より低い。残り 9 fn は §14.2 の hard-block を 1 つでも解明すれば連鎖的に解ける可能性
+
+## 15. wedge pattern: 隣接 2 fn を 1 TU にまとめると dtk cyclic dep が出るケース (2026-05-18, batch_text_8003907c_input)
+
+`InputMgr_GetPlayer` (0x80039020, size 0x1C) と `GetInputManager` (0x8003907C, size 0x8) を 1 TU `game/InputMgr.c` にまとめようとしたら splits 段階で:
+
+```
+Cyclic dependency encountered while resolving link order:
+  auto_fn_8003903C_text -> game/InputMgr.c
+```
+
+原因: 両 fn の **間に** `fn_8003903C` (size 0x40、extabindex entry 持ち、別 batch 管轄、auto_fn_8003903C_text として dtk reversed-extab group 入り) が挟まる。
+
+1 TU で disjoint .text range を 2 entry split.txt に書くと、dtk が:
+1. wedge の reversed-extab group `auto_fn_8003903C_text` を 1 unit と仮定
+2. その unit と前後の 2 entry を含む単一 TU `game/InputMgr.c` の link order を決めようとする
+3. wedge 入る前 (0x80039020-0x8003903C) → wedge unit (0x8003903C-) → wedge 出た後 (0x8003907C-) という 3-way 順序を要求
+4. group → TU → group のループになり cyclic dep
+
+**回避策 (= 採用方針)**: 2 fn を **個別 TU** に分割する。
+
+```
+splits.txt:
+game/InputMgr_GetPlayer.c:
+    .text  start:0x80039020 end:0x8003903C
+game/InputMgr.c:
+    .text  start:0x8003907C end:0x80039084
+```
+
+それぞれ単一 .text range なので wedge との order は trivial に解ける。
+
+### 適用条件
+
+- 隣接して matching したい 2 fn の間に extabindex / extab entry を持つ別 fn (wedge) があるとき
+- wedge が現 batch の管轄外 (= 別 batch に dispatch する or 既に asm_fn / matched で touch 不可)
+
+### sub-agent が踏むべき検証手順
+
+1. seed 関数の前後 ±0x20 程度の addr range で、`mcp__ghidra__list_functions(start=..., limit=10)` 等で隣接 fn を確認
+2. extabindex 持ちの fn (= reversed-extab group メンバー) があれば wedge 候補
+3. splits.txt に 2 entry の disjoint range を書く前に必ず 2 TU に分割する
+
+main 側で wedge を予測できれば dispatch prompt にヒントを書ける (`fn_XXXX が wedge なので別 TU に分けること`)。
+
+### tu_hint との関係
+
+main が提案する `tu_hint: input/InputMgr.c` のような単一 TU 想定は wedge 存在で破綻する。sub-agent の HANDOFF で複数 TU に分割する場合、`results[].src_path` を fn 単位で分け、`configure_py.add_objects[]` / `splits_txt.add_entries[]` も TU 分けて記述する (HANDOFF schema は既にこの形を許容)。

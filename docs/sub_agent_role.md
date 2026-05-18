@@ -155,7 +155,8 @@ main は HANDOFF.md の **```json ブロック** を parse する。stdlib `json
 
 - `batch_id`: 必須。main が dispatch 時に渡した値そのまま
 - `results[]`: 必須。担当関数 1 件ずつ。`status` は `matched` / `asm_fn` / `nonmatching` / `skipped` / `failed` のいずれか (`asm_fn` の詳細: `docs/per_fn_matching_strategy.md`)
-- `configure_py.add_objects[]`: option。空配列なら main は configure.py を編集しない。`object` は `Object(...)` の Python リテラル文字列そのまま
+- `results[].src_path`: 推奨は **`src/` prefix なし** (configure.py / splits.txt 都合と整合、`init/debug_bba.c` 形式)。`src/init/debug_bba.c` 形式でも main の `merge_promote.py` は worktree 内に該当 file がある側を自動採用するので両方動く。混在を避けるため新規 batch では `src/` 無しを推奨
+- `configure_py.add_objects[]`: option。空配列なら main は configure.py を編集しない。`object` は `Object(...)` の Python リテラル文字列そのまま。**`add_libs[]` は現状未対応** — 新規 lib block 追加が必要な場合は HANDOFF の自由記述部分か `user_attention` で明示し、main が手で configure.py を編集する (sub が worktree で編集した lib block は main が参照できる)
 - `splits_txt.add_entries[]`: option
 - `symbols_txt.set_scope[]` / `symbols_txt.set_attr[]`: option
 - `symbols_txt.rename[]`: option。`{old, new}` の pair。placeholder symbol (`lbl_XXX`, `fn_XXX`, `data_XXX`) を意味的な名前に rename するときに使う。rename は set_scope/set_attr より先に適用されるので、同 batch 内で rename した new 名に対して scope を設定できる
