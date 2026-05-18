@@ -28,6 +28,11 @@
     "extabindex_LookupSin": "@eti_80026CC0"
   },
 
+  "src/game/LookupCos.c": {
+    "extab_LookupCos":      "@etb_80011C18",
+    "extabindex_LookupCos": "@eti_80026CB4"
+  },
+
   "src/game/LUT_Cosine.c": {
     "extab_LUT_Cosine":      "@etb_800080A0",
     "extabindex_LUT_Cosine": "@eti_80020F6C"

@@ -428,6 +428,7 @@ config.libs = [
             Object(Matching, "game/Scene3D_GetCameraPos.c"),
             Object(Matching, "game/LUT_Sin12Bit.c"),
             Object(Matching, "game/LookupSin.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/LookupCos.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/LUT_Sine.c"),
             Object(Matching, "game/LUT_Cosine.c", extab_padding=b"\x00\x00"),
             Object(NonMatching, "game/AI_GetLapDifference.c", extra_cflags=["-Cpp_exceptions on"]),

@@ -267,6 +267,11 @@ sound/SoundMgr_PlaySE.c:
 	extabindex  start:0x80026198 end:0x800261A4
 	.text       start:0x8016C3FC end:0x8016C444
 
+game/LookupCos.c:
+	extab       start:0x80011C18 end:0x80011C20
+	extabindex  start:0x80026CB4 end:0x80026CC0
+	.text       start:0x801868EC end:0x80186928
+
 game/LookupSin.c:
 	extab       start:0x80011C20 end:0x80011C28
 	extabindex  start:0x80026CC0 end:0x80026CCC
