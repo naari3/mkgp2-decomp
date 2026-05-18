@@ -378,6 +378,7 @@ config.libs = [
             Object(Matching, "game/dtor_801F8214.c"),
             Object(Matching, "game/dtor_80209180.c"),
             Object(Matching, "game/GetCourseSectionType.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/LapDisp_SetTotalLaps.c"),
             Object(Matching, "game/ItemDisplay_Stop.c"),
             Object(Matching, "game/ItemDisplay_Destroy.c"),
             Object(Matching, "game/ItemDisplay_GetOrCreate.c"),
