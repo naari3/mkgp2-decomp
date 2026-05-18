@@ -527,6 +527,11 @@ game/AI_GetItemType.c:
 	extabindex  start:0x800288B0 end:0x800288BC
 	.text       start:0x801E6DA0 end:0x801E6DD4
 
+game/ItemHolder_Init.c:
+	extab       start:0x80016A98 end:0x80016AA0
+	extabindex  start:0x8002897C end:0x80028988
+	.text       start:0x801E8FB8 end:0x801E9070
+
 game/ItemHolder.c:
 	.text       start:0x801E9070 end:0x801E9094
 

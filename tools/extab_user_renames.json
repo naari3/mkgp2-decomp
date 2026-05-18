@@ -99,5 +99,9 @@
   "src/game/ItemObjectManager_Init.c": {
     "extab_ItemObjectManager_Init": "@etb_8000B334",
     "extabindex_ItemObjectManager_Init": "@eti_800239FC"
+  },
+  "src/game/ItemHolder_Init.c": {
+    "extab_ItemHolder_Init": "@etb_80016A98",
+    "extabindex_ItemHolder_Init": "@eti_8002897C"
   }
 }
