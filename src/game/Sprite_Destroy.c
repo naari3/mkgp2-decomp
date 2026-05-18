@@ -24,8 +24,8 @@
  * extab entry. extabindex entry sits at 0x80027548 (12 bytes).
  *
  * Register layout (CW 1.3.2 standard for 2-arg deleting-dtor):
- *   r30 = self           (mr. r30, r3 — also sets cr0 for the NULL test)
- *   r31 = deleteFlag     (mr r31, r4 — sign-extended later via extsh.)
+ *   r30 = self           (mr. r30, r3 -- also sets cr0 for the NULL test)
+ *   r31 = deleteFlag     (mr r31, r4 -- sign-extended later via extsh.)
  *
  * Approach: `#pragma exceptions on` lets CW 1.3.2 auto-emit the
  * matching extab / extabindex entries, mirroring the
@@ -37,7 +37,7 @@
  *   subi r0, r3, 1
  *   stw r0, lbl_806D16E4@sda21(r0)
  *   ble .L_801A06DC
- * — i.e. the sign-extend of the flag is scheduled between the load and
+ * -- i.e. the sign-extend of the flag is scheduled between the load and
  * the subi/stw of the counter decrement. CW 1.3.2 emits this naturally
  * from the source order below (counter decrement first, then `flag > 0`
  * branch) because the two dependency chains are disjoint and the

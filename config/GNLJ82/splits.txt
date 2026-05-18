@@ -214,6 +214,11 @@ game/CourseBgm_Free.c:
 	extabindex  start:0x80020E88 end:0x80020E94
 	.text       start:0x80064EA0 end:0x80064ED0
 
+game/CourseBgm_Load.c:
+	extab       start:0x80007F34 end:0x80007F3C
+	extabindex  start:0x80020E94 end:0x80020EA0
+	.text       start:0x80064ED0 end:0x80064F58
+
 game/LUT_Cosine.c:
 	extab       start:0x800080A0 end:0x800080A8
 	extabindex  start:0x80020F6C end:0x80020F78
