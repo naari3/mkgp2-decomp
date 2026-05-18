@@ -521,3 +521,35 @@ Ghidra decompile は同じ asm を `cntlzw(1 - x) >> 5` の C 形式で表示す
 - `x < n` で n が小定数なら subfic + carry 系 idiom (詳細は MWCC オプティマイザ依存)
 
 これらは leaf bool getter で頻出する。Ghidra 側で cntlzw / subfic 系 asm を見つけたら、まず `return x == const;` を試すこと。
+
+### 16.1 `(-x) & ~x` `andc` idiom (operand order matters) (2026-05-18, batch_text_80087a40_timer)
+
+`IsGlobalTimerExpired` で発見。target asm は `andc r3, r0, r3; ...` (1 命令)。
+
+| C source | CW 1.3.2 出力 | 命令数 |
+|---|---|---|
+| `((-x) & ~x) >> 31` | `andc r3, r0, r3; ...` | 1 (andc 1 命令) |
+| `(~x & (-x)) >> 31` | `nor r3, r3, r3; and r3, r0, r3; ...` | 2 (nor + and、byte 差) |
+
+CW は `~x & y` (NOR + AND) と `y & ~x` (ANDC) で別パターン展開する。`andc` (= `a & ~b`) を出したい時は **negation 因子を後ろに** 書く: `a & ~b` 形式。
+
+頻出シーン: sign-bit-bool / "is non-zero" idiom (`((-x) & ~x) >> 31`)。Ghidra decompile が `((-x) & ~x)` の順で出すなら、C もその順で書く。
+
+### 16.2 `if (x <= 0)` vs `if (x < 1)` signed compare (2026-05-18, batch_text_80087a40_timer)
+
+`Timer_Decrement` で発見。`if (x <= 0) return;` を guard とする loop counter pattern。
+
+| C source | CW 1.3.2 出力 |
+|---|---|
+| `if (x <= 0) return;` | `cmpwi r3, 0; blelr` (compare to 0, branch-if-less-or-equal-to-link-reg) |
+| `if (x < 1) return;` | `cmpwi r3, 1; bltlr` (compare to 1, branch-if-less-than-to-link-reg) |
+
+意味的には等価 (signed int) だが asm 上は 1 命令分の immediate value とブランチ条件が違う、結果 byte-different。target asm の `cmpwi rN, M` の M 値 (0 or 1) を確認して C を選ぶ。
+
+### 16.3 `write_u32` ghost symbol name (2026-05-18, batch_text_80087a40_timer)
+
+`g_globalTimer` (sbss @ 0x806D11D0) は元々 `write_u32` という placeholder name で symbols.txt に存在していた。これは Ghidra 解析の analysis artifact が dtk symbol dump に leak した可能性 (Ghidra で memo / annotation として書かれた文字列がそのまま symbol 名として fetch された)。
+
+対策:
+- 意味のある名前への rename を HANDOFF `symbols_txt.rename[]` で行う
+- 「`write_u32`」「`read_u32`」「`memcpy_4`」等の **動詞 + サイズ** 形の symbol 名を見つけたら、Ghidra annotation の leak を疑う (game-side の実体は別の意味)

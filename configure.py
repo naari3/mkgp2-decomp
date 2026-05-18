@@ -369,6 +369,7 @@ config.libs = [
             Object(Matching, "game/KartMovement_GetCurrentItemId.c"),
             Object(Matching, "game/LakituStart.c"),
             Object(Matching, "game/CourseData.c"),
+            Object(Matching, "game/GlobalTimer.c"),
             Object(Matching, "game/PhysicsState.c"),
             Object(Matching, "game/Rand.c"),
             Object(Matching, "game/SpawnTable.c"),

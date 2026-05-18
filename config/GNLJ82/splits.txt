@@ -72,6 +72,9 @@ sound/ISESlot.c:
 game/SpawnTable.c:
 	.text       start:0x8005F5CC end:0x8005F5D8
 
+game/GlobalTimer.c:
+	.text       start:0x80087A40 end:0x80087A6C
+
 util/bitpack.c:
 	.text       start:0x80088BA8 end:0x80088BB8
 
