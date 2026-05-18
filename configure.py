@@ -459,6 +459,7 @@ config.libs = [
         "objects": [
             Object(Matching, "sound/ISESlot.c"),
             Object(Matching, "sound/ISESlot_StopEffect.c"),
+            Object(Matching, "sound/SoundMgr_PlaySE.c"),
             Object(Matching, "sound/SoundCtrl_SetVolume.c"),
             Object(Matching, "sound/MediaBoard_PollCompletion.c"),
         ],
