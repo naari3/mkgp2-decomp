@@ -113,6 +113,11 @@ game/SceneRender.c:
 sound/SoundChannels.c:
 	.text       start:0x8003AD4C end:0x8003ADFC
 
+game/PathManager_Lookups.c:
+	extab       start:0x8000605C end:0x80006074
+	extabindex  start:0x8001FC58 end:0x8001FC7C
+	.text       start:0x8003B454 end:0x8003B668
+
 game/PathManager_RefreshFinishPositions.c:
 	extab       start:0x80006074 end:0x8000607C
 	extabindex  start:0x8001FC7C end:0x8001FC88
