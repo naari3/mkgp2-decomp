@@ -390,6 +390,7 @@ config.libs = [
             Object(Matching, "game/LakituStart_Dtor.c"),
             Object(Matching, "game/dtor_801EECD8.c"),
             Object(Matching, "game/dtor_801F8214.c"),
+            Object(Matching, "game/TexMgr_Init.c"),
             Object(Matching, "game/dtor_80209180.c"),
             Object(Matching, "game/dtor_801FE870.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/dtor_801FEA70.c", extab_padding=b"\x00\x00"),

@@ -540,6 +540,11 @@ game/dtor_801F8214.c:
 	extabindex  start:0x80029018 end:0x80029024
 	.text       start:0x801F8214 end:0x801F8250
 
+game/TexMgr_Init.c:
+	extab       start:0x800176C0 end:0x800176C8
+	extabindex  start:0x800290A8 end:0x800290B4
+	.text       start:0x801F93F8 end:0x801F947C
+
 game/TexMgr_Apply.c:
 	extab       start:0x800176C8 end:0x800176D0
 	extabindex  start:0x800290B4 end:0x800290C0
