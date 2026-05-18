@@ -166,6 +166,11 @@ sound/ISESlot_StopEffect.c:
 sound/ISESlot.c:
 	.text       start:0x80049B40 end:0x80049B70
 
+game/ISESlot_Deactivate.c:
+	extab       start:0x800068B0 end:0x800068B8
+	extabindex  start:0x80020174 end:0x80020180
+	.text       start:0x80049D0C end:0x80049D78
+
 game/CarObject_ResetPhysics.c:
 	extab       start:0x800068D0 end:0x800068D8
 	extabindex  start:0x800201A4 end:0x800201B0
