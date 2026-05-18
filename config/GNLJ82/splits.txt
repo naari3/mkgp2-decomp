@@ -125,6 +125,11 @@ ui/UISoundClSound4D.c:
 	extabindex  start:0x800293A8 end:0x800293B4
 	.text       start:0x801FE188 end:0x801FE1AC
 
+ui/UI_PlaySeDecide.c:
+	extab       start:0x80017CE4 end:0x80017CEC
+	extabindex  start:0x800293B4 end:0x800293C0
+	.text       start:0x801FE1AC end:0x801FE1D0
+
 game/ItemRes_Thunk.c:
 	extab       start:0x8001CB84 end:0x8001CB8C
 	extabindex  start:0x8002AE54 end:0x8002AE60

@@ -370,6 +370,7 @@ config.libs = [
             Object(Matching, "ui/CursorSound.c"),
             Object(Matching, "ui/FrameSelection.c"),
             Object(Matching, "ui/UISoundClSound4D.c"),
+            Object(Matching, "ui/UI_PlaySeDecide.c"),
             Object(Matching, "game/KartBody.c"),
             Object(Matching, "game/KartMovement.c"),
             Object(Matching, "game/KartMovement_CanReceiveItem.c"),
