@@ -21,7 +21,7 @@
  *     }
  *   - return 1;
  *
- * Note: PcbSlot_GetCharIdByte(0) is called twice in the && chain — target asm
+ * Note: PcbSlot_GetCharIdByte(0) is called twice in the && chain -- target asm
  * has two separate `bl` instructions in sequence, no value caching.
  *
  * extab/extabindex entries are present in the target (Large Frame, size 0xB8,
