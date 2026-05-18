@@ -265,6 +265,11 @@ game/TCPConn_LogError.c:
 game/GlobalTimer.c:
 	.text       start:0x80087A40 end:0x80087A6C
 
+game/FreeMediaBuffers.c:
+	extab       start:0x80008EA4 end:0x80008EAC
+	extabindex  start:0x800219BC end:0x800219C8
+	.text       start:0x80087A6C end:0x80087AD0
+
 util/bitpack.c:
 	extab       start:0x80008F24 end:0x80008F34
 	extabindex  start:0x80021A4C end:0x80021A64
