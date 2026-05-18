@@ -107,6 +107,11 @@ game/PathCursor_Free.c:
 	extabindex  start:0x8002000C end:0x80020018
 	.text       start:0x800468B8 end:0x800468F4
 
+game/NamCam_LoadImage.c:
+	extab       start:0x80006858 end:0x80006860
+	extabindex  start:0x800200F0 end:0x800200FC
+	.text       start:0x80048BEC end:0x80048C34
+
 sound/ISESlot_StopEffect.c:
 	extab       start:0x80006898 end:0x800068A0
 	extabindex  start:0x80020150 end:0x8002015C

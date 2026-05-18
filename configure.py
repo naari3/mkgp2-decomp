@@ -386,6 +386,7 @@ config.libs = [
             Object(Matching, "game/ProcessSystemTick.c"),
             Object(Matching, "game/NokoNoko_CountDefeated.c"),
             Object(Matching, "game/KartMovement_SetPosition.c"),
+            Object(Matching, "game/NamCam_LoadImage.c"),
             Object(Matching, "game/LiveConn.c"),
             Object(Matching, "ui/CursorSound.c"),
             Object(Matching, "ui/FrameSelection.c"),
