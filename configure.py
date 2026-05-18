@@ -385,6 +385,7 @@ config.libs = [
             Object(Matching, "game/RaceScene_PlayerSlots.c"),
             Object(Matching, "game/SpawnTable.c"),
             Object(Matching, "game/VBlank.c"),
+            Object(Matching, "game/PCBComm_PromoteToClientConfirmed.c"),
             # Phase 3a-small: 11-fn dtk reversed-extab group bundle (no extab
             # entries, just .text). All 11 fns initially asm_fn; promote to
             # matched 1 fn at a time via sub-agent dispatch.
