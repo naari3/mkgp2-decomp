@@ -89,6 +89,103 @@ EXTRACT_FN_ASM = REPO_ROOT / "tools" / "extract_fn_asm.py"
 GROUP_ID_RE = re.compile(r'^auto_(.+)_text$')
 
 
+class ScaffoldTransaction:
+    """Snapshot mutated files before edits so a baseline-build failure can
+    revert the scaffold atomically. Captures content at first snapshot()
+    per path (later writes to the same path don't overwrite the snapshot)."""
+
+    def __init__(self) -> None:
+        self.snapshots: dict[Path, bytes | None] = {}
+
+    def snapshot(self, path: Path) -> None:
+        if path in self.snapshots:
+            return
+        self.snapshots[path] = path.read_bytes() if path.exists() else None
+
+    def revert(self) -> list[Path]:
+        reverted: list[Path] = []
+        for path, content in self.snapshots.items():
+            if content is None:
+                if path.exists():
+                    path.unlink()
+                    reverted.append(path)
+            else:
+                cur = path.read_bytes() if path.exists() else None
+                if cur != content:
+                    path.write_bytes(content)
+                    reverted.append(path)
+        return reverted
+
+
+def derive_lib_from_text_start(text_start: int, extab_present: bool) -> str:
+    """Auto-pick the configure.py lib for a new auto_* group by checking which
+    existing lib's TU address range contains text_start. Falls back to
+    `game_extab`/`game` if no match.
+
+    Strategy: parse configure.py to get (lib_name -> [tu_path, ...]), parse
+    splits.txt to get (tu_path -> (.text start, .text end)), build per-lib
+    [min, max] range, then test text_start against each.
+    """
+    src = CONFIGURE_PY.read_text(encoding="utf-8")
+    splits_src = SPLITS_TXT.read_text(encoding="utf-8")
+
+    path_to_text = {}
+    tu_block_re = re.compile(
+        r'^([^\s][^:\n]*\.(?:c|cpp|s)):\s*\n((?:\t[^\n]*\n)+)', re.MULTILINE
+    )
+    code_sec_re = re.compile(
+        r'(?:\.init|\.text|\.ctors|\.dtors)\s+start:0x([0-9A-Fa-f]+)\s+end:0x([0-9A-Fa-f]+)'
+    )
+    for m in tu_block_re.finditer(splits_src):
+        starts, ends = [], []
+        for s, e in code_sec_re.findall(m.group(2)):
+            starts.append(int(s, 16))
+            ends.append(int(e, 16))
+        if starts:
+            path_to_text[m.group(1)] = (min(starts), max(ends))
+
+    lib_ranges: dict[str, tuple[int, int]] = {}
+    lib_re = re.compile(r'"lib":\s*"([^"]+)"')
+    for lib_m in lib_re.finditer(src):
+        lib_name = lib_m.group(1)
+        objs_m = re.search(r'"objects":\s*\[', src[lib_m.end():])
+        if not objs_m:
+            continue
+        objs_open = lib_m.end() + objs_m.end()
+        depth, i = 1, objs_open
+        while i < len(src) and depth > 0:
+            if src[i] == '[':
+                depth += 1
+            elif src[i] == ']':
+                depth -= 1
+            i += 1
+        objs_block = src[objs_open:i - 1]
+        starts, ends = [], []
+        for path in re.findall(r'Object\([^,]+,\s*"([^"]+)"', objs_block):
+            if path in path_to_text:
+                s, e = path_to_text[path]
+                starts.append(s)
+                ends.append(e)
+        if starts:
+            lib_ranges[lib_name] = (min(starts), max(ends))
+
+    candidate = None
+    for lib_name, (lo, hi) in lib_ranges.items():
+        if lo <= text_start < hi:
+            candidate = lib_name
+            break
+    if candidate is None:
+        return 'game_extab' if extab_present else 'game'
+
+    if extab_present:
+        if candidate == 'game':
+            return 'game_extab' if 'game_extab' in lib_ranges else 'game'
+        extab_variant = candidate + '_extab'
+        if extab_variant in lib_ranges:
+            return extab_variant
+    return candidate
+
+
 def derive_tu_path(group_id: str) -> Path:
     """Derive a neutral TU path from the dtk group id.
 
@@ -313,8 +410,9 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--group", required=True, help="group_id (auto_..._text)")
     ap.add_argument("--tu", type=Path, help="override TU path (default derived from group id)")
-    ap.add_argument("--lib", help="override target lib name in configure.py")
+    ap.add_argument("--lib", help="override target lib name in configure.py (default: auto-detect by .text start address)")
     ap.add_argument("--no-build", action="store_true", help="skip verification build")
+    ap.add_argument("--no-revert", action="store_true", help="on build failure keep partial scaffold (for debugging)")
     args = ap.parse_args(argv)
 
     asm_path = DEFAULT_ASM_DIR / f"{args.group}.s"
@@ -329,52 +427,70 @@ def main(argv: list[str] | None = None) -> int:
     abs_tu = REPO_ROOT / tu_rel
 
     extab_present = sniff_extab_present(asm_path)
-    lib_name = args.lib or ('game_extab' if extab_present else 'game')
-    # Drop the "src/" prefix for configure.py path (the dtk-template convention).
-    configure_path = tu_rel[len('src/'):] if tu_rel.startswith('src/') else tu_rel
-
-    print(f"[scaffold] group={args.group} tu={tu_rel} lib={lib_name} extab={extab_present}")
-
-    # 1-2. extract + emit C source
-    snippet = run_extract(args.group, abs_tu)
-    prepend_comment_header(abs_tu, args.group, extab_present)
-    print(f"[scaffold] wrote {tu_rel}")
-
-    # 3. configure.py
-    insert_object_in_configure(configure_path, lib_name, extab_present)
-    print(f"[scaffold] inserted Object(Matching, \"{configure_path}\"{', extab_padding' if extab_present else ''}) into lib {lib_name}")
-
-    # 4. splits.txt
     ranges = sniff_section_ranges(asm_path)
     if '.text' not in ranges:
         sys.exit("could not sniff .text range from asm file")
-    insert_splits_entry(configure_path, ranges)
-    print(f"[scaffold] inserted splits.txt entry for {configure_path}")
+    text_start = ranges['.text'][0]
 
-    # 5. renames.json
-    if extab_present:
-        merge_renames(tu_rel, snippet)
-        print(f"[scaffold] merged renames for {tu_rel} into {RENAMES_JSON.name}")
+    if args.lib:
+        lib_name = args.lib
+        lib_origin = "user-specified"
+    else:
+        lib_name = derive_lib_from_text_start(text_start, extab_present)
+        lib_origin = f"auto-picked from .text start 0x{text_start:08X}"
+    configure_path = tu_rel[len('src/'):] if tu_rel.startswith('src/') else tu_rel
 
-    # 7. state.json (do before build so an asm_fn state is recorded even if build fails)
-    fn_addrs = load_group_function_addrs(args.group)
-    n = update_state_asm_fn(args.group, fn_addrs, configure_path)
-    print(f"[scaffold] state.json: marked {n} fn(s) as asm_fn")
+    print(f"[scaffold] group={args.group} tu={tu_rel} lib={lib_name} ({lib_origin}) extab={extab_present}")
 
-    # 6. baseline build
-    if args.no_build:
-        print("[scaffold] --no-build set, skipping verification build")
+    tx = ScaffoldTransaction()
+    tx.snapshot(abs_tu)
+    tx.snapshot(CONFIGURE_PY)
+    tx.snapshot(SPLITS_TXT)
+    tx.snapshot(RENAMES_JSON)
+    tx.snapshot(STATE_JSON)
+
+    try:
+        snippet = run_extract(args.group, abs_tu)
+        prepend_comment_header(abs_tu, args.group, extab_present)
+        print(f"[scaffold] wrote {tu_rel}")
+
+        insert_object_in_configure(configure_path, lib_name, extab_present)
+        print(f"[scaffold] inserted Object(Matching, \"{configure_path}\"{', extab_padding' if extab_present else ''}) into lib {lib_name}")
+
+        insert_splits_entry(configure_path, ranges)
+        print(f"[scaffold] inserted splits.txt entry for {configure_path}")
+
+        if extab_present:
+            merge_renames(tu_rel, snippet)
+            print(f"[scaffold] merged renames for {tu_rel} into {RENAMES_JSON.name}")
+
+        fn_addrs = load_group_function_addrs(args.group)
+        n = update_state_asm_fn(args.group, fn_addrs, configure_path)
+        print(f"[scaffold] state.json: marked {n} fn(s) as asm_fn")
+
+        if args.no_build:
+            print("[scaffold] --no-build set, skipping verification build")
+            return 0
+
+        print("[scaffold] running python configure.py && ninja build/GNLJ82/ok")
+        subprocess.check_call([sys.executable, str(CONFIGURE_PY)], cwd=REPO_ROOT)
+        res = subprocess.run(["ninja", "build/GNLJ82/ok"], cwd=REPO_ROOT)
+        if res.returncode != 0:
+            raise RuntimeError(f"baseline build failed (rc={res.returncode})")
+        print(f"[scaffold] SUCCESS: baseline asm_fn bundle scaffolded ({len(fn_addrs)} fns).")
+        print(f"[scaffold] next: dispatch sub(s) for promote_asm_fn on this TU.")
         return 0
-
-    print("[scaffold] running python configure.py && ninja build/GNLJ82/ok")
-    subprocess.check_call([sys.executable, str(CONFIGURE_PY)], cwd=REPO_ROOT)
-    res = subprocess.run(["ninja", "build/GNLJ82/ok"], cwd=REPO_ROOT)
-    if res.returncode != 0:
-        print("[scaffold] BUILD FAILED — inspect ninja output above, fix or revert", file=sys.stderr)
-        return res.returncode
-    print(f"[scaffold] SUCCESS: baseline asm_fn bundle scaffolded ({len(fn_addrs)} fns).")
-    print(f"[scaffold] next: dispatch sub(s) for promote_asm_fn on this TU.")
-    return 0
+    except Exception as e:
+        print(f"[scaffold] FAILED: {e}", file=sys.stderr)
+        if args.no_revert:
+            print("[scaffold] --no-revert set, partial scaffold kept for debugging", file=sys.stderr)
+        else:
+            reverted = tx.revert()
+            for p in reverted:
+                rel = p.relative_to(REPO_ROOT) if p.is_absolute() else p
+                print(f"[scaffold] reverted: {rel}", file=sys.stderr)
+            print(f"[scaffold] revert complete ({len(reverted)} file(s) restored)", file=sys.stderr)
+        return 1
 
 
 if __name__ == "__main__":
