@@ -329,6 +329,11 @@ game/RivalRun_PathFollowerInit.c:
 	extabindex  start:0x80024C14 end:0x80024C20
 	.text       start:0x80137588 end:0x801375D8
 
+game/GetTextureByIdAndLang.c:
+	extab       start:0x8000D3D0 end:0x8000D3D8
+	extabindex  start:0x80024D94 end:0x80024DA0
+	.text       start:0x8013C2D4 end:0x8013C334
+
 sound/SoundMgr_PlaySE.c:
 	extab       start:0x80010404 end:0x8001040C
 	extabindex  start:0x80026198 end:0x800261A4
