@@ -786,6 +786,9 @@ init/__check_pad3.c:
 init/debug_bba.c:
 	.init       start:0x80003140 end:0x80003154
 
+init/__start.c:
+	.init       start:0x80003154 end:0x80003400
+
 init/__init_hardware.c:
 	.init       start:0x80003400 end:0x80003424
 
