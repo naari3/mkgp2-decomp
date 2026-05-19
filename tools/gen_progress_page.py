@@ -13,9 +13,9 @@ locally — `python tools/gen_progress_page.py build/GNLJ82/report.json`.
 from __future__ import annotations
 
 import argparse
+import bisect
 import html
 import json
-import math
 import shutil
 import sys
 from dataclasses import dataclass
@@ -82,84 +82,127 @@ def color_for_pct(pct: float) -> str:
     return f"#{r:02x}{g:02x}{b:02x}"
 
 
+def _unit_address(u: Dict[str, Any]) -> int:
+    """Lowest virtual_address across this unit's sections; 0 if none recorded."""
+    addrs: List[int] = []
+    for s in u.get("sections", []):
+        va = s.get("metadata", {}).get("virtual_address")
+        if va is None:
+            continue
+        try:
+            addrs.append(int(va))
+        except (TypeError, ValueError):
+            continue
+    return min(addrs) if addrs else 0
+
+
+def _binary_split(
+    rect: Tuple[float, float, float, float],
+    indices: List[int],
+    sums: List[float],
+    offset: float,
+    value: float,
+    out_rects: List[Tuple[float, float, float, float]],
+) -> None:
+    """streemap-rs `binary` port: bisect items by cumulative size, split rect along the longer axis."""
+    n = len(indices)
+    if n == 0 or value <= 0:
+        return
+    if n == 1:
+        out_rects[indices[0]] = rect
+        return
+    target = value / 2.0 + offset
+    mid = bisect.bisect_right(sums, target)
+    if mid == 0:
+        mid = 1
+    if mid >= n:
+        mid = n - 1
+    left = sums[mid - 1] - offset
+    right = value - left
+    x, y, w, h = rect
+    if w > h:
+        xe = x + w
+        xm = (x * right + xe * left) / value
+        lrect = (x, y, xm - x, h)
+        rrect = (xm, y, xe - xm, h)
+    else:
+        ye = y + h
+        ym = (y * right + ye * left) / value
+        lrect = (x, y, w, ym - y)
+        rrect = (x, ym, w, ye - ym)
+    if mid == 1:
+        out_rects[indices[0]] = lrect
+    else:
+        _binary_split(lrect, indices[:mid], sums[:mid], offset, left, out_rects)
+    rest = indices[mid:]
+    if len(rest) == 1:
+        out_rects[rest[0]] = rrect
+    elif rest:
+        _binary_split(rrect, rest, sums[mid:], sums[mid - 1], right, out_rects)
+
+
+def _unit_status_label(u: Dict[str, Any], matched: float) -> str:
+    """Plain-text status label for tooltip (no HTML markup)."""
+    if u.get("metadata", {}).get("complete"):
+        return "linked"
+    if matched >= 99.999:
+        return "matched"
+    if matched > 0:
+        return "in progress"
+    if u.get("metadata", {}).get("auto_generated"):
+        return "auto"
+    return "—"
+
+
 def build_treemap(units: List[Dict[str, Any]], width: int = 1000, height: int = 600) -> str:
-    """Squarified treemap of units sized by total_code, colored by matched%."""
-    items: List[Tuple[str, int, float]] = []
+    """Binary-split treemap of units (decomp.dev / streemap-rs `binary`), input order preserved.
+
+    Caller passes units already in the desired order — typically address order — so spatial
+    adjacency follows input order rather than size-descending packing."""
+    items: List[Tuple[Dict[str, Any], int, float, float]] = []
     for u in units:
         m = u.get("measures", {})
         size = _to_int(m.get("total_code"))
         if size <= 0:
             continue
-        items.append((u["name"], size, _to_float(m.get("matched_code_percent"))))
+        items.append((
+            u, size,
+            _to_float(m.get("matched_code_percent")),
+            _to_float(m.get("fuzzy_match_percent")),
+        ))
     if not items:
         return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}"></svg>'
-    items.sort(key=lambda x: x[1], reverse=True)
-    total = sum(s for _, s, _ in items)
-    scale = (width * height) / total
+
+    sums: List[float] = []
+    total = 0.0
+    for _, size, _, _ in items:
+        total += size
+        sums.append(total)
+    out_rects: List[Tuple[float, float, float, float]] = [(0.0, 0.0, 0.0, 0.0)] * len(items)
+    _binary_split(
+        (0.0, 0.0, float(width), float(height)),
+        list(range(len(items))), sums, 0.0, total, out_rects,
+    )
 
     rects: List[str] = []
-
-    def worst_aspect(row: List[float], w: float) -> float:
-        s = sum(row)
-        r_max = max(row)
-        r_min = min(row)
-        if s == 0 or w == 0:
-            return math.inf
-        return max((w * w * r_max) / (s * s), (s * s) / (w * w * r_min))
-
-    def layout_row(row: List[Tuple[str, int, float]], x: float, y: float, w: float, h: float, horizontal: bool) -> Tuple[float, float, float, float]:
-        s = sum(area for _, area, _ in [(n, a * scale, p) for n, a, p in row])
-        if horizontal:
-            row_h = s / w if w else 0
-            cx = x
-            for name, area, pct in row:
-                a = area * scale
-                rw = a / row_h if row_h else 0
-                rects.append(
-                    f'<rect x="{cx:.2f}" y="{y:.2f}" width="{rw:.2f}" height="{row_h:.2f}" '
-                    f'fill="{color_for_pct(pct)}" stroke="#0d1117" stroke-width="0.5">'
-                    f'<title>{html.escape(name)}&#10;{area} bytes&#10;{pct:.2f}% matched</title></rect>'
-                )
-                cx += rw
-            return x, y + row_h, w, h - row_h
-        else:
-            row_w = s / h if h else 0
-            cy = y
-            for name, area, pct in row:
-                a = area * scale
-                rh = a / row_w if row_w else 0
-                rects.append(
-                    f'<rect x="{x:.2f}" y="{cy:.2f}" width="{row_w:.2f}" height="{rh:.2f}" '
-                    f'fill="{color_for_pct(pct)}" stroke="#0d1117" stroke-width="0.5">'
-                    f'<title>{html.escape(name)}&#10;{area} bytes&#10;{pct:.2f}% matched</title></rect>'
-                )
-                cy += rh
-            return x + row_w, y, w - row_w, h
-
-    x, y, w, h = 0.0, 0.0, float(width), float(height)
-    remaining = list(items)
-    row: List[Tuple[str, int, float]] = []
-    while remaining:
-        side = min(w, h)
-        if side == 0:
-            break
-        item = remaining[0]
-        trial = row + [item]
-        trial_areas = [a * scale for _, a, _ in trial]
-        row_areas = [a * scale for _, a, _ in row]
-        if not row or worst_aspect(trial_areas, side) <= worst_aspect(row_areas, side):
-            row = trial
-            remaining.pop(0)
-        else:
-            x, y, w, h = layout_row(row, x, y, w, h, horizontal=(w >= h))
-            row = []
-    if row:
-        layout_row(row, x, y, w, h, horizontal=(w >= h))
-
+    for (u, size, matched, fuzzy), (x, y, w, h) in zip(items, out_rects):
+        addr = _unit_address(u)
+        addr_str = f"0x{addr:08X}" if addr else ""
+        status = _unit_status_label(u, matched)
+        rects.append(
+            f'<rect x="{x:.2f}" y="{y:.2f}" width="{w:.2f}" height="{h:.2f}" '
+            f'fill="{color_for_pct(matched)}" stroke="#0d1117" stroke-width="0.5" '
+            f'data-name="{html.escape(u["name"], quote=True)}" '
+            f'data-addr="{addr_str}" '
+            f'data-size="{format_bytes(size)}" '
+            f'data-matched="{matched:.2f}%" '
+            f'data-fuzzy="{fuzzy:.2f}%" '
+            f'data-status="{status}"/>'
+        )
     return (
-        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" '
+        f'<svg id="treemap-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" '
         f'width="100%" preserveAspectRatio="xMidYMid meet" role="img" '
-        f'aria-label="Unit treemap: each rect is one object file, sized by code bytes, colored by matched %.">'
+        f'aria-label="Unit treemap: each rect is one object file, sized by code bytes, colored by matched %, in address order.">'
         f'<rect width="{width}" height="{height}" fill="#0d1117"/>'
         + "".join(rects)
         + "</svg>"
@@ -218,7 +261,18 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   td.num {{ text-align: right; font-variant-numeric: tabular-nums; }}
   .meta {{ color: #8b949e; font-size: 0.9rem; }}
   .cat-row {{ display: grid; grid-template-columns: minmax(120px, 200px) 1fr auto; gap: 1rem; align-items: center; margin-bottom: 0.5rem; }}
-  .treemap-wrap {{ background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 0.5rem; }}
+  .treemap-wrap {{ position: relative; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 0.5rem; }}
+  .treemap-wrap svg rect[data-name] {{ cursor: default; }}
+  .treemap-wrap svg rect[data-name]:hover {{ stroke: #f0f6fc; stroke-width: 1.5; }}
+  #treemap-tooltip {{
+    position: absolute; pointer-events: none; display: none;
+    background: #21262d; color: #f0f6fc; border: 1px solid #30363d; border-radius: 4px;
+    padding: 0.5rem 0.7rem; font-size: 0.8rem; line-height: 1.4; z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5); min-width: 200px;
+  }}
+  #treemap-tooltip .tt-name {{ font-weight: 600; word-break: break-all; margin-bottom: 0.3rem; color: #58a6ff; }}
+  #treemap-tooltip .tt-row {{ display: flex; justify-content: space-between; gap: 1rem; }}
+  #treemap-tooltip .tt-row .tt-label {{ color: #8b949e; }}
   details {{ margin-top: 1rem; }}
   summary {{ cursor: pointer; color: #8b949e; }}
 </style>
@@ -243,26 +297,80 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <h2>Categories</h2>
   {category_rows}
 
-  <h2>Treemap (sized by code bytes, colored by matched%)</h2>
-  <div class="treemap-wrap">{treemap_svg}</div>
+  <h2>Treemap (sized by code bytes, colored by matched%, ordered by address)</h2>
+  <div class="treemap-wrap">
+    {treemap_svg}
+    <div id="treemap-tooltip"></div>
+  </div>
 
-  <h2>Top units</h2>
-  <p class="meta">Largest units by code size, with their match status.</p>
+  <h2>Units (by address)</h2>
+  <p class="meta">Units in section virtual-address order. First {top_n} shown; expand below for the full list.</p>
   <table>
-    <thead><tr><th>Unit</th><th class="num">Code</th><th class="num">Matched</th><th class="num">Fuzzy</th><th>Status</th></tr></thead>
-    <tbody>{top_units_rows}</tbody>
+    <thead><tr><th class="num">Address</th><th>Unit</th><th class="num">Code</th><th class="num">Matched</th><th class="num">Fuzzy</th><th>Status</th></tr></thead>
+    <tbody>{top_addr_rows}</tbody>
   </table>
-
   <details>
-    <summary>All units ({n_units})</summary>
+    <summary>All units by address ({n_units})</summary>
     <table>
-      <thead><tr><th>Unit</th><th class="num">Code</th><th class="num">Matched</th><th class="num">Fuzzy</th><th>Status</th></tr></thead>
-      <tbody>{all_units_rows}</tbody>
+      <thead><tr><th class="num">Address</th><th>Unit</th><th class="num">Code</th><th class="num">Matched</th><th class="num">Fuzzy</th><th>Status</th></tr></thead>
+      <tbody>{all_addr_rows}</tbody>
+    </table>
+  </details>
+
+  <h2>Units (by size)</h2>
+  <p class="meta">Largest units by code size. First {top_n} shown; expand below for the full list.</p>
+  <table>
+    <thead><tr><th class="num">Address</th><th>Unit</th><th class="num">Code</th><th class="num">Matched</th><th class="num">Fuzzy</th><th>Status</th></tr></thead>
+    <tbody>{top_size_rows}</tbody>
+  </table>
+  <details>
+    <summary>All units by size ({n_units})</summary>
+    <table>
+      <thead><tr><th class="num">Address</th><th>Unit</th><th class="num">Code</th><th class="num">Matched</th><th class="num">Fuzzy</th><th>Status</th></tr></thead>
+      <tbody>{all_size_rows}</tbody>
     </table>
   </details>
 
   <p class="meta" style="margin-top:2rem"><a href="report.json">Raw report.json</a> · <a href="shield.json">Shield JSON</a></p>
 </main>
+<script>
+(() => {{
+  const svg = document.getElementById('treemap-svg');
+  const tip = document.getElementById('treemap-tooltip');
+  if (!svg || !tip) return;
+  const wrap = svg.parentElement;
+  const fields = [
+    ['Address', 'addr'], ['Size', 'size'],
+    ['Matched', 'matched'], ['Fuzzy', 'fuzzy'], ['Status', 'status'],
+  ];
+  const show = (rect, evt) => {{
+    const name = rect.getAttribute('data-name');
+    if (!name) return;
+    let html = `<div class="tt-name">${{name}}</div>`;
+    for (const [label, key] of fields) {{
+      const v = rect.getAttribute('data-' + key);
+      if (!v) continue;
+      html += `<div class="tt-row"><span class="tt-label">${{label}}</span><span>${{v}}</span></div>`;
+    }}
+    tip.innerHTML = html;
+    tip.style.display = 'block';
+    const wrapRect = wrap.getBoundingClientRect();
+    const tipRect = tip.getBoundingClientRect();
+    let x = evt.clientX - wrapRect.left + 12;
+    let y = evt.clientY - wrapRect.top + 12;
+    if (x + tipRect.width > wrapRect.width) x = evt.clientX - wrapRect.left - tipRect.width - 12;
+    if (y + tipRect.height > wrapRect.height) y = evt.clientY - wrapRect.top - tipRect.height - 12;
+    tip.style.left = Math.max(0, x) + 'px';
+    tip.style.top = Math.max(0, y) + 'px';
+  }};
+  svg.addEventListener('mousemove', (e) => {{
+    const t = e.target;
+    if (t && t.tagName === 'rect' && t.hasAttribute('data-name')) show(t, e);
+    else tip.style.display = 'none';
+  }});
+  svg.addEventListener('mouseleave', () => {{ tip.style.display = 'none'; }});
+}})();
+</script>
 </body>
 </html>
 """
@@ -275,6 +383,8 @@ def unit_row(u: Dict[str, Any]) -> str:
     fuzzy = _to_float(m.get("fuzzy_match_percent"))
     complete = bool(u.get("metadata", {}).get("complete"))
     auto = bool(u.get("metadata", {}).get("auto_generated"))
+    addr = _unit_address(u)
+    addr_cell = f"0x{addr:08X}" if addr else "—"
     if complete:
         status = '<span style="color:#1f9d3a">linked</span>'
     elif matched >= 99.999:
@@ -287,6 +397,7 @@ def unit_row(u: Dict[str, Any]) -> str:
         status = '<span style="color:#8b949e">—</span>'
     return (
         "<tr>"
+        f'<td class="num"><code>{addr_cell}</code></td>'
         f"<td><code>{html.escape(u['name'])}</code></td>"
         f'<td class="num">{format_bytes(code)}</td>'
         f'<td class="num">{matched:.2f}%</td>'
@@ -317,7 +428,12 @@ def main() -> int:
     units = report.get("units", [])
 
     units_with_code = [u for u in units if _to_int(u.get("measures", {}).get("total_code")) > 0]
-    units_with_code.sort(key=lambda u: _to_int(u["measures"].get("total_code")), reverse=True)
+    units_with_code.sort(key=_unit_address)
+    units_by_size = sorted(
+        units_with_code,
+        key=lambda u: _to_int(u["measures"].get("total_code")),
+        reverse=True,
+    )
 
     category_rows = []
     for c in categories:
@@ -363,9 +479,12 @@ def main() -> int:
         fuzzy_pct=measures.fuzzy_match_percent,
         category_rows="\n".join(category_rows) or '<p class="meta">No categories defined.</p>',
         treemap_svg=treemap_svg,
-        top_units_rows="\n".join(unit_row(u) for u in units_with_code[:30]),
-        all_units_rows="\n".join(unit_row(u) for u in units_with_code),
+        top_addr_rows="\n".join(unit_row(u) for u in units_with_code[:30]),
+        all_addr_rows="\n".join(unit_row(u) for u in units_with_code),
+        top_size_rows="\n".join(unit_row(u) for u in units_by_size[:30]),
+        all_size_rows="\n".join(unit_row(u) for u in units_by_size),
         n_units=len(units_with_code),
+        top_n=30,
     )
     (args.out_dir / "index.html").write_text(html_out, encoding="utf-8")
 
