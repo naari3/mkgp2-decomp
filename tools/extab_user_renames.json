@@ -130,5 +130,9 @@
   "src/game/MemoryManager_TimedFree.cpp": {
     "extab_MemoryManager_TimedFree": "@etb_80005FDC",
     "extabindex_MemoryManager_TimedFree": "@eti_8001FC34"
+  },
+  "src/game/KartPhysics_ApplyCollisionForce.cpp": {
+    "extab_KartPhysics_ApplyCollisionForce": "@etb_80016CEC",
+    "extabindex_KartPhysics_ApplyCollisionForce": "@eti_80028B5C"
   }
 }

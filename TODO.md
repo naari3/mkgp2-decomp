@@ -67,6 +67,10 @@
   - commit `b8f8bf4` で canonical `ScopedTimer::~ScopedTimer()` も C++ 定義へ昇格済み。
   - 残課題は canonical / inline 両方の `ScopedTimer` dtor に残る raw `opword` shim、`MemoryManager_TimedFree` の frame trick、extab flag patch を、より自然な C++ source に戻せるかの調査。詳細は `docs/notes/cpp-scoped-timer-pattern.md` の "Post-match gap" 節。
 
+- [ ] **`KartPhysics_ApplyCollisionForce` の C++ NonMatching 足場を match に昇格**
+  - `src/game/KartPhysics_ApplyCollisionForce.cpp` に現状メモを集約済み。C++ non-ASM 版は text size / 命令数 / stack local 配置 / extab は target 形に到達し、objdiff は 91.8125%。
+  - 残課題は `fast_sqrtf` 周辺と angle/offset/push ブロックの FPR register allocation / scheduling。次は decomp.me scratch でブロック単位に宣言順・live range を探索する。
+
 - [ ] **SDK lib (Dolphin SDK / Runtime.PPCEABI.H) の TU 構成を確立**
   - dtk-template の `Runtime.PPCEABI.H` placeholder を実物 lib に差し替え
   - `DolphinLib("OS", [...])` 等を `configure.py` に追加していく

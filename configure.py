@@ -460,6 +460,7 @@ config.libs = [
             Object(Matching, "game/Rand.c"),
             Object(Matching, "game/RaceScene_PlayerSlots.c"),
             Object(Matching, "game/RivalRun_PathFollowerInit.c"),
+            Object(NonMatching, "game/KartPhysics_ApplyCollisionForce.cpp", extab_padding=b"\x00\x00"),
             Object(Matching, "game/GameModeBase_FrameUpdate2.cpp"),
             Object(Matching, "game/SpawnTable.c"),
             Object(Matching, "game/VBlank.c"),

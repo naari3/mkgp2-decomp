@@ -615,6 +615,11 @@ game/EnemyRunType1_Init.c:
 game/PhysicsState.c:
 	.text       start:0x801EC99C end:0x801EC9AC
 
+game/KartPhysics_ApplyCollisionForce.cpp:
+	extab       start:0x80016CEC end:0x80016D04
+	extabindex  start:0x80028B5C end:0x80028B68
+	.text       start:0x801EDFEC end:0x801EE36C
+
 game/dtor_801EECD8.c:
 	extab       start:0x80016D54 end:0x80016D5C
 	extabindex  start:0x80028B80 end:0x80028B8C
