@@ -309,9 +309,9 @@ config.libs = [
         "objects": [
             Object(Matching, "init/__init_hardware.c"),
             Object(Matching, "init/__flush_cache.c"),
-            Object(Matching, "init/fn_80003458.c"),
-            Object(Matching, "init/fn_80003488.c"),
-            Object(Matching, "init/fn_800053E0.c"),
+            Object(Matching, "init/memset_returning_dst.c"),
+            Object(Matching, "init/memcpy_bytewise.c"),
+            Object(Matching, "init/OSResetSystem_NoArgs.c"),
             Object(Matching, "init/memset.c"),
             Object(Matching, "init/__fill_mem.c"),
             Object(Matching, "init/memcpy.c"),
