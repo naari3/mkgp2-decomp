@@ -23,6 +23,25 @@ public:
         register int slot;
         register float value;
 
+        /*
+         * This is intentionally a codegen shim, not evidence that the original
+         * source used inline asm. The likely original destructor was ordinary
+         * C++:
+         *
+         *   elapsedUnit = ((OSGetTick() - m_startTick) << 3) /
+         *       (((*(volatile unsigned int *)0x800000F8) >> 2) / 125000);
+         *   Profiler_RecordFrame(m_slot, (float)elapsedUnit / 60.0f);
+         *
+         * Pure C++ gets the surrounding C++ cleanup shape right, but CW1.3.2
+         * chooses different GPRs for the reciprocal/divide block and uses r8
+         * for the 0x4330 int-to-double cookie high word. The target uses r0.
+         * Full inline asm including the Profiler_RecordFrame call fixes the
+         * block but makes the caller preserve r29 and grow to 0x170. Keeping
+         * the call in C and pinning only the arithmetic preserves the target
+         * 0x168 function layout.
+         *
+         * See docs/notes/cpp-scoped-timer-pattern.md ("Post-match gap").
+         */
         endTick = OSGetTick();
         asm {
             opword 0x3CA08000
@@ -59,6 +78,16 @@ private:
 extern "C" void MemoryManager_TimedFree(void *ptr) throw()
 {
     ScopedTimer timer(0x13);
+
+    /*
+     * Runtime writes still use size 0x200. The extra four bytes are stack
+     * pressure for CW's frame allocator: the raw dtor opwords write the
+     * conversion cookie at 0x228/0x22C(r31), which the compiler cannot see.
+     * With a visible 0x200 buffer, CW shrinks the frame to 0x230 and saved
+     * registers overlap that raw cookie area. A 0x204 visible buffer restores
+     * the target 0x240 frame without changing emitted instructions for the
+     * debug buffer address or length.
+     */
     char buf[0x204];
 
     if (lbl_806D0FA1 == 0) {
