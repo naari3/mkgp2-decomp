@@ -155,10 +155,11 @@ def _unit_status_label(u: Dict[str, Any], matched: float) -> str:
 
 
 def build_treemap(units: List[Dict[str, Any]], width: int = 1000, height: int = 600) -> str:
-    """Binary-split treemap of units (decomp.dev / streemap-rs `binary`), input order preserved.
+    """Binary-split treemap of units (decomp.dev / streemap-rs `binary`), nested by function.
 
-    Caller passes units already in the desired order — typically address order — so spatial
-    adjacency follows input order rather than size-descending packing."""
+    Outer layout splits units in caller-supplied order (typically address). Within each
+    unit rect, the same algorithm splits the unit's functions in address order so the
+    visual carries both unit-level boundaries and function-level granularity."""
     items: List[Tuple[Dict[str, Any], int, float, float]] = []
     for u in units:
         m = u.get("measures", {})
@@ -184,27 +185,77 @@ def build_treemap(units: List[Dict[str, Any]], width: int = 1000, height: int = 
         list(range(len(items))), sums, 0.0, total, out_rects,
     )
 
-    rects: List[str] = []
+    # Inline unit-level outline first (background tier), then overlay function-level rects
+    # on top. Function rects shadow their unit rect's fill so the visible color is per-fn.
+    unit_rects: List[str] = []
+    fn_rects: List[str] = []
     for (u, size, matched, fuzzy), (x, y, w, h) in zip(items, out_rects):
-        addr = _unit_address(u)
-        addr_str = f"0x{addr:08X}" if addr else ""
-        status = _unit_status_label(u, matched)
-        rects.append(
+        unit_addr = _unit_address(u)
+        unit_addr_str = f"0x{unit_addr:08X}" if unit_addr else ""
+        unit_status = _unit_status_label(u, matched)
+        unit_name_esc = html.escape(u["name"], quote=True)
+
+        # Unit-level rect: thin border, faint fill (kept so empty/tiny gaps still show color).
+        unit_rects.append(
             f'<rect x="{x:.2f}" y="{y:.2f}" width="{w:.2f}" height="{h:.2f}" '
-            f'fill="{color_for_pct(matched)}" stroke="#0d1117" stroke-width="0.5" '
-            f'data-name="{html.escape(u["name"], quote=True)}" '
-            f'data-addr="{addr_str}" '
-            f'data-size="{format_bytes(size)}" '
-            f'data-matched="{matched:.2f}%" '
-            f'data-fuzzy="{fuzzy:.2f}%" '
-            f'data-status="{status}"/>'
+            f'fill="{color_for_pct(matched)}" stroke="#0d1117" stroke-width="0.8"/>'
         )
+
+        fns = u.get("functions") or []
+        if not fns:
+            # No fn breakdown — make the unit rect itself the interactive tile.
+            fn_rects.append(
+                f'<rect x="{x:.2f}" y="{y:.2f}" width="{w:.2f}" height="{h:.2f}" '
+                f'fill="transparent" stroke="none" '
+                f'data-name="{unit_name_esc}" '
+                f'data-addr="{unit_addr_str}" '
+                f'data-size="{format_bytes(size)}" '
+                f'data-matched="{matched:.2f}%" '
+                f'data-fuzzy="{fuzzy:.2f}%" '
+                f'data-status="{unit_status}"/>'
+            )
+            continue
+
+        # Inner layout: split unit rect by function size.
+        fn_sums: List[float] = []
+        fn_total = 0.0
+        for f in fns:
+            fn_total += _to_int(f.get("size"))
+            fn_sums.append(fn_total)
+        if fn_total <= 0:
+            continue
+        inner_rects: List[Tuple[float, float, float, float]] = [(0.0, 0.0, 0.0, 0.0)] * len(fns)
+        _binary_split((x, y, w, h), list(range(len(fns))), fn_sums, 0.0, fn_total, inner_rects)
+
+        for f, (fx, fy, fw, fh) in zip(fns, inner_rects):
+            if fw < 0.5 or fh < 0.5:
+                continue  # cull below visible pixel
+            fn_size = _to_int(f.get("size"))
+            fn_fuzzy = _to_float(f.get("fuzzy_match_percent"))
+            fn_va = f.get("metadata", {}).get("virtual_address")
+            fn_addr_str = ""
+            if fn_va is not None:
+                try:
+                    fn_addr_str = f"0x{int(fn_va):08X}"
+                except (TypeError, ValueError):
+                    pass
+            fn_rects.append(
+                f'<rect x="{fx:.2f}" y="{fy:.2f}" width="{fw:.2f}" height="{fh:.2f}" '
+                f'fill="{color_for_pct(fn_fuzzy)}" stroke="#0d1117" stroke-width="0.2" '
+                f'data-name="{html.escape(f.get("name", "?"), quote=True)}" '
+                f'data-addr="{fn_addr_str}" '
+                f'data-size="{format_bytes(fn_size)}" '
+                f'data-fuzzy="{fn_fuzzy:.2f}%" '
+                f'data-unit="{unit_name_esc}"/>'
+            )
+
     return (
         f'<svg id="treemap-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" '
         f'width="100%" preserveAspectRatio="xMidYMid meet" role="img" '
-        f'aria-label="Unit treemap: each rect is one object file, sized by code bytes, colored by matched %, in address order.">'
+        f'aria-label="Treemap: outer rects are object files in address order, inner rects are functions.">'
         f'<rect width="{width}" height="{height}" fill="#0d1117"/>'
-        + "".join(rects)
+        + "".join(unit_rects)
+        + "".join(fn_rects)
         + "</svg>"
     )
 
@@ -342,6 +393,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   const fields = [
     ['Address', 'addr'], ['Size', 'size'],
     ['Matched', 'matched'], ['Fuzzy', 'fuzzy'], ['Status', 'status'],
+    ['Unit', 'unit'],
   ];
   const show = (rect, evt) => {{
     const name = rect.getAttribute('data-name');
