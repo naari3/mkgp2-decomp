@@ -99,6 +99,9 @@ game/StrPcb.c:
 game/Clamp.c:
 	.text       start:0x80038778 end:0x800387D8
 
+game/NoOpStubs_38f54.c:
+	.text       start:0x80038F54 end:0x80038F5C
+
 game/InputMgr_GetPlayer.c:
 	.text       start:0x80039020 end:0x8003903C
 
@@ -288,6 +291,9 @@ game/CourseAuxClass_VtableDtor.c:
 	extabindex  start:0x80021578 end:0x80021584
 	.text       start:0x8007D0D4 end:0x8007D11C
 
+game/DVDLoad_Stats.c:
+	.text       start:0x8007DFD4 end:0x8007DFE4
+
 game/BootNotice_CheckEnterCondition.c:
 	extab       start:0x80008D54 end:0x80008D5C
 	extabindex  start:0x80021854 end:0x80021860
@@ -423,6 +429,9 @@ game/main.c:
 	extab       start:0x8000A150 end:0x8000A158
 	extabindex  start:0x800227E4 end:0x800227F0
 	.text       start:0x800AC894 end:0x800AC8FC
+
+game/clCGameDemoWC_Stubs.c:
+	.text       start:0x800ADDA0 end:0x800ADDAC
 
 game/clCGameDemo_Dtor.c:
 	extab       start:0x8000A460 end:0x8000A468
