@@ -15,7 +15,7 @@
  *     vtable[+0x8] entry with arg=1 (deleting flag), then TimedFree
  *     under the same flag > 0 gate. Both functions have C++ exception
  *     specification scaffolding (Frame Pointer + SPECIFICATION +
- *     ACTIVECATCHBLOCK extab) with an `fn_8027248C` (__terminate /
+ *     ACTIVECATCHBLOCK extab) with an `__unexpected` (__terminate /
  *     unexpected) cleanup handler for the virtual call site.
  *
  * Implemented as asm_fn for all three: dtor_801FEA70 alone could be C
@@ -33,7 +33,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void MemoryManager_TimedFree();
-extern void fn_8027248C();
+extern void __unexpected();
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -130,7 +130,7 @@ asm void dtor_801FEAB8(void) {
     mr r3, r29
     b dtor_801FEAB8_L_801FEB24
     addi r3, r31, 0x8
-    bl fn_8027248C
+    bl __unexpected
     dtor_801FEAB8_L_801FEB20:
     b dtor_801FEAB8_L_801FEB20
     dtor_801FEAB8_L_801FEB24:
@@ -174,7 +174,7 @@ asm void dtor_801FEB48(void) {
     mr r3, r29
     b dtor_801FEB48_L_801FEBB4
     addi r3, r31, 0x8
-    bl fn_8027248C
+    bl __unexpected
     dtor_801FEB48_L_801FEBB0:
     b dtor_801FEB48_L_801FEBB0
     dtor_801FEB48_L_801FEBB4:

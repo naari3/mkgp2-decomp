@@ -53,6 +53,81 @@ LLVM_OBJCOPY_CANDIDATES = [
 RENAMES_JSON = Path(__file__).resolve().parent / "extab_user_renames.json"
 
 
+def patch_memorymanager_timedfree_extab(obj: Path) -> None:
+    """Patch CW's auto extab flag for MemoryManager_TimedFree.
+
+    The target extab has 0x101A0000 while mwcceppc GC/1.3.2 emits
+    0x10180000 for the otherwise byte-identical entry. Keep this scoped to the
+    one object that defines MemoryManager_TimedFree.
+    """
+    data = bytearray(obj.read_bytes())
+    if data[:4] != b"\x7fELF" or data[5] != 2:
+        return
+
+    def u16(off: int) -> int:
+        return int.from_bytes(data[off:off + 2], "big")
+
+    def u32(off: int) -> int:
+        return int.from_bytes(data[off:off + 4], "big")
+
+    shoff = u32(0x20)
+    shentsize = u16(0x2E)
+    shnum = u16(0x30)
+    shstrndx = u16(0x32)
+    if shoff == 0 or shentsize == 0 or shstrndx >= shnum:
+        return
+
+    sections: list[dict[str, int | str]] = []
+    shstr_hdr = shoff + shstrndx * shentsize
+    shstr_off = u32(shstr_hdr + 0x10)
+    shstr_size = u32(shstr_hdr + 0x14)
+    shstr = data[shstr_off:shstr_off + shstr_size]
+
+    def cstr(buf: bytes | bytearray, off: int) -> str:
+        end = off
+        while end < len(buf) and buf[end] != 0:
+            end += 1
+        return bytes(buf[off:end]).decode("ascii", errors="replace")
+
+    for i in range(shnum):
+        hdr = shoff + i * shentsize
+        sections.append({
+            "name": cstr(shstr, u32(hdr)),
+            "type": u32(hdr + 0x04),
+            "off": u32(hdr + 0x10),
+            "size": u32(hdr + 0x14),
+            "link": u32(hdr + 0x18),
+            "entsize": u32(hdr + 0x24),
+        })
+
+    extab = next((s for s in sections if s["name"] == "extab"), None)
+    symtab = next((s for s in sections if s["type"] == 2), None)
+    if extab is None or symtab is None:
+        return
+
+    strtab_index = int(symtab["link"])
+    if strtab_index >= len(sections):
+        return
+    strtab_sec = sections[strtab_index]
+    strtab = data[int(strtab_sec["off"]):int(strtab_sec["off"]) + int(strtab_sec["size"])]
+    sym_off = int(symtab["off"])
+    sym_size = int(symtab["size"])
+    sym_entsize = int(symtab["entsize"]) or 16
+    has_timed_free = False
+    for off in range(sym_off, sym_off + sym_size, sym_entsize):
+        name = cstr(strtab, u32(off))
+        if name == "MemoryManager_TimedFree":
+            has_timed_free = True
+            break
+    if not has_timed_free:
+        return
+
+    extab_off = int(extab["off"])
+    if data[extab_off:extab_off + 4] == bytes.fromhex("10180000"):
+        data[extab_off:extab_off + 4] = bytes.fromhex("101A0000")
+        obj.write_bytes(data)
+
+
 def find_llvm_objcopy() -> str:
     for c in LLVM_OBJCOPY_CANDIDATES:
         if shutil.which(c) or Path(c).is_file():
@@ -101,6 +176,7 @@ def main() -> int:
         cmd.append(f"--redefine-sym={src}={dst}")
     cmd.append(str(obj))
     subprocess.check_call(cmd)
+    patch_memorymanager_timedfree_extab(obj)
     return 0
 
 
