@@ -48,6 +48,11 @@ game/VBlank.c:
 game/Camera.c:
 	.text       start:0x8002D74C end:0x8002D760
 
+game/Game_Shutdown.c:
+	extab       start:0x80005780 end:0x80005788
+	extabindex  start:0x8001F478 end:0x8001F484
+	.text       start:0x8002DC7C end:0x8002DD58
+
 game/HeapStats.c:
 	extab       start:0x80005858 end:0x80005880
 	extabindex  start:0x8001F490 end:0x8001F4CC
