@@ -17,7 +17,7 @@ extern "C" void SeqMenuScene_Init();
 /* --- extern decls: sda21-referenced data --- */
 extern "C" unsigned int lbl_806D0F80;
 extern "C" unsigned int lbl_806D2268;
-extern "C" unsigned int lbl_806D2280;
+extern "C" float lbl_806D2280;
 extern "C" unsigned int lbl_806D2288;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */

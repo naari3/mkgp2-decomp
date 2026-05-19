@@ -63,7 +63,9 @@
   - 注: `mw_comment_version` (.comment セクションに書く値) と各 lib の `mw_version` (mwcceppc binary 選択) は別で、混在 link 可能。今 init は GC/1.0 / 他はまだ未確認
 
 - [ ] **`MemoryManager_TimedFree` の C++ shim gap を将来縮める**
-  - commit `871c087` で C++ 化 + SHA-1 OK は達成済み。残課題は `ScopedTimer` dtor の raw `opword` / frame trick / extab flag patch を、より自然な C++ source に戻せるかの調査。詳細は `docs/notes/cpp-scoped-timer-pattern.md` の "Post-match gap" 節。
+  - commit `871c087` で `MemoryManager_TimedFree` の C++ 化 + SHA-1 OK は達成済み。
+  - commit `b8f8bf4` で canonical `ScopedTimer::~ScopedTimer()` も C++ 定義へ昇格済み。
+  - 残課題は canonical / inline 両方の `ScopedTimer` dtor に残る raw `opword` shim、`MemoryManager_TimedFree` の frame trick、extab flag patch を、より自然な C++ source に戻せるかの調査。詳細は `docs/notes/cpp-scoped-timer-pattern.md` の "Post-match gap" 節。
 
 - [ ] **SDK lib (Dolphin SDK / Runtime.PPCEABI.H) の TU 構成を確立**
   - dtk-template の `Runtime.PPCEABI.H` placeholder を実物 lib に差し替え

@@ -4,9 +4,11 @@ Observed while attempting to match `MemoryManager_TimedFree` @ 0x8003AFB8 (asm_f
 
 Update: `MemoryManager_TimedFree` was later promoted from asm_fn to C++ and
 matched in commit `871c087` (`Match MemoryManager_TimedFree in C++`). The
-structural diagnosis below still matters, but the final implementation uses a
-small codegen shim inside the inline `ScopedTimer` destructor rather than a
-fully natural destructor body.
+canonical out-of-line `ScopedTimer::~ScopedTimer()` at 0x8002CCD8 was then
+promoted from asm_fn to a C++ destructor definition in commit `b8f8bf4`
+(`Implement ScopedTimer destructor in C++`). The structural diagnosis below
+still matters, but the final implementation uses small codegen shims inside the
+`ScopedTimer` destructor body rather than a fully natural destructor spelling.
 
 The function originally is C++ and uses a stack-allocated `ScopedTimer` instance to time the free operation. The class destructor (`ScopedTimer_End` @ 0x8002CCD8, named `dtor_8002CCD8` in symbols.txt before this analysis) is **defined in a different TU** but called from MemoryManager_TimedFree's scope cleanup.
 
@@ -87,14 +89,23 @@ The CW1.3.2 mangled name for `ScopedTimer::~ScopedTimer()` is `__dt__11ScopedTim
 
 ## Post-match gap: natural C++ vs current shim
 
-Commit `871c087` proves the H1 structure was fundamentally right:
+Commits `871c087` and `b8f8bf4` prove the H1 structure was fundamentally right:
 
 - A canonical strong `__dt__11ScopedTimerFv` owns the original
-  `0x8002CCD8..0x8002CD7C` address range.
+  `0x8002CCD8..0x8002CD7C` address range, and is now a C++ destructor
+  definition in `src/game/FlowDispatcher_ScopedTimer.c`.
 - `MemoryManager_TimedFree` is a C++ function with a stack-local
   `ScopedTimer`.
 - The function has target-like C++ exception cleanup metadata and duplicated
   destructor cleanup in both normal exit branches.
+
+The canonical dtor promotion uses the same practical compromise as
+`MemoryManager_TimedFree`: C++ owns the destructor, delete path, null guard,
+call sites, and epilogue, while raw `opword` pins the small elapsed-time
+arithmetic sequence that CW1.3.2 otherwise schedules differently. The canonical
+definition is wrapped in `#pragma exceptions off` so CW does not emit a second
+auto extab/extabindex pair; the existing manual target extab for
+`FlowDispatcher_ScopedTimer.c` remains authoritative.
 
 However, the matched source is not yet the likely original, natural C++ source.
 The remaining gap is local to `ScopedTimer`'s destructor body and its surrounding
@@ -209,6 +220,14 @@ gap:
   - The `lfs lbl_806D2280` relocation is already a normal named sdata2
     reference; only obj-level placeholder bytes differ before link.
 
+Follow-up after `b8f8bf4`: the natural one-expression canonical dtor was tried
+again in the real `FlowDispatcher_ScopedTimer.c` TU with `lbl_806D2280`
+declared as `float`. `postprocess_sdata2.py` correctly rewrote the anonymous
+cookie (`@19 -> lbl_806D2288`), but the arithmetic register allocation still
+missed target (`mulhwu r4,r4,r5` / `divwu r0,r5,r0` instead of target
+`mulhwu r0,r6,r4` / `divwu r0,r4,r0`). This confirms the next blocker is GPR
+allocation, not sdata2 naming.
+
 - Flag probes did not find a compiler option that fixes the `subi`/`lwz`
   schedule while keeping target code shape:
   - `-O4,p` and `-inline auto/deferred` keep the same order.
@@ -225,10 +244,11 @@ gap:
 Current inference: the likely original source was natural C++ with a simple
 one-expression elapsed conversion and a class-specific delete routed through
 `MemoryManager_TimedFree`. The remaining mismatch is not game logic but
-compiler scheduling/allocation context. A future cleanup should first try to
-promote the canonical `__dt__11ScopedTimerFv` from asm_fn to natural C++ using
-the one-expression form plus `postprocess_sdata2.py`; only after that should we
-try to remove the inline shim in `MemoryManager_TimedFree`.
+compiler scheduling/allocation context. The canonical `__dt__11ScopedTimerFv`
+is no longer asm_fn, so the next cleanup target is specifically to replace its
+raw arithmetic shim with the natural one-expression form plus
+`postprocess_sdata2.py`. Only after that should we try to remove the inline
+shim in `MemoryManager_TimedFree`.
 
 ## Related
 
