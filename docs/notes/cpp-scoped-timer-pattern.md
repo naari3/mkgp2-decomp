@@ -169,6 +169,67 @@ Future cleanup target:
 4. If that context is found, replace the destructor shim and remove the scoped
    extab first-word patch.
 
+## Follow-up: natural dtor probes
+
+Additional scratch probes in `tmp/cw_scoped_timer_natural_dtor_*` refined the
+gap:
+
+- The canonical out-of-line destructor can be expressed very closely as natural
+  C++ if the elapsed-unit expression is written as one expression:
+
+  ```cpp
+  endTick = OSGetTick();
+  Profiler_RecordFrame(
+      m_slot,
+      (float)(((endTick - m_startTick) << 3) /
+              (((*(volatile unsigned int *)0x800000F8) >> 2) / 125000)) /
+          lbl_806D2280);
+  ```
+
+- The class likely has a class-specific delete path equivalent to:
+
+  ```cpp
+  static void operator delete(void *ptr) { MemoryManager_TimedFree(ptr); }
+  ```
+
+  Without this, CW emits `bl __dl__FPv`; target `__dt__11ScopedTimerFv` calls
+  `MemoryManager_TimedFree` in the deleting-dtor tail.
+
+- With the one-expression form plus class-specific delete, natural C++ emits
+  the target register family for the canonical dtor:
+  `lis r5,0x8000`, `lis r4,0x431c`, `lis r0,0x4330`,
+  `mulhwu r0,r6,r4`, `divwu r0,r4,r0`.
+
+- Remaining canonical dtor differences:
+  - CW schedules `lwz r7,0x0(r30)` before `subi r6,r4,0x217d`; target has
+    `subi` first.
+  - CW emits the `0x43300000,0` conversion cookie as an anonymous `.sdata2`
+    local (`@N`). This is probably addressable with the existing
+    `postprocess_sdata2.py` mechanism, as in `fobj.c`.
+  - The `lfs lbl_806D2280` relocation is already a normal named sdata2
+    reference; only obj-level placeholder bytes differ before link.
+
+- Flag probes did not find a compiler option that fixes the `subi`/`lwz`
+  schedule while keeping target code shape:
+  - `-O4,p` and `-inline auto/deferred` keep the same order.
+  - `-O4,s`, `-O3,p`, and `-O2` change the arithmetic pattern too much.
+  - `-schedule off` did not change this natural dtor order in the probe.
+
+- Inlining the natural dtor into `MemoryManager_TimedFree` is still harder than
+  the canonical dtor:
+  - With visible natural conversion locals, CW places the conversion cookie
+    after the visible buffer (`0x230/0x234`) or changes the arithmetic GPRs.
+  - The committed raw-opword shim keeps the invisible cookie at target
+    `0x228/0x22C` and preserves the caller's `r30`/frame layout.
+
+Current inference: the likely original source was natural C++ with a simple
+one-expression elapsed conversion and a class-specific delete routed through
+`MemoryManager_TimedFree`. The remaining mismatch is not game logic but
+compiler scheduling/allocation context. A future cleanup should first try to
+promote the canonical `__dt__11ScopedTimerFv` from asm_fn to natural C++ using
+the one-expression form plus `postprocess_sdata2.py`; only after that should we
+try to remove the inline shim in `MemoryManager_TimedFree`.
+
 ## Related
 
 - `docs/per_fn_matching_strategy.md` §14.1 (Approach A / B for extab handling) — basic patterns, doesn't cover this case
