@@ -352,6 +352,9 @@ util/bitpack.c:
 	extabindex  start:0x80021A4C end:0x80021A64
 	.text       start:0x80088A5C end:0x80088C7C
 
+game/AssocTree.c:
+	.text       start:0x80089BFC end:0x80089C30
+
 game/CardTaskWelcome_Dtor.c:
 	extab       start:0x8000900C end:0x80009014
 	extabindex  start:0x80021B18 end:0x80021B24

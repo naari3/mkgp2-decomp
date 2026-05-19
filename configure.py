@@ -415,6 +415,7 @@ config.libs = [
             Object(Matching, "game/BootNotice_CheckEnterCondition.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/BootPCBCheck_Init.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/GetTextureByIdAndLang.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/AssocTree.c"),
             Object(Matching, "game/ItemDisplay_Stop.c"),
             Object(Matching, "game/ItemDisplay_Destroy.c"),
             Object(Matching, "game/ItemDisplay_GetOrCreate.c"),
