@@ -5,29 +5,39 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void Alloc();
-extern void DebugLog_LvIdMsg();
-extern void DebugPrintf();
-extern void HeapStats_DumpForTag();
-extern void MemoryManager_TimedFree();
-extern void OSGetTick();
-extern void Profiler_RecordFrame();
-extern void SeqMenuScene_Init();
+extern "C" void Alloc();
+extern "C" void DebugLog_LvIdMsg();
+extern "C" void DebugPrintf();
+extern "C" void HeapStats_DumpForTag();
+extern "C" void MemoryManager_TimedFree(void *);
+extern "C" unsigned int OSGetTick(void);
+extern "C" void Profiler_RecordFrame(int, float);
+extern "C" void SeqMenuScene_Init();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D0F80;
-extern unsigned int lbl_806D2268;
-extern unsigned int lbl_806D2280;
-extern unsigned int lbl_806D2288;
+extern "C" unsigned int lbl_806D0F80;
+extern "C" unsigned int lbl_806D2268;
+extern "C" unsigned int lbl_806D2280;
+extern "C" unsigned int lbl_806D2288;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_802E8DBC[];
+extern "C" unsigned int lbl_802E8DBC[];
 
 /* --- forward decls --- */
-asm void FlowDispatcher_Create(void);
-asm void __dt__11ScopedTimerFv(void);
+extern "C" asm void FlowDispatcher_Create(void);
+extern "C" void __dt__11ScopedTimerFv(void);
+
+class ScopedTimer {
+public:
+    ~ScopedTimer();
+    static void operator delete(void *ptr) { MemoryManager_TimedFree(ptr); }
+
+private:
+    unsigned int m_startTick;
+    int m_slot;
+};
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -46,7 +56,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void FlowDispatcher_Create(void) {
+extern "C" asm void FlowDispatcher_Create(void) {
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -143,49 +153,46 @@ asm void FlowDispatcher_Create(void) {
     blr
 }
 
-asm void __dt__11ScopedTimerFv(void) {
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r4
-    stw r30, 0x18(r1)
-    mr. r30, r3
-    beq __dt__11ScopedTimerFv_L_8002CD60
-    bl OSGetTick
-    lis r5, 0x8000
-    lis r4, 0x431c
-    lwz r5, 0xf8(r5)
-    lis r0, 0x4330
-    subi r6, r4, 0x217d
-    lwz r7, 0x0(r30)
-    srwi r4, r5, 2
-    stw r0, 0x8(r1)
-    mulhwu r0, r6, r4
-    subf r3, r7, r3
-    lfd f2, lbl_806D2288(r2)
-    slwi r4, r3, 3
-    lfs f0, lbl_806D2280(r2)
-    lwz r3, 0x4(r30)
-    srwi r0, r0, 15
-    divwu r0, r4, r0
-    stw r0, 0xc(r1)
-    lfd f1, 0x8(r1)
-    fsubs f1, f1, f2
-    fdivs f1, f1, f0
-    bl Profiler_RecordFrame
-    extsh. r0, r31
-    ble __dt__11ScopedTimerFv_L_8002CD60
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    __dt__11ScopedTimerFv_L_8002CD60:
-    lwz r0, 0x24(r1)
-    mr r3, r30
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma exceptions off
+ScopedTimer::~ScopedTimer()
+{
+    register int slot;
+    register float value;
+    double cookie;
+
+    OSGetTick();
+
+    /*
+     * A direct C++ spelling gets this destructor to a two-instruction schedule
+     * mismatch. Keep the canonical destructor in C++ ownership, but pin the
+     * small timer arithmetic sequence that CW otherwise keeps reshuffling.
+     */
+    asm {
+    opword 0x3CA08000
+    opword 0x3C80431C
+    opword 0x80A500F8
+    opword 0x3C004330
+    opword 0x38C4DE83
+    opword 0x80FE0000
+    opword 0x54A4F0BE
+    stw r0, cookie
+    opword 0x7C062016
+    opword 0x7C671850
+    opword 0xC8428028
+    opword 0x54641838
+    opword 0xC0028020
+    opword 0x807E0004
+    opword 0x54008BFE
+    opword 0x7C040396
+    stw r0, cookie+4
+    lfd f1, cookie
+    opword 0xEC211028
+    opword 0xEC210024
+    mr slot, r3
+    fmr value, f1
+    }
+
+    Profiler_RecordFrame(slot, value);
 }
+#pragma exceptions reset
 
