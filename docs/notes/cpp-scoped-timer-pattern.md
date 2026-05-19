@@ -2,6 +2,12 @@
 
 Observed while attempting to match `MemoryManager_TimedFree` @ 0x8003AFB8 (asm_fn retreat committed in b37d247).
 
+Update: `MemoryManager_TimedFree` was later promoted from asm_fn to C++ and
+matched in commit `871c087` (`Match MemoryManager_TimedFree in C++`). The
+structural diagnosis below still matters, but the final implementation uses a
+small codegen shim inside the inline `ScopedTimer` destructor rather than a
+fully natural destructor body.
+
 The function originally is C++ and uses a stack-allocated `ScopedTimer` instance to time the free operation. The class destructor (`ScopedTimer_End` @ 0x8002CCD8, named `dtor_8002CCD8` in symbols.txt before this analysis) is **defined in a different TU** but called from MemoryManager_TimedFree's scope cleanup.
 
 ## Why matching is hard
@@ -78,6 +84,90 @@ Risks:
 ## Symbol naming note
 
 The CW1.3.2 mangled name for `ScopedTimer::~ScopedTimer()` is `__dt__11ScopedTimerFv` (`__dt` = destructor, `11ScopedTimer` = class name with length prefix, `F` = function, `v` = void args). If pursuing the .cpp approach, rename `dtor_8002CCD8` to `__dt__11ScopedTimerFv` in symbols.txt.
+
+## Post-match gap: natural C++ vs current shim
+
+Commit `871c087` proves the H1 structure was fundamentally right:
+
+- A canonical strong `__dt__11ScopedTimerFv` owns the original
+  `0x8002CCD8..0x8002CD7C` address range.
+- `MemoryManager_TimedFree` is a C++ function with a stack-local
+  `ScopedTimer`.
+- The function has target-like C++ exception cleanup metadata and duplicated
+  destructor cleanup in both normal exit branches.
+
+However, the matched source is not yet the likely original, natural C++ source.
+The remaining gap is local to `ScopedTimer`'s destructor body and its surrounding
+stack layout:
+
+- The timer arithmetic is emitted through raw PPC `opword` / inline asm.
+- `char buf[0x204]` is used while the runtime size passed to
+  `fn_80276D30` remains `0x200`.
+- `tools/postprocess_extab_user.py` patches this TU's auto-extab first word
+  from `0x10180000` to target `0x101A0000`.
+
+This should be treated as a matching shim, not evidence that the original
+source used inline asm. The original source was probably closer to:
+
+```cpp
+void MemoryManager_TimedFree(void *ptr) throw()
+{
+    ScopedTimer timer(0x13);
+    char buf[0x200];
+
+    if (lbl_806D0FA1 == 0) {
+        fn_80276D30(buf, 0x200, lbl_802E9DD0);
+        DebugPrintf(buf);
+        DebugPrintf(lbl_802E9DB0);
+        for (;;) {}
+    }
+
+    if (ptr != 0) {
+        OSFreeToHeap(lbl_806CF010, ptr);
+    }
+}
+```
+
+with a simple `ScopedTimer::~ScopedTimer()` equivalent to:
+
+```cpp
+ScopedTimer::~ScopedTimer()
+{
+    unsigned int endTick = OSGetTick();
+    unsigned int ticksPerUnit = ((*(volatile unsigned int *)0x800000F8) >> 2) / 125000;
+    unsigned int elapsed = endTick - m_startTick;
+    unsigned int elapsedUnit = (elapsed << 3) / ticksPerUnit;
+
+    Profiler_RecordFrame(m_slot, (float)elapsedUnit / lbl_806D24D8);
+}
+```
+
+Pure C++ attempts get close but miss CW1.3.2's target register allocation:
+
+- The reciprocal/divide block picks different GPRs.
+- Partial asm gets `mulhwu r0,r6,r4` right, but CW chooses `r8` for the
+  `0x4330` int-to-double high word instead of target `r0`.
+- A union-cookie local creates the desired conversion flavor but shifts the
+  stack layout and grows the function.
+- Full inline asm including the `Profiler_RecordFrame` call makes CW preserve
+  `r29`, growing the function and changing the caller register plan.
+
+The likely reason is missing original compilation context rather than different
+game logic: exact TU/header layout, inline budget, surrounding declarations,
+local stack pressure, and exception-spec metadata all affect CW1.3.2's
+allocator and extab encoder. The current source restores the C++ control
+structure and exception structure, but pins the last unstable codegen details.
+
+Future cleanup target:
+
+1. Move `ScopedTimer` to a shared header once another caller is ready to promote.
+2. Compare the 30 inline-dtor callers that reference `__dt__11ScopedTimerFv`
+   only from extab, looking for a caller where natural C++ emits the destructor
+   body without raw `opword`.
+3. Identify the original TU or header context that makes CW choose `r0` for the
+   `0x4330` conversion naturally.
+4. If that context is found, replace the destructor shim and remove the scoped
+   extab first-word patch.
 
 ## Related
 
