@@ -149,7 +149,7 @@ extern void Saturate_Double();
 extern void SceneRender_SetViewportRect();
 extern void SetAnimSpin();
 extern void ShadowAreaMgr_QueryPoint();
-extern void ShadowBillboard_IsRenderReady();
+extern unsigned char ShadowBillboard_IsRenderReady(void *billboard);
 extern void ShadowBillboard_SetField0x6CAndComputeAxis();
 extern void ShadowBillboard_SetField0xA4();
 extern void ShadowBillboard_SetTargetSaturation();
@@ -235,7 +235,7 @@ extern void fn_80271EF4();
 extern void fn_802791BC();
 extern void fn_8027E480();
 extern void fn_8027E9E8();
-extern void fn_802BD6AC();
+extern void fn_802BD6AC(float x, float y);
 extern void fn_802BD6C0();
 extern void fn_802C8B48();
 extern void fn_802D6618();
@@ -472,6 +472,24 @@ typedef struct KartItemDropView {
     void *itemSelect;    /* 0x104 */
 } KartItemDropView;
 
+typedef struct KartItemRenderView {
+    char pad_0x0[0x10];
+    int eventType;                  /* 0x10 */
+    char pad_0x14[0x8];
+    int effectStrength;             /* 0x1c */
+    unsigned char renderGate20;     /* 0x20 */
+    char pad_0x21[0xb];
+    void *ownerDriver;              /* 0x2c */
+    char pad_0x30[0x4];
+    void *effectObj;                /* 0x34 */
+    void *billboard;                /* 0x38 */
+    char pad_0x3c[0xc3];
+    unsigned char renderGateFF;     /* 0xff */
+    char pad_0x100[0x10];
+    float postFxParamU;             /* 0x110 */
+    float postFxParamV;             /* 0x114 */
+} KartItemRenderView;
+
 /* --- forward decls --- */
 asm void KartItem_OnKartHit(void);
 void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, int channel);
@@ -482,7 +500,7 @@ asm void KartItem_ApplyImpactReflectAndDampVelocity(void);
 unsigned char KartItem_TryDropCoinsAndPlaySE(KartItemDropView *self, int count, unsigned char force);
 int KartItem_TryCancelIfDropAllowed(KartItemDropView *self);
 asm void KartItem_ApplyImpactImpulseAndRumble(void);
-asm void KartItem_RenderPipelinedWithEffects(void);
+void KartItem_RenderPipelinedWithEffects(KartItemRenderView *self);
 asm void KartItem_Tick(void);
 asm void KartItem_PerFrameStep(void);
 asm void CarObject_UpdateCoinSpeedBonus(void);
@@ -2717,74 +2735,30 @@ asm void KartItem_ApplyImpactImpulseAndRumble(void) { /* 0x8004B49C size:0x520 *
     blr
 }
 
-asm void KartItem_RenderPipelinedWithEffects(void) { /* 0x8004B9BC size:0xF0 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    lbz r0, 0xff(r3)
-    cmplwi r0, 0x0
-    beq KartItem_RenderPipelinedWithEffects_L_8004B9FC
-    lbz r0, 0x20(r31)
-    cmplwi r0, 0x0
-    beq KartItem_RenderPipelinedWithEffects_L_8004B9FC
-    lwz r3, 0x38(r31)
-    bl ShadowBillboard_IsRenderReady
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne KartItem_RenderPipelinedWithEffects_L_8004BA90
-    KartItem_RenderPipelinedWithEffects_L_8004B9FC:
-    lwz r0, 0x10(r31)
-    cmpwi r0, 0x4
-    bne KartItem_RenderPipelinedWithEffects_L_8004BA18
-    lwz r3, 0x34(r31)
-    li r4, 0xa
-    li r5, 0x0
-    bl TornadoEffect_SetField128AndMaybeClear134
-    KartItem_RenderPipelinedWithEffects_L_8004BA18:
-    lwz r3, 0x34(r31)
-    bl KartItem_DispatchEffectRenderByState
-    lwz r3, 0x2c(r31)
-    li r4, 0x3
-    li r5, 0x1
-    bl KartDriver_RenderTimed
-    lwz r0, 0x1c(r31)
-    cmpwi r0, 0x1
-    ble KartItem_RenderPipelinedWithEffects_L_8004BA48
-    lfs f1, 0x110(r31)
-    lfs f2, 0x114(r31)
-    bl fn_802BD6AC
-    KartItem_RenderPipelinedWithEffects_L_8004BA48:
-    lwz r3, 0x2c(r31)
-    li r4, 0x4
-    li r5, 0x1
-    bl KartDriver_RenderTimed
-    lwz r3, 0x34(r31)
-    bl KartItem_FlushPendingRender_v2
-    lwz r0, 0x1c(r31)
-    cmpwi r0, 0x1
-    ble KartItem_RenderPipelinedWithEffects_L_8004BA70
-    bl fn_802BD6C0
-    KartItem_RenderPipelinedWithEffects_L_8004BA70:
-    lwz r3, 0x34(r31)
-    bl KartItem_FlushRenderIfReady
-    lwz r3, 0x2c(r31)
-    li r4, 0x2
-    li r5, 0x1
-    bl KartDriver_RenderTimed
-    lwz r3, 0x34(r31)
-    bl KartItem_FlushPendingRender
-    KartItem_RenderPipelinedWithEffects_L_8004BA90:
-    lwz r3, 0x34(r31)
-    bl TornadoEffect_SubmitRender
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+void KartItem_RenderPipelinedWithEffects(KartItemRenderView *self) { /* 0x8004B9BC size:0xF0 */
+    if (self->renderGateFF == 0 || self->renderGate20 == 0 ||
+        ShadowBillboard_IsRenderReady(self->billboard) == 1) {
+        if (self->eventType == 4) {
+            TornadoEffect_SetField128AndMaybeClear134(self->effectObj, 10, 0);
+        }
+        KartItem_DispatchEffectRenderByState(self->effectObj);
+        KartDriver_RenderTimed(self->ownerDriver, 3, 1);
+        if (self->effectStrength > 1) {
+            fn_802BD6AC(self->postFxParamU, self->postFxParamV);
+        }
+        KartDriver_RenderTimed(self->ownerDriver, 4, 1);
+        KartItem_FlushPendingRender_v2(self->effectObj);
+        if (self->effectStrength > 1) {
+            fn_802BD6C0();
+        }
+        KartItem_FlushRenderIfReady(self->effectObj);
+        KartDriver_RenderTimed(self->ownerDriver, 2, 1);
+        KartItem_FlushPendingRender(self->effectObj);
+    }
+    TornadoEffect_SubmitRender(self->effectObj);
 }
+#pragma exceptions reset
 
 asm void KartItem_Tick(void) { /* 0x8004BAAC size:0x874 */
     nofralloc
