@@ -245,6 +245,7 @@ game/auto_ONKARTHIT_block.c:
 	extab       start:0x80006900 end:0x8000718C
 	extabindex  start:0x800201EC end:0x8002057C
 	.text       start:0x8004A238 end:0x80052F20
+	.data       start:0x803F7668 end:0x803F7690
 
 game/KartBody.c:
 	.text       start:0x8005771C end:0x80057738

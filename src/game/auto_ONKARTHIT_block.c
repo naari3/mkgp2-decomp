@@ -272,7 +272,7 @@ extern unsigned int lbl_806D2708;
 extern unsigned int lbl_806D270C;
 extern unsigned int lbl_806D2710;
 extern unsigned int lbl_806D2714;
-extern unsigned int lbl_806D2718;
+extern const float lbl_806D2718;
 extern unsigned int lbl_806D271C;
 extern unsigned int lbl_806D2720;
 extern unsigned int lbl_806D2728;
@@ -544,7 +544,15 @@ typedef struct KartMovementSpeedView {
     float velX;                      /* 0x17c */
     float velY;                      /* 0x180 */
     float velZ;                      /* 0x184 */
-    char pad_0x188[0x40];
+    char pad_0x188[0xc];
+    float impact194;                 /* 0x194 */
+    float impact198;                 /* 0x198 */
+    float impact19c;                 /* 0x19c */
+    char pad_0x1a0[0xc];
+    float impact1ac;                 /* 0x1ac */
+    float impact1b0;                 /* 0x1b0 */
+    float impact1b4;                 /* 0x1b4 */
+    char pad_0x1b8[0x10];
     float accel1c8;                  /* 0x1c8 */
     char pad_0x1cc[0xf0];
     unsigned char state2bc;          /* 0x2bc */
@@ -653,7 +661,9 @@ typedef struct KartItemOpsView {
     ItemSecondaryLane *secondary;      /* 0x50 */
     char pad_0x54[0x5c];
     unsigned char boostArmedB0;        /* 0xb0 */
-    char pad_0xb1[0x2b];
+    char pad_0xb1[0x1f];
+    int aiTimerD0;                     /* 0xd0 */
+    char pad_0xd4[0x8];
     unsigned char driftFlagDC;         /* 0xdc */
     char pad_0xdd[0x1f];
     unsigned char fellOffFC;           /* 0xfc */
@@ -680,13 +690,71 @@ typedef struct ItemRemapEntry {
 typedef int (*EffectDispatchFn)(void *obj, void *args, int mode);
 
 /* 58-entry x 0x64 item effect descriptor table (.rodata lbl_802EBF0C) */
+struct ItemEffectDesc;
+
+/* per-desc apply hook at +0x50, invoked indirectly by ItemEffect_Dispatch
+ * (isPrimary=1) and KartItem_TickActiveEffectsTwoLane (isPrimary=0) */
+typedef void (*ItemEffectApplyFn)(const struct ItemEffectDesc *desc, KartItemOpsView *owner,
+                                  void *effectState, void *mediaReq, void *itemObj,
+                                  unsigned char kind, int isPrimary);
+
 typedef struct ItemEffectDesc {
     int laneIdx;                       /* 0x0 */
     int itemId;                        /* 0x4 */
-    char pad_0x8[0x4];
+    unsigned char strPcbKind8;         /* 0x8 */
+    char pad_0x9[0x3];
     int priorityC;                     /* 0xc */
-    char pad_0x10[0x54];
+    int duration10;                    /* 0x10 */
+    unsigned char kind14;              /* 0x14 */
+    char pad_0x15[0x3];
+    int steerKind18;                   /* 0x18 */
+    float steerParam1c;                /* 0x1c */
+    float steerScale20;                /* 0x20 */
+    float steerParam24;                /* 0x24 */
+    float steerParam28;                /* 0x28 */
+    float steerParam2c;                /* 0x2c */
+    float steerParam30;                /* 0x30 */
+    int speedKind34;                   /* 0x34 */
+    float speedParam38;                /* 0x38 */
+    float speedParam3c;                /* 0x3c */
+    int camKind40;                     /* 0x40 */
+    float camParam44;                  /* 0x44 */
+    int impactKind48;                  /* 0x48 */
+    char pad_0x4c[0x4];
+    ItemEffectApplyFn onApply50;       /* 0x50 */
+    char pad_0x54[0x10];
 } ItemEffectDesc;
+
+/* run-view of one effect lane (ItemEffectTable lanes at +0x28, stride 0x18)
+ * as consumed by ItemEffect_Dispatch (base-relative) */
+typedef struct ItemEffectLaneRun {
+    int itemId;                        /* +0x00 */
+    int timer;                         /* +0x04 */
+    const ItemEffectDesc *desc;        /* +0x08 */
+    void *itemObj;                     /* +0x0c */
+    int mode;                          /* +0x10 */
+    float blend;                       /* +0x14 */
+} ItemEffectLaneRun;
+
+/* cursor view of the same lane fields at displacement +0x28 (table-base walk
+ * form used by KartItem_TickActiveEffectsTwoLane) */
+typedef struct ItemLaneRunCursor {
+    char pad_0x0[0x28];
+    int itemId;                        /* 0x28 */
+    int timer;                         /* 0x2c */
+    const ItemEffectDesc *desc;        /* 0x30 */
+    void *itemObj;                     /* 0x34 */
+    int mode;                          /* 0x38 */
+    float blend;                       /* 0x3c */
+} ItemLaneRunCursor;
+
+/* item object position view (world pos at +0xa0) */
+typedef struct ItemObjectPosView {
+    char pad_0x0[0xa0];
+    float posX;                        /* 0xa0 */
+    float posY;                        /* 0xa4 */
+    float posZ;                        /* 0xa8 */
+} ItemObjectPosView;
 
 extern ItemRemapEntry lbl_802EBE64[7];
 extern ItemEffectDesc lbl_802EBF0C[0x3A];
@@ -700,7 +768,7 @@ void KartItem_PlaySE_0x09(KartItemHitSEView *self);
 asm void KartItem_ApplyImpactReflectAndDampVelocity(void);
 unsigned char KartItem_TryDropCoinsAndPlaySE(KartItemDropView *self, int count, unsigned char force);
 int KartItem_TryCancelIfDropAllowed(KartItemDropView *self);
-asm void KartItem_ApplyImpactImpulseAndRumble(void);
+void KartItem_ApplyImpactImpulseAndRumble(KartItemOpsView *self, int mode, float x, float y, float z);
 void KartItem_RenderPipelinedWithEffects(KartItemRenderView *self);
 asm void KartItem_Tick(void);
 asm void KartItem_PerFrameStep(void);
@@ -750,8 +818,8 @@ int ItemEffect_SelectAndDispatch(ItemEffectTable *self, int itemId, void *itemOb
 int ItemEffect_GenericHandler(ItemEffectTable *self, int itemId, void *itemObj, int arg4);
 int ItemEffect_OnHit(ItemEffectTable *self, const ItemEffectDesc *desc, int itemId, void *itemObj, int arg4);
 int ItemEffect_Dispatch(ItemEffectLane *lane, KartItemOpsView *owner, int kind, void *effectState, void *mediaReq, const ItemEffectDesc *desc, int itemId, void *itemObj, int arg4, float intensity);
-asm void KartItem_TickActiveEffectsTwoLane(void);
-asm void KartItem_TickStatusEffectsByFlag(void);
+void KartItem_TickActiveEffectsTwoLane(ItemEffectTable *self);
+void KartItem_TickStatusEffectsByFlag(ItemEffectTable *self);
 asm void ItemEffectDesc_OnApply_BoostLandingSE(void);
 asm void ItemEffectDesc_OnApply_FreezeKartOrSlowdown(void);
 asm void ItemEffectDesc_OnApply_MushroomBoost(void);
@@ -2589,7 +2657,7 @@ int KartItem_TryCancelIfDropAllowed(KartItemDropView *self) { /* 0x8004B430 size
 }
 #pragma exceptions reset
 
-asm void KartItem_ApplyImpactImpulseAndRumble(void) { /* 0x8004B49C size:0x520 */
+asm void KartItem_ApplyImpactImpulseAndRumble(KartItemOpsView *self, int mode, float x, float y, float z) { /* 0x8004B49C size:0x520 */
     nofralloc
     stwu r1, -0xa0(r1)
     mflr r0
@@ -8126,264 +8194,172 @@ asm int ItemEffect_Dispatch(ItemEffectLane *lane, KartItemOpsView *owner, int ki
     blr
 }
 
-asm void KartItem_TickActiveEffectsTwoLane(void) { /* 0x8005094C size:0x3A4 */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    stw r0, 0x44(r1)
-    stmw r23, 0x1c(r1)
-    mr r23, r3
-    lwz r3, 0x14(r3)
-    cmpwi r3, 0x0
-    ble KartItem_TickActiveEffectsTwoLane_L_80050974
-    subi r0, r3, 0x1
-    stw r0, 0x14(r23)
-    KartItem_TickActiveEffectsTwoLane_L_80050974:
-    mr r3, r23
-    bl KartItem_TickStatusEffectsByFlag
-    mr r27, r23
-    li r25, 0x0
-    li r24, 0x0
-    KartItem_TickActiveEffectsTwoLane_L_80050988:
-    lwz r0, 0x28(r27)
-    cmpwi r0, 0x0
-    bge KartItem_TickActiveEffectsTwoLane_L_8005099C
-    li r0, 0x0
-    b KartItem_TickActiveEffectsTwoLane_L_800509C8
-    KartItem_TickActiveEffectsTwoLane_L_8005099C:
-    lwz r3, 0x2c(r27)
-    cmpwi r3, 0x0
-    ble KartItem_TickActiveEffectsTwoLane_L_800509C4
-    subi r0, r3, 0x1
-    stw r0, 0x2c(r27)
-    lwz r0, 0x2c(r27)
-    cmpwi r0, 0x0
-    bgt KartItem_TickActiveEffectsTwoLane_L_800509C4
-    li r0, 0x2
-    b KartItem_TickActiveEffectsTwoLane_L_800509C8
-    KartItem_TickActiveEffectsTwoLane_L_800509C4:
-    li r0, 0x1
-    KartItem_TickActiveEffectsTwoLane_L_800509C8:
-    cmpwi r0, 0x1
-    beq KartItem_TickActiveEffectsTwoLane_L_800509D4
-    addi r25, r25, 0x1
-    KartItem_TickActiveEffectsTwoLane_L_800509D4:
-    cmpwi r0, 0x2
-    bne KartItem_TickActiveEffectsTwoLane_L_80050CBC
-    lwz r30, 0x28(r27)
-    lwz r29, 0x8(r23)
-    cmpwi r30, 0x0
-    lwz r28, 0x4(r23)
-    lwz r26, 0x0(r23)
-    blt KartItem_TickActiveEffectsTwoLane_L_80050A5C
-    lwz r3, 0x34(r26)
-    mr r4, r30
-    bl TornadoEffect_ApplyItemVisual_Primary
-    lwz r3, 0x24(r26)
-    mr r4, r30
-    bl KartItemAudio_StopSEByItemId
-    lwz r3, 0x2c(r26)
-    mr r4, r30
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ApplyItemEventClear
-    mr r3, r28
-    bl EffectState_ReleaseAndClear
-    mr r3, r29
-    bl MediaBoard_SendAndCheck
-    lwz r3, 0x38(r26)
-    lfs f1, lbl_806D26EC(r2)
-    bl ShadowBillboard_SetField0xA4
-    li r3, -0x1
-    li r0, 0x0
-    stw r3, 0x28(r27)
-    lfs f0, lbl_806D26FC(r2)
-    stw r3, 0x2c(r27)
-    stw r0, 0x30(r27)
-    stw r0, 0x34(r27)
-    stw r0, 0x38(r27)
-    stfs f0, 0x3c(r27)
-    KartItem_TickActiveEffectsTwoLane_L_80050A5C:
-    subic. r0, r24, 0x1
-    blt KartItem_TickActiveEffectsTwoLane_L_80050CBC
-    mulli r0, r0, 0x18
-    lbz r28, 0xc(r23)
-    lwz r29, 0x8(r23)
-    lwz r30, 0x4(r23)
-    add r26, r23, r0
-    lwz r31, 0x0(r23)
-    lwz r3, 0x28(r26)
-    cmpwi r3, 0x0
-    blt KartItem_TickActiveEffectsTwoLane_L_80050CBC
-    lwz r0, 0x2c(r26)
-    cmpwi r0, 0x0
-    blt KartItem_TickActiveEffectsTwoLane_L_80050CAC
-    cmpwi r3, 0x0
-    blt KartItem_TickActiveEffectsTwoLane_L_80050CAC
-    lwz r4, 0x30(r26)
-    lfs f0, 0x3c(r26)
-    lwz r0, 0x18(r4)
-    cmpwi r0, 0x0
-    beq KartItem_TickActiveEffectsTwoLane_L_80050BA8
-    cmplwi r28, 0x0
-    beq KartItem_TickActiveEffectsTwoLane_L_80050BA8
-    lfs f1, 0x20(r4)
-    cmplwi r0, 0x9
-    fmuls f2, f1, f0
-    bgt KartItem_TickActiveEffectsTwoLane_L_80050BA8
-    lis r3, jumptable_803F7668@ha
-    slwi r0, r0, 2
-    addi r3, r3, jumptable_803F7668@l
-    lwzx r0, r3, r0
-    mtctr r0
-    bctr
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    bl EffectSteering_InitForLock
-    b KartItem_TickActiveEffectsTwoLane_L_80050BA8
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    lfs f3, 0x24(r4)
-    bl EffectSteering_InitForVibrate
-    b KartItem_TickActiveEffectsTwoLane_L_80050BA8
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    bl EffectSteering_InitForVibrate_Sub
-    b KartItem_TickActiveEffectsTwoLane_L_80050BA8
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    lfs f3, 0x24(r4)
-    bl EffectSteering_InitForViscosity_Uniform
-    b KartItem_TickActiveEffectsTwoLane_L_80050BA8
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    lfs f3, 0x24(r4)
-    lfs f4, 0x28(r4)
-    lfs f5, 0x2c(r4)
-    lfs f6, 0x30(r4)
-    bl EffectSteering_InitForViscosity
-    b KartItem_TickActiveEffectsTwoLane_L_80050BA8
-    fctiwz f0, f1
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    stfd f0, 0x8(r1)
-    lwz r4, 0xc(r1)
-    bl EffectSteering_InitForSplit
-    b KartItem_TickActiveEffectsTwoLane_L_80050BA8
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    lfs f3, 0x24(r4)
-    lfs f4, 0x28(r4)
-    bl EffectSteering_InitForShake
-    b KartItem_TickActiveEffectsTwoLane_L_80050BA8
-    fmr f2, f1
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    bl EffectSteering_InitForScale
-    b KartItem_TickActiveEffectsTwoLane_L_80050BA8
-    fctiwz f0, f1
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    stfd f0, 0x8(r1)
-    lwz r4, 0xc(r1)
-    bl EffectSteering_InitForDelay
-    KartItem_TickActiveEffectsTwoLane_L_80050BA8:
-    lwz r4, 0x30(r26)
-    lwz r0, 0x34(r4)
-    cmpwi r0, 0x0
-    beq KartItem_TickActiveEffectsTwoLane_L_80050BF4
-    cmpwi r0, 0x2
-    beq KartItem_TickActiveEffectsTwoLane_L_80050BE4
-    bge KartItem_TickActiveEffectsTwoLane_L_80050BF4
-    cmpwi r0, 0x1
-    bge KartItem_TickActiveEffectsTwoLane_L_80050BD0
-    b KartItem_TickActiveEffectsTwoLane_L_80050BF4
-    KartItem_TickActiveEffectsTwoLane_L_80050BD0:
-    lfs f1, 0x38(r4)
-    mr r3, r29
-    lfs f2, 0x3c(r4)
-    bl EffectSpeed_ApplySpeedScale
-    b KartItem_TickActiveEffectsTwoLane_L_80050BF4
-    KartItem_TickActiveEffectsTwoLane_L_80050BE4:
-    lfs f1, 0x38(r4)
-    mr r3, r29
-    lfs f2, 0x3c(r4)
-    bl InterpolationStep
-    KartItem_TickActiveEffectsTwoLane_L_80050BF4:
-    lwz r3, 0x30(r26)
-    lwz r0, 0x40(r3)
-    cmpwi r0, 0x0
-    beq KartItem_TickActiveEffectsTwoLane_L_80050C7C
-    cmplwi r28, 0x0
-    beq KartItem_TickActiveEffectsTwoLane_L_80050C7C
-    cmpwi r0, 0x2
-    lfs f1, 0x44(r3)
-    beq KartItem_TickActiveEffectsTwoLane_L_80050C64
-    bge KartItem_TickActiveEffectsTwoLane_L_80050C28
-    cmpwi r0, 0x1
-    bge KartItem_TickActiveEffectsTwoLane_L_80050C48
-    b KartItem_TickActiveEffectsTwoLane_L_80050C7C
-    KartItem_TickActiveEffectsTwoLane_L_80050C28:
-    cmpwi r0, 0x4
-    bge KartItem_TickActiveEffectsTwoLane_L_80050C7C
-    lwz r3, 0x38(r31)
-    bl ShadowBillboard_TriggerSpinFlash
-    lwz r3, 0x34(r31)
-    lfs f1, lbl_806D2700(r2)
-    bl TornadoEffect_SetColorY
-    b KartItem_TickActiveEffectsTwoLane_L_80050C7C
-    KartItem_TickActiveEffectsTwoLane_L_80050C48:
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne KartItem_TickActiveEffectsTwoLane_L_80050C58
-    li r3, 0x0
-    KartItem_TickActiveEffectsTwoLane_L_80050C58:
-    li r4, 0x1
-    bl CameraEffect_Apply
-    b KartItem_TickActiveEffectsTwoLane_L_80050C7C
-    KartItem_TickActiveEffectsTwoLane_L_80050C64:
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne KartItem_TickActiveEffectsTwoLane_L_80050C74
-    li r3, 0x0
-    KartItem_TickActiveEffectsTwoLane_L_80050C74:
-    li r4, 0x3
-    bl CameraEffect_Apply
-    KartItem_TickActiveEffectsTwoLane_L_80050C7C:
-    lwz r3, 0x30(r26)
-    lwz r7, 0x34(r26)
-    lwz r12, 0x50(r3)
-    cmplwi r12, 0x0
-    beq KartItem_TickActiveEffectsTwoLane_L_80050CAC
-    mr r4, r31
-    mr r5, r30
-    mr r6, r29
-    mr r8, r28
-    li r9, 0x0
-    mtctr r12
-    bctrl
-    KartItem_TickActiveEffectsTwoLane_L_80050CAC:
-    lwz r3, 0x34(r31)
-    li r5, 0x1
-    lwz r4, 0x28(r26)
-    bl TornadoEffect_ApplyItemVisual_Secondary
-    KartItem_TickActiveEffectsTwoLane_L_80050CBC:
-    addi r24, r24, 0x1
-    addi r27, r27, 0x18
-    cmplwi r24, 0x2
-    blt KartItem_TickActiveEffectsTwoLane_L_80050988
-    cmplwi r25, 0x2
-    bne KartItem_TickActiveEffectsTwoLane_L_80050CDC
-    li r0, -0x1
-    stw r0, 0x18(r23)
-    KartItem_TickActiveEffectsTwoLane_L_80050CDC:
-    lmw r23, 0x1c(r1)
-    lwz r0, 0x44(r1)
-    mtlr r0
-    addi r1, r1, 0x40
-    blr
-}
+#pragma exceptions off
+void KartItem_TickActiveEffectsTwoLane(ItemEffectTable *self) { /* 0x8005094C size:0x3A4 */
+    KartItemOpsView *own2;
+    KartItemOpsView *own;
+    void *est2;
+    void *est;
+    void *mreq2;
+    void *mreq;
+    unsigned char kc;
+    ItemLaneRunCursor *cursor;
+    int id;
+    ItemLaneRunCursor *other;
+    unsigned int expired;
+    unsigned int i;
 
-asm void KartItem_TickStatusEffectsByFlag(void) { /* 0x80050CF0 size:0x410 */
+    if (self->run14 > 0) {
+        self->run14 = self->run14 - 1;
+    }
+    KartItem_TickStatusEffectsByFlag(self);
+    cursor = (ItemLaneRunCursor *)self;
+    expired = 0;
+    for (i = 0; i < 2; i++) {
+        int state;
+
+        if (cursor->itemId < 0) {
+            state = 0;
+        } else if (cursor->timer > 0 && (cursor->timer = cursor->timer - 1, cursor->timer <= 0)) {
+            state = 2;
+        } else {
+            state = 1;
+        }
+        if (state != 1) {
+            expired += 1;
+        }
+        if (state == 2) {
+            id = cursor->itemId;
+            mreq = self->mediaReq;
+            est = self->effectState;
+            own = self->owner;
+            if (id >= 0) {
+                TornadoEffect_ApplyItemVisual_Primary(own->effectObj, id);
+                KartItemAudio_StopSEByItemId(own->soundCtrl, id);
+                ItemEffectBus_ApplyItemEventClear(own->ownerDriver->itemBus, id);
+                EffectState_ReleaseAndClear(est);
+                MediaBoard_SendAndCheck(mreq);
+                ShadowBillboard_SetField0xA4(own->billboard, lbl_806D26EC);
+                cursor->itemId = -1;
+                cursor->timer = -1;
+                cursor->desc = 0;
+                cursor->itemObj = 0;
+                cursor->mode = 0;
+                cursor->blend = lbl_806D26FC;
+            }
+            {
+                int n = i - 1;
+                if (n >= 0) {
+                    kc = self->laneKindC;
+                    mreq2 = self->mediaReq;
+                    est2 = self->effectState;
+                    other = (ItemLaneRunCursor *)((char *)self + n * 0x18);
+                    own2 = self->owner;
+                    if (other->itemId >= 0) {
+                        if (other->timer >= 0 && other->itemId >= 0) {
+                            const ItemEffectDesc *d2;
+                            float blendv;
+                            int steer;
+
+                            d2 = other->desc;
+                            blendv = other->blend;
+                            steer = d2->steerKind18;
+                            if (steer != 0 && kc != 0) {
+                                float sc20 = d2->steerScale20;
+                                float prod = sc20 * blendv;
+                                switch (steer) {
+                                case 1:
+                                    EffectSteering_InitForLock(est2, d2->steerParam1c, prod);
+                                    break;
+                                case 2:
+                                    EffectSteering_InitForVibrate(est2, d2->steerParam1c, prod, d2->steerParam24);
+                                    break;
+                                case 3:
+                                    EffectSteering_InitForVibrate_Sub(est2, d2->steerParam1c, prod);
+                                    break;
+                                case 4:
+                                    EffectSteering_InitForViscosity_Uniform(est2, d2->steerParam1c, prod, d2->steerParam24);
+                                    break;
+                                case 5:
+                                    EffectSteering_InitForViscosity(est2, d2->steerParam1c, prod, d2->steerParam24, d2->steerParam28, d2->steerParam2c, d2->steerParam30);
+                                    break;
+                                case 6:
+                                    EffectSteering_InitForSplit(est2, (int)sc20, d2->steerParam1c);
+                                    break;
+                                case 7:
+                                    EffectSteering_InitForShake(est2, d2->steerParam1c, prod, d2->steerParam24, d2->steerParam28);
+                                    break;
+                                case 8:
+                                    EffectSteering_InitForScale(est2, d2->steerParam1c, sc20);
+                                    break;
+                                case 9:
+                                    EffectSteering_InitForDelay(est2, (int)sc20, d2->steerParam1c);
+                                    break;
+                                }
+                            }
+                            d2 = other->desc;
+                            if (d2->speedKind34 != 0) {
+                                switch (d2->speedKind34) {
+                                case 1:
+                                    EffectSpeed_ApplySpeedScale(mreq2, d2->speedParam38, d2->speedParam3c);
+                                    break;
+                                case 2:
+                                    InterpolationStep(mreq2, d2->speedParam38, d2->speedParam3c);
+                                    break;
+                                }
+                            }
+                            {
+                                const ItemEffectDesc *d4 = other->desc;
+                                int camk = d4->camKind40;
+                                if (camk != 0 && kc != 0) {
+                                    float f44 = d4->camParam44;
+                                    switch (camk) {
+                                    case 3:
+                                        ShadowBillboard_TriggerSpinFlash(own2->billboard);
+                                        TornadoEffect_SetColorY(own2->effectObj, lbl_806D2700);
+                                        break;
+                                    case 1: {
+                                        void *cam;
+                                        if ((cam = (void *)lbl_806D109C) == 0) {
+                                            cam = 0;
+                                        }
+                                        CameraEffect_Apply(cam, 1, f44);
+                                        break;
+                                    }
+                                    case 2: {
+                                        void *cam;
+                                        if ((cam = (void *)lbl_806D109C) == 0) {
+                                            cam = 0;
+                                        }
+                                        CameraEffect_Apply(cam, 3, f44);
+                                        break;
+                                    }
+                                    }
+                                }
+                            }
+                            {
+                                const ItemEffectDesc *d5 = other->desc;
+                                void *io = other->itemObj;
+                                ItemEffectApplyFn fnp = d5->onApply50;
+                                if (fnp != 0) {
+                                    fnp(d5, own2, est2, mreq2, io, kc, 0);
+                                }
+                            }
+                        }
+                        TornadoEffect_ApplyItemVisual_Secondary(own2->effectObj, other->itemId, 1);
+                    }
+                }
+            }
+        }
+        cursor = (ItemLaneRunCursor *)((char *)cursor + 0x18);
+    }
+    if (expired == 2) {
+        self->run18 = -1;
+    }
+}
+#pragma exceptions reset
+
+asm void KartItem_TickStatusEffectsByFlag(ItemEffectTable *self) { /* 0x80050CF0 size:0x410 */
     nofralloc
     stwu r1, -0x40(r1)
     mflr r0

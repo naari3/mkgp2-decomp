@@ -1,0 +1,14 @@
+# TwoLane batch idioms (2026-06-10, batch_promote_80050410_dispatchpair)
+
+Matched: KartItem_TickActiveEffectsTwoLane 0x8005094C (100%, src/game/auto_ONKARTHIT_block.c).
+
+1. Jumptable switch in a promoted bundle TU: CW emits one .data jumptable per switch, in function order; the TU's splits.txt entry needs a matching `.data start: end:` range. Table is 0-anchored when min case is small (entry 0 = default), bounds check `cmplwi rX, maxcase; bgt`; case bodies emit in SOURCE order, so write cases 1..9 in target address order. dtk matches the anonymous local jumptable to `jumptable_8xxxxxxx` by layout ([.data-0] 100%).
+2. cmpwi-0-first 2-case switch shape (`cmpwi 0; beq end; cmpwi 2; beq; bge end; cmpwi 1; bge; b end`): write `if (v != 0) { switch (v) { case 1: ...; case 2: ...; } }` - the guard supplies the leading 0-test, the switch lowers to the binary tree.
+3. Single shared `li r0,1` state assignment with two branch entries (ble + bgt both landing on it): comma-&& fold `else if (t > 0 && (t = t - 1, t <= 0)) { state = 2; } else { state = 1; }`. Separate else branches emit two li blocks (+2 instrs).
+4. fp temp pair swap at a `fmuls f2, f1, f0` site (scale=f1, blend=f0): name the scale load as a local (`float sc20 = d->steerScale20;`) declared AFTER the blend local; also lets cases 6/8/9 (fctiwz / fmr) reuse the same CSE web via the named local.
+5. Callee-saved chase recipe that converged in 3 steps (stmw r23 fn, 12 webs): (a) get relative order right per scope - reversing a block-scope decl list inverts that group's relative order; (b) FLATTEN all callee-saved locals to one fn-top decl list - this changed the outer/inner register pool partition (scoped: outer webs grabbed r31..r29; flat: matched target's r27/r25/r24 outer + r26,r28-r31 inner); (c) groups sharing freed registers pick ascending-from-bottom in decl order for the earlier block, descending-from-top for the later block - reorder within the flat list accordingly. Final working order for this fn: own2, own, est2, est, mreq2, mreq, kc, cursor, id, other, expired, i.
+6. `int n = i - 1; if (n >= 0)` reproduces `subic. r0, rI, 1; blt` and keeps n in r0 for the following mulli.
+7. Re-test idiom: `if (other->timer >= 0 && other->itemId >= 0)` after an earlier `if (other->itemId < 0) continue`-shape guard keeps the second cmpwi on the CSE'd register (no reload, no branch fold).
+8. Calling a same-TU asm_fn from promoted C: change the asm body's signature in place (`asm void f(void)` -> `asm void f(ItemEffectTable *self)`), body untouched - precedent extended (KartItem_TickStatusEffectsByFlag).
+
+The TwoLane second-lane block replays the SAME desc-action body as ItemEffect_Dispatch (separate jumptable 803F7668, isPrimary=0, fctiwz slot 0x8) - duplicated source in the original, NOT a shared inline helper (each fn reloads desc from its own lane view per section).
