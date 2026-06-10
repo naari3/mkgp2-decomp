@@ -21,3 +21,19 @@ not dispatch promote subs for these):
 
 dtor-named siblings WITHOUT islands (e.g. dtor_80052200, dtor_800524CC, 8-byte
 extabs) are not in this class and remain dispatchable.
+
+## Precan rule UPDATE (2026-06-11, StlList_InsertBefore 0x80052684)
+
+The `bl __unexpected` grep is INSUFFICIENT. StlList_InsertBefore carries the full
+exceptions-on scaffolding (FP prologue `mr r31, r1`, back-chain epilogue, EH state
+store `stw r1, 0x24(r31)`, dead cleanup island `bl MemoryManager_TimedFree` parked
+behind an unconditional `b`) with NO `bl __unexpected` call - the cleanup handler
+frees an Alloc-ed node instead of calling __unexpected.
+
+Updated precan check (either marks the class, 0 probes):
+1. `bl __unexpected` anywhere in the fn range, OR
+2. FP prologue: `mr rX, r1` immediately after the callee-saved stores, paired with
+   the back-chain epilogue (`lwz r10/r11, 0x0(r1)` ... `mr r1, r10/r11`).
+
+auto_ONKARTHIT_block.c class membership grows to 13 fns: the original 12 (KartItem_Dtor
++ 11 tail dtors) + StlList_InsertBefore 0x80052684.

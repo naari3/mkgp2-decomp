@@ -254,8 +254,8 @@ extern unsigned int g_playerCarObject;
 extern unsigned int g_raceCamera;
 extern unsigned int lbl_806D0051;
 extern unsigned int lbl_806D1060;
-extern unsigned int lbl_806D1080;
-extern unsigned int lbl_806D1084;
+extern float lbl_806D1080;
+extern float lbl_806D1084;
 extern unsigned int lbl_806D109C;
 extern void *lbl_806D10A0;
 extern const int lbl_806D26E0[1];
@@ -281,7 +281,7 @@ extern unsigned int lbl_806D2734;
 extern const float lbl_806D2738;
 extern unsigned int lbl_806D273C;
 extern unsigned int lbl_806D2740;
-extern unsigned int lbl_806D2744;
+extern const float lbl_806D2744;
 extern unsigned int lbl_806D2748;
 extern unsigned int lbl_806D274C;
 extern unsigned int lbl_806D2750;
@@ -294,12 +294,12 @@ extern unsigned int lbl_806D2768;
 extern const float lbl_806D276C;
 extern const float lbl_806D2770;
 extern unsigned int lbl_806D2774;
-extern unsigned int lbl_806D2778;
+extern const float lbl_806D2778;
 extern unsigned int lbl_806D277C;
 extern unsigned int lbl_806D2780;
 extern unsigned int lbl_806D2784;
 extern unsigned int lbl_806D2788;
-extern unsigned int lbl_806D2790;
+extern const double lbl_806D2790; /* 0x4330000080000000 int-to-float cookie */
 extern unsigned int lbl_806D2798;
 extern unsigned int lbl_806D27A0;
 extern unsigned int lbl_806D27A8;
@@ -316,8 +316,8 @@ extern const float lbl_806D27D8;
 extern const float lbl_806D27E4;
 extern const float lbl_806D27E8;
 extern const float lbl_806D27EC;
-extern unsigned int lbl_806D27F0;
-extern unsigned int lbl_806D27F4;
+extern const float lbl_806D27F0;
+extern const float lbl_806D27F4;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -326,7 +326,7 @@ extern unsigned int ClStrPcb_Dtor[];
 extern unsigned int jumptable_803F7640[];
 extern unsigned int jumptable_803F7668[];
 extern unsigned int lbl_802EBA18[];
-extern unsigned int lbl_802EBE14[];
+extern const float lbl_802EBE14[]; /* 8-float boost blend color table */
 extern unsigned int lbl_802ED5B4[];
 extern unsigned int lbl_802ED7BC[];
 extern unsigned int lbl_802ED94C[];
@@ -861,6 +861,30 @@ typedef struct CollProbe {
     double pad[11];         /* 0x58 bytes, 8-aligned */
 } CollProbe;
 
+/* KartItem+0xc embedded handle passed to StlList_RemoveByValueField;
+ * +0x4 holds the listed obj pointer compared against node->obj
+ * (consumed by the parked RemoveByValueField C, HANDOFF appendix A) */
+typedef struct StlListValRef {
+    char pad_0x0[0x4];
+    SweepCarObj *val;       /* 0x4 */
+} StlListValRef;
+
+/* views for KartMovement_UpdateBoostVisualBlend (self = CarObj+0x2c render obj,
+ * m = movement object; consumed by the parked C, HANDOFF appendix C) */
+typedef struct BoostTicksView {
+    char pad_0x0[0x1b4];
+    int boostTicks;         /* 0x1b4 */
+} BoostTicksView;
+
+typedef struct BoostBlendView {
+    char pad_0x0[0x2c];
+    float weight2c;         /* 0x2c */
+    char pad_0x30[0x2b4];
+    float blendR;           /* 0x2e4 */
+    float blendG;           /* 0x2e8 */
+    float blendB;           /* 0x2ec */
+} BoostBlendView;
+
 /* vector<bool>::reference-style proxy temp; the original keeps the dead ctor
  * stores, volatile fields reproduce them without disturbing the call args */
 typedef struct BitsetRef {
@@ -972,11 +996,11 @@ void *dtor_800524CC(void *self, short flag);
 asm void StlList_RemoveByValueField(void);
 asm void StlList_EraseRange(void *ret, StlList *l, StlListNode **beg, StlListNode **end);
 asm void StlList_InsertBefore(void);
-asm void StlList_InitEmpty(void);
-asm void dtor_80052744(void);
+void StlList_InitEmpty(StlList *l);
+void *dtor_80052744(void *self, short flag);
 asm void dtor_8005278C(void);
-asm void dtor_80052808(void);
-asm void dtor_8005285C(void);
+void *dtor_80052808(void *self, short flag);
+void *dtor_8005285C(void *self, short flag);
 asm void dtor_800528B0(void);
 asm void dtor_8005292C(void);
 asm void dtor_800529A8(void);
@@ -10135,6 +10159,14 @@ void *dtor_800524CC(void *self, short flag) { /* 0x800524CC size:0x3C */
 }
 #pragma exceptions reset
 
+/* parked at 94.51% (4 probes): (1) class-1 branch-over-branch at the erase-range
+ * guard (target `cmplw r28,r27; bne unlink; b merge` - CW folds every C form to
+ * `beq merge`, KartItem_OnKartHit family; a res-merge local materializes as a
+ * real r0 web instead of coalescing), and (2) callee-saved group partition:
+ * target ranks params on top (key=r31, l=r30) above locals (end=r29, cur=r28,
+ * run=r27); CW puts locals on top in every probed decl shape (flat,
+ * block-scoped, param-to-local copies). Body otherwise instruction-identical.
+ * Paste-ready C in HANDOFF appendix A (uses StlListValRef view). */
 asm void StlList_RemoveByValueField(void) { /* 0x80052508 size:0xCC */
     nofralloc
     stwu r1, -0x20(r1)
@@ -10201,6 +10233,12 @@ asm void StlList_RemoveByValueField(void) { /* 0x80052508 size:0xCC */
     blr
 }
 
+/* parked at 95.23% (2 probes): prologue load interleave - target slots
+ * `lwz r5,0x0(r5)` (first = *beg) between the r30 and r29 save pairs; CW 1.3.2
+ * never schedules a load above the remaining callee-save stores (smallrun
+ * prologue-load-hoist family). exceptions on/off identical -> not approach-B
+ * class. All 36 body instructions + registers match. Paste-ready C in HANDOFF
+ * appendix B. */
 asm void StlList_EraseRange(void *ret, StlList *l, StlListNode **beg, StlListNode **end) { /* 0x800525D4 size:0xB0 */
     nofralloc
     stwu r1, -0x20(r1)
@@ -10253,6 +10291,12 @@ asm void StlList_EraseRange(void *ret, StlList *l, StlListNode **beg, StlListNod
     blr
 }
 
+/* skipped (0 probes): -Cpp_exceptions on EH scaffolding class - FP prologue
+ * `mr r31,r1`, back-chain epilogue, EH state store `stw r1,0x24(r31)` and dead
+ * cleanup island `bl MemoryManager_TimedFree` after the `b` (frees the Alloc'd
+ * node if the obj copy throws). Approach B cannot emit any of this; approach A
+ * excluded by the 14.1 mix rule (manual-extab asm fns precede). Same class as
+ * dtor_8005278C/800528B0 (exceptions-on-eh-scaffolding-unpromotable). */
 asm void StlList_InsertBefore(void) { /* 0x80052684 size:0xA8 */
     nofralloc
     stwu r1, -0x40(r1)
@@ -10301,38 +10345,27 @@ asm void StlList_InsertBefore(void) { /* 0x80052684 size:0xA8 */
     blr
 }
 
-asm void StlList_InitEmpty(void) { /* 0x8005272C size:0x18 */
-    nofralloc
-    li r0, 0x0
-    addi r4, r3, 0x4
-    stw r0, 0x0(r3)
-    stw r4, 0x4(r4)
-    stw r4, 0x0(r4)
-    blr
+#pragma exceptions off
+void StlList_InitEmpty(StlList *l) { /* 0x8005272C size:0x18 */
+    StlListNode *h = (StlListNode *)&l->head;
+    l->count = 0;
+    h->next = h;
+    h->prev = h;
 }
+#pragma exceptions reset
 
-asm void dtor_80052744(void) { /* 0x80052744 size:0x48 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr. r31, r3
-    beq dtor_80052744_L_80052774
-    lis r5, lbl_803F7690@ha
-    extsh. r0, r4
-    addi r0, r5, lbl_803F7690@l
-    stw r0, 0x0(r31)
-    ble dtor_80052744_L_80052774
-    bl MemoryManager_TimedFree
-    dtor_80052744_L_80052774:
-    lwz r0, 0x14(r1)
-    mr r3, r31
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+/* CarObjectManager base-subobject deleting dtor: demote vtable, free when flag > 0 */
+void *dtor_80052744(void *self, short flag) { /* 0x80052744 size:0x48 */
+    if (self) {
+        *(void **)self = (void *)lbl_803F7690;
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
+#pragma exceptions reset
 
 asm void dtor_8005278C(void) { /* 0x8005278C size:0x7C */
     nofralloc
@@ -10372,57 +10405,31 @@ asm void dtor_8005278C(void) { /* 0x8005278C size:0x7C */
     blr
 }
 
-asm void dtor_80052808(void) { /* 0x80052808 size:0x54 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r4
-    stw r30, 0x8(r1)
-    mr. r30, r3
-    beq dtor_80052808_L_80052840
-    lwz r3, 0x0(r30)
-    bl MemoryManager_TimedFree
-    extsh. r0, r31
-    ble dtor_80052808_L_80052840
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    dtor_80052808_L_80052840:
-    lwz r0, 0x14(r1)
-    mr r3, r30
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+/* owned-pointer holder deleting dtor: free the payload at +0x0 unconditionally */
+void *dtor_80052808(void *self, short flag) { /* 0x80052808 size:0x54 */
+    if (self) {
+        MemoryManager_TimedFree(*(void **)self);
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
+#pragma exceptions reset
 
-asm void dtor_8005285C(void) { /* 0x8005285C size:0x54 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r4
-    stw r30, 0x8(r1)
-    mr. r30, r3
-    beq dtor_8005285C_L_80052894
-    lwz r3, 0x0(r30)
-    bl MemoryManager_TimedFree
-    extsh. r0, r31
-    ble dtor_8005285C_L_80052894
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    dtor_8005285C_L_80052894:
-    lwz r0, 0x14(r1)
-    mr r3, r30
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+/* same shape as dtor_80052808 (sibling owned-pointer holder dtor) */
+void *dtor_8005285C(void *self, short flag) { /* 0x8005285C size:0x54 */
+    if (self) {
+        MemoryManager_TimedFree(*(void **)self);
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
+#pragma exceptions reset
 
 asm void dtor_800528B0(void) { /* 0x800528B0 size:0x7C */
     nofralloc
@@ -10820,6 +10827,15 @@ asm void dtor_80052D40(void) { /* 0x80052D40 size:0x7C */
     blr
 }
 
+/* parked at 98.88% (3 probes): scratch-fp tie-break cascade in the lerp block -
+ * target assigns the first table temp (t[5]) to f0, CW picks f4 and five other
+ * transient regs cascade (schedule + instruction content fully identical; named
+ * webs sat=f1/one=f8/s=f9/inv=f10 all match target). Probed: lane addend order
+ * (s-first regresses the load schedule, 89%), one-local elimination (no effect).
+ * ItemEffect_Explosion 88.99% family. itof, zero branch and the whole GPR side
+ * are solved - `(float)t` works in this TU: postprocess_sdata2 renames the CW
+ * anonymous cookie to lbl_806D2790 once upstream fn sizes match. Paste-ready C
+ * in HANDOFF appendix C (uses BoostTicksView/BoostBlendView). */
 asm void KartMovement_UpdateBoostVisualBlend(void) { /* 0x80052DBC size:0x164 */
     nofralloc
     stwu r1, -0x20(r1)
