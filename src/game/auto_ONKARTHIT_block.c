@@ -273,9 +273,9 @@ extern unsigned int lbl_806D270C;
 extern unsigned int lbl_806D2710;
 extern unsigned int lbl_806D2714;
 extern const float lbl_806D2718;
-extern unsigned int lbl_806D271C;
-extern unsigned int lbl_806D2720;
-extern unsigned int lbl_806D2728;
+extern const float lbl_806D271C;
+extern const double lbl_806D2720; /* 0.5 */
+extern const double lbl_806D2728; /* 3.0 */
 extern unsigned int lbl_806D2730;
 extern unsigned int lbl_806D2734;
 extern const float lbl_806D2738;
@@ -329,7 +329,6 @@ extern unsigned int lbl_802EBA18[];
 extern unsigned int lbl_802EBE14[];
 extern unsigned int lbl_802ED5B4[];
 extern unsigned int lbl_802ED7BC[];
-extern unsigned int lbl_802ED8C4[];
 extern unsigned int lbl_802ED94C[];
 extern unsigned int lbl_802ED9E4[];
 extern unsigned int lbl_802ED9F4[];
@@ -619,6 +618,31 @@ typedef struct ItemCatEntry16 {
     int valC;                          /* 0xc */
 } ItemCatEntry16;
 
+typedef struct ItemCatEntry20 {
+    int id;                            /* 0x0 */
+    char pad_0x4[0x10];                /* stride 0x14 */
+} ItemCatEntry20;
+
+typedef struct ItemCatEntry24 {
+    int id;                            /* 0x0 */
+    char pad_0x4[0x14];                /* stride 0x18 */
+} ItemCatEntry24;
+
+/* item category sub-tables with their own labels (inside lbl_802EBA18 blob) */
+extern ItemCatEntry12 lbl_802ED8C4[];  /* explosion table (base+0x1eac) */
+
+/* 8-byte pair copied out of category tables into ItemStateBlock +0xc/+0x10 */
+typedef struct IdFlagPair {
+    int a;
+    int b;
+} IdFlagPair;
+
+/* CarObject aux view: Vec3 copied out by CarObject_GetField304Vec3 */
+typedef struct CarObjAux304View {
+    char pad_0x0[0x304];
+    Vec3 vec304;                       /* 0x304 */
+} CarObjAux304View;
+
 typedef struct ItemEffectLane {
     int itemId;                        /* +0x00 (table+0x28) */
     int itemKind;                      /* +0x04 */
@@ -776,6 +800,10 @@ typedef struct ItemObjectPosView {
     float posX;                        /* 0xa0 */
     float posY;                        /* 0xa4 */
     float posZ;                        /* 0xa8 */
+    char pad_0xac[0xc];
+    float velX;                        /* 0xb8 */
+    float velY;                        /* 0xbc */
+    float velZ;                        /* 0xc0 */
 } ItemObjectPosView;
 
 extern ItemRemapEntry lbl_802EBE64[7];
@@ -850,12 +878,12 @@ int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg);
 asm void ItemEffect_Explosion(ItemStateBlock *self, int idx, void *arg);
 asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg);
 asm void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg);
-asm int ItemTable_FindEntryByIdStride16(void *tbl, int count, int itemId);
-asm int ItemTable_FindEntryByIdStride12_v1(void *tbl, int count, int itemId);
-asm int ItemTable_FindEntryByIdStride12_v2(void *tbl, int count, int itemId);
-asm int ItemTable_FindEntryByIdStride24(void *tbl, int count, int itemId);
-asm int ItemTable_FindEntryByIdStride20(void *tbl, int count, int itemId);
-asm void CarObject_GetField304Vec3(void);
+int ItemTable_FindEntryByIdStride16(ItemCatEntry16 *tbl, int count, int itemId);
+int ItemTable_FindEntryByIdStride12_v1(ItemCatEntry12 *tbl, int count, int itemId);
+int ItemTable_FindEntryByIdStride12_v2(ItemCatEntry12 *tbl, int count, int itemId);
+int ItemTable_FindEntryByIdStride24(ItemCatEntry24 *tbl, int count, int itemId);
+int ItemTable_FindEntryByIdStride20(ItemCatEntry20 *tbl, int count, int itemId);
+void CarObject_GetField304Vec3(Vec3 *out, CarObjAux304View *car);
 asm void CarObjectManager_RunKartKartCollisionSweep(void);
 asm void CarObjectManager_Dtor(void);
 asm void dtor_80052200(void);
@@ -8986,6 +9014,25 @@ asm int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *ar
     addi r1, r1, 0x40
     blr
 }
+/* C probe history (2026-06-10, batch_promote_80051648_effectsrun): best form
+ * reaches 88.99% over 11 builds; ENTIRE function byte-exact except one fp
+ * volatile web tie-break: target assigns vx=f3 / constC(lbl_806D271C)=f4,
+ * CW 1.3.2 emits constC=f3 / vx=f4 (plus the schedule cascade: d.x store
+ * cannot sink below the sqrtf fcmpo because vx=f4 must die before mag=f4).
+ * Solved pieces (keep for retry): (a) MSL inline sqrtf w/ volatile y +
+ * lbl_806D2720/2728 double externs reproduces the frsqrte block byte-exact;
+ * (b) statement order d-fill THEN a-fill THEN mag moves both const webs into
+ * the fp pool (a-fill-first leaves constC as scratch f0 and shifts
+ * zero/vy/vz down one); (c) named float trio vx/vy/vz + sum from d members
+ * (NOT from the locals - that fuses fmadds) gives 3 fmuls + 2 fadds shape;
+ * (d) tail 8-byte IdFlagPair struct copy reproduces lwz r3/lwz r0/stw/stw
+ * with the add coalescing into the mulli web (named int pair probes always
+ * canonicalize to reversed loads). Negative probes for the f3/f4 swap:
+ * vel assign order x,y,z vs y,x,z (canonicalized), a.y = mag = C fold
+ * (copy-propagated), cv named local (propagated), #pragma opt_propagation
+ * off (no effect), exceptions on/off (identical codegen -> not approach-B
+ * class). Same family as CarObject_ProcessWarpAndDash tie-break swap.
+ * Salvage C in batch HANDOFF appendix. Kept as asm. */
 asm void ItemEffect_Explosion(ItemStateBlock *self, int idx, void *arg) { /* 0x80051648 size:0x1EC */
     nofralloc
     stwu r1, -0x40(r1)
@@ -9117,6 +9164,17 @@ asm void ItemEffect_Explosion(ItemStateBlock *self, int idx, void *arg) { /* 0x8
     blr
 }
 
+/* Precan park (2026-06-10, batch_promote_80051648_effectsrun, 0 probes):
+ * ItemEffect_Trap carries TWO documented hard-block classes at once.
+ * (1) class-2 frsp store-forward interleave: the 16-float transform copy
+ * (0x58..0x94 -> sp+0x38..0x74) stores RAW lfs values while the dot-product
+ * consumes frsp'd copies of the same loads (frsp f0,f9 etc.) - CW 1.3.2
+ * tracks lfs-derived singles through cast chains and always elides the frsp
+ * (see cw132-frsp-store-forward-negative-probes.md, 6-probe ledger).
+ * (2) cross-call product-only callee-saved: mulli r30,r4,0x18 is kept in r30
+ * across the ItemEffectDamp_TryArm call while the lbl_802ED7BC table base is
+ * rematerialized (lis/addi) per use region - the TryStartByCategory
+ * addressing-reassociation family; CW saves the full pointer instead. */
 asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg) { /* 0x80051834 size:0x23C */
     nofralloc
     stwu r1, -0xb0(r1)
@@ -9266,6 +9324,13 @@ asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg) { /* 0x800518
     blr
 }
 
+/* Precan park (2026-06-10, batch_promote_80051648_effectsrun, 0 probes):
+ * ItemEffect_Projectile has the same two classes as ItemEffect_Trap above:
+ * (1) class-2 frsp interleave in the velocity-magnitude block (raw stfs of
+ * velX/Y/Z to TWO stack regions interleaved with frsp'd squares); (2)
+ * mulli r31,r4,0x14 kept callee-saved across ItemEffectImpact_TryArm with
+ * the lbl_802ED5B4 base rematerialized per region. The first normalize
+ * block (from arg+0xb8, no frsp) is solvable with the Explosion recipe. */
 asm void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg) { /* 0x80051A70 size:0x248 */
     nofralloc
     stwu r1, -0x40(r1)
@@ -9420,121 +9485,76 @@ asm void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg) { /* 0x
     blr
 }
 
-asm int ItemTable_FindEntryByIdStride16(void *tbl, int count, int itemId) { /* 0x80051CB8 size:0x38 */
-    nofralloc
-    li r6, 0x0
-    mtctr r4
-    cmpwi r4, 0x0
-    ble ItemTable_FindEntryByIdStride16_L_80051CE8
-    ItemTable_FindEntryByIdStride16_L_80051CC8:
-    lwz r0, 0x0(r3)
-    cmpw r0, r5
-    bne ItemTable_FindEntryByIdStride16_L_80051CDC
-    mr r3, r6
-    blr
-    ItemTable_FindEntryByIdStride16_L_80051CDC:
-    addi r3, r3, 0x10
-    addi r6, r6, 0x1
-    bdnz ItemTable_FindEntryByIdStride16_L_80051CC8
-    ItemTable_FindEntryByIdStride16_L_80051CE8:
-    li r3, -0x1
-    blr
+#pragma exceptions off
+int ItemTable_FindEntryByIdStride16(ItemCatEntry16 *tbl, int count, int itemId) { /* 0x80051CB8 size:0x38 */
+    int i;
+    for (i = 0; i < count; i++) {
+        if (tbl->id == itemId) {
+            return i;
+        }
+        tbl++;
+    }
+    return -1;
 }
+#pragma exceptions reset
 
-asm int ItemTable_FindEntryByIdStride12_v1(void *tbl, int count, int itemId) { /* 0x80051CF0 size:0x38 */
-    nofralloc
-    li r6, 0x0
-    mtctr r4
-    cmpwi r4, 0x0
-    ble ItemTable_FindEntryByIdStride12_v1_L_80051D20
-    ItemTable_FindEntryByIdStride12_v1_L_80051D00:
-    lwz r0, 0x0(r3)
-    cmpw r0, r5
-    bne ItemTable_FindEntryByIdStride12_v1_L_80051D14
-    mr r3, r6
-    blr
-    ItemTable_FindEntryByIdStride12_v1_L_80051D14:
-    addi r3, r3, 0xc
-    addi r6, r6, 0x1
-    bdnz ItemTable_FindEntryByIdStride12_v1_L_80051D00
-    ItemTable_FindEntryByIdStride12_v1_L_80051D20:
-    li r3, -0x1
-    blr
+#pragma exceptions off
+int ItemTable_FindEntryByIdStride12_v1(ItemCatEntry12 *tbl, int count, int itemId) { /* 0x80051CF0 size:0x38 */
+    int i;
+    for (i = 0; i < count; i++) {
+        if (tbl->id == itemId) {
+            return i;
+        }
+        tbl++;
+    }
+    return -1;
 }
+#pragma exceptions reset
 
-asm int ItemTable_FindEntryByIdStride12_v2(void *tbl, int count, int itemId) { /* 0x80051D28 size:0x38 */
-    nofralloc
-    li r6, 0x0
-    mtctr r4
-    cmpwi r4, 0x0
-    ble ItemTable_FindEntryByIdStride12_v2_L_80051D58
-    ItemTable_FindEntryByIdStride12_v2_L_80051D38:
-    lwz r0, 0x0(r3)
-    cmpw r0, r5
-    bne ItemTable_FindEntryByIdStride12_v2_L_80051D4C
-    mr r3, r6
-    blr
-    ItemTable_FindEntryByIdStride12_v2_L_80051D4C:
-    addi r3, r3, 0xc
-    addi r6, r6, 0x1
-    bdnz ItemTable_FindEntryByIdStride12_v2_L_80051D38
-    ItemTable_FindEntryByIdStride12_v2_L_80051D58:
-    li r3, -0x1
-    blr
+#pragma exceptions off
+int ItemTable_FindEntryByIdStride12_v2(ItemCatEntry12 *tbl, int count, int itemId) { /* 0x80051D28 size:0x38 */
+    int i;
+    for (i = 0; i < count; i++) {
+        if (tbl->id == itemId) {
+            return i;
+        }
+        tbl++;
+    }
+    return -1;
 }
+#pragma exceptions reset
 
-asm int ItemTable_FindEntryByIdStride24(void *tbl, int count, int itemId) { /* 0x80051D60 size:0x38 */
-    nofralloc
-    li r6, 0x0
-    mtctr r4
-    cmpwi r4, 0x0
-    ble ItemTable_FindEntryByIdStride24_L_80051D90
-    ItemTable_FindEntryByIdStride24_L_80051D70:
-    lwz r0, 0x0(r3)
-    cmpw r0, r5
-    bne ItemTable_FindEntryByIdStride24_L_80051D84
-    mr r3, r6
-    blr
-    ItemTable_FindEntryByIdStride24_L_80051D84:
-    addi r3, r3, 0x18
-    addi r6, r6, 0x1
-    bdnz ItemTable_FindEntryByIdStride24_L_80051D70
-    ItemTable_FindEntryByIdStride24_L_80051D90:
-    li r3, -0x1
-    blr
+#pragma exceptions off
+int ItemTable_FindEntryByIdStride24(ItemCatEntry24 *tbl, int count, int itemId) { /* 0x80051D60 size:0x38 */
+    int i;
+    for (i = 0; i < count; i++) {
+        if (tbl->id == itemId) {
+            return i;
+        }
+        tbl++;
+    }
+    return -1;
 }
+#pragma exceptions reset
 
-asm int ItemTable_FindEntryByIdStride20(void *tbl, int count, int itemId) { /* 0x80051D98 size:0x38 */
-    nofralloc
-    li r6, 0x0
-    mtctr r4
-    cmpwi r4, 0x0
-    ble ItemTable_FindEntryByIdStride20_L_80051DC8
-    ItemTable_FindEntryByIdStride20_L_80051DA8:
-    lwz r0, 0x0(r3)
-    cmpw r0, r5
-    bne ItemTable_FindEntryByIdStride20_L_80051DBC
-    mr r3, r6
-    blr
-    ItemTable_FindEntryByIdStride20_L_80051DBC:
-    addi r3, r3, 0x14
-    addi r6, r6, 0x1
-    bdnz ItemTable_FindEntryByIdStride20_L_80051DA8
-    ItemTable_FindEntryByIdStride20_L_80051DC8:
-    li r3, -0x1
-    blr
+#pragma exceptions off
+int ItemTable_FindEntryByIdStride20(ItemCatEntry20 *tbl, int count, int itemId) { /* 0x80051D98 size:0x38 */
+    int i;
+    for (i = 0; i < count; i++) {
+        if (tbl->id == itemId) {
+            return i;
+        }
+        tbl++;
+    }
+    return -1;
 }
+#pragma exceptions reset
 
-asm void CarObject_GetField304Vec3(void) { /* 0x80051DD0 size:0x1C */
-    nofralloc
-    lwz r5, 0x304(r4)
-    lwz r0, 0x308(r4)
-    stw r5, 0x0(r3)
-    stw r0, 0x4(r3)
-    lwz r0, 0x30c(r4)
-    stw r0, 0x8(r3)
-    blr
+#pragma exceptions off
+void CarObject_GetField304Vec3(Vec3 *out, CarObjAux304View *car) { /* 0x80051DD0 size:0x1C */
+    *out = car->vec304;
 }
+#pragma exceptions reset
 
 asm void CarObjectManager_RunKartKartCollisionSweep(void) { /* 0x80051DEC size:0x36C */
     nofralloc
