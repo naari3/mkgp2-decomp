@@ -11,7 +11,7 @@
  * extab/extabindex with Has-Elf-Vector / Large-Frame flags. Sibling
  * LookupSin (0x80186928) hit the CW 1.3.2 micro-scheduling hard-block
  * (`stwu` slot vs interleaved `lfs`/`lis`/`addi`/`fmuls` pre-stack work,
- * §14.3) after 6 cycles and was retreated to asm_fn — LookupCos has the
+ * section 14.3) after 6 cycles and was retreated to asm_fn -- LookupCos has the
  * same fingerprint plus an extra `fmadds`, so route to asm_fn directly
  * with semantics kept above for a future bundle promote pass.
  *

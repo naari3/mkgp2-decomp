@@ -1,18 +1,18 @@
 /*
  * ISESlot lifecycle trio @ 0x80049D78..0x80049EDC.
  *
- *   ISESlot_Init      @ 0x80049D78 (size 0xC8) — arm a slot. Refuses if
+ *   ISESlot_Init      @ 0x80049D78 (size 0xC8) -- arm a slot. Refuses if
  *       already armed. For mode 6 the slot resolves a secondary race
  *       context slot via the +0x90 link index of the slot indexed by
  *       `b`; a negative link index aborts the init. On success fills
  *       the parameter fields, resets state to 5 and raises the armed
  *       flag.
- *   ISESlot_Dtor      @ 0x80049E40 (size 0x84) — deleting-dtor shaped
+ *   ISESlot_Dtor      @ 0x80049E40 (size 0x84) -- deleting-dtor shaped
  *       teardown: same disarm sequence as ISESlot_Deactivate (notify
  *       the bound ItemObject with byte 2 unless type 0x51), then
  *       optionally MemoryManager_TimedFree(self) when the short flag
  *       is > 0. Returns self in r3.
- *   ISESlot_Construct @ 0x80049EC4 (size 0x18) — zero the pointer/flag
+ *   ISESlot_Construct @ 0x80049EC4 (size 0x18) -- zero the pointer/flag
  *       fields (no extab entry, hence #pragma exceptions off).
  *
  * ISESlot layout (see also sound/ISESlot.c, game/ISESlot_Deactivate.c):
@@ -57,11 +57,11 @@ extern float lbl_806D26C8; /* sdata2 float const */
  * ISESlot_Init is asm_fn: all 50 instructions are emitted identically by C
  * (see git history for the 98%-fuzzy C body), but CW 1.3.2's scheduler
  * interleaves the final li/lfs/stw constant-store block differently
- * (expected: li r5,0; lfs; li r4,5; stw 0x10; li r0,1; li r3,1 — generated
+ * (expected: li r5,0; lfs; li r4,5; stw 0x10; li r0,1; li r3,1 -- generated
  * always hoists all li above the lfs). 3 source-order variants failed to
  * steer it, so the function is kept as asm with a manually emitted extab
  * pair (approach B); ISESlot_Dtor below stays plain C with CW auto-emit
- * (approach A). Mix is fine per docs/per_fn_matching_strategy.md §14.1.
+ * (approach A). Mix is fine per docs/per_fn_matching_strategy.md section 14.1.
  */
 asm void ISESlot_Init(void);
 
