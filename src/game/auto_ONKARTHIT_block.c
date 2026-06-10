@@ -104,7 +104,7 @@ extern void KartDriver_SetJointPosY_Slot3d();
 extern void KartDriver_TickAction_79260();
 extern void KartDriver_TickAction_79268_AndSetSlot5aEulerZ();
 extern void KartEffectFadeTransit_Dtor();
-extern void KartEffectFadeTransit_GetActiveValue();
+extern float KartEffectFadeTransit_GetActiveValue();
 extern void KartEffectFadeTransit_Init();
 extern void KartEffectFadeTransit_IsActive();
 extern void KartEffectFadeTransit_Tick();
@@ -122,7 +122,7 @@ extern void KartItem_SetVec3At338();
 extern void KartItem_Stub_Returns0();
 extern void KartMovement_CalcCurrentSpeed();
 extern void KartMovement_CalcMaxSpeed();
-extern void KartMovement_CalcSpeedWithCoinBonus();
+extern float KartMovement_CalcSpeedWithCoinBonus();
 extern int KartMovement_GetCurrentItemId(void *driver);
 extern void KartMovement_Init();
 extern void KartMovement_PhysicsStep();
@@ -290,8 +290,8 @@ extern unsigned int lbl_806D275C;
 extern unsigned int lbl_806D2760;
 extern unsigned int lbl_806D2764;
 extern unsigned int lbl_806D2768;
-extern unsigned int lbl_806D276C;
-extern unsigned int lbl_806D2770;
+extern const float lbl_806D276C;
+extern const float lbl_806D2770;
 extern unsigned int lbl_806D2774;
 extern unsigned int lbl_806D2778;
 extern unsigned int lbl_806D277C;
@@ -518,6 +518,52 @@ typedef struct CarObjInputAIView {
     float inputE8;                  /* 0xe8 */
 } CarObjInputAIView;
 
+/* views for the 0x8004EFD8 small getter cluster */
+typedef struct SpeedKeyPair {
+    float key;                       /* 0x0 */
+    float value;                     /* 0x4 */
+} SpeedKeyPair;
+
+typedef struct SpeedTableEntry {
+    SpeedKeyPair *pairs;             /* 0x0 */
+    int count;                       /* 0x4 */
+    float refSpeed;                  /* 0x8 */
+    char pad_0xc[0xc];               /* stride 0x18 */
+} SpeedTableEntry;
+
+typedef struct KartMovementSpeedView {
+    char pad_0x0[0x8];
+    int tableIdx;                    /* 0x8 */
+    float speed;                     /* 0xc */
+    char pad_0x10[0x12];
+    unsigned char capFlag;           /* 0x22 */
+    char pad_0x23[0x1];
+    SpeedTableEntry *table;          /* 0x24 */
+    char pad_0x28[0x30];
+    float transform[16];             /* 0x58 */
+    char pad_0x98[0x224];
+    unsigned char state2bc;          /* 0x2bc */
+    unsigned char airborne2bd;       /* 0x2bd */
+    char pad_0x2be[0x22];
+    float coinBonus;                 /* 0x2e0 */
+} KartMovementSpeedView;
+
+typedef struct CarObjGetterView {
+    char pad_0x0[0x28];
+    KartMovementSpeedView *movement; /* 0x28 */
+    void *renderObj;                 /* 0x2c */
+    char pad_0x30[0x4];
+    void *soundCh;                   /* 0x34 */
+    char pad_0x38[0x4];
+    void *anim3c;                    /* 0x3c */
+    char pad_0x40[0x71];
+    unsigned char boostArmed;        /* 0xb1 */
+    char pad_0xb2[0x2];
+    float boostTimer;                /* 0xb4 */
+    char pad_0xb8[0x3c];
+    unsigned char byteF4;            /* 0xf4 */
+} CarObjGetterView;
+
 /* --- forward decls --- */
 asm void KartItem_OnKartHit(void);
 void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, int channel);
@@ -544,14 +590,14 @@ asm void KartItem_AdvanceAnim3c(void);
 asm void CarObject_CalcSpeedRatio(void);
 asm void KartItem_GetMaxSpeedWithBonus(void);
 asm void KartItem_GetCurrentSpeedWithBonus(void);
-asm void CarObject_GetTransformMatrix(void);
-asm void CarObject_GetKartMovementPtr(void);
-asm void KartItem_GetCarObjectSoundCh(void);
-asm void CarObject_GetRenderObj(void);
-asm void KartItem_GetByte_f4(void);
+float *CarObject_GetTransformMatrix(CarObjGetterView *self);
+KartMovementSpeedView *CarObject_GetKartMovementPtr(CarObjGetterView *self);
+void *KartItem_GetCarObjectSoundCh(CarObjGetterView *self);
+void *CarObject_GetRenderObj(CarObjGetterView *self);
+unsigned char KartItem_GetByte_f4(CarObjGetterView *self);
 asm void KartItem_GetBoostArmedAndTimer(void);
-asm void CarObject_IsAirborne(void);
-asm void KartItem_GetCarObjectState_2bc(void);
+unsigned char CarObject_IsAirborne(CarObjGetterView *self);
+unsigned char KartItem_GetCarObjectState_2bc(CarObjGetterView *self);
 asm void KartItem_ResetStrPcbToIdle(void);
 asm void KartItem_SetStrPcbIntensityFromSpeed(void);
 asm void KartItem_SetStrPcbCmd2fFromFloat(void);
@@ -6451,36 +6497,35 @@ asm void KartItem_GetCurrentSpeedWithBonus(void) { /* 0x8004F0F8 size:0x28 */
     blr
 }
 
-asm void CarObject_GetTransformMatrix(void) { /* 0x8004F120 size:0xC */
-    nofralloc
-    lwz r3, 0x28(r3)
-    addi r3, r3, 0x58
-    blr
+#pragma exceptions off
+float *CarObject_GetTransformMatrix(CarObjGetterView *self) { /* 0x8004F120 size:0xC */
+    return self->movement->transform;
 }
+#pragma exceptions reset
 
-asm void CarObject_GetKartMovementPtr(void) { /* 0x8004F12C size:0x8 */
-    nofralloc
-    lwz r3, 0x28(r3)
-    blr
+#pragma exceptions off
+KartMovementSpeedView *CarObject_GetKartMovementPtr(CarObjGetterView *self) { /* 0x8004F12C size:0x8 */
+    return self->movement;
 }
+#pragma exceptions reset
 
-asm void KartItem_GetCarObjectSoundCh(void) { /* 0x8004F134 size:0x8 */
-    nofralloc
-    lwz r3, 0x34(r3)
-    blr
+#pragma exceptions off
+void *KartItem_GetCarObjectSoundCh(CarObjGetterView *self) { /* 0x8004F134 size:0x8 */
+    return self->soundCh;
 }
+#pragma exceptions reset
 
-asm void CarObject_GetRenderObj(void) { /* 0x8004F13C size:0x8 */
-    nofralloc
-    lwz r3, 0x2c(r3)
-    blr
+#pragma exceptions off
+void *CarObject_GetRenderObj(CarObjGetterView *self) { /* 0x8004F13C size:0x8 */
+    return self->renderObj;
 }
+#pragma exceptions reset
 
-asm void KartItem_GetByte_f4(void) { /* 0x8004F144 size:0x8 */
-    nofralloc
-    lbz r3, 0xf4(r3)
-    blr
+#pragma exceptions off
+unsigned char KartItem_GetByte_f4(CarObjGetterView *self) { /* 0x8004F144 size:0x8 */
+    return self->byteF4;
 }
+#pragma exceptions reset
 
 asm void KartItem_GetBoostArmedAndTimer(void) { /* 0x8004F14C size:0x10 */
     nofralloc
@@ -6490,19 +6535,17 @@ asm void KartItem_GetBoostArmedAndTimer(void) { /* 0x8004F14C size:0x10 */
     blr
 }
 
-asm void CarObject_IsAirborne(void) { /* 0x8004F15C size:0xC */
-    nofralloc
-    lwz r3, 0x28(r3)
-    lbz r3, 0x2bd(r3)
-    blr
+#pragma exceptions off
+unsigned char CarObject_IsAirborne(CarObjGetterView *self) { /* 0x8004F15C size:0xC */
+    return self->movement->airborne2bd;
 }
+#pragma exceptions reset
 
-asm void KartItem_GetCarObjectState_2bc(void) { /* 0x8004F168 size:0xC */
-    nofralloc
-    lwz r3, 0x28(r3)
-    lbz r3, 0x2bc(r3)
-    blr
+#pragma exceptions off
+unsigned char KartItem_GetCarObjectState_2bc(CarObjGetterView *self) { /* 0x8004F168 size:0xC */
+    return self->movement->state2bc;
 }
+#pragma exceptions reset
 
 asm void KartItem_ResetStrPcbToIdle(void) { /* 0x8004F174 size:0x58 */
     nofralloc
