@@ -77,3 +77,11 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   - Phase 1 残: KartItem_Tick / KartItem_PerFrameStep / TickStatusEffectsByFlag (batch 3-4)。
     OnKartHit は class 2 併発のため Phase 2 送りのまま。
   - batch 3 = KartItem_Tick + KartItem_TickStatusEffectsByFlag。
+- 2026-06-11: Phase 1 batch 3 完了 — **recipe 検証が完結 (累計 13/13 u64 site byte-exact)**。promote は 0。
+  - TickStatusEffectsByFlag: 7 site 全部 recipe で解けたが、fp-scratch tie-break (Explosion family) で
+    >99% park (23 命令、内容同一の register 置換のみ)。paste-ready C を drafts に保存。
+    新 idiom: 隣接 2 site の CSE には named u64 local + ternary 形 / `#pragma dont_inline on`
+    (同 TU 前方 callee の auto-inline 抑止、auto_inline off は効かない)。
+  - KartItem_Tick: 0-probe park (entry block に class-2 frsp trio)。class-1 site は u64 family 確認済み。
+    class 2 研究 batch で ItemEffect_Dispatch と束ねるのを推奨。
+  - batch 4 = KartItem_PerFrameStep (Phase 1 最終)。
