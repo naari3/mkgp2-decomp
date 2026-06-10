@@ -12,8 +12,8 @@ docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件
 
 | phase | 内容 | 状態 |
 |---|---|---|
-| 0 | class 1 の最終 probe (compiler patch rev / 未試行 pragma) | **進行中 (2026-06-11 dispatch)** |
-| 1 | class-1 10 fn の回収 (salvage draft 適用) | Phase 0 の解法待ち |
+| 0 | class 1 の最終 probe (compiler patch rev / 未試行 pragma) | **SOLVED (2026-06-11)** |
+| 1 | class-1 10 fn の回収 (salvage draft 適用) | **進行中 (2026-06-11 batch 1 dispatch)** |
 | 2 | 先頭区間 index 0-17 の残り idiom 解決: class 2 (OnKartHit) / flavor 5 (MainUpdate) / flavor 4 (ProcessWarpAndDash) / ScopedTimer (FrameUpdate) | 未着手 |
 | 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | 未着手 |
 | 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 未着手 |
@@ -52,3 +52,12 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
 ## 時系列ログ
 
 - 2026-06-11: roadmap 作成、Phase 0 dispatch。
+- 2026-06-11: **Phase 0 SOLVED** (91 probes, 45 min)。class 1 は compiler variant/pragma の問題ではなく
+  source form: 明示的 `== 0` 比較 + then=0/else=1 arm 順序で target 形が出る (§14.2 更新済み)。
+  compiler patch rev 軸と pragma 軸は全 negative で closed。probe harness は tools/compiler_probe/ に保存。
+  - 観察 (事実): probeE/probeH が GC/1.3 以降で TARGET 形、1.2.5 以前は other、3.0/Wii は branchless。
+  - 仮説 (推論): then=0 が full diamond を作り folding を阻止、li 0 が zero reg に coalesce されて消える。
+  - Phase 1 の注意: coalesce 前提 = bool が u64 mask hi の zero register を共有できること。site ごとに要確認。
+- 2026-06-11: Phase 1 開始。対象 9 fn (OnKartHit は class 2 併発のため Phase 2 送り、
+  StlList_RemoveByValueField は arm-order 原理の応用候補として後段で retry)。
+  batch 1 = UpdateShadowBillboardAndViewport / UpdateCoinSpeedBonus / ApplyImpactReflectAndDampVelocity。
