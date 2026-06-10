@@ -70,7 +70,7 @@ extern void ItemEffectBus_ApplyItemEventClear();
 extern void ItemEffectBus_ApplyItemEventSet();
 extern void ItemEffectBus_ArmTornadoAndQuery();
 extern void ItemEffectBus_ClearByTable8();
-extern void ItemEffectBus_ClearMask();
+extern void ItemEffectBus_ClearMask(void *bus, unsigned long long mask);
 extern void ItemEffectBus_OrMask();
 extern void ItemEffectBus_RegisterBonkPosition();
 extern void ItemEffectBus_SnapshotAndClearSpawnFlags();
@@ -84,7 +84,7 @@ extern void ItemObject_GetByteAt0xEC();
 extern unsigned char ItemSelect_GiveItemOrQueueDrop(void *itemSelect, void *driver, int count, int flag);
 extern unsigned char ItemSelect_OnDropAllCancel(void *itemSelect, void *driver);
 extern void ItemSelect_StartRouletteSpin();
-extern void ItemStateGuard_IsActive();
+extern unsigned char ItemStateGuard_IsActive(void *guard);
 extern void ItemStateGuard_PruneIfDeadAndReport();
 extern void ItemStateSlotC_TryArm();
 extern void KartAudioChannel_Init();
@@ -145,7 +145,7 @@ extern void RankLog_OnMatchEnd();
 extern void RankLog_OnPlayerDefeated();
 extern void RenderObj_ItemStateMachine_Timed();
 extern void RenderObj_ToggleLapSegment();
-extern void Saturate_Double();
+extern float Saturate_Double(float v, float lo, float hi);
 extern void SceneRender_SetViewportRect();
 extern void SetAnimSpin();
 extern void ShadowAreaMgr_QueryPoint();
@@ -164,12 +164,12 @@ extern void SoundObj_PlaySE_Direct();
 extern void SoundVolumePan_Update();
 extern void SpeedBoost_Apply(void *obj, int id, float v);
 extern void StrPcb_ForceRun_Neutral();
-extern void StrPcb_GetInstance();
+extern void *StrPcb_GetInstance(void);
 extern void StrPcb_ResetCommands_Neutral();
-extern void StrPcb_SetCmdByte2d();
-extern void StrPcb_SetCmdByte2e();
-extern void StrPcb_SetCmdByte2f();
-extern void StrPcb_SetCounterField14();
+extern void StrPcb_SetCmdByte2d(void *pcb, int v);
+extern void StrPcb_SetCmdByte2e(void *pcb, int v);
+extern void StrPcb_SetCmdByte2f(void *pcb, int v);
+extern void StrPcb_SetCounterField14(void *pcb, int v);
 extern void StrPcb_SetTimer3034_38();
 extern void StrPcb_SetTimer3c40();
 extern void Tachometer_SetCoinCount();
@@ -223,7 +223,7 @@ extern void dtor_80209180();
 extern void fn_8019A4E0();
 extern void fn_8019A6A4();
 extern void fn_8019A850();
-extern void fn_8019A8A4();
+extern unsigned char fn_8019A8A4(void *mv, float f);
 extern void fn_8019A9BC();
 extern void fn_8019CC2C();
 extern void fn_801B1410();
@@ -257,15 +257,15 @@ extern unsigned int lbl_806D1060;
 extern unsigned int lbl_806D1080;
 extern unsigned int lbl_806D1084;
 extern unsigned int lbl_806D109C;
-extern unsigned int lbl_806D10A0;
-extern unsigned int lbl_806D26E4;
+extern void *lbl_806D10A0;
+extern const float lbl_806D26E4;
 extern unsigned int lbl_806D26E8;
 extern const float lbl_806D26EC; /* 0.0f */
 extern unsigned int lbl_806D26F0;
-extern unsigned int lbl_806D26F4;
+extern const float lbl_806D26F4;
 extern unsigned int lbl_806D26F8;
 extern const float lbl_806D26FC; /* 1.0f */
-extern unsigned int lbl_806D2700;
+extern const float lbl_806D2700;
 extern unsigned int lbl_806D2704;
 extern unsigned int lbl_806D2708;
 extern unsigned int lbl_806D270C;
@@ -312,8 +312,8 @@ extern unsigned int lbl_806D27C4;
 extern unsigned int lbl_806D27C8;
 extern unsigned int lbl_806D27D0;
 extern const float lbl_806D27D8;
-extern unsigned int lbl_806D27E4;
-extern unsigned int lbl_806D27E8;
+extern const float lbl_806D27E4;
+extern const float lbl_806D27E8;
 extern unsigned int lbl_806D27EC;
 extern unsigned int lbl_806D27F0;
 extern unsigned int lbl_806D27F4;
@@ -541,11 +541,22 @@ typedef struct KartMovementSpeedView {
     SpeedTableEntry *table;          /* 0x24 */
     char pad_0x28[0x30];
     float transform[16];             /* 0x58 */
-    char pad_0x98[0x224];
+    char pad_0x98[0xe4];
+    float velX;                      /* 0x17c */
+    float velY;                      /* 0x180 */
+    float velZ;                      /* 0x184 */
+    char pad_0x188[0x40];
+    float accel1c8;                  /* 0x1c8 */
+    char pad_0x1cc[0xf0];
     unsigned char state2bc;          /* 0x2bc */
     unsigned char airborne2bd;       /* 0x2bd */
-    char pad_0x2be[0x22];
+    char pad_0x2be[0x16];
+    float steer2d4;                  /* 0x2d4 */
+    float speedScale2d8;             /* 0x2d8 */
+    char pad_0x2dc[0x4];
     float coinBonus;                 /* 0x2e0 */
+    char pad_0x2e4[0x14];
+    float mueScale2f8;               /* 0x2f8 */
 } KartMovementSpeedView;
 
 typedef struct CarObjGetterView {
@@ -563,6 +574,86 @@ typedef struct CarObjGetterView {
     char pad_0xb8[0x3c];
     unsigned char byteF4;            /* 0xf4 */
 } CarObjGetterView;
+
+/* views for the 0x8004F174 StrPcb / item ops cluster */
+typedef struct Vec3 {
+    float x;
+    float y;
+    float z;
+} Vec3;
+
+typedef struct ItemStateBlock {
+    char pad_0x0[0x4];
+    void *guard;                       /* 0x4 */
+    char pad_0x8[0x4];
+    int activeId;                      /* 0xc */
+    int activeFlag;                    /* 0x10 */
+} ItemStateBlock;
+
+typedef struct ItemEffectLane {
+    int itemId;                        /* +0x00 (table+0x28) */
+    int itemKind;                      /* +0x04 */
+    int state8;                        /* +0x08 */
+    int stateC;                        /* +0x0c */
+    int state10;                       /* +0x10 */
+    float blend;                       /* +0x14 */
+} ItemEffectLane;
+
+/* lane cursor view: walks lanes with stride 0x18 while keeping the lane
+ * fields at displacement +0x28 (matches the strength-reduced target form) */
+typedef struct ItemLaneCursor {
+    char pad_0x0[0x28];
+    int itemId;                        /* 0x28 */
+    int itemKind;                      /* 0x2c */
+    int state8;                        /* 0x30 */
+    int stateC;                        /* 0x34 */
+    int state10;                       /* 0x38 */
+    float blend;                       /* 0x3c */
+} ItemLaneCursor;
+
+struct KartItemOpsView;
+
+typedef struct ItemEffectTable {
+    struct KartItemOpsView *owner;     /* 0x0 */
+    void *effectState;                 /* 0x4 */
+    void *mediaReq;                    /* 0x8 */
+    char pad_0xc[0x8];
+    int run14;                         /* 0x14 */
+    char pad_0x18[0x4];
+    int run1c;                         /* 0x1c */
+    float runBlend20;                  /* 0x20 */
+    float runBlend24;                  /* 0x24 */
+    ItemEffectLane lanes[2];           /* 0x28 */
+} ItemEffectTable;
+
+typedef struct KartDriverBusView {
+    char pad_0x0[0x304];
+    void *itemBus;                     /* 0x304 */
+} KartDriverBusView;
+
+typedef struct KartItemOpsView {
+    char pad_0x0[0x10];
+    int raceScore10;                   /* 0x10 */
+    char pad_0x14[0xc];
+    unsigned char strPcbGate20;        /* 0x20 */
+    char pad_0x21[0x3];
+    void *soundCtrl;                   /* 0x24 */
+    KartMovementSpeedView *movement;   /* 0x28 */
+    KartDriverBusView *ownerDriver;    /* 0x2c */
+    char pad_0x30[0x4];
+    void *effectObj;                   /* 0x34 */
+    void *billboard;                   /* 0x38 */
+    void *boostObj;                    /* 0x3c */
+    ItemStateBlock *stateBlock;        /* 0x40 */
+    char pad_0x44[0x8];
+    ItemEffectTable *effectTable;      /* 0x4c */
+    char pad_0x50[0x60];
+    unsigned char boostArmedB0;        /* 0xb0 */
+    char pad_0xb1[0x2b];
+    unsigned char driftFlagDC;         /* 0xdc */
+    char pad_0xdd[0x2f];
+    float driftTimer10C;               /* 0x10c */
+} KartItemOpsView;
 
 /* --- forward decls --- */
 asm void KartItem_OnKartHit(void);
@@ -598,22 +689,22 @@ unsigned char KartItem_GetByte_f4(CarObjGetterView *self);
 asm void KartItem_GetBoostArmedAndTimer(void);
 unsigned char CarObject_IsAirborne(CarObjGetterView *self);
 unsigned char KartItem_GetCarObjectState_2bc(CarObjGetterView *self);
-asm void KartItem_ResetStrPcbToIdle(void);
-asm void KartItem_SetStrPcbIntensityFromSpeed(void);
-asm void KartItem_SetStrPcbCmd2fFromFloat(void);
-asm void KartItem_SetStrPcbCmd2eFromFloat(void);
-asm void KartItem_SetStrPcbCmd2dFromFloat(void);
-asm void KartItem_CancelActiveEffect(void);
-asm void CarObject_ApplyDriftBoost(void);
-asm void KartMovement_SetMueScale(void);
-asm void KartMovement_SetSpeedScale(void);
+void KartItem_ResetStrPcbToIdle(KartItemOpsView *self);
+void KartItem_SetStrPcbIntensityFromSpeed(KartItemOpsView *self, float speed);
+void KartItem_SetStrPcbCmd2fFromFloat(KartItemOpsView *self, float value);
+void KartItem_SetStrPcbCmd2eFromFloat(KartItemOpsView *self, float value);
+void KartItem_SetStrPcbCmd2dFromFloat(KartItemOpsView *self, float value);
+int KartItem_CancelActiveEffect(KartItemOpsView *self);
+unsigned char CarObject_ApplyDriftBoost(KartItemOpsView *self, float amount, int id);
+void KartMovement_SetMueScale(KartItemOpsView *self, float v);
+void KartMovement_SetSpeedScale(KartItemOpsView *self, float v);
 asm void KartItem_GetCarVelocityVec3(void);
-asm void KartItem_SetCarVelocityVec3(void);
-asm void KartItem_StopCarObjectSE(void);
-asm void KartItem_TryArmBoostOnLanding(void);
-asm void KartItem_SetCarObjectField2d4Float(void);
-asm void KartItem_SetCarObjectField1c8Float(void);
-asm void CarObject_SetPosition(void);
+void KartItem_SetCarVelocityVec3(KartItemOpsView *self, Vec3 *v);
+void KartItem_StopCarObjectSE(KartItemOpsView *self);
+unsigned char KartItem_TryArmBoostOnLanding(KartItemOpsView *self, unsigned char spin);
+void KartItem_SetCarObjectField2d4Float(KartItemOpsView *self, float v);
+void KartItem_SetCarObjectField1c8Float(KartItemOpsView *self, float v);
+void CarObject_SetPosition(KartItemOpsView *self, void *pos);
 asm void KartItem_ForwardToCarMovement_8019a4e0(void);
 asm void KartItem_ForwardToCarMovement_8019a6a4(void);
 asm void KartItem_OnFallOffOrDeath(void);
@@ -6547,281 +6638,130 @@ unsigned char KartItem_GetCarObjectState_2bc(CarObjGetterView *self) { /* 0x8004
 }
 #pragma exceptions reset
 
-asm void KartItem_ResetStrPcbToIdle(void) { /* 0x8004F174 size:0x58 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    lbz r0, 0x20(r3)
-    cmplwi r0, 0x0
-    beq KartItem_ResetStrPcbToIdle_L_8004F1BC
-    bl StrPcb_GetInstance
-    li r4, 0x28
-    bl StrPcb_SetCmdByte2d
-    bl StrPcb_GetInstance
-    li r4, 0x1e
-    bl StrPcb_SetCmdByte2e
-    bl StrPcb_GetInstance
-    li r4, 0x0
-    bl StrPcb_SetCounterField14
-    bl StrPcb_GetInstance
-    li r4, 0x0
-    bl StrPcb_SetCmdByte2f
-    KartItem_ResetStrPcbToIdle_L_8004F1BC:
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+void KartItem_ResetStrPcbToIdle(KartItemOpsView *self) { /* 0x8004F174 size:0x58 */
+    if (self->strPcbGate20) {
+        StrPcb_SetCmdByte2d(StrPcb_GetInstance(), 0x28);
+        StrPcb_SetCmdByte2e(StrPcb_GetInstance(), 0x1e);
+        StrPcb_SetCounterField14(StrPcb_GetInstance(), 0);
+        StrPcb_SetCmdByte2f(StrPcb_GetInstance(), 0);
+    }
 }
+#pragma exceptions reset
 
-asm void KartItem_SetStrPcbIntensityFromSpeed(void) { /* 0x8004F1CC size:0x6C */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stfd f31, 0x10(r1)
-    psq_st f31, 0x18(r1), 0, 0
-    lbz r0, 0x20(r3)
-    cmplwi r0, 0x0
-    beq KartItem_SetStrPcbIntensityFromSpeed_L_8004F220
-    lfs f2, lbl_806D26E4(r2)
-    lfs f3, lbl_806D26FC(r2)
-    bl Saturate_Double
-    fmr f31, f1
-    bl StrPcb_GetInstance
-    lfs f1, lbl_806D27E4(r2)
-    lfs f0, lbl_806D2700(r2)
-    fmuls f1, f1, f31
-    fmuls f0, f1, f0
-    fctiwz f0, f0
-    stfd f0, 0x8(r1)
-    lwz r4, 0xc(r1)
-    bl StrPcb_SetCounterField14
-    KartItem_SetStrPcbIntensityFromSpeed_L_8004F220:
-    psq_l f31, 0x18(r1), 0, 0
-    lwz r0, 0x24(r1)
-    lfd f31, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma exceptions off
+void KartItem_SetStrPcbIntensityFromSpeed(KartItemOpsView *self, float speed) { /* 0x8004F1CC size:0x6C */
+    if (self->strPcbGate20) {
+        float s = Saturate_Double(speed, lbl_806D26E4, lbl_806D26FC);
+        float scaled;
+        void *pcb = StrPcb_GetInstance();
+        scaled = lbl_806D27E4 * s;
+        StrPcb_SetCounterField14(pcb, (int)(scaled * lbl_806D2700));
+    }
 }
+#pragma exceptions reset
 
-asm void KartItem_SetStrPcbCmd2fFromFloat(void) { /* 0x8004F238 size:0x58 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stfd f31, 0x10(r1)
-    psq_st f31, 0x18(r1), 0, 0
-    lbz r0, 0x20(r3)
-    fmr f31, f1
-    cmplwi r0, 0x0
-    beq KartItem_SetStrPcbCmd2fFromFloat_L_8004F278
-    bl StrPcb_GetInstance
-    lfs f0, lbl_806D27E8(r2)
-    fmuls f0, f0, f31
-    fctiwz f0, f0
-    stfd f0, 0x8(r1)
-    lwz r4, 0xc(r1)
-    bl StrPcb_SetCmdByte2f
-    KartItem_SetStrPcbCmd2fFromFloat_L_8004F278:
-    psq_l f31, 0x18(r1), 0, 0
-    lwz r0, 0x24(r1)
-    lfd f31, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma exceptions off
+void KartItem_SetStrPcbCmd2fFromFloat(KartItemOpsView *self, float value) { /* 0x8004F238 size:0x58 */
+    if (self->strPcbGate20) {
+        StrPcb_SetCmdByte2f(StrPcb_GetInstance(), (int)(lbl_806D27E8 * value));
+    }
 }
+#pragma exceptions reset
 
-asm void KartItem_SetStrPcbCmd2eFromFloat(void) { /* 0x8004F290 size:0x58 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stfd f31, 0x10(r1)
-    psq_st f31, 0x18(r1), 0, 0
-    lbz r0, 0x20(r3)
-    fmr f31, f1
-    cmplwi r0, 0x0
-    beq KartItem_SetStrPcbCmd2eFromFloat_L_8004F2D0
-    bl StrPcb_GetInstance
-    lfs f0, lbl_806D27E8(r2)
-    fmuls f0, f0, f31
-    fctiwz f0, f0
-    stfd f0, 0x8(r1)
-    lwz r4, 0xc(r1)
-    bl StrPcb_SetCmdByte2e
-    KartItem_SetStrPcbCmd2eFromFloat_L_8004F2D0:
-    psq_l f31, 0x18(r1), 0, 0
-    lwz r0, 0x24(r1)
-    lfd f31, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma exceptions off
+void KartItem_SetStrPcbCmd2eFromFloat(KartItemOpsView *self, float value) { /* 0x8004F290 size:0x58 */
+    if (self->strPcbGate20) {
+        StrPcb_SetCmdByte2e(StrPcb_GetInstance(), (int)(lbl_806D27E8 * value));
+    }
 }
+#pragma exceptions reset
 
-asm void KartItem_SetStrPcbCmd2dFromFloat(void) { /* 0x8004F2E8 size:0x58 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stfd f31, 0x10(r1)
-    psq_st f31, 0x18(r1), 0, 0
-    lbz r0, 0x20(r3)
-    fmr f31, f1
-    cmplwi r0, 0x0
-    beq KartItem_SetStrPcbCmd2dFromFloat_L_8004F328
-    bl StrPcb_GetInstance
-    lfs f0, lbl_806D27E8(r2)
-    fmuls f0, f0, f31
-    fctiwz f0, f0
-    stfd f0, 0x8(r1)
-    lwz r4, 0xc(r1)
-    bl StrPcb_SetCmdByte2d
-    KartItem_SetStrPcbCmd2dFromFloat_L_8004F328:
-    psq_l f31, 0x18(r1), 0, 0
-    lwz r0, 0x24(r1)
-    lfd f31, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma exceptions off
+void KartItem_SetStrPcbCmd2dFromFloat(KartItemOpsView *self, float value) { /* 0x8004F2E8 size:0x58 */
+    if (self->strPcbGate20) {
+        StrPcb_SetCmdByte2d(StrPcb_GetInstance(), (int)(lbl_806D27E8 * value));
+    }
 }
+#pragma exceptions reset
 
-asm void KartItem_CancelActiveEffect(void) { /* 0x8004F340 size:0x110 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    li r0, -0x1
-    stmw r24, 0x10(r1)
-    mr r24, r3
-    li r31, 0x0
-    lwz r3, 0x40(r3)
-    stw r0, 0xc(r3)
-    stw r31, 0x10(r3)
-    lwz r27, 0x4c(r24)
-    mr r26, r27
-    KartItem_CancelActiveEffect_L_8004F370:
-    lwz r25, 0x28(r26)
-    lwz r28, 0x8(r27)
-    cmpwi r25, 0x0
-    lwz r29, 0x4(r27)
-    lwz r30, 0x0(r27)
-    blt KartItem_CancelActiveEffect_L_8004F3F0
-    lwz r3, 0x34(r30)
-    mr r4, r25
-    bl TornadoEffect_ApplyItemVisual_Primary
-    lwz r3, 0x24(r30)
-    mr r4, r25
-    bl KartItemAudio_StopSEByItemId
-    lwz r3, 0x2c(r30)
-    mr r4, r25
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ApplyItemEventClear
-    mr r3, r29
-    bl EffectState_ReleaseAndClear
-    mr r3, r28
-    bl MediaBoard_SendAndCheck
-    lwz r3, 0x38(r30)
-    lfs f1, lbl_806D26EC(r2)
-    bl ShadowBillboard_SetField0xA4
-    li r3, -0x1
-    li r0, 0x0
-    stw r3, 0x28(r26)
-    lfs f0, lbl_806D26FC(r2)
-    stw r3, 0x2c(r26)
-    stw r0, 0x30(r26)
-    stw r0, 0x34(r26)
-    stw r0, 0x38(r26)
-    stfs f0, 0x3c(r26)
-    KartItem_CancelActiveEffect_L_8004F3F0:
-    addi r31, r31, 0x1
-    addi r26, r26, 0x18
-    cmplwi r31, 0x2
-    blt KartItem_CancelActiveEffect_L_8004F370
-    li r0, 0x0
-    lfs f0, lbl_806D26EC(r2)
-    stw r0, 0x14(r27)
-    li r6, -0x1
-    li r5, -0x1
-    stw r0, 0x1c(r27)
-    stfs f0, 0x20(r27)
-    stfs f0, 0x24(r27)
-    lwz r3, 0x2c(r24)
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ClearMask
-    lwz r3, 0x24(r24)
-    li r4, 0x64
-    bl SoundObj_PlaySE_Direct
-    lmw r24, 0x10(r1)
-    li r3, 0x1
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+#pragma exceptions off
+int KartItem_CancelActiveEffect(KartItemOpsView *self) { /* 0x8004F340 size:0x110 */
+    unsigned int i;
+    KartItemOpsView *owner;
+    void *effectState;
+    void *mediaReq;
+    ItemEffectTable *tbl;
+    ItemLaneCursor *cursor;
+    int itemId;
+    ItemStateBlock *q;
+
+    q = self->stateBlock;
+    q->activeId = -1;
+    q->activeFlag = i = 0;
+    tbl = self->effectTable;
+    cursor = (ItemLaneCursor *)tbl;
+    for (; i < 2; i++) {
+        itemId = cursor->itemId;
+        mediaReq = tbl->mediaReq;
+        effectState = tbl->effectState;
+        owner = tbl->owner;
+        if (itemId >= 0) {
+            TornadoEffect_ApplyItemVisual_Primary(owner->effectObj, itemId);
+            KartItemAudio_StopSEByItemId(owner->soundCtrl, itemId);
+            ItemEffectBus_ApplyItemEventClear(owner->ownerDriver->itemBus, itemId);
+            EffectState_ReleaseAndClear(effectState);
+            MediaBoard_SendAndCheck(mediaReq);
+            ShadowBillboard_SetField0xA4(owner->billboard, lbl_806D26EC);
+            cursor->itemId = -1;
+            cursor->itemKind = -1;
+            cursor->state8 = 0;
+            cursor->stateC = 0;
+            cursor->state10 = 0;
+            cursor->blend = lbl_806D26FC;
+        }
+        cursor = (ItemLaneCursor *)((char *)cursor + 0x18);
+    }
+    tbl->run14 = 0;
+    tbl->run1c = 0;
+    tbl->runBlend20 = lbl_806D26EC;
+    tbl->runBlend24 = lbl_806D26EC;
+    ItemEffectBus_ClearMask(self->ownerDriver->itemBus, 0xFFFFFFFFFFFFFFFFULL);
+    SoundObj_PlaySE_Direct(self->soundCtrl, 0x64);
+    return 1;
 }
+#pragma exceptions reset
 
-asm void CarObject_ApplyDriftBoost(void) { /* 0x8004F450 size:0xA4 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stfd f31, 0x10(r1)
-    psq_st f31, 0x18(r1), 0, 0
-    stw r31, 0xc(r1)
-    stw r30, 0x8(r1)
-    mr r30, r3
-    fmr f31, f1
-    lwz r3, 0x40(r3)
-    mr r31, r4
-    lwz r3, 0x4(r3)
-    bl ItemStateGuard_IsActive
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne CarObject_ApplyDriftBoost_L_8004F498
-    li r3, 0x0
-    b CarObject_ApplyDriftBoost_L_8004F4D4
-    CarObject_ApplyDriftBoost_L_8004F498:
-    lwz r3, 0x24(r30)
-    li r4, 0x5
-    bl SoundObj_PlaySE
-    lwz r3, 0x24(r30)
-    li r4, 0x55
-    bl SoundObj_PlaySE_Direct
-    fmr f1, f31
-    lwz r3, 0x3c(r30)
-    mr r4, r31
-    bl SpeedBoost_Apply
-    li r0, 0x1
-    lfs f0, lbl_806D26F4(r2)
-    stb r0, 0xdc(r30)
-    li r3, 0x1
-    stfs f0, 0x10c(r30)
-    CarObject_ApplyDriftBoost_L_8004F4D4:
-    psq_l f31, 0x18(r1), 0, 0
-    lwz r0, 0x24(r1)
-    lfd f31, 0x10(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma exceptions off
+unsigned char CarObject_ApplyDriftBoost(KartItemOpsView *self, float amount, int id) { /* 0x8004F450 size:0xA4 */
+    if (ItemStateGuard_IsActive(self->stateBlock->guard) == 1) {
+        return 0;
+    }
+    SoundObj_PlaySE(self->soundCtrl, 0x5);
+    SoundObj_PlaySE_Direct(self->soundCtrl, 0x55);
+    SpeedBoost_Apply(self->boostObj, id, amount);
+    self->driftFlagDC = 1;
+    self->driftTimer10C = lbl_806D26F4;
+    return 1;
 }
+#pragma exceptions reset
 
-asm void KartMovement_SetMueScale(void) { /* 0x8004F4F4 size:0xC */
-    nofralloc
-    lwz r3, 0x28(r3)
-    stfs f1, 0x2f8(r3)
-    blr
+#pragma exceptions off
+void KartMovement_SetMueScale(KartItemOpsView *self, float v) { /* 0x8004F4F4 size:0xC */
+    self->movement->mueScale2f8 = v;
 }
+#pragma exceptions reset
 
-asm void KartMovement_SetSpeedScale(void) { /* 0x8004F500 size:0xC */
-    nofralloc
-    lwz r3, 0x28(r3)
-    stfs f1, 0x2d8(r3)
-    blr
+#pragma exceptions off
+void KartMovement_SetSpeedScale(KartItemOpsView *self, float v) { /* 0x8004F500 size:0xC */
+    self->movement->speedScale2d8 = v;
 }
+#pragma exceptions reset
 
+/* C probe reached 99.08% (volatile Vec3 local reproduces the dead spill
+ * stores, frame, and store sequence; only the first two lfs are swapped:
+ * target loads z,y,x while CW 1.3.2 schedules y,z,x for every init order
+ * tried). Scheduler pair-swap class; kept as asm. */
 asm void KartItem_GetCarVelocityVec3(void) { /* 0x8004F50C size:0x34 */
     nofralloc
     stwu r1, -0x20(r1)
@@ -6839,108 +6779,60 @@ asm void KartItem_GetCarVelocityVec3(void) { /* 0x8004F50C size:0x34 */
     blr
 }
 
-asm void KartItem_SetCarVelocityVec3(void) { /* 0x8004F540 size:0x20 */
-    nofralloc
-    lwz r3, 0x28(r3)
-    lfs f0, 0x0(r4)
-    stfs f0, 0x17c(r3)
-    lfs f0, 0x4(r4)
-    stfs f0, 0x180(r3)
-    lfs f0, 0x8(r4)
-    stfs f0, 0x184(r3)
-    blr
+#pragma exceptions off
+void KartItem_SetCarVelocityVec3(KartItemOpsView *self, Vec3 *v) { /* 0x8004F540 size:0x20 */
+    KartMovementSpeedView *mv = self->movement;
+    mv->velX = v->x;
+    mv->velY = v->y;
+    mv->velZ = v->z;
 }
+#pragma exceptions reset
 
-asm void KartItem_StopCarObjectSE(void) { /* 0x8004F560 size:0x24 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    lwz r3, 0x34(r3)
-    bl TornadoEffect_SetColorY
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+void KartItem_StopCarObjectSE(KartItemOpsView *self) { /* 0x8004F560 size:0x24 */
+    TornadoEffect_SetColorY(self->effectObj);
 }
+#pragma exceptions reset
 
-asm void KartItem_TryArmBoostOnLanding(void) { /* 0x8004F584 size:0xA4 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lfs f1, lbl_806D26FC(r2)
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r4
-    stw r30, 0x8(r1)
-    mr r30, r3
-    lwz r3, 0x28(r3)
-    bl fn_8019A8A4
-    clrlwi. r0, r3, 24
-    bne KartItem_TryArmBoostOnLanding_L_8004F5BC
-    li r3, 0x0
-    b KartItem_TryArmBoostOnLanding_L_8004F610
-    KartItem_TryArmBoostOnLanding_L_8004F5BC:
-    lwz r3, lbl_806D10A0(r13)
-    cmplwi r3, 0x0
-    bne KartItem_TryArmBoostOnLanding_L_8004F5CC
-    li r3, 0x0
-    KartItem_TryArmBoostOnLanding_L_8004F5CC:
-    cmplwi r3, 0x0
-    beq KartItem_TryArmBoostOnLanding_L_8004F5DC
-    lwz r4, 0x10(r30)
-    bl TitleStats_IncTotalRaces
-    KartItem_TryArmBoostOnLanding_L_8004F5DC:
-    lwz r3, 0x24(r30)
-    li r4, 0x56
-    bl SoundObj_PlaySE_Direct
-    clrlwi r0, r31, 24
-    cmplwi r0, 0x1
-    bne KartItem_TryArmBoostOnLanding_L_8004F60C
-    lwz r3, 0x2c(r30)
-    bl SetAnimSpin
-    lwz r3, 0x34(r30)
-    bl TornadoEffect_SetFlagC0
-    li r0, 0x1
-    stb r0, 0xb0(r30)
-    KartItem_TryArmBoostOnLanding_L_8004F60C:
-    li r3, 0x1
-    KartItem_TryArmBoostOnLanding_L_8004F610:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+unsigned char KartItem_TryArmBoostOnLanding(KartItemOpsView *self, unsigned char spin) { /* 0x8004F584 size:0xA4 */
+    void *tracker;
+    if (!fn_8019A8A4(self->movement, lbl_806D26FC)) {
+        return 0;
+    }
+    if ((tracker = lbl_806D10A0) == 0) {
+        tracker = 0;
+    }
+    if (tracker) {
+        TitleStats_IncTotalRaces(tracker, self->raceScore10);
+    }
+    SoundObj_PlaySE_Direct(self->soundCtrl, 0x56);
+    if (spin == 1) {
+        SetAnimSpin(self->ownerDriver);
+        TornadoEffect_SetFlagC0(self->effectObj);
+        self->boostArmedB0 = 1;
+    }
+    return 1;
 }
+#pragma exceptions reset
 
-asm void KartItem_SetCarObjectField2d4Float(void) { /* 0x8004F628 size:0xC */
-    nofralloc
-    lwz r3, 0x28(r3)
-    stfs f1, 0x2d4(r3)
-    blr
+#pragma exceptions off
+void KartItem_SetCarObjectField2d4Float(KartItemOpsView *self, float v) { /* 0x8004F628 size:0xC */
+    self->movement->steer2d4 = v;
 }
+#pragma exceptions reset
 
-asm void KartItem_SetCarObjectField1c8Float(void) { /* 0x8004F634 size:0xC */
-    nofralloc
-    lwz r3, 0x28(r3)
-    stfs f1, 0x1c8(r3)
-    blr
+#pragma exceptions off
+void KartItem_SetCarObjectField1c8Float(KartItemOpsView *self, float v) { /* 0x8004F634 size:0xC */
+    self->movement->accel1c8 = v;
 }
+#pragma exceptions reset
 
-asm void CarObject_SetPosition(void) { /* 0x8004F640 size:0x28 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    li r5, 0x0
-    stw r0, 0x14(r1)
-    lwz r3, 0x28(r3)
-    bl KartMovement_SetPosition
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+void CarObject_SetPosition(KartItemOpsView *self, void *pos) { /* 0x8004F640 size:0x28 */
+    KartMovement_SetPosition(self->movement, pos, 0);
 }
+#pragma exceptions reset
 
 asm void KartItem_ForwardToCarMovement_8019a4e0(void) { /* 0x8004F668 size:0x24 */
     nofralloc
