@@ -53,7 +53,7 @@ extern void Free_IfOwnedShort();
 extern void GetCourseScene3D();
 extern void GetInputManager();
 extern void GetKartParamBlock();
-extern void GetKartStartSlot();
+extern int GetKartStartSlot();
 extern void InputCmd_Dtor();
 extern void InputCmd_GetDetectedFlag();
 extern void InputCmd_Init();
@@ -83,7 +83,7 @@ extern void ItemEffect_TornadoLift(void *guard, float *mtx);
 extern int ItemObject_GetByteAt0xEC(void *itemObj, int idx);
 extern unsigned char ItemSelect_GiveItemOrQueueDrop(void *itemSelect, void *driver, int count, int flag);
 extern unsigned char ItemSelect_OnDropAllCancel(void *itemSelect, void *driver);
-extern void ItemSelect_StartRouletteSpin();
+extern int ItemSelect_StartRouletteSpin();
 extern unsigned char ItemStateGuard_IsActive(void *guard);
 extern void ItemStateGuard_PruneIfDeadAndReport();
 extern void ItemStateSlotC_TryArm();
@@ -106,7 +106,7 @@ extern void KartDriver_TickAction_79268_AndSetSlot5aEulerZ();
 extern void KartEffectFadeTransit_Dtor();
 extern float KartEffectFadeTransit_GetActiveValue();
 extern void KartEffectFadeTransit_Init();
-extern void KartEffectFadeTransit_IsActive();
+extern unsigned char KartEffectFadeTransit_IsActive();
 extern void KartEffectFadeTransit_Tick();
 extern void KartItemAudio_PlayHitConfirmSE();
 extern void KartItemAudio_PlayThrowConfirmSE();
@@ -268,7 +268,7 @@ extern unsigned int lbl_806D26F8;
 extern const float lbl_806D26FC; /* 1.0f */
 extern const float lbl_806D2700;
 extern float lbl_806D2704;
-extern unsigned int lbl_806D2708;
+extern const float lbl_806D2708;
 extern unsigned int lbl_806D270C;
 extern unsigned int lbl_806D2710;
 extern float lbl_806D2714;
@@ -276,7 +276,7 @@ extern const float lbl_806D2718;
 extern const float lbl_806D271C;
 extern const double lbl_806D2720; /* 0.5 */
 extern const double lbl_806D2728; /* 3.0 */
-extern unsigned int lbl_806D2730;
+extern const float lbl_806D2730;
 extern unsigned int lbl_806D2734;
 extern const float lbl_806D2738;
 extern unsigned int lbl_806D273C;
@@ -297,8 +297,8 @@ extern unsigned int lbl_806D2774;
 extern const float lbl_806D2778;
 extern unsigned int lbl_806D277C;
 extern unsigned int lbl_806D2780;
-extern unsigned int lbl_806D2784;
-extern unsigned int lbl_806D2788;
+extern const float lbl_806D2784;
+extern const float lbl_806D2788;
 extern const double lbl_806D2790; /* 0x4330000080000000 int-to-float cookie */
 extern unsigned int lbl_806D2798;
 extern unsigned int lbl_806D27A0;
@@ -537,9 +537,15 @@ typedef struct KartMovementSpeedView {
     unsigned char capFlag;           /* 0x22 */
     char pad_0x23[0x1];
     SpeedTableEntry *table;          /* 0x24 */
-    char pad_0x28[0x30];
+    char pad_0x28[0x4];
+    float accelFactor2c;             /* 0x2c */
+    char pad_0x30[0x28];
     float transform[16];             /* 0x58 */
-    char pad_0x98[0xe4];
+    char pad_0x98[0x20];
+    float restVelX;                  /* 0xb8 */
+    float restVelY;                  /* 0xbc */
+    float restVelZ;                  /* 0xc0 */
+    char pad_0xc4[0xb8];
     float velX;                      /* 0x17c */
     float velY;                      /* 0x180 */
     float velZ;                      /* 0x184 */
@@ -681,9 +687,19 @@ typedef struct ItemEffectTable {
     ItemEffectLane lanes[2];           /* 0x28 */
 } ItemEffectTable;
 
+/* item effect bus with the u64 flag word exposed (flags @ +0x10) */
+typedef struct ItemBusFlagsView {
+    char pad_0x0[0x10];
+    unsigned long long flags;          /* 0x10 */
+} ItemBusFlagsView;
+
 typedef struct KartDriverBusView {
-    char pad_0x0[0x304];
-    void *itemBus;                     /* 0x304 */
+    char pad_0x0[0x23c];
+    int syncTarget23c;                 /* 0x23c */
+    char pad_0x240[0x78];
+    unsigned char deathState2b8;       /* 0x2b8 */
+    char pad_0x2b9[0x4b];
+    ItemBusFlagsView *itemBus;         /* 0x304 */
 } KartDriverBusView;
 
 typedef struct ItemSecondaryLane ItemSecondaryLane;
@@ -697,7 +713,7 @@ typedef struct KartItemOpsView {
     void *soundCtrl;                   /* 0x24 */
     KartMovementSpeedView *movement;   /* 0x28 */
     KartDriverBusView *ownerDriver;    /* 0x2c */
-    char pad_0x30[0x4];
+    void *input30;                     /* 0x30 */
     void *effectObj;                   /* 0x34 */
     void *billboard;                   /* 0x38 */
     void *boostObj;                    /* 0x3c */
@@ -707,13 +723,23 @@ typedef struct KartItemOpsView {
     ItemSecondaryLane *secondary;      /* 0x50 */
     char pad_0x54[0x5c];
     unsigned char boostArmedB0;        /* 0xb0 */
-    char pad_0xb1[0x1f];
+    char pad_0xb1[0x17];
+    int coinCountC8;                   /* 0xc8 */
+    float smoothBonusCC;               /* 0xcc */
     int aiTimerD0;                     /* 0xd0 */
     char pad_0xd4[0x8];
     unsigned char driftFlagDC;         /* 0xdc */
-    char pad_0xdd[0x1f];
+    char pad_0xdd[0x3];
+    float boostBlendE0;                /* 0xe0 */
+    char pad_0xe4[0xc];
+    int prevSyncF0;                    /* 0xf0 */
+    char pad_0xf4[0x8];
     unsigned char fellOffFC;           /* 0xfc */
-    char pad_0xfd[0xf];
+    char pad_0xfd[0x1];
+    unsigned char coinBonusEnabledFE;  /* 0xfe */
+    char pad_0xff[0x5];
+    void *itemSelect104;               /* 0x104 */
+    char pad_0x108[0x4];
     float driftTimer10C;               /* 0x10c */
 } KartItemOpsView;
 
@@ -917,7 +943,7 @@ void KartItem_ApplyImpactImpulseAndRumble(KartItemOpsView *self, int mode, float
 void KartItem_RenderPipelinedWithEffects(KartItemRenderView *self);
 asm void KartItem_Tick(void);
 asm void KartItem_PerFrameStep(void);
-asm void CarObject_UpdateCoinSpeedBonus(void);
+void CarObject_UpdateCoinSpeedBonus(KartItemOpsView *self);
 asm void CarObject_ProcessWarpAndDash(void);
 asm void CarObject_MainUpdate(void);
 asm void CarObject_FrameUpdate(void);
@@ -1011,7 +1037,7 @@ asm void dtor_80052BCC(void);
 asm void dtor_80052C48(void);
 asm void dtor_80052CC4(void);
 asm void dtor_80052D40(void);
-asm void KartMovement_UpdateBoostVisualBlend(void);
+asm void KartMovement_UpdateBoostVisualBlend(KartDriverBusView *drv, KartMovementSpeedView *mv, float *outA, float *outB, float *blend);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
 extern void __dt__11ScopedTimerFv();
@@ -4605,167 +4631,73 @@ asm void KartItem_PerFrameStep(void) { /* 0x8004C320 size:0xC44 */
     blr
 }
 
-asm void CarObject_UpdateCoinSpeedBonus(void) { /* 0x8004CF64 size:0x244 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stfd f31, 0x20(r1)
-    psq_st f31, 0x28(r1), 0, 0
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    mr r30, r3
-    lbz r0, 0xfc(r3)
-    lwz r3, 0x2c(r3)
-    cmplwi r0, 0x1
-    lwz r31, 0x304(r3)
-    bne CarObject_UpdateCoinSpeedBonus_L_8004CFE4
-    mr r3, r31
-    li r6, 0x80
-    li r5, 0x0
-    bl ItemEffectBus_OrMask
-    lbz r0, 0x20(r30)
-    cmplwi r0, 0x0
-    beq CarObject_UpdateCoinSpeedBonus_L_8004CFE4
-    bl StrPcb_GetInstance
-    li r4, 0x28
-    bl StrPcb_SetCmdByte2d
-    bl StrPcb_GetInstance
-    li r4, 0x1e
-    bl StrPcb_SetCmdByte2e
-    bl StrPcb_GetInstance
-    li r4, 0x0
-    bl StrPcb_SetCounterField14
-    bl StrPcb_GetInstance
-    li r4, 0x0
-    bl StrPcb_SetCmdByte2f
-    CarObject_UpdateCoinSpeedBonus_L_8004CFE4:
-    lfs f0, lbl_806D2778(r2)
-    lis r0, 0x4330
-    lwz r3, 0x28(r30)
-    stw r0, 0x10(r1)
-    lfd f1, lbl_806D2790(r2)
-    stfs f0, 0x2c(r3)
-    lfs f4, lbl_806D2784(r2)
-    lwz r0, 0xc8(r30)
-    lfs f2, lbl_806D26EC(r2)
-    xoris r0, r0, 0x8000
-    lfs f3, lbl_806D2788(r2)
-    stw r0, 0x14(r1)
-    lfd f0, 0x10(r1)
-    fsubs f0, f0, f1
-    fmuls f1, f4, f0
-    bl Saturate_Double
-    lwz r0, g_gameMode(r13)
-    fmr f31, f1
-    cmpwi r0, 0x2
-    bne CarObject_UpdateCoinSpeedBonus_L_8004D054
-    lwz r3, 0x2c(r30)
-    addi r5, r1, 0xc
-    lwz r4, 0x28(r30)
-    addi r6, r1, 0x8
-    addi r7, r30, 0xe0
-    bl KartMovement_UpdateBoostVisualBlend
-    lfs f0, 0xc(r1)
-    fadds f31, f31, f0
-    CarObject_UpdateCoinSpeedBonus_L_8004D054:
-    lfs f1, 0xcc(r30)
-    fcmpo cr0, f1, f31
-    ble CarObject_UpdateCoinSpeedBonus_L_8004D080
-    lfs f0, lbl_806D26E8(r2)
-    fsubs f0, f1, f0
-    stfs f0, 0xcc(r30)
-    lfs f0, 0xcc(r30)
-    fcmpo cr0, f0, f31
-    bge CarObject_UpdateCoinSpeedBonus_L_8004D09C
-    stfs f31, 0xcc(r30)
-    b CarObject_UpdateCoinSpeedBonus_L_8004D09C
-    CarObject_UpdateCoinSpeedBonus_L_8004D080:
-    lfs f0, lbl_806D26E8(r2)
-    fadds f0, f1, f0
-    stfs f0, 0xcc(r30)
-    lfs f0, 0xcc(r30)
-    fcmpo cr0, f0, f31
-    ble CarObject_UpdateCoinSpeedBonus_L_8004D09C
-    stfs f31, 0xcc(r30)
-    CarObject_UpdateCoinSpeedBonus_L_8004D09C:
-    lbz r0, 0xfe(r30)
-    cmplwi r0, 0x1
-    bne CarObject_UpdateCoinSpeedBonus_L_8004D0B4
-    lfs f0, 0xcc(r30)
-    lwz r3, 0x28(r30)
-    stfs f0, 0x2e0(r3)
-    CarObject_UpdateCoinSpeedBonus_L_8004D0B4:
-    lwz r3, 0x2c(r30)
-    lwz r4, 0xf0(r30)
-    lwz r0, 0x23c(r3)
-    cmpw r4, r0
-    beq CarObject_UpdateCoinSpeedBonus_L_8004D100
-    bge CarObject_UpdateCoinSpeedBonus_L_8004D0E0
-    mr r3, r31
-    lis r6, 0x8000
-    li r5, 0x0
-    bl ItemEffectBus_OrMask
-    b CarObject_UpdateCoinSpeedBonus_L_8004D0F0
-    CarObject_UpdateCoinSpeedBonus_L_8004D0E0:
-    mr r3, r31
-    lis r6, 0x8000
-    li r5, 0x0
-    bl ItemEffectBus_ClearMask
-    CarObject_UpdateCoinSpeedBonus_L_8004D0F0:
-    lwz r3, 0x2c(r30)
-    lwz r0, 0x23c(r3)
-    stw r0, 0xf0(r30)
-    b CarObject_UpdateCoinSpeedBonus_L_8004D110
-    CarObject_UpdateCoinSpeedBonus_L_8004D100:
-    mr r3, r31
-    lis r6, 0x8000
-    li r5, 0x0
-    bl ItemEffectBus_ClearMask
-    CarObject_UpdateCoinSpeedBonus_L_8004D110:
-    lwz r0, 0x10(r31)
-    li r4, 0x0
-    lwz r5, 0x14(r31)
-    lis r3, 0x80
-    and r0, r0, r4
-    and r3, r5, r3
-    xor r3, r3, r4
-    xor r0, r0, r4
-    or. r0, r3, r0
-    bne CarObject_UpdateCoinSpeedBonus_L_8004D13C
-    b CarObject_UpdateCoinSpeedBonus_L_8004D140
-    CarObject_UpdateCoinSpeedBonus_L_8004D13C:
-    li r4, 0x1
-    CarObject_UpdateCoinSpeedBonus_L_8004D140:
-    clrlwi r0, r4, 24
-    cmplwi r0, 0x1
-    bne CarObject_UpdateCoinSpeedBonus_L_8004D158
-    lwz r3, 0x30(r30)
-    li r4, 0x2
-    bl InputCmd_SetCooldown
-    CarObject_UpdateCoinSpeedBonus_L_8004D158:
-    lwz r3, 0x3c(r30)
-    bl KartEffectFadeTransit_IsActive
-    clrlwi. r0, r3, 24
-    bne CarObject_UpdateCoinSpeedBonus_L_8004D188
-    lbz r0, 0xdc(r30)
-    cmplwi r0, 0x1
-    bne CarObject_UpdateCoinSpeedBonus_L_8004D188
-    mr r3, r31
-    li r4, 0x40
-    bl ItemEffectBus_ClearByTable8
-    li r0, 0x0
-    stb r0, 0xdc(r30)
-    CarObject_UpdateCoinSpeedBonus_L_8004D188:
-    psq_l f31, 0x28(r1), 0, 0
-    lwz r0, 0x34(r1)
-    lfd f31, 0x20(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+#pragma exceptions off
+void CarObject_UpdateCoinSpeedBonus(KartItemOpsView *self) { /* 0x8004CF64 size:0x244 */
+    ItemBusFlagsView *bus;
+    float outA;
+    float outB;
+    float bonus;
+    float cur;
+    unsigned char b;
+
+    bus = self->ownerDriver->itemBus;
+    if (self->fellOffFC == 1) {
+        ItemEffectBus_OrMask(bus, 0x80ULL);
+        if (self->strPcbGate20) {
+            StrPcb_SetCmdByte2d(StrPcb_GetInstance(), 0x28);
+            StrPcb_SetCmdByte2e(StrPcb_GetInstance(), 0x1e);
+            StrPcb_SetCounterField14(StrPcb_GetInstance(), 0);
+            StrPcb_SetCmdByte2f(StrPcb_GetInstance(), 0);
+        }
+    }
+    self->movement->accelFactor2c = lbl_806D2778;
+    bonus = Saturate_Double(lbl_806D2784 * (float)self->coinCountC8, lbl_806D26EC, lbl_806D2788);
+    if ((int)g_gameMode == 2) {
+        KartMovement_UpdateBoostVisualBlend(self->ownerDriver, self->movement, &outA, &outB, &self->boostBlendE0);
+        bonus += outA;
+    }
+    cur = self->smoothBonusCC;
+    if (cur > bonus) {
+        self->smoothBonusCC = cur - lbl_806D26E8;
+        if (self->smoothBonusCC < bonus) {
+            self->smoothBonusCC = bonus;
+        }
+    } else {
+        self->smoothBonusCC = cur + lbl_806D26E8;
+        if (self->smoothBonusCC > bonus) {
+            self->smoothBonusCC = bonus;
+        }
+    }
+    if (self->coinBonusEnabledFE == 1) {
+        self->movement->coinBonus = self->smoothBonusCC;
+    }
+    if (self->prevSyncF0 != self->ownerDriver->syncTarget23c) {
+        if (self->prevSyncF0 < self->ownerDriver->syncTarget23c) {
+            ItemEffectBus_OrMask(bus, 0x80000000ULL);
+        } else {
+            ItemEffectBus_ClearMask(bus, 0x80000000ULL);
+        }
+        self->prevSyncF0 = self->ownerDriver->syncTarget23c;
+    } else {
+        ItemEffectBus_ClearMask(bus, 0x80000000ULL);
+    }
+    /* class-1 recipe: explicit ==0 compare, then=0 / else=1 arm order */
+    if ((bus->flags & 0x800000ULL) == 0) {
+        b = 0;
+    } else {
+        b = 1;
+    }
+    if (b == 1) {
+        InputCmd_SetCooldown(self->input30, 2);
+    }
+    if (KartEffectFadeTransit_IsActive(self->boostObj) == 0) {
+        if (self->driftFlagDC == 1) {
+            ItemEffectBus_ClearByTable8(bus, 0x40);
+            self->driftFlagDC = 0;
+        }
+    }
 }
+#pragma exceptions reset
 
 asm void CarObject_ProcessWarpAndDash(void) { /* 0x8004D1A8 size:0x25C */
     nofralloc
@@ -10836,7 +10768,7 @@ asm void dtor_80052D40(void) { /* 0x80052D40 size:0x7C */
  * are solved - `(float)t` works in this TU: postprocess_sdata2 renames the CW
  * anonymous cookie to lbl_806D2790 once upstream fn sizes match. Paste-ready C
  * in HANDOFF appendix C (uses BoostTicksView/BoostBlendView). */
-asm void KartMovement_UpdateBoostVisualBlend(void) { /* 0x80052DBC size:0x164 */
+asm void KartMovement_UpdateBoostVisualBlend(KartDriverBusView *drv, KartMovementSpeedView *mv, float *outA, float *outB, float *blend) { /* 0x80052DBC size:0x164 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0

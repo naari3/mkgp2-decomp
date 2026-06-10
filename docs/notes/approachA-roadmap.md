@@ -61,3 +61,12 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
 - 2026-06-11: Phase 1 開始。対象 9 fn (OnKartHit は class 2 併発のため Phase 2 送り、
   StlList_RemoveByValueField は arm-order 原理の応用候補として後段で retry)。
   batch 1 = UpdateShadowBillboardAndViewport / UpdateCoinSpeedBonus / ApplyImpactReflectAndDampVelocity。
+- 2026-06-11: Phase 1 batch 1 完了 — **recipe 実 TU 検証 OK** (両 zero-half polarity で byte-exact、tuning 不要)。
+  - UpdateCoinSpeedBonus: **matched 100%** (class-1 解法による初の実戦 promote)。
+  - ShadowBB: 97.95% park。class-1 site は解けた。唯一の残差 = mr-SR-init (GetMaxSpeedWithBonus 94.35% と同一 block)。
+    これが解ければ 2 fn 同時 unlock。`#pragma opt_propagation off` は bit-identical no-op (axis closed)。
+  - ApplyImpactReflect: 95.19% park。**訂正: この fn の site は u64 family ではなく int-equality-chain 変種**
+    (li 0 の削除には独立 zero web との coalesce が必要 = chain には無い。4 probe negative)。
+    class-1 残対象の site 形状は precan で u64 family / chain 変種を判別する必要あり。
+  - 新 idiom: volatile-cast const load dedup / in-place sqrtf / outer-const-local split (note 参照)。
+  - batch 2 = CarObject_OnItemHit + KartItem_ApplyImpactImpulseAndRumble。
