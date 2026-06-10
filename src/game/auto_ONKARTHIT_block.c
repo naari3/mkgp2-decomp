@@ -29,7 +29,7 @@ extern void CoinSystem_RemoveCoins();
 extern void CollisionTest_CalcPenetration();
 extern void DashZone_ProcessAutoRun();
 extern void DebugPrintf();
-extern void EffectSpeed_ApplySpeedScale();
+extern void EffectSpeed_ApplySpeedScale(void *req, float a, float b);
 extern void EffectSpeed_Init();
 extern void EffectSpeed_TickAndGet();
 extern void EffectSpeed_TickTimer();
@@ -78,8 +78,8 @@ extern void ItemEffectBus_SnapshotAndFullReset();
 extern void ItemEffectBus_TickTornadoCooldown();
 extern void ItemEffectDamp_TryArm();
 extern void ItemEffectImpact_TryArm();
-extern void ItemEffect_BossGrab();
-extern void ItemEffect_TornadoLift();
+extern void ItemEffect_BossGrab(void *guard, float *mtx, void *arg, int param);
+extern void ItemEffect_TornadoLift(void *guard, float *mtx);
 extern int ItemObject_GetByteAt0xEC(void *itemObj, int idx);
 extern unsigned char ItemSelect_GiveItemOrQueueDrop(void *itemSelect, void *driver, int count, int flag);
 extern unsigned char ItemSelect_OnDropAllCancel(void *itemSelect, void *driver);
@@ -150,17 +150,17 @@ extern void SceneRender_SetViewportRect();
 extern void SetAnimSpin();
 extern void ShadowAreaMgr_QueryPoint();
 extern unsigned char ShadowBillboard_IsRenderReady(void *billboard);
-extern void ShadowBillboard_SetField0x6CAndComputeAxis();
+extern void ShadowBillboard_SetField0x6CAndComputeAxis(void *bb, int mode);
 extern void ShadowBillboard_SetField0xA4();
 extern void ShadowBillboard_SetTargetSaturation();
-extern void ShadowBillboard_SetVec3At0x70();
+extern void ShadowBillboard_SetVec3At0x70(void *bb, void *vec);
 extern void ShadowBillboard_StepSimple();
 extern void ShadowBillboard_Tick();
 extern void ShadowBillboard_TriggerSpinFlash();
 extern void SharedPtr_Init();
 extern void SoundCtrl_SetVolume();
-extern void SoundObj_PlaySE();
-extern void SoundObj_PlaySE_Direct();
+extern void SoundObj_PlaySE(void *snd, int id);
+extern void SoundObj_PlaySE_Direct(void *snd, int id);
 extern void SoundVolumePan_Update();
 extern void SpeedBoost_Apply(void *obj, int id, float v);
 extern void StrPcb_ForceRun_Neutral();
@@ -170,14 +170,14 @@ extern void StrPcb_SetCmdByte2d(void *pcb, int v);
 extern void StrPcb_SetCmdByte2e(void *pcb, int v);
 extern void StrPcb_SetCmdByte2f(void *pcb, int v);
 extern void StrPcb_SetCounterField14(void *pcb, int v);
-extern void StrPcb_SetTimer3034_38();
+extern void StrPcb_SetTimer3034_38(void *pcb, int a, int b, float f);
 extern void StrPcb_SetTimer3c40();
 extern void Tachometer_SetCoinCount();
 extern void Tachometer_UpdateDisplaySpeed();
 extern void TireEffect_ResetSpin(void *body, float a, float b);
 extern void TitleStats_IncCurrentRaceScore();
 extern void TitleStats_IncPerfectCount();
-extern void TitleStats_IncTotalRaces();
+extern void TitleStats_IncTotalRaces(void *stats, int score);
 extern void TitleStats_MarkAllCoursesClearedIfDistance();
 extern void TitleStats_SetEventFlag_806d1420();
 extern void TitleTracker_Empty_PreFinalizeHook();
@@ -190,7 +190,7 @@ extern void TornadoEffect_Ctor();
 extern void TornadoEffect_GetField114();
 extern void TornadoEffect_SetColorPairC8CC();
 extern void TornadoEffect_SetColorRGBLerp();
-extern void TornadoEffect_SetColorY();
+extern void TornadoEffect_SetColorY(); /* K&R on purpose: matched C calls it with 1 arg (StopCarObjectSE) and 2 args (OnApply_Freeze) */
 extern void TornadoEffect_SetField114();
 extern void TornadoEffect_SetField11c();
 extern void TornadoEffect_SetField128AndMaybeClear134();
@@ -260,7 +260,7 @@ extern unsigned int lbl_806D109C;
 extern void *lbl_806D10A0;
 extern const int lbl_806D26E0[1];
 extern const float lbl_806D26E4;
-extern unsigned int lbl_806D26E8;
+extern const float lbl_806D26E8;
 extern const float lbl_806D26EC; /* 0.0f */
 extern const float lbl_806D26F0;
 extern const float lbl_806D26F4;
@@ -278,7 +278,7 @@ extern unsigned int lbl_806D2720;
 extern unsigned int lbl_806D2728;
 extern unsigned int lbl_806D2730;
 extern unsigned int lbl_806D2734;
-extern unsigned int lbl_806D2738;
+extern const float lbl_806D2738;
 extern unsigned int lbl_806D273C;
 extern unsigned int lbl_806D2740;
 extern unsigned int lbl_806D2744;
@@ -315,7 +315,7 @@ extern unsigned int lbl_806D27D0;
 extern const float lbl_806D27D8;
 extern const float lbl_806D27E4;
 extern const float lbl_806D27E8;
-extern unsigned int lbl_806D27EC;
+extern const float lbl_806D27EC;
 extern unsigned int lbl_806D27F0;
 extern unsigned int lbl_806D27F4;
 
@@ -590,12 +590,34 @@ typedef struct Vec3 {
 } Vec3;
 
 typedef struct ItemStateBlock {
-    char pad_0x0[0x4];
+    struct KartItemOpsView *owner;     /* 0x0 */
     void *guard;                       /* 0x4 */
-    char pad_0x8[0x4];
+    int curItemId;                     /* 0x8 */
     int activeId;                      /* 0xc */
     int activeFlag;                    /* 0x10 */
 } ItemStateBlock;
+
+/* driver-side state view consumed by ItemEffect_TryStartByCategory */
+typedef struct DriverStateView {
+    char pad_0x0[0x1f8];
+    int state1f8;                      /* 0x1f8 */
+} DriverStateView;
+
+/* item category tables inside the lbl_802EBA18 rodata blob
+ * (+0x1b9c stride 0x14 x26, +0x1da4 stride 0x18 x11, +0x1eac stride 0xc x9,
+ *  +0x1f18 stride 0xc x1, +0x1f24 stride 0x10 x1) */
+typedef struct ItemCatEntry12 {
+    int id;                            /* 0x0 */
+    int valA;                          /* 0x4 */
+    int valB;                          /* 0x8 */
+} ItemCatEntry12;
+
+typedef struct ItemCatEntry16 {
+    int id;                            /* 0x0 */
+    int valA;                          /* 0x4 */
+    int valB;                          /* 0x8 */
+    int valC;                          /* 0xc */
+} ItemCatEntry16;
 
 typedef struct ItemEffectLane {
     int itemId;                        /* +0x00 (table+0x28) */
@@ -820,19 +842,19 @@ int ItemEffect_OnHit(ItemEffectTable *self, const ItemEffectDesc *desc, int item
 int ItemEffect_Dispatch(ItemEffectLane *lane, KartItemOpsView *owner, int kind, void *effectState, void *mediaReq, const ItemEffectDesc *desc, int itemId, void *itemObj, int arg4, float intensity);
 void KartItem_TickActiveEffectsTwoLane(ItemEffectTable *self);
 void KartItem_TickStatusEffectsByFlag(ItemEffectTable *self);
-asm void ItemEffectDesc_OnApply_BoostLandingSE(void);
-asm void ItemEffectDesc_OnApply_FreezeKartOrSlowdown(void);
-asm void ItemEffectDesc_OnApply_MushroomBoost(void);
-asm void ItemEffect_TryStartByCategory_Wrap(void);
-asm void ItemEffect_TryStartByCategory(void);
-asm void ItemEffect_Explosion(void);
-asm void ItemEffect_Trap(void);
-asm void ItemEffect_Projectile(void);
-asm void ItemTable_FindEntryByIdStride16(void);
-asm void ItemTable_FindEntryByIdStride12_v1(void);
-asm void ItemTable_FindEntryByIdStride12_v2(void);
-asm void ItemTable_FindEntryByIdStride24(void);
-asm void ItemTable_FindEntryByIdStride20(void);
+int ItemEffectDesc_OnApply_BoostLandingSE(const ItemEffectDesc *desc, KartItemOpsView *owner, void *effectState, void *mediaReq, void *itemObj, unsigned char kind, unsigned char isPrimary);
+int ItemEffectDesc_OnApply_FreezeKartOrSlowdown(const ItemEffectDesc *desc, KartItemOpsView *owner, void *effectState, void *mediaReq, void *itemObj, unsigned char kind, unsigned char isPrimary);
+int ItemEffectDesc_OnApply_MushroomBoost(const ItemEffectDesc *desc, KartItemOpsView *owner, void *effectState, void *mediaReq, void *itemObj, unsigned char kind, unsigned char isPrimary);
+int ItemEffect_TryStartByCategory_Wrap(ItemStateBlock *self, int itemId, void *arg);
+int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg);
+asm void ItemEffect_Explosion(ItemStateBlock *self, int idx, void *arg);
+asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg);
+asm void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg);
+asm int ItemTable_FindEntryByIdStride16(void *tbl, int count, int itemId);
+asm int ItemTable_FindEntryByIdStride12_v1(void *tbl, int count, int itemId);
+asm int ItemTable_FindEntryByIdStride12_v2(void *tbl, int count, int itemId);
+asm int ItemTable_FindEntryByIdStride24(void *tbl, int count, int itemId);
+asm int ItemTable_FindEntryByIdStride20(void *tbl, int count, int itemId);
 asm void CarObject_GetField304Vec3(void);
 asm void CarObjectManager_RunKartKartCollisionSweep(void);
 asm void CarObjectManager_Dtor(void);
@@ -8651,161 +8673,92 @@ asm void KartItem_TickStatusEffectsByFlag(ItemEffectTable *self) { /* 0x80050CF0
     blr
 }
 
-asm void ItemEffectDesc_OnApply_BoostLandingSE(void) { /* 0x80051100 size:0x84 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    clrlwi r0, r9, 24
-    cmplwi r0, 0x1
-    stw r31, 0xc(r1)
-    mr r31, r4
-    stw r30, 0x8(r1)
-    mr r30, r3
-    bne ItemEffectDesc_OnApply_BoostLandingSE_L_80051168
-    lwz r3, 0x28(r31)
-    lfs f1, lbl_806D26FC(r2)
-    bl fn_8019A8A4
-    clrlwi. r0, r3, 24
-    beq ItemEffectDesc_OnApply_BoostLandingSE_L_80051168
-    lwz r3, lbl_806D10A0(r13)
-    cmplwi r3, 0x0
-    bne ItemEffectDesc_OnApply_BoostLandingSE_L_8005114C
-    li r3, 0x0
-    ItemEffectDesc_OnApply_BoostLandingSE_L_8005114C:
-    cmplwi r3, 0x0
-    beq ItemEffectDesc_OnApply_BoostLandingSE_L_8005115C
-    lwz r4, 0x10(r31)
-    bl TitleStats_IncTotalRaces
-    ItemEffectDesc_OnApply_BoostLandingSE_L_8005115C:
-    lwz r3, 0x24(r31)
-    li r4, 0x56
-    bl SoundObj_PlaySE_Direct
-    ItemEffectDesc_OnApply_BoostLandingSE_L_80051168:
-    lwz r0, 0x14(r1)
-    lwz r3, 0x4(r30)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
-}
+#pragma exceptions off
+int ItemEffectDesc_OnApply_BoostLandingSE(const ItemEffectDesc *desc, KartItemOpsView *owner, void *effectState, void *mediaReq, void *itemObj, unsigned char kind, unsigned char isPrimary) { /* 0x80051100 size:0x84 */
+    if (isPrimary == 1) {
+        if (fn_8019A8A4(owner->movement, lbl_806D26FC) != 0) {
+            void *stats;
 
-asm void ItemEffectDesc_OnApply_FreezeKartOrSlowdown(void) { /* 0x80051184 size:0xD8 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    clrlwi. r0, r9, 24
-    stw r31, 0x1c(r1)
-    mr r31, r7
-    stw r30, 0x18(r1)
-    mr r30, r6
-    stw r29, 0x14(r1)
-    mr r29, r4
-    stw r28, 0x10(r1)
-    mr r28, r3
-    bne ItemEffectDesc_OnApply_FreezeKartOrSlowdown_L_800511C0
-    lwz r3, 0x4(r28)
-    b ItemEffectDesc_OnApply_FreezeKartOrSlowdown_L_8005123C
-    ItemEffectDesc_OnApply_FreezeKartOrSlowdown_L_800511C0:
-    mr r3, r31
-    li r4, 0x0
-    bl ItemObject_GetByteAt0xEC
-    clrlwi. r0, r3, 24
-    bne ItemEffectDesc_OnApply_FreezeKartOrSlowdown_L_800511F4
-    lwz r3, 0x34(r29)
-    lfs f1, lbl_806D27EC(r2)
-    bl TornadoEffect_SetColorY
-    lfs f1, lbl_806D26E8(r2)
-    mr r3, r30
-    lfs f2, lbl_806D2738(r2)
-    bl EffectSpeed_ApplySpeedScale
-    b ItemEffectDesc_OnApply_FreezeKartOrSlowdown_L_80051238
-    ItemEffectDesc_OnApply_FreezeKartOrSlowdown_L_800511F4:
-    lwz r5, 0x28(r29)
-    mr r3, r29
-    lfs f0, lbl_806D26EC(r2)
-    li r4, 0x1
-    stfs f0, 0x17c(r5)
-    stfs f0, 0x180(r5)
-    stfs f0, 0x184(r5)
-    stfs f0, 0x194(r5)
-    stfs f0, 0x198(r5)
-    stfs f0, 0x19c(r5)
-    stfs f0, 0x1ac(r5)
-    stfs f0, 0x1b0(r5)
-    stfs f0, 0x1b4(r5)
-    lfs f1, 0xa0(r31)
-    lfs f2, 0xa4(r31)
-    lfs f3, 0xa8(r31)
-    bl KartItem_ApplyImpactImpulseAndRumble
-    ItemEffectDesc_OnApply_FreezeKartOrSlowdown_L_80051238:
-    lwz r3, 0x4(r28)
-    ItemEffectDesc_OnApply_FreezeKartOrSlowdown_L_8005123C:
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+            if ((stats = lbl_806D10A0) == 0) {
+                stats = 0;
+            }
+            if (stats != 0) {
+                TitleStats_IncTotalRaces(stats, owner->raceScore10);
+            }
+            SoundObj_PlaySE_Direct(owner->soundCtrl, 0x56);
+        }
+    }
+    return desc->itemId;
 }
+#pragma exceptions reset
 
-asm void ItemEffectDesc_OnApply_MushroomBoost(void) { /* 0x8005125C size:0x88 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    clrlwi. r0, r9, 24
-    stw r31, 0xc(r1)
-    mr r31, r4
-    bne ItemEffectDesc_OnApply_MushroomBoost_L_80051280
-    lwz r3, 0x4(r3)
-    b ItemEffectDesc_OnApply_MushroomBoost_L_800512D0
-    ItemEffectDesc_OnApply_MushroomBoost_L_80051280:
-    lwz r3, 0x40(r31)
-    lwz r3, 0x4(r3)
-    bl ItemStateGuard_IsActive
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    beq ItemEffectDesc_OnApply_MushroomBoost_L_800512D0
-    lwz r3, 0x24(r31)
-    li r4, 0x5
-    bl SoundObj_PlaySE
-    lwz r3, 0x24(r31)
-    li r4, 0x55
-    bl SoundObj_PlaySE_Direct
-    lwz r3, 0x3c(r31)
-    li r4, 0x5
-    lfs f1, lbl_806D26F0(r2)
-    bl SpeedBoost_Apply
-    li r0, 0x1
-    lfs f0, lbl_806D26F4(r2)
-    stb r0, 0xdc(r31)
-    stfs f0, 0x10c(r31)
-    ItemEffectDesc_OnApply_MushroomBoost_L_800512D0:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+int ItemEffectDesc_OnApply_FreezeKartOrSlowdown(const ItemEffectDesc *desc, KartItemOpsView *owner, void *effectState, void *mediaReq, void *itemObj, unsigned char kind, unsigned char isPrimary) { /* 0x80051184 size:0xD8 */
+    if (isPrimary == 0) {
+        return desc->itemId;
+    }
+    if ((unsigned char)ItemObject_GetByteAt0xEC(itemObj, 0) == 0) {
+        TornadoEffect_SetColorY(owner->effectObj, lbl_806D27EC);
+        EffectSpeed_ApplySpeedScale(mediaReq, lbl_806D26E8, lbl_806D2738);
+    } else {
+        KartMovementSpeedView *mov;
+
+        mov = owner->movement;
+        mov->velX = lbl_806D26EC;
+        mov->velY = lbl_806D26EC;
+        mov->velZ = lbl_806D26EC;
+        mov->impact194 = lbl_806D26EC;
+        mov->impact198 = lbl_806D26EC;
+        mov->impact19c = lbl_806D26EC;
+        mov->impact1ac = lbl_806D26EC;
+        mov->impact1b0 = lbl_806D26EC;
+        mov->impact1b4 = lbl_806D26EC;
+        KartItem_ApplyImpactImpulseAndRumble(owner, 1, ((ItemObjectPosView *)itemObj)->posX, ((ItemObjectPosView *)itemObj)->posY, ((ItemObjectPosView *)itemObj)->posZ);
+    }
+    return desc->itemId;
 }
+#pragma exceptions reset
 
-asm void ItemEffect_TryStartByCategory_Wrap(void) { /* 0x800512E4 size:0x20 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    bl ItemEffect_TryStartByCategory
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+int ItemEffectDesc_OnApply_MushroomBoost(const ItemEffectDesc *desc, KartItemOpsView *owner, void *effectState, void *mediaReq, void *itemObj, unsigned char kind, unsigned char isPrimary) { /* 0x8005125C size:0x88 */
+    if (isPrimary == 0) {
+        return desc->itemId;
+    }
+    if (ItemStateGuard_IsActive(owner->stateBlock->guard) != 1) {
+        SoundObj_PlaySE(owner->soundCtrl, 5);
+        SoundObj_PlaySE_Direct(owner->soundCtrl, 0x55);
+        SpeedBoost_Apply(owner->boostObj, 5, lbl_806D26F0);
+        owner->driftFlagDC = 1;
+        owner->driftTimer10C = lbl_806D26F4;
+    }
+    /* target falls off without a return value on this path (r3 garbage) */
 }
+#pragma exceptions reset
 
-asm void ItemEffect_TryStartByCategory(void) { /* 0x80051304 size:0x344 */
+#pragma exceptions off
+int ItemEffect_TryStartByCategory_Wrap(ItemStateBlock *self, int itemId, void *arg) { /* 0x800512E4 size:0x20 */
+    return ItemEffect_TryStartByCategory(self, itemId, arg);
+}
+#pragma exceptions reset
+
+/* C probe history (2026-06-10, batch_promote_80051100_onapplyrun): best form
+ * reaches ~95%% (203/214 instr regions; whole front half + tornado/boss-grab
+ * call bodies + vec3 fills all exact). Sole hard residue: category-table
+ * entry addressing. Target groups (base+0x1f18/0x1f24) into a SCRATCH addi
+ * (addi r0,r31,K; add rE,r0,prod; lwz 0x4/0x8(rE)) and keeps only idx<<4 in
+ * a callee-saved (r29) across the BossGrab calls. CW 1.3.2 -lang=c
+ * reassociates every probed form: (a) cast-index ((T*)(base+K))[idx] sinks
+ * K+memberoff into the load displacement (lwz K+4(base+prod)); (b) byte-arith
+ * (T*)(base+K+idx*S) joins K with the product (addi prod,K); (c) fn-scope
+ * named table ptr materializes a callee-saved (stmw shifts to r26); (d)
+ * block-scope tb/e locals get copy-propagated then form (a)/(b); (e) named
+ * int off=idx<<4 keeps off but folds K+4 into off or displacement (lwzx);
+ * (f) blob struct member ->t12[idx] identical to (a); (g) static inline
+ * accessor At(tbl,idx) inlines transparently to (a). The grouped scratch-addi
+ * shape was never produced -> likely C++ accessor this-temp / reference
+ * semantics in the original (same family as itemeffect idiom 3 table-base
+ * init split). Salvage C in batch HANDOFF appendix. Kept as asm. */
+asm int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg) { /* 0x80051304 size:0x344 */
     nofralloc
     stwu r1, -0x40(r1)
     mflr r0
@@ -9033,8 +8986,7 @@ asm void ItemEffect_TryStartByCategory(void) { /* 0x80051304 size:0x344 */
     addi r1, r1, 0x40
     blr
 }
-
-asm void ItemEffect_Explosion(void) { /* 0x80051648 size:0x1EC */
+asm void ItemEffect_Explosion(ItemStateBlock *self, int idx, void *arg) { /* 0x80051648 size:0x1EC */
     nofralloc
     stwu r1, -0x40(r1)
     mflr r0
@@ -9165,7 +9117,7 @@ asm void ItemEffect_Explosion(void) { /* 0x80051648 size:0x1EC */
     blr
 }
 
-asm void ItemEffect_Trap(void) { /* 0x80051834 size:0x23C */
+asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg) { /* 0x80051834 size:0x23C */
     nofralloc
     stwu r1, -0xb0(r1)
     mflr r0
@@ -9314,7 +9266,7 @@ asm void ItemEffect_Trap(void) { /* 0x80051834 size:0x23C */
     blr
 }
 
-asm void ItemEffect_Projectile(void) { /* 0x80051A70 size:0x248 */
+asm void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg) { /* 0x80051A70 size:0x248 */
     nofralloc
     stwu r1, -0x40(r1)
     mflr r0
@@ -9468,7 +9420,7 @@ asm void ItemEffect_Projectile(void) { /* 0x80051A70 size:0x248 */
     blr
 }
 
-asm void ItemTable_FindEntryByIdStride16(void) { /* 0x80051CB8 size:0x38 */
+asm int ItemTable_FindEntryByIdStride16(void *tbl, int count, int itemId) { /* 0x80051CB8 size:0x38 */
     nofralloc
     li r6, 0x0
     mtctr r4
@@ -9489,7 +9441,7 @@ asm void ItemTable_FindEntryByIdStride16(void) { /* 0x80051CB8 size:0x38 */
     blr
 }
 
-asm void ItemTable_FindEntryByIdStride12_v1(void) { /* 0x80051CF0 size:0x38 */
+asm int ItemTable_FindEntryByIdStride12_v1(void *tbl, int count, int itemId) { /* 0x80051CF0 size:0x38 */
     nofralloc
     li r6, 0x0
     mtctr r4
@@ -9510,7 +9462,7 @@ asm void ItemTable_FindEntryByIdStride12_v1(void) { /* 0x80051CF0 size:0x38 */
     blr
 }
 
-asm void ItemTable_FindEntryByIdStride12_v2(void) { /* 0x80051D28 size:0x38 */
+asm int ItemTable_FindEntryByIdStride12_v2(void *tbl, int count, int itemId) { /* 0x80051D28 size:0x38 */
     nofralloc
     li r6, 0x0
     mtctr r4
@@ -9531,7 +9483,7 @@ asm void ItemTable_FindEntryByIdStride12_v2(void) { /* 0x80051D28 size:0x38 */
     blr
 }
 
-asm void ItemTable_FindEntryByIdStride24(void) { /* 0x80051D60 size:0x38 */
+asm int ItemTable_FindEntryByIdStride24(void *tbl, int count, int itemId) { /* 0x80051D60 size:0x38 */
     nofralloc
     li r6, 0x0
     mtctr r4
@@ -9552,7 +9504,7 @@ asm void ItemTable_FindEntryByIdStride24(void) { /* 0x80051D60 size:0x38 */
     blr
 }
 
-asm void ItemTable_FindEntryByIdStride20(void) { /* 0x80051D98 size:0x38 */
+asm int ItemTable_FindEntryByIdStride20(void *tbl, int count, int itemId) { /* 0x80051D98 size:0x38 */
     nofralloc
     li r6, 0x0
     mtctr r4
