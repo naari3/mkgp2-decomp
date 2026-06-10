@@ -416,6 +416,15 @@ C source から target asm を再現できなかった idiom。**再試行の前
 | `WarpAutoRun_GetParam` | `lwz r4, 0x4(r3)` での `r4` reuse + `fmuls f2/f1/f3` の operand 順 | source-level の rewrite で micro register-allocator を control できない。`-use_lmw_stmw on` は sibling fn の percent を regress させた | TU 単位の extra_cflags は副作用大、per-fn flag 機構が無いので諦め |
 | `WarpZone_CheckEntry` | unused float local に `stfs` 単発 (frsp 吸収済み)、target は frsp 2 つ、C source は frsp 3 つ | CW 1.3.2 で `frsp + stfs` を 1 命令の `stfs` に潰す trigger 未特定 (volatile / non-volatile / address-take 全部 probe 済み) | CW idiom catalog が欲しい case |
 | `WarpZone_CalcEdgeVectors` | 804-byte loop body の register allocation | 4 cycle で 78% 止まり、残り 22% は loop register allocation chase | ROI 低 (大規模 fn)、TU-level retrofit 候補 |
+| `KartItem_OnKartHit` (auto_ONKARTHIT 2026-06-10) | branch-over-branch bool materialization: `or. r0,r3,r0; bne L1; b L2; L1: li r4,1; L2:` が 7 箇所 | CW 1.0/1.1/1.2.5/1.2.5n/1.3.2/2.0/2.5/2.6/2.7 × -O1..-O4,p/,s/nopeephole の全組合せが 1 命令短い `beq L2; li r4,1; L2:` に invert する。試行 C form: if / if-else / ternary / !=0 / !=var / >0 / s64 / register / goto-pair / inline-helper / `\|\|0` / `&&1` / `!!` / C++ bool (-lang=c++)。value-context は branchless (subic/subfe) 化 | C++ の未試行 construct (inline member fn returning bool?) か compiler patch rev。**解ければ同 TU の CarObject_OnItemHit 等 sibling が連鎖 unlock** |
+| 〃 | 16-float copy block の frsp store-forward interleave | target は copy と演算を interleave し読み返しに `frsp f0,f7` を挟む。生成側は register 保持で frsp が出ない (`WarpZone_CheckEntry` frsp family) | 未試行: assignment-expression copy form `dx = mtx[3] - (s.mA[12] = co->m[12]);` で forwarded value の rounding を強制 |
+
+`KartItem_OnKartHit` promote 試行 (73.6% 到達) で**検証済みの構造知見** (再試行時に再発見不要):
+- frame 0x2a0 / `stmw r25` は **単一 scratch struct** `{ float d[3]; float mB[16]; float mA[16]; HitEvent ev /*0x1EC*/; }` @ sp+0x8 で再現 (`&s.ev` が escape するので全 dead store が保持される)
+- この TU の promote には Object 行に `extra_cflags=["-use_lmw_stmw on"]` が必要 (`stmw r25` vs `_savegpr_25`)
+- signature は `unsigned char KartItem_OnKartHit(KartItem *self, KartDriver *victim)`、`ok = IsRaceStarted(); if (!ok) return ok;` で r3 reuse
+- flags は aux(+0x304)+0x10 の **u64** field、全 flag test が 64-bit 演算
+- 内積は `dx*m[0] + dy*m[1] + dz*m[2]` の source 順で target の fmuls 順を再現
 
 ### 14.3 main wave で確立した successful idioms
 
