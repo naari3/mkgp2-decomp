@@ -14,7 +14,7 @@ docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件
 |---|---|---|
 | 0 | class 1 の最終 probe (compiler patch rev / 未試行 pragma) | **SOLVED (2026-06-11)** |
 | 1 | class-1 10 fn の回収 (salvage draft 適用) | **完了 (2026-06-11)** — recipe 14/14、promote 2 fn、残りは他 family park |
-| 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **PARTIAL-SOLVED (2026-06-11)** — 検証 batch 進行中 |
+| 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **検証 NEGATIVE / family source-closed (2026-06-11)** — recipe は const-param 前提で実 fn に不適用 |
 | 2 | 先頭区間 index 0-17 の残り idiom 解決: class 2 (OnKartHit) / flavor 5 (MainUpdate) / flavor 4 (ProcessWarpAndDash) / ScopedTimer (FrameUpdate) | 未着手 |
 | 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | 未着手 |
 | 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 未着手 |
@@ -110,3 +110,24 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     効いた — 実 fn では近傍 web の影響で違った可能性があり、mixed-mechanism で再試行。
   - compiler / pragma / -opt 軸は全 negative で closed。harness は tools/compiler_probe/ (fp 系列)。
   - 検証 batch dispatch: PerFrameStep + TickStatusEffectsByFlag (draft 適用 + recipe 置換)。
+- 2026-06-11: **Phase 2a 検証 NEGATIVE — family は source-closed と判定** (in-TU 10 trial + 12 probe、
+  docs/notes/cw132-fpnumbering-phase2a-validation.md)。promote 0。
+  - 観察 (事実): direct-copy 降順 recipe は copy src が **const 修飾の top-level pointer param** のときだけ
+    batch する (9-probe bisect)。chased ptr (`mv = self->movement`) / const local / cast / __restrict /
+    static-inline const-param helper は全て serialize — CW inliner は param の no-alias 属性を落とす。
+    PerFrameStep 級 (src を struct member から取る fn) は recipe 域外。
+  - 観察 (事実): named-temp pipeline を **昇順 def** (t0=mtx[0] 先頭、refill/store も昇順) に直すと
+    copy 領域の emission は byte-exact になり、残差は純粋な 8-register mirror (t0..t7=f0..f7 vs
+    target f7..f0) のみ。decl 順 / def 順 / 変数名の全 permutation で色は不変 —
+    **named-web coloring は first-USE (store) 順で昇順**、store 順は target 形で固定なので mirror は
+    source から到達不能。683/785 = 87.0% strict (objdiff-fuzzy ~98%)。
+  - 観察 (事実): TickStatusEffectsByFlag は 4 trial 全部 byte-identical object — CSE'd const web
+    (2+ uses) は別の immune sub-family。single-use temp batch は既に降順 = match 済み。
+    na/nb def-order swap も in-fn では no-op (最小再現の lever は転移しない)。
+  - 仮説 (推論): unlock には binary-level の allocator 研究が要る可能性が高い。source form 軸は全閉。
+  - **roadmap リスク**: この family 4 fn (Explosion 88.99% / UpdateBoostVisualBlend 98.88% /
+    TickStatusEffectsByFlag >99% / PerFrameStep 87.0% strict) のうち PerFrameStep は
+    prefix (index 0-17) 内 — Phase 3 の A 化はこの fn を asm_fn のまま跨げるか要検討
+    (asm_fn は extab を manual 保持するため A 区間連続性を壊す)。
+  - 次: **Phase 2b dispatch** — class 2 frsp store-forward の C++ reference semantics 仮説
+    (最後の未試行軸、6 fn family)。
