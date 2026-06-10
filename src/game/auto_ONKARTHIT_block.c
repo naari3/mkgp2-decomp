@@ -19,14 +19,14 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void Alloc();
+extern void *Alloc(unsigned long);
 extern void AudioChannel_DtorWithSeStop();
 extern void CObj_GetViewMatrix_Cached();
 extern void CameraEffect_Apply();
 extern void Camera_RotateByYaw();
 extern void CarObject_Dtor();
 extern void CoinSystem_RemoveCoins();
-extern void CollisionTest_CalcPenetration();
+extern float CollisionTest_CalcPenetration(void *checker, void *a, void *b);
 extern void DashZone_ProcessAutoRun();
 extern void DebugPrintf();
 extern void EffectSpeed_ApplySpeedScale(void *req, float a, float b);
@@ -47,7 +47,7 @@ extern void EffectSteering_InitForVibrate_Sub();
 extern void EffectSteering_InitForViscosity();
 extern void EffectSteering_InitForViscosity_Uniform();
 extern void EffectSteering_InputViscosity_SetFieldC();
-extern void FUN_8003b120();
+extern void *FUN_8003b120(unsigned long);
 extern void Field4NotMinusOne();
 extern void Free_IfOwnedShort();
 extern void GetCourseScene3D();
@@ -229,7 +229,7 @@ extern void fn_8019CC2C();
 extern void fn_801B1410();
 extern void fn_801B1458();
 extern void fn_801B5B60();
-extern void fn_802090F0();
+extern void fn_802090F0(void *obj, void *center, void *half, float f1, float f2, float f3);
 extern void fn_802091BC();
 extern void fn_80271EF4();
 extern void fn_802791BC();
@@ -242,14 +242,14 @@ extern void fn_802D6618();
 extern void fn_802DCA04();
 extern int fn_802DCA5C(int range);
 extern void memset();
-extern void strlen();
+extern unsigned long strlen(const char *);
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int g_carObjectCount;
+extern int g_carObjectCount;
 extern unsigned int g_carObjectList;
 extern unsigned int g_gameMode;
 extern unsigned char g_lakituDropStarted;
-extern unsigned int g_objCollChecker;
+extern void *g_objCollChecker;
 extern unsigned int g_playerCarObject;
 extern unsigned int g_raceCamera;
 extern unsigned int lbl_806D0051;
@@ -267,11 +267,11 @@ extern const float lbl_806D26F4;
 extern unsigned int lbl_806D26F8;
 extern const float lbl_806D26FC; /* 1.0f */
 extern const float lbl_806D2700;
-extern unsigned int lbl_806D2704;
+extern float lbl_806D2704;
 extern unsigned int lbl_806D2708;
 extern unsigned int lbl_806D270C;
 extern unsigned int lbl_806D2710;
-extern unsigned int lbl_806D2714;
+extern float lbl_806D2714;
 extern const float lbl_806D2718;
 extern const float lbl_806D271C;
 extern const double lbl_806D2720; /* 0.5 */
@@ -303,8 +303,8 @@ extern unsigned int lbl_806D2790;
 extern unsigned int lbl_806D2798;
 extern unsigned int lbl_806D27A0;
 extern unsigned int lbl_806D27A8;
-extern unsigned int lbl_806D27AC;
-extern unsigned int lbl_806D27B0;
+extern float lbl_806D27AC;
+extern float lbl_806D27B0;
 extern unsigned int lbl_806D27B4;
 extern unsigned int lbl_806D27B8;
 extern unsigned int lbl_806D27BC;
@@ -809,6 +809,77 @@ typedef struct ItemObjectPosView {
 extern ItemRemapEntry lbl_802EBE64[7];
 extern ItemEffectDesc lbl_802EBF0C[0x3A];
 
+/* dynamic bitset (vector<bool>-like): cap = bits rounded to word, size = requested bits */
+typedef struct Bitset {
+    unsigned long cap;      /* 0x0 */
+    unsigned long size;     /* 0x4 */
+    unsigned long *data;    /* 0x8 */
+} Bitset;
+
+typedef struct StlListNode StlListNode;
+
+typedef struct StlList {
+    unsigned long count;    /* +0x0 */
+    StlListNode *head;      /* +0x4 */
+    StlListNode *tail;      /* +0x8 */
+} StlList;
+
+/* inlined length_error exception object thrown by Bitset_Init */
+typedef struct BitsetLengthErr {
+    unsigned int *vt;   /* 0x0 */
+    char *str;          /* 0x4 */
+} BitsetLengthErr;
+
+typedef struct CarObjectManager {
+    void *vtable;           /* 0x0 */
+    StlList list;           /* 0x4: count=carObject count, head/tail node ring */
+    int frame;              /* 0x10: sweep cadence counter, signed cmp vs g_carObjectCount */
+} CarObjectManager;
+
+typedef struct SweepCarObj SweepCarObj;
+
+typedef struct SweepCarObjVt {
+    char pad_0x0[0x3c];
+    void (*onKartCollide)(SweepCarObj *self, void *other);  /* 0x3c */
+} SweepCarObjVt;
+
+struct SweepCarObj {
+    SweepCarObjVt *vt;      /* 0x0 */
+    char pad_0x4[0x24];
+    void *body28;           /* 0x28: transform holder, +0x58 = 4x4 mtx */
+    void *coll2c;           /* 0x2c: collision payload passed to the vcall */
+};
+
+struct StlListNode {
+    StlListNode *prev;      /* 0x0 */
+    StlListNode *next;      /* 0x4 */
+    SweepCarObj *obj;       /* 0x8 */
+};
+
+/* collision sweep scratch object inited by fn_802091BC / destroyed by dtor_80209180 */
+typedef struct CollProbe {
+    double pad[11];         /* 0x58 bytes, 8-aligned */
+} CollProbe;
+
+/* vector<bool>::reference-style proxy temp; the original keeps the dead ctor
+ * stores, volatile fields reproduce them without disturbing the call args */
+typedef struct BitsetRef {
+    Bitset * volatile b;        /* 0x0 */
+    volatile unsigned long i;   /* 0x4 */
+} BitsetRef;
+
+unsigned char Bitset_TestBit(Bitset *self, unsigned long idx);
+void Bitset_SetBit(Bitset *self, unsigned long idx, unsigned char val);
+
+/* sweep AABB config inside the lbl_802EBA18 rodata blob */
+typedef struct SweepCfgView {
+    char pad_0x0[0x41c];
+    Vec3 halfA;             /* 0x41c */
+    Vec3 centerA;           /* 0x428 */
+    Vec3 halfB;             /* 0x434 */
+    Vec3 centerB;           /* 0x440 */
+} SweepCfgView;
+
 /* --- forward decls --- */
 asm void KartItem_OnKartHit(void);
 void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, int channel);
@@ -828,7 +899,7 @@ asm void CarObject_MainUpdate(void);
 asm void CarObject_FrameUpdate(void);
 void CarObject_ApplyInput_AI(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3, float in4);
 void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3);
-asm void KartItem_Dtor(void);
+asm void *KartItem_Dtor(void *self, short flag);
 asm void CarObject_Init(void);
 asm void KartItem_UpdateShadowBillboardAndViewport(void);
 asm void KartItem_AdvanceAnim3c(void);
@@ -886,20 +957,20 @@ int ItemTable_FindEntryByIdStride20(ItemCatEntry20 *tbl, int count, int itemId);
 void CarObject_GetField304Vec3(Vec3 *out, CarObjAux304View *car);
 asm void CarObjectManager_RunKartKartCollisionSweep(void);
 asm void CarObjectManager_Dtor(void);
-asm void dtor_80052200(void);
-asm void Bitset_TestBit(void);
-asm void Bitset_SetBit(void);
-asm void Bitset_Init(void);
-asm void Bitset_MaxSize(void);
+Bitset *dtor_80052200(Bitset *self, short flag);
+unsigned char Bitset_TestBit(Bitset *self, unsigned long idx);
+void Bitset_SetBit(Bitset *self, unsigned long idx, unsigned char val);
+asm void Bitset_Init(Bitset *self, unsigned long n, const unsigned char *pval);
+unsigned long Bitset_MaxSize(void);
 asm void fn_8005249C(void);
 asm void KartItem_TryDropCoinsAndPlaySE_AdjThunk(void);
 asm void fn_800524AC(void);
 asm void fn_800524B4(void);
 asm void KartItem_PlayHitSE_DifferentVictim_AdjThunk(void);
 asm void KartItem_ApplyEffectToVictim_AdjThunk(void);
-asm void dtor_800524CC(void);
+void *dtor_800524CC(void *self, short flag);
 asm void StlList_RemoveByValueField(void);
-asm void StlList_EraseRange(void);
+asm void StlList_EraseRange(void *ret, StlList *l, StlListNode **beg, StlListNode **end);
 asm void StlList_InsertBefore(void);
 asm void StlList_InitEmpty(void);
 asm void dtor_80052744(void);
@@ -5712,7 +5783,7 @@ void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float i
 }
 #pragma exceptions reset
 
-asm void KartItem_Dtor(void) { /* 0x8004E2B0 size:0x368 */
+asm void *KartItem_Dtor(void *self, short flag) { /* 0x8004E2B0 size:0x368 */
     nofralloc
     stwu r1, -0x150(r1)
     mflr r0
@@ -9556,6 +9627,14 @@ void CarObject_GetField304Vec3(Vec3 *out, CarObjAux304View *car) { /* 0x80051DD0
 }
 #pragma exceptions reset
 
+/* parked at 98.95% (5 probes): all 219 instructions content-identical, residue is a
+ * 6-web callee-saved permutation (target bp2=r31 cfg=r30 na=r29 nb=r28 sent=r27 i=r26 vs
+ * CW cfg=r31 i=r30 bp2=r29 na=r28 nb=r27 sent=r26; cfg/i pinned across decl orders and
+ * scoping = allocator-internal ranking, ProcessWarpAndDash family) + r12 vcall chain temp
+ * + one stw r4-vs-r23 copy pick. 98.95% paste-ready C in batch HANDOFF appendix A.
+ * Win idioms proven here: volatile-field BitsetRef proxy pair keeps the dead ctor stores;
+ * scr out-vec is float[4] (slot layout); half=cfg copy -> K*scr fills -> center=cfg copy
+ * -> mt row fills statement order locks the fp webs. */
 asm void CarObjectManager_RunKartKartCollisionSweep(void) { /* 0x80051DEC size:0x36C */
     nofralloc
     stwu r1, -0x1d0(r1)
@@ -9790,6 +9869,9 @@ asm void CarObjectManager_RunKartKartCollisionSweep(void) { /* 0x80051DEC size:0
     blr
 }
 
+/* parked at 99.76% (4 probes): single scratch-reg tie-break, end-value web target r7 vs CW r0.
+ * Triple addic. guard chain + EraseRange shape fully reproduced by nested static inline
+ * StlList dtor->clear->erase helpers each re-guarding `if (l)`; see HANDOFF appendix C. */
 asm void CarObjectManager_Dtor(void) { /* 0x80052158 size:0xA8 */
     nofralloc
     stwu r1, -0x20(r1)
@@ -9839,74 +9921,45 @@ asm void CarObjectManager_Dtor(void) { /* 0x80052158 size:0xA8 */
     blr
 }
 
-asm void dtor_80052200(void) { /* 0x80052200 size:0x5C */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r4
-    stw r30, 0x8(r1)
-    mr. r30, r3
-    beq dtor_80052200_L_80052240
-    lwz r3, 0x8(r30)
-    cmplwi r3, 0x0
-    beq dtor_80052200_L_80052230
-    bl MemoryManager_TimedFree
-    dtor_80052200_L_80052230:
-    extsh. r0, r31
-    ble dtor_80052200_L_80052240
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    dtor_80052200_L_80052240:
-    lwz r0, 0x14(r1)
-    mr r3, r30
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+/* Bitset deleting dtor: free word buffer, then free self when flag > 0 */
+Bitset *dtor_80052200(Bitset *self, short flag) { /* 0x80052200 size:0x5C */
+    if (self) {
+        if (self->data) {
+            MemoryManager_TimedFree(self->data);
+        }
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
+#pragma exceptions reset
 
-asm void Bitset_TestBit(void) { /* 0x8005225C size:0x2C */
-    nofralloc
-    lwz r3, 0x8(r3)
-    rlwinm r0, r4, 29, 3, 29
-    clrlwi r4, r4, 27
-    li r5, 0x1
-    lwzx r0, r3, r0
-    slw r3, r5, r4
-    and r3, r3, r0
-    neg r0, r3
-    or r0, r0, r3
-    srwi r3, r0, 31
-    blr
+#pragma exceptions off
+unsigned char Bitset_TestBit(Bitset *self, unsigned long idx) { /* 0x8005225C size:0x2C */
+    return ((1 << (idx & 0x1f)) & self->data[idx >> 5]) != 0;
 }
+#pragma exceptions reset
 
-asm void Bitset_SetBit(void) { /* 0x80052288 size:0x48 */
-    nofralloc
-    clrlwi. r0, r5, 24
-    clrlwi r5, r4, 27
-    li r0, 0x1
-    srwi r6, r4, 5
-    slw r5, r0, r5
-    beq Bitset_SetBit_L_800522B8
-    lwz r4, 0x8(r3)
-    slwi r3, r6, 2
-    lwzx r0, r4, r3
-    or r0, r0, r5
-    stwx r0, r4, r3
-    blr
-    Bitset_SetBit_L_800522B8:
-    lwz r4, 0x8(r3)
-    slwi r3, r6, 2
-    lwzx r0, r4, r3
-    andc r0, r0, r5
-    stwx r0, r4, r3
-    blr
+#pragma exceptions off
+void Bitset_SetBit(Bitset *self, unsigned long idx, unsigned char val) { /* 0x80052288 size:0x48 */
+    unsigned long w = idx >> 5;
+    unsigned long mask = 1 << (idx & 0x1f);
+    if (val) {
+        self->data[w] |= mask;
+    } else {
+        self->data[w] &= ~mask;
+    }
 }
+#pragma exceptions reset
 
-asm void Bitset_Init(void) { /* 0x800522D0 size:0x1C4 */
+/* parked at 81% (2 probes): approach-B exceptions-off class. Structure fully decoded
+ * (throw length_error inline + cap math + auto-unrolled word fill); blockers: (1) the
+ * exception-object this/str pointer webs (target r28/r27 callee-saved + stmw r27) are
+ * remat'd to sp-relative addi by CW with exceptions off, (2) param web order n=r31/pval=r30
+ * flips. See HANDOFF appendix C for the 81% paste-ready C. */
+asm void Bitset_Init(Bitset *self, unsigned long n, const unsigned char *pval) { /* 0x800522D0 size:0x1C4 */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -10028,12 +10081,13 @@ asm void Bitset_Init(void) { /* 0x800522D0 size:0x1C4 */
     blr
 }
 
-asm void Bitset_MaxSize(void) { /* 0x80052494 size:0x8 */
-    nofralloc
-    li r3, -0x1
-    blr
+#pragma exceptions off
+unsigned long Bitset_MaxSize(void) { /* 0x80052494 size:0x8 */
+    return 0xFFFFFFFF;
 }
+#pragma exceptions reset
 
+/* adjustor thunk (this-0xc -> KartItem_Dtor tail b): C probe emits bl+prologue, kept as asm_fn */
 asm void fn_8005249C(void) { /* 0x8005249C size:0x8 */
     nofralloc
     subi r3, r3, 0xc
@@ -10070,25 +10124,16 @@ asm void KartItem_ApplyEffectToVictim_AdjThunk(void) { /* 0x800524C4 size:0x8 */
     b CarObject_OnItemHit
 }
 
-asm void dtor_800524CC(void) { /* 0x800524CC size:0x3C */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr. r31, r3
-    beq dtor_800524CC_L_800524F0
-    extsh. r0, r4
-    ble dtor_800524CC_L_800524F0
-    bl MemoryManager_TimedFree
-    dtor_800524CC_L_800524F0:
-    lwz r0, 0x14(r1)
-    mr r3, r31
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+void *dtor_800524CC(void *self, short flag) { /* 0x800524CC size:0x3C */
+    if (self) {
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
+#pragma exceptions reset
 
 asm void StlList_RemoveByValueField(void) { /* 0x80052508 size:0xCC */
     nofralloc
@@ -10156,7 +10201,7 @@ asm void StlList_RemoveByValueField(void) { /* 0x80052508 size:0xCC */
     blr
 }
 
-asm void StlList_EraseRange(void) { /* 0x800525D4 size:0xB0 */
+asm void StlList_EraseRange(void *ret, StlList *l, StlListNode **beg, StlListNode **end) { /* 0x800525D4 size:0xB0 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
