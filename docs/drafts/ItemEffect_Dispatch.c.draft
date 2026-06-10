@@ -1,0 +1,164 @@
+/*
+ * ItemEffect dispatch chain @ 0x80050010..0x800502F0 (3 functions).
+ *
+ *   ItemEffect_SelectAndDispatch_Wrap @ 0x80050010 (size 0x20)
+ *   ItemEffect_SelectAndDispatch      @ 0x80050030 (size 0x180)
+ *   ItemEffect_GenericHandler         @ 0x800501B0 (size 0x140)
+ *
+ * SelectAndDispatch scans the 7-entry x 0x18-byte effect descriptor table at
+ * lbl_802EBE64 to remap an incoming item id (type 0 = random pick via
+ * fn_802DCA5C, type 1 = indexed by the ItemObject byte at +0xEC). The
+ * remapped id is then checked against the 1-entry sentinel list at
+ * lbl_806D26E0; ids on the list are dispatched through the kart object's
+ * vtable slot 13 with a large stack parameter block, everything else falls
+ * through to ItemEffect_GenericHandler. GenericHandler special-cases item
+ * 0x17 (mushroom boost SE + SpeedBoost_Apply) and otherwise scans the
+ * 58-entry x 0x64-byte descriptor table at lbl_802EBF0C, forwarding hits to
+ * ItemEffect_OnHit (extern; member of the large extab group, separate lane).
+ *
+ * Built with CW 1.3.2 + `-Cpp_exceptions on` so the extab/extabindex entries
+ * (0x80006930..0x80006948 / 0x800203B4..0x800203D8) are auto-emitted.
+ */
+
+extern int fn_802DCA5C(int range);
+extern int ItemObject_GetByteAt0xEC(void *itemObj, int idx);
+extern int ItemStateGuard_IsActive(void *guard);
+extern void SoundObj_PlaySE(void *sound, int id);
+extern void SoundObj_PlaySE_Direct(void *sound, int id);
+extern void SpeedBoost_Apply(float scale, void *movement, int frames);
+extern int ItemEffect_OnHit(void *self, const void *desc, int itemId, void *itemObj, int arg4);
+
+/* 7-entry x 6-word effect remap descriptor table (.rodata) */
+extern int const lbl_802EBE64[42];
+/* 58-entry x 0x64-byte item effect descriptor table (.rodata) */
+extern unsigned char const lbl_802EBF0C[0x16A8];
+/* 1-entry sentinel id list (.sdata2) */
+extern int const lbl_806D26E0[1];
+extern float const lbl_806D26F0;
+extern float const lbl_806D26F4;
+
+typedef int (*EffectDispatchFn)(void *obj, void *args, int mode);
+
+int ItemEffect_SelectAndDispatch(void *self, int itemId, void *itemObj, int arg4);
+int ItemEffect_GenericHandler(void *self, int itemId, void *itemObj, int arg4);
+
+#pragma exceptions on
+
+int ItemEffect_SelectAndDispatch_Wrap(void *self, int itemId, void *itemObj, int arg4) {
+    return ItemEffect_SelectAndDispatch(self, itemId, itemObj, arg4);
+}
+
+int ItemEffect_SelectAndDispatch(void *self, int itemId, void *itemObj, int arg4) {
+    char buf[0x1F0];
+    int sel;
+    const int *desc;
+    int i;
+    const int *p;
+    int i2;
+    int found;
+
+    desc = lbl_802EBE64;
+    i = 7;
+    do {
+        if (itemId != desc[1]) {
+            sel = -1;
+        } else {
+            switch (desc[0]) {
+            case 0:
+                sel = desc[fn_802DCA5C(desc[2]) + 3];
+                break;
+            case 1:
+                if (itemObj == 0) {
+                    sel = desc[3];
+                } else {
+                    int idx = (unsigned char)ItemObject_GetByteAt0xEC(itemObj, 0);
+                    if (idx < 0 || idx >= desc[2]) {
+                        idx = 0;
+                    }
+                    sel = desc[idx + 3];
+                }
+                break;
+            default:
+                sel = desc[3];
+                break;
+            }
+        }
+        if (sel < 0) {
+            goto next;
+        }
+        goto have_sel;
+    next:
+        i--;
+        desc += 6;
+    } while (i > 0);
+    sel = itemId;
+have_sel:
+
+    i2 = 1;
+    p = lbl_806D26E0 + 1;
+    while (--p, i2-- > 0) {
+        if (sel == *p) {
+            found = sel;
+            goto have_found;
+        }
+    }
+    found = -1;
+have_found:
+
+    if (found != -1) {
+        void **obj;
+        char *bufp;
+        int mode;
+        char *v;
+
+        obj = *(void ***)self;
+        bufp = buf;
+        mode = -1;
+        v = *(char **)((char *)obj + 0x28);
+        *(int *)(buf + 8) = found;
+        *(float *)(buf + 0xA0) = *(float *)(v + 0x88);
+        *(float *)(buf + 0xA4) = *(float *)(v + 0x8C);
+        *(float *)(buf + 0xA8) = *(float *)(v + 0x90);
+        (*(EffectDispatchFn *)((char *)*obj + 0x34))(obj, bufp, mode);
+        return 1;
+    }
+    return ItemEffect_GenericHandler(self, sel, itemObj, arg4);
+}
+
+int ItemEffect_GenericHandler(void *self, int itemId, void *itemObj, int arg4) {
+    const unsigned char *desc;
+    int i;
+
+    if ((unsigned char)ItemStateGuard_IsActive(
+            *(void **)(*(char **)(*(char **)self + 0x40) + 4)) == 0 &&
+        *(int *)((char *)self + 0x14) <= 0 && itemId == 0x17) {
+        self = *(void **)self;
+        if ((unsigned char)ItemStateGuard_IsActive(
+                *(void **)(*(char **)((char *)self + 0x40) + 4)) != 1) {
+            SoundObj_PlaySE(*(void **)((char *)self + 0x24), 5);
+            SoundObj_PlaySE_Direct(*(void **)((char *)self + 0x24), 0x55);
+            SpeedBoost_Apply(lbl_806D26F0, *(void **)((char *)self + 0x3C), 5);
+            *((unsigned char *)self + 0xDC) = 1;
+            *(float *)((char *)self + 0x10C) = lbl_806D26F4;
+        }
+        return 2;
+    }
+
+    desc = lbl_802EBF0C;
+    i = 0x3A;
+    do {
+        if ((unsigned char)(itemId == *(int *)(desc + 4)) == 1) {
+            if ((unsigned char)ItemStateGuard_IsActive(
+                    *(void **)(*(char **)(*(char **)self + 0x40) + 4)) == 1 ||
+                *(int *)((char *)self + 0x14) > 0) {
+                return 2;
+            }
+            return ItemEffect_OnHit(self, desc, itemId, itemObj, arg4);
+        }
+        desc += 0x64;
+        i--;
+    } while (i != 0);
+    return 1;
+}
+
+#pragma exceptions reset
