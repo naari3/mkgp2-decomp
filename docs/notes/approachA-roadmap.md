@@ -13,7 +13,8 @@ docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件
 | phase | 内容 | 状態 |
 |---|---|---|
 | 0 | class 1 の最終 probe (compiler patch rev / 未試行 pragma) | **SOLVED (2026-06-11)** |
-| 1 | class-1 10 fn の回収 (salvage draft 適用) | **進行中 (2026-06-11 batch 1 dispatch)** |
+| 1 | class-1 10 fn の回収 (salvage draft 適用) | **完了 (2026-06-11)** — recipe 14/14、promote 2 fn、残りは他 family park |
+| 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **進行中 (2026-06-11 dispatch)** |
 | 2 | 先頭区間 index 0-17 の残り idiom 解決: class 2 (OnKartHit) / flavor 5 (MainUpdate) / flavor 4 (ProcessWarpAndDash) / ScopedTimer (FrameUpdate) | 未着手 |
 | 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | 未着手 |
 | 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 未着手 |
@@ -85,3 +86,18 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   - KartItem_Tick: 0-probe park (entry block に class-2 frsp trio)。class-1 site は u64 family 確認済み。
     class 2 研究 batch で ItemEffect_Dispatch と束ねるのを推奨。
   - batch 4 = KartItem_PerFrameStep (Phase 1 最終)。
+- 2026-06-11: **Phase 1 完了**。batch 4 (PerFrameStep 0xC44) は 97.87% park — recipe は 14/14 で検証完結、
+  precan も全 class クリーン、残差は fp-scratch numbering のみ (805 命令中 91 行、内容差ゼロ)。
+  Phase 1 総括: promote 2 (UpdateCoinSpeedBonus / OnItemHit)、近接 park 5 (97-99% 帯 3 + 95% 帯 2)。
+  class-1 という意味では 10/10 全勝 — park の原因は全部別 family。
+- 2026-06-11: **Phase 2 を family 別に再構成** (元の「index 0-17 の 4 idiom」より粒度を細かく):
+  - **2a: fp-scratch numbering** (later-first-use→lower-reg)。4 fn が 89-99% で待機
+    (Explosion / UpdateBoostVisualBlend / TickStatusEffectsByFlag / PerFrameStep)。
+    Phase 0 方式 (最小再現 + 自動分類 + compiler/pragma 総当たり) を適用 → dispatch 済み。
+  - 2b: class 2 frsp store-forward (6 fn: OnKartHit / Tick / ApplyImpactImpulse / Dispatch / Trap / Projectile)。
+    C++ reference semantics 仮説の検証が未着手の最終手段。
+  - 2c: mr-SR-init (ShadowBB / GetMaxSpeedWithBonus の 2 fn、残差 1-2 命令)。
+  - 2d: ScopedTimer pair swap (FrameUpdate / Init + program-wide ~30)。
+  - 2e: chain 変種 / flavor 4 / flavor 5 / dead-counter (各 1-2 fn、最難)。
+  prefix (index 0-17) の完成には 2a-2e 全部が必要。HandleObstacleHit (class 3) のみ Phase 3 の
+  A 化で自動解決する見込み。
