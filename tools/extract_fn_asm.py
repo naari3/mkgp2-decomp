@@ -58,6 +58,7 @@ GNLJ82_SDA1_BASE = 0x806D6D20
 GNLJ82_SDA2_BASE = 0x806DA260
 
 INSTR_LINE_RE = re.compile(r"^\s*/\*[^*]*\*/\s*(.*\S)\s*$")
+INSTR_ADDR_RE = re.compile(r"^\s*/\*\s*([0-9A-Fa-f]{8})\b")
 SECTION_RE = re.compile(r'^\.section\s+(\S+?)(?:,.*)?$')
 OBJ_RE = re.compile(r'^\.obj\s+"([^"]+)"\s*,\s*(\S+)\s*$')
 ENDOBJ_RE = re.compile(r'^\.endobj\s+"([^"]+)"\s*$')
@@ -127,6 +128,14 @@ class FnAsm:
     name: str
     scope: str
     instructions: list[str] = field(default_factory=list)
+    start_addr: Optional[int] = None  # VA of first instruction
+    end_addr: Optional[int] = None    # VA of last instruction (inclusive)
+
+    @property
+    def size(self) -> Optional[int]:
+        if self.start_addr is None or self.end_addr is None:
+            return None
+        return self.end_addr + 4 - self.start_addr
 
 
 @dataclass
@@ -175,6 +184,12 @@ def parse_group(asm_path: Path) -> GroupData:
                 m_ins = INSTR_LINE_RE.match(line)
                 if m_ins:
                     current_fn.instructions.append(m_ins.group(1))
+                    m_addr = INSTR_ADDR_RE.match(line)
+                    if m_addr:
+                        addr = int(m_addr.group(1), 16)
+                        if current_fn.start_addr is None:
+                            current_fn.start_addr = addr
+                        current_fn.end_addr = addr
                     continue
                 # Bare local-label declaration (`.L_<addr>:`) — no comment prefix.
                 if LOCAL_LABEL_DECL_RE.match(stripped):
@@ -415,7 +430,8 @@ def emit_c_source(group_id: str, data: GroupData, sda_base_map: dict[str, str],
     sda21_syms: set[str] = set()
     rewritten: list[FnAsm] = []
     for fn in data.functions:
-        new_fn = FnAsm(name=fn.name, scope=fn.scope)
+        new_fn = FnAsm(name=fn.name, scope=fn.scope,
+                       start_addr=fn.start_addr, end_addr=fn.end_addr)
         new_fn.instructions = [
             _rewrite_instruction(ins, sda21_syms, fn.name, sda_base_map, sda_offset_map)
             for ins in fn.instructions
@@ -472,6 +488,21 @@ def emit_c_source(group_id: str, data: GroupData, sda_base_map: dict[str, str],
         for sym in sorted(data_syms):
             out.append(f"extern unsigned int {sym}[];")
         out.append("")
+
+    # Function index: one line per fn in .text order so the (potentially
+    # 10k-line) generated TU is navigable. Grep the name to jump to the body.
+    first = next((f for f in rewritten if f.start_addr is not None), None)
+    last = next((f for f in reversed(rewritten) if f.end_addr is not None), None)
+    range_str = ""
+    if first and last:
+        range_str = f", .text 0x{first.start_addr:08X}..0x{last.end_addr + 4:08X}"
+    out.append(f"/* --- function index ({len(rewritten)} fns{range_str}) ---")
+    for i, fn in enumerate(rewritten):
+        addr = f"0x{fn.start_addr:08X}" if fn.start_addr is not None else "?" * 10
+        size = f"0x{fn.size:<5X}" if fn.size is not None else "?"
+        out.append(f" * [{i:3}] {addr} size:{size} {fn.scope:<6} {fn.name}")
+    out.append(" */")
+    out.append("")
 
     # Forward decls of the asm fns so the extabindex initializers can take
     # their address. mwcc accepts function pointer initializers only if the
@@ -549,7 +580,10 @@ def emit_c_source(group_id: str, data: GroupData, sda_base_map: dict[str, str],
     # asm bodies in .text order (= fn definition source order).
     out.append("/* --- asm function bodies (.text order = fn address order) --- */")
     for fn in rewritten:
-        out.append(f"asm void {fn.name}(void) {{")
+        loc = ""
+        if fn.start_addr is not None and fn.size is not None:
+            loc = f" /* 0x{fn.start_addr:08X} size:0x{fn.size:X} */"
+        out.append(f"asm void {fn.name}(void) {{{loc}")
         out.append("    nofralloc")
         for ins in fn.instructions:
             out.append(f"    {ins}")

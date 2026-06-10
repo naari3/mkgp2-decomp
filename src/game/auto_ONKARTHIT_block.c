@@ -345,6 +345,116 @@ extern unsigned int lbl_803F75F8[];
 extern unsigned int lbl_803F7690[];
 extern unsigned int lbl_803F76A8[];
 
+/* --- function index (107 fns, .text 0x8004A238..0x80052F20) ---
+ * [  0] 0x8004A238 size:0x680   global KartItem_OnKartHit
+ * [  1] 0x8004A8B8 size:0x60    global KartItem_PlayHitSE_DifferentVictim
+ * [  2] 0x8004A918 size:0x510   global CarObject_OnItemHit
+ * [  3] 0x8004AE28 size:0x2F0   global CarObject_HandleObstacleHit
+ * [  4] 0x8004B118 size:0x28    global KartItem_PlaySE_0x09
+ * [  5] 0x8004B140 size:0x254   global KartItem_ApplyImpactReflectAndDampVelocity
+ * [  6] 0x8004B394 size:0x9C    global KartItem_TryDropCoinsAndPlaySE
+ * [  7] 0x8004B430 size:0x6C    global KartItem_TryCancelIfDropAllowed
+ * [  8] 0x8004B49C size:0x520   global KartItem_ApplyImpactImpulseAndRumble
+ * [  9] 0x8004B9BC size:0xF0    global KartItem_RenderPipelinedWithEffects
+ * [ 10] 0x8004BAAC size:0x874   global KartItem_Tick
+ * [ 11] 0x8004C320 size:0xC44   global KartItem_PerFrameStep
+ * [ 12] 0x8004CF64 size:0x244   global CarObject_UpdateCoinSpeedBonus
+ * [ 13] 0x8004D1A8 size:0x25C   global CarObject_ProcessWarpAndDash
+ * [ 14] 0x8004D404 size:0xAC8   global CarObject_MainUpdate
+ * [ 15] 0x8004DECC size:0x114   global CarObject_FrameUpdate
+ * [ 16] 0x8004DFE0 size:0x174   global CarObject_ApplyInput_AI
+ * [ 17] 0x8004E154 size:0x15C   global CarObject_ApplyInput
+ * [ 18] 0x8004E2B0 size:0x368   global KartItem_Dtor
+ * [ 19] 0x8004E618 size:0x7BC   global CarObject_Init
+ * [ 20] 0x8004EDD4 size:0x204   global KartItem_UpdateShadowBillboardAndViewport
+ * [ 21] 0x8004EFD8 size:0x24    global KartItem_AdvanceAnim3c
+ * [ 22] 0x8004EFFC size:0x44    global CarObject_CalcSpeedRatio
+ * [ 23] 0x8004F040 size:0xB8    global KartItem_GetMaxSpeedWithBonus
+ * [ 24] 0x8004F0F8 size:0x28    global KartItem_GetCurrentSpeedWithBonus
+ * [ 25] 0x8004F120 size:0xC     global CarObject_GetTransformMatrix
+ * [ 26] 0x8004F12C size:0x8     global CarObject_GetKartMovementPtr
+ * [ 27] 0x8004F134 size:0x8     global KartItem_GetCarObjectSoundCh
+ * [ 28] 0x8004F13C size:0x8     global CarObject_GetRenderObj
+ * [ 29] 0x8004F144 size:0x8     global KartItem_GetByte_f4
+ * [ 30] 0x8004F14C size:0x10    global KartItem_GetBoostArmedAndTimer
+ * [ 31] 0x8004F15C size:0xC     global CarObject_IsAirborne
+ * [ 32] 0x8004F168 size:0xC     global KartItem_GetCarObjectState_2bc
+ * [ 33] 0x8004F174 size:0x58    global KartItem_ResetStrPcbToIdle
+ * [ 34] 0x8004F1CC size:0x6C    global KartItem_SetStrPcbIntensityFromSpeed
+ * [ 35] 0x8004F238 size:0x58    global KartItem_SetStrPcbCmd2fFromFloat
+ * [ 36] 0x8004F290 size:0x58    global KartItem_SetStrPcbCmd2eFromFloat
+ * [ 37] 0x8004F2E8 size:0x58    global KartItem_SetStrPcbCmd2dFromFloat
+ * [ 38] 0x8004F340 size:0x110   global KartItem_CancelActiveEffect
+ * [ 39] 0x8004F450 size:0xA4    global CarObject_ApplyDriftBoost
+ * [ 40] 0x8004F4F4 size:0xC     global KartMovement_SetMueScale
+ * [ 41] 0x8004F500 size:0xC     global KartMovement_SetSpeedScale
+ * [ 42] 0x8004F50C size:0x34    global KartItem_GetCarVelocityVec3
+ * [ 43] 0x8004F540 size:0x20    global KartItem_SetCarVelocityVec3
+ * [ 44] 0x8004F560 size:0x24    global KartItem_StopCarObjectSE
+ * [ 45] 0x8004F584 size:0xA4    global KartItem_TryArmBoostOnLanding
+ * [ 46] 0x8004F628 size:0xC     global KartItem_SetCarObjectField2d4Float
+ * [ 47] 0x8004F634 size:0xC     global KartItem_SetCarObjectField1c8Float
+ * [ 48] 0x8004F640 size:0x28    global CarObject_SetPosition
+ * [ 49] 0x8004F668 size:0x24    global KartItem_ForwardToCarMovement_8019a4e0
+ * [ 50] 0x8004F68C size:0x24    global KartItem_ForwardToCarMovement_8019a6a4
+ * [ 51] 0x8004F6B0 size:0x1A8   global KartItem_OnFallOffOrDeath
+ * [ 52] 0x8004F858 size:0x7B8   global CarObject_HandleItemEffect
+ * [ 53] 0x80050010 size:0x20    global ItemEffect_SelectAndDispatch_Wrap
+ * [ 54] 0x80050030 size:0x180   global ItemEffect_SelectAndDispatch
+ * [ 55] 0x800501B0 size:0x140   global ItemEffect_GenericHandler
+ * [ 56] 0x800502F0 size:0x120   global ItemEffect_OnHit
+ * [ 57] 0x80050410 size:0x53C   global ItemEffect_Dispatch
+ * [ 58] 0x8005094C size:0x3A4   global KartItem_TickActiveEffectsTwoLane
+ * [ 59] 0x80050CF0 size:0x410   global KartItem_TickStatusEffectsByFlag
+ * [ 60] 0x80051100 size:0x84    global ItemEffectDesc_OnApply_BoostLandingSE
+ * [ 61] 0x80051184 size:0xD8    global ItemEffectDesc_OnApply_FreezeKartOrSlowdown
+ * [ 62] 0x8005125C size:0x88    global ItemEffectDesc_OnApply_MushroomBoost
+ * [ 63] 0x800512E4 size:0x20    global ItemEffect_TryStartByCategory_Wrap
+ * [ 64] 0x80051304 size:0x344   global ItemEffect_TryStartByCategory
+ * [ 65] 0x80051648 size:0x1EC   global ItemEffect_Explosion
+ * [ 66] 0x80051834 size:0x23C   global ItemEffect_Trap
+ * [ 67] 0x80051A70 size:0x248   global ItemEffect_Projectile
+ * [ 68] 0x80051CB8 size:0x38    global ItemTable_FindEntryByIdStride16
+ * [ 69] 0x80051CF0 size:0x38    global ItemTable_FindEntryByIdStride12_v1
+ * [ 70] 0x80051D28 size:0x38    global ItemTable_FindEntryByIdStride12_v2
+ * [ 71] 0x80051D60 size:0x38    global ItemTable_FindEntryByIdStride24
+ * [ 72] 0x80051D98 size:0x38    global ItemTable_FindEntryByIdStride20
+ * [ 73] 0x80051DD0 size:0x1C    global CarObject_GetField304Vec3
+ * [ 74] 0x80051DEC size:0x36C   global CarObjectManager_RunKartKartCollisionSweep
+ * [ 75] 0x80052158 size:0xA8    global CarObjectManager_Dtor
+ * [ 76] 0x80052200 size:0x5C    global dtor_80052200
+ * [ 77] 0x8005225C size:0x2C    global Bitset_TestBit
+ * [ 78] 0x80052288 size:0x48    global Bitset_SetBit
+ * [ 79] 0x800522D0 size:0x1C4   global Bitset_Init
+ * [ 80] 0x80052494 size:0x8     global Bitset_MaxSize
+ * [ 81] 0x8005249C size:0x8     global fn_8005249C
+ * [ 82] 0x800524A4 size:0x8     global KartItem_TryDropCoinsAndPlaySE_AdjThunk
+ * [ 83] 0x800524AC size:0x8     global fn_800524AC
+ * [ 84] 0x800524B4 size:0x8     global fn_800524B4
+ * [ 85] 0x800524BC size:0x8     global KartItem_PlayHitSE_DifferentVictim_AdjThunk
+ * [ 86] 0x800524C4 size:0x8     global KartItem_ApplyEffectToVictim_AdjThunk
+ * [ 87] 0x800524CC size:0x3C    global dtor_800524CC
+ * [ 88] 0x80052508 size:0xCC    global StlList_RemoveByValueField
+ * [ 89] 0x800525D4 size:0xB0    global StlList_EraseRange
+ * [ 90] 0x80052684 size:0xA8    global StlList_InsertBefore
+ * [ 91] 0x8005272C size:0x18    global StlList_InitEmpty
+ * [ 92] 0x80052744 size:0x48    global dtor_80052744
+ * [ 93] 0x8005278C size:0x7C    global dtor_8005278C
+ * [ 94] 0x80052808 size:0x54    global dtor_80052808
+ * [ 95] 0x8005285C size:0x54    global dtor_8005285C
+ * [ 96] 0x800528B0 size:0x7C    global dtor_800528B0
+ * [ 97] 0x8005292C size:0x7C    global dtor_8005292C
+ * [ 98] 0x800529A8 size:0xB0    global dtor_800529A8
+ * [ 99] 0x80052A58 size:0x7C    global dtor_80052A58
+ * [100] 0x80052AD4 size:0x7C    global dtor_80052AD4
+ * [101] 0x80052B50 size:0x7C    global dtor_80052B50
+ * [102] 0x80052BCC size:0x7C    global dtor_80052BCC
+ * [103] 0x80052C48 size:0x7C    global dtor_80052C48
+ * [104] 0x80052CC4 size:0x7C    global dtor_80052CC4
+ * [105] 0x80052D40 size:0x7C    global dtor_80052D40
+ * [106] 0x80052DBC size:0x164   global KartMovement_UpdateBoostVisualBlend
+ */
+
 /* --- forward decls --- */
 asm void KartItem_OnKartHit(void);
 asm void KartItem_PlayHitSE_DifferentVictim(void);
@@ -995,7 +1105,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void KartItem_OnKartHit(void) {
+asm void KartItem_OnKartHit(void) { /* 0x8004A238 size:0x680 */
     nofralloc
     stwu r1, -0x2a0(r1)
     mflr r0
@@ -1449,7 +1559,7 @@ asm void KartItem_OnKartHit(void) {
     blr
 }
 
-asm void KartItem_PlayHitSE_DifferentVictim(void) {
+asm void KartItem_PlayHitSE_DifferentVictim(void) { /* 0x8004A8B8 size:0x60 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -1478,7 +1588,7 @@ asm void KartItem_PlayHitSE_DifferentVictim(void) {
     blr
 }
 
-asm void CarObject_OnItemHit(void) {
+asm void CarObject_OnItemHit(void) { /* 0x8004A918 size:0x510 */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -1843,7 +1953,7 @@ asm void CarObject_OnItemHit(void) {
     blr
 }
 
-asm void CarObject_HandleObstacleHit(void) {
+asm void CarObject_HandleObstacleHit(void) { /* 0x8004AE28 size:0x2F0 */
     nofralloc
     stwu r1, -0x220(r1)
     mflr r0
@@ -2056,7 +2166,7 @@ asm void CarObject_HandleObstacleHit(void) {
     blr
 }
 
-asm void KartItem_PlaySE_0x09(void) {
+asm void KartItem_PlaySE_0x09(void) { /* 0x8004B118 size:0x28 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -2070,7 +2180,7 @@ asm void KartItem_PlaySE_0x09(void) {
     blr
 }
 
-asm void KartItem_ApplyImpactReflectAndDampVelocity(void) {
+asm void KartItem_ApplyImpactReflectAndDampVelocity(void) { /* 0x8004B140 size:0x254 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -2240,7 +2350,7 @@ asm void KartItem_ApplyImpactReflectAndDampVelocity(void) {
     blr
 }
 
-asm void KartItem_TryDropCoinsAndPlaySE(void) {
+asm void KartItem_TryDropCoinsAndPlaySE(void) { /* 0x8004B394 size:0x9C */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -2287,7 +2397,7 @@ asm void KartItem_TryDropCoinsAndPlaySE(void) {
     blr
 }
 
-asm void KartItem_TryCancelIfDropAllowed(void) {
+asm void KartItem_TryCancelIfDropAllowed(void) { /* 0x8004B430 size:0x6C */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -2320,7 +2430,7 @@ asm void KartItem_TryCancelIfDropAllowed(void) {
     blr
 }
 
-asm void KartItem_ApplyImpactImpulseAndRumble(void) {
+asm void KartItem_ApplyImpactImpulseAndRumble(void) { /* 0x8004B49C size:0x520 */
     nofralloc
     stwu r1, -0xa0(r1)
     mflr r0
@@ -2667,7 +2777,7 @@ asm void KartItem_ApplyImpactImpulseAndRumble(void) {
     blr
 }
 
-asm void KartItem_RenderPipelinedWithEffects(void) {
+asm void KartItem_RenderPipelinedWithEffects(void) { /* 0x8004B9BC size:0xF0 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -2736,7 +2846,7 @@ asm void KartItem_RenderPipelinedWithEffects(void) {
     blr
 }
 
-asm void KartItem_Tick(void) {
+asm void KartItem_Tick(void) { /* 0x8004BAAC size:0x874 */
     nofralloc
     stwu r1, -0xc0(r1)
     mflr r0
@@ -3321,7 +3431,7 @@ asm void KartItem_Tick(void) {
     blr
 }
 
-asm void KartItem_PerFrameStep(void) {
+asm void KartItem_PerFrameStep(void) { /* 0x8004C320 size:0xC44 */
     nofralloc
     stwu r1, -0x110(r1)
     mflr r0
@@ -4167,7 +4277,7 @@ asm void KartItem_PerFrameStep(void) {
     blr
 }
 
-asm void CarObject_UpdateCoinSpeedBonus(void) {
+asm void CarObject_UpdateCoinSpeedBonus(void) { /* 0x8004CF64 size:0x244 */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -4329,7 +4439,7 @@ asm void CarObject_UpdateCoinSpeedBonus(void) {
     blr
 }
 
-asm void CarObject_ProcessWarpAndDash(void) {
+asm void CarObject_ProcessWarpAndDash(void) { /* 0x8004D1A8 size:0x25C */
     nofralloc
     stwu r1, -0x50(r1)
     mflr r0
@@ -4492,7 +4602,7 @@ asm void CarObject_ProcessWarpAndDash(void) {
     blr
 }
 
-asm void CarObject_MainUpdate(void) {
+asm void CarObject_MainUpdate(void) { /* 0x8004D404 size:0xAC8 */
     nofralloc
     stwu r1, -0x170(r1)
     mflr r0
@@ -5222,7 +5332,7 @@ asm void CarObject_MainUpdate(void) {
     blr
 }
 
-asm void CarObject_FrameUpdate(void) {
+asm void CarObject_FrameUpdate(void) { /* 0x8004DECC size:0x114 */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -5298,7 +5408,7 @@ asm void CarObject_FrameUpdate(void) {
     blr
 }
 
-asm void CarObject_ApplyInput_AI(void) {
+asm void CarObject_ApplyInput_AI(void) { /* 0x8004DFE0 size:0x174 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -5402,7 +5512,7 @@ asm void CarObject_ApplyInput_AI(void) {
     blr
 }
 
-asm void CarObject_ApplyInput(void) {
+asm void CarObject_ApplyInput(void) { /* 0x8004E154 size:0x15C */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -5500,7 +5610,7 @@ asm void CarObject_ApplyInput(void) {
     blr
 }
 
-asm void KartItem_Dtor(void) {
+asm void KartItem_Dtor(void) { /* 0x8004E2B0 size:0x368 */
     nofralloc
     stwu r1, -0x150(r1)
     mflr r0
@@ -5755,7 +5865,7 @@ asm void KartItem_Dtor(void) {
     blr
 }
 
-asm void CarObject_Init(void) {
+asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     nofralloc
     stwu r1, -0x80(r1)
     mflr r0
@@ -6284,7 +6394,7 @@ asm void CarObject_Init(void) {
     blr
 }
 
-asm void KartItem_UpdateShadowBillboardAndViewport(void) {
+asm void KartItem_UpdateShadowBillboardAndViewport(void) { /* 0x8004EDD4 size:0x204 */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -6427,7 +6537,7 @@ asm void KartItem_UpdateShadowBillboardAndViewport(void) {
     blr
 }
 
-asm void KartItem_AdvanceAnim3c(void) {
+asm void KartItem_AdvanceAnim3c(void) { /* 0x8004EFD8 size:0x24 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -6440,7 +6550,7 @@ asm void KartItem_AdvanceAnim3c(void) {
     blr
 }
 
-asm void CarObject_CalcSpeedRatio(void) {
+asm void CarObject_CalcSpeedRatio(void) { /* 0x8004EFFC size:0x44 */
     nofralloc
     lwz r3, 0x28(r3)
     lfs f1, lbl_806D26EC(r2)
@@ -6461,7 +6571,7 @@ asm void CarObject_CalcSpeedRatio(void) {
     blr
 }
 
-asm void KartItem_GetMaxSpeedWithBonus(void) {
+asm void KartItem_GetMaxSpeedWithBonus(void) { /* 0x8004F040 size:0xB8 */
     nofralloc
     li r4, 0x0
     lwz r5, 0x28(r3)
@@ -6516,7 +6626,7 @@ asm void KartItem_GetMaxSpeedWithBonus(void) {
     blr
 }
 
-asm void KartItem_GetCurrentSpeedWithBonus(void) {
+asm void KartItem_GetCurrentSpeedWithBonus(void) { /* 0x8004F0F8 size:0x28 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -6530,38 +6640,38 @@ asm void KartItem_GetCurrentSpeedWithBonus(void) {
     blr
 }
 
-asm void CarObject_GetTransformMatrix(void) {
+asm void CarObject_GetTransformMatrix(void) { /* 0x8004F120 size:0xC */
     nofralloc
     lwz r3, 0x28(r3)
     addi r3, r3, 0x58
     blr
 }
 
-asm void CarObject_GetKartMovementPtr(void) {
+asm void CarObject_GetKartMovementPtr(void) { /* 0x8004F12C size:0x8 */
     nofralloc
     lwz r3, 0x28(r3)
     blr
 }
 
-asm void KartItem_GetCarObjectSoundCh(void) {
+asm void KartItem_GetCarObjectSoundCh(void) { /* 0x8004F134 size:0x8 */
     nofralloc
     lwz r3, 0x34(r3)
     blr
 }
 
-asm void CarObject_GetRenderObj(void) {
+asm void CarObject_GetRenderObj(void) { /* 0x8004F13C size:0x8 */
     nofralloc
     lwz r3, 0x2c(r3)
     blr
 }
 
-asm void KartItem_GetByte_f4(void) {
+asm void KartItem_GetByte_f4(void) { /* 0x8004F144 size:0x8 */
     nofralloc
     lbz r3, 0xf4(r3)
     blr
 }
 
-asm void KartItem_GetBoostArmedAndTimer(void) {
+asm void KartItem_GetBoostArmedAndTimer(void) { /* 0x8004F14C size:0x10 */
     nofralloc
     lfs f0, 0xb4(r3)
     lbz r3, 0xb1(r3)
@@ -6569,21 +6679,21 @@ asm void KartItem_GetBoostArmedAndTimer(void) {
     blr
 }
 
-asm void CarObject_IsAirborne(void) {
+asm void CarObject_IsAirborne(void) { /* 0x8004F15C size:0xC */
     nofralloc
     lwz r3, 0x28(r3)
     lbz r3, 0x2bd(r3)
     blr
 }
 
-asm void KartItem_GetCarObjectState_2bc(void) {
+asm void KartItem_GetCarObjectState_2bc(void) { /* 0x8004F168 size:0xC */
     nofralloc
     lwz r3, 0x28(r3)
     lbz r3, 0x2bc(r3)
     blr
 }
 
-asm void KartItem_ResetStrPcbToIdle(void) {
+asm void KartItem_ResetStrPcbToIdle(void) { /* 0x8004F174 size:0x58 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -6610,7 +6720,7 @@ asm void KartItem_ResetStrPcbToIdle(void) {
     blr
 }
 
-asm void KartItem_SetStrPcbIntensityFromSpeed(void) {
+asm void KartItem_SetStrPcbIntensityFromSpeed(void) { /* 0x8004F1CC size:0x6C */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -6642,7 +6752,7 @@ asm void KartItem_SetStrPcbIntensityFromSpeed(void) {
     blr
 }
 
-asm void KartItem_SetStrPcbCmd2fFromFloat(void) {
+asm void KartItem_SetStrPcbCmd2fFromFloat(void) { /* 0x8004F238 size:0x58 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -6669,7 +6779,7 @@ asm void KartItem_SetStrPcbCmd2fFromFloat(void) {
     blr
 }
 
-asm void KartItem_SetStrPcbCmd2eFromFloat(void) {
+asm void KartItem_SetStrPcbCmd2eFromFloat(void) { /* 0x8004F290 size:0x58 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -6696,7 +6806,7 @@ asm void KartItem_SetStrPcbCmd2eFromFloat(void) {
     blr
 }
 
-asm void KartItem_SetStrPcbCmd2dFromFloat(void) {
+asm void KartItem_SetStrPcbCmd2dFromFloat(void) { /* 0x8004F2E8 size:0x58 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -6723,7 +6833,7 @@ asm void KartItem_SetStrPcbCmd2dFromFloat(void) {
     blr
 }
 
-asm void KartItem_CancelActiveEffect(void) {
+asm void KartItem_CancelActiveEffect(void) { /* 0x8004F340 size:0x110 */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -6797,7 +6907,7 @@ asm void KartItem_CancelActiveEffect(void) {
     blr
 }
 
-asm void CarObject_ApplyDriftBoost(void) {
+asm void CarObject_ApplyDriftBoost(void) { /* 0x8004F450 size:0xA4 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -6844,21 +6954,21 @@ asm void CarObject_ApplyDriftBoost(void) {
     blr
 }
 
-asm void KartMovement_SetMueScale(void) {
+asm void KartMovement_SetMueScale(void) { /* 0x8004F4F4 size:0xC */
     nofralloc
     lwz r3, 0x28(r3)
     stfs f1, 0x2f8(r3)
     blr
 }
 
-asm void KartMovement_SetSpeedScale(void) {
+asm void KartMovement_SetSpeedScale(void) { /* 0x8004F500 size:0xC */
     nofralloc
     lwz r3, 0x28(r3)
     stfs f1, 0x2d8(r3)
     blr
 }
 
-asm void KartItem_GetCarVelocityVec3(void) {
+asm void KartItem_GetCarVelocityVec3(void) { /* 0x8004F50C size:0x34 */
     nofralloc
     stwu r1, -0x20(r1)
     lwz r3, 0x28(r3)
@@ -6875,7 +6985,7 @@ asm void KartItem_GetCarVelocityVec3(void) {
     blr
 }
 
-asm void KartItem_SetCarVelocityVec3(void) {
+asm void KartItem_SetCarVelocityVec3(void) { /* 0x8004F540 size:0x20 */
     nofralloc
     lwz r3, 0x28(r3)
     lfs f0, 0x0(r4)
@@ -6887,7 +6997,7 @@ asm void KartItem_SetCarVelocityVec3(void) {
     blr
 }
 
-asm void KartItem_StopCarObjectSE(void) {
+asm void KartItem_StopCarObjectSE(void) { /* 0x8004F560 size:0x24 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -6900,7 +7010,7 @@ asm void KartItem_StopCarObjectSE(void) {
     blr
 }
 
-asm void KartItem_TryArmBoostOnLanding(void) {
+asm void KartItem_TryArmBoostOnLanding(void) { /* 0x8004F584 size:0xA4 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -6950,21 +7060,21 @@ asm void KartItem_TryArmBoostOnLanding(void) {
     blr
 }
 
-asm void KartItem_SetCarObjectField2d4Float(void) {
+asm void KartItem_SetCarObjectField2d4Float(void) { /* 0x8004F628 size:0xC */
     nofralloc
     lwz r3, 0x28(r3)
     stfs f1, 0x2d4(r3)
     blr
 }
 
-asm void KartItem_SetCarObjectField1c8Float(void) {
+asm void KartItem_SetCarObjectField1c8Float(void) { /* 0x8004F634 size:0xC */
     nofralloc
     lwz r3, 0x28(r3)
     stfs f1, 0x1c8(r3)
     blr
 }
 
-asm void CarObject_SetPosition(void) {
+asm void CarObject_SetPosition(void) { /* 0x8004F640 size:0x28 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -6978,7 +7088,7 @@ asm void CarObject_SetPosition(void) {
     blr
 }
 
-asm void KartItem_ForwardToCarMovement_8019a4e0(void) {
+asm void KartItem_ForwardToCarMovement_8019a4e0(void) { /* 0x8004F668 size:0x24 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -6991,7 +7101,7 @@ asm void KartItem_ForwardToCarMovement_8019a4e0(void) {
     blr
 }
 
-asm void KartItem_ForwardToCarMovement_8019a6a4(void) {
+asm void KartItem_ForwardToCarMovement_8019a6a4(void) { /* 0x8004F68C size:0x24 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -7004,7 +7114,7 @@ asm void KartItem_ForwardToCarMovement_8019a6a4(void) {
     blr
 }
 
-asm void KartItem_OnFallOffOrDeath(void) {
+asm void KartItem_OnFallOffOrDeath(void) { /* 0x8004F6B0 size:0x1A8 */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -7118,7 +7228,7 @@ asm void KartItem_OnFallOffOrDeath(void) {
     blr
 }
 
-asm void CarObject_HandleItemEffect(void) {
+asm void CarObject_HandleItemEffect(void) { /* 0x8004F858 size:0x7B8 */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -7674,7 +7784,7 @@ asm void CarObject_HandleItemEffect(void) {
     blr
 }
 
-asm void ItemEffect_SelectAndDispatch_Wrap(void) {
+asm void ItemEffect_SelectAndDispatch_Wrap(void) { /* 0x80050010 size:0x20 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -7686,7 +7796,7 @@ asm void ItemEffect_SelectAndDispatch_Wrap(void) {
     blr
 }
 
-asm void ItemEffect_SelectAndDispatch(void) {
+asm void ItemEffect_SelectAndDispatch(void) { /* 0x80050030 size:0x180 */
     nofralloc
     stwu r1, -0x210(r1)
     mflr r0
@@ -7802,7 +7912,7 @@ asm void ItemEffect_SelectAndDispatch(void) {
     blr
 }
 
-asm void ItemEffect_GenericHandler(void) {
+asm void ItemEffect_GenericHandler(void) { /* 0x800501B0 size:0x140 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -7893,7 +8003,7 @@ asm void ItemEffect_GenericHandler(void) {
     blr
 }
 
-asm void ItemEffect_OnHit(void) {
+asm void ItemEffect_OnHit(void) { /* 0x800502F0 size:0x120 */
     nofralloc
     stwu r1, -0x40(r1)
     mflr r0
@@ -7971,7 +8081,7 @@ asm void ItemEffect_OnHit(void) {
     blr
 }
 
-asm void ItemEffect_Dispatch(void) {
+asm void ItemEffect_Dispatch(void) { /* 0x80050410 size:0x53C */
     nofralloc
     stwu r1, -0xa0(r1)
     mflr r0
@@ -8335,7 +8445,7 @@ asm void ItemEffect_Dispatch(void) {
     blr
 }
 
-asm void KartItem_TickActiveEffectsTwoLane(void) {
+asm void KartItem_TickActiveEffectsTwoLane(void) { /* 0x8005094C size:0x3A4 */
     nofralloc
     stwu r1, -0x40(r1)
     mflr r0
@@ -8592,7 +8702,7 @@ asm void KartItem_TickActiveEffectsTwoLane(void) {
     blr
 }
 
-asm void KartItem_TickStatusEffectsByFlag(void) {
+asm void KartItem_TickStatusEffectsByFlag(void) { /* 0x80050CF0 size:0x410 */
     nofralloc
     stwu r1, -0x40(r1)
     mflr r0
@@ -8884,7 +8994,7 @@ asm void KartItem_TickStatusEffectsByFlag(void) {
     blr
 }
 
-asm void ItemEffectDesc_OnApply_BoostLandingSE(void) {
+asm void ItemEffectDesc_OnApply_BoostLandingSE(void) { /* 0x80051100 size:0x84 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -8924,7 +9034,7 @@ asm void ItemEffectDesc_OnApply_BoostLandingSE(void) {
     blr
 }
 
-asm void ItemEffectDesc_OnApply_FreezeKartOrSlowdown(void) {
+asm void ItemEffectDesc_OnApply_FreezeKartOrSlowdown(void) { /* 0x80051184 size:0xD8 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -8986,7 +9096,7 @@ asm void ItemEffectDesc_OnApply_FreezeKartOrSlowdown(void) {
     blr
 }
 
-asm void ItemEffectDesc_OnApply_MushroomBoost(void) {
+asm void ItemEffectDesc_OnApply_MushroomBoost(void) { /* 0x8005125C size:0x88 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -9026,7 +9136,7 @@ asm void ItemEffectDesc_OnApply_MushroomBoost(void) {
     blr
 }
 
-asm void ItemEffect_TryStartByCategory_Wrap(void) {
+asm void ItemEffect_TryStartByCategory_Wrap(void) { /* 0x800512E4 size:0x20 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -9038,7 +9148,7 @@ asm void ItemEffect_TryStartByCategory_Wrap(void) {
     blr
 }
 
-asm void ItemEffect_TryStartByCategory(void) {
+asm void ItemEffect_TryStartByCategory(void) { /* 0x80051304 size:0x344 */
     nofralloc
     stwu r1, -0x40(r1)
     mflr r0
@@ -9267,7 +9377,7 @@ asm void ItemEffect_TryStartByCategory(void) {
     blr
 }
 
-asm void ItemEffect_Explosion(void) {
+asm void ItemEffect_Explosion(void) { /* 0x80051648 size:0x1EC */
     nofralloc
     stwu r1, -0x40(r1)
     mflr r0
@@ -9398,7 +9508,7 @@ asm void ItemEffect_Explosion(void) {
     blr
 }
 
-asm void ItemEffect_Trap(void) {
+asm void ItemEffect_Trap(void) { /* 0x80051834 size:0x23C */
     nofralloc
     stwu r1, -0xb0(r1)
     mflr r0
@@ -9547,7 +9657,7 @@ asm void ItemEffect_Trap(void) {
     blr
 }
 
-asm void ItemEffect_Projectile(void) {
+asm void ItemEffect_Projectile(void) { /* 0x80051A70 size:0x248 */
     nofralloc
     stwu r1, -0x40(r1)
     mflr r0
@@ -9701,7 +9811,7 @@ asm void ItemEffect_Projectile(void) {
     blr
 }
 
-asm void ItemTable_FindEntryByIdStride16(void) {
+asm void ItemTable_FindEntryByIdStride16(void) { /* 0x80051CB8 size:0x38 */
     nofralloc
     li r6, 0x0
     mtctr r4
@@ -9722,7 +9832,7 @@ asm void ItemTable_FindEntryByIdStride16(void) {
     blr
 }
 
-asm void ItemTable_FindEntryByIdStride12_v1(void) {
+asm void ItemTable_FindEntryByIdStride12_v1(void) { /* 0x80051CF0 size:0x38 */
     nofralloc
     li r6, 0x0
     mtctr r4
@@ -9743,7 +9853,7 @@ asm void ItemTable_FindEntryByIdStride12_v1(void) {
     blr
 }
 
-asm void ItemTable_FindEntryByIdStride12_v2(void) {
+asm void ItemTable_FindEntryByIdStride12_v2(void) { /* 0x80051D28 size:0x38 */
     nofralloc
     li r6, 0x0
     mtctr r4
@@ -9764,7 +9874,7 @@ asm void ItemTable_FindEntryByIdStride12_v2(void) {
     blr
 }
 
-asm void ItemTable_FindEntryByIdStride24(void) {
+asm void ItemTable_FindEntryByIdStride24(void) { /* 0x80051D60 size:0x38 */
     nofralloc
     li r6, 0x0
     mtctr r4
@@ -9785,7 +9895,7 @@ asm void ItemTable_FindEntryByIdStride24(void) {
     blr
 }
 
-asm void ItemTable_FindEntryByIdStride20(void) {
+asm void ItemTable_FindEntryByIdStride20(void) { /* 0x80051D98 size:0x38 */
     nofralloc
     li r6, 0x0
     mtctr r4
@@ -9806,7 +9916,7 @@ asm void ItemTable_FindEntryByIdStride20(void) {
     blr
 }
 
-asm void CarObject_GetField304Vec3(void) {
+asm void CarObject_GetField304Vec3(void) { /* 0x80051DD0 size:0x1C */
     nofralloc
     lwz r5, 0x304(r4)
     lwz r0, 0x308(r4)
@@ -9817,7 +9927,7 @@ asm void CarObject_GetField304Vec3(void) {
     blr
 }
 
-asm void CarObjectManager_RunKartKartCollisionSweep(void) {
+asm void CarObjectManager_RunKartKartCollisionSweep(void) { /* 0x80051DEC size:0x36C */
     nofralloc
     stwu r1, -0x1d0(r1)
     mflr r0
@@ -10051,7 +10161,7 @@ asm void CarObjectManager_RunKartKartCollisionSweep(void) {
     blr
 }
 
-asm void CarObjectManager_Dtor(void) {
+asm void CarObjectManager_Dtor(void) { /* 0x80052158 size:0xA8 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -10100,7 +10210,7 @@ asm void CarObjectManager_Dtor(void) {
     blr
 }
 
-asm void dtor_80052200(void) {
+asm void dtor_80052200(void) { /* 0x80052200 size:0x5C */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -10129,7 +10239,7 @@ asm void dtor_80052200(void) {
     blr
 }
 
-asm void Bitset_TestBit(void) {
+asm void Bitset_TestBit(void) { /* 0x8005225C size:0x2C */
     nofralloc
     lwz r3, 0x8(r3)
     rlwinm r0, r4, 29, 3, 29
@@ -10144,7 +10254,7 @@ asm void Bitset_TestBit(void) {
     blr
 }
 
-asm void Bitset_SetBit(void) {
+asm void Bitset_SetBit(void) { /* 0x80052288 size:0x48 */
     nofralloc
     clrlwi. r0, r5, 24
     clrlwi r5, r4, 27
@@ -10167,7 +10277,7 @@ asm void Bitset_SetBit(void) {
     blr
 }
 
-asm void Bitset_Init(void) {
+asm void Bitset_Init(void) { /* 0x800522D0 size:0x1C4 */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -10289,49 +10399,49 @@ asm void Bitset_Init(void) {
     blr
 }
 
-asm void Bitset_MaxSize(void) {
+asm void Bitset_MaxSize(void) { /* 0x80052494 size:0x8 */
     nofralloc
     li r3, -0x1
     blr
 }
 
-asm void fn_8005249C(void) {
+asm void fn_8005249C(void) { /* 0x8005249C size:0x8 */
     nofralloc
     subi r3, r3, 0xc
     b KartItem_Dtor
 }
 
-asm void KartItem_TryDropCoinsAndPlaySE_AdjThunk(void) {
+asm void KartItem_TryDropCoinsAndPlaySE_AdjThunk(void) { /* 0x800524A4 size:0x8 */
     nofralloc
     subi r3, r3, 0xc
     b KartItem_TryDropCoinsAndPlaySE
 }
 
-asm void fn_800524AC(void) {
+asm void fn_800524AC(void) { /* 0x800524AC size:0x8 */
     nofralloc
     subi r3, r3, 0xc
     b KartItem_TryCancelIfDropAllowed
 }
 
-asm void fn_800524B4(void) {
+asm void fn_800524B4(void) { /* 0x800524B4 size:0x8 */
     nofralloc
     subi r3, r3, 0xc
     b KartItem_OnKartHit
 }
 
-asm void KartItem_PlayHitSE_DifferentVictim_AdjThunk(void) {
+asm void KartItem_PlayHitSE_DifferentVictim_AdjThunk(void) { /* 0x800524BC size:0x8 */
     nofralloc
     subi r3, r3, 0xc
     b KartItem_PlayHitSE_DifferentVictim
 }
 
-asm void KartItem_ApplyEffectToVictim_AdjThunk(void) {
+asm void KartItem_ApplyEffectToVictim_AdjThunk(void) { /* 0x800524C4 size:0x8 */
     nofralloc
     subi r3, r3, 0xc
     b CarObject_OnItemHit
 }
 
-asm void dtor_800524CC(void) {
+asm void dtor_800524CC(void) { /* 0x800524CC size:0x3C */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -10351,7 +10461,7 @@ asm void dtor_800524CC(void) {
     blr
 }
 
-asm void StlList_RemoveByValueField(void) {
+asm void StlList_RemoveByValueField(void) { /* 0x80052508 size:0xCC */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -10417,7 +10527,7 @@ asm void StlList_RemoveByValueField(void) {
     blr
 }
 
-asm void StlList_EraseRange(void) {
+asm void StlList_EraseRange(void) { /* 0x800525D4 size:0xB0 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -10469,7 +10579,7 @@ asm void StlList_EraseRange(void) {
     blr
 }
 
-asm void StlList_InsertBefore(void) {
+asm void StlList_InsertBefore(void) { /* 0x80052684 size:0xA8 */
     nofralloc
     stwu r1, -0x40(r1)
     mflr r0
@@ -10517,7 +10627,7 @@ asm void StlList_InsertBefore(void) {
     blr
 }
 
-asm void StlList_InitEmpty(void) {
+asm void StlList_InitEmpty(void) { /* 0x8005272C size:0x18 */
     nofralloc
     li r0, 0x0
     addi r4, r3, 0x4
@@ -10527,7 +10637,7 @@ asm void StlList_InitEmpty(void) {
     blr
 }
 
-asm void dtor_80052744(void) {
+asm void dtor_80052744(void) { /* 0x80052744 size:0x48 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -10550,7 +10660,7 @@ asm void dtor_80052744(void) {
     blr
 }
 
-asm void dtor_8005278C(void) {
+asm void dtor_8005278C(void) { /* 0x8005278C size:0x7C */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -10588,7 +10698,7 @@ asm void dtor_8005278C(void) {
     blr
 }
 
-asm void dtor_80052808(void) {
+asm void dtor_80052808(void) { /* 0x80052808 size:0x54 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -10614,7 +10724,7 @@ asm void dtor_80052808(void) {
     blr
 }
 
-asm void dtor_8005285C(void) {
+asm void dtor_8005285C(void) { /* 0x8005285C size:0x54 */
     nofralloc
     stwu r1, -0x10(r1)
     mflr r0
@@ -10640,7 +10750,7 @@ asm void dtor_8005285C(void) {
     blr
 }
 
-asm void dtor_800528B0(void) {
+asm void dtor_800528B0(void) { /* 0x800528B0 size:0x7C */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -10678,7 +10788,7 @@ asm void dtor_800528B0(void) {
     blr
 }
 
-asm void dtor_8005292C(void) {
+asm void dtor_8005292C(void) { /* 0x8005292C size:0x7C */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -10716,7 +10826,7 @@ asm void dtor_8005292C(void) {
     blr
 }
 
-asm void dtor_800529A8(void) {
+asm void dtor_800529A8(void) { /* 0x800529A8 size:0xB0 */
     nofralloc
     stwu r1, -0x50(r1)
     mflr r0
@@ -10770,7 +10880,7 @@ asm void dtor_800529A8(void) {
     blr
 }
 
-asm void dtor_80052A58(void) {
+asm void dtor_80052A58(void) { /* 0x80052A58 size:0x7C */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -10808,7 +10918,7 @@ asm void dtor_80052A58(void) {
     blr
 }
 
-asm void dtor_80052AD4(void) {
+asm void dtor_80052AD4(void) { /* 0x80052AD4 size:0x7C */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -10846,7 +10956,7 @@ asm void dtor_80052AD4(void) {
     blr
 }
 
-asm void dtor_80052B50(void) {
+asm void dtor_80052B50(void) { /* 0x80052B50 size:0x7C */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -10884,7 +10994,7 @@ asm void dtor_80052B50(void) {
     blr
 }
 
-asm void dtor_80052BCC(void) {
+asm void dtor_80052BCC(void) { /* 0x80052BCC size:0x7C */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -10922,7 +11032,7 @@ asm void dtor_80052BCC(void) {
     blr
 }
 
-asm void dtor_80052C48(void) {
+asm void dtor_80052C48(void) { /* 0x80052C48 size:0x7C */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -10960,7 +11070,7 @@ asm void dtor_80052C48(void) {
     blr
 }
 
-asm void dtor_80052CC4(void) {
+asm void dtor_80052CC4(void) { /* 0x80052CC4 size:0x7C */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -10998,7 +11108,7 @@ asm void dtor_80052CC4(void) {
     blr
 }
 
-asm void dtor_80052D40(void) {
+asm void dtor_80052D40(void) { /* 0x80052D40 size:0x7C */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
@@ -11036,7 +11146,7 @@ asm void dtor_80052D40(void) {
     blr
 }
 
-asm void KartMovement_UpdateBoostVisualBlend(void) {
+asm void KartMovement_UpdateBoostVisualBlend(void) { /* 0x80052DBC size:0x164 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
