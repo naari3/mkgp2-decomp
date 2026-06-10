@@ -14,7 +14,7 @@ docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件
 |---|---|---|
 | 0 | class 1 の最終 probe (compiler patch rev / 未試行 pragma) | **SOLVED (2026-06-11)** |
 | 1 | class-1 10 fn の回収 (salvage draft 適用) | **完了 (2026-06-11)** — recipe 14/14、promote 2 fn、残りは他 family park |
-| 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **進行中 (2026-06-11 dispatch)** |
+| 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **PARTIAL-SOLVED (2026-06-11)** — 検証 batch 進行中 |
 | 2 | 先頭区間 index 0-17 の残り idiom 解決: class 2 (OnKartHit) / flavor 5 (MainUpdate) / flavor 4 (ProcessWarpAndDash) / ScopedTimer (FrameUpdate) | 未着手 |
 | 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | 未着手 |
 | 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 未着手 |
@@ -101,3 +101,12 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   - 2e: chain 変種 / flavor 4 / flavor 5 / dead-counter (各 1-2 fn、最難)。
   prefix (index 0-17) の完成には 2a-2e 全部が必要。HandleObstacleHit (class 3) のみ Phase 3 の
   A 化で自動解決する見込み。
+- 2026-06-11: **Phase 2a PARTIAL-SOLVED** (132 probes, ~17 min)。機構が 2 系統と判明:
+  - 観察 (事実): named local は GO web → 昇順番号 (GC 1.0-2.7 / 全 pragma / 全 -opt で不変)。
+    named temp を介さない直接 member-to-member copy は FE expression temp → **pool 上端から降順** で、
+    最小再現 (s8_member) が target 形 (lfs f7..f0 / stfs f7..f0) を byte-exact に再現。GPR 系も同型。
+  - recipe: copy 領域は named-temp pipeline をやめて直接 copy にする (batch 幅は free-reg 数に依存、
+    fn ごとに要検証)。GO-web tie (Explosion vx/const / na-nb / cross product) は最小再現で def 順が
+    効いた — 実 fn では近傍 web の影響で違った可能性があり、mixed-mechanism で再試行。
+  - compiler / pragma / -opt 軸は全 negative で closed。harness は tools/compiler_probe/ (fp 系列)。
+  - 検証 batch dispatch: PerFrameStep + TickStatusEffectsByFlag (draft 適用 + recipe 置換)。

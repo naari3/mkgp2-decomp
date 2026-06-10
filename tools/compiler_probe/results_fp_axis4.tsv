@@ -1,0 +1,6 @@
+struct:default	-	s16_local=??[] s16_p2p=??[] s3_local=??[] s8_local=??[] s8_member=ad[7,6,5,4,3,2,1,0]
+struct:pragma:gprfloatcopy off	-	s16_local=??[] s16_p2p=??[] s3_local=??[] s8_local=??[] s8_member=ad[7,6,5,4,3,2,1,0]
+struct:pragma:gprfloatcopy on	-	s16_local=??[] s16_p2p=??[] s3_local=??[] s8_local=??[] s8_member=ad[7,6,5,4,3,2,1,0]
+struct:pragma:block_assign on	-	s16_local=??[] s16_p2p=??[] s3_local=??[] s8_local=??[] s8_member=ad[7,6,5,4,3,2,1,0]
+struct:pragma:block_assign off	-	s16_local=??[] s16_p2p=??[] s3_local=??[] s8_local=??[] s8_member=ad[7,6,5,4,3,2,1,0]
+struct:pragma:gprfloatcopy off + block_assign on	-	s16_local=??[] s16_p2p=??[] s3_local=??[] s8_local=??[] s8_member=ad[7,6,5,4,3,2,1,0]
