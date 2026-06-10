@@ -118,6 +118,11 @@ game/InputMgr.c:
 game/InputObj.c:
 	.text       start:0x80039154 end:0x800391B4
 
+game/JvsInput_Calibration.c:
+	extab       start:0x80005E30 end:0x80005E48
+	extabindex  start:0x8001FA84 end:0x8001FAA8
+	.text       start:0x8003951C end:0x800395EC
+
 game/InputObj_Ctor.c:
 	extab       start:0x80005E48 end:0x80005E50
 	extabindex  start:0x8001FAA8 end:0x8001FAB4
