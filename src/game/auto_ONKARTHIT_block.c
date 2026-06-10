@@ -33,7 +33,7 @@ extern void EffectSpeed_ApplySpeedScale(void *req, float a, float b);
 extern void EffectSpeed_Init();
 extern void EffectSpeed_TickAndGet();
 extern void EffectSpeed_TickTimer();
-extern void EffectState_HasContent();
+extern unsigned char EffectState_HasContent(void *effectState);
 extern void EffectState_ReleaseAndClear();
 extern void EffectSteering_Ctor();
 extern void EffectSteering_Dtor();
@@ -48,7 +48,7 @@ extern void EffectSteering_InitForViscosity();
 extern void EffectSteering_InitForViscosity_Uniform();
 extern void EffectSteering_InputViscosity_SetFieldC();
 extern void *FUN_8003b120(unsigned long);
-extern void Field4NotMinusOne();
+extern unsigned char Field4NotMinusOne(void *ctx);
 extern void Free_IfOwnedShort();
 extern void GetCourseScene3D();
 extern void GetInputManager();
@@ -64,11 +64,11 @@ extern void InputMgr_GetPlayer();
 extern void InterpolationStep();
 extern unsigned char IsAudioMutedItem(void *soundCtrl, int channel);
 extern void IsRaceStarted();
-extern void ItemClass_GetFlagByte1();
+extern int ItemClass_GetFlagByte1(int id);
 extern void ItemEffectBus_ApplyItemConfirm();
 extern void ItemEffectBus_ApplyItemEventClear();
 extern void ItemEffectBus_ApplyItemEventSet();
-extern void ItemEffectBus_ArmTornadoAndQuery();
+extern unsigned char ItemEffectBus_ArmTornadoAndQuery(void *bus, int id);
 extern void ItemEffectBus_ClearByTable8();
 extern void ItemEffectBus_ClearMask(void *bus, unsigned long long mask);
 extern void ItemEffectBus_OrMask(void *bus, unsigned long long mask);
@@ -171,12 +171,12 @@ extern void StrPcb_SetCmdByte2e(void *pcb, int v);
 extern void StrPcb_SetCmdByte2f(void *pcb, int v);
 extern void StrPcb_SetCounterField14(void *pcb, int v);
 extern void StrPcb_SetTimer3034_38(void *pcb, int a, int b, float f);
-extern void StrPcb_SetTimer3c40();
+extern void StrPcb_SetTimer3c40(void *pcb, float t, int mode);
 extern void Tachometer_SetCoinCount();
 extern void Tachometer_UpdateDisplaySpeed();
 extern void TireEffect_ResetSpin(void *body, float a, float b);
 extern void TitleStats_IncCurrentRaceScore();
-extern void TitleStats_IncPerfectCount();
+extern void TitleStats_IncPerfectCount(void *stats, int score, signed char flag);
 extern void TitleStats_IncTotalRaces(void *stats, int score);
 extern void TitleStats_MarkAllCoursesClearedIfDistance();
 extern void TitleStats_SetEventFlag_806d1420();
@@ -277,10 +277,10 @@ extern const float lbl_806D271C;
 extern const double lbl_806D2720; /* 0.5 */
 extern const double lbl_806D2728; /* 3.0 */
 extern const float lbl_806D2730;
-extern unsigned int lbl_806D2734;
+extern const float lbl_806D2734;
 extern const float lbl_806D2738;
-extern unsigned int lbl_806D273C;
-extern unsigned int lbl_806D2740;
+extern const float lbl_806D273C;
+extern const float lbl_806D2740;
 extern const float lbl_806D2744;
 extern unsigned int lbl_806D2748;
 extern unsigned int lbl_806D274C;
@@ -557,7 +557,8 @@ typedef struct KartMovementSpeedView {
     float impact1ac;                 /* 0x1ac */
     float impact1b0;                 /* 0x1b0 */
     float impact1b4;                 /* 0x1b4 */
-    char pad_0x1b8[0x10];
+    float impactCap1b8;              /* 0x1b8 */
+    char pad_0x1bc[0xc];
     float accel1c8;                  /* 0x1c8 */
     char pad_0x1cc[0xf0];
     unsigned char state2bc;          /* 0x2bc */
@@ -569,6 +570,10 @@ typedef struct KartMovementSpeedView {
     float coinBonus;                 /* 0x2e0 */
     char pad_0x2e4[0x14];
     float mueScale2f8;               /* 0x2f8 */
+    char pad_0x2fc[0x14];
+    float rumbleX310;                /* 0x310 */
+    float rumbleY314;                /* 0x314 */
+    float rumbleZ318;                /* 0x318 */
 } KartMovementSpeedView;
 
 typedef struct CarObjGetterView {
@@ -698,7 +703,9 @@ typedef struct KartDriverBusView {
     int syncTarget23c;                 /* 0x23c */
     char pad_0x240[0x78];
     unsigned char deathState2b8;       /* 0x2b8 */
-    char pad_0x2b9[0x4b];
+    char pad_0x2b9[0x13];
+    int coins2cc;                      /* 0x2cc */
+    char pad_0x2d0[0x34];
     ItemBusFlagsView *itemBus;         /* 0x304 */
 } KartDriverBusView;
 
@@ -718,12 +725,15 @@ typedef struct KartItemOpsView {
     void *billboard;                   /* 0x38 */
     void *boostObj;                    /* 0x3c */
     ItemStateBlock *stateBlock;        /* 0x40 */
-    char pad_0x44[0x8];
+    void *effectState44;               /* 0x44 */
+    char pad_0x48[0x4];
     ItemEffectTable *effectTable;      /* 0x4c */
     ItemSecondaryLane *secondary;      /* 0x50 */
-    char pad_0x54[0x5c];
+    void *warpCtx54;                   /* 0x54 */
+    char pad_0x58[0x58];
     unsigned char boostArmedB0;        /* 0xb0 */
-    char pad_0xb1[0x17];
+    unsigned char perfectGateB1;       /* 0xb1 */
+    char pad_0xb2[0x16];
     int coinCountC8;                   /* 0xc8 */
     float smoothBonusCC;               /* 0xcc */
     int aiTimerD0;                     /* 0xd0 */
@@ -735,7 +745,7 @@ typedef struct KartItemOpsView {
     int prevSyncF0;                    /* 0xf0 */
     char pad_0xf4[0x8];
     unsigned char fellOffFC;           /* 0xfc */
-    char pad_0xfd[0x1];
+    unsigned char coinPenaltyFD;       /* 0xfd */
     unsigned char coinBonusEnabledFE;  /* 0xfe */
     char pad_0xff[0x5];
     void *itemSelect104;               /* 0x104 */
@@ -822,7 +832,9 @@ typedef struct ItemLaneRunCursor {
 
 /* item object position view (world pos at +0xa0) */
 typedef struct ItemObjectPosView {
-    char pad_0x0[0xa0];
+    char pad_0x0[0x8];
+    int itemId8;                       /* 0x8 */
+    char pad_0xc[0x94];
     float posX;                        /* 0xa0 */
     float posY;                        /* 0xa4 */
     float posZ;                        /* 0xa8 */
@@ -933,7 +945,7 @@ typedef struct SweepCfgView {
 /* --- forward decls --- */
 asm void KartItem_OnKartHit(void);
 void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, int channel);
-asm void CarObject_OnItemHit(void);
+int CarObject_OnItemHit(KartItemOpsView *self, void *itemObj, int itemIdArg);
 asm void CarObject_HandleObstacleHit(void);
 void KartItem_PlaySE_0x09(KartItemHitSEView *self);
 asm void KartItem_ApplyImpactReflectAndDampVelocity(void);
@@ -2042,370 +2054,191 @@ void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, i
 }
 #pragma exceptions reset
 
-asm void CarObject_OnItemHit(void) { /* 0x8004A918 size:0x510 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stmw r22, 0x8(r1)
-    mr r28, r3
-    mr r29, r4
-    mr r23, r5
-    li r22, 0x0
-    lwz r3, 0x54(r3)
-    bl Field4NotMinusOne
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne CarObject_OnItemHit_L_8004A954
-    li r22, 0x1
-    b CarObject_OnItemHit_L_8004A9A8
-    CarObject_OnItemHit_L_8004A954:
-    lwz r3, 0x40(r28)
-    lwz r3, 0x4(r3)
-    bl ItemStateGuard_IsActive
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne CarObject_OnItemHit_L_8004A974
-    li r22, 0x1
-    b CarObject_OnItemHit_L_8004A9A8
-    CarObject_OnItemHit_L_8004A974:
-    lwz r3, 0x4c(r28)
-    lwz r3, 0x14(r3)
-    neg r0, r3
-    andc r0, r0, r3
-    srwi r0, r0, 31
-    cmplwi r0, 0x1
-    bne CarObject_OnItemHit_L_8004A998
-    li r22, 0x1
-    b CarObject_OnItemHit_L_8004A9A8
-    CarObject_OnItemHit_L_8004A998:
-    lwz r0, 0xd0(r28)
-    cmpwi r0, 0x0
-    ble CarObject_OnItemHit_L_8004A9A8
-    li r22, 0x1
-    CarObject_OnItemHit_L_8004A9A8:
-    cmpwi r23, 0x0
-    bge CarObject_OnItemHit_L_8004A9B8
-    lwz r31, 0x8(r29)
-    b CarObject_OnItemHit_L_8004A9BC
-    CarObject_OnItemHit_L_8004A9B8:
-    mr r31, r23
-    CarObject_OnItemHit_L_8004A9BC:
-    clrlwi r0, r22, 24
-    cmplwi r0, 0x1
-    bne CarObject_OnItemHit_L_8004A9EC
-    cmpwi r31, 0x6b
-    bne CarObject_OnItemHit_L_8004A9E4
-    lwz r3, 0x2c(r28)
-    li r6, 0x6b
-    li r5, 0x0
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ClearMask
-    CarObject_OnItemHit_L_8004A9E4:
-    li r3, 0x0
-    b CarObject_OnItemHit_L_8004AE14
-    CarObject_OnItemHit_L_8004A9EC:
-    lwz r3, 0x2c(r28)
-    mr r4, r31
-    lwz r30, 0x304(r3)
-    mr r3, r30
-    bl ItemEffectBus_ArmTornadoAndQuery
-    clrlwi. r0, r3, 24
-    bne CarObject_OnItemHit_L_8004AA90
-    lbz r0, 0xb1(r28)
-    cmplwi r0, 0x1
-    bne CarObject_OnItemHit_L_8004AA88
-    lwz r0, 0x10(r30)
-    li r4, 0x0
-    lwz r5, 0x14(r30)
-    li r3, 0x40
-    and r0, r0, r4
-    and r3, r5, r3
-    xor r3, r3, r4
-    xor r0, r0, r4
-    or. r0, r3, r0
-    bne CarObject_OnItemHit_L_8004AA40
-    b CarObject_OnItemHit_L_8004AA44
-    CarObject_OnItemHit_L_8004AA40:
-    li r4, 0x1
-    CarObject_OnItemHit_L_8004AA44:
-    clrlwi r0, r4, 24
-    cmplwi r0, 0x1
-    bne CarObject_OnItemHit_L_8004AA88
-    lwz r23, lbl_806D10A0(r13)
-    cmplwi r23, 0x0
-    bne CarObject_OnItemHit_L_8004AA60
-    li r23, 0x0
-    CarObject_OnItemHit_L_8004AA60:
-    cmplwi r23, 0x0
-    beq CarObject_OnItemHit_L_8004AA88
-    cmpwi r31, 0x115
-    bge CarObject_OnItemHit_L_8004AA88
-    mr r3, r31
-    bl ItemClass_GetFlagByte1
-    lwz r4, 0x10(r28)
-    extsb r5, r3
-    mr r3, r23
-    bl TitleStats_IncPerfectCount
-    CarObject_OnItemHit_L_8004AA88:
-    li r3, 0x0
-    b CarObject_OnItemHit_L_8004AE14
-    CarObject_OnItemHit_L_8004AA90:
-    lwz r3, lbl_806D10A0(r13)
-    cmplwi r3, 0x0
-    bne CarObject_OnItemHit_L_8004AAA0
-    li r3, 0x0
-    CarObject_OnItemHit_L_8004AAA0:
-    cmplwi r3, 0x0
-    beq CarObject_OnItemHit_L_8004AAB0
-    lwz r4, 0x10(r28)
-    bl RankLog_OnHit
-    CarObject_OnItemHit_L_8004AAB0:
-    lwz r3, 0x40(r28)
-    mr r4, r31
-    mr r5, r29
-    bl ItemEffect_TryStartByCategory_Wrap
-    cmpwi r3, 0x1
-    beq CarObject_OnItemHit_L_8004ACD0
-    bge CarObject_OnItemHit_L_8004AAD8
-    cmpwi r3, 0x0
-    bge CarObject_OnItemHit_L_8004AAE8
-    b CarObject_OnItemHit_L_8004ACD0
-    CarObject_OnItemHit_L_8004AAD8:
-    cmpwi r3, 0x3
-    bge CarObject_OnItemHit_L_8004ACD0
-    li r3, 0x0
-    b CarObject_OnItemHit_L_8004AE14
-    CarObject_OnItemHit_L_8004AAE8:
-    lwz r24, 0x4c(r28)
-    li r29, 0x0
-    mr r23, r24
-    CarObject_OnItemHit_L_8004AAF4:
-    lwz r22, 0x28(r23)
-    lwz r25, 0x8(r24)
-    cmpwi r22, 0x0
-    lwz r26, 0x4(r24)
-    lwz r27, 0x0(r24)
-    blt CarObject_OnItemHit_L_8004AB74
-    lwz r3, 0x34(r27)
-    mr r4, r22
-    bl TornadoEffect_ApplyItemVisual_Primary
-    lwz r3, 0x24(r27)
-    mr r4, r22
-    bl KartItemAudio_StopSEByItemId
-    lwz r3, 0x2c(r27)
-    mr r4, r22
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ApplyItemEventClear
-    mr r3, r26
-    bl EffectState_ReleaseAndClear
-    mr r3, r25
-    bl MediaBoard_SendAndCheck
-    lwz r3, 0x38(r27)
-    lfs f1, lbl_806D26EC(r2)
-    bl ShadowBillboard_SetField0xA4
-    li r3, -0x1
-    li r0, 0x0
-    stw r3, 0x28(r23)
-    lfs f0, lbl_806D26FC(r2)
-    stw r3, 0x2c(r23)
-    stw r0, 0x30(r23)
-    stw r0, 0x34(r23)
-    stw r0, 0x38(r23)
-    stfs f0, 0x3c(r23)
-    CarObject_OnItemHit_L_8004AB74:
-    addi r29, r29, 0x1
-    addi r23, r23, 0x18
-    cmplwi r29, 0x2
-    blt CarObject_OnItemHit_L_8004AAF4
-    li r0, 0x0
-    lfs f0, lbl_806D26EC(r2)
-    stw r0, 0x14(r24)
-    stw r0, 0x1c(r24)
-    stfs f0, 0x20(r24)
-    stfs f0, 0x24(r24)
-    stb r0, 0xb0(r28)
-    lwz r24, 0x50(r28)
-    lwz r4, 0x8(r24)
-    cmpwi r4, 0x0
-    blt CarObject_OnItemHit_L_8004ABF0
-    lwz r3, 0x0(r24)
-    lwz r3, 0x34(r3)
-    bl TornadoEffect_ApplyItemVisual_Primary
-    lwz r3, 0x0(r24)
-    lwz r4, 0x8(r24)
-    lwz r3, 0x24(r3)
-    bl KartItemAudio_StopSEByItemId
-    lwz r3, 0x0(r24)
-    lwz r4, 0x8(r24)
-    lwz r3, 0x2c(r3)
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ApplyItemEventClear
-    li r0, -0x1
-    lfs f0, lbl_806D26EC(r2)
-    stw r0, 0x8(r24)
-    stfs f0, 0xc(r24)
-    CarObject_OnItemHit_L_8004ABF0:
-    mr r3, r30
-    mr r4, r31
-    li r5, 0x0
-    bl ItemEffectBus_ApplyItemEventSet
-    lwz r3, 0x34(r28)
-    mr r4, r31
-    li r5, 0x1
-    bl TornadoEffect_ApplyItemVisual_Secondary
-    lwz r3, 0x24(r28)
-    mr r4, r31
-    bl KartItemAudio_PlayHitConfirmSE
-    lbz r0, 0xfd(r28)
-    cmplwi r0, 0x0
-    beq CarObject_OnItemHit_L_8004AC68
-    lwz r0, 0x10(r28)
-    cmpwi r0, 0x4
-    beq CarObject_OnItemHit_L_8004AC44
-    lwz r3, 0x2c(r28)
-    li r4, 0x1
-    bl CoinSystem_RemoveCoins
-    b CarObject_OnItemHit_L_8004AC5C
-    CarObject_OnItemHit_L_8004AC44:
-    lwz r4, 0x2c(r28)
-    lwz r3, 0x2cc(r4)
-    subic. r0, r3, 0x1
-    bge CarObject_OnItemHit_L_8004AC58
-    li r0, 0x0
-    CarObject_OnItemHit_L_8004AC58:
-    stw r0, 0x2cc(r4)
-    CarObject_OnItemHit_L_8004AC5C:
-    lwz r3, 0x2c(r28)
-    lwz r0, 0x2cc(r3)
-    stw r0, 0xc8(r28)
-    CarObject_OnItemHit_L_8004AC68:
-    li r0, 0x2d
-    lfs f1, lbl_806D26EC(r2)
-    stw r0, 0xd0(r28)
-    lwz r4, 0x28(r28)
-    lfs f0, 0x17c(r4)
-    fmuls f0, f0, f1
-    stfs f0, 0x17c(r4)
-    lfs f0, 0x180(r4)
-    fmuls f0, f0, f1
-    stfs f0, 0x180(r4)
-    lfs f0, 0x184(r4)
-    fmuls f0, f0, f1
-    stfs f0, 0x184(r4)
-    lwz r0, 0x8(r4)
-    lfs f0, 0xc(r4)
-    mulli r0, r0, 0x18
-    lwz r3, 0x24(r4)
-    fmuls f0, f1, f0
-    add r3, r3, r0
-    lfs f1, 0x8(r3)
-    fcmpo cr0, f0, f1
-    ble CarObject_OnItemHit_L_8004ACC4
-    fmr f0, f1
-    CarObject_OnItemHit_L_8004ACC4:
-    stfs f0, 0xc(r4)
-    li r3, 0x1
-    b CarObject_OnItemHit_L_8004AE14
-    CarObject_OnItemHit_L_8004ACD0:
-    lwz r3, 0x4c(r28)
-    mr r4, r31
-    mr r5, r29
-    li r6, -0x1
-    bl ItemEffect_SelectAndDispatch_Wrap
-    cmpwi r3, 0x1
-    beq CarObject_OnItemHit_L_8004AE10
-    bge CarObject_OnItemHit_L_8004ACFC
-    cmpwi r3, 0x0
-    bge CarObject_OnItemHit_L_8004AD0C
-    b CarObject_OnItemHit_L_8004AE10
-    CarObject_OnItemHit_L_8004ACFC:
-    cmpwi r3, 0x3
-    bge CarObject_OnItemHit_L_8004AE10
-    li r3, 0x0
-    b CarObject_OnItemHit_L_8004AE14
-    CarObject_OnItemHit_L_8004AD0C:
-    li r0, 0x0
-    stb r0, 0xb0(r28)
-    lwz r25, 0x50(r28)
-    lwz r3, 0x4c(r28)
-    lwz r4, 0x8(r25)
-    lwz r24, 0x18(r3)
-    cmpwi r4, 0x0
-    blt CarObject_OnItemHit_L_8004AD6C
-    lwz r3, 0x0(r25)
-    lwz r3, 0x34(r3)
-    bl TornadoEffect_ApplyItemVisual_Primary
-    lwz r3, 0x0(r25)
-    lwz r4, 0x8(r25)
-    lwz r3, 0x24(r3)
-    bl KartItemAudio_StopSEByItemId
-    lwz r3, 0x0(r25)
-    lwz r4, 0x8(r25)
-    lwz r3, 0x2c(r3)
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ApplyItemEventClear
-    li r0, -0x1
-    lfs f0, lbl_806D26EC(r2)
-    stw r0, 0x8(r25)
-    stfs f0, 0xc(r25)
-    CarObject_OnItemHit_L_8004AD6C:
-    lwz r5, 0x4c(r28)
-    mr r3, r30
-    mr r4, r24
-    lwz r0, 0x28(r5)
-    srwi r0, r0, 31
-    xori r0, r0, 0x1
-    clrlwi r0, r0, 24
-    cmplwi r0, 0x1
-    bne CarObject_OnItemHit_L_8004AD98
-    lwz r5, 0x38(r5)
-    b CarObject_OnItemHit_L_8004AD9C
-    CarObject_OnItemHit_L_8004AD98:
-    li r5, 0x0
-    CarObject_OnItemHit_L_8004AD9C:
-    bl ItemEffectBus_ApplyItemEventSet
-    lwz r3, 0x34(r28)
-    mr r4, r24
-    li r5, 0x1
-    bl TornadoEffect_ApplyItemVisual_Secondary
-    lwz r3, 0x24(r28)
-    mr r4, r24
-    bl KartItemAudio_PlayHitConfirmSE
-    lbz r0, 0xfd(r28)
-    cmplwi r0, 0x0
-    beq CarObject_OnItemHit_L_8004AE08
-    lwz r0, 0x10(r28)
-    cmpwi r0, 0x4
-    beq CarObject_OnItemHit_L_8004ADE4
-    lwz r3, 0x2c(r28)
-    li r4, 0x1
-    bl CoinSystem_RemoveCoins
-    b CarObject_OnItemHit_L_8004ADFC
-    CarObject_OnItemHit_L_8004ADE4:
-    lwz r4, 0x2c(r28)
-    lwz r3, 0x2cc(r4)
-    subic. r0, r3, 0x1
-    bge CarObject_OnItemHit_L_8004ADF8
-    li r0, 0x0
-    CarObject_OnItemHit_L_8004ADF8:
-    stw r0, 0x2cc(r4)
-    CarObject_OnItemHit_L_8004ADFC:
-    lwz r3, 0x2c(r28)
-    lwz r0, 0x2cc(r3)
-    stw r0, 0xc8(r28)
-    CarObject_OnItemHit_L_8004AE08:
-    li r3, 0x1
-    b CarObject_OnItemHit_L_8004AE14
-    CarObject_OnItemHit_L_8004AE10:
-    li r3, 0x0
-    CarObject_OnItemHit_L_8004AE14:
-    lmw r22, 0x8(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+#pragma exceptions off
+int CarObject_OnItemHit(KartItemOpsView *self, void *itemObj, int itemIdArg) { /* 0x8004A918 size:0x510 */
+    int id;
+    ItemBusFlagsView *bus;
+    unsigned int i;
+    KartItemOpsView *owner;
+    void *effectState;
+    void *mediaReq;
+    ItemSecondaryLane *sec2;
+    ItemEffectTable *tbl;
+    int id2;
+    ItemSecondaryLane *sec;
+    ItemLaneCursor *cursor;
+    void *stats;
+    int itemId;
+    unsigned char blocked;
+    ItemEffectTable *tbl2;
+    KartDriverBusView *drv;
+    KartMovementSpeedView *mv;
+    float spd;
+    float ref;
+    int t;
+    int arg5;
+    unsigned char b;
+
+    blocked = 0;
+    if (Field4NotMinusOne(self->warpCtx54) == 1) {
+        blocked = 1;
+    } else if (ItemStateGuard_IsActive(self->stateBlock->guard) == 1) {
+        blocked = 1;
+    } else if ((unsigned char)(self->effectTable->run14 > 0) == 1) {
+        blocked = 1;
+    } else if (self->aiTimerD0 > 0) {
+        blocked = 1;
+    }
+    if (itemIdArg < 0) {
+        id = ((ItemObjectPosView *)itemObj)->itemId8;
+    } else {
+        id = itemIdArg;
+    }
+    if (blocked == 1) {
+        if (id == 0x6b) {
+            ItemEffectBus_ClearMask(self->ownerDriver->itemBus, 0x6bULL);
+        }
+        return 0;
+    }
+    bus = self->ownerDriver->itemBus;
+    if (!ItemEffectBus_ArmTornadoAndQuery(bus, id)) {
+        if (self->perfectGateB1 == 1) {
+            /* class-1 recipe: explicit ==0 compare, then=0 / else=1 arm order */
+            if ((bus->flags & 0x40ULL) == 0) {
+                b = 0;
+            } else {
+                b = 1;
+            }
+            if (b == 1) {
+                if ((stats = lbl_806D10A0) == 0) {
+                    stats = 0;
+                }
+                if (stats != 0 && id < 0x115) {
+                    TitleStats_IncPerfectCount(stats, self->raceScore10, (signed char)ItemClass_GetFlagByte1(id));
+                }
+            }
+        }
+        return 0;
+    }
+    if ((stats = lbl_806D10A0) == 0) {
+        stats = 0;
+    }
+    if (stats) {
+        RankLog_OnHit(stats, self->raceScore10);
+    }
+    switch (ItemEffect_TryStartByCategory_Wrap(self->stateBlock, id, itemObj)) {
+    case 2:
+        return 0;
+    case 0:
+        tbl = self->effectTable;
+        cursor = (ItemLaneCursor *)tbl;
+        for (i = 0; i < 2; i++) {
+            itemId = cursor->itemId;
+            mediaReq = tbl->mediaReq;
+            effectState = tbl->effectState;
+            owner = tbl->owner;
+            if (itemId >= 0) {
+                TornadoEffect_ApplyItemVisual_Primary(owner->effectObj, itemId);
+                KartItemAudio_StopSEByItemId(owner->soundCtrl, itemId);
+                ItemEffectBus_ApplyItemEventClear(owner->ownerDriver->itemBus, itemId);
+                EffectState_ReleaseAndClear(effectState);
+                MediaBoard_SendAndCheck(mediaReq);
+                ShadowBillboard_SetField0xA4(owner->billboard, lbl_806D26EC);
+                cursor->itemId = -1;
+                cursor->itemKind = -1;
+                cursor->state8 = 0;
+                cursor->stateC = 0;
+                cursor->state10 = 0;
+                cursor->blend = lbl_806D26FC;
+            }
+            cursor = (ItemLaneCursor *)((char *)cursor + 0x18);
+        }
+        tbl->run14 = 0;
+        tbl->run1c = 0;
+        tbl->runBlend20 = lbl_806D26EC;
+        tbl->runBlend24 = lbl_806D26EC;
+        self->boostArmedB0 = 0;
+        sec = self->secondary;
+        if (sec->itemId >= 0) {
+            TornadoEffect_ApplyItemVisual_Primary(sec->owner->effectObj, sec->itemId);
+            KartItemAudio_StopSEByItemId(sec->owner->soundCtrl, sec->itemId);
+            ItemEffectBus_ApplyItemEventClear(sec->owner->ownerDriver->itemBus, sec->itemId);
+            sec->itemId = -1;
+            sec->blend = lbl_806D26EC;
+        }
+        ItemEffectBus_ApplyItemEventSet(bus, id, 0);
+        TornadoEffect_ApplyItemVisual_Secondary(self->effectObj, id, 1);
+        KartItemAudio_PlayHitConfirmSE(self->soundCtrl, id);
+        if (self->coinPenaltyFD != 0) {
+            if (self->raceScore10 != 4) {
+                CoinSystem_RemoveCoins(self->ownerDriver, 1);
+            } else {
+                drv = self->ownerDriver;
+                t = drv->coins2cc - 1;
+                if (t < 0) {
+                    t = 0;
+                }
+                drv->coins2cc = t;
+            }
+            self->coinCountC8 = self->ownerDriver->coins2cc;
+        }
+        self->aiTimerD0 = 0x2d;
+        mv = self->movement;
+        mv->velX = mv->velX * lbl_806D26EC;
+        mv->velY = mv->velY * lbl_806D26EC;
+        mv->velZ = mv->velZ * lbl_806D26EC;
+        spd = lbl_806D26EC * mv->speed;
+        ref = mv->table[mv->tableIdx].refSpeed;
+        if (spd > ref) {
+            spd = ref;
+        }
+        mv->speed = spd;
+        return 1;
+    default:
+        break;
+    }
+    switch (ItemEffect_SelectAndDispatch_Wrap(self->effectTable, id, itemObj, -1)) {
+    case 2:
+        return 0;
+    case 0:
+        self->boostArmedB0 = 0;
+        sec2 = self->secondary;
+        id2 = self->effectTable->run18;
+        if (sec2->itemId >= 0) {
+            TornadoEffect_ApplyItemVisual_Primary(sec2->owner->effectObj, sec2->itemId);
+            KartItemAudio_StopSEByItemId(sec2->owner->soundCtrl, sec2->itemId);
+            ItemEffectBus_ApplyItemEventClear(sec2->owner->ownerDriver->itemBus, sec2->itemId);
+            sec2->itemId = -1;
+            sec2->blend = lbl_806D26EC;
+        }
+        tbl2 = self->effectTable;
+        if ((unsigned char)(tbl2->lanes[0].itemId >= 0) == 1) {
+            arg5 = tbl2->lanes[0].state10;
+        } else {
+            arg5 = 0;
+        }
+        ItemEffectBus_ApplyItemEventSet(bus, id2, arg5);
+        TornadoEffect_ApplyItemVisual_Secondary(self->effectObj, id2, 1);
+        KartItemAudio_PlayHitConfirmSE(self->soundCtrl, id2);
+        if (self->coinPenaltyFD != 0) {
+            if (self->raceScore10 != 4) {
+                CoinSystem_RemoveCoins(self->ownerDriver, 1);
+            } else {
+                drv = self->ownerDriver;
+                t = drv->coins2cc - 1;
+                if (t < 0) {
+                    t = 0;
+                }
+                drv->coins2cc = t;
+            }
+            self->coinCountC8 = self->ownerDriver->coins2cc;
+        }
+        return 1;
+    default:
+        return 0;
+    }
 }
+#pragma exceptions reset
 
 asm void CarObject_HandleObstacleHit(void) { /* 0x8004AE28 size:0x2F0 */
     nofralloc

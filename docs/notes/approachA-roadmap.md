@@ -70,3 +70,10 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     class-1 残対象の site 形状は precan で u64 family / chain 変種を判別する必要あり。
   - 新 idiom: volatile-cast const load dedup / in-place sqrtf / outer-const-local split (note 参照)。
   - batch 2 = CarObject_OnItemHit + KartItem_ApplyImpactImpulseAndRumble。
+- 2026-06-11: Phase 1 batch 2 完了。
+  - OnItemHit: **matched 100%** (recipe 3 連続実証、mask 0x40ULL site が初 build で byte-exact)。
+  - ApplyImpactImpulse: 83.66% park — precan で class-2 frsp interleave (16-float copy) を検出、規定通り park。
+    ただし class-1 site は **CSE-reuse sub-shape** (同 mask を 2 回 test、and 半分が CSE される) でも recipe 転移を確認。
+  - Phase 1 残: KartItem_Tick / KartItem_PerFrameStep / TickStatusEffectsByFlag (batch 3-4)。
+    OnKartHit は class 2 併発のため Phase 2 送りのまま。
+  - batch 3 = KartItem_Tick + KartItem_TickStatusEffectsByFlag。
