@@ -81,7 +81,7 @@ extern void ItemEffectImpact_TryArm();
 extern void ItemEffect_BossGrab();
 extern void ItemEffect_TornadoLift();
 extern void ItemObject_GetByteAt0xEC();
-extern void ItemSelect_GiveItemOrQueueDrop();
+extern unsigned char ItemSelect_GiveItemOrQueueDrop(void *itemSelect, void *driver, int count, int flag);
 extern void ItemSelect_OnDropAllCancel();
 extern void ItemSelect_StartRouletteSpin();
 extern void ItemStateGuard_IsActive();
@@ -123,7 +123,7 @@ extern void KartItem_Stub_Returns0();
 extern void KartMovement_CalcCurrentSpeed();
 extern void KartMovement_CalcMaxSpeed();
 extern void KartMovement_CalcSpeedWithCoinBonus();
-extern void KartMovement_GetCurrentItemId();
+extern int KartMovement_GetCurrentItemId(void *driver);
 extern void KartMovement_Init();
 extern void KartMovement_PhysicsStep();
 extern void KartMovement_RotateByYaw();
@@ -463,6 +463,15 @@ typedef struct KartItemHitSEView {
     void *ownerDriver;   /* 0x2c */
 } KartItemHitSEView;
 
+typedef struct KartItemDropView {
+    char pad_0x0[0x24];
+    void *soundCtrl;     /* 0x24 */
+    char pad_0x28[0x4];
+    void *ownerDriver;   /* 0x2c */
+    char pad_0x30[0xd4];
+    void *itemSelect;    /* 0x104 */
+} KartItemDropView;
+
 /* --- forward decls --- */
 asm void KartItem_OnKartHit(void);
 void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, int channel);
@@ -470,7 +479,7 @@ asm void CarObject_OnItemHit(void);
 asm void CarObject_HandleObstacleHit(void);
 void KartItem_PlaySE_0x09(KartItemHitSEView *self);
 asm void KartItem_ApplyImpactReflectAndDampVelocity(void);
-asm void KartItem_TryDropCoinsAndPlaySE(void);
+unsigned char KartItem_TryDropCoinsAndPlaySE(KartItemDropView *self, int count, unsigned char force);
 asm void KartItem_TryCancelIfDropAllowed(void);
 asm void KartItem_ApplyImpactImpulseAndRumble(void);
 asm void KartItem_RenderPipelinedWithEffects(void);
@@ -2329,52 +2338,25 @@ asm void KartItem_ApplyImpactReflectAndDampVelocity(void) { /* 0x8004B140 size:0
     blr
 }
 
-asm void KartItem_TryDropCoinsAndPlaySE(void) { /* 0x8004B394 size:0x9C */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr. r31, r4
-    stw r30, 0x8(r1)
-    mr r30, r3
-    bgt KartItem_TryDropCoinsAndPlaySE_L_8004B3BC
-    li r3, 0x0
-    b KartItem_TryDropCoinsAndPlaySE_L_8004B418
-    KartItem_TryDropCoinsAndPlaySE_L_8004B3BC:
-    clrlwi. r0, r5, 24
-    bne KartItem_TryDropCoinsAndPlaySE_L_8004B3DC
-    lwz r3, 0x2c(r30)
-    bl KartMovement_GetCurrentItemId
-    cmpwi r3, 0x0
-    blt KartItem_TryDropCoinsAndPlaySE_L_8004B3DC
-    li r3, 0x0
-    b KartItem_TryDropCoinsAndPlaySE_L_8004B418
-    KartItem_TryDropCoinsAndPlaySE_L_8004B3DC:
-    lwz r3, 0x104(r30)
-    cmplwi r3, 0x0
-    beq KartItem_TryDropCoinsAndPlaySE_L_8004B408
-    lwz r4, 0x2c(r30)
-    mr r5, r31
-    li r6, 0x1
-    bl ItemSelect_GiveItemOrQueueDrop
-    clrlwi. r0, r3, 24
-    bne KartItem_TryDropCoinsAndPlaySE_L_8004B408
-    li r3, 0x0
-    b KartItem_TryDropCoinsAndPlaySE_L_8004B418
-    KartItem_TryDropCoinsAndPlaySE_L_8004B408:
-    lwz r3, 0x24(r30)
-    li r4, 0x9
-    bl SoundObj_PlaySE
-    li r3, 0x1
-    KartItem_TryDropCoinsAndPlaySE_L_8004B418:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+unsigned char KartItem_TryDropCoinsAndPlaySE(KartItemDropView *self, int count, unsigned char force) { /* 0x8004B394 size:0x9C */
+    if (count <= 0) {
+        return 0;
+    }
+    if (!force) {
+        if (KartMovement_GetCurrentItemId(self->ownerDriver) >= 0) {
+            return 0;
+        }
+    }
+    if (self->itemSelect) {
+        if (!ItemSelect_GiveItemOrQueueDrop(self->itemSelect, self->ownerDriver, count, 1)) {
+            return 0;
+        }
+    }
+    SoundObj_PlaySE(self->soundCtrl, 0x9);
+    return 1;
 }
+#pragma exceptions reset
 
 asm void KartItem_TryCancelIfDropAllowed(void) { /* 0x8004B430 size:0x6C */
     nofralloc
