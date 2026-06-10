@@ -225,6 +225,11 @@ game/ISESlot_Deactivate.c:
 	extabindex  start:0x80020174 end:0x80020180
 	.text       start:0x80049D0C end:0x80049D78
 
+game/ISESlot_Lifecycle.c:
+	extab       start:0x800068B8 end:0x800068C8
+	extabindex  start:0x80020180 end:0x80020198
+	.text       start:0x80049D78 end:0x80049EDC
+
 game/CarObject_ResetPhysics.c:
 	extab       start:0x800068D0 end:0x800068D8
 	extabindex  start:0x800201A4 end:0x800201B0

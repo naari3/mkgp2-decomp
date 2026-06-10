@@ -436,6 +436,7 @@ config.libs = [
             Object(Matching, "game/NamCam_LoadImage.c"),
             Object(Matching, "game/ISESlot_Update.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ISESlot_Deactivate.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ISESlot_Lifecycle.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/CourseAuxClass_VtableDtor.c"),
             Object(Matching, "game/dtor_8021617C.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/WarpZone_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),

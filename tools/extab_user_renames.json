@@ -1,32 +1,27 @@
 {
   "_comment": "Per-TU mapping of user-emitted extab/extabindex C symbol names to the anonymous local @etb_/@eti_ names dtk dol split writes into symbols.txt. Used by tools/postprocess_extab_user.py via llvm-objcopy --redefine-sym. Each TU's mapping must cover every manually emitted extab/extabindex symbol in source order; unlisted symbols pass through unchanged (and will trip dtk dol diff).",
-
   "src/game/CourseData_Lookup.c": {
-    "extab_dtor_800ABF10":               "@etb_8000A0E8",
-    "extab_fn_800ABD80":                 "@etb_8000A0F0",
-    "extab_CourseData_GetOrCreate":      "@etb_8000A0F8",
-    "extabindex_fn_800ABD80":            "@eti_80022778",
+    "extab_dtor_800ABF10": "@etb_8000A0E8",
+    "extab_fn_800ABD80": "@etb_8000A0F0",
+    "extab_CourseData_GetOrCreate": "@etb_8000A0F8",
+    "extabindex_fn_800ABD80": "@eti_80022778",
     "extabindex_CourseData_GetOrCreate": "@eti_80022784",
-    "extabindex_dtor_800ABF10":          "@eti_80022790"
+    "extabindex_dtor_800ABF10": "@eti_80022790"
   },
-
   "src/game/InputMgr.c": {
-    "extab_InputMgr_Shutdown":      "@etb_80005DF8",
-    "extab_InputMgr_Init":          "@etb_80005E00",
+    "extab_InputMgr_Shutdown": "@etb_80005DF8",
+    "extab_InputMgr_Init": "@etb_80005E00",
     "extabindex_InputMgr_Shutdown": "@eti_8001FA60",
-    "extabindex_InputMgr_Init":     "@eti_8001FA6C"
+    "extabindex_InputMgr_Init": "@eti_8001FA6C"
   },
-
   "src/game/DMAChannelManager_Init.c": {
-    "extab_DMAChannelManager_Init":      "@etb_800080D8",
+    "extab_DMAChannelManager_Init": "@etb_800080D8",
     "extabindex_DMAChannelManager_Init": "@eti_80020FC0"
   },
-
   "src/game/TexMgr_Apply.c": {
-    "extab_TexMgr_Apply":      "@etb_800176C8",
+    "extab_TexMgr_Apply": "@etb_800176C8",
     "extabindex_TexMgr_Apply": "@eti_800290B4"
   },
-
   "src/game/dtor_801FE870.c": {
     "extab_dtor_801FE870": "@etb_80017D70",
     "extab_fn_801FE4D0": "@etb_80017D78",
@@ -134,5 +129,11 @@
   "src/game/KartPhysics_ApplyCollisionForce.cpp": {
     "extab_KartPhysics_ApplyCollisionForce": "@etb_80016CEC",
     "extabindex_KartPhysics_ApplyCollisionForce": "@eti_80028B5C"
+  },
+  "src/game/ISESlot_Lifecycle.c": {
+    "extab_ISESlot_Init": "@etb_800068B8",
+    "extab_ISESlot_Dtor": "@etb_800068C0",
+    "extabindex_ISESlot_Init": "@eti_80020180",
+    "extabindex_ISESlot_Dtor": "@eti_8002018C"
   }
 }
