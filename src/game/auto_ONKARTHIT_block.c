@@ -468,7 +468,7 @@ asm void KartItem_OnKartHit(void);
 void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, int channel);
 asm void CarObject_OnItemHit(void);
 asm void CarObject_HandleObstacleHit(void);
-asm void KartItem_PlaySE_0x09(void);
+void KartItem_PlaySE_0x09(KartItemHitSEView *self);
 asm void KartItem_ApplyImpactReflectAndDampVelocity(void);
 asm void KartItem_TryDropCoinsAndPlaySE(void);
 asm void KartItem_TryCancelIfDropAllowed(void);
@@ -2153,19 +2153,11 @@ asm void CarObject_HandleObstacleHit(void) { /* 0x8004AE28 size:0x2F0 */
     blr
 }
 
-asm void KartItem_PlaySE_0x09(void) { /* 0x8004B118 size:0x28 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    li r4, 0x9
-    stw r0, 0x14(r1)
-    lwz r3, 0x24(r3)
-    bl SoundObj_PlaySE
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+void KartItem_PlaySE_0x09(KartItemHitSEView *self) { /* 0x8004B118 size:0x28 */
+    SoundObj_PlaySE(self->soundCtrl, 0x9);
 }
+#pragma exceptions reset
 
 asm void KartItem_ApplyImpactReflectAndDampVelocity(void) { /* 0x8004B140 size:0x254 */
     nofralloc
