@@ -62,7 +62,7 @@ extern void InputCmd_SetCooldown();
 extern void InputCmd_TickAndDetectAndClear();
 extern void InputMgr_GetPlayer();
 extern void InterpolationStep();
-extern void IsAudioMutedItem();
+extern unsigned char IsAudioMutedItem(void *soundCtrl, int channel);
 extern void IsRaceStarted();
 extern void ItemClass_GetFlagByte1();
 extern void ItemEffectBus_ApplyItemConfirm();
@@ -455,9 +455,17 @@ extern unsigned int lbl_803F76A8[];
  * [106] 0x80052DBC size:0x164   global KartMovement_UpdateBoostVisualBlend
  */
 
+/* --- struct views for promoted fns --- */
+typedef struct KartItemHitSEView {
+    char pad_0x0[0x24];
+    void *soundCtrl;     /* 0x24 */
+    char pad_0x28[0x4];
+    void *ownerDriver;   /* 0x2c */
+} KartItemHitSEView;
+
 /* --- forward decls --- */
 asm void KartItem_OnKartHit(void);
-asm void KartItem_PlayHitSE_DifferentVictim(void);
+void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, int channel);
 asm void CarObject_OnItemHit(void);
 asm void CarObject_HandleObstacleHit(void);
 asm void KartItem_PlaySE_0x09(void);
@@ -1559,34 +1567,13 @@ asm void KartItem_OnKartHit(void) { /* 0x8004A238 size:0x680 */
     blr
 }
 
-asm void KartItem_PlayHitSE_DifferentVictim(void) { /* 0x8004A8B8 size:0x60 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r4
-    mr r4, r5
-    stw r30, 0x8(r1)
-    mr r30, r3
-    lwz r3, 0x24(r3)
-    bl IsAudioMutedItem
-    clrlwi. r0, r3, 24
-    beq KartItem_PlayHitSE_DifferentVictim_L_8004A900
-    lwz r0, 0x2c(r30)
-    cmplw r31, r0
-    beq KartItem_PlayHitSE_DifferentVictim_L_8004A900
-    lwz r3, 0x24(r30)
-    li r4, 0xb
-    bl SoundObj_PlaySE
-    KartItem_PlayHitSE_DifferentVictim_L_8004A900:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, int channel) { /* 0x8004A8B8 size:0x60 */
+    if (IsAudioMutedItem(self->soundCtrl, channel) && victim != self->ownerDriver) {
+        SoundObj_PlaySE(self->soundCtrl, 0xb);
+    }
 }
+#pragma exceptions reset
 
 asm void CarObject_OnItemHit(void) { /* 0x8004A918 size:0x510 */
     nofralloc
