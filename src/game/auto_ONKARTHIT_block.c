@@ -536,7 +536,7 @@ asm void CarObject_ProcessWarpAndDash(void);
 asm void CarObject_MainUpdate(void);
 asm void CarObject_FrameUpdate(void);
 void CarObject_ApplyInput_AI(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3, float in4);
-asm void CarObject_ApplyInput(void);
+void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3);
 asm void KartItem_Dtor(void);
 asm void CarObject_Init(void);
 asm void KartItem_UpdateShadowBillboardAndViewport(void);
@@ -5386,103 +5386,40 @@ void CarObject_ApplyInput_AI(CarObjInputAIView *self, unsigned char active, floa
 }
 #pragma exceptions reset
 
-asm void CarObject_ApplyInput(void) { /* 0x8004E154 size:0x15C */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r4
-    stw r30, 0x8(r1)
-    mr r30, r3
-    stfs f1, 0xe8(r3)
-    stfs f1, 0x9c(r3)
-    stfs f2, 0xa0(r3)
-    stfs f3, 0xa4(r3)
-    lbz r0, 0xa8(r3)
-    cmplwi r0, 0x1
-    beq CarObject_ApplyInput_L_8004E298
-    lbz r0, g_lakituDropStarted(r13)
-    cmplwi r0, 0x1
-    bne CarObject_ApplyInput_L_8004E1A4
-    lwz r3, 0xd8(r30)
-    addi r0, r3, 0x1
-    stw r0, 0xd8(r30)
-    CarObject_ApplyInput_L_8004E1A4:
-    lis r3, 0x8889
-    lwz r4, 0xd8(r30)
-    subi r0, r3, 0x7777
-    mulhw r0, r0, r4
-    add r0, r0, r4
-    srawi r0, r0, 3
-    srwi r3, r0, 31
-    add r0, r0, r3
-    mulli r0, r0, 0xf
-    subf. r0, r0, r4
-    bne CarObject_ApplyInput_L_8004E1E4
-    lwz r3, 0x28(r30)
-    li r0, 0x0
-    lfs f0, 0xc(r3)
-    stfs f0, 0xac(r30)
-    stb r0, 0xd5(r30)
-    CarObject_ApplyInput_L_8004E1E4:
-    lwz r0, 0xd8(r30)
-    cmpwi r0, 0xf0
-    ble CarObject_ApplyInput_L_8004E21C
-    cmpwi r0, 0x14a
-    bge CarObject_ApplyInput_L_8004E21C
-    lwz r3, 0x28(r30)
-    lfs f1, 0xac(r30)
-    lfs f2, 0xc(r3)
-    lfs f0, lbl_806D26EC(r2)
-    fsubs f1, f2, f1
-    fcmpo cr0, f1, f0
-    ble CarObject_ApplyInput_L_8004E21C
-    li r0, 0x1
-    stb r0, 0xd5(r30)
-    CarObject_ApplyInput_L_8004E21C:
-    lbz r0, 0xa8(r30)
-    cmplwi r0, 0x0
-    bne CarObject_ApplyInput_L_8004E294
-    clrlwi r0, r31, 24
-    cmplwi r0, 0x1
-    bne CarObject_ApplyInput_L_8004E294
-    lbz r0, 0xd5(r30)
-    cmplwi r0, 0x1
-    bne CarObject_ApplyInput_L_8004E278
-    lwz r3, 0x28(r30)
-    lfs f1, lbl_806D27D8(r2)
-    bl KartMovement_SetTravelProgress
-    lwz r3, 0x3c(r30)
-    li r4, 0x4
-    lfs f1, lbl_806D26FC(r2)
-    bl SpeedBoost_Apply
-    lwz r3, 0x24(r30)
-    li r4, 0x6
-    bl SoundObj_PlaySE
-    lwz r3, 0x24(r30)
-    li r4, 0x54
-    bl SoundObj_PlaySE_Direct
-    b CarObject_ApplyInput_L_8004E284
-    CarObject_ApplyInput_L_8004E278:
-    lwz r3, 0x28(r30)
-    lfs f1, lbl_806D26EC(r2)
-    bl KartMovement_SetTravelProgress
-    CarObject_ApplyInput_L_8004E284:
-    lfs f1, lbl_806D26EC(r2)
-    lwz r3, 0x34(r30)
-    fmr f2, f1
-    bl TireEffect_ResetSpin
-    CarObject_ApplyInput_L_8004E294:
-    stb r31, 0xa8(r30)
-    CarObject_ApplyInput_L_8004E298:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3) { /* 0x8004E154 size:0x15C */
+    self->inputE8 = in1;
+    self->spd0 = in1;
+    self->spd1 = in2;
+    self->spd2 = in3;
+    if (self->gateA8 != 1) {
+        if (g_lakituDropStarted == 1) {
+            self->aiTimer++;
+        }
+        if (self->aiTimer % 15 == 0) {
+            self->progressSnap = self->movement->progress;
+            self->flagD5 = 0;
+        }
+        if (self->aiTimer > 0xf0 && self->aiTimer < 0x14a) {
+            if (self->movement->progress - self->progressSnap > lbl_806D26EC) {
+                self->flagD5 = 1;
+            }
+        }
+        if (self->gateA8 == 0 && active == 1) {
+            if (self->flagD5 == 1) {
+                KartMovement_SetTravelProgress(self->movement, lbl_806D27D8);
+                SpeedBoost_Apply(self->boostObj, 4, lbl_806D26FC);
+                SoundObj_PlaySE(self->soundCtrl, 6);
+                SoundObj_PlaySE_Direct(self->soundCtrl, 0x54);
+            } else {
+                KartMovement_SetTravelProgress(self->movement, lbl_806D26EC);
+            }
+            TireEffect_ResetSpin(self->kartBody, lbl_806D26EC, lbl_806D26EC);
+        }
+        self->gateA8 = active;
+    }
 }
+#pragma exceptions reset
 
 asm void KartItem_Dtor(void) { /* 0x8004E2B0 size:0x368 */
     nofralloc
