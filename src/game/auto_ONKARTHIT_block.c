@@ -82,7 +82,7 @@ extern void ItemEffect_BossGrab();
 extern void ItemEffect_TornadoLift();
 extern void ItemObject_GetByteAt0xEC();
 extern unsigned char ItemSelect_GiveItemOrQueueDrop(void *itemSelect, void *driver, int count, int flag);
-extern void ItemSelect_OnDropAllCancel();
+extern unsigned char ItemSelect_OnDropAllCancel(void *itemSelect, void *driver);
 extern void ItemSelect_StartRouletteSpin();
 extern void ItemStateGuard_IsActive();
 extern void ItemStateGuard_PruneIfDeadAndReport();
@@ -113,7 +113,7 @@ extern void KartItemAudio_PlayThrowConfirmSE();
 extern void KartItemAudio_StopSEByItemId();
 extern void KartItemSubObject_Ctor();
 extern void KartItemSubObject_Dtor();
-extern void KartItem_CancelIfNotForced();
+extern int KartItem_CancelIfNotForced(void *driver);
 extern void KartItem_DispatchEffectRenderByState();
 extern void KartItem_FlushPendingRender();
 extern void KartItem_FlushPendingRender_v2();
@@ -480,7 +480,7 @@ asm void CarObject_HandleObstacleHit(void);
 void KartItem_PlaySE_0x09(KartItemHitSEView *self);
 asm void KartItem_ApplyImpactReflectAndDampVelocity(void);
 unsigned char KartItem_TryDropCoinsAndPlaySE(KartItemDropView *self, int count, unsigned char force);
-asm void KartItem_TryCancelIfDropAllowed(void);
+int KartItem_TryCancelIfDropAllowed(KartItemDropView *self);
 asm void KartItem_ApplyImpactImpulseAndRumble(void);
 asm void KartItem_RenderPipelinedWithEffects(void);
 asm void KartItem_Tick(void);
@@ -2358,38 +2358,17 @@ unsigned char KartItem_TryDropCoinsAndPlaySE(KartItemDropView *self, int count, 
 }
 #pragma exceptions reset
 
-asm void KartItem_TryCancelIfDropAllowed(void) { /* 0x8004B430 size:0x6C */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    stw r30, 0x8(r1)
-    mr r30, r3
-    lwz r3, 0x2c(r3)
-    bl KartItem_CancelIfNotForced
-    mr r31, r3
-    cmpwi r31, -0x1
-    beq KartItem_TryCancelIfDropAllowed_L_8004B480
-    lwz r3, 0x104(r30)
-    cmplwi r3, 0x0
-    beq KartItem_TryCancelIfDropAllowed_L_8004B480
-    lwz r4, 0x2c(r30)
-    bl ItemSelect_OnDropAllCancel
-    clrlwi. r0, r3, 24
-    bne KartItem_TryCancelIfDropAllowed_L_8004B480
-    li r3, -0x1
-    b KartItem_TryCancelIfDropAllowed_L_8004B484
-    KartItem_TryCancelIfDropAllowed_L_8004B480:
-    mr r3, r31
-    KartItem_TryCancelIfDropAllowed_L_8004B484:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+int KartItem_TryCancelIfDropAllowed(KartItemDropView *self) { /* 0x8004B430 size:0x6C */
+    int ret = KartItem_CancelIfNotForced(self->ownerDriver);
+    if (ret != -1 && self->itemSelect) {
+        if (!ItemSelect_OnDropAllCancel(self->itemSelect, self->ownerDriver)) {
+            return -1;
+        }
+    }
+    return ret;
 }
+#pragma exceptions reset
 
 asm void KartItem_ApplyImpactImpulseAndRumble(void) { /* 0x8004B49C size:0x520 */
     nofralloc
