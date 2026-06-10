@@ -371,6 +371,7 @@ config.libs = [
             Object(Matching, "game/Profiler.c"),
             Object(Matching, "game/Profiler_RecordFrame.c"),
             Object(Matching, "game/MetricsTable.c"),
+            Object(Matching, "game/MemoryManager_Alloc.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/MemoryManager_TimedFree.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/card_eject.c"),
             Object(Matching, "game/SceneRender.c"),

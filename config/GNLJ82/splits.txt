@@ -145,6 +145,12 @@ game/SceneRender.c:
 sound/SoundChannels.c:
 	.text       start:0x8003AD4C end:0x8003ADFC
 
+game/MemoryManager_Alloc.cpp:
+	extab       start:0x80005F74 end:0x80005FDC
+	extabindex  start:0x8001FC1C end:0x8001FC34
+	.text       start:0x8003ADFC end:0x8003AFB8
+	.rodata     start:0x802E9D90 end:0x802E9DF8
+
 game/MemoryManager_TimedFree.cpp:
 	extab       start:0x80005FDC end:0x8000602C
 	extabindex  start:0x8001FC34 end:0x8001FC40
