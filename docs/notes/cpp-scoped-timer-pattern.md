@@ -256,3 +256,36 @@ shim in `MemoryManager_TimedFree`.
 - `docs/notes/pragma-exceptions-on-enable-direction.md` — per-fn opt-in for auto-emit
 - `docs/notes/sdata-deleting-dtor-idiom.md` — `if (this) if (this) { ... }` doubled-guard CW C++ pattern
 - `src/game/dtor_801FEA70.c` — has similar `SPECIFICATION + ACTIVECATCHBLOCK + fn_8027248C` (`__terminate`) cleanup pattern, also asm_fn retreat
+
+## CarObject_FrameUpdate (0x8004DECC) inline-dtor caller probe (2026-06-10, batch_promote_8004decc_frameupdate)
+
+New data points for the ScopedTimer subi/lwz scheduler pair swap, gathered in an
+inline-dtor CALLER context (not the canonical dtor):
+
+- Caller context reproduces the identical swap: target 0x8004DF7C `subi r6,r4,0x217d`
+  before 0x8004DF80 `lwz r7,0x8(r1)`; CW 1.3.2 emits the inverse pair order for every
+  C spelling tried. All other 67 of 69 instructions byte-match (97.10% fuzzy).
+- exceptions on/off probe: byte-identical codegen -> NOT the approach-B regalloc class.
+- Spellings probed (all produce lwz-before-subi): two-statement diff/us; single
+  expression (OSTicksToMicroseconds macro form); denominator-first statement order
+  (this also permutes r4-r7 scratch assignment, swap persists); plain struct (gets
+  fully SROA'd: start -> r31 web, id const-propagated to `li r3,0x28`); whole-struct
+  volatile; volatile-id-member only; static inline Ctor/Dtor via this_ pointer
+  (re-SROA'd, address-take does not survive inlining).
+- volatile member is the working memory-forcing idiom: a struct with ONE volatile
+  member stays in memory wholesale, non-volatile members keep normal (schedulable)
+  loads, and the ctor store order `li r0,0x28; stw 0xc(r1); bl OSGetTick; stw r3,0x8(r1)`
+  reproduces exactly.
+- The FlowDispatcher opword-shim is NOT transplantable into a complex caller: an
+  `asm {}` block inside this fn (a) drops the psq_st half of the f31 callee save and
+  shifts the GPR save layout (+0x8), (b) un-folds the cam-in-r3 idiom into
+  `cmplw r3,r3; bne`, (c) DCE's symbolic asm loads (`lwz r7, tmStart`) because their
+  consumers are opaque opwords. Whole-fn optimization degrades; only works in simple
+  fns like the canonical dtor.
+- postprocess_sdata2.py confirmed working in the mwcc_sjis_extab rule for the
+  u32->float conversion magic: the anon `@N` double in .sdata2 is renamed to
+  lbl_806D27D0 (UND) once the .text reloc offset aligns with target (it silently
+  does NOT rename while the instruction stream is offset-shifted relative to target).
+- Sibling impact: the same inlined dtor block (with identical subi/lwz order) appears
+  in CarObject_Init (same TU, around 0x8004ECAC) and per this note's main section in
+  ~30 callers. Solving the pair swap in pure C unlocks all of them.
