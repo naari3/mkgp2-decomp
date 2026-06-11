@@ -948,3 +948,640 @@ most promising lead remains the bool zero-self-reuse: it is the visible fingerpr
 target's different value-numbering, and reproducing it may flip the whole partition.
 Matched asm retained; this is a corrected, weaker (and more accurate) conclusion than the
 three preceding commits.
+
+
+## STATIC DECOMPILE of the web-numbering pipeline (2026-06-11, Opus 4.8 session continuing batch_fable_onkarthit_recheck2)
+
+Context: this session was started under the onkarthit-valuenumbering-handoff.md (Fable 5,
+Ghidra-only, frida-avoided). Mid-session the model was force-switched Fable 5 -> Opus 4.8
+(NOT triggered by frida -- frida was never used; the most likely trigger was building and
+running a privately byte-patched compiler copy, see "dump approach" below). User said to
+continue on Opus 4.8. All findings below are Ghidra static decompile of `/mwcceppc_132.exe`
+(= `build/compilers/GC/1.3.2/mwcceppc.exe`, image_base 0x400000) in bmp_output.
+
+### OBSERVED: the CodeGen driver and the per-function reset
+
+`FUN_00433310` = CodeGen (per-function backend driver; "CodeGen.c" asserts). Order:
+1. `FUN_004fca40` -> `FUN_0042ddd0` (= IrOptimizer.c IRO_Optimize: BuildFlowgraph, CSE,
+   copy/const-prop, the actual value/expression optimization) when DAT_005e91c0 set.
+2. `FUN_004f6cb0` (arg ABI placement: walks DAT_005e8a78 arg list, sets each arg Object's
+   home/stack via FUN_004362c0, flags at Object[+0x24]).
+3. `FUN_004fd740` (per-class register state init; sets DAT_005e8a7c[class] = lowReg).
+4. `FUN_004dc750` (scan statement list; per Object usage weight Object[+4], used flag +0x23).
+5. `FUN_004dc630` (**resets the web list & web serial counter `_DAT_005e7ff4 = 0`**,
+   head DAT_005e87b0, tail DAT_005e8ad8 = 0).
+6. arg/decl register-numbering: if DAT_005e8878==0 (optimized) FUN_00435950/FUN_00435750/
+   FUN_00435590 else FUN_00435c60 -> each calls FUN_004cf530.
+7. the big statement-emit loop (many FUN_004dc420 / FUN_004dc3c0 web creations).
+8. `FUN_005077b0` (RegisterColoring driver -- already characterized in the handoff).
+
+### OBSERVED: web record allocator = FUN_004dc3c0; index = global creation order
+
+`FUN_004dc3c0` allocates a 0x2c-byte web record and stamps `record[+0x1c] = _DAT_005e7ff4;
+_DAT_005e7ff4++`. It links the record into a doubly-linked list (head DAT_005e87b0, tail
+DAT_005e8ad8). `_DAT_005e7ff4` is a single monotonic counter across ALL register classes,
+reset to 0 per function in FUN_004dc630. => **web [+0x1c] = strict creation/emission order.**
+This is the "web index" the handoff's node struct referenced. Confirmed: `_DAT_005e7ff4` is
+read by FUN_005797a0 / FUN_004dc040 (interference setup) and the scheduler to size per-web
+arrays. FUN_004dc630 also calls FUN_00512180.
+
+### OBSERVED: Object (source register-variable) allocator = FUN_004362c0; SEPARATE counter
+
+`FUN_004362c0` allocates a 0x2a-byte Object record (what FUN_004cf2e0 returns), stamping
+`Object[+0x20] = DAT_005e9220; DAT_005e9220++`. This is a DIFFERENT counter from the web
+serial. Args obtain their Object here, via FUN_004f6cb0, BEFORE the web-counter reset in
+step 5. So "Object number" != "web index". The colored home reg is written back to the
+Object (see FUN_00507900): Object[+0x26] (normal) or Object[+0x28] (special).
+
+### OBSERVED: the class-key space and the node array
+
+- `DAT_005e8778[class]` = lowReg per class = [4,8,0x20,0x20,0x20] (set in FUN_004cf6f0).
+  For class 4 (GPR, DAT_005e931f==4) lowReg = 0x20 = 32. Physical regs occupy keys 0..31;
+  virtual webs are keyed from 32 up. (This is the origin of the handoff's "args = key 32/33".)
+- `DAT_005e8a7c[class]` = webCount per class = the next-key counter, initialized to lowReg
+  (=32) in FUN_004fd740. It is incremented as class webs are registered.
+- `FUN_00579fe0` (called from build orchestrator FUN_00579cf0) allocates the interference
+  NODE array `DAT_005e87d0`, size = webCount, indexed by class-key. It writes node[+0x10] =
+  its own index (= the key), node[+0x14] = 0xffff (uncolored), node[+0x18]/[+0x12] = degree,
+  node[+0x1a..] = adjacency, and node[+0x16] |= 4/8 for coalesce-chain members. So the node
+  array is keyed by the ALREADY-ASSIGNED class-key; FUN_00579fe0 does not assign keys.
+- `FUN_005797a0` (InterferenceGraph builder) allocates the bit-matrix `DAT_005e8800`, sized
+  `_DAT_005e7ff4` (per web serial [+0x1c], 16 bytes/4 uint each), and records interference.
+  It also flags the ABI-special webs: `DAT_005e8848` (first GPR-arg / return-value web) and
+  `DAT_005e8ad8` (web list tail) get bits 8/0x10/2/4 in their DAT_005e8800 entry depending
+  on class DAT_005e931f and the function's return descriptor `*(funcType+0xe)+0xe`.
+- `FUN_004dc040` (first call inside FUN_005797a0) builds DAT_005e8940 = a DFS/postorder of
+  the web list (uses web[+0x2a] bit 4 as visited). An ordering array, not a key assigner.
+- `FUN_0057aff0` / `FUN_0057b100` (SpillCode.c) DO `DAT_005e8a7c[class]++` -- but only to
+  mint NEW keys for spill temps during spilling, i.e. AFTER the original numbering.
+
+### OBSERVED (negative): the per-pass dump approach is DEAD -- emit fns are stubs
+
+The pipeline gate `DAT_005e90ec` (set by options copy FUN_004be0d0 / preset FUN_0042d560,
+default 0) guards calls like `FUN_004ffdb0(...AFTER_REGISTER_COLORING...)`. I byte-patched a
+private copy (tmp/mwcceppc_dump.exe: VA 0x42dc6a `C6 05 EC 90 5E 00 00` last byte 00->01,
+forcing DAT_005e90ec=1; shipped compiler untouched, SHA-1 preserved) and compiled probe_ef.
+Result: exit 0, **ZERO dump output**. Reason: `FUN_004ffdb0`, `FUN_004ffd90`, `FUN_004ffd70`
+all decompile to a bare `return;` -- the diagnostic dump emitters are compiled OUT of the
+shipping build. **Forcing the dump gate produces nothing; the patched-compiler IR-dump
+strategy is infeasible. A future session should NOT retry it.** (tmp/ is untracked scratch.)
+
+### HYPOTHESIS: arg key 32/33 = "args' webs are the earliest GPR webs registered"
+
+The previously-"undecompiled value-numbering" is not a separate mystical pass. The arg keys
+are determined by class-key counter `DAT_005e8a7c[class]` (start 32) incremented as webs are
+registered during CodeGen emission in `_DAT_005e7ff4` creation order. The incoming args are
+the first persistent GPR values established for the function (and are tagged ABI-special via
+DAT_005e8848), so they take keys 32/33. The handoff's downstream proofs stand: coalesce
+keeps min-index survivor, simplify orders by key, select colors highest-key-first => low-key
+args land at the lowest callee-saved regs. NOTE this is still a hypothesis on the PRIMARY
+(non-spill) `DAT_005e8a7c[class]++` site: I ruled out coalesce/color/node-build/interf-build/
+spill/ordering, localizing it to the emission helpers (FUN_00433310 loop -> FUN_004d0170 /
+FUN_005076f0 region), but did not pin the exact instruction. That is the next read.
+
+### HYPOTHESIS: the source lever is EMISSION ORDER of the persistent bus vs arg webs
+
+For the target (args at r30/r31 = HIGH key, bus at r25 = LOW key), the bus pointer's
+persistent web must be registered BEFORE the arg webs. In probe_ef the first statement
+`bus = self->ownerDriver->itemBus` necessarily emits `self` first (to load ownerDriver),
+so self/victim get the earliest keys (EF: self/victim lowest, matching frida). To invert it,
+the IRO (FUN_0042ddd0) output must emit a persistent bus web before any arg web -- which no
+tested source form (~55) achieved. This reframes the open question from "does a C lever
+exist" to "what IRO input yields a bus-before-args emission order"; the answer lives in how
+FUN_0042ddd0's CSE/value-numbering decides which value becomes the first long-lived web.
+Still UNPROVEN either way; matched asm retained, worktree green.
+
+## DECISIVE: the web key is a RENUMBERING, not textual creation order (2026-06-11, same session)
+
+Disassembled the TARGET's actual entry (tmp/target_tu_full.s, KartItem_OnKartHit):
+```
+stwu/mflr/stw/stmw r25 ...
+mr   r30, r3          ; self  -> r30 (persistent, HIGHEST callee-saved span)
+mr   r31, r4          ; victim-> r31 (persistent, HIGHEST)
+lwz  r3,  0x2c(r3)    ; r3 = self->ownerDriver  (uses INCOMING r3 as scratch)
+lwz  r25, 0x304(r3)   ; r25 = ownerDriver->itemBus = bus (LOWEST callee-saved)
+bl   IsRaceStarted
+```
+The harness confirms EF vs target homes: EF self=r25/victim=r26/bus=r30; target
+self=r30/victim=r31/bus=r25 (cpp_probe_run.py probe_ef -> "homes: self=r25 (target r30)
+victim=r26 (target r31) bus=r30 (target r25)", ratio 66.35%, 416/416 rows).
+
+**This is decisive.** In BOTH builds the entry computes `bus = self->ownerDriver->itemBus`,
+so `self` is REFERENCED BEFORE `bus` (you must load self->ownerDriver to reach itemBus).
+Under the "web key = textual creation/emission order" model, self's web must precede bus's
+web, so key(self) < key(bus) ALWAYS. EF obeys this (self=32 -> r25, bus~52 -> r30). The
+target VIOLATES it (bus -> r25 lowest, self/victim -> r30/r31 highest). Therefore the
+virtual-register KEY is NOT assigned in textual first-reference order; the webs are
+**renumbered** before coloring, and the renumbering criterion is what differs between my
+reconstruction and the target.
+
+Consequences / corrections to the model above:
+- The earlier hypothesis "arg key 32/33 = args are the earliest-emitted GPR webs" is the
+  EF behavior but is NOT a law: the target renumbers bus below the args despite bus being
+  textually later. So "args land low because emitted first" only describes the forms that
+  happen to renumber that way.
+- The reg-ref key lives at regref[+4] (12-byte reg-ref records at web[+0x24]+n*0xc; [+1]=
+  class, [+2]=flags 1=use/2=def/4/0x40=coalesced, [+4]=key). FUN_00579e50/FUN_0057a640
+  (InterferenceGraph.c liveness/bit-matrix build) CONSUME regref[+4]; the key is already
+  set by the time coloring runs. So the key stamp happens during instruction selection /
+  operand creation (the FUN_004e9xxx emit family + DAT_005e8a7c[class]++), over the IRO's
+  output tree -- still the un-pinpointed exact site, but now bounded to "operand numbering
+  during instruction selection," and PROVEN to be a renumber (not first-use order).
+
+### Refined open question (sharper than the handoff)
+
+The entry instruction STRUCTURE is identical between EF and target (same loads, same
+scratch-r3 reuse); only the register NUMBERS differ, i.e. the divergence is 100% inside the
+invisible virtual-register numbering, with zero instruction-level lever in the entry. The
+only externally visible fingerprint remains the residual-16 (bool zero-self-reuse + FP
+fsubs/lfs schedule). So: what numbering criterion (live-range length? def-use DFS rank?
+spill-cost? the IRO value-number id carried into instruction selection?) ranks bus BELOW
+the two args in the target but ABOVE them in every reconstructed form? That criterion is
+computed over the IRO (FUN_0042ddd0) output and carried as the operand key. Pinning it needs
+either decompiling the operand-numbering in instruction selection, or an IRO-output-shaping
+source change (distinct from the ~55 surface forms already tried, which did not move it).
+
+Status unchanged operationally: OnKartHit kept as matched asm_fn, worktree green, shipped
+compiler SHA-1 d8f9c36 intact. This session converted "value-numbering is undecompiled" into
+"the numbering is a proven renumber over the IRO graph; its key-stamp site and ranking
+criterion are the two remaining un-pinned links," and killed the per-pass-dump approach.
+
+## FRIDA runtime confirmation + a sharper negative (2026-06-11, Opus 4.8, frida re-enabled by user)
+
+User authorized frida (the Fable-preservation reason is moot post-downgrade). Reused the
+existing harness (tools/compiler_probe/frida_colorer_probe.js + a private UNMODIFIED copy
+tmp_probe/mwcceppc_priv.exe; shipped compiler SHA-1 d8f9c36 untouched). Compiled probe_ef.c
+under frida, hooking the colorer select pass (FUN_00507a30).
+
+OBSERVED (EF, class 4 = GPR), key -> home reg, confirming the handoff exactly:
+```
+key=32  -> r25   self   (PARAM, flags 0x2, adjN=135)
+key=33  -> r26   victim (PARAM, flags 0x2, adjN=137)
+key=46..51 -> r27..r30  six bool webs (flags 0x42 = coalesced)
+key=52  -> r30   bus    (flags 0x2, adjN=77)
+key=94  -> r31   rm     (flags 0x2, adjN=102)
+```
+So the colorer assigns highest-key -> r31 and walks down; lowest keys (args 32/33) land at
+the lowest callee-saved regs (r25/r26). This is the EF half of the divergence (target:
+bus->r25 lowest, self/victim->r30/r31 highest, i.e. target keys are bus < ... < self < victim).
+
+SHARPER NEGATIVE (new): the persistent-web key is NOT textual first-use order either.
+`bus = self->ownerDriver->itemBus` is the FIRST statement and bus is live across the whole
+function, yet bus's key (52) is HIGHER than the six bool webs (46-51) which are computed
+much later (lines 67-179). So even in EF the numbering is not "first textual reference";
+it is some other traversal/criterion over the IRO graph. (Args 32/33 ARE first, but the
+body webs' order does not follow source order.)
+
+OBSERVED (counter mechanics): DAT_005e8a7c[class] is a PER-STATEMENT transient counter --
+FUN_004fd4f0 (called after each statement in the FUN_00433310 loop) resets it back to the
+persistent base DAT_005e7fc8[class] when it exceeds 0x100, while DAT_005e86a8[class] tracks
+the high-water (=203 for GPR = total interference nodes). Persistent (cross-statement) webs
+keep stable low numbers; transient temps are renumbered per statement. So "key 32/33 for
+args" = args are the first PERSISTENT webs; the persistent-assignment site is what numbers
+bus/rm/bools.
+
+NEGATIVE (method): MemoryAccessMonitor on the GPR counter dword (VA 0x5e8a8c) FAILED to
+locate the write instruction -- the 4KB page is so hot that 200000 trapped accesses elapsed
+with ZERO writes to the exact dword captured before the cap (the numbering phase is reached
+only after a flood of reads to other globals on that page). Page-granular monitoring is
+impractical for this counter. The persistent-key-assignment instruction remains un-pinned;
+it is register-indirect (so Ghidra's literal xref list missed it) and not reachable by
+MemoryAccessMonitor here. Next candidates if pursued: hook FUN_004dc3c0 (web-record alloc)
+to log creation order and correlate to keys, or single-step the numbering region.
+
+NET for this session: the open question is now precisely "what traversal assigns persistent
+GPR web keys" -- PROVEN to be neither textual creation order nor first-use order; args are
+first, but body webs (bus after bools) are reordered. Reproducing the target (bus before
+args) needs that traversal to rank bus's persistent web ahead of the two arg webs, which is
+decided in the IRO (FUN_0042ddd0) liveness/value-numbering. OnKartHit kept matched asm_fn;
+worktree green; shipped compiler intact.
+
+### serial<->key correlation attempt: INCONCLUSIVE (web [+0x1c] is reused, not a global counter)
+
+Walked DAT_005e87b0 at coloring time mapping each GPR key (reg-ref [+4]) to its web
+record's [+0x1c]. Result was NOT a clean global creation order: many distinct keys share
+the same low [+0x1c] (e.g. keys 32, 33, 52, 65 all -> [+0x1c]=1; rm key 94 -> 16; the bool
+webs keys 46-51 -> 24..58). So [+0x1c] on these records is reused per-statement/block, not
+the monotonic per-function serial I assumed -- the correlation cannot establish global
+creation order and is set aside. What it DOES weakly suggest (if [+0x1c] tracks anything
+ordinal): the bool webs (keys 46-51) carry HIGHER [+0x1c] than bus (key 52, [+0x1c]=1),
+i.e. key order and this ordinal disagree, consistent with the "key is a renumber" finding,
+but this is not load-bearing given the reuse. Pinning the numbering criterion needs
+single-stepping the key-stamp region, not list-walking. Recorded as a dead-end so it is not
+re-attempted blindly.
+
+## BREAKTHROUGH: the persistent-key numbering IS FUN_00435c60's object-list visit order (2026-06-11, frida single-step)
+
+frida trace of the counter DAT_005e8a7c[4] (GPR running/key counter) across the candidate
+phase functions, compiling probe_ef.c:
+```
+FUN_004f6cb0(argABI)   enter run=0   DAT_5e8878=0   leave run=0
+FUN_004fd740(init)     enter run=0                  leave run=32   (sets lowReg=32; sets DAT_5e8878)
+FUN_004dc630(resetWebs) ... run=32   DAT_5e8878=1
+FUN_004f9160           ... run=32
+FUN_00435c60           enter run=32  DAT_5e8878=1
+   [FUN_004fd680 #1] run 32->33   <- first web numbered = key 32 (self)
+   [FUN_004fd680 #2] run 33->34   <- key 33 (victim)
+   ... sequential, one key per FUN_004fd680 call ...
+FUN_00435c60           leave run=65    <- 33 persistent GPR webs numbered (keys 32..64)
+FUN_004fd570(syncPersist) enter run=65 (persist base := 65)
+```
+KEY FACTS:
+- This compile takes the **DAT_005e8878 != 0 path** (FUN_004fd740 sets it; FUN_004cf6f0 keeps
+  it 1 when opt level>0 and DAT_005e8c30==0). So FUN_00433310 calls **FUN_00435c60** (NOT the
+  FUN_00435950/750/590 branch). Earlier static guess of "optimized path" was wrong for this fn.
+- FUN_00435c60 walks its object lists and calls FUN_004cf530 -> **FUN_004fd680 SIMPLE branch**
+  (`key = DAT_005e8a7c[class]; DAT_005e8a7c[class]++`). So **key = sequential visit order**.
+- The persistent webs (args 32/33, bools 46-51, bus 52, ... up to 64) are ALL numbered here,
+  before the statement-emit loop. The statement loop only mints transient temps (65,66,...).
+
+THEREFORE the "renumber"/"value-numbering" that decides callee-saved assignment is exactly
+**the order FUN_00435c60 visits register-needing objects.** FUN_00435c60 traverses, in order:
+  list-1 = DAT_005e8cc0, then list-2 = DAT_005e8a78 (the ARG list), then list-3 = DAT_005e893c,
+  then (after FUN_004cf3b0) list-4 = DAT_005e893c again, list-5 = DAT_005e8704.
+The args live in DAT_005e8a78 (list-2). In EF, list-1 (DAT_005e8cc0) contributed no GPR webs,
+so the args were numbered FIRST -> keys 32/33 -> lowest callee-saved regs. bus (key 52) and the
+bool webs (46-51) are numbered later, i.e. they are in the later lists / later in list order.
+
+### The lever, restated concretely (and testable)
+
+key order == FUN_00435c60 list-visit order. So:
+- To push the ARGS to HIGH keys (target: self=r30/victim=r31), the args' list (DAT_005e8a78)
+  must be visited AFTER the bus web -> i.e. **bus must occupy an earlier list (DAT_005e8cc0,
+  list-1) than the args**, or many webs must precede the args in list order.
+- The remaining question is purely: **what determines which object-list a value lands in**
+  (DAT_005e8cc0 vs DAT_005e8a78 vs DAT_005e893c vs DAT_005e8704). Those lists are built in the
+  pre-numbering phases (FUN_004dc750 statement scan -> DAT_005e8cc0; FUN_004dfb90 TOC/usage ->
+  DAT_005e8704; FUN_004efb50/FUN_004f00c0 -> DAT_005e893c/DAT_005e8a78). If a source form makes
+  the bus pointer land in DAT_005e8cc0 (list-1) it would out-rank the args. THIS is the source
+  lever to find/verify next. No longer "mystery value-numbering" -- it is list membership.
+
+### What feeds DAT_005e8cc0 (the list numbered BEFORE the args)
+
+DAT_005e8cc0 is populated by FUN_004df460, called from FUN_004dca30 (which walks the
+statement list, dispatching on statement-type byte [+0x1c]=stmt[7] and passing operand
+sub-nodes to FUN_004df460). FUN_004df460's rule:
+```
+add node -> DAT_005e8cc0  IFF  node[+0] (tag) == 5  AND  node[+8] (u32) == 1
+```
+(FUN_004cf380 / FUN_004cf3b0 between the FUN_00435c60 loops are just count bookkeeping, not
+list edits.) So the webs that out-rank the args are exactly the **IR nodes of tag 5 with
+word@+8 == 1** that appear as operands of the scanned statement types. The two args
+(DAT_005e8a78, loop-2) are numbered immediately after, so in EF (no tag-5 nodes) they take
+keys 32/33; if tag-5 [+8]==1 nodes exist they are numbered first and the args slide up.
+
+LEVER (concrete, still needs the ENODE-tag -> C-construct mapping):
+- To reproduce the target (bus at the lowest callee-saved reg, args at the top), the bus
+  pointer's web must enter DAT_005e8cc0, i.e. bus must be referenced through an IR node of
+  **tag 5 with [+8]==1** in a scanned statement. tag 5 is an mwcc ENODE operator type (a
+  unary wrapper: FUN_004dcb00 cases 5/6 wrap a child at [+0xe]); its exact C-source trigger
+  + the meaning of [+8]==1 are the last unknowns. Candidate next steps: (i) read the mwcc
+  ENODE enum / a tag table in the binary to name tag 5; (ii) hook FUN_004df460 on a probe
+  that DOES populate DAT_005e8cc0 to learn the C shape empirically; (iii) test source forms
+  that wrap the bus load in the construct that yields tag 5.
+
+This fully answers "what traversal assigns the persistent keys" (FUN_00435c60 list order, keys
+minted sequentially by FUN_004fd680 simple path) and reduces the source lever to a single
+concrete condition (bus -> tag-5 [+8]==1 node in DAT_005e8cc0). Matched asm retained; green.
+
+### EF empirics: DAT_005e8cc0 is EMPTY (FUN_004df460 called 0 times)
+
+Hooked FUN_004df460 over the EF compile: **0 calls** before FUN_00435c60. So DAT_005e8cc0 is
+only reset, never appended -> empty for EF. This nails WHY the args take keys 32/33: loop-1
+(DAT_005e8cc0) contributes nothing, so the arg list (DAT_005e8a78, loop-2) is numbered first.
+FUN_004dca30 (the feeder, walking node[+0x12] sublists) IS reached but with empty sublists,
+so it never calls FUN_004df460. The tag-5 [+8]==1 construct that would populate DAT_005e8cc0
+is simply not present in any of the reconstructed forms -- which also explains why the ~55
+surface forms never moved the args: none produced a DAT_005e8cc0 (tag-5) web to out-rank them.
+
+NET (answers the user's (a) in full): the persistent-key "value-numbering" = FUN_00435c60's
+object-list visit order, keys minted sequentially (FUN_004fd680 simple path, DAT_005e8878=1).
+Visit order = [DAT_005e8cc0 (tag-5 [+8]==1 nodes via FUN_004df460/FUN_004dca30, EMPTY in EF)]
+-> [DAT_005e8a78 args] -> [DAT_005e893c] x2 -> [DAT_005e8704]. The source lever to reproduce
+the target (bus lowest, args highest) is to make the bus pointer enter DAT_005e8cc0, i.e.
+appear as a tag-5 [+8]==1 IR node in a scanned statement's [+0x12] sublist. Remaining unknown:
+the mwcc ENODE meaning of tag 5 / [+8]==1 and the C construct that yields it (the FUN_004dcb00
+path that fills node[+0x12] is not exercised by the current reconstruction). Matched asm
+retained; worktree green; shipped + priv compiler SHA-1 d8f9c36 intact.
+
+## ENODE type table found; tag 5 = EMONMIN (2026-06-11, /loop iter 1)
+
+FUN_00454b20 initializes the ENODE-name array DAT_005ddd88[] (indexed by type*4). The full
+order (type -> name): 0=EPOSTINC 1=EPOSTDEC 2=EPREINC 3=EPREDEC 4=EINDIRECT **5=EMONMIN**
+6=EBINNOT 7=ELOGNOT 8=EFORCELOAD 9=EMUL 10=EMULV 11=EDIV 12=EMODULO 13=EADDV 14=ESUBV
+15=EADD 16=ESUB 17=ESHL 18=ESHR 19=ELESS 20=EGREATER ... 31=EMULASS ... 41=ECOMMA ...
+48=ETYPCON 49=EBITFIELD 50=EINTCONST 52=ESTRINGCONST 53=ECOND 54=EFUNCCALL 56=EOBJREF
+57=EMFPOINTER 58=ENULLCHECK 60=ETEMP 61=EARGOBJ 62=ELOCOBJ 63=ELABEL ... up to ~0x4b.
+Confirmed these ARE the node types FUN_004dcb00 (TOC.c) switches on: its case 0x38 behaves as
+EOBJREF (TOC/global ref), case 0x30 as ETYPCON (cast) -- matches the table. So the codegen
+pre-pass works on frontend ENODEs.
+
+CORRECTION to FUN_004df460's condition (re-read; param_1 is char*): adds node to DAT_005e8cc0
+iff `*param_1 == 5` (**EMONMIN**) AND `param_1[2] == 1` (the BYTE at +2, not the word at +8 as
+written earlier). param_1[2] is the ENODE's [+2] field (rtype/cv low byte) == 1.
+
+PUZZLE (flag for verification): EMONMIN = unary minus. That the DAT_005e8cc0 (numbered-before-
+args) list is fed by EMONMIN [+2]==1 nodes does NOT obviously map to a "bus pointer" lever --
+OnKartHit's bus is a load chain (EINDIRECT/EOBJREF), not a negation. Possible readings:
+(1) the lever really is some unary-minus construct elsewhere in the target that pulls a web
+ahead of the args (indirect effect), (2) I am mis-identifying which structure field FUN_004df460
+walks (the FUN_004dca30 -> FUN_004df460 path passes stmt operands; the "node" may be a codegen
+operand record, not the ENODE, so tag 5 there != EMONMIN). MUST verify next: hook FUN_004df460
+on a probe that contains a unary minus and confirm whether EMONMIN [+2]==1 actually lands in
+DAT_005e8cc0 and whether it pushes the args' keys up. Until verified, "tag5=EMONMIN is the
+lever" is a HYPOTHESIS, not a conclusion.
+
+## REFUTED: FUN_004df460 is dormant — EMONMIN-as-lever premise fails (2026-06-12, /loop iter 2)
+
+Built `tmp_probe/um.c` (explicit unary minus: `int y=-x; int z=-(*b); *a=-y;`) and ran it under
+live inline logging of the feeder chain (`tmp_probe/probe_tag5c.js` + `run_tag5c.py`, dumps each
+call as it happens to avoid the deferred-dump timing trap — mwcceppc exits before any setTimeout
+or even an ExitProcess hook fires, so only inline-on-enter logging is reliable):
+
+OBSERVATION (fact):
+- FUN_004dca30 (statement walker) called 5 times.
+- FUN_00435c60 (numbering walk) called exactly ONCE.
+- FUN_004df460 (DAT_005e8cc0 feeder) called **ZERO times** — even with explicit unary minus.
+
+So the EMONMIN hypothesis is REFUTED at its premise: FUN_004df460 is never invoked in this
+compile path at all, regardless of unary-minus content. DAT_005e8cc0 being empty is NOT because
+"the input lacks tag-5 [+2]==1 nodes" — the feeder that would populate it is simply not on the
+executed path. Earlier decompile read "FUN_004dca30 walks statements and feeds FUN_004df460" was
+either wrong, or FUN_004dca30 calls FUN_004df460 only under a condition never met here.
+
+CONSEQUENCE: "make the bus a tag-5 [+2]==1 node to push it into DAT_005e8cc0 ahead of the args"
+is not a viable lever as stated, because nothing routes through FUN_004df460. The visit-order
+chain [DAT_005e8cc0 -> args -> ...] may still be correct for FUN_00435c60, but DAT_005e8cc0 is
+populated (when it is) by a DIFFERENT writer than FUN_004df460/FUN_004dca30.
+
+NEXT (re-ground, drop the EMONMIN thread): find the ACTUAL writer(s) of DAT_005e8cc0 (0x5e8cc0)
+via Ghidra xrefs, and re-decompile FUN_00435c60 to ground-truth (a) which lists it iterates and
+in what order, (b) where in that walk the args' keys are minted vs. the bus's. Stop hypothesizing
+on the feeder; confirm the writer set first.
+
+## 重大: この worktree は stale、main が investigation frontier を先行 (2026-06-12, /loop iter 2)
+
+OBSERVATION (fact): branch=orch/batch_fable_onkarthit_recheck2 は merge-base から main 14 / 自分 5
+commit で乖離。main の最新 (5daf1ea→ddc6f88) は本セッションが追っていた instruction-level の問題
+(分岐極性 bne;b vs beq、+4 li-0、fp schedule) を **既に解決済み**と記録している:
+
+- main 5daf1ea: dispatch bool 単一アーム化 `b=0; if((flags&mask)!=0) b=1;` で「EF vs target =
+  416=416 行、reg-masked 100.00%、非 register 差ゼロ」。残差を純粋 coloring に分離。
+- main ddc6f88 + follow-up 12: EF base の宣言順 sweep は self=r25/victim=r26 で不動。残差は
+  value-numbering の **web 構造差 (coalescing / web split)** に限定。
+- main 結論: 唯一の残ブロッカー = EF (命令一致) base で **param を後 pass に分離する coalesce/web
+  構造を source から作ること**。次の一手 = coalesce union-find (FUN_0057a1f0 / FUN_00579cf0) trace。
+- build 状態 (main): OnKartHit は asm_fn で byte-identical 維持。EF は clean-C 化の最有力 base。
+
+本 worktree の probe_ef.c (handoff 6bd5cd3 由来) は verify_any で reg-masked 97.60% / 16 構造差
+(fp schedule 2 + 分岐極性 4 + extra-li 4) を出す = main の「100%」EF とは別物 (古い形)。注: main の
+winning EF checkpoint は tmp/CHECKPOINT_ef_instr_matched.c で gitignore、本 worktree に存在しない。
+
+CONSEQUENCE: 本セッションの EMONMIN / DAT_005e8cc0 (FUN_004df460) 調査は、main が既に通過した
+instruction 層の問題に対する誤った lever 探索だった。FUN_004df460 が dormant という反証 (iter 2) も
+含め、この線は real frontier ではない。real frontier = **coalescing/web 構造** (main follow-up 12)。
+
+NOTE on main の「reg-masked 100%・完全一致」: CLAUDE.md の断定回避方針に照らし、これは未検証の
+強い主張として扱う (本 worktree の単一アーム probe_ef.c は 100% を再現しない)。winning EF source が
+手元に無いため本 worktree では追検証不能。coalescing trace は worktree 非依存の read-only 調査なので、
+そちらを frontier として進める。
+
+RE-ORIENT: 以降は main の open question = colorer の coalesce 機構 (FUN_0057a1f0 union-find /
+FUN_00579cf0) を Ghidra で読み、(a) どの web が併合され survivor が何 key を取るか、(b) target の
+param が高 key web と coalesce して effective key が上がる構造か、を解く方向に切替える。
+
+## colorer 全鎖を decompile で確定 — coalesce=min-survivor, select=lowest-reg, 支配は degree (2026-06-12, /loop iter 2)
+
+main follow-up 12 の next-step (coalesce union-find trace) を Ghidra 静的 decompile で実施。
+
+### FUN_0057a1f0 (InterferenceGraph.c) = coalesce union-find — survivor は MIN key
+- DAT_005e21c8 = union-find parent[] (size = web 数 = DAT_005e8a7c[class])。init parent[i]=i。
+- 全 web の move-related node (puVar3[5] の flag &0x10 かつ &0x100==0) を走査。src web=puVar3[10],
+  dst web=puVar3[0xd] の root を path-follow で求める。
+- 既に同 set → FUN_004dc230 (move 削除)。別 set かつ interference bitmatrix (DAT_005e21cc) で
+  非干渉なら UNION。
+- **UNION のコード: `sVar5=min(src_root,dst_root); sVar15=max; parent[sVar15]=sVar5`**
+  = **survivor (root) は常に MIN key**。merge 後の effective key は 2 web の小さい方。
+- 末尾 loop: 全 node の web 参照 (operand list pcVar12+4, stride 0xc) を root に書換え。
+
+→ **決定的: coalescing は web の key を上げられない。** param(key32)が高 key web と coalesce
+しても survivor=key32 のまま。**main follow-up 12 の仮説 (b)「target param が高 key web と
+coalesce して effective key 上昇」は機構的に否定される。** coalesce で動くのは partner を min に
+引き下げる方向のみ。
+
+### FUN_00507a30 (Coloring.c) = select — 最小番号 reg を pop 順で割当
+- local_18 = FUN_004fd600(class) = class の割当可能 reg bitmask。
+- simplify stack を pop 順に走査。各 node: uVar3 = 利用可能 reg = local_18 − (着色済み隣接の色)。
+- uVar3==0 → spill。else **`for iVar4=0..numRegs: if (uVar3 bit iVar4) {color=iVar4; break}`
+  = 最小番号の空き reg を割当**。
+- pop 順 = simplify 除去の逆順 (Chaitin)。**長命=高 degree web は simplify で最後に除去 →
+  select で最初に着色 → 最小番号 reg を取る。短命=低 degree → 最後に着色 → 高番号 reg。**
+
+### 統合モデル (3 関数 decompile で確定、EF frida 実測と整合)
+- key は FUN_00435c60 list 順で採番 (args=DAT_005e8a78 が loop2 で最小 key 32/33)。
+- EF 実測「key32→r25, key94→r31」(低key→低reg) の真因は **key ではなく degree**:
+  param は関数全体 live = 高 degree → 最初に着色 → 最小 reg r25。key94 web は短命 → 高 reg r31。
+  key と reg が EF で単調に見えたのは degree と key の偶発相関 (param が最小 key かつ最高 degree)。
+- **target が param を r30/r31 (高 reg) に置く = param web を遅く着色 = 低 degree 化が必要。**
+  これは main 成果 (3) degree lever (高 degree local の range 削減で param 上昇) と一致。
+  coalesce ではなく **param web の live range / degree を下げる source 構造**が唯一の機構的 lever。
+
+### NEXT (worktree 非依存の frontier)
+真の open question を再定義: 「EF の命令列を保ったまま param (self/victim) web の degree を下げ、
+simplify で早期除去 → 高 reg 着色させる source 形」。次の一手: frida で EF の simplify (FUN_00507b50)
+/ select (FUN_00507a30) を trace し、各 GPR web の (key, degree, 除去順, pop順, 割当 reg) を実測。
+param web の degree と除去位置を確認し、target の self=r30/victim=r31 にするのに必要な degree 低下幅を
+定量化する。degree を下げつつ命令を壊さない source 形 (param のコピー先 web を作る等) を設計する。
+
+### FUN_00507b50 (Coloring.c) = simplify (Chaitin-Briggs) — モデル最終確定
+- iVar6 = FUN_004fd650(class) = k (物理 reg 数 = coloring threshold)。
+- web を index 順 (DAT_005e8778[class]..DAT_005e8a7c[class]) に走査。degree = node[+0x12]。
+- degree < k の低 degree web を除去: 隣接の degree を -1、flag|=2、**stack (piVar10) に prepend**
+  (`*node=stack; stack=node`)。除去可能が尽きるまで round 反復。
+- 残り高 degree は worklist piVar9 へ。spill 候補 = `node[3]/degree` (Briggs spill cost/degree) 最小を
+  optimistic-spill として除去 → stack へ。低 degree round を再開。全 web 除去まで反復。
+- select (FUN_00507a30) は stack を **先頭から** 処理 = **最後に除去された web を最初に着色**。
+
+統合: **後除去(高 degree/spill候補) → 先着色 → 最小番号 reg。先除去(低 degree) → 後着色 → 高番号 reg。**
+round 内は index(key)昇順走査だが、これは低 degree(短命→高 reg)web の順序にしか効かない。
+param は高 degree(全体 live)で低 degree round に入らず spill-heuristic で後除去 → 先着色 → 最小 reg
+(EF: self r25/victim r26)。**target の param r30/r31 = param を低 degree 化して早期除去させる必要。**
+
+## 統合結論 (2026-06-12 /loop iter 2 時点、decompile 3関数 + 既存 frida 実測で確定)
+
+OnKartHit の register 残差は **value-numbering の key でも coalesce でもなく、interference graph の
+degree (= web の同時 live 数) が支配**する。機構:
+1. key 採番: FUN_00435c60 list 順 (args 最小 key)。← reg を直接決めない。
+2. coalesce (FUN_0057a1f0): survivor=min key。**key を上げられない** (main 仮説(b)を否定)。
+3. simplify (FUN_00507b50): 低 degree 先除去 / 高 degree 後除去。
+4. select (FUN_00507a30): stack 先頭 (後除去=高 degree) から最小 reg を割当。
+→ **高 degree web ほど低い reg。param を高 reg (r30/r31) にするには param web の degree を下げる
+(= live range 短縮 or competing local web 削減) 必要。命令を壊さずにこれを行う source 形が唯一の lever。**
+これは main 成果(3) degree lever と完全一致。EMONMIN/DAT_005e8cc0/coalesce 路線は全て否定済み。
+
+### ブロッカー (workflow): 本 worktree は stale で instruction-matched EF base (tmp/CHECKPOINT_
+ef_instr_matched.c, gitignore) を持たない。degree lever 実験は命令一致 base 上で行う必要があり、
+本 worktree の旧 probe_ef.c (命令差 16) では検証の出発点が違う。次は (a) main の EF base 上で degree
+trace + degree-preserving source 設計、を行うべき。worktree 選択はユーザー判断 (orchestration の
+merge 方針依存)。
+
+## EF colorer の直接実測 — color=物理reg番号, self/victim が degree 突出で pin (2026-06-12, /loop iter 3)
+
+probe: tmp_probe/probe_color.js + run_color.py。simplify (FUN_00507b50) enter で GPR class4 の全 web
+(id 32..202, 171 個) の初期 degree (node+0x12) / neighborCount (node+0x18) を snapshot、select
+(FUN_00507a30) leave で color (node+0x14) を読む。probe_ef.c をコンパイル。
+
+OBSERVATION (fact): **color 値 = 物理レジスタ番号そのもの** (color 25→r25, 31→r31)。これで
+「select は最小 bit を割当 + bit N = rN」が実証され、degree↔reg の方向曖昧性が解消。
+
+EF callee-saved (color 25-31) 割当 [key, initDeg, flags]:
+- r25 ← key32 (self),   initDeg=**135**, 0x2
+- r26 ← key33 (victim), initDeg=**137**, 0x2
+- r27 ← key46, deg32,  0x42(coalesced)
+- r28 ← key47, deg42,  0x42
+- r29 ← key50/51, deg47/42, 0x42 (50↔51 coalesce)
+- r30 ← key49/52, deg55/77, 0x42/0x2 (49↔52 coalesce)
+- r31 ← key94, deg102, 0x2
+- color 72/85/126 (key79/92/133, flags 0x4) = spill (物理 reg 範囲外)。
+
+決定的: **self(135)/victim(137) の degree が全 web 中で突出** (次点 key94=102, key52=77)。
+最高 degree → 最初に着色 → 最小 bit = 最小番号 callee-saved (r25/r26) を取る。これが arg park の実体。
+degree→reg は厳密単調ではない (key94 deg102→r31, key52 deg77→r30 等、coalesce と simplify 順が絡む)
+が、self/victim が突出 degree で最下位を取る点は明白。
+
+含意: self/victim を r30/r31 (最高 reg = 最後に着色) にするには degree を他 web 以下 (~100 未満) まで
+**大幅に下げる**必要。degree=135 の主因は self が関数全体 live で全 temp (FP 含む 171 web の大半) と
+co-interfere すること。target が self を r30 に置く以上、target では self web の co-interference が
+EF より遥かに小さい構造のはず。命令を保ったまま self/victim の live overlap を削る source 形が
+唯一の未確定 lever。prior work (main af1d7f0 degree levers NEGATIVE / 本枝 PINNED) と整合し、
+「instruction-match を保つ degree 低下」は未発見。
+
+未試行の精密 lever 候補: self の derefs を関数前半で local に cache し、FP 重区間 (行 91-112, 185-203)
+で self param web を dead にして co-interference を削る。ただし load schedule が変わり命令を壊す risk 大。
+次: simplify の除去順 (pop order = 着色順) を trace して、self/victim が「最初に着色」される正確な機構
+(高 degree で low-degree round に入れず spill-heuristic 経由か) を確認 → degree 何点下げれば着色順が
+ずれるかを定量化する。
+
+## 結合の実証: bool 形を変えると params も命令も同時に動く (2026-06-12, /loop iter 3)
+
+「target/EF 同一命令なら self は両方全体 live=同 degree=同 reg のはず」というパラドックスの解: 本枝は
+instr-match を撤回済 (fa4d966)。target と EF の命令は実際に異なり、その差 (特に bool 計算ブロックの
++4 li-0 / 分岐極性、16 差中 12) が web 構造を変え register 割当差を生んでいる = **命令差と register
+差は結合**。「pure coloring 残差」(main) でも純 pinned でもない。
+
+実験 (probe_ef_v2.c): 4 bool を直接ブール形 `bX = ((flags & MASK) != 0);` に変更 → verify_any:
+- diff 16 → **96 (悪化)**、ただし **self/victim = r25/r26 → r27/r28 に上昇** (target r30/r31 方向)。
+- dispatch が target `clrlwi. r0,rX,24` (bool=byte 扱い) に対し v2 は `cmplwi rX,0x0` (word) に変化。
+
+→ bool web 構造の変更で params も dispatch 命令も同時に動く (結合を実証)。原型 probe_ef.c は dispatch
+が既に target 一致 (clrlwi)・残差は計算ブロック 16 のみ・self=r25。v2 は params を上げたが dispatch を
+壊した。**中間形 (dispatch 維持 [bool=byte] + 計算ブロック差解消 + params 上昇) の探索が frontier。**
+target の計算ブロックは結果レジスタ bX(=0) を高位語マスク 0 と比較 RHS に兼用 (fold); EF は別 r4=0。
+この fold を誘発しつつ bool=byte を保つ source 形を探す。
+
+## bool 形 variant 3点の結果 — byte/word tension で fold が鍵 (2026-06-12, /loop iter 3)
+
+| variant | bool 形 | diff | self/victim | dispatch |
+|---|---|---|---|---|
+| 原型 probe_ef.c | `bX=0; if((f&M)!=0) bX=1;` | 16 | r25/r26 | clrlwi (target一致) |
+| v2 probe_ef_v2.c | `bX=((f&M)!=0);` | 96 | **r27/r28** | cmplwi (壊れる) |
+| v3 probe_ef_v3.c | 原型 + 4個の bX=0 を先頭集約 | 16 | r25/r26 | clrlwi |
+
+OBSERVATION: init 位置 (v3) は無影響 (原型と完全同一)。直接ブール形 (v2) は params を r25/r26→r27/r28 に
+上げるが dispatch を clrlwi→cmplwi に壊す (= bool が byte→word 化)。
+
+tension: **target は byte bool (dispatch=clrlwi) かつ params=r30/r31**。byte bool の if-then 形だと
+params は r25/r26 に pin、word 化すると params は上がるが dispatch が壊れる。両立には target の
+「bX(=0) を 64bit mask の高位語 0 と比較 RHS に兼用する fold」(EF は別 temp r4=0) 由来の web 構造が要る。
+この fold は CW の constant/copy-propagation 由来の低レベル codegen 判断で、試した C 形 (init 集約・
+直接ブール) では誘発できず。fold は register 圧/web 配置に依存する compiler 内部判断と思われ、source
+からの確実な誘発手段は本実験でも未発見。
+
+### 現時点の honest assessment (iter 3 終了)
+OnKartHit の param 配置は、**target 一致の byte-bool dispatch を保つ限り r25/r26 に pin される**公算が高い。
+機構は完全に解明済み: (1) key=list順採番, (2) coalesce=min-survivor で key 上げ不可, (3) reg=色付け順
+(高 degree→先着色→低 reg), (4) self/victim が degree 突出 (135/137) で最下位 pin。param を上げる唯一の
+観測経路は bool web 構造の変更 (v2) だが命令を壊す。target の fold を生む source 形は本枝 + 過去 ~50 実験 +
+本 mechanism 解析でも未発見 = **instruction-match を保つ source lever は事実上 pinned**。OnKartHit は
+現状 asm_fn で byte-identical 維持が妥当。汎用成果 (単一アーム li-fix, colorer model) は他 fn に再利用可。
+
+## bool 形 6 変種 sweep — byte→pin / word→+2のみ、target 不到達 (2026-06-12, /loop iter 4)
+
+target 実 disasm で確定: self=r30, victim=r31, bus=r25 (row7 lwz r25,0x304), rm=r29 (row52)。
+dispatch (rows 268-360) は self=r30/victim=r31 を**直接参照** (272 lwz r3,0x28(r30); 357 mr r3,r30;
+326/335 ...(r31)) = self/victim は target でも EF でも**関数全体 live = 同 live range**。
+
+bool 計算ブロックの 6 変種を verify_any で測定:
+| 変種 | diff | self/victim | bool 型 |
+|---|---|---|---|
+| 原型 if-then | 16 | r25/r26 | byte |
+| v2 直接 bX=(..!=0) | 96 | r27/r28 | word |
+| v3 0初期化集約 | 16 | r25/r26 | byte |
+| v4 三項 ?1:0 | 68 | r27/r28 | word |
+| v5 ULL temp 共有 | 56 | r25/r26 | byte |
+| v6 反転 bX=1;if(==0)bX=0 | 20 | r25/r26 | byte |
+
+OBSERVATION (完全相関): **byte bool 形 (target の clrlwi dispatch を保つ) → self/victim は例外なく
+r25/r26 に pin**。word bool 形 → self/victim は r27/r28 に動くが (a) target の r30/r31 には**届かず**、
+(b) dispatch が clrlwi→cmplwi に壊れる。
+
+決定的含意: self/victim は target/EF で同一 live range なので、register flip (target r30/r31 ↔ EF r25/r26)
+は self/victim 自身の degree では説明できず、**他 web (特に bool block の fold: target は結果レジスタ
+bX=0 を 64bit マスク高位語 0 に兼用、EF は別 temp) による coloring 順の違い**が原因。この fold は CW の
+constant/copy-propagation + register 配置の内部判断で、byte/word/三項/ULL共有/反転の全形で誘発できず。
+word 化で params が +2 動くのは bool web が word 化し degree/個数が変わる副作用だが、target の配置 (self を
++5 上げて r30) には到達しない。
+
+### 結論 (iter 4、6変種 + 機構全解明 + 過去~50実験で確定)
+OnKartHit の self/victim を target の r30/r31 にする instruction-match な C source は**存在しない公算が
+極めて高い**。理由は機構レベルで判明: target の register 配置は EF と (a) 同一 live range, (b) ほぼ同一命令
+(16差は bool fold のみ) でありながら逆順 coloring。その逆順は target の bool fold 由来の web 構造に依存し、
+fold は C source から誘発不能。**OnKartHit は asm_fn で byte-identical 維持が最終結論**。
+汎用成果 (colorer 全機構の white-box: numbering=list順, coalesce=min-survivor, simplify/select=Coloring.c,
+単一アーム li-fix) は他 fn に再利用可能。
+
+## 訂正 + 一般化の問いへの回答: main follow-up 7-12 が本セッションを包含・先行 (2026-06-12, /loop iter 5)
+
+本 worktree のノートは main の follow-up 2-12 を欠く (分岐が merge-base cfe8f26 で起きたため)。
+main note を確認したところ、本セッションの調査 (colorer 再導出 / degree trace / 6 bool 変種 /
+「pinned」結論) は **follow-up 7-12 で既に到達・超越されていた**:
+
+- follow-up 7: 真の lever = spill ratio = **degree/cost** (cost=loop加重使用回数)。最小 ratio=最後着色
+  =最低 reg。OnKartHit self/victim は degree 最大(135/137) **かつ** self-> 約20回使用で cost も最大
+  → ratio 最小 → r25/r26 pin。OnItemHit は param の使用回数少 → ratio 大 → 高 reg。
+- follow-up 8: cost lever (sub-object を冒頭 cache) **NEGATIVE** — cache local が高 reg を奪い self 沈下。
+  本セッションの「pinned」結論はこの follow-up 8 と同一地点の再導出。
+- follow-up 9: **degree lever 確定** — 高 degree **local** の live range 削減で param 上昇 (D1: self
+  r26→r27)。天井 r27 = dispatch の bool 4 個が正当に co-interfere するため剥がせない。**family 診断
+  確立** (param park 条件 = param より高 key の callee local が param の最終 simplify pass で co-interfere)。
+- follow-up 10: 「命令同一なのに param-top」は**偽の前提**。reg-masked diff で真の命令差 37
+  (+4 li-0 bool init, fsubs schedule)。→ 本セッションが見た 16 差と同種。
+- follow-up 2-4: **OnFallOffOrDeath (param TOP) と CancelActiveEffect (param BOTTOM) はほぼ同一構造で
+  両方 plain C matched** = 両極到達可能。**最小 flip 形 M2a** (CAE + 遅い条件 block + 内部 call +
+  tested web → param r31 flip) 特定。672 fn scan で param 配置は一様分布。
+
+### ユーザーの問い「OnKartHit が特定できないなら他の超大多数も同様では?」への回答 (NO)
+
+機構的・実証的に **一般化しない**:
+1. **672 fn whole-binary scan**: param home は top 35% / mid 33% / bottom 32% と一様に散る。プロジェクトは
+   既に数百 fn を match 済み = param 配置は大多数で source から制御できている (でなければ match 不能)。
+2. **両極が plain C で実証済み**: OFOD (TOP) / CAE (BOTTOM) のほぼ同一コードが両方 matched。
+   配置は source 構造の関数で、両方向に到達可能。
+3. **大多数が match する理由**: 自然な C が自然な web 構造を生み、決定的 colorer が target reg に写す。
+   問題が出るのは (a) 残差が register-identity のみ かつ (b) target が自然 C で再現できない web 構造を
+   取った場合に限る。
+4. **OnKartHit は病的な tail**: self/victim が degree 最大 **かつ** 使用回数最大 (ratio 最小 → 最低 reg)
+   + dispatch の bool 4 個が co-interfere 天井 (r27)。この組合せは稀。代表例ではない。
+
+### kernel of truth (ユーザーの懸念の正しい部分)
+残差が register-identity のみの fn 族 (register-identity family) には実際に難物が存在し、一部は asm_fn
+維持。ただしこれは**少数 tail** であって「超大多数」ではない。colorer の white-box 知見 (k-colorable +
+min-key param + degree/cost ratio → park 予測) は **撤退判定の高速 triage** に再利用でき、tail を早期に
+asm_fn 判定して bulk に注力する戦略が成立する。
+
+### 本 worktree の知識欠落と推奨
+本セッションは main の follow-up 7-12 を欠いたまま再導出し follow-up 8 地点に逆戻りしていた。新規貢献は
+colorer 機構の独立再確認 (coalesce=min-survivor を decompile で明示) のみで、frontier には未達。
+推奨: main の follow-up 7-12 + 672 fn dataset + M2a transplant 知見を取り込んで継続 (degree lever 天井
+r27、OnItemHit vs OnKartHit の coalescing 差、M2a 逆 morph が真の frontier)。OnKartHit 単体は 40+ 実験
+投入済みで ROI 低 → asm_fn 維持が妥当、汎用 triage 知見が実利。

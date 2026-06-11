@@ -86,6 +86,22 @@ params は最大干渉度なのに最低 key(32/33)ゆえ最下位 reg。**degre
   **ただしこれは数パターンの観測で、target が反例**(args が実効高 key)。「args は常に 32/33」は一般化しすぎ。
 - competitor 除去 test: bus cache 除去でも param は r25/r26 不動 (rm+bools がまだ上位) (`tmp/probe_nobus.c`)。
 
+## 4'. UPDATE (2026-06-11, Opus 4.8 継続セッション): パイプライン特定済み + dump 経路は死亡
+
+§4 の探索は実施済み。詳細は `cw132-allocator-phase2f-research.md` 末尾「STATIC DECOMPILE
+of the web-numbering pipeline」節 (= SoT)。要点:
+- **web 採番 = `FUN_004dc3c0`** (web record allocator)。`[+0x1c] = _DAT_005e7ff4++` で生成順に index。
+  `FUN_004dc630` で関数ごと reset。class-key counter は `DAT_005e8a7c[class]` (lowReg=32 始まり)。
+  node array `DAT_005e87d0` は `FUN_00579fe0` が class-key で構築、干渉行列 `DAT_005e8800` は
+  `FUN_005797a0` が web serial で構築。ABI-special web globals = `DAT_005e8848`/`DAT_005e8ad8`。
+- **Object (register 変数) は別 counter** `DAT_005e9220` (`FUN_004362c0`)。web とは別空間。
+- **⚠️ dump 経路は無効**: per-pass dump 出力関数 (`FUN_004ffdb0`/`FUN_004ffd90`/`FUN_004ffd70`) は
+  出荷ビルドで**空スタブ**。`DAT_005e90ec` (dump gate, VA 0x42dc6a) を強制 ON にしても何も出ない
+  (patched compiler で実証済み, exit 0 / 出力ゼロ)。**dump で IR を取る戦略は再試行しないこと。**
+- 残: 原 (非 spill) web の `DAT_005e8a7c[class]++` の正確な emission site (FUN_00433310 loop →
+  FUN_004d0170/FUN_005076f0 周辺) 未特定。lever 仮説は「bus web を arg web より先に emit させる
+  IRO 出力」(= `FUN_0042ddd0` の CSE 判定)。研究ノート参照。
+
 ## 4. 次の具体的ステップ (Ghidra)
 
 目標: web の index([+0x1c] on web record / node array の添字)を**割り当てる関数**を特定し、
