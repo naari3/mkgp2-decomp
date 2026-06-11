@@ -1,0 +1,8 @@
+GC/1.3.2 prod p2e_deadctr.c	d1_direct	DCE	28insn
+GC/1.3.2 prod p2e_deadctr.c	d2_inl_dead	DCE	28insn
+GC/1.3.2 prod p2e_deadctr.c	d3_inl_loopctl	DCE	28insn
+GC/1.3.2 prod p2e_deadctr.c	d4_inl_retidx	DCE	28insn
+GC/1.3.2 prod p2e_deadctr.c	d1_direct	DCE	28insn
+GC/1.3.2 prod p2e_deadctr.c	d2_inl_dead	DCE	28insn
+GC/1.3.2 prod p2e_deadctr.c	d3_inl_loopctl	DCE	28insn
+GC/1.3.2 prod p2e_deadctr.c	d4_inl_retidx	DCE	28insn

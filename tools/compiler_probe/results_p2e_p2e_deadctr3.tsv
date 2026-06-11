@@ -1,0 +1,4 @@
+GC/1.3.2 prod p2e_deadctr3.c	CalcMaxJ	NOCTR	46insn
+GC/1.3.2 prod p2e_deadctr3.c	CalcMaxK	NOCTR	49insn
+GC/1.3.2 prod p2e_deadctr3.c	g1_wrapper	NOCTR	51insn
+GC/1.3.2 prod p2e_deadctr3.c	g2_wrapper	NOCTR	51insn

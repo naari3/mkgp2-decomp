@@ -1,0 +1,6 @@
+GC/1.3.2 prod p2e_deadctr2.c	e1_volctr	DCE	36insn
+GC/1.3.2 prod p2e_deadctr2.c	e2_regvolctr	DCE	36insn
+GC/1.3.2 prod p2e_deadctr2.c	e3_inl_dead	DCE	28insn
+GC/1.3.2 prod p2e_deadctr2.c	e4_inl_count	DCE	28insn
+GC/1.3.2 prod p2e_deadctr2.c	e5_inl_bigpreopt	DCE	28insn
+GC/1.3.2 prod p2e_deadctr2.c	e6_inl_call	DCE	44insn

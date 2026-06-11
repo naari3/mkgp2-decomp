@@ -1,0 +1,3 @@
+GC/1.3.2 prod p2e_mtxmul3.c	MtxMul_m4	ctr|stfs|slwi|DCE	93insn
+GC/1.3.2 prod p2e_mtxmul3.c	m4_wrap	noctr|stfs|noslwi|NOCTR	75insn
+GC/1.3.2 prod p2e_mtxmul3.c	m4_wrap	ctr|stfs|slwi|DCE	159insn
