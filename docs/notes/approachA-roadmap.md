@@ -455,3 +455,10 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   36% 分裂 (locals が割り込む = renumbering の直接証拠)。規則同定には IR レベル観測が必要。
   次 batch = IR dump (Phase 2f-2 の private-copy 1-byte patch、frida 不要) で baseline/I1/I3/I9 の
   web 生成順を比較し、param rank を動かす pass と source 条件を特定する。
+- 2026-06-11: **IR-dump 実関数検証 + session 境界確定** (follow-up 5 節)。dump は実関数規模で
+  発火 (76 pass / 209k 行)、I1 の bool 吸収を IR レベルで可視化。ただし dump は pre-codegen で
+  web key を含まず、出現順は coloring 順と非対応 — **IR-dump 経路は rank rule に届かない (closed)**。
+  register hint も -O4 で無視 (axis closed)。rank rule 同定は frida hook channel のみ =
+  frida 可の session への引き継ぎ事項。素材完備: I3 形 (残差 = 7-web permutation 1 点) +
+  source 変種一式 + homes 実測 + whole-binary dataset。次 batch: frida で P1/I1/I3 の key 実測 →
+  key 応答の差分表 → target permutation の逆算 → promote。
