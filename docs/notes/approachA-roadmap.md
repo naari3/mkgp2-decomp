@@ -421,3 +421,13 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   - 残る唯一の未実行な厳密経路: frida で coalesce union-find (FUN_0057a1f0/FUN_00579cf0) を trace。ただし
     観測できるのは ours の候補形のみ (target source 不在) で全て params 低位 → 単独では欠けた source 形を
     示せない。上振れ手段に留まる。
+- 2026-06-11: **frida colorer 直接観測 — OnKartHit param park を機構確定** (research note の
+  「frida colorer trace」節)。private copy + frida_colorer_probe.js で GPR web の key/reg 実測。
+  - 観察 (事実): callee-saved reg は web **key 厳密順** (最高→r31)。params=key32/33 (最低・hard-pin)・
+    flags=0x02 (非coalesce)・adjN 最大 → r25/r26。rm=key94→r31, bus=key52→r30, bools=coalesced key46-51。
+  - 観察 (事実): arg key は 32/33 に **hard-pin** (param 前に web を born させても不動、新 web は key43)。
+    competitor (bus) 除去でも param 不動 (rm+bools が上位)。
+  - 結論: park = **arg-key pin + key 順割当 + 高 key 長寿命競合 6 web**。前 commit の「coalescing pin」を
+    精密化 (params は非 coalesce)。target は bus も最大寿命なのに params を最上位に置く = arg key > body key
+    が必要 = hard-pin と矛盾 = source 不可。**Phase 3 gate は閉** (OnKartHit param は source-movable でない)。
+    family floor を algorithm level で確定 = 引数以外に最大寿命 callee-saved web が >=3 ある fn は不可避 park。

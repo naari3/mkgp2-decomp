@@ -178,3 +178,25 @@ live range を縮める形は target と必ず乖離する。よって degree-re
 OnKartHit は **coalescing-pin** で source-closed (C/C++ 両空間)。残差 16 は coalescing 由来の
 partition 症状。matched asm 維持 (SHA-1 OK)。probe: tmp/verify_ef.py, verify_any.py, make_{f,g,h}.py,
 make_direct.py, dump_region.py, dump_fp.py, lastuse{,_ef}.py。
+
+
+## 追補3: frida colorer 直接観測 — arg-key pinning を機構レベルで確定 (同 worktree)
+
+「coalescing pin (仮説)」を frida 実測で精密化 → **argument-key pinning + key 順 callee-saved 割当**。
+private copy (tmp_probe/mwcceppc_priv.exe、SHA-1 一致) + tools/compiler_probe/frida_colorer_probe.js を
+build CFLAGS で EF に適用 (tmp/colorer_ef_run.py, keyscan.py)。GPR class node の key/deg/reg/flags 実測:
+
+- params self/victim = key 32/33 (最低) flags=0x02 (非coalesce) adjN=135/137 (最大干渉) → r25/r26 (最下位)。
+- rm=key94→r31, bus=key52→r30, bools=key46-51 flags=0x42 (coalesced) → r27-r30。
+- **callee-saved reg は key 厳密順** (最高 key→r31 降順)。degree/adjN は reg を決めない。
+- **arg key は 32/33 に hard-pin**: param 使用前に長寿命 web を1つ born させる probe (tmp/probe_earlyweb.c)
+  でも param は 32/33 不動、新 web は key43。引数 web は entry で最優先に予約される。
+- **competitor 除去でも上がらない**: bus cache 除去 (tmp/probe_nobus.c) でも param は r25/r26 不動
+  (rm+bools がまだ上位)。params を上げるには全競合 web を消す = 関数を壊す必要。
+- target は bus も最大寿命 (r25 span 7..398) なのに self/victim を r30/r31・bus を r25 に置く =
+  arg key > bus key が必要 = hard-pin と矛盾 = source 不可。
+
+結論精密化: param は **coalesce されていない** (flags 0x02)。park の正体は coalescing でなく
+**arg-key pin (32/33) + key 順割当 + 6 個の高 key 長寿命競合 web (rm/bus/5 bools)**。
+family floor を algorithm level で characterize: 引数以外に最大寿命 callee-saved web が >=3 ある fn は
+引数が最下位に park し、どの source lever も arg web の key を動かせない。

@@ -779,3 +779,74 @@ reuse signature in the target (e.g. a callee-saved reg doubling as a constant so
 your C form does not reproduce. Coalescing-determined partitions have shown NOT source-
 movable in every case attacked so far (OnKartHit params, HandleItemEffect `handled`,
 CarObject_Init `ch`) -- they are the current hard floor of clean-C matching for this codegen.
+
+
+## OnKartHit frida colorer trace: arg-key pinning CONFIRMED as the park mechanism (2026-06-11, batch_fable_onkarthit_recheck2)
+
+Ran the verified colorer reader (tools/compiler_probe/frida_colorer_probe.js) on the EF
+standalone with the exact build CFLAGS (tmp/colorer_ef_run.py, tmp/keyscan.py), reading
+the GPR-class (class=4) select stack: each web's key [+0x10], dynamic degree [+0x12],
+home reg [+0x14], flags [+0x16], adjacency [+0x18]. This replaces the prior "coalescing
+pin (hypothesis)" with a directly-observed mechanism.
+
+### OBSERVED (frida, EF form) -- the 9 long-lived GPR webs and their homes
+
+  key=94 deg=14 r31 flags=0x02 adjN=102   = rm (KartRootMtxView, GetKartRootMtx)
+  key=52 deg=16 r30 flags=0x02 adjN=77    = bus (cached self->ownerDriver->itemBus)
+  key=51 deg=14 r29 flags=0x42 adjN=42    = bool web (coalesced, 0x40 set)
+  key=50 deg=12 r29 flags=0x42 adjN=47    = bool web (coalesced)
+  key=49 deg=12 r30 flags=0x42 adjN=55    = bool web (coalesced)
+  key=47 deg=12 r28 flags=0x42 adjN=42    = bool web (coalesced)
+  key=46 deg=12 r27 flags=0x42 adjN=32    = bool web (coalesced)
+  key=33 deg=16 r26 flags=0x02 adjN=137   = victim  (PARAM, NOT coalesced)
+  key=32 deg=16 r25 flags=0x02 adjN=135   = self    (PARAM, NOT coalesced)
+
+The callee-saved register is a strict function of the web KEY: highest key -> r31, in
+descending order, coalesced webs (flags 0x40) inheriting their survivor's reg. The two
+PARAMS have the HIGHEST adjacency (135/137 -- they interfere with everything) yet the
+LOWEST keys (32/33) and so land at the BOTTOM (r25/r26). Degree/adjacency does NOT pick
+the reg; the key does. This is the precise mechanism behind every "param parks one reg
+low" case.
+
+### OBSERVED: argument keys are HARD-PINNED to 32/33 (not mere birth order)
+
+tmp/probe_earlyweb.c injects a long-lived local `early = (KartDriverHitView*)<global>;`
+as the FIRST statement (born before any param use) and consumes it late. Result: `early`
+took key=43; the **params stayed key 32/33** (every other web's key shifted +1 to make
+room, but the args did not move). So function-argument webs are reserved the lowest keys
+regardless of how many webs are born before their first use in source -- the colorer
+assigns arg webs first, at entry. This is the immovable pin; the earlier syn_firstuse.c
+synthetic finding is now confirmed on the real function.
+
+### OBSERVED: removing a competitor does NOT lift the params
+
+tmp/probe_nobus.c drops the bus cache (inlines self->ownerDriver->itemBus). bus's key-52
+web vanishes, rm takes r31, the bools shift up -- and the params stay EXACTLY at r25/r26.
+Because the params are the lowest keys, deleting one higher-key web just reshuffles the
+others above them; the params remain rock-bottom. (Matches HANDOFF E1/E4: params' absolute
+reg tracks the competitor count but their RELATIVE rank is always last.) To put the params
+on top you must delete EVERY higher-key callee-saved web (rm + all bool webs) -- i.e.
+gut the function.
+
+### The target is mechanically inconsistent with this rule (so it is unreproducible)
+
+Target callee-saved spans: self r30 rows 4..406, victim r31 rows 5..390, **bus r25 rows
+7..398** -- bus is MAXIMAL-lived, exactly like self/victim. Yet target ranks self/victim
+HIGHEST (r30/r31) and bus LOWEST (r25); EF ranks the same three webs the opposite way
+(bus r30, params r25/r26). For the target's assignment, the arg webs must have HIGHER keys
+than bus -- which directly contradicts the frida-observed hard pin of arg webs to keys
+32/33. No tested C/C++ source form (≈6 bool spellings + decl-order + degree levers +
+early-web + no-bus + C++ this/virtual/ref) reproduces an arg key above a body-local key.
+
+### CONCLUSION (mechanism-level, frida-confirmed)
+
+OnKartHit's param park is **argument-key pinning + key-ordered callee-saved assignment**:
+the two args are reserved keys 32/33 (immovable), the colorer hands out callee-saved regs
+in key order, and OnKartHit carries >=6 higher-key long-lived callee-saved webs (rm, bus,
+five coalesced bool webs), so the args are forced to r25/r26. The target's args-on-top
+partition would require the args to outrank those webs in key, which the hard arg-pin
+makes impossible from source. This is a stronger, observed statement than the earlier
+"coalescing pin" (the params are NOT coalesced -- flags 0x02; coalescing only groups the
+bool webs). OnKartHit stays matched asm; the family floor is now characterized at the
+algorithm level: any fn with >=3 maximal-lived callee-saved webs beyond its args will
+park the args at the bottom, and no source lever moves an arg web's key.
