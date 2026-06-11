@@ -850,3 +850,63 @@ makes impossible from source. This is a stronger, observed statement than the ea
 bool webs). OnKartHit stays matched asm; the family floor is now characterized at the
 algorithm level: any fn with >=3 maximal-lived callee-saved webs beyond its args will
 park the args at the bottom, and no source lever moves an arg web's key.
+
+
+## Ghidra static decompile cross-validates the colorer + closes the coalesce loophole (2026-06-11, batch_fable_onkarthit_recheck2)
+
+Decompiled the three allocator functions in the bmp_output Ghidra project's
+/mwcceppc_132.exe (the CW 1.3.2 compiler, already imported). This STATICALLY confirms
+the frida runtime observation and adds the decisive coalesce-survivor rule.
+
+### SELECT FUN_00507a30 (assign) -- confirmed
+
+Walks the select stack head->tail. For each node, starts from the class available-mask
+(FUN_004fd600), clears bits of already-colored neighbors, then assigns the **lowest set
+bit** (lowest available register index) into [+0x14]; if none, FUN_004fd5a0 gives a forced
+reg else the node spills (flags|=1). So stack position + the index->reg mapping fix the
+home; the params are NOT forced and NOT spilled (frida flags=0x02), they take the normal
+lowest-free path.
+
+### SIMPLIFY FUN_00507b50 (build stack) -- confirmed
+
+`for (i = lowReg[class]; i < webCount[class]; i++)` iterates nodes in **ascending index
+(= key) order**; each trivially-colorable node (degree < k, k=FUN_004fd650) is PREPENDED
+to the stack. So a pass pushes ascending-key -> the stack is **descending-key from the
+head**. SELECT then colors head-first, so highest key -> first reg, lowest key -> last reg.
+The args (keys 32/33, the two lowest) are at the stack tail -> colored last -> lowest
+callee-saved regs (r25/r26). Degree only gates WHICH pass removes a node; within the graph
+the final order is key. This is the exact mechanism behind the param park.
+
+### COALESCE FUN_0057a1f0 (union-find) -- THE decisive new finding
+
+Maintains a union-find array (DAT_005e21c8), each web initially its own parent. For each
+move-related pair it finds both roots (sVar13, sVar15) and, if they pass the conservative
+interference test, unions them with:
+
+    sVar5  = min(rootA, rootB);     // smaller index
+    sVar15 = max(rootA, rootB);     // larger index
+    uf[sVar15] = sVar5;             // larger index points to smaller -> SURVIVOR = min index
+
+**The coalesce survivor is ALWAYS the web with the smaller index (lower key).** So when an
+arg (index 32/33) coalesces with any body local (higher index), the merged web keeps the
+arg's low index and therefore the arg's low register. This statically proves why HANDOFF
+E2 (self -> local copy) came out byte-identical -- the copy coalesces back INTO the arg --
+and it CLOSES the last theoretical escape: there is no way to coalesce an arg into a
+high-index web and inherit a high register. The min-index-survivor rule makes the arg the
+survivor every time.
+
+### Net: the park is mechanically forced, cross-validated runtime + static
+
+(1) value-numbering gives the two incoming args the lowest virtual-web indices 32/33
+(frida: immovable even with an earlier-born local, which took index 43); (2) the coalescer
+keeps the min index as survivor (args never inherit a higher index); (3) simplify orders
+by key and select colors highest-key-first, so the args land at the lowest callee-saved
+regs whenever >=3 higher-key long-lived callee-saved webs exist (OnKartHit: rm, bus, the
+bool webs). Every step now confirmed in the disassembly, not just inferred.
+
+The target's self=r30/victim=r31 (args at the TOP, with bus also maximal-lived at r25)
+contradicts all three rules simultaneously; it cannot be produced by any source that
+yields index-32/33 args, which is every C/C++ form tested. The only un-decompiled link is
+the value-numbering pass that stamps the arg indices 32/33 -- but its output is empirically
+locked (frida) and both downstream passes (coalesce, color) are proven to preserve the low
+arg index. OnKartHit param-park is source-closed at the algorithm level. Matched asm kept.
