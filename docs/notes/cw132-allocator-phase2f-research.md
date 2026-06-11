@@ -774,3 +774,56 @@ Two byproducts that matter beyond OnKartHit (OBSERVED):
 
 Probe files: worktree tmp/probe_p0.c..probe_p5.cpp, probe_p4b.cpp,
 probe_common.h, probe_common_virtual.h, cpp_probe_run.py.
+
+## 訂正 + inline-composition probe: partition は動く、param-class flip pair も発見 (2026-06-11, batch_fable_onkarthit_recheck2 follow-up 2)
+
+**訂正**: 直前節の「register-identity family は C/C++ 両 source 空間で CLOSED」は過大だった。
+正しくは「**open-coded な (1 枚岩で書いた) C/C++ 形では到達不能**」まで。inline splice が web key を
+振り直す機構は HIE regime B で観測済みだったのに、composition (inline helper から locals を born
+させる) 軸を probe せずに closed と書いた。以下この軸の probe 結果 (全て OBSERVED、
+standalone harness + in-TU tu_probe.py)。
+
+### I1/I3: inline-splice composition は partition を動かす最初の lever
+
+bool quad を `static inline unsigned char FlagBit(u64 f, u64 mask)` accessor に変えただけ (I1) で:
+- **partition が初めて動いた**: bool 群が callee pool 上位へ昇格 (spliced web が高 key を取得)、
+  bus/param が押し下げ。返り値 merge は spliced 側の key を採用する (param-merge と非対称)。
+- **行数が 416=416 で target と一致** — callee-saved-bool li-coalescing 残差 (gap 4 行) が解消。
+  callee-def 14 行が target と 1:1 対応、b26=fresh / b25=bus の coalesce 構造も一致。
+- I3 (I1 + C++ method + real virtual) で vcall r12 残差も同時解消、71.15% (difflib LCS)。
+- **残差は「param 組 vs locals」の class 単位 permutation ただ 1 つ**に縮約。locals の相対順位
+  (rm > b28 > b27 > fresh > bus) は target と完全一致。
+
+### TU 全 fn scan: param 配置は per-fn にバラバラ、両極とも plain C で再現済み
+
+target TU の stmw 持ち 18 fn の prologue を scan (tmp/scan_param_class.py): param home は
+TOP (OnKartHit r30/r31, HIE r30/r31, OnFallOffOrDeath r31, StlList_RemoveByValueField r30/r31,
+Bitset_Init) / BOTTOM (CancelActiveEffect r24, ItemEffect_OnHit r22-24, Dispatch r27-29) /
+MID-MIX (OnItemHit r28/r29/r23, Init r31/r23, TryStartByCategory) が混在。**OnFallOffOrDeath
+(TOP) と CancelActiveEffect (BOTTOM) はほぼ同一構造のコードで、両方とも我々の plain C で
+matched 済み** — つまり compiler は同一、配置は source 構造の関数で、両極とも到達可能。
+
+### flip pair bisect: OFOD の sec web が param-class を flip する
+
+- OFOD から sec block (`sec = self->secondary; if (sec->itemId >= 0) {3 calls}`) を削る →
+  **self が r31 から r24 (bottom) に転落**。
+- 第 1 文の param store (`self->fellOffFC = 1`) は無関係 (移動/追加とも不動)。
+- strPcb tail 削除も無関係 (r31 のまま)。
+- sec の出生元を global に変えても r31 のまま (99.43%) — **param 派生である必要は無い**。
+  lever は「遅生まれ・call-crossing・callee pointer web の存在」(文脈依存、下記)。
+
+### I5: OnKartHit への単純移植は NEGATIVE
+
+sec-analog (global 由来の遅生まれ call-crossing pointer web) を OnKartHit に足しても
+param は r25/r26 (bottom) のまま。flip 条件は単一 web の存在ではなく web 集合の構成に依存する。
+
+### 統合 (仮説)
+
+元 binary は普通の C++ を普通に compile したもの。param 配置は web 集合構成で per-fn に決まり、
+原文の inline helper 合成 (accessor 多用) が web key 構成を我々の open-coded 再構成と変えていた、
+が最有力。OnKartHit の残課題は「param-class を top にする web 集合条件」の特定 1 点に絞られた。
+次の bisect 軸: OFOD と CAE の transplant matrix (CAE に sec block を足す / OFOD を CAE 形まで
+削る) で flip 条件を最小化 → OnKartHit の I3 形に適用。
+
+Probe assets: worktree tmp/ (probe_i1.c, probe_i3.cpp, probe_i5.c, scan_param_class.py,
+homes_detail.py, tu_probe.py + transform 群)。

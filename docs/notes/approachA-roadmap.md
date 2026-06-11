@@ -17,8 +17,8 @@ docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件
 | 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **検証 NEGATIVE / family source-closed (2026-06-11)** — recipe は const-param 前提で実 fn に不適用 |
 | 2b | class 2 frsp store-forward の研究 (6 fn family) | **完遂 (2026-06-11)** — 6/6 fn sweep。recipe core は全 fn で再現、promote 0 (全残差が register-identity family: 85-99% park) |
 | 2 | 先頭区間 index 0-17 の残り idiom 解決: class 2 (OnKartHit) / flavor 5 (MainUpdate) / flavor 4 (ProcessWarpAndDash) / ScopedTimer (FrameUpdate) | 未着手 |
-| 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | **断念 (2026-06-11)** — index 0 OnKartHit の partition が C/C++ 両 source 空間で到達不能と確定 (Fable recheck + C++-form probe 全 negative) |
-| 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | **断念 (2026-06-11)** — Phase 3 依存。軸足は他 TU の pending fn へ pivot |
+| 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | **保留 (2026-06-11 訂正)** — 「断念」は撤回。inline-composition probe で partition が動き、残差は param-class flip 1 点。flip 条件特定 (OFOD-CAE matrix) が次の鍵 |
+| 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 保留 (Phase 3 依存) |
 
 ## 制約 (再確認)
 
@@ -424,3 +424,21 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   - **Phase 3/4 判定: 断念確定**。prefix index 0 (OnKartHit) の partition は source 到達不能。
     残る理論上の経路は allocator の web-birth key 採番自体を変える未知の機構のみで、費用対効果から
     本 roadmap では追わない。**軸足を他 TU の pending fn (mega-bundle promote 本流) へ pivot**。
+
+- 2026-06-11: **訂正 — Phase 3/4 の「断念」を撤回、保留に戻す** (batch_fable_onkarthit_recheck2 follow-up 2、
+  research note 末尾の「訂正 + inline-composition probe」節)。
+  - 訂正: 前 entry の「C/C++ 両空間で到達不能と確定」は過大。open-coded 形に限る話で、
+    **inline-composition 軸 (helper splice で locals の web key を振り直す) が未試行だった**。
+  - 観察 (事実): bool quad を static inline accessor 化 (I1) しただけで partition が初めて動き、
+    li-coalescing 残差も解消 (416=416 行)。I3 (+C++ method + real virtual) で vcall r12 残差も解消、
+    **残差は「param 組 vs locals」の class 単位 permutation 1 点に縮約** (locals の相対順位は target 一致)。
+  - 観察 (事実): target TU 18 fn の param 配置は TOP/BOTTOM/MIX 混在で、ほぼ同一コードの
+    OnFallOffOrDeath (self=r31 TOP) / CancelActiveEffect (self=r24 BOTTOM) が両方 plain C で
+    matched 済み = 両極とも同一 compiler で到達可能。bisect で flip lever = OFOD の sec web
+    (遅生まれ call-crossing callee pointer、出生元不問) と特定。ただし OnKartHit への単純移植 (I5) は
+    negative — flip 条件は web 集合構成依存。
+  - 「どうやってこの binary を作ったか」への答え (仮説、高確度): 普通の C++ を普通に compile した
+    もの。param 配置は per-fn の web 集合構成で決まり、原文の inline accessor 多用が我々の
+    open-coded 再構成と key 構成を変えている。
+  - 次: OFOD-CAE transplant matrix で param-class flip 条件を最小化 → OnKartHit I3 形に適用。
+    当たれば prefix index 0 が落ち Phase 3 gate 再オープン。
