@@ -910,3 +910,41 @@ yields index-32/33 args, which is every C/C++ form tested. The only un-decompile
 the value-numbering pass that stamps the arg indices 32/33 -- but its output is empirically
 locked (frida) and both downstream passes (coalesce, color) are proven to preserve the low
 arg index. OnKartHit param-park is source-closed at the algorithm level. Matched asm kept.
+
+
+## CORRECTION: "source-closed / unreproducible" is OVERSTATED -- the target proves a source exists (2026-06-11, batch_fable_onkarthit_recheck2)
+
+The three commits above concluded OnKartHit is "source-closed at the algorithm level" /
+"unreproducible." **That is too strong and is retracted.** The target object was emitted
+by THIS compiler (GC/1.3.2, same SHA-1) at the SAME flags -- the standalone probe
+reproduces the in-TU partition exactly (P0-verified), so flags/version are NOT the
+difference; the difference is purely SOURCE STRUCTURE. Since the compiler produced the
+target, a C/C++ source that reproduces it necessarily EXISTS. The correct statement is
+"NOT reproduced by any of the ~55 forms tested," not "impossible."
+
+What this means concretely:
+- The original game is C++. The developers did NOT engineer the register allocation; they
+  wrote natural C++ and the compiler's value-numbering happened to rank the two args ABOVE
+  the body pointers (bus/rm), landing them at r30/r31. There is nothing hand-crafted to
+  reverse -- just an ordinary source whose value-numbering I have not matched.
+- My reconstruction is 96.38% instruction-identical but value-numbers to args-LOW. The 16
+  residual diffs (FP fsubs/lfs schedule, the bool zero-self-reuse) are SYMPTOMS of that
+  value-numbering divergence, not independent issues.
+
+Why my earlier model was incomplete: I observed (frida) that args stay index 32/33 under
+ONE perturbation (an early-born local) and over-generalized to "args are always 32/33,
+hence always lowest reg." The target is the counterexample -- its args behave as
+high-rank. The colorer (FUN_00507a30) and coalescer (FUN_0057a1f0, min-index survivor)
+are correctly characterized and DO force a key-32/33 arg to the bottom; therefore the
+target's args must NOT be effectively key 32/33 in its compile. That ranking is decided
+in the value-numbering / web-formation pass, which I have NOT decompiled. That undecompiled
+pass -- not "C has no lever" -- is the real open question.
+
+Honest status: OnKartHit param-park is NOT source-movable by any form found so far, and
+the colorer/coalescer back-half is fully understood; but reproducibility is UNPROVEN-either-
+way, because the value-numbering arg-index assignment (the actual origin) is undecompiled
+and the target demonstrates a reachable configuration the tested forms did not hit. The
+most promising lead remains the bool zero-self-reuse: it is the visible fingerprint of the
+target's different value-numbering, and reproducing it may flip the whole partition.
+Matched asm retained; this is a corrected, weaker (and more accurate) conclusion than the
+three preceding commits.
