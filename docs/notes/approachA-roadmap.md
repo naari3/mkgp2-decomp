@@ -17,8 +17,8 @@ docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件
 | 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **検証 NEGATIVE / family source-closed (2026-06-11)** — recipe は const-param 前提で実 fn に不適用 |
 | 2b | class 2 frsp store-forward の研究 (6 fn family) | **完遂 (2026-06-11)** — 6/6 fn sweep。recipe core は全 fn で再現、promote 0 (全残差が register-identity family: 85-99% park) |
 | 2 | 先頭区間 index 0-17 の残り idiom 解決: class 2 (OnKartHit) / flavor 5 (MainUpdate) / flavor 4 (ProcessWarpAndDash) / ScopedTimer (FrameUpdate) | 未着手 |
-| 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | 未着手 |
-| 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 未着手 |
+| 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | **未解決 (2026-06-11、「閉」撤回)** — colorer は white-box 化 (param web 最小 key 固定 / k-colorable で概ね降順着色) だが、target が命令同一で param top = 矛盾未解決。source-closed とも到達可能とも断定不可。OnKartHit は asm_fn で既に byte-identical、clean C 化のみ未達。ROI から pivot 推奨 |
+| 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 保留 (Phase 3 依存) |
 
 ## 制約 (再確認)
 
@@ -399,6 +399,96 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   - メタ: このセッションは frida 言及で safety classifier に flag され Fable→Opus 自動切替された
     (偽陽性)。OnKartHit/HIE batch は完了処理済み (state flip / cleanup / push)。frida 観測は完了済みで
     今後の本作業に frida 不要 = Fable 維持の見込み。
+- 2026-06-11: **Fable recheck 完遂 — OnKartHit degree-reducing 4 構造全 NEGATIVE、PINNED-confirmed (0 promote)**
+  (batch_fable_onkarthit_recheck2、docs/notes/cw132-allocator-phase2f-research.md 末尾の Fable recheck 節)。
+  - 観察 (事実): E1 victim-tail-hoist 92.54% で param home はむしろ降下 (r25/r26)、E2 late-copy は
+    baseline と byte-identical (copy 位置によらず param-merge が web identity を保持)、E3b volatile-slot で
+    両 param web を関数の ~63% 地点で完全 kill (disasm 検証済) しても home r26/r27 不動 (87.36%)、
+    E4 tail-helper 切り出しでも縮小 callee 集合の相対最下位のまま (52.82%)。
+  - 結論: **degree は pin ではない**。param web の着色順位は identity (最低 web-birth key 32/33) で固定。
+    round 3 の OPEN 仮説は否定、OnKartHit は **C の表現空間で source-closed**。
+  - 未試行の最終軸 = **C++-form probe**: 元実装は C++ 確定 (extab が dtor_80036E40 を参照、vcall 残差
+    r6-vs-r12 も real virtual dispatch を示唆)。Phase 2b の C++ negative は class-2 (frsp) に対してのみで、
+    GPR partition への this-call method 形 / reference param / real virtual call は未 probe。
+    これが negative なら register-identity family を完全 close し、Phase 3/4 断念 → 他 TU へ pivot。
+  - 次: C++-form probe batch (standalone harness で OnKartHit body を C++ 形にして partition 観測)。
+- 2026-06-11: **C++-form probe 完遂 — 全 negative、register-identity family は C/C++ 両空間で close 確定**
+  (batch_fable_onkarthit_recheck2 follow-up、research note 末尾の C++-form probe 節)。
+  - 観察 (事実): -lang=c++ / this-call method 形 / real virtual dispatch (base 無し + polymorphic base
+    派生で vptr=0x0・offset 完全一致の最忠実形) / reference param の 6 変種すべてで homes
+    self=r26 / victim=r27 不動 (standalone harness、P0 で in-TU 同一 stream を検証済み)。
+  - 副産物: (1) real virtual は target の r12-chain vcall 形を出す — C の明示 vt-struct 形の r6 中間
+    reg は C-source artifact。vcall 形だけが残差の park fn は C++ TU 化で unlock 可能性あり。
+    (2) CW 1.3.2 は base 無し polymorphic class の vptr を末尾に置く → 元実装は polymorphic 基底
+    からの派生と思われる (将来の C++ 再構成の layout 指針)。
+  - **Phase 3/4 判定: 断念確定**。prefix index 0 (OnKartHit) の partition は source 到達不能。
+    残る理論上の経路は allocator の web-birth key 採番自体を変える未知の機構のみで、費用対効果から
+    本 roadmap では追わない。**軸足を他 TU の pending fn (mega-bundle promote 本流) へ pivot**。
+
+- 2026-06-11: **訂正 — Phase 3/4 の「断念」を撤回、保留に戻す** (batch_fable_onkarthit_recheck2 follow-up 2、
+  research note 末尾の「訂正 + inline-composition probe」節)。
+  - 訂正: 前 entry の「C/C++ 両空間で到達不能と確定」は過大。open-coded 形に限る話で、
+    **inline-composition 軸 (helper splice で locals の web key を振り直す) が未試行だった**。
+  - 観察 (事実): bool quad を static inline accessor 化 (I1) しただけで partition が初めて動き、
+    li-coalescing 残差も解消 (416=416 行)。I3 (+C++ method + real virtual) で vcall r12 残差も解消、
+    **残差は「param 組 vs locals」の class 単位 permutation 1 点に縮約** (locals の相対順位は target 一致)。
+  - 観察 (事実): target TU 18 fn の param 配置は TOP/BOTTOM/MIX 混在で、ほぼ同一コードの
+    OnFallOffOrDeath (self=r31 TOP) / CancelActiveEffect (self=r24 BOTTOM) が両方 plain C で
+    matched 済み = 両極とも同一 compiler で到達可能。bisect で flip lever = OFOD の sec web
+    (遅生まれ call-crossing callee pointer、出生元不問) と特定。ただし OnKartHit への単純移植 (I5) は
+    negative — flip 条件は web 集合構成依存。
+  - 「どうやってこの binary を作ったか」への答え (仮説、高確度): 普通の C++ を普通に compile した
+    もの。param 配置は per-fn の web 集合構成で決まり、原文の inline accessor 多用が我々の
+    open-coded 再構成と key 構成を変えている。
+  - 次: OFOD-CAE transplant matrix で param-class flip 条件を最小化 → OnKartHit I3 形に適用。
+    当たれば prefix index 0 が落ち Phase 3 gate 再オープン。
+- 2026-06-11: **transplant matrix 完了 — 最小 flip 形 M2a 特定、ただし枠組みを再解釈**
+  (research note 末尾 follow-up 3 節)。CAE+sec block で flip transfer 確認 (M1)、最小形 =
+  「遅い条件 block + 内部 call + tested web」(M2a。branch なし M2d / 受動 web M2c は不発)。
+  OnKartHit へは I8/I9 とも transfer せず (I9 で param-merge が splice 境界でも param key を
+  保持することも確定)。target の param 配置は同一 fn 内で分裂する (HandleObstacleHit r3=r30 +
+  r4=r22 等) ため「param-class flip」ではなく **per-web 順位の未知成分**が正体。
+  次 batch: whole-binary prologue scan で param rank の予測規則を相関から発見 →
+  OnKartHit I3 形 (残差 = 順位 1 点) に適用。
+- 2026-06-11: **whole-binary scan 完了 — param rank の粗視化予測は不可能、renumbering が日常と判明**
+  (follow-up 4 節)。672 fn / 1260 param: 配置は一様分布、r3/r4 pair は 57% 隣接 (key 降順) /
+  36% 分裂 (locals が割り込む = renumbering の直接証拠)。規則同定には IR レベル観測が必要。
+  次 batch = IR dump (Phase 2f-2 の private-copy 1-byte patch、frida 不要) で baseline/I1/I3/I9 の
+  web 生成順を比較し、param rank を動かす pass と source 条件を特定する。
+- 2026-06-11: **IR-dump 実関数検証 + session 境界確定** (follow-up 5 節)。dump は実関数規模で
+  発火 (76 pass / 209k 行)、I1 の bool 吸収を IR レベルで可視化。ただし dump は pre-codegen で
+  web key を含まず、出現順は coloring 順と非対応 — **IR-dump 経路は rank rule に届かない (closed)**。
+  register hint も -O4 で無視 (axis closed)。rank rule 同定は frida hook channel のみ =
+  frida 可の session への引き継ぎ事項。素材完備: I3 形 (残差 = 7-web permutation 1 点) +
+  source 変種一式 + homes 実測 + whole-binary dataset。次 batch: frida で P1/I1/I3 の key 実測 →
+  key 応答の差分表 → target permutation の逆算 → promote。
+- 2026-06-11: **frida colorer 直接観測 — OnKartHit park 機構を runtime 確定、promote 0** (follow-up 6 節)。
+  verified colorer reader を OnKartHit probe 群に適用 (shipped compiler 無傷)。確定事実: (1) param web
+  key は entry 順で最小固定・source 不変 (合成 probe で first-use 順を否定、I1/I3 で inline splice が
+  bool key は振り直すが param key は不変)、(2) pop 順は dynamic Chaitin simplify で degree が reg を
+  決める (OnItemHit 反例: victim adjN29 で param が中位 r28/r29、local が下)、(3) OnKartHit の
+  self/victim は最小 key + 最大 degree (135/137、全域 live) の最悪同時成立で最下位。
+  未達は「self/victim を同時に top-2 に乗せる degree 構造が source 上作れない」1 点に精密化。
+  round-3 の「degree が pin」は正、「下げれば動く」は実装不可。これ以上は simplify-stack 構築規則の
+  step 追跡が要る = 費用対効果境界。Phase 3 gate は依然閉だが「C/C++ source-closed」とは断定しない
+  (OnItemHit が param-mid を実証)。
+- 2026-06-11: **colorer simplify 規則を逆アセンブルで導出 — OnKartHit park を white-box 化** (follow-up 7 節)。
+  FUN_00507b50 (simplify-stack builder @ 0x507b50) を llvm-objdump + push-site trace で解析。
+  確定: (1) k-colorable graph では simplify は node index(key) 昇順に全 trivial 除去 → SELECT は
+  key 降順着色 (最高 key → r31)、(2) OnKartHit は spill ゼロ = k-colorable (k>137、全 trivial 確認)、
+  (3) incoming param は最小 key 32/33 固定 → 必ず最後着色 → 最低 callee reg。
+  ∴ OnKartHit param-bottom は「k-colorable graph 上の key 降順着色 + 最小 key param」の機構的帰結で
+  source-closed (param key を上げる手段なし、graph を非 k-colorable にすると命令列が壊れる)。
+  round-3〜follow-up 5 の全 lever が効かなかった理由が導出された。Phase 3 gate は機構的に閉。
+  未完: OnItemHit param-mid は spill or coalescing 由来 (OnKartHit は k-colorable なので非転用見込み)。
+- 2026-06-11: **degree lever 確定 — multi-pass simplify model + family 診断** (follow-up 9)。
+  spill-only tracer で TU 全 57 関数 = 全 k-colorable (spill ゼロ)。正しい model: simplify は
+  multi-pass、高 degree node は遅い pass で除去 → 高 reg。OnKartHit は param と rm/bus/bools が
+  同一最終 pass で崩れ pass 内降順 key で param 最下位。**lever 実証: param でなく高 degree local の
+  range を削ると param 上昇** (D1: rm 短命化で self r26→r27/victim r27→r28、D2: bus も削るが bools が
+  壁で天井 r27)。family 診断 = 「param より高 key の callee local が param の最終 pass で co-interfere」、
+  lever = その local を早い pass で脱落させる。命令を壊さず local 短命化できる関数なら promote 可。
+  OnKartHit 固有: target は単一 web・命令同一で param-top = coalescing 疑い (未 trace)。
 - 2026-06-11: **Fable recheck — degree-reducing lever CLOSED, OnKartHit は coalescing-pin と確定** (PINNED 維持、
   docs/notes/cw132-allocator-phase2f-research.md の Fable recheck 節)。frida 不要、objdiff のみ。
   - 観察 (事実): round-3 が「源流未確定」とした **EF (単一アーム bool) の "命令一致" は誤計測** (label を

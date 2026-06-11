@@ -677,6 +677,9 @@ and let the param itself die, or split the tail into a helper so the params' liv
 shrinks). The frida observation says degree, not key, is the pin; this degree-reducing
 direction has not been probed and is the next candidate before declaring source-closed.
 
+(2026-06-11 訂正: この OPEN 方向は Fable recheck で全 negative — degree は pin ではない。
+末尾の「Fable recheck」節参照。)
+
 ## CarObject_HandleItemEffect handled-web, source-lever exhausted (2026-06-11, batch_promote_hie_lateweb)
 
 Re-attacked CarObject_HandleItemEffect 0x8004F858 (parked 99.93%, residual = single
@@ -704,6 +707,556 @@ move but only by reshuffling all of r22..r29 -> loses the loop-local match. The 
 is fully constrained; the one residual web is NOT source-movable. Strongest in-fn
 confirmation yet of the "source lever works only for under-constrained webs" limit. Keep
 as matched asm; 99.93% C form preserved in tools/compiler_probe/p2e_handleitemeffect_9993.patch.
+
+
+<!-- MERGE 2026-06-12: 並行した 2 ライン (main follow-up 2-12 = degree/cost/inline 実験 arc,
+と recheck 枝 = instr-match 撤回 + 本セッションの colorer decompile/一般化回答) を統合。
+下記はまず main の follow-up arc (時系列的に先, 18:14〜)、続いて recheck 枝 + 本セッション
+(20:17〜 + 06-12) を時系列順に並べる。両者は同一問題への独立探索で内容は相補的。 -->
+
+## Fable recheck: degree-reducing levers all NEGATIVE -- OnKartHit source-closed (2026-06-11, batch_fable_onkarthit_recheck2)
+
+Round 3's OPEN direction (attack the param's interference DEGREE instead of
+web-birth order) was probed with 4 structures from the 96.38% Appendix-B body,
+objdiff-only (no frida, no compiler contact): (1) hoisting victim's tail fields
+(dispatcher/state1f4) into pre-memset locals dropped match to 92.54% and moved
+the params DOWN (r25/r26) -- the two new late-born webs outrank them; (2) late
+param copies placed just before memset coalesce straight back (param-merge) and
+are BYTE-IDENTICAL to baseline, generalizing round 3 lever 2: copy position is
+irrelevant, the merged web keeps the param identity; (3) volatile-slot copies
+(coalescing physically broken; disasm-verified both param webs die at the stw
+at ~63% of the fn, zero interference with the entire bool/memset/mtx/dispatch
+tail) leave homes EXACTLY at r26/r27 (87.36%); (4) splitting the whole tail
+into a non-inlined static helper (params die at the call) shrinks the callee
+set and the params stay at its BOTTOM (r27/r28 of an r27-based pool, 52.82%).
+
+CONSEQUENCE: degree is NOT the pin -- no amount of live-range reduction
+re-ranks a param web, and adding/removing callee webs only shifts the params'
+absolute register while preserving their bottom rank. The coloring position of
+param webs is fixed by their identity (lowest web-birth keys 32/33), refuting
+round 3's open hypothesis. OnKartHit is source-closed within C: the
+params-on-top partition (self=r30/victim=r31) is unreachable from any tried
+source shape. Only untried route is outside C source space: the original is
+C++ (extab references dtor_80036E40; vcall residue r6-vs-r12 also hints at
+real virtual dispatch), and C++-specific web construction (this-call method
+form, reference params, real virtual calls) has never been probed against the
+GPR partition (Phase 2b's C++ negatives were class-2/frsp only). That probe is
+the LAST candidate before declaring the family fully closed. Probe harness:
+batch_fable_onkarthit_recheck2 worktree tmp/ (apply_and_measure.py, make_e3.py,
+make_e4.py, restore_baseline.py).
+
+## C++-form probe: register-identity family closed in BOTH C and C++ (2026-06-11, batch_fable_onkarthit_recheck2 follow-up)
+
+The last untried axis from the Fable recheck (C++-specific web construction) was
+probed with a standalone harness (worktree tmp/cpp_probe_run.py: compiles a
+single-fn TU with the production game_extab flags, dtk-disasm-based comparison
+so mangled C++ symbols work; P0 C-baseline validated to reproduce the in-TU
+instruction stream and partition exactly). Six variants, all measured on the
+96.38% body:
+
+- P1 (C, full prototypes), P2 (-lang=c++ free fn), P3 (this-call method form),
+  P4 (real virtual dispatch, base-less class), P4b (virtuals on a polymorphic
+  BASE class -- vptr at 0x0, every field offset byte-equal to target), and
+  P5 (reference param): **homes self=r26 / victim=r27 / bus=r30 in ALL of
+  them** (target r30/r31/r25). The GPR callee partition is invariant across
+  the entire C and C++ source space tried.
+
+VERDICT: the register-identity park family is CLOSED at the source level,
+in both languages. Phase 3 gate (prefix index 0 = OnKartHit) stays shut.
+
+Two byproducts that matter beyond OnKartHit (OBSERVED):
+1. Real C++ virtual dispatch emits the TARGET vcall shape -- `lwz r12,
+   0x0(rX); lwz r12, 0x8/0x34(r12); mtctr; bctrl` (r12-chained, both loads).
+   The C explicit-vt-struct spelling emits an r6 intermediate (`lwz r6,
+   0x0(rX); lwz r12, +off(r6)`) -- i.e. the recurring "vcall r6-vs-r12"
+   residue is a C-source artifact, fixable by compiling the TU as C++ with
+   real virtual classes. Any parked fn whose ONLY residue is vcall shape is
+   unlockable this way.
+2. CW 1.3.2 places the vptr of a base-LESS polymorphic class at the END of
+   the object (0x108 for the KartItemHit probe). The shipped binary has
+   vptr at 0x0 with members after, which under CW 1.3.2 requires the class
+   to DERIVE from a polymorphic base (P4b shape). Layout guidance for any
+   future C++ reconstruction of the game class hierarchy.
+
+Probe files: worktree tmp/probe_p0.c..probe_p5.cpp, probe_p4b.cpp,
+probe_common.h, probe_common_virtual.h, cpp_probe_run.py.
+
+## 訂正 + inline-composition probe: partition は動く、param-class flip pair も発見 (2026-06-11, batch_fable_onkarthit_recheck2 follow-up 2)
+
+**訂正**: 直前節の「register-identity family は C/C++ 両 source 空間で CLOSED」は過大だった。
+正しくは「**open-coded な (1 枚岩で書いた) C/C++ 形では到達不能**」まで。inline splice が web key を
+振り直す機構は HIE regime B で観測済みだったのに、composition (inline helper から locals を born
+させる) 軸を probe せずに closed と書いた。以下この軸の probe 結果 (全て OBSERVED、
+standalone harness + in-TU tu_probe.py)。
+
+### I1/I3: inline-splice composition は partition を動かす最初の lever
+
+bool quad を `static inline unsigned char FlagBit(u64 f, u64 mask)` accessor に変えただけ (I1) で:
+- **partition が初めて動いた**: bool 群が callee pool 上位へ昇格 (spliced web が高 key を取得)、
+  bus/param が押し下げ。返り値 merge は spliced 側の key を採用する (param-merge と非対称)。
+- **行数が 416=416 で target と一致** — callee-saved-bool li-coalescing 残差 (gap 4 行) が解消。
+  callee-def 14 行が target と 1:1 対応、b26=fresh / b25=bus の coalesce 構造も一致。
+- I3 (I1 + C++ method + real virtual) で vcall r12 残差も同時解消、71.15% (difflib LCS)。
+- **残差は「param 組 vs locals」の class 単位 permutation ただ 1 つ**に縮約。locals の相対順位
+  (rm > b28 > b27 > fresh > bus) は target と完全一致。
+
+### TU 全 fn scan: param 配置は per-fn にバラバラ、両極とも plain C で再現済み
+
+target TU の stmw 持ち 18 fn の prologue を scan (tmp/scan_param_class.py): param home は
+TOP (OnKartHit r30/r31, HIE r30/r31, OnFallOffOrDeath r31, StlList_RemoveByValueField r30/r31,
+Bitset_Init) / BOTTOM (CancelActiveEffect r24, ItemEffect_OnHit r22-24, Dispatch r27-29) /
+MID-MIX (OnItemHit r28/r29/r23, Init r31/r23, TryStartByCategory) が混在。**OnFallOffOrDeath
+(TOP) と CancelActiveEffect (BOTTOM) はほぼ同一構造のコードで、両方とも我々の plain C で
+matched 済み** — つまり compiler は同一、配置は source 構造の関数で、両極とも到達可能。
+
+### flip pair bisect: OFOD の sec web が param-class を flip する
+
+- OFOD から sec block (`sec = self->secondary; if (sec->itemId >= 0) {3 calls}`) を削る →
+  **self が r31 から r24 (bottom) に転落**。
+- 第 1 文の param store (`self->fellOffFC = 1`) は無関係 (移動/追加とも不動)。
+- strPcb tail 削除も無関係 (r31 のまま)。
+- sec の出生元を global に変えても r31 のまま (99.43%) — **param 派生である必要は無い**。
+  lever は「遅生まれ・call-crossing・callee pointer web の存在」(文脈依存、下記)。
+
+### I5: OnKartHit への単純移植は NEGATIVE
+
+sec-analog (global 由来の遅生まれ call-crossing pointer web) を OnKartHit に足しても
+param は r25/r26 (bottom) のまま。flip 条件は単一 web の存在ではなく web 集合の構成に依存する。
+
+### 統合 (仮説)
+
+元 binary は普通の C++ を普通に compile したもの。param 配置は web 集合構成で per-fn に決まり、
+原文の inline helper 合成 (accessor 多用) が web key 構成を我々の open-coded 再構成と変えていた、
+が最有力。OnKartHit の残課題は「param-class を top にする web 集合条件」の特定 1 点に絞られた。
+次の bisect 軸: OFOD と CAE の transplant matrix (CAE に sec block を足す / OFOD を CAE 形まで
+削る) で flip 条件を最小化 → OnKartHit の I3 形に適用。
+
+Probe assets: worktree tmp/ (probe_i1.c, probe_i3.cpp, probe_i5.c, scan_param_class.py,
+homes_detail.py, tu_probe.py + transform 群)。
+
+## OFOD-CAE transplant matrix + 再解釈: param rank は per-web、key model は不完全 (2026-06-11, batch_fable_onkarthit_recheck2 follow-up 3)
+
+### transplant matrix (in-TU tu_probe.py、全て OBSERVED)
+
+| probe | 内容 | self home | 判定 |
+|---|---|---|---|
+| M1 | CAE + OFOD の sec block 丸ごと | **r31 (TOP に flip)** | lever は sibling 間で transfer する |
+| M2c | CAE + 最小 late web (新規 call ゼロ、既存 call 2 本を跨ぐだけ) | r24 | 存在だけでは flip しない |
+| M2d | CAE + sec + 無条件 call + store (branch なし) | r24 | branch なしは flip しない |
+| M2a | CAE + sec + **if** + call 1 本 + store | **r31 (flip)** | **最小 flip 形 = 遅い条件 block + 内部 call + tested web** |
+| I8 | OnKartHit + dispatch 後に self 使用 | r26 | OnKartHit へは transfer せず |
+| I9 | OnKartHit tail を static inline helper 化 (inline 成功、416 行) | r25 | **param-merge は splice 境界でも param key を保持** (E2 / GetMaxSpeed と一貫。I1 の返り値 merge が spliced key を取るのと非対称) |
+
+OnKartHit には M2a 形 (fresh の if + 内部 CoinSystem_RemoveCoins call + 後続 self 使用) が
+baseline から存在するのに bottom — M2a 条件は CAE/OFOD 文脈でのみ十分条件で、一般条件は未特定。
+
+### 再解釈 (重要): 「param-class flip」という枠組みが誤り
+
+TU scan を見直すと、target では **同一 fn 内で param が分裂配置**される:
+- CarObject_HandleObstacleHit: r3→r30 (上から 2 番目)、r4→**r22 (最下位)**
+- CarObject_OnItemHit: r3→r28, r4→r29 (中位の連続)、r5→**r23** (離れて下位)
+- CarObject_Init: r3→r31 (最上位)、r4→r23 (最下位近く)
+
+つまり param は class として一括順位付けされるのではなく、**個別 web として locals と同じ
+順序列の任意位置に挿入される**。「param = 最低 web-birth key (32/33) → 常に最後に着色」の
+key model は、open-coded source からこの分裂配置を生成できない — **frida で観測した
+key-desc 順は (その source 形での) 部分像で、順序を決める未知の成分が残っている**
+(degree は E 系で否定済み、locals 間の decl 順 RULE2 は引き続き成立)。
+
+### 次 batch 仕様 (これが本命の研究 instrument)
+
+1. **whole-binary prologue scan**: build/GNLJ82/asm/ 全 TU で「param home の rank vs fn 特徴
+   (callee web 数 / loop 有無 / call 数 / fn size / param 数)」の相関 dataset を作る
+   (tmp/scan_param_class.py の一般化、~数百 fn)。param rank を予測する規則の発見が目標。
+2. CAE+M2a (flip ✓) を OnKartHit 形へ morph して flip が死ぬ成分を特定する (逆方向 morph)。
+3. 規則が見つかったら OnKartHit I3 形 (416 行一致、残差 = この順位 1 点) に適用 → promote。
+
+probe assets 追加: tmp/t_cae_plus_sec.py, t_cae_m2a.py, t_cae_m2c.py, t_cae_m2d.py,
+probe_i8.c, probe_i9.c (+ make_i9.py)。worktree green 維持 (tu_probe は毎回 TU を復元)。
+
+## whole-binary param-rank scan: renumbering は日常、key model の適用限界を定量化 (2026-06-11, batch_fable_onkarthit_recheck2 follow-up 4)
+
+instrument: tmp/scan_binary_params.py (build/GNLJ82/asm 全 TU、stmw fn の prologue から
+param copy の home を抽出)。dataset: tmp/param_rank_scan.tsv (672 fn / 1260 param copies)。
+
+OBSERVED:
+- param の配置分布はほぼ一様: top2 35% / mid 33% / bottom2 32%。粗い特徴量
+  (CTR loop 有無 / call 数 / fn size / pool size) との相関はどれも弱い (最大でも
+  manycalls→top の +0.15)。**決定的な粗視化特徴は存在しない**。
+- r3/r4 両方を copy する 237 fn の内訳: **57.0% が「r4 が r3 の 1 つ上」の隣接 pair**
+  (OnKartHit target と同形 = pair 内は key 降順)、7.2% が逆順隣接、**35.9% は分裂**
+  (gap 2-11、locals が param 間に割り込む)。
+- 我々の open-coded 再構成は常に「locals 全部 > params」の正準形を出す。binary は
+  params の位置が一様に散る。
+
+解釈 (仮説、高確度): web-birth key は IR pipeline の処理順で振られ、optimizer の各 pass
+(inliner splice は観測済み、他にも value numbering の再走等) が web を param key (32/33) の
+前後任意の位置に renumber する。整数 key の間に locals が割り込む分裂 35.9% は renumbering が
+日常的である直接証拠。原文 (inline accessor 多用の C++) と open-coded 再構成の差はここに出る。
+粗視化特徴で予測できない以上、**規則の同定には IR レベルの観測が必要**。
+
+次 batch 推奨: Phase 2f-2 で確立済みの IR dump (private copy の 1-byte patch、53 pass の
+named IR、frida 不要・shipped compiler 無傷) を使い、OnKartHit の我々の source 変種
+(baseline / I1 / I3 / I9) の web 生成順を pass ごとに比較 → param rank を動かす pass と
+source 条件を特定する。当たれば I3 形 (残差 = 順位 1 点、行構造 416=416 一致) が落ちて
+Phase 3 gate 再オープン。
+
+assets: tmp/scan_binary_params.py, tmp/param_rank_scan.tsv, tmp/pair_adjacency.py。
+
+## IR-dump 検証 + session 境界: rank rule は frida channel 必須と確定 (2026-06-11, batch_fable_onkarthit_recheck2 follow-up 5)
+
+Phase 2f-2 の IR dump (private copy 1-byte patch、enable_ir_dump.py) を初めて**実関数規模**で
+検証した。shipped compiler は無傷 (SHA-1 d8f9c36d... 前後確認、patched copy は実験後削除)。
+
+OBSERVED:
+- OnKartHit (0x680) で dump 発火: **76 pass dumps、209k 行** (probe_p1.log)。banner の pass 名は
+  空白入りがある ("Copy and constant propagation" 等) — パーサは行末まで取ること。
+- I1 (inline FlagBit) の dump では **b25-b28 が最終 IR から named operand として消滅**
+  (spliced 返り値 temp に吸収) — I1 で bool 群が昇格した機構の IR レベル可視化。
+- 最終 pass の named-operand 出現順は coloring 順と単調対応しない (P1 で検証:
+  IR 順 self,bus,ok,victim,rm,... vs coloring 順 rm,bus,fresh,b26,victim,self,b25)。
+  **dump は pre-codegen で web key を含まない** — note 既載の caveat を実データで確認。
+  IR-dump 経路では rank rule に到達できない (この経路は closed)。
+- 追加 negative: `register` storage class hint は -O4 で完全無視 (R1、bit 単位で baseline 同一
+  homes)。axis closed。
+- 補足: frida round-3 の key 表 (bus=52 > bools=46-51、bus が textually 先なのに key が上) は、
+  key が source 出生順ですらないことを既に示していた。key は codegen 内 VN の産物で、
+  source からの予測規則は依然未知。
+
+結論: param rank rule の同定に必要な観測 (web key を colorer 直前で読む) は **frida hook
+channel のみ** (Phase 2f-3 で実証済みの手法)。本 session は frida 不使用の制約があるため
+ここが境界。素材は揃った:
+- I3 形 = 行構造 416=416 一致、残差は 7-web permutation 1 点
+- 比較対象 source 変種一式 (P1/I1/I3/I9 + E/M 系) と各 homes 実測値
+- whole-binary rank dataset (param_rank_scan.tsv)
+
+次 batch (frida 可の session で): frida_colorer_probe.js の手法で P1/I1/I3 の web key を実測 →
+「source 編集が key をどう動かすか」の差分表を作る → I3 の permutation を target
+(victim>self>rm>b28>b27>fresh>bus) に置く key 構成を逆算 → promote。
+
+## frida colorer 直接観測 — OnKartHit park の機構を runtime で確定 (2026-06-11, batch_fable_onkarthit_recheck2 follow-up 6)
+
+verified colorer reader (tools/compiler_probe/frida_colorer_probe.js、Phase 2f-3 手法) を
+OnKartHit probe 群に初適用。private copy spawn・runtime hook のみ、shipped compiler は無傷
+(SHA-1 d8f9c36... 前後確認、tmp_probe は実験後削除)。driver: tmp/colorer_run.py、
+解析: tmp/clique.py / tmp/tu_cliques.py。
+
+### OBSERVED: param web key は構造的に最小・不変
+
+- P1/I1/I3/I9 全変種で **self=key32 / victim=key33** で完全固定。inline splice は bool 群の
+  key を振り直す (I1: bools 61-68、I3: 57-64) が param key には一切触れない。
+- 合成 probe (tmp/syn_firstuse.c): param を**最後に使用**しても key 32/33 のまま、late-born
+  locals が key 34-38。**key は first-use 順ではなく entry 順、param は最小 key に pin**。
+  これで round-3 以来の「param を late born させる source lever」探索が原理的に閉じた:
+  incoming param web の key は source で上げられない。
+
+### OBSERVED: pop 順は descending-key ではなく dynamic Chaitin simplify
+
+- OnKartHit P1 の callee clique pop 順 = rm(k94,adjN102) > bus(k52,77) > bools(k47-51) >
+  victim(k33,**adjN137**) > self(k32,**adjN135**)。self/victim は **clique 最大 degree かつ最小
+  key** で最後に pop → r26/r27 (最下位)。
+- 反例 OnItemHit (matched C、step1 webCount=132): pop 順 = k52(adjN49) > k51(48) >
+  **victim k33(adjN29) > self k32(adjN90)** > [gap] > locals k34-50。**param が中位 (r28/r29)**、
+  local 群 (key は param より高い 34-50) が r22-r27 で param の**下**。
+  → pop 順は単純な key 順でも degree 順でもなく、**dynamic simplify-stack 順** (低 dynamic-degree
+  ほど早く stack 底へ → 最後に pop → 低 reg)。clique が degree 一様 (合成 probe) のときだけ
+  descending-key に縮退する。
+
+### 機構の確定 (OBSERVED + 仮説)
+
+OnKartHit の self/victim が最下位なのは **(a) 最小 key (param 固定) と (b) 最大 degree (entry〜
+末尾 virtual dispatch まで全域 live) の同時成立**。target は同じ self/victim を r30/r31 (最上位) に
+置く = pop 最初 = この clique で最後まで simplify されず残る = それには degree が「途中で密なまま
+残る」特定構造が要る。OnItemHit で param が中位に乗れたのは victim の degree が 29 と低い
+(末尾まで live でない) ため。**OnKartHit で self/victim を top-2 に乗せるには degree を OnItemHit
+並みに下げる必要があるが、両者とも末尾 dispatch で param を直接使うため source 上 degree を
+下げられない** (E1 の tail-field hoist は新 high-key web を生んで逆効果、E3/E4 の degree 削減は
+param web が clique に残留)。
+
+### 結論
+
+- **promote 0**。ただし「C/C++ source-closed」とは断定しない: OnItemHit が param-mid を実証して
+  おり、param が最下位に固定なわけではない。**未達は「self/victim を同時に top-2 に乗せる
+  degree 構造」が source 上で作れていない 1 点**に絞られた (round-3 の degree 仮説は「degree が
+  pin」までは正しく、「degree を下げれば動く」が実装上不可能、が精密化された結論)。
+- 機構は frida で完全に runtime 観測済み: web key の source 不変性 + dynamic simplify pop 順 +
+  degree が reg を決める、の 3 点。これ以上の lever は colorer の simplify-stack 構築規則
+  (FUN_00507b50 の low-degree 除去順) を step 単位で追う必要があり、本探索の費用対効果境界。
+
+assets: tmp/colorer_run.py, clique.py, tu_cliques.py, syn_firstuse.c, syn_ptr.c,
+colorer_{P1,I1,I3,I9,E3,SYN,SYNP,TU}.log。
+
+## colorer simplify 規則を逆アセンブルで導出 — OnKartHit の descending-key を機構確定 (2026-06-11, batch_fable_onkarthit_recheck2 follow-up 7)
+
+follow-up 6 の「dynamic Chaitin で degree が効く」を、FUN_00507b50 (simplify-stack builder) の
+逆アセンブル (llvm-objdump) + push サイト trace で規則レベルまで詰めた。
+
+### OBSERVED: FUN_00507b50 のアルゴリズム (逆アセンブル)
+
+- threshold k = `call 0x4fd650(class)` を `[esp]` に保持。
+- main loop (0x507b82-0x507be3): node index ecx を lowReg→webCount で走査。各 node の
+  degree `[+0x12]` を k と比較。**degree < k なら trivial 除去**: 隣接の degree を decrement
+  (0x507ba1 loop)、flag 0x2 set (0x507bbc)、ebp stack に prepend (0x507bc1-3)。
+  **degree >= k なら ebx leftover list へ** (0x507bd0)。
+- leftover が残れば spill-pick section (0x507c02-0x507caa): 各 node の **ratio = degree/cost
+  (`[+0x12]` / `[+0x0c]`、fild+fdivrp)** を計算、最小 ratio の node を 1 個 optimistic-spill 除去
+  して ebp へ。degree>=k の node は ratio を定数 `[0x5bbb24]` (= +inf 相当) に置換。
+- SELECT (FUN_00507a30) は ebp の **head (= 最後に push = 最後に除去)** から着色、各 node に
+  最低番号の空き reg を割当。
+
+→ **除去順 = ebp push 順、着色順 = その逆 (head-first)**。最後に除去された node が最初に着色 =
+最高 reg (r31)。最初に除去された node が最後に着色 = 最低 reg。
+
+### OBSERVED: OnKartHit は graph が k-colorable → 除去は昇順 key、着色は降順 key
+
+push サイト trace (tmp/frida_simplify_probe.js、0x507bbc/0x507ca1 hook):
+- **spill 除去はゼロ**、全 node が trivial 除去。dyndeg=90 (key94) でも trivial =
+  **k は large (> 90)**。OnKartHit の interference graph は spill 不要 = k-colorable。
+- 除去は **node index (key) 昇順** (seq0=key34, seq1=key35, ... 単調増加)。main loop の
+  ecx 昇順走査そのまま。
+- ∴ ebp は key 昇順 push = head が最高 key。SELECT は head から = **着色は key 降順**。
+  これが follow-up 6 で見た clique color order = descending key (94,52,51,50,49,47,33,32) の
+  正体。callee に乗る高 degree node が key 降順で r31→r25、param (key32/33 = 最小) が最後 →
+  最低 callee reg (r26/r25)。
+
+### 導出された OnKartHit park の機構 (CONFIRMED)
+
+1. value-numbering で incoming param web は最小 key 32/33 に固定 (follow-up 6 の syn_firstuse で
+   first-use 順を否定済み、source 不変)。
+2. OnKartHit の graph は k-colorable → simplify は key 昇順除去 → SELECT は key 降順着色。
+3. ∴ param (最小 key) は必ず最後に着色 = 最低 callee reg。target の self=r30/victim=r31 は
+   param が最高 key であることを要求するが、(1) によりこれは生成不能。
+
+**= OnKartHit の param-bottom は k-colorable graph + 最小 key param の合成として機構的に閉じている**。
+round-3〜follow-up 5 の探索 (degree 削減 / inline / C++ / transplant) が全て効かなかった理由が
+これで説明される: どれも param の key を上げられず、graph は常に k-colorable のまま。
+
+### 残る非自明: OnItemHit はなぜ param-mid か (未完)
+
+OnItemHit (matched) は color order が降順 key でない (52,51,33,32,50,...) = param が中位。
+これは (a) graph が非 k-colorable で spill-pick が ratio 順に並べ替える、または (b) coalescing が
+param を別 key の web に統合する、のいずれか。OnKartHit との差はここ。ただし OnKartHit 自身は
+k-colorable と確認済みなので、OnItemHit 機構を解いても OnKartHit には転用できない見込み
+(OnKartHit を非 k-colorable にする = register pressure を spill するまで上げる source 改変は
+命令列を破壊する)。
+
+### 結論
+
+OnKartHit は **k-colorable graph 上の key-降順着色で param が最小 key に pin される** ため
+source-closed。promote 0 だが、park の理由を **compiler の coloring アルゴリズムの逆アセンブルから
+導出** した (黒箱の "register-identity park" が完全に white-box 化)。Phase 3 gate は機構的に閉。
+これは register-identity family 全体 (同じ k-colorable + 最小 key param 構造を持つ park fn) に
+適用される一般原理。
+
+assets: tmp/frida_simplify_probe.js, simplify_run.py, simplify_P1.log (partial),
+colorer_P1cost.log。逆アセンブル根拠: FUN_00507b50 @ 0x507b50。
+
+## 訂正: follow-up 7 の「機構的に閉」は誤り — spill-cost ratio が真の lever (2026-06-11, follow-up 7 訂正)
+
+follow-up 7 で「k-colorable → 降順 key → param 最下位で source-closed」と書いたが**誤り**。
+決定的反例: **target 自身が命令数同一 (416 行、余分な spill 命令なし = k-colorable) なのに
+param が top (self=r30/victim=r31)**。OnItemHit (matched, param 中位) も同様。
+∴ k-colorable graph でも param を上位に乗せられる。「全 trivial → 降順 key」は OnKartHit の
+ある source 形でたまたま成立しただけで、一般則ではない。
+
+逆アセンブル (FUN_00507b50 spill-pick section 0x507c02-0x507caa) を読み直すと真の規則が出る:
+simplify が trivial 除去で行き詰まると、leftover の中から **ratio = degree/cost
+(`[+0x12]`/`[+0x0c]`、後者は spill-cost numerator ≒ loop 加重の使用回数)** が**最小**の node を
+optimistic-spill 除去する。最小 ratio = 先に除去 = stack 底 = **最後に着色 = 最低 reg**。
+
+→ param が低 reg になる条件 = **degree/cost 比が小さい = degree 高 かつ 使用回数 (cost) 大**。
+- OnKartHit self/victim: degree 最大 (135/137) **かつ self->X が ~20 箇所で使用回数も最大** →
+  ratio 最小 → 最低 reg。
+- OnItemHit param: degree 高だが**使用回数が相対的に少ない** → ratio 大 → 後で除去 → 高 reg。
+
+**真の lever = param の使用回数 (spill cost) を下げること** (degree ではない。follow-up 5 の degree
+削減が効かなかったのは degree が分子で、分母の cost を放置していたため)。これは未検証 = 次の実験軸。
+仮説: self の頻出 sub-object (ownerDriver/movement/soundCtrl/vt) を関数冒頭でローカルに退避し
+`self->` の直接使用回数を減らすと self web の cost が下がり ratio が上がって高 reg に動く可能性。
+ただしキャッシュ先ローカルが uses を引き継ぐので、param web の cost だけ選択的に下げられるかが鍵。
+Phase 3 gate は「閉」ではなく「この cost lever 次第で再オープンの可能性」に再訂正。
+
+## cost lever 実検証 + 正直な総括 (2026-06-11, follow-up 8)
+
+cost lever (param 使用回数を下げる) を C1 で実検証: self の sub-object (ownerDriver/movement/
+soundCtrl) を冒頭ローカルにキャッシュし `self->` 直接使用を削減。
+**結果: NEGATIVE。self は r26→r25 に逆に低下** (cache local od/mv/sc が高 reg を奪い、self が沈む)。
+cost を下げても運ぶ web が競合する = E2/E3 と同じ罠。素朴な cost 削減は不可。
+
+### 未解決の核心 (正直な現状)
+
+target は **命令数ほぼ同一 (416 行、register 番号のみ差) で param top**。命令列が同じなら
+interference graph・degree・cost・use-count も同じはずで、coloring も同じになるべき。唯一
+異なり得るのは **web-birth key (value-numbering 順、source 式構造依存で最終命令列に出ない)**。
+だが param key は entry 順で 32/33 固定 (syn_firstuse で実証) = source で上げられない。
+→ **「命令同一・key 固定なのに target は param top」という矛盾が未解決**。coalescing 方向か、
+simplify の未観測な tie-break が残っている可能性。~30 実験 + colorer white-box 解析でも
+source 形は未発見。
+
+### 結論 (確定事項と未確定の分離)
+
+- **確定**: colorer は graph-coloring (FUN_00507b50 simplify + FUN_00507a30 select)、param web は
+  最小 key 32/33 固定、k-colorable graph では概ね key 降順着色。これらは逆アセンブル + runtime で
+  white-box 確定済み。
+- **未確定**: target の param-top を生む source 形。"source-closed" とも "到達可能" とも断定できない
+  (follow-up 7 の「閉」は撤回済み、本 follow-up 8 で「未解決」が正しい状態)。
+- **build 状態**: OnKartHit は asm_fn で **既に byte-identical (SHA-1 OK)**。未達成なのは「clean C
+  decompile を持つ」点のみで、build/match は完成済み。
+
+### 推奨 (ROI)
+
+OnKartHit 1 関数に round-3 以降だけで ~40 実験を投入。clean C 化の ROI は極めて低い。
+**asm_fn のまま keep し (既に byte-identical)、他 TU の pending fn (1-6 build で match する mega-bundle
+本流) に pivot する**のが妥当。colorer の white-box 知見 (k-colorable 判定 = param park の早期予測)
+は他の register-identity park fn の **撤退判定の高速化**に再利用できる = 本探索の実利成果。
+
+## degree lever 確定 — multi-pass simplify model + family 診断 (2026-06-11, follow-up 9)
+
+follow-up 8 の「閉/未解決」から前進。**正しい coloring model を確定し、param-park を動かす lever を
+実証**した。spill-only tracer (tmp/frida_spill_probe.js、低頻度サイト 0x507ca1 のみ hook で
+crash 回避) で TU 全 57 関数を観測。
+
+### OBSERVED: 真の model = multi-pass simplify (spill 不在)
+
+- **TU 全関数で spill 除去ゼロ** = 全て k-colorable。しかし OnItemHit (param 中位) のように
+  color order が降順 key でない関数が存在 → 「all-trivial = 純粋降順 key」は誤り。
+- 正しい規則: simplify は **multi-pass**。各 pass で dynamic-degree < k の node を index(key) 昇順に
+  除去。**高 degree node は degree が k 未満に落ちるまで複数 pass 生き残る → 遅い pass で除去 →
+  早く着色 → 高 reg** (spill なしで)。k ≒ 91-100 (trace: dyndeg=90 は trivial 除去、adjN=102 は
+  当初 deferred)。
+- color order = pass 群 (遅い pass 順) × pass 内 descending key。
+- OnKartHit: param (deg135/137) と rm(102)/bus(77)/bools(33-46) が相互干渉して**同一の最終 pass**で
+  崩れる → pass 内 descending key → param (最小 key 32/33) が最後 → 最低 reg。
+- OnItemHit: param が local より高 degree で**遅い pass**に分離 → param が上。
+
+### OBSERVED: degree lever 実証 (D1/D2)
+
+param ではなく **高 degree local の live range を削る** と param が上がる (従来の全 lever の逆):
+- D1 (rm を 3 箇所で短命再計算に分割): **self r26→r27, victim r27→r28** に上昇。rm web が
+  param の最終 pass から脱落。
+- D2 (D1 + bus も短命化): self r27 で頭打ち。bus を剥がしても bools が壁。
+- 天井 = **r27**。bools (key47-51、4 個) が dispatch で param と正当に co-interfere するため
+  param の最終 pass に残り、within-pass descending key で param の上を取る。bools を volatile 化
+  しないと param は r28 以上に行けない (bools は branch 選択に 4 個同時 live 必須で volatile 化困難)。
+
+### family 診断 + lever (再利用可能な一般原理)
+
+**診断**: param が低 reg に park する条件 = 「param より **高い web-key の callee local** が、param の
+**最終 simplify pass で co-interfere** している」。これは frida colorer (clique の pop order + adjN) で
+即判定できる。
+
+**lever**: その co-interfere する高 key local の **live range / web 数を削り、param の最終 pass から
+脱落させる**。local を早い pass で消せば param が繰り上がる。命令列を壊さずに local を短命化できる
+関数なら promote 可能。
+
+**適用限界**: param と最後まで正当に co-interfere する local (OnKartHit の bools のように branch 選択で
+同時 live が必須なもの) は剥がせない = その関数は degree lever だけでは天井あり。
+
+### OnKartHit 固有の残課題 (未解決、coalescing 未 trace)
+
+決定的矛盾は未解決のまま: **target は self/victim を 1 回だけ書く単一 web (row4/5、reload なし)、
+命令ほぼ同一・key 32/33・max degree なのに r30/r31**。同一 graph に決定的アルゴリズムが違う色を
+付けている = model にまだ欠けた因子。最有力候補 = **coalescing** (simplify 前段 FUN_0057a1f0、
+本探索で未 trace)。target の param が高 key web と coalesce して effective key が上がっている可能性。
+次の一手: coalescing union-find を trace し、merged web の key 選択規則を読む。
+
+### 結論
+
+degree lever は確定・family 適用可。OnKartHit は bools の co-interfere で degree 天井 r27、
+かつ命令同一で target が param-top を出す機構 (coalescing 疑い) が未解明のため依然 park。
+ただし「park = 動かせない」ではなく「**動かす条件が判明**」した点が follow-up 9 の成果。
+assets: tmp/frida_spill_probe.js, spill_run.py, make_d1.py/make_d2.py, probe_d1.c/d2.c,
+colorer_D1.log。
+
+## 訂正 — 「命令同一なのに param-top」の矛盾は偽の前提だった (2026-06-11, follow-up 10)
+
+follow-up 8/9 で「target は命令同一 (register 番号のみ差) なのに param-top = 決定的アルゴリズムが
+同一入力に違う出力 = model に欠けた因子」と書いたが、**前提が誤り**だった。
+
+register 番号をマスクして target vs baseline(P1) を厳密 diff (tmp/reg_normalized_diff.py) した結果:
+- **reg-masked similarity 92.11%、真の命令差 37 箇所** (register swap 以外)。命令は**同一ではない**。
+- 内訳: **+4 個の `li rXX, 0`** (baseline は callee-saved bool b25-b28 の 0 初期化を明示 `li 0` で
+  出す。target は branch-over `bne L; b L` で fold = class-1 li-coalescing 残差。行数 416 vs 420 の差)。
+  **fsubs の schedule/operand 差** (s.d[] 計算の fp web 構造が違う、`fsubs f4,f4,f1` vs `fsubs f5,f3,f1`)。
+
+→ **矛盾は解消**。target は web graph が実際に baseline と違う (bool webs の数 + fp temp 構造)。
+だから coloring が違って param-top になる。follow-up 8/9 の「決定的矛盾」は 96.38% の objdiff-fuzzy を
+「register 以外同一」と誤読した私のミス。follow-up 7 の「閉」撤回自体は正しい (source-closed と
+断定すべきでない) が、その根拠にした「命令同一」論拠は無効。
+
+### 含意 (brief の framing が正しかった)
+
+元 brief「96.38% の残差 = 1 つの partition 決定 + 下流症状 (callee-bool li-coalescing, vcall r6/r12,
+fp f3/f5 swap)。partition が直れば下流 self-correct」は **正しい**。逆も真: **+4 li-0 と fp schedule は
+partition の症状**。bool が callee-saved (dispatch 跨ぎで live) だから li-0 が volatile zero と coalesce
+できず明示 li になり、bool web が target と別構造になり、それが coloring を歪める — 全部 1 つの
+coupled knot。degree lever (follow-up 9) で local を剥がして param を上げるのと、bool を volatile 化して
+li-0 を消すのは、同じ partition を別角度から押す試み。
+
+### 現状の正確な要約
+
+- **確定した機構** (white-box): multi-pass simplify、param web 最小 key 固定、高 degree local が
+  param の最終 pass で co-interfere すると param が下、degree lever で local を剥がせば param 上昇
+  (D1 実証)。
+- **OnKartHit が解けない理由**: bool 4 個が dispatch の branch 選択で同時 live 必須 = 正当に callee-saved
+  かつ param と co-interfere。degree lever の天井 r27 (follow-up 9)。bool を volatile 化する source 形が
+  あれば li-0 消滅 + bool 脱 clique + param 上昇が同時に起きる可能性 — これが唯一の未試行の有望軸。
+- **未試行の具体策**: dispatch の if-chain を、4 bool を同時に保持しない形 (各 branch 判定を inline 化
+  して bool を短命 volatile temp にする、または switch/ネスト if で同時 live 数を 4→1-2 に減らす) に
+  書き換え、li-0 が消えて bool が clique を抜けるか測る。follow-up 9 の degree lever を bool に適用する版。
+
+assets: tmp/reg_normalized_diff.py。
+## マイルストーン: EF で命令列が target と完全一致 — 残差は純粋 coloring (2026-06-11, follow-up 11b)
+
+follow-up 11 の bool 読解 (target も li-0 を出すが pre-init 位置、baseline は ==0 アームで冗長 li-0) に
+基づき、dispatch の 4 bool を **単一アーム形 `b=0; if((flags&mask)!=0) b=1;`** に書換 (EF)。
+結果: **EF vs target = 416=416 行、reg-masked similarity 100.00%、非 register 差ゼロ**。
+li-0・fp schedule・全命令構造が一致、**残差は register 番号 (= coloring/partition) のみ**に分離。
+
+これは探索全体の転換点: 「命令同一なのに param-top」の矛盾は follow-up 10 で偽 (baseline は +4 li-0) と
+判明していたが、EF でその +4 を消し、**今度こそ本当に命令完全一致**を作れた。以降は instruction-locked な
+EF を base に、source 式/宣言順で web key を変えて coloring を target (self=r30/victim=r31/rm=r29/
+bus=r25/bools=r26-28) に合わせる純粋 coloring 問題。
+
+EF clique (colorer 実測): key94→r31, 52→r30, 51/50/49→r29-30(coal), 47/46→r27-28(coal),
+**key33→r26, key32→r25** (params 最下位)。baseline (r26/r27) より 1 段低い = 単一アーム化で web が
+1 個増えた副作用。次: EF base で宣言順 sweep。checkpoint = tmp/CHECKPOINT_ef_instr_matched.c。
+
+## EF base の coloring sweep — 宣言順は不動、残差は coalesce/web 構造 (2026-06-11, follow-up 12)
+
+EF (命令一致 base) で宣言順・式順 sweep (tmp/sweep_ef.py、5 変種): rm-first / bools-first /
+bus-last / param-copy 全て **self=r25/victim=r26 で不動**。EF の partition は宣言順 (RULE2) で
+動かない = graph 構造で固定。
+
+→ 命令一致まで来た以上、target との残差は **value-numbering の web 構造差 (coalescing / web split)**
+にのみ存在。EF の bool は coalesce 済 (key46-51 が r27-r30 に併合)、param は単一 pass の降順 key 末尾
+(key32/33 最小) で最下位。target は param を後 pass に分離 (= 別の coalesce/web 構造) して上位に
+乗せている。source からこの web 構造を作る形は本探索 (~50 実験) で未発見。
+
+### 今探索の到達点 (確定成果)
+
+1. **EF 形 = dispatch bool の単一アーム化 (`b=0; if((flags&mask)!=0) b=1;`) で命令列が target と
+   完全一致** (reg-masked 100%、+4 li-0 消滅)。OnKartHit を純粋 register-allocation 問題に分離。
+   この単一アーム形は **callee-bool li-0 残差を持つ全 fn に効く一般 fix** (li-coalescing sub-family)。
+2. **colorer を white-box 化**: multi-pass simplify (FUN_00507b50) + select (FUN_00507a30)、
+   逆アセンブル + frida runtime trace で導出。param web 最小 key 固定、within-pass 降順 key、
+   高 degree node は遅い pass で除去 → 高 reg。
+3. **degree lever 実証** (D1/EC/ECD): 高 degree local の live range を削ると param 上昇
+   (baseline r26 → EC bools-volatile r27 → ECD +rm r28)。命令を壊すので match には使えないが
+   partition が degree-reachable と実証。
+4. **family 診断確立**: park = param より高 key の callee local が param の最終 simplify pass で
+   co-interfere。colorer clique の pop order で即判定可。撤退/着手判定の高速化に再利用。
+
+### 残課題 (next session、coalescing trace)
+
+OnKartHit promote の唯一の残ブロッカー = **EF (命令一致) base で param を後 pass に分離する
+coalesce/web 構造を source から作ること**。次の一手: coalesce union-find (FUN_0057a1f0 /
+FUN_00579cf0) を trace し、(a) どの web が併合され survivor が何 key を取るか、(b) target の param が
+高 key web と coalesce して effective key が上がっているか、を読む。EF が命令一致 base なので
+coloring だけの差に集中できる = 過去より遥かに有利な出発点。checkpoint = tmp/CHECKPOINT_ef_instr_matched.c。
+
+build 状態: OnKartHit は asm_fn で byte-identical 維持 (SHA-1 OK)。EF は clean C 化の最有力 base
+(命令一致・coloring のみ残差)。
 
 
 ## OnKartHit Fable recheck: "EF instr-matched" RETRACTED; residual is coalescing, not degree (2026-06-11, batch_fable_onkarthit_recheck2)
