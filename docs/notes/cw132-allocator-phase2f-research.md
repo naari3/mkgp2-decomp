@@ -1215,3 +1215,39 @@ bus=r25/bools=r26-28) に合わせる純粋 coloring 問題。
 EF clique (colorer 実測): key94→r31, 52→r30, 51/50/49→r29-30(coal), 47/46→r27-28(coal),
 **key33→r26, key32→r25** (params 最下位)。baseline (r26/r27) より 1 段低い = 単一アーム化で web が
 1 個増えた副作用。次: EF base で宣言順 sweep。checkpoint = tmp/CHECKPOINT_ef_instr_matched.c。
+
+## EF base の coloring sweep — 宣言順は不動、残差は coalesce/web 構造 (2026-06-11, follow-up 12)
+
+EF (命令一致 base) で宣言順・式順 sweep (tmp/sweep_ef.py、5 変種): rm-first / bools-first /
+bus-last / param-copy 全て **self=r25/victim=r26 で不動**。EF の partition は宣言順 (RULE2) で
+動かない = graph 構造で固定。
+
+→ 命令一致まで来た以上、target との残差は **value-numbering の web 構造差 (coalescing / web split)**
+にのみ存在。EF の bool は coalesce 済 (key46-51 が r27-r30 に併合)、param は単一 pass の降順 key 末尾
+(key32/33 最小) で最下位。target は param を後 pass に分離 (= 別の coalesce/web 構造) して上位に
+乗せている。source からこの web 構造を作る形は本探索 (~50 実験) で未発見。
+
+### 今探索の到達点 (確定成果)
+
+1. **EF 形 = dispatch bool の単一アーム化 (`b=0; if((flags&mask)!=0) b=1;`) で命令列が target と
+   完全一致** (reg-masked 100%、+4 li-0 消滅)。OnKartHit を純粋 register-allocation 問題に分離。
+   この単一アーム形は **callee-bool li-0 残差を持つ全 fn に効く一般 fix** (li-coalescing sub-family)。
+2. **colorer を white-box 化**: multi-pass simplify (FUN_00507b50) + select (FUN_00507a30)、
+   逆アセンブル + frida runtime trace で導出。param web 最小 key 固定、within-pass 降順 key、
+   高 degree node は遅い pass で除去 → 高 reg。
+3. **degree lever 実証** (D1/EC/ECD): 高 degree local の live range を削ると param 上昇
+   (baseline r26 → EC bools-volatile r27 → ECD +rm r28)。命令を壊すので match には使えないが
+   partition が degree-reachable と実証。
+4. **family 診断確立**: park = param より高 key の callee local が param の最終 simplify pass で
+   co-interfere。colorer clique の pop order で即判定可。撤退/着手判定の高速化に再利用。
+
+### 残課題 (next session、coalescing trace)
+
+OnKartHit promote の唯一の残ブロッカー = **EF (命令一致) base で param を後 pass に分離する
+coalesce/web 構造を source から作ること**。次の一手: coalesce union-find (FUN_0057a1f0 /
+FUN_00579cf0) を trace し、(a) どの web が併合され survivor が何 key を取るか、(b) target の param が
+高 key web と coalesce して effective key が上がっているか、を読む。EF が命令一致 base なので
+coloring だけの差に集中できる = 過去より遥かに有利な出発点。checkpoint = tmp/CHECKPOINT_ef_instr_matched.c。
+
+build 状態: OnKartHit は asm_fn で byte-identical 維持 (SHA-1 OK)。EF は clean C 化の最有力 base
+(命令一致・coloring のみ残差)。
