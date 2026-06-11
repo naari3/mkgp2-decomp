@@ -1,0 +1,51 @@
+li r4, 0x0
+lwz r5, 0x28(r3)
+lfs f3, lbl_806D26EC(r2)
+mr r6, r4
+lfs f0, lbl_806D26FC(r2)
+b L
+LABEL
+lwz r3, 0x0(r7)
+lfs f1, 0x8(r7)
+lfsx f2, r3, r6
+fsubs f1, f2, f1
+fabs f1, f1
+frsp f1, f1
+fcmpo cr0, f1, f0
+bge L
+lwz r3, 0x8(r5)
+slwi r0, r4, 3
+lwz r4, 0x24(r5)
+mulli r3, r3, 0x18
+lwzx r3, r4, r3
+add r3, r3, r0
+lfs f3, 0x4(r3)
+b L
+LABEL
+addi r6, r6, 0x8
+addi r4, r4, 0x1
+LABEL
+lwz r0, 0x8(r5)
+lwz r3, 0x24(r5)
+mulli r0, r0, 0x18
+add r7, r3, r0
+lwz r0, 0x4(r7)
+cmpw r4, r0
+blt L
+LABEL
+lbz r0, 0x22(r5)
+cmplwi r0, 0x1
+bne L
+lfs f0, lbl_806D276C(r2)
+fcmpo cr0, f3, f0
+cror eq, gt, eq
+bne L
+fmr f3, f0
+LABEL
+lfs f1, lbl_806D2770(r2)
+lfs f2, lbl_806D26FC(r2)
+lfs f0, 0x2e0(r5)
+fmuls f1, f1, f3
+fadds f0, f2, f0
+fmuls f1, f1, f0
+blr

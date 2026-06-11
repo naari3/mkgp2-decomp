@@ -1131,7 +1131,7 @@ void CarObject_ApplyInput_AI(CarObjInputAIView *self, unsigned char active, floa
 void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3);
 asm void *KartItem_Dtor(void *self, short flag);
 asm void CarObject_Init(void);
-asm void KartItem_UpdateShadowBillboardAndViewport(void);
+void KartItem_UpdateShadowBillboardAndViewport(KartItemOpsView *self, int arg2, int arg3);
 asm void KartItem_AdvanceAnim3c(void);
 asm void CarObject_CalcSpeedRatio(void);
 asm void KartItem_GetMaxSpeedWithBonus(void);
@@ -6526,148 +6526,62 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     blr
 }
 
-asm void KartItem_UpdateShadowBillboardAndViewport(void) { /* 0x8004EDD4 size:0x204 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stfd f31, 0x20(r1)
-    psq_st f31, 0x28(r1), 0, 0
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    stw r29, 0x14(r1)
-    stw r28, 0x10(r1)
-    mr r29, r3
-    mr r30, r4
-    lwz r3, 0x40(r3)
-    mr r31, r5
-    lwz r3, 0x4(r3)
-    bl ItemStateGuard_IsActive
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne KartItem_UpdateShadowBillboardAndViewport_L_8004EE30
-    lwz r3, 0x38(r29)
-    mr r4, r30
-    mr r5, r31
-    bl ShadowBillboard_StepSimple
-    b KartItem_UpdateShadowBillboardAndViewport_L_8004EFB0
-    KartItem_UpdateShadowBillboardAndViewport_L_8004EE30:
-    li r5, 0x0
-    lwz r3, 0x28(r29)
-    lfs f31, lbl_806D26EC(r2)
-    mr r6, r5
-    lfs f0, lbl_806D26FC(r2)
-    b KartItem_UpdateShadowBillboardAndViewport_L_8004EE90
-    KartItem_UpdateShadowBillboardAndViewport_L_8004EE48:
-    lwz r4, 0x0(r7)
-    lfs f1, 0x8(r7)
-    lfsx f2, r4, r6
-    fsubs f1, f2, f1
-    fabs f1, f1
-    frsp f1, f1
-    fcmpo cr0, f1, f0
-    bge KartItem_UpdateShadowBillboardAndViewport_L_8004EE88
-    lwz r4, 0x8(r3)
-    slwi r0, r5, 3
-    lwz r5, 0x24(r3)
-    mulli r4, r4, 0x18
-    lwzx r4, r5, r4
-    add r4, r4, r0
-    lfs f31, 0x4(r4)
-    b KartItem_UpdateShadowBillboardAndViewport_L_8004EEAC
-    KartItem_UpdateShadowBillboardAndViewport_L_8004EE88:
-    addi r6, r6, 0x8
-    addi r5, r5, 0x1
-    KartItem_UpdateShadowBillboardAndViewport_L_8004EE90:
-    lwz r0, 0x8(r3)
-    lwz r4, 0x24(r3)
-    mulli r0, r0, 0x18
-    add r7, r4, r0
-    lwz r0, 0x4(r7)
-    cmpw r5, r0
-    blt KartItem_UpdateShadowBillboardAndViewport_L_8004EE48
-    KartItem_UpdateShadowBillboardAndViewport_L_8004EEAC:
-    lbz r0, 0x22(r3)
-    cmplwi r0, 0x1
-    bne KartItem_UpdateShadowBillboardAndViewport_L_8004EECC
-    lfs f0, lbl_806D276C(r2)
-    fcmpo cr0, f31, f0
-    cror eq, gt, eq
-    bne KartItem_UpdateShadowBillboardAndViewport_L_8004EECC
-    fmr f31, f0
-    KartItem_UpdateShadowBillboardAndViewport_L_8004EECC:
-    li r4, 0x0
-    bl KartMovement_CalcSpeedWithCoinBonus
-    lfs f0, lbl_806D2770(r2)
-    lfs f2, lbl_806D26EC(r2)
-    fmuls f0, f0, f31
-    lfs f3, lbl_806D26FC(r2)
-    fdivs f1, f1, f0
-    bl Saturate_Double
-    lwz r3, 0x2c(r29)
-    li r4, 0x0
-    li r0, 0x2000
-    lfs f4, lbl_806D26EC(r2)
-    lwz r5, 0x304(r3)
-    lwz r3, 0x10(r5)
-    lwz r5, 0x14(r5)
-    and r0, r3, r0
-    and r3, r5, r4
-    xor r3, r3, r4
-    xor r0, r0, r4
-    or. r0, r3, r0
-    bne KartItem_UpdateShadowBillboardAndViewport_L_8004EF24
-    b KartItem_UpdateShadowBillboardAndViewport_L_8004EF28
-    KartItem_UpdateShadowBillboardAndViewport_L_8004EF24:
-    li r4, 0x1
-    KartItem_UpdateShadowBillboardAndViewport_L_8004EF28:
-    clrlwi r0, r4, 24
-    cmplwi r0, 0x1
-    bne KartItem_UpdateShadowBillboardAndViewport_L_8004EF38
-    lfs f4, lbl_806D2708(r2)
-    KartItem_UpdateShadowBillboardAndViewport_L_8004EF38:
-    lwz r3, 0xc8(r29)
-    lis r0, 0x4330
-    stw r0, 0x8(r1)
-    fadds f3, f1, f4
-    xoris r0, r3, 0x8000
-    lfd f2, lbl_806D2790(r2)
-    stw r0, 0xc(r1)
-    lfs f0, lbl_806D27B0(r2)
-    lfd f1, 0x8(r1)
-    lwz r28, 0x38(r29)
-    fsubs f1, f1, f2
-    lfs f2, lbl_806D26EC(r2)
-    fdivs f0, f1, f0
-    fadds f1, f4, f0
-    bl Saturate_Double
-    mr r3, r28
-    bl ShadowBillboard_SetTargetSaturation
-    lwz r3, 0x38(r29)
-    mr r4, r30
-    mr r5, r31
-    bl ShadowBillboard_Tick
-    lwz r4, 0x28(r29)
-    lwz r3, g_raceCamera(r13)
-    lfs f1, 0x88(r4)
-    lfs f2, 0x8c(r4)
-    lfs f3, 0x90(r4)
-    lfs f4, 0x78(r4)
-    lfs f5, 0x7c(r4)
-    lfs f6, 0x80(r4)
-    bl SceneRender_SetViewportRect
-    KartItem_UpdateShadowBillboardAndViewport_L_8004EFB0:
-    psq_l f31, 0x28(r1), 0, 0
-    lwz r0, 0x34(r1)
-    lfd f31, 0x20(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+static inline float KartItem_CalcKeySpeedFromTable(KartMovementSpeedView *mv) {
+    SpeedTableEntry *e;
+    int off;
+    int i;
+    float keySpeed;
+
+    keySpeed = lbl_806D26EC;
+    for (i = 0, off = i; i < (e = &mv->table[mv->tableIdx])->count; off += 8, i++) {
+        if ((float)__fabs(*(const float *)((const char *)e->pairs + off) - e->refSpeed) < lbl_806D26FC) {
+            keySpeed = mv->table[mv->tableIdx].pairs[i].value;
+            break;
+        }
+    }
+    if (mv->capFlag == 1) {
+        if (keySpeed >= lbl_806D276C) {
+            keySpeed = lbl_806D276C;
+        }
+    }
+    return keySpeed;
 }
+
+#pragma exceptions off
+void KartItem_UpdateShadowBillboardAndViewport(KartItemOpsView *self, int arg2, int arg3) { /* 0x8004EDD4 size:0x204 */
+    KartMovementSpeedView *mv;
+    ItemBusFlagsView *bus;
+    void *bb;
+    float keySpeed;
+    float ratio;
+    float sel;
+    unsigned char b;
+
+    if (ItemStateGuard_IsActive(self->stateBlock->guard) == 1) {
+        ShadowBillboard_StepSimple(self->billboard, arg2, arg3);
+    } else {
+        mv = self->movement;
+        keySpeed = KartItem_CalcKeySpeedFromTable(mv);
+        ratio = Saturate_Double(KartMovement_CalcSpeedWithCoinBonus(mv, 0) / (lbl_806D2770 * keySpeed), lbl_806D26EC, lbl_806D26FC);
+        bus = self->ownerDriver->itemBus;
+        sel = *(volatile const float *)&lbl_806D26EC; /* volatile cast defeats the 26EC load CSE */
+        if ((bus->flags & 0x0000200000000000ULL) == 0) {
+            b = 0;
+        } else {
+            b = 1;
+        }
+        if (b == 1) {
+            sel = lbl_806D2708;
+        }
+        bb = self->billboard;
+        ShadowBillboard_SetTargetSaturation(bb, Saturate_Double(sel + (float)self->coinCountC8 / lbl_806D27B0, lbl_806D26EC, ratio + sel));
+        ShadowBillboard_Tick(self->billboard, arg2, arg3);
+        SceneRender_SetViewportRect(g_raceCamera,
+            self->movement->transform[12], self->movement->transform[13], self->movement->transform[14],
+            self->movement->transform[8], self->movement->transform[9], self->movement->transform[10]);
+    }
+}
+#pragma exceptions reset
 
 asm void KartItem_AdvanceAnim3c(void) { /* 0x8004EFD8 size:0x24 */
     nofralloc

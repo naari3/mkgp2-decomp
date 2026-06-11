@@ -1,0 +1,5 @@
+GC/1.3.2 prod axis3	v14_whilebody	LI2	SR	lwz r5, 0x28(r3);li r6, 0x0;lfs f3, F_ZERO@sda21(r0);li r4, 0x0;lfs f0, F_ONE@sda21(r0)
+GC/1.3.2 prod axis3	v15_forbody	LI2	SR	lwz r5, 0x28(r3);li r6, 0x0;lfs f3, F_ZERO@sda21(r0);li r4, 0x0;lfs f0, F_ONE@sda21(r0)
+GC/1.3.2 prod axis3	v16_shiftbody	LI2	SR	lwz r5, 0x28(r3);li r6, 0x0;lfs f3, F_ZERO@sda21(r0);li r4, 0x0;lfs f0, F_ONE@sda21(r0)
+GC/1.3.2 prod axis3	v17_addzero	LI2	SR	lwz r5, 0x28(r3);li r6, 0x0;lfs f3, F_ZERO@sda21(r0);li r4, 0x0;lfs f0, F_ONE@sda21(r0)
+GC/1.3.2 prod axis3	v18_ptrbody	LI2	SR	lwz r5, 0x28(r3);li r6, 0x0;lfs f3, F_ZERO@sda21(r0);li r4, 0x0;lfs f0, F_ONE@sda21(r0)

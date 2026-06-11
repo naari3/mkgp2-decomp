@@ -1,0 +1,5 @@
+GC/1.3.2 prod axis6	o1_clnormal	STACK	?	stwu r1, -0x20(r1);mflr r0;stw r0, 0x24(r1);stw r31, 0x1c(r1);li r31, 0x0;stw r30, 0x18(r1);li r30, 0x0
+GC/1.3.2 prod axis6	o2_nocall	LI2	?	li r7, 0x0;li r6, 0x0;li r4, 0x1
+GC/1.3.2 prod axis6	o3_osinitalloc	TARGETli2	?	li r5, 0x0;li r6, 0x0;mr r3, r5;li r4, -0x1
+GC/1.3.2 prod axis6	o4_stride8	STACK	SR	stwu r1, -0x30(r1);mflr r0;stw r0, 0x34(r1);stfd f31, 0x20(r1);psq_st f31, 0x28(r1), 0, qr0;stw r31, 0x1c(r1);stw r30, 0x18(r1)
+GC/1.3.2 prod axis6	o5_stride8once	STACK	SR	stwu r1, -0x20(r1);mflr r0;stw r0, 0x24(r1);stw r31, 0x1c(r1);li r31, 0x0;stw r30, 0x18(r1);li r30, 0x0
