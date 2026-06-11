@@ -738,3 +738,39 @@ GPR partition (Phase 2b's C++ negatives were class-2/frsp only). That probe is
 the LAST candidate before declaring the family fully closed. Probe harness:
 batch_fable_onkarthit_recheck2 worktree tmp/ (apply_and_measure.py, make_e3.py,
 make_e4.py, restore_baseline.py).
+
+## C++-form probe: register-identity family closed in BOTH C and C++ (2026-06-11, batch_fable_onkarthit_recheck2 follow-up)
+
+The last untried axis from the Fable recheck (C++-specific web construction) was
+probed with a standalone harness (worktree tmp/cpp_probe_run.py: compiles a
+single-fn TU with the production game_extab flags, dtk-disasm-based comparison
+so mangled C++ symbols work; P0 C-baseline validated to reproduce the in-TU
+instruction stream and partition exactly). Six variants, all measured on the
+96.38% body:
+
+- P1 (C, full prototypes), P2 (-lang=c++ free fn), P3 (this-call method form),
+  P4 (real virtual dispatch, base-less class), P4b (virtuals on a polymorphic
+  BASE class -- vptr at 0x0, every field offset byte-equal to target), and
+  P5 (reference param): **homes self=r26 / victim=r27 / bus=r30 in ALL of
+  them** (target r30/r31/r25). The GPR callee partition is invariant across
+  the entire C and C++ source space tried.
+
+VERDICT: the register-identity park family is CLOSED at the source level,
+in both languages. Phase 3 gate (prefix index 0 = OnKartHit) stays shut.
+
+Two byproducts that matter beyond OnKartHit (OBSERVED):
+1. Real C++ virtual dispatch emits the TARGET vcall shape -- `lwz r12,
+   0x0(rX); lwz r12, 0x8/0x34(r12); mtctr; bctrl` (r12-chained, both loads).
+   The C explicit-vt-struct spelling emits an r6 intermediate (`lwz r6,
+   0x0(rX); lwz r12, +off(r6)`) -- i.e. the recurring "vcall r6-vs-r12"
+   residue is a C-source artifact, fixable by compiling the TU as C++ with
+   real virtual classes. Any parked fn whose ONLY residue is vcall shape is
+   unlockable this way.
+2. CW 1.3.2 places the vptr of a base-LESS polymorphic class at the END of
+   the object (0x108 for the KartItemHit probe). The shipped binary has
+   vptr at 0x0 with members after, which under CW 1.3.2 requires the class
+   to DERIVE from a polymorphic base (P4b shape). Layout guidance for any
+   future C++ reconstruction of the game class hierarchy.
+
+Probe files: worktree tmp/probe_p0.c..probe_p5.cpp, probe_p4b.cpp,
+probe_common.h, probe_common_virtual.h, cpp_probe_run.py.

@@ -17,8 +17,8 @@ docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件
 | 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **検証 NEGATIVE / family source-closed (2026-06-11)** — recipe は const-param 前提で実 fn に不適用 |
 | 2b | class 2 frsp store-forward の研究 (6 fn family) | **完遂 (2026-06-11)** — 6/6 fn sweep。recipe core は全 fn で再現、promote 0 (全残差が register-identity family: 85-99% park) |
 | 2 | 先頭区間 index 0-17 の残り idiom 解決: class 2 (OnKartHit) / flavor 5 (MainUpdate) / flavor 4 (ProcessWarpAndDash) / ScopedTimer (FrameUpdate) | 未着手 |
-| 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | **gate 閉 (2026-06-11)** — index 0 OnKartHit が C で source-closed (Fable recheck で degree 仮説否定)。最後の unlock 候補 = C++-form probe |
-| 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 未着手 (Phase 3 依存、gate 閉のまま確定なら断念) |
+| 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | **断念 (2026-06-11)** — index 0 OnKartHit の partition が C/C++ 両 source 空間で到達不能と確定 (Fable recheck + C++-form probe 全 negative) |
+| 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | **断念 (2026-06-11)** — Phase 3 依存。軸足は他 TU の pending fn へ pivot |
 
 ## 制約 (再確認)
 
@@ -412,3 +412,15 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     GPR partition への this-call method 形 / reference param / real virtual call は未 probe。
     これが negative なら register-identity family を完全 close し、Phase 3/4 断念 → 他 TU へ pivot。
   - 次: C++-form probe batch (standalone harness で OnKartHit body を C++ 形にして partition 観測)。
+- 2026-06-11: **C++-form probe 完遂 — 全 negative、register-identity family は C/C++ 両空間で close 確定**
+  (batch_fable_onkarthit_recheck2 follow-up、research note 末尾の C++-form probe 節)。
+  - 観察 (事実): -lang=c++ / this-call method 形 / real virtual dispatch (base 無し + polymorphic base
+    派生で vptr=0x0・offset 完全一致の最忠実形) / reference param の 6 変種すべてで homes
+    self=r26 / victim=r27 不動 (standalone harness、P0 で in-TU 同一 stream を検証済み)。
+  - 副産物: (1) real virtual は target の r12-chain vcall 形を出す — C の明示 vt-struct 形の r6 中間
+    reg は C-source artifact。vcall 形だけが残差の park fn は C++ TU 化で unlock 可能性あり。
+    (2) CW 1.3.2 は base 無し polymorphic class の vptr を末尾に置く → 元実装は polymorphic 基底
+    からの派生と思われる (将来の C++ 再構成の layout 指針)。
+  - **Phase 3/4 判定: 断念確定**。prefix index 0 (OnKartHit) の partition は source 到達不能。
+    残る理論上の経路は allocator の web-birth key 採番自体を変える未知の機構のみで、費用対効果から
+    本 roadmap では追わない。**軸足を他 TU の pending fn (mega-bundle promote 本流) へ pivot**。
