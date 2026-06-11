@@ -17,8 +17,8 @@ docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件
 | 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **検証 NEGATIVE / family source-closed (2026-06-11)** — recipe は const-param 前提で実 fn に不適用 |
 | 2b | class 2 frsp store-forward の研究 (6 fn family) | **完遂 (2026-06-11)** — 6/6 fn sweep。recipe core は全 fn で再現、promote 0 (全残差が register-identity family: 85-99% park) |
 | 2 | 先頭区間 index 0-17 の残り idiom 解決: class 2 (OnKartHit) / flavor 5 (MainUpdate) / flavor 4 (ProcessWarpAndDash) / ScopedTimer (FrameUpdate) | 未着手 |
-| 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | 未着手 |
-| 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 未着手 |
+| 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | **gate 閉 (2026-06-11)** — index 0 OnKartHit が C で source-closed (Fable recheck で degree 仮説否定)。最後の unlock 候補 = C++-form probe |
+| 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 未着手 (Phase 3 依存、gate 閉のまま確定なら断念) |
 
 ## 制約 (再確認)
 
@@ -399,3 +399,16 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   - メタ: このセッションは frida 言及で safety classifier に flag され Fable→Opus 自動切替された
     (偽陽性)。OnKartHit/HIE batch は完了処理済み (state flip / cleanup / push)。frida 観測は完了済みで
     今後の本作業に frida 不要 = Fable 維持の見込み。
+- 2026-06-11: **Fable recheck 完遂 — OnKartHit degree-reducing 4 構造全 NEGATIVE、PINNED-confirmed (0 promote)**
+  (batch_fable_onkarthit_recheck2、docs/notes/cw132-allocator-phase2f-research.md 末尾の Fable recheck 節)。
+  - 観察 (事実): E1 victim-tail-hoist 92.54% で param home はむしろ降下 (r25/r26)、E2 late-copy は
+    baseline と byte-identical (copy 位置によらず param-merge が web identity を保持)、E3b volatile-slot で
+    両 param web を関数の ~63% 地点で完全 kill (disasm 検証済) しても home r26/r27 不動 (87.36%)、
+    E4 tail-helper 切り出しでも縮小 callee 集合の相対最下位のまま (52.82%)。
+  - 結論: **degree は pin ではない**。param web の着色順位は identity (最低 web-birth key 32/33) で固定。
+    round 3 の OPEN 仮説は否定、OnKartHit は **C の表現空間で source-closed**。
+  - 未試行の最終軸 = **C++-form probe**: 元実装は C++ 確定 (extab が dtor_80036E40 を参照、vcall 残差
+    r6-vs-r12 も real virtual dispatch を示唆)。Phase 2b の C++ negative は class-2 (frsp) に対してのみで、
+    GPR partition への this-call method 形 / reference param / real virtual call は未 probe。
+    これが negative なら register-identity family を完全 close し、Phase 3/4 断念 → 他 TU へ pivot。
+  - 次: C++-form probe batch (standalone harness で OnKartHit body を C++ 形にして partition 観測)。

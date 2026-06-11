@@ -677,6 +677,9 @@ and let the param itself die, or split the tail into a helper so the params' liv
 shrinks). The frida observation says degree, not key, is the pin; this degree-reducing
 direction has not been probed and is the next candidate before declaring source-closed.
 
+(2026-06-11 訂正: この OPEN 方向は Fable recheck で全 negative — degree は pin ではない。
+末尾の「Fable recheck」節参照。)
+
 ## CarObject_HandleItemEffect handled-web, source-lever exhausted (2026-06-11, batch_promote_hie_lateweb)
 
 Re-attacked CarObject_HandleItemEffect 0x8004F858 (parked 99.93%, residual = single
@@ -704,3 +707,34 @@ move but only by reshuffling all of r22..r29 -> loses the loop-local match. The 
 is fully constrained; the one residual web is NOT source-movable. Strongest in-fn
 confirmation yet of the "source lever works only for under-constrained webs" limit. Keep
 as matched asm; 99.93% C form preserved in tools/compiler_probe/p2e_handleitemeffect_9993.patch.
+
+## Fable recheck: degree-reducing levers all NEGATIVE -- OnKartHit source-closed (2026-06-11, batch_fable_onkarthit_recheck2)
+
+Round 3's OPEN direction (attack the param's interference DEGREE instead of
+web-birth order) was probed with 4 structures from the 96.38% Appendix-B body,
+objdiff-only (no frida, no compiler contact): (1) hoisting victim's tail fields
+(dispatcher/state1f4) into pre-memset locals dropped match to 92.54% and moved
+the params DOWN (r25/r26) -- the two new late-born webs outrank them; (2) late
+param copies placed just before memset coalesce straight back (param-merge) and
+are BYTE-IDENTICAL to baseline, generalizing round 3 lever 2: copy position is
+irrelevant, the merged web keeps the param identity; (3) volatile-slot copies
+(coalescing physically broken; disasm-verified both param webs die at the stw
+at ~63% of the fn, zero interference with the entire bool/memset/mtx/dispatch
+tail) leave homes EXACTLY at r26/r27 (87.36%); (4) splitting the whole tail
+into a non-inlined static helper (params die at the call) shrinks the callee
+set and the params stay at its BOTTOM (r27/r28 of an r27-based pool, 52.82%).
+
+CONSEQUENCE: degree is NOT the pin -- no amount of live-range reduction
+re-ranks a param web, and adding/removing callee webs only shifts the params'
+absolute register while preserving their bottom rank. The coloring position of
+param webs is fixed by their identity (lowest web-birth keys 32/33), refuting
+round 3's open hypothesis. OnKartHit is source-closed within C: the
+params-on-top partition (self=r30/victim=r31) is unreachable from any tried
+source shape. Only untried route is outside C source space: the original is
+C++ (extab references dtor_80036E40; vcall residue r6-vs-r12 also hints at
+real virtual dispatch), and C++-specific web construction (this-call method
+form, reference params, real virtual calls) has never been probed against the
+GPR partition (Phase 2b's C++ negatives were class-2/frsp only). That probe is
+the LAST candidate before declaring the family fully closed. Probe harness:
+batch_fable_onkarthit_recheck2 worktree tmp/ (apply_and_measure.py, make_e3.py,
+make_e4.py, restore_baseline.py).
