@@ -15,7 +15,7 @@ docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件
 | 0 | class 1 の最終 probe (compiler patch rev / 未試行 pragma) | **SOLVED (2026-06-11)** |
 | 1 | class-1 10 fn の回収 (salvage draft 適用) | **完了 (2026-06-11)** — recipe 14/14、promote 2 fn、残りは他 family park |
 | 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **検証 NEGATIVE / family source-closed (2026-06-11)** — recipe は const-param 前提で実 fn に不適用 |
-| 2b | class 2 frsp store-forward の研究 (6 fn family) | **SOLVED (2026-06-11)** — loop-written copy block recipe。in-TU 検証 batch 進行中 |
+| 2b | class 2 frsp store-forward の研究 (6 fn family) | **SOLVED + 検証済み (2026-06-11)** — recipe core は 2/2 fn で再現、fn-level 100% は fp-numbering family が阻む (97%/94% park) |
 | 2 | 先頭区間 index 0-17 の残り idiom 解決: class 2 (OnKartHit) / flavor 5 (MainUpdate) / flavor 4 (ProcessWarpAndDash) / ScopedTimer (FrameUpdate) | 未着手 |
 | 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | 未着手 |
 | 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 未着手 |
@@ -146,3 +146,22 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     in-TU で出なければ consume 順 / temp decl 順が lever。
   - 次: **in-TU 検証 batch dispatch** — ItemEffect_Dispatch (86.34% draft、canonical specimen) +
     KartItem_ApplyImpactImpulse (83.66% draft)。成功すれば OnKartHit / Tick / Trap / Projectile に展開。
+- 2026-06-11: **Phase 2b 検証完了 — recipe core は 2/2 fn で CONFIRMED、ただし promote 0**
+  (Dispatch 86.34→97.07% / ApplyImpactImpulse 83.66→94.24%、docs/notes/cw132-class2-validation.md)。
+  - 観察 (事実): loop-copy recipe は実 TU pressure 下で class-2 症状を全て再現 (frsp web /
+    22+ dead store の exact offset / frame・callee-saved cascade)。frsp/reload partition は
+    per-slot 制御可能 — reload にしたい slot だけ `*(volatile float *)&s.m[k]` で読む。
+    新 lever 5 件 (dy-first schedule / compare-the-copy-target fmr coalesce / unnamed read-back
+    降順 web / post-call plain read / named-sum dying-operand pick) も検証済み。
+  - 観察 (事実): 両 fn の最終残差は register identity のみ (内容・offset・opcode 全一致) =
+    **2a で source-closed 判定済みの fp-numbering tie-break family**。class 2 とは別問題。
+  - 仮説 (推論): 残り 4 fn (OnKartHit / Tick / Trap / Projectile) も class-2 block 自体は
+    1-2 build で再現するが、fn 到達点は high-90s park が濃厚 (consume web が unnamed 形なら
+    match の可能性あり)。
+  - **roadmap への含意**: fp-numbering family が prefix の実質的な最終 blocker に昇格した。
+    Phase 3 (A 化) は対象 fn が C (matched) であることが前提なので、prefix 内の
+    OnKartHit / ApplyImpactImpulse / PerFrameStep / Tick が 97-94% park のままだと A 区間が
+    そこで途切れる。選択肢: (i) fp-numbering の binary-level allocator 研究 (2a で示唆)、
+    (ii) prefix を park fn の手前まで縮めた部分 A 化、(iii) park を許容して Phase 4 断念。
+  - 次: 2b 残り 4 fn への展開 batch (OnKartHit + Tick は prefix 内で Phase 3 直結、
+    Trap / Projectile は TU 完遂用)。
