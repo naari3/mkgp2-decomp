@@ -1146,7 +1146,7 @@ asm void CarObject_Init(void);
 void KartItem_UpdateShadowBillboardAndViewport(KartItemOpsView *self, int arg2, int arg3);
 asm void KartItem_AdvanceAnim3c(void);
 asm void CarObject_CalcSpeedRatio(void);
-asm void KartItem_GetMaxSpeedWithBonus(void);
+float KartItem_GetMaxSpeedWithBonus(KartItemOpsView *self);
 asm void KartItem_GetCurrentSpeedWithBonus(void);
 float *CarObject_GetTransformMatrix(CarObjGetterView *self);
 KartMovementSpeedView *CarObject_GetKartMovementPtr(CarObjGetterView *self);
@@ -6593,60 +6593,37 @@ asm void CarObject_CalcSpeedRatio(void) { /* 0x8004EFFC size:0x44 */
     blr
 }
 
-asm void KartItem_GetMaxSpeedWithBonus(void) { /* 0x8004F040 size:0xB8 */
-    nofralloc
-    li r4, 0x0
-    lwz r5, 0x28(r3)
-    lfs f3, lbl_806D26EC(r2)
-    mr r6, r4
-    lfs f0, lbl_806D26FC(r2)
-    b KartItem_GetMaxSpeedWithBonus_L_8004F0A0
-    KartItem_GetMaxSpeedWithBonus_L_8004F058:
-    lwz r3, 0x0(r7)
-    lfs f1, 0x8(r7)
-    lfsx f2, r3, r6
-    fsubs f1, f2, f1
-    fabs f1, f1
-    frsp f1, f1
-    fcmpo cr0, f1, f0
-    bge KartItem_GetMaxSpeedWithBonus_L_8004F098
-    lwz r3, 0x8(r5)
-    slwi r0, r4, 3
-    lwz r4, 0x24(r5)
-    mulli r3, r3, 0x18
-    lwzx r3, r4, r3
-    add r3, r3, r0
-    lfs f3, 0x4(r3)
-    b KartItem_GetMaxSpeedWithBonus_L_8004F0BC
-    KartItem_GetMaxSpeedWithBonus_L_8004F098:
-    addi r6, r6, 0x8
-    addi r4, r4, 0x1
-    KartItem_GetMaxSpeedWithBonus_L_8004F0A0:
-    lwz r0, 0x8(r5)
-    lwz r3, 0x24(r5)
-    mulli r0, r0, 0x18
-    add r7, r3, r0
-    lwz r0, 0x4(r7)
-    cmpw r4, r0
-    blt KartItem_GetMaxSpeedWithBonus_L_8004F058
-    KartItem_GetMaxSpeedWithBonus_L_8004F0BC:
-    lbz r0, 0x22(r5)
-    cmplwi r0, 0x1
-    bne KartItem_GetMaxSpeedWithBonus_L_8004F0DC
-    lfs f0, lbl_806D276C(r2)
-    fcmpo cr0, f3, f0
-    cror eq, gt, eq
-    bne KartItem_GetMaxSpeedWithBonus_L_8004F0DC
-    fmr f3, f0
-    KartItem_GetMaxSpeedWithBonus_L_8004F0DC:
-    lfs f1, lbl_806D2770(r2)
-    lfs f2, lbl_806D26FC(r2)
-    lfs f0, 0x2e0(r5)
-    fmuls f1, f1, f3
-    fadds f0, f2, f0
-    fmuls f1, f1, f0
-    blr
+static inline float KartItem_CalcMaxSpeedWithBonus_inl(KartItemOpsView *self) {
+    SpeedTableEntry *e;
+    int off;
+    KartMovementSpeedView *mv;
+    int i;
+    float keySpeed;
+    float max;
+
+    mv = self->movement;
+    keySpeed = lbl_806D26EC;
+    for (i = 0, off = i; i < (e = &mv->table[mv->tableIdx])->count; off += 8, i++) {
+        if ((float)__fabs(*(const float *)((const char *)e->pairs + off) - e->refSpeed) < lbl_806D26FC) {
+            keySpeed = mv->table[mv->tableIdx].pairs[i].value;
+            break;
+        }
+    }
+    if (mv->capFlag == 1) {
+        if (keySpeed >= lbl_806D276C) {
+            keySpeed = lbl_806D276C;
+        }
+    }
+    max = lbl_806D2770 * keySpeed;
+    max = max * (lbl_806D26FC + mv->coinBonus);
+    return max;
 }
+
+#pragma exceptions off
+float KartItem_GetMaxSpeedWithBonus(KartItemOpsView *self) { /* 0x8004F040 size:0xB8 */
+    return KartItem_CalcMaxSpeedWithBonus_inl(self);
+}
+#pragma exceptions reset
 
 asm void KartItem_GetCurrentSpeedWithBonus(void) { /* 0x8004F0F8 size:0x28 */
     nofralloc
