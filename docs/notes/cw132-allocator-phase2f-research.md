@@ -704,3 +704,78 @@ move but only by reshuffling all of r22..r29 -> loses the loop-local match. The 
 is fully constrained; the one residual web is NOT source-movable. Strongest in-fn
 confirmation yet of the "source lever works only for under-constrained webs" limit. Keep
 as matched asm; 99.93% C form preserved in tools/compiler_probe/p2e_handleitemeffect_9993.patch.
+
+
+## OnKartHit Fable recheck: "EF instr-matched" RETRACTED; residual is coalescing, not degree (2026-06-11, batch_fable_onkarthit_recheck2)
+
+### RETRACTION (observation, corrects a prior in-session draft)
+
+A prior in-session draft (tmp/note12.md, never committed) claimed the single-arm bool
+form "EF" made OnKartHit **instruction-identical** to target (reg-masked 100%, 0 diff),
+reducing it to a pure register-allocation problem. **This was an artifact of a buggy
+diff counter** (sweep_bool2.py masked registers but treated branch-label addresses as
+false-equal, hiding real structural diffs). Re-checked with proper LABEL normalization
+(branch targets mapped to row indices) + register masking (tmp/verify_ef.py):
+
+  EF vs target: 416=416 rows, 97.60% similarity, **16 genuine instruction/structure diffs.**
+
+EF is NOT instruction-matched. The "pure coloring / logical paradox" framing is withdrawn.
+
+### The 16 diffs (all DOWNSTREAM of the param-park partition)
+
+1. **FP scheduling (4 rows, ~81-90):** identical instructions, but CW schedules `fsubs`
+   one slot earlier/later relative to an adjacent `lfs` (target: load-then-sub; EF:
+   sub-then-load). Base reg differs (target `0xc(r29)` vs EF `0xc(r31)`) = partition.
+2. **bool-zero-reuse (12 rows, ~220-267):** the load-bearing signature. For each of the
+   4 dispatch bools, the 64-bit `(flags & maskULL)` test needs a zero for the high-word
+   `& 0` and for the `!= 0` compare-rhs. **Target reuses the just-zeroed bool callee-saved
+   reg itself** (`li r28,0; ... and r0,r0,r28; xor r3,r3,r28`) and emits the conditional
+   set as `bne set1; b done; set1: li r28,1`. **EF/ours materializes a SEPARATE scratch
+   zero** (`li r4,0`) and emits `beq done; li b,1`. Same idiom, different zero-register
+   sharing = a value/move-coalescing difference.
+
+### KEY OBSERVATION: the partition is NOT a degree difference
+
+target self=r30 live rows 4..406; victim=r31 live rows 5..390.
+EF    self=r25 (real last-use ~388; r25@411 is the lmw epilogue restore); victim=r26
+**live rows 5..390 -- IDENTICAL range to target's victim.** Params have the SAME maximal
+live range (degree) in both, yet target colors them r30/r31 (top) and EF r25/r26 (bottom).
+=> the partition flip is decided by **coalescing / value-numbering**, not by interference
+degree. This refutes the prior note's still-OPEN "reduce the param's degree" lever as the
+mechanism. (And that lever is independently CLOSED: target keeps self live to row 406 and
+victim to row 390, so any source that shortens the param live range diverges from target.)
+
+### Source forms tried this round (label+reg normalized genuine-diff count vs target)
+
+- EF single-arm `b=0; if((f&m)!=0) b=1;`            -> 16  (params r25/r26)
+- F  empty-then `b=0; if((f&m)==0){}else{b=1;}`     -> 16  (CW collapses to single-arm)
+- G  clean two-arm no-preinit `if(==0){b=0}else{b=1}` -> 37 (+4 li-0 in then-arm, params r26/r27)
+- direct `b=(f&m)!=0;`                                -> 96  (64b->bool via subic/subfe, params r27/r28)
+- ternary `b=(f&m)?1:0;`                              -> 68  (same idiom blow-up, params r27/r28)
+- H  chained `b28=b27=b26=b25=0;` + bare ifs          -> 16  (zeros batched at top, params r25/r26)
+
+The clean-idiom forms (EF/F/H) bottom out at 16 diffs with params LOW. The only forms that
+LIFT params (direct/ternary -> r27/r28) do so by exploding the bool->int conversion idiom
+(+50-80 diffs) -- a real tension: clean idiom <-> params-high are mutually exclusive across
+every spelling tried. No form reproduces target's bool-zero-reuse coalescing.
+
+### Verdict
+
+OnKartHit PINNED (unchanged). Residual = the param-park partition, surfacing as 16
+coalescing-driven instruction symptoms. NOT degree-movable (params already maximal-degree),
+NOT reached by any of ~6 bool spellings + decl-order + degree levers (cumulative ~55
+experiments across sessions). The one rigorous direction still unexecuted is a frida trace
+of the coalesce union-find (FUN_0057a1f0 / FUN_00579cf0) to read which webs merge and why
+target's params survive to r30/r31 -- but it can only observe OUR candidate forms (the
+target's source is unavailable), all of which color params LOW, so it cannot by itself
+reveal the missing source form. Matched asm retained (byte-identical, SHA-1 OK).
+
+### Family takeaway (the reusable diagnostic, refined)
+
+For the recurring "param/local parks one reg off" family: first check whether it is a
+DEGREE problem (compare the parked web's live range to target's) or a COALESCING problem.
+If live ranges match but the home reg differs, it is coalescing -- look for a move/zero
+reuse signature in the target (e.g. a callee-saved reg doubling as a constant source) that
+your C form does not reproduce. Coalescing-determined partitions have shown NOT source-
+movable in every case attacked so far (OnKartHit params, HandleItemEffect `handled`,
+CarObject_Init `ch`) -- they are the current hard floor of clean-C matching for this codegen.

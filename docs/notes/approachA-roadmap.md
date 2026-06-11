@@ -399,3 +399,25 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   - メタ: このセッションは frida 言及で safety classifier に flag され Fable→Opus 自動切替された
     (偽陽性)。OnKartHit/HIE batch は完了処理済み (state flip / cleanup / push)。frida 観測は完了済みで
     今後の本作業に frida 不要 = Fable 維持の見込み。
+- 2026-06-11: **Fable recheck — degree-reducing lever CLOSED, OnKartHit は coalescing-pin と確定** (PINNED 維持、
+  docs/notes/cw132-allocator-phase2f-research.md の Fable recheck 節)。frida 不要、objdiff のみ。
+  - 観察 (事実): round-3 が「源流未確定」とした **EF (単一アーム bool) の "命令一致" は誤計測** (label を
+    address のまま比較した diff カウンタの bug)。label 正規化 + reg masking で再検証 (tmp/verify_ef.py) →
+    EF vs target は 416 行・**真の差分 16**。「命令一致 / 純 coloring パラドックス」は撤回。
+  - 観察 (事実): 16 差分は全て param-park partition の**下流症状** — (a) FP の fsubs/lfs スケジュール 1 行
+    ずれ ×4、(b) bool のゼロ自己流用 ×12 (target は 0 初期化した callee-saved bool reg を 64bit AND の
+    上位語ゼロ兼 compare-rhs に再利用 `and r0,r0,r28`、ours は別 scratch `li r4,0`)。
+  - 観察 (事実、決定的): target victim=r31 は row 5..390 live、EF victim=r26 も **row 5..390 で同一 range**。
+    self も同様に両者ほぼ全域 live。**params の degree は EF と target で等しいのに color が r26 vs r31 に
+    分岐** = round-3 が疑った degree 差ではない。partition は **coalescing/value-numbering** が決める。
+  - 結論: round-3 の最後の候補「degree-reducing (param を早 die)」は **CLOSED**。(1) degree は既に最大で
+    target と同じ、(2) target 自身が self を row 406・victim を row 390 まで使う = live range を縮める形は
+    target と乖離する。源流 lever 6 形 (single-arm/empty-then/clean-two-arm/direct/ternary/chained-zero)
+    全て params 低位 or イディオム崩壊。**OnKartHit は coalescing-pin で source-closed** (degree でなく
+    coalescing が pin の正体と精密化)。matched asm 維持 (SHA-1 OK)。
+  - Phase 3 gate: index 0=OnKartHit が coalescing-pin で source 不可と確定 → 空 prefix → **部分 A 化は実質
+    不可**。register-identity park family (OnKartHit param / HIE handled / Init ch) は全て coalescing-determined
+    で source-movable でない = clean-C matching の hard floor。軸足は他 TU の pending fn へ。
+  - 残る唯一の未実行な厳密経路: frida で coalesce union-find (FUN_0057a1f0/FUN_00579cf0) を trace。ただし
+    観測できるのは ours の候補形のみ (target source 不在) で全て params 低位 → 単独では欠けた source 形を
+    示せない。上振れ手段に留まる。

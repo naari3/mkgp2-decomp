@@ -118,9 +118,10 @@ function dumpNode(p, cls) {
   let reg = p.add(0x14).readU16();
   const flags  = p.add(0x16).readU16();
   const adjN   = p.add(0x18).readU16();
+  const cost   = p.add(0x0c).readS32();   // spill-cost numerator (fild'd in degree/cost ratio)
   return 'node@' + p + ' key=' + idx + ' deg=' + degree +
          ' reg=' + (reg === 0xffff ? '--' : regName(cls, reg)) +
-         ' flags=0x' + flags.toString(16) + ' adjN=' + adjN;
+         ' flags=0x' + flags.toString(16) + ' adjN=' + adjN + ' cost=' + cost;
 }
 
 // Dump the value-numbered web list (head DAT_005e87b0) read-only.
