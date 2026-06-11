@@ -17,7 +17,7 @@ docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件
 | 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **検証 NEGATIVE / family source-closed (2026-06-11)** — recipe は const-param 前提で実 fn に不適用 |
 | 2b | class 2 frsp store-forward の研究 (6 fn family) | **完遂 (2026-06-11)** — 6/6 fn sweep。recipe core は全 fn で再現、promote 0 (全残差が register-identity family: 85-99% park) |
 | 2 | 先頭区間 index 0-17 の残り idiom 解決: class 2 (OnKartHit) / flavor 5 (MainUpdate) / flavor 4 (ProcessWarpAndDash) / ScopedTimer (FrameUpdate) | 未着手 |
-| 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | **機構的に閉 (2026-06-11)** — colorer simplify (FUN_00507b50) を逆アセンブルで導出。OnKartHit は k-colorable graph → key 降順着色、incoming param は最小 key 32/33 固定 → 必ず最低 callee reg。source で param key を上げる手段なし = OnKartHit は source-closed (white-box 確定)。pivot 推奨 |
+| 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | **未解決 (2026-06-11、「閉」撤回)** — colorer は white-box 化 (param web 最小 key 固定 / k-colorable で概ね降順着色) だが、target が命令同一で param top = 矛盾未解決。source-closed とも到達可能とも断定不可。OnKartHit は asm_fn で既に byte-identical、clean C 化のみ未達。ROI から pivot 推奨 |
 | 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 保留 (Phase 3 依存) |
 
 ## 制約 (再確認)
