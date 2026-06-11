@@ -500,3 +500,126 @@ d8f9c36d62f66c2a044d5a20a132b79eeb2f36e5, re-verified). All hooking ran against 
 private copy in `tmp_probe/mwcceppc_priv.exe` (frida read/hook only, no binary
 patch). The private copy + lmgr326b.dll under tmp_probe/ are NOT committed
 (gitignored scratch). src/game/*.c untouched; worktree builds green.
+
+## In-TU validation round 2 (2026-06-11, batch_promote_modelguided_init)
+
+Applied the Phase 2f coloring model to the remaining register-identity park fns in
+src/game/auto_ONKARTHIT_block.c (CarObject_ProcessWarpAndDash, CarObject_Init,
+KartItem_ApplyImpactReflectAndDampVelocity). Result: **0 promotes** — all three are
+capped by a NON-coloring blocker (allocator-internal site-ordinal swap, structural
+-1 insn, and an int-equality-chain li-deletion respectively). The coloring model's
+one new lever (merged-web -> shared reg) was REFUTED at the CarObject_Init ch web.
+All mappings below are OBSERVED (objdiff per-row diffs on obj/ vs src/); interpretation
+marked HYPOTHESIS. Budget: 6 builds total across the 3 fns.
+
+### CarObject_ProcessWarpAndDash 0x8004D1A8: parked 94.60% (self/mov swap, not coloring-lever-movable)
+
+Reproduced the prior batch's 94.60% from the paste-ready C on build 1 (2 typed-extern
++ view-struct edits, no surprises). The full diff is the documented self/mov swap
+(~45 of ~49 rows) plus 2 scheduler gap slots that ride it.
+
+OBSERVED target callee homes: self(param)=r31, mov(=self->movement, first local)=r30,
+mgr(=WarpDashMgr_GetInstance result)=r29. Definition order in target asm is
+self(`mr r31,r3`) -> mov(`lwz r30`) -> mgr(`mr r29`) = r31,r30,r29 DESCENDING in
+def order, AND self (a param) ranks ABOVE the first local mov.
+
+OBSERVED mine (every C form): mov=r31, self=r30, mgr=r29. CW ranks the first-defined
+local `mov` -> r31 and demotes the param `self` -> r30. mgr=r29 matches both.
+
+This is a DIRECT CONTRADICTION between two real fns under the same model:
+- KartItem_CancelActiveEffect (round-1 standalone): param `self` colors LAST (r24
+  below 7 locals).
+- ProcessWarpAndDash TARGET: param `self` colors FIRST (r31 above the first local).
+The param's rank is therefore NOT a fixed "params last" rule; it flips with fn
+structure. The round-1 bisect (warp-only -> mov=r31; warp+dash -> mov=r30/target;
++mgr-block -> mov=r31; minus the 9-arg CalcExitPosition -> mov=r30) shows the swap is
+governed by the presence/shape of the THIRD callee web (mgr) and the r8-consuming
+9-arg call — i.e. the "(regime, site ordinal)" determinism, an allocator-internal
+visit-order/counter artifact with no source handle.
+
+NEW negative this batch (reconfirms model RULE on arg order): inlining the mov
+assignment into arg-2 of the first call
+(`WarpZone_CheckEntry(self->warpCtx, (mov = self->movement)->pos[0], ...)`) so that
+the self-derived arg-1 is surface-first -> BYTE-IDENTICAL 94.60% output. Arg /
+statement evaluation order does NOT re-rank the callee webs (consistent with
+p1_argrev / p5 no-ops in the main batch). The swap is fixed at IR linearization, not
+at the C surface. PARK; needs the colorer visit-order dump (system-1, proven stubbed)
+or a frida hook on FUN_00579cf0 to crack.
+
+### CarObject_Init 0x8004E618: parked 98.23% (structural -1 insn r0-join; coloring is secondary AND merge-lever refuted)
+
+Reproduced the prior batch's 98.23% from the paste-ready C (full promote diff applied:
+view structs, typed ctor externs, ScopedTimer recipe, uint-t idioms). OBSERVED real
+insn counts: **mine 494, target 495 (1976 vs 1980 bytes)** — a hard -1 insn. The
+fn CANNOT be byte-identical as C while it is 1 insn short, so coloring alignment is
+moot for promotion.
+
+OBSERVED the -1 site precisely (WarpAutoRun new-expr guard, objdiff rows 248-267):
+```
+target: bl AllocTagged; mr. r0,r3; beq L; <flag calc>; bl WarpAutoRun_Init; mr r0,r3; stw r0,0x54(r31)
+mine:   bl AllocTagged; cmpwi r3,0;  beq L; <flag calc>; bl WarpAutoRun_Init;          stw r3,0x54(r31)
+```
+The target holds the new-expr object pointer in a DEDICATED r0 temp across the guard
+(`mr. r0,r3` to test, `mr r0,r3` to re-capture the ctor result) = 2 insns. Every CW
+1.3.2 C spelling copy-propagates the pointer to its r3 home and tests/stores r3
+directly = 1 insn. This is the "new-expr precan class" from the prior HANDOFF, now
+pinned to exactly 2-vs-1 insns. Confirms: structural, source-closed at -O4,p in C;
+needs binary-level patch or a compiler revision that emits the r0-resident new-expr
+temp. (Prior probes 8/9/12/13/14 — 2-var copy, assign-in-cond, shared int w, explicit
+post-call copy, test-on-w — all reconfirmed copy-propagating; not re-burned here.)
+
+COLORING residue (secondary, would still mismatch even at +1 insn):
+OBSERVED target dynamic-web homes (RULE4 reuse of freed param regs):
+ch=r26, movement=r26(reuse), driver=r25, camera=r25(reuse), blk=r27, sub=r23,
+mgr=r23(reuse). Param prologue homes: self=r31, kartSlot=r23, a5=r24, a6=r26,
+a7=r29, isPlayer=r30, slotIdx=r28, camArg=r27, flag21=r25 (a SCATTERED order, not
+r31-descending — params interleave with the dynamic webs by interference).
+OBSERVED mine: ch=r25 (want r26), blk=r29 (want r27), sub=r27 (want r23),
+mgr=r27 (want r23).
+
+**MODEL LEVER REFUTED (the merged-web -> shared-reg corollary):** predicted that
+coalescing the ch (audio-channel) web with the o1 (movement) web would make both
+take r26 (RULE4 reuse, as target does). Made ch reuse the `o1` variable
+(`o1 = AllocTagged(0x38); ...; self->soundCtrl = o1; o1 = AllocTagged(0x324); ...`).
+OBSERVED: BYTE-IDENTICAL — ch stayed r25, no movement to r26. So variable-identity
+coalescing does NOT move a dynamic web's home when the home is pinned by the
+param-interference graph; the GetMaxSpeed "merge -> demote" result does NOT
+generalize to "merge -> adopt sibling's reg" in the callee pool. The ch/blk/sub/mgr
+homes are fixed by which param regs are dead at each alloc point (a liveness fact of
+the param stores + volatile-aux hoists), not by local variable identity. This is the
+"source-closed tie-break" the prior HANDOFF reported, now with a clean refutation of
+the merge lever. PARK.
+
+### KartItem_ApplyImpactReflectAndDampVelocity 0x8004B140: parked 95.19% (int-equality-chain, not a coloring problem)
+
+NOT attempted this batch beyond confirming it is the int-equality-chain li-deletion
+class (NOT register identity). The coloring model has no bearing: the residue is a
+hoisted `li r6,0` with the 4 arm `li 0`s deleted, which the prior 4-probe ledger
+showed requires `b` to coalesce with an INDEPENDENT live zero web (the u64 mask half
+in the class-1 u64 sites) — a value-numbering/coalescing precondition this site lacks.
+No new source lever from the coloring model. Left at asm (100%).
+
+### RULE 1-4 scorecard update (round 2)
+- RULE 1 (bl-crossing -> callee): still CONFIRMED.
+- RULE 2 (decl-order ranking) / RULE 3 (param rank): the warp self/mov swap is a
+  STANDING COUNTEREXAMPLE to any fixed param-rank rule — params can color FIRST
+  (warp target self=r31) or LAST (CancelActiveEffect self=r24) in real fns; the
+  determinant is the callee-web set composition (site ordinal), not decl order.
+  Arg/statement order reconfirmed irrelevant (warp inline-assign no-op).
+- RULE 4 (disjoint reuse): CONFIRMED in CarObject_Init (target reuses r26/r25/r27/r23
+  across disjoint object lifetimes), BUT the reuse TARGET reg is not steerable by
+  source-level variable coalescing (ch=o1 merge no-op) — reuse picks by param-reg
+  liveness, which is fixed by the (matched) field-store structure.
+- merged-web-colored-last corollary: CONFIRMED only where the merge DEMOTES a web to
+  the lowest free reg (GetMaxSpeed mv->r7). REFUTED as a tool to make a web ADOPT a
+  specific sibling reg in the callee pool (CarObject_Init ch).
+
+### Net
+The coloring model is predictive for WHERE webs land but does NOT expose a source
+lever to RE-STEER a callee web's home when that home is pinned by the
+param-interference / liveness graph (which is itself fixed by the already-matched
+surrounding code). The two remaining promote routes are both compiler-internal:
+(1) the colorer visit-order dump (system-1, stubbed — dead) or a frida hook on the
+Coloring.c select step (FUN_00579cf0); (2) for CarObject_Init specifically, the
+new-expr r0-temp is a codegen-shape gap unrelated to coloring. Do NOT re-burn
+source-permutation budget on warp self/mov or Init ch/blk/sub/mgr.

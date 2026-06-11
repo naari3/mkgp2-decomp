@@ -354,3 +354,27 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     なった。本線 batch (走行中) がこの lever で promote を積めば、Phase 3 (A 化) の gate が開く。
   - 次: 本線 batch の結果処理 → frida lever を反映した Init / OnKartHit / HandleItemEffect の
     promote 再挑戦 → prefix が揃ったら Phase 3 (manual extab 削除 + exceptions-on 再 compile)。
+- 2026-06-11: **model-guided round 2 — 0 promote、frida lever の適用限界が判明** (3 fn 検証、
+  docs/notes/cw132-allocator-phase2f-research.md の In-TU validation round 2 節)。
+  frida MODEL-FOUND と統合すべき重要な反例:
+  - 観察 (事実): decl-order / merged-web lever は **実 fn では効かないケースが多い**。
+    CarObject_Init の ch を o1 (movement) と coalesce しても byte-identical (ch は r25 のまま) =
+    merge lever 反証。ProcessWarpAndDash で arg/statement 順を変えても callee web は re-rank されず。
+  - 観察 (事実): ProcessWarpAndDash の param `self`=r31 が first local `mov`=r30 の**上**に rank —
+    round-1 standalone (CancelActiveEffect の param self=r24 が最後) と**矛盾**。
+    param rank は固定でなく callee-web-set 構成で flip する (round-1 bisect で 3rd web mgr +
+    9-arg CalcExitPosition に pin と判明済み)。
+  - 観察 (事実): CarObject_Init の hard cap は coloring ではなく **structural -1 命令**
+    (new-expr r0-join、494 vs 495 命令)。coloring は二次的。
+  - **統合結論 (仮説含む)**: colorer 機構は MODEL-FOUND (web-birth key 降順) で「web がどこに
+    着地するか」は予測できるが、**実 fn では param-interference / liveness graph が既に web home を
+    pin しており、source の宣言順 lever はそれを上書きできない**。frida の最小 probe で decl-order
+    lever が効いたのは web が under-constrained だったから。GetMaxSpeed が解けたのは merge を
+    消せた (= 制約を緩められた) ため。**source lever が効くのは under-constrained case のみ**。
+  - ApplyImpactReflect は coloring 外 (int-chain li-deletion、独立 zero web 不在で park 継続)。
+  - **Phase 3 gate の見通し更新**: prefix index 0 の OnKartHit が under-constrained (lever 効く) か
+    pin されているか未検証 = これが次の判定対象。pin されていれば source からの prefix 完成は不可能で、
+    残る手段は (a) frida で更に深い lever (web 生成順を直接動かす source 構造) を探す、
+    (b) 部分 A 化 (park fn 手前まで)、(c) Phase 4 断念。
+  - 次: OnKartHit に frida lever を当てて under-constrained か判定する batch。
+    + reusable objdiff harness (tools/compiler_probe/measure_fns.py, rowdiff.py) 追加済み。
