@@ -1200,65 +1200,6 @@ li-0 を消すのは、同じ partition を別角度から押す試み。
   書き換え、li-0 が消えて bool が clique を抜けるか測る。follow-up 9 の degree lever を bool に適用する版。
 
 assets: tmp/reg_normalized_diff.py。
-
-## degree lever 確定 — multi-pass simplify model + family 診断 (2026-06-11, follow-up 9)
-
-follow-up 8 の「閉/未解決」から前進。**正しい coloring model を確定し、param-park を動かす lever を
-実証**した。spill-only tracer (tmp/frida_spill_probe.js、低頻度サイト 0x507ca1 のみ hook で
-crash 回避) で TU 全 57 関数を観測。
-
-### OBSERVED: 真の model = multi-pass simplify (spill 不在)
-
-- **TU 全関数で spill 除去ゼロ** = 全て k-colorable。しかし OnItemHit (param 中位) のように
-  color order が降順 key でない関数が存在 → 「all-trivial = 純粋降順 key」は誤り。
-- 正しい規則: simplify は **multi-pass**。各 pass で dynamic-degree < k の node を index(key) 昇順に
-  除去。**高 degree node は degree が k 未満に落ちるまで複数 pass 生き残る → 遅い pass で除去 →
-  早く着色 → 高 reg** (spill なしで)。k ≒ 91-100 (trace: dyndeg=90 は trivial 除去、adjN=102 は
-  当初 deferred)。
-- color order = pass 群 (遅い pass 順) × pass 内 descending key。
-- OnKartHit: param (deg135/137) と rm(102)/bus(77)/bools(33-46) が相互干渉して**同一の最終 pass**で
-  崩れる → pass 内 descending key → param (最小 key 32/33) が最後 → 最低 reg。
-- OnItemHit: param が local より高 degree で**遅い pass**に分離 → param が上。
-
-### OBSERVED: degree lever 実証 (D1/D2)
-
-param ではなく **高 degree local の live range を削る** と param が上がる (従来の全 lever の逆):
-- D1 (rm を 3 箇所で短命再計算に分割): **self r26→r27, victim r27→r28** に上昇。rm web が
-  param の最終 pass から脱落。
-- D2 (D1 + bus も短命化): self r27 で頭打ち。bus を剥がしても bools が壁。
-- 天井 = **r27**。bools (key47-51、4 個) が dispatch で param と正当に co-interfere するため
-  param の最終 pass に残り、within-pass descending key で param の上を取る。bools を volatile 化
-  しないと param は r28 以上に行けない (bools は branch 選択に 4 個同時 live 必須で volatile 化困難)。
-
-### family 診断 + lever (再利用可能な一般原理)
-
-**診断**: param が低 reg に park する条件 = 「param より **高い web-key の callee local** が、param の
-**最終 simplify pass で co-interfere** している」。これは frida colorer (clique の pop order + adjN) で
-即判定できる。
-
-**lever**: その co-interfere する高 key local の **live range / web 数を削り、param の最終 pass から
-脱落させる**。local を早い pass で消せば param が繰り上がる。命令列を壊さずに local を短命化できる
-関数なら promote 可能。
-
-**適用限界**: param と最後まで正当に co-interfere する local (OnKartHit の bools のように branch 選択で
-同時 live が必須なもの) は剥がせない = その関数は degree lever だけでは天井あり。
-
-### OnKartHit 固有の残課題 (未解決、coalescing 未 trace)
-
-決定的矛盾は未解決のまま: **target は self/victim を 1 回だけ書く単一 web (row4/5、reload なし)、
-命令ほぼ同一・key 32/33・max degree なのに r30/r31**。同一 graph に決定的アルゴリズムが違う色を
-付けている = model にまだ欠けた因子。最有力候補 = **coalescing** (simplify 前段 FUN_0057a1f0、
-本探索で未 trace)。target の param が高 key web と coalesce して effective key が上がっている可能性。
-次の一手: coalescing union-find を trace し、merged web の key 選択規則を読む。
-
-### 結論
-
-degree lever は確定・family 適用可。OnKartHit は bools の co-interfere で degree 天井 r27、
-かつ命令同一で target が param-top を出す機構 (coalescing 疑い) が未解明のため依然 park。
-ただし「park = 動かせない」ではなく「**動かす条件が判明**」した点が follow-up 9 の成果。
-assets: tmp/frida_spill_probe.js, spill_run.py, make_d1.py/make_d2.py, probe_d1.c/d2.c,
-colorer_D1.log。
-
 ## マイルストーン: EF で命令列が target と完全一致 — 残差は純粋 coloring (2026-06-11, follow-up 11b)
 
 follow-up 11 の bool 読解 (target も li-0 を出すが pre-init 位置、baseline は ==0 アームで冗長 li-0) に
