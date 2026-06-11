@@ -120,8 +120,8 @@ extern void KartItem_FlushPendingRender_v2();
 extern void KartItem_FlushRenderIfReady();
 extern void KartItem_SetVec3At338();
 extern void KartItem_Stub_Returns0();
-extern void KartMovement_CalcCurrentSpeed();
-extern void KartMovement_CalcMaxSpeed();
+extern float KartMovement_CalcCurrentSpeed(void *mov, int flag);
+extern float KartMovement_CalcMaxSpeed(void *mov, int flag);
 extern float KartMovement_CalcSpeedWithCoinBonus(void *mv, int flag);
 extern int KartMovement_GetCurrentItemId(void *driver);
 extern void KartMovement_Init();
@@ -136,10 +136,10 @@ extern void MediaBoard_SendAndCheck();
 extern void MemoryManager_AllocTagged();
 extern void MemoryManager_TimedFree();
 extern void Mtx4x4_TransposeTo4x3();
-extern void OSGetTick();
+extern unsigned long OSGetTick(void);
 extern void PlayCamera_Dtor();
 extern void PlayCamera_Init();
-extern void Profiler_RecordFrame();
+extern void Profiler_RecordFrame(unsigned int id, float ms);
 extern void RankLog_OnHit();
 extern void RankLog_OnMatchEnd();
 extern void RankLog_OnPlayerDefeated();
@@ -172,15 +172,15 @@ extern void StrPcb_SetCmdByte2f(void *pcb, int v);
 extern void StrPcb_SetCounterField14(void *pcb, int v);
 extern void StrPcb_SetTimer3034_38(void *pcb, int a, int b, float f);
 extern void StrPcb_SetTimer3c40(void *pcb, float t, int mode);
-extern void Tachometer_SetCoinCount();
-extern void Tachometer_UpdateDisplaySpeed();
+extern void Tachometer_SetCoinCount(int count);
+extern void Tachometer_UpdateDisplaySpeed(float current, float max);
 extern void TireEffect_ResetSpin(void *body, float a, float b);
 extern void TitleStats_IncCurrentRaceScore();
 extern void TitleStats_IncPerfectCount(void *stats, int score, signed char flag);
 extern void TitleStats_IncTotalRaces(void *stats, int score);
 extern void TitleStats_MarkAllCoursesClearedIfDistance();
 extern void TitleStats_SetEventFlag_806d1420();
-extern void TitleTracker_Empty_PreFinalizeHook();
+extern void TitleTracker_Empty_PreFinalizeHook(unsigned int tracker, int kartSlot);
 extern void TornadoEffect_ApplyItemVisual_Compact();
 extern void TornadoEffect_ApplyItemVisual_Primary();
 extern void TornadoEffect_ApplyItemVisual_Secondary();
@@ -310,7 +310,7 @@ extern unsigned int lbl_806D27B8;
 extern unsigned int lbl_806D27BC;
 extern unsigned int lbl_806D27C0;
 extern unsigned int lbl_806D27C4;
-extern unsigned int lbl_806D27C8;
+extern const float lbl_806D27C8; /* 1000.0f (us -> ms divisor) */
 extern unsigned int lbl_806D27D0;
 extern const float lbl_806D27D8;
 extern const float lbl_806D27E4;
@@ -1109,6 +1109,18 @@ typedef struct KartRootMtxView {
     float posZ;             /* 0x2c */
 } KartRootMtxView;
 
+/* frame-update view of the car object (kart slot, player flag, movement, coins) */
+typedef struct CarObjFrameView {
+    char pad_0x0[0x10];
+    int kartSlot;                   /* 0x10 */
+    char pad_0x14[0xc];
+    unsigned char isPlayer;         /* 0x20 */
+    char pad_0x21[0x7];
+    void *movement;                 /* 0x28 */
+    char pad_0x2c[0x9c];
+    int coinCount;                  /* 0xc8 */
+} CarObjFrameView;
+
 
 /* --- forward decls --- */
 asm void KartItem_OnKartHit(void);
@@ -1125,8 +1137,8 @@ asm void KartItem_Tick(void);
 asm void KartItem_PerFrameStep(void);
 void CarObject_UpdateCoinSpeedBonus(KartItemOpsView *self);
 asm void CarObject_ProcessWarpAndDash(void);
-asm void CarObject_MainUpdate(void);
-asm void CarObject_FrameUpdate(void);
+asm void CarObject_MainUpdate(void *self, void *arg);
+void CarObject_FrameUpdate(CarObjFrameView *self, void *arg);
 void CarObject_ApplyInput_AI(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3, float in4);
 void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3);
 asm void *KartItem_Dtor(void *self, short flag);
@@ -4865,7 +4877,7 @@ asm void CarObject_ProcessWarpAndDash(void) { /* 0x8004D1A8 size:0x25C */
     blr
 }
 
-asm void CarObject_MainUpdate(void) { /* 0x8004D404 size:0xAC8 */
+asm void CarObject_MainUpdate(void *self, void *arg) { /* 0x8004D404 size:0xAC8 */
     nofralloc
     stwu r1, -0x170(r1)
     mflr r0
@@ -5595,81 +5607,45 @@ asm void CarObject_MainUpdate(void) { /* 0x8004D404 size:0xAC8 */
     blr
 }
 
-asm void CarObject_FrameUpdate(void) { /* 0x8004DECC size:0x114 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stfd f31, 0x20(r1)
-    psq_st f31, 0x28(r1), 0, 0
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    li r0, 0x28
-    mr r30, r3
-    stw r0, 0xc(r1)
-    mr r31, r4
-    bl OSGetTick
-    stw r3, 0x8(r1)
-    mr r3, r30
-    mr r4, r31
-    bl CarObject_MainUpdate
-    lwz r3, lbl_806D10A0(r13)
-    cmplwi r3, 0x0
-    bne CarObject_FrameUpdate_L_8004DF1C
-    li r3, 0x0
-    CarObject_FrameUpdate_L_8004DF1C:
-    cmplwi r3, 0x0
-    beq CarObject_FrameUpdate_L_8004DF2C
-    lwz r4, 0x10(r30)
-    bl TitleTracker_Empty_PreFinalizeHook
-    CarObject_FrameUpdate_L_8004DF2C:
-    lbz r0, 0x20(r30)
-    cmplwi r0, 0x1
-    bne CarObject_FrameUpdate_L_8004DF68
-    lwz r31, 0x28(r30)
-    li r4, 0x1
-    mr r3, r31
-    bl KartMovement_CalcMaxSpeed
-    fmr f31, f1
-    mr r3, r31
-    li r4, 0x1
-    bl KartMovement_CalcCurrentSpeed
-    fmr f2, f31
-    bl Tachometer_UpdateDisplaySpeed
-    lwz r3, 0xc8(r30)
-    bl Tachometer_SetCoinCount
-    CarObject_FrameUpdate_L_8004DF68:
-    bl OSGetTick
-    lis r5, 0x8000
-    lis r4, 0x431c
-    lwz r5, 0xf8(r5)
-    lis r0, 0x4330
-    subi r6, r4, 0x217d
-    lwz r7, 0x8(r1)
-    srwi r4, r5, 2
-    stw r0, 0x10(r1)
-    mulhwu r0, r6, r4
-    subf r3, r7, r3
-    lfd f2, lbl_806D27D0(r2)
-    slwi r4, r3, 3
-    lfs f0, lbl_806D27C8(r2)
-    lwz r3, 0xc(r1)
-    srwi r0, r0, 15
-    divwu r0, r4, r0
-    stw r0, 0x14(r1)
-    lfd f1, 0x10(r1)
-    fsubs f1, f1, f2
-    fdivs f1, f1, f0
-    bl Profiler_RecordFrame
-    psq_l f31, 0x28(r1), 0, 0
-    lwz r0, 0x34(r1)
-    lfd f31, 0x20(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+#pragma exceptions off
+/* inline-expanded ScopedTimer (id 0x28): ctor stores id + OSGetTick at
+ * sp+0xc/0x8; dtor converts elapsed ticks to microseconds and reports ms.
+ * The us->float conversion must stay nested in the Profiler_RecordFrame
+ * argument (no unsigned temp): a `unsigned int us` temp flips the scheduler
+ * to lwz-before-subi (docs/notes/cw132-scopedtimer-phase2d-research.md). */
+void CarObject_FrameUpdate(CarObjFrameView *self, void *arg) { /* 0x8004DECC size:0x114 */
+    struct {
+        unsigned int start;        /* sp+0x8 */
+        volatile unsigned int id;  /* sp+0xc */
+    } tm;
+    void *t;
+
+    tm.id = 0x28;
+    tm.start = OSGetTick();
+    CarObject_MainUpdate(self, arg);
+    t = lbl_806D10A0;
+    if (t != lbl_806D10A0) {
+    } else if (t == 0) {
+        t = 0;
+    }
+    if (t != 0) {
+        TitleTracker_Empty_PreFinalizeHook((unsigned int)t, self->kartSlot);
+    }
+    if (self->isPlayer == 1) {
+        void *mov;
+        float maxSpd;
+        mov = self->movement;
+        maxSpd = KartMovement_CalcMaxSpeed(mov, 1);
+        Tachometer_UpdateDisplaySpeed(KartMovement_CalcCurrentSpeed(mov, 1), maxSpd);
+        Tachometer_SetCoinCount(self->coinCount);
+    }
+    Profiler_RecordFrame(
+        tm.id,
+        (float)(((OSGetTick() - tm.start) * 8) /
+                ((*(unsigned int *)0x800000F8 / 4) / 125000)) /
+            lbl_806D27C8);
 }
+#pragma exceptions reset
 
 #pragma exceptions off
 void CarObject_ApplyInput_AI(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3, float in4) { /* 0x8004DFE0 size:0x174 */
