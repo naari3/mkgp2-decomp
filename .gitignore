@@ -42,3 +42,6 @@ per_fn.json
 
 # Claude Code local state
 .claude/
+
+# Private compiler-probe scratch (frida hooks, private mwcc copy, logs)
+tmp_probe/

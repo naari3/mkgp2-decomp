@@ -623,3 +623,84 @@ surrounding code). The two remaining promote routes are both compiler-internal:
 Coloring.c select step (FUN_00579cf0); (2) for CarObject_Init specifically, the
 new-expr r0-temp is a codegen-shape gap unrelated to coloring. Do NOT re-burn
 source-permutation budget on warp self/mov or Init ch/blk/sub/mgr.
+
+## In-TU validation round 3 -- OnKartHit gate is PINNED (2026-06-11, batch_frida_onkarthit_lever + concurrent independent run)
+
+Judged whether KartItem_OnKartHit 0x8004A238 (prefix index 0, the Phase-3 A-region
+gate) parks at 96.38% because the GPR partition is under-constrained (source-movable)
+or pinned. TWO independent runs reached the SAME verdict: PINNED by param-interference,
+0 promote. The shipped compiler was untouched (private-copy frida hook; SHA-1
+re-verified). Caveat on provenance: a second agent was probing the same OnKartHit task
+in the same worktree concurrently (not orchestrator-dispatched; no cron was running);
+both built race-immune harnesses outside the worktree and converged.
+
+OBSERVED (frida, FN#0 class-4 GPR step; key = web-birth [+0x10], home = [+0x14],
+adjN = interference degree):
+- self (PARAM) = key32, home r26, adjN 135
+- victim (PARAM) = key33, home r27, adjN 137
+- bus (local) = key52, home r30
+- rm (local) = key94, home r31
+- 5 coalesced bool/reuse webs (keys 46..51) fill r25/r28/r29.
+TARGET wants self=r30, victim=r31 (the two PARAMS at the TOP of the callee pool),
+bus=r25, rm=r29, bools in r26..r28. The colorer pops the select stack in descending
+key and assigns r31-descending; the two param webs have the LOWEST callee keys (32/33)
+AND the MAXIMUM interference degree (live across the whole fn, adjN 135/137), so Briggs
+simplify can only push them last -> colored last -> lowest callee regs. To outrank the
+locals the params would need a LOWER degree, which their (already-matched) whole-fn
+usage forbids.
+
+EXPERIMENTS (3 levers, all negative on the param/local boundary):
+- def-order / local decl reorder: moves locals AMONG themselves (rm key 94->65;
+  bus r30->r28) but the param homes stay r26/r27 and the boundary does not move.
+- param-as-local-copy (`self=selfP; victim=victimP;` born first, signature params
+  renamed): BYTE-IDENTICAL 96.38% in both runs -- the copy coalesces straight back
+  into the incoming-param web (param-merge), so the param web identity (lowest key,
+  max degree) persists. This is the strongest negative: the most direct "birth params
+  first" signal does nothing.
+- defer bus birth (move `bus = ...` into the `if(ok)` block to free the early high
+  slot): 95.43% (adds a bus reload), params STILL r26/r27. Freeing an early local slot
+  does not raise the params.
+
+CONSEQUENCE: OnKartHit is the 3rd independent real fn (after CarObject_Init,
+ProcessWarpAndDash) where the register-identity park is pinned by the
+interference/liveness graph rather than a source-movable web-birth order. The frida
+MODEL (web-birth key descending) predicts WHERE webs land but does NOT expose a source
+lever to re-rank a MAXIMAL-DEGREE param web. Downstream symptoms (callee-saved-bool li
+coalescing, vcall r6-vs-r12, fp f3/f5) all ride the same partition. The Phase-3 gate
+(prefix index 0 = OnKartHit) cannot be opened from any source lever tried so far.
+Raw rows + experiments: tools/compiler_probe/colorer_observation.log (IN-TU PROBE).
+
+OPEN (the only untried direction): all three levers attacked web-birth ORDER. None
+attacked the param's interference DEGREE -- i.e. a source restructuring that makes
+self/victim NOT live across the whole fn (hoist their needed fields into early locals
+and let the param itself die, or split the tail into a helper so the params' live range
+shrinks). The frida observation says degree, not key, is the pin; this degree-reducing
+direction has not been probed and is the next candidate before declaring source-closed.
+
+## CarObject_HandleItemEffect handled-web, source-lever exhausted (2026-06-11, batch_promote_hie_lateweb)
+
+Re-attacked CarObject_HandleItemEffect 0x8004F858 (parked 99.93%, residual = single
+`handled` web, target r22 vs ours r29) with the frida-named "late-born non-foldable
+handled" lever. Verdict: REFUTED, 0 promote, 7 builds. (No frida used; pure
+source-level investigation.)
+
+NEW OBSERVATION that resolves the old two-regime confusion: in the 99.93% baseline obj
+is ALREADY r29 (regime A achieved via the open-coded ApplyDriftBoost extern call -- a
+real `bl`, NOT an inline splice, so obj is never renumbered). ApplyDriftBoost is a
+standalone matched fn (0x8004F450), so handled = ApplyDriftBoost(obj,...) is a plain
+call; the note's worry that "a substantial helper demotes obj" does NOT apply here. The
+param r31/r30 "contradiction" also does NOT manifest -- params are correct on every row.
+The ONLY residual is handled's home register.
+
+REFINED MECHANISM (OBSERVED): handled is a SINGLE phi-web in both target and ours (every
+write uses one reg). It is not a fold/split problem. The divergence is the move-coalescer:
+in the drift cases ours emits `mr r29, r0` (coalesces handled into obj's just-freed r29);
+target emits `mr r22, r0` (no coalesce). The coalescer's choice is driven by the global
+interference graph; six source perturbations could not redirect it (non-const SSA source
+for handled; killing the pre-switch live range; dropping the explicit obj local; forcing
+handled live across the obj-load+call via `handled & call()` -- all either repartition
+everything or leave handled at r29). Probe B (handled tied to `found`) proves handled CAN
+move but only by reshuffling all of r22..r29 -> loses the loop-local match. The partition
+is fully constrained; the one residual web is NOT source-movable. Strongest in-fn
+confirmation yet of the "source lever works only for under-constrained webs" limit. Keep
+as matched asm; 99.93% C form preserved in tools/compiler_probe/p2e_handleitemeffect_9993.patch.

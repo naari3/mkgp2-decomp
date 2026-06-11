@@ -86,3 +86,39 @@
   #3 node@0x36b5190 key=32 deg=14 reg=r29 flags=0x2 adjN=17
 [driver] obj produced: True
 
+######## IN-TU PROBE: KartItem_OnKartHit (real auto_ONKARTHIT_block.c, FN#0) ########
+# Compiled the actual production TU under the hook (exact build.ninja cflags).
+# OnKartHit is the first .text fn = coloring-driver FN#0. Only its class-4 (GPR)
+# callee-saved partition (reg r25..r31) is reproduced here; the volatile webs and
+# the FPR (class-3) step are elided. Variable<->reg identity is from objdiff rows.
+#
+# BASELINE (96.38% C body, decl order rm-first):
+#   key=94 deg=14 reg=r31 flags=0x02 adjN=102   <- rm   (local; target wants r29)
+#   key=52 deg=16 reg=r30 flags=0x02 adjN=77    <- bus  (local; target wants r25)
+#   key=51 deg=14 reg=r29 flags=0x42 adjN=42    <- coalesced bool/reuse web
+#   key=50 deg=12 reg=r29 flags=0x42 adjN=40    <- coalesced
+#   key=49 deg=12 reg=r30 flags=0x42 adjN=46    <- coalesced
+#   key=47 deg=12 reg=r28 flags=0x42 adjN=33    <- coalesced
+#   key=33 deg=16 reg=r27 flags=0x02 adjN=137   <- victim (PARAM; target wants r31)
+#   key=32 deg=16 reg=r26 flags=0x02 adjN=135   <- self   (PARAM; target wants r30)
+#   key=46 deg=12 reg=r25 flags=0x42 adjN=26    <- coalesced (popped last, #151)
+#
+# EXPERIMENT V1 (hoist rm to the first statement): rm key 94 -> 65, but home reg
+#   UNCHANGED (still r31). self/victim UNCHANGED at key 32/33 -> r26/r27.
+#   -> source def-order moves a web's KEY but NOT its home; params stay pinned.
+# EXPERIMENT E2b (KartItemHit *self = selfP; born first as a local copy):
+#   BYTE-IDENTICAL 96.38%. self still key=32 r26, victim still key=33 r27. The
+#   local copy coalesced back into the incoming-param web (param-merge); the param
+#   web persists at the lowest callee key. -> param home NOT liftable from source.
+#
+# PINNING MECHANISM (observed): the two param webs (self,victim) have the MAXIMUM
+# interference (adjN 135/137 -- live across the whole fn, interfere with every
+# other web) and high degree (16). The Briggs simplify can only push them onto the
+# select stack LAST (they cannot be simplified until all neighbours are removed),
+# so they are colored LAST and take the LOWEST callee regs (r26/r27). TARGET wants
+# them at the TOP (r30/r31), i.e. the params must OUTRANK the locals -- which only
+# happens when the params do NOT dominate the interference graph. That ranking is
+# fixed by the (already-matched) whole-fn usage of self/victim, not by decl/def
+# order. VERDICT: register-identity park is PINNED by param-interference, NOT a
+# source-movable web-birth-order lever. See HANDOFF.md / phase2f research note.
+

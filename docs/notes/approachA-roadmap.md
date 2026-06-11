@@ -378,3 +378,24 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     (b) 部分 A 化 (park fn 手前まで)、(c) Phase 4 断念。
   - 次: OnKartHit に frida lever を当てて under-constrained か判定する batch。
     + reusable objdiff harness (tools/compiler_probe/measure_fns.py, rowdiff.py) 追加済み。
+- 2026-06-11: **round 3 — OnKartHit gate PINNED + HandleItemEffect PARKED (2 batch、0 promote)、Fable 再検証へ**
+  (docs/notes/cw132-allocator-phase2f-research.md の round 3 + HIE 節)。
+  - 観察 (事実): OnKartHit 0x8004A238 (prefix index 0) は param self/victim が最低 web-birth key
+    (32/33) + 最大 interference degree (adjN 135/137) → 最後着色 → r26/r27、target は r30/r31 (param
+    最上位)。3 lever (局所宣言順 / param→局所コピー [byte-identical] / 局所遅延生成 [95.43%]) 全
+    negative。2 独立 run が同結論 (PINNED)。HandleItemEffect 0x8004F858 は 99.93%、残差は handled 単一
+    phi-web の move-coalescer tie-break (obj は既に r29 で正しい、param r31/r30 も blocker でない)、
+    6 probe 全 refute。両者とも source-movable でない。
+  - 訂正: HIE の two-regime 仮説は不要だった — ApplyDriftBoost が standalone matched fn = real bl の
+    ため obj は splice されず元から r29。残るは handled の coalesce 先のみ。
+  - 仮説 (推論)・未解決: 3 lever は全て web-birth **順序**を攻めた。pin の正体は param の interference
+    **degree** で、degree を下げる source 構造 (param を早期 local に退避して param 自体を dead にする
+    等) は**未試行**。source-closed 確定前の最後の候補。
+  - 方針 (ユーザー判断): この未試行 lever を **Fable で** (frida 不要、objdiff のみ) 別セッションで
+    再検証する (0 promote が Opus の探索不足でないかの確認)。引き継ぎ = docs/notes/onkarthit-fable-recheck-brief.md。
+  - Phase 3 gate: 結論保留。Fable recheck で degree-reducing が効けば gate が開く。効かなければ
+    register-identity park family を source-closed と確定 → 部分A化は index 0=OnKartHit が pin のため
+    空 prefix = 実質不可 → Phase 4 断念が濃厚、他 TU の pending fn へ軸足。
+  - メタ: このセッションは frida 言及で safety classifier に flag され Fable→Opus 自動切替された
+    (偽陽性)。OnKartHit/HIE batch は完了処理済み (state flip / cleanup / push)。frida 観測は完了済みで
+    今後の本作業に frida 不要 = Fable 維持の見込み。
