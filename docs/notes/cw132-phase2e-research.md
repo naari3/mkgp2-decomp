@@ -88,3 +88,79 @@
 p2e_run.py (deadctr/mtx classifiers), p2e_deadctr{,2,3,4}.c, p2e_mtxmul{,2,3,4,5}.c,
 p2e_mine_deadctr{,2}.py (binary-wide miners), results_p2e_*.tsv, target_mainupdate.txt,
 p2e_handleitemeffect_9993.patch (apply onto src/game/auto_ONKARTHIT_block.c for retry).
+
+## Part 2 (2026-06-11, batch_research_phase2e_b): handled-r22 lever hunt - NEGATIVE, new share-pick invariant found
+
+### Headline
+1. CarObject_HandleItemEffect 0x8004F858 stays parked at 99.93% (7 rows, handled web r29 vs
+   target r22). ~28 additional probes, ALL negative for the flip; but the probe matrix
+   isolates a NEW allocator invariant (below) and refutes the unification hypothesis.
+2. NEW INVARIANT (observation, robust across 20+ configs): CW 1.3.2 always gives the
+   low-priority fn-scope u8 flag the SAME register as a fn-scope POINTER sibling (obj/obj2),
+   wherever that pair lands. H1 (helper form) moved the obj-pair web to r22 and handled
+   FOLLOWED it to r22 (read-site row matched target for the first time); c9 (block-local obj
+   in lane-clear arms) left handled glued to the remaining fn-scope obj2 at r29. The pairing
+   itself never broke. Target needs handled (r22) DECOUPLED from obj (r29) -> the original
+   source must break this pairing by a mechanism not found this session.
+3. REFUTED: "handled unified with the lane-clear loop's block itemId temp" (one-variable
+   theory). Probe P1: int handled doubling as loop temp -> handled grabs r29 FIRST (outranking
+   obj, which gets pushed to r28) and the boost def emits `clrlwi r29,r0,24` instead of
+   target `mr` (u8->int conversion artifact) => original handled was u8-typed at the boost
+   def AND separate from the loop temp.
+
+### Probe matrix (all on top of p2e_handleitemeffect_9993.patch, driver tools/compiler_probe/p2e_hie_check.py)
+- P1 unify handled+loop-itemId as int: 98.22%, pool rotated, clrlwi artifact. NEGATIVE (2 new facts).
+- P2 block-scope handled (switch+read wrapped in block): inert (same 7 rows).
+- P3 extra named temp web (et = self->owner->effectTable): inert.
+- renames x9 (h/ok/ret2/res/flag2/bHandled/x/zz/aa): ALL inert -> symbol-name/hash axis closed.
+- q decl moved first in each lane-clear block: inert.
+- handled fn-scope decl position x9 (all 10 slots now covered incl. previous batch): ALL inert
+  -> fn-scope decl-order axis CLOSED exhaustively for this web.
+- copy-coalescing web-ancestry probes: c1 (read via fn-scope h2=handled), c3 (arm def via
+  block-local t), c4 (boost def via block-local t), c5 (all), c8 (obj split into obj/obj2 for
+  boost arms - output identical, handled still r29): ALL inert.
+- H1 helper form (3 static inline copies, obj passed as arg => arg-coalescing): 494/494 insns
+  preserved, whole stmw pool ROTATED: obj+handled = r22 (read site matched!), site locals
+  climbed r23..r28 with direction flips. 98.48%. Shows inline/block structure is the ONLY
+  lever class that moves the pair - but it moves obj along with handled.
+- c9 block-local obj in lane-clear arms + fn-scope obj2 at boosts: lane-clear pools rotated
+  (block obj=r22), handled stayed r29 with obj2. 99.49%.
+- c11/c12/c13 dead handled=1 writes (inside 0x141 block end / after block / in 0x142 arm)
+  hoping interference is computed before DCE: ALL inert -> dead defs are eliminated BEFORE
+  the interference graph is built (FE or early opt). Closes the dead-write-interference axis.
+
+### Hypotheses for a future session (untested)
+- The share-pick may be an affinity recorded between a u8 flag web and the pointer web used
+  in its defining call's args (obj is an arg of the boost call defining handled at 3 sites;
+  most-recently-dead web at every handled def is obj). If so the original would need handled's
+  defs NOT adjacent to obj death - but li placement is fixed by the match, so this suggests
+  the original differed in IR only (e.g., C++ front end artifact; TU is -lang=c).
+- fp-numbering-family analog: residual is GPR register identity only; binary-level allocator
+  research may be the only unlock. Park verdict: source-closed for now, same family treatment
+  ("~99%+ with single-GPR-web residual -> park, no probe budget").
+
+### Priority 2: KartItem_ApplyImpactReflectAndDampVelocity 0x8004B140 chain (95.19% park stands)
+- Invisible-use lens applied to the chain's r6 web: r6 = VACATED 4th-arg register (outZ saved
+  to r31 in prologue) - same vacancy pattern as the solved dead-counter (r4). But the web has
+  a NORMAL visible read (`clrlwi. r0,r6,24`); there is NO hidden use; the residual is the arm
+  li-0 deletion + init survival combination, not liveness.
+- New probes (appendix-B C re-staged then reverted): F0 no-init else-if chain
+  = identical to ledger probe 1 (arms keep 4x li r0,0). F1/F1b OR-compound class-1 canonical
+  (then=0/else=1, with/without init): beq-fold collapses every link (no diamond survives;
+  class-1 then=0 trick does NOT transfer to multi-link ||). F2 goto-out form: init li SURVIVES
+  (li r5,0 - first form to keep it!) but links fold to beq.
+- Synthesis: target shape needs BOTH (a) init survival = some match path must NOT redefine b
+  (F2 proves the mechanism) AND (b) bne+b diamonds = arms non-empty at fold time with content
+  deleted LATER (class-1 mechanism = coalesce with an independent live zero web). The chain
+  has no independent zero web, and manufacturing one without instruction cost was not found
+  (FE const-prop folds u8 zero copies; probe-3 ledger). No C handle in 4+4 probes total ->
+  park confirmed; unlock likely binary-level or needs a zero-web donor discovered elsewhere.
+
+### Priority 3: CarObject_ProcessWarpAndDash 0x8004D1A8 - not attempted (budget)
+Transferable insight from Part 2 for the next retry: the self/mov r31<->r30 swap looks like the
+same fn-scope pair tie-break family as handled/obj (symbol-level levers proven useless there;
+prior ledger agrees). The ONLY lever class that flipped pair placement this session was
+inline/block restructuring (H1/c9). Suggested 2-probe retry: (1) wrap the dash-apply block
+(9-clear + GetParam + stores) in a static inline helper taking self (arg-coalescing keeps the
+web count but changes allocation order); (2) split mov into per-region variables (warp-mov
+block-local, dash uses existing m temps) to see if self can win r31.

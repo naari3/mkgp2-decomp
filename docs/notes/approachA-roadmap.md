@@ -247,3 +247,22 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     次の一手 (chain の li-0 は hidden use を持つ変数かもしれない)。
   - 次: Phase 2e 後半 batch — HandleItemEffect の handled-r22 lever hunt (99.93% からの一押し) +
     P3 chain 変種 (invisible-use lens) + P4 flavor 4 の見切り probe。
+- 2026-06-11: **Phase 2e 完了 (後半 batch、promote 0)** — 研究 phase (0/1/2a-2e) 全消化。
+  - 観察 (事実): handled-r22 lever は ~28 probe 全 negative (symbol 名 / decl 順 / scope /
+    copy ancestry / dead-write interference の全 axis closed)。**新 invariant**: CW 1.3.2 は
+    低優先 fn-scope u8 flag を fn-scope pointer sibling と**必ず同色にする** (share-pick)。
+    target は handled と obj が別色 = この pairing を破る機構が source に無い。
+  - 観察 (事実): chain 変種は invisible-use ではない (r6 は visible read 持ち)。goto-out 形で
+    init li が初めて生存 (新事実) したが link の beq-fold は不可避。park 確定 (4+4 probe)。
+    flavor 4 は未着手 (2-probe retry recipe を note に記録: inline/block restructuring のみが
+    pair 配置を動かせる lever class)。
+  - **Phase 2 総括**: source-form で解ける idiom は全部解けた (class 1 / class 2 / mr-SR-init /
+    ScopedTimer / dead-counter の 5 family SOLVED、promote 4 fn)。残る park は全て
+    **register-identity tie-break 系** (fp-numbering / GPR partition / fn-scope pair share-pick /
+    coloring permutation) + 構造ギャップ 2 種 (new-expr r0-join / EH scaffolding / adjustor thunk)。
+  - **Phase 3 gate 評価 (2026-06-11)**: A 区間は TU 先頭から連続が必須だが、**index 0 の
+    OnKartHit 自体が 96.38% park** (register-identity)。よって Phase 3 は現状開始不能。
+    残された unlock 経路は 1 つ = **register-identity family の binary-level allocator 研究**
+    (colorer の web visit order の解明)。解ければ OnKartHit / Tick / ApplyImpactImpulse /
+    Dispatch / GetMaxSpeedWithBonus / HandleItemEffect / fp-numbering 4 fn が連鎖 self-correct
+    し、prefix が一気に揃う。これを Phase 2f として次に掲げる。
