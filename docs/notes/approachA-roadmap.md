@@ -287,3 +287,22 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     options struct) — 当たれば visit order が直接観測可能 = MODEL-FOUND。(2) two-tier モデルの
     closing probe。(3) RULE2 の in-TU 検証 — CarObject_Init (ch/blk/sub/mgr) と OnKartHit の
     owner 宣言 permutation で実 fn の色が動くか。
+- 2026-06-11: **Phase 2f model-guided 検証 — GetMaxSpeedWithBonus promote (matched)、model 境界も精密化**
+  (docs/notes/cw132-allocator-phase2f-research.md の In-TU validation 節)。
+  - **KartItem_GetMaxSpeedWithBonus 0x8004F040 matched** (~60 variant 床だった mv<->e park を
+    model-guided 3 build で解決)。鍵 = **merged web は最後に色付けされる** corollary: wrapper-local
+    mv / mv param が param-merge で r7 に pin されていたのが床の原因。tail を helper 内に入れて
+    wrapper を passthrough 化 → merge 消滅 → decl `(e,off,mv,i)` が leaf volatile pool の r7 降順で
+    target 一致。RULE2 の scratch-pool 方向 gap (leaf volatile = r7 降順) も同時に閉じた。
+    **blind permutation で 2 batch 床だった park が model から 3 build で解けた = model-guided の
+    威力を実証**。promote 計 5 fn 目。
+  - 観察 (事実): HandleItemEffect は two-regime coloring を精密 mapping (5 build)。helper-splice
+    regime は handled=r22 ✓ だが obj も r22 に demote ✗、open-block regime は obj=r29 ✓ だが
+    handled=r29 ✗。target は「obj 早 + handled 遅」の混合で source 形では未到達。per-site の
+    decl-visit 方向は (regime, site 序数) の決定的関数 (旧「振動」の正体)。
+  - 訂正: RULE3 を「param は locals の次」→「**param/merged web は最後に色付け**」に精密化
+    (standalone CancelActiveEffect の self=r24 が根拠)。HIE の param r31/r30 配置は未解決矛盾
+    として明記 (degree-based 順序だと build-0 handled を誤予測)。
+  - 次: dump 有効化 batch (走行中) の結果待ち。dump が出れば two-regime / merged-last / share-pick を
+    観測で確定でき、残り park (Init / ProcessWarpAndDash / OnKartHit / HandleItemEffect) を
+    model から一括攻略できる見込み。

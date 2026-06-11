@@ -164,3 +164,90 @@ MODEL-REFINE + DUMP-ENABLE are both worth one more batch, in this order of payof
 Do NOT re-burn budget on: compiler-revision sweeps, pragma space, -opt suboptions, symbol
 renames, use-count/arg-order/statement-motion for GPR identity (all closed negative across
 phase2a-2e and reconfirmed here).
+
+## In-TU validation (2026-06-11, batch_promote_rule2_validation)
+
+Applied the Phase 2f model to the park fns inside src/game/auto_ONKARTHIT_block.c.
+Result: 1 promote (KartItem_GetMaxSpeedWithBonus 100%), 1 park confirmed with the model
+boundary precisely mapped (CarObject_HandleItemEffect stays 99.93%). All mappings below are
+OBSERVED (objdiff per-row diffs); interpretation marked HYPOTHESIS.
+
+### KartItem_GetMaxSpeedWithBonus 0x8004F040: PROMOTED 100% (commit 68c8b34)
+
+The mv<->e park (11 insns) fell to two model-guided edits, 3 builds total:
+1. Whole tail inside the static inline helper + passthrough wrapper
+   (`return helper(self);`): the previous ~60-variant floor always kept a wrapper-local
+   `mv` (for the coinBonus tail) or passed `mv` as the helper param. Either way mv became
+   a MERGED web (param-merge / cross-boundary CSE) -> colored LAST -> pinned r7
+   (the highest free volatile in this leaf). Removing every merge restores mv to its
+   declaration-rank slot.
+2. GPR decl order `(e, off, mv, i)` -> e=r7, off=r6, mv=r5, i=r4: descending from r7 by
+   decl order. OBSERVED: this is RULE 2 operating in the VOLATILE pool of a leaf fn
+   (no bl; pool top r7, r3 held by `self`). This closes the "scratch-pool direction"
+   gap from the main batch: leaf long-range volatile locals rank decl-order descending
+   from the pool top, same shape as the callee pool.
+3. FP tail residue (5 rows, f1<->f2): solved by accumulator form
+   `max = lbl_806D2770 * keySpeed; max = max * (lbl_806D26FC + mv->coinBonus); return max;`
+   - the product chain coalesces into the f1 return web; both
+   `return (a*b)*(c+d);` and `max = a*b; return max*(c+d);` numbered the temps inverted.
+
+### CarObject_HandleItemEffect 0x8004F858: PARKED at 99.93% - two-regime counterexample
+
+Baseline = tools/compiler_probe/p2e_handleitemeffect_9993.patch: 7 diff rows, all the
+`handled` web (target r22, ours r29 shared with `obj`). 5 builds probed; size stayed
+0x7B8 and all non-`handled`/`obj` rows stayed matched throughout.
+
+OBSERVED per-build web mappings (decl lists left-to-right = source order):
+
+| build | lane-clear form | site1 webs | site2/3 webs | fn obj | handled |
+|---|---|---|---|---|---|
+| 0 (9993 patch) | open blocks, per-site decls | decl(tbl,i,owner,es,mr,cursor,id2) -> r28..r22 IN DECL ORDER | decl(id2,cursor,owner,es,mr,{tbl,i}/{i,tbl}) -> r22..r28 (= fresh-descending in REVERSE decl) | r29 OK | r29 NG (target r22) |
+| 1 | per-site helpers(sec), helper-local obj, `handled = helper(self)` | decl(obj,tbl,i,owner,es,mr,cursor,id2) -> r22..r29 (= fresh-descending in REVERSE decl) | decl order -> descending r29.. (IN DECL ORDER) | r22 NG | r22 OK |
+| 2 | helpers take obj param (`handled = helper(obj)`, obj = self->owner at site) | sites ascend r23.. (obj consumed r22) | descending r29.. | r22 NG (fresh from BOTTOM after all site webs) | r22 OK |
+| 3 | ONE faithful clone of KartItem_CancelActiveEffect, `handled = helper(self->owner)` | reverse-decl descending | decl descending | r22 NG | r22 OK |
+| 4 | open blocks + `handled = RetOne_inl()` (trivial `return 1;`) | = build 0 | = build 0 | r29 OK | r29 NG (return const FOLDED, no web) |
+| 5 | open blocks + `handled = PlaySEAndRetOne_inl(obj->soundCtrl)` (real bl + return 1) | = build 0 | = build 0 | r29 OK | r29 NG (still folded) |
+
+Stable laws extracted (OBSERVED, reproducible):
+- Two regimes exist. Open-coded blocks (regime A): fn-scope callee webs color FIRST
+  (obj at its decl rank -> fresh r29), then per-site block webs. Helper-spliced inlines
+  (regime B): the spliced site webs color FIRST, and any fn-scope web that is merged with
+  spliced code (param-merge: builds 2-3; return-merge: handled in builds 1-3) colors LAST.
+- Within a regime the per-site fresh-allocation visits the site decl list in a FIXED but
+  site-dependent direction: regime A = site1 decl-order / sites2,3 reverse-decl; regime B
+  = exactly inverted (site1 reverse-decl / sites2,3 decl-order). Stable across 3 builds
+  each. This is the precise content behind the old "direction oscillates per
+  configuration" - it is deterministic per (regime, site ordinal), not random.
+- PICK rule (HYPOTHESIS v3, fits every row incl. the matched standalone
+  KartItem_CancelActiveEffect where locals take r31..r25 in decl order and the param
+  self takes r24 LAST): when a web is colored, reuse the LOWEST-numbered already-used
+  callee reg that does not interfere; else allocate fresh, next register DESCENDING.
+  "share-pick" (#5) is just this reuse step - handled shares whatever non-interfering web
+  is lowest at its turn (r29 in regime A, r22 in regime B).
+- TARGET needs obj EARLY (r29, regime A) and handled LATE (r22, regime B)
+  SIMULTANEOUSLY. No probed source form produces that mix: a substantial helper flips
+  BOTH (obj demotes with it), and a thin helper's `return 1` is constant-folded into
+  handled before web formation (builds 4-5), leaving handled early. The remaining unknown
+  is what the original source did to demote ONLY handled. Candidate untried levers: an
+  inline helper whose return value is NOT a foldable constant (e.g. returns a computed
+  int that the target turns into li 1 via VN) - none found yet that keeps the byte shape.
+
+Negative results (do not re-burn):
+- RetOne-style trivial inline returns (with or without a real call inside) never create
+  a surviving return web at -O4,p: the constant folds into the receiver web (FE/VN).
+- Param-merging obj (build 2) does NOT promote it; merged webs DEMOTE regardless of the
+  caller-side web's decl rank or use count.
+
+### RULE 1-4 scorecard after in-TU validation
+- RULE 1 (bl-crossing -> callee): CONFIRMED, no exceptions seen.
+- RULE 2 (decl-order ranking): CONFIRMED for fn-scope webs in regime A and for the leaf
+  volatile pool (GetMaxSpeed promote). COUNTEREXAMPLE for inline-spliced site webs: the
+  visit direction depends on (regime, site ordinal) as tabled above - a 1-fn TU probe
+  family (alloc_* style) reproducing the site1-vs-site2 inversion is the natural next
+  probe if the dump-enable route stays blocked.
+- RULE 3 (locals > params): REFINED - the standalone shows params color LAST (self=r24
+  below 7 locals), not merely "next lower". In fns where params interfere with everything
+  (HandleItemEffect) they nevertheless sit at r31/r30; the order criterion that places
+  them there is still OPEN (degree-based ordering explains it but then mispredicts
+  build-0 handled; recorded as an open contradiction, do not paper over).
+- RULE 4 (disjoint reuse): CONFIRMED everywhere (per-site r22..r29 reuse).
