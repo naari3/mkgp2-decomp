@@ -1,0 +1,3747 @@
+Starting function probe
+--------------------------------------------------------------------------------
+Dumping function probe after IRO_BuildflowGraph 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+Flowgraph node 1  First=56, Last=56
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 1
+  56: End
+
+
+
+Removing unreachable code at: 1
+Dumping function probe after IRO_RemoveUnreachable 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_RemoveRedundantJumps 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_RemoveLabels() 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_BuildflowGraph--1 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+*****************
+Dumps for pass=0
+*****************
+Dumping function probe after RewriteIndDec 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_ScalarizeClassDataMembers 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after Copy and constant propagation 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_RangePropagateInFNode 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_ExpressionPropagation 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after after IRO_UseDef 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_ConstantFolding 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after Before IRO_LoopUnroller 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after After IRO_LoopUnroller 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after Before IRO_FindLoops 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after After IRO_FindLoops 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after Second pass:IRO_CopyAndConstantPropagation, IRO_ConstantFolding, IRO_EvaluateConditionals 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_CommonSubs 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_RemoveUnreachable 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_RemoveRedundantJumps 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_RemoveLabels 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_DoJumpChaining 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after Before IRO_CopyAndConstantPropagation 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after After IRO_CopyAndConstantPropagation 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_UseDef 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_EvaluateConditionals 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+*****************
+Dumps for pass=1
+*****************
+Dumping function probe after RewriteIndDec 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_ScalarizeClassDataMembers 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after Copy and constant propagation 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_RangePropagateInFNode 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_ExpressionPropagation 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after after IRO_UseDef 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_ConstantFolding 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after Before IRO_FindEmptyLoops 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after After IRO_FindEmptyLoops 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after After IRO_FindLoops 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after Second pass:IRO_CopyAndConstantPropagation, IRO_ConstantFolding, IRO_EvaluateConditionals 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_CommonSubs 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_RemoveUnreachable 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_RemoveRedundantJumps 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_RemoveLabels 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_DoJumpChaining 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after Before IRO_CopyAndConstantPropagation 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after After IRO_CopyAndConstantPropagation 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_UseDef 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_EvaluateConditionals 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after Before RebuildCondExpressions 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after before IRO_RewriteBitFieldTemps 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after After IRO_RewriteBitFieldTemps 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Rebuilding ELORs and ELANDs
+Dumping function probe after RebuildLogicalExpressions 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Rebuilding ECONDs
+Dumping function probe after RebuildCondExpressions 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Generating ECONDASSes
+Dumping function probe after GenerateCondAssignments 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after IRO_RegenerateExpressions 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+
+Dumping function probe after After IRO_Optimizer 
+--------------------------------------------------------------------------------
+
+Flowgraph
+Flowgraph node 0  First=0, Last=55
+Succ = 
+Pred = 
+MustReach = 0, MustReach1=0
+LoopDepth = 0
+Dom: 0
+   0: Nop
+   1: Operand 1 <reffed>
+   2: Operand src <reffed>
+   3: Funccall 2(1) <reffed>
+   4: Operand a <assigned> <ind> <immind> <reffed>
+   5: EINDIRECT 4 <assigned> <reffed>
+   6: EASS 5 3
+   7: Operand 2 <reffed>
+   8: Operand src <reffed>
+   9: Funccall 8(7) <reffed>
+  10: Operand b <assigned> <ind> <immind> <reffed>
+  11: EINDIRECT 10 <assigned> <reffed>
+  12: EASS 11 9
+  13: Operand 3 <reffed>
+  14: Operand src <reffed>
+  15: Funccall 14(13) <reffed>
+  16: Operand c <assigned> <ind> <immind> <reffed>
+  17: EINDIRECT 16 <assigned> <reffed>
+  18: EASS 17 15
+  19: Operand 4 <reffed>
+  20: Operand src <reffed>
+  21: Funccall 20(19) <reffed>
+  22: Operand d <assigned> <ind> <immind> <reffed>
+  23: EINDIRECT 22 <assigned> <reffed>
+  24: EASS 23 21
+  25: Operand 5 <reffed>
+  26: Operand src <reffed>
+  27: Funccall 26(25) <reffed>
+  28: Operand e <assigned> <ind> <immind> <reffed>
+  29: EINDIRECT 28 <assigned> <reffed>
+  30: EASS 29 27
+  31: Operand b <ind> <immind> <reffed>
+  32: EINDIRECT 31 <reffed>
+  33: Operand sink <reffed>
+  34: Funccall 33(32) <reffed>
+  35: Operand a <ind> <immind> <reffed>
+  36: EINDIRECT 35 <reffed>
+  37: Operand sink <reffed>
+  38: Funccall 37(36) <reffed>
+  39: EADD 38 34 <reffed>
+  40: Operand c <ind> <immind> <reffed>
+  41: EINDIRECT 40 <reffed>
+  42: Operand sink <reffed>
+  43: Funccall 42(41) <reffed>
+  44: EADD 43 39 <reffed>
+  45: Operand d <ind> <immind> <reffed>
+  46: EINDIRECT 45 <reffed>
+  47: Operand sink <reffed>
+  48: Funccall 47(46) <reffed>
+  49: EADD 48 44 <reffed>
+  50: Operand e <ind> <immind> <reffed>
+  51: EINDIRECT 50 <reffed>
+  52: Operand sink <reffed>
+  53: Funccall 52(51) <reffed>
+  54: EADD 53 49 <reffed>
+  55: Return 54
+
+
+

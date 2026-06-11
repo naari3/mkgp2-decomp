@@ -306,3 +306,23 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   - 次: dump 有効化 batch (走行中) の結果待ち。dump が出れば two-regime / merged-last / share-pick を
     観測で確定でき、残り park (Init / ProcessWarpAndDash / OnKartHit / HandleItemEffect) を
     model から一括攻略できる見込み。
+- 2026-06-11: **Phase 2f-2 dump 有効化 PARTIAL** (Ghidra + byte scan、docs/notes/
+  cw132-allocator-phase2f-research.md の Dump enablement 節)。
+  - 観察 (事実): mwcc 1.3.2 には dump system が 2 つある。(1) per-pass **listing** dump
+    (`AFTER REGISTER COLORING`) は emit fn FUN_004ffdb0 が single-RET stub = **release build で
+    本体が削除済み、どの flag でも復活不能**。Phase 2f の「0x5e90ec=1 patch で無出力」の正体
+    (stub を呼ぶだけ)。(2) IR-optimizer per-pass dump (gate DAT_005e9409、`<basename>.log` 出力) は
+    生きていて、1-byte patch (private copy) で 53 pass 全ての named IR (flowgraph + 変数名を
+    宣言順で含む式木) を取得できた。
+  - 仮説 (推論): (2) は pre-codegen なので colorer が consume する web は見えるが物理 register /
+    visit order は見えない。colorer visit order を直接観測するには **frida で colorer
+    FUN_00579cf0 を hook** する経路が残る (entry point 確定済み、home-reg field offset の特定が
+    残課題)。scaffold は tools/compiler_probe/frida_colorer_probe.js。
+  - shipped compiler は無傷 (SHA-1 検証済み)。
+  - **Phase 2f 総括 (現時点)**: listing dump 経路は閉じた。残る観測経路は frida (colorer の
+    web struct を実行時に walk)。ただし **model-guided 検証で既に GetMaxSpeedWithBonus が
+    解けている** ので、dump が無くても black-box model の精緻化 + 各 fn の merged-web 操作で
+    park を 1 つずつ落とせる実績がある。frida 経路は「model の裏取り + 一括攻略」の上振れ手段、
+    本線は model-guided promote の継続。
+  - 次: (A) frida colorer hook batch (上振れ)、(B) model-guided で Init / OnKartHit /
+    ProcessWarpAndDash を merged-web-last + RULE2 で攻略 (本線)。並列可。

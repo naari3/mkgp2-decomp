@@ -251,3 +251,108 @@ Negative results (do not re-burn):
   them there is still OPEN (degree-based ordering explains it but then mispredicts
   build-0 handled; recorded as an open contradiction, do not paper over).
 - RULE 4 (disjoint reuse): CONFIRMED everywhere (per-site r22..r29 reuse).
+
+## Dump enablement (Phase 2f-2, batch_research_mwccdump_phase2f2, 2026-06-11)
+
+Goal of this sub-batch: fire the per-pass dump and read the colorer's web visit
+order. Verdict: **DUMP-ENABLED but PARTIAL** — a real IR dump was fired, but the
+register-coloring listing dump is permanently dead in this release, so the
+colorer's visit order is NOT directly observable from any built-in dump.
+
+### OBSERVED (Ghidra decompile of mwcceppc.exe 1.3.2 + whole-.text byte scan)
+
+There are **two distinct dump systems**, not one:
+
+1. **Per-pass listing dump (DEAD / stubbed).** Banners `AFTER REGISTER COLORING`
+   (str 0x5a52bc), `[FUNCTION-LEVEL ASM] AFTER REGISTER COLORING` (0x5bd814),
+   `INITIAL CODE`, `BEFORE SCHEDULING`, etc. Emitted from CodeGen FUN_00433310
+   (the per-fn codegen driver, contains `Coloring`/`SpillCode` pipeline) and from
+   FuncLevelAsmPPC FUN_00524f60. Every banner is gated by `.bss` byte
+   **DAT_005e90ec** and routed through emit fn **FUN_004ffdb0** (and siblings
+   FUN_004ffd90, FUN_004ffda0). OBSERVED: **FUN_004ffdb0 disassembles to a single
+   `RET`** — it is an empty stub. FUN_004ffd90 is also `return;`. So the dump
+   bodies (including the register-coloring listing) were compiled out of the
+   shipping build. The earlier Phase 2f note ("setting 0x5e90ec=1 produced no
+   output, suspected file sink / extra gate") is now EXPLAINED: 0x5e90ec is
+   sufficient to *call* the emit fns, but they do nothing. There is no flag that
+   can revive them; the code is absent. This kills the direct route to
+   `AFTER REGISTER COLORING`.
+
+   (Correction to Phase 2f: the addresses 0x453820 "IrOptimizer pass dump" and
+   0x4be0d0 options-struct were partly mismapped. Options copy is FUN_004be0d0:
+   it sets DAT_005e90ec from struct byte +4 — confirmed — but 0x5e90ec drives
+   only the stubbed system. 0x5e91de is a listing-related flag in FUN_0055b510
+   but also feeds the stubbed path.)
+
+2. **IR-optimizer per-pass dump (LIVE).** Format strings `Dumping function %s
+   after %s` (0x5a7b1c), `Flowgraph node %d First=%d, Last=%d`, `Dumps for
+   pass=%d`, `Starting function %s`. Emitted from IrOptimizer FUN_0042ddd0 (== the
+   pass driver, IrOptimizer.c) via FUN_00454400 (per-pass dumper) / FUN_004540c0
+   (progress printf) / FUN_00454240 (flowgraph dumper). Gate = `.bss` byte
+   **DAT_005e9409**; output = FILE* **DAT_005ddebc** opened by FUN_00454110 as
+   `"<source-basename>.log"` (extension stripped, suffix `.log` at 0x5a79b4, mode
+   `"wt"` at 0x5a79bc). OBSERVED via whole-.text byte scan: **DAT_005e9409 is only
+   ever WRITTEN to 0** (init/reset `mov byte[0x5e9409],0` at 0x42dd79; fopen-fail
+   disable at 0x454190). No instruction anywhere stores 1 — the enable path (a
+   `-irdump`-style option handler present in a debug build) was stripped. So the
+   dump is reachable but starts permanently off.
+
+### OBSERVED (firing it)
+
+Forced the IR dump on with a 1-byte patch to a PRIVATE copy (script
+`tools/compiler_probe/enable_ir_dump.py`):
+- Patch A: 0x42dd79 imm8 `00`->`01` (gate on). FUN_00454110, called immediately
+  after the gate reset in the one-time init FUN_0042dd70, then sees gate=1 and
+  opens `<base>.log`.
+- Patch B (optional, verbose): 0x454405 `JZ` (74 41) -> NOP NOP (90 90). The
+  IrOptimizer call sites pass param_2=0 to FUN_00454400, which suppresses the
+  flowgraph/IR body (`if(param_2!=0)`); NOPing the test forces the full body.
+
+RESULT: compiling a probe `.c` produced `<base>.log` with the full named IR for
+**every IR-optimizer pass** (53 pass banners: BuildflowGraph, RemoveUnreachable,
+CopyAndConstantPropagation, ExpressionPropagation, UseDef, ConstantFolding,
+FindLoops, CommonSubs, ... After IRO_Optimizer). Each pass dumps the flowgraph
+nodes and the expression IR with **source variable names in declaration order**
+(e.g. `Operand a <assigned>`, `EINDIRECT`, `EASS`, `Funccall`, `EADD`, `Return`).
+Saved evidence: `tools/compiler_probe/example_ir_dump_probe.log` (3747 lines for a
+5-web clique probe). The patch+compile is reproducible from a clean private copy
+(verified).
+
+### What the live dump does and does NOT give
+
+- GIVES: the named-web / temp IR and flowgraph that the colorer consumes, across
+  every IR pass, with variable names preserved in source order. Useful for
+  confirming which expressions become which webs and how passes merge/split them
+  BEFORE register class assignment.
+- Does NOT give: physical register assignments or the colorer's visit order.
+  Coloring runs later, in CodeGen FUN_005077b0 (Coloring.c) -> FUN_00579cf0, well
+  after the IR optimizer. Its only dump is system (1), which is stubbed. So this
+  dump cannot, by itself, settle RULE1-4 or the fp/GPR two-tier model.
+
+### Colorer location (for the frida follow-up — OBSERVED entry points)
+
+- **FUN_005077b0** RegisterColoring driver: outer loop over class index
+  `DAT_005e931f` = 0..4; per class with webs, calls FUN_00579cf0 in a while loop.
+  Contains the `Coloring.c` asserts (0x5bbb18). Inner per-iteration calls
+  FUN_00507d40 / FUN_00507b50 / FUN_00507a30 (try-color, returns success/fail) /
+  FUN_0057abd0 / FUN_00507900.
+- **FUN_00579cf0** per-class color step: build FUN_005797a0, FUN_00579e50,
+  FUN_0057a640, coalesce(union-find) FUN_0057a1f0, adjacency FUN_00579fe0,
+  FUN_00579d50. The select/assign that writes the home reg into a web is reached
+  from here (exact store not yet pinned).
+- Web list head: `DAT_005e87b0` (singly linked, *p==next, p[5]=node chain,
+  p[6]=interference chain, p[7]=index). Adjacency array: `DAT_005e87d0`. Per-class
+  web count: `(&DAT_005e8a7c)[class]`.
+
+HYPOTHESIS (for next batch): hook FUN_00579cf0 onLeave with frida, walk
+DAT_005e87b0, and emit each web's index + home-reg field in list order. The
+home-reg field offset must first be pinned (single-step FUN_00507a30/FUN_00507900,
+or diff the web struct across FUN_00579cf0; cross-check against the final reg that
+alloc_run.py already reads from the `mr` emit). Scaffold with these addresses
+checked in: `tools/compiler_probe/frida_colorer_probe.js` (NOT yet verified).
+
+### Constraint compliance
+Shipped `build/compilers/GC/1.3.2/mwcceppc.exe` is UNTOUCHED (SHA-1
+d8f9c36d62f66c2a044d5a20a132b79eeb2f36e5, verified before and after). All patches
+were applied to a private copy under tmp_probe/ which was deleted after the
+experiment. Only scripts + one example log are committed (binaries are not).
