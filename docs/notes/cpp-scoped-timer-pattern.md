@@ -289,3 +289,33 @@ inline-dtor CALLER context (not the canonical dtor):
 - Sibling impact: the same inlined dtor block (with identical subi/lwz order) appears
   in CarObject_Init (same TU, around 0x8004ECAC) and per this note's main section in
   ~30 callers. Solving the pair swap in pure C unlocks all of them.
+
+## Phase 2d resolution: subi/lwz pair swap SOLVED (2026-06-11, batch_research_scopedtimer_phase2d)
+
+The scheduler pair swap documented above (canonical dtor "CW schedules
+`lwz r7,0x0(r30)` before `subi r6,r4,0x217d`" and the CarObject_FrameUpdate
+97% hard-block) is solved in pure C. Full details and probe matrix:
+`docs/notes/cw132-scopedtimer-phase2d-research.md`. Key points:
+
+- RULE: the ticks->us conversion must reach the (float) cast as one expression
+  tree with no named integer temp (`us` / `diff` / `endTick` each flip the pair
+  to lwz-first; a float temp for the ms result is harmless).
+- CORRECTION to "Follow-up: natural dtor probes" above: the one-expression
+  canonical-dtor form that still missed was written as
+  `endTick = OSGetTick(); Profiler_RecordFrame(..., (float)(((endTick - m_startTick) << 3) / ...) ...)`.
+  The `endTick` temp is precisely what breaks the schedule (Phase 2d probe r0).
+  With OSGetTick() nested into the same expression, the canonical dtor shape
+  emits subi-first with the target register family (probe r1). The canonical
+  dtor's raw opword shim is therefore replaceable in a future cleanup batch.
+- CORRECTION to the FrameUpdate probe note above: "single expression
+  (OSTicksToMicroseconds macro form)" listed as a miss was in fact the
+  `us = ...; Profiler_RecordFrame(tm.id, (float)us / ...)` two-statement form;
+  the truly nested form had not been tried before Phase 2d and is the fix.
+- The target itself contains the lwz-first order at 0x8008C468 (hand-shaped
+  elapsed-ms compare, no Profiler call) -> both orders are normal CW 1.3.2
+  output; the order encodes whether the original source had an integer temp.
+- CarObject_FrameUpdate 0x8004DECC is now matched C in
+  src/game/auto_ONKARTHIT_block.c using the 97% handoff appendix +
+  one-expression tail + `void *t` cam-idiom spelling (the appendix
+  `unsigned int t = lbl_806D10A0;` does not compile - hard error in CW C;
+  `(unsigned int)` casts on the loads un-fold the idiom into cmplw/mr +3 insns).

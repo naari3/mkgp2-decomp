@@ -201,3 +201,16 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   - 仮説 (推論): 原文は KartMovement_CalcMaxSpeed 0x801999E0 (standalone twin) の header inline
     を消費していた。CalcMaxSpeed 自体も将来この recipe の候補。
   - 次: Phase 2d (ScopedTimer subi/lwz pair swap、FrameUpdate / Init + program-wide ~30 callers)。
+- 2026-06-11: **Phase 2d SOLVED — CarObject_FrameUpdate promote (matched)** (16 probes、
+  docs/notes/cw132-scopedtimer-phase2d-research.md、cpp-scoped-timer-pattern.md に訂正追記)。
+  - 観察 (事実): pair swap の lever = **dtor tail の ticks→µs 変換を整数 temp 無しの単一式で
+    書くこと**。named int temp (`us`/`diff`/`end`) が式を 2 つの tree に割ると lwz-first になる。
+    float temp は無害。C/C++ front end・exceptions on/off は無関係。
+    Phase 2c の static-inline-helper 仮説はこの flavor には negative (splice だけでは順序不変)。
+  - 観察 (事実): target 内に lwz-first の site も実在 (0x8008C468、手書き timing code と推定) —
+    順序は compiler artifact ではなく原文の temp 有無を encode している。
+  - **CarObject_FrameUpdate 0x8004DECC matched** (97.10% → 100%、SHA-1 OK)。
+    program 全体では 113 canonical dtor sites / 60 fn に recipe 適用可。
+    canonical __dt__11ScopedTimerFv の opword shim も将来置換可能 (probe r1 で実証)。
+  - 次: CarObject_Init 0x8004E618 promote batch (recipe 適用、prefix 内・0x7BC の full matching
+    job)。その後 Phase 2e (chain 変種 / flavor 4 / flavor 5 / dead-counter)。
