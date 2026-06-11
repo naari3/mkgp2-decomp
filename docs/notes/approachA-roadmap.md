@@ -17,7 +17,7 @@ docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件
 | 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **検証 NEGATIVE / family source-closed (2026-06-11)** — recipe は const-param 前提で実 fn に不適用 |
 | 2b | class 2 frsp store-forward の研究 (6 fn family) | **完遂 (2026-06-11)** — 6/6 fn sweep。recipe core は全 fn で再現、promote 0 (全残差が register-identity family: 85-99% park) |
 | 2 | 先頭区間 index 0-17 の残り idiom 解決: class 2 (OnKartHit) / flavor 5 (MainUpdate) / flavor 4 (ProcessWarpAndDash) / ScopedTimer (FrameUpdate) | 未着手 |
-| 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | **保留 (2026-06-11 訂正)** — 「断念」は撤回。inline-composition probe で partition が動き、残差は param-class flip 1 点。flip 条件特定 (OFOD-CAE matrix) が次の鍵 |
+| 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | **保留 (2026-06-11)** — frida colorer 観測で機構確定: OnKartHit の self/victim は最小 key + 最大 degree で最下位、未達は「両 param を同時に top-2 に乗せる degree 構造が source 上作れない」1 点。source-closed とは断定せず (OnItemHit が param-mid 実証) |
 | 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 保留 (Phase 3 依存) |
 
 ## 制約 (再確認)
@@ -462,3 +462,13 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   frida 可の session への引き継ぎ事項。素材完備: I3 形 (残差 = 7-web permutation 1 点) +
   source 変種一式 + homes 実測 + whole-binary dataset。次 batch: frida で P1/I1/I3 の key 実測 →
   key 応答の差分表 → target permutation の逆算 → promote。
+- 2026-06-11: **frida colorer 直接観測 — OnKartHit park 機構を runtime 確定、promote 0** (follow-up 6 節)。
+  verified colorer reader を OnKartHit probe 群に適用 (shipped compiler 無傷)。確定事実: (1) param web
+  key は entry 順で最小固定・source 不変 (合成 probe で first-use 順を否定、I1/I3 で inline splice が
+  bool key は振り直すが param key は不変)、(2) pop 順は dynamic Chaitin simplify で degree が reg を
+  決める (OnItemHit 反例: victim adjN29 で param が中位 r28/r29、local が下)、(3) OnKartHit の
+  self/victim は最小 key + 最大 degree (135/137、全域 live) の最悪同時成立で最下位。
+  未達は「self/victim を同時に top-2 に乗せる degree 構造が source 上作れない」1 点に精密化。
+  round-3 の「degree が pin」は正、「下げれば動く」は実装不可。これ以上は simplify-stack 構築規則の
+  step 追跡が要る = 費用対効果境界。Phase 3 gate は依然閉だが「C/C++ source-closed」とは断定しない
+  (OnItemHit が param-mid を実証)。
