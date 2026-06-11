@@ -97,7 +97,7 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     Phase 0 方式 (最小再現 + 自動分類 + compiler/pragma 総当たり) を適用 → dispatch 済み。
   - 2b: class 2 frsp store-forward (6 fn: OnKartHit / Tick / ApplyImpactImpulse / Dispatch / Trap / Projectile)。
     C++ reference semantics 仮説の検証が未着手の最終手段。
-  - 2c: mr-SR-init (ShadowBB / GetMaxSpeedWithBonus の 2 fn、残差 1-2 命令)。
+  - 2c: mr-SR-init (ShadowBB / GetMaxSpeedWithBonus の 2 fn、残差 1-2 命令)。→ SOLVED、下記 2026-06-11 後段エントリ参照。
   - 2d: ScopedTimer pair swap (FrameUpdate / Init + program-wide ~30)。
   - 2e: chain 変種 / flavor 4 / flavor 5 / dead-counter (各 1-2 fn、最難)。
   prefix (index 0-17) の完成には 2a-2e 全部が必要。HandleObstacleHit (class 3) のみ Phase 3 の
@@ -186,3 +186,18 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     family 6 fn の promote を阻むのは全て fp/GPR register-identity tie-break 系。
     prefix 完成の最終 blocker は register-identity family 群に一本化された。
   - 次: Phase 2c (mr-SR-init、ShadowBB / GetMaxSpeedWithBonus、残差 1-2 命令)。
+- 2026-06-11: **Phase 2c SOLVED — ShadowBB promote (matched)** (~60 probes + 60 in-TU variants、
+  docs/notes/cw132-mrsrinit-phase2c-research.md)。
+  - 観察 (事実): `mr rOFF, rI` の SR init は **static inline helper から loop が inline された
+    場合のみ** 生成される。front end は standalone な定数 copy を全 13 spelling で li に fold
+    (`-opt noprop` も無効 = propagation pass より前)。inliner が splice した for-init copy は
+    後段で fold されず mr で残る。`static inline` は prod flags で emit されない (layout 安全)、
+    plain `static` は inline されても emit される (layout breaker)。helper の local 宣言順が
+    inline 先の GPR coloring を操作する。
+  - **KartItem_UpdateShadowBillboardAndViewport 0x8004EDD4 matched** (97.95% → 100%、
+    SHA-1 OK)。prefix 内の park が 1 つ解消。
+  - GetMaxSpeedWithBonus は mr 含め 51/51 命令の構造一致まで到達したが、mv<->e の GPR coloring
+    permutation (11 命令参照) で park — register-identity family の新 instance。
+  - 仮説 (推論): 原文は KartMovement_CalcMaxSpeed 0x801999E0 (standalone twin) の header inline
+    を消費していた。CalcMaxSpeed 自体も将来この recipe の候補。
+  - 次: Phase 2d (ScopedTimer subi/lwz pair swap、FrameUpdate / Init + program-wide ~30 callers)。
