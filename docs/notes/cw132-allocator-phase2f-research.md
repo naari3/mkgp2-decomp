@@ -2207,3 +2207,30 @@ class 化も unmangled に反する → 残る source lever は無い。
 唯一残る確度ある道 (compiler 内部): CW codegen で「64bit AND/compare の下位化時に必要な定数 0 を、
 0 を持つ callee-saved reg で兼用するか scratch を materialize するか」を決める箇所を Ghidra/frida で読み、
 発火条件を特定する。条件が register 圧依存なら命令を保ったままの誘発は不可能な可能性が高い。
+
+## fold の compiler 機構を特定: ValueNumbering.c の operand 置換 (2026-06-12, /loop iter 9, user: 「compiler を追え」)
+
+ユーザー指示「compiler 内部で fold 判定箇所を追え」を実行。mwcceppc の codegen module を assert 文字列で
+地図化 (ValueNumbering.c@0x5bbb28, InstrSelection.c, Operands.c, Coloring.c, InterferenceGraph.c 等)。
+
+**fold 機構を特定 = FUN_00508140 (ValueNumbering.c) 冒頭の operand 置換**:
+各命令の各オペランド (use, *pcVar7==0 && flags&0xb==1) について VN テーブル `(&DAT_005df954)[class]`
+(web*0xc 単位) を引き、その value-number の**代表 web iVar2 = piVar8[1]** が同値 (`piVar8[0]==web[iVar2][0]`)
+なら **オペランドの web 参照を代表 web に置換** (`*(short*)(pcVar7+4)=iVar2`)。
+→ fold = 64bit AND の mask 上位語の**定数 0 オペランドが、bool web(=0)と同じ value-number を持ち、
+bool web が value-0 の代表になっているとき、VN がオペランドを bool web に置換**する現象。
+
+OBSERVED (実証、fold は source から誘発不能):
+- 最小ケース全滅: m.c (callee-saved bool + 64bit AND) / m2.c (高レジスタ圧 10 live) / m3.c (b=0 直後に
+  AND, 間に call なし) / m4.c (bool 2 個) — **どれも fold せず**、compiler は普遍的に `li rScratch,0` を
+  materialize し (複数 AND 間で scratch は共有するが) bool web とは別に保つ。
+- C/C++ の全 OnKartHit 再構成も unfold (mask-hi-0 が別 web)。
+- 全ゲーム走査でも fold するのは OnKartHit + 無名 fn_8023B318 のみ (2/7000)。
+
+CONCLUSION (compiler 追跡の最終): fold = ValueNumbering の operand 置換が、定数-0 オペランドを bool web
+に統合する稀な現象。発火には「bool web が value-0 の代表 かつ 定数-0 オペランドが同 value-number」が必要
+だが、これは VN の代表選択 (web 生成順 + value-number 割当の global 状態) に依存し、**source の型/構造/
+レジスタ圧のいずれからも制御できない** (最小再現が全滅、7000 中 2 関数のみ)。OnKartHit の clean-C 化を
+阻む唯一の差 (この fold) は、命令列を保ったまま source から誘発する手段が compiler 機構レベルで存在しない。
+→ **OnKartHit は asm_fn 維持が機構的に妥当**と確定 (黒箱の park を VN operand 置換まで完全 white-box 化)。
+assets: tmp/foldmin/m.c m2.c m3.c m4.c, tmp/foldsweep/。compiler module map は本節。
