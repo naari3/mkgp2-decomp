@@ -31,3 +31,12 @@
 - tools/compiler_probe/mrsr_min*.c, mrsr_perm*.c, mrsr_cross.c, mrsr_inits.c, mrsr_order.c, mrsr_rawkey.c, mrsr_selfp.c, mrsr_wdecl.c - probe TUs
 - tools/compiler_probe/run_mrsr_axis1/2.py, run_mrsr_exact.py, run_mrsr_intu*.py - drivers (the intu scripts patched the pre-promotion TU text; historical after this batch)
 - tools/compiler_probe/results_mrsr_axis*.tsv, target_getmaxspeed.txt, target_shadowbb.txt
+
+## Correction (2026-06-11, batch_research_phase2e)
+
+The hypothesis "const-prop does not re-run on the spliced webs" must be narrowed: post-splice
+optimization DOES include iterative DCE. Adding a dead up-counter to this very CalcMaxSpeed
+helper gets it deleted (both dead-in-callee and live-in-callee/ignored-at-site forms; probes
+p2e_deadctr3.c g1/g2) while the mr init still survives in the same build. Only copy/const
+FOLDING is FE-only. Consequence: no spliced web survives by deadness; surviving "dead-looking"
+webs always have a coalesced-invisible use.

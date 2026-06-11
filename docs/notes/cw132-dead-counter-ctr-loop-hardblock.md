@@ -20,3 +20,18 @@ Precan rule: in a ctr loop (`mtctr` + `bdnz`), an `addi rX,rX,1` whose register 
 Secondary observation from the same batch: the missing web also seems to perturb downstream callee-saved tie-breaks (lane-clear inline sites 2/3 land permuted registers while site 1 matches exactly with identical inlined source) - allocator history is global, so solving the counter may cascade-fix the site permutations.
 
 Additional negative result (inlining control): `-inline auto` refuses loop-containing fns regardless of `#pragma inline_max_size(1024)`; `-inline auto,deferred` as TU extra_cflags inlines nothing more and BREAKS the manual extab layout ([extab-0] dropped to 12.94%) - never use in extab_user TUs. Working mechanism for a loop-containing inline site: dedicated `static inline` helper (explicit inline takes loops).
+
+## SUPERSEDED (2026-06-11, batch_research_phase2e)
+
+This class is NOT a hard block. The counter is live via an INVISIBLE USE: in
+CarObject_HandleItemEffect the loop counter is passed as an extra (ignored) argument to the
+post-loop call (`ItemStateGuard_IsActive(guard, i)` with a K&R empty-paren extern); regalloc
+coalesces i into the arg register (r4, vacated by the itemId->r31 save) so the use emits zero
+instructions. Verified in-TU: loop region byte-identical, fn at 99.93%. Binary-wide, every
+"dead" ctr-loop up-counter inspected has such a hidden use (most commonly: the counter IS the
+return value on the break path, coalesced to r3/blr). The secondary cascade hypothesis (counter
+web fixing the lane-clear site permutations) is REFUTED - those needed per-site decl-order
+tuning + a fn-scope obj variable (see cw132-phase2e-research.md). Precan update: a ctr-loop
+addi rX,rX,1 with no visible read => check whether rX is an arg slot of the next bl or the
+return register on an exit path; reproduce with an ignored extra arg / returned counter, do NOT
+park.

@@ -228,3 +228,22 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     asm_fn のまま跨ぐ必要がある** — fp-numbering park 群と同じ扱い。
   - 次: Phase 2e (chain 変種 / flavor 4 / flavor 5 / dead-counter — 各 1-2 fn、最難)。
     その後 Phase 3 の実行可否を prefix park 状況込みで再評価する。
+- 2026-06-11: **Phase 2e 前半 — dead-counter SOLVED、mtx-loop は機構絞り込み**
+  (docs/notes/cw132-phase2e-research.md)。
+  - 観察 (事実): dead-counter は **dead ではなかった** — counter は後続 call の余分な引数
+    (無視される) として渡され、regalloc の coalescing で命令ゼロの invisible use になる。
+    K&R empty-paren extern + `IsActive(guard, i)` で再現、HandleItemEffect 98.62→**99.93%**
+    (残 7 行 = `handled` web の色のみ)。binary 全体 76 件の同形も全て hidden use 持ち。
+    旧 hardblock note は SUPERSEDED。
+  - 観察 (事実): 新 lever = **one-home-per-variable** (fn-scope 変数は全 live range で単一
+    home、block-local の interference で home を強制できる) + per-site block decl-order。
+  - 訂正: mrsrinit note の「const-prop は splice 後に再走しない」仮説を narrowing —
+    **post-splice の iterative DCE は存在する** (probe g1/g2 で実証)。FE-only なのは
+    copy/const folding のみ。dead な spliced web は必ず消える。
+  - 観察 (事実): MainUpdate の mtx loop は「O2 形の loop body + O4 形の late backend」という
+    シルエット。source lever 未発見。**同 loop が 14+ unmatched fns に存在** (header-inline
+    MtxConcat 系 helper と推定) — 解ければ大量 unlock の最重要未解決 idiom に昇格。
+  - P3 (chain 変種) / P4 (flavor 4) は予算切れで未着手。P3 は invisible-use lens での再検討が
+    次の一手 (chain の li-0 は hidden use を持つ変数かもしれない)。
+  - 次: Phase 2e 後半 batch — HandleItemEffect の handled-r22 lever hunt (99.93% からの一押し) +
+    P3 chain 変種 (invisible-use lens) + P4 flavor 4 の見切り probe。
