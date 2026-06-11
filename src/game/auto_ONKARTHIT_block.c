@@ -21,7 +21,7 @@
 /* refine if the real prototype matters for header consumers. */
 extern void *Alloc(unsigned long);
 extern void AudioChannel_DtorWithSeStop();
-extern void CObj_GetViewMatrix_Cached();
+extern float *CObj_GetViewMatrix_Cached(void *scene);
 extern void CameraEffect_Apply();
 extern void Camera_RotateByYaw();
 extern void CarObject_Dtor();
@@ -50,7 +50,7 @@ extern void EffectSteering_InputViscosity_SetFieldC();
 extern void *FUN_8003b120(unsigned long);
 extern unsigned char Field4NotMinusOne(void *ctx);
 extern void Free_IfOwnedShort();
-extern void GetCourseScene3D();
+extern void *GetCourseScene3D(void);
 extern void GetInputManager();
 extern void GetKartParamBlock();
 extern int GetKartStartSlot();
@@ -63,7 +63,7 @@ extern void InputCmd_TickAndDetectAndClear();
 extern void InputMgr_GetPlayer();
 extern void InterpolationStep();
 extern unsigned char IsAudioMutedItem(void *soundCtrl, int channel);
-extern void IsRaceStarted();
+extern unsigned char IsRaceStarted(void);
 extern int ItemClass_GetFlagByte1(int id);
 extern void ItemEffectBus_ApplyItemConfirm();
 extern void ItemEffectBus_ApplyItemEventClear();
@@ -76,8 +76,8 @@ extern void ItemEffectBus_RegisterBonkPosition();
 extern void ItemEffectBus_SnapshotAndClearSpawnFlags();
 extern void ItemEffectBus_SnapshotAndFullReset();
 extern void ItemEffectBus_TickTornadoCooldown();
-extern void ItemEffectDamp_TryArm();
-extern void ItemEffectImpact_TryArm();
+extern void ItemEffectDamp_TryArm(void *guard, float *vec, int mode, float accel, float scale, float k);
+extern void ItemEffectImpact_TryArm(void *guard, float *vec, float *mtx, int mode);
 extern void ItemEffect_BossGrab(void *guard, float *mtx, void *arg, int param);
 extern void ItemEffect_TornadoLift(void *guard, float *mtx);
 extern int ItemObject_GetByteAt0xEC(void *itemObj, int idx);
@@ -88,13 +88,13 @@ extern unsigned char ItemStateGuard_IsActive(void *guard);
 extern void ItemStateGuard_PruneIfDeadAndReport();
 extern void ItemStateSlotC_TryArm();
 extern void KartAudioChannel_Init();
-extern void KartAudioChannel_PlayColorMatchSE();
-extern void KartAudioChannel_PlayJumpSE();
+extern void KartAudioChannel_PlayColorMatchSE(void *snd, int a, int b, float spd);
+extern void KartAudioChannel_PlayJumpSE(void *snd, int mode);
 extern void KartAudioChannel_Set24WithSeStop();
-extern void KartAudioChannel_StopSE8a();
+extern void KartAudioChannel_StopSE8a(void *snd, int a);
 extern void KartBody_SetWarpTransitFlag();
 extern void KartDriver_Dtor();
-extern void KartDriver_GetKartRootMtx();
+extern void *KartDriver_GetKartRootMtx(void *driver);
 extern void KartDriver_New_Full();
 extern void KartDriver_RenderTimed();
 extern void KartDriver_SetJointPosY_Slot3a();
@@ -106,7 +106,7 @@ extern void KartDriver_TickAction_79268_AndSetSlot5aEulerZ();
 extern void KartEffectFadeTransit_Dtor();
 extern float KartEffectFadeTransit_GetActiveValue();
 extern void KartEffectFadeTransit_Init();
-extern unsigned char KartEffectFadeTransit_IsActive();
+extern unsigned char KartEffectFadeTransit_IsActive(void *obj);
 extern void KartEffectFadeTransit_Tick();
 extern void KartItemAudio_PlayHitConfirmSE();
 extern void KartItemAudio_PlayThrowConfirmSE();
@@ -122,7 +122,7 @@ extern void KartItem_SetVec3At338();
 extern void KartItem_Stub_Returns0();
 extern void KartMovement_CalcCurrentSpeed();
 extern void KartMovement_CalcMaxSpeed();
-extern float KartMovement_CalcSpeedWithCoinBonus();
+extern float KartMovement_CalcSpeedWithCoinBonus(void *mv, int flag);
 extern int KartMovement_GetCurrentItemId(void *driver);
 extern void KartMovement_Init();
 extern void KartMovement_PhysicsStep();
@@ -131,7 +131,7 @@ extern void KartMovement_SetPosition();
 extern void KartMovement_SetTravelProgress(void *mov, float v);
 extern void KartReaction_Front();
 extern void KartReaction_Side();
-extern void MediaBoard_PollCompletion();
+extern void MediaBoard_PollCompletion(void *snd, float v);
 extern void MediaBoard_SendAndCheck();
 extern void MemoryManager_AllocTagged();
 extern void MemoryManager_TimedFree();
@@ -148,7 +148,7 @@ extern void RenderObj_ToggleLapSegment();
 extern float Saturate_Double(float v, float lo, float hi);
 extern void SceneRender_SetViewportRect();
 extern void SetAnimSpin();
-extern void ShadowAreaMgr_QueryPoint();
+extern unsigned char ShadowAreaMgr_QueryPoint(void *mgr, float x, float y, float z);
 extern unsigned char ShadowBillboard_IsRenderReady(void *billboard);
 extern void ShadowBillboard_SetField0x6CAndComputeAxis(void *bb, int mode);
 extern void ShadowBillboard_SetField0xA4();
@@ -158,10 +158,10 @@ extern void ShadowBillboard_StepSimple();
 extern void ShadowBillboard_Tick();
 extern void ShadowBillboard_TriggerSpinFlash();
 extern void SharedPtr_Init();
-extern void SoundCtrl_SetVolume();
+extern void SoundCtrl_SetVolume(void *snd, float v);
 extern void SoundObj_PlaySE(void *snd, int id);
 extern void SoundObj_PlaySE_Direct(void *snd, int id);
-extern void SoundVolumePan_Update();
+extern void SoundVolumePan_Update(void *snd);
 extern void SpeedBoost_Apply(void *obj, int id, float v);
 extern void StrPcb_ForceRun_Neutral();
 extern void *StrPcb_GetInstance(void);
@@ -184,25 +184,25 @@ extern void TitleTracker_Empty_PreFinalizeHook();
 extern void TornadoEffect_ApplyItemVisual_Compact();
 extern void TornadoEffect_ApplyItemVisual_Primary();
 extern void TornadoEffect_ApplyItemVisual_Secondary();
-extern void TornadoEffect_ClearFlagC0AndSetC4();
+extern void TornadoEffect_ClearFlagC0AndSetC4(void *obj, float v);
 extern void TornadoEffect_ComposeRenderMatrix();
 extern void TornadoEffect_Ctor();
 extern void TornadoEffect_GetField114();
-extern void TornadoEffect_SetColorPairC8CC();
+extern void TornadoEffect_SetColorPairC8CC(void *obj, int a, int b);
 extern void TornadoEffect_SetColorRGBLerp();
 extern void TornadoEffect_SetColorY(); /* K&R on purpose: matched C calls it with 1 arg (StopCarObjectSE) and 2 args (OnApply_Freeze) */
 extern void TornadoEffect_SetField114();
 extern void TornadoEffect_SetField11c();
 extern void TornadoEffect_SetField128AndMaybeClear134();
-extern void TornadoEffect_SetFieldAc();
+extern void TornadoEffect_SetFieldAc(void *obj, float v);
 extern void TornadoEffect_SetFlagB4();
-extern void TornadoEffect_SetFlagC0();
-extern void TornadoEffect_SetMatrix1c();
-extern void TornadoEffect_SetMatrixRow0_5c();
-extern void TornadoEffect_SetScalePairB0BC();
+extern void TornadoEffect_SetFlagC0(void *obj);
+extern void TornadoEffect_SetMatrix1c(void *obj, float *m);
+extern void TornadoEffect_SetMatrixRow0_5c(void *obj, float x, float y, float z);
+extern void TornadoEffect_SetScalePairB0BC(void *obj, float a, float b);
 extern void TornadoEffect_SubmitRender();
-extern void TornadoEffect_Tick();
-extern void TornadoEffect_TriggerField140();
+extern void TornadoEffect_Tick(void *obj, int score);
+extern void TornadoEffect_TriggerField140(void *obj);
 extern void TornadoEffect_TriggerFlagD2WithTimer();
 extern void TornadoEffect_TriggerWheelScaleAnim();
 extern void TwoSubDtor_Pending_80064f58();
@@ -253,7 +253,7 @@ extern void *g_objCollChecker;
 extern unsigned int g_playerCarObject;
 extern unsigned int g_raceCamera;
 extern unsigned int lbl_806D0051;
-extern unsigned int lbl_806D1060;
+extern void *lbl_806D1060;
 extern float lbl_806D1080;
 extern float lbl_806D1084;
 extern unsigned int lbl_806D109C;
@@ -283,14 +283,14 @@ extern const float lbl_806D273C;
 extern const float lbl_806D2740;
 extern const float lbl_806D2744;
 extern unsigned int lbl_806D2748;
-extern unsigned int lbl_806D274C;
-extern unsigned int lbl_806D2750;
-extern unsigned int lbl_806D2754;
-extern unsigned int lbl_806D2758;
-extern unsigned int lbl_806D275C;
-extern unsigned int lbl_806D2760;
-extern unsigned int lbl_806D2764;
-extern unsigned int lbl_806D2768;
+extern const float lbl_806D274C;
+extern const float lbl_806D2750;
+extern const float lbl_806D2754;
+extern const float lbl_806D2758;
+extern const float lbl_806D275C;
+extern const float lbl_806D2760;
+extern const float lbl_806D2764;
+extern const float lbl_806D2768;
 extern const float lbl_806D276C;
 extern const float lbl_806D2770;
 extern unsigned int lbl_806D2774;
@@ -327,8 +327,7 @@ extern unsigned int jumptable_803F7640[];
 extern unsigned int jumptable_803F7668[];
 extern unsigned int lbl_802EBA18[];
 extern const float lbl_802EBE14[]; /* 8-float boost blend color table */
-extern unsigned int lbl_802ED5B4[];
-extern unsigned int lbl_802ED7BC[];
+
 extern unsigned int lbl_802ED94C[];
 extern unsigned int lbl_802ED9E4[];
 extern unsigned int lbl_802ED9F4[];
@@ -941,6 +940,175 @@ typedef struct SweepCfgView {
     Vec3 halfB;             /* 0x434 */
     Vec3 centerB;           /* 0x440 */
 } SweepCfgView;
+
+/* --- views for ItemEffect_Trap / ItemEffect_Projectile --- */
+
+/* trap effect table entry (stride 0x18, lbl_802ED7BC) */
+typedef struct TrapFxEntry {
+    int id;             /* 0x0 */
+    float scaleA;       /* 0x4: TryArm vector scale */
+    float scaleB;       /* 0x8: bus scale factor */
+    int mode;           /* 0xc */
+    int valC;           /* 0x10 */
+    int valD;           /* 0x14 */
+} TrapFxEntry;
+
+extern TrapFxEntry lbl_802ED7BC[];
+
+/* projectile effect table entry (stride 0x14, lbl_802ED5B4) */
+typedef struct ProjFxEntry {
+    int id;             /* 0x0 */
+    float scaleA;       /* 0x4 */
+    int mode8;          /* 0x8 */
+    int valC;           /* 0xc */
+    int valD;           /* 0x10 */
+} ProjFxEntry;
+
+extern ProjFxEntry lbl_802ED5B4[];
+
+/* item bus view exposing the trap scale slot at +0x28 */
+typedef struct ItemBusTrapView {
+    char pad_0x0[0x28];
+    float trapScale28;  /* 0x28 */
+} ItemBusTrapView;
+
+/* --- views for KartItem_OnKartHit --- */
+
+/* 0x1EC-byte hit event record built on the stack and dispatched virtually */
+typedef struct OnHitEvent {
+    char pad_0x0[0x8];
+    int kind;               /* 0x8 */
+    char pad_0xc[0x94];
+    float posX;             /* 0xa0: impact midpoint */
+    float posY;             /* 0xa4 */
+    float posZ;             /* 0xa8 */
+    char pad_0xac[0x140];   /* total 0x1ec */
+} OnHitEvent;
+
+typedef struct HitDispatcher HitDispatcher;
+typedef struct HitDispatcherVt {
+    char pad_0x0[0x8];
+    void (*onHitEvent)(HitDispatcher *self, OnHitEvent *ev, int param); /* 0x8 */
+} HitDispatcherVt;
+struct HitDispatcher {
+    HitDispatcherVt *vt;    /* 0x0 */
+};
+
+struct KartDriverHitView;
+
+/* item bus view with the last-victim slot at +0x8 exposed */
+typedef struct OnHitBusView {
+    char pad_0x0[0x8];
+    struct KartDriverHitView *lastVictim;   /* 0x8 */
+    char pad_0xc[0x4];
+    unsigned long long flags;               /* 0x10 */
+} OnHitBusView;
+
+typedef struct KartDriverHitView {
+    char pad_0x0[0x1f4];
+    int state1f4;               /* 0x1f4 */
+    char pad_0x1f8[0xd4];
+    int coins2cc;               /* 0x2cc */
+    char pad_0x2d0[0x34];
+    OnHitBusView *itemBus;      /* 0x304 */
+    HitDispatcher *dispatcher;  /* 0x308 */
+} KartDriverHitView;
+
+typedef struct KartItemHit KartItemHit;
+typedef struct KartItemHitVt {
+    char pad_0x0[0x34];
+    void (*applyEffect)(KartItemHit *self, OnHitEvent *ev, int param);  /* 0x34 */
+} KartItemHitVt;
+struct KartItemHit {
+    KartItemHitVt *vt;                  /* 0x0 */
+    char pad_0x4[0xc];
+    int raceScore10;                    /* 0x10 */
+    char pad_0x14[0x10];
+    void *soundCtrl;                    /* 0x24 */
+    KartMovementSpeedView *movement;    /* 0x28 */
+    KartDriverHitView *ownerDriver;     /* 0x2c */
+    char pad_0x30[0x94];
+    int hitTimerC4;                     /* 0xc4 */
+    int coinSnapC8;                     /* 0xc8 */
+    char pad_0xcc[0x31];
+    unsigned char coinPenaltyFD;        /* 0xfd */
+    char pad_0xfe[0xb];
+    unsigned char hitState109;          /* 0x109 */
+};
+
+/* --- views for KartItem_Tick --- */
+
+typedef struct KartMovementTickView {
+    char pad_0x0[0x8];
+    int tableIdx;               /* 0x8 */
+    float speed;                /* 0xc */
+    char pad_0x10[0x10];
+    unsigned char byte20;       /* 0x20 */
+    char pad_0x21[0x1];
+    unsigned char capFlag22;    /* 0x22 */
+    char pad_0x23[0x1];
+    SpeedTableEntry *table;     /* 0x24 */
+    char pad_0x28[0x70];
+    float mtx98[16];            /* 0x98: 3x4 transform + position row */
+    char pad_0xd8[0xa4];
+    float velX;                 /* 0x17c */
+    float velY;                 /* 0x180 */
+    float velZ;                 /* 0x184 */
+    char pad_0x188[0x134];
+    unsigned char state2bc;     /* 0x2bc */
+    unsigned char airborne2bd;  /* 0x2bd */
+    unsigned char flag2be;      /* 0x2be */
+    char pad_0x2bf[0x5];
+    int col2c4;                 /* 0x2c4 */
+    int col2c8;                 /* 0x2c8 */
+    char pad_0x2cc[0x8];
+    float steer2d4;             /* 0x2d4 */
+    char pad_0x2d8[0x4];
+    unsigned char flag2dc;      /* 0x2dc */
+} KartMovementTickView;
+
+typedef struct KartItemTickView {
+    char pad_0x0[0x10];
+    int raceScore10;                /* 0x10 */
+    char pad_0x14[0xc];
+    unsigned char strPcbGate20;     /* 0x20 */
+    char pad_0x21[0x3];
+    void *soundCtrl;                /* 0x24 */
+    KartMovementTickView *movement; /* 0x28 */
+    KartDriverBusView *ownerDriver; /* 0x2c */
+    char pad_0x30[0x4];
+    void *effectObj;                /* 0x34 */
+    char pad_0x38[0x4];
+    void *boostObj;                 /* 0x3c */
+    ItemStateBlock *stateBlock;     /* 0x40 */
+    char pad_0x44[0x58];
+    float spd9C;                    /* 0x9c */
+    char pad_0xa0[0x8];
+    unsigned char gateA8;           /* 0xa8 */
+    char pad_0xa9[0xf];
+    float airTimerB8;               /* 0xb8 */
+    float airCapBC;                 /* 0xbc */
+    char pad_0xc0[0x4c];
+    float driftTimer10C;            /* 0x10c */
+    float postFxU;                  /* 0x110 */
+    float postFxV;                  /* 0x114 */
+} KartItemTickView;
+
+typedef struct TornadoStateView {
+    char pad_0x0[0x148];
+    int state148;                   /* 0x148 */
+} TornadoStateView;
+
+/* kart root matrix view (3x4 row-major, translation at column 3) */
+typedef struct KartRootMtxView {
+    char pad_0x0[0xc];
+    float posX;             /* 0xc */
+    char pad_0x10[0xc];
+    float posY;             /* 0x1c */
+    char pad_0x20[0xc];
+    float posZ;             /* 0x2c */
+} KartRootMtxView;
+
 
 /* --- forward decls --- */
 asm void KartItem_OnKartHit(void);
@@ -3033,6 +3201,7 @@ void KartItem_RenderPipelinedWithEffects(KartItemRenderView *self) { /* 0x8004B9
 }
 #pragma exceptions reset
 
+#define VF(x) (*(volatile float *)&(x))
 asm void KartItem_Tick(void) { /* 0x8004BAAC size:0x874 */
     nofralloc
     stwu r1, -0xc0(r1)
@@ -3617,6 +3786,7 @@ asm void KartItem_Tick(void) { /* 0x8004BAAC size:0x874 */
     addi r1, r1, 0xc0
     blr
 }
+#undef VF
 
 asm void KartItem_PerFrameStep(void) { /* 0x8004C320 size:0xC44 */
     nofralloc
@@ -9035,6 +9205,7 @@ asm void ItemEffect_Explosion(ItemStateBlock *self, int idx, void *arg) { /* 0x8
  * across the ItemEffectDamp_TryArm call while the lbl_802ED7BC table base is
  * rematerialized (lis/addi) per use region - the TryStartByCategory
  * addressing-reassociation family; CW saves the full pointer instead. */
+#define VF(x) (*(volatile float *)&(x))
 asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg) { /* 0x80051834 size:0x23C */
     nofralloc
     stwu r1, -0xb0(r1)
@@ -9183,6 +9354,7 @@ asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg) { /* 0x800518
     addi r1, r1, 0xb0
     blr
 }
+#undef VF
 
 /* Precan park (2026-06-10, batch_promote_80051648_effectsrun, 0 probes):
  * ItemEffect_Projectile has the same two classes as ItemEffect_Trap above:
@@ -9191,6 +9363,7 @@ asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg) { /* 0x800518
  * mulli r31,r4,0x14 kept callee-saved across ItemEffectImpact_TryArm with
  * the lbl_802ED5B4 base rematerialized per region. The first normalize
  * block (from arg+0xb8, no frsp) is solvable with the Explosion recipe. */
+#define VF(x) (*(volatile float *)&(x))
 asm void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg) { /* 0x80051A70 size:0x248 */
     nofralloc
     stwu r1, -0x40(r1)
@@ -9344,6 +9517,7 @@ asm void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg) { /* 0x
     addi r1, r1, 0x40
     blr
 }
+#undef VF
 
 #pragma exceptions off
 int ItemTable_FindEntryByIdStride16(ItemCatEntry16 *tbl, int count, int itemId) { /* 0x80051CB8 size:0x38 */

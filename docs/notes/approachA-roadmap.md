@@ -15,7 +15,7 @@ docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件
 | 0 | class 1 の最終 probe (compiler patch rev / 未試行 pragma) | **SOLVED (2026-06-11)** |
 | 1 | class-1 10 fn の回収 (salvage draft 適用) | **完了 (2026-06-11)** — recipe 14/14、promote 2 fn、残りは他 family park |
 | 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **検証 NEGATIVE / family source-closed (2026-06-11)** — recipe は const-param 前提で実 fn に不適用 |
-| 2b | class 2 frsp store-forward の研究 (6 fn family) | **SOLVED + 検証済み (2026-06-11)** — recipe core は 2/2 fn で再現、fn-level 100% は fp-numbering family が阻む (97%/94% park) |
+| 2b | class 2 frsp store-forward の研究 (6 fn family) | **完遂 (2026-06-11)** — 6/6 fn sweep。recipe core は全 fn で再現、promote 0 (全残差が register-identity family: 85-99% park) |
 | 2 | 先頭区間 index 0-17 の残り idiom 解決: class 2 (OnKartHit) / flavor 5 (MainUpdate) / flavor 4 (ProcessWarpAndDash) / ScopedTimer (FrameUpdate) | 未着手 |
 | 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | 未着手 |
 | 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 未着手 |
@@ -165,3 +165,24 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     (ii) prefix を park fn の手前まで縮めた部分 A 化、(iii) park を許容して Phase 4 断念。
   - 次: 2b 残り 4 fn への展開 batch (OnKartHit + Tick は prefix 内で Phase 3 直結、
     Trap / Projectile は TU 完遂用)。
+- 2026-06-11: **Phase 2b 展開完了 — class-2 family 6/6 sweep 完遂、promote 0**
+  (OnKartHit 77.9→96.38% / Tick 96.8→98.83% / Trap 44.9→85.34% / Projectile 85.4→88.40%、
+  docs/notes/cw132-class2-expansion.md)。
+  - 観察 (事実): class-2 recipe は全 fn で機能。新メカニズム: **escape-serialization** —
+    struct member の address が call arg で escape すると同 struct の loop copy が serialize
+    される (escape する vec を別 struct に分離で解決)。新 lever 多数 (join-variable coalescing /
+    GPR は local 宣言順 / snd hoist / cap-up form / 名前付き temp で fmuls operand 順 など、
+    note の Control-flow recipes 節)。
+  - 観察 (事実): class-1 recipe の新前提 = bool が volatile reg に live すること
+    (callee-saved bool は li-0 coalesce 失敗、§14.2 訂正済み)。TryStartByCategory 行の
+    cross-call 積保持 sub-pattern は hard-block ではなかった (§14.2 一部訂正)。
+  - 観察 (事実): 新 source-closed family instance = **fp callee-saved partition** (Tick entry の
+    5 値 long-range 割付、4 probe shape で pairwise swap 不変)。Trap region-2 の batched
+    3-frsp+3-muls scheduling も 5 shape で不達。
+  - 残差は 4 fn とも register-identity / instruction-selection のみ。TU header 整備
+    (view structs / typed prototypes / retyped externs) は main に merge 済み (codegen-neutral、
+    SHA-1 検証済み)。
+  - **Phase 2b 総括**: class 2 は idiom として完全解明 (recipe + access discipline + escape 則)。
+    family 6 fn の promote を阻むのは全て fp/GPR register-identity tie-break 系。
+    prefix 完成の最終 blocker は register-identity family 群に一本化された。
+  - 次: Phase 2c (mr-SR-init、ShadowBB / GetMaxSpeedWithBonus、残差 1-2 命令)。
