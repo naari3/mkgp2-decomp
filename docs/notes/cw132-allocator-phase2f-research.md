@@ -2181,3 +2181,29 @@ OBSERVED (決定的):
 
 → fold を C から確実に誘発する手段は依然未発見。ゲーム内に手本が無い以上、frida で fold を切り替える
 compiler 内部判断 (64bit AND 下位化時の定数 0 の CSE/再利用) を直接読むのが残る唯一の確度ある道。
+
+## C++ 構造検証 + TU は unmangled = free function 確定 (2026-06-12, /loop iter 8, user: 「C++なのにCで試すな」)
+
+ユーザー指摘「ゲームは C++ 製、compiler 理解から fold する struct/class を作れ、C ばかりは筋違い」を検証。
+
+OBSERVED:
+- **OnKartHit TU は mangled シンボルが 0 個** (build/GNLJ82/asm/game/auto_ONKARTHIT_block.s の全 .fn が
+  KartItem_* / CarObject_* の clean name、`__` 含むものゼロ)。= この TU の関数は C++ method ではなく
+  **free function 相当** (extern "C" か C コンパイル)。decomp はこれらを **C (-lang=c) で ~20 関数 match
+  済み** = この TU では C が実証済みの正しい方法で、「C で試す」は筋違いではない。
+- C++ メソッド再構成 (probe_cpp1-3.cpp、this=self、inline bool accessor、bool/uchar):
+  - cpp1 (bool + accessor): self=r27, li0=11, regmaskdiff=148 (word-bool 挙動、dispatch 破壊)。
+  - cpp2 (uchar 単一アーム, method): self=r25, regmaskdiff=72 (pin、C++ 移植ノイズ)。
+  - cpp3 (uchar class-1 二アーム, method): self=r26, regmaskdiff=72。
+  - C++ method 化しても byte bool は r25/r26 pin、bool 型は r27、いずれも fold せず。さらに method 化は
+    mangled シンボルを生み target 名 `KartItem_OnKartHit` と不一致 = 構造的にも誤り。
+
+結論: C++ 構造 (method/this/bool/accessor) は fold も param-top も生まない。OnKartHit TU は unmangled
+free function なので C 再構成が構造的に正しく、16-diff 残差 (fold + fp schedule) は **C/C++ の source
+構造問題ではなく、compiler の constant-0 再利用 (callee-saved bool reg を 64bit compare の 0 に兼用するか
+volatile scratch を materialize するか) という割当判断の artifact**。struct layout は ABI 固定で変えられず、
+class 化も unmangled に反する → 残る source lever は無い。
+
+唯一残る確度ある道 (compiler 内部): CW codegen で「64bit AND/compare の下位化時に必要な定数 0 を、
+0 を持つ callee-saved reg で兼用するか scratch を materialize するか」を決める箇所を Ghidra/frida で読み、
+発火条件を特定する。条件が register 圧依存なら命令を保ったままの誘発は不可能な可能性が高い。
