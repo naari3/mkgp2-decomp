@@ -98,6 +98,18 @@ dtk が `build/GNLJ82/asm/auto_<group>_text.s` を生成する。その中の対
 
 sub-agent は **wall clock を能動的に見る contract を持たない** ため、分単位の判定は採用しない。サイクル回数とバイト残量の自己観測可能な指標のみ。
 
+### 既知パターン索引を先に引く (サイクルを焼く前)
+
+残差が出たら、6 サイクル/diff 停滞を待つ前に **`docs/notes/cw132-hardblock-index.md`** を症状で引く:
+
+- **A 群 (即 park 可)** に症状一致 → サイクルを焼かず即 `asm_fn` 退避。HANDOFF notes に pattern 名 + 出典を書く (例: `park: register-identity-gpr-partition, see cw132-allocator-phase2f-research.md`)。
+- **B 群 (recipe あり)** に一致 → park せず recipe を試す。
+- **C 群 (未決)** に一致 → cheap probe 1 回で駄目なら park (深堀りは main 指示時のみ)。
+- **D 群 (positive batch-idioms)** は family 別 recipe の入口。
+- どれにも当たらない新規症状で park するときは、症状を HANDOFF に残す (新パターン候補)。
+
+compiler 内部を実測して A/C 群の根拠を作る/疑うのは main 主導 (`docs/notes/cw132-compiler-tracing-playbook.md`)。subagent ループには入れない。
+
 ### 撤退後の処理
 
 1. dtk 生成 asm から body を切り出す
