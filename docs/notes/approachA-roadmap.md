@@ -266,3 +266,24 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     (colorer の web visit order の解明)。解ければ OnKartHit / Tick / ApplyImpactImpulse /
     Dispatch / GetMaxSpeedWithBonus / HandleItemEffect / fp-numbering 4 fn が連鎖 self-correct
     し、prefix が一気に揃う。これを Phase 2f として次に掲げる。
+- 2026-06-11: **Phase 2f 偵察 PARTIAL — GPR coloring rule 4 本確立 + allocator dump の所在特定**
+  (docs/notes/cw132-allocator-phase2f-research.md)。
+  - 観察 (事実): mwcc 1.3.2 backend は graph-coloring allocator (binary 内に Coloring.c /
+    InterferenceGraph.c / SpillCode.c の assert 文字列、fSpilled/fCoalesced web flag)。
+    差分 probe で 4 rule 確立: **RULE1** callee-saved 判定は live range が bl を跨ぐか
+    (純粋な live-range 属性) / **RULE2 (鍵)** callee-saved GPR local は **source 宣言順** で
+    r31 から降順 (discriminator probe で def/use/arg 順・use-count を排除) / **RULE3** locals が
+    params に優先 / **RULE4** disjoint range 間で register 再利用 (真の interference colorer)。
+  - 訂正: Phase 2e の「decl-order 方向は振動する」観察は confound (volatile/callee 混在 +
+    param) — 8/8 probe で r31-降順に統一。share-pick の残差も「handled が obj の decl-rank
+    slot を継承」として再解釈できる。
+  - 観察 (事実): per-pass dump (`Dumping function %s after %s` / `[FUNCTION-LEVEL ASM] AFTER
+    REGISTER COLORING`) が binary 内に実在、.bss flag 0x5e90ec で gate。`#pragma dumpir` /
+    flag の binary patch 単体では発火せず — 追加 gate (0x5e91de、IrOptimizer predicate) が残る。
+    key address は note に記録済み。
+  - 仮説 (推論): fp の first-use 昇順 rule は別の short-range web class — two-tier モデル
+    (long-range callee-saved = 宣言順 / short-range scratch = first-use 順) が有望、未検証。
+  - 次 (3 並列候補、推奨順): (1) dump 有効化 (disasm 0x55b510 / 0x433310 / 0x453820 +
+    options struct) — 当たれば visit order が直接観測可能 = MODEL-FOUND。(2) two-tier モデルの
+    closing probe。(3) RULE2 の in-TU 検証 — CarObject_Init (ch/blk/sub/mgr) と OnKartHit の
+    owner 宣言 permutation で実 fn の色が動くか。
