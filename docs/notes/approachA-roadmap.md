@@ -489,3 +489,11 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   壁で天井 r27)。family 診断 = 「param より高 key の callee local が param の最終 pass で co-interfere」、
   lever = その local を早い pass で脱落させる。命令を壊さず local 短命化できる関数なら promote 可。
   OnKartHit 固有: target は単一 web・命令同一で param-top = coalescing 疑い (未 trace)。
+- 2026-06-11: **degree lever 確定 — multi-pass simplify model + family 診断** (follow-up 9)。
+  spill-only tracer で TU 全 57 関数 = 全 k-colorable (spill ゼロ)。正しい model: simplify は
+  multi-pass、高 degree node は遅い pass で除去 → 高 reg。OnKartHit は param と rm/bus/bools が
+  同一最終 pass で崩れ pass 内降順 key で param 最下位。**lever 実証: param でなく高 degree local の
+  range を削ると param 上昇** (D1: rm 短命化で self r26→r27/victim r27→r28、D2: bus も削るが bools が
+  壁で天井 r27)。family 診断 = 「param より高 key の callee local が param の最終 pass で co-interfere」、
+  lever = その local を早い pass で脱落させる。命令を壊さず local 短命化できる関数なら promote 可。
+  OnKartHit 固有: target は単一 web・命令同一で param-top = coalescing 疑い (未 trace)。

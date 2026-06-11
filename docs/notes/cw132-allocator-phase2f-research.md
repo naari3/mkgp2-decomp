@@ -1161,3 +1161,116 @@ degree lever は確定・family 適用可。OnKartHit は bools の co-interfere
 ただし「park = 動かせない」ではなく「**動かす条件が判明**」した点が follow-up 9 の成果。
 assets: tmp/frida_spill_probe.js, spill_run.py, make_d1.py/make_d2.py, probe_d1.c/d2.c,
 colorer_D1.log。
+
+## 訂正 — 「命令同一なのに param-top」の矛盾は偽の前提だった (2026-06-11, follow-up 10)
+
+follow-up 8/9 で「target は命令同一 (register 番号のみ差) なのに param-top = 決定的アルゴリズムが
+同一入力に違う出力 = model に欠けた因子」と書いたが、**前提が誤り**だった。
+
+register 番号をマスクして target vs baseline(P1) を厳密 diff (tmp/reg_normalized_diff.py) した結果:
+- **reg-masked similarity 92.11%、真の命令差 37 箇所** (register swap 以外)。命令は**同一ではない**。
+- 内訳: **+4 個の `li rXX, 0`** (baseline は callee-saved bool b25-b28 の 0 初期化を明示 `li 0` で
+  出す。target は branch-over `bne L; b L` で fold = class-1 li-coalescing 残差。行数 416 vs 420 の差)。
+  **fsubs の schedule/operand 差** (s.d[] 計算の fp web 構造が違う、`fsubs f4,f4,f1` vs `fsubs f5,f3,f1`)。
+
+→ **矛盾は解消**。target は web graph が実際に baseline と違う (bool webs の数 + fp temp 構造)。
+だから coloring が違って param-top になる。follow-up 8/9 の「決定的矛盾」は 96.38% の objdiff-fuzzy を
+「register 以外同一」と誤読した私のミス。follow-up 7 の「閉」撤回自体は正しい (source-closed と
+断定すべきでない) が、その根拠にした「命令同一」論拠は無効。
+
+### 含意 (brief の framing が正しかった)
+
+元 brief「96.38% の残差 = 1 つの partition 決定 + 下流症状 (callee-bool li-coalescing, vcall r6/r12,
+fp f3/f5 swap)。partition が直れば下流 self-correct」は **正しい**。逆も真: **+4 li-0 と fp schedule は
+partition の症状**。bool が callee-saved (dispatch 跨ぎで live) だから li-0 が volatile zero と coalesce
+できず明示 li になり、bool web が target と別構造になり、それが coloring を歪める — 全部 1 つの
+coupled knot。degree lever (follow-up 9) で local を剥がして param を上げるのと、bool を volatile 化して
+li-0 を消すのは、同じ partition を別角度から押す試み。
+
+### 現状の正確な要約
+
+- **確定した機構** (white-box): multi-pass simplify、param web 最小 key 固定、高 degree local が
+  param の最終 pass で co-interfere すると param が下、degree lever で local を剥がせば param 上昇
+  (D1 実証)。
+- **OnKartHit が解けない理由**: bool 4 個が dispatch の branch 選択で同時 live 必須 = 正当に callee-saved
+  かつ param と co-interfere。degree lever の天井 r27 (follow-up 9)。bool を volatile 化する source 形が
+  あれば li-0 消滅 + bool 脱 clique + param 上昇が同時に起きる可能性 — これが唯一の未試行の有望軸。
+- **未試行の具体策**: dispatch の if-chain を、4 bool を同時に保持しない形 (各 branch 判定を inline 化
+  して bool を短命 volatile temp にする、または switch/ネスト if で同時 live 数を 4→1-2 に減らす) に
+  書き換え、li-0 が消えて bool が clique を抜けるか測る。follow-up 9 の degree lever を bool に適用する版。
+
+assets: tmp/reg_normalized_diff.py。
+
+## degree lever 確定 — multi-pass simplify model + family 診断 (2026-06-11, follow-up 9)
+
+follow-up 8 の「閉/未解決」から前進。**正しい coloring model を確定し、param-park を動かす lever を
+実証**した。spill-only tracer (tmp/frida_spill_probe.js、低頻度サイト 0x507ca1 のみ hook で
+crash 回避) で TU 全 57 関数を観測。
+
+### OBSERVED: 真の model = multi-pass simplify (spill 不在)
+
+- **TU 全関数で spill 除去ゼロ** = 全て k-colorable。しかし OnItemHit (param 中位) のように
+  color order が降順 key でない関数が存在 → 「all-trivial = 純粋降順 key」は誤り。
+- 正しい規則: simplify は **multi-pass**。各 pass で dynamic-degree < k の node を index(key) 昇順に
+  除去。**高 degree node は degree が k 未満に落ちるまで複数 pass 生き残る → 遅い pass で除去 →
+  早く着色 → 高 reg** (spill なしで)。k ≒ 91-100 (trace: dyndeg=90 は trivial 除去、adjN=102 は
+  当初 deferred)。
+- color order = pass 群 (遅い pass 順) × pass 内 descending key。
+- OnKartHit: param (deg135/137) と rm(102)/bus(77)/bools(33-46) が相互干渉して**同一の最終 pass**で
+  崩れる → pass 内 descending key → param (最小 key 32/33) が最後 → 最低 reg。
+- OnItemHit: param が local より高 degree で**遅い pass**に分離 → param が上。
+
+### OBSERVED: degree lever 実証 (D1/D2)
+
+param ではなく **高 degree local の live range を削る** と param が上がる (従来の全 lever の逆):
+- D1 (rm を 3 箇所で短命再計算に分割): **self r26→r27, victim r27→r28** に上昇。rm web が
+  param の最終 pass から脱落。
+- D2 (D1 + bus も短命化): self r27 で頭打ち。bus を剥がしても bools が壁。
+- 天井 = **r27**。bools (key47-51、4 個) が dispatch で param と正当に co-interfere するため
+  param の最終 pass に残り、within-pass descending key で param の上を取る。bools を volatile 化
+  しないと param は r28 以上に行けない (bools は branch 選択に 4 個同時 live 必須で volatile 化困難)。
+
+### family 診断 + lever (再利用可能な一般原理)
+
+**診断**: param が低 reg に park する条件 = 「param より **高い web-key の callee local** が、param の
+**最終 simplify pass で co-interfere** している」。これは frida colorer (clique の pop order + adjN) で
+即判定できる。
+
+**lever**: その co-interfere する高 key local の **live range / web 数を削り、param の最終 pass から
+脱落させる**。local を早い pass で消せば param が繰り上がる。命令列を壊さずに local を短命化できる
+関数なら promote 可能。
+
+**適用限界**: param と最後まで正当に co-interfere する local (OnKartHit の bools のように branch 選択で
+同時 live が必須なもの) は剥がせない = その関数は degree lever だけでは天井あり。
+
+### OnKartHit 固有の残課題 (未解決、coalescing 未 trace)
+
+決定的矛盾は未解決のまま: **target は self/victim を 1 回だけ書く単一 web (row4/5、reload なし)、
+命令ほぼ同一・key 32/33・max degree なのに r30/r31**。同一 graph に決定的アルゴリズムが違う色を
+付けている = model にまだ欠けた因子。最有力候補 = **coalescing** (simplify 前段 FUN_0057a1f0、
+本探索で未 trace)。target の param が高 key web と coalesce して effective key が上がっている可能性。
+次の一手: coalescing union-find を trace し、merged web の key 選択規則を読む。
+
+### 結論
+
+degree lever は確定・family 適用可。OnKartHit は bools の co-interfere で degree 天井 r27、
+かつ命令同一で target が param-top を出す機構 (coalescing 疑い) が未解明のため依然 park。
+ただし「park = 動かせない」ではなく「**動かす条件が判明**」した点が follow-up 9 の成果。
+assets: tmp/frida_spill_probe.js, spill_run.py, make_d1.py/make_d2.py, probe_d1.c/d2.c,
+colorer_D1.log。
+
+## マイルストーン: EF で命令列が target と完全一致 — 残差は純粋 coloring (2026-06-11, follow-up 11b)
+
+follow-up 11 の bool 読解 (target も li-0 を出すが pre-init 位置、baseline は ==0 アームで冗長 li-0) に
+基づき、dispatch の 4 bool を **単一アーム形 `b=0; if((flags&mask)!=0) b=1;`** に書換 (EF)。
+結果: **EF vs target = 416=416 行、reg-masked similarity 100.00%、非 register 差ゼロ**。
+li-0・fp schedule・全命令構造が一致、**残差は register 番号 (= coloring/partition) のみ**に分離。
+
+これは探索全体の転換点: 「命令同一なのに param-top」の矛盾は follow-up 10 で偽 (baseline は +4 li-0) と
+判明していたが、EF でその +4 を消し、**今度こそ本当に命令完全一致**を作れた。以降は instruction-locked な
+EF を base に、source 式/宣言順で web key を変えて coloring を target (self=r30/victim=r31/rm=r29/
+bus=r25/bools=r26-28) に合わせる純粋 coloring 問題。
+
+EF clique (colorer 実測): key94→r31, 52→r30, 51/50/49→r29-30(coal), 47/46→r27-28(coal),
+**key33→r26, key32→r25** (params 最下位)。baseline (r26/r27) より 1 段低い = 単一アーム化で web が
+1 個増えた副作用。次: EF base で宣言順 sweep。checkpoint = tmp/CHECKPOINT_ef_instr_matched.c。
