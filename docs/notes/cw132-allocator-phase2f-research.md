@@ -2138,3 +2138,21 @@ colorer 機構の独立再確認 (coalesce=min-survivor を decompile で明示)
 推奨: main の follow-up 7-12 + 672 fn dataset + M2a transplant 知見を取り込んで継続 (degree lever 天井
 r27、OnItemHit vs OnKartHit の coalescing 差、M2a 逆 morph が真の frontier)。OnKartHit 単体は 40+ 実験
 投入済みで ROI 低 → asm_fn 維持が妥当、汎用 triage 知見が実利。
+
+## merge 後の検証: coalesce 閉じ + I1 再構成 negative (2026-06-12, /loop iter 6, post-merge)
+
+main follow-up 2-12 を merge 後、本セッションの貢献を frontier に接続:
+- **coalesce=min-survivor (本セッション decompile) は follow-up 9/12 の「未 trace」coalesce 仮説を閉じる**:
+  FUN_0057a1f0 は parent[max]=min の union-find で survivor=最小 key。param(key32) が高 key web と
+  coalesce しても key32 のまま → 「target param が coalesce で effective key 上昇」は機構的に否定。
+  follow-up 9「単一 web・命令同一で param-top = coalescing 疑い」/ follow-up 12「残差=coalesce 構造」の
+  coalesce 期待は両方 negative。param-top は coalesce 由来ではない。
+- **I1 (inline FlagBit accessor) 再構成 = NEGATIVE**: probe_i1.c (bool quad を static inline FlagBit
+  化) standalone verify → diff 96 / self=r27/victim=r28。main follow-up 2 の「416=416・permutation 1つ」は
+  **行数一致のみ** (I3 は difflib LCS 71%) で実類似度は低く、word-bool 同等 (self r27 止まり + 命令破壊)。
+  inline-helper lever も match を生まない (recheck の overstated-claim 系統と一致)。
+
+集約された全 lever 結果 (~50 実験 + 2 model 導出 + inline 再構成): self を r25/r26 から動かす全形が
+**r27 止まり かつ命令破壊**。match 維持で param-top にする C source は依然未発見。残る唯一の明示的
+未完 frontier = follow-up 3 の **M2a 逆 morph** (CAE+M2a [flip✓] を OnKartHit へ morph して flip を殺す
+成分を特定)。資産は gitignore で消失、CAE source から再構成を試みる。
