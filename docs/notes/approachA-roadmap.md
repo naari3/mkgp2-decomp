@@ -214,3 +214,17 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     canonical __dt__11ScopedTimerFv の opword shim も将来置換可能 (probe r1 で実証)。
   - 次: CarObject_Init 0x8004E618 promote batch (recipe 適用、prefix 内・0x7BC の full matching
     job)。その後 Phase 2e (chain 変種 / flavor 4 / flavor 5 / dead-counter)。
+- 2026-06-11: **CarObject_Init 98.23% park** (14 builds、docs/notes/cw132-carobject-init-park.md)。
+  - 観察 (事実): ScopedTimer recipe は 0x7BC fn 内でも build 1 で byte-exact (転移性 3 連続実証)。
+    新検証 lever 9 種 (volatile aux-pointer hoist ×3 / u8-typed prototype で clrlwi 除去 /
+    inline-init preload / addi-CSE defeat / stack locals 逆宣言順 / new-expr trivial-guard 形 等)。
+  - 観察 (事実): 新 precan class = **new-expr guarded-ctor の r0-join**。非自明な pre-ctor code が
+    ある場合、target の `mr. r0,r3` join を CW C は全 spelling で r3 join に copy-prop し
+    **構造的 -1 命令** (size 不一致なので in-place park も不可)。自明 guard の 6 sibling は
+    plain C で再現する。register-web tie-break (ch/blk/sub/mgr) も併発。
+  - 仮説 (推論): r0-join は C++ new-expression の compiler temp 由来 — C からは到達不能の可能性が
+    高い (adjustor thunk と同種の言語機構ギャップ)。
+  - prefix への影響: CarObject_Init は -1 insn の構造差を持つため、**A 化 (Phase 3) では
+    asm_fn のまま跨ぐ必要がある** — fp-numbering park 群と同じ扱い。
+  - 次: Phase 2e (chain 変種 / flavor 4 / flavor 5 / dead-counter — 各 1-2 fn、最難)。
+    その後 Phase 3 の実行可否を prefix park 状況込みで再評価する。
