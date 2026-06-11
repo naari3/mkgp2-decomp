@@ -450,3 +450,8 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   r4=r22 等) ため「param-class flip」ではなく **per-web 順位の未知成分**が正体。
   次 batch: whole-binary prologue scan で param rank の予測規則を相関から発見 →
   OnKartHit I3 形 (残差 = 順位 1 点) に適用。
+- 2026-06-11: **whole-binary scan 完了 — param rank の粗視化予測は不可能、renumbering が日常と判明**
+  (follow-up 4 節)。672 fn / 1260 param: 配置は一様分布、r3/r4 pair は 57% 隣接 (key 降順) /
+  36% 分裂 (locals が割り込む = renumbering の直接証拠)。規則同定には IR レベル観測が必要。
+  次 batch = IR dump (Phase 2f-2 の private-copy 1-byte patch、frida 不要) で baseline/I1/I3/I9 の
+  web 生成順を比較し、param rank を動かす pass と source 条件を特定する。
