@@ -979,3 +979,68 @@ param web が clique に残留)。
 
 assets: tmp/colorer_run.py, clique.py, tu_cliques.py, syn_firstuse.c, syn_ptr.c,
 colorer_{P1,I1,I3,I9,E3,SYN,SYNP,TU}.log。
+
+## colorer simplify 規則を逆アセンブルで導出 — OnKartHit の descending-key を機構確定 (2026-06-11, batch_fable_onkarthit_recheck2 follow-up 7)
+
+follow-up 6 の「dynamic Chaitin で degree が効く」を、FUN_00507b50 (simplify-stack builder) の
+逆アセンブル (llvm-objdump) + push サイト trace で規則レベルまで詰めた。
+
+### OBSERVED: FUN_00507b50 のアルゴリズム (逆アセンブル)
+
+- threshold k = `call 0x4fd650(class)` を `[esp]` に保持。
+- main loop (0x507b82-0x507be3): node index ecx を lowReg→webCount で走査。各 node の
+  degree `[+0x12]` を k と比較。**degree < k なら trivial 除去**: 隣接の degree を decrement
+  (0x507ba1 loop)、flag 0x2 set (0x507bbc)、ebp stack に prepend (0x507bc1-3)。
+  **degree >= k なら ebx leftover list へ** (0x507bd0)。
+- leftover が残れば spill-pick section (0x507c02-0x507caa): 各 node の **ratio = degree/cost
+  (`[+0x12]` / `[+0x0c]`、fild+fdivrp)** を計算、最小 ratio の node を 1 個 optimistic-spill 除去
+  して ebp へ。degree>=k の node は ratio を定数 `[0x5bbb24]` (= +inf 相当) に置換。
+- SELECT (FUN_00507a30) は ebp の **head (= 最後に push = 最後に除去)** から着色、各 node に
+  最低番号の空き reg を割当。
+
+→ **除去順 = ebp push 順、着色順 = その逆 (head-first)**。最後に除去された node が最初に着色 =
+最高 reg (r31)。最初に除去された node が最後に着色 = 最低 reg。
+
+### OBSERVED: OnKartHit は graph が k-colorable → 除去は昇順 key、着色は降順 key
+
+push サイト trace (tmp/frida_simplify_probe.js、0x507bbc/0x507ca1 hook):
+- **spill 除去はゼロ**、全 node が trivial 除去。dyndeg=90 (key94) でも trivial =
+  **k は large (> 90)**。OnKartHit の interference graph は spill 不要 = k-colorable。
+- 除去は **node index (key) 昇順** (seq0=key34, seq1=key35, ... 単調増加)。main loop の
+  ecx 昇順走査そのまま。
+- ∴ ebp は key 昇順 push = head が最高 key。SELECT は head から = **着色は key 降順**。
+  これが follow-up 6 で見た clique color order = descending key (94,52,51,50,49,47,33,32) の
+  正体。callee に乗る高 degree node が key 降順で r31→r25、param (key32/33 = 最小) が最後 →
+  最低 callee reg (r26/r25)。
+
+### 導出された OnKartHit park の機構 (CONFIRMED)
+
+1. value-numbering で incoming param web は最小 key 32/33 に固定 (follow-up 6 の syn_firstuse で
+   first-use 順を否定済み、source 不変)。
+2. OnKartHit の graph は k-colorable → simplify は key 昇順除去 → SELECT は key 降順着色。
+3. ∴ param (最小 key) は必ず最後に着色 = 最低 callee reg。target の self=r30/victim=r31 は
+   param が最高 key であることを要求するが、(1) によりこれは生成不能。
+
+**= OnKartHit の param-bottom は k-colorable graph + 最小 key param の合成として機構的に閉じている**。
+round-3〜follow-up 5 の探索 (degree 削減 / inline / C++ / transplant) が全て効かなかった理由が
+これで説明される: どれも param の key を上げられず、graph は常に k-colorable のまま。
+
+### 残る非自明: OnItemHit はなぜ param-mid か (未完)
+
+OnItemHit (matched) は color order が降順 key でない (52,51,33,32,50,...) = param が中位。
+これは (a) graph が非 k-colorable で spill-pick が ratio 順に並べ替える、または (b) coalescing が
+param を別 key の web に統合する、のいずれか。OnKartHit との差はここ。ただし OnKartHit 自身は
+k-colorable と確認済みなので、OnItemHit 機構を解いても OnKartHit には転用できない見込み
+(OnKartHit を非 k-colorable にする = register pressure を spill するまで上げる source 改変は
+命令列を破壊する)。
+
+### 結論
+
+OnKartHit は **k-colorable graph 上の key-降順着色で param が最小 key に pin される** ため
+source-closed。promote 0 だが、park の理由を **compiler の coloring アルゴリズムの逆アセンブルから
+導出** した (黒箱の "register-identity park" が完全に white-box 化)。Phase 3 gate は機構的に閉。
+これは register-identity family 全体 (同じ k-colorable + 最小 key param 構造を持つ park fn) に
+適用される一般原理。
+
+assets: tmp/frida_simplify_probe.js, simplify_run.py, simplify_P1.log (partial),
+colorer_P1cost.log。逆アセンブル根拠: FUN_00507b50 @ 0x507b50。

@@ -17,7 +17,7 @@ docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件
 | 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **検証 NEGATIVE / family source-closed (2026-06-11)** — recipe は const-param 前提で実 fn に不適用 |
 | 2b | class 2 frsp store-forward の研究 (6 fn family) | **完遂 (2026-06-11)** — 6/6 fn sweep。recipe core は全 fn で再現、promote 0 (全残差が register-identity family: 85-99% park) |
 | 2 | 先頭区間 index 0-17 の残り idiom 解決: class 2 (OnKartHit) / flavor 5 (MainUpdate) / flavor 4 (ProcessWarpAndDash) / ScopedTimer (FrameUpdate) | 未着手 |
-| 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | **保留 (2026-06-11)** — frida colorer 観測で機構確定: OnKartHit の self/victim は最小 key + 最大 degree で最下位、未達は「両 param を同時に top-2 に乗せる degree 構造が source 上作れない」1 点。source-closed とは断定せず (OnItemHit が param-mid 実証) |
+| 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | **機構的に閉 (2026-06-11)** — colorer simplify (FUN_00507b50) を逆アセンブルで導出。OnKartHit は k-colorable graph → key 降順着色、incoming param は最小 key 32/33 固定 → 必ず最低 callee reg。source で param key を上げる手段なし = OnKartHit は source-closed (white-box 確定)。pivot 推奨 |
 | 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 保留 (Phase 3 依存) |
 
 ## 制約 (再確認)
@@ -472,3 +472,12 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
   round-3 の「degree が pin」は正、「下げれば動く」は実装不可。これ以上は simplify-stack 構築規則の
   step 追跡が要る = 費用対効果境界。Phase 3 gate は依然閉だが「C/C++ source-closed」とは断定しない
   (OnItemHit が param-mid を実証)。
+- 2026-06-11: **colorer simplify 規則を逆アセンブルで導出 — OnKartHit park を white-box 化** (follow-up 7 節)。
+  FUN_00507b50 (simplify-stack builder @ 0x507b50) を llvm-objdump + push-site trace で解析。
+  確定: (1) k-colorable graph では simplify は node index(key) 昇順に全 trivial 除去 → SELECT は
+  key 降順着色 (最高 key → r31)、(2) OnKartHit は spill ゼロ = k-colorable (k>137、全 trivial 確認)、
+  (3) incoming param は最小 key 32/33 固定 → 必ず最後着色 → 最低 callee reg。
+  ∴ OnKartHit param-bottom は「k-colorable graph 上の key 降順着色 + 最小 key param」の機構的帰結で
+  source-closed (param key を上げる手段なし、graph を非 k-colorable にすると命令列が壊れる)。
+  round-3〜follow-up 5 の全 lever が効かなかった理由が導出された。Phase 3 gate は機構的に閉。
+  未完: OnItemHit param-mid は spill or coalescing 由来 (OnKartHit は k-colorable なので非転用見込み)。
