@@ -326,3 +326,31 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     本線は model-guided promote の継続。
   - 次: (A) frida colorer hook batch (上振れ)、(B) model-guided で Init / OnKartHit /
     ProcessWarpAndDash を merged-web-last + RULE2 で攻略 (本線)。並列可。
+- 2026-06-11: **Phase 2f-3 frida colorer 観測 — MODEL-FOUND** (docs/notes/
+  cw132-allocator-phase2f-research.md の Frida colorer observation 節)。**register-identity family の
+  機構が実行時観測で確定した** — roadmap 全体の最大の breakthrough。
+  - 観察 (事実、frida 実測): colorer は graph-coloring。home-reg は interference-graph node の
+    `[+0x14]` (u16、0xffff=未着色)、select 関数 FUN_00507a30 が書く。visit order = FUN_00507b50 が
+    simplify/select stack を **web-birth key 降順**で pop、各 callee-clique web に r31 から降順で
+    register を割当。**web-birth key = value-numbered IR の web 生成順 = plain local では定義 =
+    宣言順** (RULE2 の「宣言順」の正体がこれ。1 つの機械的規則に還元された)。
+  - 観察 (事実): merged-web-last は機構確認 (merged web は key 最低 → 最後着色 → 低位 reg)。
+    two-regime も確認 (inline splice が spliced web の key を振り直し、fn-scope obj を押し下げる)。
+    decl/def-order lever は colorer_declorder probe で binding が反転することを確認 (ch=r31 vs ch=r28)。
+  - **promote lever 確定 (HANDOFF actionable)**:
+    - **CarObject_Init ch/blk/sub/mgr**: 4 owner-object の **source 定義順**を「target の r31-owner を
+      最初に定義、r30 を 2 番目...」と並べる (high-confidence lever)。
+    - **OnKartHit GPR partition**: 同じ def/decl-order lever。
+    - **HandleItemEffect**: obj を **open-code のまま** (early-born で高位 reg 維持) + handled に
+      **independent late-born call-crossing web** を与える (substantial inline helper は obj を
+      regime B で押し下げるので不可)。「obj 早 + handled 遅」を web-birth 条件として具体化。
+  - binary facts: ASLR off (ImageBase 0x400000 直)、private copy は lmgr326b.dll 同梱要、
+    frida 17.x。shipped compiler 無傷 (SHA-1 検証)。
+  - 仮説 (推論): fp-class partition (#6) は frida 未再 probe だが、同じ web-birth key 順で
+    rank すると予測 (class index != 4、未検証)。
+  - **意義**: 本線 (model-guided) は既に GetMaxSpeed を解いており、今回 frida 観測で
+    Init / OnKartHit / HandleItemEffect の具体的 lever が確定した。prefix の register-identity
+    park は「源流で制御不能」ではなく「web-birth key を source の定義順で操作する」問題に
+    なった。本線 batch (走行中) がこの lever で promote を積めば、Phase 3 (A 化) の gate が開く。
+  - 次: 本線 batch の結果処理 → frida lever を反映した Init / OnKartHit / HandleItemEffect の
+    promote 再挑戦 → prefix が揃ったら Phase 3 (manual extab 削除 + exceptions-on 再 compile)。

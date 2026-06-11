@@ -375,3 +375,128 @@ frida route (ImageBase 0x400000):
 - empirical: a private-copy patch forcing 0x5e90ec=1 (via the options-copy at 0x4be0f0,
   `8a 50 04 -> b2 01 90`) gave exit 0, 0 bytes output, and a byte-identical .o (SHA1
   5F5C2CFE both) -> confirms the gate is correct but the emitters are dead.
+
+## Frida colorer observation (Phase 2f-3, batch_research_frida_colorer, 2026-06-11)
+
+Verdict: **MODEL-FOUND.** The colorer was hooked at run time with frida; the web
+visit order and the home-register field are now DIRECTLY OBSERVED, not inferred.
+The previously-inferred RULE 2 ("declaration order, r31-descending") is confirmed
+and sharpened to a fully mechanical rule. The shipped compiler was not touched
+(hooks ran against a private copy; frida is read/hook only).
+
+### Setup (OBSERVED facts about the binary)
+- `mwcceppc.exe` 1.3.2 is PE32, ImageBase 0x400000, **DllCharacteristics=0x0000
+  (ASLR OFF)**. The module always loads at 0x400000, so the VAs from the static
+  analysis map directly; frida resolves `Module.getBaseAddress` == 0x400000.
+- The private copy needs `lmgr326b.dll` (FlexLM) beside it or it exits
+  0xC0000135 (DLL_NOT_FOUND) before reaching main.
+- frida 17.x: the `Memory.readX(ptr)` API is gone; use `ptr.readX()` members.
+  The `frida` CLI mangles `-proc`-style compiler flags, so a python frida driver
+  (`tools/compiler_probe/frida_colorer_run.py`) spawns the compiler directly.
+
+### Home-reg field + web/node struct (OBSERVED, objdump + run-time confirm)
+The colorer operates on **interference-graph NODES** = elements of the array
+`DAT_005e87d0` (indexed by class register number). FUN_00507b50 builds a singly
+linked **select stack** out of these nodes; FUN_00507a30 walks that stack from its
+head (`ebx=*ebx`) and writes the chosen register. Node layout:
+- `[+0x00] u32`  next-in-select-stack (pop order)
+- `[+0x04] u32`  -> IR sub-object (type byte at +0x2; not a plain name)
+- `[+0x0c] u32`  spill-cost numerator (fild'd in the cost ratio at 0x507c28)
+- `[+0x10] u16`  **key** = web-birth index (the discriminator below)
+- `[+0x12] u16`  current interference degree (decremented during simplify)
+- `[+0x14] u16`  **HOME PHYSICAL REGISTER** (0xffff = uncolored). <<< the field
+  the prior batch could not pin. Written at 0x507ace (`mov [ebx+0x14],cx`, chosen
+  color) and 0x507af4 (`mov [ebx+0x14],ax`, forced/required color).
+- `[+0x16] u16`  flags: 0x1=spilled, 0x2=on-stack, 0x8=coalesce-related,
+  0x40=coalesced-into another web.
+- `[+0x18] u16` adjacency count; `[+0x1a] u16[]` adjacency = indices into
+  DAT_005e87d0.
+
+(The other list, head `DAT_005e87b0`, is the value-numbered web list the build
+phase consumes; the select phase works off the DAT_005e87d0 node array instead.)
+
+### OBSERVED visit/color order (raw dumps in tools/compiler_probe/colorer_observation.log)
+
+Mechanism (every probe agrees): FUN_00507b50 pushes nodes so that the select
+stack pops in **DESCENDING key order** for the simultaneously-live clique; for
+each popped node FUN_00507a30 assigns the next callee register **descending from
+r31**. Concretely:
+
+- **colorer_p0.c** (5-web clique, decl a..e): pop order key 36,35,34,33 ->
+  r31,r30,r29,r28; the dead/volatile 5th web (key 41, deg 1) -> r0.
+- **colorer_p2.c** (decl e..a reversed): IDENTICAL key->reg map (36->r31 ...).
+  The frida key map is invariant to decl reorder; what changes is which SOURCE
+  VARIABLE owns each key (web-birth order), confirmed by alloc_run/disasm.
+- **colorer_merge.c** (return-merged web `m`): pop order a=key36->r31, b=35->r30,
+  c=34->r29, d=33->r28, **m=key32->r27 (LOWEST key, colored LAST)**. This is the
+  "merged web colors last -> lowest reg" rule, now mechanism-confirmed: a CSE/
+  merged web is born with the lowest key in the clique.
+- **colorer_declorder.c** (f_abcd vs f_dcba, the CarObject_Init ch/blk/sub/mgr
+  shape): frida key->reg map identical in both, BUT the disasm shows the source
+  bindings INVERT: f_abcd ch=r31 blk=r30 sub=r29 mgr=r28; f_dcba mgr=r31 sub=r29
+  blk=r30 ch=r28. => DECLARATION/DEFINITION order DOES move the variable->reg
+  binding (first-defined web -> highest key -> r31). DECL-order lever CONFIRMED
+  for this family.
+
+### Unified model (mechanism, OBSERVED)
+1. Each web gets a **key** = its birth index in the value-numbered IR. The
+   FIRST-formed web in a clique gets the HIGHEST key; later/merged webs get lower
+   keys. For plain function-scope locals, web-birth order == source definition
+   order == declaration order (this is why RULE 2 reads as "declaration order").
+2. Coloring visits webs in **descending key order** (the simplify-stack pop
+   order). Within a simultaneously-live callee clique each visited web takes the
+   next register descending from r31 (r31, r30, r29, ...).
+3. Volatile/short-range webs (low degree, don't cross a call) are trivially
+   colored to the volatile pool (r0/r3..) regardless (RULE 1 unchanged).
+4. **Merged/CSE/param-merged webs are born late => lowest key => colored last =>
+   lowest reg in the clique.** This is the single rule behind "merged web last",
+   "param pins to r7/lowest", and HandleItemEffect's `handled` share-pick.
+
+### HandleItemEffect two-regime, mechanism (OBSERVED via colorer_regime.c)
+regime_B (fn-scope `obj` defined first, then an inline helper splices its own
+locals into the body): the spliced/CSE'd webs are RENUMBERED to HIGHER keys than
+`obj`, so they color first (took r31/r30, one with flag 0x40 = coalesced-into),
+and `obj` — textually first — drops to r29 (a lower key). Disasm confirms obj=r29.
+This is exactly the phase2f "regime B: spliced site webs color first, the
+fn-scope web colors last/demoted." => the two-regime behaviour is not a separate
+rule; it is web-birth-order being rewritten by inlining. To get HandleItemEffect's
+required "obj EARLY (r29 high in its pool) + handled LATE (r22)" simultaneously,
+the source must (a) keep obj as a plain early-born fn-scope web (open-coded, no
+splice that renumbers it) AND (b) make `handled` a genuinely late-born web (its
+own call-crossing live range, not a foldable constant and not a share-pick on
+obj). This matches and sharpens the phase2e/2f conclusion; the open lever is a
+helper whose return is a non-foldable computed int that VN later turns into the
+observed constant.
+
+### Scorecard update
+- RULE 1 (bl-cross -> callee): unchanged, CONFIRMED.
+- RULE 2: CONFIRMED and reduced to "descending web-birth key; first-defined web
+  -> r31". The decl-order lever is real for plain locals (colorer_declorder).
+- RULE 3 (params/merged last): CONFIRMED as a special case of rule 4 above
+  (param-merge and CSE webs are born late -> low key -> colored last).
+- RULE 4 (disjoint reuse): unchanged, CONFIRMED.
+
+### Actionable for the park family (next batch)
+- CarObject_Init ch/blk/sub/mgr partition: reorder the four owner-object source
+  DEFINITIONS so the target's r31-owner is defined first, r30-owner second, etc.
+  (colorer_declorder proves this moves the binding). This is now a high-confidence
+  promote lever.
+- OnKartHit GPR partition: same decl/def-order lever.
+- HandleItemEffect: keep obj open-coded (early-born); give `handled` an
+  independent late-born call-crossing web. Do NOT use a substantial inline helper
+  that renumbers obj (regime B demotes obj).
+
+### Tools committed
+- `tools/compiler_probe/frida_colorer_probe.js` — verified reader (struct offsets
+  + select-stack walk + dedup of recolor passes).
+- `tools/compiler_probe/frida_colorer_run.py` — python frida spawn driver
+  (CLI flag-mangling workaround).
+- `tools/compiler_probe/colorer_*.c` — the five probes above.
+- `tools/compiler_probe/colorer_observation.log` — captured raw dumps.
+
+### Constraint compliance (this sub-batch)
+Shipped `build/compilers/GC/1.3.2/mwcceppc.exe` UNTOUCHED (SHA-1
+d8f9c36d62f66c2a044d5a20a132b79eeb2f36e5, re-verified). All hooking ran against a
+private copy in `tmp_probe/mwcceppc_priv.exe` (frida read/hook only, no binary
+patch). The private copy + lmgr326b.dll under tmp_probe/ are NOT committed
+(gitignored scratch). src/game/*.c untouched; worktree builds green.
