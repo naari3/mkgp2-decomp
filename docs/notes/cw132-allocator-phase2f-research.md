@@ -356,3 +356,22 @@ Shipped `build/compilers/GC/1.3.2/mwcceppc.exe` is UNTOUCHED (SHA-1
 d8f9c36d62f66c2a044d5a20a132b79eeb2f36e5, verified before and after). All patches
 were applied to a private copy under tmp_probe/ which was deleted after the
 experiment. Only scripts + one example log are committed (binaries are not).
+
+## Colorer call-tree map (independent 2nd RE pass, 2026-06-11)
+
+A parallel RE pass independently confirmed the listing dump is ret-stubbed (NEGATIVE,
+matches the Dump enablement section) and produced a sharper colorer call-tree map for the
+frida route (ImageBase 0x400000):
+
+- per-function register-allocation driver = **0x5077b0** (loops the 5 register classes,
+  writes current class to byte 0x5e931f, asserts via `Coloring.c:0x177`). Called at
+  **0x433dc6 / 0x5252d4 / 0x525435** — exactly the "AFTER REGISTER COLORING" points.
+- inner color-assignment routines in its call tree: **0x4cf200 / 0x4fd650** (Coloring.c
+  region ~0x507800). Hooking these and logging `(web, physical-reg)` in call order yields
+  the colorer visit order directly.
+- emit-stub resurrection is NOT recommended: stubs 0x4ffdb0/0x4ffd90/0x4ffda0/0x4fca20 have
+  different signatures and the per-instruction asm lives in in-memory line lists whose flush
+  routine is also stubbed — resurrecting string-emit alone would only print banners.
+- empirical: a private-copy patch forcing 0x5e90ec=1 (via the options-copy at 0x4be0f0,
+  `8a 50 04 -> b2 01 90`) gave exit 0, 0 bytes output, and a byte-identical .o (SHA1
+  5F5C2CFE both) -> confirms the gate is correct but the emitters are dead.
