@@ -442,3 +442,11 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     open-coded 再構成と key 構成を変えている。
   - 次: OFOD-CAE transplant matrix で param-class flip 条件を最小化 → OnKartHit I3 形に適用。
     当たれば prefix index 0 が落ち Phase 3 gate 再オープン。
+- 2026-06-11: **transplant matrix 完了 — 最小 flip 形 M2a 特定、ただし枠組みを再解釈**
+  (research note 末尾 follow-up 3 節)。CAE+sec block で flip transfer 確認 (M1)、最小形 =
+  「遅い条件 block + 内部 call + tested web」(M2a。branch なし M2d / 受動 web M2c は不発)。
+  OnKartHit へは I8/I9 とも transfer せず (I9 で param-merge が splice 境界でも param key を
+  保持することも確定)。target の param 配置は同一 fn 内で分裂する (HandleObstacleHit r3=r30 +
+  r4=r22 等) ため「param-class flip」ではなく **per-web 順位の未知成分**が正体。
+  次 batch: whole-binary prologue scan で param rank の予測規則を相関から発見 →
+  OnKartHit I3 形 (残差 = 順位 1 点) に適用。
