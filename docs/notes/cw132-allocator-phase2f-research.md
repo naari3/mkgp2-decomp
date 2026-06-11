@@ -1044,3 +1044,62 @@ source-closed。promote 0 だが、park の理由を **compiler の coloring ア
 
 assets: tmp/frida_simplify_probe.js, simplify_run.py, simplify_P1.log (partial),
 colorer_P1cost.log。逆アセンブル根拠: FUN_00507b50 @ 0x507b50。
+
+## 訂正: follow-up 7 の「機構的に閉」は誤り — spill-cost ratio が真の lever (2026-06-11, follow-up 7 訂正)
+
+follow-up 7 で「k-colorable → 降順 key → param 最下位で source-closed」と書いたが**誤り**。
+決定的反例: **target 自身が命令数同一 (416 行、余分な spill 命令なし = k-colorable) なのに
+param が top (self=r30/victim=r31)**。OnItemHit (matched, param 中位) も同様。
+∴ k-colorable graph でも param を上位に乗せられる。「全 trivial → 降順 key」は OnKartHit の
+ある source 形でたまたま成立しただけで、一般則ではない。
+
+逆アセンブル (FUN_00507b50 spill-pick section 0x507c02-0x507caa) を読み直すと真の規則が出る:
+simplify が trivial 除去で行き詰まると、leftover の中から **ratio = degree/cost
+(`[+0x12]`/`[+0x0c]`、後者は spill-cost numerator ≒ loop 加重の使用回数)** が**最小**の node を
+optimistic-spill 除去する。最小 ratio = 先に除去 = stack 底 = **最後に着色 = 最低 reg**。
+
+→ param が低 reg になる条件 = **degree/cost 比が小さい = degree 高 かつ 使用回数 (cost) 大**。
+- OnKartHit self/victim: degree 最大 (135/137) **かつ self->X が ~20 箇所で使用回数も最大** →
+  ratio 最小 → 最低 reg。
+- OnItemHit param: degree 高だが**使用回数が相対的に少ない** → ratio 大 → 後で除去 → 高 reg。
+
+**真の lever = param の使用回数 (spill cost) を下げること** (degree ではない。follow-up 5 の degree
+削減が効かなかったのは degree が分子で、分母の cost を放置していたため)。これは未検証 = 次の実験軸。
+仮説: self の頻出 sub-object (ownerDriver/movement/soundCtrl/vt) を関数冒頭でローカルに退避し
+`self->` の直接使用回数を減らすと self web の cost が下がり ratio が上がって高 reg に動く可能性。
+ただしキャッシュ先ローカルが uses を引き継ぐので、param web の cost だけ選択的に下げられるかが鍵。
+Phase 3 gate は「閉」ではなく「この cost lever 次第で再オープンの可能性」に再訂正。
+
+## cost lever 実検証 + 正直な総括 (2026-06-11, follow-up 8)
+
+cost lever (param 使用回数を下げる) を C1 で実検証: self の sub-object (ownerDriver/movement/
+soundCtrl) を冒頭ローカルにキャッシュし `self->` 直接使用を削減。
+**結果: NEGATIVE。self は r26→r25 に逆に低下** (cache local od/mv/sc が高 reg を奪い、self が沈む)。
+cost を下げても運ぶ web が競合する = E2/E3 と同じ罠。素朴な cost 削減は不可。
+
+### 未解決の核心 (正直な現状)
+
+target は **命令数ほぼ同一 (416 行、register 番号のみ差) で param top**。命令列が同じなら
+interference graph・degree・cost・use-count も同じはずで、coloring も同じになるべき。唯一
+異なり得るのは **web-birth key (value-numbering 順、source 式構造依存で最終命令列に出ない)**。
+だが param key は entry 順で 32/33 固定 (syn_firstuse で実証) = source で上げられない。
+→ **「命令同一・key 固定なのに target は param top」という矛盾が未解決**。coalescing 方向か、
+simplify の未観測な tie-break が残っている可能性。~30 実験 + colorer white-box 解析でも
+source 形は未発見。
+
+### 結論 (確定事項と未確定の分離)
+
+- **確定**: colorer は graph-coloring (FUN_00507b50 simplify + FUN_00507a30 select)、param web は
+  最小 key 32/33 固定、k-colorable graph では概ね key 降順着色。これらは逆アセンブル + runtime で
+  white-box 確定済み。
+- **未確定**: target の param-top を生む source 形。"source-closed" とも "到達可能" とも断定できない
+  (follow-up 7 の「閉」は撤回済み、本 follow-up 8 で「未解決」が正しい状態)。
+- **build 状態**: OnKartHit は asm_fn で **既に byte-identical (SHA-1 OK)**。未達成なのは「clean C
+  decompile を持つ」点のみで、build/match は完成済み。
+
+### 推奨 (ROI)
+
+OnKartHit 1 関数に round-3 以降だけで ~40 実験を投入。clean C 化の ROI は極めて低い。
+**asm_fn のまま keep し (既に byte-identical)、他 TU の pending fn (1-6 build で match する mega-bundle
+本流) に pivot する**のが妥当。colorer の white-box 知見 (k-colorable 判定 = param park の早期予測)
+は他の register-identity park fn の **撤退判定の高速化**に再利用できる = 本探索の実利成果。
