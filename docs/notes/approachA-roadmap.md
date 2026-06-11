@@ -15,6 +15,7 @@ docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件
 | 0 | class 1 の最終 probe (compiler patch rev / 未試行 pragma) | **SOLVED (2026-06-11)** |
 | 1 | class-1 10 fn の回収 (salvage draft 適用) | **完了 (2026-06-11)** — recipe 14/14、promote 2 fn、残りは他 family park |
 | 2a | fp-scratch numbering family の研究 (4 fn が 89-99% で待機) | **検証 NEGATIVE / family source-closed (2026-06-11)** — recipe は const-param 前提で実 fn に不適用 |
+| 2b | class 2 frsp store-forward の研究 (6 fn family) | **SOLVED (2026-06-11)** — loop-written copy block recipe。in-TU 検証 batch 進行中 |
 | 2 | 先頭区間 index 0-17 の残り idiom 解決: class 2 (OnKartHit) / flavor 5 (MainUpdate) / flavor 4 (ProcessWarpAndDash) / ScopedTimer (FrameUpdate) | 未着手 |
 | 3 | index 0-17 の manual extab 削除 + exceptions-on 再コンパイル (A 化)、1 fn ずつ SHA-1 検証 | 未着手 |
 | 4 | KartItem_Dtor (index 18) ほか EH fn の A promote | 未着手 |
@@ -131,3 +132,17 @@ go/no-go gate: 解けなければ class-1 10 fn + EH 13 fn は恒久 park、Phas
     (asm_fn は extab を manual 保持するため A 区間連続性を壊す)。
   - 次: **Phase 2b dispatch** — class 2 frsp store-forward の C++ reference semantics 仮説
     (最後の未試行軸、6 fn family)。
+- 2026-06-11: **Phase 2b SOLVED** (37 probes, ~25 min) — class 2 は plain C で到達可能だった。
+  - 観察 (事実): copy block を `for (i = 0; i < 16; i++) s.mtx[i] = t[i];` (plain struct、
+    volatile 不要) で書くと target 形が出る。variable-index store は CW の front-end
+    store-to-load forwarding (constant-index lvalue のみ match) を逃れ、-O4,p が loop を
+    full unroll、late pass が read-back を frsp (lfs 由来・live) / raw (演算由来) /
+    real reload (evicted) に解決 — target の 5-frsp+1-reload partition を再現。
+    GC 1.3-2.7 で hit、-O3/-O4/-O4,p 必須、exceptions/RTTI/inline/lmw 中立。
+  - 観察 (事実): C++ 固有 form 10 種は全 negative — **本 batch の動機だった C++ 仮説は
+    原因としては否定**。-lang=c++ は recipe に中立 (邪魔もしない)。
+    旧 ledger「plain C 到達不能」は訂正済み (negative-probes note に訂正追記)。
+  - 仮説 (推論): m2 の real reload は周辺 register pressure による自然な eviction。
+    in-TU で出なければ consume 順 / temp decl 順が lever。
+  - 次: **in-TU 検証 batch dispatch** — ItemEffect_Dispatch (86.34% draft、canonical specimen) +
+    KartItem_ApplyImpactImpulse (83.66% draft)。成功すれば OnKartHit / Tick / Trap / Projectile に展開。

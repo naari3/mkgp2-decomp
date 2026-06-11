@@ -14,3 +14,13 @@ Conclusion: CW 1.3.2 -O4,p provably tracks single-precision roundedness of lfs-d
 Positive salvage from the same batch: the volatile scratch struct + source-order member stores is a reliable way to materialize a fully dead spill block at exact offsets (extends strpcbrun idiom 3 from Vec3 to 22 floats), including a mid-block volatile read-back reload.
 
 Note: the `(float)(double)` frsp-forcing idiom from CarObject_MainUpdate (works on COMPUTED doubles being narrowed) does NOT apply here - the values are lfs-derived singles, already known-rounded.
+
+## 訂正 (2026-06-11, batch_research_frsp_phase2b)
+
+上の結論「plain C から到達不能 / 原文は C++ reference semantics の可能性」は **否定 (OVERTURNED)**。
+copy block を **for-loop (variable-index store)** で書くと CW front-end forwarding を逃れ、
+-O4,p の full unroll 後に late pass が constant-index read-back を `frsp fN, fM` として解決する —
+target 形が plain C で再現する。C++ 仮説は原因として negative (10 form 全滅、-lang=c++ は中立)。
+本 ledger の個々の negative 観察 (probe 1-6) 自体は全て有効のまま (再 probe で再現確認済み)。
+recipe・37-form matrix・mechanism は `cw132-frsp-storeforward-phase2b-research.md` を参照。
+precan の指示は「park」から「loop-copy recipe 適用 (frsp/reload partition に 1-2 build 予算)」に変更。
