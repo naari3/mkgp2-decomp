@@ -203,6 +203,16 @@ holder で、その holder の dtor (throw()) が delete を行う**」と各 ho
 
 probe: `tmp/dtorcpp/kartitem4.cpp` (基準)、kartitem{3,5..11} (holder 形/ spec 切替の sweep)。
 
+補足 (`tmp/dtorcpp/b0own.cpp`): 0xB0 (dtor_800529A8) を Own<StateGuard> 単一 member で再現 → 2-level 構造は出るが
+余分な null-check + frame 0x10 差。**0xB0 isolated は Own<> 包みではなく単一 `Inner*` を直接 delete する別パターン**。
+Own<T> は KartItem の per-member island を解いたが、0xB0 / KartItem 0x40 の free-scope nesting は依然別残差。
+
+### 次 step (KartItem byte-identical への道、確度高)
+1. **本体ロジック実装** (vtable 復元 ×2 / g_playerCarObject=0 / StrPcb 条件 / StlList_RemoveByValueField の
+   key 構造体 local / count 減算)。これで frame 0x140→0x150 に育ち island local offset も後方シフトして揃う見込み。
+2. **0x40 free-scope** (= 0xB0 同根) を詰める。本体実装後の frame で再評価。
+3. 簡素 member 10 個は既に命令列一致。base 2 / self-free も一致。残るは本体 + 0x40 のみ。
+
 **重要**: 0x7C 標準形 (9 dtor) は step1 で完全一致済。0xB0 は 1 fn (dtor_800529A8) のみの変種で、
 構造は出ており scope nesting の 5 word のみ残 (source 制御不可と判定)。tooling 全体の viability は確定。
 次の本丸は KartItem_Dtor (12 island / 404B extab) の多 member class 再現。
