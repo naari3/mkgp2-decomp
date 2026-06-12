@@ -264,6 +264,15 @@ tag は uninit garbage (挙動無関係)。target の key 構築は A{tag=uninit
 vtable 復元/StrPcb/count/全 member dtor が命令一致、0x40 free-scope も解決。残差は StlList key の一時変数 4 bytes のみ。
 dtor/EH tooling の土台は確立。
 
+補足 (`tmp/dtorcpp/b0v2.cpp`): explicit-free holder lever を isolated 0xB0 (dtor_800529A8) に適用 → free-scope の
+概念は正しく出るが **register 割当が違う** (mine r29-r31 保存、target r28-r31 = 1 個多い)。isolated 0xB0 は
+固有 reg-alloc を持つ別パズルで、lever の汎用性は確認できたが byte-exact には reg-alloc 調整が別途要る。
+
+### 次 step 候補 (優先順)
+1. StlList key value-struct の正確 idiom を詰めて **KartItem を byte-exact 完成** (残 4 byte + 数命令)。
+2. **StlList_InsertBefore** (もう一つの tooling item、MSL std::list::insert 相当) の再現。
+3. 統合計画 (mix-failure 制約: A 化区間は TU 先頭から連続、末尾 dtor は手前の大型関数 clean 化が前提)。
+
 **重要**: 0x7C 標準形 (9 dtor) は step1 で完全一致済。0xB0 は 1 fn (dtor_800529A8) のみの変種で、
 構造は出ており scope nesting の 5 word のみ残 (source 制御不可と判定)。tooling 全体の viability は確定。
 次の本丸は KartItem_Dtor (12 island / 404B extab) の多 member class 再現。
