@@ -213,6 +213,30 @@ Own<T> は KartItem の per-member island を解いたが、0xB0 / KartItem 0x40
 2. **0x40 free-scope** (= 0xB0 同根) を詰める。本体実装後の frame で再評価。
 3. 簡素 member 10 個は既に命令列一致。base 2 / self-free も一致。残るは本体 + 0x40 のみ。
 
+## 2026-06-12: step 5 — **本体実装で size=0x368 一致、残差は StlList 削除部の数命令のみ** (観察、大幅前進)
+
+`tmp/dtorcpp/kartitem{12..15}.cpp` で本体を実装。確立した source lever:
+- **vptr を 0x0 に置く**: polymorphic base の **virtual を data member より前に宣言** (CW は data 先・vptr 後に
+  置く既定なので、virtual 先頭宣言で vptr が offset 0 に来る)。kartitem12→13 で `stw r3,0x8`→`stw r3,0x0` に修正。
+- **MI secondary vtable offset を +0x10 に**: clItemBoxResponder に **virtual を 2 個** (dtor + dummy `vf1()`) 持たせ
+  primary vtable を 0x10 byte に。kartitem13→14 で `addi r3,0xc`→`addi r3,0x10`、vtable 復元が target と一致。
+- **StrPcb 条件**: `if (flag20==1 && flag21==0 && flag20)` で 3rd の redundant `cmplwi r3,0; beq` を再現。
+- **count 減算**: `if (lst && --g_carObjectCount <= 0)` で `subic. r0,r4,1; stw; bgt` を再現 (`< 1` だと subi+cmpwi)。
+- 結果 `kartitem15.cpp`: **size 0x368 = target 完全一致**。vtable 復元 ×2 / g_playerCarObject / StrPcb 4連 /
+  count / **全 member dtor + 全 12 島 (Own<T> holder)** / base 2 / self-free / epilogue が**命令列一致**。
+
+残差 (StlList_RemoveByValueField 本体の ~5 箇所のみ、観察):
+- `g_carObjectList ?: 0` + `mr r5,self` の hoist 順 (target は self を r5 に早出し、`bne` 前方分岐)。
+- **key value-struct 一時変数のレイアウト**: target は key@0xc / self@0x10,0x18 / tag(uninit byte)@0x8 を
+  `lbz` で読み byte round-trip (`stb 0x14; lwz 0x14`)。mine (`RemoveKey key=v;`) は word copy (`lwz 0x10`) で slot 割当が違う。
+  → key の char tag を **uninit のまま byte 幅で copy** させる source 形 (StlList の value 型の正確な再現) が要る。
+- vtable 間接呼: target `lwz r12,0x0(r3); lwz r12,0x8(r12)` (r12 再利用)、mine `lwz r5; lwz r12,0x8(r5)`。
+- `@sda21(r0)` vs `(r13)` は standalone probe の harness artifact (実 TU の r13 small-data で一致見込み、非差分)。
+
+→ **KartItem_Dtor は構造・size 完全再現、残るは list-removal helper の value-struct temp と register 割当の詰めのみ**。
+これで「多 member MI class + 本体ロジック + 12-island EH」を C++ から byte-identical 近傍まで再現できることを実証。
+tooling 土台はほぼ確立。次: key value-struct の正確形 (StlList value 型) と 0x40 free-scope。probe `tmp/dtorcpp/kartitem15.cpp`。
+
 **重要**: 0x7C 標準形 (9 dtor) は step1 で完全一致済。0xB0 は 1 fn (dtor_800529A8) のみの変種で、
 構造は出ており scope nesting の 5 word のみ残 (source 制御不可と判定)。tooling 全体の viability は確定。
 次の本丸は KartItem_Dtor (12 island / 404B extab) の多 member class 再現。
