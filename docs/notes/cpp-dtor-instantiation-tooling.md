@@ -126,6 +126,34 @@ KartItem_Dtor (0x368=872B, 12 island, 404B extab) の構造を白箱化 (asm 572
 **tooling phase の純 dtor 成果は 0x7C 9 fn (byte-identical 確定) で確立**。0xB0/KartItem/StlList の 3 つは
 各々 large-fn 級の深掘りが要る = 方針分岐点。
 
+## 2026-06-12: step 3 — Ghidra ground-truth で MI class 再構築 → 構造は出るが per-member SPECIFICATION island が壁 (観察)
+
+ユーザ指示で Ghidra bmp_output `/mkgp2_main.dol` の `KartItem_Dtor`/`CarObject_Init` を decompile、推測を排し実 layout を確定:
+- **KartItem : clItemBoxResponder (primary base @0x0), WarpZone (secondary base @0xc)** の**多重継承** (vtable 2 個)。
+- flags @0x20/@0x21、member ptr @0x24..0x5c (index*4=offset)。破棄順は Ghidra body 通り
+  (0x58,0x5c → 0x54..0x24 降順、base WarpZone→clItemBoxResponder、self-free)。
+- 0x40 = 2-level stateGuard (embedded +4 が KartItemSubObject* を delete、free は outer)。
+- 本体: vtable 復元 ×2、g_playerCarObject=0、StrPcb 条件、StlList_RemoveByValueField + count 減算。
+
+`tmp/dtorcpp/kartitem.cpp` (member throw()) / `kartitem2.cpp` (member non-throw) で MI class を compile:
+- **再現できた**: MI 認識 (base dtor 2 個 `bl __dt__8WarpZoneFv` → `bl __dt__18clItemBoxResponderFv`)、
+  member 破棄順、**0x40 2-level stateGuard の 2-island パターン** (addic.+4 / sub-dtor island / free island)、deleting wrapper。
+- **再現できない (壁)**: simple member 各々の **per-member SPECIFICATION island** + `addic. r29,0xNN; beq` slot-guard。
+  私の `delete member` は `lwz member; li r4,1; bl deleting_dtor` を直で出し guard も island も無い (island 2〜3 個 / target 12)。
+  member dtor の throw()↔non-throw 切替でも 2↔3 island しか動かず、12 には届かない。
+
+機構 (観察 → 仮説): target の 12 island は 0x18 間隔の専用 EH frame slot を各 throwing member に割る
+「per-object SPECIFICATION」構造。throwing member (Free_IfOwnedShort/EffectSteering/.../AudioChannel) は island 有、
+nothrow (HsdSceneObj=FUN_80209180 / raw TimedFree) は island 無。**callee の宣言 exception-spec で島の有無が決まる**らしいが、
+source 上で member dtor 宣言を non-throw にしても島が出ない (deleting dtor 経由だと spec 推論が nothrow に倒れる疑い)。
+これは 0xB0 nesting と同根の **CW EH-codegen (exception-action / SPECIFICATION scope 生成) パス**の挙動で、
+source-shaping では制御しきれない。
+
+→ **方針転換**: colorer (FUN_00507a30) / scheduler (FUN_005070f0) を白箱化したのと同様、
+mwcceppc_priv.exe の **EH-codegen パス (exception-action 生成 FUN、未特定) を Ghidra+frida で trace** し、
+per-member SPECIFICATION island / 0xB0 free-scope を決める入力を特定する。これが 0xB0・KartItem・StlList を
+横断して塞ぐ「土台」。source-guessing は打ち切り。probe 資産: `tmp/dtorcpp/kartitem{,2}.cpp`、`build.sh`。
+
 **重要**: 0x7C 標準形 (9 dtor) は step1 で完全一致済。0xB0 は 1 fn (dtor_800529A8) のみの変種で、
 構造は出ており scope nesting の 5 word のみ残 (source 制御不可と判定)。tooling 全体の viability は確定。
 次の本丸は KartItem_Dtor (12 island / 404B extab) の多 member class 再現。
