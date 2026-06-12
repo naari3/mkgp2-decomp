@@ -167,6 +167,42 @@ per-member SPECIFICATION island / 0xB0 free-scope を決める入力を特定す
   enclosing throw() / member offset) を特定。frida (mwcceppc_priv.exe) で kartitem2.cpp compile 時に
   確認。これが 0xB0 free-scope と KartItem 12-island を統一的に決める lever。
 
+## 2026-06-12: step 4 — **ブレイクスルー: member は埋め込み smart-pointer holder (`Own<T>`)。per-member island 完全再現** (観察)
+
+`__unexpected` 参照元 = `FUN_004e9080` (runtime helper symbol 登録テーブル: `__throw`/`__unexpected`/
+`__init/end_catch` 等を string→symbol 紐付け) を decompile し EH runtime regime を把握。その上で
+**member を「生ポインタ + 明示 `delete`」でなく「埋め込み holder」に変える**仮説を立て検証:
+
+```cpp
+template<class T> struct Own { T *p; ~Own() throw() { delete p; } };
+struct KartItem : clItemBoxResponder, WarpZone {
+    unsigned char flag20, flag21, pad22, pad23;
+    Own<AudioChannel> soundCtrl; Own<CarMovement> carObject; ... /* 各 member を Own<T> 埋め込み */
+    HsdSceneObj *hsdSceneObj16, *hsdSceneObj17;   /* 0x58/0x5c は生ポインタ */
+    ~KartItem();                                   /* throw() を付けない (= target と一致) */
+};
+KartItem::~KartItem() { delete hsdSceneObj16; delete hsdSceneObj17; }  /* 本体は明示 delete のみ、Own は自動逆順破棄 */
+```
+`tmp/dtorcpp/kartitem4.cpp`。結果 (観察):
+- **island 12 個 / addic. guard 14 個 = target と完全一致**。簡素 member 10 個は命令列も完全一致
+  (lwz/li/bl/b の並び)、差は island の FP-local offset の一定差のみ。
+- 0x58/0x5c (生ポインタ + 明示 delete) は island なし = target と一致。
+- 0x4c/0x50 (`OwnRaw{void* p; ~OwnRaw(){TimedFree(p);}}`) は guard 有・island なし = target と一致。
+
+**鍵 (確立)**: per-member SPECIFICATION island は「**member が non-throw dtor を持つ別 class の埋め込み
+holder で、その holder の dtor (throw()) が delete を行う**」と各 holder 破棄が独立 spec scope を生むことで出る。
+`delete rawptr` 直書きでは deleting-dtor 1 発で島が出ない (step3 の壁の原因)。enclosing `~KartItem()` は
+**throw() を付けない** (target も throw() spec なし、本体 catch なし)。
+
+残差 (2 点、観察):
+1. **frame size 0x140 vs target 0x150** (差 0x10)。本体の StlList_RemoveByValueField の key 構造体 local
+   (local_148/144/140/13c/138) 未実装ぶん。本体実装で frame が育てば island local offset も後方シフトして揃う見込み。
+2. **0x40 の 2-level chain の free-scope のみ違う**: target は free を main sequence slot (0xdc) に置くが
+   mine は sub と同じ低位 slot (0x20)。= 0xB0 (dtor_800529A8) と同根の free-scope 帰属問題が KartItem 内 1 member に局在。
+   → dtor_800529A8 も `Own<>` holder 風で、これを詰めれば 0xB0 も同時解決の可能性。
+
+probe: `tmp/dtorcpp/kartitem4.cpp` (基準)、kartitem{3,5..11} (holder 形/ spec 切替の sweep)。
+
 **重要**: 0x7C 標準形 (9 dtor) は step1 で完全一致済。0xB0 は 1 fn (dtor_800529A8) のみの変種で、
 構造は出ており scope nesting の 5 word のみ残 (source 制御不可と判定)。tooling 全体の viability は確定。
 次の本丸は KartItem_Dtor (12 island / 404B extab) の多 member class 再現。
