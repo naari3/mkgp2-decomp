@@ -273,6 +273,27 @@ dtor/EH tooling の土台は確立。
 2. **StlList_InsertBefore** (もう一つの tooling item、MSL std::list::insert 相当) の再現。
 3. 統合計画 (mix-failure 制約: A 化区間は TU 先頭から連続、末尾 dtor は手前の大型関数 clean 化が前提)。
 
+## 2026-06-12: step 7 — StlList key value-struct は CW 一時変数 artifact、KartItem ~99% で確定 (観察)
+
+`tmp/dtorcpp/kartitem18.cpp` で `char src; RemoveKey v; v.tag=src; v.self=this; RemoveKey key=v;` を試したが、
+CW は uninit `src` を見て `v.tag=src` を最適化し word copy のまま (`lwz 0x10`)。target の `lbz 0x8; stb 0x14;
+lwz 0x14; stw 0xc` (byte round-trip) + 余分な self@0x18 (local_138) は**挙動無関係の CW 一時変数 artifact**。
+StlList_RemoveByValueField (0x80052508) は value+4 (self) のみ比較に使うため tag は意味なし。
+正確再現には原ソースの uninit-local + 二段一時変数 idiom が要るが、これ以上の source-shaping は深追い。
+
+**KartItem_Dtor の確定状態**: EH 構造 (12 島 + MI vtable + per-member SPECIFICATION) **完全一致**、本体 (vtable 復元 ×2 /
+g_playerCarObject / StrPcb 4連 / count / 全 member dtor / 0x40 free-scope / base 2 / self-free / epilogue) **命令一致**。
+**残差は StlList 削除 helper の value-struct 構築 ~8 命令 (4 byte frame 含む) のみ = ~99% byte-identical**。
+canonical probe `tmp/dtorcpp/kartitem17.cpp` (0x40 free-scope 解決版)。
+
+→ dtor/EH tooling の土台は実証完了。確立した source lever 一覧 (再利用可):
+- per-member SPECIFICATION island = member を `Own<T>{T* p; ~Own() throw(){delete p;}}` 埋め込み holder に。
+- 2-level member の free を outer scope に = `Own<T>` でなく explicit-free holder `{T* p; ~H(){if(p){p->~T(); free(p);}}}`。
+- 多重継承 vptr@0 = polymorphic base で virtual を data member より前に宣言。
+- MI secondary vtable offset = base の virtual 個数で調整 (clItemBoxResponder は 2 個で +0x10)。
+- enclosing dtor は **throw() を付けない** (target も spec なし)。raw buffer member = trivial dtor + operator delete。
+- redundant flag 再検査 = `&& flag` 重複、`subic.` 化 = `--x <= 0`。
+
 **重要**: 0x7C 標準形 (9 dtor) は step1 で完全一致済。0xB0 は 1 fn (dtor_800529A8) のみの変種で、
 構造は出ており scope nesting の 5 word のみ残 (source 制御不可と判定)。tooling 全体の viability は確定。
 次の本丸は KartItem_Dtor (12 island / 404B extab) の多 member class 再現。
