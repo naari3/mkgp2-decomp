@@ -71,13 +71,64 @@ probe: `tmp/dtorcpp/twolevel{,2,3,4,5}.cpp` (二段 ownership form の探索)。
   **island が free の後**。
 - 意味: target では inner free が **outer (Outer::~Outer) の spec scope** (island2 側) に属し、
   SubHolder の spec (island1) は sub-dtor だけを覆う。mine は free まで SubHolder scope に入る。
-- 試した形 (Inner に operator delete 無し / global delete / 明示 `m->~Inner(); free(m)` 等) は
-  いずれも scope を割れず。free を Inner deleting-dtor ではなく Outer の body 側に出す nesting が要る。
-  → 次 step で「Inner を非 deleting ~Inner で破棄 + 別 expression で free」の clean form を詰める。
+## 2026-06-12: step 2b — 0xB0 scope nesting を 4 variant で sweep → source 制御不可と判定 (観察)
+
+extab raw byte を target と word 単位で diff (twolevel2):
+- 差は PC-action table の w2/w3/w5/w6 と action body の w11 (island1 PC) のみ。
+- target: range1 = (PC 0x4C, n=0, action island1-SPEC)、free(m) は +0x60 で **island1 の後** → island2(Outer spec 0x20)帰属。
+- mine : range1 = (PC 0x4C, n=2) が `mr;free` を含む、free(m) +0x50 は **island1 の前** → island1(0x8)帰属。
+- 構造差は emission 順だけ: target `[sub-dtor][island1][free(m)][free(this)][island2]`、mine `[sub-dtor][free(m)][island1][free(this)][island2]`。
+
+variant 結果 (`tmp/dtorcpp/twolevel{6,7,8}.cpp`、compile = `tmp/dtorcpp/build.sh` = shipped mwcceppc.exe を実行のみ + dtk disasm):
+- **twolevel6** (明示 `if(m){m->~Inner(); MemoryManager_TimedFree(m);}`): 2-island が**崩れ単一 scope に collapse** (size 0x9C)。明示 ~Inner(complete dtor 呼出) + 空 body が SubHolder spec と Outer spec を merge。
+- **twolevel7** (per-class delete を外し global `operator delete`): Outer dtor 0xB0 は維持だが free(m) は island1 のまま、かつ余計な `__dl__FPv` fn が emit (target は free を直接 inline、不一致)。
+- **twolevel8** (Inner の explicit `~Inner(){}` 削除 = implicit dtor): size 0xA0、**1-island に collapse**。implicit ~Inner は独自 spec scope を作らず全部 merge。
+
+判定 (観察 → 仮説): 2-island 構造の保持には Inner の **explicit `~Inner() throw()`** が必須。だが `delete m` の
+operator-delete (free) を member-scope(island1) でなく function-scope(island2) に割るのは CW 内部の
+EH-scope 割当ヒューリスティック (deleting-dtor inline 時の free 帰属) で、試した source 形では制御不可。
+構造 (size 0xB0 / 2 island / addic.idiom / 二重 free) は完全再現済。残差は extab nesting の 5 word のみ。
+→ **この 1 fn (dtor_800529A8) の byte-identical 化は保留**。tooling viability は 0x7C (9 dtor) で確定済のため
+先に進む。0xB0 の EH-nesting は後日 colorer/EH-scope の trace (FUN 群未特定) で機構解明する余地あり。
+
+## 2026-06-12: step 2c — 方法論検証「multi-member 文脈で割れるか」→ 否定 (観察)
+
+KartItem_Dtor (0x8004E2B0) の **member 0x40** は dtor_800529A8 と同型の 2-level (`Inner*`、embedded
+subobject @+4) だが、そこでは **free(m) が sub-dtor とは別 island (0xdc) に正しく入る**
+(`bl KartItemSubObject_Dtor; b →free; /island 0x1c/; free(m); b; /island 0xdc/`)。
+→ 「multi-member 文脈なら free が outer scope に割れる」仮説を立て `tmp/dtorcpp/multi.cpp`
+(Outer{Inner* m; Other* o} で sibling 追加、逆順 `delete o; delete m`) で検証:
+- **否定**。free(m) は依然 sub-dtor 直後 (0x5C) で island は後 = island1 帰属。sibling 追加では割れず。
+
+つまり KartItem の 0x40 member と dtor_800529A8 (同じく member offset 0 ではなく 0x40/0x0) の差は
+sibling 数ではない。KartItem の各 member dtor 前には **slot-address 検査 `addic. r0,r29,0xNN; beq`**
+(this+offset==0 の dead-check、非零 offset member の idiom) があり、これが EH-scope 構造を変える可能性
+(仮説、未確証)。dtor_800529A8 は member offset 0 で `addic.` は embedded subobject (m+4) にのみ付く。
+→ EH-scope 割当の discriminator は class shape (member offset / base / dtor spec 推論) に依存し、
+minimal-repro では誤誘導する。**byte-identical には実 class 全体の再構築が要る**という方法論的結論。
+
+## 2026-06-12: 戦略整理 — KartItem_Dtor は dtor tooling と large-fn reconstruction の hybrid
+
+KartItem_Dtor (0x368=872B, 12 island, 404B extab) の構造を白箱化 (asm 5721-5973):
+- **本体ロジック (非自明)**: vtable 設定 (lbl_803F75F8 を +0x0/+0xc に store)、g_playerCarObject=0、
+  member 0x20/0x21 条件での StrPcb 4 連 (SetCmdByte2d/2e, SetCounterField14, SetCmdByte2f)、
+  g_carObjectList から StlList_RemoveByValueField、g_carObjectCount 減算 + list-owner vtable 呼出。
+- **member dtor 逆順** (15 個、うち 12 が throw() spec island): 0x58/0x5c=dtor_80209180、
+  0x54=Free_IfOwnedShort(island 0x124)、0x50/0x4c=raw TimedFree(island なし)、
+  0x48=TwoSubDtor_Pending(0x10c)、0x44=EffectSteering(0xf4)、0x40=2-level(0x1c+0xdc)、
+  0x3c=KartEffectFadeTransit(0xc4)、0x38=PlayCamera(0xac)、0x34=VisualEffectHolder(0x94)、
+  0x30=InputCmd(0x7c)、0x2c=KartDriver(0x64)、0x28=CarObject(0x4c)、0x24=AudioChannel(0x34)。
+- **base dtor 2 個** (非 deleting flags=0): +0xc=dtor_800AA888、+0x0=dtor_80060024。self-free は最後。
+
+→ KartItem_Dtor を byte-identical 化するには (a) 15 member + 2 base の実 class 定義、
+(b) **本体の StrPcb 条件・list 操作・count 減算の byte-identical 再構築** (= large-fn reconstruction 相当) が要る。
+純粋な「dtor tooling」ではなく hybrid。ユーザ指定順 (tooling 先 → large-fn 後) では本体部分が後者に該当。
+**tooling phase の純 dtor 成果は 0x7C 9 fn (byte-identical 確定) で確立**。0xB0/KartItem/StlList の 3 つは
+各々 large-fn 級の深掘りが要る = 方針分岐点。
 
 **重要**: 0x7C 標準形 (9 dtor) は step1 で完全一致済。0xB0 は 1 fn (dtor_800529A8) のみの変種で、
-構造は出ており scope nesting の詰めだけ。tooling 全体の viability は確定。次の本丸は KartItem_Dtor
-(12 island / 404B extab) の多 member class 再現。
+構造は出ており scope nesting の 5 word のみ残 (source 制御不可と判定)。tooling 全体の viability は確定。
+次の本丸は KartItem_Dtor (12 island / 404B extab) の多 member class 再現。
 2. **KartItem_Dtor (0x8004E2B0)**: 12 island + 404B SPECIFICATION extab の大物。
    多 member class の本体 dtor。
 3. **StlList_InsertBefore**: MSL std::list::insert 相当。クラス+template の再現 or
