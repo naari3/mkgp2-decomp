@@ -52,12 +52,32 @@ flags: game lib 標準 (`-Cpp_exceptions on`, `-lang=c` **なし** = C++)。
 `dtor_8005278C` / `Free_IfOwnedShort` 等は自前ラベルなので、採用する class 名から決まる
 mangled 名へ rename すればよい。
 
-## 未検証 (次 step)
+## 2026-06-12: step 2 — dtor_800529A8 (0xB0) 二段変種を sweep → 構造一致、scope nesting 1点のみ残
 
-1. **dtor_800529A8 (0xB0) 変種**: 二段構造。member (r30=this->+0x0) を null check 後、
-   `addic. r0,r30,0x4; beq` の null-propagation idiom を挟んで `KartItemSubObject_Dtor(m->+0x4, 1)`
-   → `MemoryManager_TimedFree(m)` → flags check。inline member-dtor 展開 + 調整付き
-   null check と思われる (仮説)。empirical に C++ form を sweep して当てる。
+probe: `tmp/dtorcpp/twolevel{,2,3,4,5}.cpp` (二段 ownership form の探索)。
+
+確立 (観察):
+- **size 0xB0 / island 2個 / SPECIFICATION extab 2スコープ / prologue(r28-r31 save)・epilogue 一致**。
+- twolevel2 (`Outer{Inner* m}; Inner{int x; SubHolder h@+4; ~Inner throw(){}}`;
+  `SubHolder{Sub* sub; ~SubHolder throw(){delete sub;}}`、各 class operator delete) が、
+  target の distinctive な **`addic. r0,r30,0x4; beq` (embedded sub-object の調整付き null check)** +
+  `lwz r3,0x4; li r4,1; bl <Sub __dt>` + 二重 TimedFree + 二重 island を再現。
+- → 0xB0 変種は「m = Inner* を delete、Inner が +4 に embedded SubHolder を持ち、その dtor が
+   delete sub する二段構造」で出る、と確定的に近い。
+
+残る 1 点 (観察 → 仮説):
+- target は **island1 が「sub-dtor の bl」と「inner free (TimedFree m)」の間**にある
+  (`bl SubObject_Dtor; b →free(island skip); island1; free`)。mine は両方が同一 spec scope で
+  **island が free の後**。
+- 意味: target では inner free が **outer (Outer::~Outer) の spec scope** (island2 側) に属し、
+  SubHolder の spec (island1) は sub-dtor だけを覆う。mine は free まで SubHolder scope に入る。
+- 試した形 (Inner に operator delete 無し / global delete / 明示 `m->~Inner(); free(m)` 等) は
+  いずれも scope を割れず。free を Inner deleting-dtor ではなく Outer の body 側に出す nesting が要る。
+  → 次 step で「Inner を非 deleting ~Inner で破棄 + 別 expression で free」の clean form を詰める。
+
+**重要**: 0x7C 標準形 (9 dtor) は step1 で完全一致済。0xB0 は 1 fn (dtor_800529A8) のみの変種で、
+構造は出ており scope nesting の詰めだけ。tooling 全体の viability は確定。次の本丸は KartItem_Dtor
+(12 island / 404B extab) の多 member class 再現。
 2. **KartItem_Dtor (0x8004E2B0)**: 12 island + 404B SPECIFICATION extab の大物。
    多 member class の本体 dtor。
 3. **StlList_InsertBefore**: MSL std::list::insert 相当。クラス+template の再現 or
