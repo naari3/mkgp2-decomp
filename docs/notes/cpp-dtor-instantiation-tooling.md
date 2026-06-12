@@ -306,3 +306,36 @@ canonical probe `tmp/dtorcpp/kartitem17.cpp` (0x40 free-scope 解決版)。
    (大型関数含む) の clean C/C++ 化が前提 ([approachA-roadmap.md](approachA-roadmap.md))。
    isolation 証明 ≠ 即統合可。順序: Phase 3 (index 0-17 A 化) → KartItem_Dtor →
    大型関数で区間拡張 → 末尾 dtor。
+
+## 2026-06-12: step 8 — StlList_InsertBefore も構造再現 (MSL try/catch insert 形)、foundation 3 カテゴリ実証完了
+
+StlList_InsertBefore (0x80052684, 0xA8) は EH 島なし (extab 8B = frame descriptor のみ) の STL list insert。
+`tmp/dtorcpp/stllist2.cpp` で MSL std::list::insert 形を再現:
+```cpp
+struct Node { Node *prev, *next; CarObject *value; };          /* 12B */
+Iter List::insert(const Iter &pos, CarObject *const &value) {
+    Node *n = (Node*)Alloc(sizeof(Node));
+    if (n) { try { new (&n->value) (CarObject*)(value); }       /* placement-new construct */
+             catch (...) { MemoryManager_TimedFree(n); throw; } }  /* cleanup (T=ptr で dead だが code emit) */
+    Node *p = pos.node; p->prev->next = n; n->prev = p->prev; p->prev = n; n->next = p;  /* splice */
+    ++count; Iter r; r.node = n; return r;                      /* ++size, return iterator */
+}
+```
+結果: **size 0xA4 vs target 0xA8 (差 4)、構造一致** — `addic. node+8` placement-new guard、`stw r1,cleanup`、
+value copy、cleanup-slot clear (`li r3,0; stw 0xc`)、splice、++count、return、`bl TimedFree` cleanup tail すべて出る。
+残差は register 割当のみ (target は r27-r31 を `stmw`/`lmw`、node を r6 に spill/reload; mine は r28-r31 を個別)。
+
+**鍵 (確立)**: STL list insert の EH cleanup は `try{ new(&n->value) T(x); }catch{ deallocate(n); throw; }` で出る。
+T=pointer でも template が cleanup code を emit、ただし throw 不可なので extab は 8B (action 登録なし)。
+1st 版 (try なし) は cleanup 無・frame 小で大きく外れた。
+
+### foundation 実証完了サマリ (2026-06-12)
+| カテゴリ | 代表 | 状態 |
+|---|---|---|
+| 標準 EH dtor (0x7C, 9 fn) | holder.cpp → dtor_8005278C | **byte-identical** |
+| 多 member 多重継承 dtor + 本体 | KartItem_Dtor (12 島/0x368) | **~99%** (全 EH 構造・本体命令一致、残差=StlList key の CW 一時変数 artifact) |
+| 2-level free-scope (0xB0) | dtor_800529A8 | lever 確立 (explicit-free holder)、reg-alloc 残 |
+| STL template (list insert) | StlList_InsertBefore (0xA8) | **構造一致** (0xA4)、reg-alloc 残 |
+
+dtor/EH/STL tooling の土台 (source lever 群 + 検証 pipeline) は確立。残るは各 fn の last-mile (reg-alloc /
+value-struct artifact) と統合 (mix-failure 制約)。probe: `tmp/dtorcpp/{holder,kartitem17,stllist2,b0v2}.cpp`、`build.sh`。
