@@ -237,6 +237,33 @@ Own<T> は KartItem の per-member island を解いたが、0xB0 / KartItem 0x40
 これで「多 member MI class + 本体ロジック + 12-island EH」を C++ から byte-identical 近傍まで再現できることを実証。
 tooling 土台はほぼ確立。次: key value-struct の正確形 (StlList value 型) と 0x40 free-scope。probe `tmp/dtorcpp/kartitem15.cpp`。
 
+## 2026-06-12: step 6 — **0x40 free-scope を解決 (explicit-free holder lever)、全 12 island が一様 -4 に整列** (観察、決定的 lever)
+
+kartitem15 の唯一の構造残差 = 0x40 member (2-level stateGuard) の free が main-sequence slot でなく nested 低位 slot
+だった (mine free=0x30 / target=0xdc)。0x40 を **explicit-free holder** に変えて検証 (`tmp/dtorcpp/kartitem17.cpp`):
+```cpp
+struct StateGuard { void* parent; SubHolder h; int b,c,d; ~StateGuard() throw() {} };  /* operator delete 無し */
+struct SGHolder { StateGuard *p; ~SGHolder() throw() { if (p) { p->~StateGuard(); MemoryManager_TimedFree(p); } } };
+// member: SGHolder stateGuard;   (Own<StateGuard> でなく)
+```
+結果: **全 12 island slot が target と一様に -4 差**に整列 (0x40 free=0xd8 が main-sequence に入った、target 0xdc)。
+size 0x364 (target 0x368、差 4)。
+
+**確立した lever (0xB0 family の汎用解)**: 「2-level member の free を outer(holder/member-level) scope に出す」には
+`Own<T>` の `delete p` (= ~T + operator delete を 1 nest) ではなく、**explicit `if(p){ p->~T(); free(p); }`**
+にする。前者は free を sub-dtor と同じ nested scope に置く (低位 slot)。後者は free が holder body scope = member-level
+(main-sequence slot)。これは isolated 0xB0 (dtor_800529A8) と同じ free-scope 問題の解。
+
+残差 (観察): 全 slot が一様 -4、size も 4 小。= **StlList key value-struct の余分な local (local_138=self@0x18)** 未再現ぶん。
+StlList_RemoveByValueField (0x80052508) は `value+4` (self) のみ比較に使用、key = `{tag(4B)@0; CarObject* self@4}`、
+tag は uninit garbage (挙動無関係)。target の key 構築は A{tag=uninit byte@0x8, self@0x18} → B=A copy{tag@0xc,self@0x10}
+→ &B を渡す、の二段一時変数。この余分な local が +4 と最後の数命令差。**挙動に無関係な CW 一時変数 artifact** のため
+正確再現には原ソースの key 構築 idiom が要るが、構造・EH は完全。canonical probe = `tmp/dtorcpp/kartitem17.cpp`。
+
+**到達点**: KartItem_Dtor は EH 構造 (12 島 + MI vtable + per-member SPECIFICATION) 完全再現、本体ロジックも
+vtable 復元/StrPcb/count/全 member dtor が命令一致、0x40 free-scope も解決。残差は StlList key の一時変数 4 bytes のみ。
+dtor/EH tooling の土台は確立。
+
 **重要**: 0x7C 標準形 (9 dtor) は step1 で完全一致済。0xB0 は 1 fn (dtor_800529A8) のみの変種で、
 構造は出ており scope nesting の 5 word のみ残 (source 制御不可と判定)。tooling 全体の viability は確定。
 次の本丸は KartItem_Dtor (12 island / 404B extab) の多 member class 再現。
