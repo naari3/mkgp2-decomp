@@ -1145,7 +1145,7 @@ asm void *KartItem_Dtor(void *self, short flag);
 asm void CarObject_Init(void);
 void KartItem_UpdateShadowBillboardAndViewport(KartItemOpsView *self, int arg2, int arg3);
 asm void KartItem_AdvanceAnim3c(void);
-asm void CarObject_CalcSpeedRatio(void);
+float CarObject_CalcSpeedRatio(CarObjGetterView *self);
 float KartItem_GetMaxSpeedWithBonus(KartItemOpsView *self);
 asm void KartItem_GetCurrentSpeedWithBonus(void);
 float *CarObject_GetTransformMatrix(CarObjGetterView *self);
@@ -1153,7 +1153,7 @@ KartMovementSpeedView *CarObject_GetKartMovementPtr(CarObjGetterView *self);
 void *KartItem_GetCarObjectSoundCh(CarObjGetterView *self);
 void *CarObject_GetRenderObj(CarObjGetterView *self);
 unsigned char KartItem_GetByte_f4(CarObjGetterView *self);
-asm void KartItem_GetBoostArmedAndTimer(void);
+unsigned char KartItem_GetBoostArmedAndTimer(CarObjGetterView *self, float *out);
 unsigned char CarObject_IsAirborne(CarObjGetterView *self);
 unsigned char KartItem_GetCarObjectState_2bc(CarObjGetterView *self);
 void KartItem_ResetStrPcbToIdle(KartItemOpsView *self);
@@ -6572,26 +6572,28 @@ asm void KartItem_AdvanceAnim3c(void) { /* 0x8004EFD8 size:0x24 */
     blr
 }
 
-asm void CarObject_CalcSpeedRatio(void) { /* 0x8004EFFC size:0x44 */
-    nofralloc
-    lwz r3, 0x28(r3)
-    lfs f1, lbl_806D26EC(r2)
-    lfs f2, 0xc(r3)
-    fcmpo cr0, f2, f1
-    cror eq, lt, eq
-    beqlr
-    lwz r0, 0x8(r3)
-    lwz r3, 0x24(r3)
-    mulli r0, r0, 0x18
-    lfs f0, lbl_806D26FC(r2)
-    add r3, r3, r0
-    lfs f1, 0x8(r3)
-    fdivs f1, f2, f1
-    fcmpo cr0, f1, f0
-    blelr
-    fmr f1, f0
-    blr
+#pragma exceptions off
+float CarObject_CalcSpeedRatio(CarObjGetterView *self) { /* 0x8004EFFC size:0x44 */
+    KartMovementSpeedView *mv = self->movement;
+    float speed = mv->speed;
+    if (speed <= lbl_806D26EC) {
+        return lbl_806D26EC;
+    }
+    {
+        /* Load the divisor into the *return* variable and divide in place so the
+         * divisor and result share one register web; that web is the pinned f1
+         * return web, yielding `fdivs f1,f2,f1`. A separate divisor temp colors
+         * to f0 (interferes with the f1 result) -> `fdivs f1,f3,f0`. See
+         * docs/notes/cw132-fdivs-coalesce-pinned-f1.md. */
+        float ratio = mv->table[mv->tableIdx].refSpeed;
+        ratio = speed / ratio;
+        if (ratio > lbl_806D26FC) {
+            ratio = lbl_806D26FC;
+        }
+        return ratio;
+    }
 }
+#pragma exceptions reset
 
 static inline float KartItem_CalcMaxSpeedWithBonus_inl(KartItemOpsView *self) {
     SpeedTableEntry *e;
@@ -6669,13 +6671,19 @@ unsigned char KartItem_GetByte_f4(CarObjGetterView *self) { /* 0x8004F144 size:0
 }
 #pragma exceptions reset
 
-asm void KartItem_GetBoostArmedAndTimer(void) { /* 0x8004F14C size:0x10 */
-    nofralloc
-    lfs f0, 0xb4(r3)
-    lbz r3, 0xb1(r3)
-    stfs f0, 0x0(r4)
-    blr
+#pragma exceptions off
+unsigned char KartItem_GetBoostArmedAndTimer(CarObjGetterView *self, float *out) { /* 0x8004F14C size:0x10 */
+    /* The float (boostTimer) load must be pinned ahead of the byte (boostArmed)
+     * load so the scheduler emits `lfs; lbz r3; stfs` (byte -> r3 directly).
+     * A plain read lets mwcc bundle the lfs with the stfs (store-first); a
+     * volatile-qualified read pins it at the source point. See
+     * docs/notes/cw132-scheduler-store-load.md. */
+    float t = *(volatile float *)&self->boostTimer;
+    unsigned char a = self->boostArmed;
+    *out = t;
+    return a;
 }
+#pragma exceptions reset
 
 #pragma exceptions off
 unsigned char CarObject_IsAirborne(CarObjGetterView *self) { /* 0x8004F15C size:0xC */

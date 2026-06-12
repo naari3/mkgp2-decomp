@@ -45,3 +45,6 @@ per_fn.json
 
 # Private compiler-probe scratch (frida hooks, private mwcc copy, logs)
 tmp_probe/
+
+# Decomp probe/sweep scratch (mwcc form sweeps, dtk disasm)
+tmp/
