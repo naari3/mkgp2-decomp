@@ -774,6 +774,16 @@ game/DebrisArray_DrawForward.c:
 	extabindex  start:0x80022BE0 end:0x80022BEC
 	.text       start:0x800B4AAC end:0x800B4AD0
 
+game/Mtx_Copy.c:
+	extab       start:0x8000B114 end:0x8000B11C
+	extabindex  start:0x8002372C end:0x80023738
+	.text       start:0x800D4148 end:0x800D4174
+
+game/Vec3_ToYaw.c:
+	extab       start:0x8000B18C end:0x8000B194
+	extabindex  start:0x800237E0 end:0x800237EC
+	.text       start:0x800D5FDC end:0x800D6008
+
 game/Vec3_Magnitude_Wrapper.c:
 	extab       start:0x8000B1A4 end:0x8000B1AC
 	extabindex  start:0x80023804 end:0x80023810
@@ -781,6 +791,11 @@ game/Vec3_Magnitude_Wrapper.c:
 
 game/Vec3_ScaleXZ.c:
 	.text       start:0x800D6138 end:0x800D615C
+
+game/Vec3_Scale.c:
+	extab       start:0x8000B1AC end:0x8000B1B4
+	extabindex  start:0x80023810 end:0x8002381C
+	.text       start:0x800D615C end:0x800D6188
 
 game/SpriteSlot_SetScale.c:
 	.text       start:0x800D6568 end:0x800D657C
