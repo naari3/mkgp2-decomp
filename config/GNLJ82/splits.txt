@@ -504,6 +504,11 @@ game/FreeMediaBuffers.c:
 	extabindex  start:0x800219BC end:0x800219C8
 	.text       start:0x80087A6C end:0x80087AD0
 
+game/PcbListener_GetStateName.c:
+	extab       start:0x80008EB4 end:0x80008EBC
+	extabindex  start:0x800219D4 end:0x800219E0
+	.text       start:0x80087C34 end:0x80087C58
+
 util/bitpack.c:
 	extab       start:0x80008F24 end:0x80008F34
 	extabindex  start:0x80021A4C end:0x80021A64
