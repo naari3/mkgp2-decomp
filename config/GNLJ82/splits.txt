@@ -419,6 +419,11 @@ game/EffectSteering_InputViscosity_SetFieldC.c:
 game/SpawnTable.c:
 	.text       start:0x8005F5CC end:0x8005F5D8
 
+game/ItemSelect_DrawUIHelperIfActive.c:
+	extab       start:0x80007DD8 end:0x80007DE0
+	extabindex  start:0x80020D80 end:0x80020D8C
+	.text       start:0x800604BC end:0x800604E8
+
 game/ItemSelect.c:
 	extab       start:0x80007DE8 end:0x80007E10
 	extabindex  start:0x80020D98 end:0x80020DBC
