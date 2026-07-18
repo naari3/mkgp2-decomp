@@ -517,6 +517,7 @@ config.libs = [
             Object(Matching, "game/CarObject_ResetPhysics.c"),
             Object(Matching, "game/KartBody.c"),
             Object(Matching, "game/KartMovement.c"),
+            Object(Matching, "game/KartDriver_GetJObjRootIfReady.c"),
             Object(Matching, "game/KartMovement_GetVelocityMagnitude.c"),
             Object(Matching, "game/KartItem_TriggerStateAction.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartMovement_CanReceiveItem.c"),
