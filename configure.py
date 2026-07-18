@@ -362,6 +362,7 @@ config.libs = [
             Object(Matching, "game/WrapInRange.c"),
             Object(Matching, "game/Vtable_CallSlot2.cpp"),
             Object(Matching, "game/ObjectBase.c"),
+            Object(Matching, "game/Stub_NoOp_80030aec.c"),
             Object(Matching, "game/CardTaskWelcome_Dtor.c"),
             Object(Matching, "game/clCGameDemoWC_Stubs.c"),
             Object(Matching, "game/clCGameDemo_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),
