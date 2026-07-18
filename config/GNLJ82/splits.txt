@@ -125,6 +125,9 @@ game/StrPcb.c:
 game/StrPcb_Error.c:
 	.text       start:0x80037B68 end:0x80037CC0
 
+game/StrPcb_GetInstance.c:
+	.text       start:0x80038574 end:0x8003857C
+
 game/Clamp.c:
 	.text       start:0x80038778 end:0x800387D8
 
