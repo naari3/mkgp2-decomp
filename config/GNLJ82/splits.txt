@@ -722,6 +722,9 @@ game/ItemObjectManager_Init.c:
 	extabindex  start:0x800239FC end:0x80023A08
 	.text       start:0x800D81E0 end:0x800D8288
 
+game/Item_DecayVelocityScalar.c:
+	.text       start:0x800D9D50 end:0x800D9D74
+
 game/FinalLapCoinJump_CheckActiveForObject.c:
 	.text       start:0x800DC638 end:0x800DC690
 

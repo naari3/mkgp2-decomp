@@ -398,6 +398,7 @@ config.libs = [
             Object(Matching, "game/DebrisArray_DrawForward.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/DemoFlow_ResetTwoFlags.c"),
             Object(Matching, "game/ItemObject_RaycastWallStub.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Item_DecayVelocityScalar.c"),
             Object(Matching, "game/ItemObject_SetByte18c.c"),
             Object(Matching, "game/FinalLapCoinJump_SetEnable.c"),
             Object(Matching, "game/FinalLapCoinJump_CheckActiveForObject.c"),
