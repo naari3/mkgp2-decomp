@@ -520,6 +520,14 @@ game/PostRace_StartScoreEntryFlow_WithCardSave.c:
 	extabindex  start:0x800211DC end:0x800211E8
 	.text       start:0x80073EF8 end:0x80073F24
 
+game/TaRecord.c:
+	.text       start:0x80074910 end:0x80074C30
+
+game/TaRecord_InsertResult.c:
+	extab       start:0x80008308 end:0x80008310
+	extabindex  start:0x8002123C end:0x80021248
+	.text       start:0x80074C30 end:0x80074FA4
+
 game/Sci2Card_Singleton_Get.c:
 	.text       start:0x80076BB4 end:0x80076BBC
 

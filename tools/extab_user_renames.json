@@ -253,5 +253,9 @@
     "extabindex_Frame_PostDrawOverlay": "@eti_8001F454",
     "extabindex_Frame_PostDraw_BackupBuffer": "@eti_8001F460",
     "extabindex_Frame_Begin": "@eti_8001F46C"
+  },
+  "src/game/TaRecord_InsertResult.c": {
+    "extab_TaRecord_InsertResult": "@etb_80008308",
+    "extabindex_TaRecord_InsertResult": "@eti_8002123C"
   }
 }
