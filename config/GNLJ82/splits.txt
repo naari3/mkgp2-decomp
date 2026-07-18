@@ -383,6 +383,9 @@ game/BootPCBCheck_Init.c:
 	extabindex  start:0x80021860 end:0x8002186C
 	.text       start:0x80084DF8 end:0x80084E88
 
+game/SetPcbScratchFlag_806d11a4.c:
+	.text       start:0x80084E88 end:0x80084E94
+
 game/ResetIOPorts.c:
 	extab       start:0x80008D7C end:0x80008D84
 	extabindex  start:0x80021878 end:0x80021884
@@ -413,6 +416,9 @@ game/TCPConn_Reset.c:
 	extab       start:0x80008E6C end:0x80008E74
 	extabindex  start:0x80021968 end:0x80021974
 	.text       start:0x80087170 end:0x800871D8
+
+game/PcbConn_MarkDisabled.c:
+	.text       start:0x80087880 end:0x80087894
 
 game/TCPConn_LogError.c:
 	extab       start:0x80008E94 end:0x80008E9C

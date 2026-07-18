@@ -410,6 +410,8 @@ config.libs = [
             Object(Matching, "game/StrPcb_988.c"),
             Object(Matching, "game/StrPcb.c"),
             Object(Matching, "game/StrPcb_Error.c"),
+            Object(Matching, "game/SetPcbScratchFlag_806d11a4.c"),
+            Object(Matching, "game/PcbConn_MarkDisabled.c"),
             Object(Matching, "game/Clamp.c"),
             Object(Matching, "game/NoOpStubs_38f54.c"),
             Object(Matching, "game/Stub_NoOp_38f80.c"),
