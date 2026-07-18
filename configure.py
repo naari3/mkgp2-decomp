@@ -368,6 +368,7 @@ config.libs = [
             Object(Matching, "game/PlayStats_ShutdownStub.c"),
             Object(Matching, "game/TEXBindPaletteEntry.c", extab_padding=b"", extra_cflags=["-i src"]),
             Object(Matching, "game/Object_JObjUpdate.c"),
+            Object(Matching, "game/Object_SetJObjRotation.c"),
             Object(Matching, "game/Object_Color.c", extab_padding=b""),
             Object(Matching, "game/SpriteSlot_SetScale.c"),
             Object(Matching, "game/SpriteSlot_SetTranslateDxDy.c"),

@@ -84,6 +84,11 @@ game/Object_JObjUpdate.c:
 	extabindex  start:0x8001F658 end:0x8001F670
 	.text       start:0x80031718 end:0x80031770
 
+game/Object_SetJObjRotation.c:
+	extab       start:0x800059A0 end:0x800059B0
+	extabindex  start:0x8001F67C end:0x8001F694
+	.text       start:0x8003185C end:0x800319EC
+
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
 
