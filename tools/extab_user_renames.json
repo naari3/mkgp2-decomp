@@ -161,5 +161,12 @@
     "extabindex_SceneRender_CmdB_8aa20": "@eti_8001FBEC",
     "extab_SceneRender_Dtor": "@etb_80005F48",
     "extabindex_SceneRender_Dtor": "@eti_8001FBF8"
-  }
+  },
+  "src/game/Jyugemu_Flag_Render.c": {"extab_Jyugemu_Flag_Render":"@etb_800089FC","extabindex_Jyugemu_Flag_Render":"@eti_800216F8"},
+  "src/game/Jyugemu_Flag_Tick.c": {"extab_Jyugemu_Flag_Tick":"@etb_80008A04","extabindex_Jyugemu_Flag_Tick":"@eti_80021704"},
+  "src/game/Jyugemu_Flag_Dtor.c": {"extab_Jyugemu_Flag_Dtor":"@etb_80008A0C","extabindex_Jyugemu_Flag_Dtor":"@eti_80021710"},
+  "src/game/Jyugemu_Flag_Ctor.c": {"extab_Jyugemu_Flag_Ctor":"@etb_80008A14","extabindex_Jyugemu_Flag_Ctor":"@eti_8002171C"},
+  "src/game/Jyugemu_ReverseFlag_Tick.c": {"extab_Jyugemu_ReverseFlag_Tick":"@etb_80008A3C","extabindex_Jyugemu_ReverseFlag_Tick":"@eti_80021740"},
+  "src/game/Jyugemu_ReverseFlag_Dtor.c": {"extab_Jyugemu_ReverseFlag_Dtor":"@etb_80008A44","extabindex_Jyugemu_ReverseFlag_Dtor":"@eti_8002174C"},
+  "src/game/Jyugemu_ReverseFlag_Ctor.c": {"extab_Jyugemu_ReverseFlag_Ctor":"@etb_80008A4C","extabindex_Jyugemu_ReverseFlag_Ctor":"@eti_80021758"}
 }

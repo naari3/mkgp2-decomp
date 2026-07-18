@@ -544,10 +544,45 @@ game/DVDLoad_RecordOpStart.c:
 game/Jyugemu_Flag_SetKartDriver.c:
 	.text       start:0x800806D4 end:0x800806F4
 
+game/Jyugemu_Flag_Render.c:
+	extab       start:0x800089FC end:0x80008A04
+	extabindex  start:0x800216F8 end:0x80021704
+	.text       start:0x800806F4 end:0x80080748
+
+game/Jyugemu_Flag_Tick.c:
+	extab       start:0x80008A04 end:0x80008A0C
+	extabindex  start:0x80021704 end:0x80021710
+	.text       start:0x80080748 end:0x80080A14
+
+game/Jyugemu_Flag_Dtor.c:
+	extab       start:0x80008A0C end:0x80008A14
+	extabindex  start:0x80021710 end:0x8002171C
+	.text       start:0x80080A14 end:0x80080A74
+
+game/Jyugemu_Flag_Ctor.c:
+	extab       start:0x80008A14 end:0x80008A2C
+	extabindex  start:0x8002171C end:0x80021728
+	.text       start:0x80080A74 end:0x80080B20
+
 game/Jyugemu_ReverseFlag.c:
 	extab       start:0x80008A2C end:0x80008A3C
 	extabindex  start:0x80021728 end:0x80021740
 	.text       start:0x80080B20 end:0x80080C10
+
+game/Jyugemu_ReverseFlag_Tick.c:
+	extab       start:0x80008A3C end:0x80008A44
+	extabindex  start:0x80021740 end:0x8002174C
+	.text       start:0x80080C10 end:0x80080FAC
+
+game/Jyugemu_ReverseFlag_Dtor.c:
+	extab       start:0x80008A44 end:0x80008A4C
+	extabindex  start:0x8002174C end:0x80021758
+	.text       start:0x80080FAC end:0x8008100C
+
+game/Jyugemu_ReverseFlag_Ctor.c:
+	extab       start:0x80008A4C end:0x80008A64
+	extabindex  start:0x80021758 end:0x80021764
+	.text       start:0x8008100C end:0x8008117C
 
 game/Jyugemu_ReverseFlag_Enable.c:
 	.text       start:0x8008117C end:0x80081184
