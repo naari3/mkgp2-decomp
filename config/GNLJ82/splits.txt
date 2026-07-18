@@ -85,9 +85,9 @@ game/Object_JObjUpdate.c:
 	.text       start:0x80031718 end:0x80031770
 
 game/Object_SetJObjRotation.c:
-	extab       start:0x800059A0 end:0x800059B0
-	extabindex  start:0x8001F67C end:0x8001F694
-	.text       start:0x8003185C end:0x800319EC
+	extab       start:0x800059A0 end:0x800059C0
+	extabindex  start:0x8001F67C end:0x8001F6AC
+	.text       start:0x8003185C end:0x80031B7C
 
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
@@ -276,6 +276,9 @@ game/auto_ONKARTHIT_block.c:
 
 game/KartBody.c:
 	.text       start:0x8005771C end:0x80057738
+
+game/TornadoEffect_TriggerField140.c:
+	.text       start:0x80058DDC end:0x80058DE8
 
 sound/SoundObj_PlaySE_Direct.c:
 	extab       start:0x800076C8 end:0x800076D0
@@ -555,6 +558,11 @@ game/SpriteSlot_SetScale.c:
 
 game/SpriteSlot_SetTranslateDxDy.c:
 	.text       start:0x800D6B20 end:0x800D6B34
+
+game/SpriteSlot_SetScaleXYZ.c:
+	extab       start:0x8000B244 end:0x8000B254
+	extabindex  start:0x800238F4 end:0x8002390C
+	.text       start:0x800D6CEC end:0x800D6D4C
 
 game/ItemAlias.c:
 	.text       start:0x800D7490 end:0x800D75F8
