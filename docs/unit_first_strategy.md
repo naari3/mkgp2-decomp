@@ -98,6 +98,9 @@ C++ class だった可能性が高い。C + idiom で寄せず、**最初から 
   (ScopedTimer 昇格 commit b8f8bf4 と同手順)
 - 既存 asm_fn の .cpp retrofit 候補: ServiceMenu_Init / SeqMenuScene_Init
   (C body 保存済み、残差が register/extab のみ)
+- **2026-07-19 実証済み**: ServiceMenu_Init を本物の C++ ctor として 100% match
+  (asm_fn → matched 昇格)。mangled 名は llvm-objcopy --redefine-sym で既存 C 名
+  に橋渡しする。手法の正本: `docs/notes/cpp-ctor-retrofit-mangled-bridge.md`
 
 ## 4.5 unit claim (GitHub issue、2026-07-19 導入)
 

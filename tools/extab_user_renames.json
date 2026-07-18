@@ -361,5 +361,15 @@
   "src/game/CardSave_Tick_CaptureAndStart.c": {
     "extab_CardSave_Tick_CaptureAndStart": "@etb_80009498",
     "extabindex_CardSave_Tick_CaptureAndStart": "@eti_80022010"
+  },
+  "src/game/ServiceMenu_Page.c": {
+    "__ct__11ServiceMenuFi": "ServiceMenu_Init",
+    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
+    "__dt__12GameModeBaseFv": "dtor_8002CDF4",
+    "__vt__11ServiceMenu": "lbl_803FDE64",
+    "__ct__14DisplayContextFv": "DisplayContext_Init",
+    "__ct__6SpriteFiiff": "fn_801A08B8",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
