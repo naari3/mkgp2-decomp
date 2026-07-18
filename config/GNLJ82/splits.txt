@@ -333,6 +333,9 @@ game/ItemEffectDamp_Init.c:
 game/KartItem_Stub_Returns0.c:
 	.text       start:0x8005623C end:0x80056244
 
+game/KartEffectFadeTransit_Init.c:
+	.text       start:0x80056360 end:0x80056388
+
 game/KartItem_RenderCb_Mode7_Pre.c:
 	extab       start:0x80007584 end:0x8000758C
 	extabindex  start:0x80020738 end:0x80020744
