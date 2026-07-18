@@ -300,10 +300,15 @@ main が **(a) unit-first 選定 (2026-07-19 採用、`docs/unit_first_strategy.
 #
 # 0.5 理想形 unit (runs=1/frgn≤2/extab OK) が未 claim に無い場合は
 #    C++ retrofit レーンから補給する (docs/unit_first_strategy.md §4.6):
-#    `python tools/scan_extab_actions.py --retrofit` の dispatch レーンを
-#    1 TU = 1 batch で claim (`retrofit:<TU>`) して dispatch。
-#    sub prompt には cpp-ctor-retrofit-mangled-bridge.md と
-#    mkgp2-match SKILL の C++ 定型節の参照を必ず含める。
+#    `python tools/scan_extab_actions.py --retrofit` から
+#    - dispatch (whole-TU): 1 TU = 1 batch で claim (`retrofit:<TU>`)
+#    - dispatch (per-fn): extab_order 宣言済み大 TU (ONKARTHIT 等)。
+#      claim は TU 単位、batch は同型グループ数 fn (dtor 連隊等) で切る。
+#      手順の正本は docs/large_tu_cpp_conversion.md Phase 3 (6 step)
+#    - prep needed: 先に extab_order 宣言 + -Cpp_exceptions on 化 (main 作業)
+#    sub prompt には cpp-ctor-retrofit-mangled-bridge.md /
+#    large_tu_cpp_conversion.md Phase 3 / mkgp2-match SKILL の
+#    C++ 定型節の参照を必ず含める。dtor は throw() 指定を忘れない。
 ```
 
 **最重要**: pending 関数の ~64% は dtk reversed-extab group 内にいる (4877/7614)。そういう関数を singleton dispatch すると `Conflicting splits within reversed extab group` でほぼ確実に失敗する (iter0 / iter1 で実証済み)。よって seed の `extab_group` を最初に確認して bundle を組む (`plan_units.py` の `exX` / `ex>6` 列は同じ制約の unit 単位ビュー)。

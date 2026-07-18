@@ -141,11 +141,17 @@ def main() -> int:
             print(f"  {pre:<24} action_fns={len(rs):<3} ({total}B)")
 
     if args.retrofit:
-        # asm_fn/nonmatching park を TU 単位でまとめ、TU 丸ごと exceptions-on
-        # C++ 変換で完結できるもの (= 小 TU) を dispatch 候補として出す。
-        # 大 TU (ONKARTHIT 級) は per-fn 変換不可 (auto/manual extab の
-        # section 並び制約、docs/notes/cpp-ctor-retrofit-mangled-bridge.md)。
+        # asm_fn/nonmatching park を TU 単位でまとめる。
+        # - 小 TU: TU 丸ごと exceptions-on C++ 変換で dispatch 可
+        # - 大 TU: tools/extab_order.json に emit 順を宣言済みなら per-fn
+        #   retrofit 可 (reorder_extab が並びを担保、
+        #   docs/large_tu_cpp_conversion.md Phase 3)。未宣言なら prep が先
         import json as _json
+        order_path = Path(__file__).resolve().parent / "extab_order.json"
+        declared = set()
+        if order_path.is_file():
+            declared = {k.replace("src/", "", 1)
+                        for k in _json.loads(order_path.read_text(encoding="utf-8"))}
         asm_info = scan_repo()["asm_fns"]
         by_tu: dict[str, list[dict]] = defaultdict(list)
         for r in by_status.get("asm_fn", []) + by_status.get("nonmatching", []):
@@ -158,13 +164,21 @@ def main() -> int:
         tu_asm_total: dict[str, int] = defaultdict(int)
         for name, info in asm_info.items():
             tu_asm_total[info["tu"]] += 1
-        print("\n== C++ retrofit batches (TU 単位、小 TU = dispatch 可) ==")
-        print("claim 名は retrofit:<TU basename>。TU 丸ごと exceptions-on 変換が前提。")
+        print("\n== C++ retrofit batches (TU 単位) ==")
+        print("claim 名は retrofit:<TU basename>。lane の意味:")
+        print("  dispatch (whole-TU): TU 丸ごと exceptions-on 変換で 1 batch")
+        print("  dispatch (per-fn):   extab_order 宣言済み大 TU、fn 単位 batch 可")
+        print("  prep needed:         先に extab_order 宣言 + -Cpp_exceptions on 化が必要")
         for tu, rs in sorted(by_tu.items(), key=lambda kv: tu_asm_total[kv[0]]):
             total_asm = tu_asm_total.get(tu, 0)
-            lane = "dispatch" if total_asm <= 6 else "project (large TU)"
+            if tu in declared:
+                lane = "dispatch (per-fn)"
+            elif total_asm <= 6:
+                lane = "dispatch (whole-TU)"
+            else:
+                lane = "prep needed"
             names = ", ".join(f"{r['name']}({r['size']}B)" for r in rs)
-            print(f"  [{lane:<18}] {tu:<36} park={len(rs)} tu_asm={total_asm}  {names}")
+            print(f"  [{lane:<19}] {tu:<36} park={len(rs)} tu_asm={total_asm}  {names}")
         return 0
 
     if args.all:
