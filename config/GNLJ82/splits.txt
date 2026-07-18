@@ -341,6 +341,11 @@ game/CourseAuxClass_VtableDtor.c:
 game/DVDLoad_Stats.c:
 	.text       start:0x8007DFD4 end:0x8007DFE4
 
+game/Jyugemu_ReverseFlag.c:
+	extab       start:0x80008A2C end:0x80008A3C
+	extabindex  start:0x80021728 end:0x80021740
+	.text       start:0x80080B20 end:0x80080C10
+
 game/BootNotice_CheckEnterCondition.c:
 	extab       start:0x80008D54 end:0x80008D5C
 	extabindex  start:0x80021854 end:0x80021860
@@ -424,6 +429,11 @@ game/TEXBindPaletteEntry.c:
 	extabindex  start:0x80021DAC end:0x80021DC4
 	.text       start:0x8008E3E0 end:0x8008E5BC
 
+game/TEXPaletteAccessors.c:
+	extab       start:0x800092D0 end:0x800092D8
+	extabindex  start:0x80021DC4 end:0x80021DD0
+	.text       start:0x8008E5BC end:0x8008E63C
+
 game/GetKartParamBlock.c:
 	.text       start:0x80090FF0 end:0x8009107C
 
@@ -431,6 +441,15 @@ game/dtor_80091284.c:
 	extab       start:0x800093C8 end:0x800093D0
 	extabindex  start:0x80021ED8 end:0x80021EE4
 	.text       start:0x80091284 end:0x800912C0
+
+game/CardRW_GetSubState.c:
+	.text       start:0x800934A8 end:0x800934B0
+
+game/card_rw_get_substate.c:
+	.text       start:0x80098E48 end:0x80098E50
+
+game/Sci2Card_GetPrintErrorCode.c:
+	.text       start:0x8009927C end:0x80099284
 
 game/ProcessSystemTick.c:
 	extab       start:0x800095D0 end:0x800095D8
