@@ -380,6 +380,7 @@ config.libs = [
             Object(Matching, "game/KartItem_Stub_Returns0.c"),
             Object(Matching, "game/EffectState_HasContent.c"),
             Object(Matching, "game/EffectSteering_InputViscosity_SetFieldC.c"),
+            Object(Matching, "game/EffectActor_BindKartTargetPair.c"),
             Object(Matching, "game/DemoFlow_ResetTwoFlags.c"),
             Object(Matching, "game/ItemObject_RaycastWallStub.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemObject_SetByte18c.c"),
