@@ -84,7 +84,14 @@ __dl__FPv                 -> MemoryManager_TimedFree (operator delete)
   EH web (DELETEPOINTER の pointer) は正しい register に固定されるが、
   EH に関与しないループ web の順序は別問題
 
-## 多 fn TU での制約 (ONKARTHIT mega bundle で確認)
+## 多 fn TU での制約 (2026-07-19 実験で確定)
+
+**実験**: all-auto の ServiceMenu_Page.c で中間 fn (Tick) だけ manual emit に
+戻す → SHA-1 fail。object 内の extab section は「auto 一括 (定義順) →
+.extab_user 一括 (定義順)」で並び、**fn address 順への interleave は起きない**。
+推定ではなく検証済みの事実。
+
+## (旧記述: ONKARTHIT mega bundle で確認)
 
 manual emit の extab を持つ多 fn TU では、**一部の fn だけ** real C++ 化して
 auto-emit に切り替えると、object 内の extab section 並び (auto 一括 → manual
