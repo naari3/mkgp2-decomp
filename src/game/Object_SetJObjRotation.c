@@ -9,7 +9,8 @@ typedef struct HSD_JObj {
     float scale_x;
     float scale_y;
     float scale_z;
-    unsigned char pad_38[8];
+    float position_x;
+    float position_y;
     float field_40;
 } HSD_JObj;
 
@@ -150,6 +151,40 @@ void Object_SetJObjField40(ObjectRotationView *object, float value) {
             __assert(lbl_806D2348, 0x3D4, lbl_806D2350);
         }
         jobj->field_40 = value;
+        if (!(jobj->flags & 0x02000000) && jobj != 0) {
+            if (jobj == 0) {
+                __assert(lbl_806D2348, 0x25D, lbl_806D2350);
+            }
+            update_matrix(jobj);
+        }
+    }
+}
+
+void Object_SetJObjPositionY(ObjectRotationView *object, float position) {
+    HSD_JObj *jobj = object->jobj;
+
+    if (jobj != 0) {
+        if (jobj == 0) {
+            __assert(lbl_806D2348, 0x3C6, lbl_806D2350);
+        }
+        jobj->position_y = position;
+        if (!(jobj->flags & 0x02000000) && jobj != 0) {
+            if (jobj == 0) {
+                __assert(lbl_806D2348, 0x25D, lbl_806D2350);
+            }
+            update_matrix(jobj);
+        }
+    }
+}
+
+void Object_SetJObjPositionX(ObjectRotationView *object, float position) {
+    HSD_JObj *jobj = object->jobj;
+
+    if (jobj != 0) {
+        if (jobj == 0) {
+            __assert(lbl_806D2348, 0x3B8, lbl_806D2350);
+        }
+        jobj->position_x = position;
         if (!(jobj->flags & 0x02000000) && jobj != 0) {
             if (jobj == 0) {
                 __assert(lbl_806D2348, 0x25D, lbl_806D2350);

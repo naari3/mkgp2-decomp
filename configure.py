@@ -375,6 +375,7 @@ config.libs = [
             Object(Matching, "game/SpriteSlot_SetScaleXYZ.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Vec3_Magnitude_Wrapper.c"),
             Object(Matching, "game/TornadoEffect_TriggerField140.c"),
+            Object(Matching, "game/EffectState_HasContent.c"),
             Object(Matching, "game/ItemObject_SetByte18c.c"),
             Object(Matching, "game/FinalLapCoinJump_SetEnable.c"),
             Object(Matching, "game/FinalLapCoinJump_CheckActiveForObject.c"),

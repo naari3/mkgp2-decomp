@@ -85,9 +85,9 @@ game/Object_JObjUpdate.c:
 	.text       start:0x80031718 end:0x80031770
 
 game/Object_SetJObjRotation.c:
-	extab       start:0x800059A0 end:0x800059D0
-	extabindex  start:0x8001F67C end:0x8001F6C4
-	.text       start:0x8003185C end:0x80031CF8
+	extab       start:0x800059A0 end:0x800059E0
+	extabindex  start:0x8001F67C end:0x8001F6DC
+	.text       start:0x8003185C end:0x80031E48
 
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
@@ -294,6 +294,9 @@ sound/MediaBoard_PollCompletion.c:
 	extab       start:0x800076E0 end:0x800076E8
 	extabindex  start:0x800208E8 end:0x800208F4
 	.text       start:0x80059644 end:0x8005967C
+
+game/EffectState_HasContent.c:
+	.text       start:0x8005B168 end:0x8005B17C
 
 game/SpawnTable.c:
 	.text       start:0x8005F5CC end:0x8005F5D8
