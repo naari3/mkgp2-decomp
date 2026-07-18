@@ -7974,16 +7974,13 @@
       "type_hint": "int[8]"
     },
     "0x8039ae3c": {
-      "name": "g_frameUnlockThresholds_Partial",
-      "type_hint": "undefined"
+      "name": "g_frameUnlockThresholds_Partial"
     },
     "0x8039ae70": {
-      "name": "g_frameUnlockThresholds_Full",
-      "type_hint": "undefined"
+      "name": "g_frameUnlockThresholds_Full"
     },
     "0x8039aea4": {
-      "name": "g_tierTextureIdTable",
-      "type_hint": "undefined"
+      "name": "g_tierTextureIdTable"
     },
     "0x8039cd58": {
       "name": "kItemBaseIdTable",
@@ -8110,20 +8107,17 @@
       "type_hint": "undefined1"
     },
     "0x80498170": {
-      "name": "g_voiceWeightTable",
-      "type_hint": "undefined"
+      "name": "g_voiceWeightTable"
     },
     "0x8049aad0": {
       "name": "FrameParam_ARRAY_8049aad0",
       "type_hint": "TierParam[13]"
     },
     "0x8049ac08": {
-      "name": "g_tierCursorPosTable",
-      "type_hint": "undefined"
+      "name": "g_tierCursorPosTable"
     },
     "0x8049d010": {
-      "name": "kDummyOnePointPath",
-      "type_hint": "undefined"
+      "name": "kDummyOnePointPath"
     },
     "0x804e36a8": {
       "name": "g_PathVariantTable",
@@ -8250,16 +8244,14 @@
       "type_hint": "RaceEntry_Partial[8]"
     },
     "0x80679f70": {
-      "name": "g_OSExceptionHandlerTable",
-      "type_hint": "undefined"
+      "name": "g_OSExceptionHandlerTable"
     },
     "0x80679fb0": {
       "name": "g_OSMachineCheckDMAHandler",
       "type_hint": "undefined4"
     },
     "0x8067a430": {
-      "name": "g_DefaultThread",
-      "type_hint": "undefined"
+      "name": "g_DefaultThread"
     },
     "0x806a14dc": {
       "name": "g_ammbSocketState",

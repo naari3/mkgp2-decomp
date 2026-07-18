@@ -24,7 +24,10 @@ Ghidra について: maintainer の Ghidra project は共有していない。de
 出力が欲しい場合は自前の Ghidra project に `main.dol` を import する。
 命名済み symbol は `config/GNLJ82/symbols.txt` と
 `tools/ghidra_symbol_dump.json` に committed 済みなので、これを流し込むと
-読みやすくなる。Ghidra decompiler の生出力を repo に commit しないこと
+読みやすくなる。struct 型定義 (KartMovement / CarObject / ItemEffect 系など
+109 struct を含む 356 型) は Data Type Archive `tools/mkgp2_types.gdt` に
+export 済み。Ghidra の Data Type Manager → 「Open File Archive」で開いて
+program に適用すれば maintainer 側と同じ型が使える。Ghidra decompiler の生出力を repo に commit しないこと
 (commit するのは自分で書いた matched C source のみ)。
 
 ## 2. 担当範囲を claim する

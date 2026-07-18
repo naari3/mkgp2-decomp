@@ -52,7 +52,7 @@ mkgp2-decomp で `__check_pad3` を初めて matched したときに確立した
 
 ### 3. Ghidra decompile を取る (mkgp2 specific の関数なら必須)
 
-> **環境 note**: maintainer (naari3) 環境では Ghidra MCP bridge + user scope の `mkgp2-ghidra` / `ghidra-mcp` skill を使う (以下の `mcp__ghidra__*` 呼び出しはそれ前提)。それ以外の環境では、自前の Ghidra project に `main.dol` を import して decompile 出力を取れば同等。committed 済みの `tools/ghidra_symbol_dump.json` と `config/GNLJ82/symbols.txt` に命名済み symbol があるので、import 後に流し込むと読みやすくなる。
+> **環境 note**: maintainer (naari3) 環境では Ghidra MCP bridge + user scope の `mkgp2-ghidra` / `ghidra-mcp` skill を使う (以下の `mcp__ghidra__*` 呼び出しはそれ前提)。それ以外の環境では、自前の Ghidra project に `main.dol` を import して decompile 出力を取れば同等。committed 済みの `tools/ghidra_symbol_dump.json` と `config/GNLJ82/symbols.txt` に命名済み symbol があるので、import 後に流し込むと読みやすくなる。struct 型定義は `tools/mkgp2_types.gdt` (Data Type Archive) を Data Type Manager で開けば適用できる。dump / gdt の再生成手順は `tools/ghidra_dump_raw.java` / `tools/ghidra_export_gdt.java` (run_script_inline で実行) → `python tools/_build_ghidra_dump.py`。
 
 ```
 mcp__ghidra__connect_instance(project="mkgp2")
