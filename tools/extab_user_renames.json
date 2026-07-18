@@ -151,5 +151,15 @@
   "src/game/SeqMenuScene.c": {
     "extab_SeqMenuScene_Init": "@etb_80005898",
     "extabindex_SeqMenuScene_Init": "@eti_8001F4F0"
+  },
+  "src/game/SceneRender.c": {
+    "extab_SceneRender_DrawObjectWithLights": "@etb_80005F20",
+    "extabindex_SceneRender_DrawObjectWithLights": "@eti_8001FBD4",
+    "extab_SceneRender_CmdA_8a9e8": "@etb_80005F38",
+    "extabindex_SceneRender_CmdA_8a9e8": "@eti_8001FBE0",
+    "extab_SceneRender_CmdB_8aa20": "@etb_80005F40",
+    "extabindex_SceneRender_CmdB_8aa20": "@eti_8001FBEC",
+    "extab_SceneRender_Dtor": "@etb_80005F48",
+    "extabindex_SceneRender_Dtor": "@eti_8001FBF8"
   }
 }

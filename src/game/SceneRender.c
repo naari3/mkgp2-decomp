@@ -60,3 +60,5 @@ void SceneRender_SetViewportRect(SceneRenderViewport *scene, float x, float y,
     scene->dir_y = dir_y;
     scene->dir_z = dir_z;
 }
+
+#include "src/game/SceneRender_asm.inc"

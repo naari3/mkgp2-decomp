@@ -449,7 +449,7 @@ config.libs = [
             Object(Matching, "game/MemoryManager_Alloc.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/MemoryManager_TimedFree.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/card_eject.c"),
-            Object(Matching, "game/SceneRender.c"),
+            Object(Matching, "game/SceneRender.c", extab_padding=b""),
             Object(Matching, "game/Archive.c"),
             Object(Matching, "game/CollisionFile_FixupPointers.c"),
             Object(Matching, "game/Collision.c"),

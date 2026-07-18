@@ -6,3 +6,7 @@
 
 - Local commit `b932bb4` was rejected by `git push origin main` because remote `main` advanced concurrently.
 - Recovery in progress: fetch/rebase, full SHA-1 verification, then retry push.
+# Push recovery: SceneRender unit (2026-07-19)
+
+- Local SceneRender completion commit was rejected because remote `main` advanced concurrently.
+- Claim issue #11 was reopened immediately; recovery is fetch/rebase, SHA-1 verification, push, then `claim_unit.py done SceneRender`.

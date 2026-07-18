@@ -217,9 +217,9 @@ game/MetricsTable.c:
 	.ctors      start:0x802E88F0 end:0x802E88F4
 
 game/SceneRender.c:
-	extab       start:0x80005F18 end:0x80005F20
-	extabindex  start:0x8001FBC8 end:0x8001FBD4
-	.text       start:0x8003A71C end:0x8003A780
+	extab       start:0x80005F18 end:0x80005F50
+	extabindex  start:0x8001FBC8 end:0x8001FC04
+	.text       start:0x8003A71C end:0x8003AACC
 
 sound/SoundChannels.c:
 	.text       start:0x8003AD4C end:0x8003ADFC
