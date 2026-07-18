@@ -482,6 +482,7 @@ config.libs = [
             Object(Matching, "game/NokoNoko.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/GameModeBase.cpp"),
             Object(Matching, "game/KartMovement_SetPosition.c"),
+            Object(Matching, "game/TrampolineTo_801ba110.c"),
             Object(Matching, "game/NamCam_LoadImage.c"),
             Object(Matching, "game/ISESlot_Update.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ISESlot_Deactivate.c", extra_cflags=["-Cpp_exceptions on"]),

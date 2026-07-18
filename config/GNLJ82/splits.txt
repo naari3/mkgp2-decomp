@@ -259,6 +259,11 @@ game/PathCursor_InitFromPath.c:
 	extabindex  start:0x80020018 end:0x80020024
 	.text       start:0x800468F4 end:0x80046960
 
+game/TrampolineTo_801ba110.c:
+	extab       start:0x80006848 end:0x80006850
+	extabindex  start:0x800200D8 end:0x800200E4
+	.text       start:0x8004893C end:0x8004895C
+
 game/NamCam_LoadImage.c:
 	extab       start:0x80006858 end:0x80006860
 	extabindex  start:0x800200F0 end:0x800200FC
