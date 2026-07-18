@@ -384,6 +384,7 @@ config.libs = [
             Object(Matching, "game/ItemStateGuard_IsActive.c"),
             Object(Matching, "game/ItemEffectDamp_Init.c"),
             Object(Matching, "game/KartItem_Stub_Returns0.c"),
+            Object(Matching, "game/KartItem_RenderCb_Mode7_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectState_HasContent.c"),
             Object(Matching, "game/EffectSteering_InputViscosity_SetFieldC.c"),
             Object(Matching, "game/EffectActor_BindKartTargetPair.c"),
