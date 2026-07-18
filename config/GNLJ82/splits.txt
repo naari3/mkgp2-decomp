@@ -480,6 +480,11 @@ game/PostRace_StartScoreEntryFlow.c:
 	extabindex  start:0x800211D0 end:0x800211DC
 	.text       start:0x80073ECC end:0x80073EF8
 
+game/PostRace_StartScoreEntryFlow_WithCardSave.c:
+	extab       start:0x800082C8 end:0x800082D0
+	extabindex  start:0x800211DC end:0x800211E8
+	.text       start:0x80073EF8 end:0x80073F24
+
 game/Sci2Card_Singleton_Get.c:
 	.text       start:0x80076BB4 end:0x80076BBC
 
