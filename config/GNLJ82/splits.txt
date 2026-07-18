@@ -275,6 +275,16 @@ game/KartReaction.c:
 game/KartDriver_GetJObjRootIfReady.c:
 	.text       start:0x80042328 end:0x80042350
 
+game/KartDriver_New_Empty.c:
+	extab       start:0x80006690 end:0x80006698
+	extabindex  start:0x8001FFAC end:0x8001FFB8
+	.text       start:0x80045E88 end:0x80045EB8
+
+game/GetItemDataEntry_Bounded.c:
+	extab       start:0x80006698 end:0x800066A0
+	extabindex  start:0x8001FFB8 end:0x8001FFC4
+	.text       start:0x80045EB8 end:0x80045EE8
+
 game/PathCursor_ResetToPath.c:
 	extab       start:0x800066C8 end:0x800066D0
 	extabindex  start:0x80020000 end:0x8002000C
