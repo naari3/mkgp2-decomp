@@ -106,6 +106,28 @@ C++ class だった可能性が高い。C + idiom で寄せず、**最初から 
   pending クラスタ別ランキング (class-first で組むべき unit の判断材料)。
   2026-07-19 時点: action 持ち 945 fn (asm_fn park 39 / pending named 285)
 
+## 4.6 C++ retrofit レーン (2026-07-19 導入)
+
+asm_fn / NonMatching で park 済みの EH-family 関数は、unit-first の pending
+消化とは別の**第 2 の供給源**として再 dispatch できる:
+
+```
+python tools/scan_extab_actions.py --retrofit   # batch 一覧 (TU 単位)
+python tools/claim_unit.py claim retrofit:game/ItemSelect.c   # claim
+```
+
+- 1 batch = 1 TU。**TU 丸ごと exceptions-on / real C++ 変換**が作業単位
+  (per-fn 変換は auto/manual extab の section 並び制約で不可)
+- `dispatch` レーン (TU 内 asm fn ≤ 6) だけ着手する。`project` レーン
+  (ONKARTHIT / KartTireFX 等の大 TU) は別途計画
+- レシピ正本: `docs/notes/cpp-ctor-retrofit-mangled-bridge.md`、
+  判断基準は mkgp2-match SKILL の「extab action 持ちは最初から C++」節
+- claim 名は `retrofit:<configure.py の Object パス>`。issue の title 規約は
+  unit claim と同一 (label unit-claim、open = 着手中)
+- 優先度: 通常 unit の理想形候補が枯れた時、または真 C 化率を上げたい時に
+  このレーンから補給する。ItemObjectManager_Init のように real C++ でも
+  解けない register-identity が居る (実例あり) ので 3 試行撤退は同じ
+
 ## 4.5 unit claim (GitHub issue、2026-07-19 導入)
 
 複数人 / 複数マシンでの重複着手を防ぐため、**着手前に GitHub issue で unit を

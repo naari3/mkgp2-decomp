@@ -73,6 +73,8 @@ def main() -> int:
                     help="list every function with extab actions")
     ap.add_argument("--units", action="store_true",
                     help="rank pending clusters by action-fn count")
+    ap.add_argument("--retrofit", action="store_true",
+                    help="dispatch 可能な C++ retrofit batch (TU 単位) を列挙")
     args = ap.parse_args()
 
     if not DOL.is_file():
@@ -137,6 +139,33 @@ def main() -> int:
         for pre, rs in ranked[:30]:
             total = sum(r["size"] for r in rs)
             print(f"  {pre:<24} action_fns={len(rs):<3} ({total}B)")
+
+    if args.retrofit:
+        # asm_fn/nonmatching park を TU 単位でまとめ、TU 丸ごと exceptions-on
+        # C++ 変換で完結できるもの (= 小 TU) を dispatch 候補として出す。
+        # 大 TU (ONKARTHIT 級) は per-fn 変換不可 (auto/manual extab の
+        # section 並び制約、docs/notes/cpp-ctor-retrofit-mangled-bridge.md)。
+        import json as _json
+        asm_info = scan_repo()["asm_fns"]
+        by_tu: dict[str, list[dict]] = defaultdict(list)
+        for r in by_status.get("asm_fn", []) + by_status.get("nonmatching", []):
+            tu = asm_info.get(r["name"], {}).get("tu")
+            if tu is None:
+                # nonmatching: TU is the NonMatching object itself
+                tu = "(nonmatching TU)"
+            by_tu[tu].append(r)
+        # TU 内の総 asm fn 数 (park がその TU の変換規模の proxy)
+        tu_asm_total: dict[str, int] = defaultdict(int)
+        for name, info in asm_info.items():
+            tu_asm_total[info["tu"]] += 1
+        print("\n== C++ retrofit batches (TU 単位、小 TU = dispatch 可) ==")
+        print("claim 名は retrofit:<TU basename>。TU 丸ごと exceptions-on 変換が前提。")
+        for tu, rs in sorted(by_tu.items(), key=lambda kv: tu_asm_total[kv[0]]):
+            total_asm = tu_asm_total.get(tu, 0)
+            lane = "dispatch" if total_asm <= 6 else "project (large TU)"
+            names = ", ".join(f"{r['name']}({r['size']}B)" for r in rs)
+            print(f"  [{lane:<18}] {tu:<36} park={len(rs)} tu_asm={total_asm}  {names}")
+        return 0
 
     if args.all:
         print("\n== all fns with extab actions ==")

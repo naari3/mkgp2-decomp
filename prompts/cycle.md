@@ -297,6 +297,13 @@ main が **(a) unit-first 選定 (2026-07-19 採用、`docs/unit_first_strategy.
 #    unit の完食前に別 unit へ移らない (詳細は docs/unit_first_strategy.md §4, §4.5)。
 #    unit 完食 (全 member が matched/asm_fn で merge 済み) したら
 #    `python tools/claim_unit.py done <Name>` で close する。
+#
+# 0.5 理想形 unit (runs=1/frgn≤2/extab OK) が未 claim に無い場合は
+#    C++ retrofit レーンから補給する (docs/unit_first_strategy.md §4.6):
+#    `python tools/scan_extab_actions.py --retrofit` の dispatch レーンを
+#    1 TU = 1 batch で claim (`retrofit:<TU>`) して dispatch。
+#    sub prompt には cpp-ctor-retrofit-mangled-bridge.md と
+#    mkgp2-match SKILL の C++ 定型節の参照を必ず含める。
 ```
 
 **最重要**: pending 関数の ~64% は dtk reversed-extab group 内にいる (4877/7614)。そういう関数を singleton dispatch すると `Conflicting splits within reversed extab group` でほぼ確実に失敗する (iter0 / iter1 で実証済み)。よって seed の `extab_group` を最初に確認して bundle を組む (`plan_units.py` の `exX` / `ex>6` 列は同じ制約の unit 単位ビュー)。

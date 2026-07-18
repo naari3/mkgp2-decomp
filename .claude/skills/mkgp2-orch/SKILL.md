@@ -140,6 +140,9 @@ CASE 4 編成の入口は **unit 選択** から始める。正本は `docs/unit
 3. 理想形 `runs=1, frgn=0, ex>6=0, exX=0` かつ **未 claim** の unit を pick (判断は main の責務)。
    pick したら `python tools/claim_unit.py claim <Name>`、完食後 `done <Name>`。
    他者 claim 中の unit は skip (`docs/unit_first_strategy.md` §4.5)
+4. 理想形が枯れたら **C++ retrofit レーン** (`scan_extab_actions.py --retrofit` の
+   dispatch レーン、claim 名 `retrofit:<TU>`) から補給 (§4.6)。asm_fn park の
+   真 C 化昇格が 1 TU = 1 batch で回せる
 4. unit 全体を 1 TU (`src/game/<Name>.c`) として splits.txt 1 entry で切り、
    完食するまでその unit に dispatch を集中する。大きい unit は連続 sub-range で
    複数 batch に分割

@@ -153,6 +153,42 @@ def cmd_list(_args) -> int:
 
 def cmd_claim(args) -> int:
     unit = args.unit
+    if unit.startswith("retrofit:"):
+        # C++ retrofit batch claim (docs/unit_first_strategy.md 4.6):
+        # 対象は TU 名 (configure.py の Object パス)。pending 検証は不要
+        # (対象 fn は asm_fn/nonmatching)。scan_extab_actions.py --retrofit
+        # の dispatch レーンから選ぶ。
+        tu = unit[len("retrofit:"):]
+        cfg = (ROOT / "configure.py").read_text(encoding="utf-8")
+        if tu not in cfg:
+            sys.exit(f"TU '{tu}' が configure.py に見つからない "
+                     f"(retrofit:<configure の Object パス> 形式で指定)")
+        claims = fetch_open_claims()
+        if unit in claims:
+            c = claims[unit]
+            who = ",".join(c["assignees"]) or "(unassigned)"
+            sys.exit(f"既に claim 済み: #{c['number']} by {who}\n{c['url']}")
+        body = "\n".join([
+            f"C++ retrofit batch claim: **{tu}**",
+            "",
+            "TU 丸ごと exceptions-on / real C++ 変換で asm_fn park を昇格する。",
+            "レシピ: `docs/notes/cpp-ctor-retrofit-mangled-bridge.md`",
+            "対象一覧: `python tools/scan_extab_actions.py --retrofit`",
+            "",
+            f"完了: `python tools/claim_unit.py done {unit}` /"
+            f" 手放す: `python tools/claim_unit.py release {unit}`",
+        ])
+        if args.dry_run:
+            print(f"[dry-run] gh issue create --title '{TITLE_PREFIX}{unit}'")
+            print(body)
+            return 0
+        proc = run_gh([
+            "issue", "create", "--title", TITLE_PREFIX + unit,
+            "--label", LABEL, "--assignee", "@me", "--body", body,
+        ])
+        print(proc.stdout.strip())
+        return 0
+
     members = unit_members(unit)
     if not members:
         sys.exit(f"unit '{unit}' に該当する関数が symbols.txt に無い "
