@@ -75,6 +75,30 @@ orchestrator 運用時は 4〜6 を batch として sub に dispatch する
 1 TU に複数 sub を並列で当てる場合は `mkgp2-orch/SKILL.md` の
 「同 TU 内多 sub 並列 promote」パターン)。
 
+## 4.4 Ctor/Dtor 持ち unit は C++ class 前提で組む (2026-07-19 導入)
+
+unit の member に Ctor / Dtor / Init が居る場合、または dtk asm の extab に
+DELETEPOINTER / DESTROYBASE action が見える場合、その unit は元コードが
+C++ class だった可能性が高い。C + idiom で寄せず、**最初から .cpp + class
+定義で組む**:
+
+- 根拠 (2026-07-19 観測):
+  - ServiceMenu_Init / SeqMenuScene_Init は C で 99%+ 到達も register/extab
+    残差で asm_fn 退避。target extab の DELETEPOINTER/DESTROYBASE は
+    `-Cpp_exceptions on` の C++ ctor でしか自然に出ない
+  - virtual call の r12/r12 dispatch は `-lang=c++` の実 virtual でのみ再現
+    (SeqMenuScene_HandleInput、Vtable_CallSlot2.cpp 先例)
+  - 各 unit の Dtor は「vtable demote → dtor_8002CDF4(self, 0) →
+    flag > 0 で MemoryManager_TimedFree」の CW deleting-dtor 定型 =
+    共通基底 + 仮想 dtor の継承階層が存在した
+- 前提作業: 共通基底 (dtor_8002CDF4 / vtable layout) を `include/game/` に
+  1 回だけ class としてモデル化し全 unit で共有する。各 sub が独自定義すると
+  header conflict になるので main が管理
+- 注意: C++ 化で symbol が mangled 名になる場合は symbols.txt rename が要る
+  (ScopedTimer 昇格 commit b8f8bf4 と同手順)
+- 既存 asm_fn の .cpp retrofit 候補: ServiceMenu_Init / SeqMenuScene_Init
+  (C body 保存済み、残差が register/extab のみ)
+
 ## 4.5 unit claim (GitHub issue、2026-07-19 導入)
 
 複数人 / 複数マシンでの重複着手を防ぐため、**着手前に GitHub issue で unit を
