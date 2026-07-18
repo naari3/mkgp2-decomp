@@ -442,6 +442,9 @@ game/CourseData_GetDefaultPathKey_Safe.c:
 game/CourseData.c:
 	.text       start:0x800A0BDC end:0x800A0BE8
 
+game/TitleTracker_Stubs.c:
+	.text       start:0x800A5CE4 end:0x800A5CEC
+
 game/auto_800A8F4C_block.c:
 	extab       start:0x80009E60 end:0x80009ED0
 	extabindex  start:0x800225B0 end:0x80022640

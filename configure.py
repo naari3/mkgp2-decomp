@@ -358,6 +358,7 @@ config.libs = [
         "cflags": cflags_base,
         "progress_category": "game",
         "objects": [
+            Object(Matching, "game/TitleTracker_Stubs.c"),
             Object(Matching, "game/WrapInRange.c"),
             Object(Matching, "game/Vtable_CallSlot2.cpp"),
             Object(Matching, "game/ObjectBase.c"),
