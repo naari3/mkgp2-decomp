@@ -104,6 +104,9 @@ game/StrPcb.c:
 	extabindex  start:0x8001F8F8 end:0x8001F904
 	.text       start:0x80036E40 end:0x80036E7C
 
+game/StrPcb_Error.c:
+	.text       start:0x80037B68 end:0x80037CC0
+
 game/Clamp.c:
 	.text       start:0x80038778 end:0x800387D8
 
@@ -241,9 +244,9 @@ game/ISESlot_Deactivate.c:
 	.text       start:0x80049D0C end:0x80049D78
 
 game/ISESlot_Lifecycle.c:
-	extab       start:0x800068B8 end:0x800068C8
-	extabindex  start:0x80020180 end:0x80020198
-	.text       start:0x80049D78 end:0x80049EDC
+	extab       start:0x800068B8 end:0x800068D0
+	extabindex  start:0x80020180 end:0x800201A4
+	.text       start:0x80049D78 end:0x80049F3C
 
 game/CarObject_ResetPhysics.c:
 	extab       start:0x800068D0 end:0x800068D8
@@ -415,6 +418,11 @@ game/CardTaskWelcome_Dtor.c:
 
 game/PlayStats_ShutdownStub.c:
 	.text       start:0x8008E36C end:0x8008E370
+
+game/TEXBindPaletteEntry.c:
+	extab       start:0x800092C0 end:0x800092D0
+	extabindex  start:0x80021DAC end:0x80021DC4
+	.text       start:0x8008E3E0 end:0x8008E5BC
 
 game/GetKartParamBlock.c:
 	.text       start:0x80090FF0 end:0x8009107C

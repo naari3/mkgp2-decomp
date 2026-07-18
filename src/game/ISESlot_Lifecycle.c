@@ -66,6 +66,8 @@ extern float lbl_806D26C8; /* sdata2 float const */
 asm void ISESlot_Init(void);
 
 void *ISESlot_Dtor(ISESlot *self, short freeFlag);
+typedef struct CoinJumpFlasher_Partial CoinJumpFlasher_Partial;
+void CoinJumpFlasher_Toggle(CoinJumpFlasher_Partial *self);
 
 #pragma section R ".extab_user"
 __declspec(section ".extab_user") static const unsigned char extab_ISESlot_Init[8] = {
@@ -74,6 +76,9 @@ __declspec(section ".extab_user") static const unsigned char extab_ISESlot_Init[
 __declspec(section ".extab_user") static const unsigned char extab_ISESlot_Dtor[8] = {
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
+__declspec(section ".extab_user") static const unsigned char extab_CoinJumpFlasher_Toggle[8] = {
+    0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
 
 #pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ISESlot_Init = {
@@ -81,6 +86,9 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ISESlot_Dtor = {
     (void *)&ISESlot_Dtor, 0x00000084, (void *)extab_ISESlot_Dtor
+};
+__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CoinJumpFlasher_Toggle = {
+    (void *)&CoinJumpFlasher_Toggle, 0x00000058, (void *)extab_CoinJumpFlasher_Toggle
 };
 
 asm void ISESlot_Init(void) {
@@ -166,5 +174,35 @@ void ISESlot_Construct(ISESlot *self) {
     self->field_0x10 = 0;
     self->boundItem = 0;
     self->active = 0;
+}
+#pragma exceptions reset
+
+struct CoinJumpFlasher_Partial {
+    unsigned char pad_0x00[0x20];
+    unsigned char armed;
+    unsigned char pad_0x21[0x17];
+    void *coinSystem;
+    unsigned char pad_0x3c[0xc3];
+    unsigned char togglePhase;
+};
+
+extern void FinalLapCoinJump_SetEnable(void *coinSystem, int enabled);
+
+#pragma exceptions off
+void CoinJumpFlasher_Toggle(CoinJumpFlasher_Partial *self) {
+    if (self->armed != 0) {
+        if (self->togglePhase == 1) {
+            self->togglePhase = 0;
+        } else {
+            self->togglePhase = 1;
+        }
+        FinalLapCoinJump_SetEnable(self->coinSystem, self->togglePhase);
+    }
+}
+#pragma exceptions reset
+
+#pragma exceptions off
+void CoinJumpFlasher_SetArmed(CoinJumpFlasher_Partial *self, unsigned char armed) {
+    self->armed = armed;
 }
 #pragma exceptions reset

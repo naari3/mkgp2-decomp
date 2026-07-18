@@ -22,6 +22,12 @@
     "extab_TexMgr_Apply": "@etb_800176C8",
     "extabindex_TexMgr_Apply": "@eti_800290B4"
   },
+  "src/game/TEXBindPaletteEntry.c": {
+    "extab_TEXBindPaletteEntry_CI": "@etb_800092C0",
+    "extab_TEXBindPaletteEntry_RGB": "@etb_800092C8",
+    "extabindex_TEXBindPaletteEntry_CI": "@eti_80021DAC",
+    "extabindex_TEXBindPaletteEntry_RGB": "@eti_80021DB8"
+  },
   "src/game/dtor_801FE870.c": {
     "extab_dtor_801FE870": "@etb_80017D70",
     "extab_fn_801FE4D0": "@etb_80017D78",
