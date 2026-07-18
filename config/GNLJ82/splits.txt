@@ -89,6 +89,9 @@ game/Object_SetJObjRotation.c:
 	extabindex  start:0x8001F67C end:0x8001F6E8
 	.text       start:0x8003185C end:0x80031F10
 
+game/Object_SetByte48.c:
+	.text       start:0x800320D8 end:0x800320E0
+
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
 
