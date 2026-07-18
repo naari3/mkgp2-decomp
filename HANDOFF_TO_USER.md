@@ -25,3 +25,8 @@
 
 - Local commit `1030193` passed the full SHA-1 check, but its first push was rejected because remote `main` advanced concurrently.
 - Recovery: fetch/rebase, resolve any SoT conflicts while retaining both sides, rerun SHA-1, push, then close issues #23-#25.
+
+# Push recovery: clMiyoshiCardCreate / BiribiriLand / CardSave (2026-07-19)
+
+- Local commit `429d896` passed the full SHA-1 check, but its first push was rejected because remote `main` advanced concurrently.
+- Recovery: fetch/rebase, retain both sides of any SoT conflicts, rerun SHA-1, push, then close issues #26-#28.
