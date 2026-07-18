@@ -485,6 +485,11 @@ game/DMAChannelManager_Init.c:
 	extabindex  start:0x80020FC0 end:0x80020FCC
 	.text       start:0x800662B4 end:0x80066350
 
+game/ServiceMenu_Page.c:
+	extab       start:0x80008238 end:0x800082A0
+	extabindex  start:0x80021188 end:0x800211B8
+	.text       start:0x80073B00 end:0x80073E20
+
 game/ServiceMenu.c:
 	extab       start:0x800082A8 end:0x800082C0
 	extabindex  start:0x800211C4 end:0x800211D0

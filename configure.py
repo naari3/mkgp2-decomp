@@ -577,6 +577,7 @@ config.libs = [
             Object(Matching, "game/TCPConn_AllocTxBuffer.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/main.c"),
             Object(Matching, "game/ServiceMenu.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/ServiceMenu_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/AddCoinsFromExtraStage.c"),
             Object(Matching, "game/GetKartParamBlock.c"),
             Object(Matching, "game/NokoNokoChallenge_TransitionToResult.c"),
