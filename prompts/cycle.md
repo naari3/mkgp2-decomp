@@ -283,12 +283,22 @@ return
 ## CASE 4: 新規 batch 編成 (main の判断責務)
 
 `pending` batch が枯渇していて、かつ `pending` function がまだ残っているとき。
-main が **(a) extab group bundle 制約**、**(b) Ghidra MCP の xref / callees / namespace** を考慮して、関連関数を 1 batch にまとめる。
+main が **(a) unit-first 選定 (2026-07-19 採用、`docs/unit_first_strategy.md` 正本)**、**(b) extab group bundle 制約**、**(c) Ghidra MCP の xref / callees / namespace** を考慮して、関連関数を 1 batch にまとめる。
 
-**最重要**: pending 関数の ~64% は dtk reversed-extab group 内にいる (4877/7614)。そういう関数を singleton dispatch すると `Conflicting splits within reversed extab group` でほぼ確実に失敗する (iter0 / iter1 で実証済み)。よって seed の `extab_group` を最初に確認して bundle を組む。
+**編成の入口は unit 選択** (size 昇順の seed pick は 2026-07-19 廃止 — 散在系 non-unit に発散する):
 
 ```python
-# 1. pending function から先頭候補を pick (size 小、section 等で優先)
+# 0. unit-first: 進行中 unit があればその残 pending から編成を続ける。
+#    無ければ `python tools/plan_units.py` のランキングから
+#    runs=1 / frgn=0 / ex>6=0 / exX=0 に近い unit を main が pick し、
+#    `--unit <Name>` で member 一覧を確認して以降の手順に流す。
+#    unit の完食前に別 unit へ移らない (詳細は docs/unit_first_strategy.md §4)。
+```
+
+**最重要**: pending 関数の ~64% は dtk reversed-extab group 内にいる (4877/7614)。そういう関数を singleton dispatch すると `Conflicting splits within reversed extab group` でほぼ確実に失敗する (iter0 / iter1 で実証済み)。よって seed の `extab_group` を最初に確認して bundle を組む (`plan_units.py` の `exX` / `ex>6` 列は同じ制約の unit 単位ビュー)。
+
+```python
+# 1. 選択した unit 内の pending function から seed を pick (size 小を優先)
 #    extab_group_size が極端に大きい (>10 fn) ものは保留 (現状 dispatch 不能)
 pending_fns = [
     (addr, fn) for addr, fn in state['functions'].items()

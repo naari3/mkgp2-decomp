@@ -117,7 +117,8 @@ merge が conflict / SHA-1 fail を返した場合は hook 即実行から離脱
 1. **batch 構成**: どの fn を 1 batch にまとめるか
    - dtk reversed-extab group 内なら group 全 pending member を bundle (= 1 indivisible TU 制約、`prompts/cycle.md` CASE 5 参照)
    - 同 group 内でも asm_fn 状態の fn を 1 つずつ別 sub に promote させる pattern (Round 3 / main wave で実証、本 skill の「同 TU 内多 sub 並列 promote」項参照)
-   - **struct-driven seeding** (2026-05-18 採用、本 skill の「struct-driven TU grouping」項参照): Ghidra MCP で seed fn の引数型 (struct 名) を確認、同 struct を触る pending fn を cluster として 1 batch にまとめる。ライブな struct 情報は Ghidra DataTypeManager (`run_script_inline`) が SoT、repo 内 header は遅延コピー
+   - **unit-first 選定** (2026-07-19 採用、`docs/unit_first_strategy.md` が正本): `python tools/plan_units.py` のランキングから `runs=1 / frgn=0 / ex>6=0 / exX=0` に近い unit を 1 つ選び、その unit を完食するまで同 TU に dispatch し続ける。サイズ順の単発つまみ食いは禁止 (Vec3 / dtor 系の散在 non-unit に発散する)。pick の判断は main、ツールはランキング表示のみ
+   - **struct-driven seeding** (2026-05-18 採用、本 skill の「struct-driven TU grouping」項参照): Ghidra MCP で seed fn の引数型 (struct 名) を確認、同 struct を触る pending fn を cluster として 1 batch にまとめる。ライブな struct 情報は Ghidra DataTypeManager (`run_script_inline`) が SoT、repo 内 header は遅延コピー。unit の中身を調べる mechanics として unit-first と併用する
 2. **worktree 用意**: `python tools/setup_worktree.py <batch_id>` で `.worktrees/<batch_id>/` を作成
 3. **prompt 構築**: sub に何をやらせるか
    - 担当 fn の addr / name / size / asm 行範囲
@@ -129,7 +130,24 @@ merge が conflict / SHA-1 fail を返した場合は hook 即実行から離脱
 4. **Agent tool 起動**: `Agent(subagent_type='general-purpose', run_in_background=True, prompt=...)`
 5. **state.active_subs に記録**: 通知受信用 (TaskList には現れない、main の self-bookkeeping)
 
-## struct-driven TU grouping (2026-05-18 採用、cluster-first 既定)
+## unit-first 選定 (2026-07-19 採用、現行既定)
+
+CASE 4 編成の入口は **unit 選択** から始める。正本は `docs/unit_first_strategy.md`。
+
+1. `python tools/plan_units.py` — SoT (symbols.txt / splits.txt / configure.py) 直読みの
+   ランキング。state.json 不要、他マシンでも同一出力
+2. `python tools/plan_units.py --unit <Name>` — member 一覧 / gap / extab を確認
+3. 理想形 `runs=1, frgn=0, ex>6=0, exX=0` の unit を pick (判断は main の責務)
+4. unit 全体を 1 TU (`src/game/<Name>.c`) として splits.txt 1 entry で切り、
+   完食するまでその unit に dispatch を集中する。大きい unit は連続 sub-range で
+   複数 batch に分割
+5. 散在系 (`runs` 二桁: Vec3 / dtor / KartItem 残党) は unit として扱わない —
+   構成 fn は所属 struct の unit 側で巻き取る
+
+下記 cluster-first (2026-05-18) は unit-first の前身。struct 情報の取り方
+(Ghidra DataTypeManager fetch、header 配置) は引き続き有効なので残す。
+
+## struct-driven TU grouping (2026-05-18 採用、cluster-first → 2026-07-19 unit-first に発展)
 
 **前提**: Phase 1/2 で 34 struct + 元から存在の 18 struct + 未着手の ~40 struct が Ghidra で高確度に解析済み (KartItem 0x380 / 50+ fn、PathManager_Partial 0x4DC、ItemDisplay 0x14、HeapStats 12B 等)。repo 内 header より Ghidra DataTypeManager の方がライブで分厚い情報を持つ。
 

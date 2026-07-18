@@ -2,11 +2,20 @@
 
 ライブな次手リスト。完了したら check して push、新しく出てきた課題は下に追記する。
 
-## Status (2026-05-17 commit 352a33b)
+## Status (2026-07-19)
 
 - `main.dol` byte-identical rebuild: **OK** (SHA-1 `ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65`)
-- Named symbols: **~1223 / 7613** functions (~16.1%) + 17 named data/BSS objects
-- Matched C source: **1 / 7613** (`__check_pad3`, 64 bytes — commit `9c4efa9`)
+- Named symbols: **~3035 / 7608** functions (~40%)
+- Matching TU 経由: **~470** 関数 (asm_fn 退避 ~76 含む) / NonMatching 8 / pending ~2557
+- 再計算は `python tools/plan_units.py` (SoT 直読み)
+
+(旧 status 2026-05-17 commit 352a33b: named ~1223 / matched 1 (`__check_pad3`))
+
+## Unit-first matching (2026-07-19〜 現行方針)
+
+- [ ] **unit-first で 1 unit ずつ完食する** — 正本 `docs/unit_first_strategy.md`、ランキングは `tools/plan_units.py`
+  - 推奨キュー (2026-07-19 時点): VfxSlot → Jyugemu → Tachometer → TaRecord → ItemEffectBus → CObj → TornadoEffect → StrPcb (毎回 plan_units.py で引き直す)
+  - 散在系 (Vec3 / dtor / KartItem 残党) は unit として扱わない
 
 ## Symbol seeding
 
