@@ -439,6 +439,7 @@ config.libs = [
             Object(Matching, "game/StrPcb.c"),
             Object(Matching, "game/StrPcb_Error.c"),
             Object(Matching, "game/StrPcb_SetTimer3c40.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/StrPcb_SetTimer3034_38.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/StrPcb_BeginEffect.c"),
             Object(Matching, "game/StrPcb_GetInstance.c"),
             Object(Matching, "game/SetPcbScratchFlag_806d11a4.c"),

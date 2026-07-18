@@ -148,6 +148,11 @@ game/StrPcb_SetTimer3c40.c:
 	extabindex  start:0x8001F970 end:0x8001F97C
 	.text       start:0x800380C8 end:0x800380F0
 
+game/StrPcb_SetTimer3034_38.c:
+	extab       start:0x80005D00 end:0x80005D08
+	extabindex  start:0x8001F97C end:0x8001F988
+	.text       start:0x800380F0 end:0x8003811C
+
 game/StrPcb_BeginEffect.c:
 	.text       start:0x800381E4 end:0x80038204
 
