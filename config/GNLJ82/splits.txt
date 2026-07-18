@@ -452,6 +452,9 @@ util/bitpack.c:
 	extabindex  start:0x80021A4C end:0x80021A64
 	.text       start:0x80088A5C end:0x80088C7C
 
+game/cLNormal3DWrap_Mgr_GetPeakActiveCount.c:
+	.text       start:0x80088C7C end:0x80088C84
+
 game/AssocTree.c:
 	.text       start:0x80089BFC end:0x80089C30
 

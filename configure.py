@@ -550,6 +550,7 @@ config.libs = [
             Object(Matching, "game/CourseBgm_Free.c"),
             Object(Matching, "game/CourseBgm_Load.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/clNormal3D_Construct.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/cLNormal3DWrap_Mgr_GetPeakActiveCount.c"),
             Object(Matching, "game/FreeMediaBuffers.c", extab_padding=b"\x00\x00"),
             # Phase 3a-small: 11-fn dtk reversed-extab group bundle (no extab
             # entries, just .text). All 11 fns initially asm_fn; promote to
