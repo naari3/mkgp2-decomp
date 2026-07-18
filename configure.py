@@ -393,6 +393,7 @@ config.libs = [
             Object(Matching, "game/card_is_ejected.c"),
             Object(Matching, "game/card_ping_clear_pending_flag.c"),
             Object(Matching, "game/Jyugemu_ReverseFlag.c"),
+            Object(Matching, "game/Jyugemu_Flag_SetKartDriver.c"),
             Object(Matching, "game/Jyugemu_ReverseFlag_Enable.c"),
             Object(Matching, "game/TEXPaletteAccessors.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CardTaskPrintJob_IsSuccess.c"),

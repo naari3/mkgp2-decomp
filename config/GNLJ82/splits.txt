@@ -412,6 +412,9 @@ game/CourseAuxClass_VtableDtor.c:
 game/DVDLoad_Stats.c:
 	.text       start:0x8007DFD4 end:0x8007DFE4
 
+game/Jyugemu_Flag_SetKartDriver.c:
+	.text       start:0x800806D4 end:0x800806F4
+
 game/Jyugemu_ReverseFlag.c:
 	extab       start:0x80008A2C end:0x80008A3C
 	extabindex  start:0x80021728 end:0x80021740
