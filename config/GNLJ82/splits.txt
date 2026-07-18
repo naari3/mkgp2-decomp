@@ -508,6 +508,11 @@ game/CourseAuxClass_VtableDtor.c:
 	extabindex  start:0x80021578 end:0x80021584
 	.text       start:0x8007D0D4 end:0x8007D11C
 
+game/DVDLoad_DrawDoneCallback.c:
+	extab       start:0x800087D8 end:0x800087E0
+	extabindex  start:0x800215CC end:0x800215D8
+	.text       start:0x8007DC08 end:0x8007DC38
+
 game/DVDLoad_Stats.c:
 	.text       start:0x8007DFD4 end:0x8007DFE4
 
