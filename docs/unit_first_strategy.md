@@ -133,3 +133,8 @@ repo tracked (clone すれば揃う):
   (17 fn 完全連続・異物ゼロ・extab 内部完結) であることを確認
 - 2026-07-19: 複数人 / 複数マシン運用を見据え、GitHub issue (label `unit-claim`)
   による unit claim 機構を導入 (§4.5、`tools/claim_unit.py`)
+- 2026-07-19: 初の unit 完食 = ItemTracker (claim #4、4/4 全関数 1 試行 100%)。
+  隣接 singleton extab group 群は `-Cpp_exceptions on` の auto-emit で
+  extab/extabindex 込み 1 TU 再現できることを確認 (ISESlot_Update と同パターン)。
+  理想形 unit (runs=1/frgn=0/extab 閉包) は手戻りなく完食できる、という
+  選定基準の妥当性を裏付ける初観測
