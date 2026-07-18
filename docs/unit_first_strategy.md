@@ -75,15 +75,50 @@ orchestrator 運用時は 4〜6 を batch として sub に dispatch する
 1 TU に複数 sub を並列で当てる場合は `mkgp2-orch/SKILL.md` の
 「同 TU 内多 sub 並列 promote」パターン)。
 
+## 4.5 unit claim (GitHub issue、2026-07-19 導入)
+
+複数人 / 複数マシンでの重複着手を防ぐため、**着手前に GitHub issue で unit を
+claim する**。SoT は GitHub issues (label `unit-claim`) で、repo を clone した
+誰でも `gh` CLI 経由で同じ状態が見える。
+
+規約:
+- 1 unit = 1 issue、title `[unit-claim] <Unit>`、label `unit-claim`
+- **open issue = claim 中** (assignee = claim した人)。closed = 未 claim
+- close の使い分け: 完食 → `--reason completed` / 途中で手放す → `--reason not planned`
+  (どちらも closed = 再 claim 可能。履歴は issue に残る)
+
+操作 (すべて `tools/claim_unit.py` 経由、gh CLI 認証済みが前提):
+
+```
+python tools/plan_units.py --claims        # ランキング + claim 状況
+python tools/claim_unit.py list            # open claim 一覧
+python tools/claim_unit.py claim VfxSlot   # claim (member snapshot 付き issue 作成)
+python tools/claim_unit.py done VfxSlot    # 完食 close
+python tools/claim_unit.py release VfxSlot # 未完了 close (手放す)
+```
+
+フロー: `plan_units.py --claims` で未 claim の理想形 unit を選ぶ → `claim` →
+§4 の完食フロー → merge / push 後に `done`。長期停滞したら `release` して手放す。
+
+ツールがやるのは実在検証 (symbols.txt に prefix がある / pending が残ってる) と
+二重 claim 防止のみ。**どれを claim するかの判断は人 / agent**。
+issue を手で立てても title / label の規約さえ守れば同じに扱われる。
+
+注意 (2026-07-19 の e2e テスト #2 で観察): `gh issue list` の反映は
+create / close から数秒遅れることがある。claim 直後に `list` に出なくても
+issue URL が返っていれば claim は成立している。二重 claim 検出も同様に
+数秒窓のラグがあるが、unit 単位の作業粒度 (時間オーダー) では実害なし。
+
 ## 5. 他マシンでの再現に必要なもの
 
 repo tracked (clone すれば揃う):
-- 本 doc + `tools/plan_units.py` + `.claude/skills/*` (プロジェクト skill として自動ロード)
+- 本 doc + `tools/plan_units.py` + `tools/claim_unit.py` + `.claude/skills/*` (プロジェクト skill として自動ロード)
 - `config/GNLJ82/symbols.txt` / `splits.txt` / `configure.py` (SoT)
 - `tools/ghidra_symbol_dump.json` / `tools/mkgp2_types.gdt`
 
 ローカルで別途必要:
 - `orig/GNLJ82/sys/main.dol` (gitignore、手渡し。SHA-1 `ea30f3b1...`)
+- claim 操作には gh CLI (`gh auth login` 済み、repo への write 権限)
 - extab 列を出すには 1 度 build して
   `python tools/build_extab_map.py` (→ `.orchestrator/extab_groups.json`)
 - struct の live な詳細が要る場合のみ Ghidra + MCP (`bmp_output` project)
@@ -96,3 +131,5 @@ repo tracked (clone すれば揃う):
   方針を明確化。連続性 (runs) / 異物 (foreign) / extab 閉包 (exX) を選定基準に
   採用し、`tools/plan_units.py` として固定。初回検証で VfxSlot が理想形
   (17 fn 完全連続・異物ゼロ・extab 内部完結) であることを確認
+- 2026-07-19: 複数人 / 複数マシン運用を見据え、GitHub issue (label `unit-claim`)
+  による unit claim 機構を導入 (§4.5、`tools/claim_unit.py`)

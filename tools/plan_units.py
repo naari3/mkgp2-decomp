@@ -191,13 +191,20 @@ def rank_key(c: dict) -> tuple:
     )
 
 
-def print_ranking(clusters: list[dict], limit: int | None) -> None:
+def print_ranking(
+    clusters: list[dict],
+    limit: int | None,
+    claims: dict[str, dict] | None = None,
+) -> None:
     rows = sorted(clusters, key=rank_key)
     if limit:
         rows = rows[:limit]
+    claim_col = claims is not None
     hdr = (
         f"{'unit':<22}{'pend':>5}{'done':>5}{'runs':>5}{'frgn':>6}"
-        f"{'ex>6':>5}{'exX':>4}{'pend_B':>8}{'medB':>6}  span"
+        f"{'ex>6':>5}{'exX':>4}{'pend_B':>8}{'medB':>6}"
+        + (f"  {'claim':<16}" if claim_col else "")
+        + "  span"
     )
     print(hdr)
     print("-" * len(hdr))
@@ -205,10 +212,16 @@ def print_ranking(clusters: list[dict], limit: int | None) -> None:
         done = c["matched"] + c["asm_fn"] + c["nonmatching"]
         ex_big = str(c["extab_big"]) if c["extab_known"] else "?"
         ex_cross = str(c["extab_cross"]) if c["extab_known"] else "?"
+        claim = ""
+        if claim_col:
+            info = claims.get(c["prefix"])
+            who = ",".join(info["assignees"]) if info else ""
+            claim = f"  {who or ('#' + str(info['number']) if info else '-'):<16}"
         print(
             f"{c['prefix']:<22}{c['pending']:>5}{done:>5}{c['runs']:>5}"
             f"{c['foreign']:>6}{ex_big:>5}{ex_cross:>4}"
             f"{c['pending_size']:>8}{c['pending_median']:>6}"
+            f"{claim}"
             f"  {c['span_lo']:08x}-{c['span_hi']:08x}"
         )
     if not any(c["extab_known"] for c in rows):
@@ -252,6 +265,9 @@ def main() -> int:
     parser.add_argument("--min-fns", type=int, default=3,
                         help="min pending fns for a cluster to rank (default 3)")
     parser.add_argument("--unit", help="print member listing for one unit")
+    parser.add_argument("--claims", action="store_true",
+                        help="GitHub issue の claim 状況を列に出す (gh CLI 必要、"
+                             "tools/claim_unit.py 参照)")
     parser.add_argument("--json", action="store_true",
                         help="ranking as JSON on stdout")
     args = parser.parse_args()
@@ -277,14 +293,24 @@ def main() -> int:
         for p, n in prefixes.items()
         if n >= args.min_fns
     ]
+    claims: dict[str, dict] | None = None
+    if args.claims:
+        from claim_unit import fetch_open_claims_safe
+        claims = fetch_open_claims_safe()
+        if claims is None:
+            print("warn: gh CLI が使えない (未インストール / 未認証)。"
+                  "claim 列なしで表示する", file=sys.stderr)
+
     if args.json:
         for c in clusters:
             c["span_lo"] = f"0x{c['span_lo']:08x}"
             c["span_hi"] = f"0x{c['span_hi']:08x}"
+            if claims is not None:
+                c["claim"] = claims.get(c["prefix"])
         print(json.dumps(sorted(clusters, key=rank_key), indent=2))
         return 0
 
-    print_ranking(clusters, None if args.all else args.limit)
+    print_ranking(clusters, None if args.all else args.limit, claims)
     return 0
 
 

@@ -134,10 +134,12 @@ merge が conflict / SHA-1 fail を返した場合は hook 即実行から離脱
 
 CASE 4 編成の入口は **unit 選択** から始める。正本は `docs/unit_first_strategy.md`。
 
-1. `python tools/plan_units.py` — SoT (symbols.txt / splits.txt / configure.py) 直読みの
-   ランキング。state.json 不要、他マシンでも同一出力
+1. `python tools/plan_units.py --claims` — SoT (symbols.txt / splits.txt / configure.py) 直読みの
+   ランキング + GitHub issue claim 状況。state.json 不要、他マシンでも同一出力
 2. `python tools/plan_units.py --unit <Name>` — member 一覧 / gap / extab を確認
-3. 理想形 `runs=1, frgn=0, ex>6=0, exX=0` の unit を pick (判断は main の責務)
+3. 理想形 `runs=1, frgn=0, ex>6=0, exX=0` かつ **未 claim** の unit を pick (判断は main の責務)。
+   pick したら `python tools/claim_unit.py claim <Name>`、完食後 `done <Name>`。
+   他者 claim 中の unit は skip (`docs/unit_first_strategy.md` §4.5)
 4. unit 全体を 1 TU (`src/game/<Name>.c`) として splits.txt 1 entry で切り、
    完食するまでその unit に dispatch を集中する。大きい unit は連続 sub-range で
    複数 batch に分割

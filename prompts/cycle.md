@@ -289,10 +289,14 @@ main が **(a) unit-first 選定 (2026-07-19 採用、`docs/unit_first_strategy.
 
 ```python
 # 0. unit-first: 進行中 unit があればその残 pending から編成を続ける。
-#    無ければ `python tools/plan_units.py` のランキングから
-#    runs=1 / frgn=0 / ex>6=0 / exX=0 に近い unit を main が pick し、
+#    無ければ `python tools/plan_units.py --claims` のランキングから
+#    runs=1 / frgn=0 / ex>6=0 / exX=0 に近い **未 claim** の unit を main が pick、
+#    `python tools/claim_unit.py claim <Name>` で claim してから
 #    `--unit <Name>` で member 一覧を確認して以降の手順に流す。
-#    unit の完食前に別 unit へ移らない (詳細は docs/unit_first_strategy.md §4)。
+#    他者が claim 中 (open issue あり) の unit には触らない。
+#    unit の完食前に別 unit へ移らない (詳細は docs/unit_first_strategy.md §4, §4.5)。
+#    unit 完食 (全 member が matched/asm_fn で merge 済み) したら
+#    `python tools/claim_unit.py done <Name>` で close する。
 ```
 
 **最重要**: pending 関数の ~64% は dtk reversed-extab group 内にいる (4877/7614)。そういう関数を singleton dispatch すると `Conflicting splits within reversed extab group` でほぼ確実に失敗する (iter0 / iter1 で実証済み)。よって seed の `extab_group` を最初に確認して bundle を組む (`plan_units.py` の `exX` / `ex>6` 列は同じ制約の unit 単位ビュー)。
