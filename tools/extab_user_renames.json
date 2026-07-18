@@ -243,5 +243,15 @@
     "extabindex_VolumeCalibration_Tick": "@eti_8001FB38",
     "extabindex_VolumeCalibration_Dtor": "@eti_8001FB44",
     "extabindex_VolumeCalibration_Ctor": "@eti_8001FB50"
+  },
+  "src/game/Frame.c": {
+    "extab_Frame_UpdatePerFrameState": "@etb_80005740",
+    "extab_Frame_PostDrawOverlay": "@etb_80005748",
+    "extab_Frame_PostDraw_BackupBuffer": "@etb_80005750",
+    "extab_Frame_Begin": "@etb_80005778",
+    "extabindex_Frame_UpdatePerFrameState": "@eti_8001F448",
+    "extabindex_Frame_PostDrawOverlay": "@eti_8001F454",
+    "extabindex_Frame_PostDraw_BackupBuffer": "@eti_8001F460",
+    "extabindex_Frame_Begin": "@eti_8001F46C"
   }
 }
