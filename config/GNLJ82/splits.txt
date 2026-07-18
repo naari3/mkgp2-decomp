@@ -825,6 +825,11 @@ game/Vec3_Scale.c:
 	extabindex  start:0x80023810 end:0x8002381C
 	.text       start:0x800D615C end:0x800D6188
 
+game/Vec2.c:
+	extab       start:0x8000B1B4 end:0x8000B1CC
+	extabindex  start:0x8002381C end:0x80023840
+	.text       start:0x800D6188 end:0x800D6338
+
 game/SpriteSlot_SetScale.c:
 	.text       start:0x800D6568 end:0x800D657C
 
