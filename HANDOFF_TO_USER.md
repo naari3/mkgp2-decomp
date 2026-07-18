@@ -15,3 +15,8 @@
 
 - Local JointByName commit `17c54d4` passed the full SHA-1 check, but `git push origin main` was rejected because remote `main` advanced concurrently.
 - Recovery: reopen the unit claim, fetch/rebase onto `origin/main`, rerun the SHA-1 check, push, then close the claim.
+
+# Push recovery: TaRecord unit (2026-07-19)
+
+- Local TaRecord commit `54d2689` passed the full SHA-1 check, but its first push was rejected because remote `main` advanced concurrently.
+- Recovery: fetch/rebase, rerun the SHA-1 check, push, then close claim issue #20.
