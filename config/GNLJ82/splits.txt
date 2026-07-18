@@ -292,6 +292,9 @@ game/dtor_80064CD4.c:
 	extabindex  start:0x80020E70 end:0x80020E7C
 	.text       start:0x80064CD4 end:0x80064D28
 
+game/NoopRenderHook_Pending_80064d28.c:
+	.text       start:0x80064D28 end:0x80064D2C
+
 game/CourseBgm_Free.c:
 	extab       start:0x80007F2C end:0x80007F34
 	extabindex  start:0x80020E88 end:0x80020E94
@@ -402,10 +405,16 @@ util/bitpack.c:
 game/AssocTree.c:
 	.text       start:0x80089BFC end:0x80089C30
 
+game/Allocator_DestroyEntry_Noop.c:
+	.text       start:0x80089C54 end:0x80089C58
+
 game/CardTaskWelcome_Dtor.c:
 	extab       start:0x8000900C end:0x80009014
 	extabindex  start:0x80021B18 end:0x80021B24
 	.text       start:0x8008A058 end:0x8008A0A0
+
+game/PlayStats_ShutdownStub.c:
+	.text       start:0x8008E36C end:0x8008E370
 
 game/GetKartParamBlock.c:
 	.text       start:0x80090FF0 end:0x8009107C
