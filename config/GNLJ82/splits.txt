@@ -307,6 +307,9 @@ sound/MediaBoard_PollCompletion.c:
 game/EffectState_HasContent.c:
 	.text       start:0x8005B168 end:0x8005B17C
 
+game/EffectSteering_InputViscosity_SetFieldC.c:
+	.text       start:0x8005BB00 end:0x8005BB0C
+
 game/SpawnTable.c:
 	.text       start:0x8005F5CC end:0x8005F5D8
 
