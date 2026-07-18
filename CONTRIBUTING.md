@@ -36,21 +36,28 @@ program に適用すれば maintainer 側と同じ型が使える。Ghidra decom
 集中管理ファイルで、同じ領域を 2 人が触るとほぼ確実に conflict する。
 着手前に GitHub issue で担当範囲を宣言すること。
 
-claim の単位:
+claim の単位は **unit** (struct/class に相当する関数クラスタ、2026-07-19〜)。
+選定基準と手順の正本は [`docs/unit_first_strategy.md`](docs/unit_first_strategy.md)。
 
-- **address-contiguous な範囲** を 1 単位とする。dtk の splits は
-  1 TU = 1 連続 range が前提
-- **reversed extab group はまたげない / 割れない**。1 つの
-  `build/GNLJ82/asm/auto_*_text*.s` ファイル = 1 group で、
-  `grep -E '^\.fn ' build/GNLJ82/asm/auto_<addr>_text.s` で群内の全関数が
-  わかる。`.fn` が 2 つ以上ある group は全関数を 1 TU で一括 match する
-  必要がある (詳細は SKILL.md §7.5 制約 D)。group 全体を map したいときは
-  `python tools/build_extab_map.py`
-- issue には対象 address 範囲 (例 `0x8002F640..0x8002FA00`) と関数名を書く。
-  先に claim された範囲には手を出さない
+```
+python tools/plan_units.py --claims        # ランキング + claim 状況
+python tools/claim_unit.py claim <Unit>    # claim (issue 自動作成、label unit-claim)
+python tools/claim_unit.py done <Unit>     # 完食したら close
+python tools/claim_unit.py release <Unit>  # 手放すとき close
+```
 
-小さく始めたい場合は、`.fn` が 1 つだけの単独 split 可能な関数、または
-`TODO.md` に載っている候補が向いている。
+- open issue = claim 中。**他者の open claim には手を出さない**
+- `runs=1 / frgn=0 / ex>6=0 / exX=0` に近い unit から選ぶと安全
+  (ランキングがその順に並ぶ)
+- 背景の制約 (ランキングの列が encode しているもの):
+  - **address-contiguous な範囲** が 1 TU の前提 (dtk splits)
+  - **reversed extab group はまたげない / 割れない**。`.fn` が 2 つ以上ある
+    `build/GNLJ82/asm/auto_*_text*.s` は全関数一括 match が必要
+    (SKILL.md §7.5 制約 D、map は `python tools/build_extab_map.py`)
+- unit に当てはまらない単発をやりたい場合は従来どおり issue を手で立てて
+  address 範囲 (例 `0x8002F640..0x8002FA00`) と関数名を書く
+
+小さく始めたい場合は、ランキング上位の小さい unit (`medB` が小さいもの) が向いている。
 
 ## 3. matching する
 
