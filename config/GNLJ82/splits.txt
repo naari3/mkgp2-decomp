@@ -847,6 +847,11 @@ game/Item_DecayVelocityScalar.c:
 game/FinalLapCoinJump_CheckActiveForObject.c:
 	.text       start:0x800DC638 end:0x800DC690
 
+game/ItemTracker.c:
+	extab       start:0x8000B47C end:0x8000B49C
+	extabindex  start:0x80023BD0 end:0x80023C00
+	.text       start:0x800DD5FC end:0x800DD840
+
 game/ItemObject_WriteVectors.c:
 	extab       start:0x8000B49C end:0x8000B4AC
 	extabindex  start:0x80023C00 end:0x80023C18
