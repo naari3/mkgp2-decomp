@@ -402,6 +402,7 @@ config.libs = [
             Object(Matching, "game/Vec3_ToYaw.c", extab_padding=b""),
             Object(Matching, "game/Vec3_Scale.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Vec2.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/JointByName.c"),
             Object(Matching, "game/Vec3_ScaleXZ.c"),
             Object(Matching, "game/TornadoEffect_TriggerField140.c"),
             Object(Matching, "game/TornadoEffect_RenderCallback.c", extra_cflags=["-Cpp_exceptions on"]),

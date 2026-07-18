@@ -931,6 +931,11 @@ game/Vec2.c:
 game/SpriteSlot_SetScale.c:
 	.text       start:0x800D6568 end:0x800D657C
 
+game/JointByName.c:
+	extab       start:0x8000B204 end:0x8000B21C
+	extabindex  start:0x80023894 end:0x800238B8
+	.text       start:0x800D6670 end:0x800D68D4
+
 game/SpriteSlot_SetTranslateDxDy.c:
 	.text       start:0x800D6B20 end:0x800D6B34
 
