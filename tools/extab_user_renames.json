@@ -136,6 +136,12 @@
     "extab_KartPhysics_ApplyCollisionForce": "@etb_80016CEC",
     "extabindex_KartPhysics_ApplyCollisionForce": "@eti_80028B5C"
   },
+  "src/game/Object_Color.c": {
+    "extab_Object_SetColorRGBA": "@etb_80005960",
+    "extab_Object_SetColorAlphaOnly": "@etb_80005968",
+    "extabindex_Object_SetColorRGBA": "@eti_8001F61C",
+    "extabindex_Object_SetColorAlphaOnly": "@eti_8001F628"
+  },
   "src/game/ISESlot_Lifecycle.c": {
     "extab_ISESlot_Init": "@etb_800068B8",
     "extab_ISESlot_Dtor": "@etb_800068C0",

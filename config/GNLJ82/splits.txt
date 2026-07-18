@@ -69,6 +69,11 @@ game/Scene3D_GetCameraPos.c:
 game/Stub_NoOp_80030aec.c:
 	.text       start:0x80030AEC end:0x80030AF0
 
+game/Object_Color.c:
+	extab       start:0x80005960 end:0x80005970
+	extabindex  start:0x8001F61C end:0x8001F634
+	.text       start:0x80031408 end:0x8003151C
+
 game/JObj_Visibility.c:
 	extab       start:0x80005978 end:0x80005988
 	extabindex  start:0x8001F640 end:0x8001F658
@@ -531,6 +536,17 @@ game/clCGameDemo_Dtor.c:
 	extab       start:0x8000A460 end:0x8000A468
 	extabindex  start:0x800228D4 end:0x800228E0
 	.text       start:0x800AE6BC end:0x800AE71C
+
+game/Vec3_Magnitude_Wrapper.c:
+	extab       start:0x8000B1A4 end:0x8000B1AC
+	extabindex  start:0x80023804 end:0x80023810
+	.text       start:0x800D6118 end:0x800D6138
+
+game/SpriteSlot_SetScale.c:
+	.text       start:0x800D6568 end:0x800D657C
+
+game/SpriteSlot_SetTranslateDxDy.c:
+	.text       start:0x800D6B20 end:0x800D6B34
 
 game/ItemAlias.c:
 	.text       start:0x800D7490 end:0x800D75F8
