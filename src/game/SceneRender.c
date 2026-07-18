@@ -39,3 +39,24 @@ void *dtor_8003A71C(void *this, short flag) {
     return this;
 }
 #pragma exceptions reset
+
+typedef struct SceneRenderViewport {
+    char pad_00[0x14];
+    float x;
+    float y;
+    float z;
+    float dir_x;
+    float dir_y;
+    float dir_z;
+} SceneRenderViewport;
+
+void SceneRender_SetViewportRect(SceneRenderViewport *scene, float x, float y,
+                                 float z, float dir_x, float dir_y,
+                                 float dir_z) {
+    scene->x = x;
+    scene->y = y;
+    scene->z = z;
+    scene->dir_x = dir_x;
+    scene->dir_y = dir_y;
+    scene->dir_z = dir_z;
+}

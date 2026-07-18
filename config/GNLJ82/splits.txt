@@ -85,9 +85,9 @@ game/Object_JObjUpdate.c:
 	.text       start:0x80031718 end:0x80031770
 
 game/Object_SetJObjRotation.c:
-	extab       start:0x800059A0 end:0x800059C0
-	extabindex  start:0x8001F67C end:0x8001F6AC
-	.text       start:0x8003185C end:0x80031B7C
+	extab       start:0x800059A0 end:0x800059D0
+	extabindex  start:0x8001F67C end:0x8001F6C4
+	.text       start:0x8003185C end:0x80031CF8
 
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
@@ -167,7 +167,7 @@ game/MetricsTable.c:
 game/SceneRender.c:
 	extab       start:0x80005F18 end:0x80005F20
 	extabindex  start:0x8001FBC8 end:0x8001FBD4
-	.text       start:0x8003A71C end:0x8003A764
+	.text       start:0x8003A71C end:0x8003A780
 
 sound/SoundChannels.c:
 	.text       start:0x8003AD4C end:0x8003ADFC
@@ -574,6 +574,9 @@ game/ItemObjectManager_Init.c:
 
 game/FinalLapCoinJump_CheckActiveForObject.c:
 	.text       start:0x800DC638 end:0x800DC690
+
+game/ItemObject_SetByte18c.c:
+	.text       start:0x800DD930 end:0x800DD940
 
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C
