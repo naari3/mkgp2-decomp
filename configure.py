@@ -424,6 +424,7 @@ config.libs = [
             Object(Matching, "game/TEXPaletteAccessors.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CardTaskPrintJob_IsSuccess.c"),
             Object(Matching, "game/CardTaskPrintJob_IsRunning_Thunk.cpp"),
+            Object(Matching, "game/CardTaskPrintJob_InitStateVector.c"),
             Object(Matching, "game/CardRW_GetSubState.c"),
             Object(Matching, "game/card_rw_get_substate.c"),
             Object(Matching, "game/Sci2Card_GetPrintErrorCode.c"),

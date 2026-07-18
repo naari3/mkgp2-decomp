@@ -668,6 +668,9 @@ game/CardTaskPrintJob_IsRunning_Thunk.cpp:
 game/CardTaskPrintJob_IsSuccess.c:
 	.text       start:0x8008F4F4 end:0x8008F504
 
+game/CardTaskPrintJob_InitStateVector.c:
+	.text       start:0x8008F5A4 end:0x8008F5D4
+
 game/GetKartParamBlock.c:
 	.text       start:0x80090FF0 end:0x8009107C
 
