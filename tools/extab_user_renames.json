@@ -293,5 +293,33 @@
     "extabindex_KartTireFX_Dtor": "@eti_80021410",
     "extab_KartTireFX_Ctor": "@etb_80008488",
     "extabindex_KartTireFX_Ctor": "@eti_8002141C"
+  },
+  "src/game/HeartCompoundItem.c": {
+    "extab_HeartCompoundItem_TickReleasePhase": "@etb_8000B674",
+    "extab_HeartCompoundItem_TickCarryPhase": "@etb_8000B67C",
+    "extab_HeartCompoundItem_Update": "@etb_8000B684",
+    "extabindex_HeartCompoundItem_TickReleasePhase": "@eti_80023EC4",
+    "extabindex_HeartCompoundItem_TickCarryPhase": "@eti_80023ED0",
+    "extabindex_HeartCompoundItem_Update": "@eti_80023EDC"
+  },
+  "src/game/CarrotItemEffect_Update.c": {
+    "extab_CarrotItemEffect_Update": "@etb_8000A668",
+    "extabindex_CarrotItemEffect_Update": "@eti_80022B20"
+  },
+  "src/game/CarrotItemEffect_Render.c": {
+    "extab_CarrotItemEffect_Render": "@etb_8000A670",
+    "extabindex_CarrotItemEffect_Render": "@eti_80022B2C"
+  },
+  "src/game/CarrotItemEffect_AddDraw.c": {
+    "extab_CarrotItemEffect_AddDraw": "@etb_8000A678",
+    "extabindex_CarrotItemEffect_AddDraw": "@eti_80022B38"
+  },
+  "src/game/TwinSpriteOverlay.c": {
+    "extab_TwinSpriteOverlay_Render": "@etb_8000A638",
+    "extabindex_TwinSpriteOverlay_Render": "@eti_80022AD8",
+    "extab_TwinSpriteOverlay_AddDraw": "@etb_8000A640",
+    "extabindex_TwinSpriteOverlay_AddDraw": "@eti_80022AE4",
+    "extab_TwinSpriteOverlay_Update": "@etb_8000A648",
+    "extabindex_TwinSpriteOverlay_Update": "@eti_80022AF0"
   }
 }

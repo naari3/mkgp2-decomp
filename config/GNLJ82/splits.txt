@@ -920,6 +920,26 @@ game/VfxSlot_BindResourceEx.c:
 	extabindex  start:0x80022A48 end:0x80022A54
 	.text       start:0x800B0378 end:0x800B0454
 
+game/TwinSpriteOverlay.c:
+	extab       start:0x8000A638 end:0x8000A650
+	extabindex  start:0x80022AD8 end:0x80022AFC
+	.text       start:0x800B1670 end:0x800B1C88
+
+game/CarrotItemEffect_Update.c:
+	extab       start:0x8000A668 end:0x8000A670
+	extabindex  start:0x80022B20 end:0x80022B2C
+	.text       start:0x800B2164 end:0x800B23CC
+
+game/CarrotItemEffect_Render.c:
+	extab       start:0x8000A670 end:0x8000A678
+	extabindex  start:0x80022B2C end:0x80022B38
+	.text       start:0x800B23CC end:0x800B2A64
+
+game/CarrotItemEffect_AddDraw.c:
+	extab       start:0x8000A678 end:0x8000A680
+	extabindex  start:0x80022B38 end:0x80022B44
+	.text       start:0x800B2A64 end:0x800B2AF8
+
 game/EffectActor_BindKartTargetPair.c:
 	.text       start:0x800B3244 end:0x800B3250
 
@@ -1036,6 +1056,11 @@ game/ItemObject_WriteVectors.c:
 
 game/ItemObject_SetByte18c.c:
 	.text       start:0x800DD930 end:0x800DD940
+
+game/HeartCompoundItem.c:
+	extab       start:0x8000B674 end:0x8000B68C
+	extabindex  start:0x80023EC4 end:0x80023EE8
+	.text       start:0x800F2620 end:0x800F2D60
 
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C
