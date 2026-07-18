@@ -452,6 +452,9 @@ game/TEXPaletteAccessors.c:
 	extabindex  start:0x80021DC4 end:0x80021DD0
 	.text       start:0x8008E5BC end:0x8008E63C
 
+game/CardTaskPrintJob_IsSuccess.c:
+	.text       start:0x8008F4F4 end:0x8008F504
+
 game/GetKartParamBlock.c:
 	.text       start:0x80090FF0 end:0x8009107C
 
