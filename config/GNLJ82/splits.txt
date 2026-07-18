@@ -587,6 +587,11 @@ game/clCGameDemo_Dtor.c:
 	extabindex  start:0x800228D4 end:0x800228E0
 	.text       start:0x800AE6BC end:0x800AE71C
 
+game/VfxSlot_SetUVScroll.c:
+	extab       start:0x8000A530 end:0x8000A538
+	extabindex  start:0x800229AC end:0x800229B8
+	.text       start:0x800AFDE0 end:0x800AFE00
+
 game/EffectActor_BindKartTargetPair.c:
 	.text       start:0x800B3244 end:0x800B3250
 
