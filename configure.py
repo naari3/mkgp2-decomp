@@ -379,6 +379,8 @@ config.libs = [
             Object(Matching, "game/SpriteSlot_SetScaleXYZ.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Vec3_Magnitude_Wrapper.c"),
             Object(Matching, "game/TornadoEffect_TriggerField140.c"),
+            Object(Matching, "game/TornadoEffect_RenderCallback.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/TornadoEffect_SetField128AndMaybeClear134.c"),
             Object(Matching, "game/ItemStateGuard_IsActive.c"),
             Object(Matching, "game/ItemEffectDamp_Init.c"),
             Object(Matching, "game/KartItem_Stub_Returns0.c"),
