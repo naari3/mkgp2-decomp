@@ -321,5 +321,11 @@
     "extabindex_TwinSpriteOverlay_AddDraw": "@eti_80022AE4",
     "extab_TwinSpriteOverlay_Update": "@etb_8000A648",
     "extabindex_TwinSpriteOverlay_Update": "@eti_80022AF0"
+  },
+  "src/game/TransparentDraw.c": {
+    "extab_TransparentDraw_DestroyEntry": "@etb_800080B8",
+    "extab_TransparentDraw_SortAndDispatch": "@etb_800080C0",
+    "extabindex_TransparentDraw_DestroyEntry": "@eti_80020F90",
+    "extabindex_TransparentDraw_SortAndDispatch": "@eti_80020F9C"
   }
 }
