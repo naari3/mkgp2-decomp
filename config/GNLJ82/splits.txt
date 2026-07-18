@@ -680,6 +680,11 @@ game/VfxSlot_SetUVScroll.c:
 game/EffectActor_BindKartTargetPair.c:
 	.text       start:0x800B3244 end:0x800B3250
 
+game/DebrisArray_DrawForward.c:
+	extab       start:0x8000A6E8 end:0x8000A6F0
+	extabindex  start:0x80022BE0 end:0x80022BEC
+	.text       start:0x800B4AAC end:0x800B4AD0
+
 game/Vec3_Magnitude_Wrapper.c:
 	extab       start:0x8000B1A4 end:0x8000B1AC
 	extabindex  start:0x80023804 end:0x80023810
