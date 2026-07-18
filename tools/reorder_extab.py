@@ -18,13 +18,19 @@ tools/extab_order.json:
     "src/game/ServiceMenu_Page.c": [
       "ServiceMenu_Draw", "ServiceMenu_Tick", "ServiceMenu_Dtor",
       "ServiceMenu_Init"
-    ]
+    ],
+    "src/game/auto_ONKARTHIT_block.c": {
+      "extab":      ["dtor_...", "KartItem_...", "..."],
+      "extabindex": ["KartItem_...", "dtor_...", "..."]
+    }
   }
 
 Names are the FUNCTIONS the entries describe (resolved via the extabindex
-fn relocations), in the order their extab entries must appear. extabindex
-entries are emitted in the same declared order. Objects without a
-declaration are never touched, regardless of section layout.
+fn relocations). A plain list declares one order used for both sections;
+the object form declares extab and extabindex orders separately (they are
+independent in the target: extabindex is address-sorted while extab keeps
+original link-order artefacts, e.g. auto_800A8F4C_block). Objects without
+a declaration are never touched, regardless of section layout.
 
 Called from tools/postprocess_extab_user.py after the rename/redefine step
 (before `dtk extab clean`). The TU is identified by matching the declared
@@ -200,19 +206,39 @@ def main() -> int:
             entries.append({"isec": isec, "ioff": ioff, "fn": fn_name,
                             "esec": esec, "eoff": eoff})
 
-    # match a declared order by function-name set
-    declared = None
-    for tu, names in orders.items():
-        if set(names) == {e["fn"] for e in entries} and len(names) == len(entries):
-            declared = names
-            break
-    if declared is None:
-        return 0
-    if [e["fn"] for e in entries] == declared and len(etabs) == 1:
-        return 0  # already in declared order in a single pair
-
+    # match a declared order by function-name set.
+    # extab entries can be SHARED by multiple functions (observed in
+    # auto_ONKARTHIT_block: 76 extabindex rows, 62 extab entries), so the
+    # extab list names one REPRESENTATIVE fn per unique entry while the
+    # extabindex list names every fn.
     by_fn = {e["fn"]: e for e in entries}
-    order = [by_fn[n] for n in declared]
+    uniq_keys = {(e["esec"], e["eoff"]) for e in entries}
+    e_order_names = i_order_names = None
+    fn_set = set(by_fn)
+    for tu, decl in orders.items():
+        if isinstance(decl, dict):
+            en, inames = decl.get("extab"), decl.get("extabindex")
+        else:
+            en = inames = decl
+        if not en or not inames:
+            continue
+        if set(inames) != fn_set or len(inames) != len(entries):
+            continue
+        if not set(en) <= fn_set:
+            continue
+        keys = [(by_fn[n]["esec"], by_fn[n]["eoff"]) for n in en]
+        if len(keys) != len(uniq_keys) or set(keys) != uniq_keys:
+            continue
+        e_order_names, i_order_names = en, inames
+        break
+    if e_order_names is None:
+        return 0
+    if ([e["fn"] for e in entries] == i_order_names
+            and len(etabs) == 1 and len(eidxs) == 1):
+        return 0  # single pair already in declared index order
+
+    order = [by_fn[n] for n in e_order_names]       # extab placement order
+    iorder = [by_fn[n] for n in i_order_names]      # extabindex placement order
 
     # entry boundaries per extab section
     starts = {i: sorted({e["eoff"] for e in entries if e["esec"] == i})
@@ -233,11 +259,14 @@ def main() -> int:
 
     new_eoff, blob = {}, bytearray()
     for e in order:
-        sz = esize[(e["esec"], e["eoff"])]
-        new_eoff[(e["esec"], e["eoff"])] = len(blob)
+        key = (e["esec"], e["eoff"])
+        if key in new_eoff:
+            continue  # shared entry already placed
+        sz = esize[key]
+        new_eoff[key] = len(blob)
         blob += elf.secs[e["esec"]]["data"][e["eoff"]:e["eoff"] + sz]
     new_ioff, iblob = {}, bytearray()
-    for e in order:
+    for e in iorder:
         new_ioff[(e["isec"], e["ioff"])] = len(iblob)
         iblob += elf.secs[e["isec"]]["data"][e["ioff"]:e["ioff"] + 12]
 

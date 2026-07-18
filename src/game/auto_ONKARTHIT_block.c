@@ -1377,13 +1377,7 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 __declspec(section ".extab_user") static const unsigned char extab_dtor_80052744[8] = {
     0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const unsigned char extab_dtor_8005278C[40] = {
-    0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x34,
-    0x00, 0x04, 0x00, 0x18, 0x00, 0x00, 0x00, 0x54,
-    0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4C,
-    0x00, 0x00, 0x00, 0x08, 0x8D, 0x00, 0x00, 0x08
-};
+/* extab_dtor_8005278C: auto-emitted (real C++ dtor, see body) */
 __declspec(section ".extab_user") static const unsigned char extab_dtor_80052808[8] = {
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -1728,9 +1722,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_80052744 = {
     (void *)&dtor_80052744, 0x00000048, (void *)extab_dtor_80052744
 };
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_8005278C = {
-    (void *)&dtor_8005278C, 0x0000007C, (void *)extab_dtor_8005278C
-};
+/* extabindex_dtor_8005278C: auto-emitted */
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_80052808 = {
     (void *)&dtor_80052808, 0x00000054, (void *)extab_dtor_80052808
 };
@@ -10173,43 +10165,28 @@ void *dtor_80052744(void *self, short flag) { /* 0x80052744 size:0x48 */
 }
 #pragma exceptions reset
 
-asm void dtor_8005278C(void) { /* 0x8005278C size:0x7C */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stw r31, 0x2c(r1)
-    mr r31, r1
-    stw r30, 0x28(r1)
-    mr r30, r4
-    stw r29, 0x24(r1)
-    mr. r29, r3
-    beq dtor_8005278C_L_800527D0
-    lwz r3, 0x0(r29)
-    li r4, 0x1
-    bl Free_IfOwnedShort
-    extsh. r0, r30
-    ble dtor_8005278C_L_800527D0
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    dtor_8005278C_L_800527D0:
-    mr r3, r29
-    b dtor_8005278C_L_800527E4
-    addi r3, r31, 0x8
-    bl __unexpected
-    dtor_8005278C_L_800527E0:
-    b dtor_8005278C_L_800527E0
-    dtor_8005278C_L_800527E4:
-    mr r10, r31
-    lwz r31, 0x2c(r31)
-    lwz r30, 0x28(r10)
-    lwz r29, 0x24(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+/* dtor_8005278C: owned-pointer holder deleting dtor - real C++ retrofit
+ * (2026-07-19, pragma cplusplus island). `delete p` calls the member's
+ * deleting dtor (Free_IfOwnedShort) with flag 1; the DELETE-self tail and
+ * the SPECIFICATION island (__unexpected) are CW dtor codegen under
+ * #pragma exceptions on. Mangled names bridged via extab_user_renames:
+ *   __dt__15Holder8005278CFv -> dtor_8005278C
+ *   __dt__14Owned8005278CFv  -> Free_IfOwnedShort
+ */
+#pragma cplusplus on
+#pragma exceptions on
+struct Owned8005278C {
+    ~Owned8005278C();
+};
+struct Holder8005278C {
+    Owned8005278C *p; /* 0x0 */
+    ~Holder8005278C() throw();
+};
+Holder8005278C::~Holder8005278C() throw() {
+    delete p;
 }
+#pragma exceptions reset
+#pragma cplusplus off
 
 #pragma exceptions off
 /* owned-pointer holder deleting dtor: free the payload at +0x0 unconditionally */

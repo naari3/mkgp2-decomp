@@ -370,5 +370,9 @@
     "__ct__6SpriteFiiff": "fn_801A08B8",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/auto_ONKARTHIT_block.c": {
+    "__dt__14Holder8005278CFv": "dtor_8005278C",
+    "__dt__13Owned8005278CFv": "Free_IfOwnedShort"
   }
 }
