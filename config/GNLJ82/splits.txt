@@ -731,10 +731,30 @@ game/clCGameDemo_Dtor.c:
 	extabindex  start:0x800228D4 end:0x800228E0
 	.text       start:0x800AE6BC end:0x800AE71C
 
+game/VfxSlot_ResolveJoint.c:
+	extab       start:0x8000A528 end:0x8000A530
+	extabindex  start:0x800229A0 end:0x800229AC
+	.text       start:0x800AFDB4 end:0x800AFDE0
+
 game/VfxSlot_SetUVScroll.c:
 	extab       start:0x8000A530 end:0x8000A538
 	extabindex  start:0x800229AC end:0x800229B8
 	.text       start:0x800AFDE0 end:0x800AFE00
+
+game/VfxSlot_SetScaleVec3.c:
+	extab       start:0x8000A540 end:0x8000A548
+	extabindex  start:0x800229C4 end:0x800229D0
+	.text       start:0x800AFE44 end:0x800AFE70
+
+game/VfxSlot_SetRotationZ.c:
+	extab       start:0x8000A550 end:0x8000A558
+	extabindex  start:0x800229DC end:0x800229E8
+	.text       start:0x800AFEA4 end:0x800AFED0
+
+game/VfxSlot_SetRotationXYZ.c:
+	extab       start:0x8000A560 end:0x8000A568
+	extabindex  start:0x800229F4 end:0x80022A00
+	.text       start:0x800AFF08 end:0x800AFF34
 
 game/EffectActor_BindKartTargetPair.c:
 	.text       start:0x800B3244 end:0x800B3250
