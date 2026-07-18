@@ -24,6 +24,13 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from scan_asm_fns import scan_repo  # noqa: E402
+
+# asm_fn / NonMatching accent (amber / red) — used in treemap, tables, timeline
+C_ASM = "#b58a00"
+C_NONMATCH = "#e66767"
+
 
 def _to_int(v: Any) -> int:
     if isinstance(v, str):
@@ -156,12 +163,23 @@ def _unit_status_label(u: Dict[str, Any], matched: float) -> str:
     return "—"
 
 
-def build_treemap(units: List[Dict[str, Any]], width: int = 1000, height: int = 600) -> str:
+def build_treemap(
+    units: List[Dict[str, Any]],
+    width: int = 1000,
+    height: int = 600,
+    asm_names: Optional[set] = None,
+    nonmatching_units: Optional[set] = None,
+) -> str:
     """Binary-split treemap of units (decomp.dev / streemap-rs `binary`), nested by function.
 
     Outer layout splits units in caller-supplied order (typically address). Within each
     unit rect, the same algorithm splits the unit's functions in address order so the
-    visual carries both unit-level boundaries and function-level granularity."""
+    visual carries both unit-level boundaries and function-level granularity.
+
+    asm_fn escapes (asm_names) are tinted amber and NonMatching units red, so
+    byte-identical-but-not-C regions stand out from true C matches."""
+    asm_names = asm_names or set()
+    nonmatching_units = nonmatching_units or set()
     items: List[Tuple[Dict[str, Any], int, float, float]] = []
     for u in units:
         m = u.get("measures", {})
@@ -229,11 +247,13 @@ def build_treemap(units: List[Dict[str, Any]], width: int = 1000, height: int = 
         inner_rects: List[Tuple[float, float, float, float]] = [(0.0, 0.0, 0.0, 0.0)] * len(fns)
         _binary_split((x, y, w, h), list(range(len(fns))), fn_sums, 0.0, fn_total, inner_rects)
 
+        unit_nonmatching = u["name"] in nonmatching_units
         for f, (fx, fy, fw, fh) in zip(fns, inner_rects):
             if fw < 0.5 or fh < 0.5:
                 continue  # cull below visible pixel
             fn_size = _to_int(f.get("size"))
             fn_fuzzy = _to_float(f.get("fuzzy_match_percent"))
+            fn_name = f.get("name", "?")
             fn_va = f.get("metadata", {}).get("virtual_address")
             fn_addr_str = ""
             if fn_va is not None:
@@ -241,13 +261,23 @@ def build_treemap(units: List[Dict[str, Any]], width: int = 1000, height: int = 
                     fn_addr_str = f"0x{int(fn_va):08X}"
                 except (TypeError, ValueError):
                     pass
+            if fn_name in asm_names:
+                fill = C_ASM
+                status_attr = ' data-status="asm_fn (byte-identical, not C)"'
+            elif unit_nonmatching:
+                fill = C_NONMATCH
+                status_attr = ' data-status="nonmatching (not linked)"'
+            else:
+                fill = color_for_pct(fn_fuzzy)
+                status_attr = ""
             fn_rects.append(
                 f'<rect x="{fx:.2f}" y="{fy:.2f}" width="{fw:.2f}" height="{fh:.2f}" '
-                f'fill="{color_for_pct(fn_fuzzy)}" stroke="#0d1117" stroke-width="0.2" '
-                f'data-name="{html.escape(f.get("name", "?"), quote=True)}" '
+                f'fill="{fill}" stroke="#0d1117" stroke-width="0.2" '
+                f'data-name="{html.escape(fn_name, quote=True)}" '
                 f'data-addr="{fn_addr_str}" '
                 f'data-size="{format_bytes(fn_size)}" '
                 f'data-fuzzy="{fn_fuzzy:.2f}%" '
+                f'{status_attr} '
                 f'data-unit="{unit_name_esc}"/>'
             )
 
@@ -367,8 +397,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       <div class="sub">{matched_bytes} / {total_bytes}</div></div>
     <div class="card"><div class="label">Linked (complete)</div><div class="value">{complete_pct:.2f}%</div>
       <div class="sub">{complete_units} / {total_units} files</div></div>
+    <div class="card"><div class="label">True C matched</div><div class="value">{true_pct:.2f}%</div>
+      <div class="sub">{true_bytes} · asm_fn {asm_fn_count} 本 ({asm_bytes}) を除外</div></div>
     <div class="card"><div class="label">Matched functions</div><div class="value">{matched_fns} / {total_fns}</div>
-      <div class="sub">{fn_pct:.2f}%</div></div>
+      <div class="sub">{fn_pct:.2f}% · うち asm_fn {asm_fn_count}</div></div>
     <div class="card"><div class="label">Fuzzy match</div><div class="value">{fuzzy_pct:.2f}%</div>
       <div class="sub">objdiff fuzzy score</div></div>
   </div>
@@ -377,6 +409,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   {category_rows}
 
   <h2>Treemap (sized by code bytes, colored by matched%, ordered by address)</h2>
+  <p class="meta"><span style="color:#b58a00">■</span> asm_fn (byte-identical だが C 化されていない退避) · <span style="color:#e66767">■</span> NonMatching (未リンク隔離) · <span style="color:#1f9d3a">■</span> matched</p>
   <div class="treemap-wrap">
     {treemap_svg}
     <div id="treemap-tooltip"></div>
@@ -456,7 +489,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 """
 
 
-def unit_row(u: Dict[str, Any]) -> str:
+def unit_row(
+    u: Dict[str, Any],
+    asm_by_unit: Optional[Dict[str, int]] = None,
+    nonmatching_units: Optional[set] = None,
+) -> str:
     m = u.get("measures", {})
     code = _to_int(m.get("total_code"))
     matched = _to_float(m.get("matched_code_percent"))
@@ -465,12 +502,18 @@ def unit_row(u: Dict[str, Any]) -> str:
     auto = bool(u.get("metadata", {}).get("auto_generated"))
     addr = _unit_address(u)
     addr_cell = f"0x{addr:08X}" if addr else "—"
-    if complete:
-        status = '<span style="color:#1f9d3a">linked</span>'
+    n_asm = (asm_by_unit or {}).get(u["name"], 0)
+    asm_part = (
+        f' <span style="color:{C_ASM}">(asm {n_asm})</span>' if n_asm else ""
+    )
+    if u["name"] in (nonmatching_units or set()):
+        status = f'<span style="color:{C_NONMATCH}">nonmatching</span>'
+    elif complete:
+        status = f'<span style="color:#1f9d3a">linked</span>{asm_part}'
     elif matched >= 99.999:
-        status = '<span style="color:#3fa9ff">matched</span>'
+        status = f'<span style="color:#3fa9ff">matched</span>{asm_part}'
     elif matched > 0:
-        status = '<span style="color:#8b949e">in progress</span>'
+        status = f'<span style="color:#8b949e">in progress</span>{asm_part}'
     elif auto:
         status = '<span style="color:#444c56">auto</span>'
     else:
@@ -545,12 +588,14 @@ def timeline_points(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     prev: Optional[float] = None
     for r in rows:
         m = _to_float(r["matched_code_percent"])
+        c = r.get("true_matched_code_percent")
         pts.append({
             "t": round(_parse_ts(r["ts"]).timestamp()),
             "date": r["ts"][:16].replace("T", " "),
             "sha": r["sha"][:9],
             "m": round(m, 4),
             "l": round(_to_float(r.get("complete_code_percent")), 4),
+            "c": round(_to_float(c), 4) if c is not None else None,
             "dm": round(m - prev, 4) if prev is not None else None,
         })
         prev = m
@@ -782,7 +827,7 @@ TL_JS = r"""
       const tip = document.getElementById('tl-tip');
       const W = 1000, H = 360, ML = 52, MR = 100, MT = 14, MB = 30;
       const IW = W - ML - MR, IH = H - MT - MB, YBOT = MT + IH;
-      const CM = '__C_M__', CL = '__C_L__';
+      const CM = '__C_M__', CL = '__C_L__', CC = '__C_C__';
       const GRID = '#1c2330', BASE = '#30363d', MUT = '#8b949e';
       const INK2 = '#f0f6fc', SURF = '#0d1117';
       const tMin = pts[0].t, tMax = pts[pts.length - 1].t;
@@ -818,11 +863,12 @@ TL_JS = r"""
       const cross = el('line', {y1: MT, y2: YBOT, stroke: MUT, 'stroke-width': 1, opacity: 0}, hoverG);
       const dotM = el('circle', {r: 4, fill: CM, stroke: SURF, 'stroke-width': 2, opacity: 0}, hoverG);
       const dotL = el('circle', {r: 4, fill: CL, stroke: SURF, 'stroke-width': 2, opacity: 0}, hoverG);
+      const dotC = el('circle', {r: 4, fill: CC, stroke: SURF, 'stroke-width': 2, opacity: 0}, hoverG);
       const selRect = el('rect', {y: MT, height: IH, fill: CM, opacity: 0.15, display: 'none'}, hoverG);
 
       const hideHover = () => {
         tip.style.display = 'none';
-        for (const e of [cross, dotM, dotL]) e.setAttribute('opacity', '0');
+        for (const e of [cross, dotM, dotL, dotC]) e.setAttribute('opacity', '0');
       };
 
       function render() {
@@ -838,7 +884,7 @@ TL_JS = r"""
 
         // Full 0-100 when the data is close to the goal; otherwise snip the
         // axis: 0..yTop to scale, a marked break band, then the 100% line.
-        const dataMax = shown.length ? Math.max(...shown.map(p => Math.max(p.m, p.l))) : 100;
+        const dataMax = shown.length ? Math.max(...shown.map(p => Math.max(p.m, p.l, p.c ?? 0))) : 100;
         const snip = dataMax < 50;
         let yTop, yDataTop, gstep;
         if (snip) {
@@ -893,7 +939,8 @@ TL_JS = r"""
           label(plotG, x, YBOT + 18, (d.getMonth() + 1) + '/' + d.getDate(), 'middle');
         }
 
-        vis = shown.map(p => ({x: xAt(p.t), ym: yAt(p.m), yl: yAt(p.l), p}));
+        vis = shown.map(p => ({x: xAt(p.t), ym: yAt(p.m), yl: yAt(p.l),
+                               yc: p.c != null ? yAt(p.c) : null, p}));
         if (vis.length) {
           // one neighbor each side so lines run to the plot edge (clipped)
           const ext = [];
@@ -908,6 +955,15 @@ TL_JS = r"""
           el('path', {d: wash, fill: CM, opacity: 0.08}, seriesG);
           el('polyline', {points: lineOf('yl'), fill: 'none', stroke: CL, 'stroke-width': 2,
                           'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, seriesG);
+          // true-C series: only points that carry the metric (older history
+          // rows predate the asm_fn scan and have c == null)
+          const cPts = ext.filter(p => p.c != null)
+            .map(p => xAt(p.t).toFixed(2) + ',' + yAt(p.c).toFixed(2)).join(' ');
+          if (cPts) {
+            el('polyline', {points: cPts, fill: 'none', stroke: CC, 'stroke-width': 2,
+                            'stroke-dasharray': '5 3',
+                            'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, seriesG);
+          }
           el('polyline', {points: lineOf('ym'), fill: 'none', stroke: CM, 'stroke-width': 2,
                           'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, seriesG);
 
@@ -973,6 +1029,12 @@ TL_JS = r"""
         dotM.setAttribute('cx', v.x); dotM.setAttribute('cy', v.ym);
         dotL.setAttribute('cx', v.x); dotL.setAttribute('cy', v.yl);
         dotM.setAttribute('opacity', '1'); dotL.setAttribute('opacity', '1');
+        if (v.yc != null) {
+          dotC.setAttribute('cx', v.x); dotC.setAttribute('cy', v.yc);
+          dotC.setAttribute('opacity', '1');
+        } else {
+          dotC.setAttribute('opacity', '0');
+        }
         tip.replaceChildren();
         const head = document.createElement('div');
         head.className = 'tip-head';
@@ -980,6 +1042,7 @@ TL_JS = r"""
         tip.appendChild(head);
         const dm = p.dm == null ? '' : ' (' + (p.dm >= 0 ? '+' : '') + p.dm.toFixed(3) + 'pp)';
         mkRow(tip, p.m.toFixed(3) + '%' + dm, 'matched', CM);
+        if (p.c != null) mkRow(tip, p.c.toFixed(3) + '%', 'true C (excl. asm_fn)', CC);
         mkRow(tip, p.l.toFixed(2) + '%', 'linked', CL);
         place(tip, wrap, e);
       });
@@ -1015,7 +1078,9 @@ def build_history_section(rows: List[Dict[str, Any]], repo_url: str) -> str:
     if len(rows) < 2:
         return ""
     tl_pts = timeline_points(rows)
-    tl_script = TL_JS.replace("__C_M__", C_MATCHED).replace("__C_L__", C_LINKED)
+    tl_script = (TL_JS.replace("__C_M__", C_MATCHED)
+                 .replace("__C_L__", C_LINKED)
+                 .replace("__C_C__", C_ASM))
     dg_svg, dg_days = build_daily_chart(rows)
     commit_rows = history_commit_rows(rows, repo_url)
     top_n = 20
@@ -1047,6 +1112,7 @@ def build_history_section(rows: List[Dict[str, Any]], repo_url: str) -> str:
         </div>
         <div class="chart-legend">
           <span><span class="key" style="background:{C_MATCHED}"></span>Matched code</span>
+          <span><span class="key" style="background:{C_ASM}"></span>True C (excl. asm_fn)</span>
           <span><span class="key" style="background:{C_LINKED}"></span>Linked</span>
         </div>
       </div>
@@ -1165,6 +1231,31 @@ def main() -> int:
     categories = report.get("categories", [])
     units = report.get("units", [])
 
+    # asm_fn / NonMatching scan (repo-tracked sources; graceful degrade)
+    try:
+        scan = scan_repo()
+    except Exception as e:  # noqa: BLE001 — page must still build without src
+        print(f"warn: asm_fn scan failed ({e}); true-C metrics omitted",
+              file=sys.stderr)
+        scan = {"asm_fns": {}, "nonmatching_units": [],
+                "asm_fn_count": 0, "asm_fn_code": 0}
+    asm_names = set(scan["asm_fns"])
+    # report unit names have no extension (e.g. "game/ItemTracker");
+    # configure.py NonMatching paths do — normalize both ways
+    nonmatching_units = set(scan["nonmatching_units"])
+    nonmatching_units |= {n.rsplit(".", 1)[0] for n in scan["nonmatching_units"]}
+    asm_fn_count = scan["asm_fn_count"]
+    asm_fn_code = scan["asm_fn_code"]
+    true_matched_code = max(0, measures.matched_code - asm_fn_code)
+    true_pct = (true_matched_code / measures.total_code * 100.0) if measures.total_code else 0.0
+
+    # per-unit asm counts for the tables (match by report fn names)
+    asm_by_unit: Dict[str, int] = {}
+    for u in units:
+        n = sum(1 for f in (u.get("functions") or []) if f.get("name") in asm_names)
+        if n:
+            asm_by_unit[u["name"]] = n
+
     units_with_code = [u for u in units if _to_int(u.get("measures", {}).get("total_code")) > 0]
     units_with_code.sort(key=_unit_address)
     units_by_size = sorted(
@@ -1197,7 +1288,10 @@ def main() -> int:
     }
     (args.out_dir / "shield.json").write_text(json.dumps(shield), encoding="utf-8")
 
-    treemap_svg = build_treemap(units_with_code, width=1000, height=520)
+    treemap_svg = build_treemap(
+        units_with_code, width=1000, height=520,
+        asm_names=asm_names, nonmatching_units=nonmatching_units,
+    )
 
     history_section = ""
     if args.history and args.history.is_file():
@@ -1223,12 +1317,16 @@ def main() -> int:
         total_fns=measures.total_functions,
         fn_pct=(measures.matched_functions / measures.total_functions * 100.0) if measures.total_functions else 0.0,
         fuzzy_pct=measures.fuzzy_match_percent,
+        true_pct=true_pct,
+        true_bytes=format_bytes(true_matched_code),
+        asm_fn_count=asm_fn_count,
+        asm_bytes=format_bytes(asm_fn_code),
         category_rows="\n".join(category_rows) or '<p class="meta">No categories defined.</p>',
         treemap_svg=treemap_svg,
-        top_addr_rows="\n".join(unit_row(u) for u in units_with_code[:30]),
-        all_addr_rows="\n".join(unit_row(u) for u in units_with_code),
-        top_size_rows="\n".join(unit_row(u) for u in units_by_size[:30]),
-        all_size_rows="\n".join(unit_row(u) for u in units_by_size),
+        top_addr_rows="\n".join(unit_row(u, asm_by_unit, nonmatching_units) for u in units_with_code[:30]),
+        all_addr_rows="\n".join(unit_row(u, asm_by_unit, nonmatching_units) for u in units_with_code),
+        top_size_rows="\n".join(unit_row(u, asm_by_unit, nonmatching_units) for u in units_by_size[:30]),
+        all_size_rows="\n".join(unit_row(u, asm_by_unit, nonmatching_units) for u in units_by_size),
         n_units=len(units_with_code),
         top_n=30,
     )

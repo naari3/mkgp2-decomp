@@ -63,6 +63,23 @@ def entry_from_report(report_path: Path, sha: str, ts: str) -> Dict[str, Any]:
     entry: Dict[str, Any] = {"sha": sha, "ts": ts}
     for k in MEASURE_KEYS:
         entry[k] = _to_num(m.get(k))
+    # asm_fn / NonMatching scan (repo checkout of this commit; CI-safe).
+    # backfill entries lack these keys — the page treats them as absent.
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from scan_asm_fns import scan_repo
+        scan = scan_repo()
+        entry["asm_fn_count"] = scan["asm_fn_count"]
+        entry["asm_fn_code"] = scan["asm_fn_code"]
+        total = entry.get("total_code") or 0
+        true_code = max(0, (entry.get("matched_code") or 0) - scan["asm_fn_code"])
+        entry["true_matched_code"] = true_code
+        entry["true_matched_code_percent"] = (
+            round(true_code / total * 100.0, 4) if total else 0.0
+        )
+    except Exception as e:  # noqa: BLE001 — history append must not fail on scan
+        print(f"warn: asm_fn scan failed ({e}); true-C keys omitted",
+              file=sys.stderr)
     return entry
 
 
