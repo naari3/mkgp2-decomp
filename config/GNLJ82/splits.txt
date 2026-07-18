@@ -400,6 +400,9 @@ game/ResetIOPorts.c:
 	extabindex  start:0x80021878 end:0x80021884
 	.text       start:0x80084FF0 end:0x800850B0
 
+game/PcbSyncTable_Ptr.c:
+	.text       start:0x800850B0 end:0x800850BC
+
 game/SyncSlot.c:
 	extab       start:0x80008D84 end:0x80008D8C
 	extabindex  start:0x80021884 end:0x80021890
