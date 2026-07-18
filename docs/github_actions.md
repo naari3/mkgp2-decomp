@@ -94,6 +94,33 @@ python tools/gen_progress_page.py build/GNLJ82/report.json --out-dir site
 # open site/index.html
 ```
 
+## Per-commit progress history (progress-data branch)
+
+The dashboard's "Progress over time" charts (matched % toward the 100 % goal
+per commit, daily gained percentage points, per-commit delta table) read a
+JSONL history that lives on the orphan **`progress-data`** branch as
+`history/GNLJ82.jsonl` — one JSON line per `main` commit with the
+`report.json` measures. Pages artifacts are stateless, so git is the storage.
+
+- CI (`Update progress history` step, `main` only) checks the branch out into
+  a `.progress-data/` worktree, appends the current commit via
+  `tools/progress_history.py append` (idempotent by sha), and pushes. On a
+  rejected push (concurrent run won the race) it resets to the new remote tip
+  and redoes the append — both runs append at EOF, so a textual rebase would
+  always conflict; regenerating is the conflict-free path.
+- The page generator consumes it via
+  `gen_progress_page.py --history .progress-data/history/GNLJ82.jsonl` and
+  also republishes it as `history.jsonl` on the Pages site.
+- If history ever needs rebuilding (branch lost, schema change), reseed it
+  from past CI report artifacts (retained ~90 days):
+
+  ```bash
+  git worktree add .progress-data progress-data
+  python tools/progress_history.py backfill \
+      --history .progress-data/history/GNLJ82.jsonl
+  # commit + push .progress-data
+  ```
+
 ## Troubleshooting
 
 - **`ghcr.io/...:main` not found in CI** — confirm the build repo's image was

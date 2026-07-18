@@ -11,6 +11,11 @@ jobs:
     # Pulls main.dol + binutils + compilers from naari3/mkgp2-decomp-build.
     container: ghcr.io/naari3/mkgp2-decomp-build:main
 
+    # contents: write is for pushing per-commit progress history to the
+    # progress-data branch (main only, see "Update progress history").
+    permissions:
+      contents: write
+
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -65,12 +70,40 @@ jobs:
           name: ${{ matrix.version }}_report
           path: build/${{ matrix.version }}/report.json
 
+      # Per-commit history lives on the orphan progress-data branch
+      # (history/GNLJ82.jsonl, one JSON line per commit). Append this
+      # commit's measures and push. Concurrent runs both append at EOF, so
+      # a textual rebase would always conflict — on push rejection we reset
+      # to the new remote tip and redo the append (idempotent) instead.
+      - name: Update progress history
+        if: github.ref == 'refs/heads/main' && matrix.version == 'GNLJ82'
+        run: |
+          git fetch origin progress-data
+          git worktree add -b ci-progress .progress-data origin/progress-data
+          git config --global --add safe.directory "$GITHUB_WORKSPACE/.progress-data"
+          git config --global user.name github-actions
+          git config --global user.email actions@github.com
+          TS="$(git log -1 --format=%cI "$GITHUB_SHA")"
+          for i in 1 2 3 4 5; do
+            python tools/progress_history.py append \
+                --report build/${{ matrix.version }}/report.json \
+                --history .progress-data/history/${{ matrix.version }}.jsonl \
+                --sha "$GITHUB_SHA" --ts "$TS"
+            git -C .progress-data add -A
+            git -C .progress-data commit -m "progress: ${GITHUB_SHA::9}" || break
+            git -C .progress-data push origin ci-progress:progress-data && break
+            git fetch origin progress-data
+            git -C .progress-data reset --hard origin/progress-data
+          done
+
       - name: Generate progress page
         if: github.ref == 'refs/heads/main' && matrix.version == 'GNLJ82'
         run: |
           python tools/gen_progress_page.py \
               build/${{ matrix.version }}/report.json \
               --version ${{ matrix.version }} \
+              --commit "$GITHUB_SHA" \
+              --history .progress-data/history/${{ matrix.version }}.jsonl \
               --out-dir site
 
       - name: Upload Pages artifact
@@ -82,6 +115,11 @@ jobs:
   deploy-pages:
     needs: build
     if: github.ref == 'refs/heads/main'
+    # Serialize deploys so rapid pushes (orchestrator sessions) don't race;
+    # GitHub keeps only the newest pending job in the group.
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
     permissions:
       pages: write
       id-token: write

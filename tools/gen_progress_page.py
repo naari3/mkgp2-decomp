@@ -16,9 +16,11 @@ import argparse
 import bisect
 import html
 import json
+import math
 import shutil
 import sys
 from dataclasses import dataclass
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -326,6 +328,24 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   #treemap-tooltip .tt-row .tt-label {{ color: #8b949e; }}
   details {{ margin-top: 1rem; }}
   summary {{ cursor: pointer; color: #8b949e; }}
+  .chart-card {{ background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 1rem; margin-bottom: 1rem; }}
+  .chart-head {{ display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }}
+  .chart-title {{ color: #f0f6fc; font-weight: 600; font-size: 0.95rem; }}
+  .chart-legend {{ display: flex; gap: 1.2rem; font-size: 0.8rem; color: #8b949e; }}
+  .chart-legend .key {{ display: inline-block; width: 14px; height: 2px; border-radius: 1px; margin-right: 0.4rem; vertical-align: middle; }}
+  .chart-wrap {{ position: relative; }}
+  .chart-wrap svg text {{ font-family: inherit; }}
+  .viz-tip {{
+    position: absolute; pointer-events: none; display: none;
+    background: #21262d; color: #f0f6fc; border: 1px solid #30363d; border-radius: 4px;
+    padding: 0.5rem 0.7rem; font-size: 0.8rem; line-height: 1.5; z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5); min-width: 170px;
+  }}
+  .viz-tip .tip-head {{ color: #8b949e; margin-bottom: 0.25rem; white-space: nowrap; }}
+  .viz-tip .tip-row {{ display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }}
+  .viz-tip .tip-key {{ display: inline-block; width: 12px; height: 2px; border-radius: 1px; flex: none; }}
+  .viz-tip .tip-val {{ font-weight: 600; font-variant-numeric: tabular-nums; }}
+  .viz-tip .tip-label {{ color: #8b949e; }}
 </style>
 </head>
 <body>
@@ -344,7 +364,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <div class="card"><div class="label">Fuzzy match</div><div class="value">{fuzzy_pct:.2f}%</div>
       <div class="sub">objdiff fuzzy score</div></div>
   </div>
-
+{history_section}
   <h2>Categories</h2>
   {category_rows}
 
@@ -382,7 +402,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </table>
   </details>
 
-  <p class="meta" style="margin-top:2rem"><a href="report.json">Raw report.json</a> · <a href="shield.json">Shield JSON</a></p>
+  <p class="meta" style="margin-top:2rem"><a href="report.json">Raw report.json</a> · <a href="shield.json">Shield JSON</a> · <a href="history.jsonl">History JSONL</a></p>
 </main>
 <script>
 (() => {{
@@ -459,6 +479,570 @@ def unit_row(u: Dict[str, Any]) -> str:
     )
 
 
+# ---------------------------------------------------------------------------
+# Progress-over-time section (history JSONL maintained on the progress-data
+# branch by tools/progress_history.py).
+# ---------------------------------------------------------------------------
+
+# Series colors: categorical slots 1/2 (dark) — CVD + contrast validated
+# against the page surface #0d1117 (skill dataviz validate_palette, all PASS).
+C_MATCHED = "#3987e5"
+C_LINKED = "#008300"
+C_NEG = "#e66767"
+INK = "#f0f6fc"
+INK_MUTED = "#8b949e"
+C_GRID = "#1c2330"
+C_BASELINE = "#30363d"
+C_SURFACE = "#0d1117"
+C_DELTA_GOOD = "#0ca30c"
+
+
+def load_history_file(path: Path) -> List[Dict[str, Any]]:
+    rows = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line:
+            rows.append(json.loads(line))
+    rows.sort(key=lambda r: (r["ts"], r["sha"]))
+    return rows
+
+
+def _parse_ts(s: str) -> datetime:
+    return datetime.fromisoformat(s.replace("Z", "+00:00"))
+
+
+def _nice_step(span: float, target_ticks: int = 4) -> float:
+    """Pick a 1/2/2.5/5 ladder step so span/step lands near target_ticks."""
+    if span <= 0:
+        return 1.0
+    raw = span / target_ticks
+    mag = 10 ** math.floor(math.log10(raw))
+    for m in (1, 2, 2.5, 5, 10):
+        if raw <= m * mag:
+            return m * mag
+    return 10 * mag
+
+
+def _fmt_day(d: date) -> str:
+    return f"{d.month}/{d.day}"
+
+
+def build_timeline_chart(
+    rows: List[Dict[str, Any]], width: int = 1000, height: int = 360
+) -> Tuple[str, List[Dict[str, Any]]]:
+    """Line chart: matched/linked code % per commit over time, y fixed 0-100
+    so the distance to the 100% goal stays honest. Returns (svg, hover_points)."""
+    ml, mr, mt, mb = 52, 100, 14, 30
+    iw, ih = width - ml - mr, height - mt - mb
+
+    times = [_parse_ts(r["ts"]).timestamp() for r in rows]
+    t0, t1 = min(times), max(times)
+    if t1 - t0 < 86400:
+        pad = (86400 - (t1 - t0)) / 2
+        t0, t1 = t0 - pad, t1 + pad
+
+    def x_at(t: float) -> float:
+        return ml + (t - t0) / (t1 - t0) * iw
+
+    def y_at(pct: float) -> float:
+        return mt + (100.0 - pct) / 100.0 * ih
+
+    parts: List[str] = []
+    # Horizontal gridlines every 25%, hairline; 100% doubles as the goal line.
+    for pct in (0, 25, 50, 75, 100):
+        y = y_at(pct)
+        stroke = C_BASELINE if pct == 0 else C_GRID
+        parts.append(
+            f'<line x1="{ml}" y1="{y:.1f}" x2="{ml + iw}" y2="{y:.1f}" '
+            f'stroke="{stroke}" stroke-width="1"/>'
+        )
+        parts.append(
+            f'<text x="{ml - 8}" y="{y + 4:.1f}" text-anchor="end" '
+            f'fill="{INK_MUTED}" font-size="11">{pct}%</text>'
+        )
+    parts.append(
+        f'<text x="{ml + iw}" y="{y_at(100) - 6:.1f}" text-anchor="end" '
+        f'fill="{INK_MUTED}" font-size="11">goal</text>'
+    )
+
+    # X ticks on day boundaries, ~6 across the range.
+    d0 = datetime.fromtimestamp(t0).date()
+    d1 = datetime.fromtimestamp(t1).date()
+    ndays = max(1, (d1 - d0).days)
+    step_days = max(1, round(ndays / 6))
+    d = d0 + timedelta(days=step_days)
+    while d <= d1:
+        t = datetime(d.year, d.month, d.day).timestamp()
+        if t0 <= t <= t1:
+            x = x_at(t)
+            parts.append(
+                f'<line x1="{x:.1f}" y1="{mt}" x2="{x:.1f}" y2="{mt + ih}" '
+                f'stroke="{C_GRID}" stroke-width="1"/>'
+            )
+            parts.append(
+                f'<text x="{x:.1f}" y="{mt + ih + 18}" text-anchor="middle" '
+                f'fill="{INK_MUTED}" font-size="11">{_fmt_day(d)}</text>'
+            )
+        d += timedelta(days=step_days)
+
+    pts_m = [(x_at(t), y_at(_to_float(r["matched_code_percent"])))
+             for t, r in zip(times, rows)]
+    pts_l = [(x_at(t), y_at(_to_float(r.get("complete_code_percent"))))
+             for t, r in zip(times, rows)]
+
+    def poly(pts: List[Tuple[float, float]]) -> str:
+        return " ".join(f"{x:.2f},{y:.2f}" for x, y in pts)
+
+    # Area wash under the primary series only (~8% opacity).
+    wash = (
+        f'<path d="M {pts_m[0][0]:.2f},{y_at(0):.2f} '
+        + " ".join(f"L {x:.2f},{y:.2f}" for x, y in pts_m)
+        + f' L {pts_m[-1][0]:.2f},{y_at(0):.2f} Z" fill="{C_MATCHED}" opacity="0.08"/>'
+    )
+    parts.append(wash)
+    for pts, color in ((pts_l, C_LINKED), (pts_m, C_MATCHED)):
+        parts.append(
+            f'<polyline points="{poly(pts)}" fill="none" stroke="{color}" '
+            f'stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'
+        )
+
+    # End markers (surface ring) + direct value labels in ink, nudged apart
+    # with leader lines when the two endpoints collide.
+    end_m, end_l = pts_m[-1], pts_l[-1]
+    lab_m, lab_l = end_m[1], end_l[1]
+    if abs(lab_m - lab_l) < 16:
+        mid = (lab_m + lab_l) / 2
+        if lab_m <= lab_l:
+            lab_m, lab_l = mid - 8, mid + 8
+        else:
+            lab_m, lab_l = mid + 8, mid - 8
+    for (ex, ey), ly, color, val in (
+        (end_m, lab_m, C_MATCHED, _to_float(rows[-1]["matched_code_percent"])),
+        (end_l, lab_l, C_LINKED, _to_float(rows[-1].get("complete_code_percent"))),
+    ):
+        if abs(ly - ey) > 1:
+            parts.append(
+                f'<line x1="{ex + 6:.1f}" y1="{ey:.1f}" x2="{ex + 16:.1f}" y2="{ly:.1f}" '
+                f'stroke="{C_GRID}" stroke-width="1"/>'
+            )
+        parts.append(
+            f'<circle cx="{ex:.1f}" cy="{ey:.1f}" r="4.5" fill="{color}" '
+            f'stroke="{C_SURFACE}" stroke-width="2"/>'
+        )
+        parts.append(
+            f'<text x="{ex + 20:.1f}" y="{ly + 4:.1f}" fill="{INK}" '
+            f'font-size="12" font-weight="600">{val:.2f}%</text>'
+        )
+
+    # Crosshair + hover dots, driven by JS.
+    parts.append(
+        f'<line id="tl-cross" x1="0" y1="{mt}" x2="0" y2="{mt + ih}" '
+        f'stroke="{INK_MUTED}" stroke-width="1" opacity="0"/>'
+    )
+    for dot_id, color in (("tl-dot-m", C_MATCHED), ("tl-dot-l", C_LINKED)):
+        parts.append(
+            f'<circle id="{dot_id}" r="4" fill="{color}" '
+            f'stroke="{C_SURFACE}" stroke-width="2" opacity="0"/>'
+        )
+
+    svg = (
+        f'<svg id="tl-svg" xmlns="http://www.w3.org/2000/svg" '
+        f'viewBox="0 0 {width} {height}" width="100%" '
+        f'preserveAspectRatio="xMidYMid meet" role="img" '
+        f'aria-label="Matched and linked code percentage per commit over time, toward the 100% goal.">'
+        + "".join(parts) + "</svg>"
+    )
+
+    hover_pts = []
+    prev = None
+    for r, (xm, ym), (xl, yl) in zip(rows, pts_m, pts_l):
+        m = _to_float(r["matched_code_percent"])
+        hover_pts.append({
+            "x": round(xm, 2), "ym": round(ym, 2), "yl": round(yl, 2),
+            "sha": r["sha"][:9],
+            "date": r["ts"][:16].replace("T", " "),
+            "m": round(m, 3),
+            "l": round(_to_float(r.get("complete_code_percent")), 3),
+            "dm": round(m - prev, 3) if prev is not None else None,
+        })
+        prev = m
+    return svg, hover_pts
+
+
+def build_daily_chart(
+    rows: List[Dict[str, Any]], width: int = 1000, height: int = 200
+) -> Tuple[str, List[Dict[str, Any]]]:
+    """Bar chart: matched-code percentage points gained per day (day-end vs
+    previous day-end). Single series; days without commits stay empty."""
+    ml, mr, mt, mb = 52, 16, 12, 26
+    iw, ih = width - ml - mr, height - mt - mb
+
+    # Day-end value per calendar day (committer-local date from the ISO string).
+    day_end: Dict[str, float] = {}
+    day_commits: Dict[str, int] = {}
+    for r in rows:
+        d = r["ts"][:10]
+        day_end[d] = _to_float(r["matched_code_percent"])
+        day_commits[d] = day_commits.get(d, 0) + 1
+
+    days_sorted = sorted(day_end)
+    deltas: Dict[str, float] = {}
+    prev = _to_float(rows[0]["matched_code_percent"])
+    for d in days_sorted:
+        deltas[d] = day_end[d] - prev
+        prev = day_end[d]
+
+    d0 = date.fromisoformat(days_sorted[0])
+    d1 = date.fromisoformat(days_sorted[-1])
+    ndays = (d1 - d0).days + 1
+    slot_w = iw / ndays
+    bar_w = max(2.0, min(24.0, slot_w * 0.66))
+
+    vmax = max(0.0, *deltas.values())
+    vmin = min(0.0, *deltas.values())
+    if vmax == vmin == 0.0:
+        vmax = 1.0
+    step = _nice_step(vmax - vmin)
+
+    def y_at(v: float) -> float:
+        return mt + (vmax - v) / (vmax - vmin or 1.0) * ih
+
+    parts: List[str] = []
+    tick = 0.0
+    while tick <= vmax + 1e-9:
+        if tick >= vmin:
+            y = y_at(tick)
+            parts.append(
+                f'<line x1="{ml}" y1="{y:.1f}" x2="{ml + iw}" y2="{y:.1f}" '
+                f'stroke="{C_GRID if tick else C_BASELINE}" stroke-width="1"/>'
+            )
+            parts.append(
+                f'<text x="{ml - 8}" y="{y + 4:.1f}" text-anchor="end" '
+                f'fill="{INK_MUTED}" font-size="11">{f"{tick:+g}" if tick else "0"}</text>'
+            )
+        tick += step
+    tick = -step
+    while tick >= vmin - 1e-9:
+        y = y_at(tick)
+        parts.append(
+            f'<line x1="{ml}" y1="{y:.1f}" x2="{ml + iw}" y2="{y:.1f}" '
+            f'stroke="{C_GRID}" stroke-width="1"/>'
+        )
+        parts.append(
+            f'<text x="{ml - 8}" y="{y + 4:.1f}" text-anchor="end" '
+            f'fill="{INK_MUTED}" font-size="11">{tick:+g}</text>'
+        )
+        tick -= step
+
+    # X ticks reuse the same cadence as the timeline.
+    step_days = max(1, round(max(1, ndays - 1) / 6))
+    d = d0 + timedelta(days=step_days)
+    while d <= d1:
+        x = ml + ((d - d0).days + 0.5) * slot_w
+        parts.append(
+            f'<text x="{x:.1f}" y="{mt + ih + 18}" text-anchor="middle" '
+            f'fill="{INK_MUTED}" font-size="11">{_fmt_day(d)}</text>'
+        )
+        d += timedelta(days=step_days)
+
+    def bar_path(x: float, v: float) -> str:
+        """4px rounded data-end, square at the zero baseline."""
+        y0, y1 = y_at(0.0), y_at(v)
+        r = min(4.0, bar_w / 2, abs(y1 - y0))
+        if v >= 0:
+            return (
+                f"M {x:.2f},{y0:.2f} L {x:.2f},{y1 + r:.2f} "
+                f"Q {x:.2f},{y1:.2f} {x + r:.2f},{y1:.2f} "
+                f"L {x + bar_w - r:.2f},{y1:.2f} "
+                f"Q {x + bar_w:.2f},{y1:.2f} {x + bar_w:.2f},{y1 + r:.2f} "
+                f"L {x + bar_w:.2f},{y0:.2f} Z"
+            )
+        return (
+            f"M {x:.2f},{y0:.2f} L {x:.2f},{y1 - r:.2f} "
+            f"Q {x:.2f},{y1:.2f} {x + r:.2f},{y1:.2f} "
+            f"L {x + bar_w - r:.2f},{y1:.2f} "
+            f"Q {x + bar_w:.2f},{y1:.2f} {x + bar_w:.2f},{y1 - r:.2f} "
+            f"L {x + bar_w:.2f},{y0:.2f} Z"
+        )
+
+    hover_days: List[Dict[str, Any]] = []
+    for ds in days_sorted:
+        v = deltas[ds]
+        i = (date.fromisoformat(ds) - d0).days
+        x = ml + i * slot_w + (slot_w - bar_w) / 2
+        if abs(v) > 1e-9:
+            parts.append(
+                f'<path d="{bar_path(x, v)}" '
+                f'fill="{C_MATCHED if v >= 0 else C_NEG}"/>'
+            )
+        # Full-height transparent hit target (wider than the mark).
+        parts.append(
+            f'<rect class="dg-hit" data-i="{len(hover_days)}" '
+            f'x="{ml + i * slot_w:.2f}" y="{mt}" '
+            f'width="{slot_w:.2f}" height="{ih}" fill="transparent"/>'
+        )
+        hover_days.append({
+            "x": round(ml + i * slot_w + slot_w / 2, 2),
+            "date": ds, "d": round(v, 3), "n": day_commits[ds],
+        })
+
+    svg = (
+        f'<svg id="dg-svg" xmlns="http://www.w3.org/2000/svg" '
+        f'viewBox="0 0 {width} {height}" width="100%" '
+        f'preserveAspectRatio="xMidYMid meet" role="img" '
+        f'aria-label="Matched-code percentage points gained per day.">'
+        + "".join(parts) + "</svg>"
+    )
+    return svg, hover_days
+
+
+def history_commit_rows(rows: List[Dict[str, Any]], repo_url: str) -> List[str]:
+    """Per-commit table rows, newest first, with deltas vs the previous commit."""
+    out: List[str] = []
+    prev_pct: Optional[float] = None
+    prev_bytes: Optional[int] = None
+    annotated = []
+    for r in rows:
+        pct = _to_float(r["matched_code_percent"])
+        b = _to_int(r["matched_code"])
+        annotated.append((r, pct,
+                          None if prev_pct is None else pct - prev_pct,
+                          None if prev_bytes is None else b - prev_bytes))
+        prev_pct, prev_bytes = pct, b
+    for r, pct, dpct, dbytes in reversed(annotated):
+        sha = html.escape(r["sha"])
+        if dpct is None:
+            delta_cell = '<span style="color:#8b949e">—</span>'
+            bytes_cell = "—"
+        else:
+            if dpct > 0:
+                color = C_DELTA_GOOD
+            elif dpct < 0:
+                color = C_NEG
+            else:
+                color = "#8b949e"
+            prec = 4 if abs(dpct) < 0.01 else 3
+            delta_cell = f'<span style="color:{color}">{dpct:+.{prec}f}pp</span>'
+            bytes_cell = f"{dbytes:+,} B" if dbytes else "±0 B"
+        out.append(
+            "<tr>"
+            f'<td>{html.escape(r["ts"][:16].replace("T", " "))}</td>'
+            f'<td><a href="{html.escape(repo_url)}/commit/{sha}"><code>{sha[:9]}</code></a></td>'
+            f'<td class="num">{pct:.3f}%</td>'
+            f'<td class="num">{delta_cell}</td>'
+            f'<td class="num">{bytes_cell}</td>'
+            f'<td class="num">{_to_float(r.get("complete_code_percent")):.2f}%</td>'
+            f'<td class="num">{_to_int(r.get("matched_functions"))} / {_to_int(r.get("total_functions"))}</td>'
+            "</tr>"
+        )
+    return out
+
+
+def _pace_cards(rows: List[Dict[str, Any]]) -> str:
+    """Stat tiles: recent gain and a naive ETA to 100% (estimate, labeled)."""
+    last = rows[-1]
+    last_t = _parse_ts(last["ts"])
+    last_pct = _to_float(last["matched_code_percent"])
+
+    def gain_over(days: int) -> Optional[float]:
+        cutoff = last_t - timedelta(days=days)
+        base = None
+        for r in rows:
+            if _parse_ts(r["ts"]) <= cutoff:
+                base = _to_float(r["matched_code_percent"])
+        if base is None:
+            base = _to_float(rows[0]["matched_code_percent"])
+        return last_pct - base
+
+    g7 = gain_over(7)
+    g30 = gain_over(30)
+    span_days = max(1.0, (last_t - _parse_ts(rows[0]["ts"])).days or 1.0)
+    pace = g30 / min(30.0, span_days) if g30 is not None else None
+    if pace and pace > 0:
+        eta_days = (100.0 - last_pct) / pace
+        eta = (last_t + timedelta(days=eta_days)).date()
+        eta_val, eta_sub = f"{eta.year}-{eta.month:02d}", f"~{eta_days:.0f} days at 30d pace (estimate)"
+    else:
+        eta_val, eta_sub = "—", "no positive 30d pace"
+    return (
+        '<div class="summary" style="margin-bottom:1rem">'
+        f'<div class="card"><div class="label">Last 7 days</div>'
+        f'<div class="value">{g7:+.3f}pp</div><div class="sub">matched code</div></div>'
+        f'<div class="card"><div class="label">Last 30 days</div>'
+        f'<div class="value">{g30:+.3f}pp</div><div class="sub">{pace:+.3f}pp / day avg</div></div>'
+        f'<div class="card"><div class="label">100% reached</div>'
+        f'<div class="value">{eta_val}</div><div class="sub">{eta_sub}</div></div>'
+        "</div>"
+    )
+
+
+def _json_for_html(data: Any) -> str:
+    return json.dumps(data, separators=(",", ":")).replace("</", "<\\/")
+
+
+def build_history_section(rows: List[Dict[str, Any]], repo_url: str) -> str:
+    if len(rows) < 2:
+        return ""
+    tl_svg, tl_pts = build_timeline_chart(rows)
+    dg_svg, dg_days = build_daily_chart(rows)
+    commit_rows = history_commit_rows(rows, repo_url)
+    top_n = 20
+    if len(commit_rows) > top_n:
+        table_meta = (f"Latest {top_n} commits on <code>main</code> with a successful "
+                      f"build; expand below for all {len(commit_rows)}.")
+        table_details = f"""
+  <details>
+    <summary>All commits ({len(commit_rows)})</summary>
+    <table>
+      <thead><tr><th>Date</th><th>Commit</th><th class="num">Matched</th><th class="num">Δ matched</th><th class="num">Δ bytes</th><th class="num">Linked</th><th class="num">Fns</th></tr></thead>
+      <tbody>{"".join(commit_rows)}</tbody>
+    </table>
+  </details>"""
+    else:
+        table_meta = (f"All {len(commit_rows)} commits on <code>main</code> "
+                      f"with a successful build.")
+        table_details = ""
+
+    return f"""
+  <h2>Progress over time</h2>
+  {_pace_cards(rows)}
+  <div class="chart-card">
+    <div class="chart-head">
+      <div class="chart-title">Matched code toward the 100% goal</div>
+      <div class="chart-legend">
+        <span><span class="key" style="background:{C_MATCHED}"></span>Matched code</span>
+        <span><span class="key" style="background:{C_LINKED}"></span>Linked</span>
+      </div>
+    </div>
+    <div class="chart-wrap" id="tl-wrap">
+      {tl_svg}
+      <div class="viz-tip" id="tl-tip"></div>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-head">
+      <div class="chart-title">Daily gain — matched code, percentage points per day</div>
+    </div>
+    <div class="chart-wrap" id="dg-wrap">
+      {dg_svg}
+      <div class="viz-tip" id="dg-tip"></div>
+    </div>
+  </div>
+
+  <h2>Per-commit progress</h2>
+  <p class="meta">{table_meta}</p>
+  <table>
+    <thead><tr><th>Date</th><th>Commit</th><th class="num">Matched</th><th class="num">Δ matched</th><th class="num">Δ bytes</th><th class="num">Linked</th><th class="num">Fns</th></tr></thead>
+    <tbody>{"".join(commit_rows[:top_n])}</tbody>
+  </table>{table_details}
+
+  <script type="application/json" id="tl-data">{_json_for_html(tl_pts)}</script>
+  <script type="application/json" id="dg-data">{_json_for_html(dg_days)}</script>
+  <script>
+  (() => {{
+    // Shared tooltip helpers (textContent only — no innerHTML for data).
+    const mkRow = (tip, value, label, keyColor) => {{
+      const row = document.createElement('div');
+      row.className = 'tip-row';
+      if (keyColor) {{
+        const key = document.createElement('span');
+        key.className = 'tip-key';
+        key.style.background = keyColor;
+        row.appendChild(key);
+      }}
+      const val = document.createElement('span');
+      val.className = 'tip-val';
+      val.textContent = value;
+      const lab = document.createElement('span');
+      lab.className = 'tip-label';
+      lab.textContent = label;
+      row.appendChild(val);
+      row.appendChild(lab);
+      tip.appendChild(row);
+    }};
+    const place = (tip, wrap, evt) => {{
+      tip.style.display = 'block';
+      const wr = wrap.getBoundingClientRect();
+      const tr = tip.getBoundingClientRect();
+      let x = evt.clientX - wr.left + 14, y = evt.clientY - wr.top + 14;
+      if (x + tr.width > wr.width) x = evt.clientX - wr.left - tr.width - 14;
+      if (y + tr.height > wr.height) y = Math.max(0, wr.height - tr.height);
+      tip.style.left = Math.max(0, x) + 'px';
+      tip.style.top = Math.max(0, y) + 'px';
+    }};
+    const viewX = (svg, evt) => {{
+      const r = svg.getBoundingClientRect();
+      return (evt.clientX - r.left) * svg.viewBox.baseVal.width / r.width;
+    }};
+
+    // Timeline: crosshair snaps to the nearest commit; one tooltip, every series.
+    const tlSvg = document.getElementById('tl-svg');
+    if (tlSvg) {{
+      const pts = JSON.parse(document.getElementById('tl-data').textContent);
+      const wrap = document.getElementById('tl-wrap');
+      const tip = document.getElementById('tl-tip');
+      const cross = document.getElementById('tl-cross');
+      const dotM = document.getElementById('tl-dot-m');
+      const dotL = document.getElementById('tl-dot-l');
+      const hide = () => {{
+        tip.style.display = 'none';
+        for (const el of [cross, dotM, dotL]) el.setAttribute('opacity', '0');
+      }};
+      tlSvg.addEventListener('mousemove', (e) => {{
+        const x = viewX(tlSvg, e);
+        let best = 0, bd = Infinity;
+        for (let i = 0; i < pts.length; i++) {{
+          const d = Math.abs(pts[i].x - x);
+          if (d < bd) {{ bd = d; best = i; }}
+        }}
+        const p = pts[best];
+        cross.setAttribute('x1', p.x); cross.setAttribute('x2', p.x);
+        cross.setAttribute('opacity', '0.5');
+        dotM.setAttribute('cx', p.x); dotM.setAttribute('cy', p.ym);
+        dotL.setAttribute('cx', p.x); dotL.setAttribute('cy', p.yl);
+        dotM.setAttribute('opacity', '1'); dotL.setAttribute('opacity', '1');
+        tip.replaceChildren();
+        const head = document.createElement('div');
+        head.className = 'tip-head';
+        head.textContent = p.date + ' · ' + p.sha;
+        tip.appendChild(head);
+        const dm = p.dm === null ? '' : ' (' + (p.dm >= 0 ? '+' : '') + p.dm.toFixed(3) + 'pp)';
+        mkRow(tip, p.m.toFixed(3) + '%' + dm, 'matched', '{C_MATCHED}');
+        mkRow(tip, p.l.toFixed(2) + '%', 'linked', '{C_LINKED}');
+        place(tip, wrap, e);
+      }});
+      tlSvg.addEventListener('mouseleave', hide);
+    }}
+
+    // Daily bars: the (full-height) hit rect is the target.
+    const dgSvg = document.getElementById('dg-svg');
+    if (dgSvg) {{
+      const days = JSON.parse(document.getElementById('dg-data').textContent);
+      const wrap = document.getElementById('dg-wrap');
+      const tip = document.getElementById('dg-tip');
+      dgSvg.addEventListener('mousemove', (e) => {{
+        const t = e.target;
+        if (!t.classList || !t.classList.contains('dg-hit')) {{
+          tip.style.display = 'none';
+          return;
+        }}
+        const d = days[+t.dataset.i];
+        tip.replaceChildren();
+        const head = document.createElement('div');
+        head.className = 'tip-head';
+        head.textContent = d.date;
+        tip.appendChild(head);
+        mkRow(tip, (d.d >= 0 ? '+' : '') + d.d.toFixed(3) + 'pp',
+              d.n + (d.n === 1 ? ' commit' : ' commits'), '{C_MATCHED}');
+        place(tip, wrap, e);
+      }});
+      dgSvg.addEventListener('mouseleave', () => {{ tip.style.display = 'none'; }});
+    }}
+  }})();
+  </script>
+"""
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("report", type=Path, help="Path to report.json")
@@ -466,6 +1050,9 @@ def main() -> int:
     ap.add_argument("--version", default="GNLJ82")
     ap.add_argument("--title", default="Mario Kart Arcade GP2 — decomp progress")
     ap.add_argument("--commit", default=None, help="Optional commit SHA to display")
+    ap.add_argument("--history", type=Path, default=None,
+                    help="Per-commit history JSONL (progress-data branch)")
+    ap.add_argument("--repo-url", default="https://github.com/naari3/mkgp2-decomp")
     args = ap.parse_args()
 
     if not args.report.is_file():
@@ -513,12 +1100,20 @@ def main() -> int:
 
     treemap_svg = build_treemap(units_with_code, width=1000, height=520)
 
+    history_section = ""
+    if args.history and args.history.is_file():
+        hist_rows = load_history_file(args.history)
+        if hist_rows:
+            history_section = build_history_section(hist_rows, args.repo_url)
+            shutil.copyfile(args.history, args.out_dir / "history.jsonl")
+
     commit_part = f" · commit <code>{html.escape(args.commit)}</code>" if args.commit else ""
 
     html_out = HTML_TEMPLATE.format(
         title=html.escape(args.title),
         version=html.escape(args.version),
         commit_part=commit_part,
+        history_section=history_section,
         matched_pct=measures.matched_code_percent,
         matched_bytes=format_bytes(measures.matched_code),
         total_bytes=format_bytes(measures.total_code),

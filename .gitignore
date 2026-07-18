@@ -40,6 +40,9 @@ compile_commands.json
 site/
 per_fn.json
 
+# progress-data branch worktree (CI progress history)
+.progress-data/
+
 # Claude Code local state (skills / commands は共有物なので track する)
 .claude/*
 !.claude/skills/
