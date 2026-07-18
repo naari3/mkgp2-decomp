@@ -368,6 +368,7 @@ config.libs = [
             Object(Matching, "game/NoopRenderHook_Pending_80064d28.c"),
             Object(Matching, "game/Allocator_DestroyEntry_Noop.c"),
             Object(Matching, "game/PlayStats_ShutdownStub.c"),
+            Object(Matching, "game/PlayStats_Clear.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/TEXBindPaletteEntry.c", extab_padding=b"", extra_cflags=["-i src"]),
             Object(Matching, "game/Object_JObjUpdate.c"),
             Object(Matching, "game/Object_SetJObjRotation.c"),

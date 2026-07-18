@@ -637,6 +637,11 @@ game/CardTaskWelcome_Dtor.c:
 	extabindex  start:0x80021B18 end:0x80021B24
 	.text       start:0x8008A058 end:0x8008A0A0
 
+game/PlayStats_Clear.c:
+	extab       start:0x800092B0 end:0x800092B8
+	extabindex  start:0x80021D94 end:0x80021DA0
+	.text       start:0x8008E33C end:0x8008E36C
+
 game/PlayStats_ShutdownStub.c:
 	.text       start:0x8008E36C end:0x8008E370
 
