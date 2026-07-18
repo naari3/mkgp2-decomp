@@ -236,6 +236,11 @@ game/KartMovement_GetVelocityMagnitude.c:
 	extabindex  start:0x8001FDA8 end:0x8001FDB4
 	.text       start:0x8003F528 end:0x8003F54C
 
+game/KartItem_TriggerStateAction.c:
+	extab       start:0x80006170 end:0x80006178
+	extabindex  start:0x8001FDC0 end:0x8001FDCC
+	.text       start:0x8003F5C4 end:0x8003F5E8
+
 game/KartMovement_CanReceiveItem.c:
 	.text       start:0x8003F5E8 end:0x8003F668
 

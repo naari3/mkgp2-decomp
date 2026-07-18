@@ -513,6 +513,7 @@ config.libs = [
             Object(Matching, "game/KartBody.c"),
             Object(Matching, "game/KartMovement.c"),
             Object(Matching, "game/KartMovement_GetVelocityMagnitude.c"),
+            Object(Matching, "game/KartItem_TriggerStateAction.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartMovement_CanReceiveItem.c"),
             Object(Matching, "game/KartMovement_GetCurrentItemId.c"),
             Object(Matching, "game/KartReaction.c", extra_cflags=["-Cpp_exceptions on"]),
