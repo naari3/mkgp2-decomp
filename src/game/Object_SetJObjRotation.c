@@ -193,4 +193,24 @@ void Object_SetJObjPositionX(ObjectRotationView *object, float position) {
         }
     }
 }
+
+void Object_SetJObjPositionXYZ(ObjectRotationView *object, float position_x,
+                               float position_y, float position_z) {
+    HSD_JObj *jobj = object->jobj;
+
+    if (jobj != 0) {
+        if (jobj == 0) {
+            __assert(lbl_806D2348, 0x3A9, lbl_806D2350);
+        }
+        jobj->position_x = position_x;
+        jobj->position_y = position_y;
+        jobj->field_40 = position_z;
+        if (!(jobj->flags & 0x02000000) && jobj != 0) {
+            if (jobj == 0) {
+                __assert(lbl_806D2348, 0x25D, lbl_806D2350);
+            }
+            update_matrix(jobj);
+        }
+    }
+}
 #pragma exceptions reset

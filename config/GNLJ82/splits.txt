@@ -85,9 +85,9 @@ game/Object_JObjUpdate.c:
 	.text       start:0x80031718 end:0x80031770
 
 game/Object_SetJObjRotation.c:
-	extab       start:0x800059A0 end:0x800059E0
-	extabindex  start:0x8001F67C end:0x8001F6DC
-	.text       start:0x8003185C end:0x80031E48
+	extab       start:0x800059A0 end:0x800059E8
+	extabindex  start:0x8001F67C end:0x8001F6E8
+	.text       start:0x8003185C end:0x80031F10
 
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
@@ -537,6 +537,9 @@ game/CourseData_Lookup.c:
 	extab       start:0x8000A0E8 end:0x8000A110
 	extabindex  start:0x80022778 end:0x8002279C
 	.text       start:0x800ABD80 end:0x800ABF58
+
+game/DemoFlow_ResetTwoFlags.c:
+	.text       start:0x800AC884 end:0x800AC894
 
 game/main.c:
 	extab       start:0x8000A150 end:0x8000A158

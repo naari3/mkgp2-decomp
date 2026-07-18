@@ -376,6 +376,7 @@ config.libs = [
             Object(Matching, "game/Vec3_Magnitude_Wrapper.c"),
             Object(Matching, "game/TornadoEffect_TriggerField140.c"),
             Object(Matching, "game/EffectState_HasContent.c"),
+            Object(Matching, "game/DemoFlow_ResetTwoFlags.c"),
             Object(Matching, "game/ItemObject_SetByte18c.c"),
             Object(Matching, "game/FinalLapCoinJump_SetEnable.c"),
             Object(Matching, "game/FinalLapCoinJump_CheckActiveForObject.c"),
