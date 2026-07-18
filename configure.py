@@ -383,6 +383,7 @@ config.libs = [
             Object(Matching, "game/VfxSlot_SetRotationZ.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/VfxSlot_SetRotationXYZ.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SpriteSlot_SetScaleXYZ.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/SpriteSlot_SetRotationQuat.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SpriteSlot_Render.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Vec3_Magnitude_Wrapper.c"),
             Object(Matching, "game/Vec3_ScaleXZ.c"),
