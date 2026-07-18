@@ -330,6 +330,11 @@ game/KartItem_RenderCb_Mode3_Pre.c:
 	extabindex  start:0x80020768 end:0x80020774
 	.text       start:0x80056838 end:0x8005685C
 
+game/KartItem_RenderCb_Mode5_Pre.c:
+	extab       start:0x800075B4 end:0x800075BC
+	extabindex  start:0x80020780 end:0x8002078C
+	.text       start:0x800568DC end:0x80056900
+
 game/TornadoEffect_RenderCallback.c:
 	extab       start:0x80007648 end:0x80007650
 	extabindex  start:0x80020804 end:0x80020810
