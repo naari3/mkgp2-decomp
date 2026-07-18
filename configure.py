@@ -405,6 +405,7 @@ config.libs = [
             Object(Matching, "game/JointByName.c"),
             Object(Matching, "game/SpriteAnimParamBlock.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/VolumeCalibration.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
+            Object(Matching, "game/ItemHitRegistry.c"),
             Object(Matching, "game/Vec3_ScaleXZ.c"),
             Object(Matching, "game/TornadoEffect_TriggerField140.c"),
             Object(Matching, "game/TornadoEffect_RenderCallback.c", extra_cflags=["-Cpp_exceptions on"]),

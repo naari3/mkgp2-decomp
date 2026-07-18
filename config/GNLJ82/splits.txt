@@ -972,6 +972,9 @@ game/ItemObjectManager_Init.c:
 	extabindex  start:0x800239FC end:0x80023A08
 	.text       start:0x800D81E0 end:0x800D8288
 
+game/ItemHitRegistry.c:
+	.text       start:0x800D8840 end:0x800D8E20
+
 game/Item_DecayVelocityScalar.c:
 	.text       start:0x800D9D50 end:0x800D9D74
 
