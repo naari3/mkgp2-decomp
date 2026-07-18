@@ -168,6 +168,11 @@ game/InputObj_Ctor.c:
 	extabindex  start:0x8001FAA8 end:0x8001FAB4
 	.text       start:0x800395EC end:0x8003964C
 
+game/JvsInput_TickPoll.c:
+	extab       start:0x80005E58 end:0x80005E60
+	extabindex  start:0x8001FAC0 end:0x8001FACC
+	.text       start:0x800396C0 end:0x800396E0
+
 game/InputMgr_TeardownStub.c:
 	.text       start:0x800396E0 end:0x800396E4
 
