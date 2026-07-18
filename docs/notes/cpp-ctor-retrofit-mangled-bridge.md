@@ -64,3 +64,31 @@ __dl__FPv                 -> MemoryManager_TimedFree (operator delete)
   VolumeCalibration_Tick / DrawOverlay (後者は RTTI も必要),
   TransparentDraw_DestroyEntry, TripleBladeRing_SetWorldYaw (fp-numbering は
   別 family、効かない可能性あり)
+
+## 適用実績 (2026-07-19 第 2 波)
+
+- **Jyugemu_Flag_Ctor ✓** (2 iteration): free function 形だと return path の
+  branch-over-branch (`bne/b`) と per-return-site の `mr r3, r30` が出ない。
+  **本物の ctor + 早期 `return`** に書き直すと implicit `return this` が
+  その形を自然に生成して 100%。「returns が分離 materialize されてる関数は
+  ctor の兆候」と覚える
+- **DMAChannelManager_Init ✓** (3 iteration): ループ内 `new TDrawEntry`
+  (ctor = TransparentDraw_ResetEntry)。`-use_lmw_stmw on` が必要 (target が
+  stmw/lmw)。cursor 変数は `addi→r0→mr` の余分 copy を出すので
+  **typed struct 配列の global-index spelling** (`lbl[i].field`) にすると
+  walker が addi を直接持って 100%
+- **ItemObjectManager_Init ✗ park 維持** (6 probe): ループの i/walker
+  callee-saved 割付が target と swap したまま source-closed (for/while/
+  do-while/register/struct-index/Pool-struct すべて invariant)。
+  **real C++ 化しても register-identity park family が解けない場合がある**。
+  EH web (DELETEPOINTER の pointer) は正しい register に固定されるが、
+  EH に関与しないループ web の順序は別問題
+
+## 多 fn TU での制約 (ONKARTHIT mega bundle で確認)
+
+manual emit の extab を持つ多 fn TU では、**一部の fn だけ** real C++ 化して
+auto-emit に切り替えると、object 内の extab section 並び (auto 一括 → manual
+一括) が target の address 順と食い違って SHA-1 が壊れる。
+auto_ONKARTHIT_block.c の dtor 11 連隊 + KartItem/CarObject 大物はこのため
+**TU 丸ごと C++ 変換が前提** (別プロジェクトとして計画する)。単独 fn TU
+(Jyugemu_Flag_Ctor 等) にはこの制約は無い。

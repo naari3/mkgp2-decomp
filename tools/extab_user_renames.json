@@ -15,8 +15,7 @@
     "extabindex_InputMgr_Init": "@eti_8001FA6C"
   },
   "src/game/DMAChannelManager_Init.c": {
-    "extab_DMAChannelManager_Init": "@etb_800080D8",
-    "extabindex_DMAChannelManager_Init": "@eti_80020FC0"
+    "__ct__10TDrawEntryFv": "TransparentDraw_ResetEntry"
   },
   "src/game/TexMgr_Apply.c": {
     "extab_TexMgr_Apply": "@etb_800176C8",
@@ -175,8 +174,8 @@
     "extabindex_Jyugemu_Flag_Dtor": "@eti_80021710"
   },
   "src/game/Jyugemu_Flag_Ctor.c": {
-    "extab_Jyugemu_Flag_Ctor": "@etb_80008A14",
-    "extabindex_Jyugemu_Flag_Ctor": "@eti_8002171C"
+    "__ct__11JyugemuFlagFi": "Jyugemu_Flag_Ctor",
+    "__ct__10clNormal3DFPUii": "clNormal3D_Construct"
   },
   "src/game/Jyugemu_ReverseFlag_Tick.c": {
     "extab_Jyugemu_ReverseFlag_Tick": "@etb_80008A3C",

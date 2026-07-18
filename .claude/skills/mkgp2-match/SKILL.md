@@ -470,6 +470,29 @@ asm_fn の bundle を 1 fn ずつ matched に promote するとき、CW は plai
 
 commit message に対象関数 / address / size / 動作内容 / SHA-1 verify 通過を明記。
 
+## 定型: extab action 持ち関数は最初から C++ で書く (2026-07-19 確立)
+
+着手前に対象関数の extab を確認する (`python tools/scan_extab_actions.py --all | grep <fn>`
+か dtk asm の extab dump)。**entry が 8 byte 超 = EH action 持ち** なら、その関数は
+実 C++ 構文 (ctor / new 式 / dtor 持ち local) で compile されている。plain C +
+manual extab で寄せると register-identity park に嵌まりやすいので、**最初から
+本物の C++ で書く**:
+
+- レシピの正本: `docs/notes/cpp-ctor-retrofit-mangled-bridge.md`
+  (mangled 名を extab_user_renames.json の --redefine-sym で既存 C 名に橋渡し、
+  vtable は未定義 key function で emission 抑止)
+- 兆候の読み方:
+  - extab に DELETEPOINTER → その PC は `new T(...)` の ctor call site。
+    `li r3, SIZE; bl Alloc; mr. rN, r3; beq; bl ctor` が new 式の定型
+  - extab に DESTROYBASE → その関数は derived ctor。base class を宣言する
+  - return 直前の branch-over-branch + per-site `mr r3, r30` → implicit
+    `return this` = 本物の ctor として書く (free function では出ない)
+  - target が stmw/lmw を使う → `-use_lmw_stmw on` を TU に追加
+- 注意: 多 fn TU で manual extab と混在させると section 並びが壊れる
+  (同 note の「多 fn TU での制約」)。単独 fn TU なら制約なし
+- real C++ でも解けない register-identity (EH 無関係のループ web swap 等) は
+  ある (ItemObjectManager_Init 実例)。3 試行で動かなければ従来どおり退避
+
 ## トラブルシューティング: dtk 関連
 
 - **既存 dtk blob を分割するワークフロー**: orphan symbol を add するときの細分化と同じパターン。`tools/add_orphan_symbols.py` を参考
