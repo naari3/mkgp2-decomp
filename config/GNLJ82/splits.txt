@@ -1263,6 +1263,11 @@ game/Item_GetDescriptorField0.c:
 	extabindex  start:0x8002AEA8 end:0x8002AEB4
 	.text       start:0x8023DC50 end:0x8023DCEC
 
+game/SpriteAnimParamBlock.c:
+	extab       start:0x8001CD94 end:0x8001CDAC
+	extabindex  start:0x8002AF14 end:0x8002AF38
+	.text       start:0x8023EF38 end:0x8023F1C8
+
 game/IsCardValid.c:
 	extab       start:0x8001CE14 end:0x8001CE1C
 	extabindex  start:0x8002AF74 end:0x8002AF80
