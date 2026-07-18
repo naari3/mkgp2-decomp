@@ -424,6 +424,7 @@ config.libs = [
             Object(Matching, "game/PcbConn_MarkDisabled.c"),
             Object(Matching, "game/Clamp.c"),
             Object(Matching, "game/NoOpStubs_38f54.c"),
+            Object(Matching, "game/Allocator_Deallocate.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Stub_NoOp_38f80.c"),
             Object(Matching, "game/InputMgr_GetPlayer.c"),
             Object(Matching, "game/InputMgr.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
