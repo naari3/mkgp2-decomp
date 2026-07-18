@@ -475,6 +475,11 @@ game/ServiceMenu.c:
 	extabindex  start:0x800211C4 end:0x800211D0
 	.text       start:0x80073E7C end:0x80073ECC
 
+game/PostRace_StartScoreEntryFlow.c:
+	extab       start:0x800082C0 end:0x800082C8
+	extabindex  start:0x800211D0 end:0x800211DC
+	.text       start:0x80073ECC end:0x80073EF8
+
 game/Sci2Card_Singleton_Get.c:
 	.text       start:0x80076BB4 end:0x80076BBC
 

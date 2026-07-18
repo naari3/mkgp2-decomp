@@ -416,6 +416,7 @@ config.libs = [
             Object(Matching, "game/CardRW_GetSubState.c"),
             Object(Matching, "game/card_rw_get_substate.c"),
             Object(Matching, "game/Sci2Card_GetPrintErrorCode.c"),
+            Object(Matching, "game/PostRace_StartScoreEntryFlow.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Sci2Card_Singleton_Get.c"),
             Object(Matching, "game/CardTaskWelcome_Dtor.c"),
             Object(Matching, "game/clCGameDemoWC_Stubs.c"),
