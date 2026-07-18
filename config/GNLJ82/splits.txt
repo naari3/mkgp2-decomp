@@ -501,6 +501,11 @@ game/CourseAuxClass_VtableDtor.c:
 game/DVDLoad_Stats.c:
 	.text       start:0x8007DFD4 end:0x8007DFE4
 
+game/DVDLoad_RecordOpStart.c:
+	extab       start:0x80008808 end:0x80008810
+	extabindex  start:0x80021614 end:0x80021620
+	.text       start:0x8007E28C end:0x8007E2B8
+
 game/Jyugemu_Flag_SetKartDriver.c:
 	.text       start:0x800806D4 end:0x800806F4
 

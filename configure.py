@@ -548,6 +548,7 @@ config.libs = [
             Object(Matching, "game/ResetIOPorts.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/PcbSyncTable_Ptr.c"),
             Object(Matching, "game/DVDLoad_Stats.c"),
+            Object(Matching, "game/DVDLoad_RecordOpStart.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/RingBuffer_Getters.c"),
             Object(Matching, "game/SyncSlot_ApplyCourseChoice.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PCBComm_PromoteToClientConfirmed.c"),
