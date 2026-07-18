@@ -459,6 +459,11 @@ game/ItemSelect.c:
 	extabindex  start:0x80020D98 end:0x80020DBC
 	.text       start:0x80060D40 end:0x80061054
 
+game/clMiyoshiCardCreate.c:
+	extab       start:0x80007E10 end:0x80007E74
+	extabindex  start:0x80020DBC end:0x80020DEC
+	.text       start:0x80061054 end:0x8006178C
+
 game/dtor_8006178C.c:
 	extab       start:0x80007E74 end:0x80007E84
 	extabindex  start:0x80020DEC end:0x80020E04
@@ -759,6 +764,21 @@ game/dtor_80091284.c:
 
 game/CardRW_GetSubState.c:
 	.text       start:0x800934A8 end:0x800934B0
+
+game/CardSave_Tick.c:
+	extab       start:0x80009488 end:0x80009490
+	extabindex  start:0x80021FF8 end:0x80022004
+	.text       start:0x800934B0 end:0x800934F0
+
+game/CardSave_Tick_PollCleaningResult.c:
+	extab       start:0x80009490 end:0x80009498
+	extabindex  start:0x80022004 end:0x80022010
+	.text       start:0x800934F0 end:0x800937D4
+
+game/CardSave_Tick_CaptureAndStart.c:
+	extab       start:0x80009498 end:0x800094A0
+	extabindex  start:0x80022010 end:0x8002201C
+	.text       start:0x800937D4 end:0x80093C28
 
 game/card_is_ejected.c:
 	.text       start:0x8009838C end:0x800983A0
@@ -1084,6 +1104,11 @@ game/SuikaBallObj_Render.c:
 	extab       start:0x8000BE88 end:0x8000BE90
 	extabindex  start:0x8002486C end:0x80024878
 	.text       start:0x801240B4 end:0x801240E4
+
+game/BiribiriLand.c:
+	extab       start:0x8000CE64 end:0x8000D014
+	extabindex  start:0x80024B6C end:0x80024BA8
+	.text       start:0x801341E4 end:0x8013558C
 
 game/RivalRun_PathFollowerInit.c:
 	extab       start:0x8000D220 end:0x8000D228

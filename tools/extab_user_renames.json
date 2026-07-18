@@ -327,5 +327,39 @@
     "extab_TransparentDraw_SortAndDispatch": "@etb_800080C0",
     "extabindex_TransparentDraw_DestroyEntry": "@eti_80020F90",
     "extabindex_TransparentDraw_SortAndDispatch": "@eti_80020F9C"
+  },
+  "src/game/clMiyoshiCardCreate.c": {
+    "extab_clMiyoshiCardCreate_Draw": "@etb_80007E10",
+    "extabindex_clMiyoshiCardCreate_Draw": "@eti_80020DBC",
+    "extab_clMiyoshiCardCreate_Tick": "@etb_80007E38",
+    "extabindex_clMiyoshiCardCreate_Tick": "@eti_80020DC8",
+    "extab_clMiyoshiCardCreate_Dtor": "@etb_80007E40",
+    "extabindex_clMiyoshiCardCreate_Dtor": "@eti_80020DD4",
+    "extab_clMiyoshiCardCreate_Ctor": "@etb_80007E48",
+    "extabindex_clMiyoshiCardCreate_Ctor": "@eti_80020DE0"
+  },
+  "src/game/BiribiriLand.c": {
+    "extab_BiribiriLand_Render": "@etb_8000CE64",
+    "extab_BiribiriLand_Update": "@etb_8000CE6C",
+    "extab_BiribiriLand_UpdateObstacles": "@etb_8000CE74",
+    "extab_BiribiriLand_Destroy": "@etb_8000CE7C",
+    "extab_BiribiriLand_Init": "@etb_8000CE84",
+    "extabindex_BiribiriLand_Render": "@eti_80024B6C",
+    "extabindex_BiribiriLand_Update": "@eti_80024B78",
+    "extabindex_BiribiriLand_UpdateObstacles": "@eti_80024B84",
+    "extabindex_BiribiriLand_Destroy": "@eti_80024B90",
+    "extabindex_BiribiriLand_Init": "@eti_80024B9C"
+  },
+  "src/game/CardSave_Tick.c": {
+    "extab_CardSave_Tick": "@etb_80009488",
+    "extabindex_CardSave_Tick": "@eti_80021FF8"
+  },
+  "src/game/CardSave_Tick_PollCleaningResult.c": {
+    "extab_CardSave_Tick_PollCleaningResult": "@etb_80009490",
+    "extabindex_CardSave_Tick_PollCleaningResult": "@eti_80022004"
+  },
+  "src/game/CardSave_Tick_CaptureAndStart.c": {
+    "extab_CardSave_Tick_CaptureAndStart": "@etb_80009498",
+    "extabindex_CardSave_Tick_CaptureAndStart": "@eti_80022010"
   }
 }
