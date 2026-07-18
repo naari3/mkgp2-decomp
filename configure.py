@@ -406,6 +406,8 @@ config.libs = [
             Object(Matching, "game/TaRecord.c"),
             Object(Matching, "game/TaRecord_InsertResult.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/Tachometer.c", extab_padding=b"\x00\x00", extra_cflags=["-i src/game"]),
+            Object(Matching, "game/ParticleBurst.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/KartTireFX.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/SpriteAnimParamBlock.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/VolumeCalibration.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
             Object(Matching, "game/ItemHitRegistry.c"),

@@ -541,6 +541,11 @@ game/card_eject.c:
 	extabindex  start:0x800213A4 end:0x800213B0
 	.text       start:0x80077A54 end:0x80077AFC
 
+game/KartTireFX.c:
+	extab       start:0x80008430 end:0x80008490
+	extabindex  start:0x800213C8 end:0x80021428
+	.text       start:0x80077E24 end:0x80079B24
+
 game/CourseAuxClass_VtableDtor.c:
 	extab       start:0x800087A0 end:0x800087A8
 	extabindex  start:0x80021578 end:0x80021584
@@ -917,6 +922,11 @@ game/VfxSlot_BindResourceEx.c:
 
 game/EffectActor_BindKartTargetPair.c:
 	.text       start:0x800B3244 end:0x800B3250
+
+game/ParticleBurst.c:
+	extab       start:0x8000A6C0 end:0x8000A6D8
+	extabindex  start:0x80022BA4 end:0x80022BC8
+	.text       start:0x800B4164 end:0x800B4804
 
 game/DebrisArray_DrawForward.c:
 	extab       start:0x8000A6E8 end:0x8000A6F0

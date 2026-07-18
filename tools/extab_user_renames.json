@@ -267,5 +267,31 @@
     "extabindex_Tachometer_Destroy": "@eti_80022748",
     "extab_Tachometer_Init": "@etb_8000A08C",
     "extabindex_Tachometer_Init": "@eti_80022754"
+  },
+  "src/game/ParticleBurst.c": {
+    "extab_ParticleBurst_Draw": "@etb_8000A6C0",
+    "extab_ParticleBurst_DrawCb": "@etb_8000A6C8",
+    "extab_ParticleBurst_Update": "@etb_8000A6D0",
+    "extabindex_ParticleBurst_Draw": "@eti_80022BA4",
+    "extabindex_ParticleBurst_DrawCb": "@eti_80022BB0",
+    "extabindex_ParticleBurst_Update": "@eti_80022BBC"
+  },
+  "src/game/KartTireFX.c": {
+    "extab_KartTireFX_ShowGearStageJObjs": "@etb_80008430",
+    "extabindex_KartTireFX_ShowGearStageJObjs": "@eti_800213C8",
+    "extab_KartTireFX_ResolveJoints": "@etb_80008438",
+    "extabindex_KartTireFX_ResolveJoints": "@eti_800213D4",
+    "extab_KartTireFX_SetRollPair_Joints88_90": "@etb_80008460",
+    "extabindex_KartTireFX_SetRollPair_Joints88_90": "@eti_800213E0",
+    "extab_KartTireFX_SetRollPair_Joints84_8c": "@etb_80008468",
+    "extabindex_KartTireFX_SetRollPair_Joints84_8c": "@eti_800213EC",
+    "extab_KartTireFX_SetVisibleAll4Wheels": "@etb_80008470",
+    "extabindex_KartTireFX_SetVisibleAll4Wheels": "@eti_800213F8",
+    "extab_KartTireFX_ApplyAndRender": "@etb_80008478",
+    "extabindex_KartTireFX_ApplyAndRender": "@eti_80021404",
+    "extab_KartTireFX_Dtor": "@etb_80008480",
+    "extabindex_KartTireFX_Dtor": "@eti_80021410",
+    "extab_KartTireFX_Ctor": "@etb_80008488",
+    "extabindex_KartTireFX_Ctor": "@eti_8002141C"
   }
 }
