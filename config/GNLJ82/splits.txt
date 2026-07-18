@@ -133,6 +133,9 @@ game/StrPcb.c:
 game/StrPcb_Error.c:
 	.text       start:0x80037B68 end:0x80037CC0
 
+game/StrPcb_BeginEffect.c:
+	.text       start:0x800381E4 end:0x80038204
+
 game/StrPcb_GetInstance.c:
 	.text       start:0x80038574 end:0x8003857C
 
