@@ -233,5 +233,15 @@
   "src/game/SpriteAnimParamBlock.c": {
     "extab_SpriteAnimParamBlock_Reload": "@etb_8001CDA4",
     "extabindex_SpriteAnimParamBlock_Reload": "@eti_8002AF2C"
+  },
+  "src/game/VolumeCalibration.c": {
+    "extab_VolumeCalibration_DrawOverlay": "@etb_80005EA0",
+    "extab_VolumeCalibration_Tick": "@etb_80005EA8",
+    "extab_VolumeCalibration_Dtor": "@etb_80005EB0",
+    "extab_VolumeCalibration_Ctor": "@etb_80005EB8",
+    "extabindex_VolumeCalibration_DrawOverlay": "@eti_8001FB2C",
+    "extabindex_VolumeCalibration_Tick": "@eti_8001FB38",
+    "extabindex_VolumeCalibration_Dtor": "@eti_8001FB44",
+    "extabindex_VolumeCalibration_Ctor": "@eti_8001FB50"
   }
 }

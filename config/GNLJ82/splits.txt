@@ -216,6 +216,11 @@ game/MetricsTable.c:
 	.text       start:0x80039D38 end:0x80039E10
 	.ctors      start:0x802E88F0 end:0x802E88F4
 
+game/VolumeCalibration.c:
+	extab       start:0x80005EA0 end:0x80005ED0
+	extabindex  start:0x8001FB2C end:0x8001FB5C
+	.text       start:0x80039E10 end:0x8003A154
+
 game/SceneRender.c:
 	extab       start:0x80005F18 end:0x80005F50
 	extabindex  start:0x8001FBC8 end:0x8001FC04
