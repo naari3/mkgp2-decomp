@@ -559,6 +559,9 @@ game/PcbConn_GetStateName.c:
 game/TCPConn.c:
 	.text       start:0x80086F54 end:0x8008707C
 
+game/PcbConn_RecycleIfOver.c:
+	.text       start:0x80087144 end:0x80087170
+
 game/TCPConn_Reset.c:
 	extab       start:0x80008E6C end:0x80008E74
 	extabindex  start:0x80021968 end:0x80021974

@@ -446,6 +446,7 @@ config.libs = [
             Object(Matching, "game/StrPcb_GetInstance.c"),
             Object(Matching, "game/SetPcbScratchFlag_806d11a4.c"),
             Object(Matching, "game/PcbConn_MarkDisabled.c"),
+            Object(Matching, "game/PcbConn_RecycleIfOver.c"),
             Object(Matching, "game/Clamp.c"),
             Object(Matching, "game/NoOpStubs_38f54.c"),
             Object(Matching, "game/Allocator_Deallocate.cpp", extra_cflags=["-Cpp_exceptions on"]),
