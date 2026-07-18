@@ -503,6 +503,11 @@ game/PostRace_StartScoreEntryFlow_WithCardSave.c:
 game/Sci2Card_Singleton_Get.c:
 	.text       start:0x80076BB4 end:0x80076BBC
 
+game/Sci2Card_GetResponsePayload.c:
+	extab       start:0x800083F8 end:0x80008400
+	extabindex  start:0x80021374 end:0x80021380
+	.text       start:0x80077810 end:0x80077840
+
 game/card_eject.c:
 	extab       start:0x80008418 end:0x80008420
 	extabindex  start:0x800213A4 end:0x800213B0
