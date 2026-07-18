@@ -108,6 +108,11 @@ game/clNormal3D_Construct.c:
 	extabindex  start:0x8001F7F0 end:0x8001F7FC
 	.text       start:0x80034798 end:0x80034834
 
+game/Object_ReleaseAnimResource.c:
+	extab       start:0x80005BB8 end:0x80005BC0
+	extabindex  start:0x8001F808 end:0x8001F814
+	.text       start:0x80034A10 end:0x80034A3C
+
 game/Archive_GetCurrent.c:
 	.text       start:0x80034A8C end:0x80034A94
 

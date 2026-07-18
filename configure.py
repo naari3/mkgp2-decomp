@@ -371,6 +371,7 @@ config.libs = [
             Object(Matching, "game/TEXBindPaletteEntry.c", extab_padding=b"", extra_cflags=["-i src"]),
             Object(Matching, "game/Object_JObjUpdate.c"),
             Object(Matching, "game/Object_SetJObjRotation.c"),
+            Object(Matching, "game/Object_ReleaseAnimResource.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Object_Color.c", extab_padding=b""),
             Object(Matching, "game/Object_SetByte48.c"),
             Object(Matching, "game/SpriteSlot_SetScale.c"),
