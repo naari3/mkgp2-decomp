@@ -63,6 +63,11 @@ game/HeapStats.c:
 	extabindex  start:0x8001F490 end:0x8001F4CC
 	.text       start:0x8002F640 end:0x8002F9B4
 
+game/SeqMenuScene.c:
+	extab       start:0x80005880 end:0x800058A0
+	extabindex  start:0x8001F4CC end:0x8001F4FC
+	.text       start:0x8002F9B4 end:0x8002FD4C
+
 game/Profiler.c:
 	.text       start:0x8002FF08 end:0x8002FF48
 

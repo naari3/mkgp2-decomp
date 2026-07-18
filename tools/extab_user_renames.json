@@ -147,5 +147,9 @@
     "extab_ISESlot_Dtor": "@etb_800068C0",
     "extabindex_ISESlot_Init": "@eti_80020180",
     "extabindex_ISESlot_Dtor": "@eti_8002018C"
+  },
+  "src/game/SeqMenuScene.c": {
+    "extab_SeqMenuScene_Init": "@etb_80005898",
+    "extabindex_SeqMenuScene_Init": "@eti_8001F4F0"
   }
 }
