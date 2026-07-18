@@ -343,6 +343,11 @@ game/CoinEvent_PlaySE_0x13.c:
 	extabindex  start:0x800201C8 end:0x800201D4
 	.text       start:0x8004A04C end:0x8004A074
 
+game/DebugOverlay_KartPhysicsForLocalPlayer.c:
+	extab       start:0x800068F0 end:0x800068F8
+	extabindex  start:0x800201D4 end:0x800201E0
+	.text       start:0x8004A074 end:0x8004A0A4
+
 game/auto_ONKARTHIT_block.c:
 	extab       start:0x80006900 end:0x8000718C
 	extabindex  start:0x800201EC end:0x8002057C
