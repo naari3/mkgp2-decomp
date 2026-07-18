@@ -20,3 +20,8 @@
 
 - Local TaRecord commit `54d2689` passed the full SHA-1 check, but its first push was rejected because remote `main` advanced concurrently.
 - Recovery: fetch/rebase, rerun the SHA-1 check, push, then close claim issue #20.
+
+# Push recovery: HeartCompoundItem / CarrotItemEffect / TwinSpriteOverlay (2026-07-19)
+
+- Local commit `1030193` passed the full SHA-1 check, but its first push was rejected because remote `main` advanced concurrently.
+- Recovery: fetch/rebase, resolve any SoT conflicts while retaining both sides, rerun SHA-1, push, then close issues #23-#25.
