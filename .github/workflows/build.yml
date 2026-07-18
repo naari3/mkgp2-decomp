@@ -13,8 +13,11 @@ jobs:
 
     # contents: write is for pushing per-commit progress history to the
     # progress-data branch (main only, see "Update progress history").
+    # Explicit permissions replace ALL defaults, so packages: read must be
+    # restated or pulling the private build container is denied.
     permissions:
       contents: write
+      packages: read
 
     runs-on: ubuntu-latest
     strategy:
