@@ -333,6 +333,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   .chart-title {{ color: #f0f6fc; font-weight: 600; font-size: 0.95rem; }}
   .chart-legend {{ display: flex; gap: 1.2rem; font-size: 0.8rem; color: #8b949e; }}
   .chart-legend .key {{ display: inline-block; width: 14px; height: 2px; border-radius: 1px; margin-right: 0.4rem; vertical-align: middle; }}
+  .chart-controls {{ display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }}
+  .chart-hint {{ font-size: 0.78rem; margin: 0 0 0.5rem; }}
+  .range-btns {{ display: flex; gap: 0.25rem; }}
+  .range-btns button {{ background: transparent; border: 1px solid #30363d; color: #8b949e;
+    border-radius: 4px; font-size: 0.75rem; padding: 0.15rem 0.55rem; cursor: pointer; font-family: inherit; }}
+  .range-btns button:hover {{ color: #f0f6fc; border-color: #8b949e; }}
+  .range-btns button.active {{ background: #21262d; color: #f0f6fc; }}
+  #tl-svg {{ touch-action: pan-y; cursor: crosshair; }}
   .chart-wrap {{ position: relative; }}
   .chart-wrap svg text {{ font-family: inherit; }}
   .viz-tip {{
@@ -527,146 +535,26 @@ def _fmt_day(d: date) -> str:
     return f"{d.month}/{d.day}"
 
 
-def build_timeline_chart(
-    rows: List[Dict[str, Any]], width: int = 1000, height: int = 360
-) -> Tuple[str, List[Dict[str, Any]]]:
-    """Line chart: matched/linked code % per commit over time, y fixed 0-100
-    so the distance to the 100% goal stays honest. Returns (svg, hover_points)."""
-    ml, mr, mt, mb = 52, 100, 14, 30
-    iw, ih = width - ml - mr, height - mt - mb
+def timeline_points(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Raw per-commit points for the client-rendered timeline chart.
 
-    times = [_parse_ts(r["ts"]).timestamp() for r in rows]
-    t0, t1 = min(times), max(times)
-    if t1 - t0 < 86400:
-        pad = (86400 - (t1 - t0)) / 2
-        t0, t1 = t0 - pad, t1 + pad
-
-    def x_at(t: float) -> float:
-        return ml + (t - t0) / (t1 - t0) * iw
-
-    def y_at(pct: float) -> float:
-        return mt + (100.0 - pct) / 100.0 * ih
-
-    parts: List[str] = []
-    # Horizontal gridlines every 25%, hairline; 100% doubles as the goal line.
-    for pct in (0, 25, 50, 75, 100):
-        y = y_at(pct)
-        stroke = C_BASELINE if pct == 0 else C_GRID
-        parts.append(
-            f'<line x1="{ml}" y1="{y:.1f}" x2="{ml + iw}" y2="{y:.1f}" '
-            f'stroke="{stroke}" stroke-width="1"/>'
-        )
-        parts.append(
-            f'<text x="{ml - 8}" y="{y + 4:.1f}" text-anchor="end" '
-            f'fill="{INK_MUTED}" font-size="11">{pct}%</text>'
-        )
-    parts.append(
-        f'<text x="{ml + iw}" y="{y_at(100) - 6:.1f}" text-anchor="end" '
-        f'fill="{INK_MUTED}" font-size="11">goal</text>'
-    )
-
-    # X ticks on day boundaries, ~6 across the range.
-    d0 = datetime.fromtimestamp(t0).date()
-    d1 = datetime.fromtimestamp(t1).date()
-    ndays = max(1, (d1 - d0).days)
-    step_days = max(1, round(ndays / 6))
-    d = d0 + timedelta(days=step_days)
-    while d <= d1:
-        t = datetime(d.year, d.month, d.day).timestamp()
-        if t0 <= t <= t1:
-            x = x_at(t)
-            parts.append(
-                f'<line x1="{x:.1f}" y1="{mt}" x2="{x:.1f}" y2="{mt + ih}" '
-                f'stroke="{C_GRID}" stroke-width="1"/>'
-            )
-            parts.append(
-                f'<text x="{x:.1f}" y="{mt + ih + 18}" text-anchor="middle" '
-                f'fill="{INK_MUTED}" font-size="11">{_fmt_day(d)}</text>'
-            )
-        d += timedelta(days=step_days)
-
-    pts_m = [(x_at(t), y_at(_to_float(r["matched_code_percent"])))
-             for t, r in zip(times, rows)]
-    pts_l = [(x_at(t), y_at(_to_float(r.get("complete_code_percent"))))
-             for t, r in zip(times, rows)]
-
-    def poly(pts: List[Tuple[float, float]]) -> str:
-        return " ".join(f"{x:.2f},{y:.2f}" for x, y in pts)
-
-    # Area wash under the primary series only (~8% opacity).
-    wash = (
-        f'<path d="M {pts_m[0][0]:.2f},{y_at(0):.2f} '
-        + " ".join(f"L {x:.2f},{y:.2f}" for x, y in pts_m)
-        + f' L {pts_m[-1][0]:.2f},{y_at(0):.2f} Z" fill="{C_MATCHED}" opacity="0.08"/>'
-    )
-    parts.append(wash)
-    for pts, color in ((pts_l, C_LINKED), (pts_m, C_MATCHED)):
-        parts.append(
-            f'<polyline points="{poly(pts)}" fill="none" stroke="{color}" '
-            f'stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'
-        )
-
-    # End markers (surface ring) + direct value labels in ink, nudged apart
-    # with leader lines when the two endpoints collide.
-    end_m, end_l = pts_m[-1], pts_l[-1]
-    lab_m, lab_l = end_m[1], end_l[1]
-    if abs(lab_m - lab_l) < 16:
-        mid = (lab_m + lab_l) / 2
-        if lab_m <= lab_l:
-            lab_m, lab_l = mid - 8, mid + 8
-        else:
-            lab_m, lab_l = mid + 8, mid - 8
-    for (ex, ey), ly, color, val in (
-        (end_m, lab_m, C_MATCHED, _to_float(rows[-1]["matched_code_percent"])),
-        (end_l, lab_l, C_LINKED, _to_float(rows[-1].get("complete_code_percent"))),
-    ):
-        if abs(ly - ey) > 1:
-            parts.append(
-                f'<line x1="{ex + 6:.1f}" y1="{ey:.1f}" x2="{ex + 16:.1f}" y2="{ly:.1f}" '
-                f'stroke="{C_GRID}" stroke-width="1"/>'
-            )
-        parts.append(
-            f'<circle cx="{ex:.1f}" cy="{ey:.1f}" r="4.5" fill="{color}" '
-            f'stroke="{C_SURFACE}" stroke-width="2"/>'
-        )
-        parts.append(
-            f'<text x="{ex + 20:.1f}" y="{ly + 4:.1f}" fill="{INK}" '
-            f'font-size="12" font-weight="600">{val:.2f}%</text>'
-        )
-
-    # Crosshair + hover dots, driven by JS.
-    parts.append(
-        f'<line id="tl-cross" x1="0" y1="{mt}" x2="0" y2="{mt + ih}" '
-        f'stroke="{INK_MUTED}" stroke-width="1" opacity="0"/>'
-    )
-    for dot_id, color in (("tl-dot-m", C_MATCHED), ("tl-dot-l", C_LINKED)):
-        parts.append(
-            f'<circle id="{dot_id}" r="4" fill="{color}" '
-            f'stroke="{C_SURFACE}" stroke-width="2" opacity="0"/>'
-        )
-
-    svg = (
-        f'<svg id="tl-svg" xmlns="http://www.w3.org/2000/svg" '
-        f'viewBox="0 0 {width} {height}" width="100%" '
-        f'preserveAspectRatio="xMidYMid meet" role="img" '
-        f'aria-label="Matched and linked code percentage per commit over time, toward the 100% goal.">'
-        + "".join(parts) + "</svg>"
-    )
-
-    hover_pts = []
-    prev = None
-    for r, (xm, ym), (xl, yl) in zip(rows, pts_m, pts_l):
+    The timeline supports date-range zoom and a conditional y-axis break, so
+    scales are dynamic — rendering lives in JS (see build_history_section);
+    Python only emits the data."""
+    pts = []
+    prev: Optional[float] = None
+    for r in rows:
         m = _to_float(r["matched_code_percent"])
-        hover_pts.append({
-            "x": round(xm, 2), "ym": round(ym, 2), "yl": round(yl, 2),
-            "sha": r["sha"][:9],
+        pts.append({
+            "t": round(_parse_ts(r["ts"]).timestamp()),
             "date": r["ts"][:16].replace("T", " "),
-            "m": round(m, 3),
-            "l": round(_to_float(r.get("complete_code_percent")), 3),
-            "dm": round(m - prev, 3) if prev is not None else None,
+            "sha": r["sha"][:9],
+            "m": round(m, 4),
+            "l": round(_to_float(r.get("complete_code_percent")), 4),
+            "dm": round(m - prev, 4) if prev is not None else None,
         })
         prev = m
-    return svg, hover_pts
+    return pts
 
 
 def build_daily_chart(
@@ -880,10 +768,254 @@ def _json_for_html(data: Any) -> str:
     return json.dumps(data, separators=(",", ":")).replace("</", "<\\/")
 
 
+# Timeline renderer. Lives client-side because the date-range zoom and the
+# conditional y-axis snip make the scales dynamic. Kept as a plain string
+# (tokens __C_M__/__C_L__) so braces need no escaping; injected into the
+# history-section f-string next to the shared tooltip helpers it uses.
+TL_JS = r"""
+    // ---- Timeline: client-rendered so date-range zoom + axis snip work ----
+    const tlSvg = document.getElementById('tl-svg');
+    if (tlSvg) {
+      const NS = 'http://www.w3.org/2000/svg';
+      const pts = JSON.parse(document.getElementById('tl-data').textContent);
+      const wrap = document.getElementById('tl-wrap');
+      const tip = document.getElementById('tl-tip');
+      const W = 1000, H = 360, ML = 52, MR = 100, MT = 14, MB = 30;
+      const IW = W - ML - MR, IH = H - MT - MB, YBOT = MT + IH;
+      const CM = '__C_M__', CL = '__C_L__';
+      const GRID = '#1c2330', BASE = '#30363d', MUT = '#8b949e';
+      const INK2 = '#f0f6fc', SURF = '#0d1117';
+      const tMin = pts[0].t, tMax = pts[pts.length - 1].t;
+      let domain = [tMin, tMax];
+      let vis = [];  // visible points with px coords, for hover
+
+      const el = (n, at, parent) => {
+        const e = document.createElementNS(NS, n);
+        for (const k in at) e.setAttribute(k, at[k]);
+        if (parent) parent.appendChild(e);
+        return e;
+      };
+      const label = (parent, x, y, s, anchor, fill, size, weight) => {
+        const t = el('text', {x, y, 'text-anchor': anchor || 'start',
+                              fill: fill || MUT, 'font-size': size || 11}, parent);
+        if (weight) t.setAttribute('font-weight', weight);
+        t.textContent = s;
+      };
+      const niceStep = raw => {
+        const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+        for (const m of [1, 2, 2.5, 5, 10]) if (raw <= m * mag) return m * mag;
+        return 10 * mag;
+      };
+      const fmtPct = v => +v.toFixed(2) + '%';
+
+      const defs = el('defs', {}, tlSvg);
+      const clip = el('clipPath', {id: 'tl-clip'}, defs);
+      const clipRect = el('rect', {x: ML, y: MT, width: IW, height: IH}, clip);
+      const plotG = el('g', {}, tlSvg);
+      const seriesG = el('g', {'clip-path': 'url(#tl-clip)'}, tlSvg);
+      const topG = el('g', {}, tlSvg);
+      const hoverG = el('g', {}, tlSvg);
+      const cross = el('line', {y1: MT, y2: YBOT, stroke: MUT, 'stroke-width': 1, opacity: 0}, hoverG);
+      const dotM = el('circle', {r: 4, fill: CM, stroke: SURF, 'stroke-width': 2, opacity: 0}, hoverG);
+      const dotL = el('circle', {r: 4, fill: CL, stroke: SURF, 'stroke-width': 2, opacity: 0}, hoverG);
+      const selRect = el('rect', {y: MT, height: IH, fill: CM, opacity: 0.15, display: 'none'}, hoverG);
+
+      const hideHover = () => {
+        tip.style.display = 'none';
+        for (const e of [cross, dotM, dotL]) e.setAttribute('opacity', '0');
+      };
+
+      function render() {
+        const [t0, t1] = domain;
+        const pad = (t1 - t0) * 0.02;
+        const tA = t0 - pad, tB = t1 + pad;
+        const xAt = t => ML + (t - tA) / (tB - tA) * IW;
+
+        const first = pts.findIndex(p => p.t >= t0);
+        let last = -1;
+        for (let i = pts.length - 1; i >= 0; i--) if (pts[i].t <= t1) { last = i; break; }
+        const shown = (first < 0 || last < first) ? [] : pts.slice(first, last + 1);
+
+        // Full 0-100 when the data is close to the goal; otherwise snip the
+        // axis: 0..yTop to scale, a marked break band, then the 100% line.
+        const dataMax = shown.length ? Math.max(...shown.map(p => Math.max(p.m, p.l))) : 100;
+        const snip = dataMax < 50;
+        let yTop, yDataTop, gstep;
+        if (snip) {
+          gstep = niceStep(Math.max(dataMax, 1e-4) / 4);
+          yTop = gstep * Math.ceil(dataMax / gstep);
+          if (!yTop || yTop - dataMax < gstep * 0.2) yTop += gstep;
+          yDataTop = MT + 44;
+        } else {
+          yTop = 100; gstep = 25; yDataTop = MT;
+        }
+        const yAt = v => YBOT - (v / yTop) * (YBOT - yDataTop);
+        clipRect.setAttribute('y', yDataTop - 5);
+        clipRect.setAttribute('height', YBOT - yDataTop + 10);
+
+        plotG.replaceChildren();
+        seriesG.replaceChildren();
+        topG.replaceChildren();
+
+        for (let v = 0; v <= yTop + 1e-9; v += gstep) {
+          const y = yAt(v);
+          el('line', {x1: ML, y1: y, x2: ML + IW, y2: y,
+                      stroke: v ? GRID : BASE, 'stroke-width': 1}, plotG);
+          label(plotG, ML - 8, y + 4, fmtPct(v), 'end');
+        }
+        if (snip) {
+          const yGoal = MT + 6;
+          el('line', {x1: ML, y1: yGoal, x2: ML + IW, y2: yGoal, stroke: GRID, 'stroke-width': 1}, plotG);
+          label(plotG, ML - 8, yGoal + 4, '100%', 'end');
+          label(plotG, ML + IW, yGoal - 5, 'goal', 'end');
+          // the snip: double slash marks at both edges of the break band
+          const yb = (yGoal + yDataTop) / 2;
+          for (const x of [ML, ML + IW]) {
+            for (const dy of [-4, 4]) {
+              el('line', {x1: x - 7, y1: yb + dy + 4, x2: x + 7, y2: yb + dy - 4,
+                          stroke: MUT, 'stroke-width': 1.2}, plotG);
+            }
+          }
+        } else {
+          label(plotG, ML + IW, yAt(100) - 6, 'goal', 'end');
+        }
+
+        const spanDays = Math.max(1, (tB - tA) / 86400);
+        const stepDays = Math.max(1, Math.round(spanDays / 6));
+        const dEnd = new Date(tB * 1000);
+        let d = new Date(tA * 1000);
+        d.setHours(0, 0, 0, 0);
+        d = new Date(d.getTime() + 86400000 * stepDays);
+        for (; d <= dEnd; d = new Date(d.getTime() + 86400000 * stepDays)) {
+          const x = xAt(d.getTime() / 1000);
+          if (x < ML || x > ML + IW) continue;
+          el('line', {x1: x, y1: yDataTop, x2: x, y2: YBOT, stroke: GRID, 'stroke-width': 1}, plotG);
+          label(plotG, x, YBOT + 18, (d.getMonth() + 1) + '/' + d.getDate(), 'middle');
+        }
+
+        vis = shown.map(p => ({x: xAt(p.t), ym: yAt(p.m), yl: yAt(p.l), p}));
+        if (vis.length) {
+          // one neighbor each side so lines run to the plot edge (clipped)
+          const ext = [];
+          if (first > 0) ext.push(pts[first - 1]);
+          ext.push(...shown);
+          if (last < pts.length - 1) ext.push(pts[last + 1]);
+          const ep = ext.map(p => ({x: xAt(p.t), ym: yAt(p.m), yl: yAt(p.l)}));
+          const lineOf = key => ep.map(q => q.x.toFixed(2) + ',' + q[key].toFixed(2)).join(' ');
+          const wash = 'M ' + ep[0].x.toFixed(2) + ',' + yAt(0).toFixed(2) + ' L ' +
+            ep.map(q => q.x.toFixed(2) + ',' + q.ym.toFixed(2)).join(' L ') +
+            ' L ' + ep[ep.length - 1].x.toFixed(2) + ',' + yAt(0).toFixed(2) + ' Z';
+          el('path', {d: wash, fill: CM, opacity: 0.08}, seriesG);
+          el('polyline', {points: lineOf('yl'), fill: 'none', stroke: CL, 'stroke-width': 2,
+                          'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, seriesG);
+          el('polyline', {points: lineOf('ym'), fill: 'none', stroke: CM, 'stroke-width': 2,
+                          'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, seriesG);
+
+          const e2 = vis[vis.length - 1];
+          let lm = e2.ym, ll = e2.yl;
+          if (Math.abs(lm - ll) < 16) {
+            const mid = (lm + ll) / 2;
+            if (lm <= ll) { lm = mid - 8; ll = mid + 8; } else { lm = mid + 8; ll = mid - 8; }
+          }
+          for (const [ey, ly, color, val] of [[e2.ym, lm, CM, e2.p.m], [e2.yl, ll, CL, e2.p.l]]) {
+            if (Math.abs(ly - ey) > 1) {
+              el('line', {x1: e2.x + 6, y1: ey, x2: e2.x + 16, y2: ly, stroke: GRID, 'stroke-width': 1}, topG);
+            }
+            el('circle', {cx: e2.x, cy: ey, r: 4.5, fill: color, stroke: SURF, 'stroke-width': 2}, topG);
+            label(topG, e2.x + 20, ly + 4, val.toFixed(2) + '%', 'start', INK2, 12, 600);
+          }
+        }
+        cross.setAttribute('y1', yDataTop);
+        hideHover();
+      }
+
+      const viewXOf = evt => {
+        const r = tlSvg.getBoundingClientRect();
+        return (evt.clientX - r.left) * W / r.width;
+      };
+      const btns = document.querySelectorAll('#tl-range button');
+      const setActive = id => btns.forEach(b => b.classList.toggle('active', b.dataset.d === id));
+      btns.forEach(b => b.addEventListener('click', () => {
+        domain = b.dataset.d === 'all' ? [tMin, tMax]
+          : [Math.max(tMin, tMax - (+b.dataset.d) * 86400), tMax];
+        setActive(b.dataset.d);
+        render();
+      }));
+
+      let drag = null;
+      tlSvg.addEventListener('pointerdown', e => {
+        drag = {x0: viewXOf(e), moved: false};
+        tlSvg.setPointerCapture(e.pointerId);
+      });
+      tlSvg.addEventListener('pointermove', e => {
+        const x = viewXOf(e);
+        if (drag) {
+          if (Math.abs(x - drag.x0) > 4) drag.moved = true;
+          if (drag.moved) {
+            hideHover();
+            const a = Math.max(ML, Math.min(x, drag.x0));
+            const b2 = Math.min(ML + IW, Math.max(x, drag.x0));
+            selRect.setAttribute('x', a);
+            selRect.setAttribute('width', Math.max(0, b2 - a));
+            selRect.removeAttribute('display');
+            return;
+          }
+        }
+        if (!vis.length) return;
+        let best = 0, bd = Infinity;
+        for (let i = 0; i < vis.length; i++) {
+          const dd = Math.abs(vis[i].x - x);
+          if (dd < bd) { bd = dd; best = i; }
+        }
+        const v = vis[best], p = v.p;
+        cross.setAttribute('x1', v.x); cross.setAttribute('x2', v.x);
+        cross.setAttribute('opacity', '0.5');
+        dotM.setAttribute('cx', v.x); dotM.setAttribute('cy', v.ym);
+        dotL.setAttribute('cx', v.x); dotL.setAttribute('cy', v.yl);
+        dotM.setAttribute('opacity', '1'); dotL.setAttribute('opacity', '1');
+        tip.replaceChildren();
+        const head = document.createElement('div');
+        head.className = 'tip-head';
+        head.textContent = p.date + ' · ' + p.sha;
+        tip.appendChild(head);
+        const dm = p.dm == null ? '' : ' (' + (p.dm >= 0 ? '+' : '') + p.dm.toFixed(3) + 'pp)';
+        mkRow(tip, p.m.toFixed(3) + '%' + dm, 'matched', CM);
+        mkRow(tip, p.l.toFixed(2) + '%', 'linked', CL);
+        place(tip, wrap, e);
+      });
+      const endDrag = e => {
+        if (!drag) return;
+        const wasDrag = drag.moved;
+        const x1 = drag.x0, x2 = viewXOf(e);
+        drag = null;
+        selRect.setAttribute('display', 'none');
+        if (!wasDrag) return;
+        const [t0, t1] = domain;
+        const pad = (t1 - t0) * 0.02;
+        const tA = t0 - pad, tB = t1 + pad;
+        const tOf = x => tA + (Math.max(ML, Math.min(ML + IW, x)) - ML) / IW * (tB - tA);
+        let lo = tOf(Math.min(x1, x2)), hi = tOf(Math.max(x1, x2));
+        const minSpan = 6 * 3600;
+        if (hi - lo < minSpan) { const c = (lo + hi) / 2; lo = c - minSpan / 2; hi = c + minSpan / 2; }
+        domain = [lo, hi];
+        setActive('');
+        render();
+      };
+      tlSvg.addEventListener('pointerup', endDrag);
+      tlSvg.addEventListener('pointercancel', () => { drag = null; selRect.setAttribute('display', 'none'); });
+      tlSvg.addEventListener('mouseleave', hideHover);
+      tlSvg.addEventListener('dblclick', () => { domain = [tMin, tMax]; setActive('all'); render(); });
+
+      render();
+    }
+"""
+
+
 def build_history_section(rows: List[Dict[str, Any]], repo_url: str) -> str:
     if len(rows) < 2:
         return ""
-    tl_svg, tl_pts = build_timeline_chart(rows)
+    tl_pts = timeline_points(rows)
+    tl_script = TL_JS.replace("__C_M__", C_MATCHED).replace("__C_L__", C_LINKED)
     dg_svg, dg_days = build_daily_chart(rows)
     commit_rows = history_commit_rows(rows, repo_url)
     top_n = 20
@@ -909,13 +1041,22 @@ def build_history_section(rows: List[Dict[str, Any]], repo_url: str) -> str:
   <div class="chart-card">
     <div class="chart-head">
       <div class="chart-title">Matched code toward the 100% goal</div>
-      <div class="chart-legend">
-        <span><span class="key" style="background:{C_MATCHED}"></span>Matched code</span>
-        <span><span class="key" style="background:{C_LINKED}"></span>Linked</span>
+      <div class="chart-controls">
+        <div class="range-btns" id="tl-range">
+          <button data-d="7">7d</button><button data-d="30">30d</button><button data-d="90">90d</button><button data-d="all" class="active">All</button>
+        </div>
+        <div class="chart-legend">
+          <span><span class="key" style="background:{C_MATCHED}"></span>Matched code</span>
+          <span><span class="key" style="background:{C_LINKED}"></span>Linked</span>
+        </div>
       </div>
     </div>
+    <p class="meta chart-hint">Drag to zoom to a date range · double-click or All to reset. While far from the goal, the y axis is snipped: 0–fit, break, 100%.</p>
     <div class="chart-wrap" id="tl-wrap">
-      {tl_svg}
+      <svg id="tl-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" width="100%"
+           preserveAspectRatio="xMidYMid meet" role="img"
+           aria-label="Matched and linked code percentage per commit over time, toward the 100% goal. Y axis may show a break between the data range and 100%."></svg>
+      <noscript><p class="meta">The timeline chart needs JavaScript; the per-commit table below has the same data.</p></noscript>
       <div class="viz-tip" id="tl-tip"></div>
     </div>
   </div>
@@ -970,49 +1111,7 @@ def build_history_section(rows: List[Dict[str, Any]], repo_url: str) -> str:
       tip.style.left = Math.max(0, x) + 'px';
       tip.style.top = Math.max(0, y) + 'px';
     }};
-    const viewX = (svg, evt) => {{
-      const r = svg.getBoundingClientRect();
-      return (evt.clientX - r.left) * svg.viewBox.baseVal.width / r.width;
-    }};
-
-    // Timeline: crosshair snaps to the nearest commit; one tooltip, every series.
-    const tlSvg = document.getElementById('tl-svg');
-    if (tlSvg) {{
-      const pts = JSON.parse(document.getElementById('tl-data').textContent);
-      const wrap = document.getElementById('tl-wrap');
-      const tip = document.getElementById('tl-tip');
-      const cross = document.getElementById('tl-cross');
-      const dotM = document.getElementById('tl-dot-m');
-      const dotL = document.getElementById('tl-dot-l');
-      const hide = () => {{
-        tip.style.display = 'none';
-        for (const el of [cross, dotM, dotL]) el.setAttribute('opacity', '0');
-      }};
-      tlSvg.addEventListener('mousemove', (e) => {{
-        const x = viewX(tlSvg, e);
-        let best = 0, bd = Infinity;
-        for (let i = 0; i < pts.length; i++) {{
-          const d = Math.abs(pts[i].x - x);
-          if (d < bd) {{ bd = d; best = i; }}
-        }}
-        const p = pts[best];
-        cross.setAttribute('x1', p.x); cross.setAttribute('x2', p.x);
-        cross.setAttribute('opacity', '0.5');
-        dotM.setAttribute('cx', p.x); dotM.setAttribute('cy', p.ym);
-        dotL.setAttribute('cx', p.x); dotL.setAttribute('cy', p.yl);
-        dotM.setAttribute('opacity', '1'); dotL.setAttribute('opacity', '1');
-        tip.replaceChildren();
-        const head = document.createElement('div');
-        head.className = 'tip-head';
-        head.textContent = p.date + ' · ' + p.sha;
-        tip.appendChild(head);
-        const dm = p.dm === null ? '' : ' (' + (p.dm >= 0 ? '+' : '') + p.dm.toFixed(3) + 'pp)';
-        mkRow(tip, p.m.toFixed(3) + '%' + dm, 'matched', '{C_MATCHED}');
-        mkRow(tip, p.l.toFixed(2) + '%', 'linked', '{C_LINKED}');
-        place(tip, wrap, e);
-      }});
-      tlSvg.addEventListener('mouseleave', hide);
-    }}
+{tl_script}
 
     // Daily bars: the (full-height) hit rect is the target.
     const dgSvg = document.getElementById('dg-svg');
