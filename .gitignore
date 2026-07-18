@@ -40,8 +40,10 @@ compile_commands.json
 site/
 per_fn.json
 
-# Claude Code local state
-.claude/
+# Claude Code local state (skills / commands は共有物なので track する)
+.claude/*
+!.claude/skills/
+!.claude/commands/
 
 # Private compiler-probe scratch (frida hooks, private mwcc copy, logs)
 tmp_probe/

@@ -79,6 +79,13 @@ docs/                 # decomp-toolkit documentation
   seeded from there. The decomp side is intended to become the single source
   of truth once enough functions match.
 
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) (mostly in Japanese) — how to set up,
+claim a function range via an issue, and what a PR must include. The matching
+workflow itself is documented in
+[`.claude/skills/mkgp2-match/SKILL.md`](.claude/skills/mkgp2-match/SKILL.md).
+
 ## License
 
 [`CC0 1.0`](LICENSE) for project scaffolding and decompiled source contributed
