@@ -101,6 +101,10 @@ C++ class だった可能性が高い。C + idiom で寄せず、**最初から 
 - **2026-07-19 実証済み**: ServiceMenu_Init を本物の C++ ctor として 100% match
   (asm_fn → matched 昇格)。mangled 名は llvm-objcopy --redefine-sym で既存 C 名
   に橋渡しする。手法の正本: `docs/notes/cpp-ctor-retrofit-mangled-bridge.md`
+- **対象の探し方**: `python tools/scan_extab_actions.py` — binary の extab を
+  読んで EH action 持ち (= C++ 構文持ち) の関数を全列挙する。`--units` で
+  pending クラスタ別ランキング (class-first で組むべき unit の判断材料)。
+  2026-07-19 時点: action 持ち 945 fn (asm_fn park 39 / pending named 285)
 
 ## 4.5 unit claim (GitHub issue、2026-07-19 導入)
 
