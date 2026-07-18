@@ -1,0 +1,7 @@
+# extern const float for sdata2 literal pool refs (2026-07-19, LapBannerScene)
+
+When a TU references its original .sdata2 float literal pool via extern labels (repo convention: `extern float lbl_806D3258;` instead of claiming the pool range in splits), CW 1.3.2 treats the label as a mutable global: an `lfs lbl@sda21` load CANNOT be hoisted across any float store (type-based aliasing). The original literal (e.g. `150.0f`) has no aliasing, so target codegen often shows the constant load hoisted above a store.
+
+Symptom (LapBannerScene_UpdateAndDriveAnim timer block): target loads timer/step/limit as 3 concurrent FP temps (f2/f1/f0 descending) with the limit load ABOVE fadds+stfs; with `extern float` the limit load stays below the store, only 2 temps concurrent (f1/f0), and every register field in the block mismatches. Also broke LapBannerScene_TriggerBannerAnim scheduling (load order vs stores).
+
+Fix: declare the labels `extern const float lbl_...;`. Writes to const are UB, so CW hoists the load exactly like a literal. Both functions went to 100% in one build with no other change. Rule of thumb: any extern-labeled float that is really a literal-pool constant should be declared `const float`.

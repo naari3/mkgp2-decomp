@@ -415,6 +415,7 @@ config.libs = [
             Object(Matching, "game/ItemObject_SetByte18c.c"),
             Object(Matching, "game/ItemObject_WriteVectors.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemTracker.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/LapBannerScene.c"),
             Object(Matching, "game/FinalLapCoinJump_SetEnable.c"),
             Object(Matching, "game/FinalLapCoinJump_CheckActiveForObject.c"),
             Object(Matching, "game/card_is_ejected.c"),
