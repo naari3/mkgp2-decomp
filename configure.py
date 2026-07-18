@@ -377,6 +377,7 @@ config.libs = [
             Object(Matching, "game/Vec3_Magnitude_Wrapper.c"),
             Object(Matching, "game/TornadoEffect_TriggerField140.c"),
             Object(Matching, "game/ItemStateGuard_IsActive.c"),
+            Object(Matching, "game/KartItem_Stub_Returns0.c"),
             Object(Matching, "game/EffectState_HasContent.c"),
             Object(Matching, "game/EffectSteering_InputViscosity_SetFieldC.c"),
             Object(Matching, "game/DemoFlow_ResetTwoFlags.c"),

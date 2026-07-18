@@ -283,6 +283,9 @@ game/auto_ONKARTHIT_block.c:
 game/ItemStateGuard_IsActive.c:
 	.text       start:0x80052F9C end:0x80052FB0
 
+game/KartItem_Stub_Returns0.c:
+	.text       start:0x8005623C end:0x80056244
+
 game/KartBody.c:
 	.text       start:0x8005771C end:0x80057738
 
