@@ -585,6 +585,11 @@ game/SpriteSlot_SetScaleXYZ.c:
 game/ItemAlias.c:
 	.text       start:0x800D7490 end:0x800D75F8
 
+game/ItemObject_RaycastWallStub.c:
+	extab       start:0x8000B2D4 end:0x8000B2DC
+	extabindex  start:0x8002399C end:0x800239A8
+	.text       start:0x800D7C94 end:0x800D7CB4
+
 game/ItemObjectManager_Init.c:
 	extab       start:0x8000B334 end:0x8000B34C
 	extabindex  start:0x800239FC end:0x80023A08
