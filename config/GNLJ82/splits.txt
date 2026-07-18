@@ -690,6 +690,9 @@ game/Vec3_Magnitude_Wrapper.c:
 	extabindex  start:0x80023804 end:0x80023810
 	.text       start:0x800D6118 end:0x800D6138
 
+game/Vec3_ScaleXZ.c:
+	.text       start:0x800D6138 end:0x800D615C
+
 game/SpriteSlot_SetScale.c:
 	.text       start:0x800D6568 end:0x800D657C
 
