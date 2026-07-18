@@ -923,6 +923,21 @@ game/VfxSlot_BindResourceEx.c:
 game/EffectActor_BindKartTargetPair.c:
 	.text       start:0x800B3244 end:0x800B3250
 
+game/TripleBladeRing.c:
+	extab       start:0x8000A6A0 end:0x8000A6B0
+	extabindex  start:0x80022B74 end:0x80022B8C
+	.text       start:0x800B3C8C end:0x800B3ED4
+
+game/TripleBladeRing_SetWorldYaw.c:
+	extab       start:0x8000A6B0 end:0x8000A6B8
+	extabindex  start:0x80022B8C end:0x80022B98
+	.text       start:0x800B3ED4 end:0x800B4094
+
+game/TripleBladeRing_Update.c:
+	extab       start:0x8000A6B8 end:0x8000A6C0
+	extabindex  start:0x80022B98 end:0x80022BA4
+	.text       start:0x800B4094 end:0x800B4164
+
 game/ParticleBurst.c:
 	extab       start:0x8000A6C0 end:0x8000A6D8
 	extabindex  start:0x80022BA4 end:0x80022BC8
