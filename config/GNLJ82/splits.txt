@@ -74,6 +74,11 @@ game/JObj_Visibility.c:
 	extabindex  start:0x8001F640 end:0x8001F658
 	.text       start:0x800316B8 end:0x80031718
 
+game/Object_JObjUpdate.c:
+	extab       start:0x80005988 end:0x80005998
+	extabindex  start:0x8001F658 end:0x8001F670
+	.text       start:0x80031718 end:0x80031770
+
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
 
@@ -290,6 +295,9 @@ game/dtor_8006178C.c:
 	extabindex  start:0x80020DEC end:0x80020E04
 	.text       start:0x8006178C end:0x80061804
 
+game/FinalLapCoinJump_SetEnable.c:
+	.text       start:0x80061804 end:0x8006181C
+
 game/dtor_80064CD4.c:
 	extab       start:0x80007F1C end:0x80007F24
 	extabindex  start:0x80020E70 end:0x80020E7C
@@ -445,6 +453,12 @@ game/dtor_80091284.c:
 game/CardRW_GetSubState.c:
 	.text       start:0x800934A8 end:0x800934B0
 
+game/card_is_ejected.c:
+	.text       start:0x8009838C end:0x800983A0
+
+game/card_ping_clear_pending_flag.c:
+	.text       start:0x80098790 end:0x800987A8
+
 game/card_rw_get_substate.c:
 	.text       start:0x80098E48 end:0x80098E50
 
@@ -525,6 +539,9 @@ game/ItemObjectManager_Init.c:
 	extab       start:0x8000B334 end:0x8000B34C
 	extabindex  start:0x800239FC end:0x80023A08
 	.text       start:0x800D81E0 end:0x800D8288
+
+game/FinalLapCoinJump_CheckActiveForObject.c:
+	.text       start:0x800DC638 end:0x800DC690
 
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C
