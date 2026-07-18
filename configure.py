@@ -377,6 +377,7 @@ config.libs = [
             Object(Matching, "game/SpriteSlot_SetTranslateDxDy.c"),
             Object(Matching, "game/VfxSlot_SetUVScroll.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SpriteSlot_SetScaleXYZ.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/SpriteSlot_Render.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Vec3_Magnitude_Wrapper.c"),
             Object(Matching, "game/Vec3_ScaleXZ.c"),
             Object(Matching, "game/TornadoEffect_TriggerField140.c"),

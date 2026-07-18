@@ -704,6 +704,11 @@ game/SpriteSlot_SetScaleXYZ.c:
 	extabindex  start:0x800238F4 end:0x8002390C
 	.text       start:0x800D6CEC end:0x800D6D4C
 
+game/SpriteSlot_Render.c:
+	extab       start:0x8000B27C end:0x8000B284
+	extabindex  start:0x80023948 end:0x80023954
+	.text       start:0x800D6F40 end:0x800D6F64
+
 game/ItemAlias.c:
 	.text       start:0x800D7490 end:0x800D75F8
 
