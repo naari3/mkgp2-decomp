@@ -811,6 +811,11 @@ game/WarpZone_Dtor.c:
 	extabindex  start:0x800226A0 end:0x800226AC
 	.text       start:0x800AA888 end:0x800AA8D0
 
+game/Tachometer.c:
+	extab       start:0x8000A074 end:0x8000A0C4
+	extabindex  start:0x80022730 end:0x80022760
+	.text       start:0x800AB17C end:0x800AB958
+
 game/CourseData_Lookup.c:
 	extab       start:0x8000A0E8 end:0x8000A110
 	extabindex  start:0x80022778 end:0x8002279C

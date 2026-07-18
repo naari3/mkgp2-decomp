@@ -257,5 +257,15 @@
   "src/game/TaRecord_InsertResult.c": {
     "extab_TaRecord_InsertResult": "@etb_80008308",
     "extabindex_TaRecord_InsertResult": "@eti_8002123C"
+  },
+  "src/game/Tachometer.c": {
+    "extab_Tachometer_UpdateDisplaySpeed": "@etb_8000A074",
+    "extabindex_Tachometer_UpdateDisplaySpeed": "@eti_80022730",
+    "extab_Tachometer_RenderDigits": "@etb_8000A07C",
+    "extabindex_Tachometer_RenderDigits": "@eti_8002273C",
+    "extab_Tachometer_Destroy": "@etb_8000A084",
+    "extabindex_Tachometer_Destroy": "@eti_80022748",
+    "extab_Tachometer_Init": "@etb_8000A08C",
+    "extabindex_Tachometer_Init": "@eti_80022754"
   }
 }
