@@ -107,6 +107,9 @@ game/Clamp.c:
 game/NoOpStubs_38f54.c:
 	.text       start:0x80038F54 end:0x80038F5C
 
+game/Stub_NoOp_38f80.c:
+	.text       start:0x80038F80 end:0x80038F84
+
 game/InputMgr_GetPlayer.c:
 	.text       start:0x80039020 end:0x8003903C
 
