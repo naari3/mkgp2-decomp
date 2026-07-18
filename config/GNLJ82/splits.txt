@@ -388,6 +388,9 @@ game/Jyugemu_ReverseFlag.c:
 	extabindex  start:0x80021728 end:0x80021740
 	.text       start:0x80080B20 end:0x80080C10
 
+game/Jyugemu_ReverseFlag_Enable.c:
+	.text       start:0x8008117C end:0x80081184
+
 game/BootNotice_CheckEnterCondition.c:
 	extab       start:0x80008D54 end:0x80008D5C
 	extabindex  start:0x80021854 end:0x80021860
