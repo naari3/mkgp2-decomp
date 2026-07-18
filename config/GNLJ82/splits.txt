@@ -824,20 +824,73 @@ game/VfxSlot_SetUVScroll.c:
 	extabindex  start:0x800229AC end:0x800229B8
 	.text       start:0x800AFDE0 end:0x800AFE00
 
+game/VfxSlot_SetMatrixSourceEnabled.c:
+	extab       start:0x8000A538 end:0x8000A540
+	extabindex  start:0x800229B8 end:0x800229C4
+	.text       start:0x800AFE00 end:0x800AFE44
+
 game/VfxSlot_SetScaleVec3.c:
 	extab       start:0x8000A540 end:0x8000A548
 	extabindex  start:0x800229C4 end:0x800229D0
 	.text       start:0x800AFE44 end:0x800AFE70
+
+game/VfxSlot_SetScaleUniform.c:
+	extab       start:0x8000A548 end:0x8000A550
+	extabindex  start:0x800229D0 end:0x800229DC
+	.text       start:0x800AFE70 end:0x800AFEA4
 
 game/VfxSlot_SetRotationZ.c:
 	extab       start:0x8000A550 end:0x8000A558
 	extabindex  start:0x800229DC end:0x800229E8
 	.text       start:0x800AFEA4 end:0x800AFED0
 
+game/VfxSlot_SetRotationXYZFromVec.c:
+	extab       start:0x8000A558 end:0x8000A560
+	extabindex  start:0x800229E8 end:0x800229F4
+	.text       start:0x800AFED0 end:0x800AFF08
+
 game/VfxSlot_SetRotationXYZ.c:
 	extab       start:0x8000A560 end:0x8000A568
 	extabindex  start:0x800229F4 end:0x80022A00
 	.text       start:0x800AFF08 end:0x800AFF34
+
+game/VfxSlot_SetPositionFromVec.c:
+	extab       start:0x8000A568 end:0x8000A570
+	extabindex  start:0x80022A00 end:0x80022A0C
+	.text       start:0x800AFF34 end:0x800AFF6C
+
+game/VfxSlot_SetAnim.c:
+	.text       start:0x800AFF6C end:0x800AFF9C
+
+game/VfxSlot_Release.c:
+	extab       start:0x8000A570 end:0x8000A578
+	extabindex  start:0x80022A0C end:0x80022A18
+	.text       start:0x800AFF9C end:0x800AFFE0
+
+game/VfxSlot_RegisterDraw.c:
+	extab       start:0x8000A578 end:0x8000A580
+	extabindex  start:0x80022A18 end:0x80022A24
+	.text       start:0x800AFFE0 end:0x800B00D8
+
+game/VfxSlot_Render.c:
+	extab       start:0x8000A580 end:0x8000A588
+	extabindex  start:0x80022A24 end:0x80022A30
+	.text       start:0x800B00D8 end:0x800B013C
+
+game/VfxSlot_TickAnim.c:
+	extab       start:0x8000A588 end:0x8000A590
+	extabindex  start:0x80022A30 end:0x80022A3C
+	.text       start:0x800B013C end:0x800B02CC
+
+game/VfxSlot_BindResource.c:
+	extab       start:0x8000A590 end:0x8000A598
+	extabindex  start:0x80022A3C end:0x80022A48
+	.text       start:0x800B02CC end:0x800B0378
+
+game/VfxSlot_BindResourceEx.c:
+	extab       start:0x8000A598 end:0x8000A5A0
+	extabindex  start:0x80022A48 end:0x80022A54
+	.text       start:0x800B0378 end:0x800B0454
 
 game/EffectActor_BindKartTargetPair.c:
 	.text       start:0x800B3244 end:0x800B3250
