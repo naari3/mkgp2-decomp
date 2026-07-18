@@ -364,6 +364,7 @@ config.libs = [
             Object(Matching, "game/Vtable_CallSlot2.cpp"),
             Object(Matching, "game/ObjectBase.c"),
             Object(Matching, "game/Stub_NoOp_80030aec.c"),
+            Object(Matching, "game/LinkedNode_GetField10_OrFallback.c"),
             Object(Matching, "game/NoopRenderHook_Pending_80064d28.c"),
             Object(Matching, "game/Allocator_DestroyEntry_Noop.c"),
             Object(Matching, "game/PlayStats_ShutdownStub.c"),
