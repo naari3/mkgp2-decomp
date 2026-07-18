@@ -392,6 +392,7 @@ config.libs = [
             Object(Matching, "game/InputObj.c"),
             Object(Matching, "game/JvsInput_Calibration.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/InputObj_Ctor.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/InputMgr_TeardownStub.c"),
             Object(Matching, "game/ItemHolder.c"),
             Object(Matching, "game/ItemHolder_Init.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/ItemRes_Thunk.c"),
