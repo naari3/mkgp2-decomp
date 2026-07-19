@@ -1274,3 +1274,31 @@ build 状態: OnKartHit は asm_fn で byte-identical 維持 (SHA-1 OK)。EF は
 教訓: この 2 件は着手前に本 note の negative-lever 台帳と突合せていれば
 2〜3 probe で park 判定できた (~60 build 再燃焼した)。突合せ手順を
 mkgp2-match SKILL の CW132 節 + 撤退判定表に導線化した (2026-07-19)。
+
+## tools/mwcc_dump.py: 観測手段の常設化 (2026-07-19)
+
+Phase 2f の instrumentation (IR-dump 1-byte patch + frida colorer probe) を、
+**production TU に対してフラグ 1 つで実行できる常設ツール**に束ねた:
+
+```
+python tools/mwcc_dump.py src/game/clFlowItem.c            # --ir + --colorer
+python tools/mwcc_dump.py src/game/<TU>.c --colorer        # colorer だけ
+```
+
+- flags は `ninja -t commands` から該当 TU の **production コマンドラインを
+  そのまま抽出** (extra_cflags 込み)。probe 用の手書き flag 再現は不要になった
+- 出力: `tmp/dump/<base>.ir.log` (IR 53 pass、named web) /
+  `tmp/dump/<base>.colorer.log` (select-stack pop 順の key/deg/coalesce
+  flags/home reg、per COLOR step)
+- 安全装置: shipped mwcceppc.exe は SHA-1 検証つきで無改変。instrumented
+  copy は tmp_probe/ (gitignored)。--ir 時は shipped と instrumented の .o を
+  section 比較して codegen 無摂動を毎回証明する
+- **副産物の観測**: CW 1.3.2 は同一入力でも run 間で .o の extab junk bytes
+  (C702 class) が数 byte 揺れる = extab pad は真に uninitialized memory。
+  §clFlowItem の extab_padding 話の裏取り。このため .o 検証は extab section
+  を除外して比較する
+- 検証: clFlowItem.c (real C++ / exceptions on TU) で IR 4MB + colorer 4 step
+  の dump 取得、codegen 無摂動確認済み
+
+これで register-identity 残差の class 判定は「brute force で当てる」から
+「colorer dump を見て判定する」に移行できる。SKILL の CW132 節から導線済み。
