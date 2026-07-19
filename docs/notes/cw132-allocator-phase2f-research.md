@@ -1351,3 +1351,73 @@ merged web で本質的に lossy。
 実命令を読むので merged-web 命名問題を回避でき、人間にとっても内部 temp 名
 より有用。**item 1 (key→変数名) はこの RE をもって「--regdiff で代替、直結は
 不要」で確定クローズ**。
+
+## colorer 内部アルゴリズムの white-box RE (2026-07-20, Ghidra mwcceppc_132.exe)
+
+phase2f が「次 batch」に挙げた 3 点 (coalesce trace / scheduler / key 割当) を
+Ghidra 静的 RE で追った結果。以下すべて OBSERVED (decompile)。
+
+### 1. coalesce = aggressive union-find (FUN_0057a1f0) — 機構確定
+
+- `DAT_005e21c8` = union-find parent 配列 (web index、identity 初期化)
+- 各 register class で、coalesce 候補 move (range flag 0x10 = copy) を全走査。
+  両端オペランドの reg field から root を find (`parent[x]` を辿る)
+- **root 同一 → move 削除** (`FUN_004dc230`、冗長コピー消去)
+- **root 相異 → 干渉判定** (`DAT_005e21cc` の三角 bit matrix) + reg-class 境界
+  (`DAT_005e8778`/`DAT_005e86a8`/`DAT_005e9260`) 判定。**干渉せず class 合法
+  なら UNION**: `parent[max(root1,root2)] = min(...)` = **survivor は index が
+  小さい方**、大きい方に coalesced-into (flag 0x40) が付き build で skip される
+- これは **Chaitin 式 aggressive coalesce** (Briggs conservative ではない):
+  阻止条件は「両端の web が干渉する」か「class 違反」か「特殊 reg
+  `DAT_005e8cfe`」の 3 つだけ。それ以外は無条件で融合する
+
+**park family への含意 (HYPOTHESIS)**: HandleItemEffect の `handled` が
+obj の r29 に融合する (target は r22 で非融合) のは、その move 時点で
+handled と obj が**干渉していない**から。target を再現するには両者を
+**干渉させる** = handled の live range を obj が生きている点まで延ばす必要が
+ある。phase2e の `handled & call()` probe が失敗したのは、干渉が「その move
+命令の両端の web レベル」で判定されるため、表面的な使用追加では
+live-range 交差が作れなかったと解釈できる。次の probe 方向: handled と obj が
+**同時 live になる文**を挟む (両者を 1 つの式で同時参照させて web を重ねる)。
+frida で `DAT_005e21cc` の当該 bit を読めば融合可否を事前確認できる
+
+### 3. simplify/select = 教科書 Chaitin (FUN_00507b50 / FUN_00507a30) — key 降順は相関だった
+
+- `FUN_00507b50` (build select-stack): k = class の色数 (`FUN_004fd650`)。
+  **degree [+0x12] < k のノードを先に stack へ push** (flag 0x2、隣接の
+  degree を減算)。低次数が尽きたら、残り (高次数) から **spill-cost/degree 比
+  (`cost[+0xc] / degree`) が最小のノードを optimistic spill として push** し
+  simplify 再開。key [+0x10] >= `DAT_005df940` のノードは cost = ∞
+  (`_DAT_005bbb24`) = **spill 対象外 (precolored / machine reg)**
+- `FUN_00507a30` (select): stack head から walk (= push 逆順)。各ノードに
+  **colored 隣接の使用色を除いた最小番号の空きレジスタ**を割当
+- **帰結**: push は「低次数先」なので pop (= 色付け) は「高次数先」。
+  phase2f の「web-birth key 降順で色付け」は **clique で全ノードが同 degree
+  になるときの相関**であって根本則ではない。真の順序は
+  **degree 駆動 (Chaitin simplify)、同 degree の tie-break が node index 昇順**。
+  RULE 2 (decl 順) が効くのは「plain local が同 clique で degree が揃う」
+  ケースに限る、を機構レベルで確証。max-degree で pin された param
+  (OnKartHit self/victim) が動かないのはこの simplify 順の必然
+
+### 2. scheduler = list scheduler (Scheduler.c @ 0x5bbaf8) — 在処特定、full RE は保留
+
+- banner `BEFORE SCHEDULING` (0x5a5270) / `AFTER INSTRUCTION SCHEDULING`
+  (0x5a5284)、assert file `Scheduler.c` (0x5bbaf8) を確認。coloring の前段の
+  独立パス (list scheduler) であることは確定
+- **full RE は保留**: (a) list scheduler の priority function を actionable な
+  予測則まで落とすのは coalesce/simplify より大きい単独作業、(b) 主要な
+  scheduling 残差クラス (subi/lwz ペア swap = ScopedTimer family) は
+  `cw132-scopedtimer-phase2d-research.md` で **既に source 解決済み**
+  (「ticks→us 変換を named int temp 無しの 1 式に」)。ROI が低いので、
+  新しい scheduling 残差クラスに遭遇してから着手する
+
+### 実務への反映
+
+- coalesce の「survivor = lower index / 阻止は干渉のみ」は
+  `mwcc_dump.py --colorer` の flag 0x40 (coalesced-into) 観測と整合。
+  残差が move-coalescer class (regdiff で `mr` の合流先違い) のときは、
+  「両 web を干渉させる source 変形」が唯一の lever と判定できる
+- simplify が degree 駆動と確定したので、`--regdiff` で pure-coloring 残差の
+  当事者 web が **高 degree (param/全域 live) なら decl 順 lever は無効**、
+  **低〜中 degree の plain local なら decl 順が効く**、と degree で切り分け
+  られる。frida colorer log の deg 列がその判定材料
