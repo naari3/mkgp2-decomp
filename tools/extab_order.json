@@ -156,5 +156,21 @@
       "dtor_80052D40",
       "KartMovement_UpdateBoostVisualBlend"
     ]
+  },
+  "src/game/clFlowItem.c": {
+    "extab": [
+      "clFlowItem_Draw",
+      "clFlowItem_Update",
+      "clFlowItem_Dtor",
+      "clFlowItem_Init",
+      "dtor_80082960"
+    ],
+    "extabindex": [
+      "clFlowItem_Draw",
+      "clFlowItem_Update",
+      "clFlowItem_Dtor",
+      "clFlowItem_Init",
+      "dtor_80082960"
+    ]
   }
 }

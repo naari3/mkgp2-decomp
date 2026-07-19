@@ -374,5 +374,20 @@
   "src/game/auto_ONKARTHIT_block.c": {
     "__dt__14Holder8005278CFv": "dtor_8005278C",
     "__dt__13Owned8005278CFv": "Free_IfOwnedShort"
+  },
+  "src/game/clFlowItem.c": {
+    "__ct__10clFlowItemFv": "clFlowItem_Init",
+    "__ct__10clFlowBaseFv": "InitializeFrameSelection",
+    "__dt__10clFlowBaseFv": "dtor_801BA14C",
+    "__vt__10clFlowItem": "lbl_804EE52C",
+    "__ct__15ItemSelectStateFv": "ItemSelectState_Init",
+    "__ct__13ItemGridStateFv": "ItemGridState_Init",
+    "__ct__10ItemMsgWndFv": "fn_802325FC",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "extab_clFlowItem_Draw": "@etb_8001C704",
+    "extabindex_clFlowItem_Draw": "@eti_8002AC14",
+    "extab_clFlowItem_Update": "@etb_8001C720",
+    "extabindex_clFlowItem_Update": "@eti_8002AC20"
   }
 }

@@ -1349,6 +1349,11 @@ game/dtor_8021617C.c:
 game/AddCoinsFromExtraStage.c:
 	.text       start:0x80216540 end:0x80216568
 
+game/clFlowItem.c:
+	extab       start:0x8001C704 end:0x8001C814
+	extabindex  start:0x8002AC14 end:0x8002AC44
+	.text       start:0x802379F8 end:0x802386E0
+
 game/GetCourseSectionType.c:
 	extab       start:0x8001CB6C end:0x8001CB74
 	extabindex  start:0x8002AE30 end:0x8002AE3C

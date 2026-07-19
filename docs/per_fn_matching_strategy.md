@@ -851,3 +851,79 @@ int wrapper(void *self, int a4, unsigned char a5) {
 - load 結果が cmp + branch のみで消費される → r0 (scratch / use-once)
 - load 結果が直後の bl call で同 reg argument として消費される → 該当 arg reg (r3, r4, …)
 - これは src 表現の問題ではなく **使用パターンの問題** — 同じ load を C で 8 通り書いても、その後 cmp + branch しかしない限り r0 が出続ける
+
+## 19. clFlowItem unit 完食からの知見 (2026-07-19, unit-first claim #32)
+
+4 fn (Draw/Update/Dtor/Init) を 1 TU `src/game/clFlowItem.c` の C++ retrofit
+(ServiceMenu_Page.c 型) で処理。Dtor/Init は real C++ で 100%、Draw/Update は
+byte-identical 手前の register-coloring 残差で asm_fn 退避 (C body は `#if 0`
+保存、SHA-1 OK)。
+
+### 19.1 extab_padding は「pad site 順に消費される byte stream」
+
+`dtk extab clean --padding <hex>` の padding は **TU 内の全 pad site に先頭から
+順番に充当される** (site 1 つ 2 byte)。DELETEPOINTERCOND action は dtor pointer
+の直前 2 byte に CW junk `C7 02` を持ち、target はこれを保存している。
+COND action を持つ TU は `extab_padding=b"\xc7\x02" * <site数>` を指定する
+(clFlowItem: 6 site。site 数は `dol diff` の extab mismatch か target asm の
+`.4byte 0x00XXC702` を数える)。従来の b"\x00\x00" は「pad 1 site が 0000」の
+TU だっただけ。
+
+### 19.2 singleton lazy-Get は ternary 形が DELETEPOINTERCOND を生む
+
+```c
+return g ? g : (g = new T);   /* ItemMsg_Get */
+```
+- new 式が「条件式の枝」に居ることで CW が ctor-in-progress cond flag
+  (`li rN, 0` / `li rN, 1`) を割り、extab が **DELETEPOINTERCOND** になる。
+  文 (`if (!g) { g = new T; }` + return) で書くと plain DELETEPOINTER で
+  flag が出ない (extab 不一致)
+- branch 形も ternary 固有: `beq .alloc; b .end` (値保持 early-return 形)。
+  結果を捨てる呼び出し (`ItemMsg_Get();`) では自動的に `bne .end` 1 本に縮む
+- null 済みポインタ返しの inline (`GetInput`) は **逆条件** ternary
+  `g == 0 ? (T *)0 : g` が target の `bne .Lvalue; li rX, 0` 配置を生む
+  (正条件だと beq/b の 2 branch になる)
+
+### 19.3 delete の二重 beq は typed pointer + 明示二重 if
+
+- `delete p` は p が **typed** (struct*) のとき自身の null check を emit する。
+  `void *` への delete は check を出さない
+- member slot の解放 `if (p) { if (p) free(p); p = 0; }` の明示二重 if は
+  §14.3 の doubled-guard idiom と同じく両 beq が同 cr0 で残る (今回は
+  ~ItemGridState() の cells 解放で使用)
+
+### 19.4 別 TU 所有 dtor を DESTROYLOCAL から参照する空 dtor local
+
+ResCtrl (stack local, ctor=ResCtrl_Init, dtor=dtor_80082960):
+- class に **inline 空 dtor** `~ResCtrl() {}` を定義 → 通常 path は inline
+  で消滅 (target に dtor call 無し ✓)、extab 参照用に CW が weak
+  out-of-line copy を emit
+- weak copy は redefine-sym で `dtor_80082960` に rename → link で auto blob
+  の strong 定義に負けて **本体・extab entry ごと破棄される**
+  (MemoryManager_TimedFree.o の ScopedTimer weak copy と同じ機構)
+- 注意: weak copy 自身も extab/extabindex entry を持つので、
+  `tools/extab_order.json` の宣言リストに **末尾で含める** 必要がある
+  (含めないと name-set 不一致で reorder_extab.py が黙って skip する)
+
+### 19.5 register-identity park family の新収集 2 種
+
+- **walker-coalesce 拒否** (Draw): ループの strength-reduction walker が
+  死にゆく base pointer レジスタに合流しない (target は合流して mr 2 本
+  少ない)。decl order 34 perm / member fn 化 / destructive-walk 書き換え
+  全て不発。destructive-walk (`p = (T *)((char *)p + 4)`) は命令数は合うが
+  web が 1 本増えて frame が +0x10 する
+- **live-range split の色分かれ** (Update): 1 変数に統一しても代入点で
+  web が split され、片側 (r31) と片側 (r24) が別色になる。scoped local /
+  単一変数 + cast 別名 / decl order 36 perm 全て不発
+- どちらも「命令列は完全一致、色だけ違う」形。6 probe 上限で asm_fn 退避
+  が正解 (C body は #if 0 で保存済み、将来の allocator 研究の題材)
+
+### 19.6 mixed TU (asm_fn + real C++ 同居) の実運用確認
+
+- manual emit 2 fn (Draw/Update) + auto emit 2 fn (Dtor/Init) + weak dtor
+  entry の 5 entry を extab_order.json で並べ替えて SHA-1 通過。
+  大 TU 以外でも per-fn park/promote が普通に使えることを確認
+- extract_fn_asm.py の sdata アドレス materialize (`subi r4, r13, ...`) は
+  **正しい bytes を出す** (r13 = _SDA_BASE_ = 0x806D6D20)。objdiff がそこを
+  diff 表示するのは「reloc 有り vs raw offset」の表示差で、bytes は一致
+  している。dol diff / SHA-1 が最終裁定
