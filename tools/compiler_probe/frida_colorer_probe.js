@@ -184,5 +184,22 @@ Interceptor.attach(va(ADDR.select), {
   }
 });
 
+// ---- hook the IR-dump progress printf (FUN_004540c0) for function names ----
+// Only fires when the IR-dump gate DAT_005e9409 is on (patch-A'd exe, see
+// tools/compiler_probe/enable_ir_dump.py). The "Starting function %s" event
+// precedes the fn's IR passes AND its codegen/coloring, so it labels the COLOR
+// steps that follow it. Harmless no-op against an unpatched exe.
+Interceptor.attach(va(0x4540c0), {
+  onEnter: function (args) {
+    try {
+      const fmt = this.context.esp.add(4).readPointer().readCString();
+      if (fmt && fmt.indexOf('Starting function') === 0) {
+        const name = this.context.esp.add(8).readPointer().readCString();
+        console.log('=== FUNCTION ' + name + ' ===');
+      }
+    } catch (e) {}
+  }
+});
+
 console.log('[frida] colorer reader armed. base=' + modBase() +
             ' select=' + va(ADDR.select) + ' buildStack=' + va(ADDR.buildStack));

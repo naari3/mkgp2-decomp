@@ -1302,3 +1302,19 @@ python tools/mwcc_dump.py src/game/<TU>.c --colorer        # colorer だけ
 
 これで register-identity 残差の class 判定は「brute force で当てる」から
 「colorer dump を見て判定する」に移行できる。SKILL の CW132 節から導線済み。
+
+### 2026-07-20 拡張 (v2)
+
+- **--colorer に fn ラベル**: IR-dump 系 progress printf (FUN_004540c0) を同時
+  hook し、`Starting function %s` を `=== FUNCTION x ===` として COLOR step に
+  interleave する (colorer run は quiet IR-patch exe = patch A のみに切替)。
+  ctor/dtor は compiler 内部名 `__ct`/`__dt` で出る
+- **--regdiff (frida 不要)**: 自分の compile を target obj と命令位置で align
+  し、register だけが違う web を `ours rX -> target rY xN first@#i tgt: <定義
+  命令>` 形式で自動レポート。定義命令 (例 `lwz r31, 0x18(r30)`) がそのまま
+  ソース変数の同定になる — 手作業の 1:1 dump 比較を置換。shape 差 (命令列
+  自体が違う) と pure-coloring 残差を自動判別し、後者には phase2f 台帳への
+  誘導を出す。mangled 名は extab_user_renames.json の flat map をテキスト適用、
+  匿名 sdata2 literal (@N) は SDAREF に正規化して比較
+- 未解決のまま: colorer dump の key → ソース変数名の直結 (node[+0x04] の
+  IR sub-object の RE が必要)。実用上は --regdiff の定義命令注釈で代替
