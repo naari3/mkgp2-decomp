@@ -328,6 +328,25 @@ int i;              /* -> r8 */
 
 混合型 (pointer + int + int) でも 1 つの allocation pool として扱われる。詳細・実例 (KartMovement_SetPosition の fp 版 / ItemSelect_AddSlotItem の GPR 版) は `docs/notes/cw132-fp-decl-order-regalloc.md`。**3 試行内に register 番号 swap pattern が見えたら最優先で疑う**。
 
+**decl 順で動かなかったら、build を燃やす前に必ず
+`docs/notes/cw132-allocator-phase2f-research.md` (allocator 機構モデルの正本、
+frida で colorer 実測済み) と突合せる**。上の decl-order rule は同 note の
+RULE 2 の簡易版で、**under-constrained な plain local web にしか効かない**。
+以下は同 note で REFUTED / source-closed と確定済みの lever — 該当したら
+再燃焼せず即 asm_fn 退避 (§10.5):
+
+| 残差の形 | 判定 | note 内の該当 |
+|---|---|---|
+| 変数を統合 / 別名化して sibling の reg を継がせたい | REFUTED (byte-identical で不動) | CarObject_Init ch=o1 merge |
+| `mr rX, rY` の coalesce 先が target と違う (walker が base に合流しない等) | move-coalescer は global interference graph 駆動、source から動かせない | HandleItemEffect handled-web / clFlowItem_Draw |
+| param / 全域 live web の rank を上げ下げしたい | 構成依存で pin、decl 順・copy・degree 削減すべて negative | OnKartHit / ProcessWarpAndDash |
+| use-count / arg 順 / statement motion で動かしたい | 全 phase で closed、再燃焼禁止 | p1/p3/p5 probes |
+| 1 変数の live-range split が別色になる | split range は独立に色付け、統合 lever なし | clFlowItem_Update sel |
+
+decl-order 総当たり (brute force) は「plain local だけの swap」以外では
+±1% も動かない (clFlowItem で 70 perm 実測)。2〜3 probe で上表に該当すると
+分かった時点で撤退してよい (6 サイクル閾値を待つ必要はない)。
+
 ### 10.5. 撤退判定と asm function 退避
 
 C で matching に持っていけない関数は、`asm void fn() { nofralloc ... blr }` で C TU 内に inline 化する逃げ道がある。byte-identical 保証されるので bundle 全体の進捗を守れる。詳細は `docs/per_fn_matching_strategy.md`。
@@ -340,6 +359,7 @@ C で matching に持っていけない関数は、`asm void fn() { nofralloc ..
 |---|---|---|
 | edit → build → objdiff の通算サイクル | **6 回** で `match_percent == 100.0` に届かない | 深堀り傾向の早期検出 |
 | diff バイト数の停滞 | **3 サイクル連続** で同じバイト数残 (例: 4 byte diff が 3 連続) | 「あと 1 命令」の罠で同じ箇所を粘る pattern を切る |
+| register-identity 残差が phase2f の closed class に該当 | **突合せ即** (6 回を待たない) | `docs/notes/cw132-allocator-phase2f-research.md` の negative-lever 台帳で source-closed 確定済みの形は粘っても動かない (上の CW132 節の表参照) |
 | 個別判断 | 「ROI 低い」と判断 | 早期退避 OK。理由を notes に書く |
 
 「分単位」の判定は採用しない。サイクル回数とバイト残量の自己観測可能な指標のみ。

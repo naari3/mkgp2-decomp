@@ -905,18 +905,28 @@ ResCtrl (stack local, ctor=ResCtrl_Init, dtor=dtor_80082960):
   `tools/extab_order.json` の宣言リストに **末尾で含める** 必要がある
   (含めないと name-set 不一致で reorder_extab.py が黙って skip する)
 
-### 19.5 register-identity park family の新収集 2 種
+### 19.5 register-identity 残差 2 件 — phase2f の既知 closed class に該当
 
-- **walker-coalesce 拒否** (Draw): ループの strength-reduction walker が
-  死にゆく base pointer レジスタに合流しない (target は合流して mr 2 本
-  少ない)。decl order 34 perm / member fn 化 / destructive-walk 書き換え
-  全て不発。destructive-walk (`p = (T *)((char *)p + 4)`) は命令数は合うが
-  web が 1 本増えて frame が +0x10 する
-- **live-range split の色分かれ** (Update): 1 変数に統一しても代入点で
-  web が split され、片側 (r31) と片側 (r24) が別色になる。scoped local /
-  単一変数 + cast 別名 / decl order 36 perm 全て不発
-- どちらも「命令列は完全一致、色だけ違う」形。6 probe 上限で asm_fn 退避
-  が正解 (C body は #if 0 で保存済み、将来の allocator 研究の題材)
+allocator 残差の分類台帳の**正本は
+`docs/notes/cw132-allocator-phase2f-research.md`** (frida で colorer 実測済みの
+機構モデル + negative-lever 台帳)。今回の 2 件はどちらも同 note で
+source-closed と確定済みの class の再出現で、**着手前に突合せていれば
+brute force (~60 build) を省けた** (反省点。SKILL の CW132 節に突合せ手順を
+導線化済み):
+
+- **Draw**: strength-reduction walker が死にゆく base pointer に合流しない
+  (mr 2 本過多)。= phase2f の「move-coalescer は global interference graph
+  駆動で source から動かせない」class (HandleItemEffect handled-web と同型)。
+  decl order 34 perm / member fn 化 / destructive-walk 全て不発。
+  destructive-walk (`p = (T *)((char *)p + 4)`) は命令数は合うが web が
+  1 本増えて frame が +0x10 する (新観測、台帳に追記済み)
+- **Update**: 1 変数に統一しても代入点で live-range split が起き、split
+  range が独立に色付けされて別色 (r31/r24) になる。単一変数 + cast 別名 =
+  phase2f で REFUTED 済みの variable-merge lever (CarObject_Init ch=o1) の
+  再燃焼だった
+- どちらも「命令列は完全一致、色だけ違う」形。この形は 2〜3 probe で
+  phase2f 台帳と突合せ → 該当なら即 asm_fn 退避が正解 (C body は #if 0 で
+  保存済み、将来の allocator 研究の題材)
 
 ### 19.6 mixed TU (asm_fn + real C++ 同居) の実運用確認
 
