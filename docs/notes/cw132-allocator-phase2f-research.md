@@ -1318,3 +1318,36 @@ python tools/mwcc_dump.py src/game/<TU>.c --colorer        # colorer だけ
   匿名 sdata2 literal (@N) は SDAREF に正規化して比較
 - 未解決のまま: colorer dump の key → ソース変数名の直結 (node[+0x04] の
   IR sub-object の RE が必要)。実用上は --regdiff の定義命令注釈で代替
+
+## web→ソース変数名の RE: 決定的 negative (2026-07-20, Ghidra mwcceppc_132.exe)
+
+--colorer dump の node.key をソース変数名に直結できるか、mwcceppc.exe 1.3.2 を
+Ghidra (bmp_output project) で RE した結論: **web には単一の名前が構造的に
+存在しない**。frida への配線は行わない。
+
+観測 (OBSERVED、Ghidra decompile):
+- `FUN_00507a30` (select/assign): colorer node は array `DAT_005e87d0` の要素。
+  node[+0x04] は **spill-cost 用 sub-object** で、`FUN_004cff40` →
+  `+0x18` → `FUN_004cfe80` (cost 計算) にしか使われない。名前経路ではない
+- `FUN_0057a640` (interference graph build): web list `DAT_005e87b0` を走査。
+  各 web の `p[7]` = web index (= node の key [+0x10] と一致)、`p[6]` =
+  def/use chain (instruction/operand record の linked list)。web descriptor
+  は `DAT_005e8800 + 0xc + key*0x10` にあるが、`FUN_0057bad0` が語単位コピー
+  する **forbidden-register bitmask** であって名前ではない
+- ソース変数名は **pre-coloring IR の operand オブジェクト**側にある
+  (`Operand ` printer = `FUN_00454ec0`/`FUN_00454f60`、gate `DAT_005e91da`)。
+  coloring とは別の object graph
+
+構造的結論: web = value-numbered な **merged live range**。名前を得るには
+web の p[6] chain → 各 operand record (+0x24、0xc stride) → operand→symbol
+resolver を辿る必要があり、**coalesce / param-merge / CSE で融合した web は
+複数の別 operand を含む = 単一名が定義できない**。そしてその merged web こそ
+register 残差の当事者 (phase2f「merged web colors last」)。つまり web→name は
+(a) operand→symbol resolver の追加 RE が要る実作業で、かつ (b) 肝心の
+merged web で本質的に lossy。
+
+代替の確定: `mwcc_dump.py --regdiff` が emit 済み asm の**定義命令**で変数を
+同定する (`lwz r31, 0x18(r30)` = self->itemSelection)。これは post-merge の
+実命令を読むので merged-web 命名問題を回避でき、人間にとっても内部 temp 名
+より有用。**item 1 (key→変数名) はこの RE をもって「--regdiff で代替、直結は
+不要」で確定クローズ**。
