@@ -415,5 +415,43 @@
     "extabindex_ShellItem_TickHitResolve": "@eti_80023F48",
     "extabindex_ShellItem_TickActive": "@eti_80023F54",
     "extabindex_ShellItem_Update": "@eti_80023F60"
+  },
+  "src/game/RivalRun.c": {
+    "extab_RivalRun_Draw": "@etb_8000D014",
+    "extabindex_RivalRun_Draw": "@eti_80024BA8",
+    "extab_RivalRun_Update": "@etb_8000D01C",
+    "extabindex_RivalRun_Update": "@eti_80024BB4",
+    "extab_RivalRun_RivalAIUpdate": "@etb_8000D024",
+    "extabindex_RivalRun_RivalAIUpdate": "@eti_80024BC0",
+    "extab_RivalRun_UpdatePathFollower": "@etb_8000D02C",
+    "extabindex_RivalRun_UpdatePathFollower": "@eti_80024BCC",
+    "extab_RivalRun_RivalTactics": "@etb_8000D034",
+    "extabindex_RivalRun_RivalTactics": "@eti_80024BD8",
+    "extab_RivalRun_CalcPathDistance": "@etb_8000D03C",
+    "extabindex_RivalRun_CalcPathDistance": "@eti_80024BE4",
+    "extab_RivalRun_Destroy": "@etb_8000D044",
+    "extabindex_RivalRun_Destroy": "@eti_80024BF0",
+    "extab_RivalRun_Init": "@etb_8000D04C",
+    "extabindex_RivalRun_Init": "@eti_80024BFC",
+    "extab_RivalRun_RivalInit": "@etb_8000D1E8",
+    "extabindex_RivalRun_RivalInit": "@eti_80024C08"
+  },
+  "src/game/EggItem.c": {
+    "extab_EggItem_OnGroundDriftTick_3B3C": "@etb_8000B5DC",
+    "extabindex_EggItem_OnGroundDriftTick_3B3C": "@eti_80023DE0",
+    "extab_EggItem_Tick_HeldAndHoming_3B3C": "@etb_8000B5E4",
+    "extabindex_EggItem_Tick_HeldAndHoming_3B3C": "@eti_80023DEC",
+    "extab_EggItem_Dispatch_3B3C": "@etb_8000B5EC",
+    "extabindex_EggItem_Dispatch_3B3C": "@eti_80023DF8"
+  },
+  "src/ui/FrameSelection_Methods.c": {
+    "extab_FrameSelection_Init": "@etb_80013F14",
+    "extabindex_FrameSelection_Init": "@eti_80027D94",
+    "extab_FrameSelection_Confirm": "@etb_80013FE0",
+    "extabindex_FrameSelection_Confirm": "@eti_80027DA0",
+    "extab_FrameSelection_Draw": "@etb_80014008",
+    "extabindex_FrameSelection_Draw": "@eti_80027DAC",
+    "extab_FrameSelection_Update": "@etb_80014010",
+    "extabindex_FrameSelection_Update": "@eti_80027DB8"
   }
 }
