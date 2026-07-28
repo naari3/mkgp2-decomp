@@ -8,6 +8,14 @@
     "extabindex_CourseData_GetOrCreate": "@eti_80022784",
     "extabindex_dtor_800ABF10": "@eti_80022790"
   },
+  "src/game/GameSetting.c": {
+    "extab_GameSetting_Page_VariantA": "@etb_80008218",
+    "extab_GameSetting_Page_VariantB": "@etb_80008220",
+    "extab_GameSetting_Page": "@etb_80008228",
+    "extabindex_GameSetting_Page_VariantA": "@eti_80021158",
+    "extabindex_GameSetting_Page_VariantB": "@eti_80021164",
+    "extabindex_GameSetting_Page": "@eti_80021170"
+  },
   "src/game/InputMgr.c": {
     "extab_InputMgr_Shutdown": "@etb_80005DF8",
     "extab_InputMgr_Init": "@etb_80005E00",
@@ -536,5 +544,25 @@
     "extabindex_MukadeItem_Tick_HeldAndHoming_3839": "@eti_80023E04",
     "extabindex_MukadeItem_TickHeldOrSnake_3839": "@eti_80023E10",
     "extabindex_MukadeItem_Dispatch_3839": "@eti_80023E1C"
+  },
+  "src/game/clFlowCup.c": {
+    "extab_clFlowCup_Draw": "@etb_8001428C",
+    "extabindex_clFlowCup_Draw": "@eti_80027E00",
+    "extab_clFlowCup_Update": "@etb_80014294",
+    "extabindex_clFlowCup_Update": "@eti_80027E0C",
+    "extab_clFlowCup_Dtor": "@etb_800142DC",
+    "extabindex_clFlowCup_Dtor": "@eti_80027E18",
+    "extab_clFlowCup_Init": "@etb_800142E4",
+    "extabindex_clFlowCup_Init": "@eti_80027E24"
+  },
+  "src/game/clFlowRound.c": {
+    "extab_clFlowRound_Draw": "@etb_800145E4",
+    "extabindex_clFlowRound_Draw": "@eti_80027E3C",
+    "extab_clFlowRound_Update": "@etb_800145EC",
+    "extabindex_clFlowRound_Update": "@eti_80027E48",
+    "extab_clFlowRound_Dtor": "@etb_80014604",
+    "extabindex_clFlowRound_Dtor": "@eti_80027E54",
+    "extab_clFlowRound_Init": "@etb_8001460C",
+    "extabindex_clFlowRound_Init": "@eti_80027E60"
   }
 }

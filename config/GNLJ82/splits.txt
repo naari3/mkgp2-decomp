@@ -506,6 +506,11 @@ game/DMAChannelManager_Init.c:
 	extabindex  start:0x80020FC0 end:0x80020FCC
 	.text       start:0x800662B4 end:0x80066350
 
+game/GameSetting.c:
+	extab       start:0x80008218 end:0x80008230
+	extabindex  start:0x80021158 end:0x8002117C
+	.text       start:0x80072074 end:0x80073878
+
 game/ServiceMenu_Page.c:
 	extab       start:0x80008238 end:0x800082A0
 	extabindex  start:0x80021188 end:0x800211B8
@@ -1295,6 +1300,16 @@ ui/FrameSelection_Methods.c:
 	extab       start:0x80013F14 end:0x80014018
 	extabindex  start:0x80027D94 end:0x80027DC4
 	.text       start:0x801C4EA8 end:0x801C5C34
+
+game/clFlowCup.c:
+	extab       start:0x8001428C end:0x8001457C
+	extabindex  start:0x80027E00 end:0x80027E30
+	.text       start:0x801C7360 end:0x801C9288
+
+game/clFlowRound.c:
+	extab       start:0x800145E4 end:0x80014720
+	extabindex  start:0x80027E3C end:0x80027E6C
+	.text       start:0x801C9C28 end:0x801CB620
 
 game/PathFollower_EnsureGlobalAlloc.c:
 	extab       start:0x80015918 end:0x80015920
