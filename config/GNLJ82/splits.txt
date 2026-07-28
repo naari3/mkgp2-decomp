@@ -115,6 +115,21 @@ game/Object_SetJObjRotation.c:
 game/Object_SetByte48.c:
 	.text       start:0x800320D8 end:0x800320E0
 
+game/ObjectTree_BlendOrCopy.c:
+	extab       start:0x80005A18 end:0x80005A20
+	extabindex  start:0x8001F730 end:0x8001F73C
+	.text       start:0x800322F8 end:0x80032540
+
+game/ObjectTree_BlendOrCopy_Timed.c:
+	extab       start:0x80005A20 end:0x80005A38
+	extabindex  start:0x8001F73C end:0x8001F748
+	.text       start:0x80032540 end:0x8003267C
+
+game/ObjectTree_BlendQuatLerp.c:
+	extab       start:0x80005A38 end:0x80005A40
+	extabindex  start:0x8001F748 end:0x8001F754
+	.text       start:0x800326D0 end:0x800328A8
+
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
 
@@ -324,6 +339,21 @@ game/NamCam_LoadImage.c:
 	extab       start:0x80006858 end:0x80006860
 	extabindex  start:0x800200F0 end:0x800200FC
 	.text       start:0x80048BEC end:0x80048C34
+
+game/NamCam_TickShutdownCountdown.c:
+	extab       start:0x80006870 end:0x80006878
+	extabindex  start:0x80020114 end:0x80020120
+	.text       start:0x80049628 end:0x80049718
+
+game/NamCam_End.c:
+	extab       start:0x80006878 end:0x80006880
+	extabindex  start:0x80020120 end:0x8002012C
+	.text       start:0x80049718 end:0x80049860
+
+game/NamCam_Init.c:
+	extab       start:0x80006880 end:0x80006888
+	extabindex  start:0x8002012C end:0x80020138
+	.text       start:0x80049860 end:0x80049940
 
 sound/ISESlot_StopEffect.c:
 	extab       start:0x80006898 end:0x800068A0
@@ -1380,6 +1410,31 @@ game/clFlowRound.c:
 	extab       start:0x800145E4 end:0x80014720
 	extabindex  start:0x80027E3C end:0x80027E6C
 	.text       start:0x801C9C28 end:0x801CB620
+
+game/clFlowItemSelect_CommitSlotAnim.c:
+	extab       start:0x80014720 end:0x80014728
+	extabindex  start:0x80027E6C end:0x80027E78
+	.text       start:0x801CB620 end:0x801CB818
+
+game/clFlowItemSelect_Draw.c:
+	extab       start:0x80014730 end:0x80014738
+	extabindex  start:0x80027E84 end:0x80027E90
+	.text       start:0x801CBCAC end:0x801CBD58
+
+game/clFlowItemSelect_Update.c:
+	extab       start:0x80014738 end:0x80014740
+	extabindex  start:0x80027E90 end:0x80027E9C
+	.text       start:0x801CBD58 end:0x801CC104
+
+game/clFlowItemSelect_Dtor.c:
+	extab       start:0x80014740 end:0x80014768
+	extabindex  start:0x80027E9C end:0x80027EA8
+	.text       start:0x801CC104 end:0x801CC2EC
+
+game/clFlowItemSelect_Init.c:
+	extab       start:0x80014768 end:0x80014804
+	extabindex  start:0x80027EA8 end:0x80027EB4
+	.text       start:0x801CC2EC end:0x801CCA30
 
 game/PathFollower_EnsureGlobalAlloc.c:
 	extab       start:0x80015918 end:0x80015920

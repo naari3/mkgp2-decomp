@@ -35,3 +35,13 @@
 
 - Local commit `36f1a29` passed the full SHA-1 check, but its first push was rejected because remote `main` advanced concurrently.
 - Recovery: fetch/rebase, retain both sides of any SoT conflicts, rerun SHA-1, push, then close issues #29-#31.
+## NamCam_GetImageHandle relocation residual
+
+- Unit: `NamCam`
+- Function: `0x80048E0C NamCam_GetImageHandle`
+- Status: blocked from Matching promotion
+- Reason: the generated asm_fn has one target-only `sda21` relocation against
+  `.sdata2` symbol `lbl_806D26C0`. The worker's raw-immediate fallback compiled
+  but failed the integrated `build/GNLJ82/ok` SHA-1 check.
+- Action taken: promoted the other three pending NamCam functions only and left
+  `NamCam_GetImageHandle` pending for a relocation-aware follow-up.

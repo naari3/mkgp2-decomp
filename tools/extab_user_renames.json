@@ -1,5 +1,16 @@
 {
   "_comment": "Per-TU mapping of user-emitted extab/extabindex C symbol names to the anonymous local @etb_/@eti_ names dtk dol split writes into symbols.txt. Used by tools/postprocess_extab_user.py via llvm-objcopy --redefine-sym. Each TU's mapping must cover every manually emitted extab/extabindex symbol in source order; unlisted symbols pass through unchanged (and will trip dtk dol diff).",
+  "src/game/ObjectTree_BlendOrCopy.c": {"extab_ObjectTree_BlendOrCopy":"@etb_80005A18","extabindex_ObjectTree_BlendOrCopy":"@eti_8001F730"},
+  "src/game/ObjectTree_BlendOrCopy_Timed.c": {"extab_ObjectTree_BlendOrCopy_Timed":"@etb_80005A20","extabindex_ObjectTree_BlendOrCopy_Timed":"@eti_8001F73C"},
+  "src/game/ObjectTree_BlendQuatLerp.c": {"extab_ObjectTree_BlendQuatLerp":"@etb_80005A38","extabindex_ObjectTree_BlendQuatLerp":"@eti_8001F748"},
+  "src/game/NamCam_TickShutdownCountdown.c": {"extab_NamCam_TickShutdownCountdown":"@etb_80006870","extabindex_NamCam_TickShutdownCountdown":"@eti_80020114"},
+  "src/game/NamCam_End.c": {"extab_NamCam_End":"@etb_80006878","extabindex_NamCam_End":"@eti_80020120"},
+  "src/game/NamCam_Init.c": {"extab_NamCam_Init":"@etb_80006880","extabindex_NamCam_Init":"@eti_8002012C"},
+  "src/game/clFlowItemSelect_CommitSlotAnim.c": {"extab_clFlowItemSelect_CommitSlotAnim":"@etb_80014720","extabindex_clFlowItemSelect_CommitSlotAnim":"@eti_80027E6C"},
+  "src/game/clFlowItemSelect_Draw.c": {"extab_clFlowItemSelect_Draw":"@etb_80014730","extabindex_clFlowItemSelect_Draw":"@eti_80027E84"},
+  "src/game/clFlowItemSelect_Update.c": {"extab_clFlowItemSelect_Update":"@etb_80014738","extabindex_clFlowItemSelect_Update":"@eti_80027E90"},
+  "src/game/clFlowItemSelect_Dtor.c": {"extab_clFlowItemSelect_Dtor":"@etb_80014740","extabindex_clFlowItemSelect_Dtor":"@eti_80027E9C"},
+  "src/game/clFlowItemSelect_Init.c": {"extab_clFlowItemSelect_Init":"@etb_80014768","extabindex_clFlowItemSelect_Init":"@eti_80027EA8"},
   "src/game/BananaField_Render.c": {
     "extab_BananaField_Render": "@etb_800124B0",
     "extabindex_BananaField_Render": "@eti_80027314"
