@@ -453,5 +453,35 @@
     "extabindex_FrameSelection_Draw": "@eti_80027DAC",
     "extab_FrameSelection_Update": "@etb_80014010",
     "extabindex_FrameSelection_Update": "@eti_80027DB8"
+  },
+  "src/game/GabyouTripleChild.c": {
+    "extab_GabyouTripleChild_TickHitResolve": "@etb_8000B6A4",
+    "extabindex_GabyouTripleChild_TickHitResolve": "@eti_80023F0C",
+    "extab_GabyouTripleChild_TickActive": "@etb_8000B6AC",
+    "extabindex_GabyouTripleChild_TickActive": "@eti_80023F18",
+    "extab_GabyouTripleChild_Update": "@etb_8000B6B4",
+    "extabindex_GabyouTripleChild_Update": "@eti_80023F24"
+  },
+  "src/game/TaruItem_OnGroundDriftTick_25.c": {
+    "extab_TaruItem_OnGroundDriftTick_25": "@etb_8000B5C4",
+    "extabindex_TaruItem_OnGroundDriftTick_25": "@eti_80023DBC"
+  },
+  "src/game/TaruItem_Tick_HeldAndHoming_25.c": {
+    "extab_TaruItem_Tick_HeldAndHoming_25": "@etb_8000B5CC",
+    "extabindex_TaruItem_Tick_HeldAndHoming_25": "@eti_80023DC8"
+  },
+  "src/game/TaruItem_Dispatch_25.c": {
+    "extab_TaruItem_Dispatch_25": "@etb_8000B5D4",
+    "extabindex_TaruItem_Dispatch_25": "@eti_80023DD4"
+  },
+  "src/game/ReverseChallenge.c": {
+    "extab_ReverseChallenge_Dtor": "@etb_8000A1EC",
+    "extabindex_ReverseChallenge_Dtor": "@eti_80022868",
+    "extab_ReverseChallenge_Render": "@etb_8000A1F4",
+    "extabindex_ReverseChallenge_Render": "@eti_80022874",
+    "extab_ReverseChallenge_Update": "@etb_8000A1FC",
+    "extabindex_ReverseChallenge_Update": "@eti_80022880",
+    "extab_ReverseChallenge_Init": "@etb_8000A204",
+    "extabindex_ReverseChallenge_Init": "@eti_8002288C"
   }
 }

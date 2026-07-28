@@ -864,6 +864,11 @@ game/main.c:
 	extabindex  start:0x800227E4 end:0x800227F0
 	.text       start:0x800AC894 end:0x800AC8FC
 
+game/ReverseChallenge.c:
+	extab       start:0x8000A1EC end:0x8000A37C
+	extabindex  start:0x80022868 end:0x80022898
+	.text       start:0x800ACD60 end:0x800ADDA0
+
 game/clCGameDemoWC_Stubs.c:
 	.text       start:0x800ADDA0 end:0x800ADDAC
 
@@ -1087,6 +1092,21 @@ game/ItemObject_WriteVectors.c:
 game/ItemObject_SetByte18c.c:
 	.text       start:0x800DD930 end:0x800DD940
 
+game/TaruItem_OnGroundDriftTick_25.c:
+	extab       start:0x8000B5C4 end:0x8000B5CC
+	extabindex  start:0x80023DBC end:0x80023DC8
+	.text       start:0x800E9E94 end:0x800EA0E8
+
+game/TaruItem_Tick_HeldAndHoming_25.c:
+	extab       start:0x8000B5CC end:0x8000B5D4
+	extabindex  start:0x80023DC8 end:0x80023DD4
+	.text       start:0x800EA0E8 end:0x800EA958
+
+game/TaruItem_Dispatch_25.c:
+	extab       start:0x8000B5D4 end:0x8000B5DC
+	extabindex  start:0x80023DD4 end:0x80023DE0
+	.text       start:0x800EA958 end:0x800EADB4
+
 game/EggItem.c:
 	extab       start:0x8000B5DC end:0x8000B5F4
 	extabindex  start:0x80023DE0 end:0x80023E04
@@ -1096,6 +1116,11 @@ game/HeartCompoundItem.c:
 	extab       start:0x8000B674 end:0x8000B68C
 	extabindex  start:0x80023EC4 end:0x80023EE8
 	.text       start:0x800F2620 end:0x800F2D60
+
+game/GabyouTripleChild.c:
+	extab       start:0x8000B6A4 end:0x8000B6BC
+	extabindex  start:0x80023F0C end:0x80023F30
+	.text       start:0x800F3B20 end:0x800F4914
 
 game/ShellItem.c:
 	extab       start:0x8000B6C4 end:0x8000B6E4
