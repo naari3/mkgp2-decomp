@@ -30,3 +30,8 @@
 
 - Local commit `429d896` passed the full SHA-1 check, but its first push was rejected because remote `main` advanced concurrently.
 - Recovery: fetch/rebase, retain both sides of any SoT conflicts, rerun SHA-1, push, then close issues #26-#28.
+
+# Push recovery: KartItemAudio / PowItem / ShellItem (2026-07-28)
+
+- Local commit `36f1a29` passed the full SHA-1 check, but its first push was rejected because remote `main` advanced concurrently.
+- Recovery: fetch/rebase, retain both sides of any SoT conflicts, rerun SHA-1, push, then close issues #29-#31.
