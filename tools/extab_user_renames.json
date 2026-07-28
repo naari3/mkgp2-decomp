@@ -1,5 +1,17 @@
 {
   "_comment": "Per-TU mapping of user-emitted extab/extabindex C symbol names to the anonymous local @etb_/@eti_ names dtk dol split writes into symbols.txt. Used by tools/postprocess_extab_user.py via llvm-objcopy --redefine-sym. Each TU's mapping must cover every manually emitted extab/extabindex symbol in source order; unlisted symbols pass through unchanged (and will trip dtk dol diff).",
+  "src/game/BananaField_Render.c": {
+    "extab_BananaField_Render": "@etb_800124B0",
+    "extabindex_BananaField_Render": "@eti_80027314"
+  },
+  "src/game/BananaField_CheckCollision.c": {
+    "extab_BananaField_CheckCollision": "@etb_800124B8",
+    "extabindex_BananaField_CheckCollision": "@eti_80027320"
+  },
+  "src/game/BananaField_TestHitBox.c": {
+    "extab_BananaField_TestHitBox": "@etb_800124D8",
+    "extabindex_BananaField_TestHitBox": "@eti_80027338"
+  },
   "src/game/ItemSelect_Pending.c": {
     "extab_ItemSelect_OnDropAllCancel": "@etb_80007DC0",
     "extab_ItemSelect_GiveItemOrQueueDrop": "@etb_80007DC8",
@@ -35,6 +47,10 @@
     "extabindex_ItemEffectBus_SnapshotAndClearSpawnFlags": "@eti_80021F50",
     "extab_ItemEffectBus_SnapshotAndFullReset": "@etb_80009420",
     "extabindex_ItemEffectBus_SnapshotAndFullReset": "@eti_80021F5C"
+  },
+  "src/game/GXChannel_PushTransform.c": {
+    "extab_GXChannel_PushTransform": "@etb_800087A8",
+    "extabindex_GXChannel_PushTransform": "@eti_80021584"
   },
   "src/game/CourseData_Lookup.c": {
     "extab_dtor_800ABF10": "@etb_8000A0E8",

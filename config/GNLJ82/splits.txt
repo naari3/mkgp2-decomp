@@ -567,6 +567,11 @@ game/CourseAuxClass_VtableDtor.c:
 	extabindex  start:0x80021578 end:0x80021584
 	.text       start:0x8007D0D4 end:0x8007D11C
 
+game/GXChannel_PushTransform.c:
+	extab       start:0x800087A8 end:0x800087B0
+	extabindex  start:0x80021584 end:0x80021590
+	.text       start:0x8007D11C end:0x8007D2AC
+
 game/DVDLoad_DrawDoneCallback.c:
 	extab       start:0x800087D8 end:0x800087E0
 	extabindex  start:0x800215CC end:0x800215D8
@@ -1288,6 +1293,21 @@ game/WeatherSystem_PickVariant.c:
 	extab       start:0x800122B4 end:0x800122BC
 	extabindex  start:0x80027188 end:0x80027194
 	.text       start:0x80193264 end:0x801932F8
+
+game/BananaField_Render.c:
+	extab       start:0x800124B0 end:0x800124B8
+	extabindex  start:0x80027314 end:0x80027320
+	.text       start:0x80196AA0 end:0x80196C5C
+
+game/BananaField_CheckCollision.c:
+	extab       start:0x800124B8 end:0x800124C0
+	extabindex  start:0x80027320 end:0x8002732C
+	.text       start:0x80196C5C end:0x80196D9C
+
+game/BananaField_TestHitBox.c:
+	extab       start:0x800124D8 end:0x800124E0
+	extabindex  start:0x80027338 end:0x80027344
+	.text       start:0x80196F60 end:0x80197130
 
 game/KartMovement_SetPosition.c:
 	.text       start:0x8019A4A0 end:0x8019A4E0
