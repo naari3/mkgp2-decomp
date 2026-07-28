@@ -953,6 +953,26 @@ game/ReverseChallenge.c:
 game/clCGameDemoWC_Stubs.c:
 	.text       start:0x800ADDA0 end:0x800ADDAC
 
+game/clCGameDemoWC/Dtor.c:
+	extab       start:0x8000A37C end:0x8000A384
+	extabindex  start:0x80022898 end:0x800228A4
+	.text       start:0x800ADDAC end:0x800ADEF8
+
+game/clCGameDemoWC/Render.c:
+	extab       start:0x8000A38C end:0x8000A394
+	extabindex  start:0x800228B0 end:0x800228BC
+	.text       start:0x800ADF58 end:0x800AE108
+
+game/clCGameDemoWC/Tick.c:
+	extab       start:0x8000A394 end:0x8000A39C
+	extabindex  start:0x800228BC end:0x800228C8
+	.text       start:0x800AE108 end:0x800AE438
+
+game/clCGameDemoWC/Ctor.c:
+	extab       start:0x8000A39C end:0x8000A460
+	extabindex  start:0x800228C8 end:0x800228D4
+	.text       start:0x800AE438 end:0x800AE6BC
+
 game/clCGameDemo_Dtor.c:
 	extab       start:0x8000A460 end:0x8000A468
 	extabindex  start:0x800228D4 end:0x800228E0
@@ -1331,13 +1351,43 @@ game/LUT_Sin12Bit.c:
 	extabindex  start:0x80026CD8 end:0x80026CE4
 	.text       start:0x80186998 end:0x801869C8
 
+game/NokoNoko_Update.c:
+	extab       start:0x80011D1C end:0x80011D24
+	extabindex  start:0x80026D74 end:0x80026D80
+	.text       start:0x80187D2C end:0x801884E8
+
+game/NokoNoko_InitEntity.c:
+	extab       start:0x80011D24 end:0x80011D2C
+	extabindex  start:0x80026D80 end:0x80026D8C
+	.text       start:0x801884E8 end:0x801887BC
+
+game/NokoNoko_FindNearest.c:
+	extab       start:0x80011D2C end:0x80011D34
+	extabindex  start:0x80026D8C end:0x80026D98
+	.text       start:0x801887BC end:0x801888B8
+
+game/NokoNoko_CheckHitAndKill.c:
+	extab       start:0x80011D34 end:0x80011D3C
+	extabindex  start:0x80026D98 end:0x80026DA4
+	.text       start:0x801888B8 end:0x80188AE4
+
 game/NokoNoko_CountDefeated.c:
 	.text       start:0x80188AE4 end:0x80188B24
+
+game/NokoNoko_Render.c:
+	extab       start:0x80011D3C end:0x80011D44
+	extabindex  start:0x80026DA4 end:0x80026DB0
+	.text       start:0x80188B24 end:0x80188D0C
 
 game/NokoNoko.c:
 	extab       start:0x80011D44 end:0x80011D4C
 	extabindex  start:0x80026DB0 end:0x80026DBC
 	.text       start:0x80188D0C end:0x80188DA8
+
+game/NokoNoko_Init.c:
+	extab       start:0x80011D54 end:0x80011DAC
+	extabindex  start:0x80026DC8 end:0x80026DD4
+	.text       start:0x80188E9C end:0x801891C4
 
 game/WeatherSystem_PickVariant.c:
 	extab       start:0x800122B4 end:0x800122BC
@@ -1395,6 +1445,21 @@ game/dtor_801BA14C.c:
 
 ui/FrameSelection.c:
 	.text       start:0x801BA194 end:0x801BA1A4
+
+game/clFlowChara_HandleConfirm.c:
+	extab       start:0x80013EB4 end:0x80013EBC
+	extabindex  start:0x80027D64 end:0x80027D70
+	.text       start:0x801C393C end:0x801C3AA4
+
+game/clFlowChara_Update.c:
+	extab       start:0x80013EC4 end:0x80013F0C
+	extabindex  start:0x80027D7C end:0x80027D88
+	.text       start:0x801C3D48 end:0x801C4CA4
+
+game/clFlowChara_Destructor.c:
+	extab       start:0x80013F0C end:0x80013F14
+	extabindex  start:0x80027D88 end:0x80027D94
+	.text       start:0x801C4CA4 end:0x801C4EA8
 
 ui/FrameSelection_Methods.c:
 	extab       start:0x80013F14 end:0x80014018
