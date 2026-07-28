@@ -440,6 +440,11 @@ sound/MediaBoard_PollCompletion.c:
 	extabindex  start:0x800208E8 end:0x800208F4
 	.text       start:0x80059644 end:0x8005967C
 
+game/KartItemAudio.c:
+	extab       start:0x80007710 end:0x80007728
+	extabindex  start:0x80020930 end:0x80020954
+	.text       start:0x8005A140 end:0x8005AA04
+
 game/EffectState_HasContent.c:
 	.text       start:0x8005B168 end:0x8005B17C
 
@@ -1086,6 +1091,16 @@ game/HeartCompoundItem.c:
 	extab       start:0x8000B674 end:0x8000B68C
 	extabindex  start:0x80023EC4 end:0x80023EE8
 	.text       start:0x800F2620 end:0x800F2D60
+
+game/ShellItem.c:
+	extab       start:0x8000B6C4 end:0x8000B6E4
+	extabindex  start:0x80023F3C end:0x80023F6C
+	.text       start:0x800F4C28 end:0x800F5B7C
+
+game/PowItem.c:
+	extab       start:0x8000B6E4 end:0x8000B6FC
+	extabindex  start:0x80023F6C end:0x80023F90
+	.text       start:0x800F5B7C end:0x800F6F54
 
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C

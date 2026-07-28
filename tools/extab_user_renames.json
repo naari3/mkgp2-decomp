@@ -389,5 +389,31 @@
     "extabindex_clFlowItem_Draw": "@eti_8002AC14",
     "extab_clFlowItem_Update": "@etb_8001C720",
     "extabindex_clFlowItem_Update": "@eti_8002AC20"
+  },
+  "src/game/KartItemAudio.c": {
+    "extab_KartItemAudio_StopSEByItemId": "@etb_80007710",
+    "extab_KartItemAudio_PlayHitConfirmSE": "@etb_80007718",
+    "extab_KartItemAudio_PlayThrowConfirmSE": "@etb_80007720",
+    "extabindex_KartItemAudio_StopSEByItemId": "@eti_80020930",
+    "extabindex_KartItemAudio_PlayHitConfirmSE": "@eti_8002093C",
+    "extabindex_KartItemAudio_PlayThrowConfirmSE": "@eti_80020948"
+  },
+  "src/game/PowItem.c": {
+    "extab_PowItem_TickHitResolve": "@etb_8000B6E4",
+    "extabindex_PowItem_TickHitResolve": "@eti_80023F6C",
+    "extab_PowItem_TickActive": "@etb_8000B6EC",
+    "extabindex_PowItem_TickActive": "@eti_80023F78",
+    "extab_PowItem_Update": "@etb_8000B6F4",
+    "extabindex_PowItem_Update": "@eti_80023F84"
+  },
+  "src/game/ShellItem.c": {
+    "extab_ShellItem_TickReboundOrCarry": "@etb_8000B6C4",
+    "extab_ShellItem_TickHitResolve": "@etb_8000B6CC",
+    "extab_ShellItem_TickActive": "@etb_8000B6D4",
+    "extab_ShellItem_Update": "@etb_8000B6DC",
+    "extabindex_ShellItem_TickReboundOrCarry": "@eti_80023F3C",
+    "extabindex_ShellItem_TickHitResolve": "@eti_80023F48",
+    "extabindex_ShellItem_TickActive": "@eti_80023F54",
+    "extabindex_ShellItem_Update": "@eti_80023F60"
   }
 }
