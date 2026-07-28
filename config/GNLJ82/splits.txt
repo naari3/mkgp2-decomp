@@ -1123,6 +1123,11 @@ game/EggItem.c:
 	extabindex  start:0x80023DE0 end:0x80023E04
 	.text       start:0x800EADB4 end:0x800EBC00
 
+game/MukadeItem.c:
+	extab       start:0x8000B5F4 end:0x8000B60C
+	extabindex  start:0x80023E04 end:0x80023E28
+	.text       start:0x800EBC00 end:0x800ED010
+
 game/OnchiSpeaker_State2_Active.c:
 	extab       start:0x8000B624 end:0x8000B62C
 	extabindex  start:0x80023E4C end:0x80023E58
@@ -1162,6 +1167,16 @@ game/PowItem.c:
 	extab       start:0x8000B6E4 end:0x8000B6FC
 	extabindex  start:0x80023F6C end:0x80023F90
 	.text       start:0x800F5B7C end:0x800F6F54
+
+game/TornadoItem.c:
+	extab       start:0x8000B70C end:0x8000B73C
+	extabindex  start:0x80023FA8 end:0x80023FF0
+	.text       start:0x800F7AFC end:0x800FA3D8
+
+game/StarItem.c:
+	extab       start:0x8000B794 end:0x8000B7B4
+	extabindex  start:0x80024074 end:0x800240A4
+	.text       start:0x800FD948 end:0x800FEE8C
 
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C

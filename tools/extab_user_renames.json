@@ -508,5 +508,33 @@
     "extab_TornadoEffect_ApplyItemVisual_Primary": "@etb_80007698", "extabindex_TornadoEffect_ApplyItemVisual_Primary": "@eti_8002087C",
     "extab_TornadoEffect_ApplyItemVisual_Secondary": "@etb_800076A0", "extabindex_TornadoEffect_ApplyItemVisual_Secondary": "@eti_80020888",
     "extab_TornadoEffect_ApplyItemVisual_Compact": "@etb_800076A8", "extabindex_TornadoEffect_ApplyItemVisual_Compact": "@eti_80020894"
+  },
+  "src/game/TornadoItem.c": {
+    "extab_TornadoItem_TickActive": "@etb_8000B70C",
+    "extab_TornadoLaunch_Tick": "@etb_8000B714",
+    "extab_Tornado_HomingChildTick": "@etb_8000B71C",
+    "extab_Tornado_LockOnHomingTick": "@etb_8000B724",
+    "extab_Tornado_FlightTick": "@etb_8000B72C",
+    "extab_TornadoItem_HoldTick": "@etb_8000B734",
+    "extabindex_TornadoItem_TickActive": "@eti_80023FA8",
+    "extabindex_TornadoLaunch_Tick": "@eti_80023FB4",
+    "extabindex_Tornado_HomingChildTick": "@eti_80023FC0",
+    "extabindex_Tornado_LockOnHomingTick": "@eti_80023FCC",
+    "extabindex_Tornado_FlightTick": "@eti_80023FD8",
+    "extabindex_TornadoItem_HoldTick": "@eti_80023FE4"
+  },
+  "src/game/StarItem.c": {
+    "extab_StarItem_BoundToVictimTick": "@etb_8000B794", "extabindex_StarItem_BoundToVictimTick": "@eti_80024074",
+    "extab_StarItem_FallRecoveryTick": "@etb_8000B79C", "extabindex_StarItem_FallRecoveryTick": "@eti_80024080",
+    "extab_StarItem_FlightAndLockOnTick": "@etb_8000B7A4", "extabindex_StarItem_FlightAndLockOnTick": "@eti_8002408C",
+    "extab_StarItem_Tick": "@etb_8000B7AC", "extabindex_StarItem_Tick": "@eti_80024098"
+  },
+  "src/game/MukadeItem.c": {
+    "extab_MukadeItem_Tick_HeldAndHoming_3839": "@etb_8000B5F4",
+    "extab_MukadeItem_TickHeldOrSnake_3839": "@etb_8000B5FC",
+    "extab_MukadeItem_Dispatch_3839": "@etb_8000B604",
+    "extabindex_MukadeItem_Tick_HeldAndHoming_3839": "@eti_80023E04",
+    "extabindex_MukadeItem_TickHeldOrSnake_3839": "@eti_80023E10",
+    "extabindex_MukadeItem_Dispatch_3839": "@eti_80023E1C"
   }
 }
