@@ -1,5 +1,41 @@
 {
   "_comment": "Per-TU mapping of user-emitted extab/extabindex C symbol names to the anonymous local @etb_/@eti_ names dtk dol split writes into symbols.txt. Used by tools/postprocess_extab_user.py via llvm-objcopy --redefine-sym. Each TU's mapping must cover every manually emitted extab/extabindex symbol in source order; unlisted symbols pass through unchanged (and will trip dtk dol diff).",
+  "src/game/ItemSelect_Pending.c": {
+    "extab_ItemSelect_OnDropAllCancel": "@etb_80007DC0",
+    "extab_ItemSelect_GiveItemOrQueueDrop": "@etb_80007DC8",
+    "extab_ItemSelect_StartRouletteSpin": "@etb_80007DD0",
+    "extabindex_ItemSelect_OnDropAllCancel": "@eti_80020D5C",
+    "extabindex_ItemSelect_GiveItemOrQueueDrop": "@eti_80020D68",
+    "extabindex_ItemSelect_StartRouletteSpin": "@eti_80020D74"
+  },
+  "src/game/ItemEffectBus.c": {
+    "extab_ItemEffectBus_Commit": "@etb_800093C0",
+    "extabindex_ItemEffectBus_Commit": "@eti_80021ECC",
+    "extab_dtor_80091284": "@etb_800093C8",
+    "extabindex_dtor_80091284": "@eti_80021ED8",
+    "extab_ItemEffectBus_ClearByTable8": "@etb_800093D0",
+    "extabindex_ItemEffectBus_ClearByTable8": "@eti_80021EE4",
+    "extab_ItemEffectBus_RegisterBonkPosition": "@etb_800093D8",
+    "extabindex_ItemEffectBus_RegisterBonkPosition": "@eti_80021EF0",
+    "extab_ItemEffectBus_ApplyItemEventClear": "@etb_800093E0",
+    "extabindex_ItemEffectBus_ApplyItemEventClear": "@eti_80021EFC",
+    "extab_ItemEffectBus_ApplyItemEventSet": "@etb_800093E8",
+    "extabindex_ItemEffectBus_ApplyItemEventSet": "@eti_80021F08",
+    "extab_ItemEffectBus_ArmTornadoAndQuery": "@etb_800093F0",
+    "extabindex_ItemEffectBus_ArmTornadoAndQuery": "@eti_80021F14",
+    "extab_ItemEffectBus_ApplyItemConfirm": "@etb_800093F8",
+    "extabindex_ItemEffectBus_ApplyItemConfirm": "@eti_80021F20",
+    "extab_ItemEffectBus_ClearMask": "@etb_80009400",
+    "extabindex_ItemEffectBus_ClearMask": "@eti_80021F2C",
+    "extab_ItemEffectBus_OrMask": "@etb_80009408",
+    "extabindex_ItemEffectBus_OrMask": "@eti_80021F38",
+    "extab_ItemEffectBus_TickTornadoCooldown": "@etb_80009410",
+    "extabindex_ItemEffectBus_TickTornadoCooldown": "@eti_80021F44",
+    "extab_ItemEffectBus_SnapshotAndClearSpawnFlags": "@etb_80009418",
+    "extabindex_ItemEffectBus_SnapshotAndClearSpawnFlags": "@eti_80021F50",
+    "extab_ItemEffectBus_SnapshotAndFullReset": "@etb_80009420",
+    "extabindex_ItemEffectBus_SnapshotAndFullReset": "@eti_80021F5C"
+  },
   "src/game/CourseData_Lookup.c": {
     "extab_dtor_800ABF10": "@etb_8000A0E8",
     "extab_fn_800ABD80": "@etb_8000A0F0",
@@ -564,5 +600,25 @@
     "extabindex_clFlowRound_Dtor": "@eti_80027E54",
     "extab_clFlowRound_Init": "@etb_8001460C",
     "extabindex_clFlowRound_Init": "@eti_80027E60"
+  },
+  "src/game/DVDLoad_AsyncStop.c": {
+    "extab_DVDLoad_AsyncStop": "@etb_800087E0",
+    "extabindex_DVDLoad_AsyncStop": "@eti_800215D8"
+  },
+  "src/game/DVDLoad_AsyncStart.c": {
+    "extab_DVDLoad_AsyncStart": "@etb_800087E8",
+    "extabindex_DVDLoad_AsyncStart": "@eti_800215E4"
+  },
+  "src/game/DVDLoad_OpenAllocReadRelocSync.c": {
+    "extab_DVDLoad_OpenAllocReadRelocSync": "@etb_800087F0",
+    "extabindex_DVDLoad_OpenAllocReadRelocSync": "@eti_800215F0"
+  },
+  "src/game/DVDLoad_ReadChunkHandle.c": {
+    "extab_DVDLoad_ReadChunkHandle": "@etb_80008800",
+    "extabindex_DVDLoad_ReadChunkHandle": "@eti_80021608"
+  },
+  "src/game/DVDLoad_WaitIfSamePage.c": {
+    "extab_DVDLoad_WaitIfSamePage": "@etb_80008810",
+    "extabindex_DVDLoad_WaitIfSamePage": "@eti_80021620"
   }
 }

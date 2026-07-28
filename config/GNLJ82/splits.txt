@@ -445,6 +445,11 @@ game/EffectSteering_InputViscosity_SetFieldC.c:
 game/SpawnTable.c:
 	.text       start:0x8005F5CC end:0x8005F5D8
 
+game/ItemSelect_Pending.c:
+	extab       start:0x80007DC0 end:0x80007DD8
+	extabindex  start:0x80020D5C end:0x80020D80
+	.text       start:0x8006012C end:0x800604BC
+
 game/ItemSelect_DrawUIHelperIfActive.c:
 	extab       start:0x80007DD8 end:0x80007DE0
 	extabindex  start:0x80020D80 end:0x80020D8C
@@ -567,13 +572,38 @@ game/DVDLoad_DrawDoneCallback.c:
 	extabindex  start:0x800215CC end:0x800215D8
 	.text       start:0x8007DC08 end:0x8007DC38
 
+game/DVDLoad_AsyncStop.c:
+	extab       start:0x800087E0 end:0x800087E8
+	extabindex  start:0x800215D8 end:0x800215E4
+	.text       start:0x8007DC38 end:0x8007DC8C
+
+game/DVDLoad_AsyncStart.c:
+	extab       start:0x800087E8 end:0x800087F0
+	extabindex  start:0x800215E4 end:0x800215F0
+	.text       start:0x8007DC8C end:0x8007DD00
+
+game/DVDLoad_OpenAllocReadRelocSync.c:
+	extab       start:0x800087F0 end:0x800087F8
+	extabindex  start:0x800215F0 end:0x800215FC
+	.text       start:0x8007DD00 end:0x8007DFD4
+
 game/DVDLoad_Stats.c:
 	.text       start:0x8007DFD4 end:0x8007DFE4
+
+game/DVDLoad_ReadChunkHandle.c:
+	extab       start:0x80008800 end:0x80008808
+	extabindex  start:0x80021608 end:0x80021614
+	.text       start:0x8007E178 end:0x8007E28C
 
 game/DVDLoad_RecordOpStart.c:
 	extab       start:0x80008808 end:0x80008810
 	extabindex  start:0x80021614 end:0x80021620
 	.text       start:0x8007E28C end:0x8007E2B8
+
+game/DVDLoad_WaitIfSamePage.c:
+	extab       start:0x80008810 end:0x80008818
+	extabindex  start:0x80021620 end:0x8002162C
+	.text       start:0x8007E2B8 end:0x8007E344
 
 game/Jyugemu_Flag_SetKartDriver.c:
 	.text       start:0x800806D4 end:0x800806F4
@@ -758,10 +788,10 @@ game/CardTaskPrintJob_InitStateVector.c:
 game/GetKartParamBlock.c:
 	.text       start:0x80090FF0 end:0x8009107C
 
-game/dtor_80091284.c:
-	extab       start:0x800093C8 end:0x800093D0
-	extabindex  start:0x80021ED8 end:0x80021EE4
-	.text       start:0x80091284 end:0x800912C0
+game/ItemEffectBus.c:
+	extab       start:0x800093C0 end:0x80009428
+	extabindex  start:0x80021ECC end:0x80021F68
+	.text       start:0x8009107C end:0x80091FD4
 
 game/CardRW_GetSubState.c:
 	.text       start:0x800934A8 end:0x800934B0

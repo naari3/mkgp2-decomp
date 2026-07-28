@@ -21,7 +21,7 @@ asm void ItemSelect_GiveItemOrQueueDrop(void);
 asm void ItemSelect_StartRouletteSpin(void);
 
 #pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ItemSelect_OnDropAllCancel[8] = {
+__declspec(section ".extab_user") const unsigned char extab_ItemSelect_OnDropAllCancel[8] = {
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 __declspec(section ".extab_user") static const unsigned char extab_ItemSelect_GiveItemOrQueueDrop[8] = {
