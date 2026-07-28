@@ -411,19 +411,10 @@ game/KartItem_RenderCb_Mode2or4_Pre.c:
 	extabindex  start:0x800207B0 end:0x800207BC
 	.text       start:0x80056A24 end:0x80056A48
 
-game/TornadoEffect_RenderCallback.c:
-	extab       start:0x80007648 end:0x80007650
-	extabindex  start:0x80020804 end:0x80020810
-	.text       start:0x80056F1C end:0x80056F40
-
-game/KartBody.c:
-	.text       start:0x8005771C end:0x80057738
-
-game/TornadoEffect_SetField128AndMaybeClear134.c:
-	.text       start:0x80058510 end:0x80058534
-
-game/TornadoEffect_TriggerField140.c:
-	.text       start:0x80058DDC end:0x80058DE8
+game/TornadoEffect.c:
+	extab       start:0x800075FC end:0x800076B0
+	extabindex  start:0x800207EC end:0x800208A0
+	.text       start:0x80056CB0 end:0x80058DE8
 
 sound/SoundObj_PlaySE_Direct.c:
 	extab       start:0x800076C8 end:0x800076D0
@@ -1092,6 +1083,26 @@ game/ItemObject_WriteVectors.c:
 game/ItemObject_SetByte18c.c:
 	.text       start:0x800DD930 end:0x800DD940
 
+game/BananaTriple_StuckOnDriverTick.c:
+	extab       start:0x8000B5A4 end:0x8000B5AC
+	extabindex  start:0x80023D8C end:0x80023D98
+	.text       start:0x800E8818 end:0x800E8ACC
+
+game/BananaTriple_OnImpactTick.c:
+	extab       start:0x8000B5AC end:0x8000B5B4
+	extabindex  start:0x80023D98 end:0x80023DA4
+	.text       start:0x800E8ACC end:0x800E8CAC
+
+game/BananaTriple_Tick_HeldAndHoming.c:
+	extab       start:0x8000B5B4 end:0x8000B5BC
+	extabindex  start:0x80023DA4 end:0x80023DB0
+	.text       start:0x800E8CAC end:0x800E9934
+
+game/BananaTriple_Dispatch.c:
+	extab       start:0x8000B5BC end:0x8000B5C4
+	extabindex  start:0x80023DB0 end:0x80023DBC
+	.text       start:0x800E9934 end:0x800E9E94
+
 game/TaruItem_OnGroundDriftTick_25.c:
 	extab       start:0x8000B5C4 end:0x8000B5CC
 	extabindex  start:0x80023DBC end:0x80023DC8
@@ -1111,6 +1122,26 @@ game/EggItem.c:
 	extab       start:0x8000B5DC end:0x8000B5F4
 	extabindex  start:0x80023DE0 end:0x80023E04
 	.text       start:0x800EADB4 end:0x800EBC00
+
+game/OnchiSpeaker_State2_Active.c:
+	extab       start:0x8000B624 end:0x8000B62C
+	extabindex  start:0x80023E4C end:0x80023E58
+	.text       start:0x800EE120 end:0x800EE620
+
+game/OnchiSpeaker_State2_Flight.c:
+	extab       start:0x8000B62C end:0x8000B634
+	extabindex  start:0x80023E58 end:0x80023E64
+	.text       start:0x800EE620 end:0x800EE8D8
+
+game/OnchiSpeaker_State1_Held.c:
+	extab       start:0x8000B634 end:0x8000B63C
+	extabindex  start:0x80023E64 end:0x80023E70
+	.text       start:0x800EE8D8 end:0x800EEF34
+
+game/ItemObject_Tick_Kind3c_OnchiSpeaker.c:
+	extab       start:0x8000B63C end:0x8000B644
+	extabindex  start:0x80023E70 end:0x80023E7C
+	.text       start:0x800EEF34 end:0x800EF2DC
 
 game/HeartCompoundItem.c:
 	extab       start:0x8000B674 end:0x8000B68C

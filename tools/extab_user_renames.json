@@ -483,5 +483,30 @@
     "extabindex_ReverseChallenge_Update": "@eti_80022880",
     "extab_ReverseChallenge_Init": "@etb_8000A204",
     "extabindex_ReverseChallenge_Init": "@eti_8002288C"
+  },
+  "src/game/OnchiSpeaker_State2_Active.c": {"extab_OnchiSpeaker_State2_Active": "@etb_8000B624", "extabindex_OnchiSpeaker_State2_Active": "@eti_80023E4C"},
+  "src/game/OnchiSpeaker_State2_Flight.c": {"extab_OnchiSpeaker_State2_Flight": "@etb_8000B62C", "extabindex_OnchiSpeaker_State2_Flight": "@eti_80023E58"},
+  "src/game/OnchiSpeaker_State1_Held.c": {"extab_OnchiSpeaker_State1_Held": "@etb_8000B634", "extabindex_OnchiSpeaker_State1_Held": "@eti_80023E64"},
+  "src/game/ItemObject_Tick_Kind3c_OnchiSpeaker.c": {"extab_ItemObject_Tick_Kind3c_OnchiSpeaker": "@etb_8000B63C", "extabindex_ItemObject_Tick_Kind3c_OnchiSpeaker": "@eti_80023E70"},
+  "src/game/BananaTriple_StuckOnDriverTick.c": {"extab_BananaTriple_StuckOnDriverTick_32to36": "@etb_8000B5A4", "extabindex_BananaTriple_StuckOnDriverTick_32to36": "@eti_80023D8C"},
+  "src/game/BananaTriple_OnImpactTick.c": {"extab_BananaTriple_OnImpactTick_32to36": "@etb_8000B5AC", "extabindex_BananaTriple_OnImpactTick_32to36": "@eti_80023D98"},
+  "src/game/BananaTriple_Tick_HeldAndHoming.c": {"extab_BananaTriple_Tick_HeldAndHoming_32to36": "@etb_8000B5B4", "extabindex_BananaTriple_Tick_HeldAndHoming_32to36": "@eti_80023DA4"},
+  "src/game/BananaTriple_Dispatch.c": {"extab_BananaTriple_Dispatch_32to36": "@etb_8000B5BC", "extabindex_BananaTriple_Dispatch_32to36": "@eti_80023DB0"},
+  "src/game/TornadoEffect.c": {
+    "extab_TornadoEffect_InitDetails": "@etb_800075FC", "extabindex_TornadoEffect_InitDetails": "@eti_800207EC",
+    "extab_TornadoEffect_Ctor": "@etb_80007614", "extabindex_TornadoEffect_Ctor": "@eti_800207F8",
+    "extab_TornadoEffect_RenderCallback": "@etb_80007648", "extabindex_TornadoEffect_RenderCallback": "@eti_80020804",
+    "extab_TornadoEffect_SubmitRender": "@etb_80007650", "extabindex_TornadoEffect_SubmitRender": "@eti_80020810",
+    "extab_TornadoEffect_Tick": "@etb_80007658", "extabindex_TornadoEffect_Tick": "@eti_8002081C",
+    "extab_TornadoEffect_TriggerFlagD2WithTimer": "@etb_80007660", "extabindex_TornadoEffect_TriggerFlagD2WithTimer": "@eti_80020828",
+    "extab_TornadoEffect_SetColorPairC8CC": "@etb_80007668", "extabindex_TornadoEffect_SetColorPairC8CC": "@eti_80020834",
+    "extab_TornadoEffect_SetFlagC0": "@etb_80007670", "extabindex_TornadoEffect_SetFlagC0": "@eti_80020840",
+    "extab_TornadoEffect_SetScalePairB0BC": "@etb_80007678", "extabindex_TornadoEffect_SetScalePairB0BC": "@eti_8002084C",
+    "extab_TireEffect_ResetSpin": "@etb_80007680", "extabindex_TireEffect_ResetSpin": "@eti_80020858",
+    "extab_fn_80057960": "@etb_80007688", "extabindex_fn_80057960": "@eti_80020864",
+    "extab_TornadoEffect_ComposeRenderMatrix": "@etb_80007690", "extabindex_TornadoEffect_ComposeRenderMatrix": "@eti_80020870",
+    "extab_TornadoEffect_ApplyItemVisual_Primary": "@etb_80007698", "extabindex_TornadoEffect_ApplyItemVisual_Primary": "@eti_8002087C",
+    "extab_TornadoEffect_ApplyItemVisual_Secondary": "@etb_800076A0", "extabindex_TornadoEffect_ApplyItemVisual_Secondary": "@eti_80020888",
+    "extab_TornadoEffect_ApplyItemVisual_Compact": "@etb_800076A8", "extabindex_TornadoEffect_ApplyItemVisual_Compact": "@eti_80020894"
   }
 }
