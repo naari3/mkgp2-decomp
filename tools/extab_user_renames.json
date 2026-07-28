@@ -52,6 +52,22 @@
     "extab_GXChannel_PushTransform": "@etb_800087A8",
     "extabindex_GXChannel_PushTransform": "@eti_80021584"
   },
+  "src/game/GXChannel_PushChannelColors.c": {
+    "extab_GXChannel_PushChannelColors": "@etb_800087B0",
+    "extabindex_GXChannel_PushChannelColors": "@eti_80021590"
+  },
+  "src/game/GXChannel_Unbind.c": {
+    "extab_GXChannel_Unbind": "@etb_800087B8",
+    "extabindex_GXChannel_Unbind": "@eti_8002159C"
+  },
+  "src/game/GXChannel_Bind.c": {
+    "extab_GXChannel_Bind": "@etb_800087C0",
+    "extabindex_GXChannel_Bind": "@eti_800215A8"
+  },
+  "src/game/GXChannel_Init.c": {
+    "extab_GXChannel_Init": "@etb_800087D0",
+    "extabindex_GXChannel_Init": "@eti_800215C0"
+  },
   "src/game/CourseData_Lookup.c": {
     "extab_dtor_800ABF10": "@etb_8000A0E8",
     "extab_fn_800ABD80": "@etb_8000A0F0",
