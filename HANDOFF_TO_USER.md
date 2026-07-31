@@ -45,3 +45,8 @@
   but failed the integrated `build/GNLJ82/ok` SHA-1 check.
 - Action taken: promoted the other three pending NamCam functions only and left
   `NamCam_GetImageHandle` pending for a relocation-aware follow-up.
+
+## Unit claim API blocker (2026-07-31)
+
+- claim_unit.py claim for SceneFlow, AnimStatePool, and RaceContext could not query GitHub because gh GraphQL requests are blocked by the configured proxy (127.0.0.1:9).
+- Dispatch can proceed only with the local orchestration state; issue claims remain unconfirmed until GitHub access is restored.
