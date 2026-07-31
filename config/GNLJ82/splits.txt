@@ -241,6 +241,21 @@ game/VolumeCalibration.c:
 	extabindex  start:0x8001FB2C end:0x8001FB5C
 	.text       start:0x80039E10 end:0x8003A154
 
+game/MJObj_ColorFloat.c:
+	extab       start:0x80005ED0 end:0x80005ED8
+	extabindex  start:0x8001FB5C end:0x8001FB68
+	.text       start:0x8003A154 end:0x8003A22C
+
+game/MJObj_InitMember.c:
+	extab       start:0x80005F08 end:0x80005F10
+	extabindex  start:0x8001FBB0 end:0x8001FBBC
+	.text       start:0x8003A5A8 end:0x8003A608
+
+game/MJObj_SetColor.c:
+	extab       start:0x80005F10 end:0x80005F18
+	extabindex  start:0x8001FBBC end:0x8001FBC8
+	.text       start:0x8003A608 end:0x8003A71C
+
 game/SceneRender.c:
 	extab       start:0x80005F18 end:0x80005F50
 	extabindex  start:0x8001FBC8 end:0x8001FC04
@@ -405,8 +420,21 @@ game/ItemStateGuard_IsActive.c:
 game/ItemEffectDamp_Init.c:
 	.text       start:0x80053E68 end:0x80053E8C
 
+game/KartEffectFadeTransit_Tick.c:
+	extab       start:0x8000754C end:0x80007554
+	extabindex  start:0x800206E4 end:0x800206F0
+	.text       start:0x80056150 end:0x8005623C
+
 game/KartItem_Stub_Returns0.c:
 	.text       start:0x8005623C end:0x80056244
+
+game/KartEffectFadeTransit_GetActiveValue.c:
+	.text       start:0x80056308 end:0x80056324
+
+game/KartEffectFadeTransit_Dtor.c:
+	extab       start:0x8000755C end:0x80007564
+	extabindex  start:0x800206FC end:0x80020708
+	.text       start:0x80056324 end:0x80056360
 
 game/KartEffectFadeTransit_Init.c:
 	.text       start:0x80056360 end:0x80056388
@@ -472,8 +500,56 @@ game/EffectState_HasContent.c:
 game/EffectSteering_InputViscosity_SetFieldC.c:
 	.text       start:0x8005BB00 end:0x8005BB0C
 
+game/clItemBox_StepFn_Bobbing.c:
+	extab       start:0x80007B9C end:0x80007BA4
+	extabindex  start:0x80020BE8 end:0x80020BF4
+	.text       start:0x8005E924 end:0x8005E9D0
+
+game/clItemBox_StepFn_PopOut.c:
+	extab       start:0x80007BA4 end:0x80007BAC
+	extabindex  start:0x80020BF4 end:0x80020C00
+	.text       start:0x8005E9D0 end:0x8005EA74
+
+game/clItemBox_ResetTimer_IsPickedUp.c:
+	.text       start:0x8005EA74 end:0x8005EA94
+
+game/clItemBox_TransitionToDebris.c:
+	extab       start:0x80007BAC end:0x80007BB4
+	extabindex  start:0x80020C00 end:0x80020C0C
+	.text       start:0x8005EA94 end:0x8005ED18
+
+game/clItemBox_Draw.c:
+	extab       start:0x80007BB4 end:0x80007BBC
+	extabindex  start:0x80020C0C end:0x80020C18
+	.text       start:0x8005ED18 end:0x8005EE24
+
+game/clItemBox_Tick.c:
+	extab       start:0x80007BBC end:0x80007BC4
+	extabindex  start:0x80020C18 end:0x80020C24
+	.text       start:0x8005EE24 end:0x8005EEB0
+
+game/clItemBox_Dtor.c:
+	extab       start:0x80007BC4 end:0x80007BCC
+	extabindex  start:0x80020C24 end:0x80020C30
+	.text       start:0x8005EEB0 end:0x8005EF38
+
+game/clItemBox_Ctor_XYZ.c:
+	extab       start:0x80007BCC end:0x80007BF8
+	extabindex  start:0x80020C30 end:0x80020C3C
+	.text       start:0x8005EF38 end:0x8005F050
+
+game/clItemBox_Ctor_GroundSnap.c:
+	extab       start:0x80007BF8 end:0x80007C24
+	extabindex  start:0x80020C3C end:0x80020C48
+	.text       start:0x8005F050 end:0x8005F194
+
 game/SpawnTable.c:
 	.text       start:0x8005F5CC end:0x8005F5D8
+
+game/clItemBox_FactoryCreate.c:
+	extab       start:0x80007C9C end:0x80007CC4
+	extabindex  start:0x80020C84 end:0x80020C90
+	.text       start:0x8005F5D8 end:0x8005F65C
 
 game/ItemSelect_Pending.c:
 	extab       start:0x80007DC0 end:0x80007DD8
