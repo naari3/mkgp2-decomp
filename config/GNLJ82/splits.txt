@@ -1361,6 +1361,11 @@ game/SpriteSlot_Destroy.c:
 	extabindex  start:0x80023930 end:0x8002393C
 	.text       start:0x800D6DE8 end:0x800D6E2C
 
+game/SpriteSlot_RegisterDraw.c:
+	extab       start:0x8000B274 end:0x8000B27C
+	extabindex  start:0x8002393C end:0x80023948
+	.text       start:0x800D6E2C end:0x800D6F40
+
 game/SpriteSlot_Render.c:
 	extab       start:0x8000B27C end:0x8000B284
 	extabindex  start:0x80023948 end:0x80023954

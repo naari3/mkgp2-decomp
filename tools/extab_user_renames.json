@@ -988,6 +988,10 @@
     "extab_SpriteSlot_Container_Free": "@etb_8000B2EC",
     "extabindex_SpriteSlot_Container_Free": "@eti_800239C0"
   },
+  "src/game/SpriteSlot_RegisterDraw.c": {
+    "extab_SpriteSlot_RegisterDraw": "@etb_8000B274",
+    "extabindex_SpriteSlot_RegisterDraw": "@eti_8002393C"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
