@@ -1479,6 +1479,11 @@ game/BombItem_DropAndSpawnExplosionTick.c:
 	extabindex  start:0x80024020 end:0x8002402C
 	.text       start:0x800FBBD4 end:0x800FBD88
 
+game/BombItem_Tick.c:
+	extab       start:0x8000B774 end:0x8000B77C
+	extabindex  start:0x80024044 end:0x80024050
+	.text       start:0x800FC854 end:0x800FCCAC
+
 game/StarItem.c:
 	extab       start:0x8000B794 end:0x8000B7B4
 	extabindex  start:0x80024074 end:0x800240A4

@@ -944,6 +944,10 @@
     "extab_BombItem_DropAndSpawnExplosionTick": "@etb_8000B75C",
     "extabindex_BombItem_DropAndSpawnExplosionTick": "@eti_80024020"
   },
+  "src/game/BombItem_Tick.c": {
+    "extab_BombItem_Tick": "@etb_8000B774",
+    "extabindex_BombItem_Tick": "@eti_80024044"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
