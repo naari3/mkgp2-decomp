@@ -1176,6 +1176,10 @@
     "extab_clFlowKart_Update": "@etb_8001537C",
     "extabindex_clFlowKart_Update": "@eti_80028154"
   },
+  "src/game/CardRW_CleaningTest_Page.c": {
+    "extab_CardRW_CleaningTest_Page": "@etb_800081A8",
+    "extabindex_CardRW_CleaningTest_Page": "@eti_800210E0"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
