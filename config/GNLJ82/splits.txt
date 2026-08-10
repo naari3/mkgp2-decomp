@@ -1849,6 +1849,11 @@ game/NokoNoko_Init.c:
 	extabindex  start:0x80026DC8 end:0x80026DD4
 	.text       start:0x80188E9C end:0x801891C4
 
+game/SoundMgr_Play.c:
+	extab       start:0x800122A4 end:0x800122AC
+	extabindex  start:0x80027170 end:0x8002717C
+	.text       start:0x80192884 end:0x80192F04
+
 game/WeatherSystem_PickVariant.c:
 	extab       start:0x800122B4 end:0x800122BC
 	extabindex  start:0x80027188 end:0x80027194

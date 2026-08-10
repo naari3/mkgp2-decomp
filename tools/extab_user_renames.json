@@ -1140,6 +1140,10 @@
     "extab_SoundMgr_PlaySE_Positional": "@etb_8000B4DC",
     "extabindex_SoundMgr_PlaySE_Positional": "@eti_80023C60"
   },
+  "src/game/SoundMgr_Play.c": {
+    "extab_SoundMgr_Play": "@etb_800122A4",
+    "extabindex_SoundMgr_Play": "@eti_80027170"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
