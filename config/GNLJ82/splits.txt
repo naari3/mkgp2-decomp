@@ -1866,6 +1866,9 @@ game/JumpDistanceMode_InitTimerDisplay.c:
 	extabindex  start:0x80029F9C end:0x80029FA8
 	.text       start:0x80213A64 end:0x80213D58
 
+game/JumpDistanceMode_CopyKartMovement.c:
+	.text       start:0x80213D58 end:0x802143E4
+
 game/dtor_8021617C.c:
 	extab       start:0x8001A50C end:0x8001A514
 	extabindex  start:0x8002A068 end:0x8002A074

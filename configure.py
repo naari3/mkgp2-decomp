@@ -672,6 +672,7 @@ config.libs = [
             Object(Matching, "game/Rand_RangeInt.c"),
             Object(Matching, "game/ItemObjectManager_Controls.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/JumpDistanceMode_PredictLanding.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/JumpDistanceMode_CopyKartMovement.c"),
             Object(Matching, "game/Rand_RangeIntMax.c"),
             Object(Matching, "game/RaceScene_PlayerSlots.c"),
             Object(Matching, "game/RivalRun_PathFollowerInit.c"),
