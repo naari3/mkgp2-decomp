@@ -940,6 +940,10 @@
     "extab_JumpDistanceMode_UpdateGameplay": "@etb_80019ED4",
     "extabindex_JumpDistanceMode_UpdateGameplay": "@eti_80029F3C"
   },
+  "src/game/BombItem_DropAndSpawnExplosionTick.c": {
+    "extab_BombItem_DropAndSpawnExplosionTick": "@etb_8000B75C",
+    "extabindex_BombItem_DropAndSpawnExplosionTick": "@eti_80024020"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
