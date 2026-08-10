@@ -1,8 +1,8 @@
 # Orchestrator cycle prompt
 
-`/loop` dynamic mode で main agent が 1 cycle ごとに実行する手順。
+CronCreate (3min 間隔) で発火し、main agent が 1 cycle ごとに実行する手順。
 
-このファイルは prompt として直接 `/loop` に渡す内容。`/mkgp2-orch-start` から発火する。
+このファイルは cron prompt の本体。`/skill:mkgp2-orch-start` から CronCreate で発火される。
 
 ---
 
@@ -15,20 +15,20 @@ memory / compact summary に頼らず、以下を実ファイルから Read で�
 - `docs/orchestrator_role.md` — main agent の責務、CASE 詳細、Merge ルール、Lock 戦略
 - `docs/orchestrator_ops.md` — 運用全体像、起動 / drain / kill、`plan_batches.py` 禁止理由
 - `docs/sub_agent_role.md` — sub の制約、HANDOFF.md JSON spec、status field 要件マトリクス
-- `.claude/skills/mkgp2-orch/SKILL.md` — judgment vs tool 分担鉄則、失敗パターン集 (skill auto-load 済みなら skip 可)
+- `.kimi-code/skills/mkgp2-orch/SKILL.md` — judgment vs tool 分担鉄則、失敗パターン集 (skill auto-load 済みなら skip 可)
 
 最重要原則 (本 prompt と上記 docs / skill で繰り返し言及):
 - **judgment は main の責務、tool は mechanical part のみ**: batch 編成 / dispatch / conflict resolution は main が判断、tool は extract / apply / state.json flip / cleanup の機械作業のみ
 - **merge は通知 hook (cycle 制約の対象外、2026-05-18 旧ルール撤回)**:
-  - sub の `<task-notification>` (status=completed) を受信したら、cycle / heavy action カウントを問わず **即 merge** を実行
+  - sub の完了通知 (バックグラウンド sub-agent の完了メッセージ) を受信したら、cycle / heavy action カウントを問わず **即 merge** を実行
   - 同時/連続 notification は順番に処理して構わない (各 merge ~30s-2min、context bloat 軽微)
-  - cycle (= dispatch / 編成 / 失敗 batch 再編成 / cleanup) は merge と独立に進行、active_subs < 6 上限まで chain
-  - 詳細は `.claude/skills/mkgp2-orch/SKILL.md` 鉄則 3
+  - cycle (= dispatch / 編成 / 失敗 batch 再編成 / cleanup) は merge と独立に進行、active_subs < 3 上限まで chain
+  - 詳細は `.kimi-code/skills/mkgp2-orch/SKILL.md` 鉄則 3
 - **conflict 解決は main の手で**: merge tool が conflict 検出したら abort、main が Edit で resolve (rollback 自動化は tool に入れない)。conflict 中は他の hook を pause
 
 ## 1 cycle 動作
 
-merge は cycle 制約外の通知 hook (上記原則 / `.claude/skills/mkgp2-orch/SKILL.md` 鉄則 3 参照)。cycle は dispatch / 編成 / 失敗 batch 再編成 を担当し、active_subs < 6 上限まで連続実行 (chain) してよい。
+merge は cycle 制約外の通知 hook (上記原則 / `.kimi-code/skills/mkgp2-orch/SKILL.md` 鉄則 3 参照)。cycle は dispatch / 編成 / 失敗 batch 再編成 を担当し、active_subs < 3 上限まで連続実行 (chain) してよい。
 
 ## Step 0. SoT sync (毎回必ず)
 
@@ -54,9 +54,9 @@ SoT sync で `Object(Matching, ...)` declared 関数が自動 matched に昇格�
 
 ## Step 1. 通知の取り込み
 
-直前の system-reminder に `<task-notification>` があれば parse:
-- `<task-id>` → state.active_subs から該当 entry を引く
-- `<status>` (`completed` | `killed` | `failed`) → batch.status と active_subs を更新
+直前に受信したバックグラウンド sub-agent の完了通知 (合成 user メッセージ) があれば処理:
+- notification の task_id → state.active_subs から該当 entry を引く
+- status (`completed` | `killed` | `failed`) → batch.status と active_subs を更新
 
 ```python
 # Pseudocode
@@ -80,7 +80,7 @@ atomic_write_state()
 ```
 CASE 1 (最優先): drain.flag が立っている
 CASE 2 (旧 CASE 3): 'failed' な batch あり (再編成)
-CASE 3 (旧 CASE 4): active_subs < 6 かつ 'pending' な batch あり (dispatch)
+CASE 3 (旧 CASE 4): active_subs < 3 かつ 'pending' な batch あり (dispatch)
 CASE 4 (旧 CASE 5): pending batch 無く pending function あり (main が新規 batch 編成)
 CASE 5 (旧 CASE 6): 該当なし (idle)
 ```
@@ -92,7 +92,7 @@ cleanup する (worktree 削除のみ、heavy ではない)。
 
 CASE 4 (编成) → CASE 3 (dispatch) は **同 cycle 内 chain 可** (state.json 編集 +
 Agent invocation のみで context 圧迫は浅い)。CASE 2 (失敗 batch 再编成) → CASE 3
-(dispatch) も chain 可。CASE 3 自体も active_subs < 6 の上限まで連続 dispatch して構わない。
+(dispatch) も chain 可。CASE 3 自体も active_subs < 3 の上限まで連続 dispatch して構わない。
 
 **parallel 化の原則**: cycle では **active_subs を上限まで埋める** ことを目標にする:
 1. active_subs を確認
@@ -111,9 +111,9 @@ Agent invocation のみで context 圧迫は浅い)。CASE 2 (失敗 batch 再�
 ```python
 active = len(state['active_subs'])
 if active == 0:
-    # 全 sub 完了済み → /loop 終了
+    # 全 sub 完了済み → cron 停止
     log_event({'event': 'session_end', 'reason': 'drain_complete'})
-    # /cron list で該当 cron id を見つけて CronDelete
+    # CronList tool で該当 cron id を見つけて CronDelete
     return
 else:
     # まだ sub が走っている → 通知待ち。新規 dispatch (CASE 3/4) しない
@@ -124,7 +124,7 @@ else:
 
 ## merge hook (cycle 制約外)
 
-**sub の `<task-notification>` を受信したら、cycle 状況に関わらず即実行**。
+**sub の完了通知 (バックグラウンド sub-agent の完了メッセージ) を受信したら、cycle 状況に関わらず即実行**。
 
 各 merge は次の 9 ステップ:
 1. `git -C <worktree> log -1 --format=full HEAD` + `Read worktree/HANDOFF.md` で **sub の commit msg / notes / docs_notes / blocked_reason を全部読む** (worktree cleanup 前のみ可)
@@ -134,7 +134,7 @@ else:
 5. `python configure.py && ninja build/GNLJ82/ok` で SHA-1 verify
 6. commit + worktree+branch cleanup
 7. state.json flip (fn → matched, batch → merged, active_subs から sub 削除) + log
-8. **知見を即追記** (skill 「知見反映」表に従って `~/.claude/skills/mkgp2-match/SKILL.md` / `docs/per_fn_matching_strategy.md` / `docs/large_extab_group_strategy.md` / 本 cycle.md / 本 mkgp2-orch skill のいずれかへ)
+8. **知見を即追記** (skill 「知見反映」表に従って `~/.kimi-code/skills/mkgp2-match/SKILL.md` / `docs/per_fn_matching_strategy.md` / `docs/large_extab_group_strategy.md` / 本 cycle.md / 本 mkgp2-orch skill のいずれかへ)
 9. **`git push origin main`** で remote 公開 (各 merge ごと、累積待ち禁止)
 
 複数 notification を受信したら順番に処理 (1 件ずつ build verify する。`--no-build` で apply して最後に集約 build する変則は build fail 時の責任所在が曖昧になるので避ける)。
@@ -157,12 +157,12 @@ if not Path('.orchestrator/drain.flag').exists():
 
 つまり「merge hook → active_subs 減 → そのまま turn 終了」を許さない。pending work があるなら **同 turn 内で CASE 4 編成 → CASE 3 dispatch を chain して active_subs を 6 まで埋める**。
 
-理由: 「pending あるのに active_subs=0 で next /loop fire を 180s 待つ」状態は cycle 設計上発生してはいけない (cycle.md「留意点」section 旧記述)。明示化していないと merge 後そのまま停止する間違いが起きる。
+理由: 「pending あるのに active_subs=0 で次の cron fire を 3min 待つ」状態は cycle 設計上発生してはいけない (cycle.md「留意点」section 旧記述)。明示化していないと merge 後そのまま停止する間違いが起きる。
 
 ### chain の中断条件
 
 - `.orchestrator/drain.flag` あり → 新規 dispatch しない (CASE 1)
-- 全 pending batch / pending fn が編成不能 (large extab group only 等) → CASE 5 (idle)、ScheduleWakeup
+- 全 pending batch / pending fn が編成不能 (large extab group only 等) → CASE 5 (idle)、cron の次 fire を待つ
 
 ### chain 中の例外
 
@@ -255,7 +255,7 @@ run(f'python tools/setup_worktree.py {batch_id}')
 prompt = render_sub_prompt(batch_id, worktree_path, branch, fn_info)
 agent_id = Agent(
     description=f'decomp {batch_id}',
-    subagent_type='general-purpose',
+    subagent_type='coder',
     run_in_background=True,
     prompt=prompt,
 )
@@ -407,7 +407,7 @@ else:
         state['functions'][addr]['batch_id'] = batch_id
     log_event({'event': 'plan', 'batch_id': batch_id, 'members': len(batch_members)})
     atomic_write_state()
-    # chain: そのまま CASE 3 へ fall through (active_subs < 6 なら即 dispatch)
+    # chain: そのまま CASE 3 へ fall through (active_subs < 3 なら即 dispatch)
 ```
 
 ### 大規模 extab group (>10 fn) の扱い
@@ -450,7 +450,7 @@ GetVBlankFlag / Archive_GetCurrent のように既に matched された singleto
 
 ```python
 print("no action this cycle")
-# 次 fire は CronCreate (3min 間隔) が担当。ScheduleWakeup は使わない
+# 次 fire は CronCreate (3min 間隔) が担当。cron 以外の wake 仕組みは使わない
 # (cron driver と二重起動になるため)
 # completion check
 if all_terminal(state):
@@ -467,7 +467,7 @@ if all_terminal(state):
 
 最初に以下を必ず読み込め:
 1. docs/sub_agent_role.md  (制約と HANDOFF.md 仕様)
-2. ~/.claude/skills/mkgp2-match/SKILL.md  (matching workflow)
+2. ~/.kimi-code/skills/mkgp2-match/SKILL.md  (matching workflow)
 3. Ghidra MCP を触るなら **先に** `Skill(skill="mkgp2-ghidra")` をロード
    (bmp_output project 固有の接続手順 / domain path / image_base はこちら、
     汎用の Ghidra MCP 接続作法とツール選択は transitively 参照される
@@ -534,7 +534,7 @@ if remaining == 0 and in_flight == 0 and non_terminal_batches == 0:
 
 ## 留意点
 
-- **merge は通知 hook で即実行** (cycle 制約外、2026-05-18 旧ルール撤回)。cycle (= 编成 / dispatch / 再编成) は active_subs < 6 上限まで chain 可
-- 完了通知 (`<task-notification>`) は受信した順に即 merge。cycle 中でも cron fire 中でも同じ
-- cycle 駆動は **CronCreate (3min 間隔)** が担当 (`/mkgp2-orch-start` で仕込む)。ScheduleWakeup は cron と二重起動になるので使わない。notification は wake より先に到着して即処理されるため、cron は安全網。pending work + active_subs==0 は chain で吸収されるので発生しない想定
+- **merge は通知 hook で即実行** (cycle 制約外、2026-05-18 旧ルール撤回)。cycle (= 编成 / dispatch / 再编成) は active_subs < 3 上限まで chain 可
+- 完了通知 (バックグラウンド sub-agent の完了メッセージ) は受信した順に即 merge。cycle 中でも cron fire 中でも同じ
+- cycle 駆動は **CronCreate (3min 間隔)** が担当 (`/skill:mkgp2-orch-start` で仕込む)。cron が発火を担当するため、追加の wake 仕組みは使わない。notification は wake より先に到着して即処理されるため、cron は安全網。pending work + active_subs==0 は chain で吸収されるので発生しない想定
 - main agent の context が圧迫されたら、tool 出力をファイル経由で参照する (`Bash` で head/tail）

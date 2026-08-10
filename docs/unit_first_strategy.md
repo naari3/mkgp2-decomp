@@ -7,7 +7,7 @@ matching の対象選定を「サイズ順 / 単発 fn つまみ食い」では�
 
 関連:
 - `tools/plan_units.py` — unit ランキングを出す read-only レポート (本 doc の実装)
-- `.claude/skills/mkgp2-orch/SKILL.md` — orchestrator の編成ルール (unit-first 節)
+- `.kimi-code/skills/mkgp2-orch/SKILL.md` — orchestrator の編成ルール (unit-first 節)
 - `docs/per_fn_matching_strategy.md` — unit 内の難関 fn を asm_fn 退避する手順
 - `docs/large_extab_group_strategy.md` — extab group >6 の扱い
 
@@ -165,7 +165,7 @@ issue URL が返っていれば claim は成立している。二重 claim 検�
 ## 5. 他マシンでの再現に必要なもの
 
 repo tracked (clone すれば揃う):
-- 本 doc + `tools/plan_units.py` + `tools/claim_unit.py` + `.claude/skills/*` (プロジェクト skill として自動ロード)
+- 本 doc + `tools/plan_units.py` + `tools/claim_unit.py` + `.kimi-code/skills/*` (プロジェクト skill として自動ロード)
 - `config/GNLJ82/symbols.txt` / `splits.txt` / `configure.py` (SoT)
 - `tools/ghidra_symbol_dump.json` / `tools/mkgp2_types.gdt`
 
