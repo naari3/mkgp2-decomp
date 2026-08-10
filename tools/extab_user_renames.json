@@ -1196,6 +1196,10 @@
     "extab_CardRW_ErrorDisplay": "@etb_800080F0",
     "extabindex_CardRW_ErrorDisplay": "@eti_80020FCC"
   },
+  "src/game/CardRW_ReadWriteTest_Page.c": {
+    "extab_CardRW_ReadWriteTest_Page": "@etb_800081A0",
+    "extabindex_CardRW_ReadWriteTest_Page": "@eti_800210D4"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

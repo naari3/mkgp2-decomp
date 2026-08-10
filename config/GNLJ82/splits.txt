@@ -732,6 +732,11 @@ game/CardRW_DispenseTest_Page.c:
 	extabindex  start:0x800210C8 end:0x800210D4
 	.text       start:0x8006E7D0 end:0x8006EC24
 
+game/CardRW_ReadWriteTest_Page.c:
+	extab       start:0x800081A0 end:0x800081A8
+	extabindex  start:0x800210D4 end:0x800210E0
+	.text       start:0x8006EC24 end:0x8006F200
+
 game/CardRW_CleaningTest_Page.c:
 	extab       start:0x800081A8 end:0x800081B0
 	extabindex  start:0x800210E0 end:0x800210EC
