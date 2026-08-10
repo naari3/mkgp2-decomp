@@ -1084,6 +1084,10 @@
     "extab_VfxEffect_UpdateChildPosScaleAlpha_Helper": "@etb_8000AA40",
     "extabindex_VfxEffect_UpdateChildPosScaleAlpha_Helper": "@eti_800230CC"
   },
+  "src/game/VfxEffect_UpdateChildVisScale_Helper.c": {
+    "extab_VfxEffect_UpdateChildVisScale_Helper": "@etb_8000AA50",
+    "extabindex_VfxEffect_UpdateChildVisScale_Helper": "@eti_800230E4"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

@@ -1358,6 +1358,11 @@ game/VfxEffect_UpdateChildPosScaleAlpha_Helper.c:
 	extabindex  start:0x800230CC end:0x800230D8
 	.text       start:0x800C7C0C end:0x800C7D14
 
+game/VfxEffect_UpdateChildVisScale_Helper.c:
+	extab       start:0x8000AA50 end:0x8000AA58
+	extabindex  start:0x800230E4 end:0x800230F0
+	.text       start:0x800C7D80 end:0x800C7E8C
+
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738
