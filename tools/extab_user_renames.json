@@ -856,6 +856,10 @@
     "extab_CoinSystem_UpdateAll": "@etb_8000D2C8",
     "extabindex_CoinSystem_UpdateAll": "@eti_80024C80"
   },
+  "src/game/CoinSystem_Init.c": {
+    "extab_CoinSystem_Init": "@etb_8000D2F0",
+    "extabindex_CoinSystem_Init": "@eti_80024CA4"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

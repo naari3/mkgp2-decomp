@@ -1445,6 +1445,11 @@ game/CoinSystem_UpdateAll.c:
 game/CoinSystem_RemoveCoins.c:
 	.text       start:0x8013A5BC end:0x8013A6F8
 
+game/CoinSystem_Init.c:
+	extab       start:0x8000D2F0 end:0x8000D328
+	extabindex  start:0x80024CA4 end:0x80024CB0
+	.text       start:0x8013A778 end:0x8013AB74
+
 game/GetTextureByIdAndLang.c:
 	extab       start:0x8000D3D0 end:0x8000D3D8
 	extabindex  start:0x80024D94 end:0x80024DA0
