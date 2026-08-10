@@ -2318,6 +2318,11 @@ game/HUD_SetCurrentLap.c:
 	extabindex  start:0x8002BA3C end:0x8002BA48
 	.text       start:0x80253F84 end:0x80253FD8
 
+game/HUD_Init.c:
+	extab       start:0x8001F158 end:0x8001F184
+	extabindex  start:0x8002BA60 end:0x8002BA6C
+	.text       start:0x8025421C end:0x80254330
+
 game/Vec3.c:
 	.text       start:0x8025E324 end:0x8025E388
 

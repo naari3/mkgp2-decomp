@@ -1220,6 +1220,10 @@
     "extab_HUD_RegisterOverlay": "@etb_8001F0A0",
     "extabindex_HUD_RegisterOverlay": "@eti_8002B9C4"
   },
+  "src/game/HUD_Init.c": {
+    "extab_HUD_Init": "@etb_8001F158",
+    "extabindex_HUD_Init": "@eti_8002BA60"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
