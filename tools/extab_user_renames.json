@@ -1072,6 +1072,10 @@
     "extab_KartAudioChannel_PlayJumpSE": "@etb_80007708",
     "extabindex_KartAudioChannel_PlayJumpSE": "@eti_80020924"
   },
+  "src/game/VfxEffect_InitVariantAndResetPos.c": {
+    "extab_VfxEffect_InitVariantAndResetPos": "@etb_8000A9D8",
+    "extabindex_VfxEffect_InitVariantAndResetPos": "@eti_80023030"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
