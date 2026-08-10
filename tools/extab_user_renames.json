@@ -1104,6 +1104,10 @@
     "extab_Backup_ClearBookkeeping": "@etb_80008310",
     "extabindex_Backup_ClearBookkeeping": "@eti_80021248"
   },
+  "src/game/Backup_GetMinutesSinceBoot.c": {
+    "extab_Backup_GetMinutesSinceBoot": "@etb_800082F8",
+    "extabindex_Backup_GetMinutesSinceBoot": "@eti_80021224"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
