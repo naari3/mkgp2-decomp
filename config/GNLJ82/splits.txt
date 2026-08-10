@@ -1152,6 +1152,11 @@ game/BtMode_Dtor.c:
 	extabindex  start:0x80022244 end:0x80022250
 	.text       start:0x8009F47C end:0x8009F814
 
+game/VSMode_Init.c:
+	extab       start:0x8000963C end:0x80009744
+	extabindex  start:0x80022250 end:0x8002225C
+	.text       start:0x8009F814 end:0x800A05D0
+
 game/BtMode_Init.c:
 	extab       start:0x80009744 end:0x80009760
 	extabindex  start:0x8002225C end:0x80022268

@@ -1152,6 +1152,10 @@
     "extab_VSMode_FrameUpdate": "@etb_8000962C",
     "extabindex_VSMode_FrameUpdate": "@eti_80022238"
   },
+  "src/game/VSMode_Init.c": {
+    "extab_VSMode_Init": "@etb_8000963C",
+    "extabindex_VSMode_Init": "@eti_80022250"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
