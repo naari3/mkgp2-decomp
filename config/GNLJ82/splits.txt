@@ -507,6 +507,11 @@ sound/MediaBoard_PollCompletion.c:
 	extabindex  start:0x800208E8 end:0x800208F4
 	.text       start:0x80059644 end:0x8005967C
 
+game/KartAudioChannel_PlayColorMatchSE.c:
+	extab       start:0x800076E8 end:0x800076F0
+	extabindex  start:0x800208F4 end:0x80020900
+	.text       start:0x8005967C end:0x8005982C
+
 game/KartItemAudio.c:
 	extab       start:0x80007710 end:0x80007728
 	extabindex  start:0x80020930 end:0x80020954

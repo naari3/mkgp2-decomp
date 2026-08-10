@@ -1060,6 +1060,10 @@
     "extab_KartAudioChannel_Set24WithSeStop": "@etb_800076D8",
     "extabindex_KartAudioChannel_Set24WithSeStop": "@eti_800208DC"
   },
+  "src/game/KartAudioChannel_PlayColorMatchSE.c": {
+    "extab_KartAudioChannel_PlayColorMatchSE": "@etb_800076E8",
+    "extabindex_KartAudioChannel_PlayColorMatchSE": "@eti_800208F4"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
