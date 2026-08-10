@@ -313,6 +313,10 @@
     "extab_SyncSlot_Reset": "@etb_80008D84",
     "extabindex_SyncSlot_Reset": "@eti_80021884"
   },
+  "src/game/CommBroadcast_ClearTable.c": {
+    "extab_CommBroadcast_ClearTable": "@etb_80008D8C",
+    "extabindex_CommBroadcast_ClearTable": "@eti_80021890"
+  },
   "src/util/bitpack.c": {
     "extab_bitpack_write_field": "@etb_80008F24",
     "extab_bitpack_init": "@etb_80008F2C",
