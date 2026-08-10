@@ -952,6 +952,10 @@
     "extab_BombItem_Update": "@etb_8000B704",
     "extabindex_BombItem_Update": "@eti_80023F9C"
   },
+  "src/game/BombItem_TickActive.c": {
+    "extab_BombItem_TickActive": "@etb_8000B6FC",
+    "extabindex_BombItem_TickActive": "@eti_80023F90"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
