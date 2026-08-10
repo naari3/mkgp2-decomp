@@ -355,6 +355,11 @@ game/KartDriver_TickAction_78a3c.c:
 	extabindex  start:0x8001FF28 end:0x8001FF34
 	.text       start:0x80042288 end:0x800422D8
 
+game/KartDriver_TickAction_78d00.c:
+	extab       start:0x80006268 end:0x80006270
+	extabindex  start:0x8001FF34 end:0x8001FF40
+	.text       start:0x800422D8 end:0x80042328
+
 game/KartDriver_GetJObjRootIfReady.c:
 	.text       start:0x80042328 end:0x80042350
 
