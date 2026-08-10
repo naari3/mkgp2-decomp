@@ -1607,6 +1607,11 @@ game/SoundMgr_PlaySE_WithChannel.c:
 	extabindex  start:0x80023C54 end:0x80023C60
 	.text       start:0x800DFCE8 end:0x800DFD28
 
+game/SoundMgr_CountActiveSEInstances.c:
+	extab       start:0x8000B4E4 end:0x8000B4EC
+	extabindex  start:0x80023C6C end:0x80023C78
+	.text       start:0x800DFEB8 end:0x800DFF34
+
 game/BananaTriple_StuckOnDriverTick.c:
 	extab       start:0x8000B5A4 end:0x8000B5AC
 	extabindex  start:0x80023D8C end:0x80023D98
