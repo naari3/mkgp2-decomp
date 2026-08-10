@@ -1100,6 +1100,10 @@
     "extab_Backup_ClearAll": "@etb_80008320",
     "extabindex_Backup_ClearAll": "@eti_80021260"
   },
+  "src/game/Backup_ClearBookkeeping.c": {
+    "extab_Backup_ClearBookkeeping": "@etb_80008310",
+    "extabindex_Backup_ClearBookkeeping": "@eti_80021248"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

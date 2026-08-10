@@ -750,6 +750,11 @@ game/TaRecord_InsertResult.c:
 	extabindex  start:0x8002123C end:0x80021248
 	.text       start:0x80074C30 end:0x80074FA4
 
+game/Backup_ClearBookkeeping.c:
+	extab       start:0x80008310 end:0x80008318
+	extabindex  start:0x80021248 end:0x80021254
+	.text       start:0x80074FA4 end:0x8007502C
+
 game/Backup_ClearAll.c:
 	extab       start:0x80008320 end:0x80008328
 	extabindex  start:0x80021260 end:0x8002126C
