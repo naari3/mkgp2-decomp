@@ -956,6 +956,18 @@
     "extab_BombItem_TickActive": "@etb_8000B6FC",
     "extabindex_BombItem_TickActive": "@eti_80023F90"
   },
+  "src/game/SpriteSlot_SetRotationQuatFromVec.c": {
+    "extab_SpriteSlot_SetRotationQuatFromVec": "@etb_8000B254",
+    "extabindex_SpriteSlot_SetRotationQuatFromVec": "@eti_8002390C"
+  },
+  "src/game/SpriteSlot_SetPositionFromVec.c": {
+    "extab_SpriteSlot_SetPositionFromVec": "@etb_8000B264",
+    "extabindex_SpriteSlot_SetPositionFromVec": "@eti_80023924"
+  },
+  "src/game/SpriteSlot_Destroy.c": {
+    "extab_SpriteSlot_Destroy": "@etb_8000B26C",
+    "extabindex_SpriteSlot_Destroy": "@eti_80023930"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

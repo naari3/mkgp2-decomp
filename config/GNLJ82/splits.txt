@@ -1321,10 +1321,25 @@ game/SpriteSlot_SetScaleXYZ.c:
 	extabindex  start:0x800238F4 end:0x8002390C
 	.text       start:0x800D6CEC end:0x800D6D4C
 
+game/SpriteSlot_SetRotationQuatFromVec.c:
+	extab       start:0x8000B254 end:0x8000B25C
+	extabindex  start:0x8002390C end:0x80023918
+	.text       start:0x800D6D4C end:0x800D6D84
+
 game/SpriteSlot_SetRotationQuat.c:
 	extab       start:0x8000B25C end:0x8000B264
 	extabindex  start:0x80023918 end:0x80023924
 	.text       start:0x800D6D84 end:0x800D6DB0
+
+game/SpriteSlot_SetPositionFromVec.c:
+	extab       start:0x8000B264 end:0x8000B26C
+	extabindex  start:0x80023924 end:0x80023930
+	.text       start:0x800D6DB0 end:0x800D6DE8
+
+game/SpriteSlot_Destroy.c:
+	extab       start:0x8000B26C end:0x8000B274
+	extabindex  start:0x80023930 end:0x8002393C
+	.text       start:0x800D6DE8 end:0x800D6E2C
 
 game/SpriteSlot_Render.c:
 	extab       start:0x8000B27C end:0x8000B284
