@@ -1026,6 +1026,11 @@ game/RaceContext_EnsureSingleton.c:
 	extabindex  start:0x80022208 end:0x80022220
 	.text       start:0x8009DC80 end:0x8009DD28
 
+game/BtMode_Init.c:
+	extab       start:0x80009744 end:0x80009760
+	extabindex  start:0x8002225C end:0x80022268
+	.text       start:0x800A05D0 end:0x800A0688
+
 game/BtMode_BaseDtor.c:
 	extab       start:0x80009760 end:0x80009768
 	extabindex  start:0x80022268 end:0x80022274
