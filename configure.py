@@ -617,6 +617,7 @@ config.libs = [
             Object(Matching, "game/KartMovement_SetPosition.c"),
             Object(Matching, "game/TrampolineTo_801ba110.c"),
             Object(Matching, "game/NamCam_LoadImage.c"),
+            Object(Matching, "game/NamCam_GetImageHandle.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/NamCam_TickShutdownCountdown.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/NamCam_End.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/NamCam_Init.c", extab_padding=b"\x00\x00"),

@@ -116,6 +116,10 @@
     "extab_NamCam_TickShutdownCountdown": "@etb_80006870",
     "extabindex_NamCam_TickShutdownCountdown": "@eti_80020114"
   },
+  "src/game/NamCam_GetImageHandle.c": {
+    "extab_NamCam_GetImageHandle": "@etb_80006868",
+    "extabindex_NamCam_GetImageHandle": "@eti_80020108"
+  },
   "src/game/NamCam_End.c": {
     "extab_NamCam_End": "@etb_80006878",
     "extabindex_NamCam_End": "@eti_80020120"

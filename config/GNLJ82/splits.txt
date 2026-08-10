@@ -358,6 +358,11 @@ game/NamCam_LoadImage.c:
 	extabindex  start:0x800200F0 end:0x800200FC
 	.text       start:0x80048BEC end:0x80048C34
 
+game/NamCam_GetImageHandle.c:
+	extab       start:0x80006868 end:0x80006870
+	extabindex  start:0x80020108 end:0x80020114
+	.text       start:0x80048E0C end:0x80049628
+
 game/NamCam_TickShutdownCountdown.c:
 	extab       start:0x80006870 end:0x80006878
 	extabindex  start:0x80020114 end:0x80020120
