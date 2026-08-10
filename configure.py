@@ -686,6 +686,7 @@ config.libs = [
             Object(Matching, "game/PcbSyncTable_Ptr.c"),
             Object(Matching, "game/CommBroadcast_ClearTable.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardTaskManager_Tick.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/NetDiag_PacketRatioPage.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CoinSystem_RemoveCoins.c"),
             Object(Matching, "game/DVDLoad_Stats.c"),
             Object(Matching, "game/GXChannel_PushTransform.c", extab_padding=b""),

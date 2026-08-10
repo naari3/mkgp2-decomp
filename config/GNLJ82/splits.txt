@@ -631,6 +631,11 @@ game/NetDiag_CounterPage.c:
 	extabindex  start:0x80021008 end:0x80021014
 	.text       start:0x80067F74 end:0x8006830C
 
+game/NetDiag_PacketRatioPage.c:
+	extab       start:0x80008138 end:0x80008140
+	extabindex  start:0x80021038 end:0x80021044
+	.text       start:0x80069AB0 end:0x8006A160
+
 game/GameSetting.c:
 	extab       start:0x80008218 end:0x80008230
 	extabindex  start:0x80021158 end:0x8002117C

@@ -876,6 +876,10 @@
     "extab_NetDiag_CounterPage": "@etb_80008118",
     "extabindex_NetDiag_CounterPage": "@eti_80021008"
   },
+  "src/game/NetDiag_PacketRatioPage.c": {
+    "extab_NetDiag_PacketRatioPage": "@etb_80008138",
+    "extabindex_NetDiag_PacketRatioPage": "@eti_80021038"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
