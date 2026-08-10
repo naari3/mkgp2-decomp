@@ -363,6 +363,7 @@ config.libs = [
         "cflags": cflags_base,
         "progress_category": "game",
         "objects": [
+            Object(Matching, "game/CommBroadcast.c"),
             Object(Matching, "game/TitleTracker_Stubs.c"),
             Object(Matching, "game/KartItemAudio.c"),
             Object(Matching, "game/WrapInRange.c"),
