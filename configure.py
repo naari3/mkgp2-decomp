@@ -662,6 +662,7 @@ config.libs = [
             Object(Matching, "game/GlobalTimer.c"),
             Object(Matching, "game/PhysicsState.c"),
             Object(Matching, "game/Rand.c"),
+            Object(Matching, "game/Rand_RangeIntMax.c"),
             Object(Matching, "game/RaceScene_PlayerSlots.c"),
             Object(Matching, "game/RivalRun_PathFollowerInit.c"),
             Object(Matching, "game/RivalRun.c", extab_padding=b"\x00\x00"),
