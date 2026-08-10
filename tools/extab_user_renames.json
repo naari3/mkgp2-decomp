@@ -860,6 +860,10 @@
     "extab_CoinSystem_Init": "@etb_8000D2F0",
     "extabindex_CoinSystem_Init": "@eti_80024CA4"
   },
+  "src/game/CardTaskManager_RenderOverlay.c": {
+    "extab_CardTaskManager_RenderOverlay": "@etb_80008FF4",
+    "extabindex_CardTaskManager_RenderOverlay": "@eti_80021AF4"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
