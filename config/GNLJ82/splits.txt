@@ -532,6 +532,11 @@ game/clItemBoxResponder_DrawDebris.c:
 game/clItemBoxResponder_TickDebris.c:
 	.text       start:0x8005E330 end:0x8005E46C
 
+game/clItemBoxResponder.c:
+	extab       start:0x80007DA8 end:0x80007DB0
+	extabindex  start:0x80020D38 end:0x80020D44
+	.text       start:0x8005FFBC end:0x8005FFF0
+
 game/clItemBox_StepFn_Bobbing.c:
 	extab       start:0x80007B9C end:0x80007BA4
 	extabindex  start:0x80020BE8 end:0x80020BF4

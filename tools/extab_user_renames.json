@@ -1036,6 +1036,10 @@
     "extab_clItemBoxResponder_DrawDebris": "@etb_80007B64",
     "extabindex_clItemBoxResponder_DrawDebris": "@eti_80020BC4"
   },
+  "src/game/clItemBoxResponder.c": {
+    "extab_clItemBoxResponder_CmdGetWorldPos": "@etb_80007DA8",
+    "extabindex_clItemBoxResponder_CmdGetWorldPos": "@eti_80020D38"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
