@@ -760,6 +760,11 @@ game/Backup_ClearBookkeeping.c:
 	extabindex  start:0x80021248 end:0x80021254
 	.text       start:0x80074FA4 end:0x8007502C
 
+game/Backup_ClearHiScores.c:
+	extab       start:0x80008318 end:0x80008320
+	extabindex  start:0x80021254 end:0x80021260
+	.text       start:0x8007502C end:0x800751F0
+
 game/Backup_ClearAll.c:
 	extab       start:0x80008320 end:0x80008328
 	extabindex  start:0x80021260 end:0x8002126C
