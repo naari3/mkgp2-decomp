@@ -834,6 +834,14 @@
     "extab_DVDLoad_WaitIfSamePage": "@etb_80008810",
     "extabindex_DVDLoad_WaitIfSamePage": "@eti_80021620"
   },
+  "src/game/AnimStatePool.c": {
+    "extab_AnimStatePool_Free": "@etb_8000A488",
+    "extab_AnimStatePool_Alloc": "@etb_8000A490",
+    "extab_AnimStatePool_FreeAll": "@etb_8000A4A8",
+    "extabindex_AnimStatePool_Free": "@eti_80022910",
+    "extabindex_AnimStatePool_Alloc": "@eti_8002291C",
+    "extabindex_AnimStatePool_FreeAll": "@eti_80022928"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

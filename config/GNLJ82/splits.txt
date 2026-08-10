@@ -1058,6 +1058,11 @@ game/clCGameDemo_Dtor.c:
 	extabindex  start:0x800228D4 end:0x800228E0
 	.text       start:0x800AE6BC end:0x800AE71C
 
+game/AnimStatePool.c:
+	extab       start:0x8000A488 end:0x8000A4B0
+	extabindex  start:0x80022910 end:0x80022934
+	.text       start:0x800AF240 end:0x800AF4F8
+
 game/VfxSlot_ResolveJoint.c:
 	extab       start:0x8000A528 end:0x8000A530
 	extabindex  start:0x800229A0 end:0x800229AC
