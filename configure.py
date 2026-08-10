@@ -386,6 +386,7 @@ config.libs = [
             Object(Matching, "game/clItemBoxResponder_DebrisParticle_Dtor.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBoxResponder_Rebind.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBoxResponder_DrawDebris.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/clItemBoxResponder_DrawDebrisParticle.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBoxResponder_TickDebris.c"),
             Object(Matching, "game/clItemBoxResponder_SpawnDebris.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBoxResponder.c", extab_padding=b"\x00\x00"),

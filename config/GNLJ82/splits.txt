@@ -529,6 +529,11 @@ game/clItemBoxResponder_DrawDebris.c:
 	extabindex  start:0x80020BC4 end:0x80020BD0
 	.text       start:0x8005DB3C end:0x8005DBA0
 
+game/clItemBoxResponder_DrawDebrisParticle.c:
+	extab       start:0x80007B6C end:0x80007B74
+	extabindex  start:0x80020BD0 end:0x80020BDC
+	.text       start:0x8005DBA0 end:0x8005E330
+
 game/clItemBoxResponder_TickDebris.c:
 	.text       start:0x8005E330 end:0x8005E46C
 

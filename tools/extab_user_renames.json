@@ -1048,6 +1048,10 @@
     "extab_clItemBoxResponder_SpawnDebris": "@etb_80007B74",
     "extabindex_clItemBoxResponder_SpawnDebris": "@eti_80020BDC"
   },
+  "src/game/clItemBoxResponder_DrawDebrisParticle.c": {
+    "extab_clItemBoxResponder_DrawDebrisParticle": "@etb_80007B6C",
+    "extabindex_clItemBoxResponder_DrawDebrisParticle": "@eti_80020BD0"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
