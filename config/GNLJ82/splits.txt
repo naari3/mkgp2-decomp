@@ -747,6 +747,11 @@ game/Backup_LoadFromMemoryOrInit.c:
 	extabindex  start:0x8002120C end:0x80021218
 	.text       start:0x80074190 end:0x80074370
 
+game/Backup_PublishShadowCopy.c:
+	extab       start:0x800082F0 end:0x800082F8
+	extabindex  start:0x80021218 end:0x80021224
+	.text       start:0x80074370 end:0x8007458C
+
 game/Backup_GetMinutesSinceBoot.c:
 	extab       start:0x800082F8 end:0x80008300
 	extabindex  start:0x80021224 end:0x80021230
