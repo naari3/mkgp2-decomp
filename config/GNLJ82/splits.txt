@@ -1062,6 +1062,11 @@ game/CourseData_GetDefaultPathKey_Safe.c:
 game/CourseData.c:
 	.text       start:0x800A0BDC end:0x800A0BE8
 
+game/BtMode_RenderFrame.c:
+	extab       start:0x80009A60 end:0x80009A68
+	extabindex  start:0x80022310 end:0x8002231C
+	.text       start:0x800A28D4 end:0x800A2B90
+
 game/ItemObjectManager_PerFrameUpdate.c:
 	extab       start:0x80009C5C end:0x80009C64
 	extabindex  start:0x80022340 end:0x8002234C

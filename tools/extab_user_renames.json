@@ -1012,6 +1012,10 @@
     "extab_BtMode_Init": "@etb_80009744",
     "extabindex_BtMode_Init": "@eti_8002225C"
   },
+  "src/game/BtMode_RenderFrame.c": {
+    "extab_BtMode_RenderFrame": "@etb_80009A60",
+    "extabindex_BtMode_RenderFrame": "@eti_80022310"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
