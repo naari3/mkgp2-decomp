@@ -1856,6 +1856,11 @@ game/JumpDistanceMode_PredictLanding.c:
 	extabindex  start:0x80029F30 end:0x80029F3C
 	.text       start:0x80210A50 end:0x80210CD4
 
+game/JumpDistanceMode_HandlePhysics.c:
+	extab       start:0x80019EDC end:0x80019EE4
+	extabindex  start:0x80029F48 end:0x80029F54
+	.text       start:0x80211550 end:0x80211B10
+
 game/JumpDistanceMode_InitTimerDisplay.c:
 	extab       start:0x8001A17C end:0x8001A194
 	extabindex  start:0x80029F9C end:0x80029FA8
