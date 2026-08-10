@@ -628,16 +628,6 @@
     "extab_PowItem_TickActive": "@etb_8000B6EC",
     "extabindex_PowItem_TickActive": "@eti_80023F78"
   },
-  "src/game/ShellItem.c": {
-    "extab_ShellItem_TickReboundOrCarry": "@etb_8000B6C4",
-    "extab_ShellItem_TickHitResolve": "@etb_8000B6CC",
-    "extab_ShellItem_TickActive": "@etb_8000B6D4",
-    "extab_ShellItem_Update": "@etb_8000B6DC",
-    "extabindex_ShellItem_TickReboundOrCarry": "@eti_80023F3C",
-    "extabindex_ShellItem_TickHitResolve": "@eti_80023F48",
-    "extabindex_ShellItem_TickActive": "@eti_80023F54",
-    "extabindex_ShellItem_Update": "@eti_80023F60"
-  },
   "src/game/RivalRun.c": {
     "extab_RivalRun_Draw": "@etb_8000D014",
     "extabindex_RivalRun_Draw": "@eti_80024BA8",

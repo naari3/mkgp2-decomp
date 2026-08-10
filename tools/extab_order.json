@@ -189,5 +189,11 @@
       "GabyouTripleChild_TickActive",
       "GabyouTripleChild_Update"
     ]
-  }
+  },
+  "src/game/ShellItem.c": [
+    "ShellItem_TickReboundOrCarry",
+    "ShellItem_TickHitResolve",
+    "ShellItem_TickActive",
+    "ShellItem_Update"
+  ]
 }

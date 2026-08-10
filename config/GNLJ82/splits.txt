@@ -1386,6 +1386,7 @@ game/ShellItem.c:
 	extab       start:0x8000B6C4 end:0x8000B6E4
 	extabindex  start:0x80023F3C end:0x80023F6C
 	.text       start:0x800F4C28 end:0x800F5B7C
+	.data       start:0x80421760 end:0x80421788
 
 game/PowItem.c:
 	extab       start:0x8000B6E4 end:0x8000B6FC
