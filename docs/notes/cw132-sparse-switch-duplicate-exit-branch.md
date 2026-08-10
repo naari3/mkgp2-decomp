@@ -1,0 +1,3 @@
+# CW 1.3.2 sparse switch duplicate exit branch (unmatched idiom)
+
+GabyouTripleChild_TickActive (0x800F3DC4) で確認 (2026-08-09)。2-case sparse switch {0,1} (case 0 が case 1 に fallthrough、両方実 body、default は join へ) の decision tree 末尾に、target は join への無条件 `b` を **2 連**で持つ (例: `b .L_x; b .L_x`)。CW 1.3.2 は同じ source 形状から 1 個しか emit しない。試行して不変だった variant: default 明示 (先頭 / 末尾 / 暗黙)、case 1 の break 有無、outer switch での wrap。同 TU の outer switch (同じ {0,1}+default 形) は『関数 tail 全体を outer `case 1:` に包む』で artifact が消えたので、包み構造依存の emitter quirk と思われる。99.30% まで寄せた paste-ready C は src/game/GabyouTripleChild.c のコメントに保存。同時に出た hit/alias web 色 swap は phase2f の closed class (mwcc_dump --colorer で web-birth key pin を確認)。

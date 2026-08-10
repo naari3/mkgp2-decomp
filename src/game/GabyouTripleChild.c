@@ -1,327 +1,486 @@
-/* GabyouTripleChild inline-assembly bundle: 0x800F3B20..0x800F4914. */
-
-/* === extracted from auto_GabyouTripleChild_Ti_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void BuildOrientationFromYaw();
-extern void FinalLapCoinJump_CheckActiveForObject();
-extern void GetSpawnPosition();
-extern void ItemObject_GetGroundTypeAt();
-extern void Item_DecayVelocityScalar();
-extern void KartDriver_GetKartRootMtx();
-extern void Mtx44_GetTranslation_RowMajor();
-extern void Vec3_Add_DestFirst();
-extern void Vec3_Copy();
-extern void Vec3_Subtract_DestFirst();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D60D0;
-extern unsigned int lbl_806D60D4;
-extern unsigned int lbl_806D60DC;
-extern unsigned int lbl_806D60E0;
-extern unsigned int lbl_806D60E4;
-
-/* --- function index (1 fns, .text 0x800F3B20..0x800F3DC4) ---
- * [  0] 0x800F3B20 size:0x2A4   global GabyouTripleChild_TickHitResolve
+/*
+ * GabyouTripleChild (0x800F3B20..0x800F4914) - unit claim #67.
+ *
+ * Triple-gabyou (pin) child item: per-frame state machines for the homing
+ * phase (TickActive), the post-hit / anchored-follow resolve (TickHitResolve)
+ * and the master dispatch (Update).
+ *
+ * Field offsets recovered from the target asm; no shared header exists yet,
+ * so the layout is declared locally.
  */
 
-/* --- forward decls --- */
-asm void GabyouTripleChild_TickHitResolve(void);
+typedef struct Vec3 {
+    float x;
+    float y;
+    float z;
+} Vec3;
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_GabyouTripleChild_TickHitResolve[8] = {
-    0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+typedef float Mtx44[4][4];
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_GabyouTripleChild_TickHitResolve = {
-    (void *)&GabyouTripleChild_TickHitResolve, 0x000002A4, (void *)extab_GabyouTripleChild_TickHitResolve
-};
+typedef struct GabyouTripleChildSub {
+    /* 0x00 */ unsigned char flag_00;
+    /* 0x01 */ char pad_01[3];
+    /* 0x04 */ unsigned int timer_04;
+    /* 0x08 */ unsigned int timer_08;
+    /* 0x0C */ unsigned int timer_0c;
+    /* 0x10 */ unsigned int timer_10;
+    /* 0x14 */ float f_14;
+    /* 0x18 */ float f_18;
+    /* 0x1C */ char pad_1c[0x18];
+    /* 0x34 */ Vec3 relPos_34;
+    /* 0x40 */ Vec3 velCopy_40;
+    /* 0x4C */ void *effect_4c;
+    /* 0x50 */ char pad_50[0x2C];
+    /* 0x7C */ int f_7c;
+    /* 0x80 */ char pad_80[0x10];
+    /* 0x90 */ unsigned char flag_90;
+    /* 0x91 */ char pad_91[7];
+    /* 0x98 */ void *f_98;
+    /* 0x9C */ void *kart_9c;
+} GabyouTripleChildSub;
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void GabyouTripleChild_TickHitResolve(void) { /* 0x800F3B20 size:0x2A4 */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    stw r0, 0x54(r1)
-    stw r31, 0x4c(r1)
-    mr r31, r4
-    stw r30, 0x48(r1)
-    mr r30, r3
-    lbz r0, 0xc9(r3)
-    extsb r0, r0
-    cmpwi r0, 0x1
-    beq GabyouTripleChild_TickHitResolve_L_800F3BFC
-    bge GabyouTripleChild_TickHitResolve_L_800F3BFC
-    cmpwi r0, 0x0
-    bge GabyouTripleChild_TickHitResolve_L_800F3B5C
-    b GabyouTripleChild_TickHitResolve_L_800F3BFC
-    GabyouTripleChild_TickHitResolve_L_800F3B5C:
-    lwz r6, 0xa0(r30)
-    addi r3, r1, 0x18
-    lwz r0, 0xa4(r30)
-    addi r4, r31, 0x14
-    li r5, 0x0
-    stw r6, 0x18(r1)
-    stw r0, 0x1c(r1)
-    lwz r0, 0xa8(r30)
-    stw r0, 0x20(r1)
-    bl ItemObject_GetGroundTypeAt
-    lbz r0, 0xcb(r30)
-    cmpwi r0, 0x5
-    beq GabyouTripleChild_TickHitResolve_L_800F3B9C
-    li r0, 0xa
-    stw r0, 0x4(r31)
-    b GabyouTripleChild_TickHitResolve_L_800F3BA4
-    GabyouTripleChild_TickHitResolve_L_800F3B9C:
-    li r0, 0x0
-    stw r0, 0x4(r31)
-    GabyouTripleChild_TickHitResolve_L_800F3BA4:
-    lwz r3, 0x9c(r31)
-    cmplwi r3, 0x0
-    beq GabyouTripleChild_TickHitResolve_L_800F3BF0
-    bl KartDriver_GetKartRootMtx
-    mr r4, r3
-    addi r3, r1, 0x30
-    bl Mtx44_GetTranslation_RowMajor
-    addi r3, r31, 0x34
-    addi r4, r30, 0xa0
-    addi r5, r1, 0x30
-    bl Vec3_Subtract_DestFirst
-    addi r3, r31, 0x40
-    addi r4, r30, 0xb8
-    bl Vec3_Copy
-    lfs f1, lbl_806D60D0(r2)
-    addi r3, r30, 0xb8
-    fmr f2, f1
-    fmr f3, f1
-    bl GetSpawnPosition
-    GabyouTripleChild_TickHitResolve_L_800F3BF0:
-    lbz r3, 0xc9(r30)
-    addi r0, r3, 0x1
-    stb r0, 0xc9(r30)
-    GabyouTripleChild_TickHitResolve_L_800F3BFC:
-    lwz r0, 0x4(r31)
-    cmplwi r0, 0x0
-    bne GabyouTripleChild_TickHitResolve_L_800F3C40
-    lfs f2, 0x2c(r30)
-    lfs f1, lbl_806D60E0(r2)
-    lfs f0, lbl_806D60D0(r2)
-    fsubs f1, f2, f1
-    stfs f1, 0x2c(r30)
-    lfs f1, 0x2c(r30)
-    fcmpo cr0, f1, f0
-    bge GabyouTripleChild_TickHitResolve_L_800F3C40
-    li r3, 0x0
-    li r0, 0x3
-    stb r3, 0x28(r30)
-    stb r0, 0xc8(r30)
-    stb r3, 0xc9(r30)
-    b GabyouTripleChild_TickHitResolve_L_800F3DAC
-    GabyouTripleChild_TickHitResolve_L_800F3C40:
-    lfs f1, lbl_806D60D4(r2)
-    mr r3, r30
-    bl Item_DecayVelocityScalar
-    lbz r0, 0xcb(r30)
-    extsb r0, r0
-    cmpwi r0, 0x5
-    beq GabyouTripleChild_TickHitResolve_L_800F3CC8
-    bge GabyouTripleChild_TickHitResolve_L_800F3C78
-    cmpwi r0, 0x0
-    beq GabyouTripleChild_TickHitResolve_L_800F3C84
-    blt GabyouTripleChild_TickHitResolve_L_800F3CC8
-    cmpwi r0, 0x4
-    bge GabyouTripleChild_TickHitResolve_L_800F3C9C
-    b GabyouTripleChild_TickHitResolve_L_800F3CC8
-    GabyouTripleChild_TickHitResolve_L_800F3C78:
-    cmpwi r0, 0x9
-    beq GabyouTripleChild_TickHitResolve_L_800F3CB4
-    b GabyouTripleChild_TickHitResolve_L_800F3CC8
-    GabyouTripleChild_TickHitResolve_L_800F3C84:
-    lfs f1, 0xac(r30)
-    lfs f0, lbl_806D60DC(r2)
-    fsubs f1, f1, f0
-    bl BuildOrientationFromYaw
-    stfs f1, 0xac(r30)
-    b GabyouTripleChild_TickHitResolve_L_800F3CC8
-    GabyouTripleChild_TickHitResolve_L_800F3C9C:
-    lfs f1, 0xac(r30)
-    lfs f0, lbl_806D60DC(r2)
-    fsubs f1, f1, f0
-    bl BuildOrientationFromYaw
-    stfs f1, 0xac(r30)
-    b GabyouTripleChild_TickHitResolve_L_800F3CC8
-    GabyouTripleChild_TickHitResolve_L_800F3CB4:
-    lfs f1, lbl_806D60DC(r2)
-    lfs f0, 0xac(r30)
-    fadds f1, f1, f0
-    bl BuildOrientationFromYaw
-    stfs f1, 0xac(r30)
-    GabyouTripleChild_TickHitResolve_L_800F3CC8:
-    lwz r3, 0x9c(r31)
-    bl FinalLapCoinJump_CheckActiveForObject
-    clrlwi. r0, r3, 24
-    beq GabyouTripleChild_TickHitResolve_L_800F3CE4
-    li r0, 0x0
-    stb r0, 0x28(r30)
-    b GabyouTripleChild_TickHitResolve_L_800F3CEC
-    GabyouTripleChild_TickHitResolve_L_800F3CE4:
-    li r0, 0x1
-    stb r0, 0x28(r30)
-    GabyouTripleChild_TickHitResolve_L_800F3CEC:
-    lwz r0, 0x9c(r31)
-    cmplwi r0, 0x0
-    bne GabyouTripleChild_TickHitResolve_L_800F3D68
-    lbz r0, 0xcb(r30)
-    cmpwi r0, 0x5
-    beq GabyouTripleChild_TickHitResolve_L_800F3D14
-    lfs f1, 0xbc(r30)
-    lfs f0, lbl_806D60E4(r2)
-    fadds f0, f1, f0
-    stfs f0, 0xbc(r30)
-    GabyouTripleChild_TickHitResolve_L_800F3D14:
-    lwz r6, 0xa0(r30)
-    addi r3, r1, 0xc
-    lwz r0, 0xa4(r30)
-    addi r4, r1, 0x8
-    li r5, 0x0
-    stw r6, 0xc(r1)
-    stw r0, 0x10(r1)
-    lwz r0, 0xa8(r30)
-    stw r0, 0x14(r1)
-    bl ItemObject_GetGroundTypeAt
-    extsb. r0, r3
-    beq GabyouTripleChild_TickHitResolve_L_800F3DAC
-    lfs f1, 0x8(r1)
-    lfs f0, 0x14(r31)
-    lfs f2, 0xa4(r30)
-    fsubs f0, f1, f0
-    fadds f0, f2, f0
-    stfs f0, 0xa4(r30)
-    lfs f0, 0x8(r1)
-    stfs f0, 0x14(r31)
-    b GabyouTripleChild_TickHitResolve_L_800F3DAC
-    GabyouTripleChild_TickHitResolve_L_800F3D68:
-    lfs f1, 0x44(r31)
-    addi r3, r31, 0x34
-    lfs f0, lbl_806D60E4(r2)
-    mr r4, r3
-    addi r5, r31, 0x40
-    fadds f0, f1, f0
-    stfs f0, 0x44(r31)
-    bl Vec3_Add_DestFirst
-    lwz r3, 0x9c(r31)
-    bl KartDriver_GetKartRootMtx
-    mr r4, r3
-    addi r3, r1, 0x24
-    bl Mtx44_GetTranslation_RowMajor
-    addi r3, r30, 0xa0
-    addi r4, r1, 0x24
-    addi r5, r31, 0x34
-    bl Vec3_Add_DestFirst
-    GabyouTripleChild_TickHitResolve_L_800F3DAC:
-    lwz r0, 0x54(r1)
-    lwz r31, 0x4c(r1)
-    lwz r30, 0x48(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
-}
+typedef struct GabyouTripleChild {
+    /* 0x00 */ char pad_00[0x08];
+    /* 0x08 */ unsigned int field_08;
+    /* 0x0C */ char pad_0c[0x04];
+    /* 0x10 */ int field_10;
+    /* 0x14 */ char slot_14[0x14];
+    /* 0x28 */ unsigned char visible_28;
+    /* 0x29 */ char pad_29[3];
+    /* 0x2C */ float f_2c;
+    /* 0x30 */ char pad_30[0x0C];
+    /* 0x3C */ unsigned char flag_3c;
+    /* 0x3D */ char pad_3d[0x0B];
+    /* 0x48 */ float mtx_48[12];
+    /* 0x78 */ char pad_78[0x14];
+    /* 0x8C */ unsigned char category_8c;
+    /* 0x8D */ signed char f_8d;
+    /* 0x8E */ signed char f_8e;
+    /* 0x8F */ char pad_8f[1];
+    /* 0x90 */ Vec3 vel2_90;
+    /* 0x9C */ void *owner_9c;
+    /* 0xA0 */ Vec3 pos;
+    /* 0xAC */ float rotX_ac;
+    /* 0xB0 */ float rotY_b0;
+    /* 0xB4 */ float rotZ_b4;
+    /* 0xB8 */ Vec3 vel_b8;
+    /* 0xC4 */ float scale_c4;
+    /* 0xC8 */ signed char state_c8;
+    /* 0xC9 */ signed char state_c9;
+    /* 0xCA */ signed char state_ca;
+    /* 0xCB */ signed char state_cb;
+    /* 0xCC */ char pad_cc[0x20];
+    /* 0xEC */ GabyouTripleChildSub sub;
+} GabyouTripleChild;
 
-/* === extracted from auto_GabyouTripleChild_Ti_text_1 === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+typedef struct DrawEffectPartial {
+    /* 0x00 */ char pad_00[0x8C];
+    /* 0x8C */ Vec3 trailEnd_8c;
+    /* 0x98 */ char pad_98[0x18];
+    /* 0xB0 */ float scale_b0;
+} DrawEffectPartial;
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void AngleStepForward_OrSnap();
-extern void AngleStepTowards_Shortest();
-extern void BuildOrientationFromYaw();
-extern void DrawEffect_Free();
-extern void DrawEffect_ItemHitOriented_Spawn();
-extern void DrawEffect_SpawnDirect();
-extern void FAbs_FloatAsDouble();
-extern void GetSpawnPosition();
-extern void ItemAlias_HitRemapLookup();
-extern void ItemCollision_Check();
-extern void ItemHitRegistry_AddEntry();
-extern void ItemHitRegistry_RemoveEntry();
-extern void ItemHit_Dispatch();
-extern void ItemObject_DecrementCategoryBudget();
-extern void ItemObject_GetGroundTypeAt();
-extern void ItemTracker_AcquireLock();
-extern void ItemTracker_GetTargetKart();
-extern void ItemTracker_ReleaseLock();
-extern void ItemTracker_SetTrackPhase();
-extern void Item_BounceOffWall();
-extern void Item_CheckWallCollision();
-extern void Item_ComputeYawRelativeApproach();
-extern void Item_DecayVelocityScalar();
-extern void Item_HomingScanAndSteer();
-extern void Item_ProbeForwardGroundPitch();
-extern void Item_ProbeLateralGroundPitch();
-extern void SpriteSlot_Container_Free();
-extern void SpriteSlot_SetAnimFrameAndApplyScale();
-extern void SpriteSlot_SetScale();
-extern void Vec3_Add_DestFirst();
-extern void Vec3_Scale();
-extern void Vec3_ToYaw();
-extern void fn_801B1D5C();
-extern void fn_8027E240();
-extern void fn_8027E9E8();
+extern const float lbl_806D60D0;
+extern const float lbl_806D60D4;
+extern const float lbl_806D60D8;
+extern const float lbl_806D60DC;
+extern const float lbl_806D60E0;
+extern const float lbl_806D60E4;
+extern const float lbl_806D60E8;
+extern const float lbl_806D60EC;
+extern const float lbl_806D60F0;
+extern const float lbl_806D60F4;
+extern const float lbl_806D60F8;
+extern const float lbl_806D60FC;
+extern const float lbl_806D6100;
+extern const float lbl_806D6104;
+extern const float lbl_806D6108;
+extern const float lbl_806D610C;
+extern const float lbl_806D6110;
+extern const float lbl_806D6114;
+extern const float lbl_806D6118;
+extern const Vec3 lbl_8032FA28;
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D60D0;
-extern unsigned int lbl_806D60D4;
-extern unsigned int lbl_806D60DC;
-extern unsigned int lbl_806D60E4;
-extern unsigned int lbl_806D60E8;
-extern unsigned int lbl_806D60EC;
-extern unsigned int lbl_806D60F0;
-extern unsigned int lbl_806D60F4;
-extern unsigned int lbl_806D60F8;
-extern unsigned int lbl_806D60FC;
-extern unsigned int lbl_806D6100;
-extern unsigned int lbl_806D6104;
-extern unsigned int lbl_806D6108;
-extern unsigned int lbl_806D610C;
-extern unsigned int lbl_806D6110;
-extern unsigned int lbl_806D6114;
-extern unsigned int lbl_806D6118;
+extern signed char ItemObject_GetGroundTypeAt(Vec3 *pos, float *outGroundY, int mode);
+extern void *KartDriver_GetKartRootMtx(void *kart);
+extern void Mtx44_GetTranslation_RowMajor(Vec3 *out, const void *mtx);
+extern void Vec3_Subtract_DestFirst(Vec3 *dst, const Vec3 *a, const Vec3 *b);
+extern void Vec3_Add_DestFirst(Vec3 *dst, const Vec3 *a, const Vec3 *b);
+extern void Vec3_Copy(Vec3 *dst, const Vec3 *src);
+extern void Vec3_Scale(Vec3 *dst, const Vec3 *src, float scale);
+extern float Vec3_ToYaw(const Vec3 *v);
+extern void GetSpawnPosition(Vec3 *v, float x, float y, float z);
+extern void Item_DecayVelocityScalar(void *item, float scalar);
+extern float BuildOrientationFromYaw(float yaw);
+extern float FAbs_FloatAsDouble(float x);
+extern int FinalLapCoinJump_CheckActiveForObject(void *object);
+extern void ItemTracker_AcquireLock(void *self);
+extern void ItemTracker_SetTrackPhase(void *self, int phase);
+extern void ItemTracker_ReleaseLock(void *self);
+extern void *ItemTracker_GetTargetKart(void *self);
+extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float scale);
+extern void SpriteSlot_SetScale(void *slot, float scale);
+extern void SpriteSlot_InitNonLoop(void *slot, int animId);
+extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int enabled);
+extern void SpriteSlot_Container_Free(void *self);
+extern void ItemHitRegistry_AddEntry(void *self, int phase);
+extern unsigned char ItemHitRegistry_RemoveEntry(void *self, int entryId, int mode);
+extern void Item_HomingScanAndSteer(void *self, float *yaw, int mode);
+extern int ItemCollision_Check(void *self);
+extern short ItemAlias_HitRemapLookup(unsigned int itemId);
+extern void fn_801B1D5C(void *a, void *kart, int remapId, int flag);
+extern void Item_ComputeYawRelativeApproach(Vec3 *vel, void *kart, Vec3 *pos, Vec3 *prevVel);
+extern void ItemHit_Dispatch(void *self, int a, Vec3 *pos, int b);
+extern int Item_CheckWallCollision(void *self, Vec3 *outNormal, int mode);
+extern void Item_BounceOffWall(void *self, Vec3 *normal, int a, int b, float f1, float f2);
+extern float Item_ProbeForwardGroundPitch(Vec3 *pos, float yaw, float a, float b);
+extern float Item_ProbeLateralGroundPitch(Vec3 *pos, float yaw, float a, float b);
+extern float AngleStepForward_OrSnap(float current, float target, float step);
+extern float AngleStepTowards_Shortest(float current, double target, float step);
+extern double fn_8027E240(double x);
+extern double fn_8027E9E8(double x);
+extern void DrawEffect_ItemHitOriented_Spawn(Vec3 *pos, Vec3 *vel, int mode);
+extern void *DrawEffect_SpawnDirect(void *factory);
+extern void DrawEffect_Free(void *effect);
+extern void EffectVfx7F_PulseFan_Tick(void);
+extern void ItemObject_DecrementCategoryBudget(void *self);
+extern int Item_AdvanceTetherToJoint13(void *self, float *time, float scale, float a, float b);
+extern int Item_OrbitAnchorKart(void *self, Vec3 *anchor, float a, float b, int timer);
+extern void Matrix4_Identity(Mtx44 m);
+extern void Mtx44_Scale_Uniform(Mtx44 dst, const Mtx44 src, float scale);
+extern void Matrix4_PreMultiplyRotZ(Mtx44 dst, const Mtx44 src, float angle);
+extern void Matrix4_PreMultiplyRotX(Mtx44 dst, const Mtx44 src, float angle);
+extern void Matrix4_PreMultiplyRotY(Mtx44 dst, const Mtx44 src, float angle);
+extern void Mtx44_Translate(Mtx44 dst, const Mtx44 src, const Vec3 *offset);
+extern void DbgScene_CopyMatrix3x4Transpose(float *dst, const Mtx44 src);
+extern void Mtx_TransposeToMtx44(Mtx44 dst, const float *src);
+extern void Mtx44_TransformVec3(Vec3 *out, const Mtx44 m, Vec3 in);
 
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int EffectVfx7F_PulseFan_Tick[];
+/* Manual exception metadata for the asm_fn / approach-B functions.
+ * postprocess_extab_user.py renames .extab_user/.extabindex_user sections
+ * and symbols after compilation. Emit order (extab_order.json):
+ * TickHitResolve (CW auto) -> TickActive (manual) -> Update (manual). */
+asm void GabyouTripleChild_TickActive(GabyouTripleChild *self, GabyouTripleChildSub *sub);
+void GabyouTripleChild_Update(GabyouTripleChild *self);
 
-/* --- function index (1 fns, .text 0x800F3DC4..0x800F4540) ---
- * [  0] 0x800F3DC4 size:0x77C   global GabyouTripleChild_TickActive
- */
-
-/* --- forward decls --- */
-asm void GabyouTripleChild_TickActive(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
 __declspec(section ".extab_user") static const unsigned char extab_GabyouTripleChild_TickActive[8] = {
     0x28, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_GabyouTripleChild_TickActive = {
-    (void *)&GabyouTripleChild_TickActive, 0x0000077C, (void *)extab_GabyouTripleChild_TickActive
+__declspec(section ".extab_user") static const unsigned char extab_GabyouTripleChild_Update[8] = {
+    0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void GabyouTripleChild_TickActive(void) { /* 0x800F3DC4 size:0x77C */
+#pragma section R ".extabindex_user"
+__declspec(section ".extabindex_user") static const struct {
+    void *fn;
+    unsigned int fn_size;
+    void *extab;
+} extabindex_GabyouTripleChild_TickActive = {
+    (void *)&GabyouTripleChild_TickActive, 0x0000077C, (void *)extab_GabyouTripleChild_TickActive
+};
+__declspec(section ".extabindex_user") static const struct {
+    void *fn;
+    unsigned int fn_size;
+    void *extab;
+} extabindex_GabyouTripleChild_Update = {
+    (void *)&GabyouTripleChild_Update, 0x000003D4, (void *)extab_GabyouTripleChild_Update
+};
+
+void GabyouTripleChild_TickHitResolve(GabyouTripleChild *self, GabyouTripleChildSub *sub)
+{
+    Vec3 kartPos;
+    Vec3 kartPos2;
+    Vec3 pos;
+    Vec3 pos2;
+    float groundY;
+
+    switch (self->state_c9) {
+    case 0:
+        pos = self->pos;
+        ItemObject_GetGroundTypeAt(&pos, &sub->f_14, 0);
+        if (self->state_cb != 5) {
+            sub->timer_04 = 10;
+        } else {
+            sub->timer_04 = 0;
+        }
+        if (sub->kart_9c != 0) {
+            Mtx44_GetTranslation_RowMajor(&kartPos, KartDriver_GetKartRootMtx(sub->kart_9c));
+            Vec3_Subtract_DestFirst(&sub->relPos_34, &self->pos, &kartPos);
+            Vec3_Copy(&sub->velCopy_40, &self->vel_b8);
+            GetSpawnPosition(&self->vel_b8, lbl_806D60D0, lbl_806D60D0, lbl_806D60D0);
+        }
+        self->state_c9 = self->state_c9 + 1;
+        break;
+    case 1:
+        break;
+    }
+    if (sub->timer_04 == 0) {
+        self->f_2c = self->f_2c - lbl_806D60E0;
+        if (self->f_2c < lbl_806D60D0) {
+            self->visible_28 = 0;
+            self->state_c8 = 3;
+            self->state_c9 = 0;
+            return;
+        }
+    }
+    Item_DecayVelocityScalar(self, lbl_806D60D4);
+    switch (self->state_cb) {
+    case 0:
+        self->rotX_ac = BuildOrientationFromYaw(self->rotX_ac - lbl_806D60DC);
+        break;
+    case 4:
+        self->rotX_ac = BuildOrientationFromYaw(self->rotX_ac - lbl_806D60DC);
+        break;
+    case 5:
+        break;
+    case 9:
+        self->rotX_ac = BuildOrientationFromYaw(lbl_806D60DC + self->rotX_ac);
+        break;
+    }
+    if ((unsigned char)FinalLapCoinJump_CheckActiveForObject(sub->kart_9c) != 0) {
+        self->visible_28 = 0;
+    } else {
+        self->visible_28 = 1;
+    }
+    if (sub->kart_9c == 0) {
+        if (self->state_cb != 5) {
+            self->vel_b8.y = self->vel_b8.y + lbl_806D60E4;
+        }
+        pos2 = self->pos;
+        if (ItemObject_GetGroundTypeAt(&pos2, &groundY, 0) != 0) {
+            self->pos.y = self->pos.y + (groundY - sub->f_14);
+            sub->f_14 = groundY;
+        }
+    } else {
+        sub->velCopy_40.y = sub->velCopy_40.y + lbl_806D60E4;
+        Vec3_Add_DestFirst(&sub->relPos_34, &sub->relPos_34, &sub->velCopy_40);
+        Mtx44_GetTranslation_RowMajor(&kartPos2, KartDriver_GetKartRootMtx(sub->kart_9c));
+        Vec3_Add_DestFirst(&self->pos, &kartPos2, &sub->relPos_34);
+    }
+}
+
+/* --- paste-ready C (99.30% fuzzy, parked: see note below) ---
+ * void GabyouTripleChild_TickActive(GabyouTripleChild *self, GabyouTripleChildSub *sub)
+ * {
+ *     int alias;
+ *     int hit;
+ *     int eq;
+ *     float groundY;
+ *     double dpitch;
+ *     double dpitchL;
+ *     Vec3 wallNormal;
+ *     Vec3 sum;
+ *     Vec3 posCopy4;
+ *     Vec3 velCopy;
+ *     Vec3 bounce;
+ *     Vec3 probe;
+ *     Vec3 fxPos;
+ *     Vec3 fxVel;
+ *     Vec3 posCopy;
+ *     Vec3 posCopy2;
+ *     Vec3 posCopy3;
+ *     void *kart;
+ *     float peak;
+ *     float angle;
+ *     float rise;
+ *     float pitch;
+ *
+ *     switch (self->state_c9) {
+ *     case 0:
+ *         self->visible_28 = 1;
+ *         self->f_2c = lbl_806D60E8;
+ *         self->state_c9 = self->state_c9 + 1;
+ *         self->state_ca = 0;
+ *         (fall through)
+ *     case 1:
+ *     switch (self->state_ca) {
+ *     case 0:
+ *         ItemTracker_AcquireLock(self);
+ *         ItemTracker_SetTrackPhase(self, 1);
+ *         self->f_8d = 1;
+ *         self->flag_3c = 1;
+ *         SpriteSlot_SetAnimFrameAndApplyScale(self->slot_14, 0, lbl_806D60D0);
+ *         SpriteSlot_SetScale(self->slot_14, lbl_806D60E8);
+ *         sub->timer_04 = 0x384;
+ *         sub->timer_08 = 0;
+ *         sub->timer_0c = 0;
+ *         ItemHitRegistry_AddEntry(self, (unsigned char)self->state_ca++);
+ *         (fall through)
+ *     case 1:
+ *         self->vel_b8.y = self->vel_b8.y + lbl_806D60E4;
+ *         Item_HomingScanAndSteer(self, &self->rotY_b0, 1);
+ *     }
+ *     Item_DecayVelocityScalar(self, lbl_806D60D4);
+ *     hit = ItemCollision_Check(self);
+ *     switch (hit) {
+ *     case 1:
+ *         eq = self->state_ca == 3;
+ *         alias = ItemAlias_HitRemapLookup(self->field_08);
+ *         kart = ItemTracker_GetTargetKart(self);
+ *         fn_801B1D5C(sub->f_98, kart, alias, eq != 0);
+ *         (fall through)
+ *     case 2:
+ *     case 3:
+ *         if (self->state_ca != 3 && hit == 3) {
+ *             sub->f_7c = 0;
+ *             velCopy = self->vel_b8;
+ *             posCopy4 = self->pos;
+ *             Item_ComputeYawRelativeApproach(&self->vel_b8, ItemTracker_GetTargetKart(self),
+ *                                             &posCopy4, &velCopy);
+ *             self->rotY_b0 = Vec3_ToYaw(&self->vel_b8);
+ *             ItemTracker_SetTrackPhase(self, 0);
+ *             sub->timer_0c = 5;
+ *             break;
+ *         }
+ *         if (hit == 1) {
+ *             ItemHit_Dispatch(self, 0, &self->pos, 0);
+ *         }
+ *         sub->kart_9c = ItemTracker_GetTargetKart(self);
+ *         ItemTracker_ReleaseLock(self);
+ *         self->f_8d = 0;
+ *         self->vel_b8.y = lbl_806D60EC;
+ *         DrawEffect_Free(sub->effect_4c);
+ *         sub->effect_4c = 0;
+ *         self->state_c8 = 2;
+ *         self->state_c9 = 0;
+ *         self->state_cb = 0;
+ *         return;
+ *     case 4:
+ *         sub->kart_9c = ItemTracker_GetTargetKart(self);
+ *         ItemTracker_ReleaseLock(self);
+ *         self->f_8d = 0;
+ *         DrawEffect_Free(sub->effect_4c);
+ *         sub->effect_4c = 0;
+ *         self->state_c8 = 2;
+ *         self->state_c9 = 0;
+ *         self->state_cb = 3;
+ *         return;
+ *     case 5:
+ *         ItemTracker_SetTrackPhase(self, 1);
+ *         break;
+ *     }
+ *     if (sub->timer_0c == 0) {
+ *         ItemTracker_SetTrackPhase(self, 1);
+ *     }
+ *     if (self->f_8d == 2) {
+ *         ItemTracker_ReleaseLock(self);
+ *         self->f_8d = 0;
+ *         DrawEffect_Free(sub->effect_4c);
+ *         sub->effect_4c = 0;
+ *         if (self->f_8e == 1) {
+ *             Vec3_Add_DestFirst(&self->vel_b8, &self->vel_b8, &self->vel2_90);
+ *             self->vel_b8.y = lbl_806D60EC;
+ *             self->vel_b8.x = self->vel_b8.x * lbl_806D60F0;
+ *             self->vel_b8.z = self->vel_b8.z * lbl_806D60F0;
+ *             self->state_c8 = 2;
+ *             self->state_c9 = 0;
+ *             self->state_cb = 4;
+ *             return;
+ *         }
+ *         self->state_c8 = 2;
+ *         self->state_c9 = 0;
+ *         self->state_cb = 6;
+ *         return;
+ *     }
+ *     if (self->state_ca != 3) {
+ *         if (Item_CheckWallCollision(self, &wallNormal, 0) != 0) {
+ *             bounce = wallNormal;
+ *             Item_BounceOffWall(self, &bounce, 0, 1, lbl_806D60F0, lbl_806D60D0);
+ *             self->rotY_b0 = Vec3_ToYaw(&self->vel_b8);
+ *         }
+ *     }
+ *     Vec3_Add_DestFirst(&sum, &self->pos, &self->vel_b8);
+ *     probe = sum;
+ *     if (ItemObject_GetGroundTypeAt(&probe, &groundY, 0) != 0) {
+ *         switch (self->state_ca) {
+ *     case 1:
+ *         self->rotX_ac = BuildOrientationFromYaw(lbl_806D60F4 + self->rotX_ac);
+ *         if (sum.y < groundY) {
+ *             self->pos.y = groundY;
+ *             self->vel_b8.y = lbl_806D60D0;
+ *             Vec3_Scale(&self->vel_b8, &self->vel_b8, lbl_806D60F8);
+ *             self->state_ca = self->state_ca + 1;
+ *         }
+ *         break;
+ *     case 2:
+ *         if (sub->timer_08 == 0) {
+ *             fxVel = self->vel_b8;
+ *             fxPos = self->pos;
+ *             DrawEffect_ItemHitOriented_Spawn(&fxPos, &fxVel, 1);
+ *             sub->timer_08 = 3;
+ *         }
+ *         peak = lbl_806D6100 * (float)fn_8027E9E8((float)fn_8027E240(lbl_806D60FC));
+ *         angle = FAbs_FloatAsDouble(BuildOrientationFromYaw(self->rotX_ac));
+ *         if (angle < lbl_806D6104) {
+ *             rise = lbl_806D6100 * angle / lbl_806D6104;
+ *         } else if (angle < lbl_806D6108) {
+ *             rise = lbl_806D6100 + (angle - lbl_806D6104) * (peak - lbl_806D6100) / lbl_806D610C;
+ *         } else {
+ *             rise = peak + (angle - lbl_806D6108) * (lbl_806D6110 - peak) / lbl_806D610C;
+ *         }
+ *         rise = rise * self->scale_c4;
+ *         self->pos.y = groundY + rise;
+ *         posCopy = self->pos;
+ *         pitch = Item_ProbeForwardGroundPitch(&posCopy, self->rotY_b0, lbl_806D6110, rise);
+ *         self->rotX_ac = AngleStepForward_OrSnap(self->rotX_ac, pitch, lbl_806D6114);
+ *         if (FAbs_FloatAsDouble(BuildOrientationFromYaw(self->rotX_ac - pitch)) < lbl_806D6118) {
+ *             GetSpawnPosition(&self->vel_b8, lbl_806D60D0, lbl_806D60D0, lbl_806D60D0);
+ *             sub->effect_4c = DrawEffect_SpawnDirect(EffectVfx7F_PulseFan_Tick);
+ *             self->state_ca = self->state_ca + 1;
+ *         }
+ *         break;
+ *     case 3:
+ *         self->pos.y = groundY;
+ *         posCopy2 = self->pos;
+ *         dpitch = Item_ProbeForwardGroundPitch(&posCopy2, self->rotY_b0, lbl_806D6110, lbl_806D60D0);
+ *         self->rotX_ac = AngleStepTowards_Shortest(self->rotX_ac, dpitch, lbl_806D60DC);
+ *         posCopy3 = self->pos;
+ *         dpitchL = Item_ProbeLateralGroundPitch(&posCopy3, self->rotY_b0, lbl_806D6110, lbl_806D60D0);
+ *         self->rotZ_b4 = AngleStepTowards_Shortest(self->rotZ_b4, dpitchL, lbl_806D60DC);
+ *         break;
+ *         }
+ *     } else {
+ *         ItemTracker_ReleaseLock(self);
+ *         self->f_8d = 0;
+ *         DrawEffect_Free(sub->effect_4c);
+ *         sub->effect_4c = 0;
+ *         self->state_c8 = 2;
+ *         self->state_c9 = 0;
+ *         self->state_cb = 9;
+ *         return;
+ *     }
+ *     if (ItemHitRegistry_RemoveEntry(self, sub->timer_04, 0) != 0) {
+ *         ItemTracker_ReleaseLock(self);
+ *         self->f_8d = 0;
+ *         DrawEffect_Free(sub->effect_4c);
+ *         sub->effect_4c = 0;
+ *         DrawEffect_Free(sub->effect_4c);
+ *         sub->effect_4c = 0;
+ *         if (self->field_10 == 0) {
+ *             ItemObject_DecrementCategoryBudget(self);
+ *         }
+ *         SpriteSlot_Container_Free(self);
+ *     }
+ *     }
+ * }
+ *
+ * Parked residual (2026-08-09, ~15 edit/build cycles):
+ *  - one duplicate unconditional branch appended after the state_ca sparse
+ *    switch decision tree (target emits two `b .L_800F3ED0`, CW 1.3.2 emits
+ *    one; 6 source-shape variants tried: explicit/implicit/default-first
+ *    default, no-break case fallthrough, outer-switch wrap).
+ *  - hit/alias callee-saved web color swap (target hit=r28/alias=r29, CW
+ *    gives hit=r29/alias=r28; mwcc_dump --colorer shows web-birth-key
+ *    pinned visit order, phase2f closed class).
+ * Everything else (instruction selection, block order, stack map, extab)
+ * matches. Retry hint: the duplicate switch-exit branch is the same
+ * emitter artifact family as the outer state_c9 switch, which DID match
+ * once the whole function tail was wrapped in `case 1:` of the outer
+ * switch - the inner switch may need a different enclosing structure.
+ */
+
+asm void GabyouTripleChild_TickActive(GabyouTripleChild *self, GabyouTripleChildSub *sub) { /* 0x800F3DC4 size:0x77C */
     nofralloc
     stwu r1, -0xc0(r1)
     mflr r0
@@ -833,331 +992,124 @@ asm void GabyouTripleChild_TickActive(void) { /* 0x800F3DC4 size:0x77C */
     blr
 }
 
-/* === extracted from auto_GabyouTripleChild_Up_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+#pragma exceptions off
+void GabyouTripleChild_Update(GabyouTripleChild *self)
+{
+    GabyouTripleChildSub *sub;
+    Mtx44 m44;
+    Mtx44 m44b;
+    Vec3 trail;
+    Vec3 pos;
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void DbgScene_CopyMatrix3x4Transpose();
-extern void DrawEffect_Free();
-extern void GabyouTripleChild_TickActive();
-extern void GabyouTripleChild_TickHitResolve();
-extern void GetSpawnPosition();
-extern void ItemObject_DecrementCategoryBudget();
-extern void Item_AdvanceTetherToJoint13();
-extern void Item_DecayVelocityScalar();
-extern void Item_OrbitAnchorKart();
-extern void Matrix4_Identity();
-extern void Matrix4_PreMultiplyRotX();
-extern void Matrix4_PreMultiplyRotY();
-extern void Matrix4_PreMultiplyRotZ();
-extern void Mtx44_Scale_Uniform();
-extern void Mtx44_TransformVec3();
-extern void Mtx44_Translate();
-extern void Mtx_TransposeToMtx44();
-extern void SpriteSlot_Container_Free();
-extern void SpriteSlot_InitNonLoop();
-extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed();
-extern void Vec3_Add_DestFirst();
-extern void Vec3_Subtract_DestFirst();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D60D0;
-extern unsigned int lbl_806D60D4;
-extern unsigned int lbl_806D60D8;
-extern unsigned int lbl_806D60DC;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int jumptable_80421738[];
-extern unsigned int lbl_8032FA28[];
-
-/* --- function index (1 fns, .text 0x800F4540..0x800F4914) ---
- * [  0] 0x800F4540 size:0x3D4   global GabyouTripleChild_Update
- */
-
-/* --- forward decls --- */
-asm void GabyouTripleChild_Update(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_GabyouTripleChild_Update[8] = {
-    0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_GabyouTripleChild_Update = {
-    (void *)&GabyouTripleChild_Update, 0x000003D4, (void *)extab_GabyouTripleChild_Update
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void GabyouTripleChild_Update(void) { /* 0x800F4540 size:0x3D4 */
-    nofralloc
-    stwu r1, -0xc0(r1)
-    mflr r0
-    stw r0, 0xc4(r1)
-    stw r31, 0xbc(r1)
-    stw r30, 0xb8(r1)
-    mr r30, r3
-    addi r31, r30, 0xec
-    lbz r0, 0xc8(r3)
-    extsb r0, r0
-    cmpwi r0, 0x2
-    beq GabyouTripleChild_Update_L_800F45E4
-    bge GabyouTripleChild_Update_L_800F4580
-    cmpwi r0, 0x0
-    beq GabyouTripleChild_Update_L_800F458C
-    bge GabyouTripleChild_Update_L_800F45D4
-    b GabyouTripleChild_Update_L_800F47A4
-    GabyouTripleChild_Update_L_800F4580:
-    cmpwi r0, 0x4
-    bge GabyouTripleChild_Update_L_800F47A4
-    b GabyouTripleChild_Update_L_800F4774
-    GabyouTripleChild_Update_L_800F458C:
-    li r3, 0x1
-    li r0, 0x46
-    stb r3, 0x90(r31)
-    addi r3, r30, 0x14
-    li r4, 0x49
-    stw r0, 0x8(r30)
-    bl SpriteSlot_InitNonLoop
-    addi r3, r30, 0x14
-    li r4, 0x1
-    bl SpriteSlot_SetMatrixSourceEnabled_WithReseed
-    li r4, 0x1
-    li r3, 0x2
-    stb r4, 0x0(r31)
-    li r0, 0x0
-    stb r3, 0x8c(r30)
-    stb r0, 0x8d(r30)
-    stb r4, 0xc8(r30)
-    stb r0, 0xc9(r30)
-    GabyouTripleChild_Update_L_800F45D4:
-    mr r3, r30
-    mr r4, r31
-    bl GabyouTripleChild_TickActive
-    b GabyouTripleChild_Update_L_800F47A4
-    GabyouTripleChild_Update_L_800F45E4:
-    lbz r0, 0xcb(r30)
-    extsb r0, r0
-    cmplwi r0, 0x9
-    bgt GabyouTripleChild_Update_L_800F47A4
-    lis r4, jumptable_80421738@ha
-    slwi r0, r0, 2
-    addi r4, r4, jumptable_80421738@l
-    lwzx r0, r4, r0
-    mtctr r0
-    bctr
-    mr r4, r31
-    bl GabyouTripleChild_TickHitResolve
-    b GabyouTripleChild_Update_L_800F47A4
-    lbz r0, 0xc9(r30)
-    extsb r0, r0
-    cmpwi r0, 0x1
-    beq GabyouTripleChild_Update_L_800F4670
-    bge GabyouTripleChild_Update_L_800F4670
-    cmpwi r0, 0x0
-    bge GabyouTripleChild_Update_L_800F4638
-    b GabyouTripleChild_Update_L_800F4670
-    GabyouTripleChild_Update_L_800F4638:
-    lfs f1, lbl_806D60D0(r2)
-    addi r3, r30, 0xb8
-    fmr f2, f1
-    fmr f3, f1
-    bl GetSpawnPosition
-    li r0, 0x0
-    lfs f0, lbl_806D60D0(r2)
-    stb r0, 0x3c(r30)
-    stfs f0, 0x14(r31)
-    lfs f0, 0xc4(r30)
-    stfs f0, 0x18(r31)
-    lbz r3, 0xc9(r30)
-    addi r0, r3, 0x1
-    stb r0, 0xc9(r30)
-    GabyouTripleChild_Update_L_800F4670:
-    lfs f2, lbl_806D60DC(r2)
-    mr r3, r30
-    lfs f1, 0x18(r31)
-    addi r4, r31, 0x14
-    fmr f3, f2
-    bl Item_AdvanceTetherToJoint13
-    cmpwi r3, 0x0
-    beq GabyouTripleChild_Update_L_800F47A4
-    li r3, 0x0
-    li r0, 0x3
-    stb r3, 0x28(r30)
-    stb r0, 0xc8(r30)
-    stb r3, 0xc9(r30)
-    b GabyouTripleChild_Update_L_800F47A4
-    mr r4, r31
-    bl GabyouTripleChild_TickHitResolve
-    b GabyouTripleChild_Update_L_800F47A4
-    lbz r0, 0xc9(r30)
-    extsb r0, r0
-    cmpwi r0, 0x1
-    beq GabyouTripleChild_Update_L_800F4718
-    bge GabyouTripleChild_Update_L_800F4718
-    cmpwi r0, 0x0
-    bge GabyouTripleChild_Update_L_800F46D4
-    b GabyouTripleChild_Update_L_800F4718
-    GabyouTripleChild_Update_L_800F46D4:
-    lfs f1, lbl_806D60D0(r2)
-    addi r3, r30, 0xb8
-    fmr f2, f1
-    fmr f3, f1
-    bl GetSpawnPosition
-    li r0, 0x0
-    addi r3, r31, 0x34
-    stb r0, 0x3c(r30)
-    addi r4, r30, 0xa0
-    lwz r5, 0x9c(r30)
-    addi r5, r5, 0xa0
-    bl Vec3_Subtract_DestFirst
-    li r0, 0x1e
-    stw r0, 0x4(r31)
-    lbz r3, 0xc9(r30)
-    addi r0, r3, 0x1
-    stb r0, 0xc9(r30)
-    GabyouTripleChild_Update_L_800F4718:
-    lfs f1, lbl_806D60D4(r2)
-    mr r3, r30
-    bl Item_DecayVelocityScalar
-    lfs f1, lbl_806D60D8(r2)
-    mr r3, r30
-    lwz r5, 0x4(r31)
-    addi r4, r31, 0x34
-    fmr f2, f1
-    bl Item_OrbitAnchorKart
-    cmpwi r3, 0x0
-    beq GabyouTripleChild_Update_L_800F47A4
-    li r3, 0x0
-    li r0, 0x3
-    stb r3, 0x28(r30)
-    stb r0, 0xc8(r30)
-    stb r3, 0xc9(r30)
-    b GabyouTripleChild_Update_L_800F47A4
-    mr r4, r31
-    bl GabyouTripleChild_TickHitResolve
-    b GabyouTripleChild_Update_L_800F47A4
-    mr r4, r31
-    bl GabyouTripleChild_TickHitResolve
-    b GabyouTripleChild_Update_L_800F47A4
-    GabyouTripleChild_Update_L_800F4774:
-    lwz r3, 0x4c(r31)
-    bl DrawEffect_Free
-    li r0, 0x0
-    stw r0, 0x4c(r31)
-    lwz r0, 0x10(r30)
-    cmpwi r0, 0x0
-    bne GabyouTripleChild_Update_L_800F4798
-    mr r3, r30
-    bl ItemObject_DecrementCategoryBudget
-    GabyouTripleChild_Update_L_800F4798:
-    mr r3, r30
-    bl SpriteSlot_Container_Free
-    b GabyouTripleChild_Update_L_800F48FC
-    GabyouTripleChild_Update_L_800F47A4:
-    addi r3, r30, 0xa0
-    addi r5, r30, 0xb8
-    mr r4, r3
-    bl Vec3_Add_DestFirst
-    lbz r0, 0x0(r31)
-    cmplwi r0, 0x0
-    beq GabyouTripleChild_Update_L_800F483C
-    addi r3, r1, 0x6c
-    bl Matrix4_Identity
-    addi r3, r1, 0x6c
-    lfs f1, 0xc4(r30)
-    mr r4, r3
-    bl Mtx44_Scale_Uniform
-    addi r3, r1, 0x6c
-    lfs f1, 0xb4(r30)
-    mr r4, r3
-    bl Matrix4_PreMultiplyRotZ
-    addi r3, r1, 0x6c
-    lfs f1, 0xac(r30)
-    mr r4, r3
-    bl Matrix4_PreMultiplyRotX
-    addi r3, r1, 0x6c
-    lfs f1, 0xb0(r30)
-    mr r4, r3
-    bl Matrix4_PreMultiplyRotY
-    lwz r6, 0xa0(r30)
-    addi r3, r1, 0x6c
-    lwz r0, 0xa4(r30)
-    mr r4, r3
-    addi r5, r1, 0x14
-    stw r6, 0x14(r1)
-    stw r0, 0x18(r1)
-    lwz r0, 0xa8(r30)
-    stw r0, 0x1c(r1)
-    bl Mtx44_Translate
-    addi r3, r30, 0x48
-    addi r4, r1, 0x6c
-    bl DbgScene_CopyMatrix3x4Transpose
-    GabyouTripleChild_Update_L_800F483C:
-    lwz r0, 0x4c(r31)
-    cmplwi r0, 0x0
-    beq GabyouTripleChild_Update_L_800F48AC
-    lis r4, lbl_8032FA28@ha
-    addi r3, r1, 0x2c
-    addi r7, r4, lbl_8032FA28@l
-    addi r4, r30, 0x48
-    lwz r6, 0x0(r7)
-    lwz r5, 0x4(r7)
-    lwz r0, 0x8(r7)
-    stw r6, 0x20(r1)
-    stw r5, 0x24(r1)
-    stw r0, 0x28(r1)
-    bl Mtx_TransposeToMtx44
-    lwz r6, 0x20(r1)
-    addi r4, r1, 0x2c
-    lwz r3, 0x24(r1)
-    addi r5, r1, 0x8
-    lwz r0, 0x28(r1)
-    stw r6, 0x8(r1)
-    stw r3, 0xc(r1)
-    stw r0, 0x10(r1)
-    lwz r3, 0x4c(r31)
-    addi r3, r3, 0x8c
-    bl Mtx44_TransformVec3
-    lfs f0, 0xc4(r30)
-    lwz r3, 0x4c(r31)
-    stfs f0, 0xb0(r3)
-    GabyouTripleChild_Update_L_800F48AC:
-    lwz r3, 0x4(r31)
-    cmplwi r3, 0x0
-    beq GabyouTripleChild_Update_L_800F48C0
-    subi r0, r3, 0x1
-    stw r0, 0x4(r31)
-    GabyouTripleChild_Update_L_800F48C0:
-    lwz r3, 0x8(r31)
-    cmplwi r3, 0x0
-    beq GabyouTripleChild_Update_L_800F48D4
-    subi r0, r3, 0x1
-    stw r0, 0x8(r31)
-    GabyouTripleChild_Update_L_800F48D4:
-    lwz r3, 0xc(r31)
-    cmplwi r3, 0x0
-    beq GabyouTripleChild_Update_L_800F48E8
-    subi r0, r3, 0x1
-    stw r0, 0xc(r31)
-    GabyouTripleChild_Update_L_800F48E8:
-    lwz r3, 0x10(r31)
-    cmplwi r3, 0x0
-    beq GabyouTripleChild_Update_L_800F48FC
-    subi r0, r3, 0x1
-    stw r0, 0x10(r31)
-    GabyouTripleChild_Update_L_800F48FC:
-    lwz r0, 0xc4(r1)
-    lwz r31, 0xbc(r1)
-    lwz r30, 0xb8(r1)
-    mtlr r0
-    addi r1, r1, 0xc0
-    blr
+    sub = &self->sub;
+    switch (self->state_c8) {
+    case 0:
+        sub->flag_90 = 1;
+        self->field_08 = 0x46;
+        SpriteSlot_InitNonLoop(self->slot_14, 0x49);
+        SpriteSlot_SetMatrixSourceEnabled_WithReseed(self->slot_14, 1);
+        sub->flag_00 = 1;
+        self->category_8c = 2;
+        self->f_8d = 0;
+        self->state_c8 = 1;
+        self->state_c9 = 0;
+        /* fall through */
+    case 1:
+        GabyouTripleChild_TickActive(self, sub);
+        break;
+    case 2:
+        switch (self->state_cb) {
+        case 0:
+            GabyouTripleChild_TickHitResolve(self, sub);
+            break;
+        case 3:
+            switch (self->state_c9) {
+            case 0:
+                GetSpawnPosition(&self->vel_b8, lbl_806D60D0, lbl_806D60D0, lbl_806D60D0);
+                self->flag_3c = 0;
+                sub->f_14 = lbl_806D60D0;
+                sub->f_18 = self->scale_c4;
+                self->state_c9 = self->state_c9 + 1;
+                break;
+            case 1:
+                break;
+            }
+            if (Item_AdvanceTetherToJoint13(self, &sub->f_14, sub->f_18, lbl_806D60DC,
+                                            lbl_806D60DC) != 0) {
+                self->visible_28 = 0;
+                self->state_c8 = 3;
+                self->state_c9 = 0;
+            }
+            break;
+        case 4:
+            GabyouTripleChild_TickHitResolve(self, sub);
+            break;
+        case 6:
+            switch (self->state_c9) {
+            case 0:
+                GetSpawnPosition(&self->vel_b8, lbl_806D60D0, lbl_806D60D0, lbl_806D60D0);
+                self->flag_3c = 0;
+                Vec3_Subtract_DestFirst(&sub->relPos_34, &self->pos,
+                                        (const Vec3 *)((char *)self->owner_9c + 0xA0));
+                sub->timer_04 = 0x1E;
+                self->state_c9 = self->state_c9 + 1;
+                break;
+            case 1:
+                break;
+            }
+            Item_DecayVelocityScalar(self, lbl_806D60D4);
+            if (Item_OrbitAnchorKart(self, &sub->relPos_34, lbl_806D60D8, lbl_806D60D8,
+                                     sub->timer_04) != 0) {
+                self->visible_28 = 0;
+                self->state_c8 = 3;
+                self->state_c9 = 0;
+            }
+            break;
+        case 9:
+            GabyouTripleChild_TickHitResolve(self, sub);
+            break;
+        case 5:
+            GabyouTripleChild_TickHitResolve(self, sub);
+            break;
+        }
+        break;
+    case 3:
+        DrawEffect_Free(sub->effect_4c);
+        sub->effect_4c = 0;
+        if (self->field_10 == 0) {
+            ItemObject_DecrementCategoryBudget(self);
+        }
+        SpriteSlot_Container_Free(self);
+        return;
+    }
+    Vec3_Add_DestFirst(&self->pos, &self->pos, &self->vel_b8);
+    if (sub->flag_00 != 0) {
+        Matrix4_Identity(m44);
+        Mtx44_Scale_Uniform(m44, m44, self->scale_c4);
+        Matrix4_PreMultiplyRotZ(m44, m44, self->rotZ_b4);
+        Matrix4_PreMultiplyRotX(m44, m44, self->rotX_ac);
+        Matrix4_PreMultiplyRotY(m44, m44, self->rotY_b0);
+        pos = self->pos;
+        Mtx44_Translate(m44, m44, &pos);
+        DbgScene_CopyMatrix3x4Transpose(self->mtx_48, m44);
+    }
+    if (sub->effect_4c != 0) {
+        trail = lbl_8032FA28;
+        Mtx_TransposeToMtx44(m44b, self->mtx_48);
+        Mtx44_TransformVec3(&((DrawEffectPartial *)sub->effect_4c)->trailEnd_8c, m44b, trail);
+        ((DrawEffectPartial *)sub->effect_4c)->scale_b0 = self->scale_c4;
+    }
+    if (sub->timer_04 != 0) {
+        sub->timer_04 = sub->timer_04 - 1;
+    }
+    if (sub->timer_08 != 0) {
+        sub->timer_08 = sub->timer_08 - 1;
+    }
+    if (sub->timer_0c != 0) {
+        sub->timer_0c = sub->timer_0c - 1;
+    }
+    if (sub->timer_10 != 0) {
+        sub->timer_10 = sub->timer_10 - 1;
+    }
 }
-
+#pragma exceptions reset

@@ -177,5 +177,17 @@
     "PowItem_TickHitResolve",
     "PowItem_TickActive",
     "PowItem_Update"
-  ]
+  ],
+  "src/game/GabyouTripleChild.c": {
+    "extab": [
+      "GabyouTripleChild_TickHitResolve",
+      "GabyouTripleChild_TickActive",
+      "GabyouTripleChild_Update"
+    ],
+    "extabindex": [
+      "GabyouTripleChild_TickHitResolve",
+      "GabyouTripleChild_TickActive",
+      "GabyouTripleChild_Update"
+    ]
+  }
 }
