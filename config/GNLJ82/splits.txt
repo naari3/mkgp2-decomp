@@ -737,6 +737,11 @@ game/CardRW_Reprint_Page.c:
 	extabindex  start:0x8002108C end:0x80021098
 	.text       start:0x8006C0F4 end:0x8006C810
 
+game/CardRW_DataRepair_Page.c:
+	extab       start:0x80008178 end:0x80008180
+	extabindex  start:0x80021098 end:0x800210A4
+	.text       start:0x8006C810 end:0x8006D308
+
 game/CardRW_PrintTest_Page.c:
 	extab       start:0x80008190 end:0x80008198
 	extabindex  start:0x800210BC end:0x800210C8

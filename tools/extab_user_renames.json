@@ -1212,6 +1212,10 @@
     "extab_CardRW_Renew_Page": "@etb_80008160",
     "extabindex_CardRW_Renew_Page": "@eti_80021074"
   },
+  "src/game/CardRW_DataRepair_Page.c": {
+    "extab_CardRW_DataRepair_Page": "@etb_80008178",
+    "extabindex_CardRW_DataRepair_Page": "@eti_80021098"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
