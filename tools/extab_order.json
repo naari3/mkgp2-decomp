@@ -172,5 +172,10 @@
       "clFlowItem_Init",
       "dtor_80082960"
     ]
-  }
+  },
+  "src/game/PowItem.c": [
+    "PowItem_TickHitResolve",
+    "PowItem_TickActive",
+    "PowItem_Update"
+  ]
 }

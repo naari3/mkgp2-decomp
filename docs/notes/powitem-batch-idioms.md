@@ -1,0 +1,7 @@
+# PowItem batch idioms (2026-08-09, batch_text_800f5b7c_powitem)
+
+1. Single-case guard `switch (x) { case 0: ...; break; case 1: break; }` lowers to the 5-instr CW tree `cmpwi 1; beq out; bge out; cmpwi 0; bge body; b out` — writing the equivalent if-chain (`x != 1 && x < 1 && x >= 0`) gets the first two compares right but the third comes out as `cmpwi -1; ble` or `extsb.; blt`. Use the switch form for these guards (seen in PowItem_TickHitResolve, PowItem_Update case 3/6, and Ghidra renders the same shape as `!= 1 && < 1 && > -1`).
+2. Switch case bodies emit in SOURCE order; the jumptable is the only ground truth for order when several case bodies are instruction-identical (PowItem_Update inner switch: source order 0,3,4,6,9,5 — case 9 block precedes case 5). Instruction-level diff cannot catch a swap; check the .data jumptable bytes against the orig dol when sha1 fails with matching text.
+3. `dtk dol diff` ERROR `Expected to find symbol jumptable_XXXX ... found: @NNN` is non-blocking for `build/GNLJ82/ok` — CW anonymous jumptable locals are tolerated by the sha1 check (same as @928 in auto_ONKARTHIT_block.o). Byte identity of the table is what matters.
+4. CW 1.3.2 stack slot assignment observed: scalar locals first from 0x8, then aggregate (Vec3) locals in REVERSE declaration order.
+5. `(int)*(unsigned char *)p == K` gives `lbz` + `cmpwi` (no extsb); plain `*(unsigned char *)p == K` gives `cmplwi`. Signedness of timer/int reads (`*(int *)` vs `*(unsigned int *)`) selects cmpwi/cmplwi — check target opcode 0x2C vs 0x28.

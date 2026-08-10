@@ -419,7 +419,7 @@ config.libs = [
             Object(Matching, "game/CardSave_Tick.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardSave_Tick_PollCleaningResult.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardSave_Tick_CaptureAndStart.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/PowItem.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/PowItem.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ShellItem.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/TornadoItem.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/StarItem.c", extab_padding=b""),

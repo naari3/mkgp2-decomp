@@ -1,268 +1,54 @@
 /*
- * PowItem reversed-extab unit.
+ * PowItem @ 0x800F5B7C..0x800F6F54 (unit-claim #63).
  *
- * Three singleton extab groups are kept together in address order. The
- * manual extab/extabindex declarations are postprocessed by
- * tools/postprocess_extab_user.py; the symbol mappings live in
- * tools/extab_user_renames.json.
- */
-/* === extracted from auto_PowItem_TickHitResol_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void BuildOrientationFromYaw();
-extern void FinalLapCoinJump_CheckActiveForObject();
-extern void GetSpawnPosition();
-extern void ItemObject_GetGroundTypeAt();
-extern void Item_DecayVelocityScalar();
-extern void KartDriver_GetKartRootMtx();
-extern void Mtx44_GetTranslation_RowMajor();
-extern void Vec3_Add_DestFirst();
-extern void Vec3_Copy();
-extern void Vec3_Subtract_DestFirst();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D6178;
-extern unsigned int lbl_806D6198;
-extern unsigned int lbl_806D61A0;
-extern unsigned int lbl_806D61A4;
-extern unsigned int lbl_806D61A8;
-
-/* --- function index (1 fns, .text 0x800F5B7C..0x800F5E20) ---
- * [  0] 0x800F5B7C size:0x2A4   global PowItem_TickHitResolve
+ * POW-family item unit: PowItem_TickHitResolve / PowItem_TickActive /
+ * PowItem_Update. ItemObject_Partial layout is accessed by raw offsets
+ * (no committed struct header yet); see Ghidra bmp_output plate comments.
  */
 
-/* --- forward decls --- */
-asm void PowItem_TickHitResolve(void);
+typedef struct Vec3 {
+    float x;
+    float y;
+    float z;
+} Vec3;
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_PowItem_TickHitResolve[8] = {
-    0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+/* --- extern decls: callees referenced from C bodies --- */
+extern signed char ItemObject_GetGroundTypeAt(float *pos, float *outGroundY, int flag);
+extern float *KartDriver_GetKartRootMtx(void *kart);
+extern void Mtx44_GetTranslation_RowMajor(float *out, float *mtx);
+extern void Vec3_Subtract_DestFirst(float *dst, float *a, float *b);
+extern void Vec3_Add_DestFirst(float *dst, float *a, float *b);
+extern void Vec3_Copy(float *dst, float *src);
+extern void GetSpawnPosition(float x, float y, float z, float *out);
+extern float BuildOrientationFromYaw(float yaw);
+extern void Item_DecayVelocityScalar(void *item, float scalar);
+extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
+extern void SpriteSlot_InitNonLoop(void *slot, int animId);
+extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int enabled);
+extern int Item_AdvanceTetherToJoint13(float anchor, float k2, float k3, void *self, float *state);
+extern int Item_OrbitAnchorKart(float k1, float k2, void *self, float *offset, int timer);
+extern void ItemObject_DecrementCategoryBudget(void *self);
+extern void SpriteSlot_Container_Free(void *self);
+extern void Matrix4_Identity(float *mtx);
+extern void Mtx44_Scale_Uniform(float scale, float *mtx, float *dst);
+extern void Matrix4_PreMultiplyRotZ(float angle, float *mtx, float *dst);
+extern void Matrix4_PreMultiplyRotX(float angle, float *mtx, float *dst);
+extern void Matrix4_PreMultiplyRotY(float angle, float *mtx, float *dst);
+extern void Mtx44_Translate(float *mtx, float *dst, float *pos);
+extern void DbgScene_CopyMatrix3x4Transpose(float *dst, float *src);
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_PowItem_TickHitResolve = {
-    (void *)&PowItem_TickHitResolve, 0x000002A4, (void *)extab_PowItem_TickHitResolve
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void PowItem_TickHitResolve(void) { /* 0x800F5B7C size:0x2A4 */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    stw r0, 0x54(r1)
-    stw r31, 0x4c(r1)
-    mr r31, r4
-    stw r30, 0x48(r1)
-    mr r30, r3
-    lbz r0, 0xc9(r3)
-    extsb r0, r0
-    cmpwi r0, 0x1
-    beq PowItem_TickHitResolve_L_800F5C58
-    bge PowItem_TickHitResolve_L_800F5C58
-    cmpwi r0, 0x0
-    bge PowItem_TickHitResolve_L_800F5BB8
-    b PowItem_TickHitResolve_L_800F5C58
-    PowItem_TickHitResolve_L_800F5BB8:
-    lwz r6, 0xa0(r30)
-    addi r3, r1, 0x18
-    lwz r0, 0xa4(r30)
-    addi r4, r31, 0x14
-    li r5, 0x0
-    stw r6, 0x18(r1)
-    stw r0, 0x1c(r1)
-    lwz r0, 0xa8(r30)
-    stw r0, 0x20(r1)
-    bl ItemObject_GetGroundTypeAt
-    lbz r0, 0xcb(r30)
-    cmpwi r0, 0x5
-    beq PowItem_TickHitResolve_L_800F5BF8
-    li r0, 0xa
-    stw r0, 0x4(r31)
-    b PowItem_TickHitResolve_L_800F5C00
-    PowItem_TickHitResolve_L_800F5BF8:
-    li r0, 0x0
-    stw r0, 0x4(r31)
-    PowItem_TickHitResolve_L_800F5C00:
-    lwz r3, 0x9c(r31)
-    cmplwi r3, 0x0
-    beq PowItem_TickHitResolve_L_800F5C4C
-    bl KartDriver_GetKartRootMtx
-    mr r4, r3
-    addi r3, r1, 0x30
-    bl Mtx44_GetTranslation_RowMajor
-    addi r3, r31, 0x34
-    addi r4, r30, 0xa0
-    addi r5, r1, 0x30
-    bl Vec3_Subtract_DestFirst
-    addi r3, r31, 0x40
-    addi r4, r30, 0xb8
-    bl Vec3_Copy
-    lfs f1, lbl_806D6178(r2)
-    addi r3, r30, 0xb8
-    fmr f2, f1
-    fmr f3, f1
-    bl GetSpawnPosition
-    PowItem_TickHitResolve_L_800F5C4C:
-    lbz r3, 0xc9(r30)
-    addi r0, r3, 0x1
-    stb r0, 0xc9(r30)
-    PowItem_TickHitResolve_L_800F5C58:
-    lwz r0, 0x4(r31)
-    cmplwi r0, 0x0
-    bne PowItem_TickHitResolve_L_800F5C9C
-    lfs f2, 0x2c(r30)
-    lfs f1, lbl_806D61A4(r2)
-    lfs f0, lbl_806D6178(r2)
-    fsubs f1, f2, f1
-    stfs f1, 0x2c(r30)
-    lfs f1, 0x2c(r30)
-    fcmpo cr0, f1, f0
-    bge PowItem_TickHitResolve_L_800F5C9C
-    li r3, 0x0
-    li r0, 0x3
-    stb r3, 0x28(r30)
-    stb r0, 0xc8(r30)
-    stb r3, 0xc9(r30)
-    b PowItem_TickHitResolve_L_800F5E08
-    PowItem_TickHitResolve_L_800F5C9C:
-    lfs f1, lbl_806D6198(r2)
-    mr r3, r30
-    bl Item_DecayVelocityScalar
-    lbz r0, 0xcb(r30)
-    extsb r0, r0
-    cmpwi r0, 0x5
-    beq PowItem_TickHitResolve_L_800F5D24
-    bge PowItem_TickHitResolve_L_800F5CD4
-    cmpwi r0, 0x0
-    beq PowItem_TickHitResolve_L_800F5D10
-    blt PowItem_TickHitResolve_L_800F5D24
-    cmpwi r0, 0x4
-    bge PowItem_TickHitResolve_L_800F5CE0
-    b PowItem_TickHitResolve_L_800F5D24
-    PowItem_TickHitResolve_L_800F5CD4:
-    cmpwi r0, 0x9
-    beq PowItem_TickHitResolve_L_800F5CF8
-    b PowItem_TickHitResolve_L_800F5D24
-    PowItem_TickHitResolve_L_800F5CE0:
-    lfs f1, 0xac(r30)
-    lfs f0, lbl_806D61A0(r2)
-    fsubs f1, f1, f0
-    bl BuildOrientationFromYaw
-    stfs f1, 0xac(r30)
-    b PowItem_TickHitResolve_L_800F5D24
-    PowItem_TickHitResolve_L_800F5CF8:
-    lfs f1, lbl_806D61A0(r2)
-    lfs f0, 0xac(r30)
-    fadds f1, f1, f0
-    bl BuildOrientationFromYaw
-    stfs f1, 0xac(r30)
-    b PowItem_TickHitResolve_L_800F5D24
-    PowItem_TickHitResolve_L_800F5D10:
-    lfs f1, 0xac(r30)
-    lfs f0, lbl_806D61A0(r2)
-    fsubs f1, f1, f0
-    bl BuildOrientationFromYaw
-    stfs f1, 0xac(r30)
-    PowItem_TickHitResolve_L_800F5D24:
-    lwz r0, 0x9c(r31)
-    cmplwi r0, 0x0
-    bne PowItem_TickHitResolve_L_800F5DA0
-    lbz r0, 0xcb(r30)
-    cmpwi r0, 0x5
-    beq PowItem_TickHitResolve_L_800F5D4C
-    lfs f1, 0xbc(r30)
-    lfs f0, lbl_806D61A8(r2)
-    fadds f0, f1, f0
-    stfs f0, 0xbc(r30)
-    PowItem_TickHitResolve_L_800F5D4C:
-    lwz r6, 0xa0(r30)
-    addi r3, r1, 0xc
-    lwz r0, 0xa4(r30)
-    addi r4, r1, 0x8
-    li r5, 0x0
-    stw r6, 0xc(r1)
-    stw r0, 0x10(r1)
-    lwz r0, 0xa8(r30)
-    stw r0, 0x14(r1)
-    bl ItemObject_GetGroundTypeAt
-    extsb. r0, r3
-    beq PowItem_TickHitResolve_L_800F5DE4
-    lfs f1, 0x8(r1)
-    lfs f0, 0x14(r31)
-    lfs f2, 0xa4(r30)
-    fsubs f0, f1, f0
-    fadds f0, f2, f0
-    stfs f0, 0xa4(r30)
-    lfs f0, 0x8(r1)
-    stfs f0, 0x14(r31)
-    b PowItem_TickHitResolve_L_800F5DE4
-    PowItem_TickHitResolve_L_800F5DA0:
-    lfs f1, 0x44(r31)
-    addi r3, r31, 0x34
-    lfs f0, lbl_806D61A8(r2)
-    mr r4, r3
-    addi r5, r31, 0x40
-    fadds f0, f1, f0
-    stfs f0, 0x44(r31)
-    bl Vec3_Add_DestFirst
-    lwz r3, 0x9c(r31)
-    bl KartDriver_GetKartRootMtx
-    mr r4, r3
-    addi r3, r1, 0x24
-    bl Mtx44_GetTranslation_RowMajor
-    addi r3, r30, 0xa0
-    addi r4, r1, 0x24
-    addi r5, r31, 0x34
-    bl Vec3_Add_DestFirst
-    PowItem_TickHitResolve_L_800F5DE4:
-    lwz r3, 0x9c(r31)
-    bl FinalLapCoinJump_CheckActiveForObject
-    clrlwi. r0, r3, 24
-    beq PowItem_TickHitResolve_L_800F5E00
-    li r0, 0x0
-    stb r0, 0x28(r30)
-    b PowItem_TickHitResolve_L_800F5E08
-    PowItem_TickHitResolve_L_800F5E00:
-    li r0, 0x1
-    stb r0, 0x28(r30)
-    PowItem_TickHitResolve_L_800F5E08:
-    lwz r0, 0x54(r1)
-    lwz r31, 0x4c(r1)
-    lwz r30, 0x48(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
-}
-
-/* === extracted from auto_PowItem_TickActive_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
+/* --- extern decls: callees referenced only from the asm_fn body --- */
 extern void AngleStepForward_OrSnap();
-extern void BuildOrientationFromYaw();
 extern void DrawEffect_Free();
 extern void DrawEffect_ItemHitOriented_Spawn();
 extern void DrawEffect_SpawnDirect();
 extern void FAbs_FloatAsDouble();
-extern void FinalLapCoinJump_CheckActiveForObject();
 extern void GabyouItem_BuildLocalTransformFromHandJoint();
-extern void GetSpawnPosition();
 extern void ItemAlias_HitRemapLookup();
 extern void ItemCollision_Check();
 extern void ItemHitRegistry_AddEntry();
 extern void ItemHitRegistry_RemoveEntry();
 extern void ItemHit_Dispatch();
-extern void ItemObject_DecrementCategoryBudget();
-extern void ItemObject_GetGroundTypeAt();
 extern void ItemTracker_AcquireLock();
 extern void ItemTracker_GetTargetKart();
 extern void ItemTracker_ReleaseLock();
@@ -270,17 +56,13 @@ extern void ItemTracker_SetTrackPhase();
 extern void Item_BounceOffWall();
 extern void Item_CheckWallCollision();
 extern void Item_ComputeYawRelativeApproach();
-extern void Item_DecayVelocityScalar();
 extern void Item_HomingScanAndSteer();
 extern void Item_InitLaunchFromKart();
 extern void Item_ProbeForwardGroundPitch();
 extern void Rand_RangeFloat();
 extern void SoundMgr_PlaySE_Positional();
-extern void SpriteSlot_Container_Free();
 extern void Vec2_RotateX();
 extern void Vec2_RotateY();
-extern void Vec3_Add_DestFirst();
-extern void Vec3_Copy();
 extern void Vec3_Magnitude_Wrapper();
 extern void Vec3_Scale();
 extern void Vec3_ScaleXZ();
@@ -290,39 +72,111 @@ extern void fn_801B158C();
 extern void fn_801B1660();
 extern void fn_801B1D5C();
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D6178;
-extern unsigned int lbl_806D617C;
-extern unsigned int lbl_806D6180;
-extern unsigned int lbl_806D6184;
-extern unsigned int lbl_806D6188;
-extern unsigned int lbl_806D618C;
-extern unsigned int lbl_806D6190;
-extern unsigned int lbl_806D6194;
-extern unsigned int lbl_806D6198;
-extern unsigned int lbl_806D61A8;
-extern unsigned int lbl_806D61AC;
-extern unsigned int lbl_806D61B0;
-extern unsigned int lbl_806D61B4;
-extern unsigned int lbl_806D61B8;
-extern unsigned int lbl_806D61BC;
-extern unsigned int lbl_806D61C0;
-extern unsigned int lbl_806D61C4;
-extern unsigned int lbl_806D61C8;
-extern unsigned int lbl_806D61CC;
+/* --- extern decls: sdata2 float tuning bank --- */
+extern const float lbl_806D6178;
+extern const float lbl_806D617C;
+extern const float lbl_806D6180;
+extern const float lbl_806D6184;
+extern const float lbl_806D6188;
+extern const float lbl_806D618C;
+extern const float lbl_806D6190;
+extern const float lbl_806D6194;
+extern const float lbl_806D6198;
+extern const float lbl_806D619C;
+extern const float lbl_806D61A0;
+extern const float lbl_806D61A4;
+extern const float lbl_806D61A8;
+extern const float lbl_806D61AC;
+extern const float lbl_806D61B0;
+extern const float lbl_806D61B4;
+extern const float lbl_806D61B8;
+extern const float lbl_806D61BC;
+extern const float lbl_806D61C0;
+extern const float lbl_806D61C4;
+extern const float lbl_806D61C8;
+extern const float lbl_806D61CC;
 
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
+/* --- extern decls: large-data refs (@ha/@l pairs, asm_fn body only) --- */
 extern unsigned int EffectVfx4E_TextSplash_Tick[];
 extern unsigned int Effect_HitFlash_Update[];
 
-/* --- function index (1 fns, .text 0x800F5E20..0x800F6C18) ---
- * [  0] 0x800F5E20 size:0xDF8   global PowItem_TickActive
- */
+void PowItem_TickHitResolve(char *self, char *sub)
+{
+    float groundY;
+    Vec3 kartTrans;
+    Vec3 anchorTrans;
+    Vec3 posCopy;
+    Vec3 probePos;
+
+    switch (*(signed char *)(self + 0xc9)) {
+    case 0:
+        posCopy = *(Vec3 *)(self + 0xa0);
+        ItemObject_GetGroundTypeAt((float *)&posCopy, (float *)(sub + 0x14), 0);
+        if ((int)*(unsigned char *)(self + 0xcb) != 5) {
+            *(int *)(sub + 4) = 10;
+        } else {
+            *(int *)(sub + 4) = 0;
+        }
+        if (*(void **)(sub + 0x9c) != 0) {
+            Mtx44_GetTranslation_RowMajor((float *)&kartTrans,
+                                          KartDriver_GetKartRootMtx(*(void **)(sub + 0x9c)));
+            Vec3_Subtract_DestFirst((float *)(sub + 0x34), (float *)(self + 0xa0), (float *)&kartTrans);
+            Vec3_Copy((float *)(sub + 0x40), (float *)(self + 0xb8));
+            GetSpawnPosition(lbl_806D6178, lbl_806D6178, lbl_806D6178, (float *)(self + 0xb8));
+        }
+        *(unsigned char *)(self + 0xc9) = *(unsigned char *)(self + 0xc9) + 1;
+        break;
+    case 1:
+        break;
+    }
+    if (*(unsigned int *)(sub + 4) == 0) {
+        *(float *)(self + 0x2c) = *(float *)(self + 0x2c) - lbl_806D61A4;
+        if (*(float *)(self + 0x2c) < lbl_806D6178) {
+            self[0x28] = 0;
+            self[0xc8] = 3;
+            self[0xc9] = 0;
+            return;
+        }
+    }
+    Item_DecayVelocityScalar(self, lbl_806D6198);
+    switch (*(signed char *)(self + 0xcb)) {
+    case 5:
+        break;
+    case 4:
+        *(float *)(self + 0xac) = BuildOrientationFromYaw(*(float *)(self + 0xac) - lbl_806D61A0);
+        break;
+    case 9:
+        *(float *)(self + 0xac) = BuildOrientationFromYaw(lbl_806D61A0 + *(float *)(self + 0xac));
+        break;
+    case 0:
+        *(float *)(self + 0xac) = BuildOrientationFromYaw(*(float *)(self + 0xac) - lbl_806D61A0);
+        break;
+    }
+    if (*(void **)(sub + 0x9c) == 0) {
+        if ((int)*(unsigned char *)(self + 0xcb) != 5) {
+            *(float *)(self + 0xbc) = *(float *)(self + 0xbc) + lbl_806D61A8;
+        }
+        probePos = *(Vec3 *)(self + 0xa0);
+        if (ItemObject_GetGroundTypeAt((float *)&probePos, &groundY, 0) != 0) {
+            *(float *)(self + 0xa4) = *(float *)(self + 0xa4) + (groundY - *(float *)(sub + 0x14));
+            *(float *)(sub + 0x14) = groundY;
+        }
+    } else {
+        *(float *)(sub + 0x44) = *(float *)(sub + 0x44) + lbl_806D61A8;
+        Vec3_Add_DestFirst((float *)(sub + 0x34), (float *)(sub + 0x34), (float *)(sub + 0x40));
+        Mtx44_GetTranslation_RowMajor((float *)&anchorTrans,
+                                      KartDriver_GetKartRootMtx(*(void **)(sub + 0x9c)));
+        Vec3_Add_DestFirst((float *)(self + 0xa0), (float *)&anchorTrans, (float *)(sub + 0x34));
+    }
+    if (FinalLapCoinJump_CheckActiveForObject(*(void **)(sub + 0x9c)) != 0) {
+        self[0x28] = 0;
+    } else {
+        self[0x28] = 1;
+    }
+}
 
 /* --- forward decls --- */
-asm void PowItem_TickActive(void);
+asm void PowItem_TickActive(char *self, char *sub);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -337,7 +191,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void PowItem_TickActive(void) { /* 0x800F5E20 size:0xDF8 */
+asm void PowItem_TickActive(char *self, char *sub) { /* 0x800F5E20 size:0xDF8 */
     nofralloc
     stwu r1, -0x110(r1)
     mflr r0
@@ -1300,286 +1154,111 @@ asm void PowItem_TickActive(void) { /* 0x800F5E20 size:0xDF8 */
 }
 
 
-/* === extracted from auto_PowItem_Update_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+void PowItem_Update(char *self)
+{
+    Vec3 posCopy;
+    float mtx[16];
+    char *sub = self + 0xec;
+    int code;
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void DbgScene_CopyMatrix3x4Transpose();
-extern void GetSpawnPosition();
-extern void ItemObject_DecrementCategoryBudget();
-extern void Item_AdvanceTetherToJoint13();
-extern void Item_DecayVelocityScalar();
-extern void Item_OrbitAnchorKart();
-extern void Matrix4_Identity();
-extern void Matrix4_PreMultiplyRotX();
-extern void Matrix4_PreMultiplyRotY();
-extern void Matrix4_PreMultiplyRotZ();
-extern void Mtx44_Scale_Uniform();
-extern void Mtx44_Translate();
-extern void PowItem_TickActive();
-extern void PowItem_TickHitResolve();
-extern void SpriteSlot_Container_Free();
-extern void SpriteSlot_InitNonLoop();
-extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed();
-extern void Vec3_Add_DestFirst();
-extern void Vec3_Subtract_DestFirst();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D6178;
-extern unsigned int lbl_806D6198;
-extern unsigned int lbl_806D619C;
-extern unsigned int lbl_806D61A0;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int jumptable_80421788[];
-
-/* --- function index (1 fns, .text 0x800F6C18..0x800F6F54) ---
- * [  0] 0x800F6C18 size:0x33C   global PowItem_Update
- */
-
-/* --- forward decls --- */
-asm void PowItem_Update(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_PowItem_Update[8] = {
-    0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_PowItem_Update = {
-    (void *)&PowItem_Update, 0x0000033C, (void *)extab_PowItem_Update
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void PowItem_Update(void) { /* 0x800F6C18 size:0x33C */
-    nofralloc
-    stwu r1, -0x60(r1)
-    mflr r0
-    stw r0, 0x64(r1)
-    stw r31, 0x5c(r1)
-    stw r30, 0x58(r1)
-    mr r30, r3
-    addi r31, r30, 0xec
-    lbz r0, 0xc8(r3)
-    extsb r0, r0
-    cmpwi r0, 0x2
-    beq PowItem_Update_L_800F6CB4
-    bge PowItem_Update_L_800F6C58
-    cmpwi r0, 0x0
-    beq PowItem_Update_L_800F6C64
-    bge PowItem_Update_L_800F6CA4
-    b PowItem_Update_L_800F6E54
-    PowItem_Update_L_800F6C58:
-    cmpwi r0, 0x4
-    bge PowItem_Update_L_800F6E54
-    b PowItem_Update_L_800F6E44
-    PowItem_Update_L_800F6C64:
-    li r0, 0x1
-    addi r3, r30, 0x14
-    stb r0, 0x90(r31)
-    li r4, 0x4c
-    bl SpriteSlot_InitNonLoop
-    addi r3, r30, 0x14
-    li r4, 0x1
-    bl SpriteSlot_SetMatrixSourceEnabled_WithReseed
-    li r4, 0x1
-    li r3, 0x3
-    stb r4, 0x0(r31)
-    li r0, 0x0
-    stb r3, 0x8c(r30)
-    stb r0, 0x8d(r30)
-    stb r4, 0xc8(r30)
-    stb r0, 0xc9(r30)
-    PowItem_Update_L_800F6CA4:
-    mr r3, r30
-    mr r4, r31
-    bl PowItem_TickActive
-    b PowItem_Update_L_800F6E54
-    PowItem_Update_L_800F6CB4:
-    lbz r0, 0xcb(r30)
-    extsb r0, r0
-    cmplwi r0, 0x9
-    bgt PowItem_Update_L_800F6E54
-    lis r4, jumptable_80421788@ha
-    slwi r0, r0, 2
-    addi r4, r4, jumptable_80421788@l
-    lwzx r0, r4, r0
-    mtctr r0
-    bctr
-    mr r4, r31
-    bl PowItem_TickHitResolve
-    b PowItem_Update_L_800F6E54
-    lbz r0, 0xc9(r30)
-    extsb r0, r0
-    cmpwi r0, 0x1
-    beq PowItem_Update_L_800F6D40
-    bge PowItem_Update_L_800F6D40
-    cmpwi r0, 0x0
-    bge PowItem_Update_L_800F6D08
-    b PowItem_Update_L_800F6D40
-    PowItem_Update_L_800F6D08:
-    lfs f1, lbl_806D6178(r2)
-    addi r3, r30, 0xb8
-    fmr f2, f1
-    fmr f3, f1
-    bl GetSpawnPosition
-    li r0, 0x0
-    lfs f0, lbl_806D6178(r2)
-    stb r0, 0x3c(r30)
-    stfs f0, 0x14(r31)
-    lfs f0, 0xc4(r30)
-    stfs f0, 0x18(r31)
-    lbz r3, 0xc9(r30)
-    addi r0, r3, 0x1
-    stb r0, 0xc9(r30)
-    PowItem_Update_L_800F6D40:
-    lfs f2, lbl_806D61A0(r2)
-    mr r3, r30
-    lfs f1, 0x18(r31)
-    addi r4, r31, 0x14
-    fmr f3, f2
-    bl Item_AdvanceTetherToJoint13
-    cmpwi r3, 0x0
-    beq PowItem_Update_L_800F6E54
-    li r3, 0x0
-    li r0, 0x3
-    stb r3, 0x28(r30)
-    stb r0, 0xc8(r30)
-    stb r3, 0xc9(r30)
-    b PowItem_Update_L_800F6E54
-    mr r4, r31
-    bl PowItem_TickHitResolve
-    b PowItem_Update_L_800F6E54
-    lbz r0, 0xc9(r30)
-    extsb r0, r0
-    cmpwi r0, 0x1
-    beq PowItem_Update_L_800F6DE8
-    bge PowItem_Update_L_800F6DE8
-    cmpwi r0, 0x0
-    bge PowItem_Update_L_800F6DA4
-    b PowItem_Update_L_800F6DE8
-    PowItem_Update_L_800F6DA4:
-    lfs f1, lbl_806D6178(r2)
-    addi r3, r30, 0xb8
-    fmr f2, f1
-    fmr f3, f1
-    bl GetSpawnPosition
-    li r0, 0x0
-    addi r3, r31, 0x34
-    stb r0, 0x3c(r30)
-    addi r4, r30, 0xa0
-    lwz r5, 0x9c(r30)
-    addi r5, r5, 0xa0
-    bl Vec3_Subtract_DestFirst
-    li r0, 0x1e
-    stw r0, 0x4(r31)
-    lbz r3, 0xc9(r30)
-    addi r0, r3, 0x1
-    stb r0, 0xc9(r30)
-    PowItem_Update_L_800F6DE8:
-    lfs f1, lbl_806D6198(r2)
-    mr r3, r30
-    bl Item_DecayVelocityScalar
-    lfs f1, lbl_806D619C(r2)
-    mr r3, r30
-    lwz r5, 0x4(r31)
-    addi r4, r31, 0x34
-    fmr f2, f1
-    bl Item_OrbitAnchorKart
-    cmpwi r3, 0x0
-    beq PowItem_Update_L_800F6E54
-    li r3, 0x0
-    li r0, 0x3
-    stb r3, 0x28(r30)
-    stb r0, 0xc8(r30)
-    stb r3, 0xc9(r30)
-    b PowItem_Update_L_800F6E54
-    mr r4, r31
-    bl PowItem_TickHitResolve
-    b PowItem_Update_L_800F6E54
-    mr r4, r31
-    bl PowItem_TickHitResolve
-    b PowItem_Update_L_800F6E54
-    PowItem_Update_L_800F6E44:
-    bl ItemObject_DecrementCategoryBudget
-    mr r3, r30
-    bl SpriteSlot_Container_Free
-    b PowItem_Update_L_800F6F3C
-    PowItem_Update_L_800F6E54:
-    addi r3, r30, 0xa0
-    addi r5, r30, 0xb8
-    mr r4, r3
-    bl Vec3_Add_DestFirst
-    lbz r0, 0x0(r31)
-    cmplwi r0, 0x0
-    beq PowItem_Update_L_800F6EEC
-    addi r3, r1, 0x14
-    bl Matrix4_Identity
-    addi r3, r1, 0x14
-    lfs f1, 0xc4(r30)
-    mr r4, r3
-    bl Mtx44_Scale_Uniform
-    addi r3, r1, 0x14
-    lfs f1, 0xb4(r30)
-    mr r4, r3
-    bl Matrix4_PreMultiplyRotZ
-    addi r3, r1, 0x14
-    lfs f1, 0xac(r30)
-    mr r4, r3
-    bl Matrix4_PreMultiplyRotX
-    addi r3, r1, 0x14
-    lfs f1, 0xb0(r30)
-    mr r4, r3
-    bl Matrix4_PreMultiplyRotY
-    lwz r6, 0xa0(r30)
-    addi r3, r1, 0x14
-    lwz r0, 0xa4(r30)
-    mr r4, r3
-    addi r5, r1, 0x8
-    stw r6, 0x8(r1)
-    stw r0, 0xc(r1)
-    lwz r0, 0xa8(r30)
-    stw r0, 0x10(r1)
-    bl Mtx44_Translate
-    addi r3, r30, 0x48
-    addi r4, r1, 0x14
-    bl DbgScene_CopyMatrix3x4Transpose
-    PowItem_Update_L_800F6EEC:
-    lwz r3, 0x4(r31)
-    cmplwi r3, 0x0
-    beq PowItem_Update_L_800F6F00
-    subi r0, r3, 0x1
-    stw r0, 0x4(r31)
-    PowItem_Update_L_800F6F00:
-    lwz r3, 0x8(r31)
-    cmplwi r3, 0x0
-    beq PowItem_Update_L_800F6F14
-    subi r0, r3, 0x1
-    stw r0, 0x8(r31)
-    PowItem_Update_L_800F6F14:
-    lwz r3, 0xc(r31)
-    cmplwi r3, 0x0
-    beq PowItem_Update_L_800F6F28
-    subi r0, r3, 0x1
-    stw r0, 0xc(r31)
-    PowItem_Update_L_800F6F28:
-    lwz r3, 0x10(r31)
-    cmplwi r3, 0x0
-    beq PowItem_Update_L_800F6F3C
-    subi r0, r3, 0x1
-    stw r0, 0x10(r31)
-    PowItem_Update_L_800F6F3C:
-    lwz r0, 0x64(r1)
-    lwz r31, 0x5c(r1)
-    lwz r30, 0x58(r1)
-    mtlr r0
-    addi r1, r1, 0x60
-    blr
+    switch (*(signed char *)(self + 0xc8)) {
+    case 0:
+        sub[0x90] = 1;
+        SpriteSlot_InitNonLoop(self + 0x14, 0x4c);
+        SpriteSlot_SetMatrixSourceEnabled_WithReseed(self + 0x14, 1);
+        sub[0] = 1;
+        self[0x8c] = 3;
+        self[0x8d] = 0;
+        self[0xc8] = 1;
+        self[0xc9] = 0;
+        /* fallthrough */
+    case 1:
+        PowItem_TickActive(self, sub);
+        break;
+    case 2:
+        switch (*(signed char *)(self + 0xcb)) {
+        case 0:
+            PowItem_TickHitResolve(self, sub);
+            break;
+        case 3:
+            switch (*(signed char *)(self + 0xc9)) {
+            case 0:
+                GetSpawnPosition(lbl_806D6178, lbl_806D6178, lbl_806D6178, (float *)(self + 0xb8));
+                self[0x3c] = 0;
+                *(float *)(sub + 0x14) = lbl_806D6178;
+                *(float *)(sub + 0x18) = *(float *)(self + 0xc4);
+                *(unsigned char *)(self + 0xc9) = *(unsigned char *)(self + 0xc9) + 1;
+                break;
+            case 1:
+                break;
+            }
+            code = Item_AdvanceTetherToJoint13(*(float *)(sub + 0x18), lbl_806D61A0, lbl_806D61A0,
+                                               self, (float *)(sub + 0x14));
+            if (code != 0) {
+                self[0x28] = 0;
+                self[0xc8] = 3;
+                self[0xc9] = 0;
+            }
+            break;
+        case 4:
+            PowItem_TickHitResolve(self, sub);
+            break;
+        case 6:
+            switch (*(signed char *)(self + 0xc9)) {
+            case 0:
+                GetSpawnPosition(lbl_806D6178, lbl_806D6178, lbl_806D6178, (float *)(self + 0xb8));
+                self[0x3c] = 0;
+                Vec3_Subtract_DestFirst((float *)(sub + 0x34), (float *)(self + 0xa0),
+                                        (float *)(*(int *)(self + 0x9c) + 0xa0));
+                *(int *)(sub + 4) = 0x1e;
+                *(unsigned char *)(self + 0xc9) = *(unsigned char *)(self + 0xc9) + 1;
+                break;
+            case 1:
+                break;
+            }
+            Item_DecayVelocityScalar(self, lbl_806D6198);
+            code = Item_OrbitAnchorKart(lbl_806D619C, lbl_806D619C, self, (float *)(sub + 0x34),
+                                        *(int *)(sub + 4));
+            if (code != 0) {
+                self[0x28] = 0;
+                self[0xc8] = 3;
+                self[0xc9] = 0;
+            }
+            break;
+        case 9:
+            PowItem_TickHitResolve(self, sub);
+            break;
+        case 5:
+            PowItem_TickHitResolve(self, sub);
+            break;
+        }
+        break;
+    case 3:
+        ItemObject_DecrementCategoryBudget(self);
+        SpriteSlot_Container_Free(self);
+        return;
+    }
+    Vec3_Add_DestFirst((float *)(self + 0xa0), (float *)(self + 0xa0), (float *)(self + 0xb8));
+    if (*(unsigned char *)sub != 0) {
+        Matrix4_Identity(mtx);
+        Mtx44_Scale_Uniform(*(float *)(self + 0xc4), mtx, mtx);
+        Matrix4_PreMultiplyRotZ(*(float *)(self + 0xb4), mtx, mtx);
+        Matrix4_PreMultiplyRotX(*(float *)(self + 0xac), mtx, mtx);
+        Matrix4_PreMultiplyRotY(*(float *)(self + 0xb0), mtx, mtx);
+        posCopy = *(Vec3 *)(self + 0xa0);
+        Mtx44_Translate(mtx, mtx, (float *)&posCopy);
+        DbgScene_CopyMatrix3x4Transpose((float *)(self + 0x48), mtx);
+    }
+    if (*(unsigned int *)(sub + 4) != 0) {
+        *(unsigned int *)(sub + 4) = *(unsigned int *)(sub + 4) - 1;
+    }
+    if (*(unsigned int *)(sub + 8) != 0) {
+        *(unsigned int *)(sub + 8) = *(unsigned int *)(sub + 8) - 1;
+    }
+    if (*(unsigned int *)(sub + 0xc) != 0) {
+        *(unsigned int *)(sub + 0xc) = *(unsigned int *)(sub + 0xc) - 1;
+    }
+    if (*(unsigned int *)(sub + 0x10) != 0) {
+        *(unsigned int *)(sub + 0x10) = *(unsigned int *)(sub + 0x10) - 1;
+    }
 }
