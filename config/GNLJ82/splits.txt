@@ -1280,6 +1280,11 @@ game/Vec2.c:
 	extabindex  start:0x8002381C end:0x80023840
 	.text       start:0x800D6188 end:0x800D6338
 
+game/Rand_RangeInt.c:
+	extab       start:0x8000B1DC end:0x8000B1E4
+	extabindex  start:0x80023858 end:0x80023864
+	.text       start:0x800D63CC end:0x800D643C
+
 game/Rand_RangeIntMax.c:
 	extab       start:0x8000B1E4 end:0x8000B1EC
 	extabindex  start:0x80023864 end:0x80023870
