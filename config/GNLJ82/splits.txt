@@ -1316,6 +1316,21 @@ game/JointByName.c:
 game/SpriteSlot_SetTranslateDxDy.c:
 	.text       start:0x800D6B20 end:0x800D6B34
 
+game/SpriteSlot_SetJointScaleByName.c:
+	extab       start:0x8000B22C end:0x8000B234
+	extabindex  start:0x800238D0 end:0x800238DC
+	.text       start:0x800D6B34 end:0x800D6BA8
+
+game/SpriteSlot_SetJointVisibilityByName.c:
+	extab       start:0x8000B234 end:0x8000B23C
+	extabindex  start:0x800238DC end:0x800238E8
+	.text       start:0x800D6BA8 end:0x800D6C20
+
+game/SpriteSlot_SetTransform.c:
+	extab       start:0x8000B23C end:0x8000B244
+	extabindex  start:0x800238E8 end:0x800238F4
+	.text       start:0x800D6C20 end:0x800D6CEC
+
 game/SpriteSlot_SetScaleXYZ.c:
 	extab       start:0x8000B244 end:0x8000B254
 	extabindex  start:0x800238F4 end:0x8002390C

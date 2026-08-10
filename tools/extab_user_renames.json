@@ -968,6 +968,18 @@
     "extab_SpriteSlot_Destroy": "@etb_8000B26C",
     "extabindex_SpriteSlot_Destroy": "@eti_80023930"
   },
+  "src/game/SpriteSlot_SetJointScaleByName.c": {
+    "extab_SpriteSlot_SetJointScaleByName": "@etb_8000B22C",
+    "extabindex_SpriteSlot_SetJointScaleByName": "@eti_800238D0"
+  },
+  "src/game/SpriteSlot_SetJointVisibilityByName.c": {
+    "extab_SpriteSlot_SetJointVisibilityByName": "@etb_8000B234",
+    "extabindex_SpriteSlot_SetJointVisibilityByName": "@eti_800238DC"
+  },
+  "src/game/SpriteSlot_SetTransform.c": {
+    "extab_SpriteSlot_SetTransform": "@etb_8000B23C",
+    "extabindex_SpriteSlot_SetTransform": "@eti_800238E8"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
