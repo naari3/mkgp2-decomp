@@ -1088,6 +1088,10 @@
     "extab_VfxEffect_UpdateChildVisScale_Helper": "@etb_8000AA50",
     "extabindex_VfxEffect_UpdateChildVisScale_Helper": "@eti_800230E4"
   },
+  "src/game/VfxEffect_UpdateChildSpinMatrix_Helper.c": {
+    "extab_VfxEffect_UpdateChildSpinMatrix_Helper": "@etb_8000AA60",
+    "extabindex_VfxEffect_UpdateChildSpinMatrix_Helper": "@eti_800230FC"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

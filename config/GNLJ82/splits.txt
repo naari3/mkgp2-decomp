@@ -1363,6 +1363,11 @@ game/VfxEffect_UpdateChildVisScale_Helper.c:
 	extabindex  start:0x800230E4 end:0x800230F0
 	.text       start:0x800C7D80 end:0x800C7E8C
 
+game/VfxEffect_UpdateChildSpinMatrix_Helper.c:
+	extab       start:0x8000AA60 end:0x8000AA68
+	extabindex  start:0x800230FC end:0x80023108
+	.text       start:0x800C7F38 end:0x800C8038
+
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738
