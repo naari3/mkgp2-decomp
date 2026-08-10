@@ -360,6 +360,7 @@ config.libs = [
         "progress_category": "game",
         "objects": [
             Object(Matching, "game/TitleTracker_Stubs.c"),
+            Object(Matching, "game/KartItemAudio.c"),
             Object(Matching, "game/WrapInRange.c"),
             Object(Matching, "game/Vtable_CallSlot2.cpp"),
             Object(Matching, "game/ObjectBase.c"),
@@ -418,7 +419,6 @@ config.libs = [
             Object(Matching, "game/CardSave_Tick.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardSave_Tick_PollCleaningResult.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardSave_Tick_CaptureAndStart.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/KartItemAudio.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PowItem.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/ShellItem.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/TornadoItem.c", extab_padding=b"\x00\x00"),
