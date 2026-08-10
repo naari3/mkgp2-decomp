@@ -1096,6 +1096,10 @@
     "extab_Backup_Shutdown": "@etb_80008350",
     "extabindex_Backup_Shutdown": "@eti_800212A8"
   },
+  "src/game/Backup_ClearAll.c": {
+    "extab_Backup_ClearAll": "@etb_80008320",
+    "extabindex_Backup_ClearAll": "@eti_80021260"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
