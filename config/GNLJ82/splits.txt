@@ -1376,6 +1376,11 @@ game/SpriteSlot_Render.c:
 	extabindex  start:0x80023948 end:0x80023954
 	.text       start:0x800D6F40 end:0x800D6F64
 
+game/SpriteSlot_InitLoop.c:
+	extab       start:0x8000B28C end:0x8000B2A4
+	extabindex  start:0x80023960 end:0x8002396C
+	.text       start:0x800D717C end:0x800D7308
+
 game/SpriteSlot_InitNonLoop.c:
 	extab       start:0x8000B2A4 end:0x8000B2BC
 	extabindex  start:0x8002396C end:0x80023978

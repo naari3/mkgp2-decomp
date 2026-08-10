@@ -1000,6 +1000,10 @@
     "extab_SpriteSlot_InitNonLoop": "@etb_8000B2A4",
     "extabindex_SpriteSlot_InitNonLoop": "@eti_8002396C"
   },
+  "src/game/SpriteSlot_InitLoop.c": {
+    "extab_SpriteSlot_InitLoop": "@etb_8000B28C",
+    "extabindex_SpriteSlot_InitLoop": "@eti_80023960"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
