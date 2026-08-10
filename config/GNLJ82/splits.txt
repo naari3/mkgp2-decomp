@@ -697,6 +697,11 @@ game/DMAChannelManager_Init.c:
 	extabindex  start:0x80020FC0 end:0x80020FCC
 	.text       start:0x800662B4 end:0x80066350
 
+game/CardRW_ErrorDisplay.c:
+	extab       start:0x800080F0 end:0x800080F8
+	extabindex  start:0x80020FCC end:0x80020FD8
+	.text       start:0x80066350 end:0x800668FC
+
 game/NetDiag_QualityPage.c:
 	extab       start:0x80008110 end:0x80008118
 	extabindex  start:0x80020FFC end:0x80021008
