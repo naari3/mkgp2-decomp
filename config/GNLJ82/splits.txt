@@ -1991,6 +1991,11 @@ game/clFlowKart_HandleConfirm.c:
 	extabindex  start:0x8002813C end:0x80028148
 	.text       start:0x801D7B50 end:0x801D7CC4
 
+game/clFlowKart_Init.c:
+	extab       start:0x800153BC end:0x80015474
+	extabindex  start:0x8002816C end:0x80028178
+	.text       start:0x801D83D4 end:0x801D878C
+
 game/clFlowKart_SetupTextLayout.c:
 	extab       start:0x80015520 end:0x80015528
 	extabindex  start:0x800281CC end:0x800281D8
