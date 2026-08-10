@@ -1224,6 +1224,10 @@
     "extab_HUD_Init": "@etb_8001F158",
     "extabindex_HUD_Init": "@eti_8002BA60"
   },
+  "src/game/HUD_FrameUpdate.c": {
+    "extab_HUD_FrameUpdate": "@etb_8001F090",
+    "extabindex_HUD_FrameUpdate": "@eti_8002B9AC"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

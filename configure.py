@@ -434,6 +434,7 @@ config.libs = [
             Object(Matching, "game/CardRW_DataRepair_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/HUD_RegisterOverlay.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/HUD_Init.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/HUD_FrameUpdate.c", extab_padding=b"\x00\x00"),
                     Object(Matching, "game/auto_800A8F4C_block.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/auto_ONKARTHIT_block.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/CObj_GlobalProjPushFrame.c", extab_padding=b""),
