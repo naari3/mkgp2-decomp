@@ -1160,6 +1160,10 @@
     "extab_clFlowKart_HandleConfirm": "@etb_8001536C",
     "extabindex_clFlowKart_HandleConfirm": "@eti_8002813C"
   },
+  "src/game/clFlowKart_SetupTextLayout.c": {
+    "extab_clFlowKart_SetupTextLayout": "@etb_80015520",
+    "extabindex_clFlowKart_SetupTextLayout": "@eti_800281CC"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
