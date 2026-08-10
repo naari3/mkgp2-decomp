@@ -1124,6 +1124,10 @@
     "extab_Backup_PublishShadowCopy_Inline": "@etb_80008340",
     "extabindex_Backup_PublishShadowCopy_Inline": "@eti_80021290"
   },
+  "src/game/SoundMgr_PlaySE_WithChannel.c": {
+    "extab_SoundMgr_PlaySE_WithChannel": "@etb_8000B4D4",
+    "extabindex_SoundMgr_PlaySE_WithChannel": "@eti_80023C54"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

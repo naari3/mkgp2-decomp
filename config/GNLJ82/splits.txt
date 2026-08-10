@@ -1597,6 +1597,11 @@ game/ItemObject_WriteVectors.c:
 game/ItemObject_SetByte18c.c:
 	.text       start:0x800DD930 end:0x800DD940
 
+game/SoundMgr_PlaySE_WithChannel.c:
+	extab       start:0x8000B4D4 end:0x8000B4DC
+	extabindex  start:0x80023C54 end:0x80023C60
+	.text       start:0x800DFCE8 end:0x800DFD28
+
 game/BananaTriple_StuckOnDriverTick.c:
 	extab       start:0x8000B5A4 end:0x8000B5AC
 	extabindex  start:0x80023D8C end:0x80023D98
