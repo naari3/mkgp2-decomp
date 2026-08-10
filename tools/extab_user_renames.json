@@ -864,6 +864,10 @@
     "extabindex_RaceContext_EnsureSingleton": "@eti_80022208",
     "extabindex_dtor_8009DCE0": "@eti_80022214"
   },
+  "src/game/CoinSystem_UpdateAll.c": {
+    "extab_CoinSystem_UpdateAll": "@etb_8000D2C8",
+    "extabindex_CoinSystem_UpdateAll": "@eti_80024C80"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
