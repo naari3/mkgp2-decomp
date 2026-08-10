@@ -1016,6 +1016,10 @@
     "extab_BtMode_RenderFrame": "@etb_80009A60",
     "extabindex_BtMode_RenderFrame": "@eti_80022310"
   },
+  "src/game/BtMode_Dtor.c": {
+    "extab_BtMode_Dtor": "@etb_80009634",
+    "extabindex_BtMode_Dtor": "@eti_80022244"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
