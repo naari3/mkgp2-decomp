@@ -631,6 +631,11 @@ game/NetDiag_CounterPage.c:
 	extabindex  start:0x80021008 end:0x80021014
 	.text       start:0x80067F74 end:0x8006830C
 
+game/NetDiag_PacketPage.c:
+	extab       start:0x80008128 end:0x80008130
+	extabindex  start:0x80021020 end:0x8002102C
+	.text       start:0x80068D00 end:0x80069720
+
 game/NetDiag_PacketRatioPage.c:
 	extab       start:0x80008138 end:0x80008140
 	extabindex  start:0x80021038 end:0x80021044
@@ -1945,8 +1950,3 @@ init/__fill_mem.c:
 
 init/memcpy.c:
 	.init       start:0x800054F4 end:0x80005544
-
-game/NetDiag_PacketPage.c:
-	.extab      start:0x80008128 end:0x80008130
-	.extabindex start:0x80021020 end:0x8002102C
-	.text       start:0x80068D00 end:0x80069720
