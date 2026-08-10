@@ -1117,6 +1117,11 @@ game/card_rw_get_substate.c:
 game/Sci2Card_GetPrintErrorCode.c:
 	.text       start:0x8009927C end:0x80099284
 
+game/VSMode_SeedRandomItemSequence.c:
+	extab       start:0x800095A0 end:0x800095A8
+	extabindex  start:0x8002219C end:0x800221A8
+	.text       start:0x8009BDC0 end:0x8009BEF4
+
 game/ProcessSystemTick.c:
 	extab       start:0x800095D0 end:0x800095D8
 	extabindex  start:0x800221E4 end:0x800221F0

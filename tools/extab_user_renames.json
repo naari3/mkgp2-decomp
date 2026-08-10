@@ -1144,6 +1144,10 @@
     "extab_SoundMgr_Play": "@etb_800122A4",
     "extabindex_SoundMgr_Play": "@eti_80027170"
   },
+  "src/game/VSMode_SeedRandomItemSequence.c": {
+    "extab_VSMode_SeedRandomItemSequence": "@etb_800095A0",
+    "extabindex_VSMode_SeedRandomItemSequence": "@eti_8002219C"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
