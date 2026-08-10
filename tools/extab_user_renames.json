@@ -928,6 +928,10 @@
     "extab_JumpDistanceMode_HandlePhysics": "@etb_80019EDC",
     "extabindex_JumpDistanceMode_HandlePhysics": "@eti_80029F48"
   },
+  "src/game/JumpDistanceMode_Update.c": {
+    "extab_JumpDistanceMode_Update": "@etb_80019EEC",
+    "extabindex_JumpDistanceMode_Update": "@eti_80029F60"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
