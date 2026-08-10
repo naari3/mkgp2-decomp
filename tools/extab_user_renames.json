@@ -920,6 +920,10 @@
     "extab_JumpDistanceMode_PredictLanding": "@etb_80019ECC",
     "extabindex_JumpDistanceMode_PredictLanding": "@eti_80029F30"
   },
+  "src/game/JumpDistanceMode_InitTimerDisplay.c": {
+    "extab_JumpDistanceMode_InitTimerDisplay": "@etb_8001A17C",
+    "extabindex_JumpDistanceMode_InitTimerDisplay": "@eti_80029F9C"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
