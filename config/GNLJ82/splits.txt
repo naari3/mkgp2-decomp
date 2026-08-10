@@ -1348,6 +1348,11 @@ game/VfxEffect_InitVariantAndResetPos.c:
 	extabindex  start:0x80023030 end:0x8002303C
 	.text       start:0x800C6040 end:0x800C6074
 
+game/VfxEffect_UpdateTwoChildSpinAndSound_Helper.c:
+	extab       start:0x8000AA00 end:0x8000AA08
+	extabindex  start:0x8002306C end:0x80023078
+	.text       start:0x800C6A40 end:0x800C6CB0
+
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738

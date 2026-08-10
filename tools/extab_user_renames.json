@@ -1076,6 +1076,10 @@
     "extab_VfxEffect_InitVariantAndResetPos": "@etb_8000A9D8",
     "extabindex_VfxEffect_InitVariantAndResetPos": "@eti_80023030"
   },
+  "src/game/VfxEffect_UpdateTwoChildSpinAndSound_Helper.c": {
+    "extab_VfxEffect_UpdateTwoChildSpinAndSound_Helper": "@etb_8000AA00",
+    "extabindex_VfxEffect_UpdateTwoChildSpinAndSound_Helper": "@eti_8002306C"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
