@@ -1374,6 +1374,11 @@ game/ItemObject_RaycastWallStub.c:
 	extabindex  start:0x8002399C end:0x800239A8
 	.text       start:0x800D7C94 end:0x800D7CB4
 
+game/SpriteSlot_Container_Free.c:
+	extab       start:0x8000B2EC end:0x8000B2F4
+	extabindex  start:0x800239C0 end:0x800239CC
+	.text       start:0x800D7F30 end:0x800D7F70
+
 game/ItemObjectManager_Controls.c:
 	extab       start:0x8000B2FC end:0x8000B334
 	extabindex  start:0x800239D8 end:0x800239FC
