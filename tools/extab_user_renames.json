@@ -1044,6 +1044,10 @@
     "extab_clItemBoxResponder_Ctor": "@etb_80007DB8",
     "extabindex_clItemBoxResponder_Ctor": "@eti_80020D50"
   },
+  "src/game/clItemBoxResponder_SpawnDebris.c": {
+    "extab_clItemBoxResponder_SpawnDebris": "@etb_80007B74",
+    "extabindex_clItemBoxResponder_SpawnDebris": "@eti_80020BDC"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
