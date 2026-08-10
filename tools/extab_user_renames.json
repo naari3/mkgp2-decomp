@@ -1256,6 +1256,10 @@
     "extab_KartDriver_TickAction_78778": "@etb_80006258",
     "extabindex_KartDriver_TickAction_78778": "@eti_8001FF1C"
   },
+  "src/game/KartDriver_TickAction_78a3c.c": {
+    "extab_KartDriver_TickAction_78a3c": "@etb_80006260",
+    "extabindex_KartDriver_TickAction_78a3c": "@eti_8001FF28"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
