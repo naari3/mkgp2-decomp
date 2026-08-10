@@ -1216,6 +1216,10 @@
     "extab_CardRW_DataRepair_Page": "@etb_80008178",
     "extabindex_CardRW_DataRepair_Page": "@eti_80021098"
   },
+  "src/game/HUD_RegisterOverlay.c": {
+    "extab_HUD_RegisterOverlay": "@etb_8001F0A0",
+    "extabindex_HUD_RegisterOverlay": "@eti_8002B9C4"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

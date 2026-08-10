@@ -2298,6 +2298,11 @@ game/dtor_8024F40C.c:
 	extabindex  start:0x8002B778 end:0x8002B784
 	.text       start:0x8024F40C end:0x8024F43C
 
+game/HUD_RegisterOverlay.c:
+	extab       start:0x8001F0A0 end:0x8001F0A8
+	extabindex  start:0x8002B9C4 end:0x8002B9D0
+	.text       start:0x80253B14 end:0x80253BE4
+
 game/HUD_SetRacePosition.c:
 	extab       start:0x8001F108 end:0x8001F110
 	extabindex  start:0x8002BA18 end:0x8002BA24
