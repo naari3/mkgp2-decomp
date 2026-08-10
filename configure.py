@@ -392,6 +392,7 @@ config.libs = [
             Object(Matching, "game/clItemBoxResponder.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBoxResponder_Ctor.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartAudioChannel.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/KartAudioChannel_Set24WithSeStop.c", extab_padding=b"\x00\x00"),
                     Object(Matching, "game/auto_800A8F4C_block.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/auto_ONKARTHIT_block.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/CObj_GlobalProjPushFrame.c", extab_padding=b""),

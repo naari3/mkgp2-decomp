@@ -497,6 +497,11 @@ sound/SoundCtrl_SetVolume.c:
 	extabindex  start:0x800208D0 end:0x800208DC
 	.text       start:0x8005957C end:0x800595B4
 
+game/KartAudioChannel_Set24WithSeStop.c:
+	extab       start:0x800076D8 end:0x800076E0
+	extabindex  start:0x800208DC end:0x800208E8
+	.text       start:0x800595B4 end:0x80059644
+
 sound/MediaBoard_PollCompletion.c:
 	extab       start:0x800076E0 end:0x800076E8
 	extabindex  start:0x800208E8 end:0x800208F4

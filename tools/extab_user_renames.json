@@ -1056,6 +1056,10 @@
     "extab_KartAudioChannel_ResetSEsAndSetFlag": "@etb_800076B8",
     "extabindex_KartAudioChannel_ResetSEsAndSetFlag": "@eti_800208AC"
   },
+  "src/game/KartAudioChannel_Set24WithSeStop.c": {
+    "extab_KartAudioChannel_Set24WithSeStop": "@etb_800076D8",
+    "extabindex_KartAudioChannel_Set24WithSeStop": "@eti_800208DC"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
