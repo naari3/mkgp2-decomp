@@ -868,6 +868,10 @@
     "extab_CardTaskManager_Tick": "@etb_80008FFC",
     "extabindex_CardTaskManager_Tick": "@eti_80021B00"
   },
+  "src/game/CardTaskManager_Dtor.c": {
+    "extab_CardTaskManager_Dtor": "@etb_80009004",
+    "extabindex_CardTaskManager_Dtor": "@eti_80021B0C"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
