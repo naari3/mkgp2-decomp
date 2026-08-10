@@ -884,6 +884,10 @@
     "extab_NetDiag_PacketPage": "@etb_80008128",
     "extabindex_NetDiag_PacketPage": "@eti_80021020"
   },
+  "src/game/NetDiag_QualityPage.c": {
+    "extab_NetDiag_QualityPage": "@etb_80008110",
+    "extabindex_NetDiag_QualityPage": "@eti_80020FFC"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

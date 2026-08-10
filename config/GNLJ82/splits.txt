@@ -626,6 +626,11 @@ game/DMAChannelManager_Init.c:
 	extabindex  start:0x80020FC0 end:0x80020FCC
 	.text       start:0x800662B4 end:0x80066350
 
+game/NetDiag_QualityPage.c:
+	extab       start:0x80008110 end:0x80008118
+	extabindex  start:0x80020FFC end:0x80021008
+	.text       start:0x80067494 end:0x80067F74
+
 game/NetDiag_CounterPage.c:
 	extab       start:0x80008118 end:0x80008120
 	extabindex  start:0x80021008 end:0x80021014

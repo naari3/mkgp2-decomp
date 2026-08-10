@@ -357,6 +357,7 @@ config.libs = [
             Object(Matching, "game/CardTaskManager_RenderOverlay.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardTaskManager_Dtor.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/NetDiag_CounterPage.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/NetDiag_QualityPage.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/NetDiag_PacketPage.c", extab_padding=b"\x00\x00"),
                     Object(Matching, "game/auto_800A8F4C_block.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/auto_ONKARTHIT_block.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
