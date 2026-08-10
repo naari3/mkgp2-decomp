@@ -1285,6 +1285,16 @@ game/Rand_RangeIntMax.c:
 	extabindex  start:0x80023864 end:0x80023870
 	.text       start:0x800D643C end:0x800D6498
 
+game/Rand_RangeFloat.c:
+	extab       start:0x8000B1EC end:0x8000B1F4
+	extabindex  start:0x80023870 end:0x8002387C
+	.text       start:0x800D6498 end:0x800D650C
+
+game/Rand_RangeFloatMax.c:
+	extab       start:0x8000B1F4 end:0x8000B1FC
+	extabindex  start:0x8002387C end:0x80023888
+	.text       start:0x800D650C end:0x800D6568
+
 game/SpriteSlot_SetScale.c:
 	.text       start:0x800D6568 end:0x800D657C
 

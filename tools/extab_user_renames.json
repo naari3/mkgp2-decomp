@@ -888,6 +888,14 @@
     "extab_NetDiag_QualityPage": "@etb_80008110",
     "extabindex_NetDiag_QualityPage": "@eti_80020FFC"
   },
+  "src/game/Rand_RangeFloat.c": {
+    "extab_Rand_RangeFloat": "@etb_8000B1EC",
+    "extabindex_Rand_RangeFloat": "@eti_80023870"
+  },
+  "src/game/Rand_RangeFloatMax.c": {
+    "extab_Rand_RangeFloatMax": "@etb_8000B1F4",
+    "extabindex_Rand_RangeFloatMax": "@eti_8002387C"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
