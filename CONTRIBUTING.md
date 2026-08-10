@@ -4,7 +4,7 @@
 > English are welcome too.
 
 mkgp2-decomp への貢献手順。matching workflow の技術的な本体は
-[`.claude/skills/mkgp2-match/SKILL.md`](.claude/skills/mkgp2-match/SKILL.md)
+[`.kimi-code/skills/mkgp2-match/SKILL.md`](.kimi-code/skills/mkgp2-match/SKILL.md)
 にある (Claude Code なら project skill として自動ロードされる。人間もそのまま
 手順書として読める)。この文書は「環境を作る」「担当を決める」「PR を出す」の
 運用ルールに絞る。
@@ -61,7 +61,7 @@ python tools/claim_unit.py release <Unit>  # 手放すとき close
 
 ## 3. matching する
 
-[`.claude/skills/mkgp2-match/SKILL.md`](.claude/skills/mkgp2-match/SKILL.md)
+[`.kimi-code/skills/mkgp2-match/SKILL.md`](.kimi-code/skills/mkgp2-match/SKILL.md)
 の手順に従う。要点だけ:
 
 - 1 関数が C で 100% に届かないときは asm_fn 退避 / NonMatching 隔離という

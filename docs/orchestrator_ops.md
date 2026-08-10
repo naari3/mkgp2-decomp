@@ -11,7 +11,7 @@
 
 - **Windows Terminal で 1 タブを open のまま** 維持して main agent を常駐させる (タブを閉じると `claude` プロセスが死に、cycle cron も止まる)
 - main agent は CronCreate (3min 間隔) で自走する
-- sub-agent は main から最大 6 並列で起動される
+- sub-agent は main から最大 3 並列で起動される
 - `.orchestrator/` と `.worktrees/` は `.gitignore` 済み、commit されない
 
 PC をスリープさせると Windows がプロセスを中断するので、長時間自動運用したいなら電源設定で「スリープしない」 or 「タブの間はスリープしない」を有効化しておく。Screen lock 単独ではプロセスは生き続ける。
@@ -30,12 +30,12 @@ cd C:\Users\naari\src\github.com\naari3\mkgp2-decomp
 claude
 
 # 4. orchestrator を開始
-/mkgp2-orch-start
+/skill:mkgp2-orch-start
 ```
 
 このタブは作業終了まで閉じない。
 
-`/mkgp2-orch-start` が以下を自動実行:
+`/skill:mkgp2-orch-start` が以下を自動実行:
 
 1. `.orchestrator/state.json` の有無を確認
 2. なければ `python tools/init_orchestrator.py` で初期化 (functions セクションのみ生成、batches は空)
@@ -43,7 +43,7 @@ claude
 4. `python tools/orch_recover.py --new-session <new_sid>` で orphan recovery
 5. `CronCreate` で 3min 間隔の cycle prompt 発火を仕込む (session-only、durable=false)
 
-その後 main agent は cycle を回し続ける。3 sub まで並列で dispatch する。
+その後 main agent は cycle を回し続ける。3 sub まで並列で dispatch する (2026-08-10 から cap=3 に引き下げ。quota 枯渇対策)。
 
 **batch 編成は main agent が cycle 内で動的に行う** (Ghidra MCP の xref / callees / namespace を引いて関連関数を grouping)。`tools/plan_batches.py` は **使わない** — 機械的に「1 関数 = 1 batch」を作るだけの fallback / debug ツールで、main の判断責務を奪うため本番では起動禁止。
 
@@ -54,7 +54,7 @@ claude
 > 「もう新規 dispatch しないでほしい、走ってる sub は完了まで待ってほしい」
 
 ```
-/mkgp2-orch-drain
+/skill:mkgp2-orch-drain
 ```
 
 挙動:
@@ -63,14 +63,14 @@ claude
 - 全 sub 完了 → cycle cron CronDelete → main agent も `/exit` で抜けて OK
 - state.json は完全に整合した状態で残る
 
-再開は `/mkgp2-orch-start` を再実行するだけ。
+再開は `/skill:mkgp2-orch-start` を再実行するだけ。
 
 ### immediate stop (緊急)
 
 > 「いま走ってる sub も含めて全部止めたい」
 
 ```
-/mkgp2-orch-kill
+/skill:mkgp2-orch-kill
 ```
 
 挙動:
@@ -95,7 +95,7 @@ Windows Terminal のタブを ✕ で閉じる、または `Ctrl-C` で `claude`
 - cycle cron は session-only (durable=false) なので親 session の die と共に消滅 (新 session で `CronList` 確認、残ってたら `CronDelete`)
 - state.json は最後の cycle 終了時点でフリーズ
 
-**再開**: Windows Terminal で新タブを開き `claude` → `/mkgp2-orch-start`。orphan recovery が走り、宙ぶらりんの batch を以下のいずれかに振り分ける:
+**再開**: Windows Terminal で新タブを開き `claude` → `/skill:mkgp2-orch-start`。orphan recovery が走り、宙ぶらりんの batch を以下のいずれかに振り分ける:
 
 - worktree が無い → `cancelled` → 関数は `pending` に戻る
 - worktree あり + HANDOFF.md あり → `completed` → main の merge キューへ
@@ -108,7 +108,7 @@ Windows Terminal のタブを ✕ で閉じる、または `Ctrl-C` で `claude`
 main agent が tmux 内でまだ生きている場合:
 
 ```
-/mkgp2-orch-start
+/skill:mkgp2-orch-start
 ```
 
 `drain.flag` が削除されて cycle 再開。
@@ -125,7 +125,7 @@ claude
 そして:
 
 ```
-/mkgp2-orch-start
+/skill:mkgp2-orch-start
 ```
 
 - state.json の `session_id` と新 session が異なる → orphan recovery 走る
@@ -149,7 +149,7 @@ Move-Item .orchestrator ".orchestrator.bak.$ts"
 
 # 4. 必要なら ghidra dump 更新
 
-# 5. 再起動 (新タブで claude → /mkgp2-orch-start)
+# 5. 再起動 (新タブで claude → /skill:mkgp2-orch-start)
 ```
 
 ## 個別介入
@@ -157,7 +157,7 @@ Move-Item .orchestrator ".orchestrator.bak.$ts"
 ### 状態確認
 
 ```
-/mkgp2-orch-status
+/skill:mkgp2-orch-status
 ```
 
 state.json サマリと active sub 一覧 (read-only)。
@@ -184,7 +184,7 @@ Get-Content .orchestrator/log.jsonl -Tail 50 |
 
 ### 特定 sub の kill
 
-`/mkgp2-orch-status` で `agent_id` を確認してから:
+`/skill:mkgp2-orch-status` で `agent_id` を確認してから:
 
 ```
 main に向けて: 「<agent_id> を kill して、batch を pending に戻して」
@@ -197,10 +197,10 @@ main が `TaskStop` + state 更新する。
 drain してから直接編集:
 
 ```
-/mkgp2-orch-drain      # 待つ
+/skill:mkgp2-orch-drain      # 待つ
 # 全 sub 完了後
 vim .orchestrator/state.json
-/mkgp2-orch-start      # 再開
+/skill:mkgp2-orch-start      # 再開
 ```
 
 main が動いてる最中の直接編集は **絶対禁止** (atomic write が衝突する)。
@@ -229,16 +229,16 @@ if ((Test-Path $f) -and ((Get-Item $f).LastWriteTime -gt (Get-Date).AddHours(-1)
 ## 想定運用フロー (典型例)
 
 ```
-09:00  Windows Terminal 新タブ → claude → /mkgp2-orch-start
+09:00  Windows Terminal 新タブ → claude → /skill:mkgp2-orch-start
 09:00-12:00  自走、~10 batch 完了
 12:00  user 昼休憩 (タブはそのまま、PC sleep にしないこと)
 13:00  HANDOFF_TO_USER.md を確認 → 2 件介入要
 13:10  介入完了、main に continue 指示
 13:10-17:00  自走
-17:00  /mkgp2-orch-drain
+17:00  /skill:mkgp2-orch-drain
 17:30  全 sub 完了、cycle cron 自動停止
        → タブを残したまま帰宅、または exit でタブ閉じる
-翌朝   新タブで claude → /mkgp2-orch-start で再開
+翌朝   新タブで claude → /skill:mkgp2-orch-start で再開
 ```
 
 **長時間放置するときの注意**:
@@ -250,7 +250,7 @@ if ((Test-Path $f) -and ((Get-Item $f).LastWriteTime -gt (Get-Date).AddHours(-1)
 
 ### sub が dispatch されない
 
-- `.orchestrator/drain.flag` が立ってないか確認 → あれば delete (or `/mkgp2-orch-start` で自動削除)
+- `.orchestrator/drain.flag` が立ってないか確認 → あれば delete (or `/skill:mkgp2-orch-start` で自動削除)
 - `state.batches` に `status=pending` の batch があるか確認 → なければ `python tools/plan_batches.py`
 - `state.active_subs` が 6 未満か確認 → 上限に達してれば待つ
 
@@ -263,8 +263,8 @@ if ((Test-Path $f) -and ((Get-Item $f).LastWriteTime -gt (Get-Date).AddHours(-1)
 ### main agent が応答しない
 
 - cycle cron が動いてるか: `CronList`
-- 動いてなければ `/mkgp2-orch-start` で再発火 (cron も再作成される)
-- main agent 自体が hung → Windows Terminal タブで `Ctrl-C` → `exit` → 新タブで `claude` → `/mkgp2-orch-start`
+- 動いてなければ `/skill:mkgp2-orch-start` で再発火 (cron も再作成される)
+- main agent 自体が hung → Windows Terminal タブで `Ctrl-C` → `exit` → 新タブで `claude` → `/skill:mkgp2-orch-start`
 
 ### state.json が壊れた
 

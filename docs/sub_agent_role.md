@@ -5,7 +5,7 @@
 関連:
 - `docs/orchestrator_role.md` — main agent の責務
 - `docs/orchestrator_state_schema.md` — state.json schema
-- `~/.claude/skills/mkgp2-match/SKILL.md` — 1 関数を matching に持っていく workflow
+- `~/.kimi-code/skills/mkgp2-match/SKILL.md` — 1 関数を matching に持っていく workflow
 
 ## 性格と寿命
 
@@ -41,7 +41,7 @@ worktree に入ったら、必ず以下の順で読む:
 ```
 docs/orchestrator_state_schema.md   (自分が属する batch 構造の理解)
 docs/sub_agent_role.md              (この文書)
-~/.claude/skills/mkgp2-match/SKILL.md  (matching workflow)
+~/.kimi-code/skills/mkgp2-match/SKILL.md  (matching workflow)
 ```
 
 main が渡した prompt に Ghidra decompile / disasm / xref / 構造体定義の **inline 情報** が含まれていれば、それを優先で参考にする。

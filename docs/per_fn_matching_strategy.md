@@ -6,7 +6,7 @@ bundle (extab group 必須 bundle) の中で **関数単位** に matching / asm
 - `docs/sub_agent_role.md` — sub の制約と HANDOFF.md format (この doc で schema 拡張)
 - `docs/orchestrator_role.md` — main の merge ルール (この doc で per-fn 反映を追加)
 - `docs/orchestrator_state_schema.md` — functions[].status の state machine (`asm_fn` 追加)
-- `~/.claude/skills/mkgp2-match/SKILL.md` — 撤退判定と asm-fn 書き方を反映予定
+- `~/.kimi-code/skills/mkgp2-match/SKILL.md` — 撤退判定と asm-fn 書き方を反映予定
 - T9 verify gist (2026-05-17, 6-fn bundle `batch_text_8002f640_bundle`): https://gist.githubusercontent.com/naari3/9d78fc3972f7cc3dcf77d9d0c6a9945c
 
 ## 1. 背景
@@ -187,7 +187,7 @@ in_progress, interrupted, blocked, skipped, asm_fn   (asm_fn 追加)
 
 ## 8. mkgp2-match skill 修正点
 
-`~/.claude/skills/mkgp2-match/SKILL.md` に以下を追記:
+`~/.kimi-code/skills/mkgp2-match/SKILL.md` に以下を追記:
 
 ### 撤退判定セクション (新規)
 
@@ -401,6 +401,8 @@ CW が plain C 関数に対して extab/extabindex を **自動 emit する** �
 - bundle が C++ scoped object を抱える (extab body に `&dtor_*` ref がある) なら B が向く (`#pragma exceptions off` が C++ 例外 semantics をきっちり切るため)
 - **TU 先頭側の fn が asm_fn (manual extab) なら後続 fn も B に統一** (上記 mix 失敗条件)
 
+実績 (2026-08-11, game/GabyouTripleChild.c, batch_text_800f3b20_gabyoutriplechild): address 順 A (TickHitResolve plain C + `-Cpp_exceptions on` auto-emit) → B (TickActive asm_fn manual) → B (Update C + `#pragma exceptions off` + manual emit) の構成で SHA-1 OK。**`#pragma exceptions off` で Update の codegen は不変** (exceptions on で 100% 達成済の C をそのまま囲むだけで objdiff 100% 維持) だったので、「先に A 相当で書いて後から B に包む」手順が取れる。また同 batch で sparse switch の **重複 exit branch** (target は join への無条件 `b` を 2 連、CW は 1 個しか出さない) が新しい closed class として確認された (詳細: `docs/notes/cw132-sparse-switch-duplicate-exit-branch.md`。outer switch で包み構造を変えると消えた例あり、retry の手がかり)。
+
 ### 14.2 main wave で発見された hard-block patterns (CW 1.3.2)
 
 C source から target asm を再現できなかった idiom。**再試行の前にこれらを reference しないと同じ罠にハマる**。
@@ -457,7 +459,7 @@ bundle 内に同じ codegen pattern を持つ fn が複数あることがある 
 ### 14.5 並列 sub dispatch + immediate merge で確立した orchestrator pattern
 
 - 12 並列 sub を 1 wave で dispatch (wall-clock ~21 min、最遅 sub の duration)
-- 各 sub 完了通知ごとに即 `merge_promote.py --batch <id> --no-build` (累積待ち禁止、`.claude/skills/mkgp2-orch/SKILL.md` 「即時 merge」)
+- 各 sub 完了通知ごとに即 `merge_promote.py --batch <id> --no-build` (累積待ち禁止、`.kimi-code/skills/mkgp2-orch/SKILL.md` 「即時 merge」)
 - conflict は `dtor_800A9CC8` + `dtor_800A9D2C` で forward decl 衝突 1 件 (両 approach A / B の forward decl 差) → main が Edit で resolve、両 fn を C prototype に統合
 - 9 asm_fn worktree は merge_promote.py がスキップ (`status != "matched"`) → main が **HANDOFF.md harvest 後** に手動 cleanup (worktree 削除前に notes / blocked_reason を必ず読む、cleanup で context 消失)
 

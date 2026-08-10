@@ -1380,11 +1380,13 @@ game/GabyouTripleChild.c:
 	extab       start:0x8000B6A4 end:0x8000B6BC
 	extabindex  start:0x80023F0C end:0x80023F30
 	.text       start:0x800F3B20 end:0x800F4914
+	.data       start:0x80421738 end:0x80421760
 
 game/ShellItem.c:
 	extab       start:0x8000B6C4 end:0x8000B6E4
 	extabindex  start:0x80023F3C end:0x80023F6C
 	.text       start:0x800F4C28 end:0x800F5B7C
+	.data       start:0x80421760 end:0x80421788
 
 game/PowItem.c:
 	extab       start:0x8000B6E4 end:0x8000B6FC

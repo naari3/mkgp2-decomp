@@ -5,7 +5,7 @@
 
 ## 重要: 動作モードは「手動 roadmap 駆動」であって orch cron cycle ではない
 
-**`/mkgp2-orch-start` を実行してはいけない。** この作業は orch の cron cycle (3分間隔の自動
+**`/skill:mkgp2-orch-start` を実行してはいけない。** この作業は orch の cron cycle (3分間隔の自動
 struct-driven dispatch) ではなく、approachA-roadmap.md に沿って register-identity park という
 **単一難問を 1-2 batch ずつ手動 dispatch → 通知待ち → 処理する同期ループ**。orch-start すると
 cron が起動して cycle.md の汎用ロジック (TU 全体の pending fn を拾う) に切り替わり、今の
@@ -27,7 +27,7 @@ cron が起動して cycle.md の汎用ロジック (TU 全体の pending fn を
 1. **このファイル** (現在地と次の一手 + 動作モード)
 2. `docs/notes/approachA-roadmap.md` の末尾の時系列ログ (詳細な進捗。SoT)
 3. `docs/notes/cw132-allocator-phase2f-research.md` (最重要 breakthrough = colorer MODEL-FOUND)
-4. 手順の細部が要るとき `.claude/skills/mkgp2-orch/SKILL.md` (鉄則・merge 手順の参考。
+4. 手順の細部が要るとき `.kimi-code/skills/mkgp2-orch/SKILL.md` (鉄則・merge 手順の参考。
    ただし cron cycle 部分は使わない)
 
 ## 現在地 (確定事項)
@@ -107,7 +107,7 @@ research batch は HANDOFF の docs_notes を該当ファイルに書き出す�
 
 - Ghidra: bmp_output project に `/mwcceppc_132.exe` (CW 1.3.2 compiler) import + analyze 済み (3711 fns)。
   接続は `connect_instance(project="bmp_output")`。import が `Database is closed` で落ちたら
-  run_script_inline + ProgramLoader (Java 構文) で回避 (`~/.claude/skills/mkgp2-ghidra/SKILL.md`)。
+  run_script_inline + ProgramLoader (Java 構文) で回避 (`~/.kimi-code/skills/mkgp2-ghidra/SKILL.md`)。
 - frida: ユーザー許可済み。mwcceppc.exe の colorer hook 用 (FUN_00507a30/FUN_00507b50, home-reg node[+0x14])。
   scaffold = `tools/compiler_probe/frida_colorer_probe.js` + `frida_colorer_run.py`。
   **shipped compiler は触らない、private copy + lmgr326b.dll 同梱で hook**。ASLR off (ImageBase 0x400000)。
