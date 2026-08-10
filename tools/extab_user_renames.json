@@ -1164,6 +1164,10 @@
     "extab_clFlowKart_SetupTextLayout": "@etb_80015520",
     "extabindex_clFlowKart_SetupTextLayout": "@eti_800281CC"
   },
+  "src/game/clFlowKart_UpdateDisplay.c": {
+    "extab_clFlowKart_UpdateDisplay": "@etb_80015334",
+    "extabindex_clFlowKart_UpdateDisplay": "@eti_80028130"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
