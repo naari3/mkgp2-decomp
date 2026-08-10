@@ -722,6 +722,11 @@ game/NetDiag_PacketRatioPage.c:
 	extabindex  start:0x80021038 end:0x80021044
 	.text       start:0x80069AB0 end:0x8006A160
 
+game/CardRW_Renew_Page.c:
+	extab       start:0x80008160 end:0x80008168
+	extabindex  start:0x80021074 end:0x80021080
+	.text       start:0x8006B32C end:0x8006BB04
+
 game/CardRW_HardwareInit_Page.c:
 	extab       start:0x80008168 end:0x80008170
 	extabindex  start:0x80021080 end:0x8002108C
