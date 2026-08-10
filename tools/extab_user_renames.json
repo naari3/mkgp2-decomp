@@ -1080,6 +1080,10 @@
     "extab_VfxEffect_UpdateTwoChildSpinAndSound_Helper": "@etb_8000AA00",
     "extabindex_VfxEffect_UpdateTwoChildSpinAndSound_Helper": "@eti_8002306C"
   },
+  "src/game/VfxEffect_UpdateChildPosScaleAlpha_Helper.c": {
+    "extab_VfxEffect_UpdateChildPosScaleAlpha_Helper": "@etb_8000AA40",
+    "extabindex_VfxEffect_UpdateChildPosScaleAlpha_Helper": "@eti_800230CC"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

@@ -1353,6 +1353,11 @@ game/VfxEffect_UpdateTwoChildSpinAndSound_Helper.c:
 	extabindex  start:0x8002306C end:0x80023078
 	.text       start:0x800C6A40 end:0x800C6CB0
 
+game/VfxEffect_UpdateChildPosScaleAlpha_Helper.c:
+	extab       start:0x8000AA40 end:0x8000AA48
+	extabindex  start:0x800230CC end:0x800230D8
+	.text       start:0x800C7C0C end:0x800C7D14
+
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738
