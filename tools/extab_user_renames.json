@@ -1112,6 +1112,10 @@
     "extab_Backup_ClearHiScores": "@etb_80008318",
     "extabindex_Backup_ClearHiScores": "@eti_80021254"
   },
+  "src/game/Backup_LoadFromMemoryOrInit.c": {
+    "extab_Backup_LoadFromMemoryOrInit": "@etb_800082E8",
+    "extabindex_Backup_LoadFromMemoryOrInit": "@eti_8002120C"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

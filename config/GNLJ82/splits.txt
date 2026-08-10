@@ -742,6 +742,11 @@ game/PostRace_StartScoreEntryFlow_WithCardSave.c:
 	extabindex  start:0x800211DC end:0x800211E8
 	.text       start:0x80073EF8 end:0x80073F24
 
+game/Backup_LoadFromMemoryOrInit.c:
+	extab       start:0x800082E8 end:0x800082F0
+	extabindex  start:0x8002120C end:0x80021218
+	.text       start:0x80074190 end:0x80074370
+
 game/Backup_GetMinutesSinceBoot.c:
 	extab       start:0x800082F8 end:0x80008300
 	extabindex  start:0x80021224 end:0x80021230
