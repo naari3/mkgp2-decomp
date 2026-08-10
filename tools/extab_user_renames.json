@@ -864,6 +864,10 @@
     "extab_CardTaskManager_RenderOverlay": "@etb_80008FF4",
     "extabindex_CardTaskManager_RenderOverlay": "@eti_80021AF4"
   },
+  "src/game/CardTaskManager_Tick.c": {
+    "extab_CardTaskManager_Tick": "@etb_80008FFC",
+    "extabindex_CardTaskManager_Tick": "@eti_80021B00"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

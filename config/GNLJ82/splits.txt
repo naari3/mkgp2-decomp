@@ -904,6 +904,11 @@ game/CardTaskManager_RenderOverlay.c:
 	extabindex  start:0x80021AF4 end:0x80021B00
 	.text       start:0x80089C58 end:0x80089E6C
 
+game/CardTaskManager_Tick.c:
+	extab       start:0x80008FFC end:0x80009004
+	extabindex  start:0x80021B00 end:0x80021B0C
+	.text       start:0x80089E78 end:0x80089F9C
+
 game/CardTaskWelcome_Dtor.c:
 	extab       start:0x8000900C end:0x80009014
 	extabindex  start:0x80021B18 end:0x80021B24
