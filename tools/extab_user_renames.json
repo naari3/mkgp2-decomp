@@ -1232,6 +1232,10 @@
     "extab_KartDriver_GetJoint13_WorldPos": "@etb_8000B454",
     "extabindex_KartDriver_GetJoint13_WorldPos": "@eti_80023B94"
   },
+  "src/game/KartDriver_GetKartRootMtx.c": {
+    "extab_KartDriver_GetKartRootMtx": "@etb_800061F8",
+    "extabindex_KartDriver_GetKartRootMtx": "@eti_8001FE8C"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
