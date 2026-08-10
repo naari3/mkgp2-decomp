@@ -1092,6 +1092,10 @@
     "extab_VfxEffect_UpdateChildSpinMatrix_Helper": "@etb_8000AA60",
     "extabindex_VfxEffect_UpdateChildSpinMatrix_Helper": "@eti_800230FC"
   },
+  "src/game/Backup_Shutdown.c": {
+    "extab_Backup_Shutdown": "@etb_80008350",
+    "extabindex_Backup_Shutdown": "@eti_800212A8"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
