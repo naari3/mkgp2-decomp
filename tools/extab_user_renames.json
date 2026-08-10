@@ -916,6 +916,10 @@
     "extab_ItemObjectManager_TickActiveItems": "@etb_8000B354",
     "extabindex_ItemObjectManager_TickActiveItems": "@eti_80023A14"
   },
+  "src/game/JumpDistanceMode_PredictLanding.c": {
+    "extab_JumpDistanceMode_PredictLanding": "@etb_80019ECC",
+    "extabindex_JumpDistanceMode_PredictLanding": "@eti_80029F30"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

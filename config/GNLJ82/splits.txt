@@ -1851,6 +1851,11 @@ game/ItemDisplay_GetOrCreate.c:
 	extabindex  start:0x80029B94 end:0x80029BA0
 	.text       start:0x8020AEA8 end:0x8020AF08
 
+game/JumpDistanceMode_PredictLanding.c:
+	extab       start:0x80019ECC end:0x80019ED4
+	extabindex  start:0x80029F30 end:0x80029F3C
+	.text       start:0x80210A50 end:0x80210CD4
+
 game/dtor_8021617C.c:
 	extab       start:0x8001A50C end:0x8001A514
 	extabindex  start:0x8002A068 end:0x8002A074
