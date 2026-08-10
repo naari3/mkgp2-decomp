@@ -1128,6 +1128,10 @@
     "extab_SoundMgr_PlaySE_WithChannel": "@etb_8000B4D4",
     "extabindex_SoundMgr_PlaySE_WithChannel": "@eti_80023C54"
   },
+  "src/game/SoundMgr_StopSE_OrSpecial.c": {
+    "extab_SoundMgr_StopSE_OrSpecial": "@etb_8000B4CC",
+    "extabindex_SoundMgr_StopSE_OrSpecial": "@eti_80023C48"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
