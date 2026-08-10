@@ -482,6 +482,11 @@ game/TornadoEffect.c:
 	extabindex  start:0x800207EC end:0x800208A0
 	.text       start:0x80056CB0 end:0x80058DE8
 
+game/KartAudioChannel.c:
+	extab       start:0x800076B8 end:0x800076C0
+	extabindex  start:0x800208AC end:0x800208B8
+	.text       start:0x80058EA4 end:0x80058F5C
+
 sound/SoundObj_PlaySE_Direct.c:
 	extab       start:0x800076C8 end:0x800076D0
 	extabindex  start:0x800208C4 end:0x800208D0
