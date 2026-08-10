@@ -1334,6 +1334,11 @@ game/ItemObject_RaycastWallStub.c:
 	extabindex  start:0x8002399C end:0x800239A8
 	.text       start:0x800D7C94 end:0x800D7CB4
 
+game/ItemObjectManager_Controls.c:
+	extab       start:0x8000B2FC end:0x8000B334
+	extabindex  start:0x800239D8 end:0x800239FC
+	.text       start:0x800D802C end:0x800D81E0
+
 game/ItemObjectManager_Init.c:
 	extab       start:0x8000B334 end:0x8000B34C
 	extabindex  start:0x800239FC end:0x80023A08

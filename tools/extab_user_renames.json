@@ -896,6 +896,14 @@
     "extab_Rand_RangeFloatMax": "@etb_8000B1F4",
     "extabindex_Rand_RangeFloatMax": "@eti_8002387C"
   },
+  "src/game/ItemObjectManager_Controls.c": {
+    "extab_ItemObjectManager_Render": "@etb_8000B2FC",
+    "extabindex_ItemObjectManager_Render": "@eti_800239D8",
+    "extab_ItemObjectManager_Reset": "@etb_8000B314",
+    "extabindex_ItemObjectManager_Reset": "@eti_800239E4",
+    "extab_ItemObjectManager_Update": "@etb_8000B31C",
+    "extabindex_ItemObjectManager_Update": "@eti_800239F0"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
