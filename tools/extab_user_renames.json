@@ -1020,6 +1020,18 @@
     "extab_BtMode_Dtor": "@etb_80009634",
     "extabindex_BtMode_Dtor": "@eti_80022244"
   },
+  "src/game/clItemBoxResponder_DebrisArray_Dtor.c": {
+    "extab_clItemBoxResponder_DebrisArray_Dtor": "@etb_80007B4C",
+    "extabindex_clItemBoxResponder_DebrisArray_Dtor": "@eti_80020BA0"
+  },
+  "src/game/clItemBoxResponder_DebrisParticle_Dtor.c": {
+    "extab_clItemBoxResponder_DebrisParticle_Dtor": "@etb_80007B54",
+    "extabindex_clItemBoxResponder_DebrisParticle_Dtor": "@eti_80020BAC"
+  },
+  "src/game/clItemBoxResponder_Rebind.c": {
+    "extab_clItemBoxResponder_Rebind": "@etb_80007B5C",
+    "extabindex_clItemBoxResponder_Rebind": "@eti_80020BB8"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

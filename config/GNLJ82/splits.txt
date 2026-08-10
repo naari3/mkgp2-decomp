@@ -509,6 +509,21 @@ game/EffectState_HasContent.c:
 game/EffectSteering_InputViscosity_SetFieldC.c:
 	.text       start:0x8005BB00 end:0x8005BB0C
 
+game/clItemBoxResponder_DebrisArray_Dtor.c:
+	extab       start:0x80007B4C end:0x80007B54
+	extabindex  start:0x80020BA0 end:0x80020BAC
+	.text       start:0x8005D954 end:0x8005D9D4
+
+game/clItemBoxResponder_DebrisParticle_Dtor.c:
+	extab       start:0x80007B54 end:0x80007B5C
+	extabindex  start:0x80020BAC end:0x80020BB8
+	.text       start:0x8005D9D4 end:0x8005DA18
+
+game/clItemBoxResponder_Rebind.c:
+	extab       start:0x80007B5C end:0x80007B64
+	extabindex  start:0x80020BB8 end:0x80020BC4
+	.text       start:0x8005DA18 end:0x8005DB3C
+
 game/clItemBox_StepFn_Bobbing.c:
 	extab       start:0x80007B9C end:0x80007BA4
 	extabindex  start:0x80020BE8 end:0x80020BF4
