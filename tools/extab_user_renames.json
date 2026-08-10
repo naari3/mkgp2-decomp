@@ -1004,6 +1004,10 @@
     "extab_SpriteSlot_InitLoop": "@etb_8000B28C",
     "extabindex_SpriteSlot_InitLoop": "@eti_80023960"
   },
+  "src/game/SpriteSlot_TickAnim.c": {
+    "extab_SpriteSlot_TickAnim": "@etb_8000B284",
+    "extabindex_SpriteSlot_TickAnim": "@eti_80023954"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
