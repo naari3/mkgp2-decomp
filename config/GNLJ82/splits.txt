@@ -1318,6 +1318,11 @@ game/JointByName.c:
 	extabindex  start:0x80023894 end:0x800238B8
 	.text       start:0x800D6670 end:0x800D68D4
 
+game/SpriteSlot_SetMatrixSourceEnabled_WithReseed.c:
+	extab       start:0x8000B224 end:0x8000B22C
+	extabindex  start:0x800238C4 end:0x800238D0
+	.text       start:0x800D6A00 end:0x800D6B20
+
 game/SpriteSlot_SetTranslateDxDy.c:
 	.text       start:0x800D6B20 end:0x800D6B34
 

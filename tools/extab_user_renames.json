@@ -992,6 +992,10 @@
     "extab_SpriteSlot_RegisterDraw": "@etb_8000B274",
     "extabindex_SpriteSlot_RegisterDraw": "@eti_8002393C"
   },
+  "src/game/SpriteSlot_SetMatrixSourceEnabled_WithReseed.c": {
+    "extab_SpriteSlot_SetMatrixSourceEnabled_WithReseed": "@etb_8000B224",
+    "extabindex_SpriteSlot_SetMatrixSourceEnabled_WithReseed": "@eti_800238C4"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
