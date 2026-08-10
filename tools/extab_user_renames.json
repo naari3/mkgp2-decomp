@@ -872,6 +872,10 @@
     "extab_CardTaskManager_Dtor": "@etb_80009004",
     "extabindex_CardTaskManager_Dtor": "@eti_80021B0C"
   },
+  "src/game/NetDiag_CounterPage.c": {
+    "extab_NetDiag_CounterPage": "@etb_80008118",
+    "extabindex_NetDiag_CounterPage": "@eti_80021008"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
