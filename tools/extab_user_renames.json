@@ -1228,6 +1228,10 @@
     "extab_HUD_FrameUpdate": "@etb_8001F090",
     "extabindex_HUD_FrameUpdate": "@eti_8002B9AC"
   },
+  "src/game/KartDriver_GetJoint13_WorldPos.c": {
+    "extab_KartDriver_GetJoint13_WorldPos": "@etb_8000B454",
+    "extabindex_KartDriver_GetJoint13_WorldPos": "@eti_80023B94"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

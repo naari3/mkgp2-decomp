@@ -1649,6 +1649,11 @@ game/Item_DecayVelocityScalar.c:
 game/FinalLapCoinJump_CheckActiveForObject.c:
 	.text       start:0x800DC638 end:0x800DC690
 
+game/KartDriver_GetJoint13_WorldPos.c:
+	extab       start:0x8000B454 end:0x8000B45C
+	extabindex  start:0x80023B94 end:0x80023BA0
+	.text       start:0x800DC690 end:0x800DC6D0
+
 game/ItemTracker.c:
 	extab       start:0x8000B47C end:0x8000B49C
 	extabindex  start:0x80023BD0 end:0x80023C00
