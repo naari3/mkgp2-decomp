@@ -21,7 +21,7 @@ asm void clItemBox_Tick(void);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_clItemBox_Tick[8] = {
+__declspec(section ".extab_user") const unsigned char extab_clItemBox_Tick[8] = {
     0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 

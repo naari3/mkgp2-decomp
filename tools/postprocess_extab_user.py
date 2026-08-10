@@ -188,13 +188,6 @@ def main() -> int:
         "--rename-section=.extabindex_user=extabindex",
     ]
     renames = load_tu_renames(obj)
-    # extab/extabindex symbols are referenced cross-object (auto data blobs
-    # hold pointer tables into extab). The C side emits them `static`, so the
-    # renamed symbol stays local and the link fails with
-    # "undefined: '@etb_XXXX'". Globalize the sources before renaming.
-    for src in renames:
-        if src.startswith(("extab_", "extabindex_")):
-            cmd.append(f"--globalize-symbol={src}")
     for src, dst in renames.items():
         cmd.append(f"--redefine-sym={src}={dst}")
     cmd.append(str(obj))
