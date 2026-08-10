@@ -1204,6 +1204,10 @@
     "extab_CardRW_HardwareInit_Page": "@etb_80008168",
     "extabindex_CardRW_HardwareInit_Page": "@eti_80021080"
   },
+  "src/game/CardRW_Reprint_Page.c": {
+    "extab_CardRW_Reprint_Page": "@etb_80008170",
+    "extabindex_CardRW_Reprint_Page": "@eti_8002108C"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
