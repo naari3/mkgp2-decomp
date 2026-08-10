@@ -963,6 +963,21 @@ game/ProcessSystemTick.c:
 	extabindex  start:0x800221E4 end:0x800221F0
 	.text       start:0x8009D5F8 end:0x8009D638
 
+game/RaceContext_Dtor.c:
+	extab       start:0x800095D8 end:0x800095E0
+	extabindex  start:0x800221F0 end:0x800221FC
+	.text       start:0x8009D638 end:0x8009D6CC
+
+game/RaceContext_InitDefaults.c:
+	extab       start:0x800095E0 end:0x800095FC
+	extabindex  start:0x800221FC end:0x80022208
+	.text       start:0x8009D6CC end:0x8009DC80
+
+game/RaceContext_EnsureSingleton.c:
+	extab       start:0x800095FC end:0x8000961C
+	extabindex  start:0x80022208 end:0x80022220
+	.text       start:0x8009DC80 end:0x8009DD28
+
 game/BtMode_BaseDtor.c:
 	extab       start:0x80009760 end:0x80009768
 	extabindex  start:0x80022268 end:0x80022274

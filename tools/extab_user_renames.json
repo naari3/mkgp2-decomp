@@ -842,6 +842,20 @@
     "extabindex_AnimStatePool_Alloc": "@eti_8002291C",
     "extabindex_AnimStatePool_FreeAll": "@eti_80022928"
   },
+  "src/game/RaceContext_Dtor.c": {
+    "extab_RaceContext_Dtor": "@etb_800095D8",
+    "extabindex_RaceContext_Dtor": "@eti_800221F0"
+  },
+  "src/game/RaceContext_InitDefaults.c": {
+    "extab_RaceContext_InitDefaults": "@etb_800095E0",
+    "extabindex_RaceContext_InitDefaults": "@eti_800221FC"
+  },
+  "src/game/RaceContext_EnsureSingleton.c": {
+    "extab_dtor_8009DCE0": "@etb_800095FC",
+    "extab_RaceContext_EnsureSingleton": "@etb_80009604",
+    "extabindex_RaceContext_EnsureSingleton": "@eti_80022208",
+    "extabindex_dtor_8009DCE0": "@eti_80022214"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
