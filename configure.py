@@ -375,6 +375,7 @@ config.libs = [
             Object(Matching, "game/SpriteSlot_SetJointScaleByName.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/SpriteSlot_SetJointVisibilityByName.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/SpriteSlot_SetTransform.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/SpriteSlot_SetAnimFrameAndApplyScale.c", extab_padding=b"\x00\x00"),
                     Object(Matching, "game/auto_800A8F4C_block.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/auto_ONKARTHIT_block.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/CObj_GlobalProjPushFrame.c", extab_padding=b""),

@@ -980,6 +980,10 @@
     "extab_SpriteSlot_SetTransform": "@etb_8000B23C",
     "extabindex_SpriteSlot_SetTransform": "@eti_800238E8"
   },
+  "src/game/SpriteSlot_SetAnimFrameAndApplyScale.c": {
+    "extab_SpriteSlot_SetAnimFrameAndApplyScale": "@etb_8000B1FC",
+    "extabindex_SpriteSlot_SetAnimFrameAndApplyScale": "@eti_80023888"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
