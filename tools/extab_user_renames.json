@@ -1148,6 +1148,10 @@
     "extab_VSMode_SeedRandomItemSequence": "@etb_800095A0",
     "extabindex_VSMode_SeedRandomItemSequence": "@eti_8002219C"
   },
+  "src/game/VSMode_FrameUpdate.c": {
+    "extab_VSMode_FrameUpdate": "@etb_8000962C",
+    "extabindex_VSMode_FrameUpdate": "@eti_80022238"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

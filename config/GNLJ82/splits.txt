@@ -1142,6 +1142,11 @@ game/RaceContext_EnsureSingleton.c:
 	extabindex  start:0x80022208 end:0x80022220
 	.text       start:0x8009DC80 end:0x8009DD28
 
+game/VSMode_FrameUpdate.c:
+	extab       start:0x8000962C end:0x80009634
+	extabindex  start:0x80022238 end:0x80022244
+	.text       start:0x8009E0D4 end:0x8009F47C
+
 game/BtMode_Dtor.c:
 	extab       start:0x80009634 end:0x8000963C
 	extabindex  start:0x80022244 end:0x80022250
