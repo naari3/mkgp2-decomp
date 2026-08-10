@@ -385,6 +385,8 @@ config.libs = [
             Object(Matching, "game/clItemBoxResponder_DebrisArray_Dtor.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBoxResponder_DebrisParticle_Dtor.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBoxResponder_Rebind.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/clItemBoxResponder_DrawDebris.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/clItemBoxResponder_TickDebris.c"),
                     Object(Matching, "game/auto_800A8F4C_block.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/auto_ONKARTHIT_block.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/CObj_GlobalProjPushFrame.c", extab_padding=b""),
