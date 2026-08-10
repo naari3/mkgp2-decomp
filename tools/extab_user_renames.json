@@ -1120,6 +1120,10 @@
     "extab_Backup_PublishShadowCopy": "@etb_800082F0",
     "extabindex_Backup_PublishShadowCopy": "@eti_80021218"
   },
+  "src/game/Backup_PublishShadowCopy_Inline.c": {
+    "extab_Backup_PublishShadowCopy_Inline": "@etb_80008340",
+    "extabindex_Backup_PublishShadowCopy_Inline": "@eti_80021290"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

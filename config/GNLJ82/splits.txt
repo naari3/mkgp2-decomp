@@ -780,6 +780,11 @@ game/Backup_ClearAll.c:
 	extabindex  start:0x80021260 end:0x8002126C
 	.text       start:0x800751F0 end:0x8007526C
 
+game/Backup_PublishShadowCopy_Inline.c:
+	extab       start:0x80008340 end:0x80008348
+	extabindex  start:0x80021290 end:0x8002129C
+	.text       start:0x80075470 end:0x80075690
+
 game/Backup_Shutdown.c:
 	extab       start:0x80008350 end:0x80008358
 	extabindex  start:0x800212A8 end:0x800212B4
