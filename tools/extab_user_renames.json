@@ -908,6 +908,10 @@
     "extab_ItemObjectManager_RenderImpl": "@etb_8000B34C",
     "extabindex_ItemObjectManager_RenderImpl": "@eti_80023A08"
   },
+  "src/game/ItemObjectManager_PerFrameUpdate.c": {
+    "extab_ItemObjectManager_PerFrameUpdate": "@etb_80009C5C",
+    "extabindex_ItemObjectManager_PerFrameUpdate": "@eti_80022340"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
