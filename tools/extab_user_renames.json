@@ -1184,6 +1184,10 @@
     "extab_CardRW_TestTopMenu_Page": "@etb_800081B0",
     "extabindex_CardRW_TestTopMenu_Page": "@eti_800210EC"
   },
+  "src/game/CardRW_DispenseTest_Page.c": {
+    "extab_CardRW_DispenseTest_Page": "@etb_80008198",
+    "extabindex_CardRW_DispenseTest_Page": "@eti_800210C8"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

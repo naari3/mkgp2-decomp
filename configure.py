@@ -424,6 +424,7 @@ config.libs = [
             Object(Matching, "game/clFlowKart_Update.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardRW_CleaningTest_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardRW_TestTopMenu_Page.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/CardRW_DispenseTest_Page.c", extab_padding=b"\x00\x00"),
                     Object(Matching, "game/auto_800A8F4C_block.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/auto_ONKARTHIT_block.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/CObj_GlobalProjPushFrame.c", extab_padding=b""),
