@@ -138,25 +138,40 @@ def find_llvm_objcopy() -> str:
     )
 
 
-def load_all_renames() -> dict[str, str]:
-    """Collect rename pairs from every TU entry (flat name->name map).
+def load_tu_renames(obj: Path) -> dict[str, str]:
+    """Collect rename pairs for the TU that produced `obj`.
 
-    The same source name should not appear under two TUs with different
-    targets; tools.extab_user_renames.json is hand-maintained.
-    Returning a flat map lets us pass `--redefine-sym old=new` for every
-    pair and rely on llvm-objcopy silently skipping ones not present in
-    this particular .o.
+    Keys in tools.extab_user_renames.json are `src/...` source paths
+    (.c/.cpp). The object path is build/<ver>/src/.../<name>.o, so the TU
+    key is derived by stripping everything up to and including "src" and
+    trying both source extensions.
+
+    The special `_shared` key holds renames that apply to every TU
+    (e.g. `__nw__FUl` -> Alloc, the operator-new mapping used by all
+    C++ TUs). It is always merged in.
+
+    Passing only shared + this TU's pairs (instead of a flat map of
+    every TU) keeps the llvm-objcopy argv below the Windows
+    CreateProcess limit (WinError 206) now that the rename table has
+    ~900 entries.
     """
     if not RENAMES_JSON.is_file():
         return {}
     data = json.loads(RENAMES_JSON.read_text(encoding="utf-8"))
-    flat: dict[str, str] = {}
-    for tu, mapping in data.items():
-        if not isinstance(mapping, dict):
-            continue
-        for src, dst in mapping.items():
-            flat[src] = dst
-    return flat
+    renames: dict[str, str] = {}
+    shared = data.get("_shared")
+    if isinstance(shared, dict):
+        renames.update(shared)
+    parts = obj.parts
+    if "src" not in parts:
+        return renames
+    rel = Path(*parts[parts.index("src") + 1 :]).with_suffix("")
+    for ext in (".c", ".cpp"):
+        key = "src/" + rel.as_posix() + ext
+        mapping = data.get(key)
+        if isinstance(mapping, dict):
+            renames.update(mapping)
+    return renames
 
 
 def main() -> int:
@@ -172,7 +187,15 @@ def main() -> int:
         "--rename-section=.extab_user=extab",
         "--rename-section=.extabindex_user=extabindex",
     ]
-    for src, dst in load_all_renames().items():
+    renames = load_tu_renames(obj)
+    # extab/extabindex symbols are referenced cross-object (auto data blobs
+    # hold pointer tables into extab). The C side emits them `static`, so the
+    # renamed symbol stays local and the link fails with
+    # "undefined: '@etb_XXXX'". Globalize the sources before renaming.
+    for src in renames:
+        if src.startswith(("extab_", "extabindex_")):
+            cmd.append(f"--globalize-symbol={src}")
+    for src, dst in renames.items():
         cmd.append(f"--redefine-sym={src}={dst}")
     cmd.append(str(obj))
     subprocess.check_call(cmd)
