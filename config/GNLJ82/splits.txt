@@ -1344,6 +1344,11 @@ game/ItemObjectManager_Init.c:
 	extabindex  start:0x800239FC end:0x80023A08
 	.text       start:0x800D81E0 end:0x800D8288
 
+game/ItemObjectManager_RenderImpl.c:
+	extab       start:0x8000B34C end:0x8000B354
+	extabindex  start:0x80023A08 end:0x80023A14
+	.text       start:0x800D8288 end:0x800D85B8
+
 game/ItemHitRegistry.c:
 	.text       start:0x800D8840 end:0x800D8E20
 
