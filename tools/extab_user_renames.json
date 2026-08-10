@@ -1068,6 +1068,10 @@
     "extab_KartAudioChannel_StopSE8a": "@etb_80007700",
     "extabindex_KartAudioChannel_StopSE8a": "@eti_80020918"
   },
+  "src/game/KartAudioChannel_PlayJumpSE.c": {
+    "extab_KartAudioChannel_PlayJumpSE": "@etb_80007708",
+    "extabindex_KartAudioChannel_PlayJumpSE": "@eti_80020924"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

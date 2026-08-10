@@ -517,6 +517,11 @@ game/KartAudioChannel_StopSE8a.c:
 	extabindex  start:0x80020918 end:0x80020924
 	.text       start:0x80059F70 end:0x80059FD4
 
+game/KartAudioChannel_PlayJumpSE.c:
+	extab       start:0x80007708 end:0x80007710
+	extabindex  start:0x80020924 end:0x80020930
+	.text       start:0x80059FD4 end:0x8005A0BC
+
 game/KartItemAudio.c:
 	extab       start:0x80007710 end:0x80007728
 	extabindex  start:0x80020930 end:0x80020954
