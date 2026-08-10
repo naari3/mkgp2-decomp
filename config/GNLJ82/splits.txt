@@ -1469,6 +1469,11 @@ game/PowItem.c:
 	.text       start:0x800F5B7C end:0x800F6F54
 	.data       start:0x80421788 end:0x804217B0
 
+game/BombItem_Update.c:
+	extab       start:0x8000B704 end:0x8000B70C
+	extabindex  start:0x80023F9C end:0x80023FA8
+	.text       start:0x800F7584 end:0x800F7AFC
+
 game/TornadoItem.c:
 	extab       start:0x8000B70C end:0x8000B73C
 	extabindex  start:0x80023FA8 end:0x80023FF0
