@@ -9,14 +9,21 @@ typedef struct KartDriverView {
     int mode;
     char pad1F8[0x40];
     int finalLapJump;
+    char pad23C[0xCC];
+    void *itemDispatcher;
 } KartDriverView;
 
 typedef struct ItemView {
-    char pad0[0xA0];
+    char pad0[8];
+    int alias;
+    char padC[0x94];
     Vec3 velocity;
-    char padAC[0x0C];
+    float yaw;
+    float pitch;
+    char padB4[4];
     Vec3 position;
-    char padC4[0xC4];
+    float tetherAlpha;
+    char padC8[0xC0];
     KartDriverView *driver;
 } ItemView;
 
@@ -31,6 +38,12 @@ extern const float lbl_806D5AB8;
 extern const float lbl_806D5AC8;
 extern const float lbl_806D5AD0;
 extern u8 g_finalLapCoinJumpEnabled;
+extern int ItemAlias_HitRemapLookup(int alias);
+extern int ItemAlias_DestToSource(int alias, int zero);
+extern u8 ItemAliasTable_LookupSlotIndex(u8 source);
+extern void *KartDriver_GetJointByIdx(KartDriverView *driver, int index);
+extern float BuildOrientationFromYaw(float angle);
+extern const float lbl_806D5AD4;
 
 void Item_PrepareHitRebound(ItemView *item, Vec3 *rebound, Vec3 *oldPosition,
                             int *state)
@@ -97,3 +110,61 @@ void Item_PrepareHitRebound(ItemView *item, Vec3 *rebound, Vec3 *oldPosition,
         *state = 0;
     }
 }
+
+#pragma cplusplus on
+class ItemDispatcher {
+public:
+    virtual void slot0();
+    virtual void slot1();
+    virtual void slot2();
+    virtual void slot3();
+    virtual void slot4();
+    virtual void dispatch(int alias, int zero);
+};
+
+extern "C" {
+
+int Item_AdvanceTetherToJoint13(ItemView *item, float *progress,
+                                float tetherScale, float yawStep,
+                                float pitchStep)
+{
+    Vec3 jointPosition;
+    KartDriverView *driver;
+    int alias;
+    void *dispatcher;
+
+    if (item == 0) {
+        return 1;
+    }
+    if (lbl_806D5AB8 == *progress) {
+        return 1;
+    }
+
+    *progress += lbl_806D5AD4;
+    if (lbl_806D5AB8 < *progress) {
+        *progress = lbl_806D5AB8;
+        item->tetherAlpha = lbl_806D5AC8;
+        alias = ItemAlias_HitRemapLookup(item->alias);
+        driver = item->driver;
+        if (driver != 0 && alias != -1) {
+            if (ItemAliasTable_LookupSlotIndex(
+                    (u8)ItemAlias_DestToSource(alias, 0)) < 0x44) {
+                dispatcher = driver->itemDispatcher;
+                ((ItemDispatcher *)dispatcher)->dispatch(alias, 0);
+            }
+        }
+        return 1;
+    }
+
+    Mtx44_GetTranslation_RowMajor(
+        &jointPosition, KartDriver_GetJointByIdx(item->driver, 13));
+    Vec3_Subtract_DestFirst(&item->position, &jointPosition, &item->velocity);
+    Vec3_Scale(&item->position, &item->position, *progress);
+    item->tetherAlpha = tetherScale * (lbl_806D5AB8 - *progress);
+    item->yaw = BuildOrientationFromYaw(item->yaw + yawStep);
+    item->pitch = BuildOrientationFromYaw(item->pitch + pitchStep);
+    return 0;
+}
+
+}
+#pragma cplusplus off

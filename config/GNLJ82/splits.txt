@@ -1792,9 +1792,9 @@ game/ItemHitRegistry.c:
 	.text       start:0x800D8840 end:0x800D8E20
 
 game/Item.c:
-	extab       start:0x8000B36C end:0x8000B374
-	extabindex  start:0x80023A38 end:0x80023A44
-	.text       start:0x800D8FF0 end:0x800D91B8
+	extab       start:0x8000B36C end:0x8000B37C
+	extabindex  start:0x80023A38 end:0x80023A50
+	.text       start:0x800D8FF0 end:0x800D9340
 
 game/Item_DecayVelocityScalar.c:
 	.text       start:0x800D9D50 end:0x800D9D74
