@@ -9,7 +9,7 @@ extern void SpriteHandle_Destroy();
 extern void fn_80120A08();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int g_tachometer_isInitialized;
+extern unsigned char g_tachometer_isInitialized;
 extern unsigned int lbl_806D1459;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */

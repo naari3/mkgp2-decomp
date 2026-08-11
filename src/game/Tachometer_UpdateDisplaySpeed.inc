@@ -5,7 +5,7 @@
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_tachometer_coinCount;
 extern unsigned int g_tachometer_displaySpeed;
-extern unsigned int g_tachometer_isInitialized;
+extern unsigned char g_tachometer_isInitialized;
 extern unsigned int g_tachometer_maxDisplaySpeed;
 extern unsigned int lbl_806D4E60;
 extern unsigned int lbl_806D4E64;

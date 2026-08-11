@@ -18,7 +18,7 @@ extern unsigned int FLOAT_806d146c;
 extern unsigned int FLOAT_806d1474;
 extern unsigned int g_gameMode;
 extern unsigned int g_tachometer_displaySpeed;
-extern unsigned int g_tachometer_isInitialized;
+extern unsigned char g_tachometer_isInitialized;
 extern unsigned int lbl_806D1459;
 extern unsigned int lbl_806D4E48;
 extern unsigned int lbl_806D4E4C;

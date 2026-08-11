@@ -7,7 +7,7 @@ extern unsigned int FLOAT_806cf25c;
 extern unsigned int FLOAT_806d1474;
 extern unsigned int g_tachometer_coinCount;
 extern unsigned int g_tachometer_coinTier;
-extern unsigned int g_tachometer_isInitialized;
+extern unsigned char g_tachometer_isInitialized;
 
 /* --- function index (3 fns, .text 0x800AB17C..0x800AB220) ---
  * [  0] 0x800AB17C size:0x20    global Tachometer_SetMaxSpeedRef
@@ -16,69 +16,31 @@ extern unsigned int g_tachometer_isInitialized;
  */
 
 /* --- forward decls --- */
-asm void Tachometer_SetMaxSpeedRef(void);
-asm void Tachometer_SetDisplaySpeedRef(void);
-asm void Tachometer_SetCoinCount(void);
+int Tachometer_SetMaxSpeedRef(float value);
+int Tachometer_SetDisplaySpeedRef(float value);
+int Tachometer_SetCoinCount(int count);
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void Tachometer_SetMaxSpeedRef(void) { /* 0x800AB17C size:0x20 */
-    nofralloc
-    lbz r0, g_tachometer_isInitialized(r13)
-    cmplwi r0, 0x0
-    bne Tachometer_SetMaxSpeedRef_L_800AB190
-    li r3, 0x0
-    blr
-    Tachometer_SetMaxSpeedRef_L_800AB190:
-    stfs f1, FLOAT_806cf25c(r13)
-    li r3, 0x1
-    blr
+int Tachometer_SetMaxSpeedRef(float value) { /* 0x800AB17C size:0x20 */
+    if (!g_tachometer_isInitialized) return 0;
+    *(float *)&FLOAT_806cf25c = value;
+    return 1;
 }
 
-asm void Tachometer_SetDisplaySpeedRef(void) { /* 0x800AB19C size:0x20 */
-    nofralloc
-    lbz r0, g_tachometer_isInitialized(r13)
-    cmplwi r0, 0x0
-    bne Tachometer_SetDisplaySpeedRef_L_800AB1B0
-    li r3, 0x0
-    blr
-    Tachometer_SetDisplaySpeedRef_L_800AB1B0:
-    stfs f1, FLOAT_806d1474(r13)
-    li r3, 0x1
-    blr
+int Tachometer_SetDisplaySpeedRef(float value) { /* 0x800AB19C size:0x20 */
+    if (!g_tachometer_isInitialized) return 0;
+    *(float *)&FLOAT_806d1474 = value;
+    return 1;
 }
 
-asm void Tachometer_SetCoinCount(void) { /* 0x800AB1BC size:0x64 */
-    nofralloc
-    lbz r0, g_tachometer_isInitialized(r13)
-    cmplwi r0, 0x0
-    bne Tachometer_SetCoinCount_L_800AB1D0
-    li r3, 0x0
-    blr
-    Tachometer_SetCoinCount_L_800AB1D0:
-    cmpwi r3, 0x0
-    stw r3, g_tachometer_coinCount(r13)
-    bgt Tachometer_SetCoinCount_L_800AB1E8
-    li r0, 0x0
-    stw r0, g_tachometer_coinTier(r13)
-    b Tachometer_SetCoinCount_L_800AB218
-    Tachometer_SetCoinCount_L_800AB1E8:
-    cmpwi r3, 0x5
-    bge Tachometer_SetCoinCount_L_800AB1FC
-    li r0, 0x1
-    stw r0, g_tachometer_coinTier(r13)
-    b Tachometer_SetCoinCount_L_800AB218
-    Tachometer_SetCoinCount_L_800AB1FC:
-    cmpwi r3, 0xa
-    bge Tachometer_SetCoinCount_L_800AB210
-    li r0, 0x2
-    stw r0, g_tachometer_coinTier(r13)
-    b Tachometer_SetCoinCount_L_800AB218
-    Tachometer_SetCoinCount_L_800AB210:
-    li r0, 0x3
-    stw r0, g_tachometer_coinTier(r13)
-    Tachometer_SetCoinCount_L_800AB218:
-    li r3, 0x1
-    blr
+int Tachometer_SetCoinCount(int count) { /* 0x800AB1BC size:0x64 */
+    if (!g_tachometer_isInitialized) return 0;
+    g_tachometer_coinCount = count;
+    if (count <= 0) g_tachometer_coinTier = 0;
+    else if (count < 5) g_tachometer_coinTier = 1;
+    else if (count < 10) g_tachometer_coinTier = 2;
+    else g_tachometer_coinTier = 3;
+    return 1;
 }
 
 /* The remaining address-ordered members of the Tachometer unit. */

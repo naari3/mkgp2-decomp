@@ -21,7 +21,7 @@ extern unsigned int g_ccClass;
 extern unsigned int g_tachometer_coinCount;
 extern unsigned int g_tachometer_coinTier;
 extern unsigned int g_tachometer_displaySpeed;
-extern unsigned int g_tachometer_isInitialized;
+extern unsigned char g_tachometer_isInitialized;
 extern unsigned int g_tachometer_maxDisplaySpeed;
 extern unsigned int lbl_806D1459;
 extern unsigned int lbl_806D145C;
