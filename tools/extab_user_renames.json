@@ -1244,6 +1244,10 @@
     "extab_KartDriver_SetJointPosY_Slot3b": "@etb_80006210",
     "extabindex_KartDriver_SetJointPosY_Slot3b": "@eti_8001FEB0"
   },
+  "src/game/KartDriver_SetUniformScale_4Wheels.c": {
+    "extab_KartDriver_SetUniformScale_4Wheels": "@etb_80006228",
+    "extabindex_KartDriver_SetUniformScale_4Wheels": "@eti_8001FED4"
+  },
   "src/game/KartDriver_TriggerSlotC3Action.c": {
     "extab_KartDriver_TriggerSlotC3Action": "@etb_80006230",
     "extabindex_KartDriver_TriggerSlotC3Action": "@eti_8001FEE0"
