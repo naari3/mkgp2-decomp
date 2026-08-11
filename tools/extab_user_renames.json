@@ -1332,6 +1332,10 @@
     "extab_KartDriver_BuildJoint12EulerTransform": "@etb_8000B21C",
     "extabindex_KartDriver_BuildJoint12EulerTransform": "@eti_800238B8"
   },
+  "src/game/KartDriver_InitFull.c": {
+    "extab_KartDriver_InitFull": "@etb_800064E0",
+    "extabindex_KartDriver_InitFull": "@eti_8001FF7C"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

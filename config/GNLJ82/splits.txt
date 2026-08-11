@@ -428,6 +428,11 @@ game/KartDriver_Init.c:
 	extabindex  start:0x8001FF70 end:0x8001FF7C
 	.text       start:0x80044578 end:0x80044D50
 
+game/KartDriver_InitFull.c:
+	extab       start:0x800064E0 end:0x80006668
+	extabindex  start:0x8001FF7C end:0x8001FF88
+	.text       start:0x80044D50 end:0x80045950
+
 game/KartDriver_Dtor.c:
 	extab       start:0x80006668 end:0x80006670
 	extabindex  start:0x8001FF88 end:0x8001FF94
