@@ -1378,6 +1378,9 @@
     "extab_Effect_SmokeCloud_DriveSubslots": "@etb_8000A950",
     "extabindex_Effect_SmokeCloud_DriveSubslots": "@eti_80022F64"
   },
+  "src/game/EffectSteering.c": {
+    "@126": "jumptable_803F9A80"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

@@ -652,13 +652,10 @@ game/EffectState_HasContent.c:
 	.text       start:0x8005B168 end:0x8005B17C
 
 game/EffectSteering.c:
-	extab       start:0x80007774 end:0x80007794
-	extabindex  start:0x800209A8 end:0x800209D8
-	.text       start:0x8005B288 end:0x8005B880
-	.data       start:0x803F9A08 end:0x803F9A58
-
-game/EffectSteering_InputViscosity_SetFieldC.c:
-	.text       start:0x8005BB00 end:0x8005BB0C
+	extab       start:0x80007774 end:0x800077B4
+	extabindex  start:0x800209A8 end:0x80020A08
+	.text       start:0x8005B288 end:0x8005BD04
+	.data       start:0x803F9A08 end:0x803F9AA8
 
 game/clItemBoxResponder_DebrisArray_Dtor.c:
 	extab       start:0x80007B4C end:0x80007B54
