@@ -1405,13 +1405,7 @@ __declspec(section ".extab_user") static const unsigned char extab_dtor_800529A8
 /* extab_dtor_80052BCC: auto-emitted (real C++ dtor, see body) */
 /* extab_dtor_80052C48: auto-emitted (real C++ dtor, see body) */
 /* extab_dtor_80052CC4: auto-emitted (real C++ dtor, see body) */
-__declspec(section ".extab_user") static const unsigned char extab_dtor_80052D40[40] = {
-    0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x34,
-    0x00, 0x04, 0x00, 0x18, 0x00, 0x00, 0x00, 0x54,
-    0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4C,
-    0x00, 0x00, 0x00, 0x08, 0x8D, 0x00, 0x00, 0x08
-};
+/* extab_dtor_80052D40: auto-emitted (real C++ dtor, see body) */
 __declspec(section ".extab_user") static const unsigned char extab_KartItem_UpdateShadowBillboardAndViewport[8] = {
     0x20, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -1692,9 +1686,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 /* extabindex_dtor_80052BCC: auto-emitted */
 /* extabindex_dtor_80052C48: auto-emitted */
 /* extabindex_dtor_80052CC4: auto-emitted */
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_80052D40 = {
-    (void *)&dtor_80052D40, 0x0000007C, (void *)extab_dtor_80052D40
-};
+/* extabindex_dtor_80052D40: auto-emitted */
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_KartMovement_UpdateBoostVisualBlend = {
     (void *)&KartMovement_UpdateBoostVisualBlend, 0x00000164, (void *)extab_KartMovement_UpdateBoostVisualBlend
 };
@@ -10327,43 +10319,20 @@ Holder80052CC4::~Holder80052CC4() throw() {
 #pragma exceptions reset
 #pragma cplusplus off
 
-asm void dtor_80052D40(void) { /* 0x80052D40 size:0x7C */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stw r31, 0x2c(r1)
-    mr r31, r1
-    stw r30, 0x28(r1)
-    mr r30, r4
-    stw r29, 0x24(r1)
-    mr. r29, r3
-    beq dtor_80052D40_L_80052D84
-    lwz r3, 0x0(r29)
-    li r4, 0x1
-    bl AudioChannel_DtorWithSeStop
-    extsh. r0, r30
-    ble dtor_80052D40_L_80052D84
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    dtor_80052D40_L_80052D84:
-    mr r3, r29
-    b dtor_80052D40_L_80052D98
-    addi r3, r31, 0x8
-    bl __unexpected
-    dtor_80052D40_L_80052D94:
-    b dtor_80052D40_L_80052D94
-    dtor_80052D40_L_80052D98:
-    mr r10, r31
-    lwz r31, 0x2c(r31)
-    lwz r30, 0x28(r10)
-    lwz r29, 0x24(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+#pragma cplusplus on
+#pragma exceptions on
+struct Owned80052D40 {
+    ~Owned80052D40();
+};
+struct Holder80052D40 {
+    Owned80052D40 *p; /* 0x0 */
+    ~Holder80052D40() throw();
+};
+Holder80052D40::~Holder80052D40() throw() {
+    delete p;
 }
+#pragma exceptions reset
+#pragma cplusplus off
 
 /* parked at 98.88% (3 probes): scratch-fp tie-break cascade in the lerp block -
  * target assigns the first table temp (t[5]) to f0, CW picks f4 and five other
