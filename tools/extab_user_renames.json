@@ -1374,6 +1374,10 @@
     "extab_KartFx_MasterTick": "@etb_8000A720",
     "extabindex_KartFx_MasterTick": "@eti_80022C1C"
   },
+  "src/game/Effect.c": {
+    "extab_Effect_SmokeCloud_DriveSubslots": "@etb_8000A950",
+    "extabindex_Effect_SmokeCloud_DriveSubslots": "@eti_80022F64"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

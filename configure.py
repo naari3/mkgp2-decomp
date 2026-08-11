@@ -707,6 +707,7 @@ config.libs = [
             Object(Matching, "game/GX_EndDraw.c", extra_cflags=["-sdata 16"]),
             Object(Matching, "game/TexMgr_Apply.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/ProcessSystemTick.c"),
+            Object(Matching, "game/Effect.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartFx.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/NokoNoko_CountDefeated.c"),
             Object(Matching, "game/NokoNoko_Update.c", extab_padding=b"\x00\x00"),
