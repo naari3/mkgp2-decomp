@@ -1165,7 +1165,7 @@ int KartItem_CancelActiveEffect(KartItemOpsView *self);
 unsigned char CarObject_ApplyDriftBoost(KartItemOpsView *self, float amount, int id);
 void KartMovement_SetMueScale(KartItemOpsView *self, float v);
 void KartMovement_SetSpeedScale(KartItemOpsView *self, float v);
-asm void KartItem_GetCarVelocityVec3(void);
+void KartItem_GetCarVelocityVec3(KartItemOpsView *self, Vec3 *out);
 void KartItem_SetCarVelocityVec3(KartItemOpsView *self, Vec3 *v);
 void KartItem_StopCarObjectSE(KartItemOpsView *self);
 unsigned char KartItem_TryArmBoostOnLanding(KartItemOpsView *self, unsigned char spin);
@@ -6729,26 +6729,27 @@ void KartMovement_SetSpeedScale(KartItemOpsView *self, float v) { /* 0x8004F500 
 }
 #pragma exceptions reset
 
-/* C probe reached 99.08% (volatile Vec3 local reproduces the dead spill
- * stores, frame, and store sequence; only the first two lfs are swapped:
- * target loads z,y,x while CW 1.3.2 schedules y,z,x for every init order
- * tried). Scheduler pair-swap class; kept as asm. */
-asm void KartItem_GetCarVelocityVec3(void) { /* 0x8004F50C size:0x34 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    lwz r3, 0x28(r3)
-    lfs f2, 0x184(r3)
-    lfs f1, 0x180(r3)
-    lfs f0, 0x17c(r3)
-    stfs f1, 0xc(r1)
-    stfs f0, 0x0(r4)
-    stfs f1, 0x4(r4)
-    stfs f0, 0x8(r1)
-    stfs f2, 0x10(r1)
-    stfs f2, 0x8(r4)
-    addi r1, r1, 0x20
-    blr
+/* Volatile z read pins the target z,y,x load order; volatile spill retains
+ * the original dead stack stores. */
+#pragma exceptions off
+void KartItem_GetCarVelocityVec3(KartItemOpsView *self, Vec3 *out) { /* 0x8004F50C size:0x34 */
+    volatile Vec3 spill;
+    KartMovementSpeedView *mv = self->movement;
+    float x;
+    float y;
+    float z;
+
+    z = *(volatile float *)&mv->velZ;
+    y = mv->velY;
+    x = mv->velX;
+    spill.y = y;
+    out->x = x;
+    out->y = y;
+    spill.x = x;
+    spill.z = z;
+    out->z = z;
 }
+#pragma exceptions reset
 
 #pragma exceptions off
 void KartItem_SetCarVelocityVec3(KartItemOpsView *self, Vec3 *v) { /* 0x8004F540 size:0x20 */

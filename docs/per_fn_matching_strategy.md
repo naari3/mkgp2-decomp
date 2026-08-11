@@ -939,3 +939,14 @@ brute force (~60 build) を省けた** (反省点。SKILL の CW132 節に突合
   **正しい bytes を出す** (r13 = _SDA_BASE_ = 0x806D6D20)。objdiff がそこを
   diff 表示するのは「reloc 有り vs raw offset」の表示差で、bytes は一致
   している。dol diff / SHA-1 が最終裁定
+
+### 19.7 volatile-cast read as a local FP scheduling barrier (2026-08-11)
+
+`KartItem_GetCarVelocityVec3` (commit pending in merge cycle) reached 100% by
+combining a `volatile Vec3` spill with a volatile-cast read of only `velZ`.
+The volatile local preserves target dead stack spills; the isolated volatile read
+pins the target z/y/x `lfs` order without changing the emitted load instruction.
+When a small Vec3 copy is otherwise byte-identical except for independent FP load
+order, first keep the spill object volatile, then apply the volatile cast only to
+the load that must act as the scheduling barrier. Avoid marking all source fields
+volatile because that can over-constrain unrelated loads.
