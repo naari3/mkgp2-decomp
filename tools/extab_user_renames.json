@@ -1358,6 +1358,18 @@
     "extab_GabyouItem_BuildLocalTransformFromHandJoint": "@etb_8000B3DC",
     "extabindex_GabyouItem_BuildLocalTransformFromHandJoint": "@eti_80023AE0"
   },
+  "src/game/MiniGame.c": {
+    "@31": "jumptable_8048E158",
+    "MiniGame_CreateByCourseid__Fv": "MiniGame_CreateByCourseid",
+    "__ct__9SuikaBallFv": "SuikaBall_Init",
+    "__ct__17NokoNokoChallengeFv": "NokoNokoChallenge_Init",
+    "__ct__16ReverseChallengeFv": "ReverseChallenge_Init",
+    "__ct__12BiribiriLandFv": "BiribiriLand_Init",
+    "__ct__9CGameCoinFv": "CGameCoin_Init",
+    "__ct__8RivalRunFv": "RivalRun_Init",
+    "__ct__22MiniGame_CoinChallengeFv": "MiniGame_CoinChallenge_Init",
+    "__ct__16JumpDistanceModeFv": "JumpDistanceMode_Init"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

@@ -1959,6 +1959,12 @@ game/NokoNokoChallenge_TransitionToResult.c:
 	extabindex  start:0x80024764 end:0x80024770
 	.text       start:0x80122E58 end:0x80122E80
 
+game/MiniGame.c:
+	extab       start:0x8000BD04 end:0x8000BD8C
+	extabindex  start:0x80024788 end:0x80024794
+	.text       start:0x80123050 end:0x8012318C
+	.data       start:0x8048E158 end:0x8048E178
+
 game/SuikaBallObj_Render.c:
 	extab       start:0x8000BE88 end:0x8000BE90
 	extabindex  start:0x8002486C end:0x80024878
