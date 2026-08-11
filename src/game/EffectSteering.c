@@ -11,6 +11,7 @@ extern void KartItem_ResetStrPcbToIdle();
 /* --- extern decls: sda21-referenced data --- */
 extern const float lbl_806D2978;
 extern unsigned int lbl_806D297C;
+extern const float lbl_806D2980;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -38,7 +39,22 @@ struct EffectSteeringScale {
     unsigned char active; unsigned char pad19[3]; volatile int mode;
     EffectInputScale *input; EffectInputScale *inputs[8]; float output;
 };
+struct EffectInputShake {
+    virtual void v0();
+    virtual void reset();
+    unsigned char pad4[4];
+    float field8;
+    int fieldC;
+    int field10;
+    int field14;
+    int field18;
+    int field1C;
+    unsigned char field20;
+    unsigned char pad21[7];
+    float field28;
+};
 extern "C" int EffectSteering_InitForScale(EffectSteeringScale *self, float duration, float value);
+extern "C" int EffectSteering_InitForShake(EffectSteeringScale *self, float duration, float value, float cycle, float final_value);
 #pragma cplusplus off
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
@@ -75,6 +91,16 @@ __declspec(section ".extab_user") static const unsigned char extab_EffectSteerin
 #pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_EffectSteering_InitForScale = {
     (void *)&EffectSteering_InitForScale, 0x00000198, (void *)extab_EffectSteering_InitForScale
+};
+
+#pragma section R ".extab_user"
+__declspec(section ".extab_user") static const unsigned char extab_EffectSteering_InitForShake[8] = {
+    0x09, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+#pragma section R ".extabindex_user"
+__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_EffectSteering_InitForShake = {
+    (void *)&EffectSteering_InitForShake, 0x00000258, (void *)extab_EffectSteering_InitForShake
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
@@ -266,6 +292,64 @@ no_reset:
 selected:
     if (!ok) return 0;
     self->inputs[6]->field8 = value;
+    return 1;
+}
+
+extern "C" int EffectSteering_InitForShake(EffectSteeringScale *self, float duration, float value, float cycle, float final_value) {
+    unsigned char ok;
+    EffectInputShake *shake;
+    int half;
+    if (self->mode != 0) {
+        self->input->reset();
+    }
+    self->mode = 6;
+    if (self->step > 0) {
+        if (self->end >= self->start) goto reset;
+        goto no_reset;
+    } else {
+        if (self->end > self->start) goto no_reset;
+    }
+reset:
+    self->start = 0;
+    self->current = self->start;
+    self->end = (int)(lbl_806D2978 * duration);
+    self->step = 1;
+    self->active = 1;
+no_reset:
+    switch (self->mode) {
+    case 1: self->input = self->inputs[0]; break;
+    case 2:
+    case 4: self->input = self->inputs[1]; break;
+    case 3: self->input = self->inputs[2]; break;
+    case 5: self->input = self->inputs[3]; break;
+    case 6: self->input = self->inputs[4]; break;
+    case 7: self->input = self->inputs[5]; break;
+    case 8: self->input = self->inputs[6]; break;
+    case 9: self->input = self->inputs[7]; break;
+    default: DebugPrintf((const char *)lbl_802EDD98); ok = 0; goto selected;
+    }
+    ok = 1;
+selected:
+    if (!ok) return 0;
+    shake = (EffectInputShake *)self->inputs[4];
+    shake->reset();
+    shake->field8 = value;
+    shake->field28 = final_value;
+    shake->fieldC = (int)(lbl_806D2980 * (lbl_806D2978 * cycle));
+    half = shake->fieldC / 2;
+    if (shake->field1C > 0) {
+        if (shake->field14 >= shake->field10) goto shake_reset;
+        goto done;
+    } else {
+        if (shake->field14 > shake->field10) goto done;
+    }
+shake_reset:
+    shake->field10 = 0;
+    shake->field18 = shake->field10;
+    shake->field14 = half;
+    shake->field1C = 1;
+    shake->field20 = 1;
+done:
     return 1;
 }
 #pragma cplusplus off
