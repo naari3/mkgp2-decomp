@@ -1300,6 +1300,10 @@
     "extab_KartDriver_New_Full": "@etb_80006688",
     "extabindex_KartDriver_New_Full": "@eti_8001FFA0"
   },
+  "src/game/KartDriver_Init.c": {
+    "extab_KartDriver_Init": "@etb_80006448",
+    "extabindex_KartDriver_Init": "@eti_8001FF70"
+  },
   "src/game/KartDriver_Dtor.c": {
     "extab_KartDriver_Dtor": "@etb_80006668",
     "extabindex_KartDriver_Dtor": "@eti_8001FF88"
