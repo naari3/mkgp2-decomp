@@ -1400,13 +1400,7 @@ __declspec(section ".extab_user") static const unsigned char extab_dtor_800529A8
     0x8D, 0x00, 0x00, 0x20
 };
 /* extab_dtor_80052A58: auto-emitted (real C++ dtor, see body) */
-__declspec(section ".extab_user") static const unsigned char extab_dtor_80052AD4[40] = {
-    0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x34,
-    0x00, 0x04, 0x00, 0x18, 0x00, 0x00, 0x00, 0x54,
-    0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4C,
-    0x00, 0x00, 0x00, 0x08, 0x8D, 0x00, 0x00, 0x08
-};
+/* extab_dtor_80052AD4: auto-emitted (real C++ dtor, see body) */
 __declspec(section ".extab_user") static const unsigned char extab_dtor_80052B50[40] = {
     0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x34,
     0x00, 0x04, 0x00, 0x18, 0x00, 0x00, 0x00, 0x54,
@@ -1717,9 +1711,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&dtor_800529A8, 0x000000B0, (void *)extab_dtor_800529A8
 };
 /* extabindex_dtor_80052A58: auto-emitted */
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_80052AD4 = {
-    (void *)&dtor_80052AD4, 0x0000007C, (void *)extab_dtor_80052AD4
-};
+/* extabindex_dtor_80052AD4: auto-emitted */
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_80052B50 = {
     (void *)&dtor_80052B50, 0x0000007C, (void *)extab_dtor_80052B50
 };
@@ -10290,43 +10282,21 @@ Holder80052A58::~Holder80052A58() throw() {
 #pragma exceptions reset
 #pragma cplusplus off
 
-asm void dtor_80052AD4(void) { /* 0x80052AD4 size:0x7C */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stw r31, 0x2c(r1)
-    mr r31, r1
-    stw r30, 0x28(r1)
-    mr r30, r4
-    stw r29, 0x24(r1)
-    mr. r29, r3
-    beq dtor_80052AD4_L_80052B18
-    lwz r3, 0x0(r29)
-    li r4, 0x1
-    bl PlayCamera_Dtor
-    extsh. r0, r30
-    ble dtor_80052AD4_L_80052B18
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    dtor_80052AD4_L_80052B18:
-    mr r3, r29
-    b dtor_80052AD4_L_80052B2C
-    addi r3, r31, 0x8
-    bl __unexpected
-    dtor_80052AD4_L_80052B28:
-    b dtor_80052AD4_L_80052B28
-    dtor_80052AD4_L_80052B2C:
-    mr r10, r31
-    lwz r31, 0x2c(r31)
-    lwz r30, 0x28(r10)
-    lwz r29, 0x24(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+/* dtor_80052AD4: PlayCamera owned-pointer holder deleting dtor. */
+#pragma cplusplus on
+#pragma exceptions on
+struct Owned80052AD4 {
+    ~Owned80052AD4();
+};
+struct Holder80052AD4 {
+    Owned80052AD4 *p; /* 0x0 */
+    ~Holder80052AD4() throw();
+};
+Holder80052AD4::~Holder80052AD4() throw() {
+    delete p;
 }
+#pragma exceptions reset
+#pragma cplusplus off
 
 asm void dtor_80052B50(void) { /* 0x80052B50 size:0x7C */
     nofralloc

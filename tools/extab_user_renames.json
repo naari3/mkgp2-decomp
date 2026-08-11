@@ -605,7 +605,9 @@
     "__dt__14Holder8005292CFv": "dtor_8005292C",
     "__dt__13Owned8005292CFv": "EffectSteering_Dtor",
     "__dt__14Holder80052A58Fv": "dtor_80052A58",
-    "__dt__13Owned80052A58Fv": "KartEffectFadeTransit_Dtor"
+    "__dt__13Owned80052A58Fv": "KartEffectFadeTransit_Dtor",
+    "__dt__14Holder80052AD4Fv": "dtor_80052AD4",
+    "__dt__13Owned80052AD4Fv": "PlayCamera_Dtor"
   },
   "src/game/clFlowItem.c": {
     "__ct__10clFlowItemFv": "clFlowItem_Init",
