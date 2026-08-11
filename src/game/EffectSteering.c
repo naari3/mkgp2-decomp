@@ -644,4 +644,51 @@ done_input_vibrate:
     DebugPrintf(&lbl_806D298C, value);
     return 1;
 }
+
+extern "C" int EffectSteering_InitForLock(EffectSteeringScale *self, float duration, float value);
+#pragma section R ".extab_user"
+__declspec(section ".extab_user") static const unsigned char extab_EffectSteering_InitForLock[8] = {
+    0x08, 0x8A, 0, 0, 0, 0, 0, 0
+};
+#pragma section R ".extabindex_user"
+__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_EffectSteering_InitForLock = {
+    (void *)&EffectSteering_InitForLock, 0x1AC, (void *)extab_EffectSteering_InitForLock
+};
+
+extern "C" int EffectSteering_InitForLock(EffectSteeringScale *self, float duration, float value) {
+    unsigned char ok;
+    EffectInputScale *input;
+    if (self->mode != 0) self->input->reset();
+    self->mode = 1;
+    if (self->step > 0) {
+        if (self->end >= self->start) goto reset_lock;
+        goto no_reset_lock;
+    } else if (self->end > self->start) goto no_reset_lock;
+reset_lock:
+    self->start = 0;
+    self->current = self->start;
+    self->end = (int)(lbl_806D2978 * duration);
+    self->step = 1;
+    self->active = 1;
+no_reset_lock:
+    switch (self->mode) {
+    case 1: self->input = self->inputs[0]; break;
+    case 2:
+    case 4: self->input = self->inputs[1]; break;
+    case 3: self->input = self->inputs[2]; break;
+    case 5: self->input = self->inputs[3]; break;
+    case 6: self->input = self->inputs[4]; break;
+    case 7: self->input = self->inputs[5]; break;
+    case 8: self->input = self->inputs[6]; break;
+    case 9: self->input = self->inputs[7]; break;
+    default: DebugPrintf((const char *)lbl_802EDD98); ok = 0; goto selected_lock;
+    }
+    ok = 1;
+selected_lock:
+    if (!ok) return 0;
+    input = self->inputs[0];
+    input->reset();
+    input->field8 = value;
+    return 1;
+}
 #pragma cplusplus off
