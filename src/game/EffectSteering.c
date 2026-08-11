@@ -450,4 +450,58 @@ selected_viscosity:
     input->field18 = value18;
     return 1;
 }
+
+extern "C" int EffectSteering_InitForViscosity_Uniform(EffectSteeringScale *self, float duration,
+                                                        float uniform_value, float value18);
+#pragma section R ".extab_user"
+__declspec(section ".extab_user") static const unsigned char extab_EffectSteering_InitForViscosity_Uniform[8] = {
+    0x08, 0xCA, 0, 0, 0, 0, 0, 0
+};
+#pragma section R ".extabindex_user"
+__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_EffectSteering_InitForViscosity_Uniform = {
+    (void *)&EffectSteering_InitForViscosity_Uniform, 0x1C0, (void *)extab_EffectSteering_InitForViscosity_Uniform
+};
+
+extern "C" int EffectSteering_InitForViscosity_Uniform(EffectSteeringScale *self, float duration,
+                                                        float uniform_value, float value18) {
+    unsigned char ok;
+    EffectInputViscosity *input;
+    float zero;
+    if (self->mode != 0) self->input->reset();
+    self->mode = 3;
+    if (self->step > 0) {
+        if (self->end >= self->start) goto reset_uniform;
+        goto no_reset_uniform;
+    } else if (self->end > self->start) goto no_reset_uniform;
+reset_uniform:
+    self->start = 0;
+    self->current = self->start;
+    self->end = (int)(lbl_806D2978 * duration);
+    self->step = 1;
+    self->active = 1;
+no_reset_uniform:
+    switch (self->mode) {
+    case 1: self->input = self->inputs[0]; break;
+    case 2:
+    case 4: self->input = self->inputs[1]; break;
+    case 3: self->input = self->inputs[2]; break;
+    case 5: self->input = self->inputs[3]; break;
+    case 6: self->input = self->inputs[4]; break;
+    case 7: self->input = self->inputs[5]; break;
+    case 8: self->input = self->inputs[6]; break;
+    case 9: self->input = self->inputs[7]; break;
+    default: DebugPrintf((const char *)lbl_802EDD98); ok = 0; goto selected_uniform;
+    }
+    ok = 1;
+selected_uniform:
+    if (!ok) return 0;
+    input = (EffectInputViscosity *)self->inputs[2];
+    zero = *(float *)&lbl_806D297C;
+    input->field8 = uniform_value;
+    input->fieldC = uniform_value;
+    input->field10 = uniform_value;
+    input->field14 = zero;
+    input->field18 = value18;
+    return 1;
+}
 #pragma cplusplus off
