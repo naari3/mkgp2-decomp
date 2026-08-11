@@ -1216,7 +1216,7 @@ asm void StlList_EraseRange(void *ret, StlList *l, StlListNode **beg, StlListNod
 asm void StlList_InsertBefore(void);
 void StlList_InitEmpty(StlList *l);
 void *dtor_80052744(void *self, short flag);
-asm void dtor_8005278C(void);
+void dtor_8005278C(void);
 void *dtor_80052808(void *self, short flag);
 void *dtor_8005285C(void *self, short flag);
 asm void dtor_800528B0(void);
