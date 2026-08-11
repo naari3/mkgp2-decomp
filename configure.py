@@ -405,6 +405,7 @@ config.libs = [
             Object(Matching, "game/Backup_ClearAll.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/Backup_ClearBookkeeping.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/Backup_GetMinutesSinceBoot.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/card.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/Backup_ClearHiScores.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/Backup_LoadFromMemoryOrInit.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/Backup_PublishShadowCopy.c", extab_padding=b"\x00\x00"),

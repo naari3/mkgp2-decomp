@@ -935,6 +935,11 @@ game/Backup_GetMinutesSinceBoot.c:
 	extabindex  start:0x80021224 end:0x80021230
 	.text       start:0x8007458C end:0x800746A8
 
+game/card.c:
+	extab       start:0x80008300 end:0x80008308
+	extabindex  start:0x80021230 end:0x8002123C
+	.text       start:0x800746A8 end:0x80074910
+
 game/TaRecord.c:
 	.text       start:0x80074910 end:0x80074C30
 

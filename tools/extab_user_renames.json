@@ -1383,6 +1383,10 @@
   "src/game/EffectSteering.c": {
     "@126": "jumptable_803F9A80"
   },
+  "src/game/card.c": {
+    "extab_card_backup": "@etb_80008300",
+    "extabindex_card_backup": "@eti_80021230"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
