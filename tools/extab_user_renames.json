@@ -1264,6 +1264,10 @@
     "extab_KartDriver_TickAction_78d00": "@etb_80006268",
     "extabindex_KartDriver_TickAction_78d00": "@eti_8001FF34"
   },
+  "src/game/KartDriver_TickAction_79268_AndSetSlot5aEulerZ.c": {
+    "extab_KartDriver_TickAction_79268_AndSetSlot5aEulerZ": "@etb_80006250",
+    "extabindex_KartDriver_TickAction_79268_AndSetSlot5aEulerZ": "@eti_8001FF10"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

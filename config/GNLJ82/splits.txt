@@ -345,6 +345,11 @@ game/KartDriver_TickAction_79260.c:
 	extabindex  start:0x8001FF04 end:0x8001FF10
 	.text       start:0x800420D0 end:0x80042120
 
+game/KartDriver_TickAction_79268_AndSetSlot5aEulerZ.c:
+	extab       start:0x80006250 end:0x80006258
+	extabindex  start:0x8001FF10 end:0x8001FF1C
+	.text       start:0x80042120 end:0x80042238
+
 game/KartDriver_TickAction_78778.c:
 	extab       start:0x80006258 end:0x80006260
 	extabindex  start:0x8001FF1C end:0x8001FF28
