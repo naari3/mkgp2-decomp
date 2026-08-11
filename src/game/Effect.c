@@ -193,3 +193,5 @@ asm void Effect_SmokeCloud_DriveSubslots(void) { /* 0x800C37C8 size:0x230 */
     addi r1, r1, 0x50
     blr
 }
+
+#include "src/game/Effect_SmokeCloud_Update.inc"

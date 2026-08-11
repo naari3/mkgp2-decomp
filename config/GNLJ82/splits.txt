@@ -1582,9 +1582,9 @@ game/KartFx.c:
 	.text       start:0x800B510C end:0x800B53BC
 
 game/Effect.c:
-	extab       start:0x8000A950 end:0x8000A958
-	extabindex  start:0x80022F64 end:0x80022F70
-	.text       start:0x800C37C8 end:0x800C39F8
+	extab       start:0x8000A950 end:0x8000A960
+	extabindex  start:0x80022F64 end:0x80022F7C
+	.text       start:0x800C37C8 end:0x800C3CC8
 
 game/VfxEffect_InitVariantAndResetPos.c:
 	extab       start:0x8000A9D8 end:0x8000A9E0
