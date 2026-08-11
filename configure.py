@@ -567,6 +567,7 @@ config.libs = [
             Object(Matching, "game/KartItem_RenderCb_Mode6_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartItem_RenderCb_Mode2or4_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectState_HasContent.c"),
+            Object(Matching, "game/EffectSteering.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/EffectSteering_InputViscosity_SetFieldC.c"),
             Object(Matching, "game/EffectActor_BindKartTargetPair.c"),
             Object(Matching, "game/DebrisArray_DrawForward.c", extra_cflags=["-Cpp_exceptions on"]),

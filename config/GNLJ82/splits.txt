@@ -651,6 +651,11 @@ game/KartItemAudio.c:
 game/EffectState_HasContent.c:
 	.text       start:0x8005B168 end:0x8005B17C
 
+game/EffectSteering.c:
+	extab       start:0x80007774 end:0x8000777C
+	extabindex  start:0x800209A8 end:0x800209B4
+	.text       start:0x8005B288 end:0x8005B43C
+
 game/EffectSteering_InputViscosity_SetFieldC.c:
 	.text       start:0x8005BB00 end:0x8005BB0C
 
