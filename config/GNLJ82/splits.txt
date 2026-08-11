@@ -657,10 +657,10 @@ game/EffectState_HasContent.c:
 	.text       start:0x8005B168 end:0x8005B17C
 
 game/EffectSteering.c:
-	extab       start:0x80007774 end:0x800077BC
-	extabindex  start:0x800209A8 end:0x80020A14
-	.text       start:0x8005B288 end:0x8005BEC4
-	.data       start:0x803F9A08 end:0x803F9AD0
+	extab       start:0x80007774 end:0x800077C4
+	extabindex  start:0x800209A8 end:0x80020A20
+	.text       start:0x8005B288 end:0x8005C0C4
+	.data       start:0x803F9A08 end:0x803F9AF8
 
 game/clItemBoxResponder_DebrisArray_Dtor.c:
 	extab       start:0x80007B4C end:0x80007B54

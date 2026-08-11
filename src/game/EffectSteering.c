@@ -70,6 +70,18 @@ struct EffectInputViscosity {
     float field14;
     float field18;
 };
+struct EffectInputVibrate {
+    virtual void v0();
+    virtual void reset();
+    void *owner;
+    int start;
+    int end;
+    int current;
+    int step;
+    unsigned char active;
+    unsigned char pad19[3];
+    float field1C;
+};
 extern "C" int EffectSteering_InitForScale(EffectSteeringScale *self, float duration, float value);
 extern "C" int EffectSteering_InitForShake(EffectSteeringScale *self, float duration, float value, float cycle, float final_value);
 #pragma cplusplus off
@@ -502,6 +514,64 @@ selected_uniform:
     input->field10 = uniform_value;
     input->field14 = zero;
     input->field18 = value18;
+    return 1;
+}
+
+extern "C" int EffectSteering_InitForVibrate_Sub(EffectSteeringScale *self, float duration, float value);
+#pragma section R ".extab_user"
+__declspec(section ".extab_user") static const unsigned char extab_EffectSteering_InitForVibrate_Sub[8] = {
+    0x08, 0x8A, 0, 0, 0, 0, 0, 0
+};
+#pragma section R ".extabindex_user"
+__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_EffectSteering_InitForVibrate_Sub = {
+    (void *)&EffectSteering_InitForVibrate_Sub, 0x200, (void *)extab_EffectSteering_InitForVibrate_Sub
+};
+
+extern "C" int EffectSteering_InitForVibrate_Sub(EffectSteeringScale *self, float duration, float value) {
+    unsigned char ok;
+    EffectInputVibrate *input;
+    if (self->mode != 0) self->input->reset();
+    self->mode = 4;
+    if (self->step > 0) {
+        if (self->end >= self->start) goto reset_vibrate_sub;
+        goto no_reset_vibrate_sub;
+    } else if (self->end > self->start) goto no_reset_vibrate_sub;
+reset_vibrate_sub:
+    self->start = 0;
+    self->current = self->start;
+    self->end = (int)(lbl_806D2978 * duration);
+    self->step = 1;
+    self->active = 1;
+no_reset_vibrate_sub:
+    switch (self->mode) {
+    case 1: self->input = self->inputs[0]; break;
+    case 2:
+    case 4: self->input = self->inputs[1]; break;
+    case 3: self->input = self->inputs[2]; break;
+    case 5: self->input = self->inputs[3]; break;
+    case 6: self->input = self->inputs[4]; break;
+    case 7: self->input = self->inputs[5]; break;
+    case 8: self->input = self->inputs[6]; break;
+    case 9: self->input = self->inputs[7]; break;
+    default: DebugPrintf((const char *)lbl_802EDD98); ok = 0; goto selected_vibrate_sub;
+    }
+    ok = 1;
+selected_vibrate_sub:
+    if (!ok) return 0;
+    input = (EffectInputVibrate *)self->inputs[1];
+    input->reset();
+    input->field1C = value;
+    if (input->step > 0) {
+        if (input->end >= input->start) goto reset_input_vibrate;
+        goto done_vibrate_sub;
+    } else if (input->end > input->start) goto done_vibrate_sub;
+reset_input_vibrate:
+    input->start = 0;
+    input->current = input->start;
+    input->end = 10000;
+    input->step = 1;
+    input->active = 1;
+done_vibrate_sub:
     return 1;
 }
 #pragma cplusplus off
