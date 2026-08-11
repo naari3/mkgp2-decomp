@@ -1385,13 +1385,7 @@ __declspec(section ".extab_user") static const unsigned char extab_dtor_8005285C
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 /* extab_dtor_800528B0: auto-emitted (real C++ dtor, see body) */
-__declspec(section ".extab_user") static const unsigned char extab_dtor_8005292C[40] = {
-    0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x34,
-    0x00, 0x04, 0x00, 0x18, 0x00, 0x00, 0x00, 0x54,
-    0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4C,
-    0x00, 0x00, 0x00, 0x08, 0x8D, 0x00, 0x00, 0x08
-};
+/* extab_dtor_8005292C: auto-emitted (real C++ dtor, see body) */
 __declspec(section ".extab_user") static const unsigned char extab_dtor_800529A8[84] = {
     0x20, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4C,
     0x00, 0x00, 0x00, 0x28, 0x00, 0x00, 0x00, 0x58,
@@ -1724,9 +1718,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&dtor_8005285C, 0x00000054, (void *)extab_dtor_8005285C
 };
 /* extabindex_dtor_800528B0: auto-emitted */
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_8005292C = {
-    (void *)&dtor_8005292C, 0x0000007C, (void *)extab_dtor_8005292C
-};
+/* extabindex_dtor_8005292C: auto-emitted */
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_800529A8 = {
     (void *)&dtor_800529A8, 0x000000B0, (void *)extab_dtor_800529A8
 };
@@ -10221,43 +10213,21 @@ Holder800528B0::~Holder800528B0() throw() {
 #pragma exceptions reset
 #pragma cplusplus off
 
-asm void dtor_8005292C(void) { /* 0x8005292C size:0x7C */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stw r31, 0x2c(r1)
-    mr r31, r1
-    stw r30, 0x28(r1)
-    mr r30, r4
-    stw r29, 0x24(r1)
-    mr. r29, r3
-    beq dtor_8005292C_L_80052970
-    lwz r3, 0x0(r29)
-    li r4, 0x1
-    bl EffectSteering_Dtor
-    extsh. r0, r30
-    ble dtor_8005292C_L_80052970
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    dtor_8005292C_L_80052970:
-    mr r3, r29
-    b dtor_8005292C_L_80052984
-    addi r3, r31, 0x8
-    bl __unexpected
-    dtor_8005292C_L_80052980:
-    b dtor_8005292C_L_80052980
-    dtor_8005292C_L_80052984:
-    mr r10, r31
-    lwz r31, 0x2c(r31)
-    lwz r30, 0x28(r10)
-    lwz r29, 0x24(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+/* dtor_8005292C: EffectSteering owned-pointer holder deleting dtor. */
+#pragma cplusplus on
+#pragma exceptions on
+struct Owned8005292C {
+    ~Owned8005292C();
+};
+struct Holder8005292C {
+    Owned8005292C *p; /* 0x0 */
+    ~Holder8005292C() throw();
+};
+Holder8005292C::~Holder8005292C() throw() {
+    delete p;
 }
+#pragma exceptions reset
+#pragma cplusplus off
 
 asm void dtor_800529A8(void) { /* 0x800529A8 size:0xB0 */
     nofralloc
