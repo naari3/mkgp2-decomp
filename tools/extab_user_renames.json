@@ -609,7 +609,9 @@
     "__dt__14Holder80052AD4Fv": "dtor_80052AD4",
     "__dt__13Owned80052AD4Fv": "PlayCamera_Dtor",
     "__dt__14Holder80052B50Fv": "dtor_80052B50",
-    "__dt__13Owned80052B50Fv": "VisualEffectHolder_Dtor"
+    "__dt__13Owned80052B50Fv": "VisualEffectHolder_Dtor",
+    "__dt__14Holder80052BCCFv": "dtor_80052BCC",
+    "__dt__13Owned80052BCCFv": "InputCmd_Dtor"
   },
   "src/game/clFlowItem.c": {
     "__ct__10clFlowItemFv": "clFlowItem_Init",
