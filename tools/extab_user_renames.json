@@ -1276,6 +1276,10 @@
     "extab_KartDriver_GetJointPosition": "@etb_800061E0",
     "extabindex_KartDriver_GetJointPosition": "@eti_8001FE68"
   },
+  "src/game/KartDriver_New_Full.c": {
+    "extab_KartDriver_New_Full": "@etb_80006688",
+    "extabindex_KartDriver_New_Full": "@eti_8001FFA0"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
