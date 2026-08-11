@@ -3,17 +3,17 @@
 /* keep emit order = target section layout (do not sort). */
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int g_ccClass;
-extern unsigned int g_cupId;
-extern unsigned int g_longRoundFlag;
-extern unsigned int g_reverseRoundFlag;
-extern unsigned int lbl_806D112C;
-extern unsigned int lbl_806D2EB0;
+extern int g_ccClass;
+extern int g_cupId;
+extern int g_longRoundFlag;
+extern int g_reverseRoundFlag;
+extern int lbl_806D112C;
+extern const float lbl_806D2EB0;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_80598A60[];
+extern unsigned char lbl_80598A60[];
 
 /* --- function index (5 fns, .text 0x80074910..0x80074C30) ---
  * [  0] 0x80074910 size:0xC0    global TaRecord_GetEntry_Indexed
@@ -24,141 +24,35 @@ extern unsigned int lbl_80598A60[];
  */
 
 /* --- forward decls --- */
-asm void TaRecord_GetEntry_Indexed(void);
-asm void TaRecord_GetEntry_Current(void);
+void *TaRecord_GetEntry_Indexed(int index, int cc, int cup, int longRound, int reverse);
+void *TaRecord_GetEntry_Current(int index);
 asm void TaRecord_GetTime_Indexed(void);
 asm void TaRecord_GetTime_Current(void);
-asm void TaRecord_GetLastInsertedRank(void);
+int TaRecord_GetLastInsertedRank(void);
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void TaRecord_GetEntry_Indexed(void) { /* 0x80074910 size:0xC0 */
-    nofralloc
-    cmpwi r4, 0x0
-    bne TaRecord_GetEntry_Indexed_L_80074920
-    li r3, 0x0
-    blr
-    TaRecord_GetEntry_Indexed_L_80074920:
-    blt TaRecord_GetEntry_Indexed_L_8007492C
-    cmpwi r4, 0x3
-    blt TaRecord_GetEntry_Indexed_L_80074934
-    TaRecord_GetEntry_Indexed_L_8007492C:
-    li r3, 0x0
-    blr
-    TaRecord_GetEntry_Indexed_L_80074934:
-    cmpwi r5, 0x0
-    blt TaRecord_GetEntry_Indexed_L_80074944
-    cmpwi r5, 0x9
-    blt TaRecord_GetEntry_Indexed_L_8007494C
-    TaRecord_GetEntry_Indexed_L_80074944:
-    li r3, 0x0
-    blr
-    TaRecord_GetEntry_Indexed_L_8007494C:
-    cmpwi r6, 0x0
-    blt TaRecord_GetEntry_Indexed_L_8007495C
-    cmpwi r6, 0x2
-    blt TaRecord_GetEntry_Indexed_L_80074964
-    TaRecord_GetEntry_Indexed_L_8007495C:
-    li r3, 0x0
-    blr
-    TaRecord_GetEntry_Indexed_L_80074964:
-    cmpwi r7, 0x0
-    blt TaRecord_GetEntry_Indexed_L_80074974
-    cmpwi r7, 0x2
-    blt TaRecord_GetEntry_Indexed_L_8007497C
-    TaRecord_GetEntry_Indexed_L_80074974:
-    li r3, 0x0
-    blr
-    TaRecord_GetEntry_Indexed_L_8007497C:
-    cmpwi r3, 0x0
-    blt TaRecord_GetEntry_Indexed_L_8007498C
-    cmpwi r3, 0xa
-    blt TaRecord_GetEntry_Indexed_L_80074994
-    TaRecord_GetEntry_Indexed_L_8007498C:
-    li r3, 0x0
-    blr
-    TaRecord_GetEntry_Indexed_L_80074994:
-    subi r0, r4, 0x1
-    lis r4, lbl_80598A60@ha
-    mulli r8, r0, 0x1680
-    slwi r0, r3, 4
-    addi r4, r4, lbl_80598A60@l
-    mulli r3, r5, 0x280
-    add r5, r4, r8
-    mulli r4, r6, 0x140
-    add r5, r5, r3
-    mulli r3, r7, 0xa0
-    add r4, r5, r4
-    add r3, r4, r3
-    add r3, r3, r0
-    addi r3, r3, 0x4e0
-    blr
+void *TaRecord_GetEntry_Indexed(int index, int cc, int cup, int longRound, int reverse) { /* 0x80074910 size:0xC0 */
+    if (cc == 0) return 0;
+    if (cc < 0 || cc >= 3) return 0;
+    if (cup < 0 || cup >= 9) return 0;
+    if (longRound < 0 || longRound >= 2) return 0;
+    if (reverse < 0 || reverse >= 2) return 0;
+    if (index < 0 || index >= 10) return 0;
+    return lbl_80598A60 + 0x4e0 + (cc - 1) * 0x1680 + cup * 0x280 + longRound * 0x140 + reverse * 0xa0 + index * 0x10;
 }
 
-asm void TaRecord_GetEntry_Current(void) { /* 0x800749D0 size:0xD0 */
-    nofralloc
-    lwz r4, g_ccClass(r13)
-    lwz r6, g_cupId(r13)
-    cmpwi r4, 0x0
-    lwz r7, g_longRoundFlag(r13)
-    lwz r8, g_reverseRoundFlag(r13)
-    bne TaRecord_GetEntry_Current_L_800749F0
-    li r3, 0x0
-    blr
-    TaRecord_GetEntry_Current_L_800749F0:
-    blt TaRecord_GetEntry_Current_L_800749FC
-    cmpwi r4, 0x3
-    blt TaRecord_GetEntry_Current_L_80074A04
-    TaRecord_GetEntry_Current_L_800749FC:
-    li r3, 0x0
-    blr
-    TaRecord_GetEntry_Current_L_80074A04:
-    cmpwi r6, 0x0
-    blt TaRecord_GetEntry_Current_L_80074A14
-    cmpwi r6, 0x9
-    blt TaRecord_GetEntry_Current_L_80074A1C
-    TaRecord_GetEntry_Current_L_80074A14:
-    li r3, 0x0
-    blr
-    TaRecord_GetEntry_Current_L_80074A1C:
-    cmpwi r7, 0x0
-    blt TaRecord_GetEntry_Current_L_80074A2C
-    cmpwi r7, 0x2
-    blt TaRecord_GetEntry_Current_L_80074A34
-    TaRecord_GetEntry_Current_L_80074A2C:
-    li r3, 0x0
-    blr
-    TaRecord_GetEntry_Current_L_80074A34:
-    cmpwi r8, 0x0
-    blt TaRecord_GetEntry_Current_L_80074A44
-    cmpwi r8, 0x2
-    blt TaRecord_GetEntry_Current_L_80074A4C
-    TaRecord_GetEntry_Current_L_80074A44:
-    li r3, 0x0
-    blr
-    TaRecord_GetEntry_Current_L_80074A4C:
-    cmpwi r3, 0x0
-    blt TaRecord_GetEntry_Current_L_80074A5C
-    cmpwi r3, 0xa
-    blt TaRecord_GetEntry_Current_L_80074A64
-    TaRecord_GetEntry_Current_L_80074A5C:
-    li r3, 0x0
-    blr
-    TaRecord_GetEntry_Current_L_80074A64:
-    subi r0, r4, 0x1
-    lis r4, lbl_80598A60@ha
-    mulli r5, r0, 0x1680
-    slwi r0, r3, 4
-    addi r4, r4, lbl_80598A60@l
-    mulli r3, r6, 0x280
-    add r5, r4, r5
-    mulli r4, r7, 0x140
-    add r5, r5, r3
-    mulli r3, r8, 0xa0
-    add r4, r5, r4
-    add r3, r4, r3
-    add r3, r3, r0
-    addi r3, r3, 0x4e0
-    blr
+void *TaRecord_GetEntry_Current(int index) { /* 0x800749D0 size:0xD0 */
+    int cc = g_ccClass;
+    int cup = g_cupId;
+    int longRound = g_longRoundFlag;
+    int reverse = g_reverseRoundFlag;
+    if (cc == 0) return 0;
+    if (cc < 0 || cc >= 3) return 0;
+    if (cup < 0 || cup >= 9) return 0;
+    if (longRound < 0 || longRound >= 2) return 0;
+    if (reverse < 0 || reverse >= 2) return 0;
+    if (index < 0 || index >= 10) return 0;
+    return lbl_80598A60 + 0x4e0 + (cc - 1) * 0x1680 + cup * 0x280 + longRound * 0x140 + reverse * 0xa0 + index * 0x10;
 }
 
 asm void TaRecord_GetTime_Indexed(void) { /* 0x80074AA0 size:0xBC */
@@ -289,9 +183,7 @@ asm void TaRecord_GetTime_Current(void) { /* 0x80074B5C size:0xCC */
     blr
 }
 
-asm void TaRecord_GetLastInsertedRank(void) { /* 0x80074C28 size:0x8 */
-    nofralloc
-    lwz r3, lbl_806D112C(r13)
-    blr
+int TaRecord_GetLastInsertedRank(void) { /* 0x80074C28 size:0x8 */
+    return lbl_806D112C;
 }
 
