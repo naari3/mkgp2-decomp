@@ -1236,6 +1236,10 @@
     "extab_KartDriver_GetKartRootMtx": "@etb_800061F8",
     "extabindex_KartDriver_GetKartRootMtx": "@eti_8001FE8C"
   },
+  "src/game/KartDriver_GetJointMatrix4x3.c": {
+    "extab_KartDriver_GetJointMatrix4x3": "@etb_800061E8",
+    "extabindex_KartDriver_GetJointMatrix4x3": "@eti_8001FE74"
+  },
   "src/game/KartDriver_TriggerSlotC3Action.c": {
     "extab_KartDriver_TriggerSlotC3Action": "@etb_80006230",
     "extabindex_KartDriver_TriggerSlotC3Action": "@eti_8001FEE0"

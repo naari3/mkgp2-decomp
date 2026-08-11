@@ -446,6 +446,7 @@ config.libs = [
             Object(Matching, "game/KartDriver_TickAction_78d00.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartDriver_TickAction_79268_AndSetSlot5aEulerZ.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartDriver_GetJointPosition.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/KartDriver_GetJointMatrix4x3.c", extab_padding=b"\x00\x00"),
                     Object(Matching, "game/auto_800A8F4C_block.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/auto_ONKARTHIT_block.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/CObj_GlobalProjPushFrame.c", extab_padding=b""),
