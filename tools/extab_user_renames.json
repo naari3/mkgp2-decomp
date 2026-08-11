@@ -1292,6 +1292,10 @@
     "extab_KartDriver_SetJointPosY_Slot3d": "@etb_80006200",
     "extabindex_KartDriver_SetJointPosY_Slot3d": "@eti_8001FE98"
   },
+  "src/game/KartDriver_SetJointPosY_Slot3c.c": {
+    "extab_KartDriver_SetJointPosY_Slot3c": "@etb_80006208",
+    "extabindex_KartDriver_SetJointPosY_Slot3c": "@eti_8001FEA4"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
