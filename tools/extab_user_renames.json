@@ -599,7 +599,9 @@
   },
   "src/game/auto_ONKARTHIT_block.c": {
     "__dt__14Holder8005278CFv": "dtor_8005278C",
-    "__dt__13Owned8005278CFv": "Free_IfOwnedShort"
+    "__dt__13Owned8005278CFv": "Free_IfOwnedShort",
+    "__dt__14Holder800528B0Fv": "dtor_800528B0",
+    "__dt__13Owned800528B0Fv": "TwoSubDtor_Pending_80064f58"
   },
   "src/game/clFlowItem.c": {
     "__ct__10clFlowItemFv": "clFlowItem_Init",
