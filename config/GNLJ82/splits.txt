@@ -1574,6 +1574,11 @@ game/DebrisArray_DrawForward.c:
 	extabindex  start:0x80022BE0 end:0x80022BEC
 	.text       start:0x800B4AAC end:0x800B4AD0
 
+game/KartFx.c:
+	extab       start:0x8000A720 end:0x8000A728
+	extabindex  start:0x80022C1C end:0x80022C28
+	.text       start:0x800B510C end:0x800B53BC
+
 game/VfxEffect_InitVariantAndResetPos.c:
 	extab       start:0x8000A9D8 end:0x8000A9E0
 	extabindex  start:0x80023030 end:0x8002303C
