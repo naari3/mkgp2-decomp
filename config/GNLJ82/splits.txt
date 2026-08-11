@@ -350,6 +350,11 @@ game/KartDriver_SetJointPosY_Slot3b.c:
 	extabindex  start:0x8001FEB0 end:0x8001FEBC
 	.text       start:0x80041924 end:0x800419F0
 
+game/KartDriver_SetJointPosY_Slot3a.c:
+	extab       start:0x80006218 end:0x80006220
+	extabindex  start:0x8001FEBC end:0x8001FEC8
+	.text       start:0x800419F0 end:0x80041ABC
+
 game/KartDriver_TriggerSlotC3Action.c:
 	extab       start:0x80006230 end:0x80006238
 	extabindex  start:0x8001FEE0 end:0x8001FEEC

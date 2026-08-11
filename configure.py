@@ -866,6 +866,7 @@ config.libs = [
             Object(Matching, "game/Archive_GetCurrent.c"),
             Object(Matching, "game/Vec3.c"),
             Object(Matching, "game/ItemAlias.c"),
+            Object(Matching, "game/KartDriver_SetJointPosY_Slot3a.c", extab_padding=b"\x00\x00"),
         ],
     },
     {
