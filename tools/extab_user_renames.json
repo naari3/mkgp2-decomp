@@ -613,7 +613,9 @@
     "__dt__14Holder80052BCCFv": "dtor_80052BCC",
     "__dt__13Owned80052BCCFv": "InputCmd_Dtor",
     "__dt__14Holder80052C48Fv": "dtor_80052C48",
-    "__dt__13Owned80052C48Fv": "KartDriver_Dtor"
+    "__dt__13Owned80052C48Fv": "KartDriver_Dtor",
+    "__dt__14Holder80052CC4Fv": "dtor_80052CC4",
+    "__dt__13Owned80052CC4Fv": "CarObject_Dtor"
   },
   "src/game/clFlowItem.c": {
     "__ct__10clFlowItemFv": "clFlowItem_Init",
