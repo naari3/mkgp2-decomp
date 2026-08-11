@@ -1714,6 +1714,11 @@ game/KartDriver_GetJoint13_WorldPos.c:
 	extabindex  start:0x80023B94 end:0x80023BA0
 	.text       start:0x800DC690 end:0x800DC6D0
 
+game/KartDriver_TransformWorldToLocalY0.c:
+	extab       start:0x8000B45C end:0x8000B464
+	extabindex  start:0x80023BA0 end:0x80023BAC
+	.text       start:0x800DC6D0 end:0x800DC784
+
 game/ItemTracker.c:
 	extab       start:0x8000B47C end:0x8000B49C
 	extabindex  start:0x80023BD0 end:0x80023C00

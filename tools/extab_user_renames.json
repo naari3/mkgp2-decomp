@@ -1280,6 +1280,10 @@
     "extab_KartDriver_New_Full": "@etb_80006688",
     "extabindex_KartDriver_New_Full": "@eti_8001FFA0"
   },
+  "src/game/KartDriver_TransformWorldToLocalY0.c": {
+    "extab_KartDriver_TransformWorldToLocalY0": "@etb_8000B45C",
+    "extabindex_KartDriver_TransformWorldToLocalY0": "@eti_80023BA0"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
