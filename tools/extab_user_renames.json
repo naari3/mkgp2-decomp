@@ -1276,6 +1276,10 @@
     "extab_KartDriver_TickAction_78d00": "@etb_80006268",
     "extabindex_KartDriver_TickAction_78d00": "@eti_8001FF34"
   },
+  "src/game/KartDriver_Render.c": {
+    "extab_KartDriver_Render": "@etb_80006270",
+    "extabindex_KartDriver_Render": "@eti_8001FF40"
+  },
   "src/game/KartDriver_RenderTimed.c": {
     "extab_KartDriver_RenderTimed": "@etb_80006278",
     "extabindex_KartDriver_RenderTimed": "@eti_8001FF4C"
