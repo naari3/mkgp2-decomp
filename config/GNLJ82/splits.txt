@@ -1776,6 +1776,11 @@ game/ItemHitRegistry.c:
 game/Item_DecayVelocityScalar.c:
 	.text       start:0x800D9D50 end:0x800D9D74
 
+game/GabyouItem.c:
+	extab       start:0x8000B3DC end:0x8000B3E4
+	extabindex  start:0x80023AE0 end:0x80023AEC
+	.text       start:0x800DABBC end:0x800DAE88
+
 game/FinalLapCoinJump_CheckActiveForObject.c:
 	.text       start:0x800DC638 end:0x800DC690
 
