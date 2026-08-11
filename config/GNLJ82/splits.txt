@@ -355,6 +355,11 @@ game/KartDriver_SetJointPosY_Slot3a.c:
 	extabindex  start:0x8001FEBC end:0x8001FEC8
 	.text       start:0x800419F0 end:0x80041ABC
 
+game/KartDriver_SetEulerY_4Joints_LastMirrored.c:
+	extab       start:0x80006220 end:0x80006228
+	extabindex  start:0x8001FEC8 end:0x8001FED4
+	.text       start:0x80041ABC end:0x80041D80
+
 game/KartDriver_SetUniformScale_4Wheels.c:
 	extab       start:0x80006228 end:0x80006230
 	extabindex  start:0x8001FED4 end:0x8001FEE0

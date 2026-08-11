@@ -1316,6 +1316,10 @@
     "extab_KartDriver_SetJointPosY_Slot3a": "@etb_80006218",
     "extabindex_KartDriver_SetJointPosY_Slot3a": "@eti_8001FEBC"
   },
+  "src/game/KartDriver_SetEulerY_4Joints_LastMirrored.c": {
+    "extab_KartDriver_SetEulerY_4Joints_LastMirrored": "@etb_80006220",
+    "extabindex_KartDriver_SetEulerY_4Joints_LastMirrored": "@eti_8001FEC8"
+  },
   "src/game/KartDriver_BuildJoint12EulerTransform.c": {
     "extab_KartDriver_BuildJoint12EulerTransform": "@etb_8000B21C",
     "extabindex_KartDriver_BuildJoint12EulerTransform": "@eti_800238B8"

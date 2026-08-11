@@ -871,6 +871,7 @@ config.libs = [
             Object(Matching, "game/KartDriver_SetJointPosY_Slot3a.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartDriver_Dtor.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartDriver_Render.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/KartDriver_SetEulerY_4Joints_LastMirrored.c", extab_padding=b"\x00\x00"),
         ],
     },
     {
