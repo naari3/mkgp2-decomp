@@ -351,7 +351,7 @@ config.libs = [
             Object(Matching, "game/AnimStatePool.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/RaceContext_Dtor.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/RaceContext_InitDefaults.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/RaceContext_EnsureSingleton.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/RaceContext_EnsureSingleton.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CoinSystem_UpdateAll.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CoinSystem_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/CardTaskManager_RenderOverlay.c", extab_padding=b"\x00\x00"),

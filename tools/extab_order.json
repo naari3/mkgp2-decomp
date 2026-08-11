@@ -157,6 +157,16 @@
       "KartMovement_UpdateBoostVisualBlend"
     ]
   },
+  "src/game/RaceContext_EnsureSingleton.c": {
+    "extab": [
+      "dtor_8009DCE0",
+      "RaceContext_EnsureSingleton"
+    ],
+    "extabindex": [
+      "RaceContext_EnsureSingleton",
+      "dtor_8009DCE0"
+    ]
+  },
   "src/game/clFlowItem.c": {
     "extab": [
       "clFlowItem_Draw",
