@@ -1240,6 +1240,10 @@
     "extab_KartDriver_GetJointMatrix4x3": "@etb_800061E8",
     "extabindex_KartDriver_GetJointMatrix4x3": "@eti_8001FE74"
   },
+  "src/game/KartDriver_GetJointByIdx.c": {
+    "extab_KartDriver_GetJointByIdx": "@etb_800061F0",
+    "extabindex_KartDriver_GetJointByIdx": "@eti_8001FE80"
+  },
   "src/game/KartDriver_SetJointPosY_Slot3b.c": {
     "extab_KartDriver_SetJointPosY_Slot3b": "@etb_80006210",
     "extabindex_KartDriver_SetJointPosY_Slot3b": "@eti_8001FEB0"
