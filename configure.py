@@ -604,6 +604,7 @@ config.libs = [
             Object(Matching, "game/card_rw_get_substate.c"),
             Object(Matching, "game/Sci2Card_GetPrintErrorCode.c"),
             Object(Matching, "game/Sci2Card_GetResponsePayload.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/card_send_track_data.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/PostRace_StartScoreEntryFlow.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PostRace_StartScoreEntryFlow_WithCardSave.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Sci2Card_Singleton_Get.c"),

@@ -1387,6 +1387,10 @@
     "extab_card_backup": "@etb_80008300",
     "extabindex_card_backup": "@eti_80021230"
   },
+  "src/game/card_send_track_data.c": {
+    "extab_card_send_track_data": "@etb_800083F0",
+    "extabindex_card_send_track_data": "@eti_80021368"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

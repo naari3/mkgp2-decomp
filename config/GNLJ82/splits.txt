@@ -976,6 +976,11 @@ game/Backup_Shutdown.c:
 game/Sci2Card_Singleton_Get.c:
 	.text       start:0x80076BB4 end:0x80076BBC
 
+game/card_send_track_data.c:
+	extab       start:0x800083F0 end:0x800083F8
+	extabindex  start:0x80021368 end:0x80021374
+	.text       start:0x800776CC end:0x80077810
+
 game/Sci2Card_GetResponsePayload.c:
 	extab       start:0x800083F8 end:0x80008400
 	extabindex  start:0x80021374 end:0x80021380
