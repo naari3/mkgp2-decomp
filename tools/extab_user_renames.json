@@ -1391,6 +1391,10 @@
     "extab_card_send_track_data": "@etb_800083F0",
     "extabindex_card_send_track_data": "@eti_80021368"
   },
+  "src/game/card_task_manager_create.c": {
+    "extab_card_task_manager_create": "@etb_80009014",
+    "extabindex_card_task_manager_create": "@eti_80021B24"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

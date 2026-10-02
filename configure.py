@@ -609,6 +609,7 @@ config.libs = [
             Object(Matching, "game/PostRace_StartScoreEntryFlow_WithCardSave.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Sci2Card_Singleton_Get.c"),
             Object(Matching, "game/CardTaskWelcome_Dtor.c"),
+            Object(Matching, "game/card_task_manager_create.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clCGameDemoWC_Stubs.c"),
             Object(Matching, "game/clCGameDemoWC/Dtor.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clCGameDemoWC/Render.c", extab_padding=b"\x00\x00"),

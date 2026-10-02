@@ -1238,6 +1238,11 @@ game/CardTaskWelcome_Dtor.c:
 	extabindex  start:0x80021B18 end:0x80021B24
 	.text       start:0x8008A058 end:0x8008A0A0
 
+game/card_task_manager_create.c:
+	extab       start:0x80009014 end:0x8000901C
+	extabindex  start:0x80021B24 end:0x80021B30
+	.text       start:0x8008A0A0 end:0x8008A2A0
+
 game/PlayStats_Clear.c:
 	extab       start:0x800092B0 end:0x800092B8
 	extabindex  start:0x80021D94 end:0x80021DA0

@@ -960,3 +960,17 @@ Recovered the completed `unit_effectsteering_dtor` handoff: the 56-byte
 were not reproduced. A retry needs evidence for the eight distinct action-owner
 member types and their exception specifications, not another flattened delete
 sequence. Preserve this distinction in state and progress reports.
+
+### 19.9 Card factory and Item orbit recovery (2026-10-03)
+
+`card_task_manager_create` (0x8008A0A0, 512 bytes) is an exact asm singleton,
+not a real-C success. Loop, explicit initialization, and reordered-count probes
+peaked at 54.265625%. The target repeatedly reloads the manager entry pointer and
+count around a four-entry factory table, then uses a genuine virtual slot 0x10.
+A retry must establish the full ABI and aliasing model before register tuning.
+
+`Item_OrbitAnchorKart` (0x800D9340, 572 bytes) was skipped with no source retained.
+The recorded best was 98.81119%; unresolved differences were radius-clamp FP
+comparison control flow and orbitFade FPR identity. ABI evidence from that run:
+r3 Item pointer, r4 offset-vector pointer, r5 unsigned active flag, f1 yaw step,
+f2 pitch step. These are observations, not proof that all C forms are impossible.
