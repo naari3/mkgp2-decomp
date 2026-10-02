@@ -1003,3 +1003,16 @@ Existing exceptions-off flags retain manual EH ordering. All 15 functions and
 bytes, while aggregate linked-object counts stay unchanged (asm was exact).
 If editing only the rename JSON, explicitly rebuild the source object: that
 metadata is not currently an object dependency in the generated build graph.
+
+### 19.12 Card command partial C match (2026-10-03)
+
+`card_rw_kick_state_machine` and `card_read_tick` match as real C (244 bytes).
+Unsigned-byte callee returns reproduce `clrlwi`, while signed status words
+reproduce `cmpwi`. Both matched on the first implementation. The following
+112-byte initializer remains asm_fn; three control-flow approaches reached
+96.07% at best. Its switch C draft is preserved under `#if 0`, not counted as C.
+The initial probes used exceptions off, while the verified hybrid TU uses on:
+a later retry should first check explicit `== 0` branching under final flags.
+This is a bounded-search result, not evidence of fundamental impossibility.
+Two leading automatic extab records followed by the manual initializer record
+preserve the target section order without an extab_order override.

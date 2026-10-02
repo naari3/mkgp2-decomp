@@ -1298,6 +1298,11 @@ game/CardSave_Tick_CaptureAndStart.c:
 	extabindex  start:0x80022010 end:0x8002201C
 	.text       start:0x800937D4 end:0x80093C28
 
+game/CardReadCommand.c:
+	extab       start:0x80009500 end:0x80009518
+	extabindex  start:0x800220AC end:0x800220D0
+	.text       start:0x8009755C end:0x800976C0
+
 game/card_is_ejected.c:
 	.text       start:0x8009838C end:0x800983A0
 
