@@ -1016,3 +1016,15 @@ a later retry should first check explicit `== 0` branching under final flags.
 This is a bounded-search result, not evidence of fundamental impossibility.
 Two leading automatic extab records followed by the manual initializer record
 preserve the target section order without an extab_order override.
+
+### 19.13 Card early-return command wrappers (2026-10-03)
+
+The unused read initializer (108 bytes) and eject initializer (116 bytes)
+match on the first real-C approach. Their early-return error paths differ from
+the parked shared-footer initializer in section 19.12; do not transfer its
+branch-layout blocker to these siblings. Byte-valued latch results reproduce
+the target truncation, and the eject wrapper uses the existing compatible
+`unsigned int card_eject(int *)` declaration before narrowing the stored result.
+The two disjoint ranges require separate singleton TUs, each using automatic
+exception records with exceptions enabled. Both source objects are linked and
+their text/extab/extabindex sections are exact; no manual EH mappings are needed.

@@ -1303,11 +1303,21 @@ game/CardReadCommand.c:
 	extabindex  start:0x800220AC end:0x800220D0
 	.text       start:0x8009755C end:0x800976C0
 
+game/CardReadCommandUnused.c:
+	extab       start:0x80009520 end:0x80009528
+	extabindex  start:0x800220DC end:0x800220E8
+	.text       start:0x80098320 end:0x8009838C
+
 game/card_is_ejected.c:
 	.text       start:0x8009838C end:0x800983A0
 
 game/card_ping_clear_pending_flag.c:
 	.text       start:0x80098790 end:0x800987A8
+
+game/CardEjectCommand.c:
+	extab       start:0x80009550 end:0x80009558
+	extabindex  start:0x80022124 end:0x80022130
+	.text       start:0x80098DD4 end:0x80098E48
 
 game/card_rw_get_substate.c:
 	.text       start:0x80098E48 end:0x80098E50
