@@ -1040,3 +1040,16 @@ unwanted rounding before comparison. The raycast returns an unsigned byte;
 the response-mode field at +0x168 is unsigned, while the alias at +0x8 is signed.
 Singleton automatic exception records append in target order without renames.
 These minimal field names describe observed accesses, not a complete Item class.
+
+### 19.15 EffectSteering remaining reset callbacks (2026-10-03)
+
+ActionShake_Reset (76 bytes), ActionSplit_Reset (80 bytes), and
+ActionVibrate_Reset (56 bytes) are now real C in their existing include fragments.
+Split/Vibrate match immediately with the typed owner/output view. Shake's first
+89.47% result differed only in the initial lfs scheduling: a 0.0f literal emits
+the target early prologue load, while reading the mutable shared declaration
+loads later. Existing sdata2 postprocessing binds that literal to lbl_806D297C,
+whose target value is confirmed zero. Added declarations shift the viscosity
+table alias from @153 to @162. All 15 TU functions and four payload sections
+remain exact with manual EH; only InitForSplit remains asm in this TU.
+Real-C gain is three functions/212 bytes, not an aggregate linked-match increase.

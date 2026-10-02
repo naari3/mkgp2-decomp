@@ -1,4 +1,13 @@
-asm void ActionShake_Reset(void);
+typedef struct ActionShakeResetState {
+    void *vtable;
+    EffectSteeringResetState *owner;
+    float field8;
+    int fieldC;
+    unsigned char pad10[0x14];
+    float field24;
+} ActionShakeResetState;
+
+void ActionShake_Reset(ActionShakeResetState *self);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -12,27 +21,16 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&ActionShake_Reset, 0x0000004C, (void *)extab_ActionShake_Reset
 };
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void ActionShake_Reset(void) { /* 0x8005B880 size:0x4C */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lfs f0, lbl_806D297C(r2)
-    stw r0, 0x14(r1)
-    li r0, 0x0
-    stw r31, 0xc(r1)
-    stfs f0, 0x8(r3)
-    stw r0, 0xc(r3)
-    stfs f0, 0x24(r3)
-    lwz r31, 0x4(r3)
-    lwz r3, 0x0(r31)
-    bl KartItem_ResetStrPcbToIdle
-    lfs f0, lbl_806D297C(r2)
-    stfs f0, 0x48(r31)
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+/* Included by EffectSteering.c; retain its manual EH emission order. */
+void ActionShake_Reset(ActionShakeResetState *self) { /* 0x8005B880 size:0x4C */
+    EffectSteeringResetState *owner;
+    /* The shared zero literal can be loaded in the function prologue. */
+    float zero = 0.0f;
+    self->field8 = zero;
+    self->fieldC = 0;
+    self->field24 = zero;
+    owner = self->owner;
+    KartItem_ResetStrPcbToIdle(owner->owner);
+    owner->output = *(float *)&lbl_806D297C;
 }
 

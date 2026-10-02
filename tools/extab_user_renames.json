@@ -1386,7 +1386,7 @@
   },
   "src/game/EffectSteering.c": {
     "@33": "jumptable_803F99E0",
-    "@153": "jumptable_803F9A80"
+    "@162": "jumptable_803F9A80"
   },
   "src/game/card.c": {
     "extab_card_backup": "@etb_80008300",
