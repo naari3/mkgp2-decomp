@@ -1381,7 +1381,8 @@
     "extabindex_Effect_SmokeCloud_Update": "@eti_80022F70"
   },
   "src/game/EffectSteering.c": {
-    "@126": "jumptable_803F9A80"
+    "@33": "jumptable_803F99E0",
+    "@153": "jumptable_803F9A80"
   },
   "src/game/card.c": {
     "extab_card_backup": "@etb_80008300",

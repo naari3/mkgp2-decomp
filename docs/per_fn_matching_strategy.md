@@ -988,3 +988,18 @@ operand order. FallingDrop's threshold assignment inside the comparison
 preserves the target expression schedule. Direct objdiff: 3/3 at 100%; worker
 full DOL SHA-1 exact. Callee ABIs were independently checked from target asm;
 no Ghidra decompile was available in this session.
+
+### 19.11 EffectSteering Delay/reset real-C recovery (2026-10-03)
+
+InitForDelay (436 bytes), ActionDelay_Reset (84 bytes), and ActionLock_Reset
+(56 bytes) now match as real C/C++. Delay's old function-pointer ceiling is
+resolved by the genuine two-slot virtual interface already used by Scale/Shake:
+reset is the second virtual member, emitting the r12/r12 slot +0x0C chain.
+A plain int sample-count field preserves the reload/clamp without added
+volatility. The compiler-generated switch table requires extending the TU's
+.data start to 0x803F99E0 and refreshing its anonymous-table rename mapping.
+Existing exceptions-off flags retain manual EH ordering. All 15 functions and
+.text/.data/extab/extabindex match; source-level gain is three functions/576
+bytes, while aggregate linked-object counts stay unchanged (asm was exact).
+If editing only the rename JSON, explicitly rebuild the source object: that
+metadata is not currently an object dependency in the generated build graph.

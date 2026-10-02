@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void DebugPrintf(const char *, ...);
-extern void KartItem_ResetStrPcbToIdle();
+extern void KartItem_ResetStrPcbToIdle(void *owner);
 extern void StrPcb_GetInstance();
 extern void StrPcb_GetIntensityScale();
 extern void KartItem_SetStrPcbCmd2dFromFloat();
@@ -33,9 +33,31 @@ extern unsigned int lbl_802EDD98[];
  */
 
 /* --- forward decls --- */
-asm void EffectSteering_InitForDelay(void);
-asm void ActionDelay_Reset(void);
+/* Reset callbacks use the enclosing steering state and its output at +0x48. */
+typedef struct EffectSteeringResetState {
+    void *owner;
+    unsigned char pad4[0x44];
+    float output;
+} EffectSteeringResetState;
+
+typedef struct EffectActionResetState {
+    void *vtable;
+    EffectSteeringResetState *owner;
+    unsigned char pad8[8];
+    int field10;
+    int field14;
+    int field18;
+} EffectActionResetState;
+
+void ActionDelay_Reset(EffectActionResetState *self);
 #pragma cplusplus on
+struct EffectInputDelay {
+    /* As with Scale/Shake, reset is the second virtual slot (+0x0C). */
+    virtual void v0();
+    virtual void reset();
+    unsigned char pad4[0x18];
+    int sample_count;
+};
 struct EffectInputScale {
     virtual void v0();
     virtual void reset();
@@ -84,6 +106,7 @@ struct EffectInputVibrate {
     float field1C;
     int field20;
 };
+extern "C" int EffectSteering_InitForDelay(EffectSteeringScale *self, int sample_count, float duration);
 extern "C" int EffectSteering_InitForScale(EffectSteeringScale *self, float duration, float value);
 extern "C" int EffectSteering_InitForShake(EffectSteeringScale *self, float duration, float value, float cycle, float final_value);
 #pragma cplusplus off
@@ -134,155 +157,53 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&EffectSteering_InitForShake, 0x00000258, (void *)extab_EffectSteering_InitForShake
 };
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void EffectSteering_InitForDelay(void) { /* 0x8005B288 size:0x1B4 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stfd f31, 0x20(r1)
-    psq_st f31, 0x28(r1), 0, 0
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    mr r30, r3
-    fmr f31, f1
-    lwz r0, 0x1c(r3)
-    mr r31, r4
-    cmpwi r0, 0x0
-    beq EffectSteering_InitForDelay_L_8005B2D0
-    lwz r3, 0x20(r30)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    EffectSteering_InitForDelay_L_8005B2D0:
-    li r0, 0x9
-    stw r0, 0x1c(r30)
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x0
-    ble EffectSteering_InitForDelay_L_8005B2F8
-    lwz r3, 0xc(r30)
-    lwz r0, 0x8(r30)
-    cmpw r3, r0
-    bge EffectSteering_InitForDelay_L_8005B308
-    b EffectSteering_InitForDelay_L_8005B33C
-    EffectSteering_InitForDelay_L_8005B2F8:
-    lwz r3, 0xc(r30)
-    lwz r0, 0x8(r30)
-    cmpw r3, r0
-    bgt EffectSteering_InitForDelay_L_8005B33C
-    EffectSteering_InitForDelay_L_8005B308:
-    lfs f0, lbl_806D2978(r2)
-    li r0, 0x0
-    stw r0, 0x8(r30)
-    li r0, 0x1
-    fmuls f0, f0, f31
-    lwz r3, 0x8(r30)
-    fctiwz f0, f0
-    stw r3, 0x10(r30)
-    stfd f0, 0x8(r1)
-    lwz r3, 0xc(r1)
-    stw r3, 0xc(r30)
-    stw r0, 0x14(r30)
-    stb r0, 0x18(r30)
-    EffectSteering_InitForDelay_L_8005B33C:
-    lwz r0, 0x1c(r30)
-    cmplwi r0, 0x9
-    bgt EffectSteering_InitForDelay_L_8005B3C0
-    lis r3, jumptable_803F99E0@ha
-    slwi r0, r0, 2
-    addi r3, r3, jumptable_803F99E0@l
-    lwzx r0, r3, r0
-    mtctr r0
-    bctr
-    lwz r0, 0x24(r30)
-    stw r0, 0x20(r30)
-    b EffectSteering_InitForDelay_L_8005B3D8
-    lwz r0, 0x28(r30)
-    stw r0, 0x20(r30)
-    b EffectSteering_InitForDelay_L_8005B3D8
-    lwz r0, 0x2c(r30)
-    stw r0, 0x20(r30)
-    b EffectSteering_InitForDelay_L_8005B3D8
-    lwz r0, 0x30(r30)
-    stw r0, 0x20(r30)
-    b EffectSteering_InitForDelay_L_8005B3D8
-    lwz r0, 0x34(r30)
-    stw r0, 0x20(r30)
-    b EffectSteering_InitForDelay_L_8005B3D8
-    lwz r0, 0x38(r30)
-    stw r0, 0x20(r30)
-    b EffectSteering_InitForDelay_L_8005B3D8
-    lwz r0, 0x3c(r30)
-    stw r0, 0x20(r30)
-    b EffectSteering_InitForDelay_L_8005B3D8
-    lwz r0, 0x40(r30)
-    stw r0, 0x20(r30)
-    b EffectSteering_InitForDelay_L_8005B3D8
-    EffectSteering_InitForDelay_L_8005B3C0:
-    lis r3, lbl_802EDD98@ha
-    addi r3, r3, lbl_802EDD98@l
-    crxor 6, 6, 6
-    bl DebugPrintf
-    li r0, 0x0
-    b EffectSteering_InitForDelay_L_8005B3DC
-    EffectSteering_InitForDelay_L_8005B3D8:
-    li r0, 0x1
-    EffectSteering_InitForDelay_L_8005B3DC:
-    clrlwi. r0, r0, 24
-    bne EffectSteering_InitForDelay_L_8005B3EC
-    li r3, 0x0
-    b EffectSteering_InitForDelay_L_8005B41C
-    EffectSteering_InitForDelay_L_8005B3EC:
-    lwz r3, 0x40(r30)
-    stw r31, 0x1c(r3)
-    lwz r0, 0x1c(r3)
-    cmpwi r0, 0xd
-    blt EffectSteering_InitForDelay_L_8005B408
-    li r0, 0xc
-    stw r0, 0x1c(r3)
-    EffectSteering_InitForDelay_L_8005B408:
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    li r3, 0x1
-    EffectSteering_InitForDelay_L_8005B41C:
-    psq_l f31, 0x28(r1), 0, 0
-    lwz r0, 0x34(r1)
-    lfd f31, 0x20(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+/* Function bodies follow target .text order. Manual EH records are retained. */
+#pragma cplusplus on
+extern "C" int EffectSteering_InitForDelay(EffectSteeringScale *self, int sample_count, float duration) {
+    unsigned char ok;
+    EffectInputDelay *input;
+    if (self->mode != 0) self->input->reset();
+    self->mode = 9;
+    if (self->step > 0) {
+        if (self->end >= self->start) goto reset_delay;
+        goto no_reset_delay;
+    } else if (self->end > self->start) goto no_reset_delay;
+reset_delay:
+    self->start = 0;
+    self->current = self->start;
+    self->end = (int)(lbl_806D2978 * duration);
+    self->step = 1;
+    self->active = 1;
+no_reset_delay:
+    switch (self->mode) {
+    case 1: self->input = self->inputs[0]; break;
+    case 2:
+    case 4: self->input = self->inputs[1]; break;
+    case 3: self->input = self->inputs[2]; break;
+    case 5: self->input = self->inputs[3]; break;
+    case 6: self->input = self->inputs[4]; break;
+    case 7: self->input = self->inputs[5]; break;
+    case 8: self->input = self->inputs[6]; break;
+    case 9: self->input = self->inputs[7]; break;
+    default: DebugPrintf((const char *)lbl_802EDD98); ok = 0; goto selected_delay;
+    }
+    ok = 1;
+selected_delay:
+    if (!ok) return 0;
+    input = (EffectInputDelay *)self->inputs[7];
+    input->sample_count = sample_count;
+    if (input->sample_count >= 13) input->sample_count = 12;
+    input->reset();
+    return 1;
 }
-
-
-
-asm void ActionDelay_Reset(void) { /* 0x8005B43C size:0x54 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    stw r30, 0x8(r1)
-    mr r30, r3
-    lwz r31, 0x4(r3)
-    lwz r3, 0x0(r31)
-    bl KartItem_ResetStrPcbToIdle
-    lfs f0, lbl_806D297C(r2)
-    li r0, 0x0
-    stfs f0, 0x48(r31)
-    stw r0, 0x10(r30)
-    stw r0, 0x14(r30)
-    stw r0, 0x18(r30)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma cplusplus off
+void ActionDelay_Reset(EffectActionResetState *self) { /* 0x8005B43C size:0x54 */
+    EffectSteeringResetState *owner = self->owner;
+    KartItem_ResetStrPcbToIdle(owner->owner);
+    owner->output = *(float *)&lbl_806D297C;
+    self->field10 = 0;
+    self->field14 = 0;
+    self->field18 = 0;
 }
 
 
@@ -693,7 +614,7 @@ selected_lock:
 }
 #pragma cplusplus off
 
-asm void ActionLock_Reset(void);
+void ActionLock_Reset(EffectActionResetState *self);
 #pragma section R ".extab_user"
 __declspec(section ".extab_user") static const unsigned char extab_ActionLock_Reset[8] = {
     0x08, 0x0A, 0, 0, 0, 0, 0, 0
@@ -702,20 +623,8 @@ __declspec(section ".extab_user") static const unsigned char extab_ActionLock_Re
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ActionLock_Reset = {
     (void *)&ActionLock_Reset, 0x38, (void *)extab_ActionLock_Reset
 };
-asm void ActionLock_Reset(void) {
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    lwz r31, 0x4(r3)
-    lwz r3, 0x0(r31)
-    bl KartItem_ResetStrPcbToIdle
-    lfs f0, lbl_806D297C(r2)
-    stfs f0, 0x48(r31)
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+void ActionLock_Reset(EffectActionResetState *self) {
+    EffectSteeringResetState *owner = self->owner;
+    KartItem_ResetStrPcbToIdle(owner->owner);
+    owner->output = *(float *)&lbl_806D297C;
 }
