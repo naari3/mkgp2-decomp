@@ -1068,3 +1068,11 @@ leave five f1/f2 register substitutions in the blend increment/clamp; named
 clamp temporaries did not change them. The complete matrix/attachment body and
 callee ABIs are preserved for a future evidence-led retry. Its target object
 supplies the verified link: this draft is not counted as a C promotion.
+
+### 19.17 Card ping initializer (2026-10-03)
+
+The 128-byte ping initializer matches on its first C approach. Both early
+returns and the unsigned-byte pending flag reproduce the target branch layout.
+Sci2Card_SendCmdPing consumes only the singleton pointer; argument constants
+are set by that callee. Automatic singleton exception records and the linked
+source object reproduce the full target without manual EH or symbol mappings.
