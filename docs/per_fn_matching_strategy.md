@@ -1053,3 +1053,18 @@ whose target value is confirmed zero. Added declarations shift the viscosity
 table alias from @153 to @162. All 15 TU functions and four payload sections
 remain exact with manual EH; only InitForSplit remains asm in this TU.
 Real-C gain is three functions/212 bytes, not an aggregate linked-match increase.
+
+### 19.16 Item acceleration and bounded flying-render draft (2026-10-03)
+
+Item_AccelClampVelocity matches as real C (204 bytes) on the first approach.
+The separate reciprocal idiom also applies here. GetSpawnPosition's actual
+ABI is a three-float vector setter, despite its name; target/callee instructions
+establish this before source reconstruction. The independent singleton avoids
+crossing the pending Homing/Launch functions.
+
+Item_RenderFlyingFromKart is retained as NonMatching C at 99.61539% (260 bytes).
+An empty switch case 0 restores the missing dispatch branch. Three approaches
+leave five f1/f2 register substitutions in the blend increment/clamp; named
+clamp temporaries did not change them. The complete matrix/attachment body and
+callee ABIs are preserved for a future evidence-led retry. Its target object
+supplies the verified link: this draft is not counted as a C promotion.
