@@ -607,6 +607,7 @@ config.libs = [
             Object(Matching, "game/card_rw_get_substate.c"),
             Object(Matching, "game/CardReadCommand.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CardReadCommandUnused.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/CardCleaningCommand.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CardEjectCommand.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CardPingCommand.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Sci2Card_GetPrintErrorCode.c"),

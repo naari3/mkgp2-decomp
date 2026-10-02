@@ -1076,3 +1076,11 @@ returns and the unsigned-byte pending flag reproduce the target branch layout.
 Sci2Card_SendCmdPing consumes only the singleton pointer; argument constants
 are set by that callee. Automatic singleton exception records and the linked
 source object reproduce the full target without manual EH or symbol mappings.
+
+### 19.18 Card cleaning initializer (2026-10-03)
+
+The 204-byte cleaning initializer matches on the first C approach. Preserve
+branch-specific status-store ordering and acquire the singleton before testing
+the second byte guard. Sci2Card_ForceFailState consumes only r3; the preceding
+r4/r5 constants are store temporaries, not forwarded arguments. Automatic
+exception records, direct payload comparisons and the linked C object are exact.

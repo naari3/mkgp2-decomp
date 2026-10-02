@@ -1319,6 +1319,11 @@ game/CardPingCommand.c:
 game/card_ping_clear_pending_flag.c:
 	.text       start:0x80098790 end:0x800987A8
 
+game/CardCleaningCommand.c:
+	extab       start:0x80009540 end:0x80009548
+	extabindex  start:0x8002210C end:0x80022118
+	.text       start:0x800989C4 end:0x80098A90
+
 game/CardEjectCommand.c:
 	extab       start:0x80009550 end:0x80009558
 	extabindex  start:0x80022124 end:0x80022130
