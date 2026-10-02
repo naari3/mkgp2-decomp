@@ -974,3 +974,17 @@ The recorded best was 98.81119%; unresolved differences were radius-clamp FP
 comparison control flow and orbitFade FPR identity. ABI evidence from that run:
 r3 Item pointer, r4 offset-vector pointer, r5 unsigned active flag, f1 yaw step,
 f2 pitch step. These are observations, not proof that all C forms are impossible.
+
+### 19.10 Item ground-following helpers: complete C match (2026-10-03)
+
+Gravity (0x800D957C, 492 bytes), FallingDrop (0x800D9768, 324 bytes), and Simple
+(0x800D98AC, 408 bytes) match as real C in `game/ItemMotion.c`. Their three
+singleton extab groups form one contiguous TU without crossing the skipped
+Orbit function. Use an explicit null-exit label and return the already-null
+item pointer cast to int where the target preserves r3, rather than introducing
+another zero materialization. For magnitude-preserving velocity scaling, a
+separate reciprocal local before multiplication preserves the target `fmuls`
+operand order. FallingDrop's threshold assignment inside the comparison
+preserves the target expression schedule. Direct objdiff: 3/3 at 100%; worker
+full DOL SHA-1 exact. Callee ABIs were independently checked from target asm;
+no Ghidra decompile was available in this session.
