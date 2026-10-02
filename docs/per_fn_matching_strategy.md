@@ -950,3 +950,13 @@ When a small Vec3 copy is otherwise byte-identical except for independent FP loa
 order, first keep the spill object volatile, then apply the volatile cast only to
 the load that must act as the scheduling barrier. Avoid marking all source fields
 volatile because that can over-constrain unrelated loads.
+
+### 19.8 EffectSteering destructor recovery (2026-10-03)
+
+Recovered the completed `unit_effectsteering_dtor` handoff: the 56-byte
+`ActionLock_Reset` bridge is exact inline assembly, not a C promotion.
+`EffectSteering_Dtor` itself remains auto-asm. Three C++ shapes peaked at
+71.826385%; eight address-guarded virtual deletes and the 0x108-byte EH table
+were not reproduced. A retry needs evidence for the eight distinct action-owner
+member types and their exception specifications, not another flattened delete
+sequence. Preserve this distinction in state and progress reports.

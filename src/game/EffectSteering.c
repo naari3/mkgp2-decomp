@@ -692,3 +692,30 @@ selected_lock:
     return 1;
 }
 #pragma cplusplus off
+
+asm void ActionLock_Reset(void);
+#pragma section R ".extab_user"
+__declspec(section ".extab_user") static const unsigned char extab_ActionLock_Reset[8] = {
+    0x08, 0x0A, 0, 0, 0, 0, 0, 0
+};
+#pragma section R ".extabindex_user"
+__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ActionLock_Reset = {
+    (void *)&ActionLock_Reset, 0x38, (void *)extab_ActionLock_Reset
+};
+asm void ActionLock_Reset(void) {
+    nofralloc
+    stwu r1, -0x10(r1)
+    mflr r0
+    stw r0, 0x14(r1)
+    stw r31, 0xc(r1)
+    lwz r31, 0x4(r3)
+    lwz r3, 0x0(r31)
+    bl KartItem_ResetStrPcbToIdle
+    lfs f0, lbl_806D297C(r2)
+    stfs f0, 0x48(r31)
+    lwz r0, 0x14(r1)
+    lwz r31, 0xc(r1)
+    mtlr r0
+    addi r1, r1, 0x10
+    blr
+}
