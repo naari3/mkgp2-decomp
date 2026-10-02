@@ -1822,9 +1822,9 @@ game/Item.c:
 	.text       start:0x800D8FF0 end:0x800D9340
 
 game/ItemMotion.c:
-	extab       start:0x8000B384 end:0x8000B39C
-	extabindex  start:0x80023A5C end:0x80023A80
-	.text       start:0x800D957C end:0x800D9A44
+	extab       start:0x8000B384 end:0x8000B3AC
+	extabindex  start:0x80023A5C end:0x80023A98
+	.text       start:0x800D957C end:0x800D9D50
 
 game/Item_DecayVelocityScalar.c:
 	.text       start:0x800D9D50 end:0x800D9D74

@@ -1028,3 +1028,15 @@ the target truncation, and the eject wrapper uses the existing compatible
 The two disjoint ranges require separate singleton TUs, each using automatic
 exception records with exceptions enabled. Both source objects are linked and
 their text/extab/extabindex sections are exact; no manual EH mappings are needed.
+
+### 19.14 Item wall helpers: ABI-led contiguous extension (2026-10-03)
+
+BounceOffWall (440 bytes) and CheckWallCollision (340 bytes) both match on the
+first C approach, extending ItemMotion's contiguous text end to 0x800D9D50.
+All three earlier helpers remain exact and unchanged. Separate ordered stack
+Vec3 copies preserve the positional-sound, trail, reflection and raycast ABIs.
+FAbs_FloatAsDouble returns double: a float declaration would introduce an
+unwanted rounding before comparison. The raycast returns an unsigned byte;
+the response-mode field at +0x168 is unsigned, while the alias at +0x8 is signed.
+Singleton automatic exception records append in target order without renames.
+These minimal field names describe observed accesses, not a complete Item class.
