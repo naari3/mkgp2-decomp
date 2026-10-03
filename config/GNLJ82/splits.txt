@@ -662,6 +662,11 @@ game/EffectSteering.c:
 	.text       start:0x8005B288 end:0x8005C51C
 	.data       start:0x803F99E0 end:0x803F9B48
 
+game/EffectSteeringCtor.cpp:
+	extab       start:0x8000792C end:0x800079DC
+	extabindex  start:0x80020ABC end:0x80020AC8
+	.text       start:0x8005CA64 end:0x8005CCBC
+
 game/clItemBoxResponder_DebrisArray_Dtor.c:
 	extab       start:0x80007B4C end:0x80007B54
 	extabindex  start:0x80020BA0 end:0x80020BAC

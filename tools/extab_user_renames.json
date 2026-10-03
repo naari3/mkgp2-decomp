@@ -1391,6 +1391,27 @@
     "@33": "jumptable_803F99E0",
     "@162": "jumptable_803F9A80"
   },
+  "src/game/EffectSteeringCtor.cpp": {
+    "__ct__6ESCtorFPvUc": "EffectSteering_Ctor",
+    "__dt__6ESBaseFv": "dtor_8005CCBC",
+    "__vt__6ESBase": "lbl_803F9C28",
+    "__vt__5ESScl": "lbl_803F9C48",
+    "__vt__5ESSha": "lbl_803F9C14",
+    "__vt__5ESSpl": "lbl_803F9BF4",
+    "__vt__5ESVis": "lbl_803F9BD4",
+    "__vt__5ESVib": "lbl_803F9BB4",
+    "__vt__5ESLck": "lbl_803F9B94",
+    "__vt__5ESRng": "lbl_803F9B74",
+    "__vt__5ESDly": "lbl_803F9B54",
+    "__dt__6ESOwn1Fv": "dtor_8005D8C4",
+    "__dt__6ESOwn2Fv": "dtor_8005D834",
+    "__dt__6ESOwn3Fv": "dtor_8005D7A4",
+    "__dt__6ESOwn4Fv": "dtor_8005D714",
+    "__dt__6ESOwn5Fv": "dtor_8005D684",
+    "__dt__6ESOwn6Fv": "dtor_8005D5F4",
+    "__dt__6ESOwn7Fv": "dtor_8005D564",
+    "__nwa__FUl": "FUN_8003b120"
+  },
   "src/game/card.c": {
     "extab_card_backup": "@etb_80008300",
     "extabindex_card_backup": "@eti_80021230"

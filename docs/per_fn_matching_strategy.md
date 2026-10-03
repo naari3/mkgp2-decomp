@@ -1269,3 +1269,15 @@ Stop rather than combine untested permutations beyond the budget. Actual
 rotation helpers consume full Vec3 pointers; orientation helper returns float.
 Main independently verified EH100%, index91.66667%, source-only compilation
 and exact original-fallback DOL SHA-1. Zero matched gain; runtime/CI unverified.
+
+### 19.35 EffectSteering genuine constructor ownership (2026-10-03)
+
+The600B constructor and automatic176B EH/index match as genuine C++.
+Seven distinct four-byte owner members with declared external throw() dtors
+generate exact DESTROYMEMBER actions; flattening them into pointers loses EH.
+Inline derived constructors retain both base and derived vptr stores without
+emitting new vtables. The last Delay new[] requires natural DESTROYBASE and
+DELETEPOINTER actions. Independent ascending-offset zero statements fix the
+only first-approach store reversal. TU-scoped mangled bridges preserve external
+strong dtors. Main source link/text/EH/index100% and fullSHA1 verified; gain
+one function/600B. Observed-layout types only, runtime/CI/Ghidra unverified.
