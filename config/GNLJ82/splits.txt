@@ -275,6 +275,11 @@ game/JvsInputReset.c:
 	extabindex  start:0x8001FACC end:0x8001FAD8
 	.text       start:0x800396E4 end:0x80039780
 
+game/JvsInputPoll.c:
+	extab       start:0x80005E68 end:0x80005E70
+	extabindex  start:0x8001FAD8 end:0x8001FAE4
+	.text       start:0x80039780 end:0x80039A34
+
 game/JvsInputClear.c:
 	extab       start:0x80005E70 end:0x80005E78
 	extabindex  start:0x8001FAE4 end:0x8001FAF0

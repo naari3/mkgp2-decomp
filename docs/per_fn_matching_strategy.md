@@ -1438,3 +1438,15 @@ stores and actual variadic DebugPrintf ABI are retained. Main preserved reset
 then clear split ranges when resolving independent insertion conflict. Main
 EH87.5/index91.66667 and original-fallback full SHA1 verified; zero matched
 gain. Retry requires new cross-call pool-base evidence, runtime/CI unverified.
+
+### 19.50 JvsInput polling bounded alias residue (2026-10-03)
+
+Complete692B poll C remains NonMatching63.231213%, source664B, after three
+material approaches. Named edge fields, index arrays and flat halfword views
+do not retain target alias reload/store ordering; an extra persistent player
+base shifts the saved range to r21 rather than r22. Actual callee ABI requires
+byte player/channel/counter arguments and independent output counts. Main
+retained reset/poll/clear ranges and both Object entries in insertion conflicts.
+Main EH87.5/index91.66667, original-object linkage and full fallback SHA1
+verified; zero matched gain. Retry needs concrete alias/base-web evidence,
+not more declaration permutations. Runtime/CI/Ghidra remain unverified.
