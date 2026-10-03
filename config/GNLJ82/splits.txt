@@ -114,6 +114,11 @@ game/CObj_GlobalProjPushFrame.c:
 	extabindex  start:0x8001F5C8 end:0x8001F5D4
 	.text       start:0x80030A48 end:0x80030A68
 
+game/CObjDebugRender.c:
+	extab       start:0x80005930 end:0x80005940
+	extabindex  start:0x8001F5D4 end:0x8001F5EC
+	.text       start:0x80030A68 end:0x80030AEC
+
 game/Stub_NoOp_80030aec.c:
 	.text       start:0x80030AEC end:0x80030AF0
 

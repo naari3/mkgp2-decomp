@@ -1347,3 +1347,11 @@ Writing mode == global, rather than global == mode, preserves subf operands.
 Minimal observed padded views keep byte+0A and buffer+3034; no guessed class.
 Main independently verified text100%, no target/source EH, actual source link
 and exact full DOL SHA1. Gain3/88B; runtime/CI/Ghidra remain unverified.
+
+### 19.42 CObj debug and render camera ABI (2026-10-03)
+
+Both64B/68B wrappers match on the first approach. Camera setup/getter/render
+consume only r3; debug flush consumes matrix r3 and projection r4, not r5.
+Unsigned ready and int-return nonzero normalization reproduce the render guard.
+Main independently verified source-linked text/EH/index100% and full DOL SHA1.
+Gain2/132B, with runtime/CI/Ghidra still unverified.
