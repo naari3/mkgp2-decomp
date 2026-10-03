@@ -1430,6 +1430,17 @@ this is not a global impossibility claim. Automatic EH75%/index91.66667%
 are not acceptance. Original fallback linked; genuine/aggregate gain0.
 Runtime/CI/Ghidra unverified; retry needs new spill/web provenance evidence.
 
+### 19.88 Card RW short precompile snapshot gate (2026-10-04)
+
+Full2600B target's tail80096734..80096A10 repeats the packed two-phase
+snapshot family of19.28, including unaligned1BA..1CE words and broad spills.
+Full CardForceBackup source and actual three-argument byte-copy callee confirm
+the family; no distinct aggregate-copy/inlining mechanism was found. Stop
+before source probes rather than accept a partial prefix or repeat scalar
+permutations. No source/wiring edit or implementation commit; status skipped,
+genuine/aggregate gain0. Original fallback full SHA1 verified; runtime/CI
+unverified. This bounded evidence gate is not universal source impossibility.
+
 ### 19.65 Debris Spawn bounded natural lifetime draft (2026-10-04)
 
 Debris Spawn796B complete C++ draft is parked at93.77889% after three
