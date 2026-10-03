@@ -1325,3 +1325,16 @@ optional output stores and the null-source copy path when ready is zero;
 an invented early return changes original behavior. Main retained both cached
 and unproject Object entries when resolving their independent insertion conflict.
 Actual source link and full DOL SHA1 verified; gain1/236B, runtime/CI unverified.
+
+### 19.40 CObj perspective update and projection bounded layout (2026-10-03)
+
+UpdatePerspParam200B requires signed projection-type getter, float aspect/FOV
+getters and an18-float buffer at+3034 preceding near/far+307C/3080.
+ProjectPoint's complete296B draft reaches91.27027% in three approaches;
+frameA0, FP/GPR homes, stack arrays and automatic EH/index match, but both
+nullable getter joins remain non-null-first unlike target null-first layout.
+Aggregate Vec3 assignment naturally preserves the overwritten integer-copy
+initialization; this is not the literal-float DSE blocker. Separate adjacent
+TUs with a local source selector preserve exact update link and projection
+fallback. Retain all three non-overlapping split entries when resolving
+independent additions. No fourth probe; runtime/CI/Ghidra remain unverified.
