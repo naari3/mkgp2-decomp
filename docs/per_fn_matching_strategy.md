@@ -1155,3 +1155,14 @@ Three approaches leave tail scheduling at +0xE4..+0xFC: vector-copy loads,
 argument-address calculation and scale store order. Actual compiled C is not
 linked, so full SHA-1 verifies fallback preservation and adds no matched bytes.
 Retry requires concrete aggregate-copy scheduling/ABI evidence.
+
+### 19.25 Ground-bend yaw spill (2026-10-03)
+
+Complete 432-byte ground-bend C is preserved disabled at 98.14815%, without
+changing the existing two exact 420-byte functions or TU boundaries. The caller
+needs a double Vec3_ToYaw declaration despite the callee's frsp. Independent
+probe copies/heights and reciprocal-first normalization reproduce the body.
+Three approaches leave one spill web: target stores original f1 before argument
+moves, while CW stores rounded f0 after fneg. Existing EH/source link and full
+SHA-1 stay exact; there is no matching gain. Retry needs new spill-provenance
+evidence, not more declaration permutations.

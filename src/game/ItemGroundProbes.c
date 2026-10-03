@@ -77,3 +77,56 @@ float Item_ProbeForwardGroundPitch(const Vec3 *origin, float yaw,
     }
     return pitch;
 }
+
+/* Complete 432-byte C candidate for 0x800DBD48..0x800DBEF8, 98.14815%.
+ * The caller converts Vec3_ToYaw's f1 result to float, although the callee
+ * itself rounds to single precision. Keep the caller's double declaration.
+ * Remaining mismatch: target stores original f1 to the reused firstHeight
+ * slot before argument moves; CW stores rounded f0 after fneg. Three bounded
+ * approaches left this spill unchanged. Disabled to preserve both exact
+ * ground-pitch functions and their linked TU boundaries; no asm substitute.
+ */
+#if 0
+extern double Vec3_ToYaw(const Vec3 *v);
+extern float Vec3_Magnitude_Wrapper(const Vec3 *v);
+extern void Vec3_Scale(Vec3 *out, const Vec3 *in, float scale);
+extern void Vec2_RotateX(Vec3 *out, const Vec3 *in, float angle);
+extern float lbl_806D5AB8;
+extern float lbl_806D5B18;
+
+void Item_BendVelocityByGroundProbe(Vec3 *out, const Vec3 *origin,
+                                    float yaw, float length, float bendAngle)
+{
+    Vec3 probe;
+    Vec3 firstPosition;
+    Vec3 secondPosition;
+    float firstHeight;
+    float secondHeight;
+
+    GetSpawnPosition(out, 0.0f, 0.0f, length);
+    Vec2_RotateY(out, out, yaw);
+    firstPosition = *origin;
+    if (ItemObject_GetGroundTypeAt(&firstPosition, &firstHeight, 0) != 0) {
+        GetSpawnPosition(&probe, lbl_806D5AC8, lbl_806D5AC8, lbl_806D5B18);
+        Vec2_RotateY(&probe, &probe, yaw);
+        Vec3_Add_DestFirst(&probe, origin, &probe);
+        secondPosition = probe;
+        if (ItemObject_GetGroundTypeAt(&secondPosition, &secondHeight, 0) != 0) {
+            firstHeight = origin->y - firstHeight;
+            probe.y = secondHeight + firstHeight;
+            Vec3_Subtract_DestFirst(out, &probe, origin);
+            {
+                float reciprocal = lbl_806D5AB8 / Vec3_Magnitude_Wrapper(out);
+                Vec3_Scale(out, out, length * reciprocal);
+            }
+        }
+    }
+    {
+        double currentYaw = Vec3_ToYaw(out);
+        firstHeight = currentYaw;
+        Vec2_RotateY(out, out, -(float)currentYaw);
+    }
+    Vec2_RotateX(out, out, bendAngle);
+    Vec2_RotateY(out, out, firstHeight);
+}
+#endif
