@@ -81,6 +81,11 @@ game/Scene3D_GetCameraPos.c:
 	extabindex  start:0x8001F550 end:0x8001F55C
 	.text       start:0x800302EC end:0x8003031C
 
+game/CObjViewport.c:
+	extab       start:0x800058E8 end:0x80005900
+	extabindex  start:0x8001F568 end:0x8001F58C
+	.text       start:0x800303E8 end:0x800304E0
+
 game/CObj_GlobalProjPushFrame.c:
 	extab       start:0x80005928 end:0x80005930
 	extabindex  start:0x8001F5C8 end:0x8001F5D4

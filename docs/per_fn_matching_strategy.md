@@ -1292,3 +1292,15 @@ Preserve both raw copies, overwritten scratch and original overflow-before-free
 path. Remaining version/used r26/r27 identities and extra r0 forwarding move
 need new evidence, not declaration permutations. Main EH100%, index91.66667%,
 source-only linkage and fallback SHA1 verified. Zero matched gain.
+
+### 19.37 CObj viewport actual SDK ABI (2026-10-03)
+
+ApplyViewport, LoadIntoGX and SetWorldMatrix all match on the first approach,
+248B text plus24B automatic EH and36B index. Camera wrapper callees consume
+r4 as an input source pointer; downstream setter copies three source words
+to destination+0C/10/14. Do not omit the wrapper's second argument. Matrix
+copy consumes r3 source and r4 destination, camera+54. Unsigned ready+28,
+camera+4 and flags+8 preserve target guard and OR80000002. Explicit7/5-byte
+assert strings retain SDA21 references. Main independently verified actual
+source linkage, all sections100% and full DOL SHA1; gain3 functions/248B.
+Runtime, CI and Ghidra remain unverified; actual target/callee asm was used.
