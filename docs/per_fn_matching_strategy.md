@@ -1393,8 +1393,6 @@ gain2/268B. Worker baseline child-Python alias failure was resolved by a
 process-local venv Scripts PATH; final actual build exit0, no repo changes.
 Runtime/CI/Ghidra remain unverified.
 
-### 19.64 DemoWC constructor virtual base-this lifetime (2026-10-04)
-
 ### 19.65 Debris Spawn bounded natural lifetime draft (2026-10-04)
 
 Debris Spawn796B complete C++ draft is parked at93.77889% after three
@@ -1417,7 +1415,7 @@ not move this output. Preserve full disabled draft and unchanged exact asm;
 main fallback text/EH/index100%, source link and full SHA1 verified. Gain0,
 new scheduling/aggregate evidence required before retry; runtime/CI unverified.
 
-### DemoWC constructor acceptance details
+### 19.64 DemoWC constructor virtual base-this lifetime (2026-10-04)
 
 The644B constructor is genuine C++ with automatic196B EH/12B index100%.
 Five natural new expressions and nested root/base construction preserve all
