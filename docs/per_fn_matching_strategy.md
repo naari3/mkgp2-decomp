@@ -1366,3 +1366,14 @@ proof of source-closed impossibility. Main verified automatic EH/index100%,
 source-only compilation and exact original-fallback DOL SHA1. Zero gain.
 Retry requires a concrete vector-access/inline-composition lever; runtime/CI
 and Ghidra remain unverified.
+
+### 19.44 InputCmd complete leaf closure (2026-10-03)
+
+Five functions44B match as genuine C on the first approach. Keep the anonymous
+sample constructor with all four named accessors in the indivisible blob.
+Sample live+10 is not InputCmd mode+10; use the appropriate observed view.
+The constructor's unchanged self return preserves the external r3 ABI without
+instructions. The8B SDA global is represented at full width, using only word0;
+its semantic config type is not yet established by these accessors alone.
+Main source text100%, no EH/index, actual link and full DOL SHA1 verified.
+Gain5/44B; runtime/CI/Ghidra remain unverified.
