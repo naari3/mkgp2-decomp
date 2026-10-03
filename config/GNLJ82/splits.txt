@@ -2054,6 +2054,10 @@ game/KartDriver_TransformWorldToLocalY0.c:
 	extabindex  start:0x80023BA0 end:0x80023BAC
 	.text       start:0x800DC6D0 end:0x800DC784
 
+game/KartCharacterParam.c:
+	.text       start:0x800DC784 end:0x800DCA70
+	.data       start:0x8041EA84 end:0x8041EB88
+
 game/ItemTracker.c:
 	extab       start:0x8000B47C end:0x8000B49C
 	extabindex  start:0x80023BD0 end:0x80023C00

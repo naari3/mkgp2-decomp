@@ -1430,6 +1430,20 @@ this is not a global impossibility claim. Automatic EH75%/index91.66667%
 are not acceptance. Original fallback linked; genuine/aggregate gain0.
 Runtime/CI/Ghidra unverified; retry needs new spill/web provenance evidence.
 
+### 19.91 KartCharacter whole leaf table closure (2026-10-04)
+
+Six functions748B and five thirteen-entry jump tables260B match genuine C
+on the first source approach. Preserve separate return arms even for equal
+constants; identity switch is not a simple identity expression. Data starts
+4mod8: ELF alignment4 alone fails because CW .comment symbol alignment8
+overrides it. An explicitly approved TU-only normal-rule clone removes only
+this EH/BSS/common-free leaf's .comment and sets .data alignment4, preserving
+all instruction/data bytes and relocations. Do not generalize to lifetime or
+common-BSS objects. Main independently verified all six symbols/text/data100,
+source link, foreground exit0 and exact full DOL SHA1; gain6/748B plus260B data.
+Two initial SHA failures are resolved by metadata provenance, not opcode edits.
+Runtime/CI/Ghidra remain unverified.
+
 ### 19.90 RaceContext slot inline normalization and initialization (2026-10-04)
 
 GetIfAlive64B, Free116B and AllocItem216B match genuine C. A bit-one test of

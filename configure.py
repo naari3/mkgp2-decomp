@@ -581,6 +581,7 @@ config.libs = [
             Object(Matching, "game/ItemGroundProbes.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/ItemCharacterRender.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/ItemHandheldRender.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/KartCharacterParam.c"),
             Object(Matching, "game/Frame.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++"]),
             Object(Matching, "game/TransparentDraw.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/TripleBladeRing.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -1104,11 +1105,37 @@ def _inject_jvs_metrics_ctor_bridge() -> None:
     build_ninja.write_text(text, encoding="utf-8")
 
 
+def _inject_kart_character_data_alignment() -> None:
+    """Keep this EH/BSS-free leaf TU's observed four-byte table alignment.
+
+    MWLD symbol alignment in .comment overrides ELF section alignment. This
+    TU has no common/BSS or lifetime metadata requiring that comment section.
+    Only layout metadata is removed; text/data bytes and relocations stay native.
+    """
+    build_ninja = Path("build.ninja")
+    text = build_ninja.read_text(encoding="utf-8")
+    target = "build build\\GNLJ82\\src\\game\\KartCharacterParam.o: mwcc_sjis"
+    if sys.platform != "win32":
+        target = "build build/GNLJ82/src/game/KartCharacterParam.o: mwcc_sjis"
+    if target not in text:
+        return
+    start = text.index("rule mwcc_sjis\n")
+    end = text.index("\nrule ", start + 1)
+    rule = text[start:end].replace("rule mwcc_sjis\n", "rule mwcc_sjis_kart_character\n", 1)
+    hook = " && $python tools/postprocess_sdata2.py $out $out"
+    assert hook in rule
+    rule = rule.replace(hook, hook + ' && "C:/Program Files/LLVM/bin/llvm-objcopy.exe" --remove-section .comment --set-section-alignment .data=4 $out', 1)
+    text = text.replace(target, target.replace("mwcc_sjis", "mwcc_sjis_kart_character"), 1)
+    text = text[:start] + rule + "\n" + text[start:]
+    build_ninja.write_text(text, encoding="utf-8")
+
+
 if args.mode == "configure":
     # Write build.ninja and objdiff.json
     generate_build(config)
     _inject_sdata2_postprocess(config)
     _inject_jvs_metrics_ctor_bridge()
+    _inject_kart_character_data_alignment()
 elif args.mode == "progress":
     # Print progress information
     calculate_progress(config)
