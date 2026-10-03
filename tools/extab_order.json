@@ -3,6 +3,10 @@
     "extab": ["dtor_801FEAB8", "dtor_801FEB48", "dtor_801FEA70"],
     "extabindex": ["dtor_801FEAB8", "dtor_801FEB48", "dtor_801FEA70"]
   },
+  "src/game/CourseData_Lookup.c": {
+    "extab": ["dtor_800ABF10", "HitMessageOverlay_Dtor", "CourseData_GetOrCreate"],
+    "extabindex": ["HitMessageOverlay_Dtor", "CourseData_GetOrCreate", "dtor_800ABF10"]
+  },
   "src/game/ItemObjectManager_Controls.c": [
     "ItemObjectManager_Render",
     "ItemObjectManager_Reset",

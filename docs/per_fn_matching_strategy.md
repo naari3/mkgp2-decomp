@@ -1587,3 +1587,18 @@ second material approach. No register forcing, manual EH or instruction
 patching. Main independently verified owned text/EH/index100%, actual source
 link and full DOL SHA1. Genuine gain1/368B; aggregate report also+1/368B.
 Observed views only; runtime/CI/Ghidra remain unverified.
+
+### 19.62 CourseData lookup allocation and inline base lifetime (2026-10-04)
+
+The 124B derived destructor and 160B factory now match genuine C++ with
+natural typed destruction and ignored new12B constructor result. The
+constructor stores the global internally; retaining that behavior preserves
+the null allocation join and automatic DELETEPOINTER register home. The
+derived destructor frees values before keys and inlines the base vptr store.
+All six owned functions and text472B/extab40B/index36B independently match
+100% on main, with source linked and full DOL SHA1 exact. Existing three C
+accessors remain unchanged. The standalone72B base destructor remains
+original assembly: strong emission prevents required derived inlining,
+while inline emission omits its standalone body. Three approaches exhausted;
+do not count that fallback as C++. Genuine gain2/284B; report delta0.
+Runtime/CI/Ghidra remain unverified.

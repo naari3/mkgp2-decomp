@@ -232,11 +232,17 @@
   },
   "src/game/CourseData_Lookup.c": {
     "extab_dtor_800ABF10": "@etb_8000A0E8",
-    "extab_fn_800ABD80": "@etb_8000A0F0",
-    "extab_CourseData_GetOrCreate": "@etb_8000A0F8",
-    "extabindex_fn_800ABD80": "@eti_80022778",
-    "extabindex_CourseData_GetOrCreate": "@eti_80022784",
-    "extabindex_dtor_800ABF10": "@eti_80022790"
+    "@11": "@etb_8000A0F0",
+    "@59": "@etb_8000A0F8",
+    "@12": "@eti_80022778",
+    "@60": "@eti_80022784",
+    "extabindex_dtor_800ABF10": "@eti_80022790",
+    "__dt__12CourseLookupFv": "HitMessageOverlay_Dtor",
+    "__vt__12CourseLookup": "lbl_80419DB0",
+    "__vt__16CourseLookupBase": "lbl_80419DBC",
+    "__ct__12CourseLookupFiii": "CourseData_LoadPathTable",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/GameSetting.c": {
     "extab_GameSetting_Page_VariantA": "@etb_80008218",
