@@ -1779,3 +1779,14 @@ intermediate-base vptr and automatic ownership alone do not resolve inlining.
 Main independently verified unchanged source-linked ASM text/EH/index100%,
 foreground build exit0 and full DOL SHA1. Genuine and aggregate gain0;
 retry requires new nested-constructor inlining evidence. Runtime/CI unverified.
+
+### 19.78 KartDriver full initializer bounded natural ownership (2026-10-04)
+
+Complete disabled3080B C++ draft reaches97.75912% against3072B target.
+Natural24 allocations recover all cleanup homes; EH99.18033/index95% are
+not acceptance. Three structural approaches leave character/entry merged
+webs, table-base and loop-induction differences. Preserve unchanged original
+source prefix/newlines and ASM; main raw fallback text99.84375/EH/index100%,
+actual source link, foreground build exit0 and exact full DOL SHA1 verified.
+Genuine and aggregate gain0; retry needs concrete pointer/induction evidence.
+Runtime/CI and full semantic class layouts remain unverified.

@@ -955,3 +955,256 @@ asm void KartDriver_InitFull(void) { /* 0x80044D50 size:0xC00 */
     blr
 }
 
+#if 0
+/* Complete genuine C++ reconstruction, bounded after three structural approaches.
+ * Best: text 97.75912% (3080 vs 3072 bytes), automatic extab 99.18033%,
+ * extabindex 95%. Natural new expressions generate all 24 DELETEPOINTER actions.
+ * Remaining differences include character/entry merged webs, table-base and
+ * loop induction/address scheduling. This draft is not a matching gain.
+ * ABI verified from complete authoritative target/callee ASM; runtime unverified.
+ */
+#pragma cplusplus on
+#pragma exceptions on
+/* Observed views only; external constructors own opaque allocation storage. */
+struct Driver;
+struct Accessory { unsigned char opaque[48]; Accessory(Driver*); };
+struct EffectState { unsigned char opaque[40]; EffectState(Driver*); };
+struct HUD28 { unsigned char pad00[8]; float x,y; unsigned char pad10[12]; HUD28(); };
+struct HUD16 { unsigned char pad00[8]; float x,y; HUD16(); };
+struct HUD12 { unsigned char opaque[12]; HUD12(); };
+struct HUD36 { unsigned char opaque[36]; HUD36(); };
+struct Normal3D { unsigned char opaque[92]; Normal3D(const char *, int); };
+struct EffectBus { unsigned char opaque[88]; EffectBus(Driver *); };
+struct TireFX { unsigned char opaque[196]; TireFX(int,int,void*,void*,void*,void*); };
+struct DriverTail {
+    Driver *owner; int a04, a08, a0C, a10;
+    unsigned char a14,a15,pad16[2]; int a18;
+    DriverTail(Driver *p) { owner=p; a04=0; a0C=0; a10=0; a14=0; a15=0; a18=-1; }
+};
+struct Driver {
+    Normal3D *kart,*wheelA,*wheelB;
+    Normal3D *character,*animation,*other,*shadow;
+    Normal3D *a1C; Normal3D *extra,*slots[49];
+    void *tires[4],*ground[4],*joint108,*engine,*body,*mufflerL,*mufflerR,*handNull,*teresa,*info,*head,*a12C,*handGoo,*handPa,*a138;
+    void *joint13C,*joint140,*joint144,*joint148,*joint14C; void *joint150,*joint154,*joint158,*joint15C,*joint160,*joint164,*joint168,*joint16C;
+    float a170; unsigned char a174,pad175[3]; int a178; void *matrix;
+    unsigned char pad180[116]; int id,characterId;
+    unsigned char pad1FC[28]; int contextSlot;
+    unsigned char pad21C[16]; int a22C; unsigned char pad230[12]; int slot;
+    unsigned char pad240[8]; int raceSlot;
+    int a24C; unsigned char pad250[76]; Accessory *accessory; unsigned char pad2A0[48]; unsigned char startSlot;
+    unsigned char pad2D1[51]; EffectBus *effects;
+    unsigned char pad308[4]; TireFX *tireFX;
+    unsigned char pad310[8]; float a318,a31C,a320,a324,a328;
+    EffectState *a32C; unsigned char pad330[20]; DriverTail *tail;
+    unsigned char pad348[20]; HUD28 *a35C; HUD16 *a360;
+    unsigned char pad364[4]; unsigned char a368;
+    unsigned char pad369[11]; int a374; HUD12 *a378; unsigned char pad37C[4]; HUD36 *a380;
+};
+struct ModelEntry { const char *file,*wheelA,*wheelB; };
+struct CharacterEntry { unsigned char pad00[4]; const char *file,*anim,*other; unsigned char pad10[8]; const char **motion; unsigned char pad1C[16]; };
+struct JointMatrix { unsigned char pad00[28]; float value; };
+extern "C" {
+extern int g_cupId,g_roundIndex; extern unsigned char lbl_803F5928[];
+extern const char *lbl_806CEDD8,*lbl_806CEDDC,*lbl_806CEDE0,*lbl_806CEDE4,*lbl_806CEDE8;
+extern const float lbl_806D264C,lbl_806D2650,lbl_806D2654,lbl_806D2658;
+int fn_801B5BF4(int,int,int,Driver*);
+extern const char *chara_mario_hand_fin_joint[];
+extern int g_kartStartSlot; extern void *g_raceCamera;
+extern const float lbl_806D2540,lbl_806D2570,lbl_806D2574;
+extern const char lbl_806D263C[7],lbl_806D2644[6],lbl_802E9F80[];
+int HeapStats_DumpForTag(const char *,int);
+ModelEntry *GetKartModelNameEntry(int,int);
+CharacterEntry *GetCharacterDataEntry(int);
+void *GetRaceContextPtr(void);
+int RaceContextSlot_AllocDriver(void *,int,int,void*,Driver*,int);
+int RaceSlot_SetDriverPtr(int,Driver*);
+int Object_BindMatrixSource(Normal3D*,void*,void*);
+int Object_DriveAnimAndSkin(Normal3D*,Normal3D*,float,float);
+void *Archive_GetRootJObj(Normal3D*);
+void ObjectTree_BlendOrCopy_Timed(Normal3D*,void*,void*,void*,float);
+void *ResolveJointByName(Normal3D*,const char*);
+void JObj_Hide(Normal3D*,void*,unsigned int);
+void JObj_Show(Normal3D*,void*,unsigned int);
+JointMatrix *KartDriver_GetJointByIdx(Driver*,int);
+void SceneRender_CmdB_8aa20(void*,void*);
+void KartTireFX_SetVisibleAll4Wheels(TireFX*,int);
+int clNormal3D_SetScale(Normal3D*,Normal3D*,float,float,float,float);
+extern const char *chara_mario_hand_goo_joint[];
+extern const char *chara_mario_hand_pa_joint[];
+extern const char *chara_mario_head_null_joint[];
+extern const char *chara_mario_r_hand_null_joint[];
+extern const char *mario_cart_body_joint[];
+extern const char *mario_cart_engine_joint[];
+extern const char *mario_cart_ground_fl_joint[];
+extern const char *mario_cart_ground_fr_joint[];
+extern const char *mario_cart_ground_rl_joint[];
+extern const char *mario_cart_ground_rr_joint[];
+extern const char *mario_cart_info_null_joint[];
+extern const char *mario_cart_muffler_l_joint[];
+extern const char *mario_cart_muffler_r_joint[];
+extern const char *mario_cart_position_joint[];
+extern const char *mario_cart_teresa_null_joint[];
+extern const char *mario_cart_tire_fl_joint[];
+extern const char *mario_cart_tire_fr_joint[];
+extern const char *mario_cart_tire_rl_joint[];
+extern const char *mario_cart_tire_rr_joint[];
+extern const char *mario_shadow_dat[];
+}
+static inline Normal3D *LoadNormal(const char **resource) { return new Normal3D(*resource,0); }
+static inline void BlendRoots(Driver *self, void *to) {
+    ObjectTree_BlendOrCopy_Timed(self->character,Archive_GetRootJObj(self->animation),to,0,lbl_806D2540);
+}
+extern "C" int KartDriver_InitFull(Driver *self,int id,int characterId,void *matrix,int slot,int a8,int mode) {
+    const char *pool=lbl_802E9F80;
+    unsigned char *data=lbl_803F5928;
+    fn_801B5BF4(slot,id,characterId,self);
+    int special=-1;
+    if (g_cupId==14 && id==6) { characterId=0; special=(g_roundIndex>=4) ? 1 : 0; }
+    int heap=HeapStats_DumpForTag(lbl_806D263C,0);
+    ModelEntry *model; CharacterEntry *character;
+    if (special>=0) {
+        model=GetKartModelNameEntry(characterId,1);
+        character=(CharacterEntry*)(data+0x274)+special;
+    } else {
+        model=GetKartModelNameEntry(characterId,mode);
+        character=GetCharacterDataEntry(characterId);
+    }
+    self->id=id; self->characterId=characterId;
+    self->kart=new Normal3D(model->file,0);
+    self->character=new Normal3D(character->file,0);
+    self->animation=new Normal3D(character->anim,0);
+    self->other=new Normal3D(character->other,0);
+    self->accessory=new Accessory(self);
+    self->a22C=a8; self->slot=slot; self->raceSlot=slot; self->a24C=0;
+    if (!self->kart || !self->character || !self->animation || !self->other) return 0;
+    if (mode==2 || mode==3) { self->wheelA=0; self->wheelB=0; }
+    else { self->wheelA=new Normal3D(model->wheelA,0); self->wheelB=new Normal3D(model->wheelB,0); }
+    RaceSlot_SetDriverPtr(self->raceSlot,self);
+    if (self->raceSlot==g_kartStartSlot) self->startSlot=1; else self->startSlot=0;
+    self->matrix=matrix;
+    self->contextSlot=RaceContextSlot_AllocDriver(GetRaceContextPtr(),id,characterId,matrix,self,slot);
+    Object_BindMatrixSource(self->kart,matrix,0);
+    Object_BindMatrixSource(self->character,matrix,0);
+    Object_DriveAnimAndSkin(self->character,0,lbl_806D2540,lbl_806D2570);
+    const char **override0=(const char**)(data+0xE0)+characterId*4;
+    const char **override1=override0+1;
+    const char **override2=override0+2;
+    const char **override3=override0+3;
+    for (int i=0;i<49;++i) {
+        if (g_cupId!=11) {
+            if (character->motion[i]) self->slots[i]=new Normal3D(character->motion[i],0);
+            else self->slots[i]=0;
+        } else {
+            if (i==0) self->slots[i]=LoadNormal(override0);
+            else if (i==5) self->slots[i]=LoadNormal(override1);
+            else if (i==10) self->slots[i]=LoadNormal(override2);
+            else if (i==15) self->slots[i]=LoadNormal(override3);
+            else if (character->motion[i]) self->slots[i]=new Normal3D(character->motion[i],0);
+            else self->slots[i]=0;
+        }
+    }
+    Object_DriveAnimAndSkin(self->animation,self->slots[0],lbl_806D2574,lbl_806D2540);
+    BlendRoots(self,Archive_GetRootJObj(self->character));
+    HeapStats_DumpForTag(lbl_806D2644,heap);
+    self->tires[0]=ResolveJointByName(self->kart,mario_cart_tire_fl_joint[characterId]);
+    self->tires[1]=ResolveJointByName(self->kart,mario_cart_tire_fr_joint[characterId]);
+    self->tires[2]=ResolveJointByName(self->kart,mario_cart_tire_rl_joint[characterId]);
+    self->tires[3]=ResolveJointByName(self->kart,mario_cart_tire_rr_joint[characterId]);
+    self->ground[0]=ResolveJointByName(self->kart,mario_cart_ground_fl_joint[characterId]);
+    self->ground[1]=ResolveJointByName(self->kart,mario_cart_ground_fr_joint[characterId]);
+    self->ground[2]=ResolveJointByName(self->kart,mario_cart_ground_rl_joint[characterId]);
+    self->ground[3]=ResolveJointByName(self->kart,mario_cart_ground_rr_joint[characterId]);
+    self->engine=ResolveJointByName(self->kart,mario_cart_engine_joint[characterId]);
+    self->body=ResolveJointByName(self->kart,mario_cart_body_joint[characterId]);
+    self->mufflerL=ResolveJointByName(self->kart,mario_cart_muffler_l_joint[characterId]);
+    self->mufflerR=ResolveJointByName(self->kart,mario_cart_muffler_r_joint[characterId]);
+    self->teresa=ResolveJointByName(self->kart,mario_cart_teresa_null_joint[characterId]);
+    if (special>=0) {
+        self->info=ResolveJointByName(self->character,lbl_806CEDD8);
+        self->head=ResolveJointByName(self->character,lbl_806CEDE8);
+        self->handNull=ResolveJointByName(self->character,lbl_806CEDDC);
+        self->a138=0;
+        self->handGoo=ResolveJointByName(self->character,lbl_806CEDE0);
+        self->handPa=ResolveJointByName(self->character,lbl_806CEDE4);
+        self->a12C=0; self->joint158=0; self->joint15C=0; self->joint160=0;
+    } else {
+        self->info=ResolveJointByName(self->character,mario_cart_info_null_joint[characterId]);
+        self->head=ResolveJointByName(self->character,chara_mario_head_null_joint[characterId]);
+        self->handNull=ResolveJointByName(self->character,chara_mario_r_hand_null_joint[characterId]);
+        self->a138=ResolveJointByName(self->character,chara_mario_hand_fin_joint[characterId]);
+        if (self->characterId==4) self->a12C=ResolveJointByName(self->character,pool+0xF60);
+        else self->a12C=0;
+        if (self->characterId==12) {
+            self->handGoo=0; self->handPa=0;
+            self->joint158=ResolveJointByName(self->character,pool+0xE64);
+            self->joint15C=ResolveJointByName(self->character,pool+0xE84);
+            self->joint160=ResolveJointByName(self->character,pool+0xEA4);
+        } else {
+            self->handGoo=ResolveJointByName(self->character,chara_mario_hand_goo_joint[characterId]);
+            self->handPa=ResolveJointByName(self->character,chara_mario_hand_pa_joint[characterId]);
+            self->joint158=0; self->joint15C=0; self->joint160=0;
+        }
+    }
+    self->effects=new EffectBus(self);
+    if (mode==2 || mode==3) self->joint154=ResolveJointByName(self->kart,mario_cart_position_joint[characterId]);
+    else self->joint154=0;
+    if (self->characterId==11) {
+        if (mode==2 || mode==3) self->joint164=ResolveJointByName(self->kart,pool+0xEC4);
+        else self->joint164=0;
+    } else self->joint164=0;
+    if (self->characterId==10) {
+        if (mode==2 || mode==3) {
+            self->joint168=ResolveJointByName(self->kart,pool+0xEE4);
+            self->joint16C=ResolveJointByName(self->kart,pool+0xF04);
+        } else { self->joint16C=0; self->joint168=0; }
+    } else { self->joint16C=0; self->joint168=0; }
+    self->a170=lbl_806D2540;
+    if (self->characterId==12) {
+        if (mode==2 || mode==3) self->joint108=ResolveJointByName(self->kart,pool+0xF1C);
+        else self->joint108=0;
+    } else self->joint108=0;
+    self->a318=lbl_806D2540;
+    if (self->characterId==3) {
+        self->joint150=ResolveJointByName(self->character,pool+0xF34);
+        self->extra=new Normal3D(pool+0xF50,0);
+        clNormal3D_SetScale(self->extra,0,lbl_806D2540,lbl_806D2570,lbl_806D2540,lbl_806D2574);
+    } else { self->joint150=0; self->extra=0; }
+    if (self->joint158) JObj_Hide(self->character,self->joint158,0x10);
+    if (self->joint15C) JObj_Show(self->character,self->joint15C,0x10);
+    if (self->joint160) JObj_Hide(self->character,self->joint160,0x10);
+    self->a324=KartDriver_GetJointByIdx(self,8)->value;
+    self->a328=KartDriver_GetJointByIdx(self,9)->value;
+    self->a31C=lbl_806D2570; self->a320=lbl_806D2540;
+    if (g_raceCamera) {
+        if (mode==2 || mode==3) self->shadow=new Normal3D(((const char**)(data+0xAC))[characterId],0);
+        else self->shadow=new Normal3D(((const char**)(data+0x78))[characterId],0);
+        void *camera=g_raceCamera;
+        SceneRender_CmdB_8aa20(camera,Archive_GetRootJObj(self->shadow));
+    } else self->shadow=0;
+    self->a1C=new Normal3D(pool+0xD8C,0);
+    if (self->a1C) {
+        self->a174=0; self->a178=0;
+        self->joint13C=ResolveJointByName(self->a1C,pool+0xDA0);
+        self->joint140=ResolveJointByName(self->a1C,pool+0xDC4);
+        self->joint144=ResolveJointByName(self->a1C,pool+0xDE0);
+        self->joint148=ResolveJointByName(self->a1C,pool+0xE00);
+        self->joint14C=ResolveJointByName(self->a1C,pool+0xE20);
+    }
+    if (self->startSlot==1) {
+        self->a35C=new HUD28();
+        self->a360=new HUD16();
+        if (self->a35C) { self->a35C->x=lbl_806D264C; self->a35C->y=lbl_806D2650; }
+        if (self->a360) { self->a360->x=lbl_806D2654; self->a360->y=lbl_806D2658; }
+    } else { self->a35C=0; self->a360=0; }
+    self->tireFX=new TireFX(characterId,mode,self->tires[0],self->tires[1],self->tires[2],self->tires[3]);
+    if (self->tireFX) KartTireFX_SetVisibleAll4Wheels(self->tireFX,0);
+    self->a32C=new EffectState(self);
+    self->tail=new DriverTail(self);
+    if (self->startSlot!=0) { self->a378=new HUD12(); self->a380=new HUD36(); }
+    else { self->a378=0; self->a380=0; }
+    self->a374=-1;
+    return 1;
+}
+
+#endif
