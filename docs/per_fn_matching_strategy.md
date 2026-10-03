@@ -1475,3 +1475,19 @@ hook until Ninja SPLIT regenerates the build, then require the expected rule.
 Main retained Lifetime then Metrics entries in both insertion conflicts.
 Independent source link, text/all symbols100%, no EH/index, full DOL SHA1
 verified; genuine gain3/308B, no fallback gain. Runtime/CI/Ghidra unverified.
+
+### 19.53 ItemBox constructors and ObjectTree timer (2026-10-03)
+
+Main independently verified genuine C++ XYZ280B, GroundSnap324B and timed
+blend316B: owned text/extab/index100%, actual source-object link and full
+DOL SHA1 unchanged. Both constructor manual EH blocks are removed.
+The immutable sdata2 zero must be declared const: XYZ otherwise reloads it
+16 times and shifts cleanup PCs. GroundSnap's observed 0/-1/function triple
+is a natural CW member-function pointer; a generic word struct changes copy
+scheduling. Nontrivial Vec3 member and new debris with15 particle elements
+naturally emit DESTROYMEMBER and DELETEPOINTER. Only observed layouts claimed.
+ObjectTree's ScopedTimer uses the established single-expression conversion
+and canonical strong destructor; generated weak copy is discarded. Separate
+inline JObj predicates preserve nested guards. TU-only generated metadata
+bridges do not rewrite instructions or EH bytes. Runtime/CI/Ghidra unverified.
+Genuine gain3/920B; measured report989/309584 to990/309900 (+1/316B), not3/920.

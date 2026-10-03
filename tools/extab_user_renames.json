@@ -65,8 +65,8 @@
     "extabindex_ObjectTree_BlendOrCopy": "@eti_8001F730"
   },
   "src/game/ObjectTree_BlendOrCopy_Timed.c": {
-    "extab_ObjectTree_BlendOrCopy_Timed": "@etb_80005A20",
-    "extabindex_ObjectTree_BlendOrCopy_Timed": "@eti_8001F73C"
+    "@35": "@etb_80005A20",
+    "@36": "@eti_8001F73C"
   },
   "src/game/ObjectTree_BlendQuatLerp.c": {
     "extab_ObjectTree_BlendQuatLerp": "@etb_80005A38",
