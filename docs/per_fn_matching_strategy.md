@@ -1221,3 +1221,15 @@ duplicate classifier exit branch. Actual dispatch ABI consumes the fourth r6
 driver argument. Both original objects supply the exact DOL: zero matching gain.
 Main resolved independent split insertions by retaining all three non-overlapping
 TUs in address order; no rollback or deletion of the earlier yaw/state ranges.
+
+### 19.31 Localized Item asset rows (2026-10-03)
+
+Item_GetLocalizedAsset matches as genuine C,184 bytes, on its first approach.
+The signed ID threshold is hexadecimal0x147 (327), with fallback0x146 (326),
+not decimal147/146. Alias lookup takes a truncated byte ID and writes a byte
+through its optional output pointer; an eight-byte scratch array preserves the
+target stack+8 address. Open pointer arrays[][3] reproduce the12-byte row and
+four-byte variant strides without an inappropriate small-data relocation.
+Automatic exceptions-on EH/index and actual source linkage were independently
+verified on main, including exact full-DOL SHA-1. Gain+1/+184B; runtime/CI and
+Ghidra verification remain unavailable, with full target/callee asm used instead.
