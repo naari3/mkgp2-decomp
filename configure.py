@@ -459,6 +459,7 @@ config.libs = [
             Object(Matching, "game/CObj_GlobalProjPushFrame.c", extab_padding=b""),
             Object(Matching, "game/CObjViewport.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CObjCached.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/CObjUnproject.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartDriver_BuildJoint12EulerTransform.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartDriver_SetUniformScale_4Wheels.c", extab_padding=b"\x00\x00"),
 ],

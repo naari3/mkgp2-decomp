@@ -1314,3 +1314,14 @@ of camera subobject+0C/10/14. Do not infer direction from wrapper names.
 Cached projection getter returns camera+88 allocation; view getter refreshes
 and returns camera+54. Main independently verified source link, all sections
 and full DOL SHA1. Genuine gain4 functions/232B; runtime/CI/Ghidra unverified.
+
+### 19.39 CObj unprojection stack and alias ABI (2026-10-03)
+
+UnprojectPoint matches236B and automatic EH/index100% on the first approach.
+Declare48B matrix before12B vector to obtain vector stack+8/matrix+14.
+Matrix copy uses source r3/destination r4; transform uses matrix r3/input r4/
+output r5 and supports identical input/output vectors. Keep three independent
+optional output stores and the null-source copy path when ready is zero;
+an invented early return changes original behavior. Main retained both cached
+and unproject Object entries when resolving their independent insertion conflict.
+Actual source link and full DOL SHA1 verified; gain1/236B, runtime/CI unverified.
