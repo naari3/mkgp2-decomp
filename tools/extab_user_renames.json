@@ -4,6 +4,11 @@
     "__ct__8JvsInputFv": "JvsInput_SetVtable",
     "__vt__8JvsInput": "lbl_803F5788"
   },
+  "src/game/clNormal3D_Construct.c": {
+    "__ct__8Normal3DFPvi": "clNormal3D_Construct",
+    "@5": "@etb_80005BA8",
+    "@6": "@eti_8001F7F0"
+  },
   "src/game/CardReadCommand.c": {
     "extab_card_send_read_cmd_init": "@etb_80009510",
     "extabindex_card_send_read_cmd_init": "@eti_800220C4"

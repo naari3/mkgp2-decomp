@@ -1803,3 +1803,14 @@ Retry requires new count/table/cursor provenance, not declaration-order sweeps.
 SetFlags nullable-accessor family is already exhausted at88.42199%; recursive
 Flatten success alone does not justify another spelling. Precompile stop is
 required until a concrete distinct mechanism is established. Runtime/CI unverified.
+
+### 19.80 Normal3D constructor implicit-this and const pool (2026-10-04)
+
+Real observed92B C++ constructor with const external float matches156B text,
+automatic8B EH and12B index100%. Preserve both root+2C stores and full incoming
+useSkin word forwarding. Actual original pool806D237C is BF800000 (-1.0f),
+not the historical comment's1.0f. TU-only mangled/automatic-name bridge and
+actual recompilation; independent main source-object link, foreground exit0
+and full DOL SHA1 verified. Genuine/aggregate gain+1/+156B. This joint lever
+does not isolate ctor versus const scheduling effects; no shared type claims.
+Old six plain-C permutations were not repeated. Runtime/CI unverified.
