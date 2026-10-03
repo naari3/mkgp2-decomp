@@ -1198,3 +1198,14 @@ word accesses; padding is not copied. The byte-copy callee takes three arguments
 card_backup consumes no incoming argument registers. Full SHA-1 verifies the
 original fallback, not source acceptance. No matching gain; retry needs concrete
 aggregate-copy/inlining evidence rather than another scalar permutation.
+
+### 19.29 Tracked homing partial C promotion (2026-10-03)
+
+Yaw-relative approach matches all224 bytes and automatic EH on its first C
+approach. This caller needs a float Vec3_ToYaw result without a caller frsp;
+do not transfer the double declaration required by the ground-bend caller.
+Three stack vectors and the intentionally ignored magnitude call are retained.
+The adjacent updater remains complete NonMatching C at99.41747%,412 bytes,
+after three approaches: initial targetY/lowSpeed FP homes and multiplication
+operand order differ. Separate adjacent singleton TUs preserve the exact yaw
+source link and updater original fallback. Full SHA-1 exact; gain+1/+224B.
