@@ -1186,3 +1186,15 @@ dead command-result stores and emits the exact r4 completion join. The 204-byte
 initializer is unchanged; both functions and automatic EH are 100%, actual C
 is linked, and full-DOL SHA-1 is exact. Gain is one function and 540 real-C
 bytes, not the already-matched initializer or assembly scaffolding.
+
+### 19.28 Card backup scalar snapshot bounded draft (2026-10-03)
+
+The complete 904-byte target is preserved as NonMatching C at 57.123894%.
+Two genuine C++ assignment forms emit an out-of-line helper; explicit two-phase
+C snapshots retain the full accesses but produce 824 bytes, a smaller frame and
+different destination-pointer lifetimes and 20-word spill scheduling. Three
+approaches exhausted. Packed tail words at +1BA..+1CE preserve actual unaligned
+word accesses; padding is not copied. The byte-copy callee takes three arguments;
+card_backup consumes no incoming argument registers. Full SHA-1 verifies the
+original fallback, not source acceptance. No matching gain; retry needs concrete
+aggregate-copy/inlining evidence rather than another scalar permutation.

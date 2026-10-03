@@ -1332,6 +1332,11 @@ game/CardEjectCommand.c:
 game/card_rw_get_substate.c:
 	.text       start:0x80098E48 end:0x80098E50
 
+game/CardForceBackup.c:
+	extab       start:0x80009558 end:0x80009560
+	extabindex  start:0x80022130 end:0x8002213C
+	.text       start:0x80098E50 end:0x800991D8
+
 game/Sci2Card_GetPrintErrorCode.c:
 	.text       start:0x8009927C end:0x80099284
 
