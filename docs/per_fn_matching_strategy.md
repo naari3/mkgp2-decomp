@@ -1430,6 +1430,17 @@ this is not a global impossibility claim. Automatic EH75%/index91.66667%
 are not acceptance. Original fallback linked; genuine/aggregate gain0.
 Runtime/CI/Ghidra unverified; retry needs new spill/web provenance evidence.
 
+### 19.97 PCB receive bounded inline packet composition (2026-10-04)
+
+Complete1016B six-message/four-slot receive body retained NonMatching at
+96.30708%, source1012B. Two structural approaches recover the eight saved
+web frame and receiving-bit diamond with inline packet access and assignment
+expression. Remaining pointer births, destination reassociation and host-ring
+web homes require new provenance, not blind allocator permutations. Main
+verified automatic EH100/index91.66667, original-object main.elf edge,
+foreground exit0 and full DOL SHA1. Genuine/function/code gain0; data+8 alone
+is automatic EH accounting, not source progress. Runtime/CI unverified.
+
 ### 19.96 PCB listener natural inline socket lifetime (2026-10-04)
 
 Natural nonvirtual deleting destructor232B and constructor192B match100%,
