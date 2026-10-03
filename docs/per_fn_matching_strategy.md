@@ -1491,3 +1491,15 @@ and canonical strong destructor; generated weak copy is discarded. Separate
 inline JObj predicates preserve nested guards. TU-only generated metadata
 bridges do not rewrite instructions or EH bytes. Runtime/CI/Ghidra unverified.
 Genuine gain3/920B; measured report989/309584 to990/309900 (+1/316B), not3/920.
+
+### 19.54 KartDriver scoped timer retrofit (2026-10-04)
+
+RenderTimed184B now uses genuine ScopedTimer C++ and automatic24B EH/12B
+index. The single-expression conversion retains target scheduling; slot23
+is volatile at stack+C and start tick at+8. Preserve the observed forwarded
+r4/r5 arguments. TU-only automatic record names replace manual EH mappings.
+The weak destructor duplicate is discarded: synthetic duplicate-section diffs
+are not the owned target records, which independently match100% on main.
+Actual source link and full DOL SHA1 verified. Genuine gain1/184B; aggregate
+report gain0 because the previous asm was already counted. Runtime/CI/Ghidra
+remain unverified.
