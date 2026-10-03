@@ -887,6 +887,7 @@ config.libs = [
             Object(Matching, "game/TCPConn_LogError.c"),
             Object(Matching, "game/TCPConn.c"),
             Object(Matching, "game/TCPConn_Reset.c"),
+            Object(Matching, "game/TCPConnCloseInit.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/TCPConn_AllocTxBuffer.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/main.c"),
             Object(Matching, "game/ServiceMenu.c", extab_padding=b"\x00\x00"),

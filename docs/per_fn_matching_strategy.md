@@ -1,5 +1,15 @@
 # Per-function matching strategy
 
+### 19.98 TCP close and four-argument initialization (2026-10-04)
+
+Close252B and Init308B match genuine C on their first material approach.
+A genuine inline socket operation preserves the duplicate active guard and
+retry early exit without returning from the wrapper's buffer cleanup. Init
+is an ordinary self/channel/socket/mode function, not a constructor. Keep
+post-call reloads, raw5000+cycle port and the16B address clear. Main independently
+verified both symbols/text/EH/index100%, actual source linkage, foreground
+exit0 and full DOL SHA1. Genuine/aggregate gain2/560B; runtime/CI unverified.
+
 bundle (extab group 必須 bundle) の中で **関数単位** に matching / asm-fn 退避を切り替えるための規約。
 
 関連:
