@@ -554,6 +554,7 @@ config.libs = [
             Object(Matching, "game/ItemAcceleration.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/ItemFlyingRender.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemGroundProbes.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/ItemCharacterRender.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Frame.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++"]),
             Object(Matching, "game/TransparentDraw.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/TripleBladeRing.c", extra_cflags=["-Cpp_exceptions on"]),

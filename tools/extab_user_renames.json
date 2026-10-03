@@ -1358,6 +1358,9 @@
     "extab_KartDriver_InitFull": "@etb_800064E0",
     "extabindex_KartDriver_InitFull": "@eti_8001FF7C"
   },
+  "src/game/ItemCharacterRender.c": {
+    "@30": "jumptable_8041E8E4"
+  },
   "src/game/GabyouItem.c": {
     "extab_GabyouItem_BuildLocalTransformFromHandJoint": "@etb_8000B3DC",
     "extabindex_GabyouItem_BuildLocalTransformFromHandJoint": "@eti_80023AE0"

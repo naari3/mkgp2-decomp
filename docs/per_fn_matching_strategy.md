@@ -1145,3 +1145,13 @@ dead eject-result stores at forcing sites; retry sites ignore its return.
 This third approach reaches 100% with automatic EH and no emitted helper.
 The shared join resembles the parked ping/cleaning bodies: this is new concrete
 evidence for a narrowly bounded inline-composition retry, not blind local tuning.
+
+### 19.24 Character-scaled render tail scheduling (2026-10-03)
+
+Complete 336-byte C is retained NonMatching at 92.78571%; EH and 13-entry
+jump table are exact. Separate case arms preserve each table destination;
+an empty mode-zero arm preserves dispatch, and a literal clamp fixes FP homes.
+Three approaches leave tail scheduling at +0xE4..+0xFC: vector-copy loads,
+argument-address calculation and scale store order. Actual compiled C is not
+linked, so full SHA-1 verifies fallback preservation and adds no matched bytes.
+Retry requires concrete aggregate-copy scheduling/ABI evidence.
