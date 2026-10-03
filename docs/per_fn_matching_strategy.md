@@ -1698,3 +1698,13 @@ position address reassociation loses4B. EH95.652176/index91.66667 are not
 acceptance. Original assembly unchanged; main independently verified fallback
 text/EH/index100%, actual source link and full SHA1. Gain0; retry requires
 new structural pool-hoist/stack-address evidence. Runtime/CI/Ghidra unverified.
+
+### 19.70 FlowKart update evaluated-input composition (2026-10-04)
+
+Update1024B is genuine C++ with automatic56B EH/12B index100%. Three
+natural48B Sprite allocations produce exact DELETEPOINTER lifetimes. A genuine
+inline operation accepting the evaluated nullable input getter prevents selection
+load hoisting across its second guard diamond. Two material approaches; no
+instruction or EH-byte patches. Main independently verified text/EH/index100%,
+actual source link and full DOL SHA1. Genuine gain1/1024B; report gain0 because
+prior assembly was counted. Observed layout only; runtime/CI/Ghidra unverified.
