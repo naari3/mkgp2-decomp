@@ -2013,6 +2013,11 @@ game/ItemHitPropagation.c:
 	extabindex  start:0x80023AF8 end:0x80023B10
 	.text       start:0x800DAEBC end:0x800DB2B0
 
+game/ItemGroundExplosion.c:
+	extab       start:0x8000B3FC end:0x8000B404
+	extabindex  start:0x80023B10 end:0x80023B1C
+	.text       start:0x800DB3C0 end:0x800DB6BC
+
 game/ItemTrackedHoming.c:
 	extab       start:0x8000B414 end:0x8000B41C
 	extabindex  start:0x80023B34 end:0x80023B40

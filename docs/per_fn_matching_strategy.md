@@ -1430,6 +1430,17 @@ this is not a global impossibility claim. Automatic EH75%/index91.66667%
 are not acceptance. Original fallback linked; genuine/aggregate gain0.
 Runtime/CI/Ghidra unverified; retry needs new spill/web provenance evidence.
 
+### 19.89 Item ground explosion live yaw rounding boundary (2026-10-04)
+
+Complete764B target reconstruction remains NonMatching99.47644% after three
+structural approaches. Independent escaped vectors and actual float-return
+ABI recover the live saved-yaw store and reload across RotateX. Double unary
+negation leaves one extra frsp at source+178, shifting source size to768B;
+automatic EH100/index83.33333 are not acceptance. Main independently verified
+those direct source metrics, original-object fallback, foreground exit0 and
+exact full DOL SHA1. Genuine/aggregate gain0. Retry requires new rounding/
+spill-provenance evidence, not another permutation. Runtime/CI/Ghidra unverified.
+
 ### 19.88 Card RW short precompile snapshot gate (2026-10-04)
 
 Full2600B target's tail80096734..80096A10 repeats the packed two-phase

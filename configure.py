@@ -567,6 +567,7 @@ config.libs = [
             Object(Matching, "game/ItemLocalizedAsset.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/ItemHitBurst.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/ItemHitPropagation.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/ItemGroundExplosion.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Item.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemMotion.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/ItemHoming.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
