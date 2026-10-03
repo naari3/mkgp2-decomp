@@ -1338,3 +1338,12 @@ initialization; this is not the literal-float DSE blocker. Separate adjacent
 TUs with a local source selector preserve exact update link and projection
 fallback. Retain all three non-overlapping split entries when resolving
 independent additions. No fourth probe; runtime/CI/Ghidra remain unverified.
+
+### 19.41 CObj whole leaf bundle (2026-10-03)
+
+The complete three-member88B blob is genuine C, not a getter-only wedge.
+Signed1/2/4 checks and unsigned-byte return retain cntlzw/extrwi normalization.
+Writing mode == global, rather than global == mode, preserves subf operands.
+Minimal observed padded views keep byte+0A and buffer+3034; no guessed class.
+Main independently verified text100%, no target/source EH, actual source link
+and exact full DOL SHA1. Gain3/88B; runtime/CI/Ghidra remain unverified.

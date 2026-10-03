@@ -76,6 +76,9 @@ game/SeqMenuScene.c:
 game/Profiler.c:
 	.text       start:0x8002FF08 end:0x8002FF48
 
+game/CObjLineBuffer.c:
+	.text       start:0x8002FFB8 end:0x80030010
+
 game/CObjProject.c:
 	extab       start:0x800058C0 end:0x800058C8
 	extabindex  start:0x8001F52C end:0x8001F538
