@@ -29,8 +29,11 @@
     "extabindex_NokoNoko_Render": "@eti_80026DA4"
   },
   "src/game/NokoNoko_Init.c": {
-    "extab_NokoNoko_Init": "@etb_80011D54",
-    "extabindex_NokoNoko_Init": "@eti_80026DC8"
+    "__ct__8Normal3DFPvi": "clNormal3D_Construct",
+    "__dt__8Normal3DFv": "Object_DtorWithGXSync",
+    "__ct__10NokoEntityFPC4Vec3": "NokoNoko_InitEntity",
+    "@70": "@etb_80011D54",
+    "@71": "@eti_80026DC8"
   },
   "src/game/clFlowChara_HandleConfirm.c": {
     "extab_clFlowChara_HandleConfirm": "@etb_80013EB4",

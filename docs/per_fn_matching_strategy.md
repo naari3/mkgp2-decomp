@@ -1662,3 +1662,15 @@ original assembly: strong emission prevents required derived inlining,
 while inline emission omits its standalone body. Three approaches exhausted;
 do not count that fallback as C++. Genuine gain2/284B; report delta0.
 Runtime/CI/Ghidra remain unverified.
+
+### 19.67 NokoNoko natural new and cleanup composition (2026-10-04)
+
+Init808B is genuine C++ with automatic88B EH and12B index100%. Four92B
+Normal3D allocations and one64B entity generate the five target DELETEPOINTER
+actions naturally. A nontrivial empty entity destructor retains the nullable
+delete guard; a trivial destructor incorrectly removes8B. A genuine pointer-first
+inline cleanup preserves walker r31/counter r30 where an indexed loop swaps
+homes. Preserve signed seconds modulo64 after unsigned clock division and the
+full16B spawn rows. Main independently verified text/EH/index100%, actual source
+link and full DOL SHA1. Genuine gain1/808B; aggregate gain0 since prior assembly
+was counted. Only observed layouts claimed; runtime/CI/Ghidra unverified.
