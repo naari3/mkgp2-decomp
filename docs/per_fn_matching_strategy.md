@@ -2070,3 +2070,13 @@ source-object linkage, foreground exit0 and exact full DOL SHA1. Genuine
 and aggregate gain4/80B, report1000/312920 to1004/313000. Worker baseline
 Python launcher failure resolved by plain retry with unchanged environment;
 no installation or global repair. Runtime/CI/Ghidra remain unverified.
+
+### 19.104 TCP whole leaf closure (2026-10-04)
+
+All three members of the indivisible184B blob match first-approach genuine C.
+Signed state0..10 and channel1..4 guards, external table indexing and the
+six-row8B pointer search require no inline tricks. Preserve unchecked incoming
+channel index and omit invented active/null prechecks. Main independently
+verified all three symbols/text100%, absent EH/index, actual source linkage,
+foreground exit0 and full DOL SHA1. Genuine/aggregate gain3/184B. External
+tables remain external; only observed layouts claimed. Runtime/CI unverified.
