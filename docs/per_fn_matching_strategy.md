@@ -1708,3 +1708,13 @@ load hoisting across its second guard diamond. Two material approaches; no
 instruction or EH-byte patches. Main independently verified text/EH/index100%,
 actual source link and full DOL SHA1. Genuine gain1/1024B; report gain0 because
 prior assembly was counted. Observed layout only; runtime/CI/Ghidra unverified.
+
+### 19.71 RaceContext bounded storage composition (2026-10-04)
+
+Complete disabled C++ constructor1428B/88.20822% retains natural DESTROYBASE
+at0/r29/PC40, but saved range and cleanup end differ. Three approaches exhausted;
+typed row composition expands all eight rows while global-base CSE still removes
+independent pointer/reload provenance. A fourth register permutation is not
+justified. Original ASM remains unchanged and linked: raw text99.671234 has
+two literal SDA relocation presentation differences, EH/index100%, main full
+DOL SHA1 exact. Gain0; retry requires new storage-pointer/alias evidence.
