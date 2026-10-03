@@ -1,5 +1,17 @@
 # Per-function matching strategy
 
+### 19.109 PCB phase1 bounded timer publication (2026-10-04)
+
+Complete776B C is NonMatching94.948456% after three structural approaches;
+automatic EH/index100% is not whole-function acceptance. Native outer body
+plus genuine inline PublishTimers restores size, but phase cursor/base and
+host-role/table webs differ and timer-table construction hoists across conversion.
+Generated conversion pool is source-only, not newly owned external data. Main
+independently verified original-object link, foreground exit0 and full DOL SHA1.
+Genuine/code/function gain0; automatic data20B is not C progress. Resume requires
+new pointer/publication scheduling evidence; no fourth permutation. Independent
+Object/split additions were merged retaining Snapshot, SendPeers and Phase1.
+
 ### 19.108 PCB snapshot fixed-slot packing (2026-10-04)
 
 Complete348B ordinary C matches with automatic EH/index100%. Preserve signed

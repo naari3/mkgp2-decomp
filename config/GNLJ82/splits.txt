@@ -1242,6 +1242,11 @@ game/PCBCommSendPeers.c:
 	extabindex  start:0x8002180C end:0x80021818
 	.text       start:0x80083740 end:0x8008398C
 
+game/PCBCommPhase1.c:
+	extab       start:0x80008D3C end:0x80008D44
+	extabindex  start:0x80021830 end:0x8002183C
+	.text       start:0x800845BC end:0x800848C4
+
 game/CommBroadcast.c:
 	.text       start:0x800848C4 end:0x80084A84
 
