@@ -1845,3 +1845,15 @@ Main retains destructor then overlay split entries and both wrapper Object
 entries when resolving independent insertion conflicts, without rollback.
 Independent source link, foreground exit0 and full DOL SHA1 exact; genuine
 and aggregate gain1/124B. Runtime/CI and full class layout remain unverified.
+
+### 19.84 clRom whole accessor leaf closure (2026-10-04)
+
+All four members of the80B indivisible accessor blob match genuine C.
+JObj next/child use null-first guards at offsets8/10hex; DObj next uses
+nonnull-first at4. Active count reads806D0FEC, not806D0FE8. Minimal padded
+views do not claim complete SDK layouts or signed count semantics. Main
+independently verified all four symbols/text100%, absent EH/index, actual
+source-object linkage, foreground exit0 and exact full DOL SHA1. Genuine
+and aggregate gain4/80B, report1000/312920 to1004/313000. Worker baseline
+Python launcher failure resolved by plain retry with unchanged environment;
+no installation or global repair. Runtime/CI/Ghidra remain unverified.
