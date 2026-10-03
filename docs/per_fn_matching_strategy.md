@@ -1395,6 +1395,15 @@ Runtime/CI/Ghidra remain unverified.
 
 ### 19.64 DemoWC constructor virtual base-this lifetime (2026-10-04)
 
+Debris Spawn796B complete C++ draft is parked at93.77889% after three
+approaches. Natural298B allocation/15 nontrivial44B particles and Vec3 local
+generate DELETEPOINTER/DESTROYLOCAL, but cleanup pointer r30/r31, FP/GPR
+roles and one extra move shift the local interval by4B. Aggregate-copy and
+early-publication alternatives regress. Preserve disabled full draft and exact
+original fallback; no matching gain. Main fallback text/EH/index100%, source
+link and full SHA1 independently verified; retry requires new structural
+evidence. Saturate_Double here actually consumes/returns floats.
+
 The644B constructor is genuine C++ with automatic196B EH/12B index100%.
 Five natural new expressions and nested root/base construction preserve all
 cleanup actions. Declaring the observed virtual root/base destructors restores

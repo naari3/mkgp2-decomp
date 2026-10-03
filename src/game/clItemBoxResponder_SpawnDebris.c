@@ -255,3 +255,73 @@ asm void clItemBoxResponder_SpawnDebris(void) { /* 0x8005E46C size:0x31C */
     addi r1, r1, 0x150
     blr
 }
+
+#if 0
+/* Complete genuine C++ lifetime draft. Probe 1: 93.77889% text;
+ * automatic DELETEPOINTER and DESTROYLOCAL emitted, not an exact match.
+ * Kept disabled to preserve the original text/EH/index and zero report gain.
+ * Re-enable only with the TU-scoped BoxParticle/SpawnVec/construct_array
+ * bridges and Cpp_exceptions on; no shared class definition is implied.
+ */
+/* Observed debris ownership and particle layout; TU-local views only. */
+#pragma cplusplus on
+void *operator new(unsigned long);
+void operator delete(void *);
+extern "C" {
+extern const float lbl_806D29A8, lbl_806D29C4, lbl_806D29C8, lbl_806D29CC;
+extern const float lbl_806D29D0, lbl_806D29D4, lbl_806D29D8, lbl_806D29DC;
+extern const float lbl_806D29E0, lbl_806D29E4;
+float fn_802DCA04(void);
+float Saturate_Double(float, float, float);
+}
+struct InputVec { float x, y, z; };
+struct SpawnVec {
+    float x, y, z;
+    SpawnVec(float a, float b, float c) : x(a), y(b), z(c) {}
+    ~SpawnVec() {}
+};
+struct BoxParticle {
+    float x, y, z, vx, vy, vz, acceleration, age, scale, rotation, spin;
+    BoxParticle();
+    ~BoxParticle();
+};
+struct BoxDebris {
+    unsigned char active, pad[3];
+    BoxParticle particles[15];
+    BoxDebris() {
+        active = 0;
+        for (int i = 0; i < 15; ++i) particles[i].age = lbl_806D29A8;
+    }
+};
+struct SpawnResponder { BoxDebris *debris; };
+extern "C" SpawnResponder *clItemBoxResponder_SpawnDebris(
+    SpawnResponder *self, const InputVec *position, const InputVec *direction)
+{
+    self->debris = new BoxDebris;
+    SpawnVec pos(position->x, position->y, position->z);
+    float dz = direction->z, dy = direction->y, dx = direction->x;
+    float bz = lbl_806D29C4 * dz;
+    float by = lbl_806D29C4 * dy;
+    float bx = lbl_806D29C4 * dx;
+    BoxDebris *debris = self->debris;
+    debris->active = 1;
+    for (unsigned int i = 0; i < 15; ++i) {
+        BoxParticle &p = debris->particles[i];
+        p.x = pos.x; p.y = pos.y; p.z = pos.z;
+        float x = lbl_806D29C8 * (lbl_806D29CC * (fn_802DCA04() - lbl_806D29D0));
+        float y = lbl_806D29C8 * (lbl_806D29CC * (fn_802DCA04() - lbl_806D29D0));
+        float z = lbl_806D29C8 * (lbl_806D29CC * (fn_802DCA04() - lbl_806D29D0));
+        if (dx * x + dy * y + dz * z < lbl_806D29A8) {
+            x = -x; y = -y; z = -z;
+        }
+        p.vx = x + bx; p.vy = y + by; p.vz = z + bz;
+        p.acceleration = lbl_806D29D4;
+        p.scale = Saturate_Double(lbl_806D29D8 * fn_802DCA04(), lbl_806D29DC, lbl_806D29D8);
+        p.rotation = lbl_806D29E0 * fn_802DCA04();
+        p.spin = lbl_806D29E0 * fn_802DCA04();
+        p.age = lbl_806D29E4;
+    }
+    return self;
+}
+#pragma cplusplus off
+#endif
