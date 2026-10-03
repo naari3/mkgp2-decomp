@@ -1122,3 +1122,14 @@ scan zero init uses li r28,0 instead of mr r28,r29. Three approaches exhausted.
 Field +0x168 is a target driver here, not the wall-response mode of other helpers;
 FAbs returns double. The original object remains linked, source only compiles
 under all_source. SHA-1 proves fallback preservation, not C promotion.
+
+### 19.22 Item symmetric ground probes (2026-10-03)
+
+Lateral and forward ground-pitch probes are complete real C, 420 bytes each,
+source-linked and 100% exact including automatic EH. Their first argument is
+a Vec3 origin, not Item. Signed-byte ground results and separate integer-copied
+stack vectors preserve both hit branches and reversed fallback subtraction.
+Three approaches reached exactness: an initial verified 0.0f literal loads
+directly into f31, whereas the same-value named external zero used f2 plus a
+copy. Existing pool postprocessing binds the literal; no instruction patch.
+This adds two genuinely matched functions and 840 bytes, not asm scaffolding.

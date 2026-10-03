@@ -1859,6 +1859,11 @@ game/GabyouItem.c:
 	extabindex  start:0x80023AE0 end:0x80023AEC
 	.text       start:0x800DABBC end:0x800DAE88
 
+game/ItemGroundProbes.c:
+	extab       start:0x8000B424 end:0x8000B434
+	extabindex  start:0x80023B4C end:0x80023B64
+	.text       start:0x800DBA00 end:0x800DBD48
+
 game/FinalLapCoinJump_CheckActiveForObject.c:
 	.text       start:0x800DC638 end:0x800DC690
 
