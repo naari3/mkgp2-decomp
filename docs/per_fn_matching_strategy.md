@@ -1,5 +1,14 @@
 # Per-function matching strategy
 
+### 19.101 TCPConn enqueue header and alias reloads (2026-10-04)
+
+EnqueueMessage200B matches first-approach genuine C, with automatic EH8B/index12B.
+Use a two-halfword header, ushort length-plus-four and strict signed remaining
+capacity comparison. Preserve independent write-position reloads after memcpy;
+do not cache them across the externally visible copy. Main independently verified
+all payloads/symbol100%, actual source-object link, foreground exit0 and full
+DOL SHA1. Genuine/aggregate gain1/200B; runtime/CI/full class layout unverified.
+
 ### 19.100 PCB link recovery bounded block placement (2026-10-04)
 
 Complete1424B target reconstructed as1416B NonMatching C after three

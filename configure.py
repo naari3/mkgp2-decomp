@@ -888,6 +888,7 @@ config.libs = [
             Object(Matching, "game/TCPConn_LogError.c"),
             Object(NonMatching, "game/TCPConnRecv.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/TCPConn.c"),
+            Object(Matching, "game/TCPConnEnqueue.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/TCPConn_Reset.c"),
             Object(Matching, "game/TCPConnCloseInit.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/TCPConn_AllocTxBuffer.c", extab_padding=b"\x00\x00"),

@@ -1305,6 +1305,11 @@ game/TCPConnRecv.c:
 game/TCPConn.c:
 	.text       start:0x80086F54 end:0x8008707C
 
+game/TCPConnEnqueue.c:
+	extab       start:0x80008E64 end:0x80008E6C
+	extabindex  start:0x8002195C end:0x80021968
+	.text       start:0x8008707C end:0x80087144
+
 game/PcbConn_RecycleIfOver.c:
 	.text       start:0x80087144 end:0x80087170
 
