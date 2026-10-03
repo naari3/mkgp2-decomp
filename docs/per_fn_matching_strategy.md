@@ -1,5 +1,16 @@
 # Per-function matching strategy
 
+### 19.116 Matrix4 paired rotation bounded setup composition (2026-10-04)
+
+Complete780B Y/X drafts remain NonMatching97.528206/97.46667 after two
+structural approaches. Genuine Apply composition leaves setup scheduling
+unchanged; full multiply/copy and automatic EH/index match. Main independently
+verified both symbols, original-object linkage, foreground exit0 and exact
+full DOL SHA1. Genuine gain0. Preserve observed sine diagonal/cosine slots,
+not repaired mathematical rotations. Retry requires new coefficient provenance,
+not permutations. Independent PCB lifecycle and rotation Objects both retained
+in conflict resolution. Runtime/CI/Ghidra remain unverified.
+
 ### 19.115 PCB lifecycle whole-TU bounded natural ownership (2026-10-04)
 
 Complete four-member C++ remains NonMatching: Process89.83446%, Init93.94505%,
