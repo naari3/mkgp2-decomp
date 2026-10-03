@@ -1282,6 +1282,11 @@ game/RingBuffer_Getters.c:
 game/PcbSlotSync.c:
 	.text       start:0x80085368 end:0x800854B8
 
+game/PCBCommHostConfirm.c:
+	extab       start:0x80008D9C end:0x80008DAC
+	extabindex  start:0x800218A8 end:0x800218C0
+	.text       start:0x800854B8 end:0x80085648
+
 game/PCBComm_PromoteToClientConfirmed.c:
 	extab       start:0x80008DAC end:0x80008DB4
 	extabindex  start:0x800218C0 end:0x800218CC

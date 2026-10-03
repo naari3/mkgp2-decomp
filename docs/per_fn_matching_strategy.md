@@ -2071,6 +2071,16 @@ and aggregate gain4/80B, report1000/312920 to1004/313000. Worker baseline
 Python launcher failure resolved by plain retry with unchanged environment;
 no installation or global repair. Runtime/CI/Ghidra remain unverified.
 
+### 19.106 PCB host confirmation pair (2026-10-04)
+
+Both200B ordinary C functions match on their first approach. Preserve signed
+scene50/8 gates, unsigned role5/1 exclusions, readiness/slot[-1] checks and
+fresh myPcbId reload after SetLocalPcbRole. Its actual ABI consumes only r3.
+Explicit host stores in both arms retain the target comparison diamond.
+Main independently verified text/EH/index100%, actual source-object linkage,
+foreground exit0 and exact full DOL SHA1. Genuine/aggregate gain2/400B;
+automatic40B metadata is not code. Globals external; runtime/CI unverified.
+
 ### 19.105 TCP receive inline set-access boundary (2026-10-04)
 
 Genuine AddReadSocket transfer resolves six prior base/index substitutions;
