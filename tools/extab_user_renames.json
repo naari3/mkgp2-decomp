@@ -435,8 +435,8 @@
     "extabindex_Jyugemu_ReverseFlag_Dtor": "@eti_8002174C"
   },
   "src/game/Jyugemu_ReverseFlag_Ctor.c": {
-    "extab_Jyugemu_ReverseFlag_Ctor": "@etb_80008A4C",
-    "extabindex_Jyugemu_ReverseFlag_Ctor": "@eti_80021758"
+    "__ct__22JyugemuReverseFlagCtorFPv": "Jyugemu_ReverseFlag_Ctor",
+    "__ct__15ReverseNormal3DFPvi": "clNormal3D_Construct"
   },
   "src/game/VfxSlot_SetMatrixSourceEnabled.c": {
     "extab_VfxSlot_SetMatrixSourceEnabled": "@etb_8000A538",

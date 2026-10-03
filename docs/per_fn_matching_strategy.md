@@ -1562,3 +1562,15 @@ DELETEPOINTER. TU-only generated-name aliases replace manual Init EH. Main
 independently verified all five symbols/text788B/EH40B/index36B100%, actual
 source link and full DOL SHA1. Genuine gain1/296B; report gain0. Runtime/CI/
 Ghidra remain unverified.
+
+### 19.60 ReverseFlag constructor aggregate provenance (2026-10-04)
+
+ReverseFlag368B now matches genuine C++ with natural92B new and automatic
+24B DELETEPOINTER EH/12B index. Implicit return-this and nested inline JObj
+predicates preserve early returns and redundant guards. A float-only Vec3
+copy scalarizes into saved f29..31 across root lookup; a float/word union
+aggregate retains the observed integer stack copy then float loads on the
+second material approach. No register forcing, manual EH or instruction
+patching. Main independently verified owned text/EH/index100%, actual source
+link and full DOL SHA1. Genuine gain1/368B; aggregate report also+1/368B.
+Observed views only; runtime/CI/Ghidra remain unverified.
