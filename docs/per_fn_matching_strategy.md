@@ -1790,3 +1790,16 @@ source prefix/newlines and ASM; main raw fallback text99.84375/EH/index100%,
 actual source link, foreground build exit0 and exact full DOL SHA1 verified.
 Genuine and aggregate gain0; retry needs concrete pointer/induction evidence.
 Runtime/CI and full semantic class layouts remain unverified.
+
+### 19.79 Normal3D scale timer composition boundary (2026-10-04)
+
+Three structural approaches reproduce five natural ScopedTimer cleanup homes
+and reach99.27327% text (1336B versus1332B). Captured count/cursor homes and
+normalized byte predicate still differ; raw weak destructor EH/index records
+also prevent section acceptance. Preserve complete best draft disabled in
+NonMatching Normal3DScale.c. Independent main foreground build exit0 and
+full DOL SHA1 verify original-object fallback, not genuine C linkage. Gain0.
+Retry requires new count/table/cursor provenance, not declaration-order sweeps.
+SetFlags nullable-accessor family is already exhausted at88.42199%; recursive
+Flatten success alone does not justify another spelling. Precompile stop is
+required until a concrete distinct mechanism is established. Runtime/CI unverified.
