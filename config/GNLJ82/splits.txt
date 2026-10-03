@@ -1325,9 +1325,9 @@ game/CardCleaningCommand.c:
 	.text       start:0x800989C4 end:0x80098A90
 
 game/CardEjectCommand.c:
-	extab       start:0x80009550 end:0x80009558
-	extabindex  start:0x80022124 end:0x80022130
-	.text       start:0x80098DD4 end:0x80098E48
+	extab       start:0x80009548 end:0x80009558
+	extabindex  start:0x80022118 end:0x80022130
+	.text       start:0x80098A90 end:0x80098E48
 
 game/card_rw_get_substate.c:
 	.text       start:0x80098E48 end:0x80098E50

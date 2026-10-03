@@ -1133,3 +1133,15 @@ Three approaches reached exactness: an initial verified 0.0f literal loads
 directly into f31, whereas the same-value named external zero used f2 plus a
 copy. Existing pool postprocessing binds the literal; no instruction patch.
 This adds two genuinely matched functions and 840 bytes, not asm scaffolding.
+
+### 19.23 Card eject body: inline return propagation (2026-10-03)
+
+The 836-byte eject state machine now matches as real C; the existing 116-byte
+initializer stays unchanged and exact. Hand-expanded initialization produced
+an extra constant-one load at the pending/status join (99.47369%,840B).
+Branch-scoped locals worsened it. A genuine static inline initializer returning
+one preserves all target effects but lets inline return propagation remove
+dead eject-result stores at forcing sites; retry sites ignore its return.
+This third approach reaches 100% with automatic EH and no emitted helper.
+The shared join resembles the parked ping/cleaning bodies: this is new concrete
+evidence for a narrowly bounded inline-composition retry, not blind local tuning.
