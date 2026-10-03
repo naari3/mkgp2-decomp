@@ -1166,3 +1166,13 @@ Three approaches leave one spill web: target stores original f1 before argument
 moves, while CW stores rounded f0 after fneg. Existing EH/source link and full
 SHA-1 stay exact; there is no matching gain. Retry needs new spill-provenance
 evidence, not more declaration permutations.
+
+### 19.26 Ping inline-composition retry (2026-10-03)
+
+New concrete evidence from the matched eject body justified one bounded retry.
+A genuine static inline CardPing_Begin returns one and the caller assigns it
+to pending; inline propagation removes the overwritten command-result store
+and shares the target r0 constant join. First approach matches all 880 bytes.
+The existing 128-byte initializer is unchanged; both functions, automatic EH
+and actual source link are exact, with full-DOL SHA-1 verified. This adds one
+function and 880 real-C bytes, resolving the prior 99.47727% disabled draft.

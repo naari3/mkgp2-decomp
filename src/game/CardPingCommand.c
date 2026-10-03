@@ -24,17 +24,30 @@ extern unsigned char lbl_806D122A;
 extern unsigned char lbl_806D122B;
 extern unsigned char lbl_806D1237;
 
-/* Complete draft retained after three bounded approaches (GC/1.3.2).
- * Best direct objdiff: 99.47727%, 884 bytes versus the 880-byte target.
- * The remaining initializer-result web uses r3 instead of r0 and emits one
- * redundant li r3,1 beside the status store. Array response buffers first
- * scored 97.53%; separate byte locals below reproduce the two distinct
- * stack triplets at +0xB..0xD and +8..0xA exactly. Combining the status and
- * temporary assignments did not improve the remaining instruction shape.
- * The status checks intentionally remain independent, allowing later
- * results to overwrite earlier ones. The initializer below stays linked.
+/* Initialization completes even when the ping command is not accepted.
+ * The caller replaces the command result with this return value. Keep the
+ * helper inline to preserve the branch-local initialization-result joins.
  */
-#if 0
+static inline unsigned char CardPing_Begin(void)
+{
+    lbl_806D1210 = 0;
+    lbl_806D122A = 1;
+    lbl_806D121C = 0;
+    lbl_806CF0E4 = 5;
+    if (!ServiceLatch_CheckTriggered()) {
+        lbl_806D1210 = 1;
+        return 1;
+    }
+
+    if (lbl_806D1224 == 1) {
+        return 1;
+    }
+
+    lbl_806D1220 = 0;
+    lbl_806D121C = Sci2Card_SendCmdPing(Sci2Card_Singleton_Get());
+    return 1;
+}
+
 unsigned char card_ping_state_machine(void)
 {
     void *card;
@@ -56,22 +69,7 @@ unsigned char card_ping_state_machine(void)
 
     card = Sci2Card_Singleton_Get();
     if (lbl_806D121C == 0) {
-        int initialized;
-
-        lbl_806D1210 = 0;
-        lbl_806D122A = 1;
-        lbl_806D121C = 0;
-        lbl_806CF0E4 = 5;
-        if (!ServiceLatch_CheckTriggered()) {
-            initialized = lbl_806D1210 = 1;
-        } else if (lbl_806D1224 == 1) {
-            initialized = 1;
-        } else {
-            lbl_806D1220 = 0;
-            Sci2Card_SendCmdPing(Sci2Card_Singleton_Get());
-            initialized = 1;
-        }
-        lbl_806D121C = initialized;
+        lbl_806D121C = CardPing_Begin();
     }
 
     if (Sci2Card_IsIdleOrExhausted(card) == 1) {
@@ -156,7 +154,6 @@ unsigned char card_ping_state_machine(void)
     }
     return 0;
 }
-#endif
 
 unsigned char card_send_ping_cmd_init(void)
 {

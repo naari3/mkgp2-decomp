@@ -1312,9 +1312,9 @@ game/card_is_ejected.c:
 	.text       start:0x8009838C end:0x800983A0
 
 game/CardPingCommand.c:
-	extab       start:0x80009530 end:0x80009538
-	extabindex  start:0x800220F4 end:0x80022100
-	.text       start:0x80098710 end:0x80098790
+	extab       start:0x80009528 end:0x80009538
+	extabindex  start:0x800220E8 end:0x80022100
+	.text       start:0x800983A0 end:0x80098790
 
 game/card_ping_clear_pending_flag.c:
 	.text       start:0x80098790 end:0x800987A8
