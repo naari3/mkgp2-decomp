@@ -1718,3 +1718,14 @@ independent pointer/reload provenance. A fourth register permutation is not
 justified. Original ASM remains unchanged and linked: raw text99.671234 has
 two literal SDA relocation presentation differences, EH/index100%, main full
 DOL SHA1 exact. Gain0; retry requires new storage-pointer/alias evidence.
+
+### 19.72 FlowItemSelect bounded coupled-loop draft (2026-10-04)
+
+Complete disabled1860B constructor96.595695% has natural owned156B EH/index
+100%. Null-first input composition and per-arm weighted-selection stores restore
+cleanup PCs, but texture/unlock zero-index webs and random ctor argument order
+remain. Flat-row third approach regresses; three approaches exhausted. Preserve
+best full draft and original assembly without false promotion. Main fallback
+raw text99.354836 reflects five literal SDA presentation differences, EH/index
+100%, actual source link/full DOL SHA1 exact. Gain0; new coupled-induction or
+argument-provenance evidence required. Runtime/CI/Ghidra unverified.
