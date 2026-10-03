@@ -1,5 +1,17 @@
 # Per-function matching strategy
 
+### 19.115 PCB lifecycle whole-TU bounded natural ownership (2026-10-04)
+
+Complete four-member C++ remains NonMatching: Process89.83446%, Init93.94505%,
+Shutdown raw100% is unlinked source-only. Natural opaque40B listener/60B
+connection new reproduces Init DELETEPOINTER PCs, but text webs and EH order/
+aliases remain unresolved. Main independently verified whole text89.816696,
+unbridged named EH/index0%, original-object link, foreground exit0 and full
+DOL SHA1. Report+1/232B is source-only Shutdown, accepted genuine gain0.
+Three Process approaches exhausted; resume requires indexed/sync-base
+composition evidence, not permutations. Metadata proposals alone do not fix
+text. Independent Object insertions retained. Runtime/CI/Ghidra unverified.
+
 ### 19.114 Matrix4 translation bounded coefficient forwarding (2026-10-04)
 
 Complete492B target reconstructed as504B NonMatching85.92683% C after three

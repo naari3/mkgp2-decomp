@@ -1327,6 +1327,11 @@ game/SyncSlot_ApplyCourseChoice.c:
 	extabindex  start:0x800218CC end:0x800218D8
 	.text       start:0x80085DD8 end:0x80085E3C
 
+game/PCBCommLifecycle.cpp:
+	extab       start:0x80008DDC end:0x80008E3C
+	extabindex  start:0x800218F0 end:0x80021920
+	.text       start:0x80086170 end:0x80086A0C
+
 game/PcbConn_GetStateName.c:
 	extab       start:0x80008E3C end:0x80008E44
 	extabindex  start:0x80021920 end:0x8002192C
