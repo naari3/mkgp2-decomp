@@ -1,3 +1,206 @@
+/* Bounded genuine C++ retrofit draft (cycle_retrofit_flowkart_init).
+ * Three material approaches: 85.655464%, 88.13445%, 93.42437% text.
+ * Best draft: 948B text vs 952B target, 184B natural EH (95.652176%),
+ * 12B index (91.66667%). No genuine matching gain; exact original fallback
+ * below remains linked. Do not re-enable without new structural evidence.
+ * ABI validated from complete authoritative target and direct callee bodies;
+ * Ghidra, runtime and CI were unavailable/unverified.
+ * Independent arrays remove aggregate interior-pointer CSE, but CW reverses
+ * scale/translation stack placement (scale=SP+74, translation=SP+14).
+ * Pool base initializes after ResCtrl (PC38/40), not in target prologue.
+ * Vec3 copy folds source offsets, losing target source+4A4 address temporary.
+ * Table indexing similarly reassociates base+offset+index. Automatic EH has
+ * exact cleanup kinds/owners/registers, but PC40 -> 38 and late actions -4.
+ *
+ * For a future genuine source probe, Object needs -Cpp_exceptions on and
+ * the TU-only bridge replaces manual extab/index names with:
+ * __ct__7FKOwnerFv=clFlowKart_Init; __vt__7FKOwner=lbl_8049BBD0
+ * __ct__6FKBaseFv=InitializeFrameSelection; __dt__6FKBaseFv=dtor_801BA14C
+ * __ct__10FKResourceFv=ResCtrl_Init; __dt__10FKResourceFv=dtor_80082960
+ * __ct__7FKSceneFPCc=Scene3D_Init; __ct__7FKModelFPCcUc=SceneModel_Init
+ * __ct__8FKDriverFiiPfiii=KartDriver_New_Full; __ct__5FKTexFv=TexMgr_Init
+ * The observed pool view is address-only, owns no data, and intentionally
+ * spans existing adjacent rodata symbols through scene path at +4E0.
+ */
+#if 0
+/* Observed FlowKart constructor lifetime and ABI views; no shared layout claims. */
+#pragma cplusplus on
+void* operator new(unsigned long);
+void operator delete(void*);
+struct FKScene;
+struct FKDriver;
+struct FKTex;
+struct FKVec { float x, y, z; };
+struct FKPool {
+    unsigned char opaque[0x430];
+    int mileage[13], texture[13];
+    unsigned char opaque498[12];
+    FKVec position;
+    unsigned char opaque4b0[0x30];
+    char scenePath[1];
+};
+struct FKInput {
+    unsigned char opaque0[4], enabled, opaque5[0x13];
+    int first, second;
+};
+extern "C" {
+extern const FKPool lbl_8039E508;
+extern unsigned int g_characterId;
+extern FKInput* g_pInputState;
+extern unsigned char g_playerData[];
+extern const float lbl_806DA130, lbl_806DA134, lbl_806DA138, lbl_806DA13C;
+extern const float lbl_806DA144, lbl_806DA14C, lbl_806DA154, lbl_806DA15C;
+extern const float lbl_806DA174, lbl_806DA178, lbl_806DA17C, lbl_806DA180;
+extern const float lbl_806DA184, lbl_806DA188, lbl_806DA18C;
+void SetSyncTarget(int);
+unsigned char PreloadResource(int);
+int CObj_LoadIntoGX(FKScene*, const FKVec*);
+int CObj_ApplyViewport(FKScene*, const FKVec*);
+void PSMTXScale(float*, float, float, float);
+void PSMTXTrans(float*, float, float, float);
+void MTXIdentity(float*);
+void PSMTXConcat(const float*, const float*, float*);
+void fn_8025D770(float*, int, float);
+unsigned char RenderObj_ItemStateMachine_Timed(FKDriver*, int, float, float);
+unsigned char SetScreenBrightness(float);
+unsigned char fn_801B8918(int);
+const char* GetTextureByIdAndLang(unsigned int, int);
+void TexMgr_SetTexture(FKTex*, const char*, ...);
+void fn_801F93EC(FKTex*, float, float);
+int isJapanese();
+int GetCoinMilage(const void*);
+unsigned char InitRumbleController(unsigned char);
+}
+struct FKBase {
+    FKBase();
+    virtual ~FKBase();
+    virtual void identity();
+};
+struct FKResource {
+    int id, chain, mode, opaqueC;
+    unsigned char enabled, opaque11[3];
+    float x, y, z, scaleX, scaleY, angle, width, height;
+    int parameters[4];
+    unsigned char opaque44[0x14];
+    FKResource();
+    ~FKResource();
+};
+struct FKScene { unsigned char opaque[0x3084]; FKScene(const char*); };
+struct FKModel { unsigned char opaque[0x28]; FKModel(const char*, unsigned char); };
+struct FKDriver { unsigned char opaque[0x384]; FKDriver(int, int, float*, int, int, int); };
+struct FKTex { unsigned char opaque[0x22c]; float scale; FKTex(); };
+static inline FKInput* input()
+{
+    if (g_pInputState == 0) return 0;
+    return g_pInputState;
+}
+static inline int indexed_value(const int* table, unsigned int index)
+{
+    return table[index];
+}
+static inline void copy_position(FKVec* destination, const FKVec* source)
+{
+    *destination = *source;
+}
+struct FKOwner : FKBase {
+    int state, selection, opaqueC;
+    unsigned char active, opaque11[3];
+    int counter;
+    float scale;
+    FKScene* scene;
+    FKModel* model;
+    FKDriver* driver;
+    FKDriver* alternate;
+    float matrix[12];
+    FKVec position;
+    int slots[3], values[3];
+    FKTex* texture;
+    FKResource resource;
+    FKOwner();
+    virtual void identity();
+};
+FKOwner::FKOwner()
+{
+    const FKPool* pool = &lbl_8039E508;
+    FKVec vector;
+    float scaling[12], rotation[12], translation[12];
+    float z, zero, initialScale;
+    int character;
+    SetSyncTarget(15);
+    PreloadResource(0x167f);
+    state = 1;
+    selection = -1;
+    opaqueC = 0;
+    active = 0;
+    driver = 0;
+    alternate = 0;
+    scene = new FKScene(pool->scenePath);
+    model = new FKModel(pool->scenePath, 0);
+    initialScale = lbl_806DA174;
+    zero = lbl_806DA13C;
+    z = lbl_806DA178;
+    slots[0] = 0;
+    slots[1] = 0;
+    slots[2] = 0;
+    scale = initialScale;
+    counter = 0;
+    values[0] = 0;
+    values[1] = 0;
+    values[2] = 0;
+    vector.x = zero;
+    vector.y = zero;
+    vector.z = z;
+    CObj_LoadIntoGX(scene, &vector);
+    vector.x = lbl_806DA13C;
+    vector.y = lbl_806DA13C;
+    vector.z = lbl_806DA13C;
+    CObj_ApplyViewport(scene, &vector);
+    character = g_characterId;
+    PSMTXScale(scaling, lbl_806DA130, lbl_806DA130, lbl_806DA130);
+    copy_position(&position, &pool->position);
+    PSMTXTrans(translation, position.x, position.y, position.z);
+    MTXIdentity(matrix);
+    PSMTXConcat(scaling, matrix, matrix);
+    fn_8025D770(rotation, 'x', lbl_806DA134);
+    PSMTXConcat(rotation, matrix, matrix);
+    fn_8025D770(rotation, 'y', lbl_806DA138);
+    PSMTXConcat(rotation, matrix, matrix);
+    PSMTXConcat(translation, matrix, matrix);
+    driver = new FKDriver(6, character, matrix, 0, 0, 0);
+    alternate = new FKDriver(6, character, matrix, 0, 0, 2);
+    if (driver) RenderObj_ItemStateMachine_Timed(driver, 0, lbl_806DA13C, lbl_806DA13C);
+    if (alternate) RenderObj_ItemStateMachine_Timed(alternate, 0, lbl_806DA13C, lbl_806DA13C);
+    if (input()) {
+        FKInput* controller = input();
+        controller->enabled = 1;
+        controller->first = 0;
+        controller->second = 0;
+    }
+    SetScreenBrightness(lbl_806DA144);
+    fn_801B8918(0x1ae2);
+    texture = new FKTex;
+    TexMgr_SetTexture(texture, GetTextureByIdAndLang(indexed_value(pool->texture, g_characterId) + 0x95, -1));
+    fn_801F93EC(texture, lbl_806DA17C, lbl_806DA14C);
+    texture->scale = !isJapanese() ? lbl_806DA180 : lbl_806DA184;
+    resource.id = 0x1d5c;
+    resource.width = lbl_806DA188;
+    resource.height = lbl_806DA188;
+    resource.enabled = 1;
+    resource.x = lbl_806DA18C;
+    resource.y = lbl_806DA154;
+    resource.z = lbl_806DA15C;
+    character = g_characterId;
+    if (GetCoinMilage(g_playerData) < indexed_value(pool->mileage, character)) {
+        resource.parameters[0] = -256;
+        resource.parameters[1] = -256;
+        resource.parameters[2] = -256;
+        resource.parameters[3] = -256;
+    }
+    InitRumbleController(1);
+}
+#pragma cplusplus off
+#endif
+
 /* === extracted from auto_clFlowKart_Init_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */

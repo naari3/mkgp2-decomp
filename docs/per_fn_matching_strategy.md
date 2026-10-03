@@ -1686,3 +1686,15 @@ target mr r30,r29 initializer is missing. Automatic EH94.64286/index91.66667
 are not acceptance. Original exact assembly is retained; main independently
 verified fallback text/EH/index100%, source link and full SHA1. Gain0; retry
 requires new coupled-web/strength-reduction evidence. Runtime/CI unverified.
+
+### 19.69 FlowKart constructor independent matrix draft (2026-10-04)
+
+Complete disabled C++ constructor reaches93.42437%,948B vs952B after three
+material approaches. Natural base/ResCtrl member and five new expressions
+produce the right184B cleanup kinds/owners/registers. Separate matrix arrays
+remove aggregate interior-address CSE, but scale/translation placement reverses,
+pool initialization stays after ResCtrl rather than in the prologue, and table/
+position address reassociation loses4B. EH95.652176/index91.66667 are not
+acceptance. Original assembly unchanged; main independently verified fallback
+text/EH/index100%, actual source link and full SHA1. Gain0; retry requires
+new structural pool-hoist/stack-address evidence. Runtime/CI/Ghidra unverified.
