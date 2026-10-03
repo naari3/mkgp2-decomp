@@ -1,5 +1,15 @@
 # Per-function matching strategy
 
+### 19.114 Matrix4 translation bounded coefficient forwarding (2026-10-04)
+
+Complete492B target reconstructed as504B NonMatching85.92683% C after three
+approaches. Zero-fill preserves coefficient forwarding but extra stores and
+stack/FP roles differ; inline composition recovers initialization layout but
+loses forwarding and two-column unrolling. Main independently verified text,
+automatic EH100/index91.66667, original-object link, foreground exit0 and
+full DOL SHA1. Genuine/function/code gain0. Retry needs new initialization/
+coefficient provenance, not permutations; runtime/CI/Ghidra unverified.
+
 ### 19.113 Matrix4 RotZ bounded setup scheduling (2026-10-04)
 
 Complete780B C is NonMatching97.528206% after three structural approaches.

@@ -862,6 +862,7 @@ config.libs = [
             Object(NonMatching, "game/PcbSlotSync.c"),
             Object(Matching, "game/PCBCommHostConfirm.c"),
             Object(Matching, "game/PCBCommSnapshot.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/Matrix4Translation.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/Matrix4RotZ.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/PCBCommPhase5.c", extra_cflags=["-use_lmw_stmw on"], extab_padding=b""),
             Object(NonMatching, "game/PCBCommBroadcast.c", extra_cflags=["-lang=c++", "-Cpp_exceptions on", "-use_lmw_stmw on"]),

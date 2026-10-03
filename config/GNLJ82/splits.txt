@@ -1889,6 +1889,11 @@ game/Mtx_Copy.c:
 	extabindex  start:0x8002372C end:0x80023738
 	.text       start:0x800D4148 end:0x800D4174
 
+game/Matrix4Translation.c:
+	extab       start:0x8000B154 end:0x8000B15C
+	extabindex  start:0x8002378C end:0x80023798
+	.text       start:0x800D50FC end:0x800D52E8
+
 game/Matrix4RotZ.c:
 	extab       start:0x8000B15C end:0x8000B164
 	extabindex  start:0x80023798 end:0x800237A4
