@@ -39,12 +39,10 @@
  * The TU is wired as `extab_padding=b"\x00\x00"` + `extra_cflags=
  * ["-Cpp_exceptions on"]` because ItemSelect_Reset/Dtor/Init each have a
  * target extab/extabindex entry (Saved-GPR-range r30-r31 / r29-r31).
- * Reset and Dtor get auto-emitted by CW under `#pragma exceptions on`;
- * Init has a DELETEPOINTER PC action covering the post-Alloc /
- * fn_8023EA80 call site, which is not expressible in C, so its extab is
- * emitted manually via __declspec(section ".extab_user") + the
- * postprocess_extab_user.py rename hook (same pattern as
- * game/ServiceMenu.c).
+ * All three tables are compiler-generated. Init uses a C++ island and
+ * a genuine child new expression, with TU-local symbol bridges for the
+ * observed constructor and allocator ABI. Its DELETEPOINTER action
+ * covers constructor failure without manually encoding exception data.
  *
  * Function addresses / sizes (verified vs target asm):
  *   ItemSelect_GetSlotItemId @ 0x80060D40 (size 0x40)  no extab
@@ -72,7 +70,7 @@ extern void fn_8023E808(void *child, int flag);   /* child-obj free */
 extern void fn_8023EA80(void *child, int mode);   /* child-obj init  */
 extern void MemoryManager_TimedFree(void *self);            /* MemoryManager_TimedFree */
 
-/* forward decl needed by manual extabindex emit for ItemSelect_Init */
+/* Init retains the ordinary three-argument C ABI. */
 void *ItemSelect_Init(void *self, void *vtable, int mode);
 
 #pragma exceptions off
@@ -149,132 +147,47 @@ void *ItemSelect_Dtor(unsigned char *self, short freeSelf) {
 
 #pragma exceptions reset
 
-/* --- ItemSelect_Init: manual extab emit (DELETEPOINTER cleanup) ---
- * Mirror of target @etb_80007DF8: size 0x18 with one DELETEPOINTER action
- * covering up to PC=0xAC (the bl fn_8023EA80 call site), destructor =
- * MemoryManager_TimedFree, pointer register = r29.
- *
- * Header word 0x18080000:
- *   - 1 PC range (action count)
- *   - r29..r31 saved-GPR range (bit pattern 0x18 in upper nibble?)
- *   - Large Frame
- * Action word 0x8A80001D:
- *   - Type DELETEPOINTER + end bit
- *   - Pointer source register r29 (bits 0..4 = 0x1D mod ... encoded form)
- * (Encoding read directly from auto_ItemSelect_Init_text.s; do not modify.)
- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct {
-    unsigned int f0;
-    unsigned int f1;
-    unsigned int f2;
-    unsigned int f3;
-    unsigned int f4;
-    void *f5;
-} extab_ItemSelect_Init = {
-    0x18080000, 0x000000AC, 0x00000010, 0x00000000, 0x8A80001D, (void *)&MemoryManager_TimedFree
+/* The child constructor's observed ABI is (self, mode), and its layout
+ * reaches +0x40. A real new expression supplies allocation-failure cleanup. */
+#pragma cplusplus on
+#pragma exceptions on
+class ItemSelectChild {
+    unsigned char storage[0x44];
+public:
+    ItemSelectChild(int mode);
 };
 
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct {
-    void *fn;
-    unsigned int fn_size;
-    void *extab;
-} extabindex_ItemSelect_Init = {
-    (void *)&ItemSelect_Init, 0x00000128, (void *)&extab_ItemSelect_Init
-};
-
-/* ItemSelect_Init: asm_fn retreat after 3 C attempts diverged on
- * callee-save register allocation (CW132 assigned mode -> r29 + child ->
- * r30; target wants mode -> r30 + child -> r29). The decl-order /
- * inner-block / explicit-local_mode workarounds all reproduced the
- * swapped pattern, suggesting CW's allocator picks the swap based on
- * something we cannot reach from the C surface.
- *
- * The function body is copied verbatim from
- * build/GNLJ82/asm/auto_ItemSelect_Init_text.s. extab/extabindex are
- * emitted manually above (no #pragma exceptions on/off needed for the
- * asm_fn body itself; the manual emit covers it). */
-asm void *ItemSelect_Init(void *self, void *vtable, int mode) {
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    li r6, 0x0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r3
-    stw r30, 0x18(r1)
-    mr r30, r5
-    mr r5, r31
-    stw r29, 0x14(r1)
-    stw r4, 0x0(r3)
-    li r4, 0x0
-    b ItemSelect_Init_L_80060F6C
-ItemSelect_Init_L_80060F60:
-    stw r4, 0x4(r5)
-    addi r5, r5, 0x8
-    addi r6, r6, 0x1
-ItemSelect_Init_L_80060F6C:
-    lwz r0, lbl_806CF110(r13)
-    li r3, 0x5
-    cmpwi r0, 0x1
-    bne ItemSelect_Init_L_80060F80
-    li r3, 0x3
-ItemSelect_Init_L_80060F80:
-    addi r0, r3, 0x1
-    cmpw r6, r0
-    blt ItemSelect_Init_L_80060F60
-    li r5, -0x1
-    li r4, 0x0
-    stw r5, 0x54(r31)
-    li r0, 0x1
-    li r3, 0x44
-    stw r5, 0x58(r31)
-    stw r5, 0x5c(r31)
-    stw r4, 0x64(r31)
-    stw r4, 0x68(r31)
-    stw r4, 0x6c(r31)
-    stb r0, 0x61(r31)
-    stb r4, 0x60(r31)
-    stw r4, 0x74(r31)
-    stw r5, 0x70(r31)
-    bl Alloc
-    mr. r29, r3
-    beq ItemSelect_Init_L_80060FD8
-    mr r4, r30
-    bl fn_8023EA80
-ItemSelect_Init_L_80060FD8:
-    stw r29, 0x78(r31)
-    li r0, 0x0
-    stb r30, 0x7c(r31)
-    stw r0, 0x80(r31)
-    lbz r0, 0x7c(r31)
-    cmplwi r0, 0x1
-    bne ItemSelect_Init_L_80061034
-    lis r3, lbl_80598A60@ha
-    addi r3, r3, lbl_80598A60@l
-    lbz r0, 0x44(r3)
-    cmplwi r0, 0x1
-    bne ItemSelect_Init_L_80061014
-    bl StrPcb_GetInstance
-    li r4, 0x4
-    bl StrPcb_ClearStatusBits
-ItemSelect_Init_L_80061014:
-    lis r3, lbl_80598A60@ha
-    addi r3, r3, lbl_80598A60@l
-    lbz r0, 0x45(r3)
-    cmplwi r0, 0x1
-    bne ItemSelect_Init_L_80061034
-    bl StrPcb_GetInstance
-    li r4, 0x8
-    bl StrPcb_ClearStatusBits
-ItemSelect_Init_L_80061034:
-    lwz r0, 0x24(r1)
-    mr r3, r31
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+extern "C" void *ItemSelect_Init(void *selfArg, void *vtable, int mode) {
+    unsigned char *self = (unsigned char *)selfArg;
+    SlotEntry *cursor = (SlotEntry *)self;
+    int i = 0;
+    *(void **)self = vtable;
+    while (i < ((lbl_806CF110 == 1) ? 3 : 5) + 1) {
+        cursor->itemId = 0;
+        cursor++;
+        i++;
+    }
+    *(int *)(self + 0x54) = -1;
+    *(int *)(self + 0x58) = -1;
+    *(int *)(self + 0x5c) = -1;
+    *(int *)(self + 0x64) = 0;
+    *(int *)(self + 0x68) = 0;
+    *(int *)(self + 0x6c) = 0;
+    self[0x61] = 1;
+    self[0x60] = 0;
+    *(int *)(self + 0x74) = 0;
+    *(int *)(self + 0x70) = -1;
+    *(ItemSelectChild **)(self + 0x78) = new ItemSelectChild(mode);
+    self[0x7c] = mode;
+    *(int *)(self + 0x80) = 0;
+    if (self[0x7c] == 1) {
+        if (lbl_80598A60[0x44] == 1) {
+            StrPcb_ClearStatusBits(StrPcb_GetInstance(), 4);
+        }
+        if (lbl_80598A60[0x45] == 1) {
+            StrPcb_ClearStatusBits(StrPcb_GetInstance(), 8);
+        }
+    }
+    return self;
 }
+#pragma cplusplus off

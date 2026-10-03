@@ -316,8 +316,15 @@
     "extabindex_LUT_Cosine": "@eti_80020F6C"
   },
   "src/game/ItemSelect.c": {
-    "extab_ItemSelect_Init": "@etb_80007DF8",
-    "extabindex_ItemSelect_Init": "@eti_80020DB0"
+    "__ct__15ItemSelectChildFi": "fn_8023EA80",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@39": "@etb_80007DE8",
+    "@40": "@eti_80020D98",
+    "@56": "@etb_80007DF0",
+    "@57": "@eti_80020DA4",
+    "@77": "@etb_80007DF8",
+    "@78": "@eti_80020DB0"
   },
   "src/game/NokoNokoChallenge.c": {
     "extab_NokoNokoChallenge_CalcResultText": "@etb_8000BCE4",

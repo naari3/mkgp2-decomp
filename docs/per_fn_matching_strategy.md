@@ -1549,3 +1549,16 @@ at PC9C..F4. Undefined virtual key functions keep vtables external. Immutable
 name bridges replace manual records. Main independently verified text/EH/index
 100%, actual source link and full DOL SHA1. Genuine gain1/276B, report gain0;
 runtime/CI/Ghidra and complete HUD layout remain unverified.
+
+### 19.59 ItemSelect explicit exception state (2026-10-04)
+
+Init296B now matches genuine C++ child ownership; the other four exact C
+definitions stay unchanged. Preserve its ordinary self/vtable/mode C ABI,
+not an implicit owner-constructor signature. Natural new44B child calls the
+external mode constructor and retains pointer r29. After the earlier Dtor's
+exceptions reset, capability flag alone did not enable automatic cleanup:
+explicit exceptions on in the island restores target frame20 and PCAC
+DELETEPOINTER. TU-only generated-name aliases replace manual Init EH. Main
+independently verified all five symbols/text788B/EH40B/index36B100%, actual
+source link and full DOL SHA1. Genuine gain1/296B; report gain0. Runtime/CI/
+Ghidra remain unverified.
