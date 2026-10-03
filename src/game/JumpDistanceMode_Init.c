@@ -670,3 +670,226 @@ asm void JumpDistanceMode_Init(void) { /* 0x80213210 size:0x854 */
     addi r1, r1, 0x60
     blr
 }
+
+/* Bounded genuine C++ draft: 75.47467% text; not linked.
+ * Three structural approaches exhausted. Natural Grid construction remains
+ * out-of-line (496B), violating the immutable singleton and EH boundaries.
+ * The exact original fallback above is unchanged; genuine matched gain is zero.
+ * Enable only together with the documented TU-local constructor bridges.
+ */
+#if 0
+/* Natural constructor retrofit probe A; observed layouts only. */
+#pragma cplusplus on
+void* operator new(unsigned long);
+void operator delete(void*);
+struct JDInput; struct JDCamera; struct JDCar; struct JDScene; struct JDHud;
+struct JDItem; struct JDEffect; struct JDWeather; struct JDKartCopy;
+struct JDVec { float x, y, z; };
+extern "C" {
+extern const float lbl_806DAD70, lbl_806DAD7C, lbl_806DAD88, lbl_806DADA4;
+extern const float lbl_806DADDC, lbl_806DAE08, lbl_806DAE0C;
+extern const unsigned char lbl_803C3858[];
+extern int g_ccClass, g_characterId, g_kartStartSlot, g_reverseRoundFlag;
+extern int lbl_806D12BC;
+extern unsigned char g_lakituStartAnimDone, g_raceEnded;
+extern void* g_raceCamera; extern void* g_playerRenderObj;
+extern float g_raceTimeRemaining;
+extern JDWeather* g_weatherSystem;
+void* DrawManager_GetOrCreate();
+void SetResourceLoadingFlag(unsigned char);
+void DMAChannelManager_Init(); void* TransitionEffect_GetOrCreate();
+void SoundChannels_ClearAll(); void ItemObjectManager_Init();
+void CourseObjectManager_Init(); void* GetCourseDataPtr();
+void* RenderTarget_Create(void*);
+void SetActiveCamera(int, JDCamera*);
+void ProcessSystemTick(int); void* GetRaceContextPtr();
+void RankingTable_Init(void*); void* SoundDriver_GetOrCreate(void*);
+int GetDisplayBufferIndex(); int GetKartStartSlot(int);
+int GetStartPosition(int,float*,float*,float*);
+float GetCourseStartYaw();
+const char** GetKartModelNameEntry(int,int);
+void CarObject_Init(JDCar*,int,int,int,int,unsigned char,int,int,unsigned char,float,float,float);
+void CarObject_SetPosition(JDCar*,const JDVec*);
+void* CarObject_GetRenderObj(JDCar*);
+void* CarObject_GetKartMovementPtr(JDCar*);
+int KartMovement_EquipItem(void*,int);
+void fn_8023E1E4(JDItem*,int,unsigned char);
+void SetPlayerCarObject(JDCar*);
+void Scene3D_Init(JDScene*,const char*);
+void JumpDistanceMode_CopyKartMovement(JDKartCopy*,void*);
+void Vec3_Subtract(const JDVec*,const JDVec*,JDVec*);
+void Vec3_Normalize(const JDVec*,JDVec*);
+void Scene3D_GetCameraPos(JDScene*,float*,float*);
+int Scene3D_SetupProjection(JDScene*,float,float);
+void HUD_RegisterOverlay(JDHud*,int,int);
+void SetCourseScene3D(JDScene*);
+int MiniGame_GetTimerValue(); const float* MiniGame_GetCourseData();
+void PreloadEffectResources(int);
+int InitRumbleController(unsigned char);
+void fn_801699D8(unsigned int,unsigned char);
+void fn_8013D738(JDEffect*,float,float);
+void fn_8013D608(JDEffect*,float,float,float);
+void fn_8013D634(JDEffect*,float,float,float);
+}
+struct JDRoot { JDRoot(); virtual ~JDRoot(); virtual void identity(); };
+struct JDBase : JDRoot {
+    float phase;
+    JDBase() { phase = lbl_806DAD7C; }
+    virtual ~JDBase();
+    virtual void identity();
+};
+struct JDInput { unsigned char opaque[0x37C]; JDInput(); };
+struct JDCamera { unsigned char opaque[0x2C]; JDCamera(int,int,void*,float,float); };
+struct JDCar {
+    unsigned char opaque[0x118];
+    JDCar(const JDVec* p) {
+        int cc = g_ccClass;
+        int character = g_characterId;
+        float yaw = GetCourseStartYaw();
+        int display = GetDisplayBufferIndex();
+        CarObject_Init(this,display,character,cc,0,1,7,0,0,p->x,p->z,yaw);
+    }
+};
+struct JDItem { unsigned char opaque[0x44]; JDItem(unsigned char); };
+struct JDLakitu { unsigned char opaque[0x58]; JDLakitu(const char*,int,float,float,float); };
+struct JDScene {
+    unsigned char opaque[0x3084];
+    JDScene() { Scene3D_Init(this,*GetKartModelNameEntry(g_characterId,-1)); }
+};
+struct JDGoal { unsigned char opaque[8]; JDGoal(); };
+struct JDKartCopy {
+    unsigned char opaque[0x324];
+    JDKartCopy(JDCar* car) { JumpDistanceMode_CopyKartMovement(this,CarObject_GetKartMovementPtr(car)); }
+};
+struct JDHelper {
+    int state; JDScene* scene; JDVec position, rotation; float phase;
+    JDHelper(JDScene* p) {
+        state=0; scene=p; phase=lbl_806DAD7C;
+        position.z=position.y=position.x=lbl_806DAD7C;
+        rotation.z=rotation.y=rotation.x=lbl_806DAD7C;
+    }
+};
+struct JDGate {
+    const JDVec* row; JDVec normal, direction;
+    JDGate(const JDVec* base) {
+        row = g_reverseRoundFlag ? base+2 : base;
+        Vec3_Subtract(row+1,row,&direction);
+        Vec3_Normalize(&direction,&direction);
+        normal.x=-direction.z; normal.y=direction.y; normal.z=direction.x;
+    }
+};
+struct JDHud { unsigned char opaque[0x80]; JDHud(int); };
+struct JDTimer { unsigned char opaque[0x2C]; JDTimer(int); };
+struct JDScoreBase {
+    unsigned char b0,b1,b2,pad; int state, count; float scale,x,y;
+    unsigned char opaque[0x80];
+    JDScoreBase() {
+        b0=b1=b2=0; state=0; count=1; scale=lbl_806DAD70;
+        x=lbl_806DAD7C; y=lbl_806DAD7C;
+    }
+};
+struct JDScore : JDScoreBase {
+    JDScore() { state=3; count=3; scale=lbl_806DAD70/(float)count; }
+};
+struct JDEffect { unsigned char opaque[0x20]; JDEffect(const char*,unsigned char); };
+struct JDSubRow { int value; unsigned char opaque[12]; };
+struct JDRow {
+    float x,y,z,phase; int state, count; JDSubRow entries[5];
+};
+struct JDGridBase {
+    JDEffect* first; JDEffect* second; int a,b,c; float phase; int state;
+    JDGridBase() {
+        first=0; a=0; b=0; c=0; phase=lbl_806DAD7C; state=0;
+        first=new JDEffect((const char*)lbl_803C3858+0x560,1);
+        fn_8013D738(first,lbl_806DAD7C,lbl_806DAD70);
+        fn_8013D608(first,lbl_806DAE0C,lbl_806DAE0C,lbl_806DAE0C);
+        const float* coords=(const float*)(lbl_803C3858+0x4F0);
+        fn_8013D634(first,coords[0],coords[1],coords[2]);
+        second=new JDEffect((const char*)lbl_803C3858+0x570,1);
+        fn_8013D738(second,lbl_806DAD7C,lbl_806DAD70);
+        fn_8013D608(second,lbl_806DAE0C,lbl_806DAE0C,lbl_806DAE0C);
+        fn_8013D634(second,coords[0],coords[1],coords[2]);
+    }
+};
+struct JDGrid : JDGridBase {
+    JDRow banks[2][15];
+    JDGrid() {
+        for(int i=0;i<15;i++) {
+            float x=((const float*)(lbl_803C3858+0x4D0))[i%5];
+            float y=((const float*)(lbl_803C3858+0x4E4))[i/5];
+            banks[1][i].x=x; banks[0][i].x=x;
+            banks[1][i].y=y; banks[0][i].y=y;
+            banks[0][i].z=lbl_806DAD7C; banks[1][i].z=lbl_806DAD7C;
+            banks[0][i].phase=lbl_806DAD7C; banks[1][i].phase=lbl_806DAD7C;
+            banks[0][i].state=0; banks[1][i].state=0;
+            banks[0][i].count=0; banks[1][i].count=0;
+            banks[0][i].entries[0].value=-1; banks[1][i].entries[0].value=-1;
+            banks[0][i].entries[1].value=-1; banks[1][i].entries[1].value=-1;
+            banks[0][i].entries[2].value=-1; banks[1][i].entries[2].value=-1;
+            banks[0][i].entries[3].value=-1; banks[1][i].entries[3].value=-1;
+            banks[0][i].entries[4].value=-1; banks[1][i].entries[4].value=-1;
+        }
+    }
+};
+struct JDWeather { unsigned char opaque[0x1B4]; JDWeather(unsigned char); };
+struct JDOwner : JDBase {
+    JDCar* car; JDLakitu* lakitu; JDInput* input; JDScene* scene;
+    JDGoal* goal; JDItem* item; JDCamera* camera; void* renderTarget;
+    JDHud* hud; JDTimer* timer; JDGate* gate1; JDGate* gate2; JDGate* gate3;
+    JDScore* score; JDHelper* helper;
+    unsigned char b44,b45,pad46[2]; int w48,w4C,w50;
+    float duration, f58, f5C,f60,f64,f68;
+    unsigned char b6C,b6D,pad6E[2]; JDKartCopy* copy; float f74;
+    unsigned char b78,pad79[3]; JDGrid* grid; int w80,w84;
+    unsigned char b88;
+    JDOwner(); virtual void identity();
+};
+JDOwner::JDOwner() {
+    car=0; lakitu=0; input=0; scene=0; goal=0; item=0; camera=0;
+    renderTarget=0; hud=0; timer=0; gate1=0; gate2=0; gate3=0; score=0; helper=0;
+    b44=0; b45=0; w48=0; w4C=0; w50=0;
+    duration=lbl_806DADA4; f58=lbl_806DAD7C; f68=lbl_806DAD7C;
+    b6C=0; b6D=0; copy=0; f74=lbl_806DAD7C; b78=0; b88=0;
+    DrawManager_GetOrCreate(); SetResourceLoadingFlag(0); DMAChannelManager_Init();
+    TransitionEffect_GetOrCreate(); SoundChannels_ClearAll(); ItemObjectManager_Init();
+    CourseObjectManager_Init();
+    input=new JDInput;
+    renderTarget=RenderTarget_Create(GetCourseDataPtr());
+    camera=new JDCamera(256,256,renderTarget,lbl_806DAE08,lbl_806DAD88);
+    SetActiveCamera(0,camera); g_raceCamera=camera; ProcessSystemTick(0);
+    RankingTable_Init(GetRaceContextPtr()); lbl_806D12BC=0; SoundDriver_GetOrCreate(0);
+    g_kartStartSlot=GetKartStartSlot(GetDisplayBufferIndex());
+    JDVec start; GetStartPosition(0,&start.x,&start.y,&start.z);
+    car=new JDCar(&start); CarObject_SetPosition(car,&start);
+    *(int*)((unsigned char*)CarObject_GetRenderObj(car)+0x238)=1;
+    *((unsigned char*)CarObject_GetRenderObj(car)+0x2D0)=1;
+    KartMovement_EquipItem(CarObject_GetRenderObj(car),0x17);
+    item=new JDItem(0); fn_8023E1E4(item,0x17,0);
+    SetPlayerCarObject(car); g_playerRenderObj=CarObject_GetRenderObj(car);
+    lakitu=new JDLakitu((const char*)lbl_803C3858+0x54C,0,lbl_806DAD7C,lbl_806DAD7C,lbl_806DAD7C);
+    scene=new JDScene; goal=new JDGoal; copy=new JDKartCopy(car);
+    helper=new JDHelper(scene);
+    gate1=new JDGate((const JDVec*)(lbl_803C3858+0x408));
+    gate2=new JDGate((const JDVec*)(lbl_803C3858+0x438));
+    gate3=new JDGate((const JDVec*)(lbl_803C3858+0x468));
+    ProcessSystemTick(0);
+    float projection1,projection2;
+    Scene3D_GetCameraPos(scene,&projection1,&projection2);
+    projection1+=lbl_806DADDC; Scene3D_SetupProjection(scene,projection1,projection2);
+    hud=new JDHud(0);
+    HUD_RegisterOverlay(hud,6,0); HUD_RegisterOverlay(hud,17,0);
+    HUD_RegisterOverlay(hud,18,0); HUD_RegisterOverlay(hud,14,0);
+    g_lakituStartAnimDone=0; SetCourseScene3D(scene); g_raceEnded=0;
+    g_raceTimeRemaining=(float)MiniGame_GetTimerValue();
+    f64=lbl_806DAD7C; f60=lbl_806DAD7C; f5C=lbl_806DAD7C;
+    PreloadEffectResources(1); PreloadEffectResources(9); PreloadEffectResources(10);
+    const float* course=MiniGame_GetCourseData(); if(course) duration=*course;
+    timer=new JDTimer((int)duration);
+    score=new JDScore;
+    grid=new JDGrid; w80=0; w84=0;
+    if(!g_weatherSystem) g_weatherSystem=new JDWeather(1);
+    SetResourceLoadingFlag(1); InitRumbleController(0);
+    fn_801699D8(0,1); fn_801699D8(1,1);
+}
+#pragma cplusplus off
+#endif

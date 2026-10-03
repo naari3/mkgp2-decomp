@@ -1769,3 +1769,13 @@ on its second material approach. Preserve signed asset slot traversal and
 nullable first-animation checks. Main independently verified all owned sections
 100%, actual source linkage and full DOL SHA1. Genuine and aggregate gain2/952B;
 runtime/CI/Ghidra remain unverified. Separate singleton TUs preserve Construct.
+
+### 19.77 JumpDistance constructor bounded nested lifetime (2026-10-04)
+
+Complete disabled C++ draft reaches75.47467% after three structural approaches.
+Natural Grid construction stays in a separate496B weak body; owner1764B,
+EH596B/two index entries differ from target2132B/EH608B/one index. Real
+intermediate-base vptr and automatic ownership alone do not resolve inlining.
+Main independently verified unchanged source-linked ASM text/EH/index100%,
+foreground build exit0 and full DOL SHA1. Genuine and aggregate gain0;
+retry requires new nested-constructor inlining evidence. Runtime/CI unverified.
