@@ -1418,3 +1418,12 @@ on the default phase. Actual WrapInRange is inclusive one-step wrapping, not
 modulo. Main retained detector/samples/lifetime/leaf splits in address order.
 Object text/EH/index100%, actual source linkage and full DOL SHA1 verified;
 gain1/1136B. Runtime/CI/Ghidra remain unverified.
+
+### 19.48 JvsInput buffer clearing (2026-10-03)
+
+ClearBuffers matches68B on its first ordinary C approach. Both globals are
+32-byte unsigned-short[16] arrays: full sizes avoid inappropriate SDA21
+relocations and sizeof supplies the exact memset length. Actual memset and
+fill_mem consume destination/fill/unsigned length; return values are ignored.
+Main independently verified text/EH/index100%, actual source linkage and full
+DOL SHA1. Gain1/68B; runtime/CI/Ghidra remain unverified.

@@ -686,6 +686,7 @@ config.libs = [
             Object(Matching, "game/InputObj.c"),
             Object(Matching, "game/JvsInput_Calibration.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/JvsInput_TickPoll.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/JvsInputClear.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/InputObj_Ctor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/InputMgr_TeardownStub.c"),
             Object(Matching, "game/ItemHolder.c"),
