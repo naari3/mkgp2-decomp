@@ -1527,3 +1527,13 @@ declare owned records first and generated weak timer destructor last with the
 existing order mechanism. Weak duplicate records disappear at final link.
 Main independently verified all owned symbols/payloads100%, actual source link
 and full DOL SHA1. Genuine gain3/436B; report gain0. Runtime/CI/Ghidra unverified.
+
+### 19.57 SpriteSlot nonloop natural allocation (2026-10-04)
+
+InitNonLoop388B matches genuine C++ on its first approach by transferring the
+verified Loop natural92B new and row-start accumulator idiom. Keep active0,
+state1 and omit the Loop-only initial JObjUpdate call. Signed row index and
+const sdata2 preserve accesses; automatic DELETEPOINTER r29 at PC60 emits
+exact24B EH/12B index without manual records. Main independently verified
+all payloads100%, actual source link and full DOL SHA1. Genuine gain1/388B;
+report gain0 because prior assembly was counted. Runtime/CI/Ghidra unverified.

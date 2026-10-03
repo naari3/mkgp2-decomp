@@ -812,7 +812,7 @@ config.libs = [
             Object(Matching, "game/SpriteSlot_SetPositionFromVec.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/SpriteSlot_Destroy.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/SpriteSlot_Container_Free.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/SpriteSlot_InitNonLoop.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/SpriteSlot_InitNonLoop.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b"\x00\x00"),
             Object(Matching, "game/BtMode_Init.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBoxResponder_CmdGroup.c"),
             Object(Matching, "game/Rand_RangeIntMax.c"),
