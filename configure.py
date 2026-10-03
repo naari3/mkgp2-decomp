@@ -861,6 +861,7 @@ config.libs = [
             Object(NonMatching, "game/PcbSlotSync.c"),
             Object(Matching, "game/PCBCommHostConfirm.c"),
             Object(Matching, "game/PCBCommSnapshot.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/PCBCommPhase5.c", extra_cflags=["-use_lmw_stmw on"], extab_padding=b""),
             Object(NonMatching, "game/PCBCommPhase1.c", extab_padding=b""),
             Object(Matching, "game/CommBroadcast_ClearTable.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardTaskManager_Tick.c", extab_padding=b"\x00\x00"),

@@ -1,5 +1,20 @@
 # Per-function matching strategy
 
+### 19.110 PCB phase5 signed timer and bounded idle join (2026-10-04)
+
+Complete908B target remains NonMatching98.07489%, source912B, after three
+structural approaches. Evaluated-float PublishValue inline repairs timer
+publication scheduling, but an extra idle-one initialization and independent
+phase/host pointer webs remain. Actual division callee normalizes sign bits,
+takes absolute values and restores quotient sign: use signed64 division,
+OSGetTime high r3/low r4, and signed64 conversion. The unsigned32 clock
+denominator is zero-extended. Existing pool hook maps the natural bias only;
+unlinked native conversion helper still needs an ABI-name bridge on promotion.
+Main independently verified text98.07489/EH100/index91.66667, original-object
+link, foreground exit0 and full DOL SHA1. Genuine/function/code gain0;
+automatic data8B is not C progress. Retry needs new pointer/idle-join evidence,
+not a fourth permutation. Runtime/CI/Ghidra remain unverified.
+
 ### 19.109 PCB phase1 bounded timer publication (2026-10-04)
 
 Complete776B C is NonMatching94.948456% after three structural approaches;
