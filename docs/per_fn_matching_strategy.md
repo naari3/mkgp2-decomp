@@ -1461,3 +1461,17 @@ specification is needed for this plain EH record. Scoped mangled bridges bind
 the existing vtable and deleting destructor, using the shared operator-delete
 bridge. Main independently verified source linkage, all payloads100% and full
 DOL SHA1; gain1/72B. Runtime/CI/Ghidra remain unverified.
+
+### 19.52 JvsInput EH-free metrics closure (2026-10-03)
+
+All three members match as genuine C/C++,308B, on the first source approach.
+An empty real constructor with undefined virtual key destructor keeps the
+external vtable; the table has49 floats but reset clears only48. Signed index
+guards normalize through an unsigned-byte diamond and divide only positives.
+The existing extab rule cannot clean an EH-free object. A TU-only normal-SJIS
+clone applies the existing symbol bridge without changing flags or instructions.
+On a fresh split, the first configure has no Metrics source edge: defer the
+hook until Ninja SPLIT regenerates the build, then require the expected rule.
+Main retained Lifetime then Metrics entries in both insertion conflicts.
+Independent source link, text/all symbols100%, no EH/index, full DOL SHA1
+verified; genuine gain3/308B, no fallback gain. Runtime/CI/Ghidra unverified.

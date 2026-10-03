@@ -690,6 +690,7 @@ config.libs = [
             Object(NonMatching, "game/JvsInputPoll.c", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/JvsInputClear.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/JvsInputLifetime.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/JvsInputMetrics.cpp", extab_padding=b""),
             Object(Matching, "game/InputObj_Ctor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/InputMgr_TeardownStub.c"),
             Object(Matching, "game/ItemHolder.c"),
@@ -1063,10 +1064,40 @@ def _inject_sdata2_postprocess(config: ProjectConfig) -> None:
     build_ninja.write_text("".join(lines), encoding="utf-8")
 
 
+def _inject_jvs_metrics_ctor_bridge() -> None:
+    """Use symbol-only ctor bridging for this EH-free three-member TU.
+
+    The existing extab rule runs `dtk extab clean`, which rejects objects with
+    no extab section. Clone the normal SJIS rule without changing compilation
+    flags, then apply only the existing per-TU symbol-name bridge.
+    """
+    build_ninja = Path("build.ninja")
+    text = build_ninja.read_text(encoding="utf-8")
+    # The first configure after adding a split has no source edge yet. Ninja
+    # runs SPLIT and regenerates this file before compiling the new object.
+    if "JvsInputMetrics.o:" not in text:
+        return
+    start = text.index("rule mwcc_sjis\n")
+    end = text.index("\nrule ", start + 1)
+    rule = text[start:end]
+    rule = rule.replace("rule mwcc_sjis\n", "rule mwcc_sjis_ctor_bridge\n", 1)
+    hook = " && $python tools/postprocess_sdata2.py $out $out"
+    assert hook in rule
+    rule = rule.replace(hook, " && $python tools/postprocess_extab_user.py $out" + hook, 1)
+    target = "build build\\GNLJ82\\src\\game\\JvsInputMetrics.o: mwcc_sjis_extab"
+    if sys.platform != "win32":
+        target = "build build/GNLJ82/src/game/JvsInputMetrics.o: mwcc_sjis_extab"
+    assert target in text
+    text = text.replace(target, target.replace("mwcc_sjis_extab", "mwcc_sjis_ctor_bridge"), 1)
+    text = text[:start] + rule + "\n" + text[start:]
+    build_ninja.write_text(text, encoding="utf-8")
+
+
 if args.mode == "configure":
     # Write build.ninja and objdiff.json
     generate_build(config)
     _inject_sdata2_postprocess(config)
+    _inject_jvs_metrics_ctor_bridge()
 elif args.mode == "progress":
     # Print progress information
     calculate_progress(config)
