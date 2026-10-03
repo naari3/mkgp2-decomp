@@ -1084,3 +1084,16 @@ branch-specific status-store ordering and acquire the singleton before testing
 the second byte guard. Sci2Card_ForceFailState consumes only r3; the preceding
 r4/r5 constants are store temporaries, not forwarded arguments. Automatic
 exception records, direct payload comparisons and the linked C object are exact.
+
+### 19.19 Card cleaning body: bounded join residue (2026-10-03)
+
+The complete 540-byte cleaning state machine reached 99.18519% in three
+approaches (four compiles), but output is 544 bytes: an extra li r5,1 and
+r5 rather than r4 at the retry completion join. Byte/int width and local-scope
+changes did not resolve it. Preserve the disabled body in CardCleaningCommand.c
+without expanding its singleton boundaries or declaring the shared TU NonMatching:
+the existing 204-byte initializer must remain exact and source-linked.
+Predicates return normalized bytes; the signed retry counter decrements before
+the <=0 test; retry initialization ignores the command return and stores 1.
+This is a bounded-search blocker, not proof of a source-closed compiler class.
+No matched or genuine-C increase is attributed to this preserved draft.
