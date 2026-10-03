@@ -1261,6 +1261,11 @@ game/CommBroadcast_ClearTable.c:
 	extabindex  start:0x80021890 end:0x8002189C
 	.text       start:0x80085154 end:0x800851BC
 
+game/PcbSlotReset.c:
+	extab       start:0x80008D94 end:0x80008D9C
+	extabindex  start:0x8002189C end:0x800218A8
+	.text       start:0x800851BC end:0x80085280
+
 game/RingBuffer_Getters.c:
 	.text       start:0x80085280 end:0x80085368
 

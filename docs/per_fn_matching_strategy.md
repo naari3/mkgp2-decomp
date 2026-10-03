@@ -1430,6 +1430,17 @@ this is not a global impossibility claim. Automatic EH75%/index91.66667%
 are not acceptance. Original fallback linked; genuine/aggregate gain0.
 Runtime/CI/Ghidra unverified; retry needs new spill/web provenance evidence.
 
+### 19.95 PCB scratch reset bounded nested-loop composition (2026-10-04)
+
+Complete196B target retained as NonMatching200B C at94.69388% after three
+material approaches. Direct nested loops repaired bit extraction but changed
+all loop homes; whole-loop inline composition repaired size/index but changed
+all four homes. Best guarded per-slot inline retains an extra initializer copy
+and inner counter/walker mismatch. No blind local-order retry. Resume only
+with concrete nested initializer provenance. Main independently verified text,
+automatic EH100/index91.66667, original-object linkage, foreground exit0 and
+full DOL SHA1. Genuine/function/code gain0; automatic data+8 is not C gain.
+
 ### 19.94 PCB slot/sync bounded normalized-return closure (2026-10-04)
 
 Complete six-member336B C remains NonMatching after three material approaches.
