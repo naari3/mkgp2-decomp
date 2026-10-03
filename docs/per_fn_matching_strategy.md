@@ -1,5 +1,15 @@
 # Per-function matching strategy
 
+### 19.113 Matrix4 RotZ bounded setup scheduling (2026-10-04)
+
+Complete780B C is NonMatching97.528206% after three structural approaches.
+The full multiplication loop/copy and automatic EH/index match; nine setup
+store/load scheduling rows remain. Preserve the observed sine/cosine slots,
+not a mathematically repaired rotation. Main independently verified direct
+text97.528206/EH100/index100, original-object link, foreground exit0 and
+full DOL SHA1. Genuine/function/code gain0. Retry requires new setup
+composition evidence, not a fourth permutation; runtime/CI/Ghidra unverified.
+
 ### 19.112 PCB broadcast evaluated virtual input boundary (2026-10-04)
 
 Complete1052B broadcast remains NonMatching88.45247%, source1048B, after
