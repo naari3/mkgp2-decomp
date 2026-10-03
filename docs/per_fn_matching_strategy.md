@@ -1393,6 +1393,20 @@ gain2/268B. Worker baseline child-Python alias failure was resolved by a
 process-local venv Scripts PATH; final actual build exit0, no repo changes.
 Runtime/CI/Ghidra remain unverified.
 
+### 19.85 FlowChara bounded natural cleanup reconstruction (2026-10-04)
+
+Complete3932B Update draft is preserved disabled at92.321465% after two
+material approaches/four probe compiles. Natural92B Normal,100B Model and48B
+Sprite new expressions reproduce all four DELETEPOINTER r26 action shapes;
+aggregate13-short copying and native stmw improve the full reconstruction.
+Cleanup PCs remain shifted and automatic EH93.05556/index91.66667 are not
+acceptance. Generated28B switch data belongs to foreign jumptable8049AC90:
+do not expand immutable ownership implicitly. Main independently verified
+unchanged source-linked ASM, EH/index100%, foreground exit0 and full DOL SHA1.
+Raw fallback text99.511696 reflects eight pre-existing literal SDA operands.
+Genuine/aggregate gain0; retry requires new pointer/base scheduling evidence
+and explicit table-ownership resolution. Runtime/CI/Ghidra unverified.
+
 ### 19.65 Debris Spawn bounded natural lifetime draft (2026-10-04)
 
 Debris Spawn796B complete C++ draft is parked at93.77889% after three
