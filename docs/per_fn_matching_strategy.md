@@ -1257,3 +1257,15 @@ index-zero webs, losing one instruction and changing scratch registers. A
 genuine static inline nonzero helper did not change this. No fourth attempt.
 Main independently confirmed EH100%, index91.66667%, source-only linkage and
 exact original-fallback DOL SHA-1. No matched gain; runtime/CI unverified.
+
+### 19.34 Hit burst bounded argument-forwarding draft (2026-10-03)
+
+Complete C is retained NonMatching at98.71681%,456B vs452B target after three
+approaches. Splitting Rand out of the third vector-setter argument avoids an
+unnecessary cross-call zero lifetime and restores frame50 and saved f31.
+Residual count/kind r28/r29 homes and extra f0 forwarding remain; genuine
+inline composition repairs the FP move but changes the entry extsb web.
+Stop rather than combine untested permutations beyond the budget. Actual
+rotation helpers consume full Vec3 pointers; orientation helper returns float.
+Main independently verified EH100%, index91.66667%, source-only compilation
+and exact original-fallback DOL SHA-1. Zero matched gain; runtime/CI unverified.
