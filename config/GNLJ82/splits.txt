@@ -1909,6 +1909,11 @@ game/Matrix4RotXY.c:
 	extabindex  start:0x800237A4 end:0x800237BC
 	.text       start:0x800D55F4 end:0x800D5C0C
 
+game/Matrix4Multiply.c:
+	extab       start:0x8000B174 end:0x8000B17C
+	extabindex  start:0x800237BC end:0x800237C8
+	.text       start:0x800D5C0C end:0x800D5D50
+
 game/Vec3_ToYaw.c:
 	extab       start:0x8000B18C end:0x8000B194
 	extabindex  start:0x800237E0 end:0x800237EC

@@ -1,5 +1,17 @@
 # Per-function matching strategy
 
+### 19.117 Matrix4 multiply alias-safe bounded accumulation (2026-10-04)
+
+Complete324B C remains NonMatching80.48148 after three structural approaches.
+Four row accumulators recover size/frame/copy but FP roles and scheduling
+differ; inline dot products regress. Caller proves output aliases right:
+retain64B temporary and all16 final copies, no restrict/in-place shortcut.
+Main independently verified direct text, automatic EH/index100, original
+link, foreground exit0 and full DOL SHA1. Genuine gain0; metadata20B is not
+C progress. Retry needs new product/accumulation provenance. Independent
+RotXY/Multiply split entries retained in address order during conflicts.
+Runtime/CI/Ghidra remain unverified.
+
 ### 19.116 Matrix4 paired rotation bounded setup composition (2026-10-04)
 
 Complete780B Y/X drafts remain NonMatching97.528206/97.46667 after two
