@@ -86,6 +86,11 @@ game/CObjViewport.c:
 	extabindex  start:0x8001F568 end:0x8001F58C
 	.text       start:0x800303E8 end:0x800304E0
 
+game/CObjCached.c:
+	extab       start:0x80005908 end:0x80005928
+	extabindex  start:0x8001F598 end:0x8001F5C8
+	.text       start:0x80030960 end:0x80030A48
+
 game/CObj_GlobalProjPushFrame.c:
 	extab       start:0x80005928 end:0x80005930
 	extabindex  start:0x8001F5C8 end:0x8001F5D4

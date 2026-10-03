@@ -1304,3 +1304,13 @@ camera+4 and flags+8 preserve target guard and OR80000002. Explicit7/5-byte
 assert strings retain SDA21 references. Main independently verified actual
 source linkage, all sections100% and full DOL SHA1; gain3 functions/248B.
 Runtime, CI and Ghidra remain unverified; actual target/callee asm was used.
+
+### 19.38 CObj cached getters and output ABI (2026-10-03)
+
+Four cached-tail wrappers match232B on the first approach, with automatic32B
+EH and48B index100%. Unlike viewport setters, fn_802C7240/7318 retain r4
+as a writable output pointer: downstream fn_802DA350 copies three words OUT
+of camera subobject+0C/10/14. Do not infer direction from wrapper names.
+Cached projection getter returns camera+88 allocation; view getter refreshes
+and returns camera+54. Main independently verified source link, all sections
+and full DOL SHA1. Genuine gain4 functions/232B; runtime/CI/Ghidra unverified.
