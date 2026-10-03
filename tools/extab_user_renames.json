@@ -3,6 +3,11 @@
   "src/game/clRomDtor.c": {
     "__dt__5clRomFv": "clRom_DtorForce"
   },
+  "src/game/TCPConnPoll.c": {
+    "@93": "jumptable_803FE3D0",
+    "@94": "@etb_80008E74",
+    "@95": "@eti_80021974"
+  },
   "src/game/JvsInputMetrics.cpp": {
     "__ct__8JvsInputFv": "JvsInput_SetVtable",
     "__vt__8JvsInput": "lbl_803F5788"

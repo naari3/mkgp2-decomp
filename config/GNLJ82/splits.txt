@@ -1318,6 +1318,12 @@ game/TCPConn_Reset.c:
 	extabindex  start:0x80021968 end:0x80021974
 	.text       start:0x80087170 end:0x800871D8
 
+game/TCPConnPoll.c:
+	extab       start:0x80008E74 end:0x80008E7C
+	extabindex  start:0x80021974 end:0x80021980
+	.text       start:0x800871D8 end:0x80087530
+	.data       start:0x803FE3D0 end:0x803FE3FC
+
 game/TCPConnCloseInit.c:
 	extab       start:0x80008E7C end:0x80008E8C
 	extabindex  start:0x80021980 end:0x80021998

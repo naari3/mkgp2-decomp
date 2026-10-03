@@ -1,5 +1,15 @@
 # Per-function matching strategy
 
+### 19.102 TCPConn polling inline byte-return stages (2026-10-04)
+
+Poll856B matches first-approach genuine C through natural inline close/open/
+connect helpers returning bytes. Keep duplicate active guards, post-call reloads,
+state fallthrough and distinct6000/80000 timeouts. The owned44B switch table and
+automatic EH/index match100%; TU-only generated-name mappings change metadata,
+not instructions. Main independently verified source link, foreground exit0,
+all payloads/symbols100% and full DOL SHA1. Genuine/aggregate gain1/856B.
+Runtime/CI/full class layout unverified.
+
 ### 19.101 TCPConn enqueue header and alias reloads (2026-10-04)
 
 EnqueueMessage200B matches first-approach genuine C, with automatic EH8B/index12B.
