@@ -1430,6 +1430,16 @@ this is not a global impossibility claim. Automatic EH75%/index91.66667%
 are not acceptance. Original fallback linked; genuine/aggregate gain0.
 Runtime/CI/Ghidra unverified; retry needs new spill/web provenance evidence.
 
+### 19.93 PCB listener accepted-socket whole leaf closure (2026-10-04)
+
+Both members of the indivisible112B blob match first-approach genuine C.
+Signed socket negativity is distinct from state6/9 transitions: clear pending
+at+8 before storing5/2 at+4. Accepted socket+C is returned only in state6.
+Minimal four-word observed views suffice; no full class or callee ABI invented.
+Main independently verified both symbols/text100%, absent EH/index/data,
+actual source linkage, foreground exit0 and exact full DOL SHA1; gain2/112B.
+Runtime/CI/Ghidra remain unverified.
+
 ### 19.92 RaceContext driver and ranking whole leaf closure (2026-10-04)
 
 Both members of the indivisible344B blob match genuine C on their first

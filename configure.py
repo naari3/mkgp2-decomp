@@ -879,6 +879,7 @@ config.libs = [
             Object(Matching, "game/PCBComm_PromoteToClientConfirmed.c"),
             Object(Matching, "game/PcbConn_GetStateName.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PcbListener_GetStateName.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/PcbListenerAccept.c"),
             Object(Matching, "game/TCPConn_LogError.c"),
             Object(Matching, "game/TCPConn.c"),
             Object(Matching, "game/TCPConn_Reset.c"),

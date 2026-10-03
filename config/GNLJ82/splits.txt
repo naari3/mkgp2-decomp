@@ -1316,6 +1316,9 @@ game/PcbListener_GetStateName.c:
 	extabindex  start:0x800219D4 end:0x800219E0
 	.text       start:0x80087C34 end:0x80087C58
 
+game/PcbListenerAccept.c:
+	.text       start:0x80087C58 end:0x80087CC8
+
 game/LapBannerScene.c:
 	extab       start:0x80008ED4 end:0x80008EF4
 	extabindex  start:0x80021A04 end:0x80021A34
