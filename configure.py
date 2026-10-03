@@ -738,6 +738,7 @@ config.libs = [
             Object(Matching, "game/BootPCBCheck_Init.c", extab_padding=b"\x00\x00"),
             Object(NonMatching, "game/PCBCheckRecv.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/PCBCommSendPeers.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/PCBCommCompute.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/PCBCheckProcess.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/GetTextureByIdAndLang.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/AssocTree.c"),

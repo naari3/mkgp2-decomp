@@ -1,5 +1,18 @@
 # Per-function matching strategy
 
+### 19.111 PCB computation bounded independent storage views (2026-10-04)
+
+Complete2212B computation remains NonMatching87.11573%, source2204B, after
+two structural approaches/five compiles including repair and restoration.
+Preserve all scene votes,45B card rows, signed RNG remainders and role-count
+reloads. Evaluated-pointer whole-body inline emits a helper and regresses;
+early low-ROI stop is not universal source impossibility. Main independently
+verified text87.11573/EH100/index91.66667, original-object link, foreground
+exit0 and full DOL SHA1. Genuine/function/code gain0; automatic8B data is not
+C progress. Retry needs new independent peer/output pointer or localized
+inlining provenance. Both independent Compute and Phase5 split rows retained
+in address order during conflict resolution. Runtime/CI/Ghidra unverified.
+
 ### 19.110 PCB phase5 signed timer and bounded idle join (2026-10-04)
 
 Complete908B target remains NonMatching98.07489%, source912B, after three
