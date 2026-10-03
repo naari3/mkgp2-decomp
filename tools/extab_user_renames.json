@@ -155,8 +155,10 @@
     "extabindex_clFlowItemSelect_Update": "@eti_80027E90"
   },
   "src/game/clFlowItemSelect_Dtor.c": {
-    "extab_clFlowItemSelect_Dtor": "@etb_80014740",
-    "extabindex_clFlowItemSelect_Dtor": "@eti_80027E9C"
+    "__dt__13FlowOwnerDtorFv": "clFlowItemSelect_Dtor",
+    "__vt__13FlowOwnerDtor": "lbl_8049B148",
+    "__dt__12FlowAnimDtorFv": "SpriteAnimHandle_Destroy",
+    "__dt__12FlowBaseDtorFv": "dtor_801BA14C"
   },
   "src/game/clFlowItemSelect_Init.c": {
     "extab_clFlowItemSelect_Init": "@etb_80014768",

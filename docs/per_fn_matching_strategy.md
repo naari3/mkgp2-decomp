@@ -1393,6 +1393,17 @@ gain2/268B. Worker baseline child-Python alias failure was resolved by a
 process-local venv Scripts PATH; final actual build exit0, no repo changes.
 Runtime/CI/Ghidra remain unverified.
 
+### 19.63 FlowItemSelect natural destructor member specification (2026-10-04)
+
+The488B owner destructor is genuine C++ with automatic40B EH/12B index.
+The E8 member's throw() destructor naturally generates SPECIFICATION and
+unexpected cleanup; do not apply that specification to the entire owner.
+Empty-destructor allocation types retain redundant guarded deletes, and a
+null-first inline input accessor preserves both guards. Two approaches.
+Main independently verified owned text/EH/index100%, actual source link and
+full DOL SHA1 exact. Genuine and aggregate gain1/488B. Observed layouts only;
+runtime/CI/Ghidra remain unverified.
+
 ### 19.46 InputCmd sample clear inline composition (2026-10-03)
 
 Tick/clear216B and PushSample148B match as genuine C with automatic EH.
