@@ -1097,3 +1097,15 @@ Predicates return normalized bytes; the signed retry counter decrements before
 the <=0 test; retry initialization ignores the command return and stores 1.
 This is a bounded-search blocker, not proof of a source-closed compiler class.
 No matched or genuine-C increase is attributed to this preserved draft.
+
+### 19.20 Card ping body: scalar response locals and bounded join (2026-10-03)
+
+The complete 880-byte body reached 99.47727% after three approaches. Six scalar
+byte locals in reverse declaration order reproduce the two response triplets
+at stack +0xB/+0xC/+0xD and +8/+9/+0xA; three-byte arrays misplace them.
+Keep status checks independent: later predicates intentionally overwrite codes.
+Inline command setup ignores the ping return and stores 1, unlike the standalone
+initializer. Remaining output is 884 bytes: result in r3 rather than r0 adds
+one constant load at the shared join. Combining assignments did not resolve it.
+Retain the disabled body with original boundaries; the 128-byte initializer
+remains unchanged, source-linked and exact. No matched gain is claimed.
