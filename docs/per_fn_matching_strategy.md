@@ -1355,3 +1355,14 @@ consume only r3; debug flush consumes matrix r3 and projection r4, not r5.
 Unsigned ready and int-return nonzero normalization reproduce the render guard.
 Main independently verified source-linked text/EH/index100% and full DOL SHA1.
 Gain2/132B, with runtime/CI/Ghidra still unverified.
+
+### 19.43 CObj LinePath bounded full draft (2026-10-03)
+
+Complete1152B C is retained NonMatching94.416664%, two material approaches.
+Double trig returns and float rounding, genuine inline MSL sqrtf, count reloads
+and deliberately odd idle x stores are preserved. Mixed short-range FP homes,
+vector scheduling and debug cursor residuals remain; early ROI stop is not
+proof of source-closed impossibility. Main verified automatic EH/index100%,
+source-only compilation and exact original-fallback DOL SHA1. Zero gain.
+Retry requires a concrete vector-access/inline-composition lever; runtime/CI
+and Ghidra remain unverified.

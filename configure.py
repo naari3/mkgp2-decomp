@@ -461,6 +461,7 @@ config.libs = [
             Object(NonMatching, "game/CObjProjectPoint.c", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/CObj_GlobalProjPushFrame.c", extab_padding=b""),
             Object(Matching, "game/CObjViewport.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/CObjLinePath.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/CObjCached.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CObjDebugRender.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CObjUnproject.c", extra_cflags=["-Cpp_exceptions on"]),

@@ -104,6 +104,11 @@ game/CObjViewport.c:
 	extabindex  start:0x8001F568 end:0x8001F58C
 	.text       start:0x800303E8 end:0x800304E0
 
+game/CObjLinePath.c:
+	extab       start:0x80005900 end:0x80005908
+	extabindex  start:0x8001F58C end:0x8001F598
+	.text       start:0x800304E0 end:0x80030960
+
 game/CObjCached.c:
 	extab       start:0x80005908 end:0x80005928
 	extabindex  start:0x8001F598 end:0x8001F5C8
