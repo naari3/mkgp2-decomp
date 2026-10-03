@@ -1033,8 +1033,7 @@
     "extabindex_SpriteSlot_InitNonLoop": "@eti_8002396C"
   },
   "src/game/SpriteSlot_InitLoop.c": {
-    "extab_SpriteSlot_InitLoop": "@etb_8000B28C",
-    "extabindex_SpriteSlot_InitLoop": "@eti_80023960"
+    "__ct__12LoopNormal3DFPvi": "clNormal3D_Construct"
   },
   "src/game/SpriteSlot_TickAnim.c": {
     "extab_SpriteSlot_TickAnim": "@etb_8000B284",

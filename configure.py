@@ -378,7 +378,7 @@ config.libs = [
             Object(Matching, "game/SpriteSlot_SetAnimFrameAndApplyScale.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/SpriteSlot_RegisterDraw.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/SpriteSlot_SetMatrixSourceEnabled_WithReseed.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/SpriteSlot_InitLoop.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/SpriteSlot_InitLoop.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b"\x00\x00"),
             Object(Matching, "game/SpriteSlot_TickAnim.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/BtMode_RenderFrame.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/BtMode_Dtor.c", extab_padding=b"\x00\x00"),

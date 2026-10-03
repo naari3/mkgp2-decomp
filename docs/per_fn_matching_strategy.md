@@ -1503,3 +1503,14 @@ are not the owned target records, which independently match100% on main.
 Actual source link and full DOL SHA1 verified. Genuine gain1/184B; aggregate
 report gain0 because the previous asm was already counted. Runtime/CI/Ghidra
 remain unverified.
+
+### 19.55 SpriteSlot loop natural allocation (2026-10-04)
+
+InitLoop396B is genuine C++, including automatic24B DELETEPOINTER EH and12B
+index. An observed92B class with external constructor models natural new;
+only this TU's constructor bridge is added. Keep20B model rows,12B animation
+rows and signed row byte. The final start load uses row-byte-offset+4; a named
+accumulator initialized from start then compound-added with frameOffset fixes
+the last FP role difference in three approaches. Immutable sdata2 declarations
+avoid alias reloads. Main independently verified source link, all payloads100%
+and full DOL SHA1. Genuine gain1/396B; report gain0. Runtime/CI/Ghidra unverified.
