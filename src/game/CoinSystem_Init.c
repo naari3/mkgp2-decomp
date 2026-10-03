@@ -342,3 +342,147 @@ asm void CoinSystem_Init(void) { /* 0x8013A778 size:0x3FC */
     addi r1, r1, 0x50
     blr
 }
+
+#if 0
+/* Complete bounded genuine C++ draft: text 99.20784%, EH 94.64286%,
+ * index 91.66667%. Original exact fallback above remains active.
+ * Natural ownership/inline dual induction; no manual exception data.
+ * Probe flags: -Cpp_exceptions on, -use_lmw_stmw on, no extab_padding.
+ * TU bridges: CoinNormal ctor -> clNormal3D_Construct;
+ * CoinNormal dtor -> Object_DtorWithGXSync.
+ */
+/* TU-local observed ownership and coin-row layouts. */
+#pragma cplusplus on
+void *operator new(unsigned long);
+void operator delete(void *);
+struct CoinNormal {
+    unsigned char opaque[0x5c];
+    CoinNormal(const char *, int);
+    ~CoinNormal();
+};
+struct CoinSpawn { float x, y, z; unsigned int flags; };
+struct CoinColumn { float first; unsigned char rest[12]; };
+struct CoinRow {
+    int mode;
+    float x, y, z;
+    int field10, field14, field18;
+    float field1c;
+    unsigned char opaque20[0x14];
+    float field34;
+    unsigned char opaque38[0x34];
+    int field6c;
+    CoinColumn columns[5];
+};
+struct CoinProgress { unsigned char opaque[0x18]; int field18, field1c; };
+extern "C" {
+extern CoinNormal *lbl_806D1528, *lbl_806D152C, *lbl_806D1530;
+extern CoinRow *lbl_806D1534;
+extern int lbl_806D1538, lbl_806D153C, lbl_806D1540, lbl_806D1544;
+extern unsigned char lbl_806D1548[8];
+extern void *lbl_806D10A0;
+extern int lbl_80677CC8[4];
+extern const char lbl_8035C240[0x438];
+extern const float lbl_806D73E8, lbl_806D7440;
+unsigned char IsCardValid(void);
+CoinSpawn *GetCoinSpawnTable(void);
+unsigned char IsSpawnTableTerminator(const CoinSpawn *);
+void MemoryManager_Free(void *);
+void *FUN_8003b120(unsigned long);
+void clNormal3D_SetFlags(CoinNormal *, unsigned int, void *);
+void *Archive_GetRootJObj(CoinNormal *);
+void fn_802D07D4(void *, unsigned int);
+void RankLog_UpdateTechnicalFlag(void *, int);
+unsigned char Terrain_GetGroundHeight(float *, float *, float *, unsigned int *);
+CoinProgress *fn_8024F588(void);
+}
+static inline void CoinCleanup()
+{
+    if (lbl_806D1528) delete lbl_806D1528;
+    if (lbl_806D152C) delete lbl_806D152C;
+    if (lbl_806D1530) delete lbl_806D1530;
+    if (lbl_806D1534) MemoryManager_Free(lbl_806D1534);
+    lbl_806D1528 = 0; lbl_806D152C = 0; lbl_806D1530 = 0;
+    lbl_806D1534 = 0; lbl_806D1538 = 0;
+}
+static inline void *CoinRankLog()
+{
+    return lbl_806D10A0 == 0 ? (void *)0 : lbl_806D10A0;
+}
+static inline void CoinFill(CoinSpawn *table, int mode)
+{
+        CoinSpawn *cursor;
+        int offset;
+        int i;
+        for (i = 0, offset = i, cursor = table; i < lbl_806D1538;
+             ++i, offset += sizeof(CoinRow), ++cursor) {
+            float height;
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->x = cursor->x;
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->y = cursor->y;
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->z = cursor->z;
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->mode = mode;
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->field18 = 0;
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->field10 = 0;
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->field6c = 0;
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->field14 = -1;
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->field1c = lbl_806D73E8;
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->field34 = lbl_806D73E8;
+            if ((cursor->flags & 1) && Terrain_GetGroundHeight(
+                &((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->x, &height, 0, 0)) {
+                ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->y = height;
+            }
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->columns[0].first = lbl_806D7440;
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->columns[1].first = lbl_806D7440;
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->columns[2].first = lbl_806D7440;
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->columns[3].first = lbl_806D7440;
+            ((CoinRow *)((unsigned char *)lbl_806D1534 + offset))->columns[4].first = lbl_806D7440;
+        }
+}
+extern "C" int CoinSystem_Init(CoinSpawn *table, int mode)
+{
+    const char *assets = lbl_8035C240;
+    if (lbl_806D1538 != 0) CoinCleanup();
+    if (mode == 0) goto fail;
+    if (!IsCardValid()) mode = 1;
+    lbl_806D1548[0] = 0;
+    lbl_80677CC8[0] = 0; lbl_80677CC8[1] = 0;
+    lbl_80677CC8[2] = 0; lbl_80677CC8[3] = 0;
+    lbl_806D1528 = new CoinNormal(assets + 0x408, 1);
+    lbl_806D152C = new CoinNormal(assets + 0x418, 1);
+    lbl_806D1530 = new CoinNormal(assets + 0x428, 1);
+    if (!lbl_806D1528 || !lbl_806D152C || !lbl_806D1530) goto fail;
+    clNormal3D_SetFlags(lbl_806D1528, 0x40000000, 0);
+    clNormal3D_SetFlags(lbl_806D152C, 0x40000000, 0);
+    fn_802D07D4(Archive_GetRootJObj(lbl_806D1530), 0x200);
+    if (!table) table = GetCoinSpawnTable();
+    if (!table) goto fail;
+    {
+        CoinSpawn *cursor = table;
+        lbl_806D1538 = 0;
+        while (!IsSpawnTableTerminator(cursor)) {
+            ++lbl_806D1538;
+            ++cursor;
+        }
+    }
+    if (lbl_806D1538 == 0) goto fail;
+    {
+        void *log = CoinRankLog();
+        if (log) RankLog_UpdateTechnicalFlag(log, lbl_806D1538);
+    }
+    lbl_806D1534 = (CoinRow *)FUN_8003b120(lbl_806D1538 * sizeof(CoinRow));
+    if (!lbl_806D1534) goto fail;
+    CoinFill(table, mode);
+    lbl_806D153C = 0; lbl_806D1540 = 0; lbl_806D1544 = 0;
+    {
+        CoinProgress *progress = fn_8024F588();
+        progress->field1c = 0;
+        progress->field18 = 0;
+        int count = lbl_806D1538;
+        fn_8024F588()->field1c = count;
+    }
+    return 1;
+fail:
+    CoinCleanup();
+    return 0;
+}
+#pragma cplusplus off
+#endif

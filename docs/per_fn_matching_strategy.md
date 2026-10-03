@@ -1674,3 +1674,15 @@ homes. Preserve signed seconds modulo64 after unsigned clock division and the
 full16B spawn rows. Main independently verified text/EH/index100%, actual source
 link and full DOL SHA1. Genuine gain1/808B; aggregate gain0 since prior assembly
 was counted. Only observed layouts claimed; runtime/CI/Ghidra unverified.
+
+### 19.68 CoinSystem bounded natural row initialization (2026-10-04)
+
+Complete C++ draft is disabled at99.20784%,1016B vs target1020B after three
+material approaches. Natural three92B allocations recover DELETEPOINTER PCs
+F4/114/134; caller null guards and genuine inline row composition retain the
+192B row/global reload schedule. Explicit dual induction removes an extra
+branch, but incoming table/new-temp and index/walker homes still differ; the
+target mr r30,r29 initializer is missing. Automatic EH94.64286/index91.66667
+are not acceptance. Original exact assembly is retained; main independently
+verified fallback text/EH/index100%, source link and full SHA1. Gain0; retry
+requires new coupled-web/strength-reduction evidence. Runtime/CI unverified.
