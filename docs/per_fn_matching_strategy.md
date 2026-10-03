@@ -1430,6 +1430,17 @@ this is not a global impossibility claim. Automatic EH75%/index91.66667%
 are not acceptance. Original fallback linked; genuine/aggregate gain0.
 Runtime/CI/Ghidra unverified; retry needs new spill/web provenance evidence.
 
+### 19.96 PCB listener natural inline socket lifetime (2026-10-04)
+
+Natural nonvirtual deleting destructor232B and constructor192B match100%,
+automatic EH/index100%. Defining the genuine inline closeSocket member fully
+before destructor use recovers owner/deleting-flag webs and early retry exit;
+forward declaration alone emits a helper and fails. Compound preincrement
+port comparison retains compare-before-store. Actual external widths42B backup
+and6B error string select the proper large-data/SDA addressing. No invented
+vptr or manual EH. Main independently verified source link, all symbols and
+sections, foreground exit0 and full DOL SHA1; genuine/aggregate gain2/424B.
+
 ### 19.95 PCB scratch reset bounded nested-loop composition (2026-10-04)
 
 Complete196B target retained as NonMatching200B C at94.69388% after three

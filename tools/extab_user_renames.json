@@ -1508,6 +1508,10 @@
     "__dt__16JvsInputLifetimeFv": "JvsInput_DtorAndFree",
     "__vt__16JvsInputLifetime": "lbl_803F5788"
   },
+  "src/game/PcbListenerLifetime.c": {
+    "__dt__11PcbListenerFv": "PcbListener_Dtor",
+    "__ct__11PcbListenerFv": "PcbListener_Init"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
