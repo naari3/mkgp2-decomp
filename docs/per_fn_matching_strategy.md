@@ -1758,3 +1758,14 @@ approaches exhausted; preserve disabled best draft, no fourth blind permutation.
 Main original fallback text99.760956 reflects two pre-existing literal SDA
 relocation presentation differences; EH/index100%, actual source link and full
 DOL SHA1 exact. Gain0; retry needs new root-web provenance evidence.
+
+### 19.76 Normal3D asset load and recursive flatten (2026-10-04)
+
+Load476B and Flatten476B match genuine C with automatic8B EH/12B index each.
+Simple next/child recursion following CountJObjs allows compiler-driven recursive
+inlining, not manual unrolling; use_lmw_stmw preserves Flatten's saved range.
+Load's named signed Flatten result fixes the sole cmpw operand-order residue
+on its second material approach. Preserve signed asset slot traversal and
+nullable first-animation checks. Main independently verified all owned sections
+100%, actual source linkage and full DOL SHA1. Genuine and aggregate gain2/952B;
+runtime/CI/Ghidra remain unverified. Separate singleton TUs preserve Construct.

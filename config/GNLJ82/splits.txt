@@ -176,10 +176,20 @@ game/clNormal3D.c:
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
 
+game/Normal3DLoad.c:
+	extab       start:0x80005B98 end:0x80005BA0
+	extabindex  start:0x8001F7D8 end:0x8001F7E4
+	.text       start:0x80034508 end:0x800346E4
+
 game/clNormal3D_Construct.c:
 	extab       start:0x80005BA8 end:0x80005BB0
 	extabindex  start:0x8001F7F0 end:0x8001F7FC
 	.text       start:0x80034798 end:0x80034834
+
+game/Normal3DFlatten.c:
+	extab       start:0x80005BB0 end:0x80005BB8
+	extabindex  start:0x8001F7FC end:0x8001F808
+	.text       start:0x80034834 end:0x80034A10
 
 game/Object_ReleaseAnimResource.c:
 	extab       start:0x80005BB8 end:0x80005BC0

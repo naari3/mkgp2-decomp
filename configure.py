@@ -556,6 +556,8 @@ config.libs = [
             Object(Matching, "game/ObjectTree_BlendOrCopy_Timed.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ObjectTree_BlendQuatLerp.c", extab_padding=b""),
             Object(Matching, "game/clNormal3D.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/Normal3DLoad.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Normal3DFlatten.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/SpriteAnimParamBlock.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/VolumeCalibration.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
             Object(Matching, "game/ItemHitRegistry.c"),
