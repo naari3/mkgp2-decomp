@@ -901,12 +901,12 @@
     "extabindex_DVDLoad_WaitIfSamePage": "@eti_80021620"
   },
   "src/game/AnimStatePool.c": {
-    "extab_AnimStatePool_Free": "@etb_8000A488",
-    "extab_AnimStatePool_Alloc": "@etb_8000A490",
-    "extab_AnimStatePool_FreeAll": "@etb_8000A4A8",
-    "extabindex_AnimStatePool_Free": "@eti_80022910",
-    "extabindex_AnimStatePool_Alloc": "@eti_8002291C",
-    "extabindex_AnimStatePool_FreeAll": "@eti_80022928"
+    "@19": "@etb_8000A488",
+    "@42": "@etb_8000A490",
+    "@57": "@etb_8000A4A8",
+    "@20": "@eti_80022910",
+    "@43": "@eti_8002291C",
+    "@58": "@eti_80022928"
   },
   "src/game/RaceContext_Dtor.c": {
     "extab_RaceContext_Dtor": "@etb_800095D8",

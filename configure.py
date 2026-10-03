@@ -348,7 +348,7 @@ config.libs = [
             # the postprocess hook runs.
             Object(Matching, "game/FlowDispatcher_ScopedTimer.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++"]),
             Object(Matching, "game/HeapStats.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/AnimStatePool.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/AnimStatePool.c", extab_padding=b""),
             Object(Matching, "game/RaceContext_Dtor.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/RaceContext_InitDefaults.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/RaceContext_EnsureSingleton.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),

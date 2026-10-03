@@ -1738,3 +1738,13 @@ the base call, and the InitFull return is ignored in favor of implicit this.
 The name does not imply allocation. Main independently verified owned
 text/EH/index100%, actual source linkage and full DOL SHA1. Genuine gain1/104B,
 aggregate gain0. Only observed storage modeled; runtime/CI/Ghidra unverified.
+
+### 19.74 AnimState pool natural allocation closure (2026-10-04)
+
+Free120B, Alloc332B and FreeAll104B are genuine C/C++; existing ZeroInit140B
+is unchanged. Natural new232B with inline initialization emits DELETEPOINTER
+r29 at PC108; pointer-typed comparison fixes Free's unsigned operand order.
+Main independently verified all four symbols/text696B/EH40B/index36B100%,
+actual source linkage and full DOL SHA1. Genuine gain3/556B; measured aggregate
+992/310756 to993/311088 (+1/332B). Historical exact approach ledger unavailable;
+do not infer all prior trials were plain C. Runtime/CI/Ghidra unverified.
