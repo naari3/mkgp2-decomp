@@ -1406,3 +1406,15 @@ shared observed-layout header is unchanged. Main retains samples, lifetime
 and leaf split entries in address order. Actual source linkage, text/EH/index
 100% and full DOL SHA1 verified; gain2/364B, not a fallback. Runtime/CI/Ghidra
 remain unverified.
+
+### 19.47 InputCmd detector inline result joins (2026-10-03)
+
+The1136B detector matches as genuine C with automatic8B EH and12B index.
+Signed int inline helpers assigned to one outer result preserve four r0-to-r3
+joins; direct returns or byte helpers retain mismatches. Config at14 is an
+integer mode bit-pattern, not a pointer to dereference. Mode2 starts at write,
+has no live guard, resets its budget on each phase transition and returns one
+on the default phase. Actual WrapInRange is inclusive one-step wrapping, not
+modulo. Main retained detector/samples/lifetime/leaf splits in address order.
+Object text/EH/index100%, actual source linkage and full DOL SHA1 verified;
+gain1/1136B. Runtime/CI/Ghidra remain unverified.
