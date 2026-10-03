@@ -1748,3 +1748,13 @@ Main independently verified all four symbols/text696B/EH40B/index36B100%,
 actual source linkage and full DOL SHA1. Genuine gain3/556B; measured aggregate
 992/310756 to993/311088 (+1/332B). Historical exact approach ledger unavailable;
 do not infer all prior trials were plain C. Runtime/CI/Ghidra unverified.
+
+### 19.75 KartDriver initializer bounded root identity (2026-10-04)
+
+Complete2008B C++ draft reaches99.98008% with all nine natural DELETEPOINTER
+actions/EH152B/index12B100%. Genuine inline root composition removes an extra
+move, but root r22 instead of r23 remains at800447A4/800447BC. Three material
+approaches exhausted; preserve disabled best draft, no fourth blind permutation.
+Main original fallback text99.760956 reflects two pre-existing literal SDA
+relocation presentation differences; EH/index100%, actual source link and full
+DOL SHA1 exact. Gain0; retry needs new root-web provenance evidence.
