@@ -1,3 +1,108 @@
+/* Bounded genuine C++ retrofit draft: 80.677246%, 756 bytes.
+ * Three material approaches retained the same output. Owned automatic EH
+ * was exact; scale FP homes and tens-digit/reset scheduling remain.
+ * Original assembly below remains the accepted source-linked fallback. */
+#if 0
+/* Observed timer display constructor and local ResCtrl lifetime.
+ * The empty inline destructor has no normal-path work; its weak EH copy
+ * resolves to the existing strong dtor_80082960 at final link. */
+#pragma cplusplus on
+#pragma exceptions on
+typedef unsigned char u8;
+struct ResCtrl {
+    int resourceId;
+    char pad04[0x10-4];
+    u8 visible;
+    char pad11[3];
+    float x, y, z;
+    char pad20[0x2c-0x20];
+    float scaleX, scaleY;
+    char pad34[0x58-0x34];
+    ResCtrl();
+    ~ResCtrl() {}
+};
+extern "C" void *SpriteHandle_CreateDefault(ResCtrl *, int);
+extern "C" void fn_80121E10(ResCtrl *);
+extern const float lbl_806DAD70;
+extern const float lbl_806DAD7C;
+extern const float lbl_806DAE10;
+extern const float lbl_803C3CF0[];
+struct JumpTimer {
+    int state;
+    int value;
+    u8 active;
+    char pad09[3];
+    float elapsed;
+    void *sprites[7];
+    JumpTimer(int);
+};
+JumpTimer::JumpTimer(int input) {
+    state = 0;
+    value = input;
+    active = 0;
+    elapsed = lbl_806DAD7C;
+    ResCtrl desc;
+    desc.resourceId = 0x1b72;
+    desc.visible = 1;
+    desc.x = lbl_803C3CF0[0];
+    desc.y = lbl_803C3CF0[1];
+    desc.z = lbl_806DAD70;
+    sprites[0] = SpriteHandle_CreateDefault(&desc, 4);
+    fn_80121E10(&desc);
+    desc.resourceId = 0x1ecd;
+    desc.visible = 1;
+    desc.x = lbl_803C3CF0[2];
+    desc.y = lbl_803C3CF0[3];
+    desc.z = lbl_806DAD70;
+    sprites[1] = SpriteHandle_CreateDefault(&desc, 4);
+    desc.visible = 1;
+    desc.x = lbl_803C3CF0[4];
+    desc.y = lbl_803C3CF0[5];
+    desc.z = lbl_806DAD70;
+    sprites[2] = SpriteHandle_CreateDefault(&desc, 4);
+    fn_80121E10(&desc);
+    desc.resourceId = 0x1b73;
+    desc.visible = 1;
+    desc.x = lbl_803C3CF0[6];
+    desc.y = lbl_803C3CF0[7];
+    desc.z = lbl_806DAD70;
+    sprites[3] = SpriteHandle_CreateDefault(&desc, 4);
+    int digit = (input / 100) % 10;
+    fn_80121E10(&desc);
+    int id = 0x1ecd;
+    if (digit != 0) id = digit + 0x1b73;
+    desc.resourceId = id;
+    desc.visible = 1;
+    desc.x = lbl_803C3CF0[8];
+    desc.y = lbl_803C3CF0[9];
+    desc.z = lbl_806DAD70;
+    desc.scaleX = lbl_806DAE10;
+    desc.scaleY = lbl_806DAE10;
+    sprites[4] = SpriteHandle_CreateDefault(&desc, 4);
+    digit = (input / 10) % 10;
+    fn_80121E10(&desc);
+    desc.resourceId = digit + 0x1b73;
+    desc.visible = 1;
+    desc.x = lbl_803C3CF0[10];
+    desc.y = lbl_803C3CF0[11];
+    desc.z = lbl_806DAD70;
+    desc.scaleX = lbl_806DAE10;
+    desc.scaleY = lbl_806DAE10;
+    sprites[5] = SpriteHandle_CreateDefault(&desc, 4);
+    fn_80121E10(&desc);
+    desc.resourceId = input % 10 + 0x1b73;
+    desc.visible = 1;
+    desc.x = lbl_803C3CF0[12];
+    desc.y = lbl_803C3CF0[13];
+    desc.z = lbl_806DAD70;
+    desc.scaleX = lbl_806DAE10;
+    desc.scaleY = lbl_806DAE10;
+    sprites[6] = SpriteHandle_CreateDefault(&desc, 4);
+}
+#pragma exceptions reset
+#pragma cplusplus reset
+#endif
+
 /* === extracted from auto_JumpDistanceMode_Ini_text_1 === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */

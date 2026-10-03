@@ -1395,6 +1395,8 @@ Runtime/CI/Ghidra remain unverified.
 
 ### 19.64 DemoWC constructor virtual base-this lifetime (2026-10-04)
 
+### 19.65 Debris Spawn bounded natural lifetime draft (2026-10-04)
+
 Debris Spawn796B complete C++ draft is parked at93.77889% after three
 approaches. Natural298B allocation/15 nontrivial44B particles and Vec3 local
 generate DELETEPOINTER/DESTROYLOCAL, but cleanup pointer r30/r31, FP/GPR
@@ -1403,6 +1405,19 @@ early-publication alternatives regress. Preserve disabled full draft and exact
 original fallback; no matching gain. Main fallback text/EH/index100%, source
 link and full SHA1 independently verified; retry requires new structural
 evidence. Saturate_Double here actually consumes/returns floats.
+
+### 19.66 JumpDistance timer bounded ResCtrl lifetime draft (2026-10-04)
+
+Complete756B C++ draft is parked at80.677246% after three approaches with
+identical output. Empty inline ResCtrl destructor naturally reproduces owned
+24B DESTROYLOCAL; weak duplicate metadata is discarded. Scale/x/y/z FP
+homes differ and signed tens computation sinks after reset rather than
+remaining in r29 across it. Named scalar and inline-helper alternatives do
+not move this output. Preserve full disabled draft and unchanged exact asm;
+main fallback text/EH/index100%, source link and full SHA1 verified. Gain0,
+new scheduling/aggregate evidence required before retry; runtime/CI unverified.
+
+### DemoWC constructor acceptance details
 
 The644B constructor is genuine C++ with automatic196B EH/12B index100%.
 Five natural new expressions and nested root/base construction preserve all
