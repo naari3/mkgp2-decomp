@@ -1,5 +1,18 @@
 # Per-function matching strategy
 
+### 19.118 Matrix4 whole leaf partial acceptance (2026-10-04)
+
+Identity76B and Copy132B are genuine C100% on first approach. Lerp72B best
+complete C remains92.77778 after three approaches; declaration refinement
+is invariant and aggregate/direct-output alternatives regress. Main preserves
+that draft disabled and parks only Lerp as exact asm_fn in the indivisible
+280B EH-free TU. This partial policy supersedes worker's whole NonMatching
+proposal: all three symbols/text100%, actual source linkage, foreground
+exit0 and full DOL SHA1 independently verified. Genuine gain2/208B, ASM1/72B;
+aggregate report+3/280B must not be called genuine C gain. Raw worker HANDOFF
+is archived unchanged with explicit main acceptance override. Retain all
+RotXY/Multiply/leaf split rows during conflicts. Runtime/CI/Ghidra unverified.
+
 ### 19.117 Matrix4 multiply alias-safe bounded accumulation (2026-10-04)
 
 Complete324B C remains NonMatching80.48148 after three structural approaches.
