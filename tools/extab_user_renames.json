@@ -278,12 +278,17 @@
     "extabindex_dtor_801FE870": "@eti_80029480"
   },
   "src/game/dtor_801FEA70.c": {
-    "extab_dtor_801FEAB8": "@etb_80017DF0",
-    "extab_dtor_801FEB48": "@etb_80017E18",
-    "extab_dtor_801FEA70": "@etb_80017E40",
-    "extabindex_dtor_801FEA70": "@eti_800294B0",
-    "extabindex_dtor_801FEAB8": "@eti_800294BC",
-    "extabindex_dtor_801FEB48": "@eti_800294C8"
+    "__dt__16Lifetime801FEA70Fv": "dtor_801FEA70",
+    "__vt__16Lifetime801FEA70": "lbl_804EC1C8",
+    "__dt__14Holder801FEAB8Fv": "dtor_801FEAB8",
+    "__dt__14Holder801FEB48Fv": "dtor_801FEB48",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@7": "@etb_80017E40",
+    "@8": "@eti_800294B0",
+    "@24": "@etb_80017DF0",
+    "@25": "@eti_800294BC",
+    "@41": "@etb_80017E18",
+    "@42": "@eti_800294C8"
   },
   "src/game/HeapStats.c": {
     "extab_dtor_8002F910": "@etb_80005858",

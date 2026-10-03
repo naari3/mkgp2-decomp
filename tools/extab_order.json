@@ -1,4 +1,8 @@
 {
+  "src/game/dtor_801FEA70.c": {
+    "extab": ["dtor_801FEAB8", "dtor_801FEB48", "dtor_801FEA70"],
+    "extabindex": ["dtor_801FEAB8", "dtor_801FEB48", "dtor_801FEA70"]
+  },
   "src/game/ItemObjectManager_Controls.c": [
     "ItemObjectManager_Render",
     "ItemObjectManager_Reset",

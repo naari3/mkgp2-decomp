@@ -711,7 +711,7 @@ config.libs = [
             Object(Matching, "game/TexMgr_Init.c"),
             Object(Matching, "game/dtor_80209180.c"),
             Object(Matching, "game/dtor_801FE870.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/dtor_801FEA70.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/dtor_801FEA70.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GetCourseSectionType.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/InitRumbleController.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/LapDisp_SetTotalLaps.c"),

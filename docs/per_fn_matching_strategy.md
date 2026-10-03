@@ -1563,6 +1563,19 @@ independently verified all five symbols/text788B/EH40B/index36B100%, actual
 source link and full DOL SHA1. Genuine gain1/296B; report gain0. Runtime/CI/
 Ghidra remain unverified.
 
+### 19.61 Owner destructor complete closure (2026-10-04)
+
+The three360B members of dtor_801FEA70 are genuine C++ deleting destructors.
+Two offset-zero nonvirtual owners use typed virtual delete and throw(),
+generating their unexpected islands and40B specification EH naturally.
+The empty72B virtual lifetime restores its external vptr. Required EH order
+AB8,B48,A70 differs from text/index. Declaring both order lists in EH order
+forces the existing helper past its index-only early return without changing
+the helper; final linker canonicalizes index. Main all named owned entries
+and section metrics100%; raw synthetic index aggregate20% is not hidden.
+Actual source link and full DOL SHA1 exact establish final acceptance.
+Genuine gain3/360B, report gain0. Runtime/CI/Ghidra remain unverified.
+
 ### 19.60 ReverseFlag constructor aggregate provenance (2026-10-04)
 
 ReverseFlag368B now matches genuine C++ with natural92B new and automatic
