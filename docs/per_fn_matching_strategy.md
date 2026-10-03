@@ -1824,3 +1824,13 @@ post-call link reloads, signed-short deleting flag and implicit self return.
 Only the TU destructor name is bridged; shared operator delete stays unchanged.
 Main independently verified all owned sections100%, source link, foreground
 exit0 and full DOL SHA1. Genuine/aggregate gain1/188B; runtime/CI unverified.
+
+### 19.82 clRom inline ownership wrappers (2026-10-04)
+
+PurgeAll216B and Release196B match first-approach genuine C++ through natural
+inline nonvirtual destruction and typed delete. Save next before deletion;
+signed references decrement then reload before <=0. Typed delete retains the
+redundant null guard without volatile or hand-expanded instruction sequencing.
+No emitted helper or manual EH; automatic16B EH/24B index are exact. Main
+independently verified all owned sections100%, source link, foreground exit0
+and full DOL SHA1. Genuine/aggregate gain2/412B; runtime/CI unverified.

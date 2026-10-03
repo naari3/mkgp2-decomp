@@ -559,6 +559,7 @@ config.libs = [
             Object(NonMatching, "game/Normal3DScale.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Normal3DLoad.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Normal3DFlatten.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/clRomLifecycle.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
             Object(Matching, "game/SpriteAnimParamBlock.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/VolumeCalibration.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
             Object(Matching, "game/ItemHitRegistry.c"),

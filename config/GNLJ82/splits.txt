@@ -212,6 +212,11 @@ game/clRomDtor.c:
 resource/ResourceLoading.c:
 	.text       start:0x80034D1C end:0x80034D24
 
+game/clRomLifecycle.c:
+	extab       start:0x80005BE0 end:0x80005BF0
+	extabindex  start:0x8001F844 end:0x8001F85C
+	.text       start:0x80034D24 end:0x80034EC0
+
 game/CollisionFile_FixupPointers.c:
 	.text       start:0x80035220 end:0x80035268
 
