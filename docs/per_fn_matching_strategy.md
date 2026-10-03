@@ -1601,6 +1601,12 @@ Observed views only; runtime/CI/Ghidra remain unverified.
 
 ### 19.62 CourseData lookup allocation and inline base lifetime (2026-10-04)
 
+FlowKart display retrofit follow-up: complete disabled560B draft reached
+97.85714% in three material approaches. Natural three Sprite allocations
+already produce exact56B EH/index; threshold indexed addressing and mode/
+loop register webs remain. Original assembly remains source-linked100% and
+main full SHA1 exact. Zero genuine gain; retry needs new structural evidence.
+
 The 124B derived destructor and 160B factory now match genuine C++ with
 natural typed destruction and ignored new12B constructor result. The
 constructor stores the global internally; retaining that behavior preserves

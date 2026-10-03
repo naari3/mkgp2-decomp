@@ -202,4 +202,94 @@ asm void clFlowKart_UpdateDisplay(void) { /* 0x801D7920 size:0x230 */
     blr
 }
 
+#if 0
+/* Complete genuine C++ draft; best probe 97.857142857%, automatic EH/index 100%.
+ * Three bounded approaches exhausted. Active original asm remains exact fallback.
+ * Residual: threshold addressing and local-web register assignments.
+ */
+/* Observed FlowKart display layout and external Sprite ownership. */
+extern int GetCoinMilage(void *);
+extern unsigned char IsCardValid(void);
+extern void *Sprite_Destroy(void *, short);
+extern unsigned char Sprite_SetAnimParam(void *, short, short);
+extern unsigned char g_playerData[];
+extern unsigned char lbl_8039E508[];
+extern signed char lbl_8049BB30[3][13][3];
+extern const float lbl_806DA120, lbl_806DA124, lbl_806DA128, lbl_806DA12C;
 
+#pragma cplusplus on
+#pragma exceptions on
+class FlowKartSprite {
+    unsigned char storage[0x30];
+public:
+    FlowKartSprite(int id, int flag, float x, float y);
+};
+struct FlowKartDisplay {
+    void *vtable;
+    int state;
+    unsigned char unknown08[0x6c];
+    FlowKartSprite *first, *second, *third;
+};
+struct DisplayWords { int word[5]; };
+struct DisplayPoolView {
+    unsigned char unknown000[0x3fc];
+    int firstThreshold[13];
+    int secondThreshold[13];
+    unsigned char unknown464[0x4c];
+    DisplayWords animations;
+};
+extern "C" void clFlowKart_UpdateDisplay(FlowKartDisplay *self, int kart)
+{
+    const DisplayPoolView *pool = (const DisplayPoolView *)lbl_8039E508;
+    int *cursor0;
+    int mode = 0;
+    int index0;
+    signed char *limits;
+    int *base;
+    int *cursor1;
+    signed char *limit1;
+    int index1;
+    signed char *limit2;
+    if (self->state >= 1) {
+        if (GetCoinMilage(g_playerData) >= pool->firstThreshold[kart])
+            mode = 1;
+        if (GetCoinMilage(g_playerData) >= pool->secondThreshold[kart])
+            mode = 2;
+        if (!IsCardValid())
+            mode = 1;
+    }
+    Sprite_Destroy(self->first, 1);
+    Sprite_Destroy(self->second, 1);
+    Sprite_Destroy(self->third, 1);
+    self->first = new FlowKartSprite(0x16b, 1, lbl_806DA120, lbl_806DA124);
+    self->second = new FlowKartSprite(0x16b, 1, lbl_806DA120, lbl_806DA128);
+    self->third = new FlowKartSprite(0x16b, 1, lbl_806DA120, lbl_806DA12C);
+
+    DisplayWords words = pool->animations;
+    limits = lbl_8049BB30[mode][kart];
+    base = words.word;
+    cursor0 = base;
+    index0 = 0;
+    while (index0 < 5 - limits[0]) {
+        Sprite_SetAnimParam(self->first, (short)*cursor0, -1);
+        ++cursor0;
+        ++index0;
+    }
+    cursor1 = base;
+    limit1 = limits + 1;
+    index1 = 0;
+    while (index1 < 5 - *limit1) {
+        Sprite_SetAnimParam(self->second, (short)*cursor1, -1);
+        ++cursor1;
+        ++index1;
+    }
+    limit2 = limits + 2;
+    index1 = 0;
+    while (index1 < 5 - *limit2) {
+        Sprite_SetAnimParam(self->third, (short)*base, -1);
+        ++base;
+        ++index1;
+    }
+}
+#pragma cplusplus off
+#endif
