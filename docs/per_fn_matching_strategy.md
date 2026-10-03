@@ -1176,3 +1176,13 @@ and shares the target r0 constant join. First approach matches all 880 bytes.
 The existing 128-byte initializer is unchanged; both functions, automatic EH
 and actual source link are exact, with full-DOL SHA-1 verified. This adds one
 function and 880 real-C bytes, resolving the prior 99.47727% disabled draft.
+
+### 19.27 Cleaning inline-composition retry (2026-10-03)
+
+The same new inline-return evidence resolves the 540-byte cleaning body on
+the first approach. Its restart helper deliberately omits the standalone
+active-cleaning guard. Consuming return one at forcing-pending sites removes
+dead command-result stores and emits the exact r4 completion join. The 204-byte
+initializer is unchanged; both functions and automatic EH are 100%, actual C
+is linked, and full-DOL SHA-1 is exact. Gain is one function and 540 real-C
+bytes, not the already-matched initializer or assembly scaffolding.
