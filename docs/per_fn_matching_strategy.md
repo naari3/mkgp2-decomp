@@ -1430,6 +1430,17 @@ this is not a global impossibility claim. Automatic EH75%/index91.66667%
 are not acceptance. Original fallback linked; genuine/aggregate gain0.
 Runtime/CI/Ghidra unverified; retry needs new spill/web provenance evidence.
 
+### 19.92 RaceContext driver and ranking whole leaf closure (2026-10-04)
+
+Both members of the indivisible344B blob match genuine C on their first
+approach. AllocDriver consumes six incoming arguments r3..r8; r9 is scanner
+scratch, not a seventh argument. Initializer-only inline composition retains
+the normalized alive test and all observedBC-stride field stores. An ordinary
+128-iteration reset loop naturally emits the target four-slot unroll.
+Main independently verified both symbols/text100%, absent EH/index, actual
+source link, foreground exit0 and exact full DOL SHA1; gain2/344B.
+Only observed layout is claimed; runtime/CI/Ghidra remain unverified.
+
 ### 19.91 KartCharacter whole leaf table closure (2026-10-04)
 
 Six functions748B and five thirteen-entry jump tables260B match genuine C

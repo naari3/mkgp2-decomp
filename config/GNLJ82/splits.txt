@@ -1561,6 +1561,9 @@ game/RaceContextSlot.c:
 	extabindex  start:0x8002234C end:0x80022358
 	.text       start:0x800A4A30 end:0x800A4B7C
 
+game/RaceContextSlotDriver.c:
+	.text       start:0x800A4B7C end:0x800A4CD4
+
 game/TitleTracker_Stubs.c:
 	.text       start:0x800A5CE4 end:0x800A5CEC
 
