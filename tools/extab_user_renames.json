@@ -1381,8 +1381,10 @@
     "extabindex_KartDriver_GetJointPosition": "@eti_8001FE68"
   },
   "src/game/KartDriver_New_Full.c": {
-    "extab_KartDriver_New_Full": "@etb_80006688",
-    "extabindex_KartDriver_New_Full": "@eti_8001FFA0"
+    "__ct__15KartFullDisplayFv": "DisplayStruct_Init",
+    "__ct__14KartFullDriverFiiPfiii": "KartDriver_New_Full",
+    "@5": "@etb_80006688",
+    "@6": "@eti_8001FFA0"
   },
   "src/game/KartDriver_Init.c": {
     "extab_KartDriver_Init": "@etb_80006448",

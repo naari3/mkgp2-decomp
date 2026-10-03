@@ -1729,3 +1729,12 @@ best full draft and original assembly without false promotion. Main fallback
 raw text99.354836 reflects five literal SDA presentation differences, EH/index
 100%, actual source link/full DOL SHA1 exact. Gain0; new coupled-induction or
 argument-provenance evidence required. Runtime/CI/Ghidra unverified.
+
+### 19.73 KartDriver full forwarding constructor (2026-10-04)
+
+The104B constructor matches genuine C++ on its first approach. A trivial
+base lifetime emits plain8B automatic EH; six incoming arguments survive
+the base call, and the InitFull return is ignored in favor of implicit this.
+The name does not imply allocation. Main independently verified owned
+text/EH/index100%, actual source linkage and full DOL SHA1. Genuine gain1/104B,
+aggregate gain0. Only observed storage modeled; runtime/CI/Ghidra unverified.
