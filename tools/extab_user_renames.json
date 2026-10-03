@@ -1432,6 +1432,10 @@
     "__dla__FPv": "MemoryManager_Free",
     "__construct_new_array": "fn_80270F20"
   },
+  "src/game/JvsInputLifetime.cpp": {
+    "__dt__16JvsInputLifetimeFv": "JvsInput_DtorAndFree",
+    "__vt__16JvsInputLifetime": "lbl_803F5788"
+  },
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

@@ -1450,3 +1450,14 @@ retained reset/poll/clear ranges and both Object entries in insertion conflicts.
 Main EH87.5/index91.66667, original-object linkage and full fallback SHA1
 verified; zero matched gain. Retry needs concrete alias/base-web evidence,
 not more declaration permutations. Runtime/CI/Ghidra remain unverified.
+
+### 19.51 JvsInput natural deleting lifetime (2026-10-03)
+
+The72B destructor matches on the first genuine C++ approach, with automatic
+8B EH and12B index100%. An undefined preceding key virtual leaves the target
+vtable external; the empty virtual destructor naturally emits self preservation,
+vptr restoration, signed-short deleting flag and self return. No throw()
+specification is needed for this plain EH record. Scoped mangled bridges bind
+the existing vtable and deleting destructor, using the shared operator-delete
+bridge. Main independently verified source linkage, all payloads100% and full
+DOL SHA1; gain1/72B. Runtime/CI/Ghidra remain unverified.
