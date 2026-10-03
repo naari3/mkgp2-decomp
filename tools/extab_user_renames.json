@@ -590,6 +590,12 @@
     "extabindex_TransparentDraw_SortAndDispatch": "@eti_80020F9C"
   },
   "src/game/clMiyoshiCardCreate.c": {
+    "__ct__11MiyoshiBaseFv": "GameMode_BaseInit",
+    "__dt__11MiyoshiBaseFv": "dtor_8002CDF4",
+    "__dt__11MiyoshiModeFv": "clMiyoshiCardCreate_Dtor",
+    "__vt__11MiyoshiMode": "lbl_803F9EEC",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
     "extab_clMiyoshiCardCreate_Draw": "@etb_80007E10",
     "extabindex_clMiyoshiCardCreate_Draw": "@eti_80020DBC",
     "extab_clMiyoshiCardCreate_Tick": "@etb_80007E38",

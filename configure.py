@@ -534,7 +534,7 @@ config.libs = [
             Object(Matching, "game/CarrotItemEffect_Render.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CarrotItemEffect_AddDraw.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/TwinSpriteOverlay.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/clMiyoshiCardCreate.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/clMiyoshiCardCreate.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/BiribiriLand.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardSave_Tick.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardSave_Tick_PollCleaningResult.c", extab_padding=b"\x00\x00"),

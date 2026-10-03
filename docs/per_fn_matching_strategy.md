@@ -1601,6 +1601,15 @@ Observed views only; runtime/CI/Ghidra remain unverified.
 
 ### 19.62 CourseData lookup allocation and inline base lifetime (2026-10-04)
 
+MiyoshiCard factory148B and destructor144B now use genuine C++ lifetime,
+natural DELETEPOINTER/DESTROYBASE and ordinary deleting destructor without
+throw(). Preserve the NULL-only context destruction guard. Main genuine
+members/EH/index100%, actual source link and full DOL SHA1 exact. Draw's
+unchanged assembly scores98.26923% from six literal SDA relocation operands;
+do not claim raw TU text100%. Draw84.63%/Tick97.87% complete disabled drafts
+remain parked; Tick's generated44B jump table is outside immutable ownership.
+Genuine gain2/292B, aggregate gain0; runtime/CI/Ghidra unverified.
+
 FlowKart display retrofit follow-up: complete disabled560B draft reached
 97.85714% in three material approaches. Natural three Sprite allocations
 already produce exact56B EH/index; threshold indexed addressing and mode/

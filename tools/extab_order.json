@@ -214,6 +214,12 @@
       "GabyouTripleChild_Update"
     ]
   },
+  "src/game/clMiyoshiCardCreate.c": [
+    "clMiyoshiCardCreate_Draw",
+    "clMiyoshiCardCreate_Tick",
+    "clMiyoshiCardCreate_Dtor",
+    "clMiyoshiCardCreate_Ctor"
+  ],
   "src/game/ShellItem.c": [
     "ShellItem_TickReboundOrCarry",
     "ShellItem_TickHitResolve",

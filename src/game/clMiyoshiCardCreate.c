@@ -1,3 +1,94 @@
+/* Only observed lifetime/layout: 4B mode, 44B state, 216B display context. */
+#pragma cplusplus on
+void *operator new(unsigned long);
+void operator delete(void *);
+struct MiyoshiState;
+struct MiyoshiDisplay;
+extern "C" {
+extern MiyoshiState *lbl_806D10D8;
+extern MiyoshiDisplay *lbl_806D1880;
+void MemoryManager_TimedFree(void *);
+void *fn_801DB68C(void *, short);
+}
+struct MiyoshiState {
+    int status, selection, counter, character, cc0, cc1, cc2;
+    unsigned char flag0, flag1, flag2, reserved1f;
+    int kart, points;
+    unsigned char flag3;
+    MiyoshiState() {
+        character = 0; cc0 = 0; cc1 = 0; cc2 = 0;
+        flag0 = 0; flag1 = 0; flag2 = 0;
+        kart = 0; points = 0; selection = 0; flag3 = 0;
+        status = 0; counter = 0;
+    }
+};
+struct MiyoshiBase {
+    MiyoshiBase();
+    virtual void key();
+    virtual ~MiyoshiBase();
+};
+struct MiyoshiMode : MiyoshiBase {
+    virtual void key();
+    MiyoshiMode() { lbl_806D10D8 = new MiyoshiState; }
+    ~MiyoshiMode();
+};
+#if 0
+/* Draw complete draft: 3 approaches exhausted; 84.63% best, no gain claimed. */
+extern "C" {
+void DrawText(void *, int, int, int, float, const char *, ...);
+void DisplayContext_Flush(void *);
+extern const char lbl_802EE028[];
+extern const char *const lbl_806CEEC0[2];
+extern const char *const lbl_806CEEC8[2];
+extern const char *const lbl_806CEED0[2];
+extern const char *const lbl_806CEED8[2];
+extern const float lbl_806D2B58;
+extern const char lbl_806D2B5C[8];
+extern const char lbl_806D2B64[4];
+}
+struct MiyoshiDisplay {
+    char observedStorage[216];
+    MiyoshiDisplay();
+};
+struct MiyoshiTables {
+    const char *cc0[3], *cc1[3], *cc2[3], *characters[13], *karts[17];
+};
+extern "C" const MiyoshiTables lbl_803F9E18[];
+static inline MiyoshiDisplay *Miyoshi_GetContext() {
+    if (lbl_806D1880 == 0) lbl_806D1880 = new MiyoshiDisplay;
+    return lbl_806D1880;
+}
+extern "C" void clMiyoshiCardCreate_Draw(void *) {
+    const MiyoshiTables *table = lbl_803F9E18;
+    const char *strings = lbl_802EE028;
+    MiyoshiState *state;
+    MiyoshiDisplay *context;
+    context = Miyoshi_GetContext();
+    state = lbl_806D10D8;
+    DrawText(context,14,24,7,lbl_806D2B58,strings+0x220);
+    DrawText(context,28,72,7,lbl_806D2B58,strings+0x22c,((const char *const *)((const char *)table+0x24))[state->character]);
+    DrawText(context,28,96,7,lbl_806D2B58,strings+0x240,((const char *const *)((const char *)table+0x0))[state->cc0]);
+    DrawText(context,28,120,7,lbl_806D2B58,strings+0x254,((const char *const *)((const char *)table+0xc))[state->cc1]);
+    DrawText(context,28,144,7,lbl_806D2B58,strings+0x268,((const char *const *)((const char *)table+0x18))[state->cc2]);
+    DrawText(context,28,168,7,lbl_806D2B58,strings+0x27c,lbl_806CEEC0[state->flag0!=0]);
+    DrawText(context,28,192,7,lbl_806D2B58,strings+0x290,lbl_806CEEC8[state->flag1!=0]);
+    DrawText(context,28,216,7,lbl_806D2B58,strings+0x2a4,lbl_806CEED0[state->flag2!=0]);
+    DrawText(context,28,240,7,lbl_806D2B58,strings+0x2b8,((const char *const *)((const char *)table+0x58))[state->kart]);
+    int points;
+    if (state->points<=0) points=0; else points=state->points*100-1;
+    DrawText(context,28,264,7,lbl_806D2B58,strings+0x2cc,points);
+    DrawText(context,28,288,7,lbl_806D2B58,strings+0x2e0,lbl_806CEED8[state->flag3!=0]);
+    DrawText(context,28,312,7,lbl_806D2B58,lbl_806D2B5C);
+    int y;
+    if(state->selection==10) y=312; else y=(state->selection+3)*24;
+    state->counter &= 31;
+    if (state->counter<24) DrawText(context,14,y,7,lbl_806D2B58,lbl_806D2B64);
+    DisplayContext_Flush(Miyoshi_GetContext());
+}
+#pragma cplusplus off
+
+#endif
+#pragma cplusplus off
 /* === extracted from auto_clMiyoshiCardCreate_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -11,8 +102,6 @@ extern void DisplayContext_Init();
 extern void DrawText();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D10D8;
-extern unsigned int lbl_806D1880;
 extern unsigned int lbl_806D2B58;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
@@ -29,7 +118,6 @@ extern unsigned int lbl_803F9E18[];
 asm void clMiyoshiCardCreate_Draw(void);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void MemoryManager_TimedFree();
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -265,6 +353,71 @@ asm void clMiyoshiCardCreate_Draw(void) { /* 0x80061054 size:0x340 */
 
 
 
+
+#pragma cplusplus on
+#if 0
+/* Tick complete draft: 97.87%; generated jump-table data is outside this TU. */
+/* Virtual slot +0x20 is InputObj_IsPressed (r3 self, r4 mask, normalized byte). */
+struct MiyoshiInput {
+    virtual void destroy(short);
+    virtual void update();
+    virtual float steering();
+    virtual float defaultFloat();
+    virtual float accelerator();
+    virtual float brake();
+    virtual unsigned char isPressed(unsigned int);
+};
+extern "C" {
+void *GetInputManager();
+MiyoshiInput *InputMgr_GetPlayer(void *, unsigned int);
+int WrapInRange(int, int, int);
+void PlayerData_Construct(void *,int,int,int,int,unsigned char,unsigned char,unsigned char,int,int,unsigned char);
+unsigned char card_save_trigger(unsigned char);
+unsigned char card_rw_state_machine();
+unsigned char CardSave_Tick();
+void card_rw_kick_state_machine();
+extern unsigned int g_playerData[];
+extern int lbl_803F9E70[];
+}
+extern "C" int clMiyoshiCardCreate_Tick(void *) {
+    MiyoshiInput *input=InputMgr_GetPlayer(GetInputManager(),0);
+    unsigned char confirm=input->isPressed(1);
+    unsigned char next=input->isPressed(128);
+    MiyoshiState *state=lbl_806D10D8;
+    if(state->status==0) {
+        if(next==1) state->selection=WrapInRange(state->selection+1,0,10);
+        else if(confirm==1) {
+            switch(state->selection) {
+            case 0: state->character=WrapInRange(state->character+1,0,12); break;
+            case 1: state->cc0=WrapInRange(state->cc0+1,0,2); break;
+            case 2: state->cc1=WrapInRange(state->cc1+1,0,2); break;
+            case 3: state->cc2=WrapInRange(state->cc2+1,0,2); break;
+            case 4: state->flag0=state->flag0!=1; break;
+            case 5: state->flag1=state->flag1!=1; break;
+            case 6: state->flag2=state->flag2!=1; break;
+            case 7: state->kart=WrapInRange(state->kart+1,0,16); break;
+            case 8: state->points=WrapInRange(state->points+1,0,40); break;
+            case 9: state->flag3=state->flag3!=1; break;
+            case 10:
+                int points;
+                if(state->points<=0) points=0; else points=state->points*100-1;
+                PlayerData_Construct(g_playerData,state->character,state->cc0,state->cc1,state->cc2,
+                    state->flag0,state->flag1,state->flag2,lbl_803F9E70[state->kart],points,state->flag3);
+                card_save_trigger(0); state->status=1; break;
+            }
+        }
+    } else if(state->status==1) {
+        if(CardSave_Tick()==1) { state->status=2; card_rw_kick_state_machine(); }
+    } else if(state->status==2) {
+        if(card_rw_state_machine()==1) state->status=3;
+    }
+    ++state->counter;
+    int result;
+    if(state->status==3) result=-4; else result=-2;
+    return result;
+}
+#endif
+#pragma cplusplus off
 /* === extracted from auto_clMiyoshiCardCreate_text_1 === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -282,7 +435,6 @@ extern void card_rw_state_machine();
 extern void card_save_trigger();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D10D8;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -506,171 +658,18 @@ asm void clMiyoshiCardCreate_Tick(void) { /* 0x80061394 size:0x2D4 */
 
 
 
-/* === extracted from auto_clMiyoshiCardCreate_text_2 === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void MemoryManager_TimedFree();
-extern void dtor_8002CDF4();
-extern void fn_801DB68C();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D10D8;
-extern unsigned int lbl_806D1880;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_803F9EEC[];
-
-/* --- function index (1 fns, .text 0x80061668..0x800616F8) ---
- * [  0] 0x80061668 size:0x90    global clMiyoshiCardCreate_Dtor
- */
-
-/* --- forward decls --- */
-asm void clMiyoshiCardCreate_Dtor(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_clMiyoshiCardCreate_Dtor[8] = {
-    0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clMiyoshiCardCreate_Dtor = {
-    (void *)&clMiyoshiCardCreate_Dtor, 0x00000090, (void *)extab_clMiyoshiCardCreate_Dtor
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void clMiyoshiCardCreate_Dtor(void) { /* 0x80061668 size:0x90 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r4
-    stw r30, 0x8(r1)
-    mr. r30, r3
-    beq clMiyoshiCardCreate_Dtor_L_800616DC
-    lis r3, lbl_803F9EEC@ha
-    addi r0, r3, lbl_803F9EEC@l
-    stw r0, 0x0(r30)
-    lwz r3, lbl_806D10D8(r13)
-    bl MemoryManager_TimedFree
-    lwz r3, lbl_806D1880(r13)
-    li r0, 0x0
-    stw r0, lbl_806D10D8(r13)
-    cmplwi r3, 0x0
-    bne clMiyoshiCardCreate_Dtor_L_800616C0
-    li r4, 0x1
-    bl fn_801DB68C
-    li r0, 0x0
-    stw r0, lbl_806D1880(r13)
-    clMiyoshiCardCreate_Dtor_L_800616C0:
-    mr r3, r30
-    li r4, 0x0
-    bl dtor_8002CDF4
-    extsh. r0, r31
-    ble clMiyoshiCardCreate_Dtor_L_800616DC
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    clMiyoshiCardCreate_Dtor_L_800616DC:
-    lwz r0, 0x14(r1)
-    mr r3, r30
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma cplusplus on
+MiyoshiMode::~MiyoshiMode() {
+    MemoryManager_TimedFree((void *)lbl_806D10D8);
+    lbl_806D10D8 = 0;
+    /* Counterintuitive but authoritative: call when the pointer is NULL. */
+    if (lbl_806D1880 == 0) {
+        fn_801DB68C((void *)lbl_806D1880, 1);
+        lbl_806D1880 = 0;
+    }
 }
-
-
-
-/* === extracted from auto_clMiyoshiCardCreate_text_3 === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void Alloc();
-extern void GameMode_BaseInit();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D10D8;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_803F9EEC[];
-
-/* --- function index (1 fns, .text 0x800616F8..0x8006178C) ---
- * [  0] 0x800616F8 size:0x94    global clMiyoshiCardCreate_Ctor
- */
-
-/* --- forward decls --- */
-asm void clMiyoshiCardCreate_Ctor(void);
-
-/* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void MemoryManager_TimedFree();
-extern void dtor_8002CDF4();
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; void *f8; unsigned int f9; void *f10; } extab_clMiyoshiCardCreate_Ctor = { 0x08080000, 0x00000024, 0x00000024, 0x00000038, 0x00000018, 0x00000000, 0x0680001F, 0x00000000, (void *)&dtor_8002CDF4, 0x8A80001F, (void *)&MemoryManager_TimedFree };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clMiyoshiCardCreate_Ctor = {
-    (void *)&clMiyoshiCardCreate_Ctor, 0x00000094, (void *)&extab_clMiyoshiCardCreate_Ctor
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void clMiyoshiCardCreate_Ctor(void) { /* 0x800616F8 size:0x94 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    li r3, 0x4
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    bl Alloc
-    mr. r31, r3
-    beq clMiyoshiCardCreate_Ctor_L_80061774
-    bl GameMode_BaseInit
-    lis r4, lbl_803F9EEC@ha
-    li r3, 0x2c
-    addi r0, r4, lbl_803F9EEC@l
-    stw r0, 0x0(r31)
-    bl Alloc
-    cmplwi r3, 0x0
-    beq clMiyoshiCardCreate_Ctor_L_80061770
-    li r0, 0x0
-    stw r0, 0xc(r3)
-    stw r0, 0x10(r3)
-    stw r0, 0x14(r3)
-    stw r0, 0x18(r3)
-    stb r0, 0x1c(r3)
-    stb r0, 0x1d(r3)
-    stb r0, 0x1e(r3)
-    stw r0, 0x20(r3)
-    stw r0, 0x24(r3)
-    stw r0, 0x4(r3)
-    stb r0, 0x28(r3)
-    stw r0, 0x0(r3)
-    stw r0, 0x8(r3)
-    clMiyoshiCardCreate_Ctor_L_80061770:
-    stw r3, lbl_806D10D8(r13)
-    clMiyoshiCardCreate_Ctor_L_80061774:
-    lwz r0, 0x14(r1)
-    mr r3, r31
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
-}
+extern "C" MiyoshiMode *clMiyoshiCardCreate_Ctor() { return new MiyoshiMode; }
+#pragma cplusplus off
 
 
