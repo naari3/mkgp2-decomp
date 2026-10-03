@@ -1272,6 +1272,11 @@ game/CardTaskPrintJob_IsSuccess.c:
 game/CardTaskPrintJob_InitStateVector.c:
 	.text       start:0x8008F5A4 end:0x8008F5D4
 
+game/CardUnpackV1.c:
+	extab       start:0x80009378 end:0x80009380
+	extabindex  start:0x80021E90 end:0x80021E9C
+	.text       start:0x80090174 end:0x800903D8
+
 game/GetKartParamBlock.c:
 	.text       start:0x80090FF0 end:0x8009107C
 

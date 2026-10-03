@@ -1245,3 +1245,15 @@ scale/blend instructions retain different FP identities. Park this observed
 identity residue rather than burn declaration permutations; no matched gain.
 All matrix/vector ABI evidence and independent main source diff are archived.
 Exact full-DOL SHA-1 uses the original fallback, not the compiled C draft.
+
+### 19.33 Card v1 unpack zero-web residue (2026-10-03)
+
+Complete C is retained NonMatching at98.98693%,608B vs612B target, after three
+approaches. First-loop index-before-cursor initialization reproduces its dual
+induction setup. Actual bitpack reader has four arguments and can leave its
+output untouched; preserve only target initializations, not guessed clearing.
+Remaining normalization at800902F8..8009031C merges the output-zero and loop
+index-zero webs, losing one instruction and changing scratch registers. A
+genuine static inline nonzero helper did not change this. No fourth attempt.
+Main independently confirmed EH100%, index91.66667%, source-only linkage and
+exact original-fallback DOL SHA-1. No matched gain; runtime/CI unverified.
