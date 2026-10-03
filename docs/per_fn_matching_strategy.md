@@ -1377,3 +1377,18 @@ instructions. The8B SDA global is represented at full width, using only word0;
 its semantic config type is not yet established by these accessors alone.
 Main source text100%, no EH/index, actual link and full DOL SHA1 verified.
 Gain5/44B; runtime/CI/Ghidra remain unverified.
+
+### 19.45 InputCmd natural array ownership (2026-10-03)
+
+The96B destructor and172B constructor match as genuine C++ on the first
+approach. A20B sample with external nontrivial ctor and trivial dtor emits
+new[] construction and delete[] cookie-minus16 naturally. The deleting-owner
+flag is signed short; no manual EH or assembly is needed. Natural new[] emits
+DELETEPOINTERCOND with r29 pointer/r28 flag and PC48..6C; its target junk
+padding is C602, not the C702 of other families. TU-local mangled bridges
+bind the external sample constructor, allocator, array helper and free calls.
+Main resolved independent split insertion by retaining lifetime then leaf
+in address order. Main text/EH/index100%, source link and full DOL SHA1 exact;
+gain2/268B. Worker baseline child-Python alias failure was resolved by a
+process-local venv Scripts PATH; final actual build exit0, no repo changes.
+Runtime/CI/Ghidra remain unverified.
