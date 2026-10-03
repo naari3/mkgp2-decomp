@@ -1392,3 +1392,17 @@ in address order. Main text/EH/index100%, source link and full DOL SHA1 exact;
 gain2/268B. Worker baseline child-Python alias failure was resolved by a
 process-local venv Scripts PATH; final actual build exit0, no repo changes.
 Runtime/CI/Ghidra remain unverified.
+
+### 19.46 InputCmd sample clear inline composition (2026-10-03)
+
+Tick/clear216B and PushSample148B match as genuine C with automatic EH.
+The sdata2 zero must be declared const: mutable zero introduces alias reloads
+around stores. Direct duplicated reverse loops retain two extra counter-copy
+instructions; a genuine static inline clear helper removes them at both call
+sites on the third approach. Push matches on its first approach. Sample stride
+is20B, with xyz/code/live at0/4/8/C/10; signed WrapInRange consumes value/low/high
+and detector returns signed int without hidden r4/r5 inputs. The immutable
+shared observed-layout header is unchanged. Main retains samples, lifetime
+and leaf split entries in address order. Actual source linkage, text/EH/index
+100% and full DOL SHA1 verified; gain2/364B, not a fallback. Runtime/CI/Ghidra
+remain unverified.
