@@ -1427,3 +1427,14 @@ relocations and sizeof supplies the exact memset length. Actual memset and
 fill_mem consume destination/fill/unsigned length; return values are ignored.
 Main independently verified text/EH/index100%, actual source linkage and full
 DOL SHA1. Gain1/68B; runtime/CI/Ghidra remain unverified.
+
+### 19.49 JvsInput reset bounded pool-base residue (2026-10-03)
+
+Complete156B reset draft is NonMatching56.974358%, source164B, after three
+material approaches. Target retains the message-pool base in r31 across three
+variadic logs; direct C, size-informed extern and genuine inline composition
+all rematerialize it per call. No fourth blind permutation. Six calibration
+stores and actual variadic DebugPrintf ABI are retained. Main preserved reset
+then clear split ranges when resolving independent insertion conflict. Main
+EH87.5/index91.66667 and original-fallback full SHA1 verified; zero matched
+gain. Retry requires new cross-call pool-base evidence, runtime/CI unverified.

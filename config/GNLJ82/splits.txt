@@ -270,6 +270,11 @@ game/JvsInput_TickPoll.c:
 game/InputMgr_TeardownStub.c:
 	.text       start:0x800396E0 end:0x800396E4
 
+game/JvsInputReset.c:
+	extab       start:0x80005E60 end:0x80005E68
+	extabindex  start:0x8001FACC end:0x8001FAD8
+	.text       start:0x800396E4 end:0x80039780
+
 game/JvsInputClear.c:
 	extab       start:0x80005E70 end:0x80005E78
 	extabindex  start:0x8001FAE4 end:0x8001FAF0
