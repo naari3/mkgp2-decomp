@@ -1281,3 +1281,14 @@ DELETEPOINTER actions. Independent ascending-offset zero statements fix the
 only first-approach store reversal. TU-scoped mangled bridges preserve external
 strong dtors. Main source link/text/EH/index100% and fullSHA1 verified; gain
 one function/600B. Observed-layout types only, runtime/CI/Ghidra unverified.
+
+### 19.36 Card legacy natural EH and bounded move residue (2026-10-03)
+
+Complete real C++ draft is NonMatching99.05595%,576B vs572B, three approaches.
+Two genuine new/inline constructors generate exact automatic40B DELETEPOINTER
+EH with actionsC0/13C. Signed32 field>=1 naturally emits the target signed
+comparison tail; an explicit signed64 cast unnecessarily adds instructions.
+Preserve both raw copies, overwritten scratch and original overflow-before-free
+path. Remaining version/used r26/r27 identities and extra r0 forwarding move
+need new evidence, not declaration permutations. Main EH100%, index91.66667%,
+source-only linkage and fallback SHA1 verified. Zero matched gain.
