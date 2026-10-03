@@ -1814,3 +1814,13 @@ actual recompilation; independent main source-object link, foreground exit0
 and full DOL SHA1 verified. Genuine/aggregate gain+1/+156B. This joint lever
 does not isolate ctor versus const scheduling effects; no shared type claims.
 Old six plain-C permutations were not repeated. Runtime/CI unverified.
+
+### 19.81 clRom nonvirtual deleting destructor (2026-10-04)
+
+Observed intrusive list-owner destructor matches188B genuine C++ on its first
+approach, including automatic8B EH/12B index. No vptr or throw() is invented.
+Natural lifetime retains count decrement, discriminator-selected payload free,
+post-call link reloads, signed-short deleting flag and implicit self return.
+Only the TU destructor name is bridged; shared operator delete stays unchanged.
+Main independently verified all owned sections100%, source link, foreground
+exit0 and full DOL SHA1. Genuine/aggregate gain1/188B; runtime/CI unverified.

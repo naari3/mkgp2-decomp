@@ -665,6 +665,7 @@ config.libs = [
             Object(Matching, "game/SceneFlow.c"),
             Object(Matching, "game/card_eject.c"),
             Object(Matching, "game/SceneRender.c", extab_padding=b""),
+            Object(Matching, "game/clRomDtor.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Archive.c"),
             Object(Matching, "game/CollisionFile_FixupPointers.c"),
             Object(Matching, "game/Collision.c"),
