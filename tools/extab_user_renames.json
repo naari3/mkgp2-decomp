@@ -57,8 +57,17 @@
     "extabindex_clCGameDemoWC_Tick": "@eti_800228BC"
   },
   "src/game/clCGameDemoWC/Ctor.c": {
-    "extab_clCGameDemoWC_Ctor": "@etb_8000A39C",
-    "extabindex_clCGameDemoWC_Ctor": "@eti_800228C8"
+    "__ct__11DemoWCOwnerFv": "clCGameDemoWC_Ctor",
+    "__ct__10DemoWCRootFv": "GameMode_BaseInit",
+    "__dt__10DemoWCBaseFv": "clCGameDemo_Dtor",
+    "__ct__12DemoWCNormalFPCci": "clNormal3D_Construct",
+    "__ct__15DemoWCSceneBaseFPCc": "Scene3D_Init",
+    "__ct__16DemoWCDriverBaseFiiPfiii": "KartDriver_New_Full",
+    "__ct__13DemoWCTornadoFUcP12DemoWCDriveriUcfff": "TornadoEffect_Ctor",
+    "__ct__9DemoWCAuxFv": "fn_801967F0",
+    "__vt__11DemoWCOwner": "lbl_80419ED8",
+    "__vt__10DemoWCBase": "lbl_80419F0C",
+    "__vt__11DemoWCScene": "lbl_80419EF8"
   },
   "src/game/ObjectTree_BlendOrCopy.c": {
     "extab_ObjectTree_BlendOrCopy": "@etb_80005A18",

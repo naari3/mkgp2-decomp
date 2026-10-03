@@ -647,7 +647,7 @@ config.libs = [
             Object(Matching, "game/clCGameDemoWC/Dtor.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clCGameDemoWC/Render.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clCGameDemoWC/Tick.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/clCGameDemoWC/Ctor.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/clCGameDemoWC/Ctor.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clCGameDemo_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/BtMode_BaseDtor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GameMode_Base.c"),

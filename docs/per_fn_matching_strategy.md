@@ -1393,6 +1393,18 @@ gain2/268B. Worker baseline child-Python alias failure was resolved by a
 process-local venv Scripts PATH; final actual build exit0, no repo changes.
 Runtime/CI/Ghidra remain unverified.
 
+### 19.64 DemoWC constructor virtual base-this lifetime (2026-10-04)
+
+The644B constructor is genuine C++ with automatic196B EH/12B index100%.
+Five natural new expressions and nested root/base construction preserve all
+cleanup actions. Declaring the observed virtual root/base destructors restores
+the target redundant base-this copies; this is class semantics, not register
+forcing. An inherited polymorphic Scene root places vptr0, and an inline
+Driver wrapper captures character before the display getter. Three approaches.
+Main independently verified owned text/EH/index100%, actual source linkage
+and full DOL SHA1. Genuine gain1/644B; aggregate report gain0 because prior
+assembly was already counted. Runtime/CI/Ghidra remain unverified.
+
 ### 19.63 FlowItemSelect natural destructor member specification (2026-10-04)
 
 The488B owner destructor is genuine C++ with automatic40B EH/12B index.
