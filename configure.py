@@ -860,6 +860,7 @@ config.libs = [
             Object(NonMatching, "game/PcbSlotReset.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/PcbSlotSync.c"),
             Object(Matching, "game/PCBCommHostConfirm.c"),
+            Object(Matching, "game/PCBCommSnapshot.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CommBroadcast_ClearTable.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardTaskManager_Tick.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/NetDiag_PacketRatioPage.c", extab_padding=b"\x00\x00"),

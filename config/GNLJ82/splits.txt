@@ -1258,6 +1258,11 @@ game/BootPCBCheck_Init.c:
 game/SetPcbScratchFlag_806d11a4.c:
 	.text       start:0x80084E88 end:0x80084E94
 
+game/PCBCommSnapshot.c:
+	extab       start:0x80008D74 end:0x80008D7C
+	extabindex  start:0x8002186C end:0x80021878
+	.text       start:0x80084E94 end:0x80084FF0
+
 game/ResetIOPorts.c:
 	extab       start:0x80008D7C end:0x80008D84
 	extabindex  start:0x80021878 end:0x80021884

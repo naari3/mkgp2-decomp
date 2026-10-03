@@ -1,5 +1,16 @@
 # Per-function matching strategy
 
+### 19.108 PCB snapshot fixed-slot packing (2026-10-04)
+
+Complete348B ordinary C matches with automatic EH/index100%. Preserve signed
+localRole/myId,45B card rows and post-pack reloads; the caller supplies mode1
+although the observed callee does not consume it. Natural four-slot loop unroll
+and observed byte bitfields retain the ready/role/pending tests. Two evidence-led
+plain-local definition refinements resolve short-lived register coloring within
+one material approach/three compiles, not a permutation sweep. Main all payloads
+and symbol100%, actual source edge, foreground exit0 and full DOL SHA1 verified.
+Genuine/aggregate gain1/348B; runtime/CI/full class declarations unverified.
+
 ### 19.107 PCB peer send bounded pointer provenance (2026-10-04)
 
 Complete588B target is retained as600B NonMatching C at79.44218% after two
