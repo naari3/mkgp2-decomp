@@ -1514,3 +1514,16 @@ accumulator initialized from start then compound-added with frameOffset fixes
 the last FP role difference in three approaches. Immutable sdata2 declarations
 avoid alias reloads. Main independently verified source link, all payloads100%
 and full DOL SHA1. Genuine gain1/396B; report gain0. Runtime/CI/Ghidra unverified.
+
+### 19.56 ItemObjectManager controls whole-TU lifetime (2026-10-04)
+
+Render/Reset/Update436B now match as genuine C++, with owned56B EH/36B index.
+Both timed wrappers use the established single-expression ScopedTimer recipe.
+Reset models256 static0x1EC elements with inline destructors; a genuine static
+inline DestroySlots retains the target zero-copy initialization and pointer
+homes. Keep an explicit null guard around typed delete of the manager object.
+Scoped metadata bridges external destructor ABI and automatic EH record names;
+declare owned records first and generated weak timer destructor last with the
+existing order mechanism. Weak duplicate records disappear at final link.
+Main independently verified all owned symbols/payloads100%, actual source link
+and full DOL SHA1. Genuine gain3/436B; report gain0. Runtime/CI/Ghidra unverified.

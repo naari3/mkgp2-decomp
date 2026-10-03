@@ -1,4 +1,10 @@
 {
+  "src/game/ItemObjectManager_Controls.c": [
+    "ItemObjectManager_Render",
+    "ItemObjectManager_Reset",
+    "ItemObjectManager_Update",
+    "__dt__11ScopedTimerFv"
+  ],
   "src/game/auto_ONKARTHIT_block.c": {
     "extab": [
       "CarObject_HandleItemEffect",
