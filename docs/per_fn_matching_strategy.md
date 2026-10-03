@@ -1430,6 +1430,17 @@ this is not a global impossibility claim. Automatic EH75%/index91.66667%
 are not acceptance. Original fallback linked; genuine/aggregate gain0.
 Runtime/CI/Ghidra unverified; retry needs new spill/web provenance evidence.
 
+### 19.90 RaceContext slot inline normalization and initialization (2026-10-04)
+
+GetIfAlive64B, Free116B and AllocItem216B match genuine C. A bit-one test of
+a byte-valued inline alive flag retains the target subfic/addi/or/srwi;
+direct nonzero conditions incorrectly fold the normalization. Inline only
+slot initialization rather than the entire allocator to preserve index r31
+and parameters r27..r30. Keep post-getter type reload, signed128-slot bounds,
+strideBC and Free's invalid-index return. Separate TUs protect intervening
+foreign code. Main text/EH/index100%, actual source link, foreground exit0
+and full DOL SHA1 exact; genuine/aggregate gain3/396B. Runtime/CI unverified.
+
 ### 19.89 Item ground explosion live yaw rounding boundary (2026-10-04)
 
 Complete764B target reconstruction remains NonMatching99.47644% after three

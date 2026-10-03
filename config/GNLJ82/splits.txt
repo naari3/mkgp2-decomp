@@ -1548,10 +1548,18 @@ game/BtMode_RenderFrame.c:
 	extabindex  start:0x80022310 end:0x8002231C
 	.text       start:0x800A28D4 end:0x800A2B90
 
+game/RaceContextSlotGet.c:
+	.text       start:0x800A4578 end:0x800A45B8
+
 game/ItemObjectManager_PerFrameUpdate.c:
 	extab       start:0x80009C5C end:0x80009C64
 	extabindex  start:0x80022340 end:0x8002234C
 	.text       start:0x800A45B8 end:0x800A4A30
+
+game/RaceContextSlot.c:
+	extab       start:0x80009C64 end:0x80009C6C
+	extabindex  start:0x8002234C end:0x80022358
+	.text       start:0x800A4A30 end:0x800A4B7C
 
 game/TitleTracker_Stubs.c:
 	.text       start:0x800A5CE4 end:0x800A5CEC
