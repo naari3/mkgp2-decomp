@@ -1,5 +1,16 @@
 # Per-function matching strategy
 
+### 19.100 PCB link recovery bounded block placement (2026-10-04)
+
+Complete1424B target reconstructed as1416B NonMatching C after three
+structural approaches. Preserve four slots,64 individual sample clears,
+signed timeout and the shipped secondary-present double close of primary.
+Reset block placement, dead duplicate exit and saved webs remain different.
+Main direct function/text score really is0%, EH100/index91.66667; do not
+invent a near-match percentage. Original-object link and full SHA1 with
+foreground exit0 preserve fallback only. Genuine/aggregate code gain0.
+Resume requires new reset-block provenance; runtime/CI unverified.
+
 ### 19.99 TCP receive set-base/index bounded remainder (2026-10-04)
 
 Complete232B matches raw100%, but the adjacent Poll436B stays99.495415%
