@@ -1292,6 +1292,11 @@ game/PcbConn_GetStateName.c:
 	extabindex  start:0x80021920 end:0x8002192C
 	.text       start:0x80086A0C end:0x80086A30
 
+game/TCPConnRecv.c:
+	extab       start:0x80008E44 end:0x80008E54
+	extabindex  start:0x8002192C end:0x80021944
+	.text       start:0x80086A30 end:0x80086CCC
+
 game/TCPConn.c:
 	.text       start:0x80086F54 end:0x8008707C
 

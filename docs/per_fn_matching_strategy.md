@@ -1,5 +1,16 @@
 # Per-function matching strategy
 
+### 19.99 TCP receive set-base/index bounded remainder (2026-10-04)
+
+Complete232B matches raw100%, but the adjacent Poll436B stays99.495415%
+after three structural approaches. Nested inline endian-mask composition
+restores size and automatic EH/index; one model-guided local correction
+does not change seven base/index r27/r30 and AND operand differences.
+Main independently verifies text99.67066/EH/index100%, original-object
+linkage, foreground exit0 and exact full DOL SHA1. Whole TU remains
+NonMatching: source-only report+1/232B is not accepted genuine gain.
+Resume needs new inline set-access provenance, not further permutations.
+
 ### 19.98 TCP close and four-argument initialization (2026-10-04)
 
 Close252B and Init308B match genuine C on their first material approach.
