@@ -434,7 +434,7 @@ config.libs = [
             Object(Matching, "game/CardRW_Renew_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardRW_DataRepair_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/HUD_RegisterOverlay.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/HUD_Init.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/HUD_Init.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/HUD_FrameUpdate.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartDriver_GetJoint13_WorldPos.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartDriver_GetKartRootMtx.c", extab_padding=b"\x00\x00"),

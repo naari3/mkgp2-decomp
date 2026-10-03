@@ -1258,8 +1258,14 @@
     "extabindex_HUD_RegisterOverlay": "@eti_8002B9C4"
   },
   "src/game/HUD_Init.c": {
-    "extab_HUD_Init": "@etb_8001F158",
-    "extabindex_HUD_Init": "@eti_8002BA60"
+    "@17": "@etb_8001F158",
+    "@18": "@eti_8002BA60",
+    "__ct__11HUDInitViewFi": "HUD_Init",
+    "__vt__11HUDListBase": "lbl_804ECAC0",
+    "__vt__7HUDList": "lbl_804ECB44",
+    "__dt__12HUDListOwnerFv": "dtor_8020EB04",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/HUD_FrameUpdate.c": {
     "extab_HUD_FrameUpdate": "@etb_8001F090",

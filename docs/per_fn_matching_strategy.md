@@ -1537,3 +1537,15 @@ const sdata2 preserve accesses; automatic DELETEPOINTER r29 at PC60 emits
 exact24B EH/12B index without manual records. Main independently verified
 all payloads100%, actual source link and full DOL SHA1. Genuine gain1/388B;
 report gain0 because prior assembly was counted. Runtime/CI/Ghidra unverified.
+
+### 19.58 HUD constructor nested ownership (2026-10-04)
+
+HUD_Init276B matches as a genuine constructor on its first approach. Natural
+new16B derived list preserves both base and derived vptr stores; a four-byte
+nontrivial owner with external throw() destructor generates DESTROYMEMBER0.
+Automatic44B EH includes DELETEPOINTER r30 at PC44 and member cleanup r29
+at PC9C..F4. Undefined virtual key functions keep vtables external. Immutable
+999/zero pools and signed cup9..16/mode2 retain target order. TU-only generated
+name bridges replace manual records. Main independently verified text/EH/index
+100%, actual source link and full DOL SHA1. Genuine gain1/276B, report gain0;
+runtime/CI/Ghidra and complete HUD layout remain unverified.
