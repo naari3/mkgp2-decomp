@@ -1430,6 +1430,20 @@ this is not a global impossibility claim. Automatic EH75%/index91.66667%
 are not acceptance. Original fallback linked; genuine/aggregate gain0.
 Runtime/CI/Ghidra unverified; retry needs new spill/web provenance evidence.
 
+### 19.94 PCB slot/sync bounded normalized-return closure (2026-10-04)
+
+Complete six-member336B C remains NonMatching after three material approaches.
+Typed unsigned-byte bitfields restore readiness pointer arithmetic and register
+homes, but the compiler removes the final neg/or/srwi of an already extracted
+0/1 predicate: readiness88.46154%, source92B versus target104B, whole96.42857%.
+Five other source symbols are100%, yet the indivisible TU remains original-
+object linked. Main independently verified those metrics, absent EH/index,
+foreground exit0 and exact fallback DOL SHA1. Accepted genuine gain0;
+aggregate report adds5/232B from source-only matches, not linked C promotion.
+Keep lookup float+8 distinct from own float+4, and flags7/5/4; unknown global
+ownership is external only. Retry needs new normalization-provenance evidence.
+Runtime/CI/Ghidra remain unverified.
+
 ### 19.93 PCB listener accepted-socket whole leaf closure (2026-10-04)
 
 Both members of the indivisible112B blob match first-approach genuine C.
