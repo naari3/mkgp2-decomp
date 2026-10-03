@@ -1419,6 +1419,17 @@ index100%, foreground exit0 and full DOL SHA1 exact; genuine/aggregate gain0.
 Retry needs new semantic pool/accessor/data provenance and complete ABI audit,
 not another register permutation. Runtime/CI/Ghidra unverified.
 
+### 19.87 Item launch complete bounded ground composition (2026-10-04)
+
+Complete1112B C remains NonMatching95.01798%, source1096B. Both origin
+paths, independent stack vectors/heights and inverse/forward matrix tail
+are reconstructed. Genuine inline ground/bend composition regresses94.75%
+without separating distance/derived-length FP webs or recovering original-f1
+yaw spills. Two approaches stop against existing ground-bend evidence;
+this is not a global impossibility claim. Automatic EH75%/index91.66667%
+are not acceptance. Original fallback linked; genuine/aggregate gain0.
+Runtime/CI/Ghidra unverified; retry needs new spill/web provenance evidence.
+
 ### 19.65 Debris Spawn bounded natural lifetime draft (2026-10-04)
 
 Debris Spawn796B complete C++ draft is parked at93.77889% after three
