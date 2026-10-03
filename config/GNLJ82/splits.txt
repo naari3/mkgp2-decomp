@@ -1870,6 +1870,11 @@ game/GabyouItem.c:
 	extabindex  start:0x80023AE0 end:0x80023AEC
 	.text       start:0x800DABBC end:0x800DAE88
 
+game/ItemHitPropagation.c:
+	extab       start:0x8000B3EC end:0x8000B3FC
+	extabindex  start:0x80023AF8 end:0x80023B10
+	.text       start:0x800DAEBC end:0x800DB2B0
+
 game/ItemTrackedHoming.c:
 	extab       start:0x8000B414 end:0x8000B41C
 	extabindex  start:0x80023B34 end:0x80023B40

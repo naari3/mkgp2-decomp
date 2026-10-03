@@ -1209,3 +1209,15 @@ The adjacent updater remains complete NonMatching C at99.41747%,412 bytes,
 after three approaches: initial targetY/lowSpeed FP homes and multiplication
 operand order differ. Separate adjacent singleton TUs preserve the exact yaw
 source link and updater original fallback. Full SHA-1 exact; gain+1/+224B.
+
+### 19.30 Hit propagation classifier bounded pair (2026-10-03)
+
+Complete AllDrivers/Radius C is retained NonMatching at89.942856%/92.86487%.
+Nested inline byte return restores the explicit zero/one full diamond when a
+direct local or macro folds it. Separate radius product/add assignments preserve
+float rounding; matrix/vector stack copies are exact. Three structural approaches
+leave the outer-kind decision tree, scratch webs, effect-bus reload CSE and dead
+duplicate classifier exit branch. Actual dispatch ABI consumes the fourth r6
+driver argument. Both original objects supply the exact DOL: zero matching gain.
+Main resolved independent split insertions by retaining all three non-overlapping
+TUs in address order; no rollback or deletion of the earlier yaw/state ranges.
