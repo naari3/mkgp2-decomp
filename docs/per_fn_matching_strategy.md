@@ -1233,3 +1233,15 @@ four-byte variant strides without an inappropriate small-data relocation.
 Automatic exceptions-on EH/index and actual source linkage were independently
 verified on main, including exact full-DOL SHA-1. Gain+1/+184B; runtime/CI and
 Ghidra verification remain unavailable, with full target/callee asm used instead.
+
+### 19.32 Handheld render independent FP roles (2026-10-03)
+
+Complete812B handheld render C is retained NonMatching at99.729065% after two
+approaches; data104B and automatic EH/index are exact. Separate13-arm switches
+preserve distinct destinations even when values repeat. The two owned tables
+are8041E918..8041E980, distinct from the preceding CharacterRender table.
+Named renderScale repairs later height/scale allocation, but eleven initial
+scale/blend instructions retain different FP identities. Park this observed
+identity residue rather than burn declaration permutations; no matched gain.
+All matrix/vector ABI evidence and independent main source diff are archived.
+Exact full-DOL SHA-1 uses the original fallback, not the compiled C draft.
