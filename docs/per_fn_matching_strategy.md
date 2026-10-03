@@ -1109,3 +1109,16 @@ initializer. Remaining output is 884 bytes: result in r3 rather than r0 adds
 one constant load at the shared join. Combining assignments did not resolve it.
 Retain the disabled body with original boundaries; the 128-byte initializer
 remains unchanged, source-linked and exact. No matched gain is claimed.
+
+### 19.21 Item homing complete near-match: table mutability and moves (2026-10-03)
+
+The complete 932-byte homing scan is retained NonMatching at 99.29185%,936B.
+Mutable open-array declarations keep six table words inside the probe loop;
+incorrect const promises hoist them and disturb the saved-register set.
+Explicit cursor lifetimes align all128-slot scan/control-flow and three avoidance
+probes, stack vectors, GPR/FPR homes and 0x120 frame with stmw r25.
+Remaining: target fmr f30,f1 becomes an f0 intermediary plus extra fmr;
+scan zero init uses li r28,0 instead of mr r28,r29. Three approaches exhausted.
+Field +0x168 is a target driver here, not the wall-response mode of other helpers;
+FAbs returns double. The original object remains linked, source only compiles
+under all_source. SHA-1 proves fallback preservation, not C promotion.

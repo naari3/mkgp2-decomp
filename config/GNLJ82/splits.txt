@@ -1839,6 +1839,11 @@ game/ItemMotion.c:
 game/Item_DecayVelocityScalar.c:
 	.text       start:0x800D9D50 end:0x800D9D74
 
+game/ItemHoming.c:
+	extab       start:0x8000B3AC end:0x8000B3B4
+	extabindex  start:0x80023A98 end:0x80023AA4
+	.text       start:0x800D9D74 end:0x800DA118
+
 game/ItemAcceleration.c:
 	extab       start:0x8000B3B4 end:0x8000B3BC
 	extabindex  start:0x80023AA4 end:0x80023AB0
