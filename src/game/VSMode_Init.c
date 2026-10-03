@@ -1,3 +1,414 @@
+/*
+ * Bounded whole-body C++ reconstruction (cycle_retrofit_vsmode_cpp).
+ * Disabled best approach B: natural constructor ABI/size was checked against
+ * full direct constructor bodies. Non-constructor ABI audit remains incomplete.
+ * Three approaches: A 85.35609%, B 92.18771%, C 84.78043% (see HANDOFF).
+ * B emits 3520B text / 264B automatic EH; target is 3516B / 264B.
+ * External constructor mangled bridges must be restored before re-enabling.
+ * This is NOT a genuine matched implementation; the original fallback below is
+ * untouched. Layouts describe only bytes observed by this caller.
+ */
+#if 0
+#pragma cplusplus on
+void* operator new(unsigned long);
+void operator delete(void*);
+
+struct VSInput { unsigned char bytes[0x37C]; VSInput(); };
+struct VSCamera { unsigned char bytes[0x2C]; VSCamera(int, int, void*, float, float); };
+struct VSCar {
+    unsigned char prefix[0x104]; void* itemSelect; unsigned char suffix[0x10];
+    VSCar(int, int, int, int, unsigned char, int, int, unsigned char, float, float, float);
+};
+struct VSPath {
+    unsigned char bytes[0x4E8];
+    VSPath(void*, VSCar*, void*, float*, float*, float*);
+};
+struct VSLakitu {
+    unsigned char bytes[0x58];
+    VSLakitu(void*, int, float, float, float);
+};
+struct VSScene { unsigned char bytes[0x3084]; VSScene(void*); };
+struct VSFlag { unsigned char bytes[0xC]; VSFlag(VSScene*); };
+struct VSReverse { unsigned char bytes[0x14]; VSReverse(void*); };
+struct VSFinalLap { unsigned char bytes[0x10]; VSFinalLap(void*); };
+struct VSCollision { unsigned char bytes[0x18]; VSCollision(); };
+struct VSAI { unsigned char bytes[4]; VSAI(VSPath*, VSCollision*, int); };
+struct VSHud { unsigned char bytes[0x80]; VSHud(VSPath*); };
+struct VSItems { unsigned char bytes[0x88]; VSItems(int, unsigned char); };
+struct VSWeather { unsigned char bytes[0x1B4]; VSWeather(unsigned char); };
+struct VSFinalObject { unsigned char bytes[0x24]; VSFinalObject(int); };
+struct VSOwner {
+    void* unseen0;
+    VSLakitu* lakitu;
+    VSFlag* flag;
+    VSReverse* reverse;
+    VSFinalLap* finalLap;
+    VSInput* input;
+    VSScene* scene;
+    void* unseen1C;
+    VSCamera* camera;
+    VSHud* hud;
+    void* unseen28;
+    VSAI* ai;
+    VSCollision* collision;
+    VSFinalObject* finalObject;
+};
+struct VSPeer {
+    unsigned char team, unknown1, unknown2, cameraFlags, charFlags, unknown5, tuning;
+    unsigned char unknown7[9];
+    unsigned short items[3];
+    unsigned short shorts16[3];
+    unsigned char remainder[0xA3C - 0x1C];
+};
+struct VSRaceRow { signed char laps; unsigned char pad[3]; float remaining, bonus; };
+
+extern "C" {
+extern char lbl_80320960[];
+extern unsigned char lbl_80598A60[];
+extern VSPeer lbl_805A6154[];
+extern VSCar* g_carObjects[];
+extern VSItems* g_itemSelects[];
+extern int lbl_805D2B00[];
+extern unsigned long long lbl_805D2AA8[];
+extern unsigned char VS_MODE[];
+extern const float lbl_806D47A4, lbl_806D47A8, lbl_806D47AC, lbl_806D47C0, lbl_806D47D0;
+extern int g_cupId, g_longRoundFlag, g_reverseRoundFlag, g_localPcbRole, g_ccClass;
+extern int lbl_806CF110, lbl_806CF140, lbl_806CF144, lbl_806D129C, lbl_806D12F0;
+extern int lbl_806D12EC, lbl_806D12FC, lbl_806D1050, g_kartStartSlot;
+extern int g_sceneTransitionTimer, g_finalRacePosition, g_currentLap, g_raceResultCode;
+extern int lbl_806D1304, lbl_806D1308, lbl_806D1300, g_totalLaps;
+extern int g_raceFrameCounterLo2digits, g_roundIndex, g_gameMode, g_humanPlayerCount;
+extern unsigned char g_isCommHost, g_namCamFlag, g_lakituStartAnimDone, g_raceEnded;
+extern unsigned char g_finalLapBannerShown, g_lapChangePending, lbl_806CF148, lbl_806D12E8;
+extern unsigned char lbl_806D1318, lbl_806D1319, lbl_806D131C[4], lbl_806D1264[3];
+extern float g_bestLapTime, g_currentLapTime, g_totalRaceTime, g_raceTimeRemaining, g_lapBonusTimeDelta;
+extern int* lbl_806D0F14;
+extern void* lbl_806D10A0;
+extern void* lbl_806D12F8;
+extern void* g_playerRenderObj;
+extern VSCamera* g_raceCamera;
+extern VSCollision* g_objCollChecker;
+extern VSHud* g_raceHud;
+extern VSWeather* g_weatherSystem;
+extern VSPath* lbl_806D12F4;
+extern VSPath* g_raceRankingPathObject;
+
+void ProcessSystemTick(const char*);
+unsigned char* SyncSlot_GetRecv();
+unsigned char* SyncSlot_GetHostSend();
+void SetResourceLoadingFlag(int);
+void DMAChannelManager_Init();
+void TransitionEffect_GetOrCreate();
+void CourseData_GetOrCreate(int, int, int);
+void* GetCourseDataPtr();
+void* RenderTarget_Create(void*);
+void SetActiveCamera(int, VSCamera*);
+void SoundChannels_ClearAll();
+void ItemObjectManager_Init();
+void CourseObjectManager_Init();
+void* GetRaceContextPtr();
+void RankingTable_Init(void*);
+void* GetCourseBgmEntry();
+void SoundDriver_GetOrCreate(void*);
+void CoinSystem_Init(int, int);
+void TitleTracker_OnRaceStart_Stub(void*);
+void DebugPrintf(const char*, ...);
+void RaceSlot_InitSlot(int, int, int, int, int);
+int GetStartPosition(int, float*, float*, float*);
+float GetCourseStartYaw();
+int GetKartSlotCharId(int);
+void* CarObject_GetRenderObj(VSCar*);
+float* CarObject_GetTransformMatrix(VSCar*);
+void KartItem_SetShortArray34a(void*, unsigned short*);
+void KartItem_SetField358(void*, int);
+void VoiceSystem_BindKartCarObject(int, VSCar*);
+void SetPlayerCarObject(VSCar*);
+void* CourseData_GetDefaultPathKey_Safe();
+int PathManager_RegisterCarObject(VSPath*, float*, float*, float*, VSCar*, void*, int);
+void LakituStart_SetCountdownHoldFrames(VSLakitu*, int);
+void** GetKartModelNameEntry(int, int);
+void Scene3D_GetCameraPos(VSScene*, float*, float*);
+void Scene3D_SetupProjection(VSScene*, float, float);
+float RaceScene_GetPerspFovyForCup();
+void CObj_UpdatePerspParam(VSScene*, float);
+void CommBroadcast_SetKartRankNibble(int, int);
+void Tachometer_Init();
+void HitMessageOverlay_Init();
+void HUD_RegisterOverlay(VSHud*, int, int);
+int IsTimerModeEnabled();
+void fn_80253EB8(VSHud*, float);
+void ItemSelect_AddSlotItem(VSItems*, int, int);
+unsigned char ItemSelect_GetSlotItemId(VSItems*, int);
+void SetCourseScene3D(VSScene*);
+void HUD_SetTotalLaps(VSHud*, int);
+void CourseBgm_Load();
+void PreloadEffectResources(int);
+void PreloadItemResources(int);
+int fn_8023DBEC(int);
+void PreloadResource(int);
+void* GetEnemyParam();
+void clEnemyParam_FillItemListIds(void*, int, int, int);
+int* AI_GetItemList(void*, int, int, int, int);
+unsigned long long OSGetTime();
+void VoiceSystem_SetCheckpointsForTotalLaps(int);
+
+void VSMode_Init_CPP_Draft(VSOwner* self)
+{
+    char* pool = lbl_80320960;
+    ProcessSystemTick(pool + 0x588);
+    lbl_806D0F14 = &lbl_806D12F0;
+    *lbl_806D0F14 = SyncSlot_GetRecv()[0x1B];
+    lbl_806D129C = 0;
+    SetResourceLoadingFlag(0);
+    DMAChannelManager_Init();
+    TransitionEffect_GetOrCreate();
+    ProcessSystemTick(pool + 0x59C);
+    self->input = new VSInput;
+    ProcessSystemTick(pool + 0x5B8);
+    CourseData_GetOrCreate(g_cupId, g_longRoundFlag, g_reverseRoundFlag);
+    lbl_806D12F8 = RenderTarget_Create(GetCourseDataPtr());
+    self->camera = new VSCamera(0x100, 0x100, lbl_806D12F8, lbl_806D47AC, lbl_806D47A8);
+    SetActiveCamera(0, self->camera);
+    g_raceCamera = self->camera;
+    ProcessSystemTick(pool + 0x5C4);
+    SoundChannels_ClearAll();
+    ItemObjectManager_Init();
+    CourseObjectManager_Init();
+    ProcessSystemTick(pool + 0x5D0);
+    RankingTable_Init(GetRaceContextPtr());
+    SoundDriver_GetOrCreate(GetCourseBgmEntry());
+    CoinSystem_Init(0, 2);
+
+    lbl_806CF140 = (signed char)lbl_80598A60[0x21] - 1;
+    lbl_806CF144 = g_localPcbRole - 2;
+    lbl_806D12FC = 0;
+    int peers = 0;
+    int i;
+    for (i = 0; i < 4; ++i)
+        if (((lbl_805A6154[i].team >> 4) & 7) ==
+            ((lbl_805A6154[lbl_806CF140].team >> 4) & 7))
+            ++peers;
+    if (peers == 4 && g_isCommHost == 1)
+        TitleTracker_OnRaceStart_Stub(lbl_806D10A0 ? lbl_806D10A0 : 0);
+    ProcessSystemTick(pool + 0x5F4);
+    DebugPrintf(pool + 0x608, lbl_806CF140, lbl_806CF144, peers);
+    unsigned char* packet = SyncSlot_GetRecv();
+    int cpus = 4 - peers;
+    for (i = 0; i < cpus; ++i)
+        RaceSlot_InitSlot(i, 6, (signed char)packet[i + 0x15], 1, 0);
+    for (i = 0; i < 4; ++i)
+        if (((lbl_805A6154[i].team >> 4) & 7) ==
+            ((lbl_805A6154[lbl_806CF140].team >> 4) & 7) && i == lbl_806CF140)
+            lbl_806D12EC = (signed char)packet[i + 9];
+    g_kartStartSlot = lbl_806D12EC;
+    ProcessSystemTick(pool + 0x62C);
+
+    for (i = 0; i < 4; ++i) {
+        VSPeer* peer = &lbl_805A6154[i];
+        if (((peer->team >> 4) & 7) == ((lbl_805A6154[lbl_806CF140].team >> 4) & 7)) {
+            int slot = (signed char)packet[i + 9];
+            unsigned char human = 0;
+            int cameraPeer = -1;
+            if (i == lbl_806CF140) human = 1;
+            if ((peer->cameraFlags >> 5) & 1) cameraPeer = i;
+            lbl_806D1050 = (signed char)packet[i + 0x11];
+            RaceSlot_InitSlot(slot, i, peer->charFlags >> 4, 1, 0);
+            DebugPrintf(pool + 0x638, i, slot, i, peer->charFlags >> 4);
+            float x, z;
+            GetStartPosition(slot, &x, 0, &z);
+            g_carObjects[i] = new VSCar(i, GetKartSlotCharId(slot), g_ccClass,
+                (peer->tuning >> 1) & 3, human, -1, 1, 0, x, z, GetCourseStartYaw());
+            KartItem_SetShortArray34a(CarObject_GetRenderObj(g_carObjects[i]), peer->shorts16);
+            if (g_namCamFlag)
+                KartItem_SetField358(CarObject_GetRenderObj(g_carObjects[i]), cameraPeer);
+            VoiceSystem_BindKartCarObject(slot, g_carObjects[i]);
+        } else {
+            g_carObjects[i] = 0;
+        }
+    }
+    ProcessSystemTick(pool + 0x65C);
+    g_playerRenderObj = CarObject_GetRenderObj(g_carObjects[lbl_806CF140]);
+    SetPlayerCarObject(g_carObjects[lbl_806CF140]);
+    *(int*)((unsigned char*)g_playerRenderObj + 0x238) = 1;
+
+    for (i = 0; i < 4; ++i) {
+        if (g_carObjects[i]) {
+            float* matrix = CarObject_GetTransformMatrix(g_carObjects[i]);
+            if (!lbl_806D12F4) {
+                lbl_806D12F4 = new VSPath(CourseData_GetDefaultPathKey_Safe(),
+                    g_carObjects[i], CarObject_GetRenderObj(g_carObjects[i]),
+                    matrix + 12, matrix + 13, matrix + 14);
+                lbl_805D2B00[i] = 0;
+            } else {
+                lbl_805D2B00[i] = PathManager_RegisterCarObject(lbl_806D12F4,
+                    matrix + 12, matrix + 13, matrix + 14, g_carObjects[i],
+                    CarObject_GetRenderObj(g_carObjects[i]), -1);
+            }
+        }
+    }
+    ProcessSystemTick(pool + 0x66C);
+    if (SyncSlot_GetHostSend())
+        SyncSlot_GetHostSend()[2] &= 0x7F;
+    self->lakitu = new VSLakitu(pool + 0x684, lbl_806D12EC,
+        lbl_806D47A4, lbl_806D47A4, lbl_806D47A4);
+    LakituStart_SetCountdownHoldFrames(self->lakitu, 0x4E20);
+    self->scene = new VSScene(*GetKartModelNameEntry(GetKartSlotCharId(lbl_806D12EC), -1));
+    self->flag = new VSFlag(self->scene);
+    self->reverse = new VSReverse(g_playerRenderObj);
+    self->finalLap = new VSFinalLap(g_playerRenderObj);
+    float projectionX, projectionZ;
+    Scene3D_GetCameraPos(self->scene, &projectionX, &projectionZ);
+    projectionX += lbl_806D47D0;
+    Scene3D_SetupProjection(self->scene, projectionX, projectionZ);
+    CObj_UpdatePerspParam(self->scene, RaceScene_GetPerspFovyForCup());
+    ProcessSystemTick(pool + 0x698);
+    self->collision = new VSCollision;
+    g_objCollChecker = self->collision;
+    self->ai = new VSAI(lbl_806D12F4, self->collision, 0);
+    ProcessSystemTick(pool + 0x6AC);
+    g_sceneTransitionTimer = -1;
+    if (g_isCommHost)
+        for (i = 0; i < 4; ++i) CommBroadcast_SetKartRankNibble(i, i);
+    ProcessSystemTick(pool + 0x6C8);
+    Tachometer_Init();
+    HitMessageOverlay_Init();
+    self->hud = new VSHud(lbl_806D12F4);
+    g_raceHud = self->hud;
+    HUD_RegisterOverlay(self->hud, 6, 0);
+    HUD_RegisterOverlay(self->hud, 3, 0);
+    HUD_RegisterOverlay(self->hud, 5, 0);
+    HUD_RegisterOverlay(self->hud, 1, 0);
+    HUD_RegisterOverlay(self->hud, 2, 0);
+    HUD_RegisterOverlay(self->hud, 10, 0);
+    HUD_RegisterOverlay(self->hud, 12, 0);
+    HUD_RegisterOverlay(self->hud, 11, 0);
+    HUD_RegisterOverlay(self->hud, 7, 0);
+    HUD_RegisterOverlay(self->hud, 0, 0);
+    HUD_RegisterOverlay(self->hud, 15, 0);
+    HUD_RegisterOverlay(self->hud, 16, 0);
+    HUD_RegisterOverlay(self->hud, 14, 0);
+    if (IsTimerModeEnabled() == 1) HUD_RegisterOverlay(self->hud, 4, 0);
+    HUD_RegisterOverlay(self->hud, 13, 0);
+    fn_80253EB8(self->hud, lbl_806D47C0);
+    HUD_RegisterOverlay(self->hud, 8, 0);
+    HUD_RegisterOverlay(self->hud, 9, 0);
+    HUD_RegisterOverlay(self->hud, 21, 0);
+    HUD_RegisterOverlay(self->hud, 22, 0);
+    ProcessSystemTick(pool + 0x6D4);
+
+    for (i = 0; i < 4; ++i) {
+        VSPeer* peer = &lbl_805A6154[i];
+        if (i == lbl_806CF140 ||
+            ((peer->team >> 4) & 7) == ((lbl_805A6154[lbl_806CF140].team >> 4) & 7)) {
+            int slot = (signed char)packet[i + 9];
+            if (i == lbl_806CF140) g_itemSelects[i] = new VSItems(slot, 1);
+            else g_itemSelects[i] = new VSItems(slot, 0);
+            g_carObjects[i]->itemSelect = g_itemSelects[i];
+            VSItems* select = g_itemSelects[i];
+            *(VSItems**)((unsigned char*)CarObject_GetRenderObj(g_carObjects[i]) + 0x364) = select;
+            if (lbl_806CF110 == 1) {
+                ItemSelect_AddSlotItem(g_itemSelects[i], peer->items[0], 1);
+                ItemSelect_AddSlotItem(g_itemSelects[i], peer->items[1], 1);
+                ItemSelect_AddSlotItem(g_itemSelects[i], peer->items[2], 1);
+                if (i == lbl_806CF140) {
+                    lbl_806D1264[0] = peer->items[0];
+                    lbl_806D1264[1] = peer->items[1];
+                    lbl_806D1264[2] = peer->items[2];
+                }
+            } else {
+                ItemSelect_AddSlotItem(g_itemSelects[i], peer->items[0], 1);
+                ItemSelect_AddSlotItem(g_itemSelects[i], 0x3D, 1);
+                ItemSelect_AddSlotItem(g_itemSelects[i], 0x2B, 1);
+                ItemSelect_AddSlotItem(g_itemSelects[i], 0x17, 1);
+                ItemSelect_AddSlotItem(g_itemSelects[i], 0x32, 1);
+            }
+        } else {
+            g_itemSelects[i] = 0;
+        }
+    }
+    ProcessSystemTick(pool + 0x6E8);
+    g_lakituStartAnimDone = 0;
+    SetCourseScene3D(self->scene);
+    VSRaceRow* row = (VSRaceRow*)(VS_MODE + g_cupId * 0x48 + g_ccClass * 0x18 +
+                                 g_longRoundFlag * 12 - 0x48);
+    g_raceEnded = 0;
+    g_finalRacePosition = 0;
+    g_bestLapTime = lbl_806D47A4;
+    g_currentLapTime = lbl_806D47A4;
+    g_totalRaceTime = lbl_806D47A4;
+    g_currentLap = 1;
+    g_raceResultCode = -2;
+    g_finalLapBannerShown = 0;
+    g_lapChangePending = 0;
+    lbl_806D1304 = 0;
+    lbl_806D1308 = 0;
+    lbl_806CF148 = 1;
+    lbl_806D12E8 = 0;
+    lbl_806D1300 = 0;
+    g_totalLaps = row->laps;
+    g_raceTimeRemaining = row->remaining;
+    g_lapBonusTimeDelta = row->bonus;
+    ProcessSystemTick(pool + 0x6F8);
+    HUD_SetTotalLaps(self->hud, g_totalLaps);
+    CourseBgm_Load();
+    if (!g_weatherSystem) g_weatherSystem = new VSWeather(1);
+    SetResourceLoadingFlag(1);
+    lbl_806D129C = 1;
+    g_raceFrameCounterLo2digits = 0;
+    switch (g_cupId) {
+    case 1: PreloadEffectResources(1); break;
+    case 2: PreloadEffectResources(2); break;
+    case 3: PreloadEffectResources(3); break;
+    case 4: PreloadEffectResources(4); break;
+    case 5: PreloadEffectResources(5); break;
+    case 6: PreloadEffectResources(6); break;
+    case 7: PreloadEffectResources(7); break;
+    case 8: PreloadEffectResources(8); break;
+    default: break;
+    }
+    ProcessSystemTick(pool + 0x70C);
+    PreloadEffectResources(9);
+    ProcessSystemTick(pool + 0x72C);
+    PreloadEffectResources(10);
+    ProcessSystemTick(pool + 0x74C);
+    for (i = 0; i < 4; ++i) {
+        if (g_itemSelects[i])
+            for (int slot = 0; slot < (lbl_806CF110 == 1 ? 3 : 5); ++slot) {
+                unsigned char item = ItemSelect_GetSlotItemId(g_itemSelects[i], slot);
+                if (item) {
+                    PreloadItemResources(item);
+                    PreloadResource(fn_8023DBEC(item));
+                }
+            }
+    }
+    ProcessSystemTick(pool + 0x76C);
+    clEnemyParam_FillItemListIds(GetEnemyParam(), g_gameMode, g_cupId, g_roundIndex);
+    for (i = 0; i < 4; ++i) {
+        int* list = AI_GetItemList(GetEnemyParam(), g_gameMode, g_cupId, g_roundIndex, i);
+        while (*list != -1) {
+            PreloadItemResources(*list);
+            PreloadResource(fn_8023DBEC(*list));
+            ++list;
+        }
+    }
+    ProcessSystemTick(pool + 0x788);
+    lbl_806D1318 = 0;
+    lbl_806D1319 = 1;
+    unsigned long long time = OSGetTime();
+    for (i = 0; i < 4; ++i) {
+        lbl_806D131C[i] = 0;
+        lbl_805D2AA8[i] = time;
+    }
+    ProcessSystemTick(pool + 0x7A4);
+    g_humanPlayerCount = *(int*)(SyncSlot_GetRecv() + 4);
+    self->finalObject = new VSFinalObject(0x168);
+    VoiceSystem_SetCheckpointsForTotalLaps(g_totalLaps);
+    g_raceRankingPathObject = lbl_806D12F4;
+}
+}
+#pragma cplusplus off
+#else
+
 /* === extracted from auto_VSMode_Init_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -1115,3 +1526,4 @@ asm void VSMode_Init(void) { /* 0x8009F814 size:0xDBC */
     addi r1, r1, 0x70
     blr
 }
+#endif

@@ -1407,6 +1407,18 @@ Raw fallback text99.511696 reflects eight pre-existing literal SDA operands.
 Genuine/aggregate gain0; retry requires new pointer/base scheduling evidence
 and explicit table-ownership resolution. Runtime/CI/Ghidra unverified.
 
+### 19.86 VSMode bounded full allocation draft (2026-10-04)
+
+Complete3516B Init draft is disabled at92.18771% after three structural
+approaches. Sixteen natural allocations generate target-sized264B automatic
+EH, but shifted cleanup PCs, peer/bootstrap webs, signed comparisons and
+generated36B switch data remain. Constructor ABIs were read; other callee
+audits are explicitly incomplete. Preserve the full best draft without
+promoting speculative types. Main unchanged source-linked fallback text/EH/
+index100%, foreground exit0 and full DOL SHA1 exact; genuine/aggregate gain0.
+Retry needs new semantic pool/accessor/data provenance and complete ABI audit,
+not another register permutation. Runtime/CI/Ghidra unverified.
+
 ### 19.65 Debris Spawn bounded natural lifetime draft (2026-10-04)
 
 Debris Spawn796B complete C++ draft is parked at93.77889% after three
