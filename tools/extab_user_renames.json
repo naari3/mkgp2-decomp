@@ -116,8 +116,11 @@
     "__construct_array": "fn_80270D6C"
   },
   "src/game/clItemBox_Ctor_GroundSnap.c": {
-    "extab_clItemBox_Ctor_GroundSnap": "@etb_80007BF8",
-    "extabindex_clItemBox_Ctor_GroundSnap": "@eti_80020C3C"
+    "__ct__13GroundItemBoxFff": "clItemBox_Ctor_GroundSnap",
+    "__dt__14GroundPositionFv": "dtor_80036E40",
+    "__ct__14GroundParticleFv": "fn_8005E788",
+    "__dt__14GroundParticleFv": "clItemBoxResponder_DebrisParticle_Dtor",
+    "__construct_array": "fn_80270D6C"
   },
   "src/game/clItemBox_FactoryCreate.c": {
     "extab_clItemBox_FactoryCreate": "@etb_80007C9C",
