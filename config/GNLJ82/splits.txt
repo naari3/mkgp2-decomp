@@ -1237,6 +1237,11 @@ game/PCBCheckRecv.c:
 	extabindex  start:0x80021800 end:0x8002180C
 	.text       start:0x80083348 end:0x80083740
 
+game/PCBCommSendPeers.c:
+	extab       start:0x80008D24 end:0x80008D2C
+	extabindex  start:0x8002180C end:0x80021818
+	.text       start:0x80083740 end:0x8008398C
+
 game/CommBroadcast.c:
 	.text       start:0x800848C4 end:0x80084A84
 

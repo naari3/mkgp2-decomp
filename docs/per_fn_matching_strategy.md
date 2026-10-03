@@ -1,5 +1,16 @@
 # Per-function matching strategy
 
+### 19.107 PCB peer send bounded pointer provenance (2026-10-04)
+
+Complete588B target is retained as600B NonMatching C at79.44218% after two
+structural approaches. Evaluated-input inline composition improves75.59864%,
+but value numbering still folds independent snapshot/block bases into storage:
+four saved webs instead of target six, with different card-row addressing.
+Stop early without a concrete third lever; do not sweep declarations/registers.
+Main independently verified EH87.5/index91.66667, original-object linkage,
+foreground exit0 and exact full DOL SHA1. Genuine/aggregate gain0. Resume
+requires new independent-pointer provenance; runtime/CI/Ghidra unverified.
+
 ### 19.103 TCPConn send set-access provenance and AND residue (2026-10-04)
 
 Complete488B PollSend is NonMatching99.91803%, automatic EH/index100%.
