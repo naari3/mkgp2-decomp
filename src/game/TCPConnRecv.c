@@ -61,13 +61,18 @@ static inline unsigned int TCPConn_SelectMask(unsigned int bit)
          | ((bit >> 8) & 0x0000FF00U) | ((bit >> 24) & 0x000000FFU);
 }
 
+static inline unsigned int TCPConn_AddReadSocket(unsigned int *set, int socket)
+{
+    unsigned int index = (unsigned int)socket >> 5;
+    unsigned int mask = TCPConn_SelectMask(1U << (socket & 31));
+    set[index] |= mask;
+    return mask;
+}
+
 static inline unsigned char TCPConn_Readable(int socket)
 {
     unsigned int set[8];
     RecvTimeout timeout;
-    unsigned int bit;
-    unsigned int *setBase;
-    unsigned int index;
     unsigned int mask;
     int result;
     unsigned char ready = 0;
@@ -76,16 +81,12 @@ static inline unsigned char TCPConn_Readable(int socket)
     if (socket < 0) return ready;
     {
         memset(set, 0, sizeof(set));
-        setBase = set;
-        bit = 1U << (socket & 31);
-        index = (unsigned int)socket >> 5;
-        mask = TCPConn_SelectMask(bit);
-        setBase[index] |= mask;
-        result = acSelect(socket + 1, setBase, 0, 0, &timeout);
+        mask = TCPConn_AddReadSocket(set, socket);
+        result = acSelect(socket + 1, set, 0, 0, &timeout);
         if (result < 0) {
             TCPConn_LogError(result, socket, lbl_806D31A8);
             ready = 0;
-        } else if ((mask & setBase[index]) == 0) {
+        } else if ((set[(unsigned int)socket >> 5] & mask) == 0) {
             ready = 0;
         } else {
             ready = 1;

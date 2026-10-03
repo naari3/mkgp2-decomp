@@ -2071,6 +2071,16 @@ and aggregate gain4/80B, report1000/312920 to1004/313000. Worker baseline
 Python launcher failure resolved by plain retry with unchanged environment;
 no installation or global repair. Runtime/CI/Ghidra remain unverified.
 
+### 19.105 TCP receive inline set-access boundary (2026-10-04)
+
+Genuine AddReadSocket transfer resolves six prior base/index substitutions;
+complete436B source reaches99.90826%, whole668B text99.94012%. Only AND
+operand order at80086C54 remains, as in Send. Stop after the single new
+evidence-backed approach; do not repeat closed permutations. Main independently
+verified automatic EH/index100%, original-object linkage, foreground exit0
+and exact full DOL SHA1. Unchanged232B sibling100% is source-only: accepted
+genuine and aggregate gain0. Retry requires new predicate provenance evidence.
+
 ### 19.104 TCP whole leaf closure (2026-10-04)
 
 All three members of the indivisible184B blob match first-approach genuine C.
