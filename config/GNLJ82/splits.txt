@@ -209,6 +209,11 @@ game/clRomDtor.c:
 	extabindex  start:0x8001F814 end:0x8001F820
 	.text       start:0x80034A94 end:0x80034B50
 
+game/clRomOverlay.c:
+	extab       start:0x80005BD8 end:0x80005BE0
+	extabindex  start:0x8001F838 end:0x8001F844
+	.text       start:0x80034CA0 end:0x80034D1C
+
 resource/ResourceLoading.c:
 	.text       start:0x80034D1C end:0x80034D24
 

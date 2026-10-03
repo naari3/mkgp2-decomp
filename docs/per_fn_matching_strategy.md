@@ -1834,3 +1834,14 @@ redundant null guard without volatile or hand-expanded instruction sequencing.
 No emitted helper or manual EH; automatic16B EH/24B index are exact. Main
 independently verified all owned sections100%, source link, foreground exit0
 and full DOL SHA1. Genuine/aggregate gain2/412B; runtime/CI unverified.
+
+### 19.83 clRom overlay plain-local coloring (2026-10-04)
+
+Ordinary124B C loop matches with automatic8B EH/12B index100%. A single
+model-guided declaration swap (index before node) fixes r30/r29 ownership;
+do not replace this with blind permutation search. Format is an open external
+array; OverlayText uses four fixed arguments plus index/value/string varargs.
+Main retains destructor then overlay split entries and both wrapper Object
+entries when resolving independent insertion conflicts, without rollback.
+Independent source link, foreground exit0 and full DOL SHA1 exact; genuine
+and aggregate gain1/124B. Runtime/CI and full class layout remain unverified.
