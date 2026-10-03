@@ -1227,6 +1227,11 @@ game/Jyugemu_ReverseFlag_Ctor.c:
 game/Jyugemu_ReverseFlag_Enable.c:
 	.text       start:0x8008117C end:0x80081184
 
+game/PCBCommBroadcast.c:
+	extab       start:0x80008D0C end:0x80008D14
+	extabindex  start:0x800217E8 end:0x800217F4
+	.text       start:0x8008299C end:0x80082DB8
+
 game/PCBCheckProcess.c:
 	extab       start:0x80008D14 end:0x80008D1C
 	extabindex  start:0x800217F4 end:0x80021800

@@ -1,5 +1,19 @@
 # Per-function matching strategy
 
+### 19.112 PCB broadcast evaluated virtual input boundary (2026-10-04)
+
+Complete1052B broadcast remains NonMatching88.45247%, source1048B, after
+three structural approaches. Evaluate genuine float virtual getters before
+inline quantization to restore frame60/GPR24..31. Overlapping bitfield update
+scheduling/narrowing remains; typed inline setters emit identical output.
+Generated8B bias matches external4330000080000000 in value, but shifted
+relocation PCs prevent established safe aliasing; no metadata patch applied.
+Main independently verified text88.45247/EH100/index91.66667, original-object
+link, foreground exit0 and full DOL SHA1. Genuine/function/code gain0, not
+automatic data8B. Retry needs new overlapping-accessor provenance, not a
+fourth permutation. Independent Object entries retained during conflict
+resolution. Runtime/CI/Ghidra/full class declarations remain unverified.
+
 ### 19.111 PCB computation bounded independent storage views (2026-10-04)
 
 Complete2212B computation remains NonMatching87.11573%, source2204B, after
