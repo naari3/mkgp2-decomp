@@ -1302,6 +1302,11 @@ game/TCPConnRecv.c:
 	extabindex  start:0x8002192C end:0x80021944
 	.text       start:0x80086A30 end:0x80086CCC
 
+game/TCPConnSend.c:
+	extab       start:0x80008E5C end:0x80008E64
+	extabindex  start:0x80021950 end:0x8002195C
+	.text       start:0x80086D6C end:0x80086F54
+
 game/TCPConn.c:
 	.text       start:0x80086F54 end:0x8008707C
 

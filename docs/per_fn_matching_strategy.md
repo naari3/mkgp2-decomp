@@ -1,5 +1,15 @@
 # Per-function matching strategy
 
+### 19.103 TCPConn send set-access provenance and AND residue (2026-10-04)
+
+Complete488B PollSend is NonMatching99.91803%, automatic EH/index100%.
+Genuine inline AddWriteSocket owns mask/index calculation and removes all six
+base/index web substitutions; this is concrete evidence for one bounded receive
+retry. A byte-return predicate fixes AND order but collapses its full diamond.
+Three approaches exhausted: residual80086EE0 swaps AND operands. Main verified
+original-object linkage, foreground exit0 and full DOL SHA1; genuine gain0.
+Resume requires new predicate/control-flow provenance, not blind permutations.
+
 ### 19.102 TCPConn polling inline byte-return stages (2026-10-04)
 
 Poll856B matches first-approach genuine C through natural inline close/open/

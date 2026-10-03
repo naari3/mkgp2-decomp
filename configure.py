@@ -887,6 +887,7 @@ config.libs = [
             Object(Matching, "game/PcbListenerLifetime.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/TCPConn_LogError.c"),
             Object(NonMatching, "game/TCPConnRecv.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/TCPConnSend.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/TCPConn.c"),
             Object(Matching, "game/TCPConnEnqueue.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/TCPConn_Reset.c"),
