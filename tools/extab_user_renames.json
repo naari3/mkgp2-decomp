@@ -1521,6 +1521,12 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
   },
+  "src/game/MiniGameBase.cpp": {
+    "__dt__7MBOwnerFv": "dtor_80122FD8",
+    "__dt__6MBRootFv": "dtor_8002CDF4",
+    "__vt__7MBOwner": "lbl_8048E144",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
   "src/game/CardUnpackLegacy.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

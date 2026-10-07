@@ -2269,3 +2269,6 @@ Main independently confirmed text98.42308/EH99.41176/index100, original-object
 link, foreground exit0 and exact full DOL SHA1 on2026-10-07. Retain all three
 independent Render/Update/Init ranges and Object lines in conflict resolution;
 only the Init TU rename key was added. Genuine gain0; no fourth permutation.
+
+
+MiniGame intermediate base dtor 80122FD8 (120B) genuinely matches as real derived C++ destructor: MBOwner : MBRoot, body resets global context through fn802C8B48(0), fn801DE6E8(), SetCourseScene3D(0), then compiler emits real base dtor8002CDF4(this,0), signed-short deletion flag and implicit this return. Plain automatic EH8/index12 match, no throw() or manual EH. Important CW vtable ownership: undefined identity virtual must precede defined destructor; placing it after destructor emitted vtable and caused duplicate lbl8048E144. Unique TU-specific mangled bridges and extab_padding empty route suffice. Target/callee actual ASM audited because Ghidra unavailable.
