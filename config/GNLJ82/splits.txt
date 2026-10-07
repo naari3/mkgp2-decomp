@@ -2292,6 +2292,12 @@ game/HeartCompoundItem.c:
 	extabindex  start:0x80023EC4 end:0x80023EE8
 	.text       start:0x800F2620 end:0x800F2D60
 
+game/GabyouItemUpdate.cpp:
+	extab       start:0x8000B694 end:0x8000B69C
+	extabindex  start:0x80023EF4 end:0x80023F00
+	.text       start:0x800F33DC end:0x800F38F8
+	.data       start:0x80421710 end:0x80421738
+
 game/GabyouTripleChild.c:
 	extab       start:0x8000B6A4 end:0x8000B6BC
 	extabindex  start:0x80023F0C end:0x80023F30
