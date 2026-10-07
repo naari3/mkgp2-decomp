@@ -1,5 +1,9 @@
 # Per-function matching strategy
 
+### 19.120 Gabyou impact native draft and FP evidence (2026-10-07)
+
+OnImpactTick_2Eto31 complete816B C++ draft is NonMatching99.01961%; automatic EH8/index12 both100. By-value Vec3 ABI recovers aggregate integer copies/frame50/stack placement. A literal0.0f mapped by existing sdata2 processing to lbl_806D5D20 fixes lifetime expiry FP roles; extern symbol zero had different scratch scheduling. Three structural approaches/six compile cycles stopped at scale-init counterstore scheduling: target lfs,li,stwcounter,addiout,fmr2,fmr3; draft moves stw past addi/fmr2. Main retained both Hit/Impact distinct Objects and disjoint splits on conflict, without rollback. FullSHA1 is original-object fallback integrity, genuine gain0. Retry needs independently evidenced initialization composition, not declaration-order permutations.
+
 ### 19.119 Gabyou hit-flush native draft acceptance (2026-10-07)
 
 GabyouItem_OnHitFlush_2Eto31 (800E69E8..800E6C48) is retained as complete genuine C++ NonMatching source, not a promotion. Main independently verified608B text98.61842%, automatic EH8/index12 both100%, and full DOL SHA1 exact with original-object fallback (`linked False`). Three approaches: nested random argument628B95.16%; staged random612B96.58%; staged multiplied speed608B98.62%. Named-zero refinement produced identical bytes, not a new budget. Residual is the first velocity argument setup: target multiplies then loads zero f1/copiesf2, compiler loads zerof2 before multiply/copiesf1. All switch/loop/GPR/hit-dispatch paths otherwise match. Exact0x1EC stack hit object and genuine r6 driver argument are preserved. No manual EH or opcode implementation; future retry requires independently evidenced FP argument-lifetime mechanism, not declaration permutations. Ghidra was unavailable; observed local ABI comes from target/callee ASM. Genuine gain0.
