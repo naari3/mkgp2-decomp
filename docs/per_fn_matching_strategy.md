@@ -2244,3 +2244,10 @@ channel index and omit invented active/null prechecks. Main independently
 verified all three symbols/text100%, absent EH/index, actual source linkage,
 foreground exit0 and full DOL SHA1. Genuine/aggregate gain3/184B. External
 tables remain external; only observed layouts claimed. Runtime/CI unverified.
+
+
+
+### CoinChallenge render singleton (2026-10-05)
+
+MiniGame_CoinChallenge_Destroy (0x802143E4, 432 B) is a render dispatcher despite its current name, not a destructor. A dedicated contiguous CoinChallengeRender.cpp avoids the prior disjoint MiniGame.c TU/link-order risk. Native C++ scene slots +0xC (unsigned-char predicate) / +0x10 (tail render) and observed local field view produced identical vcall dispatch. CW132 inlined early-return singleton helper `if (p) return p; return 0;` emitted an extra unconditional branch at every call site (468 B total, 90.833333%). Assignment-shaped helper `if (!p) p=0; return p;` emitted target bne/li guard at nine sites, giving 432 B text / 8 B automatic EH / 12 B index all 100%, full SHA-1 exact. Ghidra was unavailable; observations come from target ASM, not an asserted Ghidra type definition.
+

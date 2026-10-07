@@ -960,6 +960,7 @@ config.libs = [
             Object(Matching, "game/KartDriver_GetJointByIdx.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartDriver_Init.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartDriver_InitFull.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/CoinChallengeRender.cpp", extra_cflags=["-Cpp_exceptions on"]),
         ],
     },
     {
