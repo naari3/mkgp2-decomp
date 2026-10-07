@@ -844,6 +844,7 @@ config.libs = [
             Object(Matching, "game/GabyouItemFall.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GabyouItemTick.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/GabyouItemActive.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/GabyouItemHeld.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/GabyouItemUpdate.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GabyouItemDispatch.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/GabyouTripleChild.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),

@@ -2222,6 +2222,11 @@ game/GabyouItemImpact.cpp:
 	extabindex  start:0x80023D68 end:0x80023D74
 	.text       start:0x800E6C48 end:0x800E6F78
 
+game/GabyouItemHeld.cpp:
+	extab       start:0x8000B594 end:0x8000B59C
+	extabindex  start:0x80023D74 end:0x80023D80
+	.text       start:0x800E6F78 end:0x800E7EC4
+
 game/GabyouItemDispatch.cpp:
 	extab       start:0x8000B59C end:0x8000B5A4
 	extabindex  start:0x80023D80 end:0x80023D8C
