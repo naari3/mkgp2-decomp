@@ -2301,3 +2301,18 @@ The local pointer-shaped declarations represent the observed caller-copy ABI;
 they do not change shared headers. No assembly, manual EH, or foreign ranges
 were absorbed. Do not restart the exhausted allocator/source-shape budget
 without independently evidenced new source provenance.
+
+## 2026-10-07 KartFx ring: native partial-family promotion
+
+Ring Spark700B and Slot50 spawner668B compile exactly as ordinary C++ in
+`game/KartFxRing.cpp`, including native16B EH/24B index. Real signed state
+switches, signed RandIntMax(15)%3, const literal pools, by-value Vec3 caller
+copies and float magnitude-normalization accumulator preserve the observed
+codegen. Literal0.0f decay helper avoids alias reloads. Main independent
+objdiff100%, actual source-link and full DOL SHA1 verified: genuine2/1368B.
+Ray488B remains complete NonMatching99.79508% with native EH/index100%; a
+five-instruction f1/f2 growth-clamp coloring difference survived three source
+approaches. Mechanical contiguous split at800B9758/EH8000A7F8/index80022D60
+preserves the two exact functions without ASM/manual EH or foreign ownership.
+This split is not an extra source-search attempt. No blind clamp allocator
+permutation retry is authorized; retain evidence until new provenance exists.
