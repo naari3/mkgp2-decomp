@@ -2212,6 +2212,11 @@ game/SoundMgr_CountActiveSEInstances.c:
 	extabindex  start:0x80023C6C end:0x80023C78
 	.text       start:0x800DFEB8 end:0x800DFF34
 
+game/GabyouItemHit.cpp:
+	extab       start:0x8000B584 end:0x8000B58C
+	extabindex  start:0x80023D5C end:0x80023D68
+	.text       start:0x800E69E8 end:0x800E6C48
+
 game/BananaTriple_StuckOnDriverTick.c:
 	extab       start:0x8000B5A4 end:0x8000B5AC
 	extabindex  start:0x80023D8C end:0x80023D98

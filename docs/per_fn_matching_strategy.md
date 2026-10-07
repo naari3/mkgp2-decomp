@@ -1,5 +1,9 @@
 # Per-function matching strategy
 
+### 19.119 Gabyou hit-flush native draft acceptance (2026-10-07)
+
+GabyouItem_OnHitFlush_2Eto31 (800E69E8..800E6C48) is retained as complete genuine C++ NonMatching source, not a promotion. Main independently verified608B text98.61842%, automatic EH8/index12 both100%, and full DOL SHA1 exact with original-object fallback (`linked False`). Three approaches: nested random argument628B95.16%; staged random612B96.58%; staged multiplied speed608B98.62%. Named-zero refinement produced identical bytes, not a new budget. Residual is the first velocity argument setup: target multiplies then loads zero f1/copiesf2, compiler loads zerof2 before multiply/copiesf1. All switch/loop/GPR/hit-dispatch paths otherwise match. Exact0x1EC stack hit object and genuine r6 driver argument are preserved. No manual EH or opcode implementation; future retry requires independently evidenced FP argument-lifetime mechanism, not declaration permutations. Ghidra was unavailable; observed local ABI comes from target/callee ASM. Genuine gain0.
+
 ### 19.118 Matrix4 whole leaf partial acceptance (2026-10-04)
 
 Identity76B and Copy132B are genuine C100% on first approach. Lerp72B best
