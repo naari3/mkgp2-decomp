@@ -2251,3 +2251,13 @@ tables remain external; only observed layouts claimed. Runtime/CI unverified.
 
 MiniGame_CoinChallenge_Destroy (0x802143E4, 432 B) is a render dispatcher despite its current name, not a destructor. A dedicated contiguous CoinChallengeRender.cpp avoids the prior disjoint MiniGame.c TU/link-order risk. Native C++ scene slots +0xC (unsigned-char predicate) / +0x10 (tail render) and observed local field view produced identical vcall dispatch. CW132 inlined early-return singleton helper `if (p) return p; return 0;` emitted an extra unconditional branch at every call site (468 B total, 90.833333%). Assignment-shaped helper `if (!p) p=0; return p;` emitted target bne/li guard at nine sites, giving 432 B text / 8 B automatic EH / 12 B index all 100%, full SHA-1 exact. Ghidra was unavailable; observations come from target ASM, not an asserted Ghidra type definition.
 
+
+### CoinChallenge Update singleton C++ draft (2026-10-05)
+
+Main acceptance (2026-10-07): independent direct text97.209946%, automatic
+EH100%, index91.66667% (worker reported95%). Final target object is linked,
+not compiled source; foreground build exit0/full target SHA1 exact. Genuine
+gain0. Resolve simultaneous split insertions retaining Render then Update;
+remove only the duplicate appended Update entry, without rollback.
+
+OBSERVED: MiniGame_CoinChallenge_Update 0x80214594..0x80214B3C is an independent 1448-byte blob with 8-byte automatic EH (0x288A0000), not an extension of far-disjoint game/MiniGame.c. New game/CoinChallengeUpdate.cpp keeps the following 0x80214B3C..0x80214DB8 gap intact. Real virtual input methods at slots 0x18/0x1C/0x10 and VfxSlotMgr_Update(Vec3,Vec3) naturally reproduce the six-word stack-copy sequence and frame 0x70. Three structural approaches: A full scoped real C++ body 96.11878% (1464B); B explicit owners, signed/int sprite-resource ABI and timer scalar declarations 96.9337% (1460B); C shared FP owner, destructive sprite traversal and inline transition accessor 97.209946% (1456B). Automatic extab 100%; extabindex 95% solely due length. Remaining differences include global owner/coloring, loop walkers/coalescing and input bool widening; no brute-force register/decl permutations were performed. Ghidra unavailable; actual target/callee ASM was used. NonMatching fallback preserves exact full-DOL SHA-1 but is not C matching gain. Retained the complete best draft; further retry needs new structural evidence.

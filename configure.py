@@ -915,6 +915,7 @@ config.libs = [
             Object(Matching, "game/GetKartParamBlock.c"),
             Object(Matching, "game/NokoNokoChallenge_TransitionToResult.c"),
             Object(Matching, "game/MiniGame.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
+            Object(NonMatching, "game/CoinChallengeUpdate.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/NokoNokoChallenge.c", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"], extab_padding=b"\x00\x00"),
             Object(Matching, "game/SuikaBallObj_Render.c"),
             Object(Matching, "game/WeatherSystem_PickVariant.c", extra_cflags=["-Cpp_exceptions on"]),

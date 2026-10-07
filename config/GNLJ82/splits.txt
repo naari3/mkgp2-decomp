@@ -2781,6 +2781,11 @@ game/CoinChallengeRender.cpp:
 	extabindex  start:0x80029FA8 end:0x80029FB4
 	.text       start:0x802143E4 end:0x80214594
 
+game/CoinChallengeUpdate.cpp:
+	extab       start:0x8001A19C end:0x8001A1A4
+	extabindex  start:0x80029FB4 end:0x80029FC0
+	.text       start:0x80214594 end:0x80214B3C
+
 game/dtor_8021617C.c:
 	extab       start:0x8001A50C end:0x8001A514
 	extabindex  start:0x8002A068 end:0x8002A074
