@@ -2222,6 +2222,12 @@ game/GabyouItemImpact.cpp:
 	extabindex  start:0x80023D68 end:0x80023D74
 	.text       start:0x800E6C48 end:0x800E6F78
 
+game/GabyouItemDispatch.cpp:
+	extab       start:0x8000B59C end:0x8000B5A4
+	extabindex  start:0x80023D80 end:0x80023D8C
+	.text       start:0x800E7EC4 end:0x800E8818
+	.data       start:0x80421188 end:0x804211B0
+
 game/BananaTriple_StuckOnDriverTick.c:
 	extab       start:0x8000B5A4 end:0x8000B5AC
 	extabindex  start:0x80023D8C end:0x80023D98
