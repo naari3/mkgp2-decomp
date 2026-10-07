@@ -2357,6 +2357,11 @@ game/GabyouItemFall.cpp:
 	extabindex  start:0x80023FFC end:0x80024008
 	.text       start:0x800FA6DC end:0x800FA98C
 
+game/GabyouItemFlight.cpp:
+	extab       start:0x8000B74C end:0x8000B754
+	extabindex  start:0x80024008 end:0x80024014
+	.text       start:0x800FA98C end:0x800FB818
+
 game/GabyouItemTick.cpp:
 	extab       start:0x8000B754 end:0x8000B75C
 	extabindex  start:0x80024014 end:0x80024020

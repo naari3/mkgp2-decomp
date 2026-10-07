@@ -2286,3 +2286,18 @@ MiniGame_GetCourseData 80122EFC..80122FD8 precompile gate: actual target compute
 
 
 MiniGame_GetTimerValue 0x801231FC..0x801232D8 precompile audit: target is a complete independent 220B function with 8B EH/12B index. The round normalization reads one 32-bit g_roundIndex and emits xor(round,3), srawi(xor,1), and(xor,round), subf, srwi(result,31), followed by a retained signed-negative guard on normalized r30. This is consistent with signed32 comparison lowering, not positive evidence of native signed64 provenance: no high/low pair or high-word/carry comparison is present. The CoinChallengeInit caller consumes only r3 and xoris 0x8000 for signed32-to-floating conversion. IsCardValid returns 0/1; its caller explicitly narrows to a byte. Both tables are 0xC0 bytes, addressed as course row24B/class8B/round4B. Historical three-form 96.05454%/4B branch-layout gap remains closed absent an independently evidenced signed-int inline accessor or lowering mechanism that predicts retaining the negative guard while removing that exact branch gap. No fourth source probe performed; no genuine matching gain claimed.
+# 2026-10-07 Gabyou flight native draft (NonMatching)
+
+`GabyouItem_FlightAndLockOnTick` (800FA98C,3724B) has a complete native
+C++ draft in `game/GabyouItemFlight.cpp`. Three structural approaches were
+bounded: vector-value declarations (92.63%,0x170 frame), const literal and
+evaluation-order correction (94.72%,0x180 frame), then explicit caller-owned
+vector copies (88.887215%,3752B,0x150 frame). The retained variant reproduces
+the target saved fp31/r27-r31 range and automatic extab100%, but independently
+verified index91.66667% (worker HANDOFF95% corrected)
+and text/register/scheduling residue remain. Higher fuzzy similarity alone
+does not justify promotion. Original-object fallback is linked: genuine gain0.
+The local pointer-shaped declarations represent the observed caller-copy ABI;
+they do not change shared headers. No assembly, manual EH, or foreign ranges
+were absorbed. Do not restart the exhausted allocator/source-shape budget
+without independently evidenced new source provenance.
