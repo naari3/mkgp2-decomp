@@ -2261,3 +2261,11 @@ gain0. Resolve simultaneous split insertions retaining Render then Update;
 remove only the duplicate appended Update entry, without rollback.
 
 OBSERVED: MiniGame_CoinChallenge_Update 0x80214594..0x80214B3C is an independent 1448-byte blob with 8-byte automatic EH (0x288A0000), not an extension of far-disjoint game/MiniGame.c. New game/CoinChallengeUpdate.cpp keeps the following 0x80214B3C..0x80214DB8 gap intact. Real virtual input methods at slots 0x18/0x1C/0x10 and VfxSlotMgr_Update(Vec3,Vec3) naturally reproduce the six-word stack-copy sequence and frame 0x70. Three structural approaches: A full scoped real C++ body 96.11878% (1464B); B explicit owners, signed/int sprite-resource ABI and timer scalar declarations 96.9337% (1460B); C shared FP owner, destructive sprite traversal and inline transition accessor 97.209946% (1456B). Automatic extab 100%; extabindex 95% solely due length. Remaining differences include global owner/coloring, loop walkers/coalescing and input bool widening; no brute-force register/decl permutations were performed. Ghidra unavailable; actual target/callee ASM was used. NonMatching fallback preserves exact full-DOL SHA-1 but is not C matching gain. Retained the complete best draft; further retry needs new structural evidence.
+
+
+CoinChallenge Init 0x80214DB8 singleton: genuine C++ derived ctor reproduces exact 1040B text size and 340B automatic EH (r30 initial new, r29 later new; DESTROYBASE r31). sdata2 must be const to recover base vptr/float scheduling. Camera ABI spelling (int,int,float,float,void*) recovers target argument load order while preserving r4/r5/r6/f1/f2 ABI. Explicit int ternary highRound avoids boolean-byte clrlslwi array-index residue. Three approaches stopped at 98.42308%: constant 1 web hoisted into r30 around two CarObject_GetRenderObj calls vs target li r0 after each call; native member getter spelling invariant. Full C++ draft retained NonMatching; do not count fallback as C progress.
+
+Main independently confirmed text98.42308/EH99.41176/index100, original-object
+link, foreground exit0 and exact full DOL SHA1 on2026-10-07. Retain all three
+independent Render/Update/Init ranges and Object lines in conflict resolution;
+only the Init TU rename key was added. Genuine gain0; no fourth permutation.

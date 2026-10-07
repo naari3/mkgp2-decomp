@@ -1524,5 +1524,22 @@
   "src/game/CardUnpackLegacy.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/CoinChallengeInit.cpp": {
+    "__ct__7CIOwnerFv": "MiniGame_CoinChallenge_Init",
+    "render__5CICarFv": "CarObject_GetRenderObj",
+    "__ct__6CIRootFv": "GameMode_BaseInit",
+    "__dt__6CIBaseFv": "dtor_80122FD8",
+    "__vt__6CIBase": "lbl_8048E144",
+    "__vt__7CIOwner": "lbl_804EDA98",
+    "__ct__7CIInputFv": "InputManager_Init",
+    "__ct__8CICameraFiiffPv": "Camera_Create",
+    "__ct__8CILakituFPCcifff": "LakituStart_Init",
+    "__ct__6CIGoalFv": "ChallengeGoalCamera_Init",
+    "__ct__5CIHudFi": "HUD_Init",
+    "__ct__7CIScoreFi": "ScoreDisplay_Init",
+    "__ct__9CIWeatherFUc": "WeatherSystem_Init",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
