@@ -2335,6 +2335,12 @@ game/GabyouItemFall.cpp:
 	extabindex  start:0x80023FFC end:0x80024008
 	.text       start:0x800FA6DC end:0x800FA98C
 
+game/GabyouItemTick.cpp:
+	extab       start:0x8000B754 end:0x8000B75C
+	extabindex  start:0x80024014 end:0x80024020
+	.text       start:0x800FB818 end:0x800FBBD4
+	.data       start:0x80421818 end:0x80421840
+
 game/BombItem_DropAndSpawnExplosionTick.c:
 	extab       start:0x8000B75C end:0x8000B764
 	extabindex  start:0x80024020 end:0x8002402C
