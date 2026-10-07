@@ -1859,6 +1859,16 @@ game/KartFx.c:
 	extabindex  start:0x80022C1C end:0x80022C28
 	.text       start:0x800B510C end:0x800B53BC
 
+game/KartFxDustPiece.cpp:
+	extab       start:0x8000A7C8 end:0x8000A7D0
+	extabindex  start:0x80022D18 end:0x80022D24
+	.text       start:0x800B8C30 end:0x800B90F8
+
+game/KartFxDust.cpp:
+	extab       start:0x8000A7D0 end:0x8000A7D8
+	extabindex  start:0x80022D24 end:0x80022D30
+	.text       start:0x800B90F8 end:0x800B9170
+
 game/KartFxRingRay.cpp:
 	extab       start:0x8000A7F0 end:0x8000A7F8
 	extabindex  start:0x80022D54 end:0x80022D60
