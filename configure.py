@@ -472,7 +472,7 @@ config.libs = [
             Object(Matching, "game/CObjUnproject.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartDriver_BuildJoint12EulerTransform.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartDriver_SetUniformScale_4Wheels.c", extab_padding=b"\x00\x00"),
-],
+        ],
     },
     {
         "lib": "game",
@@ -773,6 +773,8 @@ config.libs = [
             Object(NonMatching, "game/KartFxJump.cpp", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/KartFxJumpSpawner.cpp", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/KartFxLand.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/KartFxDriftParticle.cpp", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
+            Object(Matching, "game/KartFxDrift.cpp", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(NonMatching, "game/KartFxRingRay.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFxRing.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/NokoNoko_CountDefeated.c"),

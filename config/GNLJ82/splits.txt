@@ -1894,6 +1894,16 @@ game/KartFxLand.cpp:
 	extabindex  start:0x80022D90 end:0x80022DA8
 	.text       start:0x800BA288 end:0x800BA6CC
 
+game/KartFxDriftParticle.cpp:
+	extab       start:0x8000A830 end:0x8000A838
+	extabindex  start:0x80022DB4 end:0x80022DC0
+	.text       start:0x800BA988 end:0x800BABDC
+
+game/KartFxDrift.cpp:
+	extab       start:0x8000A838 end:0x8000A840
+	extabindex  start:0x80022DC0 end:0x80022DCC
+	.text       start:0x800BABDC end:0x800BAF24
+
 game/Effect.c:
 	extab       start:0x8000A950 end:0x8000A960
 	extabindex  start:0x80022F64 end:0x80022F7C
