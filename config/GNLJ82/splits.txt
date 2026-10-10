@@ -1889,6 +1889,11 @@ game/KartFxRing.cpp:
 	extabindex  start:0x80022D60 end:0x80022D78
 	.text       start:0x800B9758 end:0x800B9CB0
 
+game/KartFxLand.cpp:
+	extab       start:0x8000A818 end:0x8000A828
+	extabindex  start:0x80022D90 end:0x80022DA8
+	.text       start:0x800BA288 end:0x800BA6CC
+
 game/Effect.c:
 	extab       start:0x8000A950 end:0x8000A960
 	extabindex  start:0x80022F64 end:0x80022F7C

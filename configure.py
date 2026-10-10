@@ -772,6 +772,7 @@ config.libs = [
             Object(Matching, "game/KartFxDust.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/KartFxJump.cpp", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/KartFxJumpSpawner.cpp", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
+            Object(Matching, "game/KartFxLand.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/KartFxRingRay.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFxRing.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/NokoNoko_CountDefeated.c"),
