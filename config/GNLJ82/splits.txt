@@ -1919,6 +1919,11 @@ game/KartFxDrift.cpp:
 	extabindex  start:0x80022DC0 end:0x80022DCC
 	.text       start:0x800BABDC end:0x800BAF24
 
+game/KartFxHorn.cpp:
+	extab       start:0x8000A840 end:0x8000A848
+	extabindex  start:0x80022DCC end:0x80022DD8
+	.text       start:0x800BAF24 end:0x800BB1FC
+
 game/Effect.c:
 	extab       start:0x8000A950 end:0x8000A960
 	extabindex  start:0x80022F64 end:0x80022F7C
