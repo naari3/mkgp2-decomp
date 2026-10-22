@@ -1929,6 +1929,11 @@ game/KartFxHorn.cpp:
 	extabindex  start:0x80022DCC end:0x80022DD8
 	.text       start:0x800BAF24 end:0x800BB1FC
 
+game/KartFxDriftSparkParticle.cpp:
+	extab       start:0x8000A850 end:0x8000A858
+	extabindex  start:0x80022DE4 end:0x80022DF0
+	.text       start:0x800BBBB8 end:0x800BC028
+
 game/KartFxChargeIcon.cpp:
 	extab       start:0x8000A858 end:0x8000A860
 	extabindex  start:0x80022DF0 end:0x80022DFC
