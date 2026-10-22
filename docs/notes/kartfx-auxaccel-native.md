@@ -1,0 +1,4 @@
+# AuxAccel burst native draft (2026-10-22)
+
+Complete1092B ordinary C++ is NonMatching99.908424 after one full-body approach. EH8/index12 each100. Target root/joint/displacement/currentRoot stack38/2C/20/14 and by-value position copy08 all reproduce. Natural u64 motion flags at kart304+10 preserve both halves of the mask test; Rand_RangeIntMax is signed and %2 must not become bitwise-and. Three distinct angle branches and the forced-zero variant path are retained. Independent opacity decay/growth and size growth clamps are required; expiry uses literal0.0f. Five residual instruction rows800B8348/834C/8350/835C/8364 swap growth and upper-bound f1/f2 identities, same closed FP family as Horn. Actual source-linked DOL differs by exactly five bytes at800B8349/834D/8351/835D/8365; fallback SHA1 exact is separate safety evidence, not C match. No declaration permutations attempted. Future retry requires new FP web/lifetime evidence.
+
