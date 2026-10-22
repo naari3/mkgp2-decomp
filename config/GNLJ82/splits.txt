@@ -1864,6 +1864,11 @@ game/KartFxAuxAccel.cpp:
 	extabindex  start:0x80022D00 end:0x80022D0C
 	.text       start:0x800B8054 end:0x800B8498
 
+game/KartFxSlot60.cpp:
+	extab       start:0x8000A7C0 end:0x8000A7C8
+	extabindex  start:0x80022D0C end:0x80022D18
+	.text       start:0x800B8498 end:0x800B8C30
+
 game/KartFxDustPiece.cpp:
 	extab       start:0x8000A7C8 end:0x8000A7D0
 	extabindex  start:0x80022D18 end:0x80022D24
