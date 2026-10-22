@@ -1930,6 +1930,11 @@ game/KartFxChargeIcon.cpp:
 	.text       start:0x800BC028 end:0x800BC26C
 	.data       start:0x8041A36C end:0x8041A398
 
+game/KartFxDispatchB.cpp:
+	extab       start:0x8000A908 end:0x8000A910
+	extabindex  start:0x80022EF8 end:0x80022F04
+	.text       start:0x800C253C end:0x800C26EC
+
 game/Effect.c:
 	extab       start:0x8000A950 end:0x8000A960
 	extabindex  start:0x80022F64 end:0x80022F7C
