@@ -779,6 +779,7 @@ config.libs = [
             Object(NonMatching, "game/KartFxDriftParticle.cpp", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/KartFxDrift.cpp", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(NonMatching, "game/KartFxHorn.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/KartFxChargeIcon.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/KartFxRingRay.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFxRing.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/NokoNoko_CountDefeated.c"),
@@ -1183,12 +1184,38 @@ def _inject_kart_character_data_alignment() -> None:
     build_ninja.write_text(text, encoding="utf-8")
 
 
+def _inject_kartfx_chargeicon_data_alignment() -> None:
+    """Preserve the original four-byte alignment of this owned jump table.
+
+    The TU has only native text, one jump table and plain EH8/index12, with
+    no common/BSS or weak lifetime objects. MWLD's .comment alignment would
+    otherwise round the table to eight bytes. No code/data/EH bytes change.
+    """
+    build_ninja = Path("build.ninja")
+    text = build_ninja.read_text(encoding="utf-8")
+    target = "build build\\GNLJ82\\src\\game\\KartFxChargeIcon.o: mwcc_sjis_extab"
+    if sys.platform != "win32":
+        target = "build build/GNLJ82/src/game/KartFxChargeIcon.o: mwcc_sjis_extab"
+    if target not in text:
+        return
+    start = text.index("rule mwcc_sjis_extab\n")
+    end = text.index("\nrule ", start + 1)
+    rule = text[start:end].replace("rule mwcc_sjis_extab\n", "rule mwcc_sjis_chargeicon\n", 1)
+    hook = " && $python tools/postprocess_sdata2.py $out $out"
+    assert hook in rule
+    rule = rule.replace(hook, hook + ' && "C:/Program Files/LLVM/bin/llvm-objcopy.exe" --remove-section .comment --set-section-alignment .data=4 $out', 1)
+    text = text.replace(target, target.replace("mwcc_sjis_extab", "mwcc_sjis_chargeicon"), 1)
+    text = text[:start] + rule + "\n" + text[start:]
+    build_ninja.write_text(text, encoding="utf-8")
+
+
 if args.mode == "configure":
     # Write build.ninja and objdiff.json
     generate_build(config)
     _inject_sdata2_postprocess(config)
     _inject_jvs_metrics_ctor_bridge()
     _inject_kart_character_data_alignment()
+    _inject_kartfx_chargeicon_data_alignment()
 elif args.mode == "progress":
     # Print progress information
     calculate_progress(config)
