@@ -1937,6 +1937,11 @@ game/DebrisArray.cpp:
 	extabindex  start:0x80022BF8 end:0x80022C04
 	.text       start:0x800B4B20 end:0x800B4C28
 
+game/KartFootEffect_Spawn.c:
+	extab       start:0x8000A718 end:0x8000A720
+	extabindex  start:0x80022C10 end:0x80022C1C
+	.text       start:0x800B5020 end:0x800B510C
+
 game/KartFx.c:
 	extab       start:0x8000A720 end:0x8000A728
 	extabindex  start:0x80022C1C end:0x80022C28

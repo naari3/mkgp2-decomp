@@ -367,6 +367,7 @@ config.libs = [
             Object(NonMatching, "game/Items.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/ClStrPcb.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/OperationClock.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/KartFootEffect_Spawn.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/SceneDrawList.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/RaceContextSlot.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/RaceContextSlotDriver.c"),
