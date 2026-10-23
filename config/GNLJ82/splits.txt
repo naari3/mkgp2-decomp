@@ -1950,6 +1950,11 @@ game/KartFxExhaustRay.cpp:
 	extabindex  start:0x80022E08 end:0x80022E14
 	.text       start:0x800BD1BC end:0x800BD900
 
+game/KartFxDispatchE.cpp:
+	extab       start:0x8000A8C8 end:0x8000A8D0
+	extabindex  start:0x80022E98 end:0x80022EA4
+	.text       start:0x800C0398 end:0x800C0B04
+
 game/KartFxDispatchD.cpp:
 	extab       start:0x8000A8E8 end:0x8000A8F0
 	extabindex  start:0x80022EC8 end:0x80022ED4
