@@ -1950,6 +1950,11 @@ game/KartFxChargeIcon.cpp:
 	.text       start:0x800BC028 end:0x800BC26C
 	.data       start:0x8041A36C end:0x8041A398
 
+game/KartFxBurnout.cpp:
+	extab       start:0x8000A860 end:0x8000A868
+	extabindex  start:0x80022DFC end:0x80022E08
+	.text       start:0x800BC26C end:0x800BD1BC
+
 game/KartFxExhaustRay.cpp:
 	extab       start:0x8000A868 end:0x8000A870
 	extabindex  start:0x80022E08 end:0x80022E14

@@ -788,6 +788,7 @@ config.libs = [
             Object(NonMatching, "game/KartFxDispatchD.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/KartFxRingRay.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/KartFxExhaustRay.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/KartFxBurnout.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFxRing.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFxDispatchB.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/NokoNoko_CountDefeated.c"),
