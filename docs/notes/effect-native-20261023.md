@@ -41,3 +41,7 @@ First native C++ approach matches text408/automatic EH8/index12 100%. Signed-byt
 ## DriftExplosion Res79 Update (800C7230, 572 bytes)
 
 First native C++ structural trial matches text572/automatic EH8/index12 completely. Ground type query writes position.y directly; ground pitch probes and Mtx44_Translate consume Vec by value, producing four caller-owned copies and frame0x80. Signed-byte two-case switch, five-frame fade delay, growth/scale update and four unsigned countdowns. CW1.3.2 no lmw. Source-linked whole DOL SHA verified. Narrow target-observed field views because live Ghidra unavailable; no ASM/manual EH.
+
+## Res77or78 Variant Update (800C746C, 492 bytes)
+
+Native C++ CW132 draft retained NonMatching at 99.796745%; exact492B shape and automatic EH8/index12 all100. Trial1 direct growth clamp and trial2 named clamp-limit local emitted identical five f1/f2 operand differences in growth versus limit. Stop after two no-new-evidence approaches; do not repeat clamp-limit naming. No own data sections. Narrow target-observed field view; live Ghidra unavailable. Final main.elf uses obj/game/EffectVariant77.o fallback (not src); full DOL SHA-1 passes with zero genuine gain.

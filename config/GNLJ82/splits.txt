@@ -2085,6 +2085,11 @@ game/EffectDrift79.cpp:
 	extabindex  start:0x8002309C end:0x800230A8
 	.text       start:0x800C7230 end:0x800C746C
 
+game/EffectVariant77.cpp:
+	extab       start:0x8000AA28 end:0x8000AA30
+	extabindex  start:0x800230A8 end:0x800230B4
+	.text       start:0x800C746C end:0x800C7658
+
 game/VfxEffect_UpdateChildPosScaleAlpha_Helper.c:
 	extab       start:0x8000AA40 end:0x8000AA48
 	extabindex  start:0x800230CC end:0x800230D8
