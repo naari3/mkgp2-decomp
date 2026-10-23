@@ -1529,6 +1529,11 @@ game/CardUnpackLegacy.cpp:
 	extabindex  start:0x80021EA8 end:0x80021EB4
 	.text       start:0x8009060C end:0x80090848
 
+game/Items.cpp:
+	extab       start:0x800093B0 end:0x800093B8
+	extabindex  start:0x80021EB4 end:0x80021EC0
+	.text       start:0x80090848 end:0x80090C88
+
 game/GetKartParamBlock.c:
 	.text       start:0x80090FF0 end:0x8009107C
 
