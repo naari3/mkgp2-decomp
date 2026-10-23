@@ -59,3 +59,7 @@ First native C++ trial signed-byte two-state switch matched text172/automatic EH
 ## Res76 MatrixSource Init (800C8038,136 bytes)
 
 First native C++ structural trial matches text136/automatic EH8/index12 all100. Signed-byte state switch with explicit empty case1, resource76 binding and matrix-source enable then zero rotationZ(+A0)/matrixPhase(+150), scale(+B0) one and visible(+28) zero. CW132 no lmw. Actual multiline main.elf source input verified, no own fallback/old auto object, whole DOL SHA matches. Narrow target-observed field views; live Ghidra types unavailable. No ASM/manual EH.
+
+## Explosion Compound Update (800C7658, 704 bytes)
+
+First native C++ structural trial matches text704/automatic EH8/index12 all100. State0 spawns two variants, ground/joint effects and optional ten sparks, falling through state1; termination signals the retained child and spawns six radial pieces. Separate initialization-child and final-loop piece locals reproduce r29 versus r30 lifetimes. Signed mode/finished bytes and Vec pointer ABI match. CW132 no lmw. Actual multiline main.elf source input verified with no target/auto fallback; full DOL SHA matches. Narrow target-observed field views because live Ghidra unavailable. No ASM/manual EH; exhausted callbacks remain untouched.
