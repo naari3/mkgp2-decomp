@@ -1567,5 +1567,10 @@
     "__vt__7PcbBase": "lbl_803F5710",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__vt__12PcbMidInline": "lbl_803F5700"
+  },
+  "src/game/DebrisArray.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__15DebrisResponderF9DebrisVec9DebrisVec": "clItemBoxResponder_SpawnDebris"
   }
 }

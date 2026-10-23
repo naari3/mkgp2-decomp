@@ -1904,6 +1904,16 @@ game/DebrisArray_DrawForward.c:
 	extabindex  start:0x80022BE0 end:0x80022BEC
 	.text       start:0x800B4AAC end:0x800B4AD0
 
+game/DebrisArrayDraw.cpp:
+	extab       start:0x8000A6F0 end:0x8000A6F8
+	extabindex  start:0x80022BEC end:0x80022BF8
+	.text       start:0x800B4AD0 end:0x800B4B20
+
+game/DebrisArray.cpp:
+	extab       start:0x8000A6F8 end:0x8000A710
+	extabindex  start:0x80022BF8 end:0x80022C04
+	.text       start:0x800B4B20 end:0x800B4C28
+
 game/KartFx.c:
 	extab       start:0x8000A720 end:0x8000A728
 	extabindex  start:0x80022C1C end:0x80022C28

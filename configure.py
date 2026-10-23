@@ -619,6 +619,8 @@ config.libs = [
             Object(Matching, "game/EffectSteeringCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectActor_BindKartTargetPair.c"),
             Object(Matching, "game/DebrisArray_DrawForward.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/DebrisArrayDraw.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/DebrisArray.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/DemoFlow_ResetTwoFlags.c"),
             Object(Matching, "game/ItemObject_RaycastWallStub.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Item_DecayVelocityScalar.c"),
