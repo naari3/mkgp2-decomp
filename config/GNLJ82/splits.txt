@@ -2005,6 +2005,11 @@ game/EffectKartOrbitSpark.cpp:
 	extabindex  start:0x80022FE8 end:0x80022FF4
 	.text       start:0x800C55C0 end:0x800C57E4
 
+game/EffectSparkPlain.cpp:
+	extab       start:0x8000A9B0 end:0x8000A9B8
+	extabindex  start:0x80022FF4 end:0x80023000
+	.text       start:0x800C57E4 end:0x800C59E0
+
 game/VfxEffect_InitVariantAndResetPos.c:
 	extab       start:0x8000A9D8 end:0x8000A9E0
 	extabindex  start:0x80023030 end:0x8002303C
