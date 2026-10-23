@@ -1556,5 +1556,16 @@
   "src/game/VfxSpritePopup.cpp": {
     "__ct__12PopupResCtrlFv": "ResCtrl_Init",
     "__dt__12PopupResCtrlFv": "dtor_80082960"
+  },
+  "src/game/ClStrPcb.cpp": {
+    "__dt__8ClStrPcbFv": "ClStrPcb_Dtor",
+    "__dt__6PcbMidFv": "ClStrPcb_Mid_Dtor",
+    "__dt__7PcbBaseFv": "dtor_80038DD4",
+    "__dt__9SharedPtrFv": "dtor_80038E30",
+    "__vt__8ClStrPcb": "lbl_803F56F0",
+    "__vt__6PcbMid": "lbl_803F5700",
+    "__vt__7PcbBase": "lbl_803F5710",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__12PcbMidInline": "lbl_803F5700"
   }
 }
