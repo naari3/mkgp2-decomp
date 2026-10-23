@@ -2065,6 +2065,11 @@ game/VfxEffect_UpdateTwoChildSpinAndSound_Helper.c:
 	extabindex  start:0x8002306C end:0x80023078
 	.text       start:0x800C6A40 end:0x800C6CB0
 
+game/EffectTwoChild8F.cpp:
+	extab       start:0x8000AA08 end:0x8000AA10
+	extabindex  start:0x80023078 end:0x80023084
+	.text       start:0x800C6CB0 end:0x800C6DB4
+
 game/VfxEffect_UpdateChildPosScaleAlpha_Helper.c:
 	extab       start:0x8000AA40 end:0x8000AA48
 	extabindex  start:0x800230CC end:0x800230D8

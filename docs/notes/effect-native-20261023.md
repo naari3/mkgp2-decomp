@@ -25,3 +25,7 @@ Native C switch with case0 fallthrough into case1, then case2 attachment update,
 ## StarBurst Update (800C59E0, 672 bytes)
 
 StarBurst Update (800C59E0..800C5C80): complete native C draft reaches 99.40476%; target672B versus source668B. Three structural approaches (switch without explicit default; trailing default break; leading default break) produced identical result: target has an additional unreachable branch at +0x44 after switch dispatch. Remaining body and register identities agree. Automatic extab8 is100%; index12 section91.66667% (symbol95%) differs in function length. No own data section. Stop after3 trials; final SHA success uses honest NonMatching fallback and gives zero genuine gain. A future evidence-led investigation could compare C versus C++ switch lowering: neighboring Effect implementations are C++, while requested EffectStarBurst.c was compiled in C mode. That language-mode hypothesis is untested; do not repeat default-placement variants. Live Ghidra unavailable; target-observed field view and existing VfxSlot ABI used.
+
+## TwoChild Res8F Update (800C6CB0, 260 bytes)
+
+First native C++ approach matched text260/automatic EH8/index12 100%. Explicit case0 spawn loop and case1 break preserve two-way switch lowering. Group at +0xCC, child pointers at group+0x10/+0x14, signed sound handle at group+0xC4. CW132 use_lmw_stmw on matches r26-r31 save range. Source-linked DOL SHA-1 verified; no ASM/manual EH. Narrow target-observed field views, live Ghidra unavailable.
