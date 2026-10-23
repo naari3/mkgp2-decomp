@@ -17,3 +17,7 @@ Open-coded phases: 96.59091%; separating free-slot and cleanup-index lifetimes: 
 ## KartJoint15 Res7B Update (800C64A8, 532 bytes)
 
 First structural trial matched native C text532/automatic EH8/index12 100%. Root and joint translations are caller-owned Vec locals; position and rotation VfxSlot setters take Vec by value. Four unsigned countdowns, signed-byte state switch, and direct scale/growth expressions reproduce CW132 output. No live Ghidra lookup; local types describe target-observed offsets only. Source-linked main.elf input and whole target DOL SHA verified.
+
+## KartAttach Res59 Update (800C66BC, 492 bytes)
+
+Native C switch with case0 fallthrough into case1, then case2 attachment update, four independent unsigned countdowns. Trial1 99.51219% differed only cmpwi/cmpli for finished byte at +0x1E; signed char finished yields cmpwi without an extsb in equality-to-one check. Trial2 complete text492/EH8/index12 agreement and source-linked DOL SHA-1. CW1.3.2 with automatic EH, no lmw. Local target-observed struct views, no live Ghidra types available.
