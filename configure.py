@@ -480,6 +480,7 @@ config.libs = [
         "cflags": cflags_base,
         "progress_category": "game",
         "objects": [
+            Object(NonMatching, "game/EffectCompoundRing.cpp", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/CommBroadcast.c"),
             Object(Matching, "game/TitleTracker_Stubs.c"),
             Object(Matching, "game/KartItemAudio.c"),
