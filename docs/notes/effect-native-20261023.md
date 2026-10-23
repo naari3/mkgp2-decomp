@@ -97,3 +97,8 @@ First native C++ structural trial matches text160/automatic EH8/index12 all100. 
 ## TwoChild Rotate FromPhase150 (800CCC84,452 bytes)
 
 Native C++ typed pair update retained NonMatching97.30089%. Trial1 mutable constant-pool declarations90.176994%; trial2 correct const pool declarations97.30089% restores load scheduling. Exact452B and automatic EH8/index12 all100; remaining initial group/flag instruction order and alpha/phase clamp FP identities belong to known residual classes. Stop after2 approaches; no scalar spelling permutations. Child-loop body agrees including opposite rotation constants, Vec-by-value position setter and scale/alpha updates. CW132 exceptions on, no lmw. Actual multiline main.elf uses obj/game/EffectRotatePair.o fallback, not source; whole DOL SHA passes with zero genuine gain. Narrow target-observed views, live Ghidra unavailable, no ASM/manualEH.
+
+
+## TwoChild Res3C/3D Init (800CCE48,268 bytes)
+
+Native C++ trial1 exact268B at98.95522% differed only in group/index r27/r28 homes. Trial2 declares group before loop index, producing target group r28/index r27: text268/automatic EH8/index12 all100. Typed group+CC holds children+10/+14, resets phase+84/rotation+88/flag+C4; cleanup explicitly frees both then clears both links. CW132 exceptions and lmw on. Actual multiline main.elf source input and full DOL SHA verified. Narrow target-observed layouts because live Ghidra unavailable; no ASM/manualEH.
