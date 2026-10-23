@@ -2060,6 +2060,11 @@ game/EffectKartAttach59.c:
 	extabindex  start:0x80023054 end:0x80023060
 	.text       start:0x800C66BC end:0x800C68A8
 
+game/EffectBurst8F.cpp:
+	extab       start:0x8000A9F8 end:0x8000AA00
+	extabindex  start:0x80023060 end:0x8002306C
+	.text       start:0x800C68A8 end:0x800C6A40
+
 game/VfxEffect_UpdateTwoChildSpinAndSound_Helper.c:
 	extab       start:0x8000AA00 end:0x8000AA08
 	extabindex  start:0x8002306C end:0x80023078

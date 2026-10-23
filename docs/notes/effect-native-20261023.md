@@ -33,3 +33,7 @@ First native C++ approach matched text260/automatic EH8/index12 100%. Explicit c
 ## Spark Res72 Update (800C6DB4, 480 bytes)
 
 First structural trial native C++ switch matched text480/EH8/index12 completely. Spark72 velocity is +0xA4, position +0x8C, alpha +0x2C, scale +0xB0, signed state +0xB4, unsigned countdowns +0x180. Initialization uses randomized launch vector/rotations/scale and signed-byte cast of Rand_RangeInt(30,60); update applies gravity and fade. CW1.3.2 automatic EH, Vec-by-value slot setter, no lmw. Source-linked whole DOL SHA verified. Local target-observed layout, no live Ghidra type lookup.
+
+## Burst Res8F Update (800C68A8, 408 bytes)
+
+First native C++ approach matches text408/automatic EH8/index12 100%. Signed-byte switch has state0 initialization and explicit empty state1, followed by timer0 expiry early return, velocity addition, randomized rotation/scale, and four independent unsigned countdowns. Vec position setter takes Vec by value. CW1.3.2, no lmw, automatic EH, no ASM. Target-observed narrow layout because live Ghidra types unavailable. Multiline main.elf inputs use source object, exclude target fallback; whole DOL SHA verified.
