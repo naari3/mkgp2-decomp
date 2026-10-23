@@ -2005,6 +2005,11 @@ game/EffectSmokeRing3.cpp:
 	extabindex  start:0x80022FB8 end:0x80022FC4
 	.text       start:0x800C46AC end:0x800C48D8
 
+game/EffectDustBurst4.cpp:
+	extab       start:0x8000A990 end:0x8000A998
+	extabindex  start:0x80022FC4 end:0x80022FD0
+	.text       start:0x800C48D8 end:0x800C4C30
+
 game/EffectKartOrbitSpark.cpp:
 	extab       start:0x8000A9A8 end:0x8000A9B0
 	extabindex  start:0x80022FE8 end:0x80022FF4
