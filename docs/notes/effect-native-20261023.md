@@ -92,3 +92,8 @@ Native C++ trial1 separate loop-index lifetimes93.42857% with exact280B but grou
 ## BindRes31or34 Init (800CCBE4,160 bytes)
 
 First native C++ structural trial matches text160/automatic EH8/index12 all100. Signed-byte state switch with explicit empty case1; variant+0x10 selects resource31/34, visible+0x28 resets and state+0xB4 increments. Common signed finished+0xC9 test frees effect. CW132 no lmw, no own data. Actual multiline main.elf source input verified with no target/auto fallback; full DOL SHA matches. Narrow target-observed field views because live Ghidra unavailable; no ASM/manual EH.
+
+
+## TwoChild Rotate FromPhase150 (800CCC84,452 bytes)
+
+Native C++ typed pair update retained NonMatching97.30089%. Trial1 mutable constant-pool declarations90.176994%; trial2 correct const pool declarations97.30089% restores load scheduling. Exact452B and automatic EH8/index12 all100; remaining initial group/flag instruction order and alpha/phase clamp FP identities belong to known residual classes. Stop after2 approaches; no scalar spelling permutations. Child-loop body agrees including opposite rotation constants, Vec-by-value position setter and scale/alpha updates. CW132 exceptions on, no lmw. Actual multiline main.elf uses obj/game/EffectRotatePair.o fallback, not source; whole DOL SHA passes with zero genuine gain. Narrow target-observed views, live Ghidra unavailable, no ASM/manualEH.

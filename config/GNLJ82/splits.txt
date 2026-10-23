@@ -2160,6 +2160,11 @@ game/EffectInit31.cpp:
 	extabindex  start:0x800232E8 end:0x800232F4
 	.text       start:0x800CCBE4 end:0x800CCC84
 
+game/EffectRotatePair.cpp:
+	extab       start:0x8000ABB0 end:0x8000ABB8
+	extabindex  start:0x800232F4 end:0x80023300
+	.text       start:0x800CCC84 end:0x800CCE48
+
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738
