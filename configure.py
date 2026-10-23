@@ -1187,7 +1187,7 @@ def _inject_kart_character_data_alignment() -> None:
     rule = text[start:end].replace("rule mwcc_sjis\n", "rule mwcc_sjis_kart_character\n", 1)
     hook = " && $python tools/postprocess_sdata2.py $out $out"
     assert hook in rule
-    rule = rule.replace(hook, hook + ' && "C:/Program Files/LLVM/bin/llvm-objcopy.exe" --remove-section .comment --set-section-alignment .data=4 $out', 1)
+    rule = rule.replace(hook, hook + " && $python tools/postprocess_data_alignment.py $out", 1)
     text = text.replace(target, target.replace("mwcc_sjis", "mwcc_sjis_kart_character"), 1)
     text = text[:start] + rule + "\n" + text[start:]
     build_ninja.write_text(text, encoding="utf-8")
@@ -1212,7 +1212,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
     rule = text[start:end].replace("rule mwcc_sjis_extab\n", "rule mwcc_sjis_chargeicon\n", 1)
     hook = " && $python tools/postprocess_sdata2.py $out $out"
     assert hook in rule
-    rule = rule.replace(hook, hook + ' && "C:/Program Files/LLVM/bin/llvm-objcopy.exe" --remove-section .comment --set-section-alignment .data=4 $out', 1)
+    rule = rule.replace(hook, hook + " && $python tools/postprocess_data_alignment.py $out", 1)
     text = text.replace(target, target.replace("mwcc_sjis_extab", "mwcc_sjis_chargeicon"), 1)
     text = text[:start] + rule + "\n" + text[start:]
     build_ninja.write_text(text, encoding="utf-8")
