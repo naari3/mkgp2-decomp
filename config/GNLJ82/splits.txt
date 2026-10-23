@@ -2070,6 +2070,11 @@ game/EffectTwoChild8F.cpp:
 	extabindex  start:0x80023078 end:0x80023084
 	.text       start:0x800C6CB0 end:0x800C6DB4
 
+game/EffectSpark72.cpp:
+	extab       start:0x8000AA10 end:0x8000AA18
+	extabindex  start:0x80023084 end:0x80023090
+	.text       start:0x800C6DB4 end:0x800C6F94
+
 game/VfxEffect_UpdateChildPosScaleAlpha_Helper.c:
 	extab       start:0x8000AA40 end:0x8000AA48
 	extabindex  start:0x800230CC end:0x800230D8

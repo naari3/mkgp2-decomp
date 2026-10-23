@@ -29,3 +29,7 @@ StarBurst Update (800C59E0..800C5C80): complete native C draft reaches 99.40476%
 ## TwoChild Res8F Update (800C6CB0, 260 bytes)
 
 First native C++ approach matched text260/automatic EH8/index12 100%. Explicit case0 spawn loop and case1 break preserve two-way switch lowering. Group at +0xCC, child pointers at group+0x10/+0x14, signed sound handle at group+0xC4. CW132 use_lmw_stmw on matches r26-r31 save range. Source-linked DOL SHA-1 verified; no ASM/manual EH. Narrow target-observed field views, live Ghidra unavailable.
+
+## Spark Res72 Update (800C6DB4, 480 bytes)
+
+First structural trial native C++ switch matched text480/EH8/index12 completely. Spark72 velocity is +0xA4, position +0x8C, alpha +0x2C, scale +0xB0, signed state +0xB4, unsigned countdowns +0x180. Initialization uses randomized launch vector/rotations/scale and signed-byte cast of Rand_RangeInt(30,60); update applies gravity and fade. CW1.3.2 automatic EH, Vec-by-value slot setter, no lmw. Source-linked whole DOL SHA verified. Local target-observed layout, no live Ghidra type lookup.
