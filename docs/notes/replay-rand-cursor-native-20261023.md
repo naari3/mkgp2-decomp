@@ -1,0 +1,3 @@
+
+## ReplayRandCursor native C (2026-10-23)
+Both functions in auto_03_800A078C_text form a contiguous 40B TU with no EH or data. Advance uses the global unsigned cursor, ignoring self. Postincrement modulo and explicit old-cursor/increment forms both compile with quotient r0/increment r3 (97.14286%). Computing the remainder into a result local before incrementing the cursor produces quotient r3/increment r0 and exact target code. Reset matches a plain zero assignment. Third trial direct text 100%, no data/extab/index on either object, source object on actual main.elf edge, and full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65 verified. No struct fields are accessed; committed Ghidra dump provides names only; target ASM is sufficient for this scalar ABI.

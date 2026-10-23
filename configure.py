@@ -483,6 +483,7 @@ config.libs = [
         "cflags": cflags_base,
         "progress_category": "game",
         "objects": [
+            Object(Matching, "game/ReplayRandCursor.c"),
             Object(Matching, "game/RaceContextArray.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/RaceContextArrayInit.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/EffectSmokeRing3.cpp", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),

@@ -1652,6 +1652,9 @@ game/Rand.c:
 	extabindex  start:0x80022274 end:0x8002228C
 	.text       start:0x800A06D0 end:0x800A073C
 
+game/ReplayRandCursor.c:
+	.text       start:0x800A078C end:0x800A07B4
+
 game/GameModeBase_FrameUpdate2.cpp:
 	extab       start:0x80009780 end:0x80009788
 	extabindex  start:0x80022298 end:0x800222A4
