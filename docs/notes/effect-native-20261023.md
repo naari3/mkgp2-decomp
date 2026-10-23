@@ -13,3 +13,7 @@ Complete native draft retained NonMatching at 99.684685%; automatic EH/index agr
 ## SparkSprayCompound Update (800C5DAC, 528 bytes)
 
 Open-coded phases: 96.59091%; separating free-slot and cleanup-index lifetimes: 96.931816%. The remaining cleanup initialization sequence was resolved by composing the final release loop as a static inline helper. Third approach text528/EH8/index12 all100, source-linked target DOL SHA-1. This TU needs use_lmw_stmw on (r27-r31 saves), unlike adjacent PlaceChildren. After splitting, auto_Effect_SparkSprayCom_text.o is foreign Init800CD4BC..800CD5F4 (312B), not Update fallback: inspect actual symbols/ranges rather than object-name substring alone. No live Ghidra type lookup, ASM or manual EH.
+
+## KartJoint15 Res7B Update (800C64A8, 532 bytes)
+
+First structural trial matched native C text532/automatic EH8/index12 100%. Root and joint translations are caller-owned Vec locals; position and rotation VfxSlot setters take Vec by value. Four unsigned countdowns, signed-byte state switch, and direct scale/growth expressions reproduce CW132 output. No live Ghidra lookup; local types describe target-observed offsets only. Source-linked main.elf input and whole target DOL SHA verified.
