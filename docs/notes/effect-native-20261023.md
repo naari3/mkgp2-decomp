@@ -107,3 +107,8 @@ Native C++ trial1 exact268B at98.95522% differed only in group/index r27/r28 hom
 ## BindRes5Aor5B AnimSpeed (800CCF54,284 bytes)
 
 First native C++ structural trial matches text284/automatic EH8/index12 all100. Slot resource byte+1C chooses 5A frame-controlled phase below one versus 5B animation speed one; visibility follows nonzero phase, then transposed matrix and translation propagate to effect fields. CW132 exceptions on, no lmw, no own data. Actual multiline main.elf links native source without target/old auto fallback; full DOL SHA matches. Narrow target-observed field views because live Ghidra unavailable; no ASM/manual EH.
+
+
+## SeC2 Positional Update (800CD070,280 bytes)
+
+First native C++ structural trial matches text280/automatic EH8/index12 all100. Signed state+0xB4, finished+0xC9 and channel+0x190 preserve comparisons; initialization clears visible/timer and sets channel to -1. Sound start/update take Vec by value, yielding two caller-owned position copies. CW132 exceptions on, no lmw, no own data. Actual multiline main.elf links native source with no target/auto fallback; whole DOL SHA matches. Narrow target-observed field views because live Ghidra unavailable; no ASM/manualEH.
