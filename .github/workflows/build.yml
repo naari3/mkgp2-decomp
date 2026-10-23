@@ -43,6 +43,9 @@ jobs:
       - name: Prepare
         run: cp -a /orig .
 
+      - name: Test operational tooling
+        run: python -m unittest discover -s tools -p 'test_operations.py' -v
+
       - name: Cache build
         uses: actions/cache@v4
         with:
@@ -87,17 +90,26 @@ jobs:
           git config --global user.name github-actions
           git config --global user.email actions@github.com
           TS="$(git log -1 --format=%cI "$GITHUB_SHA")"
+          published=0
           for i in 1 2 3 4 5; do
             python tools/progress_history.py append \
                 --report build/${{ matrix.version }}/report.json \
                 --history .progress-data/history/${{ matrix.version }}.jsonl \
                 --sha "$GITHUB_SHA" --ts "$TS"
-            git -C .progress-data add -A
-            git -C .progress-data commit -m "progress: ${GITHUB_SHA::9}" || break
-            git -C .progress-data push origin ci-progress:progress-data && break
+            git -C .progress-data add history/${{ matrix.version }}.jsonl
+            if git -C .progress-data diff --cached --quiet; then
+              published=1
+              break
+            fi
+            git -C .progress-data commit -m "progress: ${GITHUB_SHA::9}"
+            if git -C .progress-data push origin ci-progress:progress-data; then
+              published=1
+              break
+            fi
             git fetch origin progress-data
             git -C .progress-data reset --hard origin/progress-data
           done
+          test "$published" = 1 || { echo "progress history push exhausted retries" >&2; exit 1; }
 
       - name: Generate progress page
         if: github.ref == 'refs/heads/main' && matrix.version == 'GNLJ82'

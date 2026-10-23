@@ -26,6 +26,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from scan_asm_fns import scan_repo  # noqa: E402
+from progress_metrics import is_nonmatching, source_metrics  # noqa: E402
 
 # asm_fn / NonMatching accent (amber / red) — used in treemap, tables, timeline
 C_ASM = "#b58a00"
@@ -247,7 +248,7 @@ def build_treemap(
         inner_rects: List[Tuple[float, float, float, float]] = [(0.0, 0.0, 0.0, 0.0)] * len(fns)
         _binary_split((x, y, w, h), list(range(len(fns))), fn_sums, 0.0, fn_total, inner_rects)
 
-        unit_nonmatching = u["name"] in nonmatching_units
+        unit_nonmatching = is_nonmatching(u, nonmatching_units)
         for f, (fx, fy, fw, fh) in zip(fns, inner_rects):
             if fw < 0.5 or fh < 0.5:
                 continue  # cull below visible pixel
@@ -398,7 +399,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <div class="card"><div class="label">Linked (complete)</div><div class="value">{complete_pct:.2f}%</div>
       <div class="sub">{complete_units} / {total_units} files</div></div>
     <div class="card"><div class="label">True C matched</div><div class="value">{true_pct:.2f}%</div>
-      <div class="sub">{true_bytes} · asm_fn {asm_fn_count} 本 ({asm_bytes}) を除外</div></div>
+      <div class="sub">{true_bytes} · linked source / exact native functions only (ASM・未リンク除外)</div></div>
     <div class="card"><div class="label">Matched functions</div><div class="value">{matched_fns} / {total_fns}</div>
       <div class="sub">{fn_pct:.2f}% · うち asm_fn {asm_fn_count}</div></div>
     <div class="card"><div class="label">Fuzzy match</div><div class="value">{fuzzy_pct:.2f}%</div>
@@ -506,7 +507,7 @@ def unit_row(
     asm_part = (
         f' <span style="color:{C_ASM}">(asm {n_asm})</span>' if n_asm else ""
     )
-    if u["name"] in (nonmatching_units or set()):
+    if is_nonmatching(u, nonmatching_units or set()):
         status = f'<span style="color:{C_NONMATCH}">nonmatching</span>'
     elif complete:
         status = f'<span style="color:#1f9d3a">linked</span>{asm_part}'
@@ -588,7 +589,9 @@ def timeline_points(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     prev: Optional[float] = None
     for r in rows:
         m = _to_float(r["matched_code_percent"])
-        c = r.get("true_matched_code_percent")
+        # Version 1 subtracted global ASM bytes and included unlinked matches.
+        # Do not join incomparable historical values into the corrected series.
+        c = r.get("true_matched_code_percent") if r.get("true_c_metric_version") == 2 else None
         pts.append({
             "t": round(_parse_ts(r["ts"]).timestamp()),
             "date": r["ts"][:16].replace("T", " "),
@@ -1234,11 +1237,8 @@ def main() -> int:
     # asm_fn / NonMatching scan (repo-tracked sources; graceful degrade)
     try:
         scan = scan_repo()
-    except Exception as e:  # noqa: BLE001 — page must still build without src
-        print(f"warn: asm_fn scan failed ({e}); true-C metrics omitted",
-              file=sys.stderr)
-        scan = {"asm_fns": {}, "nonmatching_units": [],
-                "asm_fn_count": 0, "asm_fn_code": 0}
+    except Exception as e:
+        raise RuntimeError("Cannot publish trustworthy native metrics: source scan failed") from e
     asm_names = set(scan["asm_fns"])
     # report unit names have no extension (e.g. "game/ItemTracker");
     # configure.py NonMatching paths do — normalize both ways
@@ -1246,7 +1246,7 @@ def main() -> int:
     nonmatching_units |= {n.rsplit(".", 1)[0] for n in scan["nonmatching_units"]}
     asm_fn_count = scan["asm_fn_count"]
     asm_fn_code = scan["asm_fn_code"]
-    true_matched_code = max(0, measures.matched_code - asm_fn_code)
+    true_matched_code = source_metrics(report, scan)["true_matched_code"]
     true_pct = (true_matched_code / measures.total_code * 100.0) if measures.total_code else 0.0
 
     # per-unit asm counts for the tables (match by report fn names)
