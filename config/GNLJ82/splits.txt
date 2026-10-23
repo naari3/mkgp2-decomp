@@ -1508,6 +1508,11 @@ game/TEXPaletteAccessors.c:
 	extabindex  start:0x80021DC4 end:0x80021DD0
 	.text       start:0x8008E5BC end:0x8008E63C
 
+game/TEXLoadPalette.cpp:
+	extab       start:0x800092D8 end:0x800092E8
+	extabindex  start:0x80021DD0 end:0x80021DE8
+	.text       start:0x8008E63C end:0x8008E9A0
+
 game/CardTaskPrintJob_IsRunning_Thunk.cpp:
 	extab       start:0x80009310 end:0x80009318
 	extabindex  start:0x80021E24 end:0x80021E30

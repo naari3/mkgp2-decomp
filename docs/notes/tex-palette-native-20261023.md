@@ -1,0 +1,4 @@
+
+## TEXLoadPalette and retry: native 868 B
+
+Target singleton groups contain loader 8008E63C..8008E940 and retry 8008E940..8008E9A0; automatic EH 92D8..92E8 and index 21DD0..21DE8. New typed DVDFileInfo and TPL views recover disk/header/decompression and serialized offset fixups. Loader alone needs use_lmw_stmw on; pragma reset preserves retry individual stw prologue. Trial 1 loader 98.445595%, retry 100%; trial 2 heap-before-diskSize declaration and byte-swap expression order fixes reached 99.14508%, leaving only relocation loop r3/r4 index/scratch swap. Trial 3 moved relocation into a natural static inline RelocatePalette helper, producing both functions 100% and both automatic EH/index sections 100%; no helper out-of-line emission. All native source linking, no ASM/manual EH/fallback. Full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
