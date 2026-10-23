@@ -135,3 +135,7 @@ Native C++ first structural trial text312/automatic EH8/index12 all100. Two-chil
 
 ### FourSpark resource phases 0x800CD5F4 (2026-10-23)
 Native NonMatching99.51791%, exact1452B with automatic EH/index100%. Four-child spawn/bind switch resources68/65/66/67, kart root offset translation, phase-window visibility and distinct Vec-by-value call temporaries reproduce all control/GPR/stack shape. Trial1 direct expressions99.09091% (20 FP/scheduling rows); trial2 separate phase accumulator and growth envelope99.51791% (25 pure FP identity rows). Fuzzy improvement is not elimination of residual. No opcode/manualEH/ASM. Stop2 trials rather than scalar permutation; require new lifetime/semantic evidence before retry. Final link uses obj/game/EffectFourSpark.o fallback; genuine delta0, full DOL SHA verified.
+
+
+## Effect_KartTrailRes3A_Update (0x800CDBA0), native 732B
+First structural trial matches text 732B, automatic extab 8B and index 12B at 100%. Root matrix at function scope, inverse matrix local to case 0 and render matrix declared after probes reproduce the 0x120 stack frame without artificial padding. Mtx44_TransformVec3, ItemObject_GetGroundTypeAt and both ground-pitch probes consume Vec by value; six separate ABI copies reproduce target stack slots. State and ground result are signed bytes, final-lap result unsigned byte, timers unsigned. No scalar/coloring retry required. Native object is an actual main.elf input; full DOL SHA ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. Live Ghidra type service unavailable; layout is a narrow target-observed view.

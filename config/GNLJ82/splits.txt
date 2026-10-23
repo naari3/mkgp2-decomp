@@ -2205,6 +2205,11 @@ game/EffectFourSpark.cpp:
 	extabindex  start:0x80023354 end:0x80023360
 	.text       start:0x800CD5F4 end:0x800CDBA0
 
+game/EffectKartTrail3A.cpp:
+	extab       start:0x8000ABF8 end:0x8000AC00
+	extabindex  start:0x80023360 end:0x8002336C
+	.text       start:0x800CDBA0 end:0x800CDE7C
+
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738
