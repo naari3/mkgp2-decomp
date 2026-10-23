@@ -2000,6 +2000,11 @@ game/EffectKartWaveGlow.cpp:
 	extabindex  start:0x80022FAC end:0x80022FB8
 	.text       start:0x800C4570 end:0x800C46AC
 
+game/EffectKartOrbitSpark.cpp:
+	extab       start:0x8000A9A8 end:0x8000A9B0
+	extabindex  start:0x80022FE8 end:0x80022FF4
+	.text       start:0x800C55C0 end:0x800C57E4
+
 game/VfxEffect_InitVariantAndResetPos.c:
 	extab       start:0x8000A9D8 end:0x8000A9E0
 	extabindex  start:0x80023030 end:0x8002303C
