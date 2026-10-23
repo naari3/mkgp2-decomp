@@ -2235,6 +2235,16 @@ game/EffectKartTrail3A.cpp:
 	extabindex  start:0x80023360 end:0x8002336C
 	.text       start:0x800CDBA0 end:0x800CDE7C
 
+game/CoinJumpFx.cpp:
+	extab       start:0x8000AC00 end:0x8000AC08
+	extabindex  start:0x8002336C end:0x80023378
+	.text       start:0x800CDE7C end:0x800CE2A8
+
+game/CoinJumpFxSpawn.cpp:
+	extab       start:0x8000AC08 end:0x8000AC10
+	extabindex  start:0x80023378 end:0x80023384
+	.text       start:0x800CE2A8 end:0x800CE4C4
+
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738
