@@ -1095,6 +1095,11 @@ game/Backup_Shutdown.c:
 	extabindex  start:0x800212A8 end:0x800212B4
 	.text       start:0x800758EC end:0x8007593C
 
+game/LObjList.cpp:
+	extab       start:0x80008360 end:0x80008370
+	extabindex  start:0x800212C0 end:0x800212D8
+	.text       start:0x80076370 end:0x80076494
+
 game/Sci2Card_Singleton_Get.c:
 	.text       start:0x80076BB4 end:0x80076BBC
 

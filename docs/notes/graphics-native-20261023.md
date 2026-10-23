@@ -1,0 +1,4 @@
+
+## LObjList apply/destroy (2026-10-23)
+
+LObjList_ApplyForCObj (80076370,116B) and LObjList_Destroy (800763E4,176B) match first attempt in one native C++ TU using a narrow view: archive +0, unknown word +4, eight light pointers +8. Apply checks archive then resets lights and applies each nonnull element. Destroy checks self/archive, releases each light and archive, releases/clears shared lbl_806D1130[0], and conditionally frees self for positive short flag. Array indexing naturally produces the target pointer-walking loops with the preserved base for destruction. C ABI free function spelling matches the deleting-destructor behavior; no class bridge or manual EH needed. Standard game flags + Cpp_exceptions on give text292B, extab16B and index24B all100. Actual native link/full DOL SHA-1 verified.
