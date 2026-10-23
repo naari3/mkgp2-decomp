@@ -1879,6 +1879,16 @@ game/VfxSpritePopup.cpp:
 	extabindex  start:0x80022A6C end:0x80022A84
 	.text       start:0x800B0654 end:0x800B08FC
 
+game/CelebPop17Spawn.cpp:
+	extab       start:0x8000A608 end:0x8000A610
+	extabindex  start:0x80022A90 end:0x80022A9C
+	.text       start:0x800B0B94 end:0x800B0C0C
+
+game/CelebPop17Update.cpp:
+	extab       start:0x8000A610 end:0x8000A618
+	extabindex  start:0x80022A9C end:0x80022AA8
+	.text       start:0x800B0C0C end:0x800B0FA4
+
 game/TwinSpriteOverlay.c:
 	extab       start:0x8000A638 end:0x8000A650
 	extabindex  start:0x80022AD8 end:0x80022AFC
