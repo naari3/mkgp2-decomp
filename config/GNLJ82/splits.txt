@@ -2100,6 +2100,11 @@ game/VfxEffect_UpdateChildPosScaleAlpha_Helper.c:
 	extabindex  start:0x800230CC end:0x800230D8
 	.text       start:0x800C7C0C end:0x800C7D14
 
+game/EffectInit5F.cpp:
+	extab       start:0x8000AA48 end:0x8000AA50
+	extabindex  start:0x800230D8 end:0x800230E4
+	.text       start:0x800C7D14 end:0x800C7D80
+
 game/VfxEffect_UpdateChildVisScale_Helper.c:
 	extab       start:0x8000AA50 end:0x8000AA58
 	extabindex  start:0x800230E4 end:0x800230F0
