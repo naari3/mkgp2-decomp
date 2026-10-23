@@ -2105,6 +2105,11 @@ game/EffectExplosionCompound.cpp:
 	extabindex  start:0x800230B4 end:0x800230C0
 	.text       start:0x800C7658 end:0x800C7918
 
+game/EffectKartJoint12.cpp:
+	extab       start:0x8000AA38 end:0x8000AA40
+	extabindex  start:0x800230C0 end:0x800230CC
+	.text       start:0x800C7918 end:0x800C7C0C
+
 game/VfxEffect_UpdateChildPosScaleAlpha_Helper.c:
 	extab       start:0x8000AA40 end:0x8000AA48
 	extabindex  start:0x800230CC end:0x800230D8
