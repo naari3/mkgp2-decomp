@@ -1781,6 +1781,16 @@ game/AnimStatePool.c:
 	extabindex  start:0x80022910 end:0x80022934
 	.text       start:0x800AF240 end:0x800AF4F8
 
+game/VfxSlotMgrShutdown.cpp:
+	extab       start:0x8000A4F0 end:0x8000A4F8
+	extabindex  start:0x8002297C end:0x80022988
+	.text       start:0x800AFA5C end:0x800AFAE8
+
+game/VfxSlotMgr.cpp:
+	extab       start:0x8000A4F8 end:0x8000A510
+	extabindex  start:0x80022988 end:0x80022994
+	.text       start:0x800AFAE8 end:0x800AFCD8
+
 game/VfxSlot_ResolveJoint.c:
 	extab       start:0x8000A528 end:0x8000A530
 	extabindex  start:0x800229A0 end:0x800229AC

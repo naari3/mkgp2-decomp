@@ -226,5 +226,6 @@
     "ShellItem_TickActive",
     "ShellItem_Update"
   ],
-  "src/game/VfxSpritePopup.cpp": ["VfxSpritePopup_TickType0", "VfxSpritePopup_TickType1", "dtor_80082960"]
+  "src/game/VfxSpritePopup.cpp": ["VfxSpritePopup_TickType0", "VfxSpritePopup_TickType1", "dtor_80082960"],
+  "src/game/VfxSlotMgr.cpp": ["VfxSlotMgr_Update", "__dt__11ScopedTimerFv"]
 }
