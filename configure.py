@@ -803,6 +803,7 @@ config.libs = [
             Object(Matching, "game/EffectKartAttach59.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectInit7E.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectBurst8F.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/EffectSpinBurst.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectKartWaveGlow.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/EffectDustBurst4.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/EffectHitFlash.cpp", extra_cflags=["-Cpp_exceptions on"]),

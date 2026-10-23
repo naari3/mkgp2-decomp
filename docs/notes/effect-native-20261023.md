@@ -139,3 +139,7 @@ Native NonMatching99.51791%, exact1452B with automatic EH/index100%. Four-child 
 
 ## Effect_KartTrailRes3A_Update (0x800CDBA0), native 732B
 First structural trial matches text 732B, automatic extab 8B and index 12B at 100%. Root matrix at function scope, inverse matrix local to case 0 and render matrix declared after probes reproduce the 0x120 stack frame without artificial padding. Mtx44_TransformVec3, ItemObject_GetGroundTypeAt and both ground-pitch probes consume Vec by value; six separate ABI copies reproduce target stack slots. State and ground result are signed bytes, final-lap result unsigned byte, timers unsigned. No scalar/coloring retry required. Native object is an actual main.elf input; full DOL SHA ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. Live Ghidra type service unavailable; layout is a narrow target-observed view.
+
+
+### Effect_SpinBurst_Update (0x800CC5F0) native
+First structural trial matched 648B text and automatic 8B extab/12B index. Signed state switch, nested kind 0x3D/0x3F switch, explicit extern unsigned-byte resource arrays [6] preserve SDA lookup. Two separately scoped kart-root Vec temporaries plus by-value final position reproduce stack 0x40. Angular velocity uses shared external constants; fade comparison is strictly < zero. Native main.elf source input and full DOL SHA-1 verified. Narrow target-observed layout because live Ghidra type service unavailable.

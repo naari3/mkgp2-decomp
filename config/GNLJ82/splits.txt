@@ -2140,6 +2140,11 @@ game/EffectInit76.cpp:
 	extabindex  start:0x80023108 end:0x80023114
 	.text       start:0x800C8038 end:0x800C80C0
 
+game/EffectSpinBurst.cpp:
+	extab       start:0x8000AB88 end:0x8000AB90
+	extabindex  start:0x800232B8 end:0x800232C4
+	.text       start:0x800CC5F0 end:0x800CC878
+
 game/EffectChildPair.cpp:
 	extab       start:0x8000AB90 end:0x8000AB98
 	extabindex  start:0x800232C4 end:0x800232D0
