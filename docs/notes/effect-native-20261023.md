@@ -102,3 +102,8 @@ Native C++ typed pair update retained NonMatching97.30089%. Trial1 mutable const
 ## TwoChild Res3C/3D Init (800CCE48,268 bytes)
 
 Native C++ trial1 exact268B at98.95522% differed only in group/index r27/r28 homes. Trial2 declares group before loop index, producing target group r28/index r27: text268/automatic EH8/index12 all100. Typed group+CC holds children+10/+14, resets phase+84/rotation+88/flag+C4; cleanup explicitly frees both then clears both links. CW132 exceptions and lmw on. Actual multiline main.elf source input and full DOL SHA verified. Narrow target-observed layouts because live Ghidra unavailable; no ASM/manualEH.
+
+
+## BindRes5Aor5B AnimSpeed (800CCF54,284 bytes)
+
+First native C++ structural trial matches text284/automatic EH8/index12 all100. Slot resource byte+1C chooses 5A frame-controlled phase below one versus 5B animation speed one; visibility follows nonzero phase, then transposed matrix and translation propagate to effect fields. CW132 exceptions on, no lmw, no own data. Actual multiline main.elf links native source without target/old auto fallback; full DOL SHA matches. Narrow target-observed field views because live Ghidra unavailable; no ASM/manual EH.

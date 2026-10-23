@@ -2170,6 +2170,11 @@ game/EffectChild3C.cpp:
 	extabindex  start:0x80023300 end:0x8002330C
 	.text       start:0x800CCE48 end:0x800CCF54
 
+game/EffectAnim5A.cpp:
+	extab       start:0x8000ABC0 end:0x8000ABC8
+	extabindex  start:0x8002330C end:0x80023318
+	.text       start:0x800CCF54 end:0x800CD070
+
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738
