@@ -82,3 +82,8 @@ First native C++ structural trial matches text260/automatic EH8/index12 all100. 
 ## Apply UV Scroll Along E4 (800CCA94,336 bytes)
 
 Native C++ draft retained NonMatching99.583336%, automatic EH8/index12 all100. Trial1 pointer and two-float ABI with Vec-by-value setter reproduces shape336B; six FP operand differences remain (divisor/upper-bound f0-f2 identities plus final scale-product ordering). Trial2 reverses source multiplication operand order and emits identical object code; restored simpler trial1. Stop after2 approaches rather than repeat known clamp scalar permutations. External camera lbl_805DF3D0 position+80 remains foreign-owned. Actual multiline main.elf links obj/game/EffectUvScroll.o fallback, no source input; whole DOL SHA passes, genuine gain0. Narrow target-observed layouts, live Ghidra unavailable; no ASM/manualEH.
+
+
+## TwoChild Res35/36 Init (800CC97C,280 bytes)
+
+Native C++ trial1 separate loop-index lifetimes93.42857% with exact280B but group/index GPR swap and cleanup setup differences. Trial2 static-inline release helper97.28571% shortened to276B through base/walker coalescing. Trial3 shared function-scope loop index restores target group r27/index r28 and cleanup li/mr order: text280/automatic EH8/index12 all100. CW132 exceptions and lmw on. Native source-linked whole DOL SHA verified. After split auto_Effect_TwoChild_Res3_text.o is foreign Res3C/3D800CCE48..800CCF54, not this target fallback; inspect exact symbols. Narrow target-observed layout, live Ghidra unavailable. No ASM/manualEH.
