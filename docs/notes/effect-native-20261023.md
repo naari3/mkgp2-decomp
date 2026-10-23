@@ -112,3 +112,8 @@ First native C++ structural trial matches text284/automatic EH8/index12 all100. 
 ## SeC2 Positional Update (800CD070,280 bytes)
 
 First native C++ structural trial matches text280/automatic EH8/index12 all100. Signed state+0xB4, finished+0xC9 and channel+0x190 preserve comparisons; initialization clears visible/timer and sets channel to -1. Sound start/update take Vec by value, yielding two caller-owned position copies. CW132 exceptions on, no lmw, no own data. Actual multiline main.elf links native source with no target/auto fallback; whole DOL SHA matches. Narrow target-observed field views because live Ghidra unavailable; no ASM/manualEH.
+
+
+## BindRes25 Init (800CD300,144 bytes)
+
+First native C++ structural trial matches text144/automatic EH8/index12 all100. Signed-byte two-state switch binds resource25, enables slot matrix source, resets phase150 from const5770 and clears visible28; common signed finishedC9 cleanup frees the effect. CW132 exceptions on, no lmw, no own data. Actual multiline main.elf links native source and excludes target/auto fallback; full DOL SHA matches. Narrow target-observed field view because live Ghidra unavailable; no ASM/manual EH.
