@@ -1985,6 +1985,16 @@ game/EffectCompoundRing.cpp:
 	extabindex  start:0x80022F88 end:0x80022F94
 	.text       start:0x800C3EBC end:0x800C4204
 
+game/EffectKartAura.cpp:
+	extab       start:0x8000A970 end:0x8000A978
+	extabindex  start:0x80022F94 end:0x80022FA0
+	.text       start:0x800C4204 end:0x800C439C
+
+game/EffectKartAuraCompound.cpp:
+	extab       start:0x8000A978 end:0x8000A980
+	extabindex  start:0x80022FA0 end:0x80022FAC
+	.text       start:0x800C439C end:0x800C4570
+
 game/EffectKartWaveGlow.cpp:
 	extab       start:0x8000A980 end:0x8000A988
 	extabindex  start:0x80022FAC end:0x80022FB8
