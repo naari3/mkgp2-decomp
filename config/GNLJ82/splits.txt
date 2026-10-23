@@ -1806,6 +1806,11 @@ game/VfxSlot_BindResourceEx.c:
 	extabindex  start:0x80022A48 end:0x80022A54
 	.text       start:0x800B0378 end:0x800B0454
 
+game/VfxSpritePopup.cpp:
+	extab       start:0x8000A5B0 end:0x8000A5E0
+	extabindex  start:0x80022A6C end:0x80022A84
+	.text       start:0x800B0654 end:0x800B08FC
+
 game/TwinSpriteOverlay.c:
 	extab       start:0x8000A638 end:0x8000A650
 	extabindex  start:0x80022AD8 end:0x80022AFC

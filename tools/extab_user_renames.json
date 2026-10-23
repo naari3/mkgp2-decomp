@@ -1552,5 +1552,9 @@
     "__ct__9CIWeatherFUc": "WeatherSystem_Init",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/VfxSpritePopup.cpp": {
+    "__ct__12PopupResCtrlFv": "ResCtrl_Init",
+    "__dt__12PopupResCtrlFv": "dtor_80082960"
   }
 }
