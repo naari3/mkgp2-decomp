@@ -2120,6 +2120,11 @@ game/VfxEffect_UpdateChildSpinMatrix_Helper.c:
 	extabindex  start:0x800230FC end:0x80023108
 	.text       start:0x800C7F38 end:0x800C8038
 
+game/EffectInit76.cpp:
+	extab       start:0x8000AA68 end:0x8000AA70
+	extabindex  start:0x80023108 end:0x80023114
+	.text       start:0x800C8038 end:0x800C80C0
+
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738
