@@ -77,3 +77,8 @@ Native C++ draft retained NonMatching98.06879%. Trial1 explicit two helper calls
 ## ApplyParentToChildPair DcDe (800CC878,260 bytes)
 
 First native C++ structural trial matches text260/automatic EH8/index12 all100. Parent position comes from column-major matrix translation; child0 receives transposed3x4 matrix and child1 receives extracted scale. Child links at DC/E0, alpha2C, visible28; VfxSlot position setter consumes Vec by value. CW132 no lmw. Actual multiline main.elf links native source with no target/auto fallback; full DOL SHA matches. Narrow target-observed views because live Ghidra unavailable; no ASM/manual EH.
+
+
+## Apply UV Scroll Along E4 (800CCA94,336 bytes)
+
+Native C++ draft retained NonMatching99.583336%, automatic EH8/index12 all100. Trial1 pointer and two-float ABI with Vec-by-value setter reproduces shape336B; six FP operand differences remain (divisor/upper-bound f0-f2 identities plus final scale-product ordering). Trial2 reverses source multiplication operand order and emits identical object code; restored simpler trial1. Stop after2 approaches rather than repeat known clamp scalar permutations. External camera lbl_805DF3D0 position+80 remains foreign-owned. Actual multiline main.elf links obj/game/EffectUvScroll.o fallback, no source input; whole DOL SHA passes, genuine gain0. Narrow target-observed layouts, live Ghidra unavailable; no ASM/manualEH.

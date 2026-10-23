@@ -2145,6 +2145,11 @@ game/EffectChildPair.cpp:
 	extabindex  start:0x800232C4 end:0x800232D0
 	.text       start:0x800CC878 end:0x800CC97C
 
+game/EffectUvScroll.cpp:
+	extab       start:0x8000ABA0 end:0x8000ABA8
+	extabindex  start:0x800232DC end:0x800232E8
+	.text       start:0x800CCA94 end:0x800CCBE4
+
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738
