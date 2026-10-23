@@ -2015,6 +2015,11 @@ game/EffectHitFlash.cpp:
 	extabindex  start:0x80022FD0 end:0x80022FDC
 	.text       start:0x800C4C30 end:0x800C508C
 
+game/EffectExplosionPiece.cpp:
+	extab       start:0x8000A9A0 end:0x8000A9A8
+	extabindex  start:0x80022FDC end:0x80022FE8
+	.text       start:0x800C508C end:0x800C55C0
+
 game/EffectKartOrbitSpark.cpp:
 	extab       start:0x8000A9A8 end:0x8000A9B0
 	extabindex  start:0x80022FE8 end:0x80022FF4
