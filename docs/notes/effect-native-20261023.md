@@ -45,3 +45,7 @@ First native C++ structural trial matches text572/automatic EH8/index12 complete
 ## Res77or78 Variant Update (800C746C, 492 bytes)
 
 Native C++ CW132 draft retained NonMatching at 99.796745%; exact492B shape and automatic EH8/index12 all100. Trial1 direct growth clamp and trial2 named clamp-limit local emitted identical five f1/f2 operand differences in growth versus limit. Stop after two no-new-evidence approaches; do not repeat clamp-limit naming. No own data sections. Narrow target-observed field view; live Ghidra unavailable. Final main.elf uses obj/game/EffectVariant77.o fallback (not src); full DOL SHA-1 passes with zero genuine gain.
+
+## DriftExplosion Res7A JointChain Update (800C6F94, 668 bytes)
+
+Native C++ draft retained NonMatching99.850296%, automatic EH8/index12 both100. Trial1 direct compound updates99.67066%; trial2 explicit constant-left scale multiply plus named growth maximum99.850296% resolves initialization FP region; trial3 explicit step/maximum/growth scalar dataflow leaves identical remaining five FP operand differences in growth clamp. Three trials exhausted; do not repeat these scalar-spelling axes without new evidence. Ground probes and matrix translate take Vec by value; joint byte is signed but bounds checked as unsigned15. Actual final main.elf links obj/game/EffectDrift7A.o fallback; auto_Effect_DriftExplosio_text.o after split is adjacent Res79 (800C7230..800C746C), not Res7A. Whole DOL SHA-1 matches through fallback, genuine gain zero. No live Ghidra types available, ASM or manual EH.
