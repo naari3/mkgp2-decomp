@@ -87,3 +87,8 @@ Native C++ draft retained NonMatching99.583336%, automatic EH8/index12 all100. T
 ## TwoChild Res35/36 Init (800CC97C,280 bytes)
 
 Native C++ trial1 separate loop-index lifetimes93.42857% with exact280B but group/index GPR swap and cleanup setup differences. Trial2 static-inline release helper97.28571% shortened to276B through base/walker coalescing. Trial3 shared function-scope loop index restores target group r27/index r28 and cleanup li/mr order: text280/automatic EH8/index12 all100. CW132 exceptions and lmw on. Native source-linked whole DOL SHA verified. After split auto_Effect_TwoChild_Res3_text.o is foreign Res3C/3D800CCE48..800CCF54, not this target fallback; inspect exact symbols. Narrow target-observed layout, live Ghidra unavailable. No ASM/manualEH.
+
+
+## BindRes31or34 Init (800CCBE4,160 bytes)
+
+First native C++ structural trial matches text160/automatic EH8/index12 all100. Signed-byte state switch with explicit empty case1; variant+0x10 selects resource31/34, visible+0x28 resets and state+0xB4 increments. Common signed finished+0xC9 test frees effect. CW132 no lmw, no own data. Actual multiline main.elf source input verified with no target/auto fallback; full DOL SHA matches. Narrow target-observed field views because live Ghidra unavailable; no ASM/manual EH.

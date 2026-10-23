@@ -2155,6 +2155,11 @@ game/EffectUvScroll.cpp:
 	extabindex  start:0x800232DC end:0x800232E8
 	.text       start:0x800CCA94 end:0x800CCBE4
 
+game/EffectInit31.cpp:
+	extab       start:0x8000ABA8 end:0x8000ABB0
+	extabindex  start:0x800232E8 end:0x800232F4
+	.text       start:0x800CCBE4 end:0x800CCC84
+
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738
