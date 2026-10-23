@@ -800,6 +800,7 @@ config.libs = [
             Object(Matching, "game/EffectHitFlash.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/EffectKartOrbitSpark.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/EffectSparkPlain.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/EffectSparkSprayPlace.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/NokoNoko_CountDefeated.c"),
             Object(Matching, "game/NokoNoko_Update.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/NokoNoko_InitEntity.c", extab_padding=b"\x00\x00"),
