@@ -826,6 +826,7 @@ config.libs = [
             Object(Matching, "game/EffectChildPair.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectPlaceE4.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/EffectAnim5A.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/EffectDustScatter.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectYawPitch.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectKartTrail3A.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/EffectUvScroll.cpp", extra_cflags=["-Cpp_exceptions on"]),

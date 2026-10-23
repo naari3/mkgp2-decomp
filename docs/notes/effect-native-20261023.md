@@ -143,3 +143,7 @@ First structural trial matches text 732B, automatic extab 8B and index 12B at 10
 
 ### Effect_SpinBurst_Update (0x800CC5F0) native
 First structural trial matched 648B text and automatic 8B extab/12B index. Signed state switch, nested kind 0x3D/0x3F switch, explicit extern unsigned-byte resource arrays [6] preserve SDA lookup. Two separately scoped kart-root Vec temporaries plus by-value final position reproduce stack 0x40. Angular velocity uses shared external constants; fade comparison is strictly < zero. Native main.elf source input and full DOL SHA-1 verified. Narrow target-observed layout because live Ghidra type service unavailable.
+
+
+## DustScatter 800CC1DC native candidate (normal_dust_20261023)
+Observed signed state/side, camera view+40/world+00, camera position+80, by-value vectors, signed random remainder, explicit countdowns. Initial nested Rand_RangeFloat argument retained a zero float across call in f31 and enlarged frame to80. Materializing speed before GetSpawnPosition removes it and restores70. Direct parity condition (including bool cast) folds cntlzw; named bool local retains normalization but emits extrwi. width8 instead of target srwi. Final 1044B text99.77012%, automatic EH/index100. Three attempts exhausted; NM fallback only. A genuinely new future hypothesis is named integer-valued boolean instead of bool (not attempted); do not repeat direct condition/cast/bool-local axes. Live Ghidra unavailable; narrow target-observed types.
