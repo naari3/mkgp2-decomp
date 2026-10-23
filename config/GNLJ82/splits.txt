@@ -2190,6 +2190,11 @@ game/EffectInit25.cpp:
 	extabindex  start:0x80023330 end:0x8002333C
 	.text       start:0x800CD300 end:0x800CD390
 
+game/EffectPlaceE4.cpp:
+	extab       start:0x8000ABE0 end:0x8000ABE8
+	extabindex  start:0x8002333C end:0x80023348
+	.text       start:0x800CD390 end:0x800CD4BC
+
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738

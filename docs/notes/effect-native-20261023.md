@@ -122,3 +122,7 @@ First native C++ structural trial matches text144/automatic EH8/index12 all100. 
 ## BuildYawPitchScaleMtx48 (800CD188,376 bytes)
 
 First native C++ structural trial matches text376/automatic EH8/index12 all100. Camera position+80 remains foreign-owned; camera-relative displacement is normalized and scaled, followed by phase/yaw rotation and Vec-by-value translation into a local4x4 matrix. Immutable sdata2 float declarations preserve target load scheduling. CW132 exceptions on, no lmw, no own data. Actual multiline main.elf source input and whole DOL SHA verified. Narrow target-observed layouts because live Ghidra unavailable; no ASM/manualEH.
+
+
+## Effect_TwoChildPlace_AndForward_E4 (800CD390), 2026-10-23
+Native C++ matched first structural trial: parent group at +CC, indexed two-child pointer walker at group+10, scale from lbl_806D57E8 times input, alpha copied from parent, Vec-by-value slot calls and final spray forwarding through group+18. Explicit use_lmw_stmw on and automatic EH reproduce 300B text, 8B extab and12B index at100%. Full DOL SHA1 matches; main.elf native source input confirmed. Target-observed narrow layout; live Ghidra types unavailable.
