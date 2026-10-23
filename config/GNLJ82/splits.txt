@@ -2035,6 +2035,11 @@ game/EffectSparkSprayPlace.cpp:
 	extabindex  start:0x8002300C end:0x80023018
 	.text       start:0x800C5C80 end:0x800C5DAC
 
+game/EffectSparkSprayCompound.cpp:
+	extab       start:0x8000A9C8 end:0x8000A9D0
+	extabindex  start:0x80023018 end:0x80023024
+	.text       start:0x800C5DAC end:0x800C5FBC
+
 game/VfxEffect_InitVariantAndResetPos.c:
 	extab       start:0x8000A9D8 end:0x8000A9E0
 	extabindex  start:0x80023030 end:0x8002303C
