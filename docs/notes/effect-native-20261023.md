@@ -131,3 +131,7 @@ Native C++ matched first structural trial: parent group at +CC, indexed two-chil
 ## SparkSprayCompound Init (800CD4BC,312 bytes)
 
 Native C++ first structural trial text312/automatic EH8/index12 all100. Two-child resource26/27 loop followed by separate CompoundUpdate callback child, position copy and kind1; signed state/cleanup and explicit three-child release. Group-before-index local declarations with CW132 exceptions and lmw on reproduce saves r26-r31. Native source-linked whole DOL SHA verified. Narrow target-observed views, live Ghidra types unavailable; no ASM/manualEH.
+
+
+### FourSpark resource phases 0x800CD5F4 (2026-10-23)
+Native NonMatching99.51791%, exact1452B with automatic EH/index100%. Four-child spawn/bind switch resources68/65/66/67, kart root offset translation, phase-window visibility and distinct Vec-by-value call temporaries reproduce all control/GPR/stack shape. Trial1 direct expressions99.09091% (20 FP/scheduling rows); trial2 separate phase accumulator and growth envelope99.51791% (25 pure FP identity rows). Fuzzy improvement is not elimination of residual. No opcode/manualEH/ASM. Stop2 trials rather than scalar permutation; require new lifetime/semantic evidence before retry. Final link uses obj/game/EffectFourSpark.o fallback; genuine delta0, full DOL SHA verified.

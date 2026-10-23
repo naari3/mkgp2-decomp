@@ -2200,6 +2200,11 @@ game/EffectSparkSprayInit.cpp:
 	extabindex  start:0x80023348 end:0x80023354
 	.text       start:0x800CD4BC end:0x800CD5F4
 
+game/EffectFourSpark.cpp:
+	extab       start:0x8000ABF0 end:0x8000ABF8
+	extabindex  start:0x80023354 end:0x80023360
+	.text       start:0x800CD5F4 end:0x800CDBA0
+
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738
