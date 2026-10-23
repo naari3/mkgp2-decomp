@@ -1684,6 +1684,16 @@ game/RaceContextSlot.c:
 game/RaceContextSlotDriver.c:
 	.text       start:0x800A4B7C end:0x800A4CD4
 
+game/RaceContextArray.cpp:
+	extab       start:0x80009C6C end:0x80009C74
+	extabindex  start:0x80022358 end:0x80022364
+	.text       start:0x800A4CD4 end:0x800A4D34
+
+game/RaceContextArrayInit.cpp:
+	extab       start:0x80009C74 end:0x80009C7C
+	extabindex  start:0x80022364 end:0x80022370
+	.text       start:0x800A4D34 end:0x800A4ED8
+
 game/TitleTracker_Stubs.c:
 	.text       start:0x800A5CE4 end:0x800A5CEC
 
