@@ -37,3 +37,7 @@ First structural trial native C++ switch matched text480/EH8/index12 completely.
 ## Burst Res8F Update (800C68A8, 408 bytes)
 
 First native C++ approach matches text408/automatic EH8/index12 100%. Signed-byte switch has state0 initialization and explicit empty state1, followed by timer0 expiry early return, velocity addition, randomized rotation/scale, and four independent unsigned countdowns. Vec position setter takes Vec by value. CW1.3.2, no lmw, automatic EH, no ASM. Target-observed narrow layout because live Ghidra types unavailable. Multiline main.elf inputs use source object, exclude target fallback; whole DOL SHA verified.
+
+## DriftExplosion Res79 Update (800C7230, 572 bytes)
+
+First native C++ structural trial matches text572/automatic EH8/index12 completely. Ground type query writes position.y directly; ground pitch probes and Mtx44_Translate consume Vec by value, producing four caller-owned copies and frame0x80. Signed-byte two-case switch, five-frame fade delay, growth/scale update and four unsigned countdowns. CW1.3.2 no lmw. Source-linked whole DOL SHA verified. Narrow target-observed field views because live Ghidra unavailable; no ASM/manual EH.

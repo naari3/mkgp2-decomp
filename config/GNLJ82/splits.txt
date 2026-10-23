@@ -2080,6 +2080,11 @@ game/EffectSpark72.cpp:
 	extabindex  start:0x80023084 end:0x80023090
 	.text       start:0x800C6DB4 end:0x800C6F94
 
+game/EffectDrift79.cpp:
+	extab       start:0x8000AA20 end:0x8000AA28
+	extabindex  start:0x8002309C end:0x800230A8
+	.text       start:0x800C7230 end:0x800C746C
+
 game/VfxEffect_UpdateChildPosScaleAlpha_Helper.c:
 	extab       start:0x8000AA40 end:0x8000AA48
 	extabindex  start:0x800230CC end:0x800230D8
