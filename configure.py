@@ -882,6 +882,7 @@ config.libs = [
             Object(Matching, "ui/UISoundClSound4D.c"),
             Object(Matching, "ui/UI_PlaySeDecide.c"),
             Object(Matching, "game/CarObject_ResetPhysics.c"),
+            Object(Matching, "game/CoinEvent.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CoinEvent_PlaySE_0x13.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/DebugOverlay_KartPhysicsForLocalPlayer.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartMovement.c"),

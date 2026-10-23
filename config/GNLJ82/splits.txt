@@ -635,6 +635,11 @@ game/CarObject_ResetPhysics.c:
 	extabindex  start:0x800201A4 end:0x800201B0
 	.text       start:0x80049F3C end:0x80049F60
 
+game/CoinEvent.cpp:
+	extab       start:0x800068D8 end:0x800068E8
+	extabindex  start:0x800201B0 end:0x800201C8
+	.text       start:0x80049F60 end:0x8004A04C
+
 game/CoinEvent_PlaySE_0x13.c:
 	extab       start:0x800068E8 end:0x800068F0
 	extabindex  start:0x800201C8 end:0x800201D4
