@@ -2000,6 +2000,11 @@ game/EffectKartWaveGlow.cpp:
 	extabindex  start:0x80022FAC end:0x80022FB8
 	.text       start:0x800C4570 end:0x800C46AC
 
+game/EffectSmokeRing3.cpp:
+	extab       start:0x8000A988 end:0x8000A990
+	extabindex  start:0x80022FB8 end:0x80022FC4
+	.text       start:0x800C46AC end:0x800C48D8
+
 game/EffectKartOrbitSpark.cpp:
 	extab       start:0x8000A9A8 end:0x8000A9B0
 	extabindex  start:0x80022FE8 end:0x80022FF4

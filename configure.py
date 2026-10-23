@@ -480,6 +480,7 @@ config.libs = [
         "cflags": cflags_base,
         "progress_category": "game",
         "objects": [
+            Object(NonMatching, "game/EffectSmokeRing3.cpp", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(NonMatching, "game/EffectCompoundRing.cpp", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/EffectKartAura.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/EffectKartAuraCompound.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-i src/game"]),
