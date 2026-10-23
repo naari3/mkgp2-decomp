@@ -345,6 +345,11 @@ game/MJObj_ColorFloat.c:
 	extabindex  start:0x8001FB5C end:0x8001FB68
 	.text       start:0x8003A154 end:0x8003A22C
 
+game/MObj.cpp:
+	extab       start:0x80005EF0 end:0x80005F00
+	extabindex  start:0x8001FB8C end:0x8001FBA4
+	.text       start:0x8003A49C end:0x8003A54C
+
 game/MJObj_InitMember.c:
 	extab       start:0x80005F08 end:0x80005F10
 	extabindex  start:0x8001FBB0 end:0x8001FBBC
