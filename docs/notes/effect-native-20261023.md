@@ -52,3 +52,6 @@ Native C++ draft retained NonMatching99.850296%, automatic EH8/index12 both100. 
 ## Res5F Init (800C7D14, 108 bytes)
 
 First native C++ CW132 structural trial matches text108/automatic EH8/index12 all100. Signed-byte state switch with explicit empty case1; case0 binds resource0x5F, clears visible+0x28 and increments state+0xB4. Slot begins+0x14. No own data, no lmw. Actual multiline main.elf links native source and excludes target/auto fallback; full DOL SHA-1 verified. Narrow target-observed field view, live Ghidra types unavailable. No ASM/manual EH.
+## Res7Eor62 Variant Init (800C7E8C, 172 bytes)
+
+First native C++ trial signed-byte two-state switch matched text172/automatic EH8/index12 all100. Variant int+0x10 selects resource7E/speed constant55E4 versus resource62/speed5584; visible+0x28 and growth+0x150 reset before state+0xB4 increment. CW132 no lmw. Narrow target-observed field layout, live Ghidra unavailable. Actual multiline main.elf input is src/game/EffectInit7E.o with no target fallback; whole DOL SHA-1 verified.

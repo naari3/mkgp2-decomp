@@ -2110,6 +2110,11 @@ game/VfxEffect_UpdateChildVisScale_Helper.c:
 	extabindex  start:0x800230E4 end:0x800230F0
 	.text       start:0x800C7D80 end:0x800C7E8C
 
+game/EffectInit7E.cpp:
+	extab       start:0x8000AA58 end:0x8000AA60
+	extabindex  start:0x800230F0 end:0x800230FC
+	.text       start:0x800C7E8C end:0x800C7F38
+
 game/VfxEffect_UpdateChildSpinMatrix_Helper.c:
 	extab       start:0x8000AA60 end:0x8000AA68
 	extabindex  start:0x800230FC end:0x80023108
