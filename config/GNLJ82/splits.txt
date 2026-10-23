@@ -1980,6 +1980,16 @@ game/KartFxDispatchB.cpp:
 	extabindex  start:0x80022EF8 end:0x80022F04
 	.text       start:0x800C253C end:0x800C26EC
 
+game/EffectVfxRenderHook.cpp:
+	extab       start:0x8000A910 end:0x8000A918
+	extabindex  start:0x80022F04 end:0x80022F10
+	.text       start:0x800C26EC end:0x800C2788
+
+game/EffectVfx.cpp:
+	extab       start:0x8000A918 end:0x8000A920
+	extabindex  start:0x80022F10 end:0x80022F1C
+	.text       start:0x800C2788 end:0x800C27D4
+
 game/Effect.c:
 	extab       start:0x8000A950 end:0x8000A960
 	extabindex  start:0x80022F64 end:0x80022F7C

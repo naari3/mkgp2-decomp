@@ -819,6 +819,8 @@ config.libs = [
             Object(Matching, "game/EffectExplosionCompound.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/EffectKartJoint12.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/EffectInit5F.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/EffectVfxRenderHook.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/EffectVfx.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectSeC2.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectInit25.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/VfxSpritePopup.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
