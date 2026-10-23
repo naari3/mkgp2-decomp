@@ -2050,6 +2050,11 @@ game/VfxEffect_InitVariantAndResetPos.c:
 	extabindex  start:0x80023030 end:0x8002303C
 	.text       start:0x800C6040 end:0x800C6074
 
+game/EffectCluster16.cpp:
+	extab       start:0x8000A9E0 end:0x8000A9E8
+	extabindex  start:0x8002303C end:0x80023048
+	.text       start:0x800C6074 end:0x800C64A8
+
 game/EffectKartJoint15.c:
 	extab       start:0x8000A9E8 end:0x8000A9F0
 	extabindex  start:0x80023048 end:0x80023054

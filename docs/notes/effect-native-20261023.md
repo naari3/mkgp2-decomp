@@ -63,3 +63,8 @@ First native C++ structural trial matches text136/automatic EH8/index12 all100. 
 ## Explosion Compound Update (800C7658, 704 bytes)
 
 First native C++ structural trial matches text704/automatic EH8/index12 all100. State0 spawns two variants, ground/joint effects and optional ten sparks, falling through state1; termination signals the retained child and spawns six radial pieces. Separate initialization-child and final-loop piece locals reproduce r29 versus r30 lifetimes. Signed mode/finished bytes and Vec pointer ABI match. CW132 no lmw. Actual multiline main.elf source input verified with no target/auto fallback; full DOL SHA matches. Narrow target-observed field views because live Ghidra unavailable. No ASM/manual EH; exhausted callbacks remain untouched.
+
+
+## Cluster16 Update (800C6074,1076 bytes)
+
+Native C++ typed16-child group draft retained NonMatching99.05205%. Trial1 97.32342%; trial2 target comparison operand direction, sequential FP dataflow and distinct shift/cleanup lifetimes99.05205%. Final native1072B lacks target unreachable switch branch800C63DC even in C++ (StarBurst language-mode hypothesis alone is insufficient); 24 FP operand differences also remain. Stop after2 structural approaches with known residual classes; do not repeat default-placement or clamp scalar spelling without new evidence. Automatic EH8 all100; index12 section91.66667/symbol95 due length. No own data. Native source is built but actual main.elf links obj/game/EffectCluster16.o fallback; full DOL SHA passes, genuine gain0. CW132 exceptions and lmw enabled, Vec setters by value. Target-observed narrow views; live Ghidra unavailable.
