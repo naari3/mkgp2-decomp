@@ -117,3 +117,8 @@ First native C++ structural trial matches text280/automatic EH8/index12 all100. 
 ## BindRes25 Init (800CD300,144 bytes)
 
 First native C++ structural trial matches text144/automatic EH8/index12 all100. Signed-byte two-state switch binds resource25, enables slot matrix source, resets phase150 from const5770 and clears visible28; common signed finishedC9 cleanup frees the effect. CW132 exceptions on, no lmw, no own data. Actual multiline main.elf links native source and excludes target/auto fallback; full DOL SHA matches. Narrow target-observed field view because live Ghidra unavailable; no ASM/manual EH.
+
+
+## BuildYawPitchScaleMtx48 (800CD188,376 bytes)
+
+First native C++ structural trial matches text376/automatic EH8/index12 all100. Camera position+80 remains foreign-owned; camera-relative displacement is normalized and scaled, followed by phase/yaw rotation and Vec-by-value translation into a local4x4 matrix. Immutable sdata2 float declarations preserve target load scheduling. CW132 exceptions on, no lmw, no own data. Actual multiline main.elf source input and whole DOL SHA verified. Narrow target-observed layouts because live Ghidra unavailable; no ASM/manualEH.
