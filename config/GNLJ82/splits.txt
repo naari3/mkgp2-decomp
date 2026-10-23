@@ -2010,6 +2010,11 @@ game/EffectDustBurst4.cpp:
 	extabindex  start:0x80022FC4 end:0x80022FD0
 	.text       start:0x800C48D8 end:0x800C4C30
 
+game/EffectHitFlash.cpp:
+	extab       start:0x8000A998 end:0x8000A9A0
+	extabindex  start:0x80022FD0 end:0x80022FDC
+	.text       start:0x800C4C30 end:0x800C508C
+
 game/EffectKartOrbitSpark.cpp:
 	extab       start:0x8000A9A8 end:0x8000A9B0
 	extabindex  start:0x80022FE8 end:0x80022FF4
