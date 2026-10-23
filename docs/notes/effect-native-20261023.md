@@ -21,3 +21,7 @@ First structural trial matched native C text532/automatic EH8/index12 100%. Root
 ## KartAttach Res59 Update (800C66BC, 492 bytes)
 
 Native C switch with case0 fallthrough into case1, then case2 attachment update, four independent unsigned countdowns. Trial1 99.51219% differed only cmpwi/cmpli for finished byte at +0x1E; signed char finished yields cmpwi without an extsb in equality-to-one check. Trial2 complete text492/EH8/index12 agreement and source-linked DOL SHA-1. CW1.3.2 with automatic EH, no lmw. Local target-observed struct views, no live Ghidra types available.
+
+## StarBurst Update (800C59E0, 672 bytes)
+
+StarBurst Update (800C59E0..800C5C80): complete native C draft reaches 99.40476%; target672B versus source668B. Three structural approaches (switch without explicit default; trailing default break; leading default break) produced identical result: target has an additional unreachable branch at +0x44 after switch dispatch. Remaining body and register identities agree. Automatic extab8 is100%; index12 section91.66667% (symbol95%) differs in function length. No own data section. Stop after3 trials; final SHA success uses honest NonMatching fallback and gives zero genuine gain. A future evidence-led investigation could compare C versus C++ switch lowering: neighboring Effect implementations are C++, while requested EffectStarBurst.c was compiled in C mode. That language-mode hypothesis is untested; do not repeat default-placement variants. Live Ghidra unavailable; target-observed field view and existing VfxSlot ABI used.

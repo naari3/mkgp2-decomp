@@ -801,6 +801,7 @@ config.libs = [
             Object(Matching, "game/EffectHitFlash.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/EffectExplosionPiece.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/EffectKartOrbitSpark.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/EffectStarBurst.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/EffectSparkPlain.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectKartJoint15.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectSparkSprayPlace.cpp", extra_cflags=["-Cpp_exceptions on"]),

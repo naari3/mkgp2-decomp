@@ -2030,6 +2030,11 @@ game/EffectSparkPlain.cpp:
 	extabindex  start:0x80022FF4 end:0x80023000
 	.text       start:0x800C57E4 end:0x800C59E0
 
+game/EffectStarBurst.c:
+	extab       start:0x8000A9B8 end:0x8000A9C0
+	extabindex  start:0x80023000 end:0x8002300C
+	.text       start:0x800C59E0 end:0x800C5C80
+
 game/EffectSparkSprayPlace.cpp:
 	extab       start:0x8000A9C0 end:0x8000A9C8
 	extabindex  start:0x8002300C end:0x80023018
