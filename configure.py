@@ -798,6 +798,7 @@ config.libs = [
             Object(Matching, "game/EffectTwoChild8F.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/EffectChild35.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/EffectChild3C.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/EffectSparkSprayInit.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/EffectKartAttach59.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectInit7E.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectBurst8F.cpp", extra_cflags=["-Cpp_exceptions on"]),

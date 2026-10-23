@@ -126,3 +126,8 @@ First native C++ structural trial matches text376/automatic EH8/index12 all100. 
 
 ## Effect_TwoChildPlace_AndForward_E4 (800CD390), 2026-10-23
 Native C++ matched first structural trial: parent group at +CC, indexed two-child pointer walker at group+10, scale from lbl_806D57E8 times input, alpha copied from parent, Vec-by-value slot calls and final spray forwarding through group+18. Explicit use_lmw_stmw on and automatic EH reproduce 300B text, 8B extab and12B index at100%. Full DOL SHA1 matches; main.elf native source input confirmed. Target-observed narrow layout; live Ghidra types unavailable.
+
+
+## SparkSprayCompound Init (800CD4BC,312 bytes)
+
+Native C++ first structural trial text312/automatic EH8/index12 all100. Two-child resource26/27 loop followed by separate CompoundUpdate callback child, position copy and kind1; signed state/cleanup and explicit three-child release. Group-before-index local declarations with CW132 exceptions and lmw on reproduce saves r26-r31. Native source-linked whole DOL SHA verified. Narrow target-observed views, live Ghidra types unavailable; no ASM/manualEH.

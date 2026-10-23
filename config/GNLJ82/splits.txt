@@ -2195,6 +2195,11 @@ game/EffectPlaceE4.cpp:
 	extabindex  start:0x8002333C end:0x80023348
 	.text       start:0x800CD390 end:0x800CD4BC
 
+game/EffectSparkSprayInit.cpp:
+	extab       start:0x8000ABE8 end:0x8000ABF0
+	extabindex  start:0x80023348 end:0x80023354
+	.text       start:0x800CD4BC end:0x800CD5F4
+
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738
