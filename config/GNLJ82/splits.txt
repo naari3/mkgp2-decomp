@@ -937,6 +937,11 @@ game/TransparentDraw.c:
 	extabindex  start:0x80020F84 end:0x80020FA8
 	.text       start:0x80065990 end:0x8006609C
 
+game/SceneDrawList.cpp:
+	extab       start:0x800080C8 end:0x800080D8
+	extabindex  start:0x80020FA8 end:0x80020FC0
+	.text       start:0x8006609C end:0x800662B4
+
 game/DMAChannelManager_Init.c:
 	extab       start:0x800080D8 end:0x800080F0
 	extabindex  start:0x80020FC0 end:0x80020FCC
