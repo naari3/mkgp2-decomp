@@ -137,8 +137,8 @@ extern float Item_ProbeForwardGroundPitch(Vec3 *pos, float yaw, float a, float b
 extern float Item_ProbeLateralGroundPitch(Vec3 *pos, float yaw, float a, float b);
 extern float AngleStepForward_OrSnap(float current, float target, float step);
 extern float AngleStepTowards_Shortest(float current, double target, float step);
-extern double fn_8027E240(double x);
-extern double fn_8027E9E8(double x);
+extern double atan(double x);
+extern double sin(double x);
 extern void DrawEffect_ItemHitOriented_Spawn(Vec3 *pos, Vec3 *vel, int mode);
 extern void *DrawEffect_SpawnDirect(void *factory);
 extern void DrawEffect_Free(void *effect);
@@ -410,7 +410,7 @@ void GabyouTripleChild_TickHitResolve(GabyouTripleChild *self, GabyouTripleChild
  *             DrawEffect_ItemHitOriented_Spawn(&fxPos, &fxVel, 1);
  *             sub->timer_08 = 3;
  *         }
- *         peak = lbl_806D6100 * (float)fn_8027E9E8((float)fn_8027E240(lbl_806D60FC));
+ *         peak = lbl_806D6100 * (float)sin((float)atan(lbl_806D60FC));
  *         angle = FAbs_FloatAsDouble(BuildOrientationFromYaw(self->rotX_ac));
  *         if (angle < lbl_806D6104) {
  *             rise = lbl_806D6100 * angle / lbl_806D6104;
@@ -823,9 +823,9 @@ asm void GabyouTripleChild_TickActive(GabyouTripleChild *self, GabyouTripleChild
     stw r0, 0x8(r31)
     GabyouTripleChild_TickActive_L_800F42C0:
     lfs f1, lbl_806D60FC(r2)
-    bl fn_8027E240
+    bl atan
     frsp f1, f1
-    bl fn_8027E9E8
+    bl sin
     frsp f2, f1
     lfs f0, lbl_806D6100(r2)
     lfs f1, 0xac(r30)

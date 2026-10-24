@@ -25,7 +25,7 @@ extern void Tornado_LockOnHomingTick();
 extern void Vec3_Add_DestFirst();
 extern void Vec3_Copy();
 extern void Vec3_Scale();
-extern void fn_8027E9E8();
+extern void sin();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D6260;
@@ -711,7 +711,7 @@ asm void Tornado_FlightTick(void) { /* 0x800F9618 size:0x9BC */
     lfs f2, lbl_806D62A0(r2)
     fmadds f0, f1, f31, f0
     fmuls f1, f2, f0
-    bl fn_8027E9E8
+    bl sin
     frsp f2, f1
     lfs f1, lbl_806D6260(r2)
     lwz r3, 0x5c(r30)

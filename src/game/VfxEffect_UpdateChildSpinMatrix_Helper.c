@@ -14,7 +14,7 @@ extern void Matrix4_PreMultiplyTranslation();
 extern void Mtx44_GetTranslation_ColMajor();
 extern void Mtx44_Scale_Uniform();
 extern void Mtx_TransposeToMtx44();
-extern void fn_8027E9E8();
+extern void sin();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D555C;
@@ -67,7 +67,7 @@ asm void VfxEffect_UpdateChildSpinMatrix_Helper(void) { /* 0x800C7F38 size:0x100
     bl BuildOrientationFromYaw
     stfs f1, 0x150(r30)
     lfs f1, 0x150(r30)
-    bl fn_8027E9E8
+    bl sin
     frsp f31, f1
     mr r4, r31
     addi r3, r1, 0x48

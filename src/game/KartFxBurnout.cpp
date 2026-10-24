@@ -37,7 +37,7 @@ void VfxSlot_SetPositionFromVec(void *,BurnVec);
 void VfxSlot_SetRotationZ(void *,float);
 void VfxSlot_SetScaleUniform(void *,float);
 float BuildOrientationFromYaw(float);
-double fn_8027E9E8(double);
+double sin(double);
 double FAbs_FloatAsDouble(float);
 void *KartDriver_GetKartRootMtx(BurnKart *);
 float Mtx44_GetYawOfPosZ_Padded(const void *);
@@ -169,7 +169,7 @@ void KartFx_BurnoutChargeTick(BurnEffect *e) {
             e->active=0;
         }
         e->progress=BuildOrientationFromYaw(lbl_806D5288+e->progress);
-        if(e->index==0) e->size=lbl_806D5284*(float)fn_8027E9E8(e->progress)+lbl_806D51C4;
+        if(e->index==0) e->size=lbl_806D5284*(float)sin(e->progress)+lbl_806D51C4;
         if(e->index==0) {
             if(lbl_806D51E8<=owner->speed) {
                 Vec2_RotateY(&rotated,&owner->velocity,-Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(e->kart)));
@@ -213,7 +213,7 @@ void KartFx_BurnoutChargeTick(BurnEffect *e) {
             break;
         case 1: break;
         }
-        if(e->index==0) e->size=lbl_806D51D4*(float)FAbs_FloatAsDouble((float)fn_8027E9E8(lbl_806D5330*e->progress))+lbl_806D51C4;
+        if(e->index==0) e->size=lbl_806D51D4*(float)FAbs_FloatAsDouble((float)sin(lbl_806D5330*e->progress))+lbl_806D51C4;
         if(e->child2) e->child2->rotation.z=BuildOrientationFromYaw(lbl_806D5324*e->progress+lbl_806D527C);
         e->progress+=lbl_806D5334;
         if(lbl_806D51C4<e->progress) { e->state=1; e->phase=0; }

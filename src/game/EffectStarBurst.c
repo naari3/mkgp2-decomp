@@ -32,7 +32,7 @@ int Rand_RangeIntMax(int);
 float Rand_RangeFloat(float, float);
 void GetSpawnPosition(StarVec*, float, float, float);
 float BuildOrientationFromYaw(float);
-double fn_8027E9E8(double);
+double sin(double);
 float FAbs_FloatAsDouble(float);
 void Effect_StarBurst_Update(StarEffect* effect) {
     switch (effect->state) {
@@ -61,7 +61,7 @@ void Effect_StarBurst_Update(StarEffect* effect) {
         effect->substate = 0;
     case 1:
         effect->rotation = BuildOrientationFromYaw(lbl_806D5530 + effect->rotation);
-        effect->scale = effect->amplitude * (lbl_806D54B8 - FAbs_FloatAsDouble((float)fn_8027E9E8(lbl_806D54C4 * (lbl_806D54CC * effect->phase + lbl_806D5534))));
+        effect->scale = effect->amplitude * (lbl_806D54B8 - FAbs_FloatAsDouble((float)sin(lbl_806D54C4 * (lbl_806D54CC * effect->phase + lbl_806D5534))));
         effect->phase += lbl_806D5514;
         if (lbl_806D54B8 < effect->phase) {
             effect->visible = 0;

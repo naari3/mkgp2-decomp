@@ -32,7 +32,7 @@
 
 extern void Mtx_TransposeToMtx44(float *dst, void *src);
 extern void Mtx44_GetTranslation_ColMajor(TBRVec3 *dst, float *mtx44);
-extern double fn_8027E9E8(double x); /* sin */
+extern double sin(double x); /* sin */
 
 extern TBRVec3 lbl_803292D4; /* per-arm phase staggers (rodata, 3 floats) */
 
@@ -66,7 +66,7 @@ void TripleBladeRing_SetWorldYaw(TripleBladeRing *self, float yaw, void *worldMt
             self->phaseSin -= lbl_806D50FC;
         }
         self->phaseSin = self->phaseSin / lbl_806D50FC;
-        self->phaseSin = (float)fn_8027E9E8(lbl_806D5138 * self->phaseSin);
+        self->phaseSin = (float)sin(lbl_806D5138 * self->phaseSin);
 
         *(TBRVec3 *)stag = lbl_803292D4;
         s = stag[0];

@@ -300,8 +300,8 @@ extern void FUN_8003b120();
 extern void MemoryManager_Free();
 extern void Rand_RangeFloat();
 extern void Rand_RangeFloatMax();
-extern void fn_8027E480();
-extern void fn_8027E9E8();
+extern void cos();
+extern void sin();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D5020;
@@ -433,14 +433,14 @@ asm void ParticleBurst_Update(void) { /* 0x800B441C size:0x3E8 */
     fadds f0, f29, f1
     fmuls f25, f30, f0
     fmr f1, f25
-    bl fn_8027E9E8
+    bl sin
     frsp f0, f1
     lwz r3, 0xcc(r27)
     fmr f1, f25
     addi r0, r31, 0x10
     fmuls f0, f28, f0
     stfsx f0, r3, r0
-    bl fn_8027E480
+    bl cos
     frsp f0, f1
     lwz r3, 0xcc(r27)
     addi r0, r31, 0x14

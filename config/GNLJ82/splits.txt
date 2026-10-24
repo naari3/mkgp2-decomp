@@ -3999,9 +3999,6 @@ MSL_C/printf.c:
 	.sdata      start:0x806D0B90 end:0x806D0B98
 	.sdata2     start:0x806DC3B0 end:0x806DC3B8
 
-sysdolphin/baselib/_hsd_consts.c:
-	.sdata2     start:0x806DCC58 end:0x806DCC68
-
 MSL_C/rand.c:
 	.text       start:0x80278C4C end:0x80278C74
 	.sdata      start:0x806D0B98 end:0x806D0BA0
@@ -4018,9 +4015,128 @@ MSL_C/string.c:
 	.rodata     start:0x803F1F10 end:0x803F22A0
 	.sdata      start:0x806D0BA0 end:0x806D0BA8
 
+MSL_C/float.c:
+	.sdata      start:0x806D0BA8 end:0x806D0BB8
+
 MSL_C/strtoul.c:
 	.text       start:0x80279290 end:0x802796F8
 	.data       start:0x804F4F08 end:0x804F4F50
+
+MSL_C/math/e_acos.c:
+	.text       start:0x8027B410 end:0x8027B720
+	.sdata2     start:0x806DC3C0 end:0x806DC450
+
+MSL_C/math/e_asin.c:
+	.text       start:0x8027B720 end:0x8027B984
+	.sdata2     start:0x806DC450 end:0x806DC4E8
+
+MSL_C/math/e_atan2.c:
+	.text       start:0x8027B984 end:0x8027BC14
+	.sdata2     start:0x806DC4E8 end:0x806DC540
+
+MSL_C/math/e_exp.c:
+	.text       start:0x8027BC14 end:0x8027BE38
+	.rodata     start:0x803F22A8 end:0x803F22D8
+	.sdata2     start:0x806DC540 end:0x806DC5B8
+
+MSL_C/math/e_fmod.c:
+	.text       start:0x8027BE38 end:0x8027C174
+	.rodata     start:0x803F22D8 end:0x803F22E8
+
+MSL_C/math/e_log.c:
+	.text       start:0x8027C174 end:0x8027C3F0
+	.sbss       start:0x806D1D58 end:0x806D1D60
+	.sdata2     start:0x806DC5B8 end:0x806DC638
+
+MSL_C/math/e_pow.c:
+	.text       start:0x8027C3F0 end:0x8027CCA4
+	.rodata     start:0x803F22E8 end:0x803F2318
+	.sdata2     start:0x806DC638 end:0x806DC748
+
+MSL_C/math/e_rem_pio2.c:
+	.text       start:0x8027CCA4 end:0x8027D044
+	.rodata     start:0x803F2318 end:0x803F24A0
+	.sdata2     start:0x806DC748 end:0x806DC7A0
+
+MSL_C/math/k_cos.c:
+	.text       start:0x8027D044 end:0x8027D138
+	.sdata2     start:0x806DC7A0 end:0x806DC7E8
+
+MSL_C/math/k_rem_pio2.c:
+	.text       start:0x8027D138 end:0x8027DF8C
+	.rodata     start:0x803F24A0 end:0x803F24F0
+	.sdata2     start:0x806DC7E8 end:0x806DC828
+
+MSL_C/math/k_sin.c:
+	.text       start:0x8027DF8C end:0x8027E02C
+	.sdata2     start:0x806DC828 end:0x806DC860
+
+MSL_C/math/k_tan.c:
+	.text       start:0x8027E02C end:0x8027E240
+	.rodata     start:0x803F24F0 end:0x803F2558
+	.sdata2     start:0x806DC860 end:0x806DC898
+
+MSL_C/math/s_atan.c:
+	.text       start:0x8027E240 end:0x8027E458
+	.rodata     start:0x803F2558 end:0x803F25F0
+	.sdata2     start:0x806DC898 end:0x806DC8C0
+
+MSL_C/math/s_copysign.c:
+	.text       start:0x8027E458 end:0x8027E480
+
+MSL_C/math/s_cos.c:
+	.text       start:0x8027E480 end:0x8027E554
+	.sdata2     start:0x806DC8C0 end:0x806DC8C8
+
+MSL_C/math/s_floor.c:
+	.text       start:0x8027E554 end:0x8027E69C
+	.sdata2     start:0x806DC8C8 end:0x806DC8D8
+
+MSL_C/math/s_frexp.c:
+	.text       start:0x8027E69C end:0x8027E728
+	.sdata2     start:0x806DC8D8 end:0x806DC8E0
+
+MSL_C/math/s_ldexp.c:
+	.text       start:0x8027E728 end:0x8027E8EC
+	.sdata2     start:0x806DC8E0 end:0x806DC908
+
+MSL_C/math/s_modf.c:
+	.text       start:0x8027E8EC end:0x8027E9E8
+
+MSL_C/math/s_sin.c:
+	.text       start:0x8027E9E8 end:0x8027EAC0
+	.sdata2     start:0x806DC908 end:0x806DC910
+
+MSL_C/math/s_tan.c:
+	.text       start:0x8027EAC0 end:0x8027EB38
+	.sdata2     start:0x806DC910 end:0x806DC918
+
+sysdolphin/baselib/_hsd_consts.c:
+	.sdata2     start:0x806DCC58 end:0x806DCC68
+
+MSL_C/math/w_acos.c:
+	.text       start:0x8027EB38 end:0x8027EB58
+
+MSL_C/math/w_asin.c:
+	.text       start:0x8027EB58 end:0x8027EB78
+
+MSL_C/math/w_atan2.c:
+	.text       start:0x8027EB78 end:0x8027EB98
+
+MSL_C/math/w_exp.c:
+	.text       start:0x8027EB98 end:0x8027EBB8
+
+MSL_C/math/w_fmod.c:
+	.text       start:0x8027EBB8 end:0x8027EBD8
+
+MSL_C/math/w_log.c:
+	.text       start:0x8027EBD8 end:0x8027EBF8
+
+MSL_C/math/w_pow.c:
+	.text       start:0x8027EBF8 end:0x8027EC18
+
+MSL_C/math_ppc.c:
+	.text       start:0x8027EC18 end:0x8027EC8C
 
 sysdolphin/baselib/dobj.c:
 	.text       start:0x802BD07C end:0x802BD0FC

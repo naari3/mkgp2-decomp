@@ -14,7 +14,7 @@ extern void Vec3_Copy();
 extern void VfxSlot_SetPositionFromVec();
 extern void VfxSlot_SetRotationZ();
 extern void VfxSlot_SetScaleUniform();
-extern void fn_8027E9E8();
+extern void sin();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D5560;
@@ -116,7 +116,7 @@ asm void VfxEffect_UpdateTwoChildSpinAndSound_Helper(void) { /* 0x800C6A40 size:
     stfs f31, 0xb0(r3)
     beq VfxEffect_UpdateTwoChildSpinAndSound_Helper_L_800C6B74
     lfs f1, 0x84(r30)
-    bl fn_8027E9E8
+    bl sin
     frsp f3, f1
     lwz r3, 0x10(r31)
     lfs f1, lbl_806D5560(r2)
@@ -131,7 +131,7 @@ asm void VfxEffect_UpdateTwoChildSpinAndSound_Helper(void) { /* 0x800C6A40 size:
     lfs f0, 0x84(r30)
     fadds f1, f1, f0
     bl BuildOrientationFromYaw
-    bl fn_8027E9E8
+    bl sin
     frsp f3, f1
     lwz r3, 0x10(r31)
     lfs f1, lbl_806D5560(r2)

@@ -36,7 +36,7 @@
 
 extern int __float_nan[];
 extern int __float_huge[];
-extern int __float_max[];
+extern int __float_min[];
 extern int __float_epsilon[];
 
 #if !PLATFORM_GCN
@@ -103,7 +103,7 @@ int __fpclassifyl(long double __value);
 #define FLT_MAX 3.4028235e38f
 #define FLT_EPSILON 1.1920929e-7f
 #else
-#define FLT_MAX (*(float*) __float_max)
+#define FLT_MAX (*(float*) __float_min)
 #define FLT_EPSILON (*(float*) __float_epsilon)
 #endif
 

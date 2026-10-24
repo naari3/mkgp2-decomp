@@ -16,7 +16,7 @@ extern void BuildOrientationFromYaw();
 extern void DrawEffect_SpawnDirect();
 extern void Effect_CompoundRing_PlaceChildren();
 extern void FinalLapCoinJump_CheckActiveForObject();
-extern void fn_8027E9E8();
+extern void sin();
 extern void GetRaceContextPtr();
 extern void Item_DecayVelocityScalar();
 extern void Item_RenderHandheldByCharacter();
@@ -527,7 +527,7 @@ asm void HeartCompoundItem_TickCarryPhase(void) { /* 0x800F2910 size:0x244 */
     HeartCompoundItem_TickCarryPhase_L_800F29A0:
     stfs f0,0x3c(r1)
     HeartCompoundItem_TickCarryPhase_L_800F29A4:
-    bl fn_8027E9E8
+    bl sin
     HeartCompoundItem_TickCarryPhase_L_800F29A8:
     lis r4,-0x7fbe
     HeartCompoundItem_TickCarryPhase_L_800F29AC:
@@ -555,7 +555,7 @@ asm void HeartCompoundItem_TickCarryPhase(void) { /* 0x800F2910 size:0x244 */
     HeartCompoundItem_TickCarryPhase_L_800F29D8:
     stfs f2,0x2c(r1)
     HeartCompoundItem_TickCarryPhase_L_800F29DC:
-    bl fn_8027E9E8
+    bl sin
     HeartCompoundItem_TickCarryPhase_L_800F29E0:
     frsp f0,f1
     HeartCompoundItem_TickCarryPhase_L_800F29E4:
