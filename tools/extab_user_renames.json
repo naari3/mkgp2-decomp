@@ -1094,6 +1094,15 @@
   "src/game/SpriteSlot_InitLoop.c": {
     "__ct__12LoopNormal3DFPvi": "clNormal3D_Construct"
   },
+  "src/game/ShadowAreaMgr_Ctor.c": {
+    "__ct__13ShadowAreaMgrFPv": "ShadowAreaMgr_Ctor",
+    "__vt__13ShadowAreaMgr": "lbl_80411E04",
+    "__vt__14ShadowAreaBase": "lbl_80411E10",
+    "__ct__15ShadowAreaEntryFv": "ShadowAreaEntry_Ctor",
+    "__dt__15ShadowAreaEntryFv": "dtor_800AA980",
+    "__dt__14ShadowAreaBaseFv": "dtor_800AB134",
+    "__construct_array": "fn_80270D6C"
+  },
   "src/game/SpriteSlot_TickAnim.c": {
     "extab_SpriteSlot_TickAnim": "@etb_8000B284",
     "extabindex_SpriteSlot_TickAnim": "@eti_80023954"
