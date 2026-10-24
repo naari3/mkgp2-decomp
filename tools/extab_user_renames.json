@@ -658,6 +658,36 @@
     "extab_CardSave_Tick_CaptureAndStart": "@etb_80009498",
     "extabindex_CardSave_Tick_CaptureAndStart": "@eti_80022010"
   },
+  "src/game/Scene_80163614.cpp": {
+    "__vt__10LoaderBase": "lbl_8048FF80",
+    "__vt__12LoaderHolder": "lbl_80490DAC",
+    "__ct__12CourseLoaderFPvi": "fn_80164614",
+    "__dt__10LoaderBaseFv": "dtor_801577D4"
+  },
+  "src/game/Scene_80163804.cpp": {
+    "__vt__9SceneBase": "lbl_803FE0C8",
+    "__vt__15CourseLoadScene": "lbl_80490DF8",
+    "__ct__12CourseLoaderFPvPv": "fn_80164614",
+    "__dt__9SceneBaseFv": "dtor_8007D0D4"
+  },
+  "src/game/Scene_8015B6D0.cpp": {
+    "__ct__13Scene8015AFCCFv": "fn_8015AFCC"
+  },
+  "src/game/Scene_8015BE44.cpp": {
+    "__vt__9SceneBase": "lbl_803FE0C8",
+    "__vt__11ViewerScene": "lbl_80490064",
+    "__dt__9SceneBaseFv": "dtor_8007D0D4"
+  },
+  "src/game/Scene_80165BCC.cpp": {
+    "__ct__11Obj801654E0FPvPv": "fn_801654E0"
+  },
+  "src/game/CourseMarker.cpp": {
+    "__ct__12CourseMarkerFv": "fn_8016A1AC",
+    "__vt__16CourseMarkerBase": "lbl_80490FE0",
+    "__vt__12CourseMarker": "lbl_80491004",
+    "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
+    "__ct__10clNormal3DFPvi": "clNormal3D_Construct"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",

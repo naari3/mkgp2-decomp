@@ -233,9 +233,11 @@ def main() -> int:
         break
     if e_order_names is None:
         return 0
+    decl_keys = [(by_fn[n]["esec"], by_fn[n]["eoff"]) for n in e_order_names]
     if ([e["fn"] for e in entries] == i_order_names
+            and decl_keys == sorted(uniq_keys)
             and len(etabs) == 1 and len(eidxs) == 1):
-        return 0  # single pair already in declared index order
+        return 0  # single pair already in declared index and extab order
 
     order = [by_fn[n] for n in e_order_names]       # extab placement order
     iorder = [by_fn[n] for n in i_order_names]      # extabindex placement order
