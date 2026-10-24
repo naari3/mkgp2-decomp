@@ -35,7 +35,7 @@
  * (tools/postprocess_extab_user.py renames them).
  */
 
-extern void fn_80278FD8();
+extern void strcmp();
 extern void memset();
 
 /* --- forward decls for asm fns (so extabindex can reference them) --- */
@@ -78,7 +78,7 @@ bitpack_write_field_L_80088A88:
     lwz r4, 0x0(r30)
     mr r3, r26
     lwzx r4, r4, r28
-    bl fn_80278FD8
+    bl strcmp
     cntlzw r0, r3
     extrwi r0, r0, 8, 19
     cmplwi r0, 0x1

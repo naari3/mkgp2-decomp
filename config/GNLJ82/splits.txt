@@ -13,9 +13,6 @@ Sections:
 	.sdata2     type:rodata align:16
 	.sbss2      type:bss align:32
 
-sysdolphin/baselib/_hsd_consts.c:
-	.sdata2     start:0x806DCC58 end:0x806DCC68
-
 game/FlowDispatcher_ScopedTimer.c:
 	extab       start:0x800056B8 end:0x800056F0
 	extabindex  start:0x8001F3D0 end:0x8001F3E8
@@ -3963,6 +3960,67 @@ Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
 	.ctors      start:0x802E88E0 end:0x802E88E4
 	.dtors      start:0x802E8980 end:0x802E8988
 	.sdata      start:0x806D0B78 end:0x806D0B7C
+
+MSL_C/GCN_mem_alloc.c:
+	.text       start:0x80273228 end:0x80273398
+	.rodata     start:0x803F1D78 end:0x803F1DF0
+
+MSL_C/abort_exit.c:
+	.text       start:0x80273398 end:0x80273524
+	.bss        start:0x8067DE78 end:0x8067DF78
+	.sbss       start:0x806D1D38 end:0x806D1D48
+
+MSL_C/ansi_fp.c:
+	.text       start:0x802743FC end:0x80276350
+	.rodata     start:0x803F1E08 end:0x803F1EE8
+	.data       start:0x804F48B0 end:0x804F49D8
+	.sdata2     start:0x806DC3A0 end:0x806DC3A8
+
+MSL_C/arith.c:
+	.text       start:0x80276350 end:0x80276360
+
+MSL_C/critical_regions.gamecube.c:
+	.text       start:0x80276360 end:0x8027636C
+
+MSL_C/ctype.c:
+	.text       start:0x8027636C end:0x80276390
+	.data       start:0x804F49D8 end:0x804F4CD8
+
+MSL_C/mem.c:
+	.text       start:0x8027683C end:0x80276980
+
+MSL_C/mem_funcs.c:
+	.text       start:0x80276980 end:0x80276C50
+
+MSL_C/printf.c:
+	.text       start:0x80276C50 end:0x80278C4C
+	.rodata     start:0x803F1EE8 end:0x803F1F10
+	.data       start:0x804F4CD8 end:0x804F4F08
+	.sdata      start:0x806D0B90 end:0x806D0B98
+	.sdata2     start:0x806DC3B0 end:0x806DC3B8
+
+sysdolphin/baselib/_hsd_consts.c:
+	.sdata2     start:0x806DCC58 end:0x806DCC68
+
+MSL_C/rand.c:
+	.text       start:0x80278C4C end:0x80278C74
+	.sdata      start:0x806D0B98 end:0x806D0BA0
+
+MSL_C/scanf.c:
+	.text       start:0x80278C74 end:0x80278D04
+
+MSL_C/signal.c:
+	.text       start:0x80278D04 end:0x80278DC4
+	.bss        start:0x8067DFB0 end:0x8067DFC8
+
+MSL_C/string.c:
+	.text       start:0x80278DC4 end:0x80279290
+	.rodata     start:0x803F1F10 end:0x803F22A0
+	.sdata      start:0x806D0BA0 end:0x806D0BA8
+
+MSL_C/strtoul.c:
+	.text       start:0x80279290 end:0x802796F8
+	.data       start:0x804F4F08 end:0x804F4F50
 
 sysdolphin/baselib/dobj.c:
 	.text       start:0x802BD07C end:0x802BD0FC
