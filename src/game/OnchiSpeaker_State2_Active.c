@@ -25,7 +25,7 @@ extern void Vec3_Add_DestFirst();
 extern void Vec3_HorizontalYawTo();
 extern void Vec3_Lerp();
 extern void Vec3_Subtract_DestFirst();
-extern void fn_8027E9E8();
+extern void sin();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D5F18;
@@ -233,7 +233,7 @@ asm void OnchiSpeaker_State2_Active(void) { /* 0x800EE120 size:0x500 */
     stw r3, 0x3c(r1)
     stw r0, 0x40(r1)
     lfs f1, 0x18(r31)
-    bl fn_8027E9E8
+    bl sin
     frsp f1, f1
     lfs f0, lbl_806D5F38(r2)
     addi r3, r1, 0x38

@@ -5,7 +5,7 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void Atan2();
+extern void atan2();
 extern void BananaField_TestHitBox();
 
 /* --- extern decls: sda21-referenced data --- */
@@ -89,7 +89,7 @@ asm void BananaField_CheckCollision(void) { /* 0x80196C5C size:0x140 */
     lfs f0, 0xc(r31)
     fsubs f1, f3, f1
     fsubs f2, f2, f0
-    bl Atan2
+    bl atan2
     frsp f0, f1
     stfs f0, 0x10(r31)
     b BananaField_CheckCollision_L_80196D64

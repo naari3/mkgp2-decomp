@@ -233,8 +233,8 @@ extern void fn_802090F0(void *obj, void *center, void *half, float f1, float f2,
 extern void fn_802091BC();
 extern void fn_80271EF4();
 extern void strcpy();
-extern void fn_8027E480();
-extern void fn_8027E9E8();
+extern void cos();
+extern void sin();
 extern void fn_802BD6AC(float x, float y);
 extern void fn_802BD6C0();
 extern void fn_802C8B48();
@@ -5055,7 +5055,7 @@ asm void CarObject_MainUpdate(void *self, void *arg) { /* 0x8004D404 size:0xAC8 
     stfs f0, 0xf8(r1)
     lfs f0, 0xd4(r3)
     stfs f0, 0xfc(r1)
-    bl fn_8027E480
+    bl cos
     frsp f0, f1
     lfs f10, 0xd4(r1)
     fcmpo cr0, f10, f0
@@ -5141,7 +5141,7 @@ asm void CarObject_MainUpdate(void *self, void *arg) { /* 0x8004D404 size:0xAC8 
     stfs f0, 0x10(r1)
     lfs f1, lbl_806D27A8(r2)
     stfs f0, 0xc(r1)
-    bl fn_8027E9E8
+    bl sin
     frsp f0, f1
     lfs f1, lbl_806D27A8(r2)
     fmuls f3, f31, f0
@@ -5150,7 +5150,7 @@ asm void CarObject_MainUpdate(void *self, void *arg) { /* 0x8004D404 size:0xAC8 
     stfs f3, 0xc(r1)
     stfs f2, 0x10(r1)
     stfs f0, 0x14(r1)
-    bl fn_8027E480
+    bl cos
     frsp f29, f1
     lfs f11, lbl_806D26EC(r2)
     lfs f30, 0xc(r1)
@@ -8370,7 +8370,7 @@ asm void KartItem_TickStatusEffectsByFlag(ItemEffectTable *self) { /* 0x80050CF0
     lfs f1, lbl_806D27B8(r2)
     lfs f0, 0x20(r29)
     fmuls f1, f1, f0
-    bl fn_8027E9E8
+    bl sin
     frsp f31, f1
     lfs f1, lbl_806D26FC(r2)
     lwz r3, 0x0(r29)

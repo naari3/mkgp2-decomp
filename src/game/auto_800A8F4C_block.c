@@ -26,8 +26,8 @@ extern void MemoryManager_TimedFree(void *);
 extern void dtor_800AA69C(void *, short);
 extern void fn_80270CF4();
 extern void fn_80270D6C();
-extern void fn_8027E480();
-extern void fn_8027E9E8();
+extern void cos();
+extern void sin();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D4DE8;
@@ -705,7 +705,7 @@ asm void WarpAutoRun_GetParam(void) {
     lfs f0, 0x10(r27)
     fmul f1, f1, f0
     frsp f1, f1
-    bl fn_8027E9E8
+    bl sin
     frsp f2, f1
     lfs f0, 0x14(r27)
     lfd f1, lbl_806D4E00(r2)
@@ -714,7 +714,7 @@ asm void WarpAutoRun_GetParam(void) {
     lfs f0, 0x10(r27)
     fmul f1, f1, f0
     frsp f1, f1
-    bl fn_8027E480
+    bl cos
     frsp f1, f1
     lfs f0, 0x1c(r27)
     fadds f0, f0, f1

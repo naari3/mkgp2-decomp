@@ -67,7 +67,7 @@ extern void CObj_LoadProjMatrix(void *, Vec3 *);
 extern void CObj_ApplyScissor(void *, Vec3 *);
 extern void Vec3_Subtract(Vec3 *, Vec3 *, Vec3 *);
 extern void Vec3_Normalize(Vec3 *, Vec3 *);
-extern double Atan2(float, float);
+extern double atan2(float, float);
 extern void clNormal3D_Exec(void *);
 extern void Object_DriveAnimMatrix(void *);
 extern void Object_DtorWithGXSync(void *, int);
@@ -204,7 +204,7 @@ int LapBannerScene_UpdateAndDriveAnim(LapBannerScene *self) {
         Vec3_Subtract(&at, &eye, &dir);
         dir.y = lbl_806D3250;
         Vec3_Normalize(&dir, &dir);
-        set_rotation_y(self->obj, lbl_806D3270 + (float)Atan2(dir.x, dir.z));
+        set_rotation_y(self->obj, lbl_806D3270 + (float)atan2(dir.x, dir.z));
     }
 
     clNormal3D_Exec(self->obj);

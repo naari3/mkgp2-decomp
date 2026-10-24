@@ -23,7 +23,7 @@ float Rand_RangeFloat(float, float);
 int Rand_RangeIntMax(int);
 void GetSpawnPosition(SparkPlainVec*, float, float, float);
 float BuildOrientationFromYaw(float);
-double fn_8027E9E8(double);
+double sin(double);
 
 void Effect_SparkPlain_Update(SparkPlainEffect* effect) {
     switch (effect->state) {
@@ -46,7 +46,7 @@ void Effect_SparkPlain_Update(SparkPlainEffect* effect) {
         effect->angle = BuildOrientationFromYaw(lbl_806D5528 + effect->angle);
         {
             float lifetime;
-            float oscillation = (float)fn_8027E9E8(effect->angle);
+            float oscillation = (float)sin(effect->angle);
             oscillation = lbl_806D54B8 + oscillation;
             oscillation = oscillation * lbl_806D54C0;
             oscillation = oscillation * lbl_806D54C0 + lbl_806D54C0;

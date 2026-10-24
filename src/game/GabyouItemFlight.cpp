@@ -78,7 +78,7 @@ float BuildOrientationFromYaw(float);
 int Item_AdvanceProjectileSimple(FlightItem *,float *,float,float);
 float Vec3_ToPitch(const FlightVec *);
 float AngleStepTowards_Shortest(float,float,float);
-double fn_8027E9E8(double);
+double sin(double);
 int Item_AdvanceFallingDrop(FlightItem *,int *,float *,float);
 float Vec3_Magnitude_Wrapper(const FlightVec *);
 void DrawEffect_ItemHitOriented_Spawn(const FlightVec *,const FlightVec *,int);
@@ -220,7 +220,7 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
             alive=Item_AdvanceProjectileSimple(item,&context->ground,lbl_806D6330,lbl_806D6330);
             item->pitch=AngleStepTowards_Shortest(item->pitch,lbl_806D62F8+Vec3_ToPitch(&item->velocity),lbl_806D62FC);
         } else {
-            if(item->flightPhase!=4) angle=lbl_806D630C*(float)fn_8027E9E8(item->pitch);
+            if(item->flightPhase!=4) angle=lbl_806D630C*(float)sin(item->pitch);
             else angle=lbl_806D62C0;
             alive=Item_AdvanceFallingDrop(item,&hitGround,&height,angle);
             if(alive) switch(item->flightPhase) {

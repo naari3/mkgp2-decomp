@@ -16,8 +16,8 @@ typedef struct CObjLinePathView {
 extern void fn_802C72AC(void *, const LinePoint *);
 extern void fn_802C7384(void *, const LinePoint *);
 extern void fn_8025DEAC(const float *, const LinePoint *, LinePoint *);
-extern double fn_8027E9E8(double);
-extern double fn_8027E480(double);
+extern double sin(double);
+extern double cos(double);
 extern void DebugTextOutput(int, const char *, ...);
 extern const char lbl_802E96B8[12];
 extern const char lbl_806D2334[4], lbl_806D2338[2];
@@ -54,14 +54,14 @@ int CObj_LinePath_Step(CObjLinePathView *self, const float *matrix,
     if (self->mode == 1) {
         float a;
         double radians;
-        x = -(self->radius * (float)fn_8027E9E8((float)(lbl_806D22F8 * self->angle)));
-        z = self->radius * (float)fn_8027E480((float)(lbl_806D22F8 * self->angle));
+        x = -(self->radius * (float)sin((float)(lbl_806D22F8 * self->angle)));
+        z = self->radius * (float)cos((float)(lbl_806D22F8 * self->angle));
         a = lbl_806D2300 + self->angle;
         if (a >= lbl_806D2304) a -= lbl_806D2304;
         radians = lbl_806D22F8 * a;
-        self->offset.x = -(lbl_806D2308 * (float)fn_8027E9E8((float)radians));
+        self->offset.x = -(lbl_806D2308 * (float)sin((float)radians));
         self->offset.y = y - lbl_806D230C;
-        self->offset.z = lbl_806D2308 * (float)fn_8027E480((float)radians);
+        self->offset.z = lbl_806D2308 * (float)cos((float)radians);
         a = lbl_806D2310 + self->angle;
         if (a >= lbl_806D2304) a -= lbl_806D2304;
         self->angleAux = lbl_806D2314 - a;
