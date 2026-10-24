@@ -966,6 +966,8 @@ config.libs = [
             Object(Matching, "game/KartDriver_New_Empty.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GetItemDataEntry_Bounded.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemUseStats.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/PathCursor.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/PathCursor_FindNearest.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartMovement_GetVelocityMagnitude.c"),
             Object(Matching, "game/KartItem_TriggerStateAction.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartMovement_CanReceiveItem.c"),

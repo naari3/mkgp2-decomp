@@ -681,6 +681,16 @@ game/ItemUseStats.c:
 	.text       start:0x80045EE8 end:0x800461F0
 	.data       start:0x803F5C24 end:0x803F5CE4
 
+game/PathCursor.c:
+	extab       start:0x800066B0 end:0x800066C0
+	extabindex  start:0x8001FFDC end:0x8001FFF4
+	.text       start:0x800461F0 end:0x80046680
+
+game/PathCursor_FindNearest.c:
+	extab       start:0x800066C0 end:0x800066C8
+	extabindex  start:0x8001FFF4 end:0x80020000
+	.text       start:0x80046680 end:0x80046858
+
 game/PathCursor_ResetToPath.c:
 	extab       start:0x800066C8 end:0x800066D0
 	extabindex  start:0x80020000 end:0x8002000C
