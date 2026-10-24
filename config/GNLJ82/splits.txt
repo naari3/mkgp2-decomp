@@ -312,18 +312,10 @@ game/StrPcb.c:
 game/StrPcb_Error.c:
 	.text       start:0x80037B68 end:0x80037CC0
 
-game/StrPcb_SetTimer3c40.c:
-	extab       start:0x80005CF8 end:0x80005D00
-	extabindex  start:0x8001F970 end:0x8001F97C
-	.text       start:0x800380C8 end:0x800380F0
-
-game/StrPcb_SetTimer3034_38.c:
-	extab       start:0x80005D00 end:0x80005D08
-	extabindex  start:0x8001F97C end:0x8001F988
-	.text       start:0x800380F0 end:0x8003811C
-
-game/StrPcb_BeginEffect.c:
-	.text       start:0x800381E4 end:0x80038204
+game/StrPcb_Commands.c:
+	extab       start:0x80005CF0 end:0x80005D18
+	extabindex  start:0x8001F964 end:0x8001F9A0
+	.text       start:0x80037F64 end:0x80038288
 
 game/StrPcb_GetInstance.c:
 	.text       start:0x80038574 end:0x8003857C
