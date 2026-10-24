@@ -104,6 +104,11 @@ game/Scene3D_GetCameraPos.c:
 	extabindex  start:0x8001F550 end:0x8001F55C
 	.text       start:0x800302EC end:0x8003031C
 
+game/Scene3D_SetupProjection.c:
+	extab       start:0x800058E0 end:0x800058E8
+	extabindex  start:0x8001F55C end:0x8001F568
+	.text       start:0x8003031C end:0x800303E8
+
 game/CObjViewport.c:
 	extab       start:0x800058E8 end:0x80005900
 	extabindex  start:0x8001F568 end:0x8001F58C
@@ -149,6 +154,11 @@ game/Object_JObjUpdate.c:
 	extab       start:0x80005988 end:0x80005998
 	extabindex  start:0x8001F658 end:0x8001F670
 	.text       start:0x80031718 end:0x80031770
+
+game/JObj_SetRotationQuat.c:
+	extab       start:0x80005998 end:0x800059A0
+	extabindex  start:0x8001F670 end:0x8001F67C
+	.text       start:0x80031770 end:0x8003185C
 
 game/Object_SetJObjRotation.c:
 	extab       start:0x800059A0 end:0x800059E8
@@ -407,6 +417,11 @@ game/MJObj_ColorFloat.c:
 	extab       start:0x80005ED0 end:0x80005ED8
 	extabindex  start:0x8001FB5C end:0x8001FB68
 	.text       start:0x8003A154 end:0x8003A22C
+
+game/clModelM_Construct.c:
+	extab       start:0x80005ED8 end:0x80005EE0
+	extabindex  start:0x8001FB68 end:0x8001FB74
+	.text       start:0x8003A22C end:0x8003A30C
 
 game/MObj1.cpp:
 	extab       start:0x80005EE0 end:0x80005EF0
@@ -1948,6 +1963,11 @@ game/VfxSlotMgr.cpp:
 	extabindex  start:0x80022988 end:0x80022994
 	.text       start:0x800AFAE8 end:0x800AFCD8
 
+game/CourseObjectManager_Init.cpp:
+	extab       start:0x8000A510 end:0x8000A528
+	extabindex  start:0x80022994 end:0x800229A0
+	.text       start:0x800AFCD8 end:0x800AFDB4
+
 game/VfxSlot_ResolveJoint.c:
 	extab       start:0x8000A528 end:0x8000A530
 	extabindex  start:0x800229A0 end:0x800229AC
@@ -3342,6 +3362,11 @@ game/EnemyRunType2_Init.c:
 	extab       start:0x80016C0C end:0x80016C14
 	extabindex  start:0x80028AC0 end:0x80028ACC
 	.text       start:0x801EC568 end:0x801EC5A4
+
+game/EnemyRunType1_CalcSteering.c:
+	extab       start:0x80016C14 end:0x80016C1C
+	extabindex  start:0x80028ACC end:0x80028AD8
+	.text       start:0x801EC5A4 end:0x801EC65C
 
 game/EnemyRunType1_Init.c:
 	extab       start:0x80016C1C end:0x80016C24
