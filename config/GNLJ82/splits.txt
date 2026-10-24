@@ -309,13 +309,20 @@ game/StrPcb.c:
 	extabindex  start:0x8001F8F8 end:0x8001F904
 	.text       start:0x80036E40 end:0x80036E7C
 
-game/StrPcb_Error.c:
-	.text       start:0x80037B68 end:0x80037CC0
+game/StrPcb_Control.c:
+	extab       start:0x80005CD8 end:0x80005CE0
+	extabindex  start:0x8001F940 end:0x8001F94C
+	.text       start:0x80037AB0 end:0x80037CC0
+
+game/StrPcb_WaitForState1.c:
+	extab       start:0x80005CE0 end:0x80005CE8
+	extabindex  start:0x8001F94C end:0x8001F958
+	.text       start:0x80037CC0 end:0x80037E08
 
 game/StrPcb_Commands.c:
-	extab       start:0x80005CF0 end:0x80005D18
-	extabindex  start:0x8001F964 end:0x8001F9A0
-	.text       start:0x80037F64 end:0x80038288
+	extab       start:0x80005CE8 end:0x80005D18
+	extabindex  start:0x8001F958 end:0x8001F9A0
+	.text       start:0x80037E08 end:0x80038288
 
 game/StrPcb_GetInstance.c:
 	.text       start:0x80038574 end:0x8003857C

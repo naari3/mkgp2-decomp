@@ -1,92 +1,62 @@
 /*
- * StrPcb command / status setters, 0x80037F64..0x80038288.
+ * StrPcb command / status setters, 0x80037E08..0x80038288.
  *
- * Formerly three single-function TUs (StrPcb_SetTimer3c40.c,
- * StrPcb_SetTimer3034_38.c, StrPcb_BeginEffect.c); merged now that the
- * surrounding functions are native C too.
+ * Absorbs the former single-function TUs StrPcb_SetTimer3c40.c,
+ * StrPcb_SetTimer3034_38.c and StrPcb_BeginEffect.c.
  */
 
-typedef unsigned char u8;
+#include "game/StrPcb.h"
 
-typedef struct StrPcbCmd {
-    u8 pad_00[4];
-    float intensityScale;
-    int intensityMode;
-    int positionTarget;
-    u8 pad_10[4];
-    int counter14;
-    u8 dirty18;
-    u8 pad_19[7];
-    int state20;
-    u8 status24;
-    u8 pad_25[8];
-    u8 command2D;
-    u8 command2E;
-    u8 command2F;
-    u8 timer30;
-    u8 pad_31[3];
-    int value34;
-    int value38;
-    u8 timer3C;
-    u8 pad_3D[3];
-    int value40;
-    int receivedPosData;
-    float value48;
-    float value4C;
-    u8 pad_50[0x10];
-    int state60;
-    u8 pad_64[8];
-    u8 effectId;
-} StrPcbCmd;
-
-extern float lbl_806D2410;
-extern const float lbl_806D23DC;
 extern const float lbl_806D241C;
 extern const float lbl_802E9848[3];
 extern int lbl_802E9838[];
 extern u8 lbl_80598A60[];
-extern unsigned int lbl_806D100C;
 extern unsigned int lbl_806D1008;
 
-extern unsigned int OSGetTick(void);
 extern int Clamp_Int(int value, int min, int max);
 extern void fn_802554DC(void);
 extern void fn_802E5380(void);
 extern int fn_80293290(int chan, int *count);
 extern void fn_8029321C(int chan);
 
+#pragma exceptions on
+int StrPcb_RunAndWaitIdle(StrPcbCmd *pcb)
+{
+    int timeout;
+
+    if (pcb->intensityMode == 0) {
+        return 1;
+    }
+    if (pcb->state20 == 4) {
+        return 0;
+    }
+    StrPcb_ForceRun(pcb);
+    timeout = 3600;
+    while (pcb->state20 != 0) {
+        Frame_PostDrawOverlay();
+        Frame_UpdatePerFrameState();
+        if (pcb->commError26 == 1 || StrPcb_HasErrorInline(pcb) == 1) {
+            return 0;
+        }
+        if (timeout-- < 0) {
+            pcb->stickyError5C = 1;
+            pcb->state20 = 4;
+            return 0;
+        }
+    }
+    return 1;
+}
+#pragma exceptions reset
+
 void StrPcb_ResetCommands_NeutralDefault(StrPcbCmd *pcb)
 {
-    pcb->value4C = lbl_806D2410;
-    pcb->dirty18 = 1; pcb->command2D = 0x2D;
-    pcb->dirty18 = 1; pcb->command2E = 0x14;
-    pcb->dirty18 = 1; pcb->command2F = 0;
-    pcb->dirty18 = 1; pcb->counter14 = 0;
-    pcb->timer30 = 0;
-    pcb->value34 = 0;
-    pcb->value38 = 0;
-    pcb->timer3C = 0;
-    pcb->value40 = 0;
+    StrPcb_ResetNeutralDefault(pcb);
 }
 
 #pragma exceptions on
 void StrPcb_ForceRun_Neutral(StrPcbCmd *pcb)
 {
-    if (pcb->state20 != 0) {
-        pcb->state20 = 3;
-    }
-    pcb->status24 |= 0x80;
-    pcb->value4C = lbl_806D23DC;
-    lbl_806D100C = OSGetTick();
-    pcb->dirty18 = 1; pcb->command2D = 0x2D;
-    pcb->dirty18 = 1; pcb->command2E = 0x14;
-    pcb->dirty18 = 1; pcb->command2F = 0;
-    pcb->dirty18 = 1; pcb->counter14 = 0;
-    pcb->timer30 = 0;
-    pcb->value34 = 0;
-    pcb->value38 = 0;
-    pcb->timer3C = 0;
-    pcb->value40 = 0;
+    StrPcb_ForceRun(pcb);
 }
 #pragma exceptions reset
 
