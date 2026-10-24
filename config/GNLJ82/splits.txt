@@ -3194,6 +3194,16 @@ game/csAnim.c:
 game/csAnim_Reset.c:
 	.text       start:0x8013BA78 end:0x8013BA90
 
+game/OrthoCam.c:
+	extab       start:0x8000D360 end:0x8000D3A8
+	extabindex  start:0x80024D04 end:0x80024D58
+	.text       start:0x8013BA90 end:0x8013BE98
+
+game/CourseTables.c:
+	extab       start:0x8000D3A8 end:0x8000D3D0
+	extabindex  start:0x80024D58 end:0x80024D94
+	.text       start:0x8013BE98 end:0x8013C2D4
+
 game/GetTextureByIdAndLang.c:
 	extab       start:0x8000D3D0 end:0x8000D3D8
 	extabindex  start:0x80024D94 end:0x80024DA0

@@ -12,5 +12,6 @@
   "src/game/VfxSpritePopup.cpp": ["VfxSpritePopup_TickType0", "VfxSpritePopup_TickType1", "dtor_80082960"],
   "src/game/VfxSlotMgr.cpp": ["VfxSlotMgr_Update", "__dt__11ScopedTimerFv"],
   "src/ui/FrameSelection_Methods.c": ["FrameSelection_Init", "FrameSelection_Confirm", "FrameSelection_Draw", "FrameSelection_Update"],
-  "src/game/csAnim.c": ["fn_8013AB74", "fn_8013AE20", "fn_8013B300", "fn_8013B4FC", "fn_8013B7A8", "fn_8013B87C", "fn_8013B9A0"]
+  "src/game/csAnim.c": ["fn_8013AB74", "fn_8013AE20", "fn_8013B300", "fn_8013B4FC", "fn_8013B7A8", "fn_8013B87C", "fn_8013B9A0"],
+  "src/game/CourseTables.c": ["fn_8013BFF8", "fn_8013C100", "fn_8013C198", "fn_8013C204", "fn_8013C26C"]
 }
