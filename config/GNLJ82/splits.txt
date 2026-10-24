@@ -925,6 +925,11 @@ game/EffectState_ReleaseAndClear.cpp:
 game/EffectState_HasContent.c:
 	.text       start:0x8005B168 end:0x8005B17C
 
+game/EffectSpeed_TickAndGet.cpp:
+	extab       start:0x8000776C end:0x80007774
+	extabindex  start:0x8002099C end:0x800209A8
+	.text       start:0x8005B17C end:0x8005B288
+
 game/EffectSteering.c:
 	extab       start:0x80007774 end:0x800077E4
 	extabindex  start:0x800209A8 end:0x80020A50
@@ -2553,6 +2558,11 @@ game/Vec3_ToYaw.c:
 	extabindex  start:0x800237E0 end:0x800237EC
 	.text       start:0x800D5FDC end:0x800D6008
 
+game/Vec3_ToPitch.c:
+	extab       start:0x8000B194 end:0x8000B1A4
+	extabindex  start:0x800237EC end:0x80023804
+	.text       start:0x800D6008 end:0x800D6118
+
 game/Vec3_Magnitude_Wrapper.c:
 	extab       start:0x8000B1A4 end:0x8000B1AC
 	extabindex  start:0x80023804 end:0x80023810
@@ -2787,6 +2797,9 @@ game/ItemHitPropagation.c:
 	extab       start:0x8000B3EC end:0x8000B3FC
 	extabindex  start:0x80023AF8 end:0x80023B10
 	.text       start:0x800DAEBC end:0x800DB2B0
+
+game/ItemObject_TargetFirstHomingMatch.c:
+	.text       start:0x800DB2B0 end:0x800DB3C0
 
 game/ItemGroundExplosion.c:
 	extab       start:0x8000B3FC end:0x8000B404
