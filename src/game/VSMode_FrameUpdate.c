@@ -124,7 +124,7 @@ extern void fn_80253EC4();
 extern void fn_80253F2C();
 extern void fn_80253FD8();
 extern void fn_8025EF58();
-extern void fn_80271884();
+extern void __div2i();
 extern void memset();
 extern void race_result_handler();
 
@@ -781,7 +781,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     subfc r4, r4, r29
     subfe r3, r6, r30
     srwi r6, r0, 6
-    bl fn_80271884
+    bl __div2i
     bl __cvt_ll2flt
     lfs f2, lbl_806D47AC(r2)
     lfs f0, lbl_806D47B0(r2)

@@ -5159,9 +5159,13 @@ game/fn_80255620.c:
 game/Vec3.c:
 	.text       start:0x8025E324 end:0x8025E388
 
-Runtime.PPCEABI.H/global_destructor_chain.c:
-	.text       start:0x80270BE8 end:0x80270C48
-	.dtors      start:0x802E8988 end:0x802E898C
+dolphin/base/PPCArch.c:
+	.text       start:0x802557C0 end:0x802558F4
+
+dolphin/db/db.c:
+	.text       start:0x802558F4 end:0x802559E0
+	.data       start:0x804F2160 end:0x804F2178
+	.sbss       start:0x806D1AD8 end:0x806D1AE0
 
 game/fn_802712C8.c:
 	extab       start:0x8001F2A0 end:0x8001F2A8
@@ -5390,53 +5394,95 @@ dolphin/odemustubs/odemustubs.c:
 sysdolphin/baselib/dobj.c:
 	.text       start:0x802BD07C end:0x802BD0FC
 
-sysdolphin/baselib/aobj.c:
-	.text       start:0x802C3BC0 end:0x802C3C00
+dolphin/os/OS.c:
+	.text       start:0x802559E0 end:0x802564AC
+	.data       start:0x804F2178 end:0x804F2370
+	.bss        start:0x80679F00 end:0x80679F70
+	.sdata      start:0x806D0A98 end:0x806D0AA8
+	.sbss       start:0x806D1AE0 end:0x806D1B18
 
-sysdolphin/baselib/fobj.c:
-	.text       start:0x802C8CCC end:0x802C8D70
+dolphin/os/OSAlarm.c:
+	.text       start:0x802564AC end:0x80256C08
+	.data       start:0x804F2370 end:0x804F2380
+	.sbss       start:0x806D1B18 end:0x806D1B20
 
-sysdolphin/baselib/jobj.c:
-	.text       start:0x802CDAF8 end:0x802CDB80
+dolphin/os/OSArena.c:
+	.text       start:0x80256C08 end:0x80256C54
+	.sdata      start:0x806D0AA8 end:0x806D0AB0
+	.sbss       start:0x806D1B20 end:0x806D1B28
 
-sysdolphin/baselib/jobj_anim_all.c:
-	.text       start:0x802CDB80 end:0x802CDE48
+dolphin/os/OSAudioSystem.c:
+	.text       start:0x80256C54 end:0x80256EE8
+	.data       start:0x804F2380 end:0x804F2400
 
-sysdolphin/baselib/jobj_anim_misc.c:
-	.text       start:0x802CDE48 end:0x802CDF38
+dolphin/os/OSCache.c:
+	.text       start:0x80256EE8 end:0x8025734C
+	.data       start:0x804F2400 end:0x804F2630
 
-sysdolphin/baselib/robj.c:
-	.text       start:0x802D7C1C end:0x802D7CA0
+dolphin/os/OSContext.c:
+	.text       start:0x8025734C end:0x80257CE8
+	.data       start:0x804F2630 end:0x804F2808
 
-init/__check_pad3.c:
-	.init       start:0x80003100 end:0x80003140
+dolphin/os/OSError.c:
+	.text       start:0x80257CE8 end:0x802581E8
+	.data       start:0x804F2808 end:0x804F2B28
+	.bss        start:0x80679F70 end:0x80679FC0
+	.sdata      start:0x806D0AB0 end:0x806D0AB8
 
-init/debug_bba.c:
-	.init       start:0x80003140 end:0x80003154
+dolphin/os/OSFont.c:
+	.text       start:0x80258B48 end:0x80259A1C
+	.data       start:0x804F2B38 end:0x804F3648
+	.sdata      start:0x806D0AC0 end:0x806D0AC8
+	.sbss       start:0x806D1B30 end:0x806D1B40
+	.sdata2     start:0x806DC260 end:0x806DC268
 
-init/__start.c:
-	.init       start:0x80003154 end:0x80003400
+dolphin/os/OSInterrupt.c:
+	.text       start:0x80259A1C end:0x8025A288
+	.data       start:0x804F3648 end:0x804F3678
+	.sbss       start:0x806D1B40 end:0x806D1B58
 
-init/__init_hardware.c:
-	.init       start:0x80003400 end:0x80003424
+dolphin/os/OSLink.c:
+	.text       start:0x8025A288 end:0x8025A2A0
 
-init/__flush_cache.c:
-	.init       start:0x80003424 end:0x80003458
+dolphin/os/OSMessage.c:
+	.text       start:0x8025A2A0 end:0x8025A4A4
 
-init/memset_returning_dst.c:
-	.init       start:0x80003458 end:0x80003488
+dolphin/os/OSMemory.c:
+	.text       start:0x8025A4A4 end:0x8025A788
+	.data       start:0x804F3678 end:0x804F3688
 
-init/memcpy_bytewise.c:
-	.init       start:0x80003488 end:0x800034AC
+dolphin/os/OSMutex.c:
+	.text       start:0x8025A788 end:0x8025A7F8
 
-init/OSResetSystem_NoArgs.c:
-	.init       start:0x800053E0 end:0x8000540C
+dolphin/os/OSReboot.c:
+	.text       start:0x8025A7F8 end:0x8025A8A4
+	.sbss       start:0x806D1B58 end:0x806D1B60
 
-init/memset.c:
-	.init       start:0x8000540C end:0x8000543C
+dolphin/os/OSReset.c:
+	.text       start:0x8025A8A4 end:0x8025AD28
+	.data       start:0x804F3688 end:0x804F36D8
+	.sbss       start:0x806D1B60 end:0x806D1B70
 
-init/__fill_mem.c:
-	.init       start:0x8000543C end:0x800054F4
+dolphin/os/OSResetSW.c:
+	.text       start:0x8025AD28 end:0x8025AE1C
+	.sbss       start:0x806D1B70 end:0x806D1B88
 
-init/memcpy.c:
-	.init       start:0x800054F4 end:0x80005544
+dolphin/os/OSRtc.c:
+	.text       start:0x8025AE1C end:0x8025B898
+	.bss        start:0x80679FC0 end:0x8067A018
+
+dolphin/os/OSSemaphore.c:
+	.text       start:0x8025B898 end:0x8025BA14
+
+dolphin/os/OSSync.c:
+	.text       start:0x8025BA14 end:0x8025BA98
+
+dolphin/os/OSThread.c:
+	.text       start:0x8025BA98 end:0x8025CC68
+	.bss        start:0x8067A018 end:0x8067AA10
+	.sdata      start:0x806D0AC8 end:0x806D0AD0
+	.sbss       start:0x806D1B88 end:0x806D1B98
+
+dolphin/os/OSTime.c:
+	.text       start:0x8025CC68 end:0x8025D08C
+	.data       start:0x804F36D8 end:0x804F3738

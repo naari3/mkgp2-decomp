@@ -280,6 +280,41 @@ def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     }
 
 
+# Dolphin SDK flags (mirrors doldecomp/dolsdk2004 release build flags)
+cflags_dolphin = [
+    "-nodefaults",
+    "-proc gekko",
+    "-fp hard",
+    "-Cpp_exceptions off",
+    "-enum int",
+    '-pragma "cats off"',
+    "-O4,p",
+    "-inline auto",
+    "-char unsigned",
+    "-I-",
+    "-i include",
+    "-i include/libc",
+    "-ir src/dolphin",
+    f"-i build/{config.version}/include",
+    "-D__GEKKO__",
+    "-DRELEASE",
+]
+
+
+def SdkLib(
+    lib_name: str, objects: List[Object], revision: int = 2
+) -> Dict[str, Any]:
+    # SDK_REVISION selects the dolsdk2004 variant: 1 = May 21 2004 build (OS in this game)
+    return {
+        "lib": lib_name,
+        "src_dir": "src",
+        "mw_version": "GC/1.2.5n",
+        "cflags": [*cflags_dolphin, f"-DSDK_REVISION={revision}"],
+        "progress_category": "sdk",
+        "objects": objects,
+    }
+
+
 # Helper function for REL script objects
 def Rel(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     return {
@@ -1533,6 +1568,45 @@ config.libs = [
             Object(Matching, "sound/SoundObj_PlaySE_Direct.c"),
         ],
     },
+    SdkLib(
+        "dolphin_base",
+        [
+            Object(Matching, "dolphin/base/PPCArch.c"),
+        ],
+    ),
+    SdkLib(
+        "dolphin_db",
+        [
+            Object(Matching, "dolphin/db/db.c"),
+        ],
+    ),
+    SdkLib(
+        "dolphin_os",
+        [
+            Object(Matching, "dolphin/os/OS.c"),
+            Object(Matching, "dolphin/os/OSAlarm.c"),
+            Object(Matching, "dolphin/os/OSArena.c"),
+            Object(Matching, "dolphin/os/OSAudioSystem.c"),
+            Object(Matching, "dolphin/os/OSCache.c"),
+            Object(Matching, "dolphin/os/OSContext.c"),
+            Object(Matching, "dolphin/os/OSError.c"),
+            Object(Matching, "dolphin/os/OSFont.c"),
+            Object(Matching, "dolphin/os/OSInterrupt.c"),
+            Object(Matching, "dolphin/os/OSLink.c"),
+            Object(Matching, "dolphin/os/OSMessage.c"),
+            Object(Matching, "dolphin/os/OSMemory.c"),
+            Object(Matching, "dolphin/os/OSMutex.c"),
+            Object(Matching, "dolphin/os/OSReboot.c"),
+            Object(Matching, "dolphin/os/OSReset.c"),
+            Object(Matching, "dolphin/os/OSResetSW.c"),
+            Object(Matching, "dolphin/os/OSRtc.c"),
+            Object(Matching, "dolphin/os/OSSemaphore.c"),
+            Object(Matching, "dolphin/os/OSSync.c"),
+            Object(Matching, "dolphin/os/OSThread.c"),
+            Object(Matching, "dolphin/os/OSTime.c"),
+        ],
+        revision=1,
+    ),
     {
         "lib": "MSL_C",
         "mw_version": "GC/2.7",

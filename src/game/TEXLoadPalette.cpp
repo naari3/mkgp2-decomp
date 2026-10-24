@@ -19,10 +19,10 @@ u8 FUN_8007dfe4(const char*, void*, u32, u32, int);
 u8 DVDLoad_ReadChunkHandle(DVDFileInfo*, void*, u32, u32, int);
 void ZlibInflate_BufferToBuffer(void*, void*, u32);
 void DCFlushRange(void*, u32);
-void OSPanic_Stub(const char*, int, const char*, ...);
+void OSPanic(const char*, int, const char*, ...);
 static inline void RelocatePalette(TPLPalette* palette) {
     unsigned short i;
-    if (palette->version != 0x20af30) OSPanic_Stub(lbl_80313008, 0xd2, lbl_80313018);
+    if (palette->version != 0x20af30) OSPanic(lbl_80313008, 0xd2, lbl_80313018);
     palette->descriptors = (TPLDescriptor*)((u32)palette->descriptors + (u32)palette);
     for (i = 0; i < palette->count; i++) {
         if (palette->descriptors[i].image) {

@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void OSGetTime();
-extern void fn_8025CE88();
+extern void OSTicksToCalendarTime();
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -45,10 +45,10 @@ asm void Backup_GetMinutesSinceBoot(void) { /* 0x8007458C size:0x11C */
     mr r31, r3
     lwz r3, 0x18(r4)
     lwz r4, 0x1c(r4)
-    bl fn_8025CE88
+    bl OSTicksToCalendarTime
     bl OSGetTime
     addi r5, r1, 0x8
-    bl fn_8025CE88
+    bl OSTicksToCalendarTime
     lwz r6, 0x3c(r1)
     lis r4, 0x29
     lis r5, 0x1

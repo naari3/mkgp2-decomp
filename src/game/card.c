@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void OSGetTime();
-extern void fn_8025CE88();
+extern void OSTicksToCalendarTime();
 extern void fn_80288210();
 
 /* --- extern decls: sda21-referenced data --- */
@@ -47,7 +47,7 @@ asm void card_backup(void) { /* 0x800746A8 size:0x268 */
     stmw r14, 0x38(r1)
     bl OSGetTime
     addi r5, r1, 0x8
-    bl fn_8025CE88
+    bl OSTicksToCalendarTime
     lbz r0, lbl_806D1120(r13)
     lis r3, lbl_80598A60@ha
     lwz r12, 0x8(r1)
