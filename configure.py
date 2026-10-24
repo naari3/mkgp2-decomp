@@ -1132,6 +1132,17 @@ config.libs = [
         ],
     },
     {
+        # .text 0x801077C8..0x8015A6E4 (coins / minigame objects / sprites)
+        "lib": "game_801077C8",
+        "mw_version": "GC/1.3.2",
+        "cflags": [*cflags_base, "-Cpp_exceptions on"],
+        "progress_category": "game",
+        "objects": [
+            Object(Matching, "game/csAnim.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/csAnim_Reset.c"),
+        ],
+    },
+    {
         "lib": "resource",
         "mw_version": "GC/1.3.2",
         "cflags": cflags_base,

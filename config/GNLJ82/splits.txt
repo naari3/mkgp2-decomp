@@ -3186,6 +3186,14 @@ game/CoinSystem_Init.c:
 	extabindex  start:0x80024CA4 end:0x80024CB0
 	.text       start:0x8013A778 end:0x8013AB74
 
+game/csAnim.c:
+	extab       start:0x8000D328 end:0x8000D360
+	extabindex  start:0x80024CB0 end:0x80024D04
+	.text       start:0x8013AB74 end:0x8013BA78
+
+game/csAnim_Reset.c:
+	.text       start:0x8013BA78 end:0x8013BA90
+
 game/GetTextureByIdAndLang.c:
 	extab       start:0x8000D3D0 end:0x8000D3D8
 	extabindex  start:0x80024D94 end:0x80024DA0

@@ -746,10 +746,12 @@
   "src/ui/FrameSelection_Methods.c": {
     "extab_FrameSelection_Init": "@etb_80013F14",
     "extabindex_FrameSelection_Init": "@eti_80027D94",
-    "Confirm__15clFlowNamcamRecFv": "FrameSelection_Confirm",
-    "__ct__6SpriteFiii": "Sprite_InitWithAnim",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
+    "extab_FrameSelection_Confirm": "@etb_80013FE0",
+    "extabindex_FrameSelection_Confirm": "@eti_80027DA0",
+    "extab_FrameSelection_Draw": "@etb_80014008",
+    "extabindex_FrameSelection_Draw": "@eti_80027DAC",
+    "extab_FrameSelection_Update": "@etb_80014010",
+    "extabindex_FrameSelection_Update": "@eti_80027DB8"
   },
   "src/game/GabyouTripleChild.c": {
     "extab_GabyouTripleChild_TickActive": "@etb_8000B6AC",
@@ -1586,5 +1588,11 @@
   "src/game/BananaPositionData_Init.cpp": {
     "__ct__8Normal3DFPvi": "clNormal3D_Construct",
     "__ct__18BananaPositionDataFi": "BananaPositionData_Init"
+  },
+  "src/game/csAnim.c": {
+    "extab_fn_8013AE20": "@etb_8000D330",
+    "extabindex_fn_8013AE20": "@eti_80024CBC",
+    "extab_fn_8013B87C": "@etb_8000D350",
+    "extabindex_fn_8013B87C": "@eti_80024CEC"
   }
 }
