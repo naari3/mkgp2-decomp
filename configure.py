@@ -933,7 +933,7 @@ config.libs = [
             Object(Matching, "game/InitBGM.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/dtor_801BA14C.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "ui/FrameSelection.c"),
-            Object(Matching, "ui/FrameSelection_Methods.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "ui/FrameSelection_Methods.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
             Object(Matching, "ui/UI_PlaySeToggle.c"),
             Object(Matching, "ui/UISoundClSound4D.c"),
             Object(Matching, "ui/UI_PlaySeDecide.c"),

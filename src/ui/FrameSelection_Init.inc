@@ -1,54 +1,8 @@
 /* === extracted from auto_FrameSelection_Init_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void Alloc();
-extern void GetCoinMilage();
-extern void GetFrameIdxFromVisualIdx();
-extern void GetTextureByIdAndLang();
-extern void InitBGM();
-extern void InitRumbleController();
-extern void InitializeFrameSelection();
-extern void IsCardValid();
-extern void PreloadResource();
-extern void ResCtrl_Init();
-extern void Scene3D_Init();
-extern void SceneModel_Init();
-extern void SetCourseParams();
-extern void SetScreenBrightness();
-extern void SetSyncTarget();
-extern void SetupBgSprites();
-extern void SpriteSystem_EnsureInit();
-extern void Sprite_CreateWithParams();
-extern void TexMgr_Apply();
-extern void TexMgr_Init();
-extern void TexMgr_SetTexture();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int FLOAT_ARROW_LEFT_SCALE_X;
-extern unsigned int FLOAT_ARROW_LEFT_X;
-extern unsigned int FLOAT_ARROW_RIGHT_OFFSET;
-extern unsigned int FLOAT_ARROW_RIGHT_X;
-extern unsigned int FLOAT_ARROW_SCALE;
-extern unsigned int FLOAT_ARROW_Y;
-extern unsigned int FLOAT_BRIGHTNESS_DARK;
-extern unsigned int FLOAT_FULL_ALPHA;
-extern unsigned int FLOAT_INIT_Z_DEPTH;
-extern unsigned int FLOAT_SPRITE_INIT_TIME;
-extern unsigned int FLOAT_TEX_POS_X;
-extern unsigned int FLOAT_TEX_POS_Y;
-extern unsigned int FLOAT_TEX_SCALE;
-extern unsigned int g_pInputState;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int g_charaStatTable[];
-extern unsigned int g_playerData[];
-extern unsigned int lbl_8039AA40[];
+/* FrameSelection_Init asm body + manual extab/extabindex emit.            */
+/* Included from FrameSelection_Methods.c inside extern "C" { }; all the   */
+/* referenced symbols are declared there (C++ TU, so the extracted         */
+/* open-prototype decls were dropped to avoid signature conflicts).        */
 
 /* --- function index (1 fns, .text 0x801C4EA8..0x801C53A0) ---
  * [  0] 0x801C4EA8 size:0x4F8   global FrameSelection_Init
@@ -56,12 +10,6 @@ extern unsigned int lbl_8039AA40[];
 
 /* --- forward decls --- */
 asm void FrameSelection_Init(void);
-
-/* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void MemoryManager_TimedFree();
-extern void dtor_80082960();
-extern void dtor_800869D0();
-extern void dtor_801BA14C();
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
