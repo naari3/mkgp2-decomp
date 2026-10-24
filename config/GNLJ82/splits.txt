@@ -749,20 +749,40 @@ game/KartItem_RenderCb_DefaultCycle_Pre.c:
 	extabindex  start:0x80020750 end:0x8002075C
 	.text       start:0x80056794 end:0x800567B8
 
+game/KartItem_RenderCb_DefaultCycle_Post.c:
+	extab       start:0x8000759C end:0x800075A4
+	extabindex  start:0x8002075C end:0x80020768
+	.text       start:0x800567B8 end:0x80056838
+
 game/KartItem_RenderCb_Mode3_Pre.c:
 	extab       start:0x800075A4 end:0x800075AC
 	extabindex  start:0x80020768 end:0x80020774
 	.text       start:0x80056838 end:0x8005685C
+
+game/KartItem_RenderCb_Mode3_Post.c:
+	extab       start:0x800075AC end:0x800075B4
+	extabindex  start:0x80020774 end:0x80020780
+	.text       start:0x8005685C end:0x800568DC
 
 game/KartItem_RenderCb_Mode5_Pre.c:
 	extab       start:0x800075B4 end:0x800075BC
 	extabindex  start:0x80020780 end:0x8002078C
 	.text       start:0x800568DC end:0x80056900
 
+game/KartItem_RenderCb_Mode5_Post.c:
+	extab       start:0x800075BC end:0x800075C4
+	extabindex  start:0x8002078C end:0x80020798
+	.text       start:0x80056900 end:0x80056980
+
 game/KartItem_RenderCb_Mode6_Pre.c:
 	extab       start:0x800075C4 end:0x800075CC
 	extabindex  start:0x80020798 end:0x800207A4
 	.text       start:0x80056980 end:0x800569A4
+
+game/KartItem_RenderCb_Mode6_Post.c:
+	extab       start:0x800075CC end:0x800075D4
+	extabindex  start:0x800207A4 end:0x800207B0
+	.text       start:0x800569A4 end:0x80056A24
 
 game/KartItem_RenderCb_Mode2or4_Pre.c:
 	extab       start:0x800075D4 end:0x800075DC
@@ -819,6 +839,9 @@ game/KartAudioChannel_PlayJumpSE.c:
 	extab       start:0x80007708 end:0x80007710
 	extabindex  start:0x80020924 end:0x80020930
 	.text       start:0x80059FD4 end:0x8005A0BC
+
+game/IsAudioMutedItem.c:
+	.text       start:0x8005A0BC end:0x8005A140
 
 game/KartItemAudio.c:
 	extab       start:0x80007710 end:0x80007728
@@ -2242,6 +2265,11 @@ game/EffectSparkSprayCompound.cpp:
 	extabindex  start:0x80023018 end:0x80023024
 	.text       start:0x800C5DAC end:0x800C5FBC
 
+game/DrawEffect_ApplyScaleAndIntensity.c:
+	extab       start:0x8000A9D0 end:0x8000A9D8
+	extabindex  start:0x80023024 end:0x80023030
+	.text       start:0x800C5FBC end:0x800C6040
+
 game/VfxEffect_InitVariantAndResetPos.c:
 	extab       start:0x8000A9D8 end:0x8000A9E0
 	extabindex  start:0x80023030 end:0x8002303C
@@ -2477,6 +2505,11 @@ game/Vec2.c:
 	extab       start:0x8000B1B4 end:0x8000B1CC
 	extabindex  start:0x8002381C end:0x80023840
 	.text       start:0x800D6188 end:0x800D6338
+
+game/Vec3_Subtract_DestFirst.c:
+	extab       start:0x8000B1CC end:0x8000B1DC
+	extabindex  start:0x80023840 end:0x80023858
+	.text       start:0x800D6338 end:0x800D63CC
 
 game/Rand_RangeInt.c:
 	extab       start:0x8000B1DC end:0x8000B1E4
@@ -2726,6 +2759,9 @@ game/ItemTracker.c:
 	extab       start:0x8000B47C end:0x8000B49C
 	extabindex  start:0x80023BD0 end:0x80023C00
 	.text       start:0x800DD5FC end:0x800DD840
+
+game/ItemObject_GetByteAt0xEC.c:
+	.text       start:0x800DD840 end:0x800DD8D8
 
 game/ItemObject_WriteVectors.c:
 	extab       start:0x8000B49C end:0x8000B4AC
