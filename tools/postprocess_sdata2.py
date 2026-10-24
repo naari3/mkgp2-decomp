@@ -68,6 +68,32 @@ def read_str(data: bytes, base: int, size: int, name_off: int) -> str:
     return data[base + name_off:end].decode("ascii")
 
 
+def text_functions(data: bytes, en: str, shdrs, symtab_idx: int, text_idx: Optional[int]) -> List[Tuple[int, int, str]]:
+    """Return sorted (value, size, name) of STT_FUNC symbols defined in .text."""
+    out: List[Tuple[int, int, str]] = []
+    if text_idx is None:
+        return out
+    symtab_sh = shdrs[symtab_idx]
+    strtab_sh = shdrs[symtab_sh[6]]
+    sym_entsize = symtab_sh[9] or 16
+    for k in range(symtab_sh[5] // sym_entsize):
+        st_name, st_value, st_size, st_info, _, st_shndx = struct.unpack_from(
+            en + "IIIBBH", data, symtab_sh[4] + k * sym_entsize
+        )
+        if st_shndx != text_idx or (st_info & 0xF) != 2:
+            continue
+        out.append((st_value, st_size, read_str(data, strtab_sh[4], strtab_sh[5], st_name)))
+    out.sort()
+    return out
+
+
+def func_relative(funcs: List[Tuple[int, int, str]], r_off: int) -> Optional[Tuple[str, int]]:
+    for value, size, name in funcs:
+        if value <= r_off < value + size:
+            return name, r_off - value
+    return None
+
+
 def find_text_reloc_names(target_path: Path) -> Dict[int, str]:
     """Return offset_in_text -> reloc_target_name for R_PPC_EMB_SDA21 entries."""
     data = target_path.read_bytes()
@@ -96,6 +122,7 @@ def find_text_reloc_names(target_path: Path) -> Dict[int, str]:
     strtab_base = strtab_sh[4]
     strtab_size = strtab_sh[5]
     sym_entsize = symtab_sh[9] or 16
+    funcs = text_functions(data, en, shdrs, symtab_idx, text_idx)
 
     # ELF32_Rela: offset(4), info(4), addend(4) = 12 bytes
     n_rela = rela_sh[5] // 12
@@ -111,6 +138,12 @@ def find_text_reloc_names(target_path: Path) -> Dict[int, str]:
         name = read_str(data, strtab_base, strtab_size, st_name)
         if name:
             result[r_off] = name
+            # Function-relative key: lets a TU whose .text carries extra
+            # functions the link discards (e.g. weak inline-dtor copies emitted
+            # between real functions) still align with the target.
+            rel = func_relative(funcs, r_off)
+            if rel is not None:
+                result[rel] = name  # type: ignore[index]
     return result
 
 
@@ -150,6 +183,7 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
     strtab_base = strtab_sh[4]
     strtab_size = strtab_sh[5]
     sym_entsize = symtab_sh[9] or 16
+    our_funcs = text_functions(bytes(data), en, shdrs, symtab_idx, text_idx)
 
     # Walk our text relocs; find anonymous local sdata2 targets, map to target name
     targets: List[Tuple[int, str, str]] = []  # (sym_idx, old_name, new_name)
@@ -175,6 +209,10 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
         if not ANON_RE.match(name):
             continue
         expected = target_relocs.get(r_off)
+        rel = func_relative(our_funcs, r_off)
+        if rel is not None and rel in target_relocs:
+            # prefer the function-relative match when both exist
+            expected = target_relocs[rel]  # type: ignore[index]
         if expected is None:
             continue
         if r_sym in seen_sym_idxs:
