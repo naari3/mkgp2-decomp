@@ -501,6 +501,7 @@ config.libs = [
             Object(Matching, "game/CommBroadcast.c"),
             Object(Matching, "game/TitleTracker_Stubs.c"),
             Object(Matching, "game/KartItemAudio.c"),
+            Object(Matching, "game/KartItemAudio_PlaySEByItemId.c"),
             Object(Matching, "game/WrapInRange.c"),
             Object(Matching, "game/InputCmdSamples.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Vtable_CallSlot2.cpp"),

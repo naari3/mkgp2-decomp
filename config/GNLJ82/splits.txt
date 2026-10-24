@@ -804,6 +804,12 @@ game/KartAudioChannel_PlayColorMatchSE.c:
 	extabindex  start:0x800208F4 end:0x80020900
 	.text       start:0x8005967C end:0x8005982C
 
+game/KartItemAudio_PlaySEByItemId.c:
+	extab       start:0x800076F0 end:0x800076F8
+	extabindex  start:0x80020900 end:0x8002090C
+	.text       start:0x8005982C end:0x80059E70
+	.rodata     start:0x802EDC70 end:0x802EDD30
+
 game/KartAudioChannel_StopSE8a.c:
 	extab       start:0x80007700 end:0x80007708
 	extabindex  start:0x80020918 end:0x80020924
