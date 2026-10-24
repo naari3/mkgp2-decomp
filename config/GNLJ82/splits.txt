@@ -209,6 +209,11 @@ game/Normal3DLoad.c:
 	extabindex  start:0x8001F7D8 end:0x8001F7E4
 	.text       start:0x80034508 end:0x800346E4
 
+game/Object_DtorWithGXSync.c:
+	extab       start:0x80005BA0 end:0x80005BA8
+	extabindex  start:0x8001F7E4 end:0x8001F7F0
+	.text       start:0x800346E4 end:0x80034798
+
 game/clNormal3D_Construct.c:
 	extab       start:0x80005BA8 end:0x80005BB0
 	extabindex  start:0x8001F7F0 end:0x8001F7FC
@@ -378,6 +383,11 @@ game/JvsInputLifetime.cpp:
 
 game/JvsInputMetrics.cpp:
 	.text       start:0x80039B0C end:0x80039C40
+
+game/Profiler_DrawBar.c:
+	extab       start:0x80005E80 end:0x80005E88
+	extabindex  start:0x8001FAFC end:0x8001FB08
+	.text       start:0x80039C40 end:0x80039CF4
 
 game/Profiler_RecordFrame.c:
 	.text       start:0x80039CF4 end:0x80039D38
@@ -738,6 +748,11 @@ game/KartEffectFadeTransit_Tick.c:
 game/KartItem_Stub_Returns0.c:
 	.text       start:0x8005623C end:0x80056244
 
+game/SpeedBoost_Apply.c:
+	extab       start:0x80007554 end:0x8000755C
+	extabindex  start:0x800206F0 end:0x800206FC
+	.text       start:0x80056244 end:0x80056308
+
 game/KartEffectFadeTransit_GetActiveValue.c:
 	.text       start:0x80056308 end:0x80056324
 
@@ -808,6 +823,11 @@ game/TornadoEffect.c:
 	extab       start:0x800075FC end:0x800076B0
 	extabindex  start:0x800207EC end:0x800208A0
 	.text       start:0x80056CB0 end:0x80058DE8
+
+game/AudioChannel_DtorWithSeStop.c:
+	extab       start:0x800076B0 end:0x800076B8
+	extabindex  start:0x800208A0 end:0x800208AC
+	.text       start:0x80058DE8 end:0x80058EA4
 
 game/KartAudioChannel.c:
 	extab       start:0x800076B8 end:0x800076C0
@@ -2660,6 +2680,11 @@ game/SpriteSlot_Container_Free.c:
 	extabindex  start:0x800239C0 end:0x800239CC
 	.text       start:0x800D7F30 end:0x800D7F70
 
+game/ItemObject_AllocFromPool.cpp:
+	extab       start:0x8000B2F4 end:0x8000B2FC
+	extabindex  start:0x800239CC end:0x800239D8
+	.text       start:0x800D7F70 end:0x800D802C
+
 game/ItemObjectManager_Controls.c:
 	extab       start:0x8000B2FC end:0x8000B334
 	extabindex  start:0x800239D8 end:0x800239FC
@@ -2747,6 +2772,11 @@ game/ItemGroundExplosion.c:
 	extab       start:0x8000B3FC end:0x8000B404
 	extabindex  start:0x80023B10 end:0x80023B1C
 	.text       start:0x800DB3C0 end:0x800DB6BC
+
+game/ItemObject_DispatchVtable1C_IfBoundedItem.cpp:
+	extab       start:0x8000B404 end:0x8000B414
+	extabindex  start:0x80023B1C end:0x80023B34
+	.text       start:0x800DB6BC end:0x800DB784
 
 game/ItemTrackedHoming.c:
 	extab       start:0x8000B414 end:0x8000B41C
