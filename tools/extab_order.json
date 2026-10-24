@@ -13,5 +13,6 @@
   "src/game/VfxSlotMgr.cpp": ["VfxSlotMgr_Update", "__dt__11ScopedTimerFv"],
   "src/ui/FrameSelection_Methods.c": ["FrameSelection_Init", "FrameSelection_Confirm", "FrameSelection_Draw", "FrameSelection_Update"],
   "src/game/csAnim.c": ["fn_8013AB74", "fn_8013AE20", "fn_8013B300", "fn_8013B4FC", "fn_8013B7A8", "fn_8013B87C", "fn_8013B9A0"],
-  "src/game/CourseTables.c": ["fn_8013BFF8", "fn_8013C100", "fn_8013C198", "fn_8013C204", "fn_8013C26C"]
+  "src/game/CourseTables.c": ["fn_8013BFF8", "fn_8013C100", "fn_8013C198", "fn_8013C204", "fn_8013C26C"],
+  "src/game/KartPreview.c": ["fn_8013C4A4", "fn_8013C534", "fn_8013C5FC", "fn_8013C674", "fn_8013C6EC", "fn_8013C7BC", "fn_8013C91C", "fn_8013CA04", "fn_8013CA70", "fn_8013CB10", "fn_8013CC24"]
 }

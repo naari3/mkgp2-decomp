@@ -3209,6 +3209,16 @@ game/GetTextureByIdAndLang.c:
 	extabindex  start:0x80024D94 end:0x80024DA0
 	.text       start:0x8013C2D4 end:0x8013C334
 
+game/RenderTargetSingleton.c:
+	extab       start:0x8000D3D8 end:0x8000D400
+	extabindex  start:0x80024DA0 end:0x80024DC4
+	.text       start:0x8013C334 end:0x8013C4A4
+
+game/KartPreview.c:
+	extab       start:0x8000D400 end:0x8000D538
+	extabindex  start:0x80024DC4 end:0x80024E48
+	.text       start:0x8013C4A4 end:0x8013D4B0
+
 game/InitRumbleController.c:
 	extab       start:0x800101D0 end:0x800101D8
 	extabindex  start:0x80025FD0 end:0x80025FDC

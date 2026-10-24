@@ -1598,5 +1598,21 @@
   "src/game/CourseTables.c": {
     "extab_fn_8013BFF8": "@etb_8000D3A8",
     "extabindex_fn_8013BFF8": "@eti_80024D58"
+  },
+  "src/game/KartPreview.c": {
+    "extab_fn_8013C4A4": "@etb_8000D400",
+    "extabindex_fn_8013C4A4": "@eti_80024DC4",
+    "extab_fn_8013C534": "@etb_8000D408",
+    "extabindex_fn_8013C534": "@eti_80024DD0",
+    "extab_fn_8013C5FC": "@etb_8000D410",
+    "extabindex_fn_8013C5FC": "@eti_80024DDC",
+    "extab_fn_8013C674": "@etb_8000D418",
+    "extabindex_fn_8013C674": "@eti_80024DE8",
+    "extab_fn_8013C6EC": "@etb_8000D420",
+    "extabindex_fn_8013C6EC": "@eti_80024DF4",
+    "extab_fn_8013C7BC": "@etb_8000D428",
+    "extabindex_fn_8013C7BC": "@eti_80024E00",
+    "extab_fn_8013CC24": "@etb_8000D450",
+    "extabindex_fn_8013CC24": "@eti_80024E3C"
   }
 }
