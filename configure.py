@@ -715,6 +715,7 @@ config.libs = [
             Object(Matching, "game/Stub_NoOp_38f80.c"),
             Object(Matching, "game/InputMgr_GetPlayer.c"),
             Object(Matching, "game/QuadFrame_FromPackedCorners.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/QuadFrame_FromCornerPtrs.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/InputMgr.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/DMAChannelManager_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
             Object(Matching, "game/ItemObjectManager_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
