@@ -3326,6 +3326,16 @@ game/clFlowItem.c:
 	extabindex  start:0x8002AC14 end:0x8002AC44
 	.text       start:0x802379F8 end:0x802386E0
 
+game/ItemSelectState_Dtor.cpp:
+	extab       start:0x8001C850 end:0x8001C858
+	extabindex  start:0x8002AC68 end:0x8002AC74
+	.text       start:0x802394DC end:0x80239764
+
+game/ItemSelectState_Init.cpp:
+	extab       start:0x8001C858 end:0x8001C8D0
+	extabindex  start:0x8002AC74 end:0x8002AC80
+	.text       start:0x80239764 end:0x80239D6C
+
 game/GetCourseSectionType.c:
 	extab       start:0x8001CB6C end:0x8001CB74
 	extabindex  start:0x8002AE30 end:0x8002AE3C

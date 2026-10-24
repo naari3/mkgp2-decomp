@@ -1571,5 +1571,15 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__ct__15DebrisResponderF9DebrisVec9DebrisVec": "clItemBoxResponder_SpawnDebris"
+  },
+  "src/game/ItemSelectState_Dtor.cpp": {
+    "__dt__15ItemSelectStateFv": "ItemSelectState_Dtor"
+  },
+  "src/game/ItemSelectState_Init.cpp": {
+    "__ct__15ItemSelectStateFv": "ItemSelectState_Init",
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__ct__8IconPackFv": "fn_8023B1A8",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
   }
 }
