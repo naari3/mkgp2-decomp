@@ -675,6 +675,12 @@ game/GetItemDataEntry_Bounded.c:
 	extabindex  start:0x8001FFB8 end:0x8001FFC4
 	.text       start:0x80045EB8 end:0x80045EE8
 
+game/ItemUseStats.c:
+	extab       start:0x800066A0 end:0x800066B0
+	extabindex  start:0x8001FFC4 end:0x8001FFDC
+	.text       start:0x80045EE8 end:0x800461F0
+	.data       start:0x803F5C24 end:0x803F5CE4
+
 game/PathCursor_ResetToPath.c:
 	extab       start:0x800066C8 end:0x800066D0
 	extabindex  start:0x80020000 end:0x8002000C
