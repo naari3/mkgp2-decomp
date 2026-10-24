@@ -86,6 +86,12 @@ game/DebugTextOutput.c:
 game/Profiler.c:
 	.text       start:0x8002FF08 end:0x8002FF48
 
+game/Cleanup_DtorMinimal.c:
+	extab       start:0x800058B0 end:0x800058C0
+	extabindex  start:0x8001F514 end:0x8001F52C
+	.text       start:0x8002FF48 end:0x8002FFB8
+	.ctors      start:0x802E88E4 end:0x802E88E8
+
 game/CObjLineBuffer.c:
 	.text       start:0x8002FFB8 end:0x80030010
 

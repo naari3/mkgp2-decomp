@@ -748,6 +748,7 @@ config.libs = [
             Object(Matching, "game/Camera.c"),
             Object(Matching, "game/Game_Shutdown.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Profiler.c"),
+            Object(Matching, "game/Cleanup_DtorMinimal.c"),
             Object(Matching, "game/Profiler_RecordFrame.c"),
             Object(Matching, "game/MetricsTable.c"),
             Object(Matching, "game/LObjList.cpp", extra_cflags=["-Cpp_exceptions on"]),
