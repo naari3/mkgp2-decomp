@@ -3589,17 +3589,123 @@ game/fn_8014E028.c:
 	extabindex  start:0x800255A4 end:0x800255B0
 	.text       start:0x8014E028 end:0x8014E04C
 
-game/fn_801635D4.c:
-	.text       start:0x801635D4 end:0x801635DC
+game/Scene_8015AE3C.cpp:
+	extab       start:0x8000F198 end:0x8000F1A0
+	extabindex  start:0x8002597C end:0x80025988
+	.text       start:0x8015AE3C end:0x8015AFCC
 
-game/fn_801660B0.c:
-	.text       start:0x801660B0 end:0x801660B4
+game/Scene_8015B698.cpp:
+	extab       start:0x8000F264 end:0x8000F26C
+	extabindex  start:0x80025994 end:0x800259A0
+	.text       start:0x8015B698 end:0x8015B6D0
 
-game/fn_80166B28.c:
-	.text       start:0x80166B28 end:0x80166B2C
+game/Scene_8015B6D0.cpp:
+	extab       start:0x8000F26C end:0x8000F284
+	extabindex  start:0x800259A0 end:0x800259AC
+	.text       start:0x8015B6D0 end:0x8015B70C
 
-game/fn_8016730C.c:
-	.text       start:0x8016730C end:0x80167310
+game/Scene_8015B70C.cpp:
+	extab       start:0x8000F284 end:0x8000F28C
+	extabindex  start:0x800259AC end:0x800259B8
+	.text       start:0x8015B70C end:0x8015B790
+
+game/Scene_8015BC08.cpp:
+	extab       start:0x8000F294 end:0x8000F29C
+	extabindex  start:0x800259C4 end:0x800259D0
+	.text       start:0x8015BC08 end:0x8015BCC4
+
+game/Scene_8015BE0C.cpp:
+	extab       start:0x8000F2C4 end:0x8000F2CC
+	extabindex  start:0x800259DC end:0x800259E8
+	.text       start:0x8015BE0C end:0x8015BE44
+
+game/Scene_8015BE44.cpp:
+	extab       start:0x8000F2CC end:0x8000F2F0
+	extabindex  start:0x800259E8 end:0x800259F4
+	.text       start:0x8015BE44 end:0x8015BED4
+
+game/Scene_8015BED4.cpp:
+	extab       start:0x8000F2F0 end:0x8000F2F8
+	extabindex  start:0x800259F4 end:0x80025A00
+	.text       start:0x8015BED4 end:0x8015BF18
+
+game/Scene_801622C8.cpp:
+	extab       start:0x8000FA08 end:0x8000FA10
+	extabindex  start:0x80025C1C end:0x80025C28
+	.text       start:0x801622C8 end:0x8016234C
+
+game/Scene_80162B00.cpp:
+	extab       start:0x8000FA3C end:0x8000FA54
+	extabindex  start:0x80025C34 end:0x80025C58
+	.text       start:0x80162B00 end:0x80162C3C
+
+game/Scene_801634C4.cpp:
+	extab       start:0x8000FA88 end:0x8000FA98
+	extabindex  start:0x80025C7C end:0x80025C94
+	.text       start:0x801634C4 end:0x80163554
+
+game/Scene_80163554.cpp:
+	extab       start:0x8000FA98 end:0x8000FAA8
+	extabindex  start:0x80025C94 end:0x80025CAC
+	.text       start:0x80163554 end:0x80163614
+
+game/Scene_80163614.cpp:
+	extab       start:0x8000FAA8 end:0x8000FADC
+	extabindex  start:0x80025CAC end:0x80025CB8
+	.text       start:0x80163614 end:0x801636B4
+
+game/Scene_801636B4.cpp:
+	extab       start:0x8000FADC end:0x8000FAFC
+	extabindex  start:0x80025CB8 end:0x80025CE8
+	.text       start:0x801636B4 end:0x80163804
+
+game/Scene_80163804.cpp:
+	extab       start:0x8000FAFC end:0x8000FB30
+	extabindex  start:0x80025CE8 end:0x80025CF4
+	.text       start:0x80163804 end:0x801638B4
+
+game/Scene_80165454.cpp:
+	extab       start:0x8000FC40 end:0x8000FC48
+	extabindex  start:0x80025D3C end:0x80025D48
+	.text       start:0x80165454 end:0x801654E0
+
+game/Scene_80165BCC.cpp:
+	extab       start:0x8000FEA8 end:0x8000FEF8
+	extabindex  start:0x80025D54 end:0x80025DB4
+	.text       start:0x80165BCC end:0x80165E90
+
+game/Scene_80165E90.cpp:
+	extab       start:0x8000FEF8 end:0x8000FF08
+	extabindex  start:0x80025DB4 end:0x80025DCC
+	.text       start:0x80165E90 end:0x801660EC
+
+game/Scene_801660EC.cpp:
+	extab       start:0x8000FF08 end:0x8000FF10
+	extabindex  start:0x80025DCC end:0x80025DD8
+	.text       start:0x801660EC end:0x801661FC
+
+game/Scene_80166B28.cpp:
+	extab       start:0x8000FF28 end:0x8000FF38
+	extabindex  start:0x80025DE4 end:0x80025DFC
+	.text       start:0x80166B28 end:0x80166BE8
+
+game/Scene_8016700C.cpp:
+	extab       start:0x8000FF40 end:0x8000FF58
+	extabindex  start:0x80025E08 end:0x80025E2C
+	.text       start:0x8016700C end:0x801670FC
+
+game/Sound_8016730C.cpp:
+	extab       start:0x8000FF60 end:0x8000FF88
+	extabindex  start:0x80025E38 end:0x80025E74
+	.text       start:0x8016730C end:0x801674AC
+
+game/Sound_801674AC.cpp:
+	extab       start:0x8000FF88 end:0x8000FFA0
+	extabindex  start:0x80025E74 end:0x80025E98
+	.text       start:0x801674AC end:0x80167744
+
+game/Rumble.cpp:
+	.text       start:0x80169978 end:0x80169A14
 
 game/InitRumbleController.c:
 	extab       start:0x800101D0 end:0x800101D8
@@ -3611,8 +3717,10 @@ game/fn_80169DF0.c:
 	extabindex  start:0x80025FDC end:0x80025FE8
 	.text       start:0x80169DF0 end:0x80169E10
 
-game/fn_8016A2B8.c:
-	.text       start:0x8016A2B8 end:0x8016A2C0
+game/CourseMarker.cpp:
+	extab       start:0x800101E0 end:0x80010234
+	extabindex  start:0x80025FE8 end:0x80026024
+	.text       start:0x80169E34 end:0x8016A2C0
 
 game/fn_8016B0A0.c:
 	extab       start:0x80010364 end:0x8001036C

@@ -1,4 +1,8 @@
 {
+  "src/game/CourseMarker.cpp": {
+    "extab": ["dtor_8016A270", "fn_80169E34", "fn_80169EFC", "fn_8016A11C", "fn_8016A1AC"],
+    "extabindex": ["fn_80169E34", "fn_80169EFC", "fn_8016A11C", "fn_8016A1AC", "dtor_8016A270"]
+  },
   "src/game/dtor_801FEA70.c": {
     "extab": ["dtor_801FEAB8", "dtor_801FEB48", "dtor_801FEA70"],
     "extabindex": ["dtor_801FEAB8", "dtor_801FEB48", "dtor_801FEA70"]
