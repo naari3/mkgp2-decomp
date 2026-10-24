@@ -196,6 +196,11 @@ game/Normal3DScale.c:
 	extabindex  start:0x8001F778 end:0x8001F784
 	.text       start:0x80033918 end:0x80033E4C
 
+game/ResolveJointByName.c:
+	extab       start:0x80005B50 end:0x80005B58
+	extabindex  start:0x8001F784 end:0x8001F790
+	.text       start:0x80033E4C end:0x80033EFC
+
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
 
@@ -306,6 +311,11 @@ game/Allocator_Deallocate.cpp:
 
 game/Stub_NoOp_38f80.c:
 	.text       start:0x80038F80 end:0x80038F84
+
+game/Mtx4x4_TransposeTo4x3.c:
+	extab       start:0x80005DE8 end:0x80005DF0
+	extabindex  start:0x8001FA48 end:0x8001FA54
+	.text       start:0x80038F84 end:0x80039020
 
 game/InputMgr_GetPlayer.c:
 	.text       start:0x80039020 end:0x8003903C
@@ -744,6 +754,11 @@ game/KartItem_RenderCb_Mode7_Pre.c:
 	extabindex  start:0x80020738 end:0x80020744
 	.text       start:0x800566D4 end:0x800566F8
 
+game/KartItem_RenderCb_Mode7_Post.c:
+	extab       start:0x8000758C end:0x80007594
+	extabindex  start:0x80020744 end:0x80020750
+	.text       start:0x800566F8 end:0x80056794
+
 game/KartItem_RenderCb_DefaultCycle_Pre.c:
 	extab       start:0x80007594 end:0x8000759C
 	extabindex  start:0x80020750 end:0x8002075C
@@ -977,6 +992,11 @@ game/clItemBoxResponder.c:
 
 game/clItemBoxResponder_CmdGroup.c:
 	.text       start:0x8005FFF0 end:0x80060024
+
+game/dtor_80060024.c:
+	extab       start:0x80007DB0 end:0x80007DB8
+	extabindex  start:0x80020D44 end:0x80020D50
+	.text       start:0x80060024 end:0x800600B0
 
 game/clItemBoxResponder_Ctor.c:
 	extab       start:0x80007DB8 end:0x80007DC0
@@ -1264,6 +1284,11 @@ game/GXChannel_Bind.c:
 	extab       start:0x800087C0 end:0x800087C8
 	extabindex  start:0x800215A8 end:0x800215B4
 	.text       start:0x8007D834 end:0x8007D9C4
+
+game/dtor_8007D9C4.c:
+	extab       start:0x800087C8 end:0x800087D0
+	extabindex  start:0x800215B4 end:0x800215C0
+	.text       start:0x8007D9C4 end:0x8007DA5C
 
 game/GXChannel_Init.c:
 	extab       start:0x800087D0 end:0x800087D8

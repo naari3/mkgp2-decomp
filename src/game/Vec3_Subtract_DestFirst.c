@@ -17,15 +17,8 @@ void GetSpawnPosition(float *dst, float x, float y, float z) {
     dst[2] = z;
 }
 
-/* C form `x = src[0]; y = src[1]; dst[0] = x; z = src[2]; ...` reaches 98.29%
- * but CW schedules the y load before x; kept as asm. */
-asm void Vec3_Copy(float *dst, float *src) {
-    nofralloc
-    lfs f0, 0x0(r4)
-    lfs f1, 0x4(r4)
-    stfs f0, 0x0(r3)
-    lfs f0, 0x8(r4)
-    stfs f1, 0x4(r3)
-    stfs f0, 0x8(r3)
-    blr
+void Vec3_Copy(float *__restrict dst, float *__restrict src) {
+    dst[0] = src[0];
+    dst[1] = src[1];
+    dst[2] = src[2];
 }
