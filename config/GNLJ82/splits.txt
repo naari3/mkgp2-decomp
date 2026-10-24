@@ -173,6 +173,9 @@ game/ObjectTree_BlendOrCopy_Timed.c:
 	extabindex  start:0x8001F73C end:0x8001F748
 	.text       start:0x80032540 end:0x8003267C
 
+game/Object_CopyFieldsRotPosScale.c:
+	.text       start:0x8003267C end:0x800326D0
+
 game/ObjectTree_BlendQuatLerp.c:
 	extab       start:0x80005A38 end:0x80005A40
 	extabindex  start:0x8001F748 end:0x8001F754
@@ -302,6 +305,11 @@ game/Stub_NoOp_38f80.c:
 game/InputMgr_GetPlayer.c:
 	.text       start:0x80039020 end:0x8003903C
 
+game/InputObj_TickAndDispatch.cpp:
+	extab       start:0x80005DF0 end:0x80005DF8
+	extabindex  start:0x8001FA54 end:0x8001FA60
+	.text       start:0x8003903C end:0x8003907C
+
 game/InputMgr.c:
 	extab       start:0x80005DF8 end:0x80005E28
 	extabindex  start:0x8001FA60 end:0x8001FA78
@@ -379,6 +387,11 @@ game/MObj.cpp:
 	extab       start:0x80005EF0 end:0x80005F00
 	extabindex  start:0x8001FB8C end:0x8001FBA4
 	.text       start:0x8003A49C end:0x8003A54C
+
+game/model_jobj_ClassInit.c:
+	extab       start:0x80005F00 end:0x80005F08
+	extabindex  start:0x8001FBA4 end:0x8001FBB0
+	.text       start:0x8003A54C end:0x8003A5A8
 
 game/MJObj_InitMember.c:
 	extab       start:0x80005F08 end:0x80005F10
@@ -805,6 +818,11 @@ game/InputCmdLifetime.cpp:
 game/InputCmdLeaf.c:
 	.text       start:0x8005B0EC end:0x8005B118
 
+game/EffectState_ReleaseAndClear.cpp:
+	extab       start:0x80007764 end:0x8000776C
+	extabindex  start:0x80020990 end:0x8002099C
+	.text       start:0x8005B118 end:0x8005B168
+
 game/EffectState_HasContent.c:
 	.text       start:0x8005B168 end:0x8005B17C
 
@@ -1066,6 +1084,11 @@ game/ServiceMenu_Page.c:
 	extab       start:0x80008238 end:0x800082A0
 	extabindex  start:0x80021188 end:0x800211B8
 	.text       start:0x80073B00 end:0x80073E20
+
+game/SmallObj_Dtor_VtableA.c:
+	extab       start:0x800082A0 end:0x800082A8
+	extabindex  start:0x800211B8 end:0x800211C4
+	.text       start:0x80073E20 end:0x80073E7C
 
 game/ServiceMenu.c:
 	extab       start:0x800082A8 end:0x800082C0
@@ -1681,6 +1704,11 @@ game/Rand.c:
 	extab       start:0x80009768 end:0x80009778
 	extabindex  start:0x80022274 end:0x8002228C
 	.text       start:0x800A06D0 end:0x800A073C
+
+game/RandSeedDebug_SetEnable.c:
+	extab       start:0x80009778 end:0x80009780
+	extabindex  start:0x8002228C end:0x80022298
+	.text       start:0x800A073C end:0x800A078C
 
 game/ReplayRandCursor.c:
 	.text       start:0x800A078C end:0x800A07B4
@@ -2610,6 +2638,11 @@ game/GabyouItem.c:
 	extab       start:0x8000B3DC end:0x8000B3E4
 	extabindex  start:0x80023AE0 end:0x80023AEC
 	.text       start:0x800DABBC end:0x800DAE88
+
+game/ItemObject_DecrementCategoryBudget.c:
+	extab       start:0x8000B3E4 end:0x8000B3EC
+	extabindex  start:0x80023AEC end:0x80023AF8
+	.text       start:0x800DAE88 end:0x800DAEBC
 
 game/ItemHitPropagation.c:
 	extab       start:0x8000B3EC end:0x8000B3FC
