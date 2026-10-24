@@ -4766,12 +4766,21 @@ game/fn_801FBD94.c:
 	extabindex  start:0x80029228 end:0x80029234
 	.text       start:0x801FBD94 end:0x801FBE14
 
-game/fn_801FD320.c:
-	.text       start:0x801FD320 end:0x801FD32C
+game/anon_801FC1E0.cpp:
+	extab       start:0x800179D8 end:0x80017B40
+	extabindex  start:0x8002924C end:0x800292D0
+	.text       start:0x801FC1E0 end:0x801FD320
+
+game/anon_801FD320.cpp:
+	extab       start:0x80017B40 end:0x80017C5C
+	extabindex  start:0x800292D0 end:0x80029330
+	.text       start:0x801FD320 end:0x801FD924
 	.ctors      start:0x802E8938 end:0x802E893C
 
-game/fn_801FD500.c:
-	.text       start:0x801FD500 end:0x801FD504
+game/anon_801FD924.cpp:
+	extab       start:0x80017C5C end:0x80017CD4
+	extabindex  start:0x80029330 end:0x8002939C
+	.text       start:0x801FD924 end:0x801FE150
 
 ui/UI_PlaySeToggle.c:
 	extab       start:0x80017CD4 end:0x80017CDC
@@ -4788,64 +4797,35 @@ ui/UI_PlaySeDecide.c:
 	extabindex  start:0x800293B4 end:0x800293C0
 	.text       start:0x801FE1AC end:0x801FE1D0
 
-game/fn_801FE1D0.c:
-	.text       start:0x801FE1D0 end:0x801FE1D8
+game/UISeHelpers.c:
+	extab       start:0x80017CEC end:0x80017D3C
+	extabindex  start:0x800293C0 end:0x80029438
+	.text       start:0x801FE1D0 end:0x801FE3BC
 
-game/fn_801FE1D8.c:
-	extab       start:0x80017CEC end:0x80017CF4
-	extabindex  start:0x800293C0 end:0x800293CC
-	.text       start:0x801FE1D8 end:0x801FE1FC
-
-game/fn_801FE2B8.c:
-	extab       start:0x80017D04 end:0x80017D0C
-	extabindex  start:0x800293E4 end:0x800293F0
-	.text       start:0x801FE2B8 end:0x801FE2DC
-
-game/fn_801FE2DC.c:
-	extab       start:0x80017D0C end:0x80017D14
-	extabindex  start:0x800293F0 end:0x800293FC
-	.text       start:0x801FE2DC end:0x801FE300
-
-game/fn_801FE300.c:
-	extab       start:0x80017D14 end:0x80017D1C
-	extabindex  start:0x800293FC end:0x80029408
-	.text       start:0x801FE300 end:0x801FE324
-
-game/fn_801FE324.c:
-	extab       start:0x80017D1C end:0x80017D24
-	extabindex  start:0x80029408 end:0x80029414
-	.text       start:0x801FE324 end:0x801FE348
-
-game/fn_801FE348.c:
-	extab       start:0x80017D24 end:0x80017D2C
-	extabindex  start:0x80029414 end:0x80029420
-	.text       start:0x801FE348 end:0x801FE36C
-
-game/fn_801FE36C.c:
-	extab       start:0x80017D2C end:0x80017D34
-	extabindex  start:0x80029420 end:0x8002942C
-	.text       start:0x801FE36C end:0x801FE390
-
-game/fn_801FE390.c:
-	extab       start:0x80017D34 end:0x80017D3C
-	extabindex  start:0x8002942C end:0x80029438
-	.text       start:0x801FE390 end:0x801FE3B4
-
-game/fn_801FE3B4.c:
-	.text       start:0x801FE3B4 end:0x801FE3BC
+game/anon_801FE3BC.cpp:
+	extab       start:0x80017D3C end:0x80017D70
+	extabindex  start:0x80029438 end:0x80029450
+	.text       start:0x801FE3BC end:0x801FE4D0
 
 game/dtor_801FE870.c:
 	extab       start:0x80017D70 end:0x80017D98
 	extabindex  start:0x80029450 end:0x8002948C
 	.text       start:0x801FE4D0 end:0x801FE8B8
 
+game/anon_801FE8B8.cpp:
+	extab       start:0x80017D98 end:0x80017DF0
+	extabindex  start:0x8002948C end:0x800294B0
+	.text       start:0x801FE8B8 end:0x801FEA70
+
 game/dtor_801FEA70.c:
 	extab       start:0x80017DF0 end:0x80017E48
 	extabindex  start:0x800294B0 end:0x800294D4
 	.text       start:0x801FEA70 end:0x801FEBD8
 
-game/fn_801FF3E4.c:
-	.text       start:0x801FF3E4 end:0x801FF3E8
+game/anon_801FEBD8.cpp:
+	extab       start:0x80017E48 end:0x80018008
+	extabindex  start:0x800294D4 end:0x80029534
+	.text       start:0x801FEBD8 end:0x801FF670
 
 game/fn_801FF790.c:
 	.text       start:0x801FF790 end:0x801FF794
