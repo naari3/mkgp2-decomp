@@ -106,10 +106,10 @@ def fetch_open_claims_safe() -> dict[str, dict] | None:
 
 
 def unit_members(unit: str) -> list[tuple[int, dict]]:
-    from plan_units import load_functions, prefix_of
-    fns = load_functions()
+    from plan_units import load_units
+    fns, unit_of, _fn_to_group, _groups = load_units()
     return sorted(
-        (a, v) for a, v in fns.items() if prefix_of(v["name"]) == unit
+        (a, v) for a, v in fns.items() if unit_of[a] == unit
     )
 
 
@@ -192,7 +192,7 @@ def cmd_claim(args) -> int:
     members = unit_members(unit)
     if not members:
         sys.exit(f"unit '{unit}' に該当する関数が symbols.txt に無い "
-                 f"(prefix 完全一致、大文字小文字区別)")
+                 f"(unit 名完全一致、大文字小文字区別。anon_* は plan_units.py の表記)")
     pending = [m for m in members if m[1]["status"] == "pending"]
     if not pending:
         sys.exit(f"unit '{unit}' に pending 関数が無い (全部消化済み?)")

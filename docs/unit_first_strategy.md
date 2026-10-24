@@ -55,6 +55,27 @@ prefix が同じでも address 空間に散在するものは unit ではない:
 これらの構成 fn は、所属する本来の unit (または address 近傍の別 unit) の
 batch で巻き取る。
 
+## 3.5 placeholder 名の関数 (fn_*) の unit 所属 (2026-10-25 導入)
+
+placeholder 名の関数も `pending` (旧 `excluded`)。名前 prefix が無いので
+`plan_units.py` の `assign_units()` が address で所属を決める:
+
+1. extab group の named member が全員同じ unit → その unit に入る
+   (extab group は必ず同 TU なので)
+2. placeholder の連続 run の前後が同じ unit → その unit に入る
+3. 残りは連続 run ごとに `anon_<先頭 addr>` unit になる
+
+`anon_*` unit の扱い:
+
+- 名前の由来が無いだけで、選定基準 (§2) は named unit と同じ
+- 元 TU 境界の手がかりが prefix に無いので、run が複数の元 TU を跨いでいる
+  可能性がある。Ghidra で caller/callee・vtable・struct を見て TU を切る判断は
+  main / worker が行う
+- 意味が分かったら HANDOFF の `symbols_txt.rename[]` で named 化してよい
+  (必須ではない)。rename すると次回以降その関数は prefix の unit に移り、
+  `anon_*` の id もずれるので claim 前に `plan_units.py` を引き直す
+- claim は `python tools/claim_unit.py claim anon_801FE1D0` のように id で行う
+
 ## 4. 手順 (1 unit の完食フロー)
 
 1. `python tools/plan_units.py` → ランキング確認
@@ -191,3 +212,6 @@ repo tracked (clone すれば揃う):
   extab/extabindex 込み 1 TU 再現できることを確認 (ISESlot_Update と同パターン)。
   理想形 unit (runs=1/frgn=0/extab 閉包) は手戻りなく完食できる、という
   選定基準の妥当性を裏付ける初観測
+- 2026-10-25: placeholder 名の関数 (4583 fn、.text の約 57%) を `excluded` から
+  `pending` に変更し、`plan_units.py` で address ベースに unit 所属させるようにした
+  (§3.5)。理由と観測値は `docs/notes/unnamed-functions-in-scope-20261025.md`

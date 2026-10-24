@@ -71,7 +71,7 @@ key は 16 進アドレス文字列 (`"0x80003100"`)。
 ```
 
 - `name` — symbols.txt 上の current name (`fn_xxx` / `FUN_xxx` / `lbl_*` placeholder の場合あり)
-- `has_named_symbol` — symbols.txt の name が placeholder でないか。**orchestrator 対象判定はこの field を使う**。name の由来 (Ghidra / mkgp2docs / externals.txt / 手動) を問わない
+- `has_named_symbol` — symbols.txt の name が placeholder でないか。informational (2026-10-25 までは orchestrator 対象判定に使っていた)。name の由来 (Ghidra / mkgp2docs / externals.txt / 手動) を問わない
 - `ghidra_named` — `tools/ghidra_symbol_dump.json` に当該アドレスがあるか。informational only (rename 同期の cross-check 用)
 - `tu_hint` — 推定 TU パス。configure.py の `Object(...)` で既に declared なら確定値、未配置なら splits.txt range lookup の結果。auto blob 内なら null
 - `extab_group` — dtk reversed extab group の identifier (= `auto_*_text` 単位名)。null なら singleton (単独 split 可能)。null でなければ同 group の全 function を 1 batch に bundle する必要 (CASE 5)。`tools/build_extab_map.py` → `.orchestrator/extab_groups.json` から orch_sync が populate
@@ -91,7 +91,7 @@ pending → in_progress → matched
                      ↘  interrupted  (sub kill / crash で中断)
                      ↘  blocked      (3 回以上失敗 or 依存未解決)
 
-excluded                  ← 並列 decomp の対象外 (ghidra_named=false 等)
+excluded                  ← 2026-10-25 以降は derive されない (旧: placeholder 名で対象外)
 skipped                   ← user が手動 skip
 ```
 
@@ -104,15 +104,14 @@ skipped                   ← user が手動 skip
 | `nonmatching` | `Object(NonMatching, ...)` で隔離済み |
 | `interrupted` | sub の kill / crash で中断、recovery 待ち |
 | `blocked` | 失敗が積み重なって blocked。user 介入待ち |
-| `excluded` | `has_named_symbol=false` (`fn_*` / `FUN_*` / `lbl_*` 等の placeholder) で対象外 |
+| `excluded` | **2026-10-25 廃止 (derive されない)**。旧: `has_named_symbol=false` (`fn_*` 等の placeholder) で対象外。placeholder 名の関数も `pending` になる。経緯: `docs/notes/unnamed-functions-in-scope-20261025.md` |
 | `skipped` | user が `tools/orch_skip.py` 等で除外 |
 
 derive ルール (`tools/init_orchestrator.py` 参照):
 
 1. `tu_hint` あり + `Object(NonMatching, ...)` → `nonmatching`
 2. `tu_hint` あり + `Object(Matching, ...)` → `matched`
-3. `has_named_symbol` が false → `excluded`
-4. それ以外 → `pending`
+3. それ以外 → `pending` (placeholder 名でも pending。旧ルール「`has_named_symbol` が false → `excluded`」は 2026-10-25 に廃止)
 
 `matched` / `nonmatching` は cycle 冒頭で **SoT (configure.py + report.json) から再 derive** する。手動編集禁止。
 

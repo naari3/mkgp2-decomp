@@ -249,8 +249,10 @@ def derive_status(
         return "nonmatching"
     if tu_hint and matching_flag == "Matching":
         return "matched"
-    if not has_named_symbol:
-        return "excluded"
+    # Placeholder-named functions (fn_*) are pending too: matching does not
+    # need a meaningful name. has_named_symbol stays informational.
+    # (Until 2026-10-25 they were "excluded", which capped the reachable
+    # scope at ~40% of functions.)
     return "pending"
 
 

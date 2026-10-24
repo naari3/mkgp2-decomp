@@ -19,9 +19,10 @@ Preserves entire batches and active_subs sections untouched.
 Status re-derivation rule (same as init_orchestrator.py):
   1. tu_hint + Matching     -> matched
   2. tu_hint + NonMatching  -> nonmatching
-  3. has_named_symbol=false -> excluded
-  4. else                   -> pending (UNLESS already in_progress / interrupted /
+  3. else                   -> pending (UNLESS already in_progress / interrupted /
      blocked / skipped — those are preserved as-is to avoid wiping cycle state)
+  Placeholder-named functions are pending as well (no longer excluded since
+  2026-10-25); has_named_symbol is informational only.
 
 New functions appearing in symbols.txt are added.
 Functions removed from symbols.txt are deleted from state (cleaned up).

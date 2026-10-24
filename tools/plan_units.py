@@ -19,7 +19,8 @@ Usage:
   python tools/plan_units.py --unit VfxSlot  # member listing for one unit
   python tools/plan_units.py --json          # machine-readable ranking
 
-Metrics per cluster (prefix = first '_'-separated token of the fn name):
+Metrics per cluster (unit = name prefix; placeholder fns attached by
+address, see assign_units()):
   runs      contiguous address runs the members occupy. 1 = the whole unit
             sits in one address range -> can become exactly one TU split.
   foreign   non-member functions inside the cluster's address span. They
@@ -112,14 +113,75 @@ def prefix_of(name: str) -> str:
     return name.split("_")[0]
 
 
+def assign_units(
+    fns: dict[int, dict],
+    fn_to_group: dict[int, str],
+) -> dict[int, str]:
+    """addr -> unit name, for every function.
+
+    Named functions belong to their name prefix. Placeholder-named functions
+    (fn_*) have no prefix, so they are attached by address, in this order:
+      1. extab group whose named members all share one unit -> that unit
+         (the group must live in one TU anyway)
+      2. placeholder run bracketed on both sides by the same unit -> that unit
+      3. otherwise each remaining contiguous placeholder run becomes its own
+         unit, named anon_<first addr>. The id shifts if the head function
+         gets renamed later; re-run plan_units.py before claiming.
+    """
+    unit_of = {
+        a: prefix_of(v["name"])
+        for a, v in fns.items()
+        if not is_placeholder_name(v["name"])
+    }
+
+    group_units: dict[str, set[str]] = {}
+    for a, u in unit_of.items():
+        g = fn_to_group.get(a)
+        if g is not None:
+            group_units.setdefault(g, set()).add(u)
+    for a in fns:
+        if a in unit_of:
+            continue
+        us = group_units.get(fn_to_group.get(a), set())
+        if len(us) == 1:
+            unit_of[a] = next(iter(us))
+
+    order = sorted(fns)
+    i = 0
+    while i < len(order):
+        if order[i] in unit_of:
+            i += 1
+            continue
+        j = i
+        while j < len(order) and order[j] not in unit_of:
+            j += 1
+        prev = unit_of.get(order[i - 1]) if i > 0 else None
+        nxt = unit_of.get(order[j]) if j < len(order) else None
+        run_unit = prev if prev is not None and prev == nxt else f"anon_{order[i]:08X}"
+        for a in order[i:j]:
+            unit_of[a] = run_unit
+        i = j
+    return unit_of
+
+
+def load_units() -> tuple[
+    dict[int, dict], dict[int, str], dict[int, str], dict[str, list[int]]
+]:
+    """(fns, unit_of, fn_to_group, groups)."""
+    fns = load_functions()
+    fn_to_group, groups = load_extab()
+    return fns, assign_units(fns, fn_to_group), fn_to_group, groups
+
+
 def analyze_cluster(
     prefix: str,
     fns: dict[int, dict],
+    unit_of: dict[int, str],
     fn_to_group: dict[int, str],
     groups: dict[str, list[int]],
 ) -> dict:
     members = sorted(
-        (a, v) for a, v in fns.items() if prefix_of(v["name"]) == prefix
+        (a, v) for a, v in fns.items() if unit_of[a] == prefix
     )
     addrs = {a for a, _ in members}
     lo, hi = members[0][0], members[-1][0]
@@ -235,14 +297,15 @@ def print_ranking(
 def print_unit(
     prefix: str,
     fns: dict[int, dict],
+    unit_of: dict[int, str],
     fn_to_group: dict[int, str],
     groups: dict[str, list[int]],
 ) -> None:
     members = sorted(
-        (a, v) for a, v in fns.items() if prefix_of(v["name"]) == prefix
+        (a, v) for a, v in fns.items() if unit_of[a] == prefix
     )
     if not members:
-        sys.exit(f"no functions with prefix '{prefix}'")
+        sys.exit(f"no functions in unit '{prefix}'")
     prev_end: int | None = None
     for a, v in members:
         gap = ""
@@ -272,24 +335,21 @@ def main() -> int:
                         help="ranking as JSON on stdout")
     args = parser.parse_args()
 
-    fns = load_functions()
-    fn_to_group, groups = load_extab()
+    fns, unit_of, fn_to_group, groups = load_units()
 
     if args.unit:
-        print_unit(args.unit, fns, fn_to_group, groups)
+        print_unit(args.unit, fns, unit_of, fn_to_group, groups)
         return 0
 
     prefixes: dict[str, int] = {}
-    for _a, v in fns.items():
+    for a, v in fns.items():
         if v["status"] != "pending":
             continue
-        if is_placeholder_name(v["name"]):
-            continue
-        p = prefix_of(v["name"])
+        p = unit_of[a]
         prefixes[p] = prefixes.get(p, 0) + 1
 
     clusters = [
-        analyze_cluster(p, fns, fn_to_group, groups)
+        analyze_cluster(p, fns, unit_of, fn_to_group, groups)
         for p, n in prefixes.items()
         if n >= args.min_fns
     ]

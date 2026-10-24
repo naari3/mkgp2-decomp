@@ -37,6 +37,7 @@
 | 301+ fn  |   3 | 2134 | 43.8% | Phase 3c (特別扱い) |
 
 \* named pending = orchestrator が C 化を狙う対象。placeholder (`fn_*` / `lbl_*` / `FUN_*`) は `excluded` で並列 decomp 対象外だが、TU 構成上は asm_fn として TU に含める必要がある (extab group 内 = 必ず同 TU)。
+  - 訂正 (2026-10-25): placeholder も `pending` に変更した (`docs/notes/unnamed-functions-in-scope-20261025.md`)。上の表の named pending 数は当時の値。
 
 トップ 10 group (named pending 含む):
 
@@ -101,6 +102,7 @@ mega-bundle pattern が動作するなら Phase 3b と同じ手順で済む。�
 - **TU サイズ**: 937 fn の asm body = 数万行。mwcc コンパイル時間が長くなる可能性あり (実測必要、~5 min なら受容)
 - **scaffold debug**: 1 関数の asm body 抽出ミスで SHA-1 fail。937 fn から犯人特定するには bisect tool 必須
 - **placeholder の C 化**: 847 placeholder は本来 `excluded` なので C 化対象外だが、ユーザが個別解析で named 化する可能性あり (ghidra 側で rename → orch_sync で `has_named_symbol=true` 化)。promote batch のスケジューリング条件に「`has_named_symbol=true` になった時点で pending」を含める
+  - 訂正 (2026-10-25): placeholder は rename を待たず `pending` になった。named 化は C 化の前提ではない
 
 3 group しかないので、各 group の中身を見てから個別に design する余地もある。中規模 (Phase 3b) で手順を固めてから Phase 3c に移るのが筋。
 
