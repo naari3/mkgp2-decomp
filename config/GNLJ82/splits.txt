@@ -53,6 +53,11 @@ game/VBlank.c:
 game/Camera.c:
 	.text       start:0x8002D74C end:0x8002D760
 
+game/BackupBuffer_InitAsTexture.c:
+	extab       start:0x80005738 end:0x80005740
+	extabindex  start:0x8001F43C end:0x8001F448
+	.text       start:0x8002D760 end:0x8002D7DC
+
 game/Frame.c:
 	extab       start:0x80005740 end:0x80005780
 	extabindex  start:0x8001F448 end:0x8001F478
@@ -328,6 +333,11 @@ game/InputObj_Ctor.c:
 	extabindex  start:0x8001FAA8 end:0x8001FAB4
 	.text       start:0x800395EC end:0x8003964C
 
+game/InputObj_Ctor_Internal.c:
+	extab       start:0x80005E50 end:0x80005E58
+	extabindex  start:0x8001FAB4 end:0x8001FAC0
+	.text       start:0x8003964C end:0x800396C0
+
 game/JvsInput_TickPoll.c:
 	extab       start:0x80005E58 end:0x80005E60
 	extabindex  start:0x8001FAC0 end:0x8001FACC
@@ -450,6 +460,11 @@ game/KartMovement_GetVelocityMagnitude.c:
 	extab       start:0x80006160 end:0x80006168
 	extabindex  start:0x8001FDA8 end:0x8001FDB4
 	.text       start:0x8003F528 end:0x8003F54C
+
+game/KartItem_IsAtStartSlot.c:
+	extab       start:0x80006168 end:0x80006170
+	extabindex  start:0x8001FDB4 end:0x8001FDC0
+	.text       start:0x8003F54C end:0x8003F5C4
 
 game/KartItem_TriggerStateAction.c:
 	extab       start:0x80006170 end:0x80006178
@@ -693,6 +708,11 @@ game/auto_ONKARTHIT_block.c:
 	extabindex  start:0x800201EC end:0x8002057C
 	.text       start:0x8004A238 end:0x80052F20
 	.data       start:0x803F7668 end:0x803F7690
+
+game/ItemStateGuard_PruneIfDeadAndReport.cpp:
+	extab       start:0x8000718C end:0x80007194
+	extabindex  start:0x8002057C end:0x80020588
+	.text       start:0x80052F20 end:0x80052F9C
 
 game/ItemStateGuard_IsActive.c:
 	.text       start:0x80052F9C end:0x80052FB0
@@ -1541,6 +1561,11 @@ game/PlayStats_Clear.c:
 game/PlayStats_ShutdownStub.c:
 	.text       start:0x8008E36C end:0x8008E370
 
+game/PlayStats_LoadOrInitForBoot.c:
+	extab       start:0x800092B8 end:0x800092C0
+	extabindex  start:0x80021DA0 end:0x80021DAC
+	.text       start:0x8008E370 end:0x8008E3E0
+
 game/TEXBindPaletteEntry.c:
 	extab       start:0x800092C0 end:0x800092D0
 	extabindex  start:0x80021DAC end:0x80021DC4
@@ -1808,6 +1833,11 @@ game/clCGameDemoWC/Dtor.c:
 	extab       start:0x8000A37C end:0x8000A384
 	extabindex  start:0x80022898 end:0x800228A4
 	.text       start:0x800ADDAC end:0x800ADEF8
+
+game/clACamera_Dtor_WC.c:
+	extab       start:0x8000A384 end:0x8000A38C
+	extabindex  start:0x800228A4 end:0x800228B0
+	.text       start:0x800ADEF8 end:0x800ADF58
 
 game/clCGameDemoWC/Render.c:
 	extab       start:0x8000A38C end:0x8000A394
