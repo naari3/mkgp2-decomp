@@ -5,7 +5,7 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void fn_80278C54();
+extern void rand();
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -76,7 +76,7 @@ asm void VSMode_SeedRandomItemSequence(void) { /* 0x8009BDC0 size:0x134 */
     li r26, 0x0
     b VSMode_SeedRandomItemSequence_L_8009BED4
     VSMode_SeedRandomItemSequence_L_8009BE5C:
-    bl fn_80278C54
+    bl rand
     mulhw r0, r29, r3
     srawi r0, r0, 2
     srwi r4, r0, 31

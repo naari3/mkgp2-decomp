@@ -50,7 +50,7 @@ extern const CardPointers lbl_80312234[];
 extern int g_localPcbRole, g_currentSceneState;
 extern u8 g_isCommHost, lbl_806CEFC8;
 /* Actual callee: no incoming arguments, r3 is a 15-bit integer. */
-extern int fn_80278C54(void);
+extern int rand(void);
 /* Actual callee reads four pointer words through r3 and returns an integer. */
 extern int CardSnapshot_ResolveCommonItems(CardRow** rows);
 
@@ -103,7 +103,7 @@ int PCBComm_ComputeSyncState(void)
         out->commonItem = -1;
     }
     if ((int)out->scene == 14) {
-        out->randomSeed = fn_80278C54() % 100;
+        out->randomSeed = rand() % 100;
         out->commonItem = -1;
     }
     if ((int)out->scene == 26) {
@@ -159,7 +159,7 @@ int PCBComm_ComputeSyncState(void)
         for (i = 0; i < 4; ++i, ++peer) {
             if (peer->first.bytes.header.role == g_localPcbRole) {
                 int position;
-                do { position = fn_80278C54() % 4; }
+                do { position = rand() % 4; }
                 while (usedPositions[position] != 0);
                 usedPositions[position] = 1;
                 out->position[i] = position;
@@ -173,7 +173,7 @@ int PCBComm_ComputeSyncState(void)
                 usedCharacters[(peer->character >> 4) & 15] = 1;
         i = 0;
         do {
-            int character = fn_80278C54() % 13;
+            int character = rand() % 13;
             if (usedCharacters[character] == 0) {
                 usedCharacters[character] = 1;
                 out->randomCharacter[i++] = character;

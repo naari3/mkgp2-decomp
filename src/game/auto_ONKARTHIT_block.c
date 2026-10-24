@@ -232,7 +232,7 @@ extern void fn_801B5B60();
 extern void fn_802090F0(void *obj, void *center, void *half, float f1, float f2, float f3);
 extern void fn_802091BC();
 extern void fn_80271EF4();
-extern void fn_802791BC();
+extern void strcpy();
 extern void fn_8027E480();
 extern void fn_8027E9E8();
 extern void fn_802BD6AC(float x, float y);
@@ -9741,7 +9741,7 @@ asm void Bitset_Init(Bitset *self, unsigned long n, const unsigned char *pval) {
     lis r4, lbl_802EDA80@ha
     lwz r3, 0x0(r27)
     addi r4, r4, lbl_802EDA80@l
-    bl fn_802791BC
+    bl strcpy
     lis r4, lbl_803F56F0@ha
     lis r3, lbl_802EDAA4@ha
     addi r0, r4, lbl_803F56F0@l

@@ -134,7 +134,11 @@ def find_text_reloc_names(target_path: Path) -> Dict[int, str]:
         if r_type != R_PPC_EMB_SDA21:
             continue
         sym_off = symtab_sh[4] + r_sym * sym_entsize
-        st_name = struct.unpack_from(en + "I", data, sym_off)[0]
+        st_name, _, _, _, _, st_shndx = struct.unpack_from(en + "IIIBBH", data, sym_off)
+        # Only externals: if the target object defines the symbol itself (the
+        # TU's split owns that .sdata2 range), the local must stay local.
+        if st_shndx != SHN_UNDEF:
+            continue
         name = read_str(data, strtab_base, strtab_size, st_name)
         if name:
             result[r_off] = name

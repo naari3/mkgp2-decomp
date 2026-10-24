@@ -12,14 +12,14 @@ extern int lbl_806CEFA0;
 extern void *lbl_806CF010;
 extern char lbl_80312FE8[];
 
-extern int fn_80276C50(char *dst, const char *fmt, ...);
+extern int sprintf(char *dst, const char *fmt, ...);
 extern void OSFreeToHeap(void *heap, void *ptr);
 
 void TEXReleasePalette(TEXPalette *palette)
 {
     char buf[0x200];
 
-    fn_80276C50(buf, lbl_80312FE8, palette, palette->data);
+    sprintf(buf, lbl_80312FE8, palette, palette->data);
     if (lbl_806CEFA0 == -1) {
         OSFreeToHeap(lbl_806CF010, palette->data);
     } else {

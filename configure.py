@@ -240,6 +240,19 @@ cflags_runtime = [
     "-inline auto",
 ]
 
+# MSL_C flags (match zeldaret/tp's MSL build)
+cflags_msl = [
+    *cflags_base,
+    "-use_lmw_stmw on",
+    "-str reuse,pool,readonly",
+    "-common off",
+    "-char signed",
+    "-func_align 4",
+    "-inline deferred,auto",
+    "-DMSL_USE_INLINES=1",
+    "-i include/MSL_C",
+]
+
 # REL flags
 cflags_rel = [
     *cflags_base,
@@ -1162,6 +1175,28 @@ config.libs = [
             Object(Matching, "sound/MediaBoard_PollCompletion.c"),
             Object(Matching, "sound/SoundChannels.c"),
             Object(Matching, "sound/SoundObj_PlaySE_Direct.c"),
+        ],
+    },
+    {
+        "lib": "MSL_C",
+        "mw_version": "GC/2.7",
+        "cflags": cflags_msl,
+        "progress_category": "sdk",
+        "objects": [
+            Object(Matching, "MSL_C/string.c"),
+            Object(Matching, "MSL_C/GCN_mem_alloc.c", extra_cflags=["-str nopool"]),
+            Object(Matching, "MSL_C/abort_exit.c"),
+            Object(Matching, "MSL_C/ansi_fp.c"),
+            Object(Matching, "MSL_C/arith.c"),
+            Object(Matching, "MSL_C/critical_regions.gamecube.c"),
+            Object(Matching, "MSL_C/ctype.c"),
+            Object(Matching, "MSL_C/mem.c"),
+            Object(Matching, "MSL_C/mem_funcs.c"),
+            Object(Matching, "MSL_C/printf.c"),
+            Object(Matching, "MSL_C/rand.c"),
+            Object(Matching, "MSL_C/scanf.c"),
+            Object(Matching, "MSL_C/signal.c"),
+            Object(Matching, "MSL_C/strtoul.c"),
         ],
     },
     {

@@ -2,7 +2,7 @@ extern "C" unsigned int OSGetTick(void);
 extern "C" void Profiler_RecordFrame(int slot, float value);
 extern "C" void DebugPrintf(const char *fmt, ...);
 extern "C" void OSFreeToHeap(void *heap, void *ptr);
-extern "C" void fn_80276D30(char *dst, int size, const char *fmt, ...);
+extern "C" void snprintf(char *dst, int size, const char *fmt, ...);
 
 extern "C" unsigned char lbl_806D0FA1;
 extern "C" void *lbl_806CF010;
@@ -91,7 +91,7 @@ extern "C" void MemoryManager_TimedFree(void *ptr) throw()
     char buf[0x204];
 
     if (lbl_806D0FA1 == 0) {
-        fn_80276D30(buf, 0x200, lbl_802E9DD0);
+        snprintf(buf, 0x200, lbl_802E9DD0);
         DebugPrintf(buf);
         DebugPrintf(lbl_802E9DB0);
         for (;;) {}
