@@ -48,7 +48,7 @@ game/Debug.c:
 	.text       start:0x8002CE4C end:0x8002CFB8
 
 game/VBlank.c:
-	.text       start:0x8002D040 end:0x8002D048
+	.text       start:0x8002CFB8 end:0x8002D0B0
 
 game/Camera.c:
 	.text       start:0x8002D74C end:0x8002D760
@@ -85,6 +85,12 @@ game/DebugTextOutput.c:
 
 game/Profiler.c:
 	.text       start:0x8002FF08 end:0x8002FF48
+
+game/Cleanup_DtorMinimal.c:
+	extab       start:0x800058B0 end:0x800058C0
+	extabindex  start:0x8001F514 end:0x8001F52C
+	.text       start:0x8002FF48 end:0x8002FFB8
+	.ctors      start:0x802E88E4 end:0x802E88E8
 
 game/CObjLineBuffer.c:
 	.text       start:0x8002FFB8 end:0x80030010
@@ -309,21 +315,25 @@ game/StrPcb.c:
 	extabindex  start:0x8001F8F8 end:0x8001F904
 	.text       start:0x80036E40 end:0x80036E7C
 
-game/StrPcb_Error.c:
-	.text       start:0x80037B68 end:0x80037CC0
+game/StrPcb_Tick.c:
+	extab       start:0x80005CB0 end:0x80005CD8
+	extabindex  start:0x8001F904 end:0x8001F940
+	.text       start:0x80036E7C end:0x80037AB0
 
-game/StrPcb_SetTimer3c40.c:
-	extab       start:0x80005CF8 end:0x80005D00
-	extabindex  start:0x8001F970 end:0x8001F97C
-	.text       start:0x800380C8 end:0x800380F0
+game/StrPcb_Control.c:
+	extab       start:0x80005CD8 end:0x80005CE0
+	extabindex  start:0x8001F940 end:0x8001F94C
+	.text       start:0x80037AB0 end:0x80037CC0
 
-game/StrPcb_SetTimer3034_38.c:
-	extab       start:0x80005D00 end:0x80005D08
-	extabindex  start:0x8001F97C end:0x8001F988
-	.text       start:0x800380F0 end:0x8003811C
+game/StrPcb_WaitForState1.c:
+	extab       start:0x80005CE0 end:0x80005CE8
+	extabindex  start:0x8001F94C end:0x8001F958
+	.text       start:0x80037CC0 end:0x80037E08
 
-game/StrPcb_BeginEffect.c:
-	.text       start:0x800381E4 end:0x80038204
+game/StrPcb_Commands.c:
+	extab       start:0x80005CE8 end:0x80005D18
+	extabindex  start:0x8001F958 end:0x8001F9A0
+	.text       start:0x80037E08 end:0x80038288
 
 game/StrPcb_GetInstance.c:
 	.text       start:0x80038574 end:0x8003857C
@@ -405,6 +415,9 @@ game/JvsInputClear.c:
 	extab       start:0x80005E70 end:0x80005E78
 	extabindex  start:0x8001FAE4 end:0x8001FAF0
 	.text       start:0x80039A34 end:0x80039A78
+
+game/JvsInputStubs.c:
+	.text       start:0x80039A78 end:0x80039AC4
 
 game/JvsInputLifetime.cpp:
 	extab       start:0x80005E78 end:0x80005E80
@@ -673,6 +686,22 @@ game/GetItemDataEntry_Bounded.c:
 	extabindex  start:0x8001FFB8 end:0x8001FFC4
 	.text       start:0x80045EB8 end:0x80045EE8
 
+game/ItemUseStats.c:
+	extab       start:0x800066A0 end:0x800066B0
+	extabindex  start:0x8001FFC4 end:0x8001FFDC
+	.text       start:0x80045EE8 end:0x800461F0
+	.data       start:0x803F5C24 end:0x803F5CE4
+
+game/PathCursor.c:
+	extab       start:0x800066B0 end:0x800066C0
+	extabindex  start:0x8001FFDC end:0x8001FFF4
+	.text       start:0x800461F0 end:0x80046680
+
+game/PathCursor_FindNearest.c:
+	extab       start:0x800066C0 end:0x800066C8
+	extabindex  start:0x8001FFF4 end:0x80020000
+	.text       start:0x80046680 end:0x80046858
+
 game/PathCursor_ResetToPath.c:
 	extab       start:0x800066C8 end:0x800066D0
 	extabindex  start:0x80020000 end:0x8002000C
@@ -816,6 +845,11 @@ game/KartEffectFadeTransit_Dtor.c:
 
 game/KartEffectFadeTransit_Init.c:
 	.text       start:0x80056360 end:0x80056388
+
+game/KartItem_FlushRender.c:
+	extab       start:0x80007564 end:0x80007584
+	extabindex  start:0x80020708 end:0x80020738
+	.text       start:0x80056388 end:0x800566D4
 
 game/KartItem_RenderCb_Mode7_Pre.c:
 	extab       start:0x80007584 end:0x8000758C

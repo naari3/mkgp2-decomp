@@ -745,6 +745,7 @@ config.libs = [
             Object(Matching, "game/KartEffectFadeTransit_GetActiveValue.c"),
             Object(Matching, "game/KartEffectFadeTransit_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartEffectFadeTransit_Init.c"),
+            Object(Matching, "game/KartItem_FlushRender.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartItem_RenderCb_Mode7_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartItem_RenderCb_DefaultCycle_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartItem_RenderCb_Mode3_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -816,6 +817,7 @@ config.libs = [
             Object(Matching, "game/Camera.c"),
             Object(Matching, "game/Game_Shutdown.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Profiler.c"),
+            Object(Matching, "game/Cleanup_DtorMinimal.c"),
             Object(Matching, "game/Profiler_RecordFrame.c"),
             Object(Matching, "game/MetricsTable.c"),
             Object(Matching, "game/LObjList.cpp", extra_cflags=["-Cpp_exceptions on"]),
@@ -831,10 +833,10 @@ config.libs = [
             Object(Matching, "game/Collision.c"),
             Object(Matching, "game/StrPcb_988.c"),
             Object(Matching, "game/StrPcb.c"),
-            Object(Matching, "game/StrPcb_Error.c"),
-            Object(Matching, "game/StrPcb_SetTimer3c40.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/StrPcb_SetTimer3034_38.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/StrPcb_BeginEffect.c"),
+            Object(Matching, "game/StrPcb_Tick.c", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/StrPcb_Control.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/StrPcb_WaitForState1.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/StrPcb_Commands.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/StrPcb_GetInstance.c"),
             Object(Matching, "game/SetPcbScratchFlag_806d11a4.c"),
             Object(Matching, "game/PcbConn_MarkDisabled.c"),
@@ -855,6 +857,7 @@ config.libs = [
             Object(Matching, "game/JvsInput_TickPoll.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/JvsInputPoll.c", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/JvsInputClear.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/JvsInputStubs.c"),
             Object(Matching, "game/JvsInputLifetime.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/JvsInputMetrics.cpp", extab_padding=b""),
             Object(Matching, "game/InputObj_Ctor.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -1033,6 +1036,9 @@ config.libs = [
             Object(Matching, "game/KartDriver_GetJObjRootIfReady.c"),
             Object(Matching, "game/KartDriver_New_Empty.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GetItemDataEntry_Bounded.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ItemUseStats.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/PathCursor.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/PathCursor_FindNearest.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartMovement_GetVelocityMagnitude.c"),
             Object(Matching, "game/KartItem_TriggerStateAction.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartMovement_CanReceiveItem.c"),
@@ -1418,6 +1424,41 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
     build_ninja.write_text(text, encoding="utf-8")
 
 
+# TUs whose owned .data (switch jump tables) sits at a four-byte boundary in
+# the target. MWLD's .comment alignment would round it to eight bytes, so the
+# .comment section is dropped and .data alignment pinned to 4. Text/data bytes
+# and relocations stay native.
+DATA_ALIGN4_TUS = [
+    "game/ItemUseStats",
+]
+
+
+def _inject_data_align4_tus() -> None:
+    build_ninja = Path("build.ninja")
+    text = build_ninja.read_text(encoding="utf-8")
+    sep = "\\" if sys.platform == "win32" else "/"
+    hook = " && $python tools/postprocess_sdata2.py $out $out"
+    for base_rule in ("mwcc_sjis", "mwcc_sjis_extab"):
+        new_rule = base_rule + "_align4"
+        users = []
+        for tu in DATA_ALIGN4_TUS:
+            obj = ("build/GNLJ82/src/" + tu + ".o").replace("/", sep)
+            target = "build " + obj + ": " + base_rule + " "
+            if target in text:
+                users.append(target)
+        if not users:
+            continue
+        start = text.index("rule " + base_rule + "\n")
+        end = text.index("\nrule ", start + 1)
+        rule = text[start:end].replace("rule " + base_rule + "\n", "rule " + new_rule + "\n", 1)
+        assert hook in rule
+        rule = rule.replace(hook, hook + " && $python tools/postprocess_data_alignment.py $out", 1)
+        for target in users:
+            text = text.replace(target, target.replace(": " + base_rule + " ", ": " + new_rule + " "), 1)
+        text = text[:start] + rule + "\n" + text[start:]
+    build_ninja.write_text(text, encoding="utf-8")
+
+
 if args.mode == "configure":
     # Write build.ninja and objdiff.json
     generate_build(config)
@@ -1425,6 +1466,7 @@ if args.mode == "configure":
     _inject_jvs_metrics_ctor_bridge()
     _inject_kart_character_data_alignment()
     _inject_kartfx_chargeicon_data_alignment()
+    _inject_data_align4_tus()
 elif args.mode == "progress":
     # Print progress information
     calculate_progress(config)
