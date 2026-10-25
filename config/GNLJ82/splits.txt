@@ -5114,6 +5114,12 @@ game/clFlowEntry_Init.cpp:
 game/fn_801B7B04.c:
 	.text       start:0x801B7B04 end:0x801B7B64
 
+game/fn_801B7B64.c:
+	extab       start:0x80012C38 end:0x80012C40
+	extabindex  start:0x80027890 end:0x8002789C
+	.text       start:0x801B7B64 end:0x801B7C1C
+	.data       start:0x8049A748 end:0x8049A77C
+
 game/fn_801B7C1C.c:
 	extab       start:0x80012C40 end:0x80012C48
 	extabindex  start:0x8002789C end:0x800278A8
@@ -5326,6 +5332,12 @@ game/fn_801CE1EC.cpp:
 	extab       start:0x80014B28 end:0x80014B70
 	extabindex  start:0x80027F5C end:0x80027F68
 	.text       start:0x801CE1EC end:0x801CE324
+
+game/fn_801CE800.c:
+	extab       start:0x80014C44 end:0x80014C4C
+	extabindex  start:0x80027F74 end:0x80027F80
+	.text       start:0x801CE800 end:0x801CE918
+	.data       start:0x8049B3C8 end:0x8049B3E8
 
 game/fn_801D1800.cpp:
 	extab       start:0x80014EB4 end:0x80014EBC
@@ -5948,6 +5960,21 @@ game/dtor_801F6BD0.c:
 	extabindex  start:0x80028F1C end:0x80028F28
 	.text       start:0x801F6BD0 end:0x801F6C2C
 
+game/fn_801F6F7C.c:
+	extab       start:0x80017558 end:0x80017560
+	extabindex  start:0x80028F4C end:0x80028F58
+	.text       start:0x801F6F7C end:0x801F7040
+
+game/fn_801F7040.c:
+	extab       start:0x80017560 end:0x80017568
+	extabindex  start:0x80028F58 end:0x80028F64
+	.text       start:0x801F7040 end:0x801F70F0
+
+game/fn_801F70F0.c:
+	extab       start:0x80017568 end:0x80017570
+	extabindex  start:0x80028F64 end:0x80028F70
+	.text       start:0x801F70F0 end:0x801F7198
+
 game/dtor_801F7A74.c:
 	extab       start:0x800175B8 end:0x800175C0
 	extabindex  start:0x80028F94 end:0x80028FA0
@@ -5993,6 +6020,11 @@ game/fn_801F7DAC.cpp:
 	extabindex  start:0x80028FF4 end:0x80029000
 	.text       start:0x801F7DAC end:0x801F7E98
 
+game/fn_801F7E98.cpp:
+	extab       start:0x80017610 end:0x80017618
+	extabindex  start:0x80029000 end:0x8002900C
+	.text       start:0x801F7E98 end:0x801F7F50
+
 game/dtor_801F8214.c:
 	extab       start:0x80017630 end:0x80017638
 	extabindex  start:0x80029018 end:0x80029024
@@ -6037,6 +6069,11 @@ game/fn_801F98E8.c:
 	extab       start:0x800176E8 end:0x800176F0
 	extabindex  start:0x800290E4 end:0x800290F0
 	.text       start:0x801F98E8 end:0x801F9954
+
+game/fn_801F9AAC.cpp:
+	extab       start:0x800176F8 end:0x80017700
+	extabindex  start:0x800290FC end:0x80029108
+	.text       start:0x801F9AAC end:0x801F9B64
 
 game/fn_801F9F04.cpp:
 	extab       start:0x80017790 end:0x80017798
