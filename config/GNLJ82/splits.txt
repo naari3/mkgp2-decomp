@@ -7450,6 +7450,15 @@ sysdolphin/baselib/displayfunc.c:
 	.sbss       start:0x806D21C8 end:0x806D21E8
 	.sdata2     start:0x806DCD00 end:0x806DCD20
 
+sysdolphin/baselib/initialize.c:
+	.text       start:0x802D4030 end:0x802D4B00
+	.data       start:0x804FCDB0 end:0x804FD048
+	.bss        start:0x806CD118 end:0x806CD140
+	.sdata      start:0x806D0DF0 end:0x806D0E10
+	.sbss       start:0x806D21E8 end:0x806D2218
+	.sdata2     start:0x806DCD20 end:0x806DCD28
+	.sbss2      start:0x806DCF78 end:0x806DCF80
+
 sysdolphin/baselib/video.c:
 	.text       start:0x802D4B00 end:0x802D57A8
 	.data       start:0x804FD048 end:0x804FD0D0

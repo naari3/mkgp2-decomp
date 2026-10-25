@@ -96,7 +96,7 @@ extern void GXSetTexCopySrc(int x, int y, int w, int h);
 extern void GXSetTexCopyDst(int w, int h, int fmt, int a);
 extern void GXCopyTex(unsigned char *buf, int arg);
 extern void Profiler_RecordFrame(int slot, float ms);
-extern void fn_802D4748(int arg);
+extern void HSD_StartRender(int arg);
 extern void __dt__11ScopedTimerFv(void);
 
 extern u8 lbl_806D0F8E;
@@ -262,7 +262,7 @@ void Frame_Begin(void) { /* 0x8002DC3C size:0x40 */
     if (hook != 0) {
         hook->vf0c();
     }
-    fn_802D4748(0);
+    HSD_StartRender(0);
 }
 
 } /* extern "C" */

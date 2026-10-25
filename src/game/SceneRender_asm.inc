@@ -11,7 +11,7 @@ extern void Profiler_RecordFrame();
 extern void HSD_CObjSetInterest();
 extern void HSD_CObjGetEyePosition();
 extern void HSD_CObjGetUpVector();
-extern void fn_802D4748();
+extern void HSD_StartRender();
 extern void fn_802D47E8();
 extern void HSD_MtxGetTranslate();
 extern void HSD_ShadowInit();
@@ -177,7 +177,7 @@ asm void SceneRender_DrawObjectWithLights(void) { /* 0x8003A780 size:0x268 */
     bl HSD_ShadowSetViewingRect
     SceneRender_DrawObjectWithLights_L_8003A94C:
     li r3, 0x3
-    bl fn_802D4748
+    bl HSD_StartRender
     lwz r3, 0x4(r30)
     bl HSD_ShadowInit
     lwz r3, 0x4(r30)

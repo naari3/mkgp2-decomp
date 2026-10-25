@@ -450,6 +450,7 @@ config.libs = [
         "objects": [
             Object(NonMatching, "sysdolphin/baselib/jobj.c"),
             Object(Matching, "sysdolphin/baselib/displayfunc.c"),
+            Object(Matching, "sysdolphin/baselib/initialize.c"),
             Object(Matching, "sysdolphin/baselib/video.c"),
             Object(Matching, "sysdolphin/baselib/dobj.c"),
             Object(NonMatching, "sysdolphin/baselib/tobj.c"),
