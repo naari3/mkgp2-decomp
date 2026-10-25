@@ -218,9 +218,49 @@ struct CoinPrompt {
     ~CoinPrompt();
 };
 
+struct PtrVecBase {
+    int cap;
+    int n;
+    void **data;
+    ~PtrVecBase() { if (data) delete data; }
+};
+
+struct PtrVecMid : PtrVecBase {
+    ~PtrVecMid() {}
+};
+
+struct PtrVec : PtrVecMid {
+    ~PtrVec() {}
+};
+
 struct CoinPopupDetail {
     ~CoinPopupDetail();
+    unsigned char active;
+    char pad1[3];
+    PtrVec sprites;
+    int state;
+    int pad14;
+    int mode;
+    float ax;
+    float ay;
+    float bx;
+    float by;
+    int idxA;
+    int idxB;
+    char pad34[0x39 - 0x34];
+    unsigned char on;
+    unsigned char extra;
+    char pad3b[0x40 - 0x3b];
+    int x40;
+    int x44;
+    char pad48[0x50 - 0x48];
+    PtrVec bufs;
+    SpriteHolder h5c;
+    SpriteHolder h60;
+    SpriteHolder h64;
+    SpriteHolder h68;
 };
+
 
 struct ResultText {
     ~ResultText() {}
@@ -285,6 +325,101 @@ ResultScreenObj::~ResultScreenObj() {
     fn_80232284(ItemMsg_Get(), -1.0f);
 }
 
+CoinPopupDetail::~CoinPopupDetail() {
+    void **it;
+    for (it = sprites.data; it != sprites.data + sprites.n; ++it) Sprite_Destroy(*it, 1);
+    for (it = bufs.data; it != bufs.data + bufs.n; ++it) {
+        if (*it) delete (char *)*it;
+    }
+}
+
+struct InputPlayer {
+    virtual void v08();
+    virtual void v0C();
+    virtual void v10();
+    virtual void v14();
+    virtual float Stick();
+    virtual void v1C();
+    virtual void v20();
+    virtual void v24();
+    virtual unsigned int Pressed(int mask);
+};
+
+struct ResultPartE608Sprite {
+    char pad[0x20];
+    float alpha;
+};
+
+struct ResultPartE608 {
+    void *vt;
+    int idx;
+    int timer;
+    int phase;
+    unsigned char done;
+    char pad11[0x48 - 0x11];
+    unsigned int col[4];
+    char pad58[0x6c - 0x58];
+    ResultPartE608Sprite *spr;
+};
+
+extern "C" {
+extern void *GetInputManager(void);
+extern InputPlayer *InputMgr_GetPlayer(void *mgr, int index);
+extern void Sprite_AdvanceAnim(void *s, float dt);
+extern const float lbl_806D86A4;
+extern const float lbl_806D86E8;
+extern const float lbl_806D8674;
+extern const float lbl_806D878C;
+extern const float lbl_806D8790;
+
+void fn_8015E608(ResultPartE608 *o) {
+    InputPlayer *pl;
+    if (o->done == 1) return;
+    pl = InputMgr_GetPlayer(GetInputManager(), 0);
+    switch (o->phase) {
+    case 0: {
+        float t = (float)o->timer / lbl_806D86A4;
+        unsigned int c;
+        o->spr->alpha = t;
+        c = __rlwimi(0xFFFFFF00, (int)(lbl_806D86E8 * t), 0, 24, 31);
+        o->col[0] = c;
+        o->col[1] = c;
+        o->col[2] = c;
+        o->col[3] = c;
+        if (o->timer >= 30) {
+            o->timer = 0;
+            o->phase++;
+        }
+        break;
+    }
+    case 1:
+        if (o->timer >= 600 || pl->Pressed(0x2000) || pl->Stick() >= lbl_806D8790) {
+            o->timer = 0;
+            o->phase++;
+        }
+        break;
+    case 2: {
+        float t = lbl_806D8674 - (float)o->timer / lbl_806D86A4;
+        unsigned int c;
+        o->spr->alpha = t;
+        c = __rlwimi(0xFFFFFF00, (int)(lbl_806D86E8 * t), 0, 24, 31);
+        o->col[0] = c;
+        o->col[1] = c;
+        o->col[2] = c;
+        o->col[3] = c;
+        if (o->timer >= 30) {
+            o->timer = 0;
+            o->done = 1;
+            o->phase++;
+        }
+        break;
+    }
+    }
+    o->timer++;
+    Sprite_AdvanceAnim(o->spr, lbl_806D878C);
+}
+}
+
 struct ResultSceneA : SceneBase {
     ResultSceneA() {
         started = 0;
@@ -315,7 +450,7 @@ extern void MemoryManager_TimedFree(void *p);
 extern void fn_8011FAFC(void *p, int n);
 extern void fn_801A0004(void *p);
 extern void fn_80160588(void *self, int n);
-extern void fn_80161720(void *self);
+extern void fn_80161720(CoinPopupDetail *self);
 extern char lbl_80490A58[];
 extern const float lbl_806D86A4;
 extern const float lbl_806D86D8;
@@ -382,7 +517,7 @@ int fn_801618CC(Obj80161888 *o, int v, int unused);
 void fn_80161888(Obj80161888 *o) {
     o->active = 1;
     fn_801618CC(o, o->next, 1);
-    fn_80161720(o);
+    fn_80161720((CoinPopupDetail *)o);
 }
 
 int fn_801618CC(Obj80161888 *o, int v, int unused) {
@@ -433,7 +568,7 @@ extern void fn_8019FF8C(void *obj, int id, float *out);
 extern void fn_801F93EC(void *t, float x, float y);
 extern void *fn_801F8E58(void);
 extern void fn_801F8A34(void *a, void *b, int c);
-extern void fn_8016039C(void *p);
+extern void fn_8016039C(CoinPopupDetail *p);
 extern void fn_801678FC(int mode, float r, float g, float b, float a);
 
 typedef struct {
@@ -467,8 +602,259 @@ void fn_8015F0FC(ResultScreen *s) {
         mgr = fn_801F8E58();
         for (j = 0; j < 2; j++) fn_801F8A34(mgr, s->texts[j], 6);
     }
-    if (s->p58) fn_8016039C(s->p58);
+    if (s->p58) fn_8016039C((CoinPopupDetail *)s->p58);
     fn_801678FC(7, 0.0f, 0.0f, 0.0f, s->alpha);
+}
+
+struct ResCtrlR {
+    ResCtrlR();
+    ~ResCtrlR() {}
+    int id;
+    int pad4;
+    int mode;
+    int padc;
+    unsigned char enable;
+    unsigned char pad11[3];
+    float x;
+    float y;
+    float z;
+    float u;
+    float v;
+    char pad28[0x34 - 0x28];
+    int c0;
+    int c1;
+    int c2;
+    int c3;
+    char pad44[0x4c - 0x44];
+};
+
+extern void fn_80121E10(ResCtrlR *r);
+extern void fn_8011FAFC_r(ResCtrlR *r, int n);
+extern const float lbl_806D87CC;
+extern const float lbl_806D87D0;
+extern const float lbl_806D87D4;
+extern const float lbl_806D87D8;
+extern const float lbl_806D87DC;
+extern const float lbl_806D87E0;
+extern const float lbl_806D87E4;
+extern const float lbl_806D87E8;
+extern const float lbl_806D87EC;
+
+void fn_8016039C(CoinPopupDetail *o) {
+    void **it;
+    void *mgr;
+    if (o->on) {
+        ResCtrlR r;
+        r.mode = 2;
+        r.u = lbl_806D87CC;
+        r.v = lbl_806D87D0;
+        r.enable = 1;
+        r.x = lbl_806D87D4;
+        r.y = lbl_806D87D8;
+        r.z = lbl_806D87DC;
+        r.c0 = 0x80;
+        r.c1 = 0x80;
+        r.c2 = 0x80;
+        r.c3 = 0x80;
+        fn_8011FAFC_r(&r, 4);
+        fn_801A0004(o->h5c.s);
+        if (o->extra) {
+            fn_80121E10(&r);
+            r.id = 0x1aea;
+            r.enable = 1;
+            r.x = lbl_806D87D4;
+            r.y = lbl_806D87E0;
+            r.z = lbl_806D87DC;
+            fn_8011FAFC_r(&r, 4);
+            fn_801A0004(o->h64.s);
+            fn_80121E10(&r);
+            r.id = 0x1875;
+            r.enable = 1;
+            r.x = lbl_806D87E4;
+            r.y = lbl_806D87E8;
+            r.z = lbl_806D87DC;
+            fn_8011FAFC_r(&r, 4);
+            fn_801A0004(o->h68.s);
+            fn_80121E10(&r);
+            r.id = 0x1874;
+            r.enable = 1;
+            r.x = lbl_806D87EC;
+            r.y = lbl_806D87E8;
+            r.z = lbl_806D87DC;
+            fn_8011FAFC_r(&r, 4);
+        }
+    }
+    for (it = o->sprites.data; it != o->sprites.data + o->sprites.n; ++it) fn_801A0004(*it);
+    mgr = fn_801F8E58();
+    {
+        void **jt;
+        for (jt = o->bufs.data; jt != o->bufs.data + o->bufs.n; ++jt) fn_801F8A34(mgr, *jt, 5);
+    }
+    fn_801A0004(o->h60.s);
+}
+
+typedef struct {
+    int a;
+    int a4;
+    char pad8[0x10 - 8];
+    int b;
+    int b14;
+    char pad18[0x20 - 0x18];
+} PopupInfo;
+
+typedef struct {
+    int pad0;
+    int pad4;
+    int anim8;
+    int animC;
+    int pad10;
+    int anim14;
+    int anim18;
+} PopupAnim;
+
+extern PopupInfo *lbl_806CF908[2];
+extern PopupAnim lbl_80368D80[];
+extern int isJapanese(void);
+extern void **fn_80146000(PtrVec *v, int i);
+extern unsigned char fn_801A024C(void *s);
+extern void Sprite_SetupAnim(void *sprite, int anim, int loop, int arg);
+extern void fn_80161128(CoinPopupDetail *o);
+
+static inline PopupInfo *PopupInfo_Get(int k) {
+    return &lbl_806CF908[isJapanese()][k];
+}
+
+void fn_80161444(CoinPopupDetail *o) {
+    int cnt = 0;
+    void **it;
+    for (it = o->sprites.data; it != o->sprites.data + o->sprites.n; ++it) {
+        if (!fn_801A024C(*it)) cnt++;
+    }
+    if (cnt == 2) {
+        if (o->mode == 0) {
+            Sprite_SetupAnim(*fn_80146000(&o->sprites, 0), lbl_80368D80[PopupInfo_Get(o->idxA)->a].anim8, 1, 0);
+        } else {
+            Sprite_SetupAnim(*fn_80146000(&o->sprites, 1), lbl_80368D80[PopupInfo_Get(o->idxB)->b].anim8, 1, 0);
+        }
+        fn_80161128(o);
+        o->x40 = 0x80;
+        o->x44 = 0;
+        o->state = 5;
+        o->extra = 0;
+        Sprite_SetupAnim(o->h5c.s, 0x11, 1, 0);
+    }
+}
+
+void fn_80161720(CoinPopupDetail *o) {
+    int anim;
+    if (o->mode == 0) {
+        anim = lbl_80368D80[PopupInfo_Get(o->idxA)->a].animC;
+    } else {
+        anim = lbl_80368D80[PopupInfo_Get(o->idxA)->a].anim14;
+    }
+    Sprite_SetupAnim(*fn_80146000(&o->sprites, 0), anim, 1, 0);
+    if (o->mode == 1) {
+        anim = lbl_80368D80[PopupInfo_Get(o->idxB)->b].animC;
+    } else {
+        anim = lbl_80368D80[PopupInfo_Get(o->idxB)->b].anim14;
+    }
+    Sprite_SetupAnim(*fn_80146000(&o->sprites, 1), anim, 1, 0);
+    fn_80161128(o);
+    o->state = 3;
+}
+
+extern void fn_801FE348(void);
+extern void fn_801A0500(void *s);
+extern void TexMgr_SetTexture(void *tm, const char *fmt, ...);
+extern const char lbl_806D884C[4];
+
+void fn_801615A4(CoinPopupDetail *o) {
+    if (o->active) {
+        fn_801FE348();
+        if (o->mode == 0) {
+            Sprite_SetupAnim(*fn_80146000(&o->sprites, 1), lbl_80368D80[PopupInfo_Get(o->idxB)->b].anim18, 1, 0);
+            TexMgr_SetTexture(*fn_80146000(&o->bufs, 2), lbl_806D884C);
+            TexMgr_SetTexture(*fn_80146000(&o->bufs, 3), lbl_806D884C);
+        } else {
+            Sprite_SetupAnim(*fn_80146000(&o->sprites, 0), lbl_80368D80[PopupInfo_Get(o->idxA)->a].anim18, 1, 0);
+            TexMgr_SetTexture(*fn_80146000(&o->bufs, 0), lbl_806D884C);
+            TexMgr_SetTexture(*fn_80146000(&o->bufs, 1), lbl_806D884C);
+        }
+        fn_801A0500(o->h60.s);
+        fn_80161128(o);
+        o->state = 4;
+    }
+}
+
+typedef struct {
+    char pad[0xc];
+    float x;
+    float y;
+    float sx;
+    float sy;
+} PopupSprite;
+
+typedef struct {
+    char pad[0x20];
+    unsigned int col;
+} PopupText;
+
+extern void Sprite_SetAnimParam(void *spr, short from, short to);
+extern unsigned char lbl_80598A60[0x2a];
+extern void fn_80160A90(CoinPopupDetail *o);
+
+static inline void PopupSprite_SetPos(PopupSprite *s, float x, float y) {
+    s->x = x;
+    s->y = y;
+}
+
+static inline void PopupSprite_SetScale(PopupSprite *s, float k) {
+    s->sx = k;
+    s->sy = k;
+}
+
+static inline void PopupText_SetCol(PopupText *t, unsigned int c) {
+    t->col = c;
+}
+
+#define POPUP_SPR(o, i) ((PopupSprite *)*fn_80146000(&(o)->sprites, (i)))
+#define POPUP_TXT(o, i) ((PopupText *)*fn_80146000(&(o)->bufs, (i)))
+
+void fn_80161128(CoinPopupDetail *o) {
+    PopupSprite_SetPos(POPUP_SPR(o, 0), o->ax, o->ay);
+    PopupSprite_SetPos(POPUP_SPR(o, 1), o->bx, o->by);
+    Sprite_SetAnimParam(*fn_80146000(&o->sprites, 0), 0x23e7, 0x1ecd);
+    Sprite_SetAnimParam(*fn_80146000(&o->sprites, 1), 0x23e7, 0x1ecd);
+    {
+        PopupInfo *inf = PopupInfo_Get(o->idxA);
+        Sprite_SetAnimParam(*fn_80146000(&o->sprites, 0), 0x1cfb, inf->a4);
+    }
+    {
+        PopupInfo *inf = PopupInfo_Get(o->idxB);
+        Sprite_SetAnimParam(*fn_80146000(&o->sprites, 1), 0x1cfb, inf->b14);
+    }
+    Sprite_SetAnimParam(*fn_80146000(&o->sprites, 1), 0x1565, 0x1566);
+    Sprite_SetAnimParam(*fn_80146000(&o->sprites, 1), 0x1cf5, 0x1cf6);
+    Sprite_SetAnimParam(*fn_80146000(&o->sprites, 1), 0x1563, 0x1564);
+    if ((signed char)lbl_80598A60[0x20] == 2) {
+        Sprite_SetAnimParam(*fn_80146000(&o->sprites, 0), 0x1cfb, 0x1d01);
+    }
+    if (o->mode == 0) {
+        PopupSprite_SetScale(POPUP_SPR(o, 0), 1.0f);
+        PopupSprite_SetScale(POPUP_SPR(o, 1), 0.8f);
+        PopupText_SetCol(POPUP_TXT(o, 0), 0xFFFFFFFF);
+        PopupText_SetCol(POPUP_TXT(o, 1), 0xFFFFFFFF);
+        PopupText_SetCol(POPUP_TXT(o, 2), 0xC3D7F5FF);
+        PopupText_SetCol(POPUP_TXT(o, 3), 0xC3D7F5FF);
+    } else {
+        PopupSprite_SetScale(POPUP_SPR(o, 0), 0.8f);
+        PopupSprite_SetScale(POPUP_SPR(o, 1), 1.0f);
+        PopupText_SetCol(POPUP_TXT(o, 0), 0xC3D7F5FF);
+        PopupText_SetCol(POPUP_TXT(o, 1), 0xC3D7F5FF);
+        PopupText_SetCol(POPUP_TXT(o, 2), 0xFFFFFFFF);
+        PopupText_SetCol(POPUP_TXT(o, 3), 0xFFFFFFFF);
+    }
+    fn_80160A90(o);
 }
 
 }

@@ -1133,7 +1133,10 @@
     "__dt__15ResultScreenObjFv": "fn_8015FBC0",
     "__vt__15ResultScreenObj": "lbl_80490A90",
     "__vt__9ResultMid": "lbl_8048ED10",
-    "__vt__9ResultTop": "lbl_8048ECF8"
+    "__vt__9ResultTop": "lbl_8048ECF8",
+    "__ct__8ResCtrlRFv": "ResCtrl_Init",
+    "fn_8011FAFC_r": "fn_8011FAFC",
+    "fn_80146000__FP6PtrVeci": "fn_80146000"
   },
   "src/game/kartmove/carobject.cpp": {
     "__nw__FUl": "Alloc",
