@@ -1495,6 +1495,11 @@ game/LampTest_Page.cpp:
 	extabindex  start:0x80021104 end:0x80021110
 	.text       start:0x80070238 end:0x8007044C
 
+game/LampTestIndiv_Page.cpp:
+	extab       start:0x800081F8 end:0x80008200
+	extabindex  start:0x80021128 end:0x80021134
+	.text       start:0x800712D8 end:0x800715AC
+
 game/HandleInitialize_Page.cpp:
 	extab       start:0x80008208 end:0x80008210
 	extabindex  start:0x80021140 end:0x8002114C
