@@ -3310,6 +3310,11 @@ game/KartFxDispatchD.cpp:
 	extabindex  start:0x80022EC8 end:0x80022ED4
 	.text       start:0x800C1534 end:0x800C1860
 
+game/EffectVfx55_HornBlastTrio_Tick.c:
+	extab       start:0x8000A8F0 end:0x8000A8F8
+	extabindex  start:0x80022ED4 end:0x80022EE0
+	.text       start:0x800C1860 end:0x800C1BAC
+
 game/EffectVfx83_ItemWingBurst_Tick.c:
 	extab       start:0x8000A8F8 end:0x8000A900
 	extabindex  start:0x80022EE0 end:0x80022EEC
