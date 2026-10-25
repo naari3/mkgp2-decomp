@@ -5133,6 +5133,12 @@ game/fn_80169DF0.c:
 	extabindex  start:0x80025FDC end:0x80025FE8
 	.text       start:0x80169DF0 end:0x80169E10
 
+game/misc3d/fn_80169E10.c:
+	.text       start:0x80169E10 end:0x80169E20
+
+game/misc3d/fn_80169E20.c:
+	.text       start:0x80169E20 end:0x80169E34
+
 game/CourseMarker.cpp:
 	extab       start:0x800101E0 end:0x80010234
 	extabindex  start:0x80025FE8 end:0x80026024
@@ -5213,6 +5219,14 @@ game/Scene_8016E1C0.cpp:
 	extab       start:0x800105C4 end:0x800105E4
 	extabindex  start:0x800262E8 end:0x80026318
 	.text       start:0x8016E1C0 end:0x8016E568
+
+game/misc3d/fn_8016E7E4.c:
+	extab       start:0x80010618 end:0x80010620
+	extabindex  start:0x80026324 end:0x80026330
+	.text       start:0x8016E7E4 end:0x8016E8B8
+
+game/misc3d/fn_8016E8B8.c:
+	.text       start:0x8016E8B8 end:0x8016E8E0
 
 game/Scene_8016EACC.cpp:
 	extab       start:0x80010628 end:0x80010668
@@ -5404,6 +5418,11 @@ game/miyazakiconsole/fn_8017FAFC.cpp:
 	extab       start:0x80011A14 end:0x80011A1C
 	extabindex  start:0x80026A14 end:0x80026A20
 	.text       start:0x8017FAFC end:0x8017FB5C
+
+game/miyazakiconsole/fn_8017FCAC.cpp:
+	extab       start:0x80011A24 end:0x80011A2C
+	extabindex  start:0x80026A2C end:0x80026A38
+	.text       start:0x8017FCAC end:0x8017FD68
 
 game/miyazakiconsole/fn_8018005C.c:
 	extab       start:0x80011A60 end:0x80011A68
@@ -5619,6 +5638,12 @@ game/LUT_Sin12Bit.c:
 	extabindex  start:0x80026CD8 end:0x80026CE4
 	.text       start:0x80186998 end:0x801869C8
 
+game/objview/fn_801869C8.c:
+	.text       start:0x801869C8 end:0x801869E0
+
+game/objview/fn_801869E0.c:
+	.text       start:0x801869E0 end:0x801869F8
+
 game/objview/fn_80187370.c:
 	extab       start:0x80011C48 end:0x80011C50
 	extabindex  start:0x80026CFC end:0x80026D08
@@ -5753,10 +5778,34 @@ game/bitread/fn_8018B088.c:
 	extabindex  start:0x80026EAC end:0x80026EB8
 	.text       start:0x8018B088 end:0x8018B14C
 
+game/bitread/fn_8018B248.c:
+	.text       start:0x8018B248 end:0x8018B2E4
+
+game/bitread/fn_8018B2E4.c:
+	.text       start:0x8018B2E4 end:0x8018B300
+
+game/bitread/fn_8018B300.c:
+	.text       start:0x8018B300 end:0x8018B31C
+
+game/objview/fn_8018CD68.c:
+	extab       start:0x80011E90 end:0x80011E98
+	extabindex  start:0x80026ED0 end:0x80026EDC
+	.text       start:0x8018CD68 end:0x8018CE38
+
+game/objview/fn_8018CE38.c:
+	extab       start:0x80011E98 end:0x80011EA0
+	extabindex  start:0x80026EDC end:0x80026EE8
+	.text       start:0x8018CE38 end:0x8018CF34
+
 game/objview/fn_8018CF34.c:
 	extab       start:0x80011EA0 end:0x80011EA8
 	extabindex  start:0x80026EE8 end:0x80026EF4
 	.text       start:0x8018CF34 end:0x8018CFC4
+
+game/objview/fn_8018D068.c:
+	extab       start:0x80011EDC end:0x80011EE4
+	extabindex  start:0x80026F00 end:0x80026F0C
+	.text       start:0x8018D068 end:0x8018D0F4
 
 game/objview/fn_8018D320.c:
 	extab       start:0x80011EEC end:0x80011EF4
@@ -5765,6 +5814,11 @@ game/objview/fn_8018D320.c:
 
 game/misc3d/fn_8018D638.c:
 	.text       start:0x8018D638 end:0x8018D64C
+
+game/objview/fn_8018D6F0.c:
+	extab       start:0x80011F28 end:0x80011F30
+	extabindex  start:0x80026F3C end:0x80026F48
+	.text       start:0x8018D6F0 end:0x8018D7CC
 
 game/objview/fn_8018D7CC.c:
 	extab       start:0x80011F30 end:0x80011F38
@@ -5803,6 +5857,11 @@ game/objview/fn_8018F1B0.c:
 	extab       start:0x80012054 end:0x8001205C
 	extabindex  start:0x80026FFC end:0x80027008
 	.text       start:0x8018F1B0 end:0x8018F1E0
+
+game/zprobe/fn_8018F7D4.c:
+	extab       start:0x800120C4 end:0x800120CC
+	extabindex  start:0x8002702C end:0x80027038
+	.text       start:0x8018F7D4 end:0x8018F8A8
 
 game/objview/fn_8018FBF4.c:
 	extab       start:0x800120D4 end:0x800120DC
@@ -5852,6 +5911,29 @@ game/clsound/fn_80190A70.c:
 
 game/clsound/fn_801915DC.c:
 	.text       start:0x801915DC end:0x801915F4
+
+game/clsound/fn_801915F4.c:
+	.text       start:0x801915F4 end:0x801916FC
+
+game/clsound/fn_801916FC.c:
+	.text       start:0x801916FC end:0x80191804
+
+game/clsound/fn_80191804.c:
+	.text       start:0x80191804 end:0x8019190C
+
+game/clsound/fn_8019190C.c:
+	.text       start:0x8019190C end:0x80191A14
+
+game/clsound/fn_80191A14.c:
+	extab       start:0x8001225C end:0x80012264
+	extabindex  start:0x80027104 end:0x80027110
+	.text       start:0x80191A14 end:0x80191B5C
+
+game/clsound/fn_80191F1C.c:
+	.text       start:0x80191F1C end:0x80192010
+
+game/clsound/fn_80192010.c:
+	.text       start:0x80192010 end:0x801920D4
 
 game/SoundMgr_Play.c:
 	extab       start:0x800122A4 end:0x800122AC
@@ -5907,6 +5989,11 @@ game/clstream/ClStream_IsActive.c:
 
 game/clstream/fn_80194AE0.c:
 	.text       start:0x80194AE0 end:0x80194B8C
+
+game/clstream/fn_80194CEC.c:
+	extab       start:0x8001232C end:0x80012334
+	extabindex  start:0x8002723C end:0x80027248
+	.text       start:0x80194CEC end:0x80194DD8
 
 game/clstream/fn_801951B4.c:
 	.text       start:0x801951B4 end:0x801951CC
@@ -5992,13 +6079,142 @@ game/kartmove/KartMovement_CalcMaxSpeed.c:
 game/KartMovement_SetPosition.c:
 	.text       start:0x8019A4A0 end:0x8019A4E0
 
+game/kartmove/fn_8019A850.c:
+	.text       start:0x8019A850 end:0x8019A87C
+
+game/kartmove/KartMovement_SetTravelProgress.c:
+	.text       start:0x8019A87C end:0x8019A8A4
+
+game/kartmove/fn_8019C078.c:
+	.text       start:0x8019C078 end:0x8019C15C
+
+game/sprite/fn_8019FE58.c:
+	.text       start:0x8019FE58 end:0x8019FE78
+
+game/sprite/fn_8019FE78.c:
+	.text       start:0x8019FE78 end:0x8019FEBC
+
+game/sprite/fn_8019FEBC.c:
+	.text       start:0x8019FEBC end:0x8019FED8
+
+game/sprite/fn_8019FED8.c:
+	.text       start:0x8019FED8 end:0x8019FEF4
+
+game/sprite/fn_8019FEF4.c:
+	.text       start:0x8019FEF4 end:0x8019FF18
+
+game/sprite/Sprite_SetAnimTime.c:
+	.text       start:0x8019FF18 end:0x8019FF50
+
+game/sprite/fn_8019FF50.c:
+	.text       start:0x8019FF50 end:0x8019FF6C
+
+game/sprite/fn_8019FF6C.c:
+	.text       start:0x8019FF6C end:0x8019FF8C
+
+game/sprite/fn_8019FF8C.c:
+	extab       start:0x80012990 end:0x80012998
+	extabindex  start:0x80027500 end:0x8002750C
+	.text       start:0x8019FF8C end:0x801A0004
+
+game/sprite/fn_801A024C.c:
+	.text       start:0x801A024C end:0x801A0290
+
+game/sprite/Sprite_AdvanceAnim.c:
+	.text       start:0x801A0290 end:0x801A0310
+
+game/sprite/fn_801A0310.c:
+	.text       start:0x801A0310 end:0x801A0374
+
+game/sprite/Sprite_SetAnimParam.c:
+	.text       start:0x801A0374 end:0x801A03DC
+
+game/sprite/fn_801A0500.c:
+	extab       start:0x800129A8 end:0x800129B0
+	extabindex  start:0x80027524 end:0x80027530
+	.text       start:0x801A0500 end:0x801A0550
+
+game/sprite/fn_801A0550.c:
+	extab       start:0x800129B0 end:0x800129B8
+	extabindex  start:0x80027530 end:0x8002753C
+	.text       start:0x801A0550 end:0x801A0584
+
+game/sprite/fn_801A0584.c:
+	extab       start:0x800129B8 end:0x800129C0
+	extabindex  start:0x8002753C end:0x80027548
+	.text       start:0x801A0584 end:0x801A0684
+
 game/Sprite_Destroy.c:
 	extab       start:0x800129C0 end:0x800129C8
 	extabindex  start:0x80027548 end:0x80027554
 	.text       start:0x801A0684 end:0x801A06F8
 
+game/sprite/fn_801A0B70.c:
+	.text       start:0x801A0B70 end:0x801A0BB4
+
+game/sprite/fn_801A0BB4.c:
+	.text       start:0x801A0BB4 end:0x801A0BE0
+
+game/sprite/fn_801A0D90.c:
+	extab       start:0x800129E8 end:0x800129F0
+	extabindex  start:0x80027584 end:0x80027590
+	.text       start:0x801A0D90 end:0x801A0DF0
+
+game/sprite/fn_801A0DF0.c:
+	extab       start:0x800129F0 end:0x800129F8
+	extabindex  start:0x80027590 end:0x8002759C
+	.text       start:0x801A0DF0 end:0x801A0E54
+
+game/sprite/fn_801A0FD4.c:
+	extab       start:0x80012A00 end:0x80012A08
+	extabindex  start:0x800275A8 end:0x800275B4
+	.text       start:0x801A0FD4 end:0x801A109C
+
+game/sprite/fn_801A109C.c:
+	extab       start:0x80012A08 end:0x80012A10
+	extabindex  start:0x800275B4 end:0x800275C0
+	.text       start:0x801A109C end:0x801A10DC
+
+game/sprite/fn_801A10DC.c:
+	extab       start:0x80012A10 end:0x80012A18
+	extabindex  start:0x800275C0 end:0x800275CC
+	.text       start:0x801A10DC end:0x801A1128
+
+game/sprite/fn_801A1128.c:
+	extab       start:0x80012A18 end:0x80012A20
+	extabindex  start:0x800275CC end:0x800275D8
+	.text       start:0x801A1128 end:0x801A1174
+
+game/sprite/fn_801A1280.c:
+	extab       start:0x80012A28 end:0x80012A30
+	extabindex  start:0x800275E4 end:0x800275F0
+	.text       start:0x801A1280 end:0x801A12F0
+
+game/sprite/fn_801A12F0.c:
+	extab       start:0x80012A30 end:0x80012A38
+	extabindex  start:0x800275F0 end:0x800275FC
+	.text       start:0x801A12F0 end:0x801A13BC
+
+game/sprite/fn_801A13BC.c:
+	extab       start:0x80012A38 end:0x80012A40
+	extabindex  start:0x800275FC end:0x80027608
+	.text       start:0x801A13BC end:0x801A1494
+
+game/sprite/fn_801A1678.c:
+	extab       start:0x80012A48 end:0x80012A50
+	extabindex  start:0x80027614 end:0x80027620
+	.text       start:0x801A1678 end:0x801A16F0
+
 game/SpriteSystem_EnsureInit.c:
 	.text       start:0x801A16F0 end:0x801A1714
+
+game/sprite/fn_801A175C.c:
+	extab       start:0x80012A58 end:0x80012A60
+	extabindex  start:0x8002762C end:0x80027638
+	.text       start:0x801A175C end:0x801A1798
+
+game/sprite/fn_801A1D40.c:
+	.text       start:0x801A1D40 end:0x801A1D98
 
 game/fn_801B0F20.c:
 	.text       start:0x801B0F20 end:0x801B0F88
