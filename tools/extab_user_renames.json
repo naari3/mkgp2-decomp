@@ -4437,5 +4437,43 @@
     "extabindex_fn_8014C308": "@eti_800254B4",
     "extab_fn_8014C53C": "@etb_8000E3B8",
     "extabindex_fn_8014C53C": "@eti_800254C0"
+  },
+  "src/game/SceneList_80157940.cpp": {
+    "extab_fn_80157940": "@etb_8000F0DC",
+    "extabindex_fn_80157940": "@eti_800258B0",
+    "extab_fn_801579F0": "@etb_8000F0E4",
+    "extabindex_fn_801579F0": "@eti_800258BC",
+    "extab_fn_80157A68": "@etb_8000F0EC",
+    "extabindex_fn_80157A68": "@eti_800258C8",
+    "extab_fn_80157B38": "@etb_8000F0F4",
+    "extabindex_fn_80157B38": "@eti_800258D4",
+    "extab_fn_80157BE8": "@etb_8000F0FC",
+    "extabindex_fn_80157BE8": "@eti_800258E0",
+    "extab_fn_80157C60": "@etb_8000F104",
+    "extabindex_fn_80157C60": "@eti_800258EC",
+    "extab_fn_80157D30": "@etb_8000F10C",
+    "extabindex_fn_80157D30": "@eti_800258F8"
+  },
+  "src/game/fn_80157DE0.cpp": {
+    "extab_fn_80157DE0": "@etb_8000F114",
+    "extabindex_fn_80157DE0": "@eti_80025904"
+  },
+  "src/game/SceneList_80157EA8.cpp": {
+    "extab_dtor_80157EC0": "@etb_8000F150",
+    "extabindex_dtor_80157EC0": "@eti_80025910",
+    "extab_fn_80157F1C": "@etb_8000F158",
+    "extabindex_fn_80157F1C": "@eti_8002591C",
+    "extab_fn_80157FB4": "@etb_8000F160",
+    "extabindex_fn_80157FB4": "@eti_80025928",
+    "extab_fn_801589BC": "@etb_8000F168",
+    "extabindex_fn_801589BC": "@eti_80025934",
+    "extab_fn_80158CE4": "@etb_8000F170",
+    "extabindex_fn_80158CE4": "@eti_80025940",
+    "extab_fn_8015915C": "@etb_8000F178",
+    "extabindex_fn_8015915C": "@eti_8002594C",
+    "extab_fn_801596D4": "@etb_8000F180",
+    "extabindex_fn_801596D4": "@eti_80025958",
+    "extab_fn_80159BD0": "@etb_8000F188",
+    "extabindex_fn_80159BD0": "@eti_80025964"
   }
 }

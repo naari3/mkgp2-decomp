@@ -5234,6 +5234,21 @@ game/Scene_8014E0C4.cpp:
 	extabindex  start:0x800255BC end:0x800258B0
 	.text       start:0x8014E0C4 end:0x80157940
 
+game/SceneList_80157940.cpp:
+	extab       start:0x8000F0DC end:0x8000F114
+	extabindex  start:0x800258B0 end:0x80025904
+	.text       start:0x80157940 end:0x80157DE0
+
+game/fn_80157DE0.cpp:
+	extab       start:0x8000F114 end:0x8000F150
+	extabindex  start:0x80025904 end:0x80025910
+	.text       start:0x80157DE0 end:0x80157EA8
+
+game/SceneList_80157EA8.cpp:
+	extab       start:0x8000F150 end:0x8000F190
+	extabindex  start:0x80025910 end:0x80025970
+	.text       start:0x80157EA8 end:0x8015A6E4
+
 game/Scene_8015AE3C.cpp:
 	extab       start:0x8000F198 end:0x8000F1A0
 	extabindex  start:0x8002597C end:0x80025988
