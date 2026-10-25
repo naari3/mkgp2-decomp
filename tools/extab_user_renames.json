@@ -1691,6 +1691,49 @@
     "__ct__11Obj801FA864Fii": "fn_801FD240",
     "Add__7StepSeqFPvi": "fn_801F4DF0"
   },
+  "src/game/SetupBgSprites.cpp": {
+    "__ct__9SpriteObjFiii": "Sprite_InitWithAnim"
+  },
+  "src/game/clFlowTitle_Init.cpp": {
+    "__ct__9TitleFlowFv": "clFlowTitle_Init",
+    "__ct__8FlowBaseFv": "InitializeFrameSelection",
+    "__dt__8FlowBaseFv": "dtor_801BA14C",
+    "__ct__9SpriteObjFiiff": "fn_801A08B8",
+    "__ct__9SpriteObjFiiffffff": "Sprite_CreateWithParams"
+  },
+  "src/game/clFlowAttract_Init.cpp": {
+    "__ct__11AttractFlowFv": "clFlowAttract_Init",
+    "__ct__8FlowBaseFv": "InitializeFrameSelection",
+    "__dt__8FlowBaseFv": "dtor_801BA14C",
+    "__ct__9SpriteObjFiii": "Sprite_InitWithAnim",
+    "__ct__9SpriteObjFiiffffff": "Sprite_CreateWithParams"
+  },
+  "src/game/clFlowClass_Init.cpp": {
+    "__ct__9ClassFlowFv": "clFlowClass_Init",
+    "__ct__8FlowBaseFv": "InitializeFrameSelection",
+    "__dt__8FlowBaseFv": "dtor_801BA14C",
+    "__ct__9SpriteObjFiii": "Sprite_InitWithAnim"
+  },
+  "src/game/clFlowEntry_Init.cpp": {
+    "__ct__9EntryFlowFv": "clFlowEntry_Init",
+    "__ct__8FlowBaseFv": "InitializeFrameSelection",
+    "__dt__8FlowBaseFv": "dtor_801BA14C"
+  },
+  "src/game/fn_801D39BC.cpp": {
+    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
+    "__dt__12GameModeBaseFv": "dtor_8002CDF4",
+    "__ct__9SpriteObjFiii": "Sprite_InitWithAnim"
+  },
+  "src/game/fn_801D4060.cpp": {
+    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
+    "__dt__12GameModeBaseFv": "dtor_8002CDF4",
+    "__ct__9SpriteObjFiiPs": "Sprite_InitWithAnim"
+  },
+  "src/game/fn_801B7624.cpp": {
+    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
+    "__dt__12GameModeBaseFv": "dtor_8002CDF4",
+    "__ct__14DisplayContextFv": "DisplayContext_Init"
+  },
   "src/game/MiniGameBase.cpp": {
     "__dt__7MBOwnerFv": "dtor_80122FD8",
     "__dt__6MBRootFv": "dtor_8002CDF4",
