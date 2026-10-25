@@ -4268,6 +4268,16 @@ game/Scene_801734B0.cpp:
 	extabindex  start:0x800264C8 end:0x8002651C
 	.text       start:0x801734B0 end:0x80173F5C
 
+game/Scene_80173F5C.cpp:
+	.text       start:0x80173F5C end:0x80173FA4
+
+game/ZoneVisibility.cpp:
+	extab       start:0x80010A54 end:0x80010A94
+	extabindex  start:0x80026528 end:0x80026558
+	.text       start:0x80174090 end:0x80174698
+	.rodata     start:0x8036E978 end:0x80370858
+	.data       start:0x804912F8 end:0x804914B8
+
 game/fn_80174698.c:
 	.text       start:0x80174698 end:0x801746A8
 
