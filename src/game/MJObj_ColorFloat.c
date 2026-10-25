@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void MJObj_SetColorRGBA();
-extern void fn_802DE45C();
+extern void hsdObjIsDescendantOf();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D2490;
@@ -85,7 +85,7 @@ asm void MJObj_SetColorRGBA_Float(void) { /* 0x8003A154 size:0xD8 */
     fctiwz f0, f0
     stfd f0, 0x20(r1)
     lwz r28, 0x24(r1)
-    bl fn_802DE45C
+    bl hsdObjIsDescendantOf
     cmpwi r3, 0x0
     beq MJObj_SetColorRGBA_Float_L_8003A218
     mr r3, r27

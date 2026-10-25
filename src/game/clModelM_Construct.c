@@ -8,7 +8,7 @@ typedef struct ModelDesc {
 extern char lbl_803F57E0[];
 extern char lbl_803F5888[];
 extern char *lbl_806D1038;
-extern char *fn_802DE2F4(void *);
+extern char *hsdNew(void *);
 extern void *fn_802C2988(void);
 extern void fn_802C2930(void *);
 extern void *HSD_JObjLoadDesc(void *);
@@ -21,7 +21,7 @@ void clModelM_Construct(ModelDesc *desc, void **outModel, void **outJObj) {
     char *model;
     char *saved;
 
-    model = fn_802DE2F4(lbl_803F57E0);
+    model = hsdNew(lbl_803F57E0);
     heap = fn_802C2988();
     fn_802C2930(lbl_803F5888);
     saved = lbl_806D1038;
