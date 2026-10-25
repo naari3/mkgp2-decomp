@@ -481,6 +481,18 @@
     "__ct__22JyugemuReverseFlagCtorFPv": "Jyugemu_ReverseFlag_Ctor",
     "__ct__15ReverseNormal3DFPvi": "clNormal3D_Construct"
   },
+  "src/game/ShadowBillboard.c": {
+    "extab_Mtx34_Orthonormalize": "@etb_80007E8C",
+    "extab_ShadowBillboard_Tick": "@etb_80007E9C",
+    "extab_ShadowBillboard_StepSimple": "@etb_80007EA4",
+    "extab_Camera_RotateByYaw": "@etb_80007EB4",
+    "extab_PlayCamera_Init": "@etb_80007EC4",
+    "extabindex_ShadowBillboard_Tick": "@eti_80020E1C",
+    "extabindex_ShadowBillboard_StepSimple": "@eti_80020E28",
+    "extabindex_Camera_RotateByYaw": "@eti_80020E40",
+    "extabindex_PlayCamera_Init": "@eti_80020E58",
+    "extabindex_Mtx34_Orthonormalize": "@eti_80020E64"
+  },
   "src/game/CreditMgr.c": {
     "extab_CreditMgr_DrawCoinCreditBanner": "@etb_80008A6C",
     "extabindex_CreditMgr_DrawCoinCreditBanner": "@eti_80021764"

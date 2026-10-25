@@ -1231,6 +1231,11 @@ game/ShadowBillboard_Lerp.c:
 game/ShadowBillboard_Setters.c:
 	.text       start:0x80061918 end:0x80061954
 
+game/ShadowBillboard.c:
+	extab       start:0x80007E8C end:0x80007F1C
+	extabindex  start:0x80020E10 end:0x80020E70
+	.text       start:0x80061954 end:0x80064CD4
+
 game/dtor_80064CD4.c:
 	extab       start:0x80007F1C end:0x80007F24
 	extabindex  start:0x80020E70 end:0x80020E7C

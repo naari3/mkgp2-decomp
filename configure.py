@@ -1094,6 +1094,7 @@ config.libs = [
             Object(Matching, "game/FinalLapCoinJump_SetEnable.c"),
             Object(NonMatching, "game/ShadowBillboard_Lerp.c", mw_version="GC/2.6"),
             Object(Matching, "game/ShadowBillboard_Setters.c", mw_version="GC/2.6"),
+            Object(Matching, "game/ShadowBillboard.c", mw_version="GC/2.6", extab_padding=b""),
             Object(Matching, "game/FinalLapCoinJump_CheckActiveForObject.c"),
             Object(Matching, "game/card_is_ejected.c"),
             Object(Matching, "game/card_ping_clear_pending_flag.c"),
