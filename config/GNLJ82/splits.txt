@@ -224,6 +224,9 @@ game/clNormal3D.c:
 	extabindex  start:0x8001F754 end:0x8001F760
 	.text       start:0x800328A8 end:0x80032A70
 
+game/Object_SetField8_10_14.c:
+	.text       start:0x80032A70 end:0x80032AAC
+
 game/Normal3DScale.c:
 	extab       start:0x80005AF8 end:0x80005B50
 	extabindex  start:0x8001F778 end:0x8001F784
@@ -2222,6 +2225,21 @@ game/ItemEffectBus.c:
 	extab       start:0x800093C0 end:0x80009428
 	extabindex  start:0x80021ECC end:0x80021F68
 	.text       start:0x8009107C end:0x80091FD4
+
+game/CardSession_OnServiceTriggerAbort.c:
+	extab       start:0x80009430 end:0x80009438
+	extabindex  start:0x80021F74 end:0x80021F80
+	.text       start:0x80092408 end:0x80092460
+
+game/CardRegister_KickoffArm.c:
+	extab       start:0x80009440 end:0x80009448
+	extabindex  start:0x80021F8C end:0x80021F98
+	.text       start:0x80092918 end:0x80092948
+
+game/Sci2Card_BeginSpace.c:
+	extab       start:0x80009450 end:0x80009458
+	extabindex  start:0x80021FA4 end:0x80021FB0
+	.text       start:0x80092B18 end:0x80092B60
 
 game/CardRW_GetSubState.c:
 	.text       start:0x800934A8 end:0x800934B0
