@@ -11,7 +11,7 @@ extern void Sci2Card_Singleton_Get();
 extern void ServiceLatch_CheckTriggered();
 extern void card_backup();
 extern void card_rw_state_machine();
-extern void fn_80270C48();
+extern void __copy();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806CF0D0;
@@ -237,13 +237,13 @@ asm void CardSave_Tick_CaptureAndStart(void) { /* 0x800937D4 size:0x454 */
     stw r7, 0x9c(r31)
     stw r6, 0xa0(r31)
     stw r0, 0xa4(r31)
-    bl fn_80270C48
+    bl __copy
     lis r4, g_playerData@ha
     addi r3, r31, 0x121
     addi r4, r4, g_playerData@l
     li r5, 0x69
     addi r4, r4, 0x121
-    bl fn_80270C48
+    bl __copy
     lis r3, g_playerData@ha
     lbz r0, 0x198(r14)
     addi r16, r3, g_playerData@l

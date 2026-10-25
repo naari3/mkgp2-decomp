@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void MemoryManager_TimedFree();
-extern void fn_80270CF4();
+extern void __destroy_arr();
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -52,7 +52,7 @@ asm void clItemBox_Dtor(void) { /* 0x8005EEB0 size:0x88 */
     addi r4, r4, clItemBoxResponder_DebrisParticle_Dtor@l
     li r5, 0x2c
     li r6, 0xf
-    bl fn_80270CF4
+    bl __destroy_arr
     mr r3, r31
     bl MemoryManager_TimedFree
     clItemBox_Dtor_L_8005EF00:

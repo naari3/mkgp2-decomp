@@ -24,8 +24,8 @@ extern void DebugPrintf();
 extern void WarpDashMgr_Init();
 extern void MemoryManager_TimedFree(void *);
 extern void dtor_800AA69C(void *, short);
-extern void fn_80270CF4();
-extern void fn_80270D6C();
+extern void __destroy_arr();
+extern void __construct_array();
 extern void cos();
 extern void sin();
 
@@ -932,7 +932,7 @@ asm void WarpZone_CalcEdgeVectors(void) {
     stw r4, 0x0(r31)
     addi r4, r3, fn_8007C5DC@l
     addi r3, r31, 0x4
-    bl fn_80270D6C
+    bl __construct_array
     li r0, 0x2
     li r12, 0x0
     li r9, 0x0
@@ -1131,7 +1131,7 @@ asm void WarpZone_CalcEdgeVectors(void) {
 
 void *dtor_800A9CC8(void *this, short flag) {
     if (this != 0) {
-        fn_80270CF4((char *)this + 4, &dtor_80036E40, 0xc, 0x4);
+        __destroy_arr((char *)this + 4, &dtor_80036E40, 0xc, 0x4);
         if (flag > 0) {
             MemoryManager_TimedFree(this);
         }

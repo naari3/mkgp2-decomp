@@ -91,7 +91,7 @@ extern void TransitionEffect_Tick();
 extern void VSMode_Init();
 extern void VfxSlotMgr_Update();
 extern void VoiceQueue_Clear();
-extern void __cvt_ll2flt();
+extern void __cvt_sll_flt();
 extern void clItemBoxManager_Update();
 extern void fn_8013A534();
 extern void fn_8016B32C();
@@ -782,7 +782,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     subfe r3, r6, r30
     srwi r6, r0, 6
     bl __div2i
-    bl __cvt_ll2flt
+    bl __cvt_sll_flt
     lfs f2, lbl_806D47AC(r2)
     lfs f0, lbl_806D47B0(r2)
     fdivs f1, f1, f2

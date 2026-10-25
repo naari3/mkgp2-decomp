@@ -24,12 +24,12 @@ typedef struct RaceContextSlot {
 extern "C" {
 void Unknown_DeleteIfFlag_800a5188(void*, short);
 void fn_800A51C4(void*);
-void fn_80270D6C(void*, void (*)(void*), void (*)(void*, short), unsigned long, unsigned long);
+void __construct_array(void*, void (*)(void*), void (*)(void*, short), unsigned long, unsigned long);
 }
 
 extern "C" RaceContextSlot* RaceContextArray_Init(RaceContextSlot* self)
 {
-    fn_80270D6C(self, fn_800A51C4, Unknown_DeleteIfFlag_800a5188, sizeof(RaceContextSlot), 128);
+    __construct_array(self, fn_800A51C4, Unknown_DeleteIfFlag_800a5188, sizeof(RaceContextSlot), 128);
     for (int index = 0; index < 128; index++) {
         self[index].type = -1;
         self[index].id = -1;

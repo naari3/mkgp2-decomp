@@ -20,7 +20,7 @@ extern void Sci2Card_IsStatus2Three();
 extern void Sci2Card_IsStatus2Two();
 extern void Sci2Card_IsStatus3Five();
 extern void Sci2Card_Singleton_Get();
-extern void fn_80270C48();
+extern void __copy();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D2D44;
@@ -229,13 +229,13 @@ asm void CardRW_DataRepair_Page(void) { /* 0x8006C810 size:0xAF8 */
     lwz r0, 0x134(r31)
     stw r7, 0xa0(r6)
     stw r0, 0xa4(r6)
-    bl fn_80270C48
+    bl __copy
     lis r3, g_playerData@ha
     addi r4, r31, 0x1b1
     addi r3, r3, g_playerData@l
     li r5, 0x69
     addi r3, r3, 0x121
-    bl fn_80270C48
+    bl __copy
     lis r3, g_playerData@ha
     lwz r4, 0x21c(r31)
     lwz r0, 0x220(r31)
