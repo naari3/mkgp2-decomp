@@ -4295,6 +4295,12 @@ game/KartCharacterParam.c:
 	.text       start:0x800DC784 end:0x800DCA70
 	.data       start:0x8041EA84 end:0x8041EB88
 
+game/ItemHit_Dispatch.cpp:
+	extab       start:0x8000B464 end:0x8000B46C
+	extabindex  start:0x80023BAC end:0x80023BB8
+	.text       start:0x800DCA70 end:0x800DCF88
+	.data       start:0x8041EB88 end:0x8041EBBC
+
 game/KartItem_QueryEffectStateFromIse.c:
 	.text       start:0x800DCF88 end:0x800DD060
 
