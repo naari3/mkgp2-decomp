@@ -1,6 +1,3 @@
-/* NonMatching 98.59%: only the FP registers differ (target keeps the clamped
- * steering in f2 and the fmadds result in f1). Decl order, temporaries and an
- * inline clamp did not move it. */
 typedef struct KartTuningEntry {
     unsigned char pad[0x30];
     float steering;
@@ -41,7 +38,9 @@ float EnemyRunType1_CalcSteering(EnemyRunner *enemy, float scale) {
     if (steering < 0.0f) {
         steering = 0.0f;
     }
-    result = (0.59999996f * (steering * 0.01f) + 0.1f) * scale;
+    steering *= 0.01f;
+    result = 0.59999996f * steering + 0.1f;
+    result *= scale;
     if (enemy->boosted) {
         result *= 0.15f;
     }

@@ -2193,6 +2193,19 @@
     "__dt__13Scene801FAA18Fv": "fn_801FAA18",
     "__dt__12Base801FAA18Fv": "dtor_802043EC"
   },
+  "src/game/fn_801E8D98.cpp": {
+    "Update__8ItemUserFv": "fn_801E8D98"
+  },
+  "src/game/fn_801F9CA8.cpp": {
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801D8AB4.cpp": {
+    "__ct__13KartInfoPanelFi": "fn_801D8AB4",
+    "__dt__9SpritePtrFv": "dtor_8015E8AC",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim"
+  },
   "src/game/fn_801C37E8.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",

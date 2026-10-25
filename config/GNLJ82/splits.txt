@@ -7258,6 +7258,11 @@ game/clFlowKart_HandleConfirm.c:
 	extabindex  start:0x8002813C end:0x80028148
 	.text       start:0x801D7B50 end:0x801D7CC4
 
+game/fn_801D7CC4.cpp:
+	extab       start:0x80015374 end:0x8001537C
+	extabindex  start:0x80028148 end:0x80028154
+	.text       start:0x801D7CC4 end:0x801D7E84
+
 game/clFlowKart_Update.c:
 	extab       start:0x8001537C end:0x800153B4
 	extabindex  start:0x80028154 end:0x80028160
@@ -7280,6 +7285,11 @@ game/fn_801D895C.c:
 game/fn_801D8A98.c:
 	.text       start:0x801D8A98 end:0x801D8AB4
 
+game/fn_801D8AB4.cpp:
+	extab       start:0x800154A4 end:0x800154D0
+	extabindex  start:0x80028190 end:0x8002819C
+	.text       start:0x801D8AB4 end:0x801D8D3C
+
 game/fn_801D8D3C.c:
 	.text       start:0x801D8D3C end:0x801D8DF8
 
@@ -7296,7 +7306,7 @@ game/fn_801D919C.cpp:
 	extabindex  start:0x800281B4 end:0x800281C0
 	.text       start:0x801D919C end:0x801D92D0
 
-game/clFlowKart_SetupTextLayout.c:
+game/clFlowKart_SetupTextLayout.cpp:
 	extab       start:0x80015520 end:0x80015528
 	extabindex  start:0x800281CC end:0x800281D8
 	.text       start:0x801D9890 end:0x801D9A2C
@@ -7784,6 +7794,11 @@ game/x10.c:
 	extabindex  start:0x80028958 end:0x80028964
 	.text       start:0x801E8D10 end:0x801E8D98
 
+game/fn_801E8D98.cpp:
+	extab       start:0x80016A88 end:0x80016A90
+	extabindex  start:0x80028964 end:0x80028970
+	.text       start:0x801E8D98 end:0x801E8F5C
+
 game/fn_801E8F5C.c:
 	extab       start:0x80016A90 end:0x80016A98
 	extabindex  start:0x80028970 end:0x8002897C
@@ -8101,6 +8116,11 @@ game/fn_801F9AAC.cpp:
 	extab       start:0x800176F8 end:0x80017700
 	extabindex  start:0x800290FC end:0x80029108
 	.text       start:0x801F9AAC end:0x801F9B64
+
+game/fn_801F9CA8.cpp:
+	extab       start:0x80017738 end:0x80017740
+	extabindex  start:0x80029114 end:0x80029120
+	.text       start:0x801F9CA8 end:0x801F9DA4
 
 game/fn_801F9F04.cpp:
 	extab       start:0x80017790 end:0x80017798
