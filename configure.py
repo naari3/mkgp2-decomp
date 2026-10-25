@@ -1385,6 +1385,7 @@ config.libs = [
             Object(Matching, "game/KartItem_TriggerStateAction.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartMovement_CanReceiveItem.c"),
             Object(Matching, "game/KartItem_CancelAndQueueDefault.c"),
+            Object(Matching, "game/RenderObj_UseItem.c"),
             Object(Matching, "game/KartMovement_EquipItem.c"),
             Object(Matching, "game/KartItem_CancelIfNotForced.c"),
             Object(Matching, "game/KartMovement_GetCurrentItemId.c"),
@@ -2469,6 +2470,7 @@ DATA_ALIGN4_TUS = [
     "game/ItemCharacterRender",
     "game/clItemBoxManager_StepTable",
     "game/ItemUseStats",
+    "game/RenderObj_UseItem",
     "game/KartItem_RenderCb_Modes",
     "game/fn_80117020",
 ]
