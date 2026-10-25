@@ -2257,6 +2257,9 @@ game/Sci2Card_ReceiptTables.c:
 game/RaceSys_8009B98C.c:
 	.text       start:0x8009B98C end:0x8009B9D0
 
+game/RaceScene_GetPerspFovyForCup.c:
+	.text       start:0x8009B9D0 end:0x8009BAC4
+
 game/RaceSys_8009BAC4.c:
 	.text       start:0x8009BAC4 end:0x8009BD04
 
