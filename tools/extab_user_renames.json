@@ -1528,6 +1528,10 @@
   "src/game/fn_801B8918.cpp": {
     "__ct__9SpriteObjFiii": "Sprite_InitWithAnim"
   },
+  "src/game/fn_801DAAA4.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
   "src/game/MiniGameBase.cpp": {
     "__dt__7MBOwnerFv": "dtor_80122FD8",
     "__dt__6MBRootFv": "dtor_8002CDF4",
