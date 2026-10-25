@@ -3961,6 +3961,10 @@ Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
 	.dtors      start:0x802E8980 end:0x802E8988
 	.sdata      start:0x806D0B78 end:0x806D0B7C
 
+MSL_C/Gecko_ExceptionPPC.c:
+	.text       start:0x802731B4 end:0x8027321C
+	.bss        start:0x8067DE68 end:0x8067DE78
+
 MSL_C/GCN_mem_alloc.c:
 	.text       start:0x80273228 end:0x80273398
 	.rodata     start:0x803F1D78 end:0x803F1DF0
@@ -3985,6 +3989,10 @@ MSL_C/critical_regions.gamecube.c:
 MSL_C/ctype.c:
 	.text       start:0x8027636C end:0x80276390
 	.data       start:0x804F49D8 end:0x804F4CD8
+
+MSL_C/mbstring.c:
+	.text       start:0x80276390 end:0x8027683C
+	.sdata2     start:0x806DC3A8 end:0x806DC3B0
 
 MSL_C/mem.c:
 	.text       start:0x8027683C end:0x80276980

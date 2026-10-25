@@ -1301,6 +1301,8 @@ config.libs = [
             Object(Matching, "MSL_C/math/w_log.c"),
             Object(Matching, "MSL_C/math/w_pow.c"),
             Object(Matching, "MSL_C/math_ppc.c"),
+            Object(Matching, "MSL_C/Gecko_ExceptionPPC.c"),
+            Object(Matching, "MSL_C/mbstring.c"),
         ],
     },
     {
