@@ -250,6 +250,16 @@ game/clRomDtor.c:
 	extabindex  start:0x8001F814 end:0x8001F820
 	.text       start:0x80034A94 end:0x80034B50
 
+game/FileLoader_LoadBin.c:
+	extab       start:0x80005BC8 end:0x80005BD0
+	extabindex  start:0x8001F820 end:0x8001F82C
+	.text       start:0x80034B50 end:0x80034C38
+
+game/DVDFile_LoadSync.c:
+	extab       start:0x80005BD0 end:0x80005BD8
+	extabindex  start:0x8001F82C end:0x8001F838
+	.text       start:0x80034C38 end:0x80034CA0
+
 game/clRomOverlay.c:
 	extab       start:0x80005BD8 end:0x80005BE0
 	extabindex  start:0x8001F838 end:0x8001F844
@@ -469,6 +479,9 @@ game/MemoryManager_TimedFree.cpp:
 
 game/SceneFlow.c:
 	.text       start:0x8003B2D8 end:0x8003B314
+
+game/Math_Segment2DIntersect.c:
+	.text       start:0x8003B314 end:0x8003B454
 
 game/PathManager_Lookups.c:
 	extab       start:0x8000605C end:0x80006074
@@ -3068,6 +3081,11 @@ game/NokoNokoChallenge_TransitionToResult.c:
 	extab       start:0x8000BCEC end:0x8000BCF4
 	extabindex  start:0x80024764 end:0x80024770
 	.text       start:0x80122E58 end:0x80122E80
+
+game/NokoNokoChallenge_GetCoinDivisor.c:
+	extab       start:0x8000BCF4 end:0x8000BCFC
+	extabindex  start:0x80024770 end:0x8002477C
+	.text       start:0x80122E80 end:0x80122FD8
 
 game/MiniGameBase.cpp:
 	extab       start:0x8000BCFC end:0x8000BD04
