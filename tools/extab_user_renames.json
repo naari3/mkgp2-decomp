@@ -5002,5 +5002,30 @@
     "__ct__9GXChannelFPvPvii": "GXChannel_Init",
     "__dt__9GXChannelFv": "dtor_8007D9C4",
     "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform"
+  },
+  "src/game/DNStartDino.cpp": {
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "Spawn__6HinokoFv": "fn_80229998",
+    "Update__6HinokoFv": "fn_80229BEC",
+    "Draw__13clDNStartDinoFv": "fn_80229E0C",
+    "SpawnFire__13clDNStartDinoFv": "fn_8022A014",
+    "Update__13clDNStartDinoFv": "fn_8022A160",
+    "__dt__13clDNStartDinoFv": "fn_8022A758",
+    "__ct__13clDNStartDinoFP8HSD_JObj": "fn_8022A890",
+    "__sinit_DNStartDino_cpp": "fn_8022ACB8",
+    "__vt__13clDNStartDino": "lbl_804EE0F8",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__ct__8GateAnimFv": "fn_802407C8",
+    "__dt__8GateAnimFv": "fn_802406A4",
+    "Load__8GateAnimFPCciP10clNormal3DPCv": "fn_80240378",
+    "Update__8GateAnimFv": "fn_80240014",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__dt__10clNormal3DFv": "Object_DtorWithGXSync",
+    "__ct__9GXChannelFPvPvii": "GXChannel_Init",
+    "__dt__9GXChannelFv": "dtor_8007D9C4",
+    "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform"
   }
 }
