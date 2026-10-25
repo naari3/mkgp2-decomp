@@ -5381,14 +5381,15 @@ game/anon_80204474.cpp:
 	extabindex  start:0x80029858 end:0x800298D0
 	.text       start:0x80204474 end:0x802052E0
 
-game/fn_802052E0.c:
-	.text       start:0x802052E0 end:0x802052E4
+game/anon_802052E0.cpp:
+	extab       start:0x80018EA4 end:0x8001900C
+	extabindex  start:0x800298D0 end:0x80029924
+	.text       start:0x802052E0 end:0x80205DCC
 
-game/fn_802055F0.c:
-	.text       start:0x802055F0 end:0x802055F4
-
-game/fn_80205DC8.c:
-	.text       start:0x80205DC8 end:0x80205DCC
+game/anon_80205DCC.cpp:
+	extab       start:0x8001900C end:0x80019210
+	extabindex  start:0x80029924 end:0x80029978
+	.text       start:0x80205DCC end:0x80207324
 
 game/fn_80208E2C.c:
 	.text       start:0x80208E2C end:0x80208E30
