@@ -6660,6 +6660,11 @@ game/dtor_8021617C.c:
 	extabindex  start:0x8002A068 end:0x8002A074
 	.text       start:0x8021617C end:0x802161C4
 
+game/anon_802161C4.c:
+	extab       start:0x8001A514 end:0x8001A524
+	extabindex  start:0x8002A074 end:0x8002A08C
+	.text       start:0x802161C4 end:0x80216540
+
 game/AddCoinsFromExtraStage.c:
 	.text       start:0x80216540 end:0x80216568
 
