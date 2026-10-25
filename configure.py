@@ -2001,6 +2001,9 @@ config.libs = [
             Object(Matching, "game/AI_GetItemList.c"),
             Object(Matching, "game/fn_801D5970.c"),
             Object(Matching, "game/GetCoinMilage.c"),
+            Object(Matching, "game/fn_801F6E84.c"),
+            Object(Matching, "game/fn_801F9628.c"),
+            Object(Matching, "game/fn_801F8D58.c"),
         ],
     },
     {

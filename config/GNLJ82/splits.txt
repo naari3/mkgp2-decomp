@@ -6710,6 +6710,9 @@ game/dtor_801F6BD0.c:
 	extabindex  start:0x80028F1C end:0x80028F28
 	.text       start:0x801F6BD0 end:0x801F6C2C
 
+game/fn_801F6E84.c:
+	.text       start:0x801F6E84 end:0x801F6EEC
+
 game/fn_801F6F7C.c:
 	extab       start:0x80017558 end:0x80017560
 	extabindex  start:0x80028F4C end:0x80028F58
@@ -6786,6 +6789,9 @@ game/fn_801F89F0.c:
 	.text       start:0x801F89F0 end:0x801F8A34
 	.ctors      start:0x802E8934 end:0x802E8938
 
+game/fn_801F8D58.c:
+	.text       start:0x801F8D58 end:0x801F8E08
+
 game/fn_801F8E58.c:
 	extab       start:0x800176A0 end:0x800176A8
 	extabindex  start:0x80029078 end:0x80029084
@@ -6806,6 +6812,9 @@ game/TexMgr_Apply.c:
 	extab       start:0x800176C8 end:0x800176D0
 	extabindex  start:0x800290B4 end:0x800290C0
 	.text       start:0x801F947C end:0x801F9518
+
+game/fn_801F9628.c:
+	.text       start:0x801F9628 end:0x801F9888
 
 game/fn_801F9888.c:
 	extab       start:0x800176E0 end:0x800176E8
