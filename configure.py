@@ -1747,6 +1747,7 @@ config.libs = [
             Object(Matching, "game/fn_80111D8C.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8011A184.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8011B244.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80108B04.c", extra_cflags=["-Cpp_exceptions on"]),
         ],
     },
     {
@@ -2644,6 +2645,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/fn_80108B04",
     "game/ItemCharacterRender",
     "game/clItemBoxManager_StepTable",
     "game/ItemUseStats",
