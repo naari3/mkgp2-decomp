@@ -7848,6 +7848,12 @@ game/AI_CalcItemSpeedBonus.c:
 	extabindex  start:0x80028A0C end:0x80028A18
 	.text       start:0x801EA500 end:0x801EA6F0
 
+game/fn_801EB708.c:
+	extab       start:0x80016B28 end:0x80016B38
+	extabindex  start:0x80028A3C end:0x80028A54
+	.text       start:0x801EB708 end:0x801EB91C
+	.rodata     start:0x803BD828 end:0x803BD8A8
+
 game/fn_801EB91C.c:
 	extab       start:0x80016B38 end:0x80016B40
 	extabindex  start:0x80028A54 end:0x80028A60
