@@ -7873,6 +7873,13 @@ triforce/amcoin.c:
 	.bss        start:0x80690E20 end:0x806910B8
 	.sdata2     start:0x806DC920 end:0x806DC930
 
+triforce/amjvs.c:
+	.text       start:0x8028A598 end:0x8028C158
+	.rodata     start:0x803F2768 end:0x803F2798
+	.data       start:0x804F57D0 end:0x804F5800
+	.bss        start:0x806910B8 end:0x806937C0
+	.sbss       start:0x806D1E30 end:0x806D1E40
+
 dolphin/dvd/dvdlow.c:
 	.text       start:0x80294E6C end:0x80294EA4
 	.bss        start:0x806A47A0 end:0x806A4800
