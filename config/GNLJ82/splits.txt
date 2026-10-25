@@ -9699,20 +9699,12 @@ game/ItemViewer.cpp:
 	extabindex  start:0x8002BA6C end:0x8002BAB4
 	.text       start:0x80254398 end:0x80255000
 
-game/acLibMedia.cpp:
-	extab       start:0x8001F218 end:0x8001F230
-	extabindex  start:0x8002BAB4 end:0x8002BAD8
-	.text       start:0x80255000 end:0x80255620
-
-game/fn_80255620.c:
-	extab       start:0x8001F230 end:0x8001F238
-	extabindex  start:0x8002BAD8 end:0x8002BAE4
-	.text       start:0x80255620 end:0x80255640
-
-game/acLibInit.cpp:
-	extab       start:0x8001F238 end:0x8001F240
-	extabindex  start:0x8002BAE4 end:0x8002BAF0
-	.text       start:0x80255640 end:0x802557B4
+game/acLib.cpp:
+	extab       start:0x8001F218 end:0x8001F240
+	extabindex  start:0x8002BAB4 end:0x8002BAF0
+	.text       start:0x80255000 end:0x802557C0
+	.bss        start:0x80679E28 end:0x80679F00
+	.sbss       start:0x806D1AD0 end:0x806D1AD8
 
 dolphin/base/PPCArch.c:
 	.text       start:0x802557C0 end:0x802558F4

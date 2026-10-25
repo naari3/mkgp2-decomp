@@ -1,5 +1,8 @@
 /*
- * acLib media update @ 0x80255000..0x80255620.
+ * acLib (media update + init) @ 0x80255000..0x802557C0.
+ * One TU so the file statics in .bss 0x80679E28..0x80679F00 and
+ * .sbss 0x806D1AD0..0x806D1AD8 are addressed from one pooled base.
+ *
  *
  * fn_802554DC runs once per frame (acLibUpdateMedia): it polls the two JVS
  * input boards, services a pending media request and performs the reset
@@ -28,13 +31,12 @@ struct MediaRequest {
     unsigned int len;
 };
 
+struct MediaRequestSlot {
+    MediaRequest req;
+    char pad10[0x1C];
+};
+
 extern "C" {
-extern MediaConfig lbl_80679E28;
-extern unsigned int lbl_80679E34[8];
-extern unsigned int lbl_80679E54[32];
-extern MediaRequest lbl_80679ED4;
-extern int lbl_806D1AD0;
-extern int lbl_806D1AD4;
 extern const char lbl_803F13E4[];
 ResetState *fn_8028D6B0(void);
 int sprintf(char *buf, const char *fmt, ...);
@@ -59,6 +61,20 @@ int fn_8028A8B4(unsigned char port, unsigned char arg, unsigned short len);
 void fn_8029425C(void);
 int fn_80293BCC(void);
 void fn_80293DD4(void);
+}
+
+
+extern "C" {
+MediaConfig lbl_80679E28;
+unsigned int lbl_80679E34[8];
+unsigned int lbl_80679E54[32];
+MediaRequestSlot lbl_80679ED4;
+int lbl_806D1AD0;
+int lbl_806D1AD4;
+extern void *lbl_806D0A90;
+int fn_80294810(int a, int b, int c);
+int fn_8028BAD0(void);
+void fn_80289C68(int a, int b);
 }
 
 extern "C" int fn_80255000(void) {
@@ -209,15 +225,15 @@ extern "C" int fn_802554DC(void) {
                     fn_80255154(second, 2);
                 }
             }
-            if (lbl_80679ED4.state == 0) {
+            if (lbl_80679ED4.req.state == 0) {
                 MediaRequest *req = fn_80288EAC();
                 if (req == 0) {
                     goto done;
                 }
-                lbl_80679ED4 = *req;
+                lbl_80679ED4.req = *req;
             }
             {
-                MediaRequest *cur = &lbl_80679ED4;
+                MediaRequest *cur = &lbl_80679ED4.req;
                 switch ((int)cur->state) {
                 case 1: {
                     int port;
@@ -244,4 +260,54 @@ extern "C" int fn_802554DC(void) {
         fn_80293DD4();
     }
     return 0;
+}
+
+extern "C" void fn_80255620(void) {
+    fn_802947CC();
+}
+
+extern "C" int fn_80255640(int a, int b, int c) {
+    int i;
+    int boards;
+    int ret;
+    lbl_806D1AD0 = 0;
+    for (i = 0; i < 8; i++) {
+        lbl_80679E34[i] = 0;
+        lbl_80679E54[i] = 0;
+    }
+    lbl_806D1AD4 = 0;
+    if (lbl_806D0A90 == 0) {
+        return 1;
+    }
+    memset(&lbl_80679E28, 0, 0xC);
+    lbl_80679E28.busy = a;
+    ret = fn_80294810(a, b, c);
+    if (ret != 0) {
+        return ret;
+    }
+    while (fn_8028BAD0() == 5) {
+        volatile int wait = 0x196E28;
+        while (wait-- != 0) {
+        }
+    }
+    boards = fn_8028B0B4();
+    switch (boards) {
+    case 1:
+        fn_80289C68(0x20, 0);
+        lbl_80679E28.port0 = boards;
+        break;
+    case 0:
+        break;
+    case 2:
+    default:
+        fn_80289C68(0x10, 0x11);
+        lbl_80679E28.port0 = boards;
+        lbl_80679E28.port1 = boards - 1;
+        break;
+    }
+    return 0;
+}
+
+extern "C" void fn_802557B4(void) {
+    lbl_806D1AD0 = 1;
 }
