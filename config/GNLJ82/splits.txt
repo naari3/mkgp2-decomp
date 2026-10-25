@@ -360,8 +360,10 @@ game/StrPcb_Commands.c:
 	extabindex  start:0x8001F958 end:0x8001F9A0
 	.text       start:0x80037E08 end:0x80038288
 
-game/StrPcb_GetInstance.c:
-	.text       start:0x80038574 end:0x8003857C
+game/StrPcb_Lifetime.cpp:
+	extab       start:0x80005D18 end:0x80005D74
+	extabindex  start:0x8001F9A0 end:0x8001F9D0
+	.text       start:0x80038288 end:0x80038778
 
 game/Clamp.c:
 	.text       start:0x80038778 end:0x800387D8

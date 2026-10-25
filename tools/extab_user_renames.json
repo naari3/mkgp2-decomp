@@ -2218,6 +2218,13 @@
     "__ct__8Normal3DFPvi": "clNormal3D_Construct",
     "__ct__9GXChannelFPvPvii": "GXChannel_Init"
   },
+  "src/game/StrPcb_Lifetime.cpp": {
+    "__ct__6StrPcbFi": "StrPcb_Init",
+    "__dt__12StrPcbBufferFv": "dtor_8003871C",
+    "__dt__9StopwatchFv": "dtor_8002F978",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
   "src/game/clItemBoxManager.cpp": {
     "__dt__16clItemBoxManagerFv": "clItemBoxManager_Dtor",
     "__dt__7BoxListFv": "dtor_8005F778",
