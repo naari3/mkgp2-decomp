@@ -10,8 +10,8 @@ extern void GXLoadTexMtxImm();
 extern void GX_CallDisplayList();
 extern void GX_LoadPosMtxImm();
 extern void GX_SetCurrentMtx();
-extern void fn_8025D1B8();
-extern void fn_8025D6A8();
+extern void PSMTXCopy();
+extern void PSMTXInvXpose();
 extern void fn_8026A354();
 extern void fn_802BE120();
 extern void fn_802C457C();
@@ -58,7 +58,7 @@ asm void GXChannel_PushTransform(void) { /* 0x8007D11C size:0x190 */
     lwz r5, 0x0(r29)
     mr r3, r4
     addi r4, r5, 0x44
-    bl fn_8025D1B8
+    bl PSMTXCopy
     lwz r3, 0x0(r29)
     addi r5, r1, 0x38
     lwz r4, 0x10(r29)
@@ -99,12 +99,12 @@ asm void GXChannel_PushTransform(void) { /* 0x8007D11C size:0x190 */
     beq GXChannel_PushTransform_L_8007D234
     addi r3, r1, 0x38
     addi r4, r1, 0x8
-    bl fn_8025D6A8
+    bl PSMTXInvXpose
     cmplwi r3, 0x0
     bne GXChannel_PushTransform_L_8007D204
     addi r3, r1, 0x38
     addi r4, r1, 0x8
-    bl fn_8025D1B8
+    bl PSMTXCopy
     GXChannel_PushTransform_L_8007D204:
     lwz r0, 0x14(r31)
     rlwinm. r0, r0, 0, 24, 24

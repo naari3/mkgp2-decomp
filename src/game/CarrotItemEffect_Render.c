@@ -40,7 +40,7 @@ extern void Vec3_HorizontalYawTo();
 extern void Vec3_PitchTo();
 extern void fn_8011D890();
 extern void fn_80231B74();
-extern void fn_8025DF40();
+extern void PSMTXMultVec();
 extern void fn_8026951C();
 extern void fn_802C14B8();
 extern void fn_802C7E30();
@@ -152,7 +152,7 @@ asm void CarrotItemEffect_Render(void) { /* 0x800B23CC size:0x698 */
     bl CObj_GetProjMatrix_Cached
     addi r4, r1, 0x20
     mr r5, r4
-    bl fn_8025DF40
+    bl PSMTXMultVec
     addi r3, r1, 0x6c
     addi r4, r1, 0x20
     bl Vec3_Copy

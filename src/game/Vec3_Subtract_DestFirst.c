@@ -1,5 +1,5 @@
 extern void Vec3_Subtract(float *a, float *b, float *dst);
-extern void fn_8025E264(float *a, float *b, float *dst);
+extern void PSVECAdd(float *a, float *b, float *dst);
 
 #pragma exceptions on
 void Vec3_Subtract_DestFirst(float *dst, float *a, float *b) {
@@ -7,7 +7,7 @@ void Vec3_Subtract_DestFirst(float *dst, float *a, float *b) {
 }
 
 void Vec3_Add_DestFirst(float *dst, float *a, float *b) {
-    fn_8025E264(a, b, dst);
+    PSVECAdd(a, b, dst);
 }
 #pragma exceptions reset
 

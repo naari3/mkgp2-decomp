@@ -13,7 +13,7 @@ extern const char* lbl_806CF2CC;
 extern int g_characterId;
 extern unsigned char g_lakituStartAnimDone;
 extern void* g_raceCamera;
-void MTXIdentity(float*);
+void PSMTXIdentity(float*);
 void SetResourceLoadingFlag(unsigned char);
 void* DrawManager_GetOrCreate();
 void DMAChannelManager_Init();
@@ -133,7 +133,7 @@ DemoWCOwner::DemoWCOwner()
     driver = 0;
     tornado = 0;
     joint = 0;
-    MTXIdentity(matrix);
+    PSMTXIdentity(matrix);
     SetResourceLoadingFlag(0);
     DrawManager_GetOrCreate();
     DMAChannelManager_Init();

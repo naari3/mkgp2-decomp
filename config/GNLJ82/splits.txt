@@ -5486,3 +5486,22 @@ dolphin/os/OSThread.c:
 dolphin/os/OSTime.c:
 	.text       start:0x8025CC68 end:0x8025D08C
 	.data       start:0x804F36D8 end:0x804F3738
+
+dolphin/mtx/mtx.c:
+	.text       start:0x8025D120 end:0x8025DEAC
+	.sdata      start:0x806D0AD0 end:0x806D0AD8
+	.sdata2     start:0x806DC268 end:0x806DC288
+
+dolphin/mtx/mtxvec.c:
+	.text       start:0x8025DEAC end:0x8025DFE8
+
+dolphin/mtx/mtx44.c:
+	.text       start:0x8025DFE8 end:0x8025E264
+	.sdata2     start:0x806DC288 end:0x806DC2A0
+
+dolphin/mtx/vec.c:
+	.text       start:0x8025E264 end:0x8025E440
+	.sdata2     start:0x806DC2A0 end:0x806DC2A8
+
+dolphin/mtx/quat.c:
+	.text       start:0x8025E440 end:0x8025E50C

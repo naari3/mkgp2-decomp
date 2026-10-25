@@ -1,7 +1,7 @@
-extern void MTXIdentity(float (*mtx)[4]);
+extern void PSMTXIdentity(float (*mtx)[4]);
 
 void Mtx4x4_TransposeTo4x3(float (*__restrict src)[4], float (*__restrict dst)[4]) {
-    MTXIdentity(dst);
+    PSMTXIdentity(dst);
     dst[0][0] = src[0][0];
     dst[0][1] = src[1][0];
     dst[0][2] = src[2][0];

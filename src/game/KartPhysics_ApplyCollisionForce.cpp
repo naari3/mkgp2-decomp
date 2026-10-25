@@ -65,7 +65,7 @@ union IntToDouble {
 };
 
 extern "C" {
-extern void fn_8025E2AC(Vec3 *dst, Vec3 *src, float scale);
+extern void PSVECScale(Vec3 *dst, Vec3 *src, float scale);
 extern void dtor_80036E40(void *ptr, short flag);
 
 extern float lbl_806D1940;
@@ -144,7 +144,7 @@ extern "C" void KartPhysics_ApplyCollisionForce(void *self) {
     if (lbl_806DA42C < angleDelta) {
         callVec.set(dx, dy, dz);
         scale = lbl_806DA4B4 + angleDelta;
-        fn_8025E2AC((Vec3 *)&callVec, (Vec3 *)&callVec, (scale * scale) * lbl_806DA4B8);
+        PSVECScale((Vec3 *)&callVec, (Vec3 *)&callVec, (scale * scale) * lbl_806DA4B8);
         F32(self, 0xcc) += callVec.x;
         F32(self, 0xd0) += callVec.y;
         F32(self, 0xd4) += callVec.z;

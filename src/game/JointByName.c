@@ -37,7 +37,7 @@ extern char lbl_806D5970[5];
 extern void __assert(char *, int, char *);
 extern HSD_JObj *ResolveJointByName(void *model, char *name);
 extern void fn_802D1E34(HSD_JObj *jobj);
-extern void fn_8025D1B8(const Mtx src, Mtx dst);
+extern void PSMTXCopy(const Mtx src, Mtx dst);
 extern void Mtx_TransposeToMtx44(float *dst, const Mtx src);
 
 static void update_matrix(HSD_JObj *jobj) {
@@ -73,7 +73,7 @@ void JointByName_GetLocalMatrix4x3(Mtx dst, JointByNameView *holder, char *name)
             }
             mtx = jobj->mtx;
             if (mtx != 0) {
-                fn_8025D1B8(mtx, dst);
+                PSMTXCopy(mtx, dst);
             }
         }
     }

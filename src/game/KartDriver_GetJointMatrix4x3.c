@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void KartDriver_GetJointByIdx();
-extern void fn_8025E1EC();
+extern void PSMTX44Identity();
 
 /* --- function index (1 fns, .text 0x80040DFC..0x80040E9C) ---
  * [  0] 0x80040DFC size:0xA0    global KartDriver_GetJointMatrix4x3
@@ -39,7 +39,7 @@ asm void KartDriver_GetJointMatrix4x3(void) { /* 0x80040DFC size:0xA0 */
     bl KartDriver_GetJointByIdx
     mr r31, r3
     mr r3, r30
-    bl fn_8025E1EC
+    bl PSMTX44Identity
     lfs f0, 0x0(r31)
     stfs f0, 0x0(r30)
     lfs f0, 0x10(r31)

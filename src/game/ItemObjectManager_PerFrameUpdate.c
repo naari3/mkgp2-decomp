@@ -8,9 +8,9 @@
 extern void IsRaceStarted();
 extern void ItemClass_GetFlagByte1();
 extern void ItemObject_TryAcquireTarget();
-extern void MTXIdentity();
-extern void fn_8025D1B8();
-extern void fn_8025D560();
+extern void PSMTXIdentity();
+extern void PSMTXCopy();
+extern void PSMTXTranspose();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D4868;
@@ -64,14 +64,14 @@ asm void ItemObjectManager_PerFrameUpdate(void) { /* 0x800A45B8 size:0x478 */
     cmplwi r3, 0x0
     beq ItemObjectManager_PerFrameUpdate_L_800A4644
     addi r4, r31, 0x40
-    bl fn_8025D1B8
+    bl PSMTXCopy
     lfs f0, lbl_806D4868(r2)
     addi r3, r31, 0x40
     addi r4, r31, 0x10
     stfs f0, 0x4c(r31)
     stfs f0, 0x5c(r31)
     stfs f0, 0x6c(r31)
-    bl fn_8025D560
+    bl PSMTXTranspose
     lwz r3, 0x70(r31)
     lfs f0, 0xc(r3)
     stfs f0, 0x74(r31)
@@ -86,9 +86,9 @@ asm void ItemObjectManager_PerFrameUpdate(void) { /* 0x800A45B8 size:0x478 */
     cmplwi r0, 0x0
     beq ItemObjectManager_PerFrameUpdate_L_800A4684
     addi r3, r31, 0x10
-    bl MTXIdentity
+    bl PSMTXIdentity
     addi r3, r31, 0x40
-    bl MTXIdentity
+    bl PSMTXIdentity
     lwz r3, 0x80(r31)
     lfs f0, 0x0(r3)
     stfs f0, 0x74(r31)

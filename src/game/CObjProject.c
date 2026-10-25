@@ -25,7 +25,7 @@ extern Matrix3x4 *fn_802C7E30(void *);
 extern void fn_802C6BCC(void *);
 extern void fn_8026A018(const Matrix3x4, const float *, const float *,
                        float *, float *, float *, float, float, float);
-extern void fn_8025DF40(const Matrix3x4, const Vec3 *, Vec3 *);
+extern void PSMTXMultVec(const Matrix3x4, const Vec3 *, Vec3 *);
 extern const Vec3 lbl_802E96B8;
 
 static inline Matrix3x4 *CObjProject_GetView(CObjProjectView *self)
@@ -77,7 +77,7 @@ void CObj_ProjectPoint(CObjProjectView *self, float *outX, float *outY,
     point.z = z;
     fn_802C6BCC(self->camera);
     matrix = CObjProject_GetView(self);
-    fn_8025DF40(*matrix, &point, &transformed);
+    PSMTXMultVec(*matrix, &point, &transformed);
     *outZ = transformed.z;
 }
 #endif

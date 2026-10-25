@@ -23,7 +23,7 @@ extern void Vec3_PitchTo();
 extern void cLNormal3DWrap_Slot_Render();
 extern void cLNormal3DWrap_Slot_SetMatrixSource();
 extern void cLNormal3DWrap_Slot_SetRotationQuat();
-extern void fn_8025DF40();
+extern void PSMTXMultVec();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_courseScene3D;
@@ -166,7 +166,7 @@ asm void TwinSpriteOverlay_Render(void) { /* 0x800B1670 size:0x2F4 */
     bl CObj_GetProjMatrix_Cached
     addi r4, r1, 0x28
     mr r5, r4
-    bl fn_8025DF40
+    bl PSMTXMultVec
     addi r3, r1, 0x4c
     addi r4, r1, 0x28
     bl Vec3_Copy

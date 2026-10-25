@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void Vec3_Subtract();
-extern void fn_8025E30C();
+extern void PSVECSquareMag();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_nokonokoHead;
@@ -66,12 +66,12 @@ asm void NokoNoko_FindNearest(void) { /* 0x801887BC size:0xFC */
     bne NokoNoko_FindNearest_L_80188840
     mr r31, r30
     addi r3, r1, 0x8
-    bl fn_8025E30C
+    bl PSVECSquareMag
     fmr f31, f1
     b NokoNoko_FindNearest_L_80188858
     NokoNoko_FindNearest_L_80188840:
     addi r3, r1, 0x8
-    bl fn_8025E30C
+    bl PSVECSquareMag
     fcmpo cr0, f1, f31
     bge NokoNoko_FindNearest_L_80188858
     mr r31, r30

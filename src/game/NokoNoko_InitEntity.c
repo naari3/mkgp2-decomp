@@ -10,7 +10,7 @@ extern void Terrain_GetGroundHeight();
 extern void Vec3_Dot();
 extern void Vec3_Normalize();
 extern void Vec3_Subtract();
-extern void fn_8025E30C();
+extern void PSVECSquareMag();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D1684;
@@ -141,7 +141,7 @@ asm void NokoNoko_InitEntity(void) { /* 0x801884E8 size:0x2D4 */
     addi r5, r1, 0x24
     bl Vec3_Subtract
     addi r3, r1, 0x24
-    bl fn_8025E30C
+    bl PSVECSquareMag
     cmpwi r31, 0x0
     beq NokoNoko_InitEntity_L_80188670
     fcmpo cr0, f1, f31

@@ -302,14 +302,17 @@ cflags_dolphin = [
 
 
 def SdkLib(
-    lib_name: str, objects: List[Object], revision: int = 2
+    lib_name: str,
+    objects: List[Object],
+    revision: int = 2,
+    extra_cflags: List[str] = [],
 ) -> Dict[str, Any]:
     # SDK_REVISION selects the dolsdk2004 variant: 1 = May 21 2004 build (OS in this game)
     return {
         "lib": lib_name,
         "src_dir": "src",
         "mw_version": "GC/1.2.5n",
-        "cflags": [*cflags_dolphin, f"-DSDK_REVISION={revision}"],
+        "cflags": [*cflags_dolphin, f"-DSDK_REVISION={revision}", *extra_cflags],
         "progress_category": "sdk",
         "objects": objects,
     }
@@ -1337,7 +1340,6 @@ config.libs = [
             # matched 1 fn at a time via sub-agent dispatch.
             Object(Matching, "game/auto_801223E8_block.c"),
             Object(Matching, "game/Archive_GetCurrent.c"),
-            Object(Matching, "game/Vec3.c"),
             Object(Matching, "game/ItemAlias.c"),
             Object(Matching, "game/KartDriver_SetJointPosY_Slot3a.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartDriver_Dtor.c", extab_padding=b"\x00\x00"),
@@ -1606,6 +1608,17 @@ config.libs = [
             Object(Matching, "dolphin/os/OSTime.c"),
         ],
         revision=1,
+    ),
+    SdkLib(
+        "dolphin_mtx",
+        [
+            Object(Matching, "dolphin/mtx/mtx.c"),
+            Object(Matching, "dolphin/mtx/mtxvec.c"),
+            Object(Matching, "dolphin/mtx/mtx44.c"),
+            Object(Matching, "dolphin/mtx/vec.c"),
+            Object(Matching, "dolphin/mtx/quat.c"),
+        ],
+        extra_cflags=["-char signed"],
     ),
     {
         "lib": "MSL_C",
