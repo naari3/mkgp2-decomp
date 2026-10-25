@@ -7898,6 +7898,25 @@ sysdolphin/baselib/hash.c:
 	.data       start:0x804FD970 end:0x804FD988
 	.sdata      start:0x806D0F30 end:0x806D0F38
 
+sysdolphin/baselib/texp.c:
+	.text       start:0x802DE624 end:0x802E17DC
+	.data       start:0x804FD988 end:0x804FDCF0
+	.sdata      start:0x806D0F38 end:0x806D0F60
+	.sdata2     start:0x806DCED0 end:0x806DCEE0
+
+sysdolphin/baselib/texpdag.c:
+	.text       start:0x802E17DC end:0x802E51F4
+	.data       start:0x804FDCF0 end:0x804FDDA8
+	.sdata      start:0x806D0F60 end:0x806D0F70
+	.sbss2      start:0x806DCF88 end:0x806DCF90
+
+sysdolphin/baselib/debug.c:
+	.text       start:0x802E51F4 end:0x802E5380
+	.data       start:0x804FDDA8 end:0x804FDDD8
+	.bss        start:0x806CEA50 end:0x806CED18
+	.sdata      start:0x806D0F70 end:0x806D0F78
+	.sbss       start:0x806D2250 end:0x806D2254
+
 init/__check_pad3.c:
 	.init       start:0x80003100 end:0x80003140
 

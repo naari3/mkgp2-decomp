@@ -124,8 +124,8 @@ typedef struct _HSD_TECnst {
     HSD_TExpType type; ///< must be HSD_TE_CNST for this union member
     HSD_TExp* next;
     void* val;
-    HSD_TEInput comp; ///< if TE_RGB, val points to RGB array, else 1 value
-    HSD_TEType ctype; ///< pointer type of val
+    u8 comp;  ///< HSD_TEInput; if TE_RGB, val points to RGB array (u8 in mkgp2)
+    u8 ctype; ///< HSD_TEType; pointer type of val (u8 in mkgp2)
     u8 reg;
     u8 idx;
     u8 ref;
@@ -155,6 +155,7 @@ typedef struct _HSD_TETev {
     u8 a_clamp;
     u8 a_bias;
     u8 a_scale;
+    u8 a_range; ///< mkgp2
     u8 tex_swap;
     u8 ras_swap;
     u8 kcsel;
