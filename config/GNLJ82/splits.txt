@@ -650,6 +650,11 @@ game/JObj_SetExpressionByIndex.c:
 	extabindex  start:0x8001FD0C end:0x8001FD18
 	.text       start:0x8003DDAC end:0x8003DF8C
 
+game/AnimState_UpdateEquipped.c:
+	extab       start:0x80006100 end:0x80006108
+	extabindex  start:0x8001FD18 end:0x8001FD24
+	.text       start:0x8003DF8C end:0x8003E41C
+
 game/SetAnimState.c:
 	extab       start:0x80006108 end:0x80006110
 	extabindex  start:0x8001FD24 end:0x8001FD30
@@ -1976,6 +1981,11 @@ game/FUN_8007e344.c:
 	extab       start:0x80008818 end:0x80008820
 	extabindex  start:0x8002162C end:0x80021638
 	.text       start:0x8007E344 end:0x8007E390
+
+game/TransitionEffect_Dtor.cpp:
+	extab       start:0x80008820 end:0x80008848
+	extabindex  start:0x80021638 end:0x80021644
+	.text       start:0x8007E390 end:0x8007E4CC
 
 game/Jyugemu_Flag_SetKartDriver.c:
 	.text       start:0x800806D4 end:0x800806F4
