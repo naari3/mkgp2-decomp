@@ -5996,6 +5996,12 @@ game/fn_801D4060.cpp:
 	extabindex  start:0x80028088 end:0x80028094
 	.text       start:0x801D4060 end:0x801D4118
 
+game/fn_801D5970.c:
+	.text       start:0x801D5970 end:0x801D5C88
+
+game/GetCoinMilage.c:
+	.text       start:0x801D5D68 end:0x801D5F74
+
 game/PlayerData_ResolveUnlockedIdByIndex.c:
 	.text       start:0x801D6398 end:0x801D647C
 
@@ -6319,6 +6325,9 @@ game/clEnemyParam_FillItemListIds.c:
 	extab       start:0x800159C0 end:0x800159C8
 	extabindex  start:0x80028478 end:0x80028484
 	.text       start:0x801DE208 end:0x801DE41C
+
+game/AI_GetItemList.c:
+	.text       start:0x801DE41C end:0x801DE6E8
 
 game/fn_801DE6E8.c:
 	extab       start:0x800159C8 end:0x800159D0

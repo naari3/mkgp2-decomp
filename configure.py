@@ -1998,6 +1998,9 @@ config.libs = [
             Object(Matching, "game/fn_801DD1B0.c"),
             Object(Matching, "game/AI_CheckTargetInRange.c"),
             Object(Matching, "game/AI_CalcItemSpeedBonus.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/AI_GetItemList.c"),
+            Object(Matching, "game/fn_801D5970.c"),
+            Object(Matching, "game/GetCoinMilage.c"),
         ],
     },
     {
