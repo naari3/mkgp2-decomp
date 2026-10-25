@@ -9014,6 +9014,12 @@ game/DNStartDino.cpp:
 	.ctors      start:0x802E8950 end:0x802E8954
 	.rodata     start:0x803D0DB0 end:0x803DA278
 
+game/EnemyFace.cpp:
+	extab       start:0x8001BE64 end:0x8001BFC8
+	extabindex  start:0x8002A824 end:0x8002A8C0
+	.text       start:0x8022ACE4 end:0x8022BFA8
+	.rodata     start:0x803DA278 end:0x803DA710
+
 game/fn_8022CDE4.c:
 	extab       start:0x8001BFE0 end:0x8001BFE8
 	extabindex  start:0x8002A8CC end:0x8002A8D8
