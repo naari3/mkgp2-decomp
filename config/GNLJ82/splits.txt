@@ -1612,6 +1612,11 @@ game/PCBCommPhase1.c:
 game/CommBroadcast.c:
 	.text       start:0x800848C4 end:0x80084A84
 
+game/BootPCBCheck.cpp:
+	extab       start:0x80008D44 end:0x80008D54
+	extabindex  start:0x8002183C end:0x80021854
+	.text       start:0x80084A84 end:0x80084D98
+
 game/BootNotice_CheckEnterCondition.c:
 	extab       start:0x80008D54 end:0x80008D5C
 	extabindex  start:0x80021854 end:0x80021860
@@ -1695,6 +1700,11 @@ game/TCPConnRecv.c:
 	extabindex  start:0x8002192C end:0x80021944
 	.text       start:0x80086A30 end:0x80086CCC
 
+game/PcbConn_TryReceiveAck.c:
+	extab       start:0x80008E54 end:0x80008E5C
+	extabindex  start:0x80021944 end:0x80021950
+	.text       start:0x80086CCC end:0x80086D6C
+
 game/TCPConnSend.c:
 	extab       start:0x80008E5C end:0x80008E64
 	extabindex  start:0x80021950 end:0x8002195C
@@ -1726,6 +1736,11 @@ game/TCPConnCloseInit.c:
 	extab       start:0x80008E7C end:0x80008E8C
 	extabindex  start:0x80021980 end:0x80021998
 	.text       start:0x80087530 end:0x80087760
+
+game/PcbConn_Close.cpp:
+	extab       start:0x80008E8C end:0x80008E94
+	extabindex  start:0x80021998 end:0x800219A4
+	.text       start:0x80087760 end:0x80087880
 
 game/PcbConn_MarkDisabled.c:
 	.text       start:0x80087880 end:0x80087894

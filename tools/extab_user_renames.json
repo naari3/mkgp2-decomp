@@ -2369,5 +2369,8 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "__nwa__FUl": "FUN_8003b120",
     "__dla__FPv": "MemoryManager_Free"
+  },
+  "src/game/PcbConn_Close.cpp": {
+    "__dt__7PcbConnFv": "PcbConn_Close"
   }
 }
