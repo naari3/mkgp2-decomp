@@ -280,5 +280,12 @@
   "src/game/RaceHud_80147470.cpp": ["fn_80147470", "fn_80147530", "dtor_80147584", "fn_80147638", "fn_801491DC", "fn_801477BC", "fn_801478B0", "fn_80147900", "fn_80147AF4", "fn_80147CE8", "fn_80147EE8", "fn_8014816C", "fn_80148648", "fn_80148810", "dtor_80149244", "fn_80148A44", "dtor_8014917C", "fn_80149214", "dtor_80149320", "fn_80149D58", "fn_801493B0", "fn_80149420", "fn_801494A4", "fn_80149A88", "fn_80149B8C", "fn_80149CD8", "fn_8014AD7C", "fn_80149D90", "fn_80149E44", "fn_8014A890", "fn_8014A8FC", "fn_8014AA38", "fn_8014AC48", "fn_8014ADB4", "fn_8014B118", "fn_8014BBE4", "fn_8014BF80", "fn_8014C308", "fn_8014C53C"],
   "src/game/SceneList_80157940.cpp": ["fn_80157940", "fn_801579F0", "fn_80157A68", "fn_80157B38", "fn_80157BE8", "fn_80157C60", "fn_80157D30"],
   "src/game/fn_80157DE0.cpp": ["fn_80157DE0"],
-  "src/game/SceneList_80157EA8.cpp": ["dtor_80157EC0", "fn_80157F1C", "fn_80157FB4", "fn_801589BC", "fn_80158CE4", "fn_8015915C", "fn_801596D4", "fn_80159BD0"]
+  "src/game/SceneList_80157EA8.cpp": ["dtor_80157EC0", "fn_80157F1C", "fn_80157FB4", "fn_801589BC", "fn_80158CE4", "fn_8015915C", "fn_801596D4", "fn_80159BD0"],
+  "src/game/RankPanel_80144430.cpp": ["fn_80144430", "fn_80144500", "fn_801449D4", "fn_80144AF0", "dtor_80145DB0", "fn_80144C1C", "fn_801458B4", "dtor_80145F04", "dtor_80145F9C", "fn_80145AF4", "fn_80145D34", "fn_80145E14", "fn_80146000", "fn_801460D0"],
+  "src/game/RankPanelBase_801461B0.cpp": ["fn_801461B0", "fn_80146260"],
+  "src/game/LapSelect_80146410.cpp": ["fn_80146410", "fn_80146574", "fn_8014660C", "fn_80146960", "fn_80147200", "fn_801473DC"],
+  "src/game/SceneFactory_8014D540.cpp": ["fn_8014D540", "fn_8014D848", "fn_8014D88C"],
+  "src/game/fn_8014DD80.cpp": ["fn_8014DD80"],
+  "src/game/fn_8014E04C.cpp": ["fn_8014E04C"],
+  "src/game/CourseObjects_801375D8.cpp": ["fn_80137C8C", "fn_80137E50", "fn_80138578", "fn_801385CC", "fn_8013879C", "fn_80138A50", "fn_80138DB8", "fn_80139810", "__dt__11ScopedTimerFv"]
 }
