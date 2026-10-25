@@ -24,7 +24,7 @@ void VfxSlot_BindResourceEx(void*,int,int);
 const float *KartDriver_GetKartRootMtx(void*);
 void Mtx44_GetTranslation_RowMajor(DustScatterVec*,const float*);
 void DrawEffect_Free(DustScatterEffect*);
-double Atan2(double,double);
+double atan2(double,double);
 float BuildOrientationFromYaw(float);
 void VfxSlot_SetPositionFromVec(void*,DustScatterVec);
 void VfxSlot_SetRotationZ(void*,float);
@@ -66,7 +66,7 @@ void Effect_DustScatter_Update(DustScatterEffect *effect) {
  }
  effect->velocity.y += lbl_806D5798;
  effect->velocity.x *= lbl_806D579C;
- effect->rotation.z=Atan2(effect->velocity.x,effect->velocity.y);
+ effect->rotation.z=atan2(effect->velocity.x,effect->velocity.y);
  if(effect->side) effect->rotation.z=BuildOrientationFromYaw(lbl_806D57A0+effect->rotation.z);
  else effect->rotation.z=BuildOrientationFromYaw(effect->rotation.z-lbl_806D57A0);
  Vec3_Add_DestFirst(&effect->displacement,&effect->displacement,&effect->velocity);

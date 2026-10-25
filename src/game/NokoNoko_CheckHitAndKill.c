@@ -5,7 +5,7 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void Atan2();
+extern void atan2();
 extern void DrawEffect_SpawnWithDescriptor();
 extern void SoundMgr_PlaySE();
 extern void Vec3_Magnitude();
@@ -123,7 +123,7 @@ asm void NokoNoko_CheckHitAndKill(void) { /* 0x801888B8 size:0x22C */
     stfs f0, 0x24(r30)
     lfs f1, 0x8(r1)
     lfs f2, 0x10(r1)
-    bl Atan2
+    bl atan2
     frsp f0, f1
     li r3, 0xcb
     stfs f0, 0x28(r30)

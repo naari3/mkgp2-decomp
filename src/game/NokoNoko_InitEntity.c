@@ -5,7 +5,7 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void Atan2();
+extern void atan2();
 extern void Terrain_GetGroundHeight();
 extern void Vec3_Dot();
 extern void Vec3_Normalize();
@@ -209,7 +209,7 @@ asm void NokoNoko_InitEntity(void) { /* 0x801884E8 size:0x2D4 */
     bl Vec3_Normalize
     lfs f1, 0x18(r1)
     lfs f2, 0x20(r1)
-    bl Atan2
+    bl atan2
     frsp f0, f1
     addi r3, r29, 0x1c
     addi r4, r1, 0x8

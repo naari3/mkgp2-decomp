@@ -6,8 +6,8 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void Saturate_Double();
-extern void fn_8027E480();
-extern void fn_8027E9E8();
+extern void cos();
+extern void sin();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D28C8;
@@ -282,10 +282,10 @@ asm void TornadoEffect_ComposeRenderMatrix(void) { /* 0x80057A8C size:0xA84 */
     stfs f0, 0xbc(r1)
     stfs f0, 0xa8(r1)
     stfs f0, 0x94(r1)
-    bl fn_8027E480
+    bl cos
     frsp f30, f1
     fmr f1, f31
-    bl fn_8027E9E8
+    bl sin
     frsp f1, f1
     li r5, 0x0
     li r0, 0x2
@@ -684,7 +684,7 @@ asm void TornadoEffect_ComposeRenderMatrix(void) { /* 0x80057A8C size:0xA84 */
     cmplwi r0, 0x1
     bne TornadoEffect_ComposeRenderMatrix_L_80058498
     lfs f1, 0x114(r28)
-    bl fn_8027E9E8
+    bl sin
     frsp f0, f1
     lfs f1, lbl_806D28CC(r2)
     fabs f0, f0

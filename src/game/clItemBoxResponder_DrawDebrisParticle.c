@@ -7,8 +7,8 @@
 /* refine if the real prototype matters for header consumers. */
 extern void GXChannel_PushTransform();
 extern void Mtx4x4_TransposeTo4x3();
-extern void fn_8027E480();
-extern void fn_8027E9E8();
+extern void cos();
+extern void sin();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D10B8;
@@ -91,10 +91,10 @@ asm void clItemBoxResponder_DrawDebrisParticle(void) { /* 0x8005DBA0 size:0x790 
     stfs f0, 0xf0(r1)
     stfs f0, 0xdc(r1)
     stfs f0, 0xc8(r1)
-    bl fn_8027E480
+    bl cos
     frsp f30, f1
     fmr f1, f31
-    bl fn_8027E9E8
+    bl sin
     frsp f1, f1
     li r5, 0x0
     li r0, 0x2
@@ -295,10 +295,10 @@ asm void clItemBoxResponder_DrawDebrisParticle(void) { /* 0x8005DBA0 size:0x790 
     stfs f0, 0xb0(r1)
     stfs f0, 0x9c(r1)
     stfs f0, 0x88(r1)
-    bl fn_8027E480
+    bl cos
     frsp f30, f1
     fmr f1, f31
-    bl fn_8027E9E8
+    bl sin
     frsp f1, f1
     li r5, 0x0
     li r0, 0x2

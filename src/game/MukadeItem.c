@@ -30,7 +30,7 @@ extern void fn_801B14B8();
 extern void fn_801B158C();
 extern void fn_801B1660();
 extern void fn_801B1D5C();
-extern void fn_8027E9E8();
+extern void sin();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D5E78;
@@ -169,7 +169,7 @@ asm void MukadeItem_Tick_HeldAndHoming_3839(void) { /* 0x800EBC00 size:0x668 */
     bl BuildOrientationFromYaw
     stfs f1, 0x20(r31)
     lfs f1, 0x20(r31)
-    bl fn_8027E9E8
+    bl sin
     frsp f1, f1
     lfs f0, lbl_806D5E80(r2)
     fmuls f0, f0, f1
@@ -551,7 +551,7 @@ extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed();
 extern void Vec3_Add_DestFirst();
 extern void Vec3_ToYaw();
 extern void fn_801B129C();
-extern void fn_8027E9E8();
+extern void sin();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_ccClass;
@@ -848,7 +848,7 @@ asm void MukadeItem_TickHeldOrSnake_3839(void) { /* 0x800EC268 size:0x5C0 */
     bl BuildOrientationFromYaw
     stfs f1, 0x18(r31)
     lfs f1, 0x18(r31)
-    bl fn_8027E9E8
+    bl sin
     frsp f2, f1
     lfs f0, lbl_806D5E80(r2)
     lfs f1, lbl_806D5E7C(r2)

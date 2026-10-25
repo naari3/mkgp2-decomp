@@ -29,7 +29,7 @@ void Vec3_Subtract_DestFirst(OrbitSparkVec3 *, const OrbitSparkVec3 *, const Orb
 void Vec3_Add_DestFirst(OrbitSparkVec3 *, const OrbitSparkVec3 *, const OrbitSparkVec3 *);
 void Vec3_Copy(OrbitSparkVec3 *, const OrbitSparkVec3 *);
 float BuildOrientationFromYaw(float);
-double fn_8027E9E8(double);
+double sin(double);
 void DrawEffect_Free(OrbitSparkEffect *);
 unsigned char FinalLapCoinJump_CheckActiveForObject(void *);
 void VfxSlot_SetPositionFromVec(void *, OrbitSparkVec3);
@@ -58,7 +58,7 @@ void Effect_KartOrbitSpark_Update(OrbitSparkEffect *effect) {
     {
         effect->offset.y -= lbl_806D5524;
         effect->angle = BuildOrientationFromYaw(lbl_806D5528 + effect->angle);
-        float wave = (float)fn_8027E9E8(effect->angle);
+        float wave = (float)sin(effect->angle);
         float pulse = ((lbl_806D54B8 + wave) * lbl_806D54C0) * lbl_806D54C0 + lbl_806D54C0;
         effect->scale = effect->amplitude * pulse;
         if (effect->kart) {

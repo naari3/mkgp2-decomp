@@ -42,7 +42,7 @@ void KartFx_DriftPuffTick(Effect *effect) {
     Matrix4_Identity(transform);
     Mtx44_Scale_Uniform(transform, transform, lbl_806D5304);
     Matrix4_PreMultiplyTranslation(transform, transform, lbl_806D51C0, lbl_806D51C0, lbl_806D5308);
-    Matrix4_PreMultiplyRotY(transform, transform, BuildOrientationFromYaw((float)Atan2(camera.x, camera.z)));
+    Matrix4_PreMultiplyRotY(transform, transform, BuildOrientationFromYaw((float)atan2(camera.x, camera.z)));
     Matrix4_Multiply(base, transform, base);
     DbgScene_CopyMatrix3x4Transpose(effect->matrix, base);
     Mtx44_GetTranslation_RowMajor(&effect->position, effect->matrix);

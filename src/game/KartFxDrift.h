@@ -58,7 +58,7 @@ void Matrix4_Multiply(float *, const float *, const float *);
 void Mtx44_Inverse_GaussJordan(float *, const float *);
 Vec3 Mtx44_TransformVec3(const float *, Vec3);
 void Mtx44_Scale_Uniform(float *, const float *, float);
-double Atan2(double, double);
+double atan2(double, double);
 float BuildOrientationFromYaw(float);
 void Matrix4_PreMultiplyRotY(float *, const float *, float);
 void DbgScene_CopyMatrix3x4Transpose(float *, const float *);

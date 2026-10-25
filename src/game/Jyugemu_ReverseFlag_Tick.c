@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void Archive_GetRootJObj();
-extern void Atan2();
+extern void atan2();
 extern void CObj_ApplyScissor();
 extern void CObj_LoadProjMatrix();
 extern void GetCourseScene3D();
@@ -16,7 +16,7 @@ extern void Vec3_Normalize();
 extern void Vec3_Subtract();
 extern void __assert();
 extern void clNormal3D_Exec();
-extern void fn_8027E9E8();
+extern void sin();
 extern void fn_802D20AC();
 
 /* --- extern decls: sda21-referenced data --- */
@@ -112,7 +112,7 @@ asm void Jyugemu_ReverseFlag_Tick(void) { /* 0x80080C10 size:0x39C */
     stfs f1, 0x10(r31)
     Jyugemu_ReverseFlag_Tick_L_80080CD8:
     lfs f1, 0x10(r31)
-    bl fn_8027E9E8
+    bl sin
     frsp f1, f1
     lfs f0, lbl_806D3088(r2)
     lwz r3, 0x4(r31)
@@ -246,7 +246,7 @@ asm void Jyugemu_ReverseFlag_Tick(void) { /* 0x80080C10 size:0x39C */
     bl Vec3_Normalize
     lfs f1, 0x8(r1)
     lfs f2, 0x10(r1)
-    bl Atan2
+    bl atan2
     frsp f1, f1
     lfs f0, lbl_806D30A0(r2)
     lwz r3, 0x0(r31)

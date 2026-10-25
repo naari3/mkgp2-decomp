@@ -5,7 +5,7 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void fn_8027E9E8();
+extern void sin();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D29AC;
@@ -52,7 +52,7 @@ asm void clItemBox_StepFn_PopOut(void) { /* 0x8005E9D0 size:0xA4 */
     fmuls f0, f1, f0
     fmul f1, f2, f0
     frsp f1, f1
-    bl fn_8027E9E8
+    bl sin
     frsp f3, f1
     lfs f2, lbl_806D29D8(r2)
     lfs f0, 0x0(r31)

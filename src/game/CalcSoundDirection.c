@@ -18,7 +18,7 @@ extern PathPoint *Path_LookupMaxProgressOffset(void *path, int index, int depth)
 extern float (*KartDriver_GetKartRootMtx(void *kart))[4];
 extern void fn_8025D1B8(float (*src)[4], float (*dst)[4]);
 extern void fn_8025DF40(float (*mtx)[4], float *src, float *dst);
-extern double Atan2(double, double);
+extern double atan2(double, double);
 
 float CalcSoundDirection(void *kart, void *path, float *outVolume, int index) {
     float out[3];
@@ -50,7 +50,7 @@ float CalcSoundDirection(void *kart, void *path, float *outVolume, int index) {
     mtx[1][3] = 0.0f;
     mtx[2][3] = 0.0f;
     fn_8025DF40(mtx, vec, out);
-    pan = 57.29577951308232 * (float)Atan2(out[0], out[2]);
+    pan = 57.29577951308232 * (float)atan2(out[0], out[2]);
     if (pan > 13.0f) {
         pan = 1.0f;
     } else if (pan < -13.0f) {

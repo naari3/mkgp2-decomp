@@ -40,7 +40,7 @@ extern const float lbl_806D548C, lbl_806D5490;
 void Mtx44_GetTranslation_RowMajor(RingVec*, const void*);
 void Vec3_Copy(RingVec*, const RingVec*);
 float BuildOrientationFromYaw(float);
-double fn_8027E9E8(double);
+double sin(double);
 void GetSpawnPosition(RingVec*, float, float, float);
 void Vec3_Scale(RingVec*, const RingVec*, float);
 void Vec2_RotateX(RingVec*, const RingVec*, float);
@@ -80,12 +80,12 @@ void Effect_CompoundRing_PlaceChildren(RingEffect* effect, const void* source,
             case 0:
                 tilt = signs.value[i / 3];
                 orientation = BuildOrientationFromYaw(tilt * (ring->phase - offsets.value[i % 3]) + effect->angle);
-                tilt *= lbl_806D5488 * (float)fn_8027E9E8(lbl_806D544C * orientation);
+                tilt *= lbl_806D5488 * (float)sin(lbl_806D544C * orientation);
                 break;
             case 1:
                 tilt = signs.value[i / 3];
                 orientation = BuildOrientationFromYaw((lbl_806D5464 * tilt + effect->angle) - lbl_806D5410 * offsets.value[i % 3]);
-                tilt *= lbl_806D5488 * (float)fn_8027E9E8(lbl_806D544C * orientation);
+                tilt *= lbl_806D5488 * (float)sin(lbl_806D544C * orientation);
                 break;
             }
             child = ring->child[i];

@@ -28,7 +28,7 @@ extern "C" unsigned int OSGetTick(void);
 extern "C" void DebugPrintf(const char *fmt, ...);
 extern "C" void *OSAllocFromHeap(void *heap, unsigned int size);
 extern "C" void OSFreeToHeap(void *heap, void *ptr);
-extern "C" void fn_80276D30(char *dst, int size, const char *fmt, ...);
+extern "C" void snprintf(char *dst, int size, const char *fmt, ...);
 
 extern "C" unsigned char lbl_806D0FA1;
 extern "C" void *lbl_806CF010;
@@ -71,7 +71,7 @@ extern "C" void *MemoryManager_AllocTagged(unsigned int size, char *tag)
     void *ptr;
 
     if (lbl_806D0FA1 == 0) {
-        fn_80276D30(buf, 0x200, lbl_802E9D90, tag);
+        snprintf(buf, 0x200, lbl_802E9D90, tag);
         DebugPrintf(buf);
         DebugPrintf(lbl_802E9DB0);
         for (;;) {}
@@ -98,7 +98,7 @@ extern "C" void MemoryManager_Free(void *ptr) throw()
     char buf[0x200];
 
     if (lbl_806D0FA1 == 0) {
-        fn_80276D30(buf, 0x200, lbl_802E9DD0);
+        snprintf(buf, 0x200, lbl_802E9DD0);
         DebugPrintf(buf);
         DebugPrintf(lbl_802E9DB0);
         for (;;) {}

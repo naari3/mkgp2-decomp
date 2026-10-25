@@ -1,6 +1,6 @@
 /* === extracted from auto_Vec3_ToYaw_text === */
 #pragma scheduling off
-extern void Atan2();
+extern void atan2();
 asm void Vec3_ToYaw(void);
 #pragma section R ".extab_user"
 __declspec(section ".extab_user") static const unsigned char extab_Vec3_ToYaw[8] = {
@@ -17,7 +17,7 @@ asm void Vec3_ToYaw(void) {
     lfs f1, 0x0(r3)
     stw r0, 0x14(r1)
     lfs f2, 0x8(r3)
-    bl Atan2
+    bl atan2
     lwz r0, 0x14(r1)
     frsp f1, f1
     mtlr r0
