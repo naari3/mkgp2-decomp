@@ -2400,5 +2400,9 @@
   },
   "src/game/PcbConn_Close.cpp": {
     "__dt__7PcbConnFv": "PcbConn_Close"
+  },
+  "src/game/VfxBannerSequence_Tick.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
   }
 }
