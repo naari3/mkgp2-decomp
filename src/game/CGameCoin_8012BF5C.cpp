@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D7174[7];
+extern unsigned char lbl_806D717C[5];
 /*
  * 0x8012BF5C..0x801313D0: coin game, boss Koopa, shells and coin particles.
  */
@@ -1129,17 +1133,17 @@ extern "C" asm void CGameCoin_Update(void) { /* 0x8012C538 size:0x2164 */
     cmplwi r27, 0x0
     beq CGameCoin_Update_L_8012C9C4
     bne CGameCoin_Update_L_8012C8F4
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x47c
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     CGameCoin_Update_L_8012C8F4:
     cmplwi r27, 0x0
     beq CGameCoin_Update_L_8012C93C
     bne CGameCoin_Update_L_8012C910
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x25d
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     CGameCoin_Update_L_8012C910:
     lwz r4, 0x14(r27)
@@ -1273,17 +1277,17 @@ extern "C" asm void CGameCoin_Update(void) { /* 0x8012C538 size:0x2164 */
     cmplwi r27, 0x0
     beq CGameCoin_Update_L_8012CBF8
     bne CGameCoin_Update_L_8012CB0C
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x47c
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     CGameCoin_Update_L_8012CB0C:
     cmplwi r27, 0x0
     beq CGameCoin_Update_L_8012CB54
     bne CGameCoin_Update_L_8012CB28
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x25d
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     CGameCoin_Update_L_8012CB28:
     lwz r4, 0x14(r27)
@@ -2307,16 +2311,16 @@ extern "C" asm void CGameCoin_Update(void) { /* 0x8012C538 size:0x2164 */
     lfs f29, 0xb8(r28)
     cmplwi r27, 0x0
     bne CGameCoin_Update_L_8012DA04
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x2b8
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     CGameCoin_Update_L_8012DA04:
     lwz r0, 0x14(r27)
     rlwinm. r0, r0, 0, 14, 14
     beq CGameCoin_Update_L_8012DA20
     addi r5, r31, 0x528
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x2b9
     bl __assert
     CGameCoin_Update_L_8012DA20:
@@ -2327,9 +2331,9 @@ extern "C" asm void CGameCoin_Update(void) { /* 0x8012C538 size:0x2164 */
     cmplwi r27, 0x0
     beq CGameCoin_Update_L_8012DA78
     bne CGameCoin_Update_L_8012DA4C
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x25d
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     CGameCoin_Update_L_8012DA4C:
     lwz r4, 0x14(r27)
@@ -2349,16 +2353,16 @@ extern "C" asm void CGameCoin_Update(void) { /* 0x8012C538 size:0x2164 */
     lfs f29, 0xbc(r28)
     cmplwi r27, 0x0
     bne CGameCoin_Update_L_8012DA98
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x2b8
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     CGameCoin_Update_L_8012DA98:
     lwz r0, 0x14(r27)
     rlwinm. r0, r0, 0, 14, 14
     beq CGameCoin_Update_L_8012DAB4
     addi r5, r31, 0x528
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x2b9
     bl __assert
     CGameCoin_Update_L_8012DAB4:
@@ -2369,9 +2373,9 @@ extern "C" asm void CGameCoin_Update(void) { /* 0x8012C538 size:0x2164 */
     cmplwi r27, 0x0
     beq CGameCoin_Update_L_8012DB0C
     bne CGameCoin_Update_L_8012DAE0
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x25d
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     CGameCoin_Update_L_8012DAE0:
     lwz r4, 0x14(r27)
@@ -3321,16 +3325,16 @@ extern "C" asm void DefeatDemo_Update(void) { /* 0x8012E69C size:0x5A8 */
     lfs f31, 0x2c(r31)
     cmplwi r30, 0x0
     bne DefeatDemo_Update_L_8012E880
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x2b8
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     DefeatDemo_Update_L_8012E880:
     lwz r0, 0x14(r30)
     rlwinm. r0, r0, 0, 14, 14
     beq DefeatDemo_Update_L_8012E8A0
     lis r4, lbl_80356C58@ha
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     addi r5, r4, lbl_80356C58@l
     li r4, 0x2b9
     bl __assert
@@ -3342,9 +3346,9 @@ extern "C" asm void DefeatDemo_Update(void) { /* 0x8012E69C size:0x5A8 */
     cmplwi r30, 0x0
     beq DefeatDemo_Update_L_8012E8F8
     bne DefeatDemo_Update_L_8012E8CC
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x25d
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     DefeatDemo_Update_L_8012E8CC:
     lwz r4, 0x14(r30)
@@ -3364,16 +3368,16 @@ extern "C" asm void DefeatDemo_Update(void) { /* 0x8012E69C size:0x5A8 */
     lfs f31, 0x30(r31)
     cmplwi r30, 0x0
     bne DefeatDemo_Update_L_8012E918
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x2b8
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     DefeatDemo_Update_L_8012E918:
     lwz r0, 0x14(r30)
     rlwinm. r0, r0, 0, 14, 14
     beq DefeatDemo_Update_L_8012E938
     lis r4, lbl_80356C58@ha
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     addi r5, r4, lbl_80356C58@l
     li r4, 0x2b9
     bl __assert
@@ -3385,9 +3389,9 @@ extern "C" asm void DefeatDemo_Update(void) { /* 0x8012E69C size:0x5A8 */
     cmplwi r30, 0x0
     beq DefeatDemo_Update_L_8012E990
     bne DefeatDemo_Update_L_8012E964
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x25d
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     DefeatDemo_Update_L_8012E964:
     lwz r4, 0x14(r30)
@@ -3431,9 +3435,9 @@ extern "C" asm void DefeatDemo_Update(void) { /* 0x8012E69C size:0x5A8 */
     fmr f31, f1
     cmplwi r30, 0x0
     bne DefeatDemo_Update_L_8012EA08
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x325
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     DefeatDemo_Update_L_8012EA08:
     lfs f0, lbl_806D71B4(r2)
@@ -3445,9 +3449,9 @@ extern "C" asm void DefeatDemo_Update(void) { /* 0x8012E69C size:0x5A8 */
     cmplwi r30, 0x0
     beq DefeatDemo_Update_L_8012EA68
     bne DefeatDemo_Update_L_8012EA3C
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x25d
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     DefeatDemo_Update_L_8012EA3C:
     lwz r4, 0x14(r30)
@@ -3466,9 +3470,9 @@ extern "C" asm void DefeatDemo_Update(void) { /* 0x8012E69C size:0x5A8 */
     lwz r30, 0x34(r31)
     cmplwi r30, 0x0
     bne DefeatDemo_Update_L_8012EA84
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x341
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     DefeatDemo_Update_L_8012EA84:
     stfs f31, 0x34(r30)
@@ -3478,9 +3482,9 @@ extern "C" asm void DefeatDemo_Update(void) { /* 0x8012E69C size:0x5A8 */
     cmplwi r30, 0x0
     beq DefeatDemo_Update_L_8012EADC
     bne DefeatDemo_Update_L_8012EAB0
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x25d
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     DefeatDemo_Update_L_8012EAB0:
     lwz r4, 0x14(r30)
@@ -3513,9 +3517,9 @@ extern "C" asm void DefeatDemo_Update(void) { /* 0x8012E69C size:0x5A8 */
     cmplwi r30, 0x0
     fmadds f31, f2, f1, f0
     bne DefeatDemo_Update_L_8012EB30
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x333
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     DefeatDemo_Update_L_8012EB30:
     stfs f31, 0x30(r30)
@@ -3525,9 +3529,9 @@ extern "C" asm void DefeatDemo_Update(void) { /* 0x8012E69C size:0x5A8 */
     cmplwi r30, 0x0
     beq DefeatDemo_Update_L_8012EC24
     bne DefeatDemo_Update_L_8012EB5C
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x25d
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     DefeatDemo_Update_L_8012EB5C:
     lwz r4, 0x14(r30)
@@ -3556,9 +3560,9 @@ extern "C" asm void DefeatDemo_Update(void) { /* 0x8012E69C size:0x5A8 */
     cmplwi r30, 0x0
     fnmsubs f31, f2, f1, f0
     bne DefeatDemo_Update_L_8012EBCC
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x333
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     DefeatDemo_Update_L_8012EBCC:
     stfs f31, 0x30(r30)
@@ -3568,9 +3572,9 @@ extern "C" asm void DefeatDemo_Update(void) { /* 0x8012E69C size:0x5A8 */
     cmplwi r30, 0x0
     beq DefeatDemo_Update_L_8012EC24
     bne DefeatDemo_Update_L_8012EBF8
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x25d
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     DefeatDemo_Update_L_8012EBF8:
     lwz r4, 0x14(r30)
@@ -3923,17 +3927,17 @@ extern "C" asm void KoopaFireball_Update(void) { /* 0x8012F07C size:0x3E0 */
     lwz r31, 0x4(r29)
     cmplwi r31, 0x0
     bne KoopaFireball_Update_L_8012F0E0
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x47c
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     KoopaFireball_Update_L_8012F0E0:
     cmplwi r31, 0x0
     beq KoopaFireball_Update_L_8012F128
     bne KoopaFireball_Update_L_8012F0FC
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x25d
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     KoopaFireball_Update_L_8012F0FC:
     lwz r4, 0x14(r31)
@@ -4201,17 +4205,17 @@ extern "C" asm void Shell_UpdateState(void) { /* 0x8012F45C size:0x458 */
     cmplwi r30, 0x0
     beq Shell_UpdateState_L_8012F5A4
     bne Shell_UpdateState_L_8012F4D4
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x47c
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     Shell_UpdateState_L_8012F4D4:
     cmplwi r30, 0x0
     beq Shell_UpdateState_L_8012F51C
     bne Shell_UpdateState_L_8012F4F0
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x25d
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     Shell_UpdateState_L_8012F4F0:
     lwz r4, 0x14(r30)
@@ -4388,17 +4392,17 @@ extern "C" asm void Shell_UpdateState(void) { /* 0x8012F45C size:0x458 */
     cmplwi r30, 0x0
     beq Shell_UpdateState_L_8012F860
     bne Shell_UpdateState_L_8012F790
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x47c
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     Shell_UpdateState_L_8012F790:
     cmplwi r30, 0x0
     beq Shell_UpdateState_L_8012F7D8
     bne Shell_UpdateState_L_8012F7AC
-    addi r3, r2, -0x30EC  /* lbl_806D7174 */
+    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
     li r4, 0x25d
-    addi r5, r2, -0x30E4  /* lbl_806D717C */
+    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
     bl __assert
     Shell_UpdateState_L_8012F7AC:
     lwz r4, 0x14(r30)

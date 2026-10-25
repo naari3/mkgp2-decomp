@@ -1,3 +1,6 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D7F50[8];
 /*
  * 0x8014D540..0x8014DD5C: scene factory and its object.
  */
@@ -391,7 +394,7 @@ extern "C" asm void fn_8014D88C(void *p) { /* 0x8014D88C size:0x4D0 */
     li r0, -0x1
     li r28, 0x0
     stw r0, g_kartStartSlot(r13)
-    addi r30, r2, -0x2310  /* lbl_806D7F50 */
+    la r30, lbl_806D7F50(r2)  /* lbl_806D7F50 */
     li r29, 0x0
     fn_8014D88C_L_8014D960:
     li r3, 0x50

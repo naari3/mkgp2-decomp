@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D9BCC[5];
+extern unsigned char lbl_806D9BC4[7];
 /* Bounded real-C++ lifetime reconstruction. Disabled while the original exact
  * fallback remains linked. Only instruction-observed fields are modeled.
  * Ghidra/runtime types were unavailable; ABIs were checked against full asm. */
@@ -1416,17 +1420,17 @@ asm void clFlowChara_Update(void) { /* 0x801C3D48 size:0xF5C */
     cmplwi r28, 0x0
     beq clFlowChara_Update_L_801C4BE8
     bne clFlowChara_Update_L_801C4B58
-    addi r3, r2, -0x69C  /* lbl_806D9BC4 */
+    la r3, lbl_806D9BC4(r2)  /* lbl_806D9BC4 */
     li r4, 0x47c
-    addi r5, r2, -0x694  /* lbl_806D9BCC */
+    la r5, lbl_806D9BCC(r2)  /* lbl_806D9BCC */
     bl __assert
     clFlowChara_Update_L_801C4B58:
     cmplwi r28, 0x0
     beq clFlowChara_Update_L_801C4BA0
     bne clFlowChara_Update_L_801C4B74
-    addi r3, r2, -0x69C  /* lbl_806D9BC4 */
+    la r3, lbl_806D9BC4(r2)  /* lbl_806D9BC4 */
     li r4, 0x25d
-    addi r5, r2, -0x694  /* lbl_806D9BCC */
+    la r5, lbl_806D9BCC(r2)  /* lbl_806D9BCC */
     bl __assert
     clFlowChara_Update_L_801C4B74:
     lwz r4, 0x14(r28)
@@ -1469,17 +1473,17 @@ asm void clFlowChara_Update(void) { /* 0x801C3D48 size:0xF5C */
     cmplwi r28, 0x0
     beq clFlowChara_Update_L_801C4C8C
     bne clFlowChara_Update_L_801C4C18
-    addi r3, r2, -0x69C  /* lbl_806D9BC4 */
+    la r3, lbl_806D9BC4(r2)  /* lbl_806D9BC4 */
     li r4, 0x47c
-    addi r5, r2, -0x694  /* lbl_806D9BCC */
+    la r5, lbl_806D9BCC(r2)  /* lbl_806D9BCC */
     bl __assert
     clFlowChara_Update_L_801C4C18:
     cmplwi r28, 0x0
     beq clFlowChara_Update_L_801C4C60
     bne clFlowChara_Update_L_801C4C34
-    addi r3, r2, -0x69C  /* lbl_806D9BC4 */
+    la r3, lbl_806D9BC4(r2)  /* lbl_806D9BC4 */
     li r4, 0x25d
-    addi r5, r2, -0x694  /* lbl_806D9BCC */
+    la r5, lbl_806D9BCC(r2)  /* lbl_806D9BCC */
     bl __assert
     clFlowChara_Update_L_801C4C34:
     lwz r4, 0x14(r28)

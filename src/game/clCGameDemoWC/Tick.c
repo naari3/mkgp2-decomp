@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D4FB0[7];
+extern unsigned char lbl_806D4FB8[5];
 /* === extracted from auto_clCGameDemoWC_Tick_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -148,17 +152,17 @@ asm void clCGameDemoWC_Tick(void) { /* 0x800AE108 size:0x330 */
     lwz r30, 0x50(r31)
     cmplwi r30, 0x0
     bne clCGameDemoWC_Tick_L_800AE250
-    addi r3, r2, -0x52B0  /* lbl_806D4FB0 */
+    la r3, lbl_806D4FB0(r2)  /* lbl_806D4FB0 */
     li r4, 0x47c
-    addi r5, r2, -0x52A8  /* lbl_806D4FB8 */
+    la r5, lbl_806D4FB8(r2)  /* lbl_806D4FB8 */
     bl __assert
     clCGameDemoWC_Tick_L_800AE250:
     cmplwi r30, 0x0
     beq clCGameDemoWC_Tick_L_800AE298
     bne clCGameDemoWC_Tick_L_800AE26C
-    addi r3, r2, -0x52B0  /* lbl_806D4FB0 */
+    la r3, lbl_806D4FB0(r2)  /* lbl_806D4FB0 */
     li r4, 0x25d
-    addi r5, r2, -0x52A8  /* lbl_806D4FB8 */
+    la r5, lbl_806D4FB8(r2)  /* lbl_806D4FB8 */
     bl __assert
     clCGameDemoWC_Tick_L_800AE26C:
     lwz r4, 0x14(r30)

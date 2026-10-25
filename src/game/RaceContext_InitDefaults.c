@@ -554,7 +554,7 @@ asm void RaceContext_InitDefaults(void) { /* 0x8009D6CC size:0x5B4 */
     li r11, 0x7
     li r9, 0x2d
     li r8, 0x32
-    addi r7, r13, -0x5ABC  /* lbl_806D1264 */
+    la r7, lbl_806D1264(r13)  /* lbl_806D1264 */
     stw r22, g_ccClass(r13)
     addi r3, r31, 0x5f80
     li r4, 0x0
@@ -629,7 +629,7 @@ asm void RaceContext_InitDefaults(void) { /* 0x8009D6CC size:0x5B4 */
     cntlzw r3, r3
     li r5, 0x1
     li r0, 0x0
-    addi r4, r13, -0x5A3C  /* lbl_806D12E4 */
+    la r4, lbl_806D12E4(r13)  /* lbl_806D12E4 */
     rlwnm r5, r5, r3, 31, 31
     stb r0, lbl_806D12E1(r13)
     mr r3, r29

@@ -1,3 +1,6 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D7B0C[1];
 /*
  * 0x80144430..0x80146160: time attack ranking panel and its entry vector.
  */
@@ -742,7 +745,7 @@ extern "C" asm void fn_80144C1C(void) { /* 0x80144C1C size:0xC88 */
     li r0, 0x1
     li r28, 0x0
     stb r0, 0x18(r31)
-    addi r30, r2, -0x2754  /* lbl_806D7B0C */
+    la r30, lbl_806D7B0C(r2)  /* lbl_806D7B0C */
     lwz r0, lbl_806D10A0(r13)
     stw r28, 0x24(r1)
     cmplwi r0, 0x0
@@ -978,7 +981,7 @@ extern "C" asm void fn_80144C1C(void) { /* 0x80144C1C size:0xC88 */
     bl IsCardValid
     clrlwi. r0, r3, 24
     bne fn_80144C1C_L_80144FFC
-    addi r30, r2, -0x2754  /* lbl_806D7B0C */
+    la r30, lbl_806D7B0C(r2)  /* lbl_806D7B0C */
     fn_80144C1C_L_80144FFC:
     mr r25, r31
     li r22, 0x0

@@ -58,8 +58,8 @@ typedef struct KartPreview {
 extern unsigned int lbl_806D1558;
 extern RenderTargetHolder *lbl_806D155C;
 extern char lbl_8048EA78[];
-extern char lbl_806D76D0[];
-extern char lbl_806D76D8[];
+extern char lbl_806D76D0[7];
+extern char lbl_806D76D8[5];
 extern float lbl_806D76E0;
 extern float lbl_806D76E4;
 extern char lbl_8048EAD8[];
@@ -479,17 +479,17 @@ asm void fn_8013C7BC(void) { /* 0x8013C7BC size:0x160 */
     cmplwi r31, 0x0
     beq fn_8013C7BC_L_8013C8F4
     bne fn_8013C7BC_L_8013C888
-    addi r3, r2, -0x2B90  /* lbl_806D76D0 */
+    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
     li r4, 0x47c
-    addi r5, r2, -0x2B88  /* lbl_806D76D8 */
+    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
     bl __assert
     fn_8013C7BC_L_8013C888:
     cmplwi r31, 0x0
     beq fn_8013C7BC_L_8013C8D0
     bne fn_8013C7BC_L_8013C8A4
-    addi r3, r2, -0x2B90  /* lbl_806D76D0 */
+    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
     li r4, 0x25d
-    addi r5, r2, -0x2B88  /* lbl_806D76D8 */
+    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
     bl __assert
     fn_8013C7BC_L_8013C8A4:
     lwz r4, 0x14(r31)
@@ -843,9 +843,9 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     bl ResolveJointByName
     mr. r27, r3
     bne fn_8013CC24_L_8013CF38
-    addi r3, r2, -0x2B90  /* lbl_806D76D0 */
+    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
     li r4, 0x3e4
-    addi r5, r2, -0x2B88  /* lbl_806D76D8 */
+    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
     bl __assert
     fn_8013CC24_L_8013CF38:
     lwz r26, 0x2c(r28)
@@ -854,9 +854,9 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     lfs f30, 0x3c(r27)
     lfs f29, 0x40(r27)
     bne fn_8013CC24_L_8013CF60
-    addi r3, r2, -0x2B90  /* lbl_806D76D0 */
+    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
     li r4, 0x3a9
-    addi r5, r2, -0x2B88  /* lbl_806D76D8 */
+    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
     bl __assert
     fn_8013CC24_L_8013CF60:
     stfs f31, 0x38(r26)
@@ -868,9 +868,9 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     cmplwi r26, 0x0
     beq fn_8013CC24_L_8013CFC0
     bne fn_8013CC24_L_8013CF94
-    addi r3, r2, -0x2B90  /* lbl_806D76D0 */
+    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
     li r4, 0x25d
-    addi r5, r2, -0x2B88  /* lbl_806D76D8 */
+    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
     bl __assert
     fn_8013CC24_L_8013CF94:
     lwz r4, 0x14(r26)
@@ -900,9 +900,9 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     bl ResolveJointByName
     mr. r27, r3
     bne fn_8013CC24_L_8013D008
-    addi r3, r2, -0x2B90  /* lbl_806D76D0 */
+    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
     li r4, 0x3e4
-    addi r5, r2, -0x2B88  /* lbl_806D76D8 */
+    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
     bl __assert
     fn_8013CC24_L_8013D008:
     lwz r26, 0x30(r28)
@@ -911,9 +911,9 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     lfs f30, 0x3c(r27)
     lfs f31, 0x40(r27)
     bne fn_8013CC24_L_8013D030
-    addi r3, r2, -0x2B90  /* lbl_806D76D0 */
+    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
     li r4, 0x3a9
-    addi r5, r2, -0x2B88  /* lbl_806D76D8 */
+    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
     bl __assert
     fn_8013CC24_L_8013D030:
     stfs f29, 0x38(r26)
@@ -925,9 +925,9 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     cmplwi r26, 0x0
     beq fn_8013CC24_L_8013D090
     bne fn_8013CC24_L_8013D064
-    addi r3, r2, -0x2B90  /* lbl_806D76D0 */
+    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
     li r4, 0x25d
-    addi r5, r2, -0x2B88  /* lbl_806D76D8 */
+    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
     bl __assert
     fn_8013CC24_L_8013D064:
     lwz r4, 0x14(r26)
@@ -957,9 +957,9 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     bl ResolveJointByName
     mr. r27, r3
     bne fn_8013CC24_L_8013D0D8
-    addi r3, r2, -0x2B90  /* lbl_806D76D0 */
+    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
     li r4, 0x3e4
-    addi r5, r2, -0x2B88  /* lbl_806D76D8 */
+    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
     bl __assert
     fn_8013CC24_L_8013D0D8:
     lwz r26, 0x34(r28)
@@ -968,9 +968,9 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     lfs f30, 0x3c(r27)
     lfs f31, 0x40(r27)
     bne fn_8013CC24_L_8013D100
-    addi r3, r2, -0x2B90  /* lbl_806D76D0 */
+    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
     li r4, 0x3a9
-    addi r5, r2, -0x2B88  /* lbl_806D76D8 */
+    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
     bl __assert
     fn_8013CC24_L_8013D100:
     stfs f29, 0x38(r26)
@@ -982,9 +982,9 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     cmplwi r26, 0x0
     beq fn_8013CC24_L_8013D160
     bne fn_8013CC24_L_8013D134
-    addi r3, r2, -0x2B90  /* lbl_806D76D0 */
+    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
     li r4, 0x25d
-    addi r5, r2, -0x2B88  /* lbl_806D76D8 */
+    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
     bl __assert
     fn_8013CC24_L_8013D134:
     lwz r4, 0x14(r26)
@@ -1014,9 +1014,9 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     bl ResolveJointByName
     mr. r27, r3
     bne fn_8013CC24_L_8013D1A8
-    addi r3, r2, -0x2B90  /* lbl_806D76D0 */
+    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
     li r4, 0x3e4
-    addi r5, r2, -0x2B88  /* lbl_806D76D8 */
+    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
     bl __assert
     fn_8013CC24_L_8013D1A8:
     lwz r26, 0x38(r28)
@@ -1025,9 +1025,9 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     lfs f30, 0x3c(r27)
     lfs f31, 0x40(r27)
     bne fn_8013CC24_L_8013D1D0
-    addi r3, r2, -0x2B90  /* lbl_806D76D0 */
+    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
     li r4, 0x3a9
-    addi r5, r2, -0x2B88  /* lbl_806D76D8 */
+    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
     bl __assert
     fn_8013CC24_L_8013D1D0:
     stfs f29, 0x38(r26)
@@ -1039,9 +1039,9 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     cmplwi r26, 0x0
     beq fn_8013CC24_L_8013D230
     bne fn_8013CC24_L_8013D204
-    addi r3, r2, -0x2B90  /* lbl_806D76D0 */
+    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
     li r4, 0x25d
-    addi r5, r2, -0x2B88  /* lbl_806D76D8 */
+    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
     bl __assert
     fn_8013CC24_L_8013D204:
     lwz r4, 0x14(r26)

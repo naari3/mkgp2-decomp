@@ -1,3 +1,6 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D26C0[8];
 /* === extracted from auto_NamCam_GetImageHandl_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -318,7 +321,7 @@ asm void NamCam_GetImageHandle(void) { /* 0x80048E0C size:0x81C */
     cmplw r3, r5
     beq NamCam_GetImageHandle_L_800491F4
     mr r5, r3
-    addi r3, r2, -0x7BA0  /* lbl_806D26C0@sda21 */
+    la r3, lbl_806D26C0(r2)  /* lbl_806D26C0@sda21 */
     crxor 6, 6, 6
     bl DebugPrintf
     NamCam_GetImageHandle_L_800491F0:

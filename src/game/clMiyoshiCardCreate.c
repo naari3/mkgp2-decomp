@@ -1,3 +1,11 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D2B64[2];
+extern unsigned char lbl_806D2B5C[5];
+extern unsigned char lbl_806CEED8[8];
+extern unsigned char lbl_806CEED0[8];
+extern unsigned char lbl_806CEEC8[8];
+extern unsigned char lbl_806CEEC0[8];
 /* Only observed lifetime/layout: 4B mode, 44B state, 216B display context. */
 #pragma cplusplus on
 void *operator new(unsigned long);
@@ -213,7 +221,7 @@ asm void clMiyoshiCardCreate_Draw(void) { /* 0x80061054 size:0x340 */
     creqv 6, 6, 6
     bl DrawText
     lbz r4, 0x1c(r29)
-    addi r6, r13, -0x7E60  /* lbl_806CEEC0 */
+    la r6, lbl_806CEEC0(r13)  /* lbl_806CEEC0 */
     lfs f1, lbl_806D2B58(r2)
     mr r3, r28
     neg r0, r4
@@ -227,7 +235,7 @@ asm void clMiyoshiCardCreate_Draw(void) { /* 0x80061054 size:0x340 */
     creqv 6, 6, 6
     bl DrawText
     lbz r4, 0x1d(r29)
-    addi r6, r13, -0x7E58  /* lbl_806CEEC8 */
+    la r6, lbl_806CEEC8(r13)  /* lbl_806CEEC8 */
     lfs f1, lbl_806D2B58(r2)
     mr r3, r28
     neg r0, r4
@@ -241,7 +249,7 @@ asm void clMiyoshiCardCreate_Draw(void) { /* 0x80061054 size:0x340 */
     creqv 6, 6, 6
     bl DrawText
     lbz r4, 0x1e(r29)
-    addi r6, r13, -0x7E50  /* lbl_806CEED0 */
+    la r6, lbl_806CEED0(r13)  /* lbl_806CEED0 */
     lfs f1, lbl_806D2B58(r2)
     mr r3, r28
     neg r0, r4
@@ -284,7 +292,7 @@ asm void clMiyoshiCardCreate_Draw(void) { /* 0x80061054 size:0x340 */
     creqv 6, 6, 6
     bl DrawText
     lbz r4, 0x28(r29)
-    addi r6, r13, -0x7E48  /* lbl_806CEED8 */
+    la r6, lbl_806CEED8(r13)  /* lbl_806CEED8 */
     lfs f1, lbl_806D2B58(r2)
     mr r3, r28
     neg r0, r4
@@ -302,7 +310,7 @@ asm void clMiyoshiCardCreate_Draw(void) { /* 0x80061054 size:0x340 */
     li r4, 0x1c
     li r5, 0x138
     li r6, 0x7
-    addi r7, r2, -0x7704  /* lbl_806D2B5C */
+    la r7, lbl_806D2B5C(r2)  /* lbl_806D2B5C */
     creqv 6, 6, 6
     bl DrawText
     lwz r3, 0x4(r29)
@@ -324,7 +332,7 @@ asm void clMiyoshiCardCreate_Draw(void) { /* 0x80061054 size:0x340 */
     mr r3, r28
     li r4, 0xe
     li r6, 0x7
-    addi r7, r2, -0x76FC  /* lbl_806D2B64 */
+    la r7, lbl_806D2B64(r2)  /* lbl_806D2B64 */
     creqv 6, 6, 6
     bl DrawText
     clMiyoshiCardCreate_Draw_L_80061348:

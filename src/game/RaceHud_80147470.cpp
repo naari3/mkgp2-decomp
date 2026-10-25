@@ -1,3 +1,9 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806CF810[8];
+extern unsigned char lbl_806CF818[8];
+extern unsigned char lbl_806D7CC0[4];
+extern unsigned char lbl_806D7E8C[7];
 /*
  * 0x80147470..0x8014CE74: race HUD controllers (lap/record panels,
  * countdowns and their text holders).
@@ -2448,11 +2454,11 @@ extern "C" asm void fn_80148A44(void) { /* 0x80148A44 size:0x738 */
     li r0, 0x0
     addi r3, r31, 0x608
     stb r0, 0xc(r31)
-    addi r4, r2, -0x25A0  /* lbl_806D7CC0 */
+    la r4, lbl_806D7CC0(r2)  /* lbl_806D7CC0 */
     crxor 6, 6, 6
     bl TexMgr_SetTexture
     addi r3, r31, 0x838
-    addi r4, r2, -0x25A0  /* lbl_806D7CC0 */
+    la r4, lbl_806D7CC0(r2)  /* lbl_806D7CC0 */
     crxor 6, 6, 6
     bl TexMgr_SetTexture
     li r0, 0x1ecd
@@ -5631,7 +5637,7 @@ extern "C" asm void fn_8014BBE4(void) { /* 0x8014BBE4 size:0x39C */
     addi r7, r3, lbl_8048F0FC@l
     addi r3, r1, 0x8
     lwz r5, 0x8(r7)
-    addi r4, r2, -0x23D4  /* lbl_806D7E8C */
+    la r4, lbl_806D7E8C(r2)  /* lbl_806D7E8C */
     lwz r7, 0xc(r7)
     crxor 6, 6, 6
     bl TexMgr_SetTexture
@@ -5642,7 +5648,7 @@ extern "C" asm void fn_8014BBE4(void) { /* 0x8014BBE4 size:0x39C */
     addi r7, r3, lbl_8048F0FC@l
     addi r3, r1, 0x8
     lwz r5, 0x0(r7)
-    addi r4, r2, -0x23D4  /* lbl_806D7E8C */
+    la r4, lbl_806D7E8C(r2)  /* lbl_806D7E8C */
     lwz r7, 0x4(r7)
     crxor 6, 6, 6
     bl TexMgr_SetTexture
@@ -6206,8 +6212,8 @@ extern "C" asm void fn_8014C53C(void) { /* 0x8014C53C size:0x938 */
     stw r3, 0x50(r31)
     bl fn_80160238
     li r4, 0x0
-    addi r5, r13, -0x7508  /* lbl_806CF818 */
-    addi r6, r13, -0x7510  /* lbl_806CF810 */
+    la r5, lbl_806CF818(r13)  /* lbl_806CF818 */
+    la r6, lbl_806CF810(r13)  /* lbl_806CF810 */
     li r7, 0x0
     bl fn_80271340
     stw r3, 0x54(r31)

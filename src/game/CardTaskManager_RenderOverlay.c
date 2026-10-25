@@ -1,3 +1,9 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D32CC[5];
+extern unsigned char lbl_806D32DC[3];
+extern unsigned char lbl_806D32E0[6];
+extern unsigned char lbl_806D32EC[3];
 /* === extracted from auto_CardTaskManager_Rend_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -63,13 +69,13 @@ asm void CardTaskManager_RenderOverlay(void) { /* 0x80089C58 size:0x214 */
     cmplwi r23, 0x0
     beq CardTaskManager_RenderOverlay_L_80089D20
     lwz r0, 0xc(r25)
-    addi r5, r2, -0x6F94  /* lbl_806D32CC */
+    la r5, lbl_806D32CC(r2)  /* lbl_806D32CC */
     lfs f1, lbl_806D32D4(r2)
     li r3, 0x1
     srawi r0, r0, 4
     lfs f2, lbl_806D32D8(r2)
     clrlwi r0, r0, 30
-    addi r4, r2, -0x6F84  /* lbl_806D32DC */
+    la r4, lbl_806D32DC(r2)  /* lbl_806D32DC */
     lbzx r5, r5, r0
     extsb r5, r5
     creqv 6, 6, 6
@@ -119,14 +125,14 @@ asm void CardTaskManager_RenderOverlay(void) { /* 0x80089C58 size:0x214 */
     lwz r5, 0x4(r3)
     lwzx r22, r23, r0
     ble CardTaskManager_RenderOverlay_L_80089D7C
-    addi r22, r2, -0x6F80  /* lbl_806D32E0 */
+    la r22, lbl_806D32E0(r2)  /* lbl_806D32E0 */
     CardTaskManager_RenderOverlay_L_80089D7C:
     xoris r0, r28, 0x8000
     stw r24, 0x8(r1)
     lfs f1, lbl_806D32E8(r2)
     li r3, 0x1
     stw r0, 0xc(r1)
-    addi r4, r2, -0x6F74  /* lbl_806D32EC */
+    la r4, lbl_806D32EC(r2)  /* lbl_806D32EC */
     lfd f0, 0x8(r1)
     fsubs f2, f0, f31
     creqv 6, 6, 6
@@ -137,7 +143,7 @@ asm void CardTaskManager_RenderOverlay(void) { /* 0x80089C58 size:0x214 */
     mr r5, r22
     stw r0, 0x14(r1)
     li r3, 0x1
-    addi r4, r2, -0x6F74  /* lbl_806D32EC */
+    la r4, lbl_806D32EC(r2)  /* lbl_806D32EC */
     lfd f0, 0x10(r1)
     fsubs f2, f0, f31
     creqv 6, 6, 6

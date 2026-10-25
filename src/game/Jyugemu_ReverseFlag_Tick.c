@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D308C[7];
+extern unsigned char lbl_806D3094[5];
 /* === extracted from auto_Jyugemu_ReverseFlag_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -124,9 +128,9 @@ asm void Jyugemu_ReverseFlag_Tick(void) { /* 0x80080C10 size:0x39C */
     bl Archive_GetRootJObj
     mr. r29, r3
     bne Jyugemu_ReverseFlag_Tick_L_80080D1C
-    addi r3, r2, -0x71D4  /* lbl_806D308C */
+    la r3, lbl_806D308C(r2)  /* lbl_806D308C */
     li r4, 0x3b8
-    addi r5, r2, -0x71CC  /* lbl_806D3094 */
+    la r5, lbl_806D3094(r2)  /* lbl_806D3094 */
     bl __assert
     Jyugemu_ReverseFlag_Tick_L_80080D1C:
     stfs f31, 0x38(r29)
@@ -136,9 +140,9 @@ asm void Jyugemu_ReverseFlag_Tick(void) { /* 0x80080C10 size:0x39C */
     cmplwi r29, 0x0
     beq Jyugemu_ReverseFlag_Tick_L_80080D74
     bne Jyugemu_ReverseFlag_Tick_L_80080D48
-    addi r3, r2, -0x71D4  /* lbl_806D308C */
+    la r3, lbl_806D308C(r2)  /* lbl_806D308C */
     li r4, 0x25d
-    addi r5, r2, -0x71CC  /* lbl_806D3094 */
+    la r5, lbl_806D3094(r2)  /* lbl_806D3094 */
     bl __assert
     Jyugemu_ReverseFlag_Tick_L_80080D48:
     lwz r4, 0x14(r29)
@@ -162,9 +166,9 @@ asm void Jyugemu_ReverseFlag_Tick(void) { /* 0x80080C10 size:0x39C */
     bl Archive_GetRootJObj
     mr. r29, r3
     bne Jyugemu_ReverseFlag_Tick_L_80080DA4
-    addi r3, r2, -0x71D4  /* lbl_806D308C */
+    la r3, lbl_806D308C(r2)  /* lbl_806D308C */
     li r4, 0x3c6
-    addi r5, r2, -0x71CC  /* lbl_806D3094 */
+    la r5, lbl_806D3094(r2)  /* lbl_806D3094 */
     bl __assert
     Jyugemu_ReverseFlag_Tick_L_80080DA4:
     stfs f31, 0x3c(r29)
@@ -174,9 +178,9 @@ asm void Jyugemu_ReverseFlag_Tick(void) { /* 0x80080C10 size:0x39C */
     cmplwi r29, 0x0
     beq Jyugemu_ReverseFlag_Tick_L_80080DFC
     bne Jyugemu_ReverseFlag_Tick_L_80080DD0
-    addi r3, r2, -0x71D4  /* lbl_806D308C */
+    la r3, lbl_806D308C(r2)  /* lbl_806D308C */
     li r4, 0x25d
-    addi r5, r2, -0x71CC  /* lbl_806D3094 */
+    la r5, lbl_806D3094(r2)  /* lbl_806D3094 */
     bl __assert
     Jyugemu_ReverseFlag_Tick_L_80080DD0:
     lwz r4, 0x14(r29)
@@ -197,9 +201,9 @@ asm void Jyugemu_ReverseFlag_Tick(void) { /* 0x80080C10 size:0x39C */
     bl Archive_GetRootJObj
     mr. r29, r3
     bne Jyugemu_ReverseFlag_Tick_L_80080E20
-    addi r3, r2, -0x71D4  /* lbl_806D308C */
+    la r3, lbl_806D308C(r2)  /* lbl_806D308C */
     li r4, 0x3d4
-    addi r5, r2, -0x71CC  /* lbl_806D3094 */
+    la r5, lbl_806D3094(r2)  /* lbl_806D3094 */
     bl __assert
     Jyugemu_ReverseFlag_Tick_L_80080E20:
     stfs f31, 0x40(r29)
@@ -209,9 +213,9 @@ asm void Jyugemu_ReverseFlag_Tick(void) { /* 0x80080C10 size:0x39C */
     cmplwi r29, 0x0
     beq Jyugemu_ReverseFlag_Tick_L_80080E78
     bne Jyugemu_ReverseFlag_Tick_L_80080E4C
-    addi r3, r2, -0x71D4  /* lbl_806D308C */
+    la r3, lbl_806D308C(r2)  /* lbl_806D308C */
     li r4, 0x25d
-    addi r5, r2, -0x71CC  /* lbl_806D3094 */
+    la r5, lbl_806D3094(r2)  /* lbl_806D3094 */
     bl __assert
     Jyugemu_ReverseFlag_Tick_L_80080E4C:
     lwz r4, 0x14(r29)
@@ -254,16 +258,16 @@ asm void Jyugemu_ReverseFlag_Tick(void) { /* 0x80080C10 size:0x39C */
     bl Archive_GetRootJObj
     mr. r29, r3
     bne Jyugemu_ReverseFlag_Tick_L_80080EF4
-    addi r3, r2, -0x71D4  /* lbl_806D308C */
+    la r3, lbl_806D308C(r2)  /* lbl_806D308C */
     li r4, 0x2b8
-    addi r5, r2, -0x71CC  /* lbl_806D3094 */
+    la r5, lbl_806D3094(r2)  /* lbl_806D3094 */
     bl __assert
     Jyugemu_ReverseFlag_Tick_L_80080EF4:
     lwz r0, 0x14(r29)
     rlwinm. r0, r0, 0, 14, 14
     beq Jyugemu_ReverseFlag_Tick_L_80080F14
     lis r4, lbl_80311DFC@ha
-    addi r3, r2, -0x71D4  /* lbl_806D308C */
+    la r3, lbl_806D308C(r2)  /* lbl_806D308C */
     addi r5, r4, lbl_80311DFC@l
     li r4, 0x2b9
     bl __assert
@@ -275,9 +279,9 @@ asm void Jyugemu_ReverseFlag_Tick(void) { /* 0x80080C10 size:0x39C */
     cmplwi r29, 0x0
     beq Jyugemu_ReverseFlag_Tick_L_80080F6C
     bne Jyugemu_ReverseFlag_Tick_L_80080F40
-    addi r3, r2, -0x71D4  /* lbl_806D308C */
+    la r3, lbl_806D308C(r2)  /* lbl_806D308C */
     li r4, 0x25d
-    addi r5, r2, -0x71CC  /* lbl_806D3094 */
+    la r5, lbl_806D3094(r2)  /* lbl_806D3094 */
     bl __assert
     Jyugemu_ReverseFlag_Tick_L_80080F40:
     lwz r4, 0x14(r29)

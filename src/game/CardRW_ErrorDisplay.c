@@ -1,3 +1,10 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D2D48[4];
+extern unsigned char lbl_806D2D4C[4];
+extern unsigned char lbl_806D2D50[4];
+extern unsigned char lbl_806D2D54[4];
+extern unsigned char lbl_806D2D58[4];
 /* === extracted from auto_CardRW_ErrorDisplay_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -65,7 +72,7 @@ asm void CardRW_ErrorDisplay(void) { /* 0x80066350 size:0x5AC */
     li r4, 0x54
     li r5, 0xc0
     li r6, 0x7
-    addi r7, r2, -0x7518  /* lbl_806D2D48 */
+    la r7, lbl_806D2D48(r2)  /* lbl_806D2D48 */
     creqv 6, 6, 6
     bl DrawText
     lwz r3, 0x270(r30)
@@ -99,7 +106,7 @@ asm void CardRW_ErrorDisplay(void) { /* 0x80066350 size:0x5AC */
     li r4, 0x54
     li r5, 0xc0
     li r6, 0x7
-    addi r7, r2, -0x7514  /* lbl_806D2D4C */
+    la r7, lbl_806D2D4C(r2)  /* lbl_806D2D4C */
     creqv 6, 6, 6
     bl DrawText
     lwz r3, 0x270(r30)
@@ -136,7 +143,7 @@ asm void CardRW_ErrorDisplay(void) { /* 0x80066350 size:0x5AC */
     li r4, 0x54
     li r5, 0xc0
     li r6, 0x7
-    addi r7, r2, -0x7510  /* lbl_806D2D50 */
+    la r7, lbl_806D2D50(r2)  /* lbl_806D2D50 */
     creqv 6, 6, 6
     bl DrawText
     lwz r3, 0x270(r30)
@@ -170,7 +177,7 @@ asm void CardRW_ErrorDisplay(void) { /* 0x80066350 size:0x5AC */
     li r4, 0x54
     li r5, 0xc0
     li r6, 0x7
-    addi r7, r2, -0x750C  /* lbl_806D2D54 */
+    la r7, lbl_806D2D54(r2)  /* lbl_806D2D54 */
     creqv 6, 6, 6
     bl DrawText
     lwz r3, 0x270(r30)
@@ -204,7 +211,7 @@ asm void CardRW_ErrorDisplay(void) { /* 0x80066350 size:0x5AC */
     li r4, 0x54
     li r5, 0xc0
     li r6, 0x7
-    addi r7, r2, -0x7508  /* lbl_806D2D58 */
+    la r7, lbl_806D2D58(r2)  /* lbl_806D2D58 */
     creqv 6, 6, 6
     bl DrawText
     lwz r3, 0x270(r30)

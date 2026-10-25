@@ -1,3 +1,19 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D83D8[4];
+extern unsigned char lbl_806D83E4[5];
+extern unsigned char lbl_806D83F0[8];
+extern unsigned char lbl_806D8438[3];
+extern unsigned char lbl_806D8440[5];
+extern unsigned char lbl_806D8450[4];
+extern unsigned char lbl_806D8468[5];
+extern unsigned char lbl_806D8474[5];
+extern unsigned char lbl_806D847C[4];
+extern unsigned char lbl_806D8480[4];
+extern unsigned char lbl_806D8498[8];
+extern unsigned char lbl_806D84A4[8];
+extern unsigned char lbl_806D84AC[4];
+extern unsigned char lbl_806D84D8[4];
 /*
  * 0x80157940..0x8015A6E4: list helpers and the scene updates that use them.
  */
@@ -1174,7 +1190,7 @@ extern "C" asm void fn_80158CE4(void) { /* 0x80158CE4 size:0x478 */
     fmr f3, f24
     mr r3, r31
     fadds f1, f0, f23
-    addi r4, r2, -0x1E88  /* lbl_806D83D8 */
+    la r4, lbl_806D83D8(r2)  /* lbl_806D83D8 */
     creqv 6, 6, 6
     bl fn_80168798
     lfs f1, lbl_806D83DC(r2)
@@ -1182,7 +1198,7 @@ extern "C" asm void fn_80158CE4(void) { /* 0x80158CE4 size:0x478 */
     lfs f0, lbl_806D83E0(r2)
     mr r3, r31
     fadds f1, f1, f23
-    addi r4, r2, -0x1E7C  /* lbl_806D83E4 */
+    la r4, lbl_806D83E4(r2)  /* lbl_806D83E4 */
     fadds f2, f0, f22
     creqv 6, 6, 6
     bl fn_80168D84
@@ -1204,7 +1220,7 @@ extern "C" asm void fn_80158CE4(void) { /* 0x80158CE4 size:0x478 */
     fmr f3, f24
     mr r3, r31
     fadds f1, f0, f23
-    addi r4, r2, -0x1E88  /* lbl_806D83D8 */
+    la r4, lbl_806D83D8(r2)  /* lbl_806D83D8 */
     creqv 6, 6, 6
     bl fn_80168798
     lfs f1, lbl_806D83DC(r2)
@@ -1212,7 +1228,7 @@ extern "C" asm void fn_80158CE4(void) { /* 0x80158CE4 size:0x478 */
     lfs f0, lbl_806D83E0(r2)
     mr r3, r31
     fadds f1, f1, f23
-    addi r4, r2, -0x1E70  /* lbl_806D83F0 */
+    la r4, lbl_806D83F0(r2)  /* lbl_806D83F0 */
     fadds f2, f0, f22
     creqv 6, 6, 6
     bl fn_80168D84
@@ -1374,7 +1390,7 @@ extern "C" asm void fn_80158CE4(void) { /* 0x80158CE4 size:0x478 */
     lfs f0, lbl_806D8434(r2)
     mr r3, r31
     fsubs f1, f25, f1
-    addi r4, r2, -0x1E28  /* lbl_806D8438 */
+    la r4, lbl_806D8438(r2)  /* lbl_806D8438 */
     fsubs f2, f26, f0
     creqv 6, 6, 6
     bl fn_80168D84
@@ -1383,7 +1399,7 @@ extern "C" asm void fn_80158CE4(void) { /* 0x80158CE4 size:0x478 */
     lfs f0, lbl_806D8428(r2)
     mr r3, r31
     fsubs f1, f25, f1
-    addi r4, r2, -0x1E20  /* lbl_806D8440 */
+    la r4, lbl_806D8440(r2)  /* lbl_806D8440 */
     fadds f2, f0, f26
     creqv 6, 6, 6
     bl fn_80168D84
@@ -1468,7 +1484,7 @@ extern "C" asm void fn_8015915C(void) { /* 0x8015915C size:0x578 */
     fmr f3, f31
     mr r3, r27
     fadds f1, f0, f29
-    addi r4, r2, -0x1E10  /* lbl_806D8450 */
+    la r4, lbl_806D8450(r2)  /* lbl_806D8450 */
     creqv 6, 6, 6
     bl fn_80168798
     lfs f1, lbl_806D83DC(r2)
@@ -1476,7 +1492,7 @@ extern "C" asm void fn_8015915C(void) { /* 0x8015915C size:0x578 */
     lfs f0, lbl_806D83E0(r2)
     mr r3, r27
     fadds f1, f1, f29
-    addi r4, r2, -0x1E7C  /* lbl_806D83E4 */
+    la r4, lbl_806D83E4(r2)  /* lbl_806D83E4 */
     fadds f2, f0, f30
     creqv 6, 6, 6
     bl fn_80168D84
@@ -1497,7 +1513,7 @@ extern "C" asm void fn_8015915C(void) { /* 0x8015915C size:0x578 */
     fmr f3, f31
     mr r3, r27
     fadds f1, f0, f29
-    addi r4, r2, -0x1E10  /* lbl_806D8450 */
+    la r4, lbl_806D8450(r2)  /* lbl_806D8450 */
     creqv 6, 6, 6
     bl fn_80168798
     lfs f1, lbl_806D83DC(r2)
@@ -1505,7 +1521,7 @@ extern "C" asm void fn_8015915C(void) { /* 0x8015915C size:0x578 */
     lfs f0, lbl_806D83E0(r2)
     mr r3, r27
     fadds f1, f1, f29
-    addi r4, r2, -0x1E70  /* lbl_806D83F0 */
+    la r4, lbl_806D83F0(r2)  /* lbl_806D83F0 */
     fadds f2, f0, f30
     creqv 6, 6, 6
     bl fn_80168D84
@@ -1570,7 +1586,7 @@ extern "C" asm void fn_8015915C(void) { /* 0x8015915C size:0x578 */
     lfs f1, lbl_806D8460(r2)
     mr r3, r27
     fadds f24, f0, f30
-    addi r4, r2, -0x1DF8  /* lbl_806D8468 */
+    la r4, lbl_806D8468(r2)  /* lbl_806D8468 */
     fadds f1, f1, f29
     fmr f2, f24
     creqv 6, 6, 6
@@ -1580,7 +1596,7 @@ extern "C" asm void fn_8015915C(void) { /* 0x8015915C size:0x578 */
     fmr f3, f31
     mr r3, r27
     fadds f1, f0, f29
-    addi r4, r2, -0x1DEC  /* lbl_806D8474 */
+    la r4, lbl_806D8474(r2)  /* lbl_806D8474 */
     creqv 6, 6, 6
     bl fn_80168798
     b fn_8015915C_L_80159418
@@ -1590,7 +1606,7 @@ extern "C" asm void fn_8015915C(void) { /* 0x8015915C size:0x578 */
     lfs f1, lbl_806D8460(r2)
     mr r3, r27
     fadds f24, f0, f30
-    addi r4, r2, -0x1DE4  /* lbl_806D847C */
+    la r4, lbl_806D847C(r2)  /* lbl_806D847C */
     fadds f1, f1, f29
     fmr f2, f24
     creqv 6, 6, 6
@@ -1600,7 +1616,7 @@ extern "C" asm void fn_8015915C(void) { /* 0x8015915C size:0x578 */
     fmr f3, f31
     mr r3, r27
     fadds f1, f0, f29
-    addi r4, r2, -0x1DE0  /* lbl_806D8480 */
+    la r4, lbl_806D8480(r2)  /* lbl_806D8480 */
     creqv 6, 6, 6
     bl fn_80168798
     fn_8015915C_L_80159418:
@@ -1745,7 +1761,7 @@ extern "C" asm void fn_8015915C(void) { /* 0x8015915C size:0x578 */
     fadds f1, f0, f29
     mr r3, r27
     add r5, r4, r0
-    addi r4, r2, -0x1DC8  /* lbl_806D8498 */
+    la r4, lbl_806D8498(r2)  /* lbl_806D8498 */
     creqv 6, 6, 6
     bl fn_80168798
     lfs f0, lbl_806D8490(r2)
@@ -1762,7 +1778,7 @@ extern "C" asm void fn_8015915C(void) { /* 0x8015915C size:0x578 */
     lhz r5, 0x78(r26)
     fadds f1, f0, f29
     mr r3, r27
-    addi r4, r2, -0x1DBC  /* lbl_806D84A4 */
+    la r4, lbl_806D84A4(r2)  /* lbl_806D84A4 */
     creqv 6, 6, 6
     bl fn_80168798
     fn_8015915C_L_80159680:
@@ -1840,7 +1856,7 @@ extern "C" asm void fn_801596D4(void) { /* 0x801596D4 size:0x4FC */
     fmr f3, f26
     mr r3, r21
     fadds f1, f0, f23
-    addi r4, r2, -0x1DB4  /* lbl_806D84AC */
+    la r4, lbl_806D84AC(r2)  /* lbl_806D84AC */
     creqv 6, 6, 6
     bl fn_80168798
     lfs f1, lbl_806D83DC(r2)
@@ -1848,7 +1864,7 @@ extern "C" asm void fn_801596D4(void) { /* 0x801596D4 size:0x4FC */
     lfs f0, lbl_806D83E0(r2)
     mr r3, r21
     fadds f1, f1, f23
-    addi r4, r2, -0x1E7C  /* lbl_806D83E4 */
+    la r4, lbl_806D83E4(r2)  /* lbl_806D83E4 */
     fadds f2, f0, f22
     creqv 6, 6, 6
     bl fn_80168D84
@@ -1869,7 +1885,7 @@ extern "C" asm void fn_801596D4(void) { /* 0x801596D4 size:0x4FC */
     fmr f3, f26
     mr r3, r21
     fadds f1, f0, f23
-    addi r4, r2, -0x1DB4  /* lbl_806D84AC */
+    la r4, lbl_806D84AC(r2)  /* lbl_806D84AC */
     creqv 6, 6, 6
     bl fn_80168798
     lfs f1, lbl_806D83DC(r2)
@@ -1877,7 +1893,7 @@ extern "C" asm void fn_801596D4(void) { /* 0x801596D4 size:0x4FC */
     lfs f0, lbl_806D83E0(r2)
     mr r3, r21
     fadds f1, f1, f23
-    addi r4, r2, -0x1E70  /* lbl_806D83F0 */
+    la r4, lbl_806D83F0(r2)  /* lbl_806D83F0 */
     fadds f2, f0, f22
     creqv 6, 6, 6
     bl fn_80168D84
@@ -2184,7 +2200,7 @@ extern "C" asm void fn_80159BD0(void) { /* 0x80159BD0 size:0xB14 */
     fmr f3, f26
     mr r3, r31
     fadds f1, f0, f24
-    addi r4, r2, -0x1D88  /* lbl_806D84D8 */
+    la r4, lbl_806D84D8(r2)  /* lbl_806D84D8 */
     creqv 6, 6, 6
     bl fn_80168798
     lfs f1, lbl_806D83DC(r2)
@@ -2192,7 +2208,7 @@ extern "C" asm void fn_80159BD0(void) { /* 0x80159BD0 size:0xB14 */
     lfs f0, lbl_806D83E0(r2)
     mr r3, r31
     fadds f1, f1, f24
-    addi r4, r2, -0x1E7C  /* lbl_806D83E4 */
+    la r4, lbl_806D83E4(r2)  /* lbl_806D83E4 */
     fadds f2, f0, f25
     creqv 6, 6, 6
     bl fn_80168D84
@@ -2227,7 +2243,7 @@ extern "C" asm void fn_80159BD0(void) { /* 0x80159BD0 size:0xB14 */
     fmr f3, f26
     mr r3, r31
     fadds f1, f0, f24
-    addi r4, r2, -0x1D88  /* lbl_806D84D8 */
+    la r4, lbl_806D84D8(r2)  /* lbl_806D84D8 */
     creqv 6, 6, 6
     bl fn_80168798
     lfs f0, lbl_806D83DC(r2)
@@ -2235,7 +2251,7 @@ extern "C" asm void fn_80159BD0(void) { /* 0x80159BD0 size:0xB14 */
     fmr f3, f26
     mr r3, r31
     fadds f1, f0, f24
-    addi r4, r2, -0x1E70  /* lbl_806D83F0 */
+    la r4, lbl_806D83F0(r2)  /* lbl_806D83F0 */
     creqv 6, 6, 6
     bl fn_80168D84
     fn_80159BD0_L_80159D78:

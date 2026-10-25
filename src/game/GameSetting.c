@@ -1,3 +1,16 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D2D94[4];
+extern unsigned char lbl_806D2DA4[6];
+extern unsigned char lbl_806D2DAC[3];
+extern unsigned char lbl_806D2DCC[3];
+extern unsigned char lbl_806D2E50[4];
+extern unsigned char lbl_806D2E70[6];
+extern unsigned char lbl_806D2E78[5];
+extern unsigned char lbl_806D2E80[4];
+extern unsigned char lbl_806D2E84[5];
+extern unsigned char lbl_806D2E8C[8];
+extern unsigned char lbl_806D2E94[7];
 /* === extracted from auto_GameSetting_Page_Var_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -269,7 +282,7 @@ asm void GameSetting_Page_VariantA(void) { /* 0x80072074 size:0x698 */
     li r4, 0x16c
     li r5, 0x30
     li r6, 0x2
-    addi r7, r2, -0x74BC  /* lbl_806D2DA4 */
+    la r7, lbl_806D2DA4(r2)  /* lbl_806D2DA4 */
     creqv 6, 6, 6
     bl DrawText
     cmpwi r26, 0x1
@@ -279,7 +292,7 @@ asm void GameSetting_Page_VariantA(void) { /* 0x80072074 size:0x698 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x60
     li r6, 0x7
-    addi r7, r2, -0x74CC  /* lbl_806D2D94 */
+    la r7, lbl_806D2D94(r2)  /* lbl_806D2D94 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantA_L_800723FC
@@ -290,7 +303,7 @@ asm void GameSetting_Page_VariantA(void) { /* 0x80072074 size:0x698 */
     li r4, 0x150
     li r5, 0x60
     li r6, 0x7
-    addi r7, r2, -0x73F0  /* lbl_806D2E70 */
+    la r7, lbl_806D2E70(r2)  /* lbl_806D2E70 */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_VariantA_L_800723FC:
@@ -304,7 +317,7 @@ asm void GameSetting_Page_VariantA(void) { /* 0x80072074 size:0x698 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x90
     li r6, 0x2
-    addi r7, r2, -0x7494  /* lbl_806D2DCC */
+    la r7, lbl_806D2DCC(r2)  /* lbl_806D2DCC */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantA_L_80072454
@@ -314,7 +327,7 @@ asm void GameSetting_Page_VariantA(void) { /* 0x80072074 size:0x698 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x90
     li r6, 0x4
-    addi r7, r2, -0x7494  /* lbl_806D2DCC */
+    la r7, lbl_806D2DCC(r2)  /* lbl_806D2DCC */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_VariantA_L_80072454:
@@ -327,7 +340,7 @@ asm void GameSetting_Page_VariantA(void) { /* 0x80072074 size:0x698 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0xc0
     li r6, 0x4
-    addi r7, r2, -0x74CC  /* lbl_806D2D94 */
+    la r7, lbl_806D2D94(r2)  /* lbl_806D2D94 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantA_L_800724D8
@@ -363,7 +376,7 @@ asm void GameSetting_Page_VariantA(void) { /* 0x80072074 size:0x698 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0xd8
     li r6, 0x2
-    addi r7, r2, -0x74B4  /* lbl_806D2DAC */
+    la r7, lbl_806D2DAC(r2)  /* lbl_806D2DAC */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantA_L_8007252C
@@ -373,7 +386,7 @@ asm void GameSetting_Page_VariantA(void) { /* 0x80072074 size:0x698 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0xd8
     li r6, 0x4
-    addi r7, r2, -0x74CC  /* lbl_806D2D94 */
+    la r7, lbl_806D2D94(r2)  /* lbl_806D2D94 */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_VariantA_L_8007252C:
@@ -386,7 +399,7 @@ asm void GameSetting_Page_VariantA(void) { /* 0x80072074 size:0x698 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0xf0
     li r6, 0x4
-    addi r7, r2, -0x73E8  /* lbl_806D2E78 */
+    la r7, lbl_806D2E78(r2)  /* lbl_806D2E78 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantA_L_80072580
@@ -396,7 +409,7 @@ asm void GameSetting_Page_VariantA(void) { /* 0x80072074 size:0x698 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0xf0
     li r6, 0x2
-    addi r7, r2, -0x73E0  /* lbl_806D2E80 */
+    la r7, lbl_806D2E80(r2)  /* lbl_806D2E80 */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_VariantA_L_80072580:
@@ -429,7 +442,7 @@ asm void GameSetting_Page_VariantA(void) { /* 0x80072074 size:0x698 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x108
     li r6, 0x4
-    addi r7, r2, -0x74B4  /* lbl_806D2DAC */
+    la r7, lbl_806D2DAC(r2)  /* lbl_806D2DAC */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantA_L_80072670
@@ -439,7 +452,7 @@ asm void GameSetting_Page_VariantA(void) { /* 0x80072074 size:0x698 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x108
     li r6, 0x2
-    addi r7, r2, -0x74CC  /* lbl_806D2D94 */
+    la r7, lbl_806D2D94(r2)  /* lbl_806D2D94 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantA_L_80072670
@@ -488,7 +501,7 @@ asm void GameSetting_Page_VariantA(void) { /* 0x80072074 size:0x698 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x120
     li r6, 0x4
-    addi r7, r2, -0x73DC  /* lbl_806D2E84 */
+    la r7, lbl_806D2E84(r2)  /* lbl_806D2E84 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantA_L_800726F4
@@ -498,7 +511,7 @@ asm void GameSetting_Page_VariantA(void) { /* 0x80072074 size:0x698 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x120
     li r6, 0x4
-    addi r7, r2, -0x7410  /* lbl_806D2E50 */
+    la r7, lbl_806D2E50(r2)  /* lbl_806D2E50 */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_VariantA_L_800726F4:
@@ -851,7 +864,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     li r4, 0x16c
     li r5, 0x30
     li r6, 0x2
-    addi r7, r2, -0x74BC  /* lbl_806D2DA4 */
+    la r7, lbl_806D2DA4(r2)  /* lbl_806D2DA4 */
     creqv 6, 6, 6
     bl DrawText
     cmpwi r26, 0x1
@@ -861,7 +874,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x60
     li r6, 0x7
-    addi r7, r2, -0x74CC  /* lbl_806D2D94 */
+    la r7, lbl_806D2D94(r2)  /* lbl_806D2D94 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantB_L_80072B8C
@@ -872,7 +885,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     li r4, 0x150
     li r5, 0x60
     li r6, 0x7
-    addi r7, r2, -0x73F0  /* lbl_806D2E70 */
+    la r7, lbl_806D2E70(r2)  /* lbl_806D2E70 */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_VariantB_L_80072B8C:
@@ -886,7 +899,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x90
     li r6, 0x2
-    addi r7, r2, -0x7494  /* lbl_806D2DCC */
+    la r7, lbl_806D2DCC(r2)  /* lbl_806D2DCC */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantB_L_80072BE4
@@ -896,7 +909,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x90
     li r6, 0x4
-    addi r7, r2, -0x7494  /* lbl_806D2DCC */
+    la r7, lbl_806D2DCC(r2)  /* lbl_806D2DCC */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_VariantB_L_80072BE4:
@@ -995,7 +1008,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0xd8
     li r6, 0x2
-    addi r7, r2, -0x74B4  /* lbl_806D2DAC */
+    la r7, lbl_806D2DAC(r2)  /* lbl_806D2DAC */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantB_L_80072DC4
@@ -1005,7 +1018,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0xd8
     li r6, 0x4
-    addi r7, r2, -0x74CC  /* lbl_806D2D94 */
+    la r7, lbl_806D2D94(r2)  /* lbl_806D2D94 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantB_L_80072DC4
@@ -1041,7 +1054,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0xf0
     li r6, 0x4
-    addi r7, r2, -0x74CC  /* lbl_806D2D94 */
+    la r7, lbl_806D2D94(r2)  /* lbl_806D2D94 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantB_L_80072E48
@@ -1077,7 +1090,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x108
     li r6, 0x2
-    addi r7, r2, -0x74B4  /* lbl_806D2DAC */
+    la r7, lbl_806D2DAC(r2)  /* lbl_806D2DAC */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantB_L_80072E9C
@@ -1087,7 +1100,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x108
     li r6, 0x4
-    addi r7, r2, -0x74CC  /* lbl_806D2D94 */
+    la r7, lbl_806D2D94(r2)  /* lbl_806D2D94 */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_VariantB_L_80072E9C:
@@ -1100,7 +1113,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x120
     li r6, 0x2
-    addi r7, r2, -0x73E8  /* lbl_806D2E78 */
+    la r7, lbl_806D2E78(r2)  /* lbl_806D2E78 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantB_L_80072EF0
@@ -1110,7 +1123,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x120
     li r6, 0x4
-    addi r7, r2, -0x73E0  /* lbl_806D2E80 */
+    la r7, lbl_806D2E80(r2)  /* lbl_806D2E80 */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_VariantB_L_80072EF0:
@@ -1143,7 +1156,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x138
     li r6, 0x4
-    addi r7, r2, -0x74B4  /* lbl_806D2DAC */
+    la r7, lbl_806D2DAC(r2)  /* lbl_806D2DAC */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantB_L_80072FE0
@@ -1153,7 +1166,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x138
     li r6, 0x2
-    addi r7, r2, -0x74CC  /* lbl_806D2D94 */
+    la r7, lbl_806D2D94(r2)  /* lbl_806D2D94 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantB_L_80072FE0
@@ -1202,7 +1215,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x150
     li r6, 0x4
-    addi r7, r2, -0x73DC  /* lbl_806D2E84 */
+    la r7, lbl_806D2E84(r2)  /* lbl_806D2E84 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_VariantB_L_80073064
@@ -1212,7 +1225,7 @@ asm void GameSetting_Page_VariantB(void) { /* 0x8007270C size:0x970 */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x150
     li r6, 0x4
-    addi r7, r2, -0x7410  /* lbl_806D2E50 */
+    la r7, lbl_806D2E50(r2)  /* lbl_806D2E50 */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_VariantB_L_80073064:
@@ -1528,7 +1541,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     li r4, 0x16c
     li r5, 0x30
     li r6, 0x2
-    addi r7, r2, -0x74BC  /* lbl_806D2DA4 */
+    la r7, lbl_806D2DA4(r2)  /* lbl_806D2DA4 */
     creqv 6, 6, 6
     bl DrawText
     cmpwi r26, 0x1
@@ -1538,7 +1551,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x60
     li r6, 0x7
-    addi r7, r2, -0x74CC  /* lbl_806D2D94 */
+    la r7, lbl_806D2D94(r2)  /* lbl_806D2D94 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_L_80073478
@@ -1549,7 +1562,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     li r4, 0x150
     li r5, 0x60
     li r6, 0x7
-    addi r7, r2, -0x73F0  /* lbl_806D2E70 */
+    la r7, lbl_806D2E70(r2)  /* lbl_806D2E70 */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_L_80073478:
@@ -1563,7 +1576,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x90
     li r6, 0x2
-    addi r7, r2, -0x7494  /* lbl_806D2DCC */
+    la r7, lbl_806D2DCC(r2)  /* lbl_806D2DCC */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_L_800734D0
@@ -1573,7 +1586,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x90
     li r6, 0x4
-    addi r7, r2, -0x7494  /* lbl_806D2DCC */
+    la r7, lbl_806D2DCC(r2)  /* lbl_806D2DCC */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_L_800734D0:
@@ -1606,7 +1619,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0xc0
     li r6, 0x2
-    addi r7, r2, -0x74B4  /* lbl_806D2DAC */
+    la r7, lbl_806D2DAC(r2)  /* lbl_806D2DAC */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_L_800735C0
@@ -1616,7 +1629,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0xc0
     li r6, 0x4
-    addi r7, r2, -0x74CC  /* lbl_806D2D94 */
+    la r7, lbl_806D2D94(r2)  /* lbl_806D2D94 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_L_800735C0
@@ -1652,7 +1665,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0xd8
     li r6, 0x4
-    addi r7, r2, -0x74CC  /* lbl_806D2D94 */
+    la r7, lbl_806D2D94(r2)  /* lbl_806D2D94 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_L_80073644
@@ -1688,7 +1701,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0xf0
     li r6, 0x2
-    addi r7, r2, -0x74B4  /* lbl_806D2DAC */
+    la r7, lbl_806D2DAC(r2)  /* lbl_806D2DAC */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_L_80073698
@@ -1698,7 +1711,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0xf0
     li r6, 0x4
-    addi r7, r2, -0x74CC  /* lbl_806D2D94 */
+    la r7, lbl_806D2D94(r2)  /* lbl_806D2D94 */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_L_80073698:
@@ -1711,7 +1724,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x108
     li r6, 0x2
-    addi r7, r2, -0x73D4  /* lbl_806D2E8C */
+    la r7, lbl_806D2E8C(r2)  /* lbl_806D2E8C */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_L_800736EC
@@ -1721,7 +1734,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x108
     li r6, 0x4
-    addi r7, r2, -0x73CC  /* lbl_806D2E94 */
+    la r7, lbl_806D2E94(r2)  /* lbl_806D2E94 */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_L_800736EC:
@@ -1754,7 +1767,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x120
     li r6, 0x4
-    addi r7, r2, -0x74B4  /* lbl_806D2DAC */
+    la r7, lbl_806D2DAC(r2)  /* lbl_806D2DAC */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_L_800737DC
@@ -1764,7 +1777,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x120
     li r6, 0x2
-    addi r7, r2, -0x74CC  /* lbl_806D2D94 */
+    la r7, lbl_806D2D94(r2)  /* lbl_806D2D94 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_L_800737DC
@@ -1813,7 +1826,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x138
     li r6, 0x4
-    addi r7, r2, -0x73DC  /* lbl_806D2E84 */
+    la r7, lbl_806D2E84(r2)  /* lbl_806D2E84 */
     creqv 6, 6, 6
     bl DrawText
     b GameSetting_Page_L_80073860
@@ -1823,7 +1836,7 @@ asm void GameSetting_Page(void) { /* 0x8007307C size:0x7FC */
     lfs f1, lbl_806D2D44(r2)
     li r5, 0x138
     li r6, 0x4
-    addi r7, r2, -0x7410  /* lbl_806D2E50 */
+    la r7, lbl_806D2E50(r2)  /* lbl_806D2E50 */
     creqv 6, 6, 6
     bl DrawText
     GameSetting_Page_L_80073860:

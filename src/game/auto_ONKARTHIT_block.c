@@ -1,3 +1,6 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D27DC[8];
 /*
  * dtk reversed-extab group `auto_KartItem_OnKartHit_text` bundle (1 TU, indivisible).
  * Held as asm_fn with manually emitted extab/extabindex via __declspec(section ".extab_user"/".extabindex_user"). tools/postprocess_extab_user.py renames sections + symbols to the
@@ -5924,7 +5927,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     lis r4, lbl_803F75F8@ha
     li r3, 0x38
     addi r5, r4, lbl_803F75F8@l
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     stw r5, 0x0(r31)
     addi r0, r5, 0x10
     li r5, 0x180
@@ -5951,7 +5954,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     CarObject_Init_L_8004E6EC:
     stw r26, 0x24(r31)
     li r3, 0x324
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     li r5, 0x181
     bl MemoryManager_AllocTagged
     mr. r26, r3
@@ -5974,7 +5977,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     CarObject_Init_L_8004E744:
     stw r26, 0x28(r31)
     li r3, 0x384
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     li r5, 0x182
     bl MemoryManager_AllocTagged
     mr. r25, r3
@@ -5993,7 +5996,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     CarObject_Init_L_8004E78C:
     stw r25, 0x2c(r31)
     li r3, 0x30
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     li r5, 0x183
     bl MemoryManager_AllocTagged
     mr. r0, r3
@@ -6004,7 +6007,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     CarObject_Init_L_8004E7B4:
     stw r0, 0x30(r31)
     li r3, 0x154
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     li r5, 0x184
     bl MemoryManager_AllocTagged
     mr. r0, r3
@@ -6021,7 +6024,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     CarObject_Init_L_8004E7F4:
     stw r0, 0x34(r31)
     li r3, 0xd4
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     li r5, 0x185
     bl MemoryManager_AllocTagged
     mr. r25, r3
@@ -6043,7 +6046,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     CarObject_Init_L_8004E848:
     stw r25, 0x38(r31)
     li r3, 0x1c
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     li r5, 0x186
     bl MemoryManager_AllocTagged
     mr. r0, r3
@@ -6057,7 +6060,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     CarObject_Init_L_8004E87C:
     stw r0, 0x3c(r31)
     li r3, 0x14
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     li r5, 0x187
     bl MemoryManager_AllocTagged
     mr. r27, r3
@@ -6079,7 +6082,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     CarObject_Init_L_8004E8CC:
     stw r27, 0x40(r31)
     li r3, 0x4c
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     li r5, 0x188
     bl MemoryManager_AllocTagged
     mr. r0, r3
@@ -6091,7 +6094,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     CarObject_Init_L_8004E8F8:
     stw r0, 0x44(r31)
     li r3, 0x28
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     li r5, 0x189
     bl MemoryManager_AllocTagged
     mr. r0, r3
@@ -6102,7 +6105,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     CarObject_Init_L_8004E920:
     stw r0, 0x48(r31)
     li r3, 0x58
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     li r5, 0x18a
     bl MemoryManager_AllocTagged
     cmplwi r3, 0x0
@@ -6138,7 +6141,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     CarObject_Init_L_8004E9AC:
     stw r3, 0x4c(r31)
     li r3, 0x10
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     li r5, 0x18c
     bl MemoryManager_AllocTagged
     cmplwi r3, 0x0
@@ -6153,7 +6156,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     CarObject_Init_L_8004E9E4:
     stw r3, 0x50(r31)
     li r3, 0x24
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     li r5, 0x18b
     bl MemoryManager_AllocTagged
     mr. r0, r3
@@ -6178,7 +6181,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     CarObject_Init_L_8004EA40:
     stw r0, 0x54(r31)
     li r3, 0x58
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     li r5, 0x18d
     bl MemoryManager_AllocTagged
     mr. r0, r3
@@ -6190,7 +6193,7 @@ asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     CarObject_Init_L_8004EA6C:
     stw r0, 0x58(r31)
     li r3, 0x58
-    addi r4, r2, -0x7A84  /* lbl_806D27DC */
+    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
     li r5, 0x18e
     bl MemoryManager_AllocTagged
     mr. r0, r3
@@ -7531,7 +7534,7 @@ asm int ItemEffect_SelectAndDispatch(ItemEffectTable *self, int itemId, void *it
     bgt ItemEffect_SelectAndDispatch_L_8005005C
     mr r4, r26
     ItemEffect_SelectAndDispatch_L_80050108:
-    addi r5, r2, -0x7B80  /* lbl_806D26E0 */
+    la r5, lbl_806D26E0(r2)  /* lbl_806D26E0 */
     li r3, 0x1
     addi r5, r5, 0x4
     b ItemEffect_SelectAndDispatch_L_8005012C

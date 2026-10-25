@@ -1,3 +1,6 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D24A0[8];
 /* === extracted from auto_MJObj_SetColorRGBA_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -52,7 +55,7 @@ asm void MJObj_SetColorRGBA(void) { /* 0x8003A608 size:0x114 */
     cmpwi r3, 0x0
     bne MJObj_SetColorRGBA_L_8003A658
     lis r4, lbl_802E9D04@ha
-    addi r3, r2, -0x7DC0  /* lbl_806D24A0 */
+    la r3, lbl_806D24A0(r2)  /* lbl_806D24A0 */
     addi r5, r4, lbl_802E9D04@l
     li r4, 0x31
     bl __assert
