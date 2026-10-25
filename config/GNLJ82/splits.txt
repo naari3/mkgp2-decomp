@@ -7188,9 +7188,9 @@ game/AddCoinsFromExtraStage.c:
 	.text       start:0x80216540 end:0x80216568
 
 game/anon_80216568.cpp:
-	extab       start:0x8001A524 end:0x8001A56C
-	extabindex  start:0x8002A08C end:0x8002A0E0
-	.text       start:0x80216568 end:0x802174F8
+	extab       start:0x8001A524 end:0x8001A8D4
+	extabindex  start:0x8002A08C end:0x8002A1A0
+	.text       start:0x80216568 end:0x80218B5C
 	.ctors      start:0x802E893C end:0x802E8940
 
 game/fn_80218B5C.c:

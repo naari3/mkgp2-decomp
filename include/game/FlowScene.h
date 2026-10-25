@@ -173,6 +173,8 @@ struct FlowFaderF : FlowFader {
     FlowFaderF(float v) : x(v), y(v), z(v) {}
     FlowFaderF() : x(lbl_806DA880), y(lbl_806DA880), z(lbl_806DA880) {}
     virtual void _key2();
+    float Value();                       /* fn_8020A6CC */
+    void Set(float from, float to, short dur); /* fn_8020A734 */
 };
 
 struct FlowFaderI : FlowFader {
@@ -181,6 +183,8 @@ struct FlowFaderI : FlowFader {
     int z;
     FlowFaderI() : x(0), y(0), z(0) {}
     virtual void _key2();
+    int Value();                         /* fn_8020A788 */
+    void Set(int from, int to, short dur); /* fn_8020A7CC */
 };
 
 struct FlowScene : FlowTask {
