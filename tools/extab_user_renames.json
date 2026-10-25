@@ -2522,5 +2522,26 @@
     "__ct__9FlowSceneFi": "fn_801FD41C",
     "__dt__9FlowSceneFv": "dtor_801FD32C",
     "__dt__16CoinPromptHolderFv": "dtor_801CCA30"
+  },
+  "src/game/BattleContinueScene.cpp": {
+    "__ct__19BattleContinueSceneFi": "fn_8024EF70",
+    "__dt__19BattleContinueSceneFv": "fn_8024EE10",
+    "Select__19BattleContinueSceneFv": "fn_8024E9B0",
+    "Cancel__19BattleContinueSceneFv": "fn_8024E930",
+    "Confirm__19BattleContinueSceneFv": "fn_8024E8A0",
+    "Update__19BattleContinueSceneFv": "fn_8024E3F0",
+    "Draw__19BattleContinueSceneFv": "fn_8024E344",
+    "__dt__15VHolder<5Panel>Fv": "dtor_8024F35C",
+    "__vt__19BattleContinueScene": "lbl_804EF054",
+    "__ct__10ItemMsgWndFv": "fn_802325FC",
+    "__ct__10CoinPromptFiiiii": "fn_8023D080",
+    "__ct__15CoinPopupDetailFiii": "fn_80161914",
+    "__ct__11CoinCounterFi": "fn_8024E2A4",
+    "__ct__10SyncWaiterFv": "fn_8021BA20",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__9FlowSceneFi": "fn_801FD41C",
+    "__dt__9FlowSceneFv": "dtor_801FD32C",
+    "__dt__16CoinPromptHolderFv": "dtor_801CCA30"
   }
 }
