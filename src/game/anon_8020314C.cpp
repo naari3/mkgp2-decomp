@@ -193,6 +193,7 @@ extern "C" void fn_80203C24(void) {
     }
 }
 
+#pragma peephole off
 extern "C" int fn_80203E30(void) {
     if (lbl_806D19E8 == 0) {
         return -1;
@@ -200,6 +201,7 @@ extern "C" int fn_80203E30(void) {
         return lbl_806D0250.cur;
     }
 }
+#pragma peephole reset
 
 extern "C" int fn_80203E4C(void) {
     if (lbl_806D19E8 == 0) {
