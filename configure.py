@@ -2081,6 +2081,7 @@ config.libs = [
             Object(Matching, "musyx/runtime/synthdata.c"),
             Object(Matching, "musyx/runtime/snd_init.c"),
             Object(Matching, "musyx/runtime/snd_math.c", extra_cflags=["-fp_contract off"]),
+            Object(Matching, "musyx/runtime/snd_midictrl.c"),
             Object(Matching, "musyx/runtime/snd_service.c"),
             Object(Matching, "musyx/runtime/hw_dolphin.c"),
             Object(Matching, "musyx/runtime/hw_memory.c"),
