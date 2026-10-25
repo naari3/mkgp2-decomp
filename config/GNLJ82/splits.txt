@@ -4533,6 +4533,11 @@ game/MapEffect_Create.cpp:
 	.text       start:0x801752C0 end:0x801755BC
 	.data       start:0x804914B8 end:0x804914FC
 
+game/MapEffect_WCC.cpp:
+	extab       start:0x80010BF4 end:0x80010C78
+	extabindex  start:0x800265E8 end:0x8002660C
+	.text       start:0x801755BC end:0x801759D8
+
 game/fn_801805AC.c:
 	.text       start:0x801805AC end:0x801805B4
 

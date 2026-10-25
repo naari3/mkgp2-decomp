@@ -781,6 +781,22 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "__dt__11clMapEffectFv": "dtor_800488F4"
   },
+  "src/game/MapEffect_WCC.cpp": {
+    "__ct__14clMapEffectWCCFP4JObji": "fn_801755BC",
+    "Add__9PartsListFiiP16clMapEffectParts": "fn_80175750",
+    "Append__9PartsNodeFiiP16clMapEffectParts": "fn_801757EC",
+    "__ct__9PartsNodeFiiP16clMapEffectParts": "fn_801759BC",
+    "__ct__12clSoundPartsFv": "fn_801967F0",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__vt__9clMoveTex": "lbl_8049162C",
+    "__vt__11clMapEffect": "lbl_803F7494",
+    "__vt__14clMapEffectWCC": "lbl_80491650",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "__dt__11clMapEffectFv": "dtor_800488F4",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__nwa__FUl": "FUN_8003b120"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
