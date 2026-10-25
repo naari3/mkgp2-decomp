@@ -1582,5 +1582,9 @@
   },
   "src/game/CourseObjectManager_Init.cpp": {
     "__ct__18cLNormal3DWrap_MgrFv": "cLNormal3DWrap_Mgr_Ctor"
+  },
+  "src/game/BananaPositionData_Init.cpp": {
+    "__ct__8Normal3DFPvi": "clNormal3D_Construct",
+    "__ct__18BananaPositionDataFi": "BananaPositionData_Init"
   }
 }

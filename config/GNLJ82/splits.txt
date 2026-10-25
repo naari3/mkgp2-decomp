@@ -78,6 +78,11 @@ game/SeqMenuScene.c:
 	extabindex  start:0x8001F4CC end:0x8001F4FC
 	.text       start:0x8002F9B4 end:0x8002FD4C
 
+game/DebugTextOutput.c:
+	extab       start:0x800058A0 end:0x800058B0
+	extabindex  start:0x8001F4FC end:0x8001F514
+	.text       start:0x8002FD4C end:0x8002FF08
+
 game/Profiler.c:
 	.text       start:0x8002FF08 end:0x8002FF48
 
@@ -755,6 +760,11 @@ game/DebugOverlay_KartPhysicsForLocalPlayer.c:
 	extab       start:0x800068F0 end:0x800068F8
 	extabindex  start:0x800201D4 end:0x800201E0
 	.text       start:0x8004A074 end:0x8004A0A4
+
+game/ItemUse_Gateway.c:
+	extab       start:0x800068F8 end:0x80006900
+	extabindex  start:0x800201E0 end:0x800201EC
+	.text       start:0x8004A0A4 end:0x8004A238
 
 game/auto_ONKARTHIT_block.c:
 	extab       start:0x80006900 end:0x8000718C
@@ -3248,6 +3258,11 @@ game/BananaField_CheckCollision.c:
 	extab       start:0x800124B8 end:0x800124C0
 	extabindex  start:0x80027320 end:0x8002732C
 	.text       start:0x80196C5C end:0x80196D9C
+
+game/BananaPositionData_Init.cpp:
+	extab       start:0x800124C0 end:0x800124D8
+	extabindex  start:0x8002732C end:0x80027338
+	.text       start:0x80196D9C end:0x80196F60
 
 game/BananaField_TestHitBox.c:
 	extab       start:0x800124D8 end:0x800124E0
