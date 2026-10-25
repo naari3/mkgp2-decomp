@@ -9158,6 +9158,16 @@ game/fn_8022CDE4.c:
 	extabindex  start:0x8002A8CC end:0x8002A8D8
 	.text       start:0x8022CDE4 end:0x8022CE04
 
+game/EnmyFaceEffect.cpp:
+	extab       start:0x8001BFE8 end:0x8001C15C
+	extabindex  start:0x8002A8D8 end:0x8002A98C
+	.text       start:0x8022CE04 end:0x802300C8
+	.ctors      start:0x802E8954 end:0x802E8958
+	.rodata     start:0x803DAB54 end:0x803DAE88
+	.data       start:0x804EE14C end:0x804EE1B8
+	.bss        start:0x80679CE0 end:0x80679E00
+	.sbss       start:0x806D1A80 end:0x806D1A88
+
 game/fn_802300C8.c:
 	.text       start:0x802300C8 end:0x802300CC
 
