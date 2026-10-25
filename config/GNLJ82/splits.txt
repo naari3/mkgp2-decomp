@@ -4352,6 +4352,12 @@ game/Enraku_State1_Held.c:
 	extabindex  start:0x80023E94 end:0x80023EA0
 	.text       start:0x800F091C end:0x800F0EE0
 
+game/ItemObject_Tick_Kind40_Enraku.c:
+	extab       start:0x8000B65C end:0x8000B664
+	extabindex  start:0x80023EA0 end:0x80023EAC
+	.text       start:0x800F0EE0 end:0x800F17F4
+	.data       start:0x804216B0 end:0x804216D8
+
 game/HeartCompoundItem.c:
 	extab       start:0x8000B674 end:0x8000B68C
 	extabindex  start:0x80023EC4 end:0x80023EE8
