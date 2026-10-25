@@ -11,7 +11,7 @@ extern void GX_SetCullMode();
 extern void GXSetVtxAttrFmt();
 extern void GXSetVtxDesc();
 extern void HSD_DObjSetCurrent();
-extern void fn_802C22D8();
+extern void HSD_MObjSetCurrent();
 extern void fn_802C35DC();
 extern void HSD_CObjGetCurrent();
 extern void HSD_JObjSetCurrent();
@@ -59,7 +59,7 @@ asm void GXChannel_Bind(void) { /* 0x8007D834 size:0x190 */
     bl HSD_DObjSetCurrent
     lwz r3, 0x4(r31)
     lwz r3, 0x8(r3)
-    bl fn_802C22D8
+    bl HSD_MObjSetCurrent
     lwz r3, 0x4(r31)
     lwz r4, 0x8(r31)
     lwz r3, 0x8(r3)

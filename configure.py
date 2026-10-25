@@ -439,8 +439,6 @@ config.libs = [
         "progress_category": "sdk",
         "objects": [
             Object(Matching, "sysdolphin/baselib/_hsd_consts.c"),
-            Object(Matching, "sysdolphin/baselib/aobj.c"),
-            Object(Matching, "sysdolphin/baselib/dobj.c"),
             Object(Matching, "sysdolphin/baselib/fobj.c"),  # TEST: post-process fobj.o with _externize_sdata2.py
             Object(Matching, "sysdolphin/baselib/jobj.c"),
             Object(Matching, "sysdolphin/baselib/jobj_anim_misc.c"),
@@ -457,6 +455,8 @@ config.libs = [
         "objects": [
             Object(Matching, "sysdolphin/baselib/displayfunc.c"),
             Object(Matching, "sysdolphin/baselib/video.c"),
+            Object(Matching, "sysdolphin/baselib/dobj.c"),
+            Object(Matching, "sysdolphin/baselib/aobj.c"),
             Object(Matching, "sysdolphin/baselib/list.c"),
             Object(Matching, "sysdolphin/baselib/random.c"),
             Object(Matching, "sysdolphin/baselib/fog.c"),
