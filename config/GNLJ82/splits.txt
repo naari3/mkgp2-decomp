@@ -655,6 +655,11 @@ game/KartItem_TickStunStateMachine.c:
 	extabindex  start:0x8001FD60 end:0x8001FD6C
 	.text       start:0x8003ED8C end:0x8003EF20
 
+game/RenderObj_CleanupItem.c:
+	extab       start:0x80006140 end:0x80006148
+	extabindex  start:0x8001FD78 end:0x8001FD84
+	.text       start:0x8003F13C end:0x8003F2D8
+
 game/KartItem_BroadcastParamToCarAndISE.c:
 	extab       start:0x80006148 end:0x80006150
 	extabindex  start:0x8001FD84 end:0x8001FD90
@@ -1024,6 +1029,11 @@ game/ItemEffectJump_Init.c:
 	extab       start:0x800071DC end:0x800071E4
 	extabindex  start:0x800205B8 end:0x800205C4
 	.text       start:0x8005399C end:0x80053AE0
+
+game/ItemEffect_TornadoLift.cpp:
+	extab       start:0x800071E4 end:0x800071EC
+	extabindex  start:0x800205C4 end:0x800205D0
+	.text       start:0x80053AE0 end:0x80053C70
 
 game/ItemEffectQuake_Init.c:
 	extab       start:0x800071EC end:0x800071F4
