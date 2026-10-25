@@ -1873,6 +1873,12 @@ config.libs = [
             Object(Matching, "game/fn_801CE800.c"),
             Object(Matching, "game/fn_801F6F7C.c"),
             Object(Matching, "game/fn_801F9AAC.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_801DBA34.c", mw_version="GC/2.6"),
+            Object(Matching, "game/fn_801EC698.c", mw_version="GC/2.6"),
+            Object(Matching, "game/fn_801EC6CC.c", mw_version="GC/2.6"),
+            Object(Matching, "game/fn_801E5A18.cpp"),
+            Object(Matching, "game/fn_801E8CB8.c"),
+            Object(Matching, "game/fn_801FAFFC.cpp"),
         ],
     },
     {
@@ -2512,6 +2518,7 @@ DATA_ALIGN4_TUS = [
     "game/clItemBoxManager_StepTable",
     "game/ItemUseStats",
     "game/RenderObj_UseItem",
+    "game/fn_801FAFFC",
     "game/KartItem_RenderCb_Modes",
     "game/fn_80117020",
 ]

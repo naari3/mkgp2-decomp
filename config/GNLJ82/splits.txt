@@ -5519,6 +5519,11 @@ game/fn_801DB9C4.c:
 game/fn_801DBA2C.c:
 	.text       start:0x801DBA2C end:0x801DBA34
 
+game/fn_801DBA34.c:
+	extab       start:0x8001571C end:0x80015724
+	extabindex  start:0x8002831C end:0x80028328
+	.text       start:0x801DBA34 end:0x801DBA58
+
 game/fn_801DBA58.c:
 	.text       start:0x801DBA58 end:0x801DBA60
 
@@ -5642,6 +5647,11 @@ game/fn_801E4524.c:
 	extab       start:0x800162A8 end:0x800162B0
 	extabindex  start:0x80028784 end:0x80028790
 	.text       start:0x801E4524 end:0x801E4544
+
+game/fn_801E5A18.cpp:
+	.text       start:0x801E5A18 end:0x801E5A84
+	.ctors      start:0x802E8920 end:0x802E8924
+	.sbss       start:0x806D18C8 end:0x806D1904
 
 game/fn_801E5A84.c:
 	extab       start:0x80016490 end:0x80016498
@@ -5784,6 +5794,9 @@ game/fn_801E8C7C.c:
 	.text       start:0x801E8C7C end:0x801E8C90
 	.ctors      start:0x802E8924 end:0x802E8928
 
+game/fn_801E8CB8.c:
+	.text       start:0x801E8CB8 end:0x801E8D10
+
 game/x10.c:
 	extab       start:0x80016A80 end:0x80016A88
 	extabindex  start:0x80028958 end:0x80028964
@@ -5863,6 +5876,16 @@ game/EnemyRunType1_Init.c:
 	extab       start:0x80016C1C end:0x80016C24
 	extabindex  start:0x80028AD8 end:0x80028AE4
 	.text       start:0x801EC65C end:0x801EC698
+
+game/fn_801EC698.c:
+	extab       start:0x80016C24 end:0x80016C2C
+	extabindex  start:0x80028AE4 end:0x80028AF0
+	.text       start:0x801EC698 end:0x801EC6CC
+
+game/fn_801EC6CC.c:
+	extab       start:0x80016C2C end:0x80016C34
+	extabindex  start:0x80028AF0 end:0x80028AFC
+	.text       start:0x801EC6CC end:0x801EC700
 
 game/fn_801EC700.c:
 	extab       start:0x80016C34 end:0x80016C3C
@@ -6119,6 +6142,13 @@ game/fn_801FAB58.cpp:
 	extab       start:0x80017914 end:0x8001791C
 	extabindex  start:0x800291B0 end:0x800291BC
 	.text       start:0x801FAB58 end:0x801FAB88
+
+game/fn_801FAFFC.cpp:
+	extab       start:0x80017924 end:0x8001792C
+	extabindex  start:0x800291C8 end:0x800291D4
+	.text       start:0x801FAFFC end:0x801FB418
+	.rodata     start:0x803BFC50 end:0x803BFC70
+	.data       start:0x804EBF14 end:0x804EBF58
 
 game/fn_801FB5FC.cpp:
 	extab       start:0x80017934 end:0x8001793C
