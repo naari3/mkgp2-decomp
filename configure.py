@@ -997,6 +997,8 @@ config.libs = [
             Object(Matching, "game/Math_SegmentIntersection2D.c"),
             Object(Matching, "game/Terrain_WallSegmentTest.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Collision.c"),
+            Object(Matching, "game/Terrain_StepAndResolve.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/Terrain_WallEdgeTest.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/StrPcb_988.c"),
             Object(Matching, "game/StrPcb.c"),
             Object(Matching, "game/StrPcb_Tick.c", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on"]),

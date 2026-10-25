@@ -300,6 +300,16 @@ game/Terrain_WallSegmentTest.c:
 game/Collision.c:
 	.text       start:0x800364C8 end:0x800364D8
 
+game/Terrain_StepAndResolve.c:
+	extab       start:0x80005C80 end:0x80005C88
+	extabindex  start:0x8001F8BC end:0x8001F8C8
+	.text       start:0x800364D8 end:0x80036710
+
+game/Terrain_WallEdgeTest.c:
+	extab       start:0x80005C88 end:0x80005C90
+	extabindex  start:0x8001F8C8 end:0x8001F8D4
+	.text       start:0x80036710 end:0x80036988
+
 game/StrPcb_988.c:
 	extab       start:0x80005C90 end:0x80005C98
 	extabindex  start:0x8001F8D4 end:0x8001F8E0

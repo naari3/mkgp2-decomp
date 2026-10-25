@@ -32,7 +32,7 @@ extern unsigned char Math_SegmentIntersection2D(void *self, float ax, float az, 
                                                 float cz, float dx, float dz, float *out);
 
 #pragma exceptions on
-int Terrain_WallSegmentTest(TerrainWallHit *hit, TerrainWallList *list, float *seg)
+unsigned char Terrain_WallSegmentTest(TerrainWallHit *hit, TerrainWallList *list, float *seg)
 {
     float loZ;
     float loX;
