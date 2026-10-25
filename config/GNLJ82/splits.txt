@@ -5753,8 +5753,105 @@ game/bitread/fn_8018B088.c:
 	extabindex  start:0x80026EAC end:0x80026EB8
 	.text       start:0x8018B088 end:0x8018B14C
 
+game/objview/fn_8018CF34.c:
+	extab       start:0x80011EA0 end:0x80011EA8
+	extabindex  start:0x80026EE8 end:0x80026EF4
+	.text       start:0x8018CF34 end:0x8018CFC4
+
+game/objview/fn_8018D320.c:
+	extab       start:0x80011EEC end:0x80011EF4
+	extabindex  start:0x80026F18 end:0x80026F24
+	.text       start:0x8018D320 end:0x8018D3E0
+
+game/misc3d/fn_8018D638.c:
+	.text       start:0x8018D638 end:0x8018D64C
+
+game/objview/fn_8018D7CC.c:
+	extab       start:0x80011F30 end:0x80011F38
+	extabindex  start:0x80026F48 end:0x80026F54
+	.text       start:0x8018D7CC end:0x8018D82C
+
+game/misc3d/fn_8018DFC4.c:
+	extab       start:0x80011F70 end:0x80011F78
+	extabindex  start:0x80026F78 end:0x80026F84
+	.text       start:0x8018DFC4 end:0x8018E000
+
+game/objview/fn_8018E4B4.c:
+	extab       start:0x80011FBC end:0x80011FC4
+	extabindex  start:0x80026FA8 end:0x80026FB4
+	.text       start:0x8018E4B4 end:0x8018E510
+
+game/objview/fn_8018ED1C.c:
+	extab       start:0x80011FE4 end:0x80011FEC
+	extabindex  start:0x80026FCC end:0x80026FD8
+	.text       start:0x8018ED1C end:0x8018EDE0
+
+game/zprobe/dtor_8018F088.c:
+	extab       start:0x80012044 end:0x8001204C
+	extabindex  start:0x80026FE4 end:0x80026FF0
+	.text       start:0x8018F088 end:0x8018F100
+
+game/zprobe/fn_8018F100.c:
+	.text       start:0x8018F100 end:0x8018F14C
+
+game/zprobe/fn_8018F14C.c:
+	extab       start:0x8001204C end:0x80012054
+	extabindex  start:0x80026FF0 end:0x80026FFC
+	.text       start:0x8018F14C end:0x8018F1B0
+
+game/objview/fn_8018F1B0.c:
+	extab       start:0x80012054 end:0x8001205C
+	extabindex  start:0x80026FFC end:0x80027008
+	.text       start:0x8018F1B0 end:0x8018F1E0
+
+game/objview/fn_8018FBF4.c:
+	extab       start:0x800120D4 end:0x800120DC
+	extabindex  start:0x80027044 end:0x80027050
+	.text       start:0x8018FBF4 end:0x8018FC24
+
+game/objtable/fn_8019032C.c:
+	extab       start:0x80012144 end:0x8001214C
+	extabindex  start:0x80027080 end:0x8002708C
+	.text       start:0x8019032C end:0x801903D0
+
 game/fn_80190658.c:
 	.text       start:0x80190658 end:0x80190660
+
+game/objtable/fn_80190660.cpp:
+	extab       start:0x80012204 end:0x8001220C
+	extabindex  start:0x80027098 end:0x800270A4
+	.text       start:0x80190660 end:0x80190720
+
+game/objtable/fn_80190720.cpp:
+	extab       start:0x8001220C end:0x80012224
+	extabindex  start:0x800270A4 end:0x800270B0
+	.text       start:0x80190720 end:0x80190768
+
+game/clsound/clStream_setVolume.c:
+	extab       start:0x80012224 end:0x8001222C
+	extabindex  start:0x800270B0 end:0x800270BC
+	.text       start:0x80190768 end:0x8019083C
+
+game/clsound/fn_8019083C.c:
+	.text       start:0x8019083C end:0x801908F0
+
+game/clsound/fn_801908F0.c:
+	extab       start:0x8001222C end:0x80012234
+	extabindex  start:0x800270BC end:0x800270C8
+	.text       start:0x801908F0 end:0x801909A4
+
+game/clsound/fn_801909A4.c:
+	extab       start:0x80012234 end:0x8001223C
+	extabindex  start:0x800270C8 end:0x800270D4
+	.text       start:0x801909A4 end:0x80190A70
+
+game/clsound/fn_80190A70.c:
+	extab       start:0x8001223C end:0x80012244
+	extabindex  start:0x800270D4 end:0x800270E0
+	.text       start:0x80190A70 end:0x80190B3C
+
+game/clsound/fn_801915DC.c:
+	.text       start:0x801915DC end:0x801915F4
 
 game/SoundMgr_Play.c:
 	extab       start:0x800122A4 end:0x800122AC
@@ -5768,6 +5865,93 @@ game/WeatherSystem_PickVariant.c:
 
 game/fn_801932F8.c:
 	.text       start:0x801932F8 end:0x80193300
+
+game/clsound/fn_801933D0.c:
+	extab       start:0x800122C4 end:0x800122CC
+	extabindex  start:0x800271A0 end:0x800271AC
+	.text       start:0x801933D0 end:0x80193404
+
+game/clsound/fn_80193404.c:
+	extab       start:0x800122CC end:0x800122D4
+	extabindex  start:0x800271AC end:0x800271B8
+	.text       start:0x80193404 end:0x8019345C
+
+game/clsound/fn_8019345C.c:
+	extab       start:0x800122D4 end:0x800122DC
+	extabindex  start:0x800271B8 end:0x800271C4
+	.text       start:0x8019345C end:0x801934A0
+
+game/clsound/fn_801934A0.c:
+	extab       start:0x800122DC end:0x800122E4
+	extabindex  start:0x800271C4 end:0x800271D0
+	.text       start:0x801934A0 end:0x801934F4
+
+game/clstream/fn_80194108.c:
+	extab       start:0x80012304 end:0x8001230C
+	extabindex  start:0x80027200 end:0x8002720C
+	.text       start:0x80194108 end:0x80194130
+
+game/clstream/fn_80194130.c:
+	extab       start:0x8001230C end:0x80012314
+	extabindex  start:0x8002720C end:0x80027218
+	.text       start:0x80194130 end:0x80194158
+
+game/clstream/fn_80194158.c:
+	.text       start:0x80194158 end:0x80194184
+
+game/clstream/fn_80194184.c:
+	.text       start:0x80194184 end:0x80194214
+
+game/clstream/ClStream_IsActive.c:
+	.text       start:0x80194A9C end:0x80194AE0
+
+game/clstream/fn_80194AE0.c:
+	.text       start:0x80194AE0 end:0x80194B8C
+
+game/clstream/fn_801951B4.c:
+	.text       start:0x801951B4 end:0x801951CC
+
+game/clstream/fn_801951CC.c:
+	.text       start:0x801951CC end:0x801951E4
+
+game/clstream/fn_801951E4.c:
+	.text       start:0x801951E4 end:0x801951FC
+
+game/clstream/fn_801951FC.c:
+	.text       start:0x801951FC end:0x80195214
+
+game/clstream/fn_80195214.c:
+	.text       start:0x80195214 end:0x8019522C
+
+game/clstream/fn_8019522C.c:
+	extab       start:0x80012344 end:0x8001234C
+	extabindex  start:0x80027260 end:0x8002726C
+	.text       start:0x8019522C end:0x801952EC
+
+game/objview/fn_8019561C.c:
+	extab       start:0x8001235C end:0x80012364
+	extabindex  start:0x80027284 end:0x80027290
+	.text       start:0x8019561C end:0x8019571C
+
+game/objview/fn_8019571C.c:
+	extab       start:0x80012364 end:0x8001236C
+	extabindex  start:0x80027290 end:0x8002729C
+	.text       start:0x8019571C end:0x801957AC
+
+game/objview/fn_80195CD4.c:
+	extab       start:0x800123B0 end:0x800123B8
+	extabindex  start:0x800272C0 end:0x800272CC
+	.text       start:0x80195CD4 end:0x80195DA8
+
+game/objview/fn_80195F54.c:
+	extab       start:0x800123E0 end:0x800123E8
+	extabindex  start:0x800272D8 end:0x800272E4
+	.text       start:0x80195F54 end:0x80196028
+
+game/objview/fn_80196758.c:
+	extab       start:0x80012408 end:0x80012410
+	extabindex  start:0x800272FC end:0x80027308
+	.text       start:0x80196758 end:0x801967F0
 
 game/BananaField_Render.c:
 	extab       start:0x800124B0 end:0x800124B8
@@ -5788,6 +5972,22 @@ game/BananaField_TestHitBox.c:
 	extab       start:0x800124D8 end:0x800124E0
 	extabindex  start:0x80027338 end:0x80027344
 	.text       start:0x80196F60 end:0x80197130
+
+game/objview/fn_80197C84.c:
+	extab       start:0x80012500 end:0x80012508
+	extabindex  start:0x8002735C end:0x80027368
+	.text       start:0x80197C84 end:0x80197D20
+
+game/objview/fn_801986D8.c:
+	extab       start:0x80012580 end:0x80012588
+	extabindex  start:0x8002738C end:0x80027398
+	.text       start:0x801986D8 end:0x801987C4
+
+game/kartmove/fn_801999D0.c:
+	.text       start:0x801999D0 end:0x801999E0
+
+game/kartmove/KartMovement_CalcMaxSpeed.c:
+	.text       start:0x801999E0 end:0x80199A84
 
 game/KartMovement_SetPosition.c:
 	.text       start:0x8019A4A0 end:0x8019A4E0
