@@ -11,7 +11,7 @@ extern void ServiceValue_Get();
 extern void ServiceEnable_Get();
 extern void fn_801F9888();
 extern void fn_80209FA4();
-extern void fn_8027B394();
+extern void wcsncpy();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_pInputState;
@@ -116,7 +116,7 @@ asm void fn_801FE554(void) {
     stw r0, 0x14(r1)
     li r5, 0x5
     addi r4, r6, 0x158
-    bl fn_8027B394
+    bl wcsncpy
     lwz r0, 0x14(r1)
     mtlr r0
     addi r1, r1, 0x10

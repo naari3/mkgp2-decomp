@@ -5246,8 +5246,18 @@ MSL_C/strtoul.c:
 	.text       start:0x80279290 end:0x802796F8
 	.data       start:0x804F4F08 end:0x804F4F50
 
+MSL_C/wctype.c:
+	.data       start:0x804F4F50 end:0x804F5150
+
 MSL_C/wmem.c:
 	.text       start:0x802796F8 end:0x802797A8
+
+MSL_C/wprintf.c:
+	.text       start:0x802797A8 end:0x8027B324
+	.rodata     start:0x803F22A0 end:0x803F22A8
+	.data       start:0x804F5150 end:0x804F5370
+	.sdata      start:0x806D0BB8 end:0x806D0BE8
+	.sdata2     start:0x806DC3B8 end:0x806DC3C0
 
 MSL_C/math/e_acos.c:
 	.text       start:0x8027B410 end:0x8027B720
