@@ -7338,6 +7338,14 @@ sysdolphin/baselib/dobj.c:
 	.sdata      start:0x806D0C78 end:0x806D0C90
 	.sbss       start:0x806D20B0 end:0x806D20B8
 
+sysdolphin/baselib/tobj.c:
+	.text       start:0x802BD6A4 end:0x802C0938
+	.data       start:0x804FB960 end:0x804FBE30
+	.bss        start:0x806CCF80 end:0x806CCFB0
+	.sdata      start:0x806D0C90 end:0x806D0CD0
+	.sbss       start:0x806D20B8 end:0x806D20D0
+	.sdata2     start:0x806DCB88 end:0x806DCBB8
+
 sysdolphin/baselib/state.c:
 	.text       start:0x802C0938 end:0x802C1518
 	.data       start:0x804FBE30 end:0x804FBF90

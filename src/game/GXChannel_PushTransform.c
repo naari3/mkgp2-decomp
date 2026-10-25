@@ -13,7 +13,7 @@ extern void GXSetCurrentMtx();
 extern void PSMTXCopy();
 extern void PSMTXInvXpose();
 extern void GXLoadNrmMtxImm();
-extern void fn_802BE120();
+extern void _HSD_TObjGetCurrentByType();
 extern void HSD_LObjSetupSpecularInit();
 extern void HSD_JObjMakePositionMtx();
 
@@ -83,14 +83,14 @@ asm void GXChannel_PushTransform(void) { /* 0x8007D11C size:0x190 */
     GXChannel_PushTransform_L_8007D1AC:
     li r3, 0x0
     li r4, 0x1
-    bl fn_802BE120
+    bl _HSD_TObjGetCurrentByType
     cmplwi r3, 0x0
     beq GXChannel_PushTransform_L_8007D1C4
     ori r30, r30, 0x3
     GXChannel_PushTransform_L_8007D1C4:
     li r3, 0x0
     li r4, 0x2
-    bl fn_802BE120
+    bl _HSD_TObjGetCurrentByType
     cmplwi r3, 0x0
     beq GXChannel_PushTransform_L_8007D1DC
     ori r30, r30, 0x5
