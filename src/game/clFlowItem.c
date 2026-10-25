@@ -785,7 +785,7 @@ extern "C" asm void clFlowItem_Update(void) { /* 0x80237BE0 size:0x5D8 */
     b clFlowItem_Update_L_80237F88
     clFlowItem_Update_L_80237C98:
     lwz r31, 0x18(r30)
-    subi r4, r13, 0x65C8  /* lbl_806D0758 (r13 = _SDA_BASE_ 0x806D6D20) */
+    la r4, lbl_806D0758(r13)  /* lbl_806D0758 (r13 = _SDA_BASE_ 0x806D6D20) */
     lfs f1, lbl_806DB88C(r2)
     li r5, 0x0
     lfs f2, lbl_806DB890(r2)

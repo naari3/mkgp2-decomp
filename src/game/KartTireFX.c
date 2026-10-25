@@ -1,3 +1,9 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D2F10[4];
+extern unsigned char lbl_806D2F08[6];
+extern unsigned char lbl_806D2F00[5];
+extern unsigned char lbl_806D2EF8[7];
 /* KartTireFX unit: target asm extracted from dtk auto-split groups. */
 /* Keep body order and extab metadata synchronized with 0x80077E24..0x80079B24. */
 
@@ -789,16 +795,16 @@ asm void KartTireFX_SetRollPair_Joints88_90(void) { /* 0x80078778 size:0x2C4 */
     cmplwi r30, 0x0
     beq KartTireFX_SetRollPair_Joints88_90_L_80078844
     bne KartTireFX_SetRollPair_Joints88_90_L_800787C0
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints88_90_L_800787C0:
     addic. r0, r31, 0xc
     bne KartTireFX_SetRollPair_Joints88_90_L_800787D8
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x317
-    addi r5, r2, -0x7358  /* lbl_806D2F08 */
+    la r5, lbl_806D2F08(r2)  /* lbl_806D2F08 */
     bl __assert
     KartTireFX_SetRollPair_Joints88_90_L_800787D8:
     lfs f0, 0xc(r31)
@@ -813,9 +819,9 @@ asm void KartTireFX_SetRollPair_Joints88_90(void) { /* 0x80078778 size:0x2C4 */
     cmplwi r30, 0x0
     beq KartTireFX_SetRollPair_Joints88_90_L_80078844
     bne KartTireFX_SetRollPair_Joints88_90_L_80078818
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints88_90_L_80078818:
     lwz r4, 0x14(r30)
@@ -835,16 +841,16 @@ asm void KartTireFX_SetRollPair_Joints88_90(void) { /* 0x80078778 size:0x2C4 */
     cmplwi r30, 0x0
     beq KartTireFX_SetRollPair_Joints88_90_L_80078A24
     bne KartTireFX_SetRollPair_Joints88_90_L_80078864
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints88_90_L_80078864:
     addic. r0, r31, 0xc
     bne KartTireFX_SetRollPair_Joints88_90_L_8007887C
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x317
-    addi r5, r2, -0x7358  /* lbl_806D2F08 */
+    la r5, lbl_806D2F08(r2)  /* lbl_806D2F08 */
     bl __assert
     KartTireFX_SetRollPair_Joints88_90_L_8007887C:
     lfs f0, 0xc(r31)
@@ -859,9 +865,9 @@ asm void KartTireFX_SetRollPair_Joints88_90(void) { /* 0x80078778 size:0x2C4 */
     cmplwi r30, 0x0
     beq KartTireFX_SetRollPair_Joints88_90_L_80078A24
     bne KartTireFX_SetRollPair_Joints88_90_L_800788BC
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints88_90_L_800788BC:
     lwz r4, 0x14(r30)
@@ -890,9 +896,9 @@ asm void KartTireFX_SetRollPair_Joints88_90(void) { /* 0x80078778 size:0x2C4 */
     stw r0, 0x10(r1)
     beq KartTireFX_SetRollPair_Joints88_90_L_80078998
     bne KartTireFX_SetRollPair_Joints88_90_L_8007892C
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints88_90_L_8007892C:
     lfs f0, 0x8(r1)
@@ -907,9 +913,9 @@ asm void KartTireFX_SetRollPair_Joints88_90(void) { /* 0x80078778 size:0x2C4 */
     cmplwi r30, 0x0
     beq KartTireFX_SetRollPair_Joints88_90_L_80078998
     bne KartTireFX_SetRollPair_Joints88_90_L_8007896C
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints88_90_L_8007896C:
     lwz r4, 0x14(r30)
@@ -929,9 +935,9 @@ asm void KartTireFX_SetRollPair_Joints88_90(void) { /* 0x80078778 size:0x2C4 */
     cmplwi r30, 0x0
     beq KartTireFX_SetRollPair_Joints88_90_L_80078A24
     bne KartTireFX_SetRollPair_Joints88_90_L_800789B8
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints88_90_L_800789B8:
     lfs f0, 0x8(r1)
@@ -946,9 +952,9 @@ asm void KartTireFX_SetRollPair_Joints88_90(void) { /* 0x80078778 size:0x2C4 */
     cmplwi r30, 0x0
     beq KartTireFX_SetRollPair_Joints88_90_L_80078A24
     bne KartTireFX_SetRollPair_Joints88_90_L_800789F8
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints88_90_L_800789F8:
     lwz r4, 0x14(r30)
@@ -1024,16 +1030,16 @@ asm void KartTireFX_SetRollPair_Joints84_8c(void) { /* 0x80078A3C size:0x2C4 */
     cmplwi r30, 0x0
     beq KartTireFX_SetRollPair_Joints84_8c_L_80078B08
     bne KartTireFX_SetRollPair_Joints84_8c_L_80078A84
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints84_8c_L_80078A84:
     addic. r0, r31, 0xc
     bne KartTireFX_SetRollPair_Joints84_8c_L_80078A9C
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x317
-    addi r5, r2, -0x7358  /* lbl_806D2F08 */
+    la r5, lbl_806D2F08(r2)  /* lbl_806D2F08 */
     bl __assert
     KartTireFX_SetRollPair_Joints84_8c_L_80078A9C:
     lfs f0, 0xc(r31)
@@ -1048,9 +1054,9 @@ asm void KartTireFX_SetRollPair_Joints84_8c(void) { /* 0x80078A3C size:0x2C4 */
     cmplwi r30, 0x0
     beq KartTireFX_SetRollPair_Joints84_8c_L_80078B08
     bne KartTireFX_SetRollPair_Joints84_8c_L_80078ADC
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints84_8c_L_80078ADC:
     lwz r4, 0x14(r30)
@@ -1070,16 +1076,16 @@ asm void KartTireFX_SetRollPair_Joints84_8c(void) { /* 0x80078A3C size:0x2C4 */
     cmplwi r30, 0x0
     beq KartTireFX_SetRollPair_Joints84_8c_L_80078CE8
     bne KartTireFX_SetRollPair_Joints84_8c_L_80078B28
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints84_8c_L_80078B28:
     addic. r0, r31, 0xc
     bne KartTireFX_SetRollPair_Joints84_8c_L_80078B40
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x317
-    addi r5, r2, -0x7358  /* lbl_806D2F08 */
+    la r5, lbl_806D2F08(r2)  /* lbl_806D2F08 */
     bl __assert
     KartTireFX_SetRollPair_Joints84_8c_L_80078B40:
     lfs f0, 0xc(r31)
@@ -1094,9 +1100,9 @@ asm void KartTireFX_SetRollPair_Joints84_8c(void) { /* 0x80078A3C size:0x2C4 */
     cmplwi r30, 0x0
     beq KartTireFX_SetRollPair_Joints84_8c_L_80078CE8
     bne KartTireFX_SetRollPair_Joints84_8c_L_80078B80
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints84_8c_L_80078B80:
     lwz r4, 0x14(r30)
@@ -1125,9 +1131,9 @@ asm void KartTireFX_SetRollPair_Joints84_8c(void) { /* 0x80078A3C size:0x2C4 */
     stw r0, 0x10(r1)
     beq KartTireFX_SetRollPair_Joints84_8c_L_80078C5C
     bne KartTireFX_SetRollPair_Joints84_8c_L_80078BF0
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints84_8c_L_80078BF0:
     lfs f0, 0x8(r1)
@@ -1142,9 +1148,9 @@ asm void KartTireFX_SetRollPair_Joints84_8c(void) { /* 0x80078A3C size:0x2C4 */
     cmplwi r30, 0x0
     beq KartTireFX_SetRollPair_Joints84_8c_L_80078C5C
     bne KartTireFX_SetRollPair_Joints84_8c_L_80078C30
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints84_8c_L_80078C30:
     lwz r4, 0x14(r30)
@@ -1164,9 +1170,9 @@ asm void KartTireFX_SetRollPair_Joints84_8c(void) { /* 0x80078A3C size:0x2C4 */
     cmplwi r30, 0x0
     beq KartTireFX_SetRollPair_Joints84_8c_L_80078CE8
     bne KartTireFX_SetRollPair_Joints84_8c_L_80078C7C
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints84_8c_L_80078C7C:
     lfs f0, 0x8(r1)
@@ -1181,9 +1187,9 @@ asm void KartTireFX_SetRollPair_Joints84_8c(void) { /* 0x80078A3C size:0x2C4 */
     cmplwi r30, 0x0
     beq KartTireFX_SetRollPair_Joints84_8c_L_80078CE8
     bne KartTireFX_SetRollPair_Joints84_8c_L_80078CBC
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetRollPair_Joints84_8c_L_80078CBC:
     lwz r4, 0x14(r30)
@@ -1259,16 +1265,16 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_80078DCC
     bne KartTireFX_SetVisibleAll4Wheels_L_80078D48
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80078D48:
     addic. r0, r31, 0xc
     bne KartTireFX_SetVisibleAll4Wheels_L_80078D60
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x317
-    addi r5, r2, -0x7358  /* lbl_806D2F08 */
+    la r5, lbl_806D2F08(r2)  /* lbl_806D2F08 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80078D60:
     lfs f0, 0xc(r31)
@@ -1283,9 +1289,9 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_80078DCC
     bne KartTireFX_SetVisibleAll4Wheels_L_80078DA0
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80078DA0:
     lwz r4, 0x14(r30)
@@ -1305,16 +1311,16 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_80078E70
     bne KartTireFX_SetVisibleAll4Wheels_L_80078DEC
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80078DEC:
     addic. r0, r31, 0xc
     bne KartTireFX_SetVisibleAll4Wheels_L_80078E04
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x317
-    addi r5, r2, -0x7358  /* lbl_806D2F08 */
+    la r5, lbl_806D2F08(r2)  /* lbl_806D2F08 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80078E04:
     lfs f0, 0xc(r31)
@@ -1329,9 +1335,9 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_80078E70
     bne KartTireFX_SetVisibleAll4Wheels_L_80078E44
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80078E44:
     lwz r4, 0x14(r30)
@@ -1351,16 +1357,16 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_80078F14
     bne KartTireFX_SetVisibleAll4Wheels_L_80078E90
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80078E90:
     addic. r0, r31, 0xc
     bne KartTireFX_SetVisibleAll4Wheels_L_80078EA8
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x317
-    addi r5, r2, -0x7358  /* lbl_806D2F08 */
+    la r5, lbl_806D2F08(r2)  /* lbl_806D2F08 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80078EA8:
     lfs f0, 0xc(r31)
@@ -1375,9 +1381,9 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_80078F14
     bne KartTireFX_SetVisibleAll4Wheels_L_80078EE8
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80078EE8:
     lwz r4, 0x14(r30)
@@ -1397,16 +1403,16 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_8007920C
     bne KartTireFX_SetVisibleAll4Wheels_L_80078F34
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80078F34:
     addic. r0, r31, 0xc
     bne KartTireFX_SetVisibleAll4Wheels_L_80078F4C
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x317
-    addi r5, r2, -0x7358  /* lbl_806D2F08 */
+    la r5, lbl_806D2F08(r2)  /* lbl_806D2F08 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80078F4C:
     lfs f0, 0xc(r31)
@@ -1421,9 +1427,9 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_8007920C
     bne KartTireFX_SetVisibleAll4Wheels_L_80078F8C
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80078F8C:
     lwz r4, 0x14(r30)
@@ -1452,9 +1458,9 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     stw r0, 0x10(r1)
     beq KartTireFX_SetVisibleAll4Wheels_L_80079068
     bne KartTireFX_SetVisibleAll4Wheels_L_80078FFC
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80078FFC:
     lfs f0, 0x8(r1)
@@ -1469,9 +1475,9 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_80079068
     bne KartTireFX_SetVisibleAll4Wheels_L_8007903C
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_8007903C:
     lwz r4, 0x14(r30)
@@ -1491,9 +1497,9 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_800790F4
     bne KartTireFX_SetVisibleAll4Wheels_L_80079088
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80079088:
     lfs f0, 0x8(r1)
@@ -1508,9 +1514,9 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_800790F4
     bne KartTireFX_SetVisibleAll4Wheels_L_800790C8
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_800790C8:
     lwz r4, 0x14(r30)
@@ -1530,9 +1536,9 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_80079180
     bne KartTireFX_SetVisibleAll4Wheels_L_80079114
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80079114:
     lfs f0, 0x8(r1)
@@ -1547,9 +1553,9 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_80079180
     bne KartTireFX_SetVisibleAll4Wheels_L_80079154
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_80079154:
     lwz r4, 0x14(r30)
@@ -1569,9 +1575,9 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_8007920C
     bne KartTireFX_SetVisibleAll4Wheels_L_800791A0
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x316
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_800791A0:
     lfs f0, 0x8(r1)
@@ -1586,9 +1592,9 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     cmplwi r30, 0x0
     beq KartTireFX_SetVisibleAll4Wheels_L_8007920C
     bne KartTireFX_SetVisibleAll4Wheels_L_800791E0
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_SetVisibleAll4Wheels_L_800791E0:
     lwz r4, 0x14(r30)
@@ -1737,17 +1743,17 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     lwz r29, 0x24(r31)
     cmplwi r29, 0x0
     bne KartTireFX_ApplyAndRender_L_800792D0
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x47c
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_800792D0:
     cmplwi r29, 0x0
     beq KartTireFX_ApplyAndRender_L_80079318
     bne KartTireFX_ApplyAndRender_L_800792EC
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_800792EC:
     lwz r4, 0x14(r29)
@@ -1767,16 +1773,16 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     addi r29, r29, 0x44
     cmplwi r30, 0x0
     bne KartTireFX_ApplyAndRender_L_80079338
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x495
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079338:
     cmplwi r29, 0x0
     bne KartTireFX_ApplyAndRender_L_80079350
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x496
-    addi r5, r2, -0x7350  /* lbl_806D2F10 */
+    la r5, lbl_806D2F10(r2)  /* lbl_806D2F10 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079350:
     mr r3, r29
@@ -1788,9 +1794,9 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     stw r0, 0x14(r30)
     beq KartTireFX_ApplyAndRender_L_800793B0
     bne KartTireFX_ApplyAndRender_L_80079384
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079384:
     lwz r4, 0x14(r30)
@@ -1812,17 +1818,17 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     lwz r29, 0x28(r31)
     cmplwi r29, 0x0
     bne KartTireFX_ApplyAndRender_L_800793D8
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x47c
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_800793D8:
     cmplwi r29, 0x0
     beq KartTireFX_ApplyAndRender_L_80079420
     bne KartTireFX_ApplyAndRender_L_800793F4
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_800793F4:
     lwz r4, 0x14(r29)
@@ -1842,16 +1848,16 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     addi r29, r29, 0x44
     cmplwi r30, 0x0
     bne KartTireFX_ApplyAndRender_L_80079440
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x495
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079440:
     cmplwi r29, 0x0
     bne KartTireFX_ApplyAndRender_L_80079458
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x496
-    addi r5, r2, -0x7350  /* lbl_806D2F10 */
+    la r5, lbl_806D2F10(r2)  /* lbl_806D2F10 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079458:
     mr r3, r29
@@ -1863,9 +1869,9 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     stw r0, 0x14(r30)
     beq KartTireFX_ApplyAndRender_L_800794B8
     bne KartTireFX_ApplyAndRender_L_8007948C
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_8007948C:
     lwz r4, 0x14(r30)
@@ -1887,17 +1893,17 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     lwz r29, 0x2c(r31)
     cmplwi r29, 0x0
     bne KartTireFX_ApplyAndRender_L_800794E0
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x47c
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_800794E0:
     cmplwi r29, 0x0
     beq KartTireFX_ApplyAndRender_L_80079528
     bne KartTireFX_ApplyAndRender_L_800794FC
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_800794FC:
     lwz r4, 0x14(r29)
@@ -1917,16 +1923,16 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     addi r29, r29, 0x44
     cmplwi r30, 0x0
     bne KartTireFX_ApplyAndRender_L_80079548
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x495
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079548:
     cmplwi r29, 0x0
     bne KartTireFX_ApplyAndRender_L_80079560
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x496
-    addi r5, r2, -0x7350  /* lbl_806D2F10 */
+    la r5, lbl_806D2F10(r2)  /* lbl_806D2F10 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079560:
     mr r3, r29
@@ -1938,9 +1944,9 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     stw r0, 0x14(r30)
     beq KartTireFX_ApplyAndRender_L_800795C0
     bne KartTireFX_ApplyAndRender_L_80079594
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079594:
     lwz r4, 0x14(r30)
@@ -1962,17 +1968,17 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     lwz r29, 0x30(r31)
     cmplwi r29, 0x0
     bne KartTireFX_ApplyAndRender_L_800795E8
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x47c
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_800795E8:
     cmplwi r29, 0x0
     beq KartTireFX_ApplyAndRender_L_80079630
     bne KartTireFX_ApplyAndRender_L_80079604
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079604:
     lwz r4, 0x14(r29)
@@ -1992,16 +1998,16 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     addi r29, r29, 0x44
     cmplwi r30, 0x0
     bne KartTireFX_ApplyAndRender_L_80079650
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x495
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079650:
     cmplwi r29, 0x0
     bne KartTireFX_ApplyAndRender_L_80079668
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x496
-    addi r5, r2, -0x7350  /* lbl_806D2F10 */
+    la r5, lbl_806D2F10(r2)  /* lbl_806D2F10 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079668:
     mr r3, r29
@@ -2013,9 +2019,9 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     stw r0, 0x14(r30)
     beq KartTireFX_ApplyAndRender_L_800796C8
     bne KartTireFX_ApplyAndRender_L_8007969C
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_8007969C:
     lwz r4, 0x14(r30)
@@ -2036,16 +2042,16 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     beq KartTireFX_ApplyAndRender_L_80079764
     lfs f31, 0x4(r31)
     bne KartTireFX_ApplyAndRender_L_800796EC
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x2a4
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_800796EC:
     lwz r0, 0x14(r29)
     rlwinm. r0, r0, 0, 14, 14
     beq KartTireFX_ApplyAndRender_L_8007970C
     lis r4, lbl_80311B04@ha
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     addi r5, r4, lbl_80311B04@l
     li r4, 0x2a5
     bl __assert
@@ -2057,9 +2063,9 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     cmplwi r29, 0x0
     beq KartTireFX_ApplyAndRender_L_80079764
     bne KartTireFX_ApplyAndRender_L_80079738
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079738:
     lwz r4, 0x14(r29)
@@ -2080,16 +2086,16 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     beq KartTireFX_ApplyAndRender_L_80079800
     lfs f31, 0x4(r31)
     bne KartTireFX_ApplyAndRender_L_80079788
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x2a4
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079788:
     lwz r0, 0x14(r29)
     rlwinm. r0, r0, 0, 14, 14
     beq KartTireFX_ApplyAndRender_L_800797A8
     lis r4, lbl_80311B04@ha
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     addi r5, r4, lbl_80311B04@l
     li r4, 0x2a5
     bl __assert
@@ -2101,9 +2107,9 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     cmplwi r29, 0x0
     beq KartTireFX_ApplyAndRender_L_80079800
     bne KartTireFX_ApplyAndRender_L_800797D4
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_800797D4:
     lwz r4, 0x14(r29)
@@ -2124,16 +2130,16 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     beq KartTireFX_ApplyAndRender_L_8007989C
     lfs f31, 0x8(r31)
     bne KartTireFX_ApplyAndRender_L_80079824
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x2a4
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079824:
     lwz r0, 0x14(r29)
     rlwinm. r0, r0, 0, 14, 14
     beq KartTireFX_ApplyAndRender_L_80079844
     lis r4, lbl_80311B04@ha
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     addi r5, r4, lbl_80311B04@l
     li r4, 0x2a5
     bl __assert
@@ -2145,9 +2151,9 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     cmplwi r29, 0x0
     beq KartTireFX_ApplyAndRender_L_8007989C
     bne KartTireFX_ApplyAndRender_L_80079870
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079870:
     lwz r4, 0x14(r29)
@@ -2168,16 +2174,16 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     beq KartTireFX_ApplyAndRender_L_80079938
     lfs f31, 0x8(r31)
     bne KartTireFX_ApplyAndRender_L_800798C0
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x2a4
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_800798C0:
     lwz r0, 0x14(r29)
     rlwinm. r0, r0, 0, 14, 14
     beq KartTireFX_ApplyAndRender_L_800798E0
     lis r4, lbl_80311B04@ha
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     addi r5, r4, lbl_80311B04@l
     li r4, 0x2a5
     bl __assert
@@ -2189,9 +2195,9 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     cmplwi r29, 0x0
     beq KartTireFX_ApplyAndRender_L_80079938
     bne KartTireFX_ApplyAndRender_L_8007990C
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_8007990C:
     lwz r4, 0x14(r29)
@@ -2214,9 +2220,9 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     mr. r30, r3
     beq KartTireFX_ApplyAndRender_L_80079990
     bne KartTireFX_ApplyAndRender_L_80079964
-    addi r3, r2, -0x7368  /* lbl_806D2EF8 */
+    la r3, lbl_806D2EF8(r2)  /* lbl_806D2EF8 */
     li r4, 0x25d
-    addi r5, r2, -0x7360  /* lbl_806D2F00 */
+    la r5, lbl_806D2F00(r2)  /* lbl_806D2F00 */
     bl __assert
     KartTireFX_ApplyAndRender_L_80079964:
     lwz r4, 0x14(r30)
