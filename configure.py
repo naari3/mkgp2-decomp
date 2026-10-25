@@ -1252,7 +1252,7 @@ config.libs = [
             Object(Matching, "game/clRomDtor.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Archive.c"),
             Object(Matching, "game/CollisionFile_FixupPointers.c"),
-            Object(NonMatching, "game/Terrain_GetGroundHeight.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/Terrain_GetGroundHeight.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/Terrain_FindTriangleAtPosition.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Math_SegmentIntersection2D.c"),
             Object(Matching, "game/Terrain_WallSegmentTest.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
