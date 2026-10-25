@@ -5223,6 +5223,11 @@ game/fn_8014E028.c:
 	extabindex  start:0x800255A4 end:0x800255B0
 	.text       start:0x8014E028 end:0x8014E04C
 
+game/Scene_8014E0C4.cpp:
+	extab       start:0x8000E8D4 end:0x8000F0DC
+	extabindex  start:0x800255BC end:0x800258B0
+	.text       start:0x8014E0C4 end:0x80157940
+
 game/Scene_8015AE3C.cpp:
 	extab       start:0x8000F198 end:0x8000F1A0
 	extabindex  start:0x8002597C end:0x80025988

@@ -1846,6 +1846,7 @@ config.libs = [
             Object(Matching, "game/fn_8012BDA4.c"),
             Object(Matching, "game/fn_8012BDF4.c"),
             Object(Matching, "game/SpriteHandle.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_8014E0C4.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
         ],
     },
     {
