@@ -7154,6 +7154,16 @@ triforce/amexi.c:
 	.bss        start:0x806835D0 end:0x806835E0
 	.sbss       start:0x806D1E28 end:0x806D1E30
 
+triforce/amboot.c:
+	.text       start:0x80287E34 end:0x80288048
+	.rodata     start:0x803F25F0 end:0x803F2668
+	.sdata      start:0x806D0C20 end:0x806D0C28
+
+triforce/ambackup.c:
+	.text       start:0x80288048 end:0x80288CC8
+	.bss        start:0x806835E0 end:0x80690E20
+	.sdata2     start:0x806DC918 end:0x806DC920
+
 dolphin/dvd/dvdlow.c:
 	.text       start:0x80294E6C end:0x80294EA4
 	.bss        start:0x806A47A0 end:0x806A4800
