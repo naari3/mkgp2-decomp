@@ -3311,6 +3311,11 @@ game/DbgMenu_Dtor.c:
 	extabindex  start:0x80023384 end:0x80023390
 	.text       start:0x800CE4C4 end:0x800CE54C
 
+game/DbgMenu.cpp:
+	extab       start:0x8000AC18 end:0x8000B0BC
+	extabindex  start:0x80023390 end:0x800236A8
+	.text       start:0x800CE54C end:0x800D2BE0
+
 game/fn_800D2BE0.c:
 	.text       start:0x800D2BE0 end:0x800D2BEC
 
