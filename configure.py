@@ -1543,6 +1543,10 @@ config.libs = [
             Object(NonMatching, "game/HudManagerDisp.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/HudManagerLap.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/HudManagerLife.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
+            Object(NonMatching, "game/HudFind.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
+            Object(NonMatching, "game/ItemViewer.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
+            Object(NonMatching, "game/acLibMedia.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
+            Object(NonMatching, "game/acLibInit.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             # group6-end
             Object(Matching, "game/NokoNokoChallenge.c", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"], extab_padding=b"\x00\x00"),
             Object(Matching, "game/SuikaBallObj_Render.c"),
@@ -2233,6 +2237,7 @@ config.libs = [
             Object(Matching, "Runtime.PPCEABI.H/__va_arg.c", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
             Object(Matching, "Runtime.PPCEABI.H/CPlusLibPPC.cp", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
             Object(Matching, "Runtime.PPCEABI.H/ptmf.c", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
+            Object(NonMatching, "Runtime.PPCEABI.H/MWRTTI.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on", "-inline deferred", "-RTTI on"], extab_padding=b"\x00\x00"),
             Object(Matching, "Runtime.PPCEABI.H/runtime.c", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
             Object(Matching, "Runtime.PPCEABI.H/NMWException.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on", "-inline deferred"], extab_padding=b""),
             Object(Matching, "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on", "-inline deferred", "-RTTI on", "-str nopool"], extab_padding=b"\x02\x55"),
