@@ -909,6 +909,13 @@
     "Enable__16clMapEffectPartsFi": "fn_8016A26C",
     "Update__16clMapEffectPartsFv": "fn_8016A2B8"
   },
+  "src/game/mapobject/fn_8017AD54.cpp": {
+    "__dt__12clModelGroupFv": "fn_8017AD54",
+    "__dt__7clModelFv": "dtor_8017B07C",
+    "__vt__7clModel": "lbl_80491758",
+    "__dt__6ObjectFv": "Object_DtorWithGXSync",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
