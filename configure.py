@@ -1231,6 +1231,14 @@ config.libs = [
             Object(Matching, "MSL_C/mbstring.c"),
         ],
     },
+    DolphinLib(
+        "dolphin_stubs",
+        [
+            Object(Matching, "dolphin/amcstubs/AmcExi2Stubs.c"),
+            Object(Matching, "dolphin/odenotstub/odenotstub.c"),
+            Object(Matching, "dolphin/odemustubs/odemustubs.c"),
+        ],
+    ),
     {
         "lib": "Runtime.PPCEABI.H",
         "mw_version": config.linker_version,
