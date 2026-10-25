@@ -4213,6 +4213,24 @@
     "__ct__13clGetCoinLineFPCcifP5Model": "fn_80220860",
     "__ct__12clGetSumLineFiUcf": "fn_80220678"
   },
+  "src/game/anon_80224ECC.cpp": {
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "Draw__15clCSSceneBannerFv": "fn_80224ECC",
+    "Update__15clCSSceneBannerFv": "fn_80224F0C",
+    "__dt__15clCSSceneBannerFv": "fn_80225124",
+    "__ct__15clCSSceneBannerFv": "fn_802251DC",
+    "Destroy__15clCSSceneBannerFv": "fn_80225378",
+    "__vt__15clCSSceneBanner": "lbl_804EDF14",
+    "__vt__9SceneBase": "lbl_803FE0C8",
+    "__ct__8SceneObjFiiiii": "fn_8023D080",
+    "__dt__8SceneObjFv": "fn_8023CFE0",
+    "Update__8SceneObjFv": "fn_8023CDA8",
+    "Draw__8SceneObjFv": "fn_8023CD54",
+    "__dt__6SpriteFv": "Sprite_Destroy"
+  },
   "src/game/ChallengeGoalCamera_Init.cpp": {
     "__nw__FUl": "Alloc",
     "__ct__13DemoSceneBaseFPCc": "Scene3D_Init",
