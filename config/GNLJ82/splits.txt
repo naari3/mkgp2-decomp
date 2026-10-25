@@ -4981,8 +4981,63 @@ game/coursescene/fn_8017E824.cpp:
 	extabindex  start:0x800269CC end:0x800269D8
 	.text       start:0x8017E824 end:0x8017EB58
 
+game/miyazakiconsole/fn_8017EB58.c:
+	extab       start:0x800119EC end:0x800119F4
+	extabindex  start:0x800269D8 end:0x800269E4
+	.text       start:0x8017EB58 end:0x8017EC90
+
+game/miyazakiconsole/fn_8017FAFC.cpp:
+	extab       start:0x80011A14 end:0x80011A1C
+	extabindex  start:0x80026A14 end:0x80026A20
+	.text       start:0x8017FAFC end:0x8017FB5C
+
+game/miyazakiconsole/fn_8018005C.c:
+	extab       start:0x80011A60 end:0x80011A68
+	extabindex  start:0x80026A50 end:0x80026A5C
+	.text       start:0x8018005C end:0x80180100
+
+game/miyazakiconsole/fn_80180100.c:
+	extab       start:0x80011A68 end:0x80011A70
+	extabindex  start:0x80026A5C end:0x80026A68
+	.text       start:0x80180100 end:0x8018013C
+
+game/miyazakiconsole/fn_8018013C.c:
+	extab       start:0x80011A70 end:0x80011A78
+	extabindex  start:0x80026A68 end:0x80026A74
+	.text       start:0x8018013C end:0x80180170
+
+game/miyazakiconsole/fn_80180170.c:
+	extab       start:0x80011A78 end:0x80011A80
+	extabindex  start:0x80026A74 end:0x80026A80
+	.text       start:0x80180170 end:0x801801CC
+
+game/miyazakiconsole/fn_8018041C.c:
+	extab       start:0x80011A88 end:0x80011A90
+	extabindex  start:0x80026A8C end:0x80026A98
+	.text       start:0x8018041C end:0x80180458
+
+game/miyazakiconsole/fn_80180458.c:
+	extab       start:0x80011A90 end:0x80011A98
+	extabindex  start:0x80026A98 end:0x80026AA4
+	.text       start:0x80180458 end:0x801804CC
+
+game/miyazakiconsole/fn_801804CC.cpp:
+	extab       start:0x80011A98 end:0x80011AA0
+	extabindex  start:0x80026AA4 end:0x80026AB0
+	.text       start:0x801804CC end:0x801805AC
+
 game/fn_801805AC.c:
 	.text       start:0x801805AC end:0x801805B4
+
+game/miyazakiconsole/fn_801805B4.cpp:
+	extab       start:0x80011AA0 end:0x80011AA8
+	extabindex  start:0x80026AB0 end:0x80026ABC
+	.text       start:0x801805B4 end:0x80180670
+
+game/miyazakiconsole/fn_80180670.cpp:
+	extab       start:0x80011AA8 end:0x80011AC0
+	extabindex  start:0x80026ABC end:0x80026AC8
+	.text       start:0x80180670 end:0x801807E0
 
 game/LookupCos.c:
 	extab       start:0x80011C18 end:0x80011C20
