@@ -13,6 +13,7 @@ struct OwnerBase {
 
 struct TaskOwnerA : OwnerBase {
     VHolder<VObject> task;
+    virtual void _key();
     ~TaskOwnerA();
 };
 
@@ -25,6 +26,7 @@ struct OwnerBaseB {
 
 struct TaskOwnerB : OwnerBaseB {
     VHolder<VObject> task;
+    virtual void _key();
     ~TaskOwnerB();
 };
 
