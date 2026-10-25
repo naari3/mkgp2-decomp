@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void Saturate_Double();
-extern void fn_802DCA04();
+extern void HSD_Randf();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D29A8;
@@ -126,15 +126,15 @@ asm void clItemBox_TransitionToDebris(void) { /* 0x8005EA94 size:0x284 */
     stfs f0, 0x8(r30)
     lfs f0, 0x10(r29)
     stfs f0, 0xc(r30)
-    bl fn_802DCA04
+    bl HSD_Randf
     fsubs f0, f1, f26
     fmuls f0, f27, f0
     fmuls f23, f28, f0
-    bl fn_802DCA04
+    bl HSD_Randf
     fsubs f0, f1, f26
     fmuls f0, f27, f0
     fmuls f24, f28, f0
-    bl fn_802DCA04
+    bl HSD_Randf
     fsubs f1, f1, f26
     fmuls f0, f18, f24
     fmuls f1, f27, f1
@@ -154,16 +154,16 @@ asm void clItemBox_TransitionToDebris(void) { /* 0x8005EA94 size:0x284 */
     stfs f1, 0x14(r30)
     stfs f0, 0x18(r30)
     stfs f29, 0x1c(r30)
-    bl fn_802DCA04
+    bl HSD_Randf
     fmuls f1, f30, f1
     lfs f2, lbl_806D29DC(r2)
     fmr f3, f30
     bl Saturate_Double
     stfs f1, 0x24(r30)
-    bl fn_802DCA04
+    bl HSD_Randf
     fmuls f0, f31, f1
     stfs f0, 0x28(r30)
-    bl fn_802DCA04
+    bl HSD_Randf
     fmuls f0, f31, f1
     addi r31, r31, 0x1
     cmplwi r31, 0xf
