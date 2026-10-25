@@ -81,7 +81,7 @@ void KartFx_RingExplodeRayTick(RingEffectView *effect) {
         break;
     case 1: break;
     }
-    GrowToLimit(&effect->amount, lbl_806D51F8, lbl_806D51C4);
+    GrowToLimit(&effect->amount, lbl_806D51F8, 1.0f);
     if (Decay(&effect->lifetime, lbl_806D51C8)) {
         effect->active = 0;
         DrawEffect_Free(effect);

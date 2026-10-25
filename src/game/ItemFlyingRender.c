@@ -54,8 +54,8 @@ void Item_RenderFlyingFromKart(ItemFlyingRenderView *item, void *attachment,
         break;
     case 1:
         item->renderBlend += lbl_806D5AFC;
-        if (lbl_806D5AB8 < item->renderBlend) {
-            item->renderBlend = lbl_806D5AB8;
+        if (1.0f < item->renderBlend) {
+            item->renderBlend = 1.0f;
         }
         break;
     }

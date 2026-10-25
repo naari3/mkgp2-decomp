@@ -29,7 +29,7 @@ void KartFx_JumpRingGlowTick(JumpEffectView *effect) {
     float step, maximum, current;
     current = effect->scale;
     step = lbl_806D51C8;
-    maximum = lbl_806D51C4;
+    maximum = 1.0f;
     effect->scale = current + step;
     if (maximum < effect->scale) effect->scale = maximum;
     VfxSlot_SetScaleUniform(effect->vfx, lbl_806D51D0 * effect->scale);
@@ -54,7 +54,7 @@ void KartFx_JumpDustSmokeTick(JumpEffectView *effect) {
         float step, maximum, current;
         current = effect->scale;
         step = lbl_806D51C8;
-        maximum = lbl_806D51C4;
+        maximum = 1.0f;
         effect->scale = current + step;
         if (maximum < effect->scale) {
             effect->scale = maximum;

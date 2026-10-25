@@ -77,12 +77,12 @@ void KartFx_DustStreamerPieceTick(DustEffect *effect)
         Vec3_Copy(&effect->position, &positions.entries[effect->index]);
         if (effect->index != 0)
             VfxSlot_SetRotationZ(effect->slot, lbl_806D521C * Rand_RangeFloat(lbl_806D5220, lbl_806D5224));
-        effect->scale = lbl_806D51C4;
+        effect->scale = 1.0f;
         if (effect->index == 0) effect->scale *= lbl_806D5228;
-        else effect->scale *= Rand_RangeFloat(lbl_806D51EC, lbl_806D51C4);
+        else effect->scale *= Rand_RangeFloat(lbl_806D51EC, 1.0f);
         effect->growth = lbl_806D51C0;
-        effect->stretch = lbl_806D51C4;
-        effect->lifetime = lbl_806D51C4;
+        effect->stretch = 1.0f;
+        effect->lifetime = 1.0f;
         effect->phase = 1;
         effect->subphase = 0;
         /* Initialization continues immediately into the growth state. */
@@ -96,8 +96,8 @@ void KartFx_DustStreamerPieceTick(DustEffect *effect)
         case 1:
             if (effect->delay == 0) {
                 effect->growth += lbl_806D51F8;
-                if (lbl_806D51C4 < effect->growth) {
-                    effect->growth = lbl_806D51C4;
+                if (1.0f < effect->growth) {
+                    effect->growth = 1.0f;
                     effect->delay = 10;
                     ++effect->subphase;
                 }

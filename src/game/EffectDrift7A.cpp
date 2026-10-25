@@ -51,7 +51,7 @@ void Effect_DriftExplosion_Res7A_JointChain_Update(DriftEffect *effect) {
     }
     case 1: break;
     }
-    float maximum = lbl_806D5584;
+    float maximum = 1.0f;
     effect->growth += lbl_806D55B0;
     if (maximum <= effect->growth) {
         effect->growth = maximum;

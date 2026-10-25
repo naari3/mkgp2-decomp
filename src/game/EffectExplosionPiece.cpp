@@ -56,7 +56,7 @@ void Effect_ExplosionPiece_Update(ExplosionEffect *effect) {
         case 2: VfxSlot_BindResourceEx(effect->slot, 0x6E, 0); break;
         }
         Vec3_Copy(&effect->origin, &effect->previous);
-        if (effect->initialMode == 0) effect->growth = lbl_806D54B8;
+        if (effect->initialMode == 0) effect->growth = 1.0f;
         else effect->growth = lbl_806D54E8;
         switch (effect->sizeMode) {
         case 1: effect->initialScale = lbl_806D54C0 * Rand_RangeFloat(lbl_806D54F8, lbl_806D54FC); break;
@@ -65,27 +65,27 @@ void Effect_ExplosionPiece_Update(ExplosionEffect *effect) {
         case 4: effect->initialScale = lbl_806D5500 * Rand_RangeFloat(lbl_806D54F8, lbl_806D54FC); break;
         }
         if (effect->initialMode == 0) effect->fade = lbl_806D54E8;
-        else effect->fade = lbl_806D54B8;
+        else effect->fade = 1.0f;
         effect->yaw = lbl_806D54C4 * Rand_RangeFloat(lbl_806D54C8, lbl_806D54CC);
         effect->angularVelocity = lbl_806D54C4 * Rand_RangeFloat(lbl_806D5504, lbl_806D5508);
         if (effect->kart) Mtx44_GetTranslation_RowMajor(&effect->previous, KartDriver_GetKartRootMtx(effect->kart));
         GetSpawnPosition(&effect->tracked, lbl_806D54E8, lbl_806D54E8, lbl_806D54E8);
         effect->timers[0] = 15;
-        effect->tracking = lbl_806D54B8;
+        effect->tracking = 1.0f;
         ++effect->state;
         break;
     case 1:
         {
             effect->growth += lbl_806D54B4;
-            float limit = lbl_806D54B8;
+            float limit = 1.0f;
             if (limit <= effect->growth) effect->growth = limit;
         }
         {
             effect->fade += lbl_806D54B4;
-            float limit = lbl_806D54B8;
+            float limit = 1.0f;
             if (limit <= effect->fade) effect->fade = limit;
         }
-        if (lbl_806D54B8 <= effect->growth && lbl_806D54B8 <= effect->fade) ++effect->state;
+        if (1.0f <= effect->growth && 1.0f <= effect->fade) ++effect->state;
         break;
     case 2:
         effect->growth += lbl_806D550C;
@@ -95,7 +95,7 @@ void Effect_ExplosionPiece_Update(ExplosionEffect *effect) {
     }
     if (effect->timers[0] == 0) {
         effect->tracking -= lbl_806D5514;
-        float zero = lbl_806D54E8;
+        float zero = 0.0f;
         if (effect->tracking < zero) effect->tracking = zero;
     }
     Vec3_Scale(&effect->velocity, &effect->velocity, lbl_806D5518);
