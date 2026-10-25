@@ -413,6 +413,7 @@ config.libs = [
             Object(Matching, "init/__check_pad3.c"),
             Object(Matching, "init/__start.c"),
             Object(Matching, "init/debug_bba.c"),
+            Object(Matching, "init/__ppc_eabi_init.c"),
         ],
     },
     {
@@ -1845,6 +1846,7 @@ config.libs = [
             Object(Matching, "dolphin/os/OSCache.c"),
             Object(Matching, "dolphin/os/OSContext.c"),
             Object(Matching, "dolphin/os/OSError.c"),
+            Object(Matching, "dolphin/os/OSExec.c"),
             Object(Matching, "dolphin/os/OSFont.c"),
             Object(Matching, "dolphin/os/OSInterrupt.c"),
             Object(Matching, "dolphin/os/OSLink.c"),

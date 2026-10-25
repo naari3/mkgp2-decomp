@@ -6111,6 +6111,12 @@ dolphin/os/OSError.c:
 	.bss        start:0x80679F70 end:0x80679FC0
 	.sdata      start:0x806D0AB0 end:0x806D0AB8
 
+dolphin/os/OSExec.c:
+	.text       start:0x802581E8 end:0x80258B48
+	.data       start:0x804F2B28 end:0x804F2B38
+	.sdata      start:0x806D0AB8 end:0x806D0AC0
+	.sbss       start:0x806D1B28 end:0x806D1B30
+
 dolphin/os/OSFont.c:
 	.text       start:0x80258B48 end:0x80259A1C
 	.data       start:0x804F2B38 end:0x804F3648
@@ -6168,6 +6174,9 @@ dolphin/os/OSThread.c:
 dolphin/os/OSTime.c:
 	.text       start:0x8025CC68 end:0x8025D08C
 	.data       start:0x804F36D8 end:0x804F3738
+
+init/__ppc_eabi_init.c:
+	.text       start:0x8025D08C end:0x8025D120
 
 dolphin/mtx/mtx.c:
 	.text       start:0x8025D120 end:0x8025DEAC
