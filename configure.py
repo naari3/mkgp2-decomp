@@ -2076,6 +2076,23 @@ config.libs = [
         ],
     ),
     {
+        # zeldaret/tp's odemuexi2; this build used -inline deferred (reverse function order)
+        "lib": "odemuexi2",
+        "mw_version": "GC/1.2.5n",
+        "cflags": [
+            *cflags_base,
+            "-use_lmw_stmw on",
+            "-str reuse,pool,readonly",
+            "-common off",
+            "-inline deferred",
+            "-i include/libc",
+        ],
+        "progress_category": "sdk",
+        "objects": [
+            Object(Matching, "odemuexi2/DebuggerDriver.c"),
+        ],
+    },
+    {
         "lib": "TRK_MINNOW_DOLPHIN",
         "mw_version": "GC/2.6",
         "cflags": cflags_trk,
