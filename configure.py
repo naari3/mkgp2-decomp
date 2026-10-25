@@ -2160,6 +2160,19 @@ config.libs = [
         "objects": [
             Object(NonMatching, "triforce/jvsio.c"),
             Object(NonMatching, "triforce/dvdlow.c", extra_cflags=["-O4,p", "-inline noauto"]),
+            Object(Matching, "triforce/dikey.c", extra_cflags=["-O4,p", "-inline noauto"]),
+            Object(NonMatching, "triforce/random.c", extra_cflags=["-O4,p", "-inline noauto"]),
+            Object(Matching, "triforce/dvdcmd.c", extra_cflags=["-O4,p", "-inline noauto"]),
+        ],
+    },
+    {
+        # Triforce AM baseboard libraries built with a newer compiler
+        "lib": "triforce_am",
+        "mw_version": "GC/1.3.2",
+        "cflags": [*cflags_dolphin, "-DSDK_REVISION=2", "-inline noauto"],
+        "progress_category": "sdk",
+        "objects": [
+            Object(Matching, "triforce/amexi.c"),
         ],
     },
     {
