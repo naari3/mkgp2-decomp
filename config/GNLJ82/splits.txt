@@ -8827,6 +8827,12 @@ game/DNBress.cpp:
 	extabindex  start:0x8002A6BC end:0x8002A710
 	.text       start:0x80226954 end:0x80227FA4
 
+game/DNFlash.cpp:
+	extab       start:0x8001BB78 end:0x8001BC10
+	extabindex  start:0x8002A71C end:0x8002A770
+	.text       start:0x802280F8 end:0x80228D64
+	.rodata     start:0x803D0390 end:0x803D08A8
+
 game/fn_8022CDE4.c:
 	extab       start:0x8001BFE0 end:0x8001BFE8
 	extabindex  start:0x8002A8CC end:0x8002A8D8
