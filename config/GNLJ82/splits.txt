@@ -4303,6 +4303,11 @@ game/KartItem_ApplyEffectToTarget.c:
 	extabindex  start:0x80023BB8 end:0x80023BC4
 	.text       start:0x800DD060 end:0x800DD1EC
 
+game/ItemCollision_Check.cpp:
+	extab       start:0x8000B474 end:0x8000B47C
+	extabindex  start:0x80023BC4 end:0x80023BD0
+	.text       start:0x800DD1EC end:0x800DD5FC
+
 game/ItemTracker.c:
 	extab       start:0x8000B47C end:0x8000B49C
 	extabindex  start:0x80023BD0 end:0x80023C00
