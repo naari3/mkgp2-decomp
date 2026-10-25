@@ -2703,6 +2703,11 @@ game/CourseData_GetDefaultPathKey_Safe.c:
 game/CourseData.c:
 	.text       start:0x800A0BDC end:0x800A0BE8
 
+game/RaceScene_RenderPass.cpp:
+	extab       start:0x8000981C end:0x80009824
+	extabindex  start:0x800222E0 end:0x800222EC
+	.text       start:0x800A0BE8 end:0x800A0EF4
+
 game/BtMode_RenderFrame.c:
 	extab       start:0x80009A60 end:0x80009A68
 	extabindex  start:0x80022310 end:0x8002231C
