@@ -2428,10 +2428,20 @@ game/ItemEffectBus.c:
 	extabindex  start:0x80021ECC end:0x80021F68
 	.text       start:0x8009107C end:0x80091FD4
 
+game/Sci2Card_PollAndAdvanceState.c:
+	extab       start:0x80009428 end:0x80009430
+	extabindex  start:0x80021F68 end:0x80021F74
+	.text       start:0x80091FD4 end:0x80092408
+
 game/CardSession_OnServiceTriggerAbort.c:
 	extab       start:0x80009430 end:0x80009438
 	extabindex  start:0x80021F74 end:0x80021F80
 	.text       start:0x80092408 end:0x80092460
+
+game/CardRegister_Session_Tick.c:
+	extab       start:0x80009438 end:0x80009440
+	extabindex  start:0x80021F80 end:0x80021F8C
+	.text       start:0x80092460 end:0x80092918
 
 game/CardRegister_KickoffArm.c:
 	extab       start:0x80009440 end:0x80009448
@@ -2468,6 +2478,11 @@ game/Sci2Card_BeginCleaning.c:
 	extabindex  start:0x80021FD4 end:0x80021FE0
 	.text       start:0x80092F04 end:0x80092F4C
 
+game/CardSession_PollFsmStatus.c:
+	extab       start:0x80009478 end:0x80009480
+	extabindex  start:0x80021FE0 end:0x80021FEC
+	.text       start:0x80092F4C end:0x800930B4
+
 game/CardRW_GetSubState.c:
 	.text       start:0x800934A8 end:0x800934B0
 
@@ -2486,10 +2501,25 @@ game/CardSave_Tick_CaptureAndStart.c:
 	extabindex  start:0x80022010 end:0x8002201C
 	.text       start:0x800937D4 end:0x80093C28
 
+game/CardPrintJob_TickFontTransfer.c:
+	extab       start:0x800094A8 end:0x800094B0
+	extabindex  start:0x80022028 end:0x80022034
+	.text       start:0x8009450C end:0x800948D4
+
 game/CardPrintJob_KickFontTransfer.c:
 	extab       start:0x800094B0 end:0x800094B8
 	extabindex  start:0x80022034 end:0x80022040
 	.text       start:0x800948D4 end:0x80094950
+
+game/Sci2Card_PrintReceipt.c:
+	extab       start:0x800094B8 end:0x800094C8
+	extabindex  start:0x80022040 end:0x80022058
+	.text       start:0x80094950 end:0x80094D80
+
+game/Sci2Card_WriteTrackData.c:
+	extab       start:0x800094D8 end:0x800094F0
+	extabindex  start:0x80022070 end:0x80022094
+	.text       start:0x80095C5C end:0x80096034
 
 game/CardReadCommand.c:
 	extab       start:0x80009500 end:0x80009518
