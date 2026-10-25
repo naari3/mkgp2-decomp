@@ -6144,6 +6144,21 @@ game/anon_8020C650.cpp:
 	extabindex  start:0x80029C78 end:0x80029CC0
 	.text       start:0x8020C650 end:0x8020C974
 
+game/anon_8020C974.cpp:
+	extab       start:0x8001976C end:0x800197E4
+	extabindex  start:0x80029CC0 end:0x80029D20
+	.text       start:0x8020C974 end:0x8020D1C0
+
+game/anon_8020D1C0.cpp:
+	extab       start:0x800197E4 end:0x800198C8
+	extabindex  start:0x80029D20 end:0x80029D5C
+	.text       start:0x8020D1C0 end:0x8020DAA0
+
+game/anon_8020DAA0.cpp:
+	extab       start:0x800198C8 end:0x80019950
+	extabindex  start:0x80029D5C end:0x80029D98
+	.text       start:0x8020DAA0 end:0x8020E2D8
+
 game/fn_8020E388.c:
 	extab       start:0x80019968 end:0x80019970
 	extabindex  start:0x80029DBC end:0x80029DC8
