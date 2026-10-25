@@ -78,7 +78,10 @@ void Matrix4_PreMultiplyRotY(Matrix4 destination, const Matrix4 source, float an
     sine = LUT_Sine(angle);
     cosine = LUT_Cosine(angle);
     Matrix4_ApplyY(source, rotation, product, sine, cosine);
-    Matrix4_Copy(destination, product);
+    {
+        float (*p)[4] = product;
+        Matrix4_Copy(destination, p);
+    }
 }
 
 void Matrix4_PreMultiplyRotX(Matrix4 destination, const Matrix4 source, float angle)
@@ -90,5 +93,8 @@ void Matrix4_PreMultiplyRotX(Matrix4 destination, const Matrix4 source, float an
     sine = LUT_Sine(angle);
     cosine = LUT_Cosine(angle);
     Matrix4_ApplyX(source, rotation, product, sine, cosine);
-    Matrix4_Copy(destination, product);
+    {
+        float (*p)[4] = product;
+        Matrix4_Copy(destination, p);
+    }
 }
