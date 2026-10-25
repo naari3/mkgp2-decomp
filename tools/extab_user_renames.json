@@ -1895,6 +1895,12 @@
     "extab_KartDriver_GetJointPosition": "@etb_800061E0",
     "extabindex_KartDriver_GetJointPosition": "@eti_8001FE68"
   },
+  "src/game/DisplayStruct_Init.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__7ISESlotFv": "ISESlot_Construct",
+    "Init__13DisplayStructFv": "DisplayStruct_Init"
+  },
   "src/game/KartDriver_New_Full.c": {
     "__ct__15KartFullDisplayFv": "DisplayStruct_Init",
     "__ct__14KartFullDriverFiiPfiii": "KartDriver_New_Full",
