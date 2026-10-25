@@ -5316,5 +5316,16 @@
     "Value__10FlowFaderIFv": "fn_8020A788",
     "Set__10FlowFaderIFiis": "fn_8020A7CC",
     "__vt__10clFAllDisp": "lbl_804EE398"
+  },
+  "src/game/TimerDisp.cpp": {
+    "Reset__11clTimerDispFv": "fn_802321D4",
+    "Draw__11clTimerDispFv": "fn_802321F8",
+    "SetTime__11clTimerDispFf": "fn_80232284",
+    "__dt__11clTimerDispFv": "fn_80232550",
+    "__ct__11clTimerDispFv": "fn_802325FC",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim",
+    "__dt__6SpriteFv": "Sprite_Destroy"
   }
 }
