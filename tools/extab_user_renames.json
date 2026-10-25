@@ -1497,6 +1497,9 @@
     "__dt__15ShadowAreaEntryFv": "dtor_800AA980",
     "__dt__14ShadowAreaBaseFv": "dtor_800AB134"
   },
+  "src/game/ShadowAreaMgr.cpp": {
+    "__ct__13ShadowAreaMgrFPv": "ShadowAreaMgr_Ctor"
+  },
   "src/game/SpriteSlot_TickAnim.c": {
     "extab_SpriteSlot_TickAnim": "@etb_8000B284",
     "extabindex_SpriteSlot_TickAnim": "@eti_80023954"

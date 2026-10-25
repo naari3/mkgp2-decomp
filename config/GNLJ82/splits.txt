@@ -2345,6 +2345,11 @@ game/ShadowAreaMgr_Ctor.c:
 	extabindex  start:0x800226D0 end:0x800226DC
 	.text       start:0x800AAA20 end:0x800AAAC4
 
+game/ShadowAreaMgr.cpp:
+	extab       start:0x80009FD8 end:0x8000A074
+	extabindex  start:0x800226DC end:0x80022730
+	.text       start:0x800AAAC4 end:0x800AB17C
+
 game/Tachometer.c:
 	extab       start:0x8000A074 end:0x8000A0C4
 	extabindex  start:0x80022730 end:0x80022760
