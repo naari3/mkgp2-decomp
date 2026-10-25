@@ -1389,6 +1389,11 @@ game/UI_PageDispatcher.c:
 	.text       start:0x800668FC end:0x80066B74
 	.data       start:0x803FDE78 end:0x803FDEFC
 
+game/SystemInfo_UI.cpp:
+	extab       start:0x80008100 end:0x80008108
+	extabindex  start:0x80020FE4 end:0x80020FF0
+	.text       start:0x80066B74 end:0x80066E10
+
 game/NetDiag_QualityPage.c:
 	extab       start:0x80008110 end:0x80008118
 	extabindex  start:0x80020FFC end:0x80021008
