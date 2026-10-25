@@ -3005,6 +3005,11 @@ game/EffectVfx82_FieldItemDropPuff_Tick.c:
 	extabindex  start:0x80022F40 end:0x80022F4C
 	.text       start:0x800C2F48 end:0x800C3124
 
+game/EffectVfx4E_TextSplash_Tick.c:
+	extab       start:0x8000A940 end:0x8000A948
+	extabindex  start:0x80022F4C end:0x80022F58
+	.text       start:0x800C3124 end:0x800C34F8
+
 game/EffectVfx7F_PulseFan_Tick.c:
 	extab       start:0x8000A948 end:0x8000A950
 	extabindex  start:0x80022F58 end:0x80022F64
