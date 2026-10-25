@@ -818,6 +818,7 @@ config.libs = [
             Object(Matching, "game/KartItem_RenderCb_Mode5_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartItem_RenderCb_Mode6_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartItem_RenderCb_Mode2or4_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/KartItem_RenderCb_Modes.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectState_HasContent.c"),
             Object(Matching, "game/EffectSteering.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/EffectSteeringCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
@@ -1671,6 +1672,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
     "game/ItemUseStats",
+    "game/KartItem_RenderCb_Modes",
 ]
 
 

@@ -903,6 +903,12 @@ game/KartItem_RenderCb_Mode2or4_Pre.c:
 	extabindex  start:0x800207B0 end:0x800207BC
 	.text       start:0x80056A24 end:0x80056A48
 
+game/KartItem_RenderCb_Modes.c:
+	extab       start:0x800075DC end:0x800075FC
+	extabindex  start:0x800207BC end:0x800207EC
+	.text       start:0x80056A48 end:0x80056CB0
+	.data       start:0x803F984C end:0x803F9880
+
 game/TornadoEffect.c:
 	extab       start:0x800075FC end:0x800076B0
 	extabindex  start:0x800207EC end:0x800208A0
