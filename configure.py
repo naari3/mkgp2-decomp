@@ -1812,6 +1812,9 @@ config.libs = [
             Object(Matching, "game/ChallengeGoalCamera_Init.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SuikaBallObj_Init.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ChallengeDemoShell.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ChallengeDemoObj.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ChallengeDemoTornado.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ChallengeDemoUra.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
         ],
     },
     {

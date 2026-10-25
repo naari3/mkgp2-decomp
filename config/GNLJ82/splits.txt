@@ -4925,6 +4925,21 @@ game/ChallengeDemoShell.cpp:
 	extabindex  start:0x800248CC end:0x800248FC
 	.text       start:0x80124F2C end:0x80125948
 
+game/ChallengeDemoObj.cpp:
+	extab       start:0x8000C18C end:0x8000C268
+	extabindex  start:0x8002492C end:0x8002495C
+	.text       start:0x80126CC4 end:0x80127584
+
+game/ChallengeDemoTornado.cpp:
+	extab       start:0x8000C268 end:0x8000C344
+	extabindex  start:0x8002495C end:0x8002498C
+	.text       start:0x80127584 end:0x80127ECC
+
+game/ChallengeDemoUra.cpp:
+	extab       start:0x8000C344 end:0x8000C444
+	extabindex  start:0x8002498C end:0x800249BC
+	.text       start:0x80127ECC end:0x801287F8
+
 game/BiribiriLand.c:
 	extab       start:0x8000CE64 end:0x8000D014
 	extabindex  start:0x80024B6C end:0x80024BA8
