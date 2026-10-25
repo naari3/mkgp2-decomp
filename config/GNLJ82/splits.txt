@@ -552,6 +552,11 @@ game/LakituStart_Dtor.c:
 game/KartItem_Fields.c:
 	.text       start:0x8003F364 end:0x8003F418
 
+game/KartItem_RankSlot.c:
+	extab       start:0x80006150 end:0x80006160
+	extabindex  start:0x8001FD90 end:0x8001FDA8
+	.text       start:0x8003F418 end:0x8003F518
+
 game/KartMovement.c:
 	.text       start:0x8003F518 end:0x8003F528
 
@@ -573,8 +578,34 @@ game/KartItem_TriggerStateAction.c:
 game/KartMovement_CanReceiveItem.c:
 	.text       start:0x8003F5E8 end:0x8003F668
 
+game/KartItem_CancelAndQueueDefault.c:
+	extab       start:0x80006178 end:0x80006180
+	extabindex  start:0x8001FDCC end:0x8001FDD8
+	.text       start:0x8003F668 end:0x8003F77C
+
+game/RenderObj_UseItem.c:
+	extab       start:0x80006180 end:0x80006188
+	extabindex  start:0x8001FDD8 end:0x8001FDE4
+	.text       start:0x8003F77C end:0x8003FFD0
+	.data       start:0x803F5BF4 end:0x803F5C24
+
+game/KartMovement_EquipItem.c:
+	extab       start:0x80006188 end:0x80006190
+	extabindex  start:0x8001FDE4 end:0x8001FDF0
+	.text       start:0x8003FFD0 end:0x800404C4
+
+game/KartItem_CancelIfNotForced.c:
+	extab       start:0x80006190 end:0x80006198
+	extabindex  start:0x8001FDF0 end:0x8001FDFC
+	.text       start:0x800404C4 end:0x80040600
+
 game/KartMovement_GetCurrentItemId.c:
 	.text       start:0x80040600 end:0x80040608
+
+game/KartMovement_Reset.c:
+	extab       start:0x80006198 end:0x800061C8
+	extabindex  start:0x8001FDFC end:0x8001FE44
+	.text       start:0x80040608 end:0x80040C24
 
 game/KartReaction.c:
 	extab       start:0x800061C8 end:0x800061E0
@@ -1189,6 +1220,11 @@ game/dtor_8006178C.c:
 game/FinalLapCoinJump_SetEnable.c:
 	.text       start:0x80061804 end:0x8006181C
 
+game/ShadowBillboard_Lerp.c:
+	extab       start:0x80007E84 end:0x80007E8C
+	extabindex  start:0x80020E04 end:0x80020E10
+	.text       start:0x8006181C end:0x80061918
+
 game/ShadowBillboard_Setters.c:
 	.text       start:0x80061918 end:0x80061954
 
@@ -1577,6 +1613,11 @@ game/Jyugemu_ReverseFlag_Ctor.c:
 
 game/Jyugemu_ReverseFlag_Enable.c:
 	.text       start:0x8008117C end:0x80081184
+
+game/CreditMgr.c:
+	extab       start:0x80008A64 end:0x80008D0C
+	extabindex  start:0x80021764 end:0x800217E8
+	.text       start:0x80081184 end:0x8008299C
 
 game/PCBCommBroadcast.c:
 	extab       start:0x80008D0C end:0x80008D14

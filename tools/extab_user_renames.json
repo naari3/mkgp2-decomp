@@ -481,6 +481,10 @@
     "__ct__22JyugemuReverseFlagCtorFPv": "Jyugemu_ReverseFlag_Ctor",
     "__ct__15ReverseNormal3DFPvi": "clNormal3D_Construct"
   },
+  "src/game/CreditMgr.c": {
+    "extab_CreditMgr_DrawCoinCreditBanner": "@etb_80008A6C",
+    "extabindex_CreditMgr_DrawCoinCreditBanner": "@eti_80021764"
+  },
   "src/game/VfxSlot_SetMatrixSourceEnabled.c": {
     "extab_VfxSlot_SetMatrixSourceEnabled": "@etb_8000A538",
     "extabindex_VfxSlot_SetMatrixSourceEnabled": "@eti_800229B8"
