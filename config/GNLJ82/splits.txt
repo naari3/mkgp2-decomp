@@ -3699,6 +3699,11 @@ game/clFlowItemSelect_Init.c:
 	extabindex  start:0x80027EA8 end:0x80027EB4
 	.text       start:0x801CC2EC end:0x801CCA30
 
+game/dtor_801CCA30.cpp:
+	extab       start:0x80014804 end:0x8001482C
+	extabindex  start:0x80027EB4 end:0x80027EC0
+	.text       start:0x801CCA30 end:0x801CCAAC
+
 game/fn_801D394C.c:
 	extab       start:0x80015214 end:0x8001521C
 	extabindex  start:0x8002804C end:0x80028058
@@ -3857,6 +3862,11 @@ game/fn_801DBA84.c:
 	extab       start:0x8001572C end:0x80015734
 	extabindex  start:0x80028334 end:0x80028340
 	.text       start:0x801DBA84 end:0x801DBAA8
+
+game/dtor_801DC460.cpp:
+	extab       start:0x800158D8 end:0x80015900
+	extabindex  start:0x80028364 end:0x80028370
+	.text       start:0x801DC460 end:0x801DC4DC
 
 game/fn_801DC4DC.c:
 	extab       start:0x80015900 end:0x80015908
@@ -4062,6 +4072,31 @@ game/KartController_TimedUpdate.cpp:
 	extabindex  start:0x800288EC end:0x800288F8
 	.text       start:0x801E8140 end:0x801E81D8
 
+game/dtor_801E89E8.cpp:
+	extab       start:0x800169B8 end:0x800169E0
+	extabindex  start:0x8002891C end:0x80028928
+	.text       start:0x801E89E8 end:0x801E8A64
+
+game/dtor_801E8A64.cpp:
+	extab       start:0x800169E0 end:0x80016A08
+	extabindex  start:0x80028928 end:0x80028934
+	.text       start:0x801E8A64 end:0x801E8AE0
+
+game/dtor_801E8AE0.cpp:
+	extab       start:0x80016A08 end:0x80016A30
+	extabindex  start:0x80028934 end:0x80028940
+	.text       start:0x801E8AE0 end:0x801E8B70
+
+game/dtor_801E8B70.cpp:
+	extab       start:0x80016A30 end:0x80016A58
+	extabindex  start:0x80028940 end:0x8002894C
+	.text       start:0x801E8B70 end:0x801E8C00
+
+game/dtor_801E8C00.cpp:
+	extab       start:0x80016A58 end:0x80016A80
+	extabindex  start:0x8002894C end:0x80028958
+	.text       start:0x801E8C00 end:0x801E8C7C
+
 game/fn_801E8C7C.c:
 	.text       start:0x801E8C7C end:0x801E8C90
 	.ctors      start:0x802E8924 end:0x802E8928
@@ -4117,8 +4152,18 @@ game/dtor_801EECD8.c:
 	extabindex  start:0x80028B80 end:0x80028B8C
 	.text       start:0x801EECD8 end:0x801EED14
 
+game/dtor_801F0B58.cpp:
+	extab       start:0x80016E44 end:0x80016E6C
+	extabindex  start:0x80028BBC end:0x80028BC8
+	.text       start:0x801F0B58 end:0x801F0BD4
+
 game/fn_801F0CBC.c:
 	.text       start:0x801F0CBC end:0x801F0CC0
+
+game/dtor_801F2724.cpp:
+	extab       start:0x80016F84 end:0x80016FAC
+	extabindex  start:0x80028D0C end:0x80028D18
+	.text       start:0x801F2724 end:0x801F27B4
 
 game/DisplayBuffer_GetByIndex.c:
 	extab       start:0x800174E4 end:0x800174EC
