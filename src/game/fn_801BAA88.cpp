@@ -233,7 +233,7 @@ void SetScreenBrightness(float b);
 void fn_8011FAB8(void);
 void fn_8011FAFC(ResCtrl *r, int layer);
 void fn_801A0004(Sprite *s);
-void Sprite_AdvanceAnim(Sprite *s, float step);
+unsigned char Sprite_AdvanceAnim(Sprite *s, float step);
 void *fn_801F8E58(void);
 void fn_801F8A34(void *mgr, void *t, int layer);
 void fn_801F8E90(void *t);
@@ -340,6 +340,15 @@ struct FadeObj {
     FadeTrack tracks[5];
     unsigned char shown;
     unsigned char flush;
+    FadeObj(Sprite *s, int d) : sprite(s), delay(d) {
+        shown = 0;
+        flush = 0;
+        tracks[0].active = 0;
+        tracks[1].active = 0;
+        tracks[2].active = 0;
+        tracks[3].active = 0;
+        tracks[4].active = 0;
+    }
     FadeObj() : sprite(0), delay(0) {
         shown = 0;
         flush = 0;
@@ -1757,7 +1766,6 @@ void InitRumbleController(int a);
 }
 
 struct NameEntry;
-extern "C" void fn_801BE170(NameEntry *self);
 
 /* --- the card flow itself --- */
 
@@ -1766,6 +1774,8 @@ struct KeyLabel {
     int x;
     int y;
 };
+
+extern "C" int fn_801F96D0(unsigned short code);
 
 /* One key of the name entry keyboard (0x20). */
 struct NameKey {
@@ -1779,7 +1789,36 @@ struct NameKey {
     unsigned char sel;
     float t;
     float t2;
+    void Select() {
+        lit = 1;
+        blink = 0;
+        sel = 1;
+        t = lbl_806D9A74;
+    }
+    void Deselect() {
+        lit = 0;
+        sel = 0;
+    }
+    NameKey(short px, short py, unsigned short c) : x(px), y(py), code(c), res(0x2B00), lit(0) {
+        blink = 1;
+        sel = 0;
+        t = lbl_806D9A74;
+        t2 = lbl_806D9A74;
+        if (code == 9) {
+            res = 0x2B00;
+        } else if (code == 0x8140) {
+            res = 0x1912;
+        } else {
+            res = fn_801F96D0(code);
+        }
+    }
 };
+
+struct KeyTable {
+    const unsigned short *chars;
+    const unsigned short *marks[2];
+};
+extern "C" KeyTable lbl_8049A8F8[4];
 
 /* A group of keys that light up together (0x1C). */
 struct KeyGroup {
@@ -1788,43 +1827,259 @@ struct KeyGroup {
         short y;
         int res;
     } img[2];
-    short lx;
-    short ly;
+    struct {
+        short x;
+        short y;
+    } label;
     int x14;
     signed char cols[4];
+    bool HasCol(int c) {
+        for (int i = 0; i < 4; i++) {
+            if (cols[i] == c) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+extern "C" {
+unsigned long strlen(const char *s);
+char *strcpy(char *d, const char *s);
+void *FUN_8003b120(unsigned long n);
+void SharedPtr_Init(void *sp, void *p);
+extern const char lbl_8039A484[];
+extern const char lbl_8039A4EC[];
+}
+
+inline void *operator new(unsigned long, void *p) {
+    return p;
+}
+
+struct ClStr {
+    char *ptr;
+    ClStr(const char *s) {
+        SharedPtr_Init(this, FUN_8003b120(strlen(s) + 1));
+        strcpy(ptr, s);
+    }
+    ~ClStr();
+};
+
+struct exception {
+    exception() {}
+    virtual ~exception();
+};
+
+struct logic_error : exception {
+    ClStr msg;
+    logic_error(const char *s) : msg(s) {}
+    virtual ~logic_error();
+};
+
+struct length_error : logic_error {
+    length_error(const char *s) : logic_error(s) {}
+    virtual ~length_error();
+};
+
+struct out_of_range : logic_error {
+    out_of_range(const char *s) : logic_error(s) {}
+    virtual ~out_of_range();
 };
 
 template <class T> struct KeyVecBase {
     int cap;
     int count;
     T *data;
+    KeyVecBase() : cap(0), count(0), data(0) {}
     ~KeyVecBase();
+    void init(unsigned long n, T v);
     void clear();
     T &at(unsigned long i);
 };
 
+template <class T> void KeyVecBase<T>::init(unsigned long n, T v) {
+    if (n == 0) {
+        return;
+    }
+    if (n > 0x09249249) {
+        throw length_error(lbl_8039A484);
+    }
+    data = (T *)operator new(n * sizeof(T));
+    cap = n;
+    T *end = data + n;
+    T *p = data;
+    for (; p < end; p++) {
+        try {
+            new (p) T(v);
+        } catch (...) {
+            throw;
+        }
+        count++;
+    }
+}
+
+template <class T> T &KeyVecBase<T>::at(unsigned long i) {
+    if (i >= count) {
+        throw out_of_range(lbl_8039A4EC);
+    }
+    return data[i];
+}
+
+template <class T> KeyVecBase<T>::~KeyVecBase() {
+    clear();
+    if (data) {
+        operator delete(data);
+    }
+}
+
+template <class T> void KeyVecBase<T>::clear() {
+    T *end = data + count;
+    for (T *p = data; p < end; p++) {
+        p->~T();
+    }
+    count = 0;
+}
+
 template <class T> struct KeyVecMid : KeyVecBase<T> {
+    KeyVecMid(unsigned long n, const T &v) { this->init(n, v); }
+    ~KeyVecMid() {}
 };
 template <class T> struct KeyVec : KeyVecMid<T> {
+    KeyVec(unsigned long n, const T &v) : KeyVecMid<T>(n, v) {}
     ~KeyVec() {}
 };
 
 /* 0x154: card name entry keyboard (main flow +0x14). */
+extern "C" KeyGroup lbl_806792B8;
+extern "C" const int lbl_80399E6C[4][3];
+extern "C" const KeyGroup lbl_80399E9C[5];
+
+static inline int FindCol(const KeyGroup &kg, int dir) {
+    if (dir == 0) {
+        return -1;
+    }
+    if (dir < 0) {
+        for (int i = 0; i < 4; i++) {
+            if (kg.cols[i] != 100) {
+                return kg.cols[i];
+            }
+        }
+    } else if (dir > 0) {
+        for (int i = 3; i > 0; i--) {
+            if (kg.cols[i] != 100) {
+                return kg.cols[i];
+            }
+        }
+    }
+    return -1;
+}
+
+static inline int PickCol(const KeyGroup &kg, const int &col) {
+    for (int i = 0; i < 4; i++) {
+        if (kg.cols[i] == col) {
+            return col;
+        }
+    }
+    return kg.cols[0];
+}
+
 struct KeyBoard {
     unsigned char ascii;
     KeyVec<KeyGroup> groups;
-};
-
-struct NameEntry {
-    KeyBoard board;
     int group;
     int page;
     unsigned char shift;
     int lastCol;
     int saveCol;
     int saveRow;
-    unsigned short name[8];
+    bool Navigate();
+    void SelectGroupOf(int col) {
+        for (unsigned long i = 0; i < groups.count; i++) {
+            if (groups.data[i].HasCol(col) == 1) {
+                group = i;
+                return;
+            }
+        }
+    }
+    int PeekAction() {
+        if (shift == 0) {
+            return -1;
+        }
+        if (group == 3) {
+            return 4;
+        }
+        if (group == 4) {
+            return 5;
+        }
+        return lbl_80399E6C[page][group];
+    }
+    int TakeAction() {
+        if (shift == 0) {
+            return -1;
+        }
+        shift = 0;
+        if (group == 3) {
+            return 4;
+        }
+        if (group == 4) {
+            return 5;
+        }
+        return page = lbl_80399E6C[page][group];
+    }
+    KeyBoard(int a) : ascii(a), groups(5, lbl_806792B8) {
+        group = -1;
+        page = (unsigned char)a == 1 ? 0 : 2;
+        shift = 0;
+        lastCol = -1;
+        const KeyGroup *src = lbl_80399E9C;
+        for (unsigned long i = 0; i < groups.count; i++) {
+            groups.at(i) = *src;
+            src++;
+        }
+    }
+};
+
+struct NameBuf {
+    unsigned short c[8];
     int pos;
+    bool Add(unsigned short ch);
+    unsigned short Get(int i) { return c[i + 1]; }
+    void Back() {
+        if (pos > 0) {
+            c[pos + 1] = 0x8162;
+            pos--;
+        } else if (pos == 0) {
+            c[1] = 0x8162;
+        }
+    }
+    NameBuf() {
+        pos = 0;
+        c[7] = 0;
+        for (int i = 0; i < 7; i++) {
+            c[i] = 0x8162;
+        }
+    }
+};
+
+/* 0x94: fading resource label node (vtable lbl_8048EF20). */
+struct ResNode : FadeObj {
+    short res;
+    int layer;
+    unsigned char flag;
+    ResNode(short r, float x, float y) : FadeObj(0, 30) {
+        res = r;
+        layer = 7;
+        flag = 0;
+        tracks[3].Set(x, x, lbl_806D9A34);
+        tracks[4].Set(y, y, lbl_806D9A34);
+    }
+    virtual void Update();
+    virtual void Draw();
+};
+
+struct NameEntry {
+    KeyBoard board;
+    NameBuf name;
     unsigned char started;
     Own<Sprite> frame;
     NameKey *keys[4][15];
@@ -1835,6 +2090,11 @@ struct NameEntry {
     float bright;
     PtrVec<FadeObj *> nodes;
     NameEntry(bool ascii);
+    void BuildKeys();
+    void Draw();
+    void DrawKeys();
+    void Commit();
+    void Update();
     ~NameEntry() {
         for (FadeObj **it = nodes.begin(); it != nodes.end(); it++) {
             delete *it;
@@ -1988,7 +2248,7 @@ int clFlowCard::Update() {
             }
         }
     } else if (state == 2) {
-        fn_801BE170(name);
+        name->Update();
         if (name->IsDone() == 1) {
             delete name;
             name = 0;
@@ -2058,4 +2318,559 @@ extern "C" ResCtrl fn_801BB58C(const KeyLabel *k) {
     r.resId = k->res;
     r.Show(k->x, k->y, lbl_806D9A34);
     return r;
+}
+extern "C" {
+extern const float lbl_806D9A7C;
+extern const float lbl_806D9A80;
+extern const float lbl_806D9A84;
+extern const float lbl_806D9A88;
+extern const float lbl_806D9A8C;
+extern const float lbl_806D9A90;
+extern const float lbl_806D9A94;
+extern const float lbl_806D9A9C;
+extern const float lbl_806D9AA0;
+extern const float lbl_806D9AA4;
+extern const float lbl_806D9AA8;
+extern const float lbl_806D9AAC;
+void fn_801BEDF0(NameEntry *self);
+}
+
+NameEntry::NameEntry(bool ascii) : board(ascii), started(ascii), frame(new Sprite(0x150, 1, 0)), state(0), mode(ascii == 1 ? 0 : 2),
+      col(0), row(0), bright(lbl_806D9A7C) {
+    Sprite *f = frame.p;
+    f->x = lbl_806D9A2C;
+    f->y = lbl_806D9A80;
+    fn_801B8918(0x1AD8);
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 15; j++) {
+            keys[i][j] = 0;
+        }
+    }
+    BuildKeys();
+    Sprite *s;
+    FadeObj *o;
+    ResNode *r;
+    {
+        s = new Sprite(0x3F, 1, 0);
+        fn_8019FF6C(s, 1);
+        s->x = lbl_806D9A84;
+        s->y = lbl_806D9A40;
+        s->sx = lbl_806D9A88;
+        s->sy = lbl_806D9A88;
+        o = new FadeObj(s, 30);
+        o->tracks[0].Set(lbl_806D9A74, lbl_806D9A34, lbl_806D9A8C);
+        nodes.push_back(o);
+    }
+    {
+        s = new Sprite(0x4A, 1, 0);
+        fn_8019FF6C(s, 1);
+        s->x = lbl_806D9A90;
+        s->y = lbl_806D9A48;
+        o = new FadeObj(s, 30);
+        o->tracks[0].Set(lbl_806D9A74, lbl_806D9A34, lbl_806D9A8C);
+        nodes.push_back(o);
+    }
+    {
+        s = new Sprite(0x75, 1, 0);
+        fn_8019FF6C(s, 1);
+        s->x = lbl_806D9A94;
+        s->y = lbl_806D9A98;
+        o = new FadeObj(s, 30);
+        o->tracks[0].Set(lbl_806D9A74, lbl_806D9A34, lbl_806D9A8C);
+        nodes.push_back(o);
+    }
+    {
+        s = new Sprite(0x74, 1, 0);
+        fn_8019FF6C(s, 1);
+        s->x = lbl_806D9A9C;
+        s->y = lbl_806D9A98;
+        o = new FadeObj(s, 30);
+        o->tracks[0].Set(lbl_806D9A74, lbl_806D9A34, lbl_806D9A8C);
+        nodes.push_back(o);
+    }
+    {
+        r = new ResNode(0x1875, lbl_806D9AA0, lbl_806D9AA4);
+        r->tracks[0].Set(lbl_806D9A74, lbl_806D9A34, lbl_806D9A8C);
+        nodes.push_back(r);
+    }
+    {
+        r = new ResNode(0x1873, lbl_806D9AA8, lbl_806D9AA4);
+        r->tracks[0].Set(lbl_806D9A74, lbl_806D9A34, lbl_806D9A8C);
+        nodes.push_back(r);
+    }
+    {
+        r = new ResNode(0x1874, lbl_806D9AAC, lbl_806D9AA4);
+        r->tracks[0].Set(lbl_806D9A74, lbl_806D9A34, lbl_806D9A8C);
+        nodes.push_back(r);
+    }
+}
+
+void NameEntry::BuildKeys() {
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 15; j++) {
+            delete keys[i][j];
+        }
+    }
+    int y = 0xEC;
+    int n = 0;
+    for (int r = 0; r < 4; r++) {
+        int gx = 0x3C;
+        short sy = y;
+        for (int g = 0; g < 3; g++) {
+            short x = gx;
+            for (int k = 0; k < 5; k++) {
+                int col = g * 5 + k;
+                unsigned int code = lbl_8049A8F8[mode].chars[n];
+                if (n != 59) {
+                    if (code != 0x8140) {
+                        keys[r][col] = new NameKey(x, sy, code);
+                    } else {
+                        keys[r][col] = new NameKey(x, sy, 9);
+                    }
+                } else {
+                    keys[r][col] = new NameKey(x, sy, 0x8140);
+                }
+                n++;
+                x += 0x20;
+            }
+            gx += 0xBB;
+        }
+        y += 0x26;
+    }
+}
+
+extern "C" {
+void PlayCursorMoveSE(void);
+void fn_801B7C40(void);
+}
+
+bool KeyBoard::Navigate() {
+    if (group < 0) {
+        return false;
+    }
+    int dx = GetInput()->dir;
+    int btn = GetInput()->held;
+    int vert = dx != 0 ? 0 : (btn == 3 ? 1 : 0);
+    if (btn == 1) {
+        SetRumbleMode(0, 1, 1);
+    }
+    if (btn == 3) {
+        SetRumbleMode(1, 1, 1);
+    }
+    if (dx != 0 || vert != 0) {
+        PlayCursorMoveSE();
+    }
+    int g = group;
+    if (dx != 0) {
+        g = group + dx;
+        int min = 0;
+        if (ascii == 0) {
+            min = 2;
+        }
+        if (g < min) {
+            saveCol = 14;
+            saveRow = 3;
+            g = -1;
+        } else if ((unsigned long)g > groups.count - 1) {
+            saveCol = 0;
+            saveRow = 0;
+            g = -1;
+        }
+        if (g != -1) {
+            int col = FindCol(groups.at(g), -dx);
+            if (col != -1) {
+                lastCol = col;
+            }
+        }
+    } else if (vert != 0) {
+        saveCol = PickCol(groups.at(g), lastCol);
+        if (vert < 0) {
+            saveRow = 3;
+        } else {
+            saveRow = 0;
+        }
+        g = -1;
+    }
+    group = g;
+    if (group == -1) {
+        return false;
+    }
+    if (btn == 1) {
+        shift = 1;
+        if (group < 3) {
+            fn_801B7C40();
+        }
+    } else {
+        shift = 0;
+    }
+    return true;
+}
+
+struct KanaOut {
+    unsigned short c;
+};
+
+static inline int ConvertKana(unsigned short prev, unsigned short ch, KanaOut *out) {
+    int type = -1;
+    if (ch == 0x814A) {
+        type = 0;
+    }
+    if (ch == 0x818B) {
+        type = 1;
+    }
+    if (prev == 0x8162 && type < 0) {
+        out->c = ch;
+        return 1;
+    }
+    if (type < 0) {
+        out->c = ch;
+        return 1;
+    }
+    for (int t = 0; t < 4; t++) {
+        for (int i = 0; i < 60; i++) {
+            if (prev == lbl_8049A8F8[t].chars[i] && lbl_8049A8F8[t].marks[type][i] != 0x8140) {
+                out->c = lbl_8049A8F8[t].marks[type][i];
+                return 0;
+            }
+        }
+    }
+    return -1;
+}
+
+bool NameBuf::Add(unsigned short ch) {
+    bool full = false;
+    if (pos < 5) {
+        bool next = false;
+        KanaOut out;
+        int res;
+        if (c[pos + 1] != 0x8162) {
+            next = true;
+            res = ConvertKana(c[pos + 1], ch, &out);
+        } else {
+            res = ConvertKana(c[pos], ch, &out);
+        }
+        if (res == 0) {
+            if (next == 1) {
+                c[pos + 1] = out.c;
+                if (++pos >= 5) {
+                    pos = 4;
+                    full = true;
+                }
+            } else {
+                c[pos] = out.c;
+            }
+        } else if (res == 1) {
+            c[pos + 1] = out.c;
+            if (++pos >= 5) {
+                pos = 4;
+                full = true;
+            }
+        }
+    }
+    if (full == 1 && pos >= 4) {
+        return false;
+    }
+    return true;
+}
+
+extern "C" {
+extern const float lbl_806D9A4C;
+extern const float lbl_806D9A58;
+extern const float lbl_806D9A5C;
+extern const double lbl_806D9A60;
+extern const float lbl_806D9A6C;
+extern const int lbl_80399E5C[4];
+int fn_801F9778(unsigned short ch);
+void fn_80121E10(ResCtrl *rc);
+double sin(double x);
+}
+
+static inline float sinf(float x) {
+    return sin(x);
+}
+
+void NameEntry::DrawKeys() {
+    NameKey *k;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 15; j++) {
+            k = keys[i][j];
+            if (k->res == 0x2B00) {
+                continue;
+            }
+            if (k->blink != 1) {
+                k->t += lbl_806D9A58;
+                if (k->t > lbl_806D9A34) {
+                    k->t -= lbl_806D9A34;
+                    if (k->sel == 0) {
+                        k->blink = 1;
+                    }
+                }
+                k->t2 += lbl_806D9A5C;
+                if (k->t2 >= lbl_806D9A34) {
+                    k->t2 -= lbl_806D9A34;
+                    if (k->sel == 0) {
+                        k->blink = 1;
+                    }
+                }
+            }
+            ResCtrl rc;
+            if (k->lit == 1) {
+                rc.resId = 0x1913;
+                rc.Show(k->x, k->y, lbl_806D9A34);
+                float a = k->blink == 1 ? lbl_806D9A34 : sinf(lbl_806D9A60 * k->t2);
+                rc.t1 = 4;
+                rc.t0 = 1;
+                rc.t2 = 1;
+                unsigned int c = PackColor(0xFF, 0xFF, 0xFF, (int)(lbl_806D9A68 * a));
+                rc.SetColor(c);
+                fn_8011FAFC(&rc, 7);
+            }
+            fn_80121E10(&rc);
+            rc.resId = k->res;
+            rc.Show(k->x, k->y, lbl_806D9A34);
+            float sy = k->blink == 1 ? lbl_806D9A34 : lbl_806D9A6C * sinf(lbl_806D9A60 * k->t) + lbl_806D9A34;
+            float sx = k->blink == 1 ? lbl_806D9A34 : lbl_806D9A6C * sinf(lbl_806D9A60 * k->t) + lbl_806D9A34;
+            rc.scaleX = sx;
+            rc.scaleY = sy;
+            fn_8011FAFC(&rc, 7);
+        }
+    }
+}
+
+void NameEntry::Draw() {
+    fn_801A0004(frame.p);
+    DrawKeys();
+    for (int i = 0; i < 5; i++) {
+        ResCtrl rc;
+        unsigned short ch = name.Get(i);
+        if (ch == 0x8140) {
+            rc.resId = 0x2AF7;
+        } else if (ch != 0x8162) {
+            rc.resId = fn_801F9778(ch);
+        } else {
+            rc.resId = fn_801F9778(0x8151);
+        }
+        rc.Show(0xB0 + i * 0x48, lbl_806D9A4C, lbl_806D9A34);
+        if (i == name.pos) {
+            rc.SetColor(0xE0E020FF);
+        }
+        fn_8011FAFC(&rc, 7);
+    }
+    int g = 0;
+    if (board.ascii == 0) {
+        g = 2;
+    }
+    for (; g < board.groups.count; g++) {
+        int res;
+        if (g < 3) {
+            res = lbl_80399E5C[lbl_80399E6C[board.page][g]];
+        } else {
+            res = g + 0x190D;
+        }
+        int sel = board.group == g;
+        KeyGroup &kg = board.groups.at(g);
+        int n = (bool)sel == true ? 1 : 0;
+        {
+            ResCtrl rc;
+            rc.resId = kg.img[n].res;
+            rc.Show(kg.img[n].x, kg.img[n].y, lbl_806D9A34);
+            fn_8011FAFC(&rc, 7);
+        }
+        {
+            ResCtrl lc;
+            lc.resId = res;
+            lc.Show(kg.label.x, kg.label.y, lbl_806D9A34);
+            fn_8011FAFC(&lc, 7);
+        }
+    }
+    fn_802321F8(GetFader());
+    for (FadeObj **it = nodes.begin(); it != nodes.end(); it++) {
+        (*it)->Render();
+    }
+}
+
+extern "C" {
+extern int g_characterId;
+extern const unsigned short *lbl_8049A890[];
+extern const unsigned short *lbl_8049A8C4[];
+extern const char lbl_8039A31C[];
+extern const char lbl_8039A32C[];
+unsigned short *wcsncpy(unsigned short *dst, const unsigned short *src, unsigned long n);
+unsigned char NameCheck_CardName(const unsigned short *name);
+void fn_801FE2B8(void);
+void fn_801B7C1C(void);
+}
+
+void NameEntry::Commit() {
+    unsigned short tmp[5];
+    wcsncpy(tmp, &name.c[1], 5);
+    for (int i = 0; i < 5; i++) {
+        if (tmp[i] == 0x8162) {
+            tmp[i] = 0;
+        }
+    }
+    unsigned short buf[6];
+    buf[0] = tmp[0];
+    buf[1] = tmp[1];
+    buf[2] = tmp[2];
+    buf[3] = tmp[3];
+    buf[4] = tmp[4];
+    buf[5] = 0;
+    int n;
+    for (n = 0; n < 5; n++) {
+        if (buf[n] != 0) {
+            break;
+        }
+    }
+    if (NameCheck_CardName(buf) == 1) {
+        for (int i = 0; i < 6; i++) {
+            name.Back();
+        }
+        fn_801FE2B8();
+        return;
+    }
+    if (n >= 5) {
+        DebugPrintf(lbl_8039A31C, lbl_8039A32C);
+        int chr = g_characterId;
+        wcsncpy(buf, isJapanese() == 0 ? lbl_8049A890[chr] : lbl_8049A8C4[chr], 5);
+        for (int i = 0; i < 5; i++) {
+            name.Back();
+        }
+        for (int i = 0; i < 5; i++) {
+            name.Add(buf[i]);
+        }
+        for (int i = 5; i >= 0; i--) {
+            if (buf[i] != 0x8140) {
+                break;
+            }
+            buf[i] = 0;
+        }
+    }
+    wcsncpy((unsigned short *)g_playerData, buf, 5);
+    state = 4;
+    fn_801B87D8();
+    fn_801B7C1C();
+}
+
+extern "C" void fn_801FE2DC(void);
+
+void NameEntry::Update() {
+    if (state == 0) {
+        if (Sprite_AdvanceAnim(frame.p, lbl_806D9A70) == 1) {
+            return;
+        }
+        SetInput(1);
+        state = 1;
+        keys[row][col]->Select();
+        fn_801699D8(0, 1);
+        fn_801699D8(1, 1);
+    } else if (state == 1) {
+        int dx = GetInput()->dir;
+        int btn = GetInput()->held;
+        int vert = dx != 0 ? 0 : (btn == 3 ? 1 : 0);
+        int c = col;
+        int r = row;
+        if (btn == 1) {
+            SetRumbleMode(0, 1, 1);
+        }
+        if (btn == 3) {
+            SetRumbleMode(1, 1, 1);
+        }
+        if (dx != 0 || vert != 0) {
+            PlayCursorMoveSE();
+        }
+        do {
+            c += dx;
+            r += vert;
+            if (c < 0) {
+                c = 14;
+                r--;
+            } else if (c > 14) {
+                c = 0;
+                r++;
+            }
+        } while (r >= 0 && r <= 3 && keys[r][c]->res == 0x2B00);
+        if (r < 0 || r > 3) {
+            bool wrap = false;
+            if (started == 0 && c < 5) {
+                if (vert == 0) {
+                    c = 5;
+                } else {
+                    wrap = true;
+                }
+            }
+            if (wrap == 1) {
+                keys[0][c]->Select();
+                r = 0;
+            } else {
+                state = 3;
+                board.SelectGroupOf(c);
+                board.lastCol = c;
+            }
+            keys[row][col]->Deselect();
+        } else if (dx != 0 || vert != 0) {
+            keys[row][col]->Deselect();
+            keys[r][c]->Select();
+        } else if (btn == 1) {
+            if (!name.Add(keys[r][c]->code)) {
+                state = 3;
+                board.SelectGroupOf(14);
+                board.lastCol = 14;
+                keys[row][col]->Deselect();
+            }
+            fn_801B7C40();
+        }
+        col = c;
+        row = r;
+    } else if (state == 3) {
+        if (!board.Navigate()) {
+            int oc = col;
+            int orow = row;
+            if (board.group == -1) {
+                col = board.saveCol;
+                row = board.saveRow;
+            }
+            keys[row][col]->Select();
+            state = 1;
+            if (col != oc || row != orow) {
+                PlayCursorMoveSE();
+            }
+        } else {
+            switch (board.PeekAction()) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                mode = board.TakeAction();
+                BuildKeys();
+                break;
+            case 4:
+                name.Back();
+                fn_801FE2DC();
+                break;
+            case 5:
+                Commit();
+                break;
+            }
+        }
+    } else if (state == 4) {
+        state = 5;
+    }
+    if (state == 1 || state == 3) {
+        if (GetInput()->held == 2) {
+            name.Back();
+            fn_801FE2DC();
+        }
+    }
+    bright -= lbl_806D9A78;
+    if (bright < lbl_806D9A74) {
+        bright = lbl_806D9A74;
+    }
+    fn_80232284(GetFader(), bright);
+    if (state != 4 && state != 5 && bright <= lbl_806D9A74) {
+        Commit();
+    }
+    for (FadeObj **it = nodes.begin(); it != nodes.end(); it++) {
+        (*it)->Tick();
+    }
 }
