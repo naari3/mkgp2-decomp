@@ -3507,6 +3507,7 @@ game/VoiceSystem_SetCheckpointsForTotalLaps.c:
 	extab       start:0x80012B50 end:0x80012B58
 	extabindex  start:0x800277A0 end:0x800277AC
 	.text       start:0x801B3830 end:0x801B3914
+
 game/LiveConn.c:
 	.text       start:0x801B3914 end:0x801B3928
 
@@ -3812,6 +3813,7 @@ game/DisplayContext_Init.c:
 	extab       start:0x800156E4 end:0x800156EC
 	extabindex  start:0x800282C8 end:0x800282D4
 	.text       start:0x801DB710 end:0x801DB800
+
 game/fn_801DB800.c:
 	.text       start:0x801DB800 end:0x801DB8BC
 
@@ -3847,6 +3849,7 @@ game/fn_801DB9C4.c:
 	extab       start:0x80015714 end:0x8001571C
 	extabindex  start:0x80028310 end:0x8002831C
 	.text       start:0x801DB9C4 end:0x801DBA2C
+
 game/fn_801DBA2C.c:
 	.text       start:0x801DBA2C end:0x801DBA34
 
@@ -3885,6 +3888,7 @@ game/fn_801DC5C0.c:
 	extab       start:0x80015910 end:0x80015918
 	extabindex  start:0x80028388 end:0x80028394
 	.text       start:0x801DC5C0 end:0x801DC5F8
+
 game/PathFollower_EnsureGlobalAlloc.c:
 	extab       start:0x80015918 end:0x80015920
 	extabindex  start:0x80028394 end:0x800283A0
@@ -4100,6 +4104,7 @@ game/dtor_801E8C00.cpp:
 game/fn_801E8C7C.c:
 	.text       start:0x801E8C7C end:0x801E8C90
 	.ctors      start:0x802E8924 end:0x802E8928
+
 game/ItemHolder_Init.c:
 	extab       start:0x80016A98 end:0x80016AA0
 	extabindex  start:0x8002897C end:0x80028988
@@ -4110,6 +4115,7 @@ game/ItemHolder.c:
 
 game/fn_801E9290.c:
 	.text       start:0x801E9290 end:0x801E92A0
+
 game/fn_801E93A0.c:
 	.text       start:0x801E93A0 end:0x801E93AC
 
