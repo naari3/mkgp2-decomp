@@ -7096,6 +7096,11 @@ game/fn_801DE810.c:
 	extabindex  start:0x800284A8 end:0x800284B4
 	.text       start:0x801DE810 end:0x801DE848
 
+game/fn_801DEAF4.c:
+	extab       start:0x80015A00 end:0x80015A08
+	extabindex  start:0x800284C0 end:0x800284CC
+	.text       start:0x801DEAF4 end:0x801DEC3C
+
 game/fn_801DEC3C.c:
 	.text       start:0x801DEC3C end:0x801DEC74
 
@@ -7543,6 +7548,11 @@ game/fn_801F8E58.c:
 	extab       start:0x800176A0 end:0x800176A8
 	extabindex  start:0x80029078 end:0x80029084
 	.text       start:0x801F8E58 end:0x801F8E90
+
+game/fn_801F8E90.c:
+	extab       start:0x800176A8 end:0x800176B0
+	extabindex  start:0x80029084 end:0x80029090
+	.text       start:0x801F8E90 end:0x801F8FCC
 
 game/fn_801F8FCC.c:
 	.text       start:0x801F8FCC end:0x801F9014
