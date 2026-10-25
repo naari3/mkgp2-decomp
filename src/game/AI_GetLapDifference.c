@@ -5,16 +5,15 @@
  * If the kart controller has no associated context (field 0x20 == NULL),
  * returns -1 (0xFFFFFFFF) as sentinel.
  *
- * The TU sits in `game` lib (CW 1.3.2). #pragma exceptions on/reset wraps
- * the function so CW auto-emits the extab/extabindex entry (matching the
- * Vtable_CallSlot2.cpp pattern).
+ * Built with GC/2.6: reading the field through a const-qualified self lets
+ * the scheduler hoist `lwz r3,0x20(r3)` above the `stw r0,0x14(r1)` LR save.
  */
 
 extern unsigned int fn_801EC6CC(void *ctx);
 
 #pragma exceptions on
-unsigned int AI_GetLapDifference(int self) {
-    register void *ctx = *(void **)(self + 0x20);
+unsigned int AI_GetLapDifference(const char *self) {
+    void *ctx = *(void *const *)(self + 0x20);
     return ctx ? fn_801EC6CC(ctx) : (unsigned int)-1;
 }
 #pragma exceptions reset

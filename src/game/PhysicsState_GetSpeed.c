@@ -19,22 +19,11 @@ int fn_801EC784(char *self) {
 
 void PhysicsState_SetFlag188(char *self, unsigned char v) { *(unsigned char *)(self + 0x188) = v; }
 
-/* Register allocation of the three fadds could not be reproduced from C. */
-asm void fn_801EC7B4(char *self, const float *v) {
-    nofralloc
-    lfs f2, 0xd8(r3)
-    lfs f0, 0x0(r4)
-    lfs f1, 0x4(r4)
-    fadds f2, f2, f0
-    lfs f0, 0x8(r4)
-    stfs f2, 0xd8(r3)
-    lfs f2, 0xdc(r3)
-    fadds f1, f2, f1
-    stfs f1, 0xdc(r3)
-    lfs f1, 0xe0(r3)
-    fadds f0, f1, f0
-    stfs f0, 0xe0(r3)
-    blr
+void fn_801EC7B4(char *self, const float *v) {
+    float *p = (float *)(self + 0xD8);
+    p[0] = p[0] + v[0];
+    p[1] = p[1] + v[1];
+    p[2] = p[2] + v[2];
 }
 
 void fn_801EC7E8(char *self, float v) { *(float *)(self + 0x13C) = v; }
@@ -57,10 +46,11 @@ void fn_801EC830(char *self, float v) {
     *(float *)(self + 0x84) += v;
 }
 
-void PhysicsState_SetPosition(char *self, const float *pos) {
-    *(float *)(self + 0x4C) = pos[0];
-    *(float *)(self + 0x50) = pos[1];
-    *(float *)(self + 0x54) = pos[2];
+void PhysicsState_SetPosition(char *self, float *pos) {
+    float *p = (float *)(self + 0x4C);
+    p[0] = pos[0];
+    p[1] = pos[1];
+    p[2] = pos[2];
 }
 
 void PhysicsState_SetGrounded(char *self, unsigned char v) { *(unsigned char *)(self + 0xA4) = v; }
