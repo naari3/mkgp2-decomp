@@ -34,7 +34,9 @@ struct HSD_ViewingRect {
     f32 bottom;
     f32 left;
     f32 right;
-    int perspective;
+    // mkgp2: flag bits instead of an int.
+    int perspective : 1;
+    int invalid : 1;
 };
 
 HSD_ObjAllocData* HSD_ShadowGetAllocData(void);
@@ -57,6 +59,8 @@ void HSD_ShadowSetViewingRect(HSD_Shadow* shadow, float top, float bottom,
 void HSD_ViewingRectInit(HSD_ViewingRect* rect, Vec3* position, Vec3* interest,
                          Vec3* upvector, int perspective);
 int HSD_ViewingRectCheck(HSD_ViewingRect* rect);
+void HSD_ViewingRectAddSphere(HSD_ViewingRect* rect, Vec3* position,
+                               f32 radius);
 void HSD_ViewingRectAddRect(HSD_ViewingRect* rect, Vec3* position, float top,
                             float bottom, float left, float right);
 
