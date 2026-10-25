@@ -6047,6 +6047,16 @@ game/dtor_8024F40C.c:
 	extabindex  start:0x8002B778 end:0x8002B784
 	.text       start:0x8024F40C end:0x8024F43C
 
+game/RoundResult.cpp:
+	extab       start:0x8001E960 end:0x8001E988
+	extabindex  start:0x8002B784 end:0x8002B7A8
+	.text       start:0x8024F43C end:0x8024F618
+
+game/ItemBanner.cpp:
+	extab       start:0x8001E988 end:0x8001EBD4
+	extabindex  start:0x8002B7A8 end:0x8002B838
+	.text       start:0x8024F618 end:0x802506F8
+
 game/fn_80250F34.c:
 	.text       start:0x80250F34 end:0x80250F38
 
