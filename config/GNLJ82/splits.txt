@@ -903,6 +903,12 @@ game/KartItem_RenderCb_Mode2or4_Pre.c:
 	extabindex  start:0x800207B0 end:0x800207BC
 	.text       start:0x80056A24 end:0x80056A48
 
+game/KartItem_RenderCb_Modes.c:
+	extab       start:0x800075DC end:0x800075FC
+	extabindex  start:0x800207BC end:0x800207EC
+	.text       start:0x80056A48 end:0x80056CB0
+	.data       start:0x803F984C end:0x803F9880
+
 game/TornadoEffect.c:
 	extab       start:0x800075FC end:0x800076B0
 	extabindex  start:0x800207EC end:0x800208A0
@@ -1085,6 +1091,18 @@ game/clItemBox_Ctor_GroundSnap.c:
 	extab       start:0x80007BF8 end:0x80007C24
 	extabindex  start:0x80020C3C end:0x80020C48
 	.text       start:0x8005F050 end:0x8005F194
+
+game/clItemBoxManager_Assets.cpp:
+	extab       start:0x80007C24 end:0x80007C94
+	extabindex  start:0x80020C48 end:0x80020C78
+	.text       start:0x8005F194 end:0x8005F53C
+
+game/clItemBoxManager_StepTable.cpp:
+	extab       start:0x80007C94 end:0x80007C9C
+	extabindex  start:0x80020C78 end:0x80020C84
+	.text       start:0x8005F53C end:0x8005F5CC
+	.ctors      start:0x802E88F4 end:0x802E88F8
+	.data       start:0x803F9C60 end:0x803F9CD8
 
 game/SpawnTable.c:
 	.text       start:0x8005F5CC end:0x8005F5D8
