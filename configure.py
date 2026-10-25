@@ -2716,6 +2716,7 @@ DATA_ALIGN4_TUS = [
     "game/fn_801FAFFC",
     "game/KartItem_RenderCb_Modes",
     "game/fn_80117020",
+    "game/ItemObject_Tick_DispatchcTo15",
 ]
 
 
