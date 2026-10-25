@@ -4935,6 +4935,17 @@ game/mapobject/fn_8017AD54.cpp:
 	extabindex  start:0x8002690C end:0x80026924
 	.text       start:0x8017AD54 end:0x8017B1C0
 
+game/mapobject/fn_8017B1C0.cpp:
+	extab       start:0x800118E0 end:0x800118F8
+	extabindex  start:0x80026924 end:0x80026930
+	.text       start:0x8017B1C0 end:0x8017B688
+	.data       start:0x804916C8 end:0x80491704
+
+game/mapobject/fn_8017B688.cpp:
+	extab       start:0x800118F8 end:0x80011900
+	extabindex  start:0x80026930 end:0x8002693C
+	.text       start:0x8017B688 end:0x8017B75C
+
 game/fn_801805AC.c:
 	.text       start:0x801805AC end:0x801805B4
 

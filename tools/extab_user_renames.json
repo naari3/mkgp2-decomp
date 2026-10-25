@@ -920,6 +920,15 @@
     "__dt__6ObjectFv": "Object_DtorWithGXSync",
     "__dl__FPv": "MemoryManager_TimedFree"
   },
+  "src/game/mapobject/fn_8017B1C0.cpp": {
+    "__ct__10clModelMgrFPv": "fn_8017B1C0",
+    "__ct__12clModelGroupFPC10ModelEntry": "fn_8017B75C",
+    "Append__12clModelGroupFP12clModelGroup": "fn_8017B688",
+    "__nw__FUl": "Alloc"
+  },
+  "src/game/mapobject/fn_8017B688.cpp": {
+    "Append__12clModelGroupFP12clModelGroup": "fn_8017B688"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
