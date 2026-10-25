@@ -597,8 +597,18 @@ game/PathManager_RefreshFinishPositions.c:
 	extabindex  start:0x8001FC7C end:0x8001FC88
 	.text       start:0x8003B668 end:0x8003B6C4
 
+game/Path_ResetCursorForKart.c:
+	extab       start:0x8000608C end:0x80006094
+	extabindex  start:0x8001FCA0 end:0x8001FCAC
+	.text       start:0x8003CEE4 end:0x8003CF44
+
 game/LakituStart.c:
 	.text       start:0x8003D2FC end:0x8003D304
+
+game/Object_RenderJObjIfWithinRange.c:
+	extab       start:0x800060C0 end:0x800060C8
+	extabindex  start:0x8001FCD0 end:0x8001FCDC
+	.text       start:0x8003D304 end:0x8003D360
 
 game/LakituStart_Dtor.c:
 	extab       start:0x800060D0 end:0x800060D8
@@ -950,8 +960,18 @@ game/ItemStateGuard_PruneIfDeadAndReport.cpp:
 game/ItemStateGuard_IsActive.c:
 	.text       start:0x80052F9C end:0x80052FB0
 
+game/ItemStateSlotC_TryArm.c:
+	extab       start:0x800071A4 end:0x800071AC
+	extabindex  start:0x800205A0 end:0x800205AC
+	.text       start:0x80053290 end:0x800532D4
+
 game/ItemEffectDamp_Init.c:
 	.text       start:0x80053E68 end:0x80053E8C
+
+game/ItemEffectImpact_TryArm.c:
+	extab       start:0x800071FC end:0x80007204
+	extabindex  start:0x800205E8 end:0x800205F4
+	.text       start:0x80053E8C end:0x80053ED0
 
 game/KartEffectFadeTransit_Tick.c:
 	extab       start:0x8000754C end:0x80007554
@@ -1702,6 +1722,19 @@ game/KartTireFX.c:
 	extabindex  start:0x800213C8 end:0x80021428
 	.text       start:0x80077E24 end:0x80079B24
 
+game/clDrawMan_NodePool_Free.c:
+	extab       start:0x80008498 end:0x800084A0
+	extabindex  start:0x80021434 end:0x80021440
+	.text       start:0x80079BD0 end:0x80079C0C
+
+game/clDrawMan_Buckets_Free.c:
+	extab       start:0x800084A0 end:0x800084A8
+	extabindex  start:0x80021440 end:0x8002144C
+	.text       start:0x80079C0C end:0x80079C48
+
+game/ItemEffectState_DefaultInit.c:
+	.text       start:0x8007B74C end:0x8007B798
+
 game/CourseAuxClass_VtableDtor.c:
 	extab       start:0x800087A0 end:0x800087A8
 	extabindex  start:0x80021578 end:0x80021584
@@ -1779,6 +1812,11 @@ game/DVDLoad_WaitIfSamePage.c:
 	extab       start:0x80008810 end:0x80008818
 	extabindex  start:0x80021620 end:0x8002162C
 	.text       start:0x8007E2B8 end:0x8007E344
+
+game/FUN_8007e344.c:
+	extab       start:0x80008818 end:0x80008820
+	extabindex  start:0x8002162C end:0x80021638
+	.text       start:0x8007E344 end:0x8007E390
 
 game/Jyugemu_Flag_SetKartDriver.c:
 	.text       start:0x800806D4 end:0x800806F4
@@ -2241,6 +2279,16 @@ game/Sci2Card_BeginSpace.c:
 	extabindex  start:0x80021FA4 end:0x80021FB0
 	.text       start:0x80092B18 end:0x80092B60
 
+game/Sci2Card_BeginReset.c:
+	extab       start:0x80009460 end:0x80009468
+	extabindex  start:0x80021FBC end:0x80021FC8
+	.text       start:0x80092D04 end:0x80092D4C
+
+game/Sci2Card_BeginCleaning.c:
+	extab       start:0x80009470 end:0x80009478
+	extabindex  start:0x80021FD4 end:0x80021FE0
+	.text       start:0x80092F04 end:0x80092F4C
+
 game/CardRW_GetSubState.c:
 	.text       start:0x800934A8 end:0x800934B0
 
@@ -2258,6 +2306,11 @@ game/CardSave_Tick_CaptureAndStart.c:
 	extab       start:0x80009498 end:0x800094A0
 	extabindex  start:0x80022010 end:0x8002201C
 	.text       start:0x800937D4 end:0x80093C28
+
+game/CardPrintJob_KickFontTransfer.c:
+	extab       start:0x800094B0 end:0x800094B8
+	extabindex  start:0x80022034 end:0x80022040
+	.text       start:0x800948D4 end:0x80094950
 
 game/CardReadCommand.c:
 	extab       start:0x80009500 end:0x80009518
@@ -2313,6 +2366,12 @@ game/Sci2Card_ResetRetryAndStatus.c:
 	extab       start:0x80009568 end:0x80009570
 	extabindex  start:0x80022148 end:0x80022154
 	.text       start:0x80099284 end:0x800992C0
+
+game/Sci2Card_RegisterReceiptBuffersCleanup.c:
+	extab       start:0x80009580 end:0x80009588
+	extabindex  start:0x8002216C end:0x80022178
+	.text       start:0x8009990C end:0x80099958
+	.ctors      start:0x802E88F8 end:0x802E88FC
 
 game/Sci2Card_ReceiptTables.c:
 	.text       start:0x80099958 end:0x80099994
