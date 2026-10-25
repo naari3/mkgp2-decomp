@@ -4347,6 +4347,11 @@ game/fn_80109AB8.c:
 	.text       start:0x80109AB8 end:0x8010A384
 	.data       start:0x80421BB0 end:0x80421BD8
 
+game/fn_8010A384.c:
+	extab       start:0x8000B8A4 end:0x8000B8AC
+	extabindex  start:0x8002420C end:0x80024218
+	.text       start:0x8010A384 end:0x8010AA54
+
 game/fn_8010AA54.c:
 	extab       start:0x8000B8AC end:0x8000B8B4
 	extabindex  start:0x80024218 end:0x80024224
