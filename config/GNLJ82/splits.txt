@@ -2633,6 +2633,11 @@ game/PlayerData_ResetForFlow.c:
 	extabindex  start:0x800221CC end:0x800221D8
 	.text       start:0x8009D03C end:0x8009D07C
 
+game/RaceFlow_ResetState_FullColdInit.c:
+	extab       start:0x800095C8 end:0x800095D0
+	extabindex  start:0x800221D8 end:0x800221E4
+	.text       start:0x8009D07C end:0x8009D5F8
+
 game/ProcessSystemTick.c:
 	extab       start:0x800095D0 end:0x800095D8
 	extabindex  start:0x800221E4 end:0x800221F0
@@ -2658,6 +2663,11 @@ game/KartDriverArray_StaticCtor.c:
 	extabindex  start:0x80022220 end:0x8002222C
 	.text       start:0x8009DD28 end:0x8009DD64
 	.ctors      start:0x802E88FC end:0x802E8900
+
+game/RaceScene_RenderFrame.cpp:
+	extab       start:0x80009624 end:0x8000962C
+	extabindex  start:0x8002222C end:0x80022238
+	.text       start:0x8009DD64 end:0x8009E0D4
 
 game/VSMode_FrameUpdate.c:
 	extab       start:0x8000962C end:0x80009634
@@ -2728,10 +2738,37 @@ game/CourseData_GetDefaultPathKey_Safe.c:
 game/CourseData.c:
 	.text       start:0x800A0BDC end:0x800A0BE8
 
+game/RaceScene_RenderPass.cpp:
+	extab       start:0x8000981C end:0x80009824
+	extabindex  start:0x800222E0 end:0x800222EC
+	.text       start:0x800A0BE8 end:0x800A0EF4
+
+game/RaceScene_FrameUpdate.cpp:
+	extab       start:0x80009824 end:0x8000982C
+	extabindex  start:0x800222EC end:0x800222F8
+	.text       start:0x800A0EF4 end:0x800A1A1C
+	.sdata2     start:0x806D47D8 end:0x806D4800
+
+game/RaceScene_Dtor.cpp:
+	extab       start:0x8000982C end:0x80009834
+	extabindex  start:0x800222F8 end:0x80022304
+	.text       start:0x800A1A1C end:0x800A1D80
+
+game/RaceScene_Init.cpp:
+	extab       start:0x80009834 end:0x80009A60
+	extabindex  start:0x80022304 end:0x80022310
+	.text       start:0x800A1D80 end:0x800A28D4
+	.data       start:0x8040EA30 end:0x8040EA54
+
 game/BtMode_RenderFrame.c:
 	extab       start:0x80009A60 end:0x80009A68
 	extabindex  start:0x80022310 end:0x8002231C
 	.text       start:0x800A28D4 end:0x800A2B90
+
+game/TaMode_Dtor.cpp:
+	extab       start:0x80009A70 end:0x80009A78
+	extabindex  start:0x80022328 end:0x80022334
+	.text       start:0x800A38F8 end:0x800A3C38
 
 game/RaceContextSlotGet.c:
 	.text       start:0x800A4578 end:0x800A45B8
@@ -3186,6 +3223,11 @@ game/CarrotItemEffect_AddDraw.c:
 	extabindex  start:0x80022B38 end:0x80022B44
 	.text       start:0x800B2A64 end:0x800B2AF8
 
+game/KartPair3ArmUpdate.c:
+	extab       start:0x8000A680 end:0x8000A688
+	extabindex  start:0x80022B44 end:0x80022B50
+	.text       start:0x800B2AF8 end:0x800B3244
+
 game/EffectActor_BindKartTargetPair.c:
 	.text       start:0x800B3244 end:0x800B3250
 
@@ -3499,6 +3541,11 @@ game/EffectItem4SpawnSubFlamePair_Tick.c:
 	extab       start:0x8000A8B0 end:0x8000A8B8
 	extabindex  start:0x80022E74 end:0x80022E80
 	.text       start:0x800BF4D4 end:0x800BF5B0
+
+game/EffectItemChainIndicator_Tick.c:
+	extab       start:0x8000A8B8 end:0x8000A8C0
+	extabindex  start:0x80022E80 end:0x80022E8C
+	.text       start:0x800BF5B0 end:0x800C0004
 
 game/EffectVfx6D_KartSmokeSpark_Tick.c:
 	extab       start:0x8000A8C0 end:0x8000A8C8

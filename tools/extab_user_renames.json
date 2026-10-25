@@ -1645,6 +1645,29 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
   },
+  "src/game/RaceScene_Init.cpp": {
+    "__ct__9RaceSceneFv": "RaceScene_Init",
+    "__dt__12GameModeBaseFv": "dtor_800A0688",
+    "__vt__9RaceScene": "g_RaceModeVtable",
+    "__vt__12GameModeBase": "lbl_8040E76C",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__14EnvironmentMgrFv": "InputManager_Init",
+    "__ct__10RaceCameraFfifiPv": "Camera_Create",
+    "__ct__9CarObjectFiifffiiiiii": "CarObject_Init",
+    "__ct__11PathManagerFPvP9CarObjectPvPfPfPf": "PathManager_Init",
+    "__ct__11LakituStartFPCcifff": "LakituStart_Init",
+    "__ct__7Scene3DFPCc": "Scene3D_Init",
+    "__ct__11JyugemuFlagFP7Scene3D": "Jyugemu_Flag_Ctor",
+    "__ct__18JyugemuReverseFlagFPv": "Jyugemu_ReverseFlag_Ctor",
+    "__ct__14FinalLapBannerFPv": "FinalLapBanner_Init",
+    "__ct__14ObjCollCheckerFv": "fn_802090A8",
+    "__ct__8AISystemFP11PathManagerP14ObjCollCheckeri": "AI_SystemInit",
+    "__ct__10ItemSelectFii": "ItemSelect_Init",
+    "__ct__13WeatherSystemFi": "WeatherSystem_Init",
+    "__ct__7RaceHudFP11PathManager": "HUD_Init",
+    "__ct__12SceneOverlayFi": "fn_8020B234"
+  },
   "src/game/HitMessageOverlay_FrameUpdate.cpp": {
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960"
