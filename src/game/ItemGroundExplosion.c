@@ -75,7 +75,7 @@ void Item_SpawnGroundExplosionAndFX(ItemExplosionView* self)
             }
         }
         firstHeight = Vec3_ToYaw(&self->direction);
-        Vec2_RotateY(&self->direction, &self->direction, -(double)firstHeight);
+        Vec2_RotateY(&self->direction, &self->direction, -firstHeight);
         Vec2_RotateX(&self->direction, &self->direction, lbl_806D5B28);
         Vec2_RotateY(&self->direction, &self->direction, firstHeight);
         for (i = 0; i < 6; ++i) {
