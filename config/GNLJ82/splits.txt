@@ -1334,6 +1334,11 @@ game/PostRace_StartScoreEntryFlow_WithCardSave.c:
 	extabindex  start:0x800211DC end:0x800211E8
 	.text       start:0x80073EF8 end:0x80073F24
 
+game/PcbIdToIp.c:
+	extab       start:0x800082E0 end:0x800082E8
+	extabindex  start:0x80021200 end:0x8002120C
+	.text       start:0x800740BC end:0x80074190
+
 game/Backup_LoadFromMemoryOrInit.c:
 	extab       start:0x800082E8 end:0x800082F0
 	extabindex  start:0x8002120C end:0x80021218
@@ -1612,6 +1617,11 @@ game/PCBCommPhase1.c:
 game/CommBroadcast.c:
 	.text       start:0x800848C4 end:0x80084A84
 
+game/BootPCBCheck.cpp:
+	extab       start:0x80008D44 end:0x80008D54
+	extabindex  start:0x8002183C end:0x80021854
+	.text       start:0x80084A84 end:0x80084D98
+
 game/BootNotice_CheckEnterCondition.c:
 	extab       start:0x80008D54 end:0x80008D5C
 	extabindex  start:0x80021854 end:0x80021860
@@ -1664,15 +1674,27 @@ game/PCBCommHostConfirm.c:
 	extabindex  start:0x800218A8 end:0x800218C0
 	.text       start:0x800854B8 end:0x80085648
 
+game/PcbSync_AnyPeer.c:
+	.text       start:0x80085648 end:0x800856CC
+
 game/PCBComm_PromoteToClientConfirmed.c:
 	extab       start:0x80008DAC end:0x80008DB4
 	extabindex  start:0x800218C0 end:0x800218CC
 	.text       start:0x800856CC end:0x800856F4
 
+game/PcbSync_Counts.c:
+	.text       start:0x800856F4 end:0x80085DD8
+
 game/SyncSlot_ApplyCourseChoice.c:
 	extab       start:0x80008DB4 end:0x80008DBC
 	extabindex  start:0x800218CC end:0x800218D8
 	.text       start:0x80085DD8 end:0x80085E3C
+
+game/PcbDebugOverlay.c:
+	extab       start:0x80008DBC end:0x80008DDC
+	extabindex  start:0x800218D8 end:0x800218F0
+	.text       start:0x80085E3C end:0x80086170
+	.rodata     start:0x80311E38 end:0x803123B0
 
 game/PCBCommLifecycle.cpp:
 	extab       start:0x80008DDC end:0x80008E3C
@@ -1688,6 +1710,11 @@ game/TCPConnRecv.c:
 	extab       start:0x80008E44 end:0x80008E54
 	extabindex  start:0x8002192C end:0x80021944
 	.text       start:0x80086A30 end:0x80086CCC
+
+game/PcbConn_TryReceiveAck.c:
+	extab       start:0x80008E54 end:0x80008E5C
+	extabindex  start:0x80021944 end:0x80021950
+	.text       start:0x80086CCC end:0x80086D6C
 
 game/TCPConnSend.c:
 	extab       start:0x80008E5C end:0x80008E64
@@ -1720,6 +1747,11 @@ game/TCPConnCloseInit.c:
 	extab       start:0x80008E7C end:0x80008E8C
 	extabindex  start:0x80021980 end:0x80021998
 	.text       start:0x80087530 end:0x80087760
+
+game/PcbConn_Close.cpp:
+	extab       start:0x80008E8C end:0x80008E94
+	extabindex  start:0x80021998 end:0x800219A4
+	.text       start:0x80087760 end:0x80087880
 
 game/PcbConn_MarkDisabled.c:
 	.text       start:0x80087880 end:0x80087894
