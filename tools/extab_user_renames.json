@@ -2715,5 +2715,19 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__nwa__FUl": "FUN_8003b120"
+  },
+  "src/game/KartAlertPanel.cpp": {
+    "__ct__14KartAlertPanelFv": "fn_80250D1C",
+    "__dt__14KartAlertPanelFv": "fn_80250C18",
+    "OnItem__14KartAlertPanelFiP4Kart": "fn_80250AE8",
+    "Update__14KartAlertPanelFv": "fn_80250984",
+    "Refresh__14KartAlertPanelFv": "fn_802506F8",
+    "__vt__14KartAlertPanel": "lbl_804EF130",
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "__vt__10FlowFaderF": "lbl_80419DE0",
+    "__ct__7TextBoxFv": "TexMgr_Init",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_80250668"
   }
 }
