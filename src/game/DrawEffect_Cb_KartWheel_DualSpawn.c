@@ -12,6 +12,11 @@ extern double sin(double x);
 extern void DrawEffect_KartWheel_TripleChildSpawn(unsigned char *self);
 extern void DrawEffect_KartWheel_TripleChildUpdate(unsigned char *child, Vec *pos, float scale, float alpha);
 
+static inline float sinf(float x)
+{
+    return sin(x);
+}
+
 #define D(o) (*(float *)(d + (o)))
 #define DI(o) (*(unsigned int *)(d + (o)))
 #define CP(o) (*(unsigned char **)(c + (o)))
@@ -110,7 +115,7 @@ void DrawEffect_Cb_KartWheel_DualSpawn(unsigned char *self)
                 Mtx44_GetTranslation_RowMajor(&wheel, KartDriver_GetJointByIdx(DP(0x50), 3));
             }
             offs = lbl_8032A6D4;
-            k = 0.8f * ((1.0f + (float)sin(BuildOrientationFromYaw(D(0x84) + offs.v[i]))) * 0.5f) + 0.2f;
+            k = 0.8f * ((1.0f + sinf(BuildOrientationFromYaw(D(0x84) + offs.v[i]))) / 2.0f) + 0.2f;
             if (S8(0x28)) {
                 local = wheel;
                 DrawEffect_KartWheel_TripleChildUpdate(CP(0x10), &local, 0.9f, F(0x2C) * k);

@@ -52,6 +52,11 @@ extern void Effect_ApplyParentToChildPair_DcDe(unsigned char *e, float m[4][4], 
 #define SU32(o) (*(unsigned int *)(sub + (o)))
 #define SP(o) (*(unsigned char **)(sub + (o)))
 
+static inline float sinf(float x)
+{
+    return sin(x);
+}
+
 static inline void Timer_Tick(unsigned int *t)
 {
     if (*t != 0) {
@@ -189,7 +194,7 @@ void ItemObject_Tick_Dispatch24To29(unsigned char *self)
         if (I(0x8) == 0x24 || I(0x8) == 0x25 || I(0x8) == 0x26) {
             SF(0x14) = BuildOrientationFromYaw(0.08726645f + SF(0x14));
             rot.y = BuildOrientationFromYaw(rot.y + SF(0x14));
-            ofs.y = (1.0f + (float)sin(SF(0x14))) * 0.5f + ofs.y;
+            ofs.y = (1.0f + sinf(SF(0x14))) / 2.0f + ofs.y;
         }
         Item_RenderHandheldByCharacter(self, ofs, rot, 0, lbl_80420E18[I(0x10)].scale);
         if (FinalLapCoinJump_CheckActiveForObject(SP(0x98))) {
