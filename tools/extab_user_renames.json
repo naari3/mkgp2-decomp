@@ -1787,6 +1787,63 @@
     "__dt__13Scene801FAA18Fv": "fn_801FAA18",
     "__dt__12Base801FAA18Fv": "dtor_802043EC"
   },
+  "src/game/fn_801CE1EC.cpp": {
+    "__dt__13Scene801CE1ECFv": "fn_801CE1EC",
+    "__dt__8FlowBaseFv": "dtor_801BA14C",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__9SpriteObjFv": "Sprite_Destroy",
+    "__dt__13Owned801CE1ECFv": "fn_8023CFE0"
+  },
+  "src/game/fn_801C5C34.cpp": {
+    "__dt__13Scene801C5C34Fv": "fn_801C5C34",
+    "__dt__8FlowBaseFv": "dtor_801BA14C",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__9SpriteObjFv": "Sprite_Destroy"
+  },
+  "src/game/fn_801DC29C.cpp": {
+    "__dt__16PathUser801DC29CFv": "fn_801DC29C",
+    "__dt__13Owned801DC29CFv": "PathCursor_Free",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/dtor_801F6B44.cpp": {
+    "__dt__10PaletteRefFv": "dtor_801F6B44",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801F05A8.cpp": {
+    "__dt__17PathOwner801F05A8Fv": "fn_801F05A8",
+    "__dt__8PathUserFv": "fn_801DC29C",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801EC404.cpp": {
+    "__dt__17PathOwner801EC404Fv": "fn_801EC404",
+    "__dt__8PathUserFv": "fn_801DC29C",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801F0BD4.cpp": {
+    "__dt__17PathOwner801F0BD4Fv": "fn_801F0BD4",
+    "__dt__8PathUserFv": "fn_801DC29C",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801F6860.cpp": {
+    "__dt__13PaletteBufferFv": "fn_801F6860",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dla__FPv": "MemoryManager_Free"
+  },
+  "src/game/fn_801B9740.cpp": {
+    "__dt__12Mode801B9740Fv": "fn_801B9740",
+    "__dt__12GameModeBaseFv": "dtor_8002CDF4",
+    "__dt__9SpriteObjFv": "Sprite_Destroy",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801F7DAC.cpp": {
+    "__as__8NodeDescFRC8NodeDesc": "fn_801F7DAC"
+  },
+  "src/game/fn_801CCF2C.cpp": {
+    "__dt__13Scene801CCF2CFv": "fn_801CCF2C",
+    "__dt__8FlowBaseFv": "dtor_801BA14C",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "EraseRange__8ListImplFRC8ListIterRC8ListIter": "DoublyLinkedList_EraseRange"
+  },
   "src/game/MiniGameBase.cpp": {
     "__dt__7MBOwnerFv": "dtor_80122FD8",
     "__dt__6MBRootFv": "dtor_8002CDF4",
