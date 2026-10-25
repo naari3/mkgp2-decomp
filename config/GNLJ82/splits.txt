@@ -3497,14 +3497,11 @@ game/MiniGame.c:
 	.text       start:0x80123050 end:0x8012318C
 	.data       start:0x8048E158 end:0x8048E178
 
-game/fn_801232D8.c:
-	.text       start:0x801232D8 end:0x801232E0
-
-game/fn_8012347C.c:
-	.text       start:0x8012347C end:0x80123480
-
-game/fn_801234F0.c:
-	.text       start:0x801234F0 end:0x801234F8
+game/ZoneList.c:
+	extab       start:0x8000BD8C end:0x8000BE88
+	extabindex  start:0x80024794 end:0x8002486C
+	.text       start:0x8012318C end:0x801240B4
+	.ctors      start:0x802E8908 end:0x802E890C
 
 game/SuikaBallObj_Render.c:
 	extab       start:0x8000BE88 end:0x8000BE90
@@ -3539,22 +3536,48 @@ game/CoinSystem_Init.c:
 	extabindex  start:0x80024CA4 end:0x80024CB0
 	.text       start:0x8013A778 end:0x8013AB74
 
-game/fn_8013BC98.c:
-	.text       start:0x8013BC98 end:0x8013BCA0
+game/csAnim.c:
+	extab       start:0x8000D328 end:0x8000D360
+	extabindex  start:0x80024CB0 end:0x80024D04
+	.text       start:0x8013AB74 end:0x8013BA78
+
+game/csAnim_Reset.c:
+	.text       start:0x8013BA78 end:0x8013BA90
+
+game/OrthoCam.c:
+	extab       start:0x8000D360 end:0x8000D3A8
+	extabindex  start:0x80024D04 end:0x80024D58
+	.text       start:0x8013BA90 end:0x8013BE98
+
+game/CourseTables.c:
+	extab       start:0x8000D3A8 end:0x8000D3D0
+	extabindex  start:0x80024D58 end:0x80024D94
+	.text       start:0x8013BE98 end:0x8013C2D4
 
 game/GetTextureByIdAndLang.c:
 	extab       start:0x8000D3D0 end:0x8000D3D8
 	extabindex  start:0x80024D94 end:0x80024DA0
 	.text       start:0x8013C2D4 end:0x8013C334
 
-game/fn_8013C3B8.c:
-	.text       start:0x8013C3B8 end:0x8013C3C0
+game/RenderTargetSingleton.c:
+	extab       start:0x8000D3D8 end:0x8000D400
+	extabindex  start:0x80024DA0 end:0x80024DC4
+	.text       start:0x8013C334 end:0x8013C4A4
 
-game/fn_8013C7B0.c:
-	.text       start:0x8013C7B0 end:0x8013C7BC
+game/KartPreview.c:
+	extab       start:0x8000D400 end:0x8000D538
+	extabindex  start:0x80024DC4 end:0x80024E48
+	.text       start:0x8013C4A4 end:0x8013D4B0
 
-game/fn_8013EB98.c:
-	.text       start:0x8013EB98 end:0x8013EBA0
+game/PreviewModel.c:
+	extab       start:0x8000D538 end:0x8000D630
+	extabindex  start:0x80024E48 end:0x80024F38
+	.text       start:0x8013D4B0 end:0x8013DD38
+
+game/SpriteEffects.c:
+	extab       start:0x8000D630 end:0x8000D670
+	extabindex  start:0x80024F38 end:0x80024F98
+	.text       start:0x8013DD38 end:0x8013ECB0
 
 game/fn_80141450.c:
 	.text       start:0x80141450 end:0x80141454
