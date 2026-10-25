@@ -2328,12 +2328,6 @@
     "__ct__8GMTaModeFv": "TaMode_Init",
     "__ct__11GMRaceSceneFv": "RaceScene_Init"
   },
-  "src/game/Sci2Card_Init.cpp": {
-    "__ct__8Sci2CardFv": "Sci2Card_Init"
-  },
-  "src/game/Sci2Card_Lifetime.cpp": {
-    "__ct__8Sci2CardFv": "Sci2Card_Init"
-  },
   "src/game/anon_802052E0.cpp": {
     "Draw__10YesNoSparkFv": "fn_802052E0",
     "Update__10YesNoSparkFv": "fn_802052E4",
@@ -2479,5 +2473,8 @@
     "__ct__7Scene3DFPCc": "Scene3D_Init",
     "__ct__10SceneModelFPCci": "SceneModel_Init",
     "__ct__10clNormal3DFPCci": "clNormal3D_Construct"
+  },
+  "src/game/Sci2Card.cpp": {
+    "__ct__8Sci2CardFv": "Sci2Card_Init"
   }
 }
