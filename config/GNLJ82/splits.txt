@@ -4113,11 +4113,22 @@ game/ItemHolder_Init.c:
 game/ItemHolder.c:
 	.text       start:0x801E9070 end:0x801E9094
 
+game/fn_801E9094.c:
+	extab       start:0x80016AA0 end:0x80016AA8
+	extabindex  start:0x80028988 end:0x80028994
+	.text       start:0x801E9094 end:0x801E90E0
+
 game/fn_801E9290.c:
 	.text       start:0x801E9290 end:0x801E92A0
 
 game/fn_801E93A0.c:
 	.text       start:0x801E93A0 end:0x801E93AC
+
+game/fn_801EC3DC.c:
+	extab       start:0x80016BD4 end:0x80016BDC
+	extabindex  start:0x80028A9C end:0x80028AA8
+	.text       start:0x801EC3DC end:0x801EC404
+	.ctors      start:0x802E8928 end:0x802E892C
 
 game/EnemyRunType2_Init.c:
 	extab       start:0x80016C0C end:0x80016C14
@@ -4163,6 +4174,10 @@ game/dtor_801F0B58.cpp:
 	extabindex  start:0x80028BBC end:0x80028BC8
 	.text       start:0x801F0B58 end:0x801F0BD4
 
+game/fn_801F0C80.c:
+	.text       start:0x801F0C80 end:0x801F0CBC
+	.ctors      start:0x802E892C end:0x802E8930
+
 game/fn_801F0CBC.c:
 	.text       start:0x801F0CBC end:0x801F0CC0
 
@@ -4175,6 +4190,11 @@ game/DisplayBuffer_GetByIndex.c:
 	extab       start:0x800174E4 end:0x800174EC
 	extabindex  start:0x80028EBC end:0x80028EC8
 	.text       start:0x801F6454 end:0x801F6494
+
+game/fn_801F6804.c:
+	extab       start:0x80017504 end:0x8001750C
+	extabindex  start:0x80028EEC end:0x80028EF8
+	.text       start:0x801F6804 end:0x801F6860
 
 game/GX_BeginDraw.c:
 	extab       start:0x800175D8 end:0x800175E0
@@ -4191,6 +4211,17 @@ game/dtor_801F8214.c:
 	extabindex  start:0x80029018 end:0x80029024
 	.text       start:0x801F8214 end:0x801F8250
 
+game/fn_801F8E58.c:
+	extab       start:0x800176A0 end:0x800176A8
+	extabindex  start:0x80029078 end:0x80029084
+	.text       start:0x801F8E58 end:0x801F8E90
+
+game/fn_801F8FCC.c:
+	.text       start:0x801F8FCC end:0x801F9014
+
+game/fn_801F93C8.c:
+	.text       start:0x801F93C8 end:0x801F93F8
+
 game/TexMgr_Init.c:
 	extab       start:0x800176C0 end:0x800176C8
 	extabindex  start:0x800290A8 end:0x800290B4
@@ -4200,6 +4231,19 @@ game/TexMgr_Apply.c:
 	extab       start:0x800176C8 end:0x800176D0
 	extabindex  start:0x800290B4 end:0x800290C0
 	.text       start:0x801F947C end:0x801F9518
+
+game/fn_801F98CC.c:
+	.text       start:0x801F98CC end:0x801F98E8
+
+game/fn_801FBD14.c:
+	extab       start:0x80017990 end:0x80017998
+	extabindex  start:0x8002921C end:0x80029228
+	.text       start:0x801FBD14 end:0x801FBD94
+
+game/fn_801FBD94.c:
+	extab       start:0x80017998 end:0x800179A0
+	extabindex  start:0x80029228 end:0x80029234
+	.text       start:0x801FBD94 end:0x801FBE14
 
 game/fn_801FD320.c:
 	.text       start:0x801FD320 end:0x801FD32C
