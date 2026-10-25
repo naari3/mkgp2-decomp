@@ -1141,6 +1141,7 @@ config.libs = [
             Object(Matching, "game/csAnim.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/csAnim_Reset.c"),
             Object(Matching, "game/KartPreview.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/PreviewModel.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/RenderTargetSingleton.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CourseTables.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/OrthoCam.c", extab_padding=b"\x00\x00"),

@@ -1614,5 +1614,26 @@
     "extabindex_fn_8013C7BC": "@eti_80024E00",
     "extab_fn_8013CC24": "@etb_8000D450",
     "extabindex_fn_8013CC24": "@eti_80024E3C"
+  },
+  "src/game/PreviewModel.c": {
+    "__dt__12PreviewModelFv": "fn_8013D778",
+    "__dt__11PreviewListFv": "dtor_8013D8C8",
+    "__ct__11PreviewListFv": "fn_8013DD08",
+    "__dt__8Normal3DFv": "Object_DtorWithGXSync",
+    "__ct__8ListBaseFv": "DoublyLinkedList_Init",
+    "erase__8ListBaseFQ28ListBase8iteratorQ28ListBase8iterator": "DoublyLinkedList_EraseRange",
+    "insert__8ListBaseFQ28ListBase8iteratorRCP12PreviewModel": "DoublyLinkedList_PushBefore",
+    "__construct_array": "fn_80270D6C",
+    "__destroy_arr": "fn_80270CF4",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "extab_dtor_8013DCBC": "@etb_8000D538",
+    "extab_fn_8013D800": "@etb_8000D590",
+    "extab_fn_8013D940": "@etb_8000D5D4",
+    "extab_fn_8013DA00": "@etb_8000D5DC",
+    "extabindex_fn_8013D800": "@eti_80024EC0",
+    "extabindex_fn_8013D940": "@eti_80024ED8",
+    "extabindex_fn_8013DA00": "@eti_80024EE4",
+    "extabindex_dtor_8013DCBC": "@eti_80024F20"
   }
 }
