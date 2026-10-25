@@ -31,7 +31,7 @@ extern unsigned char ServiceValue_Get(void);
 extern void ServiceValue_Set(int);
 extern unsigned char ServiceEnable_Get(void);
 extern long long OSGetTime(void);
-extern void fn_8025CE88(long long ticks, OSCalendarTime *td);
+extern void OSTicksToCalendarTime(long long ticks, OSCalendarTime *td);
 
 static inline int in_window(OSCalendarTime *time) {
     int now = time->hour * 60 + time->min;
@@ -67,7 +67,7 @@ void ServiceMode_UpdateScheduleGate(void) {
         lbl_806CEF68 = 0;
     }
     if (ServiceEnable_Get() && lbl_806CEF69 != 1) {
-        fn_8025CE88(OSGetTime(), &time);
+        OSTicksToCalendarTime(OSGetTime(), &time);
         ServiceValue_Set(in_window(&time));
     }
 }
