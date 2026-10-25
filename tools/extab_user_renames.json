@@ -3630,6 +3630,18 @@
     "__dt__8ItemSlotFv": "fn_8023E808",
     "__dt__3HUDFv": "fn_80254134"
   },
+  "src/game/anon_80214B3C.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__17CoinChallengeModeFv": "fn_80214B3C",
+    "__dt__8ModeBaseFv": "dtor_80122FD8",
+    "__vt__17CoinChallengeMode": "lbl_804EDA98",
+    "__dt__13WeatherSystemFv": "fn_8016C634",
+    "__dt__11LakituStartFv": "LakituStart_Dtor",
+    "__dt__17CourseEnvironmentFv": "CourseEnvironment_Dtor",
+    "__dt__19ChallengeGoalCameraFv": "fn_80124C84",
+    "__dt__3HUDFv": "fn_80254134"
+  },
   "src/game/anon_80216568.cpp": {
     "__dt__20VHolder<10FlowFaderI>Fv": "dtor_801F2724",
     "__dt__20VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
