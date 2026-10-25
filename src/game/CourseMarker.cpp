@@ -50,7 +50,7 @@ extern void Object_RenderJObjTree(clNormal3D *, int);
 extern KartDriver *GetKartSlotKartVariant(int);
 extern float *KartDriver_GetKartRootMtx(KartDriver *);
 extern void Vec3_Subtract(const Vec3f *, Vec3f *, Vec3f *);
-extern float fn_8025E30C(Vec3f *);
+extern float PSVECSquareMag(Vec3f *);
 extern void fn_80181F18(const Vec3f *, const Vec3f *, const Vec3f *, Vec3f *, float);
 extern double atan2(float, float);
 extern void Object_DtorWithGXSync(clNormal3D *, int);
@@ -107,7 +107,7 @@ void fn_80169EFC(CourseMarker *self) {
             kp.z = KartDriver_GetKartRootMtx(kart)[11];
             for (i = 0; i < 3; i++) {
                 Vec3_Subtract(&lbl_8036C8C0[i].trigger, &kp, &d);
-                if (fn_8025E30C(&d) < 1000000.0f) {
+                if (PSVECSquareMag(&d) < 1000000.0f) {
                     if (self->markers[i].state == 0) {
                         self->markers[i].state = 1;
                         self->markers[i].t = 0.0f;

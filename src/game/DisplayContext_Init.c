@@ -13,10 +13,10 @@ typedef struct DisplayContext {
 extern void *lbl_806CF010;
 extern const float lbl_806DA288;
 extern void *memset(void *dst, int c, unsigned long n);
-extern unsigned short fn_80258E30(void);
+extern unsigned short OSGetFontEncode(void);
 extern void *OSAllocFromHeap(void *heap, unsigned long size);
 extern void OSFreeToHeap(void *heap, void *p);
-extern int fn_802596A0(void *fifo);
+extern int OSInitFont(void *fifo);
 
 DisplayContext *DisplayContext_Init(DisplayContext *self) {
     self->fifo = 0;
@@ -27,12 +27,12 @@ DisplayContext *DisplayContext_Init(DisplayContext *self) {
     memset(self->f14, 0, 0x74);
     self->f8C = 0;
     if (self->fifo == 0) {
-        if (fn_80258E30() == 1) {
+        if (OSGetFontEncode() == 1) {
             self->fifo = OSAllocFromHeap(lbl_806CF010, 0x120F00);
         } else {
             self->fifo = OSAllocFromHeap(lbl_806CF010, 0x20120);
         }
-        if (fn_802596A0(self->fifo) == 0) {
+        if (OSInitFont(self->fifo) == 0) {
             OSFreeToHeap(lbl_806CF010, self->fifo);
             self->fifo = 0;
         }

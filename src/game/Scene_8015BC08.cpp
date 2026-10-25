@@ -13,7 +13,7 @@ extern Viewer *lbl_806D1588;
 extern void *lbl_806D158C;
 extern char lbl_80490064[];
 extern char lbl_803FE0C8[];
-extern void GX_DrawDoneAndWait(void);
+extern void GXDrawDone(void);
 extern void Object_DtorWithGXSync(void *, int);
 extern void fn_80121210(void);
 extern void MemoryManager_TimedFree(void *);
@@ -23,7 +23,7 @@ extern void MemoryManager_TimedFree(void *);
 ViewerScene *fn_8015BC08(ViewerScene *self, short flag) {
     if (self) {
         self->vtable = lbl_80490064;
-        GX_DrawDoneAndWait();
+        GXDrawDone();
         if (lbl_806D1588) {
             delete lbl_806D1588;
             lbl_806D1588 = 0;

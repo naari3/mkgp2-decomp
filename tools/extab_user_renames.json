@@ -1599,7 +1599,6 @@
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__div2i": "fn_80271884",
     "__cvt_sll_flt": "__cvt_ll2flt"
   },
   "src/game/fn_801B8918.cpp": {

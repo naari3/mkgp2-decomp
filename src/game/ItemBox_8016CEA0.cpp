@@ -50,8 +50,8 @@ extern char lbl_8036D5A8[];
 extern const float lbl_80495A94[];
 void fn_801712E4(void *, float, float, float, float);
 void Vec3_Subtract(Vec3f *, Vec3f *, Vec3f *);
-void fn_8025E2AC(Vec3f *, Vec3f *, float);
-void fn_8025E264(Vec3f *, Vec3f *, Vec3f *);
+void PSVECScale(Vec3f *, Vec3f *, float);
+void PSVECAdd(Vec3f *, Vec3f *, Vec3f *);
 float LookupSin(float);
 double atan2(double, double);
 void Object_DtorWithGXSync(void *, int);
@@ -86,8 +86,8 @@ void fn_8016CEA0(ItemBoxSet *set) {
                 it->delay = 60;
             }
             Vec3_Subtract(&it->end, &it->start, &d);
-            fn_8025E2AC(&d, &it->pos, it->t);
-            fn_8025E264(&it->start, &it->pos, &it->pos);
+            PSVECScale(&d, &it->pos, it->t);
+            PSVECAdd(&it->start, &it->pos, &it->pos);
             it->pos.y += (it->peakY - it->pos.y) * LookupSin(3.1415927f * it->t);
             it->rotY = 1.5707964f - (float)atan2(d.z, d.x);
             it->rotX = 3.1415927f * LookupSin(1.5707964f * it->t) + 1.5707964f;

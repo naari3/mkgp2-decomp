@@ -1,8 +1,8 @@
-extern void fn_8025E1EC(float dst[4][4]);
+extern void PSMTX44Identity(float dst[4][4]);
 
 void Mtx_TransposeToMtx44(float dst[4][4], float src[3][4])
 {
-    fn_8025E1EC(dst);
+    PSMTX44Identity(dst);
     dst[0][0] = src[0][0];
     dst[0][1] = src[1][0];
     dst[0][2] = src[2][0];
