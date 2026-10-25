@@ -3036,6 +3036,13 @@
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960"
   },
+  "src/Runtime.PPCEABI.H/MWRTTI.cpp": {
+    "__dynamic_cast": "fn_80271340",
+    "__dt__Q23std8bad_castFv": "fn_802715A4",
+    "what__Q23std8bad_castCFv": "fn_80271600",
+    "__vt__Q23std8bad_cast": "lbl_804F47B4",
+    "__vt__Q23std9exception": "lbl_803F5710"
+  },
   "src/Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp": {
     "__dt__Q23std9exceptionFv": "dtor_80038DD4",
     "what__Q23std9exceptionCFv": "fn_80038E1C",
