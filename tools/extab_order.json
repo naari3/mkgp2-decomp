@@ -16,6 +16,10 @@
     "extab": ["dtor_801FEAB8", "dtor_801FEB48", "dtor_801FEA70"],
     "extabindex": ["dtor_801FEAB8", "dtor_801FEB48", "dtor_801FEA70"]
   },
+  "src/game/ShadowBillboard.c": {
+    "extab": ["Mtx34_Orthonormalize", "ShadowBillboard_SetField0x6CAndComputeAxis", "ShadowBillboard_Tick", "ShadowBillboard_StepSimple", "ShadowBillboard_TriggerSpinFlash", "Camera_RotateByYaw", "PlayCamera_Dtor", "PlayCamera_Init"],
+    "extabindex": ["ShadowBillboard_SetField0x6CAndComputeAxis", "ShadowBillboard_Tick", "ShadowBillboard_StepSimple", "ShadowBillboard_TriggerSpinFlash", "Camera_RotateByYaw", "PlayCamera_Dtor", "PlayCamera_Init", "Mtx34_Orthonormalize"]
+  },
   "src/game/CreditMgr.c": {
     "extab": ["dtor_80082960", "CreditMgr_DrawCoinCreditBanner", "CreditMgr_TryConfirmPlay", "CreditMgr_GetCoinCount", "CreditMgr_GetCoinsPerCredit", "CreditMgr_GetCreditCount", "CreditMgr_PollAcceptor", "CreditMgr_AcceptorIsAbsent", "CreditMgr_GetPlayState", "CreditMgr_PollInsertAndPlay", "CreditMgr_ResetState"],
     "extabindex": ["CreditMgr_DrawCoinCreditBanner", "CreditMgr_TryConfirmPlay", "CreditMgr_GetCoinCount", "CreditMgr_GetCoinsPerCredit", "CreditMgr_GetCreditCount", "CreditMgr_PollAcceptor", "CreditMgr_AcceptorIsAbsent", "CreditMgr_GetPlayState", "CreditMgr_PollInsertAndPlay", "CreditMgr_ResetState", "dtor_80082960"]

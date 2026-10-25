@@ -1111,6 +1111,9 @@ game/clItemBoxResponder_SpawnDebris.c:
 	extabindex  start:0x80020BDC end:0x80020BE8
 	.text       start:0x8005E46C end:0x8005E788
 
+game/clItemBox_StepFn_Debris.c:
+	.text       start:0x8005E788 end:0x8005E924
+
 game/clItemBox_StepFn_Bobbing.c:
 	extab       start:0x80007B9C end:0x80007BA4
 	extabindex  start:0x80020BE8 end:0x80020BF4
@@ -1227,6 +1230,11 @@ game/ShadowBillboard_Lerp.c:
 
 game/ShadowBillboard_Setters.c:
 	.text       start:0x80061918 end:0x80061954
+
+game/ShadowBillboard.c:
+	extab       start:0x80007E8C end:0x80007F1C
+	extabindex  start:0x80020E10 end:0x80020E70
+	.text       start:0x80061954 end:0x80064CD4
 
 game/dtor_80064CD4.c:
 	extab       start:0x80007F1C end:0x80007F24
@@ -1895,6 +1903,16 @@ game/card_task_manager_create.c:
 	extabindex  start:0x80021B24 end:0x80021B30
 	.text       start:0x8008A0A0 end:0x8008A2A0
 
+game/OperationClockState.c:
+	extab       start:0x80009260 end:0x80009280
+	extabindex  start:0x80021D1C end:0x80021D4C
+	.text       start:0x8008C930 end:0x8008CB3C
+
+game/PlayStats_Accumulate.c:
+	extab       start:0x80009280 end:0x80009288
+	extabindex  start:0x80021D4C end:0x80021D58
+	.text       start:0x8008CB3C end:0x8008D87C
+
 game/PlayStats_Counters.c:
 	.text       start:0x8008D87C end:0x8008DC70
 
@@ -1933,6 +1951,17 @@ game/TEXLoadPalette.cpp:
 	extab       start:0x800092D8 end:0x800092E8
 	extabindex  start:0x80021DD0 end:0x80021DE8
 	.text       start:0x8008E63C end:0x8008E9A0
+
+game/OSAlloc_Game.c:
+	extab       start:0x800092E8 end:0x800092F0
+	extabindex  start:0x80021DE8 end:0x80021DF4
+	.text       start:0x8008E9A0 end:0x8008F07C
+
+game/CardPrinterChecker_States.c:
+	extab       start:0x800092F0 end:0x80009310
+	extabindex  start:0x80021DF4 end:0x80021E24
+	.text       start:0x8008F07C end:0x8008F4CC
+	.rodata     start:0x803133E0 end:0x803134B0
 
 game/CardTaskPrintJob_IsRunning_Thunk.cpp:
 	extab       start:0x80009310 end:0x80009318
