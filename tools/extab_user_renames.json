@@ -1921,6 +1921,10 @@
     "extab_KartDriver_GetJointPosition": "@etb_800061E0",
     "extabindex_KartDriver_GetJointPosition": "@eti_8001FE68"
   },
+  "src/game/CameraTest_Page.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
   "src/game/LampTest_Page.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",

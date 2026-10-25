@@ -606,6 +606,7 @@ config.libs = [
             Object(Matching, "game/CardRW_TestTopMenu_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/SpeakerTest_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/LampTest_Page.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/CameraTest_Page.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/LampTestIndiv_Page.cpp"),
             Object(NonMatching, "game/SwitchTest_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/HandleInitialize_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
