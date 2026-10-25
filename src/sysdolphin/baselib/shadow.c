@@ -268,9 +268,6 @@ void HSD_ShadowEndRender(HSD_Shadow* shadow)
     makeMatrix(shadow);
 }
 
-void fn_802C7240(HSD_CObj* cobj, Vec3* interest);
-void fn_802C7384(HSD_CObj* cobj, Vec3* eye);
-bool fn_802C5C68(HSD_LObj* lobj, Vec3* pos);
 
 void fn_802DBB84(HSD_Shadow* shadow, HSD_LObj* lobj, f32 distance)
 {
@@ -283,16 +280,16 @@ void fn_802DBB84(HSD_Shadow* shadow, HSD_LObj* lobj, f32 distance)
 
     switch (lobj->flags & LOBJ_TYPE_MASK) {
     case LOBJ_INFINITE:
-        fn_802C7240(shadow->camera, &interest);
-        fn_802C5C68(lobj, &dir);
+        HSD_CObjGetInterest(shadow->camera, &interest);
+        HSD_LObjGetPosition(lobj, &dir);
         PSVECScale(&dir, &dir, distance / (__float_epsilon[0] + Vec3_Magnitude(&dir)));
         PSVECAdd(&interest, &dir, &eye);
-        fn_802C7384(shadow->camera, &eye);
+        HSD_CObjSetEyePosition(shadow->camera, &eye);
         break;
     case LOBJ_POINT:
     case LOBJ_SPOT:
-        fn_802C5C68(lobj, &eye);
-        fn_802C7384(shadow->camera, &eye);
+        HSD_LObjGetPosition(lobj, &eye);
+        HSD_CObjSetEyePosition(shadow->camera, &eye);
         break;
     default:
         HSD_ASSERT(0x224, 0);
