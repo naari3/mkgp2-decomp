@@ -1424,6 +1424,27 @@ game/NetDiag_PacketRatioPage.c:
 	extabindex  start:0x80021038 end:0x80021044
 	.text       start:0x80069AB0 end:0x8006A160
 
+game/OperationTime_Page.cpp:
+	extab       start:0x80008140 end:0x80008148
+	extabindex  start:0x80021044 end:0x80021050
+	.text       start:0x8006A160 end:0x8006A500
+
+game/ClockSetting_Page.cpp:
+	extab       start:0x80008148 end:0x80008150
+	extabindex  start:0x80021050 end:0x8002105C
+	.text       start:0x8006A500 end:0x8006AA84
+
+game/CabinetSetting_Page.cpp:
+	extab       start:0x80008150 end:0x80008158
+	extabindex  start:0x8002105C end:0x80021068
+	.text       start:0x8006AA84 end:0x8006AD0C
+
+game/CardCreate_Page.cpp:
+	extab       start:0x80008158 end:0x80008160
+	extabindex  start:0x80021068 end:0x80021074
+	.text       start:0x8006AD0C end:0x8006B32C
+	.data       start:0x803FDEFC end:0x803FDF28
+
 game/CardRW_Renew_Page.c:
 	extab       start:0x80008160 end:0x80008168
 	extabindex  start:0x80021074 end:0x80021080
