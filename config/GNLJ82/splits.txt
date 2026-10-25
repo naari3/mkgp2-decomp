@@ -4882,7 +4882,7 @@ game/clFlowChara_Update.c:
 	extabindex  start:0x80027D7C end:0x80027D88
 	.text       start:0x801C3D48 end:0x801C4CA4
 
-game/clFlowChara_Destructor.c:
+game/clFlowChara_Destructor.cpp:
 	extab       start:0x80013F0C end:0x80013F14
 	extabindex  start:0x80027D88 end:0x80027D94
 	.text       start:0x801C4CA4 end:0x801C4EA8
@@ -5372,7 +5372,7 @@ game/fn_801E8F5C.c:
 	extabindex  start:0x80028970 end:0x8002897C
 	.text       start:0x801E8F5C end:0x801E8FB8
 
-game/ItemHolder_Init.c:
+game/ItemHolder_Init.cpp:
 	extab       start:0x80016A98 end:0x80016AA0
 	extabindex  start:0x8002897C end:0x80028988
 	.text       start:0x801E8FB8 end:0x801E9070
