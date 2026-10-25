@@ -2088,6 +2088,7 @@ config.libs = [
             Object(Matching, "game/fn_801C37E8.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801BA1A4.cpp"),
             Object(Matching, "game/fn_801C2238.c"),
+            Object(Matching, "game/fn_801D7CC4.cpp"),
         ],
     },
     {
