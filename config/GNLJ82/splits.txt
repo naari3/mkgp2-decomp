@@ -6377,6 +6377,11 @@ game/clstream/fn_80194158.c:
 game/clstream/fn_80194184.c:
 	.text       start:0x80194184 end:0x80194214
 
+game/clstream/ClStream_FillChunk.c:
+	extab       start:0x8001231C end:0x80012324
+	extabindex  start:0x80027224 end:0x80027230
+	.text       start:0x801948C0 end:0x80194A9C
+
 game/clstream/ClStream_IsActive.c:
 	.text       start:0x80194A9C end:0x80194AE0
 
