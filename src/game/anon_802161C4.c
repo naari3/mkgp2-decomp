@@ -4,11 +4,7 @@
  * an item for the current character).
  */
 
-typedef struct CoinMilestone {
-    int threshold;
-    int type;
-    int pad;
-} CoinMilestone;
+#include "game/CoinMilestone.h"
 
 extern int g_extraCoinsToAdd;
 extern int g_coinMilageBeforeRace;
@@ -20,7 +16,6 @@ extern int baseCoins;
 extern int g_earnedCoins;
 extern int g_characterId;
 
-extern CoinMilestone lbl_80679748[93];
 extern int lbl_80679BA4[57];
 extern int lbl_806D1A48;
 extern const char lbl_803C4B4C[];
