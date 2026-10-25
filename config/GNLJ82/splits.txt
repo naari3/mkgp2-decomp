@@ -4603,6 +4603,12 @@ game/fn_80103144.c:
 	extabindex  start:0x8002411C end:0x80024128
 	.text       start:0x80103144 end:0x8010376C
 
+game/fn_8010376C.c:
+	extab       start:0x8000B80C end:0x8000B814
+	extabindex  start:0x80024128 end:0x80024134
+	.text       start:0x8010376C end:0x801046C4
+	.data       start:0x80421A00 end:0x80421A28
+
 game/fn_80104ED4.c:
 	extab       start:0x8000B81C end:0x8000B824
 	extabindex  start:0x80024140 end:0x8002414C
