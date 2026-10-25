@@ -418,7 +418,7 @@ asm void WarpDashMgr_Cleanup(void) {
     li r31, 0x0
     stw r30, 0x18(r1)
     stw r29, 0x14(r1)
-    addi r29, r13, -0x7AE8  /* lbl_806CF238 */
+    la r29, lbl_806CF238(r13)  /* lbl_806CF238 */
     stw r28, 0x10(r1)
     li r28, 0x0
     WarpDashMgr_Cleanup_L_800A92FC:
@@ -470,7 +470,7 @@ asm void WarpDashMgr_GetOrCreate(void) {
     stmw r25, 0x14(r1)
     mr r29, r6
     clrlwi r6, r6, 24
-    addi r30, r13, -0x7AE8  /* lbl_806CF238 */
+    la r30, lbl_806CF238(r13)  /* lbl_806CF238 */
     neg r0, r6
     mr r26, r3
     or r0, r0, r6
@@ -544,7 +544,7 @@ asm void DashZone_ProcessAutoRun(void) {
     psq_st f31, 0x18(r1), 0, 0
     stw r31, 0xc(r1)
     mr r31, r3
-    addi r3, r13, -0x7AE8  /* lbl_806CF238 */
+    la r3, lbl_806CF238(r13)  /* lbl_806CF238 */
     lbz r4, 0x20(r31)
     fmr f31, f4
     neg r0, r4
@@ -694,7 +694,7 @@ asm void WarpAutoRun_GetParam(void) {
     b WarpAutoRun_GetParam_L_800A97E8
     WarpAutoRun_GetParam_L_800A9694:
     lbz r5, 0x20(r27)
-    addi r3, r13, -0x7AE8  /* lbl_806CF238 */
+    la r3, lbl_806CF238(r13)  /* lbl_806CF238 */
     neg r0, r5
     or r0, r0, r5
     rlwinm r0, r0, 3, 29, 29
@@ -801,7 +801,7 @@ void WarpAutoRun_OnEnter(void *self, float f1, float f2, float f3, float f4, flo
 asm void WarpZone_CheckEntry(void) {
     nofralloc
     stwu r1, -0x20(r1)
-    addi r4, r13, -0x7AE8  /* lbl_806CF238 */
+    la r4, lbl_806CF238(r13)  /* lbl_806CF238 */
     lbz r5, 0x20(r3)
     neg r0, r5
     or r0, r0, r5

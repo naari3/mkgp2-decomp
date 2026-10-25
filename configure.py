@@ -1304,7 +1304,7 @@ config.libs = [
             Object(Matching, "game/GameMode_Base.c"),
             Object(Matching, "game/Debug.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Camera.c"),
-            Object(Matching, "game/Game_Shutdown.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Game_Shutdown.c", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
             Object(Matching, "game/Profiler.c"),
             Object(Matching, "game/Cleanup_DtorMinimal.c"),
             Object(Matching, "game/Profiler_RecordFrame.c"),

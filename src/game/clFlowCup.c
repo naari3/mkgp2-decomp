@@ -1,3 +1,6 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D12E4[1];
 /* clFlowCup extab bundle: generated from target assembly. */
 /*
  * clFlowCup_Draw   @ 0x801C7360 (0x3CC)
@@ -956,7 +959,7 @@ asm void clFlowCup_Init(void) { /* 0x801C8AB4 size:0x7D4 */
     stb r3, 0x118(r31)
     li r0, 0x0
     lfs f0, lbl_806D9C80(r2)
-    addi r3, r13, -0x5A3C  /* lbl_806D12E4 */
+    la r3, lbl_806D12E4(r13)  /* lbl_806D12E4 */
     stw r0, 0xf8(r31)
     stw r0, 0xfc(r31)
     stw r0, 0x108(r31)

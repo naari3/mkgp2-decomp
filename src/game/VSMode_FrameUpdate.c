@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D12F0[4];
+extern unsigned char lbl_806D131C[1];
 /* === extracted from auto_VSMode_FrameUpdate_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -250,11 +254,11 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     bl IsSyncReached
     clrlwi. r0, r3, 24
     beq VSMode_FrameUpdate_L_8009E200
-    addi r3, r13, -0x5A30  /* lbl_806D12F0 */
+    la r3, lbl_806D12F0(r13)  /* lbl_806D12F0 */
     li r4, 0x0
     li r5, 0x4
     bl memset
-    addi r0, r13, -0x5A30  /* lbl_806D12F0 */
+    la r0, lbl_806D12F0(r13)  /* lbl_806D12F0 */
     stw r0, HSD_RandSeedPtr(r13)
     bl SyncSlot_GetRecv
     lbz r0, 0x1b(r3)
@@ -300,11 +304,11 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     subic. r0, r3, 0x1
     stw r0, lbl_806D1314(r13)
     bne VSMode_FrameUpdate_L_8009E270
-    addi r3, r13, -0x5A30  /* lbl_806D12F0 */
+    la r3, lbl_806D12F0(r13)  /* lbl_806D12F0 */
     li r4, 0x0
     li r5, 0x4
     bl memset
-    addi r0, r13, -0x5A30  /* lbl_806D12F0 */
+    la r0, lbl_806D12F0(r13)  /* lbl_806D12F0 */
     stw r0, HSD_RandSeedPtr(r13)
     bl SyncSlot_GetRecv
     lbz r0, 0x1b(r3)
@@ -706,7 +710,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     mr r22, r19
     addi r24, r3, 0x0
     li r18, 0x0
-    addi r23, r13, -0x5A04  /* lbl_806D131C */
+    la r23, lbl_806D131C(r13)  /* lbl_806D131C */
     VSMode_FrameUpdate_L_8009E7F0:
     mr r3, r18
     bl RingBuffer_GetKartSlot

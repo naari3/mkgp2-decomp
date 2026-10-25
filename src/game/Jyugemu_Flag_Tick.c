@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D3068[5];
+extern unsigned char lbl_806D3060[7];
 /* === extracted from auto_Jyugemu_Flag_Tick_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -74,9 +78,9 @@ asm void Jyugemu_Flag_Tick(void) { /* 0x80080748 size:0x2CC */
     bl Archive_GetRootJObj
     mr. r28, r3
     bne Jyugemu_Flag_Tick_L_800807D0
-    addi r3, r2, -0x7200  /* lbl_806D3060 */
+    la r3, lbl_806D3060(r2)  /* lbl_806D3060 */
     li r4, 0x3b8
-    addi r5, r2, -0x71F8  /* lbl_806D3068 */
+    la r5, lbl_806D3068(r2)  /* lbl_806D3068 */
     bl __assert
     Jyugemu_Flag_Tick_L_800807D0:
     stfs f31, 0x38(r28)
@@ -86,9 +90,9 @@ asm void Jyugemu_Flag_Tick(void) { /* 0x80080748 size:0x2CC */
     cmplwi r28, 0x0
     beq Jyugemu_Flag_Tick_L_80080828
     bne Jyugemu_Flag_Tick_L_800807FC
-    addi r3, r2, -0x7200  /* lbl_806D3060 */
+    la r3, lbl_806D3060(r2)  /* lbl_806D3060 */
     li r4, 0x25d
-    addi r5, r2, -0x71F8  /* lbl_806D3068 */
+    la r5, lbl_806D3068(r2)  /* lbl_806D3068 */
     bl __assert
     Jyugemu_Flag_Tick_L_800807FC:
     lwz r4, 0x14(r28)
@@ -111,9 +115,9 @@ asm void Jyugemu_Flag_Tick(void) { /* 0x80080748 size:0x2CC */
     bl Archive_GetRootJObj
     mr. r28, r3
     bne Jyugemu_Flag_Tick_L_80080854
-    addi r3, r2, -0x7200  /* lbl_806D3060 */
+    la r3, lbl_806D3060(r2)  /* lbl_806D3060 */
     li r4, 0x3c6
-    addi r5, r2, -0x71F8  /* lbl_806D3068 */
+    la r5, lbl_806D3068(r2)  /* lbl_806D3068 */
     bl __assert
     Jyugemu_Flag_Tick_L_80080854:
     stfs f31, 0x3c(r28)
@@ -123,9 +127,9 @@ asm void Jyugemu_Flag_Tick(void) { /* 0x80080748 size:0x2CC */
     cmplwi r28, 0x0
     beq Jyugemu_Flag_Tick_L_800808AC
     bne Jyugemu_Flag_Tick_L_80080880
-    addi r3, r2, -0x7200  /* lbl_806D3060 */
+    la r3, lbl_806D3060(r2)  /* lbl_806D3060 */
     li r4, 0x25d
-    addi r5, r2, -0x71F8  /* lbl_806D3068 */
+    la r5, lbl_806D3068(r2)  /* lbl_806D3068 */
     bl __assert
     Jyugemu_Flag_Tick_L_80080880:
     lwz r4, 0x14(r28)
@@ -148,9 +152,9 @@ asm void Jyugemu_Flag_Tick(void) { /* 0x80080748 size:0x2CC */
     bl Archive_GetRootJObj
     mr. r28, r3
     bne Jyugemu_Flag_Tick_L_800808D8
-    addi r3, r2, -0x7200  /* lbl_806D3060 */
+    la r3, lbl_806D3060(r2)  /* lbl_806D3060 */
     li r4, 0x3d4
-    addi r5, r2, -0x71F8  /* lbl_806D3068 */
+    la r5, lbl_806D3068(r2)  /* lbl_806D3068 */
     bl __assert
     Jyugemu_Flag_Tick_L_800808D8:
     stfs f31, 0x40(r28)
@@ -160,9 +164,9 @@ asm void Jyugemu_Flag_Tick(void) { /* 0x80080748 size:0x2CC */
     cmplwi r28, 0x0
     beq Jyugemu_Flag_Tick_L_80080930
     bne Jyugemu_Flag_Tick_L_80080904
-    addi r3, r2, -0x7200  /* lbl_806D3060 */
+    la r3, lbl_806D3060(r2)  /* lbl_806D3060 */
     li r4, 0x25d
-    addi r5, r2, -0x71F8  /* lbl_806D3068 */
+    la r5, lbl_806D3068(r2)  /* lbl_806D3068 */
     bl __assert
     Jyugemu_Flag_Tick_L_80080904:
     lwz r4, 0x14(r28)
@@ -186,16 +190,16 @@ asm void Jyugemu_Flag_Tick(void) { /* 0x80080748 size:0x2CC */
     bl Archive_GetRootJObj
     mr. r28, r3
     bne Jyugemu_Flag_Tick_L_80080960
-    addi r3, r2, -0x7200  /* lbl_806D3060 */
+    la r3, lbl_806D3060(r2)  /* lbl_806D3060 */
     li r4, 0x2b8
-    addi r5, r2, -0x71F8  /* lbl_806D3068 */
+    la r5, lbl_806D3068(r2)  /* lbl_806D3068 */
     bl __assert
     Jyugemu_Flag_Tick_L_80080960:
     lwz r0, 0x14(r28)
     rlwinm. r0, r0, 0, 14, 14
     beq Jyugemu_Flag_Tick_L_80080980
     lis r4, lbl_80311DB0@ha
-    addi r3, r2, -0x7200  /* lbl_806D3060 */
+    la r3, lbl_806D3060(r2)  /* lbl_806D3060 */
     addi r5, r4, lbl_80311DB0@l
     li r4, 0x2b9
     bl __assert
@@ -207,9 +211,9 @@ asm void Jyugemu_Flag_Tick(void) { /* 0x80080748 size:0x2CC */
     cmplwi r28, 0x0
     beq Jyugemu_Flag_Tick_L_800809D8
     bne Jyugemu_Flag_Tick_L_800809AC
-    addi r3, r2, -0x7200  /* lbl_806D3060 */
+    la r3, lbl_806D3060(r2)  /* lbl_806D3060 */
     li r4, 0x25d
-    addi r5, r2, -0x71F8  /* lbl_806D3068 */
+    la r5, lbl_806D3068(r2)  /* lbl_806D3068 */
     bl __assert
     Jyugemu_Flag_Tick_L_800809AC:
     lwz r4, 0x14(r28)

@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D7280[7];
+extern unsigned char lbl_806D7288[5];
 /*
  * 0x801313D0..0x801341E4: Suika ball minigame.
  */
@@ -393,9 +397,9 @@ extern "C" asm void SuikaBall_Render(void) { /* 0x801313D0 size:0x60C */
     beq SuikaBall_Render_L_80131700
     cmplwi r24, 0x0
     bne SuikaBall_Render_L_80131500
-    addi r3, r2, -0x2FE0  /* lbl_806D7280 */
+    la r3, lbl_806D7280(r2)  /* lbl_806D7280 */
     li r4, 0x3e4
-    addi r5, r2, -0x2FD8  /* lbl_806D7288 */
+    la r5, lbl_806D7288(r2)  /* lbl_806D7288 */
     bl __assert
     SuikaBall_Render_L_80131500:
     lwz r3, 0x8(r28)
@@ -405,9 +409,9 @@ extern "C" asm void SuikaBall_Render(void) { /* 0x801313D0 size:0x60C */
     cmplwi r25, 0x0
     lfs f29, 0x40(r24)
     bne SuikaBall_Render_L_8013152C
-    addi r3, r2, -0x2FE0  /* lbl_806D7280 */
+    la r3, lbl_806D7280(r2)  /* lbl_806D7280 */
     li r4, 0x3a9
-    addi r5, r2, -0x2FD8  /* lbl_806D7288 */
+    la r5, lbl_806D7288(r2)  /* lbl_806D7288 */
     bl __assert
     SuikaBall_Render_L_8013152C:
     stfs f30, 0x38(r25)
@@ -419,9 +423,9 @@ extern "C" asm void SuikaBall_Render(void) { /* 0x801313D0 size:0x60C */
     cmplwi r25, 0x0
     beq SuikaBall_Render_L_8013158C
     bne SuikaBall_Render_L_80131560
-    addi r3, r2, -0x2FE0  /* lbl_806D7280 */
+    la r3, lbl_806D7280(r2)  /* lbl_806D7280 */
     li r4, 0x25d
-    addi r5, r2, -0x2FD8  /* lbl_806D7288 */
+    la r5, lbl_806D7288(r2)  /* lbl_806D7288 */
     bl __assert
     SuikaBall_Render_L_80131560:
     lwz r4, 0x14(r25)
@@ -441,9 +445,9 @@ extern "C" asm void SuikaBall_Render(void) { /* 0x801313D0 size:0x60C */
     lwzx r25, r3, r31
     cmplwi r25, 0x0
     bne SuikaBall_Render_L_801315AC
-    addi r3, r2, -0x2FE0  /* lbl_806D7280 */
+    la r3, lbl_806D7280(r2)  /* lbl_806D7280 */
     li r4, 0x2dd
-    addi r5, r2, -0x2FD8  /* lbl_806D7288 */
+    la r5, lbl_806D7288(r2)  /* lbl_806D7288 */
     bl __assert
     SuikaBall_Render_L_801315AC:
     lwz r3, 0x8(r28)
@@ -454,9 +458,9 @@ extern "C" asm void SuikaBall_Render(void) { /* 0x801313D0 size:0x60C */
     lfs f31, 0x24(r25)
     lfs f28, 0x28(r25)
     bne SuikaBall_Render_L_801315DC
-    addi r3, r2, -0x2FE0  /* lbl_806D7280 */
+    la r3, lbl_806D7280(r2)  /* lbl_806D7280 */
     li r4, 0x290
-    addi r5, r2, -0x2FD8  /* lbl_806D7288 */
+    la r5, lbl_806D7288(r2)  /* lbl_806D7288 */
     bl __assert
     SuikaBall_Render_L_801315DC:
     stfs f29, 0x1c(r24)
@@ -469,9 +473,9 @@ extern "C" asm void SuikaBall_Render(void) { /* 0x801313D0 size:0x60C */
     cmplwi r24, 0x0
     beq SuikaBall_Render_L_80131640
     bne SuikaBall_Render_L_80131614
-    addi r3, r2, -0x2FE0  /* lbl_806D7280 */
+    la r3, lbl_806D7280(r2)  /* lbl_806D7280 */
     li r4, 0x25d
-    addi r5, r2, -0x2FD8  /* lbl_806D7288 */
+    la r5, lbl_806D7288(r2)  /* lbl_806D7288 */
     bl __assert
     SuikaBall_Render_L_80131614:
     lwz r4, 0x14(r24)
@@ -491,9 +495,9 @@ extern "C" asm void SuikaBall_Render(void) { /* 0x801313D0 size:0x60C */
     lwzx r24, r3, r31
     cmplwi r24, 0x0
     bne SuikaBall_Render_L_80131660
-    addi r3, r2, -0x2FE0  /* lbl_806D7280 */
+    la r3, lbl_806D7280(r2)  /* lbl_806D7280 */
     li r4, 0x351
-    addi r5, r2, -0x2FD8  /* lbl_806D7288 */
+    la r5, lbl_806D7288(r2)  /* lbl_806D7288 */
     bl __assert
     SuikaBall_Render_L_80131660:
     lwz r3, 0x8(r28)
@@ -503,9 +507,9 @@ extern "C" asm void SuikaBall_Render(void) { /* 0x801313D0 size:0x60C */
     cmplwi r25, 0x0
     lfs f30, 0x34(r24)
     bne SuikaBall_Render_L_8013168C
-    addi r3, r2, -0x2FE0  /* lbl_806D7280 */
+    la r3, lbl_806D7280(r2)  /* lbl_806D7280 */
     li r4, 0x316
-    addi r5, r2, -0x2FD8  /* lbl_806D7288 */
+    la r5, lbl_806D7288(r2)  /* lbl_806D7288 */
     bl __assert
     SuikaBall_Render_L_8013168C:
     stfs f28, 0x2c(r25)
@@ -517,9 +521,9 @@ extern "C" asm void SuikaBall_Render(void) { /* 0x801313D0 size:0x60C */
     cmplwi r25, 0x0
     beq SuikaBall_Render_L_801316EC
     bne SuikaBall_Render_L_801316C0
-    addi r3, r2, -0x2FE0  /* lbl_806D7280 */
+    la r3, lbl_806D7280(r2)  /* lbl_806D7280 */
     li r4, 0x25d
-    addi r5, r2, -0x2FD8  /* lbl_806D7288 */
+    la r5, lbl_806D7288(r2)  /* lbl_806D7288 */
     bl __assert
     SuikaBall_Render_L_801316C0:
     lwz r4, 0x14(r25)

@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D6F24[7];
+extern unsigned char lbl_806D6F2C[5];
 extern void CObj_DebugVizPathFlush();
 extern void DrawEffect_TickAndCull();
 extern void HSD_StateInvalidate();
@@ -410,9 +414,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     fmr f31, f1
     cmplwi r30, 0x0
     bne fn_80125B04_L_80125CC4
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x325
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80125CC4:
     lfs f1, lbl_806D6F34(r2)
@@ -425,9 +429,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     cmplwi r30, 0x0
     beq fn_80125B04_L_80125D28
     bne fn_80125B04_L_80125CFC
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x25d
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80125CFC:
     lwz r4, 0x14(r30)
@@ -446,9 +450,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     lwz r30, 0x24(r31)
     cmplwi r30, 0x0
     bne fn_80125B04_L_80125D44
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x333
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80125D44:
     lfs f1, lbl_806D6F38(r2)
@@ -461,9 +465,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     cmplwi r30, 0x0
     beq fn_80125B04_L_80125DA8
     bne fn_80125B04_L_80125D7C
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x25d
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80125D7C:
     lwz r4, 0x14(r30)
@@ -482,9 +486,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     lwz r30, 0x24(r31)
     cmplwi r30, 0x0
     bne fn_80125B04_L_80125DC4
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x341
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80125DC4:
     stfs f29, 0x34(r30)
@@ -494,9 +498,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     cmplwi r30, 0x0
     beq fn_80125B04_L_80125E1C
     bne fn_80125B04_L_80125DF0
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x25d
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80125DF0:
     lwz r4, 0x14(r30)
@@ -551,9 +555,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     fmr f31, f1
     cmplwi r30, 0x0
     bne fn_80125B04_L_80125EBC
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x325
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80125EBC:
     lfs f1, lbl_806D6F34(r2)
@@ -566,9 +570,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     cmplwi r30, 0x0
     beq fn_80125B04_L_80125F20
     bne fn_80125B04_L_80125EF4
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x25d
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80125EF4:
     lwz r4, 0x14(r30)
@@ -587,9 +591,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     lwz r30, 0x28(r31)
     cmplwi r30, 0x0
     bne fn_80125B04_L_80125F3C
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x333
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80125F3C:
     lfs f1, lbl_806D6F38(r2)
@@ -602,9 +606,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     cmplwi r30, 0x0
     beq fn_80125B04_L_80125FA0
     bne fn_80125B04_L_80125F74
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x25d
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80125F74:
     lwz r4, 0x14(r30)
@@ -623,9 +627,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     lwz r30, 0x28(r31)
     cmplwi r30, 0x0
     bne fn_80125B04_L_80125FBC
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x341
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80125FBC:
     stfs f29, 0x34(r30)
@@ -635,9 +639,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     cmplwi r30, 0x0
     beq fn_80125B04_L_80126014
     bne fn_80125B04_L_80125FE8
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x25d
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80125FE8:
     lwz r4, 0x14(r30)
@@ -679,17 +683,17 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     fn_80125B04_L_8012606C:
     cmplwi r29, 0x0
     bne fn_80125B04_L_80126084
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x47c
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80126084:
     cmplwi r29, 0x0
     beq fn_80125B04_L_801260CC
     bne fn_80125B04_L_801260A0
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x25d
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_801260A0:
     lwz r4, 0x14(r29)
@@ -715,9 +719,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     lfs f31, 0x50(r29)
     fadds f29, f29, f0
     bne fn_80125B04_L_80126104
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x3a9
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80126104:
     stfs f31, 0x38(r30)
@@ -729,9 +733,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     cmplwi r30, 0x0
     beq fn_80125B04_L_80126164
     bne fn_80125B04_L_80126138
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x25d
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80126138:
     lwz r4, 0x14(r30)
@@ -762,9 +766,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     fmr f31, f1
     cmplwi r30, 0x0
     bne fn_80125B04_L_801261B0
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x325
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_801261B0:
     lfs f1, lbl_806D6F58(r2)
@@ -777,9 +781,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     cmplwi r30, 0x0
     beq fn_80125B04_L_80126214
     bne fn_80125B04_L_801261E8
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x25d
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_801261E8:
     lwz r4, 0x14(r30)
@@ -798,9 +802,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     lwz r30, 0x2c(r31)
     cmplwi r30, 0x0
     bne fn_80125B04_L_80126230
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x333
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80126230:
     lfs f1, lbl_806D6F5C(r2)
@@ -813,9 +817,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     cmplwi r30, 0x0
     beq fn_80125B04_L_80126294
     bne fn_80125B04_L_80126268
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x25d
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80126268:
     lwz r4, 0x14(r30)
@@ -913,16 +917,16 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     lfs f31, 0x8c(r31)
     cmplwi r30, 0x0
     bne fn_80125B04_L_801263D8
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x2b8
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_801263D8:
     lwz r0, 0x14(r30)
     rlwinm. r0, r0, 0, 14, 14
     beq fn_80125B04_L_801263F8
     lis r4, lbl_80355EB4@ha
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     addi r5, r4, lbl_80355EB4@l
     li r4, 0x2b9
     bl __assert
@@ -934,9 +938,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     cmplwi r30, 0x0
     beq fn_80125B04_L_80126450
     bne fn_80125B04_L_80126424
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x25d
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80126424:
     lwz r4, 0x14(r30)
@@ -956,16 +960,16 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     lfs f31, 0x90(r31)
     cmplwi r30, 0x0
     bne fn_80125B04_L_80126470
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x2b8
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80126470:
     lwz r0, 0x14(r30)
     rlwinm. r0, r0, 0, 14, 14
     beq fn_80125B04_L_80126490
     lis r4, lbl_80355EB4@ha
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     addi r5, r4, lbl_80355EB4@l
     li r4, 0x2b9
     bl __assert
@@ -977,9 +981,9 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     cmplwi r30, 0x0
     beq fn_80125B04_L_801264E8
     bne fn_80125B04_L_801264BC
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x25d
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_801264BC:
     lwz r4, 0x14(r30)
@@ -1010,17 +1014,17 @@ asm void fn_80125B04(void) { /* 0x80125B04 size:0xC24 */
     lwz r30, 0x70(r31)
     cmplwi r30, 0x0
     bne fn_80125B04_L_80126534
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x47c
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80126534:
     cmplwi r30, 0x0
     beq fn_80125B04_L_8012657C
     bne fn_80125B04_L_80126550
-    addi r3, r2, -0x333C  /* lbl_806D6F24 */
+    la r3, lbl_806D6F24(r2)  /* lbl_806D6F24 */
     li r4, 0x25d
-    addi r5, r2, -0x3334  /* lbl_806D6F2C */
+    la r5, lbl_806D6F2C(r2)  /* lbl_806D6F2C */
     bl __assert
     fn_80125B04_L_80126550:
     lwz r4, 0x14(r30)

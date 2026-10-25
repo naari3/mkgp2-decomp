@@ -1,3 +1,10 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806CFE14[4];
+extern unsigned char lbl_806CFE10[4];
+extern unsigned char lbl_806CFE0C[4];
+extern unsigned char lbl_806CFE08[4];
+extern unsigned char lbl_806D9DFC[5];
 /* === extracted from auto_clFlowItemSelect_Ini_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -141,7 +148,7 @@ asm void clFlowItemSelect_Init(void) { /* 0x801CC2EC size:0x744 */
     bl TexMgr_Init
     clFlowItemSelect_Init_L_801CC3B4:
     add r3, r31, r22
-    addi r4, r2, -0x464  /* lbl_806D9DFC */
+    la r4, lbl_806D9DFC(r2)  /* lbl_806D9DFC */
     addi r0, r3, 0x98
     stwx r26, r23, r0
     lwzx r3, r23, r0
@@ -202,7 +209,7 @@ asm void clFlowItemSelect_Init(void) { /* 0x801CC2EC size:0x744 */
     stw r8, 0x1c(r31)
     addi r3, r31, 0x80
     lfs f1, lbl_806D9E04(r2)
-    addi r4, r13, -0x6F18  /* lbl_806CFE08 */
+    la r4, lbl_806CFE08(r13)  /* lbl_806CFE08 */
     stw r5, 0x7c(r31)
     li r5, 0x0
     lfs f2, lbl_806D9DD8(r2)
@@ -220,19 +227,19 @@ asm void clFlowItemSelect_Init(void) { /* 0x801CC2EC size:0x744 */
     lfs f1, lbl_806D9DE4(r2)
     addi r3, r31, 0x84
     lfs f2, lbl_806D9DD8(r2)
-    addi r4, r13, -0x6F14  /* lbl_806CFE0C */
+    la r4, lbl_806CFE0C(r13)  /* lbl_806CFE0C */
     li r5, 0x0
     bl SpriteGroup_CreateOrInit
     lfs f1, lbl_806D9E08(r2)
     addi r3, r31, 0x88
     lfs f2, lbl_806D9DD8(r2)
-    addi r4, r13, -0x6F10  /* lbl_806CFE10 */
+    la r4, lbl_806CFE10(r13)  /* lbl_806CFE10 */
     li r5, 0x0
     bl SpriteGroup_CreateOrInit
     lfs f1, lbl_806D9DE4(r2)
     addi r3, r31, 0x8c
     lfs f2, lbl_806D9E0C(r2)
-    addi r4, r13, -0x6F0C  /* lbl_806CFE14 */
+    la r4, lbl_806CFE14(r13)  /* lbl_806CFE14 */
     li r5, 0x0
     bl SpriteGroup_CreateOrInit
     li r26, 0x0

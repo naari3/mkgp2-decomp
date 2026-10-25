@@ -1,3 +1,9 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806CF828[8];
+extern unsigned char lbl_806D7F70[8];
+extern unsigned char lbl_806D8134[7];
+extern unsigned char lbl_806D813C[5];
 /*
  * 0x8014E0C4..0x80157940: scene objects (kart/driver demo scene, menu
  * panels and their list helpers).
@@ -1313,7 +1319,7 @@ extern "C" asm void fn_8014E118(void *self, int a) { /* 0x8014E118 size:0x500 */
     stw r25, 0x4(r24)
     addi r4, r31, 0x311c
     li r5, 0x0
-    addi r3, r2, -0x22F8  /* lbl_806D7F68 */
+    la r3, lbl_806D7F68(r2)  /* lbl_806D7F68 */
     stb r5, 0x8(r24)
     li r0, 0x1
     lfs f7, lbl_806D8064(r2)
@@ -4070,7 +4076,7 @@ extern "C" asm void fn_80150C1C(void) { /* 0x80150C1C size:0x618 */
     addi r3, r1, 0x60
     bl ResCtrl_Init
     lfs f0, lbl_806D8090(r2)
-    addi r3, r2, -0x2308  /* lbl_806D7F58 */
+    la r3, lbl_806D7F58(r2)  /* lbl_806D7F58 */
     lfs f6, 0x4(r3)
     li r4, 0x2
     fmuls f1, f0, f31
@@ -4144,7 +4150,7 @@ extern "C" asm void fn_80150C1C(void) { /* 0x80150C1C size:0x618 */
     addi r3, r1, 0x8
     bl ResCtrl_Init
     lfs f0, lbl_806D8090(r2)
-    addi r3, r2, -0x2308  /* lbl_806D7F58 */
+    la r3, lbl_806D7F58(r2)  /* lbl_806D7F58 */
     lfs f6, 0x4(r3)
     li r4, 0x2
     fmuls f1, f0, f31
@@ -4357,7 +4363,7 @@ extern "C" asm void fn_80151234(void) { /* 0x80151234 size:0xCD4 */
     fn_80151234_L_801513DC:
     lwz r0, 0x8(r31)
     addi r4, r30, 0x31c0
-    addi r3, r2, -0x22F0  /* lbl_806D7F70 */
+    la r3, lbl_806D7F70(r2)  /* lbl_806D7F70 */
     li r6, 0x0
     mulli r0, r0, 0x18
     add r4, r4, r0
@@ -4604,17 +4610,17 @@ extern "C" asm void fn_80151234(void) { /* 0x80151234 size:0xCD4 */
     mr. r24, r3
     beq fn_80151234_L_801517EC
     bne fn_80151234_L_8015178C
-    addi r3, r2, -0x212C  /* lbl_806D8134 */
+    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
     li r4, 0x47c
-    addi r5, r2, -0x2124  /* lbl_806D813C */
+    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
     bl __assert
     fn_80151234_L_8015178C:
     cmplwi r24, 0x0
     beq fn_80151234_L_801517D4
     bne fn_80151234_L_801517A8
-    addi r3, r2, -0x212C  /* lbl_806D8134 */
+    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
     li r4, 0x25d
-    addi r5, r2, -0x2124  /* lbl_806D813C */
+    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
     bl __assert
     fn_80151234_L_801517A8:
     lwz r4, 0x14(r24)
@@ -4788,17 +4794,17 @@ extern "C" asm void fn_80151234(void) { /* 0x80151234 size:0xCD4 */
     fmr f31, f1
     cmplwi r24, 0x0
     bne fn_80151234_L_80151A20
-    addi r3, r2, -0x212C  /* lbl_806D8134 */
+    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
     li r4, 0x47c
-    addi r5, r2, -0x2124  /* lbl_806D813C */
+    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
     bl __assert
     fn_80151234_L_80151A20:
     cmplwi r24, 0x0
     beq fn_80151234_L_80151A68
     bne fn_80151234_L_80151A3C
-    addi r3, r2, -0x212C  /* lbl_806D8134 */
+    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
     li r4, 0x25d
-    addi r5, r2, -0x2124  /* lbl_806D813C */
+    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
     bl __assert
     fn_80151234_L_80151A3C:
     lwz r4, 0x14(r24)
@@ -7398,17 +7404,17 @@ extern "C" asm void fn_80154304(void) { /* 0x80154304 size:0xCAC */
     cmplwi r25, 0x0
     beq fn_80154304_L_80154590
     bne fn_80154304_L_80154514
-    addi r3, r2, -0x212C  /* lbl_806D8134 */
+    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
     li r4, 0x47c
-    addi r5, r2, -0x2124  /* lbl_806D813C */
+    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
     bl __assert
     fn_80154304_L_80154514:
     cmplwi r25, 0x0
     beq fn_80154304_L_8015455C
     bne fn_80154304_L_80154530
-    addi r3, r2, -0x212C  /* lbl_806D8134 */
+    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
     li r4, 0x25d
-    addi r5, r2, -0x2124  /* lbl_806D813C */
+    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
     bl __assert
     fn_80154304_L_80154530:
     lwz r4, 0x14(r25)
@@ -7760,7 +7766,7 @@ extern "C" asm void fn_80154304(void) { /* 0x80154304 size:0xCAC */
     stw r26, 0x4(r25)
     addi r4, r31, 0x311c
     li r5, 0x0
-    addi r3, r2, -0x22F8  /* lbl_806D7F68 */
+    la r3, lbl_806D7F68(r2)  /* lbl_806D7F68 */
     stb r5, 0x8(r25)
     li r0, 0x1
     lfs f7, lbl_806D8064(r2)
@@ -8786,7 +8792,7 @@ extern "C" asm void fn_801558CC(void) { /* 0x801558CC size:0x16F4 */
     bl SetCourseScene3D
     mr r31, r28
     li r29, 0x0
-    addi r30, r13, -0x74F8  /* lbl_806CF828 */
+    la r30, lbl_806CF828(r13)  /* lbl_806CF828 */
     fn_801558CC_L_80155A64:
     lwz r3, 0x34(r31)
     lwz r3, 0xc(r3)
@@ -8800,17 +8806,17 @@ extern "C" asm void fn_801558CC(void) { /* 0x801558CC size:0x16F4 */
     cmplwi r26, 0x0
     beq fn_801558CC_L_80155B54
     bne fn_801558CC_L_80155AA4
-    addi r3, r2, -0x212C  /* lbl_806D8134 */
+    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
     li r4, 0x47c
-    addi r5, r2, -0x2124  /* lbl_806D813C */
+    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
     bl __assert
     fn_801558CC_L_80155AA4:
     cmplwi r26, 0x0
     beq fn_801558CC_L_80155AEC
     bne fn_801558CC_L_80155AC0
-    addi r3, r2, -0x212C  /* lbl_806D8134 */
+    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
     li r4, 0x25d
-    addi r5, r2, -0x2124  /* lbl_806D813C */
+    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
     bl __assert
     fn_801558CC_L_80155AC0:
     lwz r4, 0x14(r26)

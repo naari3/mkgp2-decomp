@@ -1,4 +1,25 @@
 
+/* sdata symbols referenced from asm */
+extern void Effect_KartAuraCompound_Update(void);
+extern unsigned char lbl_804216F8[12];
+extern unsigned char lbl_8041FF60[1108];
+extern unsigned char lbl_80421704[12];
+extern void Effect_KartGlow_Update(void);
+extern unsigned char lbl_806CF3C8[4];
+extern unsigned char lbl_806CF3CC[4];
+extern unsigned char lbl_806CF3D0[4];
+extern unsigned char lbl_806CF3D4[4];
+extern unsigned char lbl_806CF3D8[8];
+extern unsigned char lbl_806D6060[4];
+extern unsigned char lbl_806D6064[4];
+extern unsigned char lbl_806D6068[4];
+extern unsigned char lbl_806D606C[4];
+extern unsigned char lbl_806D6070[4];
+extern unsigned char lbl_806D6074[4];
+extern unsigned char lbl_806D6078[8];
+extern unsigned char lbl_806D6080[4];
+extern unsigned char lbl_806D6084[4];
+
 /*
  * HeartCompoundItem @ 0x800F2620..0x800F2D60 (unit-claim #23).
  *
@@ -112,7 +133,7 @@ asm void HeartCompoundItem_TickReleasePhase(void) { /* 0x800F2620 size:0x2F0 */
     HeartCompoundItem_TickReleasePhase_L_800F2668:
     b HeartCompoundItem_TickReleasePhase_L_800F27D0
     HeartCompoundItem_TickReleasePhase_L_800F266C:
-    lfs f0,-0x4200(r2)
+    lfs f0, lbl_806D6060(r2)
     HeartCompoundItem_TickReleasePhase_L_800F2670:
     li r3,0xa
     HeartCompoundItem_TickReleasePhase_L_800F2674:
@@ -176,13 +197,13 @@ asm void HeartCompoundItem_TickReleasePhase(void) { /* 0x800F2620 size:0x2F0 */
     HeartCompoundItem_TickReleasePhase_L_800F26E8:
     beq HeartCompoundItem_TickReleasePhase_L_800F2740
     HeartCompoundItem_TickReleasePhase_L_800F26EC:
-    lis r3,-0x7ff4
+    lis r3, Effect_KartGlow_Update@ha
     HeartCompoundItem_TickReleasePhase_L_800F26F0:
-    lfs f30,-0x41fc(r2)
+    lfs f30, lbl_806D6064(r2)
     HeartCompoundItem_TickReleasePhase_L_800F26F4:
-    lfd f31,-0x41e8(r2)
+    lfd f31, lbl_806D6078(r2)
     HeartCompoundItem_TickReleasePhase_L_800F26F8:
-    addi r27,r3,0x3cc8
+    addi r27, r3, Effect_KartGlow_Update@l
     HeartCompoundItem_TickReleasePhase_L_800F26FC:
     li r24,0x0
     HeartCompoundItem_TickReleasePhase_L_800F2700:
@@ -316,7 +337,7 @@ asm void HeartCompoundItem_TickReleasePhase(void) { /* 0x800F2620 size:0x2F0 */
     HeartCompoundItem_TickReleasePhase_L_800F2800:
     lfs f1,0xbc(r30)
     HeartCompoundItem_TickReleasePhase_L_800F2804:
-    lfs f0,-0x41f8(r2)
+    lfs f0, lbl_806D6068(r2)
     HeartCompoundItem_TickReleasePhase_L_800F2808:
     fadds f0,f1,f0
     HeartCompoundItem_TickReleasePhase_L_800F280C:
@@ -326,7 +347,7 @@ asm void HeartCompoundItem_TickReleasePhase(void) { /* 0x800F2620 size:0x2F0 */
     HeartCompoundItem_TickReleasePhase_L_800F2814:
     lfs f1,0xbc(r30)
     HeartCompoundItem_TickReleasePhase_L_800F2818:
-    lfs f0,-0x41f4(r2)
+    lfs f0, lbl_806D606C(r2)
     HeartCompoundItem_TickReleasePhase_L_800F281C:
     fadds f1,f2,f1
     HeartCompoundItem_TickReleasePhase_L_800F2820:
@@ -346,9 +367,9 @@ asm void HeartCompoundItem_TickReleasePhase(void) { /* 0x800F2620 size:0x2F0 */
     HeartCompoundItem_TickReleasePhase_L_800F283C:
     lfs f2,0x2c(r30)
     HeartCompoundItem_TickReleasePhase_L_800F2840:
-    lfs f1,-0x41f0(r2)
+    lfs f1, lbl_806D6070(r2)
     HeartCompoundItem_TickReleasePhase_L_800F2844:
-    lfs f0,-0x4200(r2)
+    lfs f0, lbl_806D6060(r2)
     HeartCompoundItem_TickReleasePhase_L_800F2848:
     fsubs f1,f2,f1
     HeartCompoundItem_TickReleasePhase_L_800F284C:
@@ -372,7 +393,7 @@ asm void HeartCompoundItem_TickReleasePhase(void) { /* 0x800F2620 size:0x2F0 */
     HeartCompoundItem_TickReleasePhase_L_800F2870:
     b HeartCompoundItem_TickReleasePhase_L_800F28EC
     HeartCompoundItem_TickReleasePhase_L_800F2874:
-    lfs f1,-0x41ec(r2)
+    lfs f1, lbl_806D6074(r2)
     HeartCompoundItem_TickReleasePhase_L_800F2878:
     or r3,r30,r30
     HeartCompoundItem_TickReleasePhase_L_800F287C:
@@ -491,7 +512,7 @@ asm void HeartCompoundItem_TickCarryPhase(void) { /* 0x800F2910 size:0x244 */
     HeartCompoundItem_TickCarryPhase_L_800F2958:
     li r0,0x1
     HeartCompoundItem_TickCarryPhase_L_800F295C:
-    lfs f0,-0x4200(r2)
+    lfs f0, lbl_806D6060(r2)
     HeartCompoundItem_TickCarryPhase_L_800F2960:
     stb r0,0x28(r30)
     HeartCompoundItem_TickCarryPhase_L_800F2964:
@@ -507,7 +528,7 @@ asm void HeartCompoundItem_TickCarryPhase(void) { /* 0x800F2910 size:0x244 */
     HeartCompoundItem_TickCarryPhase_L_800F2978:
     lfs f1,0x14(r31)
     HeartCompoundItem_TickCarryPhase_L_800F297C:
-    lfs f0,-0x7950(r13)
+    lfs f0, lbl_806CF3D0(r13)
     HeartCompoundItem_TickCarryPhase_L_800F2980:
     fadds f1,f1,f0
     HeartCompoundItem_TickCarryPhase_L_800F2984:
@@ -515,11 +536,11 @@ asm void HeartCompoundItem_TickCarryPhase(void) { /* 0x800F2910 size:0x244 */
     HeartCompoundItem_TickCarryPhase_L_800F2988:
     stfs f1,0x14(r31)
     HeartCompoundItem_TickCarryPhase_L_800F298C:
-    lis r3,-0x7fbe
+    lis r3, lbl_80421704@ha
     HeartCompoundItem_TickCarryPhase_L_800F2990:
-    lfsu f1,0x1704(r3)
+    lfsu f1, lbl_80421704@l(r3)
     HeartCompoundItem_TickCarryPhase_L_800F2994:
-    lfs f0,0x4(r3)
+    lfs f0, (lbl_8041FF60+164)@l(r3)
     HeartCompoundItem_TickCarryPhase_L_800F2998:
     stfs f1,0x38(r1)
     HeartCompoundItem_TickCarryPhase_L_800F299C:
@@ -529,25 +550,25 @@ asm void HeartCompoundItem_TickCarryPhase(void) { /* 0x800F2910 size:0x244 */
     HeartCompoundItem_TickCarryPhase_L_800F29A4:
     bl sin
     HeartCompoundItem_TickCarryPhase_L_800F29A8:
-    lis r4,-0x7fbe
+    lis r4, lbl_80421704@ha
     HeartCompoundItem_TickCarryPhase_L_800F29AC:
     frsp f3,f1
     HeartCompoundItem_TickCarryPhase_L_800F29B0:
-    addi r4,r4,0x1704
+    addi r4, r4, lbl_80421704@l
     HeartCompoundItem_TickCarryPhase_L_800F29B4:
-    lfs f2,-0x794c(r13)
+    lfs f2, lbl_806CF3D4(r13)
     HeartCompoundItem_TickCarryPhase_L_800F29B8:
     lfs f0,0x8(r4)
     HeartCompoundItem_TickCarryPhase_L_800F29BC:
-    lis r3,-0x7fbe
+    lis r3, lbl_804216F8@ha
     HeartCompoundItem_TickCarryPhase_L_800F29C0:
-    lfs f1,-0x41e0(r2)
+    lfs f1, lbl_806D6080(r2)
     HeartCompoundItem_TickCarryPhase_L_800F29C4:
     fmadds f3,f2,f3,f0
     HeartCompoundItem_TickCarryPhase_L_800F29C8:
     lfs f0,0x14(r31)
     HeartCompoundItem_TickCarryPhase_L_800F29CC:
-    lfs f2,0x16f8(r3)
+    lfs f2, lbl_804216F8@l(r3)
     HeartCompoundItem_TickCarryPhase_L_800F29D0:
     fmuls f1,f1,f0
     HeartCompoundItem_TickCarryPhase_L_800F29D4:
@@ -559,13 +580,13 @@ asm void HeartCompoundItem_TickCarryPhase(void) { /* 0x800F2910 size:0x244 */
     HeartCompoundItem_TickCarryPhase_L_800F29E0:
     frsp f0,f1
     HeartCompoundItem_TickCarryPhase_L_800F29E4:
-    lfs f1,-0x7948(r13)
+    lfs f1, lbl_806CF3D8(r13)
     HeartCompoundItem_TickCarryPhase_L_800F29E8:
-    lis r3,-0x7fbe
+    lis r3, lbl_804216F8@ha
     HeartCompoundItem_TickCarryPhase_L_800F29EC:
     lwz r11,0x38(r1)
     HeartCompoundItem_TickCarryPhase_L_800F29F0:
-    addi r3,r3,0x16f8
+    addi r3, r3, lbl_804216F8@l
     HeartCompoundItem_TickCarryPhase_L_800F29F4:
     lwz r10,0x3c(r1)
     HeartCompoundItem_TickCarryPhase_L_800F29F8:
@@ -595,7 +616,7 @@ asm void HeartCompoundItem_TickCarryPhase(void) { /* 0x800F2910 size:0x244 */
     HeartCompoundItem_TickCarryPhase_L_800F2A28:
     stfs f1,0x30(r1)
     HeartCompoundItem_TickCarryPhase_L_800F2A2C:
-    lfs f1,-0x7954(r13)
+    lfs f1, lbl_806CF3CC(r13)
     HeartCompoundItem_TickCarryPhase_L_800F2A30:
     lwz r7,0x30(r1)
     HeartCompoundItem_TickCarryPhase_L_800F2A34:
@@ -663,7 +684,7 @@ asm void HeartCompoundItem_TickCarryPhase(void) { /* 0x800F2910 size:0x244 */
     HeartCompoundItem_TickCarryPhase_L_800F2AB0:
     bl SpriteSlot_SetMatrixSourceEnabled_WithReseed
     HeartCompoundItem_TickCarryPhase_L_800F2AB4:
-    lfs f0,-0x41dc(r2)
+    lfs f0, lbl_806D6084(r2)
     HeartCompoundItem_TickCarryPhase_L_800F2AB8:
     stfs f0,0x2c(r30)
     HeartCompoundItem_TickCarryPhase_L_800F2ABC:
@@ -784,7 +805,7 @@ asm void HeartCompoundItem_Update(void) { /* 0x800F2B54 size:0x20C */
     HeartCompoundItem_Update_L_800F2B9C:
     b HeartCompoundItem_Update_L_800F2C1C
     HeartCompoundItem_Update_L_800F2BA0:
-    lwz r0,-0x7958(r13)
+    lwz r0, lbl_806CF3C8(r13)
     HeartCompoundItem_Update_L_800F2BA4:
     addi r3,r30,0x14
     HeartCompoundItem_Update_L_800F2BA8:
@@ -794,11 +815,11 @@ asm void HeartCompoundItem_Update(void) { /* 0x800F2B54 size:0x20C */
     HeartCompoundItem_Update_L_800F2BB0:
     li r0,0x4
     HeartCompoundItem_Update_L_800F2BB4:
-    lis r3,-0x7ff4
+    lis r3, Effect_KartAuraCompound_Update@ha
     HeartCompoundItem_Update_L_800F2BB8:
     stb r0,0x14(r30)
     HeartCompoundItem_Update_L_800F2BBC:
-    addi r3,r3,0x439c
+    addi r3, r3, Effect_KartAuraCompound_Update@l
     HeartCompoundItem_Update_L_800F2BC0:
     bl DrawEffect_SpawnDirect
     HeartCompoundItem_Update_L_800F2BC4:
@@ -952,7 +973,7 @@ asm void HeartCompoundItem_Update(void) { /* 0x800F2B54 size:0x20C */
     HeartCompoundItem_Update_L_800F2CEC:
     lfs f2,0xc4(r30)
     HeartCompoundItem_Update_L_800F2CF0:
-    lfs f3,-0x4200(r2)
+    lfs f3, lbl_806D6060(r2)
     HeartCompoundItem_Update_L_800F2CF4:
     bl Effect_CompoundRing_PlaceChildren
     HeartCompoundItem_Update_L_800F2CF8:

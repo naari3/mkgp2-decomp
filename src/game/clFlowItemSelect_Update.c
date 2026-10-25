@@ -1,3 +1,6 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806CFE18[4];
 /* === extracted from auto_clFlowItemSelect_Upd_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -165,7 +168,7 @@ asm void clFlowItemSelect_Update(void) { /* 0x801CBD58 size:0x3AC */
     lfs f1, lbl_806D9DE4(r2)
     addi r3, r29, 0x90
     lfs f2, lbl_806D9DE8(r2)
-    addi r4, r13, -0x6F08  /* lbl_806CFE18 */
+    la r4, lbl_806CFE18(r13)  /* lbl_806CFE18 */
     li r5, 0x1
     bl SpriteGroup_CreateOrInit
     lwz r3, 0x90(r29)

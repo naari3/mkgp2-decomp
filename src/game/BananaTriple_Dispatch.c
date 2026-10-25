@@ -1,3 +1,6 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806CF3C0[6];
 /* === extracted from auto_BananaTriple_Dispatc_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -125,7 +128,7 @@ asm void BananaTriple_Dispatch_32to36(void) { /* 0x800E9934 size:0x560 */
     stb r0, 0x3(r31)
     BananaTriple_Dispatch_32to36_L_800E99EC:
     lbz r0, 0x3(r31)
-    addi r4, r13, -0x7960  /* lbl_806CF3C0 */
+    la r4, lbl_806CF3C0(r13)  /* lbl_806CF3C0 */
     addi r3, r30, 0x14
     lbzx r4, r4, r0
     bl SpriteSlot_InitNonLoop

@@ -13,8 +13,8 @@ extern void C_QUATLerp();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D2344;
-extern unsigned char lbl_806D2348[];
-extern unsigned char lbl_806D2350[];
+extern unsigned char lbl_806D2348[7];
+extern unsigned char lbl_806D2350[5];
 
 /* --- function index (1 fns, .text 0x800326D0..0x800328A8) ---
  * [  0] 0x800326D0 size:0x1D8   global ObjectTree_BlendQuatLerp
@@ -85,9 +85,9 @@ asm void ObjectTree_BlendQuatLerp(void) { /* 0x800326D0 size:0x1D8 */
     fmadds f0, f1, f2, f0
     stfs f0, 0x34(r6)
     bne ObjectTree_BlendQuatLerp_L_8003279C
-    addi r3, r2, -0x7F18  /* lbl_806D2348 */
+    la r3, lbl_806D2348(r2)  /* lbl_806D2348 */
     li r4, 0x2dd
-    addi r5, r2, -0x7F10  /* lbl_806D2350 */
+    la r5, lbl_806D2350(r2)  /* lbl_806D2350 */
     bl __assert
     ObjectTree_BlendQuatLerp_L_8003279C:
     lfs f0, 0x1c(r29)
@@ -100,9 +100,9 @@ asm void ObjectTree_BlendQuatLerp(void) { /* 0x800326D0 size:0x1D8 */
     lfs f0, 0x28(r29)
     stfs f0, 0x34(r1)
     bne ObjectTree_BlendQuatLerp_L_800327D4
-    addi r3, r2, -0x7F18  /* lbl_806D2348 */
+    la r3, lbl_806D2348(r2)  /* lbl_806D2348 */
     li r4, 0x2dd
-    addi r5, r2, -0x7F10  /* lbl_806D2350 */
+    la r5, lbl_806D2350(r2)  /* lbl_806D2350 */
     bl __assert
     ObjectTree_BlendQuatLerp_L_800327D4:
     lfs f0, 0x1c(r30)

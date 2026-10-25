@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D2550[5];
+extern unsigned char lbl_806D2548[7];
 /* === extracted from auto_KartDriver_GetJointB_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -43,17 +47,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_80040EC8:
     bne KartDriver_GetJointByIdx_L_80040EDC
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_80040EDC:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_80040F24
     bne KartDriver_GetJointByIdx_L_80040EF8
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_80040EF8:
     lwz r4, 0x14(r31)
@@ -81,17 +85,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_80040F48:
     bne KartDriver_GetJointByIdx_L_80040F5C
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_80040F5C:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_80040FA4
     bne KartDriver_GetJointByIdx_L_80040F78
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_80040F78:
     lwz r4, 0x14(r31)
@@ -119,17 +123,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_80040FC8:
     bne KartDriver_GetJointByIdx_L_80040FDC
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_80040FDC:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_80041024
     bne KartDriver_GetJointByIdx_L_80040FF8
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_80040FF8:
     lwz r4, 0x14(r31)
@@ -157,17 +161,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_80041048:
     bne KartDriver_GetJointByIdx_L_8004105C
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_8004105C:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_800410A4
     bne KartDriver_GetJointByIdx_L_80041078
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_80041078:
     lwz r4, 0x14(r31)
@@ -195,17 +199,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_800410C8:
     bne KartDriver_GetJointByIdx_L_800410DC
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_800410DC:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_80041124
     bne KartDriver_GetJointByIdx_L_800410F8
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_800410F8:
     lwz r4, 0x14(r31)
@@ -233,17 +237,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_80041148:
     bne KartDriver_GetJointByIdx_L_8004115C
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_8004115C:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_800411A4
     bne KartDriver_GetJointByIdx_L_80041178
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_80041178:
     lwz r4, 0x14(r31)
@@ -271,17 +275,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_800411C8:
     bne KartDriver_GetJointByIdx_L_800411DC
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_800411DC:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_80041224
     bne KartDriver_GetJointByIdx_L_800411F8
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_800411F8:
     lwz r4, 0x14(r31)
@@ -309,17 +313,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_80041248:
     bne KartDriver_GetJointByIdx_L_8004125C
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_8004125C:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_800412A4
     bne KartDriver_GetJointByIdx_L_80041278
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_80041278:
     lwz r4, 0x14(r31)
@@ -347,17 +351,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_800412C8:
     bne KartDriver_GetJointByIdx_L_800412DC
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_800412DC:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_80041324
     bne KartDriver_GetJointByIdx_L_800412F8
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_800412F8:
     lwz r4, 0x14(r31)
@@ -385,17 +389,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_80041348:
     bne KartDriver_GetJointByIdx_L_8004135C
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_8004135C:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_800413A4
     bne KartDriver_GetJointByIdx_L_80041378
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_80041378:
     lwz r4, 0x14(r31)
@@ -423,17 +427,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_800413C8:
     bne KartDriver_GetJointByIdx_L_800413DC
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_800413DC:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_80041424
     bne KartDriver_GetJointByIdx_L_800413F8
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_800413F8:
     lwz r4, 0x14(r31)
@@ -461,17 +465,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_80041448:
     bne KartDriver_GetJointByIdx_L_8004145C
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_8004145C:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_800414A4
     bne KartDriver_GetJointByIdx_L_80041478
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_80041478:
     lwz r4, 0x14(r31)
@@ -499,17 +503,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_800414C8:
     bne KartDriver_GetJointByIdx_L_800414DC
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_800414DC:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_80041524
     bne KartDriver_GetJointByIdx_L_800414F8
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_800414F8:
     lwz r4, 0x14(r31)
@@ -537,17 +541,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_80041548:
     bne KartDriver_GetJointByIdx_L_8004155C
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_8004155C:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_800415A4
     bne KartDriver_GetJointByIdx_L_80041578
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_80041578:
     lwz r4, 0x14(r31)
@@ -576,17 +580,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_800415CC:
     bne KartDriver_GetJointByIdx_L_800415E0
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_800415E0:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_80041628
     bne KartDriver_GetJointByIdx_L_800415FC
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_800415FC:
     lwz r4, 0x14(r31)
@@ -614,17 +618,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_8004164C:
     bne KartDriver_GetJointByIdx_L_80041660
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_80041660:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_800416A8
     bne KartDriver_GetJointByIdx_L_8004167C
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_8004167C:
     lwz r4, 0x14(r31)
@@ -652,17 +656,17 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     b KartDriver_GetJointByIdx_L_80041734
     KartDriver_GetJointByIdx_L_800416CC:
     bne KartDriver_GetJointByIdx_L_800416E0
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x47c
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_800416E0:
     cmplwi r31, 0x0
     beq KartDriver_GetJointByIdx_L_80041728
     bne KartDriver_GetJointByIdx_L_800416FC
-    addi r3, r2, -0x7D18  /* lbl_806D2548 */
+    la r3, lbl_806D2548(r2)  /* lbl_806D2548 */
     li r4, 0x25d
-    addi r5, r2, -0x7D10  /* lbl_806D2550 */
+    la r5, lbl_806D2550(r2)  /* lbl_806D2550 */
     bl __assert
     KartDriver_GetJointByIdx_L_800416FC:
     lwz r4, 0x14(r31)

@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D2644[6];
+extern unsigned char lbl_806D263C[7];
 /* === extracted from auto_KartDriver_InitFull_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -135,7 +139,7 @@ asm void KartDriver_InitFull(void) { /* 0x80044D50 size:0xC00 */
     subfc r0, r0, r5
     adde r19, r4, r3
     KartDriver_InitFull_L_80044DCC:
-    addi r3, r2, -0x7C24  /* lbl_806D263C */
+    la r3, lbl_806D263C(r2)  /* lbl_806D263C */
     li r4, 0x0
     bl HeapStats_DumpForTag
     cmpwi r19, 0x0
@@ -417,7 +421,7 @@ asm void KartDriver_InitFull(void) { /* 0x80044D50 size:0xC00 */
     li r6, 0x0
     bl ObjectTree_BlendOrCopy_Timed
     mr r4, r17
-    addi r3, r2, -0x7C1C  /* lbl_806D2644 */
+    la r3, lbl_806D2644(r2)  /* lbl_806D2644 */
     bl HeapStats_DumpForTag
     lis r3, mario_cart_tire_fl_joint@ha
     slwi r17, r27, 2

@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D70C8[7];
+extern unsigned char lbl_806D70D0[5];
 /*
  * 0x8012B48C..0x8012B924: challenge scene init.
  */
@@ -298,17 +302,17 @@ extern "C" asm void fn_8012B48C(void) { /* 0x8012B48C size:0x498 */
     lwz r28, 0x12c(r30)
     cmplwi r28, 0x0
     bne fn_8012B48C_L_8012B840
-    addi r3, r2, -0x3198  /* lbl_806D70C8 */
+    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
     li r4, 0x47c
-    addi r5, r2, -0x3190  /* lbl_806D70D0 */
+    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
     bl __assert
     fn_8012B48C_L_8012B840:
     cmplwi r28, 0x0
     beq fn_8012B48C_L_8012B888
     bne fn_8012B48C_L_8012B85C
-    addi r3, r2, -0x3198  /* lbl_806D70C8 */
+    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
     li r4, 0x25d
-    addi r5, r2, -0x3190  /* lbl_806D70D0 */
+    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
     bl __assert
     fn_8012B48C_L_8012B85C:
     lwz r4, 0x14(r28)
@@ -329,17 +333,17 @@ extern "C" asm void fn_8012B48C(void) { /* 0x8012B48C size:0x498 */
     lwz r28, 0x130(r30)
     cmplwi r28, 0x0
     bne fn_8012B48C_L_8012B8AC
-    addi r3, r2, -0x3198  /* lbl_806D70C8 */
+    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
     li r4, 0x47c
-    addi r5, r2, -0x3190  /* lbl_806D70D0 */
+    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
     bl __assert
     fn_8012B48C_L_8012B8AC:
     cmplwi r28, 0x0
     beq fn_8012B48C_L_8012B8F4
     bne fn_8012B48C_L_8012B8C8
-    addi r3, r2, -0x3198  /* lbl_806D70C8 */
+    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
     li r4, 0x25d
-    addi r5, r2, -0x3190  /* lbl_806D70D0 */
+    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
     bl __assert
     fn_8012B48C_L_8012B8C8:
     lwz r4, 0x14(r28)

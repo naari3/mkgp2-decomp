@@ -26,3 +26,10 @@ symbols_known: false
 fill_gaps: true
 export_all: true
 globalize_symbols: true
+
+# 0x80010003 is a magic division constant (Rand15 % range), not "@etb_8000FFF8"+0xB.
+block_relocations:
+- source: 0x800D63F0
+- source: 0x800D63FC
+- source: 0x800D6458
+- source: 0x800D6460

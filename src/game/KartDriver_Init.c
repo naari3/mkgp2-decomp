@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D2644[6];
+extern unsigned char lbl_806D263C[7];
 /* Bounded genuine C++ retrofit: approach 2 reaches text 99.98008%,
  * automatic extab/index 100%. Residue: root r22 vs target r23 at
  * 800447A4 and 800447BC. Three structural approaches exhausted.
@@ -279,7 +283,7 @@ asm void KartDriver_Init(void) { /* 0x80044578 size:0x7D8 */
     mr r25, r7
     mr r30, r9
     addi r27, r8, lbl_802E9F80@l
-    addi r3, r2, -0x7C24  /* lbl_806D263C */
+    la r3, lbl_806D263C(r2)  /* lbl_806D263C */
     li r4, 0x0
     bl HeapStats_DumpForTag
     mr r0, r3
@@ -428,7 +432,7 @@ asm void KartDriver_Init(void) { /* 0x80044578 size:0x7D8 */
     li r6, 0x0
     bl ObjectTree_BlendOrCopy_Timed
     mr r4, r26
-    addi r3, r2, -0x7C1C  /* lbl_806D2644 */
+    la r3, lbl_806D2644(r2)  /* lbl_806D2644 */
     bl HeapStats_DumpForTag
     lis r3, mario_cart_tire_fl_joint@ha
     slwi r28, r29, 2

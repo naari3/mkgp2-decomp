@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D70C8[7];
+extern unsigned char lbl_806D70D0[5];
 /*
  * 0x8012A71C..0x8012B394: challenge scene update.
  */
@@ -729,9 +733,9 @@ extern "C" asm void fn_8012A71C(void) { /* 0x8012A71C size:0xC78 */
     fmuls f1, f1, f2
     fadds f31, f1, f0
     bne fn_8012A71C_L_8012B120
-    addi r3, r2, -0x3198  /* lbl_806D70C8 */
+    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
     li r4, 0x3c6
-    addi r5, r2, -0x3190  /* lbl_806D70D0 */
+    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
     bl __assert
     fn_8012A71C_L_8012B120:
     stfs f31, 0x3c(r29)
@@ -741,9 +745,9 @@ extern "C" asm void fn_8012A71C(void) { /* 0x8012A71C size:0xC78 */
     cmplwi r29, 0x0
     beq fn_8012A71C_L_8012B178
     bne fn_8012A71C_L_8012B14C
-    addi r3, r2, -0x3198  /* lbl_806D70C8 */
+    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
     li r4, 0x25d
-    addi r5, r2, -0x3190  /* lbl_806D70D0 */
+    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
     bl __assert
     fn_8012A71C_L_8012B14C:
     lwz r4, 0x14(r29)
@@ -770,9 +774,9 @@ extern "C" asm void fn_8012A71C(void) { /* 0x8012A71C size:0xC78 */
     fmuls f1, f1, f2
     fadds f31, f1, f0
     bne fn_8012A71C_L_8012B1B4
-    addi r3, r2, -0x3198  /* lbl_806D70C8 */
+    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
     li r4, 0x3c6
-    addi r5, r2, -0x3190  /* lbl_806D70D0 */
+    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
     bl __assert
     fn_8012A71C_L_8012B1B4:
     stfs f31, 0x3c(r29)
@@ -782,9 +786,9 @@ extern "C" asm void fn_8012A71C(void) { /* 0x8012A71C size:0xC78 */
     cmplwi r29, 0x0
     beq fn_8012A71C_L_8012B20C
     bne fn_8012A71C_L_8012B1E0
-    addi r3, r2, -0x3198  /* lbl_806D70C8 */
+    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
     li r4, 0x25d
-    addi r5, r2, -0x3190  /* lbl_806D70D0 */
+    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
     bl __assert
     fn_8012A71C_L_8012B1E0:
     lwz r4, 0x14(r29)
@@ -862,17 +866,17 @@ extern "C" asm void fn_8012A71C(void) { /* 0x8012A71C size:0xC78 */
     lwz r29, 0x128(r31)
     cmplwi r29, 0x0
     bne fn_8012A71C_L_8012B304
-    addi r3, r2, -0x3198  /* lbl_806D70C8 */
+    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
     li r4, 0x47c
-    addi r5, r2, -0x3190  /* lbl_806D70D0 */
+    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
     bl __assert
     fn_8012A71C_L_8012B304:
     cmplwi r29, 0x0
     beq fn_8012A71C_L_8012B34C
     bne fn_8012A71C_L_8012B320
-    addi r3, r2, -0x3198  /* lbl_806D70C8 */
+    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
     li r4, 0x25d
-    addi r5, r2, -0x3190  /* lbl_806D70D0 */
+    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
     bl __assert
     fn_8012A71C_L_8012B320:
     lwz r4, 0x14(r29)

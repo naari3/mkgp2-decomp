@@ -1,3 +1,6 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D2264[4];
 /* === extracted from auto_FlowDispatcher_Creat_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -79,7 +82,7 @@ extern "C" asm void FlowDispatcher_Create(void) {
     stw r30, 0x4(r31)
     crxor 6, 6, 6
     bl DebugPrintf
-    addi r3, r2, -0x7FFC  /* lbl_806D2264 */
+    la r3, lbl_806D2264(r2)  /* lbl_806D2264 */
     li r4, 0x0
     bl HeapStats_DumpForTag
     li r3, 0x14
@@ -121,7 +124,7 @@ extern "C" asm void FlowDispatcher_Create(void) {
     li r0, 0x0
     lfs f0, lbl_806D2268(r2)
     stw r0, 0x14(r31)
-    addi r3, r2, -0x7FFC  /* lbl_806D2264 */
+    la r3, lbl_806D2264(r2)  /* lbl_806D2264 */
     li r4, 0x0
     stfs f0, 0x24(r31)
     stfs f0, 0x28(r31)
@@ -138,7 +141,7 @@ extern "C" asm void FlowDispatcher_Create(void) {
     bl DebugPrintf
     li r3, 0x0
     li r4, 0x0
-    addi r5, r2, -0x7FFC  /* lbl_806D2264 */
+    la r5, lbl_806D2264(r2)  /* lbl_806D2264 */
     bl DebugLog_LvIdMsg
     FlowDispatcher_Create_L_8002CCB4:
     stw r31, lbl_806D0F80(r13)

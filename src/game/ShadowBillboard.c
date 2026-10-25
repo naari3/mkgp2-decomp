@@ -5,6 +5,10 @@
 
 #include "game/MathInline.h"
 
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D2BCC[7];
+extern unsigned char lbl_806D2BD4[5];
+
 typedef struct ShadowBillboardSrc {
     unsigned char pad000[0xF8];
     float axisX;
@@ -532,9 +536,9 @@ asm void ShadowBillboard_Tick(void) { /* 0x80061A88 size:0x1E14 */
     cmplwi r21, 0x0
     beq ShadowBillboard_Tick_L_80061F5C
     bne ShadowBillboard_Tick_L_80061F50
-    addi r3, r2, -0x7694  /* lbl_806D2BCC */
+    la r3, lbl_806D2BCC(r2)  /* lbl_806D2BCC */
     li r4, 0x1ae
-    addi r5, r2, -0x768C  /* lbl_806D2BD4 */
+    la r5, lbl_806D2BD4(r2)  /* lbl_806D2BD4 */
     bl __assert
     ShadowBillboard_Tick_L_80061F50:
     lwz r0, 0x8(r21)

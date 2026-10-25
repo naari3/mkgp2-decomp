@@ -1,3 +1,10 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806CF6A8[4];
+extern unsigned char lbl_806CF6AC[4];
+extern unsigned char lbl_806CF6B0[4];
+extern unsigned char lbl_806CF6B4[4];
+extern unsigned char lbl_806CF6B8[4];
 /*
  * Result-screen effects on the shared sprite-effect base: the cup trophy
  * effect (vtable lbl_8048EBCC; ctor, dtor), the confetti particle field
@@ -609,7 +616,7 @@ extern "C" asm void fn_8013F428(void) { /* 0x8013F428 size:0x518 */
     mr r6, r27
     mr r7, r26
     addi r3, r1, 0x8
-    addi r4, r2, -0x2A54  /* lbl_806D780C */
+    la r4, lbl_806D780C(r2)  /* lbl_806D780C */
     crxor 6, 6, 6
     bl sprintf
     addi r3, r1, 0x8
@@ -739,7 +746,7 @@ extern "C" asm void fn_8013F428(void) { /* 0x8013F428 size:0x518 */
     mr r5, r3
     mr r6, r27
     addi r3, r1, 0x8
-    addi r4, r2, -0x2A3C  /* lbl_806D7824 */
+    la r4, lbl_806D7824(r2)  /* lbl_806D7824 */
     crxor 6, 6, 6
     bl sprintf
     addi r3, r1, 0x8
@@ -1678,7 +1685,7 @@ extern "C" asm void fn_80140A38(void) { /* 0x80140A38 size:0x494 */
     lfs f0, lbl_806D78B8(r2)
     stw r0, 0x18(r31)
     addi r3, r31, 0x278
-    addi r4, r13, -0x7668  /* lbl_806CF6B8 */
+    la r4, lbl_806CF6B8(r13)  /* lbl_806CF6B8 */
     li r5, 0x0
     stfs f0, 0x1c(r31)
     lfs f1, 0x8(r1)
@@ -2052,7 +2059,7 @@ extern "C" asm void fn_80140FEC(void) { /* 0x80140FEC size:0x464 */
     stw r0, 0x18(r27)
     addi r3, r27, 0x270
     lfs f1, lbl_806D78D4(r2)
-    addi r4, r13, -0x7678  /* lbl_806CF6A8 */
+    la r4, lbl_806CF6A8(r13)  /* lbl_806CF6A8 */
     stfs f0, 0x1c(r27)
     li r5, 0x0
     lfs f2, lbl_806D78EC(r2)
@@ -2065,19 +2072,19 @@ extern "C" asm void fn_80140FEC(void) { /* 0x80140FEC size:0x464 */
     lfs f1, lbl_806D78D4(r2)
     addi r3, r27, 0x274
     lfs f2, lbl_806D78F0(r2)
-    addi r4, r13, -0x7674  /* lbl_806CF6AC */
+    la r4, lbl_806CF6AC(r13)  /* lbl_806CF6AC */
     li r5, 0x0
     bl SpriteGroup_CreateOrInit
     lfs f1, lbl_806D78D4(r2)
     addi r3, r27, 0x27c
     lfs f2, lbl_806D78EC(r2)
-    addi r4, r13, -0x7670  /* lbl_806CF6B0 */
+    la r4, lbl_806CF6B0(r13)  /* lbl_806CF6B0 */
     li r5, 0x1
     bl SpriteGroup_CreateOrInit
     lfs f1, lbl_806D78D4(r2)
     addi r3, r27, 0x280
     lfs f2, lbl_806D78F0(r2)
-    addi r4, r13, -0x766C  /* lbl_806CF6B4 */
+    la r4, lbl_806CF6B4(r13)  /* lbl_806CF6B4 */
     li r5, 0x1
     bl SpriteGroup_CreateOrInit
     lwz r0, 0x24(r27)

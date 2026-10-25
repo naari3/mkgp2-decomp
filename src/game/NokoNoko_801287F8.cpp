@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D7084[7];
+extern unsigned char lbl_806D708C[5];
 /*
  * 0x801287F8..0x8012A5AC: Noko Noko challenge and time trial scene.
  */
@@ -715,17 +719,17 @@ extern "C" asm void NokoNokoChallenge_Update(void) { /* 0x801289B8 size:0xCBC */
     mr. r26, r3
     beq NokoNokoChallenge_Update_L_80129008
     bne NokoNokoChallenge_Update_L_80128E00
-    addi r3, r2, -0x31DC  /* lbl_806D7084 */
+    la r3, lbl_806D7084(r2)  /* lbl_806D7084 */
     li r4, 0x47c
-    addi r5, r2, -0x31D4  /* lbl_806D708C */
+    la r5, lbl_806D708C(r2)  /* lbl_806D708C */
     bl __assert
     NokoNokoChallenge_Update_L_80128E00:
     cmplwi r26, 0x0
     beq NokoNokoChallenge_Update_L_80128E48
     bne NokoNokoChallenge_Update_L_80128E1C
-    addi r3, r2, -0x31DC  /* lbl_806D7084 */
+    la r3, lbl_806D7084(r2)  /* lbl_806D7084 */
     li r4, 0x25d
-    addi r5, r2, -0x31D4  /* lbl_806D708C */
+    la r5, lbl_806D708C(r2)  /* lbl_806D708C */
     bl __assert
     NokoNokoChallenge_Update_L_80128E1C:
     lwz r4, 0x14(r26)
