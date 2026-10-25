@@ -131,8 +131,8 @@ extern void MemoryManager_TimedFree(void *);
 extern void *GetCourseScene3D(void);
 extern void *CObj_GetViewMatrix_Cached(void *);
 extern void CObj_LoadProjMatrix(void *, Vec3 *);
-extern void fn_8025D1B8(void *, float (*)[4]);
-extern void fn_8025DF40(float (*)[4], Vec3 *, Vec3 *);
+extern void PSMTXCopy(void *, float (*)[4]);
+extern void PSMTXMultVec(float (*)[4], Vec3 *, Vec3 *);
 extern void fn_802C5674(int);
 extern void fn_802C53C8(TDrawObj *);
 
@@ -349,7 +349,7 @@ int TransparentDraw_SortAndDispatch(void) {
         return 0;
     }
 
-    fn_8025D1B8(CObj_GetViewMatrix_Cached(GetCourseScene3D()), mtx);
+    PSMTXCopy(CObj_GetViewMatrix_Cached(GetCourseScene3D()), mtx);
     mtx[2][3] = lbl_806D2C68;
     mtx[1][3] = lbl_806D2C68;
     mtx[0][3] = lbl_806D2C68;
@@ -361,7 +361,7 @@ int TransparentDraw_SortAndDispatch(void) {
             v.x = pos->x - cam.x;
             v.y = lbl_806D2C68;
             v.z = pos->z - cam.z;
-            fn_8025DF40(mtx, &v, &v);
+            PSMTXMultVec(mtx, &v, &v);
             lbl_805987E0[i].dist = v.x * v.x + v.z * v.z;
             lbl_805987E0[i].rank = 0;
         } else {

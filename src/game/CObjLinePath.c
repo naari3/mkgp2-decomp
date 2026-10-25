@@ -15,7 +15,7 @@ typedef struct CObjLinePathView {
 
 extern void fn_802C72AC(void *, const LinePoint *);
 extern void fn_802C7384(void *, const LinePoint *);
-extern void fn_8025DEAC(const float *, const LinePoint *, LinePoint *);
+extern void C_MTXMultVec(const float *, const LinePoint *, LinePoint *);
 extern double sin(double);
 extern double cos(double);
 extern void DebugTextOutput(int, const char *, ...);
@@ -80,7 +80,7 @@ int CObj_LinePath_Step(CObjLinePathView *self, const float *matrix,
         vector.x = tx + matrix[3];
         vector.y = ty + matrix[7];
         vector.z = tz + matrix[11];
-    } else fn_8025DEAC(matrix, (const LinePoint *)&vector, (LinePoint *)&vector);
+    } else C_MTXMultVec(matrix, (const LinePoint *)&vector, (LinePoint *)&vector);
     if (self->ready != 0) fn_802C7384(self->camera, (const LinePoint *)&vector);
 
     if (self->recording == 1 && self->count > 10) {

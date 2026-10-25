@@ -6,9 +6,9 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void __assert();
-extern void fn_80266774();
-extern void fn_80269230();
-extern void fn_80269328();
+extern void GXPixModeSync();
+extern void GXSetTevColor();
+extern void GXSetTevKColor();
 extern void fn_802C14B8();
 
 /* --- extern decls: sda21-referenced data --- */
@@ -367,7 +367,7 @@ asm void GXChannel_PushChannelColors(void) { /* 0x8007D2AC size:0x510 */
     bne GXChannel_PushChannelColors_L_8007D2D0
     cmplwi r30, 0x0
     beq GXChannel_PushChannelColors_L_8007D7A8
-    bl fn_80266774
+    bl GXPixModeSync
     lis r3, lbl_803FE0E0@ha
     addi r28, r1, 0x14
     addi r27, r3, lbl_803FE0E0@l
@@ -381,7 +381,7 @@ asm void GXChannel_PushChannelColors(void) { /* 0x8007D2AC size:0x510 */
     addi r4, r1, 0xc
     lwz r3, 0x0(r27)
     stw r0, 0xc(r1)
-    bl fn_80269328
+    bl GXSetTevKColor
     GXChannel_PushChannelColors_L_8007D740:
     addi r26, r26, 0x1
     addi r27, r27, 0x4
@@ -401,7 +401,7 @@ asm void GXChannel_PushChannelColors(void) { /* 0x8007D2AC size:0x510 */
     addi r4, r1, 0x8
     stw r0, 0x8(r1)
     lwz r3, -0x10(r28)
-    bl fn_80269230
+    bl GXSetTevColor
     GXChannel_PushChannelColors_L_8007D788:
     addi r31, r31, 0x1
     addi r28, r28, 0x4
@@ -410,7 +410,7 @@ asm void GXChannel_PushChannelColors(void) { /* 0x8007D2AC size:0x510 */
     blt GXChannel_PushChannelColors_L_8007D768
     li r3, 0x10
     bl fn_802C14B8
-    bl fn_80266774
+    bl GXPixModeSync
     GXChannel_PushChannelColors_L_8007D7A8:
     lmw r26, 0x58(r1)
     lwz r0, 0x74(r1)

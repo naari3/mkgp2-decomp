@@ -1,4 +1,4 @@
-extern void GX_DrawDoneAndWait(void);
+extern void GXDrawDone(void);
 extern void PcbComm_Shutdown(void);
 extern void FreeMediaBuffers(void);
 extern void CardTaskManager_Dtor(void *self, int free_flag);
@@ -24,7 +24,7 @@ void Game_Shutdown(void)
 {
     char *arena_tail;
 
-    GX_DrawDoneAndWait();
+    GXDrawDone();
     PcbComm_Shutdown();
     FreeMediaBuffers();
     CardTaskManager_Dtor(lbl_806D0F90, 1);

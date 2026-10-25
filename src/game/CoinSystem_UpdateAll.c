@@ -21,11 +21,11 @@ extern void fn_8016C394();
 extern void fn_80186960();
 extern void fn_801B377C();
 extern void fn_8024F588();
-extern void fn_8025D770();
-extern void fn_8025DF40();
-extern void fn_8025E264();
-extern void fn_8025E2AC();
-extern void fn_8025E30C();
+extern void PSMTXRotRad();
+extern void PSMTXMultVec();
+extern void PSVECAdd();
+extern void PSVECScale();
+extern void PSVECSquareMag();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_raceEnded;
@@ -169,7 +169,7 @@ asm void CoinSystem_UpdateAll(void) { /* 0x80139898 size:0xC9C */
     lfs f28, lbl_806D7414(r2)
     CoinSystem_UpdateAll_L_801399A4:
     addi r3, r1, 0x44
-    bl fn_8025E30C
+    bl PSVECSquareMag
     fcmpo cr0, f1, f28
     bge CoinSystem_UpdateAll_L_80139A04
     li r0, 0x3
@@ -610,7 +610,7 @@ asm void CoinSystem_UpdateAll(void) { /* 0x80139898 size:0xC9C */
     lfs f0, 0x28(r31)
     fsubs f0, f1, f0
     stfs f0, 0x40(r1)
-    bl fn_8025E30C
+    bl PSVECSquareMag
     lfs f0, lbl_806D7450(r2)
     lfs f3, 0x1c(r31)
     fsubs f2, f0, f31
@@ -726,11 +726,11 @@ asm void CoinSystem_UpdateAll(void) { /* 0x80139898 size:0xC9C */
     lfs f0, 0x2c(r31)
     li r4, 0x59
     fadds f1, f1, f0
-    bl fn_8025D770
+    bl PSMTXRotRad
     addi r4, r1, 0x2c
     addi r3, r1, 0x50
     mr r5, r4
-    bl fn_8025DF40
+    bl PSMTXMultVec
     lwz r3, 0x10(r31)
     bl KartMovement_GetVelocityMagnitude
     lfs f0, lbl_806D7464(r2)
@@ -738,11 +738,11 @@ asm void CoinSystem_UpdateAll(void) { /* 0x80139898 size:0xC9C */
     mr r4, r3
     fmuls f0, f0, f1
     fmuls f1, f28, f0
-    bl fn_8025E2AC
+    bl PSVECScale
     addi r3, r31, 0x20
     addi r4, r1, 0x2c
     mr r5, r3
-    bl fn_8025E264
+    bl PSVECAdd
     lfs f0, lbl_806D7468(r2)
     fmuls f1, f0, f28
     bl LUT_Sin12Bit
@@ -764,11 +764,11 @@ asm void CoinSystem_UpdateAll(void) { /* 0x80139898 size:0xC9C */
     mr r4, r3
     stfs f2, 0x34(r1)
     fmadds f1, f1, f30, f0
-    bl fn_8025E2AC
+    bl PSVECScale
     addi r3, r31, 0x20
     addi r4, r1, 0x2c
     mr r5, r3
-    bl fn_8025E264
+    bl PSVECAdd
     lfs f2, 0x30(r31)
     lfs f1, lbl_806D7470(r2)
     lfs f0, lbl_806D742C(r2)
@@ -900,7 +900,7 @@ asm void CoinSystem_UpdateAll(void) { /* 0x80139898 size:0xC9C */
     lfs f0, 0x28(r31)
     fsubs f0, f1, f0
     stfs f0, 0x10(r1)
-    bl fn_8025E30C
+    bl PSVECSquareMag
     lfs f2, lbl_806D7450(r2)
     lfs f0, lbl_806D747C(r2)
     fsubs f3, f2, f31

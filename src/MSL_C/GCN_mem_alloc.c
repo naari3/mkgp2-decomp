@@ -10,7 +10,7 @@ extern volatile OSHeapHandle lbl_806CF010;
 #define __OSCurrHeap lbl_806CF010
 
 /* OSReport */
-void DebugOutput_Stub(const char* msg, ...);
+void OSReport(const char* msg, ...);
 void* OSGetArenaLo(void);
 void* OSGetArenaHi(void);
 void OSSetArenaLo(void* newLo);
@@ -27,8 +27,8 @@ inline static void InitDefaultHeap(void) {
     void* arenaLo;
     void* arenaHi;
 
-    DebugOutput_Stub("GCN_Mem_Alloc.c : InitDefaultHeap. No Heap Available\n");
-    DebugOutput_Stub("Metrowerks CW runtime library initializing default heap\n");
+    OSReport("GCN_Mem_Alloc.c : InitDefaultHeap. No Heap Available\n");
+    OSReport("Metrowerks CW runtime library initializing default heap\n");
 
     arenaLo = OSGetArenaLo();
     arenaHi = OSGetArenaHi();

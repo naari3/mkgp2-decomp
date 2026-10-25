@@ -13,7 +13,7 @@ extern float lbl_806D11C0[2];
 /* Two adjacent timestamp words: high at 11C8, low at 11CC. */
 extern long long lbl_806D11C8;
 extern long long OSGetTime(void);
-extern long long fn_80271884(long long numerator, long long denominator);
+extern long long __div2i(long long numerator, long long denominator);
 extern const float lbl_806D3158, lbl_806D315C, lbl_806D3160;
 extern const float lbl_806D3164, lbl_806D3168;
 
@@ -58,7 +58,7 @@ int PCBComm_UpdateSyncPhase5(void)
     SlotView *slot;
     char *phase;
     int i;
-    float elapsed = (float)fn_80271884(OSGetTime() - lbl_806D11C8,
+    float elapsed = (float)__div2i(OSGetTime() - lbl_806D11C8,
         (long long)((*(volatile unsigned int *)0x800000F8 >> 2) / 1000));
     elapsed /= lbl_806D3158;
     if (elapsed <= lbl_806D315C) {

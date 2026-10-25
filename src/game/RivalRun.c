@@ -869,7 +869,7 @@ asm void RivalRun_RivalAIUpdate(void) { /* 0x80135B7C size:0x380 */
 /* refine if the real prototype matters for header consumers. */
 extern void Vec3_Dot();
 extern void Vec3_Normalize();
-extern void fn_8025E30C();
+extern void PSVECSquareMag();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D738C;
@@ -949,7 +949,7 @@ asm void RivalRun_UpdatePathFollower(void) { /* 0x80135EFC size:0x24C */
     lfs f0, 0x8(r27)
     fsubs f0, f0, f28
     stfs f0, 0x10(r1)
-    bl fn_8025E30C
+    bl PSVECSquareMag
     cmpwi r29, 0x0
     beq RivalRun_UpdatePathFollower_L_80135FC8
     fcmpo cr0, f1, f31
@@ -1597,7 +1597,7 @@ extern void Vec3_Dot();
 extern void Vec3_Magnitude();
 extern void Vec3_Normalize();
 extern void Vec3_Subtract();
-extern void fn_8025E30C();
+extern void PSVECSquareMag();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D738C;
@@ -1675,7 +1675,7 @@ asm void RivalRun_CalcPathDistance(void) { /* 0x801367F4 size:0x3B4 */
     lfs f0, 0x8(r25)
     fsubs f0, f0, f28
     stfs f0, 0x1c(r1)
-    bl fn_8025E30C
+    bl PSVECSquareMag
     cmpwi r27, 0x0
     beq RivalRun_CalcPathDistance_L_801368BC
     fcmpo cr0, f1, f27
@@ -1708,7 +1708,7 @@ asm void RivalRun_CalcPathDistance(void) { /* 0x801367F4 size:0x3B4 */
     lfs f0, 0x8(r24)
     fsubs f0, f0, f30
     stfs f0, 0x10(r1)
-    bl fn_8025E30C
+    bl PSVECSquareMag
     cmpwi r27, 0x0
     beq RivalRun_CalcPathDistance_L_80136930
     fcmpo cr0, f1, f27

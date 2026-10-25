@@ -5,8 +5,8 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void GXInitTexObjFilter();
-extern void fn_80268014();
+extern void GXInitTexObjLOD();
+extern void GXInitTexObj();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D33A0;
@@ -59,7 +59,7 @@ asm void TEXBindPaletteEntry_RGB(void) { /* 0x8008E4E8 size:0xD4 */
     lwz r7, 0x4(r9)
     lwz r8, 0xc(r9)
     lwz r9, 0x10(r9)
-    bl fn_80268014
+    bl GXInitTexObj
     lwzx r7, r30, r31
     lis r5, 0x4330
     stw r5, 0x8(r1)
@@ -80,7 +80,7 @@ asm void TEXBindPaletteEntry_RGB(void) { /* 0x8008E4E8 size:0xD4 */
     lfs f3, 0x1c(r7)
     fsubs f2, f0, f2
     lbz r7, 0x20(r7)
-    bl GXInitTexObjFilter
+    bl GXInitTexObjLOD
     lwz r0, 0x34(r1)
     lwz r31, 0x2c(r1)
     lwz r30, 0x28(r1)

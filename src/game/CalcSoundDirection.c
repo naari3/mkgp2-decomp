@@ -16,8 +16,8 @@ extern PathPoint *lbl_806D10E4;
 extern PathEntry *PathManager_GetEntrySubStruct(void *path, int index);
 extern PathPoint *Path_LookupMaxProgressOffset(void *path, int index, int depth);
 extern float (*KartDriver_GetKartRootMtx(void *kart))[4];
-extern void fn_8025D1B8(float (*src)[4], float (*dst)[4]);
-extern void fn_8025DF40(float (*mtx)[4], float *src, float *dst);
+extern void PSMTXCopy(float (*src)[4], float (*dst)[4]);
+extern void PSMTXMultVec(float (*mtx)[4], float *src, float *dst);
 extern double atan2(double, double);
 
 float CalcSoundDirection(void *kart, void *path, float *outVolume, int index) {
@@ -43,13 +43,13 @@ float CalcSoundDirection(void *kart, void *path, float *outVolume, int index) {
     vec[0] = point->x;
     vec[1] = 0.0f;
     vec[2] = point->z;
-    fn_8025D1B8(KartDriver_GetKartRootMtx(kart), mtx);
+    PSMTXCopy(KartDriver_GetKartRootMtx(kart), mtx);
     vec[0] = -(vec[0] - mtx[0][3]);
     vec[2] = vec[2] - mtx[2][3];
     mtx[0][3] = 0.0f;
     mtx[1][3] = 0.0f;
     mtx[2][3] = 0.0f;
-    fn_8025DF40(mtx, vec, out);
+    PSMTXMultVec(mtx, vec, out);
     pan = 57.29577951308232 * (float)atan2(out[0], out[2]);
     if (pan > 13.0f) {
         pan = 1.0f;

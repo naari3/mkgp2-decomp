@@ -15,7 +15,7 @@ typedef struct CObjViewportView {
 
 extern void fn_802C72AC(CObjSDKCameraView *, const void *);
 extern void fn_802C7384(CObjSDKCameraView *, const void *);
-extern void fn_8025D1B8(const void *source, void *destination);
+extern void PSMTXCopy(const void *source, void *destination);
 extern void __assert(const char *, int, const char *);
 extern const char lbl_806D22E4[7];
 extern const char lbl_806D22EC[5];
@@ -38,6 +38,6 @@ int CObj_SetWorldMatrix(CObjViewportView *self, const void *matrix) {
     camera = self->camera;
     if (camera == 0) __assert(lbl_806D22E4, 0x1A2, lbl_806D22EC);
     camera->flags |= 0x80000002;
-    fn_8025D1B8(matrix, camera->worldMatrix);
+    PSMTXCopy(matrix, camera->worldMatrix);
     return 1;
 }

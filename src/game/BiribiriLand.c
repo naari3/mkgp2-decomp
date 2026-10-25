@@ -780,7 +780,7 @@ extern void clNormal3D_Exec();
 extern void fn_8016C288();
 extern void fn_8016C360();
 extern void fn_8016C394();
-extern void fn_8025E30C();
+extern void PSVECSquareMag();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D7328;
@@ -940,7 +940,7 @@ asm void BiribiriLand_UpdateObstacles(void) { /* 0x80134A8C size:0x2DC */
     stfs f0, 0x28(r1)
     bl Vec3_Subtract
     addi r3, r1, 0x8
-    bl fn_8025E30C
+    bl PSVECSquareMag
     fmr f27, f1
     b BiribiriLand_UpdateObstacles_L_80134CAC
     BiribiriLand_UpdateObstacles_L_80134C6C:
@@ -949,7 +949,7 @@ asm void BiribiriLand_UpdateObstacles(void) { /* 0x80134A8C size:0x2DC */
     addi r5, r1, 0x8
     bl Vec3_Subtract
     addi r3, r1, 0x8
-    bl fn_8025E30C
+    bl PSVECSquareMag
     fmr f26, f1
     fcmpo cr0, f26, f27
     bge BiribiriLand_UpdateObstacles_L_80134CAC

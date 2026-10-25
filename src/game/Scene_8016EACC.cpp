@@ -58,7 +58,7 @@ float *CObj_GetProjMatrix_Cached(void *);
 void Scene3D_GetCameraPos(void *, float *, float *);
 double tan(double);
 void *fn_802D0758(void *);
-void fn_8025DF40(float *, Vec3f *, Vec3f *);
+void PSMTXMultVec(float *, Vec3f *, Vec3f *);
 void PSMTXScale(Mtx, float, float, float);
 void PSMTXConcat(Mtx, float *, Mtx);
 void Object_SetColorAlphaOnly(void *, int, float);
@@ -123,7 +123,7 @@ void fn_8016EACC(ScreenParticleLayer *self) {
                 pos.x = self->parts[i].u * (-hw - hw) + hw;
                 pos.y = self->parts[i].v * (-hh - hh) + hh;
                 pos.z = z;
-                fn_8025DF40(proj, &pos, &pos);
+                PSMTXMultVec(proj, &pos, &pos);
                 PSMTXScale(m, self->parts[i].scale, self->parts[i].scale, self->parts[i].scale);
                 PSMTXConcat(m, proj, m);
                 m[0][3] = pos.x;

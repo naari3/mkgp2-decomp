@@ -65,7 +65,7 @@ extern char lbl_806D8B70[7];
 extern char lbl_806D8B78[5];
 void __assert(char *, int, char *);
 void Object_RenderJObjTree(void *, int);
-void fn_8025E264(Vec3f *, Vec3f *, Vec3f *);
+void PSVECAdd(Vec3f *, Vec3f *, Vec3f *);
 void fn_802D20AC(HSD_JObj *);
 void fn_801712E4(SoundEmitter *, float, float, float, float);
 void fn_802D07D4(HSD_JObj *, int);
@@ -78,7 +78,7 @@ HSD_JObj *ResolveJointByName(void *, char *);
 void fn_802D0870(HSD_JObj *, int);
 void fn_802D0B48(HSD_JObj *, int);
 void Vec3_Subtract(Vec3f *, const Vec3f *, Vec3f *);
-float fn_8025E30C(Vec3f *);
+float PSVECSquareMag(Vec3f *);
 float LUT_Sin12Bit(float);
 float fn_80186960(float);
 }
@@ -158,7 +158,7 @@ void fn_8016DA78(DebrisBurst *self) {
                     if (self->groups[g].items[i].vel.y > -10.0f) {
                         self->groups[g].items[i].vel.y -= 0.2f;
                     }
-                    fn_8025E264(&pos, &self->groups[g].items[i].vel, &pos);
+                    PSVECAdd(&pos, &self->groups[g].items[i].vel, &pos);
                     HSD_JObjSetTranslate(self->groups[g].items[i].jobj, &pos);
                     if (pos.y < -110.0f) {
                         fn_801712E4(self->sound, pos.x, pos.y, pos.z, 2.5f);
@@ -184,7 +184,7 @@ int fn_8016DC90(DebrisBurst *self, Vec3f *at, float radius) {
         if (!self->groups[g].active) {
             Vec3_Subtract(at, &sDebrisSpawn[g].pos, &d);
             d.y = 0.0f;
-            if (fn_8025E30C(&d) < range) {
+            if (PSVECSquareMag(&d) < range) {
                 fn_802D0870(self->groups[g].root, 0x10);
                 for (i = 0; i < sDebrisSpawn[g].count; i++) {
                     fn_802D0B48(self->groups[g].items[i].jobj, 0x10);

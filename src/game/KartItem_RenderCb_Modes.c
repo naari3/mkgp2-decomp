@@ -18,12 +18,12 @@ typedef struct VisualEffectHolder {
 
 extern const GXColor lbl_806D28A8;
 extern const GXColor lbl_806D28AC;
-extern void GX_SetTevOrder(int stage, int coord, int map, int color);
-extern void fn_80269230(int reg, GXColor color);
-extern void fn_802690D8(int stage, int a, int b, int c, int d);
-extern void fn_80269160(int stage, int op, int bias, int scale, unsigned char clamp, int reg);
-extern void fn_8026949C(int id, int r, int g, int b, int a);
-extern void fn_80269454(int stage, int sel, int swap);
+extern void GXSetTevOrder(int stage, int coord, int map, int color);
+extern void GXSetTevColor(int reg, GXColor color);
+extern void GXSetTevColorIn(int stage, int a, int b, int c, int d);
+extern void GXSetTevColorOp(int stage, int op, int bias, int scale, unsigned char clamp, int reg);
+extern void GXSetTevSwapModeTable(int id, int r, int g, int b, int a);
+extern void GXSetTevSwapMode(int stage, int sel, int swap);
 extern void fn_802C352C(int arg);
 extern void DrawEffect_ReleaseCallbackResources(void *drawEffect);
 extern void fn_802C2238(void);
@@ -33,22 +33,22 @@ extern void MemoryManager_TimedFree(void *ptr);
 #pragma exceptions on
 void KartItem_RenderCb_Mode2or4_Post(int stage)
 {
-    GX_SetTevOrder(stage, 0xFF, 0x100, 6);
-    fn_80269230(1, lbl_806D28AC);
-    fn_802690D8(stage, 0, 0xF, 0xF, 2);
-    fn_80269160(stage, 0, 0, 0, 1, 0);
+    GXSetTevOrder(stage, 0xFF, 0x100, 6);
+    GXSetTevColor(1, lbl_806D28AC);
+    GXSetTevColorIn(stage, 0, 0xF, 0xF, 2);
+    GXSetTevColorOp(stage, 0, 0, 0, 1, 0);
 }
 
 void KartItem_RenderCb_Mode1_Pre(int stage)
 {
     fn_802C352C(0);
-    fn_8026949C(0, 0, 1, 2, 3);
-    fn_80269454(stage, 0, 0);
+    GXSetTevSwapModeTable(0, 0, 1, 2, 3);
+    GXSetTevSwapMode(stage, 0, 0);
 }
 
 void KartItem_RenderCb_Mode1_Post(int stage, unsigned int channel)
 {
-    GX_SetTevOrder(stage, 0xFF, 0x100, 6);
+    GXSetTevOrder(stage, 0xFF, 0x100, 6);
     switch (channel) {
     case 0:
     case 5:
@@ -56,26 +56,26 @@ void KartItem_RenderCb_Mode1_Post(int stage, unsigned int channel)
     case 10:
     case 11:
     case 12:
-        fn_8026949C(0, 0, 0, 0, 3);
-        fn_80269454(stage, 0, 0);
+        GXSetTevSwapModeTable(0, 0, 0, 0, 3);
+        GXSetTevSwapMode(stage, 0, 0);
         break;
     case 1:
     case 4:
     case 7:
-        fn_8026949C(0, 1, 1, 1, 3);
-        fn_80269454(stage, 0, 0);
+        GXSetTevSwapModeTable(0, 1, 1, 1, 3);
+        GXSetTevSwapMode(stage, 0, 0);
         break;
     case 2:
     case 3:
     case 8:
     case 9:
-        fn_8026949C(0, 2, 2, 2, 3);
-        fn_80269454(stage, 0, 0);
+        GXSetTevSwapModeTable(0, 2, 2, 2, 3);
+        GXSetTevSwapMode(stage, 0, 0);
         break;
     }
-    fn_80269230(1, lbl_806D28A8);
-    fn_802690D8(stage, 0xC, 0xF, 0, 2);
-    fn_80269160(stage, 0, 0, 0, 1, 0);
+    GXSetTevColor(1, lbl_806D28A8);
+    GXSetTevColorIn(stage, 0xC, 0xF, 0, 2);
+    GXSetTevColorOp(stage, 0, 0, 0, 1, 0);
 }
 
 VisualEffectHolder *VisualEffectHolder_Dtor(VisualEffectHolder *holder, short flag)

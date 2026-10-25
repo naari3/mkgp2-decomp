@@ -16,7 +16,7 @@ extern void Object_RenderJObjTree();
 extern void fn_801375D8();
 extern void fn_80231D4C();
 extern void fn_80245700();
-extern void fn_8025E3C4();
+extern void PSVECSquareDistance();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D25D0;
@@ -103,7 +103,7 @@ asm void KartDriver_Render(void) { /* 0x80042350 size:0x2C0 */
     bl Object_GetJObjPositionVec
     addi r3, r1, 0x14
     addi r4, r1, 0x8
-    bl fn_8025E3C4
+    bl PSVECSquareDistance
     fmr f31, f1
     lfs f0, lbl_806D25D0(r2)
     fcmpo cr0, f31, f0

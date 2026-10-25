@@ -13,7 +13,7 @@ extern void Vec3_Dot();
 extern void Vec3_Magnitude();
 extern void Vec3_Normalize();
 extern void Vec3_Subtract();
-extern void fn_8025E264();
+extern void PSVECAdd();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_nokonokoHead;
@@ -490,7 +490,7 @@ asm void NokoNoko_Update(void) { /* 0x80187D2C size:0x7BC */
     mr r5, r3
     addi r4, r1, 0x24
     stfs f0, 0x28(r1)
-    bl fn_8025E264
+    bl PSVECAdd
     addi r24, r1, 0x30
     mr r25, r29
     add r24, r24, r26
@@ -499,7 +499,7 @@ asm void NokoNoko_Update(void) { /* 0x80187D2C size:0x7BC */
     mr r3, r24
     mr r5, r24
     addi r4, r1, 0x24
-    bl fn_8025E264
+    bl PSVECAdd
     addi r24, r24, 0xc
     addi r25, r25, 0x1
     NokoNoko_Update_L_801883C4:

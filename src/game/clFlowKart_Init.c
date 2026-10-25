@@ -58,9 +58,9 @@ int CObj_LoadIntoGX(FKScene*, const FKVec*);
 int CObj_ApplyViewport(FKScene*, const FKVec*);
 void PSMTXScale(float*, float, float, float);
 void PSMTXTrans(float*, float, float, float);
-void MTXIdentity(float*);
+void PSMTXIdentity(float*);
 void PSMTXConcat(const float*, const float*, float*);
-void fn_8025D770(float*, int, float);
+void PSMTXRotRad(float*, int, float);
 unsigned char RenderObj_ItemStateMachine_Timed(FKDriver*, int, float, float);
 unsigned char SetScreenBrightness(float);
 unsigned char fn_801B8918(int);
@@ -159,11 +159,11 @@ FKOwner::FKOwner()
     PSMTXScale(scaling, lbl_806DA130, lbl_806DA130, lbl_806DA130);
     copy_position(&position, &pool->position);
     PSMTXTrans(translation, position.x, position.y, position.z);
-    MTXIdentity(matrix);
+    PSMTXIdentity(matrix);
     PSMTXConcat(scaling, matrix, matrix);
-    fn_8025D770(rotation, 'x', lbl_806DA134);
+    PSMTXRotRad(rotation, 'x', lbl_806DA134);
     PSMTXConcat(rotation, matrix, matrix);
-    fn_8025D770(rotation, 'y', lbl_806DA138);
+    PSMTXRotRad(rotation, 'y', lbl_806DA138);
     PSMTXConcat(rotation, matrix, matrix);
     PSMTXConcat(translation, matrix, matrix);
     driver = new FKDriver(6, character, matrix, 0, 0, 0);
@@ -216,7 +216,7 @@ extern void GetTextureByIdAndLang();
 extern void InitRumbleController();
 extern void InitializeFrameSelection();
 extern void KartDriver_New_Full();
-extern void MTXIdentity();
+extern void PSMTXIdentity();
 extern void PSMTXConcat();
 extern void PSMTXScale();
 extern void PSMTXTrans();
@@ -231,7 +231,7 @@ extern void TexMgr_Init();
 extern void TexMgr_SetTexture();
 extern void fn_801B8918();
 extern void fn_801F93EC();
-extern void fn_8025D770();
+extern void PSMTXRotRad();
 extern void isJapanese();
 
 /* --- extern decls: sda21-referenced data --- */
@@ -375,7 +375,7 @@ asm void clFlowKart_Init(void) { /* 0x801D83D4 size:0x3B8 */
     lfs f3, 0x64(r30)
     bl PSMTXTrans
     addi r3, r30, 0x2c
-    bl MTXIdentity
+    bl PSMTXIdentity
     addi r4, r30, 0x2c
     addi r3, r1, 0x14
     mr r5, r4
@@ -383,7 +383,7 @@ asm void clFlowKart_Init(void) { /* 0x801D83D4 size:0x3B8 */
     lfs f1, lbl_806DA134(r2)
     addi r3, r1, 0x44
     li r4, 0x78
-    bl fn_8025D770
+    bl PSMTXRotRad
     addi r4, r30, 0x2c
     addi r3, r1, 0x44
     mr r5, r4
@@ -391,7 +391,7 @@ asm void clFlowKart_Init(void) { /* 0x801D83D4 size:0x3B8 */
     lfs f1, lbl_806DA138(r2)
     addi r3, r1, 0x44
     li r4, 0x79
-    bl fn_8025D770
+    bl PSMTXRotRad
     addi r4, r30, 0x2c
     addi r3, r1, 0x44
     mr r5, r4

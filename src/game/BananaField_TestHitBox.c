@@ -7,7 +7,7 @@
 /* refine if the real prototype matters for header consumers. */
 extern void Vec3_Dot();
 extern void Vec3_Magnitude();
-extern void fn_8025E2AC();
+extern void PSVECScale();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D95B8;
@@ -98,7 +98,7 @@ asm void BananaField_TestHitBox(void) { /* 0x80196F60 size:0x1D0 */
     addi r3, r1, 0x8
     mr r4, r3
     fdivs f1, f0, f30
-    bl fn_8025E2AC
+    bl PSVECScale
     BananaField_TestHitBox_L_80197048:
     addi r3, r1, 0x14
     addi r4, r1, 0x8
@@ -132,7 +132,7 @@ asm void BananaField_TestHitBox(void) { /* 0x80196F60 size:0x1D0 */
     addi r3, r1, 0x8
     mr r4, r3
     fdivs f1, f0, f30
-    bl fn_8025E2AC
+    bl PSVECScale
     BananaField_TestHitBox_L_801970C4:
     addi r3, r1, 0x14
     addi r4, r1, 0x8

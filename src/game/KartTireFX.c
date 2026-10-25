@@ -1684,7 +1684,7 @@ extern void Archive_GetRootJObj();
 extern void KartTireFX_ShowGearStageJObjs();
 extern void Object_RenderJObjTree();
 extern void __assert();
-extern void fn_8025D1B8();
+extern void PSMTXCopy();
 extern void fn_802CD3DC();
 extern void fn_802D1E34();
 extern void fn_802D20AC();
@@ -1781,7 +1781,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     KartTireFX_ApplyAndRender_L_80079350:
     mr r3, r29
     addi r4, r30, 0x44
-    bl fn_8025D1B8
+    bl PSMTXCopy
     lwz r0, 0x14(r30)
     cmplwi r30, 0x0
     oris r0, r0, 0x380
@@ -1856,7 +1856,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     KartTireFX_ApplyAndRender_L_80079458:
     mr r3, r29
     addi r4, r30, 0x44
-    bl fn_8025D1B8
+    bl PSMTXCopy
     lwz r0, 0x14(r30)
     cmplwi r30, 0x0
     oris r0, r0, 0x380
@@ -1931,7 +1931,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     KartTireFX_ApplyAndRender_L_80079560:
     mr r3, r29
     addi r4, r30, 0x44
-    bl fn_8025D1B8
+    bl PSMTXCopy
     lwz r0, 0x14(r30)
     cmplwi r30, 0x0
     oris r0, r0, 0x380
@@ -2006,7 +2006,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     KartTireFX_ApplyAndRender_L_80079668:
     mr r3, r29
     addi r4, r30, 0x44
-    bl fn_8025D1B8
+    bl PSMTXCopy
     lwz r0, 0x14(r30)
     cmplwi r30, 0x0
     oris r0, r0, 0x380

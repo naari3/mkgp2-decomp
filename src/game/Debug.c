@@ -16,12 +16,12 @@ extern int vsprintf(char *, const char *, va_list);
 
 extern unsigned char lbl_80598A60[];
 
-void DebugOutput_Stub(const char *msg, ...);
+void OSReport(const char *msg, ...);
 
-void OSPanic_Stub(const char *file, int line, const char *msg, ...) {
+void OSPanic(const char *file, int line, const char *msg, ...) {
 }
 
-void DebugOutput_Stub(const char *msg, ...) {
+void OSReport(const char *msg, ...) {
 }
 
 void DebugPrintf(const char *fmt, ...) {
@@ -35,6 +35,6 @@ void DebugPrintf(const char *fmt, ...) {
         vsprintf(buf, fmt, args);
         va_end(args);
         OSRestoreInterrupts(enabled);
-        DebugOutput_Stub(buf);
+        OSReport(buf);
     }
 }

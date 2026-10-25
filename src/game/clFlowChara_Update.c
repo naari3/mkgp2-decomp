@@ -75,9 +75,9 @@ void fn_801C37E8(CharaView*, int, int, int, float);
 int fn_801B85DC(int, unsigned char, short);
 int fn_801B8918(int);
 void PSMTXScale(CharaMatrix*, float, float, float);
-void fn_8025D770(CharaMatrix*, int, float);
+void PSMTXRotRad(CharaMatrix*, int, float);
 void PSMTXTrans(CharaMatrix*, float, float, float);
-void MTXIdentity(CharaMatrix*);
+void PSMTXIdentity(CharaMatrix*);
 void PSMTXConcat(CharaMatrix*, CharaMatrix*, CharaMatrix*);
 int Sprite_AdvanceAnim(CharaSprite*, float);
 int fn_8019FF6C(CharaSprite*, unsigned char);
@@ -206,10 +206,10 @@ extern "C" int clFlowChara_Update(CharaView* self)
             for (int i = 0; i < 13; ++i) fn_801C37E8(self, i, 0x20, -1, FLOAT_ARROW_SCALE);
             fn_801B8918(0x1AE1);
             PSMTXScale(&scale, lbl_806D9B80, lbl_806D9B80, lbl_806D9B80);
-            fn_8025D770(&rotation, 'y', FLOAT_SPRITE_INIT_TIME);
+            PSMTXRotRad(&rotation, 'y', FLOAT_SPRITE_INIT_TIME);
             const float* pos = (const float*)(lbl_8039AA40 + 0x740);
             PSMTXTrans(&translation, pos[0], pos[1], pos[2]);
-            MTXIdentity(&self->matrix);
+            PSMTXIdentity(&self->matrix);
             PSMTXConcat(&scale, &self->matrix, &self->matrix);
             PSMTXConcat(&rotation, &self->matrix, &self->matrix);
             PSMTXConcat(&translation, &self->matrix, &self->matrix);
@@ -366,7 +366,7 @@ extern void FileLoader_Open();
 extern void GetFrameIdxFromVisualIdx();
 extern void GetKartModelNameEntry();
 extern void LObjList_Destroy();
-extern void MTXIdentity();
+extern void PSMTXIdentity();
 extern void Object_DriveAnimMatrix();
 extern void Object_GetField8();
 extern void Object_SetAnimBinding();
@@ -398,7 +398,7 @@ extern void fn_8021A660();
 extern void fn_8021A71C();
 extern void fn_8021A9E8();
 extern void fn_8021ABFC();
-extern void fn_8025D770();
+extern void PSMTXRotRad();
 extern void fn_802D1E34();
 
 /* --- extern decls: sda21-referenced data --- */
@@ -812,7 +812,7 @@ asm void clFlowChara_Update(void) { /* 0x801C3D48 size:0xF5C */
     lfs f1, FLOAT_SPRITE_INIT_TIME(r2)
     addi r3, r1, 0x54
     li r4, 0x79
-    bl fn_8025D770
+    bl PSMTXRotRad
     addi r4, r30, 0x740
     lfs f1, 0x740(r30)
     lfs f2, 0x4(r4)
@@ -820,7 +820,7 @@ asm void clFlowChara_Update(void) { /* 0x801C3D48 size:0xF5C */
     lfs f3, 0x8(r4)
     bl PSMTXTrans
     addi r3, r31, 0x78
-    bl MTXIdentity
+    bl PSMTXIdentity
     addi r4, r31, 0x78
     addi r3, r1, 0x24
     mr r5, r4

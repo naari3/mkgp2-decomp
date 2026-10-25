@@ -14,7 +14,7 @@ extern unsigned char IsDisplayModeEnabled(void);
 extern int OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(int);
 extern int vsprintf(char *, const char *, va_list);
-extern void DebugOutput_Stub(const char *msg, ...);
+extern void OSReport(const char *msg, ...);
 
 extern unsigned char lbl_80598A60[];
 extern char lbl_805960F0[0x2010];
@@ -30,7 +30,7 @@ void DebugTextOutput(int channel, const char *fmt, ...) {
         vsprintf(lbl_805960F0, fmt, args);
         va_end(args);
         OSRestoreInterrupts(enabled);
-        DebugOutput_Stub(lbl_806D22D8, lbl_805960F0);
+        OSReport(lbl_806D22D8, lbl_805960F0);
     }
 }
 

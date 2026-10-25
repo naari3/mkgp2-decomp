@@ -6,10 +6,10 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void __assert();
-extern void fn_8025E440();
-extern void fn_8025E464();
-extern void fn_8025E488();
-extern void fn_8025E4A8();
+extern void PSQUATAdd();
+extern void PSQUATSubtract();
+extern void PSQUATDotProduct();
+extern void C_QUATLerp();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D2344;
@@ -116,18 +116,18 @@ asm void ObjectTree_BlendQuatLerp(void) { /* 0x800326D0 size:0x1D8 */
     stfs f0, 0x20(r1)
     lfs f0, 0x28(r30)
     stfs f0, 0x24(r1)
-    bl fn_8025E464
+    bl PSQUATSubtract
     addi r3, r1, 0x8
     mr r4, r3
-    bl fn_8025E488
+    bl PSQUATDotProduct
     fmr f30, f1
     addi r3, r1, 0x28
     addi r4, r1, 0x18
     addi r5, r1, 0x8
-    bl fn_8025E440
+    bl PSQUATAdd
     addi r3, r1, 0x8
     mr r4, r3
-    bl fn_8025E488
+    bl PSQUATDotProduct
     fcmpo cr0, f30, f1
     ble ObjectTree_BlendQuatLerp_L_80032868
     lfs f0, 0x18(r1)
@@ -147,7 +147,7 @@ asm void ObjectTree_BlendQuatLerp(void) { /* 0x800326D0 size:0x1D8 */
     addi r3, r1, 0x28
     addi r4, r1, 0x18
     addi r5, r31, 0x1c
-    bl fn_8025E4A8
+    bl C_QUATLerp
     psq_l f31, 0x68(r1), 0, 0
     lfd f31, 0x60(r1)
     psq_l f30, 0x58(r1), 0, 0

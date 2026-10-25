@@ -240,6 +240,34 @@ cflags_runtime = [
     "-inline auto",
 ]
 
+# MetroTRK flags (pikmin2's TRK build; self-contained headers)
+cflags_trk = [
+    "-nodefaults",
+    "-proc gekko",
+    "-align powerpc",
+    "-enum int",
+    "-fp hardware",
+    "-Cpp_exceptions off",
+    "-O4,p",
+    "-inline auto",
+    '-pragma "cats off"',
+    '-pragma "warn_notinlined off"',
+    "-maxerrors 1",
+    "-nosyspath",
+    "-RTTI off",
+    "-fp_contract on",
+    "-str reuse",
+    "-multibyte",
+    "-i src/TRK_MINNOW_DOLPHIN/include",
+    "-i src/TRK_MINNOW_DOLPHIN/include/stl",
+    "-use_lmw_stmw on",
+    "-str reuse,readonly",
+    "-common off",
+    "-inline deferred",
+    "-sdata 0",
+    "-sdata2 0",
+]
+
 # MSL_C flags (match zeldaret/tp's MSL build)
 cflags_msl = [
     *cflags_base,
@@ -275,6 +303,44 @@ def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
         "lib": lib_name,
         "mw_version": "GC/1.2.5n",
         "cflags": cflags_base,
+        "progress_category": "sdk",
+        "objects": objects,
+    }
+
+
+# Dolphin SDK flags (mirrors doldecomp/dolsdk2004 release build flags)
+cflags_dolphin = [
+    "-nodefaults",
+    "-proc gekko",
+    "-fp hard",
+    "-Cpp_exceptions off",
+    "-enum int",
+    '-pragma "cats off"',
+    "-O4,p",
+    "-inline auto",
+    "-char unsigned",
+    "-I-",
+    "-i include",
+    "-i include/libc",
+    "-ir src/dolphin",
+    f"-i build/{config.version}/include",
+    "-D__GEKKO__",
+    "-DRELEASE",
+]
+
+
+def SdkLib(
+    lib_name: str,
+    objects: List[Object],
+    revision: int = 2,
+    extra_cflags: List[str] = [],
+) -> Dict[str, Any]:
+    # SDK_REVISION selects the dolsdk2004 variant: 1 = May 21 2004 build (OS in this game)
+    return {
+        "lib": lib_name,
+        "src_dir": "src",
+        "mw_version": "GC/1.2.5n",
+        "cflags": [*cflags_dolphin, f"-DSDK_REVISION={revision}", *extra_cflags],
         "progress_category": "sdk",
         "objects": objects,
     }
@@ -1302,7 +1368,6 @@ config.libs = [
             # matched 1 fn at a time via sub-agent dispatch.
             Object(Matching, "game/auto_801223E8_block.c"),
             Object(Matching, "game/Archive_GetCurrent.c"),
-            Object(Matching, "game/Vec3.c"),
             Object(Matching, "game/ItemAlias.c"),
             Object(Matching, "game/KartDriver_SetJointPosY_Slot3a.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartDriver_Dtor.c", extab_padding=b"\x00\x00"),
@@ -1533,6 +1598,103 @@ config.libs = [
             Object(Matching, "sound/SoundObj_PlaySE_Direct.c"),
         ],
     },
+    SdkLib(
+        "dolphin_base",
+        [
+            Object(Matching, "dolphin/base/PPCArch.c"),
+        ],
+    ),
+    SdkLib(
+        "dolphin_db",
+        [
+            Object(Matching, "dolphin/db/db.c"),
+        ],
+    ),
+    SdkLib(
+        "dolphin_os",
+        [
+            Object(Matching, "dolphin/os/OS.c"),
+            Object(Matching, "dolphin/os/OSAlarm.c"),
+            Object(Matching, "dolphin/os/OSArena.c"),
+            Object(Matching, "dolphin/os/OSAudioSystem.c"),
+            Object(Matching, "dolphin/os/OSCache.c"),
+            Object(Matching, "dolphin/os/OSContext.c"),
+            Object(Matching, "dolphin/os/OSError.c"),
+            Object(Matching, "dolphin/os/OSFont.c"),
+            Object(Matching, "dolphin/os/OSInterrupt.c"),
+            Object(Matching, "dolphin/os/OSLink.c"),
+            Object(Matching, "dolphin/os/OSMessage.c"),
+            Object(Matching, "dolphin/os/OSMemory.c"),
+            Object(Matching, "dolphin/os/OSMutex.c"),
+            Object(Matching, "dolphin/os/OSReboot.c"),
+            Object(Matching, "dolphin/os/OSReset.c"),
+            Object(Matching, "dolphin/os/OSResetSW.c"),
+            Object(Matching, "dolphin/os/OSRtc.c"),
+            Object(Matching, "dolphin/os/OSSemaphore.c"),
+            Object(Matching, "dolphin/os/OSSync.c"),
+            Object(Matching, "dolphin/os/OSThread.c"),
+            Object(Matching, "dolphin/os/OSTime.c"),
+        ],
+        revision=1,
+    ),
+    SdkLib(
+        "dolphin_mtx",
+        [
+            Object(Matching, "dolphin/mtx/mtx.c"),
+            Object(Matching, "dolphin/mtx/mtxvec.c"),
+            Object(Matching, "dolphin/mtx/mtx44.c"),
+            Object(Matching, "dolphin/mtx/vec.c"),
+            Object(Matching, "dolphin/mtx/quat.c"),
+        ],
+        extra_cflags=["-char signed"],
+    ),
+    SdkLib(
+        "dolphin_vi",
+        [
+            Object(Matching, "dolphin/vi/vi.c"),
+        ],
+    ),
+    SdkLib(
+        "dolphin_ai",
+        [
+            Object(Matching, "dolphin/ai/ai.c"),
+        ],
+    ),
+    SdkLib(
+        "dolphin_ar",
+        [
+            Object(Matching, "dolphin/ar/ar.c"),
+            Object(Matching, "dolphin/ar/arq.c"),
+        ],
+    ),
+    SdkLib(
+        "dolphin_dsp",
+        [
+            Object(Matching, "dolphin/dsp/dsp.c"),
+            Object(Matching, "dolphin/dsp/dsp_debug.c"),
+            Object(Matching, "dolphin/dsp/dsp_task.c"),
+        ],
+    ),
+    SdkLib(
+        "dolphin_gx",
+        [
+            Object(Matching, "dolphin/gx/GXInit.c"),
+            Object(Matching, "dolphin/gx/GXFifo.c"),
+            Object(Matching, "dolphin/gx/GXAttr.c"),
+            Object(Matching, "dolphin/gx/GXMisc.c"),
+            Object(Matching, "dolphin/gx/GXGeometry.c"),
+            Object(Matching, "dolphin/gx/GXFrameBuf.c"),
+            Object(Matching, "dolphin/gx/GXLight.c"),
+            Object(Matching, "dolphin/gx/GXTexture.c"),
+            Object(Matching, "dolphin/gx/GXBump.c"),
+            Object(Matching, "dolphin/gx/GXTev.c"),
+            Object(Matching, "dolphin/gx/GXPixel.c"),
+            Object(Matching, "dolphin/gx/GXDisplayList.c"),
+            Object(Matching, "dolphin/gx/GXTransform.c"),
+            Object(Matching, "dolphin/gx/GXPerf.c"),
+        ],
+        revision=0,
+    ),
     {
         "lib": "MSL_C",
         "mw_version": "GC/2.7",
@@ -1599,6 +1761,35 @@ config.libs = [
             Object(Matching, "dolphin/odemustubs/odemustubs.c"),
         ],
     ),
+    {
+        "lib": "TRK_MINNOW_DOLPHIN",
+        "mw_version": "GC/2.6",
+        "cflags": cflags_trk,
+        "progress_category": "sdk",
+        "objects": [
+            Object(Matching, "TRK_MINNOW_DOLPHIN/mainloop.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/nubevent.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/nubinit.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/msg.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/msgbuf.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/serpoll.c", extra_cflags=["-sdata 8"]),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/usr_put.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/dispatch.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/mutex_TRK.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/notify.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/flush_cache.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/mem_TRK.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/mpc_7xx_603e.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/main_TRK.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/dolphin_trk_glue.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/targcont.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/target_options.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/UDP_Stubs.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/CircleBuffer.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/MWTrace.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/MWCriticalSection_gc.cpp"),
+        ],
+    },
     {
         "lib": "Runtime.PPCEABI.H",
         "mw_version": config.linker_version,

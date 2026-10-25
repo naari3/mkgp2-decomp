@@ -19,13 +19,13 @@ extern void fn_8013879C(float *, float, float, float, float);
 extern void DebugPrintf(const char *, ...);
 extern const float lbl_806D22E0;
 extern const char lbl_802E96D0[], lbl_802E96FC[];
-extern void fn_8026A2BC(float *);
-extern void fn_8026A5BC(float *);
+extern void GXGetProjectionv(float *);
+extern void GXGetViewportv(float *);
 extern Matrix3x4 *fn_802C7E30(void *);
 extern void fn_802C6BCC(void *);
-extern void fn_8026A018(const Matrix3x4, const float *, const float *,
+extern void GXProject(const Matrix3x4, const float *, const float *,
                        float *, float *, float *, float, float, float);
-extern void fn_8025DF40(const Matrix3x4, const Vec3 *, Vec3 *);
+extern void PSMTXMultVec(const Matrix3x4, const Vec3 *, Vec3 *);
 extern const Vec3 lbl_802E96B8;
 
 static inline Matrix3x4 *CObjProject_GetView(CObjProjectView *self)
@@ -67,17 +67,17 @@ void CObj_ProjectPoint(CObjProjectView *self, float *outX, float *outY,
     Vec3 transformed;
     Matrix3x4 *matrix;
 
-    fn_8026A2BC(projection);
-    fn_8026A5BC(viewport);
+    GXGetProjectionv(projection);
+    GXGetViewportv(viewport);
     matrix = CObjProject_GetView(self);
-    fn_8026A018(*matrix, projection, viewport, outX, outY, outDepth, x, y, z);
+    GXProject(*matrix, projection, viewport, outX, outY, outDepth, x, y, z);
     point = lbl_802E96B8;
     point.x = x;
     point.y = y;
     point.z = z;
     fn_802C6BCC(self->camera);
     matrix = CObjProject_GetView(self);
-    fn_8025DF40(*matrix, &point, &transformed);
+    PSMTXMultVec(*matrix, &point, &transformed);
     *outZ = transformed.z;
 }
 #endif
