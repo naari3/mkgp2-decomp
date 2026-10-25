@@ -4966,6 +4966,21 @@ game/mapobject/fn_8017CBB0.cpp:
 	extabindex  start:0x80026984 end:0x80026990
 	.text       start:0x8017CBB0 end:0x8017CE1C
 
+game/coursescene/fn_8017E6A8.cpp:
+	extab       start:0x800119B4 end:0x800119BC
+	extabindex  start:0x800269B4 end:0x800269C0
+	.text       start:0x8017E6A8 end:0x8017E750
+
+game/coursescene/fn_8017E750.cpp:
+	extab       start:0x800119BC end:0x800119C4
+	extabindex  start:0x800269C0 end:0x800269CC
+	.text       start:0x8017E750 end:0x8017E824
+
+game/coursescene/fn_8017E824.cpp:
+	extab       start:0x800119C4 end:0x800119EC
+	extabindex  start:0x800269CC end:0x800269D8
+	.text       start:0x8017E824 end:0x8017EB58
+
 game/fn_801805AC.c:
 	.text       start:0x801805AC end:0x801805B4
 

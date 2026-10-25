@@ -941,6 +941,20 @@
   "src/game/mapobject/fn_8017CBB0.cpp": {
     "Draw__8clModelPFv": "fn_8017CBB0"
   },
+  "src/game/coursescene/fn_8017E6A8.cpp": {
+    "__nw__FUl": "Alloc",
+    "Append__10clPathNodeFP10clPathNode": "fn_8017E750"
+  },
+  "src/game/coursescene/fn_8017E750.cpp": {
+    "Append__10clPathNodeFP10clPathNode": "fn_8017E750"
+  },
+  "src/game/coursescene/fn_8017E824.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__7Scene3DFPCc": "Scene3D_Init",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__dt__10clNormal3DFv": "Object_DtorWithGXSync"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
