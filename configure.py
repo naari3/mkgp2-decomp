@@ -2093,6 +2093,16 @@ config.libs = [
         ],
     },
     {
+        # Triforce JVS/AM libraries (no reference source); built -O2
+        "lib": "triforce",
+        "mw_version": "GC/1.2.5n",
+        "cflags": [*cflags_dolphin, "-DSDK_REVISION=2", "-O2"],
+        "progress_category": "sdk",
+        "objects": [
+            Object(NonMatching, "triforce/jvsio.c"),
+        ],
+    },
+    {
         "lib": "TRK_MINNOW_DOLPHIN",
         "mw_version": "GC/2.6",
         "cflags": cflags_trk,

@@ -6897,6 +6897,10 @@ dolphin/si/SISamplingRate.c:
 	.data       start:0x804F5598 end:0x804F5630
 	.sbss       start:0x806D1DA0 end:0x806D1DA8
 
+triforce/jvsio.c:
+	.text       start:0x8028250C end:0x802857E0
+	.bss        start:0x8067E2A0 end:0x806834F0
+
 dolphin/dvd/dvdfs.c:
 	.text       start:0x80294EA4 end:0x80295A4C
 	.data       start:0x804F5848 end:0x804F59E8
