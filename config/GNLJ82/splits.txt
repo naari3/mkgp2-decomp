@@ -3224,6 +3224,11 @@ game/PreviewModel.c:
 	extabindex  start:0x80024E48 end:0x80024F38
 	.text       start:0x8013D4B0 end:0x8013DD38
 
+game/SpriteEffects.c:
+	extab       start:0x8000D630 end:0x8000D670
+	extabindex  start:0x80024F38 end:0x80024F98
+	.text       start:0x8013DD38 end:0x8013ECB0
+
 game/InitRumbleController.c:
 	extab       start:0x800101D0 end:0x800101D8
 	extabindex  start:0x80025FD0 end:0x80025FDC

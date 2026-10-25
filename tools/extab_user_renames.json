@@ -1635,5 +1635,20 @@
     "extabindex_fn_8013D940": "@eti_80024ED8",
     "extabindex_fn_8013DA00": "@eti_80024EE4",
     "extabindex_dtor_8013DCBC": "@eti_80024F20"
+  },
+  "src/game/SpriteEffects.c": {
+    "__dt__7Effect1Fv": "fn_8013DD38",
+    "__dt__7Effect2Fv": "fn_8013EBA0",
+    "__dt__7Effect3Fv": "fn_8013EBFC",
+    "__ct__7Effect1Fv": "fn_8013E14C",
+    "__ct__7Effect2Fi": "fn_8013E6F8",
+    "__ct__7Effect3Fv": "fn_8013EAFC",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "extab_fn_8013DD94": "@etb_8000D638",
+    "extabindex_fn_8013DD94": "@eti_80024F44",
+    "extab_fn_8013E194": "@etb_8000D648",
+    "extabindex_fn_8013E194": "@eti_80024F50",
+    "extab_fn_8013E744": "@etb_8000D650",
+    "extabindex_fn_8013E744": "@eti_80024F5C"
   }
 }

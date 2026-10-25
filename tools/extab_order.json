@@ -15,5 +15,6 @@
   "src/game/csAnim.c": ["fn_8013AB74", "fn_8013AE20", "fn_8013B300", "fn_8013B4FC", "fn_8013B7A8", "fn_8013B87C", "fn_8013B9A0"],
   "src/game/CourseTables.c": ["fn_8013BFF8", "fn_8013C100", "fn_8013C198", "fn_8013C204", "fn_8013C26C"],
   "src/game/KartPreview.c": ["fn_8013C4A4", "fn_8013C534", "fn_8013C5FC", "fn_8013C674", "fn_8013C6EC", "fn_8013C7BC", "fn_8013C91C", "fn_8013CA04", "fn_8013CA70", "fn_8013CB10", "fn_8013CC24"],
-  "src/game/PreviewModel.c": ["dtor_8013DCBC", "fn_8013D4B0", "fn_8013D50C", "fn_8013D570", "fn_8013D59C", "fn_8013D608", "fn_8013D634", "fn_8013D66C", "fn_8013D704", "fn_8013D738", "fn_8013D778", "fn_8013D800", "dtor_8013D8C8", "fn_8013DD08", "fn_8013D940", "fn_8013DA00", "fn_8013DAC8", "fn_8013DB2C", "fn_8013DB9C", "fn_8013DBF8", "__dt__7ListMidFv", "__dt__8ListBaseFv"]
+  "src/game/PreviewModel.c": ["dtor_8013DCBC", "fn_8013D4B0", "fn_8013D50C", "fn_8013D570", "fn_8013D59C", "fn_8013D608", "fn_8013D634", "fn_8013D66C", "fn_8013D704", "fn_8013D738", "fn_8013D778", "fn_8013D800", "dtor_8013D8C8", "fn_8013DD08", "fn_8013D940", "fn_8013DA00", "fn_8013DAC8", "fn_8013DB2C", "fn_8013DB9C", "fn_8013DBF8", "__dt__7ListMidFv", "__dt__8ListBaseFv"],
+  "src/game/SpriteEffects.c": ["fn_8013DD38", "fn_8013DD94", "dtor_8013EB50", "fn_8013E194", "fn_8013E744", "fn_8013EBA0", "fn_8013EBFC", "fn_8013EC58", "__dt__10EffectBaseFv"]
 }
