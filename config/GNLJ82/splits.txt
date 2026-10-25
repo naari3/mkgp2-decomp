@@ -6816,6 +6816,11 @@ game/dtor_801BA14C.c:
 ui/FrameSelection.c:
 	.text       start:0x801BA194 end:0x801BA1A4
 
+game/fn_801BA1A4.cpp:
+	extab       start:0x8001311C end:0x80013124
+	extabindex  start:0x800279C8 end:0x800279D4
+	.text       start:0x801BA1A4 end:0x801BA318
+
 game/fn_801BA318.c:
 	extab       start:0x80013124 end:0x8001312C
 	extabindex  start:0x800279D4 end:0x800279E0
@@ -6835,6 +6840,11 @@ game/fn_801BA9A0.cpp:
 	extab       start:0x800131A4 end:0x800131AC
 	extabindex  start:0x80027A04 end:0x80027A10
 	.text       start:0x801BA9A0 end:0x801BAA88
+
+game/fn_801C2238.c:
+	extab       start:0x80013DA4 end:0x80013DAC
+	extabindex  start:0x80027D1C end:0x80027D28
+	.text       start:0x801C2238 end:0x801C23A8
 
 game/fn_801C3108.c:
 	extab       start:0x80013E04 end:0x80013E0C
