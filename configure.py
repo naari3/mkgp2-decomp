@@ -677,6 +677,7 @@ config.libs = [
             Object(Matching, "game/KartEffectFadeTransit_GetActiveValue.c"),
             Object(Matching, "game/KartEffectFadeTransit_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartEffectFadeTransit_Init.c"),
+            Object(Matching, "game/KartItem_FlushRender.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartItem_RenderCb_Mode7_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartItem_RenderCb_DefaultCycle_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartItem_RenderCb_Mode3_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
