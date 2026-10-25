@@ -578,6 +578,21 @@ game/KartItem_TriggerStateAction.c:
 game/KartMovement_CanReceiveItem.c:
 	.text       start:0x8003F5E8 end:0x8003F668
 
+game/KartItem_CancelAndQueueDefault.c:
+	extab       start:0x80006178 end:0x80006180
+	extabindex  start:0x8001FDCC end:0x8001FDD8
+	.text       start:0x8003F668 end:0x8003F77C
+
+game/KartMovement_EquipItem.c:
+	extab       start:0x80006188 end:0x80006190
+	extabindex  start:0x8001FDE4 end:0x8001FDF0
+	.text       start:0x8003FFD0 end:0x800404C4
+
+game/KartItem_CancelIfNotForced.c:
+	extab       start:0x80006190 end:0x80006198
+	extabindex  start:0x8001FDF0 end:0x8001FDFC
+	.text       start:0x800404C4 end:0x80040600
+
 game/KartMovement_GetCurrentItemId.c:
 	.text       start:0x80040600 end:0x80040608
 
