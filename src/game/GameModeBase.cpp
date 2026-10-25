@@ -20,7 +20,7 @@
  *   - GameModeBase_Dtor         (0x800A086C, size 0xE4) — virtual GameModeBase*
  *     (this, freeFlag); dispatched at vtable[+0x10]. Invokes scene->f0(1) at
  *     vtable[+0x8], clears self->scene + g_objCollChecker + lbl_806D10AC,
- *     calls fn_80190660 + Backup_PublishShadowCopy_Inline + lbl_806D10AC->f0(1) + fn_802C8B48(0),
+ *     calls fn_80190660 + Backup_PublishShadowCopy_Inline + lbl_806D10AC->f0(1) + HSD_FObjForceLinearInterp(0),
  *     decrements g_playerData[0x198] (clamped at 0), then chains
  *     ObjectBase_Dtor (= dtor_8002CDF4) and optional MemoryManager_TimedFree
  *     (= MemoryManager_TimedFree) under the `freeFlag > 0` delete-self gate.
@@ -63,7 +63,7 @@ extern void *lbl_806D10A0;
 extern int  g_objCollChecker;
 extern void Backup_PublishShadowCopy_Inline(void);
 extern void fn_80190660(void);
-extern void fn_802C8B48(int);
+extern void HSD_FObjForceLinearInterp(int);
 extern void *dtor_8002CDF4(void *self, short freeFlag);  /* ObjectBase_Dtor */
 extern void  MemoryManager_TimedFree(void *self);                  /* MemoryManager_TimedFree */
 extern unsigned char g_playerData[0x1DC];
@@ -107,7 +107,7 @@ extern "C" GameModeBase *GameModeBase_Dtor(GameModeBase *self, short freeFlag) {
             lbl_806D10AC->f0(1);
         }
         lbl_806D10AC = 0;
-        fn_802C8B48(0);
+        HSD_FObjForceLinearInterp(0);
         {
             unsigned char *p = g_playerData;
             unsigned char v = p[0x198];
