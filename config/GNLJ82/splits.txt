@@ -549,6 +549,9 @@ game/LakituStart_Dtor.c:
 	extabindex  start:0x8001FCE8 end:0x8001FCF4
 	.text       start:0x8003DAE0 end:0x8003DB40
 
+game/KartItem_Fields.c:
+	.text       start:0x8003F364 end:0x8003F418
+
 game/KartMovement.c:
 	.text       start:0x8003F518 end:0x8003F528
 
@@ -1185,6 +1188,9 @@ game/dtor_8006178C.c:
 
 game/FinalLapCoinJump_SetEnable.c:
 	.text       start:0x80061804 end:0x8006181C
+
+game/ShadowBillboard_Setters.c:
+	.text       start:0x80061918 end:0x80061954
 
 game/dtor_80064CD4.c:
 	extab       start:0x80007F1C end:0x80007F24
@@ -1847,6 +1853,17 @@ game/card_task_manager_create.c:
 	extab       start:0x80009014 end:0x8000901C
 	extabindex  start:0x80021B24 end:0x80021B30
 	.text       start:0x8008A0A0 end:0x8008A2A0
+
+game/PlayStats_Counters.c:
+	.text       start:0x8008D87C end:0x8008DC70
+
+game/PlayStats_Session.c:
+	extab       start:0x80009288 end:0x800092B0
+	extabindex  start:0x80021D58 end:0x80021D94
+	.text       start:0x8008DC70 end:0x8008DE60
+
+game/PlayStats_CopyStatsBlock.c:
+	.text       start:0x8008DE60 end:0x8008E33C
 
 game/PlayStats_Clear.c:
 	extab       start:0x800092B0 end:0x800092B8
