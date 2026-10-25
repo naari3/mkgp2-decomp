@@ -6623,6 +6623,12 @@ game/fn_801D4060.cpp:
 	extabindex  start:0x80028088 end:0x80028094
 	.text       start:0x801D4060 end:0x801D4118
 
+game/fn_801D5970.c:
+	.text       start:0x801D5970 end:0x801D5C88
+
+game/GetCoinMilage.c:
+	.text       start:0x801D5D68 end:0x801D5F74
+
 game/PlayerData_ResolveUnlockedIdByIndex.c:
 	.text       start:0x801D6398 end:0x801D647C
 
@@ -6893,6 +6899,16 @@ game/AI_RollItemUseProbability.c:
 	extabindex  start:0x80028400 end:0x8002840C
 	.text       start:0x801DCF00 end:0x801DD044
 
+game/AI_CheckTargetInRange.c:
+	extab       start:0x80015968 end:0x80015970
+	extabindex  start:0x8002840C end:0x80028418
+	.text       start:0x801DD044 end:0x801DD1B0
+
+game/fn_801DD1B0.c:
+	extab       start:0x80015970 end:0x80015978
+	extabindex  start:0x80028418 end:0x80028424
+	.text       start:0x801DD1B0 end:0x801DD344
+
 game/AI_CheckItemSuppression.c:
 	extab       start:0x80015978 end:0x80015980
 	extabindex  start:0x80028424 end:0x80028430
@@ -6936,6 +6952,9 @@ game/clEnemyParam_FillItemListIds.c:
 	extab       start:0x800159C0 end:0x800159C8
 	extabindex  start:0x80028478 end:0x80028484
 	.text       start:0x801DE208 end:0x801DE41C
+
+game/AI_GetItemList.c:
+	.text       start:0x801DE41C end:0x801DE6E8
 
 game/fn_801DE6E8.c:
 	extab       start:0x800159C8 end:0x800159D0
@@ -7171,6 +7190,11 @@ game/fn_801E9594.cpp:
 	extabindex  start:0x800289B8 end:0x800289C4
 	.text       start:0x801E9594 end:0x801E96BC
 
+game/AI_CalcItemSpeedBonus.c:
+	extab       start:0x80016AF8 end:0x80016B00
+	extabindex  start:0x80028A0C end:0x80028A18
+	.text       start:0x801EA500 end:0x801EA6F0
+
 game/fn_801EB91C.c:
 	extab       start:0x80016B38 end:0x80016B40
 	extabindex  start:0x80028A54 end:0x80028A60
@@ -7313,6 +7337,9 @@ game/dtor_801F6BD0.c:
 	extabindex  start:0x80028F1C end:0x80028F28
 	.text       start:0x801F6BD0 end:0x801F6C2C
 
+game/fn_801F6E84.c:
+	.text       start:0x801F6E84 end:0x801F6EEC
+
 game/fn_801F6F7C.c:
 	extab       start:0x80017558 end:0x80017560
 	extabindex  start:0x80028F4C end:0x80028F58
@@ -7389,6 +7416,9 @@ game/fn_801F89F0.c:
 	.text       start:0x801F89F0 end:0x801F8A34
 	.ctors      start:0x802E8934 end:0x802E8938
 
+game/fn_801F8D58.c:
+	.text       start:0x801F8D58 end:0x801F8E08
+
 game/fn_801F8E58.c:
 	extab       start:0x800176A0 end:0x800176A8
 	extabindex  start:0x80029078 end:0x80029084
@@ -7409,6 +7439,9 @@ game/TexMgr_Apply.c:
 	extab       start:0x800176C8 end:0x800176D0
 	extabindex  start:0x800290B4 end:0x800290C0
 	.text       start:0x801F947C end:0x801F9518
+
+game/fn_801F9628.c:
+	.text       start:0x801F9628 end:0x801F9888
 
 game/fn_801F9888.c:
 	extab       start:0x800176E0 end:0x800176E8
