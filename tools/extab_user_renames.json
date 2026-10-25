@@ -4961,5 +4961,16 @@
     "extabindex_fn_80126728": "@eti_80024914",
     "extab_fn_80126878": "@etb_8000C05C",
     "extabindex_fn_80126878": "@eti_80024920"
+  },
+  "src/game/DNLensflare.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "Draw__13clDNLensflareFv": "fn_80228FB0",
+    "Update__13clDNLensflareFv": "fn_80229080",
+    "__dt__13clDNLensflareFv": "fn_802290D8",
+    "__ct__13clDNLensflareFv": "fn_80229180",
+    "__vt__13clDNLensflare": "lbl_804EE09C",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__ct__11clLensFlareFPCcfffff": "fn_80171F34"
   }
 }
