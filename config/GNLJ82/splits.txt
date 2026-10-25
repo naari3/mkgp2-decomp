@@ -4220,11 +4220,10 @@ game/fn_8014640C.c:
 game/fn_80147468.c:
 	.text       start:0x80147468 end:0x80147470
 
-game/fn_8014CFA0.c:
-	.text       start:0x8014CFA0 end:0x8014CFA4
-
-game/fn_8014D2AC.c:
-	.text       start:0x8014D2AC end:0x8014D2B0
+game/CSPartsHolders.c:
+	extab       start:0x8000E5A0 end:0x8000E640
+	extabindex  start:0x800254CC end:0x8002555C
+	.text       start:0x8014CE74 end:0x8014D540
 
 game/fn_8014DD5C.c:
 	extab       start:0x8000E86C end:0x8000E874

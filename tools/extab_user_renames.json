@@ -2634,5 +2634,16 @@
     "m10__9clCSPartsFv": "fn_80143E80",
     "Update__9clCSPartsFv": "fn_80143EA8",
     "Draw__9clCSPartsFv": "fn_80143EDC"
+  },
+  "src/game/CSPartsHolders.c": {
+    "__dt__10PairHolderFv": "fn_8014CFA4",
+    "__dt__12TripleHolderFv": "fn_8014D2B0",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10Scene3DObjFv": "fn_8014C53C",
+    "extab_fn_8014D038": "@etb_8000E5D8",
+    "extabindex_fn_8014D038": "@eti_80025508",
+    "extab_fn_8014D344": "@etb_8000E618",
+    "extabindex_fn_8014D344": "@eti_80025538"
   }
 }

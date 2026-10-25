@@ -737,8 +737,6 @@ config.libs = [
             Object(Matching, "game/fn_801DC510.c"),
             Object(Matching, "game/fn_801B129C.c"),
             Object(Matching, "game/fn_8016FC70.c"),
-            Object(Matching, "game/fn_8014D2AC.c"),
-            Object(Matching, "game/fn_8014CFA0.c"),
             Object(Matching, "game/fn_8014640C.c"),
             Object(Matching, "game/fn_800D748C.c"),
             Object(Matching, "game/fn_800A5608.c"),
@@ -1577,6 +1575,7 @@ config.libs = [
             Object(Matching, "game/CSPartsResultRank.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-inline deferred", "-rostr"]),
             Object(Matching, "game/CSPartsResultStage.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-inline deferred", "-rostr"]),
             Object(Matching, "game/CSPartsResultTimeNum.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-inline deferred", "-rostr"]),
+            Object(Matching, "game/CSPartsHolders.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
         ],
     },
     {
