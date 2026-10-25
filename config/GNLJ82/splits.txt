@@ -5555,6 +5555,11 @@ game/fn_801D4060.cpp:
 game/PlayerData_ResolveUnlockedIdByIndex.c:
 	.text       start:0x801D6398 end:0x801D647C
 
+game/fn_801D647C.c:
+	extab       start:0x800152FC end:0x80015304
+	extabindex  start:0x800280DC end:0x800280E8
+	.text       start:0x801D647C end:0x801D6558
+
 game/fn_801D67F4.c:
 	.text       start:0x801D67F4 end:0x801D680C
 
@@ -5782,6 +5787,11 @@ game/fn_801DC9AC.c:
 game/fn_801DCC6C.c:
 	.text       start:0x801DCC6C end:0x801DCCE4
 
+game/fn_801DCCE4.c:
+	extab       start:0x80015950 end:0x80015958
+	extabindex  start:0x800283E8 end:0x800283F4
+	.text       start:0x801DCCE4 end:0x801DCDCC
+
 game/fn_801DD8E4.c:
 	.text       start:0x801DD8E4 end:0x801DD934
 
@@ -5826,6 +5836,16 @@ game/fn_801DE810.c:
 
 game/fn_801DEC3C.c:
 	.text       start:0x801DEC3C end:0x801DEC74
+
+game/fn_801DEE38.cpp:
+	extab       start:0x80015A10 end:0x80015A18
+	extabindex  start:0x800284D8 end:0x800284E4
+	.text       start:0x801DEE38 end:0x801DEEB8
+
+game/fn_801DEEB8.cpp:
+	extab       start:0x80015A18 end:0x80015A34
+	extabindex  start:0x800284E4 end:0x800284F0
+	.text       start:0x801DEEB8 end:0x801DEF94
 
 game/fn_801E4524.c:
 	extab       start:0x800162A8 end:0x800162B0
