@@ -4454,6 +4454,11 @@ game/BombItem_DropAndSpawnExplosionTick.c:
 	extabindex  start:0x80024020 end:0x8002402C
 	.text       start:0x800FBBD4 end:0x800FBD88
 
+game/BombExplosion_UpdateShockwaveVfx.c:
+	extab       start:0x8000B764 end:0x8000B76C
+	extabindex  start:0x8002402C end:0x80024038
+	.text       start:0x800FBD88 end:0x800FC6D8
+
 game/BombExplosion_InitOrDestroy.c:
 	extab       start:0x8000B76C end:0x8000B774
 	extabindex  start:0x80024038 end:0x80024044
