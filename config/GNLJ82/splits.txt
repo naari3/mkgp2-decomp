@@ -6493,9 +6493,14 @@ Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
 	.dtors      start:0x802E8980 end:0x802E8988
 	.sdata      start:0x806D0B78 end:0x806D0B7C
 
-MSL_C/Gecko_ExceptionPPC.c:
-	.text       start:0x802731B4 end:0x8027321C
+Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp:
+	extab       start:0x8001F2B8 end:0x8001F32C
+	extabindex  start:0x8002BB74 end:0x8002BBC8
+	.text       start:0x80271DF0 end:0x80273228
+	.rodata     start:0x803F1CE0 end:0x803F1D78
+	.data       start:0x804F47C8 end:0x804F48B0
 	.bss        start:0x8067DE68 end:0x8067DE78
+	.sdata      start:0x806D0B80 end:0x806D0B90
 
 MSL_C/GCN_mem_alloc.c:
 	.text       start:0x80273228 end:0x80273398

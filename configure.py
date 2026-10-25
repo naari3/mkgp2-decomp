@@ -2021,7 +2021,6 @@ config.libs = [
             Object(Matching, "MSL_C/math/w_log.c"),
             Object(Matching, "MSL_C/math/w_pow.c"),
             Object(Matching, "MSL_C/math_ppc.c"),
-            Object(Matching, "MSL_C/Gecko_ExceptionPPC.c"),
             Object(Matching, "MSL_C/mbstring.c"),
             Object(Matching, "MSL_C/alloc.c"),
             Object(Matching, "MSL_C/wmem.c"),
@@ -2085,6 +2084,7 @@ config.libs = [
             Object(Matching, "Runtime.PPCEABI.H/ptmf.c", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
             Object(Matching, "Runtime.PPCEABI.H/runtime.c", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
             Object(Matching, "Runtime.PPCEABI.H/NMWException.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on", "-inline deferred"], extab_padding=b""),
+            Object(Matching, "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on", "-inline deferred", "-RTTI on", "-str nopool"], extab_padding=b"\x02\x55"),
         ],
     },
     {

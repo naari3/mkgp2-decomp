@@ -231,7 +231,7 @@ extern void fn_801B1458();
 extern void fn_801B5B60();
 extern void fn_802090F0(void *obj, void *center, void *half, float f1, float f2, float f3);
 extern void fn_802091BC();
-extern void fn_80271EF4();
+extern void __throw();
 extern void strcpy();
 extern void cos();
 extern void sin();
@@ -9750,7 +9750,7 @@ asm void Bitset_Init(Bitset *self, unsigned long n, const unsigned char *pval) {
     addi r5, r4, ClStrPcb_Dtor@l
     addi r3, r3, lbl_802EDAA4@l
     mr r4, r28
-    bl fn_80271EF4
+    bl __throw
     Bitset_Init_L_8005236C:
     cmplwi r31, 0x0
     beq Bitset_Init_L_80052480
