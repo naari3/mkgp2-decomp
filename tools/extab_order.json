@@ -247,5 +247,11 @@
   "src/game/LogoAnim.c": ["fn_80141990", "fn_80141454", "fn_801418B8", "dtor_801419C8", "fn_80141A24", "fn_8014196C", "__dt__7AnimMidFv", "__dt__8AnimBaseFv"],
   "src/game/PushPrompt.c": ["fn_80141A70", "fn_80141A94", "fn_80141B08", "fn_80141E70", "fn_80142010", "fn_8014205C", "fn_801420DC", "dtor_8013EB50"],
   "src/game/ResultFx.c": ["fn_8013ECB0", "fn_8013EDB8", "fn_8013F428", "fn_8013F940", "fn_8013FE4C", "fn_8013FF6C", "fn_8014017C", "fn_80140344", "fn_80140810", "fn_80140874", "fn_8014095C", "fn_801409B0", "fn_80140A38", "fn_80140EF0", "fn_80140FEC", "dtor_800869D0", "dtor_80082960", "dtor_8013EB50"],
-  "src/game/PodiumPose.c": ["fn_801421B0", "fn_801422B0", "fn_801426A0", "fn_80142830", "fn_80142964", "fn_80142B0C", "fn_80143048", "fn_80143450", "dtor_8013EB50"]
+  "src/game/PodiumPose.c": ["fn_801421B0", "fn_801422B0", "fn_801426A0", "fn_80142830", "fn_80142964", "fn_80142B0C", "fn_80143048", "fn_80143450", "dtor_8013EB50"],
+  "src/game/CSPartsResultRank.c": ["fn_80143E58", "fn_80143E80", "fn_80143EA8", "fn_80143EDC", "fn_8014388C", "fn_8014393C", "dtor_80143F0C", "fn_80143DB0", "dtor_8013EB50"],
+  "src/game/CSPartsResultStage.c": ["fn_80143F8C", "fn_8014403C", "dtor_80143F0C", "dtor_8013EB50"],
+  "src/game/CSPartsResultTimeNum.c": ["fn_80144258", "fn_80144308", "dtor_80143F0C", "dtor_8013EB50"],
+  "src/game/CSPartsHolders.c": ["fn_8014CE74", "fn_8014CEAC", "fn_8014CEE8", "fn_8014CF44", "fn_8014CFA4", "fn_8014D038", "fn_8014D1E0", "fn_8014D250", "fn_8014D2B0", "fn_8014D344", "fn_8014D4B8", "fn_8014D4F0"],
+  "src/game/ResourceSlot.c": ["fn_8011DC20", "ResourceSlot_Load", "TEXGetGXTexObjFromPalette", "TEXGetGXTexObjFromPaletteCI"],
+  "src/game/SpriteHandlePool.c": ["fn_8011DF98", "fn_8011E31C", "fn_8011E9C0", "__dt__11ScopedTimerFv", "dtor_80122068"]
 }
