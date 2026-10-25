@@ -929,6 +929,9 @@
   "src/game/mapobject/fn_8017B688.cpp": {
     "Append__12clModelGroupFP12clModelGroup": "fn_8017B688"
   },
+  "src/game/mapobject/fn_8017BF90.cpp": {
+    "Update__8clModelMFv": "fn_8017BF90"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
