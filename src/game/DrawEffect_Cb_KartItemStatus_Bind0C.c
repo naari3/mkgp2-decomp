@@ -23,12 +23,12 @@ void DrawEffect_Cb_KartItemStatus_Bind0C(unsigned char *self)
         switch (*(unsigned int *)(P(0x11C) + 0x1F8)) {
         case 0: I(0x10) = 0; break;
         case 1: I(0x10) = 1; break;
-        case 2: I(0x10) = 2; break;
-        case 3: I(0x10) = 3; break;
-        case 4: I(0x10) = 4; break;
-        case 5: I(0x10) = 5; break;
-        case 6: I(0x10) = 6; break;
-        case 7: I(0x10) = 7; break;
+        case 5: I(0x10) = 2; break;
+        case 4: I(0x10) = 3; break;
+        case 2: I(0x10) = 4; break;
+        case 3: I(0x10) = 5; break;
+        case 7: I(0x10) = 6; break;
+        case 6: I(0x10) = 7; break;
         case 8: I(0x10) = 8; break;
         case 9: I(0x10) = 9; break;
         case 10: I(0x10) = 10; break;
