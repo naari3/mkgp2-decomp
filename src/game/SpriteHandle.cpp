@@ -4,6 +4,28 @@
  */
 #pragma cplusplus on
 
+struct SavedGXState {
+    int cullMode;
+    float proj[7];
+    float viewport[6];
+    unsigned int scissor[4];
+};
+struct SpriteNode {
+    int index;
+    SpriteNode *prev;
+    SpriteNode *next;
+};
+struct SpriteList {
+    char pad0[4];
+    int count;
+    char pad8[4];
+    SpriteNode *freeHead;
+    SpriteNode *freeTail;
+    SpriteNode *head;
+    SpriteNode *tail;
+};
+
+
 struct ResCtrl {
     int id;
     int prev;
@@ -59,18 +81,18 @@ struct SpriteHandle {
 
 
 extern "C" {
-extern void GXSetAlphaCompare();
-extern void GXSetChanCtrl();
-extern void GXSetCullMode();
-extern void GXSetProjectionv();
-extern void GXSetScissor();
-extern void GXSetViewport();
-extern void GXSetZCompLoc();
-extern void GXSetZMode();
-extern void HSD_StateInvalidate();
-extern void fn_8011E9C0();
-extern unsigned int lbl_806D14F0;
-extern unsigned int lbl_806573A0[];
+void GXSetAlphaCompare(int, int, int, int, int);
+void GXSetChanCtrl(int, int, int, int, int, int, int);
+void GXSetCullMode(int);
+void GXSetProjectionv(const float *p);
+void GXSetScissor(unsigned int, unsigned int, unsigned int, unsigned int);
+void GXSetViewport(float, float, float, float, float, float);
+void GXSetZCompLoc(int);
+void GXSetZMode(int, int, int);
+void HSD_StateInvalidate(int);
+void fn_8011E9C0(int type);
+extern unsigned char lbl_806D14F0;
+extern SavedGXState lbl_806573A0;
 extern void C_MTXLookAt();
 extern void C_MTXOrtho();
 extern void GXGetCullMode();
@@ -112,7 +134,7 @@ extern unsigned int lbl_806D6D90;
 extern unsigned int lbl_806573E8[];
 extern void OSGetTick();
 extern void Profiler_RecordFrame();
-extern unsigned int lbl_806D1500;
+extern SpriteList *lbl_806D1500;
 extern unsigned int lbl_806D6D98;
 extern unsigned int lbl_806D6D9C;
 extern unsigned int lbl_80657208[];
@@ -140,8 +162,8 @@ extern void __construct_array();
 extern void __register_global_object();
 extern unsigned int fn_8011DF70[];
 extern unsigned int lbl_80657228[];
-asm void fn_8011EB1C(int a, int b);
-asm void fn_8011EC18(void);
+void fn_8011EB1C(void);
+asm void fn_8011EC18(unsigned char a);
 asm void SpriteHandle_RecomputeCull(void);
 asm void SpriteLayer_SetResource(void);
 asm void fn_8011F870(void);
@@ -150,7 +172,7 @@ asm int SpriteHandle_CreateEx(int a, int b, int c);
 asm void fn_8012094C(void);
 asm void fn_80120A08(void);
 asm void PreloadResource(void);
-asm void SpriteHandlePool_GC(void);
+void SpriteHandlePool_GC(void);
 asm void fn_80121210(void);
 asm void fn_801213EC(void);
 asm void fn_801217E8(void);
@@ -170,9 +192,6 @@ asm void fn_80122320(void);
 asm void fn_80122338(void);
 
 #pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_fn_8011EB1C[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const unsigned char extab_fn_8011EC18[8] = {
     0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -266,9 +285,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80122338[8
 };
 
 #pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8011EB1C = {
-    (void *)&fn_8011EB1C, 0x000000FC, (void *)extab_fn_8011EB1C
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8011EC18 = {
     (void *)&fn_8011EC18, 0x00000224, (void *)extab_fn_8011EC18
@@ -397,75 +413,26 @@ static inline SpriteHandle *GetHandle(int h) {
 }
 
 
-extern "C" asm void fn_8011EB1C(int a, int b) { /* 0x8011EB1C size:0xFC */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    lbz r3, lbl_806D14F0(r13)
-    bl fn_8011EC18
-    li r31, 0x0
-    fn_8011EB1C_L_8011EB38:
-    mr r3, r31
-    bl fn_8011E9C0
-    addi r31, r31, 0x1
-    cmpwi r31, 0x8
-    blt fn_8011EB1C_L_8011EB38
-    li r3, 0x4
-    li r4, 0x1
-    li r5, 0x1
-    li r6, 0x1
-    li r7, 0x1
-    li r8, 0x2
-    li r9, 0x2
-    bl GXSetChanCtrl
-    li r3, 0x7
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x7
-    li r7, 0x0
-    bl GXSetAlphaCompare
-    li r3, 0x1
-    bl GXSetZCompLoc
-    li r3, 0x1
-    li r4, 0x3
-    li r5, 0x1
-    bl GXSetZMode
-    lis r3, lbl_806573A0@ha
-    addi r6, r3, lbl_806573A0@l
-    lwz r3, 0x38(r6)
-    lwz r4, 0x3c(r6)
-    lwz r5, 0x40(r6)
-    lwz r6, 0x44(r6)
-    bl GXSetScissor
-    lis r3, lbl_806573A0@ha
-    addi r3, r3, lbl_806573A0@l
-    lfs f1, 0x20(r3)
-    lfs f2, 0x24(r3)
-    lfs f3, 0x28(r3)
-    lfs f4, 0x2c(r3)
-    lfs f5, 0x30(r3)
-    lfs f6, 0x34(r3)
-    bl GXSetViewport
-    lis r3, lbl_806573A0@ha
-    addi r3, r3, lbl_806573A0@l
-    addi r3, r3, 0x4
-    bl GXSetProjectionv
-    lis r3, lbl_806573A0@ha
-    addi r3, r3, lbl_806573A0@l
-    lwz r3, 0x0(r3)
-    bl GXSetCullMode
-    li r3, -0x1
-    bl HSD_StateInvalidate
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma auto_inline off
+extern "C" void fn_8011EB1C(void) {
+    int i;
+    fn_8011EC18(lbl_806D14F0);
+    for (i = 0; i < 8; i++) {
+        fn_8011E9C0(i);
+    }
+    GXSetChanCtrl(4, 1, 1, 1, 1, 2, 2);
+    GXSetAlphaCompare(7, 0, 0, 7, 0);
+    GXSetZCompLoc(1);
+    GXSetZMode(1, 3, 1);
+    GXSetScissor(lbl_806573A0.scissor[0], lbl_806573A0.scissor[1], lbl_806573A0.scissor[2], lbl_806573A0.scissor[3]);
+    GXSetViewport(lbl_806573A0.viewport[0], lbl_806573A0.viewport[1], lbl_806573A0.viewport[2], lbl_806573A0.viewport[3], lbl_806573A0.viewport[4], lbl_806573A0.viewport[5]);
+    GXSetProjectionv(lbl_806573A0.proj);
+    GXSetCullMode(lbl_806573A0.cullMode);
+    HSD_StateInvalidate(-1);
 }
+#pragma auto_inline reset
 
-extern "C" asm void fn_8011EC18(void) { /* 0x8011EC18 size:0x224 */
+extern "C" asm void fn_8011EC18(unsigned char a) { /* 0x8011EC18 size:0x224 */
     nofralloc
     stwu r1, -0xb0(r1)
     mflr r0
@@ -1331,12 +1298,12 @@ extern "C" asm void fn_8011F994(void) { /* 0x8011F994 size:0x104 */
     blr
 }
 
-extern "C" void fn_8011FA98(int a, int b) {
-    fn_8011EB1C(a, b);
+extern "C" void fn_8011FA98(void) {
+    fn_8011EB1C();
 }
 
-extern "C" void fn_8011FAB8(int a, int b) {
-    fn_8011EB1C(a, b);
+extern "C" void fn_8011FAB8(void) {
+    fn_8011EB1C();
 }
 
 extern "C" int SpriteHandle_CreateDefault(int a, int b) {
@@ -2857,77 +2824,41 @@ extern "C" asm void PreloadResource(void) { /* 0x80120D80 size:0x3A0 */
     blr
 }
 
-extern "C" asm void SpriteHandlePool_GC(void) { /* 0x80121120 size:0xF0 */
-    nofralloc
-    lwz r5, lbl_806D1500(r13)
-    lis r3, g_SpriteHandlePool@ha
-    addi r4, r3, g_SpriteHandlePool@l
-    lwz r6, 0x14(r5)
-    b SpriteHandlePool_GC_L_80121204
-    SpriteHandlePool_GC_L_80121134:
-    lwz r0, 0x0(r6)
-    li r5, 0x0
-    lwz r7, 0x8(r6)
-    mulli r0, r0, 0xe4
-    add r3, r4, r0
-    stb r5, 0xd(r3)
-    lwz r0, 0x0(r6)
-    mulli r0, r0, 0xe4
-    add r3, r4, r0
-    lbz r0, 0xc(r3)
-    cmplwi r0, 0x0
-    bne SpriteHandlePool_GC_L_80121200
-    stb r5, 0x0(r3)
-    lwz r5, lbl_806D1500(r13)
-    lwz r3, 0x4(r6)
-    cmplwi r3, 0x0
-    beq SpriteHandlePool_GC_L_80121180
-    lwz r0, 0x8(r6)
-    stw r0, 0x8(r3)
-    SpriteHandlePool_GC_L_80121180:
-    lwz r3, 0x8(r6)
-    cmplwi r3, 0x0
-    beq SpriteHandlePool_GC_L_80121194
-    lwz r0, 0x4(r6)
-    stw r0, 0x4(r3)
-    SpriteHandlePool_GC_L_80121194:
-    lwz r0, 0x14(r5)
-    cmplw r0, r6
-    bne SpriteHandlePool_GC_L_801211A8
-    lwz r0, 0x8(r6)
-    stw r0, 0x14(r5)
-    SpriteHandlePool_GC_L_801211A8:
-    lwz r0, 0x18(r5)
-    cmplw r0, r6
-    bne SpriteHandlePool_GC_L_801211BC
-    lwz r0, 0x4(r6)
-    stw r0, 0x18(r5)
-    SpriteHandlePool_GC_L_801211BC:
-    li r0, 0x0
-    stw r0, 0x4(r6)
-    stw r0, 0x8(r6)
-    lwz r3, 0x10(r5)
-    cmplwi r3, 0x0
-    beq SpriteHandlePool_GC_L_801211D8
-    stw r6, 0x8(r3)
-    SpriteHandlePool_GC_L_801211D8:
-    lwz r0, 0x10(r5)
-    stw r0, 0x4(r6)
-    lwz r0, 0xc(r5)
-    cmplwi r0, 0x0
-    bne SpriteHandlePool_GC_L_801211F0
-    stw r6, 0xc(r5)
-    SpriteHandlePool_GC_L_801211F0:
-    stw r6, 0x10(r5)
-    lwz r3, 0x4(r5)
-    subi r0, r3, 0x1
-    stw r0, 0x4(r5)
-    SpriteHandlePool_GC_L_80121200:
-    mr r6, r7
-    SpriteHandlePool_GC_L_80121204:
-    cmplwi r6, 0x0
-    bne SpriteHandlePool_GC_L_80121134
-    blr
+extern "C" void SpriteHandlePool_GC(void) {
+    SpriteNode *n = lbl_806D1500->head;
+    while (n != 0) {
+        SpriteNode *next = n->next;
+        g_SpriteHandlePool[n->index].released = 0;
+        SpriteHandle *h = &g_SpriteHandlePool[n->index];
+        if (!h->keep) {
+            h->active = 0;
+            SpriteList *l = lbl_806D1500;
+            if (n->prev != 0) {
+                n->prev->next = n->next;
+            }
+            if (n->next != 0) {
+                n->next->prev = n->prev;
+            }
+            if (l->head == n) {
+                l->head = n->next;
+            }
+            if (l->tail == n) {
+                l->tail = n->prev;
+            }
+            n->prev = 0;
+            n->next = 0;
+            if (l->freeTail != 0) {
+                l->freeTail->next = n;
+            }
+            n->prev = l->freeTail;
+            if (l->freeHead == 0) {
+                l->freeHead = n;
+            }
+            l->freeTail = n;
+            l->count--;
+        }
+        n = next;
+    }
 }
 
 extern "C" asm void fn_80121210(void) { /* 0x80121210 size:0x1DC */
