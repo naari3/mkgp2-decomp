@@ -99,40 +99,41 @@ extern "C" void fn_801FF3E4(void) {
 }
 
 extern "C" void fn_801FF3E8(CountdownDot *self) {
-    ResCtrl a;
-    ResCtrl b;
+    ResCtrl c[2];
     float s = fn_8020A6CC(self->scale.p);
     int col = fn_8020A788(self->fade.p) | ~0xFF;
-    a.resId = lbl_803C01C4[self->index];
-    b.resId = lbl_803C01C4[self->index];
-    b.mode = 3;
-    a.SetScale(s);
-    b.SetScale(s);
-    a.Show(s * lbl_803C014C[self->index][0] + self->x, s * lbl_803C014C[self->index][1] + self->y, lbl_806DA878);
-    b.Show(s * lbl_803C014C[self->index][0] + self->x, s * lbl_803C014C[self->index][1] + self->y, lbl_806DA878);
+    c[0].resId = lbl_803C01C4[self->index];
+    c[1].resId = lbl_803C01C4[self->index];
+    c[1].mode = 3;
+    c[0].SetScale(s);
+    c[1].SetScale(s);
+    float px = s * lbl_803C014C[self->index][0] + self->x;
+    float py = s * lbl_803C014C[self->index][1] + self->y;
+    c[0].Show(px, py, lbl_806DA878);
+    c[1].Show(px, py, lbl_806DA878);
     switch (self->active) {
     case 1:
-        b.SetColor(col);
+        c[1].SetColor(col);
         self->scale.p->Step();
         self->fade.p->Step();
         if (self->scale.p->Done()) {
-            b.SetColor(0xFFFFFF00);
-            a.SetScale(lbl_806DA878);
-            b.SetScale(lbl_806DA878);
+            c[0].SetScale(lbl_806DA878);
+            c[1].SetScale(lbl_806DA878);
+            c[1].SetColor(0xFFFFFF00);
             fn_8020A7CC(self->fade.p, 0xFF, 0, 0x30);
             self->active = 2;
         }
-        fn_8011FAFC(&a, self->layer);
-        fn_8011FAFC(&b, self->layer);
+        fn_8011FAFC(&c[0], self->layer);
+        fn_8011FAFC(&c[1], self->layer);
         break;
     case 2:
-        a.SetColor(col);
+        c[0].SetColor(col);
         self->fade.p->Step();
         if (self->fade.p->Done()) {
-            a.SetColor(0xFFFFFF00);
+            c[0].SetColor(0xFFFFFF00);
             self->active = 3;
         }
-        fn_8011FAFC(&a, self->layer);
+        fn_8011FAFC(&c[0], self->layer);
         break;
     case 3:
         self->active = 0;
