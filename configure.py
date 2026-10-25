@@ -1531,6 +1531,12 @@ config.libs = [
             Object(NonMatching, "game/SpeedHud.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/TitleNameHudUpdate.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/TitleNameHud.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
+            Object(NonMatching, "game/HudManager.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
+            Object(NonMatching, "game/HudManagerHide.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
+            Object(NonMatching, "game/HudManagerModes.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
+            Object(NonMatching, "game/HudManagerDisp.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
+            Object(NonMatching, "game/HudManagerLap.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
+            Object(NonMatching, "game/HudManagerLife.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             # group6-end
             Object(Matching, "game/NokoNokoChallenge.c", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"], extab_padding=b"\x00\x00"),
             Object(Matching, "game/SuikaBallObj_Render.c"),

@@ -6428,20 +6428,40 @@ game/TitleNameHud.cpp:
 	extabindex  start:0x8002B964 end:0x8002B988
 	.text       start:0x80252D90 end:0x80253294
 
+game/HudManager.cpp:
+	extab       start:0x8001F078 end:0x8001F090
+	extabindex  start:0x8002B988 end:0x8002B9AC
+	.text       start:0x80253294 end:0x80253658
+
 game/HUD_FrameUpdate.c:
 	extab       start:0x8001F090 end:0x8001F098
 	extabindex  start:0x8002B9AC end:0x8002B9B8
 	.text       start:0x80253658 end:0x802537E8
+
+game/HudManagerHide.cpp:
+	extab       start:0x8001F098 end:0x8001F0A0
+	extabindex  start:0x8002B9B8 end:0x8002B9C4
+	.text       start:0x802537E8 end:0x80253B14
 
 game/HUD_RegisterOverlay.c:
 	extab       start:0x8001F0A0 end:0x8001F0A8
 	extabindex  start:0x8002B9C4 end:0x8002B9D0
 	.text       start:0x80253B14 end:0x80253BE4
 
+game/HudManagerModes.cpp:
+	extab       start:0x8001F0A8 end:0x8001F0F8
+	extabindex  start:0x8002B9D0 end:0x8002BA00
+	.text       start:0x80253BE4 end:0x80253DF0
+
 game/fn_80253DF0.c:
 	extab       start:0x8001F0F8 end:0x8001F100
 	extabindex  start:0x8002BA00 end:0x8002BA0C
 	.text       start:0x80253DF0 end:0x80253E18
+
+game/HudManagerDisp.cpp:
+	extab       start:0x8001F100 end:0x8001F108
+	extabindex  start:0x8002BA0C end:0x8002BA18
+	.text       start:0x80253E18 end:0x80253E68
 
 game/HUD_SetRacePosition.c:
 	extab       start:0x8001F108 end:0x8001F110
@@ -6450,6 +6470,11 @@ game/HUD_SetRacePosition.c:
 
 game/fn_80253EB8.c:
 	.text       start:0x80253EB8 end:0x80253EC4
+
+game/HudManagerLap.cpp:
+	extab       start:0x8001F110 end:0x8001F118
+	extabindex  start:0x8002BA24 end:0x8002BA30
+	.text       start:0x80253EC4 end:0x80253F2C
 
 game/fn_80253F2C.c:
 	.text       start:0x80253F2C end:0x80253F34
@@ -6463,6 +6488,11 @@ game/HUD_SetCurrentLap.c:
 	extab       start:0x8001F120 end:0x8001F128
 	extabindex  start:0x8002BA3C end:0x8002BA48
 	.text       start:0x80253F84 end:0x80253FD8
+
+game/HudManagerLife.cpp:
+	extab       start:0x8001F128 end:0x8001F158
+	extabindex  start:0x8002BA48 end:0x8002BA60
+	.text       start:0x80253FD8 end:0x8025421C
 
 game/HUD_Init.c:
 	extab       start:0x8001F158 end:0x8001F184
