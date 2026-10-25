@@ -3878,5 +3878,9 @@
     "__nw__FUl": "Alloc",
     "__ct__13DemoSceneBaseFPCc": "Scene3D_Init",
     "__vt__9DemoScene": "lbl_80419EF8"
+  },
+  "src/game/SuikaBallObj_Init.cpp": {
+    "__nw__FUl": "Alloc",
+    "__ct__11SuikaNormalFPvi": "clNormal3D_Construct"
   }
 }

@@ -4900,6 +4900,11 @@ game/fn_8012491C.c:
 	extabindex  start:0x80024884 end:0x80024890
 	.text       start:0x8012491C end:0x80124984
 
+game/SuikaBallObj_Init.cpp:
+	extab       start:0x8000BEA0 end:0x8000BEB8
+	extabindex  start:0x80024890 end:0x8002489C
+	.text       start:0x80124984 end:0x80124AE8
+
 game/ChallengeGoalCamera_Update.c:
 	extab       start:0x8000BEB8 end:0x8000BEC0
 	extabindex  start:0x8002489C end:0x800248A8
