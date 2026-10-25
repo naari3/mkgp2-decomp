@@ -4172,6 +4172,12 @@ game/ItemObject_ChainShell_GrabAndArc_Sub.c:
 	extabindex  start:0x80023D44 end:0x80023D50
 	.text       start:0x800E55E4 end:0x800E5FC0
 
+game/ItemObject_Tick_Kind2d_ChainShellPair.c:
+	extab       start:0x8000B57C end:0x8000B584
+	extabindex  start:0x80023D50 end:0x80023D5C
+	.text       start:0x800E5FC0 end:0x800E69E8
+	.data       start:0x80421160 end:0x80421188
+
 game/GabyouItemHit.cpp:
 	extab       start:0x8000B584 end:0x8000B58C
 	extabindex  start:0x80023D5C end:0x80023D68
