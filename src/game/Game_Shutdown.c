@@ -1,3 +1,4 @@
+extern "C" {
 extern void GXDrawDone(void);
 extern void PcbComm_Shutdown(void);
 extern void FreeMediaBuffers(void);
@@ -19,6 +20,14 @@ extern void *lbl_806D0F90;
 extern void *lbl_806D0FC8;
 extern void *lbl_806D0FD8;
 extern void *lbl_806D12DC;
+}
+
+/* C++ object with a virtual deleting dtor in vtable slot 0 (+8). */
+struct ShutdownObj {
+    virtual void Destroy(int free_flag);
+};
+
+extern "C" {
 
 void Game_Shutdown(void)
 {
@@ -44,28 +53,9 @@ void Game_Shutdown(void)
     PlayStats_ShutdownStub();
     Backup_Shutdown();
 
-    /*
-     * Pseudo-C:
-     *
-     *   if (lbl_806D12DC != 0) {
-     *       void **obj = (void **)lbl_806D12DC;
-     *       void (**vtable)(void *, int) = (void (**)(void *, int))obj[0];
-     *       vtable[2](lbl_806D12DC, 1);
-     *   }
-     *
-     * The natural C form emits the same call but uses an extra temporary GPR
-     * for the vtable load. Target keeps the object in r3 and routes both
-     * vtable loads through r12, so pin this small virtual-call sequence.
-     */
-    asm {
-        opword 0x806DA5BC
-        opword 0x28030000
-        opword 0x41820018
-        opword 0x81830000
-        opword 0x38800001
-        opword 0x818C0008
-        opword 0x7D8903A6
-        opword 0x4E800421
+    /* A C++ virtual call: the object stays in r3 and both vtable loads go through r12. */
+    if (lbl_806D12DC != 0) {
+        ((ShutdownObj *)lbl_806D12DC)->Destroy(1);
     }
 
     lbl_806D12DC = 0;
@@ -75,4 +65,6 @@ void Game_Shutdown(void)
     memset(arena_tail, 0, 0x100);
     *(int *)arena_tail = 1;
     fn_80287EE4(0, arena_tail);
+}
+
 }

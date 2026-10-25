@@ -36,6 +36,8 @@ double sin(double);
 float FAbs_FloatAsDouble(float);
 void Effect_StarBurst_Update(StarEffect* effect) {
     switch (effect->state) {
+    case 2:
+        break;
     default:
         break;
     case 0:
