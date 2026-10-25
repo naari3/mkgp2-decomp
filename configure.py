@@ -671,7 +671,6 @@ config.libs = [
             Object(Matching, "game/fn_8014E028.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8014E004.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8014DD5C.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/fn_80141A70.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80089C30.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80255620.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8023D8F8.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -729,7 +728,6 @@ config.libs = [
             Object(Matching, "game/fn_8014D2AC.c"),
             Object(Matching, "game/fn_8014CFA0.c"),
             Object(Matching, "game/fn_8014640C.c"),
-            Object(Matching, "game/fn_80141A6C.c"),
             Object(Matching, "game/fn_800D748C.c"),
             Object(Matching, "game/fn_800A5608.c"),
             Object(Matching, "game/CarObjects_FindByEventType.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -1559,6 +1557,7 @@ config.libs = [
             Object(Matching, "game/OrthoCam.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/ZoneList.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/LogoAnim.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/PushPrompt.c", extab_padding=b"\x00\x00"),
         ],
     },
     {

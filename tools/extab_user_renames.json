@@ -2411,5 +2411,21 @@
     "extabindex_fn_80141454": "@eti_8002504C",
     "extab_fn_80141990": "@etb_8000D7AC",
     "extabindex_fn_80141990": "@eti_80025070"
+  },
+  "src/game/PushPrompt.c": {
+    "m20__10PushPromptFv": "fn_80141A6C",
+    "m1C__10PushPromptFv": "fn_80141A70",
+    "Draw__10PushPromptFv": "fn_80141A94",
+    "Update__10PushPromptFv": "fn_80141B08",
+    "Print__10PushPromptFffffffffPCce": "fn_80141E70",
+    "Put__10PushPromptFiiffffffff": "fn_80142010",
+    "__dt__10PushPromptFv": "fn_8014205C",
+    "__ct__10PushPromptFv": "fn_801420DC",
+    "__ct__10SpriteAnimFi": "fn_80167730",
+    "extab_fn_80141B08": "@etb_8000D7EC",
+    "extabindex_fn_80141B08": "@eti_800250AC",
+    "__vt__10PushPrompt": "lbl_8048ED34",
+    "__vt__6FxBase": "lbl_8048EB44",
+    "__dt__6FxBaseFv": "dtor_8013EB50"
   }
 }

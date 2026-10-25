@@ -4171,13 +4171,10 @@ game/LogoAnim.c:
 	extabindex  start:0x8002504C end:0x80025094
 	.text       start:0x80141450 end:0x80141A6C
 
-game/fn_80141A6C.c:
-	.text       start:0x80141A6C end:0x80141A70
-
-game/fn_80141A70.c:
-	extab       start:0x8000D7DC end:0x8000D7E4
-	extabindex  start:0x80025094 end:0x800250A0
-	.text       start:0x80141A70 end:0x80141A94
+game/PushPrompt.c:
+	extab       start:0x8000D7DC end:0x8000D838
+	extabindex  start:0x80025094 end:0x800250E8
+	.text       start:0x80141A6C end:0x8014219C
 
 game/fn_80143880.c:
 	.text       start:0x80143880 end:0x8014388C
