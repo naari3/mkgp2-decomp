@@ -6718,6 +6718,50 @@ musyx/runtime/synthdata.c:
 	.bss        start:0x806B5598 end:0x806BFDD0
 	.sbss       start:0x806D1F58 end:0x806D1FA8
 
+musyx/runtime/synthvoice.c:
+	.text       start:0x802AE204 end:0x802AFD2C
+	.bss        start:0x806BFDF0 end:0x806C0DB0
+	.sbss       start:0x806D1FC8 end:0x806D1FE0
+
+musyx/runtime/synth_ac.c:
+	.text       start:0x802AFD2C end:0x802AFE4C
+	.data       start:0x804F60B8 end:0x804F64B8
+	.sdata2     start:0x806DCA28 end:0x806DCA40
+
+musyx/runtime/synth_dbtab.c:
+	.data       start:0x804F64B8 end:0x804F6C40
+
+musyx/runtime/synth_adsr.c:
+	.text       start:0x802AFE4C end:0x802B060C
+	.sdata2     start:0x806DCA40 end:0x806DCA68
+
+musyx/runtime/synth_vsamples.c:
+	.text       start:0x802B060C end:0x802B0FA4
+	.bss        start:0x806C0DB0 end:0x806C1900
+
+musyx/runtime/s_data.c:
+	.text       start:0x802B0FA4 end:0x802B1844
+	.bss        start:0x806C1900 end:0x806C1F18
+	.sbss       start:0x806D1FE0 end:0x806D1FF0
+
+musyx/runtime/hw_dspctrl.c:
+	.text       start:0x802B1844 end:0x802B4EB4
+	.rodata     start:0x803F2940 end:0x803F2978
+	.data       start:0x804F6C40 end:0x804F8698
+	.bss        start:0x806C1F18 end:0x806C25F8
+	.sbss       start:0x806D1FF0 end:0x806D2030
+
+musyx/runtime/hw_volconv.c:
+	.text       start:0x802B4EB4 end:0x802B55A4
+	.data       start:0x804F8698 end:0x804F88C0
+	.sdata2     start:0x806DCA68 end:0x806DCAA0
+
+musyx/runtime/snd3d.c:
+	.text       start:0x802B55A4 end:0x802B6DCC
+	.bss        start:0x806C25F8 end:0x806C37F8
+	.sbss       start:0x806D2030 end:0x806D2050
+	.sdata2     start:0x806DCAA0 end:0x806DCAF0
+
 musyx/runtime/snd_init.c:
 	.text       start:0x802B6DCC end:0x802B6F38
 
