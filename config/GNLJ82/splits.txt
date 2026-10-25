@@ -4180,6 +4180,30 @@ game/PodiumPose.c:
 	extabindex  start:0x800250E8 end:0x80025148
 	.text       start:0x8014219C end:0x8014388C
 
+game/CSPartsResultRank.c:
+	extab       start:0x8000D92C end:0x8000DB00
+	extabindex  start:0x80025148 end:0x800251A8
+	.text       start:0x8014388C end:0x80143F8C
+	.rodata     start:0x80360C70 end:0x80361970
+	.data       start:0x8048EE08 end:0x8048EE68
+	.sdata      start:0x806CF708 end:0x806CF720
+
+game/CSPartsResultStage.c:
+	extab       start:0x8000DB00 end:0x8000DB84
+	extabindex  start:0x800251A8 end:0x800251C0
+	.text       start:0x80143F8C end:0x80144258
+	.rodata     start:0x80361970 end:0x80361C48
+	.data       start:0x8048EE68 end:0x8048EEA8
+	.sdata      start:0x806CF720 end:0x806CF738
+
+game/CSPartsResultTimeNum.c:
+	extab       start:0x8000DB84 end:0x8000DBE4
+	extabindex  start:0x800251C0 end:0x800251D8
+	.text       start:0x80144258 end:0x80144430
+	.rodata     start:0x80361C48 end:0x80361D60
+	.data       start:0x8048EEA8 end:0x8048EEE8
+	.sdata      start:0x806CF738 end:0x806CF750
+
 game/fn_80146160.c:
 	extab       start:0x8000DE5C end:0x8000DE64
 	extabindex  start:0x80025280 end:0x8002528C
