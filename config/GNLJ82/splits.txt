@@ -1867,10 +1867,30 @@ game/Sci2Card_FlagReceiptTestEnable.c:
 game/Sci2Card_GetPrintErrorCode.c:
 	.text       start:0x8009927C end:0x80099284
 
+game/RankSlot_AppendOrUpdate.c:
+	extab       start:0x80009598 end:0x800095A0
+	extabindex  start:0x80022190 end:0x8002219C
+	.text       start:0x8009BD04 end:0x8009BDC0
+
 game/VSMode_SeedRandomItemSequence.c:
 	extab       start:0x800095A0 end:0x800095A8
 	extabindex  start:0x8002219C end:0x800221A8
 	.text       start:0x8009BDC0 end:0x8009BEF4
+
+game/PlayerData_ApplyItemUnlockById.c:
+	extab       start:0x800095B0 end:0x800095B8
+	extabindex  start:0x800221B4 end:0x800221C0
+	.text       start:0x8009CFDC end:0x8009D00C
+
+game/PlayerData_GetUnlockedItemIdByIndex_U8.c:
+	extab       start:0x800095B8 end:0x800095C0
+	extabindex  start:0x800221C0 end:0x800221CC
+	.text       start:0x8009D00C end:0x8009D03C
+
+game/PlayerData_ResetForFlow.c:
+	extab       start:0x800095C0 end:0x800095C8
+	extabindex  start:0x800221CC end:0x800221D8
+	.text       start:0x8009D03C end:0x8009D07C
 
 game/ProcessSystemTick.c:
 	extab       start:0x800095D0 end:0x800095D8
@@ -1891,6 +1911,12 @@ game/RaceContext_EnsureSingleton.c:
 	extab       start:0x800095FC end:0x8000961C
 	extabindex  start:0x80022208 end:0x80022220
 	.text       start:0x8009DC80 end:0x8009DD28
+
+game/KartDriverArray_StaticCtor.c:
+	extab       start:0x8000961C end:0x80009624
+	extabindex  start:0x80022220 end:0x8002222C
+	.text       start:0x8009DD28 end:0x8009DD64
+	.ctors      start:0x802E88FC end:0x802E8900
 
 game/VSMode_FrameUpdate.c:
 	extab       start:0x8000962C end:0x80009634
@@ -1987,8 +2013,33 @@ game/RaceContextArrayInit.cpp:
 	extabindex  start:0x80022364 end:0x80022370
 	.text       start:0x800A4D34 end:0x800A4ED8
 
+game/ISE_ScaleColumnDirectionByMagnitude.c:
+	extab       start:0x80009C7C end:0x80009C84
+	extabindex  start:0x80022370 end:0x8002237C
+	.text       start:0x800A4ED8 end:0x800A4F64
+
+game/Unknown_DeleteIfFlag_800a5188.c:
+	extab       start:0x80009C8C end:0x80009C94
+	extabindex  start:0x80022388 end:0x80022394
+	.text       start:0x800A5188 end:0x800A51C4
+
+game/VSModeIntro_Dtor.c:
+	extab       start:0x80009C9C end:0x80009CA4
+	extabindex  start:0x800223A0 end:0x800223AC
+	.text       start:0x800A5578 end:0x800A5608
+
 game/fn_800A5608.c:
 	.text       start:0x800A5608 end:0x800A560C
+
+game/VSModeIntro_Ctor.c:
+	extab       start:0x80009CAC end:0x80009CC4
+	extabindex  start:0x800223B8 end:0x800223C4
+	.text       start:0x800A5840 end:0x800A58A0
+
+game/TitleTracker_Dtor.c:
+	extab       start:0x80009CCC end:0x80009CD4
+	extabindex  start:0x800223D0 end:0x800223DC
+	.text       start:0x800A5C88 end:0x800A5CE4
 
 game/TitleTracker_Stubs.c:
 	.text       start:0x800A5CE4 end:0x800A5CEC
@@ -2003,6 +2054,29 @@ game/WarpZone_Dtor.c:
 	extabindex  start:0x800226A0 end:0x800226AC
 	.text       start:0x800AA888 end:0x800AA8D0
 
+game/WarpZone_VtableTrim.c:
+	.text       start:0x800AA8D0 end:0x800AA8FC
+
+game/ShadowAreaMgr_Dtor.c:
+	extab       start:0x80009F88 end:0x80009F90
+	extabindex  start:0x800226AC end:0x800226B8
+	.text       start:0x800AA8FC end:0x800AA980
+
+game/dtor_800AA980.c:
+	extab       start:0x80009F90 end:0x80009F98
+	extabindex  start:0x800226B8 end:0x800226C4
+	.text       start:0x800AA980 end:0x800AA9E4
+
+game/ShadowAreaEdge_Dtor.c:
+	extab       start:0x80009F98 end:0x80009FA0
+	extabindex  start:0x800226C4 end:0x800226D0
+	.text       start:0x800AA9E4 end:0x800AAA20
+
+game/ShadowAreaMgr_Ctor.c:
+	extab       start:0x80009FA0 end:0x80009FD8
+	extabindex  start:0x800226D0 end:0x800226DC
+	.text       start:0x800AAA20 end:0x800AAAC4
+
 game/Tachometer.c:
 	extab       start:0x8000A074 end:0x8000A0C4
 	extabindex  start:0x80022730 end:0x80022760
@@ -2013,6 +2087,16 @@ game/CourseData_Lookup.c:
 	extabindex  start:0x80022778 end:0x8002279C
 	.text       start:0x800ABD80 end:0x800ABF58
 
+game/HitMessageOverlay_Destroy.c:
+	extab       start:0x8000A130 end:0x8000A138
+	extabindex  start:0x800227B4 end:0x800227C0
+	.text       start:0x800AC634 end:0x800AC6D0
+
+game/TweenInterp_VtableTrim.c:
+	extab       start:0x8000A148 end:0x8000A150
+	extabindex  start:0x800227D8 end:0x800227E4
+	.text       start:0x800AC83C end:0x800AC884
+
 game/DemoFlow_ResetTwoFlags.c:
 	.text       start:0x800AC884 end:0x800AC894
 
@@ -2020,6 +2104,11 @@ game/main.c:
 	extab       start:0x8000A150 end:0x8000A158
 	extabindex  start:0x800227E4 end:0x800227F0
 	.text       start:0x800AC894 end:0x800AC8FC
+
+game/GameMode_Title_Ctor.c:
+	extab       start:0x8000A158 end:0x8000A170
+	extabindex  start:0x800227F0 end:0x800227FC
+	.text       start:0x800AC8FC end:0x800AC94C
 
 game/ReverseChallenge.c:
 	extab       start:0x8000A1EC end:0x8000A37C
@@ -2059,10 +2148,43 @@ game/clCGameDemo_Dtor.c:
 	extabindex  start:0x800228D4 end:0x800228E0
 	.text       start:0x800AE6BC end:0x800AE71C
 
+game/AnimState_Reset.c:
+	extab       start:0x8000A478 end:0x8000A480
+	extabindex  start:0x800228F8 end:0x80022904
+	.text       start:0x800AF088 end:0x800AF15C
+
+game/AnimState_New.c:
+	extab       start:0x8000A480 end:0x8000A488
+	extabindex  start:0x80022904 end:0x80022910
+	.text       start:0x800AF15C end:0x800AF240
+
 game/AnimStatePool.c:
 	extab       start:0x8000A488 end:0x8000A4B0
 	extabindex  start:0x80022910 end:0x80022934
 	.text       start:0x800AF240 end:0x800AF4F8
+
+game/DrawEffect_SetFlagsByte.c:
+	.text       start:0x800AF4F8 end:0x800AF510
+
+game/DrawEffect_Free.c:
+	extab       start:0x8000A4B0 end:0x8000A4B8
+	extabindex  start:0x80022934 end:0x80022940
+	.text       start:0x800AF510 end:0x800AF54C
+
+game/DrawEffect_SpawnWithDescriptor.c:
+	extab       start:0x8000A4C0 end:0x8000A4C8
+	extabindex  start:0x8002294C end:0x80022958
+	.text       start:0x800AF65C end:0x800AF750
+
+game/DrawEffect_SpawnByType.c:
+	extab       start:0x8000A4C8 end:0x8000A4D0
+	extabindex  start:0x80022958 end:0x80022964
+	.text       start:0x800AF750 end:0x800AF840
+
+game/DrawEffect_SpawnDirect.c:
+	extab       start:0x8000A4D0 end:0x8000A4D8
+	extabindex  start:0x80022964 end:0x80022970
+	.text       start:0x800AF840 end:0x800AF904
 
 game/VfxSlotMgrShutdown.cpp:
 	extab       start:0x8000A4F0 end:0x8000A4F8
@@ -2157,6 +2279,11 @@ game/VfxSlot_BindResourceEx.c:
 	extabindex  start:0x80022A48 end:0x80022A54
 	.text       start:0x800B0378 end:0x800B0454
 
+game/VfxLaughInner_Tick.c:
+	extab       start:0x8000A5A8 end:0x8000A5B0
+	extabindex  start:0x80022A60 end:0x80022A6C
+	.text       start:0x800B05E0 end:0x800B0654
+
 game/VfxSpritePopup.cpp:
 	extab       start:0x8000A5B0 end:0x8000A5E0
 	extabindex  start:0x80022A6C end:0x80022A84
@@ -2171,6 +2298,11 @@ game/CelebPop17Update.cpp:
 	extab       start:0x8000A610 end:0x8000A618
 	extabindex  start:0x80022A9C end:0x80022AA8
 	.text       start:0x800B0C0C end:0x800B0FA4
+
+game/CharaPop12_SpawnAll.c:
+	extab       start:0x8000A618 end:0x8000A620
+	extabindex  start:0x80022AA8 end:0x80022AB4
+	.text       start:0x800B0FA4 end:0x800B1014
 
 game/TwinSpriteOverlay.c:
 	extab       start:0x8000A638 end:0x8000A650
@@ -2195,6 +2327,11 @@ game/CarrotItemEffect_AddDraw.c:
 game/EffectActor_BindKartTargetPair.c:
 	.text       start:0x800B3244 end:0x800B3250
 
+game/KartShellRibbon_DrawCb.c:
+	extab       start:0x8000A690 end:0x8000A698
+	extabindex  start:0x80022B5C end:0x80022B68
+	.text       start:0x800B3A0C end:0x800B3AA8
+
 game/TripleBladeRing.c:
 	extab       start:0x8000A6A0 end:0x8000A6B0
 	extabindex  start:0x80022B74 end:0x80022B8C
@@ -2214,6 +2351,11 @@ game/ParticleBurst.c:
 	extab       start:0x8000A6C0 end:0x8000A6D8
 	extabindex  start:0x80022BA4 end:0x80022BC8
 	.text       start:0x800B4164 end:0x800B4804
+
+game/SpawnRisingTextAndBurst.c:
+	extab       start:0x8000A6E0 end:0x8000A6E8
+	extabindex  start:0x80022BD4 end:0x80022BE0
+	.text       start:0x800B4A58 end:0x800B4AAC
 
 game/DebrisArray_DrawForward.c:
 	extab       start:0x8000A6E8 end:0x8000A6F0
@@ -2244,6 +2386,14 @@ game/KartFx.c:
 	extab       start:0x8000A720 end:0x8000A728
 	extabindex  start:0x80022C1C end:0x80022C28
 	.text       start:0x800B510C end:0x800B53BC
+
+game/DrawEffect_SetFloat110.c:
+	.text       start:0x800B53BC end:0x800B542C
+
+game/DrawEffect_Cb_DualBurstSpawner_2x4.c:
+	extab       start:0x8000A7A8 end:0x8000A7B0
+	extabindex  start:0x80022CE8 end:0x80022CF4
+	.text       start:0x800B7C24 end:0x800B7C9C
 
 game/KartFxAuxAccel.cpp:
 	extab       start:0x8000A7B8 end:0x8000A7C0
@@ -2345,6 +2495,11 @@ game/KartFxExhaustRay.cpp:
 	extab       start:0x8000A868 end:0x8000A870
 	extabindex  start:0x80022E08 end:0x80022E14
 	.text       start:0x800BD1BC end:0x800BD900
+
+game/EffectItem4SpawnSubFlamePair_Tick.c:
+	extab       start:0x8000A8B0 end:0x8000A8B8
+	extabindex  start:0x80022E74 end:0x80022E80
+	.text       start:0x800BF4D4 end:0x800BF5B0
 
 game/KartFxDispatchE.cpp:
 	extab       start:0x8000A8C8 end:0x8000A8D0
@@ -2541,6 +2696,41 @@ game/EffectInit76.cpp:
 	extabindex  start:0x80023108 end:0x80023114
 	.text       start:0x800C8038 end:0x800C80C0
 
+game/DrawEffect_Cb_RalySmokeSpawner_4Wheel.c:
+	extab       start:0x8000AA78 end:0x8000AA80
+	extabindex  start:0x80023120 end:0x8002312C
+	.text       start:0x800C83FC end:0x800C8490
+
+game/DrawEffect_Cb_KartVfx4B_StubInit.c:
+	extab       start:0x8000AAB0 end:0x8000AAB8
+	extabindex  start:0x80023174 end:0x80023180
+	.text       start:0x800C92F8 end:0x800C9364
+
+game/DrawEffect_Cb_ItemBoxBurstFlash_Tick.c:
+	extab       start:0x8000AAC0 end:0x8000AAC8
+	extabindex  start:0x8002318C end:0x80023198
+	.text       start:0x800C9500 end:0x800C95B8
+
+game/DrawEffect_Cb_ItemBoxBurstSpawner.c:
+	extab       start:0x8000AAC8 end:0x8000AAD0
+	extabindex  start:0x80023198 end:0x800231A4
+	.text       start:0x800C95B8 end:0x800C968C
+
+game/DrawEffect_Cb_UVScroll_Tick.c:
+	extab       start:0x8000AAE0 end:0x8000AAE8
+	extabindex  start:0x800231BC end:0x800231C8
+	.text       start:0x800C9B10 end:0x800C9BE8
+
+game/DrawEffect_Cb_KartHaloPlate_Init.c:
+	extab       start:0x8000AB00 end:0x8000AB08
+	extabindex  start:0x800231EC end:0x800231F8
+	.text       start:0x800CA1E8 end:0x800CA2C4
+
+game/DrawEffect_TrailDot_Spawn.c:
+	extab       start:0x8000AB78 end:0x8000AB80
+	extabindex  start:0x800232A0 end:0x800232AC
+	.text       start:0x800CC130 end:0x800CC1DC
+
 game/EffectDustScatter.cpp:
 	extab       start:0x8000AB80 end:0x8000AB88
 	extabindex  start:0x800232AC end:0x800232B8
@@ -2631,13 +2821,69 @@ game/CoinJumpFxSpawn.cpp:
 	extabindex  start:0x80023378 end:0x80023384
 	.text       start:0x800CE2A8 end:0x800CE4C4
 
+game/DbgMenu_Dtor.c:
+	extab       start:0x8000AC10 end:0x8000AC18
+	extabindex  start:0x80023384 end:0x80023390
+	.text       start:0x800CE4C4 end:0x800CE54C
+
 game/fn_800D2BE0.c:
 	.text       start:0x800D2BE0 end:0x800D2BEC
+
+game/DbgScene_InitAnimSlotArray.c:
+	extab       start:0x8000B0BC end:0x8000B0C4
+	extabindex  start:0x800236A8 end:0x800236B4
+	.text       start:0x800D2BEC end:0x800D2C28
+	.ctors      start:0x802E8900 end:0x802E8904
+
+game/DbgScene_CopyMatrix3x4Transpose.c:
+	.text       start:0x800D2C28 end:0x800D2C8C
+
+game/Mtx_TransposeToMtx44.c:
+	extab       start:0x8000B0C4 end:0x8000B0CC
+	extabindex  start:0x800236B4 end:0x800236C0
+	.text       start:0x800D2C8C end:0x800D2D24
+
+game/Vec3_HorizontalYawTo.c:
+	extab       start:0x8000B0D4 end:0x8000B0DC
+	extabindex  start:0x800236CC end:0x800236D8
+	.text       start:0x800D3008 end:0x800D3048
+
+game/Vec3_PitchTo.c:
+	extab       start:0x8000B0DC end:0x8000B0E4
+	extabindex  start:0x800236D8 end:0x800236E4
+	.text       start:0x800D3048 end:0x800D30F4
+
+game/Vec3_HorizontalDistance.c:
+	extab       start:0x8000B0E4 end:0x8000B0EC
+	extabindex  start:0x800236E4 end:0x800236F0
+	.text       start:0x800D30F4 end:0x800D3184
+
+game/fn_800D3184.c:
+	extab       start:0x8000B0EC end:0x8000B0F4
+	extabindex  start:0x800236F0 end:0x800236FC
+	.text       start:0x800D3184 end:0x800D31FC
+
+game/Mtx44_TransformVec3.c:
+	.text       start:0x800D31FC end:0x800D3278
+
+game/BuildOrientationFromYaw.c:
+	.text       start:0x800D3BD4 end:0x800D3C20
+
+game/Mtx44_GetTranslation_RowMajor.c:
+	.text       start:0x800D40B8 end:0x800D4148
 
 game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738
 	.text       start:0x800D4148 end:0x800D4174
+
+game/Mtx44_GetYawOfPosZ.c:
+	extab       start:0x8000B134 end:0x8000B13C
+	extabindex  start:0x8002375C end:0x80023768
+	.text       start:0x800D47E8 end:0x800D48D4
+
+game/Mtx44_GetTranslation_ColMajor.c:
+	.text       start:0x800D4A2C end:0x800D4B0C
 
 game/Matrix4Translation.c:
 	extab       start:0x8000B154 end:0x8000B15C
@@ -2822,10 +3068,18 @@ game/fn_800D748C.c:
 game/ItemAlias.c:
 	.text       start:0x800D7490 end:0x800D75F8
 
+game/ItemAliasTable_LookupSlotIndex.c:
+	.text       start:0x800D75F8 end:0x800D76E8
+
 game/ItemObject_RaycastWallStub.c:
 	extab       start:0x8000B2D4 end:0x8000B2DC
 	extabindex  start:0x8002399C end:0x800239A8
 	.text       start:0x800D7C94 end:0x800D7CB4
+
+game/ItemObject_GetGroundTypeAt.c:
+	extab       start:0x8000B2DC end:0x8000B2E4
+	extabindex  start:0x800239A8 end:0x800239B4
+	.text       start:0x800D7CB4 end:0x800D7D08
 
 game/SpriteSlot_Container_Free.c:
 	extab       start:0x8000B2EC end:0x8000B2F4
@@ -2859,6 +3113,11 @@ game/ItemObjectManager_TickActiveItems.c:
 
 game/ItemHitRegistry.c:
 	.text       start:0x800D8840 end:0x800D8E20
+
+game/Vec3_AddNormalizedXZ.c:
+	extab       start:0x8000B364 end:0x8000B36C
+	extabindex  start:0x80023A2C end:0x80023A38
+	.text       start:0x800D8F6C end:0x800D8FF0
 
 game/Item.c:
 	extab       start:0x8000B36C end:0x8000B37C
@@ -2948,6 +3207,11 @@ game/ItemGroundProbes.c:
 	extabindex  start:0x80023B4C end:0x80023B64
 	.text       start:0x800DBA00 end:0x800DBD48
 
+game/ItemObject_AllocGabyou.c:
+	extab       start:0x8000B444 end:0x8000B44C
+	extabindex  start:0x80023B7C end:0x80023B88
+	.text       start:0x800DC418 end:0x800DC4C8
+
 game/FinalLapCoinJump_CheckActiveForObject.c:
 	.text       start:0x800DC638 end:0x800DC690
 
@@ -2964,6 +3228,9 @@ game/KartDriver_TransformWorldToLocalY0.c:
 game/KartCharacterParam.c:
 	.text       start:0x800DC784 end:0x800DCA70
 	.data       start:0x8041EA84 end:0x8041EB88
+
+game/KartItem_QueryEffectStateFromIse.c:
+	.text       start:0x800DCF88 end:0x800DD060
 
 game/ItemTracker.c:
 	extab       start:0x8000B47C end:0x8000B49C
@@ -3000,6 +3267,11 @@ game/SoundMgr_CountActiveSEInstances.c:
 	extab       start:0x8000B4E4 end:0x8000B4EC
 	extabindex  start:0x80023C6C end:0x80023C78
 	.text       start:0x800DFEB8 end:0x800DFF34
+
+game/ItemObject_Tick_AwaitInitThenFree.c:
+	extab       start:0x8000B544 end:0x8000B54C
+	extabindex  start:0x80023CFC end:0x80023D08
+	.text       start:0x800E3BD4 end:0x800E3C30
 
 game/GabyouItemHit.cpp:
 	extab       start:0x8000B584 end:0x8000B58C
