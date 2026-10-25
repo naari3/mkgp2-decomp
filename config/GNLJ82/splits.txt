@@ -6242,6 +6242,11 @@ game/SpeedHud.cpp:
 	extabindex  start:0x8002B910 end:0x8002B940
 	.text       start:0x80251CD0 end:0x802529C8
 
+game/TitleNameHudUpdate.cpp:
+	extab       start:0x8001EF8C end:0x8001EF94
+	extabindex  start:0x8002B940 end:0x8002B94C
+	.text       start:0x802529C8 end:0x80252D48
+
 game/fn_80252D48.c:
 	extab       start:0x8001EF94 end:0x8001EF9C
 	extabindex  start:0x8002B94C end:0x8002B958
@@ -6251,6 +6256,11 @@ game/fn_80252D6C.c:
 	extab       start:0x8001EF9C end:0x8001EFA4
 	extabindex  start:0x8002B958 end:0x8002B964
 	.text       start:0x80252D6C end:0x80252D90
+
+game/TitleNameHud.cpp:
+	extab       start:0x8001EFA4 end:0x8001F078
+	extabindex  start:0x8002B964 end:0x8002B988
+	.text       start:0x80252D90 end:0x80253294
 
 game/HUD_FrameUpdate.c:
 	extab       start:0x8001F090 end:0x8001F098
