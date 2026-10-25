@@ -2116,6 +2116,7 @@ config.libs = [
             Object(Matching, "musyx/runtime/hw_dolphin.c"),
             Object(Matching, "musyx/runtime/hw_memory.c"),
             Object(Matching, "musyx/runtime/reverb_fx.c"),
+            Object(Matching, "musyx/runtime/reverb.c", extra_cflags=["-fp_contract off"]),
             Object(Matching, "musyx/runtime/chorus_fx.c"),
         ],
     },
