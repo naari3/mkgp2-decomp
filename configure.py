@@ -1607,6 +1607,11 @@ config.libs = [
             Object(Matching, "game/fn_8011562C.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_80116120.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80118230.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_8010EA84.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_8010BF20.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_8010DA90.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_8010F120.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_801163C8.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
         ],
     },
     {

@@ -4104,6 +4104,27 @@ game/fn_8010BEE0.c:
 	extabindex  start:0x80024254 end:0x80024260
 	.text       start:0x8010BEE0 end:0x8010BF20
 
+game/fn_8010BF20.c:
+	extab       start:0x8000B8DC end:0x8000B8E4
+	extabindex  start:0x80024260 end:0x8002426C
+	.text       start:0x8010BF20 end:0x8010C110
+
+game/fn_8010DA90.c:
+	extab       start:0x8000B8FC end:0x8000B904
+	extabindex  start:0x80024290 end:0x8002429C
+	.text       start:0x8010DA90 end:0x8010DCAC
+
+game/fn_8010EA84.c:
+	extab       start:0x8000B914 end:0x8000B91C
+	extabindex  start:0x800242B4 end:0x800242C0
+	.text       start:0x8010EA84 end:0x8010EC6C
+
+game/fn_8010F120.c:
+	extab       start:0x8000B924 end:0x8000B92C
+	extabindex  start:0x800242CC end:0x800242D8
+	.text       start:0x8010F120 end:0x8010F40C
+	.data       start:0x80421CA0 end:0x80421CC8
+
 game/fn_80111124.c:
 	extab       start:0x8000B94C end:0x8000B954
 	extabindex  start:0x80024308 end:0x80024314
@@ -4154,6 +4175,11 @@ game/fn_80116120.c:
 	extab       start:0x8000B9F4 end:0x8000B9FC
 	extabindex  start:0x80024404 end:0x80024410
 	.text       start:0x80116120 end:0x801163C8
+
+game/fn_801163C8.c:
+	extab       start:0x8000B9FC end:0x8000BA04
+	extabindex  start:0x80024410 end:0x8002441C
+	.text       start:0x801163C8 end:0x80116640
 
 game/fn_80117020.c:
 	extab       start:0x8000BA1C end:0x8000BA24
