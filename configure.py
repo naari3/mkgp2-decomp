@@ -1156,6 +1156,7 @@ config.libs = [
             Object(Matching, "game/card_send_track_data.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/PostRace_StartScoreEntryFlow.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PostRace_StartScoreEntryFlow_WithCardSave.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/PcbIdToIpAndModify.c"),
             Object(Matching, "game/PcbIdToIp.c"),
             Object(Matching, "game/Sci2Card_SendCmds.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/CardTaskWelcome_Dtor.c"),
