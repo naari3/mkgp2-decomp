@@ -2459,5 +2459,25 @@
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "extab_fn_8013F428": "@etb_8000D6C0",
     "extabindex_fn_8013F428": "@eti_80024FB0"
+  },
+  "src/game/PodiumPose.c": {
+    "IsDone__7WinPoseFv": "fn_8014219C",
+    "m1C__7WinPoseFv": "fn_801421B0",
+    "Update__7WinPoseFv": "fn_801422B0",
+    "Spawn__7WinPoseFii": "fn_801426A0",
+    "__dt__7WinPoseFv": "fn_80142830",
+    "__ct__7WinPoseFUc": "fn_80142964",
+    "DrawScaled__8PoseCharFv": "fn_80142B0C",
+    "Draw__8PoseCharFv": "fn_80143048",
+    "__ct__8PoseCharFiiP4Vec3P4Vec3Pf": "fn_80143450",
+    "m0C__7WinPoseFv": "fn_80143880",
+    "__dt__6FxBaseFv": "dtor_8013EB50",
+    "extab_fn_80143450": "@etb_8000D8F4",
+    "extabindex_fn_80143450": "@eti_8002513C",
+    "__vt__6FxBase": "lbl_8048EB44",
+    "__vt__7WinPose": "lbl_8048EDE4",
+    "__ct__7Scene3DFPCc": "Scene3D_Init",
+    "__ct__10SceneModelFPCci": "SceneModel_Init",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct"
   }
 }

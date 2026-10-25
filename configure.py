@@ -695,7 +695,6 @@ config.libs = [
             Object(Matching, "game/fn_80253EB8.c"),
             Object(Matching, "game/fn_8021A7BC.c"),
             Object(Matching, "game/fn_801E93A0.c"),
-            Object(Matching, "game/fn_80143880.c"),
             Object(Matching, "game/fn_800D2BE0.c"),
             Object(Matching, "game/fn_80089E6C.c"),
             Object(Matching, "game/fn_80253F2C.c"),
@@ -1559,6 +1558,7 @@ config.libs = [
             Object(Matching, "game/LogoAnim.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/PushPrompt.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/ResultFx.c", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/PodiumPose.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
         ],
     },
     {
