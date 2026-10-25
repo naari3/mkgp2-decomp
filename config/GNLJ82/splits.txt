@@ -6360,6 +6360,14 @@ game/sprite/fn_801A1BD0.c:
 game/sprite/fn_801A1D40.c:
 	.text       start:0x801A1D40 end:0x801A1D98
 
+game/fn_801B0CE4.c:
+	.text       start:0x801B0CE4 end:0x801B0D80
+
+game/fn_801B0D80.c:
+	extab       start:0x80012B00 end:0x80012B08
+	extabindex  start:0x80027728 end:0x80027734
+	.text       start:0x801B0D80 end:0x801B0F20
+
 game/fn_801B0F20.c:
 	.text       start:0x801B0F20 end:0x801B0F88
 
@@ -6375,6 +6383,9 @@ game/fn_801B11B8.c:
 
 game/fn_801B129C.c:
 	.text       start:0x801B129C end:0x801B12A0
+
+game/fn_801B13B0.c:
+	.text       start:0x801B13B0 end:0x801B14B8
 
 game/fn_801B14B8.c:
 	extab       start:0x80012B20 end:0x80012B28
@@ -6419,6 +6430,11 @@ game/VoiceQueue_Clear.c:
 
 game/fn_801B3B7C.c:
 	.text       start:0x801B3B7C end:0x801B3BC8
+
+game/fn_801B3BC8.c:
+	extab       start:0x80012B70 end:0x80012B78
+	extabindex  start:0x800277D0 end:0x800277DC
+	.text       start:0x801B3BC8 end:0x801B3CE0
 
 game/fn_801B3CE0.c:
 	.text       start:0x801B3CE0 end:0x801B3D40
@@ -7412,6 +7428,9 @@ game/DisplayBuffer_GetByIndex.c:
 	extab       start:0x800174E4 end:0x800174EC
 	extabindex  start:0x80028EBC end:0x80028EC8
 	.text       start:0x801F6454 end:0x801F6494
+
+game/fn_801F6574.c:
+	.text       start:0x801F6574 end:0x801F6588
 
 game/fn_801F6790.c:
 	extab       start:0x800174FC end:0x80017504

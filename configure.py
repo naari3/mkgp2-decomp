@@ -2019,6 +2019,11 @@ config.libs = [
             Object(Matching, "game/fn_801F6E84.c"),
             Object(Matching, "game/fn_801F9628.c"),
             Object(Matching, "game/fn_801F8D58.c"),
+            Object(Matching, "game/fn_801B13B0.c"),
+            Object(Matching, "game/fn_801B3BC8.c"),
+            Object(Matching, "game/fn_801B0D80.c"),
+            Object(Matching, "game/fn_801F6574.c"),
+            Object(Matching, "game/fn_801B0CE4.c", mw_version="GC/1.2.5n"),
         ],
     },
     {
