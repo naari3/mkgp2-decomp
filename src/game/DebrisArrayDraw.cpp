@@ -18,8 +18,9 @@ unsigned char clItemBoxResponder_TickDebris(DebrisResponder*);
 void clItemBoxResponder_DebrisArray_Dtor(DebrisResponder*,int);
 void DrawEffect_Free(DebrisArray*);
 static inline void *GetDrawManager() {
- if(!lbl_806D10AC) return 0;
- return lbl_806D10AC;
+ void *p;
+ if ((p = lbl_806D10AC) == 0) p = 0;
+ return p;
 }
 void DebrisArray_DrawCb(DebrisArray *self) {
  clDrawMan_AddSorted_DepthRange(GetDrawManager(),DebrisArray_DrawForward,self,self->position.x,self->position.y,self->position.z,lbl_806D5034);

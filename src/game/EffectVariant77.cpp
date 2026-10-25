@@ -39,19 +39,19 @@ void Effect_Res77or78_Variant_Update(Variant77Effect *effect) {
         VfxSlot_SetUVScroll(effect->slot, lbl_806D555C, lbl_806D55C0);
         effect->baseScale = effect->scale;
         effect->growth = lbl_806D555C;
-        effect->alpha = lbl_806D5584;
+        effect->alpha = 1.0f;
         if (effect->variant != 0) {
             Vec3_Subtract_DestFirst(&direction, &lbl_805DF3D0.position, &effect->position);
             Vec3_Scale(&direction, &direction,
-                lbl_806D55B4 * (lbl_806D5584 / Vec3_Magnitude_Wrapper(&direction)));
+                lbl_806D55B4 * (1.0f / Vec3_Magnitude_Wrapper(&direction)));
             Vec3_Add_DestFirst(&effect->position, &effect->position, &direction);
         }
         ++effect->state;
         // Initial growth is applied in the same update.
     case 1:
         effect->growth += lbl_806D5560;
-        if (lbl_806D5584 < effect->growth) {
-            effect->growth = lbl_806D5584;
+        if (1.0f < effect->growth) {
+            effect->growth = 1.0f;
             if (effect->fadeRequested != 0 || effect->variant != 0) ++effect->state;
         }
         break;

@@ -190,7 +190,7 @@ void KartFx_DispatchGroupE_StateByte(void *owner, StatePayload *payload,
     }
     if (payload->starCooldown) --payload->starCooldown;
     if (lbl_806D51C8 <= payload->charge) {
-        float limit = lbl_806D51C4;
+        float limit = 1.0f;
         payload->driftGrowth += lbl_806D51D8;
         if (limit < payload->driftGrowth) payload->driftGrowth = limit;
     } else payload->driftGrowth = lbl_806D51C0;
@@ -214,7 +214,7 @@ void KartFx_DispatchGroupE_StateByte(void *owner, StatePayload *payload,
         }
     }
     if (lbl_806D51E8 <= payload->charge) {
-        float limit = lbl_806D51C4;
+        float limit = 1.0f;
         payload->exhaustGrowth += lbl_806D51D8;
         if (limit < payload->exhaustGrowth) payload->exhaustGrowth = limit;
     } else {

@@ -36,7 +36,7 @@ void VfxSpritePopup_TickType0(Popup *p) {
  if(p->timer==0) { SpriteHandle_Destroy(p->sprite); DrawEffect_Free(p); }
  else {
     float step, limit, alpha;
-    alpha=p->alpha; step=lbl_806D5038; limit=lbl_806D5028;
+    alpha=p->alpha; step=lbl_806D5038; limit=1.0f;
     p->alpha=alpha+step;
     if(limit<p->alpha) p->alpha=limit;
     SpriteHandle_SetCornerAlpha(p->sprite,(unsigned char)(int)(lbl_806D503C*p->alpha));
@@ -62,7 +62,7 @@ void VfxSpritePopup_TickType1(Popup *p) {
  if(p->timer==0) { SpriteHandle_Destroy(p->sprite); DrawEffect_Free(p); }
  else {
     float step, limit, alpha;
-    alpha=p->alpha; step=lbl_806D5038; limit=lbl_806D5028;
+    alpha=p->alpha; step=lbl_806D5038; limit=1.0f;
     p->alpha=alpha+step;
     if(limit<p->alpha) p->alpha=limit;
     SpriteHandle_SetCornerAlpha(p->sprite,(unsigned char)(int)(lbl_806D503C*p->alpha));

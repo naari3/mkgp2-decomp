@@ -54,9 +54,9 @@ extern "C" void KartFx_Slot60_DriftSparkTick(Effect *e) {
     case 0:
         e->opacity = lbl_806D51C0;
         e->red = lbl_806D51C0; e->green = lbl_806D51C0; e->blue = lbl_806D51C0;
-        if (red) e->red = lbl_806D51C4;
-        if (green) e->green = lbl_806D51C4;
-        if (blue) e->blue = lbl_806D51C4;
+        if (red) e->red = 1.0f;
+        if (green) e->green = 1.0f;
+        if (blue) e->blue = 1.0f;
         if (red) e->variant = 1;
         if (green) e->variant = 2;
         if (blue) e->variant = 3;
@@ -64,9 +64,9 @@ extern "C" void KartFx_Slot60_DriftSparkTick(Effect *e) {
     case 1:
         if (red || green || blue) {
             e->red = lbl_806D51C0; e->green = lbl_806D51C0; e->blue = lbl_806D51C0;
-            if (red) e->red = lbl_806D51C4;
-            if (green) e->green = lbl_806D51C4;
-            if (blue) e->blue = lbl_806D51C4;
+            if (red) e->red = 1.0f;
+            if (green) e->green = 1.0f;
+            if (blue) e->blue = 1.0f;
             if (red) e->variant = 1;
             if (green) e->variant = 2;
             if (blue) e->variant = 3;
@@ -88,9 +88,9 @@ extern "C" void KartFx_Slot60_DriftSparkTick(Effect *e) {
         case 1:
             if (e->rise != 0) {
                 e->opacity += lbl_806D51D4;
-                if (lbl_806D51C4 < e->opacity) e->opacity = lbl_806D51C4;
+                if (1.0f < e->opacity) e->opacity = 1.0f;
             } else {
-                float minimum = lbl_806D5274;
+                float minimum = 0.9f;
                 if (Decay(&e->opacity, lbl_806D528C, minimum)) e->opacity = minimum;
             }
             if (e->delay == 0 && interrupt) e->duration = 0;
@@ -111,9 +111,9 @@ extern "C" void KartFx_Slot60_DriftSparkTick(Effect *e) {
         if (e->red < 0.0f) e->red = 0.0f;
         if (e->green < 0.0f) e->green = 0.0f;
         if (e->blue < 0.0f) e->blue = 0.0f;
-        if (lbl_806D51C4 < e->red) e->red = lbl_806D51C4;
-        if (lbl_806D51C4 < e->green) e->green = lbl_806D51C4;
-        if (lbl_806D51C4 < e->blue) e->blue = lbl_806D51C4;
+        if (1.0f < e->red) e->red = 1.0f;
+        if (1.0f < e->green) e->green = 1.0f;
+        if (1.0f < e->blue) e->blue = 1.0f;
         {
             Vec3 a = resources->colors[0], b = resources->colors[1], c = resources->colors[2];
             GetSpawnPosition(&e->color, lbl_806D51C0, lbl_806D51C0, lbl_806D51C0);

@@ -3,7 +3,7 @@
  * Ground/audio positions are copied by-value in the observed ABI. Literal
  * zero in the expiry calculation is required for the native FP web; the
  * existing shared-pool postprocessor maps it to lbl_806D5D20.
- * Remaining mismatch: counter store scheduling within InitializeImpactScale.
+ * The 1.0f scale literal (lbl_806D5D24) fixes the counter store schedule.
  * Native text is 816 bytes; automatic extab/extabindex are exact. */
 struct ImpactVec3 { float x, y, z; };
 struct ImpactItem {
@@ -73,7 +73,7 @@ void GabyouItem_OnImpactTick_2Eto31(ImpactItem *item, ImpactContext *context)
             GetSpawnPosition(&context->velocity, lbl_806D5D20, lbl_806D5D50, lbl_806D5D20);
             SoundMgr_PlaySE_Positional(0xcb, item->position, 0);
         }
-        InitializeImpactScale(item, context, lbl_806D5D24);
+        InitializeImpactScale(item, context, 1.0f);
         ++item->phase;
         break;
     case 1:

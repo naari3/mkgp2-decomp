@@ -55,7 +55,7 @@ void KartFx_HornBlastTick(HornEffect *effect) {
         VfxSlot_SetMatrixSourceEnabled(effect->slot, 1);
         effect->visible = 1;
         effect->opacity = lbl_806D51C0;
-        effect->scale = lbl_806D51C4;
+        effect->scale = 1.0f;
         effect->lastMotion = lbl_806D51C0;
         effect->delay = 0;
         effect->channel = -1;
@@ -74,7 +74,7 @@ void KartFx_HornBlastTick(HornEffect *effect) {
     effect->motion = effect->kart->motion->yawStep;
     if (lbl_806D530C < FAbs_FloatAsDouble(effect->motion)) {
         effect->opacity += lbl_806D51D4;
-        if (lbl_806D51C4 < effect->opacity) effect->opacity = lbl_806D51C4;
+        if (1.0f < effect->opacity) effect->opacity = 1.0f;
         effect->lastMotion = effect->motion;
         if (effect->channel < 0) {
             effect->channel = SoundMgr_CountActiveSEInstances(0x61);

@@ -43,7 +43,7 @@ void Effect_DustScatter_Update(DustScatterEffect *effect) {
   if(effect->side) effect->velocity.x *= lbl_806D5788;
   Vec3_Copy(&effect->origin,&effect->position);
   GetSpawnPosition(&effect->displacement,lbl_806D5770,lbl_806D5770,lbl_806D5770);
-  bool even = !(Rand_RangeIntMax(15)%2);
+  int even = ((Rand_RangeIntMax(15)%2) == 0) ? 1 : 0;
   if(even) {
    if(!effect->side) VfxSlot_BindResourceEx(effect->slot,0x50,0);
    else VfxSlot_BindResourceEx(effect->slot,0x51,0);

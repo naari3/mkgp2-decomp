@@ -56,7 +56,7 @@ void KartFx_Slot4C_AuxAccelBurstTick(AuxEffect *effect) {
         VfxSlot_BindResourceEx(effect->slot, 2, 0);
         effect->opacity = lbl_806D51F8;
         effect->variant = Rand_RangeIntMax(15) % 2;
-        GetSpawnPosition(&effect->velocity, lbl_806D51C0, lbl_806D51C0, lbl_806D51C4);
+        GetSpawnPosition(&effect->velocity, lbl_806D51C0, lbl_806D51C0, 1.0f);
         Vec2_RotateX(&effect->velocity, &effect->velocity, lbl_806D527C);
         if ((effect->kart->motion->flags & 2) != 0) {
             Vec2_RotateY(&effect->velocity, &effect->velocity,
@@ -102,11 +102,11 @@ void KartFx_Slot4C_AuxAccelBurstTick(AuxEffect *effect) {
     } else {
         if (effect->variant == 0) effect->opacity += lbl_806D5284;
         else effect->opacity += lbl_806D51D8;
-        if (lbl_806D51C4 < effect->opacity) effect->opacity = lbl_806D51C4;
+        if (1.0f < effect->opacity) effect->opacity = 1.0f;
     }
     effect->rotation = BuildOrientationFromYaw(effect->rotation - lbl_806D5288);
     effect->growth += lbl_806D51D8;
-    if (lbl_806D51C4 < effect->growth) effect->growth = lbl_806D51C4;
+    if (1.0f < effect->growth) effect->growth = 1.0f;
     Vec3_Scale(&effect->velocity, &effect->velocity, lbl_806D5268);
     effect->velocity.y += lbl_806D526C;
     Vec3_Add_DestFirst(&effect->offset, &effect->offset, &effect->velocity);

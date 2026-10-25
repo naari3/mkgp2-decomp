@@ -52,7 +52,7 @@ void Effect_SmokeRing3_Update(SmokeEffect* effect) {
                 VfxSlot_SetScaleUniform(group->child[i]->slot, group->child[i]->scale);
             }
         }
-        group->phase = lbl_806D5400;
+        group->phase = 0.0f;
         ++effect->state;
         break;
     case 1: break;
@@ -71,7 +71,7 @@ void Effect_SmokeRing3_Update(SmokeEffect* effect) {
         if (child) {
             angles = lbl_8032A730;
             tilts = lbl_8032A73C;
-            GetSpawnPosition(&child->position, lbl_806D5400, lbl_806D5400, lbl_806D5450);
+            GetSpawnPosition(&child->position, 0.0f, 0.0f, lbl_806D5450);
             Vec2_RotateY(&group->child[i]->position, &group->child[i]->position, group->phase + angles.v[i]);
             Vec2_RotateX(&group->child[i]->position, &group->child[i]->position, tilts.v[i]);
             Vec3_Add_DestFirst(&group->child[i]->position, &effect->position, &group->child[i]->position);

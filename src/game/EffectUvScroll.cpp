@@ -33,7 +33,7 @@ void Effect_ApplyUvScrollAlong_E4(UvEffect *effect, const UvVec *position, float
     if (!effect) return;
     if (effect->scrollEnabled) {
         float uv = fn_800D3184(&effect->previous, position) / lbl_806D57BC;
-        if (lbl_806D57C0 < uv) uv = lbl_806D57C0;
+        if (0.033333335f < uv) uv = 0.033333335f;
         if (uv < lbl_806D57C4) uv = lbl_806D57C4;
         VfxSlot_SetUVScroll(effect->slot, uv, lbl_806D5770);
         Vec3_Copy(&effect->previous, position);
@@ -42,7 +42,7 @@ void Effect_ApplyUvScrollAlong_E4(UvEffect *effect, const UvVec *position, float
     Vec3_Copy(&effect->position, position);
     Vec3_Subtract_DestFirst(&offset, &lbl_805DF3D0.position, &effect->position);
     float reciprocal = lbl_806D5790 / Vec3_Magnitude_Wrapper(&offset);
-    Vec3_Scale(&offset, &offset, (lbl_806D57C8 * scale) * reciprocal);
+    Vec3_Scale(&offset, &offset, (2.0f * scale) * reciprocal);
     Vec3_Add_DestFirst(&effect->position, &effect->position, &offset);
     effect->alpha = alpha;
     effect->visible = 1;

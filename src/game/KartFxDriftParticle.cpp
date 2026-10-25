@@ -21,7 +21,7 @@ void KartFx_DriftPuffParticleTick(Effect *effect) {
         float maximum, step, current;
         current = effect->growth;
         step = lbl_806D5280;
-        maximum = lbl_806D51C4;
+        maximum = 1.0f;
         effect->growth = current + step;
         if (maximum < effect->growth) { effect->growth = maximum; ++effect->state; }
         break;
