@@ -61,7 +61,7 @@ void Matrix4_PreMultiplyRotZ(Matrix4 destination, const Matrix4 source,
     Matrix4_Multiply(source, rotation, product);
     for (row = 0; row < 4; ++row) {
         for (column = 0; column < 4; ++column) {
-            destination[row][column] = product[row][column];
+            destination[row][column] = product[(unsigned int)row][column];
         }
     }
 }

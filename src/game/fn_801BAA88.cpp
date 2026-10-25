@@ -285,7 +285,8 @@ int Sci2Card_GetUnpackStatusCode(void);
 }
 
 static inline InputState *GetInput() {
-    return g_pInputState == 0 ? (InputState *)0 : g_pInputState;
+    InputState *p = g_pInputState;
+    return p == 0 ? (InputState *)0 : p;
 }
 
 static inline void SetInput(unsigned char en) {
@@ -1240,7 +1241,7 @@ extern "C" void fn_801C043C(CoinWait *self) {
 extern "C" void fn_801C0568(CoinWait *self) {
     InputState *in = GetInput();
     InputMgr_GetPlayer(GetInputManager(), 0);
-    bool press = in->held == 1;
+    unsigned char press = in->held == 1;
     fn_80160588(self->panel.p, in->dir, press);
     if (press == 1) {
         SetRumbleMode(0, 1, 1);
@@ -1601,7 +1602,7 @@ extern "C" void fn_801C1268(CardRead *self) {
             case 1:
             case 2:
             case 4:
-                if (g_playerData[0x1D9] != 2) {
+                if ((signed char)g_playerData[0x1D9] != 2) {
                     self->readOk = 1;
                 }
                 fn_801618CC(self->panel.p, 0, 0);
@@ -1612,7 +1613,7 @@ extern "C" void fn_801C1268(CardRead *self) {
                 self->Eject(0x11);
                 break;
             case 5:
-                if (g_playerData[0x1D9] != 2) {
+                if ((signed char)g_playerData[0x1D9] != 2) {
                     self->readOk = 1;
                 }
                 fn_801C0D94(self);

@@ -106,6 +106,7 @@ void order_dag(int num, u32* dep, u32* full_dep, HSD_TExpDag* list, int depth,
         }
         dag = &list[idx];
         ready_set = blocked & ~full_bits;
+        dep_bits = dep[idx];
         if (dag->nb_dep == 1 && (ready_set & dep_bits)) {
             sp8 = order;
             spC = min;
