@@ -7891,6 +7891,9 @@ triforce/amnet.c:
 	.sbss       start:0x806D1E40 end:0x806D1E48
 	.sdata2     start:0x806DC930 end:0x806DC940
 
+triforce/amsock.c:
+	.text       start:0x8028F45C end:0x80290ED8
+
 dolphin/dvd/dvdlow.c:
 	.text       start:0x80294E6C end:0x80294EA4
 	.bss        start:0x806A47A0 end:0x806A4800
