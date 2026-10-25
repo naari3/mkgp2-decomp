@@ -730,7 +730,6 @@ config.libs = [
             Object(Matching, "game/fn_8014CFA0.c"),
             Object(Matching, "game/fn_8014640C.c"),
             Object(Matching, "game/fn_80141A6C.c"),
-            Object(Matching, "game/fn_80141450.c"),
             Object(Matching, "game/fn_800D748C.c"),
             Object(Matching, "game/fn_800A5608.c"),
             Object(Matching, "game/CarObjects_FindByEventType.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -1559,6 +1558,7 @@ config.libs = [
             Object(Matching, "game/CourseTables.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/OrthoCam.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/ZoneList.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/LogoAnim.c", extab_padding=b"\x00\x00"),
         ],
     },
     {

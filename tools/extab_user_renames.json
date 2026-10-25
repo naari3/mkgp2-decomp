@@ -2036,7 +2036,6 @@
     "__vt__9FlowScene": "lbl_804EC098",
     "__RTTI__8FlowTask": "lbl_806D01E8",
     "Init__15CardFlowMgrBaseFv": "fn_801FE5C8",
-    "__dt__11CardFlowMgrFv": "fn_801FE4D0",
     "__dt__15CardFlowMgrBaseFv": "dtor_801FE870"
   },
   "src/game/anon_801FE8B8.cpp": {
@@ -2404,5 +2403,13 @@
   "src/game/VfxBannerSequence_Tick.cpp": {
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/LogoAnim.c": {
+    "__dt__8LogoAnimFv": "fn_801418B8",
+    "__ct__8LogoAnimFPvi": "fn_80141924",
+    "extab_fn_80141454": "@etb_8000D7B4",
+    "extabindex_fn_80141454": "@eti_8002504C",
+    "extab_fn_80141990": "@etb_8000D7AC",
+    "extabindex_fn_80141990": "@eti_80025070"
   }
 }
