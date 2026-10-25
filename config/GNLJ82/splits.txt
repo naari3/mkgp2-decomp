@@ -4358,6 +4358,11 @@ game/ItemObject_Tick_Kind40_Enraku.c:
 	.text       start:0x800F0EE0 end:0x800F17F4
 	.data       start:0x804216B0 end:0x804216D8
 
+game/KuppaShell_State1_Held.c:
+	extab       start:0x8000B664 end:0x8000B66C
+	extabindex  start:0x80023EAC end:0x80023EB8
+	.text       start:0x800F17F4 end:0x800F1F84
+
 game/HeartCompoundItem.c:
 	extab       start:0x8000B674 end:0x8000B68C
 	extabindex  start:0x80023EC4 end:0x80023EE8
