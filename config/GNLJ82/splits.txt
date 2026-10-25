@@ -6704,6 +6704,27 @@ musyx/runtime/synthdata.c:
 	.bss        start:0x806B5598 end:0x806BFDD0
 	.sbss       start:0x806D1F58 end:0x806D1FA8
 
+musyx/runtime/snd_init.c:
+	.text       start:0x802B6DCC end:0x802B6F38
+
+musyx/runtime/snd_math.c:
+	.text       start:0x802B6F38 end:0x802B7098
+
+musyx/runtime/snd_service.c:
+	.text       start:0x802B93A8 end:0x802B967C
+
+musyx/runtime/hw_dolphin.c:
+	.text       start:0x802BB460 end:0x802BB9B0
+
+musyx/runtime/hw_memory.c:
+	.text       start:0x802BB9B0 end:0x802BBA3C
+
+musyx/runtime/reverb_fx.c:
+	.text       start:0x802BBA3C end:0x802BBAD8
+
+musyx/runtime/chorus_fx.c:
+	.text       start:0x802BC754 end:0x802BCF94
+
 sysdolphin/baselib/dobj.c:
 	.text       start:0x802BCF94 end:0x802BD168
 
