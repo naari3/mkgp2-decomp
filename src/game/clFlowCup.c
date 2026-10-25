@@ -17,7 +17,8 @@ struct InputState {
 
 struct CupSlot {
     void *sprite;
-    int pad[3];
+    void *sub;
+    int pad[2];
 };
 
 struct CupPair {
@@ -27,19 +28,27 @@ struct CupPair {
 
 struct clFlowCup {
     void *vtbl;
-    unsigned char pad_04[0x14];
+    int round;
+    int x08;
+    int state;
+    unsigned char pad_10[8];
     void *sprite18;
     void *sprite1C;
     unsigned char pad_20[0xC];
     CupSlot slots[9];
-    unsigned char pad_BC[0x1C];
+    unsigned char pad_BC[8];
+    int pairSel[4];
+    unsigned char pad_D4[4];
     CupPair pairs[4];
     void *spriteF8;
     void *spriteFC;
     unsigned char pad_100[8];
     void *sprite108;
     void *sprite10C;
-    unsigned char pad_110[8];
+    unsigned char show110;
+    unsigned char show111;
+    unsigned char pad_112[2];
+    float alpha114;
     unsigned char mode;
     unsigned char pad_119[0xB];
     void *icons[9];
@@ -48,11 +57,36 @@ struct clFlowCup {
     void *sprite150;
 };
 
+struct CupName {
+    short id0;
+    short id1;
+    float xEn;
+    float xJp;
+};
+
+struct CupMark {
+    short x0;
+    short id;
+    int x4;
+    int x8;
+};
+
+struct SpriteInfo {
+    float x;
+    float y;
+    float pad8[3];
+    float r;
+    float g;
+    float b;
+    float a;
+    float pad24[5];
+};
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 extern char lbl_8049AE5C[];
-extern short lbl_8049ADE4[];
+extern CupName lbl_8049ADE4[];
 extern const float lbl_806D9CA4;
 extern InputState *g_pInputState;
 extern int g_roundIndex;
@@ -71,313 +105,124 @@ void dtor_801BA14C(void *, int);
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void fn_8019FF8C();
-extern void fn_801A0004();
-extern void fn_801A0DF0();
-extern void fn_801A0FD4();
-extern void fn_801A10DC();
-extern void fn_801A1128();
-extern void fn_801A1174();
-extern void isJapanese();
+extern void fn_8019FF8C(void *spr, int id, SpriteInfo *out);
+extern void fn_801A0004(void *spr);
+extern void fn_801A0DF0(void);
+extern void fn_801A0FD4(float r, float g, float b, float a);
+extern void fn_801A10DC(float sx, float sy);
+extern void fn_801A1128(float x, float y);
+extern void fn_801A1174(int id, int layer, int a, int b, int c);
+extern int isJapanese(void);
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D9C88;
-extern unsigned int lbl_806D9CA8;
-extern unsigned int lbl_806D9CAC;
-extern unsigned int lbl_806D9CB0;
-extern unsigned int lbl_806D9CB4;
-extern unsigned int lbl_806D9CB8;
-extern unsigned int lbl_806D9CBC;
-extern unsigned int lbl_806D9CC0;
+extern const float lbl_806D9C88;
+extern const float lbl_806D9CA8;
+extern const float lbl_806D9CAC;
+extern const float lbl_806D9CB0;
+extern const float lbl_806D9CB4;
+extern const float lbl_806D9CB8;
+extern const float lbl_806D9CBC;
+extern const float lbl_806D9CC0;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_8049AD58[];
+extern CupMark lbl_8049AD58[];
 
 /* --- function index (1 fns, .text 0x801C7360..0x801C772C) ---
  * [  0] 0x801C7360 size:0x3CC   global clFlowCup_Draw
  */
 
 /* --- forward decls --- */
-asm void clFlowCup_Draw(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_clFlowCup_Draw[8] = {
-    0x20, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clFlowCup_Draw = {
-    (void *)&clFlowCup_Draw, 0x000003CC, (void *)extab_clFlowCup_Draw
-};
-
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void clFlowCup_Draw(void) { /* 0x801C7360 size:0x3CC */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    stw r0, 0x54(r1)
-    stw r31, 0x4c(r1)
-    mr r31, r3
-    stw r30, 0x48(r1)
-    stw r29, 0x44(r1)
-    stw r28, 0x40(r1)
-    lwz r3, 0xf8(r3)
-    cmplwi r3, 0x0
-    beq clFlowCup_Draw_L_801C7390
-    bl fn_801A0004
-    clFlowCup_Draw_L_801C7390:
-    lwz r3, 0x18(r31)
-    cmplwi r3, 0x0
-    beq clFlowCup_Draw_L_801C73A0
-    bl fn_801A0004
-    clFlowCup_Draw_L_801C73A0:
-    lwz r3, 0xb0(r31)
-    cmplwi r3, 0x0
-    beq clFlowCup_Draw_L_801C73B0
-    bl fn_801A0004
-    clFlowCup_Draw_L_801C73B0:
-    lwz r3, 0xfc(r31)
-    cmplwi r3, 0x0
-    beq clFlowCup_Draw_L_801C73C0
-    bl fn_801A0004
-    clFlowCup_Draw_L_801C73C0:
-    li r29, 0x0
-    mr r30, r31
-    clFlowCup_Draw_L_801C73C8:
-    lwz r0, 0x4(r31)
-    cmpw r29, r0
-    beq clFlowCup_Draw_L_801C73E8
-    lwz r3, 0x2c(r30)
-    cmplwi r3, 0x0
-    beq clFlowCup_Draw_L_801C73E8
-    beq clFlowCup_Draw_L_801C73E8
-    bl fn_801A0004
-    clFlowCup_Draw_L_801C73E8:
-    addi r29, r29, 0x1
-    addi r30, r30, 0x10
-    cmpwi r29, 0x9
-    blt clFlowCup_Draw_L_801C73C8
-    lwz r0, 0xc(r31)
-    cmpwi r0, 0x4
-    beq clFlowCup_Draw_L_801C7458
-    lwz r0, 0x4(r31)
-    srwi r3, r0, 31
-    clrlwi r0, r0, 31
-    xor r0, r0, r3
-    subf r0, r3, r0
-    cmpwi r0, 0x1
-    bne clFlowCup_Draw_L_801C7458
-    lwz r3, 0x108(r31)
-    cmplwi r3, 0x0
-    beq clFlowCup_Draw_L_801C743C
-    lbz r0, 0x110(r31)
-    cmplwi r0, 0x0
-    beq clFlowCup_Draw_L_801C743C
-    bl fn_801A0004
-    clFlowCup_Draw_L_801C743C:
-    lwz r3, 0x10c(r31)
-    cmplwi r3, 0x0
-    beq clFlowCup_Draw_L_801C7458
-    lbz r0, 0x111(r31)
-    cmplwi r0, 0x0
-    beq clFlowCup_Draw_L_801C7458
-    bl fn_801A0004
-    clFlowCup_Draw_L_801C7458:
-    lwz r0, 0x4(r31)
-    slwi r0, r0, 4
-    add r3, r31, r0
-    lwz r3, 0x2c(r3)
-    cmplwi r3, 0x0
-    beq clFlowCup_Draw_L_801C7504
-    bl fn_801A0004
-    lbz r0, 0x118(r31)
-    cmplwi r0, 0x1
-    bne clFlowCup_Draw_L_801C7504
-    lwz r4, 0x4(r31)
-    lis r3, lbl_8049AD58@ha
-    addi r3, r3, lbl_8049AD58@l
-    addi r5, r1, 0x8
-    mulli r0, r4, 0xc
-    slwi r4, r4, 4
-    add r6, r31, r4
-    add r4, r3, r0
-    lwz r3, 0x2c(r6)
-    lha r4, 0x2(r4)
-    bl fn_8019FF8C
-    li r3, 0x15f4
-    li r4, 0x5
-    li r5, 0x0
-    li r6, 0x0
-    li r7, 0x0
-    bl fn_801A1174
-    lfs f3, 0x8(r1)
-    lfs f1, lbl_806D9CA8(r2)
-    lfs f2, lbl_806D9CAC(r2)
-    lfs f0, 0xc(r1)
-    fsubs f1, f3, f1
-    fadds f2, f2, f0
-    bl fn_801A1128
-    lfs f1, lbl_806D9CB0(r2)
-    fmr f2, f1
-    bl fn_801A10DC
-    lfs f1, 0x1c(r1)
-    lfs f2, 0x20(r1)
-    lfs f3, 0x24(r1)
-    lfs f4, 0x28(r1)
-    bl fn_801A0FD4
-    bl fn_801A0DF0
-    clFlowCup_Draw_L_801C7504:
-    lwz r0, 0xc(r31)
-    cmpwi r0, 0x4
-    beq clFlowCup_Draw_L_801C7560
-    lwz r0, 0x4(r31)
-    srwi r3, r0, 31
-    clrlwi r0, r0, 31
-    xor r0, r0, r3
-    subf. r0, r3, r0
-    bne clFlowCup_Draw_L_801C7560
-    lwz r3, 0x108(r31)
-    cmplwi r3, 0x0
-    beq clFlowCup_Draw_L_801C7544
-    lbz r0, 0x110(r31)
-    cmplwi r0, 0x0
-    beq clFlowCup_Draw_L_801C7544
-    bl fn_801A0004
-    clFlowCup_Draw_L_801C7544:
-    lwz r3, 0x10c(r31)
-    cmplwi r3, 0x0
-    beq clFlowCup_Draw_L_801C7560
-    lbz r0, 0x111(r31)
-    cmplwi r0, 0x0
-    beq clFlowCup_Draw_L_801C7560
-    bl fn_801A0004
-    clFlowCup_Draw_L_801C7560:
-    lwz r0, 0x4(r31)
-    lis r3, lbl_8049ADE4@ha
-    addi r3, r3, lbl_8049ADE4@l
-    li r4, 0x4
-    mulli r0, r0, 0xc
-    li r5, 0x0
-    li r6, 0x0
-    li r7, 0x0
-    lhax r3, r3, r0
-    bl fn_801A1174
-    lfs f1, lbl_806D9CB4(r2)
-    lfs f2, lbl_806D9CB8(r2)
-    bl fn_801A1128
-    lfs f1, lbl_806D9C88(r2)
-    lfs f4, 0x114(r31)
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_801A0FD4
-    bl fn_801A0DF0
-    lwz r0, 0x4(r31)
-    lis r3, lbl_8049ADE4@ha
-    addi r3, r3, lbl_8049ADE4@l
-    li r4, 0x4
-    mulli r0, r0, 0xc
-    li r5, 0x0
-    li r6, 0x0
-    li r7, 0x0
-    add r3, r3, r0
-    lha r3, 0x2(r3)
-    bl fn_801A1174
-    bl isJapanese
-    cmpwi r3, 0x0
-    bne clFlowCup_Draw_L_801C7608
-    lwz r0, 0x4(r31)
-    lis r3, lbl_8049ADE4@ha
-    addi r3, r3, lbl_8049ADE4@l
-    lfs f2, lbl_806D9CB8(r2)
-    mulli r0, r0, 0xc
-    add r3, r3, r0
-    lfs f1, 0x4(r3)
-    bl fn_801A1128
-    b clFlowCup_Draw_L_801C7628
-    clFlowCup_Draw_L_801C7608:
-    lwz r0, 0x4(r31)
-    lis r3, lbl_8049ADE4@ha
-    addi r3, r3, lbl_8049ADE4@l
-    lfs f2, lbl_806D9CB8(r2)
-    mulli r0, r0, 0xc
-    add r3, r3, r0
-    lfs f1, 0x8(r3)
-    bl fn_801A1128
-    clFlowCup_Draw_L_801C7628:
-    lfs f1, lbl_806D9C88(r2)
-    lfs f4, 0x114(r31)
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_801A0FD4
-    bl fn_801A0DF0
-    li r3, 0x174c
-    li r4, 0x4
-    li r5, 0x0
-    li r6, 0x0
-    li r7, 0x0
-    bl fn_801A1174
-    lfs f1, lbl_806D9CBC(r2)
-    lfs f2, lbl_806D9CC0(r2)
-    bl fn_801A1128
-    lfs f1, lbl_806D9C88(r2)
-    lfs f4, 0x114(r31)
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_801A0FD4
-    bl fn_801A0DF0
-    mr r30, r31
-    mr r29, r31
-    li r28, 0x0
-    clFlowCup_Draw_L_801C7688:
-    lwz r0, 0xc4(r30)
-    cmpwi r0, -0x1
-    beq clFlowCup_Draw_L_801C76A4
-    slwi r3, r0, 2
-    addi r0, r3, 0xd8
-    lwzx r3, r29, r0
-    bl fn_801A0004
-    clFlowCup_Draw_L_801C76A4:
-    addi r28, r28, 0x1
-    addi r29, r29, 0x8
-    cmpwi r28, 0x4
-    addi r30, r30, 0x4
-    blt clFlowCup_Draw_L_801C7688
-    lwz r3, 0x1c(r31)
-    cmplwi r3, 0x0
-    beq clFlowCup_Draw_L_801C76C8
-    bl fn_801A0004
-    clFlowCup_Draw_L_801C76C8:
-    lwz r0, 0xc(r31)
-    cmpwi r0, 0x4
-    bne clFlowCup_Draw_L_801C770C
-    lwz r3, 0x14c(r31)
-    bl fn_801A0004
-    lwz r3, 0x148(r31)
-    bl fn_801A0004
-    lwz r3, 0x150(r31)
-    bl fn_801A0004
-    li r28, 0x0
-    mr r29, r31
-    clFlowCup_Draw_L_801C76F4:
-    lwz r3, 0x124(r29)
-    bl fn_801A0004
-    addi r28, r28, 0x1
-    addi r29, r29, 0x4
-    cmpwi r28, 0x9
-    blt clFlowCup_Draw_L_801C76F4
-    clFlowCup_Draw_L_801C770C:
-    lwz r0, 0x54(r1)
-    lwz r31, 0x4c(r1)
-    lwz r30, 0x48(r1)
-    lwz r29, 0x44(r1)
-    lwz r28, 0x40(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
+static inline void DrawSprite(void *spr) {
+    if (spr != 0) {
+        fn_801A0004(spr);
+    }
+}
+
+static inline void DrawSide(clFlowCup *self) {
+    if (self->sprite108 != 0 && self->show110 != 0) {
+        fn_801A0004(self->sprite108);
+    }
+    if (self->sprite10C != 0 && self->show111 != 0) {
+        fn_801A0004(self->sprite10C);
+    }
+}
+
+void clFlowCup_Draw(clFlowCup *self) {
+    int i;
+    int j;
+    int k;
+
+    if (self->spriteF8 != 0) {
+        fn_801A0004(self->spriteF8);
+    }
+    if (self->sprite18 != 0) {
+        fn_801A0004(self->sprite18);
+    }
+    if (self->slots[8].sub != 0) {
+        fn_801A0004(self->slots[8].sub);
+    }
+    if (self->spriteFC != 0) {
+        fn_801A0004(self->spriteFC);
+    }
+    for (i = 0; i < 9; i++) {
+        if (i != self->round && self->slots[i].sprite != 0) {
+            DrawSprite(self->slots[i].sprite);
+        }
+    }
+    if (self->state != 4 && self->round % 2 == 1) {
+        DrawSide(self);
+    }
+    if (self->slots[self->round].sprite != 0) {
+        fn_801A0004(self->slots[self->round].sprite);
+        if (self->mode == 1) {
+            SpriteInfo info;
+
+            fn_8019FF8C(self->slots[self->round].sprite, lbl_8049AD58[self->round].id, &info);
+            fn_801A1174(0x15F4, 5, 0, 0, 0);
+            fn_801A1128(info.x - lbl_806D9CA8, lbl_806D9CAC + info.y);
+            fn_801A10DC(lbl_806D9CB0, lbl_806D9CB0);
+            fn_801A0FD4(info.r, info.g, info.b, info.a);
+            fn_801A0DF0();
+        }
+    }
+    if (self->state != 4 && self->round % 2 == 0) {
+        DrawSide(self);
+    }
+    fn_801A1174(lbl_8049ADE4[self->round].id0, 4, 0, 0, 0);
+    fn_801A1128(lbl_806D9CB4, lbl_806D9CB8);
+    fn_801A0FD4(lbl_806D9C88, lbl_806D9C88, lbl_806D9C88, self->alpha114);
+    fn_801A0DF0();
+    fn_801A1174(lbl_8049ADE4[self->round].id1, 4, 0, 0, 0);
+    if (isJapanese() == 0) {
+        fn_801A1128(lbl_8049ADE4[self->round].xEn, lbl_806D9CB8);
+    } else {
+        fn_801A1128(lbl_8049ADE4[self->round].xJp, lbl_806D9CB8);
+    }
+    fn_801A0FD4(lbl_806D9C88, lbl_806D9C88, lbl_806D9C88, self->alpha114);
+    fn_801A0DF0();
+    fn_801A1174(0x174C, 4, 0, 0, 0);
+    fn_801A1128(lbl_806D9CBC, lbl_806D9CC0);
+    fn_801A0FD4(lbl_806D9C88, lbl_806D9C88, lbl_806D9C88, self->alpha114);
+    fn_801A0DF0();
+    for (j = 0; j < 4; j++) {
+        if (self->pairSel[j] != -1) {
+            fn_801A0004((&self->pairs[j].a)[self->pairSel[j]]);
+        }
+    }
+    if (self->sprite1C != 0) {
+        fn_801A0004(self->sprite1C);
+    }
+    if (self->state == 4) {
+        fn_801A0004(self->sprite14C);
+        fn_801A0004(self->sprite148);
+        fn_801A0004(self->sprite150);
+        for (k = 0; k < 9; k++) {
+            fn_801A0004(self->icons[k]);
+        }
+    }
 }
 
 
@@ -421,7 +266,7 @@ extern unsigned int lbl_806D9C70;
 extern unsigned int lbl_806D9C74;
 extern unsigned int lbl_806D9C7C;
 extern unsigned int lbl_806D9C80;
-extern unsigned int lbl_806D9C88;
+extern const float lbl_806D9C88;
 extern unsigned int lbl_806D9C90;
 extern unsigned int lbl_806D9C94;
 extern unsigned int lbl_806D9C98;
@@ -440,7 +285,7 @@ extern unsigned int lbl_806D9CE0;
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 extern unsigned int g_playerData[];
 extern unsigned int lbl_8039B228[];
-extern unsigned int lbl_8049AD58[];
+extern CupMark lbl_8049AD58[];
 extern unsigned int lbl_8049ADD0[];
 
 /* --- function index (1 fns, .text 0x801C772C..0x801C88F4) ---
@@ -1751,15 +1596,15 @@ extern "C" clFlowCup *clFlowCup_Dtor(clFlowCup *self, short flags) {
             state->value1C = 0;
         }
         SetScreenBrightness(lbl_806D9CA4);
-        fn_80120A08(lbl_8049ADE4[1]);
-        fn_80120A08(lbl_8049ADE4[0]);
+        fn_80120A08(lbl_8049ADE4[0].id1);
+        fn_80120A08(lbl_8049ADE4[0].id0);
         Sprite_Destroy(self->sprite108, 1);
         Sprite_Destroy(self->sprite10C, 1);
         Sprite_Destroy(self->sprite18, 1);
         Sprite_Destroy(self->spriteF8, 1);
         Sprite_Destroy(self->spriteFC, 1);
         Sprite_Destroy(self->sprite1C, 1);
-        Sprite_Destroy((void *)self->slots[8].pad[0], 1);
+        Sprite_Destroy(self->slots[8].sub, 1);
         Sprite_Destroy(self->sprite148, 1);
         Sprite_Destroy(self->sprite14C, 1);
         Sprite_Destroy(self->sprite150, 1);
@@ -1816,7 +1661,7 @@ extern unsigned int lbl_806D9C70;
 extern unsigned int lbl_806D9C74;
 extern unsigned int lbl_806D9C78;
 extern unsigned int lbl_806D9C80;
-extern unsigned int lbl_806D9C88;
+extern const float lbl_806D9C88;
 extern unsigned int lbl_806D9C94;
 extern unsigned int lbl_806D9CC8;
 extern unsigned int lbl_806D9CD8;
@@ -1836,7 +1681,7 @@ extern unsigned int lbl_806D9D04;
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 extern unsigned int g_playerData[];
-extern unsigned int lbl_8049AD58[];
+extern CupMark lbl_8049AD58[];
 
 /* --- function index (1 fns, .text 0x801C8AB4..0x801C9288) ---
  * [  0] 0x801C8AB4 size:0x7D4   global clFlowCup_Init
