@@ -639,6 +639,7 @@ config.libs = [
         "objects": [
             Object(Matching, "game/TEXLoadPalette.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/OSAlloc_Game.c"),
+            Object(Matching, "game/CardPrinterChecker_States.c", extra_cflags=["-str reuse,readonly"]),
             Object(Matching, "game/ReplayRandCursor.c"),
             Object(Matching, "game/RaceContextArray.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/RaceContextArrayInit.cpp", extra_cflags=["-Cpp_exceptions on"]),
