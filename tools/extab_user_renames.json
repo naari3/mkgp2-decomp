@@ -1000,6 +1000,14 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "__dt__4MenuFv": "fn_801805B4"
   },
+  "src/game/objtable/fn_80190660.cpp": {
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/objtable/fn_80190720.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__9SingletonFv": "fn_801903D0"
+  },
   "src/game/objview/fn_80187878.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
