@@ -1465,6 +1465,11 @@ game/CardRW_DataRepair_Page.c:
 	extabindex  start:0x80021098 end:0x800210A4
 	.text       start:0x8006C810 end:0x8006D308
 
+game/CardDataTransfer_UI.cpp:
+	extab       start:0x80008180 end:0x80008188
+	extabindex  start:0x800210A4 end:0x800210B0
+	.text       start:0x8006D308 end:0x8006DB90
+
 game/CardRW_PrintTest_Page.c:
 	extab       start:0x80008190 end:0x80008198
 	extabindex  start:0x800210BC end:0x800210C8
