@@ -448,6 +448,7 @@ config.libs = [
         "cflags": cflags_hsd_melee,
         "progress_category": "sdk",
         "objects": [
+            Object(NonMatching, "sysdolphin/baselib/pobj.c"),
             Object(NonMatching, "sysdolphin/baselib/jobj.c"),
             Object(Matching, "sysdolphin/baselib/displayfunc.c"),
             Object(Matching, "sysdolphin/baselib/initialize.c"),

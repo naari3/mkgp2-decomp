@@ -7588,6 +7588,14 @@ sysdolphin/baselib/fobj.c:
 	.sbss       start:0x806D2188 end:0x806D2190
 	.sdata2     start:0x806DCC58 end:0x806DCC80
 
+sysdolphin/baselib/pobj.c:
+	.text       start:0x802CA77C end:0x802CD2B0
+	.data       start:0x804FC668 end:0x804FC9A8
+	.bss        start:0x806CD0D8 end:0x806CD0E8
+	.sdata      start:0x806D0D78 end:0x806D0DA0
+	.sbss       start:0x806D2190 end:0x806D21B0
+	.sdata2     start:0x806DCC80 end:0x806DCCB0
+
 sysdolphin/baselib/jobj.c:
 	.text       start:0x802CD2B0 end:0x802D2AD0
 	.rodata     start:0x803F2BD0 end:0x803F2BF8

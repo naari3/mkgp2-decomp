@@ -29,6 +29,7 @@ struct HSD_PObj {
         HSD_ShapeSet* shape_set;
         HSD_SList* envelope_list;
     } u;
+    HSD_AObj* aobj; ///< mkgp2 (HSD 1.3.x)
 };
 
 /// Envelopes of one vertex matrix, up to one with a null joint.
@@ -123,6 +124,7 @@ struct HSD_PObjInfo {
     void (*disp)(HSD_PObj* pobj, Mtx vmtx, Mtx pmtx, u32 rendermode);
     void (*setup_mtx)(HSD_PObj* pobj, Mtx vmtx, Mtx pmtx, u32 rendermode);
     s32 (*load)(HSD_PObj* pobj, HSD_PObjDesc* desc);
+    HSD_ObjUpdateFunc update; ///< mkgp2 (HSD 1.3.x)
 };
 
 extern HSD_PObjInfo hsdPObj;
