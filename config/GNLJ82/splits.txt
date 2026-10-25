@@ -3450,21 +3450,85 @@ game/CourseMarker.cpp:
 	extabindex  start:0x80025FE8 end:0x80026024
 	.text       start:0x80169E34 end:0x8016A2C0
 
-game/fn_8016B0A0.c:
-	extab       start:0x80010364 end:0x8001036C
-	extabindex  start:0x800260A8 end:0x800260B4
-	.text       start:0x8016B0A0 end:0x8016B0C4
+game/Sound_8016A2C0.cpp:
+	extab       start:0x80010234 end:0x80010244
+	extabindex  start:0x80026024 end:0x8002603C
+	.text       start:0x8016A2C0 end:0x8016A3D4
+
+game/Scene_8016AABC.cpp:
+	extab       start:0x80010270 end:0x80010278
+	extabindex  start:0x80026060 end:0x8002606C
+	.text       start:0x8016AABC end:0x8016AB58
+
+game/Scene_8016ACD4.cpp:
+	extab       start:0x800102D0 end:0x800102E8
+	extabindex  start:0x80026078 end:0x8002609C
+	.text       start:0x8016ACD4 end:0x8016AF3C
+
+game/HsdRes_8016B0A0.c:
+	extab       start:0x80010364 end:0x8001038C
+	extabindex  start:0x800260A8 end:0x800260E4
+	.text       start:0x8016B0A0 end:0x8016B32C
+
+sound/SoundMgr_Front.c:
+	extab       start:0x8001039C end:0x80010404
+	extabindex  start:0x800260FC end:0x80026198
+	.text       start:0x8016C0A4 end:0x8016C3FC
 
 sound/SoundMgr_PlaySE.c:
 	extab       start:0x80010404 end:0x8001040C
 	extabindex  start:0x80026198 end:0x800261A4
 	.text       start:0x8016C3FC end:0x8016C444
 
-game/fn_8016CB44.c:
-	.text       start:0x8016CB44 end:0x8016CB4C
+sound/SoundMgr_Weather.c:
+	extab       start:0x8001040C end:0x80010454
+	extabindex  start:0x800261A4 end:0x80026210
+	.text       start:0x8016C444 end:0x8016C730
 
-game/fn_8016E354.c:
-	.text       start:0x8016E354 end:0x8016E358
+sound/SoundMgr_PointSetMgr.cpp:
+	extab       start:0x8001046C end:0x80010474
+	extabindex  start:0x80026234 end:0x80026240
+	.text       start:0x8016CB44 end:0x8016CBAC
+
+sound/SoundMgr_PointSetNew.cpp:
+	extab       start:0x80010474 end:0x8001048C
+	extabindex  start:0x80026240 end:0x8002624C
+	.text       start:0x8016CBAC end:0x8016CC04
+
+game/ItemBox_8016CC04.cpp:
+	extab       start:0x8001048C end:0x800104A4
+	extabindex  start:0x8002624C end:0x80026258
+	.text       start:0x8016CC04 end:0x8016CEA0
+
+game/ItemBox_8016CEA0.cpp:
+	extab       start:0x800104A4 end:0x800104B4
+	extabindex  start:0x80026258 end:0x80026270
+	.text       start:0x8016CEA0 end:0x8016D2D0
+
+game/Scene_8016D79C.cpp:
+	extab       start:0x80010530 end:0x80010548
+	extabindex  start:0x8002627C end:0x800262A0
+	.text       start:0x8016D79C end:0x8016D920
+
+game/Scene_8016D920.cpp:
+	extab       start:0x80010548 end:0x8001057C
+	extabindex  start:0x800262A0 end:0x800262AC
+	.text       start:0x8016D920 end:0x8016DA30
+
+game/Scene_8016DA30.cpp:
+	extab       start:0x8001057C end:0x8001058C
+	extabindex  start:0x800262AC end:0x800262C4
+	.text       start:0x8016DA30 end:0x8016DC90
+
+game/Scene_8016DEF4.cpp:
+	extab       start:0x80010594 end:0x8001059C
+	extabindex  start:0x800262D0 end:0x800262DC
+	.text       start:0x8016DEF4 end:0x8016E064
+
+game/Scene_8016E1C0.cpp:
+	extab       start:0x800105C4 end:0x800105E4
+	extabindex  start:0x800262E8 end:0x80026318
+	.text       start:0x8016E1C0 end:0x8016E568
 
 game/fn_8016FC70.c:
 	.text       start:0x8016FC70 end:0x8016FC74
