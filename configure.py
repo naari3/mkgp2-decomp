@@ -2181,6 +2181,8 @@ config.libs = [
         "progress_category": "sdk",
         "objects": [
             Object(Matching, "triforce/amexi.c"),
+            Object(NonMatching, "triforce/amboot.c"),
+            Object(NonMatching, "triforce/ambackup.c", extra_cflags=["-use_lmw_stmw on"]),
         ],
     },
     {
