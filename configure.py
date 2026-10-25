@@ -1906,6 +1906,8 @@ config.libs = [
             Object(Matching, "game/mapobject/fn_8017ACBC.c"),
             Object(Matching, "game/mapobject/fn_8017ACF4.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/mapobject/fn_8017AD54.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/mapobject/fn_8017B1C0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/mapobject/fn_8017B688.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             # g4-end
         ],
     },
