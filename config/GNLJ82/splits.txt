@@ -1407,23 +1407,16 @@ game/LObjList.cpp:
 	extabindex  start:0x800212C0 end:0x800212D8
 	.text       start:0x80076370 end:0x80076494
 
-game/Sci2Card_Init.cpp:
-	extab       start:0x80008390 end:0x80008398
-	extabindex  start:0x800212F0 end:0x800212FC
-	.text       start:0x80076870 end:0x80076910
+game/Sci2Card.cpp:
+	extab       start:0x80008378 end:0x800083C0
+	extabindex  start:0x800212E4 end:0x80021320
+	.text       start:0x8007660C end:0x80076BBC
+	.rodata     start:0x803114D0 end:0x803115F0
 
-game/Sci2Card_BuildPacket.c:
-	extab       start:0x80008398 end:0x800083A0
-	extabindex  start:0x800212FC end:0x80021308
-	.text       start:0x80076910 end:0x80076A80
-
-game/Sci2Card_Lifetime.cpp:
-	extab       start:0x800083A0 end:0x800083C0
-	extabindex  start:0x80021308 end:0x80021320
-	.text       start:0x80076A80 end:0x80076BB4
-
-game/Sci2Card_Singleton_Get.c:
-	.text       start:0x80076BB4 end:0x80076BBC
+game/Sci2Card_Tick.cpp:
+	extab       start:0x800083C0 end:0x800083C8
+	extabindex  start:0x80021320 end:0x8002132C
+	.text       start:0x80076BBC end:0x8007723C
 
 game/Sci2Card_SendCmds.c:
 	extab       start:0x800083C8 end:0x800083F0
