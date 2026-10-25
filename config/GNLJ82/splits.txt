@@ -4946,6 +4946,32 @@ game/ChallengeDemoUra.cpp:
 	extabindex  start:0x8002498C end:0x800249BC
 	.text       start:0x80127ECC end:0x801287F8
 
+game/dtor_8012A5AC.c:
+	extab       start:0x8000C688 end:0x8000C690
+	extabindex  start:0x80024A10 end:0x80024A1C
+	.text       start:0x8012A5AC end:0x8012A61C
+
+game/fn_8012A61C.c:
+	extab       start:0x8000C690 end:0x8000C698
+	extabindex  start:0x80024A1C end:0x80024A28
+	.text       start:0x8012A61C end:0x8012A71C
+
+game/fn_8012B394.c:
+	extab       start:0x8000C6A0 end:0x8000C6A8
+	extabindex  start:0x80024A34 end:0x80024A40
+	.text       start:0x8012B394 end:0x8012B48C
+
+game/KartPreviewAnim.c:
+	.text       start:0x8012B924 end:0x8012BDA4
+
+game/fn_8012BDA4.c:
+	extab       start:0x8000C720 end:0x8000C728
+	extabindex  start:0x80024A4C end:0x80024A58
+	.text       start:0x8012BDA4 end:0x8012BDF4
+
+game/fn_8012BDF4.c:
+	.text       start:0x8012BDF4 end:0x8012BF5C
+
 game/BiribiriLand.c:
 	extab       start:0x8000CE64 end:0x8000D014
 	extabindex  start:0x80024B6C end:0x80024BA8

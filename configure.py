@@ -1816,6 +1816,12 @@ config.libs = [
             Object(Matching, "game/ChallengeDemoTornado.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ChallengeDemoUra.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ChallengeDemo_Create.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/dtor_8012A5AC.c"),
+            Object(Matching, "game/fn_8012A61C.c"),
+            Object(Matching, "game/fn_8012B394.c"),
+            Object(Matching, "game/KartPreviewAnim.c"),
+            Object(Matching, "game/fn_8012BDA4.c"),
+            Object(Matching, "game/fn_8012BDF4.c"),
         ],
     },
     {
