@@ -746,12 +746,10 @@
   "src/ui/FrameSelection_Methods.c": {
     "extab_FrameSelection_Init": "@etb_80013F14",
     "extabindex_FrameSelection_Init": "@eti_80027D94",
-    "extab_FrameSelection_Confirm": "@etb_80013FE0",
-    "extabindex_FrameSelection_Confirm": "@eti_80027DA0",
-    "extab_FrameSelection_Draw": "@etb_80014008",
-    "extabindex_FrameSelection_Draw": "@eti_80027DAC",
-    "extab_FrameSelection_Update": "@etb_80014010",
-    "extabindex_FrameSelection_Update": "@eti_80027DB8"
+    "Confirm__15clFlowNamcamRecFv": "FrameSelection_Confirm",
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/GabyouTripleChild.c": {
     "extab_GabyouTripleChild_TickActive": "@etb_8000B6AC",
