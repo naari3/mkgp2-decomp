@@ -2218,6 +2218,20 @@
     "__ct__8Normal3DFPvi": "clNormal3D_Construct",
     "__ct__9GXChannelFPvPvii": "GXChannel_Init"
   },
+  "src/game/clItemBoxManager.cpp": {
+    "__dt__16clItemBoxManagerFv": "clItemBoxManager_Dtor",
+    "__dt__7BoxListFv": "dtor_8005F778",
+    "__dt__13ResponderListFv": "dtor_8005F7F0",
+    "remove_if<28binder2nd<12equal_to<Pv>,Pv>>__12ListImpl<Pv>F28binder2nd<12equal_to<Pv>,Pv>": "DoublyLinkedList_RemoveByKey",
+    "erase__12ListImpl<Pv>FRC12ListIter<Pv>RC12ListIter<Pv>": "DoublyLinkedList_EraseRange",
+    "insert__12ListImpl<Pv>FRC12ListIter<Pv>RCPv": "DoublyLinkedList_PushBefore",
+    "__ct__12ListImpl<Pv>Fv": "DoublyLinkedList_Init",
+    "__dt__20clItemBoxManagerBaseFv": "dtor_8005FF74",
+    "__vt__16clItemBoxManager": "lbl_803F9CE4",
+    "__vt__20clItemBoxManagerBase": "lbl_803F9CF0",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
   "src/game/clItemBoxManager_StepTable.cpp": {
     "__sinit_clItemBoxManager_StepTable_cpp": "clItemBoxManager_InitStateTable"
   },
