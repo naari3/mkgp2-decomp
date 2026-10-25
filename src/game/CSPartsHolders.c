@@ -19,7 +19,7 @@ extern "C" {
 extern void fn_8013D4B0(Part3D *p, float t);
 extern void fn_8013DAC8(Part3D *p, int a);
 extern void fn_8013D50C(Part3D *p, float r, float g, float b, float a);
-extern void fn_802C14B8(int n);
+extern void HSD_StateInvalidate(int n);
 extern void Frame_PostDrawOverlay(void);
 extern void Frame_UpdatePerFrameState(void);
 }
@@ -371,7 +371,7 @@ extern "C" asm void fn_8014D344(void) { /* 0x8014D344 size:0x174 */
 
 extern "C" void fn_8014D4B8(RunnerOwner *o) {
     o->runner->m14();
-    fn_802C14B8(-1);
+    HSD_StateInvalidate(-1);
 }
 
 extern "C" void fn_8014D4F0(RunnerOwner *o) {
