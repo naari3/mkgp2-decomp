@@ -805,7 +805,7 @@ config.libs = [
             Object(Matching, "game/clModelM_Construct.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/CourseObjectManager_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene3D_SetupProjection.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/EnemyRunType1_CalcSteering.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/EnemyRunType1_CalcSteering.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemObject_DispatchVtable1C_IfBoundedItem.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SpeedBoost_Apply.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemObject_AllocFromPool.cpp", extra_cflags=["-Cpp_exceptions on"]),
