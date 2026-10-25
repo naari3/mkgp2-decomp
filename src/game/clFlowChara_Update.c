@@ -101,7 +101,7 @@ void fn_8021A660(CharaModel*, float, float, float);
 void fn_8021A71C(CharaModel*, float, float, float);
 void fn_8021A9E8(CharaModel*);
 void __assert(const char*, int, const char*);
-void fn_802D1E34(CharaJoint*);
+void HSD_JObjSetupMatrixSub(CharaJoint*);
 }
 static inline CharaInput* CurrentCharaInput()
 {
@@ -120,7 +120,7 @@ static inline CharaMatrix* CharaJointMatrix(CharaJoint* joint)
         if (!joint) __assert(lbl_806D9BC4, 0x25D, lbl_806D9BCC);
         unsigned char update = 0;
         if (!(joint->flags & 0x00800000) && (joint->flags & 0x40)) update = 1;
-        if (update) fn_802D1E34(joint);
+        if (update) HSD_JObjSetupMatrixSub(joint);
     }
     return &joint->matrix;
 }
@@ -399,7 +399,7 @@ extern void fn_8021A71C();
 extern void fn_8021A9E8();
 extern void fn_8021ABFC();
 extern void PSMTXRotRad();
-extern void fn_802D1E34();
+extern void HSD_JObjSetupMatrixSub();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int FLOAT_ARROW_RIGHT_OFFSET;
@@ -1440,7 +1440,7 @@ asm void clFlowChara_Update(void) { /* 0x801C3D48 size:0xF5C */
     clrlwi. r0, r3, 24
     beq clFlowChara_Update_L_801C4BA0
     mr r3, r28
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     clFlowChara_Update_L_801C4BA0:
     lwz r0, 0x4(r31)
     addi r4, r28, 0x44
@@ -1493,7 +1493,7 @@ asm void clFlowChara_Update(void) { /* 0x801C3D48 size:0xF5C */
     clrlwi. r0, r3, 24
     beq clFlowChara_Update_L_801C4C60
     mr r3, r28
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     clFlowChara_Update_L_801C4C60:
     lwz r0, 0x4(r31)
     addi r4, r28, 0x44

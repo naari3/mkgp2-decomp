@@ -1686,7 +1686,7 @@ extern void Object_RenderJObjTree();
 extern void __assert();
 extern void PSMTXCopy();
 extern void fn_802CD3DC();
-extern void fn_802D1E34();
+extern void HSD_JObjSetupMatrixSub();
 extern void fn_802D20AC();
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
@@ -1761,7 +1761,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     clrlwi. r0, r3, 24
     beq KartTireFX_ApplyAndRender_L_80079318
     mr r3, r29
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartTireFX_ApplyAndRender_L_80079318:
     lwz r30, 0x74(r31)
     addi r29, r29, 0x44
@@ -1836,7 +1836,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     clrlwi. r0, r3, 24
     beq KartTireFX_ApplyAndRender_L_80079420
     mr r3, r29
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartTireFX_ApplyAndRender_L_80079420:
     lwz r30, 0x78(r31)
     addi r29, r29, 0x44
@@ -1911,7 +1911,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     clrlwi. r0, r3, 24
     beq KartTireFX_ApplyAndRender_L_80079528
     mr r3, r29
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartTireFX_ApplyAndRender_L_80079528:
     lwz r30, 0x7c(r31)
     addi r29, r29, 0x44
@@ -1986,7 +1986,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     clrlwi. r0, r3, 24
     beq KartTireFX_ApplyAndRender_L_80079630
     mr r3, r29
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartTireFX_ApplyAndRender_L_80079630:
     lwz r30, 0x80(r31)
     addi r29, r29, 0x44

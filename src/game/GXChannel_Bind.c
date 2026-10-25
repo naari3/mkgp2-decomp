@@ -10,11 +10,11 @@ extern void GXSetArray();
 extern void GX_SetCullMode();
 extern void GXSetVtxAttrFmt();
 extern void GXSetVtxDesc();
-extern void fn_802BCF94();
+extern void HSD_DObjSetCurrent();
 extern void fn_802C22D8();
 extern void fn_802C35DC();
 extern void HSD_CObjGetCurrent();
-extern void fn_802D0F50();
+extern void HSD_JObjSetCurrent();
 
 /* --- function index (1 fns, .text 0x8007D834..0x8007D9C4) ---
  * [  0] 0x8007D834 size:0x190   global GXChannel_Bind
@@ -54,9 +54,9 @@ asm void GXChannel_Bind(void) { /* 0x8007D834 size:0x190 */
     addi r0, r3, 0x54
     stw r0, 0x10(r31)
     lwz r3, 0x0(r31)
-    bl fn_802D0F50
+    bl HSD_JObjSetCurrent
     lwz r3, 0x4(r31)
-    bl fn_802BCF94
+    bl HSD_DObjSetCurrent
     lwz r3, 0x4(r31)
     lwz r3, 0x8(r3)
     bl fn_802C22D8

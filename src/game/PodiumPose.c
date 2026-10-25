@@ -76,7 +76,7 @@ extern const char lbl_806D7AA0[7]; /* lbl_806D7AA0 */
 extern const char lbl_806D7AA8[5]; /* "jobj" */
 extern const char lbl_806D7AC0[4]; /* "mtx" */
 extern void __assert(const char *file, int line, const char *expr);
-extern void fn_802D1E34(JObj *jobj);
+extern void HSD_JObjSetupMatrixSub(JObj *jobj);
 extern void fn_802D20AC(JObj *jobj);
 extern void fn_802D0870(JObj *jobj, unsigned int flags);
 extern JObj *ResolveJointByName(void *model, const char *name);
@@ -149,7 +149,7 @@ static inline void JObjSetupMatrix(JObj *jobj) {
         return;
     }
     if (JObjMtxIsDirty(jobj)) {
-        fn_802D1E34(jobj);
+        HSD_JObjSetupMatrixSub(jobj);
     }
 }
 

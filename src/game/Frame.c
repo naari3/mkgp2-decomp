@@ -84,8 +84,8 @@ extern void CreditMgr_PollInsertAndPlay(int arg);
 extern void OverlayText(int, int, int, const char *, ...);
 extern void GXDrawDone(void);
 extern void fn_8018F14C(void);
-extern void fn_802D5228(int arg);
-extern void fn_802D53A4(void);
+extern void HSD_VICopyXFBAsync(int arg);
+extern void HSD_VIDrawDoneXFBAll(void);
 extern void VIWaitForRetrace(void);
 extern void GXInvalidateTexAll(void);
 extern void fn_802D47E8(void);
@@ -104,7 +104,7 @@ extern u8 lbl_806D0F94;
 extern u8 lbl_806D0F98;
 extern u32 *lbl_806D0F9C;
 extern FrameIOSnapshot lbl_80594080;
-extern DrawCtx lbl_806CD140;
+extern DrawCtx HSD_VIData;
 extern FrameHookPair lbl_806CED28;
 extern u8 lbl_806CED30;
 extern u32 lbl_806CED34;
@@ -204,10 +204,10 @@ void Frame_PostDrawOverlay(void) { /* 0x8002D978 size:0xC4 */
     fn_8018F14C();
     {
         u32 v = lbl_806CED34;
-        lbl_806CD140.color48 = *(Color4 *)&v;
+        HSD_VIData.color48 = *(Color4 *)&v;
     }
-    fn_802D5228(0);
-    fn_802D53A4();
+    HSD_VICopyXFBAsync(0);
+    HSD_VIDrawDoneXFBAll();
     VIWaitForRetrace();
     GXInvalidateTexAll();
 }

@@ -5,10 +5,10 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void fn_802BCF94();
+extern void HSD_DObjSetCurrent();
 extern void fn_802C14B8();
 extern void fn_802C22D8();
-extern void fn_802CAEA0();
+extern void HSD_ClearVtxDesc();
 
 /* --- function index (1 fns, .text 0x8007D7BC..0x8007D834) ---
  * [  0] 0x8007D7BC size:0x78    global GXChannel_Unbind
@@ -50,8 +50,8 @@ asm void GXChannel_Unbind(void) { /* 0x8007D7BC size:0x78 */
     li r3, 0x0
     bl fn_802C22D8
     li r3, 0x0
-    bl fn_802BCF94
-    bl fn_802CAEA0
+    bl HSD_DObjSetCurrent
+    bl HSD_ClearVtxDesc
     li r3, -0x1
     bl fn_802C14B8
     li r0, 0x0

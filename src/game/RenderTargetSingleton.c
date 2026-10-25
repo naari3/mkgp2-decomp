@@ -79,7 +79,7 @@ extern void fn_8013BB9C(void *cam);
 extern void fn_8013BCA0(void);
 extern void Object_RenderJObjTree(void *obj, int flags);
 extern void __assert(char *file, int line, char *expr);
-extern void fn_802D1E34(HSD_JObj *jobj);
+extern void HSD_JObjSetupMatrixSub(HSD_JObj *jobj);
 extern void Object_SetAnimBinding(void *obj, void *anim, int);
 extern void Object_DriveAnimMatrix(void *obj);
 extern void clNormal3D_SetScale(void *obj, void *anim, float frame, float a, float b, float c);
