@@ -4336,6 +4336,11 @@ game/ItemObject_Tick_Kind3c_OnchiSpeaker.c:
 	extabindex  start:0x80023E70 end:0x80023E7C
 	.text       start:0x800EEF34 end:0x800EF2DC
 
+game/GreenShell_State1_Held.c:
+	extab       start:0x8000B644 end:0x8000B64C
+	extabindex  start:0x80023E7C end:0x80023E88
+	.text       start:0x800EF2DC end:0x800EFC84
+
 game/HeartCompoundItem.c:
 	extab       start:0x8000B674 end:0x8000B68C
 	extabindex  start:0x80023EC4 end:0x80023EE8
