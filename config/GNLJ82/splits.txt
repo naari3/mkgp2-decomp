@@ -7026,6 +7026,11 @@ game/fn_801D8DF8.c:
 game/fn_801D9180.c:
 	.text       start:0x801D9180 end:0x801D919C
 
+game/fn_801D919C.cpp:
+	extab       start:0x800154E0 end:0x800154F8
+	extabindex  start:0x800281B4 end:0x800281C0
+	.text       start:0x801D919C end:0x801D92D0
+
 game/clFlowKart_SetupTextLayout.c:
 	extab       start:0x80015520 end:0x80015528
 	extabindex  start:0x800281CC end:0x800281D8
@@ -7088,6 +7093,11 @@ game/fn_801DAEC0.cpp:
 	extab       start:0x800156AC end:0x800156C4
 	extabindex  start:0x8002828C end:0x80028298
 	.text       start:0x801DAEC0 end:0x801DAF38
+
+game/DrawText.c:
+	extab       start:0x800156D4 end:0x800156DC
+	extabindex  start:0x800282B0 end:0x800282BC
+	.text       start:0x801DB548 end:0x801DB68C
 
 game/fn_801DB68C.c:
 	extab       start:0x800156DC end:0x800156E4
