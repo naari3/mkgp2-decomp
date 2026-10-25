@@ -1,237 +1,111 @@
-/* === extracted from auto_NokoNoko_InitEntity_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+/* NokoNoko_InitEntity (0x801884E8): places a NokoNoko at `pos`, picks its
+ * kind from the shared random table and faces it along the nearest path
+ * segment. */
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void atan2();
-extern void Terrain_GetGroundHeight();
-extern void Vec3_Dot();
-extern void Vec3_Normalize();
-extern void Vec3_Subtract();
-extern void PSVECSquareMag();
+typedef struct { float x, y, z; } Vec;
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D1684;
-extern unsigned int lbl_806D9324;
-extern unsigned int lbl_806D9350;
+typedef struct NokoKind {
+    int model;
+    int anim;
+    int extra;
+    float speed;
+    float radius;
+} NokoKind;
 
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_80377450[];
-extern unsigned int lbl_80495994[];
-extern unsigned int lbl_80495D28[];
+typedef struct NokoNoko {
+    struct NokoNoko *next;
+    int kindTable;
+    int kindIndex;
+    int model;
+    int anim;
+    float frame;
+    int extra;
+    Vec pos;
+    float yaw;
+    float speed;
+    float radius;
+    int model2;
+    float blend;
+    float frame2;
+} NokoNoko;
 
-/* --- function index (1 fns, .text 0x801884E8..0x801887BC) ---
- * [  0] 0x801884E8 size:0x2D4   global NokoNoko_InitEntity
- */
+extern int lbl_806D1684;
+extern const float lbl_806D9324;
+extern const float lbl_806D9350;
+extern float lbl_80495994[];
+extern NokoKind *lbl_80495D28[];
+extern Vec lbl_80377450[];
+extern void Vec3_Subtract(Vec *a, Vec *b, Vec *out);
+extern float PSVECSquareMag(Vec *v);
+extern void Vec3_Normalize(Vec *src, Vec *dst);
+extern float Vec3_Dot(Vec *a, Vec *b);
+extern double atan2(double y, double x);
+extern unsigned char Terrain_GetGroundHeight(Vec *pos, float *height, int a, int b);
 
-/* --- forward decls --- */
-asm void NokoNoko_InitEntity(void);
+#pragma exceptions on
+NokoNoko *NokoNoko_InitEntity(NokoNoko *self, Vec *pos) {
+    Vec d;
+    Vec rel;
+    Vec nearest;
+    float h;
+    unsigned int i;
+    unsigned int best;
+    unsigned int next;
+    float bestDist;
+    float dist;
+    float t;
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_NokoNoko_InitEntity[8] = {
-    0x20, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_NokoNoko_InitEntity = {
-    (void *)&NokoNoko_InitEntity, 0x000002D4, (void *)extab_NokoNoko_InitEntity
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void NokoNoko_InitEntity(void) { /* 0x801884E8 size:0x2D4 */
-    nofralloc
-    stwu r1, -0x60(r1)
-    mflr r0
-    stw r0, 0x64(r1)
-    stfd f31, 0x50(r1)
-    psq_st f31, 0x58(r1), 0, 0
-    stw r31, 0x4c(r1)
-    stw r30, 0x48(r1)
-    stw r29, 0x44(r1)
-    stw r28, 0x40(r1)
-    mr r29, r3
-    li r3, 0x0
-    stw r3, 0x0(r29)
-    li r0, -0x1
-    lfs f0, lbl_806D9324(r2)
-    lfs f1, 0x0(r4)
-    stfs f1, 0x1c(r29)
-    lfs f1, 0x4(r4)
-    stfs f1, 0x20(r29)
-    lfs f1, 0x8(r4)
-    stfs f1, 0x24(r29)
-    stw r0, 0x34(r29)
-    stfs f0, 0x38(r29)
-    stfs f0, 0x3c(r29)
-    lwz r0, lbl_806D1684(r13)
-    cmpwi r0, 0x40
-    blt NokoNoko_InitEntity_L_80188554
-    stw r3, lbl_806D1684(r13)
-    NokoNoko_InitEntity_L_80188554:
-    lwz r6, lbl_806D1684(r13)
-    lis r5, lbl_80495994@ha
-    lis r3, lbl_80495D28@ha
-    lis r4, lbl_80377450@ha
-    slwi r0, r6, 2
-    addi r5, r5, lbl_80495994@l
-    lfsx f1, r5, r0
-    addi r5, r6, 0x1
-    lfs f0, lbl_806D9350(r2)
-    li r0, 0x0
-    stw r5, lbl_806D1684(r13)
-    addi r3, r3, lbl_80495D28@l
-    fmuls f1, f0, f1
-    lfs f0, lbl_806D9324(r2)
-    addi r28, r4, lbl_80377450@l
-    li r31, 0x0
-    fctiwz f1, f1
-    stfd f1, 0x30(r1)
-    lwz r4, 0x34(r1)
-    stw r4, 0x4(r29)
-    stw r0, 0x8(r29)
-    lwz r4, 0x4(r29)
-    lwz r0, 0x8(r29)
-    slwi r4, r4, 2
-    mulli r0, r0, 0x14
-    lwzx r4, r3, r4
-    lwzx r0, r4, r0
-    stw r0, 0xc(r29)
-    lwz r4, 0x4(r29)
-    lwz r0, 0x8(r29)
-    slwi r4, r4, 2
-    mulli r0, r0, 0x14
-    lwzx r4, r3, r4
-    add r4, r4, r0
-    lwz r0, 0x4(r4)
-    stw r0, 0x10(r29)
-    lwz r4, 0x4(r29)
-    lwz r0, 0x8(r29)
-    slwi r4, r4, 2
-    mulli r0, r0, 0x14
-    lwzx r4, r3, r4
-    add r4, r4, r0
-    lwz r0, 0x8(r4)
-    stw r0, 0x18(r29)
-    lwz r4, 0x4(r29)
-    lwz r0, 0x8(r29)
-    slwi r4, r4, 2
-    mulli r0, r0, 0x14
-    lwzx r4, r3, r4
-    add r4, r4, r0
-    lfs f1, 0xc(r4)
-    stfs f1, 0x2c(r29)
-    lwz r4, 0x4(r29)
-    lwz r0, 0x8(r29)
-    slwi r4, r4, 2
-    mulli r0, r0, 0x14
-    lwzx r3, r3, r4
-    add r3, r3, r0
-    lfs f1, 0x10(r3)
-    stfs f1, 0x30(r29)
-    stfs f0, 0x14(r29)
-    NokoNoko_InitEntity_L_80188648:
-    mr r3, r28
-    addi r4, r29, 0x1c
-    addi r5, r1, 0x24
-    bl Vec3_Subtract
-    addi r3, r1, 0x24
-    bl PSVECSquareMag
-    cmpwi r31, 0x0
-    beq NokoNoko_InitEntity_L_80188670
-    fcmpo cr0, f1, f31
-    bge NokoNoko_InitEntity_L_80188678
-    NokoNoko_InitEntity_L_80188670:
-    mr r30, r31
-    fmr f31, f1
-    NokoNoko_InitEntity_L_80188678:
-    addi r31, r31, 0x1
-    cmplwi r31, 0x15
-    blt NokoNoko_InitEntity_L_80188648
-    mulli r4, r30, 0xc
-    lis r3, lbl_80377450@ha
-    addi r5, r30, 0x1
-    addi r0, r3, lbl_80377450@l
-    add r4, r0, r4
-    cmplwi r5, 0x15
-    lfs f2, 0x0(r4)
-    lfs f1, 0x4(r4)
-    lfs f0, 0x8(r4)
-    stfs f2, 0xc(r1)
-    stfs f1, 0x10(r1)
-    stfs f0, 0x14(r1)
-    bne NokoNoko_InitEntity_L_801886BC
-    li r5, 0x0
-    NokoNoko_InitEntity_L_801886BC:
-    mulli r5, r5, 0xc
-    lis r3, lbl_80377450@ha
-    addi r0, r3, lbl_80377450@l
-    add r3, r0, r5
-    addi r5, r1, 0x24
-    bl Vec3_Subtract
-    addi r3, r1, 0x24
-    mr r4, r3
-    bl Vec3_Normalize
-    addi r3, r29, 0x1c
-    addi r4, r1, 0xc
-    addi r5, r1, 0x18
-    bl Vec3_Subtract
-    addi r3, r1, 0x18
-    addi r4, r1, 0x24
-    bl Vec3_Dot
-    lfs f2, 0x24(r1)
-    addi r3, r1, 0x18
-    lfs f0, 0xc(r1)
-    mr r4, r3
-    lfs f4, 0x28(r1)
-    lfs f3, 0x10(r1)
-    fmadds f5, f2, f1, f0
-    lfs f2, 0x2c(r1)
-    lfs f0, 0x14(r1)
-    fmadds f3, f4, f1, f3
-    stfs f5, 0xc(r1)
-    fmadds f2, f2, f1, f0
-    lfs f0, lbl_806D9324(r2)
-    stfs f3, 0x10(r1)
-    stfs f2, 0x14(r1)
-    lfs f1, 0x1c(r29)
-    fsubs f1, f5, f1
-    stfs f0, 0x1c(r1)
-    stfs f1, 0x18(r1)
-    lfs f0, 0x24(r29)
-    fsubs f0, f2, f0
-    stfs f0, 0x20(r1)
-    bl Vec3_Normalize
-    lfs f1, 0x18(r1)
-    lfs f2, 0x20(r1)
-    bl atan2
-    frsp f0, f1
-    addi r3, r29, 0x1c
-    addi r4, r1, 0x8
-    li r5, 0x0
-    li r6, 0x0
-    stfs f0, 0x28(r29)
-    bl Terrain_GetGroundHeight
-    clrlwi. r0, r3, 24
-    beq NokoNoko_InitEntity_L_80188790
-    lfs f0, 0x8(r1)
-    stfs f0, 0x20(r29)
-    NokoNoko_InitEntity_L_80188790:
-    mr r3, r29
-    psq_l f31, 0x58(r1), 0, 0
-    lwz r0, 0x64(r1)
-    lfd f31, 0x50(r1)
-    lwz r31, 0x4c(r1)
-    lwz r30, 0x48(r1)
-    lwz r29, 0x44(r1)
-    lwz r28, 0x40(r1)
-    mtlr r0
-    addi r1, r1, 0x60
-    blr
+    self->next = 0;
+    self->pos.x = pos->x;
+    self->pos.y = pos->y;
+    self->pos.z = pos->z;
+    self->model2 = -1;
+    self->blend = lbl_806D9324;
+    self->frame2 = lbl_806D9324;
+    if (lbl_806D1684 >= 0x40) {
+        lbl_806D1684 = 0;
+    }
+    {
+        float r = lbl_80495994[lbl_806D1684++];
+        self->kindTable = lbl_806D9350 * r;
+    }
+    self->kindIndex = 0;
+    self->model = lbl_80495D28[self->kindTable][self->kindIndex].model;
+    self->anim = lbl_80495D28[self->kindTable][self->kindIndex].anim;
+    self->extra = lbl_80495D28[self->kindTable][self->kindIndex].extra;
+    self->speed = lbl_80495D28[self->kindTable][self->kindIndex].speed;
+    self->radius = lbl_80495D28[self->kindTable][self->kindIndex].radius;
+    self->frame = lbl_806D9324;
+    for (i = 0; i < 21; i++) {
+        Vec3_Subtract(lbl_80377450, &self->pos, &d);
+        dist = PSVECSquareMag(&d);
+        if ((int)i == 0 || dist < bestDist) {
+            best = i;
+            bestDist = dist;
+        }
+    }
+    nearest.x = lbl_80377450[best].x;
+    nearest.y = lbl_80377450[best].y;
+    nearest.z = lbl_80377450[best].z;
+    next = best + 1;
+    if (next == 21) {
+        next = 0;
+    }
+    Vec3_Subtract(&lbl_80377450[next], &lbl_80377450[best], &d);
+    Vec3_Normalize(&d, &d);
+    Vec3_Subtract(&self->pos, &nearest, &rel);
+    t = Vec3_Dot(&rel, &d);
+    nearest.x = d.x * t + nearest.x;
+    nearest.y = d.y * t + nearest.y;
+    nearest.z = d.z * t + nearest.z;
+    rel.x = nearest.x - self->pos.x;
+    rel.y = lbl_806D9324;
+    rel.z = nearest.z - self->pos.z;
+    Vec3_Normalize(&rel, &rel);
+    self->yaw = atan2(rel.x, rel.z);
+    if (Terrain_GetGroundHeight(&self->pos, &h, 0, 0)) {
+        self->pos.y = h;
+    }
+    return self;
 }
-
+#pragma exceptions reset

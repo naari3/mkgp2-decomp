@@ -60,8 +60,10 @@ void SceneListImpl::Sort() {
         ListIter b;
         b.node = a.node->next;
         while (b.node != entries.End()) {
-            FlowTask *tb = b.node->task;
-            FlowTask *ta = a.node->task;
+            FlowTask *ta;
+            FlowTask *tb;
+            tb = b.node->task;
+            ta = a.node->task;
             if ((unsigned int)ta->id > (unsigned int)tb->id) {
                 a.node->task = tb;
                 b.node->task = ta;

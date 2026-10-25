@@ -1,4 +1,5 @@
 {
+  "src/game/clFlowCup.c": ["clFlowCup_Draw", "clFlowCup_Update", "clFlowCup_Dtor", "clFlowCup_Init"],
   "src/game/dtor_801FE870.cpp": {
     "extab": ["dtor_801FE870", "fn_801FE4D0", "fn_801FE554", "fn_801FE588", "fn_801FE5C8"],
     "extabindex": ["fn_801FE4D0", "fn_801FE554", "fn_801FE588", "fn_801FE5C8", "dtor_801FE870"]
