@@ -1381,6 +1381,8 @@ config.libs = [
             Object(Matching, "game/LakituStart_Dtor.c"),
             Object(Matching, "game/JObj_IsForwardDotBelowThreshold.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SetAnimState.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ItemHandler_Star.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/KartItem_TickStunStateMachine.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartItem_BroadcastParamToCarAndISE.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartItem_Fields.c"),
             Object(Matching, "game/KartItem_RankSlot.c"),
