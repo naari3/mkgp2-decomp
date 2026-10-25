@@ -707,6 +707,25 @@
     "__dt__8PropNodeFv": "fn_8016E424",
     "__vt__8PropNode": "lbl_804911F4"
   },
+  "src/game/Scene_8016EACC.cpp": {
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__19ScreenParticleLayerFv": "fn_8016F010",
+    "__ct__9GXChannelFPvPvii": "GXChannel_Init",
+    "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform",
+    "__dt__9GXChannelFv": "dtor_8007D9C4"
+  },
+  "src/game/DebrisBurst.cpp": {
+    "__ct__11DebrisBurstFv": "fn_8016E064",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__12SoundEmitterFv": "fn_801715A0"
+  },
+  "src/game/Scene_8016FD0C.cpp": {
+    "__ct__11CourseModelFP8HSD_JObj": "fn_8016FD0C",
+    "__vt__16CourseMarkerBase": "lbl_80490FE0",
+    "__vt__11CourseModel": "lbl_8049123C",
+    "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
+    "__ct__10clNormal3DFPvi": "clNormal3D_Construct"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
