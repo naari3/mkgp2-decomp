@@ -38926,7 +38926,6 @@ synthVoice = .sbss:0x806D1F30; // type:object size:0x4 data:4byte
 synthMessageCallback = .sbss:0x806D1F34; // type:object size:0x4 data:4byte
 synthIdleWaitActive = .sbss:0x806D1F38; // type:object size:0x8 data:byte
 synthRealTime = .sbss:0x806D1F40; // type:object size:0x8 align:8 data:4byte
-lbl_806D1F44 = .sbss:0x806D1F44; // type:object size:0x4 data:4byte
 lbl_806D1F48 = .sbss:0x806D1F48; // type:object size:0x4 data:4byte
 lbl_806D1F4C = .sbss:0x806D1F4C; // type:object size:0x8 data:byte
 lbl_806D1F54 = .sbss:0x806D1F54; // type:object size:0x1 data:byte
