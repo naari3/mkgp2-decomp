@@ -443,7 +443,9 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/fobj.c"),  # TEST: post-process fobj.o with _externize_sdata2.py
             Object(Matching, "sysdolphin/baselib/jobj.c"),
             Object(Matching, "sysdolphin/baselib/jobj_anim_misc.c"),
+            Object(Matching, "sysdolphin/baselib/util.c"),
             Object(Matching, "sysdolphin/baselib/robj.c"),
+            Object(Matching, "sysdolphin/baselib/id.c"),
         ],
     },
     {
