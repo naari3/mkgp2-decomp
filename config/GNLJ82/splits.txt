@@ -4347,6 +4347,11 @@ game/ItemObject_Tick_Kind3dTo3f_GreenShell.c:
 	.text       start:0x800EFC84 end:0x800F091C
 	.data       start:0x80421688 end:0x804216B0
 
+game/Enraku_State1_Held.c:
+	extab       start:0x8000B654 end:0x8000B65C
+	extabindex  start:0x80023E94 end:0x80023EA0
+	.text       start:0x800F091C end:0x800F0EE0
+
 game/HeartCompoundItem.c:
 	extab       start:0x8000B674 end:0x8000B68C
 	extabindex  start:0x80023EC4 end:0x80023EE8
