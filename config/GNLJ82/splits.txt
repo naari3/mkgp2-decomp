@@ -4395,6 +4395,11 @@ game/fn_8010BF20.c:
 	extabindex  start:0x80024260 end:0x8002426C
 	.text       start:0x8010BF20 end:0x8010C110
 
+game/fn_8010CC40.c:
+	extab       start:0x8000B8EC end:0x8000B8F4
+	extabindex  start:0x80024278 end:0x80024284
+	.text       start:0x8010CC40 end:0x8010D270
+
 game/fn_8010DA90.c:
 	extab       start:0x8000B8FC end:0x8000B904
 	extabindex  start:0x80024290 end:0x8002429C
