@@ -8270,6 +8270,16 @@ game/anon_8021A430.c:
 game/fn_8021A7BC.c:
 	.text       start:0x8021A7BC end:0x8021A7C8
 
+game/anon_8021A7C8.cpp:
+	extab       start:0x8001AB68 end:0x8001AC8C
+	extabindex  start:0x8002A2A8 end:0x8002A2D8
+	.text       start:0x8021A7C8 end:0x8021B568
+
+game/anon_8021B568.cpp:
+	extab       start:0x8001AC8C end:0x8001ACE8
+	extabindex  start:0x8002A2D8 end:0x8002A308
+	.text       start:0x8021B568 end:0x8021BC44
+
 game/fn_8021ED0C.c:
 	.text       start:0x8021ED0C end:0x8021ED1C
 

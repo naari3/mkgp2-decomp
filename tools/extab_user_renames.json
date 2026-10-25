@@ -3932,6 +3932,37 @@
     "__ct__10AnimSpriteFiii": "Sprite_InitWithAnim",
     "__dt__10AnimSpriteFv": "Sprite_Destroy"
   },
+  "src/game/anon_8021A7C8.cpp": {
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "Draw__16clCSOrgKartModelFv": "fn_8021A7C8",
+    "Update__16clCSOrgKartModelFv": "fn_8021A9E8",
+    "__dt__16clCSOrgKartModelFv": "fn_8021AAE8",
+    "__ct__16clCSOrgKartModelFiiUcUc": "fn_8021ABFC",
+    "__vt__16clCSOrgKartModel": "lbl_804EDCFC",
+    "__vt__18clCSModelInterface": "lbl_8048EAE8",
+    "__ct__10clNormal3DFPCcUc": "clNormal3D_Construct",
+    "__dt__10clNormal3DFv": "Object_DtorWithGXSync"
+  },
+  "src/game/anon_8021B568.cpp": {
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "CountFlagged__11TeamIconRowFv": "fn_8021B568",
+    "Close__11TeamIconRowFv": "fn_8021B5D4",
+    "SetLayer__11TeamIconRowFi": "fn_8021B5F4",
+    "Draw__11TeamIconRowFv": "fn_8021B638",
+    "Update__11TeamIconRowFv": "fn_8021B68C",
+    "__dt__11TeamIconRowFv": "fn_8021B92C",
+    "__ct__11TeamIconRowFv": "fn_8021BA20",
+    "__vt__11TeamIconRow": "lbl_804EDD2C",
+    "__vt__17clCSPartsInerface": "lbl_8048EB44",
+    "__ct__10SpriteAnimFi": "fn_8023F320",
+    "__dt__10SpriteAnimFv": "SpriteAnimHandle_Destroy"
+  },
   "src/game/ChallengeGoalCamera_Init.cpp": {
     "__nw__FUl": "Alloc",
     "__ct__13DemoSceneBaseFPCc": "Scene3D_Init",
