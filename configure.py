@@ -1365,7 +1365,7 @@ config.libs = [
             Object(Matching, "game/Rand.c"),
             Object(Matching, "game/Rand_RangeInt.c"),
             Object(Matching, "game/ItemObjectManager_Controls.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/JumpDistanceMode_PredictLanding.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/JumpDistanceMode_PredictLanding.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/JumpDistanceMode_CopyKartMovement.c"),
             Object(Matching, "game/BombItem_DropAndSpawnExplosionTick.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/SpriteSlot_SetRotationQuatFromVec.c", extab_padding=b"\x00\x00"),
