@@ -2553,6 +2553,8 @@ config.libs = [
             Object(Matching, "game/sprite/fn_801A1798.c"),
             Object(Matching, "game/kartmove/DebugOverlay_KartPhysics.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-str reuse,readonly"]),
             Object(Matching, "game/fog/Fog_UpdateFromCourseScene3D.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/kartmove/fn_8019BF80.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/bitread/fn_8018CC64.c"),
             # g4-end
         ],
     },

@@ -1145,6 +1145,9 @@
     "__dt__7CarElemFv": "dtor_80036E40",
     "__dt__10CarTrivialFv": "dtor_8019EB60"
   },
+  "src/game/kartmove/fn_8019BF80.cpp": {
+    "__dt__3VecFv": "dtor_80036E40"
+  },
   "src/game/objview/fn_80187878.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",

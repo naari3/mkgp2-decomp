@@ -6838,6 +6838,9 @@ game/bitread/fn_8018B2E4.c:
 game/bitread/fn_8018B300.c:
 	.text       start:0x8018B300 end:0x8018B31C
 
+game/bitread/fn_8018CC64.c:
+	.text       start:0x8018CC64 end:0x8018CD68
+
 game/objview/fn_8018CD68.c:
 	extab       start:0x80011E90 end:0x80011E98
 	extabindex  start:0x80026ED0 end:0x80026EDC
@@ -7253,6 +7256,11 @@ game/kartmove/KartMovement_SetTravelProgress.c:
 
 game/kartmove/fn_8019A8A4.c:
 	.text       start:0x8019A8A4 end:0x8019A9BC
+
+game/kartmove/fn_8019BF80.cpp:
+	extab       start:0x800126B0 end:0x800126F8
+	extabindex  start:0x80027434 end:0x80027440
+	.text       start:0x8019BF80 end:0x8019C078
 
 game/kartmove/fn_8019C078.c:
 	.text       start:0x8019C078 end:0x8019C15C
