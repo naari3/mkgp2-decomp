@@ -4646,6 +4646,12 @@ game/fn_80105180.c:
 	extabindex  start:0x8002414C end:0x80024158
 	.text       start:0x80105180 end:0x80105800
 
+game/fn_80105800.c:
+	extab       start:0x8000B82C end:0x8000B834
+	extabindex  start:0x80024158 end:0x80024164
+	.text       start:0x80105800 end:0x80105CC4
+	.data       start:0x80421AE0 end:0x80421B08
+
 game/fn_80105CC4.c:
 	extab       start:0x8000B834 end:0x8000B83C
 	extabindex  start:0x80024164 end:0x80024170
