@@ -4666,6 +4666,11 @@ game/fn_80113500.c:
 	extabindex  start:0x80024380 end:0x8002438C
 	.text       start:0x80113500 end:0x80113728
 
+game/fn_80113728.c:
+	extab       start:0x8000B9A4 end:0x8000B9AC
+	extabindex  start:0x8002438C end:0x80024398
+	.text       start:0x80113728 end:0x80113F30
+
 game/fn_80113F30.c:
 	extab       start:0x8000B9AC end:0x8000B9B4
 	extabindex  start:0x80024398 end:0x800243A4
@@ -4773,10 +4778,27 @@ game/fn_8011A184.c:
 	extabindex  start:0x800244E8 end:0x800244F4
 	.text       start:0x8011A184 end:0x8011A684
 
+game/fn_8011A684.c:
+	extab       start:0x8000BA94 end:0x8000BA9C
+	extabindex  start:0x800244F4 end:0x80024500
+	.text       start:0x8011A684 end:0x8011AD98
+	.data       start:0x80422188 end:0x804221A8
+
+game/fn_8011AD98.c:
+	extab       start:0x8000BA9C end:0x8000BAA4
+	extabindex  start:0x80024500 end:0x8002450C
+	.text       start:0x8011AD98 end:0x8011B244
+
 game/fn_8011B244.c:
 	extab       start:0x8000BAA4 end:0x8000BAAC
 	extabindex  start:0x8002450C end:0x80024518
 	.text       start:0x8011B244 end:0x8011B748
+
+game/fn_8011B748.c:
+	extab       start:0x8000BAAC end:0x8000BAB4
+	extabindex  start:0x80024518 end:0x80024524
+	.text       start:0x8011B748 end:0x8011BE4C
+	.data       start:0x804221A8 end:0x804221C8
 
 game/fn_8011BE4C.c:
 	extab       start:0x8000BAB4 end:0x8000BABC
@@ -4792,6 +4814,11 @@ game/fn_8011C20C.c:
 	extab       start:0x8000BAC4 end:0x8000BACC
 	extabindex  start:0x8002453C end:0x80024548
 	.text       start:0x8011C20C end:0x8011C5DC
+
+game/fn_8011C5DC.c:
+	extab       start:0x8000BACC end:0x8000BAD4
+	extabindex  start:0x80024548 end:0x80024554
+	.text       start:0x8011C5DC end:0x8011CC34
 
 game/fn_8011CC34.c:
 	extab       start:0x8000BAD4 end:0x8000BADC
@@ -4827,6 +4854,12 @@ game/SpriteHandlePool.c:
 	extab       start:0x8000BB0C end:0x8000BB4C
 	extabindex  start:0x800245A8 end:0x800245CC
 	.text       start:0x8011DF98 end:0x8011EB1C
+
+game/SpriteHandle.cpp:
+	extab       start:0x8000BB4C end:0x8000BCDC
+	extabindex  start:0x800245CC end:0x8002474C
+	.text       start:0x8011EB1C end:0x801223E8
+	.ctors      start:0x802E8904 end:0x802E8908
 
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C
@@ -4867,6 +4900,83 @@ game/SuikaBallObj_Render.c:
 	extab       start:0x8000BE88 end:0x8000BE90
 	extabindex  start:0x8002486C end:0x80024878
 	.text       start:0x801240B4 end:0x801240E4
+
+game/fn_8012491C.c:
+	extab       start:0x8000BE98 end:0x8000BEA0
+	extabindex  start:0x80024884 end:0x80024890
+	.text       start:0x8012491C end:0x80124984
+
+game/SuikaBallObj_Init.cpp:
+	extab       start:0x8000BEA0 end:0x8000BEB8
+	extabindex  start:0x80024890 end:0x8002489C
+	.text       start:0x80124984 end:0x80124AE8
+
+game/ChallengeGoalCamera_Update.c:
+	extab       start:0x8000BEB8 end:0x8000BEC0
+	extabindex  start:0x8002489C end:0x800248A8
+	.text       start:0x80124AE8 end:0x80124C84
+
+game/fn_80124C84.c:
+	extab       start:0x8000BEC0 end:0x8000BEC8
+	extabindex  start:0x800248A8 end:0x800248B4
+	.text       start:0x80124C84 end:0x80124CF4
+
+game/ChallengeGoalCamera_Init.cpp:
+	extab       start:0x8000BEC8 end:0x8000BEE0
+	extabindex  start:0x800248B4 end:0x800248C0
+	.text       start:0x80124CF4 end:0x80124DF8
+
+game/ChallengeDemo_Create.cpp:
+	extab       start:0x8000BEE0 end:0x8000BF68
+	extabindex  start:0x800248C0 end:0x800248CC
+	.text       start:0x80124DF8 end:0x80124F2C
+	.data       start:0x8048E1E0 end:0x8048E200
+
+game/ChallengeDemoShell.cpp:
+	extab       start:0x8000BF68 end:0x8000C044
+	extabindex  start:0x800248CC end:0x800248FC
+	.text       start:0x80124F2C end:0x80125948
+
+game/ChallengeDemoObj.cpp:
+	extab       start:0x8000C18C end:0x8000C268
+	extabindex  start:0x8002492C end:0x8002495C
+	.text       start:0x80126CC4 end:0x80127584
+
+game/ChallengeDemoTornado.cpp:
+	extab       start:0x8000C268 end:0x8000C344
+	extabindex  start:0x8002495C end:0x8002498C
+	.text       start:0x80127584 end:0x80127ECC
+
+game/ChallengeDemoUra.cpp:
+	extab       start:0x8000C344 end:0x8000C444
+	extabindex  start:0x8002498C end:0x800249BC
+	.text       start:0x80127ECC end:0x801287F8
+
+game/dtor_8012A5AC.c:
+	extab       start:0x8000C688 end:0x8000C690
+	extabindex  start:0x80024A10 end:0x80024A1C
+	.text       start:0x8012A5AC end:0x8012A61C
+
+game/fn_8012A61C.c:
+	extab       start:0x8000C690 end:0x8000C698
+	extabindex  start:0x80024A1C end:0x80024A28
+	.text       start:0x8012A61C end:0x8012A71C
+
+game/fn_8012B394.c:
+	extab       start:0x8000C6A0 end:0x8000C6A8
+	extabindex  start:0x80024A34 end:0x80024A40
+	.text       start:0x8012B394 end:0x8012B48C
+
+game/KartPreviewAnim.c:
+	.text       start:0x8012B924 end:0x8012BDA4
+
+game/fn_8012BDA4.c:
+	extab       start:0x8000C720 end:0x8000C728
+	extabindex  start:0x80024A4C end:0x80024A58
+	.text       start:0x8012BDA4 end:0x8012BDF4
+
+game/fn_8012BDF4.c:
+	.text       start:0x8012BDF4 end:0x8012BF5C
 
 game/BiribiriLand.c:
 	extab       start:0x8000CE64 end:0x8000D014

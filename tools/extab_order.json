@@ -270,5 +270,10 @@
   "src/game/CSPartsResultTimeNum.c": ["fn_80144258", "fn_80144308", "dtor_80143F0C", "dtor_8013EB50"],
   "src/game/CSPartsHolders.c": ["fn_8014CE74", "fn_8014CEAC", "fn_8014CEE8", "fn_8014CF44", "fn_8014CFA4", "fn_8014D038", "fn_8014D1E0", "fn_8014D250", "fn_8014D2B0", "fn_8014D344", "fn_8014D4B8", "fn_8014D4F0"],
   "src/game/ResourceSlot.c": ["fn_8011DC20", "ResourceSlot_Load", "TEXGetGXTexObjFromPalette", "TEXGetGXTexObjFromPaletteCI"],
-  "src/game/SpriteHandlePool.c": ["fn_8011DF98", "fn_8011E31C", "fn_8011E9C0", "__dt__11ScopedTimerFv", "dtor_80122068"]
+  "src/game/SpriteHandlePool.c": ["fn_8011DF98", "fn_8011E31C", "fn_8011E9C0", "__dt__11ScopedTimerFv", "dtor_80122068"],
+  "src/game/ChallengeDemoShell.cpp": ["fn_80124F2C", "fn_801250E8", "fn_80125558", "fn_80125690", "clCGameDemo_Dtor"],
+  "src/game/ChallengeDemoObj.cpp": ["fn_80126CC4", "fn_80126E6C", "fn_801271A0", "fn_801272D8", "clCGameDemo_Dtor"],
+  "src/game/ChallengeDemoTornado.cpp": ["fn_80127584", "fn_8012772C", "fn_80127AB8", "fn_80127BF0", "clCGameDemo_Dtor"],
+  "src/game/ChallengeDemoUra.cpp": ["fn_80127ECC", "fn_80128074", "fn_801283C0", "fn_801284F8", "clCGameDemo_Dtor"],
+  "src/game/SpriteHandle.cpp": ["dtor_80122068", "fn_8011EB1C", "fn_8011EC18", "SpriteHandle_RecomputeCull", "SpriteLayer_SetResource", "fn_8011F610", "fn_8011F870", "fn_8011F994", "fn_8011FA98", "fn_8011FAB8", "SpriteHandle_CreateDefault", "fn_8011FAFC", "SpriteHandle_CreateEx", "fn_801208E0", "fn_8012094C", "fn_80120A08", "PreloadResource", "fn_80121210", "fn_801213EC", "fn_801217E8", "dtor_80122120", "fn_80121C38", "fn_80121E10", "ResCtrl_Init", "fn_8012215C", "fn_80122338", "fn_80121F54", "fn_80121FB4", "fn_801221D4", "fn_80122204", "fn_8012223C", "fn_801222F0", "__dt__11ScopedTimerFv"]
 }
