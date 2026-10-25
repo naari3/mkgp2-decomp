@@ -6886,6 +6886,12 @@ game/WeatherSystem_PickVariant.c:
 game/fn_801932F8.c:
 	.text       start:0x801932F8 end:0x80193300
 
+game/fog/Fog_UpdateFromCourseScene3D.c:
+	extab       start:0x800122BC end:0x800122C4
+	extabindex  start:0x80027194 end:0x800271A0
+	.text       start:0x80193300 end:0x801933D0
+	.data       start:0x80495F20 end:0x80495F48
+
 game/clsound/fn_801933D0.c:
 	extab       start:0x800122C4 end:0x800122CC
 	extabindex  start:0x800271A0 end:0x800271AC
@@ -7047,6 +7053,12 @@ game/objview/fn_801986D8.c:
 	extab       start:0x80012580 end:0x80012588
 	extabindex  start:0x8002738C end:0x80027398
 	.text       start:0x801986D8 end:0x801987C4
+
+game/kartmove/DebugOverlay_KartPhysics.c:
+	extab       start:0x800125F8 end:0x80012600
+	extabindex  start:0x800273C8 end:0x800273D4
+	.text       start:0x801998F8 end:0x801999D0
+	.rodata     start:0x8037DD78 end:0x8037DDC8
 
 game/kartmove/fn_801999D0.c:
 	.text       start:0x801999D0 end:0x801999E0
@@ -7241,6 +7253,10 @@ game/sprite/fn_801A175C.c:
 	extab       start:0x80012A58 end:0x80012A60
 	extabindex  start:0x8002762C end:0x80027638
 	.text       start:0x801A175C end:0x801A1798
+
+game/sprite/fn_801A1798.c:
+	.text       start:0x801A1798 end:0x801A1828
+	.data       start:0x8049A060 end:0x8049A094
 
 game/sprite/fn_801A1828.c:
 	extab       start:0x80012A60 end:0x80012A68
