@@ -37,7 +37,7 @@ float FAbs_FloatAsDouble(float);
 void Effect_StarBurst_Update(StarEffect* effect) {
     switch (effect->state) {
     default:
-        return;
+        break;
     case 0:
         if (!effect->variant) VfxSlot_BindResourceEx(effect->slotHead, 0x7f, 0);
         else VfxSlot_BindResourceEx(effect->slotHead, 3, 0);
