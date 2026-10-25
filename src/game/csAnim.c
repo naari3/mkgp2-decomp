@@ -62,7 +62,7 @@ extern const int lbl_806D7488;
 extern const int lbl_806D7490;
 
 extern void fn_8011FAFC(void *res, void *arg);
-extern void OSPanic_Stub(const char *file, int line, const char *msg, ...);
+extern void OSPanic(const char *file, int line, const char *msg, ...);
 extern void ResCtrl_Init(void *res);
 extern void dtor_80082960();
 extern void MemoryManager_TimedFree();
@@ -228,7 +228,7 @@ asm void fn_8013AE20(void) { /* 0x8013AE20 size:0x4E0 */
     mr r5, r29
     li r4, 0x86
     crxor 6, 6, 6
-    bl OSPanic_Stub
+    bl OSPanic
     fn_8013AE20_L_8013AFFC:
     lwz r0, 0x14(r30)
     add r4, r0, r27
