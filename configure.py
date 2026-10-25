@@ -1798,6 +1798,13 @@ config.libs = [
         extra_cflags=["-char signed"],
     ),
     SdkLib(
+        "dolphin_exi",
+        [
+            Object(Matching, "dolphin/exi/EXIBios.c", extra_cflags=["-schedule off"]),
+            Object(Matching, "dolphin/exi/EXIUart.c"),
+        ],
+    ),
+    SdkLib(
         "dolphin_gx",
         [
             Object(Matching, "dolphin/gx/GXInit.c"),

@@ -6195,6 +6195,17 @@ dolphin/odenotstub/odenotstub.c:
 dolphin/odemustubs/odemustubs.c:
 	.text       start:0x8027ECC4 end:0x8027ECCC
 
+dolphin/exi/EXIBios.c:
+	.text       start:0x8027F744 end:0x80280FEC
+	.data       start:0x804F5370 end:0x804F5480
+	.bss        start:0x8067DFC8 end:0x8067E088
+	.sdata      start:0x806D0BF0 end:0x806D0BF8
+	.sbss       start:0x806D1D78 end:0x806D1D80
+
+dolphin/exi/EXIUart.c:
+	.text       start:0x80280FEC end:0x80281334
+	.sbss       start:0x806D1D80 end:0x806D1D90
+
 dolphin/si/SIBios.c:
 	.text       start:0x80281334 end:0x80282404
 	.data       start:0x804F5480 end:0x804F5598
@@ -6234,7 +6245,6 @@ dolphin/dvd/fstload.c:
 	.bss        start:0x806A48B8 end:0x806A4928
 	.sdata      start:0x806D0C48 end:0x806D0C58
 	.sbss       start:0x806D1ED0 end:0x806D1EE0
-
 sysdolphin/baselib/dobj.c:
 	.text       start:0x802BD07C end:0x802BD0FC
 
