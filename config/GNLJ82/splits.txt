@@ -4697,6 +4697,12 @@ game/MapEffect_WCC.cpp:
 	extabindex  start:0x800265E8 end:0x8002660C
 	.text       start:0x801755BC end:0x801759D8
 
+game/MapEffect.cpp:
+	extab       start:0x80010C78 end:0x80011700
+	extabindex  start:0x8002660C end:0x80026684
+	.text       start:0x801759D8 end:0x801779F8
+	.rodata     start:0x80370870 end:0x80371D24
+
 game/fn_801805AC.c:
 	.text       start:0x801805AC end:0x801805B4
 
@@ -7112,13 +7118,34 @@ sysdolphin/baselib/video.c:
 	.sbss       start:0x806D2218 end:0x806D2220
 	.sdata2     start:0x806DCD28 end:0x806DCD38
 
+sysdolphin/baselib/spline.c:
+	.text       start:0x802D57A8 end:0x802D61E8
+	.sdata2     start:0x806DCD38 end:0x806DCD88
+
+sysdolphin/baselib/mtx.c:
+	.text       start:0x802D61E8 end:0x802D7730
+	.bss        start:0x806CE740 end:0x806CE798
+	.sdata      start:0x806D0E18 end:0x806D0E28
+
 sysdolphin/baselib/util.c:
 	.text       start:0x802D7730 end:0x802D78FC
 	.data       start:0x804FD0D0 end:0x804FD128
 	.sdata      start:0x806D0E28 end:0x806D0E38
 
+sysdolphin/baselib/objalloc.c:
+	.text       start:0x802D78FC end:0x802D7AD4
+	.data       start:0x804FD128 end:0x804FD170
+	.sdata      start:0x806D0E38 end:0x806D0E40
+	.sbss       start:0x806D2220 end:0x806D2228
+
 sysdolphin/baselib/robj.c:
-	.text       start:0x802D7C1C end:0x802D7CA0
+	.text       start:0x802D7AD4 end:0x802D9A58
+	.rodata     start:0x803F2C08 end:0x803F2C30
+	.data       start:0x804FD170 end:0x804FD2D8
+	.bss        start:0x806CE798 end:0x806CE7F0
+	.sdata      start:0x806D0E40 end:0x806D0E70
+	.sbss       start:0x806D2228 end:0x806D2230
+	.sdata2     start:0x806DCDC0 end:0x806DCDF8
 
 sysdolphin/baselib/id.c:
 	.text       start:0x802D9A58 end:0x802D9CD8

@@ -238,7 +238,7 @@ extern void sin();
 extern void fn_802BD6AC(float x, float y);
 extern void fn_802BD6C0();
 extern void HSD_FObjForceLinearInterp();
-extern void fn_802D6618();
+extern void HSD_MtxGetRotation();
 extern void HSD_Randf();
 extern int HSD_Randi(int range);
 extern void memset();
@@ -9454,7 +9454,7 @@ asm void CarObjectManager_RunKartKartCollisionSweep(void) { /* 0x80051DEC size:0
     bl Mtx4x4_TransposeTo4x3
     addi r3, r1, 0xc0
     addi r4, r1, 0x74
-    bl fn_802D6618
+    bl HSD_MtxGetRotation
     lfs f4, lbl_806D27AC(r2)
     addi r3, r1, 0x148
     lfs f2, 0x74(r1)
@@ -9513,7 +9513,7 @@ asm void CarObjectManager_RunKartKartCollisionSweep(void) { /* 0x80051DEC size:0
     bl Mtx4x4_TransposeTo4x3
     addi r3, r1, 0x90
     addi r4, r1, 0x4c
-    bl fn_802D6618
+    bl HSD_MtxGetRotation
     lfs f4, lbl_806D27AC(r2)
     addi r3, r1, 0xf0
     lfs f2, 0x4c(r1)

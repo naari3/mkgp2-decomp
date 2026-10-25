@@ -13,7 +13,7 @@ extern void fn_802C7318();
 extern void fn_802C79CC();
 extern void fn_802D4748();
 extern void fn_802D47E8();
-extern void fn_802D6948();
+extern void HSD_MtxGetTranslate();
 extern void fn_802DB570();
 extern void fn_802DB740();
 extern void fn_802DB9EC();
@@ -133,7 +133,7 @@ asm void SceneRender_DrawObjectWithLights(void) { /* 0x8003A780 size:0x268 */
     lwz r3, 0x4(r31)
     addi r4, r1, 0x10
     addi r3, r3, 0x44
-    bl fn_802D6948
+    bl HSD_MtxGetTranslate
     lfs f1, 0x14(r1)
     lfs f0, 0x18(r30)
     lfs f3, 0x10(r1)
