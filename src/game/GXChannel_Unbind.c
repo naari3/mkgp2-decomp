@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void HSD_DObjSetCurrent();
-extern void fn_802C14B8();
+extern void HSD_StateInvalidate();
 extern void HSD_MObjSetCurrent();
 extern void HSD_ClearVtxDesc();
 
@@ -53,7 +53,7 @@ asm void GXChannel_Unbind(void) { /* 0x8007D7BC size:0x78 */
     bl HSD_DObjSetCurrent
     bl HSD_ClearVtxDesc
     li r3, -0x1
-    bl fn_802C14B8
+    bl HSD_StateInvalidate
     li r0, 0x0
     stb r0, 0xc(r31)
     GXChannel_Unbind_L_8007D81C:

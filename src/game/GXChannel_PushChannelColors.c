@@ -9,7 +9,7 @@ extern void __assert();
 extern void GXPixModeSync();
 extern void GXSetTevColor();
 extern void GXSetTevKColor();
-extern void fn_802C14B8();
+extern void HSD_StateInvalidate();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D2FB8;
@@ -409,7 +409,7 @@ asm void GXChannel_PushChannelColors(void) { /* 0x8007D2AC size:0x510 */
     addi r27, r27, 0x4
     blt GXChannel_PushChannelColors_L_8007D768
     li r3, 0x10
-    bl fn_802C14B8
+    bl HSD_StateInvalidate
     bl GXPixModeSync
     GXChannel_PushChannelColors_L_8007D7A8:
     lmw r26, 0x58(r1)

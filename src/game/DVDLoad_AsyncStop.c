@@ -5,7 +5,7 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void fn_802C14B8();
+extern void HSD_StateInvalidate();
 extern void fn_802C352C();
 
 /* --- extern decls: sda21-referenced data --- */
@@ -53,7 +53,7 @@ asm void DVDLoad_AsyncStop(void) { /* 0x8007DC38 size:0x54 */
     li r3, -0x1
     stw r0, lbl_806D1150(r13)
     stw r0, lbl_806D1154(r13)
-    bl fn_802C14B8
+    bl HSD_StateInvalidate
     lwz r0, 0x14(r1)
     mtlr r0
     addi r1, r1, 0x10

@@ -19,7 +19,7 @@ extern void GXSetZMode();
 extern void DbgScene_CopyMatrix3x4Transpose();
 extern void GXBegin();
 extern void GXLoadPosMtxImm();
-extern void GX_SetCullMode();
+extern void HSD_StateSetCullMode();
 extern void GXSetCurrentMtx();
 extern void Matrix4_Identity();
 extern void Matrix4_PreMultiplyRotZ();
@@ -76,7 +76,7 @@ asm void ParticleBurst_Draw(void) { /* 0x800B4164 size:0x224 */
     stmw r26, 0x78(r1)
     mr r29, r3
     li r3, 0x0
-    bl GX_SetCullMode
+    bl HSD_StateSetCullMode
     lis r4, 0x4000
     li r3, 0x0
     addi r4, r4, 0x2

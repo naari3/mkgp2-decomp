@@ -7,7 +7,7 @@
 /* refine if the real prototype matters for header consumers. */
 extern void GXClearVtxDesc();
 extern void GXSetArray();
-extern void GX_SetCullMode();
+extern void HSD_StateSetCullMode();
 extern void GXSetVtxAttrFmt();
 extern void GXSetVtxDesc();
 extern void HSD_DObjSetCurrent();
@@ -138,15 +138,15 @@ asm void GXChannel_Init(void) { /* 0x8007DA5C size:0x1AC */
     b GXChannel_Init_L_8007DBE4
     GXChannel_Init_L_8007DBC4:
     li r3, 0x0
-    bl GX_SetCullMode
+    bl HSD_StateSetCullMode
     b GXChannel_Init_L_8007DBE4
     GXChannel_Init_L_8007DBD0:
     li r3, 0x1
-    bl GX_SetCullMode
+    bl HSD_StateSetCullMode
     b GXChannel_Init_L_8007DBE4
     GXChannel_Init_L_8007DBDC:
     li r3, 0x2
-    bl GX_SetCullMode
+    bl HSD_StateSetCullMode
     GXChannel_Init_L_8007DBE4:
     li r0, 0x1
     stb r0, 0xc(r31)

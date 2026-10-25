@@ -45,7 +45,7 @@ void TransitionEffect_RenderPass(void*, int);
 void fn_80253448(void*, unsigned int);
 void fn_8011F994(int);
 void fn_802535D4(void*);
-void fn_802C14B8(int);
+void HSD_StateInvalidate(int);
 }
 
 static inline void* PresentOrNull(void* p) {
@@ -83,6 +83,6 @@ extern "C" void MiniGame_CoinChallenge_Destroy(CoinChallengeRenderView* self) {
         fn_80253448(self->overlay, lbl_806DC1B8);
         fn_802535D4(self->overlay);
         TransitionEffect_RenderPass(PresentOrNull(lbl_806D109C), 1);
-        fn_802C14B8(0x7f);
+        HSD_StateInvalidate(0x7f);
     }
 }
