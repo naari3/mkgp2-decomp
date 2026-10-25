@@ -4514,6 +4514,11 @@ game/fn_80119F80.c:
 	extabindex  start:0x800244DC end:0x800244E8
 	.text       start:0x80119F80 end:0x8011A184
 
+game/fn_8011A184.c:
+	extab       start:0x8000BA8C end:0x8000BA94
+	extabindex  start:0x800244E8 end:0x800244F4
+	.text       start:0x8011A184 end:0x8011A684
+
 game/fn_8011BE4C.c:
 	extab       start:0x8000BAB4 end:0x8000BABC
 	extabindex  start:0x80024524 end:0x80024530
