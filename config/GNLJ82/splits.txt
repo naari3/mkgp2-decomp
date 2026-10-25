@@ -4895,6 +4895,16 @@ game/SuikaBallObj_Render.c:
 	extabindex  start:0x8002486C end:0x80024878
 	.text       start:0x801240B4 end:0x801240E4
 
+game/fn_8012491C.c:
+	extab       start:0x8000BE98 end:0x8000BEA0
+	extabindex  start:0x80024884 end:0x80024890
+	.text       start:0x8012491C end:0x80124984
+
+game/fn_80124C84.c:
+	extab       start:0x8000BEC0 end:0x8000BEC8
+	extabindex  start:0x800248A8 end:0x800248B4
+	.text       start:0x80124C84 end:0x80124CF4
+
 game/BiribiriLand.c:
 	extab       start:0x8000CE64 end:0x8000D014
 	extabindex  start:0x80024B6C end:0x80024BA8
