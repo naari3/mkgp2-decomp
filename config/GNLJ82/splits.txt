@@ -1334,6 +1334,11 @@ game/PostRace_StartScoreEntryFlow_WithCardSave.c:
 	extabindex  start:0x800211DC end:0x800211E8
 	.text       start:0x80073EF8 end:0x80073F24
 
+game/PcbIdToIp.c:
+	extab       start:0x800082E0 end:0x800082E8
+	extabindex  start:0x80021200 end:0x8002120C
+	.text       start:0x800740BC end:0x80074190
+
 game/Backup_LoadFromMemoryOrInit.c:
 	extab       start:0x800082E8 end:0x800082F0
 	extabindex  start:0x8002120C end:0x80021218
@@ -1684,6 +1689,12 @@ game/SyncSlot_ApplyCourseChoice.c:
 	extab       start:0x80008DB4 end:0x80008DBC
 	extabindex  start:0x800218CC end:0x800218D8
 	.text       start:0x80085DD8 end:0x80085E3C
+
+game/PcbDebugOverlay.c:
+	extab       start:0x80008DBC end:0x80008DDC
+	extabindex  start:0x800218D8 end:0x800218F0
+	.text       start:0x80085E3C end:0x80086170
+	.rodata     start:0x80311E38 end:0x803123B0
 
 game/PCBCommLifecycle.cpp:
 	extab       start:0x80008DDC end:0x80008E3C
