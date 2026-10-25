@@ -4,6 +4,32 @@
  */
 #pragma cplusplus on
 
+struct ResCtrl {
+    int id;
+    int prev;
+    int f8;
+    int fC;
+    unsigned char f10;
+    char pad11[3];
+    float f14;
+    float f18;
+    float f1C;
+    float f20;
+    float f24;
+    float f28;
+    float f2C;
+    float f30;
+    unsigned char slots[0x10];
+    unsigned char f44;
+    unsigned char f45;
+    char pad46[2];
+    int f48;
+    int f4C;
+    int f50;
+    int f54;
+};
+
+
 struct SpriteHandle {
     signed char active;
     char pad1[3];
@@ -106,7 +132,7 @@ extern void LUT_Sine();
 extern void ResourceTable_GetFlagsByte();
 extern void ResourceTable_GetScaleXY();
 extern unsigned int lbl_80332528[];
-extern void memset();
+void *memset(void *p, int c, unsigned long n);
 extern void __destroy_arr();
 extern void DoublyLinkedList_Init();
 extern unsigned int lbl_80657234[];
@@ -128,10 +154,10 @@ asm void SpriteHandlePool_GC(void);
 asm void fn_80121210(void);
 asm void fn_801213EC(void);
 asm void fn_801217E8(void);
-asm void Stub_NoOp_80121c34(void);
+void Stub_NoOp_80121c34(void);
 asm void fn_80121C38(void);
-asm void fn_80121E10(void);
-asm void ResCtrl_Init(void);
+void fn_80121E10(ResCtrl *r);
+ResCtrl *ResCtrl_Init(ResCtrl *r);
 asm void fn_80121F54(void);
 asm void fn_80121FB4(void);
 asm void dtor_80122068(void);
@@ -200,13 +226,7 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80121C38[8
     0x09, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80121E10[8] = {
-    0x00, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-__declspec(section ".extab_user") static const unsigned char extab_ResCtrl_Init[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const unsigned char extab_fn_80121F54[8] = {
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -308,13 +328,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_80121C38, 0x000001D8, (void *)extab_fn_80121C38
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80121E10 = {
-    (void *)&fn_80121E10, 0x0000009C, (void *)extab_fn_80121E10
-};
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ResCtrl_Init = {
-    (void *)&ResCtrl_Init, 0x000000A8, (void *)extab_ResCtrl_Init
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80121F54 = {
     (void *)&fn_80121F54, 0x00000060, (void *)extab_fn_80121F54
@@ -353,6 +367,29 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_80122338, 0x000000B0, (void *)extab_fn_80122338
 };
 
+}
+
+static inline void ResCtrl_Reset(ResCtrl *r) {
+    r->id = -1;
+    r->prev = -1;
+    r->f8 = 0;
+    r->fC = 0;
+    r->f10 = 1;
+    r->f1C = 0.0f;
+    r->f18 = 0.0f;
+    r->f14 = 0.0f;
+    r->f24 = 1.0f;
+    r->f20 = 1.0f;
+    r->f28 = 0.0f;
+    r->f30 = 1.0f;
+    r->f2C = 1.0f;
+    r->f45 = 0;
+    r->f44 = 0;
+    r->f48 = 1;
+    r->f4C = 4;
+    r->f50 = 5;
+    r->f54 = 0xF;
+    memset(r->slots, -1, 0x10);
 }
 
 static inline SpriteHandle *GetHandle(int h) {
@@ -3597,9 +3634,7 @@ extern "C" asm void fn_801217E8(void) { /* 0x801217E8 size:0x44C */
     blr
 }
 
-extern "C" asm void Stub_NoOp_80121c34(void) { /* 0x80121C34 size:0x4 */
-    nofralloc
-    blr
+extern "C" void Stub_NoOp_80121c34(void) {
 }
 
 extern "C" asm void fn_80121C38(void) { /* 0x80121C38 size:0x1D8 */
@@ -3734,93 +3769,13 @@ extern "C" asm void fn_80121C38(void) { /* 0x80121C38 size:0x1D8 */
     blr
 }
 
-extern "C" asm void fn_80121E10(void) { /* 0x80121E10 size:0x9C */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    li r9, 0x0
-    mr r10, r3
-    stw r0, 0x14(r1)
-    li r0, -0x1
-    li r8, 0x1
-    lfs f1, g_glyphClipMinXY(r2)
-    stw r0, 0x0(r3)
-    li r7, 0x4
-    lfs f0, lbl_806D6D8C(r2)
-    li r6, 0x5
-    stw r0, 0x4(r3)
-    li r0, 0xf
-    li r4, -0x1
-    li r5, 0x10
-    stw r9, 0x8(r3)
-    addi r3, r10, 0x34
-    stw r9, 0xc(r10)
-    stb r8, 0x10(r10)
-    stfs f1, 0x1c(r10)
-    stfs f1, 0x18(r10)
-    stfs f1, 0x14(r10)
-    stfs f0, 0x24(r10)
-    stfs f0, 0x20(r10)
-    stfs f1, 0x28(r10)
-    stfs f0, 0x30(r10)
-    stfs f0, 0x2c(r10)
-    stb r9, 0x45(r10)
-    stb r9, 0x44(r10)
-    stw r8, 0x48(r10)
-    stw r7, 0x4c(r10)
-    stw r6, 0x50(r10)
-    stw r0, 0x54(r10)
-    bl memset
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+extern "C" void fn_80121E10(ResCtrl *r) {
+    ResCtrl_Reset(r);
 }
 
-extern "C" asm void ResCtrl_Init(void) { /* 0x80121EAC size:0xA8 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    li r9, 0x0
-    li r8, 0x1
-    stw r0, 0x14(r1)
-    li r0, -0x1
-    lfs f1, g_glyphClipMinXY(r2)
-    li r7, 0x4
-    stw r31, 0xc(r1)
-    mr r31, r3
-    lfs f0, lbl_806D6D8C(r2)
-    li r6, 0x5
-    stw r0, 0x0(r3)
-    li r4, -0x1
-    li r5, 0x10
-    stw r0, 0x4(r3)
-    li r0, 0xf
-    stw r9, 0x8(r3)
-    addi r3, r31, 0x34
-    stw r9, 0xc(r31)
-    stb r8, 0x10(r31)
-    stfs f1, 0x1c(r31)
-    stfs f1, 0x18(r31)
-    stfs f1, 0x14(r31)
-    stfs f0, 0x24(r31)
-    stfs f0, 0x20(r31)
-    stfs f1, 0x28(r31)
-    stfs f0, 0x30(r31)
-    stfs f0, 0x2c(r31)
-    stb r9, 0x45(r31)
-    stb r9, 0x44(r31)
-    stw r8, 0x48(r31)
-    stw r7, 0x4c(r31)
-    stw r6, 0x50(r31)
-    stw r0, 0x54(r31)
-    bl memset
-    lwz r0, 0x14(r1)
-    mr r3, r31
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+extern "C" ResCtrl *ResCtrl_Init(ResCtrl *r) {
+    ResCtrl_Reset(r);
+    return r;
 }
 
 extern "C" asm void fn_80121F54(void) { /* 0x80121F54 size:0x60 */
