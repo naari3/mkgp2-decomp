@@ -1227,6 +1227,7 @@ config.libs = [
             Object(Matching, "game/RaceScene_RenderPass.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/RaceScene_RenderFrame.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/RaceScene_Dtor.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/TaMode_Dtor.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ItemObject_WriteVectors.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemTracker.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowItem.c", extab_padding=b"\xc7\x02" * 6, extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
