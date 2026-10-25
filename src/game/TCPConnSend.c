@@ -33,31 +33,29 @@ static inline unsigned int TCPConn_SendMask(unsigned int bit)
          | ((bit >> 8) & 0x0000FF00U) | ((bit >> 24) & 0x000000FFU);
 }
 
-static inline unsigned int TCPConn_AddWriteSocket(unsigned int *set, int socket)
+static inline void TCPConn_AddWriteSocket(unsigned int *set, int socket)
 {
     unsigned int index = (unsigned int)socket >> 5;
     unsigned int mask = TCPConn_SendMask(1U << (socket & 31));
     set[index] |= mask;
-    return mask;
 }
 
 static inline unsigned char TCPConn_Writable(int socket)
 {
     unsigned int set[8];
     SendTimeout timeout;
-    unsigned int mask;
     int result;
     unsigned char ready = 0;
     timeout.seconds = lbl_806DCF10;
     timeout.micros = lbl_806DCF14;
     if (socket < 0) return ready;
     memset(set, 0, sizeof(set));
-    mask = TCPConn_AddWriteSocket(set, socket);
+    TCPConn_AddWriteSocket(set, socket);
     result = acSelect(socket + 1, 0, set, 0, &timeout);
     if (result < 0) {
         TCPConn_LogError(result, socket, lbl_806D31A8);
         ready = 0;
-    } else if ((set[(unsigned int)socket >> 5] & mask) == 0) {
+    } else if ((set[(unsigned int)socket >> 5] & TCPConn_SendMask(1U << (socket & 31))) == 0) {
         ready = 0;
     } else {
         ready = 1;

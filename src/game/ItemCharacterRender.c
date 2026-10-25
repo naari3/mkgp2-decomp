@@ -1,7 +1,6 @@
 /* Target/callee-disassembly views; Ghidra type information was unavailable.
- * NonMatching: 336-byte body, 92.78571%; switch, extab, and index are exact.
- * Remaining difference is scheduling of vector-copy loads, argument addresses,
- * and the scale store near +0xE4..+0xFC. Keep all thirteen switch arms separate.
+ * Matches with mw_version GC/2.6 (GC/1.3.2 schedules the vector copies and
+ * scale store differently). Keep all thirteen switch arms separate.
  */
 typedef struct Vec3 {
     float x, y, z;

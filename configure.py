@@ -859,7 +859,7 @@ config.libs = [
             Object(Matching, "game/ItemLocalizedAsset.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/ItemHitBurst.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/ItemHitPropagation.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/ItemGroundExplosion.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ItemGroundExplosion.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Item.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemMotion.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/ItemHoming.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
@@ -869,7 +869,7 @@ config.libs = [
             Object(Matching, "game/ItemTrackedHoming.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/ItemTrackedHomingState.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemGroundProbes.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/ItemCharacterRender.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ItemCharacterRender.c", mw_version="GC/2.6", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/ItemHandheldRender.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartCharacterParam.c"),
             Object(Matching, "game/Frame.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++"]),
@@ -1417,9 +1417,9 @@ config.libs = [
             Object(Matching, "game/PcbListenerAccept.c"),
             Object(Matching, "game/PcbListenerLifetime.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/TCPConn_LogError.c"),
-            Object(NonMatching, "game/TCPConnRecv.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/TCPConnRecv.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/PcbConn_TryReceiveAck.c"),
-            Object(NonMatching, "game/TCPConnSend.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/TCPConnSend.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/TCPConn.c"),
             Object(Matching, "game/TCPConnEnqueue.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/TCPConn_Reset.c"),
@@ -2220,6 +2220,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/ItemCharacterRender",
     "game/clItemBoxManager_StepTable",
     "game/ItemUseStats",
     "game/KartItem_RenderCb_Modes",
