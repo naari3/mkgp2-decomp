@@ -30,13 +30,13 @@ struct Normal3D {
 extern "C" {
 unsigned int OSGetTick(void);
 void Profiler_RecordFrame(int, float);
-void fn_802CE078(JObj *, void *, void *, void *);
+void HSD_JObjAddAnimAll(JObj *, void *, void *, void *);
 void HSD_JObjReqAnimByFlags(JObj *, unsigned int, float);
 void HSD_AObjInitEndCallBack(void);
 void HSD_AObjInvokeCallBacks(void);
 void HSD_AObjInterpretAnim(void *, JObj *, AnimCallback);
 void HSD_DObjAnimAll(void *);
-void fn_802CD2B0(JObj *);
+void HSD_JObjCheckDepend(JObj *);
 extern const float lbl_806D2340;
 extern const float lbl_806D2360;
 }
@@ -57,7 +57,7 @@ static inline void Attach(Normal3D *self, AnimRow *row) {
     void *joint = First(row->joint);
     void *material = First(row->material);
     void *shape = First(row->shape);
-    fn_802CE078(self->root, joint, material, shape);
+    HSD_JObjAddAnimAll(self->root, joint, material, shape);
 }
 static inline void Request(Normal3D *self, Normal3D *source) {
     int count;
@@ -83,7 +83,7 @@ static inline void Animate(JObj **table, int count) {
                 if (HasDObj(node) == 1) HSD_DObjAnimAll(node->dobj);
             }
         }
-        fn_802CD2B0(*table);
+        HSD_JObjCheckDepend(*table);
     }
 }
 extern "C" int clNormal3D_SetScale(Normal3D *self, Normal3D *source,

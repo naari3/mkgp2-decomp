@@ -66,17 +66,17 @@ extern char lbl_806D8B78[5];
 void __assert(char *, int, char *);
 void Object_RenderJObjTree(void *, int);
 void PSVECAdd(Vec3f *, Vec3f *, Vec3f *);
-void fn_802D20AC(HSD_JObj *);
+void HSD_JObjSetMtxDirtySub(HSD_JObj *);
 void fn_801712E4(SoundEmitter *, float, float, float, float);
-void fn_802D07D4(HSD_JObj *, int);
+void HSD_JObjSetFlags(HSD_JObj *, int);
 void MemoryManager_Free(void *);
 void MemoryManager_TimedFree(void *);
 void Object_DtorWithGXSync(void *, int);
 void *FUN_8003b120(int);
 int sprintf(char *, const char *, ...);
 HSD_JObj *ResolveJointByName(void *, char *);
-void fn_802D0870(HSD_JObj *, int);
-void fn_802D0B48(HSD_JObj *, int);
+void HSD_JObjSetFlagsAll(HSD_JObj *, int);
+void HSD_JObjClearFlags(HSD_JObj *, int);
 void Vec3_Subtract(Vec3f *, const Vec3f *, Vec3f *);
 float PSVECSquareMag(Vec3f *);
 float LUT_Sin12Bit(float);
@@ -115,7 +115,7 @@ static inline void HSD_JObjSetMtxDirty(HSD_JObj *jobj) {
         clean = 1;
     }
     if (!clean) {
-        fn_802D20AC(jobj);
+        HSD_JObjSetMtxDirtySub(jobj);
     }
 }
 
@@ -162,7 +162,7 @@ void fn_8016DA78(DebrisBurst *self) {
                     HSD_JObjSetTranslate(self->groups[g].items[i].jobj, &pos);
                     if (pos.y < -110.0f) {
                         fn_801712E4(self->sound, pos.x, pos.y, pos.z, 2.5f);
-                        fn_802D07D4(self->groups[g].items[i].jobj, 0x10);
+                        HSD_JObjSetFlags(self->groups[g].items[i].jobj, 0x10);
                         self->groups[g].items[i].alive = 0;
                     }
                 }
@@ -185,9 +185,9 @@ int fn_8016DC90(DebrisBurst *self, Vec3f *at, float radius) {
             Vec3_Subtract(at, &sDebrisSpawn[g].pos, &d);
             d.y = 0.0f;
             if (PSVECSquareMag(&d) < range) {
-                fn_802D0870(self->groups[g].root, 0x10);
+                HSD_JObjSetFlagsAll(self->groups[g].root, 0x10);
                 for (i = 0; i < sDebrisSpawn[g].count; i++) {
-                    fn_802D0B48(self->groups[g].items[i].jobj, 0x10);
+                    HSD_JObjClearFlags(self->groups[g].items[i].jobj, 0x10);
                     self->groups[g].items[i].alive = 1;
                     float angle = 360.0f * DebrisBurst_Rand(self);
                     float speed = 5.0f * DebrisBurst_Rand(self);
@@ -260,7 +260,7 @@ DebrisBurst::DebrisBurst() {
         for (i = 0; i < sDebrisSpawn[g].count; i++) {
             sprintf(name, sDebrisItemJoint, g + 1, i);
             groups[g].items[i].jobj = ResolveJointByName(model, name);
-            fn_802D07D4(groups[g].items[i].jobj, 0x10);
+            HSD_JObjSetFlags(groups[g].items[i].jobj, 0x10);
         }
     }
     sound = new SoundEmitter();

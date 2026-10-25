@@ -92,9 +92,9 @@ void DebugPrintf(const char *, ...);
 int sprintf(char *, const char *, ...);
 void *ResolveJointByName(void *, char *);
 void *Archive_GetRootJObj(void *);
-void fn_802D07D4(void *, int);
-void fn_802D0B48(void *, int);
-void *fn_802D0758(void *);
+void HSD_JObjSetFlags(void *, int);
+void HSD_JObjClearFlags(void *, int);
+void *HSD_JObjGetDObj(void *);
 unsigned char fn_801379F0(Vec3f *, float);
 void PSMTXScale(Mtx, float, float, float);
 void Object_SetJObjPositionVec(void *, Vec3f *);
@@ -118,7 +118,7 @@ void fn_80170EE0(clLavaSplash *self) {
         }
     }
     {
-        GXChannel ch(Archive_GetRootJObj(self->modelA), fn_802D0758(Archive_GetRootJObj(self->modelA)), 0x40000000, 1);
+        GXChannel ch(Archive_GetRootJObj(self->modelA), HSD_JObjGetDObj(Archive_GetRootJObj(self->modelA)), 0x40000000, 1);
 
         for (b = self->bursts; b <= &self->bursts[29]; b++) {
             if (b->visible && b->scale > 0.0f) {
@@ -133,16 +133,16 @@ void fn_80170EE0(clLavaSplash *self) {
     for (b = self->bursts; b <= &self->bursts[29]; b++) {
         if (b->visible && b->t <= 15.0f) {
             for (i = 0; i < 8; i++) {
-                fn_802D07D4(self->joints[i], 0x10);
+                HSD_JObjSetFlags(self->joints[i], 0x10);
             }
-            fn_802D0B48(self->joints[(int)(b->t / 2.0f)], 0x10);
+            HSD_JObjClearFlags(self->joints[(int)(b->t / 2.0f)], 0x10);
             Object_SetJObjPositionVec(self->modelB, &b->pos);
             Object_SetJObjScaleXYZ(self->modelB, b->size, b->size, b->size);
             Object_RenderJObjTree(self->modelB, 7);
         }
     }
     {
-        GXChannel ch(Archive_GetRootJObj(self->modelC), fn_802D0758(Archive_GetRootJObj(self->modelC)), 0x40000000, 1);
+        GXChannel ch(Archive_GetRootJObj(self->modelC), HSD_JObjGetDObj(Archive_GetRootJObj(self->modelC)), 0x40000000, 1);
 
         for (b = self->bursts; b <= &self->bursts[29]; b++) {
             if (b->visible) {
@@ -271,7 +271,7 @@ clLavaSplash::clLavaSplash() {
         }
     }
     if (modelC) {
-        fn_802D07D4(Archive_GetRootJObj(modelC), 0x200);
+        HSD_JObjSetFlags(Archive_GetRootJObj(modelC), 0x200);
     }
     randIdx = 0;
 }

@@ -29,13 +29,13 @@ struct Vec3f {
 };
 
 extern "C" {
-unsigned int fn_802D07BC(JObj *);
-DObj *fn_802D0758(JObj *);
+unsigned int HSD_JObjGetFlags(JObj *);
+DObj *HSD_JObjGetDObj(JObj *);
 unsigned char fn_80183CC4(JObj *, DObj *, Vec3f *, float *);
 void fn_801899B8(ShadowSet *, JObj *, DObj *, Vec3f *, float);
 void fn_801893BC(ShadowSet *);
-void fn_802D0B48(JObj *, unsigned int);
-JObj *fn_802D0EF4(void);
+void HSD_JObjClearFlags(JObj *, unsigned int);
+JObj *HSD_JObjAlloc(void);
 void fn_80175048(JObj *, JObj *, JObj *, unsigned char);
 extern int lbl_806D15E8;
 }
@@ -54,7 +54,7 @@ struct Proxy {
         if (this->jobj) {
             orig = this->jobj->child;
             origFlags = this->jobj->flags;
-            fn_802D0B48(this->jobj, 0x1000);
+            HSD_JObjClearFlags(this->jobj, 0x1000);
             if (this->jobj->flags & 0x40000) {
                 this->jobj->flags |= 0x10000000;
                 this->jobj->flags &= ~0x40000;
@@ -67,7 +67,7 @@ struct Proxy {
                 this->jobj->flags |= 0x40000000;
                 this->jobj->flags &= ~0x100000;
             }
-            this->jobj->child = fn_802D0EF4();
+            this->jobj->child = HSD_JObjAlloc();
             lbl_806D15E8++;
             fn_80175048(orig, this->jobj->child, this->jobj, 1);
         }
@@ -135,9 +135,9 @@ void fn_801746CC(Caster *self) {
         JObj *next;
 
         while (jobj) {
-            if (!(fn_802D07BC(jobj) & 0x10)) {
-                if (fn_802D0758(jobj)) {
-                    for (dobj = fn_802D0758(jobj); dobj; dobj = DObjNext(dobj)) {
+            if (!(HSD_JObjGetFlags(jobj) & 0x10)) {
+                if (HSD_JObjGetDObj(jobj)) {
+                    for (dobj = HSD_JObjGetDObj(jobj); dobj; dobj = DObjNext(dobj)) {
                         Vec3f pos;
                         float r;
 
@@ -146,7 +146,7 @@ void fn_801746CC(Caster *self) {
                         }
                     }
                 }
-                if (!(fn_802D07BC(jobj) & 0x1000) && (next = JObjChild(jobj))) {
+                if (!(HSD_JObjGetFlags(jobj) & 0x1000) && (next = JObjChild(jobj))) {
                     depth++;
                     goto advance;
                 }
@@ -200,8 +200,8 @@ void fn_801748DC(Caster *self) {
             if (depth < 0) {
                 break;
             }
-            if (!(fn_802D07BC(jobj) & 0x10)) {
-                if (fn_802D07BC(jobj) & 0x1000) {
+            if (!(HSD_JObjGetFlags(jobj) & 0x10)) {
+                if (HSD_JObjGetFlags(jobj) & 0x1000) {
                     Proxy *proxy = new Proxy(jobj);
                     Proxy *p = self->proxies;
 
@@ -214,7 +214,7 @@ void fn_801748DC(Caster *self) {
                         p->next = proxy;
                     }
                 }
-                if (!(fn_802D07BC(jobj) & 0x1000) && (next = JObjChild(jobj))) {
+                if (!(HSD_JObjGetFlags(jobj) & 0x1000) && (next = JObjChild(jobj))) {
                     depth++;
                     goto advance;
                 }

@@ -95,7 +95,7 @@ void Object_DtorWithGXSync(void *, int);
 void dtor_8018F088(void *, int);
 void MemoryManager_TimedFree(void *);
 void *Archive_GetRootJObj(void *);
-HSD_DObj *fn_802D0758(void *);
+HSD_DObj *HSD_JObjGetDObj(void *);
 void fn_801825FC(void);
 void fn_801825C8(void);
 void fn_80182644(void *, unsigned int);
@@ -300,7 +300,7 @@ clLensFlare::clLensFlare(const char *res, HSD_JObj *at, float scale, float sprea
         fn_801825C8();
         if (model) {
             Object_SetJObjScaleXYZ(model, 0.01f, 0.01f, 0.01f);
-            for (dobj = fn_802D0758(Archive_GetRootJObj(model)); dobj; dobj = HSD_DObjGetNext(dobj)) {
+            for (dobj = HSD_JObjGetDObj(Archive_GetRootJObj(model)); dobj; dobj = HSD_DObjGetNext(dobj)) {
                 if (dobjCount < 10) {
                     fn_80182644(HSD_DObjGetMObj(dobj), 0x28000000);
                     dobjs[dobjCount] = dobj;
@@ -352,7 +352,7 @@ clLensFlare::clLensFlare(const char *res, float x, float y, float z, float scale
     fn_801825C8();
     if (model) {
         Object_SetJObjScaleXYZ(model, 0.01f, 0.01f, 0.01f);
-        for (dobj = fn_802D0758(Archive_GetRootJObj(model)); dobj; dobj = HSD_DObjGetNext(dobj)) {
+        for (dobj = HSD_JObjGetDObj(Archive_GetRootJObj(model)); dobj; dobj = HSD_DObjGetNext(dobj)) {
             if (dobjCount < 10) {
                 fn_80182644(HSD_DObjGetMObj(dobj), 0x28000000);
                 dobjs[dobjCount] = dobj;

@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void __assert();
-extern void fn_802D20AC();
+extern void HSD_JObjSetMtxDirtySub();
 extern char lbl_806D2548[7];
 extern char lbl_806D2550[5];
 
@@ -96,7 +96,7 @@ asm void KartDriver_SetEulerY_4Joints_LastMirrored(void) { /* 0x80041ABC size:0x
     clrlwi. r0, r3, 24
     bne KartDriver_SetEulerY_4Joints_LastMirrored_L_80041B94
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartDriver_SetEulerY_4Joints_LastMirrored_L_80041B94:
     lwz r30, 0xec(r31)
     cmplwi r30, 0x0
@@ -139,7 +139,7 @@ asm void KartDriver_SetEulerY_4Joints_LastMirrored(void) { /* 0x80041ABC size:0x
     clrlwi. r0, r3, 24
     bne KartDriver_SetEulerY_4Joints_LastMirrored_L_80041C2C
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartDriver_SetEulerY_4Joints_LastMirrored_L_80041C2C:
     lwz r30, 0x164(r31)
     cmplwi r30, 0x0
@@ -182,7 +182,7 @@ asm void KartDriver_SetEulerY_4Joints_LastMirrored(void) { /* 0x80041ABC size:0x
     clrlwi. r0, r3, 24
     bne KartDriver_SetEulerY_4Joints_LastMirrored_L_80041CC4
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartDriver_SetEulerY_4Joints_LastMirrored_L_80041CC4:
     lwz r30, 0x16c(r31)
     cmplwi r30, 0x0
@@ -226,7 +226,7 @@ asm void KartDriver_SetEulerY_4Joints_LastMirrored(void) { /* 0x80041ABC size:0x
     clrlwi. r0, r3, 24
     bne KartDriver_SetEulerY_4Joints_LastMirrored_L_80041D60
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartDriver_SetEulerY_4Joints_LastMirrored_L_80041D60:
     li r3, 0x1
     KartDriver_SetEulerY_4Joints_LastMirrored_L_80041D64:

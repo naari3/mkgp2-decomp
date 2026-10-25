@@ -12,7 +12,7 @@ unsigned int OSGetTick(void);
 void Profiler_RecordFrame(int slot, float value);
 void ObjectTree_BlendOrCopy(void *object, void *source, void *destination,
                             JObjFlagsView *blend, float weight);
-void fn_802D20AC(JObjFlagsView *jobj);
+void HSD_JObjSetMtxDirtySub(JObjFlagsView *jobj);
 void __assert(const char *file, int line, const char *expression);
 extern const char lbl_806D2348[7];
 extern const char lbl_806D2350[5];
@@ -52,7 +52,7 @@ static inline void JObj_RequestMatrixDirty(JObjFlagsView *jobj)
 {
     if (jobj != 0) {
         if (!JObj_IsMatrixIndependent(jobj)) {
-            fn_802D20AC(jobj);
+            HSD_JObjSetMtxDirtySub(jobj);
         }
     }
 }

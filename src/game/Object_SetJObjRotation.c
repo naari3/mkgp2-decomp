@@ -24,7 +24,7 @@ extern char lbl_806D2350[5];
 extern char lbl_806D2358[4];
 extern char lbl_802E9790[0x25];
 extern void __assert(char *, int, char *);
-extern void fn_802D20AC(HSD_JObj *);
+extern void HSD_JObjSetMtxDirtySub(HSD_JObj *);
 
 static void update_matrix(HSD_JObj *jobj) {
     unsigned int flags;
@@ -36,7 +36,7 @@ static void update_matrix(HSD_JObj *jobj) {
         skip = 1;
     }
     if (!skip) {
-        fn_802D20AC(jobj);
+        HSD_JObjSetMtxDirtySub(jobj);
     }
 }
 

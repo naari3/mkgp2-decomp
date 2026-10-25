@@ -438,8 +438,6 @@ config.libs = [
         "cflags": cflags_base,
         "progress_category": "sdk",
         "objects": [
-            Object(Matching, "sysdolphin/baselib/jobj.c"),
-            Object(Matching, "sysdolphin/baselib/jobj_anim_misc.c"),
             Object(Matching, "sysdolphin/baselib/util.c"),
             Object(Matching, "sysdolphin/baselib/id.c"),
         ],
@@ -450,6 +448,7 @@ config.libs = [
         "cflags": cflags_hsd_melee,
         "progress_category": "sdk",
         "objects": [
+            Object(NonMatching, "sysdolphin/baselib/jobj.c"),
             Object(Matching, "sysdolphin/baselib/displayfunc.c"),
             Object(Matching, "sysdolphin/baselib/video.c"),
             Object(Matching, "sysdolphin/baselib/dobj.c"),

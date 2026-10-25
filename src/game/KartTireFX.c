@@ -746,7 +746,7 @@ asm void KartTireFX_ResolveJoints(void) { /* 0x8007842C size:0x34C */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void __assert();
-extern void fn_802D20AC();
+extern void HSD_JObjSetMtxDirtySub();
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -829,7 +829,7 @@ asm void KartTireFX_SetRollPair_Joints88_90(void) { /* 0x80078778 size:0x2C4 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetRollPair_Joints88_90_L_80078844
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_SetRollPair_Joints88_90_L_80078844:
     lwz r30, 0x90(r31)
     cmplwi r30, 0x0
@@ -875,7 +875,7 @@ asm void KartTireFX_SetRollPair_Joints88_90(void) { /* 0x80078778 size:0x2C4 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetRollPair_Joints88_90_L_80078A24
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     b KartTireFX_SetRollPair_Joints88_90_L_80078A24
     KartTireFX_SetRollPair_Joints88_90_L_800788EC:
     lis r3, lbl_80311608@ha
@@ -923,7 +923,7 @@ asm void KartTireFX_SetRollPair_Joints88_90(void) { /* 0x80078778 size:0x2C4 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetRollPair_Joints88_90_L_80078998
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_SetRollPair_Joints88_90_L_80078998:
     lwz r30, 0x90(r31)
     cmplwi r30, 0x0
@@ -962,7 +962,7 @@ asm void KartTireFX_SetRollPair_Joints88_90(void) { /* 0x80078778 size:0x2C4 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetRollPair_Joints88_90_L_80078A24
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_SetRollPair_Joints88_90_L_80078A24:
     lwz r0, 0x24(r1)
     lwz r31, 0x1c(r1)
@@ -981,7 +981,7 @@ asm void KartTireFX_SetRollPair_Joints88_90(void) { /* 0x80078778 size:0x2C4 */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void __assert();
-extern void fn_802D20AC();
+extern void HSD_JObjSetMtxDirtySub();
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -1064,7 +1064,7 @@ asm void KartTireFX_SetRollPair_Joints84_8c(void) { /* 0x80078A3C size:0x2C4 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetRollPair_Joints84_8c_L_80078B08
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_SetRollPair_Joints84_8c_L_80078B08:
     lwz r30, 0x8c(r31)
     cmplwi r30, 0x0
@@ -1110,7 +1110,7 @@ asm void KartTireFX_SetRollPair_Joints84_8c(void) { /* 0x80078A3C size:0x2C4 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetRollPair_Joints84_8c_L_80078CE8
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     b KartTireFX_SetRollPair_Joints84_8c_L_80078CE8
     KartTireFX_SetRollPair_Joints84_8c_L_80078BB0:
     lis r3, lbl_803115FC@ha
@@ -1158,7 +1158,7 @@ asm void KartTireFX_SetRollPair_Joints84_8c(void) { /* 0x80078A3C size:0x2C4 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetRollPair_Joints84_8c_L_80078C5C
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_SetRollPair_Joints84_8c_L_80078C5C:
     lwz r30, 0x8c(r31)
     cmplwi r30, 0x0
@@ -1197,7 +1197,7 @@ asm void KartTireFX_SetRollPair_Joints84_8c(void) { /* 0x80078A3C size:0x2C4 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetRollPair_Joints84_8c_L_80078CE8
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_SetRollPair_Joints84_8c_L_80078CE8:
     lwz r0, 0x24(r1)
     lwz r31, 0x1c(r1)
@@ -1216,7 +1216,7 @@ asm void KartTireFX_SetRollPair_Joints84_8c(void) { /* 0x80078A3C size:0x2C4 */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void __assert();
-extern void fn_802D20AC();
+extern void HSD_JObjSetMtxDirtySub();
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -1299,7 +1299,7 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetVisibleAll4Wheels_L_80078DCC
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_SetVisibleAll4Wheels_L_80078DCC:
     lwz r30, 0x8c(r31)
     cmplwi r30, 0x0
@@ -1345,7 +1345,7 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetVisibleAll4Wheels_L_80078E70
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_SetVisibleAll4Wheels_L_80078E70:
     lwz r30, 0x88(r31)
     cmplwi r30, 0x0
@@ -1391,7 +1391,7 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetVisibleAll4Wheels_L_80078F14
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_SetVisibleAll4Wheels_L_80078F14:
     lwz r30, 0x90(r31)
     cmplwi r30, 0x0
@@ -1437,7 +1437,7 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetVisibleAll4Wheels_L_8007920C
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     b KartTireFX_SetVisibleAll4Wheels_L_8007920C
     KartTireFX_SetVisibleAll4Wheels_L_80078FBC:
     lis r3, lbl_803115F0@ha
@@ -1485,7 +1485,7 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetVisibleAll4Wheels_L_80079068
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_SetVisibleAll4Wheels_L_80079068:
     lwz r30, 0x8c(r31)
     cmplwi r30, 0x0
@@ -1524,7 +1524,7 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetVisibleAll4Wheels_L_800790F4
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_SetVisibleAll4Wheels_L_800790F4:
     lwz r30, 0x88(r31)
     cmplwi r30, 0x0
@@ -1563,7 +1563,7 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetVisibleAll4Wheels_L_80079180
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_SetVisibleAll4Wheels_L_80079180:
     lwz r30, 0x90(r31)
     cmplwi r30, 0x0
@@ -1602,7 +1602,7 @@ asm void KartTireFX_SetVisibleAll4Wheels(void) { /* 0x80078D00 size:0x524 */
     clrlwi. r0, r3, 24
     bne KartTireFX_SetVisibleAll4Wheels_L_8007920C
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_SetVisibleAll4Wheels_L_8007920C:
     lwz r0, 0x24(r1)
     lwz r31, 0x1c(r1)
@@ -1685,9 +1685,9 @@ extern void KartTireFX_ShowGearStageJObjs();
 extern void Object_RenderJObjTree();
 extern void __assert();
 extern void PSMTXCopy();
-extern void fn_802CD3DC();
+extern void HSD_JObjCheckDependAll();
 extern void HSD_JObjSetupMatrixSub();
-extern void fn_802D20AC();
+extern void HSD_JObjSetMtxDirtySub();
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -1804,7 +1804,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     clrlwi. r0, r3, 24
     bne KartTireFX_ApplyAndRender_L_800793B0
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_ApplyAndRender_L_800793B0:
     lwz r0, 0x78(r31)
     cmplwi r0, 0x0
@@ -1879,7 +1879,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     clrlwi. r0, r3, 24
     bne KartTireFX_ApplyAndRender_L_800794B8
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_ApplyAndRender_L_800794B8:
     lwz r0, 0x7c(r31)
     cmplwi r0, 0x0
@@ -1954,7 +1954,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     clrlwi. r0, r3, 24
     bne KartTireFX_ApplyAndRender_L_800795C0
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_ApplyAndRender_L_800795C0:
     lwz r0, 0x80(r31)
     cmplwi r0, 0x0
@@ -2029,7 +2029,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     clrlwi. r0, r3, 24
     bne KartTireFX_ApplyAndRender_L_800796C8
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_ApplyAndRender_L_800796C8:
     lwz r29, 0x84(r31)
     cmplwi r29, 0x0
@@ -2073,7 +2073,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     clrlwi. r0, r3, 24
     bne KartTireFX_ApplyAndRender_L_80079764
     mr r3, r29
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_ApplyAndRender_L_80079764:
     lwz r29, 0x88(r31)
     cmplwi r29, 0x0
@@ -2117,7 +2117,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     clrlwi. r0, r3, 24
     bne KartTireFX_ApplyAndRender_L_80079800
     mr r3, r29
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_ApplyAndRender_L_80079800:
     lwz r29, 0x8c(r31)
     cmplwi r29, 0x0
@@ -2161,7 +2161,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     clrlwi. r0, r3, 24
     bne KartTireFX_ApplyAndRender_L_8007989C
     mr r3, r29
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_ApplyAndRender_L_8007989C:
     lwz r29, 0x90(r31)
     cmplwi r29, 0x0
@@ -2205,7 +2205,7 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     clrlwi. r0, r3, 24
     bne KartTireFX_ApplyAndRender_L_80079938
     mr r3, r29
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_ApplyAndRender_L_80079938:
     mr r3, r31
     bl KartTireFX_ShowGearStageJObjs
@@ -2230,11 +2230,11 @@ asm void KartTireFX_ApplyAndRender(void) { /* 0x80079270 size:0x760 */
     clrlwi. r0, r3, 24
     bne KartTireFX_ApplyAndRender_L_80079990
     mr r3, r30
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartTireFX_ApplyAndRender_L_80079990:
     lwz r3, 0x20(r31)
     bl Archive_GetRootJObj
-    bl fn_802CD3DC
+    bl HSD_JObjCheckDependAll
     lwz r3, 0x20(r31)
     li r4, 0x7
     bl Object_RenderJObjTree

@@ -33,7 +33,7 @@ extern "C" {
 extern char lbl_806D8CD8[7];
 extern char lbl_806D8CE0[5];
 void __assert(char *, int, char *);
-void fn_802D20AC(HSD_JObj *);
+void HSD_JObjSetMtxDirtySub(HSD_JObj *);
 void HSD_JObjDispAll(HSD_JObj *, int, int, int);
 void fn_8016F158(void *);
 }
@@ -65,7 +65,7 @@ static inline void HSD_JObjSetMtxDirty(HSD_JObj *jobj) {
         clean = 1;
     }
     if (!clean) {
-        fn_802D20AC(jobj);
+        HSD_JObjSetMtxDirtySub(jobj);
     }
 }
 

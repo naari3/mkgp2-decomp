@@ -3,8 +3,8 @@ typedef struct Obj {
     int f_4;
 } Obj;
 
-extern void fn_802CED98(int);
+extern void HSD_JObjAnim(int);
 
 void fn_80241BE0(void *p0) {
-    fn_802CED98(((Obj *)p0)->f_4);
+    HSD_JObjAnim(((Obj *)p0)->f_4);
 }

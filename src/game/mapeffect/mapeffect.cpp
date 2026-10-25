@@ -72,7 +72,7 @@ void CObj_LoadProjMatrix(void *cobj, struct Vec3f *pos);
 void fn_80193134(unsigned char on);
 void fn_80182E18(JObj *joint, float u, float v);
 float LUT_Sin12Bit(float);
-void fn_802D20AC(JObj *);
+void HSD_JObjSetMtxDirtySub(JObj *);
 extern const float lbl_80495994[];
 extern const float lbl_80495A94[];
 }
@@ -360,7 +360,7 @@ static inline void JObjSetupMatrix(JObj *jobj) {
 
 static inline void JObjSetMtxDirty(JObj *jobj) {
     if (jobj && !JObjMtxIsDirty(jobj)) {
-        fn_802D20AC(jobj);
+        HSD_JObjSetMtxDirtySub(jobj);
     }
 }
 
