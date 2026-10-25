@@ -2512,6 +2512,9 @@ config.libs = [
             Object(Matching, "game/clstream/ClStream_FillChunk.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/resultscene/resultscene.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/kartmove/carobject.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/sprite/fn_801A1798.c"),
+            Object(Matching, "game/kartmove/DebugOverlay_KartPhysics.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-str reuse,readonly"]),
+            Object(Matching, "game/fog/Fog_UpdateFromCourseScene3D.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             # g4-end
         ],
     },
