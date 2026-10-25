@@ -112,7 +112,7 @@ void SoundChannels_ClearAll(void);
 void ItemObjectManager_Init(void);
 void CourseObjectManager_Init(void);
 void GetCourseDataPtr(void);
-int RenderTarget_Create(void);
+int HSD_LObjLoadDesc(void);
 void SetActiveCamera(int idx, void *camera);
 void ProcessSystemTick(int arg);
 void GetRaceContextPtr(void);
@@ -377,7 +377,7 @@ JumpDistanceMode::JumpDistanceMode() {
     CourseObjectManager_Init();
     input = new InputManager;
     GetCourseDataPtr();
-    renderTarget = RenderTarget_Create();
+    renderTarget = HSD_LObjLoadDesc();
     camera = new Camera(lbl_806DAE08, lbl_806DAD88, 0x100, 0x100, renderTarget);
     SetActiveCamera(0, camera);
     g_raceCamera = camera;

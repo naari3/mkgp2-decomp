@@ -60,10 +60,10 @@ extern float lbl_806D76E4;
 extern char lbl_8048EAD8[];
 extern char lbl_8048EAE8[];
 
-extern void fn_802C5674(int);
-extern void fn_802C53C8(void *rt);
-extern void fn_802C5A5C(void *rt);
-extern void *RenderTarget_Create(void *desc);
+extern void HSD_LObjDeleteCurrentAll(int);
+extern void HSD_LObjAddCurrent(void *rt);
+extern void HSD_LObjRemoveAll(void *rt);
+extern void *HSD_LObjLoadDesc(void *desc);
 extern void *Alloc(unsigned int size);
 extern void MemoryManager_TimedFree(void *p);
 extern void Object_SetColorAlphaOnly(void *obj, int, float a);
@@ -104,8 +104,8 @@ int fn_8013C34C(RenderTargetHolder *h) {
     if (h->active) {
         return 1;
     }
-    fn_802C5674(0);
-    fn_802C53C8(h->rt);
+    HSD_LObjDeleteCurrentAll(0);
+    HSD_LObjAddCurrent(h->rt);
     h->active = 1;
     return 1;
 }
@@ -117,7 +117,7 @@ RenderTargetHolder *fn_8013C3B8(void) {
 static inline void RenderTargetHolder_Free(RenderTargetHolder *h) {
     if (h) {
         if (h->rt) {
-            fn_802C5A5C(h->rt);
+            HSD_LObjRemoveAll(h->rt);
         }
         MemoryManager_TimedFree(h);
     }
@@ -140,7 +140,7 @@ struct RenderTargetObj {
     void *rt;
     RenderTargetObj() {
         active = 0;
-        rt = RenderTarget_Create(lbl_8048EA78);
+        rt = HSD_LObjLoadDesc(lbl_8048EA78);
     }
 };
 

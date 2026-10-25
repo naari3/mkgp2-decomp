@@ -54,8 +54,8 @@ typedef struct TDrawVecBlk {
 
 /* registered entry (0x6C bytes) */
 typedef struct TDrawEntry {
-    TDrawObj *handle;     /* 0x00 (result of RenderTarget_Create) */
-    /* params block passed to RenderTarget_Create starts here (0x04) */
+    TDrawObj *handle;     /* 0x00 (result of HSD_LObjLoadDesc) */
+    /* params block passed to HSD_LObjLoadDesc starts here (0x04) */
     void *p04;            /* 0x04 */
     void *p08;            /* 0x08 */
     unsigned short mode;  /* 0x0C */
@@ -126,15 +126,15 @@ extern TDrawObj *lbl_806D10F8;      /* .sbss: draw chain head */
 extern TDrawSlot lbl_805987E0[32];  /* .bss: slot table */
 extern const float lbl_806D2C68;    /* .sdata2: 0.0f */
 
-extern TDrawObj *RenderTarget_Create(void *);
+extern TDrawObj *HSD_LObjLoadDesc(void *);
 extern void MemoryManager_TimedFree(void *);
 extern void *GetCourseScene3D(void);
 extern void *CObj_GetViewMatrix_Cached(void *);
 extern void CObj_LoadProjMatrix(void *, Vec3 *);
 extern void PSMTXCopy(void *, float (*)[4]);
 extern void PSMTXMultVec(float (*)[4], Vec3 *, Vec3 *);
-extern void fn_802C5674(int);
-extern void fn_802C53C8(TDrawObj *);
+extern void HSD_LObjDeleteCurrentAll(int);
+extern void HSD_LObjAddCurrent(TDrawObj *);
 
 #pragma exceptions on
 
@@ -198,7 +198,7 @@ int TransparentDraw_InitEntry(TDrawEntry *self, TDrawDesc *desc) {
         break;
     }
 
-    self->handle = RenderTarget_Create(&self->p04);
+    self->handle = HSD_LObjLoadDesc(&self->p04);
     return 1;
 }
 
@@ -343,7 +343,7 @@ int TransparentDraw_SortAndDispatch(void) {
         }
     }
 
-    fn_802C5674(0);
+    HSD_LObjDeleteCurrentAll(0);
 
     if (lbl_806D10F8 == 0) {
         return 0;
@@ -419,7 +419,7 @@ int TransparentDraw_SortAndDispatch(void) {
     }
 
     chain->next = 0;
-    fn_802C53C8(lbl_806D10F8);
+    HSD_LObjAddCurrent(lbl_806D10F8);
     return 1;
 }
 

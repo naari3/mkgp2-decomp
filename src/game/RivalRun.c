@@ -2196,7 +2196,7 @@ extern void PreloadEffectResources();
 extern void PreloadItemResources();
 extern void ProcessSystemTick();
 extern void RankingTable_Init();
-extern void RenderTarget_Create();
+extern void HSD_LObjLoadDesc();
 extern void RivalRun_RivalInit();
 extern void Scene3D_GetCameraPos();
 extern void Scene3D_Init();
@@ -2321,7 +2321,7 @@ asm void RivalRun_Init(void) { /* 0x80136EA0 size:0x48C */
     li r5, 0x0
     bl CourseData_GetOrCreate
     bl GetCourseDataPtr
-    bl RenderTarget_Create
+    bl HSD_LObjLoadDesc
     stw r3, 0x20(r31)
     li r3, 0x2c
     bl Alloc

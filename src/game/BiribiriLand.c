@@ -1286,7 +1286,7 @@ extern void Object_SetJObjScaleXYZ();
 extern void PreloadEffectResources();
 extern void ProcessSystemTick();
 extern void RankingTable_Init();
-extern void RenderTarget_Create();
+extern void HSD_LObjLoadDesc();
 extern void Scene3D_GetCameraPos();
 extern void Scene3D_Init();
 extern void Scene3D_SetupProjection();
@@ -1414,7 +1414,7 @@ asm void BiribiriLand_Init(void) { /* 0x80134FF0 size:0x59C */
     BiribiriLand_Init_L_801350C8:
     stw r28, 0x10(r31)
     bl GetCourseDataPtr
-    bl RenderTarget_Create
+    bl HSD_LObjLoadDesc
     stw r3, 0x20(r31)
     li r3, 0x2c
     bl Alloc

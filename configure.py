@@ -456,6 +456,7 @@ config.libs = [
             Object(NonMatching, "sysdolphin/baselib/state.c"),
             Object(Matching, "sysdolphin/baselib/tev.c"),
             Object(NonMatching, "sysdolphin/baselib/mobj.c"),
+            Object(NonMatching, "sysdolphin/baselib/lobj.c"),
             Object(Matching, "sysdolphin/baselib/aobj.c"),
             Object(Matching, "sysdolphin/baselib/fobj.c"),
             Object(Matching, "sysdolphin/baselib/spline.c"),

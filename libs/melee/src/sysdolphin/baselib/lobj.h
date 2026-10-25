@@ -110,6 +110,7 @@ struct HSD_LightAnim {
 struct HSD_LObjInfo {
     HSD_ObjInfo parent;
     int (*load)(HSD_LObj* lobj, HSD_LightDesc* ldesc);
+    HSD_ObjUpdateFunc update; // 0x40
 };
 
 #define HSD_LOBJ(o) ((HSD_LObj*) (o))
@@ -118,7 +119,7 @@ struct HSD_LObjInfo {
 
 static inline u8 HSD_LObjGetPriority(HSD_LObj* lobj)
 {
-    HSD_ASSERT(367, lobj);
+    HSD_ASSERT(355, lobj);
     return lobj->priority;
 }
 

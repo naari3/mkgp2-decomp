@@ -48,7 +48,7 @@ extern void fn_802C845C(void *cobj, float a, float b, float c, float d);
 extern void fn_802C84A4(void *cobj, float *a, float *b);
 extern void *fn_802C87A0(void *desc);
 extern void fn_802C719C(void);
-extern void fn_802C4800(void *cobj);
+extern void HSD_LObjSetupInit(void *cobj);
 extern void fn_802C6C98(void *cobj);
 extern void *Alloc(unsigned int size);
 extern void MemoryManager_TimedFree(void *p);
@@ -89,7 +89,7 @@ void fn_8013BB9C(CamView *v) {
 
 void fn_8013BBFC(CamView *v) {
     if (v->cobj && v->active) {
-        fn_802C4800(v->cobj);
+        HSD_LObjSetupInit(v->cobj);
     }
 }
 

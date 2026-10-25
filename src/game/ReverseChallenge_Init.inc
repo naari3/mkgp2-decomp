@@ -34,7 +34,7 @@ extern void MiniGame_GetTimerValue();
 extern void PreloadEffectResources();
 extern void ProcessSystemTick();
 extern void RankingTable_Init();
-extern void RenderTarget_Create();
+extern void HSD_LObjLoadDesc();
 extern void Scene3D_GetCameraPos();
 extern void Scene3D_Init();
 extern void Scene3D_SetupProjection();
@@ -135,7 +135,7 @@ asm void ReverseChallenge_Init(void) { /* 0x800AD910 size:0x490 */
     ReverseChallenge_Init_L_800AD994:
     stw r30, 0x8(r31)
     bl GetCourseDataPtr
-    bl RenderTarget_Create
+    bl HSD_LObjLoadDesc
     stw r3, 0x10(r31)
     li r3, 0x2c
     bl Alloc
