@@ -1762,6 +1762,7 @@ config.libs = [
             Object(Matching, "game/fn_8010D270.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8010DCAC.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8010E2A8.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_8010F40C.c", extra_cflags=["-Cpp_exceptions on"]),
         ],
     },
     {
