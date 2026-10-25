@@ -5437,7 +5437,7 @@ game/anon_801FE3BC.cpp:
 	extabindex  start:0x80029438 end:0x80029450
 	.text       start:0x801FE3BC end:0x801FE4D0
 
-game/dtor_801FE870.c:
+game/dtor_801FE870.cpp:
 	extab       start:0x80017D70 end:0x80017D98
 	extabindex  start:0x80029450 end:0x8002948C
 	.text       start:0x801FE4D0 end:0x801FE8B8
