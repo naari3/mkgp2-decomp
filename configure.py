@@ -1476,7 +1476,7 @@ config.libs = [
             Object(Matching, "game/ResetIOPorts.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/PcbSyncTable_Ptr.c"),
             Object(NonMatching, "game/PcbSlotReset.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/PcbSlotSync.c"),
+            Object(Matching, "game/PcbSlotSync.c"),
             Object(Matching, "game/PCBCommHostConfirm.c"),
             Object(Matching, "game/PcbSync_AnyPeer.c"),
             Object(Matching, "game/PCBCommSnapshot.c", extra_cflags=["-Cpp_exceptions on"]),

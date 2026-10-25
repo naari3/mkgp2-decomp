@@ -33,7 +33,7 @@ static inline int ReadyByte(const ReadyFlags *ready)
 {
     if (ready->disabled == 1) return 0;
     if (ready->ready == 0) return 0;
-    return FinalReadyFlag(ready) != 0;
+    return (unsigned int)(-(int)FinalReadyFlag(ready) | (int)FinalReadyFlag(ready)) >> 31;
 }
 
 int PcbSlot_IsReadyByIndex(int index)
