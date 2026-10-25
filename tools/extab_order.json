@@ -24,6 +24,7 @@
     "extab": ["dtor_80082960", "CreditMgr_DrawCoinCreditBanner", "CreditMgr_TryConfirmPlay", "CreditMgr_GetCoinCount", "CreditMgr_GetCoinsPerCredit", "CreditMgr_GetCreditCount", "CreditMgr_PollAcceptor", "CreditMgr_AcceptorIsAbsent", "CreditMgr_GetPlayState", "CreditMgr_PollInsertAndPlay", "CreditMgr_ResetState"],
     "extabindex": ["CreditMgr_DrawCoinCreditBanner", "CreditMgr_TryConfirmPlay", "CreditMgr_GetCoinCount", "CreditMgr_GetCoinsPerCredit", "CreditMgr_GetCreditCount", "CreditMgr_PollAcceptor", "CreditMgr_AcceptorIsAbsent", "CreditMgr_GetPlayState", "CreditMgr_PollInsertAndPlay", "CreditMgr_ResetState", "dtor_80082960"]
   },
+  "src/game/CardPrinterChecker_Draw.c": ["TexMgr_DrawText_Format_Variant3", "CardPrinterChecker_DrawStatusErrorLabel", "Sci2Card_ClassifyStatusToCode", "CardPrinterChecker_DrawResponseStatusBytes", "TexMgr_DrawText_Format_Variant4"],
   "src/game/CourseData_Lookup.c": {
     "extab": ["dtor_800ABF10", "HitMessageOverlay_Dtor", "CourseData_GetOrCreate"],
     "extabindex": ["HitMessageOverlay_Dtor", "CourseData_GetOrCreate", "dtor_800ABF10"]

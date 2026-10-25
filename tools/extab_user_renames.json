@@ -497,6 +497,12 @@
     "extab_CreditMgr_DrawCoinCreditBanner": "@etb_80008A6C",
     "extabindex_CreditMgr_DrawCoinCreditBanner": "@eti_80021764"
   },
+  "src/game/CardPrinterChecker_Draw.c": {
+    "extab_TexMgr_DrawText_Format_Variant3": "@etb_80009328",
+    "extabindex_TexMgr_DrawText_Format_Variant3": "@eti_80021E48",
+    "extab_TexMgr_DrawText_Format_Variant4": "@etb_80009358",
+    "extabindex_TexMgr_DrawText_Format_Variant4": "@eti_80021E78"
+  },
   "src/game/VfxSlot_SetMatrixSourceEnabled.c": {
     "extab_VfxSlot_SetMatrixSourceEnabled": "@etb_8000A538",
     "extabindex_VfxSlot_SetMatrixSourceEnabled": "@eti_800229B8"
