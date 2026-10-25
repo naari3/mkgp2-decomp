@@ -5298,6 +5298,17 @@ game/Scene_80163804.cpp:
 	extabindex  start:0x80025CE8 end:0x80025CF4
 	.text       start:0x80163804 end:0x801638B4
 
+game/misc3d/fn_8016504C.cpp:
+	extab       start:0x8000FC20 end:0x8000FC28
+	extabindex  start:0x80025D24 end:0x80025D30
+	.text       start:0x8016504C end:0x801652F0
+	.data       start:0x80490E34 end:0x80490E64
+
+game/misc3d/fn_801652F0.cpp:
+	extab       start:0x8000FC28 end:0x8000FC40
+	extabindex  start:0x80025D30 end:0x80025D3C
+	.text       start:0x801652F0 end:0x80165454
+
 game/Scene_80165454.cpp:
 	extab       start:0x8000FC40 end:0x8000FC48
 	extabindex  start:0x80025D3C end:0x80025D48
@@ -5337,6 +5348,12 @@ game/Sound_801674AC.cpp:
 	extab       start:0x8000FF88 end:0x8000FFA0
 	extabindex  start:0x80025E74 end:0x80025E98
 	.text       start:0x801674AC end:0x80167744
+
+game/misc3d/fn_80167744.c:
+	extab       start:0x8000FFA0 end:0x8000FFA8
+	extabindex  start:0x80025E98 end:0x80025EA4
+	.text       start:0x80167744 end:0x801678FC
+	.data       start:0x80490FB8 end:0x80490FDC
 
 game/misc3d/fn_80167DDC.cpp:
 	extab       start:0x8000FFE0 end:0x8000FFF8
@@ -5422,6 +5439,12 @@ game/HsdRes_8016B0A0.c:
 	extabindex  start:0x800260A8 end:0x800260E4
 	.text       start:0x8016B0A0 end:0x8016B32C
 
+game/mapeffect/fn_8016BF20.c:
+	extab       start:0x80010394 end:0x8001039C
+	extabindex  start:0x800260F0 end:0x800260FC
+	.text       start:0x8016BF20 end:0x8016C0A4
+	.data       start:0x80491098 end:0x804910BC
+
 sound/SoundMgr_Front.c:
 	extab       start:0x8001039C end:0x80010404
 	extabindex  start:0x800260FC end:0x80026198
@@ -5436,6 +5459,12 @@ sound/SoundMgr_Weather.c:
 	extab       start:0x8001040C end:0x80010454
 	extabindex  start:0x800261A4 end:0x80026210
 	.text       start:0x8016C444 end:0x8016C730
+
+game/mapeffect/WeatherSystem_Init.c:
+	extab       start:0x80010454 end:0x8001045C
+	extabindex  start:0x80026210 end:0x8002621C
+	.text       start:0x8016C730 end:0x8016C850
+	.data       start:0x804910BC end:0x80491100
 
 game/mapeffect/fn_8016C850.c:
 	extab       start:0x8001045C end:0x80010464
@@ -5950,6 +5979,11 @@ game/objview/fn_8018791C.c:
 	extabindex  start:0x80026D44 end:0x80026D50
 	.text       start:0x8018791C end:0x801879E4
 
+game/objview/fn_801879E4.c:
+	extab       start:0x80011CD8 end:0x80011CE0
+	extabindex  start:0x80026D50 end:0x80026D5C
+	.text       start:0x801879E4 end:0x80187B54
+
 game/objview/fn_80187B54.c:
 	extab       start:0x80011CE0 end:0x80011CE8
 	extabindex  start:0x80026D5C end:0x80026D68
@@ -6111,6 +6145,11 @@ game/objview/fn_8018D82C.cpp:
 	extabindex  start:0x80026F54 end:0x80026F60
 	.text       start:0x8018D82C end:0x8018D968
 
+game/objview/fn_8018D968.cpp:
+	extab       start:0x80011F50 end:0x80011F68
+	extabindex  start:0x80026F60 end:0x80026F6C
+	.text       start:0x8018D968 end:0x8018DAD0
+
 game/misc3d/fn_8018DFC4.c:
 	extab       start:0x80011F70 end:0x80011F78
 	extabindex  start:0x80026F78 end:0x80026F84
@@ -6153,6 +6192,11 @@ game/objview/fn_8018F1B0.c:
 	extab       start:0x80012054 end:0x8001205C
 	extabindex  start:0x80026FFC end:0x80027008
 	.text       start:0x8018F1B0 end:0x8018F1E0
+
+game/objview/fn_8018F4A4.c:
+	extab       start:0x80012064 end:0x8001206C
+	extabindex  start:0x80027014 end:0x80027020
+	.text       start:0x8018F4A4 end:0x8018F614
 
 game/zprobe/fn_8018F7D4.c:
 	extab       start:0x800120C4 end:0x800120CC
