@@ -144,6 +144,7 @@ struct HSD_TObj {
     GXTexWrapMode wrap_t;
     u8 repeat_s;
     u8 repeat_t;
+    u16 desc_id; // 0x4A, newer HSD: GXTexMapID from the desc
     u32 flags;
     f32 blending;
     GXTexFilter magFilt;
@@ -256,6 +257,7 @@ typedef struct _HSD_TObjInfo {
     int (*load)(HSD_TObj* tobj, HSD_TObjDesc* desc);
     void (*make_texp)(HSD_TObj* tobj, u32 lightmap, u32 lightmap_done,
                       HSD_TExp** c, HSD_TExp** a, HSD_TExp** list);
+    HSD_ObjUpdateFunc update; // 0x48
 } HSD_TObjInfo;
 
 typedef struct _HSD_TexAnim {
