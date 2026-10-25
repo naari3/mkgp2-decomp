@@ -110,7 +110,7 @@ void *GetCourseScene3D(void);
 void *CObj_GetViewMatrix_Cached(void *);
 void *CObj_GetProjMatrix_Cached(void *);
 ProjParams *CObj_GetLineBufferPtr(void *);
-void fn_8025DF40(void *, Vec3f *, Vec3f *);
+void PSMTXMultVec(void *, Vec3f *, Vec3f *);
 void Vec3_Subtract(Vec3f *, Vec3f *, Vec3f *);
 double atan2(double, double);
 }
@@ -194,7 +194,7 @@ void fn_80171940(clLensFlare *self) {
     view = CObj_GetViewMatrix_Cached(scene);
     proj = CObj_GetProjMatrix_Cached(scene);
     pp = CObj_GetLineBufferPtr(scene);
-    fn_8025DF40(view, &self->pos, &v);
+    PSMTXMultVec(view, &self->pos, &v);
     if (v.z > 0.0f) {
         self->state.visible = 0;
         self->alpha -= 0x20;
@@ -210,8 +210,8 @@ void fn_80171940(clLensFlare *self) {
     self->edgeNeg.x = -self->edge.x;
     self->edgeNeg.y = -self->edge.y;
     self->edgeNeg.z = -1.0f;
-    fn_8025DF40(proj, &self->edge, &self->edge);
-    fn_8025DF40(proj, &self->edgeNeg, &self->edgeNeg);
+    PSMTXMultVec(proj, &self->edge, &self->edge);
+    PSMTXMultVec(proj, &self->edgeNeg, &self->edgeNeg);
     Vec3_Subtract(&self->edgeNeg, &self->edge, &self->edgeNeg);
     Object_SetJObjRotationZ(self->model, 4.712389f + (float)atan2(v.y, v.x));
     if (self->state.frame < 0xFFFD34) {

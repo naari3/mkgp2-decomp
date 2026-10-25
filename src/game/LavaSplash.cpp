@@ -83,7 +83,7 @@ extern "C" {
 extern char lbl_804912B4[];
 extern char lbl_80490FE0[];
 extern float lbl_80495994[64];
-void fn_8025E264(Vec3f *, Vec3f *, Vec3f *);
+void PSVECAdd(Vec3f *, Vec3f *, Vec3f *);
 double sin(double);
 double cos(double);
 void Object_DtorWithGXSync(void *, int);
@@ -183,7 +183,7 @@ void fn_80171190(clLavaSplash *self) {
                 self->bursts[i].scale *= 11.0f;
             }
             for (j = 0; j < 10; j++) {
-                fn_8025E264(&self->bursts[i].sparks[j].vel, &self->bursts[i].sparks[j].pos, &self->bursts[i].sparks[j].pos);
+                PSVECAdd(&self->bursts[i].sparks[j].vel, &self->bursts[i].sparks[j].pos, &self->bursts[i].sparks[j].pos);
                 self->bursts[i].sparks[j].vel.y = self->bursts[i].sparks[j].vel.y - self->bursts[i].sparks[j].gravity;
             }
         }
