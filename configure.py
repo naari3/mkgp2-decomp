@@ -1316,7 +1316,7 @@ config.libs = [
             Object(Matching, "game/NokoNoko_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowChara_HandleConfirm.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowChara_Update.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/clFlowChara_Destructor.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/clFlowChara_Destructor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/NokoNoko.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/GameModeBase.cpp"),
             Object(Matching, "game/KartMovement_SetPosition.c"),
