@@ -6014,8 +6014,20 @@ TRK_MINNOW_DOLPHIN/target_options.c:
 TRK_MINNOW_DOLPHIN/UDP_Stubs.c:
 	.text       start:0x80270138 end:0x80270180
 
+TRK_MINNOW_DOLPHIN/ddh/main.c:
+	.text       start:0x80270180 end:0x802704C4
+	.rodata     start:0x803F1AA8 end:0x803F1B88
+	.bss        start:0x8067D128 end:0x8067D948
+	.sbss       start:0x806D1D20 end:0x806D1D28
+
 TRK_MINNOW_DOLPHIN/CircleBuffer.c:
 	.text       start:0x802704C4 end:0x8027072C
+
+TRK_MINNOW_DOLPHIN/gdev/main.c:
+	.text       start:0x8027072C end:0x80270A78
+	.rodata     start:0x803F1B88 end:0x803F1C68
+	.bss        start:0x8067D948 end:0x8067DE68
+	.sbss       start:0x806D1D28 end:0x806D1D30
 
 TRK_MINNOW_DOLPHIN/MWTrace.c:
 	.text       start:0x80270A78 end:0x80270AC8
