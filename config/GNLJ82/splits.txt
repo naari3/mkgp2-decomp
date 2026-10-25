@@ -3156,6 +3156,11 @@ game/CarrotItemEffect_AddDraw.c:
 	extabindex  start:0x80022B38 end:0x80022B44
 	.text       start:0x800B2A64 end:0x800B2AF8
 
+game/KartPair3ArmUpdate.c:
+	extab       start:0x8000A680 end:0x8000A688
+	extabindex  start:0x80022B44 end:0x80022B50
+	.text       start:0x800B2AF8 end:0x800B3244
+
 game/EffectActor_BindKartTargetPair.c:
 	.text       start:0x800B3244 end:0x800B3250
 
