@@ -4560,6 +4560,11 @@ game/BoomerangItem_Tick.c:
 	extabindex  start:0x800240BC end:0x800240C8
 	.text       start:0x800FFBB8 end:0x80100284
 
+game/fn_80100284.c:
+	extab       start:0x8000B7CC end:0x8000B7D4
+	extabindex  start:0x800240C8 end:0x800240D4
+	.text       start:0x80100284 end:0x80100828
+
 game/fn_801022E0.c:
 	extab       start:0x8000B7EC end:0x8000B7F4
 	extabindex  start:0x800240F8 end:0x80024104
