@@ -39,22 +39,38 @@ static inline InputState *GetInput() {
 /* Owning pointer whose dtor deletes through the virtual dtor. */
 template <class T> struct VHolder {
     T *p;
+    VHolder() : p(0) {}
     VHolder(T *q) : p(q) {}
     ~VHolder() throw() { delete p; }
+    void Reset(T *q) throw() {
+        if (p != q) {
+            delete p;
+            p = q;
+        }
+    }
 };
 
 struct FlowRoot {
     virtual void _key();
+    int id;
+    int field08;
+    int field0C;
+    FlowRoot(int id_) : id(id_), field08(0), field0C(0) {}
     ~FlowRoot() {}
 };
 
 struct FlowTask : FlowRoot {
-    int id;
-    int field08;
-    int field0C;
     FlowTask(int id);
     ~FlowTask();
-    virtual void _key2();
+    virtual void Finish();
+    virtual void Update();
+    virtual void Draw();
+    bool CanUpdate() {
+        if (field08 > 0) {
+            return 0;
+        }
+        return field0C <= 0;
+    }
 };
 
 /* 0x230-byte text manager (ctor fn_80149214, dtor dtor_800869D0). */
@@ -78,11 +94,30 @@ int CreditMgr_GetCoinCount(int slot, int mode);
 }
 
 /* Scene list owned by FlowScene+0x10 (dtor dtor_801F4B10). */
+struct ListNode {
+    ListNode *prev;
+    ListNode *next;
+    FlowTask *task;
+};
+
+struct ListIter {
+    ListNode *node;
+    ListIter() {}
+    ListIter(ListNode *n) : node(n) {}
+    ListIter &operator=(const ListIter &o) {
+        node = o.node;
+        return *this;
+    }
+};
+
+/* count + sentinel node {prev = last, next = first}. */
 struct DoublyLinkedList {
-    void *head;
-    void *tail;
-    void *cur;
+    int count;
+    ListNode *last;
+    ListNode *first;
     DoublyLinkedList();
+    ListIter Erase(ListIter it);
+    ListNode *End() { return (ListNode *)&last; }
 };
 
 struct FlowSceneList {
@@ -95,7 +130,12 @@ struct FlowSceneList {
 
 struct SceneListImpl : FlowSceneList {
     SceneListImpl() {}
+    virtual void Update();
+    virtual void Draw();
     virtual void _key2();
+    void Sort();
+    void Kill(unsigned int id);
+    ListIter Remove(ListIter it) { return entries.Erase(it); }
 };
 
 extern "C" {
@@ -112,12 +152,15 @@ struct FlowFader {
     FlowFader() : a(0), b(0) {}
     void Step() {
         b++;
-        if (b >= a) {
-            b = a;
+        short lim = a;
+        if (b >= lim) {
+            b = lim;
         }
     }
     bool Done() { return b >= a; }
 };
+
+extern "C" const float lbl_806DA880;
 
 /* Fade helper variant with three floats (vtable lbl_80419DE0). */
 struct FlowFaderF : FlowFader {
@@ -125,6 +168,7 @@ struct FlowFaderF : FlowFader {
     float y;
     float z;
     FlowFaderF(float v) : x(v), y(v), z(v) {}
+    FlowFaderF() : x(lbl_806DA880), y(lbl_806DA880), z(lbl_806DA880) {}
     virtual void _key2();
 };
 
@@ -166,6 +210,14 @@ struct ResCtrl {
     void SetScale(float s) {
         scaleX = s;
         scaleY = s;
+    }
+    void SetScaleXY(float sx, float sy) {
+        scaleX = sx;
+        scaleY = sy;
+    }
+    void SetSize(float w, float h) {
+        width = w;
+        height = h;
     }
     void SetColor(unsigned int c) {
         colors[0] = c;
