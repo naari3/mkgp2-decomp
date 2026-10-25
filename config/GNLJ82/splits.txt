@@ -7144,6 +7144,11 @@ game/fn_801B11B8.c:
 game/fn_801B129C.c:
 	.text       start:0x801B129C end:0x801B12A0
 
+game/fn_801B12A0.c:
+	extab       start:0x80012B18 end:0x80012B20
+	extabindex  start:0x8002774C end:0x80027758
+	.text       start:0x801B12A0 end:0x801B13B0
+
 game/fn_801B13B0.c:
 	.text       start:0x801B13B0 end:0x801B14B8
 
@@ -7474,6 +7479,11 @@ game/fn_801CCF2C.cpp:
 	extabindex  start:0x80027EE4 end:0x80027EF0
 	.text       start:0x801CCF2C end:0x801CD030
 
+game/fn_801CDDC4.cpp:
+	extab       start:0x80014B08 end:0x80014B20
+	extabindex  start:0x80027F44 end:0x80027F50
+	.text       start:0x801CDDC4 end:0x801CDF10
+
 game/fn_801CE1EC.cpp:
 	extab       start:0x80014B28 end:0x80014B70
 	extabindex  start:0x80027F5C end:0x80027F68
@@ -7565,6 +7575,11 @@ game/clFlowKart_Init.c:
 
 game/fn_801D895C.c:
 	.text       start:0x801D895C end:0x801D898C
+
+game/fn_801D898C.c:
+	extab       start:0x8001549C end:0x800154A4
+	extabindex  start:0x80028184 end:0x80028190
+	.text       start:0x801D898C end:0x801D8A98
 
 game/fn_801D8A98.c:
 	.text       start:0x801D8A98 end:0x801D8AB4
@@ -8127,6 +8142,12 @@ game/AI_CalcItemSpeedBonus.c:
 	extabindex  start:0x80028A0C end:0x80028A18
 	.text       start:0x801EA500 end:0x801EA6F0
 
+game/fn_801EB708.c:
+	extab       start:0x80016B28 end:0x80016B38
+	extabindex  start:0x80028A3C end:0x80028A54
+	.text       start:0x801EB708 end:0x801EB91C
+	.rodata     start:0x803BD828 end:0x803BD8A8
+
 game/fn_801EB91C.c:
 	extab       start:0x80016B38 end:0x80016B40
 	extabindex  start:0x80028A54 end:0x80028A60
@@ -8274,6 +8295,11 @@ game/dtor_801F6BD0.c:
 
 game/fn_801F6E84.c:
 	.text       start:0x801F6E84 end:0x801F6EEC
+
+game/fn_801F6EEC.c:
+	extab       start:0x80017550 end:0x80017558
+	extabindex  start:0x80028F40 end:0x80028F4C
+	.text       start:0x801F6EEC end:0x801F6F7C
 
 game/fn_801F6F7C.c:
 	extab       start:0x80017558 end:0x80017560
@@ -8462,6 +8488,11 @@ game/fn_801FB5FC.cpp:
 	extab       start:0x80017934 end:0x8001793C
 	extabindex  start:0x800291E0 end:0x800291EC
 	.text       start:0x801FB5FC end:0x801FB634
+
+game/fn_801FB634.cpp:
+	extab       start:0x8001793C end:0x80017954
+	extabindex  start:0x800291EC end:0x800291F8
+	.text       start:0x801FB634 end:0x801FB6C0
 
 game/fn_801FB6C0.c:
 	extab       start:0x80017954 end:0x8001795C
