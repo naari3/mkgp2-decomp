@@ -980,6 +980,8 @@ config.libs = [
             Object(Matching, "game/clItemBox_Dtor.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBox_Ctor_XYZ.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clItemBox_Ctor_GroundSnap.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/clItemBoxManager_Assets.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/clItemBoxManager_StepTable.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clItemBox_FactoryCreate.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/MJObj_ColorFloat.c", extab_padding=b""),
             Object(Matching, "game/MJObj_InitMember.c", extab_padding=b""),
@@ -1671,6 +1673,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/clItemBoxManager_StepTable",
     "game/ItemUseStats",
     "game/KartItem_RenderCb_Modes",
 ]

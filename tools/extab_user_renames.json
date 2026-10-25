@@ -1628,5 +1628,12 @@
   "src/game/BananaPositionData_Init.cpp": {
     "__ct__8Normal3DFPvi": "clNormal3D_Construct",
     "__ct__18BananaPositionDataFi": "BananaPositionData_Init"
+  },
+  "src/game/clItemBoxManager_Assets.cpp": {
+    "__ct__8Normal3DFPvi": "clNormal3D_Construct",
+    "__ct__9GXChannelFPvPvii": "GXChannel_Init"
+  },
+  "src/game/clItemBoxManager_StepTable.cpp": {
+    "__sinit_clItemBoxManager_StepTable_cpp": "clItemBoxManager_InitStateTable"
   }
 }
