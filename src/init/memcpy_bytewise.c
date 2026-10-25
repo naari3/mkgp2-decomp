@@ -1,4 +1,4 @@
-__declspec(section ".init") void *memcpy_bytewise(void *dst, const void *src, unsigned long n) {
+__declspec(section ".init") void *TRK_memcpy(void *dst, const void *src, unsigned long n) {
     unsigned char *__src;
     unsigned char *__dst;
     int i;
