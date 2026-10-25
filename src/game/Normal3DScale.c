@@ -32,10 +32,10 @@ unsigned int OSGetTick(void);
 void Profiler_RecordFrame(int, float);
 void fn_802CE078(JObj *, void *, void *, void *);
 void HSD_JObjReqAnimByFlags(JObj *, unsigned int, float);
-void fn_802C3B54(void);
-void fn_802C3B64(void);
-void fn_802C3C00(void *, JObj *, AnimCallback);
-void fn_802BD0FC(void *);
+void HSD_AObjInitEndCallBack(void);
+void HSD_AObjInvokeCallBacks(void);
+void HSD_AObjInterpretAnim(void *, JObj *, AnimCallback);
+void HSD_DObjAnimAll(void *);
 void fn_802CD2B0(JObj *);
 extern const float lbl_806D2340;
 extern const float lbl_806D2360;
@@ -79,8 +79,8 @@ static inline void Animate(JObj **table, int count) {
         for (int i = 0; i < count; ++i, ++cursor) {
             JObj *node = *cursor;
             if (node != 0) {
-                fn_802C3C00(node->aobj, node, node->klass->animate);
-                if (HasDObj(node) == 1) fn_802BD0FC(node->dobj);
+                HSD_AObjInterpretAnim(node->aobj, node, node->klass->animate);
+                if (HasDObj(node) == 1) HSD_DObjAnimAll(node->dobj);
             }
         }
         fn_802CD2B0(*table);
@@ -129,9 +129,9 @@ extern "C" int clNormal3D_SetScale(Normal3D *self, Normal3D *source,
         JObj **table = self->table;
         int count = self->count;
         if (table != 0) {
-            fn_802C3B54();
+            HSD_AObjInitEndCallBack();
             Animate(table, count);
-            fn_802C3B64();
+            HSD_AObjInvokeCallBacks();
         }
     }
     return 1;

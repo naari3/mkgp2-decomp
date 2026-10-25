@@ -12,7 +12,7 @@ typedef struct GXSyncObject {
 } GXSyncObject;
 
 extern void GXDrawDone(void);
-extern void fn_802D041C(void *);
+extern void HSD_JObjUnref(void *);
 extern void clRom_Release(void *);
 extern void MemoryManager_Free(void *);
 extern void MemoryManager_TimedFree(void *);
@@ -22,9 +22,9 @@ GXSyncObject *Object_DtorWithGXSync(GXSyncObject *self, short flags) {
         GXDrawDone();
         if (self->rom != 0 || self->ownsRom == 1) {
             if (self->jobjOverride != 0) {
-                fn_802D041C(self->jobjOverride);
+                HSD_JObjUnref(self->jobjOverride);
             } else if (self->jobj != 0) {
-                fn_802D041C(self->jobj);
+                HSD_JObjUnref(self->jobj);
             }
             if (self->rom != 0) {
                 clRom_Release(self->rom);

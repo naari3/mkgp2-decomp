@@ -7,7 +7,7 @@
 /* refine if the real prototype matters for header consumers. */
 extern void HSD_DObjSetCurrent();
 extern void fn_802C14B8();
-extern void fn_802C22D8();
+extern void HSD_MObjSetCurrent();
 extern void HSD_ClearVtxDesc();
 
 /* --- function index (1 fns, .text 0x8007D7BC..0x8007D834) ---
@@ -48,7 +48,7 @@ asm void GXChannel_Unbind(void) { /* 0x8007D7BC size:0x78 */
     mtctr r12
     bctrl
     li r3, 0x0
-    bl fn_802C22D8
+    bl HSD_MObjSetCurrent
     li r3, 0x0
     bl HSD_DObjSetCurrent
     bl HSD_ClearVtxDesc

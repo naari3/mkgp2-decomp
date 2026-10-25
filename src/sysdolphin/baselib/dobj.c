@@ -1,101 +1,345 @@
-#include "sysdolphin/baselib/dobj.h"
+#include "dobj.h"
 
-/* mkgp2 placeholder names: pobj.c/mobj.c/aobj.c functions */
-extern void fn_802CA77C(HSD_PObj* pobj, HSD_ShapeAnim* shapeanim); /* HSD_PObjAddAnimAll */
-extern void fn_802C22E0(HSD_MObj* mobj, HSD_MatAnim* matanim);     /* HSD_MObjAddAnim */
-extern void HSD_MObjReqAnimAllByFlags(HSD_PObj* pobj, float frame, u32 flags);
-extern void HSD_PObjReqAnimByFlags(HSD_MObj* mobj, float frame, u32 flags);
-extern void fn_802C3C00(HSD_AObj* aobj, void* obj, void* update_func); /* HSD_AObjInterpretAnim */
-extern void fn_802CA8CC(HSD_PObj* pobj); /* HSD_PObjAnimAll */
-extern void fn_802C2848(HSD_MObj* mobj); /* HSD_MObjAnim */
+#include "aobj.h"
+#include "class.h"
+#include "debug.h"
+#include "mobj.h"
+#include "pobj.h"
+#include <dolphin/os.h>
 
-extern HSD_DObj* lbl_806D20B4; /* current_dobj */
+static void DObjInfoInit(void);
+HSD_DObjInfo hsdDObj = { DObjInfoInit };
 
-#define next_p(o) ((o) != 0 ? (o)->next : 0)
+static HSD_ClassInfo* default_class = NULL;
+
+static HSD_DObj* current_dobj = NULL;
 
 void HSD_DObjSetCurrent(HSD_DObj* dobj)
 {
-    lbl_806D20B4 = dobj;
+    current_dobj = dobj;
 }
 
-void fn_802BCF9C(HSD_DObj* dobj, u32 flags)
+u32 HSD_DObjGetFlags(HSD_DObj* dobj)
 {
-    if (dobj != 0) {
+    if (dobj != NULL) {
+        return dobj->flags;
+    }
+    return 0;
+}
+
+void HSD_DObjSetFlags(HSD_DObj* dobj, u32 flags)
+{
+    if (dobj != NULL) {
         dobj->flags |= flags;
     }
 }
 
-void fn_802BCFB4(HSD_DObj* dobj, u32 flags)
+void HSD_DObjClearFlags(HSD_DObj* dobj, u32 flags)
 {
-    if (dobj != 0) {
+    if (dobj != NULL) {
         dobj->flags &= ~flags;
     }
 }
 
-static inline void HSD_DObjAddAnim(HSD_DObj* dobj, HSD_MatAnim* mat_anim,
-                                   HSD_ShapeAnimDObj* sh_anim)
+void HSD_DObjModifyFlags(HSD_DObj* dobj, u32 flags, u32 mask)
 {
-    if (dobj == 0) {
+    if (dobj == NULL) {
         return;
     }
-    fn_802CA77C(dobj->pobj, sh_anim != 0 ? sh_anim->shapeanim : 0);
-    fn_802C22E0(dobj->mobj, mat_anim);
+
+    dobj->flags = (dobj->flags & ~mask) | (flags & mask);
 }
 
-void fn_802BCFCC(HSD_DObj* dobj, HSD_MatAnim* matanim,
-                 HSD_ShapeAnimDObj* shapeanimdobj)
+void HSD_DObjRemoveAnimByFlags(HSD_DObj* dobj, u32 flags)
+{
+    if (dobj == NULL) {
+        return;
+    }
+
+    if ((flags & 2) != 0) {
+        HSD_AObjRemove(dobj->aobj);
+        dobj->aobj = NULL;
+    }
+    HSD_PObjRemoveAnimAllByFlags(dobj->pobj, flags);
+    HSD_MObjRemoveAnimByFlags(dobj->mobj, flags);
+}
+
+void HSD_DObjRemoveAnimAllByFlags(HSD_DObj* dobj, u32 flags)
+{
+    HSD_DObj* dp;
+
+    if (dobj == NULL) {
+        return;
+    }
+
+    for (dp = dobj; dp != NULL; dp = dp->next) {
+        HSD_DObjRemoveAnimByFlags(dp, flags);
+    }
+}
+
+void HSD_DObjAddAnim(HSD_DObj* dobj, HSD_MatAnim* mat_anim,
+                     HSD_ShapeAnimDObj* sh_anim)
+{
+    HSD_ShapeAnim* shapeanim;
+
+    if (dobj == NULL) {
+        return;
+    }
+
+    HSD_PObjAddAnimAll(dobj->pobj, sh_anim != NULL ? sh_anim->shapeanim : NULL);
+    HSD_MObjAddAnim(dobj->mobj, mat_anim);
+}
+
+void HSD_DObjAddAnimAll(HSD_DObj* dobj, HSD_MatAnim* matanim,
+                        HSD_ShapeAnimDObj* shapeanimdobj)
 {
     HSD_DObj* dp;
     HSD_MatAnim* ma;
     HSD_ShapeAnimDObj* sd;
 
-    if (dobj == 0) {
+    if (dobj == NULL) {
         return;
     }
-    for (dp = dobj, ma = matanim, sd = shapeanimdobj; dp != 0;
+
+    for (dp = dobj, ma = matanim, sd = shapeanimdobj; dp != NULL;
          dp = dp->next, ma = next_p(ma), sd = next_p(sd))
     {
         HSD_DObjAddAnim(dp, ma, sd);
     }
 }
 
-static inline void HSD_DObjReqAnimByFlags(HSD_DObj* dobj, float frame, u32 flags)
+void HSD_DObjReqAnimByFlags(HSD_DObj* dobj, f32 startframe, u32 flags)
 {
-    if (dobj == 0) {
+    if (dobj == NULL) {
         return;
     }
-    HSD_MObjReqAnimAllByFlags(dobj->pobj, frame, flags); /* really HSD_PObjReqAnimAllByFlags */
-    HSD_PObjReqAnimByFlags(dobj->mobj, frame, flags);    /* really HSD_MObjReqAnimByFlags */
+
+    HSD_PObjReqAnimAllByFlags(dobj->pobj, startframe, flags);
+    HSD_MObjReqAnimByFlags(dobj->mobj, startframe, flags);
 }
 
-void HSD_DObjReqAnimAllByFlags(HSD_DObj* dobj, float frame, u32 flags)
+void HSD_DObjReqAnimAllByFlags(HSD_DObj* dobj, f32 startframe, u32 flags)
 {
     HSD_DObj* dp;
-    if (dobj == 0) {
+
+    if (dobj == NULL) {
         return;
     }
-    for (dp = dobj; dp != 0; dp = dp->next) {
-        HSD_DObjReqAnimByFlags(dp, frame, flags);
+
+    for (dp = dobj; dp != NULL; dp = dp->next) {
+        HSD_DObjReqAnimByFlags(dp, startframe, flags);
     }
 }
 
-static inline void HSD_DObjAnim(HSD_DObj* dobj)
-{
-    if (dobj == 0) {
-        return;
-    }
-    fn_802C3C00(dobj->aobj, dobj, dobj->class_info[0x44 / 4]);
-    fn_802CA8CC(dobj->pobj);
-    fn_802C2848(dobj->mobj);
-}
-
-void fn_802BD0FC(HSD_DObj* dobj)
+void HSD_DObjReqAnimAll(HSD_DObj* dobj, f32 startframe)
 {
     HSD_DObj* dp;
-    if (dobj == 0) {
+
+    if (dobj == NULL) {
         return;
     }
-    for (dp = dobj; dp != 0; dp = dp->next) {
+
+    for (dp = dobj; dp != NULL; dp = dp->next) {
+        HSD_DObjReqAnimByFlags(dp, startframe, 0x7FF);
+    }
+}
+
+void HSD_DObjAnim(HSD_DObj* dobj)
+{
+    if (dobj == NULL) {
+        return;
+    }
+
+    HSD_AObjInterpretAnim(dobj->aobj, dobj, HSD_DOBJ_METHOD(dobj)->update);
+    HSD_PObjAnimAll(dobj->pobj);
+    HSD_MObjAnim(dobj->mobj);
+}
+
+void HSD_DObjAnimAll(HSD_DObj* dobj)
+{
+    HSD_DObj* dp;
+
+    if (dobj == NULL) {
+        return;
+    }
+
+    for (dp = dobj; dp != NULL; dp = dp->next) {
         HSD_DObjAnim(dp);
     }
+}
+
+static int DObjLoad(HSD_DObj* dobj, HSD_DObjDesc* desc)
+{
+    dobj->next = HSD_DObjLoadDesc(desc->next);
+    dobj->mobj = HSD_MObjLoadDesc(desc->mobjdesc);
+    dobj->pobj = HSD_PObjLoadDesc(desc->pobjdesc);
+
+    if (dobj->mobj != NULL) {
+        switch (dobj->mobj->rendermode & 0x60000000) {
+        case 0:
+            HSD_DObjModifyFlags(dobj, 2, 0xE);
+            break;
+        case 0x40000000:
+            HSD_DObjModifyFlags(dobj, 8, 0xE);
+            break;
+        case 0x60000000:
+            HSD_DObjModifyFlags(dobj, 4, 0xE);
+            break;
+        default:
+            OSReport("mobj has unexpected blending flags (0x%x).",
+                     dobj->mobj->rendermode);
+            HSD_Panic(__FILE__, 319, "\0");
+        }
+    }
+    return 0;
+}
+
+HSD_DObj* HSD_DObjLoadDesc(HSD_DObjDesc* desc)
+{
+    HSD_DObj* dobj;
+    HSD_ClassInfo* info;
+
+    if (desc == NULL) {
+        return NULL;
+    }
+
+    if (desc->class_name == NULL ||
+        (info = hsdSearchClassInfo(desc->class_name)) == NULL)
+    {
+        dobj = HSD_DObjAlloc();
+    } else {
+        dobj = HSD_DOBJ(hsdNew(info));
+        if (dobj == NULL) {
+            __assert(__FILE__, 385, "dobj");
+        }
+    }
+    HSD_DOBJ_METHOD(dobj)->load(dobj, desc);
+
+    return dobj;
+}
+
+void HSD_DObjRemove(HSD_DObj* dobj)
+{
+    hsdDelete(dobj);
+}
+
+void HSD_DObjRemoveAll(HSD_DObj* dobj)
+{
+    HSD_DObj* next;
+
+    for (; dobj != NULL; dobj = next) {
+        next = dobj->next;
+        HSD_DObjRemove(dobj);
+    }
+}
+
+void HSD_DObjInsertNext(HSD_DObj* dobj, HSD_DObj* next)
+{
+    if (dobj == NULL || next == NULL) {
+        return;
+    }
+    next->next = dobj->next;
+    dobj->next = next;
+}
+
+void HSD_DObjSetDefaultClass(HSD_ClassInfo* info)
+{
+    if (info) {
+        if (!hsdIsDescendantOf(info, &hsdDObj)) {
+            // The line number here is totally made up, this function is
+            // removed in practice but the string isn't
+            __assert(__FILE__, __LINE__, "hsdIsDescendantOf(info, &hsdDObj)");
+        }
+    }
+    default_class = info;
+}
+
+HSD_DObj* HSD_DObjAlloc(void)
+{
+    HSD_DObj* dobj = hsdNew(default_class ? default_class : &hsdDObj.parent);
+    if (dobj == NULL) {
+        __assert(__FILE__, 532, "dobj");
+    }
+    return dobj;
+}
+
+void HSD_DObjResolveRefs(HSD_DObj* dobj, HSD_DObjDesc* desc)
+{
+    if (dobj == NULL || desc == NULL) {
+        return;
+    }
+    HSD_PObjResolveRefsAll(dobj->pobj, desc->pobjdesc);
+}
+
+void HSD_DObjResolveRefsAll(HSD_DObj* dobj, HSD_DObjDesc* desc)
+{
+    for (; dobj != NULL && desc != NULL; dobj = dobj->next, desc = desc->next)
+    {
+        HSD_DObjResolveRefs(dobj, desc);
+    }
+}
+
+void forceStringAllocation(
+    HSD_DObj* dobj,
+    HSD_MObj*
+        mobj) // This function exists for the sole purpose of causing strings
+              // to end up in data by the compiler despite not being used
+{
+    if (dobj->pobj == NULL) {
+        __assert(__FILE__, 700, "can not find specified pobj in link.\n");
+    }
+    if (dobj->pobj == NULL) {
+        __assert(__FILE__, 702, "can not find specified pobj in link.");
+    }
+    if (dobj->mobj != mobj) {
+        __assert(__FILE__, 704, "dobj->mobj == mobj");
+    }
+}
+
+void HSD_DObjDisp(HSD_DObj* dobj, Mtx vmtx, Mtx pmtx, u32 rendermode)
+{
+    HSD_PObj* p;
+
+    HSD_MObjSetCurrent(dobj->mobj);
+    if ((rendermode & 0x4000000) == 0) {
+        HSD_MOBJ_METHOD(dobj->mobj)->setup(dobj->mobj, rendermode);
+    }
+    for (p = dobj->pobj; p != NULL; p = p->next) {
+        HSD_POBJ_METHOD(p)->disp(p, vmtx, pmtx, rendermode);
+    }
+    if ((rendermode & 0x4000000) == 0) {
+        HSD_MOBJ_METHOD(dobj->mobj)->unset(dobj->mobj, rendermode);
+    }
+    HSD_MObjSetCurrent(NULL);
+}
+
+static void DObjRelease(HSD_Class* o)
+{
+    HSD_DObj* dobj = HSD_DOBJ(o);
+
+    HSD_MObjRemove(dobj->mobj);
+    HSD_PObjRemoveAll(dobj->pobj);
+    HSD_AObjRemove(dobj->aobj);
+
+    HSD_PARENT_INFO(&hsdDObj)->release(o);
+}
+
+static void DObjAmnesia(HSD_ClassInfo* info)
+{
+    if (info == HSD_CLASS_INFO(default_class)) {
+        default_class = NULL;
+    }
+    HSD_PARENT_INFO(&hsdDObj)->amnesia(info);
+}
+
+static void DObjInfoInit(void)
+{
+    hsdInitClassInfo(HSD_CLASS_INFO(&hsdDObj), HSD_CLASS_INFO(&hsdClass),
+                     "sysdolphin_base_library", "hsd_dobj",
+                     sizeof(HSD_DObjInfo), sizeof(HSD_DObj));
+
+    HSD_CLASS_INFO(&hsdDObj)->release = DObjRelease;
+    HSD_CLASS_INFO(&hsdDObj)->amnesia = DObjAmnesia;
+    HSD_DOBJ_INFO(&hsdDObj)->disp = HSD_DObjDisp;
+    HSD_DOBJ_INFO(&hsdDObj)->load = DObjLoad;
 }

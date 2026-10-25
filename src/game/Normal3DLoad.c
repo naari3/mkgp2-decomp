@@ -28,7 +28,7 @@ extern void* Archive_GetCurrent(void*);
 extern void* HSD_ArchiveGetPublicAddress(void*, const char*);
 extern void clModelM_Construct(AssetRow*, void**, JObj**);
 extern void clNormal3D_SetFlags(Normal3DLoadView*, unsigned int, JObj*);
-extern JObj* HSD_JObjLoadDesc(void*);
+extern JObj* HSD_JObjLoadJoint(void*);
 extern int clNormal3D_CountJObjs(Normal3DLoadView*, JObj*, int);
 extern void* FUN_8003b120(unsigned int);
 extern int clNormal3D_FlattenJObjTree(JObj*, JObj**, int);
@@ -64,7 +64,7 @@ int clNormal3D_Load(Normal3DLoadView* self, const char* path,
         clModelM_Construct(self->selected, &self->model, &self->root);
         clNormal3D_SetFlags(self, 0x40000000, 0);
     } else {
-        self->root = HSD_JObjLoadDesc(self->selected->descriptor);
+        self->root = HSD_JObjLoadJoint(self->selected->descriptor);
     }
     self->count = clNormal3D_CountJObjs(self, self->root, 0);
     self->table = (JObj**)FUN_8003b120(self->count * 4);

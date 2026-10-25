@@ -55,8 +55,8 @@ private:
 };
 
 extern "C" {
-void fn_802BCFB4(ListNode *, int);
-void fn_802BCF9C(ListNode *, int);
+void HSD_DObjClearFlags(ListNode *, int);
+void HSD_DObjSetFlags(ListNode *, int);
 unsigned char fn_801379F0(Vec3f *, float);
 void Object_SetJObjPositionVec(void *, Vec3f *);
 void Object_SetJObjRotationX(void *, float);
@@ -79,9 +79,9 @@ void fn_8016CC04(ItemBoxSet *set) {
 
     for (node = set->nodes, n = 0; node != 0; node = node->next, n++) {
         if (n == set->selected) {
-            fn_802BCFB4(node, 1);
+            HSD_DObjClearFlags(node, 1);
         } else {
-            fn_802BCF9C(node, 1);
+            HSD_DObjSetFlags(node, 1);
         }
     }
 

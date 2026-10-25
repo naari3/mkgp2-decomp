@@ -116,7 +116,7 @@ void fn_80189C10(ShadowSet *);
 unsigned char fn_801847DC(JObj *, Vec3f *, Vec3f *);
 void fn_80189FD8(ShadowSet *, Vec3f *, Vec3f *);
 void fn_80174D94(JObj *, unsigned char);
-void fn_802D041C(JObj *);
+void HSD_JObjUnref(JObj *);
 }
 
 #pragma auto_inline off
@@ -279,7 +279,7 @@ Caster::Caster(JObj *root, unsigned char proxy) {
 Proxy::~Proxy() {
     if (orig) {
         fn_80174D94(jobj->child, 1);
-        fn_802D041C(jobj->child);
+        HSD_JObjUnref(jobj->child);
         lbl_806D15E8--;
         jobj->child = orig;
         jobj->flags = origFlags;
