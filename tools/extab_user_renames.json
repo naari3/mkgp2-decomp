@@ -1075,6 +1075,15 @@
     "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
     "__ct__11Obj8018D82CFv": "fn_8018D82C"
   },
+  "src/game/objview/fn_8018D968.cpp": {
+    "__ct__9GXChannelFP8HSD_JObjP8HSD_DObjUii": "GXChannel_Init",
+    "__dt__9GXChannelFv": "dtor_8007D9C4"
+  },
+  "src/game/misc3d/fn_801652F0.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__8DispImplFii": "fn_8014AA38"
+  },
   "src/game/objview/fn_80187878.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
