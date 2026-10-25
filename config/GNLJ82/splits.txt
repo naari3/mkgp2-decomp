@@ -1999,6 +1999,11 @@ game/Items.cpp:
 	extabindex  start:0x80021EB4 end:0x80021EC0
 	.text       start:0x80090848 end:0x80090C88
 
+game/CardData_InitDefaults.c:
+	extab       start:0x800093B8 end:0x800093C0
+	extabindex  start:0x80021EC0 end:0x80021ECC
+	.text       start:0x80090C88 end:0x80090FF0
+
 game/GetKartParamBlock.c:
 	.text       start:0x80090FF0 end:0x8009107C
 
