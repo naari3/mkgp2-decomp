@@ -6266,6 +6266,16 @@ game/AI_RollItemUseProbability.c:
 	extabindex  start:0x80028400 end:0x8002840C
 	.text       start:0x801DCF00 end:0x801DD044
 
+game/AI_CheckTargetInRange.c:
+	extab       start:0x80015968 end:0x80015970
+	extabindex  start:0x8002840C end:0x80028418
+	.text       start:0x801DD044 end:0x801DD1B0
+
+game/fn_801DD1B0.c:
+	extab       start:0x80015970 end:0x80015978
+	extabindex  start:0x80028418 end:0x80028424
+	.text       start:0x801DD1B0 end:0x801DD344
+
 game/AI_CheckItemSuppression.c:
 	extab       start:0x80015978 end:0x80015980
 	extabindex  start:0x80028424 end:0x80028430
@@ -6543,6 +6553,11 @@ game/fn_801E9594.cpp:
 	extab       start:0x80016AC0 end:0x80016AC8
 	extabindex  start:0x800289B8 end:0x800289C4
 	.text       start:0x801E9594 end:0x801E96BC
+
+game/AI_CalcItemSpeedBonus.c:
+	extab       start:0x80016AF8 end:0x80016B00
+	extabindex  start:0x80028A0C end:0x80028A18
+	.text       start:0x801EA500 end:0x801EA6F0
 
 game/fn_801EB91C.c:
 	extab       start:0x80016B38 end:0x80016B40
