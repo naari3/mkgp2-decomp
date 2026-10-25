@@ -2020,6 +2020,7 @@ config.libs = [
     SdkLib(
         "dolphin_dvd",
         [
+            Object(Matching, "dolphin/dvd/dvdlow.c"),
             Object(Matching, "dolphin/dvd/dvdfs.c"),
             Object(Matching, "dolphin/dvd/dvd.c"),
             Object(Matching, "dolphin/dvd/dvdqueue.c"),
@@ -2158,6 +2159,7 @@ config.libs = [
         "progress_category": "sdk",
         "objects": [
             Object(NonMatching, "triforce/jvsio.c"),
+            Object(NonMatching, "triforce/dvdlow.c", extra_cflags=["-O4,p", "-inline noauto"]),
         ],
     },
     {
