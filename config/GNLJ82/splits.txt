@@ -4576,6 +4576,11 @@ game/fn_80100F64.c:
 	extabindex  start:0x800240E0 end:0x800240EC
 	.text       start:0x80100F64 end:0x80101A58
 
+game/fn_80101A58.c:
+	extab       start:0x8000B7E4 end:0x8000B7EC
+	extabindex  start:0x800240EC end:0x800240F8
+	.text       start:0x80101A58 end:0x801022E0
+
 game/fn_801022E0.c:
 	extab       start:0x8000B7EC end:0x8000B7F4
 	extabindex  start:0x800240F8 end:0x80024104
