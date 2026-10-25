@@ -1906,7 +1906,12 @@ game/card_task_manager_create.c:
 game/OperationClockState.c:
 	extab       start:0x80009260 end:0x80009280
 	extabindex  start:0x80021D1C end:0x80021D4C
-	.text       start:0x8008C930 end:0x8008CB20
+	.text       start:0x8008C930 end:0x8008CB3C
+
+game/PlayStats_Accumulate.c:
+	extab       start:0x80009280 end:0x80009288
+	extabindex  start:0x80021D4C end:0x80021D58
+	.text       start:0x8008CB3C end:0x8008D87C
 
 game/PlayStats_Counters.c:
 	.text       start:0x8008D87C end:0x8008DC70

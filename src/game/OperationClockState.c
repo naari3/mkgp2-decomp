@@ -1,5 +1,5 @@
 /*
- * Daily clock / operation clock helpers, 0x8008C930..0x8008CB20.
+ * Daily clock / operation clock helpers, 0x8008C930..0x8008CB3C.
  */
 
 typedef struct OSCalendarTime {
@@ -79,3 +79,10 @@ int OperationClockState_StartTick(OperationClockState *st) {
 }
 
 #pragma exceptions reset
+
+void OperationClockState_Reset(OperationClockState *st) {
+    st->state = 1;
+    st->start = 0;
+    st->current = 0;
+    st->delta = 0;
+}
