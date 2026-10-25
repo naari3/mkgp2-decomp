@@ -688,6 +688,25 @@
     "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
     "__ct__10clNormal3DFPvi": "clNormal3D_Construct"
   },
+  "src/sound/SoundMgr_PointSetNew.cpp": {
+    "__ct__11AmbPointSetFP10SpawnEntry": "fn_8016C94C"
+  },
+  "src/game/ItemBox_8016CC04.cpp": {
+    "__ct__9GXChannelFPvPvii": "GXChannel_Init",
+    "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform",
+    "__dt__9GXChannelFv": "dtor_8007D9C4"
+  },
+  "src/game/Scene_8016D920.cpp": {
+    "__ct__11MarkerChainFP12MarkerSource": "fn_8016D920",
+    "__vt__16CourseMarkerBase": "lbl_80490FE0",
+    "__vt__11MarkerChain": "lbl_80491134",
+    "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
+    "__ct__10clNormal3DFPvi": "clNormal3D_Construct"
+  },
+  "src/game/Scene_8016E1C0.cpp": {
+    "__dt__8PropNodeFv": "fn_8016E424",
+    "__vt__8PropNode": "lbl_804911F4"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
