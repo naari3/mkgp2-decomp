@@ -726,6 +726,36 @@
     "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
     "__ct__10clNormal3DFPvi": "clNormal3D_Construct"
   },
+  "src/game/LavaSplash.cpp": {
+    "__ct__12clLavaSplashFv": "fn_801715A0",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__vt__12clLavaSplash": "lbl_804912B4",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__9GXChannelFPvPvii": "GXChannel_Init",
+    "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform",
+    "__dt__9GXChannelFv": "dtor_8007D9C4"
+  },
+  "src/game/LensFlare.cpp": {
+    "__ct__11clLensFlareFPCcP8HSD_JObjff": "fn_80171CD0",
+    "__ct__11clLensFlareFPCcfffff": "fn_80171F34",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__vt__11clLensFlare": "lbl_804912DC",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__10FlareStateFv": "fn_8018F100",
+    "__dt__10FlareStateFv": "dtor_8018F088"
+  },
+  "src/game/Scene_801734B0.cpp": {
+    "__dt__12EffectHandleFv": "fn_80173550",
+    "__dt__9EffectObjFv": "fn_801F7CD8",
+    "__dt__10EffectSlotFv": "dtor_80122120",
+    "__destroy_arr": "fn_80270CF4",
+    "__ct__12EffectHandleFv": "fn_8017363C",
+    "__ct__9EffectObjFPCc": "fn_801F7D50",
+    "__ct__10EffectSlotFv": "fn_801F7E98",
+    "__construct_array": "fn_80270D6C"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
