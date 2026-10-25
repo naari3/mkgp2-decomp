@@ -8033,6 +8033,11 @@ game/fn_801F9AAC.cpp:
 	extabindex  start:0x800290FC end:0x80029108
 	.text       start:0x801F9AAC end:0x801F9B64
 
+game/fn_801F9CA8.cpp:
+	extab       start:0x80017738 end:0x80017740
+	extabindex  start:0x80029114 end:0x80029120
+	.text       start:0x801F9CA8 end:0x801F9DA4
+
 game/fn_801F9F04.cpp:
 	extab       start:0x80017790 end:0x80017798
 	extabindex  start:0x8002912C end:0x80029138
