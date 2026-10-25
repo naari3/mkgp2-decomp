@@ -2367,6 +2367,7 @@ config.libs = [
         "cflags": cflags_base,
         "progress_category": "game",
         "objects": [
+            Object(Matching, "util/bitpack_read.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "util/bitpack.c", extab_padding=b"\x00\x00"),
         ],
     },
