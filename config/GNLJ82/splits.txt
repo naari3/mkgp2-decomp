@@ -1055,6 +1055,11 @@ game/KartAudioChannel.c:
 	extabindex  start:0x800208AC end:0x800208B8
 	.text       start:0x80058EA4 end:0x80058F5C
 
+game/SoundVolumePan_Update.c:
+	extab       start:0x800076C0 end:0x800076C8
+	extabindex  start:0x800208B8 end:0x800208C4
+	.text       start:0x80058F5C end:0x800594D4
+
 sound/SoundObj_PlaySE_Direct.c:
 	extab       start:0x800076C8 end:0x800076D0
 	extabindex  start:0x800208C4 end:0x800208D0
@@ -1378,6 +1383,22 @@ game/CardRW_ErrorDisplay.c:
 	extabindex  start:0x80020FCC end:0x80020FD8
 	.text       start:0x80066350 end:0x800668FC
 
+game/UI_PageDispatcher.c:
+	extab       start:0x800080F8 end:0x80008100
+	extabindex  start:0x80020FD8 end:0x80020FE4
+	.text       start:0x800668FC end:0x80066B74
+	.data       start:0x803FDE78 end:0x803FDEFC
+
+game/SystemInfo_UI.cpp:
+	extab       start:0x80008100 end:0x80008108
+	extabindex  start:0x80020FE4 end:0x80020FF0
+	.text       start:0x80066B74 end:0x80066E10
+
+game/BackupMemoryInitialize_Page.cpp:
+	extab       start:0x80008108 end:0x80008110
+	extabindex  start:0x80020FF0 end:0x80020FFC
+	.text       start:0x80066E10 end:0x80067494
+
 game/NetDiag_QualityPage.c:
 	extab       start:0x80008110 end:0x80008118
 	extabindex  start:0x80020FFC end:0x80021008
@@ -1392,6 +1413,11 @@ game/NetDiag_PacketPage.c:
 	extab       start:0x80008128 end:0x80008130
 	extabindex  start:0x80021020 end:0x8002102C
 	.text       start:0x80068D00 end:0x80069720
+
+game/Stats_Display_UI.cpp:
+	extab       start:0x80008130 end:0x80008138
+	extabindex  start:0x8002102C end:0x80021038
+	.text       start:0x80069720 end:0x80069AB0
 
 game/NetDiag_PacketRatioPage.c:
 	extab       start:0x80008138 end:0x80008140
