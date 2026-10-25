@@ -7495,6 +7495,12 @@ sysdolphin/baselib/random.c:
 	.sdata      start:0x806D0F10 end:0x806D0F18
 	.sdata2     start:0x806DCE88 end:0x806DCE98
 
+sysdolphin/baselib/bytecode.c:
+	.text       start:0x802DCA98 end:0x802DE060
+	.data       start:0x804FD740 end:0x804FD7E0
+	.sdata      start:0x806D0F18 end:0x806D0F28
+	.sdata2     start:0x806DCE98 end:0x806DCED0
+
 sysdolphin/baselib/class.c:
 	.text       start:0x802DE060 end:0x802DE524
 	.data       start:0x804FD7E0 end:0x804FD970
