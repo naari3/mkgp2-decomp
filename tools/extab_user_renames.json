@@ -1060,6 +1060,21 @@
   "src/game/kartmove/fn_8019A6A4.cpp": {
     "__dt__3VecFv": "dtor_80036E40"
   },
+  "src/game/objview/fn_80187BF4.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__11Obj80187BF4Fv": "fn_80187BF4",
+    "__dt__7ObjBaseFv": "dtor_8016A270",
+    "__vt__7ObjBase": "lbl_80490FE0",
+    "__vt__11Obj80187BF4": "lbl_80495C0C"
+  },
+  "src/game/objview/fn_8018D82C.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__11Obj8018D82CFv": "fn_8018D82C"
+  },
   "src/game/objview/fn_80187878.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
