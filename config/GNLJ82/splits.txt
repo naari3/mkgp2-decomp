@@ -2276,6 +2276,12 @@ game/VSMode_SeedRandomItemSequence.c:
 game/RaceData_8009BEF4.c:
 	.text       start:0x8009BEF4 end:0x8009CBFC
 
+game/SetCourseParams.c:
+	extab       start:0x800095A8 end:0x800095B0
+	extabindex  start:0x800221A8 end:0x800221B4
+	.text       start:0x8009CBFC end:0x8009CFDC
+	.bss        start:0x805AC600 end:0x805D2AA8
+
 game/PlayerData_ApplyItemUnlockById.c:
 	extab       start:0x800095B0 end:0x800095B8
 	extabindex  start:0x800221B4 end:0x800221C0
