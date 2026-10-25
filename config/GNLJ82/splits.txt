@@ -5979,6 +5979,11 @@ game/ItemDisplay_Stop.c:
 	extabindex  start:0x80029B4C end:0x80029B58
 	.text       start:0x8020AA98 end:0x8020AAD4
 
+game/anon_8020AAD4.cpp:
+	extab       start:0x80019468 end:0x800194A8
+	extabindex  start:0x80029B58 end:0x80029B88
+	.text       start:0x8020AAD4 end:0x8020AE50
+
 game/ItemDisplay_Destroy.c:
 	extab       start:0x800194A8 end:0x800194B0
 	extabindex  start:0x80029B88 end:0x80029B94
@@ -5988,6 +5993,16 @@ game/ItemDisplay_GetOrCreate.c:
 	extab       start:0x800194B0 end:0x800194B8
 	extabindex  start:0x80029B94 end:0x80029BA0
 	.text       start:0x8020AEA8 end:0x8020AF08
+
+game/anon_8020AF08.cpp:
+	extab       start:0x800194B8 end:0x80019538
+	extabindex  start:0x80029BA0 end:0x80029BD0
+	.text       start:0x8020AF08 end:0x8020B4F8
+
+game/anon_8020B4F8.cpp:
+	extab       start:0x80019538 end:0x80019628
+	extabindex  start:0x80029BD0 end:0x80029C24
+	.text       start:0x8020B4F8 end:0x8020BD68
 
 game/fn_8020E388.c:
 	extab       start:0x80019968 end:0x80019970
