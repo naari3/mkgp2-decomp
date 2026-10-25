@@ -4167,6 +4167,11 @@ game/ItemObject_ChainShell_BoundOrbit_Sub.c:
 	extabindex  start:0x80023D38 end:0x80023D44
 	.text       start:0x800E5380 end:0x800E55E4
 
+game/ItemObject_ChainShell_GrabAndArc_Sub.c:
+	extab       start:0x8000B574 end:0x8000B57C
+	extabindex  start:0x80023D44 end:0x80023D50
+	.text       start:0x800E55E4 end:0x800E5FC0
+
 game/GabyouItemHit.cpp:
 	extab       start:0x8000B584 end:0x8000B58C
 	extabindex  start:0x80023D5C end:0x80023D68
