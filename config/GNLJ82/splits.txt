@@ -5156,9 +5156,6 @@ game/fn_80255620.c:
 	extabindex  start:0x8002BAD8 end:0x8002BAE4
 	.text       start:0x80255620 end:0x80255640
 
-game/Vec3.c:
-	.text       start:0x8025E324 end:0x8025E388
-
 dolphin/base/PPCArch.c:
 	.text       start:0x802557C0 end:0x802558F4
 
@@ -5603,3 +5600,84 @@ dolphin/gx/GXTransform.c:
 dolphin/gx/GXPerf.c:
 	.text       start:0x8026A78C end:0x8026AFE4
 	.data       start:0x804F4578 end:0x804F4668
+
+game/fn_801635D4.c:
+	.text       start:0x801635D4 end:0x801635DC
+
+game/fn_801660B0.c:
+	.text       start:0x801660B0 end:0x801660B4
+
+game/fn_80166B28.c:
+	.text       start:0x80166B28 end:0x80166B2C
+
+game/fn_8016730C.c:
+	.text       start:0x8016730C end:0x80167310
+
+game/fn_8016A2B8.c:
+	.text       start:0x8016A2B8 end:0x8016A2C0
+
+game/fn_8016B0A0.c:
+	extab       start:0x80010364 end:0x8001036C
+	extabindex  start:0x800260A8 end:0x800260B4
+	.text       start:0x8016B0A0 end:0x8016B0C4
+
+game/fn_8016CB44.c:
+	.text       start:0x8016CB44 end:0x8016CB4C
+
+game/fn_8016E354.c:
+	.text       start:0x8016E354 end:0x8016E358
+
+Runtime.PPCEABI.H/global_destructor_chain.c:
+	.text       start:0x80270BE8 end:0x80270C48
+	.dtors      start:0x802E8988 end:0x802E898C
+
+sysdolphin/baselib/aobj.c:
+	.text       start:0x802C3BC0 end:0x802C3C00
+
+sysdolphin/baselib/fobj.c:
+	.text       start:0x802C8CCC end:0x802C8D70
+
+sysdolphin/baselib/jobj.c:
+	.text       start:0x802CDAF8 end:0x802CDB80
+
+sysdolphin/baselib/jobj_anim_all.c:
+	.text       start:0x802CDB80 end:0x802CDE48
+
+sysdolphin/baselib/jobj_anim_misc.c:
+	.text       start:0x802CDE48 end:0x802CDF38
+
+sysdolphin/baselib/robj.c:
+	.text       start:0x802D7C1C end:0x802D7CA0
+
+init/__check_pad3.c:
+	.init       start:0x80003100 end:0x80003140
+
+init/debug_bba.c:
+	.init       start:0x80003140 end:0x80003154
+
+init/__start.c:
+	.init       start:0x80003154 end:0x80003400
+
+init/__init_hardware.c:
+	.init       start:0x80003400 end:0x80003424
+
+init/__flush_cache.c:
+	.init       start:0x80003424 end:0x80003458
+
+init/memset_returning_dst.c:
+	.init       start:0x80003458 end:0x80003488
+
+init/memcpy_bytewise.c:
+	.init       start:0x80003488 end:0x800034AC
+
+init/OSResetSystem_NoArgs.c:
+	.init       start:0x800053E0 end:0x8000540C
+
+init/memset.c:
+	.init       start:0x8000540C end:0x8000543C
+
+init/__fill_mem.c:
+	.init       start:0x8000543C end:0x800054F4
+
+init/memcpy.c:
+	.init       start:0x800054F4 end:0x80005544
