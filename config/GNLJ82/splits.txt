@@ -5949,13 +5949,25 @@ game/anon_80205DCC.cpp:
 	extabindex  start:0x80029924 end:0x80029978
 	.text       start:0x80205DCC end:0x80207324
 
-game/fn_80208E2C.c:
-	.text       start:0x80208E2C end:0x80208E30
+game/anon_80207324.cpp:
+	extab       start:0x80019210 end:0x8001933C
+	extabindex  start:0x80029978 end:0x80029A14
+	.text       start:0x80207324 end:0x80207E3C
 
-game/dtor_80209180.c:
-	extab       start:0x8001937C end:0x80019384
-	extabindex  start:0x80029A74 end:0x80029A80
-	.text       start:0x80209180 end:0x802091BC
+game/anon_80207E3C.cpp:
+	extab       start:0x8001933C end:0x80019354
+	extabindex  start:0x80029A14 end:0x80029A38
+	.text       start:0x80207E3C end:0x80208E30
+
+game/anon_80208E30.cpp:
+	extab       start:0x80019354 end:0x8001938C
+	extabindex  start:0x80029A38 end:0x80029A8C
+	.text       start:0x80208E30 end:0x80209330
+
+game/anon_80209330.cpp:
+	extab       start:0x8001938C end:0x8001939C
+	extabindex  start:0x80029A8C end:0x80029AA4
+	.text       start:0x80209330 end:0x80209A84
 
 game/ItemDisplay_Stop.c:
 	extab       start:0x80019460 end:0x80019468
