@@ -57,10 +57,10 @@ extern void GX_SetCullMode(int mode);
 extern void fn_802D2B00(int a, int b);
 extern void *fn_802C8510(void);
 extern void fn_802C7D98(void *cam, Mtx m);
-extern void GX_SetCurrentMtx(int id);
+extern void GXSetCurrentMtx(int id);
 extern void PSMTXConcat(const Mtx a, const Mtx b, Mtx ab);
-extern void GX_LoadPosMtxImm(Mtx m, int id);
-extern void GX_Begin(int prim, int fmt, int n);
+extern void GXLoadPosMtxImm(Mtx m, int id);
+extern void GXBegin(int prim, int fmt, int n);
 extern void *FUN_8003b120(unsigned long size);
 extern void MemoryManager_Free(void *p);
 extern void fn_801A0004(void *p);
@@ -70,11 +70,11 @@ extern void MemoryManager_TimedFree(void *p);
 }
 
 extern "C" {
-extern void MTXIdentity();
+extern void PSMTXIdentity();
 extern void Vec3_Dot();
 extern void fn_8013BA90();
 extern void fn_8013BAE8();
-extern void fn_8025D770();
+extern void PSMTXRotRad();
 extern void tan();
 extern unsigned int lbl_806D786C;
 extern unsigned int lbl_806D7870;
@@ -344,7 +344,7 @@ extern "C" asm void fn_8014017C(void) { /* 0x8014017C size:0x1C8 */
     addi r4, r1, 0x3c
     bl fn_802C7D98
     li r3, 0x0
-    bl GX_SetCurrentMtx
+    bl GXSetCurrentMtx
     li r31, 0x0
     li r29, 0x0
     fn_8014017C_L_80140204:
@@ -359,7 +359,7 @@ extern "C" asm void fn_8014017C(void) { /* 0x8014017C size:0x1C8 */
     bl PSMTXConcat
     addi r3, r1, 0xc
     li r4, 0x0
-    bl GX_LoadPosMtxImm
+    bl GXLoadPosMtxImm
     lwz r5, 0x1c(r30)
     addi r0, r29, 0x40
     lis r4, lbl_80360520@ha
@@ -371,7 +371,7 @@ extern "C" asm void fn_8014017C(void) { /* 0x8014017C size:0x1C8 */
     slwi r0, r0, 2
     lwzx r0, r6, r0
     stw r0, 0x8(r1)
-    bl GX_Begin
+    bl GXBegin
     lfs f0, 0x8(r30)
     lis r5, 0xcc01
     lfs f1, lbl_806D7868(r2)
@@ -487,7 +487,7 @@ extern "C" asm void fn_80140344(void) { /* 0x80140344 size:0x4CC */
     lfs f0, 0x34(r5)
     fmuls f29, f31, f2
     fmuls f1, f1, f0
-    bl fn_8025D770
+    bl PSMTXRotRad
     lwz r0, 0x1c(r29)
     addi r3, r31, 0x4
     addi r4, r1, 0x20
@@ -501,7 +501,7 @@ extern "C" asm void fn_80140344(void) { /* 0x80140344 size:0x4CC */
     lfsx f0, r4, r0
     li r4, 0x59
     fmuls f1, f1, f0
-    bl fn_8025D770
+    bl PSMTXRotRad
     lwz r0, 0x1c(r29)
     addi r3, r31, 0x4
     addi r4, r1, 0x20
@@ -515,7 +515,7 @@ extern "C" asm void fn_80140344(void) { /* 0x80140344 size:0x4CC */
     lfsx f0, r4, r0
     li r4, 0x5a
     fmuls f1, f1, f0
-    bl fn_8025D770
+    bl PSMTXRotRad
     lwz r0, 0x1c(r29)
     addi r3, r31, 0x4
     addi r4, r1, 0x20
@@ -608,7 +608,7 @@ extern "C" asm void fn_80140344(void) { /* 0x80140344 size:0x4CC */
     stb r0, 0x0(r5)
     lwz r0, 0x1c(r29)
     add r3, r0, r3
-    bl MTXIdentity
+    bl PSMTXIdentity
     lwz r3, 0x4(r29)
     addi r0, r3, 0x1
     cmpwi r0, 0x30
