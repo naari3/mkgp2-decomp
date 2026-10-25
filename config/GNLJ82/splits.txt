@@ -4859,6 +4859,11 @@ game/clFlowTitle_Init.cpp:
 	extabindex  start:0x800279F8 end:0x80027A04
 	.text       start:0x801BA7B8 end:0x801BA9A0
 
+game/fn_801BA9A0.cpp:
+	extab       start:0x800131A4 end:0x800131AC
+	extabindex  start:0x80027A04 end:0x80027A10
+	.text       start:0x801BA9A0 end:0x801BAA88
+
 game/fn_801C3108.c:
 	extab       start:0x80013E04 end:0x80013E0C
 	extabindex  start:0x80027D34 end:0x80027D40
@@ -4931,6 +4936,16 @@ game/dtor_801CCA30.cpp:
 	extab       start:0x80014804 end:0x8001482C
 	extabindex  start:0x80027EB4 end:0x80027EC0
 	.text       start:0x801CCA30 end:0x801CCAAC
+
+game/fn_801CCD14.cpp:
+	extab       start:0x80014844 end:0x8001484C
+	extabindex  start:0x80027ECC end:0x80027ED8
+	.text       start:0x801CCD14 end:0x801CCDA4
+
+game/fn_801D1800.cpp:
+	extab       start:0x80014EB4 end:0x80014EBC
+	extabindex  start:0x80027FD4 end:0x80027FE0
+	.text       start:0x801D1800 end:0x801D1890
 
 game/fn_801D394C.c:
 	extab       start:0x80015214 end:0x8001521C
@@ -5401,6 +5416,11 @@ game/ItemHolder_Update.cpp:
 game/fn_801E93A0.c:
 	.text       start:0x801E93A0 end:0x801E93AC
 
+game/fn_801E9594.cpp:
+	extab       start:0x80016AC0 end:0x80016AC8
+	extabindex  start:0x800289B8 end:0x800289C4
+	.text       start:0x801E9594 end:0x801E96BC
+
 game/fn_801EB91C.c:
 	extab       start:0x80016B38 end:0x80016B40
 	extabindex  start:0x80028A54 end:0x80028A60
@@ -5603,6 +5623,11 @@ game/fn_801F9FEC.cpp:
 	extabindex  start:0x80029144 end:0x80029150
 	.text       start:0x801F9FEC end:0x801FA024
 
+game/fn_801FA214.cpp:
+	extab       start:0x8001785C end:0x80017884
+	extabindex  start:0x8002915C end:0x80029168
+	.text       start:0x801FA214 end:0x801FA2E0
+
 game/fn_801FA2E0.cpp:
 	extab       start:0x80017884 end:0x8001788C
 	extabindex  start:0x80029168 end:0x80029174
@@ -5612,6 +5637,11 @@ game/fn_801FA864.cpp:
 	extab       start:0x800178AC end:0x800178C4
 	extabindex  start:0x8002918C end:0x80029198
 	.text       start:0x801FA864 end:0x801FAA18
+
+game/fn_801FAA18.cpp:
+	extab       start:0x800178C4 end:0x8001790C
+	extabindex  start:0x80029198 end:0x800291A4
+	.text       start:0x801FAA18 end:0x801FAB20
 
 game/fn_801FAB20.cpp:
 	extab       start:0x8001790C end:0x80017914

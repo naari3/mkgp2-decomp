@@ -1780,6 +1780,13 @@
     "__dt__12GameModeBaseFv": "dtor_8002CDF4",
     "__ct__14DisplayContextFv": "DisplayContext_Init"
   },
+  "src/game/fn_801FA214.cpp": {
+    "__dt__13Scene801FA214Fv": "fn_801FA214"
+  },
+  "src/game/fn_801FAA18.cpp": {
+    "__dt__13Scene801FAA18Fv": "fn_801FAA18",
+    "__dt__12Base801FAA18Fv": "dtor_802043EC"
+  },
   "src/game/MiniGameBase.cpp": {
     "__dt__7MBOwnerFv": "dtor_80122FD8",
     "__dt__6MBRootFv": "dtor_8002CDF4",

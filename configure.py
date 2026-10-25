@@ -1724,6 +1724,12 @@ config.libs = [
             Object(Matching, "game/dtor_801F7A74.c"),
             Object(Matching, "game/dtor_801F7AD0.c"),
             Object(Matching, "game/fn_801F89F0.c"),
+            Object(Matching, "game/fn_801FA214.cpp", extab_padding=b""),
+            Object(Matching, "game/fn_801CCD14.cpp"),
+            Object(Matching, "game/fn_801D1800.cpp"),
+            Object(Matching, "game/fn_801FAA18.cpp", extab_padding=b""),
+            Object(Matching, "game/fn_801BA9A0.cpp"),
+            Object(Matching, "game/fn_801E9594.cpp"),
         ],
     },
     {
