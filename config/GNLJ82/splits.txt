@@ -1402,8 +1402,28 @@ game/LObjList.cpp:
 	extabindex  start:0x800212C0 end:0x800212D8
 	.text       start:0x80076370 end:0x80076494
 
+game/Sci2Card_Init.cpp:
+	extab       start:0x80008390 end:0x80008398
+	extabindex  start:0x800212F0 end:0x800212FC
+	.text       start:0x80076870 end:0x80076910
+
+game/Sci2Card_BuildPacket.c:
+	extab       start:0x80008398 end:0x800083A0
+	extabindex  start:0x800212FC end:0x80021308
+	.text       start:0x80076910 end:0x80076A80
+
+game/Sci2Card_Lifetime.cpp:
+	extab       start:0x800083A0 end:0x800083C0
+	extabindex  start:0x80021308 end:0x80021320
+	.text       start:0x80076A80 end:0x80076BB4
+
 game/Sci2Card_Singleton_Get.c:
 	.text       start:0x80076BB4 end:0x80076BBC
+
+game/Sci2Card_SendCmds.c:
+	extab       start:0x800083C8 end:0x800083F0
+	extabindex  start:0x8002132C end:0x80021368
+	.text       start:0x8007723C end:0x800776CC
 
 game/card_send_track_data.c:
 	extab       start:0x800083F0 end:0x800083F8
@@ -1415,10 +1435,20 @@ game/Sci2Card_GetResponsePayload.c:
 	extabindex  start:0x80021374 end:0x80021380
 	.text       start:0x80077810 end:0x80077840
 
+game/Sci2Card_ForceFail.c:
+	extab       start:0x80008400 end:0x80008418
+	extabindex  start:0x80021380 end:0x800213A4
+	.text       start:0x80077840 end:0x80077A54
+
 game/card_eject.c:
 	extab       start:0x80008418 end:0x80008420
 	extabindex  start:0x800213A4 end:0x800213B0
 	.text       start:0x80077A54 end:0x80077AFC
+
+game/Sci2Card_Status.c:
+	extab       start:0x80008420 end:0x80008430
+	extabindex  start:0x800213B0 end:0x800213C8
+	.text       start:0x80077AFC end:0x80077E24
 
 game/KartTireFX.c:
 	extab       start:0x80008430 end:0x80008490

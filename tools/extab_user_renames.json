@@ -2285,5 +2285,11 @@
     "__ct__8GMBtModeFv": "BtMode_Init",
     "__ct__8GMTaModeFv": "TaMode_Init",
     "__ct__11GMRaceSceneFv": "RaceScene_Init"
+  },
+  "src/game/Sci2Card_Init.cpp": {
+    "__ct__8Sci2CardFv": "Sci2Card_Init"
+  },
+  "src/game/Sci2Card_Lifetime.cpp": {
+    "__ct__8Sci2CardFv": "Sci2Card_Init"
   }
 }
