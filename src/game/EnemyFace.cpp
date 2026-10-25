@@ -410,7 +410,10 @@ void clEnemyFace::Enable(int on) {
 }
 
 void clEnemyFace::Draw() {
-    if (!IsRaceStarted() || state >= 3) {
+    if (!IsRaceStarted()) {
+        return;
+    }
+    if (state >= 3) {
         return;
     }
     Sort();
@@ -420,9 +423,7 @@ void clEnemyFace::Draw() {
         if (faces[k]) {
             icons[k]->Reset();
             rings[k]->Reset();
-            faces[k]->x = world[k].x;
-            faces[k]->y = world[k].y;
-            faces[k]->z = world[k].z;
+            *(Vec3c *)&faces[k]->x = world[k]; /* struct copy into x/y/z */
             icons[k]->Place(&screen[k]);
             rings[k]->Place(&screen[k]);
             faces[k]->scale = faceScale[k];
