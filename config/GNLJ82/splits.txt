@@ -7213,8 +7213,18 @@ game/fn_80218B5C.c:
 	extabindex  start:0x8002A1A0 end:0x8002A1AC
 	.text       start:0x80218B5C end:0x80218B80
 
+game/anon_80218B80.cpp:
+	extab       start:0x8001A8DC end:0x8001A8E4
+	extabindex  start:0x8002A1AC end:0x8002A1B8
+	.text       start:0x80218B80 end:0x80218D90
+
 game/fn_80218D90.c:
 	.text       start:0x80218D90 end:0x80218D98
+
+game/anon_80218D98.cpp:
+	extab       start:0x8001A8E4 end:0x8001A938
+	extabindex  start:0x8002A1B8 end:0x8002A1D0
+	.text       start:0x80218D98 end:0x80218F1C
 
 game/fn_80218F1C.c:
 	extab       start:0x8001A938 end:0x8001A940

@@ -3764,5 +3764,19 @@
     "__vt__12TaskListBase": "lbl_804ECAC0",
     "__vt__12TaskListImpl": "lbl_804ECB44",
     "Add__12TaskListBaseFP9PopupTaski": "fn_8020EDB4"
+  },
+  "src/game/anon_80218B80.cpp": {
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free",
+    "Update__9CreditHudFv": "fn_80218B80"
+  },
+  "src/game/anon_80218D98.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "Update__9CreditHudFv": "fn_80218B80",
+    "__dt__9CreditHudFv": "fn_80218D98",
+    "__ct__9CreditHudFi": "fn_80218E24",
+    "__ct__10AnimSpriteFiii": "Sprite_InitWithAnim",
+    "__dt__10AnimSpriteFv": "Sprite_Destroy"
   }
 }
