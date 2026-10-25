@@ -65,7 +65,7 @@ extern int fn_8013C428(void);
 extern void HSD_StateSetCullMode(int mode);
 extern void HSD_StateInitDirect(int a, int b);
 extern void *HSD_CObjGetCurrent(void);
-extern void fn_802C7D98(void *cam, Mtx m);
+extern void HSD_CObjGetViewingMtx(void *cam, Mtx m);
 extern void GXSetCurrentMtx(int id);
 extern void PSMTXConcat(const Mtx a, const Mtx b, Mtx ab);
 extern void GXLoadPosMtxImm(Mtx m, int id);
@@ -1045,7 +1045,7 @@ extern "C" asm void fn_8014017C(void) { /* 0x8014017C size:0x1C8 */
     bl HSD_StateInitDirect
     bl HSD_CObjGetCurrent
     addi r4, r1, 0x3c
-    bl fn_802C7D98
+    bl HSD_CObjGetViewingMtx
     li r3, 0x0
     bl GXSetCurrentMtx
     li r31, 0x0

@@ -11,10 +11,10 @@ typedef struct Scene3D {
 
 extern char lbl_802E96D0[];
 extern char lbl_802E96FC[];
-extern void fn_802C8440(void *);
-extern int fn_802C8418(void *);
-extern float fn_802C834C(void *);
-extern float fn_802C8308(void *);
+extern void HSD_CObjSetPerspective(void *);
+extern int HSD_CObjGetProjectionType(void *);
+extern float HSD_CObjGetAspect(void *);
+extern float HSD_CObjGetFov(void *);
 extern void fn_8013879C(void *, float, float, float, float);
 extern void DebugPrintf(const char *, ...);
 
@@ -24,10 +24,10 @@ int Scene3D_SetupProjection(Scene3D *scene) {
     if (scene->active == 0) {
         return 0;
     }
-    fn_802C8440(scene->camera);
-    if (fn_802C8418(scene->camera) == 1) {
-        aspect = fn_802C834C(scene->camera);
-        fn_8013879C(scene->projection, 0.017453292f * fn_802C8308(scene->camera), aspect,
+    HSD_CObjSetPerspective(scene->camera);
+    if (HSD_CObjGetProjectionType(scene->camera) == 1) {
+        aspect = HSD_CObjGetAspect(scene->camera);
+        fn_8013879C(scene->projection, 0.017453292f * HSD_CObjGetFov(scene->camera), aspect,
                     scene->nearZ, scene->farZ);
     } else {
         DebugPrintf(lbl_802E96D0);

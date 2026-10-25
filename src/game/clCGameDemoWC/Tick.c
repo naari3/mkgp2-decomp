@@ -24,8 +24,8 @@ extern void Vec3_Subtract();
 extern void VfxSlotMgr_Update();
 extern void __assert();
 extern void clNormal3D_Exec();
-extern void fn_802C65F0();
-extern void fn_802C6640();
+extern void HSD_CObjAnim();
+extern void HSD_CObjReqAnim();
 extern void HSD_JObjSetupMatrixSub();
 
 /* --- extern decls: sda21-referenced data --- */
@@ -125,9 +125,9 @@ asm void clCGameDemoWC_Tick(void) { /* 0x800AE108 size:0x330 */
     clCGameDemoWC_Tick_L_800AE1E0:
     lwz r3, 0x4(r30)
     lfs f1, 0x308c(r30)
-    bl fn_802C6640
+    bl HSD_CObjReqAnim
     lwz r3, 0x4(r30)
-    bl fn_802C65F0
+    bl HSD_CObjAnim
     clCGameDemoWC_Tick_L_800AE1F4:
     lwz r3, 0x58(r31)
     lwz r12, 0x0(r3)

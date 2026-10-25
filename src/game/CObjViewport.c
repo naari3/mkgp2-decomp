@@ -13,8 +13,8 @@ typedef struct CObjViewportView {
     unsigned int ready;
 } CObjViewportView;
 
-extern void fn_802C72AC(CObjSDKCameraView *, const void *);
-extern void fn_802C7384(CObjSDKCameraView *, const void *);
+extern void HSD_CObjSetInterest(CObjSDKCameraView *, const void *);
+extern void HSD_CObjSetEyePosition(CObjSDKCameraView *, const void *);
 extern void PSMTXCopy(const void *source, void *destination);
 extern void __assert(const char *, int, const char *);
 extern const char lbl_806D22E4[7];
@@ -22,13 +22,13 @@ extern const char lbl_806D22EC[5];
 
 int CObj_ApplyViewport(CObjViewportView *self, const void *value) {
     if (self->ready == 0) return 0;
-    fn_802C72AC(self->camera, value);
+    HSD_CObjSetInterest(self->camera, value);
     return 1;
 }
 
 int CObj_LoadIntoGX(CObjViewportView *self, const void *value) {
     if (self->ready == 0) return 0;
-    fn_802C7384(self->camera, value);
+    HSD_CObjSetEyePosition(self->camera, value);
     return 1;
 }
 

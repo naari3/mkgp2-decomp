@@ -26,9 +26,9 @@ unsigned char clNormal3D_SetScale(DemoWCNormal*, void*, float, float, float, flo
 void* ResolveJointByName(DemoWCNormal*, const char*);
 void SetCourseScene3D(DemoWCScene*);
 int SceneDrawList_RegisterArchive(void*, int);
-void fn_802C6430(void*, void*);
-void fn_802C6640(void*, float);
-void fn_802C65F0(void*);
+void HSD_CObjAddAnim(void*, void*);
+void HSD_CObjReqAnim(void*, float);
+void HSD_CObjAnim(void*);
 }
 struct DemoWCRoot {
     DemoWCRoot();
@@ -80,9 +80,9 @@ struct DemoWCScene : DemoWCSceneBase {
             active = 1;
             frame = lbl_806D4F94;
             speed = lbl_806D4F98;
-            fn_802C6430(camera, descriptor_value(descriptor));
-            fn_802C6640(camera, frame);
-            fn_802C65F0(camera);
+            HSD_CObjAddAnim(camera, descriptor_value(descriptor));
+            HSD_CObjReqAnim(camera, frame);
+            HSD_CObjAnim(camera);
         }
     }
 };

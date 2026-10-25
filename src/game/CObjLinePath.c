@@ -13,8 +13,8 @@ typedef struct CObjLinePathView {
     LinePoint points[1024];
 } CObjLinePathView;
 
-extern void fn_802C72AC(void *, const LinePoint *);
-extern void fn_802C7384(void *, const LinePoint *);
+extern void HSD_CObjSetInterest(void *, const LinePoint *);
+extern void HSD_CObjSetEyePosition(void *, const LinePoint *);
 extern void C_MTXMultVec(const float *, const LinePoint *, LinePoint *);
 extern double sin(double);
 extern double cos(double);
@@ -49,7 +49,7 @@ int CObj_LinePath_Step(CObjLinePathView *self, const float *matrix,
     vector.x = matrix[3];
     vector.y = matrix[7] + height;
     vector.z = matrix[11];
-    if (self->ready != 0) fn_802C72AC(self->camera, (const LinePoint *)&vector);
+    if (self->ready != 0) HSD_CObjSetInterest(self->camera, (const LinePoint *)&vector);
 
     if (self->mode == 1) {
         float a;
@@ -81,7 +81,7 @@ int CObj_LinePath_Step(CObjLinePathView *self, const float *matrix,
         vector.y = ty + matrix[7];
         vector.z = tz + matrix[11];
     } else C_MTXMultVec(matrix, (const LinePoint *)&vector, (LinePoint *)&vector);
-    if (self->ready != 0) fn_802C7384(self->camera, (const LinePoint *)&vector);
+    if (self->ready != 0) HSD_CObjSetEyePosition(self->camera, (const LinePoint *)&vector);
 
     if (self->recording == 1 && self->count > 10) {
         float dz = matrix[11] - self->points[1].z;
