@@ -1012,6 +1012,54 @@
     "__dt__4NodeFv": "fn_80195A7C",
     "__dl__FPv": "MemoryManager_TimedFree"
   },
+  "src/game/misc3d/fn_801698B4.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/misc3d/fn_801696E4.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/misc3d/fn_801697C0.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/misc3d/fn_80168A4C.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/misc3d/fn_80168EFC.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/misc3d/fn_80168910.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/misc3d/fn_80167DDC.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/misc3d/fn_801680A0.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/objview/fn_80195DA8.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__5GroupFP11GroupParams": "fn_80195DA8"
+  },
+  "src/game/objview/fn_80196028.cpp": {
+    "__ct__9GXChannelFP8HSD_JObjP8HSD_DObjUii": "GXChannel_Init",
+    "__dt__9GXChannelFv": "dtor_8007D9C4"
+  },
+  "src/game/kartmove/fn_8019A4E0.cpp": {
+    "__dt__3VecFv": "dtor_80036E40"
+  },
+  "src/game/kartmove/fn_8019A6A4.cpp": {
+    "__dt__3VecFv": "dtor_80036E40"
+  },
   "src/game/objview/fn_80187878.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
