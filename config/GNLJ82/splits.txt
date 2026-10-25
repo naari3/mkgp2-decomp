@@ -5964,6 +5964,10 @@ TRK_MINNOW_DOLPHIN/msghndlr.c:
 	.data       start:0x804F46D8 end:0x804F4710
 	.bss        start:0x8067CB80 end:0x8067CB88
 
+TRK_MINNOW_DOLPHIN/support.c:
+	.text       start:0x8026D1A8 end:0x8026D8DC
+	.rodata     start:0x803F1850 end:0x803F18F8
+
 TRK_MINNOW_DOLPHIN/mutex_TRK.c:
 	.text       start:0x8026D8DC end:0x8026D8F4
 
@@ -5975,6 +5979,12 @@ TRK_MINNOW_DOLPHIN/flush_cache.c:
 
 TRK_MINNOW_DOLPHIN/mem_TRK.c:
 	.text       start:0x8026D9C4 end:0x8026DA7C
+
+TRK_MINNOW_DOLPHIN/targimpl.c:
+	.text       start:0x8026DA7C end:0x8026F4BC
+	.rodata     start:0x803F18F8 end:0x803F1990
+	.data       start:0x804F4710 end:0x804F4740
+	.bss        start:0x8067CB88 end:0x8067D108
 
 TRK_MINNOW_DOLPHIN/mpc_7xx_603e.c:
 	.text       start:0x8026F4BC end:0x8026F82C
@@ -6005,8 +6015,20 @@ TRK_MINNOW_DOLPHIN/target_options.c:
 TRK_MINNOW_DOLPHIN/UDP_Stubs.c:
 	.text       start:0x80270138 end:0x80270180
 
+TRK_MINNOW_DOLPHIN/ddh/main.c:
+	.text       start:0x80270180 end:0x802704C4
+	.rodata     start:0x803F1AA8 end:0x803F1B88
+	.bss        start:0x8067D128 end:0x8067D948
+	.sbss       start:0x806D1D20 end:0x806D1D28
+
 TRK_MINNOW_DOLPHIN/CircleBuffer.c:
 	.text       start:0x802704C4 end:0x8027072C
+
+TRK_MINNOW_DOLPHIN/gdev/main.c:
+	.text       start:0x8027072C end:0x80270A78
+	.rodata     start:0x803F1B88 end:0x803F1C68
+	.bss        start:0x8067D948 end:0x8067DE68
+	.sbss       start:0x806D1D28 end:0x806D1D30
 
 TRK_MINNOW_DOLPHIN/MWTrace.c:
 	.text       start:0x80270A78 end:0x80270AC8

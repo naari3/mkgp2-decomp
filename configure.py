@@ -1925,6 +1925,10 @@ config.libs = [
             Object(Matching, "TRK_MINNOW_DOLPHIN/MWCriticalSection_gc.cpp"),
             Object(Matching, "TRK_MINNOW_DOLPHIN/dolphin_trk.c"),
             Object(Matching, "TRK_MINNOW_DOLPHIN/msghndlr.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/support.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/targimpl.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/ddh/main.c", extra_cflags=["-sdata 8"]),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/gdev/main.c", extra_cflags=["-sdata 8"]),
         ],
     },
     {
