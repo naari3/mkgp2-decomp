@@ -6570,8 +6570,28 @@ game/anon_8020E3D0.cpp:
 	extabindex  start:0x80029DD4 end:0x80029E7C
 	.text       start:0x8020E3D0 end:0x8020F220
 
+game/anon_8020F220.cpp:
+	extab       start:0x80019C90 end:0x80019C98
+	extabindex  start:0x80029E7C end:0x80029E88
+	.text       start:0x8020F220 end:0x8020F268
+
 game/fn_8020F268.c:
 	.text       start:0x8020F268 end:0x8020F290
+
+game/anon_8020F290.cpp:
+	extab       start:0x80019C98 end:0x80019CB8
+	extabindex  start:0x80029E88 end:0x80029EB8
+	.text       start:0x8020F290 end:0x8020F44C
+
+game/anon_8020F44C.cpp:
+	extab       start:0x80019CB8 end:0x80019DF0
+	extabindex  start:0x80029EB8 end:0x80029F00
+	.text       start:0x8020F44C end:0x80210078
+
+game/anon_80210078.cpp:
+	extab       start:0x80019DF0 end:0x80019ECC
+	extabindex  start:0x80029F00 end:0x80029F30
+	.text       start:0x80210078 end:0x80210A50
 
 game/JumpDistanceMode_PredictLanding.c:
 	extab       start:0x80019ECC end:0x80019ED4
