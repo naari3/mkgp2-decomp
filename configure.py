@@ -1882,6 +1882,19 @@ config.libs = [
         ],
     ),
     SdkLib(
+        "dolphin_demo",
+        [
+            Object(Matching, "dolphin/demo/DEMOPuts.c"),
+        ],
+        extra_cflags=["-char signed"],
+    ),
+    SdkLib(
+        "dolphin_pad",
+        [
+            Object(Matching, "dolphin/pad/Pad.c"),
+        ],
+    ),
+    SdkLib(
         "dolphin_ai",
         [
             Object(Matching, "dolphin/ai/ai.c"),
