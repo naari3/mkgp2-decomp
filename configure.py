@@ -542,7 +542,7 @@ config.libs = [
             Object(Matching, "game/RaceContextSlotDriver.c"),
             Object(Matching, "game/ItemObjectManager_TickActiveItems.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/JumpDistanceMode_InitTimerDisplay.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/JumpDistanceMode_HandlePhysics.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/JumpDistanceMode_HandlePhysics.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
             Object(Matching, "game/JumpDistanceMode_Update.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/JumpDistanceMode_Init.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
             Object(Matching, "game/JumpDistanceMode_UpdateGameplay.c", extab_padding=b"\x00\x00"),
