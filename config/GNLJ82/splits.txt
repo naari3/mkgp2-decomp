@@ -6224,6 +6224,13 @@ dolphin/dvd/dvdfs.c:
 	.sdata      start:0x806D0C28 end:0x806D0C30
 	.sbss       start:0x806D1E58 end:0x806D1E78
 
+dolphin/dvd/dvd.c:
+	.text       start:0x80295A4C end:0x80298290
+	.data       start:0x804F59E8 end:0x804F5B68
+	.bss        start:0x806A4800 end:0x806A4898
+	.sdata      start:0x806D0C30 end:0x806D0C48
+	.sbss       start:0x806D1E78 end:0x806D1EC8
+
 dolphin/dvd/dvdqueue.c:
 	.text       start:0x80298290 end:0x80298488
 	.bss        start:0x806A4898 end:0x806A48B8
@@ -6245,6 +6252,7 @@ dolphin/dvd/fstload.c:
 	.bss        start:0x806A48B8 end:0x806A4928
 	.sdata      start:0x806D0C48 end:0x806D0C58
 	.sbss       start:0x806D1ED0 end:0x806D1EE0
+
 sysdolphin/baselib/dobj.c:
 	.text       start:0x802BD07C end:0x802BD0FC
 
