@@ -1187,6 +1187,7 @@ config.libs = [
             Object(NonMatching, "game/Sci2Card_Tick.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/MemoryManager_Alloc.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/MemoryManager_TimedFree.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/MemoryManager_New.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SceneFlow.c"),
             Object(Matching, "game/card_eject.c"),
             Object(Matching, "game/Sci2Card_Status.c"),

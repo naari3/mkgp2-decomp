@@ -525,6 +525,11 @@ game/MemoryManager_TimedFree.cpp:
 	extabindex  start:0x8001FC34 end:0x8001FC40
 	.text       start:0x8003AFB8 end:0x8003B120
 
+game/MemoryManager_New.cpp:
+	extab       start:0x8000602C end:0x8000605C
+	extabindex  start:0x8001FC40 end:0x8001FC58
+	.text       start:0x8003B120 end:0x8003B2D8
+
 game/SceneFlow.c:
 	.text       start:0x8003B2D8 end:0x8003B314
 
