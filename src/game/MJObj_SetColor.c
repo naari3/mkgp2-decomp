@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void __assert();
-extern void fn_802DE45C();
+extern void hsdObjIsDescendantOf();
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -48,7 +48,7 @@ asm void MJObj_SetColorRGBA(void) { /* 0x8003A608 size:0x114 */
     mr r30, r6
     mr r31, r7
     mr r4, r0
-    bl fn_802DE45C
+    bl hsdObjIsDescendantOf
     cmpwi r3, 0x0
     bne MJObj_SetColorRGBA_L_8003A658
     lis r4, lbl_802E9D04@ha

@@ -5,7 +5,7 @@ struct MObj1ClassView { unsigned char base[0x44]; Tev* (*tevInit)(MObj1View*, vo
 extern "C" {
 extern MObj1ClassView lbl_803F5888, lbl_803F5834;
 extern const char lbl_802E9CC8[], lbl_802E9CDC[];
-void HSD_ClassInit(MObj1ClassView*, MObj1ClassView*, const char*, const char*, unsigned int, unsigned int);
+void hsdInitClassInfo(MObj1ClassView*, MObj1ClassView*, const char*, const char*, unsigned int, unsigned int);
 Tev* fn_802DF044(unsigned char*, int, int, void*);
 Tev* fn_802DEF84(void*);
 void fn_802DFEF4(Tev*, int, int);
@@ -15,7 +15,7 @@ void fn_802DF24C(Tev*, int, int, int, int);
 void fn_802DFDEC(Tev*, int, Tev*, int, int, int, Tev*, int, Tev*);
 Tev* MObj1_TEVStateInit(MObj1View*, void*, void*);
 void MObj1_ClassInit(void) {
-    HSD_ClassInit(&lbl_803F5888, &lbl_803F5834, lbl_802E9CC8, lbl_802E9CDC, 0x54, 0x24);
+    hsdInitClassInfo(&lbl_803F5888, &lbl_803F5834, lbl_802E9CC8, lbl_802E9CDC, 0x54, 0x24);
     lbl_803F5888.tevInit = MObj1_TEVStateInit;
 }
 Tev* MObj1_TEVStateInit(MObj1View* self, void* arg, void* list) {

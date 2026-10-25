@@ -8,7 +8,7 @@
 extern void DVDOpen();
 extern void FUN_8007dfe4();
 extern void DVDClose();
-extern void fn_802DB304();
+extern void HSD_MemAlloc();
 extern void fn_802DC964();
 extern void memcpy();
 extern void memset();
@@ -53,7 +53,7 @@ asm void DVDLoad_OpenAllocReadRelocSync(void) { /* 0x8007DD00 size:0x2D4 */
     mtctr r12
     bctrl
     li r3, 0x44
-    bl fn_802DB304
+    bl HSD_MemAlloc
     mr. r31, r3
     beq DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
     li r4, 0x0
@@ -85,7 +85,7 @@ asm void DVDLoad_OpenAllocReadRelocSync(void) { /* 0x8007DD00 size:0x2D4 */
     addi r0, r27, 0x1f
     clrrwi r30, r0, 5
     mr r3, r30
-    bl fn_802DB304
+    bl HSD_MemAlloc
     stw r3, 0x20(r31)
     lwz r0, 0x20(r31)
     cmplwi r0, 0x0
@@ -108,7 +108,7 @@ asm void DVDLoad_OpenAllocReadRelocSync(void) { /* 0x8007DD00 size:0x2D4 */
     addi r0, r27, 0x1f
     clrrwi r28, r0, 5
     mr r3, r28
-    bl fn_802DB304
+    bl HSD_MemAlloc
     stw r3, 0x24(r31)
     lwz r4, 0x24(r31)
     cmplwi r4, 0x0
@@ -129,7 +129,7 @@ asm void DVDLoad_OpenAllocReadRelocSync(void) { /* 0x8007DD00 size:0x2D4 */
     addi r0, r27, 0x1f
     clrrwi r28, r0, 5
     mr r3, r28
-    bl fn_802DB304
+    bl HSD_MemAlloc
     stw r3, 0x28(r31)
     lwz r4, 0x28(r31)
     cmplwi r4, 0x0
@@ -150,7 +150,7 @@ asm void DVDLoad_OpenAllocReadRelocSync(void) { /* 0x8007DD00 size:0x2D4 */
     addi r0, r27, 0x1f
     clrrwi r28, r0, 5
     mr r3, r28
-    bl fn_802DB304
+    bl HSD_MemAlloc
     stw r3, 0x2c(r31)
     lwz r4, 0x2c(r31)
     cmplwi r4, 0x0
@@ -170,7 +170,7 @@ asm void DVDLoad_OpenAllocReadRelocSync(void) { /* 0x8007DD00 size:0x2D4 */
     addi r0, r3, 0x1f
     clrrwi r28, r0, 5
     mr r3, r28
-    bl fn_802DB304
+    bl HSD_MemAlloc
     stw r3, 0x30(r31)
     lwz r4, 0x30(r31)
     cmplwi r4, 0x0
@@ -187,7 +187,7 @@ asm void DVDLoad_OpenAllocReadRelocSync(void) { /* 0x8007DD00 size:0x2D4 */
     bl strlen
     mr r30, r3
     addi r3, r30, 0x1
-    bl fn_802DB304
+    bl HSD_MemAlloc
     stw r3, 0x38(r31)
     lwz r3, 0x38(r31)
     cmplwi r3, 0x0
