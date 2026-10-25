@@ -1500,6 +1500,11 @@ game/LampTestIndiv_Page.cpp:
 	extabindex  start:0x80021128 end:0x80021134
 	.text       start:0x800712D8 end:0x800715AC
 
+game/SwitchTest_Page.cpp:
+	extab       start:0x80008200 end:0x80008208
+	extabindex  start:0x80021134 end:0x80021140
+	.text       start:0x800715AC end:0x80071AE0
+
 game/HandleInitialize_Page.cpp:
 	extab       start:0x80008208 end:0x80008210
 	extabindex  start:0x80021140 end:0x8002114C
