@@ -5963,6 +5963,10 @@ TRK_MINNOW_DOLPHIN/msghndlr.c:
 	.data       start:0x804F46D8 end:0x804F4710
 	.bss        start:0x8067CB80 end:0x8067CB88
 
+TRK_MINNOW_DOLPHIN/support.c:
+	.text       start:0x8026D1A8 end:0x8026D8DC
+	.rodata     start:0x803F1850 end:0x803F18F8
+
 TRK_MINNOW_DOLPHIN/mutex_TRK.c:
 	.text       start:0x8026D8DC end:0x8026D8F4
 
