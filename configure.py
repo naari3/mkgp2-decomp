@@ -1197,7 +1197,7 @@ config.libs = [
             Object(Matching, "game/LapDisp_SetTotalLaps.c"),
             Object(Matching, "game/LapDisp_SetCurrentLap.c"),
             Object(Matching, "game/HUD_SetRacePosition.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/RnkDisp_SetPosition.c"),
+            Object(Matching, "game/RnkDisp_SetPosition.c"),
             Object(Matching, "game/HUD_SetTotalLaps.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/HUD_SetCurrentLap.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/IsCardValid.c", extra_cflags=["-Cpp_exceptions on"]),
