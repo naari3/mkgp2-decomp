@@ -1594,6 +1594,10 @@ config.libs = [
             Object(Matching, "game/fn_801092B0.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80112738.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80111124.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_80117020.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_8010AA54.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80109044.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_8011297C.c", extra_cflags=["-Cpp_exceptions on"]),
         ],
     },
     {
@@ -2342,6 +2346,7 @@ DATA_ALIGN4_TUS = [
     "game/clItemBoxManager_StepTable",
     "game/ItemUseStats",
     "game/KartItem_RenderCb_Modes",
+    "game/fn_80117020",
 ]
 
 
