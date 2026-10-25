@@ -4224,6 +4224,12 @@ MSL_C/abort_exit.c:
 	.bss        start:0x8067DE78 end:0x8067DF78
 	.sbss       start:0x806D1D38 end:0x806D1D48
 
+MSL_C/alloc.c:
+	.text       start:0x80273524 end:0x802743FC
+	.rodata     start:0x803F1DF0 end:0x803F1E08
+	.bss        start:0x8067DF78 end:0x8067DFB0
+	.sbss       start:0x806D1D48 end:0x806D1D50
+
 MSL_C/ansi_fp.c:
 	.text       start:0x802743FC end:0x80276350
 	.rodata     start:0x803F1E08 end:0x803F1EE8

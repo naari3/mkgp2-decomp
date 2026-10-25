@@ -1356,6 +1356,7 @@ config.libs = [
             Object(Matching, "MSL_C/math_ppc.c"),
             Object(Matching, "MSL_C/Gecko_ExceptionPPC.c"),
             Object(Matching, "MSL_C/mbstring.c"),
+            Object(Matching, "MSL_C/alloc.c"),
         ],
     },
     DolphinLib(
