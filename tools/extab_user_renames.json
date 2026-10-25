@@ -4564,5 +4564,223 @@
     "extabindex_fn_801596D4": "@eti_80025958",
     "extab_fn_80159BD0": "@etb_8000F188",
     "extabindex_fn_80159BD0": "@eti_80025964"
+  },
+  "src/game/RankPanel_80144430.cpp": {
+    "extab_fn_80144430": "@etb_8000DBE4",
+    "extabindex_fn_80144430": "@eti_800251D8",
+    "extab_fn_80144500": "@etb_8000DBEC",
+    "extabindex_fn_80144500": "@eti_800251E4",
+    "extab_fn_801449D4": "@etb_8000DBF4",
+    "extabindex_fn_801449D4": "@eti_800251F0",
+    "extab_fn_80144AF0": "@etb_8000DBFC",
+    "extabindex_fn_80144AF0": "@eti_800251FC",
+    "extab_fn_80144C1C": "@etb_8000DC2C",
+    "extabindex_fn_80144C1C": "@eti_80025208",
+    "extab_fn_801458B4": "@etb_8000DCE4",
+    "extabindex_fn_801458B4": "@eti_80025214",
+    "extab_fn_80145AF4": "@etb_8000DD8C",
+    "extabindex_fn_80145AF4": "@eti_80025220",
+    "extab_fn_80145D34": "@etb_8000DE04",
+    "extabindex_fn_80145D34": "@eti_8002522C",
+    "extab_dtor_80145DB0": "@etb_8000DC24",
+    "extabindex_dtor_80145DB0": "@eti_80025238",
+    "extab_fn_80145E14": "@etb_8000DE0C",
+    "extabindex_fn_80145E14": "@eti_80025244",
+    "extab_dtor_80145F04": "@etb_8000DD5C",
+    "extabindex_dtor_80145F04": "@eti_80025250",
+    "extab_dtor_80145F9C": "@etb_8000DD84",
+    "extabindex_dtor_80145F9C": "@eti_8002525C",
+    "extab_fn_80146000": "@etb_8000DE24",
+    "extabindex_fn_80146000": "@eti_80025268",
+    "extab_fn_801460D0": "@etb_8000DE54",
+    "extabindex_fn_801460D0": "@eti_80025274"
+  },
+  "src/game/RankPanelBase_801461B0.cpp": {
+    "extab_fn_801461B0": "@etb_8000DE6C",
+    "extabindex_fn_801461B0": "@eti_80025298",
+    "extab_fn_80146260": "@etb_8000DE74",
+    "extabindex_fn_80146260": "@eti_800252A4"
+  },
+  "src/game/LapSelect_80146410.cpp": {
+    "extab_fn_80146410": "@etb_8000DF14",
+    "extabindex_fn_80146410": "@eti_800252B0",
+    "extab_fn_80146574": "@etb_8000DF1C",
+    "extabindex_fn_80146574": "@eti_800252BC",
+    "extab_fn_8014660C": "@etb_8000DF24",
+    "extabindex_fn_8014660C": "@eti_800252C8",
+    "extab_fn_80146960": "@etb_8000DF2C",
+    "extabindex_fn_80146960": "@eti_800252D4",
+    "extab_fn_80147200": "@etb_8000DF34",
+    "extabindex_fn_80147200": "@eti_800252E0",
+    "extab_fn_801473DC": "@etb_8000DF3C",
+    "extabindex_fn_801473DC": "@eti_800252EC"
+  },
+  "src/game/SceneFactory_8014D540.cpp": {
+    "extab_fn_8014D540": "@etb_8000E640",
+    "extabindex_fn_8014D540": "@eti_8002555C",
+    "extab_fn_8014D848": "@etb_8000E704",
+    "extabindex_fn_8014D848": "@eti_80025568",
+    "extab_fn_8014D88C": "@etb_8000E71C",
+    "extabindex_fn_8014D88C": "@eti_80025574",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_8014DD80.cpp": {
+    "extab_fn_8014DD80": "@etb_8000E874",
+    "extabindex_fn_8014DD80": "@eti_8002558C"
+  },
+  "src/game/fn_8014E04C.cpp": {
+    "extab_fn_8014E04C": "@etb_8000E8CC",
+    "extabindex_fn_8014E04C": "@eti_800255B0"
+  },
+  "src/game/CourseObjects_801375D8.cpp": {
+    "extab_fn_80137C8C": "@etb_8000D228",
+    "extabindex_fn_80137C8C": "@eti_80024C20",
+    "extab_fn_80137E50": "@etb_8000D230",
+    "extabindex_fn_80137E50": "@eti_80024C2C",
+    "extab_fn_80138578": "@etb_8000D238",
+    "extabindex_fn_80138578": "@eti_80024C38",
+    "extab_fn_801385CC": "@etb_8000D240",
+    "extabindex_fn_801385CC": "@eti_80024C44",
+    "extab_fn_8013879C": "@etb_8000D258",
+    "extabindex_fn_8013879C": "@eti_80024C50",
+    "extab_fn_80138A50": "@etb_8000D260",
+    "extabindex_fn_80138A50": "@eti_80024C5C",
+    "extab_fn_80138DB8": "@etb_8000D268",
+    "extabindex_fn_80138DB8": "@eti_80024C68",
+    "extab_fn_80139810": "@etb_8000D2B0",
+    "extabindex_fn_80139810": "@eti_80024C74"
+  },
+  "src/game/NokoNoko_801287F8.cpp": {
+    "extab_TimeTrial_Render": "@etb_8000C444",
+    "extabindex_TimeTrial_Render": "@eti_800249BC",
+    "extab_NokoNokoChallenge_Update": "@etb_8000C454",
+    "extabindex_NokoNokoChallenge_Update": "@eti_800249C8",
+    "extab_TimeTrial_Destroy": "@etb_8000C474",
+    "extabindex_TimeTrial_Destroy": "@eti_800249D4",
+    "extab_NokoNokoChallenge_Init": "@etb_8000C484",
+    "extabindex_NokoNokoChallenge_Init": "@eti_800249E0",
+    "extab_fn_8012A070": "@etb_8000C44C",
+    "extabindex_fn_8012A070": "@eti_800249EC",
+    "extab_fn_8012A22C": "@etb_8000C46C",
+    "extabindex_fn_8012A22C": "@eti_800249F8",
+    "extab_fn_8012A52C": "@etb_8000C47C",
+    "extabindex_fn_8012A52C": "@eti_80024A04"
+  },
+  "src/game/fn_8012A71C.cpp": {
+    "extab_fn_8012A71C": "@etb_8000C698",
+    "extabindex_fn_8012A71C": "@eti_80024A28"
+  },
+  "src/game/fn_8012B48C.cpp": {
+    "extab_fn_8012B48C": "@etb_8000C6A8",
+    "extabindex_fn_8012B48C": "@eti_80024A40"
+  },
+  "src/game/CGameCoin_8012BF5C.cpp": {
+    "extab_fn_8012BF5C": "@etb_8000C730",
+    "extabindex_fn_8012BF5C": "@eti_80024A58",
+    "extab_CGameCoin_Draw": "@etb_8000C748",
+    "extabindex_CGameCoin_Draw": "@eti_80024A64",
+    "extab_CGameCoin_Update": "@etb_8000C750",
+    "extabindex_CGameCoin_Update": "@eti_80024A70",
+    "extab_DefeatDemo_Update": "@etb_8000C758",
+    "extabindex_DefeatDemo_Update": "@eti_80024A7C",
+    "extab_BossKoopa_UpdateAnim": "@etb_8000C768",
+    "extabindex_BossKoopa_UpdateAnim": "@eti_80024A88",
+    "extab_KoopaFireball_Update": "@etb_8000C770",
+    "extabindex_KoopaFireball_Update": "@eti_80024A94",
+    "extab_Shell_UpdateState": "@etb_8000C778",
+    "extabindex_Shell_UpdateState": "@eti_80024AA0",
+    "extab_CGameCoin_Destroy": "@etb_8000C788",
+    "extabindex_CGameCoin_Destroy": "@eti_80024AAC",
+    "extab_CGameCoin_Init": "@etb_8000C798",
+    "extabindex_CGameCoin_Init": "@eti_80024AB8",
+    "extab_CGameCoin_InitDefeatDemo": "@etb_8000CA88",
+    "extabindex_CGameCoin_InitDefeatDemo": "@eti_80024AC4",
+    "extab_BossKoopa_Init": "@etb_8000CAF0",
+    "extabindex_BossKoopa_Init": "@eti_80024AD0",
+    "extab_CGameCoin_InitFields": "@etb_8000CB98",
+    "extabindex_CGameCoin_InitFields": "@eti_80024ADC",
+    "extab_CoinParticle_Draw": "@etb_8000C728",
+    "extabindex_CoinParticle_Draw": "@eti_80024AE8",
+    "extab_CoinParticle_Update": "@etb_8000C760",
+    "extabindex_CoinParticle_Update": "@eti_80024AF4",
+    "extab_CoinParticleManager_Destroy": "@etb_8000C790",
+    "extabindex_CoinParticleManager_Destroy": "@eti_80024B00",
+    "extab_CGameCoin_ProcessInput": "@etb_8000C780",
+    "extabindex_CGameCoin_ProcessInput": "@eti_80024B0C"
+  },
+  "src/game/SuikaBall_801313D0.cpp": {
+    "extab_SuikaBall_Render": "@etb_8000CBA0",
+    "extabindex_SuikaBall_Render": "@eti_80024B18",
+    "extab_SuikaBall_Update": "@etb_8000CBB0",
+    "extabindex_SuikaBall_Update": "@eti_80024B24",
+    "extab_fn_80133008": "@etb_8000CBC0",
+    "extabindex_fn_80133008": "@eti_80024B30",
+    "extab_SuikaBall_Init": "@etb_8000CBD0",
+    "extabindex_SuikaBall_Init": "@eti_80024B3C",
+    "extab_fn_80133CA8": "@etb_8000CBA8",
+    "extabindex_fn_80133CA8": "@eti_80024B48",
+    "extab_fn_80133E64": "@etb_8000CBB8",
+    "extabindex_fn_80133E64": "@eti_80024B54",
+    "extab_fn_80134164": "@etb_8000CBC8",
+    "extabindex_fn_80134164": "@eti_80024B60"
+  },
+  "src/game/fn_8013A534.cpp": {
+    "extab_fn_8013A534": "@etb_8000D2D0",
+    "extabindex_fn_8013A534": "@eti_80024C8C"
+  },
+  "src/game/fn_8013A6F8.cpp": {
+    "extab_fn_8013A6F8": "@etb_8000D2E8",
+    "extabindex_fn_8013A6F8": "@eti_80024C98"
+  },
+  "src/game/fn_8010C110.c": {
+    "extab_fn_8010C110": "@etb_8000B8E4",
+    "extabindex_fn_8010C110": "@eti_8002426C"
+  },
+  "src/game/fn_80112DDC.c": {
+    "extab_fn_80112DDC": "@etb_8000B98C",
+    "extabindex_fn_80112DDC": "@eti_80024368"
+  },
+  "src/game/fn_80114990.c": {
+    "extab_fn_80114990": "@etb_8000B9BC",
+    "extabindex_fn_80114990": "@eti_800243B0"
+  },
+  "src/game/fn_80116640.c": {
+    "extab_fn_80116640": "@etb_8000BA04",
+    "extabindex_fn_80116640": "@eti_8002441C"
+  },
+  "src/game/fn_80116DD0.c": {
+    "extab_fn_80116DD0": "@etb_8000BA14",
+    "extabindex_fn_80116DD0": "@eti_80024434"
+  },
+  "src/game/fn_80117494.c": {
+    "extab_fn_80117494": "@etb_8000BA2C",
+    "extabindex_fn_80117494": "@eti_80024458"
+  },
+  "src/game/fn_80117E08.c": {
+    "extab_fn_80117E08": "@etb_8000BA3C",
+    "extabindex_fn_80117E08": "@eti_80024470"
+  },
+  "src/game/fn_801193F4.c": {
+    "extab_fn_801193F4": "@etb_8000BA6C",
+    "extabindex_fn_801193F4": "@eti_800244B8",
+    "extab_fn_80119AB4": "@etb_8000BA74",
+    "extabindex_fn_80119AB4": "@eti_800244C4",
+    "extab_fn_80119D44": "@etb_8000BA7C",
+    "extabindex_fn_80119D44": "@eti_800244D0"
+  },
+  "src/game/SuikaBallObj_UpdatePhysics.c": {
+    "extab_SuikaBallObj_UpdatePhysics": "@etb_8000BE90",
+    "extabindex_SuikaBallObj_UpdatePhysics": "@eti_80024878"
+  },
+  "src/game/fn_80125948.c": {
+    "extab_fn_80125948": "@etb_8000C044",
+    "extabindex_fn_80125948": "@eti_800248FC",
+    "extab_fn_80125B04": "@etb_8000C04C",
+    "extabindex_fn_80125B04": "@eti_80024908",
+    "extab_fn_80126728": "@etb_8000C054",
+    "extabindex_fn_80126728": "@eti_80024914",
+    "extab_fn_80126878": "@etb_8000C05C",
+    "extabindex_fn_80126878": "@eti_80024920"
   }
 }
