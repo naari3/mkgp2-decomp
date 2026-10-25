@@ -4484,6 +4484,11 @@ game/Boomerang_ReturnAndAcquireTargetTick.c:
 	extabindex  start:0x800240A4 end:0x800240B0
 	.text       start:0x800FEE8C end:0x800FF18C
 
+game/Boomerang_LaunchAndTickStateMachine.c:
+	extab       start:0x8000B7BC end:0x8000B7C4
+	extabindex  start:0x800240B0 end:0x800240BC
+	.text       start:0x800FF18C end:0x800FFBB8
+
 game/fn_801022E0.c:
 	extab       start:0x8000B7EC end:0x8000B7F4
 	extabindex  start:0x800240F8 end:0x80024104
