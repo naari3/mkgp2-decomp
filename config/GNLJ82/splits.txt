@@ -5203,6 +5203,12 @@ game/fn_8014640C.c:
 game/fn_80147468.c:
 	.text       start:0x80147468 end:0x80147470
 
+game/RaceHud_80147470.cpp:
+	extab       start:0x8000DF44 end:0x8000E5A0
+	extabindex  start:0x800252F8 end:0x800254CC
+	.text       start:0x80147470 end:0x8014CE74
+	.ctors      start:0x802E890C end:0x802E8910
+
 game/CSPartsHolders.c:
 	extab       start:0x8000E5A0 end:0x8000E640
 	extabindex  start:0x800254CC end:0x8002555C
