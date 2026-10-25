@@ -368,6 +368,12 @@ game/StrPcb_Lifetime.cpp:
 game/Clamp.c:
 	.text       start:0x80038778 end:0x800387D8
 
+game/StrPcb_RegisterAtExitCleanup.c:
+	extab       start:0x80005D74 end:0x80005D7C
+	extabindex  start:0x8001F9D0 end:0x8001F9DC
+	.text       start:0x800387D8 end:0x80038824
+	.ctors      start:0x802E88E8 end:0x802E88EC
+
 game/ClStrPcb.cpp:
 	extab       start:0x80005D7C end:0x80005D8C
 	extabindex  start:0x8001F9DC end:0x8001F9F4
