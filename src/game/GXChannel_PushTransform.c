@@ -7,12 +7,12 @@
 /* refine if the real prototype matters for header consumers. */
 extern void GXChannel_PushChannelColors();
 extern void GXLoadTexMtxImm();
-extern void GX_CallDisplayList();
-extern void GX_LoadPosMtxImm();
-extern void GX_SetCurrentMtx();
+extern void GXCallDisplayList();
+extern void GXLoadPosMtxImm();
+extern void GXSetCurrentMtx();
 extern void PSMTXCopy();
 extern void PSMTXInvXpose();
-extern void fn_8026A354();
+extern void GXLoadNrmMtxImm();
 extern void fn_802BE120();
 extern void fn_802C457C();
 extern void fn_802D377C();
@@ -71,10 +71,10 @@ asm void GXChannel_PushTransform(void) { /* 0x8007D11C size:0x190 */
     bl fn_802C457C
     GXChannel_PushTransform_L_8007D184:
     li r3, 0x0
-    bl GX_SetCurrentMtx
+    bl GXSetCurrentMtx
     addi r3, r1, 0x38
     li r4, 0x0
-    bl GX_LoadPosMtxImm
+    bl GXLoadPosMtxImm
     lwz r0, 0x14(r31)
     li r30, 0x0
     rlwinm. r0, r0, 0, 24, 24
@@ -111,7 +111,7 @@ asm void GXChannel_PushTransform(void) { /* 0x8007D11C size:0x190 */
     beq GXChannel_PushTransform_L_8007D21C
     addi r3, r1, 0x8
     li r4, 0x0
-    bl fn_8026A354
+    bl GXLoadNrmMtxImm
     GXChannel_PushTransform_L_8007D21C:
     rlwinm. r0, r30, 0, 29, 30
     beq GXChannel_PushTransform_L_8007D234
@@ -133,7 +133,7 @@ asm void GXChannel_PushTransform(void) { /* 0x8007D11C size:0x190 */
     lhz r0, 0xe(r31)
     lwz r3, 0x10(r31)
     slwi r4, r0, 5
-    bl GX_CallDisplayList
+    bl GXCallDisplayList
     lwz r31, 0x4(r31)
     GXChannel_PushTransform_L_8007D268:
     cmplwi r31, 0x0

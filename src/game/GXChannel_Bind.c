@@ -5,11 +5,11 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void GX_ClearVtxDesc();
-extern void GX_SetArray();
+extern void GXClearVtxDesc();
+extern void GXSetArray();
 extern void GX_SetCullMode();
-extern void GX_SetVtxAttrFmt();
-extern void GX_SetVtxDesc();
+extern void GXSetVtxAttrFmt();
+extern void GXSetVtxDesc();
 extern void fn_802BCF94();
 extern void fn_802C22D8();
 extern void fn_802C35DC();
@@ -76,7 +76,7 @@ asm void GXChannel_Bind(void) { /* 0x8007D834 size:0x190 */
     lwz r3, 0x0(r30)
     lwz r4, 0x14(r30)
     clrlwi r5, r0, 24
-    bl GX_SetArray
+    bl GXSetArray
     GXChannel_Bind_L_8007D8C8:
     addi r30, r30, 0x18
     GXChannel_Bind_L_8007D8CC:
@@ -85,13 +85,13 @@ asm void GXChannel_Bind(void) { /* 0x8007D834 size:0x190 */
     bne GXChannel_Bind_L_8007D8A8
     lwz r3, 0x4(r31)
     lwz r30, 0xc(r3)
-    bl GX_ClearVtxDesc
+    bl GXClearVtxDesc
     lwz r30, 0x8(r30)
     b GXChannel_Bind_L_8007D928
     GXChannel_Bind_L_8007D8EC:
     lwz r3, 0x0(r30)
     lwz r4, 0x4(r30)
-    bl GX_SetVtxDesc
+    bl GXSetVtxDesc
     lwz r0, 0x0(r30)
     cmpwi r0, 0x9
     bge GXChannel_Bind_L_8007D90C
@@ -103,7 +103,7 @@ asm void GXChannel_Bind(void) { /* 0x8007D834 size:0x190 */
     lwz r5, 0x8(r30)
     lwz r6, 0xc(r30)
     lbz r7, 0x10(r30)
-    bl GX_SetVtxAttrFmt
+    bl GXSetVtxAttrFmt
     GXChannel_Bind_L_8007D924:
     addi r30, r30, 0x18
     GXChannel_Bind_L_8007D928:

@@ -15,12 +15,12 @@ asm void ParticleBurst_Update(void);
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void DbgGx_Xfreg100A_Set3();
+extern void GXSetZMode();
 extern void DbgScene_CopyMatrix3x4Transpose();
-extern void GX_Begin();
-extern void GX_LoadPosMtxImm();
+extern void GXBegin();
+extern void GXLoadPosMtxImm();
 extern void GX_SetCullMode();
-extern void GX_SetCurrentMtx();
+extern void GXSetCurrentMtx();
 extern void Matrix4_Identity();
 extern void Matrix4_PreMultiplyRotZ();
 extern void Matrix4_PreMultiplyTranslation();
@@ -84,7 +84,7 @@ asm void ParticleBurst_Draw(void) { /* 0x800B4164 size:0x224 */
     li r3, 0x1
     li r4, 0x3
     li r5, 0x1
-    bl DbgGx_Xfreg100A_Set3
+    bl GXSetZMode
     lfs f0, lbl_806D506C(r2)
     li r30, 0x0
     li r31, 0x0
@@ -144,13 +144,13 @@ asm void ParticleBurst_Draw(void) { /* 0x800B4164 size:0x224 */
     bl DbgScene_CopyMatrix3x4Transpose
     addi r3, r1, 0x8
     li r4, 0x0
-    bl GX_LoadPosMtxImm
+    bl GXLoadPosMtxImm
     li r3, 0x0
-    bl GX_SetCurrentMtx
+    bl GXSetCurrentMtx
     li r3, 0x80
     li r4, 0x0
     li r5, 0x4
-    bl GX_Begin
+    bl GXBegin
     lis r3, 0xcc01
     lfs f1, lbl_806D5034(r2)
     stfs f28, -0x8000(r3)

@@ -54,7 +54,7 @@ extern u8 Sprite_AdvanceAnim(void *spr, f32 dt);
 extern void SetRumbleMode(int, int, int);
 extern void Sprite_Destroy(void *spr, int flag);
 extern void GX_BeginDraw(void);
-extern void GX_ResetVertex(void);
+extern void GXTexModeSync(void);
 extern int GetDisplayBufferIndex(void);
 extern void *GetDisplayContext(void);
 extern void DrawNamCamImage(void *ctx, void *tex, int w, int h, int fmt, u16 left, u16 top, u16 right, u16 bottom, int, int, int);
@@ -682,7 +682,7 @@ static inline int ConfirmTick(clFlowNamcamRec *self) {
             int cfgY;
 
             GX_BeginDraw();
-            GX_ResetVertex();
+            GXTexModeSync();
             cfgX = *(int *)(lbl_80598A60 + 0x4c);
             cfgY = *(int *)(lbl_80598A60 + 0x48);
             GetDisplayBufferIndex();

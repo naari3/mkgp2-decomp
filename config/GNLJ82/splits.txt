@@ -5541,3 +5541,65 @@ dolphin/dsp/dsp_task.c:
 	.text       start:0x80262FC4 end:0x80263848
 	.data       start:0x804F3C60 end:0x804F3DA0
 	.sbss       start:0x806D1CA0 end:0x806D1CB8
+
+dolphin/gx/GXInit.c:
+	.text       start:0x80263848 end:0x80264BC8
+	.data       start:0x804F3DA0 end:0x804F3FE0
+	.bss        start:0x8067AB58 end:0x8067B188
+	.sdata      start:0x806D0B08 end:0x806D0B10
+	.sbss       start:0x806D1CB8 end:0x806D1CE0
+	.sdata2     start:0x806DC2A8 end:0x806DC2D0
+
+dolphin/gx/GXFifo.c:
+	.text       start:0x80264BC8 end:0x80265300
+	.sbss       start:0x806D1CE0 end:0x806D1D00
+
+dolphin/gx/GXAttr.c:
+	.text       start:0x80265300 end:0x802662DC
+	.data       start:0x804F3FE0 end:0x804F4298
+	.sdata      start:0x806D0B10 end:0x806D0B20
+
+dolphin/gx/GXMisc.c:
+	.text       start:0x802662DC end:0x80266B08
+	.sbss       start:0x806D1D00 end:0x806D1D18
+
+dolphin/gx/GXGeometry.c:
+	.text       start:0x80266B08 end:0x80266E88
+
+dolphin/gx/GXFrameBuf.c:
+	.text       start:0x80266E88 end:0x802677EC
+	.sdata2     start:0x806DC2D0 end:0x806DC2D8
+
+dolphin/gx/GXLight.c:
+	.text       start:0x802677EC end:0x80267DF0
+	.data       start:0x804F4298 end:0x804F42B8
+	.sdata2     start:0x806DC2D8 end:0x806DC308
+
+dolphin/gx/GXTexture.c:
+	.text       start:0x80267DF0 end:0x80268DD8
+	.data       start:0x804F42B8 end:0x804F44E0
+	.sdata      start:0x806D0B20 end:0x806D0B60
+	.sdata2     start:0x806DC308 end:0x806DC330
+
+dolphin/gx/GXBump.c:
+	.text       start:0x80268DD8 end:0x8026904C
+
+dolphin/gx/GXTev.c:
+	.text       start:0x8026904C end:0x802697B0
+	.data       start:0x804F44E0 end:0x804F4558
+
+dolphin/gx/GXPixel.c:
+	.text       start:0x802697B0 end:0x80269FA8
+	.data       start:0x804F4558 end:0x804F4578
+	.sdata2     start:0x806DC330 end:0x806DC390
+
+dolphin/gx/GXDisplayList.c:
+	.text       start:0x80269FA8 end:0x8026A018
+
+dolphin/gx/GXTransform.c:
+	.text       start:0x8026A018 end:0x8026A78C
+	.sdata2     start:0x806DC390 end:0x806DC3A0
+
+dolphin/gx/GXPerf.c:
+	.text       start:0x8026A78C end:0x8026AFE4
+	.data       start:0x804F4578 end:0x804F4668

@@ -82,19 +82,19 @@ extern void fn_80193624(void);
 extern void FrameUpdate(void);
 extern void CreditMgr_PollInsertAndPlay(int arg);
 extern void OverlayText(int, int, int, const char *, ...);
-extern void GX_DrawDoneAndWait(void);
+extern void GXDrawDone(void);
 extern void fn_8018F14C(void);
 extern void fn_802D5228(int arg);
 extern void fn_802D53A4(void);
 extern void VIWaitForRetrace(void);
-extern void fn_802687F8(void);
+extern void GXInvalidateTexAll(void);
 extern void fn_802D47E8(void);
 extern void SpriteHandlePool_GC(void);
 extern void DebugPrintf(const char *, ...);
-extern u32 fn_80267DF0(int w, int h, int fmt, int a, int b);
-extern void fn_80266F04(int x, int y, int w, int h);
-extern void fn_80266FB4(int w, int h, int fmt, int a);
-extern void fn_80267628(unsigned char *buf, int arg);
+extern u32 GXGetTexBufferSize(int w, int h, int fmt, int a, int b);
+extern void GXSetTexCopySrc(int x, int y, int w, int h);
+extern void GXSetTexCopyDst(int w, int h, int fmt, int a);
+extern void GXCopyTex(unsigned char *buf, int arg);
 extern void Profiler_RecordFrame(int slot, float ms);
 extern void fn_802D4748(int arg);
 extern void __dt__11ScopedTimerFv(void);
@@ -200,7 +200,7 @@ void Frame_PostDrawOverlay(void) { /* 0x8002D978 size:0xC4 */
         OverlayText(1, 12, 0x1C, lbl_802E9568, &lbl_80594080.statA);
         OverlayText(1, 12, 0x1D, lbl_802E9578, &lbl_80594080.statB);
     }
-    GX_DrawDoneAndWait();
+    GXDrawDone();
     fn_8018F14C();
     {
         u32 v = lbl_806CED34;
@@ -209,7 +209,7 @@ void Frame_PostDrawOverlay(void) { /* 0x8002D978 size:0xC4 */
     fn_802D5228(0);
     fn_802D53A4();
     VIWaitForRetrace();
-    fn_802687F8();
+    GXInvalidateTexAll();
 }
 
 void Frame_PostDraw_BackupBuffer(void) { /* 0x8002DA3C size:0x200 */
@@ -235,7 +235,7 @@ void Frame_PostDraw_BackupBuffer(void) { /* 0x8002DA3C size:0x200 */
                 (float)(((OSGetTick() - tm.start) * 8) /
                         ((*(u32 *)0x800000F8 / 4) / 125000)) /
                     lbl_806D2294);
-        } else if (fn_80267DF0(0x280, 0x1E0, 4, 0, 0) > 0x96000) {
+        } else if (GXGetTexBufferSize(0x280, 0x1E0, 4, 0, 0) > 0x96000) {
             DebugPrintf(lbl_802E9538);
             Profiler_RecordFrame(
                 tm.id,
@@ -243,9 +243,9 @@ void Frame_PostDraw_BackupBuffer(void) { /* 0x8002DA3C size:0x200 */
                         ((*(u32 *)0x800000F8 / 4) / 125000)) /
                     lbl_806D2294);
         } else {
-            fn_80266F04(0, 0, 0x280, 0x1E0);
-            fn_80266FB4(0x280, 0x1E0, 4, 0);
-            fn_80267628(lbl_804FE080, 0);
+            GXSetTexCopySrc(0, 0, 0x280, 0x1E0);
+            GXSetTexCopyDst(0x280, 0x1E0, 4, 0);
+            GXCopyTex(lbl_804FE080, 0);
             Profiler_RecordFrame(
                 tm.id,
                 (float)(((OSGetTick() - tm.start) * 8) /
