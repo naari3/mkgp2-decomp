@@ -1175,7 +1175,7 @@ config.libs = [
             Object(Matching, "game/InputObj_Ctor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/InputMgr_TeardownStub.c"),
             Object(Matching, "game/ItemHolder.c"),
-            Object(Matching, "game/ItemHolder_Init.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/ItemHolder_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemRes_Thunk.c"),
             Object(Matching, "game/dtor_8024F40C.c"),
             Object(Matching, "game/ItemEffectBus.c", extab_padding=b"\x00\x00"),
