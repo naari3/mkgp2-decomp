@@ -2965,6 +2965,11 @@ game/KartFxDispatchD.cpp:
 	extabindex  start:0x80022EC8 end:0x80022ED4
 	.text       start:0x800C1534 end:0x800C1860
 
+game/EffectVfx72_ItemStarAura_Tick.c:
+	extab       start:0x8000A900 end:0x8000A908
+	extabindex  start:0x80022EEC end:0x80022EF8
+	.text       start:0x800C2124 end:0x800C253C
+
 game/KartFxDispatchB.cpp:
 	extab       start:0x8000A908 end:0x8000A910
 	extabindex  start:0x80022EF8 end:0x80022F04
