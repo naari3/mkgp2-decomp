@@ -4855,6 +4855,12 @@ game/SpriteHandlePool.c:
 	extabindex  start:0x800245A8 end:0x800245CC
 	.text       start:0x8011DF98 end:0x8011EB1C
 
+game/SpriteHandle.cpp:
+	extab       start:0x8000BB4C end:0x8000BCDC
+	extabindex  start:0x800245CC end:0x8002474C
+	.text       start:0x8011EB1C end:0x801223E8
+	.ctors      start:0x802E8904 end:0x802E8908
+
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C
 

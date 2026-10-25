@@ -1822,6 +1822,7 @@ config.libs = [
             Object(Matching, "game/KartPreviewAnim.c"),
             Object(Matching, "game/fn_8012BDA4.c"),
             Object(Matching, "game/fn_8012BDF4.c"),
+            Object(Matching, "game/SpriteHandle.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
         ],
     },
     {
