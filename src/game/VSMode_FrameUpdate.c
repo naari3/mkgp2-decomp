@@ -153,7 +153,7 @@ extern unsigned int lbl_806CF140;
 extern unsigned int lbl_806CF148;
 extern unsigned int lbl_806CF270;
 extern unsigned int lbl_806D0051;
-extern unsigned int lbl_806D0F14;
+extern unsigned int HSD_RandSeedPtr;
 extern unsigned int lbl_806D109C;
 extern unsigned int lbl_806D10A0;
 extern unsigned int lbl_806D10D0;
@@ -255,10 +255,10 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     li r5, 0x4
     bl memset
     addi r0, r13, -0x5A30  /* lbl_806D12F0 */
-    stw r0, lbl_806D0F14(r13)
+    stw r0, HSD_RandSeedPtr(r13)
     bl SyncSlot_GetRecv
     lbz r0, 0x1b(r3)
-    lwz r3, lbl_806D0F14(r13)
+    lwz r3, HSD_RandSeedPtr(r13)
     stw r0, 0x0(r3)
     bl SyncSlot_GetRecv
     lbz r3, 0x1b(r3)
@@ -305,10 +305,10 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     li r5, 0x4
     bl memset
     addi r0, r13, -0x5A30  /* lbl_806D12F0 */
-    stw r0, lbl_806D0F14(r13)
+    stw r0, HSD_RandSeedPtr(r13)
     bl SyncSlot_GetRecv
     lbz r0, 0x1b(r3)
-    lwz r3, lbl_806D0F14(r13)
+    lwz r3, HSD_RandSeedPtr(r13)
     stw r0, 0x0(r3)
     bl SyncSlot_GetRecv
     lbz r3, 0x1b(r3)

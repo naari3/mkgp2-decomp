@@ -297,6 +297,40 @@ mw_version_init_sdk = "GC/2.7"  # tentative: memset/__fill_mem/memcpy in .init u
 mw_version_hsd  = "GC/1.3.2"    # SSBM uses GC/1.2.5n but mkgp2 prologue is stwu-first / lr@0x24 = newer CW
 
 
+# HSD sysdolphin objects compiled verbatim from doldecomp/melee sources.
+# Headers are vendored read-only under libs/melee (melee commit 24e685d5),
+# mirroring melee's own include layout; do not edit them, keep per-TU deltas
+# in the .c files instead.
+cflags_hsd_melee = [
+    "-nowraplines",
+    "-cwd source",
+    "-Cpp_exceptions off",
+    "-proc gekko",
+    "-fp hardware",
+    "-align powerpc",
+    "-nosyspath",
+    "-fp_contract on",
+    "-multibyte",
+    "-enum int",
+    "-nodefaults",
+    '-pragma "cats off"',
+    '-pragma "warn_notinlined off"',
+    "-RTTI off",
+    "-str reuse",
+    "-maxerrors 1",
+    "-O4,p",
+    "-inline auto",
+    "-DNDEBUG=1",
+    "-DMUST_MATCH",
+    "-i libs/melee/src",
+    "-i libs/melee/libs/doldecomp_include",
+    "-i libs/melee/src/MSL",
+    "-i libs/melee/libs/dolphin_include",
+    "-i libs/melee/src/sysdolphin/baselib",
+    f"-i build/{config.version}/include",
+]
+
+
 # Helper function for Dolphin libraries
 def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     return {
@@ -411,6 +445,16 @@ config.libs = [
             Object(NonMatching, "sysdolphin/baselib/jobj_anim_all.c"),
             Object(Matching, "sysdolphin/baselib/jobj_anim_misc.c"),
             Object(Matching, "sysdolphin/baselib/robj.c"),
+        ],
+    },
+    {
+        "lib": "sysdolphin_melee",
+        "mw_version": mw_version_hsd,
+        "cflags": cflags_hsd_melee,
+        "progress_category": "sdk",
+        "objects": [
+            Object(Matching, "sysdolphin/baselib/list.c"),
+            Object(Matching, "sysdolphin/baselib/random.c"),
         ],
     },
     {

@@ -239,8 +239,8 @@ extern void fn_802BD6AC(float x, float y);
 extern void fn_802BD6C0();
 extern void fn_802C8B48();
 extern void fn_802D6618();
-extern void fn_802DCA04();
-extern int fn_802DCA5C(int range);
+extern void HSD_Randf();
+extern int HSD_Randi(int range);
 extern void memset();
 extern unsigned long strlen(const char *);
 
@@ -7493,7 +7493,7 @@ asm int ItemEffect_SelectAndDispatch(ItemEffectTable *self, int itemId, void *it
     b ItemEffect_SelectAndDispatch_L_800500E8
     ItemEffect_SelectAndDispatch_L_8005008C:
     lwz r3, 0x8(r27)
-    bl fn_802DCA5C
+    bl HSD_Randi
     slwi r3, r3, 2
     addi r0, r3, 0xc
     lwzx r4, r27, r0
@@ -8315,7 +8315,7 @@ asm void KartItem_TickStatusEffectsByFlag(ItemEffectTable *self) { /* 0x80050CF0
     ble KartItem_TickStatusEffectsByFlag_L_80050E80
     li r0, 0x0
     stw r0, 0x1c(r29)
-    bl fn_802DCA04
+    bl HSD_Randf
     lfs f0, lbl_806D2700(r2)
     fcmpo cr0, f1, f0
     bge KartItem_TickStatusEffectsByFlag_L_80050E40

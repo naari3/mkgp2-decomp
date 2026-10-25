@@ -6473,6 +6473,16 @@ sysdolphin/baselib/jobj_anim_misc.c:
 sysdolphin/baselib/robj.c:
 	.text       start:0x802D7C1C end:0x802D7CA0
 
+sysdolphin/baselib/list.c:
+	.text       start:0x802DAEE4 end:0x802DB0A4
+	.bss        start:0x806CE9B0 end:0x806CEA08
+	.sdata      start:0x806D0ED0 end:0x806D0EE8
+
+sysdolphin/baselib/random.c:
+	.text       start:0x802DCA04 end:0x802DCA98
+	.sdata      start:0x806D0F10 end:0x806D0F18
+	.sdata2     start:0x806DCE88 end:0x806DCE98
+
 init/__check_pad3.c:
 	.init       start:0x80003100 end:0x80003140
 

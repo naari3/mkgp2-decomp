@@ -82,7 +82,7 @@ extern unsigned char g_isCommHost, g_namCamFlag, g_lakituStartAnimDone, g_raceEn
 extern unsigned char g_finalLapBannerShown, g_lapChangePending, lbl_806CF148, lbl_806D12E8;
 extern unsigned char lbl_806D1318, lbl_806D1319, lbl_806D131C[4], lbl_806D1264[3];
 extern float g_bestLapTime, g_currentLapTime, g_totalRaceTime, g_raceTimeRemaining, g_lapBonusTimeDelta;
-extern int* lbl_806D0F14;
+extern int* HSD_RandSeedPtr;
 extern void* lbl_806D10A0;
 extern void* lbl_806D12F8;
 extern void* g_playerRenderObj;
@@ -156,8 +156,8 @@ void VSMode_Init_CPP_Draft(VSOwner* self)
 {
     char* pool = lbl_80320960;
     ProcessSystemTick(pool + 0x588);
-    lbl_806D0F14 = &lbl_806D12F0;
-    *lbl_806D0F14 = SyncSlot_GetRecv()[0x1B];
+    HSD_RandSeedPtr = &lbl_806D12F0;
+    *HSD_RandSeedPtr = SyncSlot_GetRecv()[0x1B];
     lbl_806D129C = 0;
     SetResourceLoadingFlag(0);
     DMAChannelManager_Init();
@@ -528,7 +528,7 @@ extern unsigned int lbl_806CF110;
 extern unsigned int lbl_806CF140;
 extern unsigned int lbl_806CF144;
 extern unsigned int lbl_806CF148;
-extern unsigned int lbl_806D0F14;
+extern unsigned int HSD_RandSeedPtr;
 extern unsigned int lbl_806D1050;
 extern unsigned int lbl_806D10A0;
 extern unsigned int lbl_806D1264;
@@ -599,11 +599,11 @@ asm void VSMode_Init(void) { /* 0x8009F814 size:0xDBC */
     addi r3, r27, 0x588
     bl ProcessSystemTick
     la r0, lbl_806D12F0(r13)
-    stw r0, lbl_806D0F14(r13)
+    stw r0, HSD_RandSeedPtr(r13)
     bl SyncSlot_GetRecv
     lbz r5, 0x1b(r3)
     li r0, 0x0
-    lwz r4, lbl_806D0F14(r13)
+    lwz r4, HSD_RandSeedPtr(r13)
     li r3, 0x0
     stw r5, 0x0(r4)
     stw r0, lbl_806D129C(r13)

@@ -8,7 +8,7 @@
 extern void Alloc();
 extern void Saturate_Double();
 extern void __construct_array();
-extern void fn_802DCA04();
+extern void HSD_Randf();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D29A8;
@@ -163,15 +163,15 @@ asm void clItemBoxResponder_SpawnDebris(void) { /* 0x8005E46C size:0x31C */
     stfs f22, 0x4(r30)
     stfs f23, 0x8(r30)
     stfs f24, 0xc(r30)
-    bl fn_802DCA04
+    bl HSD_Randf
     fsubs f0, f1, f25
     fmuls f0, f26, f0
     fmuls f17, f27, f0
-    bl fn_802DCA04
+    bl HSD_Randf
     fsubs f0, f1, f25
     fmuls f0, f26, f0
     fmuls f18, f27, f0
-    bl fn_802DCA04
+    bl HSD_Randf
     fsubs f1, f1, f25
     fmuls f0, f20, f18
     fmuls f1, f26, f1
@@ -191,16 +191,16 @@ asm void clItemBoxResponder_SpawnDebris(void) { /* 0x8005E46C size:0x31C */
     stfs f1, 0x14(r30)
     stfs f0, 0x18(r30)
     stfs f29, 0x1c(r30)
-    bl fn_802DCA04
+    bl HSD_Randf
     fmuls f1, f30, f1
     lfs f2, lbl_806D29DC(r2)
     fmr f3, f30
     bl Saturate_Double
     stfs f1, 0x24(r30)
-    bl fn_802DCA04
+    bl HSD_Randf
     fmuls f0, f31, f1
     stfs f0, 0x28(r30)
-    bl fn_802DCA04
+    bl HSD_Randf
     fmuls f0, f31, f1
     addi r31, r31, 0x1
     cmplwi r31, 0xf
@@ -271,7 +271,7 @@ extern "C" {
 extern const float lbl_806D29A8, lbl_806D29C4, lbl_806D29C8, lbl_806D29CC;
 extern const float lbl_806D29D0, lbl_806D29D4, lbl_806D29D8, lbl_806D29DC;
 extern const float lbl_806D29E0, lbl_806D29E4;
-float fn_802DCA04(void);
+float HSD_Randf(void);
 float Saturate_Double(float, float, float);
 }
 struct InputVec { float x, y, z; };
@@ -308,17 +308,17 @@ extern "C" SpawnResponder *clItemBoxResponder_SpawnDebris(
     for (unsigned int i = 0; i < 15; ++i) {
         BoxParticle &p = debris->particles[i];
         p.x = pos.x; p.y = pos.y; p.z = pos.z;
-        float x = lbl_806D29C8 * (lbl_806D29CC * (fn_802DCA04() - lbl_806D29D0));
-        float y = lbl_806D29C8 * (lbl_806D29CC * (fn_802DCA04() - lbl_806D29D0));
-        float z = lbl_806D29C8 * (lbl_806D29CC * (fn_802DCA04() - lbl_806D29D0));
+        float x = lbl_806D29C8 * (lbl_806D29CC * (HSD_Randf() - lbl_806D29D0));
+        float y = lbl_806D29C8 * (lbl_806D29CC * (HSD_Randf() - lbl_806D29D0));
+        float z = lbl_806D29C8 * (lbl_806D29CC * (HSD_Randf() - lbl_806D29D0));
         if (dx * x + dy * y + dz * z < lbl_806D29A8) {
             x = -x; y = -y; z = -z;
         }
         p.vx = x + bx; p.vy = y + by; p.vz = z + bz;
         p.acceleration = lbl_806D29D4;
-        p.scale = Saturate_Double(lbl_806D29D8 * fn_802DCA04(), lbl_806D29DC, lbl_806D29D8);
-        p.rotation = lbl_806D29E0 * fn_802DCA04();
-        p.spin = lbl_806D29E0 * fn_802DCA04();
+        p.scale = Saturate_Double(lbl_806D29D8 * HSD_Randf(), lbl_806D29DC, lbl_806D29D8);
+        p.rotation = lbl_806D29E0 * HSD_Randf();
+        p.spin = lbl_806D29E0 * HSD_Randf();
         p.age = lbl_806D29E4;
     }
     return self;
