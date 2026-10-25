@@ -640,6 +640,11 @@ game/JObj_IsForwardDotBelowThreshold.c:
 	extabindex  start:0x8001FD00 end:0x8001FD0C
 	.text       start:0x8003DCD4 end:0x8003DDAC
 
+game/SetAnimState.c:
+	extab       start:0x80006108 end:0x80006110
+	extabindex  start:0x8001FD24 end:0x8001FD30
+	.text       start:0x8003E41C end:0x8003E540
+
 game/KartItem_BroadcastParamToCarAndISE.c:
 	extab       start:0x80006148 end:0x80006150
 	extabindex  start:0x8001FD84 end:0x8001FD90
@@ -999,6 +1004,11 @@ game/ItemStateSlotC_TryArm.c:
 	extab       start:0x800071A4 end:0x800071AC
 	extabindex  start:0x800205A0 end:0x800205AC
 	.text       start:0x80053290 end:0x800532D4
+
+game/ItemEffectQuake_Init.c:
+	extab       start:0x800071EC end:0x800071F4
+	extabindex  start:0x800205D0 end:0x800205DC
+	.text       start:0x80053C70 end:0x80053D80
 
 game/ItemEffectDamp_Init.c:
 	.text       start:0x80053E68 end:0x80053E8C
