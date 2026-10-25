@@ -5136,5 +5136,30 @@
     "fn_8023D1B4__FP10KartRender": "fn_8023D1B4",
     "fn_80231B74__Fi": "fn_80231B74",
     "fn_80231A50__Fi": "fn_80231A50"
+  },
+  "src/game/EName3D.cpp": {
+    "@66": "lbl_803DAF7C",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "Draw__9clEName3DFv": "fn_802300CC",
+    "SetPos__9clEName3DFPCf": "fn_802301B4",
+    "__dt__9clEName3DFv": "fn_802301D0",
+    "__ct__9clEName3DFP10KartRenderi": "fn_8023023C",
+    "__vt__9clEName3D": "lbl_804EE230",
+    "kOffsetX": "lbl_803DAF6C",
+    "__ct__6TexMgrFv": "TexMgr_Init",
+    "kNamesJ": "lbl_804EE1C8"
+  },
+  "src/game/ENo3D.cpp": {
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "Draw__7clENo3DFv": "fn_80230404",
+    "SetPos__7clENo3DFPCf": "fn_80230518",
+    "__dt__7clENo3DFv": "fn_80230534",
+    "__ct__7clENo3DFP10KartRenderi": "fn_8023057C",
+    "__vt__7clENo3D": "lbl_804EE23C",
+    "fn_8011FAFC__FP7ResCtrli": "fn_8011FAFC"
   }
 }

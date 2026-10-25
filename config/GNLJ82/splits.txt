@@ -9171,8 +9171,23 @@ game/EnmyFaceEffect.cpp:
 game/fn_802300C8.c:
 	.text       start:0x802300C8 end:0x802300CC
 
+game/EName3D.cpp:
+	extab       start:0x8001C15C end:0x8001C1A0
+	extabindex  start:0x8002A98C end:0x8002A9B0
+	.text       start:0x802300CC end:0x80230400
+	.rodata     start:0x803DAE88 end:0x803DAF98
+	.data       start:0x804EE1C8 end:0x804EE23C
+	.sdata      start:0x806D0630 end:0x806D0638
+
 game/fn_80230400.c:
 	.text       start:0x80230400 end:0x80230404
+
+game/ENo3D.cpp:
+	extab       start:0x8001C1A0 end:0x8001C1DC
+	extabindex  start:0x8002A9B0 end:0x8002A9D4
+	.text       start:0x80230404 end:0x80230644
+	.data       start:0x804EE23C end:0x804EE248
+	.sdata      start:0x806D0638 end:0x806D0640
 
 game/fn_80230ED4.c:
 	.text       start:0x80230ED4 end:0x80230ED8
