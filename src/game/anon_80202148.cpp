@@ -67,8 +67,8 @@ extern "C" void fn_802021B0(ClassSelTask *self) {
         float s = fn_8020A6CC(self->scale.p);
         fn_80121E10(&ctrl);
         ctrl.resId = res;
-        ctrl.Show(px, lbl_806DA8D4, lbl_806DA8C8);
-        SetScaleXY(ctrl, s, lbl_806DA8C8);
+        ctrl.Show(px, lbl_806DA8D4, 1.0f);
+        SetScaleXY(ctrl, s, 1.0f);
         if (self->prev == 0) {
             ctrl.SetColor(-0x100);
         } else {
@@ -78,14 +78,14 @@ extern "C" void fn_802021B0(ClassSelTask *self) {
         res = lbl_803C0300[self->cur];
         fn_80121E10(&ctrl);
         ctrl.resId = res;
-        ctrl.Show(lbl_806DA8D0 + fn_8020A6CC(self->slideIn.p), lbl_806DA8D4, lbl_806DA8C8);
+        ctrl.Show(lbl_806DA8D0 + fn_8020A6CC(self->slideIn.p), lbl_806DA8D4, 1.0f);
         ctrl.SetColor(col);
         fn_8011FAFC(&ctrl, self->layer);
     } else {
         int res = lbl_803C0300[self->cur];
         fn_80121E10(&ctrl);
         ctrl.resId = res;
-        ctrl.Show(lbl_806DA8D0, lbl_806DA8D4, lbl_806DA8C8);
+        ctrl.Show(lbl_806DA8D0, lbl_806DA8D4, 1.0f);
         ctrl.SetColor(col);
         fn_8011FAFC(&ctrl, self->layer);
     }
@@ -96,10 +96,10 @@ extern "C" void fn_802021B0(ClassSelTask *self) {
         float v = fn_8020A6CC(self->slideOut.p);
         if (lbl_806DA8D8 == v) {
             fn_8020A734(self->slideOut.p, 6, lbl_806DA8D8, lbl_806DA8DC);
-            fn_8020A734(self->scale.p, 6, lbl_806DA8E0, lbl_806DA8C8);
+            fn_8020A734(self->scale.p, 6, lbl_806DA8E0, 1.0f);
         } else if (lbl_806DA8DC == v) {
             fn_8020A734(self->slideOut.p, 4, lbl_806DA8DC, lbl_806DA8E4);
-            fn_8020A734(self->scale.p, 1, lbl_806DA8C8, lbl_806DA8C8);
+            fn_8020A734(self->scale.p, 1, 1.0f, 1.0f);
         } else if (lbl_806DA8E4 == v) {
             fn_8020A734(self->slideOut.p, 3, lbl_806DA8E4, lbl_806DA8E8);
         } else if (lbl_806DA8E8 == v) {

@@ -15,38 +15,42 @@ extern "C" {
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void GetCourseShortIdByCupAndMirror();
-extern void fn_8011FAFC();
-extern void fn_801A0004();
-extern void fn_801A0DF0();
-extern void fn_801A0FD4();
-extern void fn_801A10DC();
-extern void fn_801A1128();
-extern void fn_801A1174();
+extern short GetCourseShortIdByCupAndMirror(int cup, int mirror);
+extern void fn_8011FAFC(void *obj, int layer);
+extern void fn_801A0004(void *spr);
+extern void fn_801A0DF0(void);
+extern void fn_801A0FD4(float r, float g, float b, float a);
+extern void fn_801A10DC(float sx, float sy);
+extern void fn_801A1128(float x, float y);
+extern void fn_801A1174(int id, int layer, int a, int b, int c);
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_cupId;
-extern unsigned int lbl_806D9D28;
-extern unsigned int lbl_806D9D4C;
-extern unsigned int lbl_806D9D50;
-extern unsigned int lbl_806D9D54;
-extern unsigned int lbl_806D9D58;
-extern unsigned int lbl_806D9D5C;
-extern unsigned int lbl_806D9D60;
-extern unsigned int lbl_806D9D64;
+extern const float lbl_806D9D28;
+extern const float lbl_806D9D4C;
+extern const float lbl_806D9D50;
+extern const float lbl_806D9D54;
+extern const float lbl_806D9D58;
+extern const float lbl_806D9D5C;
+extern const float lbl_806D9D60;
+extern const float lbl_806D9D64;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_8049AF8C[];
-extern unsigned int lbl_8049AFA0[];
+extern short lbl_8049AF8C[];
+extern char lbl_806CFDF8[];
+extern char lbl_806CFE00[];
+extern short lbl_806CFDF0[4];
+extern short lbl_8049AFA0[];
 
 /* --- function index (1 fns, .text 0x801C9C28..0x801C9EAC) ---
  * [  0] 0x801C9C28 size:0x284   global clFlowRound_Draw
  */
 
 /* --- forward decls --- */
-asm void clFlowRound_Draw(void);
+struct clFlowRound;
+void clFlowRound_Draw(struct clFlowRound *self);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -61,180 +65,110 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void clFlowRound_Draw(void) { /* 0x801C9C28 size:0x284 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r3
-    stw r30, 0x18(r1)
-    stw r29, 0x14(r1)
-    lwz r3, 0xf0(r3)
-    cmplwi r3, 0x0
-    beq clFlowRound_Draw_L_801C9C54
-    bl fn_801A0004
-    clFlowRound_Draw_L_801C9C54:
-    lwz r3, 0x28(r31)
-    cmplwi r3, 0x0
-    beq clFlowRound_Draw_L_801C9C64
-    bl fn_801A0004
-    clFlowRound_Draw_L_801C9C64:
-    lwz r3, 0x88(r31)
-    cmplwi r3, 0x0
-    beq clFlowRound_Draw_L_801C9C74
-    bl fn_801A0004
-    clFlowRound_Draw_L_801C9C74:
-    lwz r3, 0xec(r31)
-    cmplwi r3, 0x0
-    beq clFlowRound_Draw_L_801C9C84
-    bl fn_801A0004
-    clFlowRound_Draw_L_801C9C84:
-    addi r3, r31, 0x94
-    li r4, 0x5
-    bl fn_8011FAFC
-    addi r3, r31, 0xf4
-    li r4, 0x5
-    bl fn_8011FAFC
-    lwz r5, g_cupId(r13)
-    lis r3, lbl_8049AF8C@ha
-    lwz r0, 0x4(r31)
-    addi r4, r3, lbl_8049AF8C@l
-    slwi r5, r5, 1
-    addi r3, r13, -0x6F30  /* lbl_806CFDF0 */
-    slwi r0, r0, 1
-    lhax r30, r4, r5
-    lhax r3, r3, r0
-    li r4, 0x5
-    li r5, 0x0
-    li r6, 0x0
-    li r7, 0x0
-    bl fn_801A1174
-    lfs f1, lbl_806D9D4C(r2)
-    lfs f2, lbl_806D9D50(r2)
-    bl fn_801A1128
-    lfs f1, lbl_806D9D28(r2)
-    lfs f4, 0x158(r31)
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_801A0FD4
-    bl fn_801A0DF0
-    lis r3, lbl_8049AFA0@ha
-    slwi r0, r30, 1
-    addi r3, r3, lbl_8049AFA0@l
-    li r4, 0x5
-    lhax r3, r3, r0
-    li r5, 0x0
-    li r6, 0x0
-    li r7, 0x0
-    bl fn_801A1174
-    lfs f1, lbl_806D9D54(r2)
-    lfs f2, lbl_806D9D58(r2)
-    bl fn_801A1128
-    lfs f1, lbl_806D9D28(r2)
-    lfs f4, 0x150(r31)
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_801A0FD4
-    bl fn_801A0DF0
-    lwz r3, g_cupId(r13)
-    lwz r4, 0x4(r31)
-    bl GetCourseShortIdByCupAndMirror
-    extsh r3, r3
-    li r4, 0x5
-    li r5, 0x0
-    li r6, 0x0
-    li r7, 0x0
-    bl fn_801A1174
-    lfs f1, lbl_806D9D5C(r2)
-    lfs f2, lbl_806D9D60(r2)
-    bl fn_801A1128
-    lfs f1, lbl_806D9D64(r2)
-    fmr f2, f1
-    bl fn_801A10DC
-    lfs f1, lbl_806D9D28(r2)
-    lfs f4, 0x154(r31)
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_801A0FD4
-    bl fn_801A0DF0
-    lwz r4, 0x4(r31)
-    srwi r3, r4, 31
-    clrlwi r0, r4, 31
-    xor r0, r0, r3
-    subf. r0, r3, r0
-    bne clFlowRound_Draw_L_801C9DC8
-    mulli r0, r4, 0x14
-    add r3, r31, r0
-    lwz r3, 0x3c(r3)
-    cmplwi r3, 0x0
-    beq clFlowRound_Draw_L_801C9DC8
-    beq clFlowRound_Draw_L_801C9DC8
-    bl fn_801A0004
-    clFlowRound_Draw_L_801C9DC8:
-    li r29, 0x0
-    mr r30, r31
-    clFlowRound_Draw_L_801C9DD0:
-    lwz r0, 0x4(r31)
-    cmpw r29, r0
-    beq clFlowRound_Draw_L_801C9DF0
-    lwz r3, 0x3c(r30)
-    cmplwi r3, 0x0
-    beq clFlowRound_Draw_L_801C9DF0
-    beq clFlowRound_Draw_L_801C9DF0
-    bl fn_801A0004
-    clFlowRound_Draw_L_801C9DF0:
-    addi r29, r29, 0x1
-    addi r30, r30, 0x14
-    cmpwi r29, 0x4
-    blt clFlowRound_Draw_L_801C9DD0
-    lwz r4, 0x4(r31)
-    srwi r3, r4, 31
-    clrlwi r0, r4, 31
-    xor r0, r0, r3
-    subf r0, r3, r0
-    cmpwi r0, 0x1
-    bne clFlowRound_Draw_L_801C9E38
-    mulli r0, r4, 0x14
-    add r3, r31, r0
-    lwz r3, 0x3c(r3)
-    cmplwi r3, 0x0
-    beq clFlowRound_Draw_L_801C9E38
-    beq clFlowRound_Draw_L_801C9E38
-    bl fn_801A0004
-    clFlowRound_Draw_L_801C9E38:
-    lwz r3, 0x168(r31)
-    cmplwi r3, 0x0
-    beq clFlowRound_Draw_L_801C9E58
-    lbz r0, 0x4(r3)
-    cmplwi r0, 0x0
-    beq clFlowRound_Draw_L_801C9E58
-    lwz r3, 0x0(r3)
-    bl fn_801A0004
-    clFlowRound_Draw_L_801C9E58:
-    lwz r3, 0x15c(r31)
-    cmplwi r3, 0x0
-    beq clFlowRound_Draw_L_801C9E74
-    lbz r0, 0x164(r31)
-    cmplwi r0, 0x1
-    bne clFlowRound_Draw_L_801C9E74
-    bl fn_801A0004
-    clFlowRound_Draw_L_801C9E74:
-    lwz r3, 0x160(r31)
-    cmplwi r3, 0x0
-    beq clFlowRound_Draw_L_801C9E90
-    lbz r0, 0x165(r31)
-    cmplwi r0, 0x1
-    bne clFlowRound_Draw_L_801C9E90
-    bl fn_801A0004
-    clFlowRound_Draw_L_801C9E90:
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+struct InputState {
+    unsigned char pad_00[4];
+    unsigned char active;
+    unsigned char pad_05[0x13];
+    int value18;
+    int value1C;
+};
+
+struct RoundSlot {
+    void *spr;
+    int x4;
+    int x8;
+    int xC;
+    void *sub;
+};
+
+struct SprFlag {
+    void *spr;
+    unsigned char visible;
+};
+
+struct clFlowRound {
+    void *vtbl;
+    int mirror;
+    char pad8[0x28 - 0x8];
+    RoundSlot slots[5];
+    char pad8C[0x94 - 0x8C];
+    char layer94[0xEC - 0x94];
+    void *sprEC;
+    void *sprF0;
+    char layerF4[0x150 - 0xF4];
+    float alpha150;
+    float alpha154;
+    float alpha158;
+    void *spr15C;
+    void *spr160;
+    unsigned char show164;
+    unsigned char show165;
+    char pad166[2];
+    SprFlag *flag168;
+};
+
+static inline void DrawSprite(void *spr) {
+    if (spr != 0) {
+        fn_801A0004(spr);
+    }
+}
+
+void clFlowRound_Draw(clFlowRound *self) {
+    short cup;
+    int i;
+
+    if (self->sprF0 != 0) {
+        fn_801A0004(self->sprF0);
+    }
+    if (self->slots[0].spr != 0) {
+        fn_801A0004(self->slots[0].spr);
+    }
+    if (self->slots[4].sub != 0) {
+        fn_801A0004(self->slots[4].sub);
+    }
+    if (self->sprEC != 0) {
+        fn_801A0004(self->sprEC);
+    }
+    fn_8011FAFC(self->layer94, 5);
+    fn_8011FAFC(self->layerF4, 5);
+
+    cup = lbl_8049AF8C[g_cupId];
+    fn_801A1174(lbl_806CFDF0[self->mirror], 5, 0, 0, 0);
+    fn_801A1128(lbl_806D9D4C, lbl_806D9D50);
+    fn_801A0FD4(lbl_806D9D28, lbl_806D9D28, lbl_806D9D28, self->alpha158);
+    fn_801A0DF0();
+
+    fn_801A1174(lbl_8049AFA0[cup], 5, 0, 0, 0);
+    fn_801A1128(lbl_806D9D54, lbl_806D9D58);
+    fn_801A0FD4(lbl_806D9D28, lbl_806D9D28, lbl_806D9D28, self->alpha150);
+    fn_801A0DF0();
+
+    fn_801A1174(GetCourseShortIdByCupAndMirror(g_cupId, self->mirror), 5, 0, 0, 0);
+    fn_801A1128(lbl_806D9D5C, lbl_806D9D60);
+    fn_801A10DC(lbl_806D9D64, lbl_806D9D64);
+    fn_801A0FD4(lbl_806D9D28, lbl_806D9D28, lbl_806D9D28, self->alpha154);
+    fn_801A0DF0();
+
+    if (self->mirror % 2 == 0 && self->slots[self->mirror + 1].spr != 0) {
+        DrawSprite(self->slots[self->mirror + 1].spr);
+    }
+    for (i = 0; i < 4; i++) {
+        if (i != self->mirror && self->slots[i + 1].spr != 0) {
+            DrawSprite(self->slots[i + 1].spr);
+        }
+    }
+    if (self->mirror % 2 == 1 && self->slots[self->mirror + 1].spr != 0) {
+        DrawSprite(self->slots[self->mirror + 1].spr);
+    }
+    if (self->flag168 != 0 && self->flag168->visible != 0) {
+        fn_801A0004(self->flag168->spr);
+    }
+    if (self->spr15C != 0 && self->show164 == 1) {
+        fn_801A0004(self->spr15C);
+    }
+    if (self->spr160 != 0 && self->show165 == 1) {
+        fn_801A0004(self->spr160);
+    }
 }
 
 /* === extracted from auto_clFlowRound_Update_text === */
@@ -251,9 +185,9 @@ extern void IsItemSelectAllowed();
 extern void RumbleUpdate();
 extern void SetCourseParams();
 extern void SetRumbleMode();
-extern void SetScreenBrightness();
+extern void SetScreenBrightness(float);
 extern void Sprite_AdvanceAnim();
-extern void Sprite_Destroy();
+extern void Sprite_Destroy(void *, int);
 extern void Sprite_InitWithAnim();
 extern void Sprite_SetAnimParam();
 extern void Sprite_SetupAnim();
@@ -269,7 +203,7 @@ extern void fn_801C9288();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_cupId;
-extern unsigned int g_pInputState;
+extern struct InputState *g_pInputState;
 extern unsigned int g_roundIndex;
 extern unsigned int lbl_806D184C;
 extern unsigned int lbl_806D184D;
@@ -278,11 +212,11 @@ extern unsigned int lbl_806D9D18;
 extern unsigned int lbl_806D9D1C;
 extern unsigned int lbl_806D9D20;
 extern unsigned int lbl_806D9D24;
-extern unsigned int lbl_806D9D28;
+extern const float lbl_806D9D28;
 extern unsigned int lbl_806D9D30;
 extern unsigned int lbl_806D9D38;
 extern unsigned int lbl_806D9D44;
-extern unsigned int lbl_806D9D48;
+extern const float lbl_806D9D48;
 extern unsigned int lbl_806D9D68;
 extern unsigned int lbl_806D9D6C;
 extern unsigned int lbl_806D9D70;
@@ -300,7 +234,7 @@ extern unsigned int lbl_806D9D94;
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 extern unsigned int lbl_8039B338[];
-extern unsigned int lbl_8049AE70[];
+extern short lbl_8049AE70[];
 
 /* --- function index (1 fns, .text 0x801C9EAC..0x801CADBC) ---
  * [  0] 0x801C9EAC size:0xF10   global clFlowRound_Update
@@ -310,7 +244,7 @@ extern unsigned int lbl_8049AE70[];
 asm void clFlowRound_Update(void);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void MemoryManager_TimedFree();
+extern void MemoryManager_TimedFree(void *);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -1380,31 +1314,31 @@ asm void clFlowRound_Update(void) { /* 0x801C9EAC size:0xF10 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void MemoryManager_TimedFree();
-extern void SetScreenBrightness();
-extern void Sprite_Destroy();
-extern void dtor_801BA14C();
-extern void fn_80120A08();
-extern void fn_80169C44();
-extern void fn_801A1678();
+extern void MemoryManager_TimedFree(void *);
+extern void SetScreenBrightness(float);
+extern void Sprite_Destroy(void *, int);
+extern void dtor_801BA14C(void *, int);
+extern void fn_80120A08(int);
+extern void fn_80169C44(void);
+extern void fn_801A1678(void);
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_cupId;
-extern unsigned int g_pInputState;
-extern unsigned int lbl_806CFDF0;
-extern unsigned int lbl_806D9D48;
+extern struct InputState *g_pInputState;
+extern short lbl_806CFDF0[4];
+extern const float lbl_806D9D48;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_8049AE70[];
+extern short lbl_8049AE70[];
 
 /* --- function index (1 fns, .text 0x801CADBC..0x801CAF34) ---
  * [  0] 0x801CADBC size:0x178   global clFlowRound_Dtor
  */
 
 /* --- forward decls --- */
-asm void clFlowRound_Dtor(void);
+struct clFlowRound *clFlowRound_Dtor(struct clFlowRound *self, short flags);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -1419,109 +1353,93 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void clFlowRound_Dtor(void) { /* 0x801CADBC size:0x178 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr. r31, r3
-    lis r3, lbl_8049AE70@ha
-    stw r30, 0x18(r1)
-    addi r30, r3, lbl_8049AE70@l
-    stw r29, 0x14(r1)
-    stw r28, 0x10(r1)
-    mr r28, r4
-    beq clFlowRound_Dtor_L_801CAF10
-    addi r0, r30, 0x14c
-    stw r0, 0x0(r31)
-    bl fn_80169C44
-    lwz r3, g_pInputState(r13)
-    cmplwi r3, 0x0
-    bne clFlowRound_Dtor_L_801CAE0C
-    li r0, 0x0
-    b clFlowRound_Dtor_L_801CAE10
-    clFlowRound_Dtor_L_801CAE0C:
-    mr r0, r3
-    clFlowRound_Dtor_L_801CAE10:
-    cmplwi r0, 0x0
-    beq clFlowRound_Dtor_L_801CAE34
-    cmplwi r3, 0x0
-    bne clFlowRound_Dtor_L_801CAE24
-    li r3, 0x0
-    clFlowRound_Dtor_L_801CAE24:
-    li r0, 0x0
-    stb r0, 0x4(r3)
-    stw r0, 0x18(r3)
-    stw r0, 0x1c(r3)
-    clFlowRound_Dtor_L_801CAE34:
-    lfs f1, lbl_806D9D48(r2)
-    bl SetScreenBrightness
-    lwz r0, g_cupId(r13)
-    addi r4, r30, 0x11c
-    addi r3, r30, 0x130
-    slwi r0, r0, 1
-    lhax r0, r4, r0
-    slwi r0, r0, 1
-    lhax r3, r3, r0
-    bl fn_80120A08
-    lha r3, lbl_806CFDF0(r13)
-    bl fn_80120A08
-    lwz r3, 0x160(r31)
-    li r4, 0x1
-    bl Sprite_Destroy
-    lwz r3, 0x15c(r31)
-    li r4, 0x1
-    bl Sprite_Destroy
-    lwz r3, 0xec(r31)
-    li r4, 0x1
-    bl Sprite_Destroy
-    lwz r3, 0x88(r31)
-    li r4, 0x1
-    bl Sprite_Destroy
-    lwz r3, 0x28(r31)
-    li r4, 0x1
-    bl Sprite_Destroy
-    lwz r3, 0xf0(r31)
-    li r4, 0x1
-    bl Sprite_Destroy
-    lwz r30, 0x168(r31)
-    cmplwi r30, 0x0
-    beq clFlowRound_Dtor_L_801CAECC
-    lwz r3, 0x0(r30)
-    li r4, 0x1
-    bl Sprite_Destroy
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    clFlowRound_Dtor_L_801CAECC:
-    li r29, 0x0
-    mr r30, r31
-    clFlowRound_Dtor_L_801CAED4:
-    lwz r3, 0x3c(r30)
-    li r4, 0x1
-    bl Sprite_Destroy
-    addi r29, r29, 0x1
-    addi r30, r30, 0x14
-    cmpwi r29, 0x4
-    blt clFlowRound_Dtor_L_801CAED4
-    bl fn_801A1678
-    mr r3, r31
-    li r4, 0x0
-    bl dtor_801BA14C
-    extsh. r0, r28
-    ble clFlowRound_Dtor_L_801CAF10
-    mr r3, r31
-    bl MemoryManager_TimedFree
-    clFlowRound_Dtor_L_801CAF10:
-    lwz r0, 0x24(r1)
-    mr r3, r31
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+/* .data 0x8049AE70..0x8049AFD0 is owned by this TU so the Dtor pools it. */
+short lbl_8049AE70[142] = {
+    6481, 6476, 17064, 0, 17224, 0, 6482, 6477,
+    17232, 0, 17282, 0, 6483, 6478, 17313, -32768,
+    17224, 0, 6484, 6479, 17380, 0, 17282, 0,
+    6758, 6624, 6759, 6625, 6758, 6624, 6759, 6625,
+    6686, 6576, 6687, 6577, 6686, 6576, 6687, 6577,
+    6741, 6612, 6740, 6613, 6741, 6612, 6740, 6613,
+    6650, 6552, 6651, 6553, 6650, 6552, 6651, 6553,
+    6632, 6540, 6633, 6541, 6632, 6540, 6633, 6541,
+    6704, 6588, 6705, 6589, 6704, 6588, 6705, 6589,
+    6668, 6564, 6669, 6565, 6668, 6564, 6669, 6565,
+    6722, 6600, 6723, 6601, 6722, 6600, 6723, 6601,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 401, 0, 446, 0, 442, 0, 60,
+    0, 128, 0, 60, 0, 62, 0, 130,
+    0, 62, 0, 61, 0, 129, 0, 61,
+    0, 59, 0, 127, 0, 114, 0, 400,
+    0, 445, 0, 441, 6511, 6512, 6513, 6514,
+    6515, 6516, 6517, 6518, 0, 0
+};
+short lbl_8049AF8C[10] = {
+    -1, 1, 3, 4, 5, 6, 7, 0,
+    2, 0
+};
+short lbl_8049AFA0[8] = {
+    5869, 5870, 5871, 5872, 5893, 5894, 5895, 5896
+};
+void *lbl_8049AFB0[3] = { lbl_806CFDF8, 0, 0 };
+/* Only the asm clFlowRound_Init references this vtable (through the pooled
+ * .data base), so keep it alive for the linker until Init is C. */
+#pragma force_active on
+static void *clFlowRound_vtbl[5] = {
+    lbl_806CFE00, 0, (void *)clFlowRound_Dtor, (void *)clFlowRound_Update, (void *)clFlowRound_Draw
+};
+#pragma force_active reset
+
+static inline InputState *input_state(void) {
+    InputState *state = g_pInputState;
+
+    if (state == 0) {
+        return 0;
+    }
+    return state;
+}
+
+clFlowRound *clFlowRound_Dtor(clFlowRound *self, short flags) {
+    SprFlag *owned;
+    int i;
+
+    if (self != 0) {
+        self->vtbl = clFlowRound_vtbl;
+        fn_80169C44();
+        if (input_state() != 0) {
+            InputState *state = input_state();
+
+            state->active = 0;
+            state->value18 = 0;
+            state->value1C = 0;
+        }
+        SetScreenBrightness(lbl_806D9D48);
+        fn_80120A08(lbl_8049AFA0[lbl_8049AF8C[g_cupId]]);
+        fn_80120A08(lbl_806CFDF0[0]);
+        Sprite_Destroy(self->spr160, 1);
+        Sprite_Destroy(self->spr15C, 1);
+        Sprite_Destroy(self->sprEC, 1);
+        Sprite_Destroy(self->slots[4].sub, 1);
+        Sprite_Destroy(self->slots[0].spr, 1);
+        Sprite_Destroy(self->sprF0, 1);
+        {
+            owned = self->flag168;
+
+            if (owned != 0) {
+                Sprite_Destroy(owned->spr, 1);
+                MemoryManager_TimedFree(owned);
+            }
+        }
+        for (i = 0; i < 4; i++) {
+            Sprite_Destroy(self->slots[i + 1].spr, 1);
+        }
+        fn_801A1678();
+        dtor_801BA14C(self, 0);
+        if (flags > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
 
 
@@ -1541,7 +1459,7 @@ extern void PreloadResource();
 extern void ResCtrl_Init();
 extern void RoundCupIsCompleted();
 extern void RoundIsUnlocked();
-extern void SetScreenBrightness();
+extern void SetScreenBrightness(float);
 extern void SetSyncTarget();
 extern void SetupBgSprites();
 extern void SpriteSystem_EnsureInit();
@@ -1556,14 +1474,14 @@ extern void fn_801C9288();
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_ccClass;
 extern unsigned int g_cupId;
-extern unsigned int g_pInputState;
+extern struct InputState *g_pInputState;
 extern unsigned int g_roundIndex;
 extern unsigned int lbl_806D9D10;
 extern unsigned int lbl_806D9D14;
-extern unsigned int lbl_806D9D28;
+extern const float lbl_806D9D28;
 extern unsigned int lbl_806D9D38;
 extern unsigned int lbl_806D9D3C;
-extern unsigned int lbl_806D9D48;
+extern const float lbl_806D9D48;
 extern unsigned int lbl_806D9D68;
 extern unsigned int lbl_806D9D6C;
 extern unsigned int lbl_806D9D70;
@@ -1583,7 +1501,7 @@ extern unsigned int lbl_806D9DAC;
 extern unsigned int g_playerData[];
 extern unsigned int lbl_8039B308[];
 extern unsigned int lbl_8039B3B4[];
-extern unsigned int lbl_8049AE70[];
+extern short lbl_8049AE70[];
 
 /* --- function index (1 fns, .text 0x801CAF34..0x801CB620) ---
  * [  0] 0x801CAF34 size:0x6EC   global clFlowRound_Init
@@ -1593,9 +1511,9 @@ extern unsigned int lbl_8049AE70[];
 asm void clFlowRound_Init(void);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void MemoryManager_TimedFree();
+extern void MemoryManager_TimedFree(void *);
 extern void dtor_80082960();
-extern void dtor_801BA14C();
+extern void dtor_801BA14C(void *, int);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
