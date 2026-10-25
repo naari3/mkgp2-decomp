@@ -8204,6 +8204,13 @@ triforce/amuart.c:
 	.text       start:0x8029321C end:0x80293BBC
 	.bss        start:0x806A1CE0 end:0x806A1DB8
 
+triforce/amsys.c:
+	.text       start:0x80293BBC end:0x80294E6C
+	.rodata     start:0x803F2880 end:0x803F28B0
+	.data       start:0x804F5828 end:0x804F5848
+	.bss        start:0x806A1DB8 end:0x806A47A0
+	.sbss       start:0x806D1E48 end:0x806D1E58
+
 dolphin/dvd/dvdlow.c:
 	.text       start:0x80294E6C end:0x80294EA4
 	.bss        start:0x806A47A0 end:0x806A4800
