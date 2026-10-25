@@ -3417,6 +3417,11 @@ game/DrawEffect_ItemHitFx_Spawn.c:
 	extabindex  start:0x8002327C end:0x80023288
 	.text       start:0x800CB778 end:0x800CB8C0
 
+game/DrawEffect_ItemHitBurst_Spawn.c:
+	extab       start:0x8000AB70 end:0x8000AB78
+	extabindex  start:0x80023294 end:0x800232A0
+	.text       start:0x800CBBD4 end:0x800CC130
+
 game/DrawEffect_TrailDot_Spawn.c:
 	extab       start:0x8000AB78 end:0x8000AB80
 	extabindex  start:0x800232A0 end:0x800232AC
@@ -4040,6 +4045,16 @@ game/ItemObject_WriteVectors.c:
 game/ItemObject_SetByte18c.c:
 	.text       start:0x800DD930 end:0x800DD940
 
+game/ShellPilePiece_Tick.c:
+	extab       start:0x8000B4BC end:0x8000B4C4
+	extabindex  start:0x80023C30 end:0x80023C3C
+	.text       start:0x800DF56C end:0x800DF974
+
+game/ShellPile_Spawn.c:
+	extab       start:0x8000B4C4 end:0x8000B4CC
+	extabindex  start:0x80023C3C end:0x80023C48
+	.text       start:0x800DF974 end:0x800DFC9C
+
 game/SoundMgr_StopSE_OrSpecial.c:
 	extab       start:0x8000B4CC end:0x8000B4D4
 	extabindex  start:0x80023C48 end:0x80023C54
@@ -4060,10 +4075,30 @@ game/SoundMgr_CountActiveSEInstances.c:
 	extabindex  start:0x80023C6C end:0x80023C78
 	.text       start:0x800DFEB8 end:0x800DFF34
 
+game/ItemObject_TickHornBlastShockwave.c:
+	extab       start:0x8000B4EC end:0x8000B4F4
+	extabindex  start:0x80023C78 end:0x80023C84
+	.text       start:0x800DFF34 end:0x800E03E4
+
+game/ItemObject_Tick_Kind29_LightAttachment.c:
+	extab       start:0x8000B4F4 end:0x8000B4FC
+	extabindex  start:0x80023C84 end:0x80023C90
+	.text       start:0x800E03E4 end:0x800E076C
+
+game/ItemObject_Tick_Kind28_BananaTrioChild.c:
+	extab       start:0x8000B4FC end:0x8000B504
+	extabindex  start:0x80023C90 end:0x80023C9C
+	.text       start:0x800E076C end:0x800E0B10
+
 game/ItemObject_Tick_Kind28_BananaTrioSpawner.c:
 	extab       start:0x8000B504 end:0x8000B50C
 	extabindex  start:0x80023C9C end:0x80023CA8
 	.text       start:0x800E0B10 end:0x800E0DE4
+
+game/ItemObject_Tick_Kind27_TimedDrop.c:
+	extab       start:0x8000B50C end:0x8000B514
+	extabindex  start:0x80023CA8 end:0x80023CB4
+	.text       start:0x800E0DE4 end:0x800E10E8
 
 game/ItemObject_Tick_Kind2426_FastDrop.c:
 	extab       start:0x8000B514 end:0x8000B51C
@@ -4199,6 +4234,11 @@ game/GabyouTripleChild.c:
 	extabindex  start:0x80023F0C end:0x80023F30
 	.text       start:0x800F3B20 end:0x800F4914
 	.data       start:0x80421738 end:0x80421760
+
+game/GabyouTripleParent_Update.c:
+	extab       start:0x8000B6BC end:0x8000B6C4
+	extabindex  start:0x80023F30 end:0x80023F3C
+	.text       start:0x800F4914 end:0x800F4C28
 
 game/ShellItem.c:
 	extab       start:0x8000B6C4 end:0x8000B6E4
