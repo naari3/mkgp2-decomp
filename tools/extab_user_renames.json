@@ -1969,6 +1969,13 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
   },
+  "src/game/PathManager_Init.cpp": {
+    "__ct__11PathManagerFPviiPvii": "PathManager_Init",
+    "__ct__10PathCursorFPv": "PathCursor_InitFromPath",
+    "__dt__10PathCursorFv": "PathCursor_Free",
+    "ResetToPath__10PathCursorFPv": "PathCursor_ResetToPath",
+    "RegisterCarObject__11PathManagerFPviiiii": "PathManager_RegisterCarObject"
+  },
   "src/game/LampTest_Page.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",

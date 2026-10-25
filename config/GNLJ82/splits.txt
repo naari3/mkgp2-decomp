@@ -602,6 +602,11 @@ game/PathManager_RefreshFinishPositions.c:
 	extabindex  start:0x8001FC7C end:0x8001FC88
 	.text       start:0x8003B668 end:0x8003B6C4
 
+game/Race_CompareKartProgress.c:
+	extab       start:0x80006084 end:0x8000608C
+	extabindex  start:0x8001FC94 end:0x8001FCA0
+	.text       start:0x8003CDD8 end:0x8003CEE4
+
 game/Path_ResetCursorForKart.c:
 	extab       start:0x8000608C end:0x80006094
 	extabindex  start:0x8001FCA0 end:0x8001FCAC
@@ -611,6 +616,11 @@ game/PathParticipantArray_Dtor.c:
 	extab       start:0x8000609C end:0x800060A4
 	extabindex  start:0x8001FCB8 end:0x8001FCC4
 	.text       start:0x8003D158 end:0x8003D1F4
+
+game/PathManager_Init.cpp:
+	extab       start:0x800060A4 end:0x800060C0
+	extabindex  start:0x8001FCC4 end:0x8001FCD0
+	.text       start:0x8003D1F4 end:0x8003D2FC
 
 game/LakituStart.c:
 	.text       start:0x8003D2FC end:0x8003D304
@@ -624,6 +634,16 @@ game/LakituStart_Dtor.c:
 	extab       start:0x800060D0 end:0x800060D8
 	extabindex  start:0x8001FCE8 end:0x8001FCF4
 	.text       start:0x8003DAE0 end:0x8003DB40
+
+game/JObj_IsForwardDotBelowThreshold.c:
+	extab       start:0x800060F0 end:0x800060F8
+	extabindex  start:0x8001FD00 end:0x8001FD0C
+	.text       start:0x8003DCD4 end:0x8003DDAC
+
+game/KartItem_BroadcastParamToCarAndISE.c:
+	extab       start:0x80006148 end:0x80006150
+	extabindex  start:0x8001FD84 end:0x8001FD90
+	.text       start:0x8003F2D8 end:0x8003F364
 
 game/KartItem_Fields.c:
 	.text       start:0x8003F364 end:0x8003F418
@@ -790,6 +810,11 @@ game/KartDriver_RenderTimed.c:
 	extab       start:0x80006278 end:0x80006290
 	extabindex  start:0x8001FF4C end:0x8001FF58
 	.text       start:0x80042610 end:0x800426C8
+
+game/RenderObj_ItemStateMachine_Timed.c:
+	extab       start:0x80006430 end:0x80006448
+	extabindex  start:0x8001FF64 end:0x8001FF70
+	.text       start:0x80044498 end:0x80044578
 
 game/KartDriver_Init.c:
 	extab       start:0x80006448 end:0x800064E0
@@ -2210,6 +2235,11 @@ game/card_task_manager_create.c:
 	extab       start:0x80009014 end:0x8000901C
 	extabindex  start:0x80021B24 end:0x80021B30
 	.text       start:0x8008A0A0 end:0x8008A2A0
+
+game/CardTaskWelcome_New.c:
+	extab       start:0x8000901C end:0x80009024
+	extabindex  start:0x80021B30 end:0x80021B3C
+	.text       start:0x8008A2A0 end:0x8008A310
 
 game/OperationClockState.c:
 	extab       start:0x80009260 end:0x80009280
