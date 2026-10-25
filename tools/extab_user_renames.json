@@ -1162,6 +1162,16 @@
   "src/game/SpriteSlot_InitLoop.c": {
     "__ct__12LoopNormal3DFPvi": "clNormal3D_Construct"
   },
+  "src/game/HitMessageOverlay_Init.c": {
+    "extab_TweenInterp_Dtor": "@etb_8000A138",
+    "extab_HitMessageOverlay_Init": "@etb_8000A140",
+    "extabindex_HitMessageOverlay_Init": "@eti_800227C0",
+    "extabindex_TweenInterp_Dtor": "@eti_800227CC"
+  },
+  "src/game/DrawEffect_TickAndCull.c": {
+    "@36": "@etb_8000A4D8",
+    "@37": "@eti_80022970"
+  },
   "src/game/ShadowAreaMgr_Ctor.c": {
     "__ct__13ShadowAreaMgrFPv": "ShadowAreaMgr_Ctor",
     "__vt__13ShadowAreaMgr": "lbl_80411E04",
@@ -2235,5 +2245,13 @@
     "__RTTI__9YesNoTask": "lbl_806D02A8",
     "__RTTI__10YesNoSpark": "lbl_806D02D0",
     "__vt__8FlowRoot": "lbl_8048ECF8"
+  },
+  "src/game/GameMode_DispatchSceneInit.c": {
+    "__ct__6GMRootFv": "GameMode_BaseInit",
+    "__dt__6GMRootFv": "dtor_8002CDF4",
+    "__vt__6GMRace": "g_GameModeBaseVtable",
+    "__ct__8GMBtModeFv": "BtMode_Init",
+    "__ct__8GMTaModeFv": "TaMode_Init",
+    "__ct__11GMRaceSceneFv": "RaceScene_Init"
   }
 }
