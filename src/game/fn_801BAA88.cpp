@@ -1601,7 +1601,7 @@ extern "C" void fn_801C1268(CardRead *self) {
             case 1:
             case 2:
             case 4:
-                if (g_playerData[0x1D9] != 2) {
+                if ((signed char)g_playerData[0x1D9] != 2) {
                     self->readOk = 1;
                 }
                 fn_801618CC(self->panel.p, 0, 0);
@@ -1612,7 +1612,7 @@ extern "C" void fn_801C1268(CardRead *self) {
                 self->Eject(0x11);
                 break;
             case 5:
-                if (g_playerData[0x1D9] != 2) {
+                if ((signed char)g_playerData[0x1D9] != 2) {
                     self->readOk = 1;
                 }
                 fn_801C0D94(self);
