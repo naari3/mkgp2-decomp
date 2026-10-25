@@ -3563,5 +3563,23 @@
     "Update__13CoinDemoSceneFv": "fn_80210288",
     "__dt__13CoinDemoSceneFv": "fn_8021058C",
     "__ct__13CoinDemoSceneFv": "fn_802106C8"
+  },
+  "src/game/anon_80211B10.cpp": {
+    "Draw__16JumpDistanceModeFv": "fn_80211B10"
+  },
+  "src/game/anon_802124FC.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__16JumpDistanceModeFv": "fn_80212EA4",
+    "__dt__8ModeBaseFv": "dtor_80122FD8",
+    "__vt__16JumpDistanceMode": "lbl_804ECC08",
+    "__dt__7KartPosFv": "dtor_80036E40",
+    "__dt__13WeatherSystemFv": "fn_8016C634",
+    "__dt__12KartMovementFv": "CarObject_Dtor",
+    "__dt__11LakituStartFv": "LakituStart_Dtor",
+    "__dt__17CourseEnvironmentFv": "CourseEnvironment_Dtor",
+    "__dt__19ChallengeGoalCameraFv": "fn_80124C84",
+    "__dt__8ItemSlotFv": "fn_8023E808",
+    "__dt__3HUDFv": "fn_80254134"
   }
 }
