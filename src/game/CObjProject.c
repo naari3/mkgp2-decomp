@@ -12,17 +12,17 @@ typedef struct CObjProjectView {
     float farPlane;
 } CObjProjectView;
 
-extern int fn_802C8418(void *);
-extern float fn_802C834C(void *);
-extern float fn_802C8308(void *);
+extern int HSD_CObjGetProjectionType(void *);
+extern float HSD_CObjGetAspect(void *);
+extern float HSD_CObjGetFov(void *);
 extern void fn_8013879C(float *, float, float, float, float);
 extern void DebugPrintf(const char *, ...);
 extern const float lbl_806D22E0;
 extern const char lbl_802E96D0[], lbl_802E96FC[];
 extern void GXGetProjectionv(float *);
 extern void GXGetViewportv(float *);
-extern Matrix3x4 *fn_802C7E30(void *);
-extern void fn_802C6BCC(void *);
+extern Matrix3x4 *HSD_CObjGetViewingMtxPtr(void *);
+extern void HSD_CObjSetupViewingMtx(void *);
 extern void GXProject(const Matrix3x4, const float *, const float *,
                        float *, float *, float *, float, float, float);
 extern void PSMTXMultVec(const Matrix3x4, const Vec3 *, Vec3 *);
@@ -33,7 +33,7 @@ static inline Matrix3x4 *CObjProject_GetView(CObjProjectView *self)
     if (!self->ready) {
         return 0;
     }
-    return fn_802C7E30(self->camera);
+    return HSD_CObjGetViewingMtxPtr(self->camera);
 }
 
 #ifndef COBJ_PROJECT_POINT_ONLY
@@ -44,9 +44,9 @@ int CObj_UpdatePerspParam(CObjProjectView *self, float farPlane)
         return 0;
     }
     self->farPlane = farPlane;
-    if (fn_802C8418(self->camera) == 1) {
-        aspect = fn_802C834C(self->camera);
-        fn_8013879C(self->projectionBuffer, lbl_806D22E0 * fn_802C8308(self->camera),
+    if (HSD_CObjGetProjectionType(self->camera) == 1) {
+        aspect = HSD_CObjGetAspect(self->camera);
+        fn_8013879C(self->projectionBuffer, lbl_806D22E0 * HSD_CObjGetFov(self->camera),
                     aspect, self->nearPlane, self->farPlane);
     } else {
         DebugPrintf(lbl_802E96D0);
@@ -75,7 +75,7 @@ void CObj_ProjectPoint(CObjProjectView *self, float *outX, float *outY,
     point.x = x;
     point.y = y;
     point.z = z;
-    fn_802C6BCC(self->camera);
+    HSD_CObjSetupViewingMtx(self->camera);
     matrix = CObjProject_GetView(self);
     PSMTXMultVec(*matrix, &point, &transformed);
     *outZ = transformed.z;

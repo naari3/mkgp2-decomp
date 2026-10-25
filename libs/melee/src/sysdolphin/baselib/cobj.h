@@ -136,6 +136,7 @@ ASSERT_SIZE(HSD_CObjDesc, 0x40);
 struct HSD_CObjInfo {
     HSD_ObjInfo parent;
     int (*load)(HSD_CObj* cobj, HSD_CObjDesc* desc);
+    HSD_ObjUpdateFunc update; // 0x40
 };
 
 struct HSD_CameraAnim {

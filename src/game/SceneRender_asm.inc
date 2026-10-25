@@ -8,9 +8,9 @@
 /* refine if the real prototype matters for header consumers. */
 extern void OSGetTick();
 extern void Profiler_RecordFrame();
-extern void fn_802C72AC();
-extern void fn_802C7318();
-extern void fn_802C79CC();
+extern void HSD_CObjSetInterest();
+extern void HSD_CObjGetEyePosition();
+extern void HSD_CObjGetUpVector();
 extern void fn_802D4748();
 extern void fn_802D47E8();
 extern void HSD_MtxGetTranslate();
@@ -100,7 +100,7 @@ asm void SceneRender_DrawObjectWithLights(void) { /* 0x8003A780 size:0x268 */
     beq SceneRender_DrawObjectWithLights_L_8003A970
     lwz r3, 0x4(r4)
     addi r4, r30, 0x14
-    bl fn_802C72AC
+    bl HSD_CObjSetInterest
     lwz r3, 0x4(r30)
     lwz r4, 0x8(r30)
     lfs f1, lbl_806D24A8(r2)
@@ -108,11 +108,11 @@ asm void SceneRender_DrawObjectWithLights(void) { /* 0x8003A780 size:0x268 */
     lwz r3, 0x4(r30)
     addi r4, r1, 0x10
     lwz r3, 0x4(r3)
-    bl fn_802C7318
+    bl HSD_CObjGetEyePosition
     lwz r3, 0x4(r30)
     addi r4, r1, 0x1c
     lwz r3, 0x4(r3)
-    bl fn_802C79CC
+    bl HSD_CObjGetUpVector
     lwz r6, 0x8(r30)
     addi r3, r1, 0x28
     addi r4, r1, 0x10

@@ -6,7 +6,7 @@ typedef struct CObjUnprojectView {
     unsigned int ready;
 } CObjUnprojectView;
 
-extern const void *fn_802C7E30(void *camera);
+extern const void *HSD_CObjGetViewingMtxPtr(void *camera);
 extern void PSMTXCopy(const void *source, void *destination);
 extern void PSMTXMultVec(const void *matrix, const void *source, void *destination);
 
@@ -17,7 +17,7 @@ void CObj_UnprojectPoint(CObjUnprojectView *self, float x, float y, float z,
     const void *source;
 
     if (self->ready == 0) source = 0;
-    else source = fn_802C7E30(self->camera);
+    else source = HSD_CObjGetViewingMtxPtr(self->camera);
     PSMTXCopy(source, matrix);
     vector[0] = x;
     vector[1] = y;

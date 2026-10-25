@@ -43,7 +43,7 @@ extern void fn_80231B74();
 extern void PSMTXMultVec();
 extern void GXSetAlphaCompare();
 extern void HSD_StateInvalidate();
-extern void fn_802C7E30();
+extern void HSD_CObjGetViewingMtxPtr();
 extern void HSD_CObjGetCurrent();
 
 /* --- extern decls: sda21-referenced data --- */
@@ -225,7 +225,7 @@ asm void CarrotItemEffect_Render(void) { /* 0x800B23CC size:0x698 */
     li r0, 0x0
     b CarrotItemEffect_Render_L_800B2730
     CarrotItemEffect_Render_L_800B25F0:
-    bl fn_802C7E30
+    bl HSD_CObjGetViewingMtxPtr
     li r4, 0x0
     bl GXLoadPosMtxImm
     li r3, 0x0
