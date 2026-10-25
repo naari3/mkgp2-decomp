@@ -6710,6 +6710,13 @@ musyx/runtime/snd_init.c:
 musyx/runtime/snd_math.c:
 	.text       start:0x802B6F38 end:0x802B7098
 
+musyx/runtime/snd_midictrl.c:
+	.text       start:0x802B7098 end:0x802B93A8
+	.rodata     start:0x803F2978 end:0x803F2A88
+	.data       start:0x804F88C0 end:0x804F894C
+	.bss        start:0x806C37F8 end:0x806CA5F8
+	.sbss       start:0x806D2050 end:0x806D2058
+
 musyx/runtime/snd_service.c:
 	.text       start:0x802B93A8 end:0x802B967C
 
