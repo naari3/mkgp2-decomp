@@ -32,7 +32,7 @@ typedef struct ModelEntry {
 extern ModelEntry lbl_8041BC00[];
 
 void *ResolveJointByName(void *obj, const char *name);
-void fn_802D6948(void *src, float *out);
+void HSD_MtxGetTranslate(void *src, float *out);
 void Object_BindMatrixSource(void *obj, void *src, int arg);
 void Object_DriveAnimMatrix(void *obj);
 void Object_ClearAnimBinding(void *obj);
@@ -423,7 +423,7 @@ extern "C" void cLNormal3DWrap_Slot_GetOrLoadJointTransform(cLNormal3DWrap_Slot 
         out[1] = slot->pos[1];
         out[2] = slot->pos[2];
     } else {
-        fn_802D6948(slot->matrixSource, out);
+        HSD_MtxGetTranslate(slot->matrixSource, out);
     }
 }
 

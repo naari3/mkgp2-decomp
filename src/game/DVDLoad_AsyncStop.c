@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void HSD_StateInvalidate();
-extern void fn_802C352C();
+extern void HSD_MObjSetTevStageCallback();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D1150;
@@ -48,7 +48,7 @@ asm void DVDLoad_AsyncStop(void) { /* 0x8007DC38 size:0x54 */
     bctrl
     DVDLoad_AsyncStop_L_8007DC60:
     li r3, 0x0
-    bl fn_802C352C
+    bl HSD_MObjSetTevStageCallback
     li r0, 0x0
     li r3, -0x1
     stw r0, lbl_806D1150(r13)

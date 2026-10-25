@@ -24,7 +24,7 @@ extern void GXSetTevColorIn(int stage, int a, int b, int c, int d);
 extern void GXSetTevColorOp(int stage, int op, int bias, int scale, unsigned char clamp, int reg);
 extern void GXSetTevSwapModeTable(int id, int r, int g, int b, int a);
 extern void GXSetTevSwapMode(int stage, int sel, int swap);
-extern void fn_802C352C(int arg);
+extern void HSD_MObjSetTevStageCallback(int arg);
 extern void DrawEffect_ReleaseCallbackResources(void *drawEffect);
 extern void fn_802C2238(void);
 extern void Object_DtorWithGXSync(void *object, int flag);
@@ -41,7 +41,7 @@ void KartItem_RenderCb_Mode2or4_Post(int stage)
 
 void KartItem_RenderCb_Mode1_Pre(int stage)
 {
-    fn_802C352C(0);
+    HSD_MObjSetTevStageCallback(0);
     GXSetTevSwapModeTable(0, 0, 1, 2, 3);
     GXSetTevSwapMode(stage, 0, 0);
 }

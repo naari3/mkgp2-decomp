@@ -1,6 +1,6 @@
-extern void fn_802C352C(int);
+extern void HSD_MObjSetTevStageCallback(int);
 
 void KartItem_RenderCb_Mode6_Pre(void)
 {
-    fn_802C352C(0);
+    HSD_MObjSetTevStageCallback(0);
 }
