@@ -1490,6 +1490,41 @@ game/CardRW_TestTopMenu_Page.c:
 	extabindex  start:0x800210EC end:0x800210F8
 	.text       start:0x8006F608 end:0x8006FA1C
 
+game/SpeakerTest_Page.cpp:
+	extab       start:0x800081B8 end:0x800081C0
+	extabindex  start:0x800210F8 end:0x80021104
+	.text       start:0x8006FA1C end:0x80070238
+
+game/LampTest_Page.cpp:
+	extab       start:0x800081C0 end:0x800081D8
+	extabindex  start:0x80021104 end:0x80021110
+	.text       start:0x80070238 end:0x8007044C
+
+game/CameraTest_Page.cpp:
+	extab       start:0x800081D8 end:0x800081F0
+	extabindex  start:0x80021110 end:0x8002111C
+	.text       start:0x8007044C end:0x80070EA8
+
+game/LampTestIndiv_Page.cpp:
+	extab       start:0x800081F8 end:0x80008200
+	extabindex  start:0x80021128 end:0x80021134
+	.text       start:0x800712D8 end:0x800715AC
+
+game/SwitchTest_Page.cpp:
+	extab       start:0x80008200 end:0x80008208
+	extabindex  start:0x80021134 end:0x80021140
+	.text       start:0x800715AC end:0x80071AE0
+
+game/HandleInitialize_Page.cpp:
+	extab       start:0x80008208 end:0x80008210
+	extabindex  start:0x80021140 end:0x8002114C
+	.text       start:0x80071AE0 end:0x80071E1C
+
+game/MonitorTest_Page.cpp:
+	extab       start:0x80008210 end:0x80008218
+	extabindex  start:0x8002114C end:0x80021158
+	.text       start:0x80071E1C end:0x80072074
+
 game/GameSetting.c:
 	extab       start:0x80008218 end:0x80008230
 	extabindex  start:0x80021158 end:0x8002117C
