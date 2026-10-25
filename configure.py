@@ -2359,6 +2359,7 @@ config.libs = [
             Object(NonMatching, "triforce/ambackup.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "triforce/amcoin.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "triforce/amjvs.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(NonMatching, "triforce/amnet.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/jvsboot.c", extra_cflags=["-str reuse,readonly"]),
         ],
     },
