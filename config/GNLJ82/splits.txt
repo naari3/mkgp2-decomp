@@ -5580,6 +5580,12 @@ game/Scene_8015BED4.cpp:
 	extabindex  start:0x800259F4 end:0x80025A00
 	.text       start:0x8015BED4 end:0x8015BF18
 
+game/resultscene/resultscene.cpp:
+	extab       start:0x8000F45C end:0x8000F9D8
+	extabindex  start:0x80025A0C end:0x80025C10
+	.text       start:0x8015C41C end:0x8016219C
+	.ctors      start:0x802E8910 end:0x802E8914
+
 game/Scene_801622C8.cpp:
 	extab       start:0x8000FA08 end:0x8000FA10
 	extabindex  start:0x80025C1C end:0x80025C28
@@ -6848,6 +6854,11 @@ game/kartmove/fn_8019C078.c:
 
 game/kartmove/fn_8019CC2C.c:
 	.text       start:0x8019CC2C end:0x8019CD30
+
+game/kartmove/carobject.cpp:
+	extab       start:0x80012828 end:0x80012980
+	extabindex  start:0x80027464 end:0x800274E8
+	.text       start:0x8019E1A8 end:0x8019F5BC
 
 game/sprite/fn_8019FE58.c:
 	.text       start:0x8019FE58 end:0x8019FE78

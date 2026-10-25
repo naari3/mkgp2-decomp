@@ -1101,6 +1101,24 @@
     "__vt__7ObjBase": "lbl_80490FE0",
     "__vt__11Obj8018FEAC": "lbl_80495F04"
   },
+  "src/game/resultscene/resultscene.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__9SceneBase": "lbl_803FE0C8",
+    "__vt__12ResultSceneA": "lbl_80490AD8",
+    "__ct__9ResultSubFii": "fn_8015FD40",
+    "__dt__12ResultSceneAFv": "fn_80160178",
+    "Destroy__12ResultSceneAFv": "fn_80160200",
+    "Update__12ResultSceneAFv": "fn_80160110",
+    "Draw__12ResultSceneAFv": "fn_801600CC"
+  },
+  "src/game/kartmove/carobject.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__9CarObjectFv": "CarObject_Dtor",
+    "__dt__7CarElemFv": "dtor_80036E40",
+    "__dt__10CarTrivialFv": "dtor_8019EB60"
+  },
   "src/game/objview/fn_80187878.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
