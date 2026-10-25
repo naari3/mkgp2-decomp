@@ -2257,6 +2257,9 @@ game/Sci2Card_ReceiptTables.c:
 game/RaceSys_8009B98C.c:
 	.text       start:0x8009B98C end:0x8009B9D0
 
+game/RaceScene_GetPerspFovyForCup.c:
+	.text       start:0x8009B9D0 end:0x8009BAC4
+
 game/RaceSys_8009BAC4.c:
 	.text       start:0x8009BAC4 end:0x8009BD04
 
@@ -2272,6 +2275,12 @@ game/VSMode_SeedRandomItemSequence.c:
 
 game/RaceData_8009BEF4.c:
 	.text       start:0x8009BEF4 end:0x8009CBFC
+
+game/SetCourseParams.c:
+	extab       start:0x800095A8 end:0x800095B0
+	extabindex  start:0x800221A8 end:0x800221B4
+	.text       start:0x8009CBFC end:0x8009CFDC
+	.bss        start:0x805AC600 end:0x805D2AA8
 
 game/PlayerData_ApplyItemUnlockById.c:
 	extab       start:0x800095B0 end:0x800095B8
@@ -4646,10 +4655,32 @@ game/fn_80105180.c:
 	extabindex  start:0x8002414C end:0x80024158
 	.text       start:0x80105180 end:0x80105800
 
+game/fn_80105800.c:
+	extab       start:0x8000B82C end:0x8000B834
+	extabindex  start:0x80024158 end:0x80024164
+	.text       start:0x80105800 end:0x80105CC4
+	.data       start:0x80421AE0 end:0x80421B08
+
 game/fn_80105CC4.c:
 	extab       start:0x8000B834 end:0x8000B83C
 	extabindex  start:0x80024164 end:0x80024170
 	.text       start:0x80105CC4 end:0x80105EB4
+
+game/fn_80105EB4.c:
+	extab       start:0x8000B83C end:0x8000B844
+	extabindex  start:0x80024170 end:0x8002417C
+	.text       start:0x80105EB4 end:0x8010670C
+
+game/fn_8010670C.c:
+	extab       start:0x8000B844 end:0x8000B84C
+	extabindex  start:0x8002417C end:0x80024188
+	.text       start:0x8010670C end:0x80107040
+	.data       start:0x80421B08 end:0x80421B30
+
+game/fn_80107040.c:
+	extab       start:0x8000B84C end:0x8000B854
+	extabindex  start:0x80024188 end:0x80024194
+	.text       start:0x80107040 end:0x801077C8
 
 game/fn_801077C8.c:
 	extab       start:0x8000B854 end:0x8000B85C
