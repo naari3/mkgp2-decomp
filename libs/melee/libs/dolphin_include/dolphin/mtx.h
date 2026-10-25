@@ -1,6 +1,21 @@
 #ifndef _DOLPHIN_MTX_H_
 #define _DOLPHIN_MTX_H_
 
+// mkgp2: these PSVEC functions keep the game's names in symbols.txt
+// (same mapping as src/dolphin/mtx/__mtx_names.h).
+#define PSVECSubtract Vec3_Subtract
+#define PSVECNormalize Vec3_Normalize
+#define PSVECMag Vec3_Magnitude
+#define PSVECDotProduct Vec3_Dot
+#define PSVECDistance Vec3_Distance
+// mkgp2 links the C versions of these under their SDK names.
+#define MTXFrustum C_MTXFrustum
+#define MTXPerspective C_MTXPerspective
+#define MTXOrtho C_MTXOrtho
+#define MTXLightFrustum C_MTXLightFrustum
+#define MTXLightPerspective C_MTXLightPerspective
+#define MTXLightOrtho C_MTXLightOrtho
+
 #include <dolphin/types.h>
 
 #ifdef __cplusplus

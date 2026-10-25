@@ -14,14 +14,14 @@ extern void HSD_CObjGetUpVector();
 extern void fn_802D4748();
 extern void fn_802D47E8();
 extern void HSD_MtxGetTranslate();
-extern void fn_802DB570();
-extern void fn_802DB740();
-extern void fn_802DB9EC();
+extern void HSD_ShadowInit();
+extern void HSD_ShadowStartRender();
+extern void HSD_ShadowEndRender();
 extern void fn_802DBB84();
-extern void fn_802DC0F4();
-extern void fn_802DC2C0();
-extern void fn_802DC4D4();
-extern void fn_802DC550();
+extern void HSD_ShadowSetViewingRect();
+extern void HSD_ViewingRectInit();
+extern void HSD_ViewingRectCheck();
+extern void HSD_ViewingRectAddSphere();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D24A8;
@@ -124,7 +124,7 @@ asm void SceneRender_DrawObjectWithLights(void) { /* 0x8003A780 size:0x268 */
     subi r0, r8, 0x1
     or r0, r7, r0
     srwi r7, r0, 31
-    bl fn_802DC2C0
+    bl HSD_ViewingRectInit
     lwz r3, 0x4(r30)
     lfs f31, lbl_806D24AC(r2)
     lwz r31, 0x0(r3)
@@ -151,14 +151,14 @@ asm void SceneRender_DrawObjectWithLights(void) { /* 0x8003A780 size:0x268 */
     lfs f1, lbl_806D24B0(r2)
     addi r3, r1, 0x28
     addi r4, r1, 0x10
-    bl fn_802DC550
+    bl HSD_ViewingRectAddSphere
     SceneRender_DrawObjectWithLights_L_8003A8FC:
     lwz r31, 0x0(r31)
     SceneRender_DrawObjectWithLights_L_8003A900:
     cmplwi r31, 0x0
     bne SceneRender_DrawObjectWithLights_L_8003A8A4
     addi r3, r1, 0x28
-    bl fn_802DC4D4
+    bl HSD_ViewingRectCheck
     cmpwi r3, 0x0
     beq SceneRender_DrawObjectWithLights_L_8003A934
     lwz r3, 0x4(r30)
@@ -166,7 +166,7 @@ asm void SceneRender_DrawObjectWithLights(void) { /* 0x8003A780 size:0x268 */
     lfs f2, 0x6c(r1)
     lfs f3, 0x70(r1)
     lfs f4, 0x74(r1)
-    bl fn_802DC0F4
+    bl HSD_ShadowSetViewingRect
     b SceneRender_DrawObjectWithLights_L_8003A94C
     SceneRender_DrawObjectWithLights_L_8003A934:
     lfs f2, lbl_806D24B4(r2)
@@ -174,16 +174,16 @@ asm void SceneRender_DrawObjectWithLights(void) { /* 0x8003A780 size:0x268 */
     fmr f3, f2
     lfs f1, lbl_806D24B0(r2)
     lfs f4, lbl_806D24B8(r2)
-    bl fn_802DC0F4
+    bl HSD_ShadowSetViewingRect
     SceneRender_DrawObjectWithLights_L_8003A94C:
     li r3, 0x3
     bl fn_802D4748
     lwz r3, 0x4(r30)
-    bl fn_802DB570
+    bl HSD_ShadowInit
     lwz r3, 0x4(r30)
-    bl fn_802DB740
+    bl HSD_ShadowStartRender
     lwz r3, 0x4(r30)
-    bl fn_802DB9EC
+    bl HSD_ShadowEndRender
     bl fn_802D47E8
     SceneRender_DrawObjectWithLights_L_8003A970:
     bl OSGetTick
@@ -227,7 +227,7 @@ asm void SceneRender_DrawObjectWithLights(void) { /* 0x8003A780 size:0x268 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void fn_802DBF20();
+extern void HSD_ShadowDeleteObject();
 
 /* --- function index (1 fns, .text 0x8003A9E8..0x8003AA20) ---
  * [  0] 0x8003A9E8 size:0x38    global SceneRender_CmdA_8a9e8
@@ -261,7 +261,7 @@ asm void SceneRender_CmdA_8a9e8(void) { /* 0x8003A9E8 size:0x38 */
     bne SceneRender_CmdA_8a9e8_L_8003AA0C
     b SceneRender_CmdA_8a9e8_L_8003AA10
     SceneRender_CmdA_8a9e8_L_8003AA0C:
-    bl fn_802DBF20
+    bl HSD_ShadowDeleteObject
     SceneRender_CmdA_8a9e8_L_8003AA10:
     lwz r0, 0x14(r1)
     mtlr r0
@@ -277,7 +277,7 @@ asm void SceneRender_CmdA_8a9e8(void) { /* 0x8003A9E8 size:0x38 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void fn_802DBE74();
+extern void HSD_ShadowAddObject();
 
 /* --- function index (1 fns, .text 0x8003AA20..0x8003AA58) ---
  * [  0] 0x8003AA20 size:0x38    global SceneRender_CmdB_8aa20
@@ -311,7 +311,7 @@ asm void SceneRender_CmdB_8aa20(void) { /* 0x8003AA20 size:0x38 */
     bne SceneRender_CmdB_8aa20_L_8003AA44
     b SceneRender_CmdB_8aa20_L_8003AA48
     SceneRender_CmdB_8aa20_L_8003AA44:
-    bl fn_802DBE74
+    bl HSD_ShadowAddObject
     SceneRender_CmdB_8aa20_L_8003AA48:
     lwz r0, 0x14(r1)
     mtlr r0
@@ -327,7 +327,7 @@ asm void SceneRender_CmdB_8aa20(void) { /* 0x8003AA20 size:0x38 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void fn_802DB468();
+extern void HSD_ShadowRemove();
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -368,7 +368,7 @@ asm void SceneRender_Dtor(void) { /* 0x8003AA58 size:0x74 */
     addi r0, r3, lbl_803F58FC@l
     stw r0, 0x0(r30)
     lwz r3, 0x4(r30)
-    bl fn_802DB468
+    bl HSD_ShadowRemove
     li r0, 0x0
     mr r3, r30
     stw r0, 0x4(r30)

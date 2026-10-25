@@ -466,6 +466,7 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/robj.c"),
             Object(Matching, "sysdolphin/baselib/list.c"),
             Object(Matching, "sysdolphin/baselib/random.c"),
+            Object(Matching, "sysdolphin/baselib/shadow.c"),
             Object(Matching, "sysdolphin/baselib/wobj.c"),
             Object(Matching, "sysdolphin/baselib/fog.c"),
             Object(Matching, "sysdolphin/baselib/archive.c"),

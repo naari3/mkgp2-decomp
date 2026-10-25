@@ -34,7 +34,7 @@ extern char lbl_806D8CD8[7];
 extern char lbl_806D8CE0[5];
 void __assert(char *, int, char *);
 void fn_802D20AC(HSD_JObj *);
-void fn_802CF3B0(HSD_JObj *, int, int, int);
+void HSD_JObjDispAll(HSD_JObj *, int, int, int);
 void fn_8016F158(void *);
 }
 
@@ -93,7 +93,7 @@ void fn_801706C8(GrowSet *self) {
             for (jobj = HSD_JObjGetChild(e->jobj); jobj != 0; jobj = HSD_JObjGetNext(jobj)) {
                 HSD_JObjSetScaleY(jobj, e->scale);
             }
-            fn_802CF3B0(e->jobj, 0, 7, 0);
+            HSD_JObjDispAll(e->jobj, 0, 7, 0);
         }
         fn_8016F158(e->sub);
     }
