@@ -4806,6 +4806,11 @@ game/mapobject/fn_8017B688.cpp:
 	extabindex  start:0x80026930 end:0x8002693C
 	.text       start:0x8017B688 end:0x8017B75C
 
+game/mapobject/fn_8017BF90.cpp:
+	extab       start:0x8001197C end:0x80011984
+	extabindex  start:0x80026960 end:0x8002696C
+	.text       start:0x8017BF90 end:0x8017C1F4
+
 game/fn_801805AC.c:
 	.text       start:0x801805AC end:0x801805B4
 
