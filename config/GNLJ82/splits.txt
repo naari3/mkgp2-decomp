@@ -612,6 +612,11 @@ game/Path_ResetCursorForKart.c:
 	extabindex  start:0x8001FCA0 end:0x8001FCAC
 	.text       start:0x8003CEE4 end:0x8003CF44
 
+game/PathManager_RegisterCarObject.c:
+	extab       start:0x80006094 end:0x8000609C
+	extabindex  start:0x8001FCAC end:0x8001FCB8
+	.text       start:0x8003CF44 end:0x8003D158
+
 game/PathParticipantArray_Dtor.c:
 	extab       start:0x8000609C end:0x800060A4
 	extabindex  start:0x8001FCB8 end:0x8001FCC4
@@ -640,6 +645,11 @@ game/JObj_IsForwardDotBelowThreshold.c:
 	extabindex  start:0x8001FD00 end:0x8001FD0C
 	.text       start:0x8003DCD4 end:0x8003DDAC
 
+game/JObj_SetExpressionByIndex.c:
+	extab       start:0x800060F8 end:0x80006100
+	extabindex  start:0x8001FD0C end:0x8001FD18
+	.text       start:0x8003DDAC end:0x8003DF8C
+
 game/SetAnimState.c:
 	extab       start:0x80006108 end:0x80006110
 	extabindex  start:0x8001FD24 end:0x8001FD30
@@ -650,10 +660,30 @@ game/ItemHandler_Star.c:
 	extabindex  start:0x8001FD30 end:0x8001FD3C
 	.text       start:0x8003E540 end:0x8003E694
 
+game/KartItem_TickEffectStage_a.c:
+	extab       start:0x80006118 end:0x80006120
+	extabindex  start:0x8001FD3C end:0x8001FD48
+	.text       start:0x8003E694 end:0x8003E8BC
+
+game/ItemHandler_Shell.c:
+	extab       start:0x80006120 end:0x80006128
+	extabindex  start:0x8001FD48 end:0x8001FD54
+	.text       start:0x8003E8BC end:0x8003EB20
+
+game/KartItem_TickEffectStage_b.c:
+	extab       start:0x80006128 end:0x80006130
+	extabindex  start:0x8001FD54 end:0x8001FD60
+	.text       start:0x8003EB20 end:0x8003ED8C
+
 game/KartItem_TickStunStateMachine.c:
 	extab       start:0x80006130 end:0x80006138
 	extabindex  start:0x8001FD60 end:0x8001FD6C
 	.text       start:0x8003ED8C end:0x8003EF20
+
+game/KartItem_TickTrailingFx.c:
+	extab       start:0x80006138 end:0x80006140
+	extabindex  start:0x8001FD6C end:0x8001FD78
+	.text       start:0x8003EF20 end:0x8003F13C
 
 game/RenderObj_CleanupItem.c:
 	extab       start:0x80006140 end:0x80006148
@@ -1856,6 +1886,11 @@ game/clDrawMan_NodeList.c:
 game/ItemEffectState_Init.c:
 	.text       start:0x8007B44C end:0x8007B534
 
+game/ItemEffectMgr_TickPickLowestTimer.cpp:
+	extab       start:0x80008638 end:0x80008640
+	extabindex  start:0x800214B8 end:0x800214C4
+	.text       start:0x8007B534 end:0x8007B74C
+
 game/ItemEffectState_DefaultInit.c:
 	.text       start:0x8007B74C end:0x8007B798
 
@@ -2403,15 +2438,30 @@ game/CardRegister_KickoffArm.c:
 	extabindex  start:0x80021F8C end:0x80021F98
 	.text       start:0x80092918 end:0x80092948
 
+game/Sci2Card_WaitPingStatus.c:
+	extab       start:0x80009448 end:0x80009450
+	extabindex  start:0x80021F98 end:0x80021FA4
+	.text       start:0x80092948 end:0x80092B18
+
 game/Sci2Card_BeginSpace.c:
 	extab       start:0x80009450 end:0x80009458
 	extabindex  start:0x80021FA4 end:0x80021FB0
 	.text       start:0x80092B18 end:0x80092B60
 
+game/Sci2Card_WaitCleaningComplete.c:
+	extab       start:0x80009458 end:0x80009460
+	extabindex  start:0x80021FB0 end:0x80021FBC
+	.text       start:0x80092B60 end:0x80092D04
+
 game/Sci2Card_BeginReset.c:
 	extab       start:0x80009460 end:0x80009468
 	extabindex  start:0x80021FBC end:0x80021FC8
 	.text       start:0x80092D04 end:0x80092D4C
+
+game/Sci2Card_WaitResetComplete.c:
+	extab       start:0x80009468 end:0x80009470
+	extabindex  start:0x80021FC8 end:0x80021FD4
+	.text       start:0x80092D4C end:0x80092F04
 
 game/Sci2Card_BeginCleaning.c:
 	extab       start:0x80009470 end:0x80009478
