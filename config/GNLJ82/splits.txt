@@ -6805,6 +6805,11 @@ game/clFlowKart_SetupTextLayout.c:
 	extabindex  start:0x800281CC end:0x800281D8
 	.text       start:0x801D9890 end:0x801D9A2C
 
+game/fn_801D9A2C.cpp:
+	extab       start:0x80015528 end:0x80015540
+	extabindex  start:0x800281D8 end:0x800281E4
+	.text       start:0x801D9A2C end:0x801D9B70
+
 game/fn_801D9F88.c:
 	extab       start:0x80015558 end:0x80015560
 	extabindex  start:0x800281F0 end:0x800281FC

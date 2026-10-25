@@ -2026,6 +2026,7 @@ config.libs = [
             Object(Matching, "game/fn_801B0CE4.c", mw_version="GC/1.2.5n"),
             Object(Matching, "game/fn_801DEAF4.c"),
             Object(Matching, "game/fn_801F8E90.c"),
+            Object(Matching, "game/fn_801D9A2C.cpp", extab_padding=b""),
         ],
     },
     {
