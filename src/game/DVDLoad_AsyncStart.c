@@ -5,7 +5,7 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void fn_802C352C();
+extern void HSD_MObjSetTevStageCallback();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D1150;
@@ -58,7 +58,7 @@ asm void DVDLoad_AsyncStart(void) { /* 0x8007DC8C size:0x74 */
     DVDLoad_AsyncStart_L_8007DCC8:
     lis r3, DVDLoad_DrawDoneCallback@ha
     addi r3, r3, DVDLoad_DrawDoneCallback@l
-    bl fn_802C352C
+    bl HSD_MObjSetTevStageCallback
     stw r29, lbl_806D1150(r13)
     li r3, 0x1
     stw r30, lbl_806D1154(r13)

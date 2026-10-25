@@ -9,8 +9,8 @@ extern char lbl_803F57E0[];
 extern char lbl_803F5888[];
 extern char *lbl_806D1038;
 extern char *hsdNew(void *);
-extern void *fn_802C2988(void);
-extern void fn_802C2930(void *);
+extern void *HSD_MObjGetDefaultClass(void);
+extern void HSD_MObjSetDefaultClass(void *);
 extern void *HSD_JObjLoadJoint(void *);
 extern void fn_802CE078(void *jobj, void *anim, void *matAnim, void *shapeAnim);
 extern void fn_802D060C(void *, void *);
@@ -22,8 +22,8 @@ void clModelM_Construct(ModelDesc *desc, void **outModel, void **outJObj) {
     char *saved;
 
     model = hsdNew(lbl_803F57E0);
-    heap = fn_802C2988();
-    fn_802C2930(lbl_803F5888);
+    heap = HSD_MObjGetDefaultClass();
+    HSD_MObjSetDefaultClass(lbl_803F5888);
     saved = lbl_806D1038;
     lbl_806D1038 = model + 0x88;
     jobj = HSD_JObjLoadJoint(desc->jobjDesc);
@@ -31,7 +31,7 @@ void clModelM_Construct(ModelDesc *desc, void **outModel, void **outJObj) {
                 desc->matAnimJoint != 0 ? *desc->matAnimJoint : 0,
                 desc->shapeAnimJoint != 0 ? *desc->shapeAnimJoint : 0);
     fn_802D060C(model, jobj);
-    fn_802C2930(heap);
+    HSD_MObjSetDefaultClass(heap);
     lbl_806D1038 = saved;
     *outJObj = jobj;
     *outModel = model;

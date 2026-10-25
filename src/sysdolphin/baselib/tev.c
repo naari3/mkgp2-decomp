@@ -515,30 +515,30 @@ void _HSD_StateInvalidateTexCoordGen(void)
 
 /* Newer HSD: a material loaded from a descriptor and kept as current state.
  * The variables live in mobj.c's .sbss. */
-extern HSD_MObj* lbl_806D2140;
-extern int lbl_806D2144;
-void fn_802C3974(HSD_MObj* mobj);
+extern HSD_MObj* mobj_override;
+extern int mobj_override_enable;
+void MObjRelease(HSD_Class* o);
 void fn_802C3818(HSD_MObj* mobj);
 
 void fn_802C2238(void)
 {
-    if (lbl_806D2140 != NULL) {
-        fn_802C3974(lbl_806D2140);
-        fn_802C3818(lbl_806D2140);
-        lbl_806D2140 = NULL;
+    if (mobj_override != NULL) {
+        MObjRelease((HSD_Class*) mobj_override);
+        fn_802C3818(mobj_override);
+        mobj_override = NULL;
     }
 }
 
 void fn_802C2274(HSD_MObjDesc* desc)
 {
     if (desc == NULL) {
-        lbl_806D2144 = 0;
+        mobj_override_enable = 0;
         return;
     }
-    lbl_806D2144 = 1;
-    if (lbl_806D2140 != NULL) {
-        fn_802C3974(lbl_806D2140);
-        fn_802C3818(lbl_806D2140);
+    mobj_override_enable = 1;
+    if (mobj_override != NULL) {
+        MObjRelease((HSD_Class*) mobj_override);
+        fn_802C3818(mobj_override);
     }
-    lbl_806D2140 = HSD_MObjLoadDesc(desc);
+    mobj_override = HSD_MObjLoadDesc(desc);
 }
