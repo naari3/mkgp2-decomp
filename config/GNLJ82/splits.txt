@@ -2736,6 +2736,13 @@ game/clCGameDemo_Dtor.c:
 game/fn_800AE71C.c:
 	.text       start:0x800AE71C end:0x800AE854
 
+game/AnimState_Step.c:
+	extab       start:0x8000A468 end:0x8000A478
+	extabindex  start:0x800228E0 end:0x800228F8
+	.text       start:0x800AE854 end:0x800AF088
+	.data       start:0x80419F20 end:0x80419FB4
+	.sbss2      start:0x806DCF18 end:0x806DCF30
+
 game/AnimState_Reset.c:
 	extab       start:0x8000A478 end:0x8000A480
 	extabindex  start:0x800228F8 end:0x80022904
@@ -3233,6 +3240,11 @@ game/KartFxExhaustRay.cpp:
 	extabindex  start:0x80022E08 end:0x80022E14
 	.text       start:0x800BD1BC end:0x800BD900
 
+game/EffectVfx10_KartTrail_Tick.c:
+	extab       start:0x8000A870 end:0x8000A878
+	extabindex  start:0x80022E14 end:0x80022E20
+	.text       start:0x800BD900 end:0x800BDD74
+
 game/EffectVfx9_DriftSpark_Tick.c:
 	extab       start:0x8000A878 end:0x8000A880
 	extabindex  start:0x80022E20 end:0x80022E2C
@@ -3262,6 +3274,11 @@ game/EffectVfx134_KartHitBurst_Tick.c:
 	extab       start:0x8000A8A0 end:0x8000A8A8
 	extabindex  start:0x80022E5C end:0x80022E68
 	.text       start:0x800BEF18 end:0x800BF174
+
+game/EffectVfx29_30_Item4SubFlame_Tick.c:
+	extab       start:0x8000A8A8 end:0x8000A8B0
+	extabindex  start:0x80022E68 end:0x80022E74
+	.text       start:0x800BF174 end:0x800BF4D4
 
 game/EffectItem4SpawnSubFlamePair_Tick.c:
 	extab       start:0x8000A8B0 end:0x8000A8B8
@@ -3297,6 +3314,11 @@ game/KartFxDispatchD.cpp:
 	extab       start:0x8000A8E8 end:0x8000A8F0
 	extabindex  start:0x80022EC8 end:0x80022ED4
 	.text       start:0x800C1534 end:0x800C1860
+
+game/EffectVfx55_HornBlastTrio_Tick.c:
+	extab       start:0x8000A8F0 end:0x8000A8F8
+	extabindex  start:0x80022ED4 end:0x80022EE0
+	.text       start:0x800C1860 end:0x800C1BAC
 
 game/EffectVfx83_ItemWingBurst_Tick.c:
 	extab       start:0x8000A8F8 end:0x8000A900
@@ -3683,6 +3705,11 @@ game/DrawEffect_ItemHitFx_Spawn.c:
 	extab       start:0x8000AB60 end:0x8000AB68
 	extabindex  start:0x8002327C end:0x80023288
 	.text       start:0x800CB778 end:0x800CB8C0
+
+game/DrawEffect_ItemHitOriented_Spawn.c:
+	extab       start:0x8000AB68 end:0x8000AB70
+	extabindex  start:0x80023288 end:0x80023294
+	.text       start:0x800CB8C0 end:0x800CBBD4
 
 game/DrawEffect_ItemHitBurst_Spawn.c:
 	extab       start:0x8000AB70 end:0x8000AB78
@@ -4261,6 +4288,12 @@ game/Item_BendVelocityByGroundProbe.c:
 	extabindex  start:0x80023B64 end:0x80023B70
 	.text       start:0x800DBD48 end:0x800DBEF8
 
+game/GabyouItem_BuildOrUpdateAttachTransform.c:
+	extab       start:0x8000B43C end:0x8000B444
+	extabindex  start:0x80023B70 end:0x80023B7C
+	.text       start:0x800DBEF8 end:0x800DC418
+	.data       start:0x8041E9E8 end:0x8041EA84
+
 game/ItemObject_AllocGabyou.c:
 	extab       start:0x8000B444 end:0x8000B44C
 	extabindex  start:0x80023B7C end:0x80023B88
@@ -4288,6 +4321,12 @@ game/KartCharacterParam.c:
 	.text       start:0x800DC784 end:0x800DCA70
 	.data       start:0x8041EA84 end:0x8041EB88
 
+game/ItemHit_Dispatch.cpp:
+	extab       start:0x8000B464 end:0x8000B46C
+	extabindex  start:0x80023BAC end:0x80023BB8
+	.text       start:0x800DCA70 end:0x800DCF88
+	.data       start:0x8041EB88 end:0x8041EBBC
+
 game/KartItem_QueryEffectStateFromIse.c:
 	.text       start:0x800DCF88 end:0x800DD060
 
@@ -4295,6 +4334,11 @@ game/KartItem_ApplyEffectToTarget.c:
 	extab       start:0x8000B46C end:0x8000B474
 	extabindex  start:0x80023BB8 end:0x80023BC4
 	.text       start:0x800DD060 end:0x800DD1EC
+
+game/ItemCollision_Check.cpp:
+	extab       start:0x8000B474 end:0x8000B47C
+	extabindex  start:0x80023BC4 end:0x80023BD0
+	.text       start:0x800DD1EC end:0x800DD5FC
 
 game/ItemTracker.c:
 	extab       start:0x8000B47C end:0x8000B49C
