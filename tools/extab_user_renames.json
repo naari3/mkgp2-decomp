@@ -2645,5 +2645,10 @@
     "extabindex_fn_8014D038": "@eti_80025508",
     "extab_fn_8014D344": "@etb_8000E618",
     "extabindex_fn_8014D344": "@eti_80025538"
+  },
+  "src/game/SpriteHandlePool.c": {
+    "__dt__11ScopedAccumFv": "dtor_80122068",
+    "extab_fn_8011E31C": "@etb_8000BB14",
+    "extabindex_fn_8011E31C": "@eti_800245B4"
   }
 }

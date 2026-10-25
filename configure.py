@@ -1576,6 +1576,8 @@ config.libs = [
             Object(Matching, "game/CSPartsResultStage.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-inline deferred", "-rostr"]),
             Object(Matching, "game/CSPartsResultTimeNum.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-inline deferred", "-rostr"]),
             Object(Matching, "game/CSPartsHolders.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/ResourceSlot.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/SpriteHandlePool.c", extab_padding=b"\x00\x00"),
         ],
     },
     {
