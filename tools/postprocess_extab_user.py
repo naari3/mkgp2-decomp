@@ -189,6 +189,12 @@ def main() -> int:
     ]
     renames = load_tu_renames(obj)
     for src, dst in renames.items():
+        # "global:<name>" also gives the renamed symbol global binding, for
+        # a TU-local object (e.g. a pooled string literal) that another
+        # split TU references by name.
+        if dst.startswith("global:"):
+            dst = dst[len("global:"):]
+            cmd.append(f"--globalize-symbol={src}")
         cmd.append(f"--redefine-sym={src}={dst}")
     cmd.append(str(obj))
     subprocess.check_call(cmd)
