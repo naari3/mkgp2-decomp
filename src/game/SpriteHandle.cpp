@@ -145,10 +145,10 @@ extern void TEXGetPaletteEntry();
 extern unsigned int lbl_806D6D88;
 extern unsigned int lbl_806D6D90;
 extern ResEntry lbl_806573E8[600];
-extern void OSGetTick();
-extern void Profiler_RecordFrame();
+unsigned int OSGetTick(void);
+void Profiler_RecordFrame(int slot, float value);
 extern SpriteList *lbl_806D1500;
-extern unsigned int lbl_806D6D98;
+extern const float lbl_806D6D98;
 extern unsigned int lbl_806D6D9C;
 extern unsigned int lbl_80657208[];
 extern void __dt__11ScopedTimerFv();
@@ -186,7 +186,7 @@ void fn_8012094C(void);
 asm void fn_80120A08(void);
 asm void PreloadResource(void);
 void SpriteHandlePool_GC(void);
-asm void fn_80121210(void);
+void fn_80121210(void);
 asm void fn_801213EC(void);
 asm void fn_801217E8(SpriteHandle *s);
 void Stub_NoOp_80121c34(void);
@@ -317,9 +317,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&PreloadResource, 0x000003A0, (void *)extab_PreloadResource
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80121210 = {
-    (void *)&fn_80121210, 0x000001DC, (void *)&extab_fn_80121210
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801213EC = {
     (void *)&fn_801213EC, 0x000003FC, (void *)&extab_fn_801213EC
@@ -372,6 +369,60 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_80122338, 0x000000B0, (void *)extab_fn_80122338
 };
 
+}
+
+class ScopedTimer {
+public:
+    inline ScopedTimer(int slot) {
+        m_slot = slot;
+        m_startTick = OSGetTick();
+    }
+    inline ~ScopedTimer() {
+        Profiler_RecordFrame(m_slot,
+            (float)(((OSGetTick() - m_startTick) * 8) /
+                ((*(unsigned int *)0x800000F8 / 4) / 125000)) / lbl_806D6D98);
+    }
+
+private:
+    unsigned int m_startTick;
+    volatile int m_slot;
+};
+
+inline void SpriteList_Release(SpriteList *l, SpriteNode *n) {
+    if (n->prev != 0) {
+        n->prev->next = n->next;
+    }
+    if (n->next != 0) {
+        n->next->prev = n->prev;
+    }
+    if (l->head == n) {
+        l->head = n->next;
+    }
+    if (l->tail == n) {
+        l->tail = n->prev;
+    }
+    n->prev = 0;
+    n->next = 0;
+    if (l->freeTail != 0) {
+        l->freeTail->next = n;
+    }
+    n->prev = l->freeTail;
+    if (l->freeHead == 0) {
+        l->freeHead = n;
+    }
+    l->freeTail = n;
+    l->count--;
+}
+
+inline void SpriteList_Clear(SpriteList *l) {
+    if (l->count != 0) {
+        SpriteNode *n = l->head;
+        while (n != 0) {
+            SpriteNode *next = n->next;
+            SpriteList_Release(l, n);
+            n = next;
+        }
+    }
 }
 
 static inline void ResCtrl_Reset(ResCtrl *r) {
@@ -2615,138 +2666,10 @@ extern "C" void SpriteHandlePool_GC(void) {
     }
 }
 
-extern "C" asm void fn_80121210(void) { /* 0x80121210 size:0x1DC */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    li r0, 0xd
-    stw r31, 0x2c(r1)
-    stw r30, 0x28(r1)
-    stw r29, 0x24(r1)
-    stw r0, 0xc(r1)
-    bl OSGetTick
-    lis r5, lbl_806573E8@ha
-    lis r4, lbl_8065B588@ha
-    stw r3, 0x8(r1)
-    addi r30, r5, lbl_806573E8@l
-    addi r29, r4, lbl_8065B588@l
-    li r31, 0x0
-    fn_80121210_L_8012124C:
-    lwz r0, 0x8(r30)
-    cmplwi r0, 0x0
-    beq fn_80121210_L_8012126C
-    lwz r0, 0x0(r30)
-    cmpwi r0, 0x2b00
-    bge fn_80121210_L_8012126C
-    addi r3, r30, 0x8
-    bl TEXReleasePalette
-    fn_80121210_L_8012126C:
-    lwz r3, 0x10(r30)
-    bl MemoryManager_Free
-    lwz r3, 0x14(r30)
-    bl MemoryManager_Free
-    lwz r3, 0x18(r30)
-    bl MemoryManager_Free
-    li r3, 0x0
-    addi r31, r31, 0x1
-    stw r3, 0x0(r30)
-    li r0, -0x1
-    cmpwi r31, 0x258
-    stw r0, 0x4(r30)
-    stw r3, 0x8(r30)
-    stw r3, 0xc(r30)
-    stw r3, 0x10(r30)
-    stw r3, 0x14(r30)
-    stw r3, 0x18(r30)
-    addi r30, r30, 0x1c
-    stw r3, 0x0(r29)
-    addi r29, r29, 0x4
-    blt fn_80121210_L_8012124C
-    lwz r5, lbl_806D1500(r13)
-    lwz r0, 0x4(r5)
-    cmpwi r0, 0x0
-    beq fn_80121210_L_80121378
-    lwz r4, 0x14(r5)
-    b fn_80121210_L_80121370
-    fn_80121210_L_801212D8:
-    lwz r6, 0x4(r4)
-    lwz r3, 0x8(r4)
-    cmplwi r6, 0x0
-    beq fn_80121210_L_801212EC
-    stw r3, 0x8(r6)
-    fn_80121210_L_801212EC:
-    lwz r6, 0x8(r4)
-    cmplwi r6, 0x0
-    beq fn_80121210_L_80121300
-    lwz r0, 0x4(r4)
-    stw r0, 0x4(r6)
-    fn_80121210_L_80121300:
-    lwz r0, 0x14(r5)
-    cmplw r0, r4
-    bne fn_80121210_L_80121314
-    lwz r0, 0x8(r4)
-    stw r0, 0x14(r5)
-    fn_80121210_L_80121314:
-    lwz r0, 0x18(r5)
-    cmplw r0, r4
-    bne fn_80121210_L_80121328
-    lwz r0, 0x4(r4)
-    stw r0, 0x18(r5)
-    fn_80121210_L_80121328:
-    li r0, 0x0
-    stw r0, 0x4(r4)
-    stw r0, 0x8(r4)
-    lwz r6, 0x10(r5)
-    cmplwi r6, 0x0
-    beq fn_80121210_L_80121344
-    stw r4, 0x8(r6)
-    fn_80121210_L_80121344:
-    lwz r0, 0x10(r5)
-    stw r0, 0x4(r4)
-    lwz r0, 0xc(r5)
-    cmplwi r0, 0x0
-    bne fn_80121210_L_8012135C
-    stw r4, 0xc(r5)
-    fn_80121210_L_8012135C:
-    stw r4, 0x10(r5)
-    mr r4, r3
-    lwz r3, 0x4(r5)
-    subi r0, r3, 0x1
-    stw r0, 0x4(r5)
-    fn_80121210_L_80121370:
-    cmplwi r4, 0x0
-    bne fn_80121210_L_801212D8
-    fn_80121210_L_80121378:
-    bl OSGetTick
-    lis r5, 0x8000
-    lis r4, 0x431c
-    lwz r5, 0xf8(r5)
-    lis r0, 0x4330
-    subi r6, r4, 0x217d
-    lwz r7, 0x8(r1)
-    srwi r4, r5, 2
-    stw r0, 0x10(r1)
-    mulhwu r0, r6, r4
-    subf r3, r7, r3
-    lfd f2, lbl_806D6D90(r2)
-    slwi r4, r3, 3
-    lfs f0, lbl_806D6D98(r2)
-    lwz r3, 0xc(r1)
-    srwi r0, r0, 15
-    divwu r0, r4, r0
-    stw r0, 0x14(r1)
-    lfd f1, 0x10(r1)
-    fsubs f1, f1, f2
-    fdivs f1, f1, f0
-    bl Profiler_RecordFrame
-    lwz r0, 0x34(r1)
-    lwz r31, 0x2c(r1)
-    lwz r30, 0x28(r1)
-    lwz r29, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+extern "C" void fn_80121210(void) {
+    ScopedTimer timer(0xD);
+    fn_8012094C();
+    SpriteList_Clear(lbl_806D1500);
 }
 
 extern "C" asm void fn_801213EC(void) { /* 0x801213EC size:0x3FC */
