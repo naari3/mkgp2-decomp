@@ -2503,6 +2503,18 @@
   "src/game/Sci2Card.cpp": {
     "__ct__8Sci2CardFv": "Sci2Card_Init"
   },
+  "src/game/cLNormal3DWrap.cpp": {
+    "__dt__21clNormal3DNodeManagerFv": "cLNormal3DWrap_Mgr_Dtor",
+    "__ct__21clNormal3DNodeManagerFv": "cLNormal3DWrap_Mgr_Ctor",
+    "__dt__19cLNormal3DWrap_SlotFv": "cLNormal3DWrap_Slot_Dtor",
+    "__ct__19cLNormal3DWrap_SlotFv": "fn_80089418",
+    "__ct__11ModelHandleFPvPv": "ModelHandle_Init",
+    "__ct__10clNormal3DFPvPv": "clNormal3D_Construct",
+    "__dt__10clNormal3DFv": "Object_DtorWithGXSync",
+    "__dt__31clNodeManager<Pc,P10clNormal3D>Fv": "dtor_800897B8",
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free"
+  },
   "src/game/ContinueScene.cpp": {
     "__ct__11CoinCounterFi": "fn_8024E2A4",
     "__dt__11CoinCounterFv": "fn_8024E244",
