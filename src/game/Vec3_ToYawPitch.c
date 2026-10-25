@@ -2,7 +2,7 @@
 extern const float lbl_806D592C;
 extern const double lbl_806D5940;
 extern const double lbl_806D5948;
-extern double Atan2(double, double);
+extern double atan2(double, double);
 
 static inline float Vec3_sqrtf(float x) {
     volatile float y;
@@ -22,7 +22,7 @@ void Vec3_ToYawPitch(float *__restrict v, float *__restrict outPitch, float *__r
     float horizontal = Vec3_sqrtf(v[0] * v[0] + v[2] * v[2]);
     float up = -v[1];
 
-    *outYaw = Atan2(v[0], v[2]);
-    *outPitch = Atan2(up, horizontal);
+    *outYaw = atan2(v[0], v[2]);
+    *outPitch = atan2(up, horizontal);
 }
 #pragma exceptions reset
