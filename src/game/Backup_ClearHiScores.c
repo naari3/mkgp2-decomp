@@ -5,7 +5,7 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void fn_8027B3F4();
+extern void wcslen();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D1120;
@@ -112,7 +112,7 @@ asm void Backup_ClearHiScores(void) { /* 0x8007502C size:0x1C4 */
     addi r30, r30, 0x2
     Backup_ClearHiScores_L_80075120:
     lwz r3, 0x0(r21)
-    bl fn_8027B3F4
+    bl wcslen
     cmplw r15, r3
     bge Backup_ClearHiScores_L_80075138
     cmpwi r15, 0x5

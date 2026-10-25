@@ -1587,6 +1587,8 @@ config.libs = [
             Object(Matching, "MSL_C/mbstring.c"),
             Object(Matching, "MSL_C/alloc.c"),
             Object(Matching, "MSL_C/wmem.c"),
+            Object(Matching, "MSL_C/wctype.c"),
+            Object(Matching, "MSL_C/wprintf.c"),
         ],
     },
     DolphinLib(
