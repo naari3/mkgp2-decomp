@@ -31,6 +31,7 @@ struct HSD_DObjInfo {
     HSD_ClassInfo parent;
     void (*disp)(HSD_DObj* dobj, Mtx vmtx, Mtx pmtx, u32 rendermode); // 0x3C
     int (*load)(HSD_DObj* dobj, HSD_DObjDesc* desc);                  // 0x40
+    HSD_ObjUpdateFunc update;                                         // 0x44
 };
 
 struct HSD_ShapeAnimDObj {

@@ -21,7 +21,7 @@ typedef struct RenderSession {
     unsigned char active;
 } RenderSession;
 
-extern void fn_802C22D8(int);
+extern void HSD_MObjSetCurrent(int);
 extern void HSD_DObjSetCurrent(int);
 extern void HSD_ClearVtxDesc(void);
 extern void fn_802C14B8(int);
@@ -33,7 +33,7 @@ RenderSession *dtor_8007D9C4(RenderSession *self, short flags) {
             RenderTarget *target = self->owner->target;
 
             target->vtbl->release(target, self->handle);
-            fn_802C22D8(0);
+            HSD_MObjSetCurrent(0);
             HSD_DObjSetCurrent(0);
             HSD_ClearVtxDesc();
             fn_802C14B8(-1);

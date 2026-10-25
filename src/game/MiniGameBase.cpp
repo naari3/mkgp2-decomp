@@ -1,7 +1,7 @@
 /* Actual target/callee ASM audited; Ghidra unavailable. */
 void operator delete(void*);
 extern "C" {
-void fn_802C8B48(int);
+void HSD_FObjForceLinearInterp(int);
 void fn_801DE6E8();
 void SetCourseScene3D(void*);
 }
@@ -15,7 +15,7 @@ struct MBOwner : MBRoot {
     virtual ~MBOwner();
 };
 MBOwner::~MBOwner() {
-    fn_802C8B48(0);
+    HSD_FObjForceLinearInterp(0);
     fn_801DE6E8();
     SetCourseScene3D(0);
 }

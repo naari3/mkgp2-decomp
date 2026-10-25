@@ -20,7 +20,7 @@ extern void *fn_80124DF8(void);
 extern void RankLog_InitStartRace(GMPlayerRecord *rec);
 extern void PlayerData_RefreshDerivedStats(GMPlayerRecord *rec);
 extern void card_force_backup_now(void);
-extern void fn_802C8B48(int on);
+extern void HSD_FObjForceLinearInterp(int on);
 extern void *DrawManager_GetOrCreate(void);
 extern void PlayStats_AccumulateCcClassPlay(void);
 extern void PlayStats_AccumulatePlayTime(int);
@@ -42,7 +42,7 @@ struct GMRace : GMRoot {
 
     GMRace() {
         card_force_backup_now();
-        fn_802C8B48(1);
+        HSD_FObjForceLinearInterp(1);
         DrawManager_GetOrCreate();
         PlayStats_AccumulateCcClassPlay();
         PlayStats_AccumulatePlayTime(0);

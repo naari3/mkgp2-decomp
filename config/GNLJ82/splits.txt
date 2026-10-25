@@ -6874,6 +6874,11 @@ dolphin/odenotstub/odenotstub.c:
 dolphin/odemustubs/odemustubs.c:
 	.text       start:0x8027ECC4 end:0x8027ECCC
 
+odemuexi2/DebuggerDriver.c:
+	.text       start:0x8027ECCC end:0x8027F744
+	.sdata      start:0x806D0BE8 end:0x806D0BF0
+	.sbss       start:0x806D1D60 end:0x806D1D78
+
 dolphin/exi/EXIBios.c:
 	.text       start:0x8027F744 end:0x80280FEC
 	.data       start:0x804F5370 end:0x804F5480
@@ -6896,6 +6901,10 @@ dolphin/si/SISamplingRate.c:
 	.text       start:0x80282404 end:0x8028250C
 	.data       start:0x804F5598 end:0x804F5630
 	.sbss       start:0x806D1DA0 end:0x806D1DA8
+
+triforce/jvsio.c:
+	.text       start:0x8028250C end:0x802857E0
+	.bss        start:0x8067E2A0 end:0x806834F0
 
 dolphin/dvd/dvdfs.c:
 	.text       start:0x80294EA4 end:0x80295A4C
@@ -6945,10 +6954,29 @@ musyx/runtime/synth.c:
 	.sbss       start:0x806D1F00 end:0x806D1F48
 	.sdata2     start:0x806DC9A8 end:0x806DC9E8
 
+musyx/runtime/seq_api.c:
+	.text       start:0x802A36F0 end:0x802A38F0
+
+musyx/runtime/snd_synthapi.c:
+	.text       start:0x802A38F0 end:0x802A3C7C
+
+musyx/runtime/stream.c:
+	.text       start:0x802A3C7C end:0x802A79B8
+	.bss        start:0x806B3B98 end:0x806B5598
+	.sbss       start:0x806D1F48 end:0x806D1F58
+	.sdata2     start:0x806DC9E8 end:0x806DCA00
+
 musyx/runtime/synthdata.c:
 	.text       start:0x802A79B8 end:0x802A931C
 	.bss        start:0x806B5598 end:0x806BFDD0
 	.sbss       start:0x806D1F58 end:0x806D1FA8
+
+musyx/runtime/synthmacros.c:
+	.text       start:0x802A931C end:0x802AE204
+	.data       start:0x804F5C70 end:0x804F60B8
+	.bss        start:0x806BFDD0 end:0x806BFDF0
+	.sbss       start:0x806D1FA8 end:0x806D1FC8
+	.sdata2     start:0x806DCA00 end:0x806DCA28
 
 musyx/runtime/synthvoice.c:
 	.text       start:0x802AE204 end:0x802AFD2C
@@ -7018,9 +7046,6 @@ musyx/runtime/hardware.c:
 	.sbss       start:0x806D2058 end:0x806D2060
 	.sdata2     start:0x806DCB10 end:0x806DCB38
 
-sysdolphin/baselib/_hsd_consts.c:
-	.sdata2     start:0x806DCC58 end:0x806DCC68
-
 musyx/runtime/hw_aramdma.c:
 	.text       start:0x802BA730 end:0x802BB460
 	.bss        start:0x806CA608 end:0x806CAF10
@@ -7043,13 +7068,26 @@ musyx/runtime/chorus_fx.c:
 	.text       start:0x802BC754 end:0x802BCF94
 
 sysdolphin/baselib/dobj.c:
-	.text       start:0x802BCF94 end:0x802BD168
+	.text       start:0x802BCF94 end:0x802BD6A4
+	.data       start:0x804FB840 end:0x804FB960
+	.sdata      start:0x806D0C78 end:0x806D0C90
+	.sbss       start:0x806D20B0 end:0x806D20B8
 
 sysdolphin/baselib/aobj.c:
-	.text       start:0x802C3BC0 end:0x802C3C00
+	.text       start:0x802C3B24 end:0x802C4010
+	.data       start:0x804FC330 end:0x804FC368
+	.bss        start:0x806CD050 end:0x806CD080
+	.sdata      start:0x806D0D10 end:0x806D0D20
+	.sbss       start:0x806D2150 end:0x806D2160
+	.sdata2     start:0x806DCBD8 end:0x806DCBE0
 
 sysdolphin/baselib/fobj.c:
-	.text       start:0x802C8CCC end:0x802C8D70
+	.text       start:0x802C8B48 end:0x802CA77C
+	.data       start:0x804FC620 end:0x804FC668
+	.bss        start:0x806CD0A8 end:0x806CD0D8
+	.sdata      start:0x806D0D68 end:0x806D0D78
+	.sbss       start:0x806D2188 end:0x806D2190
+	.sdata2     start:0x806DCC58 end:0x806DCC80
 
 sysdolphin/baselib/jobj.c:
 	.text       start:0x802CDAF8 end:0x802CDE48

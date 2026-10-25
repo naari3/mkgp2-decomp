@@ -438,10 +438,6 @@ config.libs = [
         "cflags": cflags_base,
         "progress_category": "sdk",
         "objects": [
-            Object(Matching, "sysdolphin/baselib/_hsd_consts.c"),
-            Object(Matching, "sysdolphin/baselib/aobj.c"),
-            Object(Matching, "sysdolphin/baselib/dobj.c"),
-            Object(Matching, "sysdolphin/baselib/fobj.c"),  # TEST: post-process fobj.o with _externize_sdata2.py
             Object(Matching, "sysdolphin/baselib/jobj.c"),
             Object(Matching, "sysdolphin/baselib/jobj_anim_misc.c"),
             Object(Matching, "sysdolphin/baselib/util.c"),
@@ -457,6 +453,9 @@ config.libs = [
         "objects": [
             Object(Matching, "sysdolphin/baselib/displayfunc.c"),
             Object(Matching, "sysdolphin/baselib/video.c"),
+            Object(Matching, "sysdolphin/baselib/dobj.c"),
+            Object(Matching, "sysdolphin/baselib/aobj.c"),
+            Object(Matching, "sysdolphin/baselib/fobj.c"),
             Object(Matching, "sysdolphin/baselib/list.c"),
             Object(Matching, "sysdolphin/baselib/random.c"),
             Object(Matching, "sysdolphin/baselib/fog.c"),
@@ -2078,6 +2077,33 @@ config.libs = [
         ],
     ),
     {
+        # zeldaret/tp's odemuexi2; this build used -inline deferred (reverse function order)
+        "lib": "odemuexi2",
+        "mw_version": "GC/1.2.5n",
+        "cflags": [
+            *cflags_base,
+            "-use_lmw_stmw on",
+            "-str reuse,pool,readonly",
+            "-common off",
+            "-inline deferred",
+            "-i include/libc",
+        ],
+        "progress_category": "sdk",
+        "objects": [
+            Object(Matching, "odemuexi2/DebuggerDriver.c"),
+        ],
+    },
+    {
+        # Triforce JVS/AM libraries (no reference source); built -O2
+        "lib": "triforce",
+        "mw_version": "GC/1.2.5n",
+        "cflags": [*cflags_dolphin, "-DSDK_REVISION=2", "-O2"],
+        "progress_category": "sdk",
+        "objects": [
+            Object(NonMatching, "triforce/jvsio.c"),
+        ],
+    },
+    {
         "lib": "TRK_MINNOW_DOLPHIN",
         "mw_version": "GC/2.6",
         "cflags": cflags_trk,
@@ -2155,6 +2181,10 @@ config.libs = [
             Object(Matching, "musyx/runtime/hw_dspctrl.c"),
             Object(Matching, "musyx/runtime/hw_volconv.c", extra_cflags=["-fp_contract off"]),
             Object(Matching, "musyx/runtime/snd3d.c", extra_cflags=["-fp_contract off"]),
+            Object(Matching, "musyx/runtime/seq_api.c"),
+            Object(Matching, "musyx/runtime/snd_synthapi.c"),
+            Object(Matching, "musyx/runtime/stream.c"),
+            Object(Matching, "musyx/runtime/synthmacros.c"),
             Object(Matching, "musyx/runtime/snd_init.c"),
             Object(Matching, "musyx/runtime/snd_math.c", extra_cflags=["-fp_contract off"]),
             Object(Matching, "musyx/runtime/snd_midictrl.c"),

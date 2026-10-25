@@ -29,11 +29,11 @@ typedef struct HSD_DObj {
 
 /* Placeholder symbol names are kept while game code still refers to them. */
 void HSD_DObjSetCurrent(HSD_DObj* dobj);                    /* HSD_DObjSetCurrent */
-void fn_802BCF9C(HSD_DObj* dobj, u32 flags);         /* HSD_DObjSetFlags */
-void fn_802BCFB4(HSD_DObj* dobj, u32 flags);         /* HSD_DObjClearFlags */
-void fn_802BCFCC(HSD_DObj* dobj, HSD_MatAnim* matanim,
+void HSD_DObjSetFlags(HSD_DObj* dobj, u32 flags);         /* HSD_DObjSetFlags */
+void HSD_DObjClearFlags(HSD_DObj* dobj, u32 flags);         /* HSD_DObjClearFlags */
+void HSD_DObjAddAnimAll(HSD_DObj* dobj, HSD_MatAnim* matanim,
                  HSD_ShapeAnimDObj* shapeanimdobj);  /* HSD_DObjAddAnimAll */
 void HSD_DObjReqAnimAllByFlags(HSD_DObj* dobj, float frame, u32 flags);
-void fn_802BD0FC(HSD_DObj* dobj);                    /* HSD_DObjAnimAll */
+void HSD_DObjAnimAll(HSD_DObj* dobj);                    /* HSD_DObjAnimAll */
 
 #endif

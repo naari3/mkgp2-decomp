@@ -100,8 +100,8 @@ void fn_801825FC(void);
 void fn_801825C8(void);
 void fn_80182644(void *, unsigned int);
 void fn_80182578(void *, int);
-void fn_802BCF9C(HSD_DObj *, int);
-void fn_802BCFB4(HSD_DObj *, int);
+void HSD_DObjSetFlags(HSD_DObj *, int);
+void HSD_DObjClearFlags(HSD_DObj *, int);
 void Object_SetJObjScaleXYZ(void *, float, float, float);
 void Object_SetJObjPositionXYZ(void *, float, float, float);
 void Object_RenderJObjTree(void *, int);
@@ -150,9 +150,9 @@ void fn_80171754(clLensFlare *self) {
             if (self->dobjs[i]) {
                 for (j = 0; j < self->dobjCount; j++) {
                     if (j == i) {
-                        fn_802BCFB4(self->dobjs[j], 1);
+                        HSD_DObjClearFlags(self->dobjs[j], 1);
                     } else {
-                        fn_802BCF9C(self->dobjs[j], 1);
+                        HSD_DObjSetFlags(self->dobjs[j], 1);
                     }
                 }
                 fn_80182578(HSD_DObjGetMObj(self->dobjs[i]), frame);
@@ -306,7 +306,7 @@ clLensFlare::clLensFlare(const char *res, HSD_JObj *at, float scale, float sprea
                     dobjs[dobjCount] = dobj;
                     dobjCount++;
                 } else {
-                    fn_802BCF9C(dobj, 1);
+                    HSD_DObjSetFlags(dobj, 1);
                 }
             }
         }
@@ -358,7 +358,7 @@ clLensFlare::clLensFlare(const char *res, float x, float y, float z, float scale
                 dobjs[dobjCount] = dobj;
                 dobjCount++;
             } else {
-                fn_802BCF9C(dobj, 1);
+                HSD_DObjSetFlags(dobj, 1);
             }
         }
     }
