@@ -110,6 +110,68 @@ static const f64 __THPAANScaleFactor[8] = {
     1.0f, 0.785694958f, 0.541196100f, 0.275899379f,
 };
 
+
+void PPCMtmmcr0(u32 val);
+void PPCMtmmcr1(u32 val);
+u32 PPCMfpmc1(void);
+u32 PPCMfpmc2(void);
+u32 PPCMfpmc3(void);
+u32 PPCMfpmc4(void);
+void DCStoreRange(void* addr, u32 nBytes);
+u32 GXGetTexBufferSize(u16 width, u16 height, u32 format, u8 mipmap, u8 max_lod);
+
+typedef struct THPPerfRec {
+    /* 0x00 */ u32 pmc4Start;
+    /* 0x04 */ u32 pmc4End;
+    /* 0x08 */ u32 pmc2Start;
+    /* 0x0C */ u32 pmc2End;
+    /* 0x10 */ u32 pmc3Start;
+    /* 0x14 */ u32 pmc3End;
+    /* 0x18 */ u32 pmc1Start;
+    /* 0x1C */ u32 pmc1End;
+    /* 0x20 */ u32 pmc4Total;
+    /* 0x24 */ u32 pmc2Total;
+    /* 0x28 */ u32 pmc3Total;
+    /* 0x2C */ u32 pmc1Total;
+    /* 0x30 */ u32 pmc4Max;
+    /* 0x34 */ u32 count;
+} THPPerfRec; // size = 0x38
+
+extern THPPerfRec lbl_806A4A40[10];
+
+#define THP_PERF_START(r)                                                      \
+    PPCMtmmcr1(0);                                                             \
+    PPCMtmmcr0(0);                                                             \
+    (r).pmc4Start = PPCMfpmc4();                                               \
+    (r).pmc3Start = PPCMfpmc3();                                               \
+    (r).pmc2Start = PPCMfpmc2();                                               \
+    (r).pmc1Start = PPCMfpmc1();                                               \
+    PPCMtmmcr0(0x8B);                                                          \
+    PPCMtmmcr1(0x78400000)
+
+#define THP_PERF_END(r)                                                        \
+    PPCMtmmcr1(0);                                                             \
+    PPCMtmmcr0(0);                                                             \
+    (r).count++;                                                               \
+    (r).pmc4End = PPCMfpmc4();                                                 \
+    (r).pmc3End = PPCMfpmc3();                                                 \
+    (r).pmc2End = PPCMfpmc2();                                                 \
+    (r).pmc1End = PPCMfpmc1();                                                 \
+    {                                                                          \
+        u32 d = (r).pmc4End - (r).pmc4Start;                                   \
+        u32 m = (r).pmc4Max;                                                   \
+        if (d > m) {                                                           \
+            m = d;                                                             \
+        }                                                                      \
+        (r).pmc4Max = m;                                                       \
+    }                                                                          \
+    (r).pmc4Total += (r).pmc4End - (r).pmc4Start;                              \
+    (r).pmc3Total += (r).pmc3End - (r).pmc3Start;                              \
+    (r).pmc2Total += (r).pmc2End - (r).pmc2Start;                              \
+    (r).pmc1Total += (r).pmc1End - (r).pmc1Start;                              \
+    PPCMtmmcr0(0x8B);                                                          \
+    PPCMtmmcr1(0x78400000)
+
 static f32 __THPIDCTWorkspace[64] __attribute__((aligned(32)));
 
 static u8 __THPReadFrameHeader(THPFileInfo* info);
@@ -130,6 +192,10 @@ s32 THPDecGetInfo(u8* data, THPDecDesc* out);
 u32 THPDecGetWorkSize(THPDecDesc* desc);
 s32 THPVideoDecode(THPDecHandle* handle, u8* statusOut, THPFileInfo* work, void* data, THPDecDesc* desc);
 void THPDecDecode(THPDecHandle* handle, void* tileY, void* tileU, void* tileV);
+void fn_8029A6F4(register u8* dst, register u8* y, register u8* u, register u8* v, u32 n);
+void fn_8029AA2C(register u8* dst, register u8* y, register u8* u, register u8* v, register u8* a);
+void fn_8029AAC0(register u8* dst, register u8* y, register u8* u, register u8* v, register u8* a);
+void fn_8029A878(register u8* dst, register u8* y, register u8* u, register u8* v, u32 n);
 static s32 __THPGetBit(THPFileInfo* info);
 
 static void __THPSetupBuffers(THPFileInfo* info)
@@ -162,41 +228,43 @@ static s32 __THPSkipSegment(u8** data)
 
 static inline void __THPGQRSetup(register THPFileInfo* info)
 {
+    register u32 tmp;
     asm {
-        mfspr r0, GQR2
-        stw r0, 0x7B8(info)
-        li r0, 0x0004
-        oris r0, r0, 0x0004
-        mtspr GQR2, r0
-        mfspr r0, GQR5
-        stw r0, 0x7BC(info)
-        li r0, 0x0007
-        oris r0, r0, 0x0007
-        mtspr GQR5, r0
-        mfspr r0, GQR6
-        stw r0, 0x7C0(info)
-        li r0, 0x3D04
-        oris r0, r0, 0x3D04
-        mtspr GQR6, r0
-        mfspr r0, GQR7
-        stw r0, 0x7C4(info)
-        li r0, 0x0104
-        oris r0, r0, 0x0104
-        mtspr GQR7, r0
+        mfspr tmp, GQR2
+        stw tmp, 0x7B8(info)
+        li tmp, 0x0004
+        oris tmp, tmp, 0x0004
+        mtspr GQR2, tmp
+        mfspr tmp, GQR5
+        stw tmp, 0x7BC(info)
+        li tmp, 0x0007
+        oris tmp, tmp, 0x0007
+        mtspr GQR5, tmp
+        mfspr tmp, GQR6
+        stw tmp, 0x7C0(info)
+        li tmp, 0x3D04
+        oris tmp, tmp, 0x3D04
+        mtspr GQR6, tmp
+        mfspr tmp, GQR7
+        stw tmp, 0x7C4(info)
+        li tmp, 0x0104
+        oris tmp, tmp, 0x0104
+        mtspr GQR7, tmp
     }
 }
 
 static inline void __THPGQRRestore(register THPFileInfo* info)
 {
+    register u32 tmp;
     asm {
-        lwz r0, 0x7B8(info)
-        mtspr GQR2, r0
-        lwz r0, 0x7BC(info)
-        mtspr GQR5, r0
-        lwz r0, 0x7C0(info)
-        mtspr GQR6, r0
-        lwz r0, 0x7C4(info)
-        mtspr GQR7, r0
+        lwz tmp, 0x7B8(info)
+        mtspr GQR2, tmp
+        lwz tmp, 0x7BC(info)
+        mtspr GQR5, tmp
+        lwz tmp, 0x7C0(info)
+        mtspr GQR6, tmp
+        lwz tmp, 0x7C4(info)
+        mtspr GQR7, tmp
     }
 }
 
@@ -1595,7 +1663,7 @@ void THPDecDecode(THPDecHandle* handle, void* tileY, void* tileU, void* tileV)
 
     while (info->x7AC < info->yPixelSize) {
         info->x7AA = 0;
-        __THPDecompressiMCURow(info);
+        fn_80299850(info);
         info->x7AC += info->x8D4;
         for (i = 0; i < info->nComponents; i++) {
             info->components[i].tile += info->components[i].x14 *
@@ -1603,6 +1671,268 @@ void THPDecDecode(THPDecHandle* handle, void* tileY, void* tileU, void* tileV)
         }
     }
 
+    __THPGQRRestore(info);
+}
+
+void fn_8029B54C(THPDecHandle* handle, u8* dst, u32 width, u32 height)
+{
+    u32 j;
+    u32 ystride;
+    u32 uvstride;
+    u32 w;
+    u8* d;
+    u8 vs;
+    u32 h;
+    u32 i;
+    u8 hs;
+    u8* y;
+    THPFileInfo* info;
+    u8* u;
+    u8* v;
+
+    d = dst - 2;
+    info = handle->info;
+    info->file = info->scanStart;
+    info->cnt = 33;
+    info->x7AA = 0;
+    info->x7AC = 0;
+    info->x7A6 = 0;
+    info->x41D = 0;
+    info->x40C = 0;
+    info->x40E = 0;
+
+    w = info->xPixelSize > width ? width : info->xPixelSize;
+    h = info->yPixelSize > height ? height : info->yPixelSize;
+    hs = info->samplingHMax - info->components[1].samplingH;
+    vs = info->samplingVMax - info->components[1].samplingV;
+    ystride = info->components[0].x08;
+    uvstride = info->components[1].x08;
+
+    for (i = 0; i < info->nComponents; i++) {
+        info->components[i].tile = info->components[i].x10;
+    }
+    info->x7AC = 0;
+
+    THP_PERF_START(lbl_806A4A40[5]);
+    __THPGQRSetup(info);
+
+    while (info->x7AC < h) {
+        info->x7AA = 0;
+        fn_80299850(info);
+        info->x7AC += info->x8D4;
+        y = info->components[0].tile - 2;
+        u = info->components[1].tile - 2;
+        v = info->components[2].tile - 2;
+        if (hs == 0) {
+            for (j = 0; j < info->x8D4; j++) {
+                fn_8029A878(d, y, u, v, w);
+                d += width * 2;
+                y += ystride;
+                u += uvstride;
+                v += uvstride;
+            }
+        } else if (vs == 0) {
+            for (j = 0; j < info->x8D4; j++) {
+                fn_8029A6F4(d, y, u, v, w);
+                d += width * 2;
+                y += ystride;
+                u += uvstride;
+                v += uvstride;
+            }
+        } else {
+            for (j = 0; j < info->x8D4; j += 2) {
+                fn_8029A6F4(d, y, u, v, w);
+                d += width * 2;
+                y += ystride;
+                fn_8029A6F4(d, y, u, v, w);
+                d += width * 2;
+                y += ystride;
+                u += uvstride;
+                v += uvstride;
+            }
+        }
+    }
+
+    THP_PERF_END(lbl_806A4A40[5]);
+    THP_PERF_START(lbl_806A4A40[9]);
+    DCStoreRange(dst, width * height * 2);
+    THP_PERF_END(lbl_806A4A40[9]);
+    __THPGQRRestore(info);
+}
+
+void fn_8029BA2C(THPDecHandle* handle, u8* tileY, u8* tileU, u8* tileV)
+{
+    THPFileInfo* info;
+    u32 i;
+    u32 ysize;
+    u32 uvsize;
+
+    info = handle->info;
+    info->file = info->scanStart;
+    info->cnt = 33;
+    info->x7AA = 0;
+    info->x7AC = 0;
+    info->x7A6 = 0;
+    info->x41D = 0;
+    info->x40C = 0;
+    info->x40E = 0;
+    info->x7AC = 0;
+
+    info->components[0].tile = tileY;
+    if (info->nComponents >= 2) {
+        info->components[1].tile = tileU;
+    }
+    if (info->nComponents >= 3) {
+        info->components[2].tile = tileV;
+    }
+
+    __THPGQRSetup(info);
+
+    while (info->x7AC < info->yPixelSize) {
+        info->x7AA = 0;
+        fn_80299D58(info);
+        info->x7AC += info->x8D4;
+        for (i = 0; i < info->nComponents; i++) {
+            info->components[i].tile += info->components[i].x14 *
+                                        (info->MCUsPerRow * info->components[i].x18) * 64;
+        }
+    }
+
+    THP_PERF_START(lbl_806A4A40[2]);
+    ysize = info->components[0].x08 * info->components[0].x0C;
+    uvsize = info->components[1].x08 * info->components[1].x0C;
+    DCStoreRange(tileY, ysize);
+    DCStoreRange(tileU, uvsize);
+    DCStoreRange(tileV, uvsize);
+    THP_PERF_END(lbl_806A4A40[2]);
+    __THPGQRRestore(info);
+}
+
+void fn_8029BCF0(THPDecHandle* handle, u8* dst, u8 alpha)
+{
+    THPFileInfo* info;
+    u8 hs;
+    u8 vs;
+    u32 ystride;
+    u32 uvstride;
+    u32 j;
+    u32 k;
+    u32 n;
+    u8* out;
+    u8* y;
+    u8* u;
+    u8* v;
+    u8* yy;
+    u8* uu;
+    u8* vv;
+
+    out = dst;
+    info = handle->info;
+    info->file = info->scanStart;
+    info->cnt = 33;
+    info->x7AA = 0;
+    info->x7AC = 0;
+    info->x7A6 = 0;
+    info->x41D = 0;
+    info->x40C = 0;
+    info->x40E = 0;
+
+    hs = info->samplingHMax - info->components[1].samplingH;
+    vs = info->samplingVMax - info->components[1].samplingV;
+    ystride = info->components[0].x08;
+    uvstride = info->components[1].x08;
+
+    for (k = 0; k < info->nComponents; k++) {
+        info->components[k].tile = info->components[k].x10;
+    }
+    info->x7AC = 0;
+
+    THP_PERF_START(lbl_806A4A40[5]);
+    __THPGQRSetup(info);
+
+    while (info->x7AC < info->yPixelSize) {
+        info->x7AA = 0;
+        fn_80299850(info);
+        info->x7AC += info->x8D4;
+        y = info->components[0].tile;
+        u = info->components[1].tile;
+        v = info->components[2].tile;
+        if (hs == 0) {
+            for (j = 0; j < (info->x8D4 >> 2); j++) {
+                for (n = 0; n < ystride / 4; n++) {
+                    yy = y;
+                    uu = u;
+                    vv = v;
+                    for (k = 0; k < 4; k++) {
+                        fn_8029AAC0(out, yy, uu, vv, &alpha);
+                        yy += ystride;
+                        uu += uvstride;
+                        vv += uvstride;
+                        out += 8;
+                    }
+                    out += 32;
+                    y += 4;
+                    u += 4;
+                    v += 4;
+                }
+                y += ystride * 3;
+                u += uvstride * 3;
+                v += uvstride * 3;
+            }
+        } else if (vs == 0) {
+            for (j = 0; j < (info->x8D4 >> 2); j++) {
+                for (n = 0; n < ystride / 4; n++) {
+                    yy = y;
+                    uu = u;
+                    vv = v;
+                    for (k = 0; k < 4; k++) {
+                        fn_8029AA2C(out, yy, uu, vv, &alpha);
+                        yy += ystride;
+                        uu += uvstride;
+                        vv += uvstride;
+                        out += 8;
+                    }
+                    out += 32;
+                    y += 4;
+                    u += 2;
+                    v += 2;
+                }
+                y += ystride * 3;
+                u += uvstride * 3;
+                v += uvstride * 3;
+            }
+        } else {
+            for (j = 0; j < (info->x8D4 >> 2); j++) {
+                for (n = 0; n < ystride / 4; n++) {
+                    yy = y;
+                    uu = u;
+                    vv = v;
+                    for (k = 0; k < 2; k++) {
+                        fn_8029AA2C(out, yy, uu, vv, &alpha);
+                        yy += ystride;
+                        out += 8;
+                        fn_8029AA2C(out, yy, uu, vv, &alpha);
+                        yy += ystride;
+                        uu += uvstride;
+                        vv += uvstride;
+                        out += 8;
+                    }
+                    out += 32;
+                    y += 4;
+                    u += 2;
+                    v += 2;
+                }
+                y += ystride * 3;
+                u += uvstride;
+                v += uvstride;
+            }
+        }
+    }
+
+    THP_PERF_END(lbl_806A4A40[5]);
+    THP_PERF_START(lbl_806A4A40[2]);
+    DCStoreRange(dst, GXGetTexBufferSize(info->xPixelSize, info->yPixelSize, 6, 0, 0));
+    THP_PERF_END(lbl_806A4A40[2]);
     __THPGQRRestore(info);
 }
 
