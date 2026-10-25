@@ -30,7 +30,7 @@ extern const float lbl_806D23FC;
 extern void *fn_8028B0B4(void);
 extern void fn_8028B0D8(void *chan, StrPcbChanStatus *status);
 extern int fn_8028A598(void *chan, int count, u8 *data);
-extern int fn_80276C50(char *buf, const char *fmt, ...);
+extern int sprintf(char *buf, const char *fmt, ...);
 extern int fn_80293290(int chan, int *count);
 extern u8 fn_8029321C(int chan);
 extern int fn_80293338(int chan, u8 data);
@@ -153,11 +153,11 @@ u8 StrPcb_ParseResponse(StrPcbCmd *pcb, u8 *__restrict resp)
             pcb->position28 = 0x1FF;
             return 1;
         }
-        fn_80276C50(badCMsg, lbl_802E9854, resp[0], resp[1], resp[2]);
+        sprintf(badCMsg, lbl_802E9854, resp[0], resp[1], resp[2]);
         return 0;
     }
     if ((int)resp[0] == 'E') {
-        fn_80276C50(errorMsg, lbl_802E9874, resp[0], resp[1], resp[2]);
+        sprintf(errorMsg, lbl_802E9874, resp[0], resp[1], resp[2]);
         if ((int)resp[1] != '0' || (int)resp[2] != '0') {
             int i;
             for (i = 0; i < 3; i++) {
@@ -182,7 +182,7 @@ u8 StrPcb_ParseResponse(StrPcbCmd *pcb, u8 *__restrict resp)
             case '1':
             case '6':
             default:
-                fn_80276C50(badE0Msg, lbl_802E9854, resp[0], resp[1], resp[2]);
+                sprintf(badE0Msg, lbl_802E9854, resp[0], resp[1], resp[2]);
                 StrPcb_SetCommError(pcb);
                 return 0;
             }
@@ -198,7 +198,7 @@ u8 StrPcb_ParseResponse(StrPcbCmd *pcb, u8 *__restrict resp)
                 StrPcb_SetCommError(pcb);
                 break;
             default:
-                fn_80276C50(badE1Msg, lbl_802E9854, resp[0], resp[1], resp[2]);
+                sprintf(badE1Msg, lbl_802E9854, resp[0], resp[1], resp[2]);
                 StrPcb_SetCommError(pcb);
                 return 0;
             }
@@ -210,7 +210,7 @@ u8 StrPcb_ParseResponse(StrPcbCmd *pcb, u8 *__restrict resp)
                 StrPcb_SetCommError(pcb);
                 break;
             default:
-                fn_80276C50(badE2Msg, lbl_802E9854, resp[0], resp[1], resp[2]);
+                sprintf(badE2Msg, lbl_802E9854, resp[0], resp[1], resp[2]);
                 StrPcb_SetCommError(pcb);
                 return 0;
             }
@@ -223,7 +223,7 @@ u8 StrPcb_ParseResponse(StrPcbCmd *pcb, u8 *__restrict resp)
         pcb->positionAck27 = 1;
         return 1;
     }
-    fn_80276C50(unknownMsg, lbl_802E9854, resp[0], resp[1], resp[2]);
+    sprintf(unknownMsg, lbl_802E9854, resp[0], resp[1], resp[2]);
     return 0;
 }
 
