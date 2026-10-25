@@ -6940,10 +6940,29 @@ musyx/runtime/synth.c:
 	.sbss       start:0x806D1F00 end:0x806D1F48
 	.sdata2     start:0x806DC9A8 end:0x806DC9E8
 
+musyx/runtime/seq_api.c:
+	.text       start:0x802A36F0 end:0x802A38F0
+
+musyx/runtime/snd_synthapi.c:
+	.text       start:0x802A38F0 end:0x802A3C7C
+
+musyx/runtime/stream.c:
+	.text       start:0x802A3C7C end:0x802A79B8
+	.bss        start:0x806B3B98 end:0x806B5598
+	.sbss       start:0x806D1F48 end:0x806D1F58
+	.sdata2     start:0x806DC9E8 end:0x806DCA00
+
 musyx/runtime/synthdata.c:
 	.text       start:0x802A79B8 end:0x802A931C
 	.bss        start:0x806B5598 end:0x806BFDD0
 	.sbss       start:0x806D1F58 end:0x806D1FA8
+
+musyx/runtime/synthmacros.c:
+	.text       start:0x802A931C end:0x802AE204
+	.data       start:0x804F5C70 end:0x804F60B8
+	.bss        start:0x806BFDD0 end:0x806BFDF0
+	.sbss       start:0x806D1FA8 end:0x806D1FC8
+	.sdata2     start:0x806DCA00 end:0x806DCA28
 
 musyx/runtime/synthvoice.c:
 	.text       start:0x802AE204 end:0x802AFD2C
