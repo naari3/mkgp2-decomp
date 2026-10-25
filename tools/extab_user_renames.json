@@ -4972,5 +4972,23 @@
     "__vt__13clDNLensflare": "lbl_804EE09C",
     "__vt__16clMapEffectParts": "lbl_80490FE0",
     "__ct__11clLensFlareFPCcfffff": "fn_80171F34"
+  },
+  "src/game/DNStartCamera.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "Draw__15clDNStartCameraFv": "fn_8022929C",
+    "Update__15clDNStartCameraFv": "fn_80229398",
+    "__dt__15clDNStartCameraFv": "fn_802296C4",
+    "__ct__15clDNStartCameraFP8HSD_JObj": "fn_80229768",
+    "__vt__15clDNStartCamera": "lbl_804EE0C4",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "Tick__9FlashPartFv": "fn_80228C38",
+    "Start__9FlashPartFP10FlashPoint": "fn_80228C9C",
+    "Init__9FlashPartFv": "fn_80228D20",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__dt__10clNormal3DFv": "Object_DtorWithGXSync",
+    "__ct__9GXChannelFPvPvii": "GXChannel_Init",
+    "__dt__9GXChannelFv": "dtor_8007D9C4",
+    "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform"
   }
 }

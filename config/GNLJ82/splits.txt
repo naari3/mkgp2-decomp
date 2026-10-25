@@ -8839,6 +8839,12 @@ game/DNLensflare.cpp:
 	.text       start:0x80228FB0 end:0x8022929C
 	.rodata     start:0x803D08A8 end:0x803D08F0
 
+game/DNStartCamera.cpp:
+	extab       start:0x8001BCC8 end:0x8001BD48
+	extabindex  start:0x8002A7AC end:0x8002A7DC
+	.text       start:0x8022929C end:0x80229998
+	.rodata     start:0x803D08F0 end:0x803D0DB0
+
 game/fn_8022CDE4.c:
 	extab       start:0x8001BFE0 end:0x8001BFE8
 	extabindex  start:0x8002A8CC end:0x8002A8D8
