@@ -10,20 +10,45 @@
 struct InputState {
     unsigned char pad_00[4];
     unsigned char active;
-    unsigned char pad_05[0x13];
+    unsigned char pad_05[0xF];
+    int value14;
     int value18;
     int value1C;
 };
 
+struct CupSpr {
+    unsigned char pad_00[0xC];
+    float x;
+    float y;
+    float sx;
+    float sy;
+    float rot;
+    float alpha;
+    unsigned char pad_24[0xC];
+
+    CupSpr(int id, int loop, float x, float y, float sx, float sy, float rot, float a);
+    CupSpr(int id, int loop, int c);
+};
+
 struct CupSlot {
-    void *sprite;
-    void *sub;
-    int pad[2];
+    CupSpr *sprite;
+    CupSpr *sub;
+    int anim;
+    int pad;
 };
 
 struct CupPair {
-    void *a;
-    void *b;
+    CupSpr *a;
+    CupSpr *b;
+};
+
+struct CupSide {
+    float x0;
+    float y0;
+    float rot0;
+    float x1;
+    float y1;
+    float rot1;
 };
 
 struct clFlowCup {
@@ -31,30 +56,38 @@ struct clFlowCup {
     int round;
     int x08;
     int state;
-    unsigned char pad_10[8];
-    void *sprite18;
-    void *sprite1C;
+    unsigned char advance;
+    unsigned char pad_11[3];
+    int timer;
+    CupSpr *sprite18;
+    CupSpr *sprite1C;
     unsigned char pad_20[0xC];
     CupSlot slots[9];
-    unsigned char pad_BC[8];
+    int musicSel;
+    unsigned char showC0;
+    unsigned char pad_C1[3];
     int pairSel[4];
-    unsigned char pad_D4[4];
+    float brightness;
     CupPair pairs[4];
-    void *spriteF8;
-    void *spriteFC;
+    CupSpr *spriteF8;
+    CupSpr *spriteFC;
     unsigned char pad_100[8];
-    void *sprite108;
-    void *sprite10C;
+    CupSpr *sprite108;
+    CupSpr *sprite10C;
     unsigned char show110;
     unsigned char show111;
     unsigned char pad_112[2];
     float alpha114;
     unsigned char mode;
-    unsigned char pad_119[0xB];
-    void *icons[9];
-    void *sprite148;
-    void *sprite14C;
-    void *sprite150;
+    unsigned char pad_119[3];
+    float x11C;
+    float x120;
+    CupSpr *icons[9];
+    CupSpr *sprite148;
+    CupSpr *sprite14C;
+    CupSpr *sprite150;
+    unsigned char unlock154;
+    unsigned char unlock155;
 };
 
 struct CupName {
@@ -67,7 +100,7 @@ struct CupName {
 struct CupMark {
     short x0;
     short id;
-    int x4;
+    float x;
     int x8;
 };
 
@@ -227,1318 +260,448 @@ void clFlowCup_Draw(clFlowCup *self) {
 
 
 
-/* === extracted from auto_clFlowCup_Update_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+static inline InputState *input_state(void) {
+    InputState *state = g_pInputState;
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void Alloc();
-extern void CupTile_StateChange();
-extern void GetInputManager();
-extern void InputMgr_GetPlayer();
-extern void RumbleUpdate();
-extern void SetCourseParams();
-extern void SetRumbleMode();
-extern void Sprite_AdvanceAnim();
-extern void Sprite_CreateWithParams();
-extern void Sprite_InitWithAnim();
-extern void Sprite_SetAnimParam();
-extern void Sprite_SetupAnim();
-extern void fn_801699D8();
-extern void fn_8019FF6C();
-extern void fn_801A0550();
-extern void fn_801B7C64();
-extern void fn_801B7CAC();
-extern void fn_801B85DC();
-extern void fn_801B87D8();
-extern void fn_801C64DC();
-extern void fn_801C6744();
-extern void fn_801D5C88();
+    if (state == 0) {
+        return 0;
+    }
+    return state;
+}
 
-/* --- extern decls: sda21-referenced data --- */
+/* === clFlowCup_Update (C++) === */
+extern void *Alloc(unsigned long size);
+extern void CupTile_StateChange(clFlowCup *self, int idx, int mode);
+extern void *GetInputManager(void);
+extern void *InputMgr_GetPlayer(void *mgr, int idx);
+extern void RumbleUpdate(void);
+extern void SetCourseParams(int course, int a, int b, int c);
+extern void SetRumbleMode(int a, int b, int c);
+extern unsigned char Sprite_AdvanceAnim(CupSpr *spr, float step);
+extern void Sprite_CreateWithParams(void *spr, int id, int loop, float x, float y, float sx, float sy, float rot, float a);
+extern void Sprite_InitWithAnim(void *spr, int id, int loop, int c);
+extern void Sprite_SetAnimParam(CupSpr *spr, int a, int b);
+extern void Sprite_SetupAnim(CupSpr *spr, int id, int loop, int c);
+extern void fn_801699D8(int a, int b);
+extern void fn_8019FF6C(CupSpr *spr, int v);
+extern void fn_801A0550(CupSpr *spr);
+extern void fn_801B7C64(void);
+extern void fn_801B7CAC(void);
+extern void fn_801B85DC(int a, int b, int c);
+extern void fn_801B87D8(void);
+extern void fn_801C64DC(clFlowCup *self, int round);
+extern void fn_801C6744(clFlowCup *self, int idx);
+extern unsigned char fn_801D5C88(void *data, int cc);
+
 extern unsigned int g_ccClass;
-extern unsigned int lbl_806D184C;
-extern unsigned int lbl_806D184D;
-extern unsigned int lbl_806D9C68;
-extern unsigned int lbl_806D9C70;
-extern unsigned int lbl_806D9C74;
-extern unsigned int lbl_806D9C7C;
-extern unsigned int lbl_806D9C80;
-extern const float lbl_806D9C88;
-extern unsigned int lbl_806D9C90;
-extern unsigned int lbl_806D9C94;
-extern unsigned int lbl_806D9C98;
-extern unsigned int lbl_806D9CA0;
-extern unsigned int lbl_806D9CC4;
-extern unsigned int lbl_806D9CC8;
-extern unsigned int lbl_806D9CCC;
-extern unsigned int lbl_806D9CD0;
-extern unsigned int lbl_806D9CD4;
-extern unsigned int lbl_806D9CD8;
-extern unsigned int lbl_806D9CDC;
-extern unsigned int lbl_806D9CE0;
+extern signed char lbl_806D184C;
+extern unsigned char lbl_806D184D;
+extern const double lbl_806D9C68;
+extern const float lbl_806D9C70;
+extern const float lbl_806D9C74;
+extern const float lbl_806D9C7C;
+extern const float lbl_806D9C80;
+extern const float lbl_806D9C90;
+extern const float lbl_806D9C94;
+extern const float lbl_806D9CA0;
+extern const float lbl_806D9CC4;
+extern const float lbl_806D9CC8;
+extern const float lbl_806D9CCC;
+extern const float lbl_806D9CD0;
+extern const float lbl_806D9CD4;
+extern const float lbl_806D9CD8;
+extern const float lbl_806D9CDC;
+extern const float lbl_806D9CE0;
 
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 extern unsigned int g_playerData[];
-extern unsigned int lbl_8039B228[];
-extern CupMark lbl_8049AD58[];
-extern unsigned int lbl_8049ADD0[];
+extern const CupSide lbl_8039B228[];
+extern short lbl_8049ADD0[];
 
 /* --- function index (1 fns, .text 0x801C772C..0x801C88F4) ---
  * [  0] 0x801C772C size:0x11C8  global clFlowCup_Update
  */
 
 /* --- forward decls --- */
-asm void clFlowCup_Update(void);
+int clFlowCup_Update(clFlowCup *self);
 
-/* --- extern decls: extab symbolic refs (dtors / typeids) --- */
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; void *f11; unsigned int f12; void *f13; unsigned int f14; void *f15; unsigned int f16; void *f17; } extab_clFlowCup_Update = { 0x200A0000, 0x00000228, 0x00000028, 0x00000264, 0x00000030, 0x0000029C, 0x00000038, 0x000002C0, 0x00000040, 0x00000000, 0x8A80001C, (void *)&MemoryManager_TimedFree, 0x8A80001C, (void *)&MemoryManager_TimedFree, 0x8A80001C, (void *)&MemoryManager_TimedFree, 0x8A80001C, (void *)&MemoryManager_TimedFree };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clFlowCup_Update = {
-    (void *)&clFlowCup_Update, 0x000011C8, (void *)&extab_clFlowCup_Update
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void clFlowCup_Update(void) { /* 0x801C772C size:0x11C8 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stw r31, 0x2c(r1)
-    stw r30, 0x28(r1)
-    mr r30, r3
-    stw r29, 0x24(r1)
-    stw r28, 0x20(r1)
-    bl RumbleUpdate
-    lbz r0, 0x10(r30)
-    cmplwi r0, 0x0
-    beq clFlowCup_Update_L_801C7770
-    lwz r3, 0xc(r30)
-    li r0, 0x0
-    addi r3, r3, 0x1
-    stw r3, 0xc(r30)
-    stb r0, 0x10(r30)
-    clFlowCup_Update_L_801C7770:
-    lwz r3, 0x14(r30)
-    addi r0, r3, 0x1
-    stw r0, 0x14(r30)
-    lwz r0, 0xc(r30)
-    cmpwi r0, 0x2
-    beq clFlowCup_Update_L_801C82B8
-    bge clFlowCup_Update_L_801C779C
-    cmpwi r0, 0x0
-    beq clFlowCup_Update_L_801C77AC
-    bge clFlowCup_Update_L_801C7C70
-    b clFlowCup_Update_L_801C86F4
-    clFlowCup_Update_L_801C779C:
-    cmpwi r0, 0x4
-    beq clFlowCup_Update_L_801C8424
-    bge clFlowCup_Update_L_801C86F4
-    b clFlowCup_Update_L_801C8358
-    clFlowCup_Update_L_801C77AC:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x1
-    bne clFlowCup_Update_L_801C77C8
-    mr r3, r30
-    li r4, 0x0
-    li r5, 0x1
-    bl CupTile_StateChange
-    clFlowCup_Update_L_801C77C8:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x6
-    bne clFlowCup_Update_L_801C77E4
-    mr r3, r30
-    li r4, 0x1
-    li r5, 0x1
-    bl CupTile_StateChange
-    clFlowCup_Update_L_801C77E4:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0xa
-    bne clFlowCup_Update_L_801C7800
-    mr r3, r30
-    li r4, 0x2
-    li r5, 0x1
-    bl CupTile_StateChange
-    clFlowCup_Update_L_801C7800:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0xe
-    bne clFlowCup_Update_L_801C781C
-    mr r3, r30
-    li r4, 0x3
-    li r5, 0x1
-    bl CupTile_StateChange
-    clFlowCup_Update_L_801C781C:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x12
-    bne clFlowCup_Update_L_801C7838
-    mr r3, r30
-    li r4, 0x4
-    li r5, 0x1
-    bl CupTile_StateChange
-    clFlowCup_Update_L_801C7838:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x14
-    bne clFlowCup_Update_L_801C7854
-    mr r3, r30
-    li r4, 0x5
-    li r5, 0x1
-    bl CupTile_StateChange
-    clFlowCup_Update_L_801C7854:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x16
-    bne clFlowCup_Update_L_801C7870
-    mr r3, r30
-    li r4, 0x6
-    li r5, 0x1
-    bl CupTile_StateChange
-    clFlowCup_Update_L_801C7870:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x1a
-    bne clFlowCup_Update_L_801C788C
-    mr r3, r30
-    li r4, 0x7
-    li r5, 0x1
-    bl CupTile_StateChange
-    clFlowCup_Update_L_801C788C:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x1e
-    bne clFlowCup_Update_L_801C7908
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x1
-    bne clFlowCup_Update_L_801C78D0
-    lwz r3, 0xf8(r30)
-    li r4, 0x18e
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    lwz r3, 0xfc(r30)
-    li r4, 0x1c7
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    b clFlowCup_Update_L_801C7908
-    clFlowCup_Update_L_801C78D0:
-    lwz r3, 0xf8(r30)
-    li r4, 0x184
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    lwz r3, 0xfc(r30)
-    li r4, 0x1dd
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    lwz r3, 0xfc(r30)
-    li r4, 0x1ad4
-    li r5, 0x1ae3
-    bl Sprite_SetAnimParam
-    clFlowCup_Update_L_801C7908:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x28
-    bne clFlowCup_Update_L_801C799C
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x1
-    bne clFlowCup_Update_L_801C795C
-    li r3, 0x30
-    bl Alloc
-    mr. r28, r3
-    beq clFlowCup_Update_L_801C7954
-    lfs f3, lbl_806D9C88(r2)
-    li r4, 0x18f
-    lfs f1, lbl_806D9CC4(r2)
-    li r5, 0x1
-    fmr f4, f3
-    lfs f2, lbl_806D9CC8(r2)
-    fmr f6, f3
-    lfs f5, lbl_806D9C80(r2)
-    bl Sprite_CreateWithParams
-    clFlowCup_Update_L_801C7954:
-    stw r28, 0x18(r30)
-    b clFlowCup_Update_L_801C7994
-    clFlowCup_Update_L_801C795C:
-    li r3, 0x30
-    bl Alloc
-    mr. r28, r3
-    beq clFlowCup_Update_L_801C7990
-    lfs f3, lbl_806D9C88(r2)
-    li r4, 0x185
-    lfs f1, lbl_806D9CC4(r2)
-    li r5, 0x1
-    fmr f4, f3
-    lfs f2, lbl_806D9CC8(r2)
-    fmr f6, f3
-    lfs f5, lbl_806D9C80(r2)
-    bl Sprite_CreateWithParams
-    clFlowCup_Update_L_801C7990:
-    stw r28, 0x18(r30)
-    clFlowCup_Update_L_801C7994:
-    li r0, 0x1
-    stb r0, 0xc0(r30)
-    clFlowCup_Update_L_801C799C:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x3c
-    bne clFlowCup_Update_L_801C7BE0
-    li r3, 0x30
-    bl Alloc
-    mr. r28, r3
-    beq clFlowCup_Update_L_801C79C8
-    li r4, 0x9c
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_InitWithAnim
-    clFlowCup_Update_L_801C79C8:
-    stw r28, 0x108(r30)
-    li r3, 0x30
-    bl Alloc
-    mr. r28, r3
-    beq clFlowCup_Update_L_801C79EC
-    li r4, 0x9c
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_InitWithAnim
-    clFlowCup_Update_L_801C79EC:
-    stw r28, 0x10c(r30)
-    li r4, 0x1
-    lwz r3, 0x108(r30)
-    bl fn_8019FF6C
-    lwz r3, 0x10c(r30)
-    li r4, 0x1
-    bl fn_8019FF6C
-    lwz r4, 0x4(r30)
-    mr r3, r30
-    li r5, 0x4
-    bl CupTile_StateChange
-    lwz r4, 0x4(r30)
-    mr r3, r30
-    bl fn_801C64DC
-    li r0, 0x0
-    stb r0, 0x110(r30)
-    lwz r5, 0x108(r30)
-    cmplwi r5, 0x0
-    beq clFlowCup_Update_L_801C7AB0
-    lwz r0, 0x4(r30)
-    lis r3, lbl_8039B228@ha
-    addi r4, r3, lbl_8039B228@l
-    lfd f2, lbl_806D9C68(r2)
-    mulli r0, r0, 0x18
-    lfs f0, lbl_806D9C70(r2)
-    lfsx f1, r4, r0
-    add r3, r4, r0
-    lfs f3, 0x4(r3)
-    stfs f1, 0xc(r5)
-    stfs f3, 0x10(r5)
-    lwz r0, 0x4(r30)
-    lwz r3, 0x108(r30)
-    mulli r0, r0, 0x18
-    add r4, r4, r0
-    lfs f1, 0x8(r4)
-    fmul f1, f2, f1
-    frsp f1, f1
-    stfs f1, 0x1c(r3)
-    lwz r3, 0x108(r30)
-    stfs f0, 0x14(r3)
-    stfs f0, 0x18(r3)
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x0
-    bne clFlowCup_Update_L_801C7AA8
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x1
-    bne clFlowCup_Update_L_801C7AB0
-    clFlowCup_Update_L_801C7AA8:
-    li r0, 0x1
-    stb r0, 0x110(r30)
-    clFlowCup_Update_L_801C7AB0:
-    li r0, 0x0
-    stb r0, 0x111(r30)
-    lwz r5, 0x10c(r30)
-    cmplwi r5, 0x0
-    beq clFlowCup_Update_L_801C7BB8
-    lwz r0, 0x4(r30)
-    lis r3, lbl_8039B228@ha
-    addi r4, r3, lbl_8039B228@l
-    lfd f2, lbl_806D9C68(r2)
-    mulli r0, r0, 0x18
-    lfs f0, lbl_806D9C70(r2)
-    add r3, r4, r0
-    lfs f1, 0xc(r3)
-    lfs f3, 0x10(r3)
-    stfs f1, 0xc(r5)
-    stfs f3, 0x10(r5)
-    lwz r0, 0x4(r30)
-    lwz r3, 0x10c(r30)
-    mulli r0, r0, 0x18
-    add r4, r4, r0
-    lfs f1, 0x14(r4)
-    fmul f1, f2, f1
-    frsp f1, f1
-    stfs f1, 0x1c(r3)
-    lwz r3, 0x10c(r30)
-    stfs f0, 0x14(r3)
-    stfs f0, 0x18(r3)
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x7
-    beq clFlowCup_Update_L_801C7B30
-    li r0, 0x1
-    stb r0, 0x111(r30)
-    clFlowCup_Update_L_801C7B30:
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x0
-    bne clFlowCup_Update_L_801C7B60
-    lis r3, g_playerData@ha
-    lwz r4, g_ccClass(r13)
-    addi r3, r3, g_playerData@l
-    bl fn_801D5C88
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne clFlowCup_Update_L_801C7B60
-    li r0, 0x1
-    stb r0, 0x111(r30)
-    clFlowCup_Update_L_801C7B60:
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x0
-    bne clFlowCup_Update_L_801C7B8C
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x6
-    bne clFlowCup_Update_L_801C7B8C
-    lbz r0, 0x154(r30)
-    cmplwi r0, 0x0
-    bne clFlowCup_Update_L_801C7B8C
-    li r0, 0x0
-    stb r0, 0x111(r30)
-    clFlowCup_Update_L_801C7B8C:
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x1
-    bne clFlowCup_Update_L_801C7BB8
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x6
-    bne clFlowCup_Update_L_801C7BB8
-    lbz r0, 0x155(r30)
-    cmplwi r0, 0x0
-    bne clFlowCup_Update_L_801C7BB8
-    li r0, 0x0
-    stb r0, 0x111(r30)
-    clFlowCup_Update_L_801C7BB8:
-    lfs f1, 0xd4(r30)
-    bl SetScreenBrightness
-    li r5, 0x1
-    li r0, 0x0
-    stb r5, lbl_806D184C(r13)
-    li r3, 0x0
-    li r4, 0x1
-    stb r0, lbl_806D184D(r13)
-    stb r5, 0x10(r30)
-    bl fn_801699D8
-    clFlowCup_Update_L_801C7BE0:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x12
-    blt clFlowCup_Update_L_801C86F4
-    cmpwi r0, 0x1e
-    bgt clFlowCup_Update_L_801C86F4
-    xoris r3, r0, 0x8000
-    lis r0, 0x4330
-    stw r3, 0xc(r1)
-    lfd f3, lbl_806D9C98(r2)
-    stw r0, 0x8(r1)
-    lfs f1, lbl_806D9CCC(r2)
-    lfd f2, 0x8(r1)
-    lfs f0, lbl_806D9C90(r2)
-    fsubs f2, f2, f3
-    lwz r3, 0xd8(r30)
-    fsubs f1, f2, f1
-    fdivs f0, f1, f0
-    stfs f0, 0x20(r3)
-    lwz r3, 0xdc(r30)
-    stfs f0, 0x20(r3)
-    lwz r3, 0xe0(r30)
-    stfs f0, 0x20(r3)
-    lwz r3, 0xe4(r30)
-    stfs f0, 0x20(r3)
-    lwz r3, 0xe8(r30)
-    stfs f0, 0x20(r3)
-    lwz r3, 0xec(r30)
-    stfs f0, 0x20(r3)
-    lwz r3, 0xf0(r30)
-    stfs f0, 0x20(r3)
-    lwz r3, 0xf4(r30)
-    stfs f0, 0x20(r3)
-    lwz r3, 0x1c(r30)
-    stfs f0, 0x20(r3)
-    stfs f0, 0x114(r30)
-    b clFlowCup_Update_L_801C86F4
-    clFlowCup_Update_L_801C7C70:
-    lwz r4, g_pInputState(r13)
-    lwz r31, 0x4(r30)
-    cmplwi r4, 0x0
-    bne clFlowCup_Update_L_801C7C88
-    li r0, 0x0
-    b clFlowCup_Update_L_801C7C8C
-    clFlowCup_Update_L_801C7C88:
-    mr r0, r4
-    clFlowCup_Update_L_801C7C8C:
-    cmplwi r0, 0x0
-    beq clFlowCup_Update_L_801C7E18
-    cmplwi r4, 0x0
-    bne clFlowCup_Update_L_801C7CA0
-    li r4, 0x0
-    clFlowCup_Update_L_801C7CA0:
-    lwz r3, 0x4(r30)
-    lwz r0, 0x14(r4)
-    add r0, r3, r0
-    stw r0, 0x4(r30)
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x6
-    ble clFlowCup_Update_L_801C7CFC
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x0
-    bne clFlowCup_Update_L_801C7CDC
-    lbz r0, 0x154(r30)
-    cmplwi r0, 0x0
-    bne clFlowCup_Update_L_801C7CDC
-    li r0, 0x6
-    stw r0, 0x4(r30)
-    clFlowCup_Update_L_801C7CDC:
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x1
-    bne clFlowCup_Update_L_801C7CFC
-    lbz r0, 0x155(r30)
-    cmplwi r0, 0x0
-    bne clFlowCup_Update_L_801C7CFC
-    li r0, 0x6
-    stw r0, 0x4(r30)
-    clFlowCup_Update_L_801C7CFC:
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x7
-    ble clFlowCup_Update_L_801C7D90
-    li r0, 0x7
-    stw r0, 0x4(r30)
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x0
-    bne clFlowCup_Update_L_801C7D90
-    lis r3, g_playerData@ha
-    lwz r4, g_ccClass(r13)
-    addi r3, r3, g_playerData@l
-    bl fn_801D5C88
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne clFlowCup_Update_L_801C7D90
-    lwz r3, 0x148(r30)
-    li r4, 0x18f
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    lwz r3, 0x14c(r30)
-    li r4, 0x18e
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    lwz r3, 0x150(r30)
-    li r4, 0x1c7
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    li r0, 0x1
-    li r3, 0x0
-    stb r0, 0x118(r30)
-    li r0, 0x4
-    stw r3, 0x4(r30)
-    stw r0, 0xc(r30)
-    stw r3, 0x14(r30)
-    clFlowCup_Update_L_801C7D90:
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x0
-    bge clFlowCup_Update_L_801C7E18
-    li r0, 0x0
-    stw r0, 0x4(r30)
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x1
-    bne clFlowCup_Update_L_801C7E18
-    lwz r3, 0x148(r30)
-    li r4, 0x185
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    lwz r3, 0x14c(r30)
-    li r4, 0x184
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    lwz r3, 0x150(r30)
-    li r4, 0x1dd
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    lwz r3, 0x150(r30)
-    li r4, 0x1ad4
-    li r5, 0x1ae3
-    bl Sprite_SetAnimParam
-    li r4, 0x0
-    li r3, 0x7
-    stb r4, 0x118(r30)
-    li r0, 0x4
-    stw r3, 0x4(r30)
-    stw r0, 0xc(r30)
-    stw r4, 0x14(r30)
-    clFlowCup_Update_L_801C7E18:
-    lwz r0, 0x4(r30)
-    cmpw r31, r0
-    beq clFlowCup_Update_L_801C8050
-    mr r3, r30
-    mr r4, r31
-    li r5, 0x2
-    bl CupTile_StateChange
-    lwz r4, 0x4(r30)
-    mr r3, r30
-    li r5, 0x4
-    bl CupTile_StateChange
-    lwz r0, 0xb0(r30)
-    lwz r3, 0x4(r30)
-    cmplwi r0, 0x0
-    beq clFlowCup_Update_L_801C7EAC
-    lwz r0, 0xb4(r30)
-    cmpwi r0, 0x1
-    bne clFlowCup_Update_L_801C7EAC
-    stw r3, 0xbc(r30)
-    li r4, 0x183
-    li r5, 0x0
-    li r6, 0x0
-    lwz r3, 0xb0(r30)
-    bl Sprite_SetupAnim
-    lwz r0, 0xbc(r30)
-    lis r3, lbl_8049ADD0@ha
-    addi r5, r3, lbl_8049ADD0@l
-    lwz r3, 0xb0(r30)
-    slwi r0, r0, 1
-    li r4, 0x1744
-    lhax r5, r5, r0
-    bl Sprite_SetAnimParam
-    lwz r3, 0xb0(r30)
-    bl fn_801A0550
-    lwz r3, 0xb0(r30)
-    li r4, 0x1
-    bl fn_8019FF6C
-    clFlowCup_Update_L_801C7EAC:
-    lwz r4, 0x4(r30)
-    mr r3, r30
-    bl fn_801C64DC
-    li r0, 0x0
-    stb r0, 0x110(r30)
-    lwz r5, 0x108(r30)
-    cmplwi r5, 0x0
-    beq clFlowCup_Update_L_801C7F44
-    lwz r0, 0x4(r30)
-    lis r3, lbl_8039B228@ha
-    addi r4, r3, lbl_8039B228@l
-    lfd f2, lbl_806D9C68(r2)
-    mulli r0, r0, 0x18
-    lfs f0, lbl_806D9C70(r2)
-    lfsx f1, r4, r0
-    add r3, r4, r0
-    lfs f3, 0x4(r3)
-    stfs f1, 0xc(r5)
-    stfs f3, 0x10(r5)
-    lwz r0, 0x4(r30)
-    lwz r3, 0x108(r30)
-    mulli r0, r0, 0x18
-    add r4, r4, r0
-    lfs f1, 0x8(r4)
-    fmul f1, f2, f1
-    frsp f1, f1
-    stfs f1, 0x1c(r3)
-    lwz r3, 0x108(r30)
-    stfs f0, 0x14(r3)
-    stfs f0, 0x18(r3)
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x0
-    bne clFlowCup_Update_L_801C7F3C
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x1
-    bne clFlowCup_Update_L_801C7F44
-    clFlowCup_Update_L_801C7F3C:
-    li r0, 0x1
-    stb r0, 0x110(r30)
-    clFlowCup_Update_L_801C7F44:
-    li r0, 0x0
-    stb r0, 0x111(r30)
-    lwz r5, 0x10c(r30)
-    cmplwi r5, 0x0
-    beq clFlowCup_Update_L_801C804C
-    lwz r0, 0x4(r30)
-    lis r3, lbl_8039B228@ha
-    addi r4, r3, lbl_8039B228@l
-    lfd f2, lbl_806D9C68(r2)
-    mulli r0, r0, 0x18
-    lfs f0, lbl_806D9C70(r2)
-    add r3, r4, r0
-    lfs f1, 0xc(r3)
-    lfs f3, 0x10(r3)
-    stfs f1, 0xc(r5)
-    stfs f3, 0x10(r5)
-    lwz r0, 0x4(r30)
-    lwz r3, 0x10c(r30)
-    mulli r0, r0, 0x18
-    add r4, r4, r0
-    lfs f1, 0x14(r4)
-    fmul f1, f2, f1
-    frsp f1, f1
-    stfs f1, 0x1c(r3)
-    lwz r3, 0x10c(r30)
-    stfs f0, 0x14(r3)
-    stfs f0, 0x18(r3)
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x7
-    beq clFlowCup_Update_L_801C7FC4
-    li r0, 0x1
-    stb r0, 0x111(r30)
-    clFlowCup_Update_L_801C7FC4:
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x0
-    bne clFlowCup_Update_L_801C7FF4
-    lis r3, g_playerData@ha
-    lwz r4, g_ccClass(r13)
-    addi r3, r3, g_playerData@l
-    bl fn_801D5C88
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne clFlowCup_Update_L_801C7FF4
-    li r0, 0x1
-    stb r0, 0x111(r30)
-    clFlowCup_Update_L_801C7FF4:
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x0
-    bne clFlowCup_Update_L_801C8020
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x6
-    bne clFlowCup_Update_L_801C8020
-    lbz r0, 0x154(r30)
-    cmplwi r0, 0x0
-    bne clFlowCup_Update_L_801C8020
-    li r0, 0x0
-    stb r0, 0x111(r30)
-    clFlowCup_Update_L_801C8020:
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x1
-    bne clFlowCup_Update_L_801C804C
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x6
-    bne clFlowCup_Update_L_801C804C
-    lbz r0, 0x155(r30)
-    cmplwi r0, 0x0
-    bne clFlowCup_Update_L_801C804C
-    li r0, 0x0
-    stb r0, 0x111(r30)
-    clFlowCup_Update_L_801C804C:
-    bl fn_801B7CAC
-    clFlowCup_Update_L_801C8050:
-    lwz r0, 0x8(r30)
-    cmpwi r0, -0x1
-    beq clFlowCup_Update_L_801C8060
-    b clFlowCup_Update_L_801C8214
-    clFlowCup_Update_L_801C8060:
-    lfs f1, 0xd4(r30)
-    lfs f0, lbl_806D9CA0(r2)
-    fsubs f0, f1, f0
-    stfs f0, 0xd4(r30)
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lwz r3, g_pInputState(r13)
-    cmplwi r3, 0x0
-    bne clFlowCup_Update_L_801C808C
-    li r3, 0x0
-    clFlowCup_Update_L_801C808C:
-    lwz r0, 0x18(r3)
-    cmpwi r0, 0x1
-    beq clFlowCup_Update_L_801C80A8
-    lfs f1, 0xd4(r30)
-    lfs f0, lbl_806D9C80(r2)
-    fcmpo cr0, f1, f0
-    bge clFlowCup_Update_L_801C8208
-    clFlowCup_Update_L_801C80A8:
-    li r3, 0x0
-    li r4, 0x1
-    li r5, 0x1
-    bl SetRumbleMode
-    lwz r3, g_pInputState(r13)
-    cmplwi r3, 0x0
-    bne clFlowCup_Update_L_801C80CC
-    li r0, 0x0
-    b clFlowCup_Update_L_801C80D0
-    clFlowCup_Update_L_801C80CC:
-    mr r0, r3
-    clFlowCup_Update_L_801C80D0:
-    cmplwi r0, 0x0
-    beq clFlowCup_Update_L_801C80F4
-    cmplwi r3, 0x0
-    bne clFlowCup_Update_L_801C80E4
-    li r3, 0x0
-    clFlowCup_Update_L_801C80E4:
-    li r0, 0x0
-    stb r0, 0x4(r3)
-    stw r0, 0x18(r3)
-    stw r0, 0x1c(r3)
-    clFlowCup_Update_L_801C80F4:
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x0
-    bne clFlowCup_Update_L_801C8114
-    li r3, 0x7
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    bl SetCourseParams
-    clFlowCup_Update_L_801C8114:
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x1
-    bne clFlowCup_Update_L_801C8134
-    li r3, 0x1
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    bl SetCourseParams
-    clFlowCup_Update_L_801C8134:
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x2
-    bne clFlowCup_Update_L_801C8154
-    li r3, 0x8
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    bl SetCourseParams
-    clFlowCup_Update_L_801C8154:
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x3
-    bne clFlowCup_Update_L_801C8174
-    li r3, 0x2
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    bl SetCourseParams
-    clFlowCup_Update_L_801C8174:
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x4
-    bne clFlowCup_Update_L_801C8194
-    li r3, 0x3
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    bl SetCourseParams
-    clFlowCup_Update_L_801C8194:
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x5
-    bne clFlowCup_Update_L_801C81B4
-    li r3, 0x4
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    bl SetCourseParams
-    clFlowCup_Update_L_801C81B4:
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x6
-    bne clFlowCup_Update_L_801C81D4
-    li r3, 0x5
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    bl SetCourseParams
-    clFlowCup_Update_L_801C81D4:
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x7
-    bne clFlowCup_Update_L_801C81F4
-    li r3, 0x6
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    bl SetCourseParams
-    clFlowCup_Update_L_801C81F4:
-    li r0, 0x1b
-    lfs f0, lbl_806D9CA4(r2)
-    stw r0, 0x8(r30)
-    stfs f0, 0xd4(r30)
-    bl fn_801B7C64
-    clFlowCup_Update_L_801C8208:
-    lfs f1, 0xd4(r30)
-    bl SetScreenBrightness
-    lwz r0, 0x8(r30)
-    clFlowCup_Update_L_801C8214:
-    cmpwi r0, -0x1
-    beq clFlowCup_Update_L_801C86F4
-    li r29, 0x0
-    clFlowCup_Update_L_801C8220:
-    lwz r0, 0x4(r30)
-    cmpw r29, r0
-    bne clFlowCup_Update_L_801C8240
-    mr r3, r30
-    mr r4, r29
-    li r5, 0x5
-    bl CupTile_StateChange
-    b clFlowCup_Update_L_801C8250
-    clFlowCup_Update_L_801C8240:
-    mr r3, r30
-    mr r4, r29
-    li r5, 0x3
-    bl CupTile_StateChange
-    clFlowCup_Update_L_801C8250:
-    addi r29, r29, 0x1
-    cmpwi r29, 0x9
-    blt clFlowCup_Update_L_801C8220
-    lwz r3, 0x18(r30)
-    li r4, 0x1
-    bl Sprite_Destroy
-    lwz r3, 0x108(r30)
-    li r4, 0x1
-    bl Sprite_Destroy
-    lwz r3, 0x10c(r30)
-    li r4, 0x1
-    bl Sprite_Destroy
-    li r6, 0x0
-    li r4, 0x1
-    stw r6, 0x18(r30)
-    li r0, -0x1
-    li r3, 0x15
-    li r5, 0x0
-    stw r6, 0x14(r30)
-    stw r6, 0x108(r30)
-    stw r6, 0x10c(r30)
-    stb r4, 0x10(r30)
-    stb r0, lbl_806D184C(r13)
-    lbz r4, 0x118(r30)
-    bl fn_801B85DC
-    b clFlowCup_Update_L_801C86F4
-    clFlowCup_Update_L_801C82B8:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x3c
-    bne clFlowCup_Update_L_801C86F4
-    lwz r4, 0x4(r30)
-    mr r3, r30
-    li r5, 0x6
-    bl CupTile_StateChange
-    bl fn_801B87D8
-    lwz r0, 0xb0(r30)
-    cmplwi r0, 0x0
-    beq clFlowCup_Update_L_801C8334
-    lwz r0, 0xb4(r30)
-    cmpwi r0, 0x1
-    bne clFlowCup_Update_L_801C8334
-    li r0, 0x2
-    li r4, 0x35
-    stw r0, 0xb4(r30)
-    li r5, 0x0
-    li r6, 0x0
-    lwz r3, 0xb0(r30)
-    bl Sprite_SetupAnim
-    lwz r0, 0xbc(r30)
-    lis r3, lbl_8049ADD0@ha
-    addi r5, r3, lbl_8049ADD0@l
-    lwz r3, 0xb0(r30)
-    slwi r0, r0, 1
-    li r4, 0x1744
-    lhax r5, r5, r0
-    bl Sprite_SetAnimParam
-    lwz r3, 0xb0(r30)
-    bl fn_801A0550
-    clFlowCup_Update_L_801C8334:
-    li r5, 0x0
-    li r0, 0x1
-    stb r5, 0xc0(r30)
-    li r3, 0x0
-    li r4, 0x0
-    stw r5, 0x14(r30)
-    stb r0, 0x10(r30)
-    bl fn_801699D8
-    b clFlowCup_Update_L_801C86F4
-    clFlowCup_Update_L_801C8358:
-    lwz r3, 0x14(r30)
-    cmpwi r3, 0xa
-    bgt clFlowCup_Update_L_801C8404
-    lis r0, 0x4330
-    xoris r3, r3, 0x8000
-    stw r3, 0xc(r1)
-    lfd f3, lbl_806D9C98(r2)
-    stw r0, 0x8(r1)
-    lfs f2, lbl_806D9CD0(r2)
-    lfd f0, 0x8(r1)
-    lfs f4, lbl_806D9C88(r2)
-    fsubs f0, f0, f3
-    lwz r3, 0xd8(r30)
-    stw r0, 0x10(r1)
-    lfs f1, lbl_806D9CD4(r2)
-    fdivs f0, f0, f2
-    fsubs f0, f4, f0
-    stfs f0, 0x20(r3)
-    lwz r3, 0xdc(r30)
-    stfs f0, 0x20(r3)
-    lwz r3, 0xe0(r30)
-    stfs f0, 0x20(r3)
-    lwz r3, 0xe4(r30)
-    stfs f0, 0x20(r3)
-    lwz r3, 0xe8(r30)
-    stfs f0, 0x20(r3)
-    lwz r3, 0xec(r30)
-    stfs f0, 0x20(r3)
-    lwz r3, 0xf0(r30)
-    stfs f0, 0x20(r3)
-    lwz r3, 0xf4(r30)
-    stfs f0, 0x20(r3)
-    lwz r3, 0x1c(r30)
-    stfs f0, 0x20(r3)
-    stfs f0, 0x114(r30)
-    lwz r0, 0x14(r30)
-    xoris r0, r0, 0x8000
-    stw r0, 0x14(r1)
-    lfd f0, 0x10(r1)
-    fsubs f0, f0, f3
-    fdivs f0, f0, f2
-    fmuls f0, f1, f0
-    stfs f0, 0x11c(r30)
-    clFlowCup_Update_L_801C8404:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x16
-    blt clFlowCup_Update_L_801C86F4
-    lwz r0, 0xb0(r30)
-    cmplwi r0, 0x0
-    bne clFlowCup_Update_L_801C86F4
-    lwz r3, 0x8(r30)
-    b clFlowCup_Update_L_801C88D4
-    clFlowCup_Update_L_801C8424:
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x1
-    bne clFlowCup_Update_L_801C8468
-    lwz r3, 0x14(r30)
-    lis r0, 0x4330
-    stw r0, 0x10(r1)
-    xoris r0, r3, 0x8000
-    lfd f2, lbl_806D9C98(r2)
-    stw r0, 0x14(r1)
-    lfs f0, lbl_806D9CD8(r2)
-    lfd f1, 0x10(r1)
-    lfs f3, lbl_806D9CD4(r2)
-    fsubs f1, f1, f2
-    fdivs f0, f1, f0
-    fmuls f0, f3, f0
-    stfs f0, 0x120(r30)
-    b clFlowCup_Update_L_801C849C
-    clFlowCup_Update_L_801C8468:
-    lwz r3, 0x14(r30)
-    lis r0, 0x4330
-    stw r0, 0x10(r1)
-    xoris r0, r3, 0x8000
-    lfd f2, lbl_806D9C98(r2)
-    stw r0, 0x14(r1)
-    lfs f0, lbl_806D9CD8(r2)
-    lfd f1, 0x10(r1)
-    lfs f3, lbl_806D9C94(r2)
-    fsubs f1, f1, f2
-    fdivs f0, f1, f0
-    fmuls f0, f3, f0
-    stfs f0, 0x120(r30)
-    clFlowCup_Update_L_801C849C:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0xa
-    bgt clFlowCup_Update_L_801C84D8
-    xoris r3, r0, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x14(r1)
-    lfd f2, lbl_806D9C98(r2)
-    stw r0, 0x10(r1)
-    lfs f0, lbl_806D9CD0(r2)
-    lfd f1, 0x10(r1)
-    lfs f3, lbl_806D9CD4(r2)
-    fsubs f1, f1, f2
-    fdivs f0, f1, f0
-    fmuls f0, f3, f0
-    stfs f0, 0x11c(r30)
-    clFlowCup_Update_L_801C84D8:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x14
-    blt clFlowCup_Update_L_801C85AC
-    lfs f0, lbl_806D9C80(r2)
-    li r0, 0x1
-    li r3, 0x0
-    stfs f0, 0x120(r30)
-    stfs f0, 0x11c(r30)
-    stw r0, 0xc(r30)
-    stw r3, 0x14(r30)
-    lbz r0, 0x118(r30)
-    cmplwi r0, 0x0
-    bne clFlowCup_Update_L_801C856C
-    li r0, 0x7
-    li r4, 0x185
-    stw r0, 0x4(r30)
-    li r5, 0x1
-    li r6, 0x0
-    lwz r3, 0x18(r30)
-    bl Sprite_SetupAnim
-    lwz r3, 0xf8(r30)
-    li r4, 0x184
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    lwz r3, 0xfc(r30)
-    li r4, 0x1dd
-    li r5, 0x0
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    lwz r3, 0xfc(r30)
-    li r4, 0x1ad4
-    li r5, 0x1ae3
-    bl Sprite_SetAnimParam
-    lwz r3, 0xfc(r30)
-    bl fn_801A0550
-    b clFlowCup_Update_L_801C85AC
-    clFlowCup_Update_L_801C856C:
-    stw r3, 0x4(r30)
-    li r4, 0x18f
-    li r5, 0x1
-    li r6, 0x0
-    lwz r3, 0x18(r30)
-    bl Sprite_SetupAnim
-    lwz r3, 0xf8(r30)
-    li r4, 0x18e
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    lwz r3, 0xfc(r30)
-    li r4, 0x1c7
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    clFlowCup_Update_L_801C85AC:
-    lbz r0, 0x118(r30)
-    lfs f0, lbl_806D9C94(r2)
-    lfs f1, 0x120(r30)
-    cmplwi r0, 0x0
-    fadds f2, f0, f1
-    bne clFlowCup_Update_L_801C85CC
-    lfs f0, lbl_806D9CD4(r2)
-    fadds f2, f0, f1
-    clFlowCup_Update_L_801C85CC:
-    lis r3, lbl_8049AD58@ha
-    li r0, 0x2
-    addi r4, r3, lbl_8049AD58@l
-    mr r5, r30
-    mr r6, r30
-    mtctr r0
-    clFlowCup_Update_L_801C85E4:
-    lfs f1, 0x120(r30)
-    lfs f0, 0x4(r4)
-    lwz r3, 0x2c(r5)
-    fadds f0, f1, f0
-    stfs f0, 0xc(r3)
-    lfs f0, 0x4(r4)
-    lwz r3, 0x124(r6)
-    fadds f0, f2, f0
-    stfs f0, 0xc(r3)
-    lfs f1, 0x120(r30)
-    lfs f0, 0x10(r4)
-    lwz r3, 0x3c(r5)
-    fadds f0, f1, f0
-    stfs f0, 0xc(r3)
-    lfs f0, 0x10(r4)
-    lwz r3, 0x128(r6)
-    fadds f0, f2, f0
-    stfs f0, 0xc(r3)
-    lfs f1, 0x120(r30)
-    lfs f0, 0x1c(r4)
-    lwz r3, 0x4c(r5)
-    fadds f0, f1, f0
-    stfs f0, 0xc(r3)
-    lfs f0, 0x1c(r4)
-    lwz r3, 0x12c(r6)
-    fadds f0, f2, f0
-    stfs f0, 0xc(r3)
-    lwz r3, 0x5c(r5)
-    addi r5, r5, 0x40
-    lfs f1, 0x120(r30)
-    lfs f0, 0x28(r4)
-    fadds f0, f1, f0
-    stfs f0, 0xc(r3)
-    lfs f0, 0x28(r4)
-    addi r4, r4, 0x30
-    lwz r3, 0x130(r6)
-    addi r6, r6, 0x10
-    fadds f0, f2, f0
-    stfs f0, 0xc(r3)
-    bdnz clFlowCup_Update_L_801C85E4
-    lfs f0, lbl_806D9CC4(r2)
-    lwz r3, 0x148(r30)
-    fadds f0, f0, f2
-    stfs f0, 0xc(r3)
-    lwz r3, 0x14c(r30)
-    stfs f0, 0xc(r3)
-    lwz r3, 0x14(r30)
-    cmpwi r3, 0xa
-    blt clFlowCup_Update_L_801C86E8
-    subi r3, r3, 0xa
-    lis r0, 0x4330
-    xoris r3, r3, 0x8000
-    stw r0, 0x10(r1)
-    lfd f2, lbl_806D9C98(r2)
-    stw r3, 0x14(r1)
-    lfs f1, lbl_806D9CD0(r2)
-    lfd f0, 0x10(r1)
-    lfs f3, lbl_806D9C94(r2)
-    fsubs f2, f0, f2
-    lfs f0, lbl_806D9CDC(r2)
-    lwz r3, 0x150(r30)
-    fdivs f1, f2, f1
-    fmadds f0, f3, f1, f0
-    stfs f0, 0xc(r3)
-    b clFlowCup_Update_L_801C86F4
-    clFlowCup_Update_L_801C86E8:
-    lfs f0, lbl_806D9CDC(r2)
-    lwz r3, 0x150(r30)
-    stfs f0, 0xc(r3)
-    clFlowCup_Update_L_801C86F4:
-    lwz r3, 0xfc(r30)
-    cmplwi r3, 0x0
-    beq clFlowCup_Update_L_801C871C
-    lfs f2, lbl_806D9CE0(r2)
-    lfs f0, 0x11c(r30)
-    lfs f1, lbl_806D9C7C(r2)
-    fadds f0, f2, f0
-    stfs f0, 0xc(r3)
-    lwz r3, 0xfc(r30)
-    bl Sprite_AdvanceAnim
-    clFlowCup_Update_L_801C871C:
-    lwz r3, 0xf8(r30)
-    cmplwi r3, 0x0
-    beq clFlowCup_Update_L_801C8744
-    lfs f2, lbl_806D9C74(r2)
-    lfs f0, 0x120(r30)
-    lfs f1, lbl_806D9C7C(r2)
-    fadds f0, f2, f0
-    stfs f0, 0xc(r3)
-    lwz r3, 0xf8(r30)
-    bl Sprite_AdvanceAnim
-    clFlowCup_Update_L_801C8744:
-    lwz r3, 0x18(r30)
-    cmplwi r3, 0x0
-    beq clFlowCup_Update_L_801C8774
-    lfs f2, lbl_806D9CC4(r2)
-    lfs f1, 0x120(r30)
-    lfs f0, lbl_806D9CC8(r2)
-    fadds f2, f2, f1
-    lfs f1, lbl_806D9C7C(r2)
-    stfs f2, 0xc(r3)
-    stfs f0, 0x10(r3)
-    lwz r3, 0x18(r30)
-    bl Sprite_AdvanceAnim
-    clFlowCup_Update_L_801C8774:
-    li r29, 0x0
-    clFlowCup_Update_L_801C8778:
-    mr r3, r30
-    mr r4, r29
-    bl fn_801C6744
-    addi r29, r29, 0x1
-    cmpwi r29, 0x9
-    blt clFlowCup_Update_L_801C8778
-    lwz r3, 0xb0(r30)
-    cmplwi r3, 0x0
-    beq clFlowCup_Update_L_801C8854
-    lfs f1, lbl_806D9C7C(r2)
-    bl Sprite_AdvanceAnim
-    clrlwi. r0, r3, 24
-    bne clFlowCup_Update_L_801C8854
-    lwz r3, 0xb4(r30)
-    cmpwi r3, 0x0
-    bne clFlowCup_Update_L_801C8828
-    addi r0, r3, 0x1
-    stw r0, 0xb4(r30)
-    lwz r0, 0xb0(r30)
-    lwz r3, 0xbc(r30)
-    cmplwi r0, 0x0
-    beq clFlowCup_Update_L_801C8828
-    lwz r0, 0xb4(r30)
-    cmpwi r0, 0x1
-    bne clFlowCup_Update_L_801C8828
-    stw r3, 0xbc(r30)
-    li r4, 0x183
-    li r5, 0x0
-    li r6, 0x0
-    lwz r3, 0xb0(r30)
-    bl Sprite_SetupAnim
-    lwz r0, 0xbc(r30)
-    lis r3, lbl_8049ADD0@ha
-    addi r5, r3, lbl_8049ADD0@l
-    lwz r3, 0xb0(r30)
-    slwi r0, r0, 1
-    li r4, 0x1744
-    lhax r5, r5, r0
-    bl Sprite_SetAnimParam
-    lwz r3, 0xb0(r30)
-    bl fn_801A0550
-    lwz r3, 0xb0(r30)
-    li r4, 0x1
-    bl fn_8019FF6C
-    clFlowCup_Update_L_801C8828:
-    lwz r0, 0xb4(r30)
-    cmpwi r0, 0x2
-    bne clFlowCup_Update_L_801C8854
-    lwz r3, 0xb0(r30)
-    li r4, 0x1
-    bl Sprite_Destroy
-    li r0, 0x0
-    stw r0, 0xb0(r30)
-    lwz r3, 0xb4(r30)
-    addi r0, r3, 0x1
-    stw r0, 0xb4(r30)
-    clFlowCup_Update_L_801C8854:
-    mr r31, r30
-    mr r29, r30
-    li r28, 0x0
-    clFlowCup_Update_L_801C8860:
-    lwz r0, 0xc4(r31)
-    cmpwi r0, -0x1
-    beq clFlowCup_Update_L_801C8880
-    slwi r3, r0, 2
-    lfs f1, lbl_806D9C7C(r2)
-    addi r0, r3, 0xd8
-    lwzx r3, r29, r0
-    bl Sprite_AdvanceAnim
-    clFlowCup_Update_L_801C8880:
-    addi r28, r28, 0x1
-    addi r29, r29, 0x8
-    cmpwi r28, 0x4
-    addi r31, r31, 0x4
-    blt clFlowCup_Update_L_801C8860
-    lwz r3, 0x1c(r30)
-    cmplwi r3, 0x0
-    beq clFlowCup_Update_L_801C88A8
-    lfs f1, lbl_806D9C7C(r2)
-    bl Sprite_AdvanceAnim
-    clFlowCup_Update_L_801C88A8:
-    lwz r3, 0x108(r30)
-    cmplwi r3, 0x0
-    beq clFlowCup_Update_L_801C88BC
-    lfs f1, lbl_806D9C7C(r2)
-    bl Sprite_AdvanceAnim
-    clFlowCup_Update_L_801C88BC:
-    lwz r3, 0x10c(r30)
-    cmplwi r3, 0x0
-    beq clFlowCup_Update_L_801C88D0
-    lfs f1, lbl_806D9C7C(r2)
-    bl Sprite_AdvanceAnim
-    clFlowCup_Update_L_801C88D0:
-    li r3, -0x1
-    clFlowCup_Update_L_801C88D4:
-    lwz r0, 0x34(r1)
-    lwz r31, 0x2c(r1)
-    lwz r30, 0x28(r1)
-    lwz r29, 0x24(r1)
-    lwz r28, 0x20(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+static inline void SetPairAlpha(clFlowCup *self, float a) {
+    self->pairs[0].a->alpha = a;
+    self->pairs[0].b->alpha = a;
+    self->pairs[1].a->alpha = a;
+    self->pairs[1].b->alpha = a;
+    self->pairs[2].a->alpha = a;
+    self->pairs[2].b->alpha = a;
+    self->pairs[3].a->alpha = a;
+    self->pairs[3].b->alpha = a;
+    self->sprite1C->alpha = a;
+    self->alpha114 = a;
 }
 
+static inline void PlayCupMusic(clFlowCup *self, int sel) {
+    if (self->slots[8].sub != 0 && self->slots[8].anim == 1) {
+        self->musicSel = sel;
+        Sprite_SetupAnim(self->slots[8].sub, 0x183, 0, 0);
+        Sprite_SetAnimParam(self->slots[8].sub, 0x1744, lbl_8049ADD0[self->musicSel]);
+        fn_801A0550(self->slots[8].sub);
+        fn_8019FF6C(self->slots[8].sub, 1);
+    }
+}
+
+static inline void SetX(CupSpr *spr, float x) {
+    spr->x = x;
+}
+
+static inline void SetPos(CupSpr *spr, float x, float y) {
+    spr->x = x;
+    spr->y = y;
+}
+
+static inline void SetScale(CupSpr *spr, float sx, float sy) {
+    spr->sx = sx;
+    spr->sy = sy;
+}
+
+static inline void UpdateSides(clFlowCup *self) {
+    CupSpr *spr;
+
+    fn_801C64DC(self, self->round);
+    self->show110 = 0;
+    spr = self->sprite108;
+    if (spr != 0) {
+        SetPos(spr, lbl_8039B228[self->round].x0, lbl_8039B228[self->round].y0);
+        self->sprite108->rot = lbl_806D9C68 * lbl_8039B228[self->round].rot0;
+        SetScale(self->sprite108, lbl_806D9C70, lbl_806D9C70);
+        if (self->round != 0 || self->mode == 1) {
+            self->show110 = 1;
+        }
+    }
+    self->show111 = 0;
+    spr = self->sprite10C;
+    if (spr != 0) {
+        { float x = lbl_8039B228[self->round].x1; SetPos(spr, x, lbl_8039B228[self->round].y1); }
+        self->sprite10C->rot = lbl_806D9C68 * lbl_8039B228[self->round].rot1;
+        SetScale(self->sprite10C, lbl_806D9C70, lbl_806D9C70);
+        if (self->round != 7) {
+            self->show111 = 1;
+        }
+        if (self->mode == 0 && fn_801D5C88(g_playerData, g_ccClass) == 1) {
+            self->show111 = 1;
+        }
+        if (self->mode == 0 && self->round == 6 && self->unlock154 == 0) {
+            self->show111 = 0;
+        }
+        if (self->mode == 1 && self->round == 6 && self->unlock155 == 0) {
+            self->show111 = 0;
+        }
+    }
+}
+
+int clFlowCup_Update(clFlowCup *self) {
+    int i;
+    int j;
+
+    RumbleUpdate();
+    if (self->advance != 0) {
+        self->state++;
+        self->advance = 0;
+    }
+    self->timer++;
+    switch (self->state) {
+    case 0:
+        if (self->timer == 1) {
+            CupTile_StateChange(self, 0, 1);
+        }
+        if (self->timer == 6) {
+            CupTile_StateChange(self, 1, 1);
+        }
+        if (self->timer == 10) {
+            CupTile_StateChange(self, 2, 1);
+        }
+        if (self->timer == 14) {
+            CupTile_StateChange(self, 3, 1);
+        }
+        if (self->timer == 18) {
+            CupTile_StateChange(self, 4, 1);
+        }
+        if (self->timer == 20) {
+            CupTile_StateChange(self, 5, 1);
+        }
+        if (self->timer == 22) {
+            CupTile_StateChange(self, 6, 1);
+        }
+        if (self->timer == 26) {
+            CupTile_StateChange(self, 7, 1);
+        }
+        if (self->timer == 30) {
+            if (self->mode == 1) {
+                Sprite_SetupAnim(self->spriteF8, 0x18E, 1, 0);
+                Sprite_SetupAnim(self->spriteFC, 0x1C7, 1, 0);
+            } else {
+                Sprite_SetupAnim(self->spriteF8, 0x184, 1, 0);
+                Sprite_SetupAnim(self->spriteFC, 0x1DD, 1, 0);
+                Sprite_SetAnimParam(self->spriteFC, 0x1AD4, 0x1AE3);
+            }
+        }
+        if (self->timer == 40) {
+            if (self->mode == 1) {
+                self->sprite18 = new CupSpr(0x18F, 1, lbl_806D9CC4, lbl_806D9CC8, lbl_806D9C88, lbl_806D9C88, lbl_806D9C80, lbl_806D9C88);
+            } else {
+                self->sprite18 = new CupSpr(0x185, 1, lbl_806D9CC4, lbl_806D9CC8, lbl_806D9C88, lbl_806D9C88, lbl_806D9C80, lbl_806D9C88);
+            }
+            self->showC0 = 1;
+        }
+        if (self->timer == 60) {
+            self->sprite108 = new CupSpr(0x9C, 1, 0);
+            self->sprite10C = new CupSpr(0x9C, 1, 0);
+            fn_8019FF6C(self->sprite108, 1);
+            fn_8019FF6C(self->sprite10C, 1);
+            CupTile_StateChange(self, self->round, 4);
+            UpdateSides(self);
+            SetScreenBrightness(self->brightness);
+            lbl_806D184C = 1;
+            lbl_806D184D = 0;
+            self->advance = 1;
+            fn_801699D8(0, 1);
+        }
+        if (self->timer >= 18 && self->timer <= 30) {
+            SetPairAlpha(self, ((float)self->timer - lbl_806D9CCC) / lbl_806D9C90);
+        }
+        break;
+    case 1: {
+        int prev = self->round;
+        int st;
+
+        if (input_state() != 0) {
+            { InputState *st = input_state(); self->round += st->value14; }
+            if (self->round > 6) {
+                if (self->mode == 0 && self->unlock154 == 0) {
+                    self->round = 6;
+                }
+                if (self->mode == 1 && self->unlock155 == 0) {
+                    self->round = 6;
+                }
+            }
+            if (self->round > 7) {
+                self->round = 7;
+                if (self->mode == 0 && fn_801D5C88(g_playerData, g_ccClass) == 1) {
+                    Sprite_SetupAnim(self->sprite148, 0x18F, 1, 0);
+                    Sprite_SetupAnim(self->sprite14C, 0x18E, 1, 0);
+                    Sprite_SetupAnim(self->sprite150, 0x1C7, 1, 0);
+                    self->mode = 1;
+                    self->round = 0;
+                    self->state = 4;
+                    self->timer = 0;
+                }
+            }
+            if (self->round < 0) {
+                self->round = 0;
+                if (self->mode == 1) {
+                    Sprite_SetupAnim(self->sprite148, 0x185, 1, 0);
+                    Sprite_SetupAnim(self->sprite14C, 0x184, 1, 0);
+                    Sprite_SetupAnim(self->sprite150, 0x1DD, 1, 0);
+                    Sprite_SetAnimParam(self->sprite150, 0x1AD4, 0x1AE3);
+                    self->mode = 0;
+                    self->round = 7;
+                    self->state = 4;
+                    self->timer = 0;
+                }
+            }
+        }
+        if (prev != self->round) {
+            CupTile_StateChange(self, prev, 2);
+            CupTile_StateChange(self, self->round, 4);
+            PlayCupMusic(self, self->round);
+            UpdateSides(self);
+            fn_801B7CAC();
+        }
+        st = self->x08;
+        switch (st) {
+        case -1:
+            self->brightness -= lbl_806D9CA0;
+            InputMgr_GetPlayer(GetInputManager(), 0);
+            if (input_state()->value18 == 1 || self->brightness < lbl_806D9C80) {
+                SetRumbleMode(0, 1, 1);
+                if (input_state() != 0) {
+                    InputState *state = input_state();
+
+                    state->active = 0;
+                    state->value18 = 0;
+                    state->value1C = 0;
+                }
+                if (self->round == 0) {
+                    SetCourseParams(7, 0, 0, 0);
+                }
+                if (self->round == 1) {
+                    SetCourseParams(1, 0, 0, 0);
+                }
+                if (self->round == 2) {
+                    SetCourseParams(8, 0, 0, 0);
+                }
+                if (self->round == 3) {
+                    SetCourseParams(2, 0, 0, 0);
+                }
+                if (self->round == 4) {
+                    SetCourseParams(3, 0, 0, 0);
+                }
+                if (self->round == 5) {
+                    SetCourseParams(4, 0, 0, 0);
+                }
+                if (self->round == 6) {
+                    SetCourseParams(5, 0, 0, 0);
+                }
+                if (self->round == 7) {
+                    SetCourseParams(6, 0, 0, 0);
+                }
+                self->x08 = 0x1B;
+                self->brightness = lbl_806D9CA4;
+                fn_801B7C64();
+            }
+            SetScreenBrightness(self->brightness);
+            st = self->x08;
+            break;
+        }
+        if (st != -1) {
+            for (i = 0; i < 9; i++) {
+                if (i == self->round) {
+                    CupTile_StateChange(self, i, 5);
+                } else {
+                    CupTile_StateChange(self, i, 3);
+                }
+            }
+            Sprite_Destroy(self->sprite18, 1);
+            Sprite_Destroy(self->sprite108, 1);
+            Sprite_Destroy(self->sprite10C, 1);
+            self->sprite18 = 0;
+            self->timer = 0;
+            self->sprite108 = 0;
+            self->sprite10C = 0;
+            self->advance = 1;
+            lbl_806D184C = -1;
+            fn_801B85DC(0x15, self->mode, 0);
+        }
+        break;
+    }
+    case 2:
+        if (self->timer == 60) {
+            CupTile_StateChange(self, self->round, 6);
+            fn_801B87D8();
+            if (self->slots[8].sub != 0 && self->slots[8].anim == 1) {
+                self->slots[8].anim = 2;
+                Sprite_SetupAnim(self->slots[8].sub, 0x35, 0, 0);
+                Sprite_SetAnimParam(self->slots[8].sub, 0x1744, lbl_8049ADD0[self->musicSel]);
+                fn_801A0550(self->slots[8].sub);
+            }
+            self->showC0 = 0;
+            self->timer = 0;
+            self->advance = 1;
+            fn_801699D8(0, 0);
+        }
+        break;
+    case 3:
+        if (self->timer <= 10) {
+            SetPairAlpha(self, lbl_806D9C88 - (float)self->timer / lbl_806D9CD0);
+            self->x11C = lbl_806D9CD4 * ((float)self->timer / lbl_806D9CD0);
+        }
+        if (self->timer >= 22 && self->slots[8].sub == 0) {
+            return self->x08;
+        }
+        break;
+    case 4: {
+        float base;
+        const CupMark *mark;
+
+        if (self->mode == 1) {
+            self->x120 = lbl_806D9CD4 * ((float)self->timer / lbl_806D9CD8);
+        } else {
+            self->x120 = lbl_806D9C94 * ((float)self->timer / lbl_806D9CD8);
+        }
+        if (self->timer <= 10) {
+            self->x11C = lbl_806D9CD4 * ((float)self->timer / lbl_806D9CD0);
+        }
+        if (self->timer >= 20) {
+            self->x120 = lbl_806D9C80;
+            self->x11C = lbl_806D9C80;
+            self->state = 1;
+            self->timer = 0;
+            if (self->mode == 0) {
+                self->round = 7;
+                Sprite_SetupAnim(self->sprite18, 0x185, 1, 0);
+                Sprite_SetupAnim(self->spriteF8, 0x184, 1, 0);
+                Sprite_SetupAnim(self->spriteFC, 0x1DD, 0, 0);
+                Sprite_SetAnimParam(self->spriteFC, 0x1AD4, 0x1AE3);
+                fn_801A0550(self->spriteFC);
+            } else {
+                self->round = 0;
+                Sprite_SetupAnim(self->sprite18, 0x18F, 1, 0);
+                Sprite_SetupAnim(self->spriteF8, 0x18E, 1, 0);
+                Sprite_SetupAnim(self->spriteFC, 0x1C7, 1, 0);
+            }
+        }
+        base = lbl_806D9C94 + self->x120;
+        if (self->mode == 0) {
+            base = lbl_806D9CD4 + self->x120;
+        }
+        for (i = 0; i < 8; i++) {
+            SetX(self->slots[i].sprite, self->x120 + lbl_8049AD58[i].x);
+            SetX(self->icons[i], base + lbl_8049AD58[i].x);
+        }
+        {
+            float x = lbl_806D9CC4 + base;
+
+            self->sprite148->x = x;
+            self->sprite14C->x = x;
+        }
+        if (self->timer >= 10) {
+            self->sprite150->x = lbl_806D9C94 * ((float)(self->timer - 10) / lbl_806D9CD0) + lbl_806D9CDC;
+        } else {
+            self->sprite150->x = lbl_806D9CDC;
+        }
+        break;
+    }
+    }
+    if (self->spriteFC != 0) {
+        self->spriteFC->x = lbl_806D9CE0 + self->x11C;
+        Sprite_AdvanceAnim(self->spriteFC, lbl_806D9C7C);
+    }
+    if (self->spriteF8 != 0) {
+        self->spriteF8->x = lbl_806D9C74 + self->x120;
+        Sprite_AdvanceAnim(self->spriteF8, lbl_806D9C7C);
+    }
+    if (self->sprite18 != 0) {
+        SetPos(self->sprite18, lbl_806D9CC4 + self->x120, lbl_806D9CC8);
+        Sprite_AdvanceAnim(self->sprite18, lbl_806D9C7C);
+    }
+    for (i = 0; i < 9; i++) {
+        fn_801C6744(self, i);
+    }
+    if (self->slots[8].sub != 0 && Sprite_AdvanceAnim(self->slots[8].sub, lbl_806D9C7C) == 0) {
+        if (self->slots[8].anim == 0) {
+            self->slots[8].anim++;
+            PlayCupMusic(self, self->musicSel);
+        }
+        if (self->slots[8].anim == 2) {
+            Sprite_Destroy(self->slots[8].sub, 1);
+            self->slots[8].sub = 0;
+            self->slots[8].anim++;
+        }
+    }
+    for (j = 0; j < 4; j++) {
+        if (self->pairSel[j] != -1) {
+            Sprite_AdvanceAnim((&self->pairs[j].a)[self->pairSel[j]], lbl_806D9C7C);
+        }
+    }
+    if (self->sprite1C != 0) {
+        Sprite_AdvanceAnim(self->sprite1C, lbl_806D9C7C);
+    }
+    if (self->sprite108 != 0) {
+        Sprite_AdvanceAnim(self->sprite108, lbl_806D9C7C);
+    }
+    if (self->sprite10C != 0) {
+        Sprite_AdvanceAnim(self->sprite10C, lbl_806D9C7C);
+    }
+    return -1;
+}
 
 
 /* === extracted from auto_clFlowCup_Dtor_text === */
@@ -1562,14 +725,6 @@ asm void clFlowCup_Update(void) { /* 0x801C772C size:0x11C8 */
 /* --- forward decls --- */
 #pragma exceptions on
 
-static inline InputState *input_state(void) {
-    InputState *state = g_pInputState;
-
-    if (state == 0) {
-        return 0;
-    }
-    return state;
-}
 
 static inline int GetRound(clFlowCup *self) {
     int round = 0;
@@ -1636,7 +791,6 @@ extern "C" clFlowCup *clFlowCup_Dtor(clFlowCup *self, short flags) {
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void Alloc();
 extern void InitBGM();
 extern void InitRumbleController();
 extern void InitializeFrameSelection();
@@ -1646,27 +800,12 @@ extern void PreloadResource();
 extern void SetSyncTarget();
 extern void SetupBgSprites();
 extern void SpriteSystem_EnsureInit();
-extern void Sprite_CreateWithParams();
-extern void Sprite_InitWithAnim();
-extern void Sprite_SetAnimParam();
 extern void fn_801A0310();
-extern void fn_801A0550();
-extern void fn_801C64DC();
 extern void fn_801D5B8C();
-extern void fn_801D5C88();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int g_ccClass;
-extern unsigned int lbl_806D9C70;
-extern unsigned int lbl_806D9C74;
 extern unsigned int lbl_806D9C78;
-extern unsigned int lbl_806D9C80;
 extern const float lbl_806D9C88;
-extern unsigned int lbl_806D9C94;
-extern unsigned int lbl_806D9CC8;
-extern unsigned int lbl_806D9CD8;
-extern unsigned int lbl_806D9CDC;
-extern unsigned int lbl_806D9CE0;
 extern unsigned int lbl_806D9CE4;
 extern unsigned int lbl_806D9CE8;
 extern unsigned int lbl_806D9CEC;
@@ -1680,7 +819,6 @@ extern unsigned int lbl_806D9D04;
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int g_playerData[];
 extern CupMark lbl_8049AD58[];
 
 /* --- function index (1 fns, .text 0x801C8AB4..0x801C9288) ---

@@ -1246,8 +1246,8 @@
   "src/game/clFlowCup.c": {
     "extab_clFlowCup_Draw": "@etb_8001428C",
     "extabindex_clFlowCup_Draw": "@eti_80027E00",
-    "extab_clFlowCup_Update": "@etb_80014294",
-    "extabindex_clFlowCup_Update": "@eti_80027E0C",
+    "__ct__6CupSprFiiffffff": "Sprite_CreateWithParams",
+    "__ct__6CupSprFiii": "Sprite_InitWithAnim",
     "extab_clFlowCup_Dtor": "@etb_800142DC",
     "extabindex_clFlowCup_Dtor": "@eti_80027E18",
     "extab_clFlowCup_Init": "@etb_800142E4",
