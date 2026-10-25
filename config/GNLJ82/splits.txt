@@ -7954,6 +7954,10 @@ triforce/amnet.c:
 triforce/amsock.c:
 	.text       start:0x8028F45C end:0x80290ED8
 
+triforce/amsrv.c:
+	.text       start:0x80290ED8 end:0x8029179C
+	.bss        start:0x80699220 end:0x806992A0
+
 dolphin/dvd/dvdlow.c:
 	.text       start:0x80294E6C end:0x80294EA4
 	.bss        start:0x806A47A0 end:0x806A4800
