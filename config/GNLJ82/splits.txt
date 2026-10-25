@@ -4454,6 +4454,11 @@ game/BombItem_DropAndSpawnExplosionTick.c:
 	extabindex  start:0x80024020 end:0x8002402C
 	.text       start:0x800FBBD4 end:0x800FBD88
 
+game/BombExplosion_UpdateShockwaveVfx.c:
+	extab       start:0x8000B764 end:0x8000B76C
+	extabindex  start:0x8002402C end:0x80024038
+	.text       start:0x800FBD88 end:0x800FC6D8
+
 game/BombExplosion_InitOrDestroy.c:
 	extab       start:0x8000B76C end:0x8000B774
 	extabindex  start:0x80024038 end:0x80024044
@@ -4483,6 +4488,16 @@ game/Boomerang_ReturnAndAcquireTargetTick.c:
 	extab       start:0x8000B7B4 end:0x8000B7BC
 	extabindex  start:0x800240A4 end:0x800240B0
 	.text       start:0x800FEE8C end:0x800FF18C
+
+game/Boomerang_LaunchAndTickStateMachine.c:
+	extab       start:0x8000B7BC end:0x8000B7C4
+	extabindex  start:0x800240B0 end:0x800240BC
+	.text       start:0x800FF18C end:0x800FFBB8
+
+game/BoomerangItem_Tick.c:
+	extab       start:0x8000B7C4 end:0x8000B7CC
+	extabindex  start:0x800240BC end:0x800240C8
+	.text       start:0x800FFBB8 end:0x80100284
 
 game/fn_801022E0.c:
 	extab       start:0x8000B7EC end:0x8000B7F4
