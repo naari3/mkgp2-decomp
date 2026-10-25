@@ -7442,6 +7442,13 @@ sysdolphin/baselib/id.c:
 	.bss        start:0x806CE7F0 end:0x806CE9B0
 	.sdata      start:0x806D0E70 end:0x806D0E80
 
+sysdolphin/baselib/wobj.c:
+	.text       start:0x802D9CD8 end:0x802DA5B0
+	.data       start:0x804FD2D8 end:0x804FD380
+	.sdata      start:0x806D0E80 end:0x806D0EA8
+	.sbss       start:0x806D2230 end:0x806D2238
+	.sdata2     start:0x806DCDF8 end:0x806DCE18
+
 sysdolphin/baselib/fog.c:
 	.text       start:0x802DA5B0 end:0x802DAE88
 	.data       start:0x804FD380 end:0x804FD498
