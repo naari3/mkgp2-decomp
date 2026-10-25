@@ -4411,6 +4411,11 @@ game/fn_8010DA90.c:
 	extabindex  start:0x80024290 end:0x8002429C
 	.text       start:0x8010DA90 end:0x8010DCAC
 
+game/fn_8010DCAC.c:
+	extab       start:0x8000B904 end:0x8000B90C
+	extabindex  start:0x8002429C end:0x800242A8
+	.text       start:0x8010DCAC end:0x8010E2A8
+
 game/fn_8010EA84.c:
 	extab       start:0x8000B914 end:0x8000B91C
 	extabindex  start:0x800242B4 end:0x800242C0
