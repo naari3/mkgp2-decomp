@@ -1462,6 +1462,11 @@ game/LObjList.cpp:
 	extabindex  start:0x800212C0 end:0x800212D8
 	.text       start:0x80076370 end:0x80076494
 
+game/SceneModel_Init.cpp:
+	extab       start:0x80008370 end:0x80008378
+	extabindex  start:0x800212D8 end:0x800212E4
+	.text       start:0x80076494 end:0x8007660C
+
 game/Sci2Card.cpp:
 	extab       start:0x80008378 end:0x800083C0
 	extabindex  start:0x800212E4 end:0x80021320

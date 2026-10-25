@@ -1181,6 +1181,7 @@ config.libs = [
             Object(Matching, "game/Profiler_RecordFrame.c"),
             Object(Matching, "game/MetricsTable.c"),
             Object(Matching, "game/LObjList.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/SceneModel_Init.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Sci2Card.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/Sci2Card_Tick.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/MemoryManager_Alloc.cpp", extra_cflags=["-Cpp_exceptions on"]),
