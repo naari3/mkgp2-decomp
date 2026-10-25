@@ -579,7 +579,7 @@ config.libs = [
             Object(Matching, "game/clFlowKart_HandleConfirm.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowKart_SetupTextLayout.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clFlowKart_UpdateDisplay.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/clFlowKart_Init.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/clFlowKart_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
             Object(Matching, "game/clFlowKart_Update.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++"]),
             Object(Matching, "game/CardRW_CleaningTest_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardRW_TestTopMenu_Page.c", extab_padding=b"\x00\x00"),

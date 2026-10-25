@@ -1591,8 +1591,18 @@
     "extabindex_clFlowKart_UpdateDisplay": "@eti_80028130"
   },
   "src/game/clFlowKart_Init.c": {
-    "extab_clFlowKart_Init": "@etb_800153BC",
-    "extabindex_clFlowKart_Init": "@eti_8002816C"
+    "__ct__7FKOwnerFv": "clFlowKart_Init",
+    "__vt__7FKOwner": "lbl_8049BBD0",
+    "__ct__6FKBaseFv": "InitializeFrameSelection",
+    "__dt__6FKBaseFv": "dtor_801BA14C",
+    "__ct__10FKResourceFv": "ResCtrl_Init",
+    "__dt__10FKResourceFv": "dtor_80082960",
+    "__ct__7FKSceneFPCc": "Scene3D_Init",
+    "__ct__7FKModelFPCcUc": "SceneModel_Init",
+    "__ct__8FKDriverFiiPfiii": "KartDriver_New_Full",
+    "__ct__5FKTexFv": "TexMgr_Init",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/clFlowKart_Update.c": {
     "__ct__10FlowSpriteFiiffffff": "Sprite_CreateWithParams",

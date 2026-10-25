@@ -1,50 +1,102 @@
-/* Bounded genuine C++ retrofit draft (cycle_retrofit_flowkart_init).
- * Three material approaches: 85.655464%, 88.13445%, 93.42437% text.
- * Best draft: 948B text vs 952B target, 184B natural EH (95.652176%),
- * 12B index (91.66667%). No genuine matching gain; exact original fallback
- * below remains linked. Do not re-enable without new structural evidence.
- * ABI validated from complete authoritative target and direct callee bodies;
- * Ghidra, runtime and CI were unavailable/unverified.
- * Independent arrays remove aggregate interior-pointer CSE, but CW reverses
- * scale/translation stack placement (scale=SP+74, translation=SP+14).
- * Pool base initializes after ResCtrl (PC38/40), not in target prologue.
- * Vec3 copy folds source offsets, losing target source+4A4 address temporary.
- * Table indexing similarly reassociates base+offset+index. Automatic EH has
- * exact cleanup kinds/owners/registers, but PC40 -> 38 and late actions -4.
- *
- * For a future genuine source probe, Object needs -Cpp_exceptions on and
- * the TU-only bridge replaces manual extab/index names with:
- * __ct__7FKOwnerFv=clFlowKart_Init; __vt__7FKOwner=lbl_8049BBD0
- * __ct__6FKBaseFv=InitializeFrameSelection; __dt__6FKBaseFv=dtor_801BA14C
- * __ct__10FKResourceFv=ResCtrl_Init; __dt__10FKResourceFv=dtor_80082960
- * __ct__7FKSceneFPCc=Scene3D_Init; __ct__7FKModelFPCcUc=SceneModel_Init
- * __ct__8FKDriverFiiPfiii=KartDriver_New_Full; __ct__5FKTexFv=TexMgr_Init
- * The observed pool view is address-only, owns no data, and intentionally
- * spans existing adjacent rodata symbols through scene path at +4E0.
+/* clFlowKart_Init: FlowKart constructor (C++, compiled with -lang=c++).
+ * The TU owns .rodata 0x8039E508..0x8039E9F8 so the pooled base register is
+ * hoisted to the prologue like the target. Unused objects stay global so they
+ * are emitted in place; "cone.dat" is a string literal emitted after them.
+ * Mangled names are mapped to the original symbols in
+ * tools/extab_user_renames.json.
  */
-#if 0
-/* Observed FlowKart constructor lifetime and ABI views; no shared layout claims. */
-#pragma cplusplus on
+#pragma readonly_strings on
+
 void* operator new(unsigned long);
 void operator delete(void*);
 struct FKScene;
 struct FKDriver;
 struct FKTex;
 struct FKVec { float x, y, z; };
-struct FKPool {
-    unsigned char opaque[0x430];
-    int mileage[13], texture[13];
-    unsigned char opaque498[12];
-    FKVec position;
-    unsigned char opaque4b0[0x30];
-    char scenePath[1];
+/* .rodata 0x8039E508..0x8039E9F8 */
+extern "C" {
+extern const unsigned int lbl_8039E508[0x10C];
+/* tables used by other clFlowKart functions */
+const unsigned int lbl_8039E508[0x10C] = {
+    0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000,
+    0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000,
+    0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000,
+    0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000,
+    0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
+    0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000,
+    0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000,
+    0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000,
+    0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000,
+    0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
+    0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x0000001E, 0x000005BE, 0x000004CE,
+    0x00000096, 0x000002EE, 0x00000546, 0x0000010E, 0x00000276, 0x000003DE,
+    0x00000186, 0x00000456, 0x000001FE, 0x00000366,
 };
+/* coin mileage needed per character */
+extern const int g_kartEnhancedUnlockThreshold[13];
+const int g_kartEnhancedUnlockThreshold[13] = {
+    0x00000636, 0x00000BD6, 0x00000AE6, 0x000006AE, 0x00000906, 0x00000B5E,
+    0x00000726, 0x0000088E, 0x000009F6, 0x0000079E, 0x00000A6E, 0x00000816,
+    0x0000097E,
+};
+/* texture index per character */
+extern const int lbl_8039E96C[13];
+const int lbl_8039E96C[13] = {
+    0x00000002, 0x00000002, 0x00000003, 0x00000001, 0x00000003, 0x00000000,
+    0x00000003, 0x00000001, 0x00000002, 0x00000000, 0x00000001, 0x00000002,
+    0x00000000,
+};
+extern const int lbl_8039E9A0[3];
+const int lbl_8039E9A0[3] = {
+    0x00000000, 0x00000000, 0x00000000,
+};
+}
+static const FKVec s_position = { 10.0f, -5.5f, 3.0f };
+extern "C" {
+extern const int lbl_8039E9B8[5];
+const int lbl_8039E9B8[5] = { 0x16B4, 0x16B3, 0x16B2, 0x16B1, 0x16B0 };
+extern const char clFlowKart[];
+const char clFlowKart[] = "clFlowKart";
+extern const char clFlowProcess[];
+const char clFlowProcess[] = "clFlowProcess";
+}
 struct FKInput {
     unsigned char opaque0[4], enabled, opaque5[0x13];
     int first, second;
 };
 extern "C" {
-extern const FKPool lbl_8039E508;
 extern unsigned int g_characterId;
 extern FKInput* g_pInputState;
 extern unsigned char g_playerData[];
@@ -121,9 +173,8 @@ struct FKOwner : FKBase {
 };
 FKOwner::FKOwner()
 {
-    const FKPool* pool = &lbl_8039E508;
     FKVec vector;
-    float scaling[12], rotation[12], translation[12];
+    float translation[12], rotation[12], scaling[12];
     float z, zero, initialScale;
     int character;
     SetSyncTarget(15);
@@ -134,8 +185,8 @@ FKOwner::FKOwner()
     active = 0;
     driver = 0;
     alternate = 0;
-    scene = new FKScene(pool->scenePath);
-    model = new FKModel(pool->scenePath, 0);
+    scene = new FKScene("cone.dat");
+    model = new FKModel("cone.dat", 0);
     initialScale = lbl_806DA174;
     zero = lbl_806DA13C;
     z = lbl_806DA178;
@@ -157,7 +208,7 @@ FKOwner::FKOwner()
     CObj_ApplyViewport(scene, &vector);
     character = g_characterId;
     PSMTXScale(scaling, lbl_806DA130, lbl_806DA130, lbl_806DA130);
-    copy_position(&position, &pool->position);
+    copy_position(&position, &s_position);
     PSMTXTrans(translation, position.x, position.y, position.z);
     PSMTXIdentity(matrix);
     PSMTXConcat(scaling, matrix, matrix);
@@ -179,7 +230,7 @@ FKOwner::FKOwner()
     SetScreenBrightness(lbl_806DA144);
     fn_801B8918(0x1ae2);
     texture = new FKTex;
-    TexMgr_SetTexture(texture, GetTextureByIdAndLang(indexed_value(pool->texture, g_characterId) + 0x95, -1));
+    TexMgr_SetTexture(texture, GetTextureByIdAndLang(indexed_value(lbl_8039E96C, g_characterId) + 0x95, -1));
     fn_801F93EC(texture, lbl_806DA17C, lbl_806DA14C);
     texture->scale = !isJapanese() ? lbl_806DA180 : lbl_806DA184;
     resource.id = 0x1d5c;
@@ -190,7 +241,7 @@ FKOwner::FKOwner()
     resource.y = lbl_806DA154;
     resource.z = lbl_806DA15C;
     character = g_characterId;
-    if (GetCoinMilage(g_playerData) < indexed_value(pool->mileage, character)) {
+    if (GetCoinMilage(g_playerData) < g_kartEnhancedUnlockThreshold[character]) {
         resource.parameters[0] = -256;
         resource.parameters[1] = -256;
         resource.parameters[2] = -256;
@@ -198,345 +249,3 @@ FKOwner::FKOwner()
     }
     InitRumbleController(1);
 }
-#pragma cplusplus off
-#endif
-
-/* === extracted from auto_clFlowKart_Init_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void Alloc();
-extern void CObj_ApplyViewport();
-extern void CObj_LoadIntoGX();
-extern void GetCoinMilage();
-extern void GetTextureByIdAndLang();
-extern void InitRumbleController();
-extern void InitializeFrameSelection();
-extern void KartDriver_New_Full();
-extern void PSMTXIdentity();
-extern void PSMTXConcat();
-extern void PSMTXScale();
-extern void PSMTXTrans();
-extern void PreloadResource();
-extern void RenderObj_ItemStateMachine_Timed();
-extern void ResCtrl_Init();
-extern void Scene3D_Init();
-extern void SceneModel_Init();
-extern void SetScreenBrightness();
-extern void SetSyncTarget();
-extern void TexMgr_Init();
-extern void TexMgr_SetTexture();
-extern void fn_801B8918();
-extern void fn_801F93EC();
-extern void PSMTXRotRad();
-extern void isJapanese();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int g_characterId;
-extern unsigned int g_pInputState;
-extern unsigned int lbl_806DA130;
-extern unsigned int lbl_806DA134;
-extern unsigned int lbl_806DA138;
-extern unsigned int lbl_806DA13C;
-extern unsigned int lbl_806DA144;
-extern unsigned int lbl_806DA14C;
-extern unsigned int lbl_806DA154;
-extern unsigned int lbl_806DA15C;
-extern unsigned int lbl_806DA174;
-extern unsigned int lbl_806DA178;
-extern unsigned int lbl_806DA17C;
-extern unsigned int lbl_806DA180;
-extern unsigned int lbl_806DA184;
-extern unsigned int lbl_806DA188;
-extern unsigned int lbl_806DA18C;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int g_playerData[];
-extern unsigned int lbl_8039E508[];
-extern unsigned int lbl_8049BBD0[];
-
-/* --- function index (1 fns, .text 0x801D83D4..0x801D878C) ---
- * [  0] 0x801D83D4 size:0x3B8   global clFlowKart_Init
- */
-
-/* --- forward decls --- */
-asm void clFlowKart_Init(void);
-
-/* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void MemoryManager_TimedFree();
-extern void dtor_80082960();
-extern void dtor_801BA14C();
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; void *f27; unsigned int f28; unsigned int f29; void *f30; unsigned int f31; unsigned int f32; void *f33; unsigned int f34; void *f35; unsigned int f36; unsigned int f37; void *f38; unsigned int f39; unsigned int f40; void *f41; unsigned int f42; unsigned int f43; void *f44; unsigned int f45; } extab_clFlowKart_Init = { 0x200A0000, 0x00000040, 0x0000007C, 0x00000048, 0x000D0070, 0x0000008C, 0x00000068, 0x00000098, 0x00000070, 0x000000AC, 0x00000088, 0x000000F8, 0x00350070, 0x000001F0, 0x00000094, 0x000001FC, 0x00000070, 0x00000220, 0x000000A0, 0x00000240, 0x001D0070, 0x000002C0, 0x000000AC, 0x000002E0, 0x002D0070, 0x00000000, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0780001E, 0x00000084, (void *)&dtor_80082960, 0x8680001E, 0x00000000, (void *)&dtor_801BA14C, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x01000070, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x01000070, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x01000070, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x01000070 };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clFlowKart_Init = {
-    (void *)&clFlowKart_Init, 0x000003B8, (void *)&extab_clFlowKart_Init
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void clFlowKart_Init(void) { /* 0x801D83D4 size:0x3B8 */
-    nofralloc
-    stwu r1, -0xc0(r1)
-    mflr r0
-    lis r4, lbl_8039E508@ha
-    stw r0, 0xc4(r1)
-    stw r31, 0xbc(r1)
-    addi r31, r4, lbl_8039E508@l
-    stw r30, 0xb8(r1)
-    mr r30, r3
-    stw r29, 0xb4(r1)
-    stw r28, 0xb0(r1)
-    bl InitializeFrameSelection
-    lis r4, lbl_8049BBD0@ha
-    addi r3, r30, 0x84
-    addi r0, r4, lbl_8049BBD0@l
-    stw r0, 0x0(r30)
-    bl ResCtrl_Init
-    li r3, 0xf
-    bl SetSyncTarget
-    li r3, 0x167f
-    bl PreloadResource
-    li r0, 0x1
-    li r4, -0x1
-    stw r0, 0x4(r30)
-    li r0, 0x0
-    li r3, 0x3084
-    stw r4, 0x8(r30)
-    stw r0, 0xc(r30)
-    stb r0, 0x10(r30)
-    stw r0, 0x24(r30)
-    stw r0, 0x28(r30)
-    bl Alloc
-    mr. r29, r3
-    beq clFlowKart_Init_L_801D8460
-    addi r4, r31, 0x4e0
-    bl Scene3D_Init
-    clFlowKart_Init_L_801D8460:
-    stw r29, 0x1c(r30)
-    li r3, 0x28
-    bl Alloc
-    mr. r29, r3
-    beq clFlowKart_Init_L_801D8480
-    addi r4, r31, 0x4e0
-    li r5, 0x0
-    bl SceneModel_Init
-    clFlowKart_Init_L_801D8480:
-    stw r29, 0x20(r30)
-    li r0, 0x0
-    lfs f2, lbl_806DA174(r2)
-    addi r4, r1, 0x8
-    stw r0, 0x68(r30)
-    lfs f1, lbl_806DA13C(r2)
-    stw r0, 0x6c(r30)
-    lfs f0, lbl_806DA178(r2)
-    stw r0, 0x70(r30)
-    stfs f2, 0x18(r30)
-    stw r0, 0x14(r30)
-    stw r0, 0x74(r30)
-    stw r0, 0x78(r30)
-    stw r0, 0x7c(r30)
-    stfs f1, 0x8(r1)
-    stfs f1, 0xc(r1)
-    stfs f0, 0x10(r1)
-    lwz r3, 0x1c(r30)
-    bl CObj_LoadIntoGX
-    lfs f0, lbl_806DA13C(r2)
-    addi r4, r1, 0x8
-    stfs f0, 0x8(r1)
-    stfs f0, 0xc(r1)
-    stfs f0, 0x10(r1)
-    lwz r3, 0x1c(r30)
-    bl CObj_ApplyViewport
-    lfs f1, lbl_806DA130(r2)
-    addi r3, r1, 0x14
-    lwz r29, g_characterId(r13)
-    fmr f2, f1
-    fmr f3, f1
-    bl PSMTXScale
-    lfs f0, 0x4a4(r31)
-    addi r4, r31, 0x4a4
-    lfs f1, 0x4(r4)
-    addi r3, r1, 0x74
-    stfs f0, 0x5c(r30)
-    lfs f0, 0x8(r4)
-    stfs f1, 0x60(r30)
-    stfs f0, 0x64(r30)
-    lfs f1, 0x5c(r30)
-    lfs f2, 0x60(r30)
-    lfs f3, 0x64(r30)
-    bl PSMTXTrans
-    addi r3, r30, 0x2c
-    bl PSMTXIdentity
-    addi r4, r30, 0x2c
-    addi r3, r1, 0x14
-    mr r5, r4
-    bl PSMTXConcat
-    lfs f1, lbl_806DA134(r2)
-    addi r3, r1, 0x44
-    li r4, 0x78
-    bl PSMTXRotRad
-    addi r4, r30, 0x2c
-    addi r3, r1, 0x44
-    mr r5, r4
-    bl PSMTXConcat
-    lfs f1, lbl_806DA138(r2)
-    addi r3, r1, 0x44
-    li r4, 0x79
-    bl PSMTXRotRad
-    addi r4, r30, 0x2c
-    addi r3, r1, 0x44
-    mr r5, r4
-    bl PSMTXConcat
-    addi r4, r30, 0x2c
-    addi r3, r1, 0x74
-    mr r5, r4
-    bl PSMTXConcat
-    li r3, 0x384
-    bl Alloc
-    mr. r28, r3
-    beq clFlowKart_Init_L_801D85C4
-    mr r5, r29
-    addi r6, r30, 0x2c
-    li r4, 0x6
-    li r7, 0x0
-    li r8, 0x0
-    li r9, 0x0
-    bl KartDriver_New_Full
-    clFlowKart_Init_L_801D85C4:
-    stw r28, 0x24(r30)
-    li r3, 0x384
-    bl Alloc
-    mr. r28, r3
-    beq clFlowKart_Init_L_801D85F4
-    mr r5, r29
-    addi r6, r30, 0x2c
-    li r4, 0x6
-    li r7, 0x0
-    li r8, 0x0
-    li r9, 0x2
-    bl KartDriver_New_Full
-    clFlowKart_Init_L_801D85F4:
-    stw r28, 0x28(r30)
-    lwz r3, 0x24(r30)
-    cmplwi r3, 0x0
-    beq clFlowKart_Init_L_801D8614
-    lfs f1, lbl_806DA13C(r2)
-    li r4, 0x0
-    fmr f2, f1
-    bl RenderObj_ItemStateMachine_Timed
-    clFlowKart_Init_L_801D8614:
-    lwz r3, 0x28(r30)
-    cmplwi r3, 0x0
-    beq clFlowKart_Init_L_801D8630
-    lfs f1, lbl_806DA13C(r2)
-    li r4, 0x0
-    fmr f2, f1
-    bl RenderObj_ItemStateMachine_Timed
-    clFlowKart_Init_L_801D8630:
-    lwz r4, g_pInputState(r13)
-    cmplwi r4, 0x0
-    bne clFlowKart_Init_L_801D8644
-    li r0, 0x0
-    b clFlowKart_Init_L_801D8648
-    clFlowKart_Init_L_801D8644:
-    mr r0, r4
-    clFlowKart_Init_L_801D8648:
-    cmplwi r0, 0x0
-    beq clFlowKart_Init_L_801D8670
-    cmplwi r4, 0x0
-    bne clFlowKart_Init_L_801D865C
-    li r4, 0x0
-    clFlowKart_Init_L_801D865C:
-    li r3, 0x1
-    li r0, 0x0
-    stb r3, 0x4(r4)
-    stw r0, 0x18(r4)
-    stw r0, 0x1c(r4)
-    clFlowKart_Init_L_801D8670:
-    lfs f1, lbl_806DA144(r2)
-    bl SetScreenBrightness
-    li r3, 0x1ae2
-    bl fn_801B8918
-    li r3, 0x230
-    bl Alloc
-    mr. r28, r3
-    beq clFlowKart_Init_L_801D8694
-    bl TexMgr_Init
-    clFlowKart_Init_L_801D8694:
-    stw r28, 0x80(r30)
-    addi r3, r31, 0x464
-    li r4, -0x1
-    lwz r0, g_characterId(r13)
-    slwi r0, r0, 2
-    lwzx r3, r3, r0
-    addi r3, r3, 0x95
-    bl GetTextureByIdAndLang
-    mr r4, r3
-    lwz r3, 0x80(r30)
-    crxor 6, 6, 6
-    bl TexMgr_SetTexture
-    lwz r3, 0x80(r30)
-    lfs f1, lbl_806DA17C(r2)
-    lfs f2, lbl_806DA14C(r2)
-    bl fn_801F93EC
-    bl isJapanese
-    cmpwi r3, 0x0
-    bne clFlowKart_Init_L_801D86E8
-    lfs f0, lbl_806DA180(r2)
-    b clFlowKart_Init_L_801D86EC
-    clFlowKart_Init_L_801D86E8:
-    lfs f0, lbl_806DA184(r2)
-    clFlowKart_Init_L_801D86EC:
-    lwz r5, 0x80(r30)
-    lis r3, g_playerData@ha
-    li r4, 0x1d5c
-    li r0, 0x1
-    stfs f0, 0x22c(r5)
-    addi r3, r3, g_playerData@l
-    lfs f0, lbl_806DA188(r2)
-    stw r4, 0x84(r30)
-    lfs f2, lbl_806DA18C(r2)
-    stfs f0, 0xb0(r30)
-    lfs f1, lbl_806DA154(r2)
-    stfs f0, 0xb4(r30)
-    lfs f0, lbl_806DA15C(r2)
-    stb r0, 0x94(r30)
-    stfs f2, 0x98(r30)
-    stfs f1, 0x9c(r30)
-    stfs f0, 0xa0(r30)
-    lwz r29, g_characterId(r13)
-    bl GetCoinMilage
-    slwi r0, r29, 2
-    addi r4, r31, 0x430
-    lwzx r0, r4, r0
-    cmpw r3, r0
-    bge clFlowKart_Init_L_801D8760
-    li r0, -0x100
-    stw r0, 0xb8(r30)
-    stw r0, 0xbc(r30)
-    stw r0, 0xc0(r30)
-    stw r0, 0xc4(r30)
-    clFlowKart_Init_L_801D8760:
-    li r3, 0x1
-    bl InitRumbleController
-    lwz r0, 0xc4(r1)
-    mr r3, r30
-    lwz r31, 0xbc(r1)
-    lwz r30, 0xb8(r1)
-    lwz r29, 0xb4(r1)
-    lwz r28, 0xb0(r1)
-    mtlr r0
-    addi r1, r1, 0xc0
-    blr
-}
-
-
