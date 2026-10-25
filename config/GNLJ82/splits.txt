@@ -3417,6 +3417,11 @@ game/DrawEffect_ItemHitFx_Spawn.c:
 	extabindex  start:0x8002327C end:0x80023288
 	.text       start:0x800CB778 end:0x800CB8C0
 
+game/DrawEffect_ItemHitBurst_Spawn.c:
+	extab       start:0x8000AB70 end:0x8000AB78
+	extabindex  start:0x80023294 end:0x800232A0
+	.text       start:0x800CBBD4 end:0x800CC130
+
 game/DrawEffect_TrailDot_Spawn.c:
 	extab       start:0x8000AB78 end:0x8000AB80
 	extabindex  start:0x800232A0 end:0x800232AC
@@ -4199,6 +4204,11 @@ game/GabyouTripleChild.c:
 	extabindex  start:0x80023F0C end:0x80023F30
 	.text       start:0x800F3B20 end:0x800F4914
 	.data       start:0x80421738 end:0x80421760
+
+game/GabyouTripleParent_Update.c:
+	extab       start:0x8000B6BC end:0x8000B6C4
+	extabindex  start:0x80023F30 end:0x80023F3C
+	.text       start:0x800F4914 end:0x800F4C28
 
 game/ShellItem.c:
 	extab       start:0x8000B6C4 end:0x8000B6E4
