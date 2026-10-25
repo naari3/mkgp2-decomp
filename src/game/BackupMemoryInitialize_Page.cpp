@@ -5,60 +5,15 @@
  * shadow copy, then shows a done message for 90 frames. Strings come from
  * the shared test-menu .rodata pool at lbl_8030E598.
  */
-
-struct InputPlayer {
-    virtual void v0();
-    virtual void v1();
-    virtual float v2();
-    virtual void v3();
-    virtual float StickRight();
-    virtual float StickLeft();
-    virtual unsigned char Pressed(int mask);
-    virtual unsigned char Held(int mask);
-};
-
-struct MenuItem {
-    int x;
-    int y;
-    const char *text;
-};
-
-struct TestPage {
-    unsigned char pad_0[8];
-    int blink;              /* 0x08 */
-    unsigned char pad_C[4];
-    int next;               /* 0x10 */
-    unsigned char pad_14[4];
-    int cursor;             /* 0x18 */
-    int sub;                /* 0x1C */
-    unsigned char pad_20[0x250];
-    void *text;             /* 0x270 */
-};
+#include "game/TestMenuPage.h"
 
 extern "C" {
-extern char lbl_8030E598[];
 extern MenuItem lbl_803FDAE8[];
 extern const char lbl_806D2D68[5];
-void *GetInputManager(void);
-InputPlayer *InputMgr_GetPlayer(void *, int);
-void DrawText(void *ctx, int x, int y, int color, float scale, const char *fmt, ...);
 void Backup_ClearHiScores(void);
 void Backup_ClearBookkeeping(void);
 void Backup_ClearAll(void);
 void Backup_PublishShadowCopy_Inline(void);
-}
-
-static inline void TestPage_DrawItems(TestPage *self, MenuItem *it, int sel)
-{
-    int i;
-
-    for (i = 0; it[i].text != 0; i++) {
-        if (i != sel || self->blink <= 0x1E) {
-            if (self->text != 0) {
-                DrawText(self->text, it[i].x * 14, it[i].y * 24, 7, 1.0f, it[i].text);
-            }
-        }
-    }
 }
 
 #pragma exceptions on
