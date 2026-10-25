@@ -13,6 +13,11 @@ Sections:
 	.sdata2     type:rodata align:16
 	.sbss2      type:bss align:32
 
+game/FlowDispatcher_Dtor.cpp:
+	extab       start:0x80005610 end:0x80005618
+	extabindex  start:0x8001F3B8 end:0x8001F3C4
+	.text       start:0x8002C554 end:0x8002C5E8
+
 game/FlowDispatcher_ScopedTimer.c:
 	extab       start:0x800056B8 end:0x800056F0
 	extabindex  start:0x8001F3D0 end:0x8001F3E8
@@ -602,6 +607,11 @@ game/Path_ResetCursorForKart.c:
 	extabindex  start:0x8001FCA0 end:0x8001FCAC
 	.text       start:0x8003CEE4 end:0x8003CF44
 
+game/PathParticipantArray_Dtor.c:
+	extab       start:0x8000609C end:0x800060A4
+	extabindex  start:0x8001FCB8 end:0x8001FCC4
+	.text       start:0x8003D158 end:0x8003D1F4
+
 game/LakituStart.c:
 	.text       start:0x8003D2FC end:0x8003D304
 
@@ -972,6 +982,31 @@ game/ItemEffectImpact_TryArm.c:
 	extab       start:0x800071FC end:0x80007204
 	extabindex  start:0x800205E8 end:0x800205F4
 	.text       start:0x80053E8C end:0x80053ED0
+
+game/ItemEffectImpact_Dtor.c:
+	extab       start:0x800072DC end:0x800072E4
+	extabindex  start:0x8002060C end:0x80020618
+	.text       start:0x800547D8 end:0x80054834
+
+game/ItemEffectQuake_Dtor.c:
+	extab       start:0x800072E4 end:0x800072EC
+	extabindex  start:0x80020618 end:0x80020624
+	.text       start:0x80054834 end:0x80054890
+
+game/ItemEffectJump_Dtor.c:
+	extab       start:0x800072EC end:0x800072F4
+	extabindex  start:0x80020624 end:0x80020630
+	.text       start:0x80054890 end:0x800548EC
+
+game/ItemEffectDamp_Dtor.c:
+	extab       start:0x800072F4 end:0x800072FC
+	extabindex  start:0x80020630 end:0x8002063C
+	.text       start:0x800548EC end:0x80054948
+
+game/ItemEffectSpin_Dtor.c:
+	extab       start:0x800072FC end:0x80007304
+	extabindex  start:0x8002063C end:0x80020648
+	.text       start:0x80054948 end:0x800549A4
 
 game/KartEffectFadeTransit_Tick.c:
 	extab       start:0x8000754C end:0x80007554
@@ -1376,6 +1411,16 @@ game/CourseBgm_Load.c:
 	extabindex  start:0x80020E94 end:0x80020EA0
 	.text       start:0x80064ED0 end:0x80064F58
 
+game/EffectSpeedAction_SpeedScale_Dtor.c:
+	extab       start:0x80007F84 end:0x80007F8C
+	extabindex  start:0x80020EAC end:0x80020EB8
+	.text       start:0x80065028 end:0x80065084
+
+game/EffectSpeedAction_MueScale_Dtor.c:
+	extab       start:0x80007F8C end:0x80007F94
+	extabindex  start:0x80020EB8 end:0x80020EC4
+	.text       start:0x80065084 end:0x800650E0
+
 game/Sinf_LUT_Wrap.c:
 	extab       start:0x80008098 end:0x800080A0
 	extabindex  start:0x80020F60 end:0x80020F6C
@@ -1722,6 +1767,11 @@ game/KartTireFX.c:
 	extabindex  start:0x800213C8 end:0x80021428
 	.text       start:0x80077E24 end:0x80079B24
 
+game/clDrawMan_Dtor.c:
+	extab       start:0x80008490 end:0x80008498
+	extabindex  start:0x80021428 end:0x80021434
+	.text       start:0x80079B24 end:0x80079BD0
+
 game/clDrawMan_NodePool_Free.c:
 	extab       start:0x80008498 end:0x800084A0
 	extabindex  start:0x80021434 end:0x80021440
@@ -1731,6 +1781,12 @@ game/clDrawMan_Buckets_Free.c:
 	extab       start:0x800084A0 end:0x800084A8
 	extabindex  start:0x80021440 end:0x8002144C
 	.text       start:0x80079C0C end:0x80079C48
+
+game/clDrawMan_NodeList.c:
+	.text       start:0x80079C48 end:0x80079CDC
+
+game/ItemEffectState_Init.c:
+	.text       start:0x8007B44C end:0x8007B534
 
 game/ItemEffectState_DefaultInit.c:
 	.text       start:0x8007B74C end:0x8007B798
