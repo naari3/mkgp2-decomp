@@ -1394,6 +1394,11 @@ game/SystemInfo_UI.cpp:
 	extabindex  start:0x80020FE4 end:0x80020FF0
 	.text       start:0x80066B74 end:0x80066E10
 
+game/BackupMemoryInitialize_Page.cpp:
+	extab       start:0x80008108 end:0x80008110
+	extabindex  start:0x80020FF0 end:0x80020FFC
+	.text       start:0x80066E10 end:0x80067494
+
 game/NetDiag_QualityPage.c:
 	extab       start:0x80008110 end:0x80008118
 	extabindex  start:0x80020FFC end:0x80021008
