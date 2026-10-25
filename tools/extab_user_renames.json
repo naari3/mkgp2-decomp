@@ -1005,6 +1005,27 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "__dt__4MenuFv": "fn_801805B4"
   },
+  "src/game/miyazakiconsole/fn_801814C8.cpp": {
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__4MenuFv": "fn_801805B4"
+  },
+  "src/game/mobjclass/fn_80182204.cpp": {
+    "DObjGetNext__FP8HSD_DObj": "fn_801869C8",
+    "DObjGetMObj__FP8HSD_DObj": "fn_801869E0",
+    "SetMObjFlag__FP8HSD_MObjUc": "fn_80182578",
+    "SetJObjDObjsFlag__FP8HSD_JObjUc": "fn_801824D8"
+  },
+  "src/game/mobjclass/fn_80182990.cpp": {
+    "DObjGetNext__FP8HSD_DObj": "fn_801869C8",
+    "DObjGetMObj__FP8HSD_DObj": "fn_801869E0",
+    "SetMObjBuf__FP8HSD_MObjPv": "fn_80182684"
+  },
+  "src/game/mobjclass/fn_80182B50.cpp": {
+    "DObjGetMObj__FP8HSD_DObj": "fn_801869E0",
+    "TObjTranslate__FP8HSD_TObjff": "fn_80182A5C",
+    "DObjsTranslate__FP8HSD_DObjff": "fn_80182AA4",
+    "JObjTranslateDObjs__FP8HSD_JObjff": "fn_80182E18"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",

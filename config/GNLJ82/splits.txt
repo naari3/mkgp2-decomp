@@ -5093,6 +5093,11 @@ game/miyazakiconsole/fn_80180670.cpp:
 	extabindex  start:0x80026ABC end:0x80026AC8
 	.text       start:0x80180670 end:0x801807E0
 
+game/miyazakiconsole/fn_80180C80.cpp:
+	extab       start:0x80011AD0 end:0x80011AD8
+	extabindex  start:0x80026AE0 end:0x80026AEC
+	.text       start:0x80180C80 end:0x80181144
+
 game/miyazakiconsole/fn_80181144.cpp:
 	extab       start:0x80011AD8 end:0x80011AE0
 	extabindex  start:0x80026AEC end:0x80026AF8
@@ -5103,10 +5108,35 @@ game/miyazakiconsole/fn_8018137C.cpp:
 	extabindex  start:0x80026AF8 end:0x80026B04
 	.text       start:0x8018137C end:0x801814C8
 
+game/miyazakiconsole/fn_801814C8.cpp:
+	extab       start:0x80011AE8 end:0x80011AF0
+	extabindex  start:0x80026B04 end:0x80026B10
+	.text       start:0x801814C8 end:0x801816AC
+
 game/miyazakiconsole/fn_801816AC.cpp:
 	extab       start:0x80011AF0 end:0x80011B08
 	extabindex  start:0x80026B10 end:0x80026B1C
 	.text       start:0x801816AC end:0x80181790
+
+game/debugdraw/fn_80181790.c:
+	extab       start:0x80011B08 end:0x80011B10
+	extabindex  start:0x80026B1C end:0x80026B28
+	.text       start:0x80181790 end:0x80181998
+
+game/debugdraw/fn_80181998.c:
+	extab       start:0x80011B10 end:0x80011B18
+	extabindex  start:0x80026B28 end:0x80026B34
+	.text       start:0x80181998 end:0x80181B7C
+
+game/debugdraw/fn_80181B7C.c:
+	extab       start:0x80011B18 end:0x80011B20
+	extabindex  start:0x80026B34 end:0x80026B40
+	.text       start:0x80181B7C end:0x80181D28
+
+game/debugdraw/fn_80181D28.c:
+	extab       start:0x80011B20 end:0x80011B28
+	extabindex  start:0x80026B40 end:0x80026B4C
+	.text       start:0x80181D28 end:0x80181EA4
 
 game/curveutil/fn_80181EA4.c:
 	.text       start:0x80181EA4 end:0x80181F18
@@ -5130,6 +5160,79 @@ game/mobjclass/fn_8018219C.c:
 	extab       start:0x80011B40 end:0x80011B48
 	extabindex  start:0x80026B70 end:0x80026B7C
 	.text       start:0x8018219C end:0x80182204
+
+game/mobjclass/fn_80182204.cpp:
+	extab       start:0x80011B48 end:0x80011B60
+	extabindex  start:0x80026B7C end:0x80026BA0
+	.text       start:0x80182204 end:0x801825C8
+
+game/mobjclass/fn_801825C8.c:
+	extab       start:0x80011B60 end:0x80011B68
+	extabindex  start:0x80026BA0 end:0x80026BAC
+	.text       start:0x801825C8 end:0x801825FC
+
+game/mobjclass/fn_801825FC.c:
+	extab       start:0x80011B68 end:0x80011B70
+	extabindex  start:0x80026BAC end:0x80026BB8
+	.text       start:0x801825FC end:0x80182644
+
+game/mobjclass/fn_80182644.c:
+	.text       start:0x80182644 end:0x80182684
+
+game/mobjclass/fn_80182684.c:
+	extab       start:0x80011B70 end:0x80011B78
+	extabindex  start:0x80026BB8 end:0x80026BC4
+	.text       start:0x80182684 end:0x801826F8
+
+game/mobjclass/fn_80182954.c:
+	extab       start:0x80011B80 end:0x80011B88
+	extabindex  start:0x80026BD0 end:0x80026BDC
+	.text       start:0x80182954 end:0x80182990
+
+game/mobjclass/fn_80182990.cpp:
+	extab       start:0x80011B88 end:0x80011B90
+	extabindex  start:0x80026BDC end:0x80026BE8
+	.text       start:0x80182990 end:0x80182A5C
+
+game/mobjclass/fn_80182A5C.c:
+	extab       start:0x80011B90 end:0x80011B98
+	extabindex  start:0x80026BE8 end:0x80026BF4
+	.text       start:0x80182A5C end:0x80182AA4
+
+game/mobjclass/fn_80182AA4.c:
+	extab       start:0x80011B98 end:0x80011BA0
+	extabindex  start:0x80026BF4 end:0x80026C00
+	.text       start:0x80182AA4 end:0x80182B50
+
+game/mobjclass/fn_80182B50.cpp:
+	extab       start:0x80011BA0 end:0x80011BB0
+	extabindex  start:0x80026C00 end:0x80026C18
+	.text       start:0x80182B50 end:0x80182ED0
+
+game/dlistutil/fn_80182ED0.c:
+	extab       start:0x80011BB0 end:0x80011BB8
+	extabindex  start:0x80026C18 end:0x80026C24
+	.text       start:0x80182ED0 end:0x801831F8
+
+game/dlistutil/fn_801831F8.c:
+	extab       start:0x80011BB8 end:0x80011BC0
+	extabindex  start:0x80026C24 end:0x80026C30
+	.text       start:0x801831F8 end:0x80183538
+
+game/dlistutil/fn_80183538.c:
+	extab       start:0x80011BC0 end:0x80011BC8
+	extabindex  start:0x80026C30 end:0x80026C3C
+	.text       start:0x80183538 end:0x8018387C
+
+game/dlistutil/fn_8018387C.c:
+	extab       start:0x80011BC8 end:0x80011BD0
+	extabindex  start:0x80026C3C end:0x80026C48
+	.text       start:0x8018387C end:0x80183A5C
+
+game/dlistutil/fn_80183A5C.c:
+	extab       start:0x80011BD0 end:0x80011BD8
+	extabindex  start:0x80026C48 end:0x80026C54
+	.text       start:0x80183A5C end:0x80183CC4
 
 game/LookupCos.c:
 	extab       start:0x80011C18 end:0x80011C20
