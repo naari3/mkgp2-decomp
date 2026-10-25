@@ -1992,6 +1992,13 @@
     "__dt__13Scene801FAA18Fv": "fn_801FAA18",
     "__dt__12Base801FAA18Fv": "dtor_802043EC"
   },
+  "src/game/fn_801F9AAC.cpp": {
+    "__dt__8GXObjectFv": "Object_DtorWithGXSync",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801F7E98.cpp": {
+    "__ct__8NodeDescFv": "fn_801F7E98"
+  },
   "src/game/fn_801CE1EC.cpp": {
     "__dt__13Scene801CE1ECFv": "fn_801CE1EC",
     "__dt__8FlowBaseFv": "dtor_801BA14C",
