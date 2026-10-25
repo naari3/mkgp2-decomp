@@ -1240,7 +1240,7 @@ extern "C" void fn_801C043C(CoinWait *self) {
 extern "C" void fn_801C0568(CoinWait *self) {
     InputState *in = GetInput();
     InputMgr_GetPlayer(GetInputManager(), 0);
-    bool press = in->held == 1;
+    unsigned char press = in->held == 1;
     fn_80160588(self->panel.p, in->dir, press);
     if (press == 1) {
         SetRumbleMode(0, 1, 1);
