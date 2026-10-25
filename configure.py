@@ -1247,6 +1247,7 @@ config.libs = [
             Object(Matching, "game/ItemSelect.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemSelect_DrawUIHelperIfActive.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemSelect_Pending.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/clItemBox_StepFn_Debris.c"),
             Object(Matching, "game/clItemBox_StepFn_Bobbing.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBox_StepFn_PopOut.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBox_ResetTimer_IsPickedUp.c"),
