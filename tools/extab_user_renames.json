@@ -967,6 +967,17 @@
     "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
     "__dt__10clNormal3DFv": "Object_DtorWithGXSync"
   },
+  "src/game/miyazakiconsole/fn_801804CC.cpp": {
+    "__nw__FUl": "Alloc"
+  },
+  "src/game/miyazakiconsole/fn_801805B4.cpp": {
+    "__dt__4MenuFv": "fn_801805B4",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/miyazakiconsole/fn_80180670.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
