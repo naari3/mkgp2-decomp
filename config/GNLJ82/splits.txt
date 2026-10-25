@@ -6586,6 +6586,14 @@ game/sprite/fn_801A1BD0.c:
 game/sprite/fn_801A1D40.c:
 	.text       start:0x801A1D40 end:0x801A1D98
 
+game/fn_801B0CE4.c:
+	.text       start:0x801B0CE4 end:0x801B0D80
+
+game/fn_801B0D80.c:
+	extab       start:0x80012B00 end:0x80012B08
+	extabindex  start:0x80027728 end:0x80027734
+	.text       start:0x801B0D80 end:0x801B0F20
+
 game/fn_801B0F20.c:
 	.text       start:0x801B0F20 end:0x801B0F88
 
@@ -6601,6 +6609,9 @@ game/fn_801B11B8.c:
 
 game/fn_801B129C.c:
 	.text       start:0x801B129C end:0x801B12A0
+
+game/fn_801B13B0.c:
+	.text       start:0x801B13B0 end:0x801B14B8
 
 game/fn_801B14B8.c:
 	extab       start:0x80012B20 end:0x80012B28
@@ -6645,6 +6656,11 @@ game/VoiceQueue_Clear.c:
 
 game/fn_801B3B7C.c:
 	.text       start:0x801B3B7C end:0x801B3BC8
+
+game/fn_801B3BC8.c:
+	extab       start:0x80012B70 end:0x80012B78
+	extabindex  start:0x800277D0 end:0x800277DC
+	.text       start:0x801B3BC8 end:0x801B3CE0
 
 game/fn_801B3CE0.c:
 	.text       start:0x801B3CE0 end:0x801B3D40
@@ -7015,6 +7031,11 @@ game/clFlowKart_SetupTextLayout.c:
 	extabindex  start:0x800281CC end:0x800281D8
 	.text       start:0x801D9890 end:0x801D9A2C
 
+game/fn_801D9A2C.cpp:
+	extab       start:0x80015528 end:0x80015540
+	extabindex  start:0x800281D8 end:0x800281E4
+	.text       start:0x801D9A2C end:0x801D9B70
+
 game/fn_801D9F88.c:
 	extab       start:0x80015558 end:0x80015560
 	extabindex  start:0x800281F0 end:0x800281FC
@@ -7305,6 +7326,11 @@ game/fn_801DE810.c:
 	extab       start:0x800159F0 end:0x800159F8
 	extabindex  start:0x800284A8 end:0x800284B4
 	.text       start:0x801DE810 end:0x801DE848
+
+game/fn_801DEAF4.c:
+	extab       start:0x80015A00 end:0x80015A08
+	extabindex  start:0x800284C0 end:0x800284CC
+	.text       start:0x801DEAF4 end:0x801DEC3C
 
 game/fn_801DEC3C.c:
 	.text       start:0x801DEC3C end:0x801DEC74
@@ -7639,6 +7665,9 @@ game/DisplayBuffer_GetByIndex.c:
 	extabindex  start:0x80028EBC end:0x80028EC8
 	.text       start:0x801F6454 end:0x801F6494
 
+game/fn_801F6574.c:
+	.text       start:0x801F6574 end:0x801F6588
+
 game/fn_801F6790.c:
 	extab       start:0x800174FC end:0x80017504
 	extabindex  start:0x80028EE0 end:0x80028EEC
@@ -7750,6 +7779,11 @@ game/fn_801F8E58.c:
 	extab       start:0x800176A0 end:0x800176A8
 	extabindex  start:0x80029078 end:0x80029084
 	.text       start:0x801F8E58 end:0x801F8E90
+
+game/fn_801F8E90.c:
+	extab       start:0x800176A8 end:0x800176B0
+	extabindex  start:0x80029084 end:0x80029090
+	.text       start:0x801F8E90 end:0x801F8FCC
 
 game/fn_801F8FCC.c:
 	.text       start:0x801F8FCC end:0x801F9014
