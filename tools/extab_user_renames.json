@@ -754,6 +754,33 @@
     "__dt__12HomingMarkerFv": "fn_80173CC4",
     "__ct__12HomingMarkerFP6Driver": "fn_80173DB4"
   },
+  "src/game/ShadowCaster.cpp": {
+    "__dt__5ProxyFv": "fn_80174CF4",
+    "__dt__6CasterFv": "fn_80174C30",
+    "__ct__6CasterFP4JObjUc": "fn_80174C8C",
+    "__ct__9ShadowSetFv": "fn_8018A2E8",
+    "__dt__9ShadowSetFv": "dtor_8018A0A8",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/MapEffect_Create.cpp": {
+    "__vt__11clMapEffect": "lbl_803F7494",
+    "__vt__14clMapEffectDKC": "lbl_804916B0",
+    "__vt__14clMapEffectPCC": "lbl_80491690",
+    "__vt__14clMapEffectKPC": "lbl_80491670",
+    "__ct__13clMapEffectMRFP4JObji": "fn_801775E8",
+    "__ct__13clMapEffectDKFP4JObji": "fn_80176F98",
+    "__ct__13clMapEffectWCFP4JObji": "fn_80176CC0",
+    "__ct__13clMapEffectPCFP4JObji": "fn_80176AE0",
+    "__ct__13clMapEffectKPFP4JObji": "fn_80176348",
+    "__ct__13clMapEffectRBFP4JObji": "fn_80176048",
+    "__ct__13clMapEffectYIFP4JObji": "fn_80175DB4",
+    "__ct__13clMapEffectDNFP4JObji": "fn_801759D8",
+    "__ct__14clMapEffectWCCFP4JObji": "fn_801755BC",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__11clMapEffectFv": "dtor_800488F4"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
