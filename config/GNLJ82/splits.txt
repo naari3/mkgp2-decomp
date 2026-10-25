@@ -2960,6 +2960,11 @@ game/EffectVfx84_85_BoostChargeRing_Tick.c:
 	extabindex  start:0x80022EB0 end:0x80022EBC
 	.text       start:0x800C0C7C end:0x800C0F80
 
+game/EffectVfx1C_DriftSparkRing_Tick.c:
+	extab       start:0x8000A8E0 end:0x8000A8E8
+	extabindex  start:0x80022EBC end:0x80022EC8
+	.text       start:0x800C0F80 end:0x800C1534
+
 game/KartFxDispatchD.cpp:
 	extab       start:0x8000A8E8 end:0x8000A8F0
 	extabindex  start:0x80022EC8 end:0x80022ED4
