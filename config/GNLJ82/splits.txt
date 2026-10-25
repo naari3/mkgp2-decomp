@@ -4749,22 +4749,13 @@ game/ShadowCaster.cpp:
 	extabindex  start:0x80026558 end:0x800265C4
 	.text       start:0x801746A8 end:0x80174D94
 
-game/MapEffect_Create.cpp:
-	extab       start:0x80010B10 end:0x80010BF4
-	extabindex  start:0x800265DC end:0x800265E8
-	.text       start:0x801752C0 end:0x801755BC
-	.data       start:0x804914B8 end:0x804914FC
-
-game/MapEffect_WCC.cpp:
-	extab       start:0x80010BF4 end:0x80010C78
-	extabindex  start:0x800265E8 end:0x8002660C
-	.text       start:0x801755BC end:0x801759D8
-
-game/MapEffect.cpp:
-	extab       start:0x80010C78 end:0x80011700
-	extabindex  start:0x8002660C end:0x80026684
-	.text       start:0x801759D8 end:0x801779F8
-	.rodata     start:0x80370870 end:0x80371D24
+game/mapeffect/mapeffect.cpp:
+	extab       start:0x80010B10 end:0x80011878
+	extabindex  start:0x800265DC end:0x800268B8
+	.text       start:0x801752C0 end:0x8017A52C
+	.rodata     start:0x80370870 end:0x80371E98
+	.data       start:0x804914B8 end:0x804916C8
+	.sdata      start:0x806CFAD0 end:0x806CFB50
 
 game/fn_801805AC.c:
 	.text       start:0x801805AC end:0x801805B4

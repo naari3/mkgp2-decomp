@@ -1,11 +1,15 @@
 /*
- * 0x801759D8..0x801779F8: the per-course map effects (Mario Highway,
- * DK Jungle, Wario Colosseum, Pac-Man/Peach courses, Bowser Castle, Rainbow
- * Road, Yoshi and DK stadium). Each constructor fills a parts list with the
- * course's animated pieces (sounds, texture scrollers, reverb zones, traps)
- * and spawns its static particle effects on marker joints.
- * Real C++ for the inline constructors; mangled names are bridged in
- * tools/extab_user_renames.json.
+ * 0x801752C0..0x8017A52C: the course map effects. CreateMapEffect builds the
+ * effect for the current cup; each course class fills a parts list with its
+ * animated pieces (sounds, texture scrollers, reverb zones, traps) and spawns
+ * static particle effects on marker joints. Every member function is defined
+ * inline, so the constructors and the virtual methods are emitted as weak
+ * copies after the factory, in the order the compiler first needs them; the
+ * vtables, typeinfo and RTTI names fall out in the same order.
+ * YIState::Update is a member template so it is instantiated last, as in the
+ * target. It is the only function that does not match yet: the quad tests
+ * get a different float register assignment (TU kept NonMatching for that).
+ * Mangled names are bridged in tools/extab_user_renames.json.
  */
 
 #pragma readonly_strings on
@@ -18,7 +22,13 @@ struct JObj {
     JObj *parent;
     JObj *child;
     unsigned int flags;
-    char pad18[0x2C];
+    char pad18[0x8];
+    float rotY;
+    char pad24[0x8];
+    float scaleX;
+    char pad30[0x4];
+    float scaleZ;
+    char pad38[0xC];
     float mtx[3][4];
 };
 
@@ -46,6 +56,25 @@ void fn_8016B178(int mode);
 void fn_8016B160(float v);
 void fn_8016B148(float v);
 void fn_8016B0F0(unsigned char r, unsigned char g, unsigned char b);
+void fn_8016B190(void);
+void fn_8016B0A0(void);
+void fn_8016B0C4(void);
+unsigned char SoundMgr_PlaySE(int id);
+unsigned char fn_8016C360(int id);
+unsigned char fn_8016C394(int id);
+unsigned char fn_8016C3C8(int id, int mode);
+void fn_8016C1B0(int id, int vol);
+void fn_8016C168(int id, int pan);
+void fn_8016C1F8(int id, float vol);
+unsigned char IsRaceStarted(void);
+void *GetCourseScene3D(void);
+void CObj_LoadProjMatrix(void *cobj, struct Vec3f *pos);
+void fn_80193134(unsigned char on);
+void fn_80182E18(JObj *joint, float u, float v);
+float LUT_Sin12Bit(float);
+void fn_802D20AC(JObj *);
+extern const float lbl_80495994[];
+extern const float lbl_80495A94[];
 }
 
 extern const unsigned int lbl_80370870[0x102] = {
@@ -329,6 +358,45 @@ static inline void JObjSetupMatrix(JObj *jobj) {
     }
 }
 
+static inline void JObjSetMtxDirty(JObj *jobj) {
+    if (jobj && !JObjMtxIsDirty(jobj)) {
+        fn_802D20AC(jobj);
+    }
+}
+
+static inline void JObjSetRotationY(JObj *jobj, float y) {
+    if (!jobj) {
+        __assert("jobj.h", 0x2B8, "jobj");
+    }
+    if (jobj->flags & 0x20000) {
+        __assert("jobj.h", 0x2B9, "!(jobj->flags & JOBJ_USE_QUATERNION)");
+    }
+    jobj->rotY = y;
+    if (!(jobj->flags & 0x2000000)) {
+        JObjSetMtxDirty(jobj);
+    }
+}
+
+static inline void JObjSetScaleX(JObj *jobj, float x) {
+    if (!jobj) {
+        __assert("jobj.h", 0x325, "jobj");
+    }
+    jobj->scaleX = x;
+    if (!(jobj->flags & 0x2000000)) {
+        JObjSetMtxDirty(jobj);
+    }
+}
+
+static inline void JObjSetScaleZ(JObj *jobj, float z) {
+    if (!jobj) {
+        __assert("jobj.h", 0x341, "jobj");
+    }
+    jobj->scaleZ = z;
+    if (!(jobj->flags & 0x2000000)) {
+        JObjSetMtxDirty(jobj);
+    }
+}
+
 static inline float (*JObjGetMtxPtr(JObj *jobj))[4] {
     if (!jobj) {
         __assert("jobj.h", 0x47C, "jobj");
@@ -337,21 +405,34 @@ static inline float (*JObjGetMtxPtr(JObj *jobj))[4] {
     return jobj->mtx;
 }
 
+struct Vec3f {
+    float x, y, z;
+};
+
 struct ZoneVolume {
     ZoneVolume(const ZoneDesc *desc, int closed);
+    ~ZoneVolume();
+    unsigned char Contains(Vec3f *pos);
+    void Draw();
     char pad00[0x4];
 };
 
 struct clMapEffectParts {
-    virtual void vKeyFunction();
-    virtual ~clMapEffectParts();
+    virtual ~clMapEffectParts() {}
+    virtual void Update();
+    virtual void Draw();
+    virtual void Enable(int on);
     clMapEffectParts() {}
 };
+
+namespace {
 
 struct clReverbCtrl : clMapEffectParts {
     ZoneVolume *vol;
 
-    virtual void vKeyFunction3();
+    virtual ~clReverbCtrl();
+    virtual void Update();
+    virtual void Draw();
 
     clReverbCtrl(const unsigned int *desc, int n) {
         vol = 0;
@@ -366,7 +447,8 @@ struct clMoveTex : clMapEffectParts {
     JObj **joints;
     int count;
 
-    virtual void vKeyFunction2();
+    virtual ~clMoveTex();
+    virtual void Update();
 
     clMoveTex(JObj *root, const MoveTexDesc *t) {
         DebugPrintf(" CreateMapEffect : clMoveTex\n");
@@ -391,6 +473,8 @@ struct clMoveTex : clMapEffectParts {
         }
     }
 };
+
+}
 
 #define PART0(sym, size)                                                     \
     struct P_##sym : clMapEffectParts {                                      \
@@ -454,7 +538,31 @@ struct PartsNode {
     unsigned char done;
     PartsNode *next;
 
+    PartsNode(int kind, int prio, clMapEffectParts *parts) {
+        this->kind = kind;
+        this->prio = prio;
+        this->parts = parts;
+        done = 0;
+        next = 0;
+    }
+
+    int Append(int kind, int prio, clMapEffectParts *parts) {
+        if (parts) {
+            if (next) {
+                next->Append(kind, prio, parts);
+            } else {
+                next = new PartsNode(kind, prio, parts);
+            }
+            return 1;
+        }
+        return 0;
+    }
+
+    ~PartsNode();
     clMapEffectParts *Find(unsigned int kind);
+    void Update();
+    void Draw(int mask);
+    void SetHidden(int mask, unsigned char hide);
 };
 
 struct PartsList {
@@ -464,14 +572,23 @@ struct PartsList {
         head = 0;
     }
 
+    ~PartsList();
     int Add(int kind, int prio, clMapEffectParts *parts);
     clMapEffectParts *Find(unsigned int kind);
+    void Update();
+    void Draw(int mask);
+    void SetHidden(int mask, unsigned char hide);
+};
+
+struct PartsCtx {
+    char pad00[0xC];
+    int mode;
 };
 
 struct clMapEffect {
-    virtual ~clMapEffect();
+    virtual ~clMapEffect() {}
     virtual void Update();
-    virtual void Draw();
+    virtual void Draw(int mask);
 
     clMapEffect() {}
 };
@@ -480,14 +597,16 @@ struct clMapEffectDN : clMapEffect {
     PartsList *parts;
     unsigned char done;
 
-    virtual void vKeyFunction();
+    virtual ~clMapEffectDN();
+    virtual void Update();
+    virtual void Draw(int mask);
 
     clMapEffectDN(JObj *root, int arg);
 };
 
 struct YIState {
     unsigned char a;
-    int x04;
+    float x04;
     unsigned char b;
     int x0c;
     unsigned char c;
@@ -510,23 +629,49 @@ struct YIState {
         x14 = 0.0f;
         x1c = 0.0f;
     }
+
+    ~YIState() {
+        if (a == 1) {
+            fn_8016C394(0x3E);
+        }
+        if (d == 1) {
+            fn_8016C394(0x3F);
+        }
+        if (c == 1) {
+            fn_8016C394(0x40);
+        }
+        if (b == 1) {
+            fn_8016C394(0x3B);
+        }
+    }
+
+    template <int N>
+    void UpdateT();
+
+    void Update() {
+        UpdateT<0>();
+    }
 };
 
 struct clMapEffectYI : clMapEffect {
     PartsList *parts;
     YIState *state;
 
-    virtual void vKeyFunction();
+    virtual ~clMapEffectYI();
+    virtual void Update();
+    virtual void Draw(int mask);
 
     clMapEffectYI(JObj *root, int arg);
 };
 
 struct clMapEffectRB : clMapEffect {
     PartsList *parts;
-    int arg;
+    PartsCtx *ctx;
     unsigned char done;
 
-    virtual void vKeyFunction();
+    virtual ~clMapEffectRB();
+    virtual void Update();
+    virtual void Draw(int mask);
 
     clMapEffectRB(JObj *root, int arg);
 };
@@ -544,17 +689,21 @@ struct clMapEffectKP : clMapEffect {
     float x28;
     unsigned char x2c;
 
-    virtual void vKeyFunction();
+    virtual ~clMapEffectKP();
+    virtual void Update();
+    virtual void Draw(int mask);
 
     clMapEffectKP(JObj *root, int arg);
 };
 
 struct clMapEffectPC : clMapEffect {
     PartsList *parts;
-    int arg;
+    PartsCtx *ctx;
     unsigned char done;
 
-    virtual void vKeyFunction();
+    virtual ~clMapEffectPC();
+    virtual void Update();
+    virtual void Draw(int mask);
 
     clMapEffectPC(JObj *root, int arg);
 };
@@ -563,7 +712,9 @@ struct clMapEffectWC : clMapEffect {
     PartsList *parts;
     unsigned char done;
 
-    virtual void vKeyFunction();
+    virtual ~clMapEffectWC();
+    virtual void Update();
+    virtual void Draw(int mask);
 
     clMapEffectWC(JObj *root, int arg);
 };
@@ -575,7 +726,9 @@ struct clMapEffectDK : clMapEffect {
     int x10;
     unsigned char done;
 
-    virtual void vKeyFunction();
+    virtual ~clMapEffectDK();
+    virtual void Update();
+    virtual void Draw(int mask);
 
     clMapEffectDK(JObj *root, int arg);
 };
@@ -584,9 +737,69 @@ struct clMapEffectMR : clMapEffect {
     PartsList *parts;
     unsigned char done;
 
-    virtual void vKeyFunction();
+    virtual ~clMapEffectMR();
+    virtual void Update();
+    virtual void Draw(int mask);
 
     clMapEffectMR(JObj *root, int arg);
+};
+
+struct clMapEffectWCC : clMapEffect {
+    PartsList *parts;
+    unsigned char done;
+
+    virtual ~clMapEffectWCC();
+    virtual void Update();
+    virtual void Draw(int mask);
+
+    clMapEffectWCC(JObj *root, int arg);
+};
+
+struct clMapEffectKPC : clMapEffect {
+    unsigned char done;
+
+    virtual ~clMapEffectKPC();
+    virtual void Update();
+    virtual void Draw(int mask);
+
+    clMapEffectKPC() {
+        done = 0;
+    }
+};
+
+struct clMapEffectPCC : clMapEffect {
+    unsigned char done;
+
+    virtual ~clMapEffectPCC();
+    virtual void Update();
+    virtual void Draw(int mask);
+
+    clMapEffectPCC() {
+        done = 0;
+    }
+};
+
+struct clMapEffectDKC : clMapEffect {
+    int wait;
+    int volIdx;
+    int panIdx;
+    unsigned char done;
+
+    virtual ~clMapEffectDKC();
+    virtual void Update();
+    virtual void Draw(int mask);
+
+    clMapEffectDKC() {
+        wait = 0;
+        volIdx = 0;
+        panIdx = 0;
+        done = 0;
+        fn_8016B248(0);
+        fn_8016B178(2);
+        fn_8016B160(0.0f);
+        fn_8016B148(10000.0f);
+        fn_8016B0F0(0xC0, 0xC0, 0xC0);
+    }
 };
 
 inline ZoneVolume *NewKPZone() {
@@ -605,7 +818,30 @@ inline ZoneVolume *NewKPZone() {
 
 #pragma exceptions on
 
-clMapEffectDN::clMapEffectDN(JObj *root, int arg) {
+inline clMapEffectWCC::clMapEffectWCC(JObj *root, int arg) {
+    parts = 0;
+    done = 0;
+    parts = new PartsList();
+    if (parts) {
+        parts->Add(4, 2, new P_fn_801967F0());
+        parts->Add(0, 0, new clMoveTex(root, lbl_80370E58));
+    }
+}
+
+inline int PartsList::Add(int kind, int prio, clMapEffectParts *parts) {
+    if (!parts) {
+        return 0;
+    }
+    if (head) {
+        head->Append(kind, prio, parts);
+    } else {
+        head = new PartsNode(kind, prio, parts);
+    }
+    return 1;
+}
+
+
+inline clMapEffectDN::clMapEffectDN(JObj *root, int arg) {
     parts = 0;
     done = 0;
     parts = new PartsList();
@@ -632,7 +868,7 @@ clMapEffectDN::clMapEffectDN(JObj *root, int arg) {
     fn_8016B0F0(0xB9, 0xFF, 0xFF);
 }
 
-clMapEffectYI::clMapEffectYI(JObj *root, int arg) {
+inline clMapEffectYI::clMapEffectYI(JObj *root, int arg) {
     parts = 0;
     state = 0;
     parts = new PartsList();
@@ -647,12 +883,12 @@ clMapEffectYI::clMapEffectYI(JObj *root, int arg) {
     state = new YIState();
 }
 
-clMapEffectRB::clMapEffectRB(JObj *root, int arg) {
+inline clMapEffectRB::clMapEffectRB(JObj *root, int arg) {
     parts = 0;
-    this->arg = 0;
+    ctx = 0;
     done = 0;
     parts = new PartsList();
-    this->arg = arg;
+    ctx = (PartsCtx *)arg;
     if (parts) {
         parts->Add(1, 1, new P_fn_8018EDE0(root));
         parts->Add(2, 2, new P_fn_8018E108(root));
@@ -666,7 +902,7 @@ clMapEffectRB::clMapEffectRB(JObj *root, int arg) {
     }
 }
 
-clMapEffectKP::clMapEffectKP(JObj *root, int arg) {
+inline clMapEffectKP::clMapEffectKP(JObj *root, int arg) {
     parts = 0;
     zone = 0;
     x0c = 0.0f;
@@ -692,6 +928,8 @@ clMapEffectKP::clMapEffectKP(JObj *root, int arg) {
         switch (g_courseVariantIdx) {
         case 0:
             if (g_longRoundFlag) {
+                break;
+            } else if (g_gameMode) {
                 break;
             }
             break;
@@ -739,22 +977,22 @@ clMapEffectKP::clMapEffectKP(JObj *root, int arg) {
     x0c = 0.0f;
 }
 
-clMapEffectParts *PartsList::Find(unsigned int kind) {
+inline clMapEffectParts *PartsList::Find(unsigned int kind) {
     return head ? head->Find(kind) : 0;
 }
 
-clMapEffectParts *PartsNode::Find(unsigned int kind) {
+inline clMapEffectParts *PartsNode::Find(unsigned int kind) {
     if (this->kind == kind) {
         return parts;
     }
     return next ? next->Find(kind) : 0;
 }
 
-clMapEffectPC::clMapEffectPC(JObj *root, int arg) {
+inline clMapEffectPC::clMapEffectPC(JObj *root, int arg) {
     parts = 0;
-    this->arg = 0;
+    ctx = 0;
     parts = new PartsList();
-    this->arg = arg;
+    ctx = (PartsCtx *)arg;
     done = 0;
     if (parts) {
         parts->Add(4, 2, new P_fn_8018D3E0());
@@ -767,7 +1005,7 @@ clMapEffectPC::clMapEffectPC(JObj *root, int arg) {
     }
 }
 
-clMapEffectWC::clMapEffectWC(JObj *root, int arg) {
+inline clMapEffectWC::clMapEffectWC(JObj *root, int arg) {
     parts = 0;
     done = 0;
     parts = new PartsList();
@@ -786,7 +1024,7 @@ clMapEffectWC::clMapEffectWC(JObj *root, int arg) {
     }
 }
 
-clMapEffectDK::clMapEffectDK(JObj *root, int arg) {
+inline clMapEffectDK::clMapEffectDK(JObj *root, int arg) {
     parts = 0;
     x08 = 0;
     x0c = 0;
@@ -855,7 +1093,7 @@ clMapEffectDK::clMapEffectDK(JObj *root, int arg) {
     }
 }
 
-clMapEffectMR::clMapEffectMR(JObj *root, int arg) {
+inline clMapEffectMR::clMapEffectMR(JObj *root, int arg) {
     JObj *j;
 
     parts = 0;
@@ -886,6 +1124,726 @@ clMapEffectMR::clMapEffectMR(JObj *root, int arg) {
     j = ResolveJointByName(root, "MR_highway_volcano_joint");
     if (j) {
         DrawEffect_SpawnWithMatrix(0xB, JObjGetMtxPtr(j));
+    }
+}
+
+inline clMapEffectMR::~clMapEffectMR() {
+    if (parts) {
+        delete parts;
+    }
+    if (done) {
+        fn_8016C394(0x24);
+    }
+}
+
+inline PartsList::~PartsList() {
+    if (head) {
+        delete head;
+    }
+}
+
+inline PartsNode::~PartsNode() {
+    if (next) {
+        delete next;
+    }
+    delete parts;
+}
+
+inline void clMapEffectMR::Update() {
+    if (parts) {
+        parts->Update();
+    }
+    if (!IsRaceStarted()) {
+        if (!done) {
+            done = SoundMgr_PlaySE(0x24);
+        }
+    } else if (done == 1) {
+        fn_8016C3C8(0x24, 1);
+        done = 0;
+    }
+}
+
+inline void PartsList::Update() {
+    if (head) {
+        head->Update();
+    }
+}
+
+inline void PartsNode::Update() {
+    done = 0;
+    if (!(prio & 0x40)) {
+        parts->Update();
+        done = 1;
+    }
+    if (next) {
+        next->Update();
+    }
+}
+
+inline void clMapEffectMR::Draw(int mask) {
+    if (parts) {
+        parts->Draw(mask);
+    }
+}
+
+inline void PartsList::Draw(int mask) {
+    if (head) {
+        head->Draw(mask & 7);
+    }
+}
+
+inline void PartsNode::Draw(int mask) {
+    if (done && (prio & mask)) {
+        if (prio & 0x20) {
+            fn_8016B0A0();
+            parts->Draw();
+            fn_8016B0C4();
+        } else {
+            parts->Draw();
+        }
+        done = 0;
+    }
+    if (next) {
+        next->Draw(mask);
+    }
+}
+
+inline clMapEffectDK::~clMapEffectDK() {
+    if (parts) {
+        delete parts;
+    }
+    fn_8016B190();
+    if (fn_8016C360(0x2C)) {
+        fn_8016C394(0x2C);
+    }
+}
+
+inline void clMapEffectDK::Update() {
+    if (parts) {
+        parts->Update();
+    }
+    if (x08 > 0) {
+        x08--;
+    } else if (!fn_8016C360(0x27)) {
+        unsigned char vol;
+        int pan;
+
+        x08 = (int)(1000.0f * lbl_80495994[x0c]) + 60;
+        vol = (int)(64.0f * lbl_80495994[x0c]) + 64;
+        pan = (int)(127.0f * lbl_80495A94[x10]);
+        SoundMgr_PlaySE(0x27);
+        fn_8016C1B0(0x27, vol);
+        fn_8016C168(0x27, pan);
+        if (++x0c >= 0x40) {
+            x0c = 0;
+        }
+        if (++x10 >= 0x30) {
+            x10 = 0;
+        }
+    }
+    if (!IsRaceStarted()) {
+        if (!done) {
+            done = SoundMgr_PlaySE(0x2C);
+            done = 1;
+        }
+    } else if (done == 1) {
+        done = fn_8016C3C8(0x2C, 1);
+        done = 0;
+    }
+}
+
+inline void clMapEffectDK::Draw(int mask) {
+    if (parts) {
+        parts->Draw(mask);
+    }
+}
+
+inline clMapEffectWC::~clMapEffectWC() {
+    if (parts) {
+        delete parts;
+    }
+    if (fn_8016C360(0x2E)) {
+        fn_8016C394(0x2E);
+    }
+    if (fn_8016C360(0x2F)) {
+        fn_8016C394(0x2F);
+    }
+}
+
+inline void clMapEffectWC::Update() {
+    if (parts) {
+        parts->Update();
+    }
+    if (g_gameMode == 1) {
+        if (!done) {
+            done = SoundMgr_PlaySE(0x2F);
+        }
+    } else if (!done) {
+        if (!IsRaceStarted()) {
+            done = SoundMgr_PlaySE(0x2E);
+        }
+    } else if (IsRaceStarted() && fn_8016C360(0x2E)) {
+        fn_8016C3C8(0x2E, 2);
+        done = 0;
+    }
+}
+
+inline void clMapEffectWC::Draw(int mask) {
+    if (parts) {
+        parts->Draw(mask);
+    }
+}
+
+inline clMapEffectPC::~clMapEffectPC() {
+    if (parts) {
+        delete parts;
+    }
+    if (fn_8016C360(0x31)) {
+        fn_8016C394(0x31);
+    }
+    if (fn_8016C360(0x32)) {
+        fn_8016C394(0x32);
+    }
+}
+
+inline void clMapEffectPC::Update() {
+    if (!IsRaceStarted()) {
+        if (!done) {
+            done = SoundMgr_PlaySE(0x31);
+            done = 1;
+        }
+    } else if (done == 1) {
+        fn_8016C3C8(0x31, 1);
+        done = 0;
+    }
+    if (ctx) {
+        if (ctx->mode == 0) {
+            if (!fn_8016C360(0x32)) {
+                SoundMgr_PlaySE(0x32);
+            }
+        } else if (fn_8016C360(0x32) == 1) {
+            fn_8016C394(0x32);
+        }
+    }
+    if (parts) {
+        if (ctx) {
+            if (ctx->mode == 1) {
+                parts->SetHidden(7, 0);
+                parts->SetHidden(8, 1);
+            } else if (ctx->mode == 0) {
+                parts->SetHidden(7, 1);
+                parts->SetHidden(8, 0);
+            } else {
+                parts->SetHidden(0xF, 0);
+            }
+        }
+        parts->Update();
+    }
+}
+
+inline void PartsList::SetHidden(int mask, unsigned char hide) {
+    if (head) {
+        head->SetHidden(mask, hide);
+    }
+}
+
+inline void PartsNode::SetHidden(int mask, unsigned char hide) {
+    if (mask & kind) {
+        if (hide) {
+            if (!(prio & 0x40)) {
+                parts->Enable(0);
+                prio = prio | 0x40;
+            }
+        } else if (prio & 0x40) {
+            parts->Enable(1);
+            prio = prio & ~0x40;
+        }
+    }
+    if (next) {
+        next->SetHidden(mask, hide);
+    }
+}
+
+inline void clMapEffectPC::Draw(int mask) {
+    if (parts) {
+        parts->Draw(mask);
+    }
+}
+
+inline clMapEffectKP::~clMapEffectKP() {
+    if (parts) {
+        delete parts;
+    }
+    if (zone) {
+        delete zone;
+    }
+    fn_8016B190();
+    if (x18) {
+        fn_8016C394(0x33);
+    }
+    if (x2c) {
+        fn_8016C394(0x36);
+    }
+}
+
+inline void clMapEffectKP::Update() {
+    if (parts) {
+        parts->Update();
+    }
+    if (x10) {
+        float s;
+        float sx;
+        JObj *j;
+
+        x14 += 30.0f;
+        if (x14 >= 360.0f) {
+            x14 = 0.0f;
+        }
+        s = LUT_Sin12Bit(x14);
+        sx = 1.0f - 0.2f * (s < 0.0f ? -s : s);
+        JObj *p = x10;
+        for (j = p == 0 ? 0 : p->child; j; j = j == 0 ? 0 : j->next) {
+            JObjSetScaleZ(j, s);
+            JObjSetScaleX(j, sx);
+        }
+    }
+    if (x1c) {
+        x24 += 0.0008726644446142018f;
+        if (x24 >= 6.283184051513672f) {
+            x24 -= 6.283184051513672f;
+        }
+        JObjSetRotationY(x1c, x24);
+    }
+    if (x20) {
+        x28 += 0.0005817763158120215f;
+        if (x28 >= 6.283184051513672f) {
+            x28 -= 6.283184051513672f;
+        }
+        JObjSetRotationY(x20, x28);
+    }
+    if (GetCourseScene3D()) {
+        Vec3f pos;
+
+        CObj_LoadProjMatrix(GetCourseScene3D(), &pos);
+        if (zone->Contains(&pos)) {
+            x0c += 0.01666666753590107f;
+        } else {
+            x0c -= 0.01666666753590107f;
+        }
+        x0c = x0c < 0.0f ? 0.0f : (x0c > 1.0f ? 1.0f : x0c);
+        if (x0c > 0.0f) {
+            fn_8016B178(2);
+        } else {
+            fn_8016B178(0);
+        }
+        fn_8016B160(3000.0f - 2900.0f * x0c);
+        fn_8016B148(10000.0f - 3000.0f * x0c);
+        if (x0c > 0.0f) {
+            int vol = (int)(127.0f * x0c);
+
+            if (!x18) {
+                x18 = SoundMgr_PlaySE(0x33);
+            }
+            fn_8016C1B0(0x33, vol);
+        } else if (x18) {
+            fn_8016C394(0x33);
+            x18 = 0;
+        }
+    }
+    if (!IsRaceStarted()) {
+        if (!x2c) {
+            x2c = SoundMgr_PlaySE(0x36);
+            x2c = 1;
+        }
+    } else if (x2c == 1) {
+        x2c = fn_8016C3C8(0x36, 1);
+        x2c = 0;
+    }
+}
+
+inline void clMapEffectKP::Draw(int mask) {
+    if (parts) {
+        parts->Draw(mask);
+    }
+}
+
+inline clMapEffectRB::~clMapEffectRB() {
+    if (parts) {
+        delete parts;
+    }
+}
+
+inline void clMapEffectRB::Update() {
+    if (parts) {
+        if (ctx) {
+            if (ctx->mode == 0) {
+                parts->SetHidden(5, 0);
+                parts->SetHidden(2, 1);
+            } else {
+                parts->SetHidden(5, 1);
+                parts->SetHidden(2, 0);
+            }
+        }
+        parts->Update();
+    }
+    if (!done) {
+        if (!IsRaceStarted()) {
+            done = SoundMgr_PlaySE(0x39);
+        }
+    } else if (IsRaceStarted() && fn_8016C360(0x39)) {
+        fn_8016C3C8(0x39, 2);
+        done = 0;
+    }
+}
+
+inline void clMapEffectRB::Draw(int mask) {
+    if (parts) {
+        parts->Draw(mask);
+    }
+}
+
+inline clMapEffectYI::~clMapEffectYI() {
+    if (parts) {
+        delete parts;
+    }
+    if (state) {
+        delete state;
+    }
+}
+
+inline void clMapEffectYI::Update() {
+    if (parts) {
+        parts->Update();
+    }
+    if (state) {
+        state->Update();
+    }
+}
+
+inline void clMapEffectYI::Draw(int mask) {
+    if (parts) {
+        parts->Draw(mask);
+    }
+}
+
+inline clReverbCtrl::~clReverbCtrl() {
+    if (vol) {
+        fn_80193134(0);
+        delete vol;
+        vol = 0;
+    }
+}
+
+inline void clReverbCtrl::Update() {
+    if (GetCourseScene3D() && vol) {
+        Vec3f pos;
+
+        CObj_LoadProjMatrix(GetCourseScene3D(), &pos);
+        fn_80193134(vol->Contains(&pos));
+    }
+}
+
+inline void clReverbCtrl::Draw() {
+    if (vol) {
+        vol->Draw();
+    }
+}
+
+inline clMapEffectDN::~clMapEffectDN() {
+    fn_8016B190();
+    if (parts) {
+        delete parts;
+    }
+    if (done == 1) {
+        done = fn_8016C394(0x42);
+    }
+    if (fn_8016C360(0x3C) == 1) {
+        fn_8016C394(0x3C);
+    }
+}
+
+inline void clMapEffectDN::Update() {
+    if (parts) {
+        parts->Update();
+    }
+    if (!IsRaceStarted()) {
+        if (!done) {
+            SoundMgr_PlaySE(0x42);
+            fn_8016C1F8(0x42, 0.7300000190734863f);
+            done = 1;
+        }
+    } else if (done == 1) {
+        fn_8016C3C8(0x42, 1);
+        done = 0;
+    }
+}
+
+inline void clMapEffectDN::Draw(int mask) {
+    if (parts) {
+        parts->Draw(mask);
+    }
+}
+
+inline clMoveTex::~clMoveTex() {
+    if (joints) {
+        delete[] joints;
+    }
+    DebugPrintf(" DeleteMapEffect : clMoveTex\n");
+}
+
+inline void clMoveTex::Update() {
+    int i;
+
+    for (i = 0; i < count; i++) {
+        if (joints[i]) {
+            fn_80182E18(joints[i], table[i].u, table[i].v);
+        }
+    }
+}
+
+inline clMapEffectWCC::~clMapEffectWCC() {
+    if (parts) {
+        delete parts;
+    }
+    if (fn_8016C360(0x2F)) {
+        fn_8016C394(0x2F);
+    }
+}
+
+inline void clMapEffectWCC::Update() {
+    if (parts) {
+        parts->Update();
+    }
+    if (!IsRaceStarted()) {
+        if (!done) {
+            done = SoundMgr_PlaySE(0x2F);
+        }
+    } else if (done == 1) {
+        done = 0;
+        fn_8016C3C8(0x2F, 1);
+    }
+}
+
+inline void clMapEffectWCC::Draw(int mask) {
+    if (parts) {
+        parts->Draw(mask);
+    }
+}
+
+inline clMapEffectKPC::~clMapEffectKPC() {
+    if (done) {
+        fn_8016C394(0x36);
+    }
+}
+
+inline void clMapEffectKPC::Update() {
+    if (!IsRaceStarted()) {
+        if (!done) {
+            SoundMgr_PlaySE(0x36);
+            done = 1;
+        }
+    } else if (done == 1) {
+        fn_8016C3C8(0x36, 1);
+        done = 0;
+    }
+}
+
+inline void clMapEffectKPC::Draw(int mask) {
+}
+
+inline clMapEffectPCC::~clMapEffectPCC() {
+    if (fn_8016C360(0x32)) {
+        fn_8016C394(0x32);
+    }
+}
+
+inline void clMapEffectPCC::Update() {
+    if (!IsRaceStarted()) {
+        if (!done) {
+            done = SoundMgr_PlaySE(0x32);
+        }
+    } else if (done == 1) {
+        done = 0;
+        fn_8016C3C8(0x32, 1);
+    }
+}
+
+inline void clMapEffectPCC::Draw(int mask) {
+}
+
+inline clMapEffectDKC::~clMapEffectDKC() {
+    fn_8016B190();
+    if (done) {
+        fn_8016C394(0x2C);
+    }
+}
+
+inline void clMapEffectDKC::Update() {
+    if (!IsRaceStarted()) {
+        if (wait > 0) {
+            wait--;
+        } else if (!fn_8016C360(0x27)) {
+            unsigned char vol;
+            int pan;
+
+            wait = (int)(1000.0f * lbl_80495994[volIdx]) + 60;
+            vol = (int)(64.0f * lbl_80495994[volIdx]) + 64;
+            pan = (int)(127.0f * lbl_80495A94[panIdx]);
+            SoundMgr_PlaySE(0x27);
+            fn_8016C1B0(0x27, vol);
+            fn_8016C168(0x27, pan);
+            if (++volIdx >= 0x40) {
+                volIdx = 0;
+            }
+            if (++panIdx >= 0x30) {
+                panIdx = 0;
+            }
+        }
+        if (!done) {
+            done = SoundMgr_PlaySE(0x2C);
+        }
+    } else if (done == 1) {
+        done = 0;
+        fn_8016C3C8(0x2C, 1);
+    }
+}
+
+
+static inline unsigned char InQuad(const float *q, const Vec3f *p) {
+    if (((q[2] - q[0]) * (p->z - q[1]) - (q[3] - q[1]) * (p->x - q[0]) <= 0.0f) == 0) {
+        return 0;
+    }
+    if (((q[4] - q[2]) * (p->z - q[3]) - (q[5] - q[3]) * (p->x - q[2]) <= 0.0f) == 0) {
+        return 0;
+    }
+    if (((q[6] - q[4]) * (p->z - q[5]) - (q[7] - q[5]) * (p->x - q[4]) <= 0.0f) == 0) {
+        return 0;
+    }
+    if (((q[0] - q[6]) * (p->z - q[7]) - (q[1] - q[7]) * (p->x - q[6]) <= 0.0f) == 0) {
+        return 0;
+    }
+    return 1;
+}
+
+
+extern "C" clMapEffect *fn_801752C0(JObj *root, int arg) {
+    if (!root) {
+        return 0;
+    }
+    switch (g_cupId) {
+    case 1:
+        return new clMapEffectMR(root, arg);
+    case 2:
+        return new clMapEffectDK(root, arg);
+    case 3:
+        return new clMapEffectWC(root, arg);
+    case 4:
+        return new clMapEffectPC(root, arg);
+    case 5:
+        return new clMapEffectKP(root, arg);
+    case 6:
+        return new clMapEffectRB(root, arg);
+    case 7:
+        return new clMapEffectYI(root, arg);
+    case 8:
+        return new clMapEffectDN(root, arg);
+    case 10:
+        return new clMapEffectDKC();
+    case 11:
+        return new clMapEffectWCC(root, arg);
+    case 12:
+        return new clMapEffectPCC();
+    case 13:
+        return new clMapEffectKPC();
+    case 14:
+        return new clMapEffectRB(root, arg);
+    case 15:
+        return new clMapEffectYI(root, arg);
+    case 16:
+        return new clMapEffectDN(root, arg);
+    }
+    return 0;
+}
+
+inline void clMapEffectDKC::Draw(int mask) {
+}
+
+template <int N>
+inline void YIState::UpdateT() {
+    Vec3f pos;
+
+    if (!IsRaceStarted()) {
+        if (!a) {
+            SoundMgr_PlaySE(0x3E);
+            a = 1;
+            x04 = 1.0f;
+        }
+    } else if (a == 1) {
+        x04 -= 0.003000000026077032f;
+        fn_8016C1F8(0x3E, x04);
+        if (x04 <= 0.0f) {
+            a = 0;
+            fn_8016C394(0x3E);
+        }
+    }
+    CObj_LoadProjMatrix(GetCourseScene3D(), &pos);
+    if (!g_longRoundFlag) {
+        if (InQuad((const float *)lbl_80370C78, &pos) == 1) {
+            if (++x20 >= 0x78) {
+                x20 = 0;
+            }
+            if (x20 == 0x1A) {
+                SoundMgr_PlaySE(0x3B);
+            }
+        }
+    } else {
+        if (InQuad((const float *)lbl_80370CB8, &pos) == 1) {
+            if (!c) {
+                SoundMgr_PlaySE(0x40);
+                c = 1;
+            } else if (x14 < 1.0f) {
+                x14 += 0.004999999888241291f;
+                if (x14 >= 1.0f) {
+                    x14 = 1.0f;
+                }
+                fn_8016C1F8(0x40, x14);
+            }
+        } else if (c == 1) {
+            x14 -= 0.003000000026077032f;
+            fn_8016C1F8(0x40, x14);
+            if (x14 <= 0.0f) {
+                c = 0;
+                fn_8016C394(0x40);
+            }
+        }
+        if (InQuad((const float *)lbl_80370C98, &pos) == 1) {
+            x24++;
+            if (x24 >= 0x168) {
+                fn_8016C394(0x3F);
+                d = 0;
+                x24 = 0;
+            }
+            if (x24 > 0x96) {
+                if (!d) {
+                    SoundMgr_PlaySE(0x3F);
+                    d = 1;
+                    x1c = 1.0f;
+                } else if (x1c < 1.0f) {
+                    x1c += 0.004999999888241291f;
+                    if (x1c >= 1.0f) {
+                        x1c = 1.0f;
+                    }
+                    fn_8016C1F8(0x3F, x1c);
+                }
+            }
+        } else if (d == 1) {
+            x1c -= 0.003000000026077032f;
+            fn_8016C1F8(0x3F, x1c);
+            if (x1c <= 0.0f) {
+                d = 0;
+                fn_8016C394(0x3F);
+            }
+        }
     }
 }
 
