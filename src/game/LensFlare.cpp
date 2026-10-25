@@ -88,7 +88,7 @@ extern char lbl_8036E880[];
 extern char lbl_8036E8A0[];
 extern char lbl_806D8D80[7];
 extern char lbl_806D8D88[5];
-extern GXRenderModeObj lbl_806CD140;
+extern GXRenderModeObj HSD_VIData;
 void __assert(char *, int, char *);
 void DebugPrintf(const char *, ...);
 void Object_DtorWithGXSync(void *, int);
@@ -293,8 +293,8 @@ clLensFlare::clLensFlare(const char *res, HSD_JObj *at, float scale, float sprea
     this->spread = spread;
     if (at) {
         HSD_JObjGetTranslation(at, &pos);
-        screenW = lbl_806CD140.fbWidth;
-        screenH = lbl_806CD140.xfbHeight;
+        screenW = HSD_VIData.fbWidth;
+        screenH = HSD_VIData.xfbHeight;
         fn_801825FC();
         model = new clNormal3D(res, 0);
         fn_801825C8();
@@ -345,8 +345,8 @@ clLensFlare::clLensFlare(const char *res, float x, float y, float z, float scale
     pos.z = z;
     this->scale = scale;
     this->spread = spread;
-    screenW = lbl_806CD140.fbWidth;
-    screenH = lbl_806CD140.xfbHeight;
+    screenW = HSD_VIData.fbWidth;
+    screenH = HSD_VIData.xfbHeight;
     fn_801825FC();
     model = new clNormal3D(res, 0);
     fn_801825C8();

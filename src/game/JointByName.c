@@ -36,7 +36,7 @@ extern char lbl_806D5968[7];
 extern char lbl_806D5970[5];
 extern void __assert(char *, int, char *);
 extern HSD_JObj *ResolveJointByName(void *model, char *name);
-extern void fn_802D1E34(HSD_JObj *jobj);
+extern void HSD_JObjSetupMatrixSub(HSD_JObj *jobj);
 extern void PSMTXCopy(const Mtx src, Mtx dst);
 extern void Mtx_TransposeToMtx44(float *dst, const Mtx src);
 
@@ -50,7 +50,7 @@ static void update_matrix(HSD_JObj *jobj) {
         dirty = 1;
     }
     if (dirty) {
-        fn_802D1E34(jobj);
+        HSD_JObjSetupMatrixSub(jobj);
     }
 }
 

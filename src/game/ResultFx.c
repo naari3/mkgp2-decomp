@@ -63,7 +63,7 @@ extern void fn_8013C3C0(void);
 extern int fn_8013BD7C(void);
 extern int fn_8013C428(void);
 extern void GX_SetCullMode(int mode);
-extern void fn_802D2B00(int a, int b);
+extern void HSD_StateInitDirect(int a, int b);
 extern void *HSD_CObjGetCurrent(void);
 extern void fn_802C7D98(void *cam, Mtx m);
 extern void GXSetCurrentMtx(int id);
@@ -1042,7 +1042,7 @@ extern "C" asm void fn_8014017C(void) { /* 0x8014017C size:0x1C8 */
     lis r4, 0x4000
     li r3, 0x0
     addi r4, r4, 0x2
-    bl fn_802D2B00
+    bl HSD_StateInitDirect
     bl HSD_CObjGetCurrent
     addi r4, r1, 0x3c
     bl fn_802C7D98

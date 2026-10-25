@@ -1986,6 +1986,12 @@ game/Sci2Card_ResetRetryAndStatus.c:
 game/Sci2Card_ReceiptTables.c:
 	.text       start:0x80099958 end:0x80099994
 
+game/RaceSys_8009B98C.c:
+	.text       start:0x8009B98C end:0x8009B9D0
+
+game/RaceSys_8009BAC4.c:
+	.text       start:0x8009BAC4 end:0x8009BD04
+
 game/RankSlot_AppendOrUpdate.c:
 	extab       start:0x80009598 end:0x800095A0
 	extabindex  start:0x80022190 end:0x8002219C
@@ -1995,6 +2001,9 @@ game/VSMode_SeedRandomItemSequence.c:
 	extab       start:0x800095A0 end:0x800095A8
 	extabindex  start:0x8002219C end:0x800221A8
 	.text       start:0x8009BDC0 end:0x8009BEF4
+
+game/RaceData_8009BEF4.c:
+	.text       start:0x8009BEF4 end:0x8009CBFC
 
 game/PlayerData_ApplyItemUnlockById.c:
 	extab       start:0x800095B0 end:0x800095B8
@@ -2191,6 +2200,11 @@ game/TitleTracker_Dtor.c:
 game/TitleTracker_Stubs.c:
 	.text       start:0x800A5CE4 end:0x800A5CEC
 
+game/RankLog.c:
+	extab       start:0x80009CD4 end:0x80009E04
+	extabindex  start:0x800223DC end:0x800225A4
+	.text       start:0x800A5CEC end:0x800A8D34
+
 game/auto_800A8F4C_block.c:
 	extab       start:0x80009E60 end:0x80009ED0
 	extabindex  start:0x800225B0 end:0x80022640
@@ -2271,6 +2285,11 @@ game/GameMode_Title_Ctor.c:
 	extab       start:0x8000A158 end:0x8000A170
 	extabindex  start:0x800227F0 end:0x800227FC
 	.text       start:0x800AC8FC end:0x800AC94C
+
+game/GameMode_TitleSelect.cpp:
+	extab       start:0x8000A170 end:0x8000A1EC
+	extabindex  start:0x800227FC end:0x80022868
+	.text       start:0x800AC94C end:0x800ACD60
 
 game/ReverseChallenge.c:
 	extab       start:0x8000A1EC end:0x8000A37C
@@ -4053,6 +4072,125 @@ game/fn_80105CC4.c:
 	extabindex  start:0x80024164 end:0x80024170
 	.text       start:0x80105CC4 end:0x80105EB4
 
+game/fn_80107B00.c:
+	extab       start:0x8000B85C end:0x8000B864
+	extabindex  start:0x800241A0 end:0x800241AC
+	.text       start:0x80107B00 end:0x80107C74
+
+game/fn_8010829C.c:
+	extab       start:0x8000B86C end:0x8000B874
+	extabindex  start:0x800241B8 end:0x800241C4
+	.text       start:0x8010829C end:0x80108484
+
+game/fn_80109044.c:
+	extab       start:0x8000B884 end:0x8000B88C
+	extabindex  start:0x800241DC end:0x800241E8
+	.text       start:0x80109044 end:0x801092B0
+
+game/fn_801092B0.c:
+	extab       start:0x8000B88C end:0x8000B894
+	extabindex  start:0x800241E8 end:0x800241F4
+	.text       start:0x801092B0 end:0x801094E4
+
+game/fn_8010AA54.c:
+	extab       start:0x8000B8AC end:0x8000B8B4
+	extabindex  start:0x80024218 end:0x80024224
+	.text       start:0x8010AA54 end:0x8010ACF0
+	.data       start:0x80421BD8 end:0x80421C00
+
+game/fn_8010B36C.c:
+	extab       start:0x8000B8BC end:0x8000B8C4
+	extabindex  start:0x80024230 end:0x8002423C
+	.text       start:0x8010B36C end:0x8010B664
+	.data       start:0x80421C00 end:0x80421C28
+
+game/fn_8010BEE0.c:
+	extab       start:0x8000B8D4 end:0x8000B8DC
+	extabindex  start:0x80024254 end:0x80024260
+	.text       start:0x8010BEE0 end:0x8010BF20
+
+game/fn_80111124.c:
+	extab       start:0x8000B94C end:0x8000B954
+	extabindex  start:0x80024308 end:0x80024314
+	.text       start:0x80111124 end:0x8011136C
+
+game/fn_80112738.c:
+	extab       start:0x8000B974 end:0x8000B97C
+	extabindex  start:0x80024344 end:0x80024350
+	.text       start:0x80112738 end:0x8011297C
+
+game/fn_8011297C.c:
+	extab       start:0x8000B97C end:0x8000B984
+	extabindex  start:0x80024350 end:0x8002435C
+	.text       start:0x8011297C end:0x80112BE4
+	.data       start:0x80421D68 end:0x80421D9C
+
+game/fn_80112BE4.c:
+	extab       start:0x8000B984 end:0x8000B98C
+	extabindex  start:0x8002435C end:0x80024368
+	.text       start:0x80112BE4 end:0x80112DDC
+
+game/fn_80113500.c:
+	extab       start:0x8000B99C end:0x8000B9A4
+	extabindex  start:0x80024380 end:0x8002438C
+	.text       start:0x80113500 end:0x80113728
+
+game/fn_80115118.c:
+	extab       start:0x8000B9C4 end:0x8000B9CC
+	extabindex  start:0x800243BC end:0x800243C8
+	.text       start:0x80115118 end:0x801152B0
+
+game/fn_801152B0.c:
+	extab       start:0x8000B9CC end:0x8000B9D4
+	extabindex  start:0x800243C8 end:0x800243D4
+	.text       start:0x801152B0 end:0x80115474
+
+game/fn_80115474.c:
+	extab       start:0x8000B9D4 end:0x8000B9DC
+	extabindex  start:0x800243D4 end:0x800243E0
+	.text       start:0x80115474 end:0x8011562C
+
+game/fn_80117020.c:
+	extab       start:0x8000BA1C end:0x8000BA24
+	extabindex  start:0x80024440 end:0x8002444C
+	.text       start:0x80117020 end:0x801172D8
+	.data       start:0x8042209C end:0x804220C4
+
+game/fn_801172D8.c:
+	extab       start:0x8000BA24 end:0x8000BA2C
+	extabindex  start:0x8002444C end:0x80024458
+	.text       start:0x801172D8 end:0x80117494
+
+game/fn_80119234.c:
+	extab       start:0x8000BA64 end:0x8000BA6C
+	extabindex  start:0x800244AC end:0x800244B8
+	.text       start:0x80119234 end:0x801193F4
+
+game/fn_80119F80.c:
+	extab       start:0x8000BA84 end:0x8000BA8C
+	extabindex  start:0x800244DC end:0x800244E8
+	.text       start:0x80119F80 end:0x8011A184
+
+game/fn_8011BE4C.c:
+	extab       start:0x8000BAB4 end:0x8000BABC
+	extabindex  start:0x80024524 end:0x80024530
+	.text       start:0x8011BE4C end:0x8011C008
+
+game/fn_8011D008.c:
+	extab       start:0x8000BADC end:0x8000BAE4
+	extabindex  start:0x80024560 end:0x8002456C
+	.text       start:0x8011D008 end:0x8011D118
+
+game/ResourceSlot.c:
+	extab       start:0x8000BAFC end:0x8000BB0C
+	extabindex  start:0x80024590 end:0x800245A8
+	.text       start:0x8011DC20 end:0x8011DF98
+
+game/SpriteHandlePool.c:
+	extab       start:0x8000BB0C end:0x8000BB4C
+	extabindex  start:0x800245A8 end:0x800245CC
+	.text       start:0x8011DF98 end:0x8011EB1C
+
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C
 
@@ -4185,6 +4323,30 @@ game/PodiumPose.c:
 	extabindex  start:0x800250E8 end:0x80025148
 	.text       start:0x8014219C end:0x8014388C
 
+game/CSPartsResultRank.c:
+	extab       start:0x8000D92C end:0x8000DB00
+	extabindex  start:0x80025148 end:0x800251A8
+	.text       start:0x8014388C end:0x80143F8C
+	.rodata     start:0x80360C70 end:0x80361970
+	.data       start:0x8048EE08 end:0x8048EE68
+	.sdata      start:0x806CF708 end:0x806CF720
+
+game/CSPartsResultStage.c:
+	extab       start:0x8000DB00 end:0x8000DB84
+	extabindex  start:0x800251A8 end:0x800251C0
+	.text       start:0x80143F8C end:0x80144258
+	.rodata     start:0x80361970 end:0x80361C48
+	.data       start:0x8048EE68 end:0x8048EEA8
+	.sdata      start:0x806CF720 end:0x806CF738
+
+game/CSPartsResultTimeNum.c:
+	extab       start:0x8000DB84 end:0x8000DBE4
+	extabindex  start:0x800251C0 end:0x800251D8
+	.text       start:0x80144258 end:0x80144430
+	.rodata     start:0x80361C48 end:0x80361D60
+	.data       start:0x8048EEA8 end:0x8048EEE8
+	.sdata      start:0x806CF738 end:0x806CF750
+
 game/fn_80146160.c:
 	extab       start:0x8000DE5C end:0x8000DE64
 	extabindex  start:0x80025280 end:0x8002528C
@@ -4201,11 +4363,10 @@ game/fn_8014640C.c:
 game/fn_80147468.c:
 	.text       start:0x80147468 end:0x80147470
 
-game/fn_8014CFA0.c:
-	.text       start:0x8014CFA0 end:0x8014CFA4
-
-game/fn_8014D2AC.c:
-	.text       start:0x8014D2AC end:0x8014D2B0
+game/CSPartsHolders.c:
+	extab       start:0x8000E5A0 end:0x8000E640
+	extabindex  start:0x800254CC end:0x8002555C
+	.text       start:0x8014CE74 end:0x8014D540
 
 game/fn_8014DD5C.c:
 	extab       start:0x8000E86C end:0x8000E874
@@ -6498,9 +6659,14 @@ Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
 	.dtors      start:0x802E8980 end:0x802E8988
 	.sdata      start:0x806D0B78 end:0x806D0B7C
 
-MSL_C/Gecko_ExceptionPPC.c:
-	.text       start:0x802731B4 end:0x8027321C
+Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp:
+	extab       start:0x8001F2B8 end:0x8001F32C
+	extabindex  start:0x8002BB74 end:0x8002BBC8
+	.text       start:0x80271DF0 end:0x80273228
+	.rodata     start:0x803F1CE0 end:0x803F1D78
+	.data       start:0x804F47C8 end:0x804F48B0
 	.bss        start:0x8067DE68 end:0x8067DE78
+	.sdata      start:0x806D0B80 end:0x806D0B90
 
 MSL_C/GCN_mem_alloc.c:
 	.text       start:0x80273228 end:0x80273398
@@ -6766,6 +6932,19 @@ dolphin/dvd/fstload.c:
 	.sdata      start:0x806D0C48 end:0x806D0C58
 	.sbss       start:0x806D1ED0 end:0x806D1EE0
 
+musyx/runtime/seq.c:
+	.text       start:0x8029C33C end:0x802A0278
+	.data       start:0x804F5C20 end:0x804F5C70
+	.bss        start:0x806A4C70 end:0x806B25B0
+	.sbss       start:0x806D1EE0 end:0x806D1F00
+	.sdata2     start:0x806DC988 end:0x806DC9A8
+
+musyx/runtime/synth.c:
+	.text       start:0x802A0278 end:0x802A36F0
+	.bss        start:0x806B25B0 end:0x806B3B98
+	.sbss       start:0x806D1F00 end:0x806D1F48
+	.sdata2     start:0x806DC9A8 end:0x806DC9E8
+
 musyx/runtime/synthdata.c:
 	.text       start:0x802A79B8 end:0x802A931C
 	.bss        start:0x806B5598 end:0x806BFDD0
@@ -6877,6 +7056,23 @@ sysdolphin/baselib/jobj.c:
 
 sysdolphin/baselib/jobj_anim_misc.c:
 	.text       start:0x802CDE48 end:0x802CDF38
+
+sysdolphin/baselib/displayfunc.c:
+	.text       start:0x802D2AD0 end:0x802D4030
+	.rodata     start:0x803F2BF8 end:0x803F2C08
+	.data       start:0x804FCD80 end:0x804FCDB0
+	.bss        start:0x806CD0E8 end:0x806CD118
+	.sdata      start:0x806D0DD0 end:0x806D0DF0
+	.sbss       start:0x806D21C8 end:0x806D21E8
+	.sdata2     start:0x806DCD00 end:0x806DCD20
+
+sysdolphin/baselib/video.c:
+	.text       start:0x802D4B00 end:0x802D57A8
+	.data       start:0x804FD048 end:0x804FD0D0
+	.bss        start:0x806CD140 end:0x806CE740
+	.sdata      start:0x806D0E10 end:0x806D0E18
+	.sbss       start:0x806D2218 end:0x806D2220
+	.sdata2     start:0x806DCD28 end:0x806DCD38
 
 sysdolphin/baselib/util.c:
 	.text       start:0x802D7730 end:0x802D78FC

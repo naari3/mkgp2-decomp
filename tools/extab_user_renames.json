@@ -2569,6 +2569,88 @@
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960"
   },
+  "src/Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp": {
+    "__dt__Q23std9exceptionFv": "dtor_80038DD4",
+    "what__Q23std9exceptionCFv": "fn_80038E1C",
+    "__vt__Q23std9exception": "lbl_803F5710"
+  },
+  "src/game/Sci2Card_Init.cpp": {
+    "__ct__8Sci2CardFv": "Sci2Card_Init"
+  },
+  "src/game/Sci2Card_Lifetime.cpp": {
+    "__ct__8Sci2CardFv": "Sci2Card_Init"
+  },
+  "src/game/CSPartsResultRank.c": {
+    "__dt__19clCSPartsResultRankFv": "fn_8014388C",
+    "__ct__19clCSPartsResultRankFv": "fn_8014393C",
+    "m0C__9clCSPartsFv": "fn_80143E58",
+    "m10__9clCSPartsFv": "fn_80143E80",
+    "Update__9clCSPartsFv": "fn_80143EA8",
+    "Draw__9clCSPartsFv": "fn_80143EDC",
+    "__dt__9clCSPartsFv": "dtor_80143F0C",
+    "fn_80143DB0__Fv": "fn_80143DB0",
+    "__vt__9clCSParts": "lbl_8048EE48",
+    "__vt__19clCSPartsResultRank": "lbl_8048EE28",
+    "__dt__17clCSPartsInerfaceFv": "dtor_8013EB50",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__17clCSPartsInerface": "lbl_8048EB44",
+    "m1C__17clCSPartsInerfaceFv": "fn_8013EB4C",
+    "__ct__9clCSModelFiiiPCvi": "fn_8013B9A0",
+    "__dt__9clCSModelFv": "fn_8013B87C"
+  },
+  "src/game/CSPartsResultStage.c": {
+    "__dt__20clCSPartsResultStageFv": "fn_80143F8C",
+    "__ct__20clCSPartsResultStageFv": "fn_8014403C",
+    "__vt__9clCSParts": "lbl_8048EE48",
+    "__vt__20clCSPartsResultStage": "lbl_8048EE88",
+    "__dt__17clCSPartsInerfaceFv": "dtor_8013EB50",
+    "__dt__9clCSPartsFv": "dtor_80143F0C",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__17clCSPartsInerface": "lbl_8048EB44",
+    "m1C__17clCSPartsInerfaceFv": "fn_8013EB4C",
+    "__ct__9clCSModelFiiiPCvi": "fn_8013B9A0",
+    "__dt__9clCSModelFv": "fn_8013B87C",
+    "m0C__9clCSPartsFv": "fn_80143E58",
+    "m10__9clCSPartsFv": "fn_80143E80",
+    "Update__9clCSPartsFv": "fn_80143EA8",
+    "Draw__9clCSPartsFv": "fn_80143EDC"
+  },
+  "src/game/CSPartsResultTimeNum.c": {
+    "__dt__22clCSPartsResultTimeNumFv": "fn_80144258",
+    "__ct__22clCSPartsResultTimeNumFi": "fn_80144308",
+    "__vt__9clCSParts": "lbl_8048EE48",
+    "__vt__22clCSPartsResultTimeNum": "lbl_8048EEC8",
+    "__dt__17clCSPartsInerfaceFv": "dtor_8013EB50",
+    "__dt__9clCSPartsFv": "dtor_80143F0C",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__17clCSPartsInerface": "lbl_8048EB44",
+    "m1C__17clCSPartsInerfaceFv": "fn_8013EB4C",
+    "__ct__9clCSModelFiiiPCvi": "fn_8013B9A0",
+    "__dt__9clCSModelFv": "fn_8013B87C",
+    "m0C__9clCSPartsFv": "fn_80143E58",
+    "m10__9clCSPartsFv": "fn_80143E80",
+    "Update__9clCSPartsFv": "fn_80143EA8",
+    "Draw__9clCSPartsFv": "fn_80143EDC"
+  },
+  "src/game/CSPartsHolders.c": {
+    "__dt__10PairHolderFv": "fn_8014CFA4",
+    "__dt__12TripleHolderFv": "fn_8014D2B0",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10Scene3DObjFv": "fn_8014C53C",
+    "extab_fn_8014D038": "@etb_8000E5D8",
+    "extabindex_fn_8014D038": "@eti_80025508",
+    "extab_fn_8014D344": "@etb_8000E618",
+    "extabindex_fn_8014D344": "@eti_80025538"
+  },
+  "src/game/SpriteHandlePool.c": {
+    "__dt__11ScopedAccumFv": "dtor_80122068",
+    "extab_fn_8011E31C": "@etb_8000BB14",
+    "extabindex_fn_8011E31C": "@eti_800245B4"
+  },
   "src/game/cLNormal3DWrap.cpp": {
     "__dt__21clNormal3DNodeManagerFv": "cLNormal3DWrap_Mgr_Dtor",
     "__ct__21clNormal3DNodeManagerFv": "cLNormal3DWrap_Mgr_Ctor",

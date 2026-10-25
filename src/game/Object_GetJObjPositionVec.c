@@ -25,7 +25,7 @@ extern char lbl_806D2350[5];
 extern char lbl_802E97B8[0xA];
 extern void __assert(char *, int, char *);
 extern void fn_802D6948(void *, float *);
-extern void fn_802D1E34(HSD_JObj *);
+extern void HSD_JObjSetupMatrixSub(HSD_JObj *);
 
 static inline unsigned char mtx_is_dirty(HSD_JObj *jobj) {
     unsigned int flags;
@@ -78,7 +78,7 @@ void *Object_GetJObjLocalMatrix(ObjectJObjView *object) {
         __assert(lbl_806D2348, 0x47C, lbl_806D2350);
     }
     if (jobj != 0 && mtx_is_dirty(jobj)) {
-        fn_802D1E34(jobj);
+        HSD_JObjSetupMatrixSub(jobj);
     }
     return jobj->mtx;
 }

@@ -455,6 +455,8 @@ config.libs = [
         "cflags": cflags_hsd_melee,
         "progress_category": "sdk",
         "objects": [
+            Object(Matching, "sysdolphin/baselib/displayfunc.c"),
+            Object(Matching, "sysdolphin/baselib/video.c"),
             Object(Matching, "sysdolphin/baselib/list.c"),
             Object(Matching, "sysdolphin/baselib/random.c"),
             Object(Matching, "sysdolphin/baselib/fog.c"),
@@ -735,8 +737,6 @@ config.libs = [
             Object(Matching, "game/fn_801DC510.c"),
             Object(Matching, "game/fn_801B129C.c"),
             Object(Matching, "game/fn_8016FC70.c"),
-            Object(Matching, "game/fn_8014D2AC.c"),
-            Object(Matching, "game/fn_8014CFA0.c"),
             Object(Matching, "game/fn_8014640C.c"),
             Object(Matching, "game/fn_800D748C.c"),
             Object(Matching, "game/fn_800A5608.c"),
@@ -1069,6 +1069,11 @@ config.libs = [
             Object(Matching, "game/CharaPop12_Update.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/Boomerang_ReturnAndAcquireTargetTick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(NonMatching, "game/EffectVfx84_85_BoostChargeRing_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/RaceSys_8009B98C.c"),  #g2
+            Object(Matching, "game/RaceSys_8009BAC4.c"),  #g2
+            Object(Matching, "game/RaceData_8009BEF4.c"),  #g2
+            Object(NonMatching, "game/GameMode_TitleSelect.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(NonMatching, "game/RankLog.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/ItemObject_WriteVectors.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemTracker.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowItem.c", extab_padding=b"\xc7\x02" * 6, extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
@@ -1205,7 +1210,7 @@ config.libs = [
             Object(Matching, "game/LapDisp_SetTotalLaps.c"),
             Object(Matching, "game/LapDisp_SetCurrentLap.c"),
             Object(Matching, "game/HUD_SetRacePosition.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/RnkDisp_SetPosition.c"),
+            Object(Matching, "game/RnkDisp_SetPosition.c"),
             Object(Matching, "game/HUD_SetTotalLaps.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/HUD_SetCurrentLap.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/IsCardValid.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -1315,8 +1320,8 @@ config.libs = [
             Object(Matching, "game/EffectSparkSprayPlace.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectSparkSprayCompound.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/NokoNoko_CountDefeated.c"),
-            Object(Matching, "game/NokoNoko_Update.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/NokoNoko_InitEntity.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/NokoNoko_Update.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/NokoNoko_InitEntity.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/NokoNoko_FindNearest.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/NokoNoko_CheckHitAndKill.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/NokoNoko_Render.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -1573,6 +1578,33 @@ config.libs = [
             Object(Matching, "game/PushPrompt.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/ResultFx.c", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/PodiumPose.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/CSPartsResultRank.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-inline deferred", "-rostr"]),
+            Object(Matching, "game/CSPartsResultStage.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-inline deferred", "-rostr"]),
+            Object(Matching, "game/CSPartsResultTimeNum.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-inline deferred", "-rostr"]),
+            Object(Matching, "game/CSPartsHolders.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/ResourceSlot.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/SpriteHandlePool.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/fn_8010BEE0.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_8011D008.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80107B00.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_801172D8.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80119234.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_8011BE4C.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_8010829C.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80115118.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_801152B0.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80115474.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80119F80.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80112BE4.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80113500.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_801092B0.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80112738.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80111124.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_80117020.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_8010AA54.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80109044.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_8011297C.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_8010B36C.c", extra_cflags=["-Cpp_exceptions on"]),
         ],
     },
     {
@@ -2030,7 +2062,6 @@ config.libs = [
             Object(Matching, "MSL_C/math/w_log.c"),
             Object(Matching, "MSL_C/math/w_pow.c"),
             Object(Matching, "MSL_C/math_ppc.c"),
-            Object(Matching, "MSL_C/Gecko_ExceptionPPC.c"),
             Object(Matching, "MSL_C/mbstring.c"),
             Object(Matching, "MSL_C/alloc.c"),
             Object(Matching, "MSL_C/wmem.c"),
@@ -2094,6 +2125,7 @@ config.libs = [
             Object(Matching, "Runtime.PPCEABI.H/ptmf.c", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
             Object(Matching, "Runtime.PPCEABI.H/runtime.c", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
             Object(Matching, "Runtime.PPCEABI.H/NMWException.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on", "-inline deferred"], extab_padding=b""),
+            Object(Matching, "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on", "-inline deferred", "-RTTI on", "-str nopool"], extab_padding=b"\x02\x55"),
         ],
     },
     {
@@ -2111,6 +2143,8 @@ config.libs = [
         ],
         "progress_category": "sdk",
         "objects": [
+            Object(Matching, "musyx/runtime/seq.c", extra_cflags=["-fp_contract off"]),
+            Object(Matching, "musyx/runtime/synth.c", extra_cflags=["-fp_contract off"]),
             Object(Matching, "musyx/runtime/synthdata.c"),
             Object(Matching, "musyx/runtime/synthvoice.c"),
             Object(Matching, "musyx/runtime/synth_ac.c"),
@@ -2319,6 +2353,7 @@ DATA_ALIGN4_TUS = [
     "game/clItemBoxManager_StepTable",
     "game/ItemUseStats",
     "game/KartItem_RenderCb_Modes",
+    "game/fn_80117020",
 ]
 
 
