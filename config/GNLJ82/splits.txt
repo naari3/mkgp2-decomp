@@ -7176,8 +7176,18 @@ game/CoinChallengeInit.cpp:
 	extabindex  start:0x80029FCC end:0x80029FD8
 	.text       start:0x80214DB8 end:0x802151C8
 
+game/anon_802151C8.cpp:
+	extab       start:0x8001A300 end:0x8001A318
+	extabindex  start:0x80029FD8 end:0x80029FE4
+	.text       start:0x802151C8 end:0x80215508
+
 game/fn_80215508.c:
 	.text       start:0x80215508 end:0x8021550C
+
+game/anon_8021550C.cpp:
+	extab       start:0x8001A318 end:0x8001A50C
+	extabindex  start:0x80029FE4 end:0x8002A068
+	.text       start:0x8021550C end:0x8021617C
 
 game/dtor_8021617C.c:
 	extab       start:0x8001A50C end:0x8001A514
