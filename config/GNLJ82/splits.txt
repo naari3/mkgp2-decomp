@@ -6157,6 +6157,7 @@ game/JumpDistanceMode_Init.c:
 	extab       start:0x80019F1C end:0x8001A17C
 	extabindex  start:0x80029F90 end:0x80029F9C
 	.text       start:0x80213210 end:0x80213A64
+	.rodata     start:0x803C3858 end:0x803C3DD8
 
 game/JumpDistanceMode_InitTimerDisplay.c:
 	extab       start:0x8001A17C end:0x8001A194
