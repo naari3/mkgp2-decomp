@@ -1779,6 +1779,13 @@ config.libs = [
         ],
     ),
     SdkLib(
+        "dolphin_si",
+        [
+            Object(Matching, "dolphin/si/SIBios.c"),
+            Object(Matching, "dolphin/si/SISamplingRate.c"),
+        ],
+    ),
+    SdkLib(
         "dolphin_gx",
         [
             Object(Matching, "dolphin/gx/GXInit.c"),
