@@ -858,3 +858,163 @@ void fn_80161128(CoinPopupDetail *o) {
 }
 
 }
+
+struct RYScene {
+    virtual ~RYScene();
+    virtual unsigned char v0C();
+    virtual void v10();
+};
+
+struct RYKart {
+    void *driver;
+    int x4;
+    float z;
+};
+
+struct RYKarts {
+    RYScene *scene;
+    void *lobj;
+    RYKart *karts[13];
+    unsigned char on;
+};
+
+struct RYSub {
+    int n;
+    float x;
+    float y;
+    int pad;
+};
+
+struct RYEntry {
+    int on;
+    float x;
+    float y;
+    int pad0c;
+    float rx;
+    float ry;
+    float rz;
+    float scale;
+    char pad20[0x2c - 0x20];
+    RYSub subs[10];
+};
+
+struct RYPair {
+    char pad[0xc];
+    VObj *a;
+    VObj *b;
+    RYEntry e[3];
+};
+
+struct ResultPartYD {
+    void *vt;
+    char pad4[0x14 - 4];
+    unsigned char active;
+    char pad15[0x2c - 0x15];
+    RYKarts *karts;
+    char *buf;
+    RYPair *pair;
+    char pad38[0x90 - 0x38];
+    char res90[1];
+};
+
+extern "C" {
+extern void fn_8013D660(VObj *p, float x, float y);
+extern void fn_8013D4B0(VObj *p, float a);
+extern void fn_8013D608(VObj *p, float x, float y, float z);
+extern void fn_8013D59C(VObj *p, float x, float y, float z);
+extern void fn_8011FAB8(void);
+extern void SetCourseScene3D(RYScene *s);
+extern void LObjList_ApplyForCObj(void *l);
+extern void CObj_DebugVizPathFlush(RYScene *s);
+extern void KartDriver_RenderTimed(void *d, int a, int b);
+
+static inline void RYPair_Draw(RYPair *p) {
+    int i;
+    for (i = 0; i < 3; i++) {
+        RYEntry *e = &p->e[i];
+        if (e->on >= 0) {
+            int j;
+            float sc;
+            for (j = 0; j < 10; j++) {
+                if (e->subs[j].n >= 0) {
+                    float t = (float)e->subs[j].n / 15.0f;
+                    float ssc;
+                    t = 1.0f - t;
+                    ssc = 0.035f * t;
+                    VObj *b = p->b;
+                    fn_8013D660(b, e->subs[j].x, e->subs[j].y);
+                    fn_8013D4B0(p->b, t);
+                    fn_8013D608(p->b, ssc, ssc, ssc);
+                    p->b->v0C();
+                }
+            }
+            sc = 0.05f * e->scale;
+            fn_8013D660(p->a, e->x, e->y);
+            fn_8013D59C(p->a, 0.017453292f * e->rx, 0.017453292f * e->ry, 0.017453292f * e->rz);
+            fn_8013D608(p->a, sc, sc, sc);
+            p->a->v0C();
+        }
+    }
+}
+
+static inline void RYKarts_Draw(RYKarts *k) {
+    if (k->on) {
+        SetCourseScene3D(k->scene);
+        if (k->scene->v0C()) {
+            int i;
+            LObjList_ApplyForCObj(k->lobj);
+            CObj_DebugVizPathFlush(k->scene);
+            for (i = 0; i < 13; i++) {
+                RYKart *kt = k->karts[i];
+                if (!(kt->z < -70.0f || kt->z > 70.0f)) {
+                    KartDriver_RenderTimed(kt->driver, 0, 1);
+                }
+            }
+            k->scene->v10();
+        }
+        SetCourseScene3D(0);
+    }
+}
+
+static inline void RYBuf_Draw(char *buf) {
+    fn_8011FAFC(buf + 0x58, 0);
+    fn_8011FAFC(buf, 0);
+}
+
+void fn_8015DEBC(ResultPartYD *o) {
+    if (o->active) {
+        RYBuf_Draw(o->buf);
+        fn_8011F994(0);
+        RYPair_Draw(o->pair);
+        fn_8011FAB8();
+        RYKarts_Draw(o->karts);
+        fn_8011FAFC(o->res90, 7);
+        HSD_StateInvalidate(-1);
+        o->active = 0;
+    }
+}
+
+}
+
+extern "C" {
+extern void *lbl_806D10A0;
+extern unsigned char g_playerData[];
+extern unsigned char get_title_result(void *t, int *a, int *b, int *c);
+
+static inline void *TitleTracker_Get(void) {
+    void *t = lbl_806D10A0;
+    if (!t) t = 0;
+    return t;
+}
+
+int has_title_changed(void) {
+    int a;
+    int c;
+    int b;
+    void *t = TitleTracker_Get();
+    if (!t || !get_title_result(t, &a, &b, &c)) return 0;
+    if (a == 0) return 0;
+    if (a == g_playerData[0x19b] && b == g_playerData[0x19c] && c == g_playerData[0x1b1]) return 0;
+    return 1;
+}
+}
