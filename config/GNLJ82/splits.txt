@@ -1099,10 +1099,20 @@ game/EffectSteering.c:
 	.text       start:0x8005B288 end:0x8005C51C
 	.data       start:0x803F99E0 end:0x803F9B48
 
+game/EffectSteering_Dtor.cpp:
+	extab       start:0x800077E4 end:0x8000792C
+	extabindex  start:0x80020A50 end:0x80020ABC
+	.text       start:0x8005C51C end:0x8005CA64
+
 game/EffectSteeringCtor.cpp:
 	extab       start:0x8000792C end:0x800079DC
 	extabindex  start:0x80020ABC end:0x80020AC8
 	.text       start:0x8005CA64 end:0x8005CCBC
+
+game/EffectSteering_Actions.cpp:
+	extab       start:0x800079DC end:0x80007B4C
+	extabindex  start:0x80020AC8 end:0x80020BA0
+	.text       start:0x8005CCBC end:0x8005D954
 
 game/clItemBoxResponder_DebrisArray_Dtor.c:
 	extab       start:0x80007B4C end:0x80007B54
