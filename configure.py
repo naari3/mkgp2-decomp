@@ -1151,6 +1151,15 @@ config.libs = [
             Object(Matching, "game/ItemObject_Tick_Dispatch1eTo23.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ItemObject_Tick_Dispatch16To1d.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ItemObject_Tick_DispatchcTo15.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/ItemObject_Tick_DispatchShellGroup.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/Dossun_State2_Drop.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/Dossun_State1And2_HeldOrFly.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/GreenShell_State1_Held.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/ItemObject_Tick_Kind3dTo3f_GreenShell.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+            Object(Matching, "game/Enraku_State1_Held.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/ItemObject_Tick_Kind40_Enraku.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/KuppaShell_State1_Held.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/ItemObject_Tick_Kind41_KuppaShell.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ItemObject_WriteVectors.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemTracker.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowItem.c", extab_padding=b"\xc7\x02" * 6, extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
