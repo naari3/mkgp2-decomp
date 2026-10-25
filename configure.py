@@ -1169,6 +1169,17 @@ config.libs = [
             Object(Matching, "game/Boomerang_LaunchAndTickStateMachine.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/BoomerangItem_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(NonMatching, "game/BombExplosion_UpdateShockwaveVfx.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/HandOverItem_HandToHandTick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/fn_80100284.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/fn_80100828.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(NonMatching, "game/fn_80100F64.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+            Object(Matching, "game/fn_80101A58.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/fn_801025C0.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/fn_80102DE0.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/fn_80103144.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/fn_8010376C.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+            Object(NonMatching, "game/fn_801046C4.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/fn_80105180.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ItemObject_WriteVectors.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemTracker.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowItem.c", extab_padding=b"\xc7\x02" * 6, extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),

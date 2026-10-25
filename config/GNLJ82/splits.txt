@@ -4525,6 +4525,11 @@ game/BombItem_Tick.c:
 	extabindex  start:0x80024044 end:0x80024050
 	.text       start:0x800FC854 end:0x800FCCAC
 
+game/HandOverItem_HandToHandTick.c:
+	extab       start:0x8000B77C end:0x8000B784
+	extabindex  start:0x80024050 end:0x8002405C
+	.text       start:0x800FCCAC end:0x800FD648
+
 game/HandOverItem_Tick.c:
 	extab       start:0x8000B784 end:0x8000B78C
 	extabindex  start:0x8002405C end:0x80024068
@@ -4555,17 +4560,70 @@ game/BoomerangItem_Tick.c:
 	extabindex  start:0x800240BC end:0x800240C8
 	.text       start:0x800FFBB8 end:0x80100284
 
+game/fn_80100284.c:
+	extab       start:0x8000B7CC end:0x8000B7D4
+	extabindex  start:0x800240C8 end:0x800240D4
+	.text       start:0x80100284 end:0x80100828
+
+game/fn_80100828.c:
+	extab       start:0x8000B7D4 end:0x8000B7DC
+	extabindex  start:0x800240D4 end:0x800240E0
+	.text       start:0x80100828 end:0x80100F64
+	.data       start:0x80421868 end:0x80421890
+
+game/fn_80100F64.c:
+	extab       start:0x8000B7DC end:0x8000B7E4
+	extabindex  start:0x800240E0 end:0x800240EC
+	.text       start:0x80100F64 end:0x80101A58
+
+game/fn_80101A58.c:
+	extab       start:0x8000B7E4 end:0x8000B7EC
+	extabindex  start:0x800240EC end:0x800240F8
+	.text       start:0x80101A58 end:0x801022E0
+
 game/fn_801022E0.c:
 	extab       start:0x8000B7EC end:0x8000B7F4
 	extabindex  start:0x800240F8 end:0x80024104
 	.text       start:0x801022E0 end:0x801025C0
 	.data       start:0x80421890 end:0x804218B8
 
+game/fn_801025C0.c:
+	extab       start:0x8000B7F4 end:0x8000B7FC
+	extabindex  start:0x80024104 end:0x80024110
+	.text       start:0x801025C0 end:0x80102DE0
+
+game/fn_80102DE0.c:
+	extab       start:0x8000B7FC end:0x8000B804
+	extabindex  start:0x80024110 end:0x8002411C
+	.text       start:0x80102DE0 end:0x80103144
+	.data       start:0x804218B8 end:0x804218E0
+
+game/fn_80103144.c:
+	extab       start:0x8000B804 end:0x8000B80C
+	extabindex  start:0x8002411C end:0x80024128
+	.text       start:0x80103144 end:0x8010376C
+
+game/fn_8010376C.c:
+	extab       start:0x8000B80C end:0x8000B814
+	extabindex  start:0x80024128 end:0x80024134
+	.text       start:0x8010376C end:0x801046C4
+	.data       start:0x80421A00 end:0x80421A28
+
+game/fn_801046C4.c:
+	extab       start:0x8000B814 end:0x8000B81C
+	extabindex  start:0x80024134 end:0x80024140
+	.text       start:0x801046C4 end:0x80104ED4
+
 game/fn_80104ED4.c:
 	extab       start:0x8000B81C end:0x8000B824
 	extabindex  start:0x80024140 end:0x8002414C
 	.text       start:0x80104ED4 end:0x80105180
 	.data       start:0x80421AB8 end:0x80421AE0
+
+game/fn_80105180.c:
+	extab       start:0x8000B824 end:0x8000B82C
+	extabindex  start:0x8002414C end:0x80024158
+	.text       start:0x80105180 end:0x80105800
 
 game/fn_80105CC4.c:
 	extab       start:0x8000B834 end:0x8000B83C
