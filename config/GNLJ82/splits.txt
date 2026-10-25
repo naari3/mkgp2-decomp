@@ -4048,6 +4048,86 @@ game/fn_80105CC4.c:
 	extabindex  start:0x80024164 end:0x80024170
 	.text       start:0x80105CC4 end:0x80105EB4
 
+game/fn_80107B00.c:
+	extab       start:0x8000B85C end:0x8000B864
+	extabindex  start:0x800241A0 end:0x800241AC
+	.text       start:0x80107B00 end:0x80107C74
+
+game/fn_8010829C.c:
+	extab       start:0x8000B86C end:0x8000B874
+	extabindex  start:0x800241B8 end:0x800241C4
+	.text       start:0x8010829C end:0x80108484
+
+game/fn_801092B0.c:
+	extab       start:0x8000B88C end:0x8000B894
+	extabindex  start:0x800241E8 end:0x800241F4
+	.text       start:0x801092B0 end:0x801094E4
+
+game/fn_8010BEE0.c:
+	extab       start:0x8000B8D4 end:0x8000B8DC
+	extabindex  start:0x80024254 end:0x80024260
+	.text       start:0x8010BEE0 end:0x8010BF20
+
+game/fn_80111124.c:
+	extab       start:0x8000B94C end:0x8000B954
+	extabindex  start:0x80024308 end:0x80024314
+	.text       start:0x80111124 end:0x8011136C
+
+game/fn_80112738.c:
+	extab       start:0x8000B974 end:0x8000B97C
+	extabindex  start:0x80024344 end:0x80024350
+	.text       start:0x80112738 end:0x8011297C
+
+game/fn_80112BE4.c:
+	extab       start:0x8000B984 end:0x8000B98C
+	extabindex  start:0x8002435C end:0x80024368
+	.text       start:0x80112BE4 end:0x80112DDC
+
+game/fn_80113500.c:
+	extab       start:0x8000B99C end:0x8000B9A4
+	extabindex  start:0x80024380 end:0x8002438C
+	.text       start:0x80113500 end:0x80113728
+
+game/fn_80115118.c:
+	extab       start:0x8000B9C4 end:0x8000B9CC
+	extabindex  start:0x800243BC end:0x800243C8
+	.text       start:0x80115118 end:0x801152B0
+
+game/fn_801152B0.c:
+	extab       start:0x8000B9CC end:0x8000B9D4
+	extabindex  start:0x800243C8 end:0x800243D4
+	.text       start:0x801152B0 end:0x80115474
+
+game/fn_80115474.c:
+	extab       start:0x8000B9D4 end:0x8000B9DC
+	extabindex  start:0x800243D4 end:0x800243E0
+	.text       start:0x80115474 end:0x8011562C
+
+game/fn_801172D8.c:
+	extab       start:0x8000BA24 end:0x8000BA2C
+	extabindex  start:0x8002444C end:0x80024458
+	.text       start:0x801172D8 end:0x80117494
+
+game/fn_80119234.c:
+	extab       start:0x8000BA64 end:0x8000BA6C
+	extabindex  start:0x800244AC end:0x800244B8
+	.text       start:0x80119234 end:0x801193F4
+
+game/fn_80119F80.c:
+	extab       start:0x8000BA84 end:0x8000BA8C
+	extabindex  start:0x800244DC end:0x800244E8
+	.text       start:0x80119F80 end:0x8011A184
+
+game/fn_8011BE4C.c:
+	extab       start:0x8000BAB4 end:0x8000BABC
+	extabindex  start:0x80024524 end:0x80024530
+	.text       start:0x8011BE4C end:0x8011C008
+
+game/fn_8011D008.c:
+	extab       start:0x8000BADC end:0x8000BAE4
+	extabindex  start:0x80024560 end:0x8002456C
+	.text       start:0x8011D008 end:0x8011D118
+
 game/ResourceSlot.c:
 	extab       start:0x8000BAFC end:0x8000BB0C
 	extabindex  start:0x80024590 end:0x800245A8
