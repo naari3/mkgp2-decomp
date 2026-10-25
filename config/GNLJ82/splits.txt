@@ -5937,6 +5937,11 @@ TRK_MINNOW_DOLPHIN/mem_TRK.c:
 TRK_MINNOW_DOLPHIN/mpc_7xx_603e.c:
 	.text       start:0x8026F4BC end:0x8026F82C
 
+TRK_MINNOW_DOLPHIN/dolphin_trk.c:
+	.text       start:0x8026F82C end:0x8026FB48
+	.data       start:0x804F4740 end:0x804F4780
+	.bss        start:0x8067D108 end:0x8067D110
+
 TRK_MINNOW_DOLPHIN/main_TRK.c:
 	.text       start:0x8026FB48 end:0x8026FBA0
 	.rodata     start:0x803F1990 end:0x803F19A0
