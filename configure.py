@@ -1891,6 +1891,7 @@ config.libs = [
             Object(Matching, "TRK_MINNOW_DOLPHIN/MWTrace.c"),
             Object(Matching, "TRK_MINNOW_DOLPHIN/MWCriticalSection_gc.cpp"),
             Object(Matching, "TRK_MINNOW_DOLPHIN/dolphin_trk.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/msghndlr.c"),
         ],
     },
     {

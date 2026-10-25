@@ -24,10 +24,7 @@ static u32 TRK_ISR_OFFSETS[15] = { PPC_SystemReset,
                                    PPC_SystemManagementInterrupt,
                                    PPC_ThermalManagementInterrupt };
 
-DECL_SECT(".init") void __TRK_reset()
-{
-	OSResetSystem(FALSE, 0, FALSE);
-}
+/* __TRK_reset lives in .init (init/OSResetSystem_NoArgs.c) */
 
 /**
  * @note Address: 0x800C03EC
