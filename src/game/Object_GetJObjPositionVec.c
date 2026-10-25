@@ -24,7 +24,7 @@ extern char lbl_806D2348[7];
 extern char lbl_806D2350[5];
 extern char lbl_802E97B8[0xA];
 extern void __assert(char *, int, char *);
-extern void fn_802D6948(void *, float *);
+extern void HSD_MtxGetTranslate(void *, float *);
 extern void HSD_JObjSetupMatrixSub(HSD_JObj *);
 
 static inline unsigned char mtx_is_dirty(HSD_JObj *jobj) {
@@ -50,7 +50,7 @@ int Object_GetJObjPositionVec(ObjectJObjView *object, float *position) {
         return 0;
     }
     if (object->override != 0) {
-        fn_802D6948(object->override, position);
+        HSD_MtxGetTranslate(object->override, position);
     } else {
         if (jobj == 0) {
             __assert(lbl_806D2348, 0x3E4, lbl_806D2350);

@@ -698,7 +698,7 @@ static inline void HSD_JObjAddTranslationZ(HSD_JObj* jobj, float z)
 
 static inline MtxPtr HSD_JObjGetMtxPtr(HSD_JObj* jobj)
 {
-    HSD_ASSERT(1144, jobj);
+    HSD_ASSERT(1148, jobj);
     HSD_JObjSetupMatrix(jobj);
     return jobj->mtx;
 }
