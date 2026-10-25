@@ -2915,6 +2915,11 @@ game/KartFxExhaustRay.cpp:
 	extabindex  start:0x80022E08 end:0x80022E14
 	.text       start:0x800BD1BC end:0x800BD900
 
+game/EffectVfx9_DriftSpark_Tick.c:
+	extab       start:0x8000A878 end:0x8000A880
+	extabindex  start:0x80022E20 end:0x80022E2C
+	.text       start:0x800BDD74 end:0x800BE21C
+
 game/EffectVfx16_StarItemBurst_Tick.c:
 	extab       start:0x8000A880 end:0x8000A888
 	extabindex  start:0x80022E2C end:0x80022E38
