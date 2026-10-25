@@ -906,7 +906,7 @@ config.libs = [
             Object(Matching, "game/EffectSteeringCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectActor_BindKartTargetPair.c"),
             Object(Matching, "game/DebrisArray_DrawForward.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/DebrisArrayDraw.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/DebrisArrayDraw.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/DebrisArray.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/DemoFlow_ResetTwoFlags.c"),
             Object(Matching, "game/ItemObject_RaycastWallStub.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -1027,7 +1027,7 @@ config.libs = [
             Object(Matching, "game/DrawEffect_Cb_KartTrail_Bind3E.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartRotatingSparkle_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartFlatBurst_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(NonMatching, "game/fn_80105CC4.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+            Object(Matching, "game/fn_80105CC4.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(NonMatching, "game/Terrain_FlagsToDebugString.c", extra_cflags=["-Cpp_exceptions on", "-str reuse,readonly"]),  #g2
             Object(Matching, "game/Effect_KartGlow_Update.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/Mtx44_Translate.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -1306,7 +1306,7 @@ config.libs = [
             Object(Matching, "game/EffectChildPair.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectPlaceE4.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/EffectAnim5A.cpp", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/EffectDustScatter.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/EffectDustScatter.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectYawPitch.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/CoinJumpFx.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/CelebPop17Update.cpp", extra_cflags=["-Cpp_exceptions on"]),
@@ -1393,8 +1393,8 @@ config.libs = [
             Object(Matching, "game/EggItem.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GabyouItem.c", extab_padding=b"\x00\x00"),
             Object(NonMatching, "game/GabyouItemFlight.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/GabyouItemHit.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/GabyouItemImpact.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/GabyouItemHit.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/GabyouItemImpact.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/GabyouItemReturn.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GabyouItemFall.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GabyouItemTick.cpp", extra_cflags=["-Cpp_exceptions on"]),

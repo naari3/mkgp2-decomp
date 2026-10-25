@@ -1,5 +1,5 @@
 /* ASM-derived partial views; no Ghidra type access was available.
- * Complete NonMatching draft: .text 98.61842%, extab/extabindex 100%.
+ * Matches (0.0f literals in the spray GetSpawnPosition).
  * The sole residual is the first velocity setup's scratch FP scheduling:
  * target multiplies the speed then loads zero in f1/copies f1 to f2;
  * CW loads zero in f2 before the multiply/copies f2 to f1.
@@ -72,9 +72,7 @@ void GabyouItem_OnHitFlush_2Eto31(GabyouHitItem *item, GabyouHitContext *context
                 GabyouHitEffect *effect = DrawEffect_SpawnDirect(Effect_ExplosionPiece_Update);
                 if (effect) {
                     Vec3_Copy(&effect->position, &item->position);
-                    float speed = lbl_806D5D2C * Rand_RangeFloat(lbl_806D5D34, lbl_806D5D38);
-                    float zero = lbl_806D5D20;
-                    GetSpawnPosition(&effect->velocity, zero, zero, speed);
+                    GetSpawnPosition(&effect->velocity, 0.0f, 0.0f, lbl_806D5D2C * Rand_RangeFloat(lbl_806D5D34, lbl_806D5D38));
                     Vec2_RotateX(&effect->velocity, &effect->velocity,
                         lbl_806D5D3C * Rand_RangeFloat(lbl_806D5D40, lbl_806D5D20));
                     Vec2_RotateY(&effect->velocity, &effect->velocity,

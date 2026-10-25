@@ -63,6 +63,8 @@ void fn_80105CC4(HitFlashSrc *src, HitFlashTarget *target, int type, float yaw)
         if (e != 0) {
             if (src->kind == 0x5F) {
                 e->variant = 3;
+                kind++; /* fakematch: keeps kind's extsb ahead of sub's clrlwi */
+                kind--;
             } else {
                 e->variant = 4;
             }
