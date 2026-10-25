@@ -2758,6 +2758,11 @@ game/HitMessageOverlay_Show.c:
 	extabindex  start:0x8002279C end:0x800227A8
 	.text       start:0x800ABF58 end:0x800AC1C4
 
+game/HitMessageOverlay_FrameUpdate.cpp:
+	extab       start:0x8000A118 end:0x8000A130
+	extabindex  start:0x800227A8 end:0x800227B4
+	.text       start:0x800AC1C4 end:0x800AC634
+
 game/HitMessageOverlay_Destroy.c:
 	extab       start:0x8000A130 end:0x8000A138
 	extabindex  start:0x800227B4 end:0x800227C0

@@ -1633,6 +1633,10 @@
   "src/game/SpriteSlot_InitLoop.c": {
     "__ct__12LoopNormal3DFPvi": "clNormal3D_Construct"
   },
+  "src/game/HitMessageOverlay_FrameUpdate.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
   "src/game/HitMessageOverlay_Init.c": {
     "extab_TweenInterp_Dtor": "@etb_8000A138",
     "extab_HitMessageOverlay_Init": "@etb_8000A140",
