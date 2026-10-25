@@ -485,6 +485,21 @@ config.libs = [
         ],
     },
     {
+        # zlib 1.2.1 (inflate only), linked after HSD
+        "lib": "zlib",
+        "mw_version": mw_version_hsd,
+        "cflags": [*cflags_hsd_melee, "-i src/zlib", "-O0,s", "-inline off", "-Cpp_exceptions on"],
+        "progress_category": "sdk",
+        "objects": [
+            Object(Matching, "zlib/adler32.c"),
+            Object(Matching, "zlib/crc32.c"),
+            Object(Matching, "zlib/zutil.c"),
+            Object(Matching, "zlib/inflate.c"),
+            Object(Matching, "zlib/inftrees.c"),
+            Object(Matching, "zlib/inffast.c"),
+        ],
+    },
+    {
         "lib": "game_extab",
         "mw_version": "GC/1.3.2",
         "cflags": [*cflags_base, "-Cpp_exceptions on"],
@@ -2225,6 +2240,7 @@ config.libs = [
             Object(Matching, "triforce/amexi.c"),
             Object(NonMatching, "triforce/amboot.c"),
             Object(NonMatching, "triforce/ambackup.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "triforce/jvsboot.c", extra_cflags=["-str reuse,readonly"]),
         ],
     },
     {

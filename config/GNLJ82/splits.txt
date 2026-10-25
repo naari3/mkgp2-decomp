@@ -7753,6 +7753,47 @@ sysdolphin/baselib/debug.c:
 	.sdata      start:0x806D0F70 end:0x806D0F78
 	.sbss       start:0x806D2250 end:0x806D2254
 
+triforce/jvsboot.c:
+	.text       start:0x802E5380 end:0x802E53E4
+	.rodata     start:0x803F2C30 end:0x803F2C60
+	.sdata2     start:0x806DCEE0 end:0x806DCEE6
+
+zlib/adler32.c:
+	extab       start:0x8001F32C end:0x8001F334
+	extabindex  start:0x8002BBC8 end:0x8002BBD4
+	.text       start:0x802E53E4 end:0x802E5578
+
+zlib/crc32.c:
+	extab       start:0x8001F334 end:0x8001F34C
+	extabindex  start:0x8002BBD4 end:0x8002BBF8
+	.text       start:0x802E5578 end:0x802E6078
+	.rodata     start:0x803F2C60 end:0x803F4C60
+
+zlib/zutil.c:
+	extab       start:0x8001F34C end:0x8001F35C
+	extabindex  start:0x8002BBF8 end:0x8002BC10
+	.text       start:0x802E6078 end:0x802E6104
+
+zlib/inflate.c:
+	extab       start:0x8001F35C end:0x8001F38C
+	extabindex  start:0x8002BC10 end:0x8002BC58
+	.text       start:0x802E6104 end:0x802E7C9C
+	.rodata     start:0x803F4C60 end:0x803F5508
+	.data       start:0x804FDDD8 end:0x804FDFF8
+	.sdata      start:0x806D0F78 end:0x806D0F7E
+
+zlib/inftrees.c:
+	extab       start:0x8001F38C end:0x8001F394
+	extabindex  start:0x8002BC58 end:0x8002BC64
+	.text       start:0x802E7C9C end:0x802E82E8
+	.rodata     start:0x803F5508 end:0x803F5604
+
+zlib/inffast.c:
+	extab       start:0x8001F394 end:0x8001F39C
+	extabindex  start:0x8002BC64 end:0x8002BC70
+	.text       start:0x802E82E8 end:0x802E88D0
+	.data       start:0x804FDFF8 end:0x804FE048
+
 init/__check_pad3.c:
 	.init       start:0x80003100 end:0x80003140
 
