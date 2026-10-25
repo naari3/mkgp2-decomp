@@ -6496,7 +6496,7 @@ musyx/runtime/synthdata.c:
 	.sbss       start:0x806D1F58 end:0x806D1FA8
 
 sysdolphin/baselib/dobj.c:
-	.text       start:0x802BD07C end:0x802BD0FC
+	.text       start:0x802BCF94 end:0x802BD168
 
 sysdolphin/baselib/aobj.c:
 	.text       start:0x802C3BC0 end:0x802C3C00
