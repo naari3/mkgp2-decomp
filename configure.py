@@ -1694,6 +1694,7 @@ config.libs = [
             Object(Matching, "game/Scene_80173F5C.cpp"),
             Object(Matching, "game/ZoneVisibility.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/ShadowCaster.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/MapEffect_Create.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             # g4-end
         ],
     },
