@@ -1439,6 +1439,12 @@ game/CabinetSetting_Page.cpp:
 	extabindex  start:0x8002105C end:0x80021068
 	.text       start:0x8006AA84 end:0x8006AD0C
 
+game/CardCreate_Page.cpp:
+	extab       start:0x80008158 end:0x80008160
+	extabindex  start:0x80021068 end:0x80021074
+	.text       start:0x8006AD0C end:0x8006B32C
+	.data       start:0x803FDEFC end:0x803FDF28
+
 game/CardRW_Renew_Page.c:
 	extab       start:0x80008160 end:0x80008168
 	extabindex  start:0x80021074 end:0x80021080

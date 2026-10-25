@@ -1568,6 +1568,7 @@ config.libs = [
             Object(Matching, "game/OperationTime_Page.cpp"),
             Object(Matching, "game/ClockSetting_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/CabinetSetting_Page.cpp"),
+            Object(NonMatching, "game/CardCreate_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/CoinSystem_RemoveCoins.c"),
             Object(Matching, "game/DVDLoad_Stats.c"),
             Object(Matching, "game/DVDLoad_ReadFileTimed.c", extra_cflags=["-use_lmw_stmw on"]),
