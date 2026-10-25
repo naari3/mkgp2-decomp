@@ -36,7 +36,7 @@ extern void fn_8016B0C4();
 extern void fn_8023E2F8();
 extern void fn_80253448();
 extern void fn_802535D4();
-extern void fn_802C14B8();
+extern void HSD_StateInvalidate();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_cupId;
@@ -271,7 +271,7 @@ asm void BtMode_RenderFrame(void) { /* 0x800A28D4 size:0x2BC */
     lwz r3, 0x2c(r31)
     bl fn_802535D4
     li r3, 0x7f
-    bl fn_802C14B8
+    bl HSD_StateInvalidate
     BtMode_RenderFrame_L_800A2B74:
     lwz r0, 0x24(r1)
     lwz r31, 0x1c(r1)

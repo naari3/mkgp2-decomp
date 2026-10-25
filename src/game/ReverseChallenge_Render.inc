@@ -22,7 +22,7 @@ extern void clDrawMan_EndFrame_NoOp();
 extern void fn_8016B0C4();
 extern void fn_80253448();
 extern void fn_802535D4();
-extern void fn_802C14B8();
+extern void HSD_StateInvalidate();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D109C;
@@ -147,7 +147,7 @@ asm void ReverseChallenge_Render(void) { /* 0x800ACFC0 size:0x174 */
     li r4, 0x1
     bl TransitionEffect_RenderPass
     li r3, 0x7f
-    bl fn_802C14B8
+    bl HSD_StateInvalidate
     ReverseChallenge_Render_L_800AD120:
     lwz r0, 0x14(r1)
     lwz r31, 0xc(r1)

@@ -24,7 +24,7 @@ struct Scene801622C8 {
 
 extern "C" {
 extern void fn_8011F994(int);
-extern void fn_802C14B8(int);
+extern void HSD_StateInvalidate(int);
 
 #pragma exceptions on
 
@@ -37,7 +37,7 @@ void fn_801622C8(Scene801622C8 *self) {
         if (self->model) {
             self->model->Draw();
         }
-        fn_802C14B8(-1);
+        HSD_StateInvalidate(-1);
     }
 }
 

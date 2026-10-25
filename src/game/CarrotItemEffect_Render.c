@@ -17,7 +17,7 @@ extern void GXBegin();
 extern void GXClearVtxDesc();
 extern void GXLoadPosMtxImm();
 extern void GXSetBlendMode();
-extern void GX_SetCullMode();
+extern void HSD_StateSetCullMode();
 extern void GXSetCurrentMtx();
 extern void GXSetNumTevStages();
 extern void GXSetNumTexGens();
@@ -42,7 +42,7 @@ extern void fn_8011D890();
 extern void fn_80231B74();
 extern void PSMTXMultVec();
 extern void GXSetAlphaCompare();
-extern void fn_802C14B8();
+extern void HSD_StateInvalidate();
 extern void fn_802C7E30();
 extern void HSD_CObjGetCurrent();
 
@@ -245,7 +245,7 @@ asm void CarrotItemEffect_Render(void) { /* 0x800B23CC size:0x698 */
     li r9, 0x2
     bl GXSetChanCtrl
     li r3, 0x0
-    bl GX_SetCullMode
+    bl HSD_StateSetCullMode
     li r3, 0x1
     li r4, 0x3
     li r5, 0x1
@@ -500,7 +500,7 @@ asm void CarrotItemEffect_Render(void) { /* 0x800B23CC size:0x698 */
     subi r25, r25, 0x4
     bge CarrotItemEffect_Render_L_800B2910
     li r3, -0x1
-    bl fn_802C14B8
+    bl HSD_StateInvalidate
     CarrotItemEffect_Render_L_800B2A18:
     psq_l f31, 0x408(r1), 0, 0
     lfd f31, 0x400(r1)

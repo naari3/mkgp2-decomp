@@ -19,7 +19,7 @@ extern void GXSetAlphaCompare(int, int, int, int, int);
 extern void GXSetZCompLoc(int);
 extern void GXSetZMode(int, int, int);
 extern void fn_801F6790(void *);
-extern void fn_802C14B8(unsigned int);
+extern void HSD_StateInvalidate(unsigned int);
 
 extern char lbl_806796FC[];
 
@@ -30,6 +30,6 @@ void GX_BeginDraw(void) {
     GXSetZCompLoc(1);
     GXSetZMode(1, 3, 1);
     fn_801F6790(&lbl_806796FC);
-    fn_802C14B8(0xFFFFFFFF);
+    HSD_StateInvalidate(0xFFFFFFFF);
 }
 #pragma exceptions reset

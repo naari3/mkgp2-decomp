@@ -29,7 +29,7 @@ extern void clDrawMan_EndFrame_NoOp();
 extern void fn_8016B0C4();
 extern void fn_80253448();
 extern void fn_802535D4();
-extern void fn_802C14B8();
+extern void HSD_StateInvalidate();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806CF5F0;
@@ -243,7 +243,7 @@ asm void BiribiriLand_Render(void) { /* 0x801341E4 size:0x2B8 */
     li r4, 0x1
     bl TransitionEffect_RenderPass
     li r3, 0x7f
-    bl fn_802C14B8
+    bl HSD_StateInvalidate
     BiribiriLand_Render_L_80134480:
     psq_l f31, 0x28(r1), 0, 0
     lfd f31, 0x20(r1)

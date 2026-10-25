@@ -16,7 +16,7 @@ extern void clDrawMan_Buckets_Reset();
 extern void clDrawMan_EndFrame_NoOp();
 extern void fn_8016B0C4();
 extern void fn_80181790();
-extern void fn_802C14B8();
+extern void HSD_StateInvalidate();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D10AC;
@@ -163,7 +163,7 @@ asm void clCGameDemoWC_Render(void) { /* 0x800ADF58 size:0x1B0 */
     mtctr r12
     bctrl
     li r3, 0x7f
-    bl fn_802C14B8
+    bl HSD_StateInvalidate
     clCGameDemoWC_Render_L_800AE0F4:
     lwz r0, 0x24(r1)
     lwz r31, 0x1c(r1)

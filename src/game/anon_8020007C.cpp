@@ -18,7 +18,7 @@ extern const float lbl_806DA8C0;
 extern CountdownResStep lbl_803C0074[13];
 extern const char *lbl_803C0064[4];
 extern int g_ccClass;
-void fn_802C14B8(int);
+void HSD_StateInvalidate(int);
 void Scene3D_Init(void *, const char *);
 void LObjList_ApplyForCObj(void *);
 void CObj_DebugVizPathFlush(void *);
@@ -433,7 +433,7 @@ GaugePart::~GaugePart() {
 }
 
 extern "C" void fn_802018A4(CcClassModel *self) {
-    fn_802C14B8(-1);
+    HSD_StateInvalidate(-1);
     if (self->scene.p->IsReady()) {
         LObjList_ApplyForCObj(self->lobj.p);
         CObj_DebugVizPathFlush(self->scene.p);

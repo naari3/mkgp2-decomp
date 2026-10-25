@@ -12,7 +12,7 @@ extern void *lbl_806D158C;
 extern void CObj_DebugVizPathFlush(Viewer *);
 extern void Object_RenderJObjTree(void *, int);
 extern void fn_8011FAB8(void);
-extern void fn_802C14B8(int);
+extern void HSD_StateInvalidate(int);
 
 #pragma exceptions on
 
@@ -25,7 +25,7 @@ void fn_8015B70C(void) {
         }
     }
     fn_8011FAB8();
-    fn_802C14B8(-1);
+    HSD_StateInvalidate(-1);
 }
 
 #pragma exceptions reset

@@ -8,7 +8,7 @@ public:
 extern "C" void fn_8011FAB8(void);
 extern "C" void fn_80203BEC(void);
 extern "C" void fn_80207810(void);
-extern "C" void fn_802C14B8(int);
+extern "C" void HSD_StateInvalidate(int);
 
 struct SceneOwner {
     char pad_0[4];
@@ -23,6 +23,6 @@ extern "C" void fn_801F9F04(SceneOwner *self) {
         fn_80207810();
         fn_80203BEC();
         fn_8011FAB8();
-        fn_802C14B8(-1);
+        HSD_StateInvalidate(-1);
     }
 }
