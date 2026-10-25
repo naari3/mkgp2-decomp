@@ -7227,7 +7227,7 @@ game/fn_801D919C.cpp:
 	extabindex  start:0x800281B4 end:0x800281C0
 	.text       start:0x801D919C end:0x801D92D0
 
-game/clFlowKart_SetupTextLayout.c:
+game/clFlowKart_SetupTextLayout.cpp:
 	extab       start:0x80015520 end:0x80015528
 	extabindex  start:0x800281CC end:0x800281D8
 	.text       start:0x801D9890 end:0x801D9A2C
