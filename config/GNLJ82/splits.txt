@@ -4141,6 +4141,11 @@ game/ItemObject_Tick_Dispatch24To29.c:
 	extabindex  start:0x80023CC0 end:0x80023CCC
 	.text       start:0x800E1298 end:0x800E1E70
 
+game/ItemObject_Tick_Dispatch1eTo23.c:
+	extab       start:0x8000B524 end:0x8000B52C
+	extabindex  start:0x80023CCC end:0x80023CD8
+	.text       start:0x800E1E70 end:0x800E246C
+
 game/ItemObject_Tick_AwaitInitThenFree.c:
 	extab       start:0x8000B544 end:0x8000B54C
 	extabindex  start:0x80023CFC end:0x80023D08
