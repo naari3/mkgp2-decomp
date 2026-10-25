@@ -18,3 +18,23 @@ void HSD_JObjReqAnimByFlags(HSD_JObj* jobj, unsigned int flags, float frame)
         HSD_RObjReqAnimAllByFlags(jobj->robj, frame, flags);
     }
 }
+
+/* The child walk is inlined five levels deep in the target, which needs a
+ * larger auto-inline size budget than the default. */
+#pragma push
+#pragma inline_max_size(600)
+void HSD_JObjReqAnimAllByFlags(HSD_JObj* jobj, unsigned int flags, float frame)
+{
+    HSD_JObj* child;
+
+    if (jobj == 0) {
+        return;
+    }
+    HSD_JObjReqAnimByFlags(jobj, flags, frame);
+    if (!(jobj->flags & JOBJ_INSTANCE)) {
+        for (child = jobj->child; child != 0; child = child->next) {
+            HSD_JObjReqAnimAllByFlags(child, flags, frame);
+        }
+    }
+}
+#pragma pop

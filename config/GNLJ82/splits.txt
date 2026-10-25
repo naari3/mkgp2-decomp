@@ -6460,10 +6460,7 @@ sysdolphin/baselib/fobj.c:
 	.text       start:0x802C8CCC end:0x802C8D70
 
 sysdolphin/baselib/jobj.c:
-	.text       start:0x802CDAF8 end:0x802CDB80
-
-sysdolphin/baselib/jobj_anim_all.c:
-	.text       start:0x802CDB80 end:0x802CDE48
+	.text       start:0x802CDAF8 end:0x802CDE48
 
 sysdolphin/baselib/jobj_anim_misc.c:
 	.text       start:0x802CDE48 end:0x802CDF38
