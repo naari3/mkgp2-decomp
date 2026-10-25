@@ -645,6 +645,21 @@ game/SetAnimState.c:
 	extabindex  start:0x8001FD24 end:0x8001FD30
 	.text       start:0x8003E41C end:0x8003E540
 
+game/ItemHandler_Star.c:
+	extab       start:0x80006110 end:0x80006118
+	extabindex  start:0x8001FD30 end:0x8001FD3C
+	.text       start:0x8003E540 end:0x8003E694
+
+game/KartItem_TickStunStateMachine.c:
+	extab       start:0x80006130 end:0x80006138
+	extabindex  start:0x8001FD60 end:0x8001FD6C
+	.text       start:0x8003ED8C end:0x8003EF20
+
+game/RenderObj_CleanupItem.c:
+	extab       start:0x80006140 end:0x80006148
+	extabindex  start:0x8001FD78 end:0x8001FD84
+	.text       start:0x8003F13C end:0x8003F2D8
+
 game/KartItem_BroadcastParamToCarAndISE.c:
 	extab       start:0x80006148 end:0x80006150
 	extabindex  start:0x8001FD84 end:0x8001FD90
@@ -1000,10 +1015,25 @@ game/ItemStateGuard_PruneIfDeadAndReport.cpp:
 game/ItemStateGuard_IsActive.c:
 	.text       start:0x80052F9C end:0x80052FB0
 
+game/ItemState_InitKeyframeBufferAndArm.c:
+	extab       start:0x8000719C end:0x800071A4
+	extabindex  start:0x80020594 end:0x800205A0
+	.text       start:0x80053168 end:0x80053290
+
 game/ItemStateSlotC_TryArm.c:
 	extab       start:0x800071A4 end:0x800071AC
 	extabindex  start:0x800205A0 end:0x800205AC
 	.text       start:0x80053290 end:0x800532D4
+
+game/ItemEffectJump_Init.c:
+	extab       start:0x800071DC end:0x800071E4
+	extabindex  start:0x800205B8 end:0x800205C4
+	.text       start:0x8005399C end:0x80053AE0
+
+game/ItemEffect_TornadoLift.cpp:
+	extab       start:0x800071E4 end:0x800071EC
+	extabindex  start:0x800205C4 end:0x800205D0
+	.text       start:0x80053AE0 end:0x80053C70
 
 game/ItemEffectQuake_Init.c:
 	extab       start:0x800071EC end:0x800071F4
@@ -1017,6 +1047,9 @@ game/ItemEffectImpact_TryArm.c:
 	extab       start:0x800071FC end:0x80007204
 	extabindex  start:0x800205E8 end:0x800205F4
 	.text       start:0x80053E8C end:0x80053ED0
+
+game/ItemEffectImpact_Init.c:
+	.text       start:0x8005453C end:0x80054660
 
 game/ItemEffectImpact_Dtor.c:
 	extab       start:0x800072DC end:0x800072E4
@@ -2462,6 +2495,11 @@ game/Sci2Card_ResetRetryAndStatus.c:
 	extab       start:0x80009568 end:0x80009570
 	extabindex  start:0x80022148 end:0x80022154
 	.text       start:0x80099284 end:0x800992C0
+
+game/Sci2Card_PopulateRankRowByMode.c:
+	extab       start:0x80009578 end:0x80009580
+	extabindex  start:0x80022160 end:0x8002216C
+	.text       start:0x800997E4 end:0x8009990C
 
 game/Sci2Card_RegisterReceiptBuffersCleanup.c:
 	extab       start:0x80009580 end:0x80009588
