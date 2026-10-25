@@ -285,7 +285,8 @@ int Sci2Card_GetUnpackStatusCode(void);
 }
 
 static inline InputState *GetInput() {
-    return g_pInputState == 0 ? (InputState *)0 : g_pInputState;
+    InputState *p = g_pInputState;
+    return p == 0 ? (InputState *)0 : p;
 }
 
 static inline void SetInput(unsigned char en) {
