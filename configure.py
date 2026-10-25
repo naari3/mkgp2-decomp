@@ -1973,10 +1973,18 @@ config.libs = [
         # MusyX sound library (hand-decompiled; built like the game code)
         "lib": "musyx",
         "mw_version": "GC/1.3.2",
-        "cflags": cflags_base,
+        "cflags": [
+            *cflags_base,
+            "-i include/musyx_libc",
+            "-i include/libc",
+            "-DMUSY_TARGET=1",
+            "-DMUSY_VERSION_MAJOR=2",
+            "-DMUSY_VERSION_MINOR=0",
+            "-DMUSY_VERSION_PATCH=2",
+        ],
         "progress_category": "sdk",
         "objects": [
-            Object(Matching, "musyx/macro_lookup.c"),
+            Object(Matching, "musyx/runtime/synthdata.c"),
         ],
     },
 ]
