@@ -1987,6 +1987,17 @@ config.libs = [
         ],
         extra_cflags=["-char signed"],
     ),
+    {
+        # Old THP video decoder (custom THPFileInfo layout, predates the
+        # dolsdk2004 THPDec.c); built with the base flags and GC/1.2.5.
+        "lib": "thp",
+        "mw_version": "GC/1.2.5",
+        "cflags": [*cflags_base, "-fp_contract off"],
+        "progress_category": "sdk",
+        "objects": [
+            Object(NonMatching, "thp/THPDec.c"),
+        ],
+    },
     SdkLib(
         "dolphin_exi",
         [
