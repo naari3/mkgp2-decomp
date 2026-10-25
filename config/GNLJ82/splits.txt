@@ -4692,6 +4692,12 @@ game/MapEffect_WCC.cpp:
 	extabindex  start:0x800265E8 end:0x8002660C
 	.text       start:0x801755BC end:0x801759D8
 
+game/MapEffect.cpp:
+	extab       start:0x80010C78 end:0x80011700
+	extabindex  start:0x8002660C end:0x80026684
+	.text       start:0x801759D8 end:0x801779F8
+	.rodata     start:0x80370870 end:0x80371D24
+
 game/fn_801805AC.c:
 	.text       start:0x801805AC end:0x801805B4
 
