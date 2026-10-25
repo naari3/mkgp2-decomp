@@ -3512,6 +3512,11 @@ game/EffectItem4SpawnSubFlamePair_Tick.c:
 	extabindex  start:0x80022E74 end:0x80022E80
 	.text       start:0x800BF4D4 end:0x800BF5B0
 
+game/EffectItemChainIndicator_Tick.c:
+	extab       start:0x8000A8B8 end:0x8000A8C0
+	extabindex  start:0x80022E80 end:0x80022E8C
+	.text       start:0x800BF5B0 end:0x800C0004
+
 game/EffectVfx6D_KartSmokeSpark_Tick.c:
 	extab       start:0x8000A8C0 end:0x8000A8C8
 	extabindex  start:0x80022E8C end:0x80022E98
