@@ -604,6 +604,7 @@ config.libs = [
             Object(Matching, "game/clFlowKart_Update.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++"]),
             Object(Matching, "game/CardRW_CleaningTest_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardRW_TestTopMenu_Page.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/LampTest_Page.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CardRW_DispenseTest_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardRW_PrintTest_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardRW_ErrorDisplay.c", extab_padding=b"\x00\x00"),

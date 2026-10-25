@@ -1921,6 +1921,14 @@
     "extab_KartDriver_GetJointPosition": "@etb_800061E0",
     "extabindex_KartDriver_GetJointPosition": "@eti_8001FE68"
   },
+  "src/game/LampTest_Page.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10LampTesterFi": "fn_801DAB7C",
+    "Select__10LampTesterFi": "fn_801DAB18",
+    "Update__10LampTesterFv": "fn_801DAAA4",
+    "Draw__10LampTesterFv": "fn_801DAA84"
+  },
   "src/game/DisplayStruct_Init.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",

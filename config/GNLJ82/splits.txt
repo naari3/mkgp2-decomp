@@ -1490,6 +1490,11 @@ game/CardRW_TestTopMenu_Page.c:
 	extabindex  start:0x800210EC end:0x800210F8
 	.text       start:0x8006F608 end:0x8006FA1C
 
+game/LampTest_Page.cpp:
+	extab       start:0x800081C0 end:0x800081D8
+	extabindex  start:0x80021104 end:0x80021110
+	.text       start:0x80070238 end:0x8007044C
+
 game/GameSetting.c:
 	extab       start:0x80008218 end:0x80008230
 	extabindex  start:0x80021158 end:0x8002117C
