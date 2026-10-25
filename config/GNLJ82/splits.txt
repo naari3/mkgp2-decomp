@@ -5273,6 +5273,11 @@ game/Scene_80162B00.cpp:
 	extabindex  start:0x80025C34 end:0x80025C58
 	.text       start:0x80162B00 end:0x80162C3C
 
+game/misc3d/fn_80162C3C.cpp:
+	extab       start:0x8000FA54 end:0x8000FA78
+	extabindex  start:0x80025C58 end:0x80025C64
+	.text       start:0x80162C3C end:0x80162D90
+
 game/Scene_801634C4.cpp:
 	extab       start:0x8000FA88 end:0x8000FA98
 	extabindex  start:0x80025C7C end:0x80025C94
@@ -5520,6 +5525,11 @@ game/misc3d/fn_8016E7E4.c:
 game/misc3d/fn_8016E8B8.c:
 	.text       start:0x8016E8B8 end:0x8016E8E0
 
+game/misc3d/fn_8016E8E0.c:
+	extab       start:0x80010620 end:0x80010628
+	extabindex  start:0x80026330 end:0x8002633C
+	.text       start:0x8016E8E0 end:0x8016EACC
+
 game/Scene_8016EACC.cpp:
 	extab       start:0x80010628 end:0x80010668
 	extabindex  start:0x8002633C end:0x8002636C
@@ -5548,6 +5558,11 @@ game/Scene_8016FD0C.cpp:
 	extab       start:0x800106B8 end:0x800106EC
 	extabindex  start:0x800263B4 end:0x800263C0
 	.text       start:0x8016FD0C end:0x8016FE44
+
+game/mapeffect/fn_801702E0.c:
+	extab       start:0x800106F4 end:0x800106FC
+	extabindex  start:0x800263CC end:0x800263D8
+	.text       start:0x801702E0 end:0x801704A0
 
 game/Scene_801704A0.cpp:
 	extab       start:0x800106FC end:0x80010704
@@ -6050,6 +6065,11 @@ game/bbox/fn_80189FD8.c:
 	extabindex  start:0x80026E1C end:0x80026E28
 	.text       start:0x80189FD8 end:0x8018A0A8
 
+game/objview/dtor_8018A0A8.c:
+	extab       start:0x80011DF4 end:0x80011DFC
+	extabindex  start:0x80026E28 end:0x80026E34
+	.text       start:0x8018A0A8 end:0x8018A278
+
 game/bbox/fn_8018A278.c:
 	extab       start:0x80011DFC end:0x80011E04
 	extabindex  start:0x80026E34 end:0x80026E40
@@ -6212,6 +6232,11 @@ game/objview/fn_8018FDA4.c:
 	extab       start:0x800120E4 end:0x800120EC
 	extabindex  start:0x8002705C end:0x80027068
 	.text       start:0x8018FDA4 end:0x8018FEAC
+
+game/objview/fn_8018FEAC.cpp:
+	extab       start:0x800120EC end:0x8001213C
+	extabindex  start:0x80027068 end:0x80027074
+	.text       start:0x8018FEAC end:0x80190064
 
 game/objtable/fn_8019032C.c:
 	extab       start:0x80012144 end:0x8001214C

@@ -1084,6 +1084,23 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "__ct__8DispImplFii": "fn_8014AA38"
   },
+  "src/game/misc3d/fn_80162C3C.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__9SceneBase": "lbl_803FE0C8",
+    "__vt__13Scene80162C3C": "lbl_80490AFC",
+    "__dt__9SceneBaseFv": "dtor_8007D0D4"
+  },
+  "src/game/objview/fn_8018FEAC.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__7WaveTexFP8HSD_JObj": "fn_80190064",
+    "__ct__11Obj8018FEACFv": "fn_8018FEAC",
+    "__dt__7ObjBaseFv": "dtor_8016A270",
+    "__vt__7ObjBase": "lbl_80490FE0",
+    "__vt__11Obj8018FEAC": "lbl_80495F04"
+  },
   "src/game/objview/fn_80187878.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",

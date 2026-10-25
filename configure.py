@@ -2371,6 +2371,11 @@ config.libs = [
             Object(Matching, "game/misc3d/fn_80167744.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/misc3d/fn_8016504C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/misc3d/fn_801652F0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/misc3d/fn_80162C3C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/objview/fn_8018FEAC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/mapeffect/fn_801702E0.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/objview/dtor_8018A0A8.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/misc3d/fn_8016E8E0.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             # g4-end
         ],
     },
