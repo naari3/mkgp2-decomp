@@ -2729,5 +2729,25 @@
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960",
     "__dt__21VHolder<10FlowFaderF>Fv": "dtor_80250668"
+  },
+  "src/game/RacePopups.cpp": {
+    "Finish__10FlashPopupFv": "fn_80251C98",
+    "Finish__9KindPopupFv": "fn_80251C60",
+    "__ct__10FlashPopupFii": "fn_80251A94",
+    "__dt__10FlashPopupFv": "fn_80251948",
+    "Update__10FlashPopupFv": "fn_80251594",
+    "Draw__10FlashPopupFv": "fn_80251590",
+    "__dt__9KindPopupFv": "fn_8025147C",
+    "Update__9KindPopupFv": "fn_80250F38",
+    "Draw__9KindPopupFv": "fn_80250F34",
+    "__vt__9PopupRoot": "lbl_8048ECF8",
+    "__vt__9PopupTask": "lbl_8048ED10",
+    "__vt__9KindPopup": "lbl_804EF160",
+    "__vt__10FlashPopup": "lbl_804EF18C",
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "__vt__10FlowFaderI": "lbl_804E5284",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_802505D8"
   }
 }
