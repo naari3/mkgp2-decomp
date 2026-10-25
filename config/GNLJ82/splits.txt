@@ -6837,6 +6837,11 @@ musyx/runtime/hardware.c:
 sysdolphin/baselib/_hsd_consts.c:
 	.sdata2     start:0x806DCC58 end:0x806DCC68
 
+musyx/runtime/hw_aramdma.c:
+	.text       start:0x802BA730 end:0x802BB460
+	.bss        start:0x806CA608 end:0x806CAF10
+	.sbss       start:0x806D2060 end:0x806D207C
+
 musyx/runtime/hw_dolphin.c:
 	.text       start:0x802BB460 end:0x802BB9B0
 
