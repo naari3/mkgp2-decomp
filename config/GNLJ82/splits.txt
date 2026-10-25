@@ -1275,6 +1275,11 @@ game/OperationClock.cpp:
 	extabindex  start:0x8002126C end:0x80021284
 	.text       start:0x8007526C end:0x80075330
 
+game/ServiceMode_UpdateScheduleGate.c:
+	extab       start:0x80008338 end:0x80008340
+	extabindex  start:0x80021284 end:0x80021290
+	.text       start:0x80075330 end:0x80075470
+
 game/Backup_PublishShadowCopy_Inline.c:
 	extab       start:0x80008340 end:0x80008348
 	extabindex  start:0x80021290 end:0x8002129C
@@ -1602,6 +1607,11 @@ game/FreeMediaBuffers.c:
 	extab       start:0x80008EA4 end:0x80008EAC
 	extabindex  start:0x800219BC end:0x800219C8
 	.text       start:0x80087A6C end:0x80087AD0
+
+game/InitGlobalTimer.c:
+	extab       start:0x80008EAC end:0x80008EB4
+	extabindex  start:0x800219C8 end:0x800219D4
+	.text       start:0x80087AD0 end:0x80087C34
 
 game/PcbListener_GetStateName.c:
 	extab       start:0x80008EB4 end:0x80008EBC
@@ -3330,6 +3340,11 @@ game/clFlowKart_Update.c:
 	extab       start:0x8001537C end:0x800153B4
 	extabindex  start:0x80028154 end:0x80028160
 	.text       start:0x801D7E84 end:0x801D8284
+
+game/dtor_801D8284.cpp:
+	extab       start:0x800153B4 end:0x800153BC
+	extabindex  start:0x80028160 end:0x8002816C
+	.text       start:0x801D8284 end:0x801D83D4
 
 game/clFlowKart_Init.c:
 	extab       start:0x800153BC end:0x80015474
