@@ -679,6 +679,7 @@ config.libs = [
             Object(Matching, "game/Stub_NoOp_80030aec.c"),
             Object(Matching, "game/Scene3D.c"),
             Object(Matching, "game/LinkedNode_GetField10_OrFallback.c"),
+            Object(Matching, "game/clNormal3D_Tree.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/NoopRenderHook_Pending_80064d28.c"),
             Object(Matching, "game/Allocator_DestroyEntry_Noop.c"),
             Object(Matching, "game/PlayStats_ShutdownStub.c"),
