@@ -984,6 +984,27 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
   },
+  "src/game/miyazakiconsole/fn_801801CC.cpp": {
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__4MenuFv": "fn_801805B4",
+    "Clear__4MenuFv": "fn_80180458",
+    "__dt__8MenuItemFv": "fn_8018041C"
+  },
+  "src/game/miyazakiconsole/fn_80181144.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__4MenuFv": "fn_801805B4"
+  },
+  "src/game/miyazakiconsole/fn_8018137C.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__4MenuFv": "fn_801805B4"
+  },
+  "src/game/miyazakiconsole/fn_801816AC.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__4MenuFv": "fn_801805B4"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",

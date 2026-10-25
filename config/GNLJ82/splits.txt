@@ -5060,6 +5060,11 @@ game/miyazakiconsole/fn_80180170.c:
 	extabindex  start:0x80026A74 end:0x80026A80
 	.text       start:0x80180170 end:0x801801CC
 
+game/miyazakiconsole/fn_801801CC.cpp:
+	extab       start:0x80011A80 end:0x80011A88
+	extabindex  start:0x80026A80 end:0x80026A8C
+	.text       start:0x801801CC end:0x8018041C
+
 game/miyazakiconsole/fn_8018041C.c:
 	extab       start:0x80011A88 end:0x80011A90
 	extabindex  start:0x80026A8C end:0x80026A98
@@ -5087,6 +5092,44 @@ game/miyazakiconsole/fn_80180670.cpp:
 	extab       start:0x80011AA8 end:0x80011AC0
 	extabindex  start:0x80026ABC end:0x80026AC8
 	.text       start:0x80180670 end:0x801807E0
+
+game/miyazakiconsole/fn_80181144.cpp:
+	extab       start:0x80011AD8 end:0x80011AE0
+	extabindex  start:0x80026AEC end:0x80026AF8
+	.text       start:0x80181144 end:0x8018137C
+
+game/miyazakiconsole/fn_8018137C.cpp:
+	extab       start:0x80011AE0 end:0x80011AE8
+	extabindex  start:0x80026AF8 end:0x80026B04
+	.text       start:0x8018137C end:0x801814C8
+
+game/miyazakiconsole/fn_801816AC.cpp:
+	extab       start:0x80011AF0 end:0x80011B08
+	extabindex  start:0x80026B10 end:0x80026B1C
+	.text       start:0x801816AC end:0x80181790
+
+game/curveutil/fn_80181EA4.c:
+	.text       start:0x80181EA4 end:0x80181F18
+
+game/curveutil/fn_80181F18.c:
+	extab       start:0x80011B28 end:0x80011B30
+	extabindex  start:0x80026B4C end:0x80026B58
+	.text       start:0x80181F18 end:0x8018201C
+
+game/mobjclass/fn_8018201C.c:
+	extab       start:0x80011B30 end:0x80011B38
+	extabindex  start:0x80026B58 end:0x80026B64
+	.text       start:0x8018201C end:0x80182138
+
+game/mobjclass/fn_80182138.c:
+	extab       start:0x80011B38 end:0x80011B40
+	extabindex  start:0x80026B64 end:0x80026B70
+	.text       start:0x80182138 end:0x8018219C
+
+game/mobjclass/fn_8018219C.c:
+	extab       start:0x80011B40 end:0x80011B48
+	extabindex  start:0x80026B70 end:0x80026B7C
+	.text       start:0x8018219C end:0x80182204
 
 game/LookupCos.c:
 	extab       start:0x80011C18 end:0x80011C20
