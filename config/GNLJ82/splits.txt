@@ -2603,6 +2603,11 @@ game/PlayerData_ResetForFlow.c:
 	extabindex  start:0x800221CC end:0x800221D8
 	.text       start:0x8009D03C end:0x8009D07C
 
+game/RaceFlow_ResetState_FullColdInit.c:
+	extab       start:0x800095C8 end:0x800095D0
+	extabindex  start:0x800221D8 end:0x800221E4
+	.text       start:0x8009D07C end:0x8009D5F8
+
 game/ProcessSystemTick.c:
 	extab       start:0x800095D0 end:0x800095D8
 	extabindex  start:0x800221E4 end:0x800221F0
