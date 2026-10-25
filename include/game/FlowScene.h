@@ -77,7 +77,9 @@ struct FlowTask : FlowRoot {
 struct TextManager {
     char pad000[0x18];
     int visible;
-    char pad01C[0x22C - 0x1C];
+    char pad01C[4];
+    unsigned int color;
+    char pad024[0x22C - 0x24];
     float scale;
     TextManager();
     ~TextManager();
@@ -198,7 +200,10 @@ struct ResCtrl {
     unsigned char flag, pad11[3];
     float x, y, z, width, height, field28, scaleX, scaleY;
     unsigned int colors[4];
-    int tail[5];
+    bool flipX;
+    bool flipY;
+    char pad46[2];
+    int tail[4];
     ResCtrl();
     ~ResCtrl() {}
     void Show(float px, float py, float pz) {
