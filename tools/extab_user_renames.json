@@ -3954,5 +3954,16 @@
     "__dt__12UraDemoSceneFv": "fn_801283C0",
     "__ct__12UraDemoSceneFv": "fn_801284F8",
     "__vt__12UraDemoScene": "lbl_8048E300"
+  },
+  "src/game/ChallengeDemo_Create.cpp": {
+    "__ct__16ChallengeDemoObjFv": "fn_801272D8",
+    "__ct__18ChallengeDemoShellFv": "fn_80125690",
+    "__ct__15ChallengeDemoWCFv": "clCGameDemoWC_Ctor",
+    "__ct__20ChallengeDemoTornadoFv": "fn_80127BF0",
+    "__ct__18ChallengeDemoBlockFv": "fn_80126878",
+    "__ct__16ChallengeDemoUraFv": "fn_801284F8",
+    "__ct__17ChallengeDemoCoinFv": "fn_802106C8",
+    "__ct__18ChallengeDemoExtraFv": "fn_8020FBC4",
+    "__nw__FUl": "Alloc"
   }
 }

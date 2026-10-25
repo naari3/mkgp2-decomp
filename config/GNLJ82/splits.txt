@@ -4920,6 +4920,12 @@ game/ChallengeGoalCamera_Init.cpp:
 	extabindex  start:0x800248B4 end:0x800248C0
 	.text       start:0x80124CF4 end:0x80124DF8
 
+game/ChallengeDemo_Create.cpp:
+	extab       start:0x8000BEE0 end:0x8000BF68
+	extabindex  start:0x800248C0 end:0x800248CC
+	.text       start:0x80124DF8 end:0x80124F2C
+	.data       start:0x8048E1E0 end:0x8048E200
+
 game/ChallengeDemoShell.cpp:
 	extab       start:0x8000BF68 end:0x8000C044
 	extabindex  start:0x800248CC end:0x800248FC

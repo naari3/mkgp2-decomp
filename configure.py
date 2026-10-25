@@ -1815,6 +1815,7 @@ config.libs = [
             Object(Matching, "game/ChallengeDemoObj.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ChallengeDemoTornado.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ChallengeDemoUra.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ChallengeDemo_Create.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
         ],
     },
     {
