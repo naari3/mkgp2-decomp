@@ -4,7 +4,7 @@
 extern const float lbl_806D592C;
 extern const double lbl_806D5940;
 extern const double lbl_806D5948;
-extern double Atan2(double, double);
+extern double atan2(double, double);
 
 static inline float Vec3_sqrtf(float x) {
     volatile float y;
@@ -21,7 +21,7 @@ static inline float Vec3_sqrtf(float x) {
 
 #pragma exceptions on
 float Vec3_ToPitch(float *__restrict v) {
-    return Atan2(-v[1], Vec3_sqrtf(v[0] * v[0] + v[2] * v[2]));
+    return atan2(-v[1], Vec3_sqrtf(v[0] * v[0] + v[2] * v[2]));
 }
 
 float Vec3_HorizontalMagnitude(float *__restrict v) {
