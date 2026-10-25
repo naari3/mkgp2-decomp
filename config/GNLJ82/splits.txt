@@ -3866,6 +3866,11 @@ game/fn_801DC4DC.c:
 game/fn_801DC510.c:
 	.text       start:0x801DC510 end:0x801DC514
 
+game/PathData_GetByContext.c:
+	extab       start:0x80015908 end:0x80015910
+	extabindex  start:0x8002837C end:0x80028388
+	.text       start:0x801DC514 end:0x801DC5C0
+
 game/fn_801DC5C0.c:
 	extab       start:0x80015910 end:0x80015918
 	extabindex  start:0x80028388 end:0x80028394
@@ -3905,6 +3910,21 @@ game/fn_801DD8E4.c:
 game/fn_801DDA8C.c:
 	.text       start:0x801DDA8C end:0x801DDB04
 
+game/fn_801DE15C.c:
+	extab       start:0x800159A0 end:0x800159A8
+	extabindex  start:0x80028460 end:0x8002846C
+	.text       start:0x801DE15C end:0x801DE1B0
+
+game/fn_801DE1B0.cpp:
+	extab       start:0x800159A8 end:0x800159C0
+	extabindex  start:0x8002846C end:0x80028478
+	.text       start:0x801DE1B0 end:0x801DE208
+
+game/fn_801DE6E8.c:
+	extab       start:0x800159C8 end:0x800159D0
+	extabindex  start:0x80028484 end:0x80028490
+	.text       start:0x801DE6E8 end:0x801DE73C
+
 game/GetEnemyParam.c:
 	extab       start:0x800159D0 end:0x800159E8
 	extabindex  start:0x80028490 end:0x8002849C
@@ -3931,14 +3951,24 @@ game/fn_801E4524.c:
 	extabindex  start:0x80028784 end:0x80028790
 	.text       start:0x801E4524 end:0x801E4544
 
+game/fn_801E5A84.c:
+	extab       start:0x80016490 end:0x80016498
+	extabindex  start:0x800287D8 end:0x800287E4
+	.text       start:0x801E5A84 end:0x801E5B50
 game/fn_801E6594.c:
 	extab       start:0x800164A0 end:0x800164A8
 	extabindex  start:0x800287F0 end:0x800287FC
 	.text       start:0x801E6594 end:0x801E65B8
+
 game/AI_GrantItem.c:
 	extab       start:0x800164A8 end:0x800164B0
 	extabindex  start:0x800287FC end:0x80028808
 	.text       start:0x801E65B8 end:0x801E6670
+
+game/fn_801E6670.c:
+	extab       start:0x800164B0 end:0x800164B8
+	extabindex  start:0x80028808 end:0x80028814
+	.text       start:0x801E6670 end:0x801E66B4
 
 game/fn_801E6B0C.c:
 	extab       start:0x800164E0 end:0x800164E8
@@ -4021,6 +4051,16 @@ game/fn_801E6E20.c:
 	extab       start:0x80016548 end:0x80016550
 	extabindex  start:0x800288C8 end:0x800288D4
 	.text       start:0x801E6E20 end:0x801E6E4C
+
+game/fn_801E6E4C.c:
+	extab       start:0x80016550 end:0x80016558
+	extabindex  start:0x800288D4 end:0x800288E0
+	.text       start:0x801E6E4C end:0x801E6ED4
+
+game/KartController_TimedUpdate.cpp:
+	extab       start:0x80016570 end:0x80016588
+	extabindex  start:0x800288EC end:0x800288F8
+	.text       start:0x801E8140 end:0x801E81D8
 
 game/fn_801E8C7C.c:
 	.text       start:0x801E8C7C end:0x801E8C90
