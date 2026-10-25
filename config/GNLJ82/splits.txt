@@ -6024,9 +6024,19 @@ game/fn_8024B544.c:
 	extabindex  start:0x8002B4F0 end:0x8002B4FC
 	.text       start:0x8024B544 end:0x8024B568
 
+game/ContinueScene.cpp:
+	extab       start:0x8001E638 end:0x8001E78C
+	extabindex  start:0x8002B670 end:0x8002B700
+	.text       start:0x8024D764 end:0x8024E338
+
 game/fn_8024E338.c:
 	.text       start:0x8024E338 end:0x8024E344
 	.ctors      start:0x802E8968 end:0x802E896C
+
+game/BattleContinueScene.cpp:
+	extab       start:0x8001E78C end:0x8001E958
+	extabindex  start:0x8002B700 end:0x8002B778
+	.text       start:0x8024E344 end:0x8024F400
 
 game/fn_8024F400.c:
 	.text       start:0x8024F400 end:0x8024F40C
@@ -6036,6 +6046,16 @@ game/dtor_8024F40C.c:
 	extab       start:0x8001E958 end:0x8001E960
 	extabindex  start:0x8002B778 end:0x8002B784
 	.text       start:0x8024F40C end:0x8024F43C
+
+game/RoundResult.cpp:
+	extab       start:0x8001E960 end:0x8001E988
+	extabindex  start:0x8002B784 end:0x8002B7A8
+	.text       start:0x8024F43C end:0x8024F618
+
+game/ItemBanner.cpp:
+	extab       start:0x8001E988 end:0x8001EBD4
+	extabindex  start:0x8002B7A8 end:0x8002B838
+	.text       start:0x8024F618 end:0x802506F8
 
 game/fn_80250F34.c:
 	.text       start:0x80250F34 end:0x80250F38
