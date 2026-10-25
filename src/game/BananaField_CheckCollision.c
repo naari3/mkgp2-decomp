@@ -20,7 +20,7 @@ extern const float lbl_806D95B8;
 extern const float lbl_806D95BC;
 extern const float lbl_806D95D0;
 extern const float lbl_806D95D8;
-extern unsigned char BananaField_TestHitBox(int chara, void *kart, Vec *pos);
+extern unsigned char BananaField_TestHitBox(int chara, void *kart, Vec *pos, float radius);
 extern double atan2(double, double);
 
 #pragma exceptions on
@@ -37,7 +37,7 @@ void BananaField_CheckCollision(BananaField *self, char *kart) {
             pos.x = b->x;
             pos.y = lbl_806D95D0 + b->y;
             pos.z = b->z;
-            if (BananaField_TestHitBox(g_characterId, kart, &pos)) {
+            if (BananaField_TestHitBox(g_characterId, kart, &pos, lbl_806D95D0)) {
                 self->hit = 1;
                 b->state = 1;
                 b->timer = lbl_806D95B8;
