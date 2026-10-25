@@ -1,5 +1,6 @@
 
 /* sdata symbols referenced from asm */
+extern unsigned char lbl_8032F580[21];
 extern void Effect_KartAuraCompound_Update(void);
 extern unsigned char lbl_804216F8[12];
 extern unsigned char lbl_8041FF60[1108];
@@ -935,11 +936,11 @@ asm void HeartCompoundItem_Update(void) { /* 0x800F2B54 size:0x20C */
     HeartCompoundItem_Update_L_800F2CA0:
     beq HeartCompoundItem_Update_L_800F2CF8
     HeartCompoundItem_Update_L_800F2CA4:
-    lis r4,-0x7fcd
+    lis r4, lbl_8032F580@ha
     HeartCompoundItem_Update_L_800F2CA8:
     addi r3,r1,0x20
     HeartCompoundItem_Update_L_800F2CAC:
-    subi r5,r4,0xa80
+    addi r5, r4, lbl_8032F580@l
     HeartCompoundItem_Update_L_800F2CB0:
     addi r4,r30,0x14
     HeartCompoundItem_Update_L_800F2CB4:
