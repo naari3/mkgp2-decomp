@@ -16,7 +16,9 @@ struct AnimSprite {
     int x8;
     float x;
     float y;
-    char pad14[0x30 - 0x14];
+    char pad14[0x20 - 0x14];
+    float alpha;
+    char pad24[0x30 - 0x24];
     AnimSprite(int res, int a, int b);
     void SetPos(float px, float py) {
         x = px;
