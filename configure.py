@@ -1808,6 +1808,7 @@ config.libs = [
             Object(Matching, "game/fn_8011AD98.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_8012491C.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80124C84.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ChallengeGoalCamera_Update.c"),
         ],
     },
     {
