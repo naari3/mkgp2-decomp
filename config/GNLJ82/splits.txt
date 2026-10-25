@@ -2718,6 +2718,12 @@ game/RaceScene_Dtor.cpp:
 	extabindex  start:0x800222F8 end:0x80022304
 	.text       start:0x800A1A1C end:0x800A1D80
 
+game/RaceScene_Init.cpp:
+	extab       start:0x80009834 end:0x80009A60
+	extabindex  start:0x80022304 end:0x80022310
+	.text       start:0x800A1D80 end:0x800A28D4
+	.data       start:0x8040EA30 end:0x8040EA54
+
 game/BtMode_RenderFrame.c:
 	extab       start:0x80009A60 end:0x80009A68
 	extabindex  start:0x80022310 end:0x8002231C
