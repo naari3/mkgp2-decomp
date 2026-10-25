@@ -2210,7 +2210,10 @@ clCSSceneCoinMilage::clCSSceneCoinMilage()
     AddCoinMilage(g_playerData, GetEarnedCoins());
     SetInput(1);
     ItemDisplay_GetOrCreate();
-    ItemDisplay_GetOrCreate()->mode = 2;
+    {
+        ItemDisplay *d = ItemDisplay_GetOrCreate();
+        d->mode = 2;
+    }
     fn_8013DBF8();
     lines[0] = 0;
     lines[1] = 0;
