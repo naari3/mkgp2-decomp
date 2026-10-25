@@ -13,7 +13,7 @@ extern HSD_DObj* lbl_806D20B4; /* current_dobj */
 
 #define next_p(o) ((o) != 0 ? (o)->next : 0)
 
-void fn_802BCF94(HSD_DObj* dobj)
+void HSD_DObjSetCurrent(HSD_DObj* dobj)
 {
     lbl_806D20B4 = dobj;
 }

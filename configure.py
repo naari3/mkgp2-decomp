@@ -455,6 +455,8 @@ config.libs = [
         "cflags": cflags_hsd_melee,
         "progress_category": "sdk",
         "objects": [
+            Object(Matching, "sysdolphin/baselib/displayfunc.c"),
+            Object(Matching, "sysdolphin/baselib/video.c"),
             Object(Matching, "sysdolphin/baselib/list.c"),
             Object(Matching, "sysdolphin/baselib/random.c"),
             Object(Matching, "sysdolphin/baselib/fog.c"),

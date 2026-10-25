@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void __assert();
-extern void fn_802D1E34();
+extern void HSD_JObjSetupMatrixSub();
 
 /* --- function index (1 fns, .text 0x80040E9C..0x80041748) ---
  * [  0] 0x80040E9C size:0x8AC   global KartDriver_GetJointByIdx
@@ -67,7 +67,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_80040F24
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_80040F24:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -105,7 +105,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_80040FA4
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_80040FA4:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -143,7 +143,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_80041024
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_80041024:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -181,7 +181,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_800410A4
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_800410A4:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -219,7 +219,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_80041124
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_80041124:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -257,7 +257,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_800411A4
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_800411A4:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -295,7 +295,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_80041224
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_80041224:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -333,7 +333,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_800412A4
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_800412A4:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -371,7 +371,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_80041324
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_80041324:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -409,7 +409,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_800413A4
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_800413A4:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -447,7 +447,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_80041424
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_80041424:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -485,7 +485,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_800414A4
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_800414A4:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -523,7 +523,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_80041524
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_80041524:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -561,7 +561,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_800415A4
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_800415A4:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -600,7 +600,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_80041628
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_80041628:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -638,7 +638,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_800416A8
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_800416A8:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734
@@ -676,7 +676,7 @@ asm void KartDriver_GetJointByIdx(void) { /* 0x80040E9C size:0x8AC */
     clrlwi. r0, r3, 24
     beq KartDriver_GetJointByIdx_L_80041728
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     KartDriver_GetJointByIdx_L_80041728:
     addi r3, r31, 0x44
     b KartDriver_GetJointByIdx_L_80041734

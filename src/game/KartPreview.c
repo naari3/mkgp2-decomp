@@ -84,7 +84,7 @@ extern void fn_8013BB9C(void *cam);
 extern void fn_8013BCA0(void);
 extern void Object_RenderJObjTree(void *obj, int flags);
 extern void __assert(char *file, int line, char *expr);
-extern void fn_802D1E34(HSD_JObj *jobj);
+extern void HSD_JObjSetupMatrixSub(HSD_JObj *jobj);
 extern void Object_SetAnimBinding(void *obj, void *anim, int);
 extern void Object_DriveAnimMatrix(void *obj);
 extern void clNormal3D_SetScale(void *obj, void *anim, float frame, float a, float b, float c);
@@ -503,7 +503,7 @@ asm void fn_8013C7BC(void) { /* 0x8013C7BC size:0x160 */
     clrlwi. r0, r3, 24
     beq fn_8013C7BC_L_8013C8D0
     mr r3, r31
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     fn_8013C7BC_L_8013C8D0:
     lwz r3, 0x24(r30)
     addi r4, r31, 0x44

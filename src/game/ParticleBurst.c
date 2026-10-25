@@ -24,7 +24,7 @@ extern void GXSetCurrentMtx();
 extern void Matrix4_Identity();
 extern void Matrix4_PreMultiplyRotZ();
 extern void Matrix4_PreMultiplyTranslation();
-extern void fn_802D2B00();
+extern void HSD_StateInitDirect();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D5020;
@@ -80,7 +80,7 @@ asm void ParticleBurst_Draw(void) { /* 0x800B4164 size:0x224 */
     lis r4, 0x4000
     li r3, 0x0
     addi r4, r4, 0x2
-    bl fn_802D2B00
+    bl HSD_StateInitDirect
     li r3, 0x1
     li r4, 0x3
     li r5, 0x1

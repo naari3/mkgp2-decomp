@@ -28,7 +28,7 @@ typedef struct HSD_DObj {
 } HSD_DObj;
 
 /* Placeholder symbol names are kept while game code still refers to them. */
-void fn_802BCF94(HSD_DObj* dobj);                    /* HSD_DObjSetCurrent */
+void HSD_DObjSetCurrent(HSD_DObj* dobj);                    /* HSD_DObjSetCurrent */
 void fn_802BCF9C(HSD_DObj* dobj, u32 flags);         /* HSD_DObjSetFlags */
 void fn_802BCFB4(HSD_DObj* dobj, u32 flags);         /* HSD_DObjClearFlags */
 void fn_802BCFCC(HSD_DObj* dobj, HSD_MatAnim* matanim,

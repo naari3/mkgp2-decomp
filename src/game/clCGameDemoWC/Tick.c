@@ -26,7 +26,7 @@ extern void __assert();
 extern void clNormal3D_Exec();
 extern void fn_802C65F0();
 extern void fn_802C6640();
-extern void fn_802D1E34();
+extern void HSD_JObjSetupMatrixSub();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D4F94;
@@ -172,7 +172,7 @@ asm void clCGameDemoWC_Tick(void) { /* 0x800AE108 size:0x330 */
     clrlwi. r0, r3, 24
     beq clCGameDemoWC_Tick_L_800AE298
     mr r3, r30
-    bl fn_802D1E34
+    bl HSD_JObjSetupMatrixSub
     clCGameDemoWC_Tick_L_800AE298:
     addi r4, r31, 0x20
     addi r3, r30, 0x44

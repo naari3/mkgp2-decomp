@@ -6886,6 +6886,23 @@ sysdolphin/baselib/jobj.c:
 sysdolphin/baselib/jobj_anim_misc.c:
 	.text       start:0x802CDE48 end:0x802CDF38
 
+sysdolphin/baselib/displayfunc.c:
+	.text       start:0x802D2AD0 end:0x802D4030
+	.rodata     start:0x803F2BF8 end:0x803F2C08
+	.data       start:0x804FCD80 end:0x804FCDB0
+	.bss        start:0x806CD0E8 end:0x806CD118
+	.sdata      start:0x806D0DD0 end:0x806D0DF0
+	.sbss       start:0x806D21C8 end:0x806D21E8
+	.sdata2     start:0x806DCD00 end:0x806DCD20
+
+sysdolphin/baselib/video.c:
+	.text       start:0x802D4B00 end:0x802D57A8
+	.data       start:0x804FD048 end:0x804FD0D0
+	.bss        start:0x806CD140 end:0x806CE740
+	.sdata      start:0x806D0E10 end:0x806D0E18
+	.sbss       start:0x806D2218 end:0x806D2220
+	.sdata2     start:0x806DCD28 end:0x806DCD38
+
 sysdolphin/baselib/util.c:
 	.text       start:0x802D7730 end:0x802D78FC
 	.data       start:0x804FD0D0 end:0x804FD128

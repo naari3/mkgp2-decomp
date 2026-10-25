@@ -14,8 +14,8 @@ extern void PSMTXCopy();
 extern void PSMTXInvXpose();
 extern void GXLoadNrmMtxImm();
 extern void fn_802BE120();
-extern void fn_802C457C();
-extern void fn_802D377C();
+extern void HSD_LObjSetupSpecularInit();
+extern void HSD_JObjMakePositionMtx();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D2FB4;
@@ -62,13 +62,13 @@ asm void GXChannel_PushTransform(void) { /* 0x8007D11C size:0x190 */
     lwz r3, 0x0(r29)
     addi r5, r1, 0x38
     lwz r4, 0x10(r29)
-    bl fn_802D377C
+    bl HSD_JObjMakePositionMtx
     lwz r31, 0x0(r29)
     lwz r0, 0x14(r31)
     rlwinm. r0, r0, 0, 15, 15
     beq GXChannel_PushTransform_L_8007D184
     addi r3, r1, 0x38
-    bl fn_802C457C
+    bl HSD_LObjSetupSpecularInit
     GXChannel_PushTransform_L_8007D184:
     li r3, 0x0
     bl GXSetCurrentMtx
