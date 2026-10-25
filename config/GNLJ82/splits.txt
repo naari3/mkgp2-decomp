@@ -2713,6 +2713,12 @@ game/RaceScene_RenderPass.cpp:
 	extabindex  start:0x800222E0 end:0x800222EC
 	.text       start:0x800A0BE8 end:0x800A0EF4
 
+game/RaceScene_FrameUpdate.cpp:
+	extab       start:0x80009824 end:0x8000982C
+	extabindex  start:0x800222EC end:0x800222F8
+	.text       start:0x800A0EF4 end:0x800A1A1C
+	.sdata2     start:0x806D47D8 end:0x806D4800
+
 game/RaceScene_Dtor.cpp:
 	extab       start:0x8000982C end:0x80009834
 	extabindex  start:0x800222F8 end:0x80022304
