@@ -2110,6 +2110,8 @@ config.libs = [
         ],
         "progress_category": "sdk",
         "objects": [
+            Object(Matching, "musyx/runtime/seq.c", extra_cflags=["-fp_contract off"]),
+            Object(Matching, "musyx/runtime/synth.c", extra_cflags=["-fp_contract off"]),
             Object(Matching, "musyx/runtime/synthdata.c"),
             Object(Matching, "musyx/runtime/synthvoice.c"),
             Object(Matching, "musyx/runtime/synth_ac.c"),
