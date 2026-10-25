@@ -607,6 +607,7 @@ config.libs = [
             Object(Matching, "game/CardRW_DispenseTest_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardRW_PrintTest_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardRW_ErrorDisplay.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/UI_PageDispatcher.c"),
             Object(Matching, "game/CardRW_ReadWriteTest_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardRW_HardwareInit_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardRW_Reprint_Page.c", extab_padding=b"\x00\x00"),
