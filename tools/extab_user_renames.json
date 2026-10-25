@@ -754,7 +754,9 @@
     "__ct__12EffectHandleFv": "fn_8017363C",
     "__ct__9EffectObjFPCc": "fn_801F7D50",
     "__ct__10EffectSlotFv": "fn_801F7E98",
-    "__construct_array": "fn_80270D6C"
+    "__construct_array": "fn_80270D6C",
+    "__dt__12HomingMarkerFv": "fn_80173CC4",
+    "__ct__12HomingMarkerFP6Driver": "fn_80173DB4"
   },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
