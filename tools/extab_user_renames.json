@@ -2193,6 +2193,13 @@
     "__dt__13Scene801FAA18Fv": "fn_801FAA18",
     "__dt__12Base801FAA18Fv": "dtor_802043EC"
   },
+  "src/game/fn_801FB634.cpp": {
+    "__ct__9FlowSceneFi": "fn_801FD41C",
+    "__dt__9FlowSceneFv": "dtor_801FD32C",
+    "__vt__13WaitFlowScene": "lbl_804EBECC",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
   "src/game/fn_801CDDC4.cpp": {
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960",
