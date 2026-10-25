@@ -3553,11 +3553,6 @@ game/fn_801B7C1C.c:
 	extabindex  start:0x8002789C end:0x800278A8
 	.text       start:0x801B7C1C end:0x801B7C40
 
-game/SoundCue_801B7C1C.c:
-	extab       start:0x80012C40 end:0x80012C58
-	extabindex  start:0x8002789C end:0x800278C0
-	.text       start:0x801B7C1C end:0x801B7C88
-
 game/fn_801B7C40.c:
 	extab       start:0x80012C48 end:0x80012C50
 	extabindex  start:0x800278A8 end:0x800278B4
@@ -3772,6 +3767,7 @@ game/fn_801D9F88.c:
 	extab       start:0x80015558 end:0x80015560
 	extabindex  start:0x800281F0 end:0x800281FC
 	.text       start:0x801D9F88 end:0x801DA06C
+
 game/fn_801DAA84.c:
 	extab       start:0x8001566C end:0x80015674
 	extabindex  start:0x80028244 end:0x80028250
@@ -3781,6 +3777,7 @@ game/fn_801DAAA4.cpp:
 	extab       start:0x80015674 end:0x8001568C
 	extabindex  start:0x80028250 end:0x8002825C
 	.text       start:0x801DAAA4 end:0x801DAB18
+
 game/fn_801DAB18.c:
 	.text       start:0x801DAB18 end:0x801DAB20
 
@@ -3876,6 +3873,7 @@ game/fn_801DC4DC.c:
 	extabindex  start:0x80028370 end:0x8002837C
 	.text       start:0x801DC4DC end:0x801DC510
 	.ctors      start:0x802E891C end:0x802E8920
+
 game/fn_801DC510.c:
 	.text       start:0x801DC510 end:0x801DC514
 
@@ -3969,6 +3967,7 @@ game/fn_801E5A84.c:
 	extab       start:0x80016490 end:0x80016498
 	extabindex  start:0x800287D8 end:0x800287E4
 	.text       start:0x801E5A84 end:0x801E5B50
+
 game/fn_801E6594.c:
 	extab       start:0x800164A0 end:0x800164A8
 	extabindex  start:0x800287F0 end:0x800287FC

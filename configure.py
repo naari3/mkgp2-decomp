@@ -1278,7 +1278,6 @@ config.libs = [
         "cflags": [*cflags_base, "-Cpp_exceptions on"],
         "progress_category": "game",
         "objects": [
-            Object(Matching, "game/SoundCue_801B7C1C.c"),
             Object(Matching, "game/fn_801DB800.c"),
             Object(Matching, "game/fn_801DB8BC.c"),
             Object(Matching, "game/fn_801DB8F0.c"),
