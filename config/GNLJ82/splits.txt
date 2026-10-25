@@ -2773,6 +2773,16 @@ game/DrawEffect_Cb_BurstSpawner_Bind6Then4or5.c:
 	extabindex  start:0x80022C58 end:0x80022C64
 	.text       start:0x800B5D40 end:0x800B5E68
 
+game/DrawEffect_Cb_MutekiStar_VfxA.c:
+	extab       start:0x8000A750 end:0x8000A758
+	extabindex  start:0x80022C64 end:0x80022C70
+	.text       start:0x800B5E68 end:0x800B61D4
+
+game/DrawEffect_Cb_MutekiStar_VfxB.c:
+	extab       start:0x8000A758 end:0x8000A760
+	extabindex  start:0x80022C70 end:0x80022C7C
+	.text       start:0x800B61D4 end:0x800B6534
+
 game/DrawEffect_Cb_KartVfx_Bind1_Damage.c:
 	extab       start:0x8000A760 end:0x8000A768
 	extabindex  start:0x80022C7C end:0x80022C88
@@ -2798,6 +2808,12 @@ game/DrawEffect_Cb_MatrixSourced_Bind63.c:
 	extabindex  start:0x80022CAC end:0x80022CB8
 	.text       start:0x800B6E08 end:0x800B6FA0
 
+game/DrawEffect_Cb_KartItemStatus_Bind0C.c:
+	extab       start:0x8000A788 end:0x8000A790
+	extabindex  start:0x80022CB8 end:0x80022CC4
+	.text       start:0x800B6FA0 end:0x800B72FC
+	.data       start:0x8041A340 end:0x8041A36C
+
 game/DrawEffect_Cb_KartFire_WithSE99.c:
 	extab       start:0x8000A790 end:0x8000A798
 	extabindex  start:0x80022CC4 end:0x80022CD0
@@ -2809,10 +2825,20 @@ game/DrawEffect_Cb_WheelSpark_Bind4D.c:
 	.text       start:0x800B75B8 end:0x800B7864
 	.sdata2     start:0x806D51B4 end:0x806D51BC
 
+game/DrawEffect_Cb_KartItem_Bind6E_3Phase.c:
+	extab       start:0x8000A7A0 end:0x8000A7A8
+	extabindex  start:0x80022CDC end:0x80022CE8
+	.text       start:0x800B7864 end:0x800B7C24
+
 game/DrawEffect_Cb_DualBurstSpawner_2x4.c:
 	extab       start:0x8000A7A8 end:0x8000A7B0
 	extabindex  start:0x80022CE8 end:0x80022CF4
 	.text       start:0x800B7C24 end:0x800B7C9C
+
+game/DrawEffect_Cb_KartWheel_DualSpawn.c:
+	extab       start:0x8000A7B0 end:0x8000A7B8
+	extabindex  start:0x80022CF4 end:0x80022D00
+	.text       start:0x800B7C9C end:0x800B8054
 
 game/KartFxAuxAccel.cpp:
 	extab       start:0x8000A7B8 end:0x8000A7C0
@@ -3010,6 +3036,11 @@ game/EffectVfx88_DustHelix_Tick.c:
 	extabindex  start:0x80022F1C end:0x80022F28
 	.text       start:0x800C27D4 end:0x800C2AAC
 
+game/DrawEffect_KartWheel_TripleChildUpdate.c:
+	extab       start:0x8000A928 end:0x8000A930
+	extabindex  start:0x80022F28 end:0x80022F34
+	.text       start:0x800C2AAC end:0x800C2E30
+
 game/DrawEffect_KartWheel_TripleChildSpawn.c:
 	extab       start:0x8000A930 end:0x8000A938
 	extabindex  start:0x80022F34 end:0x80022F40
@@ -3205,10 +3236,20 @@ game/EffectInit76.cpp:
 	extabindex  start:0x80023108 end:0x80023114
 	.text       start:0x800C8038 end:0x800C80C0
 
+game/DrawEffect_Cb_RalySmokeVariant_Tick.c:
+	extab       start:0x8000AA70 end:0x8000AA78
+	extabindex  start:0x80023114 end:0x80023120
+	.text       start:0x800C80C0 end:0x800C83FC
+
 game/DrawEffect_Cb_RalySmokeSpawner_4Wheel.c:
 	extab       start:0x8000AA78 end:0x8000AA80
 	extabindex  start:0x80023120 end:0x8002312C
 	.text       start:0x800C83FC end:0x800C8490
+
+game/DrawEffect_Cb_KartItemTrail_4Phase.c:
+	extab       start:0x8000AA80 end:0x8000AA88
+	extabindex  start:0x8002312C end:0x80023138
+	.text       start:0x800C8490 end:0x800C8B6C
 
 game/DrawEffect_Cb_KartItemTrail_SpawnerSwarm.c:
 	extab       start:0x8000AA88 end:0x8000AA90
@@ -3254,6 +3295,11 @@ game/DrawEffect_Cb_ItemBoxBurstSpawner.c:
 	extab       start:0x8000AAC8 end:0x8000AAD0
 	extabindex  start:0x80023198 end:0x800231A4
 	.text       start:0x800C95B8 end:0x800C968C
+
+game/DrawEffect_Cb_KartWheelSmokeOrbital_Tick.c:
+	extab       start:0x8000AAD0 end:0x8000AAD8
+	extabindex  start:0x800231A4 end:0x800231B0
+	.text       start:0x800C968C end:0x800C99F0
 
 game/DrawEffect_KartImpactRing_AdvanceByVfxDelta.c:
 	extab       start:0x8000AAD8 end:0x8000AAE0
