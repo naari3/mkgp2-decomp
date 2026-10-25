@@ -123,7 +123,7 @@ extern void fn_80253EC0();
 extern void fn_80253EC4();
 extern void fn_80253F2C();
 extern void fn_80253FD8();
-extern void fn_8025EF58();
+extern void VIWaitForRetrace();
 extern void __div2i();
 extern void memset();
 extern void race_result_handler();
@@ -390,7 +390,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     addi r18, r18, 0x1
     cmpwi r18, 0x4
     bgt VSMode_FrameUpdate_L_8009E3E4
-    bl fn_8025EF58
+    bl VIWaitForRetrace
     bl Frame_UpdatePerFrameState
     bl Timer_Decrement
     li r3, 0x1
@@ -406,7 +406,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     clrlwi. r0, r3, 24
     bne VSMode_FrameUpdate_L_8009E3E4
     VSMode_FrameUpdate_L_8009E3A8:
-    bl fn_8025EF58
+    bl VIWaitForRetrace
     bl Frame_UpdatePerFrameState
     bl Timer_Decrement
     li r3, 0x0

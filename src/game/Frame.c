@@ -86,7 +86,7 @@ extern void GX_DrawDoneAndWait(void);
 extern void fn_8018F14C(void);
 extern void fn_802D5228(int arg);
 extern void fn_802D53A4(void);
-extern void fn_8025EF58(void);
+extern void VIWaitForRetrace(void);
 extern void fn_802687F8(void);
 extern void fn_802D47E8(void);
 extern void SpriteHandlePool_GC(void);
@@ -208,7 +208,7 @@ void Frame_PostDrawOverlay(void) { /* 0x8002D978 size:0xC4 */
     }
     fn_802D5228(0);
     fn_802D53A4();
-    fn_8025EF58();
+    VIWaitForRetrace();
     fn_802687F8();
 }
 

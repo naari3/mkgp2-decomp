@@ -1620,6 +1620,33 @@ config.libs = [
         ],
         extra_cflags=["-char signed"],
     ),
+    SdkLib(
+        "dolphin_vi",
+        [
+            Object(Matching, "dolphin/vi/vi.c"),
+        ],
+    ),
+    SdkLib(
+        "dolphin_ai",
+        [
+            Object(Matching, "dolphin/ai/ai.c"),
+        ],
+    ),
+    SdkLib(
+        "dolphin_ar",
+        [
+            Object(Matching, "dolphin/ar/ar.c"),
+            Object(Matching, "dolphin/ar/arq.c"),
+        ],
+    ),
+    SdkLib(
+        "dolphin_dsp",
+        [
+            Object(Matching, "dolphin/dsp/dsp.c"),
+            Object(Matching, "dolphin/dsp/dsp_debug.c"),
+            Object(Matching, "dolphin/dsp/dsp_task.c"),
+        ],
+    ),
     {
         "lib": "MSL_C",
         "mw_version": "GC/2.7",

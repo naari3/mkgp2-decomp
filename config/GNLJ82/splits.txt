@@ -5505,3 +5505,39 @@ dolphin/mtx/vec.c:
 
 dolphin/mtx/quat.c:
 	.text       start:0x8025E440 end:0x8025E50C
+
+dolphin/vi/vi.c:
+	.text       start:0x8025E50C end:0x8026031C
+	.data       start:0x804F3738 end:0x804F3BE0
+	.bss        start:0x8067AA10 end:0x8067AB58
+	.sdata      start:0x806D0AD8 end:0x806D0AE8
+	.sbss       start:0x806D1BA0 end:0x806D1C00
+
+dolphin/ai/ai.c:
+	.text       start:0x802606A8 end:0x80260F98
+	.sdata      start:0x806D0AE8 end:0x806D0AF0
+	.sbss       start:0x806D1C10 end:0x806D1C50
+
+dolphin/ar/ar.c:
+	.text       start:0x80260F98 end:0x80262A18
+	.sdata      start:0x806D0AF0 end:0x806D0AF8
+	.sbss       start:0x806D1C50 end:0x806D1C70
+
+dolphin/ar/arq.c:
+	.text       start:0x80262A18 end:0x80262DB4
+	.sdata      start:0x806D0AF8 end:0x806D0B00
+	.sbss       start:0x806D1C70 end:0x806D1C98
+
+dolphin/dsp/dsp.c:
+	.text       start:0x80262DB4 end:0x80262F74
+	.data       start:0x804F3BE0 end:0x804F3C60
+	.sdata      start:0x806D0B00 end:0x806D0B08
+	.sbss       start:0x806D1C98 end:0x806D1CA0
+
+dolphin/dsp/dsp_debug.c:
+	.text       start:0x80262F74 end:0x80262FC4
+
+dolphin/dsp/dsp_task.c:
+	.text       start:0x80262FC4 end:0x80263848
+	.data       start:0x804F3C60 end:0x804F3DA0
+	.sbss       start:0x806D1CA0 end:0x806D1CB8
