@@ -1952,6 +1952,11 @@ game/TEXLoadPalette.cpp:
 	extabindex  start:0x80021DD0 end:0x80021DE8
 	.text       start:0x8008E63C end:0x8008E9A0
 
+game/OSAlloc_Game.c:
+	extab       start:0x800092E8 end:0x800092F0
+	extabindex  start:0x80021DE8 end:0x80021DF4
+	.text       start:0x8008E9A0 end:0x8008F07C
+
 game/CardTaskPrintJob_IsRunning_Thunk.cpp:
 	extab       start:0x80009310 end:0x80009318
 	extabindex  start:0x80021E24 end:0x80021E30
