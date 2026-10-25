@@ -1942,6 +1942,16 @@ config.libs = [
             Object(Matching, "Runtime.PPCEABI.H/NMWException.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on", "-inline deferred"], extab_padding=b""),
         ],
     },
+    {
+        # MusyX sound library (hand-decompiled; built like the game code)
+        "lib": "musyx",
+        "mw_version": "GC/1.3.2",
+        "cflags": cflags_base,
+        "progress_category": "sdk",
+        "objects": [
+            Object(Matching, "musyx/macro_lookup.c"),
+        ],
+    },
 ]
 
 
