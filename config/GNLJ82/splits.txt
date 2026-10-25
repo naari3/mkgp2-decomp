@@ -2935,6 +2935,11 @@ game/EffectVfx13or14_MushroomDust_Tick.c:
 	extabindex  start:0x80022E44 end:0x80022E50
 	.text       start:0x800BE5A0 end:0x800BE8E4
 
+game/EffectVfx13_14_84_85_BoostSpark_Tick.c:
+	extab       start:0x8000A898 end:0x8000A8A0
+	extabindex  start:0x80022E50 end:0x80022E5C
+	.text       start:0x800BE8E4 end:0x800BEF18
+
 game/EffectVfx134_KartHitBurst_Tick.c:
 	extab       start:0x8000A8A0 end:0x8000A8A8
 	extabindex  start:0x80022E5C end:0x80022E68
