@@ -8817,6 +8817,11 @@ game/fn_8022664C.c:
 	extabindex  start:0x8002A680 end:0x8002A68C
 	.text       start:0x8022664C end:0x80226670
 
+game/anon_80226670.cpp:
+	extab       start:0x8001BA34 end:0x8001BA88
+	extabindex  start:0x8002A68C end:0x8002A6BC
+	.text       start:0x80226670 end:0x80226954
+
 game/fn_8022CDE4.c:
 	extab       start:0x8001BFE0 end:0x8001BFE8
 	extabindex  start:0x8002A8CC end:0x8002A8D8

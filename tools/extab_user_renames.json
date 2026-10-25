@@ -4278,6 +4278,17 @@
     "__ct__6SpriteFiii": "Sprite_InitWithAnim",
     "__dt__6SpriteFv": "Sprite_Destroy"
   },
+  "src/game/anon_80226670.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "Update__16clCSSceneJoinMsgFv": "fn_80226670",
+    "__dt__16clCSSceneJoinMsgFv": "fn_802267A0",
+    "Destroy__16clCSSceneJoinMsgFv": "fn_80226828",
+    "__vt__16clCSSceneJoinMsg": "lbl_804EDF64",
+    "__vt__9SceneBase": "lbl_803FE0C8",
+    "__ct__9FlowPanelFv": "fn_801DA06C"
+  },
   "src/game/ChallengeGoalCamera_Init.cpp": {
     "__nw__FUl": "Alloc",
     "__ct__13DemoSceneBaseFPCc": "Scene3D_Init",
