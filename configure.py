@@ -1495,6 +1495,7 @@ config.libs = [
             Object(Matching, "game/NetDiag_PacketRatioPage.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CoinSystem_RemoveCoins.c"),
             Object(Matching, "game/DVDLoad_Stats.c"),
+            Object(Matching, "game/DVDLoad_ReadFileTimed.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/GXChannel_PushTransform.c", extab_padding=b""),
             Object(Matching, "game/GXChannel_PushChannelColors.c", extab_padding=b""),
             Object(Matching, "game/GXChannel_Unbind.c", extab_padding=b""),

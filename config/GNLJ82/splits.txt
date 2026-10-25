@@ -1571,6 +1571,11 @@ game/DVDLoad_OpenAllocReadRelocSync.c:
 game/DVDLoad_Stats.c:
 	.text       start:0x8007DFD4 end:0x8007DFE4
 
+game/DVDLoad_ReadFileTimed.c:
+	extab       start:0x800087F8 end:0x80008800
+	extabindex  start:0x800215FC end:0x80021608
+	.text       start:0x8007DFE4 end:0x8007E178
+
 game/DVDLoad_ReadChunkHandle.c:
 	extab       start:0x80008800 end:0x80008808
 	extabindex  start:0x80021608 end:0x80021614
