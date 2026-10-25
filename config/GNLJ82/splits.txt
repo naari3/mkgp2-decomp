@@ -145,6 +145,11 @@ game/Object_Color.c:
 	extabindex  start:0x8001F61C end:0x8001F634
 	.text       start:0x80031408 end:0x8003151C
 
+game/JObj_SetScale.c:
+	extab       start:0x80005970 end:0x80005978
+	extabindex  start:0x8001F634 end:0x8001F640
+	.text       start:0x8003151C end:0x800316B8
+
 game/JObj_Visibility.c:
 	extab       start:0x80005978 end:0x80005988
 	extabindex  start:0x8001F640 end:0x8001F658
@@ -1091,6 +1096,11 @@ game/dtor_80064CD4.c:
 
 game/NoopRenderHook_Pending_80064d28.c:
 	.text       start:0x80064D28 end:0x80064D2C
+
+game/CalcSoundDirection.c:
+	extab       start:0x80007F24 end:0x80007F2C
+	extabindex  start:0x80020E7C end:0x80020E88
+	.text       start:0x80064D2C end:0x80064EA0
 
 game/CourseBgm_Free.c:
 	extab       start:0x80007F2C end:0x80007F34
@@ -2575,6 +2585,16 @@ game/Matrix4Multiply.c:
 
 game/Matrix4Leaf.c:
 	.text       start:0x800D5D50 end:0x800D5E68
+
+game/Vec3_Normalize_SafeXZY.c:
+	extab       start:0x8000B17C end:0x8000B184
+	extabindex  start:0x800237C8 end:0x800237D4
+	.text       start:0x800D5E68 end:0x800D5EEC
+
+game/Vec3_ToYawPitch.c:
+	extab       start:0x8000B184 end:0x8000B18C
+	extabindex  start:0x800237D4 end:0x800237E0
+	.text       start:0x800D5EEC end:0x800D5FDC
 
 game/Vec3_ToYaw.c:
 	extab       start:0x8000B18C end:0x8000B194
