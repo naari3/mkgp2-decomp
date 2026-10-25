@@ -20,9 +20,9 @@ typedef struct HSDObj {
 } HSDObj;
 
 extern HSDObj *lbl_806D15B8;
-extern void fn_802DA5B0(HSDObj *);
-extern HSDObj *fn_802DA8B8(void *);
-extern HSDObj *fn_802DA86C(void);
+extern void HSD_FogSet(HSDObj *);
+extern HSDObj *HSD_FogLoadDesc(void *);
+extern HSDObj *HSD_FogAlloc(void);
 
 static inline int ref_DEC(HSDObj *o) {
     unsigned char ret = o->ref_count == (unsigned short)-1;
@@ -50,7 +50,7 @@ static inline void HSDObj_Release(HSDObj *o) {
 
 static inline void Holder_Release(void) {
     if (lbl_806D15B8) {
-        fn_802DA5B0(0);
+        HSD_FogSet(0);
         HSDObj_Release(lbl_806D15B8);
     }
     lbl_806D15B8 = 0;
@@ -77,12 +77,12 @@ static inline void Holder_SetMode(HSDObj *o, int v) {
 #pragma exceptions on
 
 void fn_8016B0A0(void) {
-    fn_802DA5B0(0);
+    HSD_FogSet(0);
 }
 
 void fn_8016B0C4(void) {
     if (lbl_806D15B8) {
-        fn_802DA5B0(lbl_806D15B8);
+        HSD_FogSet(lbl_806D15B8);
     }
 }
 
@@ -148,9 +148,9 @@ void fn_8016B248(void *desc) {
         Holder_Release();
     }
     if (desc) {
-        lbl_806D15B8 = fn_802DA8B8(desc);
+        lbl_806D15B8 = HSD_FogLoadDesc(desc);
     } else {
-        lbl_806D15B8 = fn_802DA86C();
+        lbl_806D15B8 = HSD_FogAlloc();
     }
 }
 

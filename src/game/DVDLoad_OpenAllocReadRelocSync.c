@@ -9,7 +9,7 @@ extern void DVDOpen();
 extern void FUN_8007dfe4();
 extern void DVDClose();
 extern void HSD_MemAlloc();
-extern void fn_802DC964();
+extern void HSD_ArchiveFree();
 extern void memcpy();
 extern void memset();
 extern void strlen();
@@ -221,7 +221,7 @@ asm void DVDLoad_OpenAllocReadRelocSync(void) { /* 0x8007DD00 size:0x2D4 */
     cmplwi r31, 0x0
     beq DVDLoad_OpenAllocReadRelocSync_L_8007DFBC
     mr r3, r31
-    bl fn_802DC964
+    bl HSD_ArchiveFree
     DVDLoad_OpenAllocReadRelocSync_L_8007DFBC:
     li r3, 0x0
     DVDLoad_OpenAllocReadRelocSync_L_8007DFC0:

@@ -15,7 +15,7 @@ extern "C" {
 extern clRom *lbl_806D0FE0;
 extern clRom *lbl_806D0FE4;
 extern unsigned int lbl_806D0FE8;
-void fn_802DC964(void *);
+void HSD_ArchiveFree(void *);
 void HSD_Free(void *);
 }
 void operator delete(void *);
@@ -23,7 +23,7 @@ void operator delete(void *);
 clRom::~clRom() {
     --lbl_806D0FE8;
     if (payload != 0) {
-        if (directFree == 0) fn_802DC964(payload);
+        if (directFree == 0) HSD_ArchiveFree(payload);
         else HSD_Free(payload);
     }
     if (previous == 0) lbl_806D0FE0 = next;

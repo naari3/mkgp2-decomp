@@ -13,7 +13,7 @@ extern void GXSetVtxDesc();
 extern void fn_802BCF94();
 extern void fn_802C22D8();
 extern void fn_802C35DC();
-extern void fn_802C8510();
+extern void HSD_CObjGetCurrent();
 extern void fn_802D0F50();
 
 /* --- function index (1 fns, .text 0x8007DA5C..0x8007DC08) ---
@@ -56,7 +56,7 @@ asm void GXChannel_Init(void) { /* 0x8007DA5C size:0x1AC */
     lbz r0, 0xc(r31)
     cmplwi r0, 0x1
     beq GXChannel_Init_L_8007DBEC
-    bl fn_802C8510
+    bl HSD_CObjGetCurrent
     addi r0, r3, 0x54
     stw r0, 0x10(r31)
     lwz r3, 0x0(r31)

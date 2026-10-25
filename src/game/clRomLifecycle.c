@@ -4,7 +4,7 @@ extern "C" {
 extern RomLifecycle* lbl_806D0FE0;
 extern RomLifecycle* lbl_806D0FE4;
 extern int lbl_806D0FE8;
-void fn_802DC964(void* archive);
+void HSD_ArchiveFree(void* archive);
 void HSD_Free(void* block);
 }
 
@@ -21,7 +21,7 @@ struct RomLifecycle {
         --lbl_806D0FE8;
         if (archive != 0) {
             if (rawBlock == 0) {
-                fn_802DC964(archive);
+                HSD_ArchiveFree(archive);
             } else {
                 HSD_Free(archive);
             }

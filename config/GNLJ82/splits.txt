@@ -6886,6 +6886,13 @@ sysdolphin/baselib/id.c:
 	.bss        start:0x806CE7F0 end:0x806CE9B0
 	.sdata      start:0x806D0E70 end:0x806D0E80
 
+sysdolphin/baselib/fog.c:
+	.text       start:0x802DA5B0 end:0x802DAE88
+	.data       start:0x804FD380 end:0x804FD498
+	.sdata      start:0x806D0EA8 end:0x806D0EC0
+	.sdata2     start:0x806DCE18 end:0x806DCE40
+	.sbss2      start:0x806DCF80 end:0x806DCF88
+
 sysdolphin/baselib/perf.c:
 	.text       start:0x802DAE88 end:0x802DAEE4
 	.data       start:0x804FD498 end:0x804FD528
@@ -6910,6 +6917,9 @@ sysdolphin/baselib/memory.c:
 	.data       start:0x804FD580 end:0x804FD5A8
 	.bss        start:0x806CEA08 end:0x806CEA20
 
+sysdolphin/baselib/archive.c:
+	.text       start:0x802DC864 end:0x802DCA04
+
 sysdolphin/baselib/random.c:
 	.text       start:0x802DCA04 end:0x802DCA98
 	.sdata      start:0x806D0F10 end:0x806D0F18
@@ -6920,6 +6930,11 @@ sysdolphin/baselib/class.c:
 	.data       start:0x804FD7E0 end:0x804FD970
 	.sdata      start:0x806D0F28 end:0x806D0F30
 	.sbss       start:0x806D2240 end:0x806D2250
+
+sysdolphin/baselib/hash.c:
+	.text       start:0x802DE524 end:0x802DE624
+	.data       start:0x804FD970 end:0x804FD988
+	.sdata      start:0x806D0F30 end:0x806D0F38
 
 init/__check_pad3.c:
 	.init       start:0x80003100 end:0x80003140
