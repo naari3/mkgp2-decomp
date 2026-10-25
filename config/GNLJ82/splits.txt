@@ -3515,23 +3515,60 @@ game/Scene_8016D920.cpp:
 	extabindex  start:0x800262A0 end:0x800262AC
 	.text       start:0x8016D920 end:0x8016DA30
 
-game/Scene_8016DA30.cpp:
-	extab       start:0x8001057C end:0x8001058C
-	extabindex  start:0x800262AC end:0x800262C4
-	.text       start:0x8016DA30 end:0x8016DC90
-
-game/Scene_8016DEF4.cpp:
-	extab       start:0x80010594 end:0x8001059C
-	extabindex  start:0x800262D0 end:0x800262DC
-	.text       start:0x8016DEF4 end:0x8016E064
+game/DebrisBurst.cpp:
+	extab       start:0x8001057C end:0x800105C4
+	extabindex  start:0x800262AC end:0x800262E8
+	.text       start:0x8016DA30 end:0x8016E1C0
+	.rodata     start:0x8036D690 end:0x8036D728
 
 game/Scene_8016E1C0.cpp:
 	extab       start:0x800105C4 end:0x800105E4
 	extabindex  start:0x800262E8 end:0x80026318
 	.text       start:0x8016E1C0 end:0x8016E568
 
+game/Scene_8016EACC.cpp:
+	extab       start:0x80010628 end:0x80010668
+	extabindex  start:0x8002633C end:0x8002636C
+	.text       start:0x8016EACC end:0x8016F158
+	.rodata     start:0x8036D920 end:0x8036D960
+
+game/Scene_8016FC14.cpp:
+	extab       start:0x800106A8 end:0x800106B0
+	extabindex  start:0x8002639C end:0x800263A8
+	.text       start:0x8016FC14 end:0x8016FC70
+
 game/fn_8016FC70.c:
 	.text       start:0x8016FC70 end:0x8016FC74
+
+game/Scene_8016FC74.cpp:
+	extab       start:0x800106B0 end:0x800106B8
+	extabindex  start:0x800263A8 end:0x800263B4
+	.text       start:0x8016FC74 end:0x8016FD0C
+
+game/Scene_8016FD0C.cpp:
+	extab       start:0x800106B8 end:0x800106EC
+	extabindex  start:0x800263B4 end:0x800263C0
+	.text       start:0x8016FD0C end:0x8016FE44
+
+game/Scene_801704A0.cpp:
+	extab       start:0x800106FC end:0x80010704
+	extabindex  start:0x800263D8 end:0x800263E4
+	.text       start:0x801704A0 end:0x80170544
+
+game/Scene_801706C8.cpp:
+	extab       start:0x8001075C end:0x80010764
+	extabindex  start:0x800263F0 end:0x800263FC
+	.text       start:0x801706C8 end:0x801707FC
+
+game/Scene_801707FC.cpp:
+	extab       start:0x80010764 end:0x8001076C
+	extabindex  start:0x800263FC end:0x80026408
+	.text       start:0x801707FC end:0x801709FC
+
+game/Scene_801709FC.cpp:
+	extab       start:0x8001076C end:0x80010774
+	extabindex  start:0x80026408 end:0x80026414
+	.text       start:0x801709FC end:0x80170B5C
 
 game/fn_8017218C.c:
 	extab       start:0x8001094C end:0x80010954
