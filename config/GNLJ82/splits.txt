@@ -2664,20 +2664,16 @@ game/Terrain_FlagsToDebugString.c:
 	extabindex  start:0x80022394 end:0x800223A0
 	.text       start:0x800A5384 end:0x800A5578
 	.rodata     start:0x80322120 end:0x80322188
-	.sdata2     start:0x806D48C4 end:0x806D4904
+	.sdata2     start:0x806D48C4 end:0x806D4908
 
-game/VSModeIntro_Dtor.c:
-	extab       start:0x80009C9C end:0x80009CA4
-	extabindex  start:0x800223A0 end:0x800223AC
-	.text       start:0x800A5578 end:0x800A5608
-
-game/fn_800A5608.c:
-	.text       start:0x800A5608 end:0x800A560C
-
-game/VSModeIntro_Ctor.c:
-	extab       start:0x80009CAC end:0x80009CC4
-	extabindex  start:0x800223B8 end:0x800223C4
-	.text       start:0x800A5840 end:0x800A58A0
+game/VSModeIntro.cpp:
+	extab       start:0x80009C9C end:0x80009CC4
+	extabindex  start:0x800223A0 end:0x800223C4
+	.text       start:0x800A5578 end:0x800A58A0
+	.rodata     start:0x80322188 end:0x80322200
+	.data       start:0x8040F148 end:0x8040F168
+	.sdata      start:0x806CF1B0 end:0x806CF1C0
+	.sdata2     start:0x806D4908 end:0x806D4910
 
 game/ItemRes_LookupDatPathByKey.c:
 	.text       start:0x800A58A0 end:0x800A59F0
