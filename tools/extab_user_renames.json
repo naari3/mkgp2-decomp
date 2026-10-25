@@ -1648,5 +1648,31 @@
     "extabindex_fn_8013E194": "@eti_80024F50",
     "extab_fn_8013E744": "@etb_8000D650",
     "extabindex_fn_8013E744": "@eti_80024F5C"
+  },
+  "src/game/ZoneList.c": {
+    "__ct__7BoxZoneFPC7ZoneSrc": "fn_80123674",
+    "__ct__8QuadZoneFPC7ZoneSrc": "fn_801238EC",
+    "__dt__8ZoneListFv": "fn_80123B48",
+    "__ct__8ZoneListFPC7ZoneSrci": "fn_80123BB4",
+    "__dt__8QuadZoneFv": "fn_80123BEC",
+    "__dt__7BoxZoneFv": "fn_80123D90",
+    "__dt__8TaskModeFv": "fn_80123FDC",
+    "__ct__8TaskModeFv": "fn_8012409C",
+    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
+    "__dt__12GameModeBaseFv": "dtor_8002CDF4",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__4Zone": "lbl_8048E1B0",
+    "__vt__7BoxZone": "lbl_8048E1A0",
+    "__vt__8QuadZone": "lbl_8048E184",
+    "__vt__8TaskMode": "lbl_8048E1CC",
+    "extab_MiniGame_GetTimerValue": "@etb_8000BD8C",
+    "extabindex_MiniGame_GetTimerValue": "@eti_80024794",
+    "extab_fn_801232E0": "@etb_8000BD94",
+    "extabindex_fn_801232E0": "@eti_800247A0",
+    "extab_fn_80123674": "@etb_8000BDD4",
+    "extabindex_fn_80123674": "@eti_800247D0",
+    "extab_fn_801238EC": "@etb_8000BDF8",
+    "extabindex_fn_801238EC": "@eti_800247E8"
   }
 }

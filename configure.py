@@ -1146,6 +1146,7 @@ config.libs = [
             Object(Matching, "game/RenderTargetSingleton.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CourseTables.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/OrthoCam.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/ZoneList.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
         ],
     },
     {
