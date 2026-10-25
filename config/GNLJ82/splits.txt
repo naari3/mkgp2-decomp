@@ -5150,6 +5150,11 @@ game/ChallengeDemoUra.cpp:
 	extabindex  start:0x8002498C end:0x800249BC
 	.text       start:0x80127ECC end:0x801287F8
 
+game/NokoNoko_801287F8.cpp:
+	extab       start:0x8000C444 end:0x8000C688
+	extabindex  start:0x800249BC end:0x80024A10
+	.text       start:0x801287F8 end:0x8012A5AC
+
 game/dtor_8012A5AC.c:
 	extab       start:0x8000C688 end:0x8000C690
 	extabindex  start:0x80024A10 end:0x80024A1C
@@ -5160,10 +5165,20 @@ game/fn_8012A61C.c:
 	extabindex  start:0x80024A1C end:0x80024A28
 	.text       start:0x8012A61C end:0x8012A71C
 
+game/fn_8012A71C.cpp:
+	extab       start:0x8000C698 end:0x8000C6A0
+	extabindex  start:0x80024A28 end:0x80024A34
+	.text       start:0x8012A71C end:0x8012B394
+
 game/fn_8012B394.c:
 	extab       start:0x8000C6A0 end:0x8000C6A8
 	extabindex  start:0x80024A34 end:0x80024A40
 	.text       start:0x8012B394 end:0x8012B48C
+
+game/fn_8012B48C.cpp:
+	extab       start:0x8000C6A8 end:0x8000C720
+	extabindex  start:0x80024A40 end:0x80024A4C
+	.text       start:0x8012B48C end:0x8012B924
 
 game/KartPreviewAnim.c:
 	.text       start:0x8012B924 end:0x8012BDA4
@@ -5175,6 +5190,16 @@ game/fn_8012BDA4.c:
 
 game/fn_8012BDF4.c:
 	.text       start:0x8012BDF4 end:0x8012BF5C
+
+game/CGameCoin_8012BF5C.cpp:
+	extab       start:0x8000C728 end:0x8000CBA0
+	extabindex  start:0x80024A58 end:0x80024B18
+	.text       start:0x8012BF5C end:0x801313D0
+
+game/SuikaBall_801313D0.cpp:
+	extab       start:0x8000CBA0 end:0x8000CE64
+	extabindex  start:0x80024B18 end:0x80024B6C
+	.text       start:0x801313D0 end:0x801341E4
 
 game/BiribiriLand.c:
 	extab       start:0x8000CE64 end:0x8000D014
@@ -5201,8 +5226,18 @@ game/CoinSystem_UpdateAll.c:
 	extabindex  start:0x80024C80 end:0x80024C8C
 	.text       start:0x80139898 end:0x8013A534
 
+game/fn_8013A534.cpp:
+	extab       start:0x8000D2D0 end:0x8000D2E8
+	extabindex  start:0x80024C8C end:0x80024C98
+	.text       start:0x8013A534 end:0x8013A5BC
+
 game/CoinSystem_RemoveCoins.c:
 	.text       start:0x8013A5BC end:0x8013A6F8
+
+game/fn_8013A6F8.cpp:
+	extab       start:0x8000D2E8 end:0x8000D2F0
+	extabindex  start:0x80024C98 end:0x80024CA4
+	.text       start:0x8013A6F8 end:0x8013A778
 
 game/CoinSystem_Init.c:
 	extab       start:0x8000D2F0 end:0x8000D328

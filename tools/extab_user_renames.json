@@ -4650,5 +4650,87 @@
     "extabindex_fn_80138DB8": "@eti_80024C68",
     "extab_fn_80139810": "@etb_8000D2B0",
     "extabindex_fn_80139810": "@eti_80024C74"
+  },
+  "src/game/NokoNoko_801287F8.cpp": {
+    "extab_TimeTrial_Render": "@etb_8000C444",
+    "extabindex_TimeTrial_Render": "@eti_800249BC",
+    "extab_NokoNokoChallenge_Update": "@etb_8000C454",
+    "extabindex_NokoNokoChallenge_Update": "@eti_800249C8",
+    "extab_TimeTrial_Destroy": "@etb_8000C474",
+    "extabindex_TimeTrial_Destroy": "@eti_800249D4",
+    "extab_NokoNokoChallenge_Init": "@etb_8000C484",
+    "extabindex_NokoNokoChallenge_Init": "@eti_800249E0",
+    "extab_fn_8012A070": "@etb_8000C44C",
+    "extabindex_fn_8012A070": "@eti_800249EC",
+    "extab_fn_8012A22C": "@etb_8000C46C",
+    "extabindex_fn_8012A22C": "@eti_800249F8",
+    "extab_fn_8012A52C": "@etb_8000C47C",
+    "extabindex_fn_8012A52C": "@eti_80024A04"
+  },
+  "src/game/fn_8012A71C.cpp": {
+    "extab_fn_8012A71C": "@etb_8000C698",
+    "extabindex_fn_8012A71C": "@eti_80024A28"
+  },
+  "src/game/fn_8012B48C.cpp": {
+    "extab_fn_8012B48C": "@etb_8000C6A8",
+    "extabindex_fn_8012B48C": "@eti_80024A40"
+  },
+  "src/game/CGameCoin_8012BF5C.cpp": {
+    "extab_fn_8012BF5C": "@etb_8000C730",
+    "extabindex_fn_8012BF5C": "@eti_80024A58",
+    "extab_CGameCoin_Draw": "@etb_8000C748",
+    "extabindex_CGameCoin_Draw": "@eti_80024A64",
+    "extab_CGameCoin_Update": "@etb_8000C750",
+    "extabindex_CGameCoin_Update": "@eti_80024A70",
+    "extab_DefeatDemo_Update": "@etb_8000C758",
+    "extabindex_DefeatDemo_Update": "@eti_80024A7C",
+    "extab_BossKoopa_UpdateAnim": "@etb_8000C768",
+    "extabindex_BossKoopa_UpdateAnim": "@eti_80024A88",
+    "extab_KoopaFireball_Update": "@etb_8000C770",
+    "extabindex_KoopaFireball_Update": "@eti_80024A94",
+    "extab_Shell_UpdateState": "@etb_8000C778",
+    "extabindex_Shell_UpdateState": "@eti_80024AA0",
+    "extab_CGameCoin_Destroy": "@etb_8000C788",
+    "extabindex_CGameCoin_Destroy": "@eti_80024AAC",
+    "extab_CGameCoin_Init": "@etb_8000C798",
+    "extabindex_CGameCoin_Init": "@eti_80024AB8",
+    "extab_CGameCoin_InitDefeatDemo": "@etb_8000CA88",
+    "extabindex_CGameCoin_InitDefeatDemo": "@eti_80024AC4",
+    "extab_BossKoopa_Init": "@etb_8000CAF0",
+    "extabindex_BossKoopa_Init": "@eti_80024AD0",
+    "extab_CGameCoin_InitFields": "@etb_8000CB98",
+    "extabindex_CGameCoin_InitFields": "@eti_80024ADC",
+    "extab_CoinParticle_Draw": "@etb_8000C728",
+    "extabindex_CoinParticle_Draw": "@eti_80024AE8",
+    "extab_CoinParticle_Update": "@etb_8000C760",
+    "extabindex_CoinParticle_Update": "@eti_80024AF4",
+    "extab_CoinParticleManager_Destroy": "@etb_8000C790",
+    "extabindex_CoinParticleManager_Destroy": "@eti_80024B00",
+    "extab_CGameCoin_ProcessInput": "@etb_8000C780",
+    "extabindex_CGameCoin_ProcessInput": "@eti_80024B0C"
+  },
+  "src/game/SuikaBall_801313D0.cpp": {
+    "extab_SuikaBall_Render": "@etb_8000CBA0",
+    "extabindex_SuikaBall_Render": "@eti_80024B18",
+    "extab_SuikaBall_Update": "@etb_8000CBB0",
+    "extabindex_SuikaBall_Update": "@eti_80024B24",
+    "extab_fn_80133008": "@etb_8000CBC0",
+    "extabindex_fn_80133008": "@eti_80024B30",
+    "extab_SuikaBall_Init": "@etb_8000CBD0",
+    "extabindex_SuikaBall_Init": "@eti_80024B3C",
+    "extab_fn_80133CA8": "@etb_8000CBA8",
+    "extabindex_fn_80133CA8": "@eti_80024B48",
+    "extab_fn_80133E64": "@etb_8000CBB8",
+    "extabindex_fn_80133E64": "@eti_80024B54",
+    "extab_fn_80134164": "@etb_8000CBC8",
+    "extabindex_fn_80134164": "@eti_80024B60"
+  },
+  "src/game/fn_8013A534.cpp": {
+    "extab_fn_8013A534": "@etb_8000D2D0",
+    "extabindex_fn_8013A534": "@eti_80024C8C"
+  },
+  "src/game/fn_8013A6F8.cpp": {
+    "extab_fn_8013A6F8": "@etb_8000D2E8",
+    "extabindex_fn_8013A6F8": "@eti_80024C98"
   }
 }
