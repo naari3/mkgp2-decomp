@@ -2634,6 +2634,11 @@ game/KartDriverArray_StaticCtor.c:
 	.text       start:0x8009DD28 end:0x8009DD64
 	.ctors      start:0x802E88FC end:0x802E8900
 
+game/RaceScene_RenderFrame.cpp:
+	extab       start:0x80009624 end:0x8000962C
+	extabindex  start:0x8002222C end:0x80022238
+	.text       start:0x8009DD64 end:0x8009E0D4
+
 game/VSMode_FrameUpdate.c:
 	extab       start:0x8000962C end:0x80009634
 	extabindex  start:0x80022238 end:0x80022244
