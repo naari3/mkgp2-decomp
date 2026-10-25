@@ -718,6 +718,16 @@ game/NamCam_Init.c:
 	extabindex  start:0x8002012C end:0x80020138
 	.text       start:0x80049860 end:0x80049940
 
+game/ItemSpawner_TimedRemapAndSpawn.c:
+	extab       start:0x80006888 end:0x80006890
+	extabindex  start:0x80020138 end:0x80020144
+	.text       start:0x80049940 end:0x80049A90
+
+game/ISESlot_TickIfActiveNotBattle6.c:
+	extab       start:0x80006890 end:0x80006898
+	extabindex  start:0x80020144 end:0x80020150
+	.text       start:0x80049A90 end:0x80049AFC
+
 sound/ISESlot_StopEffect.c:
 	extab       start:0x80006898 end:0x800068A0
 	extabindex  start:0x80020150 end:0x8002015C
@@ -1884,6 +1894,11 @@ game/GameModeBase.cpp:
 	extab       start:0x80009788 end:0x80009798
 	extabindex  start:0x800222A4 end:0x800222BC
 	.text       start:0x800A07EC end:0x800A0950
+
+game/CarObjects_FindByEventType.c:
+	extab       start:0x8000980C end:0x80009814
+	extabindex  start:0x800222C8 end:0x800222D4
+	.text       start:0x800A0A84 end:0x800A0B34
 
 game/RaceScene_PlayerSlots.c:
 	.text       start:0x800A0B34 end:0x800A0BAC
