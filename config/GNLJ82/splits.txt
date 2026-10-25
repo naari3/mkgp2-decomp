@@ -4930,9 +4930,6 @@ game/anon_801FD320.cpp:
 	extab       start:0x80017B40 end:0x80017C5C
 	extabindex  start:0x800292D0 end:0x80029330
 	.text       start:0x801FD320 end:0x801FD924
-
-game/fn_801FD320.c:
-	.text       start:0x801FD320 end:0x801FD32C
 	.ctors      start:0x802E8938 end:0x802E893C
 
 game/anon_801FD924.cpp:
