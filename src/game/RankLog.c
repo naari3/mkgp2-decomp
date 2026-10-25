@@ -779,12 +779,14 @@ unsigned char TaTitle_CheckAllCoursesRecorded(void)
     int b;
     int c;
     int d;
+    void *entry;
 
     for (a = 0; a < 2; a++) {
         for (b = 0; b < 8; b++) {
             for (c = 0; c < 2; c++) {
                 for (d = 0; d < 2; d++) {
-                    if (wcscmp(&g_playerData, TaRecord_GetEntry_Indexed(0, a + 1, b + 1, c, d)) != 0) {
+                    entry = TaRecord_GetEntry_Indexed(0, a + 1, b + 1, c, d);
+                    if (wcscmp(&g_playerData, entry) != 0) {
                         return 0;
                     }
                 }

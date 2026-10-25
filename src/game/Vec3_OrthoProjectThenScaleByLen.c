@@ -35,9 +35,14 @@ static inline void Vec3_ScaleByDot(Vec3f *out, const Vec3f *n, Vec3f a, Vec3f b)
     PSVECScale(out, out, a.z * b.z + (a.x * b.x + a.y * b.y));
 }
 
+static inline float Vec3_Length(const Vec3f *v)
+{
+    return Vec3_Magnitude(v);
+}
+
 void Vec3_OrthoProjectThenScaleByLen(Vec3f *out, const Vec3f *dir, const Vec3f *normal)
 {
-    float len = Vec3_Magnitude(dir);
+    float len = Vec3_Length(dir);
     Vec3f r;
     Vec3f neg;
 

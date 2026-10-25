@@ -191,7 +191,10 @@ void CardModeRoot::OnTaskDone(int st) {
             if (fn_801FE404()->f194) {
                 f28 = 0;
                 SetLocalPcbRole(0);
-                fn_801FE404()->f168 = 0;
+                {
+                    FlowMgrInfo *st = fn_801FE404();
+                    st->f168 = 0;
+                }
                 StrPcb_ForceRun_Neutral(StrPcb_GetInstance());
                 StrPcb_ResetCommands_Neutral(StrPcb_GetInstance(), 1);
                 state = 3;

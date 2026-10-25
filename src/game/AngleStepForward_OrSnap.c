@@ -21,7 +21,12 @@ float AngleStepForward_OrSnap(float cur, float target, float step)
     if (Angle_Abs(diff) < step) {
         return target;
     }
-    return Angle_Wrap(0.0f < diff ? cur + step : cur + step);
+    if (0.0f < diff) {
+        cur = cur + step;
+    } else {
+        cur = cur + step;
+    }
+    return Angle_Wrap(cur);
 }
 
 float AngleStepTowards_Shortest(float cur, float target, float step)
@@ -31,5 +36,10 @@ float AngleStepTowards_Shortest(float cur, float target, float step)
     if (Angle_Abs(diff) < step) {
         return target;
     }
-    return Angle_Wrap(0.0f < diff ? cur + step : cur - step);
+    if (0.0f < diff) {
+        cur = cur + step;
+    } else {
+        cur = cur - step;
+    }
+    return Angle_Wrap(cur);
 }

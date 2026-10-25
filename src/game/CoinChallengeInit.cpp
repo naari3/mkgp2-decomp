@@ -82,8 +82,8 @@ CIOwner::CIOwner() {
     RankingTable_Init(GetRaceContextPtr()); lbl_806D12BC=0; SoundDriver_GetOrCreate(0);
     float x,z; GetStartPosition(0,&x,0,&z);
     car=new CICar(&x,&z); car->fd=0; car->fe=0;
-    car->render()->visible=1;
-    car->render()->active=1;
+    {CIRender*r=car->render(); r->visible=1;}
+    {CIRender*r=car->render(); r->active=1;}
     SetPlayerCarObject(car);
     lakitu=new CILakitu(lbl_803C3E38,0,lbl_806DAE30,lbl_806DAE30,lbl_806DAE30);
     scene=new CIScene; goal=new CIGoal; ProcessSystemTick(0);

@@ -64,6 +64,7 @@ struct Sprite {
     Sprite(int res, int a, int b);
     ~Sprite();
     void SetAnimParam(int key, short value);
+    void SetPos(float px, float py) { x = px; y = py; }
 };
 
 template <class T> struct Own {
@@ -533,8 +534,7 @@ struct clGetCoinLine : FadeObj {
     void Draw() {
         float x = tracks[3].value;
         float y = tracks[4].value;
-        spr.p->x = x;
-        spr.p->y = y;
+        spr.p->SetPos(x, y);
         fn_801A0004(spr.p);
         fn_8011F994(1);
         if (model != 0) {
@@ -575,11 +575,9 @@ struct clGetSumLine : clGetCoinLine {
         float y = tracks[4].value;
         clGetCoinLine::Draw();
         if (perfect) {
-            bar.p->x = x - lbl_806DB288;
-            bar.p->y = y - lbl_806DB2F4;
+            bar.p->SetPos(x - lbl_806DB288, y - lbl_806DB2F4);
         } else {
-            bar.p->x = x - lbl_806DB288;
-            bar.p->y = y - lbl_806DB2F8;
+            bar.p->SetPos(x - lbl_806DB288, y - lbl_806DB2F8);
         }
         fn_801A0004(bar.p);
         if (isJapanese() == 0) {
@@ -652,8 +650,7 @@ struct clGetCoinSum : FadeObj {
         }
         r[1].Show(lbl_806DB310 + x, lbl_806DB314 + y, lbl_806DB194);
         Layout();
-        spr.p->x = tracks[3].value;
-        spr.p->y = tracks[4].value;
+        spr.p->SetPos(tracks[3].value, tracks[4].value);
         Sprite_AdvanceAnim(spr.p, lbl_806DB280);
         if (timer < 240) {
             timer++;
@@ -755,8 +752,7 @@ struct ItemWnd {
         spr[1] = 0;
         spr[2] = 0;
         spr[0] = new Sprite(0x192, 1, 0);
-        spr[0]->x = lbl_806DB1E8;
-        spr[0]->y = lbl_806DB290;
+        spr[0]->SetPos(lbl_806DB1E8, lbl_806DB290);
         spr[0]->layer = 4;
         spr[0]->alpha = lbl_806DB190;
         label.resId = 0x1ECD;
@@ -849,10 +845,8 @@ struct NextWnd {
         spr[1]->alpha = lbl_806DB190;
         spr[0]->layer = 4;
         spr[1]->layer = 5;
-        spr[0]->x = lbl_806DB1E8;
-        spr[0]->y = lbl_806DB290;
-        spr[1]->x = lbl_806DB1E8;
-        spr[1]->y = lbl_806DB2AC;
+        spr[0]->SetPos(lbl_806DB1E8, lbl_806DB290);
+        spr[1]->SetPos(lbl_806DB1E8, lbl_806DB2AC);
         spr[1]->SetAnimParam(0x1931, 0x1ECD);
         spr[1]->SetAnimParam(0x1932, 0x1ECD);
         back.mode = 2;
@@ -1335,8 +1329,7 @@ void clCSSceneCoinMilage::StateLines() {
 
 clGetSumLine::clGetSumLine(int n, unsigned char p, float y)
     : clGetCoinLine(lbl_806DB220, n, y, 0), perfect(p), bar(new Sprite(0x140, 1, 0)) {
-    bar.p->x = lbl_806DB224;
-    bar.p->y = lbl_806DB228;
+    bar.p->SetPos(lbl_806DB224, lbl_806DB228);
     bar.p->layer = 1;
     fn_80121E10(&label);
     label.resId = 0x16D7;
@@ -1356,8 +1349,7 @@ clGetCoinLine::clGetCoinLine(const char *label, int n, float y, Model *m)
     flash = 0;
     tracks[4].Set(y, y, lbl_806DB1E0);
     tracks[3].Set(lbl_806DB23C, lbl_806DB21C, lbl_806DB1EC);
-    spr.p->x = lbl_806DB23C;
-    spr.p->y = y;
+    spr.p->SetPos(lbl_806DB23C, y);
     spr.p->layer = 1;
     TexMgr_SetTexture(&text, label);
     text.visible = 1;
@@ -1804,8 +1796,7 @@ void ItemWnd::ShowOther() {
                 spr[1] = 0;
             }
             spr[1] = new Sprite(0x21, 1, 0);
-            spr[1]->x = lbl_806DB1E8;
-            spr[1]->y = lbl_806DB290;
+            spr[1]->SetPos(lbl_806DB1E8, lbl_806DB290);
             spr[1]->layer = 6;
             spr[1]->alpha = lbl_806DB194;
         }
@@ -1904,8 +1895,7 @@ void ItemWnd::ShowTicket() {
             spr[1] = 0;
         }
         spr[1] = new Sprite(0x1B3, 1, 0);
-        spr[1]->x = lbl_806DB1E8;
-        spr[1]->y = lbl_806DB1A4;
+        spr[1]->SetPos(lbl_806DB1E8, lbl_806DB1A4);
         spr[1]->SetAnimParam(0xC3F, fn_80216908(fn_80216974(entry->id)));
         spr[1]->layer = 5;
         spr[1]->alpha = lbl_806DB190;
@@ -1982,8 +1972,7 @@ void ItemWnd::ShowItem() {
             spr[1] = 0;
         }
         spr[1] = new Sprite(0x19F, 1, 0);
-        spr[1]->x = lbl_806DB298;
-        spr[1]->y = lbl_806DB29C;
+        spr[1]->SetPos(lbl_806DB298, lbl_806DB29C);
         spr[1]->SetAnimParam(0x1E1D, rb);
         spr[1]->SetAnimParam(0x17A4, ra);
         spr[1]->SetAnimParam(0x13B9, Item_GetDescriptorField0(itemId, 0));
@@ -2139,8 +2128,7 @@ void ItemWnd::Open() {
                 spr[2] = 0;
             }
             spr[2] = new Sprite(0x14A, 1, 0);
-            spr[2]->x = lbl_806DB1E8;
-            spr[2]->y = lbl_806DB2AC;
+            spr[2]->SetPos(lbl_806DB1E8, lbl_806DB2AC);
             spr[2]->layer = 5;
             spr[2]->alpha = lbl_806DB190;
             spr[2]->SetAnimParam(0x1931, 0x1ECD);
@@ -2222,7 +2210,10 @@ clCSSceneCoinMilage::clCSSceneCoinMilage()
     AddCoinMilage(g_playerData, GetEarnedCoins());
     SetInput(1);
     ItemDisplay_GetOrCreate();
-    ItemDisplay_GetOrCreate()->mode = 2;
+    {
+        ItemDisplay *d = ItemDisplay_GetOrCreate();
+        d->mode = 2;
+    }
     fn_8013DBF8();
     lines[0] = 0;
     lines[1] = 0;
