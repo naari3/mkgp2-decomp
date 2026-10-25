@@ -1398,6 +1398,11 @@ game/NetDiag_PacketPage.c:
 	extabindex  start:0x80021020 end:0x8002102C
 	.text       start:0x80068D00 end:0x80069720
 
+game/Stats_Display_UI.cpp:
+	extab       start:0x80008130 end:0x80008138
+	extabindex  start:0x8002102C end:0x80021038
+	.text       start:0x80069720 end:0x80069AB0
+
 game/NetDiag_PacketRatioPage.c:
 	extab       start:0x80008138 end:0x80008140
 	extabindex  start:0x80021038 end:0x80021044

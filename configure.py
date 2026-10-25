@@ -524,6 +524,7 @@ config.libs = [
             Object(Matching, "game/NetDiag_CounterPage.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/NetDiag_QualityPage.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/NetDiag_PacketPage.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/Stats_Display_UI.cpp", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/Rand_RangeFloat.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/Rand_RangeFloatMax.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/ItemObjectManager_RenderImpl.c", extab_padding=b"\x00\x00"),
