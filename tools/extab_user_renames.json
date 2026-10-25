@@ -3629,5 +3629,11 @@
     "__dt__19ChallengeGoalCameraFv": "fn_80124C84",
     "__dt__8ItemSlotFv": "fn_8023E808",
     "__dt__3HUDFv": "fn_80254134"
+  },
+  "src/game/anon_80216568.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__7TextRowFv": "dtor_80217404",
+    "__ct__10TextSpriteFv": "TexMgr_Init"
   }
 }
