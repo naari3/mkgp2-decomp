@@ -4151,6 +4151,12 @@ game/ItemObject_Teresa_GrabAndArc_Sub.c:
 	extabindex  start:0x80023D14 end:0x80023D20
 	.text       start:0x800E40C8 end:0x800E4760
 
+game/ItemObject_Tick_Kind2b_Teresa.c:
+	extab       start:0x8000B55C end:0x8000B564
+	extabindex  start:0x80023D20 end:0x80023D2C
+	.text       start:0x800E4760 end:0x800E4F18
+	.data       start:0x80421008 end:0x80421030
+
 game/ItemObject_Tick_Kind2c_Horn.c:
 	extab       start:0x8000B564 end:0x8000B56C
 	extabindex  start:0x80023D2C end:0x80023D38
