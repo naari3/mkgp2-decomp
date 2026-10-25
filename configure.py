@@ -894,6 +894,7 @@ config.libs = [
             Object(Matching, "game/CardSave_Tick.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardSave_Tick_PollCleaningResult.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardSave_Tick_CaptureAndStart.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/CardPrintJob_TickFontTransfer.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CardPrintJob_KickFontTransfer.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Sci2Card_PrintReceipt.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Sci2Card_WriteTrackData.c", extra_cflags=["-Cpp_exceptions on"]),
