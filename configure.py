@@ -1930,6 +1930,13 @@ config.libs = [
             Object(Matching, "game/ZoneVisibility.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/ShadowCaster.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/mapeffect/mapeffect.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
+            Object(Matching, "game/mapobject/fn_8017A614.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/mapobject/fn_8017AA80.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/mapobject/fn_8017AB28.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/mapobject/fn_8017AC54.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/mapobject/fn_8017ACBC.c"),
+            Object(Matching, "game/mapobject/fn_8017ACF4.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/mapobject/fn_8017AD54.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             # g4-end
         ],
     },

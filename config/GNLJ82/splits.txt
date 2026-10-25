@@ -4902,6 +4902,39 @@ game/mapeffect/mapeffect.cpp:
 	.data       start:0x804914B8 end:0x804916C8
 	.sdata      start:0x806CFAD0 end:0x806CFB50
 
+game/mapobject/fn_8017A614.c:
+	extab       start:0x80011880 end:0x80011888
+	extabindex  start:0x800268C4 end:0x800268D0
+	.text       start:0x8017A614 end:0x8017A68C
+
+game/mapobject/fn_8017AA80.cpp:
+	extab       start:0x800118B0 end:0x800118B8
+	extabindex  start:0x800268DC end:0x800268E8
+	.text       start:0x8017AA80 end:0x8017AB28
+
+game/mapobject/fn_8017AB28.cpp:
+	extab       start:0x800118B8 end:0x800118C0
+	extabindex  start:0x800268E8 end:0x800268F4
+	.text       start:0x8017AB28 end:0x8017AC54
+
+game/mapobject/fn_8017AC54.cpp:
+	extab       start:0x800118C0 end:0x800118C8
+	extabindex  start:0x800268F4 end:0x80026900
+	.text       start:0x8017AC54 end:0x8017ACBC
+
+game/mapobject/fn_8017ACBC.c:
+	.text       start:0x8017ACBC end:0x8017ACF4
+
+game/mapobject/fn_8017ACF4.c:
+	extab       start:0x800118C8 end:0x800118D0
+	extabindex  start:0x80026900 end:0x8002690C
+	.text       start:0x8017ACF4 end:0x8017AD54
+
+game/mapobject/fn_8017AD54.cpp:
+	extab       start:0x800118D0 end:0x800118E0
+	extabindex  start:0x8002690C end:0x80026924
+	.text       start:0x8017AD54 end:0x8017B1C0
+
 game/fn_801805AC.c:
 	.text       start:0x801805AC end:0x801805B4
 
