@@ -142,15 +142,13 @@
     "__ct__10ItemBoxXYZFfff": "clItemBox_Ctor_XYZ",
     "__dt__10ItemBoxVecFv": "dtor_80036E40",
     "__ct__11BoxParticleFv": "fn_8005E788",
-    "__dt__11BoxParticleFv": "clItemBoxResponder_DebrisParticle_Dtor",
-    "__construct_array": "fn_80270D6C"
+    "__dt__11BoxParticleFv": "clItemBoxResponder_DebrisParticle_Dtor"
   },
   "src/game/clItemBox_Ctor_GroundSnap.c": {
     "__ct__13GroundItemBoxFff": "clItemBox_Ctor_GroundSnap",
     "__dt__14GroundPositionFv": "dtor_80036E40",
     "__ct__14GroundParticleFv": "fn_8005E788",
-    "__dt__14GroundParticleFv": "clItemBoxResponder_DebrisParticle_Dtor",
-    "__construct_array": "fn_80270D6C"
+    "__dt__14GroundParticleFv": "clItemBoxResponder_DebrisParticle_Dtor"
   },
   "src/game/clItemBox_FactoryCreate.c": {
     "extab_clItemBox_FactoryCreate": "@etb_80007C9C",
@@ -750,11 +748,9 @@
     "__dt__12EffectHandleFv": "fn_80173550",
     "__dt__9EffectObjFv": "fn_801F7CD8",
     "__dt__10EffectSlotFv": "dtor_80122120",
-    "__destroy_arr": "fn_80270CF4",
     "__ct__12EffectHandleFv": "fn_8017363C",
     "__ct__9EffectObjFPCc": "fn_801F7D50",
     "__ct__10EffectSlotFv": "fn_801F7E98",
-    "__construct_array": "fn_80270D6C",
     "__dt__12HomingMarkerFv": "fn_80173CC4",
     "__ct__12HomingMarkerFP6Driver": "fn_80173DB4"
   },
@@ -1210,8 +1206,7 @@
     "__vt__14ShadowAreaBase": "lbl_80411E10",
     "__ct__15ShadowAreaEntryFv": "ShadowAreaEntry_Ctor",
     "__dt__15ShadowAreaEntryFv": "dtor_800AA980",
-    "__dt__14ShadowAreaBaseFv": "dtor_800AB134",
-    "__construct_array": "fn_80270D6C"
+    "__dt__14ShadowAreaBaseFv": "dtor_800AB134"
   },
   "src/game/SpriteSlot_TickAnim.c": {
     "extab_SpriteSlot_TickAnim": "@etb_8000B284",
@@ -1627,8 +1622,7 @@
     "__ct__16InputCmdLifetimeFi": "InputCmd_Init",
     "__ct__19InputCmdOwnedSampleFv": "fn_8005B10C",
     "__nwa__FUl": "FUN_8003b120",
-    "__dla__FPv": "MemoryManager_Free",
-    "__construct_new_array": "fn_80270F20"
+    "__dla__FPv": "MemoryManager_Free"
   },
   "src/game/JvsInputLifetime.cpp": {
     "__dt__16JvsInputLifetimeFv": "JvsInput_DtorAndFree",
@@ -1641,7 +1635,7 @@
   "_shared": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__cvt_sll_flt": "__cvt_ll2flt"
+    "__dla__FPv": "MemoryManager_Free"
   },
   "src/game/fn_801B8918.cpp": {
     "__ct__9SpriteObjFiii": "Sprite_InitWithAnim"
@@ -1802,8 +1796,6 @@
     "__ct__8ListBaseFv": "DoublyLinkedList_Init",
     "erase__8ListBaseFQ28ListBase8iteratorQ28ListBase8iterator": "DoublyLinkedList_EraseRange",
     "insert__8ListBaseFQ28ListBase8iteratorRCP12PreviewModel": "DoublyLinkedList_PushBefore",
-    "__construct_array": "fn_80270D6C",
-    "__destroy_arr": "fn_80270CF4",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "extab_dtor_8013DCBC": "@etb_8000D538",
@@ -1871,8 +1863,6 @@
     "__dla__FPv": "MemoryManager_Free",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__construct_new_array": "fn_80270F20",
-    "__destroy_new_array": "fn_80270C78",
     "__ct__11TextManagerFv": "fn_80149214",
     "__dt__11TextManagerFv": "dtor_800869D0",
     "__ct__8FlowTaskFi": "fn_80204448",
@@ -1898,8 +1888,6 @@
     "__dla__FPv": "MemoryManager_Free",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__construct_new_array": "fn_80270F20",
-    "__destroy_new_array": "fn_80270C78",
     "__ct__11TextManagerFv": "fn_80149214",
     "__dt__11TextManagerFv": "dtor_800869D0",
     "__ct__8FlowTaskFi": "fn_80204448",
@@ -1936,8 +1924,6 @@
     "__dla__FPv": "MemoryManager_Free",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__construct_new_array": "fn_80270F20",
-    "__destroy_new_array": "fn_80270C78",
     "__ct__11TextManagerFv": "fn_80149214",
     "__dt__11TextManagerFv": "dtor_800869D0",
     "__ct__8FlowTaskFi": "fn_80204448",
@@ -1965,8 +1951,6 @@
     "__dla__FPv": "MemoryManager_Free",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__construct_new_array": "fn_80270F20",
-    "__destroy_new_array": "fn_80270C78",
     "__ct__11TextManagerFv": "fn_80149214",
     "__dt__11TextManagerFv": "dtor_800869D0",
     "__ct__8FlowTaskFi": "fn_80204448",
@@ -2002,8 +1986,6 @@
     "__dla__FPv": "MemoryManager_Free",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__construct_new_array": "fn_80270F20",
-    "__destroy_new_array": "fn_80270C78",
     "__ct__11TextManagerFv": "fn_80149214",
     "__dt__11TextManagerFv": "dtor_800869D0",
     "__ct__8FlowTaskFi": "fn_80204448",
@@ -2038,8 +2020,6 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__dynamic_cast": "fn_80271340",
-    "__construct_new_array": "fn_80270F20",
-    "__destroy_new_array": "fn_80270C78",
     "__ct__11TextManagerFv": "fn_80149214",
     "__dt__11TextManagerFv": "dtor_800869D0",
     "__ct__8FlowTaskFi": "fn_80204448",
@@ -2066,8 +2046,6 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__dynamic_cast": "fn_80271340",
-    "__construct_new_array": "fn_80270F20",
-    "__destroy_new_array": "fn_80270C78",
     "__ct__11TextManagerFv": "fn_80149214",
     "__dt__11TextManagerFv": "dtor_800869D0",
     "__ct__8FlowTaskFi": "fn_80204448",
@@ -2160,8 +2138,6 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__dynamic_cast": "fn_80271340",
-    "__construct_new_array": "fn_80270F20",
-    "__destroy_new_array": "fn_80270C78",
     "__ct__8FlowTaskFi": "fn_80204448",
     "__dt__8FlowTaskFv": "dtor_802043EC",
     "__ct__9FlowSceneFi": "fn_801FD41C",
@@ -2180,7 +2156,6 @@
   },
   "src/game/anon_80202BCC.cpp": {
     "__ct__16DoublyLinkedListFv": "DoublyLinkedList_Init",
-    "__destroy_new_array": "fn_80270C78",
     "__dt__7ResCtrlFv": "dtor_80082960",
     "__dt__8FlowTaskFv": "dtor_802043EC",
     "__dt__24VHolder<13FlowSceneList>Fv": "dtor_801F4B10",
@@ -2217,8 +2192,6 @@
     "__dla__FPv": "MemoryManager_Free",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__construct_new_array": "fn_80270F20",
-    "__destroy_new_array": "fn_80270C78",
     "__ct__11TextManagerFv": "fn_80149214",
     "__dt__11TextManagerFv": "dtor_800869D0",
     "__ct__8FlowTaskFi": "fn_80204448",
@@ -2254,7 +2227,6 @@
     "__nwa__FUl": "FUN_8003b120",
     "__ct__11TextManagerFv": "fn_80149214",
     "__dt__11TextManagerFv": "dtor_800869D0",
-    "__construct_new_array": "fn_80270F20",
     "__vt__12YesNoButtonR": "lbl_804EC51C",
     "__RTTI__11YesNoButton": "lbl_806D02B0",
     "Draw__11YesNoCursorFv": "fn_80204F38",

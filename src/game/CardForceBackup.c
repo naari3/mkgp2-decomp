@@ -1,5 +1,5 @@
 /* Complete assembly-grounded scalar snapshot; padding is not transferred. */
-extern void fn_80270C48(void *dst, const void *src, unsigned int size);
+extern void __copy(void *dst, const void *src, unsigned int size);
 extern void card_backup(void);
 
 /* Packed tail words at +1BA..+1CE are deliberately not aligned to four. */
@@ -224,8 +224,8 @@ void card_force_backup_now(void)
     dst->player.word09C = h_word09C;
     dst->player.word0A0 = h_word0A0;
     dst->player.word0A4 = h_word0A4;
-    fn_80270C48(dst->player.bytes0A8, src->bytes0A8, 0x79);
-    fn_80270C48(dst->player.bytes121, src->bytes121, 0x69);
+    __copy(dst->player.bytes0A8, src->bytes0A8, 0x79);
+    __copy(dst->player.bytes121, src->bytes121, 0x69);
     t_unlockIdx = src->unlockIdx;
     t_word190 = src->word190;
     t_word194 = src->word194;

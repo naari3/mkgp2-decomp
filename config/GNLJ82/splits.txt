@@ -5957,6 +5957,12 @@ TRK_MINNOW_DOLPHIN/dispatch.c:
 	.rodata     start:0x803F1628 end:0x803F1668
 	.data       start:0x804F4668 end:0x804F46D8
 
+TRK_MINNOW_DOLPHIN/msghndlr.c:
+	.text       start:0x8026C1D8 end:0x8026D1A8
+	.rodata     start:0x803F1668 end:0x803F1850
+	.data       start:0x804F46D8 end:0x804F4710
+	.bss        start:0x8067CB80 end:0x8067CB88
+
 TRK_MINNOW_DOLPHIN/mutex_TRK.c:
 	.text       start:0x8026D8DC end:0x8026D8F4
 
@@ -5971,6 +5977,11 @@ TRK_MINNOW_DOLPHIN/mem_TRK.c:
 
 TRK_MINNOW_DOLPHIN/mpc_7xx_603e.c:
 	.text       start:0x8026F4BC end:0x8026F82C
+
+TRK_MINNOW_DOLPHIN/dolphin_trk.c:
+	.text       start:0x8026F82C end:0x8026FB48
+	.data       start:0x804F4740 end:0x804F4780
+	.bss        start:0x8067D108 end:0x8067D110
 
 TRK_MINNOW_DOLPHIN/main_TRK.c:
 	.text       start:0x8026FB48 end:0x8026FBA0
@@ -6002,14 +6013,28 @@ TRK_MINNOW_DOLPHIN/MWTrace.c:
 TRK_MINNOW_DOLPHIN/MWCriticalSection_gc.cpp:
 	.text       start:0x80270AC8 end:0x80270B20
 
+Runtime.PPCEABI.H/__va_arg.c:
+	.text       start:0x80270B20 end:0x80270BE8
+
 Runtime.PPCEABI.H/global_destructor_chain.c:
 	.text       start:0x80270BE8 end:0x80270C48
 	.dtors      start:0x802E8988 end:0x802E898C
 
-game/fn_802712C8.c:
-	extab       start:0x8001F2A0 end:0x8001F2A8
-	extabindex  start:0x8002BB50 end:0x8002BB5C
-	.text       start:0x802712C8 end:0x802712E8
+Runtime.PPCEABI.H/CPlusLibPPC.cp:
+	.text       start:0x80270C48 end:0x80270C78
+
+Runtime.PPCEABI.H/NMWException.cpp:
+	extab       start:0x8001F240 end:0x8001F2A8
+	extabindex  start:0x8002BAF0 end:0x8002BB5C
+	.text       start:0x80270C78 end:0x802712E8
+	.sdata      start:0x806D0B60 end:0x806D0B68
+
+Runtime.PPCEABI.H/ptmf.c:
+	.text       start:0x802712E8 end:0x80271340
+
+Runtime.PPCEABI.H/runtime.c:
+	.text       start:0x8027160C end:0x80271D74
+	.rodata     start:0x803F1CC8 end:0x803F1CE0
 
 Runtime.PPCEABI.H/__init_cpp_exceptions.cpp:
 	.text       start:0x80271D74 end:0x80271DF0

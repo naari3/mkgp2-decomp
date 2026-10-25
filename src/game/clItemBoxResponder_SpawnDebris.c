@@ -7,7 +7,7 @@
 /* refine if the real prototype matters for header consumers. */
 extern void Alloc();
 extern void Saturate_Double();
-extern void fn_80270D6C();
+extern void __construct_array();
 extern void fn_802DCA04();
 
 /* --- extern decls: sda21-referenced data --- */
@@ -109,7 +109,7 @@ asm void clItemBoxResponder_SpawnDebris(void) { /* 0x8005E46C size:0x31C */
     addi r3, r31, 0x4
     addi r5, r5, clItemBoxResponder_DebrisParticle_Dtor@l
     li r7, 0xf
-    bl fn_80270D6C
+    bl __construct_array
     li r0, 0x0
     lfs f0, lbl_806D29A8(r2)
     stb r0, 0x0(r31)

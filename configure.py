@@ -629,7 +629,6 @@ config.libs = [
             Object(Matching, "game/fn_8014DD5C.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80141A70.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80089C30.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/fn_802712C8.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80255620.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8023D8F8.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8022CDE4.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -1925,16 +1924,23 @@ config.libs = [
             Object(Matching, "TRK_MINNOW_DOLPHIN/CircleBuffer.c"),
             Object(Matching, "TRK_MINNOW_DOLPHIN/MWTrace.c"),
             Object(Matching, "TRK_MINNOW_DOLPHIN/MWCriticalSection_gc.cpp"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/dolphin_trk.c"),
+            Object(Matching, "TRK_MINNOW_DOLPHIN/msghndlr.c"),
         ],
     },
     {
         "lib": "Runtime.PPCEABI.H",
         "mw_version": config.linker_version,
-        "cflags": cflags_runtime,
+        "cflags": [*cflags_runtime, "-i src/Runtime.PPCEABI.H/include"],
         "progress_category": "sdk",  # str | List[str]
         "objects": [
             Object(Matching, "Runtime.PPCEABI.H/global_destructor_chain.c"),
             Object(Matching, "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
+            Object(Matching, "Runtime.PPCEABI.H/__va_arg.c", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
+            Object(Matching, "Runtime.PPCEABI.H/CPlusLibPPC.cp", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
+            Object(Matching, "Runtime.PPCEABI.H/ptmf.c", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
+            Object(Matching, "Runtime.PPCEABI.H/runtime.c", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
+            Object(Matching, "Runtime.PPCEABI.H/NMWException.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on", "-inline deferred"], extab_padding=b""),
         ],
     },
 ]
