@@ -1000,6 +1000,15 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "__dt__4MenuFv": "fn_801805B4"
   },
+  "src/game/objview/fn_80187878.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__7ObjViewFv": "fn_80187878",
+    "__dt__7ObjBaseFv": "dtor_8016A270",
+    "__vt__7ObjBase": "lbl_80490FE0",
+    "__vt__7ObjView": "lbl_80495BE4"
+  },
   "src/game/miyazakiconsole/fn_801816AC.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
