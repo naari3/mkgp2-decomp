@@ -6849,6 +6849,11 @@ game/clFlowClass_Init.cpp:
 game/GetFrameIdxFromVisualIdx.c:
 	.text       start:0x801C3714 end:0x801C37E8
 
+game/fn_801C37E8.cpp:
+	extab       start:0x80013E9C end:0x80013EB4
+	extabindex  start:0x80027D58 end:0x80027D64
+	.text       start:0x801C37E8 end:0x801C393C
+
 game/clFlowChara_HandleConfirm.c:
 	extab       start:0x80013EB4 end:0x80013EBC
 	extabindex  start:0x80027D64 end:0x80027D70

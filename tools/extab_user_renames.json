@@ -2161,6 +2161,11 @@
     "__dt__13Scene801FAA18Fv": "fn_801FAA18",
     "__dt__12Base801FAA18Fv": "dtor_802043EC"
   },
+  "src/game/fn_801C37E8.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim"
+  },
   "src/game/fn_801D919C.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
