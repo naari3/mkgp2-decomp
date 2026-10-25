@@ -53,7 +53,7 @@ void Vec3_Subtract(Vec3f *, Vec3f *, Vec3f *);
 void fn_8025E2AC(Vec3f *, Vec3f *, float);
 void fn_8025E264(Vec3f *, Vec3f *, Vec3f *);
 float LookupSin(float);
-double Atan2(double, double);
+double atan2(double, double);
 void Object_DtorWithGXSync(void *, int);
 void MemoryManager_Free(void *);
 void MemoryManager_TimedFree(void *);
@@ -89,7 +89,7 @@ void fn_8016CEA0(ItemBoxSet *set) {
             fn_8025E2AC(&d, &it->pos, it->t);
             fn_8025E264(&it->start, &it->pos, &it->pos);
             it->pos.y += (it->peakY - it->pos.y) * LookupSin(3.1415927f * it->t);
-            it->rotY = 1.5707964f - (float)Atan2(d.z, d.x);
+            it->rotY = 1.5707964f - (float)atan2(d.z, d.x);
             it->rotX = 3.1415927f * LookupSin(1.5707964f * it->t) + 1.5707964f;
             it->t += 0.008333334f;
         }
