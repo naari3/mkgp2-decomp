@@ -6288,6 +6288,9 @@ dolphin/dvd/fstload.c:
 	.sdata      start:0x806D0C48 end:0x806D0C58
 	.sbss       start:0x806D1ED0 end:0x806D1EE0
 
+musyx/macro_lookup.c:
+	.text       start:0x802A8E3C end:0x802A8ED8
+
 sysdolphin/baselib/dobj.c:
 	.text       start:0x802BD07C end:0x802BD0FC
 

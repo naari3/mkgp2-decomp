@@ -1937,6 +1937,16 @@ config.libs = [
             Object(Matching, "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
         ],
     },
+    {
+        # MusyX sound library (hand-decompiled; built like the game code)
+        "lib": "musyx",
+        "mw_version": "GC/1.3.2",
+        "cflags": cflags_base,
+        "progress_category": "sdk",
+        "objects": [
+            Object(Matching, "musyx/macro_lookup.c"),
+        ],
+    },
 ]
 
 
