@@ -50,6 +50,7 @@ struct CardFlowMgr : CardFlowMgrBase {
         field18C = 0x2D;
         field190 = 0x32;
     }
+    virtual ~CardFlowMgr(); /* fn_801FE4D0, defined in dtor_801FE870.cpp */
     virtual void _key();
 };
 
