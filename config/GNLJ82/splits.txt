@@ -6860,6 +6860,11 @@ game/fn_801B11B8.c:
 game/fn_801B129C.c:
 	.text       start:0x801B129C end:0x801B12A0
 
+game/fn_801B12A0.c:
+	extab       start:0x80012B18 end:0x80012B20
+	extabindex  start:0x8002774C end:0x80027758
+	.text       start:0x801B12A0 end:0x801B13B0
+
 game/fn_801B13B0.c:
 	.text       start:0x801B13B0 end:0x801B14B8
 
@@ -7286,6 +7291,11 @@ game/clFlowKart_Init.c:
 
 game/fn_801D895C.c:
 	.text       start:0x801D895C end:0x801D898C
+
+game/fn_801D898C.c:
+	extab       start:0x8001549C end:0x800154A4
+	extabindex  start:0x80028184 end:0x80028190
+	.text       start:0x801D898C end:0x801D8A98
 
 game/fn_801D8A98.c:
 	.text       start:0x801D8A98 end:0x801D8AB4
