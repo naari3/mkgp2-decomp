@@ -142,9 +142,7 @@ struct FaceHolder {
     FaceSprite *p;
     FaceHolder(FaceSprite *q) : p(q) {}
     ~FaceHolder() throw() {
-        if (p) {
-            delete p;
-        }
+        delete p;
     }
 };
 

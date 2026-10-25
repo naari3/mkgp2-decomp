@@ -305,11 +305,9 @@ void YesNoButton::Animate() {
 
 /* Out-of-line deleting dtor of the abstract YesNoButton (vtable lbl_804EC54C). */
 extern "C" YesNoButton *dtor_802070EC(YesNoButton *self, short flag) {
-    if (self) {
-        self->~YesNoButton();
-        if (flag > 0) {
-            operator delete(self);
-        }
+    self->~YesNoButton();
+    if (flag > 0) {
+        operator delete(self);
     }
     return self;
 }
