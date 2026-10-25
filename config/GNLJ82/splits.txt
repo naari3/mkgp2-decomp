@@ -7585,6 +7585,12 @@ game/fn_801BA9A0.cpp:
 	extabindex  start:0x80027A04 end:0x80027A10
 	.text       start:0x801BA9A0 end:0x801BAA88
 
+game/fn_801BAA88.cpp:
+	extab       start:0x800131AC end:0x80013D9C
+	extabindex  start:0x80027A10 end:0x80027D10
+	.text       start:0x801BAA88 end:0x801C1F88
+	.ctors      start:0x802E8918 end:0x802E891C
+
 game/fn_801C2238.c:
 	extab       start:0x80013DA4 end:0x80013DAC
 	extabindex  start:0x80027D1C end:0x80027D28
