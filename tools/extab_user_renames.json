@@ -754,6 +754,15 @@
     "__dt__12HomingMarkerFv": "fn_80173CC4",
     "__ct__12HomingMarkerFP6Driver": "fn_80173DB4"
   },
+  "src/game/ShadowCaster.cpp": {
+    "__dt__5ProxyFv": "fn_80174CF4",
+    "__dt__6CasterFv": "fn_80174C30",
+    "__ct__6CasterFP4JObjUc": "fn_80174C8C",
+    "__ct__9ShadowSetFv": "fn_8018A2E8",
+    "__dt__9ShadowSetFv": "dtor_8018A0A8",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
