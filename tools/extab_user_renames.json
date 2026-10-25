@@ -3882,5 +3882,23 @@
   "src/game/SuikaBallObj_Init.cpp": {
     "__nw__FUl": "Alloc",
     "__ct__11SuikaNormalFPvi": "clNormal3D_Construct"
+  },
+  "src/game/ChallengeDemoShell.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__8DemoRootFv": "GameMode_BaseInit",
+    "__dt__8DemoRootFv": "dtor_8002CDF4",
+    "__vt__8DemoBase": "lbl_80419F0C",
+    "__ct__13DemoSceneBaseFPCc": "Scene3D_Init",
+    "__vt__9DemoScene": "lbl_80419EF8",
+    "__ct__10DemoNormalFPCci": "clNormal3D_Construct",
+    "__ct__14DemoDriverBaseFiiPA4_fiii": "KartDriver_New_Full",
+    "__ct__11DemoTornadoFUcP10DemoDriveriUcfff": "TornadoEffect_Ctor",
+    "__dt__8DemoBaseFv": "clCGameDemo_Dtor",
+    "Draw__14ShellDemoSceneFv": "fn_80124F2C",
+    "Update__14ShellDemoSceneFv": "fn_801250E8",
+    "__dt__14ShellDemoSceneFv": "fn_80125558",
+    "__ct__14ShellDemoSceneFv": "fn_80125690",
+    "__vt__14ShellDemoScene": "lbl_8048E220"
   }
 }

@@ -4920,6 +4920,11 @@ game/ChallengeGoalCamera_Init.cpp:
 	extabindex  start:0x800248B4 end:0x800248C0
 	.text       start:0x80124CF4 end:0x80124DF8
 
+game/ChallengeDemoShell.cpp:
+	extab       start:0x8000BF68 end:0x8000C044
+	extabindex  start:0x800248CC end:0x800248FC
+	.text       start:0x80124F2C end:0x80125948
+
 game/BiribiriLand.c:
 	extab       start:0x8000CE64 end:0x8000D014
 	extabindex  start:0x80024B6C end:0x80024BA8
