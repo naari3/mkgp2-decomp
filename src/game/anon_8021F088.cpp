@@ -650,8 +650,7 @@ struct clGetCoinSum : FadeObj {
         }
         r[1].Show(lbl_806DB310 + x, lbl_806DB314 + y, lbl_806DB194);
         Layout();
-        spr.p->x = tracks[3].value;
-        spr.p->y = tracks[4].value;
+        spr.p->SetPos(tracks[3].value, tracks[4].value);
         Sprite_AdvanceAnim(spr.p, lbl_806DB280);
         if (timer < 240) {
             timer++;
@@ -753,8 +752,7 @@ struct ItemWnd {
         spr[1] = 0;
         spr[2] = 0;
         spr[0] = new Sprite(0x192, 1, 0);
-        spr[0]->x = lbl_806DB1E8;
-        spr[0]->y = lbl_806DB290;
+        spr[0]->SetPos(lbl_806DB1E8, lbl_806DB290);
         spr[0]->layer = 4;
         spr[0]->alpha = lbl_806DB190;
         label.resId = 0x1ECD;
@@ -1798,8 +1796,7 @@ void ItemWnd::ShowOther() {
                 spr[1] = 0;
             }
             spr[1] = new Sprite(0x21, 1, 0);
-            spr[1]->x = lbl_806DB1E8;
-            spr[1]->y = lbl_806DB290;
+            spr[1]->SetPos(lbl_806DB1E8, lbl_806DB290);
             spr[1]->layer = 6;
             spr[1]->alpha = lbl_806DB194;
         }
@@ -1898,8 +1895,7 @@ void ItemWnd::ShowTicket() {
             spr[1] = 0;
         }
         spr[1] = new Sprite(0x1B3, 1, 0);
-        spr[1]->x = lbl_806DB1E8;
-        spr[1]->y = lbl_806DB1A4;
+        spr[1]->SetPos(lbl_806DB1E8, lbl_806DB1A4);
         spr[1]->SetAnimParam(0xC3F, fn_80216908(fn_80216974(entry->id)));
         spr[1]->layer = 5;
         spr[1]->alpha = lbl_806DB190;
@@ -1976,8 +1972,7 @@ void ItemWnd::ShowItem() {
             spr[1] = 0;
         }
         spr[1] = new Sprite(0x19F, 1, 0);
-        spr[1]->x = lbl_806DB298;
-        spr[1]->y = lbl_806DB29C;
+        spr[1]->SetPos(lbl_806DB298, lbl_806DB29C);
         spr[1]->SetAnimParam(0x1E1D, rb);
         spr[1]->SetAnimParam(0x17A4, ra);
         spr[1]->SetAnimParam(0x13B9, Item_GetDescriptorField0(itemId, 0));
@@ -2133,8 +2128,7 @@ void ItemWnd::Open() {
                 spr[2] = 0;
             }
             spr[2] = new Sprite(0x14A, 1, 0);
-            spr[2]->x = lbl_806DB1E8;
-            spr[2]->y = lbl_806DB2AC;
+            spr[2]->SetPos(lbl_806DB1E8, lbl_806DB2AC);
             spr[2]->layer = 5;
             spr[2]->alpha = lbl_806DB190;
             spr[2]->SetAnimParam(0x1931, 0x1ECD);
