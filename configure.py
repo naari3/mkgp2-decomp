@@ -1311,7 +1311,7 @@ config.libs = [
             Object(Matching, "game/NokoNoko_Update.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/NokoNoko_InitEntity.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/NokoNoko_FindNearest.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/NokoNoko_CheckHitAndKill.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/NokoNoko_CheckHitAndKill.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/NokoNoko_Render.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/NokoNoko_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowChara_HandleConfirm.c", extra_cflags=["-Cpp_exceptions on"]),
