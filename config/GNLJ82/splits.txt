@@ -4810,6 +4810,11 @@ game/fn_8011C20C.c:
 	extabindex  start:0x8002453C end:0x80024548
 	.text       start:0x8011C20C end:0x8011C5DC
 
+game/fn_8011C5DC.c:
+	extab       start:0x8000BACC end:0x8000BAD4
+	extabindex  start:0x80024548 end:0x80024554
+	.text       start:0x8011C5DC end:0x8011CC34
+
 game/fn_8011CC34.c:
 	extab       start:0x8000BAD4 end:0x8000BADC
 	extabindex  start:0x80024554 end:0x80024560
