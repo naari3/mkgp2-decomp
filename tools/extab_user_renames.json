@@ -1633,6 +1633,22 @@
   "src/game/SpriteSlot_InitLoop.c": {
     "__ct__12LoopNormal3DFPvi": "clNormal3D_Construct"
   },
+  "src/game/VSModeIntro.cpp": {
+    "__dt__18clGameRuleSelectorFv": "VSModeIntro_Dtor",
+    "Draw__18clGameRuleSelectorFv": "fn_800A5608",
+    "Update__18clGameRuleSelectorFv": "DebugStageSelect_UpdateInput",
+    "__vt__18clGameRuleSelector": "lbl_8040F154",
+    "__RTTI__18clGameRuleSelector": "lbl_806CF1B8",
+    "__RTTI__11clJobRunner": "lbl_806CF1B0",
+    "__ct__11clJobRunnerFv": "GameMode_BaseInit",
+    "__dt__11clJobRunnerFv": "dtor_8002CDF4",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/HitMessageOverlay_FrameUpdate.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
   "src/game/HitMessageOverlay_Init.c": {
     "extab_TweenInterp_Dtor": "@etb_8000A138",
     "extab_HitMessageOverlay_Init": "@etb_8000A140",

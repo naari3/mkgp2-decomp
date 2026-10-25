@@ -790,7 +790,6 @@ config.libs = [
             Object(Matching, "game/fn_8016FC70.c"),
             Object(Matching, "game/fn_8014640C.c"),
             Object(Matching, "game/fn_800D748C.c"),
-            Object(Matching, "game/fn_800A5608.c"),
             Object(Matching, "game/CarObjects_FindByEventType.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/ItemSpawner_TimedRemapAndSpawn.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ISESlot_TickIfActiveNotBattle6.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -993,8 +992,7 @@ config.libs = [
             Object(Matching, "game/KartDriverArray_StaticCtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ISE_ScaleColumnDirectionByMagnitude.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/Unknown_DeleteIfFlag_800a5188.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(Matching, "game/VSModeIntro_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(Matching, "game/VSModeIntro_Ctor.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/VSModeIntro.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr", "-inline deferred"]),  #g2
             Object(Matching, "game/TitleTracker_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/WarpZone_VtableTrim.c"),  #g2
             Object(Matching, "game/ShadowAreaMgr_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -1220,6 +1218,7 @@ config.libs = [
             Object(NonMatching, "game/EffectVfx29_30_Item4SubFlame_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(NonMatching, "game/EffectVfx55_HornBlastTrio_Tick.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(NonMatching, "game/EffectVfx10_KartTrail_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/HitMessageOverlay_FrameUpdate.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),  #g2
             Object(Matching, "game/ItemObject_WriteVectors.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemTracker.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowItem.c", extab_padding=b"\xc7\x02" * 6, extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
