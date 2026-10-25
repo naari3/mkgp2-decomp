@@ -1521,7 +1521,49 @@
   },
   "_shared": {
     "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__div2i": "fn_80271884",
+    "__cvt_sll_flt": "__cvt_ll2flt"
+  },
+  "src/game/fn_801B8918.cpp": {
+    "__ct__9SpriteObjFiii": "Sprite_InitWithAnim"
+  },
+  "src/game/fn_801DAAA4.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/dtor_801CCA30.cpp": {
+    "__dt__14Holder801CCA30Fv": "dtor_801CCA30",
+    "__dt__13Owned801CCA30Fv": "fn_8023CFE0"
+  },
+  "src/game/dtor_801DC460.cpp": {
+    "__dt__14Holder801DC460Fv": "dtor_801DC460",
+    "__dt__13Owned801DC460Fv": "PathCursor_Free"
+  },
+  "src/game/dtor_801E89E8.cpp": {
+    "__dt__14Holder801E89E8Fv": "dtor_801E89E8",
+    "__dt__13Owned801E89E8Fv": "fn_801DEE38"
+  },
+  "src/game/dtor_801E8A64.cpp": {
+    "__dt__14Holder801E8A64Fv": "dtor_801E8A64",
+    "__dt__13Owned801E8A64Fv": "fn_801DF774"
+  },
+  "src/game/dtor_801E8AE0.cpp": {
+    "__dt__14Holder801E8AE0Fv": "dtor_801E8AE0"
+  },
+  "src/game/dtor_801E8B70.cpp": {
+    "__dt__14Holder801E8B70Fv": "dtor_801E8B70"
+  },
+  "src/game/dtor_801E8C00.cpp": {
+    "__dt__14Holder801E8C00Fv": "dtor_801E8C00",
+    "__dt__13Owned801E8C00Fv": "dtor_80209180"
+  },
+  "src/game/dtor_801F0B58.cpp": {
+    "__dt__14Holder801F0B58Fv": "dtor_801F0B58",
+    "__dt__13Owned801F0B58Fv": "fn_801DC29C"
+  },
+  "src/game/dtor_801F2724.cpp": {
+    "__dt__14Holder801F2724Fv": "dtor_801F2724"
   },
   "src/game/MiniGameBase.cpp": {
     "__dt__7MBOwnerFv": "dtor_80122FD8",
