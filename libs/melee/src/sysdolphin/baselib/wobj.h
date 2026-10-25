@@ -26,6 +26,8 @@ struct HSD_WObjDesc {
 struct HSD_WObjInfo {
     HSD_ObjInfo parent;
     int (*load)(HSD_WObj* wobj, HSD_WObjDesc* desc);
+    // mkgp2: anim update callback slot at 0x40.
+    void (*update)(void* obj, enum_t type, HSD_ObjData* val);
 };
 
 struct HSD_WObjAnim {
