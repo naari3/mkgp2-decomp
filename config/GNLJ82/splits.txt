@@ -511,6 +511,11 @@ game/SceneRender.c:
 	extabindex  start:0x8001FBC8 end:0x8001FC04
 	.text       start:0x8003A71C end:0x8003AACC
 
+game/ClRomTable_PurgeAll.c:
+	extab       start:0x80005F6C end:0x80005F74
+	extabindex  start:0x8001FC10 end:0x8001FC1C
+	.text       start:0x8003AC84 end:0x8003AD4C
+
 sound/SoundChannels.c:
 	.text       start:0x8003AD4C end:0x8003ADFC
 
@@ -785,6 +790,12 @@ game/TrampolineTo_801ba110.c:
 	extab       start:0x80006848 end:0x80006850
 	extabindex  start:0x800200D8 end:0x800200E4
 	.text       start:0x8004893C end:0x8004895C
+
+game/AcError_LogIfError.c:
+	extab       start:0x80006850 end:0x80006858
+	extabindex  start:0x800200E4 end:0x800200F0
+	.text       start:0x8004895C end:0x80048BEC
+	.data       start:0x803F74A8 end:0x803F75D0
 
 game/NamCam_LoadImage.c:
 	extab       start:0x80006858 end:0x80006860
@@ -1088,10 +1099,20 @@ game/EffectSteering.c:
 	.text       start:0x8005B288 end:0x8005C51C
 	.data       start:0x803F99E0 end:0x803F9B48
 
+game/EffectSteering_Dtor.cpp:
+	extab       start:0x800077E4 end:0x8000792C
+	extabindex  start:0x80020A50 end:0x80020ABC
+	.text       start:0x8005C51C end:0x8005CA64
+
 game/EffectSteeringCtor.cpp:
 	extab       start:0x8000792C end:0x800079DC
 	extabindex  start:0x80020ABC end:0x80020AC8
 	.text       start:0x8005CA64 end:0x8005CCBC
+
+game/EffectSteering_Actions.cpp:
+	extab       start:0x800079DC end:0x80007B4C
+	extabindex  start:0x80020AC8 end:0x80020BA0
+	.text       start:0x8005CCBC end:0x8005D954
 
 game/clItemBoxResponder_DebrisArray_Dtor.c:
 	extab       start:0x80007B4C end:0x80007B54
@@ -1191,6 +1212,11 @@ game/clItemBox_FactoryCreate.c:
 	extab       start:0x80007C9C end:0x80007CC4
 	extabindex  start:0x80020C84 end:0x80020C90
 	.text       start:0x8005F5D8 end:0x8005F65C
+
+game/clItemBoxManager.cpp:
+	extab       start:0x80007CC4 end:0x80007DA8
+	extabindex  start:0x80020C90 end:0x80020D38
+	.text       start:0x8005F65C end:0x8005FFBC
 
 game/clItemBoxResponder.c:
 	extab       start:0x80007DA8 end:0x80007DB0
@@ -1373,6 +1399,11 @@ game/GameSetting.c:
 	extab       start:0x80008218 end:0x80008230
 	extabindex  start:0x80021158 end:0x8002117C
 	.text       start:0x80072074 end:0x80073878
+
+game/GameTestTopMenu_Page.cpp:
+	extab       start:0x80008230 end:0x80008238
+	extabindex  start:0x8002117C end:0x80021188
+	.text       start:0x80073878 end:0x80073B00
 
 game/ServiceMenu_Page.c:
 	extab       start:0x80008238 end:0x800082A0

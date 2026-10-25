@@ -1886,6 +1886,28 @@
     "@33": "jumptable_803F99E0",
     "@162": "jumptable_803F9A80"
   },
+  "src/game/EffectSteering_Dtor.cpp": {
+    "__dt__6ESCtorFv": "EffectSteering_Dtor",
+    "__dt__5ESSclFv": "ActionLock_Dtor",
+    "__dt__5ESShaFv": "ActionVibrate_Dtor",
+    "__dt__5ESSplFv": "ActionViscosity_Dtor",
+    "__dt__5ESVisFv": "ActionSplit_Dtor",
+    "__dt__5ESVibFv": "ActionShake_Dtor",
+    "__dt__5ESLckFv": "ActionInputViscosity_Dtor",
+    "__dt__5ESRngFv": "ActionScale_Dtor",
+    "__dt__5ESDlyFv": "ActionDelay_Dtor",
+    "__vt__6ESBase": "lbl_803F9C28",
+    "__vt__5ESScl": "lbl_803F9C48",
+    "__vt__5ESSha": "lbl_803F9C14",
+    "__vt__5ESSpl": "lbl_803F9BF4",
+    "__vt__5ESVis": "lbl_803F9BD4",
+    "__vt__5ESVib": "lbl_803F9BB4",
+    "__vt__5ESLck": "lbl_803F9B94",
+    "__vt__5ESRng": "lbl_803F9B74",
+    "__vt__5ESDly": "lbl_803F9B54",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dla__FPv": "MemoryManager_Free"
+  },
   "src/game/EffectSteeringCtor.cpp": {
     "__ct__6ESCtorFPvUc": "EffectSteering_Ctor",
     "__dt__6ESBaseFv": "dtor_8005CCBC",
@@ -1906,6 +1928,18 @@
     "__dt__6ESOwn6Fv": "dtor_8005D5F4",
     "__dt__6ESOwn7Fv": "dtor_8005D564",
     "__nwa__FUl": "FUN_8003b120"
+  },
+  "src/game/EffectSteering_Actions.cpp": {
+    "__dt__6ESBaseFv": "dtor_8005CCBC",
+    "__vt__6ESBase": "lbl_803F9C28",
+    "__dt__6ESOwn7Fv": "dtor_8005D564",
+    "__dt__6ESOwn6Fv": "dtor_8005D5F4",
+    "__dt__6ESOwn5Fv": "dtor_8005D684",
+    "__dt__6ESOwn4Fv": "dtor_8005D714",
+    "__dt__6ESOwn3Fv": "dtor_8005D7A4",
+    "__dt__6ESOwn2Fv": "dtor_8005D834",
+    "__dt__6ESOwn1Fv": "dtor_8005D8C4",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/card.c": {
     "extab_card_backup": "@etb_80008300",
@@ -2183,6 +2217,20 @@
   "src/game/clItemBoxManager_Assets.cpp": {
     "__ct__8Normal3DFPvi": "clNormal3D_Construct",
     "__ct__9GXChannelFPvPvii": "GXChannel_Init"
+  },
+  "src/game/clItemBoxManager.cpp": {
+    "__dt__16clItemBoxManagerFv": "clItemBoxManager_Dtor",
+    "__dt__7BoxListFv": "dtor_8005F778",
+    "__dt__13ResponderListFv": "dtor_8005F7F0",
+    "remove_if<28binder2nd<12equal_to<Pv>,Pv>>__12ListImpl<Pv>F28binder2nd<12equal_to<Pv>,Pv>": "DoublyLinkedList_RemoveByKey",
+    "erase__12ListImpl<Pv>FRC12ListIter<Pv>RC12ListIter<Pv>": "DoublyLinkedList_EraseRange",
+    "insert__12ListImpl<Pv>FRC12ListIter<Pv>RCPv": "DoublyLinkedList_PushBefore",
+    "__ct__12ListImpl<Pv>Fv": "DoublyLinkedList_Init",
+    "__dt__20clItemBoxManagerBaseFv": "dtor_8005FF74",
+    "__vt__16clItemBoxManager": "lbl_803F9CE4",
+    "__vt__20clItemBoxManagerBase": "lbl_803F9CF0",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/clItemBoxManager_StepTable.cpp": {
     "__sinit_clItemBoxManager_StepTable_cpp": "clItemBoxManager_InitStateTable"
