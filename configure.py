@@ -1285,6 +1285,7 @@ config.libs = [
             Object(Matching, "game/DMAChannelManager_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
             Object(Matching, "game/ItemObjectManager_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/InputObj.c"),
+            Object(NonMatching, "game/InputObj_ReadRawInput.c"),
             Object(Matching, "game/JvsInput_Calibration.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/JvsInputReset.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/JvsInput_TickPoll.c", extra_cflags=["-Cpp_exceptions on"]),

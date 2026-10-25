@@ -436,6 +436,11 @@ game/InputMgr.c:
 game/InputObj.c:
 	.text       start:0x80039154 end:0x800391B4
 
+game/InputObj_ReadRawInput.c:
+	extab       start:0x80005E28 end:0x80005E30
+	extabindex  start:0x8001FA78 end:0x8001FA84
+	.text       start:0x800391B4 end:0x8003951C
+
 game/JvsInput_Calibration.c:
 	extab       start:0x80005E30 end:0x80005E48
 	extabindex  start:0x8001FA84 end:0x8001FAA8
