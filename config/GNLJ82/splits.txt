@@ -1429,6 +1429,11 @@ game/OperationTime_Page.cpp:
 	extabindex  start:0x80021044 end:0x80021050
 	.text       start:0x8006A160 end:0x8006A500
 
+game/ClockSetting_Page.cpp:
+	extab       start:0x80008148 end:0x80008150
+	extabindex  start:0x80021050 end:0x8002105C
+	.text       start:0x8006A500 end:0x8006AA84
+
 game/CabinetSetting_Page.cpp:
 	extab       start:0x80008150 end:0x80008158
 	extabindex  start:0x8002105C end:0x80021068

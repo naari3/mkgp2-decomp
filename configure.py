@@ -1566,6 +1566,7 @@ config.libs = [
             Object(Matching, "game/CardTaskManager_Tick.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/NetDiag_PacketRatioPage.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/OperationTime_Page.cpp"),
+            Object(Matching, "game/ClockSetting_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/CabinetSetting_Page.cpp"),
             Object(Matching, "game/CoinSystem_RemoveCoins.c"),
             Object(Matching, "game/DVDLoad_Stats.c"),
