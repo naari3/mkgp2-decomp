@@ -8822,6 +8822,11 @@ game/anon_80226670.cpp:
 	extabindex  start:0x8002A68C end:0x8002A6BC
 	.text       start:0x80226670 end:0x80226954
 
+game/DNBress.cpp:
+	extab       start:0x8001BA88 end:0x8001BB70
+	extabindex  start:0x8002A6BC end:0x8002A710
+	.text       start:0x80226954 end:0x80227FA4
+
 game/fn_8022CDE4.c:
 	extab       start:0x8001BFE0 end:0x8001BFE8
 	extabindex  start:0x8002A8CC end:0x8002A8D8
