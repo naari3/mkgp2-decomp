@@ -2302,6 +2302,12 @@
     "__ct__8Normal3DFPvi": "clNormal3D_Construct",
     "__ct__18BananaPositionDataFi": "BananaPositionData_Init"
   },
+  "src/game/FinalLapBanner_Init.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__8Normal3DFPvi": "clNormal3D_Construct",
+    "__ct__14FinalLapBannerFPv": "FinalLapBanner_Init"
+  },
   "src/game/clItemBoxManager_Assets.cpp": {
     "__ct__8Normal3DFPvi": "clNormal3D_Construct",
     "__ct__9GXChannelFPvPvii": "GXChannel_Init"

@@ -1947,6 +1947,11 @@ game/LapBannerScene.c:
 	extabindex  start:0x80021A04 end:0x80021A34
 	.text       start:0x800882B8 end:0x80088700
 
+game/FinalLapBanner_Init.cpp:
+	extab       start:0x80008EF4 end:0x80008F1C
+	extabindex  start:0x80021A34 end:0x80021A40
+	.text       start:0x80088700 end:0x80088880
+
 util/bitpack.c:
 	extab       start:0x80008F24 end:0x80008F34
 	extabindex  start:0x80021A4C end:0x80021A64
