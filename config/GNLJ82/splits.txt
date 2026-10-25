@@ -1055,6 +1055,11 @@ game/KartAudioChannel.c:
 	extabindex  start:0x800208AC end:0x800208B8
 	.text       start:0x80058EA4 end:0x80058F5C
 
+game/SoundVolumePan_Update.c:
+	extab       start:0x800076C0 end:0x800076C8
+	extabindex  start:0x800208B8 end:0x800208C4
+	.text       start:0x80058F5C end:0x800594D4
+
 sound/SoundObj_PlaySE_Direct.c:
 	extab       start:0x800076C8 end:0x800076D0
 	extabindex  start:0x800208C4 end:0x800208D0
