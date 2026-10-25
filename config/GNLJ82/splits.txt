@@ -5609,10 +5609,50 @@ game/LookupSin.c:
 	extabindex  start:0x80026CC0 end:0x80026CCC
 	.text       start:0x80186928 end:0x80186960
 
+game/miyazakishare/fn_80186960.c:
+	extab       start:0x80011C28 end:0x80011C30
+	extabindex  start:0x80026CCC end:0x80026CD8
+	.text       start:0x80186960 end:0x80186998
+
 game/LUT_Sin12Bit.c:
 	extab       start:0x80011C30 end:0x80011C38
 	extabindex  start:0x80026CD8 end:0x80026CE4
 	.text       start:0x80186998 end:0x801869C8
+
+game/objview/fn_80187370.c:
+	extab       start:0x80011C48 end:0x80011C50
+	extabindex  start:0x80026CFC end:0x80026D08
+	.text       start:0x80187370 end:0x80187410
+
+game/objview/fn_80187754.c:
+	extab       start:0x80011C84 end:0x80011C8C
+	extabindex  start:0x80026D14 end:0x80026D20
+	.text       start:0x80187754 end:0x80187784
+
+game/objview/fn_80187784.c:
+	extab       start:0x80011C8C end:0x80011C94
+	extabindex  start:0x80026D20 end:0x80026D2C
+	.text       start:0x80187784 end:0x801877E8
+
+game/objview/fn_801877E8.c:
+	extab       start:0x80011C94 end:0x80011C9C
+	extabindex  start:0x80026D2C end:0x80026D38
+	.text       start:0x801877E8 end:0x80187878
+
+game/objview/fn_80187878.cpp:
+	extab       start:0x80011C9C end:0x80011CD0
+	extabindex  start:0x80026D38 end:0x80026D44
+	.text       start:0x80187878 end:0x8018791C
+
+game/objview/fn_8018791C.c:
+	extab       start:0x80011CD0 end:0x80011CD8
+	extabindex  start:0x80026D44 end:0x80026D50
+	.text       start:0x8018791C end:0x801879E4
+
+game/objview/fn_80187B54.c:
+	extab       start:0x80011CE0 end:0x80011CE8
+	extabindex  start:0x80026D5C end:0x80026D68
+	.text       start:0x80187B54 end:0x80187BF4
 
 game/NokoNoko_Update.c:
 	extab       start:0x80011D1C end:0x80011D24
@@ -5647,10 +5687,71 @@ game/NokoNoko.c:
 	extabindex  start:0x80026DB0 end:0x80026DBC
 	.text       start:0x80188D0C end:0x80188DA8
 
+game/nokonoko/fn_80188DA8.c:
+	extab       start:0x80011D4C end:0x80011D54
+	extabindex  start:0x80026DBC end:0x80026DC8
+	.text       start:0x80188DA8 end:0x80188E9C
+
 game/NokoNoko_Init.c:
 	extab       start:0x80011D54 end:0x80011DAC
 	extabindex  start:0x80026DC8 end:0x80026DD4
 	.text       start:0x80188E9C end:0x801891C4
+
+game/nokonoko/fn_80189394.c:
+	.text       start:0x80189394 end:0x801893BC
+
+game/nokonoko/fn_80189950.c:
+	extab       start:0x80011DD4 end:0x80011DDC
+	extabindex  start:0x80026DF8 end:0x80026E04
+	.text       start:0x80189950 end:0x801899B8
+
+game/bbox/fn_80189FD8.c:
+	extab       start:0x80011DEC end:0x80011DF4
+	extabindex  start:0x80026E1C end:0x80026E28
+	.text       start:0x80189FD8 end:0x8018A0A8
+
+game/bbox/fn_8018A278.c:
+	extab       start:0x80011DFC end:0x80011E04
+	extabindex  start:0x80026E34 end:0x80026E40
+	.text       start:0x8018A278 end:0x8018A2E8
+
+game/bbox/fn_8018A2E8.c:
+	.text       start:0x8018A2E8 end:0x8018A32C
+
+game/bbox/fn_8018A32C.c:
+	extab       start:0x80011E04 end:0x80011E0C
+	extabindex  start:0x80026E40 end:0x80026E4C
+	.text       start:0x8018A32C end:0x8018A418
+
+game/objview/fn_8018A66C.c:
+	extab       start:0x80011E14 end:0x80011E1C
+	extabindex  start:0x80026E58 end:0x80026E64
+	.text       start:0x8018A66C end:0x8018A70C
+
+game/bitread/fn_8018AD70.c:
+	extab       start:0x80011E58 end:0x80011E60
+	extabindex  start:0x80026E7C end:0x80026E88
+	.text       start:0x8018AD70 end:0x8018AE34
+
+game/bitread/fn_8018AE34.c:
+	extab       start:0x80011E60 end:0x80011E68
+	extabindex  start:0x80026E88 end:0x80026E94
+	.text       start:0x8018AE34 end:0x8018AEF8
+
+game/bitread/fn_8018AEF8.c:
+	extab       start:0x80011E68 end:0x80011E70
+	extabindex  start:0x80026E94 end:0x80026EA0
+	.text       start:0x8018AEF8 end:0x8018AFC0
+
+game/bitread/fn_8018AFC0.c:
+	extab       start:0x80011E70 end:0x80011E78
+	extabindex  start:0x80026EA0 end:0x80026EAC
+	.text       start:0x8018AFC0 end:0x8018B088
+
+game/bitread/fn_8018B088.c:
+	extab       start:0x80011E78 end:0x80011E80
+	extabindex  start:0x80026EAC end:0x80026EB8
+	.text       start:0x8018B088 end:0x8018B14C
 
 game/fn_80190658.c:
 	.text       start:0x80190658 end:0x80190660
