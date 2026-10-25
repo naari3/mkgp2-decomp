@@ -153,6 +153,11 @@ game/Scene3D.c:
 game/LinkedNode_GetField10_OrFallback.c:
 	.text       start:0x80030D24 end:0x80030D48
 
+game/clNormal3D_Tree.c:
+	extab       start:0x80005950 end:0x80005960
+	extabindex  start:0x8001F604 end:0x8001F61C
+	.text       start:0x80030D48 end:0x80031408
+
 game/Object_Color.c:
 	extab       start:0x80005960 end:0x80005970
 	extabindex  start:0x8001F61C end:0x8001F634
@@ -232,6 +237,11 @@ game/ResolveJointByName.c:
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
 
+game/Object_AnimBinding.cpp:
+	extab       start:0x80005B58 end:0x80005B98
+	extabindex  start:0x8001F790 end:0x8001F7D8
+	.text       start:0x80033F10 end:0x80034508
+
 game/Normal3DLoad.c:
 	extab       start:0x80005B98 end:0x80005BA0
 	extabindex  start:0x8001F7D8 end:0x8001F7E4
@@ -290,6 +300,11 @@ game/clRomLifecycle.c:
 	extab       start:0x80005BE0 end:0x80005BF0
 	extabindex  start:0x8001F844 end:0x8001F85C
 	.text       start:0x80034D24 end:0x80034EC0
+
+game/FileLoader_Open.cpp:
+	extab       start:0x80005BF0 end:0x80005C18
+	extabindex  start:0x8001F85C end:0x8001F880
+	.text       start:0x80034EC0 end:0x80035220
 
 game/CollisionFile_FixupPointers.c:
 	.text       start:0x80035220 end:0x80035268
