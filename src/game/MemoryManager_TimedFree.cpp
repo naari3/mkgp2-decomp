@@ -1,3 +1,7 @@
+
+/* sdata symbols referenced from asm */
+extern "C" unsigned char lbl_806D24D8[4];
+extern "C" unsigned char lbl_806D24E0[8];
 extern "C" unsigned int OSGetTick(void);
 extern "C" void Profiler_RecordFrame(int slot, float value);
 extern "C" void DebugPrintf(const char *fmt, ...);
@@ -54,17 +58,17 @@ public:
             opword 0x901F0228
             opword 0x7C062016
             opword 0x7C671850
-            opword 0xC8428280
+            lfd f2, lbl_806D24E0(r2)
             opword 0x54641838
-            opword 0xC0028278
+            lfs f0, lbl_806D24D8(r2)
             opword 0x807F000C
             mr slot, r3
             opword 0x54008BFE
             opword 0x7C040396
             opword 0x901F022C
             opword 0xC83F0228
-            opword 0xEC211028
-            opword 0xEC210024
+            fsubs f1, f1, f2
+            fdivs f1, f1, f0
             fmr value, f1
         }
         Profiler_RecordFrame(slot, value);

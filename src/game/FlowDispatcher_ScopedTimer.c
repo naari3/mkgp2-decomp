@@ -181,16 +181,16 @@ ScopedTimer::~ScopedTimer()
     stw r0, cookie
     opword 0x7C062016
     opword 0x7C671850
-    opword 0xC8428028
+    lfd f2, lbl_806D2288(r2)
     opword 0x54641838
-    opword 0xC0028020
+    lfs f0, lbl_806D2280(r2)
     opword 0x807E0004
     opword 0x54008BFE
     opword 0x7C040396
     stw r0, cookie+4
     lfd f1, cookie
-    opword 0xEC211028
-    opword 0xEC210024
+    fsubs f1, f1, f2
+    fdivs f1, f1, f0
     mr slot, r3
     fmr value, f1
     }
