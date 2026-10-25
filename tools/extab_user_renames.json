@@ -2427,5 +2427,30 @@
     "__vt__10PushPrompt": "lbl_8048ED34",
     "__vt__6FxBase": "lbl_8048EB44",
     "__dt__6FxBaseFv": "dtor_8013EB50"
+  },
+  "src/game/ResultFx.c": {
+    "__dt__8TrophyFxFv": "fn_8013FE4C",
+    "__ct__8TrophyFxFv": "fn_8013FF6C",
+    "Draw__13ConfettiFieldFv": "fn_8014017C",
+    "__dt__13ConfettiFieldFv": "fn_80140810",
+    "__ct__13ConfettiFieldFv": "fn_80140874",
+    "Stop__8ResultFxFv": "fn_8014095C",
+    "Draw__8ResultFxFv": "fn_801409B0",
+    "IsDone__8ResultFxFv": "fn_80140ECC",
+    "__dt__8ResultFxFv": "fn_80140EF0",
+    "__vt__8TrophyFx": "lbl_8048EBCC",
+    "__vt__8ResultFx": "lbl_8048EC9C",
+    "__vt__6FxBase": "lbl_8048EB44",
+    "extab_fn_8014017C": "@etb_8000D714",
+    "extabindex_fn_8014017C": "@eti_80024FE0",
+    "extab_fn_80140344": "@etb_8000D71C",
+    "extabindex_fn_80140344": "@eti_80024FEC",
+    "extab_fn_80140A38": "@etb_8000D744",
+    "extabindex_fn_80140A38": "@eti_80025028",
+    "extab_fn_80140FEC": "@etb_8000D764",
+    "extabindex_fn_80140FEC": "@eti_80025040",
+    "__dt__6FxBaseFv": "dtor_8013EB50",
+    "__dt__6TexMgrFv": "dtor_800869D0",
+    "__ct__6TexMgrFv": "TexMgr_Init"
   }
 }

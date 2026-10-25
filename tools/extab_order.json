@@ -244,5 +244,6 @@
   "src/game/SpriteEffects.c": ["fn_8013DD38", "fn_8013DD94", "dtor_8013EB50", "fn_8013E194", "fn_8013E744", "fn_8013EBA0", "fn_8013EBFC", "fn_8013EC58", "__dt__10EffectBaseFv"],
   "src/game/ZoneList.c": ["MiniGame_GetTimerValue", "fn_801232E0", "fn_80123480", "fn_801234F8", "fn_801235A0", "fn_80123674", "dtor_80123870", "fn_801238EC", "fn_80123B48", "fn_80123BB4", "fn_80123BEC", "fn_80123C78", "fn_80123D90", "fn_80123E1C", "fn_80123F34", "fn_80123F6C", "fn_80123FDC", "fn_80124064", "__dt__4ZoneFv"],
   "src/game/LogoAnim.c": ["fn_80141990", "fn_80141454", "fn_801418B8", "dtor_801419C8", "fn_80141A24", "fn_8014196C", "__dt__7AnimMidFv", "__dt__8AnimBaseFv"],
-  "src/game/PushPrompt.c": ["fn_80141A70", "fn_80141A94", "fn_80141B08", "fn_80141E70", "fn_80142010", "fn_8014205C", "fn_801420DC", "dtor_8013EB50"]
+  "src/game/PushPrompt.c": ["fn_80141A70", "fn_80141A94", "fn_80141B08", "fn_80141E70", "fn_80142010", "fn_8014205C", "fn_801420DC", "dtor_8013EB50"],
+  "src/game/ResultFx.c": ["fn_8013FE4C", "fn_8013FF6C", "fn_8014017C", "fn_80140344", "fn_80140810", "fn_80140874", "fn_8014095C", "fn_801409B0", "fn_80140A38", "fn_80140EF0", "fn_80140FEC", "dtor_8013EB50", "dtor_800869D0"]
 }
