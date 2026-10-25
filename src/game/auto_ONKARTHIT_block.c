@@ -237,7 +237,7 @@ extern void cos();
 extern void sin();
 extern void fn_802BD6AC(float x, float y);
 extern void fn_802BD6C0();
-extern void fn_802C8B48();
+extern void HSD_FObjForceLinearInterp();
 extern void fn_802D6618();
 extern void HSD_Randf();
 extern int HSD_Randi(int range);
@@ -4543,7 +4543,7 @@ asm void KartItem_PerFrameStep(void) { /* 0x8004C320 size:0xC44 */
     cmplwi r0, 0x1
     bne KartItem_PerFrameStep_L_8004CF18
     li r3, 0x0
-    bl fn_802C8B48
+    bl HSD_FObjForceLinearInterp
     KartItem_PerFrameStep_L_8004CF18:
     lfs f0, 0xe8(r30)
     mr r4, r31
@@ -4552,7 +4552,7 @@ asm void KartItem_PerFrameStep(void) { /* 0x8004C320 size:0xC44 */
     lfs f2, lbl_806D26EC(r2)
     bl RenderObj_ItemStateMachine_Timed
     li r3, 0x1
-    bl fn_802C8B48
+    bl HSD_FObjForceLinearInterp
     lwz r3, 0x3c(r30)
     bl KartEffectFadeTransit_Tick
     psq_l f31, 0x108(r1), 0, 0
