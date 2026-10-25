@@ -314,6 +314,11 @@ game/Terrain_GetGroundHeight.c:
 	extabindex  start:0x8001F880 end:0x8001F898
 	.text       start:0x80035268 end:0x80035AE4
 
+game/Terrain_RaycastWall.c:
+	extab       start:0x80005C28 end:0x80005C70
+	extabindex  start:0x8001F898 end:0x8001F8A4
+	.text       start:0x80035AE4 end:0x80035ED4
+
 game/Terrain_FindTriangleAtPosition.c:
 	extab       start:0x80005C70 end:0x80005C78
 	extabindex  start:0x8001F8A4 end:0x8001F8B0
