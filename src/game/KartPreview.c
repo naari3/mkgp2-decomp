@@ -65,10 +65,10 @@ extern float lbl_806D76E4;
 extern char lbl_8048EAD8[];
 extern char lbl_8048EAE8[];
 
-extern void fn_802C5674(int);
-extern void fn_802C53C8(void *rt);
-extern void fn_802C5A5C(void *rt);
-extern void *RenderTarget_Create(void *desc);
+extern void HSD_LObjDeleteCurrentAll(int);
+extern void HSD_LObjAddCurrent(void *rt);
+extern void HSD_LObjRemoveAll(void *rt);
+extern void *HSD_LObjLoadDesc(void *desc);
 extern void *Alloc(unsigned int size);
 extern void MemoryManager_TimedFree(void *p);
 extern void Object_SetColorAlphaOnly(void *obj, int, float a);

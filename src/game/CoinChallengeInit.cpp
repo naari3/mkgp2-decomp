@@ -18,7 +18,7 @@ void* DrawManager_GetOrCreate(); void SetResourceLoadingFlag(unsigned char);
 void DMAChannelManager_Init(); void* TransitionEffect_GetOrCreate();
 void SoundChannels_ClearAll(); void ItemObjectManager_Init();
 void CourseObjectManager_Init(); void SetReverseRoundFlag(unsigned char);
-void* GetCourseDataPtr(); void* RenderTarget_Create(void*);
+void* GetCourseDataPtr(); void* HSD_LObjLoadDesc(void*);
 void* SetActiveCamera(int, CICamera*); void ProcessSystemTick(int);
 void* GetRaceContextPtr(); void RankingTable_Init(void*);
 void* SoundDriver_GetOrCreate(void*);
@@ -76,7 +76,7 @@ CIOwner::CIOwner() {
     TransitionEffect_GetOrCreate(); SoundChannels_ClearAll(); ItemObjectManager_Init();
     CourseObjectManager_Init(); SetReverseRoundFlag(0);
     input=new CIInput;
-    renderTarget=RenderTarget_Create(GetCourseDataPtr());
+    renderTarget=HSD_LObjLoadDesc(GetCourseDataPtr());
     camera=new CICamera(256,256,lbl_806DAE44,lbl_806DAE2C,renderTarget);
     SetActiveCamera(0,camera); g_raceCamera=camera; ProcessSystemTick(0);
     RankingTable_Init(GetRaceContextPtr()); lbl_806D12BC=0; SoundDriver_GetOrCreate(0);

@@ -7301,6 +7301,15 @@ sysdolphin/baselib/aobj.c:
 	.sbss       start:0x806D2150 end:0x806D2160
 	.sdata2     start:0x806DCBD8 end:0x806DCBE0
 
+sysdolphin/baselib/lobj.c:
+	.text       start:0x802C4010 end:0x802C6430
+	.rodata     start:0x803F2BB8 end:0x803F2BD0
+	.data       start:0x804FC368 end:0x804FC4C8
+	.bss        start:0x806CD080 end:0x806CD0A8
+	.sdata      start:0x806D0D20 end:0x806D0D48
+	.sbss       start:0x806D2160 end:0x806D2180
+	.sdata2     start:0x806DCBE0 end:0x806DCC08
+
 sysdolphin/baselib/fobj.c:
 	.text       start:0x802C8B48 end:0x802CA77C
 	.data       start:0x804FC620 end:0x804FC668

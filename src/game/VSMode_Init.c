@@ -101,7 +101,7 @@ void DMAChannelManager_Init();
 void TransitionEffect_GetOrCreate();
 void CourseData_GetOrCreate(int, int, int);
 void* GetCourseDataPtr();
-void* RenderTarget_Create(void*);
+void* HSD_LObjLoadDesc(void*);
 void SetActiveCamera(int, VSCamera*);
 void SoundChannels_ClearAll();
 void ItemObjectManager_Init();
@@ -166,7 +166,7 @@ void VSMode_Init_CPP_Draft(VSOwner* self)
     self->input = new VSInput;
     ProcessSystemTick(pool + 0x5B8);
     CourseData_GetOrCreate(g_cupId, g_longRoundFlag, g_reverseRoundFlag);
-    lbl_806D12F8 = RenderTarget_Create(GetCourseDataPtr());
+    lbl_806D12F8 = HSD_LObjLoadDesc(GetCourseDataPtr());
     self->camera = new VSCamera(0x100, 0x100, lbl_806D12F8, lbl_806D47AC, lbl_806D47A8);
     SetActiveCamera(0, self->camera);
     g_raceCamera = self->camera;
@@ -467,7 +467,7 @@ extern void ProcessSystemTick();
 extern void RaceScene_GetPerspFovyForCup();
 extern void RaceSlot_InitSlot();
 extern void RankingTable_Init();
-extern void RenderTarget_Create();
+extern void HSD_LObjLoadDesc();
 extern void Scene3D_GetCameraPos();
 extern void Scene3D_Init();
 extern void Scene3D_SetupProjection();
@@ -626,7 +626,7 @@ asm void VSMode_Init(void) { /* 0x8009F814 size:0xDBC */
     lwz r5, g_reverseRoundFlag(r13)
     bl CourseData_GetOrCreate
     bl GetCourseDataPtr
-    bl RenderTarget_Create
+    bl HSD_LObjLoadDesc
     stw r3, lbl_806D12F8(r13)
     li r3, 0x2c
     bl Alloc
