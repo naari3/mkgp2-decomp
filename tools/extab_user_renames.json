@@ -2749,5 +2749,22 @@
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960",
     "__dt__21VHolder<10FlowFaderI>Fv": "dtor_802505D8"
+  },
+  "src/game/SpeedHud.cpp": {
+    "__ct__8SpeedHudFi": "fn_802526DC",
+    "__dt__8SpeedHudFv": "fn_80252514",
+    "SetValue__8SpeedHudFf": "fn_802524A0",
+    "Update__8SpeedHudFv": "fn_80251CEC",
+    "Draw__8SpeedHudFv": "fn_80251CE8",
+    "SetDelay__8SpeedHudFi": "fn_80251CD0",
+    "__vt__7HudPart": "lbl_804EDB28",
+    "__vt__8SpeedHud": "lbl_804EF1B4",
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "__vt__10FlowFaderF": "lbl_80419DE0",
+    "__vt__10FlowFaderI": "lbl_804E5284",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_80250668",
+    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_802505D8"
   }
 }
