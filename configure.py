@@ -878,6 +878,7 @@ config.libs = [
             Object(Matching, "game/StarItem.c", extab_padding=b""),
             Object(Matching, "game/MukadeItem.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GameSetting.c", extab_padding=b"\x00\x00"),
+            Object(NonMatching, "game/GameTestTopMenu_Page.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowCup.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
             Object(Matching, "game/clFlowRound.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++", "-use_lmw_stmw on"]),
             Object(Matching, "game/clFlowItemSelect_CommitSlotAnim.c", extab_padding=b"\x00\x00"),

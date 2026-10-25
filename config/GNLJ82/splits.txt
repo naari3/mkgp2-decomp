@@ -1385,6 +1385,11 @@ game/GameSetting.c:
 	extabindex  start:0x80021158 end:0x8002117C
 	.text       start:0x80072074 end:0x80073878
 
+game/GameTestTopMenu_Page.cpp:
+	extab       start:0x80008230 end:0x80008238
+	extabindex  start:0x8002117C end:0x80021188
+	.text       start:0x80073878 end:0x80073B00
+
 game/ServiceMenu_Page.c:
 	extab       start:0x80008238 end:0x800082A0
 	extabindex  start:0x80021188 end:0x800211B8
