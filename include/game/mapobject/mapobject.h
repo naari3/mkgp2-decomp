@@ -63,9 +63,9 @@ extern char lbl_803761AC[];
 extern float lbl_806D15F0;
 void __assert(char *, int, char *);
 void HSD_JObjReqAnimAll(HSD_JObj *, float);
-void fn_802CF244(HSD_JObj *);
-void fn_802CF3B0(HSD_JObj *, int, int, int);
-void fn_802D20AC(HSD_JObj *);
+void HSD_JObjAnimAll(HSD_JObj *);
+void HSD_JObjDispAll(HSD_JObj *, int, int, int);
+void HSD_JObjSetMtxDirtySub(HSD_JObj *);
 void PSVECAdd(const Vec3f *, const Vec3f *, Vec3f *);
 unsigned char fn_80137718(Vec3f *pos, Vec3f *view, float radius);
 }
@@ -90,7 +90,7 @@ static inline void HSD_JObjSetMtxDirty(HSD_JObj *jobj) {
         clean = 1;
     }
     if (!clean) {
-        fn_802D20AC(jobj);
+        HSD_JObjSetMtxDirtySub(jobj);
     }
 }
 
