@@ -2111,6 +2111,7 @@ config.libs = [
             Object(Matching, "game/fn_801E8D98.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801CDDC4.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801FB634.cpp", extab_padding=b""),
+            Object(Matching, "game/fn_801F6EEC.c"),
         ],
     },
     {
