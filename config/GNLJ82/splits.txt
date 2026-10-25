@@ -4310,6 +4310,11 @@ game/fn_80107B00.c:
 	extabindex  start:0x800241A0 end:0x800241AC
 	.text       start:0x80107B00 end:0x80107C74
 
+game/fn_80107C74.c:
+	extab       start:0x8000B864 end:0x8000B86C
+	extabindex  start:0x800241AC end:0x800241B8
+	.text       start:0x80107C74 end:0x8010829C
+
 game/fn_8010829C.c:
 	extab       start:0x8000B86C end:0x8000B874
 	extabindex  start:0x800241B8 end:0x800241C4
