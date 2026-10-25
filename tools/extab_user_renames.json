@@ -2306,6 +2306,12 @@
     "__ct__8Normal3DFPvi": "clNormal3D_Construct",
     "__ct__9GXChannelFPvPvii": "GXChannel_Init"
   },
+  "src/game/Camera_Create.cpp": {
+    "__ct__8clShadowFiiP8HSD_LObjff": "Camera_Create",
+    "__dt__10clCallbackFv": "dtor_8003A71C",
+    "__vt__10clCallback": "lbl_803F58E0",
+    "__vt__8clShadow": "lbl_803F58FC"
+  },
   "src/game/Terrain_RaycastWall.c": {
     "__dt__14TerrainStepperFv": "dtor_80036988"
   },

@@ -544,6 +544,11 @@ game/SceneRender.c:
 	extabindex  start:0x8001FBC8 end:0x8001FC04
 	.text       start:0x8003A71C end:0x8003AACC
 
+game/Camera_Create.cpp:
+	extab       start:0x80005F50 end:0x80005F6C
+	extabindex  start:0x8001FC04 end:0x8001FC10
+	.text       start:0x8003AACC end:0x8003AC84
+
 game/ClRomTable_PurgeAll.c:
 	extab       start:0x80005F6C end:0x80005F74
 	extabindex  start:0x8001FC10 end:0x8001FC1C
