@@ -2558,6 +2558,11 @@ config.libs = [
             Object(Matching, "game/bbox/fn_80189808.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/miyazakiconsole/fn_8017FF10.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/miyazakiconsole/fn_80180B34.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/clsound/fn_801920D4.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/clsound/fn_80192208.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/clsound/fn_80192348.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/clsound/fn_80192514.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/clsound/fn_80192688.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             # g4-end
         ],
     },
