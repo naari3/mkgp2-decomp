@@ -64,6 +64,7 @@ struct Sprite {
     Sprite(int res, int a, int b);
     ~Sprite();
     void SetAnimParam(int key, short value);
+    void SetPos(float px, float py) { x = px; y = py; }
 };
 
 template <class T> struct Own {
@@ -533,8 +534,7 @@ struct clGetCoinLine : FadeObj {
     void Draw() {
         float x = tracks[3].value;
         float y = tracks[4].value;
-        spr.p->x = x;
-        spr.p->y = y;
+        spr.p->SetPos(x, y);
         fn_801A0004(spr.p);
         fn_8011F994(1);
         if (model != 0) {
@@ -575,11 +575,9 @@ struct clGetSumLine : clGetCoinLine {
         float y = tracks[4].value;
         clGetCoinLine::Draw();
         if (perfect) {
-            bar.p->x = x - lbl_806DB288;
-            bar.p->y = y - lbl_806DB2F4;
+            bar.p->SetPos(x - lbl_806DB288, y - lbl_806DB2F4);
         } else {
-            bar.p->x = x - lbl_806DB288;
-            bar.p->y = y - lbl_806DB2F8;
+            bar.p->SetPos(x - lbl_806DB288, y - lbl_806DB2F8);
         }
         fn_801A0004(bar.p);
         if (isJapanese() == 0) {
@@ -849,10 +847,8 @@ struct NextWnd {
         spr[1]->alpha = lbl_806DB190;
         spr[0]->layer = 4;
         spr[1]->layer = 5;
-        spr[0]->x = lbl_806DB1E8;
-        spr[0]->y = lbl_806DB290;
-        spr[1]->x = lbl_806DB1E8;
-        spr[1]->y = lbl_806DB2AC;
+        spr[0]->SetPos(lbl_806DB1E8, lbl_806DB290);
+        spr[1]->SetPos(lbl_806DB1E8, lbl_806DB2AC);
         spr[1]->SetAnimParam(0x1931, 0x1ECD);
         spr[1]->SetAnimParam(0x1932, 0x1ECD);
         back.mode = 2;
@@ -1335,8 +1331,7 @@ void clCSSceneCoinMilage::StateLines() {
 
 clGetSumLine::clGetSumLine(int n, unsigned char p, float y)
     : clGetCoinLine(lbl_806DB220, n, y, 0), perfect(p), bar(new Sprite(0x140, 1, 0)) {
-    bar.p->x = lbl_806DB224;
-    bar.p->y = lbl_806DB228;
+    bar.p->SetPos(lbl_806DB224, lbl_806DB228);
     bar.p->layer = 1;
     fn_80121E10(&label);
     label.resId = 0x16D7;
@@ -1356,8 +1351,7 @@ clGetCoinLine::clGetCoinLine(const char *label, int n, float y, Model *m)
     flash = 0;
     tracks[4].Set(y, y, lbl_806DB1E0);
     tracks[3].Set(lbl_806DB23C, lbl_806DB21C, lbl_806DB1EC);
-    spr.p->x = lbl_806DB23C;
-    spr.p->y = y;
+    spr.p->SetPos(lbl_806DB23C, y);
     spr.p->layer = 1;
     TexMgr_SetTexture(&text, label);
     text.visible = 1;
