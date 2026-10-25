@@ -764,6 +764,7 @@ config.libs = [
             Object(Matching, "game/Collision.c"),
             Object(Matching, "game/StrPcb_988.c"),
             Object(Matching, "game/StrPcb.c"),
+            Object(Matching, "game/StrPcb_Tick.c", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/StrPcb_Control.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/StrPcb_WaitForState1.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/StrPcb_Commands.c", extra_cflags=["-Cpp_exceptions on"]),

@@ -10,15 +10,17 @@ typedef struct StrPcbCmd {
     float intensityScale;
     int intensityMode;
     int positionTarget;
-    u8 pad_10[4];
+    int position10;
     int counter14;
     u8 dirty18;
     u8 pad_19[7];
     int state20;
     u8 status24;
-    u8 pad_25;
+    u8 statusSent25;
     u8 commError26;
-    u8 pad_27[6];
+    u8 positionAck27;
+    int position28;
+    u8 pad_2C;
     u8 command2D;
     u8 command2E;
     u8 command2F;
@@ -39,7 +41,8 @@ typedef struct StrPcbCmd {
     u8 stickyError5C;
     u8 pad_5D[3];
     int state60;
-    u8 pad_64[8];
+    float effectTimer64;
+    void *buffer68;
     u8 effectId;
 } StrPcbCmd;
 

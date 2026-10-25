@@ -315,6 +315,11 @@ game/StrPcb.c:
 	extabindex  start:0x8001F8F8 end:0x8001F904
 	.text       start:0x80036E40 end:0x80036E7C
 
+game/StrPcb_Tick.c:
+	extab       start:0x80005CB0 end:0x80005CD8
+	extabindex  start:0x8001F904 end:0x8001F940
+	.text       start:0x80036E7C end:0x80037AB0
+
 game/StrPcb_Control.c:
 	extab       start:0x80005CD8 end:0x80005CE0
 	extabindex  start:0x8001F940 end:0x8001F94C
