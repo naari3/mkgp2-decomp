@@ -1972,8 +1972,21 @@ game/CardForceBackup.c:
 game/Sci2Card_FlagReceiptTestEnable.c:
 	.text       start:0x800991D8 end:0x800991FC
 
+game/Sci2Card_PollResponseStatusTri.c:
+	extab       start:0x80009560 end:0x80009568
+	extabindex  start:0x8002213C end:0x80022148
+	.text       start:0x800991FC end:0x8009927C
+
 game/Sci2Card_GetPrintErrorCode.c:
 	.text       start:0x8009927C end:0x80099284
+
+game/Sci2Card_ResetRetryAndStatus.c:
+	extab       start:0x80009568 end:0x80009570
+	extabindex  start:0x80022148 end:0x80022154
+	.text       start:0x80099284 end:0x800992C0
+
+game/Sci2Card_ReceiptTables.c:
+	.text       start:0x80099958 end:0x80099994
 
 game/RankSlot_AppendOrUpdate.c:
 	extab       start:0x80009598 end:0x800095A0
