@@ -7715,6 +7715,11 @@ game/x10.c:
 	extabindex  start:0x80028958 end:0x80028964
 	.text       start:0x801E8D10 end:0x801E8D98
 
+game/fn_801E8D98.cpp:
+	extab       start:0x80016A88 end:0x80016A90
+	extabindex  start:0x80028964 end:0x80028970
+	.text       start:0x801E8D98 end:0x801E8F5C
+
 game/fn_801E8F5C.c:
 	extab       start:0x80016A90 end:0x80016A98
 	extabindex  start:0x80028970 end:0x8002897C
