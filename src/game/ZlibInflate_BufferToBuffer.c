@@ -21,9 +21,9 @@ extern const char lbl_806D4E88[6];        /* zlib version string */
 extern unsigned char lbl_805D3338[0x6000];  /* input staging buffer */
 extern unsigned char lbl_805D9338[0x6000];  /* output staging buffer */
 
-extern int fn_802E630C(ZStream *strm, const char *version, int size); /* inflateInit_ */
-extern int fn_802E6508(ZStream *strm, int flush);                     /* inflate */
-extern int fn_802E7BFC(ZStream *strm);                                /* inflateEnd */
+extern int inflateInit_(ZStream *strm, const char *version, int size); /* inflateInit_ */
+extern int inflate(ZStream *strm, int flush);                     /* inflate */
+extern int inflateEnd(ZStream *strm);                                /* inflateEnd */
 extern void *memset(void *dst, int c, unsigned long n);
 extern void *memcpy(void *dst, const void *src, unsigned long n);
 
@@ -39,7 +39,7 @@ void *ZlibInflate_BufferToBuffer(const unsigned char *src, void *dst, int srcLen
     strm.opaque = 0;
     strm.next_in = 0;
     strm.avail_in = 0;
-    if (fn_802E630C(&strm, lbl_806D4E88, sizeof(ZStream)) != 0) {
+    if (inflateInit_(&strm, lbl_806D4E88, sizeof(ZStream)) != 0) {
         return 0;
     }
     strm.avail_out = 0x6000;
@@ -61,7 +61,7 @@ void *ZlibInflate_BufferToBuffer(const unsigned char *src, void *dst, int srcLen
             remain -= err;
             src += err;
         }
-        err = fn_802E6508(&strm, 0);
+        err = inflate(&strm, 0);
         if (err == 1) {
             break;
         }
@@ -79,7 +79,7 @@ void *ZlibInflate_BufferToBuffer(const unsigned char *src, void *dst, int srcLen
     if (err != 0) {
         memcpy(out, lbl_805D9338, err);
     }
-    if (fn_802E7BFC(&strm) != 0) {
+    if (inflateEnd(&strm) != 0) {
         return 0;
     }
     return dst;
