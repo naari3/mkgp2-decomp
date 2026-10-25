@@ -1353,6 +1353,11 @@ game/CourseBgm_Load.c:
 	extabindex  start:0x80020E94 end:0x80020EA0
 	.text       start:0x80064ED0 end:0x80064F58
 
+game/Sinf_LUT_Wrap.c:
+	extab       start:0x80008098 end:0x800080A0
+	extabindex  start:0x80020F60 end:0x80020F6C
+	.text       start:0x8006584C end:0x800658B4
+
 game/LUT_Cosine.c:
 	extab       start:0x800080A0 end:0x800080A8
 	extabindex  start:0x80020F6C end:0x80020F78
