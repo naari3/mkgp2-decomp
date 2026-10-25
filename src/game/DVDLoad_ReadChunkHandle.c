@@ -5,9 +5,9 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void DVDReadAsync();
+extern void DVDReadAsyncPrio();
 extern void OSGetTick();
-extern void fn_80297B98();
+extern void DVDGetCommandBlockStatus();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D1140;
@@ -75,7 +75,7 @@ asm void DVDLoad_ReadChunkHandle(void) { /* 0x8007E178 size:0x114 */
     mr r6, r30
     li r7, 0x0
     li r8, 0x2
-    bl DVDReadAsync
+    bl DVDReadAsyncPrio
     cmpwi r3, 0x0
     bne DVDLoad_ReadChunkHandle_L_8007E220
     li r3, 0x0
@@ -93,7 +93,7 @@ asm void DVDLoad_ReadChunkHandle(void) { /* 0x8007E178 size:0x114 */
     li r25, 0x10
     DVDLoad_ReadChunkHandle_L_8007E244:
     mr r3, r27
-    bl fn_80297B98
+    bl DVDGetCommandBlockStatus
     cmpwi r3, 0x1
     beq DVDLoad_ReadChunkHandle_L_8007E228
     lwz r12, lbl_806D2238(r13)

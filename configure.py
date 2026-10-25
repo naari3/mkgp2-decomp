@@ -1786,6 +1786,18 @@ config.libs = [
         ],
     ),
     SdkLib(
+        "dolphin_dvd",
+        [
+            Object(Matching, "dolphin/dvd/dvdfs.c"),
+            Object(Matching, "dolphin/dvd/dvdqueue.c"),
+            Object(Matching, "dolphin/dvd/dvderror.c"),
+            Object(Matching, "dolphin/dvd/dvdidutils.c"),
+            Object(Matching, "dolphin/dvd/dvdFatal.c"),
+            Object(Matching, "dolphin/dvd/fstload.c"),
+        ],
+        extra_cflags=["-char signed"],
+    ),
+    SdkLib(
         "dolphin_gx",
         [
             Object(Matching, "dolphin/gx/GXInit.c"),
