@@ -6530,6 +6530,11 @@ game/anon_8020DAA0.cpp:
 	extabindex  start:0x80029D5C end:0x80029D98
 	.text       start:0x8020DAA0 end:0x8020E2D8
 
+game/anon_8020E2D8.cpp:
+	extab       start:0x80019950 end:0x80019968
+	extabindex  start:0x80029D98 end:0x80029DBC
+	.text       start:0x8020E2D8 end:0x8020E388
+
 game/fn_8020E388.c:
 	extab       start:0x80019968 end:0x80019970
 	extabindex  start:0x80029DBC end:0x80029DC8
@@ -6539,6 +6544,11 @@ game/fn_8020E3AC.c:
 	extab       start:0x80019970 end:0x80019978
 	extabindex  start:0x80029DC8 end:0x80029DD4
 	.text       start:0x8020E3AC end:0x8020E3D0
+
+game/anon_8020E3D0.cpp:
+	extab       start:0x80019978 end:0x80019C90
+	extabindex  start:0x80029DD4 end:0x80029E7C
+	.text       start:0x8020E3D0 end:0x8020F220
 
 game/fn_8020F268.c:
 	.text       start:0x8020F268 end:0x8020F290
