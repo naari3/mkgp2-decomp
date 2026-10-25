@@ -4732,5 +4732,55 @@
   "src/game/fn_8013A6F8.cpp": {
     "extab_fn_8013A6F8": "@etb_8000D2E8",
     "extabindex_fn_8013A6F8": "@eti_80024C98"
+  },
+  "src/game/fn_8010C110.c": {
+    "extab_fn_8010C110": "@etb_8000B8E4",
+    "extabindex_fn_8010C110": "@eti_8002426C"
+  },
+  "src/game/fn_80112DDC.c": {
+    "extab_fn_80112DDC": "@etb_8000B98C",
+    "extabindex_fn_80112DDC": "@eti_80024368"
+  },
+  "src/game/fn_80114990.c": {
+    "extab_fn_80114990": "@etb_8000B9BC",
+    "extabindex_fn_80114990": "@eti_800243B0"
+  },
+  "src/game/fn_80116640.c": {
+    "extab_fn_80116640": "@etb_8000BA04",
+    "extabindex_fn_80116640": "@eti_8002441C"
+  },
+  "src/game/fn_80116DD0.c": {
+    "extab_fn_80116DD0": "@etb_8000BA14",
+    "extabindex_fn_80116DD0": "@eti_80024434"
+  },
+  "src/game/fn_80117494.c": {
+    "extab_fn_80117494": "@etb_8000BA2C",
+    "extabindex_fn_80117494": "@eti_80024458"
+  },
+  "src/game/fn_80117E08.c": {
+    "extab_fn_80117E08": "@etb_8000BA3C",
+    "extabindex_fn_80117E08": "@eti_80024470"
+  },
+  "src/game/fn_801193F4.c": {
+    "extab_fn_801193F4": "@etb_8000BA6C",
+    "extabindex_fn_801193F4": "@eti_800244B8",
+    "extab_fn_80119AB4": "@etb_8000BA74",
+    "extabindex_fn_80119AB4": "@eti_800244C4",
+    "extab_fn_80119D44": "@etb_8000BA7C",
+    "extabindex_fn_80119D44": "@eti_800244D0"
+  },
+  "src/game/SuikaBallObj_UpdatePhysics.c": {
+    "extab_SuikaBallObj_UpdatePhysics": "@etb_8000BE90",
+    "extabindex_SuikaBallObj_UpdatePhysics": "@eti_80024878"
+  },
+  "src/game/fn_80125948.c": {
+    "extab_fn_80125948": "@etb_8000C044",
+    "extabindex_fn_80125948": "@eti_800248FC",
+    "extab_fn_80125B04": "@etb_8000C04C",
+    "extabindex_fn_80125B04": "@eti_80024908",
+    "extab_fn_80126728": "@etb_8000C054",
+    "extabindex_fn_80126728": "@eti_80024914",
+    "extab_fn_80126878": "@etb_8000C05C",
+    "extabindex_fn_80126878": "@eti_80024920"
   }
 }

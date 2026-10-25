@@ -294,5 +294,15 @@
   "src/game/CGameCoin_8012BF5C.cpp": ["CoinParticle_Draw", "fn_8012BF5C", "CGameCoin_Draw", "CGameCoin_Update", "DefeatDemo_Update", "CoinParticle_Update", "BossKoopa_UpdateAnim", "KoopaFireball_Update", "Shell_UpdateState", "CGameCoin_ProcessInput", "CGameCoin_Destroy", "CoinParticleManager_Destroy", "CGameCoin_Init", "CGameCoin_InitDefeatDemo", "BossKoopa_Init", "CGameCoin_InitFields"],
   "src/game/SuikaBall_801313D0.cpp": ["SuikaBall_Render", "fn_80133CA8", "SuikaBall_Update", "fn_80133E64", "fn_80133008", "fn_80134164", "SuikaBall_Init"],
   "src/game/fn_8013A534.cpp": ["fn_8013A534", "__dt__11ScopedTimerFv"],
-  "src/game/fn_8013A6F8.cpp": ["fn_8013A6F8"]
+  "src/game/fn_8013A6F8.cpp": ["fn_8013A6F8"],
+  "src/game/fn_8010C110.c": ["fn_8010C110"],
+  "src/game/fn_80112DDC.c": ["fn_80112DDC"],
+  "src/game/fn_80114990.c": ["fn_80114990"],
+  "src/game/fn_80116640.c": ["fn_80116640"],
+  "src/game/fn_80116DD0.c": ["fn_80116DD0"],
+  "src/game/fn_80117494.c": ["fn_80117494"],
+  "src/game/fn_80117E08.c": ["fn_80117E08"],
+  "src/game/fn_801193F4.c": ["fn_801193F4", "fn_80119AB4", "fn_80119D44"],
+  "src/game/SuikaBallObj_UpdatePhysics.c": ["SuikaBallObj_UpdatePhysics"],
+  "src/game/fn_80125948.c": ["fn_80125948", "fn_80125B04", "fn_80126728", "fn_80126878"]
 }

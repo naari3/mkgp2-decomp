@@ -4746,6 +4746,11 @@ game/fn_8010BF20.c:
 	extabindex  start:0x80024260 end:0x8002426C
 	.text       start:0x8010BF20 end:0x8010C110
 
+game/fn_8010C110.c:
+	extab       start:0x8000B8E4 end:0x8000B8EC
+	extabindex  start:0x8002426C end:0x80024278
+	.text       start:0x8010C110 end:0x8010CC40
+
 game/fn_8010CC40.c:
 	extab       start:0x8000B8EC end:0x8000B8F4
 	extabindex  start:0x80024278 end:0x80024284
@@ -4854,6 +4859,11 @@ game/fn_80112BE4.c:
 	extabindex  start:0x8002435C end:0x80024368
 	.text       start:0x80112BE4 end:0x80112DDC
 
+game/fn_80112DDC.c:
+	extab       start:0x8000B98C end:0x8000B994
+	extabindex  start:0x80024368 end:0x80024374
+	.text       start:0x80112DDC end:0x80113114
+
 game/fn_80113114.c:
 	extab       start:0x8000B994 end:0x8000B99C
 	extabindex  start:0x80024374 end:0x80024380
@@ -4878,6 +4888,11 @@ game/fn_80114400.c:
 	extab       start:0x8000B9B4 end:0x8000B9BC
 	extabindex  start:0x800243A4 end:0x800243B0
 	.text       start:0x80114400 end:0x80114990
+
+game/fn_80114990.c:
+	extab       start:0x8000B9BC end:0x8000B9C4
+	extabindex  start:0x800243B0 end:0x800243BC
+	.text       start:0x80114990 end:0x80115118
 
 game/fn_80115118.c:
 	extab       start:0x8000B9C4 end:0x8000B9CC
@@ -4920,10 +4935,20 @@ game/fn_801163C8.c:
 	extabindex  start:0x80024410 end:0x8002441C
 	.text       start:0x801163C8 end:0x80116640
 
+game/fn_80116640.c:
+	extab       start:0x8000BA04 end:0x8000BA0C
+	extabindex  start:0x8002441C end:0x80024428
+	.text       start:0x80116640 end:0x80116960
+
 game/fn_80116960.c:
 	extab       start:0x8000BA0C end:0x8000BA14
 	extabindex  start:0x80024428 end:0x80024434
 	.text       start:0x80116960 end:0x80116DD0
+
+game/fn_80116DD0.c:
+	extab       start:0x8000BA14 end:0x8000BA1C
+	extabindex  start:0x80024434 end:0x80024440
+	.text       start:0x80116DD0 end:0x80117020
 
 game/fn_80117020.c:
 	extab       start:0x8000BA1C end:0x8000BA24
@@ -4936,10 +4961,20 @@ game/fn_801172D8.c:
 	extabindex  start:0x8002444C end:0x80024458
 	.text       start:0x801172D8 end:0x80117494
 
+game/fn_80117494.c:
+	extab       start:0x8000BA2C end:0x8000BA34
+	extabindex  start:0x80024458 end:0x80024464
+	.text       start:0x80117494 end:0x8011791C
+
 game/fn_8011791C.c:
 	extab       start:0x8000BA34 end:0x8000BA3C
 	extabindex  start:0x80024464 end:0x80024470
 	.text       start:0x8011791C end:0x80117E08
+
+game/fn_80117E08.c:
+	extab       start:0x8000BA3C end:0x8000BA44
+	extabindex  start:0x80024470 end:0x8002447C
+	.text       start:0x80117E08 end:0x80118230
 
 game/fn_80118230.c:
 	extab       start:0x8000BA44 end:0x8000BA4C
@@ -4965,6 +5000,11 @@ game/fn_80119234.c:
 	extab       start:0x8000BA64 end:0x8000BA6C
 	extabindex  start:0x800244AC end:0x800244B8
 	.text       start:0x80119234 end:0x801193F4
+
+game/fn_801193F4.c:
+	extab       start:0x8000BA6C end:0x8000BA84
+	extabindex  start:0x800244B8 end:0x800244DC
+	.text       start:0x801193F4 end:0x80119F80
 
 game/fn_80119F80.c:
 	extab       start:0x8000BA84 end:0x8000BA8C
@@ -5099,6 +5139,11 @@ game/SuikaBallObj_Render.c:
 	extabindex  start:0x8002486C end:0x80024878
 	.text       start:0x801240B4 end:0x801240E4
 
+game/SuikaBallObj_UpdatePhysics.c:
+	extab       start:0x8000BE90 end:0x8000BE98
+	extabindex  start:0x80024878 end:0x80024884
+	.text       start:0x801240E4 end:0x8012491C
+
 game/fn_8012491C.c:
 	extab       start:0x8000BE98 end:0x8000BEA0
 	extabindex  start:0x80024884 end:0x80024890
@@ -5134,6 +5179,11 @@ game/ChallengeDemoShell.cpp:
 	extab       start:0x8000BF68 end:0x8000C044
 	extabindex  start:0x800248CC end:0x800248FC
 	.text       start:0x80124F2C end:0x80125948
+
+game/fn_80125948.c:
+	extab       start:0x8000C044 end:0x8000C18C
+	extabindex  start:0x800248FC end:0x8002492C
+	.text       start:0x80125948 end:0x80126CC4
 
 game/ChallengeDemoObj.cpp:
 	extab       start:0x8000C18C end:0x8000C268
