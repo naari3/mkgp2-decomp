@@ -310,9 +310,14 @@ game/CollisionFile_FixupPointers.c:
 	.text       start:0x80035220 end:0x80035268
 
 game/Terrain_GetGroundHeight.c:
-	extab       start:0x80005C20 end:0x80005C28
-	extabindex  start:0x8001F88C end:0x8001F898
-	.text       start:0x80035700 end:0x80035AE4
+	extab       start:0x80005C18 end:0x80005C28
+	extabindex  start:0x8001F880 end:0x8001F898
+	.text       start:0x80035268 end:0x80035AE4
+
+game/Terrain_RaycastWall.c:
+	extab       start:0x80005C28 end:0x80005C70
+	extabindex  start:0x8001F898 end:0x8001F8A4
+	.text       start:0x80035AE4 end:0x80035ED4
 
 game/Terrain_FindTriangleAtPosition.c:
 	extab       start:0x80005C70 end:0x80005C78
@@ -431,6 +436,11 @@ game/InputMgr.c:
 game/InputObj.c:
 	.text       start:0x80039154 end:0x800391B4
 
+game/InputObj_ReadRawInput.c:
+	extab       start:0x80005E28 end:0x80005E30
+	extabindex  start:0x8001FA78 end:0x8001FA84
+	.text       start:0x800391B4 end:0x8003951C
+
 game/JvsInput_Calibration.c:
 	extab       start:0x80005E30 end:0x80005E48
 	extabindex  start:0x8001FA84 end:0x8001FAA8
@@ -538,6 +548,11 @@ game/SceneRender.c:
 	extab       start:0x80005F18 end:0x80005F50
 	extabindex  start:0x8001FBC8 end:0x8001FC04
 	.text       start:0x8003A71C end:0x8003AACC
+
+game/Camera_Create.cpp:
+	extab       start:0x80005F50 end:0x80005F6C
+	extabindex  start:0x8001FC04 end:0x8001FC10
+	.text       start:0x8003AACC end:0x8003AC84
 
 game/ClRomTable_PurgeAll.c:
 	extab       start:0x80005F6C end:0x80005F74
@@ -767,6 +782,11 @@ game/KartDriver_Dtor.c:
 	extab       start:0x80006668 end:0x80006670
 	extabindex  start:0x8001FF88 end:0x8001FF94
 	.text       start:0x80045950 end:0x80045B50
+
+game/DisplayStruct_Init.cpp:
+	extab       start:0x80006670 end:0x80006688
+	extabindex  start:0x8001FF94 end:0x8001FFA0
+	.text       start:0x80045B50 end:0x80045E20
 
 game/KartDriver_New_Full.c:
 	extab       start:0x80006688 end:0x80006690
@@ -1936,6 +1956,16 @@ game/LapBannerScene.c:
 	extab       start:0x80008ED4 end:0x80008EF4
 	extabindex  start:0x80021A04 end:0x80021A34
 	.text       start:0x800882B8 end:0x80088700
+
+game/FinalLapBanner_Init.cpp:
+	extab       start:0x80008EF4 end:0x80008F1C
+	extabindex  start:0x80021A34 end:0x80021A40
+	.text       start:0x80088700 end:0x80088880
+
+util/bitpack_read.c:
+	extab       start:0x80008F1C end:0x80008F24
+	extabindex  start:0x80021A40 end:0x80021A4C
+	.text       start:0x80088880 end:0x80088A5C
 
 util/bitpack.c:
 	extab       start:0x80008F24 end:0x80008F34
