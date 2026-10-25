@@ -289,6 +289,11 @@ game/clRomLifecycle.c:
 game/CollisionFile_FixupPointers.c:
 	.text       start:0x80035220 end:0x80035268
 
+game/Terrain_FindTriangleAtPosition.c:
+	extab       start:0x80005C70 end:0x80005C78
+	extabindex  start:0x8001F8A4 end:0x8001F8B0
+	.text       start:0x80035ED4 end:0x80036154
+
 game/Math_SegmentIntersection2D.c:
 	.text       start:0x80036154 end:0x80036278
 
