@@ -839,7 +839,7 @@ config.libs = [
             Object(Matching, "game/clFlowCup.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
             Object(Matching, "game/clFlowRound.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++", "-use_lmw_stmw on"]),
             Object(Matching, "game/clFlowItemSelect_CommitSlotAnim.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/clFlowItemSelect_Draw.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/clFlowItemSelect_Draw.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/clFlowItemSelect_Update.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clFlowItemSelect_Dtor.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/clFlowItemSelect_Init.c", extab_padding=b"\x00\x00"),
