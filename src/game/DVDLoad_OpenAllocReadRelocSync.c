@@ -7,7 +7,7 @@
 /* refine if the real prototype matters for header consumers. */
 extern void DVDOpen();
 extern void FUN_8007dfe4();
-extern void fn_8029530C();
+extern void DVDClose();
 extern void fn_802DB304();
 extern void fn_802DC964();
 extern void memcpy();
@@ -77,7 +77,7 @@ asm void DVDLoad_OpenAllocReadRelocSync(void) { /* 0x8007DD00 size:0x2D4 */
     DVDLoad_OpenAllocReadRelocSync_L_8007DD8C:
     lwz r27, 0x3c(r1)
     addi r3, r1, 0x8
-    bl fn_8029530C
+    bl DVDClose
     lwz r0, 0x0(r31)
     cmplw r0, r27
     bne DVDLoad_OpenAllocReadRelocSync_L_8007DFAC

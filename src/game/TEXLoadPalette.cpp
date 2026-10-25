@@ -12,7 +12,7 @@ extern u32 lbl_806D11F8[2];
 extern const u8 lbl_806D2FB0;
 extern const char lbl_80313008[], lbl_80313018[];
 int DVDOpen(const char*, DVDFileInfo*);
-void fn_8029530C(DVDFileInfo*);
+void DVDClose(DVDFileInfo*);
 void* OSAllocFromHeap(int, u32);
 void OSFreeToHeap(int, void*);
 u8 FUN_8007dfe4(const char*, void*, u32, u32, int);
@@ -55,16 +55,16 @@ void TEXLoadPalette(TPLPalette** out, const char* path) {
     u32 x = *header;
     int size = ((x >> 24) & 0xff) | ((x >> 8) & 0xff00) | ((x << 8) & 0xff0000) | (x << 24);
     OSFreeToHeap(lbl_806CF010, header);
-    if (size <= 0) { fn_8029530C(&file); return; }
+    if (size <= 0) { DVDClose(&file); return; }
     if (heap == -1) *out = (TPLPalette*)OSAllocFromHeap(lbl_806CF010, size);
     else *out = (TPLPalette*)OSAllocFromHeap(heap, size);
-    if (!*out) { fn_8029530C(&file); return; }
+    if (!*out) { DVDClose(&file); return; }
     void* compressed = OSAllocFromHeap(lbl_806CF010, diskSize);
-    if (lbl_806D2FB0 == 1) fn_8029530C(&file);
+    if (lbl_806D2FB0 == 1) DVDClose(&file);
     lbl_806D11F8[0] += size;
     if (lbl_806D2FB0 == 0) {
         if (!DVDLoad_ReadChunkHandle(&file, *out, size, 0, 9)) {
-            OSFreeToHeap(lbl_806CF010, *out); *out = 0; fn_8029530C(&file); return;
+            OSFreeToHeap(lbl_806CF010, *out); *out = 0; DVDClose(&file); return;
         }
     } else {
         if (!FUN_8007dfe4(path, compressed, diskSize, 0, 9)) {
@@ -74,7 +74,7 @@ void TEXLoadPalette(TPLPalette** out, const char* path) {
         DCFlushRange(*out, size);
         OSFreeToHeap(lbl_806CF010, compressed);
     }
-    if (lbl_806D2FB0 == 0) fn_8029530C(&file);
+    if (lbl_806D2FB0 == 0) DVDClose(&file);
     RelocatePalette(*out);
 }
 
