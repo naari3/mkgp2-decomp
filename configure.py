@@ -1136,6 +1136,7 @@ config.libs = [
             Object(Matching, "game/Sci2Card_SendCmds.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/CardTaskWelcome_Dtor.c"),
             Object(Matching, "game/card_task_manager_create.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/OperationClockState.c"),
             Object(Matching, "game/PlayStats_Counters.c"),
             Object(Matching, "game/PlayStats_Session.c"),
             Object(NonMatching, "game/PlayStats_CopyStatsBlock.c", mw_version="GC/2.6"),
