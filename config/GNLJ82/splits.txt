@@ -5120,6 +5120,46 @@ game/Sound_801674AC.cpp:
 	extabindex  start:0x80025E74 end:0x80025E98
 	.text       start:0x801674AC end:0x80167744
 
+game/misc3d/fn_80167DDC.cpp:
+	extab       start:0x8000FFE0 end:0x8000FFF8
+	extabindex  start:0x80025EC8 end:0x80025ED4
+	.text       start:0x80167DDC end:0x80167F24
+
+game/misc3d/fn_801680A0.cpp:
+	extab       start:0x80010010 end:0x80010028
+	extabindex  start:0x80025EE0 end:0x80025EEC
+	.text       start:0x801680A0 end:0x801681E8
+
+game/misc3d/fn_80168910.cpp:
+	extab       start:0x80010088 end:0x800100A0
+	extabindex  start:0x80025F1C end:0x80025F28
+	.text       start:0x80168910 end:0x80168A4C
+
+game/misc3d/fn_80168A4C.cpp:
+	extab       start:0x800100A0 end:0x800100B8
+	extabindex  start:0x80025F28 end:0x80025F34
+	.text       start:0x80168A4C end:0x80168B90
+
+game/misc3d/fn_80168EFC.cpp:
+	extab       start:0x800100E8 end:0x80010100
+	extabindex  start:0x80025F4C end:0x80025F58
+	.text       start:0x80168EFC end:0x80169040
+
+game/misc3d/fn_801696E4.cpp:
+	extab       start:0x80010178 end:0x80010190
+	extabindex  start:0x80025F94 end:0x80025FA0
+	.text       start:0x801696E4 end:0x801697C0
+
+game/misc3d/fn_801697C0.cpp:
+	extab       start:0x80010190 end:0x800101A8
+	extabindex  start:0x80025FA0 end:0x80025FAC
+	.text       start:0x801697C0 end:0x801698B4
+
+game/misc3d/fn_801698B4.cpp:
+	extab       start:0x800101A8 end:0x800101C0
+	extabindex  start:0x80025FAC end:0x80025FB8
+	.text       start:0x801698B4 end:0x80169978
+
 game/Rumble.cpp:
 	.text       start:0x80169978 end:0x80169A14
 
@@ -6073,10 +6113,20 @@ game/objview/fn_80195CD4.c:
 	extabindex  start:0x800272C0 end:0x800272CC
 	.text       start:0x80195CD4 end:0x80195DA8
 
+game/objview/fn_80195DA8.cpp:
+	extab       start:0x800123B8 end:0x800123E0
+	extabindex  start:0x800272CC end:0x800272D8
+	.text       start:0x80195DA8 end:0x80195F54
+
 game/objview/fn_80195F54.c:
 	extab       start:0x800123E0 end:0x800123E8
 	extabindex  start:0x800272D8 end:0x800272E4
 	.text       start:0x80195F54 end:0x80196028
+
+game/objview/fn_80196028.cpp:
+	extab       start:0x800123E8 end:0x80012400
+	extabindex  start:0x800272E4 end:0x800272F0
+	.text       start:0x80196028 end:0x8019618C
 
 game/objview/fn_80196758.c:
 	extab       start:0x80012408 end:0x80012410
@@ -6122,14 +6172,30 @@ game/kartmove/KartMovement_CalcMaxSpeed.c:
 game/KartMovement_SetPosition.c:
 	.text       start:0x8019A4A0 end:0x8019A4E0
 
+game/kartmove/fn_8019A4E0.cpp:
+	extab       start:0x80012618 end:0x80012630
+	extabindex  start:0x800273F8 end:0x80027404
+	.text       start:0x8019A4E0 end:0x8019A6A4
+
+game/kartmove/fn_8019A6A4.cpp:
+	extab       start:0x80012630 end:0x80012648
+	extabindex  start:0x80027404 end:0x80027410
+	.text       start:0x8019A6A4 end:0x8019A850
+
 game/kartmove/fn_8019A850.c:
 	.text       start:0x8019A850 end:0x8019A87C
 
 game/kartmove/KartMovement_SetTravelProgress.c:
 	.text       start:0x8019A87C end:0x8019A8A4
 
+game/kartmove/fn_8019A8A4.c:
+	.text       start:0x8019A8A4 end:0x8019A9BC
+
 game/kartmove/fn_8019C078.c:
 	.text       start:0x8019C078 end:0x8019C15C
+
+game/kartmove/fn_8019CC2C.c:
+	.text       start:0x8019CC2C end:0x8019CD30
 
 game/sprite/fn_8019FE58.c:
 	.text       start:0x8019FE58 end:0x8019FE78
@@ -6228,6 +6294,11 @@ game/sprite/fn_801A1128.c:
 	extabindex  start:0x800275CC end:0x800275D8
 	.text       start:0x801A1128 end:0x801A1174
 
+game/sprite/fn_801A1174.c:
+	extab       start:0x80012A20 end:0x80012A28
+	extabindex  start:0x800275D8 end:0x800275E4
+	.text       start:0x801A1174 end:0x801A1280
+
 game/sprite/fn_801A1280.c:
 	extab       start:0x80012A28 end:0x80012A30
 	extabindex  start:0x800275E4 end:0x800275F0
@@ -6255,6 +6326,21 @@ game/sprite/fn_801A175C.c:
 	extab       start:0x80012A58 end:0x80012A60
 	extabindex  start:0x8002762C end:0x80027638
 	.text       start:0x801A175C end:0x801A1798
+
+game/sprite/fn_801A1828.c:
+	extab       start:0x80012A60 end:0x80012A68
+	extabindex  start:0x80027638 end:0x80027644
+	.text       start:0x801A1828 end:0x801A19FC
+
+game/sprite/fn_801A19FC.c:
+	extab       start:0x80012A68 end:0x80012A70
+	extabindex  start:0x80027644 end:0x80027650
+	.text       start:0x801A19FC end:0x801A1BD0
+
+game/sprite/fn_801A1BD0.c:
+	extab       start:0x80012A70 end:0x80012A78
+	extabindex  start:0x80027650 end:0x8002765C
+	.text       start:0x801A1BD0 end:0x801A1D40
 
 game/sprite/fn_801A1D40.c:
 	.text       start:0x801A1D40 end:0x801A1D98
