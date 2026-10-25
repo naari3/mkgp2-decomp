@@ -1981,6 +1981,12 @@ game/Sci2Card_ResetRetryAndStatus.c:
 game/Sci2Card_ReceiptTables.c:
 	.text       start:0x80099958 end:0x80099994
 
+game/RaceSys_8009B98C.c:
+	.text       start:0x8009B98C end:0x8009B9D0
+
+game/RaceSys_8009BAC4.c:
+	.text       start:0x8009BAC4 end:0x8009BD04
+
 game/RankSlot_AppendOrUpdate.c:
 	extab       start:0x80009598 end:0x800095A0
 	extabindex  start:0x80022190 end:0x8002219C
@@ -1990,6 +1996,9 @@ game/VSMode_SeedRandomItemSequence.c:
 	extab       start:0x800095A0 end:0x800095A8
 	extabindex  start:0x8002219C end:0x800221A8
 	.text       start:0x8009BDC0 end:0x8009BEF4
+
+game/RaceData_8009BEF4.c:
+	.text       start:0x8009BEF4 end:0x8009CBFC
 
 game/PlayerData_ApplyItemUnlockById.c:
 	extab       start:0x800095B0 end:0x800095B8
@@ -2186,6 +2195,11 @@ game/TitleTracker_Dtor.c:
 game/TitleTracker_Stubs.c:
 	.text       start:0x800A5CE4 end:0x800A5CEC
 
+game/RankLog.c:
+	extab       start:0x80009CD4 end:0x80009E04
+	extabindex  start:0x800223DC end:0x800225A4
+	.text       start:0x800A5CEC end:0x800A8D34
+
 game/auto_800A8F4C_block.c:
 	extab       start:0x80009E60 end:0x80009ED0
 	extabindex  start:0x800225B0 end:0x80022640
@@ -2266,6 +2280,11 @@ game/GameMode_Title_Ctor.c:
 	extab       start:0x8000A158 end:0x8000A170
 	extabindex  start:0x800227F0 end:0x800227FC
 	.text       start:0x800AC8FC end:0x800AC94C
+
+game/GameMode_TitleSelect.cpp:
+	extab       start:0x8000A170 end:0x8000A1EC
+	extabindex  start:0x800227FC end:0x80022868
+	.text       start:0x800AC94C end:0x800ACD60
 
 game/ReverseChallenge.c:
 	extab       start:0x8000A1EC end:0x8000A37C

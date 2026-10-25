@@ -1071,6 +1071,11 @@ config.libs = [
             Object(Matching, "game/CharaPop12_Update.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/Boomerang_ReturnAndAcquireTargetTick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(NonMatching, "game/EffectVfx84_85_BoostChargeRing_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/RaceSys_8009B98C.c"),  #g2
+            Object(Matching, "game/RaceSys_8009BAC4.c"),  #g2
+            Object(Matching, "game/RaceData_8009BEF4.c"),  #g2
+            Object(NonMatching, "game/GameMode_TitleSelect.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(NonMatching, "game/RankLog.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/ItemObject_WriteVectors.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemTracker.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowItem.c", extab_padding=b"\xc7\x02" * 6, extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
