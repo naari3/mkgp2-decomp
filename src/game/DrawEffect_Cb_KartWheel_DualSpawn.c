@@ -14,22 +14,30 @@ extern void DrawEffect_KartWheel_TripleChildUpdate(unsigned char *child, Vec *po
 
 #define D(o) (*(float *)(d + (o)))
 #define DI(o) (*(unsigned int *)(d + (o)))
+#define CP(o) (*(unsigned char **)(c + (o)))
 #define DP(o) (*(unsigned char **)(d + (o)))
 
-static inline unsigned char Flag_Test(unsigned long long flags, unsigned long long mask)
+typedef struct KartStatus {
+    unsigned char pad[0x10];
+    unsigned long long flags;
+} KartStatus;
+
+static inline unsigned char has_flag(KartStatus *st, unsigned long long mask)
 {
-    unsigned char r = 0;
-    if (flags & mask) {
-        r = 1;
+    unsigned char result;
+
+    if ((st->flags & mask) == 0) {
+        result = 0;
+    } else {
+        result = 1;
     }
-    return r;
+    return result;
 }
 
 void DrawEffect_Cb_KartWheel_DualSpawn(unsigned char *self)
 {
+    unsigned char *c;
     unsigned char *d = self + 0xCC;
-    unsigned char **child;
-    float *phase;
     int i;
 
     switch (STATE) {
@@ -58,12 +66,12 @@ void DrawEffect_Cb_KartWheel_DualSpawn(unsigned char *self)
         return;
     }
     {
-        unsigned long long flags = *(unsigned long long *)(*(unsigned char **)(DP(0x50) + 0x304) + 0x10);
+        KartStatus *st = *(KartStatus **)(DP(0x50) + 0x304);
         int active = 0;
-        if (Flag_Test(flags, 8ULL)) {
+        if (has_flag(st, 8ULL)) {
             active = 1;
         }
-        if (flags & 0x10ULL) {
+        if (st->flags & 0x10ULL) {
             active = 1;
         }
         if (active != 0) {
@@ -88,8 +96,9 @@ void DrawEffect_Cb_KartWheel_DualSpawn(unsigned char *self)
     } else {
         U8(0x28) = 1;
     }
-    for (i = 0; i < 2; i++) {
-        if (DP(0x10 + i * 4) != 0) {
+    c = d;
+    for (i = 0; i < 2; i++, c += 4) {
+        if (CP(0x10) != 0) {
             Vec wheel;
             PhaseTable offs;
             Vec local;
@@ -104,14 +113,14 @@ void DrawEffect_Cb_KartWheel_DualSpawn(unsigned char *self)
             k = 0.8f * ((1.0f + (float)sin(BuildOrientationFromYaw(D(0x84) + offs.v[i]))) * 0.5f) + 0.2f;
             if (S8(0x28)) {
                 local = wheel;
-                DrawEffect_KartWheel_TripleChildUpdate(DP(0x10 + i * 4), &local, 0.9f, F(0x2C) * k);
+                DrawEffect_KartWheel_TripleChildUpdate(CP(0x10), &local, 0.9f, F(0x2C) * k);
             } else {
                 local2 = wheel;
-                DrawEffect_KartWheel_TripleChildUpdate(DP(0x10 + i * 4), &local2, 0.9f, 0.0f);
+                DrawEffect_KartWheel_TripleChildUpdate(CP(0x10), &local2, 0.9f, 0.0f);
             }
-            *(float *)(DP(0x10 + i * 4) + 0x150) += 0.007142857f;
-            if (1.0f < *(float *)(DP(0x10 + i * 4) + 0x150)) {
-                *(float *)(DP(0x10 + i * 4) + 0x150) -= 1.0f;
+            *(float *)(CP(0x10) + 0x150) += 0.007142857f;
+            if (1.0f < *(float *)(CP(0x10) + 0x150)) {
+                *(float *)(CP(0x10) + 0x150) -= 1.0f;
             }
         }
     }
