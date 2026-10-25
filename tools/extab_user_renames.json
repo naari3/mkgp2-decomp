@@ -1641,6 +1641,20 @@
   "src/game/dtor_801F2724.cpp": {
     "__dt__14Holder801F2724Fv": "dtor_801F2724"
   },
+  "src/game/fn_801F7CD8.cpp": {
+    "__dt__14Holder801F7CD8Fv": "fn_801F7CD8"
+  },
+  "src/game/fn_801F7D50.cpp": {
+    "__ct__14Holder801F7D50Fi": "fn_801F7D50",
+    "__ct__11Obj801F7D50Fi": "fn_801F6918"
+  },
+  "src/game/fn_801BA110.cpp": {
+    "__ct__11Obj801BA110Fv": "fn_801B9928"
+  },
+  "src/game/fn_801FA864.cpp": {
+    "__ct__11Obj801FA864Fii": "fn_801FD240",
+    "Add__7StepSeqFPvi": "fn_801F4DF0"
+  },
   "src/game/MiniGameBase.cpp": {
     "__dt__7MBOwnerFv": "dtor_80122FD8",
     "__dt__6MBRootFv": "dtor_8002CDF4",
