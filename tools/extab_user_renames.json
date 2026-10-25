@@ -1008,6 +1008,10 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "__ct__9SingletonFv": "fn_801903D0"
   },
+  "src/game/objview/fn_80195A7C.cpp": {
+    "__dt__4NodeFv": "fn_80195A7C",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
   "src/game/objview/fn_80187878.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",

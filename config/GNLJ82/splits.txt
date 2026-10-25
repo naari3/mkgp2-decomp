@@ -5929,6 +5929,21 @@ game/clsound/fn_80191A14.c:
 	extabindex  start:0x80027104 end:0x80027110
 	.text       start:0x80191A14 end:0x80191B5C
 
+game/clsound/fn_80191B5C.c:
+	extab       start:0x80012264 end:0x8001226C
+	extabindex  start:0x80027110 end:0x8002711C
+	.text       start:0x80191B5C end:0x80191CF4
+
+game/clsound/fn_80191CF4.c:
+	extab       start:0x8001226C end:0x80012274
+	extabindex  start:0x8002711C end:0x80027128
+	.text       start:0x80191CF4 end:0x80191DF8
+
+game/clsound/fn_80191DF8.c:
+	extab       start:0x80012274 end:0x8001227C
+	extabindex  start:0x80027128 end:0x80027134
+	.text       start:0x80191DF8 end:0x80191F1C
+
 game/clsound/fn_80191F1C.c:
 	.text       start:0x80191F1C end:0x80192010
 
@@ -5939,6 +5954,9 @@ game/SoundMgr_Play.c:
 	extab       start:0x800122A4 end:0x800122AC
 	extabindex  start:0x80027170 end:0x8002717C
 	.text       start:0x80192884 end:0x80192F04
+
+game/clsound/fn_80193134.c:
+	.text       start:0x80193134 end:0x80193264
 
 game/WeatherSystem_PickVariant.c:
 	extab       start:0x800122B4 end:0x800122BC
@@ -5968,6 +5986,11 @@ game/clsound/fn_801934A0.c:
 	extabindex  start:0x800271C4 end:0x800271D0
 	.text       start:0x801934A0 end:0x801934F4
 
+game/clsound/fn_80193838.c:
+	extab       start:0x800122F4 end:0x800122FC
+	extabindex  start:0x800271E8 end:0x800271F4
+	.text       start:0x80193838 end:0x8019397C
+
 game/clstream/fn_80194108.c:
 	extab       start:0x80012304 end:0x8001230C
 	extabindex  start:0x80027200 end:0x8002720C
@@ -5990,10 +6013,20 @@ game/clstream/ClStream_IsActive.c:
 game/clstream/fn_80194AE0.c:
 	.text       start:0x80194AE0 end:0x80194B8C
 
+game/clstream/ClStream_Stop.c:
+	extab       start:0x80012324 end:0x8001232C
+	extabindex  start:0x80027230 end:0x8002723C
+	.text       start:0x80194B8C end:0x80194CEC
+
 game/clstream/fn_80194CEC.c:
 	extab       start:0x8001232C end:0x80012334
 	extabindex  start:0x8002723C end:0x80027248
 	.text       start:0x80194CEC end:0x80194DD8
+
+game/clstream/ClStream_PlayMono.c:
+	extab       start:0x8001233C end:0x80012344
+	extabindex  start:0x80027254 end:0x80027260
+	.text       start:0x80195050 end:0x801951B4
 
 game/clstream/fn_801951B4.c:
 	.text       start:0x801951B4 end:0x801951CC
@@ -6015,6 +6048,11 @@ game/clstream/fn_8019522C.c:
 	extabindex  start:0x80027260 end:0x8002726C
 	.text       start:0x8019522C end:0x801952EC
 
+game/objview/fn_801954F4.c:
+	extab       start:0x80012354 end:0x8001235C
+	extabindex  start:0x80027278 end:0x80027284
+	.text       start:0x801954F4 end:0x8019561C
+
 game/objview/fn_8019561C.c:
 	extab       start:0x8001235C end:0x80012364
 	extabindex  start:0x80027284 end:0x80027290
@@ -6024,6 +6062,11 @@ game/objview/fn_8019571C.c:
 	extab       start:0x80012364 end:0x8001236C
 	extabindex  start:0x80027290 end:0x8002729C
 	.text       start:0x8019571C end:0x801957AC
+
+game/objview/fn_80195A7C.cpp:
+	extab       start:0x80012374 end:0x8001237C
+	extabindex  start:0x800272A8 end:0x800272B4
+	.text       start:0x80195A7C end:0x80195B94
 
 game/objview/fn_80195CD4.c:
 	extab       start:0x800123B0 end:0x800123B8
