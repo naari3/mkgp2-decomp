@@ -2451,6 +2451,13 @@
     "extabindex_fn_80140FEC": "@eti_80025040",
     "__dt__6FxBaseFv": "dtor_8013EB50",
     "__dt__6TexMgrFv": "dtor_800869D0",
-    "__ct__6TexMgrFv": "TexMgr_Init"
+    "__ct__6TexMgrFv": "TexMgr_Init",
+    "Draw__8TrophyFxFv": "fn_8013ECB0",
+    "DrawCaption__8TrophyFxFf": "fn_8013EDB8",
+    "Update__8TrophyFxFv": "fn_8013F940",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "extab_fn_8013F428": "@etb_8000D6C0",
+    "extabindex_fn_8013F428": "@eti_80024FB0"
   }
 }

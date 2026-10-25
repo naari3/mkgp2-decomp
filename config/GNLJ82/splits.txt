@@ -4167,9 +4167,10 @@ game/SpriteEffects.c:
 	.text       start:0x8013DD38 end:0x8013ECB0
 
 game/ResultFx.c:
-	extab       start:0x8000D6E0 end:0x8000D7AC
-	extabindex  start:0x80024FC8 end:0x8002504C
-	.text       start:0x8013FE4C end:0x80141450
+	extab       start:0x8000D670 end:0x8000D7AC
+	extabindex  start:0x80024F98 end:0x8002504C
+	.text       start:0x8013ECB0 end:0x80141450
+	.data       start:0x8048EBEC end:0x8048EC4C
 
 game/LogoAnim.c:
 	extab       start:0x8000D7AC end:0x8000D7DC
