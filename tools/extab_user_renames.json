@@ -928,6 +928,15 @@
   "src/game/mapobject/fn_8017BF90.cpp": {
     "Update__8clModelMFv": "fn_8017BF90"
   },
+  "src/game/mapobject/fn_8017C1F4.cpp": {
+    "Draw__8clModelMFv": "fn_8017C1F4"
+  },
+  "src/game/mapobject/fn_8017C58C.cpp": {
+    "Draw__9clModelPRFv": "fn_8017C58C"
+  },
+  "src/game/mapobject/fn_8017CBB0.cpp": {
+    "Draw__8clModelPFv": "fn_8017CBB0"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
