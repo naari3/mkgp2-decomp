@@ -2360,5 +2360,18 @@
     "__dt__11TextManagerFv": "dtor_800869D0",
     "__vt__9FlowFader": "lbl_80419DC8",
     "__vt__10FlowFaderF": "lbl_80419DE0"
+  },
+  "src/game/ZoneVisibility.cpp": {
+    "__dt__14ZoneVisibilityFv": "fn_80174090",
+    "__dt__4ZoneFv": "fn_80174130",
+    "__ct__14ZoneVisibilityFP4JObj": "fn_801742FC",
+    "Append__4ZoneFP4Zone": "fn_801745C4",
+    "__ct__10ZoneVolumeFPC8ZoneDesci": "fn_80123BB4",
+    "__dt__10ZoneVolumeFv": "fn_80123B48",
+    "Contains__10ZoneVolumeFP5Vec3f": "fn_80123480",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free"
   }
 }
