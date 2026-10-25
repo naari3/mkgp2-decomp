@@ -4252,6 +4252,17 @@ game/fn_8017218C.c:
 	extabindex  start:0x80026498 end:0x800264A4
 	.text       start:0x8017218C end:0x801721B0
 
+game/Scene_801721B0.cpp:
+	extab       start:0x80010954 end:0x8001095C
+	extabindex  start:0x800264A4 end:0x800264B0
+	.text       start:0x801721B0 end:0x80172844
+
+game/Scene_80172844.cpp:
+	extab       start:0x8001095C end:0x80010964
+	extabindex  start:0x800264B0 end:0x800264BC
+	.text       start:0x80172844 end:0x80172948
+	.rodata     start:0x8036E8B0 end:0x8036E978
+
 game/Scene_801734B0.cpp:
 	extab       start:0x8001096C end:0x80010A4C
 	extabindex  start:0x800264C8 end:0x8002651C
