@@ -237,6 +237,11 @@ game/ResolveJointByName.c:
 game/Archive.c:
 	.text       start:0x80033EFC end:0x80033F10
 
+game/Object_AnimBinding.cpp:
+	extab       start:0x80005B58 end:0x80005B98
+	extabindex  start:0x8001F790 end:0x8001F7D8
+	.text       start:0x80033F10 end:0x80034508
+
 game/Normal3DLoad.c:
 	extab       start:0x80005B98 end:0x80005BA0
 	extabindex  start:0x8001F7D8 end:0x8001F7E4

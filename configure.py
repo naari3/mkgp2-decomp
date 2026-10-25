@@ -893,6 +893,7 @@ config.libs = [
             Object(Matching, "game/ObjectTree_BlendQuatLerp.c", extab_padding=b""),
             Object(Matching, "game/clNormal3D.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/Normal3DScale.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/Object_AnimBinding.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Normal3DLoad.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Normal3DFlatten.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/clRomLifecycle.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
