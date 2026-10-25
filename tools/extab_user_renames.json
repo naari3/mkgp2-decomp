@@ -3023,6 +3023,19 @@
     "SetSpeed__10HudManagerFf": "fn_80253FD8",
     "__dt__10HudManagerFv": "fn_80254134"
   },
+  "src/game/ItemViewer.cpp": {
+    "LoadModel__12clItemViewerFv": "fn_80254398",
+    "Draw__12clItemViewerFv": "fn_80254604",
+    "Update__12clItemViewerFv": "fn_802549CC",
+    "__dt__12clItemViewerFv": "fn_80254EA4",
+    "Release__12clItemViewerFv": "fn_80254F3C",
+    "__vt__16clSceneInterface": "lbl_803FE0C8",
+    "__vt__12clItemViewer": "lbl_804F211C",
+    "__ct__9ShowModelFPvi": "fn_8013D800",
+    "__ct__8InfoTextFv": "TexMgr_Init",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
   "src/Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp": {
     "__dt__Q23std9exceptionFv": "dtor_80038DD4",
     "what__Q23std9exceptionCFv": "fn_80038E1C",
