@@ -552,6 +552,11 @@ game/LakituStart_Dtor.c:
 game/KartItem_Fields.c:
 	.text       start:0x8003F364 end:0x8003F418
 
+game/KartItem_RankSlot.c:
+	extab       start:0x80006150 end:0x80006160
+	extabindex  start:0x8001FD90 end:0x8001FDA8
+	.text       start:0x8003F418 end:0x8003F518
+
 game/KartMovement.c:
 	.text       start:0x8003F518 end:0x8003F528
 
@@ -575,6 +580,11 @@ game/KartMovement_CanReceiveItem.c:
 
 game/KartMovement_GetCurrentItemId.c:
 	.text       start:0x80040600 end:0x80040608
+
+game/KartMovement_Reset.c:
+	extab       start:0x80006198 end:0x800061C8
+	extabindex  start:0x8001FDFC end:0x8001FE44
+	.text       start:0x80040608 end:0x80040C24
 
 game/KartReaction.c:
 	extab       start:0x800061C8 end:0x800061E0
