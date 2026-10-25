@@ -8089,6 +8089,11 @@ game/fn_801DEEB8.cpp:
 	extabindex  start:0x800284E4 end:0x800284F0
 	.text       start:0x801DEEB8 end:0x801DEF94
 
+game/fn_801DEF94.cpp:
+	extab       start:0x80015A34 end:0x800162A8
+	extabindex  start:0x800284F0 end:0x80028784
+	.text       start:0x801DEF94 end:0x801E4524
+
 game/fn_801E4524.c:
 	extab       start:0x800162A8 end:0x800162B0
 	extabindex  start:0x80028784 end:0x80028790
