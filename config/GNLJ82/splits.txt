@@ -7087,6 +7087,25 @@ triforce/dvdlow.c:
 	.sdata      start:0x806D0C08 end:0x806D0C10
 	.sbss       start:0x806D1DA8 end:0x806D1E08
 
+triforce/dikey.c:
+	.text       start:0x80286314 end:0x802867B0
+	.bss        start:0x806835C0 end:0x806835D0
+	.sdata      start:0x806D0C10 end:0x806D0C18
+	.sbss       start:0x806D1E08 end:0x806D1E28
+
+triforce/random.c:
+	.text       start:0x802867B0 end:0x80286934
+	.sdata      start:0x806D0C18 end:0x806D0C20
+
+triforce/dvdcmd.c:
+	.text       start:0x80286934 end:0x80286B4C
+
+triforce/amexi.c:
+	.text       start:0x80286B4C end:0x80287E34
+	.data       start:0x804F5718 end:0x804F57D0
+	.bss        start:0x806835D0 end:0x806835E0
+	.sbss       start:0x806D1E28 end:0x806D1E30
+
 dolphin/dvd/dvdlow.c:
 	.text       start:0x80294E6C end:0x80294EA4
 	.bss        start:0x806A47A0 end:0x806A4800
