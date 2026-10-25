@@ -108,7 +108,7 @@ extern void GXSetVtxDesc();
 extern void GXSetZCompLoc();
 extern void GXSetZMode();
 extern void fn_8011EC18();
-extern void fn_802C14B8();
+extern void HSD_StateInvalidate();
 extern unsigned int lbl_806D14F0;
 extern unsigned int lbl_806D14F1;
 extern unsigned int lbl_806D14F4;
@@ -266,7 +266,7 @@ extern "C" asm void fn_8011E31C(struct SpriteHandle *) { /* 0x8011E31C size:0x6A
     lwz r3, 0x0(r3)
     bl GXSetCullMode
     li r3, -0x1
-    bl fn_802C14B8
+    bl HSD_StateInvalidate
     lbz r3, 0x25(r25)
     bl fn_8011EC18
     fn_8011E31C_L_8011E4CC:

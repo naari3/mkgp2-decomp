@@ -36,7 +36,7 @@ extern void MemoryManager_TimedFree(void *);
 extern void dtor_8002CDF4(void *, int);
 extern void *Alloc(unsigned long size);
 extern void GameMode_BaseInit(void *self);
-extern void fn_8026031C(int x, int y, int color, const char *text);
+extern void DEMOPuts(int x, int y, int color, const char *text);
 extern VObj *fn_8015CB5C(int arg);
 extern void fn_801A1280(void);
 extern void fn_8011FAB8(void);
@@ -103,7 +103,7 @@ extern "C" int fn_800AC9AC(GameModeTitle *self)
 #pragma exceptions on
 extern "C" void GameMode_Title_DrawDebugLabel(void)
 {
-    fn_8026031C(10, 10, 0, lbl_80328DC8);
+    DEMOPuts(10, 10, 0, lbl_80328DC8);
 }
 
 extern "C" GameModeTitle *GameMode_StageSelect_Ctor(void)
@@ -138,7 +138,7 @@ extern "C" int fn_800ACAC0(void)
 #pragma exceptions on
 extern "C" void GameMode_StageSelect_DrawDebugLabel(void)
 {
-    fn_8026031C(10, 10, 0, lbl_80328DB8);
+    DEMOPuts(10, 10, 0, lbl_80328DB8);
 }
 
 extern "C" GameModeSelect *GameMode_CharacterSelect_Ctor(void)
