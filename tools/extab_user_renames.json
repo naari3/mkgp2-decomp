@@ -658,6 +658,74 @@
     "extab_CardSave_Tick_CaptureAndStart": "@etb_80009498",
     "extabindex_CardSave_Tick_CaptureAndStart": "@eti_80022010"
   },
+  "src/game/Scene_80163614.cpp": {
+    "__vt__10LoaderBase": "lbl_8048FF80",
+    "__vt__12LoaderHolder": "lbl_80490DAC",
+    "__ct__12CourseLoaderFPvi": "fn_80164614",
+    "__dt__10LoaderBaseFv": "dtor_801577D4"
+  },
+  "src/game/Scene_80163804.cpp": {
+    "__vt__9SceneBase": "lbl_803FE0C8",
+    "__vt__15CourseLoadScene": "lbl_80490DF8",
+    "__ct__12CourseLoaderFPvPv": "fn_80164614",
+    "__dt__9SceneBaseFv": "dtor_8007D0D4"
+  },
+  "src/game/Scene_8015B6D0.cpp": {
+    "__ct__13Scene8015AFCCFv": "fn_8015AFCC"
+  },
+  "src/game/Scene_8015BE44.cpp": {
+    "__vt__9SceneBase": "lbl_803FE0C8",
+    "__vt__11ViewerScene": "lbl_80490064",
+    "__dt__9SceneBaseFv": "dtor_8007D0D4"
+  },
+  "src/game/Scene_80165BCC.cpp": {
+    "__ct__11Obj801654E0FPvPv": "fn_801654E0"
+  },
+  "src/game/CourseMarker.cpp": {
+    "__ct__12CourseMarkerFv": "fn_8016A1AC",
+    "__vt__16CourseMarkerBase": "lbl_80490FE0",
+    "__vt__12CourseMarker": "lbl_80491004",
+    "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
+    "__ct__10clNormal3DFPvi": "clNormal3D_Construct"
+  },
+  "src/sound/SoundMgr_PointSetNew.cpp": {
+    "__ct__11AmbPointSetFP10SpawnEntry": "fn_8016C94C"
+  },
+  "src/game/ItemBox_8016CC04.cpp": {
+    "__ct__9GXChannelFPvPvii": "GXChannel_Init",
+    "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform",
+    "__dt__9GXChannelFv": "dtor_8007D9C4"
+  },
+  "src/game/Scene_8016D920.cpp": {
+    "__ct__11MarkerChainFP12MarkerSource": "fn_8016D920",
+    "__vt__16CourseMarkerBase": "lbl_80490FE0",
+    "__vt__11MarkerChain": "lbl_80491134",
+    "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
+    "__ct__10clNormal3DFPvi": "clNormal3D_Construct"
+  },
+  "src/game/Scene_8016E1C0.cpp": {
+    "__dt__8PropNodeFv": "fn_8016E424",
+    "__vt__8PropNode": "lbl_804911F4"
+  },
+  "src/game/Scene_8016EACC.cpp": {
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__19ScreenParticleLayerFv": "fn_8016F010",
+    "__ct__9GXChannelFPvPvii": "GXChannel_Init",
+    "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform",
+    "__dt__9GXChannelFv": "dtor_8007D9C4"
+  },
+  "src/game/DebrisBurst.cpp": {
+    "__ct__11DebrisBurstFv": "fn_8016E064",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__12SoundEmitterFv": "fn_801715A0"
+  },
+  "src/game/Scene_8016FD0C.cpp": {
+    "__ct__11CourseModelFP8HSD_JObj": "fn_8016FD0C",
+    "__vt__16CourseMarkerBase": "lbl_80490FE0",
+    "__vt__11CourseModel": "lbl_8049123C",
+    "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
+    "__ct__10clNormal3DFPvi": "clNormal3D_Construct"
+  },
   "src/game/ServiceMenu_Page.c": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init",
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
@@ -1093,6 +1161,15 @@
   },
   "src/game/SpriteSlot_InitLoop.c": {
     "__ct__12LoopNormal3DFPvi": "clNormal3D_Construct"
+  },
+  "src/game/ShadowAreaMgr_Ctor.c": {
+    "__ct__13ShadowAreaMgrFPv": "ShadowAreaMgr_Ctor",
+    "__vt__13ShadowAreaMgr": "lbl_80411E04",
+    "__vt__14ShadowAreaBase": "lbl_80411E10",
+    "__ct__15ShadowAreaEntryFv": "ShadowAreaEntry_Ctor",
+    "__dt__15ShadowAreaEntryFv": "dtor_800AA980",
+    "__dt__14ShadowAreaBaseFv": "dtor_800AB134",
+    "__construct_array": "fn_80270D6C"
   },
   "src/game/SpriteSlot_TickAnim.c": {
     "extab_SpriteSlot_TickAnim": "@etb_8000B284",
@@ -1628,6 +1705,13 @@
   "src/game/BananaPositionData_Init.cpp": {
     "__ct__8Normal3DFPvi": "clNormal3D_Construct",
     "__ct__18BananaPositionDataFi": "BananaPositionData_Init"
+  },
+  "src/game/clItemBoxManager_Assets.cpp": {
+    "__ct__8Normal3DFPvi": "clNormal3D_Construct",
+    "__ct__9GXChannelFPvPvii": "GXChannel_Init"
+  },
+  "src/game/clItemBoxManager_StepTable.cpp": {
+    "__sinit_clItemBoxManager_StepTable_cpp": "clItemBoxManager_InitStateTable"
   },
   "src/game/csAnim.c": {
     "extab_fn_8013AE20": "@etb_8000D330",

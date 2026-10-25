@@ -567,7 +567,6 @@ config.libs = [
             Object(Matching, "game/fn_801B7C1C.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801737CC.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8017218C.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/fn_8016B0A0.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8014E028.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8014E004.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8014DD5C.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -614,9 +613,6 @@ config.libs = [
             Object(Matching, "game/fn_801932F8.c"),
             Object(Matching, "game/fn_80190658.c"),
             Object(Matching, "game/fn_801805AC.c"),
-            Object(Matching, "game/fn_8016CB44.c"),
-            Object(Matching, "game/fn_8016A2B8.c"),
-            Object(Matching, "game/fn_801635D4.c"),
             Object(Matching, "game/fn_80147468.c"),
             Object(Matching, "game/fn_80089F9C.c"),
             Object(Matching, "game/fn_80250F34.c"),
@@ -639,10 +635,6 @@ config.libs = [
             Object(Matching, "game/fn_801DC510.c"),
             Object(Matching, "game/fn_801B129C.c"),
             Object(Matching, "game/fn_8016FC70.c"),
-            Object(Matching, "game/fn_8016E354.c"),
-            Object(Matching, "game/fn_8016730C.c"),
-            Object(Matching, "game/fn_80166B28.c"),
-            Object(Matching, "game/fn_801660B0.c"),
             Object(Matching, "game/fn_8014D2AC.c"),
             Object(Matching, "game/fn_8014CFA0.c"),
             Object(Matching, "game/fn_8014640C.c"),
@@ -811,6 +803,7 @@ config.libs = [
             Object(Matching, "game/KartItem_RenderCb_Mode5_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartItem_RenderCb_Mode6_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartItem_RenderCb_Mode2or4_Pre.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/KartItem_RenderCb_Modes.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectState_HasContent.c"),
             Object(Matching, "game/EffectSteering.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/EffectSteeringCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
@@ -822,6 +815,65 @@ config.libs = [
             Object(Matching, "game/ItemObject_RaycastWallStub.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Item_DecayVelocityScalar.c"),
             Object(Matching, "game/ItemObject_SetByte18c.c"),
+            # group2 batch (0x8009B98C..0x801077C8)
+            Object(Matching, "game/RankSlot_AppendOrUpdate.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/PlayerData_ApplyItemUnlockById.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/PlayerData_GetUnlockedItemIdByIndex_U8.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/PlayerData_ResetForFlow.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/KartDriverArray_StaticCtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/ISE_ScaleColumnDirectionByMagnitude.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/Unknown_DeleteIfFlag_800a5188.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/VSModeIntro_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/VSModeIntro_Ctor.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/TitleTracker_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/WarpZone_VtableTrim.c"),  #g2
+            Object(Matching, "game/ShadowAreaMgr_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/dtor_800AA980.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/ShadowAreaEdge_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/ShadowAreaMgr_Ctor.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/HitMessageOverlay_Destroy.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/TweenInterp_VtableTrim.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/GameMode_Title_Ctor.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/AnimState_Reset.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/AnimState_New.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DrawEffect_SetFlagsByte.c"),  #g2
+            Object(Matching, "game/DrawEffect_Free.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DrawEffect_SpawnWithDescriptor.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+            Object(Matching, "game/DrawEffect_SpawnByType.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DrawEffect_SpawnDirect.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/VfxLaughInner_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/CharaPop12_SpawnAll.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/KartShellRibbon_DrawCb.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/SpawnRisingTextAndBurst.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DrawEffect_SetFloat110.c"),  #g2
+            Object(Matching, "game/DrawEffect_Cb_DualBurstSpawner_2x4.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+            Object(Matching, "game/EffectItem4SpawnSubFlamePair_Tick.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+            Object(Matching, "game/DrawEffect_Cb_RalySmokeSpawner_4Wheel.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DrawEffect_Cb_KartVfx4B_StubInit.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DrawEffect_Cb_ItemBoxBurstFlash_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DrawEffect_Cb_ItemBoxBurstSpawner.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DrawEffect_Cb_UVScroll_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DrawEffect_Cb_KartHaloPlate_Init.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DrawEffect_TrailDot_Spawn.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DbgMenu_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DbgScene_InitAnimSlotArray.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DbgScene_CopyMatrix3x4Transpose.c"),  #g2
+            Object(Matching, "game/Mtx_TransposeToMtx44.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/Vec3_HorizontalYawTo.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/Vec3_PitchTo.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/Vec3_HorizontalDistance.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/fn_800D3184.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/Mtx44_TransformVec3.c"),  #g2
+            Object(Matching, "game/BuildOrientationFromYaw.c"),  #g2
+            Object(Matching, "game/Mtx44_GetTranslation_RowMajor.c"),  #g2
+            Object(Matching, "game/Mtx44_GetYawOfPosZ.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/Mtx44_GetTranslation_ColMajor.c"),  #g2
+            Object(Matching, "game/ItemAliasTable_LookupSlotIndex.c"),  #g2
+            Object(Matching, "game/ItemObject_GetGroundTypeAt.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/Vec3_AddNormalizedXZ.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/ItemObject_AllocGabyou.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(NonMatching, "game/KartItem_QueryEffectStateFromIse.c"),  #g2
+            Object(Matching, "game/ItemObject_Tick_AwaitInitThenFree.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ItemObject_WriteVectors.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemTracker.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowItem.c", extab_padding=b"\xc7\x02" * 6, extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
@@ -972,6 +1024,8 @@ config.libs = [
             Object(Matching, "game/clItemBox_Dtor.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBox_Ctor_XYZ.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clItemBox_Ctor_GroundSnap.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/clItemBoxManager_Assets.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/clItemBoxManager_StepTable.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clItemBox_FactoryCreate.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/MJObj_ColorFloat.c", extab_padding=b""),
             Object(Matching, "game/MJObj_InitMember.c", extab_padding=b""),
@@ -1395,6 +1449,62 @@ config.libs = [
         ],
     },
     {
+        "lib": "game_g4",
+        "mw_version": "GC/1.3.2",
+        "cflags": cflags_base,
+        "progress_category": "game",
+        "objects": [
+            Object(Matching, "game/Scene_80163554.cpp"),
+            Object(Matching, "game/Scene_8015AE3C.cpp"),
+            Object(Matching, "game/Scene_8015B698.cpp"),
+            Object(Matching, "game/Scene_8015B70C.cpp"),
+            Object(Matching, "game/Scene_8015BC08.cpp"),
+            Object(Matching, "game/Scene_8015BE0C.cpp"),
+            Object(Matching, "game/Scene_8015BED4.cpp"),
+            Object(Matching, "game/Scene_801622C8.cpp"),
+            Object(Matching, "game/Scene_80162B00.cpp"),
+            Object(Matching, "game/Scene_801634C4.cpp"),
+            Object(Matching, "game/Scene_801636B4.cpp"),
+            Object(Matching, "game/Scene_80163614.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_80163804.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_8015B6D0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_8015BE44.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_80165454.cpp"),
+            Object(Matching, "game/Scene_80165BCC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_80165E90.cpp"),
+            Object(Matching, "game/Scene_801660EC.cpp", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/Scene_80166B28.cpp"),
+            Object(Matching, "game/Scene_8016700C.cpp"),
+            Object(Matching, "game/Sound_8016730C.cpp"),
+            Object(Matching, "game/Sound_801674AC.cpp"),
+            Object(Matching, "game/Rumble.cpp"),
+            Object(Matching, "game/CourseMarker.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Sound_8016A2C0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_8016AABC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_8016ACD4.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/HsdRes_8016B0A0.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "sound/SoundMgr_Front.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "sound/SoundMgr_Weather.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "sound/SoundMgr_PointSetMgr.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "sound/SoundMgr_PointSetNew.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ItemBox_8016CC04.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ItemBox_8016CEA0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_8016D79C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_8016D920.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_8016E1C0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/Scene_8016EACC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/DebrisBurst.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/Scene_8016FC14.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_8016FC74.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_8016FD0C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_801704A0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_801706C8.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/Scene_801707FC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/Scene_801709FC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            # g4-end
+        ],
+    },
+    {
         "lib": "resource",
         "mw_version": "GC/1.3.2",
         "cflags": cflags_base,
@@ -1681,7 +1791,9 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/clItemBoxManager_StepTable",
     "game/ItemUseStats",
+    "game/KartItem_RenderCb_Modes",
 ]
 
 
