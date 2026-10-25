@@ -83,10 +83,12 @@ struct SpriteHandle {
     char pad4A[2];
     float uv[6];
     unsigned int color[4];
-    char pad74[0xD8 - 0x74];
+    char pad74[0x88 - 0x74];
+    float corner[4][2];
+    char padA8[0xD8 - 0xA8];
     unsigned char activeFlag;
-    unsigned char callbackOn;
-    unsigned char dirty;
+    unsigned char visible;
+    signed char dirty;
     char padDB[0xE4 - 0xDB];
 };
 
@@ -113,8 +115,8 @@ extern void GXGetViewportv();
 extern void GXLoadPosMtxImm();
 extern void GXSetCurrentMtx();
 extern void GXSetProjection();
-extern unsigned int g_glyphClipMaxX;
-extern unsigned int g_glyphClipMaxY;
+extern float g_glyphClipMaxX;
+extern float g_glyphClipMaxY;
 extern float g_glyphClipMinXY;
 extern unsigned int lbl_806D14F1;
 extern unsigned int lbl_806D14F4;
@@ -175,9 +177,9 @@ extern unsigned int fn_8011DF70[];
 extern unsigned int lbl_80657228[];
 void fn_8011EB1C(void);
 asm void fn_8011EC18(unsigned char a);
-asm void SpriteHandle_RecomputeCull(void);
+void SpriteHandle_RecomputeCull(int h);
 asm void SpriteLayer_SetResource(void);
-asm void fn_8011F870(void);
+void fn_8011F870(unsigned int mask);
 void fn_8011F994(int type);
 asm int SpriteHandle_CreateEx(int a, int b, int c);
 void fn_8012094C(void);
@@ -186,7 +188,7 @@ asm void PreloadResource(void);
 void SpriteHandlePool_GC(void);
 asm void fn_80121210(void);
 asm void fn_801213EC(void);
-asm void fn_801217E8(void);
+asm void fn_801217E8(SpriteHandle *s);
 void Stub_NoOp_80121c34(void);
 asm void fn_80121C38(void);
 void fn_80121E10(ResCtrl *r);
@@ -208,18 +210,12 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_8011EC18[8
     0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const unsigned char extab_SpriteHandle_RecomputeCull[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const unsigned char extab_SpriteLayer_SetResource[8] = {
     0x28, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8011F870[8] = {
-    0x18, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
@@ -295,18 +291,12 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_8011EC18, 0x00000224, (void *)extab_fn_8011EC18
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_SpriteHandle_RecomputeCull = {
-    (void *)&SpriteHandle_RecomputeCull, 0x000001C8, (void *)extab_SpriteHandle_RecomputeCull
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_SpriteLayer_SetResource = {
     (void *)&SpriteLayer_SetResource, 0x00000504, (void *)extab_SpriteLayer_SetResource
 };
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8011F870 = {
-    (void *)&fn_8011F870, 0x00000124, (void *)extab_fn_8011F870
-};
 
 
 
@@ -584,142 +574,50 @@ extern "C" void SpriteHandle_Destroy(int h) {
     }
 }
 
-extern "C" asm void SpriteHandle_RecomputeCull(void) { /* 0x8011EE88 size:0x1C8 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    cmpwi r3, 0x0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    beq SpriteHandle_RecomputeCull_L_8011F03C
-    lis r5, 0x1062
-    lis r4, g_SpriteHandlePool@ha
-    subi r6, r3, 0x1
-    addi r3, r5, 0x4dd3
-    addi r0, r4, g_SpriteHandlePool@l
-    mulhw r3, r3, r6
-    srawi r3, r3, 5
-    srwi r4, r3, 31
-    add r3, r3, r4
-    mulli r3, r3, 0x1f4
-    subf r3, r3, r6
-    mulli r3, r3, 0xe4
-    add r31, r0, r3
-    lbz r0, 0xda(r31)
-    extsb. r0, r0
-    beq SpriteHandle_RecomputeCull_L_8011F03C
-    mr r3, r31
-    bl fn_801217E8
-    lfs f3, 0x88(r31)
-    lfs f4, 0x8c(r31)
-    fmr f2, f3
-    fmr f1, f4
-    fmr f0, f3
-    fcmpo cr0, f3, f3
-    fcmpo cr0, f2, f0
-    bge SpriteHandle_RecomputeCull_L_8011EF0C
-    fmr f2, f0
-    SpriteHandle_RecomputeCull_L_8011EF0C:
-    lfs f0, 0x8c(r31)
-    fcmpo cr0, f0, f4
-    bge SpriteHandle_RecomputeCull_L_8011EF1C
-    fmr f4, f0
-    SpriteHandle_RecomputeCull_L_8011EF1C:
-    fcmpo cr0, f1, f0
-    bge SpriteHandle_RecomputeCull_L_8011EF28
-    fmr f1, f0
-    SpriteHandle_RecomputeCull_L_8011EF28:
-    addi r3, r31, 0x8
-    lfs f0, 0x90(r31)
-    fcmpo cr0, f0, f3
-    bge SpriteHandle_RecomputeCull_L_8011EF3C
-    fmr f3, f0
-    SpriteHandle_RecomputeCull_L_8011EF3C:
-    fcmpo cr0, f2, f0
-    bge SpriteHandle_RecomputeCull_L_8011EF48
-    fmr f2, f0
-    SpriteHandle_RecomputeCull_L_8011EF48:
-    lfs f0, 0x8c(r3)
-    fcmpo cr0, f0, f4
-    bge SpriteHandle_RecomputeCull_L_8011EF58
-    fmr f4, f0
-    SpriteHandle_RecomputeCull_L_8011EF58:
-    fcmpo cr0, f1, f0
-    bge SpriteHandle_RecomputeCull_L_8011EF64
-    fmr f1, f0
-    SpriteHandle_RecomputeCull_L_8011EF64:
-    lfs f0, 0x90(r3)
-    addi r3, r3, 0x8
-    fcmpo cr0, f0, f3
-    bge SpriteHandle_RecomputeCull_L_8011EF78
-    fmr f3, f0
-    SpriteHandle_RecomputeCull_L_8011EF78:
-    fcmpo cr0, f2, f0
-    bge SpriteHandle_RecomputeCull_L_8011EF84
-    fmr f2, f0
-    SpriteHandle_RecomputeCull_L_8011EF84:
-    lfs f0, 0x8c(r3)
-    fcmpo cr0, f0, f4
-    bge SpriteHandle_RecomputeCull_L_8011EF94
-    fmr f4, f0
-    SpriteHandle_RecomputeCull_L_8011EF94:
-    fcmpo cr0, f1, f0
-    bge SpriteHandle_RecomputeCull_L_8011EFA0
-    fmr f1, f0
-    SpriteHandle_RecomputeCull_L_8011EFA0:
-    lfs f0, 0x90(r3)
-    addi r3, r3, 0x8
-    fcmpo cr0, f0, f3
-    bge SpriteHandle_RecomputeCull_L_8011EFB4
-    fmr f3, f0
-    SpriteHandle_RecomputeCull_L_8011EFB4:
-    fcmpo cr0, f2, f0
-    bge SpriteHandle_RecomputeCull_L_8011EFC0
-    fmr f2, f0
-    SpriteHandle_RecomputeCull_L_8011EFC0:
-    lfs f0, 0x8c(r3)
-    fcmpo cr0, f0, f4
-    bge SpriteHandle_RecomputeCull_L_8011EFD0
-    fmr f4, f0
-    SpriteHandle_RecomputeCull_L_8011EFD0:
-    fcmpo cr0, f1, f0
-    bge SpriteHandle_RecomputeCull_L_8011EFDC
-    fmr f1, f0
-    SpriteHandle_RecomputeCull_L_8011EFDC:
-    lfs f0, g_glyphClipMaxX(r2)
-    li r0, 0x1
-    stb r0, 0xd9(r31)
-    fcmpo cr0, f0, f3
-    bge SpriteHandle_RecomputeCull_L_8011EFF8
-    li r0, 0x0
-    stb r0, 0xd9(r31)
-    SpriteHandle_RecomputeCull_L_8011EFF8:
-    lfs f0, g_glyphClipMinXY(r2)
-    fcmpo cr0, f2, f0
-    bge SpriteHandle_RecomputeCull_L_8011F00C
-    li r0, 0x0
-    stb r0, 0xd9(r31)
-    SpriteHandle_RecomputeCull_L_8011F00C:
-    lfs f0, g_glyphClipMaxY(r2)
-    fcmpo cr0, f0, f4
-    bge SpriteHandle_RecomputeCull_L_8011F020
-    li r0, 0x0
-    stb r0, 0xd9(r31)
-    SpriteHandle_RecomputeCull_L_8011F020:
-    lfs f0, g_glyphClipMinXY(r2)
-    fcmpo cr0, f1, f0
-    bge SpriteHandle_RecomputeCull_L_8011F034
-    li r0, 0x0
-    stb r0, 0xd9(r31)
-    SpriteHandle_RecomputeCull_L_8011F034:
-    li r0, 0x0
-    stb r0, 0xda(r31)
-    SpriteHandle_RecomputeCull_L_8011F03C:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+extern "C" void SpriteHandle_RecomputeCull(int h) {
+    if (h != 0) {
+        SpriteHandle *s = GetHandle(h);
+        if (s->dirty) {
+            int i;
+            float maxY, maxX, minX, minY;
+            fn_801217E8(s);
+            minX = s->corner[0][0];
+            minY = s->corner[0][1];
+            maxX = minX;
+            maxY = minY;
+            for (i = 0; i < 4; i++) {
+                float x = s->corner[i][0];
+                float y;
+                if (x < minX) {
+                    minX = x;
+                }
+                if (maxX < x) {
+                    maxX = x;
+                }
+                y = s->corner[i][1];
+                if (y < minY) {
+                    minY = y;
+                }
+                if (maxY < y) {
+                    maxY = y;
+                }
+            }
+            s->visible = 1;
+            if (g_glyphClipMaxX < minX) {
+                s->visible = 0;
+            }
+            if (maxX < g_glyphClipMinXY) {
+                s->visible = 0;
+            }
+            if (g_glyphClipMaxY < minY) {
+                s->visible = 0;
+            }
+            if (maxY < g_glyphClipMinXY) {
+                s->visible = 0;
+            }
+            s->dirty = 0;
+        }
+    }
 }
 
 extern "C" void SpriteHandle_SetActiveFlag(int h, unsigned char on) {
@@ -1146,84 +1044,26 @@ extern "C" void fn_8011F804(int h, float x, float y) {
 extern "C" void fn_8011F86C(void) {
 }
 
-extern "C" asm void fn_8011F870(void) { /* 0x8011F870 size:0x124 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    stw r29, 0x14(r1)
-    mr. r29, r3
-    beq fn_8011F870_L_8011F978
-    lbz r3, lbl_806D14F0(r13)
-    bl fn_8011EC18
-    li r30, 0x0
-    li r31, 0x1
-    fn_8011F870_L_8011F8A0:
-    slw r0, r31, r30
-    and. r0, r29, r0
-    beq fn_8011F870_L_8011F8B4
-    mr r3, r30
-    bl fn_8011E9C0
-    fn_8011F870_L_8011F8B4:
-    addi r30, r30, 0x1
-    cmpwi r30, 0x8
-    blt fn_8011F870_L_8011F8A0
-    li r3, 0x4
-    li r4, 0x1
-    li r5, 0x1
-    li r6, 0x1
-    li r7, 0x1
-    li r8, 0x2
-    li r9, 0x2
-    bl GXSetChanCtrl
-    li r3, 0x7
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x7
-    li r7, 0x0
-    bl GXSetAlphaCompare
-    li r3, 0x1
-    bl GXSetZCompLoc
-    li r3, 0x1
-    li r4, 0x3
-    li r5, 0x1
-    bl GXSetZMode
-    lis r3, lbl_806573A0@ha
-    addi r6, r3, lbl_806573A0@l
-    lwz r3, 0x38(r6)
-    lwz r4, 0x3c(r6)
-    lwz r5, 0x40(r6)
-    lwz r6, 0x44(r6)
-    bl GXSetScissor
-    lis r3, lbl_806573A0@ha
-    addi r3, r3, lbl_806573A0@l
-    lfs f1, 0x20(r3)
-    lfs f2, 0x24(r3)
-    lfs f3, 0x28(r3)
-    lfs f4, 0x2c(r3)
-    lfs f5, 0x30(r3)
-    lfs f6, 0x34(r3)
-    bl GXSetViewport
-    lis r3, lbl_806573A0@ha
-    addi r3, r3, lbl_806573A0@l
-    addi r3, r3, 0x4
-    bl GXSetProjectionv
-    lis r3, lbl_806573A0@ha
-    addi r3, r3, lbl_806573A0@l
-    lwz r3, 0x0(r3)
-    bl GXSetCullMode
-    li r3, -0x1
-    bl HSD_StateInvalidate
-    fn_8011F870_L_8011F978:
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+extern "C" void fn_8011F870(unsigned int mask) {
+    int i;
+    if (mask == 0) {
+        return;
+    }
+    fn_8011EC18(lbl_806D14F0);
+    for (i = 0; i < 8; i++) {
+        if (mask & (1 << i)) {
+            fn_8011E9C0(i);
+        }
+    }
+    GXSetChanCtrl(4, 1, 1, 1, 1, 2, 2);
+    GXSetAlphaCompare(7, 0, 0, 7, 0);
+    GXSetZCompLoc(1);
+    GXSetZMode(1, 3, 1);
+    GXSetScissor(lbl_806573A0.scissor[0], lbl_806573A0.scissor[1], lbl_806573A0.scissor[2], lbl_806573A0.scissor[3]);
+    GXSetViewport(lbl_806573A0.viewport[0], lbl_806573A0.viewport[1], lbl_806573A0.viewport[2], lbl_806573A0.viewport[3], lbl_806573A0.viewport[4], lbl_806573A0.viewport[5]);
+    GXSetProjectionv(lbl_806573A0.proj);
+    GXSetCullMode(lbl_806573A0.cullMode);
+    HSD_StateInvalidate(-1);
 }
 
 extern "C" void fn_8011F994(int type) {
@@ -3189,7 +3029,7 @@ extern "C" asm void fn_801213EC(void) { /* 0x801213EC size:0x3FC */
     blr
 }
 
-extern "C" asm void fn_801217E8(void) { /* 0x801217E8 size:0x44C */
+extern "C" asm void fn_801217E8(SpriteHandle *s) { /* 0x801217E8 size:0x44C */
     nofralloc
     stwu r1, -0x100(r1)
     mflr r0
