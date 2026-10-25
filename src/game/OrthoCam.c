@@ -41,7 +41,7 @@ extern unsigned int lbl_806D1550;
 extern CamView *lbl_806D1554;
 extern char lbl_8048E510[];
 
-extern float fn_802C8390(void *cobj);
+extern float HSD_CObjGetNear(void *cobj);
 extern double atan(float x);
 extern double tan(float x);
 extern void fn_802C845C(void *cobj, float a, float b, float c, float d);
@@ -57,7 +57,7 @@ float fn_8013BA90(CamView *v) {
     if (v->cobj == 0) {
         return lbl_806D74A0;
     }
-    return lbl_806D74A4 * (float)atan(v->c / fn_802C8390(v->cobj));
+    return lbl_806D74A4 * (float)atan(v->c / HSD_CObjGetNear(v->cobj));
 }
 
 float fn_8013BAE8(CamView *v) {
@@ -173,7 +173,7 @@ struct OrthoCamObj {
         cobj = fn_802C87A0(lbl_8048E510);
         if (cobj) {
             fn_802C84A4(cobj, &sx, &sy);
-            aspect = fn_802C8390(cobj);
+            aspect = HSD_CObjGetNear(cobj);
             sx = tan(lbl_806D74B8 * (lbl_806D74BC * sx));
             b = aspect * (sx * sy);
             c = aspect * sx;

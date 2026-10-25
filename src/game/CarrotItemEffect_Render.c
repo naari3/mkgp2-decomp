@@ -44,7 +44,7 @@ extern void PSMTXMultVec();
 extern void GXSetAlphaCompare();
 extern void fn_802C14B8();
 extern void fn_802C7E30();
-extern void fn_802C8510();
+extern void HSD_CObjGetCurrent();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_courseScene3D;
@@ -219,7 +219,7 @@ asm void CarrotItemEffect_Render(void) { /* 0x800B23CC size:0x698 */
     addi r26, r26, 0x30
     cmpwi r24, 0x3
     blt CarrotItemEffect_Render_L_800B25A8
-    bl fn_802C8510
+    bl HSD_CObjGetCurrent
     cmplwi r3, 0x0
     bne CarrotItemEffect_Render_L_800B25F0
     li r0, 0x0

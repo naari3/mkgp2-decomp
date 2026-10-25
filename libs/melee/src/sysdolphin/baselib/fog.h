@@ -9,12 +9,14 @@
 #include <dolphin/mtx.h>
 #include <sysdolphin/baselib/object.h>
 
+// mkgp2 (newer HSD): flags word at 0x08, size 0x54.
 struct HSD_FogAdj {
     /* 0x00 */ HSD_Obj parent;
-    /* 0x08 */ s16 center;
-    /* 0x0A */ u16 width;
-    /* 0x0C */ Mtx44 mtx;
-    /* 0x3C */ HSD_AObj* aobj;
+    /* 0x08 */ u32 flags;
+    /* 0x0C */ s16 center;
+    /* 0x0E */ u16 width;
+    /* 0x10 */ Mtx44 mtx;
+    /* 0x50 */ HSD_AObj* aobj;
 };
 
 struct HSD_Fog {
@@ -28,13 +30,16 @@ struct HSD_Fog {
 };
 
 struct HSD_FogAdjDesc {
-    /* 0x00 */ u16 center;
-    /* 0x02 */ u16 width;
-    /* 0x04 */ Mtx44 mtx;
+    /* 0x00 */ u32 flags;
+    /* 0x04 */ u16 center;
+    /* 0x06 */ u16 width;
+    /* 0x08 */ Mtx44 mtx;
 };
 
+// mkgp2: the info has an anim update callback slot at 0x3C.
 struct HSD_FogInfo {
     HSD_ObjInfo parent;
+    void (*update)(void* obj, enum_t type, HSD_ObjData* val);
 };
 
 struct HSD_FogAdjInfo {

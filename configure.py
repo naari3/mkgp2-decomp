@@ -457,6 +457,9 @@ config.libs = [
         "objects": [
             Object(Matching, "sysdolphin/baselib/list.c"),
             Object(Matching, "sysdolphin/baselib/random.c"),
+            Object(Matching, "sysdolphin/baselib/fog.c"),
+            Object(Matching, "sysdolphin/baselib/archive.c"),
+            Object(Matching, "sysdolphin/baselib/hash.c"),
             Object(Matching, "sysdolphin/baselib/class.c"),
             Object(Matching, "sysdolphin/baselib/quatlib.c"),
             Object(Matching, "sysdolphin/baselib/memory.c"),
