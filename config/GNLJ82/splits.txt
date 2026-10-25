@@ -8280,6 +8280,11 @@ game/anon_8021B568.cpp:
 	extabindex  start:0x8002A2D8 end:0x8002A308
 	.text       start:0x8021B568 end:0x8021BC44
 
+game/anon_8021BC44.cpp:
+	extab       start:0x8001ACE8 end:0x8001B130
+	extabindex  start:0x8002A308 end:0x8002A3B0
+	.text       start:0x8021BC44 end:0x8021ED0C
+
 game/fn_8021ED0C.c:
 	.text       start:0x8021ED0C end:0x8021ED1C
 
