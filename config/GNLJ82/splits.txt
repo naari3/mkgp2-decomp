@@ -2736,6 +2736,13 @@ game/clCGameDemo_Dtor.c:
 game/fn_800AE71C.c:
 	.text       start:0x800AE71C end:0x800AE854
 
+game/AnimState_Step.c:
+	extab       start:0x8000A468 end:0x8000A478
+	extabindex  start:0x800228E0 end:0x800228F8
+	.text       start:0x800AE854 end:0x800AF088
+	.data       start:0x80419F20 end:0x80419FB4
+	.sbss2      start:0x806DCF18 end:0x806DCF30
+
 game/AnimState_Reset.c:
 	extab       start:0x8000A478 end:0x8000A480
 	extabindex  start:0x800228F8 end:0x80022904
