@@ -5878,6 +5878,11 @@ game/fn_801D9F88.c:
 	extabindex  start:0x800281F0 end:0x800281FC
 	.text       start:0x801D9F88 end:0x801DA06C
 
+game/fn_801DA46C.c:
+	extab       start:0x80015590 end:0x80015598
+	extabindex  start:0x80028214 end:0x80028220
+	.text       start:0x801DA46C end:0x801DA574
+
 game/fn_801DA700.c:
 	extab       start:0x800155A0 end:0x800155A8
 	extabindex  start:0x8002822C end:0x80028238
@@ -6043,8 +6048,23 @@ game/fn_801DC740.c:
 game/fn_801DC774.c:
 	.text       start:0x801DC774 end:0x801DC888
 
+game/AI_GetHitCooldown.c:
+	extab       start:0x80015938 end:0x80015940
+	extabindex  start:0x800283C4 end:0x800283D0
+	.text       start:0x801DC888 end:0x801DC9AC
+
 game/fn_801DC9AC.c:
 	.text       start:0x801DC9AC end:0x801DC9FC
+
+game/fn_801DC9FC.c:
+	extab       start:0x80015940 end:0x80015948
+	extabindex  start:0x800283D0 end:0x800283DC
+	.text       start:0x801DC9FC end:0x801DCB18
+
+game/PathVariant_Select.c:
+	extab       start:0x80015948 end:0x80015950
+	extabindex  start:0x800283DC end:0x800283E8
+	.text       start:0x801DCB18 end:0x801DCC6C
 
 game/fn_801DCC6C.c:
 	.text       start:0x801DCC6C end:0x801DCCE4
@@ -6054,11 +6074,41 @@ game/fn_801DCCE4.c:
 	extabindex  start:0x800283E8 end:0x800283F4
 	.text       start:0x801DCCE4 end:0x801DCDCC
 
+game/AI_CalcDistanceSpeedBonus.c:
+	extab       start:0x80015958 end:0x80015960
+	extabindex  start:0x800283F4 end:0x80028400
+	.text       start:0x801DCDCC end:0x801DCF00
+
+game/AI_RollItemUseProbability.c:
+	extab       start:0x80015960 end:0x80015968
+	extabindex  start:0x80028400 end:0x8002840C
+	.text       start:0x801DCF00 end:0x801DD044
+
+game/AI_CheckItemSuppression.c:
+	extab       start:0x80015978 end:0x80015980
+	extabindex  start:0x80028424 end:0x80028430
+	.text       start:0x801DD344 end:0x801DD480
+
 game/fn_801DD8E4.c:
 	.text       start:0x801DD8E4 end:0x801DD934
 
+game/fn_801DD934.c:
+	extab       start:0x80015988 end:0x80015990
+	extabindex  start:0x8002843C end:0x80028448
+	.text       start:0x801DD934 end:0x801DDA8C
+
 game/fn_801DDA8C.c:
 	.text       start:0x801DDA8C end:0x801DDB04
+
+game/RivalAvoidance_CalcPattern.c:
+	extab       start:0x80015990 end:0x80015998
+	extabindex  start:0x80028448 end:0x80028454
+	.text       start:0x801DDB04 end:0x801DDC5C
+
+game/LateralOffset_GetMagnitude.c:
+	extab       start:0x80015998 end:0x800159A0
+	extabindex  start:0x80028454 end:0x80028460
+	.text       start:0x801DDC5C end:0x801DDD6C
 
 game/fn_801DDD6C.c:
 	.text       start:0x801DDD6C end:0x801DE15C
@@ -6072,6 +6122,11 @@ game/fn_801DE1B0.cpp:
 	extab       start:0x800159A8 end:0x800159C0
 	extabindex  start:0x8002846C end:0x80028478
 	.text       start:0x801DE1B0 end:0x801DE208
+
+game/clEnemyParam_FillItemListIds.c:
+	extab       start:0x800159C0 end:0x800159C8
+	extabindex  start:0x80028478 end:0x80028484
+	.text       start:0x801DE208 end:0x801DE41C
 
 game/fn_801DE6E8.c:
 	extab       start:0x800159C8 end:0x800159D0
