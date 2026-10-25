@@ -4085,10 +4085,20 @@ game/ItemObject_Tick_Kind29_LightAttachment.c:
 	extabindex  start:0x80023C84 end:0x80023C90
 	.text       start:0x800E03E4 end:0x800E076C
 
+game/ItemObject_Tick_Kind28_BananaTrioChild.c:
+	extab       start:0x8000B4FC end:0x8000B504
+	extabindex  start:0x80023C90 end:0x80023C9C
+	.text       start:0x800E076C end:0x800E0B10
+
 game/ItemObject_Tick_Kind28_BananaTrioSpawner.c:
 	extab       start:0x8000B504 end:0x8000B50C
 	extabindex  start:0x80023C9C end:0x80023CA8
 	.text       start:0x800E0B10 end:0x800E0DE4
+
+game/ItemObject_Tick_Kind27_TimedDrop.c:
+	extab       start:0x8000B50C end:0x8000B514
+	extabindex  start:0x80023CA8 end:0x80023CB4
+	.text       start:0x800E0DE4 end:0x800E10E8
 
 game/ItemObject_Tick_Kind2426_FastDrop.c:
 	extab       start:0x8000B514 end:0x8000B51C
