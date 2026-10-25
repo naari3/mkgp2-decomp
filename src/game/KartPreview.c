@@ -619,7 +619,7 @@ extern void ResolveJointByName();
 extern void clNormal3D_Construct();
 extern void clNormal3D_SetFlags();
 extern void fn_8013BD7C();
-extern void fn_80276C50();
+extern void sprintf();
 extern void fn_802D0870();
 extern void fn_802D20AC();
 extern unsigned int lbl_806D76E8;
@@ -767,7 +767,7 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     addi r4, r30, 0x68
     lwzx r5, r5, r0
     crxor 6, 6, 6
-    bl fn_80276C50
+    bl sprintf
     lwz r3, 0xc(r28)
     addi r4, r1, 0x8
     bl ResolveJointByName
@@ -780,7 +780,7 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     slwi r0, r0, 2
     lwzx r5, r5, r0
     crxor 6, 6, 6
-    bl fn_80276C50
+    bl sprintf
     lwz r3, 0xc(r28)
     addi r4, r1, 0x8
     bl ResolveJointByName
@@ -793,7 +793,7 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     slwi r0, r0, 2
     lwzx r5, r5, r0
     crxor 6, 6, 6
-    bl fn_80276C50
+    bl sprintf
     lwz r3, 0xc(r28)
     addi r4, r1, 0x8
     bl ResolveJointByName
@@ -837,7 +837,7 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     slwi r0, r0, 2
     lwzx r5, r5, r0
     crxor 6, 6, 6
-    bl fn_80276C50
+    bl sprintf
     lwz r3, 0x4(r28)
     addi r4, r1, 0x8
     bl ResolveJointByName
@@ -894,7 +894,7 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     addi r4, r30, 0x138
     lwzx r5, r5, r0
     crxor 6, 6, 6
-    bl fn_80276C50
+    bl sprintf
     lwz r3, 0x4(r28)
     addi r4, r1, 0x8
     bl ResolveJointByName
@@ -951,7 +951,7 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     addi r4, r30, 0x150
     lwzx r5, r5, r0
     crxor 6, 6, 6
-    bl fn_80276C50
+    bl sprintf
     lwz r3, 0x4(r28)
     addi r4, r1, 0x8
     bl ResolveJointByName
@@ -1008,7 +1008,7 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     addi r4, r30, 0x168
     lwzx r5, r5, r0
     crxor 6, 6, 6
-    bl fn_80276C50
+    bl sprintf
     lwz r3, 0x4(r28)
     addi r4, r1, 0x8
     bl ResolveJointByName

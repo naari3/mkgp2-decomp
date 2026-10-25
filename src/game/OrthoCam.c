@@ -42,8 +42,8 @@ extern CamView *lbl_806D1554;
 extern char lbl_8048E510[];
 
 extern float fn_802C8390(void *cobj);
-extern double fn_8027E240(float x);
-extern double fn_8027EAC0(float x);
+extern double atan(float x);
+extern double tan(float x);
 extern void fn_802C845C(void *cobj, float a, float b, float c, float d);
 extern void fn_802C84A4(void *cobj, float *a, float *b);
 extern void *fn_802C87A0(void *desc);
@@ -57,7 +57,7 @@ float fn_8013BA90(CamView *v) {
     if (v->cobj == 0) {
         return lbl_806D74A0;
     }
-    return lbl_806D74A4 * (float)fn_8027E240(v->c / fn_802C8390(v->cobj));
+    return lbl_806D74A4 * (float)atan(v->c / fn_802C8390(v->cobj));
 }
 
 float fn_8013BAE8(CamView *v) {
@@ -174,7 +174,7 @@ struct OrthoCamObj {
         if (cobj) {
             fn_802C84A4(cobj, &sx, &sy);
             aspect = fn_802C8390(cobj);
-            sx = fn_8027EAC0(lbl_806D74B8 * (lbl_806D74BC * sx));
+            sx = tan(lbl_806D74B8 * (lbl_806D74BC * sx));
             b = aspect * (sx * sy);
             c = aspect * sx;
             a = -b;
