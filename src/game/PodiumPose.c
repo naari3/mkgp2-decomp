@@ -77,8 +77,8 @@ extern const char lbl_806D7AA8[5]; /* "jobj" */
 extern const char lbl_806D7AC0[4]; /* "mtx" */
 extern void __assert(const char *file, int line, const char *expr);
 extern void HSD_JObjSetupMatrixSub(JObj *jobj);
-extern void fn_802D20AC(JObj *jobj);
-extern void fn_802D0870(JObj *jobj, unsigned int flags);
+extern void HSD_JObjSetMtxDirtySub(JObj *jobj);
+extern void HSD_JObjSetFlagsAll(JObj *jobj, unsigned int flags);
 extern JObj *ResolveJointByName(void *model, const char *name);
 extern JObj *Archive_GetRootJObj(void *model);
 extern void Object_RenderJObjTree(void *model, int mask);
@@ -163,7 +163,7 @@ static inline MtxPtr JObjGetMtxPtr(JObj *jobj) {
 
 static inline void JObjSetMtxDirty(JObj *jobj) {
     if (jobj && !JObjMtxIsDirty(jobj)) {
-        fn_802D20AC(jobj);
+        HSD_JObjSetMtxDirtySub(jobj);
     }
 }
 
@@ -747,17 +747,17 @@ extern "C" asm void __ct__8PoseCharFiiP4Vec3P4Vec3Pf(void) { /* 0x80143450 size:
     lwz r3, 0x20(r29)
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x20(r29)
     addi r4, r1, 0x28
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x20(r29)
     addi r4, r1, 0x8
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     b fn_80143450_L_80143860
     fn_80143450_L_801436EC:
     cmpwi r0, 0x1
@@ -780,17 +780,17 @@ extern "C" asm void __ct__8PoseCharFiiP4Vec3P4Vec3Pf(void) { /* 0x80143450 size:
     lwz r3, 0x20(r29)
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x20(r29)
     addi r4, r1, 0x28
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x20(r29)
     addi r4, r1, 0x8
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     b fn_80143450_L_80143860
     fn_80143450_L_8014376C:
     cmpwi r0, 0x2
@@ -813,17 +813,17 @@ extern "C" asm void __ct__8PoseCharFiiP4Vec3P4Vec3Pf(void) { /* 0x80143450 size:
     lwz r3, 0x20(r29)
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x20(r29)
     addi r4, r1, 0x48
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x20(r29)
     addi r4, r1, 0x8
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     b fn_80143450_L_80143860
     fn_80143450_L_801437EC:
     lwz r3, 0x20(r29)
@@ -844,17 +844,17 @@ extern "C" asm void __ct__8PoseCharFiiP4Vec3P4Vec3Pf(void) { /* 0x80143450 size:
     lwz r3, 0x20(r29)
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x20(r29)
     addi r4, r1, 0x48
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x20(r29)
     addi r4, r1, 0x28
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     fn_80143450_L_80143860:
     mr r3, r29
     fn_80143450_L_80143864:

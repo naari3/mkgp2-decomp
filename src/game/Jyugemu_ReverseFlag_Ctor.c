@@ -27,7 +27,7 @@ void fn_8016C510(unsigned char);
 unsigned char clNormal3D_SetScale(ReverseNormal3D*, void*, float, float, float, float);
 ReverseJObj* Archive_GetRootJObj(ReverseNormal3D*);
 void __assert(const char*, int, const char*);
-void fn_802D20AC(ReverseJObj*);
+void HSD_JObjSetMtxDirtySub(ReverseJObj*);
 }
 static inline unsigned char matrix_is_clean(ReverseJObj* jobj)
 {
@@ -42,7 +42,7 @@ static inline unsigned char matrix_is_clean(ReverseJObj* jobj)
 static inline void dirty_matrix(ReverseJObj* jobj)
 {
     if (jobj != 0) {
-        if (!matrix_is_clean(jobj)) fn_802D20AC(jobj);
+        if (!matrix_is_clean(jobj)) HSD_JObjSetMtxDirtySub(jobj);
     }
 }
 static inline void set_scale(ReverseJObj* jobj, ReverseVec3* scale)

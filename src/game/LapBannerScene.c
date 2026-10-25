@@ -56,7 +56,7 @@ extern const float lbl_806D3270;   /* yaw offset */
 extern char lbl_803127B8[0x58]; /* quaternion assert message */
 
 extern void __assert(char *, int, char *);
-extern void fn_802D20AC(HSD_JObj *);
+extern void HSD_JObjSetMtxDirtySub(HSD_JObj *);
 extern void clNormal3D_SetScale(void *, int, float, float, float, float);
 extern void Jyugemu_ReverseFlag_SetEnable(unsigned char);
 extern void Object_RenderJObjTree(void *, int);
@@ -83,7 +83,7 @@ static void update_matrix(HSD_JObj *jobj) {
         skip = 1;
     }
     if (!skip) {
-        fn_802D20AC(jobj);
+        HSD_JObjSetMtxDirtySub(jobj);
     }
 }
 

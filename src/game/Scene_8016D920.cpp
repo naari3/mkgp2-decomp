@@ -21,8 +21,8 @@ extern char lbl_8036D660[];
 extern char lbl_8036D680[];
 void DebugPrintf(const char *, ...);
 HSD_JObj *Archive_GetRootJObj(clNormal3D *);
-void fn_802D0BE4(HSD_JObj *, int);
-void fn_802D0870(HSD_JObj *, int);
+void HSD_JObjClearFlagsAll(HSD_JObj *, int);
+void HSD_JObjSetFlagsAll(HSD_JObj *, int);
 void clNormal3D_SetScale(clNormal3D *, int, float, float, float, float);
 void Object_SetJObjScaleXYZ(clNormal3D *, float, float, float);
 }
@@ -51,8 +51,8 @@ MarkerChain::MarkerChain(MarkerSource *src) {
     if (model == 0) {
         return;
     }
-    fn_802D0BE4(Archive_GetRootJObj(model), 0xE00);
-    fn_802D0870(Archive_GetRootJObj(model), 0x400);
+    HSD_JObjClearFlagsAll(Archive_GetRootJObj(model), 0xE00);
+    HSD_JObjSetFlagsAll(Archive_GetRootJObj(model), 0x400);
     clNormal3D_SetScale(model, 0, 0.0f, 1.0f, 0.0f, 0.0f);
     Object_SetJObjScaleXYZ(model, 1.5f, 1.5f, 1.5f);
     chain = src == 0 ? 0 : src->chain;

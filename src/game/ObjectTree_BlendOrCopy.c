@@ -7,7 +7,7 @@
 /* refine if the real prototype matters for header consumers. */
 extern void ObjectTree_BlendQuatLerp();
 extern void Object_CopyFieldsRotPosScale();
-extern void fn_802D07BC();
+extern void HSD_JObjGetFlags();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D2340;
@@ -77,7 +77,7 @@ asm void ObjectTree_BlendOrCopy(void) { /* 0x800322F8 size:0x248 */
     stfs f0, 0x34(r25)
     ObjectTree_BlendOrCopy_L_80032394:
     mr r3, r26
-    bl fn_802D07BC
+    bl HSD_JObjGetFlags
     rlwinm. r0, r3, 0, 19, 19
     bne ObjectTree_BlendOrCopy_L_80032524
     cmplwi r24, 0x0
@@ -107,7 +107,7 @@ asm void ObjectTree_BlendOrCopy(void) { /* 0x800322F8 size:0x248 */
     bl Object_CopyFieldsRotPosScale
     ObjectTree_BlendOrCopy_L_80032400:
     mr r3, r26
-    bl fn_802D07BC
+    bl HSD_JObjGetFlags
     rlwinm. r0, r3, 0, 19, 19
     bne ObjectTree_BlendOrCopy_L_8003248C
     cmplwi r24, 0x0
@@ -168,7 +168,7 @@ asm void ObjectTree_BlendOrCopy(void) { /* 0x800322F8 size:0x248 */
     mr r5, r27
     bl Object_CopyFieldsRotPosScale
     mr r3, r30
-    bl fn_802D07BC
+    bl HSD_JObjGetFlags
     rlwinm. r0, r3, 0, 19, 19
     bne ObjectTree_BlendOrCopy_L_80032514
     lwz r29, 0x10(r30)

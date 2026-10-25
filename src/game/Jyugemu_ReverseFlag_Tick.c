@@ -17,7 +17,7 @@ extern void Vec3_Subtract();
 extern void __assert();
 extern void clNormal3D_Exec();
 extern void sin();
-extern void fn_802D20AC();
+extern void HSD_JObjSetMtxDirtySub();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806CEFC0;
@@ -152,7 +152,7 @@ asm void Jyugemu_ReverseFlag_Tick(void) { /* 0x80080C10 size:0x39C */
     clrlwi. r0, r3, 24
     bne Jyugemu_ReverseFlag_Tick_L_80080D74
     mr r3, r29
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     Jyugemu_ReverseFlag_Tick_L_80080D74:
     lfs f1, lbl_806D309C(r2)
     lfs f0, 0x1c(r30)
@@ -190,7 +190,7 @@ asm void Jyugemu_ReverseFlag_Tick(void) { /* 0x80080C10 size:0x39C */
     clrlwi. r0, r3, 24
     bne Jyugemu_ReverseFlag_Tick_L_80080DFC
     mr r3, r29
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     Jyugemu_ReverseFlag_Tick_L_80080DFC:
     lfs f31, 0x2c(r30)
     lwz r3, 0x0(r31)
@@ -225,7 +225,7 @@ asm void Jyugemu_ReverseFlag_Tick(void) { /* 0x80080C10 size:0x39C */
     clrlwi. r0, r3, 24
     bne Jyugemu_ReverseFlag_Tick_L_80080E78
     mr r3, r29
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     Jyugemu_ReverseFlag_Tick_L_80080E78:
     bl GetCourseScene3D
     mr. r29, r3
@@ -291,7 +291,7 @@ asm void Jyugemu_ReverseFlag_Tick(void) { /* 0x80080C10 size:0x39C */
     clrlwi. r0, r3, 24
     bne Jyugemu_ReverseFlag_Tick_L_80080F6C
     mr r3, r29
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     Jyugemu_ReverseFlag_Tick_L_80080F6C:
     lwz r3, 0x0(r31)
     bl clNormal3D_Exec

@@ -12,19 +12,19 @@
  * emit via #pragma exceptions on / reset.
  */
 
-extern void fn_802D0BE4(void *jobj, unsigned int flags);
-extern void fn_802D0870(void *jobj, unsigned int flags);
+extern void HSD_JObjClearFlagsAll(void *jobj, unsigned int flags);
+extern void HSD_JObjSetFlagsAll(void *jobj, unsigned int flags);
 
 #pragma exceptions on
 void JObj_Show(void *unused, void *jobj, unsigned int flags) {
     if (jobj != 0) {
-        fn_802D0BE4(jobj, flags);
+        HSD_JObjClearFlagsAll(jobj, flags);
     }
 }
 
 void JObj_Hide(void *unused, void *jobj, unsigned int flags) {
     if (jobj != 0) {
-        fn_802D0870(jobj, flags);
+        HSD_JObjSetFlagsAll(jobj, flags);
     }
 }
 #pragma exceptions reset

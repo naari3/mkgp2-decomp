@@ -10,7 +10,7 @@ extern void KartDriver_GetKartRootMtx();
 extern void Object_DriveAnimMatrix();
 extern void __assert();
 extern void clNormal3D_Exec();
-extern void fn_802D20AC();
+extern void HSD_JObjSetMtxDirtySub();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D3070;
@@ -102,7 +102,7 @@ asm void Jyugemu_Flag_Tick(void) { /* 0x80080748 size:0x2CC */
     clrlwi. r0, r3, 24
     bne Jyugemu_Flag_Tick_L_80080828
     mr r3, r28
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     Jyugemu_Flag_Tick_L_80080828:
     lfs f1, 0x18(r29)
     lfs f0, 0x1c(r30)
@@ -139,7 +139,7 @@ asm void Jyugemu_Flag_Tick(void) { /* 0x80080748 size:0x2CC */
     clrlwi. r0, r3, 24
     bne Jyugemu_Flag_Tick_L_800808AC
     mr r3, r28
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     Jyugemu_Flag_Tick_L_800808AC:
     lfs f1, 0x1c(r29)
     lfs f0, 0x2c(r30)
@@ -176,7 +176,7 @@ asm void Jyugemu_Flag_Tick(void) { /* 0x80080748 size:0x2CC */
     clrlwi. r0, r3, 24
     bne Jyugemu_Flag_Tick_L_80080930
     mr r3, r28
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     Jyugemu_Flag_Tick_L_80080930:
     lwz r3, 0x4(r31)
     lfs f1, lbl_806D3070(r2)
@@ -223,7 +223,7 @@ asm void Jyugemu_Flag_Tick(void) { /* 0x80080748 size:0x2CC */
     clrlwi. r0, r3, 24
     bne Jyugemu_Flag_Tick_L_800809D8
     mr r3, r28
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     Jyugemu_Flag_Tick_L_800809D8:
     lwz r3, 0x0(r31)
     bl clNormal3D_Exec

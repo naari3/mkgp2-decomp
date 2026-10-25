@@ -57,7 +57,7 @@ void *GetCourseScene3D(void);
 float *CObj_GetProjMatrix_Cached(void *);
 void Scene3D_GetCameraPos(void *, float *, float *);
 double tan(double);
-void *fn_802D0758(void *);
+void *HSD_JObjGetDObj(void *);
 void PSMTXMultVec(float *, Vec3f *, Vec3f *);
 void PSMTXScale(Mtx, float, float, float);
 void PSMTXConcat(Mtx, float *, Mtx);
@@ -108,7 +108,7 @@ void fn_8016EACC(ScreenParticleLayer *self) {
     tanHalf = tan(0.5f * (0.017453292f * fov));
     tanHalfX = tanHalf * aspect;
     for (layer = 0; layer < 3; layer++) {
-        GXChannel ch(self->roots[layer], fn_802D0758(self->roots[layer]), 0x40000000, 1);
+        GXChannel ch(self->roots[layer], HSD_JObjGetDObj(self->roots[layer]), 0x40000000, 1);
 
         for (i = 0; i < 60; i++) {
             if (self->parts[i].active && self->parts[i].layer == layer) {

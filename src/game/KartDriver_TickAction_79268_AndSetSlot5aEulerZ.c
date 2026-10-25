@@ -7,7 +7,7 @@
 /* refine if the real prototype matters for header consumers. */
 extern void KartTireFX_SetPitch();
 extern void __assert();
-extern void fn_802D20AC();
+extern void HSD_JObjSetMtxDirtySub();
 extern char lbl_806D2548[7];
 extern char lbl_806D2550[5];
 
@@ -105,7 +105,7 @@ asm void KartDriver_TickAction_79268_AndSetSlot5aEulerZ(void) { /* 0x80042120 si
     clrlwi. r0, r3, 24
     bne KartDriver_TickAction_79268_AndSetSlot5aEulerZ_L_80042214
     mr r3, r31
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartDriver_TickAction_79268_AndSetSlot5aEulerZ_L_80042214:
     li r3, 0x1
     KartDriver_TickAction_79268_AndSetSlot5aEulerZ_L_80042218:

@@ -92,8 +92,8 @@ extern void *Archive_GetRootJObj(void *obj);
 extern void ObjectTree_BlendOrCopy_Timed(void *obj, void *a, void *b, int, float t);
 extern void clNormal3D_Exec(void *obj);
 extern CharacterData *GetCharacterDataEntry(int chara);
-extern void fn_802D0B48(HSD_JObj *jobj, int flags);
-extern void fn_802D07D4(HSD_JObj *jobj, int flags);
+extern void HSD_JObjClearFlags(HSD_JObj *jobj, int flags);
+extern void HSD_JObjSetFlags(HSD_JObj *jobj, int flags);
 extern void Object_DtorWithGXSync(void *obj, int flag);
 
 extern void fn_8013C334(RenderTargetHolder *h);
@@ -558,9 +558,9 @@ void fn_8013CA04(KartPreview *p) {
     p->anim_state = 3;
     p->frame = 0.0f;
     p->end_frame = GetCharacterDataEntry(p->chara)->anim24;
-    fn_802D0B48(p->jobj3C, 0x10);
-    fn_802D07D4(p->jobj40, 0x10);
-    fn_802D07D4(p->jobj44, 0x10);
+    HSD_JObjClearFlags(p->jobj3C, 0x10);
+    HSD_JObjSetFlags(p->jobj40, 0x10);
+    HSD_JObjSetFlags(p->jobj44, 0x10);
 }
 
 void fn_8013CA70(KartPreview *p) {
@@ -568,13 +568,13 @@ void fn_8013CA70(KartPreview *p) {
     p->frame = 0.0f;
     p->end_frame = GetCharacterDataEntry(p->chara)->anim1C;
     if (p->chara == 3) {
-        fn_802D0B48(p->jobj40, 0x10);
-        fn_802D07D4(p->jobj3C, 0x10);
-        fn_802D07D4(p->jobj44, 0x10);
+        HSD_JObjClearFlags(p->jobj40, 0x10);
+        HSD_JObjSetFlags(p->jobj3C, 0x10);
+        HSD_JObjSetFlags(p->jobj44, 0x10);
     } else {
-        fn_802D0B48(p->jobj3C, 0x10);
-        fn_802D07D4(p->jobj40, 0x10);
-        fn_802D07D4(p->jobj44, 0x10);
+        HSD_JObjClearFlags(p->jobj3C, 0x10);
+        HSD_JObjSetFlags(p->jobj40, 0x10);
+        HSD_JObjSetFlags(p->jobj44, 0x10);
     }
 }
 
@@ -620,8 +620,8 @@ extern void clNormal3D_Construct();
 extern void clNormal3D_SetFlags();
 extern void fn_8013BD7C();
 extern void sprintf();
-extern void fn_802D0870();
-extern void fn_802D20AC();
+extern void HSD_JObjSetFlagsAll();
+extern void HSD_JObjSetMtxDirtySub();
 extern unsigned int lbl_806D76E8;
 extern unsigned int lbl_806D76EC;
 extern unsigned int lbl_803600E0[];
@@ -800,10 +800,10 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     stw r3, 0x44(r28)
     li r4, 0x10
     lwz r3, 0x40(r28)
-    bl fn_802D07D4
+    bl HSD_JObjSetFlags
     lwz r3, 0x44(r28)
     li r4, 0x10
-    bl fn_802D07D4
+    bl HSD_JObjSetFlags
     li r3, 0x5c
     bl Alloc
     mr. r26, r3
@@ -884,7 +884,7 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     clrlwi. r0, r3, 24
     bne fn_8013CC24_L_8013CFC0
     mr r3, r26
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     fn_8013CC24_L_8013CFC0:
     lwz r0, 0x48(r28)
     lis r3, lbl_8048EA98@ha
@@ -941,7 +941,7 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     clrlwi. r0, r3, 24
     bne fn_8013CC24_L_8013D090
     mr r3, r26
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     fn_8013CC24_L_8013D090:
     lwz r0, 0x48(r28)
     lis r3, lbl_8048EA98@ha
@@ -998,7 +998,7 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     clrlwi. r0, r3, 24
     bne fn_8013CC24_L_8013D160
     mr r3, r26
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     fn_8013CC24_L_8013D160:
     lwz r0, 0x48(r28)
     lis r3, lbl_8048EA98@ha
@@ -1055,108 +1055,108 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     clrlwi. r0, r3, 24
     bne fn_8013CC24_L_8013D230
     mr r3, r26
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     fn_8013CC24_L_8013D230:
     lwz r3, 0x8(r28)
     addi r4, r30, 0x180
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x198
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x1b0
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x1c8
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x1e0
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x1f8
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x210
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x228
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x240
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x258
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x270
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x288
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x2a0
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x2b8
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x2d0
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x2e8
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x300
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x318
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x330
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     lwz r3, 0x8(r28)
     addi r4, r30, 0x348
     bl ResolveJointByName
     li r4, 0x10
-    bl fn_802D0870
+    bl HSD_JObjSetFlagsAll
     addi r26, r30, 0x0
     li r30, 0x0
     li r27, 0x0

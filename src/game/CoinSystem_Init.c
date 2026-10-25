@@ -18,7 +18,7 @@ extern void Terrain_GetGroundHeight();
 extern void clNormal3D_Construct();
 extern void clNormal3D_SetFlags();
 extern void fn_8024F588();
-extern void fn_802D07D4();
+extern void HSD_JObjSetFlags();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D10A0;
@@ -168,7 +168,7 @@ asm void CoinSystem_Init(void) { /* 0x8013A778 size:0x3FC */
     lwz r3, lbl_806D1530(r13)
     bl Archive_GetRootJObj
     li r4, 0x200
-    bl fn_802D07D4
+    bl HSD_JObjSetFlags
     cmplwi r30, 0x0
     bne CoinSystem_Init_L_8013A90C
     bl GetCoinSpawnTable
@@ -390,7 +390,7 @@ void MemoryManager_Free(void *);
 void *FUN_8003b120(unsigned long);
 void clNormal3D_SetFlags(CoinNormal *, unsigned int, void *);
 void *Archive_GetRootJObj(CoinNormal *);
-void fn_802D07D4(void *, unsigned int);
+void HSD_JObjSetFlags(void *, unsigned int);
 void RankLog_UpdateTechnicalFlag(void *, int);
 unsigned char Terrain_GetGroundHeight(float *, float *, float *, unsigned int *);
 CoinProgress *fn_8024F588(void);
@@ -452,7 +452,7 @@ extern "C" int CoinSystem_Init(CoinSpawn *table, int mode)
     if (!lbl_806D1528 || !lbl_806D152C || !lbl_806D1530) goto fail;
     clNormal3D_SetFlags(lbl_806D1528, 0x40000000, 0);
     clNormal3D_SetFlags(lbl_806D152C, 0x40000000, 0);
-    fn_802D07D4(Archive_GetRootJObj(lbl_806D1530), 0x200);
+    HSD_JObjSetFlags(Archive_GetRootJObj(lbl_806D1530), 0x200);
     if (!table) table = GetCoinSpawnTable();
     if (!table) goto fail;
     {

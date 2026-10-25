@@ -64,7 +64,7 @@ void Object_SetJObjRotationY(void *, float);
 void Object_SetJObjRotationZ(void *, float);
 void Object_RenderJObjTree(void *, int);
 void *Archive_GetRootJObj(void *);
-void *fn_802D0758(void *);
+void *HSD_JObjGetDObj(void *);
 void PSMTXScale(Mtx, float, float, float);
 
 void fn_8016CC04(ItemBoxSet *set) {
@@ -112,7 +112,7 @@ void fn_8016CC04(ItemBoxSet *set) {
         }
     }
 
-    GXChannel ch(Archive_GetRootJObj(set->archive), fn_802D0758(Archive_GetRootJObj(set->archive)), 0x40000000, 1);
+    GXChannel ch(Archive_GetRootJObj(set->archive), HSD_JObjGetDObj(Archive_GetRootJObj(set->archive)), 0x40000000, 1);
 
     for (it = set->slots; it <= &set->slots[set->count - 1]; it++) {
         for (i = 0; i < 10; i++) {

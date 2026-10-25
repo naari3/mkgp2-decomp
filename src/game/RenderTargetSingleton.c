@@ -87,8 +87,8 @@ extern void *Archive_GetRootJObj(void *obj);
 extern void ObjectTree_BlendOrCopy_Timed(void *obj, void *a, void *b, int, float t);
 extern void clNormal3D_Exec(void *obj);
 extern CharacterData *GetCharacterDataEntry(int chara);
-extern void fn_802D0B48(HSD_JObj *jobj, int flags);
-extern void fn_802D07D4(HSD_JObj *jobj, int flags);
+extern void HSD_JObjClearFlags(HSD_JObj *jobj, int flags);
+extern void HSD_JObjSetFlags(HSD_JObj *jobj, int flags);
 extern void Object_DtorWithGXSync(void *obj, int flag);
 
 void fn_8013C334(RenderTargetHolder *h) {

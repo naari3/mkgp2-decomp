@@ -7434,10 +7434,12 @@ sysdolphin/baselib/fobj.c:
 	.sdata2     start:0x806DCC58 end:0x806DCC80
 
 sysdolphin/baselib/jobj.c:
-	.text       start:0x802CDAF8 end:0x802CDE48
-
-sysdolphin/baselib/jobj_anim_misc.c:
-	.text       start:0x802CDE48 end:0x802CDF38
+	.text       start:0x802CD2B0 end:0x802D2AD0
+	.rodata     start:0x803F2BD0 end:0x803F2BF8
+	.data       start:0x804FC9A8 end:0x804FCD80
+	.sdata      start:0x806D0DA0 end:0x806D0DD0
+	.sbss       start:0x806D21B0 end:0x806D21C8
+	.sdata2     start:0x806DCCB0 end:0x806DCD00
 
 sysdolphin/baselib/displayfunc.c:
 	.text       start:0x802D2AD0 end:0x802D4030

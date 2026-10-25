@@ -6,7 +6,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void __assert();
-extern void fn_802D20AC();
+extern void HSD_JObjSetMtxDirtySub();
 extern char lbl_806D2548[7];
 extern char lbl_806D2550[5];
 
@@ -80,7 +80,7 @@ asm void KartDriver_SetJointPosY_Slot3a(void) { /* 0x800419F0 size:0xCC */
     clrlwi. r0, r3, 24
     bne KartDriver_SetJointPosY_Slot3a_L_80041AA0
     mr r3, r31
-    bl fn_802D20AC
+    bl HSD_JObjSetMtxDirtySub
     KartDriver_SetJointPosY_Slot3a_L_80041AA0:
     li r3, 0x1
     KartDriver_SetJointPosY_Slot3a_L_80041AA4:

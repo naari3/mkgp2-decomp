@@ -151,6 +151,7 @@ typedef struct HSD_JObjInfo {
     void (*disp)(HSD_JObj* jobj, Mtx vmtx, Mtx pmtx, HSD_TrspMask trsp_mask,
                  u32 rendermode);
     void (*release_child)(HSD_JObj* jobj);
+    HSD_ObjUpdateFunc update; ///< mkgp2 (HSD 1.3.x)
 } HSD_JObjInfo;
 
 extern HSD_JObjInfo hsdJObj;
@@ -296,8 +297,8 @@ static inline void HSD_JObjSetRotationWithMtxDirty(HSD_JObj* jobj,
 
 static inline void HSD_JObjSetRotationX(HSD_JObj* jobj, f32 x)
 {
-    HSD_ASSERT(639, jobj);
-    HSD_ASSERT(640, !(jobj->flags & JOBJ_USE_QUATERNION));
+    HSD_ASSERT(676, jobj);
+    HSD_ASSERT(677, !(jobj->flags & JOBJ_USE_QUATERNION));
     jobj->rotate.x = x;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         HSD_JObjSetMtxDirty(jobj);
@@ -306,8 +307,8 @@ static inline void HSD_JObjSetRotationX(HSD_JObj* jobj, f32 x)
 
 static inline void HSD_JObjSetRotationXWithMtxDirty(HSD_JObj* jobj, f32 x)
 {
-    HSD_ASSERT(639, jobj);
-    HSD_ASSERT(640, !(jobj->flags & JOBJ_USE_QUATERNION));
+    HSD_ASSERT(676, jobj);
+    HSD_ASSERT(677, !(jobj->flags & JOBJ_USE_QUATERNION));
     jobj->rotate.x = x;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         (HSD_JObjSetMtxDirty)(jobj);
@@ -316,8 +317,8 @@ static inline void HSD_JObjSetRotationXWithMtxDirty(HSD_JObj* jobj, f32 x)
 
 static inline void HSD_JObjSetRotationY(HSD_JObj* jobj, f32 y)
 {
-    HSD_ASSERT(660, jobj);
-    HSD_ASSERT(661, !(jobj->flags & JOBJ_USE_QUATERNION));
+    HSD_ASSERT(696, jobj);
+    HSD_ASSERT(697, !(jobj->flags & JOBJ_USE_QUATERNION));
     jobj->rotate.y = y;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         HSD_JObjSetMtxDirty(jobj);
@@ -326,8 +327,8 @@ static inline void HSD_JObjSetRotationY(HSD_JObj* jobj, f32 y)
 
 static inline void HSD_JObjSetRotationYWithMtxDirty(HSD_JObj* jobj, f32 y)
 {
-    HSD_ASSERT(660, jobj);
-    HSD_ASSERT(661, !(jobj->flags & JOBJ_USE_QUATERNION));
+    HSD_ASSERT(696, jobj);
+    HSD_ASSERT(697, !(jobj->flags & JOBJ_USE_QUATERNION));
     jobj->rotate.y = y;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         (HSD_JObjSetMtxDirty)(jobj);
@@ -336,8 +337,8 @@ static inline void HSD_JObjSetRotationYWithMtxDirty(HSD_JObj* jobj, f32 y)
 
 static inline void HSD_JObjSetRotationZ(HSD_JObj* jobj, f32 z)
 {
-    HSD_ASSERT(681, jobj);
-    HSD_ASSERT(682, !(jobj->flags & JOBJ_USE_QUATERNION));
+    HSD_ASSERT(716, jobj);
+    HSD_ASSERT(717, !(jobj->flags & JOBJ_USE_QUATERNION));
     jobj->rotate.z = z;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         HSD_JObjSetMtxDirty(jobj);
@@ -346,8 +347,8 @@ static inline void HSD_JObjSetRotationZ(HSD_JObj* jobj, f32 z)
 
 static inline void HSD_JObjSetRotationZWithMtxDirty(HSD_JObj* jobj, f32 z)
 {
-    HSD_ASSERT(681, jobj);
-    HSD_ASSERT(682, !(jobj->flags & JOBJ_USE_QUATERNION));
+    HSD_ASSERT(716, jobj);
+    HSD_ASSERT(717, !(jobj->flags & JOBJ_USE_QUATERNION));
     jobj->rotate.z = z;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         (HSD_JObjSetMtxDirty)(jobj);
@@ -401,7 +402,7 @@ static inline void HSD_JObjSetScaleWithMtxDirty(HSD_JObj* jobj, Vec3* scale)
 
 static inline void HSD_JObjSetScaleX(HSD_JObj* jobj, f32 x)
 {
-    HSD_ASSERT(776, jobj);
+    HSD_ASSERT(805, jobj);
     jobj->scale.x = x;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         HSD_JObjSetMtxDirty(jobj);
@@ -410,7 +411,7 @@ static inline void HSD_JObjSetScaleX(HSD_JObj* jobj, f32 x)
 
 static inline void HSD_JObjSetScaleXWithMtxDirty(HSD_JObj* jobj, f32 x)
 {
-    HSD_ASSERT(776, jobj);
+    HSD_ASSERT(805, jobj);
     jobj->scale.x = x;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         (HSD_JObjSetMtxDirty)(jobj);
@@ -419,7 +420,7 @@ static inline void HSD_JObjSetScaleXWithMtxDirty(HSD_JObj* jobj, f32 x)
 
 static inline void HSD_JObjSetScaleY(HSD_JObj* jobj, f32 y)
 {
-    HSD_ASSERT(791, jobj);
+    HSD_ASSERT(819, jobj);
     jobj->scale.y = y;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         HSD_JObjSetMtxDirty(jobj);
@@ -428,7 +429,7 @@ static inline void HSD_JObjSetScaleY(HSD_JObj* jobj, f32 y)
 
 static inline void HSD_JObjSetScaleYWithMtxDirty(HSD_JObj* jobj, f32 y)
 {
-    HSD_ASSERT(791, jobj);
+    HSD_ASSERT(819, jobj);
     jobj->scale.y = y;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         (HSD_JObjSetMtxDirty)(jobj);
@@ -437,7 +438,7 @@ static inline void HSD_JObjSetScaleYWithMtxDirty(HSD_JObj* jobj, f32 y)
 
 static inline void HSD_JObjSetScaleZ(HSD_JObj* jobj, f32 z)
 {
-    HSD_ASSERT(806, jobj);
+    HSD_ASSERT(833, jobj);
     jobj->scale.z = z;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         HSD_JObjSetMtxDirty(jobj);
@@ -446,7 +447,7 @@ static inline void HSD_JObjSetScaleZ(HSD_JObj* jobj, f32 z)
 
 static inline void HSD_JObjSetScaleZWithMtxDirty(HSD_JObj* jobj, f32 z)
 {
-    HSD_ASSERT(806, jobj);
+    HSD_ASSERT(833, jobj);
     jobj->scale.z = z;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         (HSD_JObjSetMtxDirty)(jobj);
@@ -512,7 +513,7 @@ static inline void HSD_JObjSetTranslateWithMtxDirtyOutOfLine(HSD_JObj* jobj,
 
 static inline void HSD_JObjSetTranslateX(HSD_JObj* jobj, f32 x)
 {
-    HSD_ASSERT(932, jobj);
+    HSD_ASSERT(952, jobj);
     jobj->translate.x = x;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         HSD_JObjSetMtxDirty(jobj);
@@ -521,7 +522,7 @@ static inline void HSD_JObjSetTranslateX(HSD_JObj* jobj, f32 x)
 
 static inline void HSD_JObjSetTranslateXWithMtxDirty(HSD_JObj* jobj, f32 x)
 {
-    HSD_ASSERT(932, jobj);
+    HSD_ASSERT(952, jobj);
     jobj->translate.x = x;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         (HSD_JObjSetMtxDirty)(jobj);
@@ -530,7 +531,7 @@ static inline void HSD_JObjSetTranslateXWithMtxDirty(HSD_JObj* jobj, f32 x)
 
 static inline void HSD_JObjSetTranslateY(HSD_JObj* jobj, f32 y)
 {
-    HSD_ASSERT(947, jobj);
+    HSD_ASSERT(966, jobj);
     jobj->translate.y = y;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         HSD_JObjSetMtxDirty(jobj);
@@ -539,7 +540,7 @@ static inline void HSD_JObjSetTranslateY(HSD_JObj* jobj, f32 y)
 
 static inline void HSD_JObjSetTranslateYWithMtxDirty(HSD_JObj* jobj, f32 y)
 {
-    HSD_ASSERT(947, jobj);
+    HSD_ASSERT(966, jobj);
     jobj->translate.y = y;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         (HSD_JObjSetMtxDirty)(jobj);
@@ -548,7 +549,7 @@ static inline void HSD_JObjSetTranslateYWithMtxDirty(HSD_JObj* jobj, f32 y)
 
 static inline void HSD_JObjSetTranslateZ(HSD_JObj* jobj, f32 z)
 {
-    HSD_ASSERT(962, jobj);
+    HSD_ASSERT(980, jobj);
     jobj->translate.z = z;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         HSD_JObjSetMtxDirty(jobj);
@@ -557,7 +558,7 @@ static inline void HSD_JObjSetTranslateZ(HSD_JObj* jobj, f32 z)
 
 static inline void HSD_JObjSetTranslateZWithMtxDirty(HSD_JObj* jobj, f32 z)
 {
-    HSD_ASSERT(962, jobj);
+    HSD_ASSERT(980, jobj);
     jobj->translate.z = z;
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) {
         (HSD_JObjSetMtxDirty)(jobj);
@@ -710,9 +711,20 @@ static inline void HSD_JObjCopyMtx(HSD_JObj* jobj, Mtx mtx)
     PSMTXCopy(mtx, jobj->mtx);
 }
 
+/// mkgp2's object.h ref_INC has no NULL check (the caller does it).
+static inline void jobj_ref_INC(void* o)
+{
+    HSD_OBJ(o)->ref_count++;
+    ((HSD_OBJ(o)->ref_count != HSD_OBJ_NOREF)
+         ? ((void) 0)
+         : __assert("object.h", 93, "HSD_OBJ(o)->ref_count != HSD_OBJ_NOREF"));
+}
+
 static inline void HSD_JObjRef(HSD_JObj* jobj)
 {
-    ref_INC(jobj);
+    if (jobj != NULL) {
+        jobj_ref_INC(jobj);
+    }
 }
 
 static inline void HSD_JObjRefThis(HSD_JObj* jobj)

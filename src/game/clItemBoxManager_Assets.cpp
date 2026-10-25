@@ -36,8 +36,8 @@ void dtor_8007D9C4(GXChannel *channel, int flag);
 void Object_DtorWithGXSync(void *object, int flag);
 void *ResolveJointByName(void *object, const char *name);
 void JObj_Hide(void *object, void *jobj, int flags);
-void fn_802D07D4(void *jobj, int flags);
-void *fn_802D0758(void *jobj);
+void HSD_JObjSetFlags(void *jobj, int flags);
+void *HSD_JObjGetDObj(void *jobj);
 
 void clItemBoxManager_UnbindCurrent(void);
 void clItemBoxManager_Bind(int index);
@@ -118,14 +118,14 @@ void clItemBoxManager_LoadAssets(void)
         JObj_Hide(lbl_806D10BC, ResolveJointByName(lbl_806D10BC, strings + 0x74), 0x10);
         lbl_806D10C0 = ResolveJointByName(lbl_806D10BC, strings + 0x90);
         lbl_806D10C4 = ResolveJointByName(lbl_806D10BC, strings + 0xA8);
-        fn_802D07D4(lbl_806D10C4, 0x400);
+        HSD_JObjSetFlags(lbl_806D10C4, 0x400);
     }
     if (lbl_806D10C8 == 0) {
         lbl_806D10C8 = new Normal3D(strings + 0x64, 0);
         JObj_Hide(lbl_806D10C8, ResolveJointByName(lbl_806D10C8, strings + 0xC0), 0x10);
         lbl_806D10CC = ResolveJointByName(lbl_806D10C8, strings + 0x74);
     }
-    lbl_806D10B0 = new GXChannel(lbl_806D10C0, fn_802D0758(lbl_806D10C0), 1, 0);
-    lbl_806D10B4 = new GXChannel(lbl_806D10C4, fn_802D0758(lbl_806D10C4), 1, 0);
-    lbl_806D10B8 = new GXChannel(lbl_806D10CC, fn_802D0758(lbl_806D10CC), 1, 0);
+    lbl_806D10B0 = new GXChannel(lbl_806D10C0, HSD_JObjGetDObj(lbl_806D10C0), 1, 0);
+    lbl_806D10B4 = new GXChannel(lbl_806D10C4, HSD_JObjGetDObj(lbl_806D10C4), 1, 0);
+    lbl_806D10B8 = new GXChannel(lbl_806D10CC, HSD_JObjGetDObj(lbl_806D10CC), 1, 0);
 }
