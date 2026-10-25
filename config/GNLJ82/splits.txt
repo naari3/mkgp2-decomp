@@ -4136,15 +4136,69 @@ game/ItemObject_Tick_Kind2426_FastDrop.c:
 	extabindex  start:0x80023CB4 end:0x80023CC0
 	.text       start:0x800E10E8 end:0x800E1298
 
+game/ItemObject_Tick_Dispatch24To29.c:
+	extab       start:0x8000B51C end:0x8000B524
+	extabindex  start:0x80023CC0 end:0x80023CCC
+	.text       start:0x800E1298 end:0x800E1E70
+
+game/ItemObject_Tick_Dispatch1eTo23.c:
+	extab       start:0x8000B524 end:0x8000B52C
+	extabindex  start:0x80023CCC end:0x80023CD8
+	.text       start:0x800E1E70 end:0x800E246C
+
+game/ItemObject_Tick_Dispatch16To1d.c:
+	extab       start:0x8000B52C end:0x8000B534
+	extabindex  start:0x80023CD8 end:0x80023CE4
+	.text       start:0x800E246C end:0x800E2CF0
+	.data       start:0x80420F28 end:0x80420F64
+
+game/ItemObject_Tick_DispatchcTo15.c:
+	extab       start:0x8000B534 end:0x8000B53C
+	extabindex  start:0x80023CE4 end:0x80023CF0
+	.text       start:0x800E2CF0 end:0x800E33C4
+	.data       start:0x80420F64 end:0x80421004
+
 game/ItemObject_Tick_AwaitInitThenFree.c:
 	extab       start:0x8000B544 end:0x8000B54C
 	extabindex  start:0x80023CFC end:0x80023D08
 	.text       start:0x800E3BD4 end:0x800E3C30
 
+game/ItemObject_Teresa_TrackToKart_Sub.c:
+	extab       start:0x8000B54C end:0x8000B554
+	extabindex  start:0x80023D08 end:0x80023D14
+	.text       start:0x800E3C30 end:0x800E40C8
+
+game/ItemObject_Teresa_GrabAndArc_Sub.c:
+	extab       start:0x8000B554 end:0x8000B55C
+	extabindex  start:0x80023D14 end:0x80023D20
+	.text       start:0x800E40C8 end:0x800E4760
+
+game/ItemObject_Tick_Kind2b_Teresa.c:
+	extab       start:0x8000B55C end:0x8000B564
+	extabindex  start:0x80023D20 end:0x80023D2C
+	.text       start:0x800E4760 end:0x800E4F18
+	.data       start:0x80421008 end:0x80421030
+
+game/ItemObject_Tick_Kind2c_Horn.c:
+	extab       start:0x8000B564 end:0x8000B56C
+	extabindex  start:0x80023D2C end:0x80023D38
+	.text       start:0x800E4F18 end:0x800E5380
+
 game/ItemObject_ChainShell_BoundOrbit_Sub.c:
 	extab       start:0x8000B56C end:0x8000B574
 	extabindex  start:0x80023D38 end:0x80023D44
 	.text       start:0x800E5380 end:0x800E55E4
+
+game/ItemObject_ChainShell_GrabAndArc_Sub.c:
+	extab       start:0x8000B574 end:0x8000B57C
+	extabindex  start:0x80023D44 end:0x80023D50
+	.text       start:0x800E55E4 end:0x800E5FC0
+
+game/ItemObject_Tick_Kind2d_ChainShellPair.c:
+	extab       start:0x8000B57C end:0x8000B584
+	extabindex  start:0x80023D50 end:0x80023D5C
+	.text       start:0x800E5FC0 end:0x800E69E8
+	.data       start:0x80421160 end:0x80421188
 
 game/GabyouItemHit.cpp:
 	extab       start:0x8000B584 end:0x8000B58C
