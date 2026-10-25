@@ -4300,6 +4300,16 @@ game/MukadeItem.c:
 	extabindex  start:0x80023E04 end:0x80023E28
 	.text       start:0x800EBC00 end:0x800ED010
 
+game/Dossun_State2_Drop.c:
+	extab       start:0x8000B60C end:0x8000B614
+	extabindex  start:0x80023E28 end:0x80023E34
+	.text       start:0x800ED010 end:0x800ED3C0
+
+game/Dossun_State1And2_HeldOrFly.c:
+	extab       start:0x8000B614 end:0x8000B61C
+	extabindex  start:0x80023E34 end:0x80023E40
+	.text       start:0x800ED3C0 end:0x800EDE8C
+
 game/ItemObject_Tick_Kind3b_Dossun.c:
 	extab       start:0x8000B61C end:0x8000B624
 	extabindex  start:0x80023E40 end:0x80023E4C
