@@ -5965,9 +5965,14 @@ game/anon_80208E30.cpp:
 	.text       start:0x80208E30 end:0x80209330
 
 game/anon_80209330.cpp:
-	extab       start:0x8001938C end:0x8001939C
-	extabindex  start:0x80029A8C end:0x80029AA4
-	.text       start:0x80209330 end:0x80209A84
+	extab       start:0x8001938C end:0x800193B4
+	extabindex  start:0x80029A8C end:0x80029AC8
+	.text       start:0x80209330 end:0x80209FA4
+
+game/anon_80209FA4.cpp:
+	extab       start:0x800193B4 end:0x80019460
+	extabindex  start:0x80029AC8 end:0x80029B4C
+	.text       start:0x80209FA4 end:0x8020AA98
 
 game/ItemDisplay_Stop.c:
 	extab       start:0x80019460 end:0x80019468

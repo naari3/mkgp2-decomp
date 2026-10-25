@@ -1,5 +1,5 @@
 /*
- * Card reward item pickers (0x80209330..0x80209A84): pick an item the
+ * Card reward item pickers (0x80209330..0x80209FA4): pick an item the
  * player does not own yet, in a shuffled order.
  */
 
@@ -25,9 +25,24 @@ unsigned char IsCardValid(void);
 int Rand15(void);
 int WrapInRange(int v, int lo, int hi);
 
+extern int g_ccClass;
+extern int lbl_806D02D8;
+extern int lbl_806D02DC;
+extern int lbl_806D02E0;
+extern const int lbl_804EC568[];
+unsigned char fn_801D5B8C(PlayerData *pd, int cc, int a, int b);
+void card_pack(PlayerData *pd, void *buf, int a);
+
 int fn_80209330(void);
+int fn_80209A84(void);
+int fn_80209AC4(int a, int b);
+void fn_80209C88(void);
 int fn_80209338(int cat);
 int CardSnapshot_ResolveCommonItems(void **cards);
+}
+
+static inline bool CardOK() {
+    return IsCardValid();
 }
 
 int fn_80209330(void) {
@@ -101,7 +116,7 @@ static inline bool HasAllItems(PlayerData *pd) {
 }
 
 int CardSnapshot_ResolveCommonItems(void **cards) {
-    if (!IsCardValid()) {
+    if (!CardOK()) {
         return 0;
     }
     PlayerData *snaps[4];
@@ -161,4 +176,99 @@ int CardSnapshot_ResolveCommonItems(void **cards) {
         delete snaps[i];
     }
     return result;
+}
+
+int fn_80209A84(void) {
+    bool ok = IsCardValid() != 0;
+    if (!ok) {
+        return 0;
+    }
+    return lbl_806D02E0;
+}
+
+int fn_80209AC4(int a, int b) {
+    if (!CardOK()) {
+        return 0;
+    }
+    if (a < 1 || a > 8) {
+        return 0;
+    }
+    if (b < 0 || b > 7) {
+        return 0;
+    }
+    int result = 0;
+    int row = a - 1;
+    switch ((g_ccClass == 2 ? 2 : 0) + (b >= 4 ? 1 : 0)) {
+    case 0:
+        if (fn_801D5B8C(&g_playerData, g_ccClass, a, b) == 1) {
+            result = lbl_806D02DC;
+        } else {
+            result = lbl_804EC568[row * 4 + b];
+            if (fn_801D6F30(&g_playerData, result, 0) == 1) {
+                result = lbl_806D02DC;
+            }
+        }
+        break;
+    case 1:
+        if (b == 7 && !fn_801D5B8C(&g_playerData, g_ccClass, a, 7)) {
+            result = lbl_806D02DC;
+        }
+        break;
+    case 2:
+        result = lbl_806D02DC;
+        break;
+    case 3:
+        if (b == 7 && !fn_801D5B8C(&g_playerData, g_ccClass, a, 7)) {
+            result = lbl_806D02DC;
+        }
+        break;
+    }
+    lbl_806D02E0 = result;
+    return result;
+}
+
+void fn_80209C88(void) {
+    char buf[0x54];
+    void *cards[4] = {0, 0, 0, 0};
+    cards[0] = buf;
+    card_pack(&g_playerData, buf, 1);
+    lbl_806D02D8 = CardSnapshot_ResolveCommonItems(cards);
+    int list[4] = {0, 0, 0, 0};
+    PlayerData *pd = &g_playerData;
+    int result = -1;
+    const int *tbl;
+    int n;
+    if (g_ccClass == 2) {
+        if (g_roundIndex >= 4) {
+            tbl = lbl_804EC568 + 0x6D;
+            n = 14;
+        } else {
+            tbl = lbl_804EC568;
+            n = 32;
+        }
+    } else if (g_roundIndex >= 4) {
+        tbl = lbl_804EC568 + 0x6D;
+        n = 14;
+    } else {
+        int k = 0;
+        for (int i = 0; i < 4; i++) {
+            if (!fn_801D6F30(pd, lbl_804EC568[0x61 + i], 0) &&
+                fn_801D5B8C(pd, 0, lbl_804EC568[0x65 + i], lbl_804EC568[0x69 + i]) &&
+                fn_801D5B8C(pd, 1, lbl_804EC568[0x65 + i], lbl_804EC568[0x69 + i])) {
+                list[k++] = lbl_804EC568[0x61 + i];
+            }
+        }
+        tbl = list;
+        n = 4;
+    }
+    int *ids = new int[n];
+    Shuffle(ids, tbl, n);
+    for (int i = 0; i < n; i++) {
+        if (!fn_801D6F30(pd, ids[i], 0)) {
+            result = ids[i];
+            break;
+        }
+    }
+    delete[] ids;
+    lbl_806D02DC = result;
 }
