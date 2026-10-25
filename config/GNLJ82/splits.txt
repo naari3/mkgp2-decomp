@@ -7737,6 +7737,9 @@ MSL_C/wprintf.c:
 	.sdata      start:0x806D0BB8 end:0x806D0BE8
 	.sdata2     start:0x806DC3B8 end:0x806DC3C0
 
+MSL_C/wstring.c:
+	.text       start:0x8027B324 end:0x8027B410
+
 MSL_C/math/e_acos.c:
 	.text       start:0x8027B410 end:0x8027B720
 	.sdata2     start:0x806DC3C0 end:0x806DC450

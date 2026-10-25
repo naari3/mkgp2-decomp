@@ -2305,6 +2305,7 @@ config.libs = [
             Object(Matching, "MSL_C/wmem.c"),
             Object(Matching, "MSL_C/wctype.c"),
             Object(Matching, "MSL_C/wprintf.c"),
+            Object(Matching, "MSL_C/wstring.c"),
         ],
     },
     DolphinLib(
