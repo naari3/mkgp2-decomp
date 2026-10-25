@@ -2876,6 +2876,27 @@
     "__dt__7ResCtrlFv": "dtor_80082960",
     "__dt__21VHolder<10FlowFaderF>Fv": "dtor_80250668"
   },
+  "src/game/HudManager.cpp": {
+    "CreatePart__10HudManagerFiUc": "fn_80253294",
+    "DrawMasked__10HudManagerFUi": "fn_80253448",
+    "DrawAll__10HudManagerFv": "fn_802535D4"
+  },
+  "src/game/HudManagerHide.cpp": {
+    "HideAll__10HudManagerFv": "fn_802537E8"
+  },
+  "src/game/HudManagerModes.cpp": {
+    "__ct__8OverlayAFiiii": "fn_80148810",
+    "__ct__8OverlayBFii": "fn_8014AA38",
+    "__ct__8OverlayCFii": "fn_80149B8C",
+    "HideAll__10HudManagerFv": "fn_802537E8"
+  },
+  "src/game/HudManagerLap.cpp": {
+    "SetLapScale__10HudManagerFf": "fn_80253EC4"
+  },
+  "src/game/HudManagerLife.cpp": {
+    "SetSpeed__10HudManagerFf": "fn_80253FD8",
+    "__dt__10HudManagerFv": "fn_80254134"
+  },
   "src/Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp": {
     "__dt__Q23std9exceptionFv": "dtor_80038DD4",
     "what__Q23std9exceptionCFv": "fn_80038E1C",
