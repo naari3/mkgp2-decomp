@@ -2540,6 +2540,9 @@ config.libs = [
             Object(Matching, "game/fog/Fog_UpdateFromCourseScene3D.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/kartmove/fn_8019BF80.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/bitread/fn_8018CC64.c"),
+            Object(Matching, "game/bbox/fn_80189808.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/miyazakiconsole/fn_8017FF10.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/miyazakiconsole/fn_80180B34.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             # g4-end
         ],
     },

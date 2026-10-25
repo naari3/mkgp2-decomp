@@ -1148,6 +1148,10 @@
   "src/game/kartmove/fn_8019BF80.cpp": {
     "__dt__3VecFv": "dtor_80036E40"
   },
+  "src/game/bbox/fn_80189808.cpp": {
+    "__ct__4BBoxFP4Vec3P4Vec3P4BBoxi": "fn_8018A278",
+    "__nw__FUl": "Alloc"
+  },
   "src/game/objview/fn_80187878.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",

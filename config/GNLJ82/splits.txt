@@ -6383,6 +6383,11 @@ game/miyazakiconsole/fn_8017FCAC.cpp:
 	extabindex  start:0x80026A2C end:0x80026A38
 	.text       start:0x8017FCAC end:0x8017FD68
 
+game/miyazakiconsole/fn_8017FF10.c:
+	extab       start:0x80011A58 end:0x80011A60
+	extabindex  start:0x80026A44 end:0x80026A50
+	.text       start:0x8017FF10 end:0x8018005C
+
 game/miyazakiconsole/fn_8018005C.c:
 	extab       start:0x80011A60 end:0x80011A68
 	extabindex  start:0x80026A50 end:0x80026A5C
@@ -6435,6 +6440,11 @@ game/miyazakiconsole/fn_80180670.cpp:
 	extab       start:0x80011AA8 end:0x80011AC0
 	extabindex  start:0x80026ABC end:0x80026AC8
 	.text       start:0x80180670 end:0x801807E0
+
+game/miyazakiconsole/fn_80180B34.cpp:
+	extab       start:0x80011AC8 end:0x80011AD0
+	extabindex  start:0x80026AD4 end:0x80026AE0
+	.text       start:0x80180B34 end:0x80180C80
 
 game/miyazakiconsole/fn_80180C80.cpp:
 	extab       start:0x80011AD0 end:0x80011AD8
@@ -6693,6 +6703,11 @@ game/NokoNoko_Init.c:
 
 game/nokonoko/fn_80189394.c:
 	.text       start:0x80189394 end:0x801893BC
+
+game/bbox/fn_80189808.cpp:
+	extab       start:0x80011DBC end:0x80011DD4
+	extabindex  start:0x80026DEC end:0x80026DF8
+	.text       start:0x80189808 end:0x80189950
 
 game/nokonoko/fn_80189950.c:
 	extab       start:0x80011DD4 end:0x80011DDC
