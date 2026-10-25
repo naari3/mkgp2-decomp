@@ -1664,10 +1664,16 @@ game/PCBCommHostConfirm.c:
 	extabindex  start:0x800218A8 end:0x800218C0
 	.text       start:0x800854B8 end:0x80085648
 
+game/PcbSync_AnyPeer.c:
+	.text       start:0x80085648 end:0x800856CC
+
 game/PCBComm_PromoteToClientConfirmed.c:
 	extab       start:0x80008DAC end:0x80008DB4
 	extabindex  start:0x800218C0 end:0x800218CC
 	.text       start:0x800856CC end:0x800856F4
+
+game/PcbSync_Counts.c:
+	.text       start:0x800856F4 end:0x80085DD8
 
 game/SyncSlot_ApplyCourseChoice.c:
 	extab       start:0x80008DB4 end:0x80008DBC
