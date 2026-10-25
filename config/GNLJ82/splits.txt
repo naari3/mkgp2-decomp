@@ -6942,6 +6942,12 @@ dolphin/dvd/fstload.c:
 	.sdata      start:0x806D0C48 end:0x806D0C58
 	.sbss       start:0x806D1ED0 end:0x806D1EE0
 
+thp/THPDec.c:
+	.text       start:0x80298988 end:0x8029C33C
+	.rodata     start:0x803F28B0 end:0x803F2940
+	.bss        start:0x806A4940 end:0x806A4C70
+	.sdata2     start:0x806DC948 end:0x806DC988
+
 musyx/runtime/seq.c:
 	.text       start:0x8029C33C end:0x802A0278
 	.data       start:0x804F5C20 end:0x804F5C70
