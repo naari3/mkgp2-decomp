@@ -4068,6 +4068,18 @@
     "__dynamic_cast": "fn_80271340",
     "SetAnimParam__6SpriteFis": "Sprite_SetAnimParam"
   },
+  "src/game/anon_8021ED88.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "Draw__21clCSSceneChangeSingleFv": "fn_8021ED88",
+    "Update__21clCSSceneChangeSingleFv": "fn_8021EDB4",
+    "__dt__21clCSSceneChangeSingleFv": "fn_8021EEB8",
+    "Destroy__21clCSSceneChangeSingleFv": "fn_8021EF7C",
+    "__vt__21clCSSceneChangeSingle": "lbl_804EDE1C",
+    "__vt__9SceneBase": "lbl_803FE0C8",
+    "__ct__9FlowPanelFv": "fn_801DA06C"
+  },
   "src/game/ChallengeGoalCamera_Init.cpp": {
     "__nw__FUl": "Alloc",
     "__ct__13DemoSceneBaseFPCc": "Scene3D_Init",
