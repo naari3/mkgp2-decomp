@@ -6024,6 +6024,11 @@ game/fn_8024B544.c:
 	extabindex  start:0x8002B4F0 end:0x8002B4FC
 	.text       start:0x8024B544 end:0x8024B568
 
+game/ContinueScene.cpp:
+	extab       start:0x8001E638 end:0x8001E78C
+	extabindex  start:0x8002B670 end:0x8002B700
+	.text       start:0x8024D764 end:0x8024E338
+
 game/fn_8024E338.c:
 	.text       start:0x8024E338 end:0x8024E344
 	.ctors      start:0x802E8968 end:0x802E896C

@@ -2502,5 +2502,25 @@
   },
   "src/game/Sci2Card.cpp": {
     "__ct__8Sci2CardFv": "Sci2Card_Init"
+  },
+  "src/game/ContinueScene.cpp": {
+    "__ct__11CoinCounterFi": "fn_8024E2A4",
+    "__dt__11CoinCounterFv": "fn_8024E244",
+    "Show__11CoinCounterFv": "fn_8024E1DC",
+    "Draw__11CoinCounterFv": "fn_8024E094",
+    "Update__11CoinCounterFv": "fn_8024E05C",
+    "__ct__13ContinueSceneFi": "fn_8024DE38",
+    "__dt__13ContinueSceneFv": "fn_8024DD50",
+    "Update__13ContinueSceneFv": "fn_8024D874",
+    "Cancel__13ContinueSceneFv": "fn_8024D7F4",
+    "Confirm__13ContinueSceneFv": "fn_8024D764",
+    "__vt__13ContinueScene": "lbl_804EF000",
+    "__ct__10ItemMsgWndFv": "fn_802325FC",
+    "__ct__10CoinWindowFv": "fn_801DA06C",
+    "__ct__10CoinPromptFiiiii": "fn_8023D080",
+    "__ct__15CoinPopupDetailFiii": "fn_80161914",
+    "__ct__9FlowSceneFi": "fn_801FD41C",
+    "__dt__9FlowSceneFv": "dtor_801FD32C",
+    "__dt__16CoinPromptHolderFv": "dtor_801CCA30"
   }
 }
