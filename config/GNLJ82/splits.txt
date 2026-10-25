@@ -6605,9 +6605,6 @@ MSL_C/math/s_tan.c:
 	.text       start:0x8027EAC0 end:0x8027EB38
 	.sdata2     start:0x806DC910 end:0x806DC918
 
-sysdolphin/baselib/_hsd_consts.c:
-	.sdata2     start:0x806DCC58 end:0x806DCC68
-
 MSL_C/math/w_acos.c:
 	.text       start:0x8027EB38 end:0x8027EB58
 
@@ -6719,6 +6716,17 @@ musyx/runtime/snd_midictrl.c:
 
 musyx/runtime/snd_service.c:
 	.text       start:0x802B93A8 end:0x802B967C
+
+musyx/runtime/hardware.c:
+	.text       start:0x802B967C end:0x802BA730
+	.rodata     start:0x803F2AB8 end:0x803F2BB8
+	.bss        start:0x806CA5F8 end:0x806CA608
+	.sdata      start:0x806D0C60 end:0x806D0C70
+	.sbss       start:0x806D2058 end:0x806D2060
+	.sdata2     start:0x806DCB10 end:0x806DCB38
+
+sysdolphin/baselib/_hsd_consts.c:
+	.sdata2     start:0x806DCC58 end:0x806DCC68
 
 musyx/runtime/hw_dolphin.c:
 	.text       start:0x802BB460 end:0x802BB9B0
