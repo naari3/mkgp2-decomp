@@ -9524,6 +9524,21 @@ game/LapDisp_SetCurrentLap.c:
 	extabindex  start:0x8002AFA4 end:0x8002AFB0
 	.text       start:0x8023FAEC end:0x8023FB4C
 
+game/CountdownOwner.cpp:
+	extab       start:0x8001CE3C end:0x8001CEE4
+	extabindex  start:0x8002AFB0 end:0x8002AFD4
+	.text       start:0x8023FB4C end:0x8023FE74
+
+game/TaskBucketsCast.cpp:
+	extab       start:0x8001CEE4 end:0x8001CEEC
+	extabindex  start:0x8002AFD4 end:0x8002AFE0
+	.text       start:0x8023FE74 end:0x8023FF18
+
+game/TaskBuckets.cpp:
+	extab       start:0x8001CEEC end:0x8001CF04
+	extabindex  start:0x8002AFE0 end:0x8002B004
+	.text       start:0x8023FF18 end:0x802400A4
+
 game/fn_80241BE0.c:
 	extab       start:0x8001CF88 end:0x8001CF90
 	extabindex  start:0x8002B088 end:0x8002B094

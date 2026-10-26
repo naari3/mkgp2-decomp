@@ -5434,5 +5434,19 @@
     "__ct__11clIndicatorFiiiii": "fn_8023D080",
     "__dt__11clIndicatorFv": "fn_8023CFE0",
     "__ct__7TextMgrFv": "TexMgr_Init"
+  },
+  "src/game/CountdownOwner.cpp": {
+    "__ct__14CountdownOwnerFii": "fn_8023FCAC",
+    "__dt__14CountdownOwnerFv": "fn_8023FBA8",
+    "__vt__14CountdownOwner": "lbl_804EE644",
+    "__vt__13CountdownRoot": "lbl_804EDB28",
+    "__dt__13CountdownRootFv": "dtor_8021617C",
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "__vt__10FlowFaderF": "lbl_80419DE0",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "Set__10FlowFaderFFffs": "fn_8020A734",
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "__dt__10FlowFaderFFv": "TweenInterp_Dtor"
   }
 }

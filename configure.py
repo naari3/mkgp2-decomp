@@ -505,6 +505,9 @@ config.libs = [
         "cflags": [*cflags_base, "-Cpp_exceptions on"],
         "progress_category": "game",
         "objects": [
+            Object(Matching, "game/CountdownOwner.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
+            Object(NonMatching, "game/TaskBucketsCast.cpp", extab_padding=b""),
+            Object(Matching, "game/TaskBuckets.cpp", extab_padding=b""),
             # 1 TU = 1 dtk reversed-extab group bundle (6 functions).
             # Phase 1b: held as Matching with all 6 fns as asm_fn + manually
             # emitted extab/extabindex (via __declspec(section ".extab_user")
