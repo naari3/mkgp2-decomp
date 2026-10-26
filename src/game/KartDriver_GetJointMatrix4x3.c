@@ -1,75 +1,25 @@
-/* === extracted from auto_KartDriver_GetJointM_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+/* Joint matrix as a 4x4 row-vector matrix: the transposed 3x4 rotation and
+ * the translation in the last row. */
+typedef struct KartDriver KartDriver;
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void KartDriver_GetJointByIdx();
-extern void PSMTX44Identity();
+extern float (*KartDriver_GetJointByIdx(KartDriver *self, int idx))[4];
+extern void PSMTX44Identity(float m[4][4]);
 
-/* --- function index (1 fns, .text 0x80040DFC..0x80040E9C) ---
- * [  0] 0x80040DFC size:0xA0    global KartDriver_GetJointMatrix4x3
- */
+void KartDriver_GetJointMatrix4x3(KartDriver *self, int idx, float out[4][4])
+{
+    float (*m)[4] = KartDriver_GetJointByIdx(self, idx);
 
-/* --- forward decls --- */
-asm void KartDriver_GetJointMatrix4x3(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_KartDriver_GetJointMatrix4x3[8] = {
-    0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_KartDriver_GetJointMatrix4x3 = {
-    (void *)&KartDriver_GetJointMatrix4x3, 0x000000A0, (void *)extab_KartDriver_GetJointMatrix4x3
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void KartDriver_GetJointMatrix4x3(void) { /* 0x80040DFC size:0xA0 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    stw r30, 0x8(r1)
-    mr r30, r5
-    bl KartDriver_GetJointByIdx
-    mr r31, r3
-    mr r3, r30
-    bl PSMTX44Identity
-    lfs f0, 0x0(r31)
-    stfs f0, 0x0(r30)
-    lfs f0, 0x10(r31)
-    stfs f0, 0x4(r30)
-    lfs f0, 0x20(r31)
-    stfs f0, 0x8(r30)
-    lfs f0, 0x4(r31)
-    stfs f0, 0x10(r30)
-    lfs f0, 0x14(r31)
-    stfs f0, 0x14(r30)
-    lfs f0, 0x24(r31)
-    stfs f0, 0x18(r30)
-    lfs f0, 0x8(r31)
-    stfs f0, 0x20(r30)
-    lfs f0, 0x18(r31)
-    stfs f0, 0x24(r30)
-    lfs f0, 0x28(r31)
-    stfs f0, 0x28(r30)
-    lfs f0, 0xc(r31)
-    stfs f0, 0x30(r30)
-    lfs f0, 0x1c(r31)
-    stfs f0, 0x34(r30)
-    lfs f0, 0x2c(r31)
-    stfs f0, 0x38(r30)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+    PSMTX44Identity(out);
+    out[0][0] = m[0][0];
+    out[0][1] = m[1][0];
+    out[0][2] = m[2][0];
+    out[1][0] = m[0][1];
+    out[1][1] = m[1][1];
+    out[1][2] = m[2][1];
+    out[2][0] = m[0][2];
+    out[2][1] = m[1][2];
+    out[2][2] = m[2][2];
+    out[3][0] = m[0][3];
+    out[3][1] = m[1][3];
+    out[3][2] = m[2][3];
 }
-
-

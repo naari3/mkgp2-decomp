@@ -1,100 +1,49 @@
-/* === extracted from auto_NamCam_Init_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+/* Allocate the NAM camera receiver: a 512 KiB frame buffer followed by
+ * the socket state, set up for port 80 on PCB 0's address. */
+typedef struct NamCamSocket {
+    unsigned char pad00;
+    unsigned char family;   /* 0x01 */
+    unsigned short port;    /* 0x02 */
+    unsigned int addr;      /* 0x04 */
+    unsigned char pad08[0x8];
+    unsigned char flag10;   /* 0x10 */
+    unsigned char flag11;   /* 0x11 */
+    unsigned char flag12;   /* 0x12 */
+    unsigned char flag13;   /* 0x13 */
+    int socket;             /* 0x14 */
+    unsigned char connected; /* 0x18 */
+    unsigned char pad19[0xb];
+    int received;           /* 0x24 */
+    unsigned char pad28[0x8];
+    int frames;             /* 0x30 */
+} NamCamSocket;
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void Alloc();
-extern void DebugPrintf();
-extern void PcbIdToIpString();
-extern void acInetAddr();
+typedef struct NamCam {
+    unsigned char frame[0x80000];
+    NamCamSocket sock; /* 0x80000 */
+} NamCam;
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D1070;
+extern NamCam *lbl_806D1070;
+extern char lbl_802EBA04[];
+extern void *Alloc(unsigned long size);
+extern char *PcbIdToIpString(int pcb);
+extern unsigned int acInetAddr(const char *str);
+extern void DebugPrintf(const char *fmt, ...);
 
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_802EBA04[];
-
-/* --- function index (1 fns, .text 0x80049860..0x80049940) ---
- * [  0] 0x80049860 size:0xE0    global NamCam_Init
- */
-
-/* --- forward decls --- */
-asm void NamCam_Init(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_NamCam_Init[8] = {
-    0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_NamCam_Init = {
-    (void *)&NamCam_Init, 0x000000E0, (void *)extab_NamCam_Init
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void NamCam_Init(void) { /* 0x80049860 size:0xE0 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lis r3, 0x8
-    stw r0, 0x14(r1)
-    addi r3, r3, 0x34
-    bl Alloc
-    stw r3, lbl_806D1070(r13)
-    addis r3, r3, 0x8
-    li r4, 0x2
-    li r0, 0x50
-    stb r4, 0x1(r3)
-    li r3, 0x0
-    lwz r4, lbl_806D1070(r13)
-    addis r4, r4, 0x8
-    sth r0, 0x2(r4)
-    bl PcbIdToIpString
-    bl acInetAddr
-    lwz r7, lbl_806D1070(r13)
-    lis r4, lbl_802EBA04@ha
-    li r6, 0x0
-    li r5, -0x1
-    addis r7, r7, 0x8
-    addi r0, r4, lbl_802EBA04@l
-    stw r3, 0x4(r7)
-    mr r3, r0
-    lwz r4, lbl_806D1070(r13)
-    addis r4, r4, 0x8
-    stb r6, 0x10(r4)
-    lwz r4, lbl_806D1070(r13)
-    addis r4, r4, 0x8
-    stb r6, 0x11(r4)
-    lwz r4, lbl_806D1070(r13)
-    addis r4, r4, 0x8
-    stb r6, 0x12(r4)
-    lwz r4, lbl_806D1070(r13)
-    addis r4, r4, 0x8
-    stb r6, 0x13(r4)
-    lwz r4, lbl_806D1070(r13)
-    addis r4, r4, 0x8
-    stw r5, 0x14(r4)
-    lwz r4, lbl_806D1070(r13)
-    addis r4, r4, 0x8
-    stb r6, 0x18(r4)
-    lwz r4, lbl_806D1070(r13)
-    addis r4, r4, 0x8
-    stw r6, 0x24(r4)
-    lwz r4, lbl_806D1070(r13)
-    addis r4, r4, 0x8
-    stw r6, 0x30(r4)
-    crxor 6, 6, 6
-    bl DebugPrintf
-    lwz r0, 0x14(r1)
-    li r3, 0x1
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+int NamCam_Init(void)
+{
+    lbl_806D1070 = Alloc(sizeof(NamCam));
+    lbl_806D1070->sock.family = 2;
+    lbl_806D1070->sock.port = 0x50;
+    lbl_806D1070->sock.addr = acInetAddr(PcbIdToIpString(0));
+    lbl_806D1070->sock.flag10 = 0;
+    lbl_806D1070->sock.flag11 = 0;
+    lbl_806D1070->sock.flag12 = 0;
+    lbl_806D1070->sock.flag13 = 0;
+    lbl_806D1070->sock.socket = -1;
+    lbl_806D1070->sock.connected = 0;
+    lbl_806D1070->sock.received = 0;
+    lbl_806D1070->sock.frames = 0;
+    DebugPrintf(lbl_802EBA04);
+    return 1;
 }
-

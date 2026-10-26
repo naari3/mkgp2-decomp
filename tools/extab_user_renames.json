@@ -146,8 +146,8 @@
     "extabindex_clItemBox_Tick": "@eti_80020C18"
   },
   "src/game/clItemBox_Dtor.c": {
-    "extab_clItemBox_Dtor": "@etb_80007BC4",
-    "extabindex_clItemBox_Dtor": "@eti_80020C24"
+    "@11": "@etb_80007BC4",
+    "@12": "@eti_80020C24"
   },
   "src/game/clItemBox_Ctor_XYZ.c": {
     "__ct__10ItemBoxXYZFfff": "clItemBox_Ctor_XYZ",
@@ -178,8 +178,8 @@
     "extabindex_NamCam_End": "@eti_80020120"
   },
   "src/game/NamCam_Init.c": {
-    "extab_NamCam_Init": "@etb_80006880",
-    "extabindex_NamCam_Init": "@eti_8002012C"
+    "@5": "@etb_80006880",
+    "@6": "@eti_8002012C"
   },
   "src/game/clFlowItemSelect_CommitSlotAnim.c": {
     "extab_clFlowItemSelect_CommitSlotAnim": "@etb_80014720",
@@ -548,8 +548,8 @@
     "extabindex_VfxSlot_BindResource": "@eti_80022A3C"
   },
   "src/game/VfxSlot_BindResourceEx.c": {
-    "extab_VfxSlot_BindResourceEx": "@etb_8000A598",
-    "extabindex_VfxSlot_BindResourceEx": "@eti_80022A48"
+    "@13": "@etb_8000A598",
+    "@14": "@eti_80022A48"
   },
   "src/game/SpriteAnimParamBlock.c": {
     "extab_SpriteAnimParamBlock_Reload": "@etb_8001CDA4",
@@ -1455,8 +1455,8 @@
     "extabindex_DVDLoad_ReadChunkHandle": "@eti_80021608"
   },
   "src/game/DVDLoad_WaitIfSamePage.c": {
-    "extab_DVDLoad_WaitIfSamePage": "@etb_80008810",
-    "extabindex_DVDLoad_WaitIfSamePage": "@eti_80021620"
+    "@15": "@etb_80008810",
+    "@16": "@eti_80021620"
   },
   "src/game/AnimStatePool.c": {
     "@19": "@etb_8000A488",
@@ -1493,12 +1493,12 @@
     "extabindex_CardTaskManager_RenderOverlay": "@eti_80021AF4"
   },
   "src/game/CardTaskManager_Tick.c": {
-    "extab_CardTaskManager_Tick": "@etb_80008FFC",
-    "extabindex_CardTaskManager_Tick": "@eti_80021B00"
+    "@etb_80008FFC": "@etb_80008FFC",
+    "@eti_80021B00": "@eti_80021B00"
   },
   "src/game/CardTaskManager_Dtor.c": {
-    "extab_CardTaskManager_Dtor": "@etb_80009004",
-    "extabindex_CardTaskManager_Dtor": "@eti_80021B0C"
+    "@21": "@etb_80009004",
+    "@22": "@eti_80021B0C"
   },
   "src/game/NetDiag_CounterPage.c": {
     "extab_NetDiag_CounterPage": "@etb_80008118",
@@ -1767,8 +1767,8 @@
     "@10": "@eti_800208AC"
   },
   "src/game/KartAudioChannel_Set24WithSeStop.c": {
-    "extab_KartAudioChannel_Set24WithSeStop": "@etb_800076D8",
-    "extabindex_KartAudioChannel_Set24WithSeStop": "@eti_800208DC"
+    "@12": "@etb_800076D8",
+    "@13": "@eti_800208DC"
   },
   "src/game/KartAudioChannel_PlayColorMatchSE.c": {
     "extab_KartAudioChannel_PlayColorMatchSE": "@etb_800076E8",
@@ -1811,8 +1811,8 @@
     "@9": "@eti_80021260"
   },
   "src/game/Backup_ClearBookkeeping.c": {
-    "extab_Backup_ClearBookkeeping": "@etb_80008310",
-    "extabindex_Backup_ClearBookkeeping": "@eti_80021248"
+    "@9": "@etb_80008310",
+    "@10": "@eti_80021248"
   },
   "src/game/Backup_GetMinutesSinceBoot.c": {
     "extab_Backup_GetMinutesSinceBoot": "@etb_800082F8",
@@ -1966,16 +1966,16 @@
     "@10": "@eti_8001FE8C"
   },
   "src/game/KartDriver_GetJointMatrix4x3.c": {
-    "extab_KartDriver_GetJointMatrix4x3": "@etb_800061E8",
-    "extabindex_KartDriver_GetJointMatrix4x3": "@eti_8001FE74"
+    "@5": "@etb_800061E8",
+    "@6": "@eti_8001FE74"
   },
   "src/game/KartDriver_GetJointByIdx.c": {
     "extab_KartDriver_GetJointByIdx": "@etb_800061F0",
     "extabindex_KartDriver_GetJointByIdx": "@eti_8001FE80"
   },
   "src/game/KartDriver_SetJointPosY_Slot3b.c": {
-    "extab_KartDriver_SetJointPosY_Slot3b": "@etb_80006210",
-    "extabindex_KartDriver_SetJointPosY_Slot3b": "@eti_8001FEB0"
+    "@36": "@etb_80006210",
+    "@37": "@eti_8001FEB0"
   },
   "src/game/KartDriver_SetUniformScale_4Wheels.c": {
     "extab_KartDriver_SetUniformScale_4Wheels": "@etb_80006228",
@@ -2069,16 +2069,16 @@
     "extabindex_KartDriver_TransformWorldToLocalY0": "@eti_80023BA0"
   },
   "src/game/KartDriver_SetJointPosY_Slot3d.c": {
-    "extab_KartDriver_SetJointPosY_Slot3d": "@etb_80006200",
-    "extabindex_KartDriver_SetJointPosY_Slot3d": "@eti_8001FE98"
+    "@36": "@etb_80006200",
+    "@37": "@eti_8001FE98"
   },
   "src/game/KartDriver_SetJointPosY_Slot3c.c": {
-    "extab_KartDriver_SetJointPosY_Slot3c": "@etb_80006208",
-    "extabindex_KartDriver_SetJointPosY_Slot3c": "@eti_8001FEA4"
+    "@36": "@etb_80006208",
+    "@37": "@eti_8001FEA4"
   },
   "src/game/KartDriver_SetJointPosY_Slot3a.c": {
-    "extab_KartDriver_SetJointPosY_Slot3a": "@etb_80006218",
-    "extabindex_KartDriver_SetJointPosY_Slot3a": "@eti_8001FEBC"
+    "@36": "@etb_80006218",
+    "@37": "@eti_8001FEBC"
   },
   "src/game/KartDriver_SetEulerY_4Joints_LastMirrored.c": {
     "extab_KartDriver_SetEulerY_4Joints_LastMirrored": "@etb_80006220",
