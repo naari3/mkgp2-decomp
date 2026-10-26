@@ -5469,5 +5469,33 @@
   },
   "src/game/ItemAliasSpriteDraw.cpp": {
     "Draw__15ItemAliasSpriteFv": "fn_8023D2B8"
-  }
+  },
+  "src/game/CardPrintFlowUpdate.cpp": {
+    "Set__10FlowFaderIFiis": "fn_8020A7CC"
+  },
+  "src/game/CardPrintFlowErrors.cpp": {},
+  "src/game/SceneRoleTransitions.cpp": {
+    "Set__10FlowFaderIFiis": "fn_8020A7CC"
+  },
+  "src/game/CardPrintFlowLifetime.cpp": {
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__8FlowTaskFv": "dtor_802043EC",
+    "__dt__13CardPrintFlowFv": "fn_8024BCDC",
+    "__vt__13CardPrintFlow": "lbl_804EEE98",
+    "__dt__9PrintKartFv": "fn_801D9F88",
+    "__dt__10FlowFaderIFv": "fn_801F26C8",
+    "__vt__10FlowFaderI": "lbl_804E5284",
+    "@69": "@etb_8001E204",
+    "@70": "@eti_8002B520"
+  },
+  "src/game/CardPrintFlowRender.cpp": {
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0",
+    "@32": "@etb_8001E1D4",
+    "@33": "@eti_8002B508"
+  },
+  "src/game/CardPrintConfig.cpp": {}
 }

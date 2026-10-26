@@ -9594,6 +9594,36 @@ game/fn_8024B544.c:
 	extabindex  start:0x8002B4F0 end:0x8002B4FC
 	.text       start:0x8024B544 end:0x8024B568
 
+game/CardPrintFlowUpdate.cpp:
+	extab       start:0x8001E1CC end:0x8001E1D4
+	extabindex  start:0x8002B4FC end:0x8002B508
+	.text       start:0x8024B568 end:0x8024B77C
+	.data       start:0x804EEE20 end:0x804EEE60
+
+game/CardPrintFlowRender.cpp:
+	extab       start:0x8001E1D4 end:0x8001E1FC
+	extabindex  start:0x8002B508 end:0x8002B514
+	.text       start:0x8024B77C end:0x8024B924
+
+game/CardPrintFlowErrors.cpp:
+	extab       start:0x8001E1FC end:0x8001E204
+	extabindex  start:0x8002B514 end:0x8002B520
+	.text       start:0x8024B924 end:0x8024BCDC
+
+game/CardPrintFlowLifetime.cpp:
+	extab       start:0x8001E204 end:0x8001E26C
+	extabindex  start:0x8002B520 end:0x8002B52C
+	.text       start:0x8024BCDC end:0x8024BDF0
+
+game/CardPrintConfig.cpp:
+	.text       start:0x8024BDF0 end:0x8024BE64
+	.ctors      start:0x802E8964 end:0x802E8968
+
+game/SceneRoleTransitions.cpp:
+	extab       start:0x8001E26C end:0x8001E28C
+	extabindex  start:0x8002B52C end:0x8002B55C
+	.text       start:0x8024BE64 end:0x8024C0F4
+
 game/SceneRoleRender.cpp:
 	extab       start:0x8001E570 end:0x8001E578
 	extabindex  start:0x8002B610 end:0x8002B61C
