@@ -38,8 +38,13 @@ int Item_OrbitAnchorKart(unsigned char *self, Vec *off, void *keep, float dYaw, 
 
         Vec3_Copy(&tmp, (Vec *)(anchor + 0xA0));
         h = lbl_806D5AD8 * *(float *)(anchor + 0xC4);
+        /* fakematch (permuter): the offset in a variable keeps the gain load order.
+         * Natural code:
+         *   inner = lbl_806D5ADC * *(float *)(anchor + 0xC4) * *(float *)(anchor + 0x10C);
+         *   outer = lbl_806D5AE0 * *(float *)(anchor + 0xC4) * *(float *)(anchor + 0x10C);
+         */
         {
-            unsigned int gainOfs = 0x10C; /* fakematch: keeps the gain load order */
+            unsigned int gainOfs = 0x10C;
             inner = lbl_806D5ADC * *(float *)(anchor + 0xC4) * *(float *)(anchor + gainOfs);
             outer = lbl_806D5AE0 * *(float *)(anchor + 0xC4) * *(float *)(anchor + gainOfs);
         }
@@ -54,7 +59,9 @@ int Item_OrbitAnchorKart(unsigned char *self, Vec *off, void *keep, float dYaw, 
         len = Vec3_HorizontalMagnitude(off);
         Vec3_ScaleXZ(off, off, lbl_806D5AB8 / len);
         if (FAbs_FloatAsDouble(target - len) < lbl_806D5ACC) {
-            if (off && off && off) { /* fakematch (permuter): fixes block order */
+            /* fakematch (permuter): the dummy test fixes the block order.
+             * Natural code: an empty branch (keep target as is). */
+            if (off && off && off) {
             }
         } else if (len < target) {
             target = len + lbl_806D5ACC;
