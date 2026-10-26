@@ -1753,8 +1753,8 @@
     "@6": "@eti_80020D38"
   },
   "src/game/clItemBoxResponder_Ctor.c": {
-    "extab_clItemBoxResponder_Ctor": "@etb_80007DB8",
-    "extabindex_clItemBoxResponder_Ctor": "@eti_80020D50"
+    "@19": "@etb_80007DB8",
+    "@20": "@eti_80020D50"
   },
   "src/game/clItemBoxResponder_SpawnDebris.c": {
     "extab_clItemBoxResponder_SpawnDebris": "@etb_80007B74",
