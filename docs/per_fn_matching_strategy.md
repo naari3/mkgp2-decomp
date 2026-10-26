@@ -2316,3 +2316,12 @@ approaches. Mechanical contiguous split at800B9758/EH8000A7F8/index80022D60
 preserves the two exact functions without ASM/manual EH or foreign ownership.
 This split is not an extra source-search attempt. No blind clamp allocator
 permutation retry is authorized; retain evidence until new provenance exists.
+
+## 2026-10-26 fakematch comment rule
+
+A fakematch (code that matches but that no one would write, such as permuter
+output like `if (x && x && x) {}`, `(0, v)` or an offset held in a variable) is
+allowed. Mark it with `/* fakematch (permuter): <what it fixes> */` and also
+write in that comment the natural code the original most likely had, so it can
+be replaced when a cleaner match turns up. Examples: `game/Item_OrbitAnchorKart.c`,
+`game/ItemHandheldRender.c`.

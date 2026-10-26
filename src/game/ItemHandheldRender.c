@@ -89,7 +89,9 @@ void Item_RenderHandheldByCharacter(ItemHandheldRenderView *item,
     case 1:
         blendValue = item->blend;
         blendLimit = lbl_806D5AB8;
-        if (lbl_806D5ACC && lbl_806D5ACC && lbl_806D5ACC) { /* fakematch (permuter) */
+        /* fakematch (permuter): the dummy test fixes the register order.
+         * Natural code: nothing here. */
+        if (lbl_806D5ACC && lbl_806D5ACC && lbl_806D5ACC) {
         }
         item->blend = blendValue + lbl_806D5AFC;
         if (blendLimit < item->blend) item->blend = blendLimit;
@@ -131,8 +133,12 @@ void Item_RenderHandheldByCharacter(ItemHandheldRenderView *item,
     default: height = lbl_806D5AC8; break;
     }
     renderScale = item->scale;
+    /* fakematch (permuter): `(0, renderScale)`. Natural code:
+     *   Matrix4_PreMultiplyTranslation(local, local, offset->x * renderScale,
+     *       offset->y * renderScale + height, offset->z * renderScale);
+     */
     Matrix4_PreMultiplyTranslation(local, local,
-        offset->x * renderScale, offset->y * (0, renderScale) + height, /* fakematch (permuter) */
+        offset->x * renderScale, offset->y * (0, renderScale) + height,
         offset->z * renderScale);
     Matrix4_Multiply(work, local, work);
     Matrix4_Identity(local);
