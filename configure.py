@@ -1743,7 +1743,7 @@ config.libs = [
             Object(Matching, "game/TCPConnCloseInit.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PcbConn_Close.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/TCPConnLeaf.c"),
-            Object(Matching, "game/TCPConn_AllocTxBuffer.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/TCPConn_AllocTxBuffer.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/main.c"),
             Object(Matching, "game/ServiceMenu.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/ServiceMenu_Page.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),

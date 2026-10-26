@@ -420,8 +420,8 @@
     "extabindex_ItemHolder_Init": "@eti_8002897C"
   },
   "src/game/TCPConn_AllocTxBuffer.c": {
-    "extab_TCPConn_AllocTxBuffer": "@etb_80008E9C",
-    "extabindex_TCPConn_AllocTxBuffer": "@eti_800219B0"
+    "@19": "@etb_80008E9C",
+    "@20": "@eti_800219B0"
   },
   "src/game/ResetIOPorts.c": {
     "extab_ResetIOPorts": "@etb_80008D7C",
