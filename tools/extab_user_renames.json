@@ -1763,8 +1763,8 @@
     "extabindex_clItemBoxResponder_DrawDebrisParticle": "@eti_80020BD0"
   },
   "src/game/KartAudioChannel.c": {
-    "extab_KartAudioChannel_ResetSEsAndSetFlag": "@etb_800076B8",
-    "extabindex_KartAudioChannel_ResetSEsAndSetFlag": "@eti_800208AC"
+    "@9": "@etb_800076B8",
+    "@10": "@eti_800208AC"
   },
   "src/game/KartAudioChannel_Set24WithSeStop.c": {
     "extab_KartAudioChannel_Set24WithSeStop": "@etb_800076D8",

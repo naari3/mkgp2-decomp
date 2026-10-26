@@ -574,7 +574,7 @@ config.libs = [
             Object(Matching, "game/clItemBoxResponder_SpawnDebris.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBoxResponder.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBoxResponder_Ctor.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/KartAudioChannel.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/KartAudioChannel.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SoundVolumePan_Update.c"),
             Object(Matching, "game/KartAudioChannel_Set24WithSeStop.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartAudioChannel_PlayColorMatchSE.c", extab_padding=b"\x00\x00"),
