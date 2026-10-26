@@ -1,4 +1,12 @@
 {
+  "src/game/SceneRoleCreate.cpp": {
+    "__ct__14SceneRoleAllocFv": "BattleScene_InitAndPromoteRole"
+  },
+  "src/game/SceneRoleDtor.cpp": {
+    "__dt__14SceneRoleOwnerFv": "fn_8024D17C",
+    "__vt__14SceneRoleOwner": "lbl_804EEFA4",
+    "__vt__13SceneRoleBase": "lbl_803FE0C8"
+  },
   "src/game/ItemHolder_Init.cpp": {
     "__ct__10ItemHolderFUiiii": "ItemHolder_Init"
   },

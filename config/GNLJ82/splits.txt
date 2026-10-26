@@ -9559,6 +9559,21 @@ game/SceneRoleUpdate.cpp:
 	extabindex  start:0x8002B61C end:0x8002B628
 	.text       start:0x8024D02C end:0x8024D108
 
+game/SceneRoleDelete.cpp:
+	extab       start:0x8001E580 end:0x8001E588
+	extabindex  start:0x8002B628 end:0x8002B634
+	.text       start:0x8024D108 end:0x8024D140
+
+game/SceneRoleCreate.cpp:
+	extab       start:0x8001E588 end:0x8001E5A0
+	extabindex  start:0x8002B634 end:0x8002B640
+	.text       start:0x8024D140 end:0x8024D17C
+
+game/SceneRoleDtor.cpp:
+	extab       start:0x8001E5A0 end:0x8001E5C8
+	extabindex  start:0x8002B640 end:0x8002B64C
+	.text       start:0x8024D17C end:0x8024D244
+
 game/ContinueScene.cpp:
 	extab       start:0x8001E638 end:0x8001E78C
 	extabindex  start:0x8002B670 end:0x8002B700
