@@ -1865,10 +1865,11 @@ game/Sci2Card_Status.c:
 	extabindex  start:0x800213B0 end:0x800213C8
 	.text       start:0x80077AFC end:0x80077E24
 
-game/KartTireFX.c:
+game/KartTireFX.cpp:
 	extab       start:0x80008430 end:0x80008490
 	extabindex  start:0x800213C8 end:0x80021428
 	.text       start:0x80077E24 end:0x80079B24
+	.rodata     start:0x803115F0 end:0x80311B30
 
 game/clDrawMan_Dtor.c:
 	extab       start:0x80008490 end:0x80008498

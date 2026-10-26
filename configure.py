@@ -911,7 +911,7 @@ config.libs = [
             Object(Matching, "game/TaRecord_InsertResult.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/Tachometer.c", extab_padding=b"\x00\x00", extra_cflags=["-i src/game"]),
             Object(Matching, "game/ParticleBurst.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/KartTireFX.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/KartTireFX.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-inline deferred"]),
             Object(Matching, "game/clDrawMan_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clDrawMan_NodePool_Free.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clDrawMan_Buckets_Free.c", extra_cflags=["-Cpp_exceptions on"]),
