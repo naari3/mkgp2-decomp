@@ -122,8 +122,8 @@
     "@eti_8001FBB0": "@eti_8001FBB0"
   },
   "src/game/MJObj_SetColor.c": {
-    "extab_MJObj_SetColorRGBA": "@etb_80005F10",
-    "extabindex_MJObj_SetColorRGBA": "@eti_8001FBBC"
+    "@etb_80005F10": "@etb_80005F10",
+    "@eti_8001FBBC": "@eti_8001FBBC"
   },
   "src/game/clItemBox_StepFn_Bobbing.c": {
     "extab_clItemBox_StepFn_Bobbing": "@etb_80007B9C",
@@ -166,16 +166,16 @@
     "extabindex_clItemBox_FactoryCreate": "@eti_80020C84"
   },
   "src/game/NamCam_TickShutdownCountdown.c": {
-    "extab_NamCam_TickShutdownCountdown": "@etb_80006870",
-    "extabindex_NamCam_TickShutdownCountdown": "@eti_80020114"
+    "@18": "@etb_80006870",
+    "@19": "@eti_80020114"
   },
   "src/game/NamCam_GetImageHandle.c": {
     "extab_NamCam_GetImageHandle": "@etb_80006868",
     "extabindex_NamCam_GetImageHandle": "@eti_80020108"
   },
   "src/game/NamCam_End.c": {
-    "extab_NamCam_End": "@etb_80006878",
-    "extabindex_NamCam_End": "@eti_80020120"
+    "@22": "@etb_80006878",
+    "@23": "@eti_80020120"
   },
   "src/game/NamCam_Init.c": {
     "@5": "@etb_80006880",
@@ -1739,8 +1739,8 @@
     "@10": "@eti_80020BAC"
   },
   "src/game/clItemBoxResponder_Rebind.c": {
-    "extab_clItemBoxResponder_Rebind": "@etb_80007B5C",
-    "extabindex_clItemBoxResponder_Rebind": "@eti_80020BB8"
+    "@27": "@etb_80007B5C",
+    "@28": "@eti_80020BB8"
   },
   "src/game/clItemBoxResponder_DrawDebris.c": {
     "@13": "@etb_80007B64",
@@ -1779,8 +1779,8 @@
     "@10": "@eti_80020918"
   },
   "src/game/KartAudioChannel_PlayJumpSE.c": {
-    "extab_KartAudioChannel_PlayJumpSE": "@etb_80007708",
-    "extabindex_KartAudioChannel_PlayJumpSE": "@eti_80020924"
+    "@14": "@etb_80007708",
+    "@15": "@eti_80020924"
   },
   "src/game/VfxEffect_InitVariantAndResetPos.c": {
     "@7": "@etb_8000A9D8",
@@ -1791,8 +1791,8 @@
     "extabindex_VfxEffect_UpdateTwoChildSpinAndSound_Helper": "@eti_8002306C"
   },
   "src/game/VfxEffect_UpdateChildPosScaleAlpha_Helper.c": {
-    "extab_VfxEffect_UpdateChildPosScaleAlpha_Helper": "@etb_8000AA40",
-    "extabindex_VfxEffect_UpdateChildPosScaleAlpha_Helper": "@eti_800230CC"
+    "@etb_8000AA40": "@etb_8000AA40",
+    "@eti_800230CC": "@eti_800230CC"
   },
   "src/game/VfxEffect_UpdateChildVisScale_Helper.c": {
     "extab_VfxEffect_UpdateChildVisScale_Helper": "@etb_8000AA50",
@@ -2018,8 +2018,8 @@
     "@14": "@eti_8001FF4C"
   },
   "src/game/KartDriver_TickAction_79268_AndSetSlot5aEulerZ.c": {
-    "extab_KartDriver_TickAction_79268_AndSetSlot5aEulerZ": "@etb_80006250",
-    "extabindex_KartDriver_TickAction_79268_AndSetSlot5aEulerZ": "@eti_8001FF10"
+    "@43": "@etb_80006250",
+    "@44": "@eti_8001FF10"
   },
   "src/game/KartDriver_GetJointPosition.c": {
     "@19": "@etb_800061E0",
