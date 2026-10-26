@@ -1,47 +1,20 @@
-/* === extracted from auto_VfxSlot_SetPositionF_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+/* Position a bound VfxSlot's model from a vector. */
+typedef struct VfxSlot {
+    unsigned char pad00[0x4];
+    void *model; /* 0x04 */
+} VfxSlot;
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void cLNormal3DWrap_Slot_SetPositionXYZ();
+typedef struct Vec3 {
+    float x, y, z;
+} Vec3;
 
-/* --- function index (1 fns, .text 0x800AFF34..0x800AFF6C) ---
- * [  0] 0x800AFF34 size:0x38    global VfxSlot_SetPositionFromVec
- */
+extern void cLNormal3DWrap_Slot_SetPositionXYZ(void *model, float x, float y, float z);
 
-/* --- forward decls --- */
-asm void VfxSlot_SetPositionFromVec(void);
+void VfxSlot_SetPositionFromVec(VfxSlot *self, const Vec3 *pos)
+{
+    void *model = self->model;
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_VfxSlot_SetPositionFromVec[8] = {
-    0x00, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_VfxSlot_SetPositionFromVec = {
-    (void *)&VfxSlot_SetPositionFromVec, 0x00000038, (void *)extab_VfxSlot_SetPositionFromVec
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void VfxSlot_SetPositionFromVec(void) { /* 0x800AFF34 size:0x38 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    lwz r3, 0x4(r3)
-    cmplwi r3, 0x0
-    beq VfxSlot_SetPositionFromVec_L_800AFF5C
-    lfs f1, 0x0(r4)
-    lfs f2, 0x4(r4)
-    lfs f3, 0x8(r4)
-    bl cLNormal3DWrap_Slot_SetPositionXYZ
-    VfxSlot_SetPositionFromVec_L_800AFF5C:
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+    if (model != 0) {
+        cLNormal3DWrap_Slot_SetPositionXYZ(model, pos->x, pos->y, pos->z);
+    }
 }

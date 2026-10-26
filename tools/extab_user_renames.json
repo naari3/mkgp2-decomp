@@ -512,24 +512,24 @@
     "extabindex_TexMgr_DrawText_Format_Variant4": "@eti_80021E78"
   },
   "src/game/VfxSlot_SetMatrixSourceEnabled.c": {
-    "extab_VfxSlot_SetMatrixSourceEnabled": "@etb_8000A538",
-    "extabindex_VfxSlot_SetMatrixSourceEnabled": "@eti_800229B8"
+    "@10": "@etb_8000A538",
+    "@11": "@eti_800229B8"
   },
   "src/game/VfxSlot_SetScaleUniform.c": {
-    "extab_VfxSlot_SetScaleUniform": "@etb_8000A548",
-    "extabindex_VfxSlot_SetScaleUniform": "@eti_800229D0"
+    "@7": "@etb_8000A548",
+    "@8": "@eti_800229D0"
   },
   "src/game/VfxSlot_SetRotationXYZFromVec.c": {
-    "extab_VfxSlot_SetRotationXYZFromVec": "@etb_8000A558",
-    "extabindex_VfxSlot_SetRotationXYZFromVec": "@eti_800229E8"
+    "@8": "@etb_8000A558",
+    "@9": "@eti_800229E8"
   },
   "src/game/VfxSlot_SetPositionFromVec.c": {
-    "extab_VfxSlot_SetPositionFromVec": "@etb_8000A568",
-    "extabindex_VfxSlot_SetPositionFromVec": "@eti_80022A00"
+    "@8": "@etb_8000A568",
+    "@9": "@eti_80022A00"
   },
   "src/game/VfxSlot_Release.c": {
-    "extab_VfxSlot_Release": "@etb_8000A570",
-    "extabindex_VfxSlot_Release": "@eti_80022A0C"
+    "@8": "@etb_8000A570",
+    "@9": "@eti_80022A0C"
   },
   "src/game/VfxSlot_RegisterDraw.c": {
     "extab_VfxSlot_RegisterDraw": "@etb_8000A578",
@@ -684,8 +684,8 @@
     "extabindex_BiribiriLand_Init": "@eti_80024B9C"
   },
   "src/game/CardSave_Tick.c": {
-    "extab_CardSave_Tick": "@etb_80009488",
-    "extabindex_CardSave_Tick": "@eti_80021FF8"
+    "@etb_80009488": "@etb_80009488",
+    "@eti_80021FF8": "@eti_80021FF8"
   },
   "src/game/CardSave_Tick_PollCleaningResult.c": {
     "extab_CardSave_Tick_PollCleaningResult": "@etb_80009490",
@@ -1609,16 +1609,16 @@
     "extabindex_BombItem_TickActive": "@eti_80023F90"
   },
   "src/game/SpriteSlot_SetRotationQuatFromVec.c": {
-    "extab_SpriteSlot_SetRotationQuatFromVec": "@etb_8000B254",
-    "extabindex_SpriteSlot_SetRotationQuatFromVec": "@eti_8002390C"
+    "@17": "@etb_8000B254",
+    "@18": "@eti_8002390C"
   },
   "src/game/SpriteSlot_SetPositionFromVec.c": {
-    "extab_SpriteSlot_SetPositionFromVec": "@etb_8000B264",
-    "extabindex_SpriteSlot_SetPositionFromVec": "@eti_80023924"
+    "@17": "@etb_8000B264",
+    "@18": "@eti_80023924"
   },
   "src/game/SpriteSlot_Destroy.c": {
-    "extab_SpriteSlot_Destroy": "@etb_8000B26C",
-    "extabindex_SpriteSlot_Destroy": "@eti_80023930"
+    "@8": "@etb_8000B26C",
+    "@9": "@eti_80023930"
   },
   "src/game/SpriteSlot_SetJointScaleByName.c": {
     "extab_SpriteSlot_SetJointScaleByName": "@etb_8000B22C",
@@ -1637,8 +1637,8 @@
     "extabindex_SpriteSlot_SetAnimFrameAndApplyScale": "@eti_80023888"
   },
   "src/game/SpriteSlot_Container_Free.c": {
-    "extab_SpriteSlot_Container_Free": "@etb_8000B2EC",
-    "extabindex_SpriteSlot_Container_Free": "@eti_800239C0"
+    "@9": "@etb_8000B2EC",
+    "@10": "@eti_800239C0"
   },
   "src/game/SpriteSlot_RegisterDraw.c": {
     "extab_SpriteSlot_RegisterDraw": "@etb_8000B274",
@@ -1735,8 +1735,8 @@
     "extabindex_clItemBoxResponder_DebrisArray_Dtor": "@eti_80020BA0"
   },
   "src/game/clItemBoxResponder_DebrisParticle_Dtor.c": {
-    "extab_clItemBoxResponder_DebrisParticle_Dtor": "@etb_80007B54",
-    "extabindex_clItemBoxResponder_DebrisParticle_Dtor": "@eti_80020BAC"
+    "@9": "@etb_80007B54",
+    "@10": "@eti_80020BAC"
   },
   "src/game/clItemBoxResponder_Rebind.c": {
     "extab_clItemBoxResponder_Rebind": "@etb_80007B5C",
@@ -1783,8 +1783,8 @@
     "extabindex_KartAudioChannel_PlayJumpSE": "@eti_80020924"
   },
   "src/game/VfxEffect_InitVariantAndResetPos.c": {
-    "extab_VfxEffect_InitVariantAndResetPos": "@etb_8000A9D8",
-    "extabindex_VfxEffect_InitVariantAndResetPos": "@eti_80023030"
+    "@7": "@etb_8000A9D8",
+    "@8": "@eti_80023030"
   },
   "src/game/VfxEffect_UpdateTwoChildSpinAndSound_Helper.c": {
     "extab_VfxEffect_UpdateTwoChildSpinAndSound_Helper": "@etb_8000AA00",
@@ -1835,8 +1835,8 @@
     "extabindex_Backup_PublishShadowCopy_Inline": "@eti_80021290"
   },
   "src/game/SoundMgr_PlaySE_WithChannel.c": {
-    "extab_SoundMgr_PlaySE_WithChannel": "@etb_8000B4D4",
-    "extabindex_SoundMgr_PlaySE_WithChannel": "@eti_80023C54"
+    "@10": "@etb_8000B4D4",
+    "@11": "@eti_80023C54"
   },
   "src/game/SoundMgr_StopSE_OrSpecial.c": {
     "extab_SoundMgr_StopSE_OrSpecial": "@etb_8000B4CC",
@@ -1958,12 +1958,12 @@
     "extabindex_HUD_FrameUpdate": "@eti_8002B9AC"
   },
   "src/game/KartDriver_GetJoint13_WorldPos.c": {
-    "extab_KartDriver_GetJoint13_WorldPos": "@etb_8000B454",
-    "extabindex_KartDriver_GetJoint13_WorldPos": "@eti_80023B94"
+    "@5": "@etb_8000B454",
+    "@6": "@eti_80023B94"
   },
   "src/game/KartDriver_GetKartRootMtx.c": {
-    "extab_KartDriver_GetKartRootMtx": "@etb_800061F8",
-    "extabindex_KartDriver_GetKartRootMtx": "@eti_8001FE8C"
+    "@9": "@etb_800061F8",
+    "@10": "@eti_8001FE8C"
   },
   "src/game/KartDriver_GetJointMatrix4x3.c": {
     "extab_KartDriver_GetJointMatrix4x3": "@etb_800061E8",
