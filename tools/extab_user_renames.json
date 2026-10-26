@@ -1477,8 +1477,10 @@
   "src/game/RaceContext_EnsureSingleton.c": {
     "__nw__FUl": "Alloc",
     "__ct__11RaceContextFv": "RaceContext_InitDefaults",
-    "extab_dtor_8009DCE0": "@etb_800095FC",
-    "extabindex_dtor_8009DCE0": "@eti_80022214"
+    "@17": "@etb_80009604",
+    "@18": "@eti_80022208",
+    "@27": "@etb_800095FC",
+    "@28": "@eti_80022214"
   },
   "src/game/CoinSystem_UpdateAll.c": {
     "extab_CoinSystem_UpdateAll": "@etb_8000D2C8",
