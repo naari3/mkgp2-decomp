@@ -1679,7 +1679,7 @@ config.libs = [
             Object(Matching, "game/GameModeBase_FrameUpdate2.cpp"),
             Object(Matching, "game/SpawnTable.c"),
             Object(Matching, "game/VBlank.c"),
-            Object(Matching, "game/SyncSlot.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/SyncSlot.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/ResetIOPorts.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/PcbSyncTable_Ptr.c"),
             Object(NonMatching, "game/PcbSlotReset.c", extra_cflags=["-Cpp_exceptions on"]),
