@@ -1483,7 +1483,7 @@ config.libs = [
             Object(Matching, "game/clItemBox_ResetTimer_IsPickedUp.c"),
             Object(Matching, "game/clItemBox_TransitionToDebris.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBox_Draw.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
-            Object(Matching, "game/clItemBox_Tick.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/clItemBox_Tick.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/clItemBox_Dtor.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/clItemBox_Ctor_XYZ.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clItemBox_Ctor_GroundSnap.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),

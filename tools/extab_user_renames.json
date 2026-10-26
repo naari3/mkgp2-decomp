@@ -1,4 +1,8 @@
 {
+  "src/game/clItemBox_Tick.c": {
+    "@10": "global:@etb_80007BBC",
+    "@11": "@eti_80020C18"
+  },
   "src/game/SceneRoleCreate.cpp": {
     "__ct__14SceneRoleAllocFv": "BattleScene_InitAndPromoteRole"
   },
@@ -140,10 +144,6 @@
   "src/game/clItemBox_Draw.c": {
     "@etb_80007BB4": "@etb_80007BB4",
     "@eti_80020C0C": "@eti_80020C0C"
-  },
-  "src/game/clItemBox_Tick.c": {
-    "extab_clItemBox_Tick": "@etb_80007BBC",
-    "extabindex_clItemBox_Tick": "@eti_80020C18"
   },
   "src/game/clItemBox_Dtor.c": {
     "@11": "@etb_80007BC4",
