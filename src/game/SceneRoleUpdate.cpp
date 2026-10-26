@@ -1,7 +1,7 @@
 /* Target-observed owner/result views; no live Ghidra type lookup performed. */
 #include "game/FlowScene.h"
 
-struct SceneRoleOwner {
+struct SceneRoleUpdateView {
     void *vtable;
     unsigned char done;
     unsigned char pad05[3];
@@ -33,7 +33,7 @@ static inline RankLog *RoleRankLog() {
     return lbl_806D10A0 == 0 ? (RankLog *)0 : lbl_806D10A0;
 }
 
-extern "C" void fn_8024D02C(SceneRoleOwner *self) {
+extern "C" void fn_8024D02C(SceneRoleUpdateView *self) {
     if (!self->done) {
         FlowTask *task = fn_801F4DC0(self->list, 0);
         if (task) {

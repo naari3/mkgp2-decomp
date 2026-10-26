@@ -14,4 +14,6 @@ Render fn_8024CFE8 (68B) also matches first native approach. FlowSceneList::Draw
 
 ## Synchronization boundary
 
+The Update-only field view is named SceneRoleUpdateView, distinct from the actual SceneRoleOwner destructor class. Identical memory layout does not make different class definitions an ODR-safe shared type. The view-name separation changes no binary ABI/codegen and is verified independently after integration.
+
 The preceding pull moved local main296 commits to30d30c5. Rebuilt report, not stale local report, establishes baseline66.202995% aggregate/38.6054% source-linked native. Old ShellRibbon/BurstShard/CharaPop12 alternate HANDOFFs are superseded by the6 latest-main native implementations (independent text/EH/index100 and actual source link), not newly gained functions. Old worktrees remain preserved; their stale active entries were reconciled. Source classification is checked from current tracked sources instead of retaining old ASM labels indefinitely. State remains a cache, not the genuine progress metric.
