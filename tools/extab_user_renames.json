@@ -118,8 +118,8 @@
     "extabindex_MJObj_SetColorRGBA_Float": "@eti_8001FB5C"
   },
   "src/game/MJObj_InitMember.c": {
-    "extab_MJObj_InitMember_RGBA": "@etb_80005F08",
-    "extabindex_MJObj_InitMember_RGBA": "@eti_8001FBB0"
+    "@etb_80005F08": "@etb_80005F08",
+    "@eti_8001FBB0": "@eti_8001FBB0"
   },
   "src/game/MJObj_SetColor.c": {
     "extab_MJObj_SetColorRGBA": "@etb_80005F10",
@@ -260,8 +260,8 @@
     "extabindex_GXChannel_PushChannelColors": "@eti_80021590"
   },
   "src/game/GXChannel_Unbind.c": {
-    "extab_GXChannel_Unbind": "@etb_800087B8",
-    "extabindex_GXChannel_Unbind": "@eti_8002159C"
+    "@7": "@etb_800087B8",
+    "@8": "@eti_8002159C"
   },
   "src/game/GXChannel_Bind.c": {
     "extab_GXChannel_Bind": "@etb_800087C0",
@@ -363,8 +363,8 @@
     "extabindex_LookupCos": "@eti_80026CB4"
   },
   "src/game/LUT_Cosine.c": {
-    "extab_LUT_Cosine": "@etb_800080A0",
-    "extabindex_LUT_Cosine": "@eti_80020F6C"
+    "@12": "@etb_800080A0",
+    "@eti_80020F6C": "@eti_80020F6C"
   },
   "src/game/ItemSelect.c": {
     "__ct__15ItemSelectChildFi": "fn_8023EA80",
@@ -386,8 +386,8 @@
     "extabindex_SyncSlot_Reset": "@eti_80021884"
   },
   "src/game/CommBroadcast_ClearTable.c": {
-    "extab_CommBroadcast_ClearTable": "@etb_80008D8C",
-    "extabindex_CommBroadcast_ClearTable": "@eti_80021890"
+    "@11": "@etb_80008D8C",
+    "@12": "@eti_80021890"
   },
   "src/util/bitpack.c": {
     "extab_bitpack_write_field": "@etb_80008F24",
@@ -396,12 +396,12 @@
     "extabindex_bitpack_init": "@eti_80021A58"
   },
   "src/game/PathCursor_ResetToPath.c": {
-    "extab_PathCursor_ResetToPath": "@etb_800066C8",
-    "extabindex_PathCursor_ResetToPath": "@eti_80020000"
+    "@11": "@etb_800066C8",
+    "@12": "@eti_80020000"
   },
   "src/game/PathCursor_InitFromPath.c": {
-    "extab_PathCursor_InitFromPath": "@etb_800066D8",
-    "extabindex_PathCursor_InitFromPath": "@eti_80020018"
+    "@11": "@etb_800066D8",
+    "@12": "@eti_80020018"
   },
   "src/game/FreeMediaBuffers.c": {
     "extab_FreeMediaBuffers": "@etb_80008EA4",
@@ -462,16 +462,16 @@
     "extabindex_SceneRender_Dtor": "@eti_8001FBF8"
   },
   "src/game/Jyugemu_Flag_Render.c": {
-    "extab_Jyugemu_Flag_Render": "@etb_800089FC",
-    "extabindex_Jyugemu_Flag_Render": "@eti_800216F8"
+    "@10": "@etb_800089FC",
+    "@11": "@eti_800216F8"
   },
   "src/game/Jyugemu_Flag_Tick.c": {
     "extab_Jyugemu_Flag_Tick": "@etb_80008A04",
     "extabindex_Jyugemu_Flag_Tick": "@eti_80021704"
   },
   "src/game/Jyugemu_Flag_Dtor.c": {
-    "extab_Jyugemu_Flag_Dtor": "@etb_80008A0C",
-    "extabindex_Jyugemu_Flag_Dtor": "@eti_80021710"
+    "@9": "@etb_80008A0C",
+    "@10": "@eti_80021710"
   },
   "src/game/Jyugemu_Flag_Ctor.c": {
     "__ct__11JyugemuFlagFi": "Jyugemu_Flag_Ctor",
@@ -482,8 +482,8 @@
     "extabindex_Jyugemu_ReverseFlag_Tick": "@eti_80021740"
   },
   "src/game/Jyugemu_ReverseFlag_Dtor.c": {
-    "extab_Jyugemu_ReverseFlag_Dtor": "@etb_80008A44",
-    "extabindex_Jyugemu_ReverseFlag_Dtor": "@eti_8002174C"
+    "@9": "@etb_80008A44",
+    "@10": "@eti_8002174C"
   },
   "src/game/Jyugemu_ReverseFlag_Ctor.c": {
     "__ct__22JyugemuReverseFlagCtorFPv": "Jyugemu_ReverseFlag_Ctor",
@@ -536,8 +536,8 @@
     "extabindex_VfxSlot_RegisterDraw": "@eti_80022A18"
   },
   "src/game/VfxSlot_Render.c": {
-    "extab_VfxSlot_Render": "@etb_8000A580",
-    "extabindex_VfxSlot_Render": "@eti_80022A24"
+    "@5": "@etb_8000A580",
+    "@6": "@eti_80022A24"
   },
   "src/game/VfxSlot_TickAnim.c": {
     "extab_VfxSlot_TickAnim": "@etb_8000A588",
@@ -1439,12 +1439,12 @@
     "extabindex_clFlowRound_Init": "@eti_80027E60"
   },
   "src/game/DVDLoad_AsyncStop.c": {
-    "extab_DVDLoad_AsyncStop": "@etb_800087E0",
-    "extabindex_DVDLoad_AsyncStop": "@eti_800215D8"
+    "@8": "@etb_800087E0",
+    "@9": "@eti_800215D8"
   },
   "src/game/DVDLoad_AsyncStart.c": {
-    "extab_DVDLoad_AsyncStart": "@etb_800087E8",
-    "extabindex_DVDLoad_AsyncStart": "@eti_800215E4"
+    "@8": "@etb_800087E8",
+    "@9": "@eti_800215E4"
   },
   "src/game/DVDLoad_OpenAllocReadRelocSync.c": {
     "extab_DVDLoad_OpenAllocReadRelocSync": "@etb_800087F0",
@@ -1517,12 +1517,12 @@
     "extabindex_NetDiag_QualityPage": "@eti_80020FFC"
   },
   "src/game/Rand_RangeFloat.c": {
-    "extab_Rand_RangeFloat": "@etb_8000B1EC",
-    "extabindex_Rand_RangeFloat": "@eti_80023870"
+    "@7": "@etb_8000B1EC",
+    "@8": "@eti_80023870"
   },
   "src/game/Rand_RangeFloatMax.c": {
-    "extab_Rand_RangeFloatMax": "@etb_8000B1F4",
-    "extabindex_Rand_RangeFloatMax": "@eti_8002387C"
+    "@7": "@etb_8000B1F4",
+    "@8": "@eti_8002387C"
   },
   "src/game/ItemObjectManager_Controls.c": {
     "__dt__13ManagedObjectFv": "Object_DtorWithGXSync",
@@ -1621,12 +1621,12 @@
     "@9": "@eti_80023930"
   },
   "src/game/SpriteSlot_SetJointScaleByName.c": {
-    "extab_SpriteSlot_SetJointScaleByName": "@etb_8000B22C",
-    "extabindex_SpriteSlot_SetJointScaleByName": "@eti_800238D0"
+    "@10": "@etb_8000B22C",
+    "@11": "@eti_800238D0"
   },
   "src/game/SpriteSlot_SetJointVisibilityByName.c": {
-    "extab_SpriteSlot_SetJointVisibilityByName": "@etb_8000B234",
-    "extabindex_SpriteSlot_SetJointVisibilityByName": "@eti_800238DC"
+    "@13": "@etb_8000B234",
+    "@14": "@eti_800238DC"
   },
   "src/game/SpriteSlot_SetTransform.c": {
     "extab_SpriteSlot_SetTransform": "@etb_8000B23C",
@@ -1743,12 +1743,12 @@
     "extabindex_clItemBoxResponder_Rebind": "@eti_80020BB8"
   },
   "src/game/clItemBoxResponder_DrawDebris.c": {
-    "extab_clItemBoxResponder_DrawDebris": "@etb_80007B64",
-    "extabindex_clItemBoxResponder_DrawDebris": "@eti_80020BC4"
+    "@13": "@etb_80007B64",
+    "@14": "@eti_80020BC4"
   },
   "src/game/clItemBoxResponder.c": {
-    "extab_clItemBoxResponder_CmdGetWorldPos": "@etb_80007DA8",
-    "extabindex_clItemBoxResponder_CmdGetWorldPos": "@eti_80020D38"
+    "@5": "@etb_80007DA8",
+    "@6": "@eti_80020D38"
   },
   "src/game/clItemBoxResponder_Ctor.c": {
     "extab_clItemBoxResponder_Ctor": "@etb_80007DB8",
@@ -1775,8 +1775,8 @@
     "extabindex_KartAudioChannel_PlayColorMatchSE": "@eti_800208F4"
   },
   "src/game/KartAudioChannel_StopSE8a.c": {
-    "extab_KartAudioChannel_StopSE8a": "@etb_80007700",
-    "extabindex_KartAudioChannel_StopSE8a": "@eti_80020918"
+    "@9": "@etb_80007700",
+    "@10": "@eti_80020918"
   },
   "src/game/KartAudioChannel_PlayJumpSE.c": {
     "extab_KartAudioChannel_PlayJumpSE": "@etb_80007708",
@@ -1803,12 +1803,12 @@
     "extabindex_VfxEffect_UpdateChildSpinMatrix_Helper": "@eti_800230FC"
   },
   "src/game/Backup_Shutdown.c": {
-    "extab_Backup_Shutdown": "@etb_80008350",
-    "extabindex_Backup_Shutdown": "@eti_800212A8"
+    "@7": "@etb_80008350",
+    "@8": "@eti_800212A8"
   },
   "src/game/Backup_ClearAll.c": {
-    "extab_Backup_ClearAll": "@etb_80008320",
-    "extabindex_Backup_ClearAll": "@eti_80021260"
+    "@8": "@etb_80008320",
+    "@9": "@eti_80021260"
   },
   "src/game/Backup_ClearBookkeeping.c": {
     "extab_Backup_ClearBookkeeping": "@etb_80008310",
@@ -1839,12 +1839,12 @@
     "@11": "@eti_80023C54"
   },
   "src/game/SoundMgr_StopSE_OrSpecial.c": {
-    "extab_SoundMgr_StopSE_OrSpecial": "@etb_8000B4CC",
-    "extabindex_SoundMgr_StopSE_OrSpecial": "@eti_80023C48"
+    "@12": "@etb_8000B4CC",
+    "@13": "@eti_80023C48"
   },
   "src/game/SoundMgr_CountActiveSEInstances.c": {
-    "extab_SoundMgr_CountActiveSEInstances": "@etb_8000B4E4",
-    "extabindex_SoundMgr_CountActiveSEInstances": "@eti_80023C6C"
+    "@eti_80023C6C": "@etb_8000B4E4",
+    "@16": "@eti_80023C6C"
   },
   "src/game/SoundMgr_PlaySE_Positional.c": {
     "extab_SoundMgr_PlaySE_Positional": "@etb_8000B4DC",
@@ -1982,32 +1982,32 @@
     "extabindex_KartDriver_SetUniformScale_4Wheels": "@eti_8001FED4"
   },
   "src/game/KartDriver_TriggerSlotC3Action.c": {
-    "extab_KartDriver_TriggerSlotC3Action": "@etb_80006230",
-    "extabindex_KartDriver_TriggerSlotC3Action": "@eti_8001FEE0"
+    "@11": "@etb_80006230",
+    "@12": "@eti_8001FEE0"
   },
   "src/game/KartDriver_TickAction_79234.c": {
-    "extab_KartDriver_TickAction_79234": "@etb_80006238",
-    "extabindex_KartDriver_TickAction_79234": "@eti_8001FEEC"
+    "@11": "@etb_80006238",
+    "@12": "@eti_8001FEEC"
   },
   "src/game/KartDriver_TickAction_79244.c": {
-    "extab_KartDriver_TickAction_79244": "@etb_80006240",
-    "extabindex_KartDriver_TickAction_79244": "@eti_8001FEF8"
+    "@11": "@etb_80006240",
+    "@12": "@eti_8001FEF8"
   },
   "src/game/KartDriver_TickAction_79260.c": {
-    "extab_KartDriver_TickAction_79260": "@etb_80006248",
-    "extabindex_KartDriver_TickAction_79260": "@eti_8001FF04"
+    "@11": "@etb_80006248",
+    "@12": "@eti_8001FF04"
   },
   "src/game/KartDriver_TickAction_78778.c": {
-    "extab_KartDriver_TickAction_78778": "@etb_80006258",
-    "extabindex_KartDriver_TickAction_78778": "@eti_8001FF1C"
+    "@11": "@etb_80006258",
+    "@12": "@eti_8001FF1C"
   },
   "src/game/KartDriver_TickAction_78a3c.c": {
-    "extab_KartDriver_TickAction_78a3c": "@etb_80006260",
-    "extabindex_KartDriver_TickAction_78a3c": "@eti_8001FF28"
+    "@11": "@etb_80006260",
+    "@12": "@eti_8001FF28"
   },
   "src/game/KartDriver_TickAction_78d00.c": {
-    "extab_KartDriver_TickAction_78d00": "@etb_80006268",
-    "extabindex_KartDriver_TickAction_78d00": "@eti_8001FF34"
+    "@11": "@etb_80006268",
+    "@12": "@eti_8001FF34"
   },
   "src/game/KartDriver_Render.c": {
     "extab_KartDriver_Render": "@etb_80006270",
@@ -2022,8 +2022,8 @@
     "extabindex_KartDriver_TickAction_79268_AndSetSlot5aEulerZ": "@eti_8001FF10"
   },
   "src/game/KartDriver_GetJointPosition.c": {
-    "extab_KartDriver_GetJointPosition": "@etb_800061E0",
-    "extabindex_KartDriver_GetJointPosition": "@eti_8001FE68"
+    "@19": "@etb_800061E0",
+    "@20": "@eti_8001FE68"
   },
   "src/game/CameraTest_Page.cpp": {
     "__nw__FUl": "Alloc",

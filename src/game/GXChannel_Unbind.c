@@ -1,67 +1,41 @@
-/* === extracted from auto_GXChannel_Unbind_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+/* Unbind a GX channel: let the bound object restore its state, then clear
+ * the current HSD MObj/DObj, vertex descriptors and render state. */
+typedef struct GXObjClass {
+    unsigned char pad00[0x50];
+    void (*unbind)(void *obj, void *arg);
+} GXObjClass;
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void HSD_DObjSetCurrent();
-extern void HSD_StateInvalidate();
-extern void HSD_MObjSetCurrent();
-extern void HSD_ClearVtxDesc();
+typedef struct GXObj {
+    GXObjClass *klass;
+} GXObj;
 
-/* --- function index (1 fns, .text 0x8007D7BC..0x8007D834) ---
- * [  0] 0x8007D7BC size:0x78    global GXChannel_Unbind
- */
+typedef struct GXOwner {
+    unsigned char pad00[0x8];
+    GXObj *obj; /* 0x08 */
+} GXOwner;
 
-/* --- forward decls --- */
-asm void GXChannel_Unbind(void);
+typedef struct GXChannel {
+    unsigned char pad00[0x4];
+    GXOwner *owner;      /* 0x04 */
+    void *arg;           /* 0x08 */
+    unsigned char bound; /* 0x0C */
+} GXChannel;
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_GXChannel_Unbind[8] = {
-    0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+extern void HSD_MObjSetCurrent(void *mobj);
+extern void HSD_DObjSetCurrent(void *dobj);
+extern void HSD_ClearVtxDesc(void);
+extern void HSD_StateInvalidate(int state);
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_GXChannel_Unbind = {
-    (void *)&GXChannel_Unbind, 0x00000078, (void *)extab_GXChannel_Unbind
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void GXChannel_Unbind(void) { /* 0x8007D7BC size:0x78 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    lbz r0, 0xc(r3)
-    cmplwi r0, 0x1
-    bne GXChannel_Unbind_L_8007D81C
-    lwz r3, 0x4(r31)
-    lwz r4, 0x8(r31)
-    lwz r3, 0x8(r3)
-    lwz r5, 0x0(r3)
-    lwz r12, 0x50(r5)
-    mtctr r12
-    bctrl
-    li r3, 0x0
-    bl HSD_MObjSetCurrent
-    li r3, 0x0
-    bl HSD_DObjSetCurrent
-    bl HSD_ClearVtxDesc
-    li r3, -0x1
-    bl HSD_StateInvalidate
-    li r0, 0x0
-    stb r0, 0xc(r31)
-    GXChannel_Unbind_L_8007D81C:
-    lwz r0, 0x14(r1)
-    li r3, 0x1
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+int GXChannel_Unbind(GXChannel *self)
+{
+    if (self->bound == 1) {
+        GXObj *obj = self->owner->obj;
+        obj->klass->unbind(obj, self->arg);
+        HSD_MObjSetCurrent(0);
+        HSD_DObjSetCurrent(0);
+        HSD_ClearVtxDesc();
+        HSD_StateInvalidate(-1);
+        self->bound = 0;
+    }
+    return 1;
 }
-
