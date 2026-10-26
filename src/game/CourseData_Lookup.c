@@ -28,21 +28,6 @@ CourseLookup::~CourseLookup() {
 }
 #pragma cplusplus off
 
-/* The inline base lifetime is exact in the derived destructor, but CW does
- * not retain its standalone definition. Keep the existing standalone fallback
- * and its original EH; it is not counted as genuine C++ progress. */
-extern unsigned int lbl_80419DBC[];
-extern void MemoryManager_TimedFree(void *);
-asm void dtor_800ABF10(void);
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_dtor_800ABF10[8] = {
-    0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_800ABF10 = {
-    (void *)&dtor_800ABF10, 0x00000048, (void *)extab_dtor_800ABF10
-};
-
 int CourseData_ResolveByKey(void *p, unsigned int key) {
     unsigned int *keys = ((unsigned int **)p)[1];
     int i = 0;
@@ -96,25 +81,22 @@ CourseLookupBaseDraft::~CourseLookupBaseDraft() {}
 #pragma cplusplus off
 #endif
 
-asm void dtor_800ABF10(void) {
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr. r31, r3
-    beq dtor_800ABF10_L_800ABF40
-    lis r5, lbl_80419DBC@ha
-    extsh. r0, r4
-    addi r0, r5, lbl_80419DBC@l
-    stw r0, 0x0(r31)
-    ble dtor_800ABF10_L_800ABF40
-    bl MemoryManager_TimedFree
-    dtor_800ABF10_L_800ABF40:
-    lwz r0, 0x14(r1)
-    mr r3, r31
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma cplusplus on
+extern "C" {
+extern void *lbl_80419DBC[];
+void MemoryManager_TimedFree(void *);
 }
+
+/* Standalone deleting destructor of CourseLookupBase (CW does not keep the
+ * inline one): reset the vtable, then free when flag > 0. */
+extern "C" CourseLookupBase *dtor_800ABF10(CourseLookupBase *self, short flag)
+{
+    if (self) {
+        *(void **)self = lbl_80419DBC;
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
+}
+#pragma cplusplus off

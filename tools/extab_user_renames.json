@@ -272,12 +272,12 @@
     "extabindex_GXChannel_Init": "@eti_800215C0"
   },
   "src/game/CourseData_Lookup.c": {
-    "extab_dtor_800ABF10": "@etb_8000A0E8",
+    "@69": "@etb_8000A0E8",
     "@11": "@etb_8000A0F0",
     "@59": "@etb_8000A0F8",
     "@12": "@eti_80022778",
     "@60": "@eti_80022784",
-    "extabindex_dtor_800ABF10": "@eti_80022790",
+    "@70": "@eti_80022790",
     "__dt__12CourseLookupFv": "HitMessageOverlay_Dtor",
     "__vt__12CourseLookup": "lbl_80419DB0",
     "__vt__16CourseLookupBase": "lbl_80419DBC",
