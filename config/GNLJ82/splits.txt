@@ -9589,6 +9589,11 @@ game/RnkDisp_SetPosition.c:
 	extabindex  start:0x8002B43C end:0x8002B448
 	.text       start:0x80249984 end:0x802499F4
 
+game/TripletFaderOwner.cpp:
+	extab       start:0x8001DC60 end:0x8001DD64
+	extabindex  start:0x8002B448 end:0x8002B46C
+	.text       start:0x802499F4 end:0x80249E0C
+
 game/CardPrintOwner.cpp:
 	extab       start:0x8001E084 end:0x8001E1C4
 	extabindex  start:0x8002B4C0 end:0x8002B4F0

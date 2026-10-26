@@ -5689,5 +5689,31 @@
     "__dt__10FlowFaderIFv": "fn_801F26C8",
     "@45": "@etb_8001E510",
     "@46": "@eti_8002B5F8"
+  },
+  "src/game/TripletFaderOwner.cpp": {
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "__vt__10FlowFaderF": "lbl_80419DE0",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "Set__10FlowFaderFFffs": "fn_8020A734",
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "__dt__10FlowFaderFFv": "TweenInterp_Dtor",
+    "__ct__17TripletFaderOwnerFi": "fn_80249BB4",
+    "__dt__17TripletFaderOwnerFv": "fn_80249A40",
+    "__vt__17TripletFaderOwner": "lbl_804EECDC",
+    "__vt__16TripletFaderRoot": "lbl_804EDB28",
+    "__dt__16TripletFaderRootFv": "dtor_8021617C",
+    "__vt__10FlowFaderI": "lbl_804E5284",
+    "__dt__20VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "__dt__20VHolder<10FlowFaderI>Fv": "dtor_801F2724",
+    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
+    "Set__10FlowFaderIFiis": "fn_8020A7CC",
+    "__dt__10FlowFaderIFv": "fn_801F26C8",
+    "@22": "@etb_8001DC60",
+    "@23": "@eti_8002B448",
+    "@99": "@etb_8001DC78",
+    "@100": "@eti_8002B454",
+    "@157": "@etb_8001DCE8",
+    "@158": "@eti_8002B460"
   }
 }

@@ -320,5 +320,6 @@
   "src/game/SceneRoleVariantCUpdate.cpp": [
     "fn_8024CD54",
     "dtor_80082960"
-  ]
+  ],
+  "src/game/TripletFaderOwner.cpp": ["fn_802499F4", "fn_80249A40", "fn_80249BB4", "TweenInterp_Dtor", "fn_801F26C8", "dtor_80082960", "dtor_801F2724", "dtor_801F4A80", "dtor_8021617C"]
 }
