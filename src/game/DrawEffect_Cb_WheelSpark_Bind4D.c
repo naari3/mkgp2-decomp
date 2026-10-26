@@ -3,6 +3,8 @@
  * with a little random drift; it sinks and fades out after 10 frames. */
 #include "game/DrawEffectAccess.h"
 
+extern const int lbl_806D51B4; /* 2 */
+extern const int lbl_806D51B8; /* 3 */
 extern const float lbl_806D51BC; /* 2.0 */
 extern const float lbl_806D51C0; /* 0.0 */
 extern const float lbl_806D51C4; /* 1.0 */
@@ -65,7 +67,9 @@ void DrawEffect_Cb_WheelSpark_Bind4D(unsigned char *self)
     F(0xA8) -= lbl_806D5258;
     Vec3_Add_DestFirst(V(0x120), V(0x120), V(0xA4));
     {
-        int joints[2] = {2, 3};
+        int joints[2];
+        joints[0] = lbl_806D51B4;
+        joints[1] = lbl_806D51B8;
         Mtx44_GetTranslation_RowMajor(&wheel, KartDriver_GetJointByIdx(P(0x11C), joints[I(0x10)]));
         Vec3_Add_DestFirst(V(0x8C), &wheel, V(0x120));
     }

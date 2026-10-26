@@ -801,7 +801,7 @@ config.libs = [
             Object(Matching, "game/fn_8014640C.c"),
             Object(Matching, "game/fn_800D748C.c"),
             Object(Matching, "game/CarObjects_FindByEventType.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/ItemSpawner_TimedRemapAndSpawn.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ItemSpawner_TimedRemapAndSpawn.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ISESlot_TickIfActiveNotBattle6.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/BananaPositionData_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/DebugTextOutput.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -1234,7 +1234,7 @@ config.libs = [
             Object(Matching, "game/GabyouItem_BuildOrUpdateAttachTransform.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_ItemHitOriented_Spawn.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(NonMatching, "game/EffectVfx29_30_Item4SubFlame_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(NonMatching, "game/EffectVfx55_HornBlastTrio_Tick.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+            Object(Matching, "game/EffectVfx55_HornBlastTrio_Tick.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(NonMatching, "game/EffectVfx10_KartTrail_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/HitMessageOverlay_FrameUpdate.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),  #g2
             Object(NonMatching, "game/KartPair3ArmUpdate.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2

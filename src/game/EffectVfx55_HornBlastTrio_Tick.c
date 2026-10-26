@@ -83,11 +83,11 @@ void EffectVfx55_HornBlastTrio_Tick(unsigned char *self)
     }
 
     for (i = 0; i < 3; i++) {
-        curve = &lbl_8041A1B8[i];
         if (ext->children[i] != 0) {
             Vec pos;
 
             Vec3_Copy(V_(ext->children[i], 0x8C), V(0x8C));
+            curve = &lbl_8041A1B8[i];
             if (curve->keys[0] <= ext->timer && ext->timer < curve->keys[2]) {
                 for (j = 0; j < 2; j++) {
                     if (curve->keys[j] <= ext->timer && ext->timer < curve->keys[j + 1]) {

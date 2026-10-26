@@ -39,7 +39,6 @@ extern int g_brakeRange;
 void InputObj_ReadRawInput(InputObj *self)
 {
     unsigned int bits;
-    unsigned short buttons;
     unsigned short op;
     int d;
     int i;
@@ -83,9 +82,9 @@ void InputObj_ReadRawInput(InputObj *self)
     self->brake = v;
 
     bits = 0;
-    buttons = g_jvsPlayerButtons[self->port * 4];
+    prev = g_jvsPlayerButtons[self->port * 4];
     for (i = 0; i < 5; i++) {
-        if (buttons & kRawGameMap_Raw0[i].mask) {
+        if (prev & kRawGameMap_Raw0[i].mask) {
             bits |= kRawGameMap_Raw0[i].bit;
         }
     }
