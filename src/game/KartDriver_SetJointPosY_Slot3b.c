@@ -1,94 +1,60 @@
-/* === extracted from auto_KartDriver_SetJointP_text_2 === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+/* Set the Y translation of the kart joint at 0xec (slot 3b). */
+typedef struct HSD_JObj {
+    unsigned char pad00[0x14];
+    unsigned int flags; /* 0x14 */
+    unsigned char pad18[0x24];
+    float translateY;   /* 0x3C */
+} HSD_JObj;
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void __assert();
-extern void HSD_JObjSetMtxDirtySub();
-extern unsigned int lbl_806D2548;
-extern unsigned int lbl_806D2550;
+typedef struct KartDriver {
+    void *model;  /* 0x00 */
+    unsigned char pad04[0x8];
+    void *loaded; /* 0x0C */
+    unsigned char pad10[0xec - 0x10];
+    HSD_JObj *joint; /* 0xec */
+} KartDriver;
 
-/* --- function index (1 fns, .text 0x80041924..0x800419F0) ---
- * [  0] 0x80041924 size:0xCC    global KartDriver_SetJointPosY_Slot3b
- */
+extern char lbl_806D2548[7]; /* "jobj.h" */
+extern char lbl_806D2550[5]; /* "jobj" */
+extern void __assert(const char *file, int line, const char *cond);
+extern void HSD_JObjSetMtxDirtySub(HSD_JObj *jobj);
 
-/* --- forward decls --- */
-asm void KartDriver_SetJointPosY_Slot3b(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_KartDriver_SetJointPosY_Slot3b[8] = {
-    0x08, 0x48, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_KartDriver_SetJointPosY_Slot3b = {
-    (void *)&KartDriver_SetJointPosY_Slot3b, 0x000000CC, (void *)extab_KartDriver_SetJointPosY_Slot3b
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void KartDriver_SetJointPosY_Slot3b(void) { /* 0x80041924 size:0xCC */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stfd f31, 0x18(r1)
-    fmr f31, f1
-    stw r31, 0x14(r1)
-    lwz r0, 0x0(r3)
-    cmplwi r0, 0x0
-    beq KartDriver_SetJointPosY_Slot3b_L_80041954
-    lwz r0, 0xc(r3)
-    cmplwi r0, 0x0
-    bne KartDriver_SetJointPosY_Slot3b_L_8004195C
-    KartDriver_SetJointPosY_Slot3b_L_80041954:
-    li r3, 0x0
-    b KartDriver_SetJointPosY_Slot3b_L_800419D8
-    KartDriver_SetJointPosY_Slot3b_L_8004195C:
-    lwz r31, 0xec(r3)
-    cmplwi r31, 0x0
-    beq KartDriver_SetJointPosY_Slot3b_L_800419D4
-    bne KartDriver_SetJointPosY_Slot3b_L_8004197C
-    la r3, lbl_806D2548(r2)
-    li r4, 0x3c6
-    la r5, lbl_806D2550(r2)
-    bl __assert
-    KartDriver_SetJointPosY_Slot3b_L_8004197C:
-    stfs f31, 0x3c(r31)
-    lwz r0, 0x14(r31)
-    rlwinm. r0, r0, 0, 6, 6
-    bne KartDriver_SetJointPosY_Slot3b_L_800419D4
-    cmplwi r31, 0x0
-    beq KartDriver_SetJointPosY_Slot3b_L_800419D4
-    bne KartDriver_SetJointPosY_Slot3b_L_800419A8
-    la r3, lbl_806D2548(r2)
-    li r4, 0x25d
-    la r5, lbl_806D2550(r2)
-    bl __assert
-    KartDriver_SetJointPosY_Slot3b_L_800419A8:
-    lwz r4, 0x14(r31)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne KartDriver_SetJointPosY_Slot3b_L_800419C4
-    rlwinm. r0, r4, 0, 25, 25
-    beq KartDriver_SetJointPosY_Slot3b_L_800419C4
-    li r3, 0x1
-    KartDriver_SetJointPosY_Slot3b_L_800419C4:
-    clrlwi. r0, r3, 24
-    bne KartDriver_SetJointPosY_Slot3b_L_800419D4
-    mr r3, r31
-    bl HSD_JObjSetMtxDirtySub
-    KartDriver_SetJointPosY_Slot3b_L_800419D4:
-    li r3, 0x1
-    KartDriver_SetJointPosY_Slot3b_L_800419D8:
-    lwz r0, 0x24(r1)
-    lfd f31, 0x18(r1)
-    lwz r31, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+static inline int HSD_JObjMtxIsDirty(HSD_JObj *jobj)
+{
+    unsigned char result;
+    if (!jobj) {
+        __assert(lbl_806D2548, 0x25d, lbl_806D2550);
+    }
+    result = 0;
+    if (!(jobj->flags & 0x00800000) && (jobj->flags & 0x40)) {
+        result = 1;
+    }
+    return result;
 }
 
+static inline void HSD_JObjSetTranslateY(HSD_JObj *jobj, float y)
+{
+    if (!jobj) {
+        __assert(lbl_806D2548, 0x3c6, lbl_806D2550);
+    }
+    jobj->translateY = y;
+    if (!(jobj->flags & 0x02000000)) {
+        if (jobj != 0 && !HSD_JObjMtxIsDirty(jobj)) {
+            HSD_JObjSetMtxDirtySub(jobj);
+        }
+    }
+}
+
+int KartDriver_SetJointPosY_Slot3b(KartDriver *self, float y)
+{
+    HSD_JObj *jobj;
+
+    if (self->model == 0 || self->loaded == 0) {
+        return 0;
+    }
+    jobj = self->joint;
+    if (jobj != 0) {
+        HSD_JObjSetTranslateY(jobj, y);
+    }
+    return 1;
+}
