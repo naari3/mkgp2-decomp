@@ -337,16 +337,16 @@
     "@42": "@eti_800294C8"
   },
   "src/game/HeapStats.c": {
-    "extab_dtor_8002F910": "@etb_80005858",
-    "extab_dtor_8002F978": "@etb_80005860",
-    "extab_fn_8002F640": "@etb_80005868",
-    "extab_HeapStats_DumpForTag": "@etb_80005870",
-    "extab_fn_8002F8D4": "@etb_80005878",
-    "extabindex_fn_8002F640": "@eti_8001F490",
-    "extabindex_HeapStats_DumpForTag": "@eti_8001F49C",
-    "extabindex_fn_8002F8D4": "@eti_8001F4A8",
-    "extabindex_dtor_8002F910": "@eti_8001F4B4",
-    "extabindex_dtor_8002F978": "@eti_8001F4C0"
+    "@30": "@etb_80005868",
+    "@31": "@eti_8001F490",
+    "@40": "@etb_80005870",
+    "@41": "@eti_8001F49C",
+    "@51": "@etb_80005878",
+    "@52": "@eti_8001F4A8",
+    "@64": "@etb_80005858",
+    "@65": "@eti_8001F4B4",
+    "@73": "@etb_80005860",
+    "@74": "@eti_8001F4C0"
   },
   "src/game/FlowDispatcher_ScopedTimer.c": {
     "extab___dt__11ScopedTimerFv": "@etb_800056B8",
