@@ -9468,11 +9468,41 @@ game/ItemSelectState_Init.cpp:
 	extabindex  start:0x8002AC74 end:0x8002AC80
 	.text       start:0x80239764 end:0x80239D6C
 
+game/SpritePairOwner.cpp:
+	extab       start:0x8001CAB4 end:0x8001CADC
+	extabindex  start:0x8002AD7C end:0x8002ADB8
+	.text       start:0x8023CC74 end:0x8023CDA8
+
+game/SpritePairOwnerTick.cpp:
+	extab       start:0x8001CADC end:0x8001CAEC
+	extabindex  start:0x8002ADB8 end:0x8002ADD0
+	.text       start:0x8023CDA8 end:0x8023CFC8
+
 game/fn_8023CFC8.c:
 	.text       start:0x8023CFC8 end:0x8023CFE0
 
+game/SpritePairOwnerLife.cpp:
+	extab       start:0x8001CAEC end:0x8001CB2C
+	extabindex  start:0x8002ADD0 end:0x8002ADE8
+	.text       start:0x8023CFE0 end:0x8023D1B4
+
+game/KartVariantBindings.cpp:
+	extab       start:0x8001CB2C end:0x8001CB3C
+	extabindex  start:0x8002ADE8 end:0x8002AE00
+	.text       start:0x8023D1B4 end:0x8023D2B4
+
 game/fn_8023D2B4.c:
 	.text       start:0x8023D2B4 end:0x8023D2B8
+
+game/ItemAliasSpriteDraw.cpp:
+	extab       start:0x8001CB3C end:0x8001CB44
+	extabindex  start:0x8002AE00 end:0x8002AE0C
+	.text       start:0x8023D2B8 end:0x8023D458
+
+game/ItemAliasSprite.cpp:
+	extab       start:0x8001CB44 end:0x8001CB6C
+	extabindex  start:0x8002AE0C end:0x8002AE30
+	.text       start:0x8023D458 end:0x8023D6D4
 
 game/GetCourseSectionType.c:
 	extab       start:0x8001CB6C end:0x8001CB74

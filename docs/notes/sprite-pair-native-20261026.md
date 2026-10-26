@@ -1,0 +1,3 @@
+
+Sprite pair/alias owners (claim354,2026-10-26): fourteen genuine functions1668B match native C++. Natural Sprite new expressions and canonical ResCtrl stack cleanup emit exact owned EH; trailing weak ResCtrl destructor/EH/index records are discarded by the linker. Unsigned scalar equality operands remained reversed under source operand swap; using the actual pointer-shaped KartVariant ABI recovers both cmplw orders. Tick/Reset are bounded at98.731346/98.478264 with FP temporary coloring residue; Draw best97.69231 has owner/color/flag register partition residue after three approaches. Preserve mechanical singleton splits and all existing matched neighbors. Full source build, actual source/fallback link inputs and exact DOL SHA verified; runtime/CI/Ghidra unverified.
+

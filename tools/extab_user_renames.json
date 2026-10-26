@@ -5448,5 +5448,26 @@
     "Set__10FlowFaderFFffs": "fn_8020A734",
     "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
     "__dt__10FlowFaderFFv": "TweenInterp_Dtor"
+  },
+  "src/game/SpritePairOwnerLife.cpp": {
+    "__ct__15SpritePairOwnerFiiiii": "fn_8023D080",
+    "__dt__15SpritePairOwnerFv": "fn_8023CFE0",
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim",
+    "__dt__6SpriteFv": "Sprite_Destroy",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/ItemAliasSprite.cpp": {
+    "__ct__15ItemAliasSpriteFii": "fn_8023D5D8",
+    "__dt__15ItemAliasSpriteFv": "fn_8023D55C",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/SpritePairOwnerTick.cpp": {
+    "Tick__15SpritePairOwnerFv": "fn_8023CDA8",
+    "Reset__15SpritePairOwnerFv": "fn_8023CEB4"
+  },
+  "src/game/ItemAliasSpriteDraw.cpp": {
+    "Draw__15ItemAliasSpriteFv": "fn_8023D2B8"
   }
 }
