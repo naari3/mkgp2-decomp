@@ -1,4 +1,8 @@
 {
+  "src/game/HeapStats.c": {
+    "extab": ["dtor_8002F910", "dtor_8002F978", "BootStateStruct_RefreshIfDue", "HeapStats_DumpForTag", "DebugLog_LvIdMsg"],
+    "extabindex": ["BootStateStruct_RefreshIfDue", "HeapStats_DumpForTag", "DebugLog_LvIdMsg", "dtor_8002F910", "dtor_8002F978"]
+  },
   "src/game/clFlowCup.c": ["clFlowCup_Draw", "clFlowCup_Update", "clFlowCup_Dtor", "clFlowCup_Init"],
   "src/game/dtor_801FE870.cpp": {
     "extab": ["dtor_801FE870", "fn_801FE4D0", "fn_801FE554", "fn_801FE588", "fn_801FE5C8"],

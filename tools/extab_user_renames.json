@@ -1,4 +1,8 @@
 {
+  "src/game/clItemBox_Tick.c": {
+    "@10": "global:@etb_80007BBC",
+    "@11": "@eti_80020C18"
+  },
   "src/game/SceneRoleCreate.cpp": {
     "__ct__14SceneRoleAllocFv": "BattleScene_InitAndPromoteRole"
   },
@@ -141,10 +145,6 @@
     "@etb_80007BB4": "@etb_80007BB4",
     "@eti_80020C0C": "@eti_80020C0C"
   },
-  "src/game/clItemBox_Tick.c": {
-    "extab_clItemBox_Tick": "@etb_80007BBC",
-    "extabindex_clItemBox_Tick": "@eti_80020C18"
-  },
   "src/game/clItemBox_Dtor.c": {
     "@11": "@etb_80007BC4",
     "@12": "@eti_80020C24"
@@ -272,12 +272,12 @@
     "extabindex_GXChannel_Init": "@eti_800215C0"
   },
   "src/game/CourseData_Lookup.c": {
-    "extab_dtor_800ABF10": "@etb_8000A0E8",
+    "@69": "@etb_8000A0E8",
     "@11": "@etb_8000A0F0",
     "@59": "@etb_8000A0F8",
     "@12": "@eti_80022778",
     "@60": "@eti_80022784",
-    "extabindex_dtor_800ABF10": "@eti_80022790",
+    "@70": "@eti_80022790",
     "__dt__12CourseLookupFv": "HitMessageOverlay_Dtor",
     "__vt__12CourseLookup": "lbl_80419DB0",
     "__vt__16CourseLookupBase": "lbl_80419DBC",
@@ -337,16 +337,16 @@
     "@42": "@eti_800294C8"
   },
   "src/game/HeapStats.c": {
-    "extab_dtor_8002F910": "@etb_80005858",
-    "extab_dtor_8002F978": "@etb_80005860",
-    "extab_fn_8002F640": "@etb_80005868",
-    "extab_HeapStats_DumpForTag": "@etb_80005870",
-    "extab_fn_8002F8D4": "@etb_80005878",
-    "extabindex_fn_8002F640": "@eti_8001F490",
-    "extabindex_HeapStats_DumpForTag": "@eti_8001F49C",
-    "extabindex_fn_8002F8D4": "@eti_8001F4A8",
-    "extabindex_dtor_8002F910": "@eti_8001F4B4",
-    "extabindex_dtor_8002F978": "@eti_8001F4C0"
+    "@30": "@etb_80005868",
+    "@31": "@eti_8001F490",
+    "@40": "@etb_80005870",
+    "@41": "@eti_8001F49C",
+    "@51": "@etb_80005878",
+    "@52": "@eti_8001F4A8",
+    "@64": "@etb_80005858",
+    "@65": "@eti_8001F4B4",
+    "@73": "@etb_80005860",
+    "@74": "@eti_8001F4C0"
   },
   "src/game/FlowDispatcher_ScopedTimer.c": {
     "extab___dt__11ScopedTimerFv": "@etb_800056B8",
@@ -382,8 +382,8 @@
     "extabindex_NokoNokoChallenge_CalcResultText": "@eti_80024758"
   },
   "src/game/SyncSlot.c": {
-    "extab_SyncSlot_Reset": "@etb_80008D84",
-    "extabindex_SyncSlot_Reset": "@eti_80021884"
+    "@22": "@etb_80008D84",
+    "@23": "@eti_80021884"
   },
   "src/game/CommBroadcast_ClearTable.c": {
     "@11": "@etb_80008D8C",
@@ -404,8 +404,8 @@
     "@12": "@eti_80020018"
   },
   "src/game/FreeMediaBuffers.c": {
-    "extab_FreeMediaBuffers": "@etb_80008EA4",
-    "extabindex_FreeMediaBuffers": "@eti_800219BC"
+    "@11": "@etb_80008EA4",
+    "@12": "@eti_800219BC"
   },
   "src/game/BootPCBCheck_Init.c": {
     "extab_BootPCBCheck_Init": "@etb_80008D5C",
@@ -420,8 +420,8 @@
     "extabindex_ItemHolder_Init": "@eti_8002897C"
   },
   "src/game/TCPConn_AllocTxBuffer.c": {
-    "extab_TCPConn_AllocTxBuffer": "@etb_80008E9C",
-    "extabindex_TCPConn_AllocTxBuffer": "@eti_800219B0"
+    "@19": "@etb_80008E9C",
+    "@20": "@eti_800219B0"
   },
   "src/game/ResetIOPorts.c": {
     "extab_ResetIOPorts": "@etb_80008D7C",
@@ -1477,8 +1477,10 @@
   "src/game/RaceContext_EnsureSingleton.c": {
     "__nw__FUl": "Alloc",
     "__ct__11RaceContextFv": "RaceContext_InitDefaults",
-    "extab_dtor_8009DCE0": "@etb_800095FC",
-    "extabindex_dtor_8009DCE0": "@eti_80022214"
+    "@17": "@etb_80009604",
+    "@18": "@eti_80022208",
+    "@27": "@etb_800095FC",
+    "@28": "@eti_80022214"
   },
   "src/game/CoinSystem_UpdateAll.c": {
     "extab_CoinSystem_UpdateAll": "@etb_8000D2C8",
@@ -1731,8 +1733,8 @@
     "extabindex_BtMode_Dtor": "@eti_80022244"
   },
   "src/game/clItemBoxResponder_DebrisArray_Dtor.c": {
-    "extab_clItemBoxResponder_DebrisArray_Dtor": "@etb_80007B4C",
-    "extabindex_clItemBoxResponder_DebrisArray_Dtor": "@eti_80020BA0"
+    "@11": "@etb_80007B4C",
+    "@12": "@eti_80020BA0"
   },
   "src/game/clItemBoxResponder_DebrisParticle_Dtor.c": {
     "@9": "@etb_80007B54",
@@ -1751,8 +1753,8 @@
     "@6": "@eti_80020D38"
   },
   "src/game/clItemBoxResponder_Ctor.c": {
-    "extab_clItemBoxResponder_Ctor": "@etb_80007DB8",
-    "extabindex_clItemBoxResponder_Ctor": "@eti_80020D50"
+    "@19": "@etb_80007DB8",
+    "@20": "@eti_80020D50"
   },
   "src/game/clItemBoxResponder_SpawnDebris.c": {
     "extab_clItemBoxResponder_SpawnDebris": "@etb_80007B74",
@@ -2065,8 +2067,8 @@
     "extabindex_KartDriver_Dtor": "@eti_8001FF88"
   },
   "src/game/KartDriver_TransformWorldToLocalY0.c": {
-    "extab_KartDriver_TransformWorldToLocalY0": "@etb_8000B45C",
-    "extabindex_KartDriver_TransformWorldToLocalY0": "@eti_80023BA0"
+    "@12": "@etb_8000B45C",
+    "@13": "@eti_80023BA0"
   },
   "src/game/KartDriver_SetJointPosY_Slot3d.c": {
     "@36": "@etb_80006200",
