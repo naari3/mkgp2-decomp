@@ -138,8 +138,8 @@
     "extabindex_clItemBox_TransitionToDebris": "@eti_80020C00"
   },
   "src/game/clItemBox_Draw.c": {
-    "extab_clItemBox_Draw": "@etb_80007BB4",
-    "extabindex_clItemBox_Draw": "@eti_80020C0C"
+    "@etb_80007BB4": "@etb_80007BB4",
+    "@eti_80020C0C": "@eti_80020C0C"
   },
   "src/game/clItemBox_Tick.c": {
     "extab_clItemBox_Tick": "@etb_80007BBC",
@@ -532,8 +532,8 @@
     "@9": "@eti_80022A0C"
   },
   "src/game/VfxSlot_RegisterDraw.c": {
-    "extab_VfxSlot_RegisterDraw": "@etb_8000A578",
-    "extabindex_VfxSlot_RegisterDraw": "@eti_80022A18"
+    "@33": "@etb_8000A578",
+    "@34": "@eti_80022A18"
   },
   "src/game/VfxSlot_Render.c": {
     "@5": "@etb_8000A580",
@@ -1641,8 +1641,8 @@
     "@10": "@eti_800239C0"
   },
   "src/game/SpriteSlot_RegisterDraw.c": {
-    "extab_SpriteSlot_RegisterDraw": "@etb_8000B274",
-    "extabindex_SpriteSlot_RegisterDraw": "@eti_8002393C"
+    "@31": "@etb_8000B274",
+    "@32": "@eti_8002393C"
   },
   "src/game/SpriteSlot_SetMatrixSourceEnabled_WithReseed.c": {
     "extab_SpriteSlot_SetMatrixSourceEnabled_WithReseed": "@etb_8000B224",
@@ -2185,8 +2185,8 @@
     "extabindex_card_backup": "@eti_80021230"
   },
   "src/game/card_send_track_data.c": {
-    "extab_card_send_track_data": "@etb_800083F0",
-    "extabindex_card_send_track_data": "@eti_80021368"
+    "@etb_800083F0": "@etb_800083F0",
+    "@eti_80021368": "@eti_80021368"
   },
   "src/game/card_task_manager_create.c": {
     "extab_card_task_manager_create": "@etb_80009014",

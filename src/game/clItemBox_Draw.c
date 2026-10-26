@@ -1,121 +1,72 @@
-/* === extracted from auto_clItemBox_Draw_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+/* Draw an item box: through the debris responder in channel 2, otherwise
+ * as the shared box model placed, spun and faded per box, when it is on
+ * screen and in front of the camera. */
+typedef struct Vec {
+    float x, y, z;
+} Vec;
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void GXChannel_PushTransform();
-extern void Object_GetJObjLocalMatrix();
-extern void Object_SetColorAlphaOnly();
-extern void Object_SetJObjPositionXYZ();
-extern void Object_SetJObjRotationY();
-extern void clItemBoxResponder_DrawDebris();
-extern void fn_80137718();
+typedef struct clItemBoxResponder {
+    unsigned char broken; /* 0x00 */
+} clItemBoxResponder;
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806CEEA0;
-extern unsigned int lbl_806D10B0;
-extern unsigned int lbl_806D10B4;
-extern unsigned int lbl_806D10BC;
-extern unsigned int lbl_806D29E0;
-extern unsigned int lbl_806D29F0;
-extern unsigned int lbl_806D2A04;
-extern unsigned int lbl_806D2A08;
-extern unsigned int lbl_806D2A0C;
+typedef struct clItemBox {
+    unsigned char pad00[0x4];
+    clItemBoxResponder *responder; /* 0x04 */
+    Vec pos;                       /* 0x08 */
+    float spin;                    /* 0x14 */
+    unsigned char pad18[0xc];
+    int state;                     /* 0x24 */
+    unsigned char pad28[0x8];
+    float alpha;                   /* 0x30 */
+} clItemBox;
 
-/* --- function index (1 fns, .text 0x8005ED18..0x8005EE24) ---
- * [  0] 0x8005ED18 size:0x10C   global clItemBox_Draw
- */
+typedef struct GXChannel GXChannel;
 
-/* --- forward decls --- */
-asm void clItemBox_Draw(void);
+extern int lbl_806CEEA0;
+extern GXChannel *lbl_806D10B0;
+extern GXChannel *lbl_806D10B4;
+extern void *lbl_806D10BC;
+extern const float lbl_806D29E0;
+extern const double lbl_806D29F0;
+extern const float lbl_806D2A04;
+extern const float lbl_806D2A08;
+extern const float lbl_806D2A0C;
+extern void clItemBoxResponder_DrawDebris(clItemBoxResponder *self);
+extern unsigned char fn_80137718(const Vec *pos, Vec *out, float radius);
+extern void Object_SetColorAlphaOnly(void *object, int joint, float alpha);
+extern void Object_SetJObjPositionXYZ(void *object, float x, float y, float z);
+extern void Object_SetJObjRotationY(void *object, float y);
+extern void *Object_GetJObjLocalMatrix(void *object);
+extern void GXChannel_PushTransform(GXChannel *ch, void *mtx);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_clItemBox_Draw[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clItemBox_Draw = {
-    (void *)&clItemBox_Draw, 0x0000010C, (void *)extab_clItemBox_Draw
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void clItemBox_Draw(void) { /* 0x8005ED18 size:0x10C */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r3
-    lwz r0, 0x24(r3)
-    cmpwi r0, 0x3
-    beq clItemBox_Draw_L_8005EE10
-    lwz r0, lbl_806CEEA0(r13)
-    cmpwi r0, 0x2
-    bne clItemBox_Draw_L_8005ED50
-    lwz r3, 0x4(r31)
-    bl clItemBoxResponder_DrawDebris
-    b clItemBox_Draw_L_8005EE10
-    clItemBox_Draw_L_8005ED50:
-    lwz r3, 0x4(r31)
-    lbz r0, 0x0(r3)
-    cmplwi r0, 0x1
-    beq clItemBox_Draw_L_8005EE10
-    lfs f1, lbl_806D2A04(r2)
-    addi r3, r31, 0x8
-    addi r4, r1, 0x8
-    bl fn_80137718
-    clrlwi. r0, r3, 24
-    beq clItemBox_Draw_L_8005EE10
-    lfs f1, 0x10(r1)
-    lfs f0, lbl_806D2A08(r2)
-    fcmpo cr0, f1, f0
-    bge clItemBox_Draw_L_8005ED8C
-    b clItemBox_Draw_L_8005EE10
-    clItemBox_Draw_L_8005ED8C:
-    lwz r3, lbl_806D10BC(r13)
-    li r4, 0x0
-    lfs f1, 0x30(r31)
-    bl Object_SetColorAlphaOnly
-    lfs f1, lbl_806D2A0C(r2)
-    lfs f0, 0xc(r31)
-    lwz r3, lbl_806D10BC(r13)
-    fadds f2, f1, f0
-    lfs f1, 0x8(r31)
-    lfs f3, 0x10(r31)
-    bl Object_SetJObjPositionXYZ
-    lfs f1, lbl_806D29E0(r2)
-    lfs f0, 0x14(r31)
-    lfd f2, lbl_806D29F0(r2)
-    fmuls f0, f1, f0
-    lwz r3, lbl_806D10BC(r13)
-    fmul f1, f2, f0
-    frsp f1, f1
-    bl Object_SetJObjRotationY
-    lwz r0, lbl_806CEEA0(r13)
-    cmpwi r0, 0x0
-    bne clItemBox_Draw_L_8005EDFC
-    lwz r3, lbl_806D10BC(r13)
-    bl Object_GetJObjLocalMatrix
-    mr r4, r3
-    lwz r3, lbl_806D10B4(r13)
-    bl GXChannel_PushTransform
-    b clItemBox_Draw_L_8005EE10
-    clItemBox_Draw_L_8005EDFC:
-    lwz r3, lbl_806D10BC(r13)
-    bl Object_GetJObjLocalMatrix
-    mr r4, r3
-    lwz r3, lbl_806D10B0(r13)
-    bl GXChannel_PushTransform
-    clItemBox_Draw_L_8005EE10:
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+static inline void clItemBox_DrawModel(clItemBox *self, Vec *view)
+{
+    Object_SetColorAlphaOnly(lbl_806D10BC, 0, self->alpha);
+    Object_SetJObjPositionXYZ(lbl_806D10BC, self->pos.x, lbl_806D2A0C + self->pos.y, self->pos.z);
+    Object_SetJObjRotationY(lbl_806D10BC, lbl_806D29F0 * (lbl_806D29E0 * self->spin));
+    if (lbl_806CEEA0 == 0) {
+        GXChannel_PushTransform(lbl_806D10B4, Object_GetJObjLocalMatrix(lbl_806D10BC));
+    } else {
+        GXChannel_PushTransform(lbl_806D10B0, Object_GetJObjLocalMatrix(lbl_806D10BC));
+    }
 }
 
+void clItemBox_Draw(clItemBox *self)
+{
+    Vec view;
+
+    if (self->state == 3) {
+        return;
+    }
+    if (lbl_806CEEA0 == 2) {
+        clItemBoxResponder_DrawDebris(self->responder);
+        return;
+    }
+    if (self->responder->broken == 1) {
+        return;
+    }
+    if (!fn_80137718(&self->pos, &view, lbl_806D2A04) || view.z < lbl_806D2A08) {
+        return;
+    }
+    clItemBox_DrawModel(self, &view);
+}
