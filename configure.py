@@ -733,6 +733,7 @@ config.libs = [
             Object(Matching, "game/SceneRoleTransitions.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SceneRoleDelete.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SceneRoleCreate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/SceneRoleVariantB.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SceneRoleDtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80241BE0.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_8022664C.c", extra_cflags=["-Cpp_exceptions on"]),
