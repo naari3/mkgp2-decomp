@@ -726,6 +726,13 @@ config.libs = [
             Object(Matching, "game/fn_80252D48.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CardPrintOwner.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_8024B544.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/CardSetupFlowDraw.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
+            Object(Matching, "game/CardSetupFlowSelect.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
+            Object(Matching, "game/CardSetupFlowName.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
+            Object(Matching, "game/CardSetupFlowReceipt.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
+            Object(NonMatching, "game/CardSetupFlowInitial.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
+            Object(Matching, "game/CardSetupFlowUpdate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
+            Object(NonMatching, "game/CardSetupFlowResult.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-i src/game"]),
             Object(Matching, "game/CardPrintFlowUpdate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/CardPrintFlowRender.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/CardPrintFlowErrors.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
@@ -3175,6 +3182,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/CardSetupFlowUpdate",
     "game/fn_80108B04",
     "game/ItemCharacterRender",
     "game/clItemBoxManager_StepTable",

@@ -9594,6 +9594,42 @@ game/TripletFaderOwner.cpp:
 	extabindex  start:0x8002B448 end:0x8002B46C
 	.text       start:0x802499F4 end:0x80249E0C
 
+game/CardSetupFlowDraw.cpp:
+	extab       start:0x8001DD64 end:0x8001DD6C
+	extabindex  start:0x8002B46C end:0x8002B478
+	.text       start:0x80249E0C end:0x80249E78
+
+game/CardSetupFlowUpdate.cpp:
+	extab       start:0x8001DD6C end:0x8001DD74
+	extabindex  start:0x8002B478 end:0x8002B484
+	.text       start:0x80249E78 end:0x8024A06C
+	.data       start:0x804EEDE4 end:0x804EEE20
+
+game/CardSetupFlowReceipt.cpp:
+	extab       start:0x8001DD74 end:0x8001DE24
+	extabindex  start:0x8002B484 end:0x8002B490
+	.text       start:0x8024A06C end:0x8024A2F0
+
+game/CardSetupFlowResult.cpp:
+	extab       start:0x8001DE24 end:0x8001DF3C
+	extabindex  start:0x8002B490 end:0x8002B49C
+	.text       start:0x8024A2F0 end:0x8024AA6C
+
+game/CardSetupFlowName.cpp:
+	extab       start:0x8001DF3C end:0x8001DFCC
+	extabindex  start:0x8002B49C end:0x8002B4A8
+	.text       start:0x8024AA6C end:0x8024AC38
+
+game/CardSetupFlowSelect.cpp:
+	extab       start:0x8001DFCC end:0x8001DFD4
+	extabindex  start:0x8002B4A8 end:0x8002B4B4
+	.text       start:0x8024AC38 end:0x8024AD8C
+
+game/CardSetupFlowInitial.cpp:
+	extab       start:0x8001DFD4 end:0x8001E084
+	extabindex  start:0x8002B4B4 end:0x8002B4C0
+	.text       start:0x8024AD8C end:0x8024B0A0
+
 game/CardPrintOwner.cpp:
 	extab       start:0x8001E084 end:0x8001E1C4
 	extabindex  start:0x8002B4C0 end:0x8002B4F0
