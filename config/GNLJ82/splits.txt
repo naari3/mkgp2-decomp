@@ -9649,6 +9649,26 @@ game/SceneRoleVariantB.cpp:
 	extabindex  start:0x8002B598 end:0x8002B5D4
 	.text       start:0x8024C564 end:0x8024CA18
 
+game/SceneRoleVariantCFactory.cpp:
+	extab       start:0x8001E444 end:0x8001E4C0
+	extabindex  start:0x8002B5D4 end:0x8002B5E0
+	.text       start:0x8024CA18 end:0x8024CBC0
+
+game/SceneRoleVariantCDtor.cpp:
+	extab       start:0x8001E4C0 end:0x8001E508
+	extabindex  start:0x8002B5E0 end:0x8002B5EC
+	.text       start:0x8024CBC0 end:0x8024CCE8
+
+game/SceneRoleVariantCDraw.cpp:
+	extab       start:0x8001E508 end:0x8001E510
+	extabindex  start:0x8002B5EC end:0x8002B5F8
+	.text       start:0x8024CCE8 end:0x8024CD54
+
+game/SceneRoleVariantCUpdate.cpp:
+	extab       start:0x8001E510 end:0x8001E528
+	extabindex  start:0x8002B5F8 end:0x8002B604
+	.text       start:0x8024CD54 end:0x8024CED0
+
 game/SceneRoleRender.cpp:
 	extab       start:0x8001E570 end:0x8001E578
 	extabindex  start:0x8002B610 end:0x8002B61C

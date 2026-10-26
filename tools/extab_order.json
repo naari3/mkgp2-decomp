@@ -305,5 +305,20 @@
   "src/game/fn_801193F4.c": ["fn_801193F4", "fn_80119AB4", "fn_80119D44"],
   "src/game/SuikaBallObj_UpdatePhysics.c": ["SuikaBallObj_UpdatePhysics"],
   "src/game/fn_80125948.c": ["fn_80125948", "fn_80125B04", "fn_80126728", "fn_80126878"],
-  "src/game/CountdownOwner.cpp": ["fn_8023FB4C", "fn_8023FBA8", "fn_8023FCAC", "TweenInterp_Dtor", "dtor_80082960", "dtor_801F4A80", "dtor_8021617C"]
+  "src/game/CountdownOwner.cpp": ["fn_8023FB4C", "fn_8023FBA8", "fn_8023FCAC", "TweenInterp_Dtor", "dtor_80082960", "dtor_801F4A80", "dtor_8021617C"],
+  "src/game/SceneRoleVariantCFactory.cpp": [
+    "fn_8024CA18",
+    "dtor_801F2724",
+    "fn_801F26C8",
+    "dtor_801F4B10",
+    "dtor_8007D0D4"
+  ],
+  "src/game/SceneRoleVariantCDtor.cpp": [
+    "fn_8024CBC0",
+    "fn_801F26C8"
+  ],
+  "src/game/SceneRoleVariantCUpdate.cpp": [
+    "fn_8024CD54",
+    "dtor_80082960"
+  ]
 }
