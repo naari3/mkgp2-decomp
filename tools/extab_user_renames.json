@@ -5497,5 +5497,28 @@
     "@32": "@etb_8001E1D4",
     "@33": "@eti_8002B508"
   },
-  "src/game/CardPrintConfig.cpp": {}
+  "src/game/CardPrintConfig.cpp": {},
+  "src/game/CardPrintOwner.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__16DoublyLinkedListFv": "DoublyLinkedList_Init",
+    "__ct__14CardPrintOwnerFv": "fn_8024B3B8",
+    "__dt__14CardPrintOwnerFv": "fn_8024B114",
+    "__dt__13CardPrintBaseFv": "dtor_8007D0D4",
+    "__ct__10PrintPanelFv": "fn_801DA06C",
+    "__dt__16PrintPanelHolderFv": "dtor_801C1DBC",
+    "__ct__9PrintNameFb": "fn_801BF644",
+    "__dt__11PrintSpriteFv": "Sprite_Destroy",
+    "__dt__12PrintMessageFv": "fn_80232550",
+    "__vt__14CardPrintOwner": "lbl_804EEE6C",
+    "__vt__13CardPrintBase": "lbl_803FE0C8",
+    "__vt__13FlowSceneList": "lbl_804E533C",
+    "__vt__13SceneListImpl": "lbl_804EC404",
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "__vt__10FlowFaderI": "lbl_804E5284",
+    "__dt__12PrintKeyDataFv": "dtor_801C1B78",
+    "__dt__24VHolder<13SceneListImpl>Fv": "dtor_801F4B10",
+    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
+    "Set__10FlowFaderIFiis": "fn_8020A7CC"
+  }
 }

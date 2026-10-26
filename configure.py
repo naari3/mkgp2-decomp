@@ -723,6 +723,7 @@ config.libs = [
             Object(Matching, "game/fn_80146160.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80252D6C.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80252D48.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/CardPrintOwner.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_8024B544.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CardPrintFlowUpdate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/CardPrintFlowRender.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
