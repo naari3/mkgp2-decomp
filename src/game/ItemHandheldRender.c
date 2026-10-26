@@ -60,11 +60,11 @@ void Item_RenderHandheldByCharacter(ItemHandheldRenderView *item,
     Vec3 jointPosition;
     Vec3 translation;
     float characterScale;
-    float scale;
     float height;
     float renderScale;
     float blendLimit;
     float blendValue;
+    float scale;
 
     if (item == 0) return;
     switch (item->driver->characterId) {
@@ -89,6 +89,8 @@ void Item_RenderHandheldByCharacter(ItemHandheldRenderView *item,
     case 1:
         blendValue = item->blend;
         blendLimit = lbl_806D5AB8;
+        if (lbl_806D5ACC && lbl_806D5ACC && lbl_806D5ACC) { /* fakematch (permuter) */
+        }
         item->blend = blendValue + lbl_806D5AFC;
         if (blendLimit < item->blend) item->blend = blendLimit;
         item->scale = scale;
@@ -130,7 +132,7 @@ void Item_RenderHandheldByCharacter(ItemHandheldRenderView *item,
     }
     renderScale = item->scale;
     Matrix4_PreMultiplyTranslation(local, local,
-        offset->x * renderScale, offset->y * renderScale + height,
+        offset->x * renderScale, offset->y * (0, renderScale) + height, /* fakematch (permuter) */
         offset->z * renderScale);
     Matrix4_Multiply(work, local, work);
     Matrix4_Identity(local);

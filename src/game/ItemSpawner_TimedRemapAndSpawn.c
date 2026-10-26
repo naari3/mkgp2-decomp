@@ -48,12 +48,15 @@ static inline int remap_item(int id) {
 
 #pragma exceptions on
 void ItemSpawner_TimedRemapAndSpawn(ItemSpawner *spawner) {
+    int itemId;
+
     spawner->timer += 1.0f;
     if (spawner->timer <= 10.0f) {
         return;
     }
+    itemId = spawner->itemId;
     {
-        int id = remap_item(spawner->itemId);
+        int id = remap_item(itemId);
 
         spawner->timer = 0.0f;
         spawner->item = ItemObject_SpawnWithAlias(id, 0xFF);
