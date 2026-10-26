@@ -1876,7 +1876,7 @@ config.libs = [
             Object(Matching, "game/clNormal3D_Construct.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/cLNormal3DWrap_Mgr_GetPeakActiveCount.c"),
             Object(NonMatching, "game/cLNormal3DWrap.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(Matching, "game/FreeMediaBuffers.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/FreeMediaBuffers.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             # Phase 3a-small: 11-fn dtk reversed-extab group bundle (no extab
             # entries, just .text). All 11 fns initially asm_fn; promote to
             # matched 1 fn at a time via sub-agent dispatch.

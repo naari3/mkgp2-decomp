@@ -404,8 +404,8 @@
     "@12": "@eti_80020018"
   },
   "src/game/FreeMediaBuffers.c": {
-    "extab_FreeMediaBuffers": "@etb_80008EA4",
-    "extabindex_FreeMediaBuffers": "@eti_800219BC"
+    "@11": "@etb_80008EA4",
+    "@12": "@eti_800219BC"
   },
   "src/game/BootPCBCheck_Init.c": {
     "extab_BootPCBCheck_Init": "@etb_80008D5C",
