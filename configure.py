@@ -1453,6 +1453,8 @@ config.libs = [
             Object(Matching, "game/dtor_801FE870.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/dtor_801FEA70.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GetCourseSectionType.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/ItemUnlockGridResolve.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/ItemUnlockGrid.c"),
             Object(Matching, "game/InitRumbleController.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/LapDisp_SetTotalLaps.c"),
             Object(Matching, "game/LapDisp_SetCurrentLap.c"),
