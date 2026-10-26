@@ -216,12 +216,12 @@
     "extabindex_BananaField_TestHitBox": "@eti_80027338"
   },
   "src/game/ItemSelect_Pending.c": {
-    "extab_ItemSelect_OnDropAllCancel": "@etb_80007DC0",
-    "extab_ItemSelect_GiveItemOrQueueDrop": "@etb_80007DC8",
-    "extab_ItemSelect_StartRouletteSpin": "@etb_80007DD0",
-    "extabindex_ItemSelect_OnDropAllCancel": "@eti_80020D5C",
-    "extabindex_ItemSelect_GiveItemOrQueueDrop": "@eti_80020D68",
-    "extabindex_ItemSelect_StartRouletteSpin": "@eti_80020D74"
+    "@22": "global:@etb_80007DC0",
+    "@54": "@etb_80007DC8",
+    "@92": "@etb_80007DD0",
+    "@23": "@eti_80020D5C",
+    "@55": "@eti_80020D68",
+    "@93": "@eti_80020D74"
   },
   "src/game/ItemEffectBus.c": {
     "extab_ItemEffectBus_Commit": "@etb_800093C0",
