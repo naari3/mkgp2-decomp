@@ -1733,8 +1733,8 @@
     "extabindex_BtMode_Dtor": "@eti_80022244"
   },
   "src/game/clItemBoxResponder_DebrisArray_Dtor.c": {
-    "extab_clItemBoxResponder_DebrisArray_Dtor": "@etb_80007B4C",
-    "extabindex_clItemBoxResponder_DebrisArray_Dtor": "@eti_80020BA0"
+    "@11": "@etb_80007B4C",
+    "@12": "@eti_80020BA0"
   },
   "src/game/clItemBoxResponder_DebrisParticle_Dtor.c": {
     "@9": "@etb_80007B54",

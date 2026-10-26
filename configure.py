@@ -565,7 +565,7 @@ config.libs = [
             Object(Matching, "game/SpriteSlot_TickAnim.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/BtMode_RenderFrame.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/BtMode_Dtor.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/clItemBoxResponder_DebrisArray_Dtor.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/clItemBoxResponder_DebrisArray_Dtor.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/clItemBoxResponder_DebrisParticle_Dtor.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/clItemBoxResponder_Rebind.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/clItemBoxResponder_DrawDebris.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
