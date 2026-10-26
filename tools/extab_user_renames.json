@@ -2067,8 +2067,8 @@
     "extabindex_KartDriver_Dtor": "@eti_8001FF88"
   },
   "src/game/KartDriver_TransformWorldToLocalY0.c": {
-    "extab_KartDriver_TransformWorldToLocalY0": "@etb_8000B45C",
-    "extabindex_KartDriver_TransformWorldToLocalY0": "@eti_80023BA0"
+    "@12": "@etb_8000B45C",
+    "@13": "@eti_80023BA0"
   },
   "src/game/KartDriver_SetJointPosY_Slot3d.c": {
     "@36": "@etb_80006200",
