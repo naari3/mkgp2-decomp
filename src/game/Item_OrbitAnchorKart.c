@@ -38,8 +38,11 @@ int Item_OrbitAnchorKart(unsigned char *self, Vec *off, void *keep, float dYaw, 
 
         Vec3_Copy(&tmp, (Vec *)(anchor + 0xA0));
         h = lbl_806D5AD8 * *(float *)(anchor + 0xC4);
-        inner = lbl_806D5ADC * *(float *)(anchor + 0xC4) * *(float *)(anchor + 0x10C);
-        outer = lbl_806D5AE0 * *(float *)(anchor + 0xC4) * *(float *)(anchor + 0x10C);
+        {
+            unsigned int gainOfs = 0x10C; /* fakematch: keeps the gain load order */
+            inner = lbl_806D5ADC * *(float *)(anchor + 0xC4) * *(float *)(anchor + gainOfs);
+            outer = lbl_806D5AE0 * *(float *)(anchor + 0xC4) * *(float *)(anchor + gainOfs);
+        }
         if (FAbs_FloatAsDouble(h - off->y) < lbl_806D5AB8) {
             off->y = h;
         } else if (off->y < h) {
@@ -51,6 +54,8 @@ int Item_OrbitAnchorKart(unsigned char *self, Vec *off, void *keep, float dYaw, 
         len = Vec3_HorizontalMagnitude(off);
         Vec3_ScaleXZ(off, off, lbl_806D5AB8 / len);
         if (FAbs_FloatAsDouble(target - len) < lbl_806D5ACC) {
+            if (off && off && off) { /* fakematch (permuter): fixes block order */
+            }
         } else if (len < target) {
             target = len + lbl_806D5ACC;
         } else {

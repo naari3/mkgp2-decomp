@@ -950,10 +950,10 @@ config.libs = [
             Object(NonMatching, "game/ItemLaunch.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemFlyingRender.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemTrackedHoming.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/ItemTrackedHomingState.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ItemTrackedHomingState.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemGroundProbes.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemCharacterRender.c", mw_version="GC/2.6", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/ItemHandheldRender.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ItemHandheldRender.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartCharacterParam.c"),
             Object(Matching, "game/Frame.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++"]),
             Object(Matching, "game/TransparentDraw.c", extab_padding=b"\x00\x00"),
@@ -1128,7 +1128,7 @@ config.libs = [
             Object(NonMatching, "game/ItemObject_SpawnWithAlias.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/KartImpactRingItem_Update.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/KartAttachedSpin_Update.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(NonMatching, "game/Item_OrbitAnchorKart.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/Item_OrbitAnchorKart.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartVfx_Bind4or5_Variant.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(NonMatching, "game/DrawEffect_KartDustRing_Update.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/RisingTextSprite_Update.c", extra_cflags=["-Cpp_exceptions on"]),  #g2

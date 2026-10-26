@@ -7,6 +7,11 @@
 #include "texp.h"
 #include "tobj.h"
 
+static inline s32 TETev_GetCRef(HSD_TETev* tev)
+{
+    return tev->c_ref;
+}
+
 int assign_reg(int num, UNUSED u32* arg1, HSD_TExpDag* list, const int* order)
 {
     u8 color_refs[4] = { 0 };
@@ -38,10 +43,10 @@ int assign_reg(int num, UNUSED u32* arg1, HSD_TExpDag* list, const int* order)
         }
 
         tev = dag_entry->tev;
-        if (tev->c_ref > 0) {
+        if (TETev_GetCRef(tev) > 0) {
             for (i = 3; i >= 0; i--) {
                 if (color_refs[i] == 0) {
-                    color_refs[i] = tev->c_ref;
+                    color_refs[i] = TETev_GetCRef(tev);
                     tev->c_dst = i;
                     if (min_color_reg > i) {
                         min_color_reg = i;
@@ -54,7 +59,7 @@ int assign_reg(int num, UNUSED u32* arg1, HSD_TExpDag* list, const int* order)
         if (alpha_ref_count > 0) {
             for (i = 3; i >= 0; i--) {
                 if (alpha_refs[i] == 0) {
-                    alpha_refs[i] = alpha_ref_count;
+                    alpha_refs[i] = tev->a_ref;
                     tev->a_dst = i;
                     if (min_alpha_reg > i) {
                         min_alpha_reg = i;
