@@ -54,18 +54,18 @@ extern "C" unsigned char Items_PlayerOwnsAnyAlias(Items* self, int wanted, unsig
         if (self->slots[i] == 1) {
             int resolved = Resolve(self, i);
             unsigned char found = 0;
-            if (!aliasMode) { if (wanted == resolved) found = 1; }
+            if (0 == aliasMode) { if (wanted == resolved) found = 1; }
             else {
                 signed char resolvedFlag = 0;
                 int source = ItemAlias_DestToSource((unsigned char)resolved, (unsigned char*)&resolvedFlag);
                 if (source == wantedSource) {
-                    if (resolvedFlag == 1 && (signed char)wantedFlag == 0) found = 1;
-                    else if ((signed char)resolvedFlag == 0 && (signed char)wantedFlag == 0) found = 1;
-                    else if ((signed char)resolvedFlag == 1 && wantedFlag == 1) found = 1;
+                    if (1 == resolvedFlag && (signed char)wantedFlag == 0) found = 1;
+                    else if ((signed char)resolvedFlag == 0 && (signed char)0 == wantedFlag) found = 1;
+                    else if ((signed char)1 == resolvedFlag && wantedFlag == 1) found = 1;
                 }
-                if (wanted == 0x3F && source == 0x3D) found = 1;
-                if (wanted == 0x3A && source == 0x39) found = 1;
-                if (wanted == 0x33 && source == 0x32) found = 1;
+                if (0x3F == wanted && 0x3D == source) found = 1;
+                if (0x3A == wanted && source == 0x39) found = 1;
+                if (0x33 == wanted && 0x32 == source) found = 1;
             }
             if (found == 1) return 1;
         }

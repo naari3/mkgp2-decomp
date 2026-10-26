@@ -1,6 +1,4 @@
 /* Tracked homing state, .text [0x800DB864, 0x800DBA00).
- * NonMatching: bounded three-approach stop at 99.41747% real-C text match.
- * Remaining initial targetY/lowSpeed FP homes and product operand order differ.
  * Reconstructed from complete target/callee assembly (Ghidra unavailable).
  * Only observed fields are named; this is not a full Item class layout.
  */
@@ -15,6 +13,8 @@ typedef struct ItemTrackedHomingView {
     char padC9[0x43];
     float gain;
 } ItemTrackedHomingView;
+
+static inline float ItemTrackedHoming_GetGain(ItemTrackedHomingView *item) { return item->gain; }
 
 extern void Vec3_Copy(Vec3 *out, const Vec3 *in);
 extern double FAbs_FloatAsDouble(float value);
@@ -35,6 +35,7 @@ int Item_AdvanceTrackedHomingState(ItemTrackedHomingView *item, Vec3 *velocity,
     Vec3 position;
     float lowSpeed;
     float targetY;
+    float lowProduct;
     float highSpeed;
     float desiredSpeed;
     float currentSpeed;
@@ -45,8 +46,9 @@ int Item_AdvanceTrackedHomingState(ItemTrackedHomingView *item, Vec3 *velocity,
     }
     Vec3_Copy(&position, &item->position);
     targetY = lbl_806D5AD8 * item->scale;
-    lowSpeed = item->gain * (lbl_806D5ADC * item->scale);
-    highSpeed = item->gain * (lbl_806D5AE0 * item->scale);
+    lowProduct = ItemTrackedHoming_GetGain(item) * (lbl_806D5ADC * item->scale);
+    lowSpeed = lowProduct;
+    highSpeed = ItemTrackedHoming_GetGain(item) * (lbl_806D5AE0 * item->scale);
     if (FAbs_FloatAsDouble(targetY - velocity->y) < step) {
         velocity->y = targetY;
     } else if (velocity->y < targetY) {
