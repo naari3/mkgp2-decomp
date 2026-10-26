@@ -706,6 +706,7 @@ config.libs = [
             Object(Matching, "game/Object_GetJObjRotation.c"),
             Object(Matching, "game/Object_ReleaseAnimResource.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_Draw.cpp"),
+            Object(Matching, "game/SceneRoleUpdate.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/MObj1.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/MObj.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Object_Color.c", extab_padding=b""),

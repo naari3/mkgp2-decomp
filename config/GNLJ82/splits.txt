@@ -9549,6 +9549,11 @@ game/fn_8024B544.c:
 	extabindex  start:0x8002B4F0 end:0x8002B4FC
 	.text       start:0x8024B544 end:0x8024B568
 
+game/SceneRoleUpdate.cpp:
+	extab       start:0x8001E578 end:0x8001E580
+	extabindex  start:0x8002B61C end:0x8002B628
+	.text       start:0x8024D02C end:0x8024D108
+
 game/ContinueScene.cpp:
 	extab       start:0x8001E638 end:0x8001E78C
 	extabindex  start:0x8002B670 end:0x8002B700
