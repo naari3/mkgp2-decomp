@@ -133,9 +133,14 @@ struct FlowSceneList {
 
 struct SceneListImpl : FlowSceneList {
     SceneListImpl() {}
+#ifdef SCENELISTIMPL_EXTERNAL_VTABLE
+    virtual void _key2();
+#endif
     virtual void Update();
     virtual void Draw();
+#ifndef SCENELISTIMPL_EXTERNAL_VTABLE
     virtual void _key2();
+#endif
     void Sort();
     void Kill(unsigned int id);
     ListIter Remove(ListIter it) { return entries.Erase(it); }

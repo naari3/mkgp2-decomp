@@ -4,6 +4,7 @@
  * scene and, when a card is inserted, the landing result grid.
  */
 
+#define JUMPDISTANCEMODE_EXTERNAL_VTABLE
 #include "game/JumpDistanceMode.h"
 
 struct DrawMan;

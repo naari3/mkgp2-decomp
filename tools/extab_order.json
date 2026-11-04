@@ -1647,5 +1647,12 @@
     "fn_80205B6C",
     "__dt__10FlowFaderIFv",
     "__dt__10FlowFaderFFv"
+  ],
+  "src/game/anon_80202BCC_m2.cpp": [
+    "fn_80202F54",
+    "fn_802030DC",
+    "fn_801F26C8",
+    "TweenInterp_Dtor",
+    "dtor_80082960"
   ]
 }

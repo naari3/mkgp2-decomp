@@ -69,7 +69,7 @@ int fn_8021620C(void) {
     return lbl_80679BA4[lbl_806D1A48++];
 }
 
-static CoinMilestone *GetMilestone(int i) {
+static inline CoinMilestone *GetMilestone(int i) {
     if (i < 0) {
         return 0;
     }
@@ -79,7 +79,7 @@ static CoinMilestone *GetMilestone(int i) {
     return &lbl_80679748[i];
 }
 
-static int FindMilestone(int mileage) {
+static inline int FindMilestone(int mileage) {
     int i;
     for (i = 0; i < 93; i++) {
         if (mileage < lbl_80679748[i].threshold) {

@@ -229,3 +229,18 @@ c2_r3 rescue (coordinator acceptance pending): HudManager requires ownership of 
 Source: Codex worker c2_r1_texpdag_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 15 fn / 6212 B.
 
 c2_r1_texpdag rescue candidate (full link pending): FlowYesNo RTTI references can reuse external original records through fn_80271340 while a private first-declared undefined key suppresses derived vtables. anon_80204474_nm2 owned constructor EH references YesNoButton destructor dtor_802070EC; bridge __dt__11YesNoButtonFv accordingly. Mapping owned compiler @etb/@eti symbols exposes 100% owned EH in objdiff despite appended weak entries. texpdag exact assign_reg/order_dag own the .sbss2 zero initializers; preserve with their leading split. CalcRange and HSD_TExpSimplify2 isolate exactly; HSD_TExpSchedule is coupled to the original .data group base.
+
+## c2_r4_802161c4_20261105
+Source: Codex worker c2_r4_802161c4_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 36 fn / 5948 B.
+
+c2_r4 rescue: FIRST CHECK found all 45 symbols defined. Explicit inline on coin private helpers removes 160 bytes of unused out-of-line helper emission while all 12 primary functions and EH remain exact. GC/1.3.2 InputObj_ReadRawInput needed -Cpp_exceptions on plus normal extab postprocess; all text/EH then 100%.
+
+## c2_r4_802161c4_20261105
+Source: Codex worker c2_r4_802161c4_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 36 fn / 5948 B.
+
+FlashFx: an explicit empty destructor makes deleting singleton fn_8021A2B4 emit before factory fn_8021A354, matching target physical order. OwnPtr<AnimSprite> cleanup bridges to dtor_8015E8AC. However an isolated delete-only leading EH triggers the overbroad existing patch_memorymanager_timedfree_extab (it checks symbol presence, not definition/TU identity), changing 10180000 to 101A0000. This batch leaves Update+delete NonMatching and promotes the factory independently. No tool code changed.
+
+## c2_r4_802161c4_20261105
+Source: Codex worker c2_r4_802161c4_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 36 fn / 5948 B.
+
+Popup rescue: opt-in suppression of unused Open/Close dynamic_cast helpers avoids emitted RTTI even with -RTTI on. Exact Close wrapper uses the same runtime call fn_80271340(t,0,lbl_806D0268,lbl_806D0260,0) with external target RTTI records. First-declared SceneListImpl _key2 suppresses its vtable. Tail MsgPopupCoin dtor needs primary EH order before appended weak FlowFaderI/F and ResCtrl EH. A split with only two leaf getters has no extab, so omit extab_padding while retaining original compiler flags; dtk extab clean otherwise fails.

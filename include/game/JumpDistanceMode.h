@@ -141,6 +141,10 @@ struct JumpDistanceMode : ModeBase {
     LandingGrid *grid;
     int x80, x84;
     unsigned char x88;
+#ifdef JUMPDISTANCEMODE_EXTERNAL_VTABLE
+    /* Keep the canonical vtable external in independently rescued TUs. */
+    virtual int Update();
+#endif
     virtual void Draw();
     virtual ~JumpDistanceMode();
 };

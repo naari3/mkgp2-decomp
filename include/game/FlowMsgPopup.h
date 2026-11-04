@@ -84,6 +84,7 @@ extern FlowSceneList *lbl_806D19E8;
 extern int lbl_806D19EC;
 }
 
+#ifndef FLOWMSGPOPUP_NO_SERVICE_HELPERS
 static inline int CloseMsgPopup() {
     if (lbl_806D19E8 == 0) {
         return 0;
@@ -131,5 +132,7 @@ static inline int OpenMsgPopup(int msg) {
     }
     return 0;
 }
+
+#endif /* FLOWMSGPOPUP_NO_SERVICE_HELPERS */
 
 #endif

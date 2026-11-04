@@ -1,3 +1,5 @@
+#define FLOWMSGPOPUP_NO_SERVICE_HELPERS
+#define SCENELISTIMPL_EXTERNAL_VTABLE
 #include "game/FlowScene.h"
 #include "game/FlowMsgPopup.h"
 
@@ -20,113 +22,30 @@ void fn_802040B0(void);
 void fn_80204130(int layer);
 }
 
+extern "C" {
+extern const unsigned long lbl_806D0268[2];
+extern const unsigned long lbl_806D0260[2];
+void *fn_80271340(void *, int, const void *, const void *, int);
+}
+
+static inline int CloseMsgPopup() {
+    if (lbl_806D19E8 == 0) {
+        return 0;
+    }
+    FlowTask *t = fn_801F4DC0(lbl_806D19E8, 0);
+    if (t) {
+        MsgPopup *p = (MsgPopup *)fn_80271340(t, 0, lbl_806D0268, lbl_806D0260, 0);
+        if (p->state < 4) {
+            fn_8020A734(p->scaleX.p, 5, lbl_806DAA9C, lbl_806DAA98);
+            fn_8020A734(p->scaleY.p, 5, lbl_806DAAA4, lbl_806DAAA0);
+            fn_8020A734(p->scale.p, 5, lbl_806DAAAC, lbl_806DAAA8);
+            p->state = 4;
+        }
+        return 1;
+    }
+    return 0;
+}
+
 int fn_80203EA0(void) {
     return CloseMsgPopup();
 }
-
-int fn_80203F5C(int msg) {
-    return OpenMsgPopup(msg);
-}
-
-void fn_802040B0(void) {
-    lbl_806D0250.cur = -1;
-    lbl_806D0250.pending = -1;
-    if (lbl_806D19E8) {
-        delete lbl_806D19E8;
-        lbl_806D19E8 = 0;
-    }
-    lbl_806D19EC = 0;
-    fn_80120A08(0x72F);
-    fn_80120A08(0x731);
-    DebugPrintf(lbl_803C250C);
-}
-
-void fn_80204130(int layer) {
-    DebugPrintf(lbl_803C2528);
-    if (lbl_806D19E8 == 0) {
-        lbl_806D19E8 = new SceneListImpl;
-    }
-    lbl_806D19EC = layer;
-    PreloadResource(0x72F);
-    PreloadResource(0x731);
-}
-
-void SceneListImpl::Sort() {
-    ListIter a;
-    a.node = entries.first;
-    ListIter last;
-    last.node = entries.last;
-    while (a.node != last.node) {
-        ListIter b;
-        b.node = a.node->next;
-        while (b.node != entries.End()) {
-            FlowTask *ta;
-            FlowTask *tb;
-            tb = b.node->task;
-            ta = a.node->task;
-            if ((unsigned int)ta->id > (unsigned int)tb->id) {
-                a.node->task = tb;
-                b.node->task = ta;
-            }
-            b.node = b.node->next;
-        }
-        a.node = a.node->next;
-    }
-}
-
-void SceneListImpl::Draw() {
-    ListNode *end = entries.End();
-    ListIter it;
-    it.node = entries.first;
-    while (it.node != end) {
-        FlowTask *t = it.node->task;
-        bool run;
-        if (t->field08 > 0) {
-            run = 0;
-            t->field08--;
-        } else {
-            if (t->field0C == 1) {
-                t->field0C = 2;
-            }
-            run = t->field0C <= 0;
-        }
-        if (run) {
-            t->Draw();
-        }
-        if (t->field0C >= 2) {
-            t->Finish();
-            it = Remove(it);
-        } else {
-            it.node = it.node->next;
-        }
-    }
-}
-
-void SceneListImpl::Update() {
-    Sort();
-    ListIter it;
-    it.node = entries.End()->next;
-    while (it.node != entries.End()) {
-        FlowTask *t = it.node->task;
-        if (t->CanUpdate()) {
-            t->Update();
-        }
-        it.node = it.node->next;
-    }
-}
-
-void SceneListImpl::Kill(unsigned int id) {
-    ListIter it;
-    it.node = entries.first;
-    while (it.node != entries.End()) {
-        FlowTask *t = it.node->task;
-        if (id == (unsigned int)t->id) {
-            t->field0C = 1;
-        }
-        it.node = it.node->next;
-    }
-}
-
-FlowTask::~FlowTask() {}
-
-FlowTask::FlowTask(int id_) : FlowRoot(id_) {}
