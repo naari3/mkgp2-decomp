@@ -104,3 +104,8 @@ auto_ONKARTHIT_block.c の dtor 11 連隊 + KartItem/CarObject 大物はこの�
 Source: Codex worker cxc_u12_f9aac_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 2084 B.
 
 fn_801FA024 factory: canonical SceneListImpl + VHolder<FlowSceneList> and FlowFaderI generate exact 496-byte primary text and exact 180-byte primary EH. Compiler spells VHolder<FlowFaderI> destructor with length 21, despite old reference maps containing length 20. Bridge length 21 to dtor_801F2724. Extra weak destructor EH must be judged on owned ranges and full-link discard.
+
+## c2_i2_8020007c_20261105
+Source: Codex worker c2_i2_8020007c_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 7 fn / 752 B.
+
+Countdown TU 8020007C has reversed EH ordering from ctor 80200240 through tail weak dtors 80201E8C..802020B8: their EH entries sit at 80018274, 8001829C, 800184E4, 8001856C, 80018594. Only first factory/dtor pair is a safe leading cut. Yes/no exact Draw/delete/factory functions isolate cleanly. Existing FlowYesNo/FlowCountdown declarations also emit unmatched vtable/RTTI data when relevant method definitions or dynamic_cast are present; a 100% text score is insufficient to promote those TUs.

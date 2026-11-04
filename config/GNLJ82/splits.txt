@@ -9559,9 +9559,14 @@ game/anon_801FF670.cpp:
 	.text       start:0x801FF670 end:0x8020007C
 
 game/anon_8020007C.cpp:
-	extab       start:0x800180E8 end:0x800187E4
-	extabindex  start:0x80029594 end:0x800296D8
-	.text       start:0x8020007C end:0x80202148
+	extab       start:0x800180E8 end:0x80018188
+	extabindex  start:0x80029594 end:0x800295AC
+	.text       start:0x8020007C end:0x80200240
+
+game/anon_8020007C_nm1.cpp:
+	extab       start:0x80018188 end:0x800187E4
+	extabindex  start:0x800295AC end:0x800296D8
+	.text       start:0x80200240 end:0x80202148
 
 game/anon_80202148.cpp:
 	extab       start:0x800187E4 end:0x80018974
@@ -9584,9 +9589,44 @@ game/anon_80203EA0.cpp:
 	.text       start:0x80203EA0 end:0x80204474
 
 game/anon_80204474.cpp:
-	extab       start:0x80018C0C end:0x80018EA4
-	extabindex  start:0x80029858 end:0x800298D0
-	.text       start:0x80204474 end:0x802052E0
+	extab       start:0x80018C0C end:0x80018C14
+	extabindex  start:0x80029858 end:0x80029864
+	.text       start:0x80204474 end:0x802044A4
+
+game/anon_80204474_nm1.cpp:
+	extab       start:0x80018C14 end:0x80018C1C
+	extabindex  start:0x80029864 end:0x80029870
+	.text       start:0x802044A4 end:0x80204740
+
+game/anon_80204474_part2.cpp:
+	extab       start:0x80018C1C end:0x80018C3C
+	extabindex  start:0x80029870 end:0x80029888
+	.text       start:0x80204740 end:0x802047D4
+
+game/anon_80204474_nm2.cpp:
+	extab       start:0x80018C3C end:0x80018DE4
+	extabindex  start:0x80029888 end:0x800298A0
+	.text       start:0x802047D4 end:0x80204F38
+
+game/anon_80204474_part3.cpp:
+	extab       start:0x80018DE4 end:0x80018DEC
+	extabindex  start:0x800298A0 end:0x800298AC
+	.text       start:0x80204F38 end:0x80204F68
+
+game/anon_80204474_nm3.cpp:
+	extab       start:0x80018DEC end:0x80018E54
+	extabindex  start:0x800298AC end:0x800298B8
+	.text       start:0x80204F68 end:0x802051B0
+
+game/anon_80204474_part4.cpp:
+	extab       start:0x80018E54 end:0x80018E5C
+	extabindex  start:0x800298B8 end:0x800298C4
+	.text       start:0x802051B0 end:0x802051E8
+
+game/anon_80204474_nm4.cpp:
+	extab       start:0x80018E5C end:0x80018EA4
+	extabindex  start:0x800298C4 end:0x800298D0
+	.text       start:0x802051E8 end:0x802052E0
 
 game/anon_802052E0.cpp:
 	extab       start:0x80018EA4 end:0x8001900C
