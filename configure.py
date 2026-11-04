@@ -2463,7 +2463,8 @@ config.libs = [
             Object(Matching, "game/Scene_80173F5C.cpp"),
             Object(Matching, "game/ZoneVisibility.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/ShadowCaster.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/mapeffect/mapeffect.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
+            Object(Matching, "game/mapeffect/mapeffect.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
+            Object(NonMatching, "game/mapeffect/mapeffect_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
             Object(Matching, "game/mapobject/fn_8017A614.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/mapobject/fn_8017AA80.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/mapobject/fn_8017AB28.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
@@ -3349,6 +3350,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 DATA_ALIGN4_TUS = [
     "game/anon_8020D1C0",
     "game/anon_8020DAA0",
+    "game/mapeffect/mapeffect_nm1",
     "game/KartChoiceUpdate",
     "game/CardSetupFlowUpdate",
     "game/fn_80108B04",

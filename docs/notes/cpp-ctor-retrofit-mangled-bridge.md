@@ -164,3 +164,18 @@ FaceEffect GC/2.6 needs -rostr and -inline deferred for target vtable-before-jum
 Source: Codex worker c2_b6_8020d1c0_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 32 fn / 10276 B.
 
 A bridged named const array can remain locally defined despite postprocess_sdata2 externalizing compiler literals. FaceEffect kGlowOffset[2] must be extern so lbl_806DB6E0 resolves to target-owned shared pool. A local initialized copy produces +8 .sdata2 growth and two text refs to its appended address; per-function objdiff remains 100 because symbolic relocations conceal final placement. Audit UND/defined symbol status.
+
+## c2_i1_mapeffect_20261105
+Source: Codex worker c2_i1_mapeffect_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 43 fn / 17296 B.
+
+mapeffect rescue: fn_80179F60 has EH at 0x800117E0, preceding fn_80179650. dtk rejects a split at fn_80179F60, accepts 0x80179650. Prefix ranges in this HANDOFF yield 43 exact functions / 17296 bytes. Its data and RTTI partition cleanly at .rodata 0x80371DC8, .data 0x804915DC, .sdata 0x806CFB10. Default objdiff inferred pool references can give 99.95143% text despite exact instructions; ppc_calculate_pool_relocations=false compares actual instructions and relocations at 100%.
+
+## c2_i1_mapeffect_20261105
+Source: Codex worker c2_i1_mapeffect_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 43 fn / 17296 B.
+
+When splitting a C++ TU, an anonymous-namespace class vtable reference can become STB_LOCAL SHN_UNDEF. llvm-objcopy symbol rename preserves binding, so a global fallback definition cannot resolve it. For mapeffect, naming the private namespace MapEffectPrivate and bridging its new mangled vtable names makes references global while preserving all prefix text/EH/data bytes. Audit all local undefined ELF symbols after any split.
+
+## c2_i1_mapeffect_20261105
+Source: Codex worker c2_i1_mapeffect_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 43 fn / 17296 B.
+
+After a C++ split, compiler RTTI symbols can stay STB_LOCAL even for external-linkage classes. A fallback TU cannot resolve such definitions by global name. Existing postprocess bridge supports global:<target> values; mapeffect uses __RTTI__11clMapEffect -> global:lbl_806CFAD0. Audit the intersection of fallback undefined names and source local defined names; payload bytes stay unchanged.
