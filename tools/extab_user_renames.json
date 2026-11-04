@@ -6298,5 +6298,27 @@
     "__ct__16DebugPayloadB163Fi": "fn_80147638",
     "__ct__16DebugPayloadC163Fv": "fn_801420DC",
     "__ct__16DebugPayloadD163Fiii": "fn_80145AF4"
+  },
+  "src/game/mapobject/fn_8017BCF8.cpp": {
+    "__ct__8clModelMFP10clNormal3DP8ModelDef": "fn_8017BCF8",
+    "__vt__7clModel": "lbl_80491758",
+    "__vt__8clModelM": "lbl_80491710"
+  },
+  "src/game/mapobject/fn_8017B75C.cpp": {
+    "__ct__12clModelGroupFPC10ModelEntry": "fn_8017B75C",
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
+    "__ct__8clModelMFP10clNormal3DP8ModelDef": "fn_8017BCF8",
+    "__dt__7clModelFv": "dtor_8017B07C",
+    "__vt__7clModel": "lbl_80491758",
+    "__vt__8clModelP": "lbl_80491748",
+    "__vt__9clModelPR": "lbl_8049172C",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/mapobject/fn_8017DF00.cpp": {
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/mapobject/fn_8017D660.cpp": {
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

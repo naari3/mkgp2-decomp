@@ -6584,10 +6584,20 @@ game/mapobject/fn_8017B688.cpp:
 	extabindex  start:0x80026930 end:0x8002693C
 	.text       start:0x8017B688 end:0x8017B75C
 
+game/mapobject/fn_8017B75C.cpp:
+	extab       start:0x80011900 end:0x8001196C
+	extabindex  start:0x8002693C end:0x80026948
+	.text       start:0x8017B75C end:0x8017BC24
+
 game/mapobject/fn_8017BC24.c:
 	extab       start:0x8001196C end:0x80011974
 	extabindex  start:0x80026948 end:0x80026954
 	.text       start:0x8017BC24 end:0x8017BCF8
+
+game/mapobject/fn_8017BCF8.cpp:
+	extab       start:0x80011974 end:0x8001197C
+	extabindex  start:0x80026954 end:0x80026960
+	.text       start:0x8017BCF8 end:0x8017BF90
 
 game/mapobject/fn_8017BF90.cpp:
 	extab       start:0x8001197C end:0x80011984
@@ -6608,6 +6618,22 @@ game/mapobject/fn_8017CBB0.cpp:
 	extab       start:0x80011994 end:0x8001199C
 	extabindex  start:0x80026984 end:0x80026990
 	.text       start:0x8017CBB0 end:0x8017CE1C
+
+game/mapobject/fn_8017CE1C.cpp:
+	extab       start:0x8001199C end:0x800119A4
+	extabindex  start:0x80026990 end:0x8002699C
+	.text       start:0x8017CE1C end:0x8017D660
+	.data       start:0x80491894 end:0x804918C4
+
+game/mapobject/fn_8017D660.cpp:
+	extab       start:0x800119A4 end:0x800119AC
+	extabindex  start:0x8002699C end:0x800269A8
+	.text       start:0x8017D660 end:0x8017DF00
+
+game/mapobject/fn_8017DF00.cpp:
+	extab       start:0x800119AC end:0x800119B4
+	extabindex  start:0x800269A8 end:0x800269B4
+	.text       start:0x8017DF00 end:0x8017E6A8
 
 game/coursescene/fn_8017E6A8.cpp:
 	extab       start:0x800119B4 end:0x800119BC
