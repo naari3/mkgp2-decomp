@@ -8758,6 +8758,36 @@ game/fn_801E4524.c:
 	extabindex  start:0x80028784 end:0x80028790
 	.text       start:0x801E4524 end:0x801E4544
 
+game/fn_801E4544.cpp:
+	extab       start:0x800162B0 end:0x80016324
+	extabindex  start:0x80028790 end:0x8002879C
+	.text       start:0x801E4544 end:0x801E4824
+
+game/fn_801E4824.cpp:
+	extab       start:0x80016324 end:0x8001632C
+	extabindex  start:0x8002879C end:0x800287A8
+	.text       start:0x801E4824 end:0x801E4AF4
+
+game/fn_801E4AF4.cpp:
+	extab       start:0x8001632C end:0x800163A0
+	extabindex  start:0x800287A8 end:0x800287B4
+	.text       start:0x801E4AF4 end:0x801E5454
+
+game/fn_801E5454.cpp:
+	extab       start:0x800163A0 end:0x80016414
+	extabindex  start:0x800287B4 end:0x800287C0
+	.text       start:0x801E5454 end:0x801E5724
+
+game/fn_801E5724.cpp:
+	extab       start:0x80016414 end:0x80016488
+	extabindex  start:0x800287C0 end:0x800287CC
+	.text       start:0x801E5724 end:0x801E5A00
+
+game/fn_801E5A00.c:
+	extab       start:0x80016488 end:0x80016490
+	extabindex  start:0x800287CC end:0x800287D8
+	.text       start:0x801E5A00 end:0x801E5A18
+
 game/fn_801E5A18.cpp:
 	.text       start:0x801E5A18 end:0x801E5A84
 	.ctors      start:0x802E8920 end:0x802E8924
