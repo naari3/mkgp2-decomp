@@ -9853,10 +9853,38 @@ game/AddCoinsFromExtraStage.c:
 	.text       start:0x80216540 end:0x80216568
 
 game/anon_80216568.cpp:
-	extab       start:0x8001A524 end:0x8001A8D4
-	extabindex  start:0x8002A08C end:0x8002A1A0
-	.text       start:0x80216568 end:0x80218B5C
+	extab       start:0x8001A524 end:0x8001A52C
+	extabindex  start:0x8002A08C end:0x8002A098
+	.text       start:0x80216568 end:0x80216908
+
+game/anon_80216568_lookup.cpp:
+	extab       start:0x8001A52C end:0x8001A53C
+	extabindex  start:0x8002A098 end:0x8002A0B0
+	.text       start:0x80216908 end:0x802170F0
 	.ctors      start:0x802E893C end:0x802E8940
+
+game/anon_80216568_row_nm.cpp:
+	extab       start:0x8001A53C end:0x8001A544
+	extabindex  start:0x8002A0B0 end:0x8002A0BC
+	.text       start:0x802170F0 end:0x80217298
+
+game/anon_80216568_row_add.cpp:
+	extab       start:0x8001A544 end:0x8001A55C
+	extabindex  start:0x8002A0BC end:0x8002A0C8
+	.text       start:0x80217298 end:0x80217390
+
+game/anon_80216568_row_draw.cpp:
+	extab       start:0x8001A55C end:0x8001A564
+	extabindex  start:0x8002A0C8 end:0x8002A0D4
+	.text       start:0x80217390 end:0x80217404
+
+game/anon_80216568_misc.cpp:
+	extab       start:0x8001A564 end:0x8001A8D4
+	extabindex  start:0x8002A0D4 end:0x8002A1A0
+	.text       start:0x80217404 end:0x80218B28
+
+game/anon_80216568_fader.cpp:
+	.text       start:0x80218B28 end:0x80218B5C
 
 game/fn_80218B5C.c:
 	extab       start:0x8001A8D4 end:0x8001A8DC

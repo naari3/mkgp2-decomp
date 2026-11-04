@@ -144,3 +144,8 @@ Rescue of anon_801FEBD8 / anon_80202148 / anon_80207324: correct VHolder<FlowFad
 Source: Codex worker c2_b5_80207324_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 33 fn / 8244 B.
 
 Resume 1: an owned weak inline constructor can match objdiff 100% yet link at its caller emission position. fn_80202148 was emitted after fn_80202780, shifting the first five functions -0x38 with unchanged section sizes. An opt-in header declaration and genuine out-of-line ctor definition first in the assigned TU preserves exact text and restores source order. Add owned symbol placement checks; object matching percentages do not prove placement. Coordinator rebuild pending.
+
+## c2_i3_80216568_20261105
+Source: Codex worker c2_i3_80216568_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 30 fn / 8312 B.
+
+Per-function objdiff 100% plus primary EH equality do not prove TU text placement. CW may defer functions and emit weak inline array constructors in the middle of strong functions. Compare surviving strong function order/sizes to target, and ensure surviving weak functions have intended target location. anon_80216568 resume isolates two row methods and leaves final 52-byte ctor in target fallback, retaining 30 native functions.
