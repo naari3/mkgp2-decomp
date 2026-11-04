@@ -9579,9 +9579,29 @@ game/anon_80202BCC.cpp:
 	.text       start:0x80202BCC end:0x8020314C
 
 game/anon_8020314C.cpp:
-	extab       start:0x80018A24 end:0x80018BA4
-	extabindex  start:0x80029798 end:0x80029804
-	.text       start:0x8020314C end:0x80203EA0
+	extab       start:0x80018A24 end:0x80018A2C
+	extabindex  start:0x80029798 end:0x800297A4
+	.text       start:0x8020314C end:0x80203224
+
+game/anon_8020314C_nm1.cpp:
+	extab       start:0x80018A2C end:0x80018A44
+	extabindex  start:0x800297A4 end:0x800297B0
+	.text       start:0x80203224 end:0x802035F0
+
+game/anon_8020314C_mid.cpp:
+	extab       start:0x80018A44 end:0x80018B74
+	extabindex  start:0x800297B0 end:0x800297EC
+	.text       start:0x802035F0 end:0x80203C24
+
+game/anon_8020314C_nm2.cpp:
+	extab       start:0x80018B74 end:0x80018B9C
+	extabindex  start:0x800297EC end:0x800297F8
+	.text       start:0x80203C24 end:0x80203E30
+
+game/anon_8020314C_tail.cpp:
+	extab       start:0x80018B9C end:0x80018BA4
+	extabindex  start:0x800297F8 end:0x80029804
+	.text       start:0x80203E30 end:0x80203EA0
 
 game/anon_80203EA0.cpp:
 	extab       start:0x80018BA4 end:0x80018C0C
@@ -9689,14 +9709,28 @@ game/anon_8020AF08.cpp:
 	.text       start:0x8020AF08 end:0x8020B4F8
 
 game/anon_8020B4F8.cpp:
-	extab       start:0x80019538 end:0x80019628
-	extabindex  start:0x80029BD0 end:0x80029C24
-	.text       start:0x8020B4F8 end:0x8020BD68
+	extab       start:0x80019538 end:0x800195C8
+	extabindex  start:0x80029BD0 end:0x80029C18
+	.text       start:0x8020B4F8 end:0x8020BACC
+	.data       start:0x804EC858 end:0x804EC8C0
+
+game/anon_8020B4F8_nm1.cpp:
+	extab       start:0x800195C8 end:0x80019628
+	extabindex  start:0x80029C18 end:0x80029C24
+	.text       start:0x8020BACC end:0x8020BD68
+	.data       start:0x804EC8C0 end:0x804EC8F4
 
 game/anon_8020BD68.cpp:
-	extab       start:0x80019628 end:0x80019718
-	extabindex  start:0x80029C24 end:0x80029C78
-	.text       start:0x8020BD68 end:0x8020C650
+	extab       start:0x80019628 end:0x800196B8
+	extabindex  start:0x80029C24 end:0x80029C6C
+	.text       start:0x8020BD68 end:0x8020C38C
+	.data       start:0x804EC8F4 end:0x804EC95C
+
+game/anon_8020BD68_nm1.cpp:
+	extab       start:0x800196B8 end:0x80019718
+	extabindex  start:0x80029C6C end:0x80029C78
+	.text       start:0x8020C38C end:0x8020C650
+	.data       start:0x804EC95C end:0x804EC990
 
 game/anon_8020C650.cpp:
 	extab       start:0x80019718 end:0x8001976C
@@ -9994,9 +10028,19 @@ game/DNBressInit.c:
 	.ctors      start:0x802E8948 end:0x802E894C
 
 game/DNFlash.cpp:
-	extab       start:0x8001BB78 end:0x8001BC10
-	extabindex  start:0x8002A71C end:0x8002A770
-	.text       start:0x802280F8 end:0x80228D64
+	extab       start:0x8001BB78 end:0x8001BB90
+	extabindex  start:0x8002A71C end:0x8002A728
+	.text       start:0x802280F8 end:0x802281F0
+
+game/DNFlash_nm1.cpp:
+	extab       start:0x8001BB90 end:0x8001BBA0
+	extabindex  start:0x8002A728 end:0x8002A740
+	.text       start:0x802281F0 end:0x802286B4
+
+game/DNFlash_tail.cpp:
+	extab       start:0x8001BBA0 end:0x8001BC10
+	extabindex  start:0x8002A740 end:0x8002A770
+	.text       start:0x802286B4 end:0x80228D64
 	.rodata     start:0x803D0390 end:0x803D08A8
 
 game/DNFlashInit.c:

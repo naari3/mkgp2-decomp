@@ -1402,5 +1402,53 @@
       "dtor_801FEAB8",
       "dtor_801FEB48"
     ]
-  }
+  },
+  "src/game/anon_8020B4F8.cpp": [
+    "fn_8020B4F8",
+    "fn_8020B554",
+    "fn_8020B79C",
+    "fn_8020B95C",
+    "fn_8020B994",
+    "fn_8020B9D0",
+    "dtor_80082960",
+    "__dt__10FlowFaderIFv"
+  ],
+  "src/game/anon_8020BD68.cpp": [
+    "fn_8020BD68",
+    "fn_8020BDC4",
+    "fn_8020BFF0",
+    "fn_8020C21C",
+    "fn_8020C254",
+    "fn_8020C290",
+    "dtor_80082960",
+    "__dt__10FlowFaderIFv"
+  ],
+  "src/game/DNFlash.cpp": [
+    "fn_802280F8"
+  ],
+  "src/game/DNFlash_tail.cpp": [
+    "fn_802286B4",
+    "fn_802287EC",
+    "fn_80228884",
+    "fn_80228C9C",
+    "dtor_8016A270"
+  ],
+  "src/game/anon_8020314C.cpp": [
+    "fn_8020314C"
+  ],
+  "src/game/anon_8020314C_mid.cpp": [
+    "fn_802035F0",
+    "fn_8020374C",
+    "fn_80203784",
+    "fn_802038FC",
+    "fn_80203BEC",
+    "dtor_80082960",
+    "__dt__10FlowFaderIFv",
+    "__dt__10FlowFaderFFv",
+    "dtor_801F4A80",
+    "dtor_801F2724"
+  ],
+  "src/game/anon_8020314C_tail.cpp": [
+    "fn_80203E4C"
+  ]
 }
