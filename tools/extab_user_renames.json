@@ -6248,5 +6248,12 @@
   "src/game/fn_801F8A34.cpp": {
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/miyazakiconsole/fn_8017FD68.cpp": {
+    "__ct__8DemoRootFv": "GameMode_BaseInit",
+    "__dt__8DemoRootFv": "dtor_8002CDF4",
+    "__vt__12MiyazakiMode": "lbl_80491880",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
