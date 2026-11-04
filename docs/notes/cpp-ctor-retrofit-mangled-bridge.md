@@ -194,3 +194,13 @@ TU rescue must check primary function PHYSICAL order as well as per-function obj
 Source: Codex worker c2_i10_8021f088_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 19 fn / 7620 B.
 
 anon_8021F088 isolation: empty inline TextSprite destructor mapped to dtor_800869D0 restores DESTROYMEMBER EH without changing text; map Own<Sprite> dtor to dtor_8015E8AC, FadeObj to dtor_80145DB0, SceneBase to dtor_8007D0D4, PtrVec<FadeObj*> to dtor_80145F9C. Retain trailing #pragma inline_max_size(240) with CoinResultScene_Init so NextWnd ctor remains out of line and exact. Vtable-bearing destructors remain NonMatching: target vtables have RTTI pointers, whereas original RTTI-off source has zero; enabling RTTI after splitting duplicates base type records. Data order also prevents independently owning both the scene jump table (804EDE5C) and earlier-text line vtable (804EDE8C).
+
+## c2_i5_802253ec_20261105
+Source: Codex worker c2_i5_802253ec_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 25 fn / 7356 B.
+
+TU rescue: anon_802253EC uses canonical RTTI names clCSSceneNextRaceBT / clSceneInterface. RTTI-on + -rostr and owned rodata 803C6E80..803C6EA8, data 804EDF30..804EDF54, sdata 806D0520..806D0530 yield section-level 100% without changing method bodies. Add bridges @246/@248/@247 and RTTI class names to existing labels. ContinueScene needs two C702 padding sites and explicit EH order with weak dtor last. CardModeRoot can safely rescue CC04..CEE8 only, avoiding dynamic_cast/vtable RTTI emissions.
+
+## c2_i5_802253ec_20261105
+Source: Codex worker c2_i5_802253ec_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 25 fn / 7356 B.
+
+Rescue verification must check physical .text function order as well as symbol-level objdiff. ContinueScene individual text symbols were 100%, yet emitted in original source-definition order; main.elf placed fn_8024E05C at 8024D764. Explicit EH ordering cannot correct .text layout, and the linker sorts EH index by actual function address. Move strong definitions into target-address order, preserve inline helpers, and verify cumulative native offsets after weak-copy discard.

@@ -1,0 +1,55 @@
+#include "game/NetJoin_private.h"
+
+clCSSceneNextRaceBT::clCSSceneNextRaceBT() {
+    state = 0;
+    time = lbl_806DB35C;
+    x10 = 0;
+    x14 = 1;
+    x18 = lbl_806D1A78 + 1;
+    x1c = 0;
+    scroll = lbl_806DB380;
+    joined = 0;
+    scrollMin = lbl_806DB35C;
+    t0 = 0;
+    timing = 0;
+    count = 0;
+    list = new SceneListImpl;
+    waiter = 0;
+    panel = 0;
+    box = 0;
+    prompt = 0;
+    popup = 0;
+    SetInput(1);
+    waiter = new SyncWaiter;
+    fn_8021B5F4(waiter, 1);
+    panel = new FlowPanel;
+    clFlowKart_SetupTextLayout(panel, 0xE);
+    fn_801D8E28(panel, lbl_806DB374, lbl_806DB384);
+    panel->x21 = 0;
+    fn_801D9180(panel, 1);
+    ResCtrl rc;
+    rc.resId = 0x157C;
+    rc.Show(lbl_806DB374, lbl_806DB374, lbl_806DB37C);
+    rc.SetScaleXY(lbl_806DB388, lbl_806DB37C);
+    box = new SpriteBox(&rc, 1);
+    box->Cull();
+    text = new TextSprite;
+    text->visible = 1;
+    TexMgr_SetTexture((TextManager *)text, GetTextureByIdAndLang(0x74, -1));
+    fn_801F93EC(text->tm(), scroll, lbl_806DB374);
+    prompt = new SceneObj(0x73, 0x14, 0x1B1F, 0x1B1E, 1);
+    fn_8023CD3C(prompt, lbl_806DB38C, lbl_806DB390);
+    fn_8023CCF8(prompt, lbl_806DB394, lbl_806DB398);
+    fn_8023CD24(prompt, lbl_806DB39C, lbl_806DB390);
+    fn_8023CCCC(prompt, lbl_806DB3A0, lbl_806DB398);
+    fn_8023CEB4(prompt);
+    fn_8023CFD4(prompt);
+    fn_801F8FCC(text->tm(), 2);
+    fn_801F8E90(text->tm());
+    scrollMin = -text->width;
+    fn_801F8FCC(text->tm(), 0);
+    fn_801F8E90(text->tm());
+    SetSyncTarget(0x31);
+    SetLocalPcbRole(5);
+    PlayStats_IncSinglePlayJoin();
+}

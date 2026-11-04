@@ -1562,5 +1562,16 @@
     "__dt__21PtrVecBase<P7FadeObj>Fv",
     "__dt__21PtrVecData<P7FadeObj>Fv",
     "dtor_8007D0D4"
+  ],
+  "src/game/ContinueScene.cpp": [
+    "fn_8024D764",
+    "fn_8024D7F4",
+    "fn_8024D874",
+    "fn_8024DCCC",
+    "fn_8024DD04",
+    "fn_8024DD50",
+    "fn_8024DE38",
+    "fn_8024E05C",
+    "dtor_801CCA30"
   ]
 }

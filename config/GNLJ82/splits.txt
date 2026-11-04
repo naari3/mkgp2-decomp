@@ -9746,9 +9746,19 @@ game/anon_8020C650.cpp:
 	.text       start:0x8020C650 end:0x8020C974
 
 game/anon_8020C974.cpp:
-	extab       start:0x8001976C end:0x800197E4
-	extabindex  start:0x80029CC0 end:0x80029D20
-	.text       start:0x8020C974 end:0x8020D1C0
+	extab       start:0x8001976C end:0x80019774
+	extabindex  start:0x80029CC0 end:0x80029CCC
+	.text       start:0x8020C974 end:0x8020CC04
+
+game/anon_8020C974_misc.cpp:
+	extab       start:0x80019774 end:0x800197AC
+	extabindex  start:0x80029CCC end:0x80029D08
+	.text       start:0x8020CC04 end:0x8020CEE8
+
+game/anon_8020C974_nm1.cpp:
+	extab       start:0x800197AC end:0x800197E4
+	extabindex  start:0x80029D08 end:0x80029D20
+	.text       start:0x8020CEE8 end:0x8020D1C0
 
 game/anon_8020D1C0.cpp:
 	extab       start:0x800197E4 end:0x800198C8
@@ -10132,9 +10142,22 @@ game/anon_80224ECC.cpp:
 	.text       start:0x80224ECC end:0x802253EC
 
 game/anon_802253EC.cpp:
-	extab       start:0x8001B840 end:0x8001BA2C
-	extabindex  start:0x8002A608 end:0x8002A680
-	.text       start:0x802253EC end:0x80226640
+	extab       start:0x8001B840 end:0x8001B87C
+	extabindex  start:0x8002A608 end:0x8002A62C
+	.text       start:0x802253EC end:0x80225C2C
+	.rodata     start:0x803C6E80 end:0x803C6EA8
+	.data       start:0x804EDF30 end:0x804EDF54
+	.sdata      start:0x806D0520 end:0x806D0530
+
+game/anon_802253EC_nm1.cpp:
+	extab       start:0x8001B87C end:0x8001B964
+	extabindex  start:0x8002A62C end:0x8002A638
+	.text       start:0x80225C2C end:0x80225F34
+
+game/anon_802253EC_tail.cpp:
+	extab       start:0x8001B964 end:0x8001BA2C
+	extabindex  start:0x8002A638 end:0x8002A680
+	.text       start:0x80225F34 end:0x80226640
 
 game/fn_80226640.c:
 	.text       start:0x80226640 end:0x8022664C
@@ -10712,9 +10735,19 @@ game/SceneRoleDtor.cpp:
 	.text       start:0x8024D17C end:0x8024D244
 
 game/ContinueScene.cpp:
-	extab       start:0x8001E638 end:0x8001E78C
-	extabindex  start:0x8002B670 end:0x8002B700
-	.text       start:0x8024D764 end:0x8024E338
+	extab       start:0x8001E638 end:0x8001E75C
+	extabindex  start:0x8002B670 end:0x8002B6D0
+	.text       start:0x8024D764 end:0x8024E094
+
+game/ContinueScene_nm1.cpp:
+	extab       start:0x8001E75C end:0x8001E764
+	extabindex  start:0x8002B6D0 end:0x8002B6DC
+	.text       start:0x8024E094 end:0x8024E1DC
+
+game/ContinueScene_tail.cpp:
+	extab       start:0x8001E764 end:0x8001E78C
+	extabindex  start:0x8002B6DC end:0x8002B700
+	.text       start:0x8024E1DC end:0x8024E338
 
 game/fn_8024E338.c:
 	.text       start:0x8024E338 end:0x8024E344
