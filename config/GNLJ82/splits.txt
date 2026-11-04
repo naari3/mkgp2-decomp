@@ -7765,6 +7765,12 @@ game/sprite/fn_801A1678.c:
 game/SpriteSystem_EnsureInit.c:
 	.text       start:0x801A16F0 end:0x801A1714
 
+game/sprite/fn_801A1714.c:
+	extab       start:0x80012A50 end:0x80012A58
+	extabindex  start:0x80027620 end:0x8002762C
+	.text       start:0x801A1714 end:0x801A175C
+	.ctors      start:0x802E8914 end:0x802E8918
+
 game/sprite/fn_801A175C.c:
 	extab       start:0x80012A58 end:0x80012A60
 	extabindex  start:0x8002762C end:0x80027638
@@ -7791,6 +7797,21 @@ game/sprite/fn_801A1BD0.c:
 
 game/sprite/fn_801A1D40.c:
 	.text       start:0x801A1D40 end:0x801A1D98
+
+game/sprite/fn_801A1D98.c:
+	extab       start:0x80012A78 end:0x80012A80
+	extabindex  start:0x8002765C end:0x80027668
+	.text       start:0x801A1D98 end:0x801A24B8
+
+game/sprite/fn_801A4A10.c:
+	extab       start:0x80012A90 end:0x80012A98
+	extabindex  start:0x80027680 end:0x8002768C
+	.text       start:0x801A4A10 end:0x801A4F38
+
+game/sprite/fn_801A5DC0.c:
+	extab       start:0x80012AA0 end:0x80012AA8
+	extabindex  start:0x80027698 end:0x800276A4
+	.text       start:0x801A5DC0 end:0x801A6538
 
 game/fn_801B0CE4.c:
 	.text       start:0x801B0CE4 end:0x801B0D80
