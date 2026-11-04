@@ -7993,6 +7993,18 @@ game/fn_801CF188.c:
 	extabindex  start:0x80027F98 end:0x80027FA4
 	.text       start:0x801CF188 end:0x801CF360
 
+game/clFlowCourse_Update.cpp:
+	extab       start:0x80014CF4 end:0x80014D3C
+	extabindex  start:0x80027FA4 end:0x80027FB0
+	.text       start:0x801CF360 end:0x801D0C30
+	.data       start:0x8049B408 end:0x8049B448
+
+game/clFlowCourse.cpp:
+	extab       start:0x80014D3C end:0x80014EB4
+	extabindex  start:0x80027FB0 end:0x80027FD4
+	.text       start:0x801D0C30 end:0x801D1800
+	.data       start:0x8049B448 end:0x8049B4A8
+
 game/fn_801D1800.cpp:
 	extab       start:0x80014EB4 end:0x80014EBC
 	extabindex  start:0x80027FD4 end:0x80027FE0

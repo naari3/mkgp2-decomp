@@ -2212,6 +2212,8 @@ config.libs = [
             Object(Matching, "game/fn_801BA6A4.c"),
             Object(Matching, "game/clFlowTitle_Init.cpp", extab_padding=b""),
             Object(Matching, "game/clFlowClass_Init.cpp", extab_padding=b""),
+            Object(NonMatching, "game/clFlowCourse.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/clFlowCourse_Update.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801D39BC.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801D4060.cpp", extab_padding=b""),
             Object(Matching, "game/clFlowAttract_Init.cpp", extab_padding=b""),

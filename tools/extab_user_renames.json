@@ -6106,5 +6106,22 @@
     "__vt__7Kiri16A": "lbl_8049102C",
     "__vt__10MapPart16A": "lbl_80490FE0",
     "__dt__10MapPart16AFv": "dtor_8016A270"
+  },
+  "src/game/clFlowCourse.cpp": {
+    "__ct__10CourseFlowFv": "clFlowCourse_Init",
+    "__dt__10CourseFlowFv": "clFlowCourse_Dtor",
+    "__ct__10CourseBaseFv": "InitializeFrameSelection",
+    "__dt__10CourseBaseFv": "dtor_801BA14C",
+    "__ct__12CourseSpriteFiii": "Sprite_InitWithAnim",
+    "__ct__12CourseSpriteFiiffffff": "Sprite_CreateWithParams",
+    "__dt__12CourseSpriteFv": "Sprite_Destroy",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__vt__10CourseFlow": "lbl_8049B3B4"
+  },
+  "src/game/clFlowCourse_Update.cpp": {
+    "__ct__12CourseSpriteFiii": "Sprite_InitWithAnim",
+    "__ct__12CourseSpriteFiiffffff": "Sprite_CreateWithParams",
+    "__dt__12CourseSpriteFv": "Sprite_Destroy"
   }
 }
