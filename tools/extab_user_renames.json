@@ -6193,5 +6193,20 @@
   "src/game/misc3d/fn_80169040.cpp": {
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/ItemSelectChoiceInit.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/KartChoiceFinish.cpp": {
+    "__ct__12ChoiceFinishFv": "fn_8023C6A8",
+    "__dt__12ChoiceFinishFv": "fn_8023C5A4",
+    "__vt__12ChoiceFinish": "lbl_804EE5BC",
+    "__dt__16ChoiceFinishBaseFv": "dtor_8007D0D4",
+    "__vt__16ChoiceFinishBase": "lbl_803FE0C8",
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim",
+    "__dt__6SpriteFv": "Sprite_Destroy",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
   }
 }

@@ -505,6 +505,9 @@ config.libs = [
         "cflags": [*cflags_base, "-Cpp_exceptions on"],
         "progress_category": "game",
         "objects": [
+            Object(NonMatching, "game/ItemSelectChoiceStep.cpp"),
+            Object(NonMatching, "game/ItemSelectChoiceUpdate.cpp", extra_cflags=["-use_lmw_stmw on"]),
+            Object(NonMatching, "game/ItemSelectChoiceInit.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/KartChoiceSelect.cpp", extab_padding=b""),
             Object(Matching, "game/KartChoiceRequest.cpp"),
             Object(Matching, "game/KartChoiceOtherUpdate.cpp", extab_padding=b""),
@@ -515,6 +518,7 @@ config.libs = [
             Object(Matching, "game/KartChoiceChildDraw.cpp", extab_padding=b""),
             Object(Matching, "game/KartChoiceChildDtor.cpp", extab_padding=b""),
             Object(Matching, "game/KartChoiceChildCtor.cpp", extab_padding=b""),
+            Object(Matching, "game/KartChoiceFinish.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/TripletFaderOwner.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/CountdownOwner.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "game/TaskBucketsCast.cpp", extab_padding=b""),
