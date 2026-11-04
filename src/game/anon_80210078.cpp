@@ -92,6 +92,8 @@ static inline void SetupJointMatrix(HSD_JObj *jobj) {
 }
 
 struct CoinDemoScene : DemoBase {
+    // Keep the target vtable external: CW selects the first non-inline virtual.
+    virtual void _keyB();
     unsigned char first;
     float time;
     DemoScene *scene;

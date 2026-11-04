@@ -1507,5 +1507,28 @@
       "fn_80179DDC",
       "fn_80179F60"
     ]
-  }
+  },
+  "src/game/KartAlertPanel.cpp": [
+    "fn_802506F8",
+    "fn_80250984",
+    "fn_80250AE8",
+    "fn_80250C18",
+    "fn_80250D1C",
+    "dtor_80082960",
+    "dtor_801F4A80",
+    "__dt__10FlowFaderFFv"
+  ],
+  "src/game/anon_8020F44C.cpp": [
+    "fn_8020F44C",
+    "fn_8020F658",
+    "fn_8020F9C4",
+    "fn_8020FBC4",
+    "dtor_8020FFB0",
+    "dtor_80210014",
+    "__dt__25PtrVecBase<P10DemoNormal>Fv",
+    "__dt__25PtrVecData<P10DemoNormal>Fv",
+    "__dt__21PtrVecBase<P7DemoObj>Fv",
+    "__dt__21PtrVecData<P7DemoObj>Fv",
+    "clCGameDemo_Dtor"
+  ]
 }

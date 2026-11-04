@@ -3733,7 +3733,7 @@
     "__ct__7TextBoxFv": "TexMgr_Init",
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960",
-    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_80250668"
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80"
   },
   "src/game/RacePopups.cpp": {
     "Finish__10FlashPopupFv": "fn_80251C98",
@@ -4262,7 +4262,8 @@
     "__dt__12ObjDemoSceneFv": "fn_8020F9C4",
     "__ct__12ObjDemoSceneFv": "fn_8020FBC4",
     "__dt__21PtrVec<P10DemoNormal>Fv": "dtor_8020FFB0",
-    "__dt__17PtrVec<P7DemoObj>Fv": "dtor_80210014"
+    "__dt__17PtrVec<P7DemoObj>Fv": "dtor_80210014",
+    "__dt__8DemoBaseFv": "clCGameDemo_Dtor"
   },
   "src/game/anon_80210078.cpp": {
     "__nwa__FUl": "FUN_8003b120",
@@ -4282,7 +4283,8 @@
     "Draw__13CoinDemoSceneFv": "fn_80210078",
     "Update__13CoinDemoSceneFv": "fn_80210288",
     "__dt__13CoinDemoSceneFv": "fn_8021058C",
-    "__ct__13CoinDemoSceneFv": "fn_802106C8"
+    "__ct__13CoinDemoSceneFv": "fn_802106C8",
+    "__dt__8DemoBaseFv": "clCGameDemo_Dtor"
   },
   "src/game/anon_80211B10.cpp": {
     "Draw__16JumpDistanceModeFv": "fn_80211B10"

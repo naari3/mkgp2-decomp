@@ -179,3 +179,13 @@ When splitting a C++ TU, an anonymous-namespace class vtable reference can becom
 Source: Codex worker c2_i1_mapeffect_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 43 fn / 17296 B.
 
 After a C++ split, compiler RTTI symbols can stay STB_LOCAL even for external-linkage classes. A fallback TU cannot resolve such definitions by global name. Existing postprocess bridge supports global:<target> values; mapeffect uses __RTTI__11clMapEffect -> global:lbl_806CFAD0. Audit the intersection of fallback undefined names and source local defined names; payload bytes stay unchanged.
+
+## c2_b4_8020f44c_20261105
+Source: Codex worker c2_b4_8020f44c_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 15 fn / 7744 B.
+
+CW GC/2.6 emits a strong derived vtable when its first non-inline virtual is defined, even if a later undefined key virtual exists (or the key is inherited). Redeclaring the inherited undefined key as the first virtual of each derived demo class suppresses that table. KartAlertPanel similarly needs its existing undefined key before its destructor; this TU contains no panel virtual dispatch. All 15 assigned functions retain 100% text. DemoBase weak dtor must bridge to clCGameDemo_Dtor for owned constructor EH; KartAlertPanel holder cleanup targets dtor_801F4A80, not dtor_80250668.
+
+## c2_b4_8020f44c_20261105
+Source: Codex worker c2_b4_8020f44c_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 15 fn / 7744 B.
+
+TU rescue must check primary function PHYSICAL order as well as per-function objdiff. KartAlertPanel had every function 100% and exact owned EH, but source definition order was reversed, which moved link addresses and made MWLD sort extabindex to the wrong function order. Moving definitions verbatim to address order preserves 100% text and fixes the placement cause. A source object can contain interspersed weak destructor text; evaluate final order after weak discard.

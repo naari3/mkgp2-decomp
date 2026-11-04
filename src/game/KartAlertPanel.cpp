@@ -127,6 +127,8 @@ static inline unsigned char TestFlag(Kart *k, unsigned long long mask) {
 }
 
 struct KartAlertPanel {
+    // Keep the target vtable external: no panel virtual dispatch occurs in this TU.
+    virtual void _key();
     virtual ~KartAlertPanel();
     unsigned char active;
     unsigned char hold;
@@ -141,103 +143,7 @@ struct KartAlertPanel {
     void OnItem(int id, Kart *k);
     void Update();
     void Refresh();
-    virtual void _key();
 };
-
-KartAlertPanel::KartAlertPanel()
-    : active(0), hold(0), hidden(1), fader(new FlowFaderF(lbl_806DC0E8)), text(0), kart(0),
-      timer(0), item(-1) {
-    ResCtrl rc;
-    rc.resId = 0x1ECD;
-    rc.Show(lbl_806DC0E0.x + lbl_803F0FC4[0].x, lbl_806DC0E0.y + lbl_803F0FC4[0].y, lbl_806DC0EC);
-    sprites[0] = new SpriteBox(&rc, 4);
-    sprites[0]->SetActive(0);
-    fn_80121E10(&rc);
-    rc.resId = 0x1ECD;
-    rc.Show(lbl_806DC0E0.x + lbl_803F0FC4[1].x, lbl_806DC0E0.y + lbl_803F0FC4[1].y, lbl_806DC0EC);
-    sprites[1] = new SpriteBox(&rc, 4);
-    sprites[1]->SetActive(0);
-    text = new TextBox;
-    TexMgr_SetTexture(text->tm(), lbl_806DC0F4);
-    fn_801F93EC(text->tm(), lbl_806DC0E0.x + lbl_803F0FC4[2].x, lbl_806DC0E0.y + lbl_803F0FC4[2].y);
-}
-
-KartAlertPanel::~KartAlertPanel() {
-    for (int i = 0; i < 2; i++) {
-        if (sprites[i]) {
-            delete sprites[i];
-            sprites[i] = 0;
-        }
-    }
-    if (text) {
-        delete text;
-        text = 0;
-    }
-}
-
-void KartAlertPanel::OnItem(int id, Kart *k) {
-    if (k) {
-        Kart *pl = g_playerRenderObj;
-        if (pl == k) {
-            int old = item;
-            item = id;
-            if (id == 0x2E || id == 0x2F || id == 0x30 || id == 0x31) {
-                if (old != item) {
-                    if (timer == 0) {
-                        timer = 0x9A;
-                    }
-                    hold = 1;
-                    fn_8020A734(fader.p, 10, lbl_806DC0E8, lbl_806DC0E8);
-                    DebugPrintf(lbl_803F1034);
-                }
-                return;
-            }
-        }
-        if (hold == 1) {
-            if (timer == 0) {
-                hold = 0;
-                kart = 0;
-                DebugPrintf(lbl_803F1020);
-            }
-            if (pl) {
-                if (!HasFlag(pl, 0x0800000000000000ULL)) {
-                    hold = 0;
-                    kart = 0;
-                    DebugPrintf(lbl_803F1020);
-                }
-            }
-        }
-    }
-}
-
-void KartAlertPanel::Update() {
-    unsigned char vis = 1;
-    Refresh();
-    fader.p->Step();
-    if (fn_8020A6CC(fader.p) <= lbl_806DC0E8 && fader.p->Done()) {
-        active = 0;
-        hidden = 1;
-    }
-    if (hold == 1 || !active) {
-        vis = 0;
-    }
-    if (timer != 0) {
-        timer--;
-    }
-    {
-        int alpha = lbl_806DC0F0 * fn_8020A6CC(fader.p);
-        int i;
-        for (i = 0; i < 2; i++) {
-            sprites[i]->SetAlpha(alpha);
-            sprites[i]->SetActive(vis);
-            sprites[i]->Cull();
-        }
-        text->tm()->color = 0xFFFFFF00 | (alpha & 0xFF);
-        if (vis == 1) {
-            fn_801F8A34(fn_801F8E58(), text->tm(), 4);
-        }
-    }
-}
 
 void KartAlertPanel::Refresh() {
     const char *base = lbl_803F0AD8;
@@ -303,4 +209,99 @@ void KartAlertPanel::Refresh() {
         fn_8020A734(fader.p, 10, lbl_806DC0E8, lbl_806DC0EC);
         DebugPrintf(base + 0x534);
     }
+}
+
+void KartAlertPanel::Update() {
+    unsigned char vis = 1;
+    Refresh();
+    fader.p->Step();
+    if (fn_8020A6CC(fader.p) <= lbl_806DC0E8 && fader.p->Done()) {
+        active = 0;
+        hidden = 1;
+    }
+    if (hold == 1 || !active) {
+        vis = 0;
+    }
+    if (timer != 0) {
+        timer--;
+    }
+    {
+        int alpha = lbl_806DC0F0 * fn_8020A6CC(fader.p);
+        int i;
+        for (i = 0; i < 2; i++) {
+            sprites[i]->SetAlpha(alpha);
+            sprites[i]->SetActive(vis);
+            sprites[i]->Cull();
+        }
+        text->tm()->color = 0xFFFFFF00 | (alpha & 0xFF);
+        if (vis == 1) {
+            fn_801F8A34(fn_801F8E58(), text->tm(), 4);
+        }
+    }
+}
+
+void KartAlertPanel::OnItem(int id, Kart *k) {
+    if (k) {
+        Kart *pl = g_playerRenderObj;
+        if (pl == k) {
+            int old = item;
+            item = id;
+            if (id == 0x2E || id == 0x2F || id == 0x30 || id == 0x31) {
+                if (old != item) {
+                    if (timer == 0) {
+                        timer = 0x9A;
+                    }
+                    hold = 1;
+                    fn_8020A734(fader.p, 10, lbl_806DC0E8, lbl_806DC0E8);
+                    DebugPrintf(lbl_803F1034);
+                }
+                return;
+            }
+        }
+        if (hold == 1) {
+            if (timer == 0) {
+                hold = 0;
+                kart = 0;
+                DebugPrintf(lbl_803F1020);
+            }
+            if (pl) {
+                if (!HasFlag(pl, 0x0800000000000000ULL)) {
+                    hold = 0;
+                    kart = 0;
+                    DebugPrintf(lbl_803F1020);
+                }
+            }
+        }
+    }
+}
+
+KartAlertPanel::~KartAlertPanel() {
+    for (int i = 0; i < 2; i++) {
+        if (sprites[i]) {
+            delete sprites[i];
+            sprites[i] = 0;
+        }
+    }
+    if (text) {
+        delete text;
+        text = 0;
+    }
+}
+
+KartAlertPanel::KartAlertPanel()
+    : active(0), hold(0), hidden(1), fader(new FlowFaderF(lbl_806DC0E8)), text(0), kart(0),
+      timer(0), item(-1) {
+    ResCtrl rc;
+    rc.resId = 0x1ECD;
+    rc.Show(lbl_806DC0E0.x + lbl_803F0FC4[0].x, lbl_806DC0E0.y + lbl_803F0FC4[0].y, lbl_806DC0EC);
+    sprites[0] = new SpriteBox(&rc, 4);
+    sprites[0]->SetActive(0);
+    fn_80121E10(&rc);
+    rc.resId = 0x1ECD;
+    rc.Show(lbl_806DC0E0.x + lbl_803F0FC4[1].x, lbl_806DC0E0.y + lbl_803F0FC4[1].y, lbl_806DC0EC);
+    sprites[1] = new SpriteBox(&rc, 4);
+    sprites[1]->SetActive(0);
+    text = new TextBox;
+    TexMgr_SetTexture(text->tm(), lbl_806DC0F4);
+    fn_801F93EC(text->tm(), lbl_806DC0E0.x + lbl_803F0FC4[2].x, lbl_806DC0E0.y + lbl_803F0FC4[2].y);
 }

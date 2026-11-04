@@ -63,6 +63,8 @@ extern char lbl_806DAD24[5];
 }
 
 struct ObjDemoScene : DemoBase {
+    // Keep the target vtable external: CW selects the first non-inline virtual.
+    virtual void _keyB();
     unsigned char first;
     float time;
     DemoScene *scene;
