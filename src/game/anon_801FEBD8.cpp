@@ -4,6 +4,22 @@
 
 #include "game/FlowCountdown.h"
 
+/* Reuse the original RTTI records through the CW cast runtime. */
+extern "C" {
+void *fn_80271340(void *, int, void *, void *, int);
+extern unsigned char lbl_806D01E8[8];
+extern unsigned char lbl_806D01F0[8];
+extern unsigned char lbl_806D01F8[8];
+}
+
+static inline CountdownDot *CastCountdownDot(FlowTask *task) {
+    return (CountdownDot *)fn_80271340(task, 0, lbl_806D01F0, lbl_806D01E8, 0);
+}
+
+static inline CountdownDigit *CastCountdownDigit(FlowTask *task) {
+    return (CountdownDigit *)fn_80271340(task, 0, lbl_806D01F8, lbl_806D01E8, 0);
+}
+
 extern "C" void fn_801FEBD8(Countdown *self) {
     self->list.p->Draw();
 }
@@ -19,7 +35,7 @@ extern "C" void fn_801FEC08(Countdown *self) {
         if (frac % 4 == 0) {
             FlowTask *t = fn_801F4DC0(self->list.p, frac / 4);
             if (t) {
-                CountdownDot *dot = dynamic_cast<CountdownDot *>(t);
+                CountdownDot *dot = CastCountdownDot(t);
                 dot->active = 1;
                 fn_8020A734(dot->scale.p, 8, lbl_806DA87C, lbl_806DA878);
                 fn_8020A7CC(dot->fade.p, 0xFF, 0, 8);
@@ -35,7 +51,7 @@ extern "C" void fn_801FEC08(Countdown *self) {
                 fn_801F4DF0(list, new CountdownDigit(id, layer, secs), 0);
                 FlowTask *t = fn_801F4DC0(self->list.p, id);
                 if (t) {
-                    dynamic_cast<CountdownDigit *>(t)->SetPos(self->x, self->y);
+                    CastCountdownDigit(t)->SetPos(self->x, self->y);
                 }
             }
         }
@@ -60,7 +76,7 @@ extern "C" void fn_801FEF34(Countdown *self, float x, float y) {
     for (i = 0; i < 15; i++) {
         FlowTask *t = fn_801F4DC0(self->list.p, i);
         if (t) {
-            dynamic_cast<CountdownDot *>(t)->SetPos(self->x, self->y);
+            CastCountdownDot(t)->SetPos(self->x, self->y);
         }
     }
 }
@@ -90,7 +106,7 @@ Countdown::Countdown(int layer_, int id)
         fn_801F4DF0(l, new CountdownDot(i, lay), 0);
         FlowTask *t = fn_801F4DC0(list.p, i);
         if (t) {
-            dynamic_cast<CountdownDot *>(t)->SetPos(x, y);
+            CastCountdownDot(t)->SetPos(x, y);
         }
     }
 }

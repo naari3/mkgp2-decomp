@@ -1,5 +1,26 @@
 #include "game/FlowYesNo.h"
 
+/* Reuse the original RTTI records through the CW cast runtime. */
+extern "C" {
+void *fn_80271340(void *, int, void *, void *, int);
+extern unsigned char lbl_806D02A0[8];
+extern unsigned char lbl_806D02A8[8];
+extern unsigned char lbl_806D02C0[8];
+extern unsigned char lbl_806D02C8[8];
+}
+
+static inline YesNoTask *CastYesNoTask(FlowTask *task) {
+    return (YesNoTask *)fn_80271340(task, 0, lbl_806D02A8, lbl_806D02A0, 0);
+}
+
+static inline YesNoButtonL *CastYesNoButtonL(FlowTask *task) {
+    return (YesNoButtonL *)fn_80271340(task, 0, lbl_806D02C0, lbl_806D02A0, 0);
+}
+
+static inline YesNoButtonR *CastYesNoButtonR(FlowTask *task) {
+    return (YesNoButtonR *)fn_80271340(task, 0, lbl_806D02C8, lbl_806D02A0, 0);
+}
+
 /*
  * YesNoButton base ctor and the yes/no popup service (0x80207324..0x80207E3C):
  * open/close entry points, option queries and service init/shutdown.
@@ -74,9 +95,9 @@ YesNoButton::YesNoButton(int kind_, bool flag, int layer_, int id)
 void fn_80207760(bool show) {
     FlowTask *t = fn_801F4DC0(lbl_806D19F8, 0);
     if (t) {
-        YesNoTask *task = dynamic_cast<YesNoTask *>(t);
-        YesNoButtonL *l = dynamic_cast<YesNoButtonL *>(fn_801F4DC0(task->list.p, 0));
-        YesNoButtonR *r = dynamic_cast<YesNoButtonR *>(fn_801F4DC0(task->list.p, 1));
+        YesNoTask *task = CastYesNoTask(t);
+        YesNoButtonL *l = CastYesNoButtonL(fn_801F4DC0(task->list.p, 0));
+        YesNoButtonR *r = CastYesNoButtonR(fn_801F4DC0(task->list.p, 1));
         l->field6D = show;
         r->field70 = show;
     }
@@ -124,9 +145,9 @@ static inline void CloseButton(YesNoButton *b) {
 int fn_802078F8(void) {
     FlowTask *t = fn_801F4DC0(lbl_806D19F8, 0);
     if (t) {
-        YesNoTask *task = dynamic_cast<YesNoTask *>(t);
-        YesNoButtonL *l = dynamic_cast<YesNoButtonL *>(fn_801F4DC0(task->list.p, 0));
-        YesNoButtonR *r = dynamic_cast<YesNoButtonR *>(fn_801F4DC0(task->list.p, 1));
+        YesNoTask *task = CastYesNoTask(t);
+        YesNoButtonL *l = CastYesNoButtonL(fn_801F4DC0(task->list.p, 0));
+        YesNoButtonR *r = CastYesNoButtonR(fn_801F4DC0(task->list.p, 1));
         CloseButton(l);
         CloseButton(r);
         ((SceneListImpl *)task->list.p)->Kill(0xA);
@@ -149,9 +170,9 @@ int fn_80207B28(unsigned char v) {
     }
     FlowTask *t = fn_801F4DC0(lbl_806D19F8, 0);
     if (t) {
-        YesNoTask *task = dynamic_cast<YesNoTask *>(t);
+        YesNoTask *task = CastYesNoTask(t);
         task->field20 = v;
-        YesNoButtonL *l = dynamic_cast<YesNoButtonL *>(fn_801F4DC0(task->list.p, 0));
+        YesNoButtonL *l = CastYesNoButtonL(fn_801F4DC0(task->list.p, 0));
         if (l) {
             if (l->field6C != v) {
                 if (v) {
@@ -177,7 +198,7 @@ unsigned char fn_80207C64(void) {
     }
     FlowTask *t = fn_801F4DC0(lbl_806D19F8, 0);
     if (t) {
-        return dynamic_cast<YesNoTask *>(t)->field20;
+        return CastYesNoTask(t)->field20;
     }
     return 0;
 }
@@ -188,7 +209,7 @@ int fn_80207CC4(int choice) {
     }
     FlowTask *t = fn_801F4DC0(lbl_806D19F8, 0);
     if (t) {
-        dynamic_cast<YesNoTask *>(t)->choice = choice;
+        CastYesNoTask(t)->choice = choice;
         return 1;
     }
     return 0;

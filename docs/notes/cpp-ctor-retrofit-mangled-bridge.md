@@ -134,3 +134,13 @@ ItemBanner RTTI names are clRubDisp/clRubBack/clRubMark. Text-identical generic 
 Source: Codex worker c2_b1_banner_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 22 fn / 8604 B.
 
 Rescue of existing NonMatching TUs must check retained function emission order, not only per-symbol objdiff percentages. The first link of this batch failed despite 100% functions/EH because source order differed. GC/2.6 -inline deferred emits ordinary out-of-line definitions in reverse source order. Private whole-class VHolder specializations with out-of-line destructors plus deferred inlining preserved exact inlined delete bodies while placing owned dtors at the target TU tail.
+
+## c2_b5_80207324_20261105
+Source: Codex worker c2_b5_80207324_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 33 fn / 8244 B.
+
+Rescue of anon_801FEBD8 / anon_80202148 / anon_80207324: correct VHolder<FlowFaderF/I> mangled length is 21. Map implicit FlowFaderI destructor to fn_801F26C8 (target vtable lbl_804E5284). Append weak destructor EH after owned entries in extab_order. Local synthetic RTTI can retain duplicate .data/.sdata even when text objdiff is 100%; explicit calls to the same CW dynamic-cast runtime with external target RTTI records removed all such sections while preserving every function at 100%. Full-link acceptance remains pending.
+
+## c2_b5_80207324_20261105
+Source: Codex worker c2_b5_80207324_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 33 fn / 8244 B.
+
+Resume 1: an owned weak inline constructor can match objdiff 100% yet link at its caller emission position. fn_80202148 was emitted after fn_80202780, shifting the first five functions -0x38 with unchanged section sizes. An opt-in header declaration and genuine out-of-line ctor definition first in the assigned TU preserves exact text and restores source order. Add owned symbol placement checks; object matching percentages do not prove placement. Coordinator rebuild pending.

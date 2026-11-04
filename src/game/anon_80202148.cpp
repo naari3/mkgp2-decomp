@@ -2,7 +2,23 @@
  * Character-class selector flow task @ 0x80202148..0x80202BCC.
  */
 
+#define GAME_FLOWFADERF_DEFAULT_CTOR_OUT_OF_LINE
 #include "game/FlowCountdown.h"
+
+FlowFaderF::FlowFaderF() : x(lbl_806DA880), y(lbl_806DA880), z(lbl_806DA880) {}
+
+/* Reuse the original RTTI records through the CW cast runtime. */
+extern "C" {
+void *fn_80271340(void *, int, void *, void *, int);
+extern unsigned char lbl_806D0240[8];
+extern unsigned char lbl_806D0248[8];
+}
+
+struct ClassSelTask;
+
+static inline ClassSelTask *CastClassSelTask(FlowTask *task) {
+    return (ClassSelTask *)fn_80271340(task, 0, lbl_806D0248, lbl_806D0240, 0);
+}
 
 extern "C" {
 extern const float lbl_806DA8C8;
@@ -168,7 +184,7 @@ extern "C" int fn_80202A5C(int sel) {
     }
     FlowTask *t = fn_801F4DC0(lbl_806D19E0, 0);
     if (t) {
-        ClassSelTask *c = dynamic_cast<ClassSelTask *>(t);
+        ClassSelTask *c = CastClassSelTask(t);
         int next = 0;
         int old = c->cur;
         if (old > -1 && old < 22) {

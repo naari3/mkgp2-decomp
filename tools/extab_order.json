@@ -1292,5 +1292,55 @@
       "dtor_801F4A80",
       "__dt__10FlowFaderFFv"
     ]
-  }
+  },
+  "src/game/anon_80202148.cpp": [
+    "fn_80202180",
+    "fn_802021B0",
+    "fn_8020258C",
+    "fn_802025C4",
+    "fn_80202780",
+    "fn_802029EC",
+    "fn_80202A24",
+    "fn_80202A5C",
+    "fn_80202B48",
+    "TweenInterp_Dtor",
+    "dtor_80082960",
+    "dtor_801F4A80",
+    "dtor_801F4B10"
+  ],
+  "src/game/anon_801FEBD8.cpp": [
+    "fn_801FEBD8",
+    "fn_801FEC08",
+    "fn_801FEF34",
+    "fn_801FEFD4",
+    "fn_801FF00C",
+    "fn_801FF068",
+    "fn_801FF158",
+    "fn_801FF3E8",
+    "fn_801F26C8",
+    "dtor_801F2724",
+    "dtor_801F4A80",
+    "TweenInterp_Dtor",
+    "dtor_80082960",
+    "dtor_801F4B10"
+  ],
+  "src/game/anon_80207324.cpp": [
+    "fn_80207324",
+    "fn_80207760",
+    "fn_80207810",
+    "fn_80207848",
+    "fn_80207880",
+    "fn_802078B4",
+    "fn_802078F8",
+    "fn_80207AD8",
+    "fn_80207B28",
+    "fn_80207C64",
+    "fn_80207CC4",
+    "fn_80207D38",
+    "fn_80207DA8",
+    "dtor_801F2724",
+    "fn_801F26C8",
+    "dtor_801F4A80",
+    "TweenInterp_Dtor"
+  ]
 }

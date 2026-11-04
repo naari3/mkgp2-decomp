@@ -2915,7 +2915,11 @@
     "__vt__10FlowFaderF": "lbl_80419DE0",
     "__vt__10FlowFaderI": "lbl_804E5284",
     "__vt__9FlowScene": "lbl_804EC098",
-    "__RTTI__8FlowTask": "lbl_806D01E8"
+    "__RTTI__8FlowTask": "lbl_806D01E8",
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
+    "__dt__10FlowFaderIFv": "fn_801F26C8",
+    "__dt__10FlowFaderFFv": "TweenInterp_Dtor"
   },
   "src/game/anon_8020314C.cpp": {
     "@106": "jumptable_804EC3C4",
@@ -3037,7 +3041,10 @@
     "__dt__10FlowFaderFFv": "TweenInterp_Dtor",
     "__RTTI__12ClassSelTask": "lbl_806D0248",
     "__dt__12ClassSelTaskFv": "fn_802025C4",
-    "__ct__12ClassSelTaskFiii": "fn_80202780"
+    "__ct__12ClassSelTaskFiii": "fn_80202780",
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
+    "__dt__10FlowFaderIFv": "fn_801F26C8"
   },
   "src/game/anon_80202BCC.cpp": {
     "__ct__16DoublyLinkedListFv": "DoublyLinkedList_Init",
@@ -3224,7 +3231,8 @@
     "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
     "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
     "__dt__10FlowFaderFFv": "TweenInterp_Dtor",
-    "Kill__13SceneListImplFUi": "fn_802043B8"
+    "Kill__13SceneListImplFUi": "fn_802043B8",
+    "__dt__10FlowFaderIFv": "fn_801F26C8"
   },
   "src/game/anon_80208E30.cpp": {
     "@108": "lbl_806DABA8",
