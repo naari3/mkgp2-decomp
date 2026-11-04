@@ -9766,9 +9766,17 @@ game/anon_80207E3C_tail.cpp:
 	.text       start:0x80208E2C end:0x80208E30
 
 game/anon_80208E30.cpp:
-	extab       start:0x80019354 end:0x8001938C
-	extabindex  start:0x80029A38 end:0x80029A8C
-	.text       start:0x80208E30 end:0x80209330
+	extab       start:0x80019354 end:0x8001937C
+	extabindex  start:0x80029A38 end:0x80029A74
+	.text       start:0x80208E30 end:0x802090F0
+
+game/anon_80208E30_nm1.cpp:
+	.text       start:0x802090F0 end:0x80209180
+
+game/anon_80208E30_exact2.cpp:
+	extab       start:0x8001937C end:0x8001938C
+	extabindex  start:0x80029A74 end:0x80029A8C
+	.text       start:0x80209180 end:0x80209330
 
 game/anon_80209330.cpp:
 	extab       start:0x8001938C end:0x800193B4
@@ -10083,9 +10091,29 @@ game/fn_80218F1C.c:
 	.text       start:0x80218F1C end:0x80218F40
 
 game/anon_80218F40.cpp:
-	extab       start:0x8001A940 end:0x8001AA90
-	extabindex  start:0x8002A1DC end:0x8002A224
-	.text       start:0x80218F40 end:0x80219FF4
+	.text       start:0x80218F40 end:0x80218F5C
+
+game/anon_80218F40_nm1.cpp:
+	extab       start:0x8001A940 end:0x8001A958
+	extabindex  start:0x8002A1DC end:0x8002A200
+	.text       start:0x80218F5C end:0x80219900
+	.data       start:0x804EDC44 end:0x804EDC60
+
+game/anon_80218F40_exact2.cpp:
+	extab       start:0x8001A958 end:0x8001A970
+	extabindex  start:0x8002A200 end:0x8002A20C
+	.text       start:0x80219900 end:0x8021995C
+
+game/anon_80218F40_nm2.cpp:
+	extab       start:0x8001A970 end:0x8001A9CC
+	extabindex  start:0x8002A20C end:0x8002A218
+	.text       start:0x8021995C end:0x80219B24
+
+game/anon_80218F40_exact3.cpp:
+	extab       start:0x8001A9CC end:0x8001AA90
+	extabindex  start:0x8002A218 end:0x8002A224
+	.text       start:0x80219B24 end:0x80219FF4
+	.data       start:0x804EDC60 end:0x804EDC84
 
 game/anon_80219FF4.cpp:
 	extab       start:0x8001AA90 end:0x8001AAA8
@@ -10121,9 +10149,19 @@ game/anon_8021A7C8_nm1.cpp:
 	.text       start:0x8021ABFC end:0x8021B568
 
 game/anon_8021B568.cpp:
-	extab       start:0x8001AC8C end:0x8001ACE8
-	extabindex  start:0x8002A2D8 end:0x8002A308
-	.text       start:0x8021B568 end:0x8021BC44
+	extab       start:0x8001AC8C end:0x8001AC94
+	extabindex  start:0x8002A2D8 end:0x8002A2E4
+	.text       start:0x8021B568 end:0x8021B68C
+
+game/anon_8021B568_nm1.cpp:
+	extab       start:0x8001AC94 end:0x8001AC9C
+	extabindex  start:0x8002A2E4 end:0x8002A2F0
+	.text       start:0x8021B68C end:0x8021B92C
+
+game/anon_8021B568_exact2.cpp:
+	extab       start:0x8001AC9C end:0x8001ACE8
+	extabindex  start:0x8002A2F0 end:0x8002A308
+	.text       start:0x8021B92C end:0x8021BC44
 
 game/anon_8021BC44.cpp:
 	extab       start:0x8001ACE8 end:0x8001B130
@@ -10267,9 +10305,19 @@ game/fn_80224EBC.c:
 	.text       start:0x80224EBC end:0x80224ECC
 
 game/anon_80224ECC.cpp:
-	extab       start:0x8001B7B8 end:0x8001B840
-	extabindex  start:0x8002A5C0 end:0x8002A608
-	.text       start:0x80224ECC end:0x802253EC
+	extab       start:0x8001B7B8 end:0x8001B7C8
+	extabindex  start:0x8002A5C0 end:0x8002A5D8
+	.text       start:0x80224ECC end:0x80225124
+
+game/anon_80224ECC_nm1.cpp:
+	extab       start:0x8001B7C8 end:0x8001B7D0
+	extabindex  start:0x8002A5D8 end:0x8002A5E4
+	.text       start:0x80225124 end:0x802251DC
+
+game/anon_80224ECC_exact2.cpp:
+	extab       start:0x8001B7D0 end:0x8001B840
+	extabindex  start:0x8002A5E4 end:0x8002A608
+	.text       start:0x802251DC end:0x802253EC
 
 game/anon_802253EC.cpp:
 	extab       start:0x8001B840 end:0x8001B87C
@@ -10410,10 +10458,50 @@ game/DNStartDino_tail.cpp:
 	.data       start:0x804EE0E0 end:0x804EE0EC
 
 game/EnemyFace.cpp:
-	extab       start:0x8001BE64 end:0x8001BFC8
-	extabindex  start:0x8002A824 end:0x8002A8C0
-	.text       start:0x8022ACE4 end:0x8022BFA8
+	extab       start:0x8001BE64 end:0x8001BE74
+	extabindex  start:0x8002A824 end:0x8002A83C
+	.text       start:0x8022ACE4 end:0x8022B1C8
 	.rodata     start:0x803DA278 end:0x803DA710
+
+game/EnemyFace_exact1.cpp:
+	extab       start:0x8001BE74 end:0x8001BE7C
+	extabindex  start:0x8002A83C end:0x8002A848
+	.text       start:0x8022B1C8 end:0x8022B278
+
+game/EnemyFace_nm1.cpp:
+	extab       start:0x8001BE7C end:0x8001BE84
+	extabindex  start:0x8002A848 end:0x8002A854
+	.text       start:0x8022B278 end:0x8022B39C
+
+game/EnemyFace_exact2.cpp:
+	extab       start:0x8001BE84 end:0x8001BE8C
+	extabindex  start:0x8002A854 end:0x8002A860
+	.text       start:0x8022B39C end:0x8022B53C
+
+game/EnemyFace_nm2.cpp:
+	extab       start:0x8001BE8C end:0x8001BEAC
+	extabindex  start:0x8002A860 end:0x8002A878
+	.text       start:0x8022B53C end:0x8022B9B0
+
+game/EnemyFace_exact3.cpp:
+	extab       start:0x8001BEAC end:0x8001BEF4
+	extabindex  start:0x8002A878 end:0x8002A89C
+	.text       start:0x8022B9B0 end:0x8022BBC8
+
+game/EnemyFace_nm3.cpp:
+	extab       start:0x8001BEF4 end:0x8001BFB8
+	extabindex  start:0x8002A89C end:0x8002A8A8
+	.text       start:0x8022BBC8 end:0x8022BEB4
+
+game/EnemyFace_nm4.cpp:
+	extab       start:0x8001BFB8 end:0x8001BFC0
+	extabindex  start:0x8002A8A8 end:0x8002A8B4
+	.text       start:0x8022BEB4 end:0x8022BF2C
+
+game/EnemyFace_exact5.cpp:
+	extab       start:0x8001BFC0 end:0x8001BFC8
+	extabindex  start:0x8002A8B4 end:0x8002A8C0
+	.text       start:0x8022BF2C end:0x8022BFA8
 
 game/EnemyFaceDraw.cpp:
 	extab       start:0x8001BFC8 end:0x8001BFE0

@@ -244,3 +244,18 @@ FlashFx: an explicit empty destructor makes deleting singleton fn_8021A2B4 emit 
 Source: Codex worker c2_r4_802161c4_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 36 fn / 5948 B.
 
 Popup rescue: opt-in suppression of unused Open/Close dynamic_cast helpers avoids emitted RTTI even with -RTTI on. Exact Close wrapper uses the same runtime call fn_80271340(t,0,lbl_806D0268,lbl_806D0260,0) with external target RTTI records. First-declared SceneListImpl _key2 suppresses its vtable. Tail MsgPopupCoin dtor needs primary EH order before appended weak FlowFaderI/F and ResCtrl EH. A split with only two leaf getters has no extab, so omit extab_padding while retaining original compiler flags; dtk extab clean otherwise fails.
+
+## c2_r2_enemyface_20261105
+Source: Codex worker c2_r2_enemyface_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 32 fn / 5952 B.
+
+MinimapHud ctor 80219B24: separate sequential scopes for ResCtrl a/b/c/d reproduce exact 196-byte primary EH while all 1232 instruction bytes stay exact. Canonical VHolder mangled length is 21; bridge MapBase destructor to dtor_8021617C. Owned ctor jump table is .data 804EDC60..804EDC84.
+
+## c2_r2_enemyface_20261105
+Source: Codex worker c2_r2_enemyface_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 32 fn / 5952 B.
+
+No-EH C++ leaf split: extab_padding invokes dtk extab clean, which errors when no extab exists. For MinimapHud Start/Draw, use ordinary compile rule and rename owned target symbols to actual CW mangled names (Start__10MinimapHudFi, Draw__10MinimapHudFv); definitions remain verbatim. Full-link acceptance pending.
+
+## c2_r2_enemyface_20261105
+Source: Codex worker c2_r2_enemyface_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 32 fn / 5952 B.
+
+EnemyFace 8022BEB4 text/EH is exact but emitted clEFace3D vtable under RTTI-off has null at +0 whereas target 804EE134 references lbl_806D0618. Leave destructor NonMatching and isolate exact Trigger 8022BF2C; do not promote based solely on 100% text.

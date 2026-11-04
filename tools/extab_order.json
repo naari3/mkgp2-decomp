@@ -1654,5 +1654,63 @@
     "fn_801F26C8",
     "TweenInterp_Dtor",
     "dtor_80082960"
+  ],
+  "src/game/anon_80208E30.cpp": [
+    "fn_80208E30",
+    "fn_80208FA0",
+    "fn_80208FE4",
+    "fn_80209044",
+    "fn_802090A8"
+  ],
+  "src/game/anon_80208E30_exact2.cpp": [
+    "dtor_80209180",
+    "fn_802091BC",
+    "__dt__10PtrVecBaseFv"
+  ],
+  "src/game/anon_80224ECC.cpp": [
+    "fn_80224ECC",
+    "fn_80224F0C"
+  ],
+  "src/game/anon_80224ECC_exact2.cpp": [
+    "fn_802251DC",
+    "fn_80225378",
+    "fn_802253B0",
+    "dtor_80082960",
+    "dtor_8007D0D4"
+  ],
+  "src/game/anon_8021B568.cpp": [
+    "fn_8021B638"
+  ],
+  "src/game/anon_8021B568_exact2.cpp": [
+    "fn_8021B92C",
+    "fn_8021BA20",
+    "dtor_8013EB50"
+  ],
+  "src/game/EnemyFace_exact1.cpp": [
+    "fn_8022B1C8"
+  ],
+  "src/game/EnemyFace_exact2.cpp": [
+    "fn_8022B414"
+  ],
+  "src/game/EnemyFace_exact3.cpp": [
+    "fn_8022B9B0",
+    "fn_8022B9FC",
+    "fn_8022BA58",
+    "dtor_8021617C"
+  ],
+  "src/game/anon_80218F40_exact2.cpp": [
+    "fn_80219900"
+  ],
+  "src/game/anon_80218F40_exact3.cpp": [
+    "fn_80219B24",
+    "dtor_80082960",
+    "dtor_801F4A80",
+    "TweenInterp_Dtor",
+    "dtor_801F2724",
+    "fn_801F26C8",
+    "dtor_8021617C"
+  ],
+  "src/game/EnemyFace_exact5.cpp": [
+    "fn_8022BF2C"
   ]
 }
