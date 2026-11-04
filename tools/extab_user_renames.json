@@ -6067,5 +6067,21 @@
     "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
     "__dt__10FlowFaderFFv": "TweenInterp_Dtor",
     "__dt__10FlowFaderIFv": "fn_801F26C8"
+  },
+  "src/game/objtable/fn_801903D0.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10Table903D0Fv": "fn_801903D0",
+    "__ct__5EntryFPCvi": "fn_80123BB4"
+  },
+  "src/game/objview/fn_8018F614.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__9MorphViewFv": "fn_8018F614",
+    "__vt__9MorphView": "lbl_80495EDC",
+    "__vt__9MorphBase": "lbl_80490FE0",
+    "__dt__9MorphBaseFv": "dtor_8016A270",
+    "__ct__9MorphNodeFP8HSD_JObjP8HSD_JObj": "fn_8018F8A8",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct"
   }
 }

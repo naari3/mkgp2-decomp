@@ -6958,20 +6958,40 @@ game/objview/fn_8018F1B0.c:
 	extabindex  start:0x80026FFC end:0x80027008
 	.text       start:0x8018F1B0 end:0x8018F1E0
 
+game/objview/fn_8018F1E0.c:
+	extab       start:0x8001205C end:0x80012064
+	extabindex  start:0x80027008 end:0x80027014
+	.text       start:0x8018F1E0 end:0x8018F4A4
+
 game/objview/fn_8018F4A4.c:
 	extab       start:0x80012064 end:0x8001206C
 	extabindex  start:0x80027014 end:0x80027020
 	.text       start:0x8018F4A4 end:0x8018F614
+
+game/objview/fn_8018F614.cpp:
+	extab       start:0x8001206C end:0x800120C4
+	extabindex  start:0x80027020 end:0x8002702C
+	.text       start:0x8018F614 end:0x8018F7D4
 
 game/zprobe/fn_8018F7D4.c:
 	extab       start:0x800120C4 end:0x800120CC
 	extabindex  start:0x8002702C end:0x80027038
 	.text       start:0x8018F7D4 end:0x8018F8A8
 
+game/objview/fn_8018F8A8.c:
+	extab       start:0x800120CC end:0x800120D4
+	extabindex  start:0x80027038 end:0x80027044
+	.text       start:0x8018F8A8 end:0x8018FBF4
+
 game/objview/fn_8018FBF4.c:
 	extab       start:0x800120D4 end:0x800120DC
 	extabindex  start:0x80027044 end:0x80027050
 	.text       start:0x8018FBF4 end:0x8018FC24
+
+game/objview/fn_8018FC24.c:
+	extab       start:0x800120DC end:0x800120E4
+	extabindex  start:0x80027050 end:0x8002705C
+	.text       start:0x8018FC24 end:0x8018FDA4
 
 game/objview/fn_8018FDA4.c:
 	extab       start:0x800120E4 end:0x800120EC
@@ -6983,10 +7003,20 @@ game/objview/fn_8018FEAC.cpp:
 	extabindex  start:0x80027068 end:0x80027074
 	.text       start:0x8018FEAC end:0x80190064
 
+game/objview/fn_80190064.c:
+	extab       start:0x8001213C end:0x80012144
+	extabindex  start:0x80027074 end:0x80027080
+	.text       start:0x80190064 end:0x8019032C
+
 game/objtable/fn_8019032C.c:
 	extab       start:0x80012144 end:0x8001214C
 	extabindex  start:0x80027080 end:0x8002708C
 	.text       start:0x8019032C end:0x801903D0
+
+game/objtable/fn_801903D0.cpp:
+	extab       start:0x8001214C end:0x80012204
+	extabindex  start:0x8002708C end:0x80027098
+	.text       start:0x801903D0 end:0x80190658
 
 game/fn_80190658.c:
 	.text       start:0x80190658 end:0x80190660
