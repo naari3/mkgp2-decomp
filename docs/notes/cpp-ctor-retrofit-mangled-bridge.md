@@ -109,3 +109,13 @@ fn_801FA024 factory: canonical SceneListImpl + VHolder<FlowSceneList> and FlowFa
 Source: Codex worker c2_i2_8020007c_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 7 fn / 752 B.
 
 Countdown TU 8020007C has reversed EH ordering from ctor 80200240 through tail weak dtors 80201E8C..802020B8: their EH entries sit at 80018274, 8001829C, 800184E4, 8001856C, 80018594. Only first factory/dtor pair is a safe leading cut. Yes/no exact Draw/delete/factory functions isolate cleanly. Existing FlowYesNo/FlowCountdown declarations also emit unmatched vtable/RTTI data when relevant method definitions or dynamic_cast are present; a 100% text score is insufficient to promote those TUs.
+
+## c2_b2_popups_20261105
+Source: Codex worker c2_b2_popups_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+CW GC/2.6 selects an earlier defined non-inline virtual as vtable key even when an undefined _key is declared last. Moving the undefined derived _key before other declarations suppresses extra vtable/RTTI emission while preserving inherited virtual slots and exact text (RacePopups, SpeedHud). SpeedHud ctor requires ResCtrl rc to remain alive through new GaugeMark(layer); moving that statement into rc scope preserves text and exactly reproduces nested EH cleanup ordering.
+
+## c2_b2_popups_20261105
+Source: Codex worker c2_b2_popups_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+RacePopups/SpeedHud rescue resume: 100% individual function objdiff plus exact owned EH/data does not prove physical primary function order. Coordinator ELF revealed reversed definitions linking at wrong addresses. Reorder native definitions to target address order; verify every symbols.txt function is defined and primary object-offset order matches target order, ignoring only weak copies known to discard. Refresh anonymous compiler IDs in bridges afterward.

@@ -1136,5 +1136,59 @@
       "fn_801F4DF0",
       "fn_801F4E78"
     ]
+  },
+  "src/game/SpeedHud.cpp": [
+    "fn_80251CEC",
+    "fn_802524C8",
+    "fn_80252514",
+    "fn_802526DC",
+    "dtor_801F2724",
+    "__dt__10FlowFaderIFv",
+    "dtor_80082960",
+    "dtor_801F4A80",
+    "__dt__10FlowFaderFFv",
+    "dtor_8021617C"
+  ],
+  "src/game/RacePopups.cpp": {
+    "extab": [
+      "fn_80251C60",
+      "fn_80250F38",
+      "fn_80251288",
+      "fn_802512AC",
+      "fn_802512D0",
+      "fn_8025147C",
+      "fn_80251594",
+      "fn_8025189C",
+      "fn_802518C8",
+      "fn_802518EC",
+      "fn_80251948",
+      "fn_80251A94",
+      "fn_80251C98",
+      "dtor_80082960",
+      "dtor_801F2724",
+      "__dt__10FlowFaderIFv",
+      "dtor_801419C8",
+      "__dt__9PopupRootFv"
+    ],
+    "extabindex": [
+      "fn_80250F38",
+      "fn_80251288",
+      "fn_802512AC",
+      "fn_802512D0",
+      "fn_8025147C",
+      "fn_80251594",
+      "fn_8025189C",
+      "fn_802518C8",
+      "fn_802518EC",
+      "fn_80251948",
+      "fn_80251A94",
+      "fn_80251C60",
+      "fn_80251C98",
+      "dtor_80082960",
+      "dtor_801F2724",
+      "__dt__10FlowFaderIFv",
+      "dtor_801419C8",
+      "__dt__9PopupRootFv"
+    ]
   }
 }

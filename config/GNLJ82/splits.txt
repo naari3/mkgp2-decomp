@@ -10554,6 +10554,7 @@ game/SpeedHud.cpp:
 	extab       start:0x8001EE38 end:0x8001EF8C
 	extabindex  start:0x8002B910 end:0x8002B940
 	.text       start:0x80251CD0 end:0x802529C8
+	.data       start:0x804EF1CC end:0x804EF1EC
 
 game/TitleNameHudUpdate.cpp:
 	extab       start:0x8001EF8C end:0x8001EF94

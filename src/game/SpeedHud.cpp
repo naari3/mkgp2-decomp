@@ -114,6 +114,7 @@ struct GaugeMark {
 };
 
 struct SpeedHud : HudPart {
+    virtual void _key();
     int layer;
     int sprites[4];
     int state;
@@ -131,54 +132,15 @@ struct SpeedHud : HudPart {
     void Update();
     void Draw();
     void SetDelay(int n);
-    virtual void _key();
 };
 
-SpeedHud::SpeedHud(int layer_)
-    : layer(layer_), state(-1), slide(new FlowFaderF(lbl_806DC128)),
-      digitScale(new FlowFaderF(lbl_806DC128)), iconScale(new FlowFaderF(lbl_806DC128)),
-      value(lbl_806DC128), mark(0) {
-    int i;
-    PreloadResource(0xB29);
-    PreloadResource(0xB34);
-    PreloadResource(0xB2A);
-    PreloadResource(0xB35);
-    fn_8020A734(slide.p, 7, lbl_806DC12C, lbl_806DC128);
-    fn_8020A734(digitScale.p, 4, lbl_806DC118, lbl_806DC11C);
-    fn_8020A734(iconScale.p, 4, lbl_806DC120, lbl_806DC124);
-    {
-        ResCtrl rc;
-        rc.resId = 0xB29;
-        for (i = 0; i < 4; i++) {
-            sprites[i] = SpriteHandle_CreateDefault(&rc, layer);
-            SpriteHandle_SetActiveFlag(sprites[i], 0);
-            SpriteHandle_RecomputeCull(sprites[i]);
-        }
+void SpeedHud::SetDelay(int n) {
+    if (state < 5) {
+        delay = n + 1;
     }
-    mark = new GaugeMark(layer);
 }
 
-SpeedHud::~SpeedHud() {
-    for (int i = 0; i < 4; i++) {
-        SpriteHandle_Destroy(sprites[i]);
-    }
-    delete mark;
-}
-
-#pragma dont_inline on
-extern "C" SpeedHud *fn_802524C8(int layer) {
-    return new SpeedHud(layer);
-}
-#pragma dont_inline reset
-
-void SpeedHud::SetValue(float v) {
-    if (v > lbl_806DC13C) {
-        v = lbl_806DC13C;
-    }
-    if (v < lbl_806DC128) {
-        v = lbl_806DC128;
-    }
-    value = v;
+void SpeedHud::Draw() {
 }
 
 void SpeedHud::Update() {
@@ -325,11 +287,49 @@ void SpeedHud::Update() {
     }
 }
 
-void SpeedHud::Draw() {
+void SpeedHud::SetValue(float v) {
+    if (v > lbl_806DC13C) {
+        v = lbl_806DC13C;
+    }
+    if (v < lbl_806DC128) {
+        v = lbl_806DC128;
+    }
+    value = v;
 }
 
-void SpeedHud::SetDelay(int n) {
-    if (state < 5) {
-        delay = n + 1;
+#pragma dont_inline on
+extern "C" SpeedHud *fn_802524C8(int layer) {
+    return new SpeedHud(layer);
+}
+#pragma dont_inline reset
+
+SpeedHud::~SpeedHud() {
+    for (int i = 0; i < 4; i++) {
+        SpriteHandle_Destroy(sprites[i]);
+    }
+    delete mark;
+}
+
+SpeedHud::SpeedHud(int layer_)
+    : layer(layer_), state(-1), slide(new FlowFaderF(lbl_806DC128)),
+      digitScale(new FlowFaderF(lbl_806DC128)), iconScale(new FlowFaderF(lbl_806DC128)),
+      value(lbl_806DC128), mark(0) {
+    int i;
+    PreloadResource(0xB29);
+    PreloadResource(0xB34);
+    PreloadResource(0xB2A);
+    PreloadResource(0xB35);
+    fn_8020A734(slide.p, 7, lbl_806DC12C, lbl_806DC128);
+    fn_8020A734(digitScale.p, 4, lbl_806DC118, lbl_806DC11C);
+    fn_8020A734(iconScale.p, 4, lbl_806DC120, lbl_806DC124);
+    {
+        ResCtrl rc;
+        rc.resId = 0xB29;
+        for (i = 0; i < 4; i++) {
+            sprites[i] = SpriteHandle_CreateDefault(&rc, layer);
+            SpriteHandle_SetActiveFlag(sprites[i], 0);
+            SpriteHandle_RecomputeCull(sprites[i]);
+        }
+        mark = new GaugeMark(layer);
     }
 }

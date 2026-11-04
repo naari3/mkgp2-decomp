@@ -52,6 +52,7 @@ struct PopupTask : PopupRoot {
 };
 
 struct KindPopup : PopupTask {
+    virtual void _key();
     int layer;
     int state;
     int sprites[3];
@@ -79,10 +80,10 @@ struct KindPopup : PopupTask {
     void Finish();
     void Update();
     void Draw();
-    virtual void _key();
 };
 
 struct FlashPopup : PopupTask {
+    virtual void _key();
     int layer;
     int state;
     int sprites[2];
@@ -94,131 +95,7 @@ struct FlashPopup : PopupTask {
     void Finish();
     void Update();
     void Draw();
-    virtual void _key();
 };
-
-void FlashPopup::Finish() {
-    delete this;
-}
-
-void KindPopup::Finish() {
-    delete this;
-}
-
-FlashPopup::FlashPopup(int layer_, int id_)
-    : PopupTask(id_), layer(layer_), state(0), scale(new FlowFaderI), fade1(new FlowFaderI),
-      fade2(new FlowFaderI) {
-    PreloadResource(0x13A6);
-    fn_8020A7CC(scale.p, 0x1900, 0x6400, 10);
-    {
-        ResCtrl rc;
-        rc.resId = 0x13A6;
-        rc.Show(lbl_806DC0F8.x, lbl_806DC0F8.y, lbl_806DC114);
-        sprites[0] = SpriteHandle_CreateDefault(&rc, layer);
-        rc.mode = 3;
-        sprites[1] = SpriteHandle_CreateDefault(&rc, layer);
-        SpriteHandle_SetActiveFlag(sprites[0], 0);
-        SpriteHandle_SetActiveFlag(sprites[1], 0);
-    }
-}
-
-FlashPopup::~FlashPopup() {
-    for (int i = 0; i < 2; i++) {
-        SpriteHandle_Destroy(sprites[i]);
-    }
-}
-
-#pragma dont_inline on
-extern "C" FlashPopup *fn_802518EC(int layer, int id) {
-    return new FlashPopup(layer, id);
-}
-#pragma dont_inline reset
-
-extern "C" void fn_802518C8(void) {
-    PreloadResource(0x13A6);
-}
-
-extern "C" void fn_8025189C(void) {
-    fn_80120A08(0x13A6);
-    fn_80120A08(0x13AF);
-}
-
-void FlashPopup::Update() {
-    int i;
-    switch (state) {
-    case 0: {
-        float s = (float)fn_8020A788(scale.p);
-        s *= lbl_806DC110;
-        fn_8011F744(sprites[0], s, s);
-        SpriteHandle_SetActiveFlag(sprites[0], 1);
-        SpriteHandle_SetActiveFlag(sprites[1], 0);
-        scale.p->Step();
-        if (scale.p->Done()) {
-            fn_8020A7CC(scale.p, 0x7F, 0, 5);
-            state = 1;
-        }
-        break;
-    }
-    case 1:
-        SpriteHandle_SetActiveFlag(sprites[0], 1);
-        SpriteHandle_SetActiveFlag(sprites[1], 1);
-        SpriteHandle_SetCornerAlpha(sprites[1], fn_8020A788(scale.p));
-        scale.p->Step();
-        if (scale.p->Done()) {
-            fn_8020A7CC(scale.p, 0x6400, 0xC800, 0xF);
-            fn_8020A7CC(fade1.p, 0, 0, 1);
-            fn_8020A7CC(fade2.p, 0xFF, 0, 0xF);
-            state = 2;
-        }
-        break;
-    case 2: {
-        float s = (float)fn_8020A788(scale.p);
-        s *= lbl_806DC110;
-        SpriteHandle_SetCornerAlpha(sprites[0], fn_8020A788(fade2.p));
-        fn_8011F744(sprites[0], s, s);
-        SpriteHandle_SetActiveFlag(sprites[0], 1);
-        SpriteHandle_SetActiveFlag(sprites[1], 0);
-        scale.p->Step();
-        fade2.p->Step();
-        if (fade2.p->Done()) {
-            fn_8020A7CC(scale.p, 0, 0, 1);
-            fn_8020A7CC(fade2.p, 0, 0, 1);
-            state = 3;
-            for (i = 0; i < 2; i++) {
-                SpriteHandle_SetActiveFlag(sprites[i], 0);
-            }
-        }
-        break;
-    }
-    case 3:
-        done = 1;
-        break;
-    }
-    for (i = 0; i < 2; i++) {
-        SpriteHandle_RecomputeCull(sprites[i]);
-    }
-}
-
-void FlashPopup::Draw() {
-}
-
-KindPopup::~KindPopup() {
-    for (int i = 0; i < 3; i++) {
-        SpriteHandle_Destroy(sprites[i]);
-    }
-}
-
-extern "C" KindPopup *fn_802512D0(int kind, int layer, int id) {
-    return new KindPopup(kind, layer, id);
-}
-
-extern "C" void fn_802512AC(void) {
-    PreloadResource(0x13A3);
-}
-
-extern "C" void fn_80251288(void) {
-    fn_80120A08(0x13A3);
-}
 
 void KindPopup::Update() {
     float cx = lbl_806DC0F8.x;
@@ -280,4 +157,127 @@ void KindPopup::Update() {
     for (i = 0; i < 3; i++) {
         SpriteHandle_RecomputeCull(sprites[i]);
     }
+}
+
+extern "C" void fn_80251288(void) {
+    fn_80120A08(0x13A3);
+}
+
+extern "C" void fn_802512AC(void) {
+    PreloadResource(0x13A3);
+}
+
+extern "C" KindPopup *fn_802512D0(int kind, int layer, int id) {
+    return new KindPopup(kind, layer, id);
+}
+
+KindPopup::~KindPopup() {
+    for (int i = 0; i < 3; i++) {
+        SpriteHandle_Destroy(sprites[i]);
+    }
+}
+
+void FlashPopup::Draw() {
+}
+
+void FlashPopup::Update() {
+    int i;
+    switch (state) {
+    case 0: {
+        float s = (float)fn_8020A788(scale.p);
+        s *= lbl_806DC110;
+        fn_8011F744(sprites[0], s, s);
+        SpriteHandle_SetActiveFlag(sprites[0], 1);
+        SpriteHandle_SetActiveFlag(sprites[1], 0);
+        scale.p->Step();
+        if (scale.p->Done()) {
+            fn_8020A7CC(scale.p, 0x7F, 0, 5);
+            state = 1;
+        }
+        break;
+    }
+    case 1:
+        SpriteHandle_SetActiveFlag(sprites[0], 1);
+        SpriteHandle_SetActiveFlag(sprites[1], 1);
+        SpriteHandle_SetCornerAlpha(sprites[1], fn_8020A788(scale.p));
+        scale.p->Step();
+        if (scale.p->Done()) {
+            fn_8020A7CC(scale.p, 0x6400, 0xC800, 0xF);
+            fn_8020A7CC(fade1.p, 0, 0, 1);
+            fn_8020A7CC(fade2.p, 0xFF, 0, 0xF);
+            state = 2;
+        }
+        break;
+    case 2: {
+        float s = (float)fn_8020A788(scale.p);
+        s *= lbl_806DC110;
+        SpriteHandle_SetCornerAlpha(sprites[0], fn_8020A788(fade2.p));
+        fn_8011F744(sprites[0], s, s);
+        SpriteHandle_SetActiveFlag(sprites[0], 1);
+        SpriteHandle_SetActiveFlag(sprites[1], 0);
+        scale.p->Step();
+        fade2.p->Step();
+        if (fade2.p->Done()) {
+            fn_8020A7CC(scale.p, 0, 0, 1);
+            fn_8020A7CC(fade2.p, 0, 0, 1);
+            state = 3;
+            for (i = 0; i < 2; i++) {
+                SpriteHandle_SetActiveFlag(sprites[i], 0);
+            }
+        }
+        break;
+    }
+    case 3:
+        done = 1;
+        break;
+    }
+    for (i = 0; i < 2; i++) {
+        SpriteHandle_RecomputeCull(sprites[i]);
+    }
+}
+
+extern "C" void fn_8025189C(void) {
+    fn_80120A08(0x13A6);
+    fn_80120A08(0x13AF);
+}
+
+extern "C" void fn_802518C8(void) {
+    PreloadResource(0x13A6);
+}
+
+#pragma dont_inline on
+extern "C" FlashPopup *fn_802518EC(int layer, int id) {
+    return new FlashPopup(layer, id);
+}
+#pragma dont_inline reset
+
+FlashPopup::~FlashPopup() {
+    for (int i = 0; i < 2; i++) {
+        SpriteHandle_Destroy(sprites[i]);
+    }
+}
+
+FlashPopup::FlashPopup(int layer_, int id_)
+    : PopupTask(id_), layer(layer_), state(0), scale(new FlowFaderI), fade1(new FlowFaderI),
+      fade2(new FlowFaderI) {
+    PreloadResource(0x13A6);
+    fn_8020A7CC(scale.p, 0x1900, 0x6400, 10);
+    {
+        ResCtrl rc;
+        rc.resId = 0x13A6;
+        rc.Show(lbl_806DC0F8.x, lbl_806DC0F8.y, lbl_806DC114);
+        sprites[0] = SpriteHandle_CreateDefault(&rc, layer);
+        rc.mode = 3;
+        sprites[1] = SpriteHandle_CreateDefault(&rc, layer);
+        SpriteHandle_SetActiveFlag(sprites[0], 0);
+        SpriteHandle_SetActiveFlag(sprites[1], 0);
+    }
+}
+
+void KindPopup::Finish() {
+    delete this;
+}
+
+void FlashPopup::Finish() {
+    delete this;
 }
