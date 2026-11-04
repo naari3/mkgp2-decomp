@@ -189,3 +189,8 @@ CW GC/2.6 emits a strong derived vtable when its first non-inline virtual is def
 Source: Codex worker c2_b4_8020f44c_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 15 fn / 7744 B.
 
 TU rescue must check primary function PHYSICAL order as well as per-function objdiff. KartAlertPanel had every function 100% and exact owned EH, but source definition order was reversed, which moved link addresses and made MWLD sort extabindex to the wrong function order. Moving definitions verbatim to address order preserves 100% text and fixes the placement cause. A source object can contain interspersed weak destructor text; evaluate final order after weak discard.
+
+## c2_i10_8021f088_20261105
+Source: Codex worker c2_i10_8021f088_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 19 fn / 7620 B.
+
+anon_8021F088 isolation: empty inline TextSprite destructor mapped to dtor_800869D0 restores DESTROYMEMBER EH without changing text; map Own<Sprite> dtor to dtor_8015E8AC, FadeObj to dtor_80145DB0, SceneBase to dtor_8007D0D4, PtrVec<FadeObj*> to dtor_80145F9C. Retain trailing #pragma inline_max_size(240) with CoinResultScene_Init so NextWnd ctor remains out of line and exact. Vtable-bearing destructors remain NonMatching: target vtables have RTTI pointers, whereas original RTTI-off source has zero; enabling RTTI after splitting duplicates base type records. Data order also prevents independently owning both the scene jump table (804EDE5C) and earlier-text line vtable (804EDE8C).

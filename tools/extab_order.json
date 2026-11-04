@@ -1530,5 +1530,37 @@
     "__dt__21PtrVecBase<P7DemoObj>Fv",
     "__dt__21PtrVecData<P7DemoObj>Fv",
     "clCGameDemo_Dtor"
+  ],
+  "src/game/anon_8021F088_m_8021F824.cpp": [
+    "fn_8021F824",
+    "fn_8021FA44",
+    "dtor_800869D0",
+    "dtor_80082960",
+    "dtor_8015E8AC",
+    "dtor_80145DB0"
+  ],
+  "src/game/anon_8021F088_m_80220678.cpp": [
+    "fn_80220678",
+    "dtor_8015E8AC",
+    "dtor_80082960"
+  ],
+  "src/game/anon_8021F088_m_80220860.cpp": [
+    "fn_80220860",
+    "dtor_800869D0",
+    "dtor_80082960",
+    "dtor_8015E8AC",
+    "dtor_80145DB0"
+  ],
+  "src/game/anon_8021F088_m_80223798.cpp": [
+    "CoinResultScene_Init",
+    "fn_80223E78",
+    "fn_80224028",
+    "dtor_800869D0",
+    "dtor_80082960",
+    "dtor_80145DB0",
+    "dtor_80145F9C",
+    "__dt__21PtrVecBase<P7FadeObj>Fv",
+    "__dt__21PtrVecData<P7FadeObj>Fv",
+    "dtor_8007D0D4"
   ]
 }

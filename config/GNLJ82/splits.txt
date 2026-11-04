@@ -9999,9 +9999,129 @@ game/anon_8021ED88.cpp:
 	.text       start:0x8021ED88 end:0x8021F088
 
 game/anon_8021F088.cpp:
-	extab       start:0x8001B184 end:0x8001B7B8
-	extabindex  start:0x8002A3EC end:0x8002A5C0
-	.text       start:0x8021F088 end:0x80224EBC
+	extab       start:0x8001B184 end:0x8001B19C
+	extabindex  start:0x8002A3EC end:0x8002A410
+	.text       start:0x8021F088 end:0x8021F508
+
+game/anon_8021F088_nm_8021F508.cpp:
+	extab       start:0x8001B19C end:0x8001B1D4
+	extabindex  start:0x8002A410 end:0x8002A41C
+	.text       start:0x8021F508 end:0x8021F824
+
+game/anon_8021F088_m_8021F824.cpp:
+	extab       start:0x8001B1D4 end:0x8001B2A0
+	extabindex  start:0x8002A41C end:0x8002A434
+	.text       start:0x8021F824 end:0x8021FC4C
+
+game/anon_8021F088_nm_8021FC4C.cpp:
+	extab       start:0x8001B2A0 end:0x8001B37C
+	extabindex  start:0x8002A434 end:0x8002A440
+	.text       start:0x8021FC4C end:0x80220678
+
+game/anon_8021F088_m_80220678.cpp:
+	extab       start:0x8001B37C end:0x8001B3D4
+	extabindex  start:0x8002A440 end:0x8002A44C
+	.text       start:0x80220678 end:0x80220780
+
+game/anon_8021F088_nm_80220780.cpp:
+	extab       start:0x8001B3D4 end:0x8001B3FC
+	extabindex  start:0x8002A44C end:0x8002A458
+	.text       start:0x80220780 end:0x80220860
+
+game/anon_8021F088_m_80220860.cpp:
+	extab       start:0x8001B3FC end:0x8001B494
+	extabindex  start:0x8002A458 end:0x8002A464
+	.text       start:0x80220860 end:0x80220A54
+
+game/anon_8021F088_nm_80220A54.cpp:
+	extab       start:0x8001B494 end:0x8001B4AC
+	extabindex  start:0x8002A464 end:0x8002A488
+	.text       start:0x80220A54 end:0x8022134C
+
+game/anon_8021F088_nm_8022134C.cpp:
+	extab       start:0x8001B4AC end:0x8001B4B4
+	extabindex  start:0x8002A488 end:0x8002A494
+	.text       start:0x8022134C end:0x80221674
+
+game/anon_8021F088_nm_80221674.cpp:
+	extab       start:0x8001B4B4 end:0x8001B4C4
+	extabindex  start:0x8002A494 end:0x8002A4AC
+	.text       start:0x80221674 end:0x80221AA8
+
+game/anon_8021F088_m_80221AA8.cpp:
+	extab       start:0x8001B4C4 end:0x8001B4CC
+	extabindex  start:0x8002A4AC end:0x8002A4B8
+	.text       start:0x80221AA8 end:0x80221C94
+
+game/anon_8021F088_nm_80221C94.cpp:
+	extab       start:0x8001B4CC end:0x8001B534
+	extabindex  start:0x8002A4B8 end:0x8002A4F4
+	.text       start:0x80221C94 end:0x802234C8
+
+game/anon_8021F088_m_802234C8.cpp:
+	extab       start:0x8001B534 end:0x8001B554
+	extabindex  start:0x8002A4F4 end:0x8002A50C
+	.text       start:0x802234C8 end:0x8022353C
+
+game/anon_8021F088_nm_8022353C.cpp:
+	extab       start:0x8001B554 end:0x8001B55C
+	extabindex  start:0x8002A50C end:0x8002A518
+	.text       start:0x8022353C end:0x80223798
+
+game/anon_8021F088_m_80223798.cpp:
+	extab       start:0x8001B55C end:0x8001B70C
+	extabindex  start:0x8002A518 end:0x8002A53C
+	.text       start:0x80223798 end:0x80224260
+
+game/anon_8021F088_nm_80224260.cpp:
+	extab       start:0x8001B70C end:0x8001B714
+	extabindex  start:0x8002A53C end:0x8002A548
+	.text       start:0x80224260 end:0x80224300
+
+game/anon_8021F088_m_80224300.cpp:
+	extab       start:0x8001B714 end:0x8001B71C
+	extabindex  start:0x8002A548 end:0x8002A554
+	.text       start:0x80224300 end:0x80224484
+
+game/anon_8021F088_nm_80224484.cpp:
+	extab       start:0x8001B71C end:0x8001B758
+	extabindex  start:0x8002A554 end:0x8002A560
+	.text       start:0x80224484 end:0x8022459C
+
+game/anon_8021F088_m_8022459C.cpp:
+	extab       start:0x8001B758 end:0x8001B760
+	extabindex  start:0x8002A560 end:0x8002A56C
+	.text       start:0x8022459C end:0x802246A4
+
+game/anon_8021F088_nm_802246A4.cpp:
+	extab       start:0x8001B760 end:0x8001B768
+	extabindex  start:0x8002A56C end:0x8002A578
+	.text       start:0x802246A4 end:0x80224734
+
+game/anon_8021F088_m_80224734.cpp:
+	extab       start:0x8001B768 end:0x8001B778
+	extabindex  start:0x8002A578 end:0x8002A590
+	.text       start:0x80224734 end:0x80224800
+
+game/anon_8021F088_nm_80224800.cpp:
+	extab       start:0x8001B778 end:0x8001B7A0
+	extabindex  start:0x8002A590 end:0x8002A59C
+	.text       start:0x80224800 end:0x802248F8
+
+game/anon_8021F088_m_802248F8.cpp:
+	extab       start:0x8001B7A0 end:0x8001B7A8
+	extabindex  start:0x8002A59C end:0x8002A5A8
+	.text       start:0x802248F8 end:0x802249FC
+
+game/anon_8021F088_nm_802249FC.cpp:
+	extab       start:0x8001B7A8 end:0x8001B7B0
+	extabindex  start:0x8002A5A8 end:0x8002A5B4
+	.text       start:0x802249FC end:0x80224E20
+
+game/anon_8021F088_m_80224E20.cpp:
+	extab       start:0x8001B7B0 end:0x8001B7B8
+	extabindex  start:0x8002A5B4 end:0x8002A5C0
+	.text       start:0x80224E20 end:0x80224EBC
 
 game/fn_80224EBC.c:
 	.text       start:0x80224EBC end:0x80224ECC
