@@ -219,3 +219,8 @@ With MWCC GC/2.6 -inline deferred, physical emission order can be reverse source
 Source: Codex worker c2_r5_80205dcc_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 21 fn / 5584 B.
 
 Rescue c2_r5: Matrix4RotZ and HudManagerHide need flag promotion only. CardMenuRoot and MenuModeBase require first-declared undefined virtual keys to suppress duplicate tables; clCSSceneChangeSingle likewise. Bridge SceneBase dtor to dtor_8007D0D4; order owned EH before weak copies and bridge compiler @etb/@eti names. ItemDisplay can isolate the exact Start/Draw/Update tail by retaining the original hide routine as a static inline helper, preserving target Update inlining. Selector 8020688C..80206BC8 is a clean exact 828-byte run; private declaration copy suppresses its vtables without modifying shared FlowYesNo.h.
+
+## c2_r3_8021a7c8_20261105
+Source: Codex worker c2_r3_8021a7c8_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 24 fn / 5988 B.
+
+c2_r3 rescue (coordinator acceptance pending): HudManager requires ownership of 0x804F20B4..0x804F2110 jump table, @59 bridge and DATA_ALIGN4_TUS. anon_801FD320 requires genuine .ctors pointer, VHolder<FlowFaderI> length 21 bridge, implicit FlowFaderI destructor to fn_801F26C8 and owned EH before discarded weak copies. Safe cuts at 801FD5FC/801FD800, 8021ABFC, 80229398/802296C4 all accepted by dtk. All resulting Matching owned sections and primary physical order after known weak discard are exact.

@@ -9506,10 +9506,20 @@ game/anon_801FC1E0.cpp:
 	.text       start:0x801FC1E0 end:0x801FD320
 
 game/anon_801FD320.cpp:
-	extab       start:0x80017B40 end:0x80017C5C
-	extabindex  start:0x800292D0 end:0x80029330
-	.text       start:0x801FD320 end:0x801FD924
+	extab       start:0x80017B40 end:0x80017C00
+	extabindex  start:0x800292D0 end:0x8002930C
+	.text       start:0x801FD320 end:0x801FD5FC
 	.ctors      start:0x802E8938 end:0x802E893C
+
+game/anon_801FD320_nm1.cpp:
+	extab       start:0x80017C00 end:0x80017C2C
+	extabindex  start:0x8002930C end:0x80029318
+	.text       start:0x801FD5FC end:0x801FD800
+
+game/anon_801FD320_m2.cpp:
+	extab       start:0x80017C2C end:0x80017C5C
+	extabindex  start:0x80029318 end:0x80029330
+	.text       start:0x801FD800 end:0x801FD924
 
 game/anon_801FD924.cpp:
 	extab       start:0x80017C5C end:0x80017CBC
@@ -10038,9 +10048,14 @@ game/fn_8021A7BC.c:
 	.text       start:0x8021A7BC end:0x8021A7C8
 
 game/anon_8021A7C8.cpp:
-	extab       start:0x8001AB68 end:0x8001AC8C
-	extabindex  start:0x8002A2A8 end:0x8002A2D8
-	.text       start:0x8021A7C8 end:0x8021B568
+	extab       start:0x8001AB68 end:0x8001AB80
+	extabindex  start:0x8002A2A8 end:0x8002A2CC
+	.text       start:0x8021A7C8 end:0x8021ABFC
+
+game/anon_8021A7C8_nm1.cpp:
+	extab       start:0x8001AB80 end:0x8001AC8C
+	extabindex  start:0x8002A2CC end:0x8002A2D8
+	.text       start:0x8021ABFC end:0x8021B568
 
 game/anon_8021B568.cpp:
 	extab       start:0x8001AC8C end:0x8001ACE8
@@ -10293,9 +10308,19 @@ game/DNLensflare.cpp:
 	.rodata     start:0x803D08A8 end:0x803D08F0
 
 game/DNStartCamera.cpp:
-	extab       start:0x8001BCC8 end:0x8001BD48
-	extabindex  start:0x8002A7AC end:0x8002A7DC
-	.text       start:0x8022929C end:0x80229998
+	extab       start:0x8001BCC8 end:0x8001BCE0
+	extabindex  start:0x8002A7AC end:0x8002A7B8
+	.text       start:0x8022929C end:0x80229398
+
+game/DNStartCamera_nm1.cpp:
+	extab       start:0x8001BCE0 end:0x8001BCE8
+	extabindex  start:0x8002A7B8 end:0x8002A7C4
+	.text       start:0x80229398 end:0x802296C4
+
+game/DNStartCamera_m2.cpp:
+	extab       start:0x8001BCE8 end:0x8001BD48
+	extabindex  start:0x8002A7C4 end:0x8002A7DC
+	.text       start:0x802296C4 end:0x80229998
 	.rodata     start:0x803D08F0 end:0x803D0DB0
 
 game/DNStartDino.cpp:
@@ -10917,6 +10942,7 @@ game/HudManager.cpp:
 	extab       start:0x8001F078 end:0x8001F090
 	extabindex  start:0x8002B988 end:0x8002B9AC
 	.text       start:0x80253294 end:0x80253658
+	.data       start:0x804F20B4 end:0x804F2110
 
 game/HUD_FrameUpdate.c:
 	extab       start:0x8001F090 end:0x8001F098

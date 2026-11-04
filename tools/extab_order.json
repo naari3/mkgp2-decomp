@@ -1624,5 +1624,15 @@
     "fn_802068C4",
     "fn_801F26C8",
     "TweenInterp_Dtor"
+  ],
+  "src/game/anon_801FD320.cpp": [
+    "dtor_801FD32C",
+    "fn_801FD41C",
+    "fn_801FD504",
+    "fn_801FD550",
+    "fn_801FD588",
+    "fn_801F26C8",
+    "dtor_801F2724",
+    "dtor_801F4B10"
   ]
 }

@@ -148,6 +148,7 @@ struct clCSOrgKartModel : clCSModelInterface {
     float camA;
     float camB;
     clCSOrgKartModel(int character_, int variant, unsigned char withDriver, unsigned char flag);
+    virtual void _keyM();
     ~clCSOrgKartModel();
     void Draw();
     void Update();
@@ -241,91 +242,4 @@ clCSOrgKartModel::~clCSOrgKartModel() {
     }
     fn_8013BCA0();
     fn_8013C3C0();
-}
-
-static const int sAnimIds[4] = {0, 5, 42, 43};
-
-clCSOrgKartModel::clCSOrgKartModel(int character_, int variant, unsigned char withDriver, unsigned char flag) {
-    fn_8013BD7C();
-    fn_8013C428();
-    camA = lbl_806DAFE8;
-    camB = lbl_806DAFE8;
-    character = character_;
-    animSel = 0;
-    animTime = lbl_806DAFE8;
-    animEnd = lbl_806DAFF0;
-    kart = 0;
-    tires = 0;
-    driver = 0;
-    driverAnim = 0;
-    kartAnim = 0;
-    anims[0] = 0;
-    anims[1] = 0;
-    anims[2] = 0;
-    anims[3] = 0;
-    pony = 0;
-    ponyJoint = 0;
-    if (character < 0 || character >= 13) {
-        return;
-    }
-    const char **ent = GetKartModelNameEntry(character, variant);
-    CharData *cd = GetCharacterDataEntry(character);
-    kart = new clNormal3D(ent[0], flag);
-    char buf[0x20];
-    if (withDriver == 1) {
-        driver = new clNormal3D(cd->driverFile, flag);
-        driverAnim = new clNormal3D(cd->animFile, 0);
-        clNormal3D_SetScale(driver, 0, lbl_806DAFE8, lbl_806DAFEC, lbl_806DAFE8, lbl_806DAFE8);
-        if (character == 3) {
-            ponyJoint = ResolveJointByName(driver, "chara_peach_pony_null_joint");
-            pony = new clNormal3D("pony.dat", flag);
-            clNormal3D_SetScale(pony, 0, lbl_806DAFE8, lbl_806DAFEC, lbl_806DAFE8, lbl_806DAFF4);
-        }
-        sprintf(buf, "chara_%s_hand_goo_joint", lbl_804EDC88[character]);
-        handJoints[0] = ResolveJointByName(driver, buf);
-        sprintf(buf, "chara_%s_hand_pa_joint", lbl_804EDC88[character]);
-        handJoints[1] = ResolveJointByName(driver, buf);
-        sprintf(buf, "chara_%s_hand_fin_joint", lbl_804EDC88[character]);
-        handJoints[2] = ResolveJointByName(driver, buf);
-        HSD_JObjSetFlags(handJoints[1], 0x10);
-        HSD_JObjSetFlags(handJoints[2], 0x10);
-    }
-    if (variant >= 2) {
-        tires = new clNormal3D(lbl_804EDCBC[character_], flag);
-    } else {
-        tires = new clNormal3D("cart_tire.dat", flag);
-    }
-    tireJoints[0] = ResolveJointByName(tires, "cart_tireset_fl_joint");
-    tireJoints[1] = ResolveJointByName(tires, "cart_tireset_fr_joint");
-    tireJoints[2] = ResolveJointByName(tires, "cart_tireset_rl_joint");
-    tireJoints[3] = ResolveJointByName(tires, "cart_tireset_rr_joint");
-    Vec3 t;
-    sprintf(buf, "%s_cart_tire_fl_joint", lbl_804EDC88[character]);
-    JObjGetTranslation(ResolveJointByName(kart, buf), &t);
-    JObjSetTranslate(tireJoints[0], &t);
-    sprintf(buf, "%s_cart_tire_fr_joint", lbl_804EDC88[character]);
-    JObjGetTranslation(ResolveJointByName(kart, buf), &t);
-    JObjSetTranslate(tireJoints[1], &t);
-    sprintf(buf, "%s_cart_tire_rl_joint", lbl_804EDC88[character]);
-    JObjGetTranslation(ResolveJointByName(kart, buf), &t);
-    JObjSetTranslate(tireJoints[2], &t);
-    sprintf(buf, "%s_cart_tire_rr_joint", lbl_804EDC88[character]);
-    JObjGetTranslation(ResolveJointByName(kart, buf), &t);
-    JObjSetTranslate(tireJoints[3], &t);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, "cart_big_tire_fl_joint"), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, "cart_big_tire_fr_joint"), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, "cart_big_tire_rl_joint"), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, "cart_big_tire_rr_joint"), 0x10);
-    if (withDriver == 1) {
-        for (int i = 0; i < 4; i++) {
-            anims[i] = new clNormal3D(cd->anims[sAnimIds[i]], 0);
-        }
-        clNormal3D_SetScale(driverAnim, anims[0], lbl_806DAFF4, lbl_806DAFE8, lbl_806DAFE8, lbl_806DAFE8);
-        HSD_JObj *dst = Archive_GetRootJObj(driver);
-        ObjectTree_BlendOrCopy_Timed(driver, Archive_GetRootJObj(driverAnim), dst, lbl_806DAFE8, 0);
-        if (flag) {
-            clNormal3D_SetFlags(kart, 0x40000000, 0);
-            clNormal3D_SetFlags(driver, 0x40000000, 0);
-        }
-    }
 }
