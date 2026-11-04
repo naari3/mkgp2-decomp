@@ -6208,5 +6208,22 @@
     "__dt__6SpriteFv": "Sprite_Destroy",
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/Scene_8016219C.cpp": {
+    "__ct__5ClStrFPv": "SharedPtr_Init",
+    "__vt__Q23std9exception": "lbl_803F5710",
+    "__vt__Q23std11logic_error": "lbl_803F5700",
+    "__vt__Q23std12length_error": "lbl_803F56F0",
+    "__dt__Q23std9exceptionFv": "dtor_80038DD4",
+    "__dt__5ClStrFv": "dtor_80038E30",
+    "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor"
+  },
+  "src/game/Scene_80162D90.cpp": {
+    "Tick__14CreditPanel162Fv": "fn_80162D90"
+  },
+  "src/game/Scene_8016234C.cpp": {
+    "__ct__13CreditBase162Fi": "fn_80147638",
+    "__dt__13CreditBase162Fv": "dtor_80147584",
+    "__vt__14CreditChild162": "lbl_80490B34"
   }
 }

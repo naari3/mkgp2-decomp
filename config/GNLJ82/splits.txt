@@ -5990,10 +5990,20 @@ game/resultscene/resultscene.cpp:
 	.text       start:0x8015C41C end:0x8016219C
 	.ctors      start:0x802E8910 end:0x802E8914
 
+game/Scene_8016219C.cpp:
+	extab       start:0x8000F9D8 end:0x8000FA08
+	extabindex  start:0x80025C10 end:0x80025C1C
+	.text       start:0x8016219C end:0x801622C8
+
 game/Scene_801622C8.cpp:
 	extab       start:0x8000FA08 end:0x8000FA10
 	extabindex  start:0x80025C1C end:0x80025C28
 	.text       start:0x801622C8 end:0x8016234C
+
+game/Scene_8016234C.cpp:
+	extab       start:0x8000FA10 end:0x8000FA3C
+	extabindex  start:0x80025C28 end:0x80025C34
+	.text       start:0x8016234C end:0x80162B00
 
 game/Scene_80162B00.cpp:
 	extab       start:0x8000FA3C end:0x8000FA54
@@ -6004,6 +6014,16 @@ game/misc3d/fn_80162C3C.cpp:
 	extab       start:0x8000FA54 end:0x8000FA78
 	extabindex  start:0x80025C58 end:0x80025C64
 	.text       start:0x80162C3C end:0x80162D90
+
+game/Scene_80162D90.cpp:
+	extab       start:0x8000FA78 end:0x8000FA80
+	extabindex  start:0x80025C64 end:0x80025C70
+	.text       start:0x80162D90 end:0x8016303C
+
+game/Scene_8016303C.cpp:
+	extab       start:0x8000FA80 end:0x8000FA88
+	extabindex  start:0x80025C70 end:0x80025C7C
+	.text       start:0x8016303C end:0x801634C4
 
 game/Scene_801634C4.cpp:
 	extab       start:0x8000FA88 end:0x8000FA98
@@ -6029,6 +6049,16 @@ game/Scene_80163804.cpp:
 	extab       start:0x8000FAFC end:0x8000FB30
 	extabindex  start:0x80025CE8 end:0x80025CF4
 	.text       start:0x80163804 end:0x801638B4
+
+game/Scene_801638B4.cpp:
+	extab       start:0x8000FB30 end:0x8000FB38
+	extabindex  start:0x80025CF4 end:0x80025D00
+	.text       start:0x801638B4 end:0x80163C68
+
+game/Scene_80163C68.cpp:
+	extab       start:0x8000FB38 end:0x8000FB40
+	extabindex  start:0x80025D00 end:0x80025D0C
+	.text       start:0x80163C68 end:0x80163EF4
 
 game/misc3d/fn_8016504C.cpp:
 	extab       start:0x8000FC20 end:0x8000FC28
