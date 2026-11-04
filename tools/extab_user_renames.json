@@ -6123,5 +6123,11 @@
     "__ct__12CourseSpriteFiii": "Sprite_InitWithAnim",
     "__ct__12CourseSpriteFiiffffff": "Sprite_CreateWithParams",
     "__dt__12CourseSpriteFv": "Sprite_Destroy"
+  },
+  "src/game/ItemSelectSetup.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init"
+  },
+  "src/game/ItemSelectUpdate.cpp": {
+    "__ct__15RefillSingletonFv": "fn_802325FC"
   }
 }
