@@ -119,3 +119,8 @@ CW GC/2.6 selects an earlier defined non-inline virtual as vtable key even when 
 Source: Codex worker c2_b2_popups_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 RacePopups/SpeedHud rescue resume: 100% individual function objdiff plus exact owned EH/data does not prove physical primary function order. Coordinator ELF revealed reversed definitions linking at wrong addresses. Reorder native definitions to target address order; verify every symbols.txt function is defined and primary object-offset order matches target order, ignoring only weak copies known to discard. Refresh anonymous compiler IDs in bridges afterward.
+
+## c2_b3_8021550c_20261105
+Source: Codex worker c2_b3_8021550c_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 20 fn / 6360 B.
+
+For these native rescue TUs, placing the undefined virtual key declaration before the first defined non-inline virtual suppresses derived vtable emission without changing inherited dispatch slots or primary text. Explicit scopes around sequential ResCtrl locals reproduce target constructor EH lifetimes while empty destructors preserve all instruction bytes. Owned EH is exact even though objdiff whole-section scores fall due to appended weak destructor copies.

@@ -45,6 +45,7 @@ struct InfoText {
     unsigned int color;
     char pad24[0x230 - 0x24];
     InfoText();
+    ~InfoText() {}
     TextManager *tm() { return (TextManager *)this; }
 };
 
@@ -85,6 +86,8 @@ struct clSceneInterface {
 };
 
 struct clItemViewer : clSceneInterface {
+    /* Declare the undefined key first to keep the original vtable external. */
+    virtual void _key();
     int item;
     ShowModel *model;
     int field;
@@ -106,7 +109,6 @@ struct clItemViewer : clSceneInterface {
     void Update();
     void Draw();
     void LoadModel();
-    virtual void _key();
 };
 
 /* Wraps an angle into [0, 360). */
@@ -131,19 +133,105 @@ static inline float WrapUnit(float v) {
     return v;
 }
 
-extern "C" clItemViewer *fn_80254F74(void) {
-    return new clItemViewer;
-}
-
-void clItemViewer::Release() {
-    delete this;
-}
-
-clItemViewer::~clItemViewer() {
+void clItemViewer::LoadModel() {
+    float s;
     if (model) {
         delete model;
         model = 0;
     }
+    if (item < 0x9F) {
+        ShowXform *xf = fn_8013BE98(item);
+        s = 0.02f * xf->scale;
+        model = new ShowModel(ItemRes_LookupByKey_Thunk(item), 0);
+        fn_8013D738(model, 0.0f, 1.0f);
+        fn_8013D660(model, 320.0f, 240.0f);
+        fn_8013D634(model, 0.02f * xf->pos[0], 0.02f * xf->pos[1], 0.02f * xf->pos[2]);
+        fn_8013D59C(model, 0.017453292f * xf->rot[0], 0.017453292f * xf->rot[1], 0.017453292f * xf->rot[2]);
+        fn_8013D608(model, s, s, s);
+        pos[0] = xf->pos[0];
+        pos[1] = xf->pos[1];
+        pos[2] = xf->pos[2];
+        rot[0] = xf->rot[0];
+        rot[1] = xf->rot[1];
+        rot[2] = xf->rot[2];
+        scale = xf->scale;
+    } else {
+        const ViewerEntry *e = &lbl_803F1234[item - 0x9F];
+        s = 0.02f * e->xf.scale;
+        model = new ShowModel((void *)e->file, 0);
+        fn_8013D738(model, 0.0f, 1.0f);
+        fn_8013D660(model, 320.0f, 240.0f);
+        fn_8013D634(model, 0.02f * e->xf.pos[0], 0.02f * e->xf.pos[1], 0.02f * e->xf.pos[2]);
+        fn_8013D59C(model, 0.017453292f * e->xf.rot[0], 0.017453292f * e->xf.rot[1], 0.017453292f * e->xf.rot[2]);
+        fn_8013D608(model, s, s, s);
+        pos[0] = e->xf.pos[0];
+        pos[1] = e->xf.pos[1];
+        pos[2] = e->xf.pos[2];
+        rot[0] = e->xf.rot[0];
+        rot[1] = e->xf.rot[1];
+        rot[2] = e->xf.rot[2];
+        scale = e->xf.scale;
+    }
+}
+
+void clItemViewer::Draw() {
+    const char *strs = lbl_803F1208;
+    ResCtrl rc;
+    unsigned int c;
+    rc.mode = 2;
+    rc.SetSize(640.0f, 480.0f);
+    rc.Show(320.0f, 240.0f, 1.0f);
+    c = ((unsigned char)(int)(255.0f * color[0]) << 24) |
+        ((unsigned char)(int)(255.0f * color[1]) << 16) |
+        ((unsigned char)(int)(255.0f * color[2]) << 8) | 0xFF;
+    rc.SetColor(c);
+    fn_8011FAFC(&rc, 0);
+    fn_8011F994(0);
+    if (model) {
+        model->Render();
+    }
+    if (showInfo == 1) {
+        void *ctx = fn_801F8E58();
+        InfoText text;
+        text.color = 0xFFFFFFFF;
+        fn_801F93EC(text.tm(), 20.0f, 20.0f * field + 50.0f);
+        TexMgr_SetTexture(text.tm(), lbl_806DC218);
+        fn_801F8A34(ctx, &text, 7);
+        fn_801F93EC(text.tm(), 50.0f, 50.0f);
+        TexMgr_SetTexture(text.tm(), strs + 0x104, pos[0]); /* "Pos   x=%3.1f" */
+        fn_801F8A34(ctx, &text, 7);
+        fn_801F93EC(text.tm(), 50.0f, 70.0f);
+        TexMgr_SetTexture(text.tm(), strs + 0x114, pos[1]);
+        fn_801F8A34(ctx, &text, 7);
+        fn_801F93EC(text.tm(), 50.0f, 90.0f);
+        TexMgr_SetTexture(text.tm(), strs + 0x124, pos[2]);
+        fn_801F8A34(ctx, &text, 7);
+        fn_801F93EC(text.tm(), 50.0f, 110.0f);
+        TexMgr_SetTexture(text.tm(), strs + 0x134, rot[0]);
+        fn_801F8A34(ctx, &text, 7);
+        fn_801F93EC(text.tm(), 50.0f, 130.0f);
+        TexMgr_SetTexture(text.tm(), strs + 0x144, rot[1]);
+        fn_801F8A34(ctx, &text, 7);
+        fn_801F93EC(text.tm(), 50.0f, 150.0f);
+        TexMgr_SetTexture(text.tm(), strs + 0x154, rot[2]);
+        fn_801F8A34(ctx, &text, 7);
+        fn_801F93EC(text.tm(), 50.0f, 170.0f);
+        TexMgr_SetTexture(text.tm(), strs + 0x164, scale); /* "Scale  =%2.2f" */
+        fn_801F8A34(ctx, &text, 7);
+        fn_801F93EC(text.tm(), 50.0f, 190.0f);
+        TexMgr_SetTexture(text.tm(), strs + 0x174, color[0]); /* "Color r=%1.2f" */
+        fn_801F8A34(ctx, &text, 7);
+        fn_801F93EC(text.tm(), 50.0f, 210.0f);
+        TexMgr_SetTexture(text.tm(), strs + 0x184, color[1]);
+        fn_801F8A34(ctx, &text, 7);
+        fn_801F93EC(text.tm(), 50.0f, 230.0f);
+        TexMgr_SetTexture(text.tm(), strs + 0x194, color[2]);
+        fn_801F8A34(ctx, &text, 7);
+        fn_801F93EC(text.tm(), 50.0f, 250.0f);
+        TexMgr_SetTexture(text.tm(), strs + 0x1A4); /* "Next Item" */
+        fn_801F8A34(ctx, &text, 7);
+    }
+    fn_8011FAB8();
 }
 
 void clItemViewer::Update() {
@@ -242,103 +330,17 @@ void clItemViewer::Update() {
     }
 }
 
-void clItemViewer::Draw() {
-    const char *strs = lbl_803F1208;
-    ResCtrl rc;
-    unsigned int c;
-    rc.mode = 2;
-    rc.SetSize(640.0f, 480.0f);
-    rc.Show(320.0f, 240.0f, 1.0f);
-    c = ((unsigned char)(int)(255.0f * color[0]) << 24) |
-        ((unsigned char)(int)(255.0f * color[1]) << 16) |
-        ((unsigned char)(int)(255.0f * color[2]) << 8) | 0xFF;
-    rc.SetColor(c);
-    fn_8011FAFC(&rc, 0);
-    fn_8011F994(0);
-    if (model) {
-        model->Render();
-    }
-    if (showInfo == 1) {
-        void *ctx = fn_801F8E58();
-        InfoText text;
-        text.color = 0xFFFFFFFF;
-        fn_801F93EC(text.tm(), 20.0f, 20.0f * field + 50.0f);
-        TexMgr_SetTexture(text.tm(), lbl_806DC218);
-        fn_801F8A34(ctx, &text, 7);
-        fn_801F93EC(text.tm(), 50.0f, 50.0f);
-        TexMgr_SetTexture(text.tm(), strs + 0x104, pos[0]); /* "Pos   x=%3.1f" */
-        fn_801F8A34(ctx, &text, 7);
-        fn_801F93EC(text.tm(), 50.0f, 70.0f);
-        TexMgr_SetTexture(text.tm(), strs + 0x114, pos[1]);
-        fn_801F8A34(ctx, &text, 7);
-        fn_801F93EC(text.tm(), 50.0f, 90.0f);
-        TexMgr_SetTexture(text.tm(), strs + 0x124, pos[2]);
-        fn_801F8A34(ctx, &text, 7);
-        fn_801F93EC(text.tm(), 50.0f, 110.0f);
-        TexMgr_SetTexture(text.tm(), strs + 0x134, rot[0]);
-        fn_801F8A34(ctx, &text, 7);
-        fn_801F93EC(text.tm(), 50.0f, 130.0f);
-        TexMgr_SetTexture(text.tm(), strs + 0x144, rot[1]);
-        fn_801F8A34(ctx, &text, 7);
-        fn_801F93EC(text.tm(), 50.0f, 150.0f);
-        TexMgr_SetTexture(text.tm(), strs + 0x154, rot[2]);
-        fn_801F8A34(ctx, &text, 7);
-        fn_801F93EC(text.tm(), 50.0f, 170.0f);
-        TexMgr_SetTexture(text.tm(), strs + 0x164, scale); /* "Scale  =%2.2f" */
-        fn_801F8A34(ctx, &text, 7);
-        fn_801F93EC(text.tm(), 50.0f, 190.0f);
-        TexMgr_SetTexture(text.tm(), strs + 0x174, color[0]); /* "Color r=%1.2f" */
-        fn_801F8A34(ctx, &text, 7);
-        fn_801F93EC(text.tm(), 50.0f, 210.0f);
-        TexMgr_SetTexture(text.tm(), strs + 0x184, color[1]);
-        fn_801F8A34(ctx, &text, 7);
-        fn_801F93EC(text.tm(), 50.0f, 230.0f);
-        TexMgr_SetTexture(text.tm(), strs + 0x194, color[2]);
-        fn_801F8A34(ctx, &text, 7);
-        fn_801F93EC(text.tm(), 50.0f, 250.0f);
-        TexMgr_SetTexture(text.tm(), strs + 0x1A4); /* "Next Item" */
-        fn_801F8A34(ctx, &text, 7);
-    }
-    fn_8011FAB8();
-}
-
-void clItemViewer::LoadModel() {
-    float s;
+clItemViewer::~clItemViewer() {
     if (model) {
         delete model;
         model = 0;
     }
-    if (item < 0x9F) {
-        ShowXform *xf = fn_8013BE98(item);
-        s = 0.02f * xf->scale;
-        model = new ShowModel(ItemRes_LookupByKey_Thunk(item), 0);
-        fn_8013D738(model, 0.0f, 1.0f);
-        fn_8013D660(model, 320.0f, 240.0f);
-        fn_8013D634(model, 0.02f * xf->pos[0], 0.02f * xf->pos[1], 0.02f * xf->pos[2]);
-        fn_8013D59C(model, 0.017453292f * xf->rot[0], 0.017453292f * xf->rot[1], 0.017453292f * xf->rot[2]);
-        fn_8013D608(model, s, s, s);
-        pos[0] = xf->pos[0];
-        pos[1] = xf->pos[1];
-        pos[2] = xf->pos[2];
-        rot[0] = xf->rot[0];
-        rot[1] = xf->rot[1];
-        rot[2] = xf->rot[2];
-        scale = xf->scale;
-    } else {
-        const ViewerEntry *e = &lbl_803F1234[item - 0x9F];
-        s = 0.02f * e->xf.scale;
-        model = new ShowModel((void *)e->file, 0);
-        fn_8013D738(model, 0.0f, 1.0f);
-        fn_8013D660(model, 320.0f, 240.0f);
-        fn_8013D634(model, 0.02f * e->xf.pos[0], 0.02f * e->xf.pos[1], 0.02f * e->xf.pos[2]);
-        fn_8013D59C(model, 0.017453292f * e->xf.rot[0], 0.017453292f * e->xf.rot[1], 0.017453292f * e->xf.rot[2]);
-        fn_8013D608(model, s, s, s);
-        pos[0] = e->xf.pos[0];
-        pos[1] = e->xf.pos[1];
-        pos[2] = e->xf.pos[2];
-        rot[0] = e->xf.rot[0];
-        rot[1] = e->xf.rot[1];
-        rot[2] = e->xf.rot[2];
-        scale = e->xf.scale;
-    }
+}
+
+void clItemViewer::Release() {
+    delete this;
+}
+
+extern "C" clItemViewer *fn_80254F74(void) {
+    return new clItemViewer;
 }

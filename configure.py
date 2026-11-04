@@ -1831,7 +1831,7 @@ config.libs = [
             Object(NonMatching, "game/anon_802124FC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/anon_80214B3C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/anon_802151C8.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/anon_8021550C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(Matching, "game/anon_8021550C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/anon_80216568.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/anon_80218B80.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/anon_80218D98.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
@@ -1876,7 +1876,7 @@ config.libs = [
             Object(NonMatching, "game/HudManagerLap.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/HudManagerLife.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/HudFind.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/ItemViewer.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
+            Object(Matching, "game/ItemViewer.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/acLib.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             # group6-end
             Object(Matching, "game/NokoNokoChallenge.c", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"], extab_padding=b"\x00\x00"),
@@ -3385,6 +3385,8 @@ def _inject_data_align4_tus() -> None:
 # only the .data alignment inside .comment and the section header is pinned.
 DATA_ALIGN4_WEAK_TUS = [
     "game/SpeedHud",
+    "game/ItemViewer",
+    "game/anon_8021550C",
     "game/ResultFx",
 ]
 

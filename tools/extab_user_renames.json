@@ -3679,7 +3679,10 @@
     "__ct__9ShowModelFPvi": "fn_8013D800",
     "__ct__8InfoTextFv": "TexMgr_Init",
     "__ct__7ResCtrlFv": "ResCtrl_Init",
-    "__dt__7ResCtrlFv": "dtor_80082960"
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__dt__16clSceneInterfaceFv": "dtor_8007D0D4",
+    "__dt__8InfoTextFv": "dtor_800869D0",
+    "@181": "jumptable_804F2134"
   },
   "src/Runtime.PPCEABI.H/MWRTTI.cpp": {
     "__dynamic_cast": "fn_80271340",
@@ -4149,7 +4152,12 @@
     "Value__10FlowFaderFFv": "fn_8020A6CC",
     "Set__10FlowFaderFFffs": "fn_8020A734",
     "Value__10FlowFaderIFv": "fn_8020A788",
-    "Set__10FlowFaderIFiis": "fn_8020A7CC"
+    "Set__10FlowFaderIFiis": "fn_8020A7CC",
+    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "__dt__9PopupTaskFv": "dtor_801419C8",
+    "__dt__10FlowFaderIFv": "fn_801F26C8",
+    "__dt__10FlowFaderFFv": "TweenInterp_Dtor"
   },
   "src/game/anon_80216568.cpp": {
     "__dt__20VHolder<10FlowFaderI>Fv": "dtor_801F2724",

@@ -9837,6 +9837,7 @@ game/anon_8021550C.cpp:
 	extab       start:0x8001A318 end:0x8001A50C
 	extabindex  start:0x80029FE4 end:0x8002A068
 	.text       start:0x8021550C end:0x8021617C
+	.data       start:0x804EDB0C end:0x804EDB28
 
 game/dtor_8021617C.c:
 	extab       start:0x8001A50C end:0x8001A514
@@ -10654,6 +10655,7 @@ game/ItemViewer.cpp:
 	extab       start:0x8001F184 end:0x8001F218
 	extabindex  start:0x8002BA6C end:0x8002BAB4
 	.text       start:0x80254398 end:0x80255000
+	.data       start:0x804F2134 end:0x804F2160
 
 game/acLib.cpp:
 	extab       start:0x8001F218 end:0x8001F240

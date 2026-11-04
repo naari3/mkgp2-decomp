@@ -42,6 +42,8 @@ void Tachometer_SetMaxSpeedRef(float v);
 /* ---- result popup ---- */
 
 struct ScorePopup : PopupTask {
+    /* Keep the original vtable external. */
+    virtual void _key();
     int layer;
     int kind;
     VHolder<FlowFaderI> alpha;
@@ -137,6 +139,8 @@ struct CountPos {
 extern "C" const CountPos lbl_803C3EA0[2][6];
 
 struct CountdownHud : CountBase {
+    /* Keep the original vtable external. */
+    virtual void _key();
     int layer;
     int sprites[6];
     int state;
@@ -278,26 +282,36 @@ CountdownHud::CountdownHud(int layer_)
     zoom.p->Set(lbl_806DAE88, lbl_806DAE88, 1);
     Tachometer_SetDisplaySpeedRef(slide.p->Value());
     if (g_gameMode == 2) {
-        ResCtrl a;
-        a.resId = 0xBD4;
-        sprites[4] = SpriteHandle_CreateDefault(&a, layer);
-        ResCtrl b;
-        b.resId = 0xBD5;
-        sprites[5] = SpriteHandle_CreateDefault(&b, layer);
+        {
+            ResCtrl a;
+            a.resId = 0xBD4;
+            sprites[4] = SpriteHandle_CreateDefault(&a, layer);
+        }
+        {
+            ResCtrl b;
+            b.resId = 0xBD5;
+            sprites[5] = SpriteHandle_CreateDefault(&b, layer);
+        }
     } else {
         sprites[4] = 0;
         sprites[5] = 0;
     }
-    ResCtrl c;
-    c.resId = 0xB73;
-    sprites[0] = SpriteHandle_CreateDefault(&c, layer);
-    ResCtrl d;
-    d.resId = 0xB74;
-    sprites[1] = SpriteHandle_CreateDefault(&d, layer);
-    ResCtrl e;
-    e.resId = 0xB69;
-    sprites[2] = SpriteHandle_CreateDefault(&e, layer);
-    sprites[3] = SpriteHandle_CreateDefault(&e, layer);
+    {
+        ResCtrl c;
+        c.resId = 0xB73;
+        sprites[0] = SpriteHandle_CreateDefault(&c, layer);
+    }
+    {
+        ResCtrl d;
+        d.resId = 0xB74;
+        sprites[1] = SpriteHandle_CreateDefault(&d, layer);
+    }
+    {
+        ResCtrl e;
+        e.resId = 0xB69;
+        sprites[2] = SpriteHandle_CreateDefault(&e, layer);
+        sprites[3] = SpriteHandle_CreateDefault(&e, layer);
+    }
     for (int i = 0; i < 6; i++) {
         SpriteHandle_SetActiveFlag(sprites[i], 0);
         SpriteHandle_RecomputeCull(sprites[i]);

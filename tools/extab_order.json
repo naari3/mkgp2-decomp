@@ -1190,5 +1190,37 @@
       "dtor_801419C8",
       "__dt__9PopupRootFv"
     ]
-  }
+  },
+  "src/game/ItemViewer.cpp": [
+    "fn_80254398",
+    "fn_80254604",
+    "fn_802549CC",
+    "fn_80254EA4",
+    "fn_80254F3C",
+    "fn_80254F74",
+    "dtor_8007D0D4",
+    "dtor_800869D0",
+    "dtor_80082960"
+  ],
+  "src/game/anon_8021550C.cpp": [
+    "fn_8021550C",
+    "fn_802156C4",
+    "fn_80215708",
+    "fn_8021574C",
+    "fn_80215784",
+    "fn_802158E8",
+    "fn_80215A04",
+    "fn_80215DB0",
+    "fn_80215DE4",
+    "fn_80215E30",
+    "fn_80215F34",
+    "dtor_80082960",
+    "fn_801F26C8",
+    "TweenInterp_Dtor",
+    "dtor_801F4A80",
+    "dtor_801F2724",
+    "dtor_801419C8",
+    "__dt__9PopupRootFv",
+    "dtor_8021617C"
+  ]
 }
