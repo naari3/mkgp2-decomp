@@ -6320,5 +6320,8 @@
   },
   "src/game/mapobject/fn_8017D660.cpp": {
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/EnemyFaceDraw.cpp": {
+    "__dt__5Vec3cFv": "dtor_80036E40"
   }
 }
