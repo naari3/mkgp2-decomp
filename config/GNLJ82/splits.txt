@@ -9680,9 +9680,19 @@ game/anon_80204474_nm4.cpp:
 	.text       start:0x802051E8 end:0x802052E0
 
 game/anon_802052E0.cpp:
-	extab       start:0x80018EA4 end:0x8001900C
-	extabindex  start:0x800298D0 end:0x80029924
-	.text       start:0x802052E0 end:0x80205DCC
+	extab       start:0x80018EA4 end:0x80018F14
+	extabindex  start:0x800298D0 end:0x800298F4
+	.text       start:0x802052E0 end:0x802055F4
+
+game/anon_802052E0_nm1.cpp:
+	extab       start:0x80018F14 end:0x80018F44
+	extabindex  start:0x800298F4 end:0x8002990C
+	.text       start:0x802055F4 end:0x80205B34
+
+game/anon_802052E0_tail.cpp:
+	extab       start:0x80018F44 end:0x8001900C
+	extabindex  start:0x8002990C end:0x80029924
+	.text       start:0x80205B34 end:0x80205DCC
 
 game/anon_80205DCC.cpp:
 	extab       start:0x8001900C end:0x80019044
@@ -12247,10 +12257,22 @@ sysdolphin/baselib/texp_compile.c:
 	.text       start:0x802E1488 end:0x802E17DC
 
 sysdolphin/baselib/texpdag.c:
-	.text       start:0x802E17DC end:0x802E51F4
+	.text       start:0x802E17DC end:0x802E1BC4
+	.sbss2      start:0x806DCF88 end:0x806DCF90
+
+sysdolphin/baselib/texpdag_nm1.c:
+	.text       start:0x802E1BC4 end:0x802E4CB4
 	.data       start:0x804FDCF0 end:0x804FDDA8
 	.sdata      start:0x806D0F60 end:0x806D0F70
-	.sbss2      start:0x806DCF88 end:0x806DCF90
+
+sysdolphin/baselib/texpdag_range.c:
+	.text       start:0x802E4CB4 end:0x802E4F68
+
+sysdolphin/baselib/texpdag_nm2.c:
+	.text       start:0x802E4F68 end:0x802E4FF8
+
+sysdolphin/baselib/texpdag_tail.c:
+	.text       start:0x802E4FF8 end:0x802E51F4
 
 sysdolphin/baselib/debug.c:
 	.text       start:0x802E51F4 end:0x802E5380

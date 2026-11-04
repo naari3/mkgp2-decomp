@@ -1634,5 +1634,18 @@
     "fn_801F26C8",
     "dtor_801F2724",
     "dtor_801F4B10"
+  ],
+  "src/game/anon_802052E0.cpp": [
+    "fn_802052E4",
+    "fn_80205498",
+    "fn_802054D0",
+    "dtor_80082960",
+    "__dt__10FlowFaderFFv"
+  ],
+  "src/game/anon_802052E0_tail.cpp": [
+    "fn_80205B34",
+    "fn_80205B6C",
+    "__dt__10FlowFaderIFv",
+    "__dt__10FlowFaderFFv"
   ]
 }

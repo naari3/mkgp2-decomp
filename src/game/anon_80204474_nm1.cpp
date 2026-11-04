@@ -1,10 +1,32 @@
-#include "game/FlowYesNo.h"
+#include "game/FlowYesNoRescue.h"
+
+/* Use the original RTTI records through the CW cast runtime. */
+extern "C" {
+void *fn_80271340(void *, int, void *, void *, int);
+extern unsigned char lbl_806D02A0[8];
+extern unsigned char lbl_806D02C0[8];
+extern unsigned char lbl_806D02C8[8];
+extern unsigned char lbl_806D02B8[8];
+}
+
+static inline YesNoButtonL *CastYesNoButtonL(FlowTask *task) {
+    return (YesNoButtonL *)fn_80271340(task, 0, lbl_806D02C0, lbl_806D02A0, 0);
+}
+
+static inline YesNoButtonR *CastYesNoButtonR(FlowTask *task) {
+    return (YesNoButtonR *)fn_80271340(task, 0, lbl_806D02C8, lbl_806D02A0, 0);
+}
+
+static inline YesNoCursor *CastYesNoCursor(FlowTask *task) {
+    return (YesNoCursor *)fn_80271340(task, 0, lbl_806D02B8, lbl_806D02A0, 0);
+}
+
 
 void YesNoTask::Update() {
     FlowTask *t0 = fn_801F4DC0(list.p, 0);
-    YesNoButtonL *l = dynamic_cast<YesNoButtonL *>(t0);
+    YesNoButtonL *l = CastYesNoButtonL(t0);
     FlowTask *t1 = fn_801F4DC0(list.p, 1);
-    YesNoButtonR *r = dynamic_cast<YesNoButtonR *>(t1);
+    YesNoButtonR *r = CastYesNoButtonR(t1);
     int sel = choice;
     if (l && r) {
         YESNO_SET_SELECTED(l, sel == 0);
@@ -12,7 +34,7 @@ void YesNoTask::Update() {
     }
     FlowTask *c = fn_801F4DC0(list.p, 0xA);
     if (c) {
-        YesNoCursor *cur = dynamic_cast<YesNoCursor *>(c);
+        YesNoCursor *cur = CastYesNoCursor(c);
         cur->visible = sel == 0;
     }
     if (list.p->entries.count <= 0) {

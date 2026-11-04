@@ -224,3 +224,8 @@ Rescue c2_r5: Matrix4RotZ and HudManagerHide need flag promotion only. CardMenuR
 Source: Codex worker c2_r3_8021a7c8_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 24 fn / 5988 B.
 
 c2_r3 rescue (coordinator acceptance pending): HudManager requires ownership of 0x804F20B4..0x804F2110 jump table, @59 bridge and DATA_ALIGN4_TUS. anon_801FD320 requires genuine .ctors pointer, VHolder<FlowFaderI> length 21 bridge, implicit FlowFaderI destructor to fn_801F26C8 and owned EH before discarded weak copies. Safe cuts at 801FD5FC/801FD800, 8021ABFC, 80229398/802296C4 all accepted by dtk. All resulting Matching owned sections and primary physical order after known weak discard are exact.
+
+## c2_r1_texpdag_20261105
+Source: Codex worker c2_r1_texpdag_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 15 fn / 6212 B.
+
+c2_r1_texpdag rescue candidate (full link pending): FlowYesNo RTTI references can reuse external original records through fn_80271340 while a private first-declared undefined key suppresses derived vtables. anon_80204474_nm2 owned constructor EH references YesNoButton destructor dtor_802070EC; bridge __dt__11YesNoButtonFv accordingly. Mapping owned compiler @etb/@eti symbols exposes 100% owned EH in objdiff despite appended weak entries. texpdag exact assign_reg/order_dag own the .sbss2 zero initializers; preserve with their leading split. CalcRange and HSD_TExpSimplify2 isolate exactly; HSD_TExpSchedule is coupled to the original .data group base.
