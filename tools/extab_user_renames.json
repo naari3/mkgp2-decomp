@@ -6083,5 +6083,28 @@
     "__dt__9MorphBaseFv": "dtor_8016A270",
     "__ct__9MorphNodeFP8HSD_JObjP8HSD_JObj": "fn_8018F8A8",
     "__ct__10clNormal3DFPCci": "clNormal3D_Construct"
+  },
+  "src/game/mapeffect/Jungle16ACtor.cpp": {
+    "__ct__9Jungle16AFv": "fn_8016AB58",
+    "__vt__9Jungle16A": "lbl_80491054",
+    "__vt__10MapPart16A": "lbl_80490FE0",
+    "__dt__10MapPart16AFv": "dtor_8016A270",
+    "__ct__7Zone16AFPCvi": "fn_80123BB4",
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct"
+  },
+  "src/game/mapeffect/Cave16ACtor.cpp": {
+    "__ct__7Cave16AFv": "fn_8016AF3C",
+    "__vt__7Cave16A": "lbl_8049107C",
+    "__ct__6Obj16AFv": "fn_8018D82C",
+    "__vt__10MapPart16A": "lbl_80490FE0",
+    "__dt__10MapPart16AFv": "dtor_8016A270",
+    "__ct__7Zone16AFPCvi": "fn_80123BB4",
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct"
+  },
+  "src/game/mapeffect/Kiri16ACtor.cpp": {
+    "__ct__7Kiri16AFP12KiriJoint16A": "fn_8016A3D4",
+    "__vt__7Kiri16A": "lbl_8049102C",
+    "__vt__10MapPart16A": "lbl_80490FE0",
+    "__dt__10MapPart16AFv": "dtor_8016A270"
   }
 }

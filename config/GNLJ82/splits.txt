@@ -6156,20 +6156,50 @@ game/Sound_8016A2C0.cpp:
 	extabindex  start:0x80026024 end:0x8002603C
 	.text       start:0x8016A2C0 end:0x8016A3D4
 
+game/mapeffect/Kiri16ACtor.cpp:
+	extab       start:0x80010244 end:0x80010260
+	extabindex  start:0x8002603C end:0x80026048
+	.text       start:0x8016A3D4 end:0x8016A654
+
+game/mapeffect/Jungle16ADraw.cpp:
+	extab       start:0x80010260 end:0x80010268
+	extabindex  start:0x80026048 end:0x80026054
+	.text       start:0x8016A654 end:0x8016A854
+
+game/mapeffect/Jungle16AUpdate.cpp:
+	extab       start:0x80010268 end:0x80010270
+	extabindex  start:0x80026054 end:0x80026060
+	.text       start:0x8016A854 end:0x8016AABC
+
 game/Scene_8016AABC.cpp:
 	extab       start:0x80010270 end:0x80010278
 	extabindex  start:0x80026060 end:0x8002606C
 	.text       start:0x8016AABC end:0x8016AB58
+
+game/mapeffect/Jungle16ACtor.cpp:
+	extab       start:0x80010278 end:0x800102D0
+	extabindex  start:0x8002606C end:0x80026078
+	.text       start:0x8016AB58 end:0x8016ACD4
 
 game/Scene_8016ACD4.cpp:
 	extab       start:0x800102D0 end:0x800102E8
 	extabindex  start:0x80026078 end:0x8002609C
 	.text       start:0x8016ACD4 end:0x8016AF3C
 
+game/mapeffect/Cave16ACtor.cpp:
+	extab       start:0x800102E8 end:0x80010364
+	extabindex  start:0x8002609C end:0x800260A8
+	.text       start:0x8016AF3C end:0x8016B0A0
+
 game/HsdRes_8016B0A0.c:
 	extab       start:0x80010364 end:0x8001038C
 	extabindex  start:0x800260A8 end:0x800260E4
 	.text       start:0x8016B0A0 end:0x8016B32C
+
+game/mapeffect/WeatherSystem_Update.c:
+	extab       start:0x8001038C end:0x80010394
+	extabindex  start:0x800260E4 end:0x800260F0
+	.text       start:0x8016B32C end:0x8016BF20
 
 game/mapeffect/fn_8016BF20.c:
 	extab       start:0x80010394 end:0x8001039C
