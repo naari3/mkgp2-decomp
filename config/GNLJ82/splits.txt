@@ -11908,13 +11908,43 @@ sysdolphin/baselib/aobj.c:
 	.sdata2     start:0x806DCBD8 end:0x806DCBE0
 
 sysdolphin/baselib/lobj.c:
-	.text       start:0x802C4010 end:0x802C6430
+	.text       start:0x802C4010 end:0x802C42F0
+	.data       start:0x804FC368 end:0x804FC3E4
+
+sysdolphin/baselib/lobj_vector_nm.c:
+	.text       start:0x802C42F0 end:0x802C4418
 	.rodata     start:0x803F2BB8 end:0x803F2BD0
-	.data       start:0x804FC368 end:0x804FC4C8
+
+sysdolphin/baselib/lobj_setup.c:
+	.text       start:0x802C4418 end:0x802C457C
+
+sysdolphin/baselib/lobj_init_nm.c:
+	.text       start:0x802C457C end:0x802C53C8
+	.data       start:0x804FC3E4 end:0x804FC418
 	.bss        start:0x806CD080 end:0x806CD0A8
 	.sdata      start:0x806D0D20 end:0x806D0D48
 	.sbss       start:0x806D2160 end:0x806D2180
 	.sdata2     start:0x806DCBE0 end:0x806DCC08
+
+sysdolphin/baselib/lobj_current.c:
+	.text       start:0x802C53C8 end:0x802C5900
+
+sysdolphin/baselib/lobj_id.c:
+	.text       start:0x802C5900 end:0x802C59EC
+
+sysdolphin/baselib/lobj_index.c:
+	.text       start:0x802C59EC end:0x802C5A5C
+	.data       start:0x804FC418 end:0x804FC43C
+
+sysdolphin/baselib/lobj_position.c:
+	.text       start:0x802C5A5C end:0x802C5CE8
+
+sysdolphin/baselib/lobj_load.c:
+	.text       start:0x802C5CE8 end:0x802C63B0
+
+sysdolphin/baselib/lobj_load_nm.c:
+	.text       start:0x802C63B0 end:0x802C6430
+	.data       start:0x804FC43C end:0x804FC4C8
 
 sysdolphin/baselib/cobj.c:
 	.text       start:0x802C6430 end:0x802C8B48
@@ -12136,10 +12166,39 @@ sysdolphin/baselib/hash.c:
 	.sdata      start:0x806D0F30 end:0x806D0F38
 
 sysdolphin/baselib/texp.c:
-	.text       start:0x802DE624 end:0x802E17DC
-	.data       start:0x804FD988 end:0x804FDCF0
+	.text       start:0x802DE624 end:0x802DEC64
+
+sysdolphin/baselib/texp_inputs_nm.c:
+	.text       start:0x802DEC64 end:0x802DEF84
+	.data       start:0x804FD988 end:0x804FDBA4
 	.sdata      start:0x806D0F38 end:0x806D0F60
+
+sysdolphin/baselib/texp_alloc.c:
+	.text       start:0x802DEF84 end:0x802DF334
+
+sysdolphin/baselib/texp_color_nm.c:
+	.text       start:0x802DF334 end:0x802DF8EC
+
+sysdolphin/baselib/texp_color.c:
+	.text       start:0x802DF8EC end:0x802DF9F4
+
+sysdolphin/baselib/texp_alpha_nm.c:
+	.text       start:0x802DF9F4 end:0x802DFDEC
+
+sysdolphin/baselib/texp_alpha.c:
+	.text       start:0x802DFDEC end:0x802DFFB8
+
+sysdolphin/baselib/texp_assign.c:
+	.text       start:0x802DFFB8 end:0x802E04C0
+	.data       start:0x804FDBA4 end:0x804FDC64
+
+sysdolphin/baselib/texp_nm.c:
+	.text       start:0x802E04C0 end:0x802E1488
+	.data       start:0x804FDC64 end:0x804FDCF0
 	.sdata2     start:0x806DCED0 end:0x806DCEE0
+
+sysdolphin/baselib/texp_compile.c:
+	.text       start:0x802E1488 end:0x802E17DC
 
 sysdolphin/baselib/texpdag.c:
 	.text       start:0x802E17DC end:0x802E51F4
