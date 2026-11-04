@@ -10518,6 +10518,7 @@ game/BattleContinueScene.cpp:
 	extab       start:0x8001E78C end:0x8001E958
 	extabindex  start:0x8002B700 end:0x8002B778
 	.text       start:0x8024E344 end:0x8024F400
+	.data       start:0x804EF06C end:0x804EF09C
 
 game/fn_8024F400.c:
 	.text       start:0x8024F400 end:0x8024F40C
@@ -10537,6 +10538,9 @@ game/ItemBanner.cpp:
 	extab       start:0x8001E988 end:0x8001EBD4
 	extabindex  start:0x8002B7A8 end:0x8002B838
 	.text       start:0x8024F618 end:0x802506F8
+	.rodata     start:0x803F0AB0 end:0x803F0AD8
+	.data       start:0x804EF0A0 end:0x804EF0C8
+	.sdata      start:0x806D09D0 end:0x806D09E8
 
 game/KartAlertPanel.cpp:
 	extab       start:0x8001EBD4 end:0x8001EC90

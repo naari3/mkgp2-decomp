@@ -234,6 +234,7 @@ inline void CoinPopupDetail::SetRect(float x0, float y0, float x1, float y1) {
     SetXY(center, 0.5f * (rect[2] - rect[0]) + rect[0], 0.5f * (rect[3] - rect[1]) + rect[1]);
 }
 
+
 struct BattleContinueScene : FlowScene {
     float timeLeft;
     int field2C;
@@ -260,55 +261,157 @@ struct BattleContinueScene : FlowScene {
     void Cancel();
 };
 
-BattleContinueScene::BattleContinueScene(int id)
-    : FlowScene(id), field2C(0), coins(CreditMgr_GetCoinCount(0, -1)), noCredit(0), started(0),
-      field38(0), waiting(0), autoQuit(0), confirmed(0), waiter(0), counter(0), detail(0),
-      prompt(new CoinPrompt(0x74, 0x4A, 0x1874, 0x1875, 3)), panel(new Panel) {
-    SetLocalPcbRole(5);
-    cursor = 0;
-    state = 0;
-    timeLeft = PcbSyncTable_LookupValueByState(g_localPcbRole);
-    autoQuit = 1;
-    detail = new CoinPopupDetail(0, 0, 8);
-    detail->SetRect(lbl_806DC06C, lbl_806DC070, lbl_806DC074, lbl_806DC070);
-    fn_8020A7CC(fader.p, 0, 0x1E, 0x1E);
-    state = 1;
-    CreditMgr_SetActiveSlot(1);
-    waiter = new SyncWaiter;
-    counter = new CoinCounter(1);
-    fn_8023CD3C(prompt.p, lbl_806DC078, lbl_806DC07C);
-    fn_8023CCF8(prompt.p, lbl_806DC054, lbl_806DC050);
-    fn_8023CD24(prompt.p, lbl_806DC080, lbl_806DC050);
-    fn_8023CCCC(prompt.p, lbl_806DC04C, lbl_806DC050);
-    fn_8023CEB4(prompt.p);
-}
-
-BattleContinueScene::~BattleContinueScene() {
-    SetPcbMode(1);
-    CreditMgr_SetActiveSlot(0);
+/* Primary definitions follow target address order. */
+void BattleContinueScene::Draw() {
+    waiter->Draw();
+    list.p->Draw();
+    fn_8023CD54(prompt.p);
     if (detail) {
-        fn_80161F28(detail, 1);
-        detail = 0;
-    }
-    if (waiter) {
-        delete waiter;
-        waiter = 0;
+        fn_8016039C(detail);
     }
     if (counter) {
-        fn_8024E244(counter, 1);
-        counter = 0;
+        fn_8024E05C(counter);
+    }
+    {
+        Panel *p = panel.p;
+        if (p->kind != 3) {
+            fn_8011FAFC(&p->frame, 6);
+            fn_8011FAFC(&p->labels[0], 6);
+            fn_8011FAFC(&p->labels[1], 6);
+        }
     }
 }
 
-#pragma dont_inline on
-extern "C" BattleContinueScene *fn_8024EDC4(int id) {
-    return new BattleContinueScene(id);
+void BattleContinueScene::Update() {
+    InputState *in = GetInput();
+    if (in->held == 1) {
+        SetPcbMode(4);
+    } else {
+        SetPcbMode(1);
+    }
+    switch (state) {
+    case 1:
+        fader.p->Step();
+        if (fader.p->Done()) {
+            coins = CreditMgr_GetCoinCount(0, -1);
+            noCredit = IsNoCredit();
+            state = 2;
+            fn_8023CFD4(prompt.p);
+        }
+        break;
+    case 2:
+        Select();
+        break;
+    case 3:
+        if (InputMgr_GetPlayer(GetInputManager(), 0)->Released(0x2000)) {
+            SetPcbScratchFlag_806d11a4();
+        }
+        timeLeft = PcbSyncTable_LookupValueByState(g_localPcbRole);
+        fn_801FE27C((int)timeLeft);
+        fn_80232284(ItemMsg_Get(), timeLeft);
+        if (fn_8021B568(waiter) == 0 && waiting == 0) {
+            waiting = 1;
+            field38 = 0;
+            waitStart = OSGetTime();
+            fn_8021B5D4(waiter);
+        }
+        if (waiting > 0) {
+            if ((float)OSTicksToMilliseconds(OSGetTime() - waitStart) / lbl_806DC058 >= lbl_806DC05C) {
+                if (PCBComm_ConfirmHostBattle() == 1) {
+                    Panel *p = panel.p;
+                    if (p->kind == 0 || p->kind == 1) {
+                        p->kind = 2;
+                        p->timer = 0;
+                    }
+                    lbl_806D17F0 = 1;
+                    fn_801FE348();
+                    lbl_806D17F1 = g_localPcbRole != 0;
+                    state = 8;
+                    waitStart = OSGetTime();
+                    {
+                        RankLog *log = GetRankLog();
+                        if (log) {
+                            RankLog_OnRoundComplete(log);
+                            TitleStats_ResetRaceStagingState(log);
+                        }
+                    }
+                }
+            }
+        }
+        break;
+    case 4:
+        Cancel();
+        break;
+    case 5:
+        Confirm();
+        break;
+    case 6:
+        fn_8024E094(counter);
+        if (counter->done == 1) {
+            state = 2;
+        }
+        break;
+    case 8:
+        if ((float)OSTicksToMilliseconds(OSGetTime() - waitStart) / lbl_806DC058 >= lbl_806DC060) {
+            fn_8021B5D4(waiter);
+            state = 9;
+        }
+        break;
+    case 9:
+        fn_80161888(detail);
+        fn_8023CFC8(prompt.p);
+        fn_802321D4(ItemMsg_Get());
+        fn_8020AAD4(ItemDisplay_GetOrCreate());
+        state = 10;
+        break;
+    case -1:
+    case 0:
+    case 7:
+        break;
+    case 10:
+        if (list.p->entries.count <= 0 && detail->Closed() == 1) {
+            field0C = 1;
+            state = -1;
+        }
+        break;
+    }
+    waiter->Update();
+    list.p->Update();
+    fn_8023CDA8(prompt.p);
+    if (detail) {
+        if (state == 6) {
+            fn_80160588(detail, 0, 0);
+        } else {
+            fn_80160588(detail, in->dir, 0);
+        }
+    }
+    fn_8024E094(counter);
+    fn_801D1684(panel.p);
 }
-#pragma dont_inline reset
 
-extern "C" void fn_8024ED8C(VObject *obj) {
-    delete obj;
+#pragma auto_inline off
+void BattleContinueScene::Confirm() {
+    fn_801618CC(detail, 1, 0);
+    fn_80161888(detail);
+    SetLocalPcbRole(0);
+    fader.p->Step();
+    if (fader.p->Done()) {
+        cursor = 1;
+        state = 9;
+    }
 }
+#pragma auto_inline reset
+
+#pragma auto_inline off
+void BattleContinueScene::Cancel() {
+    fn_801618CC(detail, 0, 0);
+    fader.p->Step();
+    if (fader.p->Done()) {
+        cursor = 0;
+        state = 2;
+    }
+}
+#pragma auto_inline reset
 
 void BattleContinueScene::Select() {
     InputState *in;
@@ -418,152 +521,52 @@ confirmed_:
     SetSyncTarget(0x32);
 }
 
-#pragma auto_inline off
-void BattleContinueScene::Cancel() {
-    fn_801618CC(detail, 0, 0);
-    fader.p->Step();
-    if (fader.p->Done()) {
-        cursor = 0;
-        state = 2;
-    }
+extern "C" void fn_8024ED8C(VObject *obj) {
+    delete obj;
 }
 
-void BattleContinueScene::Confirm() {
-    fn_801618CC(detail, 1, 0);
-    fn_80161888(detail);
-    SetLocalPcbRole(0);
-    fader.p->Step();
-    if (fader.p->Done()) {
-        cursor = 1;
-        state = 9;
-    }
+#pragma dont_inline on
+extern "C" BattleContinueScene *fn_8024EDC4(int id) {
+    return new BattleContinueScene(id);
 }
+#pragma dont_inline reset
 
-#pragma auto_inline reset
-
-void BattleContinueScene::Update() {
-    InputState *in = GetInput();
-    if (in->held == 1) {
-        SetPcbMode(4);
-    } else {
-        SetPcbMode(1);
-    }
-    switch (state) {
-    case 1:
-        fader.p->Step();
-        if (fader.p->Done()) {
-            coins = CreditMgr_GetCoinCount(0, -1);
-            noCredit = IsNoCredit();
-            state = 2;
-            fn_8023CFD4(prompt.p);
-        }
-        break;
-    case 2:
-        Select();
-        break;
-    case 3:
-        if (InputMgr_GetPlayer(GetInputManager(), 0)->Released(0x2000)) {
-            SetPcbScratchFlag_806d11a4();
-        }
-        timeLeft = PcbSyncTable_LookupValueByState(g_localPcbRole);
-        fn_801FE27C((int)timeLeft);
-        fn_80232284(ItemMsg_Get(), timeLeft);
-        if (fn_8021B568(waiter) == 0 && waiting == 0) {
-            waiting = 1;
-            field38 = 0;
-            waitStart = OSGetTime();
-            fn_8021B5D4(waiter);
-        }
-        if (waiting > 0) {
-            if ((float)OSTicksToMilliseconds(OSGetTime() - waitStart) / lbl_806DC058 >= lbl_806DC05C) {
-                if (PCBComm_ConfirmHostBattle() == 1) {
-                    Panel *p = panel.p;
-                    if (p->kind == 0 || p->kind == 1) {
-                        p->kind = 2;
-                        p->timer = 0;
-                    }
-                    lbl_806D17F0 = 1;
-                    fn_801FE348();
-                    lbl_806D17F1 = g_localPcbRole != 0;
-                    state = 8;
-                    waitStart = OSGetTime();
-                    {
-                        RankLog *log = GetRankLog();
-                        if (log) {
-                            RankLog_OnRoundComplete(log);
-                            TitleStats_ResetRaceStagingState(log);
-                        }
-                    }
-                }
-            }
-        }
-        break;
-    case 4:
-        Cancel();
-        break;
-    case 5:
-        Confirm();
-        break;
-    case 6:
-        fn_8024E094(counter);
-        if (counter->done == 1) {
-            state = 2;
-        }
-        break;
-    case 8:
-        if ((float)OSTicksToMilliseconds(OSGetTime() - waitStart) / lbl_806DC058 >= lbl_806DC060) {
-            fn_8021B5D4(waiter);
-            state = 9;
-        }
-        break;
-    case 9:
-        fn_80161888(detail);
-        fn_8023CFC8(prompt.p);
-        fn_802321D4(ItemMsg_Get());
-        fn_8020AAD4(ItemDisplay_GetOrCreate());
-        state = 10;
-        break;
-    case -1:
-    case 0:
-    case 7:
-        break;
-    case 10:
-        if (list.p->entries.count <= 0 && detail->Closed() == 1) {
-            field0C = 1;
-            state = -1;
-        }
-        break;
-    }
-    waiter->Update();
-    list.p->Update();
-    fn_8023CDA8(prompt.p);
+BattleContinueScene::~BattleContinueScene() {
+    SetPcbMode(1);
+    CreditMgr_SetActiveSlot(0);
     if (detail) {
-        if (state == 6) {
-            fn_80160588(detail, 0, 0);
-        } else {
-            fn_80160588(detail, in->dir, 0);
-        }
+        fn_80161F28(detail, 1);
+        detail = 0;
     }
-    fn_8024E094(counter);
-    fn_801D1684(panel.p);
-}
-
-void BattleContinueScene::Draw() {
-    waiter->Draw();
-    list.p->Draw();
-    fn_8023CD54(prompt.p);
-    if (detail) {
-        fn_8016039C(detail);
+    if (waiter) {
+        delete waiter;
+        waiter = 0;
     }
     if (counter) {
-        fn_8024E05C(counter);
+        fn_8024E244(counter, 1);
+        counter = 0;
     }
-    {
-        Panel *p = panel.p;
-        if (p->kind != 3) {
-            fn_8011FAFC(&p->frame, 6);
-            fn_8011FAFC(&p->labels[0], 6);
-            fn_8011FAFC(&p->labels[1], 6);
-        }
-    }
+}
+
+BattleContinueScene::BattleContinueScene(int id)
+    : FlowScene(id), field2C(0), coins(CreditMgr_GetCoinCount(0, -1)), noCredit(0), started(0),
+      field38(0), waiting(0), autoQuit(0), confirmed(0), waiter(0), counter(0), detail(0),
+      prompt(new CoinPrompt(0x74, 0x4A, 0x1874, 0x1875, 3)), panel(new Panel) {
+    SetLocalPcbRole(5);
+    cursor = 0;
+    state = 0;
+    timeLeft = PcbSyncTable_LookupValueByState(g_localPcbRole);
+    autoQuit = 1;
+    detail = new CoinPopupDetail(0, 0, 8);
+    detail->SetRect(lbl_806DC06C, lbl_806DC070, lbl_806DC074, lbl_806DC070);
+    fn_8020A7CC(fader.p, 0, 0x1E, 0x1E);
+    state = 1;
+    CreditMgr_SetActiveSlot(1);
+    waiter = new SyncWaiter;
+    counter = new CoinCounter(1);
+    fn_8023CD3C(prompt.p, lbl_806DC078, lbl_806DC07C);
+    fn_8023CCF8(prompt.p, lbl_806DC054, lbl_806DC050);
+    fn_8023CD24(prompt.p, lbl_806DC080, lbl_806DC050);
+    fn_8023CCCC(prompt.p, lbl_806DC04C, lbl_806DC050);
+    fn_8023CEB4(prompt.p);
 }

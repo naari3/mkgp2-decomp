@@ -1,8 +1,8 @@
 /*
  * Result item banner @ 0x8024F618..0x802506F8.
  *
- * ItemBanner (vtable lbl_804EF0A0) owns an ItemIcon (vtable lbl_804EF0B8,
- * four sprites) and a BannerFlash (vtable lbl_804EF0AC, one sprite).
+ * clRubDisp (vtable lbl_804EF0A0) owns a clRubMark (vtable lbl_804EF0B8,
+ * four sprites) and a clRubBack (vtable lbl_804EF0AC, one sprite).
  */
 
 #include "game/FlowCountdown.h"
@@ -31,8 +31,8 @@ int ItemAlias_DestToSource(int item, int *out);
 void fn_80120A08(int id);
 }
 
-struct BannerFlash {
-    virtual ~BannerFlash();
+struct clRubBack {
+    virtual ~clRubBack();
     unsigned char active;
     float x;
     float y;
@@ -42,7 +42,7 @@ struct BannerFlash {
     int loops;
     VHolder<FlowFaderF> scale;
     VHolder<FlowFaderI> fade;
-    BannerFlash()
+    clRubBack()
         : active(0), x(lbl_806DC090), y(lbl_806DC094), frame(0), loop(0), loops(6),
           scale(new FlowFaderF(lbl_806DC088)), fade(new FlowFaderI) {
         fn_8020A734(scale.p, 0xD, lbl_806DC088, lbl_806DC08C);
@@ -55,11 +55,10 @@ struct BannerFlash {
         }
     }
     void Update();
-    virtual void _key();
 };
 
-struct ItemIcon {
-    virtual ~ItemIcon();
+struct clRubMark {
+    virtual ~clRubMark();
     unsigned char active;
     float x;
     float y;
@@ -71,23 +70,46 @@ struct ItemIcon {
     VHolder<FlowFaderF> scale;
     VHolder<FlowFaderI> fade0;
     VHolder<FlowFaderI> fade1;
-    ItemIcon();
+    clRubMark();
     void Update();
     void Show(int item);
-    virtual void _key();
 };
 
-struct ItemBanner {
-    virtual ~ItemBanner();
-    VHolder<ItemIcon> icon;
-    VHolder<BannerFlash> flash;
-    ItemBanner();
+/* These holders own the two out-of-line destructors at the end of this TU.
+ * Deferred inlining keeps their delete bodies inline at cleanup sites while
+ * emitting these ordinary definitions after the primary methods. */
+template <> struct VHolder<clRubBack> {
+    clRubBack *p;
+    VHolder(clRubBack *q) : p(q) {}
+    ~VHolder() throw();
+};
+
+template <> struct VHolder<clRubMark> {
+    clRubMark *p;
+    VHolder(clRubMark *q) : p(q) {}
+    ~VHolder() throw();
+};
+
+struct clRubDisp {
+    virtual ~clRubDisp();
+    VHolder<clRubMark> icon;
+    VHolder<clRubBack> flash;
+    clRubDisp();
     void Update();
     void Show(int item);
-    virtual void _key();
 };
 
-ItemIcon::ItemIcon()
+/* GC/2.6 -inline deferred emits out-of-line definitions in reverse order.
+ * Keep these two definitions first so clRubBack then clRubMark are last. */
+VHolder<clRubMark>::~VHolder() throw() {
+    delete p;
+}
+
+VHolder<clRubBack>::~VHolder() throw() {
+    delete p;
+}
+
+clRubMark::clRubMark()
     : active(0), x(lbl_806DC090), y(lbl_806DC094), item(0), kind(-1), frame(0), loop(0),
       scale(new FlowFaderF(lbl_806DC088)), fade0(new FlowFaderI), fade1(new FlowFaderI) {
     int i;
@@ -104,20 +126,20 @@ ItemIcon::ItemIcon()
         rc.mode = 3;
         sprites[1] = SpriteHandle_CreateDefault(&rc, 3);
         sprites[3] = SpriteHandle_CreateDefault(&rc, 3);
-    }
-    for (i = 0; i < 4; i++) {
-        SpriteHandle_SetActiveFlag(sprites[i], 0);
-        SpriteHandle_RecomputeCull(sprites[i]);
+        for (i = 0; i < 4; i++) {
+            SpriteHandle_SetActiveFlag(sprites[i], 0);
+            SpriteHandle_RecomputeCull(sprites[i]);
+        }
     }
 }
 
-ItemIcon::~ItemIcon() {
+clRubMark::~clRubMark() {
     for (int i = 0; i < 4; i++) {
         SpriteHandle_Destroy(sprites[i]);
     }
 }
 
-void ItemIcon::Show(int id) {
+void clRubMark::Show(int id) {
     int tmp;
     int src = ItemAlias_DestToSource((unsigned char)id, &tmp);
     if (src != 0x2E && src != 0x2F && src != 0x30 && src != 0x31) {
@@ -175,7 +197,7 @@ void ItemIcon::Show(int id) {
     }
 }
 
-void ItemIcon::Update() {
+void clRubMark::Update() {
     int i;
     if (!active) {
         for (i = 0; i < 4; i++) {
@@ -247,11 +269,11 @@ void ItemIcon::Update() {
     }
 }
 
-BannerFlash::~BannerFlash() {
+clRubBack::~clRubBack() {
     SpriteHandle_Destroy(sprite);
 }
 
-void BannerFlash::Update() {
+void clRubBack::Update() {
     if (active) {
         float px = x;
         float py = y;
@@ -295,7 +317,7 @@ void BannerFlash::Update() {
     }
 }
 
-ItemBanner::ItemBanner() : icon(new ItemIcon), flash(new BannerFlash) {
+clRubDisp::clRubDisp() : icon(new clRubMark), flash(new clRubBack) {
     if (isJapanese() == 0) {
         PreloadResource(0x1557);
     } else {
@@ -303,7 +325,7 @@ ItemBanner::ItemBanner() : icon(new ItemIcon), flash(new BannerFlash) {
     }
 }
 
-ItemBanner::~ItemBanner() {
+clRubDisp::~clRubDisp() {
     if (isJapanese() == 0) {
         fn_80120A08(0x1557);
     } else {
@@ -311,8 +333,8 @@ ItemBanner::~ItemBanner() {
     }
 }
 
-void ItemBanner::Show(int id) {
-    BannerFlash *f = flash.p;
+void clRubDisp::Show(int id) {
+    clRubBack *f = flash.p;
     if (id == -1) {
         f->active = 0;
         SpriteHandle_SetActiveFlag(f->sprite, 0);
@@ -331,7 +353,7 @@ void ItemBanner::Show(int id) {
     icon.p->Show(id);
 }
 
-void ItemBanner::Update() {
+void clRubDisp::Update() {
     flash.p->Update();
     icon.p->Update();
 }

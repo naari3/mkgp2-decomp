@@ -1222,5 +1222,75 @@
     "dtor_801419C8",
     "__dt__9PopupRootFv",
     "dtor_8021617C"
-  ]
+  ],
+  "src/game/BattleContinueScene.cpp": {
+    "extab": [
+      "fn_8024E344",
+      "fn_8024E3F0",
+      "fn_8024E8A0",
+      "fn_8024E930",
+      "fn_8024E9B0",
+      "fn_8024ED8C",
+      "fn_8024EDC4",
+      "fn_8024EE10",
+      "fn_8024EF70",
+      "dtor_8024F35C",
+      "dtor_80082960",
+      "dtor_801CCA30"
+    ],
+    "extabindex": [
+      "fn_8024E344",
+      "fn_8024E3F0",
+      "fn_8024E8A0",
+      "fn_8024E930",
+      "fn_8024E9B0",
+      "fn_8024ED8C",
+      "fn_8024EDC4",
+      "fn_8024EE10",
+      "fn_8024EF70",
+      "dtor_8024F35C",
+      "dtor_80082960",
+      "dtor_801CCA30"
+    ]
+  },
+  "src/game/ItemBanner.cpp": {
+    "extab": [
+      "fn_8024F618",
+      "fn_8024F650",
+      "fn_8024F720",
+      "fn_8024F81C",
+      "dtor_802505D8",
+      "dtor_80250668",
+      "fn_8024F9D4",
+      "fn_8024FC00",
+      "fn_8024FCE4",
+      "fn_80250048",
+      "fn_80250278",
+      "fn_802503A0",
+      "dtor_80082960",
+      "dtor_801F2724",
+      "__dt__10FlowFaderIFv",
+      "dtor_801F4A80",
+      "__dt__10FlowFaderFFv"
+    ],
+    "extabindex": [
+      "fn_8024F618",
+      "fn_8024F650",
+      "fn_8024F720",
+      "fn_8024F81C",
+      "fn_8024F9D4",
+      "fn_8024FC00",
+      "fn_8024FCE4",
+      "fn_80250048",
+      "fn_80250278",
+      "fn_802503A0",
+      "dtor_802505D8",
+      "dtor_80250668",
+      "dtor_80082960",
+      "dtor_801F2724",
+      "__dt__10FlowFaderIFv",
+      "dtor_801F4A80",
+      "__dt__10FlowFaderFFv"
+    ]
+  }
 }

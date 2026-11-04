@@ -124,3 +124,13 @@ RacePopups/SpeedHud rescue resume: 100% individual function objdiff plus exact o
 Source: Codex worker c2_b3_8021550c_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 20 fn / 6360 B.
 
 For these native rescue TUs, placing the undefined virtual key declaration before the first defined non-inline virtual suppresses derived vtable emission without changing inherited dispatch slots or primary text. Explicit scopes around sequential ResCtrl locals reproduce target constructor EH lifetimes while empty destructors preserve all instruction bytes. Owned EH is exact even though objdiff whole-section scores fall due to appended weak destructor copies.
+
+## c2_b1_banner_20261105
+Source: Codex worker c2_b1_banner_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 22 fn / 8604 B.
+
+ItemBanner RTTI names are clRubDisp/clRubBack/clRubMark. Text-identical generic VHolder deleting dtors can hide incorrect type-to-address bridges: EH cleanup identifies canonical FlowFaderI/F dtors vs TU-owned clRubBack/clRubMark holder dtors. The ResCtrl local in clRubMark ctor stays alive through the final sprite activation loop; narrowing that lifetime preserves text but changes EH.
+
+## c2_b1_banner_20261105
+Source: Codex worker c2_b1_banner_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 22 fn / 8604 B.
+
+Rescue of existing NonMatching TUs must check retained function emission order, not only per-symbol objdiff percentages. The first link of this batch failed despite 100% functions/EH because source order differed. GC/2.6 -inline deferred emits ordinary out-of-line definitions in reverse source order. Private whole-class VHolder specializations with out-of-line destructors plus deferred inlining preserved exact inlined delete bodies while placing owned dtors at the target TU tail.
