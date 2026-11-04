@@ -9592,6 +9592,32 @@ game/Item_GetDescriptorField0.c:
 	extabindex  start:0x8002AEA8 end:0x8002AEB4
 	.text       start:0x8023DC50 end:0x8023DCEC
 
+game/ItemSelectChildSpriteDraw.cpp:
+	extab       start:0x8001CBC4 end:0x8001CBDC
+	extabindex  start:0x8002AEB4 end:0x8002AEC0
+	.text       start:0x8023DCEC end:0x8023E154
+
+game/ItemSelectChildSpriteMethods.cpp:
+	extab       start:0x8001CBDC end:0x8001CBFC
+	extabindex  start:0x8002AEC0 end:0x8002AEF0
+	.text       start:0x8023E154 end:0x8023E324
+
+game/ItemSelectChildSpriteUpdate.cpp:
+	extab       start:0x8001CBFC end:0x8001CC04
+	extabindex  start:0x8002AEF0 end:0x8002AEFC
+	.text       start:0x8023E324 end:0x8023E808
+	.data       start:0x804EE618 end:0x804EE638
+
+game/ItemSelectChildSpriteDtor.cpp:
+	extab       start:0x8001CC04 end:0x8001CC9C
+	extabindex  start:0x8002AEFC end:0x8002AF08
+	.text       start:0x8023E808 end:0x8023EA80
+
+game/ItemSelectChildSpriteCtor.cpp:
+	extab       start:0x8001CC9C end:0x8001CD94
+	extabindex  start:0x8002AF08 end:0x8002AF14
+	.text       start:0x8023EA80 end:0x8023EF38
+
 game/SpriteAnimParamBlock.c:
 	extab       start:0x8001CD94 end:0x8001CDAC
 	extabindex  start:0x8002AF14 end:0x8002AF38
