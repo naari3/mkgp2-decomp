@@ -213,8 +213,11 @@ static HSD_SList* loadEnvelopeDesc(HSD_EnvelopeDesc** edesc_p)
 
     while (*edesc_p) {
         HSD_Envelope* envelope = NULL;
-        HSD_EnvelopeDesc* edesc = *edesc_p;
-        HSD_Envelope** env_p = &envelope;
+        HSD_Envelope** env_p;
+        HSD_EnvelopeDesc* edesc;
+
+        edesc = *edesc_p;
+        env_p = &envelope;
 
         while (edesc->joint) {
             *env_p = HSD_EnvelopeAlloc();
@@ -252,13 +255,19 @@ static void HSD_ShapeSetRemove(HSD_ShapeSet* shape_set)
     HSD_ShapeSetFree(shape_set);
 }
 
+static HSD_ShapeSet* HSD_ShapeSetAlloc(void)
+{
+    HSD_ShapeSet* shape_set = hsdAllocMemPiece(SHAPESET_SIZE);
+    HSD_ASSERT(482, shape_set);
+    memset(shape_set, 0, SHAPESET_SIZE);
+    return shape_set;
+}
+
 static HSD_ShapeSet* loadShapeSetDesc(HSD_ShapeSetDesc* sdesc)
 {
     int i;
 
-    HSD_ShapeSet* shape_set = hsdAllocMemPiece(SHAPESET_SIZE);
-    HSD_ASSERT(482, shape_set);
-    memset(shape_set, 0, SHAPESET_SIZE);
+    HSD_ShapeSet* shape_set = HSD_ShapeSetAlloc();
     shape_set->flags = sdesc->flags;
     shape_set->nb_shape = sdesc->nb_shape;
     shape_set->nb_vertex_index = sdesc->nb_vertex_index;

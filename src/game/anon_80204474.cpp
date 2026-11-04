@@ -40,7 +40,7 @@ extern "C" YesNoTask *fn_80204778(int kind, unsigned char defYes, int layer, int
 YesNoTask::~YesNoTask() {}
 
 YesNoTask::YesNoTask(int kind_, unsigned char defYes, int layer_, int id)
-    : FlowTask(id), list(new SceneListImpl), layer(layer_), kind(kind_), choice(defYes == 0), field20(0) {
+    : FlowTask(id), list(new SceneListImpl), layer(layer_), kind(kind_), choice(defYes ? 0 : 1), field20(0) {
     {
         FlowSceneList *l = list.p;
         fn_801F4DF0(l, new YesNoButtonL(kind_, layer_), 0);
@@ -98,11 +98,16 @@ void YesNoCursor::Update() {
     int t = fn_8020A788(timer.p);
     if (t % 15 == 0) {
         int id = (t / 15) * 2;
-        FlowSceneList *l = list.p;
-        float px = x;
-        unsigned char f = visible;
-        float py = y;
-        int lay = layer;
+        unsigned char f;
+        FlowSceneList *l;
+        int lay;
+        float py;
+        float px;
+        l = list.p;
+        lay = layer;
+        f = visible;
+        py = y;
+        px = x;
         fn_801F4DF0(l, new YesNoSpark(id, lay, px, py, f), 0);
     }
     list.p->Update();
