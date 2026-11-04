@@ -6263,5 +6263,40 @@
   },
   "src/game/PhysicsState_WallCollisionCheck.cpp": {
     "__dt__19PhysicsCollisionVecFv": "dtor_80036E40"
+  },
+  "src/game/Scene_80164614.cpp": {
+    "__ct__6Env163Fv": "InputManager_Init",
+    "__ct__9Camera163FiiffPv": "Camera_Create",
+    "__ct__6Car163Fiifffiiiiii": "CarObject_Init",
+    "__ct__7Path163FPvPvPvPvPvPv": "PathManager_Init",
+    "__ct__8Scene163FPCc": "Scene3D_Init",
+    "__ct__9Lakitu163FPCcifff": "LakituStart_Init",
+    "__ct__7Flag163FP13DemoSceneBase": "Jyugemu_Flag_Ctor",
+    "__ct__10Reverse163FPv": "Jyugemu_ReverseFlag_Ctor",
+    "__ct__9Banner163FPv": "FinalLapBanner_Init",
+    "__ct__12Collision163Fv": "fn_802090A8",
+    "__ct__5AI163FPvPvi": "AI_SystemInit",
+    "__ct__9Select163Fii": "ItemSelect_Init"
+  },
+  "src/game/Scene_801654E0.cpp": {
+    "__ct__11Obj801654E0FUiUi": "fn_801654E0",
+    "__vt__12SceneRoot163": "lbl_803FE0C8",
+    "__vt__11Obj801654E0": "lbl_80490E1C",
+    "__dt__12SceneRoot163Fv": "dtor_8007D0D4",
+    "__vt__12PanelRoot163": "lbl_8048ECF8",
+    "__vt__8Panel163": "lbl_8048ED10",
+    "__dt__8Panel163Fv": "dtor_801419C8",
+    "__vt__13DebugTitle163": "lbl_80490F9C",
+    "__vt__12DebugName163": "lbl_80490F70",
+    "__vt__13DebugTable163": "lbl_80490F0C",
+    "__vt__13DebugOther163": "lbl_80490EE0",
+    "__vt__17DebugModelPage163": "lbl_80490EB4",
+    "__ct__13DebugFirst163Fii": "fn_80149B8C",
+    "__ct__14DebugRecord163Fii": "fn_8014AA38",
+    "__ct__11DebugCup163Fiiii": "fn_80148810",
+    "__ct__16DebugPayloadA163Fv": "fn_8013FF6C",
+    "__ct__16DebugPayloadB163Fi": "fn_80147638",
+    "__ct__16DebugPayloadC163Fv": "fn_801420DC",
+    "__ct__16DebugPayloadD163Fiii": "fn_80145AF4"
   }
 }
