@@ -2,15 +2,15 @@
  * CameraTest_Page @ 0x8007044C..0x80070EA8: the camera test page. Owns a
  * NamCam capture object (lbl_806D1104) whose image is drawn in a frame by
  * FlashFadeOverlay_Draw; the operator toggles mirror/photo mode and moves
- * the image offset (data+0x48, data+0x4C). NonMatching: the phase-0 delete
- * loads lbl_806D1104 into r3 and copies it to r30 instead of loading r30.
+ * the image offset (data+0x48, data+0x4C). The mode-label pointers are
+ * loaded from the shared constant pool.
  */
 #include "game/TestMenuPage.h"
 
 extern "C" {
 extern MenuItem lbl_803FC768[];
-extern const char lbl_806D2CF8[7];
-extern const char lbl_806D2D00[6];
+extern const char *const lbl_806D2D08;
+extern const char *const lbl_806D2D0C;
 extern const char lbl_806D2D64[3];
 extern const char lbl_806D2D68[5];
 extern void *lbl_806D1100;
@@ -196,7 +196,9 @@ extern "C" int CameraTest_Page(TestPage *self, int phase)
                 DrawText(self->text, 0x7E, 0xD8, 7, 1.0f, pool + 0x24C4);
             }
         } else {
-            const char *modes[2] = { lbl_806D2CF8, lbl_806D2D00 };
+            const char *modes[2];
+            modes[0] = lbl_806D2D08;
+            modes[1] = lbl_806D2D0C;
             unsigned char colX;
             unsigned char colY;
 

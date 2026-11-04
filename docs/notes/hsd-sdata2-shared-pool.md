@@ -59,3 +59,8 @@ CW (1.3.2) は `0.0f` / `(f32)s16` magic を unconditionally **anonymous local s
 ## 他 TU も pool に依存しているか
 
 HSD lib の他 TU (`HSD_*Init*` 系等) でも sda21 reloc が出る可能性。new TU を match するときに `objdump -r` で `R_PPC_EMB_SDA21 lbl_806DCC*` が見えたら、post-process が自動で kick する (target .o の reloc を SoT に名前解決)。
+
+## c2_b7_pobj_20261105
+Source: Codex worker c2_b7_pobj_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 27 fn / 18076 B.
+
+pobj rescue: all raw .data bytes can agree while objdiff text reports R_PPC_NONE argument mismatches if target data symbol spans class info plus strings. Splitting symbols at genuine class-info/string boundaries makes all owned sections and functions 100% without code or postprocess changes.

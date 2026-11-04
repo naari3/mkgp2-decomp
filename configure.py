@@ -448,7 +448,7 @@ config.libs = [
         "cflags": cflags_hsd_melee,
         "progress_category": "sdk",
         "objects": [
-            Object(NonMatching, "sysdolphin/baselib/pobj.c"),
+            Object(Matching, "sysdolphin/baselib/pobj.c"),
             Object(NonMatching, "sysdolphin/baselib/jobj.c"),
             Object(Matching, "sysdolphin/baselib/displayfunc.c"),
             Object(Matching, "sysdolphin/baselib/initialize.c"),
@@ -625,7 +625,7 @@ config.libs = [
             Object(Matching, "game/CardRW_TestTopMenu_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/SpeakerTest_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/LampTest_Page.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/CameraTest_Page.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/CameraTest_Page.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/LampTestIndiv_Page.cpp"),
             Object(NonMatching, "game/SwitchTest_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/HandleInitialize_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
@@ -1263,7 +1263,7 @@ config.libs = [
             Object(Matching, "game/HandOverItem_HandToHandTick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/fn_80100284.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/fn_80100828.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(NonMatching, "game/fn_80100F64.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+            Object(Matching, "game/fn_80100F64.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/fn_80101A58.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/fn_801025C0.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/fn_80102DE0.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -1716,7 +1716,7 @@ config.libs = [
             Object(NonMatching, "game/Matrix4RotZ.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Matrix4Leaf.c"),
             Object(NonMatching, "game/PCBCommLifecycle.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/Matrix4RotXY.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Matrix4RotXY.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/Matrix4Multiply.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/PCBCommPhase5.c", extra_cflags=["-use_lmw_stmw on"], extab_padding=b""),
             Object(NonMatching, "game/PCBCommBroadcast.c", extra_cflags=["-lang=c++", "-Cpp_exceptions on", "-use_lmw_stmw on"]),
