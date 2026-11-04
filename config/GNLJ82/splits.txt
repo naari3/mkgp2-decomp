@@ -9675,9 +9675,19 @@ game/anon_802052E0.cpp:
 	.text       start:0x802052E0 end:0x80205DCC
 
 game/anon_80205DCC.cpp:
-	extab       start:0x8001900C end:0x80019210
-	extabindex  start:0x80029924 end:0x80029978
-	.text       start:0x80205DCC end:0x80207324
+	extab       start:0x8001900C end:0x80019044
+	extabindex  start:0x80029924 end:0x80029948
+	.text       start:0x80205DCC end:0x8020688C
+
+game/anon_80205DCC_m1.cpp:
+	extab       start:0x80019044 end:0x80019148
+	extabindex  start:0x80029948 end:0x80029960
+	.text       start:0x8020688C end:0x80206BC8
+
+game/anon_80205DCC_nm1.cpp:
+	extab       start:0x80019148 end:0x80019210
+	extabindex  start:0x80029960 end:0x80029978
+	.text       start:0x80206BC8 end:0x80207324
 
 game/anon_80207324.cpp:
 	extab       start:0x80019210 end:0x8001933C
@@ -9729,9 +9739,14 @@ game/ItemDisplay_Stop.c:
 	.text       start:0x8020AA98 end:0x8020AAD4
 
 game/anon_8020AAD4.cpp:
-	extab       start:0x80019468 end:0x800194A8
-	extabindex  start:0x80029B58 end:0x80029B88
-	.text       start:0x8020AAD4 end:0x8020AE50
+	extab       start:0x80019468 end:0x80019470
+	extabindex  start:0x80029B58 end:0x80029B64
+	.text       start:0x8020AAD4 end:0x8020AB44
+
+game/anon_8020AAD4_m1.cpp:
+	extab       start:0x80019470 end:0x800194A8
+	extabindex  start:0x80029B64 end:0x80029B88
+	.text       start:0x8020AB44 end:0x8020AE50
 
 game/ItemDisplay_Destroy.c:
 	extab       start:0x800194A8 end:0x800194B0
@@ -9744,9 +9759,14 @@ game/ItemDisplay_GetOrCreate.c:
 	.text       start:0x8020AEA8 end:0x8020AF08
 
 game/anon_8020AF08.cpp:
-	extab       start:0x800194B8 end:0x80019538
-	extabindex  start:0x80029BA0 end:0x80029BD0
-	.text       start:0x8020AF08 end:0x8020B4F8
+	extab       start:0x800194B8 end:0x800194D0
+	extabindex  start:0x80029BA0 end:0x80029BC4
+	.text       start:0x8020AF08 end:0x8020B234
+
+game/anon_8020AF08_nm1.cpp:
+	extab       start:0x800194D0 end:0x80019538
+	extabindex  start:0x80029BC4 end:0x80029BD0
+	.text       start:0x8020B234 end:0x8020B4F8
 
 game/anon_8020B4F8.cpp:
 	extab       start:0x80019538 end:0x800195C8

@@ -56,6 +56,7 @@ struct SceneBase {
 };
 
 struct clCSSceneChangeSingle : SceneBase {
+    virtual void _key();
     int state;
     float xc;
     int x10;

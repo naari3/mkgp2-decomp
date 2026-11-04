@@ -30,6 +30,7 @@ struct FlowMgrInfo {
 
 /* Menu mode base (vtable lbl_804E549C, ctor fn_801F5B54). */
 struct MenuModeBase : SceneBase {
+    virtual void _key();
     int f08;
     int f0C;
     int f10;
@@ -60,6 +61,7 @@ SceneBase *fn_8020C254(void);
 }
 
 struct CardMenuRoot : MenuModeBase {
+    virtual void _key();
     SceneBase *task;
     CardMenuRoot();
     ~CardMenuRoot();

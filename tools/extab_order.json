@@ -1600,5 +1600,29 @@
     "fn_8022A758",
     "fn_8022A890",
     "dtor_8016A270"
+  ],
+  "src/game/anon_8020C650.cpp": [
+    "fn_8020C650",
+    "fn_8020C69C",
+    "fn_8020C7BC",
+    "fn_8020C7F4",
+    "fn_8020C830",
+    "fn_8020C8B4",
+    "dtor_8007D0D4",
+    "dtor_801F63F8"
+  ],
+  "src/game/anon_8021ED88.cpp": [
+    "fn_8021ED88",
+    "fn_8021EDB4",
+    "fn_8021EEB8",
+    "fn_8021EF7C",
+    "fn_8021EFB4",
+    "dtor_8007D0D4"
+  ],
+  "src/game/anon_80205DCC_m1.cpp": [
+    "fn_8020688C",
+    "fn_802068C4",
+    "fn_801F26C8",
+    "TweenInterp_Dtor"
   ]
 }

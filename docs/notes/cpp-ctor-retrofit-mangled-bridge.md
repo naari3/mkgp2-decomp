@@ -214,3 +214,8 @@ For a derived class overriding inherited slots, declare an undefined new virtual
 Source: Codex worker c2_i11_dn_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 31 fn / 11788 B.
 
 With MWCC GC/2.6 -inline deferred, physical emission order can be reverse source-definition order even while every per-function objdiff score is 100%. Verify actual primary-function order/sizes in source .o against target .o, excluding discardable weak copies. In anon_80209FA4.cpp prefix and tail, reversing the out-of-line definitions restores target order without changing function bodies. Initial full-link failure had exactly 473 changed words inside permuted functions and 247 branch references to them, plus vtable/rodata/EH index references.
+
+## c2_r5_80205dcc_20261105
+Source: Codex worker c2_r5_80205dcc_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 21 fn / 5584 B.
+
+Rescue c2_r5: Matrix4RotZ and HudManagerHide need flag promotion only. CardMenuRoot and MenuModeBase require first-declared undefined virtual keys to suppress duplicate tables; clCSSceneChangeSingle likewise. Bridge SceneBase dtor to dtor_8007D0D4; order owned EH before weak copies and bridge compiler @etb/@eti names. ItemDisplay can isolate the exact Start/Draw/Update tail by retaining the original hide routine as a static inline helper, preserving target Update inlining. Selector 8020688C..80206BC8 is a clean exact 828-byte run; private declaration copy suppresses its vtables without modifying shared FlowYesNo.h.
