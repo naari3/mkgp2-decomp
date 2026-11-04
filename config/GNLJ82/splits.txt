@@ -6924,8 +6924,18 @@ game/NokoNoko_Init.c:
 	extabindex  start:0x80026DC8 end:0x80026DD4
 	.text       start:0x80188E9C end:0x801891C4
 
+game/nokonoko/fn_801891C4.c:
+	extab       start:0x80011DAC end:0x80011DB4
+	extabindex  start:0x80026DD4 end:0x80026DE0
+	.text       start:0x801891C4 end:0x80189394
+
 game/nokonoko/fn_80189394.c:
 	.text       start:0x80189394 end:0x801893BC
+
+game/nokonoko/fn_801893BC.c:
+	extab       start:0x80011DB4 end:0x80011DBC
+	extabindex  start:0x80026DE0 end:0x80026DEC
+	.text       start:0x801893BC end:0x80189808
 
 game/bbox/fn_80189808.cpp:
 	extab       start:0x80011DBC end:0x80011DD4
@@ -6936,6 +6946,16 @@ game/nokonoko/fn_80189950.c:
 	extab       start:0x80011DD4 end:0x80011DDC
 	extabindex  start:0x80026DF8 end:0x80026E04
 	.text       start:0x80189950 end:0x801899B8
+
+game/bbox/fn_801899B8.c:
+	extab       start:0x80011DDC end:0x80011DE4
+	extabindex  start:0x80026E04 end:0x80026E10
+	.text       start:0x801899B8 end:0x80189C10
+
+game/bbox/fn_80189C10.c:
+	extab       start:0x80011DE4 end:0x80011DEC
+	extabindex  start:0x80026E10 end:0x80026E1C
+	.text       start:0x80189C10 end:0x80189FD8
 
 game/bbox/fn_80189FD8.c:
 	extab       start:0x80011DEC end:0x80011DF4
