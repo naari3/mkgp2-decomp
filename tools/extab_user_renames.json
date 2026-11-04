@@ -6323,5 +6323,22 @@
   },
   "src/game/EnemyFaceDraw.cpp": {
     "__dt__5Vec3cFv": "dtor_80036E40"
+  },
+  "src/game/SceneListOperations.cpp": {
+    "SceneListInsert": "fn_801F4DF0"
+  },
+  "src/game/PaletteBufferCtor.cpp": {
+    "__ct__13PaletteBufferFPCc": "fn_801F6918",
+    "__dt__10PaletteRefFv": "dtor_801F6B44",
+    "@19": "global:lbl_806DA700"
+  },
+  "src/game/RaceHudSceneCtor.cpp": {
+    "__ct__12RaceHudSceneFv": "fn_8024932C",
+    "__vt__12RaceHudScene": "lbl_804EECA4",
+    "__vt__9SceneBase": "lbl_803FE0C8",
+    "__dt__9SceneBaseFv": "dtor_8007D0D4",
+    "__ct__13FlowSceneHostFv": "fn_801FDA04",
+    "__dt__13FlowSceneHostFv": "dtor_801FD958",
+    "__ct__10ItemMsgWndFv": "fn_802325FC"
   }
 }

@@ -9099,6 +9099,11 @@ game/dtor_801F2724.cpp:
 	extabindex  start:0x80028D0C end:0x80028D18
 	.text       start:0x801F2724 end:0x801F27B4
 
+game/SceneListOperations.cpp:
+	extab       start:0x800173C0 end:0x800173D8
+	extabindex  start:0x80028E20 end:0x80028E44
+	.text       start:0x801F4D3C end:0x801F4EB0
+
 game/fn_801F5A64.cpp:
 	extab       start:0x800173E8 end:0x800173F0
 	extabindex  start:0x80028E5C end:0x80028E68
@@ -9109,8 +9114,18 @@ game/DisplayBuffer_GetByIndex.c:
 	extabindex  start:0x80028EBC end:0x80028EC8
 	.text       start:0x801F6454 end:0x801F6494
 
+game/DisplayBuffersReset.c:
+	extab       start:0x800174EC end:0x800174F4
+	extabindex  start:0x80028EC8 end:0x80028ED4
+	.text       start:0x801F6494 end:0x801F6574
+
 game/fn_801F6574.c:
 	.text       start:0x801F6574 end:0x801F6588
+
+game/OverlayViewSetup.cpp:
+	extab       start:0x800174F4 end:0x800174FC
+	extabindex  start:0x80028ED4 end:0x80028EE0
+	.text       start:0x801F6588 end:0x801F6790
 
 game/fn_801F6790.c:
 	extab       start:0x800174FC end:0x80017504
@@ -9126,6 +9141,12 @@ game/fn_801F6860.cpp:
 	extab       start:0x8001750C end:0x80017514
 	extabindex  start:0x80028EF8 end:0x80028F04
 	.text       start:0x801F6860 end:0x801F6918
+
+game/PaletteBufferCtor.cpp:
+	extab       start:0x80017514 end:0x80017530
+	extabindex  start:0x80028F04 end:0x80028F10
+	.text       start:0x801F6918 end:0x801F6B44
+	.sdata2     start:0x806DA700 end:0x806DA708
 
 game/dtor_801F6B44.cpp:
 	extab       start:0x80017530 end:0x80017538
@@ -10151,6 +10172,20 @@ game/IsCardValid.c:
 	extabindex  start:0x8002AF74 end:0x8002AF80
 	.text       start:0x8023F65C end:0x8023F714
 
+game/CardSlotFlag.cpp:
+	extab       start:0x8001CE1C end:0x8001CE24
+	extabindex  start:0x8002AF80 end:0x8002AF8C
+	.text       start:0x8023F714 end:0x8023F76C
+
+game/LapDispControls.c:
+	.text       start:0x8023F76C end:0x8023F790
+
+game/LapDispUpdate.cpp:
+	extab       start:0x8001CE24 end:0x8001CE2C
+	extabindex  start:0x8002AF8C end:0x8002AF98
+	.text       start:0x8023F790 end:0x8023FAA0
+	.data       start:0x804EE65C end:0x804EE67C
+
 game/LapDisp_SetTotalLaps.c:
 	extab       start:0x8001CE2C end:0x8001CE34
 	extabindex  start:0x8002AF98 end:0x8002AFA4
@@ -10190,6 +10225,20 @@ game/fn_80242DE0.c:
 
 game/fn_80245700.c:
 	.text       start:0x80245700 end:0x80245704
+
+game/RaceHudSceneCtor.cpp:
+	extab       start:0x8001DC0C end:0x8001DC50
+	extabindex  start:0x8002B424 end:0x8002B430
+	.text       start:0x8024932C end:0x802494B4
+
+game/RankDispControls.c:
+	.text       start:0x802494B4 end:0x802494E0
+
+game/RankDispUpdate.cpp:
+	extab       start:0x8001DC50 end:0x8001DC58
+	extabindex  start:0x8002B430 end:0x8002B43C
+	.text       start:0x802494E0 end:0x80249984
+	.data       start:0x804EECF4 end:0x804EED1C
 
 game/RnkDisp_SetPosition.c:
 	extab       start:0x8001DC58 end:0x8001DC60

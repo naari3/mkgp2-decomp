@@ -2307,6 +2307,16 @@ config.libs = [
             Object(Matching, "game/fn_801B3BC8.c"),
             Object(Matching, "game/fn_801B0D80.c"),
             Object(Matching, "game/fn_801F6574.c"),
+            Object(Matching, "game/RaceHudSceneCtor.cpp", extab_padding=b"\xC6\x02", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/DisplayBuffersReset.c"),
+            Object(NonMatching, "game/OverlayViewSetup.cpp"),
+            Object(NonMatching, "game/PaletteBufferCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/SceneListOperations.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/CardSlotFlag.cpp"),
+            Object(Matching, "game/LapDispControls.c"),
+            Object(Matching, "game/LapDispUpdate.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/RankDispControls.c"),
+            Object(Matching, "game/RankDispUpdate.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801B0CE4.c", mw_version="GC/1.2.5n"),
             Object(Matching, "game/fn_801DEAF4.c"),
             Object(Matching, "game/fn_801F8E90.c"),
@@ -3315,6 +3325,8 @@ DATA_ALIGN4_TUS = [
     "game/ItemObject_Tick_DispatchcTo15",
     "game/mapeffect/WeatherSystem_Init",
     "game/misc3d/fn_8016504C",
+    "game/LapDispUpdate",
+    "game/RankDispUpdate",
 ]
 
 

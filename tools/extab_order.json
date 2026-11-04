@@ -1124,5 +1124,17 @@
       "dtor_80082960",
       "dtor_8007D0D4"
     ]
+  },
+  "src/game/SceneListOperations.cpp": {
+    "extab": [
+      "fn_801F4E78",
+      "fn_801F4D3C",
+      "fn_801F4DF0"
+    ],
+    "extabindex": [
+      "fn_801F4D3C",
+      "fn_801F4DF0",
+      "fn_801F4E78"
+    ]
   }
 }
