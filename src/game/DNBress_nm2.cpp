@@ -1,0 +1,385 @@
+/*
+ * 0x80226954..0x80227FA4: clDNBress (dnBress.cpp), the ice dinosaur's breath
+ * on Dino Dino Jungle. When a kart comes close, the dinosaur animation plays,
+ * a breath sound starts and fire/frost particles (two variants, picked by the
+ * reverse-course flag) are spawned through pointer-to-member tables. Four
+ * smoke puffs rise over the lake. The class data (spawn ranges, member
+ * function tables, vtable) lives in lbl_804EDF80 and is addressed off one
+ * base; the static initializer (fn_80227FA4) stays in asm.
+ */
+
+void *operator new(unsigned long size);
+void operator delete(void *p) throw();
+
+typedef float Mtx[3][4];
+
+struct Vec3f {
+    float x, y, z;
+};
+
+struct HSD_JObj {
+    char pad00[0x14];
+    unsigned int flags;
+    char pad18[0x38 - 0x18];
+    Vec3f translate;
+    Mtx mtx;
+};
+
+struct clNormal3D {
+    char _opaque[0x5C];
+    clNormal3D(const char *res, int flags);
+    ~clNormal3D();
+};
+
+struct AnimCtrl {
+    char _opaque[0x180];
+    AnimCtrl();
+    ~AnimCtrl();
+};
+
+struct KartRender {
+    char pad000[0x23C];
+    int x23c;
+};
+
+class GXChannel {
+public:
+    GXChannel(void *root, void *desc, int flags, int mode);
+    ~GXChannel();
+    void PushTransform(Mtx m);
+
+private:
+    char pad[0x14];
+};
+
+struct Particle {
+    unsigned char active;
+    Vec3f v;
+    Vec3f pos;
+    float scale;
+    float alpha;
+    float c[3];
+    float speed;
+    float grow;
+    float dvx;
+    float dvy;
+    float dvz;
+    int delay;
+};
+
+struct clMapEffectParts {
+    virtual ~clMapEffectParts() {}
+    virtual void Update();
+    virtual void Draw();
+    virtual void Enable(int on);
+    clMapEffectParts() {}
+};
+
+struct clDNBress;
+typedef void (clDNBress::*SpawnFn)();
+typedef void (clDNBress::*UpdFn)(Particle *p);
+
+struct FireFuncs {
+    SpawnFn spawn;
+    UpdFn upd;
+};
+
+struct clDNBress : clMapEffectParts {
+    clNormal3D *model;
+    int type;
+    unsigned char xc;
+    AnimCtrl *anim;
+    clNormal3D *x14;
+    clNormal3D *fx;
+    HSD_JObj *joint;
+    float x20;
+    Vec3f pos;
+    Vec3f dir;
+    int randIdx;
+    unsigned char sePlaying;
+    int cooldown;
+    int state;
+    int x4c;
+    int timer;
+    float x54;
+    Vec3f x58;
+    unsigned char hidden;
+    int x68;
+    Particle parts[20];
+    Particle smoke[4];
+    Particle *freeSlot;
+    SpawnFn spawn;
+    UpdFn upd;
+
+    clDNBress();
+    virtual void Enable(int on);
+    virtual ~clDNBress();
+    virtual void Update();
+    virtual void Draw();
+    void Tick();
+    void UpdFire1(Particle *p);
+    void SpawnFire1();
+    void UpdFire2(Particle *p);
+    void SpawnFire2();
+    void Breathe();
+};
+
+extern "C" {
+extern int g_gameMode;
+extern int g_longRoundFlag;
+extern int g_reverseRoundFlag;
+extern KartRender *g_playerRenderObj;
+extern const char lbl_806DB3F0[7];
+extern const char lbl_806DB3F8[5];
+extern const int lbl_806DB3E8[2];
+extern float lbl_806D0548[2];
+extern float lbl_806D0580;
+extern float lbl_806D0584;
+extern float lbl_806D0588;
+extern const int lbl_803D0240[4][2];
+extern const float lbl_803D0260[3];
+extern const float lbl_803D026C[3];
+extern const float lbl_803D0278[4];
+extern const Vec3f lbl_803D02A0[2];
+extern float lbl_804EDF80[2][3];
+extern FireFuncs lbl_804EDF98[2];
+extern float lbl_80495A94[48];
+extern const char lbl_803D01BC[];
+extern const char lbl_803D01CC[];
+extern const char *lbl_803D01DC[];
+extern const char lbl_803D0300[];
+extern const char lbl_803D0320[];
+extern const char lbl_803D0340[];
+extern const char lbl_803D0354[];
+extern const char lbl_803D037C[];
+extern const float lbl_806DB400;
+extern const float lbl_806DB404;
+extern const float lbl_806DB408;
+extern const float lbl_806DB40C;
+extern const float lbl_806DB410;
+extern const float lbl_806DB414;
+extern const float lbl_806DB418;
+extern const float lbl_806DB41C;
+extern const float lbl_806DB420;
+extern const float lbl_806DB424;
+extern const float lbl_806DB428;
+extern const float lbl_806DB42C;
+extern const float lbl_806DB430;
+extern const float lbl_806DB434;
+extern const float lbl_806DB438;
+extern const float lbl_806DB43C;
+extern const float lbl_806DB440;
+extern const float lbl_806DB444;
+extern const float lbl_806DB448;
+extern const float lbl_806DB44C;
+extern const float lbl_806DB450;
+extern const float lbl_806DB454;
+extern const float lbl_806DB458;
+extern const float lbl_806DB45C;
+extern const float lbl_806DB460;
+extern const float lbl_806DB464;
+extern const float lbl_806DB468;
+extern const float lbl_806DB46C;
+extern const float lbl_806DB470;
+extern const float lbl_806DB474;
+extern const float lbl_806DB478;
+extern const float lbl_806DB47C;
+extern const float lbl_806DB480;
+extern const float lbl_806DB484;
+void __assert(const char *file, int line, const char *cond);
+HSD_JObj *LinkedNode_GetField10_OrFallback(clNormal3D *m, int idx);
+void HSD_JObjSetupMatrixSub(HSD_JObj *jobj);
+void Object_RenderJObjTree(clNormal3D *m, int mask);
+HSD_JObj *Archive_GetRootJObj(clNormal3D *m);
+void *HSD_JObjGetDObj(HSD_JObj *jobj);
+void HSD_JObjSetFlags(HSD_JObj *jobj, int flags);
+void PSMTXScale(Mtx m, float x, float y, float z);
+void PSMTXMultVecSR(Mtx m, Vec3f *src, Vec3f *dst);
+float PSVECSquareMag(Vec3f *v);
+void Object_SetColorRGBA(clNormal3D *m, int idx, float r, float g, float b, float a);
+void Object_DriveAnimMatrix(clNormal3D *m);
+void clNormal3D_SetScale(clNormal3D *m, int idx, float x, float y, float z, float w);
+KartRender *GetKartSlotKartVariant(int slot);
+void *GetPlayerCarObject(void);
+KartRender *CarObject_GetRenderObj(void *car);
+const float *KartDriver_GetKartRootMtx(KartRender *k);
+void fn_80240014(AnimCtrl *a);
+void fn_8023FE74(AnimCtrl *a, int b, int frame);
+void fn_80240378(AnimCtrl *a, const char *file, int b, clNormal3D *m, const char **names);
+void SoundMgr_PlaySE(int id);
+void fn_8016C288(int id, Vec3f *pos);
+void fn_8016C1F8(int id, float vol);
+void fn_8016C394(int id);
+float LUT_Cosine(float a);
+float LUT_Sine(float a);
+void DebugPrintf(const char *fmt, ...);
+HSD_JObj *ResolveJointByName(clNormal3D *m, const char *name);
+void JObj_Hide(clNormal3D *m, HSD_JObj *jobj, int flags);
+void fn_80182954(HSD_JObj *jobj, int on);
+}
+
+static inline HSD_JObj *GetJObj(clNormal3D *m) {
+    HSD_JObj *jobj = LinkedNode_GetField10_OrFallback(m, 0);
+    if (jobj == 0) {
+        __assert(lbl_806DB3F0, 0x3E4, lbl_806DB3F8);
+    }
+    return jobj;
+}
+
+static inline void SetupJointMatrix(HSD_JObj *jobj) {
+    if (jobj == 0) {
+        __assert(lbl_806DB3F0, 0x47C, lbl_806DB3F8);
+    }
+    if (jobj != 0) {
+        if (jobj == 0) {
+            __assert(lbl_806DB3F0, 0x25D, lbl_806DB3F8);
+        }
+        unsigned int flags = jobj->flags;
+        unsigned char dirty = 0;
+        if (!(flags & 0x00800000) && (flags & 0x40)) {
+            dirty = 1;
+        }
+        if (dirty) {
+            HSD_JObjSetupMatrixSub(jobj);
+        }
+    }
+}
+
+static inline bool InRect(float x, float z, const float *r) {
+    if (x < r[0]) {
+        return 0;
+    }
+    if (x > r[2]) {
+        return 0;
+    }
+    if (z < r[1]) {
+        return 0;
+    }
+    if (z > r[3]) {
+        return 0;
+    }
+    return 1;
+}
+
+void clDNBress::UpdFire1(Particle *p) {
+    if (p == 0) {
+        return;
+    }
+    p->pos.x = p->v.x * p->speed + p->pos.x;
+    p->pos.y = p->v.y * p->speed + p->pos.y;
+    p->pos.z = p->v.z * p->speed + p->pos.z;
+    p->scale += p->grow;
+    p->v.y += p->dvy;
+    if (p->v.y > lbl_806DB424) {
+        p->v.x *= lbl_806DB428;
+        p->v.z *= lbl_806DB428;
+        p->v.y += lbl_806DB42C;
+        p->c[1] = p->c[2] -= lbl_806DB430;
+    } else if (p->v.y > lbl_806DB434) {
+        p->v.x *= lbl_806DB438;
+        p->v.z *= lbl_806DB438;
+        p->c[1] = p->c[2] -= lbl_806DB43C;
+        p->dvy *= lbl_806DB440;
+    }
+    p->v.x += p->dvx;
+    p->v.z += p->dvz;
+    p->c[1] = p->c[2] -= lbl_806DB444;
+    p->speed -= lbl_806DB448;
+    if (p->speed <= lbl_806DB424) {
+        p->speed = lbl_806DB424;
+    }
+    p->alpha -= lbl_806DB43C;
+}
+
+void clDNBress::SpawnFire1() {
+    Particle *p = freeSlot;
+    if (p == 0) {
+        return;
+    }
+    p->v.x = dir.x;
+    freeSlot->v.y = lbl_806DB44C * dir.y;
+    freeSlot->v.z = dir.z;
+    freeSlot->pos.x = pos.x;
+    freeSlot->pos.y = pos.y;
+    freeSlot->pos.z = pos.z;
+    freeSlot->scale = lbl_806DB450;
+    freeSlot->alpha = lbl_806DB404;
+    freeSlot->speed = lbl_806DB414 * lbl_80495A94[randIdx] + lbl_806DB454;
+    freeSlot->grow = lbl_806DB424 * lbl_80495A94[randIdx] + lbl_806DB424;
+    freeSlot->active = 1;
+    freeSlot->c[0] = lbl_803D026C[0];
+    freeSlot->c[1] = lbl_803D026C[1];
+    freeSlot->c[2] = lbl_803D026C[2];
+    freeSlot->dvx = dir.x * lbl_80495A94[randIdx];
+    if (++randIdx >= 48) {
+        randIdx = 0;
+    }
+    freeSlot->dvz = dir.z * lbl_80495A94[randIdx];
+    freeSlot->dvy = lbl_806DB458;
+    if (++randIdx >= 48) {
+        randIdx = 0;
+    }
+    cooldown = 4;
+    freeSlot = 0;
+}
+
+void clDNBress::UpdFire2(Particle *p) {
+    if (p == 0) {
+        return;
+    }
+    p->pos.x = p->v.x * p->speed + p->pos.x;
+    p->pos.y = p->v.y * p->speed + p->pos.y;
+    p->pos.z = p->v.z * p->speed + p->pos.z;
+    p->scale += p->grow;
+    p->v.y += p->dvy;
+    if (p->v.y > lbl_806DB448) {
+        p->dvy = lbl_806DB400;
+    } else if (p->v.y > lbl_806DB45C) {
+        p->speed -= lbl_806DB460;
+        p->v.x *= lbl_806DB464;
+        p->v.z *= lbl_806DB464;
+        p->c[1] = p->c[2] -= lbl_806DB430;
+    } else if (p->v.y > lbl_806DB468) {
+        p->v.x *= lbl_806DB464;
+        p->v.z *= lbl_806DB464;
+        p->c[1] = p->c[2] -= lbl_806DB43C;
+    }
+    p->v.x += p->dvx;
+    p->v.z += p->dvz;
+    p->c[1] = p->c[2] -= lbl_806DB46C;
+    p->speed -= lbl_806DB470;
+    if (p->speed <= lbl_806DB424) {
+        p->speed = lbl_806DB424;
+    }
+    p->alpha -= lbl_806DB43C;
+}
+
+void clDNBress::SpawnFire2() {
+    Particle *p = freeSlot;
+    if (p == 0) {
+        return;
+    }
+    p->v.x = dir.x;
+    freeSlot->v.y = lbl_806DB418 * dir.y;
+    freeSlot->v.z = dir.z;
+    freeSlot->pos.x = pos.x;
+    freeSlot->pos.y = pos.y;
+    freeSlot->pos.z = pos.z;
+    freeSlot->scale = lbl_806DB418;
+    freeSlot->alpha = lbl_806DB404;
+    freeSlot->speed = lbl_806DB414 * lbl_80495A94[randIdx] + lbl_806DB474;
+    freeSlot->grow = lbl_806DB424 * lbl_80495A94[randIdx] + lbl_806DB424;
+    freeSlot->active = 1;
+    freeSlot->c[0] = lbl_803D026C[0];
+    freeSlot->c[1] = lbl_803D026C[1];
+    freeSlot->c[2] = lbl_803D026C[2];
+    float a = lbl_806DB478 * lbl_80495A94[randIdx] - lbl_806DB47C;
+    freeSlot->dvx = dir.x * LUT_Cosine(a);
+    freeSlot->dvz = dir.z * LUT_Sine(a);
+    freeSlot->dvy = lbl_806DB480;
+    if (++randIdx >= 48) {
+        randIdx = 0;
+    }
+    cooldown = 4;
+    freeSlot = 0;
+}

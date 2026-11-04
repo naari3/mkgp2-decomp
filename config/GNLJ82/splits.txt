@@ -9512,9 +9512,22 @@ game/anon_801FD320.cpp:
 	.ctors      start:0x802E8938 end:0x802E893C
 
 game/anon_801FD924.cpp:
-	extab       start:0x80017C5C end:0x80017CD4
-	extabindex  start:0x80029330 end:0x8002939C
-	.text       start:0x801FD924 end:0x801FE150
+	extab       start:0x80017C5C end:0x80017CBC
+	extabindex  start:0x80029330 end:0x80029378
+	.text       start:0x801FD924 end:0x801FDDA4
+	.data       start:0x804EC0E8 end:0x804EC13C
+
+game/anon_801FD924_nm1.cpp:
+	extab       start:0x80017CBC end:0x80017CC4
+	extabindex  start:0x80029378 end:0x80029384
+	.text       start:0x801FDDA4 end:0x801FDF20
+	.data       start:0x804EC13C end:0x804EC158
+
+game/anon_801FD924_tail.cpp:
+	extab       start:0x80017CC4 end:0x80017CD4
+	extabindex  start:0x80029384 end:0x8002939C
+	.text       start:0x801FDF20 end:0x801FE150
+	.data       start:0x804EC158 end:0x804EC190
 
 ui/UI_PlaySeToggle.c:
 	extab       start:0x80017CD4 end:0x80017CDC
@@ -9672,9 +9685,17 @@ game/anon_80207324.cpp:
 	.text       start:0x80207324 end:0x80207E3C
 
 game/anon_80207E3C.cpp:
-	extab       start:0x8001933C end:0x80019354
-	extabindex  start:0x80029A14 end:0x80029A38
-	.text       start:0x80207E3C end:0x80208E30
+	extab       start:0x8001933C end:0x8001934C
+	extabindex  start:0x80029A14 end:0x80029A2C
+	.text       start:0x80207E3C end:0x802086AC
+
+game/anon_80207E3C_nm1.cpp:
+	extab       start:0x8001934C end:0x80019354
+	extabindex  start:0x80029A2C end:0x80029A38
+	.text       start:0x802086AC end:0x80208E2C
+
+game/anon_80207E3C_tail.cpp:
+	.text       start:0x80208E2C end:0x80208E30
 
 game/anon_80208E30.cpp:
 	extab       start:0x80019354 end:0x8001938C
@@ -9687,9 +9708,20 @@ game/anon_80209330.cpp:
 	.text       start:0x80209330 end:0x80209FA4
 
 game/anon_80209FA4.cpp:
-	extab       start:0x800193B4 end:0x80019460
-	extabindex  start:0x80029AC8 end:0x80029B4C
-	.text       start:0x80209FA4 end:0x8020AA98
+	extab       start:0x800193B4 end:0x800193FC
+	extabindex  start:0x80029AC8 end:0x80029B04
+	.text       start:0x80209FA4 end:0x8020A454
+	.data       start:0x804EC7F4 end:0x804EC808
+
+game/anon_80209FA4_nm1.cpp:
+	extab       start:0x800193FC end:0x80019430
+	extabindex  start:0x80029B04 end:0x80029B34
+	.text       start:0x8020A454 end:0x8020A7CC
+
+game/anon_80209FA4_tail.cpp:
+	extab       start:0x80019430 end:0x80019460
+	extabindex  start:0x80029B34 end:0x80029B4C
+	.text       start:0x8020A7CC end:0x8020AA98
 
 game/ItemDisplay_Stop.c:
 	extab       start:0x80019460 end:0x80019468
@@ -10174,9 +10206,34 @@ game/anon_80226670.cpp:
 	.text       start:0x80226670 end:0x80226954
 
 game/DNBress.cpp:
-	extab       start:0x8001BA88 end:0x8001BB70
-	extabindex  start:0x8002A6BC end:0x8002A710
-	.text       start:0x80226954 end:0x80227FA4
+	extab       start:0x8001BA88 end:0x8001BAA8
+	extabindex  start:0x8002A6BC end:0x8002A6C8
+	.text       start:0x80226954 end:0x80226B20
+
+game/DNBress_nm1.cpp:
+	extab       start:0x8001BAA8 end:0x8001BAB0
+	extabindex  start:0x8002A6C8 end:0x8002A6D4
+	.text       start:0x80226B20 end:0x80226EEC
+
+game/DNBress_tick.cpp:
+	extab       start:0x8001BAB0 end:0x8001BAB8
+	extabindex  start:0x8002A6D4 end:0x8002A6E0
+	.text       start:0x80226EEC end:0x802271A4
+
+game/DNBress_nm2.cpp:
+	extab       start:0x8001BAB8 end:0x8001BAC0
+	extabindex  start:0x8002A6E0 end:0x8002A6EC
+	.text       start:0x802271A4 end:0x802277A0
+
+game/DNBress_breath.cpp:
+	extab       start:0x8001BAC0 end:0x8001BAD0
+	extabindex  start:0x8002A6EC end:0x8002A704
+	.text       start:0x802277A0 end:0x80227B98
+
+game/DNBress_nm3.cpp:
+	extab       start:0x8001BAD0 end:0x8001BB70
+	extabindex  start:0x8002A704 end:0x8002A710
+	.text       start:0x80227B98 end:0x80227FA4
 
 game/DNBressInit.c:
 	extab       start:0x8001BB70 end:0x8001BB78
@@ -10222,11 +10279,27 @@ game/DNStartCamera.cpp:
 	.rodata     start:0x803D08F0 end:0x803D0DB0
 
 game/DNStartDino.cpp:
-	extab       start:0x8001BD48 end:0x8001BE64
-	extabindex  start:0x8002A7DC end:0x8002A824
-	.text       start:0x80229998 end:0x8022ACE4
+	extab       start:0x8001BD48 end:0x8001BD50
+	extabindex  start:0x8002A7DC end:0x8002A7E8
+	.text       start:0x80229998 end:0x80229BEC
+
+game/DNStartDino_hinoko.cpp:
+	extab       start:0x8001BD50 end:0x8001BD58
+	extabindex  start:0x8002A7E8 end:0x8002A7F4
+	.text       start:0x80229BEC end:0x80229E0C
+
+game/DNStartDino_nm1.cpp:
+	extab       start:0x8001BD58 end:0x8001BD80
+	extabindex  start:0x8002A7F4 end:0x8002A800
+	.text       start:0x80229E0C end:0x8022A014
+
+game/DNStartDino_tail.cpp:
+	extab       start:0x8001BD80 end:0x8001BE64
+	extabindex  start:0x8002A800 end:0x8002A824
+	.text       start:0x8022A014 end:0x8022ACE4
 	.ctors      start:0x802E8950 end:0x802E8954
 	.rodata     start:0x803D0DB0 end:0x803DA278
+	.data       start:0x804EE0E0 end:0x804EE0EC
 
 game/EnemyFace.cpp:
 	extab       start:0x8001BE64 end:0x8001BFC8

@@ -204,3 +204,13 @@ TU rescue: anon_802253EC uses canonical RTTI names clCSSceneNextRaceBT / clScene
 Source: Codex worker c2_i5_802253ec_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 25 fn / 7356 B.
 
 Rescue verification must check physical .text function order as well as symbol-level objdiff. ContinueScene individual text symbols were 100%, yet emitted in original source-definition order; main.elf placed fn_8024E05C at 8024D764. Explicit EH ordering cannot correct .text layout, and the linker sorts EH index by actual function address. Move strong definitions into target-address order, preserve inline helpers, and verify cumulative native offsets after weak-copy discard.
+
+## c2_i11_dn_20261105
+Source: Codex worker c2_i11_dn_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 31 fn / 11788 B.
+
+For a derived class overriding inherited slots, declare an undefined new virtual BEFORE the override declarations to make it the CW key function without changing inherited slot indices. This suppresses emitted vtable; an ordinary native pointer table can retain an existing RTTI pointer while RTTI is off. Verified JobRunnerMode primary text and data 100%. Shared rodata visibility can control MWCC hoisted-base generation: DNStartDino tail requires all original rodata definitions in the same TU. Its full raw rodata and normalized relocations are exact although objdiff section scoring is 99.99344 due padded symbol boundaries.
+
+## c2_i11_dn_20261105
+Source: Codex worker c2_i11_dn_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 31 fn / 11788 B.
+
+With MWCC GC/2.6 -inline deferred, physical emission order can be reverse source-definition order even while every per-function objdiff score is 100%. Verify actual primary-function order/sizes in source .o against target .o, excluding discardable weak copies. In anon_80209FA4.cpp prefix and tail, reversing the out-of-line definitions restores target order without changing function bodies. Initial full-link failure had exactly 473 changed words inside permuted functions and 247 branch references to them, plus vtable/rodata/EH index references.

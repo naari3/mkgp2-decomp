@@ -1573,5 +1573,32 @@
     "fn_8024DE38",
     "fn_8024E05C",
     "dtor_801CCA30"
+  ],
+  "src/game/anon_801FD924.cpp": [
+    "fn_801FD924",
+    "dtor_801FD958",
+    "fn_801FDA04",
+    "fn_801FDA78",
+    "fn_801FDB90",
+    "fn_801FDCA8",
+    "dtor_801F4B10"
+  ],
+  "src/game/anon_80209FA4.cpp": [
+    "fn_80209FA4",
+    "fn_8020A004",
+    "fn_8020A194",
+    "fn_8020A39C",
+    "fn_8020A3FC"
+  ],
+  "src/game/anon_80209FA4_tail.cpp": [
+    "fn_8020A7F8",
+    "fn_8020A9EC",
+    "fn_801FE8B8"
+  ],
+  "src/game/DNStartDino_tail.cpp": [
+    "fn_8022A160",
+    "fn_8022A758",
+    "fn_8022A890",
+    "dtor_8016A270"
   ]
 }
