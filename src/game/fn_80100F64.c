@@ -55,7 +55,9 @@ extern unsigned char lbl_803307E8[];
 
 void fn_80100F64(unsigned char *self, unsigned char *w)
 {
-    unsigned char *base = lbl_803307E8;
+    struct ConstPool { unsigned char pad[0x438]; Vec offset; JointNames names; };
+    struct ConstPool *pool = (struct ConstPool *)lbl_803307E8;
+    unsigned char *base = (unsigned char *)pool;
     float m[4][4];
     Vec pts[3];
     float m2[4][4];
@@ -74,7 +76,7 @@ void fn_80100F64(unsigned char *self, unsigned char *w)
 
     Mtx_TransposeToMtx44(m, KartDriver_GetKartRootMtx(*(void **)(w + 0x9C)));
     Mtx44_GetTranslation_ColMajor(&rootPos, m);
-    Mtx44_TransformVec3(&target, m, *(Vec *)(base + 0x438));
+    Mtx44_TransformVec3(&target, m, pool->offset);
     switch (S8(0xC9)) {
     case 0:
         GetSpawnPosition(self + 0xB8, 0.0f, 0.0f, 0.0f);
@@ -193,7 +195,7 @@ void fn_80100F64(unsigned char *self, unsigned char *w)
                     WF(0x14) = -1.0f * WF(0x14);
                 }
                 if (WF(0x18) < 0.0f) {
-                    WF(0x18) = WF(0x18) * -1.0f;
+                    WF(0x18) *= -1.0f;
                 } else {
                     WF(0x18) += 0.017453289f;
                 }
@@ -203,7 +205,7 @@ void fn_80100F64(unsigned char *self, unsigned char *w)
                     WF(0x14) = -1.0f * WF(0x14);
                 }
                 if (0.0f < WF(0x18)) {
-                    WF(0x18) = WF(0x18) * -1.0f;
+                    WF(0x18) *= -1.0f;
                 } else {
                     WF(0x18) += -0.017453289f;
                 }

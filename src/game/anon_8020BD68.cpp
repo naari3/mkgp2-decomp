@@ -281,7 +281,6 @@ GrandPrixMenu::~GrandPrixMenu() {
 }
 
 GrandPrixMenu::GrandPrixMenu() : list(new SceneListImpl), fade(new FlowFaderI), task(0), state(0) {
-    FlowSceneList *l;
     fn_80202C34(0);
     fn_80202B48(0);
     switch (lbl_806D1A30) {
@@ -291,16 +290,8 @@ GrandPrixMenu::GrandPrixMenu() : list(new SceneListImpl), fade(new FlowFaderI), 
         break;
     case 2: {
         state = 0xB;
-        int cup = g_gameMode;
-        fn_801FE404()->mode = cup;
-        cup = g_cupId;
-        if (cup < 1) {
-            cup = 1;
-        }
-        while (cup >= 9) {
-            cup -= 8;
-        }
-        fn_801FE3B4(fn_801FE404(), cup);
+        SetMode(g_gameMode);
+        SetCup(g_cupId);
         break;
     }
     default:
@@ -314,7 +305,9 @@ GrandPrixMenu::GrandPrixMenu() : list(new SceneListImpl), fade(new FlowFaderI), 
     fn_8020A7CC(fade.p, 0xFF, 0, 0xF);
     ClSound_PlayBgmStream(1, 0);
     clStream_setVolume(1, fn_801932F8());
-    l = list.p;
-    fn_801F4DF0(l, fn_80201A48(0), 2);
+    {
+        FlowSceneList *l = list.p;
+        fn_801F4DF0(l, fn_80201A48(0), 2);
+    }
     Factory();
 }
