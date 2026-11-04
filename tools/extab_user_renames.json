@@ -6225,5 +6225,9 @@
     "__ct__13CreditBase162Fi": "fn_80147638",
     "__dt__13CreditBase162Fv": "dtor_80147584",
     "__vt__14CreditChild162": "lbl_80490B34"
+  },
+  "src/game/Scene_801661FC.cpp": {
+    "__ct__10ParamModelFPvi": "fn_8013D800",
+    "Update__14ParamEditSceneFv": "fn_801661FC"
   }
 }
