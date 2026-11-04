@@ -6255,5 +6255,13 @@
     "__vt__12MiyazakiMode": "lbl_80491880",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/PhysicsState_KartCollisionCheck.cpp": {
+    "__dt__19PhysicsCollisionVecFv": "dtor_80036E40",
+    "__ct__21PhysicsCollisionShapeFii": "fn_802091BC",
+    "__dt__21PhysicsCollisionShapeFv": "dtor_80209180"
+  },
+  "src/game/PhysicsState_WallCollisionCheck.cpp": {
+    "__dt__19PhysicsCollisionVecFv": "dtor_80036E40"
   }
 }

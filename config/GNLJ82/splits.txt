@@ -8957,8 +8957,23 @@ game/fn_801EC700.c:
 game/PhysicsState_GetSpeed.c:
 	.text       start:0x801EC734 end:0x801EC894
 
+game/PhysicsState_AccelInterpolate.c:
+	extab       start:0x80016C3C end:0x80016C44
+	extabindex  start:0x80028B08 end:0x80028B14
+	.text       start:0x801EC894 end:0x801EC99C
+
 game/PhysicsState.c:
 	.text       start:0x801EC99C end:0x801EC9AC
+
+game/fn_801EC9AC.c:
+	extab       start:0x80016C44 end:0x80016C4C
+	extabindex  start:0x80028B14 end:0x80028B20
+	.text       start:0x801EC9AC end:0x801ECA14
+
+game/fn_801ECA14.c:
+	extab       start:0x80016C4C end:0x80016C54
+	extabindex  start:0x80028B20 end:0x80028B2C
+	.text       start:0x801ECA14 end:0x801ECAFC
 
 game/fn_801ECAFC.c:
 	.text       start:0x801ECAFC end:0x801ECB04
@@ -8967,6 +8982,16 @@ game/fn_801ECB04.c:
 	extab       start:0x80016C54 end:0x80016C5C
 	extabindex  start:0x80028B2C end:0x80028B38
 	.text       start:0x801ECB04 end:0x801ECB88
+
+game/PhysicsState_KartCollisionCheck.cpp:
+	extab       start:0x80016C5C end:0x80016CA4
+	extabindex  start:0x80028B38 end:0x80028B44
+	.text       start:0x801ECB88 end:0x801ED0E8
+
+game/PhysicsState_WallCollisionCheck.cpp:
+	extab       start:0x80016CA4 end:0x80016CD4
+	extabindex  start:0x80028B44 end:0x80028B50
+	.text       start:0x801ED0E8 end:0x801ED798
 
 game/KartPhysics_ApplyCollisionForce.cpp:
 	extab       start:0x80016CEC end:0x80016D04
