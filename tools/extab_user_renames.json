@@ -6229,5 +6229,14 @@
   "src/game/Scene_801661FC.cpp": {
     "__ct__10ParamModelFPvi": "fn_8013D800",
     "Update__14ParamEditSceneFv": "fn_801661FC"
+  },
+  "src/game/objview/fn_80187410.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
+    "__ct__11Path186ViewFv": "fn_80187410",
+    "__dt__11Path186BaseFv": "dtor_8016A270",
+    "__vt__11Path186Base": "lbl_80490FE0",
+    "__vt__11Path186View": "lbl_80495BBC"
   }
 }
