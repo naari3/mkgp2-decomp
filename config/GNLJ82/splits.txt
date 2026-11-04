@@ -6087,15 +6087,55 @@ game/misc3d/fn_80167744.c:
 	.text       start:0x80167744 end:0x801678FC
 	.data       start:0x80490FB8 end:0x80490FDC
 
+game/misc3d/fn_801678FC.cpp:
+	extab       start:0x8000FFA8 end:0x8000FFC0
+	extabindex  start:0x80025EA4 end:0x80025EB0
+	.text       start:0x801678FC end:0x80167A24
+
+game/misc3d/fn_80167A24.cpp:
+	extab       start:0x8000FFC0 end:0x8000FFC8
+	extabindex  start:0x80025EB0 end:0x80025EBC
+	.text       start:0x80167A24 end:0x80167C60
+
+game/misc3d/fn_80167C60.cpp:
+	extab       start:0x8000FFC8 end:0x8000FFE0
+	extabindex  start:0x80025EBC end:0x80025EC8
+	.text       start:0x80167C60 end:0x80167DDC
+
 game/misc3d/fn_80167DDC.cpp:
 	extab       start:0x8000FFE0 end:0x8000FFF8
 	extabindex  start:0x80025EC8 end:0x80025ED4
 	.text       start:0x80167DDC end:0x80167F24
 
+game/misc3d/fn_80167F24.cpp:
+	extab       start:0x8000FFF8 end:0x80010010
+	extabindex  start:0x80025ED4 end:0x80025EE0
+	.text       start:0x80167F24 end:0x801680A0
+
 game/misc3d/fn_801680A0.cpp:
 	extab       start:0x80010010 end:0x80010028
 	extabindex  start:0x80025EE0 end:0x80025EEC
 	.text       start:0x801680A0 end:0x801681E8
+
+game/misc3d/fn_801681E8.cpp:
+	extab       start:0x80010028 end:0x80010040
+	extabindex  start:0x80025EEC end:0x80025EF8
+	.text       start:0x801681E8 end:0x80168404
+
+game/misc3d/fn_80168404.cpp:
+	extab       start:0x80010040 end:0x80010058
+	extabindex  start:0x80025EF8 end:0x80025F04
+	.text       start:0x80168404 end:0x801685A4
+
+game/misc3d/fn_801685A4.cpp:
+	extab       start:0x80010058 end:0x80010070
+	extabindex  start:0x80025F04 end:0x80025F10
+	.text       start:0x801685A4 end:0x80168798
+
+game/misc3d/fn_80168798.cpp:
+	extab       start:0x80010070 end:0x80010088
+	extabindex  start:0x80025F10 end:0x80025F1C
+	.text       start:0x80168798 end:0x80168910
 
 game/misc3d/fn_80168910.cpp:
 	extab       start:0x80010088 end:0x800100A0
@@ -6107,10 +6147,45 @@ game/misc3d/fn_80168A4C.cpp:
 	extabindex  start:0x80025F28 end:0x80025F34
 	.text       start:0x80168A4C end:0x80168B90
 
+game/misc3d/fn_80168B90.cpp:
+	extab       start:0x800100B8 end:0x800100D0
+	extabindex  start:0x80025F34 end:0x80025F40
+	.text       start:0x80168B90 end:0x80168D84
+
+game/misc3d/fn_80168D84.cpp:
+	extab       start:0x800100D0 end:0x800100E8
+	extabindex  start:0x80025F40 end:0x80025F4C
+	.text       start:0x80168D84 end:0x80168EFC
+
 game/misc3d/fn_80168EFC.cpp:
 	extab       start:0x800100E8 end:0x80010100
 	extabindex  start:0x80025F4C end:0x80025F58
 	.text       start:0x80168EFC end:0x80169040
+
+game/misc3d/fn_80169040.cpp:
+	extab       start:0x80010100 end:0x80010118
+	extabindex  start:0x80025F58 end:0x80025F64
+	.text       start:0x80169040 end:0x8016918C
+
+game/misc3d/fn_8016918C.cpp:
+	extab       start:0x80010118 end:0x80010130
+	extabindex  start:0x80025F64 end:0x80025F70
+	.text       start:0x8016918C end:0x80169334
+
+game/misc3d/fn_80169334.cpp:
+	extab       start:0x80010130 end:0x80010148
+	extabindex  start:0x80025F70 end:0x80025F7C
+	.text       start:0x80169334 end:0x80169468
+
+game/misc3d/fn_80169468.cpp:
+	extab       start:0x80010148 end:0x80010160
+	extabindex  start:0x80025F7C end:0x80025F88
+	.text       start:0x80169468 end:0x801695E0
+
+game/misc3d/fn_801695E0.cpp:
+	extab       start:0x80010160 end:0x80010178
+	extabindex  start:0x80025F88 end:0x80025F94
+	.text       start:0x801695E0 end:0x801696E4
 
 game/misc3d/fn_801696E4.cpp:
 	extab       start:0x80010178 end:0x80010190

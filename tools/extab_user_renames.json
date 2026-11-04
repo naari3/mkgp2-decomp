@@ -6137,5 +6137,61 @@
   },
   "src/game/FlowPanelUpdate.cpp": {
     "__ct__11PanelSpriteFiii": "Sprite_InitWithAnim"
+  },
+  "src/game/misc3d/fn_801695E0.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/misc3d/fn_80167C60.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/misc3d/fn_801678FC.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/misc3d/fn_80167F24.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/misc3d/fn_80168798.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/misc3d/fn_80168D84.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/misc3d/fn_80168404.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/misc3d/fn_801681E8.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/misc3d/fn_801685A4.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/misc3d/fn_80168B90.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/misc3d/fn_80169468.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/misc3d/fn_8016918C.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/misc3d/fn_80169334.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/misc3d/fn_80169040.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
   }
 }
