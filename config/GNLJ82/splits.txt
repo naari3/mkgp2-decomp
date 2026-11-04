@@ -8155,10 +8155,25 @@ game/fn_801D9A2C.cpp:
 	extabindex  start:0x800281D8 end:0x800281E4
 	.text       start:0x801D9A2C end:0x801D9B70
 
+game/FlowPanelUpdate.cpp:
+	extab       start:0x80015540 end:0x80015558
+	extabindex  start:0x800281E4 end:0x800281F0
+	.text       start:0x801D9B70 end:0x801D9F88
+
 game/fn_801D9F88.c:
 	extab       start:0x80015558 end:0x80015560
 	extabindex  start:0x800281F0 end:0x800281FC
 	.text       start:0x801D9F88 end:0x801DA06C
+
+game/FlowPanelCtor.cpp:
+	extab       start:0x80015560 end:0x80015588
+	extabindex  start:0x800281FC end:0x80028208
+	.text       start:0x801DA06C end:0x801DA1C4
+
+game/AttractJoinInput.cpp:
+	extab       start:0x80015588 end:0x80015590
+	extabindex  start:0x80028208 end:0x80028214
+	.text       start:0x801DA1C4 end:0x801DA46C
 
 game/fn_801DA46C.c:
 	extab       start:0x80015590 end:0x80015598

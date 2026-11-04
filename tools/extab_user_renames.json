@@ -6129,5 +6129,13 @@
   },
   "src/game/ItemSelectUpdate.cpp": {
     "__ct__15RefillSingletonFv": "fn_802325FC"
+  },
+  "src/game/FlowPanelCtor.cpp": {
+    "__ct__9FlowPanelFv": "fn_801DA06C",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__ct__9GlyphTextFv": "TexMgr_Init"
+  },
+  "src/game/FlowPanelUpdate.cpp": {
+    "__ct__11PanelSpriteFiii": "Sprite_InitWithAnim"
   }
 }
