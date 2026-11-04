@@ -6238,5 +6238,15 @@
     "__dt__11Path186BaseFv": "dtor_8016A270",
     "__vt__11Path186Base": "lbl_80490FE0",
     "__vt__11Path186View": "lbl_80495BBC"
+  },
+  "src/game/fn_801F8404.cpp": {
+    "__dt__12DrawQuad801FFv": "dtor_801F8214"
+  },
+  "src/game/fn_801F8728.cpp": {
+    "__dt__12DrawQuad801FFv": "dtor_801F8214"
+  },
+  "src/game/fn_801F8A34.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
   }
 }
