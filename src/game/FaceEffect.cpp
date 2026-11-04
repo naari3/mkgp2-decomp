@@ -188,8 +188,7 @@ static RankKey sRankKeys[26] = {
     {0, 46}, {3, 0}, {0, 66}, {3, 0}, {0, 92}, {3, 0},
 };
 
-static const float kGlowOffset[2] = {0.0f, 10.0f};
-static const char kPencilRes[] = "it_v_02_pencil.dat";
+extern const float kGlowOffset[2];
 
 class clFaceEffect {
 public:
@@ -283,38 +282,328 @@ static inline void RotMtx(Mtx rot, float rx, float ry, float rz) {
     rot[0][1] = cz;
 }
 
-bool clFaceEffect::IsIdle() {
-    int s = state;
-    bool r = false;
-    if (s == 7 || s == 0 || s == 5) {
-        r = true;
+static inline unsigned char IsSlotActive(int slot) {
+    unsigned char r;
+    if (slot < 0 || slot > 3) {
+        r = 0;
+    } else if (!((PcbSlot *)PcbSlot_GetByIndex(slot))->active) {
+        r = 0;
+    } else {
+        r = 1;
     }
     return r;
 }
 
-void clFaceEffect::Hide() {
-    state = 7;
+static inline int ClampSlot(int slot) {
+    if ((slot < 0 || slot > 3) && slot != 6) {
+        slot = 0;
+    }
+    return slot;
 }
 
-void clFaceEffect::FadeOut() {
-    state = 6;
+static inline int EmblemResOf(int slot) {
+    slot = ClampSlot(slot);
+    if (slot == 6) {
+        return -1;
+    }
+    return kEmblemRes[slot];
 }
 
-void clFaceEffect::Request(int m) {
-    mode = m;
-    if (state != 2) {
-        state = 1;
+static inline int NameResOf(int chara, int slot, unsigned char useSlot) {
+    if ((slot < 0 || slot > 3) && slot != 6) {
+        slot = 0;
+    }
+    if (chara <= -1 || chara >= 13) {
+        chara = 0;
+    }
+    if (slot >= 0 && slot <= 3) {
+        int res = kNameRes[chara];
+        int tier;
+        if (useSlot == 1) {
+            tier = ((PcbSlot *)PcbSlot_GetByIndex(slot))->tier;
+        } else {
+            tier = g_consecutiveWinsTier;
+        }
+        if (tier > 0) {
+            res = sEmblems[tier - 1].id;
+        }
+        return res;
+    }
+    if (g_cupId == 14) {
+        if (g_roundIndex < 4) {
+            chara = 13;
+        } else {
+            chara = 14;
+        }
+    }
+    return kCpuNameRes[chara];
+}
+
+static inline unsigned char IsEmblemId(int id) {
+    unsigned char r;
+    if (id >= 0xC3F && id <= 0xC48) {
+        r = 1;
+    } else {
+        r = 0;
+    }
+    return r;
+}
+
+/* Deferred compilation emits these definitions in reverse order. */
+void FaceEffect_Dummy() {}
+
+void FaceEffect_ShiftRankKeys() {
+    sRankKeys[1].value = sRankKeys[2].value;
+    sRankKeys[3].value = sRankKeys[4].value;
+    sRankKeys[5].value = sRankKeys[6].value;
+    sRankKeys[7].value = sRankKeys[8].value;
+    sRankKeys[9].value = sRankKeys[10].value;
+    sRankKeys[11].value = sRankKeys[12].value;
+    sRankKeys[13].value = sRankKeys[14].value;
+    sRankKeys[15].value = sRankKeys[16].value;
+    sRankKeys[17].value = sRankKeys[18].value;
+    sRankKeys[19].value = sRankKeys[20].value;
+    sRankKeys[21].value = sRankKeys[22].value;
+    sRankKeys[23].value = sRankKeys[24].value;
+    sRankKeys[25].value = sRankKeys[26].value;
+}
+
+int FaceEffect_GetNameRes(int slot, int chara, unsigned char useSlot) {
+    int res;
+    if ((slot < 0 || slot > 3) && slot != 6) {
+        slot = 0;
+    }
+    if (chara <= -1 || chara >= 13) {
+        chara = 0;
+    }
+    if (slot >= 0 && slot <= 3) {
+        res = kNameRes[chara];
+        int tier;
+        if (useSlot == 1) {
+            tier = ((PcbSlot *)PcbSlot_GetByIndex(slot))->tier;
+        } else {
+            tier = g_consecutiveWinsTier;
+        }
+        if (tier > 0) {
+            res = sEmblems[tier - 1].id;
+        }
+        return res;
+    }
+    if (g_cupId == 14) {
+        if (g_roundIndex < 4) {
+            chara = 13;
+        } else {
+            chara = 14;
+        }
+    }
+    return kCpuNameRes[chara];
+}
+
+int FaceEffect_GetEmblemRes(int slot) {
+    return EmblemResOf(slot);
+}
+
+unsigned char FaceEffect_IsEmblemId(int id) {
+    if (id >= 0xC3F && id <= 0xC48) {
+        return 1;
+    }
+    return 0;
+}
+
+int FaceEffect_EmblemIndex(int id) {
+    if (IsEmblemId(id) == 0) {
+        return -1;
+    }
+    EmblemRes *e = sEmblems;
+    for (int i = 0; i < 10; i++, e++) {
+        if (id == e->id) {
+            return i;
+        }
+    }
+    return 0;
+}
+
+short FaceEffect_GetEmblemId(int idx) {
+    if (idx < 0 || (unsigned int)idx >= 10) {
+        return -1;
+    }
+    return sEmblems[idx].id;
+}
+
+int FaceEffect_GetRes(int *flag, int *name, int *emblem, int slot, int chara, unsigned char useSlot) {
+    unsigned char ok;
+    if (useSlot == 1) {
+        if (!GetVBlankFlag()) {
+            ok = 0;
+        } else if (VBlankValue_Get() == 1) {
+            ok = 0;
+        } else if (!g_namCamFlag) {
+            ok = 0;
+        } else {
+            ok = 1;
+        }
+    } else if (!GetVBlankFlag()) {
+        ok = 0;
+    } else if (VBlankValue_Get() == 1) {
+        ok = 0;
+    } else if (!g_playerData.b19D) {
+        ok = 0;
+    } else if (!g_namCamFlag) {
+        ok = 0;
+    } else {
+        ok = 1;
+    }
+    if (ok == 1 && slot != 6) {
+        *flag = kFlagRes[slot];
+        *name = NameResOf(chara, slot, useSlot);
+        *emblem = EmblemResOf(slot);
+        return 1;
+    }
+    *emblem = -1;
+    *name = -1;
+    *flag = -1;
+    return 0;
+}
+
+int FaceEffect_GetSlotRes(int *flag, int *name, int *emblem, int slot, int chara) {
+    if (IsSlotActive(slot) == 1) {
+        *flag = kFlagRes[slot];
+        *name = NameResOf(chara, slot, 1);
+        *emblem = EmblemResOf(slot);
+        return 1;
+    }
+    *emblem = -1;
+    *name = -1;
+    *flag = -1;
+    return 0;
+}
+
+unsigned char FaceEffect_IsSlotActive(int slot) {
+    if (slot < 0 || slot > 3) {
+        return 0;
+    }
+    return ((PcbSlot *)PcbSlot_GetByIndex(slot))->active != 0;
+}
+
+clFaceEffect::clFaceEffect(KartRender *k, int p) {
+    kart = k;
+    prio = p;
+    x = 0.0f;
+    y = 0.0f;
+    scale = 1.0f;
+    animOn = 0;
+    mode = -1;
+    timer = 0;
+    resId = -1;
+    state = 0;
+    counter = 0;
+    glow = 0.0f;
+    glowSpeed = 0.0f;
+    i40 = 0;
+    model = 0;
+    alpha = 0.0f;
+    PreloadResource(0xC2F);
+    PreloadResource(0xC30);
+    PreloadResource(0xC31);
+    PreloadResource(0xC6C);
+    model = new clNormal3D("it_v_02_pencil.dat", 0);
+    Object_JObjUpdate_870(model, 0x200);
+    Object_SetJObjScaleXYZ(model, 0.05f, 0.05f, 0.05f);
+    sprL = new Sprite(100, 0, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f);
+    sprR = new Sprite(100, 0, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f, 1.0f);
+    sprL->prio = prio;
+    sprR->prio = prio;
+}
+
+clFaceEffect::~clFaceEffect() {
+    fn_80120A08(0x540);
+    fn_80120A08(0xC2F);
+    fn_80120A08(0xC30);
+    fn_80120A08(0xC31);
+    if (model) {
+        delete model;
+        model = 0;
+    }
+    if (sprL) {
+        delete sprL;
+        sprL = 0;
+    }
+    if (sprR) {
+        delete sprR;
+        sprR = 0;
     }
 }
 
-void clFaceEffect::Force(int m) {
-    mode = m;
-    state = 1;
+void clFaceEffect::UpdateIcon(unsigned char draw, float px, float py) {
+    KartStatus *st = kart->status;
+    int prev = mode;
+    if (TestBits(st, 0x10000) == 1) {
+        mode = -1;
+        prev = -1;
+        timer = 0;
+    }
+    if (TestBits(st, 0x800000000ULL)) {
+        mode = 0;
+    } else if (st->bits & 0x1000000000ULL) {
+        mode = 4;
+    } else if (st->bits & 0x4000000000000ULL) {
+        mode = 5;
+    } else if (st->bits & 0x8000000000000ULL) {
+        mode = 6;
+    } else if (st->bits & 0x200ULL) {
+        mode = 2;
+    } else if (st->bits & 0x80000000000ULL) {
+        mode = 3;
+    } else if (st->bits & 0x10000000000000ULL) {
+        int n = fn_8023D1B4(kart);
+        if (n < 0) {
+            mode = 7;
+        } else {
+            mode = n + 7;
+        }
+    } else {
+        mode = -1;
+    }
+    if (mode != -1) {
+        if (prev != mode) {
+            timer = 600;
+        } else if (TestBits(st, 0x10000) == 1) {
+            timer = 600;
+        }
+        resId = kModeRes[mode];
+    }
+    if (timer != 0) {
+        timer--;
+    }
+    if (timer != 0 && draw && animOn != 1) {
+        ResCtrl r;
+        fn_80121E10(&r);
+        r.resId = resId;
+        r.Show(px, py, 1.0f);
+        r.SetScale(scale);
+        fn_8011FAFC(&r, prio);
+    }
 }
 
-void clFaceEffect::SetMode(int m) {
-    mode = m;
+void clFaceEffect::Update(unsigned char draw) {
+    KartRender *k = kart;
+    float px = scale * kIconOffset[k->chara].x + x;
+    float py = scale * kIconOffset[k->chara].y + y;
+    if (k->special == 1) {
+        UpdateSpecial(draw, px, py);
+    } else {
+        UpdateSprites(draw, px, py);
+        UpdateIcon(draw, px, py);
+    }
+    if (animOn == 1) {
+        Sprite_AdvanceAnim(sprL, 0.0165f);
+        Sprite_AdvanceAnim(sprR, 0.0165f);
+        fn_801A0004(sprL);
+        fn_801A0004(sprR);
+    }
 }
+
+void clFaceEffect::Dummy() {}
 
 void clFaceEffect::UpdateSpecial(unsigned char draw, float px, float py) {
     if (mode == -1) {
@@ -486,324 +775,37 @@ void clFaceEffect::UpdateSpecial(unsigned char draw, float px, float py) {
     }
 }
 
-void clFaceEffect::Dummy() {}
+void clFaceEffect::SetMode(int m) {
+    mode = m;
+}
 
-void clFaceEffect::Update(unsigned char draw) {
-    KartRender *k = kart;
-    float px = scale * kIconOffset[k->chara].x + x;
-    float py = scale * kIconOffset[k->chara].y + y;
-    if (k->special == 1) {
-        UpdateSpecial(draw, px, py);
-    } else {
-        UpdateSprites(draw, px, py);
-        UpdateIcon(draw, px, py);
-    }
-    if (animOn == 1) {
-        Sprite_AdvanceAnim(sprL, 0.0165f);
-        Sprite_AdvanceAnim(sprR, 0.0165f);
-        fn_801A0004(sprL);
-        fn_801A0004(sprR);
+void clFaceEffect::Force(int m) {
+    mode = m;
+    state = 1;
+}
+
+void clFaceEffect::Request(int m) {
+    mode = m;
+    if (state != 2) {
+        state = 1;
     }
 }
 
-void clFaceEffect::UpdateIcon(unsigned char draw, float px, float py) {
-    KartStatus *st = kart->status;
-    int prev = mode;
-    if (TestBits(st, 0x10000) == 1) {
-        mode = -1;
-        prev = -1;
-        timer = 0;
-    }
-    if (TestBits(st, 0x800000000ULL)) {
-        mode = 0;
-    } else if (st->bits & 0x1000000000ULL) {
-        mode = 4;
-    } else if (st->bits & 0x4000000000000ULL) {
-        mode = 5;
-    } else if (st->bits & 0x8000000000000ULL) {
-        mode = 6;
-    } else if (st->bits & 0x200ULL) {
-        mode = 2;
-    } else if (st->bits & 0x80000000000ULL) {
-        mode = 3;
-    } else if (st->bits & 0x10000000000000ULL) {
-        int n = fn_8023D1B4(kart);
-        if (n < 0) {
-            mode = 7;
-        } else {
-            mode = n + 7;
-        }
-    } else {
-        mode = -1;
-    }
-    if (mode != -1) {
-        if (prev != mode) {
-            timer = 600;
-        } else if (TestBits(st, 0x10000) == 1) {
-            timer = 600;
-        }
-        resId = kModeRes[mode];
-    }
-    if (timer != 0) {
-        timer--;
-    }
-    if (timer != 0 && draw && animOn != 1) {
-        ResCtrl r;
-        fn_80121E10(&r);
-        r.resId = resId;
-        r.Show(px, py, 1.0f);
-        r.SetScale(scale);
-        fn_8011FAFC(&r, prio);
-    }
+void clFaceEffect::FadeOut() {
+    state = 6;
 }
 
-clFaceEffect::~clFaceEffect() {
-    fn_80120A08(0x540);
-    fn_80120A08(0xC2F);
-    fn_80120A08(0xC30);
-    fn_80120A08(0xC31);
-    if (model) {
-        delete model;
-        model = 0;
-    }
-    if (sprL) {
-        delete sprL;
-        sprL = 0;
-    }
-    if (sprR) {
-        delete sprR;
-        sprR = 0;
-    }
+void clFaceEffect::Hide() {
+    state = 7;
 }
 
-clFaceEffect::clFaceEffect(KartRender *k, int p) {
-    kart = k;
-    prio = p;
-    x = 0.0f;
-    y = 0.0f;
-    scale = 1.0f;
-    animOn = 0;
-    mode = -1;
-    timer = 0;
-    resId = -1;
-    state = 0;
-    counter = 0;
-    glow = 0.0f;
-    glowSpeed = 0.0f;
-    i40 = 0;
-    model = 0;
-    alpha = 0.0f;
-    PreloadResource(0xC2F);
-    PreloadResource(0xC30);
-    PreloadResource(0xC31);
-    PreloadResource(0xC6C);
-    model = new clNormal3D(kPencilRes, 0);
-    Object_JObjUpdate_870(model, 0x200);
-    Object_SetJObjScaleXYZ(model, 0.05f, 0.05f, 0.05f);
-    sprL = new Sprite(100, 0, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f);
-    sprR = new Sprite(100, 0, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f, 1.0f);
-    sprL->prio = prio;
-    sprR->prio = prio;
-}
-
-static inline unsigned char IsSlotActive(int slot) {
-    unsigned char r;
-    if (slot < 0 || slot > 3) {
-        r = 0;
-    } else if (!((PcbSlot *)PcbSlot_GetByIndex(slot))->active) {
-        r = 0;
-    } else {
-        r = 1;
+bool clFaceEffect::IsIdle() {
+    int s = state;
+    bool r = false;
+    if (s == 7 || s == 0 || s == 5) {
+        r = true;
     }
     return r;
 }
 
-unsigned char FaceEffect_IsSlotActive(int slot) {
-    if (slot < 0 || slot > 3) {
-        return 0;
-    }
-    return ((PcbSlot *)PcbSlot_GetByIndex(slot))->active != 0;
-}
-
-static inline int ClampSlot(int slot) {
-    if ((slot < 0 || slot > 3) && slot != 6) {
-        slot = 0;
-    }
-    return slot;
-}
-
-static inline int EmblemResOf(int slot) {
-    slot = ClampSlot(slot);
-    if (slot == 6) {
-        return -1;
-    }
-    return kEmblemRes[slot];
-}
-
-static inline int NameResOf(int chara, int slot, unsigned char useSlot) {
-    if ((slot < 0 || slot > 3) && slot != 6) {
-        slot = 0;
-    }
-    if (chara <= -1 || chara >= 13) {
-        chara = 0;
-    }
-    if (slot >= 0 && slot <= 3) {
-        int res = kNameRes[chara];
-        int tier;
-        if (useSlot == 1) {
-            tier = ((PcbSlot *)PcbSlot_GetByIndex(slot))->tier;
-        } else {
-            tier = g_consecutiveWinsTier;
-        }
-        if (tier > 0) {
-            res = sEmblems[tier - 1].id;
-        }
-        return res;
-    }
-    if (g_cupId == 14) {
-        if (g_roundIndex < 4) {
-            chara = 13;
-        } else {
-            chara = 14;
-        }
-    }
-    return kCpuNameRes[chara];
-}
-
-int FaceEffect_GetSlotRes(int *flag, int *name, int *emblem, int slot, int chara) {
-    if (IsSlotActive(slot) == 1) {
-        *flag = kFlagRes[slot];
-        *name = NameResOf(chara, slot, 1);
-        *emblem = EmblemResOf(slot);
-        return 1;
-    }
-    *emblem = -1;
-    *name = -1;
-    *flag = -1;
-    return 0;
-}
-
-int FaceEffect_GetRes(int *flag, int *name, int *emblem, int slot, int chara, unsigned char useSlot) {
-    unsigned char ok;
-    if (useSlot == 1) {
-        if (!GetVBlankFlag()) {
-            ok = 0;
-        } else if (VBlankValue_Get() == 1) {
-            ok = 0;
-        } else if (!g_namCamFlag) {
-            ok = 0;
-        } else {
-            ok = 1;
-        }
-    } else if (!GetVBlankFlag()) {
-        ok = 0;
-    } else if (VBlankValue_Get() == 1) {
-        ok = 0;
-    } else if (!g_playerData.b19D) {
-        ok = 0;
-    } else if (!g_namCamFlag) {
-        ok = 0;
-    } else {
-        ok = 1;
-    }
-    if (ok == 1 && slot != 6) {
-        *flag = kFlagRes[slot];
-        *name = NameResOf(chara, slot, useSlot);
-        *emblem = EmblemResOf(slot);
-        return 1;
-    }
-    *emblem = -1;
-    *name = -1;
-    *flag = -1;
-    return 0;
-}
-
-short FaceEffect_GetEmblemId(int idx) {
-    if (idx < 0 || (unsigned int)idx >= 10) {
-        return -1;
-    }
-    return sEmblems[idx].id;
-}
-
-static inline unsigned char IsEmblemId(int id) {
-    unsigned char r;
-    if (id >= 0xC3F && id <= 0xC48) {
-        r = 1;
-    } else {
-        r = 0;
-    }
-    return r;
-}
-
-int FaceEffect_EmblemIndex(int id) {
-    if (IsEmblemId(id) == 0) {
-        return -1;
-    }
-    EmblemRes *e = sEmblems;
-    for (int i = 0; i < 10; i++, e++) {
-        if (id == e->id) {
-            return i;
-        }
-    }
-    return 0;
-}
-
-unsigned char FaceEffect_IsEmblemId(int id) {
-    if (id >= 0xC3F && id <= 0xC48) {
-        return 1;
-    }
-    return 0;
-}
-
-int FaceEffect_GetEmblemRes(int slot) {
-    return EmblemResOf(slot);
-}
-
-int FaceEffect_GetNameRes(int slot, int chara, unsigned char useSlot) {
-    int res;
-    if ((slot < 0 || slot > 3) && slot != 6) {
-        slot = 0;
-    }
-    if (chara <= -1 || chara >= 13) {
-        chara = 0;
-    }
-    if (slot >= 0 && slot <= 3) {
-        res = kNameRes[chara];
-        int tier;
-        if (useSlot == 1) {
-            tier = ((PcbSlot *)PcbSlot_GetByIndex(slot))->tier;
-        } else {
-            tier = g_consecutiveWinsTier;
-        }
-        if (tier > 0) {
-            res = sEmblems[tier - 1].id;
-        }
-        return res;
-    }
-    if (g_cupId == 14) {
-        if (g_roundIndex < 4) {
-            chara = 13;
-        } else {
-            chara = 14;
-        }
-    }
-    return kCpuNameRes[chara];
-}
-
-void FaceEffect_ShiftRankKeys() {
-    sRankKeys[1].value = sRankKeys[2].value;
-    sRankKeys[3].value = sRankKeys[4].value;
-    sRankKeys[5].value = sRankKeys[6].value;
-    sRankKeys[7].value = sRankKeys[8].value;
-    sRankKeys[9].value = sRankKeys[10].value;
-    sRankKeys[11].value = sRankKeys[12].value;
-    sRankKeys[13].value = sRankKeys[14].value;
-    sRankKeys[15].value = sRankKeys[16].value;
-    sRankKeys[17].value = sRankKeys[18].value;
-    sRankKeys[19].value = sRankKeys[20].value;
-    sRankKeys[21].value = sRankKeys[22].value;
-    sRankKeys[23].value = sRankKeys[24].value;
-    sRankKeys[25].value = sRankKeys[26].value;
-}
-
-void FaceEffect_Dummy() {}
+__declspec(section ".ctors") static void (*const sFaceEffectInit)() = FaceEffect_ShiftRankKeys;

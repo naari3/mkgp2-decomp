@@ -28,9 +28,9 @@ struct InputPlayer {
 };
 
 /* Flow base (ctor InitializeFrameSelection, dtor dtor_801BA14C). */
-struct FlowBase {
-    FlowBase();
-    virtual ~FlowBase();
+struct clFlowProcess {
+    clFlowProcess();
+    virtual ~clFlowProcess();
     virtual int Update();
     virtual void Draw();
 };
@@ -90,7 +90,7 @@ void Sprite_SetAnimTime(Sprite *sprite, float t);
 void Sprite_Destroy(Sprite *sprite, int del);
 }
 
-struct CardAttractFlow : FlowBase {
+struct clFlowFigureBT : clFlowProcess {
     unsigned char f04;
     signed char peerCount;
     signed char role;
@@ -101,8 +101,8 @@ struct CardAttractFlow : FlowBase {
     int pad14;
     OSTime startTime;
     Sprite *sprites[5];
-    CardAttractFlow();
-    virtual ~CardAttractFlow();
+    clFlowFigureBT();
+    virtual ~clFlowFigureBT();
     virtual int Update();
     virtual void Draw();
     int Step();
@@ -113,7 +113,7 @@ struct CardAttractFlow : FlowBase {
     }
 };
 
-int CardAttractFlow::Step() {
+int clFlowFigureBT::Step() {
     InputPlayer *in;
     unsigned char go;
 
@@ -171,7 +171,7 @@ int CardAttractFlow::Step() {
     return state;
 }
 
-void CardAttractFlow::Draw() {
+void clFlowFigureBT::Draw() {
     if (sprites[0] != 0) {
         fn_801A0004(sprites[0]);
     }
@@ -199,7 +199,7 @@ void CardAttractFlow::Draw() {
     }
 }
 
-int CardAttractFlow::Update() {
+int clFlowFigureBT::Update() {
     OSTime now;
     int n;
 
@@ -239,7 +239,7 @@ int CardAttractFlow::Update() {
     return Step();
 }
 
-CardAttractFlow::~CardAttractFlow() {
+clFlowFigureBT::~clFlowFigureBT() {
     if (GetInput()) {
         InputState *in = GetInput();
         in->enabled = 0;
@@ -260,7 +260,7 @@ CardAttractFlow::~CardAttractFlow() {
     SetScreenBrightness(lbl_806DAC8C);
 }
 
-CardAttractFlow::CardAttractFlow() {
+clFlowFigureBT::clFlowFigureBT() {
     SetSyncTarget(0x30);
     role = PcbSync_AnyPeerAtState5();
     SetLocalPcbRole(role);

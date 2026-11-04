@@ -9746,11 +9746,17 @@ game/anon_8020D1C0.cpp:
 	extab       start:0x800197E4 end:0x800198C8
 	extabindex  start:0x80029D20 end:0x80029D5C
 	.text       start:0x8020D1C0 end:0x8020DAA0
+	.rodata     start:0x803C35B0 end:0x803C35D0
+	.data       start:0x804ECA2C end:0x804ECA50
+	.sdata      start:0x806D0338 end:0x806D0348
 
 game/anon_8020DAA0.cpp:
 	extab       start:0x800198C8 end:0x80019950
 	extabindex  start:0x80029D5C end:0x80029D98
 	.text       start:0x8020DAA0 end:0x8020E2D8
+	.rodata     start:0x803C35D0 end:0x803C35F0
+	.data       start:0x804ECA64 end:0x804ECA88
+	.sdata      start:0x806D0348 end:0x806D0358
 
 game/anon_8020E2D8.cpp:
 	extab       start:0x80019950 end:0x80019968

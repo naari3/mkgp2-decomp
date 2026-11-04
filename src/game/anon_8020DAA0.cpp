@@ -41,9 +41,9 @@ struct InputPlayer {
 };
 
 /* Flow base (ctor InitializeFrameSelection, dtor dtor_801BA14C). */
-struct FlowBase {
-    FlowBase();
-    virtual ~FlowBase();
+struct clFlowProcess {
+    clFlowProcess();
+    virtual ~clFlowProcess();
     virtual int Update();
     virtual void Draw();
 };
@@ -103,7 +103,7 @@ void fn_80160588(Dialog *dlg, int dir, unsigned char edge);
 void fn_8016039C(Dialog *dlg);
 }
 
-struct CardCleanFlow : FlowBase {
+struct clFlowEntryBT : clFlowProcess {
     int peerCount;
     unsigned char waiting;
     unsigned char active;
@@ -115,14 +115,14 @@ struct CardCleanFlow : FlowBase {
     Sprite *icon;
     Sprite *fade;
     Dialog *dialog;
-    CardCleanFlow();
-    virtual ~CardCleanFlow();
+    clFlowEntryBT();
+    virtual ~clFlowEntryBT();
     virtual int Update();
     virtual void Draw();
     int Step();
 };
 
-int CardCleanFlow::Step() {
+int clFlowEntryBT::Step() {
     SetSyncTarget(0x32);
     if (waiting) {
         if (PcbSync_CountPeersAtSyncTargetPair_0_or_1() == 0) {
@@ -149,7 +149,7 @@ int CardCleanFlow::Step() {
     return state;
 }
 
-void CardCleanFlow::Draw() {
+void clFlowEntryBT::Draw() {
     if (icon != 0) {
         fn_801A0004(icon);
     }
@@ -161,7 +161,7 @@ void CardCleanFlow::Draw() {
     }
 }
 
-int CardCleanFlow::Update() {
+int clFlowEntryBT::Update() {
     InputPlayer *in;
     int n;
 
@@ -262,7 +262,7 @@ int CardCleanFlow::Update() {
     return -1;
 }
 
-CardCleanFlow::~CardCleanFlow() {
+clFlowEntryBT::~clFlowEntryBT() {
     fn_801699D8(0, 0);
     fn_801699D8(1, 0);
     fn_80169C44();
@@ -281,7 +281,7 @@ CardCleanFlow::~CardCleanFlow() {
     SetScreenBrightness(lbl_806DACD0);
 }
 
-CardCleanFlow::CardCleanFlow() {
+clFlowEntryBT::clFlowEntryBT() {
     SetSyncTarget(0x32);
     SetLocalPcbRole(5);
     waiting = 1;

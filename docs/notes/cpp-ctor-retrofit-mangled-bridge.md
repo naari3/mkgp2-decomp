@@ -154,3 +154,13 @@ Per-function objdiff 100% plus primary EH equality do not prove TU text placemen
 Source: Codex worker c2_i6_8020bd68_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 28 fn / 6940 B.
 
 Rescue of these four near-exact TUs: preserve exact runs, isolate NM bodies at accepted extab boundaries, bridge actual VHolder length 21 destructors, declare owned extab/index order with weak copies last, and map compiler @ symbols to target @etb/@eti. An undefined first-declared virtual key in a derived private class suppresses vtable emission without changing inherited virtual slots; a key declared after the destructor did not suppress emission. Popup inline helper dynamic_cast expressions emit RTTI even when unused, so restrict those helpers to the NM TU that uses them. DNFlash rodata string symbol sizes must match target sizes, with final zero gap kept in .rodata; bytes and all sections then match 100%.
+
+## c2_b6_8020d1c0_20261105
+Source: Codex worker c2_b6_8020d1c0_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 32 fn / 10276 B.
+
+FaceEffect GC/2.6 needs -rostr and -inline deferred for target vtable-before-jumptable ordering. Deferred emits out-of-line definitions in reverse order, so reverse source definitions verbatim; verify linked text layout after weak destructor discard, not just symbol objdiff percentages. Pencil resource must be an expression string literal so it emits after RTTI name. Identify packed resource tables separately in symbols.txt.
+
+## c2_b6_8020d1c0_20261105
+Source: Codex worker c2_b6_8020d1c0_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 32 fn / 10276 B.
+
+A bridged named const array can remain locally defined despite postprocess_sdata2 externalizing compiler literals. FaceEffect kGlowOffset[2] must be extern so lbl_806DB6E0 resolves to target-owned shared pool. A local initialized copy produces +8 .sdata2 growth and two text refs to its appended address; per-function objdiff remains 100 because symbolic relocations conceal final placement. Audit UND/defined symbol status.
