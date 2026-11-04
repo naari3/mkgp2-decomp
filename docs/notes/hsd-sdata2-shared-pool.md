@@ -64,3 +64,8 @@ HSD lib の他 TU (`HSD_*Init*` 系等) でも sda21 reloc が出る可能性。
 Source: Codex worker c2_b7_pobj_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 27 fn / 18076 B.
 
 pobj rescue: all raw .data bytes can agree while objdiff text reports R_PPC_NONE argument mismatches if target data symbol spans class info plus strings. Splitting symbols at genuine class-info/string boundaries makes all owned sections and functions 100% without code or postprocess changes.
+
+## c2_i12_jobj_20261105
+Source: Codex worker c2_i12_jobj_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 33 fn / 13040 B.
+
+jobj rescue: 33 functions / 13040 bytes isolated with owned sections 100% (full-link pending). Splitting canonical static inline dirty helper directly creates local copies whose calls cannot resolve to the original address. A private adapter aliases the canonical header helpers and supplies genuine global inline (weak) equivalents with named shared assertion strings. Primary native functions remain verbatim. Weak CheckDepend and SetMtxDirty copies must be discarded in favor of the strong fallback originals, and weak MtxIsDirty copies in favor of the new strong native helper. MWCC .sdata defaults to align 8 even for char[4]/char[5]; a new TU at target .sdata address 0x806D0DC4 would grow layout by 4 bytes. Keep those strings in an existing contiguous fallback pool and reference them extern. The 40-byte IK rodata target has a final 16-byte unit vector; use a native float[4] (1,1,1,0) viewed as Vec3 to preserve its genuine trailing zero.
