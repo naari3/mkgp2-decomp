@@ -7264,15 +7264,51 @@ game/BananaField_TestHitBox.c:
 	extabindex  start:0x80027338 end:0x80027344
 	.text       start:0x80196F60 end:0x80197130
 
+game/objview/fn_80197130.cpp:
+	extab       start:0x800124E0 end:0x800124F8
+	extabindex  start:0x80027344 end:0x80027350
+	.text       start:0x80197130 end:0x801972E0
+
 game/objview/fn_80197C84.c:
 	extab       start:0x80012500 end:0x80012508
 	extabindex  start:0x8002735C end:0x80027368
 	.text       start:0x80197C84 end:0x80197D20
 
+game/objview/fn_80197D20.cpp:
+	extab       start:0x80012508 end:0x80012560
+	extabindex  start:0x80027368 end:0x80027374
+	.text       start:0x80197D20 end:0x80197F24
+
+game/objview/fn_80197F24.cpp:
+	extab       start:0x80012560 end:0x80012578
+	extabindex  start:0x80027374 end:0x80027380
+	.text       start:0x80197F24 end:0x801980C8
+
+game/objview/fn_801980C8.c:
+	extab       start:0x80012578 end:0x80012580
+	extabindex  start:0x80027380 end:0x8002738C
+	.text       start:0x801980C8 end:0x801986D8
+
 game/objview/fn_801986D8.c:
 	extab       start:0x80012580 end:0x80012588
 	extabindex  start:0x8002738C end:0x80027398
 	.text       start:0x801986D8 end:0x801987C4
+
+game/objview/fn_80198ABC.c:
+	extab       start:0x800125E0 end:0x800125E8
+	extabindex  start:0x800273A4 end:0x800273B0
+	.text       start:0x80198ABC end:0x80198F84
+
+game/objview/fn_80198F84.c:
+	extab       start:0x800125E8 end:0x800125F0
+	extabindex  start:0x800273B0 end:0x800273BC
+	.text       start:0x80198F84 end:0x801992B0
+
+game/objview/fn_801992B0.c:
+	extab       start:0x800125F0 end:0x800125F8
+	extabindex  start:0x800273BC end:0x800273C8
+	.text       start:0x801992B0 end:0x801998F8
+	.data       start:0x804963D8 end:0x804963F8
 
 game/kartmove/DebugOverlay_KartPhysics.c:
 	extab       start:0x800125F8 end:0x80012600
