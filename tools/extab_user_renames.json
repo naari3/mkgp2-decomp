@@ -6340,5 +6340,51 @@
     "__ct__13FlowSceneHostFv": "fn_801FDA04",
     "__dt__13FlowSceneHostFv": "dtor_801FD958",
     "__ct__10ItemMsgWndFv": "fn_802325FC"
+  },
+  "src/game/fn_801F9B64.cpp": {
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801F9DA4.cpp": {
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801FA6A4.cpp": {
+    "__ct__11Obj801FA6A4Fii": "fn_801FD240",
+    "Add__7StepSeqFPvi": "fn_801F4DF0",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801FBE14.cpp": {
+    "__ct__15RefillSingletonFv": "fn_802325FC",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801FA024.cpp": {
+    "__dt__24VHolder<13FlowSceneList>Fv": "dtor_801F4B10",
+    "__ct__16DoublyLinkedListFv": "DoublyLinkedList_Init",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__8FlowTaskFi": "fn_80204448",
+    "__dt__8FlowTaskFv": "dtor_802043EC",
+    "__vt__13FlowSceneList": "lbl_804E533C",
+    "__vt__13SceneListImpl": "lbl_804EC404",
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "__vt__10FlowFaderI": "lbl_804E5284",
+    "__vt__13CardOwnerBase": "lbl_803FE0C8",
+    "__dt__13CardOwnerBaseFv": "dtor_8007D0D4",
+    "__vt__9CardOwner": "lbl_804EBE38",
+    "__vt__8ReadTask": "lbl_804EBE78",
+    "Set__10FlowFaderIFiis": "fn_8020A7CC",
+    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
+    "__dt__10FlowFaderIFv": "fn_801F26C8"
+  },
+  "src/game/fn_801FB778.cpp": {
+    "__ct__15CardChoicePanelFiii": "fn_80161914",
+    "__ct__15RefillSingletonFv": "fn_802325FC",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

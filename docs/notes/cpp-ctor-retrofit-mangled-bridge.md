@@ -99,3 +99,8 @@ auto-emit に切り替えると、object 内の extab section 並び (auto 一�
 auto_ONKARTHIT_block.c の dtor 11 連隊 + KartItem/CarObject 大物はこのため
 **TU 丸ごと C++ 変換が前提** (別プロジェクトとして計画する)。単独 fn TU
 (Jyugemu_Flag_Ctor 等) にはこの制約は無い。
+
+## cxc_u12_f9aac_20261105
+Source: Codex worker cxc_u12_f9aac_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 2084 B.
+
+fn_801FA024 factory: canonical SceneListImpl + VHolder<FlowSceneList> and FlowFaderI generate exact 496-byte primary text and exact 180-byte primary EH. Compiler spells VHolder<FlowFaderI> destructor with length 21, despite old reference maps containing length 20. Bridge length 21 to dtor_801F2724. Extra weak destructor EH must be judged on owned ranges and full-link discard.
