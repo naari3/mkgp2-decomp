@@ -749,3 +749,8 @@ c13_u10: TextRow layout fn_8021713C reaches 100% with inline Advance(TextSprite*
 Source: Codex worker c13_u13_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u13: SwitchList ctor 8017A68C inline AppendSwitchPair(list,ResolveJointByName(second),ResolveJointByName(first),messages) removes two r3->r0->r26 copies under production MWCC right-to-left argument evaluation. Text 97.56917 ->98.39921, size1020->1012 and EH40/index12 exact. Remaining bge vs blt switch direction and two lwz-before-stw scheduling pairs. Separate declarations/case placement invariant; empty case2 adds compare; single six-float bounds aggregate introduces subobject-address saved web and regresses94.87352. Retained NonMatching, no safe subset in singleton.
+
+## c13_u16_20261106
+Source: Codex worker c13_u16_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u16: CharaSelect_SetupCharacterDisplay 801C3470 improves fresh97.18343 to97.89349. Capture external FLOAT_FULL_ALPHA then FLOAT_SPRITE_INIT_TIME before alternate-normal call for exact FP order; cursor-before-stat and k-before-stat3 fix most loop homes (do not hoist i). Numeric literals fixed FP but remain anonymous when source text is4B short; final captures avoid extra sdata2. Inline scale/texture accessors are invariant. Residual scale-base addi folded away, third stat pointer r25 vsr26, texture-table base folded into lwz displacement. Single-function TU remains NM; full fallback DOL SHA-1 OK.

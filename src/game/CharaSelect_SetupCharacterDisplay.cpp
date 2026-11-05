@@ -21,7 +21,9 @@ extern "C" void CharaSelect_SetupCharacterDisplay(CharaDisplay *self, int charac
     const float (&scale)[4] = *(const float (*)[4])(data + 0x4A4);
     clNormal3D_SetScale(self->normals[self->selection], 0, scale[0], FLOAT_FULL_ALPHA, scale[0], scale[1]);
     if (self->alternateNormals[self->selection]) {
-        clNormal3D_SetScale(self->alternateNormals[self->selection], 0, FLOAT_FULL_ALPHA, FLOAT_FULL_ALPHA, FLOAT_SPRITE_INIT_TIME, FLOAT_SPRITE_INIT_TIME);
+        float fullAlpha = FLOAT_FULL_ALPHA;
+        float initialTime = FLOAT_SPRITE_INIT_TIME;
+        clNormal3D_SetScale(self->alternateNormals[self->selection], 0, fullAlpha, fullAlpha, initialTime, initialTime);
     }
     self->joint = ResolveJointByName(self->normals[self->selection], (const char*)(data + 0x798));
     Sprite_Destroy(self->stats[0], 1);
@@ -31,16 +33,16 @@ extern "C" void CharaSelect_SetupCharacterDisplay(CharaDisplay *self, int charac
     self->stats[1] = new DisplaySprite(0x16B, 1, lbl_806D9B60, lbl_806D9B68);
     self->stats[2] = new DisplaySprite(0x16B, 1, lbl_806D9B60, lbl_806D9B6C);
     const int *anims = (const int*)(data + 0x768);
-    signed char *stat = g_charaStatTable[self->variants[self->character]][character];
     const int *cursor = anims;
+    signed char *stat = g_charaStatTable[self->variants[self->character]][character];
     int i = 0;
     while (i < 5 - stat[0]) { Sprite_SetAnimParam(self->stats[0], (short)*cursor, -1); ++cursor; ++i; }
     const int *cursor2 = anims;
     signed char *stat2 = stat + 1;
     int j = 0;
     while (j < 5 - *stat2) { Sprite_SetAnimParam(self->stats[1], (short)*cursor2, -1); ++cursor2; ++j; }
-    signed char *stat3 = stat + 2;
     int k = 0;
+    signed char *stat3 = stat + 2;
     while (k < 5 - *stat3) { Sprite_SetAnimParam(self->stats[2], (short)*anims, -1); ++anims; ++k; }
     TexMgr_SetTexture(self->texture, GetTextureByIdAndLang((*(const int (*)[13])(data + 0x464))[character] + 0x95, -1));
     fn_801F93EC(self->texture, FLOAT_ARROW_RIGHT_OFFSET, lbl_806D9B74);
