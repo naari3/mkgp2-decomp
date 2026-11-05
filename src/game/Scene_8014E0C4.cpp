@@ -485,25 +485,25 @@ extern void SceneModel_Init();
 extern void clNormal3D_Exec();
 extern unsigned int lbl_806D806C;
 extern unsigned int lbl_80419EF8[];
-extern void CourseEnvironment_Dtor();
+void CourseEnvironment_Dtor(void *p, int flag);
 void KartDriver_Dtor(void *p, int flag);
-extern void SetActiveCamera();
+void SetActiveCamera(void *cam, int a);
 extern void TireEffect_ResetSpin();
 void VisualEffectHolder_Dtor(void *p, int flag);
 extern void fn_8013D4B0();
 extern void fn_8013D738();
 extern unsigned int g_playerRenderObj;
-extern unsigned int g_raceCamera;
+extern void *g_raceCamera;
 void ClRomTable_PurgeAll(void);
 void ItemObjectManager_Reset(void);
-extern void LObjList_Destroy();
+void LObjList_Destroy(void *p, int flag);
 void Object_DtorWithGXSync(void *o, int flag);
-extern void SceneDrawList_Reset();
+void SceneDrawList_Reset(void);
 void SetCourseScene3D(void *s);
 void VfxSlotMgr_Shutdown(void);
-extern void fn_8013DB9C();
-extern void fn_8019083C();
-extern void fn_801909A4();
+void fn_8013DB9C(void);
+unsigned char fn_8019083C(int slot);
+void fn_801909A4(int slot);
 extern struct VObj *lbl_806D10AC;
 extern unsigned int lbl_80490010[];
 extern void CObj_DebugVizPathFlush();
@@ -698,7 +698,7 @@ extern unsigned int lbl_806D823C;
 extern unsigned int lbl_806D8240;
 extern unsigned int lbl_806D8244;
 extern void fn_801F6790(void *p);
-extern void fn_80140810();
+void fn_80140810(void *p, int flag);
 extern void __destroy_arr();
 void fn_80157940(struct LIter *ret, void *list, struct LIter *b, struct LIter *e);
 extern void fn_801579F0();
@@ -837,6 +837,66 @@ extern unsigned int lbl_806D8380;
 extern unsigned int lbl_806D8384;
 extern unsigned int lbl_806D8388;
 void fn_80157EA8(void *l);
+struct VObjPair {
+    VObj *a;
+    VObj *b;
+    ~VObjPair() {
+        delete a;
+        delete b;
+    }
+    static void operator delete(void *p) {
+        MemoryManager_TimedFree(p);
+    }
+};
+
+struct CourseScene {
+    void *vt;
+    char pad4[0x10];
+    void *obj14;
+    char pad18[0x1C];
+    void *drivers[6];
+    void *effects[6];
+    char pad64[0x1A8 - 0x64];
+    VObj *obj1A8;
+    void *obj1AC;
+    char pad1B0[4];
+    VObjPair *pair;
+    void *list;
+    void *arr;
+};
+
+struct HsdClassInfo {
+    char pad[0x30];
+    void (*release)(struct HsdObj *o);
+    void (*destroy)(struct HsdObj *o);
+};
+
+struct HsdObj {
+    HsdClassInfo *info;
+    unsigned short ref;
+};
+
+struct RaceScene {
+    void *vt;
+    char pad4[0xD];
+    unsigned char cardOn;
+    char pad12[2];
+    int cardSlot;
+    char pad18[4];
+    void *env;
+    VObj *camera;
+    HsdObj *lights;
+    VObj *objs[21];
+    void *lists[21];
+    void *models[21];
+    void *drivers[11];
+    void *effects[11];
+    char pad17C[0x3F0 - 0x17C];
+    void *sprites[48];
+    char pad4B0[0x574 - 0x4B0];
+    VObj *obj574;
+};
+
 void *fn_8014E0C4(int a);
 asm void fn_8014E118(void *self, int a);
 void fn_8014E618(AttractPanel *self);
@@ -862,7 +922,7 @@ asm void fn_801500F4(void);
 asm void fn_801502AC(void);
 asm void fn_8015061C(void);
 unsigned char fn_80150924(unsigned char *o);
-asm void fn_8015092C(void);
+RaceScene *fn_8015092C(RaceScene *self, short flag);
 void fn_80150BE4(VObj *p);
 asm void fn_80150C1C(void);
 asm void fn_80151234(void);
@@ -888,7 +948,7 @@ void fn_80153AFC(FadeTimer *o);
 unsigned char fn_80153BEC(StateObj *o);
 void fn_80153C00(TexFadePanel *self);
 void fn_80153ED0(VObj *p);
-asm void fn_80153F08(void);
+CourseScene *fn_80153F08(CourseScene *self, short flag);
 asm void fn_801540E0(void *o, int flag);
 asm void fn_80154304(void);
 asm void fn_80154FB0(void);
@@ -946,9 +1006,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; void *f11; unsigned int f12; void *f13; unsigned int f14; void *f15; unsigned int f16; void *f17; } extab_fn_8015061C = { 0x300A0000, 0x000000E8, 0x00000028, 0x00000144, 0x00000030, 0x0000027C, 0x00000038, 0x000002E4, 0x00000040, 0x00000000, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x8A80001A, (void *)&MemoryManager_TimedFree, 0x8A80001A, (void *)&MemoryManager_TimedFree };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8015092C[8] = {
-    0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; void *f7; unsigned int f8; void *f9; } extab_fn_80150C1C = { 0x304A0000, 0x00000428, 0x00000018, 0x00000540, 0x00000020, 0x00000000, 0x82000060, (void *)&dtor_80082960, 0x82000008, (void *)&dtor_80082960 };
@@ -977,9 +1034,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80152C00[8
 
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80153F08[8] = {
-    0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const unsigned char extab_fn_801540E0[8] = {
     0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -1057,9 +1111,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_8015061C, 0x00000308, (void *)&extab_fn_8015061C
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8015092C = {
-    (void *)&fn_8015092C, 0x000002B8, (void *)extab_fn_8015092C
-};
 
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80150C1C = {
@@ -1094,9 +1145,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80153F08 = {
-    (void *)&fn_80153F08, 0x000001D8, (void *)extab_fn_80153F08
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801540E0 = {
     (void *)&fn_801540E0, 0x00000224, (void *)extab_fn_801540E0
@@ -3337,201 +3385,90 @@ extern "C" unsigned char fn_80150924(unsigned char *o) {
     return o[0x10];
 }
 
-extern "C" asm void fn_8015092C(void) { /* 0x8015092C size:0x2B8 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r4
-    stw r30, 0x18(r1)
-    mr. r30, r3
-    stw r29, 0x14(r1)
-    stw r28, 0x10(r1)
-    beq fn_8015092C_L_80150BC0
-    lis r3, lbl_80490010@ha
-    addi r0, r3, lbl_80490010@l
-    stw r0, 0x0(r30)
-    lwz r3, 0x574(r30)
-    cmplwi r3, 0x0
-    beq fn_8015092C_L_80150984
-    beq fn_8015092C_L_80150984
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8015092C_L_80150984:
-    bl fn_8013DB9C
-    lbz r0, 0x11(r30)
-    cmplwi r0, 0x0
-    beq fn_8015092C_L_801509B4
-    lwz r3, 0x14(r30)
-    cmpwi r3, -0x1
-    beq fn_8015092C_L_801509B4
-    bl fn_8019083C
-    clrlwi. r0, r3, 24
-    beq fn_8015092C_L_801509B4
-    lwz r3, 0x14(r30)
-    bl fn_801909A4
-    fn_8015092C_L_801509B4:
-    lwz r3, 0x1c(r30)
-    cmplwi r3, 0x0
-    beq fn_8015092C_L_801509C8
-    li r4, 0x1
-    bl CourseEnvironment_Dtor
-    fn_8015092C_L_801509C8:
-    li r0, 0x0
-    li r3, 0x0
-    stw r0, g_raceCamera(r13)
-    li r4, 0x0
-    bl SetActiveCamera
-    lwz r3, 0x20(r30)
-    cmplwi r3, 0x0
-    beq fn_8015092C_L_80150A00
-    beq fn_8015092C_L_80150A00
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8015092C_L_80150A00:
-    lwz r29, 0x24(r30)
-    cmplwi r29, 0x0
-    beq fn_8015092C_L_80150A7C
-    beq fn_8015092C_L_80150A7C
-    lis r3, 0x1
-    lhz r4, 0x4(r29)
-    subi r0, r3, 0x1
-    clrlwi r0, r0, 16
-    subf r0, r4, r0
-    cntlzw r0, r0
-    extrwi. r0, r0, 8, 19
-    beq fn_8015092C_L_80150A34
-    b fn_8015092C_L_80150A44
-    fn_8015092C_L_80150A34:
-    subi r3, r4, 0x1
-    cntlzw r0, r4
-    sth r3, 0x4(r29)
-    extrwi r0, r0, 8, 19
-    fn_8015092C_L_80150A44:
-    cmpwi r0, 0x0
-    beq fn_8015092C_L_80150A7C
-    cmplwi r29, 0x0
-    beq fn_8015092C_L_80150A7C
-    lwz r4, 0x0(r29)
-    mr r3, r29
-    lwz r12, 0x30(r4)
-    mtctr r12
-    bctrl
-    lwz r4, 0x0(r29)
-    mr r3, r29
-    lwz r12, 0x34(r4)
-    mtctr r12
-    bctrl
-    fn_8015092C_L_80150A7C:
-    li r28, 0x0
-    mr r29, r30
-    fn_8015092C_L_80150A84:
-    lwz r3, 0x28(r29)
-    cmplwi r3, 0x0
-    beq fn_8015092C_L_80150AA8
-    beq fn_8015092C_L_80150AA8
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8015092C_L_80150AA8:
-    lwz r3, 0x7c(r29)
-    cmplwi r3, 0x0
-    beq fn_8015092C_L_80150ABC
-    li r4, 0x1
-    bl LObjList_Destroy
-    fn_8015092C_L_80150ABC:
-    lwz r3, 0xd0(r29)
-    cmplwi r3, 0x0
-    beq fn_8015092C_L_80150AD0
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    fn_8015092C_L_80150AD0:
-    addi r28, r28, 0x1
-    addi r29, r29, 0x4
-    cmpwi r28, 0x15
-    blt fn_8015092C_L_80150A84
-    li r28, 0x0
-    mr r29, r30
-    fn_8015092C_L_80150AE8:
-    lwz r3, 0x124(r29)
-    cmplwi r3, 0x0
-    beq fn_8015092C_L_80150AFC
-    li r4, 0x1
-    bl KartDriver_Dtor
-    fn_8015092C_L_80150AFC:
-    lwz r3, 0x150(r29)
-    cmplwi r3, 0x0
-    beq fn_8015092C_L_80150B10
-    li r4, 0x1
-    bl VisualEffectHolder_Dtor
-    fn_8015092C_L_80150B10:
-    addi r28, r28, 0x1
-    addi r29, r29, 0x4
-    cmpwi r28, 0xb
-    blt fn_8015092C_L_80150AE8
-    li r28, 0x0
-    mr r29, r30
-    fn_8015092C_L_80150B28:
-    lwz r3, 0x3f0(r29)
-    cmplwi r3, 0x0
-    beq fn_8015092C_L_80150B3C
-    li r4, 0x1
-    bl Sprite_Destroy
-    fn_8015092C_L_80150B3C:
-    addi r28, r28, 0x1
-    addi r29, r29, 0x4
-    cmpwi r28, 0x30
-    blt fn_8015092C_L_80150B28
-    li r3, 0x0
-    bl SetCourseScene3D
-    bl ItemObjectManager_Reset
-    bl VfxSlotMgr_Shutdown
-    bl ClRomTable_PurgeAll
-    bl SceneDrawList_Reset
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    beq fn_8015092C_L_80150B84
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8015092C_L_80150B84:
-    li r0, 0x0
-    stw r0, lbl_806D10AC(r13)
-    bl fn_80121210
-    bl clRom_PurgeAll
-    li r3, 0x0
-    bl SetResourceLoadingFlag
-    cmplwi r30, 0x0
-    beq fn_8015092C_L_80150BB0
-    lis r3, lbl_8048FF80@ha
-    addi r0, r3, lbl_8048FF80@l
-    stw r0, 0x0(r30)
-    fn_8015092C_L_80150BB0:
-    extsh. r0, r31
-    ble fn_8015092C_L_80150BC0
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    fn_8015092C_L_80150BC0:
-    lwz r0, 0x24(r1)
-    mr r3, r30
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+static inline int RefDec(HsdObj *o) {
+    int ret = o->ref == (unsigned short)-1;
+    if (ret) {
+        return ret;
+    }
+    return o->ref-- == 0;
+}
+
+static inline void ObjUnref(HsdObj *o) {
+    if (o == 0) {
+        return;
+    }
+    if (RefDec(o)) {
+        if (o != 0) {
+            o->info->release(o);
+            o->info->destroy(o);
+        }
+    }
+}
+
+extern "C" RaceScene *fn_8015092C(RaceScene *self, short flag) {
+    if (self != 0) {
+        int i;
+        self->vt = lbl_80490010;
+        if (self->obj574 != 0) {
+            delete self->obj574;
+        }
+        fn_8013DB9C();
+        if (self->cardOn && self->cardSlot != -1 && fn_8019083C(self->cardSlot)) {
+            fn_801909A4(self->cardSlot);
+        }
+        if (self->env != 0) {
+            CourseEnvironment_Dtor(self->env, 1);
+        }
+        g_raceCamera = 0;
+        SetActiveCamera(0, 0);
+        if (self->camera != 0) {
+            delete self->camera;
+        }
+        if (self->lights != 0) {
+            ObjUnref(self->lights);
+        }
+        for (i = 0; i < 21; i++) {
+            if (self->objs[i] != 0) {
+                delete self->objs[i];
+            }
+            if (self->lists[i] != 0) {
+                LObjList_Destroy(self->lists[i], 1);
+            }
+            if (self->models[i] != 0) {
+                Object_DtorWithGXSync(self->models[i], 1);
+            }
+        }
+        for (i = 0; i < 11; i++) {
+            if (self->drivers[i] != 0) {
+                KartDriver_Dtor(self->drivers[i], 1);
+            }
+            if (self->effects[i] != 0) {
+                VisualEffectHolder_Dtor(self->effects[i], 1);
+            }
+        }
+        for (i = 0; i < 48; i++) {
+            if (self->sprites[i] != 0) {
+                Sprite_Destroy(self->sprites[i], 1);
+            }
+        }
+        SetCourseScene3D(0);
+        ItemObjectManager_Reset();
+        VfxSlotMgr_Shutdown();
+        ClRomTable_PurgeAll();
+        SceneDrawList_Reset();
+        delete lbl_806D10AC;
+        lbl_806D10AC = 0;
+        fn_80121210();
+        clRom_PurgeAll();
+        SetResourceLoadingFlag(0);
+        if (self != 0) {
+            self->vt = lbl_8048FF80;
+        }
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
 
 extern "C" void fn_80150BE4(VObj *p) {
@@ -6333,137 +6270,49 @@ extern "C" void fn_80153ED0(VObj *p) {
     delete p;
 }
 
-extern "C" asm void fn_80153F08(void) { /* 0x80153F08 size:0x1D8 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r4
-    stw r30, 0x18(r1)
-    mr. r30, r3
-    stw r29, 0x14(r1)
-    stw r28, 0x10(r1)
-    beq fn_80153F08_L_801540BC
-    lis r4, lbl_8048FED8@ha
-    li r3, 0x0
-    addi r0, r4, lbl_8048FED8@l
-    stw r0, 0x0(r30)
-    bl SetCourseScene3D
-    li r3, 0x0
-    bl fn_8019083C
-    clrlwi. r0, r3, 24
-    beq fn_80153F08_L_80153F5C
-    li r3, 0x0
-    bl fn_801909A4
-    fn_80153F08_L_80153F5C:
-    li r28, 0x0
-    mr r29, r30
-    fn_80153F08_L_80153F64:
-    lwz r3, 0x4c(r29)
-    li r4, 0x1
-    bl VisualEffectHolder_Dtor
-    lwz r3, 0x34(r29)
-    li r4, 0x1
-    bl KartDriver_Dtor
-    addi r28, r28, 0x1
-    addi r29, r29, 0x4
-    cmpwi r28, 0x6
-    blt fn_80153F08_L_80153F64
-    bl ItemObjectManager_Reset
-    bl VfxSlotMgr_Shutdown
-    bl ClRomTable_PurgeAll
-    lwz r3, 0x14(r30)
-    cmplwi r3, 0x0
-    beq fn_80153F08_L_80153FAC
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    fn_80153F08_L_80153FAC:
-    lwz r3, 0x1a8(r30)
-    cmplwi r3, 0x0
-    beq fn_80153F08_L_80153FD0
-    beq fn_80153F08_L_80153FD0
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_80153F08_L_80153FD0:
-    lwz r3, 0x1ac(r30)
-    cmplwi r3, 0x0
-    beq fn_80153F08_L_80153FE4
-    li r4, 0x1
-    bl fn_80140810
-    fn_80153F08_L_80153FE4:
-    lwz r29, 0x1b4(r30)
-    cmplwi r29, 0x0
-    beq fn_80153F08_L_8015403C
-    beq fn_80153F08_L_8015403C
-    lwz r3, 0x0(r29)
-    cmplwi r3, 0x0
-    beq fn_80153F08_L_80154014
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_80153F08_L_80154014:
-    lwz r3, 0x4(r29)
-    cmplwi r3, 0x0
-    beq fn_80153F08_L_80154034
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_80153F08_L_80154034:
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    fn_80153F08_L_8015403C:
-    lwz r3, 0x1b8(r30)
-    li r4, 0x1
-    bl fn_801540E0
-    lis r4, dtor_800869D0@ha
-    lwz r3, 0x1bc(r30)
-    addi r4, r4, dtor_800869D0@l
-    bl __destroy_new_array
-    li r0, 0x0
-    stw r0, 0x1bc(r30)
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    beq fn_80153F08_L_80154080
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_80153F08_L_80154080:
-    li r0, 0x0
-    stw r0, lbl_806D10AC(r13)
-    bl fn_80121210
-    bl clRom_PurgeAll
-    li r3, 0x0
-    bl SetResourceLoadingFlag
-    cmplwi r30, 0x0
-    beq fn_80153F08_L_801540AC
-    lis r3, lbl_8048FF80@ha
-    addi r0, r3, lbl_8048FF80@l
-    stw r0, 0x0(r30)
-    fn_80153F08_L_801540AC:
-    extsh. r0, r31
-    ble fn_80153F08_L_801540BC
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    fn_80153F08_L_801540BC:
-    lwz r0, 0x24(r1)
-    mr r3, r30
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+extern "C" CourseScene *fn_80153F08(CourseScene *self, short flag) {
+    if (self != 0) {
+        int i;
+        self->vt = lbl_8048FED8;
+        SetCourseScene3D(0);
+        if (fn_8019083C(0)) {
+            fn_801909A4(0);
+        }
+        for (i = 0; i < 6; i++) {
+            VisualEffectHolder_Dtor(self->effects[i], 1);
+            KartDriver_Dtor(self->drivers[i], 1);
+        }
+        ItemObjectManager_Reset();
+        VfxSlotMgr_Shutdown();
+        ClRomTable_PurgeAll();
+        if (self->obj14 != 0) {
+            Object_DtorWithGXSync(self->obj14, 1);
+        }
+        if (self->obj1A8 != 0) {
+            delete self->obj1A8;
+        }
+        if (self->obj1AC != 0) {
+            fn_80140810(self->obj1AC, 1);
+        }
+        if (self->pair != 0) {
+            delete self->pair;
+        }
+        fn_801540E0(self->list, 1);
+        __destroy_new_array(self->arr, dtor_800869D0);
+        self->arr = 0;
+        delete lbl_806D10AC;
+        lbl_806D10AC = 0;
+        fn_80121210();
+        clRom_PurgeAll();
+        SetResourceLoadingFlag(0);
+        if (self != 0) {
+            self->vt = lbl_8048FF80;
+        }
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
 
 extern "C" asm void fn_801540E0(void *o, int flag) { /* 0x801540E0 size:0x224 */
