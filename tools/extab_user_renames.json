@@ -11180,5 +11180,15 @@
     "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
     "Init__12DigitListMidFiPCi": "fn_80247CFC",
     "__dt__10FlowFaderIFv": "fn_801F26C8"
+  },
+  "src/game/HudModeCreate.cpp": {
+    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
+    "__dt__12GameModeBaseFv": "dtor_8002CDF4",
+    "__ct__14HudModeDisplayFi": "fn_80218E24",
+    "__ct__7HudFlowFv": "fn_802487E0",
+    "__ct__12HudModeOtherFv": "fn_80248C10",
+    "__ct__11HudModeLastFv": "fn_80248FB0",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

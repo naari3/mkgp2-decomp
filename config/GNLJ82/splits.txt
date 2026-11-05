@@ -12124,11 +12124,27 @@ game/RaceDigits.cpp:
 	.text       start:0x80246DE4 end:0x80247B8C
 	.data       start:0x804EEAC4 end:0x804EEAE0
 
+game/HudModeDestroy.cpp:
+	extab       start:0x8001DA64 end:0x8001DA6C
+	extabindex  start:0x8002B334 end:0x8002B340
+	.text       start:0x80248150 end:0x80248248
+
+game/HudModeCreate.cpp:
+	extab       start:0x8001DA6C end:0x8001DAFC
+	extabindex  start:0x8002B340 end:0x8002B34C
+	.text       start:0x80248248 end:0x802483B4
+
 game/HudFlow.cpp:
 	extab       start:0x8001DAFC end:0x8001DB48
 	extabindex  start:0x8002B34C end:0x8002B388
 	.text       start:0x802483B4 end:0x802488FC
 	.data       start:0x804EEB4C end:0x804EEB84
+
+game/HudThunk802488FC.c:
+	.text       start:0x802488FC end:0x80248904
+
+game/HudThunk80248CE4.c:
+	.text       start:0x80248CE4 end:0x80248CEC
 
 game/RaceHudSceneCtor.cpp:
 	extab       start:0x8001DC0C end:0x8001DC50
