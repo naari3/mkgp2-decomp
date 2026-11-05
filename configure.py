@@ -2362,6 +2362,8 @@ config.libs = [
             Object(Matching, "game/fn_801B11B8.c", extab_padding=b""),
             Object(Matching, "game/fn_801B14B8.c"),
             Object(Matching, "game/fn_801B158C.c"),
+            Object(Matching, "game/fn_801B1660.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/Voice_TryEnqueueAnnouncerByPhase.c"),
             Object(Matching, "game/fn_801B377C.c", extab_padding=b""),
             Object(Matching, "game/VoiceSystem_SetCheckpointsForTotalLaps.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801B3980.c"),

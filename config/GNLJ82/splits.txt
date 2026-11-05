@@ -8524,6 +8524,16 @@ game/fn_801B158C.c:
 	extabindex  start:0x80027764 end:0x80027770
 	.text       start:0x801B158C end:0x801B1660
 
+game/fn_801B1660.c:
+	extab       start:0x80012B30 end:0x80012B38
+	extabindex  start:0x80027770 end:0x8002777C
+	.text       start:0x801B1660 end:0x801B1D5C
+
+game/Voice_TryEnqueueAnnouncerByPhase.c:
+	extab       start:0x80012B40 end:0x80012B48
+	extabindex  start:0x80027788 end:0x80027794
+	.text       start:0x801B3190 end:0x801B377C
+
 game/fn_801B377C.c:
 	extab       start:0x80012B48 end:0x80012B50
 	extabindex  start:0x80027794 end:0x800277A0
