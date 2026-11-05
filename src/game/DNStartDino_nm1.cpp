@@ -1242,6 +1242,27 @@ static inline float (*JObjGetMtx(HSD_JObj *jobj))[4] {
     return jobj->mtx;
 }
 
+static inline void DrawHinoko(Hinoko *h) {
+    int c;
+    int i;
+    if (h->model && h->joints[0] && h->joints[1] && h->joints[2] && fn_801379F0(h->pos, lbl_806DB540)) {
+        for (c = 0; c < 3; c++) {
+            Mtx em;
+            GXChannel ch(h->joints[c], HSD_JObjGetDObj(h->joints[c]), 0x40000000, 1);
+            for (i = 0; i < 20; i++) {
+                if (h->embers[i].active && h->embers[i].color == c) {
+                    PSMTXScale(em, h->embers[i].scale, h->embers[i].scale, h->embers[i].scale);
+                    em[0][3] = h->embers[i].pos.x;
+                    em[1][3] = h->embers[i].pos.y;
+                    em[2][3] = h->embers[i].pos.z;
+                    Object_SetColorAlphaOnly(h->model, 0, h->embers[i].alpha);
+                    ch.PushTransform(em);
+                }
+            }
+        }
+    }
+}
+
 #pragma auto_inline off
 void clDNStartDino::Draw() {
     Mtx m;
@@ -1271,21 +1292,5 @@ void clDNStartDino::Draw() {
             }
         }
     }
-    h = hinoko;
-    if (h->model && h->joints[0] && h->joints[1] && h->joints[2] && fn_801379F0(h->pos, lbl_806DB540)) {
-        for (c = 0; c < 3; c++) {
-            Mtx em;
-            GXChannel ch(h->joints[c], HSD_JObjGetDObj(h->joints[c]), 0x40000000, 1);
-            for (i = 0; i < 20; i++) {
-                if (h->embers[i].active && h->embers[i].color == c) {
-                    PSMTXScale(em, h->embers[i].scale, h->embers[i].scale, h->embers[i].scale);
-                    em[0][3] = h->embers[i].pos.x;
-                    em[1][3] = h->embers[i].pos.y;
-                    em[2][3] = h->embers[i].pos.z;
-                    Object_SetColorAlphaOnly(h->model, 0, h->embers[i].alpha);
-                    ch.PushTransform(em);
-                }
-            }
-        }
-    }
+    DrawHinoko(hinoko);
 }

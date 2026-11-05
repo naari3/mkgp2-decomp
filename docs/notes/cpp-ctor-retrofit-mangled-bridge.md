@@ -309,3 +309,8 @@ c3_u1 partial: fn_801BAA88.cpp is missing fn_801C1C14 in baseline. Native pointe
 Source: Codex worker c3_a1_astra_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c3_a1 partial: CoinChallengeUpdate sprite slide/cull extraction into a static inline helper removes an extra position-base move and improves text 97.209946 to 98.24586 while extab remains 100 and extabindex 91.66667. Remaining primary body is 1452 bytes versus target 1448 with input-result copy and GPR color residuals. All five single-function TUs remain NonMatching; no native gain. PlayStats aggregate regrouping does not move the 0x198..0x1A4 scheduling boundary; KartChoice changed flag still shares dead status r31 rather than independent r28.
+
+## c5_s2_dnstartdinonm_20261105
+Source: Codex worker c5_s2_dnstartdinonm_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 520 B.
+
+DNStartDino Draw 80229E0C: extracting Hinoko ember rendering verbatim into a static inline DrawHinoko(Hinoko*) helper resolves the monolithic Draw loop-register residual. Original GC/2.6 flags and existing EH mappings suffice; text 520 B, extab 40 B and extabindex 12 B all 100%. Full coordinator build SHA-1 OK; source .o appears on main.elf input edge.
