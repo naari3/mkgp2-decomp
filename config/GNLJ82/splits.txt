@@ -4263,6 +4263,11 @@ game/fn_800D3184.c:
 game/Mtx44_TransformVec3.c:
 	.text       start:0x800D31FC end:0x800D3278
 
+game/Mtx44_FromEulerXYZTrans.c:
+	extab       start:0x8000B0F4 end:0x8000B0FC
+	extabindex  start:0x800236FC end:0x80023708
+	.text       start:0x800D3278 end:0x800D3BD4
+
 game/BuildOrientationFromYaw.c:
 	.text       start:0x800D3BD4 end:0x800D3C20
 
@@ -4288,6 +4293,11 @@ game/Mtx_Copy.c:
 	extab       start:0x8000B114 end:0x8000B11C
 	extabindex  start:0x8002372C end:0x80023738
 	.text       start:0x800D4148 end:0x800D4174
+
+game/fn_800D4174.c:
+	extab       start:0x8000B11C end:0x8000B124
+	extabindex  start:0x80023738 end:0x80023744
+	.text       start:0x800D4174 end:0x800D44E0
 
 game/Mtx44_GetYawPitchOfPosZ.c:
 	extab       start:0x8000B124 end:0x8000B12C
