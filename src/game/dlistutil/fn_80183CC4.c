@@ -1,4 +1,23 @@
 #include "game/DListBoundsPrivate.h"
+static inline unsigned char ReadBoundsPosition(unsigned char *p, BoundsVec *out) {
+    int i;
+    for (i=0;i<22;++i) {
+        if (!lbl_80677E18[i].desc || lbl_80677E18[i].desc->attr==255) break;
+        if (lbl_80677E18[i].desc->attr==9) {
+            VtxAttrEntry *entry=&lbl_80677E18[i];
+            VtxDesc *d=entry->desc;
+            unsigned int index;
+            float *v;
+            if (d->type==3) index=*(unsigned short *)(p+entry->offset);
+            else index=p[entry->offset];
+            v=d->array;
+            v+=index*(d->stride/4);
+            out->x=v[0];out->y=v[1];out->z=v[2];
+            return 1;
+        }
+    }
+    return 0;
+}
 int fn_80183CC4(HSD_JObj *j, HSD_DObj *d, BoundsVec *out, float *radius) {
     const char *messages=lbl_80376F60;
     BoundsVec v=*(const BoundsVec *)(messages+0x0c);
@@ -22,7 +41,7 @@ int fn_80183CC4(HSD_JObj *j, HSD_DObj *d, BoundsVec *out, float *radius) {
             n=*(unsigned short *)(p+1);
             p+=3;
             for (i=0;i<n;++i) {
-                if (ReadPosition(p,&v)) Extend(&lo,&hi,&v);
+                if (ReadBoundsPosition(p,&v)) Extend(&lo,&hi,&v);
                 p+=lbl_806D1678;
             }
         }
