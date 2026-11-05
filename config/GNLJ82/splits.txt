@@ -10412,6 +10412,11 @@ game/fn_801F98E8.c:
 	extabindex  start:0x800290E4 end:0x800290F0
 	.text       start:0x801F98E8 end:0x801F9954
 
+game/CollisionFile_Load.c:
+	extab       start:0x800176F0 end:0x800176F8
+	extabindex  start:0x800290F0 end:0x800290FC
+	.text       start:0x801F9954 end:0x801F9AAC
+
 game/fn_801F9AAC.cpp:
 	extab       start:0x800176F8 end:0x80017700
 	extabindex  start:0x800290FC end:0x80029108
@@ -11256,6 +11261,10 @@ game/anon_8021BC44.cpp:
 game/fn_8021ED0C.c:
 	.text       start:0x8021ED0C end:0x8021ED1C
 
+game/fn_8021ED1C.cpp:
+	.text       start:0x8021ED1C end:0x8021ED88
+	.ctors      start:0x802E8940 end:0x802E8944
+
 game/anon_8021ED88.cpp:
 	extab       start:0x8001B130 end:0x8001B184
 	extabindex  start:0x8002A3B0 end:0x8002A3EC
@@ -11742,6 +11751,16 @@ game/ItemSelectState_Init.cpp:
 	extab       start:0x8001C858 end:0x8001C8D0
 	extabindex  start:0x8002AC74 end:0x8002AC80
 	.text       start:0x80239764 end:0x80239D6C
+
+game/fn_80239D6C.cpp:
+	extab       start:0x8001C8D0 end:0x8001C8D8
+	extabindex  start:0x8002AC80 end:0x8002AC8C
+	.text       start:0x80239D6C end:0x8023A148
+
+game/fn_8023A148.cpp:
+	extab       start:0x8001C8D8 end:0x8001C8E0
+	extabindex  start:0x8002AC8C end:0x8002AC98
+	.text       start:0x8023A148 end:0x8023A7AC
 
 game/ItemSelectChoiceStep.cpp:
 	extab       start:0x8001C910 end:0x8001C918
