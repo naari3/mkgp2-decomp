@@ -8,3 +8,8 @@ texp/lobj isolation: inspect cross-object pool references before promoting a tex
 Source: Codex worker c3_u13_mapeffect_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1740 B.
 
 c3_u13: TExpAssignReg 802E04C0..802E0B8C is an independent exact 1740-byte TU when AssignAlphaReg is static inline using existing canonical global lbl_804FDBC4[4], __FILE__ uses existing lbl_806D0F38[7], and val>=0 assertions use existing lbl_804FDC64[9]. Keep full data 804FDC64..804FDCF0 and sdata2 806DCED0..806DCEE0 with tail fallback. Its leading string must remain present in native draft tail as ordinary char lbl_804FDC64[]="val >= 0". Source prefix emits no local out-of-line helper. All named functions present. Full-link acceptance pending.
+
+## c4_t3_texp_20261105
+Source: Codex worker c4_t3_texp_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 2480 B.
+
+c4_t3: HSD_TExpColorInSub/AlphaInSub unlock with a single local pointer initialized from the shared assertion pool lbl_804FD988 at function entry; repeating extern-base-plus-offset expressions rematerializes the base at each failure site and disrupts allocation. Use canonical small file/zero strings, preserve HSD_TExpRef inline, undefine HSD_TExpUnref to call the existing native external function. Own only compiler-generated switch tables 804FDAE8..804FDB04 and 804FDB88..804FDBA4; middle alpha strings 804FDB04..804FDB88 remain in a separate data-only NonMatching pool. Both .text/.data and default objdiff are 100%; source-linked full DOL SHA-1 OK, +2 fn / 2480 B.

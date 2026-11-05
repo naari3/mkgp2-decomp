@@ -12630,7 +12630,7 @@ sysdolphin/baselib/hash.c:
 	.sdata      start:0x806D0F30 end:0x806D0F38
 
 sysdolphin/baselib/texp_inputs_pools_nm.c:
-	.data       start:0x804FD988 end:0x804FDBA4
+	.data       start:0x804FD988 end:0x804FDAE8
 	.sdata      start:0x806D0F38 end:0x806D0F60
 
 sysdolphin/baselib/texp.c:
@@ -12644,12 +12644,17 @@ sysdolphin/baselib/texp_alloc.c:
 
 sysdolphin/baselib/texp_color_nm.c:
 	.text       start:0x802DF334 end:0x802DF8EC
+	.data       start:0x804FDAE8 end:0x804FDB04
+
+sysdolphin/baselib/texp_alpha_strings_nm.c:
+	.data       start:0x804FDB04 end:0x804FDB88
 
 sysdolphin/baselib/texp_color.c:
 	.text       start:0x802DF8EC end:0x802DF9F4
 
 sysdolphin/baselib/texp_alpha_nm.c:
 	.text       start:0x802DF9F4 end:0x802DFDEC
+	.data       start:0x804FDB88 end:0x804FDBA4
 
 sysdolphin/baselib/texp_alpha.c:
 	.text       start:0x802DFDEC end:0x802DFFB8
