@@ -9155,8 +9155,28 @@ game/fn_801D676C.c:
 game/fn_801D67F4.c:
 	.text       start:0x801D67F4 end:0x801D680C
 
+game/fn_801D680C.c:
+	extab       start:0x80015314 end:0x8001531C
+	extabindex  start:0x80028100 end:0x8002810C
+	.text       start:0x801D680C end:0x801D6DF0
+
 game/fn_801D6DF0.c:
 	.text       start:0x801D6DF0 end:0x801D6F30
+
+game/fn_801D6F30.c:
+	extab       start:0x8001531C end:0x80015324
+	extabindex  start:0x8002810C end:0x80028118
+	.text       start:0x801D6F30 end:0x801D7160
+
+game/PlayerData_Construct.c:
+	extab       start:0x80015324 end:0x8001532C
+	extabindex  start:0x80028118 end:0x80028124
+	.text       start:0x801D7160 end:0x801D7610
+
+game/fn_801D7610.c:
+	extab       start:0x8001532C end:0x80015334
+	extabindex  start:0x80028124 end:0x80028130
+	.text       start:0x801D7610 end:0x801D7920
 
 game/clFlowKart_UpdateDisplay.c:
 	extab       start:0x80015334 end:0x8001536C
