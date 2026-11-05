@@ -12230,8 +12230,28 @@ game/ItemUseEffectCtor.cpp:
 	extabindex  start:0x8002B1CC end:0x8002B1D8
 	.text       start:0x8024514C end:0x80245420
 
+game/fn_80245420.cpp:
+	extab       start:0x8001D3BC end:0x8001D3D4
+	extabindex  start:0x8002B1D8 end:0x8002B1E4
+	.text       start:0x80245420 end:0x802455EC
+
+game/fn_802455EC.cpp:
+	extab       start:0x8001D3D4 end:0x8001D430
+	extabindex  start:0x8002B1E4 end:0x8002B1F0
+	.text       start:0x802455EC end:0x80245700
+
 game/fn_80245700.c:
 	.text       start:0x80245700 end:0x80245704
+
+game/fn_80245704.cpp:
+	extab       start:0x8001D430 end:0x8001D448
+	extabindex  start:0x8002B1F0 end:0x8002B1FC
+	.text       start:0x80245704 end:0x80245780
+
+game/fn_80245780.c:
+	extab       start:0x8001D448 end:0x8001D450
+	extabindex  start:0x8002B1FC end:0x8002B208
+	.text       start:0x80245780 end:0x802457E0
 
 game/HudSelectionInit.c:
 	extab       start:0x8001D450 end:0x8001D458

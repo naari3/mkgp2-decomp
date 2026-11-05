@@ -11459,5 +11459,18 @@
     "Value__10FlowFaderIFv": "fn_8020A788",
     "@107": "@etb_8001D248",
     "@108": "@eti_8002B1A8"
+  },
+  "src/game/fn_80245420.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/fn_80245704.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/fn_802455EC.cpp": {
+    "__dt__18HudSpriteOwner2454Fv": "fn_802455EC",
+    "__vt__18HudSpriteOwner2454": "lbl_804EE7A8",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

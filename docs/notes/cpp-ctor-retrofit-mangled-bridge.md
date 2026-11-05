@@ -579,3 +579,8 @@ c8_s64: 80244128 native 592B and owned 60B EH match using real GaugePulse/FlowFa
 Source: Codex worker c8_s65_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 3040 B.
 
 c8_s65: four new singleton ItemUseEffect TUs at 80244840..80245420 match 3040 B native text plus 372 B owned EH and 48 B EH index. Reuse canonical FlowFaderF/I and VHolder. Constructor member initializer ordering and inline ItemUseBurst new expression naturally reproduce DESTROYMEMBER/DELETEPOINTER payloads. Update must retain explicit no-op switch states 4/5, and use a literal 1.5f in the category fallback arm while earlier arms use the captured comparison constant: this reproduces a fresh target lfs instead of fmr. Actual source link inputs, final addresses/sizes, and full DOL SHA-1 verified.
+
+## c8_s66_20261105
+Source: Codex worker c8_s66_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 956 B.
+
+c8_s66: fn_802455EC text can match with one VHolder<T> type, but EH then incorrectly merges all SPECIFICATION actions. A distinct byte-tween type for the final member versus shared float-tween type for the first two reproduces exact 92-byte EH. ResCtrl Show(self->x,self->y,z) evaluates y before x; staging x and y locals restores target load order in fn_80245420/fn_80245704. Native source-linked 4 fn/956 B and full DOL SHA-1 verified.
