@@ -41,11 +41,27 @@ const GXRenderModeObj* fn_80287EC4(u32 i) {
     return Modes[i];
 }
 
+static inline s32 SetSaveRegion(void* save, u32 size) {
+    void* end;
+    void* src;
+
+    if (save == NULL) {
+        return 2;
+    }
+    end = (u8*)save + size;
+    if ((u32)save < 0x80700000 || (u32)save > 0x81200000 - size) {
+        end = (void*)0x81200000;
+        src = save;
+        save = (u8*)end - size;
+        memcpy(save, src, size);
+    }
+    OSSetSaveRegion(save, end);
+    return 0;
+}
+
 s32 fn_80287EE4(u32 mode, void* save) {
     DVDCommandBlock block;
     s32 ret;
-    void* end;
-    void* src;
 
     memset(&block, 0, sizeof(block));
     if (mode == 1) {
@@ -58,19 +74,7 @@ s32 fn_80287EE4(u32 mode, void* save) {
     VISetBlack(TRUE);
     VIFlush();
     VIWaitForRetrace();
-    if (save == NULL) {
-        ret = 2;
-    } else {
-        end = (u8*)save + 0x100;
-        if ((u32)save < 0x80700000 || (u32)save > 0x811FFF00) {
-            end = (void*)0x81200000;
-            src = save;
-            save = (u8*)end - 0x100;
-            memcpy(save, src, 0x100);
-        }
-        OSSetSaveRegion(save, end);
-        ret = 0;
-    }
+    ret = SetSaveRegion(save, 0x100);
     if (ret != 0) {
         return ret;
     }
