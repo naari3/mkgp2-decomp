@@ -917,6 +917,8 @@ config.libs = [
             Object(Matching, "game/fn_80089F9C.c"),
             Object(Matching, "game/fn_80250F34.c"),
             Object(Matching, "game/fn_80245700.c"),
+            Object(Matching, "game/FlowAdvance10.c"),
+            Object(NonMatching, "game/FlowAdvance1C.c"),
             Object(Matching, "game/fn_8023D2B4.c"),
             Object(Matching, "game/fn_80230400.c"),
             Object(Matching, "game/fn_802300C8.c"),
@@ -2584,6 +2586,7 @@ config.libs = [
             Object(Matching, "game/fn_801B0D80.c"),
             Object(Matching, "game/fn_801F6574.c"),
             Object(NonMatching, "game/RaceDigits.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(Matching, "game/HudFlow.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/RaceHudSceneCtor.cpp", extab_padding=b"\xC6\x02", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/DisplayBuffersReset.c"),
             Object(NonMatching, "game/OverlayViewSetup.cpp"),
@@ -3711,6 +3714,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/HudFlow",
     "game/PreloadEffectResources",
     "game/TaMode_Init",
     "game/CardCreditFlow",

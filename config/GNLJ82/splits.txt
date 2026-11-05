@@ -11651,11 +11651,23 @@ game/fn_80245700.c:
 game/HudSelectionStep.c:
 	.text       start:0x80245834 end:0x80245850
 
+game/FlowAdvance10.c:
+	.text       start:0x80245E50 end:0x80245E6C
+
+game/FlowAdvance1C.c:
+	.text       start:0x80246460 end:0x80246484
+
 game/RaceDigits.cpp:
 	extab       start:0x8001D738 end:0x8001DA34
 	extabindex  start:0x8002B2A4 end:0x8002B2EC
 	.text       start:0x80246DE4 end:0x80247B8C
 	.data       start:0x804EEAC4 end:0x804EEAE0
+
+game/HudFlow.cpp:
+	extab       start:0x8001DAFC end:0x8001DB48
+	extabindex  start:0x8002B34C end:0x8002B388
+	.text       start:0x802483B4 end:0x802488FC
+	.data       start:0x804EEB4C end:0x804EEB84
 
 game/RaceHudSceneCtor.cpp:
 	extab       start:0x8001DC0C end:0x8001DC50

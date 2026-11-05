@@ -2053,5 +2053,21 @@
       "dtor_801F4A80",
       "__dt__12DigitListMidFv"
     ]
+  },
+  "src/game/HudFlow.cpp": {
+    "extab": [
+      "fn_802488C4",
+      "fn_802483B4",
+      "fn_8024858C",
+      "fn_80248778",
+      "fn_802487E0"
+    ],
+    "extabindex": [
+      "fn_802483B4",
+      "fn_8024858C",
+      "fn_80248778",
+      "fn_802487E0",
+      "fn_802488C4"
+    ]
   }
 }
