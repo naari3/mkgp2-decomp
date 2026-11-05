@@ -11614,5 +11614,25 @@
     "@85": "@eti_8002B3B8",
     "@22": "jumptable_804EEBD4",
     "@50": "jumptable_804EEBF0"
+  },
+  "src/game/HudAlternate.cpp": {
+    "__ct__7HudRootFv": "fn_8024932C",
+    "__dt__7HudRootFv": "dtor_80249274",
+    "__ct__12HudAlternateFv": "fn_80248FB0",
+    "__ct__8HudSmallFv": "fn_8023C6A8",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@20": "jumptable_804EEC5C",
+    "@45": "jumptable_804EEC78",
+    "@73": "@etb_8001DB94",
+    "@21": "@etb_8001DB9C",
+    "@46": "@etb_8001DBA4",
+    "@56": "@etb_8001DBBC",
+    "@63": "@etb_8001DBC4",
+    "@22": "@eti_8002B3C4",
+    "@47": "@eti_8002B3D0",
+    "@57": "@eti_8002B3DC",
+    "@64": "@eti_8002B3E8",
+    "@74": "@eti_8002B3F4"
   }
 }
