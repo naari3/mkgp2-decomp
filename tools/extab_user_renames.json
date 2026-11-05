@@ -9931,5 +9931,29 @@
     "__ct__10FlowFaderIFv": "fn_80218B28",
     "__ct__10FlowFaderFFv": "fn_80202148",
     "@175": "jumptable_804EDC44"
+  },
+  "src/game/anon_8021F088_nm_80221C94_nm1_m1.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "ShowKart__7ItemWndFv": "fn_80221C94",
+    "ShowOther__7ItemWndFv": "fn_80221FC4",
+    "ShowTicket__7ItemWndFv": "fn_80222564",
+    "ShowItem__7ItemWndFv": "fn_80222968",
+    "Open__7ItemWndFv": "fn_802230C0",
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim",
+    "__dt__6SpriteFv": "Sprite_Destroy",
+    "SetAnimParam__6SpriteFis": "Sprite_SetAnimParam"
+  },
+  "src/game/anon_8021F088_nm_80221C94_nm1_nm1.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "ShowKart__7ItemWndFv": "fn_80221C94",
+    "ShowOther__7ItemWndFv": "fn_80221FC4",
+    "ShowTicket__7ItemWndFv": "fn_80222564",
+    "ShowItem__7ItemWndFv": "fn_80222968",
+    "Open__7ItemWndFv": "fn_802230C0",
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim",
+    "__dt__6SpriteFv": "Sprite_Destroy",
+    "SetAnimParam__6SpriteFis": "Sprite_SetAnimParam"
   }
 }

@@ -314,3 +314,8 @@ c3_a1 partial: CoinChallengeUpdate sprite slide/cull extraction into a static in
 Source: Codex worker c5_s2_dnstartdinonm_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 520 B.
 
 DNStartDino Draw 80229E0C: extracting Hinoko ember rendering verbatim into a static inline DrawHinoko(Hinoko*) helper resolves the monolithic Draw loop-register residual. Original GC/2.6 flags and existing EH mappings suffice; text 520 B, extab 40 B and extabindex 12 B all 100%. Full coordinator build SHA-1 OK; source .o appears on main.elf input edge.
+
+## c5_m2_8021f088_20261105
+Source: Codex worker c5_m2_8021f088_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 2104 B.
+
+c5_m2: NextWnd Update 80221674 requires case 0 early return; Count 802218A4 caches bool held==1 before its float/color work. Both text/EH 100%. ItemWnd ShowTicket 80222564 reaches exact text by passing fn_8021691C result to inline SetTicketText, removing r3->r0->r30 extra copy. DTK accepts independent splits at 80222564 and 80222968. Promoted +3 fn / 2104 B, coordinator SHA-1 ea30f3b1 OK; actual main.elf addresses checked. ShowItem stack arrays need pos before buf; inline formatting/sprite helpers improve to 97.54256%, still NonMatching due colors/conversions and GPR webs.

@@ -3,6 +3,8 @@
 
 void NextWnd::Update() {
     switch (state) {
+    case 0:
+        return;
     case 1: {
         int a = (int)(lbl_806DB284 * (timer / lbl_806DB250));
         back.SetColor((unsigned char)a);
@@ -53,13 +55,13 @@ void NextWnd::Update() {
 }
 
 void NextWnd::Count() {
-    InputState *in = GetInput();
+    bool pressed = GetInput()->held == 1;
     if (timer <= 10) {
         float f = timer / lbl_806DB250;
         spr[1]->alpha = f;
         SetDigitColor(PackColor(0xFF, 0xFF, 0xFF, (int)(lbl_806DB24C * f)));
     }
-    if (timer > 10 && timer < 250 && in->held == 1) {
+    if (timer > 10 && timer < 250 && pressed) {
         timer = 250;
     }
     if (timer >= 250 && timer >= 260) {
