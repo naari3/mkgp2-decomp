@@ -739,3 +739,8 @@ c13_u1: CardModeRoot ctor 8020D00C extra li r3,1 resolves by static inline Selec
 Source: Codex worker c13_u3_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u3: fn_801CDF10 improves 97.9235 to 98.68852. Inline EnterRace(VSMode_SeedRandomItemSequence(...)) removes extra r0 seed copy; nested InitPlayerSlot(seed, g_characterId) restores seed r30 / character r29 target homes. Size 736 -> exact 732 B, EH8/index12 exact. Residual input bool r29 vs r30 and player-character tail value/base/flag scratch registers remain. Hoisted function-scope declarations + direct global byte assignment regress97.86885/736B. Typed player view/accessor/member setter does not resolve tail. Singleton stays NonMatching; fallback-linked DOL SHA-1 OK.
+
+## c13_u10_20261106
+Source: Codex worker c13_u10_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 348 B.
+
+c13_u10: TextRow layout fn_8021713C reaches 100% with inline Advance(TextSprite*,float): named delta = gap - width; return delta + spacing. This restores target width f1/spacing f0 and fadds operand order. Safe split at 8021713C isolates leaf alpha fn_802170F0 (97.63158%, sprite/alpha/color GPR homes r5/r4/r7 vs target r7/r6/r5). Single SetAlpha and nested SetColor helper probes invariant; original alpha source retained. Original two-function object emitted reversed strong function order; standalone Matching layout owns EH8001A53C/index8002A0B0. Full source-linked SHA-1 and ELF8021713C/348 verified.

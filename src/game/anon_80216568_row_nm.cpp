@@ -91,33 +91,3 @@ extern "C" void fn_802170F0(TextRow *row, unsigned char alpha) {
     }
 }
 
-extern "C" void fn_8021713C(TextRow *row) {
-    float gap;
-    float width = lbl_806DAEC0;
-    float x = row->x;
-    TextSprite **it;
-    if (row->visible == 0) {
-        gap = lbl_806DAEC4;
-    } else {
-        gap = lbl_806DAEC8;
-    }
-    row->dirty = 0;
-    for (it = row->sprites.begin(); it != row->sprites.end(); it++) {
-        (*it)->visible = row->visible;
-        SetAlign(*it, 2);
-        fn_801F8E90((TextManager *)*it);
-        width += (*it)->width;
-    }
-    if (row->align == 1) {
-        x -= lbl_806DAECC * width;
-    } else if (row->align == 2) {
-        x -= width;
-    }
-    for (it = row->sprites.begin(); it != row->sprites.end(); it++) {
-        SetAlign(*it, 0);
-        SetPos(*it, x, row->y);
-        x += (gap - (*it)->width) + (*it)->spacing;
-        fn_801F8E90((TextManager *)*it);
-    }
-}
-
