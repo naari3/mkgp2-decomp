@@ -267,21 +267,21 @@ void clDNBress::SpawnFire2() {
         return;
     }
     p->v.x = dir.x;
-    freeSlot->v.y = lbl_806DB418 * dir.y;
+    freeSlot->v.y = 3.0f * dir.y;
     freeSlot->v.z = dir.z;
     freeSlot->pos.x = pos.x;
     freeSlot->pos.y = pos.y;
     freeSlot->pos.z = pos.z;
-    freeSlot->scale = lbl_806DB418;
-    freeSlot->alpha = lbl_806DB404;
-    freeSlot->speed = lbl_806DB414 * lbl_80495A94[randIdx] + lbl_806DB474;
-    freeSlot->grow = lbl_806DB424 * lbl_80495A94[randIdx] + lbl_806DB424;
+    freeSlot->scale = 3.0f;
+    freeSlot->alpha = 1.0f;
+    freeSlot->speed = 0.4f * lbl_80495A94[randIdx] + 1.2f;
+    freeSlot->grow = 0.1f * lbl_80495A94[randIdx] + 0.1f;
     freeSlot->active = 1;
     *(Vec3f*)freeSlot->c = *(const Vec3f*)lbl_803D026C;
-    float a = lbl_806DB478 * lbl_80495A94[randIdx] - lbl_806DB47C;
+    float a = 3.141592025756836f * lbl_80495A94[randIdx] - 1.570796012878418f;
     freeSlot->dvx = dir.x * LUT_Cosine(a);
     freeSlot->dvz = dir.z * LUT_Sine(a);
-    freeSlot->dvy = lbl_806DB480;
+    freeSlot->dvy = -0.015f;
     if (++randIdx >= 48) {
         randIdx = 0;
     }
