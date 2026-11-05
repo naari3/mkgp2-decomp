@@ -6881,6 +6881,11 @@ game/mobjclass/fn_80182684.c:
 	extabindex  start:0x80026BB8 end:0x80026BC4
 	.text       start:0x80182684 end:0x801826F8
 
+game/mobjclass/fn_801826F8.c:
+	extab       start:0x80011B78 end:0x80011B80
+	extabindex  start:0x80026BC4 end:0x80026BD0
+	.text       start:0x801826F8 end:0x80182954
+
 game/mobjclass/fn_80182954.c:
 	extab       start:0x80011B80 end:0x80011B88
 	extabindex  start:0x80026BD0 end:0x80026BDC
@@ -6930,6 +6935,16 @@ game/dlistutil/fn_80183A5C.c:
 	extab       start:0x80011BD0 end:0x80011BD8
 	extabindex  start:0x80026C48 end:0x80026C54
 	.text       start:0x80183A5C end:0x80183CC4
+
+game/dlistutil/fn_801847DC.c:
+	extab       start:0x80011BE8 end:0x80011BF0
+	extabindex  start:0x80026C6C end:0x80026C78
+	.text       start:0x801847DC end:0x80184928
+
+game/dlistutil/fn_801866DC.c:
+	extab       start:0x80011C10 end:0x80011C18
+	extabindex  start:0x80026CA8 end:0x80026CB4
+	.text       start:0x801866DC end:0x801868EC
 
 game/LookupCos.c:
 	extab       start:0x80011C18 end:0x80011C20

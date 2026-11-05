@@ -68,3 +68,8 @@ BombExplosion_UpdateShockwaveVfx final-ring scalar reuse across two blocks creat
 Source: Codex worker c5_s6_hudmanagerdisp_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 656 B.
 
 Waypoint_FindNearest 80046680: assigning dx = dx*dx + dy*dy + dz*dz; return PathCursor_sqrtf(dx); in both private distance helpers produces exact text/EH. Returning sqrt(expression) used dz register for result; two-step dx accumulation fixes result register but changes intermediate FMADD destination. One full-expression assignment preserves scratch intermediate and coalesces result into dx. No shared header changed.
+
+## c6_nt3_8017b1c0_20261105
+Source: Codex worker c6_nt3_8017b1c0_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 528 B.
+
+fn_801866DC (528 B): a local const char *messages = lbl_80376F60 preserves r31 diagnostic pool base; global lbl_80677E18[i].desc/offset indexing removes the pointer walker/stride-sum register swap. Combined result text/extab/extabindex 100%, source-linked full DOL SHA-1 OK.
