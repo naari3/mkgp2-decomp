@@ -10733,5 +10733,30 @@
     "@746": "@etb_800066F8",
     "@765": "@eti_800200CC",
     "@764": "@etb_80006838"
+  },
+  "src/game/Scene_80170544.cpp": {
+    "__ct__11SparkModelsFP10SparkJoint": "fn_80170544",
+    "__vt__16CourseMarkerBase": "lbl_80490FE0",
+    "__vt__11SparkModels": "lbl_80491264",
+    "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
+    "__ct__10clNormal3DFPvi": "clNormal3D_Construct",
+    "@28": "@etb_80010704",
+    "@29": "@eti_800263E4"
+  },
+  "src/game/Scene_80170B5C.cpp": {
+    "__ct__7GrowSetFv": "fn_80170B5C",
+    "__vt__16CourseMarkerBase": "lbl_80490FE0",
+    "__vt__7GrowSet": "lbl_8049128C",
+    "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
+    "__ct__10clNormal3DFPvi": "clNormal3D_Construct",
+    "__ct__8GrowAnimFP8GrowFacei": "fn_80123BB4",
+    "__ct__7GrowSubFv": "fn_8016FA50",
+    "@124": "@etb_80010774",
+    "@125": "@eti_80026414"
+  },
+  "src/game/Scene_8016FE44.cpp": {
+    "Draw__11SparkRenderFv": "fn_8016FE44",
+    "@136": "@etb_800106EC",
+    "@137": "@eti_800263C0"
   }
 }

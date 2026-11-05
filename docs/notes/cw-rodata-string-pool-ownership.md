@@ -13,3 +13,8 @@ Fix: the strings belong to the original TU itself. DEFINE them as named const ch
 Wiring: the TU takes a `.rodata start:0x802E9D90 end:0x802E9DF8` split range; symbols.txt objects are resized/added to match the per-string array objects (lbl_802E9D90 0x1F->0x20 absorbing dtk's gap byte, lbl_802E9DB0 0x20->0x10 split into lbl_802E9DB0 + new lbl_802E9DC0, lbl_802E9DD0 0xE8->0x18 with new lbl_802E9DE8; remainder 0x802E9DF8.. returns to the auto rodata blob). Cross-TU refs (MemoryManager_TimedFree.cpp externs lbl_802E9DB0/lbl_802E9DD0) still resolve because the definitions are extern "C" globals. objdiff 100.0 on .text, extab, extabindex and .rodata; SHA-1 OK.
 
 Likely applies to the rest of the MemoryManager family: FUN_8003b120 (0x8003B120) and Alloc (0x8003B1FC) also load r31 = lbl_802E9D90 and index the same pool (offsets 0x40+: "operator new[]", "broken ..." messages at 0x802E9DF8..0x802E9EB8). When matching those, extend/transfer pool ownership accordingly.
+
+## c7_s16_20261105
+Source: Codex worker c7_s16_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 388 B.
+
+fn_80170544: owning the genuine clKPThunder string arrays 8036E118..8036E21C restores exact native ctor text and EH. Leave 8036E21C..8036E220 to ordinary fallback alignment; no zero filler required. Objdiff .rodata can report 99.6139% because string-length symbols omit per-array padding even though both ELF .rodata sections are exactly 260 identical bytes. Full source-linked DOL SHA-1 and actual 80170544/388 range verified.

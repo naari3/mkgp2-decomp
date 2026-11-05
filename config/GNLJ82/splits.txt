@@ -6744,6 +6744,11 @@ game/Scene_8016FD0C.cpp:
 	extabindex  start:0x800263B4 end:0x800263C0
 	.text       start:0x8016FD0C end:0x8016FE44
 
+game/Scene_8016FE44.cpp:
+	extab       start:0x800106EC end:0x800106F4
+	extabindex  start:0x800263C0 end:0x800263CC
+	.text       start:0x8016FE44 end:0x801702E0
+
 game/mapeffect/fn_801702E0.c:
 	extab       start:0x800106F4 end:0x800106FC
 	extabindex  start:0x800263CC end:0x800263D8
@@ -6753,6 +6758,12 @@ game/Scene_801704A0.cpp:
 	extab       start:0x800106FC end:0x80010704
 	extabindex  start:0x800263D8 end:0x800263E4
 	.text       start:0x801704A0 end:0x80170544
+
+game/Scene_80170544.cpp:
+	extab       start:0x80010704 end:0x8001075C
+	extabindex  start:0x800263E4 end:0x800263F0
+	.text       start:0x80170544 end:0x801706C8
+	.rodata     start:0x8036E118 end:0x8036E21C
 
 game/Scene_801706C8.cpp:
 	extab       start:0x8001075C end:0x80010764
@@ -6768,6 +6779,11 @@ game/Scene_801709FC.cpp:
 	extab       start:0x8001076C end:0x80010774
 	extabindex  start:0x80026408 end:0x80026414
 	.text       start:0x801709FC end:0x80170B5C
+
+game/Scene_80170B5C.cpp:
+	extab       start:0x80010774 end:0x800107E8
+	extabindex  start:0x80026414 end:0x80026420
+	.text       start:0x80170B5C end:0x80170EE0
 
 game/LavaSplash.cpp:
 	extab       start:0x800107E8 end:0x800108A4
