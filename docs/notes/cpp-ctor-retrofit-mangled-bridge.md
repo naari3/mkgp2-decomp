@@ -809,3 +809,8 @@ Scene_80170B5C GrowSet ctor: TU-local inline GetJointPObj(j) wrapping GetPObj(HS
 Source: Codex worker c14_u16_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u16: AI_CalcRivalAvoidance 801EE7F0 singleton text94.092354 ->94.808914 with candidate default distance1200000000.0f and position20000.0f in owned header; own EH IDs shift @158/@159 to@159/@160. Broad literal conversion raw97.468155 but1252B, helper/fieldwise94.89809, scalar candidate with late vector view96.92038 all retain early position base hoist and were rejected. Remaining early r30 position base at+80 (target+28C) shifts self/helper GPR homes; normalize and amount FP webs differ, waypoint lacks fmr. Owned extab97.22222/index100 unchanged. NM fallback full SHA1OK; zero native gain.
+
+## c14_u21_20261106
+Source: Codex worker c14_u21_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u21 AI_UpdatePerFrameState: inline pointer Vec subtract + separate squared-length helper and AIFramePosition proximity temporary restore target non-fused arithmetic/intermediate stores. Moving pair scan into a static inline helper restores first-loop FP homes, vector slots 8/14/20/2c and primary 24-byte EH payload. Text improves reproducibly 93.765205 to 96.175674, remains NonMatching due pair/proximity scan GPR cycles, nearest-distance FP home, rank-search base loads/result coalescing and lap homes. Singleton TU gives no mechanism B cut. Full fallback DOL SHA-1 OK.

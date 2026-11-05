@@ -1,47 +1,21 @@
 #include "game/AIFramePrivate.h"
-static inline void UpdateFlags(AIFrameOwner *self, AISpeedRender *player, int waypoint) {
-    self->flag18 = 0;
-    if (player->rank == 0) {
-        AISpeedRender *driver=0;
-        AIPairRecord *p=lbl_806793D8;
-        for (int i=0;i<8;++i,++p) {
-            if (p && p->driver && ((AISpeedRender *)p->driver)->rank == 1) {
-                driver=(AISpeedRender *)p->driver; break;
-            }
-        }
-        if (driver) {
-            int count=Path_GetTotalCount(g_pathSystem);
-            int a=waypoint+(g_totalLaps-player->lap)*count;
-            int b=p->waypoint+(g_totalLaps-driver->lap)*count;
-            fn_801DE1B0();
-            if (fn_801DE074() <= lbl_806DA3E0*(float)a-lbl_806DA3E0*(float)b) self->flag18=1;
-        }
-    }
-    self->flag19 = 0;
-    if (player->rank == 5) {
-        AISpeedRender *driver=0;
-        AIPairRecord *p=lbl_806793D8;
-        for (int i=0;i<8;++i,++p) {
-            if (p && p->driver && ((AISpeedRender *)p->driver)->rank == 4) {
-                driver=(AISpeedRender *)p->driver; break;
-            }
-        }
-        if (driver) {
-            int count=Path_GetTotalCount(g_pathSystem);
-            int a=waypoint+(g_totalLaps-player->lap)*count;
-            int b=p->waypoint+(g_totalLaps-driver->lap)*count;
-            fn_801DE1B0();
-            if (fn_801DDF8C() <= lbl_806DA3E0*(float)b-lbl_806DA3E0*(float)a) self->flag19=1;
-        }
-    }
+static inline void FrameVecSubtract(Vec *v, const Vec *p) {
+    v->x -= p->x; v->y -= p->y; v->z -= p->z;
 }
-extern "C" void AI_UpdatePerFrameState(AIFrameOwner *self) {
-    int maxFrames = lbl_806D1920;
-    ++self->frame;
-    if (maxFrames < self->frame) self->frame=maxFrames;
-    AISpeedRender *player = CarObject_GetRenderObj(self->car);
-    float *mtx = KartDriver_GetKartRootMtx(player);
-    float px=mtx[3],py=mtx[7],pz=mtx[11];
+static inline float FrameVecSquare(const Vec *v) {
+    float x=v->x*v->x, y=v->y*v->y, z=v->z*v->z;
+    return (x+y)+z;
+}
+static inline AISpeedRender *FrameFindRank(int rank, AIPairRecord *&record) {
+    AIPairRecord *p=lbl_806793D8;
+    for (int i=0; i<8; ++i,++p) {
+        record=p;
+        if (p && p->driver && ((AISpeedRender *)p->driver)->rank == rank)
+            return (AISpeedRender *)p->driver;
+    }
+    return 0;
+}
+static inline void FrameUpdatePairs(AISpeedRender *player, float px, float py, float pz) {
     for (int i=0;i<8;++i) {
         AIPairRecord *p=&lbl_806793D8[i];
     if (p && p->driver) {
@@ -77,6 +51,41 @@ extern "C" void AI_UpdatePerFrameState(AIFrameOwner *self) {
         PlayerDistance(p)=dx*dx+dz*dz;
     }
     }
+}
+static inline void UpdateFlags(AIFrameOwner *self, AISpeedRender *player, int waypoint) {
+    self->flag18 = 0;
+    if (player->rank == 0) {
+        AIPairRecord *p;
+        AISpeedRender *driver=FrameFindRank(1,p);
+        if (driver) {
+            int count=Path_GetTotalCount(g_pathSystem);
+            int a=waypoint+(g_totalLaps-player->lap)*count;
+            int b=p->waypoint+(g_totalLaps-driver->lap)*count;
+            fn_801DE1B0();
+            if (fn_801DE074() <= lbl_806DA3E0*(float)a-lbl_806DA3E0*(float)b) self->flag18=1;
+        }
+    }
+    self->flag19 = 0;
+    if (player->rank == 5) {
+        AIPairRecord *p;
+        AISpeedRender *driver=FrameFindRank(4,p);
+        if (driver) {
+            int count=Path_GetTotalCount(g_pathSystem);
+            int a=waypoint+(g_totalLaps-player->lap)*count;
+            int b=p->waypoint+(g_totalLaps-driver->lap)*count;
+            fn_801DE1B0();
+            if (fn_801DDF8C() <= lbl_806DA3E0*(float)b-lbl_806DA3E0*(float)a) self->flag19=1;
+        }
+    }
+}
+extern "C" void AI_UpdatePerFrameState(AIFrameOwner *self) {
+    int maxFrames = lbl_806D1920;
+    ++self->frame;
+    if (maxFrames < self->frame) self->frame=maxFrames;
+    AISpeedRender *player = CarObject_GetRenderObj(self->car);
+    float *mtx = KartDriver_GetKartRootMtx(player);
+    float px=mtx[3],py=mtx[7],pz=mtx[11];
+    FrameUpdatePairs(player,px,py,pz);
     int waypoint;
     if (self->selectedKart < 0) waypoint=Waypoint_FindNearest(g_pathSystem,0,px,py,pz,lbl_806DA3E8);
     else waypoint=lbl_806793D8[self->selectedKart].waypoint;
@@ -88,11 +97,10 @@ extern "C" void AI_UpdatePerFrameState(AIFrameOwner *self) {
             AIPairRecord *p=&lbl_806793D8[i];
             if (p && p->driver && p->driver != player && p->field1C >= 0) {
                 float *m=KartDriver_GetKartRootMtx(p->driver);
-                Vec v;
                 float y=m[7],x=m[3],z=m[11];
-                v.x=x;v.y=y;v.z=z;
-                v.x-=pos.x;v.y-=pos.y;v.z-=pos.z;
-                float d=(v.x*v.x+v.y*v.y)+v.z*v.z;
+                AIFramePosition v(x,y,z);
+                FrameVecSubtract(&v,&pos);
+                float d=FrameVecSquare(&v);
                 if (d <= distance) { nearest=i;distance=d; }
             }
         }
