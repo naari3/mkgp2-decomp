@@ -11284,5 +11284,22 @@
     "__ct__12FigureSpriteFiiff": "fn_801A08B8",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/AI_CalcRivalAvoidance.cpp": {
+    "__dt__19PhysicsCollisionVecFv": "dtor_80036E40",
+    "__dt__23RivalAvoidanceCandidateFv": "dtor_801EECD8",
+    "@158": "@etb_80016D1C",
+    "@159": "@eti_80028B74"
+  },
+  "src/game/EnemyRun_BaseInit.cpp": {
+    "__ct__13EnemyRunStateFiiiii": "EnemyRun_BaseInit",
+    "__ct__12EnemyRunPathFii": "PathFollower_Init",
+    "__dt__12EnemyRunPathFv": "fn_801DC29C",
+    "__dt__19PhysicsCollisionVecFv": "dtor_80036E40",
+    "__dt__23VHolder<12EnemyRunPath>Fv": "dtor_801F0B58",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@147": "@etb_80016D94",
+    "@148": "@eti_80028BB0"
   }
 }

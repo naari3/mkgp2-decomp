@@ -559,3 +559,8 @@ c8_s69: isolated AdvanceCard ctor 8024629C uses canonical DigitHudBase, two VHol
 Source: Codex worker c8_s40_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 676 B.
 
 c8_s40: fn_801C3AA4 draw pass matches native text/EH exactly with a private virtual dispatch view (Draw at +0xC, Finish at +0x10). FigureSlot_Tick uses real sprite new expressions and inline SetPos/SetScale: evaluate both coordinates before stores and capture the pointer once for two scale stores; this improves 87.78% to 99.42% with exact owned EH. Floating interpolation cookie stack order and FP homes remain, so retained NonMatching.
+
+## c8_s54_20261105
+Source: Codex worker c8_s54_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c8_s54: EnemyRun_BaseInit 801F0644 is a genuine constructor with VHolder<EnemyRunPath> at +4 and seven canonical PhysicsCollisionVec members (+4C,+58,+A8,+B4,+CC,+D8,+12C). VHolder::Reset(new EnemyRunPath(owner,kart)) reproduces exact 176-byte owned EH, including throw() Reset specification island and DELETEPOINTER r24. Scalar 0.0f/1.0f literals remove alias-induced reloads; native text 98.08%, 1300B. Explicit pointer matrix loop caused unwanted unrolling and r29/r30 swap; retained indexed form NonMatching.
