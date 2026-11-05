@@ -21,8 +21,7 @@ struct Owner {
 extern "C" {
 extern const float lbl_806D9648, lbl_806D964C, lbl_806D9650, lbl_806D9654, lbl_806D9658;
 }
-static inline void DrawParticles(Owner *o, Mtx *view) {
-    int i;
+static inline void DrawParticles(Owner *o, Mtx *view, int& i) {
     Particle *p;
         GXChannel ch(Archive_GetRootJObj(o->model), HSD_JObjGetDObj(Archive_GetRootJObj(o->model)), 0x40000000, 1);
         Mtx m;
@@ -59,6 +58,6 @@ extern "C" void fn_80197F24(Owner *o) {
                 Object_RenderJObjTree(items[i].model, 7);
             }
         }
-        DrawParticles(o, view);
+        DrawParticles(o, view, i);
     }
 }

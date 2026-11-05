@@ -10007,5 +10007,9 @@
   "src/game/objview/fn_80197130.cpp": {
     "__ct__9GXChannelFP8HSD_JObjP8HSD_DObjUii": "GXChannel_Init",
     "__dt__9GXChannelFv": "dtor_8007D9C4"
+  },
+  "src/game/objview/fn_80197F24.cpp": {
+    "__ct__9GXChannelFP8HSD_JObjP8HSD_DObjUii": "GXChannel_Init",
+    "__dt__9GXChannelFv": "dtor_8007D9C4"
   }
 }

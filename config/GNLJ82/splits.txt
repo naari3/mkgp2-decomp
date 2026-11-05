@@ -12453,11 +12453,13 @@ sysdolphin/baselib/pobj.c:
 	.sbss       start:0x806D2190 end:0x806D21B0
 	.sdata2     start:0x806DCC80 end:0x806DCCB0
 
-sysdolphin/baselib/jobj.c:
-	.text       start:0x802CD2B0 end:0x802CD3DC
+sysdolphin/baselib/jobj_data_nm.c:
 	.data       start:0x804FC9A8 end:0x804FCD80
 	.sbss       start:0x806D21B0 end:0x806D21C8
 	.sdata2     start:0x806DCCB0 end:0x806DCD00
+
+sysdolphin/baselib/jobj.c:
+	.text       start:0x802CD2B0 end:0x802CD3DC
 
 sysdolphin/baselib/jobj_depend.c:
 	.text       start:0x802CD3DC end:0x802CD760

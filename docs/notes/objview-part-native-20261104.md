@@ -36,3 +36,8 @@ c5_s21: inline extraction of only the position-interpolation loop as MorphBlend(
 Source: Codex worker c5_s22_fn8018f614_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 384 B.
 
 c5_s22: fn_8018FC24 matches 384B text plus 8B extab and 12B index by replacing external 360.0f constant uses with literals and extracting UpdateUV(Wave*) with local declarations src,dst,i and fu,fv. Phase FP registers and loop index/stride/pointer homes become exact. Coordinator full build SHA-1 OK, source .o on main.elf edge. fn_80197130 scene declaration after particle pointer resolves scene r30 reuse; per-TU typed GXChannel ctor/dtor bridge fixes EH and call relocations, leaving f30/f31 height-width swap. fn_8018F614 pairs-before-name declarations fix those homes; base-vptr scheduling remains.
+
+## c5_s23_fn80197f24_20261105
+Source: Codex worker c5_s23_fn80197f24_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 816 B.
+
+c5_s23: fn_80197F24 reaches exact 420-byte text and 24/12-byte EH/index by passing the outer item-loop int i by reference to inline DrawParticles. This preserves count r29/stride r30 across both loops. Per-TU GXChannel ctor/dtor bridges required. Full source-linked DOL SHA-1 OK.

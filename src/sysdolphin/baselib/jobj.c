@@ -1,5 +1,5 @@
 #include "mkgp2_names.h"
-#include "jobj.h"
+#include "jobj_unlock_private.h"
 
 #include <math.h>
 #include <string.h>
@@ -20,22 +20,13 @@
 
 double acos(double);
 
-void JObjInfoInit(void);
-HSD_JObjInfo hsdJObj = { JObjInfoInit };
-
-static HSD_ClassInfo* default_class;
-static HSD_SList* ufc_callbacks;
-static void (*dptcl_callback)(int, int lo, int hi, HSD_JObj* jobj);
-static void (*jsound_callback)(s32);
-static void (*ptcltgt_callback)(HSD_JObj*, s32);
-static HSD_JObj* current_jobj;
-
 void HSD_JObjCheckDepend(HSD_JObj* jobj)
 {
     if (jobj == NULL) {
         return;
     }
-    if (!HSD_JObjMtxIsDirty(jobj)) {
+    switch (HSD_JObjMtxIsDirty(jobj)) {
+    case 0:
         if ((jobj->flags & JOBJ_USER_DEF_MTX)) {
             if (!(jobj->flags & JOBJ_MTX_INDEP_PARENT) &&
                 jobj->parent != NULL && HSD_JObjMtxIsDirty(jobj->parent))
@@ -51,5 +42,6 @@ void HSD_JObjCheckDepend(HSD_JObj* jobj)
         {
             jobj->flags |= JOBJ_MTX_DIRTY;
         }
+        break;
     }
 }

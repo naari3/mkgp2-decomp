@@ -74,3 +74,8 @@ jobj rescue: 33 functions / 13040 bytes isolated with owned sections 100% (full-
 Source: Codex worker c3_u16_jobj_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 13 fn / 5544 B.
 
 c3 jobj_load unlock: canonical small assertion file/text references remove a spurious pooled-base live range and restore fn_802CFB68 recursive register allocation exactly. ResolveRefs/AddChild require one local shared string-pool base. ResolveRefsAll matches by explicit four-level traversal with progressively outlined ref/ID helpers; cache child during ref increment and initialize child joint before child jobj. MObjUpdateFunc text/data exact still needs named constant exports: material fallback references lbl_806DCBCC. A separate native .sdata2 constants TU plus existing postprocess_sdata2 mechanism preserves exports without duplicated anonymous constants. DATA_ALIGN4_TUS required at .data804FC214.
+
+## c5_s23_fn80197f24_20261105
+Source: Codex worker c5_s23_fn80197f24_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 816 B.
+
+c5_s23: HSD_JObjCheckDepend dirty test as switch(dirty) { case 0: ...; break; } preserves target beq body + unconditional exit rather than optimizer folded bne exit. Text300 exact. Existing jobj_unlock_private.h avoids private assertion strings after shared pools move to NonMatching jobj_data_nm.c. HSD_MaterialAlloc already exact96 only needed flag promotion. Full source-linked SHA-1 OK.
