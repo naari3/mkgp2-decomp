@@ -1,0 +1,5 @@
+# onchi-speaker-native
+
+Source: Codex worker c11_a14_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1628 B.
+
+OnchiSpeaker_State1_Held 800EE8D8 native retrofit: original 0cb2868 introduced an extracted asm-only TU, with no function-specific park reason in history or notes. Canonical game/objview/item_state_private.h Item/State layouts fit. Natural switch fallthrough reproduces full branch tree. ItemAlias_HitRemapLookup must be declared int with short local conversion to emit extsh r29 rather than redundant return-value moves. Inline deflection plus ground/sound/bounce wrappers place Vec temporaries in target source-use order: wall44, ground38, pos2C, velocity20, sound14, bounce08. Deflection declares velocity before position. Automatic exceptions pragma emits exact EH8/index12, manual EH removed. Final text1628 all100 and full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. No configure/split/symbol/shared header edits.
