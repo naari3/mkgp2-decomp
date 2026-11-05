@@ -1633,6 +1633,11 @@ game/EffectSpeedAction_MueScale_Dtor.c:
 	extabindex  start:0x80020EB8 end:0x80020EC4
 	.text       start:0x80065084 end:0x800650E0
 
+game/EffectSpeed_Init.cpp:
+	extab       start:0x80007F94 end:0x80007FF8
+	extabindex  start:0x80020EC4 end:0x80020ED0
+	.text       start:0x800650E0 end:0x8006520C
+
 game/Cosf_LUT_Wrap.c:
 	extab       start:0x80008090 end:0x80008098
 	extabindex  start:0x80020F54 end:0x80020F60
@@ -2033,6 +2038,11 @@ game/KartItem_FindRearTarget_v1.cpp:
 	extab       start:0x80008620 end:0x80008628
 	extabindex  start:0x80021494 end:0x800214A0
 	.text       start:0x8007ADC0 end:0x8007AFC4
+
+game/KartItem_FindRearTarget_v2.cpp:
+	extab       start:0x80008628 end:0x80008630
+	extabindex  start:0x800214A0 end:0x800214AC
+	.text       start:0x8007AFC4 end:0x8007B208
 
 game/ItemEffectState_Init.c:
 	.text       start:0x8007B44C end:0x8007B534
@@ -11940,6 +11950,11 @@ game/fn_8023A148.cpp:
 	extab       start:0x8001C8D8 end:0x8001C8E0
 	extabindex  start:0x8002AC8C end:0x8002AC98
 	.text       start:0x8023A148 end:0x8023A7AC
+
+game/ItemGridState_Init.cpp:
+	extab       start:0x8001C8E0 end:0x8001C910
+	extabindex  start:0x8002AC98 end:0x8002ACA4
+	.text       start:0x8023A7AC end:0x8023AA0C
 
 game/ItemSelectChoiceStep.cpp:
 	extab       start:0x8001C910 end:0x8001C918

@@ -576,6 +576,9 @@ config.libs = [
         "progress_category": "game",
         "objects": [
             Object(Matching, "game/KartItem_FindRearTarget_v1.cpp"),
+            Object(Matching, "game/KartItem_FindRearTarget_v2.cpp"),
+            Object(Matching, "game/EffectSpeed_Init.cpp", extab_padding=b""),
+            Object(NonMatching, "game/ItemGridState_Init.cpp", extab_padding=b""),
             Object(Matching, "game/DrawNamCamImage.c", extra_cflags=["-use_lmw_stmw on", "-i include/libc"]),
             Object(NonMatching, "game/GameBoot_Init.cpp", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "game/ItemSelectChoiceStep.cpp"),

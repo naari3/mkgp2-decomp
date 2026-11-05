@@ -11578,5 +11578,21 @@
     "__dt__13ImpactArmQuatFv": "dtor_800524CC",
     "@200": "@etb_80007204",
     "@201": "@eti_800205F4"
+  },
+  "src/game/EffectSpeed_Init.cpp": {
+    "__ct__14SpeedInitOwnerFPv": "EffectSpeed_Init",
+    "__dt__15SpeedInitActionFv": "dtor_8006528C",
+    "__vt__15SpeedInitAction": "lbl_803FBF48",
+    "__vt__14SpeedInitScale": "lbl_803FBF68",
+    "__vt__12SpeedInitMue": "lbl_803FBF34",
+    "__dt__16SpeedScaleHolderFv": "dtor_80065748",
+    "__dt__14SpeedMueHolderFv": "dtor_800656B8"
+  },
+  "src/game/ItemGridState_Init.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

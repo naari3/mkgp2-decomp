@@ -604,3 +604,8 @@ fn_80247CFC float-list insert: inline RAII allocation guard + real placement new
 Source: Codex worker c9_L1_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 BootDispatcher 8002DD58..8002F640: genuine C++ reconstruction reaches 96.16123% and exact 6376-byte primary text size. Shared inline frame helper requires inline_max_size(10000)/inline_max_total_size(100000) to expand FinishFrame. CopyFrame must return early from alignment and capacity error branches: this duplicates each scoped timer cleanup naturally, restores the target 208-byte EH action/PC-interval structure, and improves text from 87.83814% to 96.16123%. Remaining register-save range, stack locations, scheduling, and PC offsets differ, so the singleton stays NonMatching; no native gain.
+
+## c9_s3_20261106
+Source: Codex worker c9_s3_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 880 B.
+
+EffectSpeed_Init 800650E0 matches 300B text +100B owned EH via genuine owner ctor, two inline derived virtual action constructors, tag/line placement new with no placement delete, and two distinct declared owning-holder destructors at +20/+24. Placement allocation avoids spurious DELETEPOINTER actions; inline base/derived ctors reproduce DESTROYBASE around virtual reset, owning members reproduce DESTROYMEMBER. Full source-linked DOL SHA-1 OK.
