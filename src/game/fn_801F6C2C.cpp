@@ -1,6 +1,5 @@
 #include "game/TextureRect801FPrivate.h"
 extern "C" {
-extern const float lbl_806DA710;
 void GXLoadTexMtxImm(const float (*)[4], unsigned int, int);
 void fn_801F6C2C(TextureSprite801F *self, const TextureRect801F *rect,
                    unsigned char flipX, unsigned char flipY) {
@@ -9,11 +8,11 @@ void fn_801F6C2C(TextureSprite801F *self, const TextureRect801F *rect,
     float one;
     float invWidth;
     float y;
-    float height;
     float x;
+    float height;
     float width;
-    one = lbl_806DA710;
-    half = lbl_806DA714;
+    one = 1.0f;
+    half = 0.5f;
     invWidth = one / self->desc.h18;
     invHeight = one / self->desc.h1A;
     height = rect->height;
@@ -31,9 +30,9 @@ void fn_801F6C2C(TextureSprite801F *self, const TextureRect801F *rect,
     if (flipY) { self->desc.v1 = bottom; self->desc.v0 = top; }
     else { self->desc.v1 = top; self->desc.v0 = bottom; }
     PSMTXScale(self->textureMatrix, self->desc.u1 - self->desc.u0,
-              self->desc.v0 - self->desc.v1, lbl_806DA710);
+              self->desc.v0 - self->desc.v1, 1.0f);
     PSMTXTransApply(self->textureMatrix, self->textureMatrix,
-                   self->desc.u0, self->desc.v1, lbl_806DA718);
+                   self->desc.u0, self->desc.v1, 0.0f);
     GXLoadTexMtxImm(self->textureMatrix, 30, 1);
 }
 }
