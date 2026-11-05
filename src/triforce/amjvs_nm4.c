@@ -1,14 +1,11 @@
 #include <triforce/amjvs_internal.h>
 
-s32 fn_8028AE64(s32 node, u8 player, u8 byte) {
+static inline s32 ReadSwitch(s32 node, u8 player, u8 byte) {
     s32 ret;
-    OSSemaphore* sem = &Mgr.sem;
     u8* count;
     JvsNode* nodes;
-    u8 bytes;
     u8* p;
-
-    OSWaitSemaphore(sem);
+    u8 bytes;
     count = fn_80285778();
     nodes = fn_802857B8();
     if (node < 1 || node > *count) {
@@ -24,6 +21,14 @@ s32 fn_8028AE64(s32 node, u8 player, u8 byte) {
             ret = p[1 + byte + player * bytes];
         }
     }
+    return ret;
+}
+
+s32 fn_8028AE64(s32 node, u8 player, u8 byte) {
+    OSSemaphore* sem = &Mgr.sem;
+    s32 ret;
+    OSWaitSemaphore(sem);
+    ret = ReadSwitch(node, player, byte);
     OSSignalSemaphore(sem);
     return ret;
 }

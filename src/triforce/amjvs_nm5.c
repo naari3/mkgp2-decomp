@@ -9,10 +9,10 @@ void fn_8028B180(BOOL filter) {
     s32 n;
 
     OSWaitSemaphore(sem);
-    for (i = 0; i < 16; i++) {
-        Mgr.node[i].err.count = 0;
-    }
     m = &Mgr;
+    for (i = 0; i < 16; i++) {
+        m->node[i].err.count = 0;
+    }
     if (fn_80283E3C() != 0) {
         for (n = fn_80283E3C(); n > 0; n--) {
             ev = fn_80283E54();
@@ -25,9 +25,9 @@ void fn_8028B180(BOOL filter) {
             }
         }
     }
-    for (i = 0; i < 16; i++, m = (JvsMgr*)((u8*)m + sizeof(JvsMgrNode))) {
+    for (i = 0; i < 16; m = (JvsMgr*)((u8*)m + sizeof(JvsMgrNode)), i++) {
         st = &m->node[0].err;
-        if (m->node[0].err.count > 0) {
+        if (st->count > 0) {
             st->runs++;
             st->streak++;
         } else {
