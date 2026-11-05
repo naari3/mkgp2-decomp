@@ -11148,8 +11148,7 @@
     "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
     "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
     "Init__12DigitListMidFiPCi": "fn_80247CFC",
-    "__dt__10FlowFaderIFv": "fn_801F26C8",
-    "@191": "jumptable_804EEAA4"
+    "__dt__10FlowFaderIFv": "fn_801F26C8"
   },
   "src/game/RaceDigitLap.cpp": {
     "__ct__10DigitPanelFi": "fn_802476FC",

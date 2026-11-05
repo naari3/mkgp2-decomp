@@ -649,3 +649,8 @@ c10_u27: EnemyRun_BaseInit explicit RHS column cursor (const float *column=b.m; 
 Source: Codex worker c10_u28_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c10_u28: RankingFlowView::Update singleton 801D1890 retains NM at 97.993805% (1292 B), owned EH 95%, index100. Inline list-insert wrapper slightly improves stack layout vs97.990715 baseline. Player-loop helper regresses97.35604; hoisting node/entry declarations before self is byte-invariant. Remaining param/self r28 vsr30, loop/new pointer partition and iterator stack slots. Both EH DELETEPOINTER bytes encode r29 vs targetr28. All three hypotheses used; final fallback DOL SHA-1 OK.
+
+## c10_u29_20261106
+Source: Codex worker c10_u29_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c10_u29: RaceDigitUpdate 80246484 state 6 must break into common update tail, not return; jump table becomes exact. Scalar 0/1/1.2/220/599.999 literals remove extra sum constant fmr and FP constant-home differences. Remove stale per-TU @191 jump-table rename because @191 is now the 599.999 literal and postprocess_sdata2 must map it normally. Text 97.90966 -> 98.76636, .data/extab/extabindex 100%; retain NonMatching. Sentinel-based begin reload and shared function-scope loop index fail to recover remaining GPR homes. Full fallback-linked DOL SHA-1 exact.
