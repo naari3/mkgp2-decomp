@@ -10983,5 +10983,14 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "@236": "@etb_80015734",
     "@237": "@eti_80028340"
+  },
+  "src/game/fn_801D878C.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
+  },
+  "src/game/fn_801D92D0.cpp": {
+    "__ct__13FKPanelSpriteFiii": "Sprite_InitWithAnim",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

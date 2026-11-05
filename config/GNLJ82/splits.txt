@@ -9209,6 +9209,11 @@ game/clFlowKart_Init.c:
 	.text       start:0x801D83D4 end:0x801D878C
 	.rodata     start:0x8039E508 end:0x8039E9F8
 
+game/fn_801D878C.cpp:
+	extab       start:0x80015474 end:0x8001549C
+	extabindex  start:0x80028178 end:0x80028184
+	.text       start:0x801D878C end:0x801D895C
+
 game/fn_801D895C.c:
 	.text       start:0x801D895C end:0x801D898C
 
@@ -9233,6 +9238,11 @@ game/fn_801D8DF8.c:
 	extabindex  start:0x8002819C end:0x800281A8
 	.text       start:0x801D8DF8 end:0x801D8E28
 
+game/fn_801D8E28.cpp:
+	extab       start:0x800154D8 end:0x800154E0
+	extabindex  start:0x800281A8 end:0x800281B4
+	.text       start:0x801D8E28 end:0x801D9180
+
 game/fn_801D9180.c:
 	.text       start:0x801D9180 end:0x801D919C
 
@@ -9240,6 +9250,11 @@ game/fn_801D919C.cpp:
 	extab       start:0x800154E0 end:0x800154F8
 	extabindex  start:0x800281B4 end:0x800281C0
 	.text       start:0x801D919C end:0x801D92D0
+
+game/fn_801D92D0.cpp:
+	extab       start:0x800154F8 end:0x80015520
+	extabindex  start:0x800281C0 end:0x800281CC
+	.text       start:0x801D92D0 end:0x801D9890
 
 game/clFlowKart_SetupTextLayout.cpp:
 	extab       start:0x80015520 end:0x80015528
@@ -9313,6 +9328,11 @@ game/fn_801DAB7C.c:
 	extab       start:0x80015694 end:0x8001569C
 	extabindex  start:0x80028268 end:0x80028274
 	.text       start:0x801DAB7C end:0x801DABFC
+
+game/fn_801DABFC.c:
+	extab       start:0x8001569C end:0x800156A4
+	extabindex  start:0x80028274 end:0x80028280
+	.text       start:0x801DABFC end:0x801DAE54
 
 game/fn_801DAE54.c:
 	extab       start:0x800156A4 end:0x800156AC
