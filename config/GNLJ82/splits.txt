@@ -10278,6 +10278,11 @@ game/fn_801F7E98.cpp:
 	extabindex  start:0x80029000 end:0x8002900C
 	.text       start:0x801F7E98 end:0x801F7F50
 
+game/fn_801F7F50.cpp:
+	extab       start:0x80017618 end:0x80017630
+	extabindex  start:0x8002900C end:0x80029018
+	.text       start:0x801F7F50 end:0x801F8214
+
 game/dtor_801F8214.c:
 	extab       start:0x80017630 end:0x80017638
 	extabindex  start:0x80029018 end:0x80029024
@@ -10338,6 +10343,11 @@ game/fn_801F8E90.c:
 game/fn_801F8FCC.c:
 	.text       start:0x801F8FCC end:0x801F9014
 
+game/fn_801F9014.cpp:
+	extab       start:0x800176B0 end:0x800176B8
+	extabindex  start:0x80029090 end:0x8002909C
+	.text       start:0x801F9014 end:0x801F91EC
+
 game/TexMgr_SetTexture.cpp:
 	extab       start:0x800176B8 end:0x800176C0
 	extabindex  start:0x8002909C end:0x800290A8
@@ -10355,6 +10365,16 @@ game/TexMgr_Apply.c:
 	extab       start:0x800176C8 end:0x800176D0
 	extabindex  start:0x800290B4 end:0x800290C0
 	.text       start:0x801F947C end:0x801F9518
+
+game/fn_801F9518.cpp:
+	extab       start:0x800176D0 end:0x800176D8
+	extabindex  start:0x800290C0 end:0x800290CC
+	.text       start:0x801F9518 end:0x801F95A0
+
+game/fn_801F95A0.cpp:
+	extab       start:0x800176D8 end:0x800176E0
+	extabindex  start:0x800290CC end:0x800290D8
+	.text       start:0x801F95A0 end:0x801F9628
 
 game/fn_801F9628.c:
 	.text       start:0x801F9628 end:0x801F9888

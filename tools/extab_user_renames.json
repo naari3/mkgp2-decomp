@@ -11022,5 +11022,8 @@
   },
   "src/game/fn_801ED798.cpp": {
     "__dt__12CollisionVecFv": "dtor_80036E40"
+  },
+  "src/game/fn_801F7F50.cpp": {
+    "__dt__12DrawQuad7F50Fv": "dtor_801F8214"
   }
 }

@@ -1,0 +1,64 @@
+#include "game/TextDraw801F.h"
+#include "libc/stdarg.h"
+
+extern "C" int OSDisableInterrupts(void);
+extern "C" void OSRestoreInterrupts(int);
+extern "C" unsigned short *wcscpy(unsigned short *, const unsigned short *);
+extern "C" int vsprintf(char *, const char *, va_list);
+
+static inline unsigned short LookupWide(const char *cursor) {
+    int glyph = 0;
+    int i;
+    for (i = 0; i < 654; ++i) {
+        if (*(const unsigned short *)cursor == lbl_804E5590[i].code) {
+            glyph = lbl_804E5590[i].card;
+            break;
+        }
+    }
+    return glyph;
+}
+
+static inline unsigned short LookupNarrow(const char *cursor) {
+    int glyph = 654;
+    int i;
+    for (i = 654; i < 739; ++i) {
+        if (*cursor == lbl_804E5590[i].code) {
+            glyph = lbl_804E5590[i].card;
+            break;
+        }
+    }
+    return glyph;
+}
+
+static inline void DecodeText(TextDraw801F *self, char *cursor) {
+    unsigned short *out = self->glyphs;
+    int count = 0;
+    for (; *cursor && count < 255; ++count, ++out, ++cursor) {
+        if (*(unsigned short *)cursor & 0x8000) {
+            *out = LookupWide(cursor);
+            ++cursor;
+        } else if (*cursor == '\n') {
+            *out = 0xC000;
+        } else {
+            *out = LookupNarrow(cursor);
+        }
+    }
+    if (count < 255) {
+        *out = 0xFFFF;
+    } else {
+        self->glyphs[255] = 0xFFFF;
+    }
+}
+
+extern "C" void fn_801F9014(TextManager *self, const unsigned short *format, ...) {
+    unsigned short narrowFormat[0x200];
+    char buffer[0x200];
+    va_list args;
+    wcscpy(narrowFormat, format);
+    int enabled = OSDisableInterrupts();
+    va_start(args, format);
+    vsprintf(buffer, (const char *)narrowFormat, args);
+    va_end(args);
+    OSRestoreInterrupts(enabled);
+    DecodeText((TextDraw801F *)self, buffer);
+}
