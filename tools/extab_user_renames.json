@@ -10667,5 +10667,8 @@
     "__ct__5GroupFP11GroupParams": "fn_80195DA8",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/kartmove/KartMovement_CollisionUpdate.cpp": {
+    "__dt__12CollisionVecFv": "dtor_80036E40"
   }
 }

@@ -459,3 +459,8 @@ CardCreditFlow (80241C1C..80242DE0): GC/1.3.2 real C++ using canonical FlowScene
 Source: Codex worker c7_s23_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1308 B.
 
 fn_8018E108 and fn_8018EDE0 match exact native text/EH with inline base vptr construction and new clNormal3D. Null-safe child/next accessors must spell `if (p == 0) return 0; return p->child/next;`; ternaries select inverse branches and a return-through-r0 temporary. Early returns remove these differences and produce 100%.
+
+## c7_s29_20261105
+Source: Codex worker c7_s29_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+CollisionUpdate 8019B080 standalone split owns extab 80012668..800126B0 and index 80027428..80027434. It has six DESTROYLOCAL Vec slots: contact 24, normal 30, hit point 3C, up 48, forward 54, previous position 78. Value-argument constructors and a nontrivial normal temporary recover target stack layout. In-place 4x4 matrix multiplication plus aggregate copies increases native text similarity from 70.70 to 81.33%; TU remains NonMatching after three structural hypotheses. No exact native subset exists within this one large function.

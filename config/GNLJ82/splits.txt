@@ -8108,6 +8108,11 @@ game/kartmove/fn_8019ADF4.c:
 	extabindex  start:0x8002741C end:0x80027428
 	.text       start:0x8019ADF4 end:0x8019B080
 
+game/kartmove/KartMovement_CollisionUpdate.cpp:
+	extab       start:0x80012668 end:0x800126B0
+	extabindex  start:0x80027428 end:0x80027434
+	.text       start:0x8019B080 end:0x8019BF80
+
 game/kartmove/fn_8019BF80.cpp:
 	extab       start:0x800126B0 end:0x800126F8
 	extabindex  start:0x80027434 end:0x80027440
