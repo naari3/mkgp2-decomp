@@ -7285,7 +7285,10 @@
     "__vt__10BattleMenu": "lbl_804EC840",
     "__vt__9SceneBase": "lbl_803FE0C8",
     "__dt__9SceneBaseFv": "dtor_8007D0D4",
-    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724"
+    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
+    "@107": "@etb_800195C8",
+    "@108": "@eti_80029C18",
+    "@106": "jumptable_804EC8C0"
   },
   "src/game/anon_8020BD68_nm1.cpp": {
     "@106": "jumptable_804EC8F4",

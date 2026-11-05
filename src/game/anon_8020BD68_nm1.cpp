@@ -1,5 +1,9 @@
 #include "game/anon_8020BD68_private.h"
 
+static inline void AddInitialTask(FlowSceneList *l) {
+    fn_801F4DF0(l, fn_80201A48(0), 2);
+}
+
 GrandPrixMenu::GrandPrixMenu() : list(new SceneListImpl), fade(new FlowFaderI), task(0), state(0) {
     fn_80202C34(0);
     fn_80202B48(0);
@@ -25,9 +29,6 @@ GrandPrixMenu::GrandPrixMenu() : list(new SceneListImpl), fade(new FlowFaderI), 
     fn_8020A7CC(fade.p, 0xFF, 0, 0xF);
     ClSound_PlayBgmStream(1, 0);
     clStream_setVolume(1, fn_801932F8());
-    {
-        FlowSceneList *l = list.p;
-        fn_801F4DF0(l, fn_80201A48(0), 2);
-    }
+    AddInitialTask(list.p);
     Factory();
 }

@@ -1747,5 +1747,12 @@
     "fn_8022B53C",
     "fn_8022B728",
     "dtor_80036E40"
+  ],
+  "src/game/anon_8020B4F8_nm1.cpp": [
+    "fn_8020BACC",
+    "dtor_801F2724",
+    "__dt__10FlowFaderIFv",
+    "dtor_801F4B10",
+    "dtor_8007D0D4"
   ]
 }

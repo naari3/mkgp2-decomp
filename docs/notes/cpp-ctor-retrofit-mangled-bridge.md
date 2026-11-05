@@ -349,3 +349,8 @@ c5_m5 EnemyFace: Update requires unsigned-byte hidden helper with (bits & 0x8000
 Source: Codex worker c5_s11_anon80203ea0_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 588 B.
 
 c5_s11: fn_80203F5C popup open needs explicit else return 0 when both cur and pending are occupied. TU-local copy plus external target RTTI runtime fn_80271340(t,0,lbl_806D0268,lbl_806D0260,0) gives 340 bytes and all owned sections 100%, no emitted data. Cursor destructor 802051E8 promotes unchanged text with weak FlowFaderI bridge to fn_801F26C8; extra EH discards. YesNoCursor Update declaration px before py fixes FP homes (99.72603 to 99.863014), but list/visible r30/r31 swap remains after scope/helper attempts. Full DOL SHA-1 and ELF positions verified for two promoted functions.
+
+## c5_s12_anon8020aad4_20261105
+Source: Codex worker c5_s12_anon8020aad4_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 668 B.
+
+c5_s12: BattleMenu ctor 8020BACC cached list r28->r30 resolves by extracting fn_801F4DF0(l,fn_80201A48(0),2) into static inline AddInitialTask(FlowSceneList *l). Exact 668-byte text, 52-byte data and owned 96-byte EH/12-byte index after bridging @106 jump table, @107/@108 EH names; append weak copies in extab_order and add DATA_ALIGN4_WEAK_TUS. Coordinator full build SHA-1 OK; main.elf fn at 8020BACC size668 with source input true. Same helper fixes GrandPrix list but leaves cup r29 vs r30 (99.77401%). AAD4 switch/if forms fail to retain target branch-over-branch. ItemShowcase aggregate-reference or aggregate-part representation leaves same extra base move.
