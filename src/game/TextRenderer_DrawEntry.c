@@ -21,11 +21,14 @@ void TextRenderer_DrawEntry(DebugDisplayContext *self, DebugTextEntry *entry)
     DebugTexObj texture;
     void *image;
     int s, t, width;
-    char *text;
-    void *loaded;
-    int height;
-    int dy;
     int dx;
+    int dy;
+    int height;
+    void *loaded;
+    short y1, y0, x1, x0;
+    short t1, t0, s1, s0;
+    unsigned char color;
+    char *text;
 
     DebugFontHeader *font = self->font;
     if (entry->color > 8) entry->color = 8;
@@ -56,9 +59,6 @@ void TextRenderer_DrawEntry(DebugDisplayContext *self, DebugTextEntry *entry)
                 loaded = image;
             }
             {
-                unsigned char color;
-                short s0, s1, t0, t1;
-                short x0, x1, y0, y1;
                 x0 = entry->x + dx;
                 y0 = entry->y + dy;
                 x1 = self->font->cellWidth * entry->scale + x0;
