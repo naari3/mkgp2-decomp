@@ -1,4 +1,4 @@
-#include "game/FlowYesNo.h"
+#include "game/YesNoButtonRDrawPrivate.h"
 
 /*
  * Selector sparkle and right-hand button drawing (0x802052E0..0x80205DCC).

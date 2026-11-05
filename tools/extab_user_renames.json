@@ -3862,7 +3862,10 @@
     "__vt__10FlowFaderF": "lbl_80419DE0",
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960",
-    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_80250668"
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_80250668",
+    "@116": "jumptable_804F2044",
+    "@117": "@etb_8001EF8C",
+    "@118": "@eti_8002B940"
   },
   "src/game/TitleNameHud.cpp": {
     "__ct__12TitleNameHudFi": "fn_80252EE4",

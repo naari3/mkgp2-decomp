@@ -334,3 +334,8 @@ TitleNameHud ctor 80252EE4: real empty GlyphText destructor must remain alive th
 Source: Codex worker c5_s10_anon801fd320_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c5_s10 partial: MsgPopup::Tick 80203224 improves 98.234566 -> 99.06584 with named px/py temporaries before each ResCtrl::Show and a separate float yy=s*(base+(float)dy) before y+yy. This restores exact 972-byte primary size and all owned EH/index bytes; extra weak ResCtrl dtor EH remains. FP/GPR allocation is still non-exact. A future promotion also needs .data 804EC3C4..804EC3E0 jump-table ownership/bridge; current source emits @85 while old bridge expects @106. fn_80203C24 explicit pending-busy early return fixes one branch (98.816795 -> 98.854965), but direct pending-r30 hoisting/missing mr and duplicate RTTI/data remain. CardEjectTask body cached pool must precede base call in target; moving array allocation into member initialization or removing the pool cache regresses. No flag flips/native gain.
+
+## c5_m4_802052e0_20261105
+Source: Codex worker c5_m4_802052e0_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 896 B.
+
+TitleNameHud Update 802529E4: extract only sprite positioning into static inline helper, retain cull loop in caller, and reuse x for badge/glyph positions to resolve GPR and FPR webs. Own jump table 804F2044..804F2060, DATA_ALIGN4_TUS, bridge @116 table / @117 EH / @118 EH index. Define SetDelay, Draw, Update in target order: symbol-level and section objdiff can report 100 even with reversed physical order. Final full DOL SHA-1 OK; 3 fn / 896 B native.

@@ -1,4 +1,4 @@
-#include "game/DNFlash_private.h"
+#include "game/DNFlashSpawn_private.h"
 
 #pragma dont_inline on
 unsigned char clDNFlash::Check() {
@@ -45,14 +45,28 @@ unsigned char clDNFlash::Check() {
 }
 #pragma dont_inline reset
 
+static inline int SpawnArea(const float *xLimits, const float *zLimits, float x, float z) {
+    int ix = -1;
+    int iz = ix;
+    for (int i = 0; i < 3; i++) {
+        if (x < xLimits[i]) { ix = i; break; }
+    }
+    for (int i = 0; i < 3; i++) {
+        if (z > zLimits[i]) { iz = i; break; }
+    }
+    if (ix < 0 || iz < 0) return -1;
+    return ix + iz * 3;
+}
+
 void clDNFlash::Spawn() {
+    const DNFlashSpawnTables &tables = *(const DNFlashSpawnTables *)lbl_803D0390;
     int list[5];
 
     if (g_playerRenderObj == 0) {
         return;
     }
     const float *m = KartDriver_GetKartRootMtx(g_playerRenderObj);
-    int area = AreaIndex(m[3], m[11]);
+    int area = SpawnArea(tables.xLimits, tables.zLimits, m[3], m[11]);
     if (area < 0) {
         return;
     }
@@ -101,7 +115,7 @@ void clDNFlash::Spawn() {
             p->owner = pt;
             p->active = 1;
             p->life = 8;
-            p->scale = lbl_803D0798[rand() % 3];
+            p->scale = tables.scales[rand() % 3];
             p->dscale = lbl_806DB498;
             p->alpha = lbl_806DB49C;
             free[i] = 0;
