@@ -499,3 +499,8 @@ c8_s38: clFlowEntry_Update 801BA380 matches native 804B text + 24B DELETEPOINTER
 Source: Codex worker c8_s42_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 2180 B.
 
 c8_s42: fn_801CCAAC real new SelectClosing plus declared SelectTween array ctor bridged to fn_801CDA7C gives exact DELETEPOINTER EH. Put vt/sprite/delay in member initializer list before array construction. Call an inline Fade method before passing &p to list insertion: its this parameter preserves the cached pointer and original SP+10 p slot; open-coded field writes caused repeated stack pointer reloads. fn_801CCDA4 needs outer end local plus inline TickSelectEntries(node,end) for exact self/end/entry/node GPR partition. fn_801CB818 compares float constant against (float)--countdown to match conversion before member store. All three GC/2.6 text/EH/index exact and source-linked full DOL SHA-1 OK.
+
+## c8_s44_20261105
+Source: Codex worker c8_s44_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 2160 B.
+
+c8_s44: fn_801CE918 and fn_801CEB78 match 2160B text plus 160B EH, 24B index and 32B switch data using canonical AnimSprite new expressions. Declare RowAnimation * before RowLayout * inside each switch case to get target base-load/register scheduling. Inline SetPos and SetRowScale capture the sprite once. Single-function blobs split independently. Constructor clFlowTaPlease_Init remains NM at 93.340836%; constant table-base caching/lifetime differs, no filler or manual EH used.

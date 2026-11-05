@@ -10895,5 +10895,39 @@
     "__vt__12GpLabelPanel": "lbl_8048EF20",
     "__vt__12GpColorPanel": "lbl_8049B1AC",
     "__dt__15GpPayloadHolderFv": "dtor_801CDBB8"
+  },
+  "src/game/fn_801CE918.cpp": {
+    "__ct__10AnimSpriteFiii": "Sprite_InitWithAnim",
+    "__dt__10AnimSpriteFv": "Sprite_Destroy",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@44": "@etb_80014C4C",
+    "@45": "@eti_80027F80"
+  },
+  "src/game/fn_801CEB78.cpp": {
+    "__ct__10AnimSpriteFiii": "Sprite_InitWithAnim",
+    "__dt__10AnimSpriteFv": "Sprite_Destroy",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@121": "@etb_80014C74",
+    "@122": "@eti_80027F8C",
+    "@120": "jumptable_8049B3E8"
+  },
+  "src/game/clFlowTaPlease_Init.cpp": {
+    "__ct__10C8TaPleaseFv": "clFlowTaPlease_Init",
+    "__ct__10C8FlowBaseFv": "InitializeFrameSelection",
+    "__dt__10C8FlowBaseFv": "dtor_801BA14C",
+    "__ct__8C8PromptFiiiii": "fn_8023D080",
+    "__dt__14C8PromptHolderFv": "dtor_801CCA30",
+    "__dt__11C8BoxHolderFv": "dtor_80145F04",
+    "__ct__13C8ParamSpriteFiiffffff": "Sprite_CreateWithParams",
+    "__ct__6C8TextFv": "TexMgr_Init",
+    "__ct__10AnimSpriteFiii": "Sprite_InitWithAnim",
+    "__dt__10AnimSpriteFv": "Sprite_Destroy",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__10C8TaPlease": "lbl_8049B1CC",
+    "@65": "@etb_80014B70",
+    "@66": "@eti_80027F68"
   }
 }
