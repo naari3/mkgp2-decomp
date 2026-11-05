@@ -4,8 +4,9 @@
  * game-mode wrapper. Each class declares a virtual that is not defined
  * here first, so the vtables (in data) are not emitted by this unit.
  *
- * Still asm: the timer lookup (callee-saved register order), the colour
- * table init, and the two zone ctors (load scheduling).
+ * Still asm: the colour table init (dynamic init of tables this unit does
+ * not own) and the two zone ctors (their src loads are scheduled across the
+ * stores to `this` as if the two could not alias).
  */
 #pragma cplusplus on
 
@@ -45,16 +46,11 @@ extern unsigned int lbl_806D6E2C;
 extern unsigned int lbl_806D6E30;
 extern unsigned int lbl_806D6E34;
 extern unsigned int lbl_8048DAA8[];
-asm void MiniGame_GetTimerValue(void);
 asm void fn_801232E0(void);
 asm void fn_80123674(void);
 asm void fn_801238EC(void);
 
 #pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_MiniGame_GetTimerValue[8] = {
-    0x18, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
 __declspec(section ".extab_user") static const unsigned char extab_fn_801232E0[8] = {
     0x90, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -64,10 +60,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; void *f6; } extab_fn_801238EC = { 0x180A0000, 0x0000016C, 0x000D0010, 0x00000000, 0x8680001F, 0x00000000, (void *)&dtor_80123870 };
 
 #pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_MiniGame_GetTimerValue = {
-    (void *)&MiniGame_GetTimerValue, 0x000000DC, (void *)extab_MiniGame_GetTimerValue
-};
-
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801232E0 = {
     (void *)&fn_801232E0, 0x0000019C, (void *)extab_fn_801232E0
 };
@@ -88,7 +80,7 @@ void *operator new(unsigned long size);
 void operator delete(void *p);
 
 extern "C" int IsUraCourseFromSubMode(void) {
-    return g_roundIndex > 3;
+    return g_roundIndex > 3 ? 1 : 0;
 }
 
 static inline int CupIndex(void) {
@@ -109,69 +101,17 @@ extern "C" int fn_801231AC(void) {
     return 0;
 }
 
-extern "C" asm void MiniGame_GetTimerValue(void) { /* 0x801231FC size:0xDC */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    stw r29, 0x14(r1)
-    lwz r3, g_cupId(r13)
-    cmpwi r3, 0x9
-    blt MiniGame_GetTimerValue_L_80123228
-    subi r31, r3, 0x9
-    b MiniGame_GetTimerValue_L_8012322C
-    MiniGame_GetTimerValue_L_80123228:
-    subi r31, r3, 0x1
-    MiniGame_GetTimerValue_L_8012322C:
-    lwz r4, g_roundIndex(r13)
-    li r0, 0x3
-    cmpwi r31, 0x0
-    lwz r29, g_ccClass(r13)
-    xor r0, r4, r0
-    srawi r3, r0, 1
-    and r0, r0, r4
-    subf r0, r0, r3
-    srwi r30, r0, 31
-    blt MiniGame_GetTimerValue_L_80123264
-    cmpwi r30, 0x0
-    blt MiniGame_GetTimerValue_L_80123264
-    cmpwi r29, 0x0
-    bge MiniGame_GetTimerValue_L_8012326C
-    MiniGame_GetTimerValue_L_80123264:
-    li r3, 0x0
-    b MiniGame_GetTimerValue_L_801232BC
-    MiniGame_GetTimerValue_L_8012326C:
-    bl IsCardValid
-    clrlwi. r0, r3, 24
-    bne MiniGame_GetTimerValue_L_8012329C
-    mulli r5, r31, 0x18
-    lis r4, lbl_803554E0@ha
-    slwi r3, r29, 3
-    addi r0, r4, lbl_803554E0@l
-    add r4, r0, r5
-    slwi r0, r30, 2
-    add r3, r4, r3
-    lwzx r3, r3, r0
-    b MiniGame_GetTimerValue_L_801232BC
-    MiniGame_GetTimerValue_L_8012329C:
-    mulli r5, r31, 0x18
-    lis r4, lbl_80355078@ha
-    slwi r3, r29, 3
-    addi r0, r4, lbl_80355078@l
-    add r4, r0, r5
-    slwi r0, r30, 2
-    add r3, r4, r3
-    lwzx r3, r3, r0
-    MiniGame_GetTimerValue_L_801232BC:
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+extern "C" int MiniGame_GetTimerValue(void) {
+    int cup = CupIndex();
+    int ura = IsUraCourseFromSubMode();
+    int cc = g_ccClass;
+    if (cup < 0 || ura < 0 || cc < 0) {
+        return 0;
+    }
+    if (IsCardValid() == 0) {
+        return lbl_803554E0[cup][cc][ura];
+    }
+    return lbl_80355078[cup][cc][ura];
 }
 
 extern "C" void fn_801232D8(void) {
