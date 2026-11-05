@@ -384,3 +384,8 @@ Coin destructors 802246A4/80224800 unlock with existing undefined Update overrid
 Source: Codex worker c6_nt8_playerdata_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 756 B.
 
 c6 NT8: PlayerData fn_801D6558 matches 436B text/8B EH/12B index with a genuine 0x1DC-byte snapshot and CupRank inline validation. Initialize normalized=cup, then initialized cc=g_ccClass, then normalize 9..16; this gives exact load scheduling (a deferred cc assignment or helper extraction left residuals). fn_801D6DF0 becomes exact 320B when the 1..8 loop lives in AllCupsComplete inline helper, with a signed int rank temporary before >=4 comparison. Source inputs and ELF ranges verified; full DOL SHA-1 OK.
+
+## c7_s2_20261105
+Source: Codex worker c7_s2_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1692 B.
+
+ServiceButton_Handler 8002D0B0: new ServiceMenu(11), size 0x28C, private virtual slots Tick/Draw/dtor, and per-TU ctor bridge give exact text and DELETEPOINTER EH. ServiceMode +8..+10 must be represented as a two-word aggregate member so its implicit copy emits load/load/store/store rather than scalar load/store/load/store. One shared inline ServiceFrame reproduces both target loops exactly; full source-linked DOL SHA-1 verified.

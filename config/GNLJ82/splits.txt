@@ -52,6 +52,11 @@ game/Debug.c:
 game/VBlank.c:
 	.text       start:0x8002CFB8 end:0x8002D0B0
 
+game/ServiceButton_Handler.cpp:
+	extab       start:0x80005720 end:0x80005738
+	extabindex  start:0x8001F430 end:0x8001F43C
+	.text       start:0x8002D0B0 end:0x8002D74C
+
 game/Camera.c:
 	.text       start:0x8002D74C end:0x8002D760
 
@@ -231,6 +236,11 @@ game/clNormal3D.c:
 
 game/Object_SetField8_10_14.c:
 	.text       start:0x80032A70 end:0x80032AAC
+
+game/Object_DriveAnimAndSkin.cpp:
+	extab       start:0x80005AA0 end:0x80005AF8
+	extabindex  start:0x8001F76C end:0x8001F778
+	.text       start:0x800331E0 end:0x80033918
 
 game/Normal3DScale.c:
 	extab       start:0x80005AF8 end:0x80005B50
