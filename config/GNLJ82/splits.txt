@@ -4785,6 +4785,12 @@ game/ItemObject_WriteVectors.c:
 game/ItemObject_SetByte18c.c:
 	.text       start:0x800DD930 end:0x800DD940
 
+game/PreloadEffectResources.c:
+	extab       start:0x8000B4B4 end:0x8000B4BC
+	extabindex  start:0x80023C24 end:0x80023C30
+	.text       start:0x800DEF74 end:0x800DF56C
+	.data       start:0x8041EE3C end:0x8041EEC0
+
 game/ShellPilePiece_Tick.c:
 	extab       start:0x8000B4BC end:0x8000B4C4
 	extabindex  start:0x80023C30 end:0x80023C3C
@@ -6099,6 +6105,11 @@ game/SceneList_80157EA8.cpp:
 	extab       start:0x8000F150 end:0x8000F190
 	extabindex  start:0x80025910 end:0x80025970
 	.text       start:0x80157EA8 end:0x8015A6E4
+
+game/OptionMenuDraw.cpp:
+	extab       start:0x8000F190 end:0x8000F198
+	extabindex  start:0x80025970 end:0x8002597C
+	.text       start:0x8015A6E4 end:0x8015AE3C
 
 game/Scene_8015AE3C.cpp:
 	extab       start:0x8000F198 end:0x8000F1A0

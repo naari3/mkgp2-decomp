@@ -1131,6 +1131,7 @@ config.libs = [
             Object(Matching, "game/ItemObject_RaycastWallStub.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Item_DecayVelocityScalar.c"),
             Object(Matching, "game/ItemObject_SetByte18c.c"),
+            Object(Matching, "game/PreloadEffectResources.c", extra_cflags=["-Cpp_exceptions on"]),
             # group2 batch (0x8009B98C..0x801077C8)
             Object(Matching, "game/RankSlot_AppendOrUpdate.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/PlayerData_ApplyItemUnlockById.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -2610,6 +2611,7 @@ config.libs = [
         "objects": [
             Object(Matching, "game/Scene_80163554.cpp"),
             Object(Matching, "game/Scene_8015AE3C.cpp"),
+            Object(NonMatching, "game/OptionMenuDraw.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Scene_8015B698.cpp"),
             Object(Matching, "game/Scene_8015B70C.cpp"),
             Object(Matching, "game/Scene_8015BC08.cpp"),
@@ -3632,6 +3634,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/PreloadEffectResources",
     "game/TitleNameHudUpdate",
     "game/anon_80218F40_nm1",
     "sysdolphin/baselib/mobj_update_nm",
