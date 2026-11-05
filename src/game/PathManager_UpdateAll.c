@@ -194,13 +194,14 @@ int PathManager_UpdateAll(UpdateManager *self)
     rank++;
     if (g_gameMode != 2 || g_isCommHost) {
         for (i = 0; i < limit; i++) {
-            UpdateEntry *candidate;
+            UpdateManager *scan;
             UpdateManager *slot = self;
+            UpdateEntry *candidate;
             slot = (UpdateManager *)((char *)slot + i*0x98);
             candidate = &slot->entries[0];
             if (slot->entries[0].node < 0 || candidate->rank != -1) continue;
             for (j = 0; j < limit; j++) {
-                UpdateManager *scan = (UpdateManager *)((char *)self + j*0x98);
+                scan = (UpdateManager *)((char *)self + j*0x98);
                 if (scan->entries[0].node < 0 || scan->entries[0].rank != -1) continue;
                 if (candidate->lap < scan->entries[0].lap) candidate = &scan->entries[0];
                 else if (candidate->lap == scan->entries[0].lap) {
@@ -244,37 +245,41 @@ int PathManager_UpdateAll(UpdateManager *self)
     g_bestLapTime = own->bestLap;
     g_totalRaceTime = own->totalTime;
     lbl_806CF128 = node+1;
-    for (i = 0; i < 8; i++) {
-        e = &self->entries[i];
-        if (e == own && e->item && e->rankImproved == 1) {
-            for (j = 0; j < 8; j++) {
-                /* Original compares with this slot's rank before measuring j. */
-                if (self->entries[i].rank == e->rank-1) {
-                    float distance;
-                    if (!PathManager_HasPathLoaded(self)) distance = lbl_806D2508;
-                    else {
-                        UpdateManager *a = (UpdateManager *)((char *)self + i*0x98);
-                        UpdateManager *b = (UpdateManager *)((char *)self + j*0x98);
-                        float dy = *a->entries[0].py-*b->entries[0].py;
-                        float dx = *a->entries[0].px-*b->entries[0].px;
-                        float dz = *a->entries[0].pz-*b->entries[0].pz;
-                        distance = (dy*dy + dx*dx) + dz*dz;
-                        if (distance > lbl_806D24E8) {
-                            double guess = __frsqrte(distance);
-                            guess = lbl_806D24F0*guess*(lbl_806D24F8-distance*(guess*guess));
-                            guess = lbl_806D24F0*guess*(lbl_806D24F8-distance*(guess*guess));
-                            guess = lbl_806D24F0*guess*(lbl_806D24F8-distance*(guess*guess));
-                            {
-                                volatile float rounded = (float)(distance*guess);
-                                distance = rounded;
+    {
+        UpdateManager *slot = self;
+        for (i = 0; i < 8; i++, slot = (UpdateManager *)((char *)slot + 0x98)) {
+            e = &slot->entries[0];
+            if (e == own && e->item && e->rankImproved == 1) {
+                for (j = 0; j < 8; j++) {
+                    /* Original compares with this slot's rank before measuring j. */
+                    if (slot->entries[0].rank == e->rank-1) {
+                        float distance;
+                        if (!PathManager_HasPathLoaded(self)) distance = lbl_806D2508;
+                        else {
+                            UpdateManager *a = slot;
+                            UpdateManager *b = (UpdateManager *)((char *)self + j*0x98);
+                            float dx, dy, dz;
+                            dy = *a->entries[0].py-*b->entries[0].py;
+                            dx = *a->entries[0].px-*b->entries[0].px;
+                            dz = *a->entries[0].pz-*b->entries[0].pz;
+                            distance = (dy*dy + dx*dx) + dz*dz;
+                            if (distance > lbl_806D24E8) {
+                                double guess = __frsqrte(distance);
+                                guess = lbl_806D24F0*guess*(lbl_806D24F8-distance*(guess*guess));
+                                guess = lbl_806D24F0*guess*(lbl_806D24F8-distance*(guess*guess));
+                                guess = lbl_806D24F0*guess*(lbl_806D24F8-distance*(guess*guess));
+                                {
+                                    volatile float rounded = (float)(distance*guess);
+                                    distance = rounded;
+                                }
                             }
                         }
+                        if (distance > lbl_806D250C) {
+                            CoinEvent_PlayAlternatingSE(e->item);
+                            e->rankImproved = 0;
+                        }
+                        break;
                     }
-                    if (distance > lbl_806D250C) {
-                        CoinEvent_PlayAlternatingSE(e->item);
-                        e->rankImproved = 0;
-                    }
-                    break;
                 }
             }
         }

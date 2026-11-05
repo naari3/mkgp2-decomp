@@ -108,3 +108,8 @@ c8_s50: AI_UpdateItemEffects matches 2628B text plus EH/data by declaring catalo
 Source: Codex worker c9_L7_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 KartMovement_PhysicsStep direct reconstruction: declaring yawTurn, turn, grip in this order places them in f29, f28, f27, matching the target; declaring grip, turn, yawTurn swaps f27/f29. PlainDot uses distinct product statements to prevent FMA after inline expansion; fp_contract off on the helper alone did not prevent caller fusion. Inline return-by-value Vec3 helpers materialized extra copy temporaries and worsened this function; canonical direct InitVec construction was closer.
+
+## c10_u3_20261106
+Source: Codex worker c10_u3_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+PathManager_UpdateAll 8003B6C4 (c10_u3_20261106): draft improved 98.89709 to 99.20515, kept NonMatching. Explicit shared manager cursor in final loop removes duplicate induction pointer and restores exact text5908/extab8/index12 sizes (EH/index100%). Declaring dx,dy,dz then evaluating dy,dx,dz matches FP arithmetic homes while x/y pointer-load order remains reversed. Declaring ranking scan before slot/candidate fixes candidate r3 / scan r4. Display-loop r24/r25, rank/limit and final loop GPR identities plus final NORMAL argument scheduling remain. Inline search helper was neutral; capturing inputs before the lap condition hoisted loads and worsened the match. No native gain; full fallback build SHA-1 OK.
