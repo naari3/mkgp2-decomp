@@ -123,3 +123,8 @@ c10_u15 LakituStart_UpdateCountdown 8003D360: shared function-scope unsigned loo
 Source: Codex worker c10_u16_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c10_u16: OptionMenuDraw fn_8015A6E4 draft declared get_title_name_global() without its actual RankLog* argument. Mirroring established GetRankLog inline accessor and passing the result restores singleton r3 load/check and removes prohibited null self-assignment. positions-before-count/i declarations fix loop r27/r28. Best text97.46809, size1880 and EH100; remaining FP scratch/shared coordinate and indexed-access residuals. Full literal conversion97.43617; selective literals can break CSE (+4B). Remains NonMatching; full fallback SHA-1 OK.
+
+## c10_u18_20261106
+Source: Codex worker c10_u18_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1852 B.
+
+DebugOverlay_Dispatch 8002BE18: case 9 accumulator residual f30 vs f28 (99.61123%) resolves by separating case 9 accumulated/drawTime locals from case 1 other/draw with a lexical case block. Text1852/data56/extab8/index12 all 100%; Matching source-input full link DOL SHA-1 OK. One hypothesis; no codegen pragma or filler.

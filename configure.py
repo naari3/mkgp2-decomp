@@ -611,7 +611,7 @@ config.libs = [
             # kwarg routes this TU through the mwcc_sjis_extab build rule so
             # the postprocess hook runs.
             Object(Matching, "game/Flow_TransitionTo.cpp"),
-            Object(NonMatching, "game/DebugOverlay_Dispatch.cpp", extab_padding=b""),
+            Object(Matching, "game/DebugOverlay_Dispatch.cpp", extab_padding=b""),
             Object(Matching, "game/MainGameLoop.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/FlowDispatcher_Dtor.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/FlowDispatcher_ScopedTimer.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++"]),
