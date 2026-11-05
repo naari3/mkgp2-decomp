@@ -9623,6 +9623,11 @@ game/fn_801F5A64.cpp:
 	extabindex  start:0x80028E5C end:0x80028E68
 	.text       start:0x801F5A64 end:0x801F5A9C
 
+game/MenuModeLane.cpp:
+	extab       start:0x800173F0 end:0x800174E4
+	extabindex  start:0x80028E68 end:0x80028EBC
+	.text       start:0x801F5A9C end:0x801F6454
+
 game/DisplayBuffer_GetByIndex.c:
 	extab       start:0x800174E4 end:0x800174EC
 	extabindex  start:0x80028EBC end:0x80028EC8

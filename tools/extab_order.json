@@ -1898,5 +1898,27 @@
       "fn_801CDCE0",
       "dtor_80082960"
     ]
+  },
+  "src/game/MenuModeLane.cpp": {
+    "extab": [
+      "dtor_801F63F8",
+      "fn_801F5A9C",
+      "fn_801F5BF4",
+      "fn_801F5FB0",
+      "fn_801F6008",
+      "fn_801F6178",
+      "fn_801F63A4",
+      "dtor_8007D0D4"
+    ],
+    "extabindex": [
+      "fn_801F5A9C",
+      "fn_801F5BF4",
+      "fn_801F5FB0",
+      "fn_801F6008",
+      "fn_801F6178",
+      "fn_801F63A4",
+      "dtor_801F63F8",
+      "dtor_8007D0D4"
+    ]
   }
 }
