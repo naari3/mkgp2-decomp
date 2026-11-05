@@ -178,3 +178,8 @@ c13_u22: KartPhysics_UpdateSmoothing 801EFFA4: declare yaw before pitch but defi
 Source: Codex worker c13_u24_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u24: Collision setup 802090F0/80209138 scalar inline SetVector(Vec*,float x,float y,float z) improves 97.77778/96.666664 to98.333336/98.888885 under unchanged GC/2.6. Remaining first-function pos.z/rot.y/rot.z FPR identities and second-function pos.x/pos.y f4/f5 swap. Explicit caller scalar snapshots regress; by-value Vec helper adds stack/GPR copies/EH; helper parameter x/y swap and helper named scalar declarations are invariant. TU stays NonMatching, no native gain. Full fallback-linked DOL SHA-1 OK.
+
+## c13_u26_20261106
+Source: Codex worker c13_u26_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+PointList constructor 8016C94C improves96.65873->99.15873 with independent copy/diagnostic loop indices (i,k) under unchanged GC1.3.2 flags. Direct delta field stores regress91.82539; named dz/dx before Set optimize to original96.65873. Literal zero in Set is text-neutral and adds unused sdata2, removed. Final text504/EH8/index12 sizes unchanged, EH/index100. Remaining reversed x/z argument evaluation, mr vs li copy-offset initialization, print indexr26 vs targetr25. Singleton stays NM; full fallback DOL SHA-1 OK.
