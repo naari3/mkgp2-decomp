@@ -769,3 +769,8 @@ c13_u29: fn_801D680C improves 96.61273 to 97.554375 by moving the final 1..8 ran
 Source: Codex worker c13_u32_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u32: CourseEnvironment UpdateAndCullZones fresh96.197845 ->99.06475: independent object-loop index restores saved r30 offset; direct reset loop with independent reset scope restores all reset-loop homes; semantic final-edge inline helper restores FP f6/f7 homes. Remaining zone index/object walker r5/r6 swap and missing mfcr/extrwi boolean (1104 vs1112B). CourseScene_Load remains98.7021, zone r26/r28 swap, debug byte-count homes and two bool normalization triplets (3212vs3236B). Boolean return spelling/declaration probes reverted. Full reversed EH span blocks rescue split; TU staysNonMatching, native gain0. Own anonymous EH rename keys after update shifted -3 and refreshed; owned extab all100/index99.28571 unchanged. Coordinator full build SHA-1OK.
+
+## c13_u33_20261106
+Source: Codex worker c13_u33_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u33: fn_801B4548 singleton fresh96.02687 ->96.06223 using TU-local typed map/clip inline scopes. C++ table member helpers emit identical output; const int& id/character helper worsens92.785. Remaining saved r23 vsr24, stride/entry/index GPR homes, folded subobject-base addi, timestamp/return scheduling. Text5616 vs target5656, EH87.5/index83.333/.data0. No safe subset; retained NonMatching, fallback-linked DOL SHA-1 OK; native gain0.

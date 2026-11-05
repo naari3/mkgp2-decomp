@@ -1,5 +1,19 @@
 #include "game/ItemUseVoicePrivate.h"
 
+/* Keep the item-map scan and clip-duration calculation in their own
+ * inline scopes, matching the announcer's table-based operations. */
+static inline short LookupItemVoice801B(ItemUseVoiceMap *map, int item) {
+    int i;
+    for (i = 0; map[i].item != -1; i++) {
+        if (item == map[i].item) return map[i].voice;
+    }
+    return -1;
+}
+
+static inline float ItemVoiceLength801B(VoiceClip *clips, short voice) {
+    return 2.0f + (clips[0x1C5].length + clips[voice].length);
+}
+
 #pragma use_lmw_stmw on
 
 int fn_801B4548(int kart, int item) {
@@ -56,9 +70,9 @@ int fn_801B4548(int kart, int item) {
                 }
             }
         }
-        if (nearest != -1 && ItemVoice_Lookup(data, item) != -1) {
+        if (nearest != -1 && LookupItemVoice801B((ItemUseVoiceMap *)data->pad118C, item) != -1) {
             if (VoiceQueue_Push(ENTRY_VOICE(&g_raceEntryArray[g_taMinLapPlayerIndex]), 7, 1, 1)) {
-                VoiceQueue_Push(ItemVoice_Lookup(data, item), 7, 1, 1);
+                VoiceQueue_Push(LookupItemVoice801B((ItemUseVoiceMap *)data->pad118C, item), 7, 1, 1);
                 VoiceQueue_Push(0x1D6, 7, 1, 1);
                 g_bgmStateId = 7;
                 g_bgmStateTimeHi = OSGetTime();
@@ -80,14 +94,14 @@ int fn_801B4548(int kart, int item) {
                 if (VoiceQueue_Push(voice, 11, 1, 1)) {
                     variant = g_voiceTickCounter % 3;
                     if (variant == 0) {
-                        VoiceQueue_Push(ItemVoice_Lookup(data, item), 11, 1, 1);
+                        VoiceQueue_Push(LookupItemVoice801B((ItemUseVoiceMap *)data->pad118C, item), 11, 1, 1);
                         VoiceQueue_Push(0x1C5, 11, 1, 1);
                     } else if (variant == 1) VoiceQueue_Push(0x17B, 11, 1, 1);
                     else VoiceQueue_Push(0x17C, 11, 1, 1);
                     g_bgmStateId = 0x6E;
                     lbl_806D1774 = 0;
                     g_bgmStateTimeHi = OSGetTime();
-                    lbl_806D1788 = 2.0f + (data->clips[0x1C5].length + data->clips[voice].length);
+                    lbl_806D1788 = ItemVoiceLength801B(data->clips, voice);
                     lbl_806CFD34 = ItemVoice_BaseItem(item);
                     lbl_806D1775 = kart;
                     lbl_806D1777 = g_raceEntryArray[(signed char)(unsigned char)kart].player;
@@ -113,7 +127,7 @@ int fn_801B4548(int kart, int item) {
             if (VoiceQueue_Push(ENTRY_VOICE(&g_raceEntryArray[kart]), 11, 1, 1)) {
                 variant = g_voiceTickCounter % 3;
                 if (variant == 0) {
-                    VoiceQueue_Push(ItemVoice_Lookup(data, item), 11, 1, 1);
+                    VoiceQueue_Push(LookupItemVoice801B((ItemUseVoiceMap *)data->pad118C, item), 11, 1, 1);
                     VoiceQueue_Push(0x204, 11, 1, 1);
                 } else if (variant == 1) VoiceQueue_Push(0x205, 11, 1, 1);
                 else VoiceQueue_Push(0x206, 11, 1, 1);
@@ -160,7 +174,7 @@ int fn_801B4548(int kart, int item) {
         VoiceQueue_Push(ENTRY_VOICE(&g_raceEntryArray[kart]), 22, 0, 1);
         variant = g_voiceTickCounter % 3;
         if (variant == 0) {
-            VoiceQueue_Push(ItemVoice_Lookup(data, item), 22, 0, 0);
+            VoiceQueue_Push(LookupItemVoice801B((ItemUseVoiceMap *)data->pad118C, item), 22, 0, 0);
             VoiceQueue_Push(0x204, 22, 0, 0);
         } else if (variant == 1) VoiceQueue_Push(0x205, 22, 0, 0);
         else VoiceQueue_Push(0x206, 22, 0, 0);
