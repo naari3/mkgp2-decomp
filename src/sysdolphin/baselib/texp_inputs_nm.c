@@ -10,9 +10,14 @@
 
 #include "texp_inline.h"
 #undef __FILE__
-#define __FILE__ "texp.c"
+#define __FILE__ lbl_806D0F38
+extern char lbl_806D0F38[7];
+extern char lbl_806D0F48[2];
+#undef HSD_TExpUnref
+#undef HSD_ASSERT
+#define HSD_ASSERT(line, cond) ((cond) ? (void)0 : __assert(lbl_806D0F38, line, lbl_806D0F48))
 
-void HSD_TExpFree(HSD_TExp* texp)
+static inline void HSD_TExpFree(HSD_TExp* texp)
 {
     switch (HSD_TExpGetType(texp)) {
     case HSD_TE_TEV:

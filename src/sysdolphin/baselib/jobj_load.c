@@ -1,5 +1,5 @@
 #include "mkgp2_names.h"
-#include "jobj.h"
+#include "jobj_unlock_private.h"
 
 #include <math.h>
 #include <string.h>
@@ -20,23 +20,15 @@
 
 double acos(double);
 
-void JObjInfoInit(void);
-HSD_JObjInfo hsdJObj = { JObjInfoInit };
+extern HSD_SList* lbl_806D21B4;
+extern void (*lbl_806D21B8)(int, int, int, HSD_JObj*);
+extern void (*lbl_806D21BC)(s32);
+extern void (*lbl_806D21C0)(HSD_JObj*, s32);
+#define ufc_callbacks lbl_806D21B4
+#define dptcl_callback lbl_806D21B8
+#define jsound_callback lbl_806D21BC
+#define ptcltgt_callback lbl_806D21C0
 
-static HSD_ClassInfo* default_class;
-static HSD_SList* ufc_callbacks;
-static void (*dptcl_callback)(int, int lo, int hi, HSD_JObj* jobj);
-static void (*jsound_callback)(s32);
-static void (*ptcltgt_callback)(HSD_JObj*, s32);
-static HSD_JObj* current_jobj;
-
-void HSD_JObjSetDefaultClass(HSD_ClassInfo* info)
-{
-    if (info != NULL) {
-        HSD_ASSERT(0x3A5, hsdIsDescendantOf(info, &hsdJObj));
-    }
-    default_class = info;
-}
 
 static inline HSD_JObj* JObjLoadJointSub(HSD_Joint* joint, HSD_JObj* parent)
 {
@@ -51,7 +43,7 @@ static inline HSD_JObj* JObjLoadJointSub(HSD_Joint* joint, HSD_JObj* parent)
         jobj = HSD_JObjAlloc();
     } else {
         jobj = hsdNew(info);
-        HSD_ASSERT(981, jobj);
+        if (!jobj) __assert(lbl_806D0DB0, 981, lbl_806D0DA8);
     }
     HSD_JOBJ_METHOD(jobj)->load(jobj, joint, parent);
     return jobj;
@@ -104,6 +96,9 @@ s32 JObjLoad(HSD_JObj* jobj, HSD_Joint* joint, HSD_JObj* parent)
     return 0;
 }
 
+extern char lbl_804FCB5C[10];
+extern char lbl_804FCB68[17];
+
 /* mkgp2: find the jobj built from `joint` in a tree loaded from joint_root. */
 #pragma push
 #pragma inline_max_size(600)
@@ -115,11 +110,11 @@ HSD_JObj* fn_802CFB68(HSD_Joint* joint, HSD_Joint* joint_root,
     HSD_JObj* found;
 
     if (joint_root != NULL) {
-        HSD_ASSERT(1059, jobj_root);
+        if (!jobj_root) __assert(lbl_806D0DB0, 1059, lbl_804FCB5C);
         jp = joint_root;
         jobj = jobj_root;
         while (jp != NULL) {
-            HSD_ASSERT(1061, jobj);
+            if (!jobj) __assert(lbl_806D0DB0, 1061, lbl_806D0DB8);
             if (jp == joint) {
                 return jobj;
             }
@@ -133,7 +128,7 @@ HSD_JObj* fn_802CFB68(HSD_Joint* joint, HSD_Joint* joint_root,
             jobj = jobj->next;
         }
     } else {
-        HSD_ASSERT(1070, jobj_root == NULL);
+        if (jobj_root != NULL) __assert(lbl_806D0DB0, 1070, lbl_804FCB68);
     }
     return NULL;
 }
@@ -146,8 +141,18 @@ HSD_JObj* HSD_JObjLoadJoint(HSD_Joint* arg0)
     return jobj;
 }
 
+static inline void JObjRefFromPool(HSD_JObj* jobj, char* pool)
+{
+    if (jobj != NULL) {
+        jobj->object.ref_count++;
+        if (jobj->object.ref_count == HSD_OBJ_NOREF)
+            __assert(pool + 0x1e0, 93, pool + 0x1ec);
+    }
+}
+
 void HSD_JObjResolveRefs(HSD_JObj* jobj, HSD_Joint* joint)
 {
+    char* pool = lbl_804FC9A8;
     u8 _[4];
 
     if (jobj == NULL || joint == NULL) {
@@ -159,238 +164,10 @@ void HSD_JObjResolveRefs(HSD_JObj* jobj, HSD_Joint* joint)
         HSD_JObjUnref(jobj->child);
         jobj->child =
             HSD_IDGetData((HSD_IDKey) joint->child, NULL);
-        HSD_ASSERT(1119, jobj->child);
-        HSD_JObjRef(jobj->child);
+        if (!jobj->child) __assert(lbl_806D0DB0, 1119, pool + 0x1d4);
+        JObjRefFromPool(jobj->child, pool);
     }
     if (union_type_dobj(jobj)) {
         HSD_DObjResolveRefsAll(jobj->u.dobj, joint->u.dobjdesc);
     }
-}
-
-void HSD_JObjResolveRefsAll(HSD_JObj* jobj, HSD_Joint* joint)
-{
-    u8 _[4];
-
-    while (jobj != NULL && joint != NULL) {
-        HSD_JObjResolveRefs(jobj, joint);
-        if (!(jobj->flags & JOBJ_INSTANCE)) {
-            HSD_JObjResolveRefsAll(jobj->child, joint->child);
-        }
-        jobj = jobj->next;
-        joint = joint->next;
-    }
-}
-
-void HSD_JObjUnref(HSD_JObj* jobj)
-{
-    if (jobj != NULL && ref_DEC(jobj)) {
-        if (iref_CNT(jobj) - 1 < 0) {
-            hsdDelete(jobj);
-        } else {
-            iref_INC(jobj);
-            HSD_JOBJ_METHOD(jobj)->release_child(jobj);
-            if (iref_DEC(jobj)) {
-                hsdDelete(jobj);
-            }
-        }
-    }
-}
-
-void HSD_JObjUnrefThis(HSD_JObj* jobj)
-{
-    if (jobj != NULL && iref_DEC(jobj) && ref_CNT(jobj) < 0) {
-        hsdDelete(jobj);
-    }
-}
-
-HSD_JObj* HSD_JObjGetPrev(HSD_JObj*);
-
-HSD_JObj* HSD_JObjRemove(HSD_JObj* jobj)
-{
-    HSD_JObj* child;
-    HSD_JObj* next;
-    HSD_JObj* prev;
-
-    if (jobj == NULL) {
-        return 0;
-    }
-    child = jobj->child;
-    if (child != NULL) {
-        HSD_ASSERT(1216, child->next == NULL);
-    }
-
-    next = child != NULL ? child : jobj->next;
-
-    prev = HSD_JObjGetPrev(jobj);
-    if (prev != NULL) {
-        prev->next = next;
-    } else if (jobj->parent != NULL) {
-        jobj->parent->child = next;
-    }
-    if (next != NULL && next == child) {
-        next->next = jobj->next;
-        next->parent = jobj->parent;
-    }
-    jobj->parent = NULL;
-    jobj->child = NULL;
-    jobj->next = NULL;
-    HSD_JObjUnref(jobj);
-    return child;
-}
-
-void HSD_JObjRemoveAll(HSD_JObj* jobj)
-{
-    HSD_JObj* prev;
-    HSD_JObj* next;
-
-    if (jobj == NULL) {
-        return;
-    }
-    if (jobj->parent != NULL) {
-        prev = HSD_JObjGetPrev(jobj);
-        if (prev != NULL) {
-            prev->next = NULL;
-        } else {
-            jobj->parent->child = NULL;
-        }
-    }
-    while (jobj != NULL) {
-        next = jobj->next;
-        jobj->parent = NULL;
-        jobj->next = NULL;
-        HSD_JObjUnref(jobj);
-        jobj = next;
-    }
-}
-
-void RecalcParentTrspBits(HSD_JObj* jobj)
-{
-    while (jobj != NULL) {
-        HSD_JObj* child = jobj->child;
-        u32 flags = ~JOBJ_ROOT_MASK;
-        while (child != NULL) {
-            flags |= (child->flags | child->flags << 10) & JOBJ_ROOT_MASK;
-            child = child->next;
-        }
-        if (!(jobj->flags & ~flags)) {
-            break;
-        }
-        jobj->flags &= flags;
-        jobj = jobj->next;
-    }
-}
-
-static void UpdateParentTrspBits(HSD_JObj* jobj, HSD_JObj* child)
-{
-    u32 flags = (child->flags | (child->flags << 10)) & JOBJ_ROOT_MASK;
-    while (jobj != NULL) {
-        if (!(flags & ~jobj->flags)) {
-            break;
-        }
-        jobj->flags |= flags;
-        jobj = jobj->parent;
-    }
-}
-
-void HSD_JObjAddChild(HSD_JObj* jobj, HSD_JObj* child)
-{
-    HSD_JObj* last;
-
-    if (jobj == NULL || child == NULL) {
-        return;
-    }
-    HSD_ASSERTREPORT(1353, child->parent == NULL,
-                     "child should be a orphan.\n");
-    HSD_ASSERTREPORT(1354, child->next == NULL,
-                     "child should not have siblings");
-    if (jobj->child == NULL) {
-        jobj->child = child;
-    } else {
-        HSD_ASSERT(1360, !(jobj->flags & JOBJ_INSTANCE));
-        last = jobj->child;
-        while (last->next != NULL) {
-            HSD_ASSERT(1363, last != child);
-            last = last->next;
-        }
-        last->next = child;
-    }
-    child->parent = jobj;
-    UpdateParentTrspBits(jobj, child);
-}
-
-HSD_JObj* HSD_JObjReparent(HSD_JObj* jobj, HSD_JObj* parent)
-{
-    HSD_JObj* next;
-
-    if (jobj == NULL) {
-        return NULL;
-    }
-    next = jobj->next;
-    if (jobj->parent != NULL) {
-        if (jobj->parent->child == jobj) {
-            jobj->parent->child = next;
-        } else {
-            HSD_JObj* prev = HSD_JObjGetPrev(jobj);
-            HSD_ASSERT(1394, prev);
-            prev->next = next;
-        }
-        RecalcParentTrspBits(jobj->parent);
-        jobj->parent = NULL;
-    }
-    jobj->next = NULL;
-    HSD_JObjAddChild(parent, jobj);
-    return next;
-}
-
-void HSD_JObjAddNext(HSD_JObj* jobj, HSD_JObj* next)
-{
-    HSD_JObj* cur;
-
-    if (jobj == NULL || next == NULL) {
-        return;
-    }
-    if (jobj->parent != NULL) {
-        cur = jobj->parent->child;
-        jobj->parent->child = NULL;
-        jobj->flags &= ~JOBJ_ROOT_MASK;
-    } else {
-        cur = jobj;
-    }
-    HSD_JObjReparent(next, jobj->parent);
-    if (next->child != NULL) {
-        HSD_JObj* child = next->child;
-        while (child->next != NULL) {
-            child = child->next;
-        }
-        child->next = cur;
-    } else {
-        next->child = cur;
-    }
-    while (cur != NULL) {
-        cur->parent = next;
-        UpdateParentTrspBits(next, cur);
-        cur = cur->next;
-    }
-}
-
-HSD_JObj* HSD_JObjGetPrev(HSD_JObj* jobj)
-{
-    HSD_JObj* cur;
-
-    if (jobj == NULL || jobj->parent == NULL) {
-        return NULL;
-    }
-    if (jobj == jobj->parent->child) {
-        return NULL;
-    }
-    cur = jobj->parent->child;
-    while (cur != NULL) {
-        if (cur->next == jobj) {
-            return cur;
-        }
-        cur = cur->next;
-    }
-    HSD_Panic(__FILE__, 1519,
-              "can not find specified jobj. maybe jobj tree is broken.\n");
-    return NULL;
 }

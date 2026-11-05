@@ -459,7 +459,9 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/jobj_anim_eval.c"),
             Object(NonMatching, "sysdolphin/baselib/jobj_display.c"),
             Object(Matching, "sysdolphin/baselib/jobj_get_matrix.c"),
-            Object(NonMatching, "sysdolphin/baselib/jobj_load.c"),
+            Object(Matching, "sysdolphin/baselib/jobj_load.c"),
+            Object(Matching, "sysdolphin/baselib/jobj_load_nm1.c"),
+            Object(Matching, "sysdolphin/baselib/jobj_load_refs.c"),
             Object(Matching, "sysdolphin/baselib/jobj_flags.c"),
             Object(Matching, "sysdolphin/baselib/jobj_alloc.c"),
             Object(NonMatching, "sysdolphin/baselib/jobj_end.c"),
@@ -501,7 +503,8 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/lobj_position.c"),
             Object(Matching, "sysdolphin/baselib/lobj_load.c"),
             Object(NonMatching, "sysdolphin/baselib/lobj_load_nm.c"),
-            Object(NonMatching, "sysdolphin/baselib/mobj_update_nm.c"),
+            Object(Matching, "sysdolphin/baselib/mobj_update_nm.c"),
+            Object(Matching, "sysdolphin/baselib/mobj_update_consts.c"),
             Object(Matching, "sysdolphin/baselib/mobj_anim.c"),
             Object(NonMatching, "sysdolphin/baselib/mobj_nm.c"),
             Object(Matching, "sysdolphin/baselib/mobj_setup.c"),
@@ -524,7 +527,8 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/archive.c"),
             Object(Matching, "sysdolphin/baselib/hash.c"),
             Object(Matching, "sysdolphin/baselib/texp.c"),
-            Object(NonMatching, "sysdolphin/baselib/texp_inputs_nm.c"),
+            Object(Matching, "sysdolphin/baselib/texp_inputs_nm.c"),
+            Object(NonMatching, "sysdolphin/baselib/texp_inputs_pools_nm.c"),
             Object(Matching, "sysdolphin/baselib/texp_alloc.c"),
             Object(NonMatching, "sysdolphin/baselib/texp_color_nm.c"),
             Object(Matching, "sysdolphin/baselib/texp_color.c"),
@@ -3535,6 +3539,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "sysdolphin/baselib/mobj_update_nm",
     "game/HudManager",
     "game/anon_8020D1C0",
     "game/anon_8020DAA0",

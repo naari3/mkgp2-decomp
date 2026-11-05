@@ -1,5 +1,5 @@
 #include "mkgp2_names.h"
-#include "jobj.h"
+#include "jobj_unlock_private.h"
 
 #include <math.h>
 #include <string.h>
@@ -20,20 +20,45 @@
 
 double acos(double);
 
-void JObjInfoInit(void);
-HSD_JObjInfo hsdJObj = { JObjInfoInit };
+extern HSD_SList* lbl_806D21B4;
+extern void (*lbl_806D21B8)(int, int, int, HSD_JObj*);
+extern void (*lbl_806D21BC)(s32);
+extern void (*lbl_806D21C0)(HSD_JObj*, s32);
+#define ufc_callbacks lbl_806D21B4
+#define dptcl_callback lbl_806D21B8
+#define jsound_callback lbl_806D21BC
+#define ptcltgt_callback lbl_806D21C0
 
-static HSD_ClassInfo* default_class;
-static HSD_SList* ufc_callbacks;
-static void (*dptcl_callback)(int, int lo, int hi, HSD_JObj* jobj);
-static void (*jsound_callback)(s32);
-static void (*ptcltgt_callback)(HSD_JObj*, s32);
-static HSD_JObj* current_jobj;
 
 typedef void (*ufc_callback)(HSD_JObj*, u32, f32);
 
+static inline void JObjUnlockSetRotationX(HSD_JObj* jobj, f32 v, char* pool)
+{
+    if (!jobj) __assert(lbl_806D0DA0, 676, lbl_806D0DA8);
+    if (jobj->flags & JOBJ_USE_QUATERNION) __assert(lbl_806D0DA0, 677, pool + 0x80);
+    jobj->rotate.x = v;
+    if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) HSD_JObjSetMtxDirty(jobj);
+}
+
+static inline void JObjUnlockSetRotationY(HSD_JObj* jobj, f32 v, char* pool)
+{
+    if (!jobj) __assert(lbl_806D0DA0, 696, lbl_806D0DA8);
+    if (jobj->flags & JOBJ_USE_QUATERNION) __assert(lbl_806D0DA0, 697, pool + 0x80);
+    jobj->rotate.y = v;
+    if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) HSD_JObjSetMtxDirty(jobj);
+}
+
+static inline void JObjUnlockSetRotationZ(HSD_JObj* jobj, f32 v, char* pool)
+{
+    if (!jobj) __assert(lbl_806D0DA0, 716, lbl_806D0DA8);
+    if (jobj->flags & JOBJ_USE_QUATERNION) __assert(lbl_806D0DA0, 717, pool + 0x80);
+    jobj->rotate.z = v;
+    if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) HSD_JObjSetMtxDirty(jobj);
+}
+
 void JObjUpdateFunc(void* obj, enum_t type, HSD_ObjData* val)
 {
+    char* pool = lbl_804FC9A8;
     HSD_JObj* jobj = obj;
     ufc_callback cb;
     HSD_SList* callback_node;
@@ -51,10 +76,10 @@ void JObjUpdateFunc(void* obj, enum_t type, HSD_ObjData* val)
             if (1.0L < val->fv) {
                 val->fv = 1.0F;
             }
-            HSD_ASSERT(590, jobj->aobj);
+            if (!jobj->aobj) __assert(lbl_806D0DB0, 590, pool + 0x64);
             jp = jobj->aobj->jobj;
-            HSD_ASSERT(592, jp);
-            HSD_ASSERT(593, jp->u.spline);
+            if (!jp) __assert(lbl_806D0DB0, 592, lbl_806D0DB8);
+            if (!jp->u.spline) __assert(lbl_806D0DB0, 593, pool + 0x70);
             splArcLengthPoint(&p, jp->u.spline, val->fv);
             HSD_JObjSetTranslateX(jobj, p.x);
             HSD_JObjSetTranslateY(jobj, p.y);
@@ -67,13 +92,13 @@ void JObjUpdateFunc(void* obj, enum_t type, HSD_ObjData* val)
                     robj->u.ik_hint.rotate_x = val->fv;
                 }
             }
-            HSD_JObjSetRotationX(jobj, val->fv);
+            JObjUnlockSetRotationX(jobj, val->fv, pool);
             break;
         case HSD_A_J_ROTY:
-            HSD_JObjSetRotationY(jobj, val->fv);
+            JObjUnlockSetRotationY(jobj, val->fv, pool);
             break;
         case HSD_A_J_ROTZ:
-            HSD_JObjSetRotationZ(jobj, val->fv);
+            JObjUnlockSetRotationZ(jobj, val->fv, pool);
             break;
         case HSD_A_J_TRAX:
             HSD_JObjSetTranslateX(jobj, val->fv);

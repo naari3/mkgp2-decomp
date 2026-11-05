@@ -12255,6 +12255,9 @@ sysdolphin/baselib/state_color.c:
 	.text       start:0x802C0FF8 end:0x802C106C
 	.sdata2     start:0x806DCBB8 end:0x806DCBC8
 
+sysdolphin/baselib/mobj_update_consts.c:
+	.sdata2     start:0x806DCBC8 end:0x806DCBD4
+
 sysdolphin/baselib/state_cache.c:
 	.text       start:0x802C106C end:0x802C1518
 	.data       start:0x804FBF50 end:0x804FBF90
@@ -12275,7 +12278,6 @@ sysdolphin/baselib/mobj.c:
 sysdolphin/baselib/mobj_update_nm.c:
 	.text       start:0x802C23AC end:0x802C2848
 	.data       start:0x804FC214 end:0x804FC24C
-	.sdata2     start:0x806DCBC8 end:0x806DCBD4
 
 sysdolphin/baselib/mobj_anim.c:
 	.text       start:0x802C2848 end:0x802C2890
@@ -12402,7 +12404,13 @@ sysdolphin/baselib/jobj_get_matrix.c:
 	.text       start:0x802CF8F4 end:0x802CF96C
 
 sysdolphin/baselib/jobj_load.c:
-	.text       start:0x802CF96C end:0x802D0758
+	.text       start:0x802CF96C end:0x802D007C
+
+sysdolphin/baselib/jobj_load_nm1.c:
+	.text       start:0x802D007C end:0x802D0350
+
+sysdolphin/baselib/jobj_load_refs.c:
+	.text       start:0x802D0350 end:0x802D0758
 
 sysdolphin/baselib/jobj_flags.c:
 	.text       start:0x802D0758 end:0x802D0EF4
@@ -12564,13 +12572,15 @@ sysdolphin/baselib/hash.c:
 	.data       start:0x804FD970 end:0x804FD988
 	.sdata      start:0x806D0F30 end:0x806D0F38
 
+sysdolphin/baselib/texp_inputs_pools_nm.c:
+	.data       start:0x804FD988 end:0x804FDBA4
+	.sdata      start:0x806D0F38 end:0x806D0F60
+
 sysdolphin/baselib/texp.c:
 	.text       start:0x802DE624 end:0x802DEC64
 
 sysdolphin/baselib/texp_inputs_nm.c:
 	.text       start:0x802DEC64 end:0x802DEF84
-	.data       start:0x804FD988 end:0x804FDBA4
-	.sdata      start:0x806D0F38 end:0x806D0F60
 
 sysdolphin/baselib/texp_alloc.c:
 	.text       start:0x802DEF84 end:0x802DF334
