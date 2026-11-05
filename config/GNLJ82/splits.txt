@@ -12064,6 +12064,11 @@ game/SpriteGroupCreate.cpp:
 	extabindex  start:0x8002AF5C end:0x8002AF68
 	.text       start:0x8023F444 end:0x8023F5B4
 
+game/fn_8023F5B4.cpp:
+	extab       start:0x8001CDFC end:0x8001CE14
+	extabindex  start:0x8002AF68 end:0x8002AF74
+	.text       start:0x8023F5B4 end:0x8023F65C
+
 game/IsCardValid.c:
 	extab       start:0x8001CE14 end:0x8001CE1C
 	extabindex  start:0x8002AF74 end:0x8002AF80
@@ -12114,6 +12119,11 @@ game/JointTracks.cpp:
 	.text       start:0x802400A4 end:0x80241B84
 	.sdata2     start:0x806DBDF8 end:0x806DBE00
 
+game/fn_80241B84.c:
+	extab       start:0x8001CF80 end:0x8001CF88
+	extabindex  start:0x8002B07C end:0x8002B088
+	.text       start:0x80241B84 end:0x80241BE0
+
 game/fn_80241BE0.c:
 	extab       start:0x8001CF88 end:0x8001CF90
 	extabindex  start:0x8002B088 end:0x8002B094
@@ -12131,6 +12141,14 @@ game/CardCreditFlow.cpp:
 game/fn_80242DE0.c:
 	.text       start:0x80242DE0 end:0x80242DEC
 	.ctors      start:0x802E895C end:0x802E8960
+
+game/fn_80242DEC.c:
+	.text       start:0x80242DEC end:0x80242E04
+
+game/fn_80242E04.c:
+	extab       start:0x8001D09C end:0x8001D0A4
+	extabindex  start:0x8002B10C end:0x8002B118
+	.text       start:0x80242E04 end:0x80242E80
 
 game/fn_80242E80.cpp:
 	extab       start:0x8001D0A4 end:0x8001D0AC

@@ -11301,5 +11301,10 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "@147": "@etb_80016D94",
     "@148": "@eti_80028BB0"
+  },
+  "src/game/fn_8023F5B4.cpp": {
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

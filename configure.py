@@ -597,6 +597,10 @@ config.libs = [
             Object(NonMatching, "game/TaskBucketsCast.cpp", extab_padding=b""),
             Object(Matching, "game/TaskBuckets.cpp", extab_padding=b""),
             Object(NonMatching, "game/JointTracks.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_8023F5B4.cpp", extab_padding=b""),
+            Object(Matching, "game/fn_80241B84.c"),
+            Object(Matching, "game/fn_80242DEC.c"),
+            Object(Matching, "game/fn_80242E04.c"),
             # 1 TU = 1 dtk reversed-extab group bundle (6 functions).
             # Phase 1b: held as Matching with all 6 fns as asm_fn + manually
             # emitted extab/extabindex (via __declspec(section ".extab_user")
