@@ -79,3 +79,8 @@ c3 jobj_load unlock: canonical small assertion file/text references remove a spu
 Source: Codex worker c5_s23_fn80197f24_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 816 B.
 
 c5_s23: HSD_JObjCheckDepend dirty test as switch(dirty) { case 0: ...; break; } preserves target beq body + unconditional exit rather than optimizer folded bne exit. Text300 exact. Existing jobj_unlock_private.h avoids private assertion strings after shared pools move to NonMatching jobj_data_nm.c. HSD_MaterialAlloc already exact96 only needed flag promotion. Full source-linked SHA-1 OK.
+
+## c14_u15_20261106
+Source: Codex worker c14_u15_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u15: HSD_JObjDispAll (802CF3B0, 1348 B) improves 94.16321 -> 98.76855% by three explicit inline traversal levels, specializing the instance-child view as nonnull and using actual outlined SetupMatrix/camera/matrix helper declarations at deeper levels. Baseline recursive inline leaves an addic. stack-address NULL test, impossible camera branch and extra saved flags copies (1396 B). Directly embedding matrix body instead expands 1852 B (59.47181%) because inline depth changes. Flat explicit expansion gives exact1348 B at98.36498% but wrong stack ordering; inline tiers restore all stack offsets at98.76855%. Final remaining outer parameter homes r29/r26/r27/r28 versus target r26/r27/r28/r29 and leaf walker/base coalescing r25 versus target distinct r24; stop at3 hypotheses. Sole-function TU remains NonMatching; full fallback DOL SHA-1 OK, native gain0.

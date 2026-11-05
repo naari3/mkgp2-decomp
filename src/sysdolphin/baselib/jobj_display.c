@@ -1,61 +1,22 @@
 #include "mkgp2_names.h"
-#include "jobj.h"
-
-#include <math.h>
-#include <string.h>
-
-#include "aobj.h"
-#include "class.h"
+#define HSD_JObjSetupMatrix jobj_header_setup_matrix
+#include "jobj_unlock_private.h"
+#undef HSD_JObjSetupMatrix
+#define HSD_CObjGetViewingMtxPtrDirect jobj_header_viewing_matrix
 #include "cobj.h"
-#include "displayfunc.h"
-#include "dobj.h"
-#include "fobj.h"
-#include "id.h"
-#include "mobj.h"
-#include "mtx.h"
-#include "pobj.h"
-#include "robj.h"
-#include "spline.h"
+#undef HSD_CObjGetViewingMtxPtrDirect
 #include <dolphin/mtx.h>
 
-double acos(double);
-
-void JObjInfoInit(void);
-HSD_JObjInfo hsdJObj = { JObjInfoInit };
-
-static HSD_ClassInfo* default_class;
-static HSD_SList* ufc_callbacks;
-static void (*dptcl_callback)(int, int lo, int hi, HSD_JObj* jobj);
-static void (*jsound_callback)(s32);
-static void (*ptcltgt_callback)(HSD_JObj*, s32);
-static HSD_JObj* current_jobj;
-
-/* mkgp2: an instance is drawn with the caller's view matrix when given,
- * otherwise with the current camera's. */
-static inline void JObjMakeInstanceMtx(MtxPtr vmtx, HSD_JObj* jobj, Mtx mtx)
-{
-    HSD_CObj* cobj;
-
-    HSD_JObjSetupMatrix(jobj);
-    HSD_JObjSetupMatrix(jobj->child);
-    PSMTXInverse(jobj->child->mtx, mtx);
-    PSMTXConcat(jobj->mtx, mtx, mtx);
-    if (vmtx != NULL) {
-        PSMTXConcat(vmtx, mtx, mtx);
-    } else {
-        cobj = HSD_CObjGetCurrent();
-        if (cobj != NULL) {
-            PSMTXConcat(HSD_CObjGetViewingMtxPtrDirect(cobj), mtx, mtx);
-        }
-    }
-}
+extern void HSD_JObjSetupMatrix(HSD_JObj* jobj);
+extern MtxPtr HSD_CObjGetViewingMtxPtrDirect(HSD_CObj* cobj);
+extern void JObjMakeInstanceMtx(MtxPtr vmtx, HSD_JObj* jobj, Mtx mtx);
 
 #pragma push
 #pragma inline_max_size(700)
-void HSD_JObjDispAll(HSD_JObj* jobj, Mtx vmtx, u32 flags, u32 rendermode)
+/* The last expanded level uses the original general instance helper. */
+static inline void JObjDispLevel3(HSD_JObj* jobj, Mtx vmtx, u32 flags, u32 rendermode)
 {
     HSD_JObj* child;
-
     if (jobj == NULL) {
         return;
     }
@@ -66,12 +27,110 @@ void HSD_JObjDispAll(HSD_JObj* jobj, Mtx vmtx, u32 flags, u32 rendermode)
             HSD_JObjDispAll(jobj->child, mtx, flags, rendermode);
         }
     } else {
-        if (jobj->flags & (flags << 0x12)) {
+        if (jobj->flags & (flags << 18)) {
             HSD_JObjDisp(jobj, vmtx, flags, rendermode);
         }
-        if (jobj->flags & (flags << 0x1C)) {
+        if (jobj->flags & (flags << 28)) {
             for (child = jobj->child; child != NULL; child = child->next) {
                 HSD_JObjDispAll(child, vmtx, flags, rendermode);
+            }
+        }
+    }
+}
+/* This path receives the enclosing instance matrix, which is always valid. */
+static inline void JObjDispLevel2Instance(HSD_JObj* jobj, Mtx vmtx, u32 flags, u32 rendermode)
+{
+    HSD_JObj* child;
+    if (jobj == NULL) {
+        return;
+    }
+    if (jobj->flags & JOBJ_INSTANCE) {
+        if (!(jobj->flags & JOBJ_HIDDEN)) {
+            Mtx mtx;
+            HSD_JObjSetupMatrix(jobj);
+            HSD_JObjSetupMatrix(jobj->child);
+            PSMTXInverse(jobj->child->mtx, mtx);
+            PSMTXConcat(jobj->mtx, mtx, mtx);
+            PSMTXConcat(vmtx, mtx, mtx);
+            JObjDispLevel3(jobj->child, mtx, flags, rendermode);
+        }
+    } else {
+        if (jobj->flags & (flags << 18)) {
+            HSD_JObjDisp(jobj, vmtx, flags, rendermode);
+        }
+        if (jobj->flags & (flags << 28)) {
+            for (child = jobj->child; child != NULL; child = child->next) {
+                JObjDispLevel3(child, vmtx, flags, rendermode);
+            }
+        }
+    }
+}
+static inline void JObjDispLevel2(HSD_JObj* jobj, Mtx vmtx, u32 flags, u32 rendermode)
+{
+    HSD_JObj* child;
+    if (jobj == NULL) {
+        return;
+    }
+    if (jobj->flags & JOBJ_INSTANCE) {
+        if (!(jobj->flags & JOBJ_HIDDEN)) {
+            Mtx mtx;
+            HSD_CObj* cobj;
+            HSD_JObjSetupMatrix(jobj);
+            HSD_JObjSetupMatrix(jobj->child);
+            PSMTXInverse(jobj->child->mtx, mtx);
+            PSMTXConcat(jobj->mtx, mtx, mtx);
+            if (vmtx != NULL) {
+                PSMTXConcat(vmtx, mtx, mtx);
+            } else {
+                cobj = HSD_CObjGetCurrent();
+                if (cobj != NULL) {
+                    PSMTXConcat(HSD_CObjGetViewingMtxPtrDirect(cobj), mtx, mtx);
+                }
+            }
+            JObjDispLevel3(jobj->child, mtx, flags, rendermode);
+        }
+    } else {
+        if (jobj->flags & (flags << 18)) {
+            HSD_JObjDisp(jobj, vmtx, flags, rendermode);
+        }
+        if (jobj->flags & (flags << 28)) {
+            for (child = jobj->child; child != NULL; child = child->next) {
+                JObjDispLevel3(child, vmtx, flags, rendermode);
+            }
+        }
+    }
+}
+void HSD_JObjDispAll(HSD_JObj* jobj, Mtx vmtx, u32 flags, u32 rendermode)
+{
+    HSD_JObj* child;
+    if (jobj == NULL) {
+        return;
+    }
+    if (jobj->flags & JOBJ_INSTANCE) {
+        if (!(jobj->flags & JOBJ_HIDDEN)) {
+            Mtx mtx;
+            HSD_CObj* cobj;
+            jobj_header_setup_matrix(jobj);
+            jobj_header_setup_matrix(jobj->child);
+            PSMTXInverse(jobj->child->mtx, mtx);
+            PSMTXConcat(jobj->mtx, mtx, mtx);
+            if (vmtx != NULL) {
+                PSMTXConcat(vmtx, mtx, mtx);
+            } else {
+                cobj = HSD_CObjGetCurrent();
+                if (cobj != NULL) {
+                    PSMTXConcat(cobj->view_mtx, mtx, mtx);
+                }
+            }
+            JObjDispLevel2Instance(jobj->child, mtx, flags, rendermode);
+        }
+    } else {
+        if (jobj->flags & (flags << 18)) {
+            HSD_JObjDisp(jobj, vmtx, flags, rendermode);
+        }
+        if (jobj->flags & (flags << 28)) {
+            for (child = jobj->child; child != NULL; child = child->next) {
+                JObjDispLevel2(child, vmtx, flags, rendermode);
             }
         }
     }
