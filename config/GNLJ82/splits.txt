@@ -11962,9 +11962,48 @@ triforce/amsrv_tail.c:
 	.text       start:0x80291314 end:0x8029179C
 
 triforce/acsocket.c:
-	.text       start:0x8029179C end:0x8029321C
-	.bss        start:0x806992A0 end:0x806A1CE0
+	.text       start:0x8029179C end:0x80291C7C
+
+triforce/acsocket_nm1.c:
+	.text       start:0x80291C7C end:0x80291E14
+
+triforce/acsocket_m2.c:
+	.text       start:0x80291E14 end:0x80291F64
+
+triforce/acsocket_nm2.c:
+	.text       start:0x80291F64 end:0x8029209C
+
+triforce/acsocket_m3.c:
+	.text       start:0x8029209C end:0x80292184
+
+triforce/acsocket_nm3.c:
+	.text       start:0x80292184 end:0x802922A8
+
+triforce/acsocket_m4.c:
+	.text       start:0x802922A8 end:0x80292380
+
+triforce/acsocket_nm4.c:
+	.text       start:0x80292380 end:0x802924F4
+
+triforce/acsocket_m5.c:
+	.text       start:0x802924F4 end:0x802925CC
+
+triforce/acsocket_nm5.c:
+	.text       start:0x802925CC end:0x802928DC
+
+triforce/acsocket_m6.c:
+	.text       start:0x802928DC end:0x80292AD8
 	.sdata2     start:0x806DC940 end:0x806DC948
+
+triforce/acsocket_nm6.c:
+	.text       start:0x80292AD8 end:0x80292BFC
+
+triforce/acsocket_m7.c:
+	.text       start:0x80292BFC end:0x80292D18
+
+triforce/acsocket_nm7.c:
+	.text       start:0x80292D18 end:0x8029321C
+	.bss        start:0x806992A0 end:0x806A1CE0
 
 triforce/amuart.c:
 	.text       start:0x8029321C end:0x80293BBC
