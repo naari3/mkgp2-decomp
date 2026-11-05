@@ -11298,8 +11298,8 @@
   "src/game/AI_CalcRivalAvoidance.cpp": {
     "__dt__19PhysicsCollisionVecFv": "dtor_80036E40",
     "__dt__23RivalAvoidanceCandidateFv": "dtor_801EECD8",
-    "@158": "@etb_80016D1C",
-    "@159": "@eti_80028B74"
+    "@159": "@etb_80016D1C",
+    "@160": "@eti_80028B74"
   },
   "src/game/EnemyRun_BaseInit.cpp": {
     "__ct__13EnemyRunStateFiiiii": "EnemyRun_BaseInit",

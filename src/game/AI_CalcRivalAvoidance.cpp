@@ -1,6 +1,6 @@
-/* Native reconstruction. The complete body and cleanup locals are retained;
+/* Native reconstruction. Literal candidate defaults preserve constant loads;
  * the first EH interval and register allocation remain NonMatching. */
-#include "game/RivalAvoidancePrivate.h"
+#include "game/RivalAvoidanceUnlockPrivate.h"
 extern "C" {
 extern void *g_pathSystem;
 extern AIPairRecord lbl_806793D8[8];

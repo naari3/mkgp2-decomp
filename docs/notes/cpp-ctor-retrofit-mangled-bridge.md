@@ -804,3 +804,8 @@ EnemyFace_nm3 ctor 8022BBC8: target clEFace3D +8 is destructible Vec3c; face sel
 Source: Codex worker c14_u12_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 Scene_80170B5C GrowSet ctor: TU-local inline GetJointPObj(j) wrapping GetPObj(HSD_JObjGetDObj(j)) fixes first face extraction sequence from mr. r4,r3 / early mr r3,r24 to target cmplwi r3,0 / lwz r4,0xC(r3) / late mr r3,r24. Current objdiff rises 94.08 to 95.257774 with EH 100%. Explicit componentwise Vec3 snapshot scalarizes across new into preserved f29-f31; returning vector by value produces target float snapshot plus unwanted extra aggregate copy. Retain original vector spelling until canonical vector lifetime/type is recovered.
+
+## c14_u16_20261106
+Source: Codex worker c14_u16_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u16: AI_CalcRivalAvoidance 801EE7F0 singleton text94.092354 ->94.808914 with candidate default distance1200000000.0f and position20000.0f in owned header; own EH IDs shift @158/@159 to@159/@160. Broad literal conversion raw97.468155 but1252B, helper/fieldwise94.89809, scalar candidate with late vector view96.92038 all retain early position base hoist and were rejected. Remaining early r30 position base at+80 (target+28C) shifts self/helper GPR homes; normalize and amount FP webs differ, waypoint lacks fmr. Owned extab97.22222/index100 unchanged. NM fallback full SHA1OK; zero native gain.
