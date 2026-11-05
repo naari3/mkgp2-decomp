@@ -8522,6 +8522,11 @@ game/sprite/fn_801A7D0C.c:
 	extabindex  start:0x800276B0 end:0x800276BC
 	.text       start:0x801A7D0C end:0x801A8688
 
+game/sprite/RaceAnnouncer_TickAndEnqueue.c:
+	extab       start:0x80012AB8 end:0x80012AC0
+	extabindex  start:0x800276BC end:0x800276C8
+	.text       start:0x801A8688 end:0x801A9D58
+
 game/sprite/fn_801A9D58.c:
 	extab       start:0x80012AC0 end:0x80012AC8
 	extabindex  start:0x800276C8 end:0x800276D4
