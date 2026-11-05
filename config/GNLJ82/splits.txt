@@ -5157,6 +5157,7 @@ game/OnchiSpeaker_State2_Flight.c:
 	extab       start:0x8000B62C end:0x8000B634
 	extabindex  start:0x80023E58 end:0x80023E64
 	.text       start:0x800EE620 end:0x800EE8D8
+	.data       start:0x80421638 end:0x80421660
 
 game/OnchiSpeaker_State1_Held.c:
 	extab       start:0x8000B634 end:0x8000B63C
