@@ -289,3 +289,8 @@ c3_u19: Coin StateCoins 80220ECC becomes exact when gravity/angle-limit use ordi
 Source: Codex worker c3_n4_80205dcc_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1884 B.
 
 c3_n4: YesNoButton Animate +0x58 multiply resolves by naming the appearance call result a, then a *= pulse before storing scale. Genuine out-of-line YesNoButton::~YesNoButton() resolves a wrapper null-branch mismatch: target null skips both member destruction and delete. Private first-key declaration suppresses vtables. Owned EH 80019148..80019210 and index 80029960..80029978 compare 100% after bridge @138/@139/@226/@227; weak Fader I/F copies remain appended and must discard. Full-link acceptance pending.
+
+## c3_u3_dbgmenu_20261105
+Source: Codex worker c3_u3_dbgmenu_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+DbgMenu partial: real new/derived ctor fixes 01,07,08,10,12,13,RaceStart factory text; Reset (800D040C) is a real ctor. A separate inline ResetParticlePool loop restores four distinct hoisted zero webs and implicit this return, yielding 100% Reset text. Cache Sprite* before two position stores to eliminate alias reload. Global-index spelling fixes ScrollList_Update. All still NonMatching because six residuals and inseparable reversed EH group remain.

@@ -9848,5 +9848,26 @@
     "Layout__13clGetCoinLineFf": "fn_80220A54",
     "StateCoins__19clCSSceneCoinMilageFv": "fn_80220ECC",
     "Draw__19clCSSceneCoinMilageFv": "fn_80221104"
+  },
+  "src/game/DbgMenu.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__13MenuSceneBaseFv": "dtor_800D2B98",
+    "__vt__13MenuSceneBase": "lbl_8041C9D4",
+    "__vt__15SpriteTestScene": "lbl_8041CB94",
+    "__vt__12AnmTestScene": "lbl_8041CB34",
+    "__vt__16PaletteTestScene": "lbl_8041CAF4",
+    "__vt__14ScreenEffScene": "lbl_8041CAD4",
+    "__vt__12AtrTestScene": "lbl_8041CAB4",
+    "__vt__14TitleTestScene": "lbl_8041CA74",
+    "__vt__14PrizeTestScene": "lbl_8041CA34",
+    "__vt__13ItemTestScene": "lbl_8041CA14",
+    "__vt__14RaceStartScene": "lbl_8041C9F4",
+    "__ct__15MenuNormalModelFPci": "clNormal3D_Construct",
+    "__ct__14MenuAnimSpriteFiii": "Sprite_InitWithAnim",
+    "__ct__13MenuRaceStartFi": "fn_8020B234",
+    "__ct__13MenuItemModelFPvi": "fn_8013D800",
+    "__ct__17ParticleTestSceneFv": "DbgScene05_TplTest2_Reset",
+    "__vt__17ParticleTestScene": "lbl_8041CB14"
   }
 }
