@@ -10960,5 +10960,9 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "Init__12RankingPanelFiiiiUciPCciPCciP12RankingWorldP13RankingLightsfff": "fn_801D286C"
+  },
+  "game/fn_801D4FF4.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

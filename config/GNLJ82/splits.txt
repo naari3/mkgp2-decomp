@@ -9107,11 +9107,29 @@ game/fn_801D4118.cpp:
 	extabindex  start:0x80028094 end:0x800280A0
 	.text       start:0x801D4118 end:0x801D43C4
 
+game/fn_801D4DC0.cpp:
+	extab       start:0x800152CC end:0x800152D4
+	extabindex  start:0x800280AC end:0x800280B8
+	.text       start:0x801D4DC0 end:0x801D4FF4
+
+game/fn_801D4FF4.cpp:
+	extab       start:0x800152D4 end:0x800152EC
+	extabindex  start:0x800280B8 end:0x800280C4
+	.text       start:0x801D4FF4 end:0x801D5244
+
 game/fn_801D5970.c:
 	.text       start:0x801D5970 end:0x801D5C88
 
+game/fn_801D5C88.c:
+	.text       start:0x801D5C88 end:0x801D5D68
+
 game/GetCoinMilage.c:
 	.text       start:0x801D5D68 end:0x801D5F74
+
+game/fn_801D5F74.c:
+	extab       start:0x800152F4 end:0x800152FC
+	extabindex  start:0x800280D0 end:0x800280DC
+	.text       start:0x801D5F74 end:0x801D6398
 
 game/PlayerData_ResolveUnlockedIdByIndex.c:
 	.text       start:0x801D6398 end:0x801D647C
