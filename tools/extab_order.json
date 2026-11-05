@@ -1830,5 +1830,33 @@
       "dtor_80052B50",
       "dtor_80052C48"
     ]
+  },
+  "src/game/SpecialFaceMesh_Raycast.cpp": {
+    "extab": [
+      "dtor_8007C5E0",
+      "dtor_8007CC54",
+      "SpecialFaceMesh_Raycast",
+      "SpecialFace_RaycastSegment",
+      "dtor_8007C470",
+      "SpecialFaceMesh_RaycastThunk",
+      "SpecialFaceMesh_AddFace",
+      "FUN_8007c56c",
+      "PtrVec_InsertFill",
+      "PtrVec_Reserve",
+      "dtor_80036E40"
+    ],
+    "extabindex": [
+      "SpecialFaceMesh_Raycast",
+      "SpecialFace_RaycastSegment",
+      "dtor_8007C470",
+      "SpecialFaceMesh_RaycastThunk",
+      "SpecialFaceMesh_AddFace",
+      "FUN_8007c56c",
+      "dtor_8007C5E0",
+      "PtrVec_InsertFill",
+      "PtrVec_Reserve",
+      "dtor_8007CC54",
+      "dtor_80036E40"
+    ]
   }
 }

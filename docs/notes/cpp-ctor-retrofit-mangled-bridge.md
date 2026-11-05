@@ -404,3 +404,8 @@ clDrawMan 80079CDC..8007ADC0: both timer20/timer42 locals must live together in 
 Source: Codex worker c7_s4_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 976 B.
 
 KartItemSubObject ctor: vptr+owner form the 8-byte base; the Vec at +8 is a derived member. Putting it inside the base preserves text but loses one DESTROYMEMBER per new site (60 EH bytes total). Distinct owning pointer template instantiations are necessary for separate inline throw() specifications in multi-member destructors; one repeated member type merges specification records despite exact text.
+
+## c7_m4_20261105
+Source: Codex worker c7_m4_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+SpecialFaceMesh 8007BE70..8007CC9C new-TU partial: canonical SpecialFaceMeshPrivate types and real new expressions yield exact AddFace/factory plus array-holder dtor, wrapper, empty ctor, pointer-vector dtor and base dtor (seven text-exact symbols). Explicit inline FaceRaySegment ctor/dtor reproduces __construct_array/__destroy_arr and DESTROYLOCAL; nontrivial SpecialFaceVec temporaries restore otherwise optimized-away stack stores in ray segment. Group remains NonMatching: Raycast 92.09091, Segment 81.41053, InsertFill 96.05944, Reserve 91.79412. EH order starts dtor_C5E0,dtor_CC54 before Raycast; cannot isolate exact seven due reversed group. Compiler defers RaycastSegment/weak holder dtors, so physical text ordering must also be repaired before promotion.

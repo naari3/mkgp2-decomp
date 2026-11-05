@@ -2014,6 +2014,11 @@ game/SpecialFace_BuildPlaneAndEdges.cpp:
 	extabindex  start:0x800214E8 end:0x800214F4
 	.text       start:0x8007BB08 end:0x8007BE70
 
+game/SpecialFaceMesh_Raycast.cpp:
+	extab       start:0x800086C8 end:0x80008798
+	extabindex  start:0x800214F4 end:0x8002156C
+	.text       start:0x8007BE70 end:0x8007CC9C
+
 game/CourseAuxClass_VtableDtor.c:
 	extab       start:0x800087A0 end:0x800087A8
 	extabindex  start:0x80021578 end:0x80021584
