@@ -188,3 +188,8 @@ PointList constructor 8016C94C improves96.65873->99.15873 with independent copy/
 Source: Codex worker c13_u36_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u36: KartMovement_PhysicsStep 8019CD30 improves 95.86947 to 96.40763 by moving yaw subtraction into each field2fc/field2fd branch and retaining a named correction product in the else branch. Shared outer correction merges branch tails and removes target separate yaw load/sub/store. Copy-initializing all InitVec snapshots worsens 88.84199; default-constructed displacement component writes alter EH. Literal zero at throttle compare restores missing target reload but worsens other scratch webs; literal quantization/blend also below retained best. Singleton stays NonMatching, unchanged EH scores, full fallback DOL SHA-1 OK.
+
+## c13_u39_20261106
+Source: Codex worker c13_u39_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 300 B.
+
+c13_u39: fn_801F6D58 300B texture-rectangle setter reaches exact text/EH under unchanged GC/1.3.2. Numeric literals 1.0f/0.5f restore constant homes and fmuls operand order (95.8 -> 96.666664). Declare float x,y,h before assigning h=height; y=y; x=x to restore target x=f3/h=f9 and dependent arithmetic scheduling (100%). Existing canonical SpriteTex header unchanged. Existing Matching flag promotion needs no bridge or split edits; full source-linked DOL SHA-1 OK.
