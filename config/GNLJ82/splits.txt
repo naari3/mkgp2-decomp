@@ -11908,12 +11908,27 @@ triforce/amjvs_m8.c:
 	.text       start:0x8028BFB0 end:0x8028C158
 
 triforce/amnet.c:
-	.text       start:0x8028C158 end:0x8028F45C
+	.text       start:0x8028C158 end:0x8028D3E4
 	.rodata     start:0x803F2798 end:0x803F2880
 	.data       start:0x804F5800 end:0x804F5828
 	.bss        start:0x806937C0 end:0x80699220
 	.sbss       start:0x806D1E40 end:0x806D1E48
 	.sdata2     start:0x806DC930 end:0x806DC940
+
+triforce/amnet_io.c:
+	.text       start:0x8028D3E4 end:0x8028D750
+
+triforce/amnet_nm1.c:
+	.text       start:0x8028D750 end:0x8028D7E8
+
+triforce/amnet_probe.c:
+	.text       start:0x8028D7E8 end:0x8028D870
+
+triforce/amnet_nm2.c:
+	.text       start:0x8028D870 end:0x8028EF74
+
+triforce/amnet_init.c:
+	.text       start:0x8028EF74 end:0x8028F45C
 
 triforce/amsock.c:
 	.text       start:0x8028F45C end:0x80290ED8
