@@ -479,3 +479,8 @@ RaceDigits 80246DE4..80247B8C: genuine VHolder/FlowFader/ResCtrl model gives six
 Source: Codex worker c7_m15_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 7 fn / 1380 B.
 
 c7_m15: 802483B4..802488FC native group matches all text (1352 B), EH (76 B), EH index (60 B), switch tables (56 B). Use true derived ctor/new expression for DESTROYBASE/DELETEPOINTER. Target base-dtor call in free deleting wrapper passes flag 0; direct C++ explicit dtor expression passes -1 and differs. Final delete wrapper must invoke a virtual destructor (delete through private virtual view), not a virtual ordinary Destroy method: this generates hidden flag 1 and exact 56 B. EH order begins with final delete wrapper, then first four methods; index stays address order. Switch tables 804EEB4C..804EEB84 need DATA_ALIGN4_TUS; existing 4-byte gap at 804EEB84 remains unowned, no filler added. Full source-linked SHA-1 OK.
+
+## c8_s36_20261105
+Source: Codex worker c8_s36_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1240 B.
+
+c8_s36: fn_801B7CD0 matches via canonical Sprite/new, coin quotient/remainder pair before cost pair, and inline SetPosition capturing the sprite pointer once. VoiceBrowser draw 801B70EC matches when string-pool base is captured before context null guard. 801B739C retains a localized FP clamp register residual at 99.496124%.

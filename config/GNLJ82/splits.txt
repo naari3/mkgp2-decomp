@@ -8619,6 +8619,21 @@ game/fn_801B6B94.c:
 	extabindex  start:0x8002780C end:0x80027818
 	.text       start:0x801B6B94 end:0x801B6C94
 
+game/VoiceSystem_Init.c:
+	extab       start:0x80012BA0 end:0x80012BA8
+	extabindex  start:0x80027818 end:0x80027824
+	.text       start:0x801B6C94 end:0x801B70EC
+
+game/fn_801B70EC.cpp:
+	extab       start:0x80012BA8 end:0x80012BB0
+	extabindex  start:0x80027824 end:0x80027830
+	.text       start:0x801B70EC end:0x801B739C
+
+game/fn_801B739C.cpp:
+	extab       start:0x80012BB0 end:0x80012BB8
+	extabindex  start:0x80027830 end:0x8002783C
+	.text       start:0x801B739C end:0x801B75A0
+
 game/fn_801B75A0.c:
 	extab       start:0x80012BB8 end:0x80012BC0
 	extabindex  start:0x8002783C end:0x80027848
@@ -8687,6 +8702,11 @@ game/fn_801B7CAC.c:
 	extab       start:0x80012C60 end:0x80012C68
 	extabindex  start:0x800278CC end:0x800278D8
 	.text       start:0x801B7CAC end:0x801B7CD0
+
+game/fn_801B7CD0.cpp:
+	extab       start:0x80012C68 end:0x80012C80
+	extabindex  start:0x800278D8 end:0x800278E4
+	.text       start:0x801B7CD0 end:0x801B7EF8
 
 game/InitBGM.c:
 	extab       start:0x80012C90 end:0x80012C98

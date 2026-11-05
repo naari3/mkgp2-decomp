@@ -10826,5 +10826,10 @@
     "@81": "@eti_8002B364",
     "@99": "@etb_8001DB2C",
     "@100": "@eti_8002B370"
+  },
+  "src/game/fn_801B7CD0.cpp": {
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
