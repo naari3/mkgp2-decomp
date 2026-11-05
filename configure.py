@@ -2371,6 +2371,7 @@ config.libs = [
             Object(Matching, "game/VoiceQueue_Clear.c"),
             Object(Matching, "game/fn_801B3B7C.c"),
             Object(Matching, "game/fn_801B3CE0.c"),
+            Object(Matching, "game/fn_801B3D40.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801B6B94.c"),
             Object(Matching, "game/fn_801B75A0.c"),
             Object(Matching, "game/fn_801B7B04.c"),

@@ -8576,6 +8576,11 @@ game/fn_801B3BC8.c:
 game/fn_801B3CE0.c:
 	.text       start:0x801B3CE0 end:0x801B3D40
 
+game/fn_801B3D40.c:
+	extab       start:0x80012B78 end:0x80012B80
+	extabindex  start:0x800277DC end:0x800277E8
+	.text       start:0x801B3D40 end:0x801B4548
+
 game/fn_801B5B60.c:
 	.text       start:0x801B5B60 end:0x801B5C98
 
