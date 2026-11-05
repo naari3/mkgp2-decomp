@@ -364,3 +364,8 @@ c5_s13: CardModeRoot::OnTaskDone text/extab/index were 100%, but dynamic_cast em
 Source: Codex worker c5_s15_anon8021f088_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 1044 B.
 
 Coin mileage rescue: first-declared undefined derived virtual key suppresses clCSSceneCoinMilage/clGetSumLine emitted RTTI-off vtables without altering inherited slots or destructor text. Own EH bridge @231/@232 -> etb8001B554/eti8002A50C and @165/@166 -> etb8001B71C/eti8002A554 makes owned EH exact; extra weak dtor EH discards. clGetCoinLine Update uses 3.0f/360.0f literals to reproduce FP colors. All three source-linked, DOL SHA-1 OK.
+
+## c5_s17_fn801f8668_20261105
+Source: Codex worker c5_s17_fn801f8668_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1108 B.
+
+fn_801FA310 becomes exact by declaring case-4 count then pointer at function scope before CardInput; fixes r29/r30 coloring without changing case-5 locals. All text/EH/jump-table sections 100%; full SHA-1 OK.

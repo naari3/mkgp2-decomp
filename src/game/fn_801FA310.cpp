@@ -1,5 +1,7 @@
 #include "game/cxc_card_flow.h"
 extern "C" void fn_801FA310(CardStep *self) {
+    int n4;
+    void *p4;
     CardInput *input = InputMgr_GetPlayer(GetInputManager(), 0);
     switch (self->state) {
     case 0: fn_801FA864(self); break;
@@ -22,13 +24,13 @@ extern "C" void fn_801FA310(CardStep *self) {
         break;
     case 3: fn_801FA6A4(self); break;
     case 4: {
-        void *p = fn_801F4DC0(self->seq, 3);
-        if (p) self->result = *(int *)(fn_80271340(p, 0, &lbl_806D00F8, &lbl_806D00C8, 0) + 0x24);
-        int n = 0;
-        if (p) n = *(int *)(fn_80271340(p, 0, &lbl_806D00F8, &lbl_806D00C8, 0) + 0x20);
+        p4 = fn_801F4DC0(self->seq, 3);
+        if (p4) self->result = *(int *)(fn_80271340(p4, 0, &lbl_806D00F8, &lbl_806D00C8, 0) + 0x24);
+        n4 = 0;
+        if (p4) n4 = *(int *)(fn_80271340(p4, 0, &lbl_806D00F8, &lbl_806D00C8, 0) + 0x20);
         void *q = fn_801F4DC0(self->seq, 8);
-        if (q) fn_801FEF18(fn_80271340(q, 0, &lbl_806D00D0, &lbl_806D00C8, 0), n);
-        if (!p) self->state = 8;
+        if (q) fn_801FEF18(fn_80271340(q, 0, &lbl_806D00D0, &lbl_806D00C8, 0), n4);
+        if (!p4) self->state = 8;
         break;
     }
     case 5: {
