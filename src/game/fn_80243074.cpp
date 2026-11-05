@@ -56,10 +56,7 @@ extern "C" float fn_80243074(RivalMarkerHud *self, int index, const RivalPositio
     end.Sub(start);
     point.Sub(start);
     RivalVector offset(point);
-    float dot = point.Dot(end);
-    float length = end.Length();
-    float length2 = end.Length();
-    float amount = dot / (length * length2);
+    float amount = point.Dot(end) / (end.Length() * end.Length());
     RivalVector projection(end);
     projection.Scale(amount);
     offset.Sub(projection);
