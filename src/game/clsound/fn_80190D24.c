@@ -21,19 +21,23 @@ static inline void ResetVoice(ClSoundVoice* voice) {
     voice->category=255;
     voice->flags=0;
 }
+static inline void SwapQueued(int index) {
+    ClSoundQueue* a = &lbl_80677F40[index];
+    ClSoundQueue* b = &lbl_80677F40[index-1];
+    ClSoundQueue tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
 static inline void RemoveQueued(unsigned int id) {
     int i;
     for (i=0;i<37;i++) {
         if (lbl_80677F40[i].id == -1) break;
         if (id == lbl_80677F40[i].id) {
-            ClSoundQueue tmp;
             lbl_80677F40[i].state=3;
             lbl_80677F40[i].delay=0;
             for (;i>0;i--) {
                 if (lbl_80677F40[i-1].state == 3) break;
-                tmp=lbl_80677F40[i];
-                lbl_80677F40[i]=lbl_80677F40[i-1];
-                lbl_80677F40[i-1]=tmp;
+                SwapQueued(i);
             }
             break;
         }
@@ -114,7 +118,12 @@ void fn_80190D24(void) {
                 if (lbl_80379554[id].mode==0) volume=(unsigned char)Clamp_Int(scaled,0,127);
                 else volume=(unsigned char)Clamp_Int(scaled,0,127);
                 if (voice->id != 1 && voice->id != 2 && (voice->category==0 || voice->category==1)) {
-                    volume=(int)(((float)(unsigned char)volume*(float)lbl_80598A60[0x2f])*lbl_806D94F8);
+                    float gain, level, setting;
+                    gain = lbl_806D94F8;
+                    level = (float)(unsigned char)volume;
+                    setting = (float)lbl_80598A60[0x2f];
+                    level = level * setting;
+                    volume = (int)(level * gain);
                 }
                 sndFXCtrl(voice->handle,7,volume);
                 voice->flags &= ~0x10;
