@@ -664,3 +664,8 @@ c11_a3: SpriteSlot_SetTransform 800D6C20 exact native C requires by-value Vec3 i
 Source: Codex worker c11_a6_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 716 B.
 
 c11_a6: Jyugemu_Flag_Tick 80080748 (716 B) matches text/EH/index with an inline Flag::Tick member behind extern C wrapper, using pragma cplusplus on and automatic EH. Plain free C body reached 99.52514% but allocated self/desc/matrix as r30/r31/r29; inlined member naturally yields target r31/r29/r30. JObj dirty boolean must be initialized after the assertion/flags load, as in the canonical inline, to avoid an extra callee-saved boolean. No symbol rename or configure change required. Full source-linked DOL SHA-1 OK.
+
+## c11_a35_20261106
+Source: Codex worker c11_a35_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 780 B.
+
+c11_a35: 80125948 draw (444 B) and 80126728 teardown (336 B) convert within original Matching TU using canonical DemoKartScene.h, existing extab_order key and automatic EH. For teardown, directly typed self parameter matches r30 self/r31 free flag; a local self initialized from void* instead gives opposite homes. Native 80125B04 best 99.54311% has exact size/EH but residual FP coordinate ordering/homes and anchor register; inline member-wrapper hypothesis regresses to 95.2278%. No new bridges or metadata edits.
