@@ -5304,7 +5304,12 @@
   },
   "src/game/fn_8014DD80.cpp": {
     "extab_fn_8014DD80": "@etb_8000E874",
-    "extabindex_fn_8014DD80": "@eti_8002558C"
+    "extabindex_fn_8014DD80": "@eti_8002558C",
+    "__ct__16SceneCacheNormalFPCci": "clNormal3D_Construct",
+    "__ct__15SceneCacheSceneFPCc": "Scene3D_Init",
+    "__vt__19SceneCacheAnimScene": "lbl_80419EF8",
+    "__ct__15SceneCacheModelFPCci": "SceneModel_Init",
+    "insert__14SceneCacheListFRC14SceneCacheIterRC15SceneCacheEntry": "fn_80157A68"
   },
   "src/game/fn_8014E04C.cpp": {
     "extab_fn_8014E04C": "@etb_8000E8CC",
