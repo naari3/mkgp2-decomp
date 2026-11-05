@@ -759,3 +759,8 @@ c13_u16: CharaSelect_SetupCharacterDisplay 801C3470 improves fresh97.18343 to97.
 Source: Codex worker c13_u18_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u18: SceneListOperations insertion801F4DF0 matches136B with canonical ListIter n/end locals, accesses through.node and position.node=n.node; raw ListNode* cursor/sentinel were r7/r6 instead of targetr6/r7. Shutdown801F4D3C98.93939 and lookup801F4DC097.083336 retain swapped cursor/sentinel registers after declaration swap, aggregate iterators and begin-before-end construction. No-gain edits reverted there. EH24B/index36B exact. Reversed extab order(delete800173C0, shutdown800173C8, insert800173D0) crosses whole801F4D3C..801F4EB0 range; no safe exact subset split. TU remains NM; full fallback DOL SHA-1 OK; zero native gain.
+
+## c13_u29_20261106
+Source: Codex worker c13_u29_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u29: fn_801D680C improves 96.61273 to 97.554375 by moving the final 1..8 rank loop into AllCupsComplete inline helper as in fn_801D6DF0. Still saves r26-r31 instead of r27-r31 because cc*8 survives calls in r31; draft 1504 B vs 1508 B target. Snapshot/rank-update helper regresses to 96.08223; nested canonical CupRank helper regresses to 94.034485. Remains honest NonMatching; one-function TU offers no split rescue.

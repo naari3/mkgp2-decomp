@@ -32,14 +32,20 @@ static inline unsigned char RankReached(PlayerDataRecord *p, int cc, int cup) {
     if (rank >= 4) return 1;
     return 0;
 }
+static inline unsigned char AllCupsComplete(PlayerDataRecord *self, int cc) {
+    unsigned char all = 1;
+    int cup;
+    for (cup = 1; cup <= 8; cup++) {
+        if (cup != 6 && RankReached(self, cc, cup) == 0) { all = 0; break; }
+    }
+    return all;
+}
 void fn_801D680C(PlayerDataRecord *self, int cup, int round, unsigned char update) {
     lbl_806D09C8 = -1;
     if (update) {
         PlayerDataRecord old = *self;
         int award = -1;
         int cc = g_ccClass;
-        unsigned char all;
-        int i;
         if (round <= 3) {
             if (self->cupRank[cc][cup] < round + 1) self->cupRank[cc][cup] = round + 1;
         } else {
@@ -70,14 +76,7 @@ void fn_801D680C(PlayerDataRecord *self, int cup, int round, unsigned char updat
             lbl_806D09C8 = award;
             *(int *)(fn_8024F588() + 0x10) = award;
         }
-        all = 1;
-        for (i = 1; i <= 8; i++) {
-            if (i != 6 && RankReached(self, cc, i) == 0) {
-                all = 0;
-                break;
-            }
-        }
-        if (all == 1) lbl_806D12E4[cc] = 1;
+        if (AllCupsComplete(self, cc) == 1) lbl_806D12E4[cc] = 1;
         ((PlayerDataReset *)self)->field1D4 = cc;
         ((PlayerDataReset *)self)->field1D8 = round >= 4;
     }
