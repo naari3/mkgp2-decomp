@@ -1937,6 +1937,12 @@ game/clDrawMan_Buckets_Free.c:
 game/clDrawMan_NodeList.c:
 	.text       start:0x80079C48 end:0x80079CDC
 
+game/clDrawMan.cpp:
+	extab       start:0x800084A8 end:0x80008620
+	extabindex  start:0x8002144C end:0x80021494
+	.text       start:0x80079CDC end:0x8007ADC0
+	.sdata2     start:0x806D2F38 end:0x806D2F40
+
 game/ItemEffectState_Init.c:
 	.text       start:0x8007B44C end:0x8007B534
 

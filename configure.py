@@ -1015,6 +1015,7 @@ config.libs = [
             Object(Matching, "game/clDrawMan_NodePool_Free.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clDrawMan_Buckets_Free.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clDrawMan_NodeList.c"),
+            Object(Matching, "game/clDrawMan.cpp", extab_padding=b"\xC6\x02\xC6\x02", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemEffectState_Init.c"),
             Object(Matching, "game/ItemEffectMgr_TickPickLowestTimer.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemEffectState_DefaultInit.c"),

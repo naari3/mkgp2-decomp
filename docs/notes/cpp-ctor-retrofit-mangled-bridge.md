@@ -394,3 +394,8 @@ ServiceButton_Handler 8002D0B0: new ServiceMenu(11), size 0x28C, private virtual
 Source: Codex worker c7_s3_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1464 B.
 
 c7_s3: LakituStart_Init 8003DB40 is a real 0x58-byte constructor whose new clNormal3D(const void*,0) produces exact 404-byte text and 24-byte DELETEPOINTER EH via the existing mangled bridge. ObjectChain_RenderInZRange 80046960 matches with four explicitly nested native stages: inline NeedsEval/SetupMatrixSub, JObj_NeedsEval/SetupMatrixSub, JObj_EvalIfDirty, JObj_EvalIfDirtyAndGetMtxPtr, then recursion. Initialize the inline NeedsEval boolean after its null assertion; initializing before the assertion extends it across the call and changes its GPR. Both source inputs passed full DOL SHA-1 and linked address/size checks.
+
+## c7_m3_20261105
+Source: Codex worker c7_m3_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 9 fn / 4324 B.
+
+clDrawMan 80079CDC..8007ADC0: both timer20/timer42 locals must live together in inline DrawBucket::Dispatch to reproduce SP+8/+10. Inner timer-only extraction fixes node/end r24/r25 but leaves stack order reversed. AllocateNode must cache nodes+nodeCount before ++nodeCount to restore the target count/stride webs. New array EH uses padding C6 02 twice; owned extab order starts with trailing base dtor, then getter/dispatch/three sort methods. Implicit uint-to-float double cookie owns 806D2F38..806D2F40.

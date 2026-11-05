@@ -10128,5 +10128,29 @@
     "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/clDrawMan.cpp": {
+    "__nw__FUl": "Alloc",
+    "__nwa__FUl": "FUN_8003b120",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dla__FPv": "MemoryManager_Free",
+    "__ct__8DrawNodeFv": "fn_80079C48",
+    "__dt__8DrawNodeFv": "clDrawMan_NodePool_Free",
+    "__ct__10DrawBucketFv": "fn_80079C68",
+    "__dt__10DrawBucketFv": "clDrawMan_Buckets_Free",
+    "__dt__15DrawManagerBaseFv": "dtor_8007AD78",
+    "@131": "lbl_806D2F38",
+    "@83": "@etb_800084B0",
+    "@84": "@eti_8002144C",
+    "@133": "@etb_80008500",
+    "@134": "@eti_80021458",
+    "@191": "@etb_80008530",
+    "@192": "@eti_80021464",
+    "@245": "@etb_80008580",
+    "@246": "@eti_80021470",
+    "@300": "@etb_800085D0",
+    "@301": "@eti_8002147C",
+    "@308": "@etb_800084A8",
+    "@309": "@eti_80021488"
   }
 }

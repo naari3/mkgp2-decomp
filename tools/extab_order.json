@@ -1782,5 +1782,25 @@
       "dtor_80038E30",
       "SharedPtr_Init"
     ]
+  },
+  "src/game/clDrawMan.cpp": {
+    "extab": [
+      "dtor_8007AD78",
+      "DrawManager_GetOrCreate",
+      "clDrawMan_Buckets_Dispatch",
+      "clDrawMan_AddSorted",
+      "clDrawMan_AddSorted_NoDepthBias",
+      "clDrawMan_AddSorted_DepthRange",
+      "__dt__11ScopedTimerFv"
+    ],
+    "extabindex": [
+      "DrawManager_GetOrCreate",
+      "clDrawMan_Buckets_Dispatch",
+      "clDrawMan_AddSorted",
+      "clDrawMan_AddSorted_NoDepthBias",
+      "clDrawMan_AddSorted_DepthRange",
+      "dtor_8007AD78",
+      "__dt__11ScopedTimerFv"
+    ]
   }
 }
