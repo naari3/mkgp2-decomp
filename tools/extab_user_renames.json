@@ -10011,5 +10011,31 @@
   "src/game/objview/fn_80197F24.cpp": {
     "__ct__9GXChannelFP8HSD_JObjP8HSD_DObjUii": "GXChannel_Init",
     "__dt__9GXChannelFv": "dtor_8007D9C4"
+  },
+  "src/game/DNBress_spawn2_nm.cpp": {
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "Draw__9clDNBressFv": "fn_80226954",
+    "Update__9clDNBressFv": "fn_80226B20",
+    "Tick__9clDNBressFv": "fn_80226EEC",
+    "UpdFire1__9clDNBressFP8Particle": "fn_802271A4",
+    "SpawnFire1__9clDNBressFv": "fn_80227318",
+    "UpdFire2__9clDNBressFP8Particle": "fn_80227490",
+    "SpawnFire2__9clDNBressFv": "fn_8022760C",
+    "Breathe__9clDNBressFv": "fn_802277A0",
+    "__dt__9clDNBressFv": "fn_80227AA4",
+    "__ct__9clDNBressFv": "fn_80227B98",
+    "__vt__9clDNBress": "lbl_804EDFD4",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__dt__10clNormal3DFv": "Object_DtorWithGXSync",
+    "__ct__8AnimCtrlFv": "fn_802407C8",
+    "__dt__8AnimCtrlFv": "fn_802406A4",
+    "__ct__9GXChannelFPvPvii": "GXChannel_Init",
+    "__dt__9GXChannelFv": "dtor_8007D9C4",
+    "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270"
   }
 }

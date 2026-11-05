@@ -261,7 +261,7 @@ static inline bool InRect(float x, float z, const float *r) {
     return 1;
 }
 
-void clDNBress::UpdFire1(Particle *p) {
+extern "C" void fn_802271A4(clDNBress *self, Particle *p) {
     if (p == 0) {
         return;
     }
@@ -285,101 +285,8 @@ void clDNBress::UpdFire1(Particle *p) {
     p->v.z += p->dvz;
     p->c[1] = p->c[2] -= lbl_806DB444;
     p->speed -= lbl_806DB448;
-    if (p->speed <= lbl_806DB424) {
-        p->speed = lbl_806DB424;
+    if (p->speed <= 0.0f) {
+        p->speed = 0.0f;
     }
     p->alpha -= lbl_806DB43C;
-}
-
-void clDNBress::SpawnFire1() {
-    Particle *p = freeSlot;
-    if (p == 0) {
-        return;
-    }
-    p->v.x = dir.x;
-    freeSlot->v.y = lbl_806DB44C * dir.y;
-    freeSlot->v.z = dir.z;
-    freeSlot->pos.x = pos.x;
-    freeSlot->pos.y = pos.y;
-    freeSlot->pos.z = pos.z;
-    freeSlot->scale = lbl_806DB450;
-    freeSlot->alpha = lbl_806DB404;
-    freeSlot->speed = lbl_806DB414 * lbl_80495A94[randIdx] + lbl_806DB454;
-    freeSlot->grow = lbl_806DB424 * lbl_80495A94[randIdx] + lbl_806DB424;
-    freeSlot->active = 1;
-    freeSlot->c[0] = lbl_803D026C[0];
-    freeSlot->c[1] = lbl_803D026C[1];
-    freeSlot->c[2] = lbl_803D026C[2];
-    freeSlot->dvx = dir.x * lbl_80495A94[randIdx];
-    if (++randIdx >= 48) {
-        randIdx = 0;
-    }
-    freeSlot->dvz = dir.z * lbl_80495A94[randIdx];
-    freeSlot->dvy = lbl_806DB458;
-    if (++randIdx >= 48) {
-        randIdx = 0;
-    }
-    cooldown = 4;
-    freeSlot = 0;
-}
-
-void clDNBress::UpdFire2(Particle *p) {
-    if (p == 0) {
-        return;
-    }
-    p->pos.x = p->v.x * p->speed + p->pos.x;
-    p->pos.y = p->v.y * p->speed + p->pos.y;
-    p->pos.z = p->v.z * p->speed + p->pos.z;
-    p->scale += p->grow;
-    p->v.y += p->dvy;
-    if (p->v.y > lbl_806DB448) {
-        p->dvy = lbl_806DB400;
-    } else if (p->v.y > lbl_806DB45C) {
-        p->speed -= lbl_806DB460;
-        p->v.x *= lbl_806DB464;
-        p->v.z *= lbl_806DB464;
-        p->c[1] = p->c[2] -= lbl_806DB430;
-    } else if (p->v.y > lbl_806DB468) {
-        p->v.x *= lbl_806DB464;
-        p->v.z *= lbl_806DB464;
-        p->c[1] = p->c[2] -= lbl_806DB43C;
-    }
-    p->v.x += p->dvx;
-    p->v.z += p->dvz;
-    p->c[1] = p->c[2] -= lbl_806DB46C;
-    p->speed -= lbl_806DB470;
-    if (p->speed <= lbl_806DB424) {
-        p->speed = lbl_806DB424;
-    }
-    p->alpha -= lbl_806DB43C;
-}
-
-void clDNBress::SpawnFire2() {
-    Particle *p = freeSlot;
-    if (p == 0) {
-        return;
-    }
-    p->v.x = dir.x;
-    freeSlot->v.y = lbl_806DB418 * dir.y;
-    freeSlot->v.z = dir.z;
-    freeSlot->pos.x = pos.x;
-    freeSlot->pos.y = pos.y;
-    freeSlot->pos.z = pos.z;
-    freeSlot->scale = lbl_806DB418;
-    freeSlot->alpha = lbl_806DB404;
-    freeSlot->speed = lbl_806DB414 * lbl_80495A94[randIdx] + lbl_806DB474;
-    freeSlot->grow = lbl_806DB424 * lbl_80495A94[randIdx] + lbl_806DB424;
-    freeSlot->active = 1;
-    freeSlot->c[0] = lbl_803D026C[0];
-    freeSlot->c[1] = lbl_803D026C[1];
-    freeSlot->c[2] = lbl_803D026C[2];
-    float a = lbl_806DB478 * lbl_80495A94[randIdx] - lbl_806DB47C;
-    freeSlot->dvx = dir.x * LUT_Cosine(a);
-    freeSlot->dvz = dir.z * LUT_Sine(a);
-    freeSlot->dvy = lbl_806DB480;
-    if (++randIdx >= 48) {
-        randIdx = 0;
-    }
-    cooldown = 4;
-    freeSlot = 0;
 }

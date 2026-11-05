@@ -10426,9 +10426,18 @@ game/DNBress_tick.cpp:
 	.text       start:0x80226EEC end:0x802271A4
 
 game/DNBress_nm2.cpp:
+	.text       start:0x802271A4 end:0x80227318
+
+game/DNBress_spawn1_nm.cpp:
+	.text       start:0x80227318 end:0x80227490
+
+game/DNBress_update2.cpp:
+	.text       start:0x80227490 end:0x8022760C
+
+game/DNBress_spawn2_nm.cpp:
 	extab       start:0x8001BAB8 end:0x8001BAC0
 	extabindex  start:0x8002A6E0 end:0x8002A6EC
-	.text       start:0x802271A4 end:0x802277A0
+	.text       start:0x8022760C end:0x802277A0
 
 game/DNBress_breath.cpp:
 	extab       start:0x8001BAC0 end:0x8001BAD0
