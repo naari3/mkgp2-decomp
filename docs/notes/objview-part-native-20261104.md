@@ -41,3 +41,8 @@ c5_s22: fn_8018FC24 matches 384B text plus 8B extab and 12B index by replacing e
 Source: Codex worker c5_s23_fn80197f24_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 816 B.
 
 c5_s23: fn_80197F24 reaches exact 420-byte text and 24/12-byte EH/index by passing the outer item-loop int i by reference to inline DrawParticles. This preserves count r29/stride r30 across both loops. Per-TU GXChannel ctor/dtor bridges required. Full source-linked DOL SHA-1 OK.
+
+## c14_u26_20261106
+Source: Codex worker c14_u26_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 556 B.
+
+c14_u26: fn_8018D0F4 556B promoted native. Null-first inline Child/Next accessors restore target branch arm order (93.66907 ->99.568344). Plain float literals restore angle FP homes; direct o->angle += 1.0f restores field-before-constant load order. All text/extab8/index12 100%, existing TU flag Matching, source main.elf edge and full DOL SHA-1 verified. No split, EH bridge, data ownership or header edits.
