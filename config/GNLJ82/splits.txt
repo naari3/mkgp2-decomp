@@ -640,6 +640,11 @@ game/PathManager_RefreshFinishPositions.c:
 	extabindex  start:0x8001FC7C end:0x8001FC88
 	.text       start:0x8003B668 end:0x8003B6C4
 
+game/PathManager_UpdateAll.c:
+	extab       start:0x8000607C end:0x80006084
+	extabindex  start:0x8001FC88 end:0x8001FC94
+	.text       start:0x8003B6C4 end:0x8003CDD8
+
 game/Race_CompareKartProgress.c:
 	extab       start:0x80006084 end:0x8000608C
 	extabindex  start:0x8001FC94 end:0x8001FCA0
