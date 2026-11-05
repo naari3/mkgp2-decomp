@@ -8257,6 +8257,11 @@ game/kartmove/fn_8019C6B4.cpp:
 game/kartmove/fn_8019CC2C.c:
 	.text       start:0x8019CC2C end:0x8019CD30
 
+game/kartmove/KartMovement_PhysicsStep.cpp:
+	extab       start:0x80012740 end:0x80012828
+	extabindex  start:0x80027458 end:0x80027464
+	.text       start:0x8019CD30 end:0x8019E1A8
+
 game/kartmove/carobject.cpp:
 	extab       start:0x80012828 end:0x80012980
 	extabindex  start:0x80027464 end:0x800274E8

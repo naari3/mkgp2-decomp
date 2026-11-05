@@ -103,3 +103,8 @@ DrawNamCamImage 8007CC9C: y,x,s0,t0,s1,t1,aspect declaration order yields target
 Source: Codex worker c8_s50_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 3080 B.
 
 c8_s50: AI_UpdateItemEffects matches 2628B text plus EH/data by declaring catalog before category. fn_801DEC74 matches 452B using explicit persistent ring pointer and separate lookup result before remainder/index calculation. fn_801E68B4 real member-function model restores target self/incoming/item/bus GPR allocation and exact primary EH; free-function model had reversed GPR priority. Residual length f3/f4 scratch allocation remains NonMatching.
+
+## c9_L7_20261106
+Source: Codex worker c9_L7_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+KartMovement_PhysicsStep direct reconstruction: declaring yawTurn, turn, grip in this order places them in f29, f28, f27, matching the target; declaring grip, turn, yawTurn swaps f27/f29. PlainDot uses distinct product statements to prevent FMA after inline expansion; fp_contract off on the helper alone did not prevent caller fusion. Inline return-by-value Vec3 helpers materialized extra copy temporaries and worsened this function; canonical direct InitVec construction was closer.

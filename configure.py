@@ -3074,6 +3074,7 @@ config.libs = [
             Object(Matching, "game/kartmove/fn_8019A850.c"),
             Object(Matching, "game/kartmove/KartMovement_SetTravelProgress.c"),
             Object(Matching, "game/kartmove/fn_8019C078.c"),
+            Object(NonMatching, "game/kartmove/KartMovement_PhysicsStep.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/kartmove/fn_8019C6B4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/kartmove/fn_8019A9BC.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/kartmove/fn_8019C15C.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),

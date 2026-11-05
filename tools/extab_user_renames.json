@@ -11564,5 +11564,10 @@
     "__ct__11BootDisplayFv": "DisplayContext_Init",
     "__dt__8BootWaitFv": "dtor_8002F978",
     "__dt__10BootNoticeFv": "dtor_8002F910"
+  },
+  "src/game/kartmove/KartMovement_PhysicsStep.cpp": {
+    "__dt__7InitVecFv": "dtor_80036E40",
+    "@631": "@etb_80012740",
+    "@632": "@eti_80027458"
   }
 }
