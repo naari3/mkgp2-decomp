@@ -23,10 +23,10 @@ C8TaPlease::C8TaPlease() : prompt(new C8Prompt(0x74,-1,0x1872,-1,5)), box(new C8
     *params[3]=0x23E5;
     int cup=g_cupId-1;
     int round=g_longRoundFlag;
-    Sprite_SetAnimParam(sprite,0xA9C,(short)((const int *)tables->labels)[cup*4+round*2]);
-    Sprite_SetAnimParam(sprite,0xA9D,(short)((const int *)tables->labels)[cup*4+round*2+1]);
-    Sprite_SetAnimParam(sprite,0x1E5B,(short)((const int *)tables->rounds)[cup*2+round]);
-    Sprite_SetAnimParam(sprite,0x1AB4,(short)((const int *)tables->symbols)[cup*2+round]);
+    Sprite_SetAnimParam(sprite,0xA9C,(short)tables->labels[cup][round][0]);
+    Sprite_SetAnimParam(sprite,0xA9D,(short)tables->labels[cup][round][1]);
+    Sprite_SetAnimParam(sprite,0x1E5B,(short)tables->rounds[cup][round]);
+    Sprite_SetAnimParam(sprite,0x1AB4,(short)tables->symbols[cup][round]);
     float time=TaRecord_GetTime_Current(0);
     short *digit0=fn_801A0310(sprite,0x1A9A);
     short *digit1=fn_801A0310(sprite,0x1A9B);
