@@ -2741,6 +2741,8 @@ config.libs = [
             Object(Matching, "game/objview/fn_8018CF34.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/objview/fn_8018D320.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/misc3d/fn_8018D638.c"),
+            Object(NonMatching, "game/misc3d/fn_8018D64C.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/objview/fn_8018E510.c"),
             Object(Matching, "game/objview/fn_8018D7CC.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/misc3d/fn_8018DFC4.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/objview/fn_8018E4B4.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
