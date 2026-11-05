@@ -1260,7 +1260,14 @@
     "__vt__9ResultTop": "lbl_8048ECF8",
     "__ct__8ResCtrlRFv": "ResCtrl_Init",
     "fn_8011FAFC_r": "fn_8011FAFC",
-    "fn_80146000__FP6PtrVeci": "fn_80146000"
+    "fn_80146000__FP6PtrVeci": "fn_80146000",
+    "__ct__15CoinPopupDetailFiii": "fn_80161914",
+    "__ct__17ResultPopupSpriteFiii": "Sprite_InitWithAnim",
+    "__ct__15ResultPopupTextFv": "TexMgr_Init",
+    "__vt__9ResultSub": "lbl_80490A90",
+    "__dt__9ResultMidFv": "dtor_801419C8",
+    "__ct__10CoinPromptFiiiii": "fn_8023D080",
+    "__dt__8ResCtrlRFv": "dtor_80082960"
   },
   "src/game/kartmove/carobject.cpp": {
     "__nw__FUl": "Alloc",
