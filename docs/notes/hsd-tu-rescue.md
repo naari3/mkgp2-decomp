@@ -8,3 +8,8 @@ Object-level objdiff can match anonymous literal content while fallback objects 
 Source: Codex worker c2_i14_tobj_state_mobj_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 66 fn / 10176 B.
 
 Even 100% object text/data and a source link edge do not ensure every static function survives MWLD. HSD_TexMapID2PTTexMtx (148 B) was unreferenced after isolation, so MWLD dropped it and its 32 B jump table. Actual main.elf had MakeTextureMtx at 0x802BE15C instead of 0x802BE1F0. Keeping the helper in an honest target fallback partition restores its original Active 0x8 retention; preserve the neighboring six native functions separately.
+
+## c5_s24_tobjresetnm_20261105
+Source: Codex worker c5_s24_tobjresetnm_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 372 B.
+
+tobj_reset native rescue: reverse chained float stores; separate genuine named zero constant into native tobj_reset_consts.c so existing sdata2 postprocessor maps the reset literal to exported lbl_806DCB88. tobj_texmap isolated static helper retained with established force_active pragma; source-linked final ELF address/size and full DOL SHA-1 verified.

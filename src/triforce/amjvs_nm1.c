@@ -17,7 +17,7 @@ s32 fn_8028A740(s32 node, u32 ch) {
         if ((u8)ch > (u32)(nodes[node].coinSlots - 1)) {
             ret = 0x80000000;
         } else {
-            ret = (p[((u8)ch << 1)] << 8) | p[((u8)ch << 1) + 1];
+            ret = p[((ch << 1) & 0x1FE) + 1] | (p[((ch << 1) & 0x1FE)] << 8);
         }
     }
     OSSignalSemaphore(sem);

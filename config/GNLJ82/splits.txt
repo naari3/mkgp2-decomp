@@ -12247,6 +12247,9 @@ musyx/runtime/hardware.c:
 	.sbss       start:0x806D2058 end:0x806D2060
 	.sdata2     start:0x806DCB10 end:0x806DCB38
 
+sysdolphin/baselib/tobj_reset_consts.c:
+	.sdata2     start:0x806DCB88 end:0x806DCB8C
+
 musyx/runtime/hw_aramdma.c:
 	.text       start:0x802BA730 end:0x802BB460
 	.bss        start:0x806CA608 end:0x806CAF10
@@ -12280,7 +12283,6 @@ sysdolphin/baselib/tobj.c:
 
 sysdolphin/baselib/tobj_reset_nm.c:
 	.text       start:0x802BD6C0 end:0x802BD6D8
-	.sdata2     start:0x806DCB88 end:0x806DCB8C
 
 sysdolphin/baselib/tobj_anim.c:
 	.text       start:0x802BD6D8 end:0x802BD8A0

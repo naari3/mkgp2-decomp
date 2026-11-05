@@ -21,6 +21,6 @@ extern int tobj_unk_flag;
 void fn_802BD6C0(void)
 {
     tobj_unk_flag = 0;
-    tobj_unk_f0 = tobj_unk_f1 = 0.0F;
+    tobj_unk_f1 = tobj_unk_f0 = 0.0F;
 }
 

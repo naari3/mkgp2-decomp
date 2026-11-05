@@ -24,6 +24,7 @@ extern char lbl_806D0C9C[5];
 #define __FILE__ lbl_806D0C94
 #undef HSD_ASSERT
 #define HSD_ASSERT(line, cond) ((cond) ? (void) 0 : __assert(__FILE__, line, lbl_806D0C9C))
+#pragma force_active on
 static u32 HSD_TexMapID2PTTexMtx(GXTexMapID id)
 {
     switch (id) {
