@@ -6,6 +6,17 @@ extern void GXInvalidateVtxCache(void);
 static inline float Clamp(float f) {
     return f<0.0f ? 0.0f : (f>1.0f ? 1.0f : f);
 }
+static inline void MorphBlend(MorphNode *n, int side, float blend) {
+    int i;
+    for (i=0;i<n->count;i++) {
+        MorphVec *a=&n->input[0][n->indices[0][i]];
+        MorphVec *b=&n->input[1][n->indices[1][i]];
+        MorphVec *dst=&n->output[side][i];
+        dst->x=blend*(a->x-b->x)+b->x;
+        dst->y=blend*(a->y-b->y)+b->y;
+        dst->z=blend*(a->z-b->z)+b->z;
+    }
+}
 void fn_8018F1E0(MorphView *self) {
     MorphNode *n;
     if (self->model) {
@@ -22,7 +33,6 @@ void fn_8018F1E0(MorphView *self) {
                 for (side=0;side<2;side++) {
                     float blend,alpha;
                     void *material;
-                    int i;
                     blend=0.5f*(1.0f+LUT_Sin12Bit(angles[side]));
                     if (angles[side]<90.0f || angles[side]>=270.0f) {
                         alpha=2.0f*blend;
@@ -35,14 +45,7 @@ void fn_8018F1E0(MorphView *self) {
                     alpha=Clamp(alpha);
                     material=n->obj[side] ? n->obj[side]->material : 0;
                     if (material) fn_80182578(material,(int)(255.0f*alpha));
-                    for (i=0;i<n->count;i++) {
-                        MorphVec *a=&n->input[0][n->indices[0][i]];
-                        MorphVec *b=&n->input[1][n->indices[1][i]];
-                        MorphVec *dst=&n->output[side][i];
-                        dst->x=blend*(a->x-b->x)+b->x;
-                        dst->y=blend*(a->y-b->y)+b->y;
-                        dst->z=blend*(a->z-b->z)+b->z;
-                    }
+                    MorphBlend(n,side,blend);
                 }
                 DCFlushRange(n->output[0],n->count*12);
                 DCFlushRange(n->output[1],n->count*12);

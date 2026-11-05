@@ -26,3 +26,8 @@ Source: Codex worker cxc_u6_objview186_20261105 (gpt-6.1-sol/medium) + coordinat
 Source: Codex worker c4_t1_objview_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1224 B.
 
 c4_t1_objview_20261105: fn_80198ABC promoted native1224B. Scalar float literals (0,11,0.2,1,-0.1,2,0.05,5) instead of extern const objects resolve height/lift clamp FP identities; existing sdata2 postprocessor bridges constants, all text/EH/index100 and source-linked DOL SHA1 OK. Inline clamp parameterization is a no-op. fn_801980C8 remains99.72938: literal constants and integer-index helper return both leave identical15 FP operand residuals; moving arithmetic inside helpers does not fix homes and adds factor1 multiply. All C8 experiments reverted.
+
+## c5_s21_fn801807e0_20261105
+Source: Codex worker c5_s21_fn801807e0_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c5_s21: inline extraction of only the position-interpolation loop as MorphBlend(MorphNode*,int,float) improves fn_8018F1E0 98.50282 -> 98.98305 while preserving 708B and exact EH/index. Still NonMatching: self/side r27/r28 swap and inner address/stride colors remain. Whole-node helper and widened side/index scopes are worse. Path186 index-first pointer helper and wrapped-integer-return helper are byte-identical negative probes. Menu direct clear / column-zero before clear are byte-identical negatives. Table global-direct loses hoist; reference retains extra base copy; later base initialization worsens zero scheduling. All failed variants reverted.
