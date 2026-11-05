@@ -1,5 +1,11 @@
 #include "game/DListGeometryPrivate.h"
 
+static inline float (*FaceMatrix(HSD_JObj *jobj))[4] {
+    if (!jobj) __assert(lbl_806D9280, 0x47c, lbl_806D9288);
+    SetupMatrix(jobj);
+    return (float (*)[4])&jobj->_pad_1c[0x28];
+}
+
 /* Extract world-space faces, reversing winding and alternating strip parity. */
 int fn_80185630(HSD_JObj *jobj, DListPObj *pobj, DListFace *out, int capacity) {
     DListVec v[4];
@@ -36,35 +42,35 @@ int fn_80185630(HSD_JObj *jobj, DListPObj *pobj, DListFace *out, int capacity) {
             if (collected >= needed) {
                 switch (primitive) {
                 case 0x90:
-                    PSMTXMultVec(GetMatrix(jobj), &v[0], &face->v[2]);
-                    PSMTXMultVec(GetMatrix(jobj), &v[1], &face->v[1]);
-                    PSMTXMultVec(GetMatrix(jobj), &v[2], &face->v[0]);
+                    PSMTXMultVec(FaceMatrix(jobj), &v[0], &face->v[2]);
+                    PSMTXMultVec(FaceMatrix(jobj), &v[1], &face->v[1]);
+                    PSMTXMultVec(FaceMatrix(jobj), &v[2], &face->v[0]);
                     face->count = 3;
                     collected = 0;
                     break;
                 case 0x98:
                     if (parity == 0) {
-                        PSMTXMultVec(GetMatrix(jobj), &v[0], &face->v[2]);
-                        PSMTXMultVec(GetMatrix(jobj), &v[1], &face->v[1]);
-                        PSMTXMultVec(GetMatrix(jobj), &v[2], &face->v[0]);
+                        PSMTXMultVec(FaceMatrix(jobj), &v[0], &face->v[2]);
+                        PSMTXMultVec(FaceMatrix(jobj), &v[1], &face->v[1]);
+                        PSMTXMultVec(FaceMatrix(jobj), &v[2], &face->v[0]);
                         face->count = 3;
                         parity = 1;
                     } else {
-                        PSMTXMultVec(GetMatrix(jobj), &v[0], &face->v[1]);
-                        PSMTXMultVec(GetMatrix(jobj), &v[1], &face->v[2]);
-                        PSMTXMultVec(GetMatrix(jobj), &v[2], &face->v[0]);
+                        PSMTXMultVec(FaceMatrix(jobj), &v[0], &face->v[1]);
+                        PSMTXMultVec(FaceMatrix(jobj), &v[1], &face->v[2]);
+                        PSMTXMultVec(FaceMatrix(jobj), &v[2], &face->v[0]);
                         face->count = 3;
                         parity = 0;
                     }
                     collected = 2;
-                    v[0] = v[1];
-                    v[1] = v[2];
+                    v[0].x = v[1].x; v[0].y = v[1].y; v[0].z = v[1].z;
+                    v[1].x = v[2].x; v[1].y = v[2].y; v[1].z = v[2].z;
                     break;
                 case 0x80:
-                    PSMTXMultVec(GetMatrix(jobj), &v[0], &face->v[3]);
-                    PSMTXMultVec(GetMatrix(jobj), &v[1], &face->v[2]);
-                    PSMTXMultVec(GetMatrix(jobj), &v[2], &face->v[1]);
-                    PSMTXMultVec(GetMatrix(jobj), &v[3], &face->v[0]);
+                    PSMTXMultVec(FaceMatrix(jobj), &v[0], &face->v[3]);
+                    PSMTXMultVec(FaceMatrix(jobj), &v[1], &face->v[2]);
+                    PSMTXMultVec(FaceMatrix(jobj), &v[2], &face->v[1]);
+                    PSMTXMultVec(FaceMatrix(jobj), &v[3], &face->v[0]);
                     face->count = 4;
                     collected = 0;
                     break;

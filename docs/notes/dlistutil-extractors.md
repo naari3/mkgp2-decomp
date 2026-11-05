@@ -13,3 +13,8 @@ fn_80183CC4: changing indexed pointer expression d->array+index*(d->stride/4) in
 Source: Codex worker c13_u28_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1128 B.
 
 fn_80184374: local reader v=d->array; v+=index*(d->stride/4) fixes load timing and scratch GPRs. Replacing Transform(j,&v) with SetupMatrix(j); PSMTXMultVec(&j->_pad_1c[0x28],&v,&v) uses the canonical partial JObj member at matrix offset 0x44 and prevents arithmetic loop hoisting: extra r29 matrix home disappears, frame 0x50->0x40 and EH becomes exact. Remaining plain-local count/cursor/end cycle resolves by declaring n before p/end. Final text1128/extab8/index12 all 100%, source-linked DOL SHA-1 OK. Vertex-run helper extraction emitted out of line and regressed; reverted.
+
+## c13_u42_20261106
+Source: Codex worker c13_u42_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u42 fn_80185630: explicit x/y/z strip copies restore target floating lfs/stfs (95.5611 -> 96.2074). TU-local GetMatrix equivalent returning (float (*)[4])&jobj->_pad_1c[0x28] prevents matrix address hoist and removes extra saved GPR (98.49679%, extab100). Remaining GPR/coalescing differences and two missing pointer mr instructions leave text2480 versus target2488; index91.66667. Target-derived declaration order changed loop homes but regressed98.40836 and was reverted. Singleton kept NonMatching; full fallback SHA-1 OK.
