@@ -4,10 +4,13 @@
  * tracker singleton (unused) and a display slot that must be the local
  * player's.
  *
- * NonMatching: InitStartRace (struct copy codegen), the two title-name
- * lookups, DetermineTitle and a few TitleCheck_* differ only in register
- * allocation; ScoreOverQuarterTarget/HeavyLossWithWin need the target
- * tables (0x80411458+0/0x240/0x480) defined in this TU so CW pools them. */
+ * NonMatching: InitStartRace uses a native fieldwise snapshot with the
+ * packed 0x1BA words kept at their target offsets. Residual scheduling and
+ * register allocation remain in it, the title-name lookups, DetermineTitle,
+ * OnMatchEnd and NewClearedRecord_Race. The score predicates still need
+ * the target table-pool address generation. Reversed EH ordering prevents
+ * isolating the exact methods into independently linked TUs.
+ */
 
 typedef struct RoundInfo {
     unsigned char pad0[0x18];
@@ -82,9 +85,11 @@ extern char lbl_80326B54[];
 extern char lbl_80326B70[];
 extern char lbl_80326B84[];
 
+#pragma pack(push, 1)
 typedef struct PackedWords {
     unsigned int w1BA, w1BE, w1C2, w1C6, w1CA, w1CE;
 } PackedWords;
+#pragma pack(pop)
 
 typedef struct PlayerData {
     unsigned int word000, word004, word008;
@@ -124,8 +129,8 @@ void DetermineTitle(unsigned char arg);
 extern unsigned char lbl_80324B98[];
 extern char *lbl_806CF1E8;
 extern char lbl_806D4A44[4];
-extern char lbl_806D4DD8[];
-extern char lbl_806D4DE0[];
+extern char lbl_806D4DD8[5];
+extern char lbl_806D4DE0[7];
 extern char lbl_805D311C[0x200];
 extern int isJapanese(void);
 extern int sprintf(char *buf, const char *fmt, ...);
@@ -442,6 +447,8 @@ void RankLog_Reset(void *self)
     RankLog_InitStartRace(self);
 }
 
+extern void __copy(void *, const void *, unsigned long);
+
 void RankLog_InitStartRace(void *self)
 {
     DebugPrintf(lbl_80326B84);
@@ -483,7 +490,86 @@ void RankLog_InitStartRace(void *self)
     g_scoreThreshold = -1;
     lbl_806D144A = 0;
     g_hitCount = 0;
-    lbl_805D2F40 = g_playerData;
+    /* Copy scalar fields and the two byte arrays independently, as in the
+     * target memberwise snapshot. PackedWords preserves the unaligned words. */
+    lbl_805D2F40.word000 = g_playerData.word000;
+    lbl_805D2F40.word004 = g_playerData.word004;
+    lbl_805D2F40.word008 = g_playerData.word008;
+    lbl_805D2F40.byte00C = g_playerData.byte00C;
+    lbl_805D2F40.byte00D = g_playerData.byte00D;
+    lbl_805D2F40.wins = g_playerData.wins;
+    lbl_805D2F40.losses = g_playerData.losses;
+    lbl_805D2F40.word014 = g_playerData.word014;
+    lbl_805D2F40.byte018 = g_playerData.byte018;
+    lbl_805D2F40.byte019 = g_playerData.byte019;
+    lbl_805D2F40.byte01A = g_playerData.byte01A;
+    lbl_805D2F40.w01C = g_playerData.w01C;
+    lbl_805D2F40.w020 = g_playerData.w020;
+    lbl_805D2F40.w024 = g_playerData.w024;
+    lbl_805D2F40.w028 = g_playerData.w028;
+    lbl_805D2F40.w02C = g_playerData.w02C;
+    lbl_805D2F40.w030 = g_playerData.w030;
+    lbl_805D2F40.w034 = g_playerData.w034;
+    lbl_805D2F40.w038 = g_playerData.w038;
+    lbl_805D2F40.w03C = g_playerData.w03C;
+    lbl_805D2F40.w040 = g_playerData.w040;
+    lbl_805D2F40.w044 = g_playerData.w044;
+    lbl_805D2F40.w048 = g_playerData.w048;
+    lbl_805D2F40.w04C = g_playerData.w04C;
+    lbl_805D2F40.w050 = g_playerData.w050;
+    lbl_805D2F40.w054 = g_playerData.w054;
+    lbl_805D2F40.w058 = g_playerData.w058;
+    lbl_805D2F40.w05C = g_playerData.w05C;
+    lbl_805D2F40.w060 = g_playerData.w060;
+    lbl_805D2F40.w064 = g_playerData.w064;
+    lbl_805D2F40.w068 = g_playerData.w068;
+    lbl_805D2F40.w06C = g_playerData.w06C;
+    lbl_805D2F40.w070 = g_playerData.w070;
+    lbl_805D2F40.w074 = g_playerData.w074;
+    lbl_805D2F40.w078 = g_playerData.w078;
+    lbl_805D2F40.w07C = g_playerData.w07C;
+    lbl_805D2F40.w080 = g_playerData.w080;
+    lbl_805D2F40.w084 = g_playerData.w084;
+    lbl_805D2F40.w088 = g_playerData.w088;
+    lbl_805D2F40.w08C = g_playerData.w08C;
+    lbl_805D2F40.w090 = g_playerData.w090;
+    lbl_805D2F40.w094 = g_playerData.w094;
+    lbl_805D2F40.w098 = g_playerData.w098;
+    lbl_805D2F40.w09C = g_playerData.w09C;
+    lbl_805D2F40.w0A0 = g_playerData.w0A0;
+    lbl_805D2F40.w0A4 = g_playerData.w0A4;
+    __copy(lbl_805D2F40.bytes0A8, g_playerData.bytes0A8, sizeof(g_playerData.bytes0A8));
+    __copy(lbl_805D2F40.bytes121, g_playerData.bytes121, sizeof(g_playerData.bytes121));
+    lbl_805D2F40.word18C = g_playerData.word18C;
+    lbl_805D2F40.word190 = g_playerData.word190;
+    lbl_805D2F40.word194 = g_playerData.word194;
+    lbl_805D2F40.b198 = g_playerData.b198;
+    lbl_805D2F40.b199 = g_playerData.b199;
+    lbl_805D2F40.b19A = g_playerData.b19A;
+    lbl_805D2F40.b19B = g_playerData.b19B;
+    lbl_805D2F40.b19C = g_playerData.b19C;
+    lbl_805D2F40.b19D = g_playerData.b19D;
+    lbl_805D2F40.b19E = g_playerData.b19E;
+    lbl_805D2F40.b19F = g_playerData.b19F;
+    lbl_805D2F40.b1A0 = g_playerData.b1A0;
+    lbl_805D2F40.word1A4 = g_playerData.word1A4;
+    lbl_805D2F40.byte1A8 = g_playerData.byte1A8;
+    lbl_805D2F40.word1AC = g_playerData.word1AC;
+    lbl_805D2F40.byte1B0 = g_playerData.byte1B0;
+    lbl_805D2F40.byte1B1 = g_playerData.byte1B1;
+    lbl_805D2F40.word1B4 = g_playerData.word1B4;
+    lbl_805D2F40.byte1B8 = g_playerData.byte1B8;
+    lbl_805D2F40.byte1B9 = g_playerData.byte1B9;
+    lbl_805D2F40.words1BA.w1BA = g_playerData.words1BA.w1BA;
+    lbl_805D2F40.words1BA.w1BE = g_playerData.words1BA.w1BE;
+    lbl_805D2F40.words1BA.w1C2 = g_playerData.words1BA.w1C2;
+    lbl_805D2F40.words1BA.w1C6 = g_playerData.words1BA.w1C6;
+    lbl_805D2F40.words1BA.w1CA = g_playerData.words1BA.w1CA;
+    lbl_805D2F40.words1BA.w1CE = g_playerData.words1BA.w1CE;
+    lbl_805D2F40.word1D4 = g_playerData.word1D4;
+    lbl_805D2F40.byte1D8 = g_playerData.byte1D8;
+    lbl_805D2F40.byte1D9 = g_playerData.byte1D9;
+    lbl_805D2F40.byte1DA = g_playerData.byte1DA;
 }
 
 
@@ -625,14 +711,14 @@ TitleTracker *TitleTracker_GetOrCreateSingleton(void)
 
 void DetermineTitle(unsigned char mode)
 {
-    int j;
-    int chara;
     int k;
+    int chara;
+    int j;
     int score;
     unsigned char skip;
-    TitleCheckFn pre = 0;
-    int count = 0;
     TitleCheckFn *checks = 0;
+    int count = 0;
+    TitleCheckFn pre = 0;
     int i;
     unsigned char *tbl = lbl_80411458;
     unsigned char *pool = lbl_80324B98;
