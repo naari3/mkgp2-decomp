@@ -574,3 +574,8 @@ c8_s63: fn_80243A24 native new ItemListHud(layer) using existing HudPart and VHo
 Source: Codex worker c8_s64_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 1020 B.
 
 c8_s64: 80244128 native 592B and owned 60B EH match using real GaugePulse/FlowFaderI new, canonical VHolder/ResCtrl, captured SetPosition and ShowYX(r,y,x,z) to evaluate x before y. Ordinary Show(x,y,z) leaves a 99.91892% FP-coordinate swap. Concrete nonvirtual GaugePulse dtor with an undefined virtual key suppresses extra vtable data; polymorphic delete uses canonical VObject view. Native 80244378 (264B) and 80244480 (164B) also match. All actual ELF addresses/sizes checked, source edges verified, full DOL SHA-1 OK.
+
+## c8_s65_20261105
+Source: Codex worker c8_s65_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 3040 B.
+
+c8_s65: four new singleton ItemUseEffect TUs at 80244840..80245420 match 3040 B native text plus 372 B owned EH and 48 B EH index. Reuse canonical FlowFaderF/I and VHolder. Constructor member initializer ordering and inline ItemUseBurst new expression naturally reproduce DESTROYMEMBER/DELETEPOINTER payloads. Update must retain explicit no-op switch states 4/5, and use a literal 1.5f in the category fallback arm while earlier arms use the captured comparison constant: this reproduces a fresh target lfs instead of fmr. Actual source link inputs, final addresses/sizes, and full DOL SHA-1 verified.
