@@ -1301,7 +1301,8 @@ config.libs = [
             Object(Matching, "game/Mtx44_GetYawPitchOfPosZ.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(NonMatching, "game/Item_BendVelocityByGroundProbe.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ItemObject_Tick_Kind2426_FastDrop.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
-            Object(NonMatching, "game/Terrain_FlagsToTypeId.c"),  #g2
+            Object(Matching, "game/Terrain_FlagsToTypeId.c"),  #g2
+            Object(NonMatching, "game/Terrain_FlagsToTypeId_nm1.c"),  #g2
             Object(Matching, "game/ItemObject_CheckPairCollision.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartVfx_Bind1_Damage.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartVfx_Bind6_YawZ.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
