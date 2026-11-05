@@ -10202,6 +10202,12 @@ game/dtor_801F2724.cpp:
 	extabindex  start:0x80028D0C end:0x80028D18
 	.text       start:0x801F2724 end:0x801F27B4
 
+game/fn_801F27B4.cpp:
+	extab       start:0x80016FAC end:0x80016FB4
+	extabindex  start:0x80028D18 end:0x80028D24
+	.text       start:0x801F27B4 end:0x801F2B70
+	.ctors      start:0x802E8930 end:0x802E8934
+
 game/NamCamFlow.cpp:
 	extab       start:0x80016FB4 end:0x800173C0
 	extabindex  start:0x80028D24 end:0x80028E20
@@ -10211,6 +10217,17 @@ game/SceneListOperations.cpp:
 	extab       start:0x800173C0 end:0x800173D8
 	extabindex  start:0x80028E20 end:0x80028E44
 	.text       start:0x801F4D3C end:0x801F4EB0
+
+game/DebugOverlay_RaceConfig.cpp:
+	extab       start:0x800173D8 end:0x800173E0
+	extabindex  start:0x80028E44 end:0x80028E50
+	.text       start:0x801F4EB0 end:0x801F52A8
+
+game/fn_801F52A8.cpp:
+	extab       start:0x800173E0 end:0x800173E8
+	extabindex  start:0x80028E50 end:0x80028E5C
+	.text       start:0x801F52A8 end:0x801F5A64
+	.data       start:0x804E545C end:0x804E549C
 
 game/fn_801F5A64.cpp:
 	extab       start:0x800173E8 end:0x800173F0
@@ -10270,6 +10287,11 @@ game/dtor_801F6BD0.c:
 	extab       start:0x80017538 end:0x80017540
 	extabindex  start:0x80028F1C end:0x80028F28
 	.text       start:0x801F6BD0 end:0x801F6C2C
+
+game/fn_801F6C2C.cpp:
+	extab       start:0x80017540 end:0x80017548
+	extabindex  start:0x80028F28 end:0x80028F34
+	.text       start:0x801F6C2C end:0x801F6D58
 
 game/fn_801F6D58.cpp:
 	extab       start:0x80017548 end:0x80017550
