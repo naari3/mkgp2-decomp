@@ -1,5 +1,6 @@
 /* GP please panel: update anchor positions, animate badge, and enter race. */
 #include "game/FlowScene.h"
+#include "game/GpPleaseUpdate_private.h"
 struct SpriteUpdateView { char pad[0x20]; float scale; };
 struct BadgeUpdateView { SpriteUpdateView *sprite; unsigned char active, reverse; int frame; };
 struct GpPleaseUpdate {
@@ -23,7 +24,19 @@ extern int g_characterId;
 extern unsigned char g_lakituStartAnimDone, lbl_806D1290, g_rendererGateFlag;
 extern unsigned char g_playerData[0x2000];
 extern const float lbl_806D9E88, lbl_806D9EA8, lbl_806D9EB0, lbl_806D9EB4;
-static inline void SetPlayerCharacter(int character) { unsigned char *data = g_playerData; data[0x1b8] = character; }
+static inline PlayerCharacterView *GetPlayerCharacter() { return (PlayerCharacterView *)g_playerData; }
+static inline void InitPlayerSlot(int seed, int character) {
+    RaceSlot_InitSlot(seed, GetDisplayBufferIndex(), character, 1, 0);
+}
+static inline void EnterRace(int seed) {
+    SetTimerModeEnabled(1);
+    g_lakituStartAnimDone = 0;
+    lbl_806D1290 = 0;
+    InitPlayerSlot(seed, g_characterId);
+    GetPlayerCharacter()->SetCharacter(g_characterId);
+    g_rendererGateFlag = 1;
+    fn_801B7CD0(-1);
+}
 int fn_801CDF10(GpPleaseUpdate *self) {
     float pos[12]; // Complete 0x30-byte sprite node record.
     RumbleUpdate();
@@ -61,15 +74,7 @@ int fn_801CDF10(GpPleaseUpdate *self) {
         fn_801699D8(0, 0);
     }
     if (self->fading == 1 && self->timer > lbl_806D9E88) {
-        int seed = VSMode_SeedRandomItemSequence(0, g_characterId, 0);
-        SetTimerModeEnabled(1);
-        g_lakituStartAnimDone = 0;
-        lbl_806D1290 = 0;
-        int character = g_characterId;
-        RaceSlot_InitSlot(seed, GetDisplayBufferIndex(), character, 1, 0);
-        SetPlayerCharacter(g_characterId);
-        g_rendererGateFlag = 1;
-        fn_801B7CD0(-1);
+        EnterRace(VSMode_SeedRandomItemSequence(0, g_characterId, 0));
         self->next = 42;
     }
     return self->next;
