@@ -1858,5 +1858,45 @@
       "dtor_8007CC54",
       "dtor_80036E40"
     ]
+  },
+  "src/game/WarpZoneVector_Reserve.cpp": {
+    "extab": [
+      "WarpZoneArray_UninitFillN",
+      "WarpZone_OperatorAssign_LinkerStub",
+      "WarpZoneArray_CopyBackward",
+      "WarpZoneArray_CopyBackwardImpl",
+      "WarpZoneVector_Reserve",
+      "dtor_800AA69C",
+      "WarpZoneVector_Clear"
+    ],
+    "extabindex": [
+      "WarpZoneVector_Reserve",
+      "dtor_800AA69C",
+      "WarpZoneVector_Clear",
+      "WarpZoneArray_UninitFillN",
+      "WarpZoneArray_CopyBackward",
+      "WarpZoneArray_CopyBackwardImpl",
+      "WarpZone_OperatorAssign_LinkerStub"
+    ]
+  },
+  "src/game/PanelCda40.cpp": {
+    "extab": [
+      "dtor_801CDBB8",
+      "dtor_801CDC68",
+      "fn_801CDCE0",
+      "fn_801CDA40",
+      "fn_801CDA8C",
+      "fn_801CDB00",
+      "dtor_80082960"
+    ],
+    "extabindex": [
+      "fn_801CDA40",
+      "fn_801CDA8C",
+      "fn_801CDB00",
+      "dtor_801CDBB8",
+      "dtor_801CDC68",
+      "fn_801CDCE0",
+      "dtor_80082960"
+    ]
   }
 }

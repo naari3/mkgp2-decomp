@@ -3013,6 +3013,11 @@ game/WarpZoneVector_Insert.cpp:
 	extabindex  start:0x80022640 end:0x8002264C
 	.text       start:0x800A9D84 end:0x800AA484
 
+game/WarpZoneVector_Reserve.cpp:
+	extab       start:0x80009F10 end:0x80009F80
+	extabindex  start:0x8002264C end:0x800226A0
+	.text       start:0x800AA484 end:0x800AA888
+
 game/WarpZone_Dtor.c:
 	extab       start:0x80009F80 end:0x80009F88
 	extabindex  start:0x800226A0 end:0x800226AC
@@ -8519,6 +8524,11 @@ game/fn_801CCF2C.cpp:
 	extabindex  start:0x80027EE4 end:0x80027EF0
 	.text       start:0x801CCF2C end:0x801CD030
 
+game/PanelCda40.cpp:
+	extab       start:0x80014A30 end:0x80014B08
+	extabindex  start:0x80027EFC end:0x80027F44
+	.text       start:0x801CDA40 end:0x801CDDC4
+
 game/fn_801CDDC4.cpp:
 	extab       start:0x80014B08 end:0x80014B20
 	extabindex  start:0x80027F44 end:0x80027F50
@@ -9252,6 +9262,9 @@ game/dtor_801E8C00.cpp:
 game/fn_801E8C7C.c:
 	.text       start:0x801E8C7C end:0x801E8C90
 	.ctors      start:0x802E8924 end:0x802E8928
+
+game/AI_AdjustThunks.c:
+	.text       start:0x801E8C90 end:0x801E8CB8
 
 game/fn_801E8CB8.c:
 	.text       start:0x801E8CB8 end:0x801E8D10
