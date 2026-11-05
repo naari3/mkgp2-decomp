@@ -1,4 +1,4 @@
-#include "game/SteeringRingAlgorithmsPrivate.h"
+#include "game/SteeringRingInsertPrivate.h"
 extern "C" void fn_801E4AF4(SteeringRing *s, const SteeringRingIter &position, unsigned long n, const int &value) {
     if(n) {
         unsigned long max=RingMax();
@@ -6,7 +6,8 @@ extern "C" void fn_801E4AF4(SteeringRing *s, const SteeringRingIter &position, u
         unsigned long newCount=s->count+n;
         if(newCount<=s->capacity) {
             unsigned long before=position.index;
-            unsigned long after=s->count-before;
+            SteeringRingIter end=s->end();
+            unsigned long after=end.index-position.index;
             if(before<after) {
                 if(s->head>=n) s->head-=n;
                 else s->head=s->capacity-(n-s->head);
@@ -33,7 +34,7 @@ extern "C" void fn_801E4AF4(SteeringRing *s, const SteeringRingIter &position, u
             int *q=p+before;
             unsigned long remaining=n;
             while(remaining) { *q++=value; --remaining; }
-            if(before!=s->count) RingCopy(position,s->end(),p+before+n);
+            if(before<s->count) RingCopy(position,s->end(),p+before+n);
             if(s->data) MemoryManager_TimedFree(s->data);
             s->data=p;
             s->count=newCount;

@@ -9797,5 +9797,15 @@
     "Draw__17clFlowCCCharaItemFv": "fn_80234EDC",
     "Draw__12clFlowCCDateFv": "fn_80236C28",
     "@133": "jumptable_804EE3D4"
+  },
+  "src/game/fn_801E4AF4.cpp": {
+    "__dt__Q23std9exceptionFv": "dtor_80038DD4",
+    "__dt__10RingSharedFv": "dtor_80038E30",
+    "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor",
+    "__vt__Q23std9exception": "lbl_803F5710",
+    "__vt__Q23std11logic_error": "lbl_803F5700",
+    "__vt__Q23std12length_error": "lbl_803F56F0",
+    "@436": "@etb_8001632C",
+    "@437": "@eti_800287A8"
   }
 }
