@@ -193,3 +193,8 @@ c13_u36: KartMovement_PhysicsStep 8019CD30 improves 95.86947 to 96.40763 by movi
 Source: Codex worker c13_u39_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 300 B.
 
 c13_u39: fn_801F6D58 300B texture-rectangle setter reaches exact text/EH under unchanged GC/1.3.2. Numeric literals 1.0f/0.5f restore constant homes and fmuls operand order (95.8 -> 96.666664). Declare float x,y,h before assigning h=height; y=y; x=x to restore target x=f3/h=f9 and dependent arithmetic scheduling (100%). Existing canonical SpriteTex header unchanged. Existing Matching flag promotion needs no bridge or split edits; full source-linked DOL SHA-1 OK.
+
+## c14_u5_20261106
+Source: Codex worker c14_u5_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 400 B.
+
+ZlibInflate_BufferToBuffer 0x800AB958 (400B, GC/1.3.2): assigning next_out before avail_out at both setup/reset sites improves 94.65 ->95.05. Declaring local input after remain/out and setting input=src+8, instead of mutating the src parameter, restores input=r29/dst=r28 and initialization scheduling, reaching exact text/extab/extabindex. Canonical z_stream header adoption preserves exact output. Matching promotion verified source-linked with full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
