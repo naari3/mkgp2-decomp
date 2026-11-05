@@ -11572,5 +11572,11 @@
   },
   "src/game/KartController_Update.cpp": {
     "__dt__10AIPositionFv": "dtor_80036E40"
+  },
+  "src/game/ItemEffectImpact_TryArmInit.cpp": {
+    "__dt__5C7VecFv": "dtor_80036E40",
+    "__dt__13ImpactArmQuatFv": "dtor_800524CC",
+    "@200": "@etb_80007204",
+    "@201": "@eti_800205F4"
   }
 }

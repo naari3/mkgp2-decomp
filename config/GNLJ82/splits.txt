@@ -1118,6 +1118,11 @@ game/ItemStateGuard_PruneIfDeadAndReport.cpp:
 game/ItemStateGuard_IsActive.c:
 	.text       start:0x80052F9C end:0x80052FB0
 
+game/ItemEffect_BossGrab.cpp:
+	extab       start:0x80007194 end:0x8000719C
+	extabindex  start:0x80020588 end:0x80020594
+	.text       start:0x80052FB0 end:0x80053168
+
 game/ItemState_InitKeyframeBufferAndArm.c:
 	extab       start:0x8000719C end:0x800071A4
 	extabindex  start:0x80020594 end:0x800205A0
@@ -1148,6 +1153,11 @@ game/ItemEffectQuake_Init.c:
 	extabindex  start:0x800205D0 end:0x800205DC
 	.text       start:0x80053C70 end:0x80053D80
 
+game/ItemEffectDamp_TryArm.cpp:
+	extab       start:0x800071F4 end:0x800071FC
+	extabindex  start:0x800205DC end:0x800205E8
+	.text       start:0x80053D80 end:0x80053E68
+
 game/ItemEffectDamp_Init.c:
 	.text       start:0x80053E68 end:0x80053E8C
 
@@ -1155,6 +1165,11 @@ game/ItemEffectImpact_TryArm.c:
 	extab       start:0x800071FC end:0x80007204
 	extabindex  start:0x800205E8 end:0x800205F4
 	.text       start:0x80053E8C end:0x80053ED0
+
+game/ItemEffectImpact_TryArmInit.cpp:
+	extab       start:0x80007204 end:0x80007234
+	extabindex  start:0x800205F4 end:0x80020600
+	.text       start:0x80053ED0 end:0x8005453C
 
 game/ItemEffectImpact_Init.c:
 	.text       start:0x8005453C end:0x80054660
