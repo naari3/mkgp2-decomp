@@ -4868,6 +4868,12 @@ game/ItemObject_WriteVectors.c:
 game/ItemObject_SetByte18c.c:
 	.text       start:0x800DD930 end:0x800DD940
 
+game/PreloadItemResources.c:
+	extab       start:0x8000B4AC end:0x8000B4B4
+	extabindex  start:0x80023C18 end:0x80023C24
+	.text       start:0x800DD940 end:0x800DEF74
+	.data       start:0x8041EBC0 end:0x8041EE3C
+
 game/PreloadEffectResources.c:
 	extab       start:0x8000B4B4 end:0x8000B4BC
 	extabindex  start:0x80023C24 end:0x80023C30

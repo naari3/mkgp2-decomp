@@ -1186,6 +1186,7 @@ config.libs = [
             Object(Matching, "game/ItemObject_RaycastWallStub.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Item_DecayVelocityScalar.c"),
             Object(Matching, "game/ItemObject_SetByte18c.c"),
+            Object(Matching, "game/PreloadItemResources.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PreloadEffectResources.c", extra_cflags=["-Cpp_exceptions on"]),
             # group2 batch (0x8009B98C..0x801077C8)
             Object(Matching, "game/RankSlot_AppendOrUpdate.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
