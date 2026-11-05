@@ -1,0 +1,441 @@
+#pragma inline_max_size(10000)
+#pragma inline_max_total_size(100000)
+#include "game/BootDispatcher_private.h"
+
+extern "C" {
+unsigned int OSGetTick();
+void Profiler_RecordFrame(int, float);
+void *Alloc(unsigned long);
+void MemoryManager_TimedFree(void *);
+void MemoryManager_Free(void *);
+void *memset(void *, int, unsigned long);
+void DebugPrintf(const char *, ...);
+void OverlayText(int, int, int, const char *, ...);
+void BootStateStruct_RefreshIfDue();
+unsigned int PPCMfhid0();
+void PPCMthid0(unsigned int);
+void fn_80287FDC(void *);
+int fn_80255640(int, int, BootError *);
+unsigned int fn_8028B090();
+void *fn_80287EC4(int);
+void fn_80289D4C(int);
+BootState *fn_80293BBC();
+int fn_80293BCC();
+void fn_802554DC();
+void SceneFlow_InitCleanupList();
+void SceneFlow_SetCleanupTag(int);
+void *OSGetArenaHi();
+void *OSGetArenaLo();
+void *OSInitAlloc(void *, void *, int);
+void OSSetArenaLo(void *);
+void HSD_SetInitParameter(int, ...);
+void HSD_InitComponent(void *);
+void VIWaitForRetrace();
+void GameBoot_Init();
+void PlayStats_LoadOrInitForBoot();
+void RaceContext_EnsureSingleton();
+void Sci2Card_FlagReceiptTestEnable();
+void InputMgr_Init();
+void StrPcb_EnsureInstance();
+void JvsInput_SetSteeringCalibration(int);
+void JvsInput_SetAccelCalibration(int);
+void JvsInput_SetBrakeCalibration(int);
+void *StrPcb_GetInstance();
+void StrPcb_SetPositionTarget(void *, short);
+void StrPcb_SetIntensityMode(void *, signed char);
+void ClSound_InitSoundSystem();
+void fn_801934A0(unsigned char);
+void fn_8019345C(unsigned char);
+void fn_80193404(unsigned char);
+void fn_801951E4(unsigned char);
+void fn_801951CC(unsigned char);
+void Sci2Card_Singleton_GetOrCreate(int);
+void HSD_VISetBlack(int);
+void *FUN_8003b120(unsigned int);
+void fn_801F8E58();
+void StrPcb_BeginEffect(void *, int);
+void StrPcb_DrainInputBuffer(void *);
+void fn_801213EC();
+int CardTaskManager_Tick(void *);
+void CardTaskManager_RenderOverlay(void *);
+void CardTaskManager_Dtor(void *, int);
+void HSD_StartRender(int);
+void fn_802D47E8();
+void SpriteHandlePool_GC();
+unsigned int GXGetTexBufferSize(int,int,int,int,int);
+void GXSetTexCopySrc(int,int,int,int);
+void GXSetTexCopyDst(int,int,int,int);
+void GXCopyTex(void *, int);
+void GXDrawDone();
+void fn_8018F14C();
+void HSD_VICopyXFBAsync(int);
+void HSD_VIDrawDoneXFBAll();
+void GXInvalidateTexAll();
+void *Sci2Card_Singleton_Get();
+void Sci2Card_Tick(void *);
+void *GetInputManager();
+void InputObj_TickAndDispatch(void *);
+void StrPcb_OutputTick(void *);
+void fn_80193624();
+void FrameUpdate();
+void CreditMgr_PollInsertAndPlay(int);
+unsigned char ServiceButton_Handler();
+void PcbComm_Shutdown();
+void FreeMediaBuffers();
+void Sci2Card_Shutdown();
+void fn_80193838();
+void InputMgr_Shutdown();
+void StrPcb_Shutdown();
+void PlayStats_ShutdownStub();
+void Backup_Shutdown();
+void fn_80255620();
+void fn_80287EE4(int,void *);
+void fn_80121210();
+void *DVDGetFSTLocation();
+void fn_802928DC();
+void fn_80290ED8();
+void InitGlobalTimer();
+void PCBComm_Init();
+void BootPCBCheck_Init();
+void BootPCBCheck_Display();
+unsigned char BootPCBCheck_Poll();
+void Timer_Decrement();
+void PCBComm_Process(int,int);
+int BootNotice_CheckEnterCondition();
+void SetSyncTarget(int);
+void DrawText(void *,int,int,int,const char *,...);
+void DisplayContext_Flush(void *);
+void fn_8011F994(int);
+void fn_801DB68C(void *,int);
+extern void (*lbl_806D2238)();
+extern const char lbl_802E8F48[];
+extern BootState lbl_80594080;
+extern BootConfig lbl_80598A60;
+extern BootHooks lbl_806CED28;
+extern unsigned char lbl_806D0FA1, lbl_806D0F94, vblank_flag;
+extern unsigned char lbl_806D0F99, lbl_806D0F98, lbl_806D0F96, lbl_806D0F97;
+extern unsigned char lbl_806D0FA0, lbl_806D0F8E, lbl_806CED30;
+extern BootTimer *lbl_806D0F9C;
+extern const float lbl_806D2294, SAFE, lbl_806D22A8;
+extern const char lbl_806D22AC[4];
+extern char lbl_804FE080[];
+extern BootVI HSD_VIData;
+extern BootColor lbl_806CED34;
+extern void *lbl_806D0F90, *lbl_806D1880, *lbl_806D12DC;
+extern char *lbl_806D0FC8;
+extern unsigned int lbl_806D0FCC, lbl_806D0FD0, lbl_806D0FD4;
+extern const char *lbl_803F5670[10];
+}
+
+inline void *operator new(unsigned long n) { return Alloc(n); }
+inline void operator delete(void *p) { MemoryManager_TimedFree(p); }
+
+class ScopedTimer {
+    unsigned int start;
+    int slot;
+public:
+    ScopedTimer(int id) { slot=id; start=OSGetTick(); }
+    ~ScopedTimer() {
+        Profiler_RecordFrame(slot, (float)(((OSGetTick()-start)*8)/
+            ((*(unsigned int *)0x800000F8/4)/125000))/lbl_806D2294);
+    }
+};
+class BootWait {
+    unsigned int start;
+public:
+    BootWait() { start=OSGetTick(); }
+    ~BootWait() {}
+    unsigned char Done() {
+        return (float)(((OSGetTick()-start)*8)/
+            ((*(unsigned int *)0x800000F8/4)/125000))/lbl_806D2294 >= SAFE;
+    }
+};
+class BootCardManager {
+    unsigned char data[0x14];
+public:
+    BootCardManager(unsigned char, int, int);
+};
+class BootDisplay {
+    unsigned char data[0xD8];
+public:
+    BootDisplay();
+};
+class BootNotice {
+public:
+    int remaining;
+    void *display;
+    BootNotice() {
+        remaining=599;
+        if (!lbl_806D1880) lbl_806D1880=new BootDisplay;
+        display=lbl_806D1880;
+    }
+    ~BootNotice() {
+        if (!lbl_806D1880) {
+            fn_801DB68C(lbl_806D1880,1);
+            lbl_806D1880=0;
+        }
+    }
+    unsigned char Done() {
+        if (remaining<=0) return 1;
+        --remaining;
+        return 0;
+    }
+    void Draw() {
+        if (display) {
+            for (unsigned int i=0, y=32;i<10;++i,y+=36)
+                DrawText(display,78,y,7,lbl_803F5670[i],lbl_806D22A8);
+            DrawText(display,588,24,7,lbl_806D22AC,remaining/60,lbl_806D22A8);
+            DisplayContext_Flush(display);
+        }
+    }
+};
+struct BootTextBuffer {
+    unsigned int field0, field4, field8, fieldC, width, height;
+    BootTextBuffer() { field4=0; field8=0; width=11; height=14; field0=0; }
+};
+extern "C" BootTextBuffer *lbl_806D0FD8;
+struct BootShutdownObject { virtual void Destroy(int); };
+
+static inline void RefreshBootState() {
+    fn_802554DC();
+    BootState *src=fn_80293BBC();
+    BootTimer *timer=lbl_806D0F9C;
+    lbl_80594080=*src;
+    timer->lastTick=OSGetTick();
+}
+static inline void CopyFrame(const char *text) {
+    if (lbl_806CED30==1) {
+        ScopedTimer timer(21);
+        if ((unsigned int)lbl_804FE080 & 31) {
+            DebugPrintf(text+0x5C4);
+            return;
+        }
+        if (GXGetTexBufferSize(640,480,4,0,0)>0x96000) {
+            DebugPrintf(text+0x5F0);
+            return;
+        }
+        GXSetTexCopySrc(0,0,640,480);
+        GXSetTexCopyDst(640,480,4,0);
+        GXCopyTex(lbl_804FE080,0);
+    }
+}
+static inline void FinishFrame(const char *text) {
+    if (lbl_806D0F8E==1) {
+        OverlayText(1,12,28,text+0x620,&lbl_80594080.f18);
+        OverlayText(1,12,29,text+0x630,&lbl_80594080.f2C);
+    }
+    GXDrawDone();
+    fn_8018F14C();
+    HSD_VIData.color=lbl_806CED34;
+    HSD_VICopyXFBAsync(0);
+    HSD_VIDrawDoneXFBAll();
+    VIWaitForRetrace();
+    GXInvalidateTexAll();
+    void *card=Sci2Card_Singleton_Get();
+    if (card) {
+        unsigned char active;
+        if (!lbl_806D0F94) active=0;
+        else if (lbl_806D0F98==1) active=0;
+        else active=1;
+        if (active==1) Sci2Card_Tick(card);
+    }
+    RefreshBootState();
+    void *input=GetInputManager();
+    if (input) InputObj_TickAndDispatch(input);
+    void *pcb=StrPcb_GetInstance();
+    if (pcb) StrPcb_OutputTick(pcb);
+    fn_80193624();
+    FrameUpdate();
+    CreditMgr_PollInsertAndPlay(0);
+}
+static inline void Shutdown() {
+    GXDrawDone();
+    PcbComm_Shutdown();
+    FreeMediaBuffers();
+    CardTaskManager_Dtor(lbl_806D0F90,1);
+    lbl_806D0F90=0;
+    Sci2Card_Shutdown();
+    fn_80193838();
+    InputMgr_Shutdown();
+    StrPcb_Shutdown();
+    if (lbl_806D0FD8) MemoryManager_TimedFree(lbl_806D0FD8);
+    lbl_806D0FD8=0;
+    MemoryManager_Free(lbl_806D0FC8);
+    lbl_806D0FC8=0;
+    PlayStats_ShutdownStub();
+    Backup_Shutdown();
+    if (lbl_806D12DC) ((BootShutdownObject *)lbl_806D12DC)->Destroy(1);
+    lbl_806D12DC=0;
+    fn_80255620();
+    char *tail=(char *)OSGetArenaHi()-256;
+    memset(tail,0,256);
+    *(int *)tail=1;
+    fn_80287EE4(0,tail);
+}
+
+extern "C" void BootDispatcher(unsigned char *serviceMode)
+{
+    const char *text=lbl_802E8F48;
+    lbl_806D2238=BootStateStruct_RefreshIfDue;
+    PPCMthid0(PPCMfhid0()|0x200);
+    *serviceMode=0;
+    unsigned char service=0;
+    void *component=0;
+    unsigned int bootInfo[64];
+    fn_80287FDC(bootInfo);
+    int isService=(unsigned char)(bootInfo[0]==1);
+    if (isService==1) { DebugPrintf(text+0x640); service=1; }
+    BootError error;
+    memset(&error,0,24);
+    error.code[0]=99;
+    error.code[1]=99;
+    error.code[2]=1;
+    error.enabled=1;
+    int mode=1;
+    if (isService) mode=2;
+    if (fn_80255640(isService,mode,&error)==0) {
+        component=fn_80287EC4((~fn_8028B090()>>5)&1);
+        BootState *state=fn_80293BBC();
+        fn_80289D4C(255);
+        lbl_80594080=*state;
+    }
+    SceneFlow_InitCleanupList();
+    SceneFlow_SetCleanupTag(0);
+    lbl_806CED28.begin=0;
+    lbl_806CED28.end=0;
+    void *hi=OSGetArenaHi();
+    OSSetArenaLo(OSInitAlloc(OSGetArenaLo(),hi,2));
+    lbl_806D0FA1=1;
+    HSD_SetInitParameter(0,0x40000);
+    HSD_SetInitParameter(1,2);
+    lbl_806D0F94=0;
+    vblank_flag=0;
+    lbl_806D0F99=1;
+    lbl_806D0F98=1;
+    lbl_806D0F96=0;
+    lbl_806D0F97=0;
+    HSD_InitComponent(component);
+    VIWaitForRetrace(); VIWaitForRetrace();
+    lbl_806D0F9C=(BootTimer *)Alloc(4);
+    while (!fn_80293BCC()) {
+        BootWait wait;
+        while (!wait.Done()) {}
+        RefreshBootState();
+    }
+    GameBoot_Init();
+    PlayStats_LoadOrInitForBoot();
+    RaceContext_EnsureSingleton();
+    if (lbl_80598A60.receiptTest==1) Sci2Card_FlagReceiptTestEnable();
+    unsigned char enabled=lbl_80598A60.card;
+    lbl_806D0F94=enabled;
+    if (!enabled) lbl_806D0F98=1;
+    vblank_flag=1;
+    lbl_806D0F98=enabled ? !lbl_80598A60.cardDisabled : 1;
+    lbl_806D0F99=!lbl_80598A60.otherDisabled;
+    InputMgr_Init();
+    StrPcb_EnsureInstance();
+    JvsInput_SetSteeringCalibration(lbl_80598A60.steering);
+    JvsInput_SetAccelCalibration(lbl_80598A60.accel);
+    JvsInput_SetBrakeCalibration(lbl_80598A60.brake);
+    StrPcb_SetPositionTarget(StrPcb_GetInstance(),(short)lbl_80598A60.position);
+    StrPcb_SetIntensityMode(StrPcb_GetInstance(),lbl_80598A60.intensity);
+    ClSound_InitSoundSystem();
+    fn_801934A0((unsigned char)((lbl_80598A60.volume<<7)/15));
+    fn_8019345C((unsigned char)((lbl_80598A60.volume<<7)/15));
+    fn_80193404((unsigned char)((lbl_80598A60.effectsVolume<<7)/15));
+    fn_801951E4(lbl_80598A60.soundMode);
+    fn_801951CC(lbl_80598A60.soundOption);
+    Sci2Card_Singleton_GetOrCreate(0);
+    HSD_VISetBlack(0);
+    if (!lbl_806D0FD8) {
+        lbl_806D0FD8=new BootTextBuffer;
+        lbl_806D0FCC=640/lbl_806D0FD8->width+1;
+        lbl_806D0FD0=480/lbl_806D0FD8->height;
+        lbl_806D0FD4=lbl_806D0FCC*lbl_806D0FD0;
+        lbl_806D0FC8=(char *)FUN_8003b120(lbl_806D0FD4);
+        memset(lbl_806D0FC8,0,lbl_806D0FD4);
+    }
+    fn_801F8E58();
+    int effect=lbl_80598A60.effect-1;
+    StrPcb_BeginEffect(StrPcb_GetInstance(),effect);
+    StrPcb_DrainInputBuffer(StrPcb_GetInstance());
+    if (service==1) {
+        *serviceMode=1;
+        DebugPrintf(text+0x650);
+        fn_801213EC();
+        return;
+    }
+    if ((~fn_8028B090())&1) {
+        lbl_806D0F94=0;
+        lbl_806D0F98=1;
+        vblank_flag=0;
+        lbl_806D0F99=1;
+        lbl_806D0FA0=0;
+        DebugPrintf(text+0x664);
+    } else lbl_806D0FA0=1;
+    fn_801213EC();
+    if (lbl_806D0FA0==1) {
+        int card=1, other=1;
+        if (!lbl_806D0F94 || lbl_806D0F98==1) card=0;
+        if (!vblank_flag || lbl_806D0F99==1) other=0;
+        lbl_806D0F90=new BootCardManager(lbl_80598A60.intensity!=0,card,other);
+        int state=CardTaskManager_Tick(lbl_806D0F90);
+        while (state==2) {
+            if (lbl_806CED28.begin) lbl_806CED28.begin->Tick();
+            HSD_StartRender(0);
+            CardTaskManager_RenderOverlay(lbl_806D0F90);
+            fn_802D47E8(); SpriteHandlePool_GC();
+            if (lbl_806CED28.end) lbl_806CED28.end->Tick();
+            CopyFrame(text);
+            FinishFrame(text);
+            state=CardTaskManager_Tick(lbl_806D0F90);
+            if (ServiceButton_Handler()==1) {
+                DebugPrintf(text+0x678);
+                state=3;
+            }
+        }
+        if (state==3) Shutdown();
+    }
+    CardTaskManager_Dtor(lbl_806D0F90,1);
+    lbl_806D0F90=0;
+    fn_80121210();
+    DebugPrintf(text+0x694,DVDGetFSTLocation());
+    for (;;) {
+        BootState state=*fn_80293BBC();
+        if (((unsigned char *)&state)[0x14] && ((unsigned char *)&state)[0x15]) break;
+        BootWait wait;
+        while (!wait.Done()) {}
+        RefreshBootState();
+    }
+    fn_802928DC(); fn_80290ED8(); InitGlobalTimer(); PCBComm_Init();
+    HSD_VIData.color=lbl_806CED34;
+    BootPCBCheck_Init();
+    while (BootPCBCheck_Poll()) {
+        if (lbl_806CED28.begin) lbl_806CED28.begin->Tick();
+        HSD_StartRender(0);
+        BootPCBCheck_Display();
+        fn_802D47E8(); SpriteHandlePool_GC();
+        if (lbl_806CED28.end) lbl_806CED28.end->Tick();
+        CopyFrame(text);
+        Timer_Decrement(); PCBComm_Process(1,1);
+        FinishFrame(text);
+        if (ServiceButton_Handler()==1) Shutdown();
+    }
+    BootNotice_CheckEnterCondition();
+    if (!lbl_80598A60.skipNotice) {
+        SetSyncTarget(55);
+        BootNotice notice;
+        while (!notice.Done()) {
+            if (lbl_806CED28.begin) lbl_806CED28.begin->Tick();
+            HSD_StartRender(0);
+            notice.Draw();
+            for (int i=0;i<8;++i) fn_8011F994(i);
+            fn_802D47E8(); SpriteHandlePool_GC();
+            if (lbl_806CED28.end) lbl_806CED28.end->Tick();
+            CopyFrame(text);
+            Timer_Decrement(); PCBComm_Process(1,1);
+            FinishFrame(text);
+        }
+    }
+}
+

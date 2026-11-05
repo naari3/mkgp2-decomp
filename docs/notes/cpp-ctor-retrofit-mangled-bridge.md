@@ -599,3 +599,8 @@ RaceHud 80249054/80249130/80249274 native text/EH exact. Update input processing
 Source: Codex worker c8_s71_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 472 B.
 
 fn_80247CFC float-list insert: inline RAII allocation guard + real placement new of float produces the target stack anchor (stw r1) and unreachable cleanup call without manual EH. Guard must die before the loop decrement. The guard first field is a pointer to the allocator/sentinel member (&list->last), not the list pointer or a node pointer: this distinction preserves the otherwise missing mr r0,r30. GC/2.6 with -use_lmw_stmw on matches the 176-byte primary function. Extra weak guard destructor EH discards cleanly at full link.
+
+## c9_L1_20261106
+Source: Codex worker c9_L1_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+BootDispatcher 8002DD58..8002F640: genuine C++ reconstruction reaches 96.16123% and exact 6376-byte primary text size. Shared inline frame helper requires inline_max_size(10000)/inline_max_total_size(100000) to expand FinishFrame. CopyFrame must return early from alignment and capacity error branches: this duplicates each scoped timer cleanup naturally, restores the target 208-byte EH action/PC-interval structure, and improves text from 87.83814% to 96.16123%. Remaining register-save range, stack locations, scheduling, and PC offsets differ, so the singleton stays NonMatching; no native gain.

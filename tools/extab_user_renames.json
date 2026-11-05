@@ -11558,5 +11558,11 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__ct__10ItemMsgWndFv": "fn_802325FC"
+  },
+  "src/game/BootDispatcher.cpp": {
+    "__ct__15BootCardManagerFUcii": "card_task_manager_create",
+    "__ct__11BootDisplayFv": "DisplayContext_Init",
+    "__dt__8BootWaitFv": "dtor_8002F978",
+    "__dt__10BootNoticeFv": "dtor_8002F910"
   }
 }

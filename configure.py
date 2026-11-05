@@ -1511,6 +1511,7 @@ config.libs = [
             Object(Matching, "game/ServiceButton_Handler.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Camera.c"),
             Object(Matching, "game/Game_Shutdown.c", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
+            Object(NonMatching, "game/BootDispatcher.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Profiler.c"),
             Object(Matching, "game/Cleanup_DtorMinimal.c"),
             Object(Matching, "game/Profiler_RecordFrame.c"),
