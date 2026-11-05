@@ -6,6 +6,8 @@ struct Zone {
     ZoneVolume *vol;
     unsigned int mask;
     int id;
+
+    unsigned int GetMask() const { return mask; }
 };
 struct ZoneVisibility {
     Zone *zones;
@@ -34,7 +36,7 @@ void fn_80173FA4(ZoneVisibility *self) {
         if (zone->vol) contains = fn_80123480(zone->vol, &pos);
         else contains = 0;
         if (contains) {
-            mask = zone->mask;
+            mask = zone->GetMask();
             for (int i = 0; i < self->count; i++) {
                 HSD_JObj *joint = self->joints[i];
                 if (joint) {

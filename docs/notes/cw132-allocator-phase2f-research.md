@@ -1446,3 +1446,8 @@ c8_s37: MenuScene_Dispatch split y/scale expressions with a cached integer frame
 Source: Codex worker c10_u1_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 JointTracks fn_80240810: extracting the sentinel scan into inline TrackLength fixes first eight channels index/length r5/r7 homes, 99.111115 -> 99.82539. Only final channel keys/cursor r7/r8 swap remains. fn_80240378 remains pure GPR coloring at 98.42262; registration-loop helper extraction and whole-function helper failed to improve. Target JointTask dtor at 80241B3C owns first extab 8001CF04, before first function extab 8001CF0C, so group 802400A4..80241B84 cannot split.
+
+## c12_u12_20261106
+Source: Codex worker c12_u12_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 236 B.
+
+c12_u12: ZoneVisibilityUpdate fn_80173FA4 resolves its r28/r29 mask/array-offset swap by replacing zone->mask with an inline Zone::GetMask() const accessor returning mask. Text236/extab8/index12 all 100%. Named byte-offset induction local regresses to99.20339 and changes initialization/increment ordering. Matching promotion verified source-linked, full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
