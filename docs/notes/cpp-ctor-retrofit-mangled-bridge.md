@@ -779,3 +779,8 @@ c13_u33: fn_801B4548 singleton fresh96.02687 ->96.06223 using TU-local typed map
 Source: Codex worker c13_u34_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u34: BootDispatcher 8002DD58 improves 96.16123 to 98.645546. Inline SetBootColor(BootColor color) restores four 4-byte stack copies, moving RAII locals and conversion scratch to target offsets. Captured BootConfig* plus int disabled before ternary restores configuration-base lifetime and most GPR homes. Done()!=1 recovers mfcr but keeps an extra cmplwi; int Done plus !predicate regresses to98.281685. Nested 20-byte BootState channel assignment is output-invariant. Best source6412 vs target6376 B, saves r20 vs r21 and retains subobject-base, global reload, BootNotice and conversion-cookie relocation residuals. Singleton stays NonMatching. Full fallback-linked DOL SHA-1 OK; no native gain.
+
+## c13_u37_20261106
+Source: Codex worker c13_u37_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u37: debug viewer fn_8015B790 95.6958 ->96.12937 via block-local ModelEntry* models before selected-model call and early return if either viewer pointer is null. This restores explicit model base +0x10c and indexed resource load; early guard restores bne/b pair. Array-argument inline helpers still fold bases; function-scope array pointers add r29/r30 saves. Remaining step base +0x304 and icon base +0x10c folded addressing, icon FP/load scheduling; 1140 vs1144B. Singleton NonMatching; no safe subset. Full fallback-linked DOL SHA-1 OK.

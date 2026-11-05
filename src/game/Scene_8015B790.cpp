@@ -51,7 +51,8 @@ extern "C" void fn_8015B790() {
     if (lbl_806D159C == -1) { if (--selected < 0) selected = 13; }
     if (lbl_806D1594 != selected) {
         lbl_806D1594 = selected;
-        fn_8015BCC4(pool->models[selected].res, pool->models[selected].scale);
+        ModelEntry *models = pool->models;
+        fn_8015BCC4(models[selected].res, models[selected].scale);
         lbl_806D15A4 = lbl_806D85EC;
         lbl_806D15A8 = lbl_806D85EC;
         return;
@@ -69,8 +70,8 @@ extern "C" void fn_8015B790() {
         } else lbl_806D15A0 = 0;
     }
     float step = lbl_806D85EC;
-    if (lbl_806D15A0 == 1 || lbl_806D15A0 == 20) step = pool->steps[lbl_806D1598];
-    if (lbl_806D15A0 == -1 || lbl_806D15A0 == -20) step = -pool->steps[lbl_806D1598];
+    if (lbl_806D15A0 == 1 || lbl_806D15A0 == 20) { float *steps = pool->steps; step = steps[lbl_806D1598]; }
+    if (lbl_806D15A0 == -1 || lbl_806D15A0 == -20) { float *steps = pool->steps; step = -steps[lbl_806D1598]; }
     if (InputMgr_GetPlayer(GetInputManager(),0)->held(0x2000)) step *= lbl_806D85F8;
     if (lbl_806D85EC != step) {
         switch (lbl_806D1598) {
@@ -84,10 +85,12 @@ extern "C" void fn_8015B790() {
     fn_80168EFC(1, lbl_806D860C, lbl_806D8610, lbl_806D8614);
     fn_80168EFC(1, lbl_806D860C, lbl_806D8618, lbl_806D861C);
     fn_80168EFC(1, lbl_806D860C, lbl_806D8620, lbl_806D8624);
-    if (lbl_806D1588 && lbl_806D158C) {
+    if (!lbl_806D1588 || !lbl_806D158C) return;
+    {
         Object_SetJObjPositionX(lbl_806D158C, lbl_806D15A4);
         Object_SetJObjField40(lbl_806D158C, lbl_806D15A8);
-        ModelEntry *entry = &pool->models[lbl_806D1594];
+        ModelEntry *models = pool->models;
+        ModelEntry *entry = &models[lbl_806D1594];
         float size = lbl_806D8628 * entry->iconScale;
         fn_80169040(0, entry->icon, lbl_806D862C, lbl_806D8630, size,size, lbl_806D8634 * -entry->iconY, lbl_806D8638,0);
         void *camera = lbl_806D1588->camera;
