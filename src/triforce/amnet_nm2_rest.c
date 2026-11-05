@@ -1,28 +1,15 @@
 #include <triforce/amnet_priv.h>
 
 static inline void ProbeTraceAdd(u8 op, u8 dir, void* buf, u32 addr, u32 size) {
-    NetTrace* t;
-    u32 n;
-    n = lbl_806D1E44++;
-    t = &lbl_806937C0[n & 7];
-    t->seq = n;
-    t->op = op;
-    t->dir = dir;
-    t->buf = buf;
-    t->addr = addr;
-    t->size = size;
-    memcpy(t->data, buf, 0x20);
-}
-
-static inline void ProbeDevSend(void* buf, u32 addr, u8 id) {
-    if ((lbl_806937C0[0].flags & 1) && id == 0xA9) {
-        ProbeTraceAdd('W', 'R', buf, addr, 0x20);
-    }
-    DevWrite(buf, addr, 0x20);
-    if ((lbl_806937C0[0].flags & 4) && id == 0xA9) {
-        DCInvalidateRange(buf, 0x20);
-        ProbeTraceAdd('W', '2', buf, -1, -1);
-    }
+    u32 n = lbl_806D1E44++;
+    u32 i = n & 7;
+    lbl_806937C0[i].seq = n;
+    lbl_806937C0[i].op = op;
+    lbl_806937C0[i].dir = dir;
+    lbl_806937C0[i].buf = buf;
+    lbl_806937C0[i].addr = addr;
+    lbl_806937C0[i].size = size;
+    memcpy(lbl_806937C0[i].data, buf, 0x20);
 }
 
 static inline void ProbeDevClear(u32 addr, NetDev* dev) {
@@ -35,7 +22,14 @@ static inline void ProbeDevClear(u32 addr, NetDev* dev) {
     if ((lbl_806937C0[0].flags & 2) && id == 0xA9) {
         ProbeTraceAdd('C', 'L', buf, addr, 0x20);
     }
-    ProbeDevSend(buf, addr, id);
+    if ((lbl_806937C0[0].flags & 1) && id == 0xA9) {
+        ProbeTraceAdd('W', 'R', buf, addr, 0x20);
+    }
+    DevWrite(buf, addr, 0x20);
+    if ((lbl_806937C0[0].flags & 4) && id == 0xA9) {
+        DCInvalidateRange(buf, 0x20);
+        ProbeTraceAdd('W', '2', buf, -1, -1);
+    }
 }
 
 
@@ -176,6 +170,7 @@ s32 fn_8028EAA8(u8 id) {
     ProbeDevClear(dev->statAddr, dev);
     switch (dev->kind) {
     default:
+        break;
     case 1:
         break;
     case 2:
