@@ -10688,5 +10688,10 @@
     "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/mapobject/fn_8017A68C.cpp": {
+    "__ct__10SwitchListFPv": "fn_8017A68C",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

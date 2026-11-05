@@ -6832,6 +6832,11 @@ game/mapobject/fn_8017A614.c:
 	extabindex  start:0x800268C4 end:0x800268D0
 	.text       start:0x8017A614 end:0x8017A68C
 
+game/mapobject/fn_8017A68C.cpp:
+	extab       start:0x80011888 end:0x800118B0
+	extabindex  start:0x800268D0 end:0x800268DC
+	.text       start:0x8017A68C end:0x8017AA80
+
 game/mapobject/fn_8017AA80.cpp:
 	extab       start:0x800118B0 end:0x800118B8
 	extabindex  start:0x800268DC end:0x800268E8
@@ -7199,6 +7204,16 @@ game/dlistutil/fn_80183A5C.c:
 	extab       start:0x80011BD0 end:0x80011BD8
 	extabindex  start:0x80026C48 end:0x80026C54
 	.text       start:0x80183A5C end:0x80183CC4
+
+game/dlistutil/fn_80183CC4.c:
+	extab       start:0x80011BD8 end:0x80011BE0
+	extabindex  start:0x80026C54 end:0x80026C60
+	.text       start:0x80183CC4 end:0x80184374
+
+game/dlistutil/fn_80184374.c:
+	extab       start:0x80011BE0 end:0x80011BE8
+	extabindex  start:0x80026C60 end:0x80026C6C
+	.text       start:0x80184374 end:0x801847DC
 
 game/dlistutil/fn_801847DC.c:
 	extab       start:0x80011BE8 end:0x80011BF0
