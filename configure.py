@@ -1480,6 +1480,8 @@ config.libs = [
             Object(Matching, "game/CardCleaningCommand.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CardEjectCommand.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/CardForceBackup.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/CardSaveData_Parser.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/Card_VerifyChecksum.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/CardUnpackV1.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/CardUnpackLegacy.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/InputCmdLifetime.cpp", extab_padding=b"\xc6\x02", extra_cflags=["-Cpp_exceptions on"]),

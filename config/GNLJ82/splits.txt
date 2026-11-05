@@ -2618,10 +2618,20 @@ game/CardPrinterChecker_Draw.c:
 	extabindex  start:0x80021E48 end:0x80021E84
 	.text       start:0x8008F5D4 end:0x8008FA2C
 
+game/CardSaveData_Parser.c:
+	extab       start:0x80009370 end:0x80009378
+	extabindex  start:0x80021E84 end:0x80021E90
+	.text       start:0x8008FA2C end:0x80090174
+
 game/CardUnpackV1.c:
 	extab       start:0x80009378 end:0x80009380
 	extabindex  start:0x80021E90 end:0x80021E9C
 	.text       start:0x80090174 end:0x800903D8
+
+game/Card_VerifyChecksum.c:
+	extab       start:0x80009380 end:0x80009388
+	extabindex  start:0x80021E9C end:0x80021EA8
+	.text       start:0x800903D8 end:0x8009060C
 
 game/CardUnpackLegacy.cpp:
 	extab       start:0x80009388 end:0x800093B0
