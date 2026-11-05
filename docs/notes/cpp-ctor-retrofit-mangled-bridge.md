@@ -514,3 +514,8 @@ fn_801D1D9C (272B) matches natively with a nontrivial copy constructor on its si
 Source: Codex worker c8_s49_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 2356 B.
 
 c8_s49: PathFollower_Init 801DC320 matches 320B native text plus 108B owned EH using canonical PathCursor as a base view, real new FollowerCursor, and a throw() owning pointer member. Weak owner dtor bridges to existing dtor_801DC460 and discards. Update 801DBAA8 uses inline ResetFollower expanded seven times; cooldown global lbl_806D1898 read-only declaration permits load before requested-state store and completes exact 2036B text/272B EH. Both source-linked, ELF addresses/sizes and DOL SHA-1 verified.
+
+## c8_s52_20261105
+Source: Codex worker c8_s52_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c8_s52: AI_SystemInit genuine member-owner constructor/new AIKart gives exact 700-byte operation/branch layout and exact EH PC intervals; remaining this/flag/index/cup register homes prevent promotion. RankingMgr_UpdatePositions uses inline FindLast/FindFirst/Notify to improve 86.79 to 99.13 with exact EH; only final-loop register homes differ. Per-frame scalar Vec initialization avoids CW zero-template rodata copies and improves 83.51 to 89.35; flattening pair loop and retaining driver alongside rank record reaches 93.77. All three retained NonMatching after three hypotheses; full DOL SHA-1 remains exact.

@@ -10996,5 +10996,15 @@
   "src/game/fn_801E68B4.cpp": {
     "__dt__5Vec3cFv": "dtor_80036E40",
     "ApplyIncomingItem__16AIItemControllerFP14AIIncomingItem": "fn_801E68B4"
+  },
+  "src/game/AI_SystemInit.cpp": {
+    "__ct__17AISystemInitOwnerFPvPvi": "AI_SystemInit",
+    "__ct__6AIKartFPviii": "AI_KartInit",
+    "__dt__11AISystemBoxFv": "dtor_801EC388",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/AI_UpdatePerFrameState.cpp": {
+    "__dt__15AIFramePositionFv": "dtor_80036E40"
   }
 }

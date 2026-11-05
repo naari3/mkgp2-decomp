@@ -9938,6 +9938,11 @@ game/AI_PerKartUpdate.cpp:
 	extabindex  start:0x80028A24 end:0x80028A30
 	.text       start:0x801EACA0 end:0x801EADC8
 
+game/AI_UpdatePerFrameState.cpp:
+	extab       start:0x80016B10 end:0x80016B28
+	extabindex  start:0x80028A30 end:0x80028A3C
+	.text       start:0x801EADC8 end:0x801EB708
+
 game/fn_801EB708.c:
 	extab       start:0x80016B28 end:0x80016B38
 	extabindex  start:0x80028A3C end:0x80028A54
@@ -9949,10 +9954,20 @@ game/fn_801EB91C.c:
 	extabindex  start:0x80028A54 end:0x80028A60
 	.text       start:0x801EB91C end:0x801EB99C
 
+game/RankingMgr_UpdatePositions.cpp:
+	extab       start:0x80016B40 end:0x80016B48
+	extabindex  start:0x80028A60 end:0x80028A6C
+	.text       start:0x801EB99C end:0x801EBAF4
+
 game/AI_SystemDtor.cpp:
 	extab       start:0x80016B48 end:0x80016B50
 	extabindex  start:0x80028A6C end:0x80028A78
 	.text       start:0x801EBAF4 end:0x801EBC8C
+
+game/AI_SystemInit.cpp:
+	extab       start:0x80016B50 end:0x80016B84
+	extabindex  start:0x80028A78 end:0x80028A84
+	.text       start:0x801EBC8C end:0x801EBF48
 
 game/ThinkBoxCreate.cpp:
 	extab       start:0x80016B84 end:0x80016BD4
