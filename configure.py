@@ -1651,6 +1651,7 @@ config.libs = [
             Object(Matching, "game/ItemDisplay_Destroy.c"),
             Object(Matching, "game/ItemDisplay_GetOrCreate.c"),
             Object(Matching, "game/ItemSelect.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ItemBox_ProcessPickup.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/ItemSelect_DrawUIHelperIfActive.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemSelect_Pending.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/clItemBox_StepFn_Debris.c"),
@@ -3880,6 +3881,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
     "game/fn_801B1D5C",
+    "game/ItemBox_ProcessPickup",
     "game/HudSelectionUpdate",
     "game/HudFlow",
     "game/PreloadEffectResources",

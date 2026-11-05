@@ -1543,6 +1543,12 @@ game/ItemSelect_DrawUIHelperIfActive.c:
 	extabindex  start:0x80020D80 end:0x80020D8C
 	.text       start:0x800604BC end:0x800604E8
 
+game/ItemBox_ProcessPickup.c:
+	extab       start:0x80007DE0 end:0x80007DE8
+	extabindex  start:0x80020D8C end:0x80020D98
+	.text       start:0x800604E8 end:0x80060D40
+	.data       start:0x803F9DAC end:0x803F9E14
+
 game/ItemSelect.c:
 	extab       start:0x80007DE8 end:0x80007E10
 	extabindex  start:0x80020D98 end:0x80020DBC
