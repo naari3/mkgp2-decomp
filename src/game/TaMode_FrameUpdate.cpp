@@ -13,6 +13,7 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
     }
     float steer = 0.0f;
     float accel, brake;
+    signed char coins;
     signed char started;
     ItemObjectManager_PerFrameUpdate(GetRaceContextPtr());
     if (lbl_806D13B4) fn_8023E324(lbl_806D13B4, __ptmf_test(battle->memberFunction) != 0);
@@ -71,9 +72,9 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
         CoinJumpFlasher_Toggle(g_carObjects[0]);
     fn_8013A534();
     if (lbl_806D13A0) {
-        signed char coins = 0;
+        coins = 0;
         if (lbl_806D1394 < lbl_806D138C) {
-            accel = lbl_806D1388[lbl_806D1394].accel;
+            accel = ((float *)lbl_806D1388)[lbl_806D1394 * 4];
             TaGhostFrame *frame = &lbl_806D1388[lbl_806D1394];
             steer = frame->steer;
             brake = frame->brake;
@@ -196,9 +197,15 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
                 if (lbl_806D13A0) {
                     if (g_finalRacePosition == 0) fn_801D670C(g_playerData);
                 } else {
-                    TaRecord *record = &battle->reverse[g_cupId-1][g_longRoundFlag];
+                    TaRecord (*reverse)[2] = battle->reverse;
+                    int cup = g_cupId - 1;
+                    int round = g_longRoundFlag;
+                    TaRecord *record = &reverse[cup][round];
                     float time = g_totalRaceTime;
-                    if (g_reverseRoundFlag == 0) record = &battle->normal[g_cupId-1][g_longRoundFlag];
+                    if (g_reverseRoundFlag == 0) {
+                        TaRecord (*normal)[2] = battle->normal;
+                        record = &normal[cup][round];
+                    }
                     if (time < record->time) {
                         fn_801D676C(g_playerData);
                         PlayStats_IncTaBestRecord();
