@@ -654,3 +654,8 @@ c10_u28: RankingFlowView::Update singleton 801D1890 retains NM at 97.993805% (12
 Source: Codex worker c10_u29_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c10_u29: RaceDigitUpdate 80246484 state 6 must break into common update tail, not return; jump table becomes exact. Scalar 0/1/1.2/220/599.999 literals remove extra sum constant fmr and FP constant-home differences. Remove stale per-TU @191 jump-table rename because @191 is now the 599.999 literal and postprocess_sdata2 must map it normally. Text 97.90966 -> 98.76636, .data/extab/extabindex 100%; retain NonMatching. Sentinel-based begin reload and shared function-scope loop index fail to recover remaining GPR homes. Full fallback-linked DOL SHA-1 exact.
+
+## c11_a3_20261106
+Source: Codex worker c11_a3_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 7 fn / 4068 B.
+
+c11_a3: SpriteSlot_SetTransform 800D6C20 exact native C requires by-value Vec3 inline setter calling a scalar XYZ inline setter; the latter owns the joint null guard. Direct vector-field call under the null guard changes copies/load scheduling (73.31373%). Nested scalar helper matches text204/EH8/index12 exactly. HUD_RegisterOverlay 80253B14 first lazy-create/early-exit/switch native C trial exact208/EH8/index12. Both source-linked, full coordinator DOL SHA-1 OK. MJObj float conversion remains parked due mr r3,r27 scheduling; CourseTables remains parked because subtable addi folds into load displacement; SceneList insert remains parked due catch/rethrow cleanup and GPR residuals.
