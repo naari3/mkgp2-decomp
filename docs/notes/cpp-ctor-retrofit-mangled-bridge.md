@@ -329,3 +329,8 @@ c5_s4: EnemyFace_nm4 8022BEB4 rescued by a TU-private minimal class view with un
 Source: Codex worker c5_s9_terrainwalled_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 380 B.
 
 TitleNameHud ctor 80252EE4: real empty GlyphText destructor must remain alive through final activation/cull loop. Bridge GlyphText dtor to dtor_800869D0, HudPart dtor to dtor_8021617C, VHolder<FlowFaderF> (length 21) to dtor_801F4A80. Owned EH 128 bytes and index 12 bytes become exact with @140/@141 bridges. Naming cached width w and half-count span fixes fnmsubs operand order; final retained source differs only at +0x358 (mr r23,r22 vs li r23,0). Keep NonMatching.
+
+## c5_s10_anon801fd320_20261105
+Source: Codex worker c5_s10_anon801fd320_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c5_s10 partial: MsgPopup::Tick 80203224 improves 98.234566 -> 99.06584 with named px/py temporaries before each ResCtrl::Show and a separate float yy=s*(base+(float)dy) before y+yy. This restores exact 972-byte primary size and all owned EH/index bytes; extra weak ResCtrl dtor EH remains. FP/GPR allocation is still non-exact. A future promotion also needs .data 804EC3C4..804EC3E0 jump-table ownership/bridge; current source emits @85 while old bridge expects @106. fn_80203C24 explicit pending-busy early return fixes one branch (98.816795 -> 98.854965), but direct pending-r30 hoisting/missing mr and duplicate RTTI/data remain. CardEjectTask body cached pool must precede base call in target; moving array allocation into member initialization or removing the pool cache regresses. No flag flips/native gain.

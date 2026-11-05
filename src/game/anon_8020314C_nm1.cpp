@@ -53,9 +53,17 @@ void MsgPopup::Tick() {
     ctrls[0].SetColor(fn_8020A788(fade.p));
     float off = lbl_806DAABC * s;
     ctrls[1].SetScaleXY(sx, sy);
-    ctrls[1].Show(x + off, y + off, lbl_806DAAAC);
+    {
+        float px = x + off;
+        float py = y + off;
+        ctrls[1].Show(px, py, lbl_806DAAAC);
+    }
     ctrls[2].SetScale(s);
-    ctrls[2].Show(x, y, lbl_806DAAAC);
+    {
+        float px = x;
+        float py = y;
+        ctrls[2].Show(px, py, lbl_806DAAAC);
+    }
     UpdateBadge();
     {
         int i;
@@ -67,7 +75,8 @@ void MsgPopup::Tick() {
         float base = lbl_806DAAC8;
         float ox = lbl_806DAAC4 * s;
         for (i = 0; i < 4; i++, dy += 30) {
-            fn_801F93EC(&texts[i], x + ox, y + s * (base + (float)dy));
+            float yy = s * (base + (float)dy);
+            fn_801F93EC(&texts[i], x + ox, y + yy);
             fn_801F93D0(&texts[i], ts, ts);
         }
     }

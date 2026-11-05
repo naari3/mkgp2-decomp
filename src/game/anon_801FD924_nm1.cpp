@@ -74,29 +74,35 @@ extern "C" int fn_801FDDA4(int code) {
     if (MapCommonCardError(code)) {
         return lbl_806D19D4;
     }
-    switch (code) {
-    case 1:
-        break;
-    case 4:
-        lbl_806D19D4 = 1;
-        break;
-    case 3:
-        if (Sci2Card_GetUnpackStatusCode() == 6) {
-            lbl_806D19D4 = 2;
-        }
-        break;
-    case 103:
-        lbl_806D19D4 = 3;
-        break;
-    case 5:
-        lbl_806D19D4 = 4;
-        break;
-    case 2:
-    default:
-        DebugPrintf(lbl_806DA840, lbl_803BFEF8, 0xD7);
-        card_send_read_cmd_init();
-        lbl_806D19D4 = 9;
-        break;
+    if (code == 5) goto status4;
+    if (code >= 5) {
+        if (code == 103) goto status3;
+        if (code >= 103) goto error;
+        goto error;
     }
+    if (code == 2) goto error;
+    if (code >= 2) {
+        if (code >= 4) goto status1;
+        goto unpack;
+    }
+    if (code >= 1) goto done;
+    goto error;
+status1:
+    lbl_806D19D4 = 1;
+    goto done;
+unpack:
+    if (Sci2Card_GetUnpackStatusCode() == 6) lbl_806D19D4 = 2;
+    goto done;
+status3:
+    lbl_806D19D4 = 3;
+    goto done;
+status4:
+    lbl_806D19D4 = 4;
+    goto done;
+error:
+    DebugPrintf(lbl_806DA840, lbl_803BFEF8, 0xD7);
+    card_send_read_cmd_init();
+    lbl_806D19D4 = 9;
+done:
     return lbl_806D19D4;
 }
