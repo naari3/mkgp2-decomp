@@ -594,3 +594,8 @@ c8_s70: Race digit HUD deleting destructor 80246BD4 matches 528B text +180B EH +
 Source: Codex worker c8_s73_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 728 B.
 
 RaceHud 80249054/80249130/80249274 native text/EH exact. Update input processing needs branch-local InputState *in=g_pInputState followed by CGameCoin_ProcessInput(in == 0 ? (InputState *)0 : in), matching existing CardModeRoot idiom. Direct GetInput() argument collapses a branch. Destroy uses canonical HudDisplayFlags::SetOther(0) to avoid zero constant hoisting across singleton accessor, recovering exact r30/r31/frame10. Draw ternary new ItemMsgWnd uses extab padding C6 02. Adjustment thunk 8024904C retained NM.
+
+## c8_s71_20261105
+Source: Codex worker c8_s71_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 472 B.
+
+fn_80247CFC float-list insert: inline RAII allocation guard + real placement new of float produces the target stack anchor (stw r1) and unreachable cleanup call without manual EH. Guard must die before the loop decrement. The guard first field is a pointer to the allocator/sentinel member (&list->last), not the list pointer or a node pointer: this distinction preserves the otherwise missing mr r0,r30. GC/2.6 with -use_lmw_stmw on matches the 176-byte primary function. Extra weak guard destructor EH discards cleanly at full link.

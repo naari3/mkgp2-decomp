@@ -12349,6 +12349,22 @@ game/RaceDigitListInsert.cpp:
 game/RaceDigitListInit.cpp:
 	.text       start:0x80247CE4 end:0x80247CFC
 
+game/RaceFloatListInsert.cpp:
+	extab       start:0x8001DA44 end:0x8001DA4C
+	extabindex  start:0x8002B304 end:0x8002B310
+	.text       start:0x80247CFC end:0x80247DAC
+
+game/RaceDigitPositions.cpp:
+	extab       start:0x8001DA4C end:0x8001DA54
+	extabindex  start:0x8002B310 end:0x8002B31C
+	.text       start:0x80247DAC end:0x80248028
+	.ctors      start:0x802E8960 end:0x802E8964
+
+game/RaceHudTransition.cpp:
+	extab       start:0x8001DA54 end:0x8001DA64
+	extabindex  start:0x8002B31C end:0x8002B334
+	.text       start:0x80248028 end:0x80248150
+
 game/HudModeDestroy.cpp:
 	extab       start:0x8001DA64 end:0x8001DA6C
 	extabindex  start:0x8002B334 end:0x8002B340
