@@ -1,110 +1,69 @@
-/* === extracted from auto_03_8005E330_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+/* Advance all 15 item-box debris particles; deactivate the burst once every
+ * particle has expired. Returns nonzero when the burst is (now) inactive. */
+typedef struct DebrisParticle {
+    float pos[3];   /* 0x00 */
+    float vel[3];   /* 0x0C */
+    float fallVel;  /* 0x18 */
+    float life;     /* 0x1C */
+    float pad20;    /* 0x20 */
+    float rotX;     /* 0x24 */
+    float rotY;     /* 0x28 */
+} DebrisParticle;
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D29A8;
-extern unsigned int lbl_806D29B0;
-extern unsigned int lbl_806D29B4;
-extern unsigned int lbl_806D29B8;
-extern unsigned int lbl_806D29BC;
-extern unsigned int lbl_806D29C0;
+typedef struct DebrisBurst {
+    unsigned char active;          /* 0x00 */
+    unsigned char pad01[0x3];
+    DebrisParticle particles[15];  /* 0x04 */
+} DebrisBurst;
 
-/* --- function index (1 fns, .text 0x8005E330..0x8005E46C) ---
- * [  0] 0x8005E330 size:0x13C   global clItemBoxResponder_TickDebris
- */
+typedef struct clItemBoxResponder {
+    DebrisBurst *debris;           /* 0x00 */
+} clItemBoxResponder;
 
-/* --- forward decls --- */
-asm void clItemBoxResponder_TickDebris(void);
+static inline unsigned char DebrisParticle_Tick(DebrisParticle *p)
+{
+    p->life -= 0.016666668f;
+    if (p->life < 0.0f) {
+        return 0;
+    }
+    p->fallVel -= 0.11f;
+    if (p->fallVel < -0.75f) {
+        p->fallVel = -0.75f;
+    }
+    p->vel[1] += p->fallVel;
+    p->pos[0] += p->vel[0];
+    p->pos[1] += p->vel[1];
+    p->pos[2] += p->vel[2];
+    p->vel[0] *= 0.999f;
+    p->vel[1] *= 0.999f;
+    p->vel[2] *= 0.999f;
+    p->rotX += 0.10471976f;
+    p->rotY += 0.10471976f;
+    return 1;
+}
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void clItemBoxResponder_TickDebris(void) { /* 0x8005E330 size:0x13C */
-    nofralloc
-    lwz r4, 0x0(r3)
-    lbz r0, 0x0(r4)
-    cmplwi r0, 0x0
-    bne clItemBoxResponder_TickDebris_L_8005E348
-    li r0, 0x0
-    b clItemBoxResponder_TickDebris_L_8005E45C
-    clItemBoxResponder_TickDebris_L_8005E348:
-    li r0, 0xf
-    mr r5, r4
-    lfs f0, lbl_806D29B0(r2)
-    li r3, 0x0
-    lfs f5, lbl_806D29A8(r2)
-    mtctr r0
-    clItemBoxResponder_TickDebris_L_8005E360:
-    lfs f1, 0x20(r5)
-    fsubs f1, f1, f0
-    stfs f1, 0x20(r5)
-    lfs f1, 0x20(r5)
-    fcmpo cr0, f1, f5
-    bge clItemBoxResponder_TickDebris_L_8005E380
-    li r0, 0x0
-    b clItemBoxResponder_TickDebris_L_8005E42C
-    clItemBoxResponder_TickDebris_L_8005E380:
-    lfs f3, 0x1c(r5)
-    lfs f2, lbl_806D29B4(r2)
-    lfs f1, lbl_806D29B8(r2)
-    fsubs f2, f3, f2
-    stfs f2, 0x1c(r5)
-    lfs f2, 0x1c(r5)
-    fcmpo cr0, f2, f1
-    bge clItemBoxResponder_TickDebris_L_8005E3A4
-    stfs f1, 0x1c(r5)
-    clItemBoxResponder_TickDebris_L_8005E3A4:
-    lfs f2, 0x14(r5)
-    li r0, 0x1
-    lfs f1, 0x1c(r5)
-    lfs f3, lbl_806D29BC(r2)
-    fadds f1, f2, f1
-    lfs f2, lbl_806D29C0(r2)
-    stfs f1, 0x14(r5)
-    lfs f4, 0x4(r5)
-    lfs f1, 0x10(r5)
-    fadds f1, f4, f1
-    stfs f1, 0x4(r5)
-    lfs f4, 0x8(r5)
-    lfs f1, 0x14(r5)
-    fadds f1, f4, f1
-    stfs f1, 0x8(r5)
-    lfs f4, 0xc(r5)
-    lfs f1, 0x18(r5)
-    fadds f1, f4, f1
-    stfs f1, 0xc(r5)
-    lfs f1, 0x10(r5)
-    fmuls f1, f1, f3
-    stfs f1, 0x10(r5)
-    lfs f1, 0x14(r5)
-    fmuls f1, f1, f3
-    stfs f1, 0x14(r5)
-    lfs f1, 0x18(r5)
-    fmuls f1, f1, f3
-    stfs f1, 0x18(r5)
-    lfs f1, 0x28(r5)
-    fadds f1, f1, f2
-    stfs f1, 0x28(r5)
-    lfs f1, 0x2c(r5)
-    fadds f1, f1, f2
-    stfs f1, 0x2c(r5)
-    clItemBoxResponder_TickDebris_L_8005E42C:
-    clrlwi r0, r0, 24
-    cmplwi r0, 0x1
-    bne clItemBoxResponder_TickDebris_L_8005E43C
-    addi r3, r3, 0x1
-    clItemBoxResponder_TickDebris_L_8005E43C:
-    addi r5, r5, 0x2c
-    bdnz clItemBoxResponder_TickDebris_L_8005E360
-    cmpwi r3, 0x0
-    bgt clItemBoxResponder_TickDebris_L_8005E458
-    li r0, 0x0
-    stb r0, 0x0(r4)
-    b clItemBoxResponder_TickDebris_L_8005E45C
-    clItemBoxResponder_TickDebris_L_8005E458:
-    li r0, 0x1
-    clItemBoxResponder_TickDebris_L_8005E45C:
-    clrlwi r0, r0, 24
-    cntlzw r0, r0
-    extrwi r3, r0, 8, 19
-    blr
+static inline unsigned char DebrisBurst_Tick(DebrisBurst *self)
+{
+    int alive;
+    int i;
+
+    if (self->active == 0) {
+        return 0;
+    }
+    alive = 0;
+    for (i = 0; i < 15; i++) {
+        if (DebrisParticle_Tick(&self->particles[i]) == 1) {
+            alive++;
+        }
+    }
+    if (alive <= 0) {
+        self->active = 0;
+        return 0;
+    }
+    return 1;
+}
+
+unsigned char clItemBoxResponder_TickDebris(clItemBoxResponder *self)
+{
+    return DebrisBurst_Tick(self->debris) == 0;
 }

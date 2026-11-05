@@ -1,180 +1,110 @@
-/* === extracted from auto_KartDriver_Dtor_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void Archive_GetRootJObj();
-extern void ISESlot_Dtor();
-extern void KartTireFX_Dtor();
-extern void MemoryManager_TimedFree();
-extern void Object_DtorWithGXSync();
-extern void RaceSlot_SetDriverPtr();
-extern void SceneRender_CmdA_8a9e8();
-extern void dtor_80091284();
-extern void fn_80173CC4();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int g_raceCamera;
-
-/* --- function index (1 fns, .text 0x80045950..0x80045B50) ---
- * [  0] 0x80045950 size:0x200   global KartDriver_Dtor
+/*
+ * KartDriver destructor (0x80045950, 0x200). Releases the kart's scene
+ * objects, effect slots and polymorphic helpers, unbinds the race slot and
+ * frees the driver when called as a deleting destructor (flags > 0).
+ * Compiled as C++ (the helpers are deleted through their virtual dtor).
  */
+#pragma cplusplus on
 
-/* --- forward decls --- */
-asm void KartDriver_Dtor(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_KartDriver_Dtor[8] = {
-    0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+class KartHelper {
+public:
+    virtual ~KartHelper();
 };
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_KartDriver_Dtor = {
-    (void *)&KartDriver_Dtor, 0x00000200, (void *)extab_KartDriver_Dtor
-};
+typedef struct KartDriver {
+    void *body;              /* 0x000 */
+    void *shadow;            /* 0x004 */
+    void *wheels;            /* 0x008 */
+    void *obj0C;             /* 0x00C */
+    void *obj10;             /* 0x010 */
+    void *obj14;             /* 0x014 */
+    void *model;             /* 0x018 */
+    void *obj1C;             /* 0x01C */
+    void *obj20;             /* 0x020 */
+    void *parts[49];         /* 0x024 */
+    char pad0E8[0x248 - 0x0E8];
+    void *raceSlot;          /* 0x248 */
+    char pad24C[0x29C - 0x24C];
+    void *obj29C;            /* 0x29C */
+    char pad2A0[0x2DC - 0x2A0];
+    void *seSlots[10];       /* 0x2DC */
+    void *obj304;            /* 0x304 */
+    char pad308[0x30C - 0x308];
+    void *tireFx;            /* 0x30C */
+    char pad310[0x32C - 0x310];
+    void *buf32C;            /* 0x32C */
+    char pad330[0x344 - 0x330];
+    void *buf344;            /* 0x344 */
+    char pad348[0x35C - 0x348];
+    KartHelper *helper35C;   /* 0x35C */
+    KartHelper *helper360;   /* 0x360 */
+    char pad364[0x378 - 0x364];
+    KartHelper *helper378;   /* 0x378 */
+    char pad37C[0x380 - 0x37C];
+    KartHelper *helper380;   /* 0x380 */
+} KartDriver;
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void KartDriver_Dtor(void) { /* 0x80045950 size:0x200 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    stw r29, 0x14(r1)
-    mr r29, r4
-    stw r28, 0x10(r1)
-    mr. r28, r3
-    beq KartDriver_Dtor_L_80045B2C
-    lwz r31, g_raceCamera(r13)
-    cmplwi r31, 0x0
-    beq KartDriver_Dtor_L_800459A0
-    lwz r3, 0x18(r28)
-    cmplwi r3, 0x0
-    beq KartDriver_Dtor_L_800459A0
-    bl Archive_GetRootJObj
-    mr r4, r3
-    mr r3, r31
-    bl SceneRender_CmdA_8a9e8
-    KartDriver_Dtor_L_800459A0:
-    lwz r3, 0x8(r28)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    lwz r3, 0x4(r28)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    lwz r3, 0x0(r28)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    lwz r3, 0xc(r28)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    lwz r3, 0x10(r28)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    lwz r3, 0x14(r28)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    lwz r3, 0x29c(r28)
-    li r4, 0x1
-    bl fn_80173CC4
-    lwz r3, 0x304(r28)
-    li r4, 0x1
-    bl dtor_80091284
-    lwz r3, 0x18(r28)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    lwz r3, 0x30c(r28)
-    li r4, 0x1
-    bl KartTireFX_Dtor
-    lwz r3, 0x32c(r28)
-    bl MemoryManager_TimedFree
-    lwz r3, 0x20(r28)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    lwz r3, 0x344(r28)
-    bl MemoryManager_TimedFree
-    lwz r3, 0x35c(r28)
-    cmplwi r3, 0x0
-    beq KartDriver_Dtor_L_80045A54
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    KartDriver_Dtor_L_80045A54:
-    lwz r3, 0x360(r28)
-    cmplwi r3, 0x0
-    beq KartDriver_Dtor_L_80045A74
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    KartDriver_Dtor_L_80045A74:
-    lwz r3, 0x378(r28)
-    cmplwi r3, 0x0
-    beq KartDriver_Dtor_L_80045A94
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    KartDriver_Dtor_L_80045A94:
-    lwz r3, 0x380(r28)
-    cmplwi r3, 0x0
-    beq KartDriver_Dtor_L_80045AB4
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    KartDriver_Dtor_L_80045AB4:
-    li r30, 0x0
-    mr r31, r28
-    KartDriver_Dtor_L_80045ABC:
-    lwz r3, 0x2dc(r31)
-    li r4, 0x1
-    bl ISESlot_Dtor
-    addi r30, r30, 0x1
-    addi r31, r31, 0x4
-    cmpwi r30, 0xa
-    blt KartDriver_Dtor_L_80045ABC
-    li r30, 0x0
-    mr r31, r28
-    KartDriver_Dtor_L_80045AE0:
-    lwz r3, 0x24(r31)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    addi r30, r30, 0x1
-    addi r31, r31, 0x4
-    cmpwi r30, 0x31
-    blt KartDriver_Dtor_L_80045AE0
-    lwz r3, 0x1c(r28)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    li r0, 0x0
-    li r4, 0x0
-    stw r0, 0x1c(r28)
-    lwz r3, 0x248(r28)
-    bl RaceSlot_SetDriverPtr
-    extsh. r0, r29
-    ble KartDriver_Dtor_L_80045B2C
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    KartDriver_Dtor_L_80045B2C:
-    lwz r0, 0x24(r1)
-    mr r3, r28
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+extern "C" {
+void *Archive_GetRootJObj(void *obj);
+void ISESlot_Dtor(void *slot, int flags);
+void KartTireFX_Dtor(void *fx, int flags);
+void MemoryManager_TimedFree(void *p);
+void Object_DtorWithGXSync(void *obj, int flags);
+void RaceSlot_SetDriverPtr(void *slot, KartDriver *driver);
+void SceneRender_CmdA_8a9e8(void *camera, void *jobj);
+void dtor_80091284(void *obj, int flags);
+void fn_80173CC4(void *obj, int flags);
+
+extern void *g_raceCamera;
 }
 
+static inline void KartDriver_DetachModel(KartDriver *self)
+{
+    void *camera = g_raceCamera;
+    if (camera != 0 && self->model != 0) {
+        SceneRender_CmdA_8a9e8(camera, Archive_GetRootJObj(self->model));
+    }
+}
+
+#pragma exceptions on
+
+extern "C" KartDriver *KartDriver_Dtor(KartDriver *self, short flags)
+{
+    int i;
+
+    if (self != 0) {
+        KartDriver_DetachModel(self);
+        Object_DtorWithGXSync(self->wheels, 1);
+        Object_DtorWithGXSync(self->shadow, 1);
+        Object_DtorWithGXSync(self->body, 1);
+        Object_DtorWithGXSync(self->obj0C, 1);
+        Object_DtorWithGXSync(self->obj10, 1);
+        Object_DtorWithGXSync(self->obj14, 1);
+        fn_80173CC4(self->obj29C, 1);
+        dtor_80091284(self->obj304, 1);
+        Object_DtorWithGXSync(self->model, 1);
+        KartTireFX_Dtor(self->tireFx, 1);
+        MemoryManager_TimedFree(self->buf32C);
+        Object_DtorWithGXSync(self->obj20, 1);
+        MemoryManager_TimedFree(self->buf344);
+        delete self->helper35C;
+        delete self->helper360;
+        delete self->helper378;
+        delete self->helper380;
+        for (i = 0; i < 10; i++) {
+            ISESlot_Dtor(self->seSlots[i], 1);
+        }
+        for (i = 0; i < 49; i++) {
+            Object_DtorWithGXSync(self->parts[i], 1);
+        }
+        Object_DtorWithGXSync(self->obj1C, 1);
+        self->obj1C = 0;
+        RaceSlot_SetDriverPtr(self->raceSlot, 0);
+        if (flags > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
+}
+
+#pragma exceptions reset

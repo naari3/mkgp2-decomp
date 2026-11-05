@@ -22,20 +22,17 @@
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int gResTableCacheIdx;
 extern unsigned int gResTableCacheKey;
-extern unsigned int g_ccClass;
-extern unsigned int lbl_806D6DE0;
+extern int g_ccClass;
+extern const char *const lbl_806D6DE0;
 extern unsigned int lbl_806D6E0C;
 extern unsigned int lbl_806D6E10;
-extern unsigned int lbl_806D6E40;
-extern unsigned int lbl_806D6E44;
-extern unsigned int lbl_806D6E48;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 extern unsigned int kResourcePathTable[];
 extern unsigned int kResourceTableExt[];
 extern unsigned int kResourceTableMain[];
 extern unsigned int lbl_80355018[];
-extern unsigned int lbl_80355068;
+extern const char *lbl_80355068[];
 
 /* --- forward decls --- */
 unsigned char ResourceTable_GetFlagsByte(int id);
@@ -44,11 +41,10 @@ short ResourceTable_GetChainNextId(int id);
 void ResourceTable_GetSizeXY(int id, float *out_x, float *out_y);
 void ResourceTable_GetOffsetXY(int id, float *outX, float *outY);
 short ResourceTable_GetSlotIndex(int id);
-asm void fn_801228D4(void);
+const char *fn_801228D4(int id);
 const char *ResourceTable_GetFilePathPtr(int id);
 short ResourceTable_GetGroupKey(int id);
 int IsValidResourceId(int id);
-asm void NokoNokoChallenge_HandleBrakeInput(void);
 
 /* --- asm function bodies (.text order = fn address order) --- */
 typedef struct ResourceTableEntry {
@@ -294,76 +290,43 @@ check_entry:
     return -1;
 }
 
-asm void fn_801228D4(void) {
-    nofralloc
-    cmpwi r3, 0x2b00
-    bge fn_801228D4_L_801229A8
-    lwz r0, gResTableCacheKey(r13)
-    cmpw r3, r0
-    bne fn_801228D4_L_80122920
-    cmpwi r3, 0x2b00
-    bge fn_801228D4_L_80122908
-    lwz r4, gResTableCacheIdx(r13)
-    lis r3, kResourceTableMain@ha
-    addi r0, r3, kResourceTableMain@l
-    mulli r3, r4, 0x28
-    add r0, r0, r3
-    b fn_801228D4_L_80122990
-    fn_801228D4_L_80122908:
-    lwz r4, gResTableCacheIdx(r13)
-    lis r3, kResourceTableExt@ha
-    addi r0, r3, kResourceTableExt@l
-    mulli r3, r4, 0x28
-    add r0, r0, r3
-    b fn_801228D4_L_80122990
-    fn_801228D4_L_80122920:
-    cmpwi r3, 0x2b00
-    bge fn_801228D4_L_80122944
-    mulli r5, r3, 0x28
-    lis r4, kResourceTableMain@ha
-    stw r3, gResTableCacheIdx(r13)
-    addi r0, r4, kResourceTableMain@l
-    stw r3, gResTableCacheKey(r13)
-    add r0, r0, r5
-    b fn_801228D4_L_80122990
-    fn_801228D4_L_80122944:
-    lis r4, kResourceTableExt@ha
-    li r0, 0x4
-    addi r4, r4, kResourceTableExt@l
-    li r6, 0x0
-    mtctr r0
-    fn_801228D4_L_80122958:
-    lha r0, 0x0(r4)
-    cmpw r3, r0
-    bne fn_801228D4_L_80122980
-    mulli r5, r6, 0x28
-    lis r4, kResourceTableExt@ha
-    stw r3, gResTableCacheKey(r13)
-    addi r0, r4, kResourceTableExt@l
-    stw r6, gResTableCacheIdx(r13)
-    add r0, r0, r5
-    b fn_801228D4_L_80122990
-    fn_801228D4_L_80122980:
-    addi r4, r4, 0x28
-    addi r6, r6, 0x1
-    bdnz fn_801228D4_L_80122958
-    li r0, 0x0
-    fn_801228D4_L_80122990:
-    cmplwi r0, 0x0
-    beq fn_801228D4_L_801229A0
-    lwz r3, lbl_806D6DE0(r2)
-    blr
-    fn_801228D4_L_801229A0:
-    li r3, 0x0
-    blr
-    fn_801228D4_L_801229A8:
-    lis r4, lbl_80355068@ha
-    slwi r0, r3, 2
-    addi r3, r4, lbl_80355068@l
-    subis r3, r3, 0x1
-    add r3, r3, r0
-    lwz r3, 0x5400(r3)
-    blr
+const char *fn_801228D4(int id) {
+    ResourceTableEntry *entry;
+    ResourceTableEntry *p;
+    int i;
+
+    if (id < 0x2b00) {
+        if (id == (int)gResTableCacheKey) {
+            if (id < 0x2b00) {
+                entry = &((ResourceTableEntry *)kResourceTableMain)[gResTableCacheIdx];
+            } else {
+                entry = &((ResourceTableEntry *)kResourceTableExt)[gResTableCacheIdx];
+            }
+        } else if (id < 0x2b00) {
+            gResTableCacheIdx = id;
+            gResTableCacheKey = id;
+            entry = &((ResourceTableEntry *)kResourceTableMain)[id];
+        } else {
+            p = (ResourceTableEntry *)kResourceTableExt;
+            for (i = 0; i < 4; i++) {
+                if (id == p->id) {
+                    gResTableCacheKey = id;
+                    gResTableCacheIdx = i;
+                    entry = &((ResourceTableEntry *)kResourceTableExt)[i];
+                    goto check_entry;
+                }
+                p++;
+            }
+            entry = 0;
+        }
+
+    check_entry:
+        if (entry != 0) {
+            return lbl_806D6DE0;
+        }
+        return 0;
+    }
+    return lbl_80355068[id - 0x2b00];
 }
 
 const char *ResourceTable_GetFilePathPtr(int id) {
@@ -450,33 +413,20 @@ int IsValidResourceId(int id) {
     return 0;
 }
 
-asm void NokoNokoChallenge_HandleBrakeInput(void) {
-    nofralloc
-    clrlwi. r0, r4, 24
-    beq NokoNokoChallenge_HandleBrakeInput_L_80122BC4
-    lwz r0, g_ccClass(r13)
-    cmpwi r0, 0x2
-    bne NokoNokoChallenge_HandleBrakeInput_L_80122BD4
-    NokoNokoChallenge_HandleBrakeInput_L_80122BC4:
-    lfs f0, lbl_806D6E40(r2)
-    stfs f0, 0x4(r3)
-    li r3, 0x0
-    blr
-    NokoNokoChallenge_HandleBrakeInput_L_80122BD4:
-    lfs f2, 0x4(r3)
-    lfs f1, lbl_806D6E44(r2)
-    lfs f0, lbl_806D6E48(r2)
-    fadds f1, f2, f1
-    stfs f1, 0x4(r3)
-    lfs f1, 0x4(r3)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne NokoNokoChallenge_HandleBrakeInput_L_80122C04
-    stfs f0, 0x4(r3)
-    li r3, 0x1
-    blr
-    NokoNokoChallenge_HandleBrakeInput_L_80122C04:
-    li r3, 0x0
-    blr
-}
+typedef struct BrakeHoldState {
+    char pad00[0x4];
+    float holdTime; /* 0x04 */
+} BrakeHoldState;
 
+unsigned char NokoNokoChallenge_HandleBrakeInput(BrakeHoldState *self, unsigned char brake) {
+    if (!brake || g_ccClass == 2) {
+        self->holdTime = 0.0f;
+        return 0;
+    }
+    self->holdTime += 0.016666668f;
+    if (self->holdTime >= 4.0f) {
+        self->holdTime = 4.0f;
+        return 1;
+    }
+    return 0;
+}
