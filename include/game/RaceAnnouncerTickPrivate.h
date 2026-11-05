@@ -32,7 +32,8 @@ static inline float TickRemaining(VoiceClip *clips) {
     int i;
     if (g_voiceQueueHead != 0) {
         for (i = g_voiceQueueTail; i < g_voiceQueueHead; i++) {
-            remaining += clips[g_voiceQueue[i].id].length;
+            /* Keep the clip base separate from the indexed byte offset. */
+            remaining += *(float *)((unsigned int)clips + g_voiceQueue[i].id * sizeof(VoiceClip) + 4);
         }
         remaining -= (float)OSTicksToMilliseconds(g_voiceStreamLastPollTime - g_voiceStreamStartTime) / 1000.0f;
         if (remaining < 0.0f) remaining = 0.0f;
