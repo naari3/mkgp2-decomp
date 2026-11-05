@@ -138,3 +138,8 @@ c10_u23: fn_8023A148 improved 98.08068 -> 99.1687 by replacing return-value tern
 Source: Codex worker c10_u25_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c10_u25: AI_CalcGPTargetSpeed 801EA6F0 improves 99.06593 to 99.34066 with TU-local numeric-literal SetSpeed/InitialSpeed helpers and lap declared before rank in inline LapBonus (assign rank before lap). Initial-speed FP scratch instructions and lap rank/lap register homes become exact. Rank-follow helper extraction fails auto-inline and regresses to 46.008244; reverted. Residual cup/round arg-home coalescing, scan volatile register homes, FollowBonus conversion/multiplier FP homes, and final render rank r25/r26. Single function retained NonMatching; full coordinator build SHA-1 OK, no native gain.
+
+## c10_u26_20261106
+Source: Codex worker c10_u26_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c10_u26: fn_8019C15C improves 99.67836 to99.9269 by direct compression = corner->y - h with literal-zero compares and direct v194.y += lbl_806D96D4 plus literal-zero clamp. Removes scalar z/cy/one/value webs; suspension/clamp instruction identities become exact. Inline CopyUp worsens zero/up FP homes; real InitVec ctor shifts stack slots/EH. Residual only initial uy=f0 vs target f2 / ux=f2 vs target f0 (five instructions). Keep named increment: literal1.0f anonymous @116 collides with existing per-TU EH rename. Remains NonMatching; source objdiff owned EH/index100 and fallback full DOL SHA-1 OK.

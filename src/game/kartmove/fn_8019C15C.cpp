@@ -66,24 +66,21 @@ extern "C" void fn_8019C15C(MovementInit *k) {
         h = lbl_806D96D0;
         if (Terrain_GetGroundHeightWithPenetration(corner, &h, &n, 0, lbl_806D9744) == 1) {
             if (!inverted) {
-                float cy;
-                float z;
-                z = lbl_806D96D0; cy = corner->y;
-                compression = cy - h;
-                if (compression >= z) {
+                compression = corner->y - h;
+                if (compression >= 0.0f) {
                     if (compression > lbl_804963F8[i >> 1].limit) {
                         compression = lbl_804963F8[i >> 1].limit;
                         k->flags[i] = 0;
                         h = corner->y;
                     } else {
                         contact = 1;
-                        if (n.y > lbl_806D96D0) {
+                        if (n.y > 0.0f) {
                             k->v1a0.x += n.x;
                             k->v1a0.y += n.y;
                             k->v1a0.z += n.z;
                         }
                     }
-                } else { compression = lbl_806D96D0; contact = 1; }
+                } else { compression = 0.0f; contact = 1; }
             } else {
                 compression = lbl_804963F8[i >> 1].limit;
                 float clearance = lbl_806D9748 * LUT_Cosine(lbl_806D974C * up.y);
@@ -105,10 +102,8 @@ extern "C" void fn_8019C15C(MovementInit *k) {
     }
     for (int j = 0; j < 4; j++) ((Vec3 *)&k->elems[j])->y += lift;
     if (contact == 1) {
-        float one, z, value;
-        value = k->v194.y; one = lbl_806D96D4; z = lbl_806D96D0;
-        k->v194.y = value + one;
-        if (k->v194.y > z) k->v194.y = z;
+        k->v194.y += lbl_806D96D4;
+        if (k->v194.y > 0.0f) k->v194.y = 0.0f;
     }
     float len = k->v1a0.z*k->v1a0.z + (k->v1a0.x*k->v1a0.x + k->v1a0.y*k->v1a0.y);
     KART_SPEED_ROOT(len);
