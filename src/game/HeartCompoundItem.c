@@ -1,72 +1,77 @@
-
-/* sdata symbols referenced from asm */
-extern unsigned char lbl_8032F580[21];
-extern void Effect_KartAuraCompound_Update(void);
-extern unsigned char lbl_804216F8[12];
-extern unsigned char lbl_8041FF60[1108];
-extern unsigned char lbl_80421704[12];
-extern void Effect_KartGlow_Update(void);
-extern unsigned char lbl_806CF3C8[4];
-extern unsigned char lbl_806CF3CC[4];
-extern unsigned char lbl_806CF3D0[4];
-extern unsigned char lbl_806CF3D4[4];
-extern unsigned char lbl_806CF3D8[8];
-extern unsigned char lbl_806D6060[4];
-extern unsigned char lbl_806D6064[4];
-extern unsigned char lbl_806D6068[4];
-extern unsigned char lbl_806D606C[4];
-extern unsigned char lbl_806D6070[4];
-extern unsigned char lbl_806D6074[4];
-extern unsigned char lbl_806D6078[8];
-extern unsigned char lbl_806D6080[4];
-extern unsigned char lbl_806D6084[4];
-
 /*
- * HeartCompoundItem @ 0x800F2620..0x800F2D60 (unit-claim #23).
+ * HeartCompoundItem @ 0x800F2620..0x800F2D60.
  *
- * Exact asm_fn park for the complete three-member unit. The target contains
- * exception metadata for each member; the orchestrator must apply the single
- * TU split and emit the corresponding extab/extabindex entries before build.
+ * Held "heart" compound item. Update drives a three-state machine
+ * (spawn / active / release); while active it alternates between the carry
+ * phase (item orbits above the holder's kart) and the release phase (glow
+ * effects on every other kart holding an item, then the item drifts away).
+ * `st` is the per-item state block at self + 0xEC.
  */
 
-asm void HeartCompoundItem_TickReleasePhase(void);
-asm void HeartCompoundItem_TickCarryPhase(void);
-asm void HeartCompoundItem_Update(void);
+typedef struct Vec3 {
+    float x, y, z;
+} Vec3;
 
-/* Inline asm branch targets must be declared for mwcceppc's assembler pass. */
-extern void BuildOrientationFromYaw();
-extern void DrawEffect_SpawnDirect();
-extern void Effect_CompoundRing_PlaceChildren();
-extern void FinalLapCoinJump_CheckActiveForObject();
-extern void sin();
-extern void GetRaceContextPtr();
-extern void Item_DecayVelocityScalar();
-extern void Item_RenderHandheldByCharacter();
-extern void ItemObject_DispatchVtable18_GetState();
-extern void JointByName_GetLocalMatrix4x3();
-extern void KartDriver_GetKartRootMtx();
-extern void KartMovement_GetCurrentItemId();
-extern void Mtx_TransposeToMtx44();
-extern void Mtx44_GetYawOfPosZ();
-extern void Mtx44_GetYawOfPosZ_Padded();
-extern void Mtx44_Inverse_GaussJordan();
-extern void Mtx44_TransformVec3();
-extern void RaceContextSlot_GetIfAlive();
-extern void SpriteSlot_Container_Free();
-extern void SpriteSlot_InitNonLoop();
-extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed();
-extern void SpriteSlot_SetTransform();
-extern void SpriteSlot_TickAnim();
+typedef float Mtx44[4][4];
+typedef float Mtx34[3][4];
 
-/* Manual exception metadata. postprocess_extab_user.py renames these
- * .extab_user/.extabindex_user sections and symbols after compilation. */
+extern float BuildOrientationFromYaw(float yaw);
+extern char *DrawEffect_SpawnDirect(void (*fn)(char *));
+extern void Effect_CompoundRing_PlaceChildren(char *ring, Mtx34 *m, float yaw, float scale, float alpha);
+extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
+extern double sin(double x);
+extern void *GetRaceContextPtr(void);
+extern void Item_DecayVelocityScalar(char *item, float k);
+extern void Item_RenderHandheldByCharacter(char *item, Vec3 ofs, Vec3 rot, int flag, float scale);
+extern void ItemObject_DispatchVtable18_GetState(void *kart);
+extern void JointByName_GetLocalMatrix4x3(Mtx34 *out, void *slot, const char *name);
+extern void *KartDriver_GetKartRootMtx(void *kart);
+extern int KartMovement_GetCurrentItemId(void *kart);
+extern void Mtx_TransposeToMtx44(Mtx44 *dst, void *src);
+extern float Mtx44_GetYawOfPosZ(Mtx44 *m);
+extern float Mtx44_GetYawOfPosZ_Padded(void *m);
+extern void Mtx44_Inverse_GaussJordan(Mtx44 *dst, Mtx44 *src);
+extern void Mtx44_TransformVec3(void *out, Mtx44 m, Vec3 v);
+extern int *RaceContextSlot_GetIfAlive(void *ctx, int idx);
+extern void SpriteSlot_Container_Free(char *item);
+extern void SpriteSlot_InitNonLoop(void *slot, unsigned char id);
+extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int enable);
+extern void SpriteSlot_SetTransform(void *slot, Vec3 pos, Vec3 rot, float scale);
+extern void SpriteSlot_TickAnim(void *slot);
+extern void Effect_KartAuraCompound_Update(char *self);
+extern void Effect_KartGlow_Update(char *self);
+
+extern const char lbl_8032F580[];
+extern Vec3 lbl_804216F8;
+extern Vec3 lbl_80421704;
+extern int lbl_806CF3C8;
+extern float lbl_806CF3CC;
+extern float lbl_806CF3D0;
+extern float lbl_806CF3D4;
+extern float lbl_806CF3D8;
+extern const float lbl_806D6060;
+extern const float lbl_806D6064;
+extern const float lbl_806D6068;
+extern const float lbl_806D606C;
+extern const float lbl_806D6070;
+extern const float lbl_806D6074;
+extern const float lbl_806D6080;
+extern const float lbl_806D6084;
+
+extern const double lbl_806D6078;
+
+/*
+ * TickReleasePhase is still an exact asm body: the C version reaches 99.4 %
+ * but MWCC does not reproduce the redundant `b` after its switch dispatch.
+ * Its exception-table entry is emitted manually (postprocess_extab_user.py
+ * renames .extab_user/.extabindex_user); the C functions below get theirs
+ * from the compiler.
+ */
+asm void HeartCompoundItem_TickReleasePhase(char *self, char *st);
+
 #pragma section R ".extab_user"
 __declspec(section ".extab_user") static const unsigned char extab_HeartCompoundItem_TickReleasePhase[8] =
     { 0x40, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-__declspec(section ".extab_user") static const unsigned char extab_HeartCompoundItem_TickCarryPhase[8] =
-    { 0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-__declspec(section ".extab_user") static const unsigned char extab_HeartCompoundItem_Update[8] =
-    { 0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 #pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct {
@@ -77,24 +82,8 @@ __declspec(section ".extabindex_user") static const struct {
     (void *)&HeartCompoundItem_TickReleasePhase, 0x000002F0,
     (void *)extab_HeartCompoundItem_TickReleasePhase
 };
-__declspec(section ".extabindex_user") static const struct {
-    void *fn;
-    unsigned int fn_size;
-    void *extab;
-} extabindex_HeartCompoundItem_TickCarryPhase = {
-    (void *)&HeartCompoundItem_TickCarryPhase, 0x00000244,
-    (void *)extab_HeartCompoundItem_TickCarryPhase
-};
-__declspec(section ".extabindex_user") static const struct {
-    void *fn;
-    unsigned int fn_size;
-    void *extab;
-} extabindex_HeartCompoundItem_Update = {
-    (void *)&HeartCompoundItem_Update, 0x0000020C,
-    (void *)extab_HeartCompoundItem_Update
-};
 
-asm void HeartCompoundItem_TickReleasePhase(void) { /* 0x800F2620 size:0x2F0 */
+asm void HeartCompoundItem_TickReleasePhase(char *self, char *st) { /* 0x800F2620 size:0x2F0 */
     nofralloc
     stwu r1,-0xa0(r1)
     HeartCompoundItem_TickReleasePhase_L_800F2624:
@@ -473,561 +462,121 @@ asm void HeartCompoundItem_TickReleasePhase(void) { /* 0x800F2620 size:0x2F0 */
     blr
 }
 
-asm void HeartCompoundItem_TickCarryPhase(void) { /* 0x800F2910 size:0x244 */
-    nofralloc
-    stwu r1,-0x90(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2914:
-    mflr r0
-    HeartCompoundItem_TickCarryPhase_L_800F2918:
-    stw r0,0x94(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F291C:
-    stw r31,0x8c(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2920:
-    or r31,r4,r4
-    HeartCompoundItem_TickCarryPhase_L_800F2924:
-    stw r30,0x88(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2928:
-    or r30,r3,r3
-    HeartCompoundItem_TickCarryPhase_L_800F292C:
-    lbz r0,0xca(r3)
-    HeartCompoundItem_TickCarryPhase_L_800F2930:
-    extsb r0,r0
-    HeartCompoundItem_TickCarryPhase_L_800F2934:
-    cmpwi r0,0x1
-    HeartCompoundItem_TickCarryPhase_L_800F2938:
-    beq HeartCompoundItem_TickCarryPhase_L_800F2978
-    HeartCompoundItem_TickCarryPhase_L_800F293C:
-    bge HeartCompoundItem_TickCarryPhase_L_800F2B3C
-    HeartCompoundItem_TickCarryPhase_L_800F2940:
-    cmpwi r0,0x0
-    HeartCompoundItem_TickCarryPhase_L_800F2944:
-    bge HeartCompoundItem_TickCarryPhase_L_800F294C
-    HeartCompoundItem_TickCarryPhase_L_800F2948:
-    b HeartCompoundItem_TickCarryPhase_L_800F2B3C
-    HeartCompoundItem_TickCarryPhase_L_800F294C:
-    addi r3,r30,0x14
-    HeartCompoundItem_TickCarryPhase_L_800F2950:
-    li r4,0x1
-    HeartCompoundItem_TickCarryPhase_L_800F2954:
-    bl SpriteSlot_SetMatrixSourceEnabled_WithReseed
-    HeartCompoundItem_TickCarryPhase_L_800F2958:
-    li r0,0x1
-    HeartCompoundItem_TickCarryPhase_L_800F295C:
-    lfs f0, lbl_806D6060(r2)
-    HeartCompoundItem_TickCarryPhase_L_800F2960:
-    stb r0,0x28(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2964:
-    stfs f0,0x2c(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2968:
-    stfs f0,0x14(r31)
-    HeartCompoundItem_TickCarryPhase_L_800F296C:
-    lbz r3,0xca(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2970:
-    addi r0,r3,0x1
-    HeartCompoundItem_TickCarryPhase_L_800F2974:
-    stb r0,0xca(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2978:
-    lfs f1,0x14(r31)
-    HeartCompoundItem_TickCarryPhase_L_800F297C:
-    lfs f0, lbl_806CF3D0(r13)
-    HeartCompoundItem_TickCarryPhase_L_800F2980:
-    fadds f1,f1,f0
-    HeartCompoundItem_TickCarryPhase_L_800F2984:
-    bl BuildOrientationFromYaw
-    HeartCompoundItem_TickCarryPhase_L_800F2988:
-    stfs f1,0x14(r31)
-    HeartCompoundItem_TickCarryPhase_L_800F298C:
-    lis r3, lbl_80421704@ha
-    HeartCompoundItem_TickCarryPhase_L_800F2990:
-    lfsu f1, lbl_80421704@l(r3)
-    HeartCompoundItem_TickCarryPhase_L_800F2994:
-    lfs f0, (lbl_8041FF60+164)@l(r3)
-    HeartCompoundItem_TickCarryPhase_L_800F2998:
-    stfs f1,0x38(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F299C:
-    lfs f1,0x14(r31)
-    HeartCompoundItem_TickCarryPhase_L_800F29A0:
-    stfs f0,0x3c(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F29A4:
-    bl sin
-    HeartCompoundItem_TickCarryPhase_L_800F29A8:
-    lis r4, lbl_80421704@ha
-    HeartCompoundItem_TickCarryPhase_L_800F29AC:
-    frsp f3,f1
-    HeartCompoundItem_TickCarryPhase_L_800F29B0:
-    addi r4, r4, lbl_80421704@l
-    HeartCompoundItem_TickCarryPhase_L_800F29B4:
-    lfs f2, lbl_806CF3D4(r13)
-    HeartCompoundItem_TickCarryPhase_L_800F29B8:
-    lfs f0,0x8(r4)
-    HeartCompoundItem_TickCarryPhase_L_800F29BC:
-    lis r3, lbl_804216F8@ha
-    HeartCompoundItem_TickCarryPhase_L_800F29C0:
-    lfs f1, lbl_806D6080(r2)
-    HeartCompoundItem_TickCarryPhase_L_800F29C4:
-    fmadds f3,f2,f3,f0
-    HeartCompoundItem_TickCarryPhase_L_800F29C8:
-    lfs f0,0x14(r31)
-    HeartCompoundItem_TickCarryPhase_L_800F29CC:
-    lfs f2, lbl_804216F8@l(r3)
-    HeartCompoundItem_TickCarryPhase_L_800F29D0:
-    fmuls f1,f1,f0
-    HeartCompoundItem_TickCarryPhase_L_800F29D4:
-    stfs f3,0x40(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F29D8:
-    stfs f2,0x2c(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F29DC:
-    bl sin
-    HeartCompoundItem_TickCarryPhase_L_800F29E0:
-    frsp f0,f1
-    HeartCompoundItem_TickCarryPhase_L_800F29E4:
-    lfs f1, lbl_806CF3D8(r13)
-    HeartCompoundItem_TickCarryPhase_L_800F29E8:
-    lis r3, lbl_804216F8@ha
-    HeartCompoundItem_TickCarryPhase_L_800F29EC:
-    lwz r11,0x38(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F29F0:
-    addi r3, r3, lbl_804216F8@l
-    HeartCompoundItem_TickCarryPhase_L_800F29F4:
-    lwz r10,0x3c(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F29F8:
-    fmadds f1,f1,f0,f1
-    HeartCompoundItem_TickCarryPhase_L_800F29FC:
-    lfs f2,0x4(r3)
-    HeartCompoundItem_TickCarryPhase_L_800F2A00:
-    lfs f0,0x8(r3)
-    HeartCompoundItem_TickCarryPhase_L_800F2A04:
-    or r3,r30,r30
-    HeartCompoundItem_TickCarryPhase_L_800F2A08:
-    lwz r9,0x40(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2A0C:
-    addi r4,r1,0x20
-    HeartCompoundItem_TickCarryPhase_L_800F2A10:
-    fadds f1,f2,f1
-    HeartCompoundItem_TickCarryPhase_L_800F2A14:
-    stfs f0,0x34(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2A18:
-    lwz r8,0x2c(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2A1C:
-    addi r5,r1,0x14
-    HeartCompoundItem_TickCarryPhase_L_800F2A20:
-    lwz r0,0x34(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2A24:
-    li r6,0x1
-    HeartCompoundItem_TickCarryPhase_L_800F2A28:
-    stfs f1,0x30(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2A2C:
-    lfs f1, lbl_806CF3CC(r13)
-    HeartCompoundItem_TickCarryPhase_L_800F2A30:
-    lwz r7,0x30(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2A34:
-    stw r11,0x14(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2A38:
-    stw r10,0x18(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2A3C:
-    stw r9,0x1c(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2A40:
-    stw r8,0x20(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2A44:
-    stw r7,0x24(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2A48:
-    stw r0,0x28(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2A4C:
-    bl Item_RenderHandheldByCharacter
-    HeartCompoundItem_TickCarryPhase_L_800F2A50:
-    addi r3,r30,0x48
-    HeartCompoundItem_TickCarryPhase_L_800F2A54:
-    bl Mtx44_GetYawOfPosZ_Padded
-    HeartCompoundItem_TickCarryPhase_L_800F2A58:
-    stfs f1,0xb0(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2A5C:
-    lwz r3,0x98(r31)
-    HeartCompoundItem_TickCarryPhase_L_800F2A60:
-    bl FinalLapCoinJump_CheckActiveForObject
-    HeartCompoundItem_TickCarryPhase_L_800F2A64:
-    rlwinm. r0,r3,0x0,0x18,0x1f
-    HeartCompoundItem_TickCarryPhase_L_800F2A68:
-    beq HeartCompoundItem_TickCarryPhase_L_800F2A78
-    HeartCompoundItem_TickCarryPhase_L_800F2A6C:
-    li r0,0x0
-    HeartCompoundItem_TickCarryPhase_L_800F2A70:
-    stb r0,0x28(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2A74:
-    b HeartCompoundItem_TickCarryPhase_L_800F2A80
-    HeartCompoundItem_TickCarryPhase_L_800F2A78:
-    li r0,0x1
-    HeartCompoundItem_TickCarryPhase_L_800F2A7C:
-    stb r0,0x28(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2A80:
-    lbz r0,0xa0(r31)
-    HeartCompoundItem_TickCarryPhase_L_800F2A84:
-    extsb r0,r0
-    HeartCompoundItem_TickCarryPhase_L_800F2A88:
-    cmpwi r0,0x2
-    HeartCompoundItem_TickCarryPhase_L_800F2A8C:
-    beq HeartCompoundItem_TickCarryPhase_L_800F2B24
-    HeartCompoundItem_TickCarryPhase_L_800F2A90:
-    bge HeartCompoundItem_TickCarryPhase_L_800F2B3C
-    HeartCompoundItem_TickCarryPhase_L_800F2A94:
-    cmpwi r0,0x1
-    HeartCompoundItem_TickCarryPhase_L_800F2A98:
-    bge HeartCompoundItem_TickCarryPhase_L_800F2AA0
-    HeartCompoundItem_TickCarryPhase_L_800F2A9C:
-    b HeartCompoundItem_TickCarryPhase_L_800F2B3C
-    HeartCompoundItem_TickCarryPhase_L_800F2AA0:
-    li r0,0x0
-    HeartCompoundItem_TickCarryPhase_L_800F2AA4:
-    addi r3,r30,0x14
-    HeartCompoundItem_TickCarryPhase_L_800F2AA8:
-    stb r0,0xa0(r31)
-    HeartCompoundItem_TickCarryPhase_L_800F2AAC:
-    li r4,0x0
-    HeartCompoundItem_TickCarryPhase_L_800F2AB0:
-    bl SpriteSlot_SetMatrixSourceEnabled_WithReseed
-    HeartCompoundItem_TickCarryPhase_L_800F2AB4:
-    lfs f0, lbl_806D6084(r2)
-    HeartCompoundItem_TickCarryPhase_L_800F2AB8:
-    stfs f0,0x2c(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2ABC:
-    lwz r3,0x98(r31)
-    HeartCompoundItem_TickCarryPhase_L_800F2AC0:
-    cmplwi r3,0x0
-    HeartCompoundItem_TickCarryPhase_L_800F2AC4:
-    beq HeartCompoundItem_TickCarryPhase_L_800F2B0C
-    HeartCompoundItem_TickCarryPhase_L_800F2AC8:
-    bl KartDriver_GetKartRootMtx
-    HeartCompoundItem_TickCarryPhase_L_800F2ACC:
-    or r4,r3,r3
-    HeartCompoundItem_TickCarryPhase_L_800F2AD0:
-    addi r3,r1,0x44
-    HeartCompoundItem_TickCarryPhase_L_800F2AD4:
-    bl Mtx_TransposeToMtx44
-    HeartCompoundItem_TickCarryPhase_L_800F2AD8:
-    addi r3,r1,0x44
-    HeartCompoundItem_TickCarryPhase_L_800F2ADC:
-    or r4,r3,r3
-    HeartCompoundItem_TickCarryPhase_L_800F2AE0:
-    bl Mtx44_Inverse_GaussJordan
-    HeartCompoundItem_TickCarryPhase_L_800F2AE4:
-    lwz r6,0xa0(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2AE8:
-    addi r3,r31,0x34
-    HeartCompoundItem_TickCarryPhase_L_800F2AEC:
-    lwz r0,0xa4(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2AF0:
-    addi r4,r1,0x44
-    HeartCompoundItem_TickCarryPhase_L_800F2AF4:
-    addi r5,r1,0x8
-    HeartCompoundItem_TickCarryPhase_L_800F2AF8:
-    stw r6,0x8(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2AFC:
-    stw r0,0xc(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2B00:
-    lwz r0,0xa8(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2B04:
-    stw r0,0x10(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2B08:
-    bl Mtx44_TransformVec3
-    HeartCompoundItem_TickCarryPhase_L_800F2B0C:
-    lbz r3,0xc9(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2B10:
-    li r0,0x0
-    HeartCompoundItem_TickCarryPhase_L_800F2B14:
-    addi r3,r3,0x1
-    HeartCompoundItem_TickCarryPhase_L_800F2B18:
-    stb r3,0xc9(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2B1C:
-    stb r0,0xca(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2B20:
-    b HeartCompoundItem_TickCarryPhase_L_800F2B3C
-    HeartCompoundItem_TickCarryPhase_L_800F2B24:
-    li r3,0x0
-    HeartCompoundItem_TickCarryPhase_L_800F2B28:
-    li r0,0x3
-    HeartCompoundItem_TickCarryPhase_L_800F2B2C:
-    stb r3,0xa0(r31)
-    HeartCompoundItem_TickCarryPhase_L_800F2B30:
-    stb r3,0x28(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2B34:
-    stb r0,0xc8(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2B38:
-    stb r3,0xc9(r30)
-    HeartCompoundItem_TickCarryPhase_L_800F2B3C:
-    lwz r0,0x94(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2B40:
-    lwz r31,0x8c(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2B44:
-    lwz r30,0x88(r1)
-    HeartCompoundItem_TickCarryPhase_L_800F2B48:
-    mtlr r0
-    HeartCompoundItem_TickCarryPhase_L_800F2B4C:
-    addi r1,r1,0x90
-    HeartCompoundItem_TickCarryPhase_L_800F2B50:
-    blr
+#pragma exceptions on
+
+void HeartCompoundItem_TickCarryPhase(char *self, char *st) {
+    Mtx44 m;
+    Vec3 rot;
+    Vec3 ofs;
+    double s;
+
+    switch (*(signed char *)(self + 0xCA)) {
+    case 0:
+        SpriteSlot_SetMatrixSourceEnabled_WithReseed(self + 0x14, 1);
+        *(signed char *)(self + 0x28) = 1;
+        *(float *)(self + 0x2C) = lbl_806D6060;
+        *(float *)(st + 0x14) = lbl_806D6060;
+        (*(signed char *)(self + 0xCA))++;
+    case 1:
+        *(float *)(st + 0x14) = BuildOrientationFromYaw(*(float *)(st + 0x14) + lbl_806CF3D0);
+        rot.x = lbl_80421704.x;
+        rot.y = lbl_80421704.y;
+        rot.z = lbl_806CF3D4 * (float)sin(*(float *)(st + 0x14)) + lbl_80421704.z;
+        ofs.x = lbl_804216F8.x;
+        s = sin(lbl_806D6080 * *(float *)(st + 0x14));
+        ofs.y = lbl_804216F8.y + (lbl_806CF3D8 * (float)s + lbl_806CF3D8);
+        ofs.z = lbl_804216F8.z;
+        Item_RenderHandheldByCharacter(self, ofs, rot, 1, lbl_806CF3CC);
+        *(float *)(self + 0xB0) = Mtx44_GetYawOfPosZ_Padded(self + 0x48);
+        if (FinalLapCoinJump_CheckActiveForObject(*(void **)(st + 0x98))) {
+            *(signed char *)(self + 0x28) = 0;
+        } else {
+            *(signed char *)(self + 0x28) = 1;
+        }
+
+        switch (*(signed char *)(st + 0xA0)) {
+        case 1:
+            *(signed char *)(st + 0xA0) = 0;
+            SpriteSlot_SetMatrixSourceEnabled_WithReseed(self + 0x14, 0);
+            *(float *)(self + 0x2C) = lbl_806D6084;
+            if (*(void **)(st + 0x98) != 0) {
+                Mtx_TransposeToMtx44(&m, KartDriver_GetKartRootMtx(*(void **)(st + 0x98)));
+                Mtx44_Inverse_GaussJordan(&m, &m);
+                Mtx44_TransformVec3(st + 0x34, m, *(Vec3 *)(self + 0xA0));
+            }
+            (*(signed char *)(self + 0xC9))++;
+            *(signed char *)(self + 0xCA) = 0;
+            break;
+        case 2:
+            *(signed char *)(st + 0xA0) = 0;
+            *(signed char *)(self + 0x28) = 0;
+            *(signed char *)(self + 0xC8) = 3;
+            *(signed char *)(self + 0xC9) = 0;
+            break;
+        }
+        break;
+    }
 }
 
-asm void HeartCompoundItem_Update(void) { /* 0x800F2B54 size:0x20C */
-    nofralloc
-    stwu r1,-0x60(r1)
-    HeartCompoundItem_Update_L_800F2B58:
-    mflr r0
-    HeartCompoundItem_Update_L_800F2B5C:
-    stw r0,0x64(r1)
-    HeartCompoundItem_Update_L_800F2B60:
-    stw r31,0x5c(r1)
-    HeartCompoundItem_Update_L_800F2B64:
-    stw r30,0x58(r1)
-    HeartCompoundItem_Update_L_800F2B68:
-    or r30,r3,r3
-    HeartCompoundItem_Update_L_800F2B6C:
-    addi r31,r30,0xec
-    HeartCompoundItem_Update_L_800F2B70:
-    lbz r0,0xc8(r3)
-    HeartCompoundItem_Update_L_800F2B74:
-    extsb r0,r0
-    HeartCompoundItem_Update_L_800F2B78:
-    cmpwi r0,0x2
-    HeartCompoundItem_Update_L_800F2B7C:
-    beq HeartCompoundItem_Update_L_800F2C4C
-    HeartCompoundItem_Update_L_800F2B80:
-    bge HeartCompoundItem_Update_L_800F2B94
-    HeartCompoundItem_Update_L_800F2B84:
-    cmpwi r0,0x0
-    HeartCompoundItem_Update_L_800F2B88:
-    beq HeartCompoundItem_Update_L_800F2BA0
-    HeartCompoundItem_Update_L_800F2B8C:
-    bge HeartCompoundItem_Update_L_800F2BDC
-    HeartCompoundItem_Update_L_800F2B90:
-    b HeartCompoundItem_Update_L_800F2C4C
-    HeartCompoundItem_Update_L_800F2B94:
-    cmpwi r0,0x4
-    HeartCompoundItem_Update_L_800F2B98:
-    bge HeartCompoundItem_Update_L_800F2C4C
-    HeartCompoundItem_Update_L_800F2B9C:
-    b HeartCompoundItem_Update_L_800F2C1C
-    HeartCompoundItem_Update_L_800F2BA0:
-    lwz r0, lbl_806CF3C8(r13)
-    HeartCompoundItem_Update_L_800F2BA4:
-    addi r3,r30,0x14
-    HeartCompoundItem_Update_L_800F2BA8:
-    rlwinm r4,r0,0x0,0x18,0x1f
-    HeartCompoundItem_Update_L_800F2BAC:
-    bl SpriteSlot_InitNonLoop
-    HeartCompoundItem_Update_L_800F2BB0:
-    li r0,0x4
-    HeartCompoundItem_Update_L_800F2BB4:
-    lis r3, Effect_KartAuraCompound_Update@ha
-    HeartCompoundItem_Update_L_800F2BB8:
-    stb r0,0x14(r30)
-    HeartCompoundItem_Update_L_800F2BBC:
-    addi r3, r3, Effect_KartAuraCompound_Update@l
-    HeartCompoundItem_Update_L_800F2BC0:
-    bl DrawEffect_SpawnDirect
-    HeartCompoundItem_Update_L_800F2BC4:
-    stw r3,0x4c(r31)
-    HeartCompoundItem_Update_L_800F2BC8:
-    li r3,0x1
-    HeartCompoundItem_Update_L_800F2BCC:
-    li r0,0x0
-    HeartCompoundItem_Update_L_800F2BD0:
-    stb r3,0xc8(r30)
-    HeartCompoundItem_Update_L_800F2BD4:
-    stb r0,0xc9(r30)
-    HeartCompoundItem_Update_L_800F2BD8:
-    stb r0,0xca(r30)
-    HeartCompoundItem_Update_L_800F2BDC:
-    lbz r0,0xc9(r30)
-    HeartCompoundItem_Update_L_800F2BE0:
-    extsb r0,r0
-    HeartCompoundItem_Update_L_800F2BE4:
-    cmpwi r0,0x1
-    HeartCompoundItem_Update_L_800F2BE8:
-    beq HeartCompoundItem_Update_L_800F2C0C
-    HeartCompoundItem_Update_L_800F2BEC:
-    bge HeartCompoundItem_Update_L_800F2C4C
-    HeartCompoundItem_Update_L_800F2BF0:
-    cmpwi r0,0x0
-    HeartCompoundItem_Update_L_800F2BF4:
-    bge HeartCompoundItem_Update_L_800F2BFC
-    HeartCompoundItem_Update_L_800F2BF8:
-    b HeartCompoundItem_Update_L_800F2C4C
-    HeartCompoundItem_Update_L_800F2BFC:
-    or r3,r30,r30
-    HeartCompoundItem_Update_L_800F2C00:
-    or r4,r31,r31
-    HeartCompoundItem_Update_L_800F2C04:
-    bl HeartCompoundItem_TickCarryPhase
-    HeartCompoundItem_Update_L_800F2C08:
-    b HeartCompoundItem_Update_L_800F2C4C
-    HeartCompoundItem_Update_L_800F2C0C:
-    or r3,r30,r30
-    HeartCompoundItem_Update_L_800F2C10:
-    or r4,r31,r31
-    HeartCompoundItem_Update_L_800F2C14:
-    bl HeartCompoundItem_TickReleasePhase
-    HeartCompoundItem_Update_L_800F2C18:
-    b HeartCompoundItem_Update_L_800F2C4C
-    HeartCompoundItem_Update_L_800F2C1C:
-    lwz r3,0x4c(r31)
-    HeartCompoundItem_Update_L_800F2C20:
-    cmplwi r3,0x0
-    HeartCompoundItem_Update_L_800F2C24:
-    beq HeartCompoundItem_Update_L_800F2C30
-    HeartCompoundItem_Update_L_800F2C28:
-    li r0,0x2
-    HeartCompoundItem_Update_L_800F2C2C:
-    stb r0,0xc9(r3)
-    HeartCompoundItem_Update_L_800F2C30:
-    li r0,0x0
-    HeartCompoundItem_Update_L_800F2C34:
-    or r3,r30,r30
-    HeartCompoundItem_Update_L_800F2C38:
-    stw r0,0x4c(r31)
-    HeartCompoundItem_Update_L_800F2C3C:
-    lwz r4,0x98(r31)
-    HeartCompoundItem_Update_L_800F2C40:
-    stb r0,0x2b1(r4)
-    HeartCompoundItem_Update_L_800F2C44:
-    bl SpriteSlot_Container_Free
-    HeartCompoundItem_Update_L_800F2C48:
-    b HeartCompoundItem_Update_L_800F2D48
-    HeartCompoundItem_Update_L_800F2C4C:
-    lwz r6,0xac(r30)
-    HeartCompoundItem_Update_L_800F2C50:
-    addi r3,r30,0x14
-    HeartCompoundItem_Update_L_800F2C54:
-    lwz r0,0xb0(r30)
-    HeartCompoundItem_Update_L_800F2C58:
-    addi r4,r1,0x14
-    HeartCompoundItem_Update_L_800F2C5C:
-    addi r5,r1,0x8
-    HeartCompoundItem_Update_L_800F2C60:
-    stw r6,0x8(r1)
-    HeartCompoundItem_Update_L_800F2C64:
-    stw r0,0xc(r1)
-    HeartCompoundItem_Update_L_800F2C68:
-    lwz r0,0xb4(r30)
-    HeartCompoundItem_Update_L_800F2C6C:
-    stw r0,0x10(r1)
-    HeartCompoundItem_Update_L_800F2C70:
-    lwz r6,0xa0(r30)
-    HeartCompoundItem_Update_L_800F2C74:
-    lwz r0,0xa4(r30)
-    HeartCompoundItem_Update_L_800F2C78:
-    stw r6,0x14(r1)
-    HeartCompoundItem_Update_L_800F2C7C:
-    stw r0,0x18(r1)
-    HeartCompoundItem_Update_L_800F2C80:
-    lwz r0,0xa8(r30)
-    HeartCompoundItem_Update_L_800F2C84:
-    stw r0,0x1c(r1)
-    HeartCompoundItem_Update_L_800F2C88:
-    lfs f1,0xc4(r30)
-    HeartCompoundItem_Update_L_800F2C8C:
-    bl SpriteSlot_SetTransform
-    HeartCompoundItem_Update_L_800F2C90:
-    addi r3,r30,0x14
-    HeartCompoundItem_Update_L_800F2C94:
-    bl SpriteSlot_TickAnim
-    HeartCompoundItem_Update_L_800F2C98:
-    lwz r0,0x4c(r31)
-    HeartCompoundItem_Update_L_800F2C9C:
-    cmplwi r0,0x0
-    HeartCompoundItem_Update_L_800F2CA0:
-    beq HeartCompoundItem_Update_L_800F2CF8
-    HeartCompoundItem_Update_L_800F2CA4:
-    lis r4, lbl_8032F580@ha
-    HeartCompoundItem_Update_L_800F2CA8:
-    addi r3,r1,0x20
-    HeartCompoundItem_Update_L_800F2CAC:
-    addi r5, r4, lbl_8032F580@l
-    HeartCompoundItem_Update_L_800F2CB0:
-    addi r4,r30,0x14
-    HeartCompoundItem_Update_L_800F2CB4:
-    bl JointByName_GetLocalMatrix4x3
-    HeartCompoundItem_Update_L_800F2CB8:
-    lbz r0,0x28(r30)
-    HeartCompoundItem_Update_L_800F2CBC:
-    extsb. r0,r0
-    HeartCompoundItem_Update_L_800F2CC0:
-    beq HeartCompoundItem_Update_L_800F2CE0
-    HeartCompoundItem_Update_L_800F2CC4:
-    lwz r3,0x4c(r31)
-    HeartCompoundItem_Update_L_800F2CC8:
-    addi r4,r1,0x20
-    HeartCompoundItem_Update_L_800F2CCC:
-    lfs f1,0xb0(r30)
-    HeartCompoundItem_Update_L_800F2CD0:
-    lfs f2,0xc4(r30)
-    HeartCompoundItem_Update_L_800F2CD4:
-    lfs f3,0x2c(r30)
-    HeartCompoundItem_Update_L_800F2CD8:
-    bl Effect_CompoundRing_PlaceChildren
-    HeartCompoundItem_Update_L_800F2CDC:
-    b HeartCompoundItem_Update_L_800F2CF8
-    HeartCompoundItem_Update_L_800F2CE0:
-    lwz r3,0x4c(r31)
-    HeartCompoundItem_Update_L_800F2CE4:
-    addi r4,r1,0x20
-    HeartCompoundItem_Update_L_800F2CE8:
-    lfs f1,0xb0(r30)
-    HeartCompoundItem_Update_L_800F2CEC:
-    lfs f2,0xc4(r30)
-    HeartCompoundItem_Update_L_800F2CF0:
-    lfs f3, lbl_806D6060(r2)
-    HeartCompoundItem_Update_L_800F2CF4:
-    bl Effect_CompoundRing_PlaceChildren
-    HeartCompoundItem_Update_L_800F2CF8:
-    lwz r3,0x4(r31)
-    HeartCompoundItem_Update_L_800F2CFC:
-    cmplwi r3,0x0
-    HeartCompoundItem_Update_L_800F2D00:
-    beq HeartCompoundItem_Update_L_800F2D0C
-    HeartCompoundItem_Update_L_800F2D04:
-    subi r0,r3,0x1
-    HeartCompoundItem_Update_L_800F2D08:
-    stw r0,0x4(r31)
-    HeartCompoundItem_Update_L_800F2D0C:
-    lwz r3,0x8(r31)
-    HeartCompoundItem_Update_L_800F2D10:
-    cmplwi r3,0x0
-    HeartCompoundItem_Update_L_800F2D14:
-    beq HeartCompoundItem_Update_L_800F2D20
-    HeartCompoundItem_Update_L_800F2D18:
-    subi r0,r3,0x1
-    HeartCompoundItem_Update_L_800F2D1C:
-    stw r0,0x8(r31)
-    HeartCompoundItem_Update_L_800F2D20:
-    lwz r3,0xc(r31)
-    HeartCompoundItem_Update_L_800F2D24:
-    cmplwi r3,0x0
-    HeartCompoundItem_Update_L_800F2D28:
-    beq HeartCompoundItem_Update_L_800F2D34
-    HeartCompoundItem_Update_L_800F2D2C:
-    subi r0,r3,0x1
-    HeartCompoundItem_Update_L_800F2D30:
-    stw r0,0xc(r31)
-    HeartCompoundItem_Update_L_800F2D34:
-    lwz r3,0x10(r31)
-    HeartCompoundItem_Update_L_800F2D38:
-    cmplwi r3,0x0
-    HeartCompoundItem_Update_L_800F2D3C:
-    beq HeartCompoundItem_Update_L_800F2D48
-    HeartCompoundItem_Update_L_800F2D40:
-    subi r0,r3,0x1
-    HeartCompoundItem_Update_L_800F2D44:
-    stw r0,0x10(r31)
-    HeartCompoundItem_Update_L_800F2D48:
-    lwz r0,0x64(r1)
-    HeartCompoundItem_Update_L_800F2D4C:
-    lwz r31,0x5c(r1)
-    HeartCompoundItem_Update_L_800F2D50:
-    lwz r30,0x58(r1)
-    HeartCompoundItem_Update_L_800F2D54:
-    mtlr r0
-    HeartCompoundItem_Update_L_800F2D58:
-    addi r1,r1,0x60
-    HeartCompoundItem_Update_L_800F2D5C:
-    blr
+void HeartCompoundItem_Update(char *self) {
+    Mtx34 jm;
+    char *st = self + 0xEC;
+
+    switch (*(signed char *)(self + 0xC8)) {
+    case 0:
+        SpriteSlot_InitNonLoop(self + 0x14, lbl_806CF3C8);
+        *(signed char *)(self + 0x14) = 4;
+        *(char **)(st + 0x4C) = DrawEffect_SpawnDirect(Effect_KartAuraCompound_Update);
+        *(signed char *)(self + 0xC8) = 1;
+        *(signed char *)(self + 0xC9) = 0;
+        *(signed char *)(self + 0xCA) = 0;
+    case 1:
+        switch (*(signed char *)(self + 0xC9)) {
+        case 0:
+            HeartCompoundItem_TickCarryPhase(self, st);
+            break;
+        case 1:
+            HeartCompoundItem_TickReleasePhase(self, st);
+            break;
+        }
+        break;
+    case 2:
+        break;
+    case 3:
+        if (*(char **)(st + 0x4C) != 0) {
+            *(signed char *)(*(char **)(st + 0x4C) + 0xC9) = 2;
+        }
+        *(char **)(st + 0x4C) = 0;
+        *(signed char *)(*(char **)(st + 0x98) + 0x2B1) = 0;
+        SpriteSlot_Container_Free(self);
+        return;
+    }
+
+    SpriteSlot_SetTransform(self + 0x14, *(Vec3 *)(self + 0xA0), *(Vec3 *)(self + 0xAC),
+                            *(float *)(self + 0xC4));
+    SpriteSlot_TickAnim(self + 0x14);
+    if (*(char **)(st + 0x4C) != 0) {
+        JointByName_GetLocalMatrix4x3(&jm, self + 0x14, lbl_8032F580);
+        if (*(signed char *)(self + 0x28)) {
+            Effect_CompoundRing_PlaceChildren(*(char **)(st + 0x4C), &jm, *(float *)(self + 0xB0),
+                                              *(float *)(self + 0xC4), *(float *)(self + 0x2C));
+        } else {
+            Effect_CompoundRing_PlaceChildren(*(char **)(st + 0x4C), &jm, *(float *)(self + 0xB0),
+                                              *(float *)(self + 0xC4), lbl_806D6060);
+        }
+    }
+    if (*(unsigned int *)(st + 0x4) != 0) {
+        (*(unsigned int *)(st + 0x4))--;
+    }
+    if (*(unsigned int *)(st + 0x8) != 0) {
+        (*(unsigned int *)(st + 0x8))--;
+    }
+    if (*(unsigned int *)(st + 0xC) != 0) {
+        (*(unsigned int *)(st + 0xC))--;
+    }
+    if (*(unsigned int *)(st + 0x10) != 0) {
+        (*(unsigned int *)(st + 0x10))--;
+    }
 }
 
+#pragma exceptions reset

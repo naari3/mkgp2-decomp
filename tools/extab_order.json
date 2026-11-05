@@ -1754,5 +1754,15 @@
     "__dt__10FlowFaderIFv",
     "dtor_801F4B10",
     "dtor_8007D0D4"
+  ],
+  "src/game/HeartCompoundItem.c": [
+    "HeartCompoundItem_TickReleasePhase",
+    "HeartCompoundItem_TickCarryPhase",
+    "HeartCompoundItem_Update"
+  ],
+  "src/game/TwinSpriteOverlay.c": [
+    "TwinSpriteOverlay_Render",
+    "TwinSpriteOverlay_AddDraw",
+    "TwinSpriteOverlay_Update"
   ]
 }
