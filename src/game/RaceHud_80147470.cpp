@@ -63,12 +63,47 @@ struct StepObj {
     int state;
 };
 
+class RecordCounter {
+public:
+    virtual void v8();
+    virtual void vC();
+    virtual void Start();
+    int f4;
+    int busy;
+    int count;
+    bool Idle() {
+        if (busy > 0) {
+            return 0;
+        }
+        return count <= 0;
+    }
+};
+
+struct Spark {
+    float x;
+    float y;
+    float z;
+    int life;
+};
+
 struct StepHolder {
-    char pad0[0x18];
+    char pad0[0xC];
+    int done;
+    unsigned char active;
+    char pad11[7];
     int state;
     float t;
-    char pad20[0x78];
+    char pad20[0xC];
+    float cx;
+    float cy;
+    char pad34[4];
+    float rot;
+    float rotSpeed;
+    Spark sparks[5];
+    void *f90;
+    RecordCounter *counter;
     StepObj *step;
+    unsigned char glow;
 };
 
 struct KartVariant {
@@ -145,12 +180,12 @@ extern unsigned int lbl_806D7C0C;
 extern unsigned int lbl_806D7C10;
 extern const float lbl_80362620[4];
 extern float lbl_8048EFB8[4];
-extern void GetTextureByIdAndLang();
+const char *GetTextureByIdAndLang(int id, int lang);
 void PreloadResource(int id);
 extern void TexMgr_Apply();
 void TexMgr_Init(void *t);
 extern void TexMgr_SetTexture();
-extern unsigned int g_cupId;
+extern int g_cupId;
 extern unsigned int dtor_800869D0[];
 extern unsigned int lbl_80362790[];
 extern const float lbl_806D7C2C;
@@ -158,7 +193,7 @@ extern void GetInputManager();
 extern void InputMgr_GetPlayer();
 extern unsigned int lbl_806D7C20;
 extern unsigned int lbl_806D7C34;
-extern unsigned int lbl_806D7C38;
+extern const float lbl_806D7C38;
 extern unsigned int lbl_806D7C3C;
 extern unsigned int lbl_806D7C40;
 extern unsigned int lbl_806D7C44;
@@ -166,11 +201,11 @@ extern void SoundMgr_Play();
 extern unsigned int lbl_806D7C48;
 extern unsigned int lbl_806D7C4C;
 extern unsigned int lbl_806D7C50;
-extern void IsCardValid();
+unsigned char IsCardValid(void);
 extern void ResCtrl_Init();
 extern void fn_8011F994();
 extern void fn_8011FAFC();
-extern void fn_8013D4B0();
+void fn_8013D4B0(void *model, float a);
 extern void fn_8013D570();
 extern void fn_8013D608();
 extern void fn_8013D660();
@@ -185,10 +220,10 @@ extern unsigned int lbl_806D7C84;
 extern unsigned int lbl_806D7C88;
 extern unsigned int lbl_806D7C8C;
 extern unsigned int dtor_80082960[];
-extern void Cosf_LUT_Wrap();
-extern void Sinf_LUT_Wrap();
-extern void fn_80140344();
-extern void rand();
+float Cosf_LUT_Wrap(float a);
+float Sinf_LUT_Wrap(float a);
+void fn_80140344(void *p);
+int rand(void);
 extern unsigned int lbl_806D7C18;
 extern unsigned int lbl_806D7C28;
 extern unsigned int lbl_806D7C30;
@@ -198,14 +233,14 @@ extern unsigned int lbl_806D7C5C;
 extern unsigned int lbl_806D7C60;
 extern unsigned int lbl_806D7C64;
 extern unsigned int lbl_806D7C68;
-extern unsigned int lbl_806D7C6C;
+extern const float lbl_806D7C6C;
 extern unsigned int lbl_806D7C70;
 extern unsigned int lbl_806D7C90;
 extern unsigned int lbl_806D7C94;
 void __destroy_arr(void *p, void *dtor, unsigned long size, unsigned long n);
 extern void __unexpected();
 void fn_80120A08(int id);
-extern void fn_80140810();
+void fn_80140810(void *p, int flag);
 extern void fn_801F8E54();
 extern unsigned int lbl_8048ECF8[];
 extern unsigned int lbl_8048ED10[];
@@ -225,7 +260,7 @@ extern void DebugPrintf();
 extern void __construct_array();
 extern void fn_801F8E90();
 extern void fn_801F93EC();
-extern void isJapanese();
+int isJapanese(void);
 extern void strlen();
 extern unsigned int lbl_806D7C9C;
 extern unsigned int lbl_806D7CA0;
@@ -241,30 +276,30 @@ extern unsigned int lbl_806D7CC8;
 extern unsigned int lbl_806D7CCC;
 extern unsigned int lbl_806D7CD0;
 extern unsigned int lbl_806D7CD4;
-extern void LUT_Sin12Bit();
-extern void RankSlot_GetByIndex();
-extern void fn_8013C534();
-extern void fn_8013C5FC();
-extern void fn_8013C674();
-extern void fn_8013C6EC();
-extern void fn_8013C7B0();
-extern void fn_8013C91C();
-extern void fn_8013CA04();
-extern void fn_8013CA70();
-extern void fn_8013CC24();
-extern void fn_801680A0();
-extern void fn_80169468();
-extern void fn_801697C0();
-extern void fn_801698B4();
-extern void fn_80186960();
+float LUT_Sin12Bit(float a);
+struct HudRankSlot *RankSlot_GetByIndex(int i);
+void fn_8013C534(void *m, float r, float g, float b, float a);
+void fn_8013C5FC(void *m, float a);
+void fn_8013C674(void *m, float a);
+void fn_8013C6EC(void *m, float x, float y, float z);
+void fn_8013C7B0(void *m, float x, float y);
+void fn_8013C91C(void *m);
+void fn_8013CA04(void *m);
+void fn_8013CA70(void *m);
+void fn_8013CC24(void *m, int kart, int flag);
+void fn_801680A0(int layer, const unsigned short *s, float x, float y, ...);
+void fn_80169468(int layer, int id, int flag, float x, float y, float r, float g, float b, float a);
+void fn_801697C0(int layer, int id, int flag, float x, float y, float sx, float sy);
+void fn_801698B4(int layer, int id, int flag, float x, float y);
+float fn_80186960(float a);
 int fn_80231BD4(int a, int b, int c);
-extern unsigned int lbl_806D6DE4;
-extern unsigned int lbl_806D6DE8;
+extern const float lbl_806D6DE4;
+extern const float lbl_806D6DE8;
 extern unsigned int lbl_806D7CD8;
-extern unsigned int lbl_806D7CDC;
+extern const float lbl_806D7CDC;
 extern unsigned int lbl_806D7CE0;
 extern unsigned int lbl_806D7CE4;
-extern unsigned int lbl_806D7CE8;
+extern const float lbl_806D7CE8;
 extern unsigned int lbl_806D7CEC;
 extern unsigned int lbl_806D7CF0;
 extern unsigned int lbl_806D7CF4;
@@ -285,13 +320,13 @@ extern unsigned int lbl_806D7D2C;
 extern unsigned int lbl_806D7D30;
 extern unsigned int lbl_806D7D34;
 extern unsigned int lbl_806D7D38;
-extern unsigned int lbl_806D7D3C;
+extern const float lbl_806D7D3C;
 extern unsigned int lbl_806D7D40;
 extern unsigned int lbl_806D7D44;
 extern unsigned int lbl_806D7D48;
-extern unsigned int lbl_806D7D4C;
-extern unsigned int lbl_806D7D50;
-extern unsigned int lbl_80362858[];
+extern const float lbl_806D7D4C;
+extern const float lbl_806D7D50;
+extern const float lbl_80362858[6];
 extern unsigned int lbl_8048F058[];
 extern void fn_80141924();
 extern void fn_8014393C();
@@ -302,7 +337,7 @@ extern int g_gameMode;
 void fn_8023CD54(void *p);
 extern void RumbleUpdate();
 extern void Saturate_Double();
-extern void StrPcb_GetInstance();
+void *StrPcb_GetInstance(void);
 extern void StrPcb_SetStatusBits();
 extern void TaRecord_GetEntry_Current();
 extern void fn_801420DC();
@@ -315,9 +350,9 @@ extern void wcscpy();
 extern unsigned int lbl_806D10A0;
 extern unsigned int lbl_806D7D58;
 extern unsigned int lbl_806D7D5C;
-extern unsigned int lbl_806D7D60;
+extern const float lbl_806D7D60;
 extern unsigned int lbl_806D7D64;
-extern unsigned int lbl_806D7D68;
+extern const float lbl_806D7D68;
 extern unsigned int lbl_806D7D6C;
 extern unsigned int lbl_806D7D70;
 extern unsigned int lbl_806D7D74;
@@ -355,8 +390,8 @@ extern unsigned int lbl_806D7DF0;
 extern unsigned int lbl_806D7DF8;
 extern unsigned int lbl_8048F0C8[];
 void fn_8014205C(void *self, int flag);
-extern void StrPcb_ClearStatusBits();
-extern void fn_8023CFE0();
+void StrPcb_ClearStatusBits(void *p, int bits);
+void fn_8023CFE0(void *p, int flag);
 extern unsigned int lbl_8048F090[];
 extern void TaRecord_GetLastInsertedRank();
 extern void fn_8014403C();
@@ -373,25 +408,25 @@ extern unsigned int lbl_806D7E00;
 extern unsigned int lbl_806D7E04;
 extern unsigned int lbl_806D7E08;
 extern unsigned int lbl_806D7E0C;
-extern void fn_80141E70();
-extern void fn_80142010();
+void fn_80141E70(void *self, float x, float y, float w, float h, float r, float g, float b, float a, const char *fmt, ...);
+void fn_80142010(void *self, int id, int flag, float x, float y, float w, float h, float r, float g, float b, float a);
 extern unsigned int lbl_806D7E10;
 extern unsigned int lbl_806D7E14;
 extern unsigned int lbl_806D7E18;
 extern unsigned int lbl_806D7E1C;
-extern unsigned int lbl_803628A8[];
+extern char lbl_803628A8[];
 extern void HSD_StateInvalidate();
 extern void fn_8011FAB8();
 extern void fn_8013D940();
 extern void fn_8014095C();
 extern void fn_80167F24();
-extern void fn_80169334();
+void fn_80169334(void *obj, int id, int flag, float x, float y, float sx, float sy, float a);
 extern void fn_801A0004();
 extern void fn_80231644();
 extern void fn_802317E0();
 extern void fn_80231B74();
 extern unsigned int lbl_806D7E28;
-extern unsigned int lbl_806D7E2C;
+extern const float lbl_806D7E2C;
 extern unsigned int lbl_806D7E30;
 extern unsigned int lbl_806D7E34;
 extern unsigned int lbl_806D7E38;
@@ -415,16 +450,16 @@ extern unsigned int lbl_806D7E4C;
 extern unsigned int lbl_806D7E50;
 extern unsigned int lbl_806D7E54;
 extern unsigned int jumptable_8048F130[];
-extern void Item_GetDescriptorField0();
-extern void Item_GetDescriptorField8();
-extern void fn_8013BEC8();
+int Item_GetDescriptorField0(int item, int a);
+int Item_GetDescriptorField8(int item);
+float *fn_8013BEC8(int a);
 extern void fn_8013C26C();
 extern void fn_801685A4();
-extern void fn_80168798();
-extern void fn_801695E0();
+void fn_80168798(void *obj, const char *s, float x, float y, float a, ...);
+void fn_801695E0(void *obj, int id, int flag, float x, float y, float a);
 extern void fn_801F93D0();
-extern void fn_8023DAA8();
-extern unsigned int lbl_806D7E58;
+const char *fn_8023DAA8(int item);
+extern const float lbl_806D7E58;
 extern unsigned int lbl_806D7E5C;
 extern unsigned int lbl_806D7E60;
 extern unsigned int lbl_806D7E64;
@@ -440,12 +475,12 @@ extern unsigned int lbl_806D7E88;
 extern unsigned int lbl_806D7E94;
 extern unsigned int lbl_806D7E98;
 extern unsigned int lbl_8048F0FC[];
-extern void Item_GetDescriptorFieldC();
-extern void fn_8013D50C();
-extern void fn_8013DAC8();
-extern void fn_80168B90();
-extern void fn_80168D84();
-extern void fn_8023D938();
+int Item_GetDescriptorFieldC(int item);
+void fn_8013D50C(void *model, float r, float g, float b, float a);
+void fn_8013DAC8(void *model, int a);
+void fn_80168B90(void *obj, const char *s, float x, float y, float r, float g, float b, float a, ...);
+void fn_80168D84(void *obj, const char *s, float x, float y, float a, ...);
+const char *fn_8023D938(int item, int line);
 extern unsigned int lbl_806D7E9C;
 extern unsigned int lbl_806D7EA0;
 extern unsigned int lbl_806D7EA4;
@@ -465,7 +500,7 @@ extern unsigned int lbl_806D7ED8;
 extern unsigned int lbl_806D7EDC;
 extern unsigned int lbl_806D7EE0;
 extern unsigned int lbl_806D7EE4;
-extern void Sprite_Destroy();
+void Sprite_Destroy(void *p, int flag);
 extern void clRom_PurgeAll();
 extern void fn_8012094C();
 extern void fn_80121210();
@@ -524,34 +559,34 @@ asm void fn_80147900(struct StepObj *o);
 asm void fn_80147AF4(void);
 asm void fn_80147CE8(void);
 asm void fn_80147EE8(void);
-asm void fn_8014816C(void);
-asm void fn_80148648(void);
+void fn_8014816C(StepHolder *self);
+struct RecordPanel *fn_80148648(struct RecordPanel *self, short flag);
 asm void fn_80148810(void);
 asm void fn_80148A44(void);
 void *dtor_8014917C(void *self, short flag);
 void fn_801491DC(VObj *p);
 void *fn_80149214(void *t);
-asm void dtor_80149244(void);
-asm void dtor_80149320(void);
+struct HudResHolder *dtor_80149244(struct HudResHolder *self, short flag) throw();
+struct PtrHolder *dtor_80149320(struct PtrHolder *self, short flag) throw();
 void fn_801493B0(CountList *self);
 void fn_80149420(CdHolder *self);
-asm void fn_801494A4(void);
-asm void fn_80149A88(void);
+void fn_801494A4(struct CountListFull *self);
+struct CountListFull *fn_80149A88(struct CountListFull *self, short flag);
 asm void fn_80149B8C(void);
 void fn_80149CD8(void);
 void fn_80149D58(VObj *p);
 void fn_80149D90(CdHolder2 *self);
 asm void fn_80149E44(void);
 HudPanel *fn_8014A890(HudPanel *self, short flag);
-asm void fn_8014A8FC(void);
+struct StrPanel *fn_8014A8FC(struct StrPanel *self, short flag);
 asm void fn_8014AA38(void);
-asm void fn_8014AC48(void);
+void fn_8014AC48(void *self);
 void fn_8014AD7C(VObj *p);
 asm void fn_8014ADB4(void);
 asm void fn_8014B118(void);
 asm void fn_8014BBE4(void);
-asm void fn_8014BF80(void);
-asm void fn_8014C308(void);
+void fn_8014BF80(struct ResultPanel *self, float alpha);
+struct ResultPanel *fn_8014C308(struct ResultPanel *self, short flag);
 asm void fn_8014C53C(void);
 
 #pragma section R ".extab_user"
@@ -577,24 +612,7 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80147CE8[8
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_80147EE8 = { 0x284A0000, 0x0000007C, 0x00770010, 0x00000000, 0x82000008, (void *)&dtor_80082960 };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8014816C[8] = {
-    0x10, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80148648[92] = {
-    0x20, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0xB0,
-    0x00, 0x0E, 0x00, 0x38, 0x00, 0x00, 0x00, 0xF4,
-    0x00, 0x00, 0x00, 0x44, 0x00, 0x00, 0x01, 0x20,
-    0x00, 0x00, 0x00, 0x48, 0x00, 0x00, 0x01, 0x2C,
-    0x00, 0x00, 0x00, 0x54, 0x00, 0x00, 0x01, 0x58,
-    0x00, 0x00, 0x00, 0x48, 0x00, 0x00, 0x01, 0x64,
-    0x00, 0x00, 0x00, 0x58, 0x00, 0x00, 0x00, 0x00,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xEC,
-    0x00, 0x00, 0x00, 0x38, 0x8D, 0x00, 0x00, 0x38,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x24,
-    0x00, 0x00, 0x00, 0x20, 0x8D, 0x00, 0x00, 0x20,
-    0x8D, 0x00, 0x00, 0x08
-};
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; void *f29; unsigned int f30; unsigned int f31; void *f32; unsigned int f33; void *f34; unsigned int f35; unsigned int f36; void *f37; unsigned int f38; unsigned int f39; void *f40; unsigned int f41; void *f42; unsigned int f43; unsigned int f44; void *f45; unsigned int f46; unsigned int f47; void *f48; unsigned int f49; unsigned int f50; void *f51; unsigned int f52; unsigned int f53; void *f54; unsigned int f55; unsigned int f56; void *f57; unsigned int f58; } extab_fn_80148810 = { 0x280A0000, 0x00000080, 0x00000078, 0x00000094, 0x00000070, 0x000000A0, 0x0000008C, 0x000000B4, 0x00000084, 0x000000C0, 0x000000AC, 0x000000CC, 0x000000A4, 0x000000E0, 0x000000AC, 0x000000EC, 0x000800BC, 0x00000130, 0x000000D0, 0x00000144, 0x000000C8, 0x00000158, 0x000000D0, 0x0000016C, 0x000000E0, 0x00000180, 0x001A00D0, 0x00000000, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801419C8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x00000024, (void *)&dtor_80149320, 0x8680001F, 0x00000000, (void *)&dtor_801419C8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x00000028, (void *)&dtor_80149320, 0x0100008C, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x010000AC, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x00000098, (void *)&dtor_80149244, 0x010000AC, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x010000D0 };
 
@@ -603,29 +621,11 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const unsigned char extab_dtor_80149244[40] = {
-    0x20, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x58,
-    0x00, 0x12, 0x00, 0x18, 0x00, 0x00, 0x00, 0xB0,
-    0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xA8,
-    0x00, 0x00, 0x00, 0x08, 0x8D, 0x00, 0x00, 0x08
-};
-
-__declspec(section ".extab_user") static const unsigned char extab_dtor_80149320[40] = {
-    0x18, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x48,
-    0x00, 0x04, 0x00, 0x18, 0x00, 0x00, 0x00, 0x68,
-    0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x60,
-    0x00, 0x00, 0x00, 0x08, 0x8D, 0x00, 0x00, 0x08
-};
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_801494A4 = { 0x294A0000, 0x000000C8, 0x00000010, 0x00000000, 0x8A80001F, (void *)&MemoryManager_TimedFree };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80149A88[8] = {
-    0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; void *f13; unsigned int f14; unsigned int f15; void *f16; unsigned int f17; void *f18; unsigned int f19; unsigned int f20; void *f21; } extab_fn_80149B8C = { 0x180A0000, 0x00000070, 0x00000038, 0x00000084, 0x00000030, 0x00000090, 0x00000038, 0x0000009C, 0x00000044, 0x000000CC, 0x00000038, 0x00000000, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801419C8, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801419C8 };
 
@@ -635,15 +635,9 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_80149E44 = { 0x214A0000, 0x000005E4, 0x00000010, 0x00000000, 0x8A80001C, (void *)&MemoryManager_TimedFree };
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8014A8FC[8] = {
-    0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; void *f21; unsigned int f22; unsigned int f23; void *f24; unsigned int f25; void *f26; unsigned int f27; unsigned int f28; void *f29; unsigned int f30; void *f31; unsigned int f32; unsigned int f33; void *f34; unsigned int f35; void *f36; unsigned int f37; unsigned int f38; void *f39; } extab_fn_8014AA38 = { 0x300A0000, 0x00000080, 0x00150058, 0x000000E4, 0x00000050, 0x0000011C, 0x00060058, 0x00000148, 0x00000064, 0x00000154, 0x00000058, 0x00000160, 0x00000078, 0x0000018C, 0x00000058, 0x000001AC, 0x0000008C, 0x000001B8, 0x00100058, 0x00000000, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801419C8, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801419C8, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801419C8, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801419C8 };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8014AC48[8] = {
-    0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 __declspec(section ".extab_user") static const unsigned char extab_fn_8014ADB4[8] = {
@@ -656,13 +650,7 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_8014B118[8
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_8014BBE4 = { 0x204A0000, 0x0000004C, 0x00C80010, 0x00000000, 0x82000008, (void *)&dtor_800869D0 };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8014BF80[8] = {
-    0x28, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8014C308[8] = {
-    0x28, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; unsigned int f45; unsigned int f46; unsigned int f47; unsigned int f48; unsigned int f49; unsigned int f50; unsigned int f51; unsigned int f52; unsigned int f53; unsigned int f54; unsigned int f55; unsigned int f56; unsigned int f57; unsigned int f58; unsigned int f59; unsigned int f60; void *f61; unsigned int f62; unsigned int f63; void *f64; unsigned int f65; void *f66; unsigned int f67; unsigned int f68; void *f69; unsigned int f70; void *f71; unsigned int f72; unsigned int f73; void *f74; unsigned int f75; void *f76; unsigned int f77; unsigned int f78; void *f79; unsigned int f80; void *f81; unsigned int f82; unsigned int f83; void *f84; unsigned int f85; void *f86; unsigned int f87; void *f88; unsigned int f89; unsigned int f90; void *f91; unsigned int f92; void *f93; unsigned int f94; void *f95; unsigned int f96; unsigned int f97; void *f98; unsigned int f99; void *f100; unsigned int f101; unsigned int f102; void *f103; unsigned int f104; unsigned int f105; void *f106; unsigned int f107; void *f108; unsigned int f109; unsigned int f110; void *f111; unsigned int f112; void *f113; unsigned int f114; unsigned int f115; void *f116; unsigned int f117; void *f118; unsigned int f119; unsigned int f120; void *f121; } extab_fn_8014C53C = { 0x414A0000, 0x00000068, 0x000400F8, 0x00000088, 0x000000F0, 0x00000098, 0x001800F8, 0x00000104, 0x00000104, 0x00000110, 0x000000F8, 0x0000011C, 0x00000118, 0x00000128, 0x000000F8, 0x00000134, 0x0000012C, 0x00000180, 0x00A500F8, 0x00000420, 0x00000140, 0x00000428, 0x000F00F8, 0x00000498, 0x0000015C, 0x000004A8, 0x00040154, 0x000004CC, 0x0020015C, 0x0000058C, 0x000900F8, 0x000005C8, 0x00000178, 0x000005DC, 0x00000170, 0x000005E8, 0x00000178, 0x000005FC, 0x0000018C, 0x00000634, 0x00160178, 0x000006B8, 0x000700F8, 0x000006E4, 0x00040198, 0x00000708, 0x003000F8, 0x000007E0, 0x000001AC, 0x00000804, 0x000000F8, 0x0000081C, 0x000001C0, 0x0000084C, 0x000B00F8, 0x00000884, 0x000001D4, 0x0000089C, 0x001700F8, 0x00000000, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_8007D0D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_8007D0D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_8007D0D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_8007D0D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_8007D0D4, 0x0A80001E, (void *)&MemoryManager_TimedFree, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_8007D0D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_8007D0D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x01000178, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_8007D0D4, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_8007D0D4, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_8007D0D4, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_8007D0D4 };
 
@@ -695,13 +683,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_80147EE8, 0x00000284, (void *)&extab_fn_80147EE8
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014816C = {
-    (void *)&fn_8014816C, 0x000004DC, (void *)extab_fn_8014816C
-};
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80148648 = {
-    (void *)&fn_80148648, 0x000001C8, (void *)extab_fn_80148648
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80148810 = {
     (void *)&fn_80148810, 0x00000234, (void *)&extab_fn_80148810
@@ -714,23 +696,11 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_80149244 = {
-    (void *)&dtor_80149244, 0x000000DC, (void *)extab_dtor_80149244
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_80149320 = {
-    (void *)&dtor_80149320, 0x00000090, (void *)extab_dtor_80149320
-};
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801494A4 = {
-    (void *)&fn_801494A4, 0x000005E4, (void *)&extab_fn_801494A4
-};
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80149A88 = {
-    (void *)&fn_80149A88, 0x00000104, (void *)extab_fn_80149A88
-};
+
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80149B8C = {
     (void *)&fn_80149B8C, 0x0000014C, (void *)&extab_fn_80149B8C
@@ -744,17 +714,11 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014A8FC = {
-    (void *)&fn_8014A8FC, 0x0000013C, (void *)extab_fn_8014A8FC
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014AA38 = {
     (void *)&fn_8014AA38, 0x00000210, (void *)&extab_fn_8014AA38
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014AC48 = {
-    (void *)&fn_8014AC48, 0x00000134, (void *)extab_fn_8014AC48
-};
 
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014ADB4 = {
@@ -769,13 +733,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_8014BBE4, 0x0000039C, (void *)&extab_fn_8014BBE4
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014BF80 = {
-    (void *)&fn_8014BF80, 0x00000388, (void *)extab_fn_8014BF80
-};
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014C308 = {
-    (void *)&fn_8014C308, 0x00000234, (void *)extab_fn_8014C308
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014C53C = {
     (void *)&fn_8014C53C, 0x00000938, (void *)&extab_fn_8014C53C
@@ -783,6 +741,178 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 }
 
+
+struct ResTrio {
+    char res[3][0x58];
+};
+
+inline ResTrio *ResTrio_Destroy(ResTrio *self, short flag) {
+    if (self != 0) {
+        __destroy_arr(self, (void *)dtor_80082960, 0x58, 3);
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
+}
+
+struct HudResSet {
+    char pad0[0x10];
+    char res[11][0x58];
+    char texts[3][0x230];
+    ResTrio tail;
+    ~HudResSet() {
+        ResTrio_Destroy(&tail, 0);
+        __destroy_arr(texts, (void *)dtor_800869D0, 0x230, 3);
+        __destroy_arr(res, (void *)dtor_80082960, 0x58, 11);
+    }
+    static void operator delete(void *p) {
+        MemoryManager_TimedFree(p);
+    }
+};
+
+struct HudResHolder {
+    HudResSet *p;
+};
+
+struct PtrHolder {
+    VObj *p;
+};
+
+inline HudResHolder *HudResHolder_Destroy(HudResHolder *self, short flag) throw() {
+    if (self != 0) {
+        delete self->p;
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
+}
+
+inline PtrHolder *PtrHolder_Destroy(PtrHolder *self, short flag) throw() {
+    if (self != 0) {
+        delete self->p;
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
+}
+
+struct ObjTrio {
+    int f0;
+    VObj *objs[3];
+    void SetColor(float a) {
+        int i;
+        for (i = 0; i < 3; i++) {
+            fn_8013D50C(objs[i], 2.0f, 2.0f, 2.0f, a);
+        }
+    }
+    void Apply() {
+        int i;
+        for (i = 0; i < 3; i++) {
+            fn_8013DAC8(objs[i], f0);
+        }
+    }
+    ~ObjTrio() {
+        int i;
+        for (i = 0; i < 3; i++) {
+            delete objs[i];
+        }
+    }
+    static void operator delete(void *p) {
+        MemoryManager_TimedFree(p);
+    }
+};
+
+struct ObjPair {
+    int f0;
+    VObj *objs[2];
+    void SetAlpha(float a) {
+        int i;
+        for (i = 0; i < 2; i++) {
+            fn_8013D4B0(objs[i], a);
+        }
+    }
+    void Apply() {
+        int i;
+        for (i = 0; i < 2; i++) {
+            fn_8013DAC8(objs[i], f0);
+        }
+    }
+    ~ObjPair() {
+        int i;
+        for (i = 0; i < 2; i++) {
+            delete objs[i];
+        }
+    }
+    static void operator delete(void *p) {
+        MemoryManager_TimedFree(p);
+    }
+};
+
+struct ResultFader {
+    char pad0[0x20];
+    float alpha;
+};
+
+struct ResultPanel {
+    void *vt;
+    char pad4[4];
+    VObj14 *f8;
+    VObj14 *fC;
+    VObj14 *f10;
+    void *f14;
+    void *f18;
+    char pad1C[0x38 - 0x1C];
+    int item;
+    VObj *f3C;
+    char pad40[4];
+    VObj14 *f44;
+    char pad48[8];
+    VObj14 *f50;
+    VObjC *f54;
+    char pad58[0x64 - 0x58];
+    ResultFader *f64;
+    ObjTrio *f68;
+    ObjPair *f6C;
+};
+
+struct HudRankSlot {
+    unsigned char active;
+    char pad1;
+    unsigned short name[7];
+    int chr;
+    int kart;
+    char pad18[4];
+    int icon;
+};
+
+struct HudModel {
+    char data[0x90];
+    HudModel(int kart, int flag) {
+        fn_8013CC24(this, kart, flag);
+    }
+};
+
+struct CountListFull {
+    void *vt;
+    char pad4[0xC];
+    int layer;
+    float t;
+    unsigned char on;
+    char pad19[3];
+    RecordCounter *f1C;
+    char pad20[4];
+    VObj14 *f24;
+    char pad28[4];
+    struct {
+        int count;
+        float t;
+        VObj *obj;
+    } e[6];
+    int highlight;
+};
 
 extern "C" int fn_80147470(LapCtrl *self, int idx) {
     if (idx < 0 || idx >= 2) {
@@ -1009,6 +1139,7 @@ extern "C" asm void fn_801477BC(void) { /* 0x801477BC size:0xF4 */
     blr
 }
 
+#pragma auto_inline off
 extern "C" void fn_801478B0(StepHolder *self) {
     fn_80147900(self->step);
     if (self->step->state == 5) {
@@ -1016,6 +1147,7 @@ extern "C" void fn_801478B0(StepHolder *self) {
         self->state = 4;
     }
 }
+#pragma auto_inline reset
 
 extern "C" asm void fn_80147900(struct StepObj *o) { /* 0x80147900 size:0x1F4 */
     nofralloc
@@ -1601,474 +1733,132 @@ extern "C" asm void fn_80147EE8(void) { /* 0x80147EE8 size:0x284 */
     blr
 }
 
-extern "C" asm void fn_8014816C(void) { /* 0x8014816C size:0x4DC */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stfd f31, 0x20(r1)
-    psq_st f31, 0x28(r1), 0, 0
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    mr r31, r3
-    lwz r0, 0x18(r3)
-    cmpwi r0, 0x3
-    beq fn_8014816C_L_80148260
-    bge fn_8014816C_L_801481B4
-    cmpwi r0, 0x1
-    beq fn_8014816C_L_80148288
-    bge fn_8014816C_L_801484A4
-    cmpwi r0, 0x0
-    bge fn_8014816C_L_801481C4
-    b fn_8014816C_L_801484E0
-    fn_8014816C_L_801481B4:
-    cmpwi r0, 0x5
-    beq fn_8014816C_L_801484D4
-    bge fn_8014816C_L_801484E0
-    b fn_8014816C_L_801484AC
-    fn_8014816C_L_801481C4:
-    lwz r3, 0x94(r31)
-    lwz r0, 0x8(r3)
-    cmpwi r0, 0x0
-    ble fn_8014816C_L_801481DC
-    li r0, 0x0
-    b fn_8014816C_L_801481EC
-    fn_8014816C_L_801481DC:
-    lwz r0, 0xc(r3)
-    li r4, 0x1
-    cntlzw r0, r0
-    rlwnm r0, r4, r0, 31, 31
-    fn_8014816C_L_801481EC:
-    clrlwi r0, r0, 24
-    cmplwi r0, 0x1
-    bne fn_8014816C_L_80148208
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    fn_8014816C_L_80148208:
-    lwz r3, 0x94(r31)
-    lwz r0, 0xc(r3)
-    cmpwi r0, 0x2
-    blt fn_8014816C_L_801484E0
-    lfs f0, lbl_806D7C2C(r2)
-    li r0, 0x1
-    stfs f0, 0x1c(r31)
-    stw r0, 0x18(r31)
-    lwz r0, g_cupId(r13)
-    cmpwi r0, 0xd
-    bne fn_8014816C_L_80148248
-    lbz r0, 0x10(r31)
-    cmplwi r0, 0x1
-    bne fn_8014816C_L_80148248
-    li r0, 0x3
-    stw r0, 0x18(r31)
-    fn_8014816C_L_80148248:
-    bl IsCardValid
-    clrlwi. r0, r3, 24
-    bne fn_8014816C_L_801484E0
-    li r0, 0x4
-    stw r0, 0x18(r31)
-    b fn_8014816C_L_801484E0
-    fn_8014816C_L_80148260:
-    lfs f1, 0x1c(r31)
-    lfs f0, lbl_806D7C30(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8014816C_L_801484E0
-    li r0, 0x1
-    lfs f0, lbl_806D7C2C(r2)
-    stw r0, 0x18(r31)
-    stfs f0, 0x1c(r31)
-    b fn_8014816C_L_801484E0
-    fn_8014816C_L_80148288:
-    lfs f2, 0x1c(r31)
-    lfs f0, lbl_806D7C54(r2)
-    fctiwz f1, f2
-    fcmpo cr0, f2, f0
-    stfd f1, 0x8(r1)
-    lwz r30, 0xc(r1)
-    bge fn_8014816C_L_8014838C
-    fdivs f0, f2, f0
-    lfs f1, lbl_806D7C18(r2)
-    fmuls f1, f1, f0
-    bl Sinf_LUT_Wrap
-    lfs f3, lbl_806D7C5C(r2)
-    clrlwi. r0, r30, 30
-    lfs f2, lbl_806D7C58(r2)
-    lfs f0, lbl_806D7C60(r2)
-    fmadds f1, f3, f1, f2
-    stfs f1, 0x30(r31)
-    stfs f0, 0x3c(r31)
-    bne fn_8014816C_L_801484E0
-    li r0, 0x5
-    mr r3, r31
-    li r30, 0x0
-    mtctr r0
-    fn_8014816C_L_801482E4:
-    lwz r0, 0x4c(r3)
-    cmpwi r0, 0x0
-    bge fn_8014816C_L_8014837C
-    bl rand
-    lis r4, 0xb60b
-    lis r0, 0x4330
-    addi r4, r4, 0x60b7
-    stw r0, 0x8(r1)
-    mulhw r0, r4, r3
-    lfd f1, lbl_806D7C20(r2)
-    add r0, r0, r3
-    srawi r0, r0, 8
-    srwi r4, r0, 31
-    add r0, r0, r4
-    mulli r0, r0, 0x168
-    subf r0, r0, r3
-    xoris r0, r0, 0x8000
-    stw r0, 0xc(r1)
-    lfd f0, 0x8(r1)
-    fsubs f31, f0, f1
-    fmr f1, f31
-    bl Cosf_LUT_Wrap
-    lfs f2, lbl_806D7C18(r2)
-    slwi r30, r30, 4
-    lfs f0, 0x2c(r31)
-    add r3, r31, r30
-    fmadds f0, f2, f1, f0
-    fmr f1, f31
-    stfs f0, 0x40(r3)
-    bl Sinf_LUT_Wrap
-    lfs f2, lbl_806D7C18(r2)
-    add r3, r31, r30
-    lfs f0, 0x30(r31)
-    li r0, 0x0
-    fmadds f0, f2, f1, f0
-    stfs f0, 0x44(r3)
-    stw r0, 0x4c(r3)
-    b fn_8014816C_L_801484E0
-    fn_8014816C_L_8014837C:
-    addi r3, r3, 0x10
-    addi r30, r30, 0x1
-    bdnz fn_8014816C_L_801482E4
-    b fn_8014816C_L_801484E0
-    fn_8014816C_L_8014838C:
-    lfs f0, lbl_806D7C64(r2)
-    fcmpo cr0, f2, f0
-    bge fn_8014816C_L_80148454
-    clrlwi. r0, r30, 30
-    bne fn_8014816C_L_801484E0
-    li r0, 0x5
-    li r30, 0x0
-    mtctr r0
-    fn_8014816C_L_801483AC:
-    lwz r0, 0x4c(r3)
-    cmpwi r0, 0x0
-    bge fn_8014816C_L_80148444
-    bl rand
-    lis r4, 0xb60b
-    lis r0, 0x4330
-    addi r4, r4, 0x60b7
-    stw r0, 0x8(r1)
-    mulhw r0, r4, r3
-    lfd f1, lbl_806D7C20(r2)
-    add r0, r0, r3
-    srawi r0, r0, 8
-    srwi r4, r0, 31
-    add r0, r0, r4
-    mulli r0, r0, 0x168
-    subf r0, r0, r3
-    xoris r0, r0, 0x8000
-    stw r0, 0xc(r1)
-    lfd f0, 0x8(r1)
-    fsubs f31, f0, f1
-    fmr f1, f31
-    bl Cosf_LUT_Wrap
-    lfs f2, lbl_806D7C18(r2)
-    slwi r30, r30, 4
-    lfs f0, 0x2c(r31)
-    add r3, r31, r30
-    fmadds f0, f2, f1, f0
-    fmr f1, f31
-    stfs f0, 0x40(r3)
-    bl Sinf_LUT_Wrap
-    lfs f2, lbl_806D7C18(r2)
-    add r3, r31, r30
-    lfs f0, 0x30(r31)
-    li r0, 0x0
-    fmadds f0, f2, f1, f0
-    stfs f0, 0x44(r3)
-    stw r0, 0x4c(r3)
-    b fn_8014816C_L_801484E0
-    fn_8014816C_L_80148444:
-    addi r3, r3, 0x10
-    addi r30, r30, 0x1
-    bdnz fn_8014816C_L_801483AC
-    b fn_8014816C_L_801484E0
-    fn_8014816C_L_80148454:
-    lfs f0, lbl_806D7C68(r2)
-    fcmpo cr0, f2, f0
-    bge fn_8014816C_L_80148474
-    lfs f1, 0x3c(r31)
-    lfs f0, lbl_806D7C6C(r2)
-    fsubs f0, f1, f0
-    stfs f0, 0x3c(r31)
-    b fn_8014816C_L_801484E0
-    fn_8014816C_L_80148474:
-    lfs f0, lbl_806D7C70(r2)
-    fcmpo cr0, f2, f0
-    bge fn_8014816C_L_80148490
-    lbz r3, 0x9c(r31)
-    addi r0, r3, 0x3
-    stb r0, 0x9c(r31)
-    b fn_8014816C_L_801484E0
-    fn_8014816C_L_80148490:
-    lfs f0, lbl_806D7C2C(r2)
-    li r0, 0x2
-    stfs f0, 0x1c(r31)
-    stw r0, 0x18(r31)
-    b fn_8014816C_L_801484E0
-    fn_8014816C_L_801484A4:
-    bl fn_801478B0
-    b fn_8014816C_L_801484E0
-    fn_8014816C_L_801484AC:
-    lfs f1, 0x1c(r31)
-    lfs f0, lbl_806D7C28(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8014816C_L_801484E0
-    lfs f0, lbl_806D7C2C(r2)
-    li r0, 0x5
-    stfs f0, 0x1c(r31)
-    stw r0, 0x18(r31)
-    b fn_8014816C_L_801484E0
-    fn_8014816C_L_801484D4:
-    li r0, 0x1
-    stw r0, 0xc(r31)
-    b fn_8014816C_L_80148628
-    fn_8014816C_L_801484E0:
-    lfs f2, 0x38(r31)
-    lfs f1, 0x3c(r31)
-    lfs f0, lbl_806D7C90(r2)
-    fadds f1, f2, f1
-    stfs f1, 0x38(r31)
-    lfs f1, 0x38(r31)
-    fcmpo cr0, f1, f0
-    ble fn_8014816C_L_80148508
-    fsubs f0, f1, f0
-    stfs f0, 0x38(r31)
-    fn_8014816C_L_80148508:
-    lwz r3, 0x4c(r31)
-    li r0, -0x1
-    lfs f1, lbl_806D7C94(r2)
-    cmpwi r3, 0x0
-    blt fn_8014816C_L_80148540
-    lfs f0, 0x44(r31)
-    fadds f0, f0, f1
-    stfs f0, 0x44(r31)
-    lwz r3, 0x4c(r31)
-    addi r3, r3, 0x1
-    cmpwi r3, 0xa
-    stw r3, 0x4c(r31)
-    ble fn_8014816C_L_80148540
-    stw r0, 0x4c(r31)
-    fn_8014816C_L_80148540:
-    lwz r3, 0x5c(r31)
-    cmpwi r3, 0x0
-    blt fn_8014816C_L_80148570
-    lfs f0, 0x54(r31)
-    fadds f0, f0, f1
-    stfs f0, 0x54(r31)
-    lwz r3, 0x5c(r31)
-    addi r3, r3, 0x1
-    cmpwi r3, 0xa
-    stw r3, 0x5c(r31)
-    ble fn_8014816C_L_80148570
-    stw r0, 0x5c(r31)
-    fn_8014816C_L_80148570:
-    addi r4, r31, 0x20
-    lwz r3, 0x6c(r31)
-    cmpwi r3, 0x0
-    blt fn_8014816C_L_801485A4
-    lfs f0, 0x44(r4)
-    fadds f0, f0, f1
-    stfs f0, 0x44(r4)
-    lwz r3, 0x4c(r4)
-    addi r3, r3, 0x1
-    cmpwi r3, 0xa
-    stw r3, 0x4c(r4)
-    ble fn_8014816C_L_801485A4
-    stw r0, 0x4c(r4)
-    fn_8014816C_L_801485A4:
-    lwz r3, 0x5c(r4)
-    cmpwi r3, 0x0
-    blt fn_8014816C_L_801485D4
-    lfs f0, 0x54(r4)
-    fadds f0, f0, f1
-    stfs f0, 0x54(r4)
-    lwz r3, 0x5c(r4)
-    addi r3, r3, 0x1
-    cmpwi r3, 0xa
-    stw r3, 0x5c(r4)
-    ble fn_8014816C_L_801485D4
-    stw r0, 0x5c(r4)
-    fn_8014816C_L_801485D4:
-    lwz r3, 0x6c(r4)
-    cmpwi r3, 0x0
-    blt fn_8014816C_L_80148604
-    lfs f0, 0x64(r4)
-    fadds f0, f0, f1
-    stfs f0, 0x64(r4)
-    lwz r3, 0x6c(r4)
-    addi r3, r3, 0x1
-    cmpwi r3, 0xa
-    stw r3, 0x6c(r4)
-    ble fn_8014816C_L_80148604
-    stw r0, 0x6c(r4)
-    fn_8014816C_L_80148604:
-    lbz r0, 0x10(r31)
-    cmplwi r0, 0x1
-    bne fn_8014816C_L_80148618
-    lwz r3, 0x90(r31)
-    bl fn_80140344
-    fn_8014816C_L_80148618:
-    lfs f1, 0x1c(r31)
-    lfs f0, lbl_806D7C38(r2)
-    fadds f0, f1, f0
-    stfs f0, 0x1c(r31)
-    fn_8014816C_L_80148628:
-    psq_l f31, 0x28(r1), 0, 0
-    lwz r0, 0x34(r1)
-    lfd f31, 0x20(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+inline void Record_SpawnSpark(StepHolder *self) {
+    int i;
+    for (i = 0; i < 5; i++) {
+        if (self->sparks[i].life < 0) {
+            float ang = rand() % 360;
+            self->sparks[i].x = 90.0f * Cosf_LUT_Wrap(ang) + self->cx;
+            self->sparks[i].y = 90.0f * Sinf_LUT_Wrap(ang) + self->cy;
+            self->sparks[i].life = 0;
+            return;
+        }
+    }
 }
 
-extern "C" asm void fn_80148648(void) { /* 0x80148648 size:0x1C8 */
-    nofralloc
-    stwu r1, -0x60(r1)
-    mflr r0
-    stw r0, 0x64(r1)
-    stw r31, 0x5c(r1)
-    mr r31, r1
-    stw r30, 0x58(r1)
-    mr r30, r4
-    stw r29, 0x54(r1)
-    mr. r29, r3
-    stw r28, 0x50(r1)
-    beq fn_80148648_L_801487E4
-    lis r3, lbl_8048F020@ha
-    li r4, 0x1
-    addi r0, r3, lbl_8048F020@l
-    stw r0, 0x0(r29)
-    lwz r3, 0x90(r29)
-    bl fn_80140810
-    lwz r3, 0x94(r29)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    bl fn_801F8E54
-    li r3, 0x16d8
-    bl fn_80120A08
-    li r3, 0x14ba
-    bl fn_80120A08
-    li r3, 0x16d1
-    bl fn_80120A08
-    li r3, 0x16d2
-    bl fn_80120A08
-    addic. r0, r29, 0x98
-    beq fn_80148648_L_80148740
-    lwz r28, 0x98(r29)
-    cmplwi r28, 0x0
-    beq fn_80148648_L_80148740
-    addic. r0, r28, 0xa68
-    beq fn_80148648_L_801486F8
-    lis r4, dtor_80082960@ha
-    addi r3, r28, 0xa68
-    addi r4, r4, dtor_80082960@l
-    li r5, 0x58
-    li r6, 0x3
-    bl __destroy_arr
-    fn_80148648_L_801486F8:
-    lis r4, dtor_800869D0@ha
-    addi r3, r28, 0x3d8
-    addi r4, r4, dtor_800869D0@l
-    li r5, 0x230
-    li r6, 0x3
-    bl __destroy_arr
-    lis r4, dtor_80082960@ha
-    addi r3, r28, 0x10
-    addi r4, r4, dtor_80082960@l
-    li r5, 0x58
-    li r6, 0xb
-    bl __destroy_arr
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    b fn_80148648_L_80148740
-    addi r3, r31, 0x38
-    bl __unexpected
-    fn_80148648_L_8014873C:
-    b fn_80148648_L_8014873C
-    fn_80148648_L_80148740:
-    addic. r0, r29, 0x28
-    beq fn_80148648_L_80148778
-    lwz r3, 0x28(r29)
-    cmplwi r3, 0x0
-    beq fn_80148648_L_80148778
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    b fn_80148648_L_80148778
-    addi r3, r31, 0x20
-    bl __unexpected
-    fn_80148648_L_80148774:
-    b fn_80148648_L_80148774
-    fn_80148648_L_80148778:
-    addic. r0, r29, 0x24
-    beq fn_80148648_L_801487B0
-    lwz r3, 0x24(r29)
-    cmplwi r3, 0x0
-    beq fn_80148648_L_801487B0
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    b fn_80148648_L_801487B0
-    addi r3, r31, 0x8
-    bl __unexpected
-    fn_80148648_L_801487AC:
-    b fn_80148648_L_801487AC
-    fn_80148648_L_801487B0:
-    cmplwi r29, 0x0
-    beq fn_80148648_L_801487D4
-    lis r3, lbl_8048ED10@ha
-    addi r0, r3, lbl_8048ED10@l
-    stw r0, 0x0(r29)
-    beq fn_80148648_L_801487D4
-    lis r3, lbl_8048ECF8@ha
-    addi r0, r3, lbl_8048ECF8@l
-    stw r0, 0x0(r29)
-    fn_80148648_L_801487D4:
-    extsh. r0, r30
-    ble fn_80148648_L_801487E4
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    fn_80148648_L_801487E4:
-    mr r10, r31
-    lwz r31, 0x5c(r31)
-    mr r3, r29
-    lwz r30, 0x58(r10)
-    lwz r29, 0x54(r10)
-    lwz r28, 0x50(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+extern "C" void fn_8014816C(StepHolder *self) {
+    int i;
+    switch (self->state) {
+    case 0:
+        if (self->counter->Idle() == 1) {
+            self->counter->Start();
+        }
+        if (self->counter->count >= 2) {
+            self->t = lbl_806D7C2C;
+            self->state = 1;
+            if (g_cupId == 13 && self->active == 1) {
+                self->state = 3;
+            }
+            if (!IsCardValid()) {
+                self->state = 4;
+            }
+        }
+        break;
+    case 3:
+        if (self->t >= 160.0f) {
+            self->state = 1;
+            self->t = lbl_806D7C2C;
+        }
+        break;
+    case 1: {
+        float t = self->t;
+        int frame = (int)t;
+        if (t < 60.0f) {
+            self->cy = 550.0f * Sinf_LUT_Wrap(90.0f * (t / 60.0f)) + 200.0f;
+            self->rotSpeed = 30.0f;
+            if ((frame & 3) == 0) {
+                Record_SpawnSpark(self);
+            }
+        } else if (t < 70.0f) {
+            if ((frame & 3) == 0) {
+                Record_SpawnSpark(self);
+            }
+        } else if (t < 108.0f) {
+            self->rotSpeed -= lbl_806D7C6C;
+        } else if (t < 138.0f) {
+            self->glow += 3;
+        } else {
+            self->t = lbl_806D7C2C;
+            self->state = 2;
+        }
+        break;
+    }
+    case 2:
+        fn_801478B0(self);
+        break;
+    case 4:
+        if (self->t >= 180.0f) {
+            self->t = lbl_806D7C2C;
+            self->state = 5;
+        }
+        break;
+    case 5:
+        self->done = 1;
+        return;
+    }
+    self->rot += self->rotSpeed;
+    if (self->rot > 360.0f) {
+        self->rot -= 360.0f;
+    }
+    for (i = 0; i < 5; i++) {
+        if (self->sparks[i].life >= 0) {
+            self->sparks[i].y += 4.0f;
+            if (++self->sparks[i].life > 10) {
+                self->sparks[i].life = -1;
+            }
+        }
+    }
+    if (self->active == 1) {
+        fn_80140344(self->f90);
+    }
+    self->t += lbl_806D7C38;
+}
+
+struct RecordPanel {
+    void *vt;
+    char pad4[0x20];
+    PtrHolder f24;
+    PtrHolder f28;
+    char pad2C[0x90 - 0x2C];
+    void *f90;
+    VObjC *f94;
+    HudResHolder f98;
+};
+
+extern "C" RecordPanel *fn_80148648(RecordPanel *self, short flag) {
+    if (self != 0) {
+        self->vt = lbl_8048F020;
+        fn_80140810(self->f90, 1);
+        self->f94->vC();
+        fn_801F8E54();
+        fn_80120A08(0x16D8);
+        fn_80120A08(0x14BA);
+        fn_80120A08(0x16D1);
+        fn_80120A08(0x16D2);
+        HudResHolder_Destroy(&self->f98, 0);
+        PtrHolder_Destroy(&self->f28, 0);
+        PtrHolder_Destroy(&self->f24, 0);
+        if (self != 0) {
+            self->vt = lbl_8048ED10;
+            if (self != 0) {
+                self->vt = lbl_8048ECF8;
+            }
+        }
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
 
 extern "C" asm void fn_80148810(void) { /* 0x80148810 size:0x234 */
@@ -2727,112 +2517,24 @@ extern "C" void *fn_80149214(void *t) {
     return t;
 }
 
-extern "C" asm void dtor_80149244(void) { /* 0x80149244 size:0xDC */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stw r31, 0x2c(r1)
-    mr r31, r1
-    stw r30, 0x28(r1)
-    stw r29, 0x24(r1)
-    mr r29, r4
-    stw r28, 0x20(r1)
-    mr. r28, r3
-    beq dtor_80149244_L_801492E4
-    lwz r30, 0x0(r28)
-    cmplwi r30, 0x0
-    beq dtor_80149244_L_801492D4
-    addic. r0, r30, 0xa68
-    beq dtor_80149244_L_8014929C
-    lis r4, dtor_80082960@ha
-    addi r3, r30, 0xa68
-    addi r4, r4, dtor_80082960@l
-    li r5, 0x58
-    li r6, 0x3
-    bl __destroy_arr
-    dtor_80149244_L_8014929C:
-    lis r4, dtor_800869D0@ha
-    addi r3, r30, 0x3d8
-    addi r4, r4, dtor_800869D0@l
-    li r5, 0x230
-    li r6, 0x3
-    bl __destroy_arr
-    lis r4, dtor_80082960@ha
-    addi r3, r30, 0x10
-    addi r4, r4, dtor_80082960@l
-    li r5, 0x58
-    li r6, 0xb
-    bl __destroy_arr
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    dtor_80149244_L_801492D4:
-    extsh. r0, r29
-    ble dtor_80149244_L_801492E4
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    dtor_80149244_L_801492E4:
-    mr r3, r28
-    b dtor_80149244_L_801492F8
-    addi r3, r31, 0x8
-    bl __unexpected
-    dtor_80149244_L_801492F4:
-    b dtor_80149244_L_801492F4
-    dtor_80149244_L_801492F8:
-    mr r10, r31
-    lwz r31, 0x2c(r31)
-    lwz r30, 0x28(r10)
-    lwz r29, 0x24(r10)
-    lwz r28, 0x20(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+extern "C" HudResHolder *dtor_80149244(HudResHolder *self, short flag) throw() {
+    if (self != 0) {
+        delete self->p;
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
 
-extern "C" asm void dtor_80149320(void) { /* 0x80149320 size:0x90 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stw r31, 0x2c(r1)
-    mr r31, r1
-    stw r30, 0x28(r1)
-    mr r30, r4
-    stw r29, 0x24(r1)
-    mr. r29, r3
-    beq dtor_80149320_L_80149378
-    lwz r3, 0x0(r29)
-    cmplwi r3, 0x0
-    beq dtor_80149320_L_80149368
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    dtor_80149320_L_80149368:
-    extsh. r0, r30
-    ble dtor_80149320_L_80149378
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    dtor_80149320_L_80149378:
-    mr r3, r29
-    b dtor_80149320_L_8014938C
-    addi r3, r31, 0x8
-    bl __unexpected
-    dtor_80149320_L_80149388:
-    b dtor_80149320_L_80149388
-    dtor_80149320_L_8014938C:
-    mr r10, r31
-    lwz r31, 0x2c(r31)
-    lwz r30, 0x28(r10)
-    lwz r29, 0x24(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+extern "C" PtrHolder *dtor_80149320(PtrHolder *self, short flag) throw() {
+    if (self != 0) {
+        delete self->p;
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
 
 extern "C" void fn_801493B0(CountList *self) {
@@ -2854,487 +2556,165 @@ extern "C" void fn_80149420(CdHolder *self) {
     }
 }
 
-extern "C" asm void fn_801494A4(void) { /* 0x801494A4 size:0x5E4 */
-    nofralloc
-    stwu r1, -0x70(r1)
-    mflr r0
-    stw r0, 0x74(r1)
-    stfd f31, 0x60(r1)
-    psq_st f31, 0x68(r1), 0, 0
-    stfd f30, 0x50(r1)
-    psq_st f30, 0x58(r1), 0, 0
-    stfd f29, 0x40(r1)
-    psq_st f29, 0x48(r1), 0, 0
-    stfd f28, 0x30(r1)
-    psq_st f28, 0x38(r1), 0, 0
-    stfd f27, 0x20(r1)
-    psq_st f27, 0x28(r1), 0, 0
-    stmw r27, 0xc(r1)
-    mr r28, r3
-    lwz r3, 0x1c(r3)
-    cmplwi r3, 0x0
-    beq fn_801494A4_L_80149510
-    lwz r0, 0xc(r3)
-    cmpwi r0, 0x2
-    blt fn_801494A4_L_80149510
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    li r0, 0x0
-    stw r0, 0x1c(r28)
-    fn_801494A4_L_80149510:
-    lbz r0, 0x18(r28)
-    cmplwi r0, 0x0
-    beq fn_801494A4_L_801499CC
-    li r30, 0x0
-    mr r29, r28
-    fn_801494A4_L_80149524:
-    mr r3, r30
-    bl RankSlot_GetByIndex
-    mr r27, r3
-    lwz r0, 0x14(r3)
-    cmpwi r0, 0x0
-    blt fn_801494A4_L_801495DC
-    lwz r0, 0x2c(r29)
-    cmpwi r0, 0x0
-    bne fn_801494A4_L_801495DC
-    li r0, 0x1
-    li r3, 0x90
-    stw r0, 0x2c(r29)
-    bl Alloc
-    mr. r31, r3
-    beq fn_801494A4_L_8014956C
-    lwz r4, 0x14(r27)
-    li r5, 0x1
-    bl fn_8013CC24
-    fn_801494A4_L_8014956C:
-    stw r31, 0x34(r29)
-    lbz r0, 0x0(r27)
-    cmplwi r0, 0x0
-    beq fn_801494A4_L_801495B0
-    lfs f1, lbl_806D7CD8(r2)
-    lwz r3, 0x34(r29)
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_8013C6EC
-    lfs f1, lbl_806D7CDC(r2)
-    lwz r3, 0x34(r29)
-    fmr f2, f1
-    fmr f3, f1
-    fmr f4, f1
-    bl fn_8013C534
-    stw r30, 0x74(r28)
-    b fn_801494A4_L_801495DC
-    fn_801494A4_L_801495B0:
-    lfs f1, lbl_806D7CE0(r2)
-    lwz r3, 0x34(r29)
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_8013C6EC
-    lfs f1, lbl_806D7CDC(r2)
-    lwz r3, 0x34(r29)
-    fmr f2, f1
-    fmr f3, f1
-    fmr f4, f1
-    bl fn_8013C534
-    fn_801494A4_L_801495DC:
-    addi r30, r30, 0x1
-    addi r29, r29, 0xc
-    cmpwi r30, 0x6
-    blt fn_801494A4_L_80149524
-    lfs f1, 0x14(r28)
-    lfs f0, lbl_806D7CE4(r2)
-    fcmpo cr0, f1, f0
-    ble fn_801494A4_L_801499CC
-    lis r3, lbl_80362858@ha
-    mr r31, r28
-    addi r30, r3, lbl_80362858@l
-    li r29, 0x0
-    fn_801494A4_L_8014960C:
-    lwz r0, 0x2c(r31)
-    cmpwi r0, 0x0
-    beq fn_801494A4_L_801499B8
-    mr r3, r29
-    bl RankSlot_GetByIndex
-    lwz r0, 0x74(r28)
-    mr r27, r3
-    lfs f27, lbl_806D7CE8(r2)
-    cmpw r29, r0
-    bge fn_801494A4_L_80149638
-    lfs f27, lbl_806D7CEC(r2)
-    fn_801494A4_L_80149638:
-    cmpw r29, r0
-    ble fn_801494A4_L_80149644
-    lfs f27, lbl_806D7CF0(r2)
-    fn_801494A4_L_80149644:
-    lwz r3, 0x2c(r31)
-    cmpwi r3, 0x3
-    beq fn_801494A4_L_8014974C
-    bge fn_801494A4_L_80149664
-    cmpwi r3, 0x1
-    beq fn_801494A4_L_80149670
-    bge fn_801494A4_L_801496E8
-    b fn_801494A4_L_80149988
-    fn_801494A4_L_80149664:
-    cmpwi r3, 0x5
-    bge fn_801494A4_L_80149988
-    b fn_801494A4_L_80149840
-    fn_801494A4_L_80149670:
-    cmpwi r29, 0x0
-    bne fn_801494A4_L_8014968C
-    addi r0, r3, 0x1
-    lfs f0, lbl_806D7CE8(r2)
-    stw r0, 0x2c(r31)
-    stfs f0, 0x30(r31)
-    b fn_801494A4_L_801496DC
-    fn_801494A4_L_8014968C:
-    lwz r0, 0x20(r31)
-    cmpwi r0, 0x2
-    bne fn_801494A4_L_801496C8
-    lfs f3, lbl_806D7CF8(r2)
-    lfs f2, 0x24(r31)
-    lfs f1, lbl_806D7CF4(r2)
-    lfs f0, lbl_806D7CFC(r2)
-    fmadds f1, f3, f2, f1
-    fcmpo cr0, f1, f0
-    bge fn_801494A4_L_801496DC
-    addi r0, r3, 0x1
-    lfs f0, lbl_806D7CE8(r2)
-    stw r0, 0x2c(r31)
-    stfs f0, 0x30(r31)
-    b fn_801494A4_L_801496DC
-    fn_801494A4_L_801496C8:
-    ble fn_801494A4_L_801496DC
-    addi r0, r3, 0x1
-    lfs f0, lbl_806D7CE8(r2)
-    stw r0, 0x2c(r31)
-    stfs f0, 0x30(r31)
-    fn_801494A4_L_801496DC:
-    lfs f31, lbl_806D7CF4(r2)
-    lfs f30, lbl_806D7D00(r2)
-    b fn_801494A4_L_80149988
-    fn_801494A4_L_801496E8:
-    lfs f1, 0x30(r31)
-    lfs f0, lbl_806D7CDC(r2)
-    lfs f2, lbl_806D7CF8(r2)
-    fadds f3, f1, f0
-    lfs f1, lbl_806D7CF4(r2)
-    lfs f0, lbl_806D7D04(r2)
-    stfs f3, 0x30(r31)
-    lfs f3, 0x30(r31)
-    fmadds f31, f2, f3, f1
-    fmuls f1, f0, f3
-    bl LUT_Sin12Bit
-    lfs f0, 0x0(r30)
-    lfs f2, lbl_806D7D00(r2)
-    fadds f0, f27, f0
-    lfs f29, lbl_806D7CE8(r2)
-    fadds f30, f2, f1
-    lfs f28, lbl_806D7D08(r2)
-    fcmpo cr0, f31, f0
-    bge fn_801494A4_L_80149988
-    lwz r3, 0x2c(r31)
-    fmr f31, f0
-    addi r0, r3, 0x1
-    stw r0, 0x2c(r31)
-    stfs f29, 0x30(r31)
-    b fn_801494A4_L_80149988
-    fn_801494A4_L_8014974C:
-    lfs f2, 0x30(r31)
-    lfs f1, lbl_806D7CDC(r2)
-    lfs f0, 0x0(r30)
-    fadds f2, f2, f1
-    lfs f1, lbl_806D7D18(r2)
-    lfs f4, lbl_806D7D10(r2)
-    fadds f31, f27, f0
-    lfs f0, lbl_806D7D28(r2)
-    stfs f2, 0x30(r31)
-    lfs f5, lbl_806D7D0C(r2)
-    lfs f6, 0x30(r31)
-    lfs f3, lbl_806D7D14(r2)
-    fdivs f2, f6, f1
-    lfs f1, lbl_806D7D08(r2)
-    lfs f30, lbl_806D7D00(r2)
-    fmuls f4, f4, f6
-    fcmpo cr0, f6, f0
-    fmadds f28, f3, f2, f1
-    fmuls f29, f5, f4
-    cror eq, lt, eq
-    bne fn_801494A4_L_801497B8
-    lfs f0, lbl_806D7D20(r2)
-    fmuls f1, f0, f6
-    bl LUT_Sin12Bit
-    lfs f0, lbl_806D7D1C(r2)
-    fmuls f3, f0, f1
-    b fn_801494A4_L_801497D4
-    fn_801494A4_L_801497B8:
-    fsubs f0, f6, f0
-    lfs f1, lbl_806D7D04(r2)
-    fmuls f1, f1, f0
-    bl fn_80186960
-    lfs f2, lbl_806D7D24(r2)
-    lfs f0, lbl_806D7CDC(r2)
-    fmadds f3, f2, f1, f0
-    fn_801494A4_L_801497D4:
-    lfs f0, lbl_806D7D2C(r2)
-    fmr f4, f3
-    lwz r3, 0x10(r28)
-    addi r4, r29, 0x96b
-    fadds f1, f0, f31
-    lfs f2, lbl_806D7D30(r2)
-    addi r3, r3, 0x1
-    li r5, 0x0
-    bl fn_801697C0
-    lfs f1, 0x30(r31)
-    lfs f0, lbl_806D7D18(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_801494A4_L_80149988
-    lwz r3, 0x2c(r31)
-    cmpwi r29, 0x0
-    lfs f0, lbl_806D7CE8(r2)
-    addi r0, r3, 0x1
-    stw r0, 0x2c(r31)
-    stfs f0, 0x30(r31)
-    bne fn_801494A4_L_80149834
-    lwz r3, 0x34(r31)
-    bl fn_8013CA70
-    b fn_801494A4_L_80149988
-    fn_801494A4_L_80149834:
-    lwz r3, 0x34(r31)
-    bl fn_8013CA04
-    b fn_801494A4_L_80149988
-    fn_801494A4_L_80149840:
-    lfs f2, 0x30(r31)
-    lfs f1, lbl_806D7CDC(r2)
-    lfs f0, 0x0(r30)
-    fadds f1, f2, f1
-    lfs f30, lbl_806D7D00(r2)
-    fadds f31, f27, f0
-    lfs f29, lbl_806D7D10(r2)
-    lfs f28, lbl_806D7D34(r2)
-    stfs f1, 0x30(r31)
-    lwz r3, 0x1c(r27)
-    cmpwi r3, 0x0
-    blt fn_801494A4_L_801498DC
-    lfs f0, lbl_806D7D18(r2)
-    addi r4, r3, 0x2b00
-    lwz r3, 0x10(r28)
-    li r5, 0x0
-    fadds f27, f0, f31
-    lfs f4, lbl_806D7D3C(r2)
-    lfs f2, lbl_806D6DE4(r2)
-    addi r3, r3, 0x1
-    lfs f0, lbl_806D6DE8(r2)
-    fmr f1, f27
-    fmuls f3, f4, f2
-    lfs f2, lbl_806D7D38(r2)
-    fmuls f4, f4, f0
-    bl fn_801697C0
-    lwz r3, 0x10(r27)
-    li r5, 0x0
-    lwz r4, 0x14(r27)
-    bl fn_80231BD4
-    lfs f3, lbl_806D7D3C(r2)
-    fmr f1, f27
-    lwz r5, 0x10(r28)
-    mr r4, r3
-    fmr f4, f3
-    lfs f2, lbl_806D7D38(r2)
-    addi r3, r5, 0x1
-    li r5, 0x0
-    bl fn_801697C0
-    fn_801494A4_L_801498DC:
-    lfs f0, lbl_806D7D40(r2)
-    addi r4, r27, 0x2
-    lwz r3, 0x10(r28)
-    fadds f1, f0, f31
-    lfs f2, lbl_806D7D44(r2)
-    addi r3, r3, 0x1
-    creqv 6, 6, 6
-    bl fn_801680A0
-    lfs f0, lbl_806D7D2C(r2)
-    addi r4, r29, 0x96b
-    lwz r3, 0x10(r28)
-    li r5, 0x0
-    fadds f27, f0, f31
-    lfs f2, lbl_806D7D30(r2)
-    addi r3, r3, 0x1
-    fmr f1, f27
-    bl fn_801698B4
-    lbz r0, 0x0(r27)
-    cmplwi r0, 0x0
-    beq fn_801494A4_L_8014996C
-    lfs f1, lbl_806D7D4C(r2)
-    lfs f0, 0x30(r31)
-    fmuls f1, f1, f0
-    bl LUT_Sin12Bit
-    lfs f3, lbl_806D7CDC(r2)
-    addi r4, r29, 0x96b
-    lfs f0, lbl_806D7D48(r2)
-    li r5, 0x2
-    lwz r3, 0x10(r28)
-    fmr f4, f3
-    fmuls f6, f0, f1
-    lfs f2, lbl_806D7D30(r2)
-    fmr f1, f27
-    addi r3, r3, 0x1
-    fmr f5, f3
-    bl fn_80169468
-    fn_801494A4_L_8014996C:
-    lfs f1, 0x30(r31)
-    lfs f0, lbl_806D7D50(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_801494A4_L_80149988
-    lfs f0, lbl_806D7CE8(r2)
-    stfs f0, 0x30(r31)
-    fn_801494A4_L_80149988:
-    fmr f1, f31
-    lwz r3, 0x34(r31)
-    fmr f2, f30
-    bl fn_8013C7B0
-    fmr f1, f28
-    lwz r3, 0x34(r31)
-    bl fn_8013C5FC
-    fmr f1, f29
-    lwz r3, 0x34(r31)
-    bl fn_8013C674
-    lwz r3, 0x34(r31)
-    bl fn_8013C91C
-    fn_801494A4_L_801499B8:
-    addi r29, r29, 0x1
-    addi r30, r30, 0x4
-    cmpwi r29, 0x6
-    addi r31, r31, 0xc
-    blt fn_801494A4_L_8014960C
-    fn_801494A4_L_801499CC:
-    lwz r3, 0x24(r28)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x24(r28)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x1c(r28)
-    cmplwi r3, 0x0
-    beq fn_801494A4_L_80149A3C
-    lwz r0, 0x8(r3)
-    cmpwi r0, 0x0
-    ble fn_801494A4_L_80149A14
-    li r0, 0x0
-    b fn_801494A4_L_80149A24
-    fn_801494A4_L_80149A14:
-    lwz r0, 0xc(r3)
-    li r4, 0x1
-    cntlzw r0, r0
-    rlwnm r0, r4, r0, 31, 31
-    fn_801494A4_L_80149A24:
-    clrlwi. r0, r0, 24
-    beq fn_801494A4_L_80149A3C
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    fn_801494A4_L_80149A3C:
-    lfs f1, 0x14(r28)
-    lfs f0, lbl_806D7CDC(r2)
-    fadds f0, f1, f0
-    stfs f0, 0x14(r28)
-    psq_l f31, 0x68(r1), 0, 0
-    lfd f31, 0x60(r1)
-    psq_l f30, 0x58(r1), 0, 0
-    lfd f30, 0x50(r1)
-    psq_l f29, 0x48(r1), 0, 0
-    lfd f29, 0x40(r1)
-    psq_l f28, 0x38(r1), 0, 0
-    lfd f28, 0x30(r1)
-    psq_l f27, 0x28(r1), 0, 0
-    lfd f27, 0x20(r1)
-    lmw r27, 0xc(r1)
-    lwz r0, 0x74(r1)
-    mtlr r0
-    addi r1, r1, 0x70
-    blr
+#pragma use_lmw_stmw on
+extern "C" void fn_801494A4(CountListFull *self) {
+    int i;
+    if (self->f1C != 0 && self->f1C->count >= 2) {
+        self->f1C->vC();
+        self->f1C = 0;
+    }
+    if (self->on) {
+        for (i = 0; i < 6; i++) {
+            HudRankSlot *slot = RankSlot_GetByIndex(i);
+            if (slot->kart >= 0 && self->e[i].count == 0) {
+                self->e[i].count = 1;
+                self->e[i].obj = (VObj *)new HudModel(slot->kart, 1);
+                if (slot->active) {
+                    fn_8013C6EC(self->e[i].obj, 0.014f, 0.014f, 0.014f);
+                    fn_8013C534(self->e[i].obj, 1.0f, 1.0f, 1.0f, 1.0f);
+                    self->highlight = i;
+                } else {
+                    fn_8013C6EC(self->e[i].obj, 0.007f, 0.007f, 0.007f);
+                    fn_8013C534(self->e[i].obj, 1.0f, 1.0f, 1.0f, 1.0f);
+                }
+            }
+        }
+        if (self->t > 300.0f) {
+            for (i = 0; i < 6; i++) {
+                HudRankSlot *slot;
+                float x;
+                float y;
+                float sy;
+                float sx;
+                float off;
+                if (self->e[i].count == 0) {
+                    continue;
+                }
+                slot = RankSlot_GetByIndex(i);
+                off = lbl_806D7CE8;
+                if (i < self->highlight) {
+                    off = -25.0f;
+                }
+                if (i > self->highlight) {
+                    off = 25.0f;
+                }
+                switch (self->e[i].count) {
+                case 1:
+                    if (i == 0) {
+                        self->e[i].count++;
+                        self->e[i].t = lbl_806D7CE8;
+                    } else if (self->e[i - 1].count == 2) {
+                        if (-18.0f * self->e[i - 1].t + 718.0f < 510.0f) {
+                            self->e[i].count++;
+                            self->e[i].t = lbl_806D7CE8;
+                        }
+                    } else if (self->e[i - 1].count > 2) {
+                        self->e[i].count++;
+                        self->e[i].t = lbl_806D7CE8;
+                    }
+                    x = 718.0f;
+                    y = 350.0f;
+                    break;
+                case 2:
+                    self->e[i].t += 1.0f;
+                    x = -18.0f * self->e[i].t + 718.0f;
+                    y = 350.0f + LUT_Sin12Bit(45.0f * self->e[i].t);
+                    sy = lbl_806D7CE8;
+                    sx = -1.570796f;
+                    if (x < off + lbl_80362858[i]) {
+                        x = off + lbl_80362858[i];
+                        self->e[i].count++;
+                        self->e[i].t = lbl_806D7CE8;
+                    }
+                    break;
+                case 3: {
+                    float s;
+                    self->e[i].t += 1.0f;
+                    x = off + lbl_80362858[i];
+                    y = 350.0f;
+                    sy = 0.1f * (0.17453292f * self->e[i].t);
+                    sx = 1.4311696f * (self->e[i].t / 10.0f) + -1.570796f;
+                    if (self->e[i].t <= 8.0f) {
+                        s = 1.5f * LUT_Sin12Bit(11.25f * self->e[i].t);
+                    } else {
+                        s = 0.5f * fn_80186960(45.0f * (self->e[i].t - 8.0f)) + 1.0f;
+                    }
+                    fn_801697C0(self->layer + 1, i + 0x96B, 0, -20.0f + x, 380.0f, s, s);
+                    if (self->e[i].t >= 10.0f) {
+                        self->e[i].count++;
+                        self->e[i].t = lbl_806D7CE8;
+                        if (i == 0) {
+                            fn_8013CA70(self->e[i].obj);
+                        } else {
+                            fn_8013CA04(self->e[i].obj);
+                        }
+                    }
+                    break;
+                }
+                case 4: {
+                    float nx;
+                    self->e[i].t += 1.0f;
+                    y = 350.0f;
+                    x = off + lbl_80362858[i];
+                    sy = 0.17453292f;
+                    sx = -0.13962634f;
+                    if (slot->icon >= 0) {
+                        float ix = 10.0f + x;
+                        fn_801697C0(self->layer + 1, slot->icon + 0x2B00, 0, ix, 370.0f, 0.75f * lbl_806D6DE4, 0.75f * lbl_806D6DE8);
+                        fn_801697C0(self->layer + 1, fn_80231BD4(slot->chr, slot->kart, 0), 0, ix, 370.0f, 0.75f, 0.75f);
+                    }
+                    fn_801680A0(self->layer + 1, slot->name, -30.0f + x, 408.0f);
+                    nx = -20.0f + x;
+                    fn_801698B4(self->layer + 1, i + 0x96B, 0, nx, 380.0f);
+                    if (slot->active) {
+                        fn_80169468(self->layer + 1, i + 0x96B, 2, nx, 380.0f, 1.0f, 1.0f, 1.0f, 0.8f * LUT_Sin12Bit(lbl_806D7D4C * self->e[i].t));
+                    }
+                    if (self->e[i].t >= lbl_806D7D50) {
+                        self->e[i].t = lbl_806D7CE8;
+                    }
+                    break;
+                }
+                }
+                fn_8013C7B0(self->e[i].obj, x, y);
+                fn_8013C5FC(self->e[i].obj, sx);
+                fn_8013C674(self->e[i].obj, sy);
+                fn_8013C91C(self->e[i].obj);
+            }
+        }
+    }
+    self->f24->v14();
+    self->f24->v18();
+    if (self->f1C != 0 && self->f1C->Idle()) {
+        self->f1C->Start();
+    }
+    self->t += 1.0f;
 }
+#pragma use_lmw_stmw reset
 
-extern "C" asm void fn_80149A88(void) { /* 0x80149A88 size:0x104 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    stw r29, 0x14(r1)
-    mr r29, r4
-    stw r28, 0x10(r1)
-    mr. r28, r3
-    beq fn_80149A88_L_80149B68
-    lis r3, lbl_8048F058@ha
-    addi r0, r3, lbl_8048F058@l
-    stw r0, 0x0(r28)
-    lwz r3, 0x1c(r28)
-    cmplwi r3, 0x0
-    beq fn_80149A88_L_80149AD8
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    fn_80149A88_L_80149AD8:
-    lwz r3, 0x24(r28)
-    cmplwi r3, 0x0
-    beq fn_80149A88_L_80149AF8
-    lwz r12, 0x14(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_80149A88_L_80149AF8:
-    li r30, 0x0
-    mr r31, r28
-    fn_80149A88_L_80149B00:
-    lwz r3, 0x34(r31)
-    cmplwi r3, 0x0
-    beq fn_80149A88_L_80149B24
-    beq fn_80149A88_L_80149B24
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_80149A88_L_80149B24:
-    addi r30, r30, 0x1
-    addi r31, r31, 0xc
-    cmpwi r30, 0x6
-    blt fn_80149A88_L_80149B00
-    cmplwi r28, 0x0
-    beq fn_80149A88_L_80149B58
-    lis r3, lbl_8048ED10@ha
-    addi r0, r3, lbl_8048ED10@l
-    stw r0, 0x0(r28)
-    beq fn_80149A88_L_80149B58
-    lis r3, lbl_8048ECF8@ha
-    addi r0, r3, lbl_8048ECF8@l
-    stw r0, 0x0(r28)
-    fn_80149A88_L_80149B58:
-    extsh. r0, r29
-    ble fn_80149A88_L_80149B68
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    fn_80149A88_L_80149B68:
-    lwz r0, 0x24(r1)
-    mr r3, r28
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+extern "C" CountListFull *fn_80149A88(CountListFull *self, short flag) {
+    if (self != 0) {
+        int i;
+        self->vt = lbl_8048F058;
+        if (self->f1C != 0) {
+            self->f1C->vC();
+        }
+        delete self->f24;
+        for (i = 0; i < 6; i++) {
+            if (self->e[i].obj != 0) {
+                delete self->e[i].obj;
+            }
+        }
+        if (self != 0) {
+            self->vt = lbl_8048ED10;
+            if (self != 0) {
+                self->vt = lbl_8048ECF8;
+            }
+        }
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
 
 extern "C" asm void fn_80149B8C(void) { /* 0x80149B8C size:0x14C */
@@ -4179,94 +3559,44 @@ extern "C" HudPanel *fn_8014A890(HudPanel *self, short flag) {
     return self;
 }
 
-extern "C" asm void fn_8014A8FC(void) { /* 0x8014A8FC size:0x13C */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    stw r29, 0x14(r1)
-    mr r29, r4
-    stw r28, 0x10(r1)
-    mr. r28, r3
-    beq fn_8014A8FC_L_8014AA14
-    lis r3, lbl_8048F090@ha
-    addi r0, r3, lbl_8048F090@l
-    stw r0, 0x0(r28)
-    bl StrPcb_GetInstance
-    li r4, 0x4
-    bl StrPcb_ClearStatusBits
-    lwz r3, 0x34(r28)
-    cmplwi r3, 0x0
-    beq fn_8014A8FC_L_8014A958
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    fn_8014A8FC_L_8014A958:
-    lwz r3, 0x38(r28)
-    cmplwi r3, 0x0
-    beq fn_8014A8FC_L_8014A978
-    lwz r12, 0x14(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8014A8FC_L_8014A978:
-    lwz r3, 0x68(r28)
-    li r4, 0x1
-    bl fn_8023CFE0
-    lwz r3, 0x60(r28)
-    cmplwi r3, 0x0
-    beq fn_8014A8FC_L_8014A9A8
-    beq fn_8014A8FC_L_8014A9A8
-    lwz r12, 0x14(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8014A8FC_L_8014A9A8:
-    li r30, 0x0
-    mr r31, r28
-    fn_8014A8FC_L_8014A9B0:
-    lwz r3, 0x3c(r31)
-    cmplwi r3, 0x0
-    beq fn_8014A8FC_L_8014A9D0
-    lwz r12, 0x14(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8014A8FC_L_8014A9D0:
-    addi r30, r30, 0x1
-    addi r31, r31, 0x4
-    cmpwi r30, 0x9
-    blt fn_8014A8FC_L_8014A9B0
-    cmplwi r28, 0x0
-    beq fn_8014A8FC_L_8014AA04
-    lis r3, lbl_8048ED10@ha
-    addi r0, r3, lbl_8048ED10@l
-    stw r0, 0x0(r28)
-    beq fn_8014A8FC_L_8014AA04
-    lis r3, lbl_8048ECF8@ha
-    addi r0, r3, lbl_8048ECF8@l
-    stw r0, 0x0(r28)
-    fn_8014A8FC_L_8014AA04:
-    extsh. r0, r29
-    ble fn_8014A8FC_L_8014AA14
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    fn_8014A8FC_L_8014AA14:
-    lwz r0, 0x24(r1)
-    mr r3, r28
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+struct StrPanel {
+    void *vt;
+    char pad4[0x30];
+    VObjC *f34;
+    VObj14 *f38;
+    VObj14 *f3C[9];
+    VObj14 *f60;
+    char pad64[4];
+    void *f68;
+};
+
+extern "C" StrPanel *fn_8014A8FC(StrPanel *self, short flag) {
+    if (self != 0) {
+        int i;
+        self->vt = lbl_8048F090;
+        StrPcb_ClearStatusBits(StrPcb_GetInstance(), 4);
+        if (self->f34 != 0) {
+            self->f34->vC();
+        }
+        delete self->f38;
+        fn_8023CFE0(self->f68, 1);
+        if (self->f60 != 0) {
+            delete self->f60;
+        }
+        for (i = 0; i < 9; i++) {
+            delete self->f3C[i];
+        }
+        if (self != 0) {
+            self->vt = lbl_8048ED10;
+            if (self != 0) {
+                self->vt = lbl_8048ECF8;
+            }
+        }
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
 
 extern "C" asm void fn_8014AA38(void) { /* 0x8014AA38 size:0x210 */
@@ -4412,87 +3742,16 @@ extern "C" asm void fn_8014AA38(void) { /* 0x8014AA38 size:0x210 */
     blr
 }
 
-extern "C" asm void fn_8014AC48(void) { /* 0x8014AC48 size:0x134 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lfs f3, lbl_806D7D60(r2)
-    lis r4, lbl_803628A8@ha
-    stw r0, 0x14(r1)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, lbl_806D7E10(r2)
-    stw r31, 0xc(r1)
-    addi r31, r4, lbl_803628A8@l
-    fmr f5, f3
-    lfs f2, lbl_806D7D68(r2)
-    stw r30, 0x8(r1)
-    fmr f6, f3
-    fmr f7, f3
-    mr r30, r3
-    fmr f8, f3
-    li r4, 0x580
-    bl fn_80142010
-    bl isJapanese
-    cmpwi r3, 0x1
-    bne fn_8014AC48_L_8014AD04
-    lfs f3, lbl_806D7D60(r2)
-    mr r3, r30
-    lfs f1, lbl_806D7E14(r2)
-    addi r4, r31, 0x494
-    fmr f4, f3
-    lfs f2, lbl_806D7E18(r2)
-    fmr f5, f3
-    fmr f6, f3
-    fmr f7, f3
-    fmr f8, f3
-    creqv 6, 6, 6
-    bl fn_80141E70
-    lfs f3, lbl_806D7D60(r2)
-    mr r3, r30
-    lfs f1, lbl_806D7E14(r2)
-    addi r4, r31, 0x4a4
-    fmr f4, f3
-    lfs f2, lbl_806D7E1C(r2)
-    fmr f5, f3
-    fmr f6, f3
-    fmr f7, f3
-    fmr f8, f3
-    creqv 6, 6, 6
-    bl fn_80141E70
-    b fn_8014AC48_L_8014AD64
-    fn_8014AC48_L_8014AD04:
-    lfs f3, lbl_806D7D60(r2)
-    mr r3, r30
-    lfs f1, lbl_806D7E14(r2)
-    addi r4, r31, 0x4b8
-    fmr f4, f3
-    lfs f2, lbl_806D7E18(r2)
-    fmr f5, f3
-    fmr f6, f3
-    fmr f7, f3
-    fmr f8, f3
-    creqv 6, 6, 6
-    bl fn_80141E70
-    lfs f3, lbl_806D7D60(r2)
-    mr r3, r30
-    lfs f1, lbl_806D7E14(r2)
-    addi r4, r31, 0x4d0
-    fmr f4, f3
-    lfs f2, lbl_806D7E1C(r2)
-    fmr f5, f3
-    fmr f6, f3
-    fmr f7, f3
-    fmr f8, f3
-    creqv 6, 6, 6
-    bl fn_80141E70
-    fn_8014AC48_L_8014AD64:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+extern "C" void fn_8014AC48(void *self) {
+    char *str = lbl_803628A8;
+    fn_80142010(self, 0x580, 0, 134.0f, lbl_806D7D68, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60);
+    if (isJapanese() == 1) {
+        fn_80141E70(self, -212.0f, -52.0f, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, str + 0x494);
+        fn_80141E70(self, -212.0f, -22.0f, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, str + 0x4A4);
+    } else {
+        fn_80141E70(self, -212.0f, -52.0f, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, str + 0x4B8);
+        fn_80141E70(self, -212.0f, -22.0f, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, str + 0x4D0);
+    }
 }
 
 extern "C" void fn_8014AD7C(VObj *p) {
@@ -5703,407 +4962,98 @@ extern "C" asm void fn_8014BBE4(void) { /* 0x8014BBE4 size:0x39C */
     blr
 }
 
-extern "C" asm void fn_8014BF80(void) { /* 0x8014BF80 size:0x388 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stfd f31, 0x20(r1)
-    psq_st f31, 0x28(r1), 0, 0
-    stmw r27, 0xc(r1)
-    mr r31, r3
-    fmr f31, f1
-    lwz r28, 0x38(r3)
-    mr r3, r28
-    bl Item_GetDescriptorField8
-    mr r0, r3
-    mr r3, r28
-    mr r30, r0
-    bl Item_GetDescriptorFieldC
-    cmpwi r30, 0x0
-    li r0, -0x1
-    blt fn_8014BF80_L_8014BFCC
-    addi r0, r30, 0x503
-    fn_8014BF80_L_8014BFCC:
-    cmpwi r3, 0x0
-    mr r27, r0
-    li r29, -0x1
-    blt fn_8014BF80_L_8014BFE0
-    addi r29, r3, 0x1e1d
-    fn_8014BF80_L_8014BFE0:
-    mr r3, r30
-    bl fn_8013BEC8
-    fmr f5, f31
-    mr r30, r3
-    lfs f1, lbl_806D7E58(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D7E5C(r2)
-    li r4, 0x14e5
-    lfs f3, lbl_806D7E60(r2)
-    li r5, 0x0
-    lfs f4, lbl_806D7E2C(r2)
-    bl fn_80169334
-    fmr f3, f31
-    lfs f1, lbl_806D7E9C(r2)
-    lfs f2, lbl_806D7EA0(r2)
-    li r3, 0x0
-    li r4, 0x14e7
-    li r5, 0x0
-    bl fn_801695E0
-    fmr f5, f31
-    lfs f1, lbl_806D7EA4(r2)
-    lfs f2, lbl_806D7EA0(r2)
-    li r3, 0x0
-    lfs f3, lbl_806D7EA8(r2)
-    li r4, 0x14e8
-    lfs f4, lbl_806D7E2C(r2)
-    li r5, 0x0
-    bl fn_80169334
-    fmr f3, f31
-    lfs f1, lbl_806D7EAC(r2)
-    lfs f2, lbl_806D7EB0(r2)
-    li r3, 0x0
-    li r4, 0x14e2
-    li r5, 0x0
-    bl fn_801695E0
-    lfs f3, lbl_806D7E2C(r2)
-    fmr f5, f31
-    lfs f1, lbl_806D7EB4(r2)
-    li r3, 0x0
-    fmr f4, f3
-    lfs f2, lbl_806D7EB8(r2)
-    li r4, 0x14ea
-    li r5, 0x0
-    bl fn_80169334
-    fmr f3, f31
-    lfs f1, lbl_806D7EB4(r2)
-    lfs f2, lbl_806D7EBC(r2)
-    mr r4, r27
-    li r3, 0x0
-    li r5, 0x0
-    bl fn_801695E0
-    fmr f3, f31
-    lfs f1, lbl_806D7EB4(r2)
-    lfs f2, lbl_806D7EBC(r2)
-    mr r4, r29
-    li r3, 0x0
-    li r5, 0x0
-    bl fn_801695E0
-    mr r3, r28
-    li r4, 0x0
-    bl Item_GetDescriptorField0
-    fmr f3, f31
-    mr r4, r3
-    lfs f1, lbl_806D7EC0(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D7EC4(r2)
-    li r5, 0x0
-    bl fn_801695E0
-    fmr f3, f31
-    lfs f1, lbl_806D7EC8(r2)
-    lfs f2, lbl_806D7ECC(r2)
-    li r3, 0x0
-    li r4, 0x14e6
-    li r5, 0x0
-    bl fn_801695E0
-    li r3, 0x4d
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    fmr f3, f31
-    mr r4, r3
-    lfs f1, lbl_806D7ED0(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D7ECC(r2)
-    creqv 6, 6, 6
-    bl fn_80168798
-    cmplwi r30, 0x0
-    beq fn_8014BF80_L_8014C174
-    mr r3, r28
-    bl fn_8023DAA8
-    lfs f0, 0xc(r30)
-    mr r4, r3
-    lfs f1, lbl_806D7ED4(r2)
-    li r3, 0x0
-    fmuls f6, f0, f31
-    lfs f2, lbl_806D7ED8(r2)
-    lfs f3, 0x0(r30)
-    lfs f4, 0x4(r30)
-    lfs f5, 0x8(r30)
-    creqv 6, 6, 6
-    bl fn_80168B90
-    b fn_8014BF80_L_8014C198
-    fn_8014BF80_L_8014C174:
-    mr r3, r28
-    bl fn_8023DAA8
-    fmr f3, f31
-    mr r4, r3
-    lfs f1, lbl_806D7ED4(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D7ED8(r2)
-    creqv 6, 6, 6
-    bl fn_80168D84
-    fn_8014BF80_L_8014C198:
-    mr r3, r28
-    li r4, 0x0
-    bl fn_8023D938
-    fmr f3, f31
-    mr r4, r3
-    lfs f1, lbl_806D7EDC(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D7EE0(r2)
-    creqv 6, 6, 6
-    bl fn_80168D84
-    mr r3, r28
-    li r4, 0x1
-    bl fn_8023D938
-    fmr f3, f31
-    mr r4, r3
-    lfs f1, lbl_806D7EDC(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D7EBC(r2)
-    creqv 6, 6, 6
-    bl fn_80168D84
-    mr r3, r28
-    li r4, 0x2
-    bl fn_8023D938
-    fmr f3, f31
-    mr r4, r3
-    lfs f1, lbl_806D7EDC(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D7EC8(r2)
-    creqv 6, 6, 6
-    bl fn_80168D84
-    lwz r28, 0x68(r31)
-    cmplwi r28, 0x0
-    beq fn_8014BF80_L_8014C274
-    li r29, 0x0
-    fn_8014BF80_L_8014C220:
-    lfs f1, lbl_806D7EE4(r2)
-    fmr f4, f31
-    lwz r3, 0x4(r28)
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_8013D50C
-    addi r29, r29, 0x1
-    addi r28, r28, 0x4
-    cmpwi r29, 0x3
-    blt fn_8014BF80_L_8014C220
-    lwz r30, 0x68(r31)
-    li r29, 0x0
-    mr r28, r30
-    fn_8014BF80_L_8014C254:
-    lwz r3, 0x4(r28)
-    lwz r4, 0x0(r30)
-    bl fn_8013DAC8
-    addi r29, r29, 0x1
-    addi r28, r28, 0x4
-    cmpwi r29, 0x3
-    blt fn_8014BF80_L_8014C254
-    b fn_8014BF80_L_8014C2E4
-    fn_8014BF80_L_8014C274:
-    lwz r28, 0x6c(r31)
-    cmplwi r28, 0x0
-    beq fn_8014BF80_L_8014C2CC
-    li r29, 0x0
-    fn_8014BF80_L_8014C284:
-    fmr f1, f31
-    lwz r3, 0x4(r28)
-    bl fn_8013D4B0
-    addi r29, r29, 0x1
-    addi r28, r28, 0x4
-    cmpwi r29, 0x2
-    blt fn_8014BF80_L_8014C284
-    lwz r30, 0x6c(r31)
-    li r29, 0x0
-    mr r28, r30
-    fn_8014BF80_L_8014C2AC:
-    lwz r3, 0x4(r28)
-    lwz r4, 0x0(r30)
-    bl fn_8013DAC8
-    addi r29, r29, 0x1
-    addi r28, r28, 0x4
-    cmpwi r29, 0x2
-    blt fn_8014BF80_L_8014C2AC
-    b fn_8014BF80_L_8014C2E4
-    fn_8014BF80_L_8014C2CC:
-    fmr f1, f31
-    lwz r3, 0x3c(r31)
-    bl fn_8013D4B0
-    lwz r3, 0x3c(r31)
-    li r4, 0x1
-    bl fn_8013DAC8
-    fn_8014BF80_L_8014C2E4:
-    lwz r3, 0x64(r31)
-    stfs f31, 0x20(r3)
-    psq_l f31, 0x28(r1), 0, 0
-    lfd f31, 0x20(r1)
-    lmw r27, 0xc(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+#pragma use_lmw_stmw on
+extern "C" void fn_8014BF80(ResultPanel *self, float alpha) {
+    int item = self->item;
+    int a = Item_GetDescriptorField8(item);
+    int b = Item_GetDescriptorFieldC(item);
+    int idA;
+    int idB;
+    if (a >= 0) {
+        idA = a + 0x503;
+    } else {
+        idA = -1;
+    }
+    idB = b >= 0 ? b + 0x1E1D : -1;
+    float *col = fn_8013BEC8(a);
+    fn_80169334(0, 0x14E5, 0, lbl_806D7E58, 373.0f, 1.25f, lbl_806D7E2C, alpha);
+    fn_801695E0(0, 0x14E7, 0, 204.0f, 394.0f, alpha);
+    fn_80169334(0, 0x14E8, 0, 420.0f, 394.0f, 10.6f, lbl_806D7E2C, alpha);
+    fn_801695E0(0, 0x14E2, 0, 113.0f, 374.0f, alpha);
+    fn_80169334(0, 0x14EA, 0, 305.0f, 399.0f, lbl_806D7E2C, lbl_806D7E2C, alpha);
+    fn_801695E0(0, idA, 0, 305.0f, 398.0f, alpha);
+    fn_801695E0(0, idB, 0, 305.0f, 398.0f, alpha);
+    fn_801695E0(0, Item_GetDescriptorField0(item, 0), 0, 365.0f, 402.0f, alpha);
+    fn_801695E0(0, 0x14E6, 0, 418.0f, 316.0f, alpha);
+    fn_80168798(0, GetTextureByIdAndLang(0x4D, -1), 228.0f, 316.0f, alpha);
+    if (col != 0) {
+        fn_80168B90(0, fn_8023DAA8(item), 224.0f, 362.0f, col[0], col[1], col[2], col[3] * alpha);
+    } else {
+        fn_80168D84(0, fn_8023DAA8(item), 224.0f, 362.0f, alpha);
+    }
+    fn_80168D84(0, fn_8023D938(item, 0), 424.0f, 378.0f, alpha);
+    fn_80168D84(0, fn_8023D938(item, 1), 424.0f, 398.0f, alpha);
+    fn_80168D84(0, fn_8023D938(item, 2), 424.0f, 418.0f, alpha);
+    if (self->f68 != 0) {
+        self->f68->SetColor(alpha);
+        self->f68->Apply();
+    } else if (self->f6C != 0) {
+        self->f6C->SetAlpha(alpha);
+        self->f6C->Apply();
+    } else {
+        fn_8013D4B0(self->f3C, alpha);
+        fn_8013DAC8(self->f3C, 1);
+    }
+    self->f64->alpha = alpha;
 }
+#pragma use_lmw_stmw reset
 
-extern "C" asm void fn_8014C308(void) { /* 0x8014C308 size:0x234 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stmw r27, 0xc(r1)
-    mr. r30, r3
-    mr r31, r4
-    beq fn_8014C308_L_8014C524
-    lis r3, lbl_8048F118@ha
-    addi r0, r3, lbl_8048F118@l
-    stw r0, 0x0(r30)
-    bl fn_8013DB9C
-    lwz r3, 0x64(r30)
-    cmplwi r3, 0x0
-    beq fn_8014C308_L_8014C350
-    li r4, 0x1
-    bl Sprite_Destroy
-    li r0, 0x0
-    stw r0, 0x64(r30)
-    fn_8014C308_L_8014C350:
-    lwz r3, 0x8(r30)
-    cmplwi r3, 0x0
-    beq fn_8014C308_L_8014C370
-    lwz r12, 0x14(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8014C308_L_8014C370:
-    lwz r3, 0xc(r30)
-    cmplwi r3, 0x0
-    beq fn_8014C308_L_8014C390
-    lwz r12, 0x14(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8014C308_L_8014C390:
-    lwz r3, 0x10(r30)
-    cmplwi r3, 0x0
-    beq fn_8014C308_L_8014C3B0
-    lwz r12, 0x14(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8014C308_L_8014C3B0:
-    lwz r3, 0x14(r30)
-    li r4, 0x1
-    bl fn_80140810
-    lwz r3, 0x18(r30)
-    li r4, 0x1
-    bl fn_8023CFE0
-    lwz r27, 0x68(r30)
-    cmplwi r27, 0x0
-    beq fn_8014C308_L_8014C418
-    beq fn_8014C308_L_8014C418
-    li r29, 0x0
-    mr r28, r27
-    fn_8014C308_L_8014C3E0:
-    lwz r3, 0x4(r28)
-    cmplwi r3, 0x0
-    beq fn_8014C308_L_8014C400
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8014C308_L_8014C400:
-    addi r29, r29, 0x1
-    addi r28, r28, 0x4
-    cmpwi r29, 0x3
-    blt fn_8014C308_L_8014C3E0
-    mr r3, r27
-    bl MemoryManager_TimedFree
-    fn_8014C308_L_8014C418:
-    lwz r27, 0x6c(r30)
-    cmplwi r27, 0x0
-    beq fn_8014C308_L_8014C468
-    beq fn_8014C308_L_8014C468
-    li r29, 0x0
-    mr r28, r27
-    fn_8014C308_L_8014C430:
-    lwz r3, 0x4(r28)
-    cmplwi r3, 0x0
-    beq fn_8014C308_L_8014C450
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8014C308_L_8014C450:
-    addi r29, r29, 0x1
-    addi r28, r28, 0x4
-    cmpwi r29, 0x2
-    blt fn_8014C308_L_8014C430
-    mr r3, r27
-    bl MemoryManager_TimedFree
-    fn_8014C308_L_8014C468:
-    lwz r3, 0x3c(r30)
-    cmplwi r3, 0x0
-    beq fn_8014C308_L_8014C48C
-    beq fn_8014C308_L_8014C48C
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8014C308_L_8014C48C:
-    lwz r3, 0x44(r30)
-    cmplwi r3, 0x0
-    beq fn_8014C308_L_8014C4B0
-    beq fn_8014C308_L_8014C4B0
-    lwz r12, 0x14(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8014C308_L_8014C4B0:
-    lwz r3, 0x50(r30)
-    cmplwi r3, 0x0
-    beq fn_8014C308_L_8014C4D4
-    beq fn_8014C308_L_8014C4D4
-    lwz r12, 0x14(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8014C308_L_8014C4D4:
-    lwz r3, 0x54(r30)
-    cmplwi r3, 0x0
-    beq fn_8014C308_L_8014C4F0
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    fn_8014C308_L_8014C4F0:
-    bl fn_80169C44
-    bl fn_80121210
-    bl fn_8012094C
-    bl clRom_PurgeAll
-    cmplwi r30, 0x0
-    beq fn_8014C308_L_8014C514
-    lis r3, lbl_803FE0C8@ha
-    addi r0, r3, lbl_803FE0C8@l
-    stw r0, 0x0(r30)
-    fn_8014C308_L_8014C514:
-    extsh. r0, r31
-    ble fn_8014C308_L_8014C524
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    fn_8014C308_L_8014C524:
-    mr r3, r30
-    lmw r27, 0xc(r1)
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma use_lmw_stmw on
+extern "C" ResultPanel *fn_8014C308(ResultPanel *self, short flag) {
+    if (self != 0) {
+        self->vt = lbl_8048F118;
+        fn_8013DB9C();
+        if (self->f64 != 0) {
+            Sprite_Destroy(self->f64, 1);
+            self->f64 = 0;
+        }
+        delete self->f8;
+        delete self->fC;
+        delete self->f10;
+        fn_80140810(self->f14, 1);
+        fn_8023CFE0(self->f18, 1);
+        if (self->f68 != 0) {
+            delete self->f68;
+        }
+        if (self->f6C != 0) {
+            delete self->f6C;
+        }
+        if (self->f3C != 0) {
+            delete self->f3C;
+        }
+        if (self->f44 != 0) {
+            delete self->f44;
+        }
+        if (self->f50 != 0) {
+            delete self->f50;
+        }
+        if (self->f54 != 0) {
+            self->f54->vC();
+        }
+        fn_80169C44();
+        fn_80121210();
+        fn_8012094C();
+        clRom_PurgeAll();
+        if (self != 0) {
+            self->vt = lbl_803FE0C8;
+        }
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
+#pragma use_lmw_stmw reset
 
 extern "C" asm void fn_8014C53C(void) { /* 0x8014C53C size:0x938 */
     nofralloc
