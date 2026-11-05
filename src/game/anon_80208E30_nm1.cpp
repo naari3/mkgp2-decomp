@@ -1,12 +1,18 @@
 #include "game/anon_80208E30_private.h"
 
+static inline void SetVector(Vec *dst, float x, float y, float z) {
+    dst->x = x;
+    dst->y = y;
+    dst->z = z;
+}
+
 extern "C" void fn_802090F0(CollisionObject *o, float hx, float hy, float hz, const Vec *pos, const Vec *rot) {
     o->type = 1;
     o->half.x = hx;
     o->half.y = hy;
     o->half.z = hz;
-    o->pos = *pos;
-    o->rot = *rot;
+    SetVector(&o->pos, pos->x, pos->y, pos->z);
+    SetVector(&o->rot, rot->x, rot->y, rot->z);
 }
 
 extern "C" void CollisionObject_SetPosAndBounds(CollisionObject *o, float hx, float hy, float hz, const Vec *pos,
@@ -15,10 +21,6 @@ extern "C" void CollisionObject_SetPosAndBounds(CollisionObject *o, float hx, fl
     o->half.x = hx;
     o->half.y = hy;
     o->half.z = hz;
-    o->pos.x = pos->x;
-    o->pos.y = pos->y;
-    o->pos.z = pos->z;
-    o->rot.x = rot->x;
-    o->rot.y = rot->y;
-    o->rot.z = rot->z;
+    SetVector(&o->pos, pos->x, pos->y, pos->z);
+    SetVector(&o->rot, rot->x, rot->y, rot->z);
 }
