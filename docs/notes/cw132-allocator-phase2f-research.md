@@ -1421,3 +1421,8 @@ frida で `DAT_005e21cc` の当該 bit を読めば融合可否を事前確認�
   当事者 web が **高 degree (param/全域 live) なら decl 順 lever は無効**、
   **低〜中 degree の plain local なら decl 順が効く**、と degree で切り分け
   られる。frida colorer log の deg 列がその判定材料
+
+## c6_nt11_8016c850_20261105
+Source: Codex worker c6_nt11_8016c850_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 984 B.
+
+fn_80173FA4 ZoneVisibility Update: function-scope unsigned mask and Zone* cursor changes 98.89831% to 99.49152% with exact 236-byte text size and exact 8-byte extab/12-byte extabindex. Remaining mask/array-offset registers swap r28/r29; extracting whole ApplyMask inline helper regresses to 94.49152%. Retain NonMatching.

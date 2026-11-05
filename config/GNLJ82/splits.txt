@@ -6514,6 +6514,11 @@ game/Scene_801734B0.cpp:
 game/Scene_80173F5C.cpp:
 	.text       start:0x80173F5C end:0x80173FA4
 
+game/ZoneVisibilityUpdate.cpp:
+	extab       start:0x80010A4C end:0x80010A54
+	extabindex  start:0x8002651C end:0x80026528
+	.text       start:0x80173FA4 end:0x80174090
+
 game/ZoneVisibility.cpp:
 	extab       start:0x80010A54 end:0x80010A94
 	extabindex  start:0x80026528 end:0x80026558
@@ -6547,6 +6552,11 @@ game/mapeffect/mapeffect_nm1.cpp:
 	.rodata     start:0x80371DC8 end:0x80371E98
 	.data       start:0x804915DC end:0x804916C8
 	.sdata      start:0x806CFB10 end:0x806CFB50
+
+game/mapobject/DistanceSwitchUpdate.cpp:
+	extab       start:0x80011878 end:0x80011880
+	extabindex  start:0x800268B8 end:0x800268C4
+	.text       start:0x8017A52C end:0x8017A614
 
 game/mapobject/fn_8017A614.c:
 	extab       start:0x80011880 end:0x80011888
