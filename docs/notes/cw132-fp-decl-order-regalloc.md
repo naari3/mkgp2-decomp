@@ -153,3 +153,8 @@ AssocTree_Init80089C08: direct header initialization with restrict on tree and f
 Source: Codex worker c12_u10_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 600 B.
 
 fn_801E68B4 600B: by-value inline sqrt helper left squared-length/result f3 vs target f4 and Newton half constant f4 vs f3 (99.53333%). Compute squared length into caller float length, then pass by reference to void in-place helper; replacing return result with value=result resolves all FPR identities at 100% with unchanged instructions/EH. Existing weak Vec3c destructor bridge discards extra 8B EH/12B index at link. Matching source edge and full DOL SHA-1 verified.
+
+## c12_u17_20261106
+Source: Codex worker c12_u17_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c12_u17: DriveBehavior_HandleWpType case11 literal constants restore phase-update FP scratch homes, improving 99.210526 to 99.5614 under unchanged GC/1.3.2 flags. Explicit named matrix outputs and named amplitude/bias/inverse-wave components each compile identically to the literal version. Remaining eight post-sin FP register differences; singleton stays NonMatching. All owned data/EH100%; fallback full DOL SHA-1 OK.

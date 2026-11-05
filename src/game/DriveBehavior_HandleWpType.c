@@ -2,8 +2,7 @@
 extern float fn_801DB860(void *, int);
 extern double sin(double);
 extern const float lbl_806D18E4, lbl_806D18E8;
-extern const float lbl_806DA2D0, lbl_806DA2D4, lbl_806DA2D8;
-extern const float lbl_806DA2DC, lbl_806DA2E0, lbl_806DA2E4, lbl_806DA2E8;
+extern const float lbl_806DA2D0, lbl_806DA2D4;
 
 void DriveBehavior_HandleWpType(DriveBehavior *self, int waypoint) {
     float speed;
@@ -47,11 +46,11 @@ void DriveBehavior_HandleWpType(DriveBehavior *self, int waypoint) {
         break;
     case 11: {
         float wave;
-        self->phase += lbl_806DA2D8;
-        if (self->phase > lbl_806DA2DC) self->phase -= lbl_806DA2DC;
-        wave = sin(lbl_806DA2E0 * self->phase);
-        self->matrix[0] = lbl_806DA2E8 * wave + lbl_806DA2E4;
-        self->matrix[5] = lbl_806DA2E8 * (lbl_806DA2DC - wave) + lbl_806DA2E4;
+        self->phase += 0.008333333767950535f;
+        if (self->phase > 1.0f) self->phase -= 1.0f;
+        wave = sin(3.1415927410125732f * self->phase);
+        self->matrix[0] = 1.1f * wave + 0.1f;
+        self->matrix[5] = 1.1f * (1.0f - wave) + 0.1f;
         break;
     }
     case 12:
