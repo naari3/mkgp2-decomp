@@ -484,3 +484,8 @@ c7_m15: 802483B4..802488FC native group matches all text (1352 B), EH (76 B), EH
 Source: Codex worker c8_s36_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1240 B.
 
 c8_s36: fn_801B7CD0 matches via canonical Sprite/new, coin quotient/remainder pair before cost pair, and inline SetPosition capturing the sprite pointer once. VoiceBrowser draw 801B70EC matches when string-pool base is captured before context null guard. 801B739C retains a localized FP clamp register residual at 99.496124%.
+
+## c8_s39_20261105
+Source: Codex worker c8_s39_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c8_s39: clFlowClass_Update native reconstruction reached 99.81191% with exact 88-byte allocation EH. Declaring externally referenced rodata bytes const let MWCC hoist loop aggregate-table loads into saved registers (r21-r31/frame C0); mutable extern restored per-iteration loads and target r26-r31/frame A0. An inline interpolate(start,end,frame,duration) helper reproduced the target FP computation/register sequence. Still NonMatching: one input-selection reload is absent, leaving later text four bytes early. No native gain.

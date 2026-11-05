@@ -10843,5 +10843,12 @@
     "__ct__10TileSpriteFiii": "Sprite_InitWithAnim",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/CharaSelect_SetupCharacterDisplay.cpp": {
+    "__ct__13DisplaySpriteFiUcff": "fn_801A08B8"
+  },
+  "src/game/clFlowClass_Update.cpp": {
+    "__ct__11ClassSpriteFiii": "Sprite_InitWithAnim",
+    "__ct__11ClassSpriteFiUcff": "fn_801A08B8"
   }
 }

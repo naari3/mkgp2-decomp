@@ -8823,6 +8823,12 @@ game/fn_801C2238.c:
 	extabindex  start:0x80027D1C end:0x80027D28
 	.text       start:0x801C2238 end:0x801C23A8
 
+game/clFlowClass_Update.cpp:
+	extab       start:0x80013DAC end:0x80013E04
+	extabindex  start:0x80027D28 end:0x80027D34
+	.text       start:0x801C23A8 end:0x801C3108
+	.data       start:0x8049AA20 end:0x8049AA54
+
 game/fn_801C3108.c:
 	extab       start:0x80013E04 end:0x80013E0C
 	extabindex  start:0x80027D34 end:0x80027D40
@@ -8832,6 +8838,11 @@ game/clFlowClass_Init.cpp:
 	extab       start:0x80013E0C end:0x80013E64
 	extabindex  start:0x80027D40 end:0x80027D4C
 	.text       start:0x801C3244 end:0x801C3470
+
+game/CharaSelect_SetupCharacterDisplay.cpp:
+	extab       start:0x80013E64 end:0x80013E9C
+	extabindex  start:0x80027D4C end:0x80027D58
+	.text       start:0x801C3470 end:0x801C3714
 
 game/GetFrameIdxFromVisualIdx.c:
 	.text       start:0x801C3714 end:0x801C37E8
