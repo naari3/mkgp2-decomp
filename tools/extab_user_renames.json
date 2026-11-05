@@ -10337,8 +10337,8 @@
     "__dt__10WarpCornerFv": "dtor_80036E40",
     "__ct__13WarpInitValueFPC11WarpRawZone": "WarpZone_CalcEdgeVectors",
     "__dt__13WarpInitValueFv": "dtor_800A9CC8",
-    "@90": "@etb_80009E04",
-    "@91": "@eti_800225A4"
+    "@91": "@etb_80009E04",
+    "@92": "@eti_800225A4"
   },
   "src/game/TaMode_Init.cpp": {
     "__dt__12GameModeBaseFv": "dtor_800A0688",

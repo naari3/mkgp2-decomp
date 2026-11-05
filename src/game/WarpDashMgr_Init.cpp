@@ -3,7 +3,7 @@
 
 WarpDashManager::WarpDashManager(int course, unsigned char first, unsigned char second, unsigned char alternate) : ready(0) {
     const char *pool = lbl_80326CB0;
-    const WarpZoneSource *table = *(const WarpZoneSource **)((pool + 0x1660) + (course * 8 + (alternate != 0) * 4));
+    const WarpZoneSource *table = ((const WarpZoneSource *const (*)[2])(pool + 0x1660))[course][alternate != 0];
     if (table) {
         int index = 0;
         if (!first) index = 2;
@@ -20,7 +20,7 @@ WarpDashManager::WarpDashManager(int course, unsigned char first, unsigned char 
             }
         }
     }
-    table = *(const WarpZoneSource **)((pool + 0x16e8) + (course * 8 + (alternate != 0) * 4));
+    table = ((const WarpZoneSource *const (*)[2])(pool + 0x16e8))[course][alternate != 0];
     if (table) {
         int index = 0;
         if (!first) index = 2;

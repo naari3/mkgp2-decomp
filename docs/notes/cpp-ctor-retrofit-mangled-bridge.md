@@ -824,3 +824,8 @@ c14_u23: singleton NetJoin ctor 80225C2C baseline measured 93.824745%. Capturing
 Source: Codex worker c14_u25_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u25: clFlowTaPlease_Init fresh baseline 93.340836% /1248B; replacing flattened table casts with existing C8TaTables multidimensional indexes yields 93.58521% /1244B and extabindex 100%, extab 97.64151%. Direct global inline typed accessors lose cached base (92.2926%). Byte-stride inline lookup reaches 94.14791% but regresses owned EH/index; rejected. Prologue table-base hoisting remains unresolved; no native gain.
+
+## c14_u28_20261106
+Source: Codex worker c14_u28_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u28 WarpDashMgr_Init: fresh baseline 92.791046 (assignment report 93.57). Casting each pool table to const WarpZoneSource *const (*)[2] and indexing [course][alternate != 0] prevents combined-offset CSE, restores separate r29/r30 stride webs, self r26, r21-r31 saves, frame 0xE0, and improves text to93.731346/owned EH97.22222. Own EH IDs shift @90/@91 -> @91/@92. Remaining folded base/stride association, first-loop GPR homes, second-loop cursor coalescing leave532 vs536B. Flat inline lookup88.76119 and shared population helper90.89552 regressed; reverted. Singleton stays NonMatching; coordinator full build SHA1OK, zero native gain.
