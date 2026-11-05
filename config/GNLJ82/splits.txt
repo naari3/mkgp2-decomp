@@ -7872,6 +7872,11 @@ game/clstream/fn_80194CEC.c:
 	extabindex  start:0x8002723C end:0x80027248
 	.text       start:0x80194CEC end:0x80194DD8
 
+game/clstream/ClStream_PlayStereo.c:
+	extab       start:0x80012334 end:0x8001233C
+	extabindex  start:0x80027248 end:0x80027254
+	.text       start:0x80194DD8 end:0x80195050
+
 game/clstream/ClStream_PlayMono.c:
 	extab       start:0x8001233C end:0x80012344
 	extabindex  start:0x80027254 end:0x80027260
@@ -7897,6 +7902,11 @@ game/clstream/fn_8019522C.c:
 	extabindex  start:0x80027260 end:0x8002726C
 	.text       start:0x8019522C end:0x801952EC
 
+game/clstream/fn_801952EC.c:
+	extab       start:0x8001234C end:0x80012354
+	extabindex  start:0x8002726C end:0x80027278
+	.text       start:0x801952EC end:0x801954F4
+
 game/objview/fn_801954F4.c:
 	extab       start:0x80012354 end:0x8001235C
 	extabindex  start:0x80027278 end:0x80027284
@@ -7912,10 +7922,21 @@ game/objview/fn_8019571C.c:
 	extabindex  start:0x80027290 end:0x8002729C
 	.text       start:0x8019571C end:0x801957AC
 
+game/objview/fn_801957AC.cpp:
+	extab       start:0x8001236C end:0x80012374
+	extabindex  start:0x8002729C end:0x800272A8
+	.text       start:0x801957AC end:0x80195A7C
+
 game/objview/fn_80195A7C.cpp:
 	extab       start:0x80012374 end:0x8001237C
 	extabindex  start:0x800272A8 end:0x800272B4
 	.text       start:0x80195A7C end:0x80195B94
+
+game/objview/MapWaterEffect_Init.cpp:
+	extab       start:0x8001237C end:0x800123B0
+	extabindex  start:0x800272B4 end:0x800272C0
+	.text       start:0x80195B94 end:0x80195CD4
+	.data       start:0x80495F6C end:0x80495F98
 
 game/objview/fn_80195CD4.c:
 	extab       start:0x800123B0 end:0x800123B8

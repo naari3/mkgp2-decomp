@@ -10653,5 +10653,19 @@
     "@836": "@etb_8001CF78",
     "@845": "@eti_8002B070",
     "@844": "@etb_8001CF04"
+  },
+  "src/game/objview/fn_801957AC.cpp": {
+    "__dt__5GroupFv": "fn_801957AC",
+    "__dt__4NodeFv": "fn_80195A7C",
+    "__dt__5ModelFv": "Object_DtorWithGXSync"
+  },
+  "src/game/objview/MapWaterEffect_Init.cpp": {
+    "__ct__14MapWaterEffectFv": "MapWaterEffect_Init",
+    "__dt__9WaterBaseFv": "dtor_8016A270",
+    "__vt__9WaterBase": "lbl_80490FE0",
+    "__vt__14MapWaterEffect": "lbl_80495F54",
+    "__ct__5GroupFP11GroupParams": "fn_80195DA8",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
