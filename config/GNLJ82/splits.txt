@@ -12170,6 +12170,26 @@ game/fn_802437AC.cpp:
 	extabindex  start:0x8002B13C end:0x8002B148
 	.text       start:0x802437AC end:0x80243958
 
+game/fn_80243958.c:
+	extab       start:0x8001D0EC end:0x8001D0F4
+	extabindex  start:0x8002B148 end:0x8002B154
+	.text       start:0x80243958 end:0x80243A24
+
+game/ItemListHudCreate.cpp:
+	extab       start:0x8001D0F4 end:0x8001D12C
+	extabindex  start:0x8002B154 end:0x8002B160
+	.text       start:0x80243A24 end:0x80243B78
+
+game/ItemListHudDestroy.cpp:
+	extab       start:0x8001D12C end:0x8001D154
+	extabindex  start:0x8002B160 end:0x8002B16C
+	.text       start:0x80243B78 end:0x80243C70
+
+game/ItemPanelDraw.cpp:
+	extab       start:0x8001D154 end:0x8001D1C4
+	extabindex  start:0x8002B16C end:0x8002B178
+	.text       start:0x80243C70 end:0x80244128
+
 game/fn_80245700.c:
 	.text       start:0x80245700 end:0x80245704
 

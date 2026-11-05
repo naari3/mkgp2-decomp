@@ -11306,5 +11306,44 @@
     "__ct__6SpriteFiii": "Sprite_InitWithAnim",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/ItemListHudCreate.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__7HudPart": "lbl_804EDB28",
+    "__vt__11ItemListHud": "lbl_804EE76C",
+    "__dt__7HudPartFv": "dtor_8021617C",
+    "__dt__11ItemListHudFv": "fn_80243B78",
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "__vt__10FlowFaderF": "lbl_80419DE0",
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "Set__10FlowFaderFFffs": "fn_8020A734",
+    "__dt__10FlowFaderFFv": "TweenInterp_Dtor",
+    "@61": "@etb_8001D0F4",
+    "@62": "@eti_8002B154"
+  },
+  "src/game/ItemListHudDestroy.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__7HudPart": "lbl_804EDB28",
+    "__vt__11ItemListHud": "lbl_804EE76C",
+    "__dt__7HudPartFv": "dtor_8021617C",
+    "__dt__11ItemListHudFv": "fn_80243B78",
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "__vt__10FlowFaderF": "lbl_80419DE0",
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "Set__10FlowFaderFFffs": "fn_8020A734",
+    "__dt__10FlowFaderFFv": "TweenInterp_Dtor",
+    "@66": "@etb_8001D12C",
+    "@67": "@eti_8002B160"
+  },
+  "src/game/ItemPanelDraw.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__9PanelItemFP13ItemPanelKartii": "fn_8024514C",
+    "@135": "@etb_8001D154",
+    "@136": "@eti_8002B16C"
   }
 }

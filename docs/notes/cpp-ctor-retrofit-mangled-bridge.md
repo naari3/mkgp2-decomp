@@ -564,3 +564,8 @@ c8_s40: fn_801C3AA4 draw pass matches native text/EH exactly with a private virt
 Source: Codex worker c8_s54_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c8_s54: EnemyRun_BaseInit 801F0644 is a genuine constructor with VHolder<EnemyRunPath> at +4 and seven canonical PhysicsCollisionVec members (+4C,+58,+A8,+B4,+CC,+D8,+12C). VHolder::Reset(new EnemyRunPath(owner,kart)) reproduces exact 176-byte owned EH, including throw() Reset specification island and DELETEPOINTER r24. Scalar 0.0f/1.0f literals remove alias-induced reloads; native text 98.08%, 1300B. Explicit pointer matrix loop caused unwanted unrolling and r29/r30 swap; retained indexed form NonMatching.
+
+## c8_s63_20261105
+Source: Codex worker c8_s63_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 792 B.
+
+c8_s63: fn_80243A24 native new ItemListHud(layer) using existing HudPart and VHolder<FlowFaderF> yields exact 340B text and 56B owned EH. Its reverse-loop destructor fn_80243B78 is exact 248B with -use_lmw_stmw on; canonical throw() holder generates specification EH. Three exact independent blobs give 792B native gain with source-linked DOL SHA-1 OK. fn_80243C70 Draw uses canonical ResCtrl scopes plus real new PanelItem: 99.96689%, exact size and owned EH. Inline DrawPanelItem recovers GPR homes, captured SetPos helpers remove reloads; final f30 vs target f28 range remains, so kept NonMatching after three structural hypotheses.
