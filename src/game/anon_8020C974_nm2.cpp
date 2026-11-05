@@ -1,4 +1,10 @@
-#include "game/CardModeRoot_private.h"
+#include "game/CardModeRootUnlock_private.h"
+
+static inline int SelectCardMode(CardConfig *cfg) {
+    int mode = 1;
+    if (cfg->f02) mode = 2;
+    return mode;
+}
 
 CardModeRoot::CardModeRoot() : task(0), state(0) {
     CardConfig *cfg;
@@ -20,13 +26,8 @@ CardModeRoot::CardModeRoot() : task(0), state(0) {
         if (cfg->f0F) {
             state = 1;
         } else {
-            int v;
             state = 3;
-            v = 1;
-            if (cfg->f02) {
-                v = 2;
-            }
-            lbl_806D1A30 = v;
+            lbl_806D1A30 = SelectCardMode(cfg);
             if (GetInput() == 0) {
                 CreateInputState();
             }

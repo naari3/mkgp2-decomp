@@ -729,3 +729,8 @@ c12_u36: SpritePairOwner::Tick/Reset 8023CDA8/8023CEB4 improve 98.731346/98.4782
 Source: Codex worker c12_u35_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 400 B.
 
 c12_u35: FlashFx Update 8021A1C4 resolves FP clamp allocation (98.583336 -> 100%) by replacing external float const references with ordinary 0.0f, 1.0f, 0.0165f literals. Existing postprocess_sdata2 maps to lbl_806DAF60/64/70; Update + delete TU now text400/extab68/index24 all exact, existing bridges suffice. Keeping Update before delete avoids previously documented delete-only leading EH patch issue. Full Matching source-linked DOL SHA-1 exact; ELF addresses 8021A1C4/240 and 8021A2B4/160 verified.
+
+## c13_u1_20261106
+Source: Codex worker c13_u1_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 428 B.
+
+c13_u1: CardModeRoot ctor 8020D00C extra li r3,1 resolves by static inline SelectCardMode(CardConfig*) returning a local int initialized to1 and conditionally set2. Inline helper gives 100% text428; previous same-body local was432B/99.06542. Reusing existing CardModeRootUnlock_private.h suppresses duplicate RTTI/vtable data. Bridge @57/@58 to @etb_800197B4/@eti_80029D14 yields exact owned EH. Weak MenuModeBase dtor/EH discards at link. Matching source-linked ELF8020D00C/428 and full DOL SHA-1 exact.
