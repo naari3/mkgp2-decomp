@@ -18,6 +18,10 @@ extern int fn_80209330(void);
 extern void DebugPrintf(const char *, ...);
 typedef struct ThreeModes { int modes[3]; } ThreeModes;
 
+static inline int RollRareItem(void) {
+    return rand() % 20 == 0;
+}
+
 void PlayerData_Construct(PlayerDataReset *self, int character, int a, int b, int c,
     unsigned char freePlay, unsigned char allRare, unsigned char special,
     int value, int coins, unsigned char allItems) {
@@ -31,6 +35,7 @@ void PlayerData_Construct(PlayerDataReset *self, int character, int a, int b, in
     if (self->field1B0 != 1) {
         ThreeModes modes = *(const ThreeModes *)(pool + 0x1280);
         int cc;
+        int count;
         int mode;
         int cup;
         int round;
@@ -40,7 +45,7 @@ void PlayerData_Construct(PlayerDataReset *self, int character, int a, int b, in
         modes.modes[1] = b;
         modes.modes[2] = c;
         for (cc = 0; cc < 3; cc++) {
-            int count = modes.modes[cc];
+            count = modes.modes[cc];
             if (count > 0) {
                 g_ccClass = cc;
                 for (mode = 0; mode < count; mode++) {
@@ -68,9 +73,9 @@ void PlayerData_Construct(PlayerDataReset *self, int character, int a, int b, in
             self->remapFlags[1] = 1;
             self->remapFlags[2] = 1;
         } else {
-            self->remapFlags[0] = (rand() % 20 == 0) != 0;
-            self->remapFlags[1] = (rand() % 20 == 0) != 0;
-            self->remapFlags[2] = (rand() % 20 == 0) != 0;
+            self->remapFlags[0] = RollRareItem() != 0;
+            self->remapFlags[1] = RollRareItem() != 0;
+            self->remapFlags[2] = RollRareItem() != 0;
         }
         maximum = -1;
         for (i = 0; i < coins; i++) {
