@@ -11,10 +11,6 @@ unsigned char Sprite_AdvanceAnim(PanelSprite *, float);
 void fn_801FE1D0();
 void fn_801D92D0(FlowPanel *, int *);
 }
-union PanelColor {
-    unsigned int rgba;
-    struct { unsigned int rgb : 24; unsigned int a : 8; } channel;
-};
 static inline void ClosePanel(FlowPanel *self) {
     if (self->state != 0 && self->state != 3) {
         self->state = 3;
@@ -46,12 +42,11 @@ extern "C" void fn_801D9B70(FlowPanel *self, unsigned char pressed) {
         if (self->timer >= 8) {
             float t = ((float)self->timer - 8.0f) * 0.125f;
             if (t > 1.0f) t = 1.0f;
-            PanelColor c;
-            c.rgba = 0xFFFFFF00;
-            c.channel.a = (int)(lbl_806DA1EC * t);
-            self->texts[0]->tm()->color = c.rgba;
-            self->texts[1]->tm()->color = c.rgba;
-            self->texts[2]->tm()->color = c.rgba;
+            unsigned int c = 0xFFFFFF00;
+            c |= (unsigned char)(int)(lbl_806DA1EC * t);
+            self->texts[0]->tm()->color = c;
+            self->texts[1]->tm()->color = c;
+            self->texts[2]->tm()->color = c;
         }
         if (!fn_8019FE78(self->labelA)) {
             self->state = 2;
@@ -73,12 +68,11 @@ extern "C" void fn_801D9B70(FlowPanel *self, unsigned char pressed) {
         {
             float t = lbl_806DA1C0 - self->timer / lbl_806DA1F0;
             if (t < lbl_806DA1C4) t = lbl_806DA1C4;
-            PanelColor c;
-            c.rgba = 0xFFFFFF00;
-            c.channel.a = (int)(lbl_806DA1EC * t);
-            self->texts[0]->tm()->color = c.rgba;
-            self->texts[1]->tm()->color = c.rgba;
-            self->texts[2]->tm()->color = c.rgba;
+            unsigned int c = 0xFFFFFF00;
+            c |= (unsigned char)(int)(lbl_806DA1EC * t);
+            self->texts[0]->tm()->color = c;
+            self->texts[1]->tm()->color = c;
+            self->texts[2]->tm()->color = c;
         }
         if (!fn_8019FE78(self->labelA) || self->timer >= 20) {
             self->state = 0;
