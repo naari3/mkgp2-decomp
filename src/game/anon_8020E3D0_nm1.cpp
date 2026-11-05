@@ -1,4 +1,4 @@
-#include "game/FadeLogo.h"
+#include "game/FadeLogoDraw_private.h"
 
 void TaskListImpl::Draw() {
     TaskNode *end = entries.End();
