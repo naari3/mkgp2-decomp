@@ -84,12 +84,30 @@ static inline void *getTransition() {
     return p;
 }
 
+static inline void UpdateCoinSprites(CoinSprites *sprites) {
+    int i;
+    if (sprites->exiting != 0) {
+        if (sprites->slide >= lbl_806DAE28) goto sprites_done;
+        float accelerator = lbl_806DAE40;
+        float *positions = lbl_803C3DD8;
+        void **cursor = sprites->sprite;
+        sprites->slide += lbl_806DAE2C;
+        for (i = 0; i < 9; ++i, positions += 2, ++cursor)
+            fn_8011F804(*cursor, accelerator * sprites->slide + positions[0], positions[1]);
+    }
+    {
+        for (i = 0; i < 9; ++i, sprites = (CoinSprites *)((char *)sprites + 4))
+            SpriteHandle_RecomputeCull(sprites->sprite[0]);
+    }
+sprites_done:
+    return;
+}
+
 int MiniGame_CoinChallenge_Update(CoinChallengeView *self) {
     CoinSprites *sprites;
     int before;
     int after;
     CoinInput *input;
-    int i;
     float accelerator, brake;
     Vec3 projection, scissor;
     if (self->active == 0) self->active = 1;
@@ -160,21 +178,7 @@ int MiniGame_CoinChallenge_Update(CoinChallengeView *self) {
     fn_80253EBC(self->hud, lbl_806DAE3C * CarObject_CalcSpeedRatio(self->car));
     fn_80253EC0(self->hud, KartItem_GetCurrentSpeedWithBonus(self->car));
     HUD_FrameUpdate(self->hud);
-    sprites = self->sprites;
-    if (sprites->exiting != 0) {
-        if (sprites->slide >= lbl_806DAE28) goto sprites_done;
-        accelerator = lbl_806DAE40;
-        float *positions = lbl_803C3DD8;
-        void **cursor = sprites->sprite;
-        sprites->slide += lbl_806DAE2C;
-        for (i = 0; i < 9; ++i, positions += 2, ++cursor)
-            fn_8011F804(*cursor, accelerator * sprites->slide + positions[0], positions[1]);
-    }
-    {
-        for (i = 0; i < 9; ++i, sprites = (CoinSprites *)((char *)sprites + 4))
-            SpriteHandle_RecomputeCull(sprites->sprite[0]);
-    }
-sprites_done:
+    UpdateCoinSprites(self->sprites);
     TransitionEffect_Tick(getTransition());
     if (g_raceEnded == 1) {
         if (self->endDelay > 0) --self->endDelay;
