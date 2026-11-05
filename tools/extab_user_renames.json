@@ -11345,5 +11345,41 @@
     "__ct__9PanelItemFP13ItemPanelKartii": "fn_8024514C",
     "@135": "@etb_8001D154",
     "@136": "@eti_8002B16C"
+  },
+  "src/game/fn_80244480.cpp": {
+    "__dt__10GaugePulseFv": "fn_80244480",
+    "__vt__10GaugePulse": "lbl_804EE790",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@48": "@etb_8001D208",
+    "@49": "@eti_8002B190",
+    "__dt__10FlowFaderIFv": "fn_801F26C8"
+  },
+  "src/game/fn_80244128.cpp": {
+    "__vt__10GaugePulse": "lbl_804EE790",
+    "__dt__10GaugePulseFv": "fn_80244480",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "__vt__10FlowFaderI": "lbl_804E5284",
+    "Set__10FlowFaderIFiis": "fn_8020A7CC",
+    "Value__10FlowFaderIFv": "fn_8020A788",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
+    "@91": "@etb_8001D1C4",
+    "@92": "@eti_8002B178",
+    "__dt__10FlowFaderIFv": "fn_801F26C8"
+  },
+  "src/game/fn_80244524.cpp": {
+    "Set__10FlowFaderFFffs": "fn_8020A734",
+    "Value__10FlowFaderFFv": "fn_8020A6CC",
+    "Value__10FlowFaderIFv": "fn_8020A788",
+    "Set__10FlowFaderIFiis": "fn_8020A7CC",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
+  },
+  "src/game/fn_80244378.cpp": {
+    "@50": "@etb_8001D200",
+    "@51": "@eti_8002B184"
   }
 }

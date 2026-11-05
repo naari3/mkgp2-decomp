@@ -12190,6 +12190,26 @@ game/ItemPanelDraw.cpp:
 	extabindex  start:0x8002B16C end:0x8002B178
 	.text       start:0x80243C70 end:0x80244128
 
+game/fn_80244128.cpp:
+	extab       start:0x8001D1C4 end:0x8001D200
+	extabindex  start:0x8002B178 end:0x8002B184
+	.text       start:0x80244128 end:0x80244378
+
+game/fn_80244378.cpp:
+	extab       start:0x8001D200 end:0x8001D208
+	extabindex  start:0x8002B184 end:0x8002B190
+	.text       start:0x80244378 end:0x80244480
+
+game/fn_80244480.cpp:
+	extab       start:0x8001D208 end:0x8001D230
+	extabindex  start:0x8002B190 end:0x8002B19C
+	.text       start:0x80244480 end:0x80244524
+
+game/fn_80244524.cpp:
+	extab       start:0x8001D230 end:0x8001D248
+	extabindex  start:0x8002B19C end:0x8002B1A8
+	.text       start:0x80244524 end:0x80244840
+
 game/fn_80245700.c:
 	.text       start:0x80245700 end:0x80245704
 

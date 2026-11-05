@@ -905,6 +905,11 @@ config.libs = [
             Object(Matching, "game/fn_80243958.c", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
             Object(Matching, "game/ItemListHudCreate.cpp", mw_version="GC/1.3.2", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw off"]),
             Object(Matching, "game/ItemListHudDestroy.cpp", mw_version="GC/1.3.2", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/fn_80244524.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_80244128.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80244378.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80244480.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+
             Object(Matching, "game/fn_80226640.c"),
             Object(Matching, "game/fn_8020F268.c"),
             Object(Matching, "game/Sci2Card_FlagReceiptTestEnable.c"),

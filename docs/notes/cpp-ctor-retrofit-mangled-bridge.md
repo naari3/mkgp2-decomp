@@ -569,3 +569,8 @@ c8_s54: EnemyRun_BaseInit 801F0644 is a genuine constructor with VHolder<EnemyRu
 Source: Codex worker c8_s63_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 792 B.
 
 c8_s63: fn_80243A24 native new ItemListHud(layer) using existing HudPart and VHolder<FlowFaderF> yields exact 340B text and 56B owned EH. Its reverse-loop destructor fn_80243B78 is exact 248B with -use_lmw_stmw on; canonical throw() holder generates specification EH. Three exact independent blobs give 792B native gain with source-linked DOL SHA-1 OK. fn_80243C70 Draw uses canonical ResCtrl scopes plus real new PanelItem: 99.96689%, exact size and owned EH. Inline DrawPanelItem recovers GPR homes, captured SetPos helpers remove reloads; final f30 vs target f28 range remains, so kept NonMatching after three structural hypotheses.
+
+## c8_s64_20261105
+Source: Codex worker c8_s64_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 1020 B.
+
+c8_s64: 80244128 native 592B and owned 60B EH match using real GaugePulse/FlowFaderI new, canonical VHolder/ResCtrl, captured SetPosition and ShowYX(r,y,x,z) to evaluate x before y. Ordinary Show(x,y,z) leaves a 99.91892% FP-coordinate swap. Concrete nonvirtual GaugePulse dtor with an undefined virtual key suppresses extra vtable data; polymorphic delete uses canonical VObject view. Native 80244378 (264B) and 80244480 (164B) also match. All actual ELF addresses/sizes checked, source edges verified, full DOL SHA-1 OK.
