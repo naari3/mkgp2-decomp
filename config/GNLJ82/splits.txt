@@ -12477,7 +12477,10 @@ sysdolphin/baselib/texp_assign.c:
 	.data       start:0x804FDBA4 end:0x804FDC64
 
 sysdolphin/baselib/texp_nm.c:
-	.text       start:0x802E04C0 end:0x802E1488
+	.text       start:0x802E04C0 end:0x802E0B8C
+
+sysdolphin/baselib/texp_nm1.c:
+	.text       start:0x802E0B8C end:0x802E1488
 	.data       start:0x804FDC64 end:0x804FDCF0
 	.sdata2     start:0x806DCED0 end:0x806DCEE0
 
