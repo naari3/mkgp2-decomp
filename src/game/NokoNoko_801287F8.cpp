@@ -13,9 +13,10 @@ struct Trail { int age; Vec3 pos; };
 struct Shot {
     char pad0[0x14];
     int active;
-    char pad18[8];
+    char pad18[4];
+    int timer;
     Vec3 pos;
-    char pad2C[0xc];
+    Vec3 vel;
     float rot;
     float alpha;
     Trail trail[18];
@@ -28,7 +29,9 @@ struct ShotOwner {
     char pad0[4];
     void *model;
     void *trailModel;
-    char padC[0x89c - 0xc];
+    int phaseA;
+    int phaseB;
+    char pad14[0x89c - 0x14];
     int trailCount;
 };
 
@@ -36,6 +39,44 @@ struct ModelPair {
     void **vt;
     void *a;
     void *b;
+};
+
+struct VObj {
+    virtual ~VObj();
+};
+
+struct VObjSub {
+    virtual void Update();
+    virtual ~VObjSub();
+};
+
+struct HsdClassInfo {
+    char pad[0x30];
+    void (*release)(struct HsdObj *o);
+    void (*destroy)(struct HsdObj *o);
+};
+
+struct HsdObj {
+    HsdClassInfo *info;
+    unsigned short ref;
+};
+
+struct TimeTrialMode {
+    void **vt;
+    char pad4[4];
+    VObjSub *car;
+    void *lakitu;
+    void *env;
+    VObj *scene;
+    void *goalCam;
+    VObj *camera;
+    HsdObj *lights;
+    char pad24[4];
+    void *hud;
+    void *icons;
+    VObj *x30;
+    char pad34[0x44 - 0x34];
+    VObj *x44;
 };
 
 /* TOP-END */
@@ -62,9 +103,9 @@ extern void fn_8011F994();
 extern void fn_8016B0C4();
 extern void fn_80253448();
 extern void fn_802535D4();
-extern unsigned int lbl_806D109C;
-extern unsigned int lbl_806D10AC;
-extern unsigned int lbl_806D10D0;
+extern VObj *lbl_806D109C;
+extern VObj *lbl_806D10AC;
+extern VObj *lbl_806D10D0;
 extern unsigned int lbl_806D7048;
 extern unsigned int lbl_806DC190;
 extern unsigned int lbl_806DC1B0;
@@ -81,7 +122,7 @@ extern void CourseEnvironment_UpdateAndCullZones_Timed();
 extern void DebugPrintf();
 extern void Fog_UpdateFromCourseScene3D();
 extern void GetInputManager();
-extern void GetRaceContextPtr();
+void *GetRaceContextPtr(void);
 extern void HSD_JObjSetupMatrixSub();
 extern void HUD_FrameUpdate();
 extern void InputMgr_GetPlayer();
@@ -133,13 +174,13 @@ extern void fn_80253FD8();
 extern unsigned int g_lakituStartAnimDone;
 extern unsigned int g_raceEnded;
 extern unsigned int g_raceTimeRemaining;
-extern unsigned int g_weatherSystem;
+extern void *g_weatherSystem;
 extern unsigned int lbl_806D1290;
 extern const float lbl_806D7054;
 extern const float lbl_806D7058;
 extern unsigned int lbl_806D7068;
-extern unsigned int lbl_806D706C;
-extern unsigned int lbl_806D7070;
+extern const float lbl_806D706C;
+extern const float lbl_806D7070;
 extern unsigned int lbl_806D7074;
 extern unsigned int lbl_806D7078;
 extern unsigned int lbl_806D707C;
@@ -154,28 +195,28 @@ extern unsigned int lbl_803561E8[];
 extern unsigned int lbl_80677C58[];
 extern unsigned int lbl_80677C64[];
 extern void dtor_80036E40();
-extern void ClRomTable_PurgeAll();
-extern void CourseEnvironment_Dtor();
-extern void ItemObjectManager_Reset();
-extern void LakituStart_Dtor();
+void ClRomTable_PurgeAll(void);
+void CourseEnvironment_Dtor(void *env, int del);
+void ItemObjectManager_Reset(void);
+void LakituStart_Dtor(void *l, int del);
 void MemoryManager_TimedFree(void *p);
-extern void RankingTable_Init();
-extern void SceneDrawList_Reset();
-extern void SetActiveCamera();
-extern void SetPlayerCarObject();
-extern void SetResourceLoadingFlag();
-extern void VfxSlotMgr_Shutdown();
-extern void __destroy_arr();
-extern void clRom_PurgeAll();
-extern void dtor_80122FD8();
-extern void fn_80121210();
-extern void fn_80124C84();
-extern void fn_8016C634();
-extern void fn_80188DA8();
-extern void fn_80254134();
-extern unsigned int g_raceCamera;
-extern unsigned int dtor_80082960[];
-extern unsigned int lbl_8048E338[];
+void RankingTable_Init(void *ctx);
+void SceneDrawList_Reset(void);
+void SetActiveCamera(int a, void *cam);
+void SetPlayerCarObject(void *car);
+void SetResourceLoadingFlag(unsigned char on);
+void VfxSlotMgr_Shutdown(void);
+void __destroy_arr(void *block, void *dtor, unsigned long size, unsigned long count);
+void clRom_PurgeAll(void);
+void dtor_80122FD8(void *self, int del);
+void fn_80121210(void);
+void fn_80124C84(void *cam, int del);
+void fn_8016C634(void *w, int del);
+void fn_80188DA8(void);
+void fn_80254134(void *hud, int del);
+extern void *g_raceCamera;
+void dtor_80082960(void);
+extern void *lbl_8048E338[];
 extern void Alloc();
 extern void Archive_GetRootJObj();
 extern void Camera_Create();
@@ -221,7 +262,7 @@ extern unsigned int g_characterId;
 extern unsigned int lbl_806D12BC;
 extern const float lbl_806D7050;
 extern unsigned int lbl_806D7060;
-extern unsigned int lbl_806D70B0;
+extern const float lbl_806D70B0;
 extern unsigned int lbl_806D70BC;
 extern unsigned int lbl_806D70C0;
 extern unsigned int lbl_806D70C4;
@@ -237,21 +278,21 @@ void Object_SetColorAlphaOnly(void *o, int idx, float a);
 void Object_SetJObjPositionVec(void *o, struct Vec3 *v);
 void Object_SetJObjRotationY(void *o, float r);
 extern const float lbl_806D704C;
-extern void LUT_Sin12Bit();
-extern void Terrain_GetGroundHeightWithPenetration();
-extern void fn_80186960();
-extern unsigned int lbl_806D70AC;
-extern unsigned int lbl_806D70B4;
-extern unsigned int lbl_806D70B8;
-extern unsigned int lbl_80495994[];
-extern unsigned int lbl_80495A94[];
+float LUT_Sin12Bit(float x);
+unsigned char Terrain_GetGroundHeightWithPenetration(Vec3 *pos, float *out, int a, int b, float c);
+float fn_80186960(float x);
+extern const float lbl_806D70AC;
+extern const float lbl_806D70B4;
+extern const float lbl_806D70B8;
+extern float lbl_80495994[];
+extern float lbl_80495A94[];
 void Object_DtorWithGXSync(void *o, int flag);
 asm void TimeTrial_Render(void);
 asm void NokoNokoChallenge_Update(void);
-asm void TimeTrial_Destroy(void);
+TimeTrialMode *TimeTrial_Destroy(TimeTrialMode *self, short flag);
 asm void NokoNokoChallenge_Init(void);
 void fn_8012A070(ShotOwner *self);
-asm void fn_8012A22C(void);
+void fn_8012A22C(ShotOwner *self);
 ModelPair *fn_8012A52C(ModelPair *self, short flag);
 
 #pragma section R ".extab_user"
@@ -261,16 +302,10 @@ __declspec(section ".extab_user") static const unsigned char extab_TimeTrial_Ren
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_NokoNokoChallenge_Update = { 0x308A0000, 0x00000258, 0x028F0010, 0x00000000, 0x8200002C, (void *)&dtor_80036E40 };
 
-__declspec(section ".extab_user") static const unsigned char extab_TimeTrial_Destroy[8] = {
-    0x18, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; unsigned int f45; unsigned int f46; unsigned int f47; unsigned int f48; unsigned int f49; unsigned int f50; unsigned int f51; unsigned int f52; unsigned int f53; unsigned int f54; unsigned int f55; unsigned int f56; unsigned int f57; unsigned int f58; unsigned int f59; unsigned int f60; void *f61; unsigned int f62; unsigned int f63; void *f64; unsigned int f65; void *f66; unsigned int f67; unsigned int f68; void *f69; unsigned int f70; void *f71; unsigned int f72; unsigned int f73; void *f74; unsigned int f75; void *f76; unsigned int f77; unsigned int f78; void *f79; unsigned int f80; void *f81; unsigned int f82; unsigned int f83; void *f84; unsigned int f85; void *f86; unsigned int f87; unsigned int f88; void *f89; unsigned int f90; void *f91; unsigned int f92; unsigned int f93; void *f94; unsigned int f95; void *f96; unsigned int f97; unsigned int f98; void *f99; unsigned int f100; unsigned int f101; unsigned int f102; unsigned int f103; void *f104; unsigned int f105; void *f106; unsigned int f107; unsigned int f108; void *f109; unsigned int f110; void *f111; unsigned int f112; void *f113; unsigned int f114; unsigned int f115; void *f116; unsigned int f117; void *f118; unsigned int f119; unsigned int f120; unsigned int f121; void *f122; unsigned int f123; unsigned int f124; void *f125; unsigned int f126; unsigned int f127; void *f128; } extab_NokoNokoChallenge_Init = { 0x204A0000, 0x00000060, 0x000900F8, 0x00000090, 0x000000F0, 0x00000098, 0x000400F8, 0x000000C8, 0x00000104, 0x000000D8, 0x001100F8, 0x0000012C, 0x00100118, 0x00000178, 0x000E00F8, 0x000001D0, 0x0000012C, 0x000001DC, 0x000000F8, 0x000001F0, 0x00040140, 0x0000020C, 0x000000F8, 0x00000218, 0x00000154, 0x00000224, 0x000000F8, 0x00000230, 0x00000168, 0x0000023C, 0x000D00F8, 0x00000280, 0x0000017C, 0x00000294, 0x003100F8, 0x00000380, 0x000001A4, 0x00000388, 0x00040190, 0x0000050C, 0x000000F8, 0x0000053C, 0x000001C0, 0x00000550, 0x000001B8, 0x00000564, 0x000201C0, 0x00000580, 0x000001D4, 0x0000058C, 0x000201C0, 0x000006D8, 0x000001E0, 0x000006F0, 0x000000F8, 0x00000700, 0x000001F0, 0x0000070C, 0x000000F8, 0x00000000, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0980001C, 0x00000000, 0x00000008, 0x00000058, (void *)&dtor_80082960, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x010001C0, 0x0680001C, 0x00000000, (void *)&dtor_8012A5AC, 0x010001C0, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8 };
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8012A22C[8] = {
-    0x40, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 #pragma section R ".extabindex_user"
@@ -282,18 +317,12 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&NokoNokoChallenge_Update, 0x00000CBC, (void *)&extab_NokoNokoChallenge_Update
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_TimeTrial_Destroy = {
-    (void *)&TimeTrial_Destroy, 0x000002C4, (void *)extab_TimeTrial_Destroy
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_NokoNokoChallenge_Init = {
     (void *)&NokoNokoChallenge_Init, 0x00000738, (void *)&extab_NokoNokoChallenge_Init
 };
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8012A22C = {
-    (void *)&fn_8012A22C, 0x00000300, (void *)extab_fn_8012A22C
-};
 
 
 }
@@ -1300,199 +1329,79 @@ extern "C" asm void NokoNokoChallenge_Update(void) { /* 0x801289B8 size:0xCBC */
     blr
 }
 
-extern "C" asm void TimeTrial_Destroy(void) { /* 0x80129674 size:0x2C4 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r4
-    stw r30, 0x18(r1)
-    mr. r30, r3
-    stw r29, 0x14(r1)
-    beq TimeTrial_Destroy_L_80129918
-    lis r3, lbl_8048E338@ha
-    addi r0, r3, lbl_8048E338@l
-    stw r0, 0x0(r30)
-    lwz r3, g_weatherSystem(r13)
-    cmplwi r3, 0x0
-    beq TimeTrial_Destroy_L_801296C0
-    li r4, 0x1
-    bl fn_8016C634
-    li r0, 0x0
-    stw r0, g_weatherSystem(r13)
-    TimeTrial_Destroy_L_801296C0:
-    li r3, 0x0
-    li r4, 0x0
-    bl SetActiveCamera
-    lwz r3, 0x44(r30)
-    cmplwi r3, 0x0
-    beq TimeTrial_Destroy_L_801296EC
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    TimeTrial_Destroy_L_801296EC:
-    lwz r3, 0x14(r30)
-    cmplwi r3, 0x0
-    beq TimeTrial_Destroy_L_8012970C
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    TimeTrial_Destroy_L_8012970C:
-    lwz r3, 0xc(r30)
-    li r4, 0x1
-    bl LakituStart_Dtor
-    lwz r3, 0x18(r30)
-    li r4, 0x1
-    bl fn_80124C84
-    lwz r3, 0x30(r30)
-    cmplwi r3, 0x0
-    beq TimeTrial_Destroy_L_80129744
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    TimeTrial_Destroy_L_80129744:
-    li r3, 0x0
-    bl SetPlayerCarObject
-    lwz r3, 0x8(r30)
-    cmplwi r3, 0x0
-    beq TimeTrial_Destroy_L_8012976C
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    TimeTrial_Destroy_L_8012976C:
-    li r0, 0x0
-    stw r0, g_raceCamera(r13)
-    lwz r3, 0x1c(r30)
-    cmplwi r3, 0x0
-    beq TimeTrial_Destroy_L_80129798
-    beq TimeTrial_Destroy_L_80129798
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    TimeTrial_Destroy_L_80129798:
-    lwz r29, 0x20(r30)
-    cmplwi r29, 0x0
-    beq TimeTrial_Destroy_L_80129814
-    beq TimeTrial_Destroy_L_80129814
-    lis r3, 0x1
-    lhz r4, 0x4(r29)
-    subi r0, r3, 0x1
-    clrlwi r0, r0, 16
-    subf r0, r4, r0
-    cntlzw r0, r0
-    extrwi. r0, r0, 8, 19
-    beq TimeTrial_Destroy_L_801297CC
-    b TimeTrial_Destroy_L_801297DC
-    TimeTrial_Destroy_L_801297CC:
-    subi r3, r4, 0x1
-    cntlzw r0, r4
-    sth r3, 0x4(r29)
-    extrwi r0, r0, 8, 19
-    TimeTrial_Destroy_L_801297DC:
-    cmpwi r0, 0x0
-    beq TimeTrial_Destroy_L_80129814
-    cmplwi r29, 0x0
-    beq TimeTrial_Destroy_L_80129814
-    lwz r4, 0x0(r29)
-    mr r3, r29
-    lwz r12, 0x30(r4)
-    mtctr r12
-    bctrl
-    lwz r4, 0x0(r29)
-    mr r3, r29
-    lwz r12, 0x34(r4)
-    mtctr r12
-    bctrl
-    TimeTrial_Destroy_L_80129814:
-    lwz r3, 0x10(r30)
-    li r4, 0x1
-    bl CourseEnvironment_Dtor
-    lwz r29, 0x2c(r30)
-    cmplwi r29, 0x0
-    beq TimeTrial_Destroy_L_80129850
-    bl fn_80121210
-    lis r4, dtor_80082960@ha
-    mr r3, r29
-    addi r4, r4, dtor_80082960@l
-    li r5, 0x58
-    li r6, 0x8
-    bl __destroy_arr
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    TimeTrial_Destroy_L_80129850:
-    lwz r3, 0x28(r30)
-    li r4, 0x1
-    bl fn_80254134
-    bl fn_80188DA8
-    bl ItemObjectManager_Reset
-    bl VfxSlotMgr_Shutdown
-    bl ClRomTable_PurgeAll
-    bl GetRaceContextPtr
-    bl RankingTable_Init
-    lwz r3, lbl_806D10D0(r13)
-    cmplwi r3, 0x0
-    beq TimeTrial_Destroy_L_80129894
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    TimeTrial_Destroy_L_80129894:
-    li r0, 0x0
-    stw r0, lbl_806D10D0(r13)
-    bl SceneDrawList_Reset
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    beq TimeTrial_Destroy_L_801298C0
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    TimeTrial_Destroy_L_801298C0:
-    li r0, 0x0
-    li r3, 0x0
-    stw r0, lbl_806D109C(r13)
-    bl SetResourceLoadingFlag
-    bl clRom_PurgeAll
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    beq TimeTrial_Destroy_L_801298F4
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    TimeTrial_Destroy_L_801298F4:
-    li r0, 0x0
-    mr r3, r30
-    stw r0, lbl_806D10AC(r13)
-    li r4, 0x0
-    bl dtor_80122FD8
-    extsh. r0, r31
-    ble TimeTrial_Destroy_L_80129918
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    TimeTrial_Destroy_L_80129918:
-    lwz r0, 0x24(r1)
-    mr r3, r30
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+static inline int RefDec(HsdObj *o)
+{
+    int ret = o->ref == (unsigned short)-1;
+    if (ret) {
+        return ret;
+    }
+    return o->ref-- == 0;
+}
+
+static inline void ObjUnref(HsdObj *o)
+{
+    if (o == 0) {
+        return;
+    }
+    if (RefDec(o)) {
+        if (o != 0) {
+            o->info->release(o);
+            o->info->destroy(o);
+        }
+    }
+}
+
+extern "C" TimeTrialMode *TimeTrial_Destroy(TimeTrialMode *self, short flag)
+{
+    if (self) {
+        self->vt = lbl_8048E338;
+        if (g_weatherSystem != 0) {
+            fn_8016C634(g_weatherSystem, 1);
+            g_weatherSystem = 0;
+        }
+        SetActiveCamera(0, 0);
+        delete self->x44;
+        delete self->scene;
+        LakituStart_Dtor(self->lakitu, 1);
+        fn_80124C84(self->goalCam, 1);
+        delete self->x30;
+        SetPlayerCarObject(0);
+        delete self->car;
+        g_raceCamera = 0;
+        if (self->camera != 0) {
+            delete self->camera;
+        }
+        if (self->lights != 0) {
+            ObjUnref(self->lights);
+        }
+        CourseEnvironment_Dtor(self->env, 1);
+        void *icons = self->icons;
+        if (icons != 0) {
+            fn_80121210();
+            __destroy_arr(icons, (void *)dtor_80082960, 0x58, 8);
+            MemoryManager_TimedFree(icons);
+        }
+        fn_80254134(self->hud, 1);
+        fn_80188DA8();
+        ItemObjectManager_Reset();
+        VfxSlotMgr_Shutdown();
+        ClRomTable_PurgeAll();
+        RankingTable_Init(GetRaceContextPtr());
+        delete lbl_806D10D0;
+        lbl_806D10D0 = 0;
+        SceneDrawList_Reset();
+        delete lbl_806D109C;
+        lbl_806D109C = 0;
+        SetResourceLoadingFlag(0);
+        clRom_PurgeAll();
+        delete lbl_806D10AC;
+        lbl_806D10AC = 0;
+        dtor_80122FD8(self, 0);
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
 
 extern "C" asm void NokoNokoChallenge_Init(void) { /* 0x80129938 size:0x738 */
@@ -2000,215 +1909,71 @@ extern "C" void fn_8012A070(ShotOwner *self)
     }
 }
 
-extern "C" asm void fn_8012A22C(void) { /* 0x8012A22C size:0x300 */
-    nofralloc
-    stwu r1, -0x60(r1)
-    mflr r0
-    stw r0, 0x64(r1)
-    stfd f31, 0x50(r1)
-    psq_st f31, 0x58(r1), 0, 0
-    stfd f30, 0x40(r1)
-    psq_st f30, 0x48(r1), 0, 0
-    stmw r24, 0x20(r1)
-    mr r26, r3
-    li r27, 0x0
-    mr r30, r26
-    fn_8012A22C_L_8012A258:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x0
-    beq fn_8012A22C_L_8012A4F8
-    lfs f1, 0x20(r30)
-    addi r28, r30, 0x40
-    lfs f0, 0x2c(r30)
-    addi r3, r30, 0x20
-    lfs f2, lbl_806D706C(r2)
-    addi r4, r1, 0x8
-    fadds f3, f1, f0
-    lfs f0, lbl_806D7070(r2)
-    lfs f1, lbl_806D7050(r2)
-    li r5, 0x0
-    li r6, 0x0
-    stfs f3, 0x20(r30)
-    lfs f4, 0x24(r30)
-    lfs f3, 0x30(r30)
-    fadds f3, f4, f3
-    stfs f3, 0x24(r30)
-    lfs f4, 0x28(r30)
-    lfs f3, 0x34(r30)
-    fadds f3, f4, f3
-    stfs f3, 0x28(r30)
-    lfs f3, 0x30(r30)
-    fsubs f2, f3, f2
-    stfs f2, 0x30(r30)
-    stfs f0, 0x8(r1)
-    bl Terrain_GetGroundHeightWithPenetration
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne fn_8012A22C_L_8012A2F8
-    lfs f1, 0x24(r30)
-    lfs f0, 0x8(r1)
-    fcmpo cr0, f1, f0
-    bge fn_8012A22C_L_8012A2F8
-    lfs f0, 0x30(r30)
-    lfs f1, lbl_806D70AC(r2)
-    fneg f0, f0
-    fmuls f0, f1, f0
-    stfs f0, 0x30(r30)
-    fn_8012A22C_L_8012A2F8:
-    lfs f2, 0x38(r30)
-    lfs f1, lbl_806D70B0(r2)
-    lfs f0, lbl_806D70B4(r2)
-    fadds f1, f2, f1
-    stfs f1, 0x38(r30)
-    lfs f1, 0x38(r30)
-    fcmpo cr0, f1, f0
-    ble fn_8012A22C_L_8012A320
-    fsubs f0, f1, f0
-    stfs f0, 0x38(r30)
-    fn_8012A22C_L_8012A320:
-    lwz r3, 0x1c(r30)
-    lis r0, 0x4330
-    stw r0, 0x10(r1)
-    mr r5, r28
-    xoris r0, r3, 0x8000
-    lfd f2, lbl_806D7060(r2)
-    stw r0, 0x14(r1)
-    li r6, 0x0
-    lfs f0, lbl_806D70B8(r2)
-    li r3, -0x1
-    lfd f1, 0x10(r1)
-    lfs f3, lbl_806D7058(r2)
-    fsubs f2, f1, f2
-    lfs f1, lbl_806D7054(r2)
-    fdivs f0, f2, f0
-    fsubs f0, f3, f0
-    stfs f0, 0x3c(r30)
-    b fn_8012A22C_L_8012A3A0
-    fn_8012A22C_L_8012A368:
-    lwz r0, 0x0(r5)
-    cmpwi r0, 0x0
-    blt fn_8012A22C_L_8012A398
-    lfs f0, 0x8(r5)
-    fsubs f0, f0, f1
-    stfs f0, 0x8(r5)
-    lwz r4, 0x0(r5)
-    addi r0, r4, 0x1
-    cmpwi r0, 0xa
-    stw r0, 0x0(r5)
-    ble fn_8012A22C_L_8012A398
-    stw r3, 0x0(r5)
-    fn_8012A22C_L_8012A398:
-    addi r5, r5, 0x10
-    addi r6, r6, 0x1
-    fn_8012A22C_L_8012A3A0:
-    lwz r0, 0x89c(r26)
-    cmpw r6, r0
-    blt fn_8012A22C_L_8012A368
-    lwz r0, 0x1c(r30)
-    clrlwi. r0, r0, 30
-    bne fn_8012A22C_L_8012A4DC
-    lis r4, lbl_80495A94@ha
-    lis r3, lbl_80495994@ha
-    mr r31, r28
-    li r29, 0x0
-    addi r24, r4, lbl_80495A94@l
-    addi r25, r3, lbl_80495994@l
-    b fn_8012A22C_L_8012A498
-    fn_8012A22C_L_8012A3D4:
-    lwz r4, 0x10(r26)
-    lwz r3, 0xc(r26)
-    lwz r0, 0x0(r31)
-    slwi r4, r4, 2
-    slwi r3, r3, 2
-    lfsx f31, r24, r4
-    cmpwi r0, 0x0
-    lfsx f1, r25, r3
-    blt fn_8012A22C_L_8012A400
-    li r0, 0x0
-    b fn_8012A22C_L_8012A448
-    fn_8012A22C_L_8012A400:
-    lfs f0, lbl_806D70B4(r2)
-    li r0, 0x0
-    stw r0, 0x0(r31)
-    fmuls f30, f0, f1
-    fmr f1, f30
-    bl LUT_Sin12Bit
-    lfs f2, lbl_806D70B0(r2)
-    lfs f0, lbl_806D7050(r2)
-    fmuls f2, f2, f1
-    fmuls f0, f0, f31
-    fmr f1, f30
-    stfs f2, 0x4(r31)
-    stfs f0, 0x8(r31)
-    bl fn_80186960
-    lfs f0, lbl_806D70B0(r2)
-    li r0, 0x1
-    fmuls f0, f0, f1
-    stfs f0, 0xc(r31)
-    fn_8012A22C_L_8012A448:
-    clrlwi r0, r0, 24
-    cmplwi r0, 0x1
-    bne fn_8012A22C_L_8012A490
-    slwi r0, r29, 4
-    lfs f0, 0x20(r30)
-    add r3, r28, r0
-    lfs f1, 0x4(r3)
-    fadds f0, f1, f0
-    stfs f0, 0x4(r3)
-    lfs f1, 0x8(r3)
-    lfs f0, 0x24(r30)
-    fadds f0, f1, f0
-    stfs f0, 0x8(r3)
-    lfs f1, 0xc(r3)
-    lfs f0, 0x28(r30)
-    fadds f0, f1, f0
-    stfs f0, 0xc(r3)
-    b fn_8012A22C_L_8012A4A4
-    fn_8012A22C_L_8012A490:
-    addi r31, r31, 0x10
-    addi r29, r29, 0x1
-    fn_8012A22C_L_8012A498:
-    lwz r0, 0x89c(r26)
-    cmpw r29, r0
-    blt fn_8012A22C_L_8012A3D4
-    fn_8012A22C_L_8012A4A4:
-    lwz r3, 0xc(r26)
-    addi r0, r3, 0x1
-    cmpwi r0, 0x40
-    stw r0, 0xc(r26)
-    blt fn_8012A22C_L_8012A4C0
-    li r0, 0x0
-    stw r0, 0xc(r26)
-    fn_8012A22C_L_8012A4C0:
-    lwz r3, 0x10(r26)
-    addi r0, r3, 0x1
-    cmpwi r0, 0x30
-    stw r0, 0x10(r26)
-    blt fn_8012A22C_L_8012A4DC
-    li r0, 0x0
-    stw r0, 0x10(r26)
-    fn_8012A22C_L_8012A4DC:
-    lwz r3, 0x1c(r30)
-    addi r0, r3, 0x1
-    cmpwi r0, 0x5a
-    stw r0, 0x1c(r30)
-    blt fn_8012A22C_L_8012A4F8
-    li r0, 0x0
-    stw r0, 0x14(r30)
-    fn_8012A22C_L_8012A4F8:
-    addi r27, r27, 0x1
-    addi r30, r30, 0x16c
-    cmpwi r27, 0x6
-    blt fn_8012A22C_L_8012A258
-    psq_l f31, 0x58(r1), 0, 0
-    lfd f31, 0x50(r1)
-    psq_l f30, 0x48(r1), 0, 0
-    lfd f30, 0x40(r1)
-    lmw r24, 0x20(r1)
-    lwz r0, 0x64(r1)
-    mtlr r0
-    addi r1, r1, 0x60
-    blr
+static inline bool Trail_Spawn(Trail *t, float a, float b)
+{
+    if (t->age >= 0) {
+        return false;
+    }
+    t->age = 0;
+    t->pos.x = 5.0f * LUT_Sin12Bit(360.0f * a);
+    t->pos.y = 10.0f * b;
+    t->pos.z = 5.0f * fn_80186960(360.0f * a);
+    return true;
+}
+
+extern "C" void fn_8012A22C(ShotOwner *self)
+{
+    Shot *s;
+    Trail *trails;
+    int i;
+    int j;
+
+    for (i = 0; i < 6; i++) {
+        s = &((ShotSet *)self)->shots[i];
+        if (s->active) {
+            trails = s->trail;
+            s->pos.x += s->vel.x;
+            s->pos.y += s->vel.y;
+            s->pos.z += s->vel.z;
+            s->vel.y -= 0.1f;
+            float ground = 0.0f;
+            if (Terrain_GetGroundHeightWithPenetration(&s->pos, &ground, 0, 0, 10.0f) == 1 && s->pos.y < ground) {
+                s->vel.y = 0.85f * -s->vel.y;
+            }
+            s->rot += 5.0f;
+            if (s->rot > 360.0f) {
+                s->rot -= 360.0f;
+            }
+            s->alpha = 1.0f - s->timer / 90.0f;
+            for (j = 0; j < self->trailCount; j++) {
+                if (trails[j].age >= 0) {
+                    trails[j].pos.y -= 2.0f;
+                    if (++trails[j].age > 10) {
+                        trails[j].age = -1;
+                    }
+                }
+            }
+            if ((s->timer & 3) == 0) {
+                for (j = 0; j < self->trailCount; j++) {
+                    if (Trail_Spawn(&trails[j], lbl_80495994[self->phaseA], lbl_80495A94[self->phaseB]) == 1) {
+                        trails[j].pos.x += s->pos.x;
+                        trails[j].pos.y += s->pos.y;
+                        trails[j].pos.z += s->pos.z;
+                        break;
+                    }
+                }
+                if (++self->phaseA >= 0x40) {
+                    self->phaseA = 0;
+                }
+                if (++self->phaseB >= 0x30) {
+                    self->phaseB = 0;
+                }
+            }
+            if (++s->timer >= 0x5a) {
+                s->active = 0;
+            }
+        }
+    }
 }
 
 extern "C" ModelPair *fn_8012A52C(ModelPair *self, short flag)
