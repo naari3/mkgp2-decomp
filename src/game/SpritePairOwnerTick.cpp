@@ -1,23 +1,22 @@
 #include "game/SpritePairOwner.h"
 void SpritePairOwner::Tick() {
-    const float upper=lbl_806DB9D8;
     alpha += speed;
-    if (alpha > upper) { alpha=upper; speed=lbl_806DB9DC; }
-    if (alpha < lbl_806DB9DC) { alpha=lbl_806DB9DC; speed=lbl_806DB9DC; }
+    if (alpha > 1.0f) { alpha=1.0f; speed=0.0f; }
+    if (alpha < 0.0f) { alpha=0.0f; speed=0.0f; }
     for (int i=0; i<2; ++i) {
         if (sprites[i]) {
             sprites[i]->alpha=alpha;
-            Sprite_AdvanceAnim(sprites[i],lbl_806DB9E0);
+            Sprite_AdvanceAnim(sprites[i],0.0165f);
         }
     }
     for (int i=0; i<2; ++i) {
         if (handles[i] >= 0) {
-            SpriteHandle_SetCornerAlpha(handles[i],(int)(lbl_806DB9E4*alpha));
+            SpriteHandle_SetCornerAlpha(handles[i],(int)(255.0f*alpha));
             SpriteHandle_RecomputeCull(handles[i]);
         }
     }
 }
 void SpritePairOwner::Reset() {
-    alpha=lbl_806DB9DC; speed=lbl_806DB9DC;
+    alpha=0.0f; speed=0.0f;
     Tick();
 }

@@ -719,3 +719,8 @@ RaceDigitLap 80246988: numeric clamp literals plus independent local value remov
 Source: Codex worker c12_u34_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c12_u34: fn_801F7198 improved 98.58878 to 98.92523 by retaining a TU-local copy of SelectSpriteTexture801F with height captured before width. This fixes f8/f9 and conversion scratch SP+08/SP+10 ordering without shared-header edits. Bounds-check cast-to-unsigned-char ==1 still emits srwi/cmplwi/bne rather than target srwi./beq, leaving source432 vs target428B. Direct predicate, branch-return int helper, and removing cast all collapse to cmplw and 412B (92.65-93.27%). Three hypotheses exhausted; singleton remains NonMatching. Full fallback-linked DOL SHA-1 OK.
+
+## c12_u36_20261106
+Source: Codex worker c12_u36_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 544 B.
+
+c12_u36: SpritePairOwner::Tick/Reset 8023CDA8/8023CEB4 improve 98.731346/98.478264 to 100% using numeric float literals 1.0f/0.0f/0.0165f/255.0f instead of captured external const floats. Clamp FPR homes become exact; Reset naturally inlines Tick. Existing EH bridges suffice, no split or metadata changes. Whole TU text544/extab16/extabindex24 exact, Matching promotion source-linked, actual main.elf addresses/sizes and full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65 verified.
