@@ -10992,5 +10992,9 @@
     "__ct__13FKPanelSpriteFiii": "Sprite_InitWithAnim",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801E68B4.cpp": {
+    "__dt__5Vec3cFv": "dtor_80036E40",
+    "ApplyIncomingItem__16AIItemControllerFP14AIIncomingItem": "fn_801E68B4"
   }
 }

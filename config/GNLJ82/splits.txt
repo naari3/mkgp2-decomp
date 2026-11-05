@@ -9612,6 +9612,12 @@ game/fn_801DE810.c:
 	extabindex  start:0x800284A8 end:0x800284B4
 	.text       start:0x801DE810 end:0x801DE848
 
+game/DriveBehavior_HandleWpType.c:
+	extab       start:0x800159F8 end:0x80015A00
+	extabindex  start:0x800284B4 end:0x800284C0
+	.text       start:0x801DE848 end:0x801DEAF4
+	.data       start:0x804E4850 end:0x804E4878
+
 game/fn_801DEAF4.c:
 	extab       start:0x80015A00 end:0x80015A08
 	extabindex  start:0x800284C0 end:0x800284CC
@@ -9619,6 +9625,11 @@ game/fn_801DEAF4.c:
 
 game/fn_801DEC3C.c:
 	.text       start:0x801DEC3C end:0x801DEC74
+
+game/fn_801DEC74.c:
+	extab       start:0x80015A08 end:0x80015A10
+	extabindex  start:0x800284CC end:0x800284D8
+	.text       start:0x801DEC74 end:0x801DEE38
 
 game/fn_801DEE38.cpp:
 	extab       start:0x80015A10 end:0x80015A18
@@ -9680,6 +9691,12 @@ game/fn_801E5A84.c:
 	extabindex  start:0x800287D8 end:0x800287E4
 	.text       start:0x801E5A84 end:0x801E5B50
 
+game/AI_UpdateItemEffects.c:
+	extab       start:0x80016498 end:0x800164A0
+	extabindex  start:0x800287E4 end:0x800287F0
+	.text       start:0x801E5B50 end:0x801E6594
+	.data       start:0x804E4A78 end:0x804E4AF0
+
 game/fn_801E6594.c:
 	extab       start:0x800164A0 end:0x800164A8
 	extabindex  start:0x800287F0 end:0x800287FC
@@ -9699,6 +9716,11 @@ game/fn_801E66B4.c:
 	extab       start:0x800164B8 end:0x800164C0
 	extabindex  start:0x80028814 end:0x80028820
 	.text       start:0x801E66B4 end:0x801E68B4
+
+game/fn_801E68B4.cpp:
+	extab       start:0x800164C0 end:0x800164E0
+	extabindex  start:0x80028820 end:0x8002882C
+	.text       start:0x801E68B4 end:0x801E6B0C
 
 game/fn_801E6B0C.c:
 	extab       start:0x800164E0 end:0x800164E8
