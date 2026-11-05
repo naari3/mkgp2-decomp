@@ -1,4 +1,4 @@
-#include "game/EnemyFace_private.h"
+#include "game/EnemyFace_nm3_private.h"
 
 clEnemyFace::clEnemyFace(void *path, int p) : state(1), param(p), holder(0) {
     for (int i = 0; i < 4; i++) {
@@ -18,14 +18,7 @@ clEnemyFace::clEnemyFace(void *path, int p) : state(1), param(p), holder(0) {
             int slot = e->kart->slot;
             if (slot != GetDisplayBufferIndex(e->kart) && slot != 6) {
                 karts[i] = e->kart;
-                clEFace3D *f = new clEFace3D(e->kart, param);
-                if (f) {
-                    if (g_gameMode == 2 && !fn_80231644(&f->b, &f->a, &f->c, f->slot, e->kart->course)) {
-                        f->a = fn_80231BD4(6, e->kart->course, 0);
-                    }
-                    f->model = new clEFaceModel(e->kart, f->a, f->b, f->c);
-                }
-                faces[i] = f;
+                faces[i] = new clEFace3D(e->kart, param);
                 icons[i] = new FaceIcon(e->kart, param);
                 rings[i] = new FaceRing(e->kart, param);
             }

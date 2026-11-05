@@ -9406,6 +9406,10 @@
     "__dt__16clCDispInterfaceFv": "dtor_8021617C"
   },
   "src/game/EnemyFace_nm3.cpp": {
+    "__dt__10FaceHolderFv": "dtor_8020EB04",
+    "__dt__16clCDispInterfaceFv": "dtor_8021617C",
+    "@93": "@etb_8001BEF4",
+    "@94": "@eti_8002A89C",
     "TireSprite_Draw__FP10TireSprite": "fn_8022ACE4",
     "TireSprite_Queue__FP10TireSprite": "fn_8022B150",
     "TireSprite_Release__Fv": "fn_8022B1C8",

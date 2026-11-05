@@ -794,3 +794,8 @@ c13_u38: fn_80244524 rendering uses separate block-local size variables for two 
 Source: Codex worker c13_u43_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u43: fn_801F7344 fresh95.44886 ->99.03409 using a TU-local zero-texture helper: height-before-width fixes FP f8/f9 and conversion scratch slots; count then local index=0 fixes r29/r30. Bounds remains cmplwi/bne vs target cntlzw/extrwi./beq (source700 vs target704B). Inline unsigned-char empty-bank predicate invariant. Local conversion cookie @84 remains vs target lbl_806DA720. Three hypotheses exhausted; singleton stays NonMatching. Full fallback-linked DOL SHA-1 OK; native gain0.
+
+## c14_u11_20261106
+Source: Codex worker c14_u11_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+EnemyFace_nm3 ctor 8022BBC8: target clEFace3D +8 is destructible Vec3c; face selection and model allocation belong within inline clEFace3D ctor EH lifetime, not caller post-new initialization. FaceIcon sizeof=0x28, FaceRing sizeof=0x24. TU-private view raises text 94.35 to 98.72 and matches owned EH exactly after FaceHolder->dtor_8020EB04/base->dtor_8021617C bridges. Residual is local initialization register/scheduling; stop after unchanged member-initializer/default-vector probes. TU remains NonMatching.
