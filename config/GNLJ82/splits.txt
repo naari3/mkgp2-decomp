@@ -10205,6 +10205,11 @@ game/dtor_801F6BD0.c:
 	extabindex  start:0x80028F1C end:0x80028F28
 	.text       start:0x801F6BD0 end:0x801F6C2C
 
+game/fn_801F6D58.cpp:
+	extab       start:0x80017548 end:0x80017550
+	extabindex  start:0x80028F34 end:0x80028F40
+	.text       start:0x801F6D58 end:0x801F6E84
+
 game/fn_801F6E84.c:
 	.text       start:0x801F6E84 end:0x801F6EEC
 
@@ -10227,6 +10232,21 @@ game/fn_801F70F0.c:
 	extab       start:0x80017568 end:0x80017570
 	extabindex  start:0x80028F64 end:0x80028F70
 	.text       start:0x801F70F0 end:0x801F7198
+
+game/fn_801F7198.cpp:
+	extab       start:0x80017570 end:0x80017578
+	extabindex  start:0x80028F70 end:0x80028F7C
+	.text       start:0x801F7198 end:0x801F7344
+
+game/fn_801F7344.cpp:
+	extab       start:0x80017578 end:0x80017580
+	extabindex  start:0x80028F7C end:0x80028F88
+	.text       start:0x801F7344 end:0x801F7604
+
+game/fn_801F7604.cpp:
+	extab       start:0x80017580 end:0x800175B8
+	extabindex  start:0x80028F88 end:0x80028F94
+	.text       start:0x801F7604 end:0x801F7A74
 
 game/dtor_801F7A74.c:
 	extab       start:0x800175B8 end:0x800175C0
