@@ -7947,15 +7947,35 @@ game/sprite/fn_801A1D98.c:
 	extabindex  start:0x8002765C end:0x80027668
 	.text       start:0x801A1D98 end:0x801A24B8
 
+game/sprite/fn_801A24B8.c:
+	extab       start:0x80012A80 end:0x80012A88
+	extabindex  start:0x80027668 end:0x80027674
+	.text       start:0x801A24B8 end:0x801A32BC
+
+game/sprite/fn_801A32BC.c:
+	extab       start:0x80012A88 end:0x80012A90
+	extabindex  start:0x80027674 end:0x80027680
+	.text       start:0x801A32BC end:0x801A4A10
+
 game/sprite/fn_801A4A10.c:
 	extab       start:0x80012A90 end:0x80012A98
 	extabindex  start:0x80027680 end:0x8002768C
 	.text       start:0x801A4A10 end:0x801A4F38
 
+game/sprite/fn_801A4F38.c:
+	extab       start:0x80012A98 end:0x80012AA0
+	extabindex  start:0x8002768C end:0x80027698
+	.text       start:0x801A4F38 end:0x801A5DC0
+
 game/sprite/fn_801A5DC0.c:
 	extab       start:0x80012AA0 end:0x80012AA8
 	extabindex  start:0x80027698 end:0x800276A4
 	.text       start:0x801A5DC0 end:0x801A6538
+
+game/sprite/fn_801A7D0C.c:
+	extab       start:0x80012AB0 end:0x80012AB8
+	extabindex  start:0x800276B0 end:0x800276BC
+	.text       start:0x801A7D0C end:0x801A8688
 
 game/sprite/fn_801ACC18.c:
 	extab       start:0x80012AD8 end:0x80012AE0
