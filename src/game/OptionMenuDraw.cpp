@@ -1,12 +1,17 @@
 #include "game/OptionMenuDrawPrivate.h"
 
+static inline RankLog *GetRankLog() {
+    return lbl_806D10A0 == 0 ? (RankLog *)0 : lbl_806D10A0;
+}
+
 extern "C" void fn_8015A6E4(OptionDrawScene *self, int layer, float x, float y, float alpha) {
     const OptionDrawData *data = &lbl_803678D8;
-    float nameX, rowY, titleY, imageX, nameY;
+    float nameX, rowY, imageX, nameY, titleY;
+    float rowX;
     float pulseScale, pulseAlpha;
     const char *title;
-    int count, i;
     const float *positions;
+    int count, i;
     if (isJapanese() == 1) {
         fn_80168798(layer, lbl_806D8574, lbl_806D83D4+x, lbl_806D83D0+y, alpha);
         fn_80168D84(layer, lbl_806D83E4, lbl_806D83DC+x, lbl_806D83E0+y, alpha);
@@ -35,10 +40,9 @@ extern "C" void fn_8015A6E4(OptionDrawScene *self, int layer, float x, float y, 
     nameX=lbl_806D83D4+x;
     fn_80167C60(layer,self->target,nameX,lbl_806D8594+y,alpha);
     fn_80168D84(layer,GetTextureByIdAndLang(0x45,-1),imageX,lbl_806D8598+y,alpha);
-    void *global=lbl_806D10A0;
-    if (!global) global=0;
+    RankLog *global=GetRankLog();
     title=lbl_806D859C;
-    if (global) title=get_title_name_global();
+    if (global) title=get_title_name_global(global);
     if (isJapanese()==1)
         fn_80168404(layer,title,nameX,nameY,lbl_806D83B0,lbl_806D83B0,alpha);
     else
@@ -47,8 +51,8 @@ extern "C" void fn_8015A6E4(OptionDrawScene *self, int layer, float x, float y, 
     count=self->target->count-1;
     count=count & (((unsigned int)count >> 31)-1);
     fn_80168798(layer,GetTextureByIdAndLang(0x49,-1),nameX,lbl_806D85A8+y,alpha,count);
-    nameY=lbl_806D85AC+x;
-    fn_801695E0(layer,0x643,0,nameY,lbl_806D85B0+y,alpha);
+    rowX=lbl_806D85AC+x;
+    fn_801695E0(layer,0x643,0,rowX,lbl_806D85B0+y,alpha);
     if (self->toggle) {
         rowY=lbl_806D85B8+y;
         fn_801695E0(layer,0x67D,0,lbl_806D85B4+x,rowY,alpha);
@@ -64,14 +68,14 @@ extern "C" void fn_8015A6E4(OptionDrawScene *self, int layer, float x, float y, 
     self->panel38->alpha=alpha;
     self->panel38->Draw();
     rowY=lbl_806D8504+y;
-    fn_801695E0(layer,0x642,0,nameY,rowY,alpha);
+    fn_801695E0(layer,0x642,0,rowX,rowY,alpha);
     titleY=lbl_806D8410+rowY;
     positions=data->positions;
     for(i=0;i<5;i++,positions++) {
         if(self->selection==i)
-            fn_801695E0(layer,0x676+i,0,nameY+*positions,titleY,alpha);
+            fn_801695E0(layer,0x676+i,0,rowX+*positions,titleY,alpha);
         else
-            fn_801695E0(layer,0x671+i,0,nameY+*positions,titleY,alpha);
+            fn_801695E0(layer,0x671+i,0,rowX+*positions,titleY,alpha);
     }
     if(self->fade50<lbl_806D8398) {
         texture=GetTextureByIdAndLang(0x4B,-1);
@@ -93,7 +97,7 @@ extern "C" void fn_8015A6E4(OptionDrawScene *self, int layer, float x, float y, 
             pulseScale=lbl_806D83B0+fraction;
             pulseAlpha=lbl_806D83B0-fraction;
         }
-        fn_80169334(layer,0x67F,0,nameY+(data->positions)[self->selection],titleY,pulseScale,pulseScale,pulseAlpha*alpha);
+        fn_80169334(layer,0x67F,0,rowX+(&data->positions[0])[self->selection],titleY,pulseScale,pulseScale,pulseAlpha*alpha);
         t=self->fade54;
         if(t>lbl_806D8418) {
             if(t<lbl_806D83B8) {
@@ -105,7 +109,7 @@ extern "C" void fn_8015A6E4(OptionDrawScene *self, int layer, float x, float y, 
                 pulseScale=lbl_806D83B0+fraction;
                 pulseAlpha=lbl_806D83B0-fraction;
             }
-            fn_80169334(layer,0x67F,0,nameY+(data->positions)[self->selection],titleY,pulseScale,pulseScale,pulseAlpha*alpha);
+            fn_80169334(layer,0x67F,0,rowX+(&data->positions[0])[self->selection],titleY,pulseScale,pulseScale,pulseAlpha*alpha);
         }
     }
 }
