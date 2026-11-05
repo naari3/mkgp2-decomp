@@ -494,3 +494,8 @@ c8_s39: clFlowClass_Update native reconstruction reached 99.81191% with exact 88
 Source: Codex worker c8_s38_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1492 B.
 
 c8_s38: clFlowEntry_Update 801BA380 matches native 804B text + 24B DELETEPOINTER EH + 12B index. For inline boolean equality predicates, explicit int finished=(unsigned char)card->Done() and int held=(unsigned char)(input->held==1) produce target cntlzw/extrwi materialization; direct if(Done()) folds to cmpwi, whereas Done()==1 adds a comparison. Preserve the nested else-return structure for its branch-over-branch. fn_801C1F88 688B and all EH/index match using mutable extern aggregate animation tables and one captured input pointer for clearing fields. Full DOL SHA-1 and actual ELF addresses verified.
+
+## c8_s42_20261105
+Source: Codex worker c8_s42_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 2180 B.
+
+c8_s42: fn_801CCAAC real new SelectClosing plus declared SelectTween array ctor bridged to fn_801CDA7C gives exact DELETEPOINTER EH. Put vt/sprite/delay in member initializer list before array construction. Call an inline Fade method before passing &p to list insertion: its this parameter preserves the cached pointer and original SP+10 p slot; open-coded field writes caused repeated stack pointer reloads. fn_801CCDA4 needs outer end local plus inline TickSelectEntries(node,end) for exact self/end/entry/node GPR partition. fn_801CB818 compares float constant against (float)--countdown to match conversion before member store. All three GC/2.6 text/EH/index exact and source-linked full DOL SHA-1 OK.

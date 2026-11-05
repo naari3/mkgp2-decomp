@@ -8918,6 +8918,11 @@ game/clFlowItemSelect_CommitSlotAnim.c:
 	extabindex  start:0x80027E6C end:0x80027E78
 	.text       start:0x801CB620 end:0x801CB818
 
+game/fn_801CB818.cpp:
+	extab       start:0x80014728 end:0x80014730
+	extabindex  start:0x80027E78 end:0x80027E84
+	.text       start:0x801CB818 end:0x801CBCAC
+
 game/clFlowItemSelect_Draw.c:
 	extab       start:0x80014730 end:0x80014738
 	extabindex  start:0x80027E84 end:0x80027E90
@@ -8943,10 +8948,20 @@ game/dtor_801CCA30.cpp:
 	extabindex  start:0x80027EB4 end:0x80027EC0
 	.text       start:0x801CCA30 end:0x801CCAAC
 
+game/fn_801CCAAC.cpp:
+	extab       start:0x8001482C end:0x80014844
+	extabindex  start:0x80027EC0 end:0x80027ECC
+	.text       start:0x801CCAAC end:0x801CCD14
+
 game/fn_801CCD14.cpp:
 	extab       start:0x80014844 end:0x8001484C
 	extabindex  start:0x80027ECC end:0x80027ED8
 	.text       start:0x801CCD14 end:0x801CCDA4
+
+game/fn_801CCDA4.cpp:
+	extab       start:0x8001484C end:0x80014854
+	extabindex  start:0x80027ED8 end:0x80027EE4
+	.text       start:0x801CCDA4 end:0x801CCF2C
 
 game/fn_801CCF2C.cpp:
 	extab       start:0x80014854 end:0x8001485C

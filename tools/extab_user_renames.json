@@ -10869,5 +10869,10 @@
     "__ct__15CourseEntryTaskFv": "clFlowEntry_Init",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801CCAAC.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__11SelectTweenFv": "fn_801CDA7C"
   }
 }
