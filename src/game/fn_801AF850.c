@@ -1,0 +1,65 @@
+#include "game/RaceVoiceEventsPrivate.h"
+
+extern int g_cupId, g_longRoundFlag, g_courseVariantIdx;
+extern unsigned int g_voiceTickCounter;
+extern int g_humanPlayerCount;
+extern short g_charRaceStartVoiceTable[14], lbl_80496D5C[52];
+
+static inline short SelectStartVoice(int character, int id) {
+    short *normal = g_charRaceStartVoiceTable;
+    short *special = lbl_80496D5C;
+    short voice = 0x43;
+    if (character > -1 && character < 13) {
+        if (g_gameMode == 2) {
+            if (id >= 0 && id <= 3) voice = special[character + id * 13];
+            else voice = normal[character];
+        } else voice = normal[character];
+    }
+    return voice;
+}
+
+/* Queue the cup/course introduction, participating drivers, and start prompt. */
+void fn_801AF850(void) {
+    int cup = g_cupId;
+    int longRound = g_longRoundFlag;
+    int variant = g_courseVariantIdx;
+    int participants;
+    int i;
+    if (cup == 1) SpriteVoice_Push(0x10 + longRound * 3 + variant % 3, -1, 0, 1);
+    if (cup == 2) SpriteVoice_Push(0x16 + longRound * 3 + variant % 3, -1, 0, 1);
+    if (cup == 3) SpriteVoice_Push(0x1C + longRound * 3 + variant % 3, -1, 0, 1);
+    if (cup == 4) SpriteVoice_Push(0x22 + longRound * 2 + variant % 2, -1, 0, 1);
+    if (cup == 5) SpriteVoice_Push(0x26 + longRound * 2 + variant % 2, -1, 0, 1);
+    if (cup == 6) SpriteVoice_Push(0x2B + longRound, -1, 0, 1);
+    if (cup == 7) SpriteVoice_Push(0x2E + longRound, -1, 0, 1);
+    if (cup == 8) SpriteVoice_Push(0x32 + longRound, -1, 0, 1);
+    participants = 0;
+    for (i = 0; i < 8; i++) {
+        if (g_raceEntryArray[i].participant) participants++;
+    }
+    if (participants != 4) {
+        if (g_voiceTickCounter % 2 == 0) SpriteVoice_Push(0x18A, 0, 0, 0);
+        else SpriteVoice_Push(0x16F, 0, 0, 0);
+    }
+    for (i = 0; i < 8; i++) {
+        if (g_raceEntryArray[i].participant) {
+            SpriteVoice_Push(SelectStartVoice(g_raceEntryArray[i].character, g_raceEntryArray[i].id), 0, 0, 0);
+        }
+    }
+    if (participants == 4) {
+        if (g_voiceTickCounter % 2 == 0) SpriteVoice_Push(0x18B, 0, 0, 0);
+        else SpriteVoice_Push(0x170, 0, 0, 0);
+    }
+    if (g_humanPlayerCount <= 0) {
+        if (g_voiceTickCounter % 2 == 0) SpriteVoice_Push(0x18F, 0, 0, 0);
+        else SpriteVoice_Push(0x171, 0, 0, 0);
+    } else {
+        switch (g_voiceTickCounter % 5) {
+        case 0: SpriteVoice_Push(0x172, 0, 0, 0); break;
+        case 1: SpriteVoice_Push(0x173, 0, 0, 0); break;
+        case 2: SpriteVoice_Push(0x174, 0, 0, 0); break;
+        case 3: SpriteVoice_Push(0x171, 0, 0, 0); break;
+        default: SpriteVoice_Push(0x18F, 0, 0, 0); break;
+        }
+    }
+}
