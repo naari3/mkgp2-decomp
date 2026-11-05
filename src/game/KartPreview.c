@@ -3,9 +3,10 @@
  * (0x8013C4A4..0x8013D4B0): model wrapper setters, render, anim, dtor
  * and ctor. The render target singleton lives in RenderTargetSingleton.c.
  *
- * The model setters and the render function test `kart` then `driver` with a
- * `bne; b` branch-over-branch on the second test that no C form tried here
- * reproduces, so they stay asm for now (as does the large ctor).
+ * The model setters and the render function start with
+ * `if (kart == 0 || driver == 0) return;`, which is what produces the
+ * `beq end; ...; bne body; b end` branch-over-branch on the second test.
+ * The large ctor (fn_8013CC24) stays asm for now.
  */
 
 typedef struct HSD_JObj {
@@ -102,310 +103,65 @@ extern RenderTargetHolder *fn_8013C3B8(void);
 extern void fn_8013C3C0(void);
 extern int fn_8013C428(void);
 
-asm void fn_8013C4A4(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_fn_8013C4A4[8] = {
-    0x08, 0x48, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013C4A4 = {
-    (void *)&fn_8013C4A4, 0x00000090, (void *)extab_fn_8013C4A4
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void fn_8013C4A4(void) { /* 0x8013C4A4 size:0x90 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stfd f31, 0x18(r1)
-    fmr f31, f1
-    stw r31, 0x14(r1)
-    mr r31, r3
-    lwz r3, 0x4(r3)
-    cmplwi r3, 0x0
-    beq fn_8013C4A4_L_8013C51C
-    lwz r0, 0xc(r31)
-    cmplwi r0, 0x0
-    bne fn_8013C4A4_L_8013C4DC
-    b fn_8013C4A4_L_8013C51C
-    fn_8013C4A4_L_8013C4DC:
-    li r4, 0x0
-    bl Object_SetColorAlphaOnly
-    fmr f1, f31
-    lwz r3, 0x8(r31)
-    li r4, 0x0
-    bl Object_SetColorAlphaOnly
-    fmr f1, f31
-    lwz r3, 0xc(r31)
-    li r4, 0x0
-    bl Object_SetColorAlphaOnly
-    lwz r3, 0x24(r31)
-    cmplwi r3, 0x0
-    beq fn_8013C4A4_L_8013C51C
-    fmr f1, f31
-    li r4, 0x0
-    bl Object_SetColorAlphaOnly
-    fn_8013C4A4_L_8013C51C:
-    lwz r0, 0x24(r1)
-    lfd f31, 0x18(r1)
-    lwz r31, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+void fn_8013C4A4(KartPreview *p, float a) {
+    if (p->kart == 0 || p->driver == 0) {
+        return;
+    }
+    Object_SetColorAlphaOnly(p->kart, 0, a);
+    Object_SetColorAlphaOnly(p->obj8, 0, a);
+    Object_SetColorAlphaOnly(p->driver, 0, a);
+    if (p->obj24) {
+        Object_SetColorAlphaOnly(p->obj24, 0, a);
+    }
 }
 
 
-extern void _restfpr_28();
-extern void _savefpr_28();
-asm void fn_8013C534(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_fn_8013C534[8] = {
-    0x09, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013C534 = {
-    (void *)&fn_8013C534, 0x000000C8, (void *)extab_fn_8013C534
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void fn_8013C534(void) { /* 0x8013C534 size:0xC8 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    addi r11, r1, 0x30
-    bl _savefpr_28
-    stw r31, 0xc(r1)
-    mr r31, r3
-    fmr f28, f1
-    lwz r3, 0x4(r3)
-    fmr f29, f2
-    fmr f30, f3
-    fmr f31, f4
-    cmplwi r3, 0x0
-    beq fn_8013C534_L_8013C5E0
-    lwz r0, 0xc(r31)
-    cmplwi r0, 0x0
-    bne fn_8013C534_L_8013C57C
-    b fn_8013C534_L_8013C5E0
-    fn_8013C534_L_8013C57C:
-    li r4, 0x0
-    bl Object_SetColorRGBA
-    fmr f1, f28
-    lwz r3, 0x8(r31)
-    fmr f2, f29
-    li r4, 0x0
-    fmr f3, f30
-    fmr f4, f31
-    bl Object_SetColorRGBA
-    fmr f1, f28
-    lwz r3, 0xc(r31)
-    fmr f2, f29
-    li r4, 0x0
-    fmr f3, f30
-    fmr f4, f31
-    bl Object_SetColorRGBA
-    lwz r3, 0x24(r31)
-    cmplwi r3, 0x0
-    beq fn_8013C534_L_8013C5E0
-    fmr f1, f28
-    li r4, 0x0
-    fmr f2, f29
-    fmr f3, f30
-    fmr f4, f31
-    bl Object_SetColorRGBA
-    fn_8013C534_L_8013C5E0:
-    addi r11, r1, 0x30
-    bl _restfpr_28
-    lwz r0, 0x34(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+void fn_8013C534(KartPreview *p, float r, float g, float b, float a) {
+    if (p->kart == 0 || p->driver == 0) {
+        return;
+    }
+    Object_SetColorRGBA(p->kart, 0, r, g, b, a);
+    Object_SetColorRGBA(p->obj8, 0, r, g, b, a);
+    Object_SetColorRGBA(p->driver, 0, r, g, b, a);
+    if (p->obj24) {
+        Object_SetColorRGBA(p->obj24, 0, r, g, b, a);
+    }
 }
 
 
-asm void fn_8013C5FC(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_fn_8013C5FC[8] = {
-    0x08, 0x48, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013C5FC = {
-    (void *)&fn_8013C5FC, 0x00000078, (void *)extab_fn_8013C5FC
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void fn_8013C5FC(void) { /* 0x8013C5FC size:0x78 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stfd f31, 0x18(r1)
-    fmr f31, f1
-    stw r31, 0x14(r1)
-    mr r31, r3
-    lwz r3, 0x4(r3)
-    cmplwi r3, 0x0
-    beq fn_8013C5FC_L_8013C65C
-    lwz r0, 0xc(r31)
-    cmplwi r0, 0x0
-    bne fn_8013C5FC_L_8013C634
-    b fn_8013C5FC_L_8013C65C
-    fn_8013C5FC_L_8013C634:
-    bl Object_SetJObjRotationY
-    fmr f1, f31
-    lwz r3, 0x8(r31)
-    bl Object_SetJObjRotationY
-    fmr f1, f31
-    lwz r3, 0xc(r31)
-    bl Object_SetJObjRotationY
-    fmr f1, f31
-    lwz r3, 0x10(r31)
-    bl Object_SetJObjRotationY
-    fn_8013C5FC_L_8013C65C:
-    lwz r0, 0x24(r1)
-    lfd f31, 0x18(r1)
-    lwz r31, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+void fn_8013C5FC(KartPreview *p, float r) {
+    if (p->kart == 0 || p->driver == 0) {
+        return;
+    }
+    Object_SetJObjRotationY(p->kart, r);
+    Object_SetJObjRotationY(p->obj8, r);
+    Object_SetJObjRotationY(p->driver, r);
+    Object_SetJObjRotationY(p->obj10, r);
 }
 
 
-asm void fn_8013C674(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_fn_8013C674[8] = {
-    0x08, 0x48, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013C674 = {
-    (void *)&fn_8013C674, 0x00000078, (void *)extab_fn_8013C674
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void fn_8013C674(void) { /* 0x8013C674 size:0x78 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stfd f31, 0x18(r1)
-    fmr f31, f1
-    stw r31, 0x14(r1)
-    mr r31, r3
-    lwz r3, 0x4(r3)
-    cmplwi r3, 0x0
-    beq fn_8013C674_L_8013C6D4
-    lwz r0, 0xc(r31)
-    cmplwi r0, 0x0
-    bne fn_8013C674_L_8013C6AC
-    b fn_8013C674_L_8013C6D4
-    fn_8013C674_L_8013C6AC:
-    bl Object_SetJObjRotationX
-    fmr f1, f31
-    lwz r3, 0x8(r31)
-    bl Object_SetJObjRotationX
-    fmr f1, f31
-    lwz r3, 0xc(r31)
-    bl Object_SetJObjRotationX
-    fmr f1, f31
-    lwz r3, 0x10(r31)
-    bl Object_SetJObjRotationX
-    fn_8013C674_L_8013C6D4:
-    lwz r0, 0x24(r1)
-    lfd f31, 0x18(r1)
-    lwz r31, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+void fn_8013C674(KartPreview *p, float r) {
+    if (p->kart == 0 || p->driver == 0) {
+        return;
+    }
+    Object_SetJObjRotationX(p->kart, r);
+    Object_SetJObjRotationX(p->obj8, r);
+    Object_SetJObjRotationX(p->driver, r);
+    Object_SetJObjRotationX(p->obj10, r);
 }
 
 
-asm void fn_8013C6EC(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_fn_8013C6EC[8] = {
-    0x08, 0xC8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013C6EC = {
-    (void *)&fn_8013C6EC, 0x000000C4, (void *)extab_fn_8013C6EC
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void fn_8013C6EC(void) { /* 0x8013C6EC size:0xC4 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stfd f31, 0x28(r1)
-    fmr f31, f3
-    stfd f30, 0x20(r1)
-    fmr f30, f2
-    stfd f29, 0x18(r1)
-    fmr f29, f1
-    stw r31, 0x14(r1)
-    mr r31, r3
-    lwz r3, 0x4(r3)
-    cmplwi r3, 0x0
-    beq fn_8013C6EC_L_8013C790
-    lwz r0, 0xc(r31)
-    cmplwi r0, 0x0
-    bne fn_8013C6EC_L_8013C734
-    b fn_8013C6EC_L_8013C790
-    fn_8013C6EC_L_8013C734:
-    bl Object_SetJObjScaleXYZ
-    fmr f1, f29
-    lwz r3, 0x8(r31)
-    fmr f2, f30
-    fmr f3, f31
-    bl Object_SetJObjScaleXYZ
-    fmr f1, f29
-    lwz r3, 0xc(r31)
-    fmr f2, f30
-    fmr f3, f31
-    bl Object_SetJObjScaleXYZ
-    fmr f1, f29
-    lwz r3, 0x10(r31)
-    fmr f2, f30
-    fmr f3, f31
-    bl Object_SetJObjScaleXYZ
-    lwz r3, 0x24(r31)
-    cmplwi r3, 0x0
-    beq fn_8013C6EC_L_8013C790
-    fmr f1, f29
-    fmr f2, f30
-    fmr f3, f31
-    bl Object_SetJObjScaleXYZ
-    fn_8013C6EC_L_8013C790:
-    lwz r0, 0x34(r1)
-    lfd f31, 0x28(r1)
-    lfd f30, 0x20(r1)
-    lfd f29, 0x18(r1)
-    lwz r31, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+void fn_8013C6EC(KartPreview *p, float x, float y, float z) {
+    if (p->kart == 0 || p->driver == 0) {
+        return;
+    }
+    Object_SetJObjScaleXYZ(p->kart, x, y, z);
+    Object_SetJObjScaleXYZ(p->obj8, x, y, z);
+    Object_SetJObjScaleXYZ(p->driver, x, y, z);
+    Object_SetJObjScaleXYZ(p->obj10, x, y, z);
+    if (p->obj24) {
+        Object_SetJObjScaleXYZ(p->obj24, x, y, z);
+    }
 }
 
 
@@ -414,118 +170,67 @@ void fn_8013C7B0(KartPreview *p, float x, float y) {
     p->view_y = y;
 }
 
-asm void fn_8013C7BC(void);
+/* jobj.h inlines (HSD_JObjMtxIsDirty / SetupMatrix / GetMtxPtr), as in
+ * AnimState_UpdateEquipped.c. */
+static inline unsigned char HSD_JObjMtxIsDirty(HSD_JObj *jobj)
+{
+    unsigned char result;
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_fn_8013C7BC[8] = {
-    0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+    if (jobj == 0) {
+        __assert(lbl_806D76D0, 0x25D, lbl_806D76D8);
+    }
+    result = 0;
+    if (!(jobj->flags & 0x00800000) && (jobj->flags & 0x40)) {
+        result = 1;
+    }
+    return result;
+}
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013C7BC = {
-    (void *)&fn_8013C7BC, 0x00000160, (void *)extab_fn_8013C7BC
-};
+static inline void HSD_JObjSetupMatrix(HSD_JObj *jobj)
+{
+    if (jobj == 0) {
+        return;
+    }
+    if (HSD_JObjMtxIsDirty(jobj)) {
+        HSD_JObjSetupMatrixSub(jobj);
+    }
+}
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void fn_8013C7BC(void) { /* 0x8013C7BC size:0x160 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    stw r30, 0x8(r1)
-    mr r30, r3
-    lwz r0, 0x4(r3)
-    cmplwi r0, 0x0
-    beq fn_8013C7BC_L_8013C904
-    lwz r0, 0xc(r30)
-    cmplwi r0, 0x0
-    bne fn_8013C7BC_L_8013C7F0
-    b fn_8013C7BC_L_8013C904
-    fn_8013C7BC_L_8013C7F0:
-    bl fn_8013BC98
-    cmplwi r3, 0x0
-    beq fn_8013C7BC_L_8013C904
-    bl fn_8013C3B8
-    cmplwi r3, 0x0
-    beq fn_8013C7BC_L_8013C904
-    bl fn_8013BC98
-    lfs f1, 0x88(r30)
-    lfs f2, 0x8c(r30)
-    bl fn_8013BB1C
-    bl fn_8013BC98
-    bl fn_8013BC38
-    clrlwi. r0, r3, 24
-    beq fn_8013C7BC_L_8013C904
-    bl fn_8013C3B8
-    bl fn_8013C34C
-    bl fn_8013BC98
-    bl fn_8013BBFC
-    lwz r3, 0x4(r30)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    lwz r3, 0x8(r30)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    lwz r3, 0xc(r30)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    lwz r0, 0x24(r30)
-    cmplwi r0, 0x0
-    beq fn_8013C7BC_L_8013C8F4
-    lwz r31, 0x28(r30)
-    cmplwi r31, 0x0
-    beq fn_8013C7BC_L_8013C8F4
-    bne fn_8013C7BC_L_8013C888
-    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
-    li r4, 0x47c
-    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
-    bl __assert
-    fn_8013C7BC_L_8013C888:
-    cmplwi r31, 0x0
-    beq fn_8013C7BC_L_8013C8D0
-    bne fn_8013C7BC_L_8013C8A4
-    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
-    li r4, 0x25d
-    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
-    bl __assert
-    fn_8013C7BC_L_8013C8A4:
-    lwz r4, 0x14(r31)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne fn_8013C7BC_L_8013C8C0
-    rlwinm. r0, r4, 0, 25, 25
-    beq fn_8013C7BC_L_8013C8C0
-    li r3, 0x1
-    fn_8013C7BC_L_8013C8C0:
-    clrlwi. r0, r3, 24
-    beq fn_8013C7BC_L_8013C8D0
-    mr r3, r31
-    bl HSD_JObjSetupMatrixSub
-    fn_8013C7BC_L_8013C8D0:
-    lwz r3, 0x24(r30)
-    addi r4, r31, 0x44
-    li r5, 0x0
-    bl Object_SetAnimBinding
-    lwz r3, 0x24(r30)
-    bl Object_DriveAnimMatrix
-    lwz r3, 0x24(r30)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    fn_8013C7BC_L_8013C8F4:
-    bl fn_8013BC98
-    bl fn_8013BB9C
-    bl fn_8013C3B8
-    bl fn_8013C334
-    fn_8013C7BC_L_8013C904:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+static inline void *HSD_JObjGetMtxPtr(HSD_JObj *jobj)
+{
+    if (jobj == 0) {
+        __assert(lbl_806D76D0, 0x47C, lbl_806D76D8);
+    }
+    HSD_JObjSetupMatrix(jobj);
+    return jobj->anim;
+}
+
+void fn_8013C7BC(KartPreview *p) {
+    if (p->kart == 0 || p->driver == 0) {
+        return;
+    }
+    if (fn_8013BC98() == 0) {
+        return;
+    }
+    if (fn_8013C3B8() == 0) {
+        return;
+    }
+    fn_8013BB1C(fn_8013BC98(), p->view_x, p->view_y);
+    if (!fn_8013BC38(fn_8013BC98())) {
+        return;
+    }
+    fn_8013C34C(fn_8013C3B8());
+    fn_8013BBFC(fn_8013BC98());
+    Object_RenderJObjTree(p->kart, 7);
+    Object_RenderJObjTree(p->obj8, 7);
+    Object_RenderJObjTree(p->driver, 7);
+    if (p->obj24 != 0 && p->jobj28 != 0) {
+        Object_SetAnimBinding(p->obj24, HSD_JObjGetMtxPtr(p->jobj28), 0);
+        Object_DriveAnimMatrix(p->obj24);
+        Object_RenderJObjTree(p->obj24, 7);
+    }
+    fn_8013BB9C(fn_8013BC98());
+    fn_8013C334(fn_8013C3B8());
 }
 
 
