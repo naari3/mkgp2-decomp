@@ -8547,6 +8547,11 @@ game/sprite/fn_801ACC18.c:
 	extabindex  start:0x800276EC end:0x800276F8
 	.text       start:0x801ACC18 end:0x801AD534
 
+game/sprite/VoiceEvent_PushRace.c:
+	extab       start:0x80012AE0 end:0x80012AE8
+	extabindex  start:0x800276F8 end:0x80027704
+	.text       start:0x801AD534 end:0x801AECF4
+
 game/sprite/fn_801AECF4.c:
 	extab       start:0x80012AE8 end:0x80012AF0
 	extabindex  start:0x80027704 end:0x80027710
