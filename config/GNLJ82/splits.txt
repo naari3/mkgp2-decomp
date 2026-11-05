@@ -668,10 +668,20 @@ game/Object_RenderJObjIfWithinRange.c:
 	extabindex  start:0x8001FCD0 end:0x8001FCDC
 	.text       start:0x8003D304 end:0x8003D360
 
+game/LakituStart_UpdateCountdown.cpp:
+	extab       start:0x800060C8 end:0x800060D0
+	extabindex  start:0x8001FCDC end:0x8001FCE8
+	.text       start:0x8003D360 end:0x8003DAE0
+
 game/LakituStart_Dtor.c:
 	extab       start:0x800060D0 end:0x800060D8
 	extabindex  start:0x8001FCE8 end:0x8001FCF4
 	.text       start:0x8003DAE0 end:0x8003DB40
+
+game/LakituStart_Init.cpp:
+	extab       start:0x800060D8 end:0x800060F0
+	extabindex  start:0x8001FCF4 end:0x8001FD00
+	.text       start:0x8003DB40 end:0x8003DCD4
 
 game/JObj_IsForwardDotBelowThreshold.c:
 	extab       start:0x800060F0 end:0x800060F8
@@ -969,6 +979,11 @@ game/PathCursor_InitFromPath.c:
 	extab       start:0x800066D8 end:0x800066E0
 	extabindex  start:0x80020018 end:0x80020024
 	.text       start:0x800468F4 end:0x80046960
+
+game/ObjectChain_RenderInZRange.c:
+	extab       start:0x800066E0 end:0x800066E8
+	extabindex  start:0x80020024 end:0x80020030
+	.text       start:0x80046960 end:0x80046D84
 
 game/TrampolineTo_801ba110.c:
 	extab       start:0x80006848 end:0x80006850

@@ -10122,5 +10122,11 @@
     "Update__9CreditHudFv": "fn_80218B80",
     "@88": "@etb_80005618",
     "@89": "@eti_8001F3C4"
+  },
+  "src/game/LakituStart_Init.cpp": {
+    "__ct__11LakituStartFPCvifff": "LakituStart_Init",
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

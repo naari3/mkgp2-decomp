@@ -389,3 +389,8 @@ c6 NT8: PlayerData fn_801D6558 matches 436B text/8B EH/12B index with a genuine 
 Source: Codex worker c7_s2_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1692 B.
 
 ServiceButton_Handler 8002D0B0: new ServiceMenu(11), size 0x28C, private virtual slots Tick/Draw/dtor, and per-TU ctor bridge give exact text and DELETEPOINTER EH. ServiceMode +8..+10 must be represented as a two-word aggregate member so its implicit copy emits load/load/store/store rather than scalar load/store/load/store. One shared inline ServiceFrame reproduces both target loops exactly; full source-linked DOL SHA-1 verified.
+
+## c7_s3_20261105
+Source: Codex worker c7_s3_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1464 B.
+
+c7_s3: LakituStart_Init 8003DB40 is a real 0x58-byte constructor whose new clNormal3D(const void*,0) produces exact 404-byte text and 24-byte DELETEPOINTER EH via the existing mangled bridge. ObjectChain_RenderInZRange 80046960 matches with four explicitly nested native stages: inline NeedsEval/SetupMatrixSub, JObj_NeedsEval/SetupMatrixSub, JObj_EvalIfDirty, JObj_EvalIfDirtyAndGetMtxPtr, then recursion. Initialize the inline NeedsEval boolean after its null assertion; initializing before the assertion extends it across the call and changes its GPR. Both source inputs passed full DOL SHA-1 and linked address/size checks.
