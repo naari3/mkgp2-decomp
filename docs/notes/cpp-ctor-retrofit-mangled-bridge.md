@@ -339,3 +339,8 @@ c5_s10 partial: MsgPopup::Tick 80203224 improves 98.234566 -> 99.06584 with name
 Source: Codex worker c5_m4_802052e0_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 896 B.
 
 TitleNameHud Update 802529E4: extract only sprite positioning into static inline helper, retain cull loop in caller, and reuse x for badge/glyph positions to resolve GPR and FPR webs. Own jump table 804F2044..804F2060, DATA_ALIGN4_TUS, bridge @116 table / @117 EH / @118 EH index. Define SetDelay, Draw, Update in target order: symbol-level and section objdiff can report 100 even with reversed physical order. Final full DOL SHA-1 OK; 3 fn / 896 B native.
+
+## c5_m5_enemyface_20261105
+Source: Codex worker c5_m5_enemyface_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 1440 B.
+
+c5_m5 EnemyFace: Update requires unsigned-byte hidden helper with (bits & 0x8000000000ULL)==0 ? 0 : 1 to preserve the target branch island, inline model position/scale helpers to preserve receiver webs, and exact external scale constant lbl_806DB5B4 (1.2240002155303955, not rounded 1.224f). Sort uses plain eye output storage but a genuine three-float Vec3c loop temporary with inline empty dtor; this reproduces exact 24-byte DESTROYLOCAL at SP+0xC. Inline camera depth-range helper fixes camera r30 web. Queue manager accessor and explicit SetPath output-byte stride match; safe cuts at 8022B150 and 8021984C accepted. Full source-linked SHA-1 OK, +4 fn/1440B.

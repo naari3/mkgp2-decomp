@@ -1742,5 +1742,10 @@
     "dtor_802070EC",
     "fn_801F26C8",
     "TweenInterp_Dtor"
+  ],
+  "src/game/EnemyFace_nm2.cpp": [
+    "fn_8022B53C",
+    "fn_8022B728",
+    "dtor_80036E40"
   ]
 }

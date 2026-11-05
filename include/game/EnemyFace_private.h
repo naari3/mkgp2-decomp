@@ -29,7 +29,12 @@ union WGPipe {
 struct Vec3c {
     float x, y, z;
     Vec3c();
+#ifdef ENEMYFACE_INLINE_VEC_DTOR
+    Vec3c(float a, float b, float c) : x(a), y(b), z(c) {}
+    ~Vec3c() {}
+#else
     ~Vec3c();
+#endif
 };
 
 struct Vec3f {
@@ -161,6 +166,9 @@ struct clCDispInterface {
 };
 
 struct clEnemyFace : clCDispInterface {
+#ifdef ENEMYFACE_INLINE_VEC_DTOR
+    virtual void _EnemyFaceKey();
+#endif
     virtual void Update();
     int state;
     int param;

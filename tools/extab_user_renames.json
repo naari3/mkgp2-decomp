@@ -9323,7 +9323,11 @@
     "__ct__12clEFaceModelFP10KartRenderiii": "fn_8022D050",
     "Draw__12clEFaceModelFv": "fn_8022CDE4",
     "Update__12clEFaceModelFv": "fn_8022CE04",
-    "Reset__12FaceModelSubFv": "fn_8022FCA8"
+    "Reset__12FaceModelSubFv": "fn_8022FCA8",
+    "@102": "@etb_8001BE8C",
+    "@103": "@eti_8002A860",
+    "@168": "@etb_8001BE94",
+    "@169": "@eti_8002A86C"
   },
   "src/game/EnemyFace_exact3.cpp": {
     "TireSprite_Draw__FP10TireSprite": "fn_8022ACE4",
@@ -9962,5 +9966,12 @@
     "__ct__6SpriteFiii": "Sprite_InitWithAnim",
     "__dt__6SpriteFv": "Sprite_Destroy",
     "SetAnimParam__6SpriteFis": "Sprite_SetAnimParam"
+  },
+  "src/game/EnemyFace_queue.cpp": {
+    "TireSprite_Draw__FP10TireSprite": "fn_8022ACE4",
+    "TireSprite_Queue__FP10TireSprite": "fn_8022B150"
+  },
+  "src/game/anon_80218F40_setpath.cpp": {
+    "SetPath__10MinimapHudFP11PathManager": "fn_8021984C"
   }
 }

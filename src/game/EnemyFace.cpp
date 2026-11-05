@@ -9,6 +9,12 @@ extern const char lbl_803DA6EC[0x14] = "clCDispInterface";
 extern const char lbl_803DA700[0x10] = "clEFace3D";
 
 
+static inline void TirePosition(float x, float y, float z) {
+    GXFIFO.f32 = x;
+    GXFIFO.f32 = y;
+    GXFIFO.f32 = z;
+}
+
 void TireSprite_Draw(TireSprite *s) {
     Mtx m;
 
@@ -66,17 +72,13 @@ void TireSprite_Draw(TireSprite *s) {
     const float *uv = (const float *)lbl_803DA680;
     TireSprite *p = s;
     for (int i = 0; i < 2; i++) {
-        GXFIFO.f32 = p->vx[0];
-        GXFIFO.f32 = p->vy[0];
-        GXFIFO.f32 = p->vz[0];
+        TirePosition(p->vx[0], p->vy[0], p->vz[0]);
         GXFIFO.u32 = color;
         GXFIFO.f32 = u + uv[0];
         GXFIFO.f32 = v + uv[1];
         GXFIFO.f32 = u + uv[0];
         GXFIFO.f32 = v + uv[1];
-        GXFIFO.f32 = p->vx[1];
-        GXFIFO.f32 = p->vy[1];
-        GXFIFO.f32 = p->vz[1];
+        TirePosition(p->vx[1], p->vy[1], p->vz[1]);
         GXFIFO.u32 = color;
         GXFIFO.f32 = u + uv[2];
         GXFIFO.f32 = v + uv[3];
@@ -88,12 +90,3 @@ void TireSprite_Draw(TireSprite *s) {
     HSD_StateInvalidate(-1);
 }
 
-void TireSprite_Queue(TireSprite *s) {
-    if (s && s->visible && !(s->alpha <= 0.0f)) {
-        void *man = lbl_806D10AC;
-        if (man == 0) {
-            man = 0;
-        }
-        clDrawMan_AddSorted_DepthRange(man, TireSprite_Draw, s, s->px, s->py - 1.0f, s->pz, 0.0f);
-    }
-}
