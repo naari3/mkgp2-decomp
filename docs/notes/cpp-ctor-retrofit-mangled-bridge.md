@@ -699,3 +699,8 @@ c12_u19: fn_801D4FF4 diagnostic DebugPrintf needs direct nested calls for used b
 Source: Codex worker c12_u21_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c12_u21: RankingMgr_UpdatePositions 801EB99C improves 99.12791 to 99.30232 via one-slot static inline UpdateKart(self,i), with original indexed outer loop and nested Notify. coll becomes exact r29; residual index=r26 vs targetr27, cursor=r28 vsr26, ctrl=r27 vsr28. Whole-loop helper invariant; explicit cursor adds mr and regresses98.139534/348B. Exact344B/EH8/index12 retained, NonMatching. Full fallback-linked DOL SHA-1 OK; no native gain.
+
+## c12_u23_20261106
+Source: Codex worker c12_u23_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c12_u23: fn_80242E80 inline RivalItems captures directly into case-3 loop improves 99.08 to 99.40 with exact 500 B and extab8/index12. Direct global argument expressions regress to 92.08/480B because loads are delayed past GetEnemyParam. Hoisting capture declarations outside loop gives 99.16. Residual retained: item index r30 vs target r31 / round r31 vs target r30; tail marker index r28 vs target r29 / cursor r30 vs target r28. Singleton stays NonMatching; final fallback-linked DOL SHA-1 OK.

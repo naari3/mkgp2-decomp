@@ -1,11 +1,5 @@
 #include "game/RivalMarkerPrivate.h"
 
-static inline int *RivalItems(int kart) {
-    int round = g_roundIndex;
-    int cup = g_cupId;
-    int mode = g_gameMode;
-    return AI_GetItemList(GetEnemyParam(), mode, cup, round, kart);
-}
 extern "C" void fn_80242E80(RivalMarkerHud *self) {
     switch (self->state) {
     case -1:
@@ -30,7 +24,10 @@ extern "C" void fn_80242E80(RivalMarkerHud *self) {
         fn_80120A08(0x1cd6);
         if (g_gameMode != 1) {
             for (int i = 0; i < 5; ++i) {
-                int *p = RivalItems(i);
+                int round = g_roundIndex;
+                int cup = g_cupId;
+                int mode = g_gameMode;
+                int *p = AI_GetItemList(GetEnemyParam(), mode, cup, round, i);
                 while (*p != -1) {
                     fn_80120A08(fn_8023DBEC(*p));
                     ++p;
