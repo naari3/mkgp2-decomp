@@ -17,10 +17,24 @@ typedef struct TrailPair {
     unsigned char *b;
 } TrailPair;
 
-void DrawEffect_ReleaseCallbackResources(unsigned char *self)
+static inline void ReleaseTrailGroup(unsigned char *group)
 {
     int i;
+    for (i = -1; i < 2; i++) {
+        TrailPair *t = (TrailPair *)(group + 0x98 + i * 4);
+        if (t->a != 0) {
+            *(signed char *)(t->a + 0xC9) = 2;
+        }
+        if (t->b != 0) {
+            *(signed char *)(t->b + 0xC9) = 2;
+        }
+        t->a = 0;
+        t->b = 0;
+    }
+}
 
+void DrawEffect_ReleaseCallbackResources(unsigned char *self)
+{
     if (self == 0) {
         return;
     }
@@ -37,17 +51,7 @@ void DrawEffect_ReleaseCallbackResources(unsigned char *self)
     RELEASE(0x154, 1);
     RELEASE(0x158, 1);
     RELEASE(0x15C, 1);
-    for (i = 0; i < 3; i++) {
-        TrailPair *t = (TrailPair *)(self + 0x164 + i * 4);
-        if (t->a != 0) {
-            *(signed char *)(t->a + 0xC9) = 2;
-        }
-        if (t->b != 0) {
-            *(signed char *)(t->b + 0xC9) = 2;
-        }
-        t->a = 0;
-        t->b = 0;
-    }
+    ReleaseTrailGroup(self + 0xD0);
     RELEASE(0x17C, 1);
     RELEASE(0x184, 1);
     RELEASE(0x190, 1);

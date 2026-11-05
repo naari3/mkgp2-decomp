@@ -1251,7 +1251,7 @@ config.libs = [
             Object(Matching, "game/EffectVfx134_KartHitBurst_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_BurstSpawner_30Frame.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/ItemObject_ChainShell_BoundOrbit_Sub.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(NonMatching, "game/DrawEffect_ReleaseCallbackResources.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DrawEffect_ReleaseCallbackResources.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/HitMessageOverlay_Show.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_SmokeRingTimed_Update.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_KartSpark_Update.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -2029,7 +2029,7 @@ config.libs = [
             Object(NonMatching, "game/EnemyFace_nm2.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/EnemyFace_exact3.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/EnemyFace_nm3.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/EnemyFace_nm4.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(Matching, "game/EnemyFace_nm4.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/EnemyFace_exact5.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/EnemyFaceDraw.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/EnmyFaceEffect.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),

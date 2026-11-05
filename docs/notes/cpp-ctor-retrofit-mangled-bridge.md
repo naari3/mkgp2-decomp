@@ -319,3 +319,8 @@ DNStartDino Draw 80229E0C: extracting Hinoko ember rendering verbatim into a sta
 Source: Codex worker c5_m2_8021f088_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 2104 B.
 
 c5_m2: NextWnd Update 80221674 requires case 0 early return; Count 802218A4 caches bool held==1 before its float/color work. Both text/EH 100%. ItemWnd ShowTicket 80222564 reaches exact text by passing fn_8021691C result to inline SetTicketText, removing r3->r0->r30 extra copy. DTK accepts independent splits at 80222564 and 80222968. Promoted +3 fn / 2104 B, coordinator SHA-1 ea30f3b1 OK; actual main.elf addresses checked. ShowItem stack arrays need pos before buf; inline formatting/sprite helpers improve to 97.54256%, still NonMatching due colors/conversions and GPR webs.
+
+## c5_s4_draweffectrel_20261105
+Source: Codex worker c5_s4_draweffectrel_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 736 B.
+
+c5_s4: EnemyFace_nm4 8022BEB4 rescued by a TU-private minimal class view with undefined first virtual key, suppressing RTTI-off duplicate vtable. Text/extab/extabindex remain 100%; Matching full link source input and DOL SHA-1 verified. DrawEffect ReleaseCallbackResources 800B542C reaches 100% by inline trail-group helper at self+0xD0 and centered -1..1 loop over group+0x98+i*4; reproduces target group base reuse.
