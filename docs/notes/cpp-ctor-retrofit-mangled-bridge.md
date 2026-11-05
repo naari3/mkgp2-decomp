@@ -324,3 +324,8 @@ c5_m2: NextWnd Update 80221674 requires case 0 early return; Count 802218A4 cach
 Source: Codex worker c5_s4_draweffectrel_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 736 B.
 
 c5_s4: EnemyFace_nm4 8022BEB4 rescued by a TU-private minimal class view with undefined first virtual key, suppressing RTTI-off duplicate vtable. Text/extab/extabindex remain 100%; Matching full link source input and DOL SHA-1 verified. DrawEffect ReleaseCallbackResources 800B542C reaches 100% by inline trail-group helper at self+0xD0 and centered -1..1 loop over group+0x98+i*4; reproduces target group base reuse.
+
+## c5_s9_terrainwalled_20261105
+Source: Codex worker c5_s9_terrainwalled_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 380 B.
+
+TitleNameHud ctor 80252EE4: real empty GlyphText destructor must remain alive through final activation/cull loop. Bridge GlyphText dtor to dtor_800869D0, HudPart dtor to dtor_8021617C, VHolder<FlowFaderF> (length 21) to dtor_801F4A80. Owned EH 128 bytes and index 12 bytes become exact with @140/@141 bridges. Naming cached width w and half-count span fixes fnmsubs operand order; final retained source differs only at +0x358 (mr r23,r22 vs li r23,0). Keep NonMatching.

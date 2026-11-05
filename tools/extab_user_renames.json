@@ -9886,7 +9886,11 @@
     "__vt__10FlowFaderF": "lbl_80419DE0",
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960",
-    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_80250668"
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "__dt__7HudPartFv": "dtor_8021617C",
+    "__dt__9GlyphTextFv": "dtor_800869D0",
+    "@140": "@etb_8001EFF8",
+    "@141": "@eti_8002B97C"
   },
   "src/game/anon_80218F40_nm1_tail.cpp": {
     "__dt__20VHolder<10FlowFaderI>Fv": "dtor_801F2724",

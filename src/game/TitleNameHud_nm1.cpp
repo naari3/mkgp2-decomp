@@ -1,4 +1,4 @@
-#include "game/TitleNameHud.h"
+#include "game/TitleNameHud_nm1.h"
 
 TitleNameHud::TitleNameHud(int layer_)
     : layer(layer_), count(0), state(-1), title(-1), field78(0), field7C(-1),
@@ -44,7 +44,9 @@ TitleNameHud::TitleNameHud(int layer_)
         ResCtrl rc;
         const float *ps = &lbl_806DC148[isJapanese()];
         const float *pw = &lbl_806DC150[isJapanese()];
-        float x = (lbl_806DC140.x - *pw * (lbl_806DC168 * (float)(count - 1))) + lbl_806DC168 * *pw;
+        float w = *pw;
+        float span = lbl_806DC168 * (float)(count - 1);
+        float x = (lbl_806DC140.x - span * w) + lbl_806DC168 * w;
         {
             GlyphText text;
             int j;
@@ -65,11 +67,12 @@ TitleNameHud::TitleNameHud(int layer_)
                 x += *pw;
                 sprites[i] = SpriteHandle_CreateDefault(&rc, layer);
             }
+            int k, n;
+            for (k = 0, n = k; k < count; n++, k++) {
+                SpriteHandle_SetActiveFlag(sprites[n], 0);
+                SpriteHandle_RecomputeCull(sprites[n]);
+            }
         }
-    }
-    for (int k = 0; k < count; k++) {
-        SpriteHandle_SetActiveFlag(sprites[k], 0);
-        SpriteHandle_RecomputeCull(sprites[k]);
     }
 }
 
