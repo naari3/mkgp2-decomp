@@ -294,3 +294,8 @@ c3_n4: YesNoButton Animate +0x58 multiply resolves by naming the appearance call
 Source: Codex worker c3_u3_dbgmenu_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 DbgMenu partial: real new/derived ctor fixes 01,07,08,10,12,13,RaceStart factory text; Reset (800D040C) is a real ctor. A separate inline ResetParticlePool loop restores four distinct hoisted zero webs and implicit this return, yielding 100% Reset text. Cache Sprite* before two position stores to eliminate alias reload. Global-index spelling fixes ScrollList_Update. All still NonMatching because six residuals and inseparable reversed EH group remain.
+
+## c3_n8_enemyface_20261105
+Source: Codex worker c3_n8_enemyface_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 1840 B.
+
+c3_n8: Minimap Update 80218F5C cached resId web reaches target r30 only when its declaration is function-scoped; block-scoped before cup/round stays r29. Isolate 80218F5C..80219538 with its 28-byte jump table and DATA_ALIGN4_TUS. TitleNameHud safe split is 80252EE4. Prefix factory/dtor text/EH exact after factory-first source order, removal of the old dont_inline scope (otherwise member dtors are called out of line), private undefined vtable keys, and owned @ EH bridges. Only appended weak TweenInterp_Dtor remains. Full-link acceptance pending.
