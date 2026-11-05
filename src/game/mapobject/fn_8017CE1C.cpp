@@ -18,7 +18,7 @@ VObject *fn_80160238();
 VObject *fn_80162C3C();
 VObject *fn_8015BE44();
 VObject *fn_8015CB5C(int);
-VObject *fn_80163804(void *,void *);
+VObject *fn_80163804(int,int);
 VObject *fn_80165C04(int,int);
 void fn_80202C34(int);
 void fn_80202B48(int);
@@ -108,6 +108,7 @@ static inline void SetScene(VObject *scene) {
 
 extern "C" int fn_8017CE1C(int event, int unused, int item, int unused2, int selection) {
     const char *base = lbl_80376220;
+    int mode;
     switch (event) {
     case 0:
         switch (selection) {
@@ -215,10 +216,10 @@ extern "C" int fn_8017CE1C(int event, int unused, int item, int unused2, int sel
                 break;
             }
             case 1: {
-                void *mode = (void *)(int)(selection == 1);
+                mode = selection == 1 ? 1 : 0;
                 OperationClock_Commit();
                 RaceFlow_ResetState_FullColdInit();
-                SetScene(fn_80163804((void *)lbl_806D1648, mode));
+                SetScene(fn_80163804(lbl_806D1648, mode));
                 break;
             }
             }

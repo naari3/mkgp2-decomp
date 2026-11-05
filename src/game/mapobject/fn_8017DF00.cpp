@@ -1,9 +1,9 @@
 #include "game/mapobject/mapobject17b_debug_private.h"
 
 static inline void MapDebugPrintPath(const char *base) {
-    int i;
-    clPathNode *node;
     Vec3f *point;
+    clPathNode *node;
+    int i;
                 DebugPrintf(base + 0x8C0);
                 DebugPrintf(base + 0x8F8);
                 node = lbl_806D163C;
@@ -23,8 +23,8 @@ static inline void MapDebugPrintPath(const char *base) {
 extern "C" void fn_8017DF00() {
     const char *base = lbl_80376220;
     if (lbl_806D1618 == 0 || lbl_806D1620 == 0) return;
-    unsigned char left;
     unsigned char right;
+    unsigned char left;
     right = 0;
     left = 0;
     MapDebugInput *input = InputMgr_GetPlayer(GetInputManager(), 0);
