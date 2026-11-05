@@ -2879,6 +2879,7 @@ config.libs = [
             Object(Matching, "game/sprite/fn_801A4A10.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/sprite/fn_801A4F38.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/sprite/fn_801A5DC0.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/sprite/fn_801A6538.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/sprite/fn_801A9D58.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/sprite/fn_801AAF64.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/sprite/fn_801AC208.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
