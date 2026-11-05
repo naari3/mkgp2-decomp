@@ -4,8 +4,9 @@
  * from its timer, an update that advances the timer, a ctor and a dtor.
  * The vtables stay in data, so the vptr stores are spelled out by hand
  * (volatile, so the derived store before the inlined base dtor survives).
- * The three render functions are still asm: their float register
- * assignment did not settle from C.
+ * The three render functions draw a frame-picked sprite and then a scaled,
+ * offset overlay; their float literals are written inline (the shared
+ * Effect_DrawSprite helper mirrors the repeated draw call).
  */
 #pragma cplusplus on
 
@@ -32,39 +33,6 @@ extern void fn_801A0004(void *p);
 }
 
 void *operator new(unsigned long size);
-extern "C" {
-asm void fn_8013DD94(void);
-asm void fn_8013E194(void);
-asm void fn_8013E744(void);
-
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_fn_8013DD94[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-__declspec(section ".extab_user") static const unsigned char extab_fn_8013E194[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-__declspec(section ".extab_user") static const unsigned char extab_fn_8013E744[8] = {
-    0x08, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013DD94 = {
-    (void *)&fn_8013DD94, 0x00000374, (void *)extab_fn_8013DD94
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013E194 = {
-    (void *)&fn_8013E194, 0x00000520, (void *)extab_fn_8013E194
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013E744 = {
-    (void *)&fn_8013E744, 0x00000370, (void *)extab_fn_8013E744
-};
-
-}
-
 inline void *operator new(unsigned long, void *p) { return p; }
 void operator delete(void *p);
 
@@ -108,246 +76,82 @@ Effect1::~Effect1() {
     vptr = lbl_8048EB24;
 }
 
-extern "C" asm void fn_8013DD94(void) { /* 0x8013DD94 size:0x374 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lfs f0, lbl_806D76F0(r2)
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    lfs f1, 0x1c(r3)
-    fcmpo cr0, f1, f0
-    bge fn_8013DD94_L_8013DDE4
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x883
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013DD94_L_8013DF24
-    fn_8013DD94_L_8013DDE4:
-    lfs f0, lbl_806D76F8(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013DD94_L_8013DE1C
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x884
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013DD94_L_8013DF24
-    fn_8013DD94_L_8013DE1C:
-    lfs f0, lbl_806D76FC(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013DD94_L_8013DE54
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x885
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013DD94_L_8013DF24
-    fn_8013DD94_L_8013DE54:
-    lfs f0, lbl_806D7700(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013DD94_L_8013DE8C
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x886
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013DD94_L_8013DF24
-    fn_8013DD94_L_8013DE8C:
-    lfs f0, lbl_806D7704(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013DD94_L_8013DEC4
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x885
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013DD94_L_8013DF24
-    fn_8013DD94_L_8013DEC4:
-    lfs f0, lbl_806D7708(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013DD94_L_8013DEFC
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x884
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013DD94_L_8013DF24
-    fn_8013DD94_L_8013DEFC:
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x883
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    fn_8013DD94_L_8013DF24:
-    lfs f2, 0x1c(r31)
-    lfs f0, lbl_806D76FC(r2)
-    fcmpo cr0, f2, f0
-    bge fn_8013DD94_L_8013DF3C
-    lfs f2, lbl_806D770C(r2)
-    b fn_8013DD94_L_8013DF80
-    fn_8013DD94_L_8013DF3C:
-    lfs f1, lbl_806D7710(r2)
-    fcmpo cr0, f2, f1
-    bge fn_8013DD94_L_8013DF58
-    fsubs f1, f2, f0
-    lfs f0, lbl_806D7714(r2)
-    fdivs f2, f1, f0
-    b fn_8013DD94_L_8013DF80
-    fn_8013DD94_L_8013DF58:
-    lfs f0, lbl_806D7704(r2)
-    fcmpo cr0, f2, f0
-    bge fn_8013DD94_L_8013DF7C
-    fsubs f1, f2, f1
-    lfs f0, lbl_806D76F8(r2)
-    lfs f2, lbl_806D76F4(r2)
-    fdivs f0, f1, f0
-    fsubs f2, f2, f0
-    b fn_8013DD94_L_8013DF80
-    fn_8013DD94_L_8013DF7C:
-    lfs f2, lbl_806D770C(r2)
-    fn_8013DD94_L_8013DF80:
-    lfs f0, lbl_806D770C(r2)
-    fcmpo cr0, f2, f0
-    ble fn_8013DD94_L_8013DFB8
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x88a
-    lfs f0, 0x10(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lwz r3, 0x0(r31)
-    fmr f5, f3
-    lfs f1, 0x8(r31)
-    fmuls f6, f2, f0
-    lfs f2, 0xc(r31)
-    bl fn_80169468
-    fn_8013DD94_L_8013DFB8:
-    lfs f2, 0x1c(r31)
-    lfs f4, lbl_806D76F0(r2)
-    fcmpo cr0, f2, f4
-    bge fn_8013DD94_L_8013DFEC
-    fdivs f4, f2, f4
-    lfs f8, lbl_806D7718(r2)
-    lfs f2, lbl_806D771C(r2)
-    lfs f1, lbl_806D7724(r2)
-    lfs f0, lbl_806D7720(r2)
-    lfs f10, lbl_806D7728(r2)
-    fnmsubs f3, f2, f4, f8
-    fmadds f9, f1, f4, f0
-    b fn_8013DD94_L_8013E0BC
-    fn_8013DD94_L_8013DFEC:
-    lfs f0, lbl_806D772C(r2)
-    fcmpo cr0, f2, f0
-    bge fn_8013DD94_L_8013E030
-    fsubs f1, f2, f4
-    lfs f0, lbl_806D7730(r2)
-    lfs f5, lbl_806D7738(r2)
-    lfs f3, lbl_806D7734(r2)
-    fmuls f6, f1, f0
-    lfs f4, lbl_806D773C(r2)
-    lfs f2, lbl_806D7718(r2)
-    lfs f1, lbl_806D7744(r2)
-    lfs f0, lbl_806D7740(r2)
-    fmadds f3, f5, f6, f3
-    fmadds f8, f4, f6, f2
-    lfs f10, lbl_806D7728(r2)
-    fnmsubs f9, f1, f6, f0
-    b fn_8013DD94_L_8013E0BC
-    fn_8013DD94_L_8013E030:
-    lfs f1, lbl_806D7700(r2)
-    fcmpo cr0, f2, f1
-    bge fn_8013DD94_L_8013E074
-    fsubs f1, f2, f0
-    lfs f0, lbl_806D76F8(r2)
-    lfs f5, lbl_806D7738(r2)
-    lfs f3, lbl_806D7748(r2)
-    fdivs f6, f1, f0
-    lfs f4, lbl_806D773C(r2)
-    lfs f2, lbl_806D76F4(r2)
-    lfs f1, lbl_806D7744(r2)
-    lfs f0, lbl_806D774C(r2)
-    lfs f10, lbl_806D7728(r2)
-    fnmsubs f3, f5, f6, f3
-    fnmsubs f8, f4, f6, f2
-    fmadds f9, f1, f6, f0
-    b fn_8013DD94_L_8013E0BC
-    fn_8013DD94_L_8013E074:
-    lfs f0, lbl_806D7708(r2)
-    fcmpo cr0, f2, f0
-    bge fn_8013DD94_L_8013E0AC
-    fsubs f0, f2, f1
-    lfs f3, lbl_806D771C(r2)
-    lfs f2, lbl_806D7734(r2)
-    lfs f1, lbl_806D7724(r2)
-    fdivs f4, f0, f4
-    lfs f0, lbl_806D7740(r2)
-    lfs f8, lbl_806D7718(r2)
-    lfs f10, lbl_806D7728(r2)
-    fmadds f3, f3, f4, f2
-    fnmsubs f9, f1, f4, f0
-    b fn_8013DD94_L_8013E0BC
-    fn_8013DD94_L_8013E0AC:
-    lfs f3, lbl_806D7718(r2)
-    lfs f9, lbl_806D7720(r2)
-    fmr f8, f3
-    lfs f10, lbl_806D7728(r2)
-    fn_8013DD94_L_8013E0BC:
-    lfs f5, lbl_806D76F4(r2)
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    li r4, 0x8a2
-    lfs f2, 0xc(r31)
-    fmr f6, f5
-    lfs f0, 0x10(r31)
-    fmr f7, f5
-    lwz r3, 0x0(r31)
-    fadds f1, f1, f9
-    li r5, 0x0
-    fadds f2, f2, f10
-    fmuls f8, f8, f0
-    bl fn_8016918C
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+static inline void Effect_DrawSprite(Effect *e, int id, float alpha) {
+    fn_80169468(e->obj, id, 0, e->x, e->y, 1.0f, 1.0f, 1.0f, alpha);
+}
+
+extern "C" void fn_8013DD94(Effect *e) {
+    float s;
+    float t;
+    float sx;
+    float a;
+    float dx;
+    float dy;
+    float u;
+
+    t = e->t;
+    if (t < 10.0f) {
+        Effect_DrawSprite(e, 0x883, e->alpha);
+    } else if (t < 14.0f) {
+        Effect_DrawSprite(e, 0x884, e->alpha);
+    } else if (t < 18.0f) {
+        Effect_DrawSprite(e, 0x885, e->alpha);
+    } else if (t < 40.0f) {
+        Effect_DrawSprite(e, 0x886, e->alpha);
+    } else if (t < 44.0f) {
+        Effect_DrawSprite(e, 0x885, e->alpha);
+    } else if (t < 50.0f) {
+        Effect_DrawSprite(e, 0x884, e->alpha);
+    } else {
+        Effect_DrawSprite(e, 0x883, e->alpha);
+    }
+
+    t = e->t;
+    if (t < 18.0f) {
+        s = 0.0f;
+    } else if (t < 30.0f) {
+        s = (t - 18.0f) / 12.0f;
+    } else if (t < 44.0f) {
+        s = 1.0f - (t - 30.0f) / 14.0f;
+    } else {
+        s = 0.0f;
+    }
+    if (s > 0.0f) {
+        Effect_DrawSprite(e, 0x88A, s * e->alpha);
+    }
+
+    t = e->t;
+    if (t < 10.0f) {
+        u = t / 10.0f;
+        a = 0.8f;
+        sx = a - 0.1f * u;
+        dx = 7.0f * u + -54.0f;
+        dy = -2.0f;
+    } else if (t < 26.0f) {
+        u = (t - 10.0f) / 16.0f;
+        sx = 0.5f * u + 0.7f;
+        a = 0.2f * u + 0.8f;
+        dx = -47.0f - 27.0f * u;
+        dy = -2.0f;
+    } else if (t < 40.0f) {
+        u = (t - 26.0f) / 14.0f;
+        sx = 1.2f - 0.5f * u;
+        a = 1.0f - 0.2f * u;
+        dx = 27.0f * u + -74.0f;
+        dy = -2.0f;
+    } else if (t < 50.0f) {
+        u = (t - 40.0f) / 10.0f;
+        sx = 0.1f * u + 0.7f;
+        a = 0.8f;
+        dx = -47.0f - 7.0f * u;
+        dy = -2.0f;
+    } else {
+        sx = 0.8f;
+        a = sx;
+        dx = -54.0f;
+        dy = -2.0f;
+    }
+    fn_8016918C(e->obj, 0x8A2, 0, e->x + dx, e->y + dy, sx, sx, 1.0f, 1.0f, 1.0f, a * e->alpha);
 }
 
 extern "C" void fn_8013E108(Effect *e) {
@@ -368,361 +172,103 @@ Effect1::Effect1() {
     t = lbl_806D770C;
 }
 
-extern "C" asm void fn_8013E194(void) { /* 0x8013E194 size:0x520 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lfs f0, lbl_806D7754(r2)
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    lfs f1, 0x1c(r3)
-    fcmpo cr0, f1, f0
-    bge fn_8013E194_L_8013E1E4
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x89d
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E194_L_8013E474
-    fn_8013E194_L_8013E1E4:
-    lfs f0, lbl_806D7758(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013E194_L_8013E21C
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x89e
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E194_L_8013E474
-    fn_8013E194_L_8013E21C:
-    lfs f0, lbl_806D775C(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013E194_L_8013E254
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x89f
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E194_L_8013E474
-    fn_8013E194_L_8013E254:
-    lfs f0, lbl_806D7760(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013E194_L_8013E28C
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x8a0
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E194_L_8013E474
-    fn_8013E194_L_8013E28C:
-    lfs f0, lbl_806D7708(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013E194_L_8013E2C4
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x89f
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E194_L_8013E474
-    fn_8013E194_L_8013E2C4:
-    lfs f0, lbl_806D7764(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013E194_L_8013E2FC
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x89e
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E194_L_8013E474
-    fn_8013E194_L_8013E2FC:
-    lfs f0, lbl_806D7768(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013E194_L_8013E334
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x89d
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E194_L_8013E474
-    fn_8013E194_L_8013E334:
-    lfs f0, lbl_806D776C(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013E194_L_8013E36C
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x89c
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E194_L_8013E474
-    fn_8013E194_L_8013E36C:
-    lfs f0, lbl_806D7770(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013E194_L_8013E3A4
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x89b
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E194_L_8013E474
-    fn_8013E194_L_8013E3A4:
-    lfs f0, lbl_806D7774(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013E194_L_8013E3DC
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x8a1
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E194_L_8013E474
-    fn_8013E194_L_8013E3DC:
-    lfs f0, lbl_806D7778(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013E194_L_8013E414
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x89b
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E194_L_8013E474
-    fn_8013E194_L_8013E414:
-    lfs f0, lbl_806D777C(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8013E194_L_8013E44C
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x89c
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E194_L_8013E474
-    fn_8013E194_L_8013E44C:
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x89d
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    fn_8013E194_L_8013E474:
-    lfs f2, 0x1c(r31)
-    lfs f0, lbl_806D7750(r2)
-    fcmpo cr0, f2, f0
-    cror eq, gt, eq
-    bne fn_8013E194_L_8013E48C
-    fsubs f2, f2, f0
-    fn_8013E194_L_8013E48C:
-    lwz r0, 0x18(r31)
-    rlwinm r0, r0, 0, 29, 29
-    cmplwi r0, 0x4
-    bne fn_8013E194_L_8013E564
-    lfs f3, lbl_806D76F0(r2)
-    fcmpo cr0, f2, f3
-    bge fn_8013E194_L_8013E4C0
-    fdivs f1, f2, f3
-    lfs f0, lbl_806D7718(r2)
-    lfs f2, lbl_806D771C(r2)
-    fmr f8, f0
-    fnmsubs f3, f2, f1, f0
-    b fn_8013E194_L_8013E558
-    fn_8013E194_L_8013E4C0:
-    lfs f0, lbl_806D772C(r2)
-    fcmpo cr0, f2, f0
-    bge fn_8013E194_L_8013E4F4
-    fsubs f1, f2, f3
-    lfs f0, lbl_806D7730(r2)
-    lfs f3, lbl_806D7738(r2)
-    lfs f2, lbl_806D7734(r2)
-    fmuls f4, f1, f0
-    lfs f1, lbl_806D773C(r2)
-    lfs f0, lbl_806D7718(r2)
-    fmadds f3, f3, f4, f2
-    fmadds f8, f1, f4, f0
-    b fn_8013E194_L_8013E558
-    fn_8013E194_L_8013E4F4:
-    lfs f1, lbl_806D7700(r2)
-    fcmpo cr0, f2, f1
-    bge fn_8013E194_L_8013E528
-    fsubs f1, f2, f0
-    lfs f0, lbl_806D76F8(r2)
-    lfs f3, lbl_806D7738(r2)
-    lfs f2, lbl_806D7748(r2)
-    fdivs f4, f1, f0
-    lfs f1, lbl_806D773C(r2)
-    lfs f0, lbl_806D76F4(r2)
-    fnmsubs f3, f3, f4, f2
-    fnmsubs f8, f1, f4, f0
-    b fn_8013E194_L_8013E558
-    fn_8013E194_L_8013E528:
-    lfs f0, lbl_806D7708(r2)
-    fcmpo cr0, f2, f0
-    bge fn_8013E194_L_8013E550
-    fsubs f1, f2, f1
-    lfs f2, lbl_806D771C(r2)
-    lfs f0, lbl_806D7734(r2)
-    lfs f8, lbl_806D7718(r2)
-    fdivs f1, f1, f3
-    fmadds f3, f2, f1, f0
-    b fn_8013E194_L_8013E558
-    fn_8013E194_L_8013E550:
-    lfs f3, lbl_806D7718(r2)
-    fmr f8, f3
-    fn_8013E194_L_8013E558:
-    lfs f10, lbl_806D76F4(r2)
-    lfs f0, lbl_806D7780(r2)
-    b fn_8013E194_L_8013E668
-    fn_8013E194_L_8013E564:
-    lfs f5, lbl_806D76F0(r2)
-    fcmpo cr0, f2, f5
-    bge fn_8013E194_L_8013E598
-    fdivs f5, f2, f5
-    lfs f3, lbl_806D7718(r2)
-    lfs f4, lbl_806D771C(r2)
-    lfs f2, lbl_806D7724(r2)
-    lfs f1, lbl_806D7784(r2)
-    lfs f0, lbl_806D770C(r2)
-    fmr f8, f3
-    fnmsubs f3, f4, f5, f3
-    fnmsubs f10, f2, f5, f1
-    b fn_8013E194_L_8013E668
-    fn_8013E194_L_8013E598:
-    lfs f0, lbl_806D772C(r2)
-    fcmpo cr0, f2, f0
-    bge fn_8013E194_L_8013E5DC
-    fsubs f1, f2, f5
-    lfs f0, lbl_806D7730(r2)
-    lfs f5, lbl_806D7738(r2)
-    lfs f3, lbl_806D7734(r2)
-    fmuls f6, f1, f0
-    lfs f4, lbl_806D773C(r2)
-    lfs f0, lbl_806D7718(r2)
-    lfs f2, lbl_806D7744(r2)
-    lfs f1, lbl_806D7704(r2)
-    fmadds f3, f5, f6, f3
-    fmadds f8, f4, f6, f0
-    lfs f0, lbl_806D770C(r2)
-    fmadds f10, f2, f6, f1
-    b fn_8013E194_L_8013E668
-    fn_8013E194_L_8013E5DC:
-    lfs f1, lbl_806D7700(r2)
-    fcmpo cr0, f2, f1
-    bge fn_8013E194_L_8013E620
-    fsubs f1, f2, f0
-    lfs f0, lbl_806D76F8(r2)
-    lfs f6, lbl_806D7738(r2)
-    lfs f3, lbl_806D7748(r2)
-    fdivs f7, f1, f0
-    lfs f5, lbl_806D773C(r2)
-    lfs f4, lbl_806D76F4(r2)
-    lfs f2, lbl_806D7744(r2)
-    lfs f1, lbl_806D7788(r2)
-    lfs f0, lbl_806D770C(r2)
-    fnmsubs f3, f6, f7, f3
-    fnmsubs f8, f5, f7, f4
-    fnmsubs f10, f2, f7, f1
-    b fn_8013E194_L_8013E668
-    fn_8013E194_L_8013E620:
-    lfs f0, lbl_806D7708(r2)
-    fcmpo cr0, f2, f0
-    bge fn_8013E194_L_8013E658
-    fsubs f0, f2, f1
-    lfs f4, lbl_806D771C(r2)
-    lfs f3, lbl_806D7734(r2)
-    lfs f2, lbl_806D7724(r2)
-    fdivs f5, f0, f5
-    lfs f1, lbl_806D7704(r2)
-    lfs f8, lbl_806D7718(r2)
-    lfs f0, lbl_806D770C(r2)
-    fmadds f3, f4, f5, f3
-    fmadds f10, f2, f5, f1
-    b fn_8013E194_L_8013E668
-    fn_8013E194_L_8013E658:
-    lfs f3, lbl_806D7718(r2)
-    lfs f10, lbl_806D7784(r2)
-    fmr f8, f3
-    lfs f0, lbl_806D770C(r2)
-    fn_8013E194_L_8013E668:
-    lfs f5, lbl_806D76F4(r2)
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    li r4, 0x8a2
-    lfs f2, 0xc(r31)
-    fmr f6, f5
-    lfs f9, 0x10(r31)
-    fmr f7, f5
-    lwz r3, 0x0(r31)
-    fadds f1, f1, f10
-    li r5, 0x0
-    fadds f2, f2, f0
-    fmuls f8, f8, f9
-    bl fn_8016918C
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+extern "C" void fn_8013E194(Effect *e) {
+    float t;
+    float u;
+    float dx;
+    float dy;
+    float sx;
+    float a;
+
+    t = e->t;
+    if (t < 24.0f) {
+        Effect_DrawSprite(e, 0x89D, e->alpha);
+    } else if (t < 28.0f) {
+        Effect_DrawSprite(e, 0x89E, e->alpha);
+    } else if (t < 32.0f) {
+        Effect_DrawSprite(e, 0x89F, e->alpha);
+    } else if (t < 45.0f) {
+        Effect_DrawSprite(e, 0x8A0, e->alpha);
+    } else if (t < 50.0f) {
+        Effect_DrawSprite(e, 0x89F, e->alpha);
+    } else if (t < 58.0f) {
+        Effect_DrawSprite(e, 0x89E, e->alpha);
+    } else if (t < 84.0f) {
+        Effect_DrawSprite(e, 0x89D, e->alpha);
+    } else if (t < 88.0f) {
+        Effect_DrawSprite(e, 0x89C, e->alpha);
+    } else if (t < 92.0f) {
+        Effect_DrawSprite(e, 0x89B, e->alpha);
+    } else if (t < 105.0f) {
+        Effect_DrawSprite(e, 0x8A1, e->alpha);
+    } else if (t < 110.0f) {
+        Effect_DrawSprite(e, 0x89B, e->alpha);
+    } else if (t < 116.0f) {
+        Effect_DrawSprite(e, 0x89C, e->alpha);
+    } else {
+        Effect_DrawSprite(e, 0x89D, e->alpha);
+    }
+
+    t = e->t;
+    if (t >= 60.0f) {
+        t -= 60.0f;
+    }
+    if ((e->flags & 4) == 4) {
+        if (t < 10.0f) {
+            u = t / 10.0f;
+            sx = 0.8f - 0.1f * u;
+            a = 0.8f;
+        } else if (t < 26.0f) {
+            u = (t - 10.0f) / 16.0f;
+            sx = 0.5f * u + 0.7f;
+            a = 0.2f * u + 0.8f;
+        } else if (t < 40.0f) {
+            u = (t - 26.0f) / 14.0f;
+            sx = 1.2f - 0.5f * u;
+            a = 1.0f - 0.2f * u;
+        } else if (t < 50.0f) {
+            u = (t - 40.0f) / 10.0f;
+            sx = 0.1f * u + 0.7f;
+            a = 0.8f;
+        } else {
+            sx = 0.8f;
+            a = sx;
+        }
+        dx = 1.0f;
+        dy = 41.0f;
+    } else {
+        if (t < 10.0f) {
+            u = t / 10.0f;
+            sx = 0.8f - 0.1f * u;
+            a = 0.8f;
+            dx = 51.0f - 7.0f * u;
+            dy = 0.0f;
+        } else if (t < 26.0f) {
+            u = (t - 10.0f) / 16.0f;
+            sx = 0.5f * u + 0.7f;
+            a = 0.2f * u + 0.8f;
+            dx = 27.0f * u + 44.0f;
+            dy = 0.0f;
+        } else if (t < 40.0f) {
+            u = (t - 26.0f) / 14.0f;
+            sx = 1.2f - 0.5f * u;
+            a = 1.0f - 0.2f * u;
+            dx = 71.0f - 27.0f * u;
+            dy = 0.0f;
+        } else if (t < 50.0f) {
+            u = (t - 40.0f) / 10.0f;
+            sx = 0.1f * u + 0.7f;
+            dx = 7.0f * u + 44.0f;
+            a = 0.8f;
+            dy = 0.0f;
+        } else {
+            sx = 0.8f;
+            dx = 51.0f;
+            a = sx;
+            dy = 0.0f;
+        }
+    }
+    fn_8016918C(e->obj, 0x8A2, 0, e->x + dx, e->y + dy, sx, sx, 1.0f, 1.0f, 1.0f, a * e->alpha);
 }
 
 extern "C" void fn_8013E6B4(Effect *e) {
@@ -743,240 +289,67 @@ Effect2::Effect2(int mode) {
     t = lbl_806D770C;
 }
 
-extern "C" asm void fn_8013E744(void) { /* 0x8013E744 size:0x370 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stfd f31, 0x10(r1)
-    psq_st f31, 0x18(r1), 0, 0
-    stw r31, 0xc(r1)
-    mr r31, r3
-    lfs f0, lbl_806D76F0(r2)
-    lfs f31, 0x1c(r3)
-    fcmpo cr0, f31, f0
-    bge fn_8013E744_L_8013E79C
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x896
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E744_L_8013E958
-    fn_8013E744_L_8013E79C:
-    lfs f0, lbl_806D7790(r2)
-    fcmpo cr0, f31, f0
-    bge fn_8013E744_L_8013E7D4
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x897
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E744_L_8013E958
-    fn_8013E744_L_8013E7D4:
-    lfs f0, lbl_806D7794(r2)
-    fcmpo cr0, f31, f0
-    bge fn_8013E744_L_8013E848
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x898
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    lfs f0, lbl_806D7790(r2)
-    li r4, 0x899
-    lfs f3, lbl_806D76F4(r2)
-    li r5, 0x0
-    fsubs f2, f31, f0
-    lfs f1, lbl_806D76F0(r2)
-    lfs f0, 0x10(r31)
-    fmr f4, f3
-    fmr f5, f3
-    lwz r3, 0x0(r31)
-    fdivs f6, f2, f1
-    lfs f1, 0x8(r31)
-    lfs f2, 0xc(r31)
-    fmuls f6, f6, f0
-    bl fn_80169468
-    b fn_8013E744_L_8013E958
-    fn_8013E744_L_8013E848:
-    lfs f0, lbl_806D7798(r2)
-    fcmpo cr0, f31, f0
-    bge fn_8013E744_L_8013E8C0
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x898
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    lfs f0, lbl_806D7794(r2)
-    li r4, 0x899
-    lfs f3, lbl_806D76F4(r2)
-    li r5, 0x0
-    fsubs f2, f31, f0
-    lfs f1, lbl_806D76F0(r2)
-    lfs f0, 0x10(r31)
-    fmr f4, f3
-    fmr f5, f3
-    lwz r3, 0x0(r31)
-    fdivs f6, f2, f1
-    lfs f1, 0x8(r31)
-    lfs f2, 0xc(r31)
-    fsubs f6, f3, f6
-    fmuls f6, f6, f0
-    bl fn_80169468
-    b fn_8013E744_L_8013E958
-    fn_8013E744_L_8013E8C0:
-    lfs f0, lbl_806D7700(r2)
-    fcmpo cr0, f31, f0
-    bge fn_8013E744_L_8013E8F8
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x897
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E744_L_8013E958
-    fn_8013E744_L_8013E8F8:
-    lfs f0, lbl_806D7760(r2)
-    fcmpo cr0, f31, f0
-    bge fn_8013E744_L_8013E930
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x896
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    b fn_8013E744_L_8013E958
-    fn_8013E744_L_8013E930:
-    lfs f3, lbl_806D76F4(r2)
-    li r4, 0x896
-    lwz r3, 0x0(r31)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    fmr f5, f3
-    lfs f2, 0xc(r31)
-    lfs f6, 0x10(r31)
-    bl fn_80169468
-    fn_8013E744_L_8013E958:
-    lfs f2, 0x1c(r31)
-    lfs f4, lbl_806D76F0(r2)
-    fcmpo cr0, f2, f4
-    bge fn_8013E744_L_8013E990
-    fdivs f4, f2, f4
-    lfs f2, lbl_806D7718(r2)
-    lfs f3, lbl_806D771C(r2)
-    lfs f1, lbl_806D7724(r2)
-    lfs f0, lbl_806D7788(r2)
-    lfs f9, lbl_806D779C(r2)
-    fmr f10, f2
-    fnmsubs f3, f3, f4, f2
-    fnmsubs f8, f1, f4, f0
-    b fn_8013E744_L_8013EA60
-    fn_8013E744_L_8013E990:
-    lfs f0, lbl_806D772C(r2)
-    fcmpo cr0, f2, f0
-    bge fn_8013E744_L_8013E9D4
-    fsubs f1, f2, f4
-    lfs f0, lbl_806D7730(r2)
-    lfs f5, lbl_806D7738(r2)
-    lfs f3, lbl_806D7734(r2)
-    fmuls f6, f1, f0
-    lfs f4, lbl_806D773C(r2)
-    lfs f2, lbl_806D7718(r2)
-    lfs f1, lbl_806D775C(r2)
-    lfs f0, lbl_806D77A0(r2)
-    fmadds f3, f5, f6, f3
-    fmadds f10, f4, f6, f2
-    lfs f9, lbl_806D779C(r2)
-    fmadds f8, f1, f6, f0
-    b fn_8013E744_L_8013EA60
-    fn_8013E744_L_8013E9D4:
-    lfs f1, lbl_806D7700(r2)
-    fcmpo cr0, f2, f1
-    bge fn_8013E744_L_8013EA18
-    fsubs f1, f2, f0
-    lfs f0, lbl_806D76F8(r2)
-    lfs f5, lbl_806D7738(r2)
-    lfs f3, lbl_806D7748(r2)
-    fdivs f6, f1, f0
-    lfs f4, lbl_806D773C(r2)
-    lfs f2, lbl_806D76F4(r2)
-    lfs f1, lbl_806D775C(r2)
-    lfs f0, lbl_806D77A4(r2)
-    lfs f9, lbl_806D779C(r2)
-    fnmsubs f3, f5, f6, f3
-    fnmsubs f10, f4, f6, f2
-    fnmsubs f8, f1, f6, f0
-    b fn_8013E744_L_8013EA60
-    fn_8013E744_L_8013EA18:
-    lfs f0, lbl_806D7708(r2)
-    fcmpo cr0, f2, f0
-    bge fn_8013E744_L_8013EA50
-    fsubs f0, f2, f1
-    lfs f3, lbl_806D771C(r2)
-    lfs f2, lbl_806D7734(r2)
-    lfs f1, lbl_806D7724(r2)
-    fdivs f4, f0, f4
-    lfs f0, lbl_806D77A0(r2)
-    lfs f10, lbl_806D7718(r2)
-    lfs f9, lbl_806D779C(r2)
-    fmadds f3, f3, f4, f2
-    fmadds f8, f1, f4, f0
-    b fn_8013E744_L_8013EA60
-    fn_8013E744_L_8013EA50:
-    lfs f3, lbl_806D7718(r2)
-    lfs f8, lbl_806D7788(r2)
-    fmr f10, f3
-    lfs f9, lbl_806D779C(r2)
-    fn_8013E744_L_8013EA60:
-    lfs f5, lbl_806D76F4(r2)
-    fmr f4, f3
-    lfs f1, 0x8(r31)
-    li r4, 0x8a8
-    lfs f2, 0xc(r31)
-    fmr f6, f5
-    lfs f0, 0x10(r31)
-    fadds f1, f1, f8
-    lwz r3, 0x0(r31)
-    fmr f7, f5
-    li r5, 0x0
-    fadds f2, f2, f9
-    fmuls f8, f10, f0
-    bl fn_8016918C
-    psq_l f31, 0x18(r1), 0, 0
-    lwz r0, 0x24(r1)
-    lfd f31, 0x10(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+extern "C" void fn_8013E744(Effect *e) {
+    float t;
+    float u;
+    float dx;
+    float dy;
+    float sx;
+    float a;
+
+    t = e->t;
+    if (t < 10.0f) {
+        Effect_DrawSprite(e, 0x896, e->alpha);
+    } else if (t < 15.0f) {
+        Effect_DrawSprite(e, 0x897, e->alpha);
+    } else if (t < 25.0f) {
+        Effect_DrawSprite(e, 0x898, e->alpha);
+        u = (t - 15.0f) / 10.0f;
+        Effect_DrawSprite(e, 0x899, u * e->alpha);
+    } else if (t < 35.0f) {
+        Effect_DrawSprite(e, 0x898, e->alpha);
+        u = (t - 25.0f) / 10.0f;
+        Effect_DrawSprite(e, 0x899, (1.0f - u) * e->alpha);
+    } else if (t < 40.0f) {
+        Effect_DrawSprite(e, 0x897, e->alpha);
+    } else if (t < 45.0f) {
+        Effect_DrawSprite(e, 0x896, e->alpha);
+    } else {
+        Effect_DrawSprite(e, 0x896, e->alpha);
+    }
+
+    t = e->t;
+    if (t < 10.0f) {
+        u = t / 10.0f;
+        sx = 0.8f - 0.1f * u;
+        a = 0.8f;
+        dx = 71.0f - 7.0f * u;
+        dy = -4.0f;
+    } else if (t < 26.0f) {
+        u = (t - 10.0f) / 16.0f;
+        sx = 0.5f * u + 0.7f;
+        a = 0.2f * u + 0.8f;
+        dx = 32.0f * u + 64.0f;
+        dy = -4.0f;
+    } else if (t < 40.0f) {
+        u = (t - 26.0f) / 14.0f;
+        sx = 1.2f - 0.5f * u;
+        a = 1.0f - 0.2f * u;
+        dx = 96.0f - 32.0f * u;
+        dy = -4.0f;
+    } else if (t < 50.0f) {
+        u = (t - 40.0f) / 10.0f;
+        sx = 0.1f * u + 0.7f;
+        dx = 7.0f * u + 64.0f;
+        a = 0.8f;
+        dy = -4.0f;
+    } else {
+        sx = 0.8f;
+        dx = 71.0f;
+        a = sx;
+        dy = -4.0f;
+    }
+    fn_8016918C(e->obj, 0x8A8, 0, e->x + dx, e->y + dy, sx, sx, 1.0f, 1.0f, 1.0f, a * e->alpha);
 }
 
 extern "C" void fn_8013EAB4(Effect *e) {
