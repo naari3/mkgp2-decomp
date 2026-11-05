@@ -10850,5 +10850,24 @@
   "src/game/clFlowClass_Update.cpp": {
     "__ct__11ClassSpriteFiii": "Sprite_InitWithAnim",
     "__ct__11ClassSpriteFiUcff": "fn_801A08B8"
+  },
+  "src/game/clFlowEntry_Update.cpp": {
+    "__ct__9EntryCardFiii": "fn_80161914",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801B9928.cpp": {
+    "__ct__14CourseModeInitFv": "fn_801B9928",
+    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
+    "__dt__12GameModeBaseFv": "dtor_8002CDF4",
+    "__ct__12CourseSpriteFiii": "Sprite_InitWithAnim",
+    "__ct__12CourseSpriteFiiffffff": "Sprite_CreateWithParams",
+    "__ct__15CourseClassTaskFv": "clFlowClass_Init",
+    "__ct__13CourseCupTaskFv": "clFlowCup_Init",
+    "__ct__15CourseRoundTaskFv": "clFlowRound_Init",
+    "__ct__15CourseFrameTaskFv": "FrameSelection_Init",
+    "__ct__15CourseEntryTaskFv": "clFlowEntry_Init",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

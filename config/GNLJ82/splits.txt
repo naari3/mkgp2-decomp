@@ -8771,6 +8771,11 @@ game/fn_801B9740.cpp:
 	extabindex  start:0x80027998 end:0x800279A4
 	.text       start:0x801B9740 end:0x801B9928
 
+game/fn_801B9928.cpp:
+	extab       start:0x80012ED0 end:0x800130FC
+	extabindex  start:0x800279A4 end:0x800279B0
+	.text       start:0x801B9928 end:0x801BA034
+
 game/GetCourseSelectEntry.c:
 	.text       start:0x801BA034 end:0x801BA110
 
@@ -8797,6 +8802,11 @@ game/fn_801BA318.c:
 	extabindex  start:0x800279D4 end:0x800279E0
 	.text       start:0x801BA318 end:0x801BA380
 
+game/clFlowEntry_Update.cpp:
+	extab       start:0x8001312C end:0x80013144
+	extabindex  start:0x800279E0 end:0x800279EC
+	.text       start:0x801BA380 end:0x801BA6A4
+
 game/fn_801BA6A4.c:
 	extab       start:0x80013144 end:0x8001314C
 	extabindex  start:0x800279EC end:0x800279F8
@@ -8817,6 +8827,11 @@ game/fn_801BAA88.cpp:
 	extabindex  start:0x80027A10 end:0x80027D10
 	.text       start:0x801BAA88 end:0x801C1F88
 	.ctors      start:0x802E8918 end:0x802E891C
+
+game/fn_801C1F88.cpp:
+	extab       start:0x80013D9C end:0x80013DA4
+	extabindex  start:0x80027D10 end:0x80027D1C
+	.text       start:0x801C1F88 end:0x801C2238
 
 game/fn_801C2238.c:
 	extab       start:0x80013DA4 end:0x80013DAC

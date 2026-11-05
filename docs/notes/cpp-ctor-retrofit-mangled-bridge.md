@@ -489,3 +489,8 @@ c8_s36: fn_801B7CD0 matches via canonical Sprite/new, coin quotient/remainder pa
 Source: Codex worker c8_s39_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c8_s39: clFlowClass_Update native reconstruction reached 99.81191% with exact 88-byte allocation EH. Declaring externally referenced rodata bytes const let MWCC hoist loop aggregate-table loads into saved registers (r21-r31/frame C0); mutable extern restored per-iteration loads and target r26-r31/frame A0. An inline interpolate(start,end,frame,duration) helper reproduced the target FP computation/register sequence. Still NonMatching: one input-selection reload is absent, leaving later text four bytes early. No native gain.
+
+## c8_s38_20261105
+Source: Codex worker c8_s38_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1492 B.
+
+c8_s38: clFlowEntry_Update 801BA380 matches native 804B text + 24B DELETEPOINTER EH + 12B index. For inline boolean equality predicates, explicit int finished=(unsigned char)card->Done() and int held=(unsigned char)(input->held==1) produce target cntlzw/extrwi materialization; direct if(Done()) folds to cmpwi, whereas Done()==1 adds a comparison. Preserve the nested else-return structure for its branch-over-branch. fn_801C1F88 688B and all EH/index match using mutable extern aggregate animation tables and one captured input pointer for clearing fields. Full DOL SHA-1 and actual ELF addresses verified.
