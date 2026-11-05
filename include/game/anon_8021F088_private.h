@@ -589,6 +589,9 @@ struct clGetSumLine : clGetCoinLine {
 
 /* clCoinPerfect (0x3C0): the "perfect" bonus label. */
 struct clCoinPerfect : FadeObj {
+#ifdef COIN_EXTERNAL_DTOR_VTABLE
+    void Update();
+#endif
     ~clCoinPerfect();
     TextSprite text;
     ResCtrl r[3];
@@ -610,12 +613,17 @@ struct clCoinPerfect : FadeObj {
         fn_801F8E90(&text);
         SoundMgr_Play(0x1B);
     }
+#ifndef COIN_EXTERNAL_DTOR_VTABLE
     void Update();
+#endif
     void Draw();
 };
 
 /* clGetCoinSum (0x6E8): the coin mileage total. */
 struct clGetCoinSum : FadeObj {
+#ifdef COIN_EXTERNAL_DTOR_VTABLE
+    void Update();
+#endif
     ~clGetCoinSum();
     int value;
     Own<Sprite> spr;
@@ -628,7 +636,9 @@ struct clGetCoinSum : FadeObj {
     int timer;
     clGetCoinSum();
     void Layout();
+#ifndef COIN_EXTERNAL_DTOR_VTABLE
     void Update();
+#endif
     void Draw();
     void Flash() {
         flash = 1;

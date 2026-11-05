@@ -8,3 +8,8 @@ Source: Codex worker cxc_u10_f8250_20261105 (gpt-6.1-sol/medium) + coordinator a
 Source: Codex worker c5_s17_fn801f8668_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1108 B.
 
 fn_801F8668 matches with a const byte-pointer view of canonical DrawTables801F plus offsets A0/100/C0; this prevents redundant descriptor-address rematerialization. Same form does not solve fn_801F894C: offset zero generates an extra base copy and mr instead of target addi-zero. Typed inline helper also leaves original residual.
+
+## c5_s16_anon8021f088_20261105
+Source: Codex worker c5_s16_anon8021f088_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 392 B.
+
+F8404: source-private DrawQuad8404 using named double fabs results before float narrowing restores initial product/fabs scheduling; ordering dx before sinPart improves text 97.05882 -> 98.59477. Remaining construction FP colors and first depth vertex y/z f1/f3 swap; exact size 612 and owned EH 100%, stays NonMatching.

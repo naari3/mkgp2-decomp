@@ -374,3 +374,8 @@ fn_801FA310 becomes exact by declaring case-4 count then pointer at function sco
 Source: Codex worker c5_s14_anon80218b80_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 752 B.
 
 c5_s14: clGetCoinLine dtor 80220780 can be rescued without owning its vtable: opt-in undefined virtual key before its destructor suppresses duplicate RTTI-off vtable and weak Draw emission; primary 224-byte text and 40-byte EH remain exact. Bridge compiler @167/@168 to @etb_8001B3D4/@eti_8002A44C. Appended weak ResCtrl dtor is discarded. CreditHud Update 80218B80 only needed Matching plus @26/@27 EH-name bridges. Coordinator full build and DOL SHA-1 verified, expected main.elf addresses checked.
+
+## c5_s16_anon8021f088_20261105
+Source: Codex worker c5_s16_anon8021f088_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 392 B.
+
+Coin destructors 802246A4/80224800 unlock with existing undefined Update override declared before destructor (opt-in header declaration ordering). This suppresses incorrect RTTI-off vtables without changing inherited virtual slots or text. Owned compiler EH symbol bridges give text/extab/extabindex 100%; source inputs and exact main.elf addresses plus coordinator DOL SHA-1 verified. Native gain 2 / 392 bytes.
