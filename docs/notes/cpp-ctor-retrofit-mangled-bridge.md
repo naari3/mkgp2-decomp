@@ -709,3 +709,8 @@ c12_u23: fn_80242E80 inline RivalItems captures directly into case-3 loop improv
 Source: Codex worker c12_u25_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 292 B.
 
 c12_u25: CardModeRoot ctor 8020D00C remains 99.06542%, extra li r3,1 in state=3 branch. Hoisted shared int value 98.97196%, byte value97.850464%, ternary93.97196% all rejected. Safe dtk split at8020D00C isolates exact292B destructor. Private canonical declaration copy with Destroy override before CardModeRoot dtor and inherited Destroy redeclared before inline MenuModeBase dtor suppresses all duplicate vtable/RTTI/weak text; bridge @38/@39 to owned EH. All destructor sections100%, source-linked DOL SHA-1 OK. Thunk8020D1B8 is deliberately auto fallback after constructor range ends8020D1B8.
+
+## c12_u32_20261106
+Source: Codex worker c12_u32_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+RaceDigitLap 80246988: numeric clamp literals plus independent local value remove frsp; local declaration order value/where/result produces SP+10/+0C/+08 and exact 496B size, owned 164B EH/index12. Text improves 98.59677 to 99.82258. Remaining x/y load scheduling is reversed; by-value coordinate helper adds copies, nested scalar helper and reversed plain-local declarations are invariant. Retain NonMatching.
