@@ -689,3 +689,8 @@ c12_u6: PanelCda40 dtor_801CDC68 sentinel r7/r0 residual resolves by begin(){ret
 Source: Codex worker c12_u11_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 516 B.
 
 c12_u11: fn_801B739C length decrement clamp uses literal 0.0f instead of captured external lbl_806D986C. External compare/assignment without capture is byte-invariant at 99.496124%; numeric literal gives exact target FP temporary allocation and 100% text516/EH8/index12. postprocess_sdata2 maps literal to existing lbl_806D986C. Matching promotion source-linked; actual ELF 801B739C/516 and full DOL SHA-1 verified.
+
+## c12_u19_20261106
+Source: Codex worker c12_u19_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 592 B.
+
+c12_u19: fn_801D4FF4 diagnostic DebugPrintf needs direct nested calls for used bytes, used bits, and 0x228 - used bits. Explicit used/version locals yield swapped r25/r26 plus extra mr through r0 (99.189186%). Nested arguments naturally reproduce exact 592-byte text and 24-byte EH/12-byte index. Existing new-expression bridge is sufficient; Matching promotion passes source-linked DOL SHA-1.

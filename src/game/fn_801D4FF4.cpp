@@ -21,7 +21,6 @@ void operator delete(void *);
 extern "C" u8 fn_801D4FF4(u8 *self, const void *raw, u8 publish) {
     const char *messages = lbl_8039C718;
     u8 result;
-    int used;
     int version;
     PlayerCardBitpack *pack;
     u8 copy[0x45];
@@ -49,9 +48,8 @@ extern "C" u8 fn_801D4FF4(u8 *self, const void *raw, u8 publish) {
         } else { DebugPrintf(messages + 0x1A20); return 0; }
     } else { DebugPrintf(messages + 0x1A20); return 0; }
     if (pack) {
-        version = 0x228 - bitpack_get_used_bits(pack);
-        used = bitpack_get_used_bits(pack);
-        DebugPrintf(messages + 0x1A30, bitpack_get_used_bytes(pack), used, version);
+        DebugPrintf(messages + 0x1A30, bitpack_get_used_bytes(pack),
+                    bitpack_get_used_bits(pack), 0x228 - bitpack_get_used_bits(pack));
         if (bitpack_get_used_bytes(pack) > 0x45) return 0;
         MemoryManager_TimedFree(pack);
     }
