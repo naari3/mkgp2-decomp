@@ -8236,6 +8236,16 @@ game/kartmove/carobject.cpp:
 	extabindex  start:0x80027464 end:0x800274E8
 	.text       start:0x8019E1A8 end:0x8019F5BC
 
+game/sprite/fn_8019F5BC.c:
+	extab       start:0x80012980 end:0x80012988
+	extabindex  start:0x800274E8 end:0x800274F4
+	.text       start:0x8019F5BC end:0x8019FA30
+
+game/sprite/fn_8019FA30.c:
+	extab       start:0x80012988 end:0x80012990
+	extabindex  start:0x800274F4 end:0x80027500
+	.text       start:0x8019FA30 end:0x8019FE58
+
 game/sprite/fn_8019FE58.c:
 	.text       start:0x8019FE58 end:0x8019FE78
 
@@ -8264,6 +8274,11 @@ game/sprite/fn_8019FF8C.c:
 	extab       start:0x80012990 end:0x80012998
 	extabindex  start:0x80027500 end:0x8002750C
 	.text       start:0x8019FF8C end:0x801A0004
+
+game/sprite/fn_801A0004.c:
+	extab       start:0x80012998 end:0x800129A0
+	extabindex  start:0x8002750C end:0x80027518
+	.text       start:0x801A0004 end:0x801A024C
 
 game/sprite/fn_801A024C.c:
 	.text       start:0x801A024C end:0x801A0290
@@ -8337,6 +8352,11 @@ game/sprite/fn_801A0DF0.c:
 	extab       start:0x800129F0 end:0x800129F8
 	extabindex  start:0x80027590 end:0x8002759C
 	.text       start:0x801A0DF0 end:0x801A0E54
+
+game/sprite/fn_801A0E54.c:
+	extab       start:0x800129F8 end:0x80012A00
+	extabindex  start:0x8002759C end:0x800275A8
+	.text       start:0x801A0E54 end:0x801A0FD4
 
 game/sprite/fn_801A0FD4.c:
 	extab       start:0x80012A00 end:0x80012A08
