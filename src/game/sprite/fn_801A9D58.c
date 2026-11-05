@@ -46,7 +46,6 @@ void fn_801A9D58(void) {
     int count;
     int i;
     int j;
-    int third;
     int gap;
     SpriteVoiceRaceEntry *other;
     MidRaceTrigger *trigger;
@@ -236,6 +235,10 @@ void fn_801A9D58(void) {
                 }
             }
             if (count == 3) {
+                int first;
+                int second;
+                int third;
+                int j;
                 first = -1;
                 second = -1;
                 third = -1;
