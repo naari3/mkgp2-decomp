@@ -18,6 +18,15 @@ static inline short SelectStartVoice(int character, int id) {
     return voice;
 }
 
+/* Commit the driver entry before advancing the queue index. */
+static inline void PushDriverVoice(short voice) {
+    if (voice == -1 || g_voiceQueueHead >= 64 || g_voiceQueueMuted) return;
+    g_voiceQueue[g_voiceQueueHead].id = voice;
+    g_voiceQueue[g_voiceQueueHead].priority = 0;
+    g_voiceQueue[g_voiceQueueHead].flag = 0;
+    g_voiceQueueHead++;
+}
+
 /* Queue the cup/course introduction, participating drivers, and start prompt. */
 void fn_801AF850(void) {
     int cup = g_cupId;
@@ -30,9 +39,18 @@ void fn_801AF850(void) {
     if (cup == 3) SpriteVoice_Push(0x1C + longRound * 3 + variant % 3, -1, 0, 1);
     if (cup == 4) SpriteVoice_Push(0x22 + longRound * 2 + variant % 2, -1, 0, 1);
     if (cup == 5) SpriteVoice_Push(0x26 + longRound * 2 + variant % 2, -1, 0, 1);
-    if (cup == 6) SpriteVoice_Push(0x2B + longRound, -1, 0, 1);
-    if (cup == 7) SpriteVoice_Push(0x2E + longRound, -1, 0, 1);
-    if (cup == 8) SpriteVoice_Push(0x32 + longRound, -1, 0, 1);
+    if (cup == 6) {
+        int voice = 0x2B + longRound;
+        SpriteVoice_Push(voice, -1, 0, 1);
+    }
+    if (cup == 7) {
+        int voice = 0x2E + longRound;
+        SpriteVoice_Push(voice, -1, 0, 1);
+    }
+    if (cup == 8) {
+        int voice = 0x32 + longRound;
+        SpriteVoice_Push(voice, -1, 0, 1);
+    }
     participants = 0;
     for (i = 0; i < 8; i++) {
         if (g_raceEntryArray[i].participant) participants++;
@@ -43,7 +61,7 @@ void fn_801AF850(void) {
     }
     for (i = 0; i < 8; i++) {
         if (g_raceEntryArray[i].participant) {
-            SpriteVoice_Push(SelectStartVoice(g_raceEntryArray[i].character, g_raceEntryArray[i].id), 0, 0, 0);
+            PushDriverVoice(SelectStartVoice(g_raceEntryArray[i].character, g_raceEntryArray[i].id));
         }
     }
     if (participants == 4) {

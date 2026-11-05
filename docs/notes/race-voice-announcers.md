@@ -8,3 +8,8 @@ fn_801AC208 addresses lbl_80496C38 voice tables (+0x1C, +0xBC) and goal trigger 
 Source: Codex worker c10_u6_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 fn_801A9D58: independent block-local first/second/third/j in count==3 fixes volatile j/third homes and li-vs-mr initialization, improving 99.483116 to 99.66234 with exact 4620B text size and 8B/12B EH. Entry/progress/kart comparison helper variants leave late global-path-load residual. Remaining 12 differing instructions at offsets 9E0..9F0, C50..C60, D1C..D20. Retained NonMatching.
+
+## c13_u21_20261106
+Source: Codex worker c13_u21_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 10 fn / 3684 B.
+
+c13_u21: fn_801AF850 (single fn, text 2976 B) improves 96.80779 -> 99.879036. TU-local driver push with standalone g_voiceQueueHead++ after all field stores removes 16 bytes of loop alias-driven address recalculation and matches the entire participant-count/driver/start-prompt tail. Named int voice locals for cups 6/7/8 remove repeated sum rematerialization (12 bytes) and retain raw sum for sth. Only 15 instruction register differences remain: course ID raw sum vs queue byte offset r8/r9 in cups 6/7 and r7/r8 in cup 8. Named short IDs instead retain extsh result, 99.26075%; a TU-local int-parameter course push helper regresses to 98.80645%, 2988 B. Retained NonMatching; full fallback-linked SHA-1 OK, zero native gain.
