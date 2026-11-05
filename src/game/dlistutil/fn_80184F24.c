@@ -1,5 +1,11 @@
 #include <game/dlistutil_extract_private.h>
 
+static inline MtxPtr DListQuadMatrix(HSD_JObj *jobj) {
+    if (!jobj) __assert(lbl_806D9280, 0x47c, lbl_806D9288);
+    if (jobj && DListMatrixDirty(jobj)) HSD_JObjSetupMatrixSub(jobj);
+    return (MtxPtr)&jobj->_pad_1c[0x28];
+}
+
 int fn_80184F24(HSD_JObj *jobj, DListPObj *pobj, DListQuadInfo *out, int capacity) {
     Vec pos[4];
     unsigned char *end;
@@ -39,10 +45,10 @@ int fn_80184F24(HSD_JObj *jobj, DListPObj *pobj, DListQuadInfo *out, int capacit
             if (used >= 4) {
                 if (primitive == 0x98) {
                     quad = (DListQuadInfo *)((unsigned char *)out + offset);
-                    PSMTXMultVec(DListGetMatrix(jobj), &pos[0], &quad->vertex[0]);
-                    PSMTXMultVec(DListGetMatrix(jobj), &pos[1], &quad->vertex[1]);
-                    PSMTXMultVec(DListGetMatrix(jobj), &pos[2], &quad->vertex[3]);
-                    PSMTXMultVec(DListGetMatrix(jobj), &pos[3], &quad->vertex[2]);
+                    PSMTXMultVec(DListQuadMatrix(jobj), &pos[0], &quad->vertex[0]);
+                    PSMTXMultVec(DListQuadMatrix(jobj), &pos[1], &quad->vertex[1]);
+                    PSMTXMultVec(DListQuadMatrix(jobj), &pos[2], &quad->vertex[3]);
+                    PSMTXMultVec(DListQuadMatrix(jobj), &pos[3], &quad->vertex[2]);
                     quad->flags = 0;
                     quad->value1 = lbl_806D927C;
                     quad->value2 = lbl_806D927C;
@@ -52,10 +58,10 @@ int fn_80184F24(HSD_JObj *jobj, DListPObj *pobj, DListQuadInfo *out, int capacit
                     if (count >= capacity) return count;
                 } else if (primitive == 0x80) {
                     quad = (DListQuadInfo *)((unsigned char *)out + offset);
-                    PSMTXMultVec(DListGetMatrix(jobj), &pos[0], &quad->vertex[0]);
-                    PSMTXMultVec(DListGetMatrix(jobj), &pos[1], &quad->vertex[1]);
-                    PSMTXMultVec(DListGetMatrix(jobj), &pos[2], &quad->vertex[2]);
-                    PSMTXMultVec(DListGetMatrix(jobj), &pos[3], &quad->vertex[3]);
+                    PSMTXMultVec(DListQuadMatrix(jobj), &pos[0], &quad->vertex[0]);
+                    PSMTXMultVec(DListQuadMatrix(jobj), &pos[1], &quad->vertex[1]);
+                    PSMTXMultVec(DListQuadMatrix(jobj), &pos[2], &quad->vertex[2]);
+                    PSMTXMultVec(DListQuadMatrix(jobj), &pos[3], &quad->vertex[3]);
                     quad->flags = 0;
                     quad->value1 = lbl_806D927C;
                     quad->value2 = lbl_806D927C;

@@ -18,3 +18,8 @@ fn_80184374: local reader v=d->array; v+=index*(d->stride/4) fixes load timing a
 Source: Codex worker c13_u42_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u42 fn_80185630: explicit x/y/z strip copies restore target floating lfs/stfs (95.5611 -> 96.2074). TU-local GetMatrix equivalent returning (float (*)[4])&jobj->_pad_1c[0x28] prevents matrix address hoist and removes extra saved GPR (98.49679%, extab100). Remaining GPR/coalescing differences and two missing pointer mr instructions leave text2480 versus target2488; index91.66667. Target-derived declaration order changed loop homes but regressed98.40836 and was reverted. Singleton kept NonMatching; full fallback SHA-1 OK.
+
+## c13_u50_20261106
+Source: Codex worker c13_u50_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u50: fn_80184F24 TU-local matrix getter returning (MtxPtr)&jobj->_pad_1c[0x28] removes matrix-address hoist, extra instruction and saved GPR: text95.028824 ->97.52772, exact1804B/extab8/index12. Inline transform wrapper and separate SetupMatrix with DListJObjMatrixView address were byte-identical to baseline. Residual saved-register partition plus quad-address scheduling remains; retain NonMatching. Coordinator full fallback build SHA-1 OK.
