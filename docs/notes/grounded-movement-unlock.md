@@ -1,0 +1,5 @@
+# grounded-movement-unlock
+
+Source: Codex worker c14_u9_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u9: KartPhysics_GroundedMovement 801EED14 remains singleton NM. Move lateral pointer declaration before pair declaration, assigning it only in nearestKart>=0 body, fixes target pair r26/lateral r25, raising remeasured94.39141 to94.43771 with unchanged source4748B and EH8/index12 scores100/91.66667. Direct explicit if-return singleton accessor is byte-invariant, cached accessor also misses bne-over-li shape. Literal constants improve FP scheduling but full literal conversion shifts offsets and existing postprocess_sdata2 then maps some constants incorrectly; reject reported96.61869. Separate distance/heading/side declarations do not solve saved FP homes. Remaining accessor branches, FP callee webs, constant reload CSE and matrixYaw FMA require new structural evidence; no blind permutations. Source fallback fullDOL SHA1 exact; genuine native gain0.

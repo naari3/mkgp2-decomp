@@ -89,11 +89,12 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
         break;
     case -1: default:
         if (self->avoidanceTimer<=0) {
+            void *lateral;
             AIPairRecord *pair=&lbl_806793D8[self->kartId];
             float magnitude=lbl_806DA450;
             if (pair->nearestKart>=0) {
                 float distance=pair->distanceSquared;
-                void *lateral=self->controller->lateralOffset;
+                lateral=self->controller->lateralOffset;
                 groundedSqrt(distance);
                 int driver=RaceSlot_GetDriverId(pair->nearestKart);
                 int pattern=RivalAvoidance_CalcPattern(lateral,driver,distance);
