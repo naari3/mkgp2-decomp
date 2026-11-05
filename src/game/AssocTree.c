@@ -7,17 +7,12 @@ void Allocator_Identity_VoidVoid(void)
 {
 }
 
-asm void AssocTree_Init(char *tree, const unsigned char *flags)
+void AssocTree_Init(char *__restrict tree, const unsigned char *__restrict flags)
 {
-    nofralloc
-    li r5, 0x0
-    lbz r4, 0x0(r4)
-    stw r5, 0x0(r3)
-    addi r0, r3, 0x4
-    stw r5, 0x4(r3)
-    stb r4, 0x8(r3)
-    stw r0, 0xc(r3)
-    blr
+    *(unsigned int *)(tree + 0) = 0;
+    *(unsigned int *)(tree + 4) = 0;
+    tree[8] = *flags;
+    *(void **)(tree + 12) = tree + 4;
 }
 
 void Allocator_DestroyKey_Noop(void)

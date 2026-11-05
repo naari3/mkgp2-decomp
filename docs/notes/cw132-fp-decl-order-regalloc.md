@@ -143,3 +143,8 @@ c10_u25: AI_CalcGPTargetSpeed 801EA6F0 improves 99.06593 to 99.34066 with TU-loc
 Source: Codex worker c10_u26_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c10_u26: fn_8019C15C improves 99.67836 to99.9269 by direct compression = corner->y - h with literal-zero compares and direct v194.y += lbl_806D96D4 plus literal-zero clamp. Removes scalar z/cy/one/value webs; suspension/clamp instruction identities become exact. Inline CopyUp worsens zero/up FP homes; real InitVec ctor shifts stack slots/EH. Residual only initial uy=f0 vs target f2 / ux=f2 vs target f0 (five instructions). Keep named increment: literal1.0f anonymous @116 collides with existing per-TU EH rename. Remains NonMatching; source objdiff owned EH/index100 and fallback full DOL SHA-1 OK.
+
+## c11_a1_20261106
+Source: Codex worker c11_a1_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 32 B.
+
+AssocTree_Init80089C08: direct header initialization with restrict on tree and flags exactly matches32 B under unchangedGC/1.3.2 flags. Cached flag before stores allocates flagr5/zeror4 and changes instruction order; direct restricted field assignments permit lir5;lbzr4;stwr5;addir0 sequence. Full source-linked build SHA-1 OK.
