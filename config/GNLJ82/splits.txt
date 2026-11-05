@@ -8609,6 +8609,11 @@ game/fn_801B5C98.c:
 	extabindex  start:0x800277F4 end:0x80027800
 	.text       start:0x801B5C98 end:0x801B5E18
 
+game/RacePerFrame.c:
+	extab       start:0x80012B90 end:0x80012B98
+	extabindex  start:0x80027800 end:0x8002780C
+	.text       start:0x801B5E18 end:0x801B6B94
+
 game/fn_801B6B94.c:
 	extab       start:0x80012B98 end:0x80012BA0
 	extabindex  start:0x8002780C end:0x80027818
