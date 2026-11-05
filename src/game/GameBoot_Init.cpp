@@ -13,9 +13,10 @@ static inline void SnapshotBootBackup() {
     lbl_8059F480.large = lbl_80598A60.large;
     lbl_8059F480.tail = lbl_80598A60.tail;
 }
-static inline void ConfigureBootIP(int cabinet, const char *messages) {
-    BootIP *ip;
-    ip = &g_pcbIpTable[cabinet];
+static inline void ConfigureBootIP(BootBackup *backup, const char *messages) {
+    BootIP *ip = g_pcbIpTable;
+    int cabinet = ((signed char *)backup)[0x21];
+    ip += cabinet;
     DebugPrintf(messages + 0x4d0, (--ip)->address);
     int result = acModifyMyIPaddr(ip->address, 0xffffff00);
     DebugPrintf(messages + 0x500, cabinet, result, ip->address);
@@ -27,10 +28,10 @@ static inline void ConfigureBootIP(int cabinet, const char *messages) {
     if (result == -6) DebugPrintf(messages + 0x64c);
     DebugPrintf(messages + 0x688, result);
 }
-static inline void FinishBootBackup(BootBackup *backup) {
-    backup->head.a2a = 0;
+static inline void FinishBootBackup(char *backup) {
+    backup[0x2a] = 0;
     if (lbl_806D1120 && lbl_806D1128 == 0) {
-        fn_80288210(0, backup);
+        fn_80288210(0, (BootBackup *)backup);
         SnapshotBootBackup();
     }
 }
@@ -58,8 +59,8 @@ extern "C" void GameBoot_Init() {
         lbl_806D1124 = 4;
     } else CreditMgr_ResetState(0);
     SnapshotBootBackup();
-    if (lbl_806D1120) ConfigureBootIP((signed char)((char *)&lbl_80598A60)[0x21], messages);
-    FinishBootBackup(&lbl_80598A60);
+    if (lbl_806D1120) ConfigureBootIP(&lbl_80598A60, messages);
+    FinishBootBackup((char *)&lbl_80598A60);
     lbl_806D1118 = messages + 0x6c8;
     lbl_806D111C = messages + 0x6d4;
 }
