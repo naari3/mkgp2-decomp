@@ -674,3 +674,8 @@ c11_a35: 80125948 draw (444 B) and 80126728 teardown (336 B) convert within orig
 Source: Codex worker c11_a37_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 648 B.
 
 c11_a37: BiribiriLand_Destroy 80134D68 (648 B) matches in existing .c via pragma cplusplus on, compiler EH and use_lmw_stmw. Canonical HSD ref_DEC should keep its byte-sized retained boolean when ported into a C++ island: builtin C++ bool introduced extra normalization; unsigned char local with int return reproduces target extrwi sequence. Inline obstacle teardown naturally restores loop/light register homes. Whole TU text/extab/extabindex 100%; source-linked DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
+
+## c12_u2_20261106
+Source: Codex worker c12_u2_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1844 B.
+
+c12_u2: fn_801EE36C transit vector construction before scale calculation fixes initial-X f2 -> f4 and improves native draft 99.81315 -> 99.83045. Extracted sqrt inline helper and named previous-X local leave same 12-instruction residual. Scratch SP+0x0C/+0x10 swapped; transit previous-X f9 vs target f2, coefficient f2 vs f3, scale f10 vs f9. Single-function TU remains NonMatching.

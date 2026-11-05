@@ -1,4 +1,4 @@
-/* Native candidate: 99.81315% text. Remaining differences are two
+/* Native candidate: 99.83045% text. Remaining differences are two
  * square-root scratch slots and FP registers in the transit interpolation.
  * The primary EH payload is exact; the extra weak Vec destructor is unowned. */
 #include "game/kartmove/collision_private.h"
@@ -64,8 +64,8 @@ extern "C" void fn_801EE36C(char *self)
         }
     }
     if (STEP_I(self, 0xC8) > 0) {
-        float scale = 0.0125f * (float)STEP_I(self, 0xC8) + 1.0f;
         CollisionVec delta(STEP_F(self, 0x4C), STEP_F(self, 0x50), STEP_F(self, 0x54));
+        float scale = 0.0125f * (float)STEP_I(self, 0xC8) + 1.0f;
         delta.x -= STEP_F(self, 0x58);
         delta.y -= STEP_F(self, 0x5C);
         delta.z -= STEP_F(self, 0x60);
