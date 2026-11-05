@@ -8807,6 +8807,11 @@ game/AI_CheckItemSuppression.c:
 	extabindex  start:0x80028424 end:0x80028430
 	.text       start:0x801DD344 end:0x801DD480
 
+game/AI_CalcLapSpeedBonus.c:
+	extab       start:0x80015980 end:0x80015988
+	extabindex  start:0x80028430 end:0x8002843C
+	.text       start:0x801DD480 end:0x801DD8E4
+
 game/fn_801DD8E4.c:
 	.text       start:0x801DD8E4 end:0x801DD934
 
@@ -8954,6 +8959,11 @@ game/fn_801E6670.c:
 	extab       start:0x800164B0 end:0x800164B8
 	extabindex  start:0x80028808 end:0x80028814
 	.text       start:0x801E6670 end:0x801E66B4
+
+game/fn_801E66B4.c:
+	extab       start:0x800164B8 end:0x800164C0
+	extabindex  start:0x80028814 end:0x80028820
+	.text       start:0x801E66B4 end:0x801E68B4
 
 game/fn_801E6B0C.c:
 	extab       start:0x800164E0 end:0x800164E8
@@ -9123,15 +9133,45 @@ game/ItemHolder_Update.cpp:
 game/fn_801E93A0.c:
 	.text       start:0x801E93A0 end:0x801E93AC
 
+game/AI_CalcVSTargetSpeed.c:
+	extab       start:0x80016AB8 end:0x80016AC0
+	extabindex  start:0x800289AC end:0x800289B8
+	.text       start:0x801E93AC end:0x801E9594
+
 game/fn_801E9594.cpp:
 	extab       start:0x80016AC0 end:0x80016AC8
 	extabindex  start:0x800289B8 end:0x800289C4
 	.text       start:0x801E9594 end:0x801E96BC
 
+game/fn_801E96BC.c:
+	extab       start:0x80016AC8 end:0x80016AD0
+	extabindex  start:0x800289C4 end:0x800289D0
+	.text       start:0x801E96BC end:0x801E9840
+
+game/AI_CalcTargetSpeed_PairTracking.c:
+	extab       start:0x80016AD8 end:0x80016AE0
+	extabindex  start:0x800289DC end:0x800289E8
+	.text       start:0x801E9A84 end:0x801E9CBC
+
+game/fn_801E9CBC.cpp:
+	extab       start:0x80016AE0 end:0x80016AE8
+	extabindex  start:0x800289E8 end:0x800289F4
+	.text       start:0x801E9CBC end:0x801E9E74
+
+game/AI_UpdateItemUseLogic.cpp:
+	extab       start:0x80016AF0 end:0x80016AF8
+	extabindex  start:0x80028A00 end:0x80028A0C
+	.text       start:0x801EA2FC end:0x801EA500
+
 game/AI_CalcItemSpeedBonus.c:
 	extab       start:0x80016AF8 end:0x80016B00
 	extabindex  start:0x80028A0C end:0x80028A18
 	.text       start:0x801EA500 end:0x801EA6F0
+
+game/AI_PerKartUpdate.cpp:
+	extab       start:0x80016B08 end:0x80016B10
+	extabindex  start:0x80028A24 end:0x80028A30
+	.text       start:0x801EACA0 end:0x801EADC8
 
 game/fn_801EB708.c:
 	extab       start:0x80016B28 end:0x80016B38
@@ -9143,6 +9183,11 @@ game/fn_801EB91C.c:
 	extab       start:0x80016B38 end:0x80016B40
 	extabindex  start:0x80028A54 end:0x80028A60
 	.text       start:0x801EB91C end:0x801EB99C
+
+game/AI_SystemDtor.cpp:
+	extab       start:0x80016B48 end:0x80016B50
+	extabindex  start:0x80028A6C end:0x80028A78
+	.text       start:0x801EBAF4 end:0x801EBC8C
 
 game/fn_801EC3DC.c:
 	extab       start:0x80016BD4 end:0x80016BDC
