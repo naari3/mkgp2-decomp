@@ -28,3 +28,8 @@ c12_u18: DNBress SpawnFire2 fn_8022760C resolves the 14-instruction f6..f10 regi
 Source: Codex worker c12_u22_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 376 B.
 
 c12_u22: DNBress SpawnFire1 fn_80227318 resolves 99.09574% FP home cycle by replacing seven external float labels with plain numeric literals; postprocess_sdata2 maps all back to existing labels. Text376 100%, leaf TU has no EH/data; flip Matching. Source-linked main.elf 80227318/376 exact and full DOL SHA-1 OK.
+
+## c14_u8_20261106
+Source: Codex worker c14_u8_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u8: HSD_LObjGetLightVector 802C42F0 text296/rodata24 reaches objdiff100 with Vec3 position={0,0,0}; interest={0,0,0}, rather than copying exported named constants. This changes prologue schedule: lwz r9/r8 now follow saved-register stores. However anonymous aggregate templates are pooled with HSD_LObjSetupInit in fallback lobj_init_nm.o, which references HSD_LObj_803B94A0_803F2BB8 and HSD_LObj_803B94AC_803F2BC4. Full Matching link fails without exports; retained exact draft NonMatching pending approved non-EH template-symbol bridge or a broader family pool solution. Named aggregate assignments / by-value inline copying are byte invariant at94.5946. No instruction, register, rodata-byte or EH residual remains in draft.
