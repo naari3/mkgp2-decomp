@@ -12277,8 +12277,29 @@ game/HudSelectionDestroy.cpp:
 	extabindex  start:0x8002B22C end:0x8002B238
 	.text       start:0x80245B10 end:0x80245C1C
 
+game/HudFlow24Ctor.cpp:
+	extab       start:0x8001D4B4 end:0x8001D510
+	extabindex  start:0x8002B238 end:0x8002B244
+	.text       start:0x80245C1C end:0x80245E50
+
 game/FlowAdvance10.c:
 	.text       start:0x80245E50 end:0x80245E6C
+
+game/HudFlow20Update.cpp:
+	extab       start:0x8001D510 end:0x8001D518
+	extabindex  start:0x8002B244 end:0x8002B250
+	.text       start:0x80245E6C end:0x80246150
+	.data       start:0x804EE870 end:0x804EE88C
+
+game/HudFlow20Factory.cpp:
+	extab       start:0x8001D518 end:0x8001D530
+	extabindex  start:0x8002B250 end:0x8002B25C
+	.text       start:0x80246150 end:0x8024619C
+
+game/HudFlow20Dtor.cpp:
+	extab       start:0x8001D530 end:0x8001D56C
+	extabindex  start:0x8002B25C end:0x8002B268
+	.text       start:0x8024619C end:0x8024629C
 
 game/AdvanceCardCtor.cpp:
 	extab       start:0x8001D56C end:0x8001D5C0
