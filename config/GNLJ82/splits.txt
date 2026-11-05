@@ -7978,10 +7978,20 @@ game/objview/fn_80196028.cpp:
 	extabindex  start:0x800272E4 end:0x800272F0
 	.text       start:0x80196028 end:0x8019618C
 
+game/objview/fn_8019618C.cpp:
+	extab       start:0x80012400 end:0x80012408
+	extabindex  start:0x800272F0 end:0x800272FC
+	.text       start:0x8019618C end:0x80196758
+
 game/objview/fn_80196758.c:
 	extab       start:0x80012408 end:0x80012410
 	extabindex  start:0x800272FC end:0x80027308
 	.text       start:0x80196758 end:0x801967F0
+
+game/objview/fn_801967F0.cpp:
+	extab       start:0x80012410 end:0x800124B0
+	extabindex  start:0x80027308 end:0x80027314
+	.text       start:0x801967F0 end:0x80196AA0
 
 game/BananaField_Render.c:
 	extab       start:0x800124B0 end:0x800124B8

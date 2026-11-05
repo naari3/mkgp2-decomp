@@ -10670,5 +10670,14 @@
   },
   "src/game/kartmove/KartMovement_CollisionUpdate.cpp": {
     "__dt__12CollisionVecFv": "dtor_80036E40"
+  },
+  "src/game/objview/fn_801967F0.cpp": {
+    "__ct__12ParticleViewFv": "fn_801967F0",
+    "__dt__16ParticleViewBaseFv": "dtor_8016A270",
+    "__vt__16ParticleViewBase": "lbl_80490FE0",
+    "__vt__12ParticleView": "lbl_80495FA4",
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
