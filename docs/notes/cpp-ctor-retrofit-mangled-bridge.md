@@ -724,3 +724,8 @@ c12_u34: fn_801F7198 improved 98.58878 to 98.92523 by retaining a TU-local copy 
 Source: Codex worker c12_u36_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 544 B.
 
 c12_u36: SpritePairOwner::Tick/Reset 8023CDA8/8023CEB4 improve 98.731346/98.478264 to 100% using numeric float literals 1.0f/0.0f/0.0165f/255.0f instead of captured external const floats. Clamp FPR homes become exact; Reset naturally inlines Tick. Existing EH bridges suffice, no split or metadata changes. Whole TU text544/extab16/extabindex24 exact, Matching promotion source-linked, actual main.elf addresses/sizes and full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65 verified.
+
+## c12_u35_20261106
+Source: Codex worker c12_u35_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 400 B.
+
+c12_u35: FlashFx Update 8021A1C4 resolves FP clamp allocation (98.583336 -> 100%) by replacing external float const references with ordinary 0.0f, 1.0f, 0.0165f literals. Existing postprocess_sdata2 maps to lbl_806DAF60/64/70; Update + delete TU now text400/extab68/index24 all exact, existing bridges suffice. Keeping Update before delete avoids previously documented delete-only leading EH patch issue. Full Matching source-linked DOL SHA-1 exact; ELF addresses 8021A1C4/240 and 8021A2B4/160 verified.

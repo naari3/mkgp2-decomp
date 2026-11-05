@@ -7,19 +7,19 @@ void FlashFx::Update() {
         state = 1;
     }
     alpha += speed;
-    if (alpha > lbl_806DAF64) {
-        alpha = lbl_806DAF64;
-        speed = lbl_806DAF60;
+    if (alpha > 1.0f) {
+        alpha = 1.0f;
+        speed = 0.0f;
     }
-    if (alpha < lbl_806DAF60) {
-        alpha = lbl_806DAF60;
-        speed = lbl_806DAF60;
+    if (alpha < 0.0f) {
+        alpha = 0.0f;
+        speed = 0.0f;
     }
     body.p->alpha = alpha;
     ring.p->alpha = alpha;
-    if (alpha > lbl_806DAF60) {
-        Sprite_AdvanceAnim(body.p, lbl_806DAF70);
-        Sprite_AdvanceAnim(ring.p, lbl_806DAF70);
+    if (alpha > 0.0f) {
+        Sprite_AdvanceAnim(body.p, 0.0165f);
+        Sprite_AdvanceAnim(ring.p, 0.0165f);
     }
 }
 
