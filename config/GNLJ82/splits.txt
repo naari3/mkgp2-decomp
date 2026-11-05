@@ -7874,6 +7874,11 @@ game/sprite/fn_801A5DC0.c:
 	extabindex  start:0x80027698 end:0x800276A4
 	.text       start:0x801A5DC0 end:0x801A6538
 
+game/sprite/fn_801ACC18.c:
+	extab       start:0x80012AD8 end:0x80012AE0
+	extabindex  start:0x800276EC end:0x800276F8
+	.text       start:0x801ACC18 end:0x801AD534
+
 game/fn_801B0CE4.c:
 	.text       start:0x801B0CE4 end:0x801B0D80
 
