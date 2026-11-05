@@ -1,7 +1,7 @@
 #include "game/TextDraw801F.h"
 
 extern "C" void fn_801F8A34(void *, TextManager *manager, int layer) {
-#define text ((TextDraw801F *)manager)
+    TextDraw801F *text = (TextDraw801F *)manager;
     float sine, cosine;
     float specialAdvance, normalAdvance, lineAdvance;
     float cursorX, cursorY;
@@ -14,27 +14,29 @@ extern "C" void fn_801F8A34(void *, TextManager *manager, int layer) {
         normalAdvance = lbl_806DA740[0];
         lineAdvance = lbl_806DA740[1];
         if (text->font == 1) {
-            normalAdvance = lbl_806DA748[0];
-        lineAdvance = lbl_806DA748[1];
-            specialAdvance = lbl_806DA768 * normalAdvance;
+            float width = lbl_806DA748[0];
+            normalAdvance = width;
+            lineAdvance = lbl_806DA748[1];
+            specialAdvance = lbl_806DA768 * width;
         }
     } else {
         specialAdvance = lbl_806DA750[0];
         normalAdvance = lbl_806DA758[0];
         lineAdvance = lbl_806DA758[1];
         if (text->font == 1) {
-            normalAdvance = lbl_806DA760[0];
-        lineAdvance = lbl_806DA760[1];
-            specialAdvance = lbl_806DA768 * normalAdvance;
+            float width = lbl_806DA760[0];
+            normalAdvance = width;
+            lineAdvance = lbl_806DA760[1];
+            specialAdvance = lbl_806DA768 * width;
         }
     }
     cursorX = text->cursorX;
     cursorY = lbl_806DA76C;
+    i = 0;
     sine = (float)sin(text->angle);
     cosine = (float)cos(text->angle);
     extraAdvance = lbl_806DA76C;
     walker = text;
-    i = 0;
     while (walker->glyphs[0] != 0xFFFF && i<256) {
         float y = cursorY * text->scaleY;
         float x = cursorX * text->scaleX;
@@ -78,4 +80,3 @@ extern "C" void fn_801F8A34(void *, TextManager *manager, int layer) {
         ++i;
     }
 }
-#undef text

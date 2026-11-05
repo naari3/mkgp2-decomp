@@ -18,3 +18,8 @@ F8404: source-private DrawQuad8404 using named double fabs results before float 
 Source: Codex worker c14_u2_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u2: fn_801F8250 typed local pointer fmt = tables->mixedDepthFmt (or mixedFmt), then fmt += offset improves measured object 94.86239 to 96.33028 with owned EH 100%. Residual is only shift/base schedule in both branches: target slwi r0,r30,4 then addi r4,r31,field; source reverses those independent instructions. Byte-scaled offset declared before base and reversed pointer-add operands both emit identical code. Kept typed local form; no source-closed conclusion. Single-function TU cannot rescue an exact subset.
+
+## c14_u7_20261106
+Source: Codex worker c14_u7_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u7: fn_801F8A34 improves 94.60199 -> 98.1592. Named local TextDraw801F* instead of parameter-cast macro plus counter initialization before sin/cos restores all target GPR homes. Block-local font width reused for normalAdvance and factor*width restores f1 load + fmr f28,f1 in both font branches. Remaining body glyph lhz is CSE-eliminated, compare and FP schedule differ; primary text800 vs804 B. Fully indexed glyph traversal regresses97.860695, reverted. Singleton remains NonMatching; full fallback-linked DOL SHA-1 OK. Three hypotheses exhausted; no source-closed claim.
