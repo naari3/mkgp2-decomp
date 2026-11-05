@@ -11,7 +11,9 @@ extern short lbl_8039B218[];
 extern void SetCourseParams(int,int,int,int);
 extern unsigned char RoundIsUnlocked(void*,int);
 static inline int FigureLabel(FigureUnlocks* self) {
-    return lbl_8039B218[self->cup]+(self->second == 1 ? 8 : 0);
+    int label = lbl_8039B218[self->cup];
+    label += self->second == 1 ? 8 : 0;
+    return label;
 }
 #pragma exceptions on
 void fn_801C64DC(FigureUnlocks* self) {
