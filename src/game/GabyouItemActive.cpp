@@ -148,8 +148,8 @@ void GabyouItem_TickActive(GabyouActiveView *item, GabyouActiveContext *context)
         collision = ItemCollision_Check(item);
         switch (collision) {
         case 1: {
-            int hitAlias = ItemAlias_HitRemapLookup(item->alias);
-            fn_801B1D5C(context->ownerKart, ItemTracker_GetTargetKart(item), hitAlias, 0);
+            fn_801B1D5C(context->ownerKart, ItemTracker_GetTargetKart(item),
+                (short)ItemAlias_HitRemapLookup(item->alias), 0);
         }
         case 2:
             if (collision == 2)

@@ -1,1 +1,6 @@
 GabyouItem_Tick800FB818 genuinely matched using typed local item/context ABI views and native plainC++EH. Normal signed-kind10-way switch emits exactly own40-byte table80421818..80421840. Retaining separate Fall calls for cases1/4/8/9 preserves table target offsets. Initial extern constants produced correct956-byte layout but FP scheduling mismatches: tetherAngle=0.0f, tetherStep=0.34906578f, and AngleStep argument literals1.570796f/0.17453289f restore target schedule. Existing pool postprocessor resolves literals to expected shared sdata2 symbols; no new metadata needed. All text/EH/index/data100 and originalDOL SHA1 verified.
+
+## c3_n2_gabyou_20261105
+Source: Codex worker c3_n2_gabyou_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1660 B.
+
+c3_n2 Flight: replace pointer-shaped pseudo-value arguments/manual assignments with true FlightVec-by-value prototypes for bend, world-to-local, ground, positional sound, relative approach, hit-oriented effect, forward probe. Direct members restore target lwz/stw copies and item/context r29/r30 homes; reaches 98.566055%, 3748B (+24). Explicit particle locals now occupy high stack slots while target has them below compiler by-value copies. Particle-loop inline-helper shapes tested twice regress saved FP/frame and do not unlock.

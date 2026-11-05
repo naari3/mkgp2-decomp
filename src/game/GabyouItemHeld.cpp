@@ -120,7 +120,6 @@ static inline void Recover(HeldItem *item, int kind)
 void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
 {
     int collision;
-    short hit;
     switch (item->phase) {
     case 0:
         ++item->phase;
@@ -202,8 +201,8 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
         collision = ItemCollision_Check(item);
         switch (collision) {
         case 1: {
-            hit = (short)ItemAlias_HitRemapLookup(item->type);
-            fn_801B1D5C(context->owner, ItemTracker_GetTargetKart(item), hit, 0);
+            fn_801B1D5C(context->owner, ItemTracker_GetTargetKart(item),
+                (short)ItemAlias_HitRemapLookup(item->type), 0);
         }
         case 2:
             if (collision == 2) fn_801B1660(context->owner, ItemTracker_GetTargetKart(item));
@@ -319,9 +318,10 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
                 item->rotation.y = AngleStepTowards_Shortest(item->rotation.y, yaw, lbl_806D5D30);
             } else {
                 float yaw = Vec3_HorizontalYawTo(&item->position, &targetPosition);
-                float weightedYaw = progress * yaw;
-                float remainder = lbl_806D5D24 - progress;
-                item->rotation.y = BuildOrientationFromYaw(remainder * item->rotation.y + weightedYaw);
+                yaw = progress * yaw;
+                progress = lbl_806D5D24 - progress;
+                yaw = progress * item->rotation.y + yaw;
+                item->rotation.y = BuildOrientationFromYaw(yaw);
             }
             if (lbl_806D5D24 == context->progress) {
                 if (FinalLapCoinJump_CheckActiveForObject(context->target)) item->active = 0;

@@ -1,9 +1,8 @@
 /* Complete ASM-derived flight/lock-on state machine. Ghidra unavailable.
  * Views are local to this TU and describe only observed fields.
- * Vector-value ABI is represented with explicit caller-owned copies and
- * pointer-shaped extern declarations; no shared ABI/header is changed.
- * NonMatching: text 88.887215%, automatic EH 100%, index 91.66667%.
- * Correct 0x150 frame; remaining text size +0x1C and register/schedule drift. */
+ * Vec3 value arguments use the native C++ ABI and compiler-owned copies.
+ * NonMatching: text 98.566055%, automatic EH 100%, index 91.66667%.
+ * Remaining size +0x18, vector stack placement and particle/switch scheduling. */
 struct FlightVec { float x,y,z; };
 struct FlightItem {
     unsigned char pad00[8]; int alias; unsigned char pad0C[4]; int launched;
@@ -35,8 +34,8 @@ extern const float lbl_806D6300,lbl_806D630C,lbl_806D6314,lbl_806D6318,lbl_806D6
 extern const float lbl_806D6320,lbl_806D6324,lbl_806D6328,lbl_806D632C;
 extern const float lbl_806D6330,lbl_806D6334,lbl_806D6338,lbl_806D633C,lbl_806D6340,lbl_806D6344;
 extern int g_ccClass;
-void Item_BendVelocityByGroundProbe(FlightVec *,const FlightVec *,float,float,float);
-void KartDriver_TransformWorldToLocalY0(FlightVec *,const FlightVec *,void *);
+void Item_BendVelocityByGroundProbe(FlightVec *,FlightVec,float,float,float);
+void KartDriver_TransformWorldToLocalY0(FlightVec *,FlightVec,void *);
 void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *,int);
 void *ItemObject_AllocGabyou();
 void Item_RenderFlyingFromKart(FlightItem *,void *,int,float,float,float);
@@ -45,7 +44,7 @@ void SpriteSlot_Container_Free(void *);
 void Item_InitLaunchFromKart(FlightItem *,int,float,float);
 void ItemTracker_AcquireLock(FlightItem *);
 void ItemTracker_SetTrackPhase(FlightItem *,int);
-signed char ItemObject_GetGroundTypeAt(const FlightVec *,float *,int);
+signed char ItemObject_GetGroundTypeAt(FlightVec,float *,int);
 void Item_AccelClampVelocity(FlightItem *,float,float);
 void fn_801B129C(FlightVec *);
 void Item_HomingScanAndSteer(FlightItem *,float *,int);
@@ -59,7 +58,7 @@ void fn_801B158C(void *,void *);
 void fn_801B14B8(void *,void *);
 void ItemHit_Dispatch(FlightItem *,int,int,int);
 void ItemTracker_ReleaseLock(FlightItem *);
-void SoundMgr_PlaySE_Positional(int,const FlightVec *,int);
+void SoundMgr_PlaySE_Positional(int,FlightVec,int);
 void Effect_HitFlash_Update(void *);
 FlightEffect *DrawEffect_SpawnDirect(void (*)(void *));
 void Vec3_Copy(FlightVec *,const FlightVec *);
@@ -70,7 +69,7 @@ void Vec2_RotateY(FlightVec *,const FlightVec *,float);
 void *KartDriver_GetJointByIdx(void *,int);
 void Mtx44_GetTranslation_RowMajor(FlightVec *,void *);
 float fn_800D3184(const FlightVec *,const FlightVec *);
-void Item_ComputeYawRelativeApproach(FlightVec *,void *,const FlightVec *,const FlightVec *);
+void Item_ComputeYawRelativeApproach(FlightVec *,void *,FlightVec,FlightVec);
 float Vec3_ToYaw(const FlightVec *);
 void Vec3_Add_DestFirst(FlightVec *,const FlightVec *,const FlightVec *);
 int Item_CheckWallCollision(FlightItem *,FlightVec *,void *);
@@ -81,8 +80,8 @@ float AngleStepTowards_Shortest(float,float,float);
 double sin(double);
 int Item_AdvanceFallingDrop(FlightItem *,int *,float *,float);
 float Vec3_Magnitude_Wrapper(const FlightVec *);
-void DrawEffect_ItemHitOriented_Spawn(const FlightVec *,const FlightVec *,int);
-float Item_ProbeForwardGroundPitch(const FlightVec *,float,float,float);
+void DrawEffect_ItemHitOriented_Spawn(FlightVec,FlightVec,int);
+float Item_ProbeForwardGroundPitch(FlightVec,float,float,float);
 float AngleStepForward_OrSnap(float,float,float);
 void Vec3_Scale(FlightVec *,const FlightVec *,float);
 }
@@ -93,19 +92,14 @@ void Vec3_Scale(FlightVec *,const FlightVec *,float);
 extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *context)
 {
     FlightVec hand,wall;
-    FlightVec tmpLaunch,tmpTransform,tmpGround,tmpSound1,tmpSound2,tmpComputePos,tmpComputeVel;
-    FlightVec tmpSoundLock,tmpSoundWall,tmpSoundGround,tmpEffectPos3,tmpEffectVel3,tmpProbe3;
-    FlightVec tmpEffectPos4,tmpEffectVel4,tmpProbe4;
     FlightVec v1,v2,v3,v4,v5;
     int alive,hitGround;
     float height,angle;
     switch(item->phase) {
     case 0:
         if(item->launched) {
-            tmpLaunch=item->position;
-            Item_BendVelocityByGroundProbe(&item->velocity,&tmpLaunch,item->yaw,lbl_806D6314,lbl_806D62C0);
-            tmpTransform=item->position;
-            KartDriver_TransformWorldToLocalY0(&item->position,&tmpTransform,context->kart);
+            Item_BendVelocityByGroundProbe(&item->velocity,item->position,item->yaw,lbl_806D6314,lbl_806D62C0);
+            KartDriver_TransformWorldToLocalY0(&item->position,item->position,context->kart);
             item->speed=lbl_806D6300; item->lifetime=lbl_806D62C4;
             item->active=1; item->phase=2; item->flightPhase=0; return;
         }
@@ -137,8 +131,7 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
         case 0:
             ItemTracker_AcquireLock(item); ItemTracker_SetTrackPhase(item,1);
             item->lockState=1; item->flag3C=1;
-            tmpGround=item->position;
-            ItemObject_GetGroundTypeAt(&tmpGround,&context->ground,0);
+            ItemObject_GetGroundTypeAt(item->position,&context->ground,0);
             context->ground=item->position.y-context->ground;
             context->timer=30; context->effectTimer=0; context->trackTimer=0; ++item->flightPhase;
         case 1:
@@ -158,8 +151,7 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
             fn_801B1D5C(context->kart,ItemTracker_GetTargetKart(item),alias,0);
             ItemHit_Dispatch(item,0,0,0); context->target=ItemTracker_GetTargetKart(item);
             ItemTracker_ReleaseLock(item); item->lockState=0;
-            tmpSound1=item->position;
-            SoundMgr_PlaySE_Positional(0x84,&tmpSound1,0);
+            SoundMgr_PlaySE_Positional(0x84,item->position,0);
             RANDOM_PARTICLES(v1)
             Mtx44_GetTranslation_RowMajor(&hand,KartDriver_GetJointByIdx(context->target,15));
             if(fn_800D3184(&item->position,&hand)<lbl_806D6324) {SET_REASON(0); return;}
@@ -169,15 +161,12 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
         case 2:
             fn_801B1660(context->kart,ItemTracker_GetTargetKart(item));
             context->target=ItemTracker_GetTargetKart(item); ItemTracker_ReleaseLock(item); item->lockState=0;
-            tmpSound2=item->position;
-            SoundMgr_PlaySE_Positional(0x84,&tmpSound2,0);
+            SoundMgr_PlaySE_Positional(0x84,item->position,0);
             item->velocity.y=lbl_806D6300; item->velocity.x*=lbl_806D6328; item->velocity.z*=lbl_806D6328;
             SET_REASON(1); return;
         case 3:
             fn_801B158C(context->kart,ItemTracker_GetTargetKart(item)); context->field7C=0;
-            { tmpComputeVel=item->velocity; tmpComputePos=item->position;
-              void *target=ItemTracker_GetTargetKart(item);
-              Item_ComputeYawRelativeApproach(&item->velocity,target,&tmpComputePos,&tmpComputeVel); }
+            Item_ComputeYawRelativeApproach(&item->velocity,ItemTracker_GetTargetKart(item),item->position,item->velocity);
             item->yaw=Vec3_ToYaw(&item->velocity); ItemTracker_SetTrackPhase(item,0); context->trackTimer=5; break;
         case 4:
             fn_801B14B8(context->kart,ItemTracker_GetTargetKart(item));
@@ -189,8 +178,7 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
         if(item->lockState==2) {
             ItemTracker_ReleaseLock(item); item->lockState=0;
             if(item->lockKind==1) {
-                tmpSoundLock=item->position;
-                SoundMgr_PlaySE_Positional(0x84,&tmpSoundLock,0);
+                SoundMgr_PlaySE_Positional(0x84,item->position,0);
                 RANDOM_PARTICLES(v2)
                 Vec3_Add_DestFirst(&item->velocity,&item->velocity,&item->impulse);
                 item->velocity.y=lbl_806D6300; item->velocity.x*=lbl_806D632C; item->velocity.z*=lbl_806D632C;
@@ -206,8 +194,7 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
             GetSpawnPosition(&item->velocity,lbl_806D62C0,lbl_806D62C0,lbl_806D62C0);
             if(item->flightPhase==1 || item->flightPhase==2) {
                 ItemTracker_ReleaseLock(item); item->lockState=0; context->ground=Vec3_ToYaw(&wall);
-                tmpSoundWall=item->position;
-                SoundMgr_PlaySE_Positional(0x84,&tmpSoundWall,0);
+                SoundMgr_PlaySE_Positional(0x84,item->position,0);
                 angle=context->ground;
                 PARTICLE_BEGIN(v4)
                     Vec2_RotateX(&v4,&v4,lbl_806D62CC*Rand_RangeFloat(lbl_806D62D0,lbl_806D62D4));
@@ -227,8 +214,7 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
             case 2:
                 item->pitch=AngleStepTowards_Shortest(item->pitch,lbl_806D62F8+Vec3_ToPitch(&item->velocity),lbl_806D62FC);
                 if(hitGround) {
-                    tmpSoundGround=item->position;
-                    SoundMgr_PlaySE_Positional(0x84,&tmpSoundGround,0); context->ground=Vec3_Magnitude_Wrapper(&item->velocity);
+                    SoundMgr_PlaySE_Positional(0x84,item->position,0); context->ground=Vec3_Magnitude_Wrapper(&item->velocity);
                     GetSpawnPosition(&item->velocity,lbl_806D62C0,lbl_806D62C0,lbl_806D6334*context->ground);
                     Vec2_RotateY(&item->velocity,&item->velocity,item->yaw); ++item->flightPhase; return;
                 }
@@ -236,11 +222,9 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
             case 3:
                 item->position.y=angle*item->speed+height;
                 if(context->effectTimer==0) {
-                    tmpEffectVel3=item->velocity; tmpEffectPos3=item->position;
-                    DrawEffect_ItemHitOriented_Spawn(&tmpEffectPos3,&tmpEffectVel3,2); context->effectTimer=3;
+                    DrawEffect_ItemHitOriented_Spawn(item->position,item->velocity,2); context->effectTimer=3;
                 }
-                tmpProbe3=item->position;
-                angle=BuildOrientationFromYaw(lbl_806D6338+Item_ProbeForwardGroundPitch(&tmpProbe3,item->yaw,lbl_806D630C,item->position.y-height));
+                angle=BuildOrientationFromYaw(lbl_806D6338+Item_ProbeForwardGroundPitch(item->position,item->yaw,lbl_806D630C,item->position.y-height));
                 item->pitch=AngleStepForward_OrSnap(item->pitch,angle,lbl_806D62FC);
                 if(item->pitch==angle) {
                     PARTICLE_BEGIN(v5)
@@ -255,11 +239,9 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
             case 4:
                 item->position.y=height;
                 if(context->effectTimer==0) {
-                    tmpEffectVel4=item->velocity; tmpEffectPos4=item->position;
-                    DrawEffect_ItemHitOriented_Spawn(&tmpEffectPos4,&tmpEffectVel4,2); context->effectTimer=3;
+                    DrawEffect_ItemHitOriented_Spawn(item->position,item->velocity,2); context->effectTimer=3;
                 }
-                tmpProbe4=item->position;
-                item->pitch=BuildOrientationFromYaw(lbl_806D6338+Item_ProbeForwardGroundPitch(&tmpProbe4,item->yaw,lbl_806D630C,lbl_806D62C0));
+                item->pitch=BuildOrientationFromYaw(lbl_806D6338+Item_ProbeForwardGroundPitch(item->position,item->yaw,lbl_806D630C,lbl_806D62C0));
                 Vec3_Scale(&item->velocity,&item->velocity,lbl_806D6340); item->velocity.y=lbl_806D62C0;
                 if(Vec3_Magnitude_Wrapper(&item->velocity)<lbl_806D6344) {
                     ItemTracker_ReleaseLock(item); item->lockState=0;
