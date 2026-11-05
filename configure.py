@@ -1484,6 +1484,7 @@ config.libs = [
             Object(NonMatching, "game/Sci2Card_BuildScoreReceiptLine.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/Sci2Card_BuildItemGetReceiptLine.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/NameCheck_CardName.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/NameCheck_ScanBanned.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Sci2Card_GetResponsePayload.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Sci2Card_ForceFail.c"),
             Object(Matching, "game/card_send_track_data.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], extab_padding=b""),
