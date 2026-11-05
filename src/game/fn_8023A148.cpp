@@ -21,12 +21,6 @@ static inline void SetTextAlpha(ItemSelectPresentation *self, int alpha) {
     *(unsigned int *)(self->texts[2][2]->data + 0x20) = color;
     *(unsigned int *)(self->texts[2][3]->data + 0x20) = color;
 }
-static inline float ClampLow(float value, float limit) {
-    return value < limit ? limit : value;
-}
-static inline float ClampHigh(float value, float limit) {
-    return value > limit ? limit : value;
-}
 extern "C" void fn_8023A148(ItemSelectPresentation *self) {
     PresentationInput *input = g_pInputState == 0 ? (PresentationInput *)0 : g_pInputState;
     switch (self->phase) {
@@ -37,7 +31,8 @@ extern "C" void fn_8023A148(ItemSelectPresentation *self) {
             SpriteHandle_SetActiveFlag(self->handle, 1);
         }
         if (self->timer < 6) {
-            float alpha = ClampLow((float)((self->timer - 2) / 3), lbl_806DB888);
+            float alpha = (float)((self->timer - 2) / 3);
+            if (alpha < lbl_806DB888) alpha = lbl_806DB888;
             self->groups[1]->sprite->alpha = alpha;
             self->groups[2]->sprite->alpha = alpha;
         }
@@ -71,9 +66,11 @@ extern "C" void fn_8023A148(ItemSelectPresentation *self) {
             else self->groups[6]->sprite->field1c = lbl_806DB968 * lbl_806D0738;
         }
         if (self->selected == 0) {
-            alpha = ClampLow(alpha - lbl_806DB96C, lbl_806DB888);
+            alpha -= lbl_806DB96C;
+            if (alpha < lbl_806DB888) alpha = lbl_806DB888;
         } else {
-            alpha = ClampHigh(alpha + lbl_806DB96C, lbl_806DB8CC);
+            alpha += lbl_806DB96C;
+            if (alpha > lbl_806DB8CC) alpha = lbl_806DB8CC;
         }
         if (!self->automatic) {
             self->groups[3]->sprite->alpha = alpha;

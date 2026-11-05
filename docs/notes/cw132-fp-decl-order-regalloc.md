@@ -128,3 +128,8 @@ c10_u16: OptionMenuDraw fn_8015A6E4 draft declared get_title_name_global() witho
 Source: Codex worker c10_u18_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1852 B.
 
 DebugOverlay_Dispatch 8002BE18: case 9 accumulator residual f30 vs f28 (99.61123%) resolves by separating case 9 accumulated/drawTime locals from case 1 other/draw with a lexical case block. Text1852/data56/extab8/index12 all 100%; Matching source-input full link DOL SHA-1 OK. One hypothesis; no codegen pragma or filler.
+
+## c10_u23_20261106
+Source: Codex worker c10_u23_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c10_u23: fn_8023A148 improved 98.08068 -> 99.1687 by replacing return-value ternary clamp helpers with direct in-place conditional assignments. Restored exact text1636/extab8/index12 sizes; EH/index100%. Reference-parameter in-place helpers emit same output as direct conditionals. Targeted explicit declarations for bounds/title-color/conversion locals did not change remaining scratch register allocations. Singleton kept NonMatching; full fallback DOL SHA-1 OK.
