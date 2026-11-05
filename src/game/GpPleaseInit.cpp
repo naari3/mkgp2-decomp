@@ -17,7 +17,7 @@ clFlowGpPlease::clFlowGpPlease() {
     sprite=new CourseSprite(0x193,1,0);
     sprite->x=lbl_806D9E30; sprite->y=lbl_806D9E38;
     panel=new GpPanelBase(sprite,10);
-    panel->tween[0].Set(lbl_806D9E20,lbl_806D9E24,lbl_806D9E3C,lbl_806D9E20,lbl_806D9E20);
+    panel->Fade();
     list.Append(panel);
     unsigned char *ids;
     int x;
@@ -25,7 +25,7 @@ clFlowGpPlease::clFlowGpPlease() {
     i=0; ids=lbl_806D1264; x=118;
     for(;i<3;i++) {
         panel=new GpTextPanel(*ids,x);
-        panel->tween[0].Set(lbl_806D9E20,lbl_806D9E24,lbl_806D9E3C,lbl_806D9E20,lbl_806D9E20);
+        panel->Fade();
         fn_801D8AA0(((GpTextPanel *)panel)->holder.p,5);
         fn_801D8A98(((GpTextPanel *)panel)->holder.p,6);
         list.Append(panel);
@@ -43,15 +43,15 @@ clFlowGpPlease::clFlowGpPlease() {
     list.Append(panel);
     panel=new GpLabelPanel(0x17ae,lbl_806D9E30,lbl_806D9E50);
     panel->tween[1].Set(lbl_806D9E20,lbl_806D9E4C,lbl_806D9E54,lbl_806D9E20,lbl_806D9E20);
-    panel->tween[0].Set(lbl_806D9E20,lbl_806D9E24,lbl_806D9E3C,lbl_806D9E20,lbl_806D9E20);
+    panel->Fade();
     list.Append(panel);
     panel=new GpLabelPanel(fn_801D8DA0(g_cupId),lbl_806D9E30,lbl_806D9E58);
-    panel->tween[0].Set(lbl_806D9E20,lbl_806D9E24,lbl_806D9E3C,lbl_806D9E20,lbl_806D9E20);
+    panel->Fade();
     list.Append(panel);
     if(g_roundIndex>=4) {
         panel->tween[3].Set(lbl_806D9E5C,lbl_806D9E5C,lbl_806D9E60,lbl_806D9E20,lbl_806D9E5C);
         panel=new GpLabelPanel(0x15f4,lbl_806D9E64,lbl_806D9E58);
-        panel->tween[0].Set(lbl_806D9E20,lbl_806D9E24,lbl_806D9E3C,lbl_806D9E20,lbl_806D9E20);
+        panel->Fade();
         list.Append(panel);
     }
     panel=new GpColorPanel;

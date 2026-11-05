@@ -619,3 +619,8 @@ HudResultFlow 80248904..80248CE4: reuse canonical HudRoot/HudChild/HudSmall from
 Source: Codex worker c9_s9_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 49 fn / 9760 B.
 
 c9_s9_20261106: CardTaskChecks matches 49 fn / 9760 B, all owned EH and final DOL SHA-1. A timer local must be default-constructed BEFORE its explicit OSGetTick reset to reproduce EH PC 0x18; an OSGetTick-calling ctor delayed EH to PC 0x28 with identical text. Direct vs inlined ResCtrl locals change stack allocation order: final welcome frame must be direct while inner frame is inlined; printer left-choice resource is inlined while right-choice is direct. A plain C factory view preserves WaitInput_New before its real C++ virtual destructor when the compiler otherwise defers new-expression factory emission. Verify physical addresses after weak-copy discard.
+
+## c10_u12_20261106
+Source: Codex worker c10_u12_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c10_u12: GpPleaseInit 801CD030 retained NonMatching. Inline GpPanelBase::Fade restores cached tween receiver for the second label and improves 99.298134 to 99.352486 with identical 2576B size and unchanged 468B EH/12B index. Loop-member extraction regresses to 99.21429 and moves stack slots; explicit C ABI Append regresses to 99.31056. Remaining list/sentinel/index/new-pointer register partition and active/end scratch swap are unresolved. Do not repeat these three hypotheses. Full fallback-linked DOL SHA-1 OK; no native gain.

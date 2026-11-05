@@ -43,6 +43,11 @@ struct GpPanelBase {
         tween[0].active=0; tween[1].active=0; tween[2].active=0;
         tween[3].active=0; tween[4].active=0;
     }
+    void Fade() {
+        tween[0].x=lbl_806D9E20; tween[0].y=lbl_806D9E24;
+        tween[0].z=lbl_806D9E3C; tween[0].w=lbl_806D9E20;
+        tween[0].v=lbl_806D9E20; tween[0].active=1;
+    }
     ~GpPanelBase();
 };
 struct GpTextPayload { char opaque[0x160]; GpTextPayload(int); };
