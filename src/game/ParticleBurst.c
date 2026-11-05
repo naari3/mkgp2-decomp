@@ -1,235 +1,162 @@
 /*
- * ParticleBurst unit: all three claimed members are preserved as byte-identical
- * inline PowerPC asm. Generated from the three dtk reversed-extab groups;
- * do not reorder functions or extab declarations.
+ * ParticleBurst @ 0x800B4164..0x800B4804.
+ *
+ * A burst of 36 coloured quads: Update allocates the particle array, gives
+ * each particle a random launch velocity/spin (the second half launches
+ * with a per-particle delay), then integrates them with gravity until all
+ * have left the screen; DrawCb queues Draw in the sorted draw list; Draw
+ * emits one screen-space quad per live particle through the GX FIFO.
  */
 
-asm void ParticleBurst_Draw(void);
-asm void ParticleBurst_DrawCb(void);
-asm void ParticleBurst_Update(void);
+typedef float Mtx44[4][4];
+typedef float Mtx34[3][4];
 
-/* === extracted from auto_ParticleBurst_Draw_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+typedef struct Particle {
+    float x;      /* 0x00 */
+    float y;      /* 0x04 */
+    float z;      /* 0x08 */
+    float rot;    /* 0x0C */
+    float vx;     /* 0x10 */
+    float vy;     /* 0x14 */
+    float vrot;   /* 0x18 */
+    signed char delay; /* 0x1C */
+    signed char dead;  /* 0x1D */
+} Particle;
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void GXSetZMode();
-extern void DbgScene_CopyMatrix3x4Transpose();
-extern void GXBegin();
-extern void GXLoadPosMtxImm();
-extern void HSD_StateSetCullMode();
-extern void GXSetCurrentMtx();
-extern void Matrix4_Identity();
-extern void Matrix4_PreMultiplyRotZ();
-extern void Matrix4_PreMultiplyTranslation();
-extern void HSD_StateInitDirect();
+typedef union WGPipe {
+    unsigned char u8;
+    float f32;
+} WGPipe;
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D5020;
-extern unsigned int lbl_806D5024;
-extern unsigned int lbl_806D5028;
-extern unsigned int lbl_806D5034;
-extern unsigned int lbl_806D506C;
-extern unsigned int lbl_806D509C;
-extern unsigned int lbl_806D50A0;
+#define GXFIFO (*(volatile WGPipe *)0xCC008000)
 
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_803292B4[];
-
-/* --- function index (1 fns, .text 0x800B4164..0x800B4388) ---
- * [  0] 0x800B4164 size:0x224   global ParticleBurst_Draw
- */
-
-/* --- forward decls --- */
-asm void ParticleBurst_Draw(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ParticleBurst_Draw[8] = {
-    0x31, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ParticleBurst_Draw = {
-    (void *)&ParticleBurst_Draw, 0x00000224, (void *)extab_ParticleBurst_Draw
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void ParticleBurst_Draw(void) { /* 0x800B4164 size:0x224 */
-    nofralloc
-    stwu r1, -0xd0(r1)
-    mflr r0
-    stw r0, 0xd4(r1)
-    stfd f31, 0xc0(r1)
-    psq_st f31, 0xc8(r1), 0, 0
-    stfd f30, 0xb0(r1)
-    psq_st f30, 0xb8(r1), 0, 0
-    stfd f29, 0xa0(r1)
-    psq_st f29, 0xa8(r1), 0, 0
-    stfd f28, 0x90(r1)
-    psq_st f28, 0x98(r1), 0, 0
-    stmw r26, 0x78(r1)
-    mr r29, r3
-    li r3, 0x0
-    bl HSD_StateSetCullMode
-    lis r4, 0x4000
-    li r3, 0x0
-    addi r4, r4, 0x2
-    bl HSD_StateInitDirect
-    li r3, 0x1
-    li r4, 0x3
-    li r5, 0x1
-    bl GXSetZMode
-    lfs f0, lbl_806D506C(r2)
-    li r30, 0x0
-    li r31, 0x0
-    fneg f28, f0
-    ParticleBurst_Draw_L_800B41D0:
-    lwz r0, 0xcc(r29)
-    add r5, r0, r31
-    lbz r0, 0x1d(r5)
-    extsb. r0, r0
-    bne ParticleBurst_Draw_L_800B4344
-    lbz r0, 0x1c(r5)
-    extsb. r0, r0
-    bne ParticleBurst_Draw_L_800B4344
-    lis r4, 0x2aab
-    lis r3, lbl_803292B4@ha
-    subi r0, r4, 0x5555
-    lfs f3, 0x0(r5)
-    mulhw r4, r0, r30
-    lfs f2, lbl_806D5020(r2)
-    lfs f1, 0x4(r5)
-    addi r0, r3, lbl_803292B4@l
-    lfs f0, lbl_806D5024(r2)
-    fsubs f4, f3, f2
-    srwi r3, r4, 31
-    lfs f5, lbl_806D509C(r2)
-    add r3, r4, r3
-    fsubs f2, f1, f0
-    mulli r3, r3, 0x6
-    lfs f3, lbl_806D50A0(r2)
-    lfs f1, 0x8(r5)
-    fmuls f31, f5, f4
-    lfs f0, lbl_806D5028(r2)
-    subf r3, r3, r30
-    mulli r4, r3, 0x3
-    fmuls f30, f3, f2
-    fsubs f29, f1, f0
-    addi r3, r1, 0x38
-    add r4, r0, r4
-    lbz r28, 0x0(r4)
-    lbz r27, 0x1(r4)
-    lbz r26, 0x2(r4)
-    bl Matrix4_Identity
-    lwz r4, 0xcc(r29)
-    addi r0, r31, 0xc
-    addi r3, r1, 0x38
-    lfsx f1, r4, r0
-    mr r4, r3
-    bl Matrix4_PreMultiplyRotZ
-    fmr f1, f31
-    addi r3, r1, 0x38
-    fmr f2, f30
-    mr r4, r3
-    fmr f3, f29
-    bl Matrix4_PreMultiplyTranslation
-    addi r3, r1, 0x8
-    addi r4, r1, 0x38
-    bl DbgScene_CopyMatrix3x4Transpose
-    addi r3, r1, 0x8
-    li r4, 0x0
-    bl GXLoadPosMtxImm
-    li r3, 0x0
-    bl GXSetCurrentMtx
-    li r3, 0x80
-    li r4, 0x0
-    li r5, 0x4
-    bl GXBegin
-    lis r3, 0xcc01
-    lfs f1, lbl_806D5034(r2)
-    stfs f28, -0x8000(r3)
-    li r0, 0xff
-    lfs f0, lbl_806D506C(r2)
-    stfs f28, -0x8000(r3)
-    stfs f1, -0x8000(r3)
-    stb r28, -0x8000(r3)
-    stb r27, -0x8000(r3)
-    stb r26, -0x8000(r3)
-    stb r0, -0x8000(r3)
-    stfs f0, -0x8000(r3)
-    stfs f28, -0x8000(r3)
-    stfs f1, -0x8000(r3)
-    stb r28, -0x8000(r3)
-    stb r27, -0x8000(r3)
-    stb r26, -0x8000(r3)
-    stb r0, -0x8000(r3)
-    stfs f0, -0x8000(r3)
-    stfs f0, -0x8000(r3)
-    stfs f1, -0x8000(r3)
-    stb r28, -0x8000(r3)
-    stb r27, -0x8000(r3)
-    stb r26, -0x8000(r3)
-    stb r0, -0x8000(r3)
-    stfs f28, -0x8000(r3)
-    stfs f0, -0x8000(r3)
-    stfs f1, -0x8000(r3)
-    stb r28, -0x8000(r3)
-    stb r27, -0x8000(r3)
-    stb r26, -0x8000(r3)
-    stb r0, -0x8000(r3)
-    ParticleBurst_Draw_L_800B4344:
-    addi r30, r30, 0x1
-    addi r31, r31, 0x20
-    cmpwi r30, 0x24
-    blt ParticleBurst_Draw_L_800B41D0
-    psq_l f31, 0xc8(r1), 0, 0
-    lfd f31, 0xc0(r1)
-    psq_l f30, 0xb8(r1), 0, 0
-    lfd f30, 0xb0(r1)
-    psq_l f29, 0xa8(r1), 0, 0
-    lfd f29, 0xa0(r1)
-    psq_l f28, 0x98(r1), 0, 0
-    lfd f28, 0x90(r1)
-    lmw r26, 0x78(r1)
-    lwz r0, 0xd4(r1)
-    mtlr r0
-    addi r1, r1, 0xd0
-    blr
+static inline void GXPosition3f32(float x, float y, float z) {
+    GXFIFO.f32 = x;
+    GXFIFO.f32 = y;
+    GXFIFO.f32 = z;
 }
 
+static inline void GXColor4u8(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
+    GXFIFO.u8 = r;
+    GXFIFO.u8 = g;
+    GXFIFO.u8 = b;
+    GXFIFO.u8 = a;
+}
 
-/* === extracted from auto_ParticleBurst_DrawCb_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+#define PARTICLES(self) (*(Particle **)((self) + 0xCC))
+#define NUM_PARTICLES 36
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
+extern void GXSetZMode(int enable, int func, int update);
+extern void GXBegin(int prim, int fmt, int n);
+extern void GXLoadPosMtxImm(Mtx34 *m, int id);
+extern void GXSetCurrentMtx(int id);
+extern void HSD_StateSetCullMode(int mode);
+extern void HSD_StateInitDirect(int a, int flags);
+extern void DbgScene_CopyMatrix3x4Transpose(Mtx34 *dst, Mtx44 *src);
+extern void Matrix4_Identity(Mtx44 *m);
+extern void Matrix4_PreMultiplyRotZ(Mtx44 *dst, Mtx44 *src, float a);
+extern void Matrix4_PreMultiplyTranslation(Mtx44 *dst, Mtx44 *src, float x, float y, float z);
+extern float BuildOrientationFromYaw(float yaw);
+extern void DrawEffect_Free(void *eff);
+extern void *FUN_8003b120(unsigned long size);
+extern void MemoryManager_Free(void *p);
+extern float Rand_RangeFloat(float lo, float hi);
+extern float Rand_RangeFloatMax(float max);
+extern double sin(double);
+extern double cos(double);
+
+extern const float lbl_806D5020;
+extern const float lbl_806D5024;
+extern const float lbl_806D5028;
+extern const float lbl_806D5034;
+extern const float lbl_806D5044;
+extern const float lbl_806D506C;
+extern const float lbl_806D5070;
+extern const float lbl_806D5074;
+extern const float lbl_806D5080;
+extern const float lbl_806D5084;
+extern const float lbl_806D5090;
+extern const float lbl_806D509C;
+extern const float lbl_806D50A0;
+extern const float lbl_806D50E4;
+extern const float lbl_806D5134;
+extern const float lbl_806D5140;
+extern const float lbl_806D5144;
+extern const float lbl_806D5148;
+extern const float lbl_806D514C;
+extern const float lbl_806D5150;
+extern const float lbl_806D5154;
+extern const float lbl_806D5158;
+extern const float lbl_806D515C;
+extern const unsigned char lbl_803292B4[6][3];
+
+void ParticleBurst_Draw(char *self);
+asm void ParticleBurst_DrawCb(void);
+
+#pragma exceptions on
+#pragma use_lmw_stmw on
+
+void ParticleBurst_Draw(char *self) {
+    Mtx44 m;
+    Mtx34 m34;
+    Particle *p;
+    const unsigned char *c;
+    float x;
+    float y;
+    float z;
+    float n;
+    int r;
+    int g;
+    int b;
+    int i;
+
+    HSD_StateSetCullMode(0);
+    HSD_StateInitDirect(0, 0x40000002);
+    GXSetZMode(1, 3, 1);
+    n = -lbl_806D506C;
+    for (i = 0; i < NUM_PARTICLES; i++) {
+        p = &PARTICLES(self)[i];
+        if (p->dead == 0 && p->delay == 0) {
+            x = lbl_806D509C * (p->x - lbl_806D5020);
+            y = lbl_806D50A0 * (p->y - lbl_806D5024);
+            z = p->z - lbl_806D5028;
+            c = lbl_803292B4[i % 6];
+            r = c[0];
+            g = c[1];
+            b = c[2];
+            Matrix4_Identity(&m);
+            Matrix4_PreMultiplyRotZ(&m, &m, PARTICLES(self)[i].rot);
+            Matrix4_PreMultiplyTranslation(&m, &m, x, y, z);
+            DbgScene_CopyMatrix3x4Transpose(&m34, &m);
+            GXLoadPosMtxImm(&m34, 0);
+            GXSetCurrentMtx(0);
+            GXBegin(0x80, 0, 4);
+            GXPosition3f32(n, n, lbl_806D5034);
+            GXColor4u8(r, g, b, 0xFF);
+            GXPosition3f32(lbl_806D506C, n, lbl_806D5034);
+            GXColor4u8(r, g, b, 0xFF);
+            GXPosition3f32(lbl_806D506C, lbl_806D506C, lbl_806D5034);
+            GXColor4u8(r, g, b, 0xFF);
+            GXPosition3f32(n, lbl_806D506C, lbl_806D5034);
+            GXColor4u8(r, g, b, 0xFF);
+        }
+    }
+}
+
+#pragma use_lmw_stmw reset
+#pragma exceptions reset
+
+/*
+ * ParticleBurst_DrawCb stays an exact asm body: the draw-manager load is
+ * followed by a redundant `p ? p : 0` select, which has no genuine C form in
+ * this C TU (same as TwinSpriteOverlay_AddDraw). Its extab entry is emitted
+ * manually and ordered by tools/extab_order.json.
+ */
 extern void Mtx44_TransformVec3();
 extern void clDrawMan_AddSorted_NoDepthBias();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D10AC;
-extern unsigned int lbl_806D5034;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_803292C8[];
-extern unsigned int lbl_805DF3D0[];
-
-/* --- function index (1 fns, .text 0x800B4388..0x800B441C) ---
- * [  0] 0x800B4388 size:0x94    global ParticleBurst_DrawCb
- */
-
-/* --- forward decls --- */
-asm void ParticleBurst_DrawCb(void);
+extern void *lbl_806D10AC;
+extern float lbl_803292C8[];
+extern float lbl_805DF3D0[];
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -243,7 +170,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&ParticleBurst_DrawCb, 0x00000094, (void *)extab_ParticleBurst_DrawCb
 };
 
-/* --- asm function bodies (.text order = fn address order) --- */
 asm void ParticleBurst_DrawCb(void) { /* 0x800B4388 size:0x94 */
     nofralloc
     stwu r1, -0x30(r1)
@@ -286,53 +212,11 @@ asm void ParticleBurst_DrawCb(void) { /* 0x800B4388 size:0x94 */
     blr
 }
 
-
-/* === extracted from auto_ParticleBurst_Update_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void BuildOrientationFromYaw();
-extern void DrawEffect_Free();
-extern void FUN_8003b120();
-extern void MemoryManager_Free();
-extern void Rand_RangeFloat();
-extern void Rand_RangeFloatMax();
-extern void cos();
-extern void sin();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D5020;
-extern unsigned int lbl_806D5024;
-extern unsigned int lbl_806D5034;
-extern unsigned int lbl_806D5044;
-extern unsigned int lbl_806D5070;
-extern unsigned int lbl_806D5074;
-extern unsigned int lbl_806D5080;
-extern unsigned int lbl_806D5084;
-extern unsigned int lbl_806D5090;
-extern unsigned int lbl_806D50E4;
-extern unsigned int lbl_806D5134;
-extern unsigned int lbl_806D5140;
-extern unsigned int lbl_806D5144;
-extern unsigned int lbl_806D5148;
-extern unsigned int lbl_806D514C;
-extern unsigned int lbl_806D5150;
-extern unsigned int lbl_806D5154;
-extern unsigned int lbl_806D5158;
-extern unsigned int lbl_806D515C;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-
-/* --- function index (1 fns, .text 0x800B441C..0x800B4804) ---
- * [  0] 0x800B441C size:0x3E8   global ParticleBurst_Update
+/*
+ * ParticleBurst_Update stays an exact asm body: a C form matches every GPR,
+ * branch and instruction, but MWCC rotates the callee-saved float registers
+ * for the hoisted loop constants (99.6 %), so the asm is kept.
  */
-
-/* --- forward decls --- */
 asm void ParticleBurst_Update(void);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
@@ -619,4 +503,3 @@ asm void ParticleBurst_Update(void) { /* 0x800B441C size:0x3E8 */
     addi r1, r1, 0x90
     blr
 }
-

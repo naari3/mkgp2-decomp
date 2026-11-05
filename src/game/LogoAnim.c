@@ -4,8 +4,10 @@
  * frame timer. Three classes deep (vtables lbl_8048ECF8, lbl_8048ED10,
  * lbl_8048ECE0, all in data), so the vptr stores are spelled out by hand.
  *
- * Still asm: the update (float register assignment) and the virtual
- * release (`delete this` through the vtable).
+ * Still asm: the update (float register assignment: a C form gets the
+ * instruction stream but MWCC colors the compare-chain constants and the
+ * block-local scale temps differently, ~95 %). The release helper is C++
+ * `delete` through the virtual destructor.
  */
 #pragma cplusplus on
 
@@ -33,24 +35,15 @@ extern void MemoryManager_TimedFree(void *p);
 
 extern "C" {
 asm void fn_80141454(void);
-asm void fn_80141990(void);
 
 #pragma section R ".extab_user"
 __declspec(section ".extab_user") static const unsigned char extab_fn_80141454[8] = {
     0x09, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80141990[8] = {
-    0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
 #pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80141454 = {
     (void *)&fn_80141454, 0x00000464, (void *)extab_fn_80141454
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80141990 = {
-    (void *)&fn_80141990, 0x00000038, (void *)extab_fn_80141990
 };
 
 }
@@ -398,23 +391,12 @@ extern "C" void fn_8014196C(void) {
     PreloadResource(0x139F);
 }
 
-extern "C" asm void fn_80141990(void) { /* 0x80141990 size:0x38 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    cmplwi r3, 0x0
-    stw r0, 0x14(r1)
-    beq fn_80141990_L_801419B8
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_80141990_L_801419B8:
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+struct LogoAnimOwned {
+    virtual ~LogoAnimOwned();
+};
+
+extern "C" void fn_80141990(LogoAnimOwned *p) {
+    delete p;
 }
 
 extern "C" AnimMid *dtor_801419C8(AnimMid *p, short flag) {

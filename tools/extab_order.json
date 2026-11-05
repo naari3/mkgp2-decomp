@@ -1920,5 +1920,10 @@
       "dtor_801F63F8",
       "dtor_8007D0D4"
     ]
-  }
+  },
+  "src/game/ParticleBurst.c": [
+    "ParticleBurst_Draw",
+    "ParticleBurst_DrawCb",
+    "ParticleBurst_Update"
+  ]
 }
