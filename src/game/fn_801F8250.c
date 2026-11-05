@@ -29,9 +29,13 @@ void fn_801F8250(DrawSetup801F *self) {
     if (self->mode == 1 || self->mode == 2) offset = 4;
     GXSetVtxDescv(tables->mixedDesc);
     if (self->depth) {
-        GXSetVtxAttrFmtv(0,&tables->mixedDepthFmt[offset]);
+        const DrawAttr801F *fmt = tables->mixedDepthFmt;
+        fmt += offset;
+        GXSetVtxAttrFmtv(0,fmt);
     } else {
-        GXSetVtxAttrFmtv(0,&tables->mixedFmt[offset]);
+        const DrawAttr801F *fmt = tables->mixedFmt;
+        fmt += offset;
+        GXSetVtxAttrFmtv(0,fmt);
     }
 }
 #pragma exceptions reset
