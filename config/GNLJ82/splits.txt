@@ -8968,6 +8968,11 @@ game/fn_801CCF2C.cpp:
 	extabindex  start:0x80027EE4 end:0x80027EF0
 	.text       start:0x801CCF2C end:0x801CD030
 
+game/GpPleaseInit.cpp:
+	extab       start:0x8001485C end:0x80014A30
+	extabindex  start:0x80027EF0 end:0x80027EFC
+	.text       start:0x801CD030 end:0x801CDA40
+
 game/PanelCda40.cpp:
 	extab       start:0x80014A30 end:0x80014B08
 	extabindex  start:0x80027EFC end:0x80027F44
@@ -8977,6 +8982,11 @@ game/fn_801CDDC4.cpp:
 	extab       start:0x80014B08 end:0x80014B20
 	extabindex  start:0x80027F44 end:0x80027F50
 	.text       start:0x801CDDC4 end:0x801CDF10
+
+game/fn_801CDF10.cpp:
+	extab       start:0x80014B20 end:0x80014B28
+	extabindex  start:0x80027F50 end:0x80027F5C
+	.text       start:0x801CDF10 end:0x801CE1EC
 
 game/fn_801CE1EC.cpp:
 	extab       start:0x80014B28 end:0x80014B70

@@ -10874,5 +10874,26 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__ct__11SelectTweenFv": "fn_801CDA7C"
+  },
+  "src/game/GpPleaseInit.cpp": {
+    "__ct__14clFlowGpPleaseFv": "clFlowGpPlease_Init",
+    "__vt__14clFlowGpPlease": "lbl_8049B16C",
+    "__ct__13clFlowProcessFv": "InitializeFrameSelection",
+    "__dt__13clFlowProcessFv": "dtor_801BA14C",
+    "__ct__10GpInitListFv": "DoublyLinkedList_Init",
+    "__dt__10GpInitListFv": "dtor_801CDC68",
+    "Insert__10GpInitListFRC10GpInitIterRCP11GpPanelBase": "DoublyLinkedList_PushBefore",
+    "__ct__7GpTweenFv": "fn_801CDA7C",
+    "__dt__11GpPanelBaseFv": "dtor_80145DB0",
+    "__ct__13GpTextPayloadFi": "fn_801D8AB4",
+    "__ct__12CourseSpriteFiii": "Sprite_InitWithAnim",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__9CdaHolderFv": "dtor_801CDBB8",
+    "__vt__11GpPanelBase": "lbl_8048EF34",
+    "__vt__11GpTextPanel": "lbl_8049B18C",
+    "__vt__12GpLabelPanel": "lbl_8048EF20",
+    "__vt__12GpColorPanel": "lbl_8049B1AC",
+    "__dt__15GpPayloadHolderFv": "dtor_801CDBB8"
   }
 }
