@@ -1,0 +1,5 @@
+# suikaball-updatephysics-native
+
+Source: Codex worker c11_a25_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2104 B.
+
+0x801240E4 (0x838 B): bulk asm import 894cdc84 had no prior C attempt or parking rationale in TU history; no matching docs/notes entry found. Two BallProbes aggregates must be initialized in phases: old_points assignment, old-point coordinate writes, new_points assignment, new-point coordinate writes. Adjacent aggregate assignments induce excessive simultaneous integer loads, r14 saves and larger frame. In collision response, declare side_abs before side to reproduce f27/f26 allocation. The zero-forward-dot exit should use !forward_dot to emit fcmpu f1,f0; explicit ==0/!=0 comparisons emitted reversed operands. Existing C++ exception flag plus use_lmw_stmw pragma emits exact 8-byte register-save EH. dolphin/mtx.h cannot compile under the existing TU recipe because dolphin/types.h includes libc/stdio.h which requires unavailable stdarg.h; TU-owned private header mirrors Vec/Mtx and declares the observed physics layout.
