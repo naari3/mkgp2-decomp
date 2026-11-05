@@ -7016,7 +7016,8 @@
     "__RTTI__10YesNoSpark": "lbl_806D02D0",
     "__vt__8FlowRoot": "lbl_8048ECF8",
     "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
-    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80"
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "__dt__10FlowFaderIFv": "fn_801F26C8"
   },
   "src/game/anon_80216568_misc.cpp": {
     "__dt__20VHolder<10FlowFaderI>Fv": "dtor_801F2724",

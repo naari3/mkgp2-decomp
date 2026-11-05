@@ -344,3 +344,8 @@ TitleNameHud Update 802529E4: extract only sprite positioning into static inline
 Source: Codex worker c5_m5_enemyface_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 1440 B.
 
 c5_m5 EnemyFace: Update requires unsigned-byte hidden helper with (bits & 0x8000000000ULL)==0 ? 0 : 1 to preserve the target branch island, inline model position/scale helpers to preserve receiver webs, and exact external scale constant lbl_806DB5B4 (1.2240002155303955, not rounded 1.224f). Sort uses plain eye output storage but a genuine three-float Vec3c loop temporary with inline empty dtor; this reproduces exact 24-byte DESTROYLOCAL at SP+0xC. Inline camera depth-range helper fixes camera r30 web. Queue manager accessor and explicit SetPath output-byte stride match; safe cuts at 8022B150 and 8021984C accepted. Full source-linked SHA-1 OK, +4 fn/1440B.
+
+## c5_s11_anon80203ea0_20261105
+Source: Codex worker c5_s11_anon80203ea0_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 588 B.
+
+c5_s11: fn_80203F5C popup open needs explicit else return 0 when both cur and pending are occupied. TU-local copy plus external target RTTI runtime fn_80271340(t,0,lbl_806D0268,lbl_806D0260,0) gives 340 bytes and all owned sections 100%, no emitted data. Cursor destructor 802051E8 promotes unchanged text with weak FlowFaderI bridge to fn_801F26C8; extra EH discards. YesNoCursor Update declaration px before py fixes FP homes (99.72603 to 99.863014), but list/visible r30/r31 swap remains after scope/helper attempts. Full DOL SHA-1 and ELF positions verified for two promoted functions.

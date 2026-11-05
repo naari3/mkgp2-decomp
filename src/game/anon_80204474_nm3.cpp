@@ -8,11 +8,11 @@ void YesNoCursor::Update() {
     int t = fn_8020A788(timer.p);
     if (t % 15 == 0) {
         int id = (t / 15) * 2;
-        unsigned char f;
         FlowSceneList *l;
+        unsigned char f;
         int lay;
-        float py;
         float px;
+        float py;
         l = list.p;
         lay = layer;
         f = visible;
