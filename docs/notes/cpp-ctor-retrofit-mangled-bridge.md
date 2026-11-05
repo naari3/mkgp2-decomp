@@ -539,3 +539,8 @@ c8_s56 partial: independent sprite texture/draw functions 801F6D58/7198/7344/760
 Source: Codex worker c8_s60_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 636 B.
 
 c8_s60: SpriteAnimHandle ctor 8023F320 matches native 292B plus 24B DELETEPOINTER EH using canonical AnimSprite new and simple for(i=0;i<50;++i) sentinel copy. GC/1.3.2 naturally emits target five-way unroll, including apparently dead li/addi induction register. Standalone flush needs explicit handle cursor plus i (rather than indexed inline Flush) for exact cursor/index register identities. Native Destroy indexed inline Flush already matches. 3 fn / 636B source-linked full DOL SHA-1 OK.
+
+## c8_s62_20261105
+Source: Codex worker c8_s62_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 428 B.
+
+c8_s62: fn_802437AC new RivalMarker with nested new RivalOther yields exact 428B text, 48B DELETEPOINTER EH and 12B index using GC/1.3.2 + use_lmw_stmw. Cache render slot before GetDisplayBufferIndex to preserve pre-call load; declare kart pointer before loop index for target r29/r28 allocation. Full source-linked DOL SHA-1 and 802437AC..80243958 ELF range verified. Other independent singleton TUs remain NonMatching at 99.08/98.20635/99.14286 percent.

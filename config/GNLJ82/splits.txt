@@ -12044,6 +12044,26 @@ game/fn_80242DE0.c:
 	.text       start:0x80242DE0 end:0x80242DEC
 	.ctors      start:0x802E895C end:0x802E8960
 
+game/fn_80242E80.cpp:
+	extab       start:0x8001D0A4 end:0x8001D0AC
+	extabindex  start:0x8002B118 end:0x8002B124
+	.text       start:0x80242E80 end:0x80243074
+
+game/fn_80243074.cpp:
+	extab       start:0x8001D0AC end:0x8001D0B4
+	extabindex  start:0x8002B124 end:0x8002B130
+	.text       start:0x80243074 end:0x80243464
+
+game/fn_80243464.cpp:
+	extab       start:0x8001D0B4 end:0x8001D0BC
+	extabindex  start:0x8002B130 end:0x8002B13C
+	.text       start:0x80243464 end:0x802437AC
+
+game/fn_802437AC.cpp:
+	extab       start:0x8001D0BC end:0x8001D0EC
+	extabindex  start:0x8002B13C end:0x8002B148
+	.text       start:0x802437AC end:0x80243958
+
 game/fn_80245700.c:
 	.text       start:0x80245700 end:0x80245704
 

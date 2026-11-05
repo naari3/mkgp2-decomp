@@ -11043,5 +11043,9 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__ct__10AnimSpriteFiii": "Sprite_InitWithAnim"
+  },
+  "src/game/fn_802437AC.cpp": {
+    "__ct__10RivalOtherFP11RivalRenderi": "fn_8023147C",
+    "__vt__11RivalMarker": "lbl_804EE784"
   }
 }
