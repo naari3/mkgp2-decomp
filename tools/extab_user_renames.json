@@ -2535,7 +2535,8 @@
     "__vt__11SteerBounce": "lbl_804E4834",
     "__vt__9SteerBase": "lbl_804E4A08",
     "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__13QueueBlockMapFv": "dtor_801E3200"
   },
   "src/game/fn_801B85DC.cpp": {
     "__ct__6SpriteFiii": "Sprite_InitWithAnim",
