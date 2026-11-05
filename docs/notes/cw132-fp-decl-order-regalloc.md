@@ -93,3 +93,8 @@ RumbleUpdate 80169A14 / shutdown 80169C44: fn_801DAEC0()->inline_member_setter(r
 Source: Codex worker c7_s27_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1484 B.
 
 fn_8019618C: external named zero in the facing compare let CW retain it in f2 through an inlined free-slot scan, deleting the target later zero load (99.690025%, -4 B). Using literal 0.0f only for the facing compare leaves the assignment using the named external. Standard postprocess_sdata2 maps the compiler literal to lbl_806D9570; all text/EH becomes exact. Coordinator full link and DOL SHA-1 passed, with both lbl_806D9570 symbols SHN_UNDEF and no retained extra constant.
+
+## c7_s6_20261105
+Source: Codex worker c7_s6_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1596 B.
+
+DrawNamCamImage 8007CC9C: y,x,s0,t0,s1,t1,aspect declaration order yields target fp31..fp26 homes; declaring FIFO temporaries z,negX,negY and assigning negX=-x; z=externalDepth; negY=-y reproduces f1/f0/f2 exact scratch assignment. KartItem rear-target unsigned-char inline helper if ((flags & mask)==0) return 0; return 1 reproduces target branch-over-branch boolean island where direct bool initialization does not.

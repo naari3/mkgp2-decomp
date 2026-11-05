@@ -1907,6 +1907,11 @@ game/Backup_Shutdown.c:
 	extabindex  start:0x800212A8 end:0x800212B4
 	.text       start:0x800758EC end:0x8007593C
 
+game/GameBoot_Init.cpp:
+	extab       start:0x80008358 end:0x80008360
+	extabindex  start:0x800212B4 end:0x800212C0
+	.text       start:0x8007593C end:0x80076370
+
 game/LObjList.cpp:
 	extab       start:0x80008360 end:0x80008370
 	extabindex  start:0x800212C0 end:0x800212D8
@@ -1988,6 +1993,11 @@ game/clDrawMan.cpp:
 	.text       start:0x80079CDC end:0x8007ADC0
 	.sdata2     start:0x806D2F38 end:0x806D2F40
 
+game/KartItem_FindRearTarget_v1.cpp:
+	extab       start:0x80008620 end:0x80008628
+	extabindex  start:0x80021494 end:0x800214A0
+	.text       start:0x8007ADC0 end:0x8007AFC4
+
 game/ItemEffectState_Init.c:
 	.text       start:0x8007B44C end:0x8007B534
 
@@ -2023,6 +2033,11 @@ game/SpecialFaceMesh_Raycast.cpp:
 	extab       start:0x800086C8 end:0x80008798
 	extabindex  start:0x800214F4 end:0x8002156C
 	.text       start:0x8007BE70 end:0x8007CC9C
+
+game/DrawNamCamImage.c:
+	extab       start:0x80008798 end:0x800087A0
+	extabindex  start:0x8002156C end:0x80021578
+	.text       start:0x8007CC9C end:0x8007D0D4
 
 game/CourseAuxClass_VtableDtor.c:
 	extab       start:0x800087A0 end:0x800087A8

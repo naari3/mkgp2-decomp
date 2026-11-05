@@ -575,6 +575,9 @@ config.libs = [
         "cflags": [*cflags_base, "-Cpp_exceptions on"],
         "progress_category": "game",
         "objects": [
+            Object(Matching, "game/KartItem_FindRearTarget_v1.cpp"),
+            Object(Matching, "game/DrawNamCamImage.c", extra_cflags=["-use_lmw_stmw on", "-i include/libc"]),
+            Object(NonMatching, "game/GameBoot_Init.cpp", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "game/ItemSelectChoiceStep.cpp"),
             Object(NonMatching, "game/ItemSelectChoiceUpdate.cpp", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "game/ItemSelectChoiceInit.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
