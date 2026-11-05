@@ -8903,6 +8903,11 @@ game/clFlowChara_HandleConfirm.c:
 	extabindex  start:0x80027D64 end:0x80027D70
 	.text       start:0x801C393C end:0x801C3AA4
 
+game/clFlowChara_Draw.cpp:
+	extab       start:0x80013EBC end:0x80013EC4
+	extabindex  start:0x80027D70 end:0x80027D7C
+	.text       start:0x801C3AA4 end:0x801C3D48
+
 game/clFlowChara_Update.c:
 	extab       start:0x80013EC4 end:0x80013F0C
 	extabindex  start:0x80027D7C end:0x80027D88
@@ -8922,6 +8927,21 @@ game/fn_801C5C34.cpp:
 	extab       start:0x80014018 end:0x80014020
 	extabindex  start:0x80027DC4 end:0x80027DD0
 	.text       start:0x801C5C34 end:0x801C5E00
+
+game/MileageFlow_Init.cpp:
+	extab       start:0x80014020 end:0x80014204
+	extabindex  start:0x80027DD0 end:0x80027DDC
+	.text       start:0x801C5E00 end:0x801C64DC
+
+game/clFlowFigure_Unlocks.c:
+	extab       start:0x80014204 end:0x8001420C
+	extabindex  start:0x80027DDC end:0x80027DE8
+	.text       start:0x801C64DC end:0x801C6744
+
+game/FigureSlot_Tick.cpp:
+	extab       start:0x8001420C end:0x80014234
+	extabindex  start:0x80027DE8 end:0x80027DF4
+	.text       start:0x801C6744 end:0x801C6C0C
 
 game/CupTile_StateChange.cpp:
 	extab       start:0x80014234 end:0x8001428C

@@ -11270,5 +11270,19 @@
     "__ct__24Menuranking_displaySceneFv": "ranking_display",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/FigureSlot_Tick.cpp": {
+    "__ct__12FigureSpriteFiii": "Sprite_InitWithAnim",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/MileageFlow_Init.cpp": {
+    "__ct__11MileageFlowFv": "clFlowFigure_Init",
+    "__ct__11MileageBaseFv": "InitializeFrameSelection",
+    "__dt__11MileageBaseFv": "dtor_801BA14C",
+    "__ct__12FigureSpriteFiii": "Sprite_InitWithAnim",
+    "__ct__12FigureSpriteFiiff": "fn_801A08B8",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

@@ -554,3 +554,8 @@ HudSelection 802457E0/80245850/80245AC4/80245B10: canonical FlowFaderF::Step/Don
 Source: Codex worker c8_s69_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 544 B.
 
 c8_s69: isolated AdvanceCard ctor 8024629C uses canonical DigitHudBase, two VHolder<FlowFaderF> members and ResCtrl local. All 452B text and owned 84B EH match with GC/2.6. Real new DigitHud factory 80246B78 matches 92B text and 24B EH. Whole ctor EH section scores below 100 only from discarded weak destructors. Full DOL SHA-1 exact, source link edges and ELF addresses verified.
+
+## c8_s40_20261105
+Source: Codex worker c8_s40_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 676 B.
+
+c8_s40: fn_801C3AA4 draw pass matches native text/EH exactly with a private virtual dispatch view (Draw at +0xC, Finish at +0x10). FigureSlot_Tick uses real sprite new expressions and inline SetPos/SetScale: evaluate both coordinates before stores and capture the pointer once for two scale stores; this improves 87.78% to 99.42% with exact owned EH. Floating interpolation cookie stack order and FP homes remain, so retained NonMatching.
