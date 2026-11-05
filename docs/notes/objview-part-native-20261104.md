@@ -31,3 +31,8 @@ c4_t1_objview_20261105: fn_80198ABC promoted native1224B. Scalar float literals 
 Source: Codex worker c5_s21_fn801807e0_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c5_s21: inline extraction of only the position-interpolation loop as MorphBlend(MorphNode*,int,float) improves fn_8018F1E0 98.50282 -> 98.98305 while preserving 708B and exact EH/index. Still NonMatching: self/side r27/r28 swap and inner address/stride colors remain. Whole-node helper and widened side/index scopes are worse. Path186 index-first pointer helper and wrapped-integer-return helper are byte-identical negative probes. Menu direct clear / column-zero before clear are byte-identical negatives. Table global-direct loses hoist; reference retains extra base copy; later base initialization worsens zero scheduling. All failed variants reverted.
+
+## c5_s22_fn8018f614_20261105
+Source: Codex worker c5_s22_fn8018f614_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 384 B.
+
+c5_s22: fn_8018FC24 matches 384B text plus 8B extab and 12B index by replacing external 360.0f constant uses with literals and extracting UpdateUV(Wave*) with local declarations src,dst,i and fu,fv. Phase FP registers and loop index/stride/pointer homes become exact. Coordinator full build SHA-1 OK, source .o on main.elf edge. fn_80197130 scene declaration after particle pointer resolves scene r30 reuse; per-TU typed GXChannel ctor/dtor bridge fixes EH and call relocations, leaving f30/f31 height-width swap. fn_8018F614 pairs-before-name declarations fix those homes; base-vptr scheduling remains.

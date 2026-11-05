@@ -25,8 +25,8 @@ MorphView::MorphView() {
     const char *cursor=lbl_80378210;
     HSD_JObj *b;
     HSD_JObj *a;
-    const char *name;
     const Pair *pairs;
+    const char *name;
     int count;
     DebugPrintf(cursor+0x2f4);
     model=0; head=0; phase=lbl_806D94B8;

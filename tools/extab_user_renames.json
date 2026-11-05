@@ -10003,5 +10003,9 @@
     "@113": "lbl_803BD228",
     "@116": "@etb_800162B0",
     "@117": "@eti_80028790"
+  },
+  "src/game/objview/fn_80197130.cpp": {
+    "__ct__9GXChannelFP8HSD_JObjP8HSD_DObjUii": "GXChannel_Init",
+    "__dt__9GXChannelFv": "dtor_8007D9C4"
   }
 }

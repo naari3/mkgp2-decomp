@@ -16,11 +16,12 @@ extern const float lbl_806D95E8, lbl_806D95EC, lbl_806D95F0, lbl_806D95F4;
 }
 extern "C" void fn_80197130(Owner *o) {
     Particle *p;
+    void *scene;
     int i;
     Mtx *view;
     float width;
     float height;
-    void *scene = GetCourseScene3D();
+    scene = GetCourseScene3D();
     if (scene != 0) {
         view = CObj_GetProjMatrix_Cached(scene);
         float angle;
