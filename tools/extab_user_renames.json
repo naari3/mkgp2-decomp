@@ -10545,5 +10545,23 @@
     "__ct__10clNormal3DFPvi": "clNormal3D_Construct",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/objview/fn_8018CFC4.cpp": {
+    "__ct__9S22SingleFv": "fn_8018CFC4",
+    "__vt__9S22Single": "lbl_80495DDC",
+    "__vt__7S22Base": "lbl_80490FE0",
+    "__dt__7S22BaseFv": "dtor_8016A270",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "@8": "@etb_80011EA8",
+    "@9": "@eti_80026EF4"
+  },
+  "src/game/objview/fn_8018D3E0.cpp": {
+    "__ct__7S22ListFv": "fn_8018D3E0",
+    "__vt__7S22List": "lbl_80495E18",
+    "__vt__7S22Base": "lbl_80490FE0",
+    "__dt__7S22BaseFv": "dtor_8016A270",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "@59": "@etb_80011EF4",
+    "@60": "@eti_80026F24"
   }
 }
