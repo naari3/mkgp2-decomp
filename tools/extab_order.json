@@ -2023,5 +2023,35 @@
       "dtor_800488F4",
       "__dt__11ScopedTimerFv"
     ]
+  },
+  "src/game/RaceDigits.cpp": {
+    "extab": [
+      "dtor_80247980",
+      "fn_80246DE4",
+      "dtor_80247AA4",
+      "dtor_80247B1C",
+      "fn_80247258",
+      "fn_802476FC",
+      "dtor_80082960",
+      "TweenInterp_Dtor",
+      "dtor_801F2724",
+      "fn_801F26C8",
+      "dtor_801F4A80",
+      "__dt__12DigitListMidFv"
+    ],
+    "extabindex": [
+      "fn_80246DE4",
+      "fn_80247258",
+      "fn_802476FC",
+      "dtor_80247980",
+      "dtor_80247AA4",
+      "dtor_80247B1C",
+      "dtor_80082960",
+      "TweenInterp_Dtor",
+      "dtor_801F2724",
+      "fn_801F26C8",
+      "dtor_801F4A80",
+      "__dt__12DigitListMidFv"
+    ]
   }
 }

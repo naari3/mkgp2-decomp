@@ -2583,6 +2583,7 @@ config.libs = [
             Object(Matching, "game/fn_801B3BC8.c"),
             Object(Matching, "game/fn_801B0D80.c"),
             Object(Matching, "game/fn_801F6574.c"),
+            Object(NonMatching, "game/RaceDigits.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/RaceHudSceneCtor.cpp", extab_padding=b"\xC6\x02", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/DisplayBuffersReset.c"),
             Object(NonMatching, "game/OverlayViewSetup.cpp"),
