@@ -3,7 +3,9 @@
 s32 fn_80291134(u8 ch) {
     NetPacket* req = fn_8028CF1C(ch);
     NetPacket* rsp = fn_8028CE34(ch);
-    u32* p = (u32*)((fn_8028D6B0()[1] + BSWAP32(req->result)) & ~3);
+    u32* base = fn_8028D6B0();
+    u32 addr = base[1] + BSWAP32(req->result);
+    u32* p = (u32*)(addr & ~3);
 
     p[0] = BSWAP32(req->arg[0]);
     p[1] = BSWAP32(req->arg[1]);
@@ -19,7 +21,9 @@ s32 fn_80291134(u8 ch) {
 s32 fn_8029121C(u8 ch) {
     NetPacket* req = fn_8028CF1C(ch);
     NetPacket* rsp = fn_8028CE34(ch);
-    u32* p = (u32*)((fn_8028D6B0()[1] + BSWAP32(req->result)) & ~3);
+    u32* base = fn_8028D6B0();
+    u32 addr = base[1] + BSWAP32(req->result);
+    u32* p = (u32*)(addr & ~3);
 
     rsp->result = BSWAP32(p[0]);
     rsp->arg[0] = BSWAP32(p[1]);
