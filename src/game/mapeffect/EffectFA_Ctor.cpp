@@ -1,0 +1,37 @@
+#include "game/EffectFA_private.h"
+
+MapEffectFA::MapEffectFA() {
+    char *data = lbl_8036D960;
+    if (lbl_806D15D8 == 0) {
+        lbl_806D15D0 = new clNormal3D(data + 0x71c, 1);
+        clNormal3D_SetScale(lbl_806D15D0, 0, lbl_806D8C28, lbl_806D8C30, lbl_806D8C28, lbl_806D8C28);
+        lbl_806D15D4 = ResolveJointByName(lbl_806D15D0, data + 0x72c);
+        fn_801825FC();
+        for (int i = 0; i < 3; i++) {
+            lbl_80491224[i] = new clNormal3D(lbl_80491218[i], 0);
+            HSD_JObjSetFlagsAll(Archive_GetRootJObj(lbl_80491224[i]), 0x200);
+            fn_801826F8(Archive_GetRootJObj(lbl_80491224[i]), lbl_80495988);
+        }
+        fn_801825C8();
+    }
+    lbl_806D15D8++;
+    position.x = lbl_806D8C28;
+    position.y = lbl_806D8C28;
+    position.z = lbl_806D8C28;
+    radius = lbl_806D8C74;
+    active = 0;
+    released = 0;
+    state = 0;
+    phase = lbl_806D8C28;
+    yaw = lbl_806D8C28;
+    MapEffectDef *defs = (MapEffectDef *)(data + 0x6a0);
+    for (int i = 0; i < 6; i++) {
+        parts[i].joint = ResolveJointByName(lbl_80491224[defs[i].model], defs[i].joint);
+        parts[i].frame = -1;
+        parts[i].time = lbl_806D8C28;
+        parts[i].x = lbl_806D8C28;
+        parts[i].scale = lbl_806D8C30;
+        parts[i].y = lbl_806D8C28;
+    }
+    soundPlayed = 0;
+}

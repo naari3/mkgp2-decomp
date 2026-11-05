@@ -429,3 +429,8 @@ New Menu801F0CC0 reconstruction: final helper fn_801F2690 owns extab 80016E94, b
 Source: Codex worker c7_s13_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1284 B.
 
 c7_s13: fn_8015BF18 matches 1284-byte text and owned 356-byte EH/12-byte index with genuine ResultAward/ResultIntro inline ctors and canonical ResCtrl. A small inline sprite ctor loading size then alpha before Sprite_CreateWithParams fixes reversed FP common-value load order without changing call timing. Bridge primary compiler @164/@165 to @etb_8000F2F8/@eti_80025A00. Appended weak ResCtrl destructor is discarded; source-input link and full DOL SHA-1 verified.
+
+## c7_s15_20261105
+Source: Codex worker c7_s15_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 2120 B.
+
+fn_8016F158 draw: moving asserted root-matrix setup into an inline pointer-returning GetMatrix helper removes an extra lwz-r0/mr-r27 copy. Naming alphaFactor=self->alpha before partAlpha=constant*channel.x restores f2/f3 assignments; both changes together give exact 1068B text and 8B EH/12B index. fn_8016F584 state/keyframe update matches first native compile. fn_8016FA50 constructor has exact owned EH and size but independent loop-web register identities remain; preserve NonMatching.

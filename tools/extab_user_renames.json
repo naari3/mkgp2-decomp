@@ -10415,5 +10415,21 @@
     "__dt__12SpriteHolderFv": "dtor_8015E8AC",
     "@164": "@etb_8000F2F8",
     "@165": "@eti_80025A00"
+  },
+  "src/game/mapeffect/EffectFA_Ctor.cpp": {
+    "__ct__11MapEffectFAFv": "fn_8016FA50",
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/mapeffect/CoursePropCtor.cpp": {
+    "__ct__14CoursePropListFv": "fn_8016E568",
+    "__dt__14CoursePropBaseFv": "dtor_8016A270",
+    "__vt__14CoursePropNode": "lbl_804911F4",
+    "__vt__15CoursePropNodeA": "lbl_804911E8",
+    "__vt__15CoursePropNodeB": "lbl_804911D0",
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
