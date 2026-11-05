@@ -1,11 +1,15 @@
 
 /* sdata symbols referenced from asm */
-extern unsigned char lbl_806D7174[7];
-extern unsigned char lbl_806D717C[5];
+extern char lbl_806D7174[7];
+extern char lbl_806D717C[5];
 /*
  * 0x8012BF5C..0x801313D0: coin game, boss Koopa, shells and coin particles.
  */
 #pragma cplusplus on
+
+struct CoinVObj {
+    virtual ~CoinVObj();
+};
 
 extern "C" {
 extern void Archive_GetRootJObj();
@@ -22,12 +26,12 @@ extern void KartItem_DispatchEffectRenderByState();
 extern void KartItem_FlushPendingRender_v2();
 extern void Object_DriveAnimMatrix();
 extern void Object_RenderJObjIfWithinRange();
-extern void Object_RenderJObjTree();
+extern void Object_RenderJObjTree(void *, int);
 extern void Object_SetAnimBinding();
-extern void Object_SetColorAlphaOnly();
-extern void PSMTXConcat();
-extern void PSMTXRotRad();
-extern void PSMTXScale();
+extern void Object_SetColorAlphaOnly(void *, int, float);
+extern void PSMTXConcat(float (*)[4], float (*)[4], float (*)[4]);
+extern void PSMTXRotRad(float (*)[4], char, float);
+extern void PSMTXScale(float (*)[4], float, float, float);
 extern void Subsystem36c_DispatchPass2_Timed();
 extern void Subsystem36c_DispatchPass4_Timed();
 extern void TransitionEffect_RenderPass();
@@ -45,8 +49,8 @@ extern unsigned int lbl_806CF58C;
 extern unsigned int lbl_806CF590;
 extern unsigned int lbl_806CF594;
 extern unsigned int lbl_806CF598;
-extern unsigned int lbl_806D109C;
-extern unsigned int lbl_806D10AC;
+extern CoinVObj *lbl_806D109C;
+extern CoinVObj *lbl_806D10AC;
 extern unsigned int lbl_806D7138;
 extern unsigned int lbl_806D7140;
 extern unsigned int lbl_806D7150;
@@ -66,42 +70,42 @@ extern void CourseEnvironment_UpdateAndCullZones_Timed();
 extern void DebugPrintf();
 extern void Fog_UpdateFromCourseScene3D();
 extern void GetDisplayBufferIndex();
-extern void GetInputManager();
-extern void GetRaceContextPtr();
-extern void HSD_JObjSetMtxDirtySub();
-extern void HSD_JObjSetupMatrixSub();
+extern void *GetInputManager(void);
+extern void *GetRaceContextPtr(void);
+extern void HSD_JObjSetMtxDirtySub(struct CoinJObj *);
+extern void HSD_JObjSetupMatrixSub(struct CoinJObj *);
 extern void HUD_FrameUpdate();
 extern void InputCmd_GetDetectedFlag();
 extern void InputCmd_PushSample();
 extern void InputCmd_TickAndDetectAndClear();
-extern void InputMgr_GetPlayer();
+extern struct CoinInputPlayer *InputMgr_GetPlayer(void *, int);
 extern void Input_IsItemButtonPressed();
 extern void IsCardValid();
-extern void IsRaceStarted();
+extern unsigned char IsRaceStarted(void);
 extern void ItemEffectBus_ApplyItemEventClear();
 extern void ItemEffectBus_ApplyItemEventSet();
 extern void ItemEffectBus_SnapshotAndFullReset();
 extern void ItemEffectBus_TickTornadoCooldown();
 extern void ItemObjectManager_PerFrameUpdate();
 extern void ItemObjectManager_Update();
-extern void LUT_Sin12Bit();
+extern float LUT_Sin12Bit(float);
 extern void LakituStart_UpdateCountdown();
 extern void NokoNokoChallenge_CalcResultText();
 extern void NokoNokoChallenge_GetCoinDivisor();
 extern void NokoNokoChallenge_SaveResult();
 extern void NokoNokoChallenge_TransitionToResult();
 extern void Object_SetByte10_Return1();
-extern void PSMTXCopy();
+extern void PSMTXCopy(float (*)[4], float (*)[4]);
 extern void PSMTXTrans();
 extern void PSVECSquareMag();
 extern void RenderObj_ItemStateMachine_Timed();
 extern void RumbleUpdate();
 extern void SetCoinCount();
-extern void SetCourseScene3D();
+extern void SetCourseScene3D(void *);
 extern void SetRumbleMode();
 extern void Sinf_LUT_Wrap();
-extern void SoundMgr_Play();
-extern void SoundMgr_PlaySE();
+extern void SoundMgr_Play(int);
+extern void SoundMgr_PlaySE(int);
 extern void SoundObj_PlaySE();
 extern void SoundObj_PlaySE_Direct();
 extern void SoundVolumePan_Update();
@@ -111,10 +115,10 @@ extern void TornadoEffect_ClearFlagC0AndSetC4();
 extern void TornadoEffect_SetFlagC0();
 extern void TornadoEffect_Tick();
 extern void TransitionEffect_Tick();
-extern void Vec3_Normalize();
+extern void Vec3_Normalize(struct CoinVec *, struct CoinVec *);
 extern void Vec3_Subtract();
 extern void VfxSlotMgr_Update();
-extern void __assert();
+extern void __assert(const char *, int, const char *);
 extern void fn_8012A71C();
 extern void fn_8012B924();
 extern void fn_8012B9AC();
@@ -125,8 +129,8 @@ extern void fn_8012BD2C();
 extern void fn_8012BDA4();
 extern void fn_801699D8();
 extern void fn_8016B32C();
-extern void fn_8016C360();
-extern void fn_8016C394();
+extern unsigned char fn_8016C360(int);
+extern void fn_8016C394(int);
 extern void fn_8016C554();
 extern void fn_8016DA78();
 extern void fn_8016DC90();
@@ -136,7 +140,7 @@ extern void fn_8016EC80();
 extern void fn_801734B0();
 extern void fn_80173500();
 extern void fn_8017351C();
-extern void fn_80182B50();
+extern void fn_80182B50(void *, float, float);
 extern void fn_80192688();
 extern void fn_80253C40();
 extern void fn_80253C74();
@@ -145,7 +149,7 @@ extern unsigned int g_lakituStartAnimDone;
 extern unsigned int g_pInputState;
 extern unsigned int g_raceEnded;
 extern unsigned int g_raceTimeRemaining;
-extern unsigned int g_weatherSystem;
+extern void *g_weatherSystem;
 extern unsigned int lbl_806D7148;
 extern unsigned int lbl_806D715C;
 extern unsigned int lbl_806D7160;
@@ -188,14 +192,14 @@ extern unsigned int lbl_806D7200;
 extern unsigned int lbl_806D7204;
 extern unsigned int lbl_806D7208;
 extern unsigned int lbl_80356730[];
-extern void HSD_CObjAnim();
-extern void HSD_CObjReqAnim();
-extern void HSD_JObjClearFlagsAll();
-extern void HSD_JObjSetFlagsAll();
-extern void Object_SetField8_AndDirty();
-extern void Saturate_Double();
-extern void clNormal3D_Exec();
-extern unsigned int g_characterId;
+extern void HSD_CObjAnim(void *);
+extern void HSD_CObjReqAnim(void *, float);
+extern void HSD_JObjClearFlagsAll(struct CoinJObj *, int);
+extern void HSD_JObjSetFlagsAll(struct CoinJObj *, int);
+extern void Object_SetField8_AndDirty(void *, float);
+extern float Saturate_Double(float, float, float);
+extern void clNormal3D_Exec(void *);
+extern int g_characterId;
 extern unsigned int lbl_806D720C;
 extern unsigned int lbl_806D7210;
 extern unsigned int lbl_806D7214;
@@ -205,7 +209,7 @@ extern unsigned int lbl_806D7220;
 extern unsigned int lbl_806D7224;
 extern unsigned int lbl_806D7228;
 extern unsigned int lbl_806D722C;
-extern unsigned int lbl_80356C58[];
+extern char lbl_80356C58[];
 extern unsigned int lbl_806D7134;
 extern unsigned int lbl_806D7234;
 extern unsigned int lbl_806D7238;
@@ -215,52 +219,52 @@ extern unsigned int lbl_806D7244;
 extern unsigned int lbl_806D7248;
 extern unsigned int lbl_806D724C;
 extern unsigned int lbl_806D7250;
-extern unsigned int lbl_80495994[];
-extern unsigned int lbl_80495A94[];
-extern void PSMTXMultVec();
-extern void Vec3_Dot();
-extern unsigned int lbl_806CF578;
-extern unsigned int lbl_806CF57C;
-extern unsigned int lbl_806CF580;
-extern unsigned int lbl_806CF584;
-extern unsigned int lbl_806CF588;
-extern unsigned int lbl_806D1510;
+extern float lbl_80495994[];
+extern float lbl_80495A94[];
+extern void PSMTXMultVec(float (*)[4], struct CoinVec *, struct CoinVec *);
+extern float Vec3_Dot(struct CoinVec *, struct CoinVec *);
+extern float lbl_806CF578;
+extern float lbl_806CF57C;
+extern float lbl_806CF580;
+extern float lbl_806CF584;
+extern float lbl_806CF588;
+extern int lbl_806D1510;
 extern unsigned int lbl_806D7254;
 extern unsigned int lbl_806D7258;
 extern unsigned int lbl_806D725C;
-extern void fn_80123480();
-extern void fn_80172844();
+extern unsigned char fn_80123480(void *, struct CoinVec *);
+extern void fn_80172844(void *);
 extern unsigned int lbl_806D7260;
 extern unsigned int lbl_806D7264;
-extern void AudioChannel_DtorWithSeStop();
-extern void ClRomTable_PurgeAll();
-extern void CourseEnvironment_Dtor();
-extern void InputCmd_Dtor();
-extern void ItemObjectManager_Reset();
-extern void KartDriver_Dtor();
-extern void LakituStart_Dtor();
-extern void MemoryManager_TimedFree();
-extern void Object_DtorWithGXSync();
-extern void RankingTable_Init();
-extern void SceneDrawList_Reset();
-extern void SetActiveCamera();
-extern void SetPlayerCarObject();
-extern void SetResourceLoadingFlag();
-extern void VfxSlotMgr_Shutdown();
-extern void VisualEffectHolder_Dtor();
-extern void clRom_PurgeAll();
-extern void dtor_80122FD8();
-extern void fn_80123B48();
-extern void fn_80124C84();
-extern void fn_8012B394();
-extern void fn_80169C44();
-extern void fn_8016C634();
-extern void fn_8016DFAC();
-extern void fn_8016EFA8();
-extern void fn_80173550();
-extern void fn_80254134();
-extern unsigned int g_raceCamera;
-extern unsigned int lbl_806D10D0;
+extern void AudioChannel_DtorWithSeStop(void *, int);
+extern void ClRomTable_PurgeAll(void);
+extern void CourseEnvironment_Dtor(void *, int);
+extern void InputCmd_Dtor(void *, int);
+extern void ItemObjectManager_Reset(void);
+extern void KartDriver_Dtor(void *, int);
+extern void LakituStart_Dtor(void *, int);
+extern void MemoryManager_TimedFree(void *);
+extern void Object_DtorWithGXSync(void *, int);
+extern void RankingTable_Init(void *);
+extern void SceneDrawList_Reset(void);
+extern void SetActiveCamera(void *, int);
+extern void SetPlayerCarObject(void *);
+extern void SetResourceLoadingFlag(unsigned char);
+extern void VfxSlotMgr_Shutdown(void);
+extern void VisualEffectHolder_Dtor(void *, int);
+extern void clRom_PurgeAll(void);
+extern void dtor_80122FD8(void *, int);
+extern void fn_80123B48(void *, int);
+extern void fn_80124C84(void *, int);
+extern void fn_8012B394(void *, int);
+extern void fn_80169C44(void);
+extern void fn_8016C634(void *, int);
+extern void fn_8016DFAC(void *, int);
+extern void fn_8016EFA8(void *, int);
+extern void fn_80173550(void *, int);
+extern void fn_80254134(void *, int);
+extern void *g_raceCamera;
+extern CoinVObj *lbl_806D10D0;
 extern unsigned int vtable[];
 extern void Alloc();
 extern void ChallengeGoalCamera_Init();
@@ -290,8 +294,8 @@ extern void Scene3D_Init();
 extern void SoundChannels_ClearAll();
 extern void SoundDriver_GetOrCreate();
 extern void StrPcb_ForceRun_Neutral();
-extern void StrPcb_GetInstance();
-extern void StrPcb_ResetCommands_Neutral();
+extern struct CoinStrPcb *StrPcb_GetInstance(void);
+extern void StrPcb_ResetCommands_Neutral(struct CoinStrPcb *, int);
 extern void TireEffect_ResetSpin();
 extern void TornadoEffect_Ctor();
 extern void TornadoEffect_SetColorPairC8CC();
@@ -318,37 +322,44 @@ extern void OSGetTick();
 extern void Object_SetJObjPositionXYZ();
 extern unsigned int lbl_806CF570;
 extern unsigned int lbl_806CF574;
-extern void PSMTXIdentity();
-extern void LinkedNode_GetField10_OrFallback();
-extern void Object_RenderJObjEx();
-extern void Object_SetJObjPositionVec();
-extern void Object_SetJObjRotationY();
-extern void Object_SetJObjScaleXYZ();
+extern void PSMTXIdentity(float (*)[4]);
+extern void *LinkedNode_GetField10_OrFallback(void *, int);
+extern void Object_RenderJObjEx(void *, void *, int);
+extern void Object_SetJObjPositionVec(void *, void *);
+extern void Object_SetJObjRotationY(void *, float);
+extern void Object_SetJObjScaleXYZ(void *, float, float, float);
 extern unsigned int lbl_806D7130;
 extern unsigned int lbl_806D713C;
-extern void fn_80186960();
+extern float fn_80186960(float);
 extern unsigned int lbl_806D7230;
-extern void Clamp_Int();
-extern void StrPcb_ResetCommands_Zero();
-extern void abs();
-extern unsigned int lbl_806D7268;
-extern unsigned int lbl_806D726C;
+extern int Clamp_Int(int, int, int);
+extern void StrPcb_ResetCommands_Zero(struct CoinStrPcb *, int);
+extern int abs(int);
+extern const unsigned int lbl_806D7268;
+extern const unsigned int lbl_806D726C;
 extern unsigned int lbl_806D7270;
 asm void fn_8012BF5C(void);
 asm void CGameCoin_Draw(void);
 asm void CGameCoin_Update(void);
-asm void DefeatDemo_Update(void);
-asm void BossKoopa_UpdateAnim(void);
-asm void KoopaFireball_Update(void);
-asm void Shell_UpdateState(void);
-asm void CGameCoin_Destroy(void);
+struct DefeatDemo;
+void DefeatDemo_Update(DefeatDemo *self);
+struct BossKoopa;
+void BossKoopa_UpdateAnim(BossKoopa *self);
+struct KoopaFireball;
+asm void KoopaFireball_Update(KoopaFireball *self);
+struct CoinShell;
+void Shell_UpdateState(CoinShell *self);
+struct CGameCoin;
+CGameCoin *CGameCoin_Destroy(CGameCoin *self, short flag);
 asm void CGameCoin_Init(void);
 asm void CGameCoin_InitDefeatDemo(void);
 asm void BossKoopa_Init(void);
-asm void CGameCoin_InitFields(void);
-asm void CoinParticle_Draw(void);
-asm void CoinParticle_Update(void);
-asm void CoinParticleManager_Destroy(void);
+struct CGameCoinFields;
+void CGameCoin_InitFields(CGameCoinFields *self);
+struct CoinParticleManager;
+void CoinParticle_Draw(CoinParticleManager *self);
+void CoinParticle_Update(CoinParticleManager *self);
+CoinParticleManager *CoinParticleManager_Destroy(CoinParticleManager *self, short flag);
 asm void CGameCoin_ProcessInput(void);
 
 #pragma section R ".extab_user"
@@ -362,24 +373,8 @@ __declspec(section ".extab_user") static const unsigned char extab_CGameCoin_Upd
     0x38, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const unsigned char extab_DefeatDemo_Update[8] = {
-    0x10, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-__declspec(section ".extab_user") static const unsigned char extab_BossKoopa_UpdateAnim[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
 __declspec(section ".extab_user") static const unsigned char extab_KoopaFireball_Update[8] = {
     0x18, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-__declspec(section ".extab_user") static const unsigned char extab_Shell_UpdateState[8] = {
-    0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-__declspec(section ".extab_user") static const unsigned char extab_CGameCoin_Destroy[8] = {
-    0x28, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; unsigned int f45; unsigned int f46; unsigned int f47; unsigned int f48; unsigned int f49; unsigned int f50; unsigned int f51; unsigned int f52; unsigned int f53; unsigned int f54; unsigned int f55; unsigned int f56; unsigned int f57; unsigned int f58; unsigned int f59; unsigned int f60; unsigned int f61; unsigned int f62; unsigned int f63; unsigned int f64; unsigned int f65; unsigned int f66; unsigned int f67; unsigned int f68; unsigned int f69; unsigned int f70; unsigned int f71; unsigned int f72; unsigned int f73; unsigned int f74; unsigned int f75; unsigned int f76; unsigned int f77; unsigned int f78; unsigned int f79; unsigned int f80; unsigned int f81; unsigned int f82; unsigned int f83; unsigned int f84; unsigned int f85; unsigned int f86; unsigned int f87; unsigned int f88; unsigned int f89; unsigned int f90; void *f91; unsigned int f92; unsigned int f93; void *f94; unsigned int f95; void *f96; unsigned int f97; unsigned int f98; void *f99; unsigned int f100; void *f101; unsigned int f102; unsigned int f103; void *f104; unsigned int f105; void *f106; unsigned int f107; unsigned int f108; void *f109; unsigned int f110; void *f111; unsigned int f112; unsigned int f113; void *f114; unsigned int f115; void *f116; unsigned int f117; unsigned int f118; void *f119; unsigned int f120; void *f121; unsigned int f122; unsigned int f123; void *f124; unsigned int f125; void *f126; unsigned int f127; unsigned int f128; void *f129; unsigned int f130; void *f131; unsigned int f132; unsigned int f133; void *f134; unsigned int f135; void *f136; unsigned int f137; unsigned int f138; void *f139; unsigned int f140; void *f141; unsigned int f142; void *f143; unsigned int f144; unsigned int f145; void *f146; unsigned int f147; void *f148; unsigned int f149; unsigned int f150; void *f151; unsigned int f152; unsigned int f153; void *f154; unsigned int f155; unsigned int f156; void *f157; unsigned int f158; void *f159; unsigned int f160; unsigned int f161; void *f162; unsigned int f163; void *f164; unsigned int f165; unsigned int f166; void *f167; unsigned int f168; void *f169; unsigned int f170; unsigned int f171; void *f172; unsigned int f173; void *f174; unsigned int f175; void *f176; unsigned int f177; unsigned int f178; void *f179; unsigned int f180; void *f181; unsigned int f182; unsigned int f183; void *f184; unsigned int f185; unsigned int f186; void *f187; } extab_CGameCoin_Init = { 0x284A0000, 0x00000058, 0x000A0170, 0x0000008C, 0x00000168, 0x000000A8, 0x00020170, 0x000000C0, 0x0000017C, 0x000000C8, 0x000C0170, 0x00000108, 0x00080190, 0x00000140, 0x00000170, 0x00000168, 0x000001A4, 0x0000017C, 0x00060170, 0x000001B4, 0x000001B8, 0x000001C4, 0x00020170, 0x000001E0, 0x000001CC, 0x000001EC, 0x00000170, 0x0000020C, 0x000001E0, 0x00000218, 0x00000170, 0x0000022C, 0x000401F4, 0x00000248, 0x00000170, 0x00000254, 0x00000208, 0x00000260, 0x00020170, 0x00000278, 0x0000021C, 0x0000028C, 0x002A0170, 0x00000388, 0x00000238, 0x00000394, 0x00000230, 0x000003A0, 0x00000238, 0x000003B4, 0x0000024C, 0x000003C8, 0x00040238, 0x000003EC, 0x00000258, 0x000003FC, 0x00000170, 0x00000414, 0x00000264, 0x00000420, 0x00000170, 0x0000042C, 0x00000278, 0x00000438, 0x00000170, 0x00000444, 0x0000028C, 0x00000450, 0x00000170, 0x0000045C, 0x000002A0, 0x0000046C, 0x00130170, 0x000004E8, 0x000002BC, 0x000004FC, 0x000002B4, 0x00000510, 0x000202BC, 0x0000052C, 0x000002D0, 0x00000538, 0x000202BC, 0x00000698, 0x00000170, 0x000006A8, 0x000002DC, 0x000006B4, 0x00250170, 0x00000000, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x01000238, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x01000238, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x010002BC, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8 };
@@ -387,22 +382,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; void *f15; unsigned int f16; void *f17; unsigned int f18; void *f19; unsigned int f20; void *f21; unsigned int f22; void *f23; unsigned int f24; void *f25; } extab_CGameCoin_InitDefeatDemo = { 0x180A0000, 0x00000090, 0x00000038, 0x000000B0, 0x00000040, 0x000000D4, 0x00000048, 0x000000F4, 0x00000050, 0x00000114, 0x00000058, 0x00000184, 0x00000060, 0x00000000, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree };
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; void *f23; unsigned int f24; void *f25; unsigned int f26; void *f27; unsigned int f28; void *f29; unsigned int f30; void *f31; unsigned int f32; void *f33; unsigned int f34; void *f35; unsigned int f36; void *f37; unsigned int f38; void *f39; unsigned int f40; void *f41; } extab_BossKoopa_Init = { 0x200A0000, 0x000001AC, 0x00000060, 0x000001C0, 0x00000058, 0x000001F0, 0x00000068, 0x00000210, 0x00000070, 0x00000230, 0x00000078, 0x00000250, 0x00000080, 0x00000294, 0x00000088, 0x000002B4, 0x00000090, 0x000002D4, 0x00000098, 0x000002F4, 0x000000A0, 0x00000000, 0x0A80001E, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree };
-
-__declspec(section ".extab_user") static const unsigned char extab_CGameCoin_InitFields[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-__declspec(section ".extab_user") static const unsigned char extab_CoinParticle_Draw[8] = {
-    0x31, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-__declspec(section ".extab_user") static const unsigned char extab_CoinParticle_Update[8] = {
-    0x40, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-__declspec(section ".extab_user") static const unsigned char extab_CoinParticleManager_Destroy[8] = {
-    0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const unsigned char extab_CGameCoin_ProcessInput[8] = {
     0x38, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -421,24 +400,8 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&CGameCoin_Update, 0x00002164, (void *)extab_CGameCoin_Update
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_DefeatDemo_Update = {
-    (void *)&DefeatDemo_Update, 0x000005A8, (void *)extab_DefeatDemo_Update
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_BossKoopa_UpdateAnim = {
-    (void *)&BossKoopa_UpdateAnim, 0x00000438, (void *)extab_BossKoopa_UpdateAnim
-};
-
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_KoopaFireball_Update = {
     (void *)&KoopaFireball_Update, 0x000003E0, (void *)extab_KoopaFireball_Update
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_Shell_UpdateState = {
-    (void *)&Shell_UpdateState, 0x00000458, (void *)extab_Shell_UpdateState
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CGameCoin_Destroy = {
-    (void *)&CGameCoin_Destroy, 0x000003A4, (void *)extab_CGameCoin_Destroy
 };
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CGameCoin_Init = {
@@ -451,22 +414,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_BossKoopa_Init = {
     (void *)&BossKoopa_Init, 0x000003FC, (void *)&extab_BossKoopa_Init
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CGameCoin_InitFields = {
-    (void *)&CGameCoin_InitFields, 0x000000D4, (void *)extab_CGameCoin_InitFields
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CoinParticle_Draw = {
-    (void *)&CoinParticle_Draw, 0x000001D0, (void *)extab_CoinParticle_Draw
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CoinParticle_Update = {
-    (void *)&CoinParticle_Update, 0x000002B0, (void *)extab_CoinParticle_Update
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CoinParticleManager_Destroy = {
-    (void *)&CoinParticleManager_Destroy, 0x00000080, (void *)extab_CoinParticleManager_Destroy
 };
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CGameCoin_ProcessInput = {
@@ -3197,713 +3144,359 @@ extern "C" asm void CGameCoin_Update(void) { /* 0x8012C538 size:0x2164 */
     blr
 }
 
-extern "C" asm void DefeatDemo_Update(void) { /* 0x8012E69C size:0x5A8 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stfd f31, 0x10(r1)
-    psq_st f31, 0x18(r1), 0, 0
-    stw r31, 0xc(r1)
-    stw r30, 0x8(r1)
-    mr r31, r3
-    lbz r0, 0x14(r3)
-    cmplwi r0, 0x1
-    bne DefeatDemo_Update_L_8012E6D4
-    li r0, 0x0
-    stb r0, 0x14(r31)
-    b DefeatDemo_Update_L_8012E700
-    DefeatDemo_Update_L_8012E6D4:
-    lfs f2, 0x10(r31)
-    lfs f1, lbl_806D7140(r2)
-    lfs f0, lbl_806D720C(r2)
-    fadds f1, f2, f1
-    stfs f1, 0x10(r31)
-    lfs f1, 0x10(r31)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne DefeatDemo_Update_L_8012E700
-    lfs f0, lbl_806D7210(r2)
-    stfs f0, 0x10(r31)
-    DefeatDemo_Update_L_8012E700:
-    lfs f1, lbl_806D71D0(r2)
-    lfs f0, 0x10(r31)
-    fcmpu cr0, f1, f0
-    bne DefeatDemo_Update_L_8012E724
-    lwz r0, g_characterId(r13)
-    cmpwi r0, 0x4
-    beq DefeatDemo_Update_L_8012E724
-    li r3, 0x13b
-    bl SoundMgr_Play
-    DefeatDemo_Update_L_8012E724:
-    lwz r3, 0xc(r31)
-    lfs f0, lbl_806D7150(r2)
-    lfs f1, 0x308c(r3)
-    lfs f2, 0x10(r31)
-    fcmpo cr0, f1, f0
-    blt DefeatDemo_Update_L_8012E750
-    fcmpo cr0, f2, f0
-    blt DefeatDemo_Update_L_8012E750
-    li r0, 0x1
-    stb r0, 0x3084(r3)
-    stfs f2, 0x308c(r3)
-    DefeatDemo_Update_L_8012E750:
-    lwz r30, 0xc(r31)
-    lfs f0, lbl_806D71BC(r2)
-    lfs f1, 0x3088(r30)
-    fcmpu cr0, f0, f1
-    beq DefeatDemo_Update_L_8012E79C
-    lbz r0, 0x3084(r30)
-    cmplwi r0, 0x0
-    beq DefeatDemo_Update_L_8012E77C
-    li r0, 0x0
-    stb r0, 0x3084(r30)
-    b DefeatDemo_Update_L_8012E788
-    DefeatDemo_Update_L_8012E77C:
-    lfs f0, 0x308c(r30)
-    fadds f0, f0, f1
-    stfs f0, 0x308c(r30)
-    DefeatDemo_Update_L_8012E788:
-    lwz r3, 0x4(r30)
-    lfs f1, 0x308c(r30)
-    bl HSD_CObjReqAnim
-    lwz r3, 0x4(r30)
-    bl HSD_CObjAnim
-    DefeatDemo_Update_L_8012E79C:
-    lwz r3, 0x0(r31)
-    lfs f1, 0x10(r31)
-    bl Object_SetField8_AndDirty
-    lwz r3, 0x0(r31)
-    bl clNormal3D_Exec
-    lwz r3, 0x4(r31)
-    lfs f1, 0x10(r31)
-    bl Object_SetField8_AndDirty
-    lwz r3, 0x4(r31)
-    bl clNormal3D_Exec
-    lwz r3, 0x8(r31)
-    lfs f1, 0x10(r31)
-    bl Object_SetField8_AndDirty
-    lwz r3, 0x8(r31)
-    bl clNormal3D_Exec
-    lwz r3, 0x18(r31)
-    lfs f1, lbl_806D7150(r2)
-    lfs f2, lbl_806D71E4(r2)
-    bl fn_80182B50
-    lwz r3, 0x1c(r31)
-    lfs f1, lbl_806D7150(r2)
-    lfs f2, lbl_806D71E8(r2)
-    bl fn_80182B50
-    lwz r3, 0x20(r31)
-    lfs f1, lbl_806D7150(r2)
-    lfs f2, lbl_806D71E8(r2)
-    bl fn_80182B50
-    lfs f2, 0x2c(r31)
-    lfs f1, lbl_806D71EC(r2)
-    lfs f0, lbl_806D71F0(r2)
-    fadds f1, f2, f1
-    stfs f1, 0x2c(r31)
-    lfs f1, 0x2c(r31)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne DefeatDemo_Update_L_8012E834
-    fsubs f0, f1, f0
-    stfs f0, 0x2c(r31)
-    DefeatDemo_Update_L_8012E834:
-    lfs f2, 0x30(r31)
-    lfs f1, lbl_806D71F4(r2)
-    lfs f0, lbl_806D71F0(r2)
-    fadds f1, f2, f1
-    stfs f1, 0x30(r31)
-    lfs f1, 0x30(r31)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne DefeatDemo_Update_L_8012E860
-    fsubs f0, f1, f0
-    stfs f0, 0x30(r31)
-    DefeatDemo_Update_L_8012E860:
-    lwz r30, 0x24(r31)
-    lfs f31, 0x2c(r31)
-    cmplwi r30, 0x0
-    bne DefeatDemo_Update_L_8012E880
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x2b8
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    DefeatDemo_Update_L_8012E880:
-    lwz r0, 0x14(r30)
-    rlwinm. r0, r0, 0, 14, 14
-    beq DefeatDemo_Update_L_8012E8A0
-    lis r4, lbl_80356C58@ha
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    addi r5, r4, lbl_80356C58@l
-    li r4, 0x2b9
-    bl __assert
-    DefeatDemo_Update_L_8012E8A0:
-    stfs f31, 0x20(r30)
-    lwz r0, 0x14(r30)
-    rlwinm. r0, r0, 0, 6, 6
-    bne DefeatDemo_Update_L_8012E8F8
-    cmplwi r30, 0x0
-    beq DefeatDemo_Update_L_8012E8F8
-    bne DefeatDemo_Update_L_8012E8CC
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x25d
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    DefeatDemo_Update_L_8012E8CC:
-    lwz r4, 0x14(r30)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne DefeatDemo_Update_L_8012E8E8
-    rlwinm. r0, r4, 0, 25, 25
-    beq DefeatDemo_Update_L_8012E8E8
-    li r3, 0x1
-    DefeatDemo_Update_L_8012E8E8:
-    clrlwi. r0, r3, 24
-    bne DefeatDemo_Update_L_8012E8F8
-    mr r3, r30
-    bl HSD_JObjSetMtxDirtySub
-    DefeatDemo_Update_L_8012E8F8:
-    lwz r30, 0x28(r31)
-    lfs f31, 0x30(r31)
-    cmplwi r30, 0x0
-    bne DefeatDemo_Update_L_8012E918
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x2b8
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    DefeatDemo_Update_L_8012E918:
-    lwz r0, 0x14(r30)
-    rlwinm. r0, r0, 0, 14, 14
-    beq DefeatDemo_Update_L_8012E938
-    lis r4, lbl_80356C58@ha
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    addi r5, r4, lbl_80356C58@l
-    li r4, 0x2b9
-    bl __assert
-    DefeatDemo_Update_L_8012E938:
-    stfs f31, 0x20(r30)
-    lwz r0, 0x14(r30)
-    rlwinm. r0, r0, 0, 6, 6
-    bne DefeatDemo_Update_L_8012E990
-    cmplwi r30, 0x0
-    beq DefeatDemo_Update_L_8012E990
-    bne DefeatDemo_Update_L_8012E964
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x25d
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    DefeatDemo_Update_L_8012E964:
-    lwz r4, 0x14(r30)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne DefeatDemo_Update_L_8012E980
-    rlwinm. r0, r4, 0, 25, 25
-    beq DefeatDemo_Update_L_8012E980
-    li r3, 0x1
-    DefeatDemo_Update_L_8012E980:
-    clrlwi. r0, r3, 24
-    bne DefeatDemo_Update_L_8012E990
-    mr r3, r30
-    bl HSD_JObjSetMtxDirtySub
-    DefeatDemo_Update_L_8012E990:
-    lfs f1, 0x10(r31)
-    lfs f0, lbl_806D7214(r2)
-    fcmpo cr0, f1, f0
-    blt DefeatDemo_Update_L_8012E9AC
-    lfs f0, lbl_806D7218(r2)
-    fcmpo cr0, f1, f0
-    ble DefeatDemo_Update_L_8012E9BC
-    DefeatDemo_Update_L_8012E9AC:
-    lwz r3, 0x34(r31)
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    b DefeatDemo_Update_L_8012EC24
-    DefeatDemo_Update_L_8012E9BC:
-    lwz r3, 0x34(r31)
-    li r4, 0x10
-    bl HSD_JObjClearFlagsAll
-    lfs f2, 0x10(r31)
-    lfs f1, lbl_806D7214(r2)
-    lfs f0, lbl_806D7194(r2)
-    fsubs f1, f2, f1
-    lfs f2, lbl_806D7150(r2)
-    lfs f3, lbl_806D7140(r2)
-    fdivs f1, f1, f0
-    bl Saturate_Double
-    lwz r30, 0x34(r31)
-    fmr f31, f1
-    cmplwi r30, 0x0
-    bne DefeatDemo_Update_L_8012EA08
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x325
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    DefeatDemo_Update_L_8012EA08:
-    lfs f0, lbl_806D71B4(r2)
-    fmadds f31, f0, f31, f0
-    stfs f31, 0x2c(r30)
-    lwz r0, 0x14(r30)
-    rlwinm. r0, r0, 0, 6, 6
-    bne DefeatDemo_Update_L_8012EA68
-    cmplwi r30, 0x0
-    beq DefeatDemo_Update_L_8012EA68
-    bne DefeatDemo_Update_L_8012EA3C
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x25d
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    DefeatDemo_Update_L_8012EA3C:
-    lwz r4, 0x14(r30)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne DefeatDemo_Update_L_8012EA58
-    rlwinm. r0, r4, 0, 25, 25
-    beq DefeatDemo_Update_L_8012EA58
-    li r3, 0x1
-    DefeatDemo_Update_L_8012EA58:
-    clrlwi. r0, r3, 24
-    bne DefeatDemo_Update_L_8012EA68
-    mr r3, r30
-    bl HSD_JObjSetMtxDirtySub
-    DefeatDemo_Update_L_8012EA68:
-    lwz r30, 0x34(r31)
-    cmplwi r30, 0x0
-    bne DefeatDemo_Update_L_8012EA84
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x341
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    DefeatDemo_Update_L_8012EA84:
-    stfs f31, 0x34(r30)
-    lwz r0, 0x14(r30)
-    rlwinm. r0, r0, 0, 6, 6
-    bne DefeatDemo_Update_L_8012EADC
-    cmplwi r30, 0x0
-    beq DefeatDemo_Update_L_8012EADC
-    bne DefeatDemo_Update_L_8012EAB0
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x25d
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    DefeatDemo_Update_L_8012EAB0:
-    lwz r4, 0x14(r30)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne DefeatDemo_Update_L_8012EACC
-    rlwinm. r0, r4, 0, 25, 25
-    beq DefeatDemo_Update_L_8012EACC
-    li r3, 0x1
-    DefeatDemo_Update_L_8012EACC:
-    clrlwi. r0, r3, 24
-    bne DefeatDemo_Update_L_8012EADC
-    mr r3, r30
-    bl HSD_JObjSetMtxDirtySub
-    DefeatDemo_Update_L_8012EADC:
-    lfs f2, 0x10(r31)
-    lfs f0, lbl_806D721C(r2)
-    fcmpo cr0, f2, f0
-    bge DefeatDemo_Update_L_8012EB8C
-    lfs f1, lbl_806D7214(r2)
-    lfs f0, lbl_806D71B0(r2)
-    fsubs f1, f2, f1
-    lfs f2, lbl_806D7150(r2)
-    lfs f3, lbl_806D7140(r2)
-    fdivs f1, f1, f0
-    bl Saturate_Double
-    lwz r30, 0x34(r31)
-    lfs f2, lbl_806D7220(r2)
-    lfs f0, lbl_806D7140(r2)
-    cmplwi r30, 0x0
-    fmadds f31, f2, f1, f0
-    bne DefeatDemo_Update_L_8012EB30
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x333
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    DefeatDemo_Update_L_8012EB30:
-    stfs f31, 0x30(r30)
-    lwz r0, 0x14(r30)
-    rlwinm. r0, r0, 0, 6, 6
-    bne DefeatDemo_Update_L_8012EC24
-    cmplwi r30, 0x0
-    beq DefeatDemo_Update_L_8012EC24
-    bne DefeatDemo_Update_L_8012EB5C
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x25d
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    DefeatDemo_Update_L_8012EB5C:
-    lwz r4, 0x14(r30)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne DefeatDemo_Update_L_8012EB78
-    rlwinm. r0, r4, 0, 25, 25
-    beq DefeatDemo_Update_L_8012EB78
-    li r3, 0x1
-    DefeatDemo_Update_L_8012EB78:
-    clrlwi. r0, r3, 24
-    bne DefeatDemo_Update_L_8012EC24
-    mr r3, r30
-    bl HSD_JObjSetMtxDirtySub
-    b DefeatDemo_Update_L_8012EC24
-    DefeatDemo_Update_L_8012EB8C:
-    fsubs f1, f2, f0
-    lfs f0, lbl_806D722C(r2)
-    lfs f2, lbl_806D7150(r2)
-    lfs f3, lbl_806D7140(r2)
-    fmuls f1, f1, f0
-    bl Saturate_Double
-    lwz r30, 0x34(r31)
-    lfs f2, lbl_806D7228(r2)
-    lfs f0, lbl_806D7224(r2)
-    cmplwi r30, 0x0
-    fnmsubs f31, f2, f1, f0
-    bne DefeatDemo_Update_L_8012EBCC
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x333
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    DefeatDemo_Update_L_8012EBCC:
-    stfs f31, 0x30(r30)
-    lwz r0, 0x14(r30)
-    rlwinm. r0, r0, 0, 6, 6
-    bne DefeatDemo_Update_L_8012EC24
-    cmplwi r30, 0x0
-    beq DefeatDemo_Update_L_8012EC24
-    bne DefeatDemo_Update_L_8012EBF8
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x25d
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    DefeatDemo_Update_L_8012EBF8:
-    lwz r4, 0x14(r30)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne DefeatDemo_Update_L_8012EC14
-    rlwinm. r0, r4, 0, 25, 25
-    beq DefeatDemo_Update_L_8012EC14
-    li r3, 0x1
-    DefeatDemo_Update_L_8012EC14:
-    clrlwi. r0, r3, 24
-    bne DefeatDemo_Update_L_8012EC24
-    mr r3, r30
-    bl HSD_JObjSetMtxDirtySub
-    DefeatDemo_Update_L_8012EC24:
-    psq_l f31, 0x18(r1), 0, 0
-    lwz r0, 0x24(r1)
-    lfd f31, 0x10(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+struct CoinVec {
+    float x;
+    float y;
+    float z;
+};
+
+struct CoinQuat {
+    float x;
+    float y;
+    float z;
+    float w;
+};
+
+struct CoinJObj {
+    unsigned char pad0[0x14];
+    unsigned int flags;
+    unsigned char pad18[0x4];
+    CoinQuat rotate;
+    CoinVec scale;
+    CoinVec translate;
+    float mtx[3][4];
+};
+
+struct CoinScene3D : CoinVObj {
+    virtual ~CoinScene3D();
+    void *cobj;
+    unsigned char pad8[0x307C];
+    unsigned char animFirst;
+    float animSpeed;
+    float animFrame;
+};
+
+struct DefeatDemo {
+    void *body;
+    void *hand;
+    void *effect;
+    CoinScene3D *scene;
+    float frame;
+    unsigned char first;
+    void *spinA;
+    void *spinB;
+    void *spinC;
+    CoinJObj *wheelA;
+    CoinJObj *wheelB;
+    float wheelAngleA;
+    float wheelAngleB;
+    CoinJObj *flash;
+};
+
+static inline void CoinJObj_SetMtxDirty(CoinJObj *jobj) {
+    unsigned int flags;
+    unsigned char dirty;
+
+    if (jobj != 0) {
+        if (jobj == 0) {
+            __assert(lbl_806D7174, 0x25D, lbl_806D717C);
+        }
+        flags = jobj->flags;
+        dirty = 0;
+        if (!(flags & 0x00800000) && (flags & 0x40)) {
+            dirty = 1;
+        }
+        if (!dirty) {
+            HSD_JObjSetMtxDirtySub(jobj);
+        }
+    }
 }
 
-extern "C" asm void BossKoopa_UpdateAnim(void) { /* 0x8012EC44 size:0x438 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stw r31, 0x2c(r1)
-    mr r31, r3
-    lwz r0, 0x10(r3)
-    lwz r3, 0x14(r3)
-    cmpw r0, r3
-    beq BossKoopa_UpdateAnim_L_8012ED0C
-    stw r3, 0x10(r31)
-    li r0, 0x1
-    lfs f0, lbl_806D7150(r2)
-    stfs f0, 0x18(r31)
-    stb r0, 0x1c(r31)
-    stfs f0, 0x20(r31)
-    lwz r0, 0x10(r31)
-    cmpwi r0, 0x0
-    bne BossKoopa_UpdateAnim_L_8012ED0C
-    lwz r0, 0x38(r31)
-    cmpwi r0, 0x40
-    blt BossKoopa_UpdateAnim_L_8012ECA0
-    li r0, 0x0
-    stw r0, 0x38(r31)
-    BossKoopa_UpdateAnim_L_8012ECA0:
-    lwz r5, 0x38(r31)
-    lis r3, 0x4330
-    lis r4, lbl_80495994@ha
-    stw r3, 0x8(r1)
-    addi r0, r5, 0x1
-    lfd f2, lbl_806D7148(r2)
-    stw r0, 0x38(r31)
-    slwi r6, r5, 2
-    addi r5, r4, lbl_80495994@l
-    lwz r7, 0x30(r31)
-    lwz r4, 0x34(r31)
-    xoris r0, r7, 0x8000
-    stw r3, 0x10(r1)
-    subf r3, r7, r4
-    lfsx f3, r5, r6
-    xoris r3, r3, 0x8000
-    stw r0, 0x14(r1)
-    stw r3, 0xc(r1)
-    lfd f0, 0x10(r1)
-    lfd f1, 0x8(r1)
-    fsubs f0, f0, f2
-    fsubs f1, f1, f2
-    fmadds f0, f1, f3, f0
-    fctiwz f0, f0
-    stfd f0, 0x18(r1)
-    lwz r0, 0x1c(r1)
-    stw r0, 0x2c(r31)
-    BossKoopa_UpdateAnim_L_8012ED0C:
-    lwz r0, 0x10(r31)
-    cmpwi r0, 0x4
-    beq BossKoopa_UpdateAnim_L_8012F068
-    lbz r0, 0x1c(r31)
-    cmplwi r0, 0x0
-    beq BossKoopa_UpdateAnim_L_8012ED30
-    li r0, 0x0
-    stb r0, 0x1c(r31)
-    b BossKoopa_UpdateAnim_L_8012ED40
-    BossKoopa_UpdateAnim_L_8012ED30:
-    lfs f1, 0x20(r31)
-    lfs f0, lbl_806D7140(r2)
-    fadds f0, f1, f0
-    stfs f0, 0x20(r31)
-    BossKoopa_UpdateAnim_L_8012ED40:
-    lwz r0, 0x10(r31)
-    cmpwi r0, 0x1
-    beq BossKoopa_UpdateAnim_L_8012EE24
-    bge BossKoopa_UpdateAnim_L_8012ED5C
-    cmpwi r0, 0x0
-    bge BossKoopa_UpdateAnim_L_8012ED68
-    b BossKoopa_UpdateAnim_L_8012EF74
-    BossKoopa_UpdateAnim_L_8012ED5C:
-    cmpwi r0, 0x4
-    bge BossKoopa_UpdateAnim_L_8012EF74
-    b BossKoopa_UpdateAnim_L_8012EF48
-    BossKoopa_UpdateAnim_L_8012ED68:
-    lfs f1, 0x20(r31)
-    lfs f0, lbl_806D7188(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne BossKoopa_UpdateAnim_L_8012ED84
-    lfs f0, lbl_806D7150(r2)
-    stfs f0, 0x20(r31)
-    BossKoopa_UpdateAnim_L_8012ED84:
-    lfs f0, 0x20(r31)
-    stfs f0, 0x18(r31)
-    bl IsRaceStarted
-    clrlwi. r0, r3, 24
-    beq BossKoopa_UpdateAnim_L_8012EF74
-    lwz r3, 0x2c(r31)
-    cmpwi r3, 0x0
-    ble BossKoopa_UpdateAnim_L_8012EDB0
-    subi r0, r3, 0x1
-    stw r0, 0x2c(r31)
-    b BossKoopa_UpdateAnim_L_8012EF74
-    BossKoopa_UpdateAnim_L_8012EDB0:
-    li r0, 0x1
-    stw r0, 0x14(r31)
-    lwz r0, 0x3c(r31)
-    cmpwi r0, 0x30
-    blt BossKoopa_UpdateAnim_L_8012EDCC
-    li r0, 0x0
-    stw r0, 0x3c(r31)
-    BossKoopa_UpdateAnim_L_8012EDCC:
-    lwz r5, 0x3c(r31)
-    lis r3, lbl_80495A94@ha
-    addi r3, r3, lbl_80495A94@l
-    lfs f0, lbl_806D71B4(r2)
-    addi r4, r5, 0x1
-    slwi r0, r5, 2
-    stw r4, 0x3c(r31)
-    lfsx f1, r3, r0
-    fcmpo cr0, f1, f0
-    bge BossKoopa_UpdateAnim_L_8012EE00
-    li r0, 0x0
-    stw r0, 0x24(r31)
-    b BossKoopa_UpdateAnim_L_8012EF74
-    BossKoopa_UpdateAnim_L_8012EE00:
-    lfs f0, lbl_806D7238(r2)
-    fcmpo cr0, f1, f0
-    bge BossKoopa_UpdateAnim_L_8012EE18
-    li r0, 0x1
-    stw r0, 0x24(r31)
-    b BossKoopa_UpdateAnim_L_8012EF74
-    BossKoopa_UpdateAnim_L_8012EE18:
-    li r0, 0x2
-    stw r0, 0x24(r31)
-    b BossKoopa_UpdateAnim_L_8012EF74
-    BossKoopa_UpdateAnim_L_8012EE24:
-    lwz r0, 0x24(r31)
-    cmpwi r0, 0x2
-    beq BossKoopa_UpdateAnim_L_8012EEA0
-    bge BossKoopa_UpdateAnim_L_8012EE44
-    cmpwi r0, 0x0
-    beq BossKoopa_UpdateAnim_L_8012EE50
-    bge BossKoopa_UpdateAnim_L_8012EE74
-    b BossKoopa_UpdateAnim_L_8012EF74
-    BossKoopa_UpdateAnim_L_8012EE44:
-    cmpwi r0, 0x4
-    bge BossKoopa_UpdateAnim_L_8012EF74
-    b BossKoopa_UpdateAnim_L_8012EEE4
-    BossKoopa_UpdateAnim_L_8012EE50:
-    lfs f1, 0x20(r31)
-    lfs f0, lbl_806D721C(r2)
-    stfs f1, 0x18(r31)
-    lfs f1, 0x20(r31)
-    fcmpo cr0, f1, f0
-    ble BossKoopa_UpdateAnim_L_8012EF74
-    li r0, 0x0
-    stw r0, 0x14(r31)
-    b BossKoopa_UpdateAnim_L_8012EF74
-    BossKoopa_UpdateAnim_L_8012EE74:
-    lfs f2, lbl_806D7134(r2)
-    lfs f1, 0x20(r31)
-    lfs f0, lbl_806D723C(r2)
-    fmuls f1, f2, f1
-    stfs f1, 0x18(r31)
-    lfs f1, 0x20(r31)
-    fcmpo cr0, f1, f0
-    ble BossKoopa_UpdateAnim_L_8012EF74
-    li r0, 0x0
-    stw r0, 0x14(r31)
-    b BossKoopa_UpdateAnim_L_8012EF74
-    BossKoopa_UpdateAnim_L_8012EEA0:
-    lfs f0, 0x20(r31)
-    lfs f2, lbl_806D7188(r2)
-    fcmpo cr0, f0, f2
-    bge BossKoopa_UpdateAnim_L_8012EEB8
-    stfs f0, 0x18(r31)
-    b BossKoopa_UpdateAnim_L_8012EEC8
-    BossKoopa_UpdateAnim_L_8012EEB8:
-    fsubs f0, f0, f2
-    lfs f1, lbl_806D7238(r2)
-    fmadds f0, f1, f0, f2
-    stfs f0, 0x18(r31)
-    BossKoopa_UpdateAnim_L_8012EEC8:
-    lfs f1, 0x20(r31)
-    lfs f0, lbl_806D7240(r2)
-    fcmpo cr0, f1, f0
-    ble BossKoopa_UpdateAnim_L_8012EF74
-    li r0, 0x0
-    stw r0, 0x14(r31)
-    b BossKoopa_UpdateAnim_L_8012EF74
-    BossKoopa_UpdateAnim_L_8012EEE4:
-    lfs f2, 0x20(r31)
-    lfs f1, lbl_806D7244(r2)
-    fcmpo cr0, f2, f1
-    cror eq, lt, eq
-    bne BossKoopa_UpdateAnim_L_8012EF00
-    stfs f2, 0x18(r31)
-    b BossKoopa_UpdateAnim_L_8012EF2C
-    BossKoopa_UpdateAnim_L_8012EF00:
-    lfs f0, lbl_806D7248(r2)
-    fcmpo cr0, f2, f0
-    cror eq, lt, eq
-    bne BossKoopa_UpdateAnim_L_8012EF20
-    fsubs f0, f2, f1
-    fsubs f0, f1, f0
-    stfs f0, 0x18(r31)
-    b BossKoopa_UpdateAnim_L_8012EF2C
-    BossKoopa_UpdateAnim_L_8012EF20:
-    lfs f0, lbl_806D7234(r2)
-    fsubs f0, f2, f0
-    stfs f0, 0x18(r31)
-    BossKoopa_UpdateAnim_L_8012EF2C:
-    lfs f1, 0x20(r31)
-    lfs f0, lbl_806D724C(r2)
-    fcmpo cr0, f1, f0
-    ble BossKoopa_UpdateAnim_L_8012EF74
-    li r0, 0x0
-    stw r0, 0x14(r31)
-    b BossKoopa_UpdateAnim_L_8012EF74
-    BossKoopa_UpdateAnim_L_8012EF48:
-    lfs f1, 0x20(r31)
-    lfs f0, lbl_806D7250(r2)
-    stfs f1, 0x18(r31)
-    lfs f1, 0x20(r31)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne BossKoopa_UpdateAnim_L_8012EF74
-    li r3, 0x1
-    li r0, 0x3
-    stw r3, 0x14(r31)
-    stw r0, 0x24(r31)
-    BossKoopa_UpdateAnim_L_8012EF74:
-    lwz r0, 0x10(r31)
-    lfs f1, 0x18(r31)
-    slwi r0, r0, 2
-    lwzx r3, r31, r0
-    bl Object_SetField8_AndDirty
-    lwz r0, 0x10(r31)
-    slwi r0, r0, 2
-    lwzx r3, r31, r0
-    bl clNormal3D_Exec
-    lwz r0, 0x10(r31)
-    cmpwi r0, 0x1
-    bne BossKoopa_UpdateAnim_L_8012F014
-    lfs f1, 0x18(r31)
-    lfs f0, lbl_806D7188(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne BossKoopa_UpdateAnim_L_8012F014
-    lfs f0, lbl_806D7244(r2)
-    fcmpo cr0, f1, f0
-    cror eq, lt, eq
-    bne BossKoopa_UpdateAnim_L_8012F014
-    lwz r4, 0x28(r31)
-    lbz r0, 0x10(r4)
-    cmplwi r0, 0x1
-    beq BossKoopa_UpdateAnim_L_8012EFF8
-    li r3, 0x1
-    stb r3, 0x10(r4)
-    lbz r0, 0x10(r4)
-    cmplwi r0, 0x0
-    beq BossKoopa_UpdateAnim_L_8012EFF8
-    li r0, 0x0
-    stw r0, 0xc(r4)
-    stb r3, 0x1c(r4)
-    BossKoopa_UpdateAnim_L_8012EFF8:
-    li r3, 0x37
-    bl fn_8016C360
-    clrlwi. r0, r3, 24
-    bne BossKoopa_UpdateAnim_L_8012F060
-    li r3, 0x37
-    bl SoundMgr_PlaySE
-    b BossKoopa_UpdateAnim_L_8012F060
-    BossKoopa_UpdateAnim_L_8012F014:
-    lwz r4, 0x28(r31)
-    lbz r0, 0x10(r4)
-    cmplwi r0, 0x0
-    beq BossKoopa_UpdateAnim_L_8012F044
-    li r3, 0x0
-    stb r3, 0x10(r4)
-    lbz r0, 0x10(r4)
-    cmplwi r0, 0x0
-    beq BossKoopa_UpdateAnim_L_8012F044
-    stw r3, 0xc(r4)
-    li r0, 0x1
-    stb r0, 0x1c(r4)
-    BossKoopa_UpdateAnim_L_8012F044:
-    li r3, 0x37
-    bl fn_8016C360
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne BossKoopa_UpdateAnim_L_8012F060
-    li r3, 0x37
-    bl fn_8016C394
-    BossKoopa_UpdateAnim_L_8012F060:
-    lwz r3, 0x28(r31)
-    bl KoopaFireball_Update
-    BossKoopa_UpdateAnim_L_8012F068:
-    lwz r0, 0x34(r1)
-    lwz r31, 0x2c(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+static inline void CoinJObj_SetRotationY(CoinJObj *jobj, float y) {
+    if (jobj == 0) {
+        __assert(lbl_806D7174, 0x2B8, lbl_806D717C);
+    }
+    if (jobj->flags & 0x00020000) {
+        __assert(lbl_806D7174, 0x2B9, lbl_80356C58);
+    }
+    jobj->rotate.y = y;
+    if (!(jobj->flags & 0x02000000)) {
+        CoinJObj_SetMtxDirty(jobj);
+    }
 }
 
-extern "C" asm void KoopaFireball_Update(void) { /* 0x8012F07C size:0x3E0 */
+static inline void CoinJObj_SetScaleX(CoinJObj *jobj, float x) {
+    if (jobj == 0) {
+        __assert(lbl_806D7174, 0x325, lbl_806D717C);
+    }
+    jobj->scale.x = x;
+    if (!(jobj->flags & 0x02000000)) {
+        CoinJObj_SetMtxDirty(jobj);
+    }
+}
+
+static inline void CoinJObj_SetScaleY(CoinJObj *jobj, float y) {
+    if (jobj == 0) {
+        __assert(lbl_806D7174, 0x333, lbl_806D717C);
+    }
+    jobj->scale.y = y;
+    if (!(jobj->flags & 0x02000000)) {
+        CoinJObj_SetMtxDirty(jobj);
+    }
+}
+
+static inline void CoinJObj_SetScaleZ(CoinJObj *jobj, float z) {
+    if (jobj == 0) {
+        __assert(lbl_806D7174, 0x341, lbl_806D717C);
+    }
+    jobj->scale.z = z;
+    if (!(jobj->flags & 0x02000000)) {
+        CoinJObj_SetMtxDirty(jobj);
+    }
+}
+
+static inline void CoinScene3D_SetAnimFrame(CoinScene3D *scene, float frame) {
+    if (scene->animFrame < 0.0f || frame < 0.0f) {
+        return;
+    }
+    scene->animFirst = 1;
+    scene->animFrame = frame;
+}
+
+static inline void CoinScene3D_UpdateAnim(CoinScene3D *scene) {
+    if (scene->animSpeed == -1.0f) {
+        return;
+    }
+    if (scene->animFirst) {
+        scene->animFirst = 0;
+    } else {
+        scene->animFrame += scene->animSpeed;
+    }
+    HSD_CObjReqAnim(scene->cobj, scene->animFrame);
+    HSD_CObjAnim(scene->cobj);
+}
+
+extern "C" void DefeatDemo_Update(DefeatDemo *self) { /* 0x8012E69C size:0x5A8 */
+    float s;
+
+    if (self->first == 1) {
+        self->first = 0;
+    } else {
+        self->frame += 1.0f;
+        if (self->frame >= 270.0f) {
+            self->frame = 269.0f;
+        }
+    }
+    if (self->frame == 180.0f && g_characterId != 4) {
+        SoundMgr_Play(0x13B);
+    }
+    CoinScene3D_SetAnimFrame(self->scene, self->frame);
+    CoinScene3D_UpdateAnim(self->scene);
+    Object_SetField8_AndDirty(self->body, self->frame);
+    clNormal3D_Exec(self->body);
+    Object_SetField8_AndDirty(self->hand, self->frame);
+    clNormal3D_Exec(self->hand);
+    Object_SetField8_AndDirty(self->effect, self->frame);
+    clNormal3D_Exec(self->effect);
+    fn_80182B50(self->spinA, 0.0f, 0.002f);
+    fn_80182B50(self->spinB, 0.0f, -0.002f);
+    fn_80182B50(self->spinC, 0.0f, -0.002f);
+    self->wheelAngleA += 0.00087266444f;
+    if (self->wheelAngleA >= 6.283184f) {
+        self->wheelAngleA -= 6.283184f;
+    }
+    self->wheelAngleB += 0.0005817763f;
+    if (self->wheelAngleB >= 6.283184f) {
+        self->wheelAngleB -= 6.283184f;
+    }
+    CoinJObj_SetRotationY(self->wheelA, self->wheelAngleA);
+    CoinJObj_SetRotationY(self->wheelB, self->wheelAngleB);
+    if (self->frame < 192.0f || self->frame > 230.0f) {
+        HSD_JObjSetFlagsAll(self->flash, 0x10);
+    } else {
+        HSD_JObjClearFlagsAll(self->flash, 0x10);
+        s = Saturate_Double((self->frame - 192.0f) / 3.0f, 0.0f, 1.0f);
+        CoinJObj_SetScaleX(self->flash, 0.5f * s + 0.5f);
+        CoinJObj_SetScaleZ(self->flash, 0.5f * s + 0.5f);
+        if (self->frame < 198.0f) {
+            CoinJObj_SetScaleY(self->flash, 8.0f * Saturate_Double((self->frame - 192.0f) / 6.0f, 0.0f, 1.0f) + 1.0f);
+        } else {
+            CoinJObj_SetScaleY(self->flash, 9.0f - 8.8f * Saturate_Double((self->frame - 198.0f) / 32.0f, 0.0f, 1.0f));
+        }
+    }
+}
+
+struct KoopaFlame {
+    float life;
+    CoinVec vel;
+    CoinVec pos;
+    float scale;
+    float alpha;
+    float grow;
+};
+
+struct KoopaFireball {
+    void *model;
+    CoinJObj *jobj;
+    float angle;
+    int cooldown;
+    unsigned char active;
+    int rnd64;
+    int rnd48;
+    unsigned char first;
+    CoinVec dir;
+    KoopaFlame flames[64];
+};
+
+struct BossKoopa {
+    void *anims[4];
+    int state;
+    int reqState;
+    float frame;
+    unsigned char justChanged;
+    float timer;
+    int attack;
+    KoopaFireball *fireball;
+    int wait;
+    int waitMin;
+    int waitMax;
+    int waitRndIdx;
+    int attackRndIdx;
+};
+
+static inline void KoopaFireball_SetActive(KoopaFireball *fb, unsigned char on) {
+    if (fb->active != on) {
+        fb->active = on;
+        if (fb->active) {
+            fb->cooldown = 0;
+            fb->first = 1;
+        }
+    }
+}
+
+static inline float BossKoopa_Rand64(BossKoopa *self) {
+    if (self->waitRndIdx >= 64) {
+        self->waitRndIdx = 0;
+    }
+    return lbl_80495994[self->waitRndIdx++];
+}
+
+static inline float BossKoopa_Rand48(BossKoopa *self) {
+    if (self->attackRndIdx >= 48) {
+        self->attackRndIdx = 0;
+    }
+    return lbl_80495A94[self->attackRndIdx++];
+}
+
+extern "C" void BossKoopa_UpdateAnim(BossKoopa *self) { /* 0x8012EC44 size:0x438 */
+    float r;
+    float t;
+
+    if (self->state != self->reqState) {
+        self->state = self->reqState;
+        self->frame = 0.0f;
+        self->justChanged = 1;
+        self->timer = 0.0f;
+        if (self->state == 0) {
+            self->wait = (int)((self->waitMax - self->waitMin) * BossKoopa_Rand64(self) + self->waitMin);
+        }
+    }
+    if (self->state == 4) {
+        return;
+    }
+    if (self->justChanged) {
+        self->justChanged = 0;
+    } else {
+        self->timer += 1.0f;
+    }
+    switch (self->state) {
+    case 0:
+        if (self->timer >= 60.0f) {
+            self->timer = 0.0f;
+        }
+        self->frame = self->timer;
+        if (IsRaceStarted()) {
+            if (self->wait > 0) {
+                self->wait--;
+            } else {
+                self->reqState = 1;
+                r = BossKoopa_Rand48(self);
+                if (r < 0.5f) {
+                    self->attack = 0;
+                } else if (r < 0.75f) {
+                    self->attack = 1;
+                } else {
+                    self->attack = 2;
+                }
+            }
+        }
+        break;
+    case 1:
+        switch (self->attack) {
+        case 0:
+            self->frame = self->timer;
+            if (self->timer > 198.0f) {
+                self->reqState = 0;
+            }
+            break;
+        case 1:
+            self->frame = 1.2f * self->timer;
+            if (self->timer > 165.0f) {
+                self->reqState = 0;
+            }
+            break;
+        case 2:
+            t = self->timer;
+            if (t < 60.0f) {
+                self->frame = t;
+            } else {
+                self->frame = 0.75f * (t - 60.0f) + 60.0f;
+            }
+            if (self->timer > 244.0f) {
+                self->reqState = 0;
+            }
+            break;
+        case 3:
+            t = self->timer;
+            if (t <= 150.0f) {
+                self->frame = t;
+            } else if (t <= 200.0f) {
+                self->frame = 150.0f - (t - 150.0f);
+            } else {
+                self->frame = t - 100.0f;
+            }
+            if (self->timer > 298.0f) {
+                self->reqState = 0;
+            }
+            break;
+        }
+        break;
+    case 2:
+    case 3:
+        self->frame = self->timer;
+        if (self->timer >= 69.0f) {
+            self->reqState = 1;
+            self->attack = 3;
+        }
+        break;
+    }
+    Object_SetField8_AndDirty(self->anims[self->state], self->frame);
+    clNormal3D_Exec(self->anims[self->state]);
+    if (self->state == 1 && self->frame >= 60.0f && self->frame <= 150.0f) {
+        KoopaFireball_SetActive(self->fireball, 1);
+        if (!fn_8016C360(0x37)) {
+            SoundMgr_PlaySE(0x37);
+        }
+    } else {
+        KoopaFireball_SetActive(self->fireball, 0);
+        if (fn_8016C360(0x37) == 1) {
+            fn_8016C394(0x37);
+        }
+    }
+    KoopaFireball_Update(self->fireball);
+}
+
+extern "C" asm void KoopaFireball_Update(KoopaFireball *self) { /* 0x8012F07C size:0x3E0 */
     nofralloc
     stwu r1, -0x60(r1)
     mflr r0
@@ -4175,563 +3768,294 @@ extern "C" asm void KoopaFireball_Update(void) { /* 0x8012F07C size:0x3E0 */
     blr
 }
 
-extern "C" asm void Shell_UpdateState(void) { /* 0x8012F45C size:0x458 */
-    nofralloc
-    stwu r1, -0xb0(r1)
-    mflr r0
-    stw r0, 0xb4(r1)
-    stw r31, 0xac(r1)
-    mr r31, r3
-    stw r30, 0xa8(r1)
-    lwz r0, 0x8(r3)
-    cmpwi r0, 0x0
-    beq Shell_UpdateState_L_8012F89C
-    cmpwi r0, 0x4
-    beq Shell_UpdateState_L_8012F5EC
-    bge Shell_UpdateState_L_8012F4A4
-    cmpwi r0, 0x2
-    beq Shell_UpdateState_L_8012F894
-    bge Shell_UpdateState_L_8012F4B4
-    cmpwi r0, 0x1
-    bge Shell_UpdateState_L_8012F5D8
-    b Shell_UpdateState_L_8012F894
-    Shell_UpdateState_L_8012F4A4:
-    cmpwi r0, 0x6
-    beq Shell_UpdateState_L_8012F754
-    bge Shell_UpdateState_L_8012F894
-    b Shell_UpdateState_L_8012F704
-    Shell_UpdateState_L_8012F4B4:
-    lwz r30, 0x44(r31)
-    cmplwi r30, 0x0
-    beq Shell_UpdateState_L_8012F5A4
-    bne Shell_UpdateState_L_8012F4D4
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x47c
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    Shell_UpdateState_L_8012F4D4:
-    cmplwi r30, 0x0
-    beq Shell_UpdateState_L_8012F51C
-    bne Shell_UpdateState_L_8012F4F0
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x25d
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    Shell_UpdateState_L_8012F4F0:
-    lwz r4, 0x14(r30)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne Shell_UpdateState_L_8012F50C
-    rlwinm. r0, r4, 0, 25, 25
-    beq Shell_UpdateState_L_8012F50C
-    li r3, 0x1
-    Shell_UpdateState_L_8012F50C:
-    clrlwi. r0, r3, 24
-    beq Shell_UpdateState_L_8012F51C
-    mr r3, r30
-    bl HSD_JObjSetupMatrixSub
-    Shell_UpdateState_L_8012F51C:
-    addi r30, r30, 0x44
-    addi r4, r31, 0x10
-    mr r3, r30
-    bl PSMTXCopy
-    lfs f1, lbl_806D7164(r2)
-    addi r3, r1, 0x74
-    li r4, 0x5a
-    bl PSMTXRotRad
-    addi r3, r31, 0x10
-    addi r4, r1, 0x74
-    mr r5, r3
-    bl PSMTXConcat
-    lfs f1, lbl_806D7140(r2)
-    addi r3, r1, 0x74
-    fmr f2, f1
-    fmr f3, f1
-    bl PSMTXScale
-    addi r3, r31, 0x10
-    addi r4, r1, 0x74
-    mr r5, r3
-    bl PSMTXConcat
-    lfs f2, lbl_806D7184(r2)
-    lfs f1, 0x14(r31)
-    lfs f0, 0xc(r30)
-    fmadds f0, f2, f1, f0
-    stfs f0, 0x1c(r31)
-    lfs f1, 0x24(r31)
-    lfs f0, 0x1c(r30)
-    fmadds f0, f2, f1, f0
-    stfs f0, 0x2c(r31)
-    lfs f1, 0x34(r31)
-    lfs f0, 0x2c(r30)
-    fmadds f0, f2, f1, f0
-    stfs f0, 0x3c(r31)
-    Shell_UpdateState_L_8012F5A4:
-    lfs f0, 0xc(r31)
-    lfs f1, lbl_806D7188(r2)
-    fcmpo cr0, f0, f1
-    bge Shell_UpdateState_L_8012F894
-    lfs f3, lbl_806D7140(r2)
-    lfs f2, lbl_806D7150(r2)
-    fadds f0, f0, f3
-    stfs f0, 0xc(r31)
-    lfs f0, 0xc(r31)
-    fdivs f1, f0, f1
-    bl Saturate_Double
-    stfs f1, 0x40(r31)
-    b Shell_UpdateState_L_8012F894
-    Shell_UpdateState_L_8012F5D8:
-    lfs f1, 0x2c(r31)
-    lfs f0, lbl_806D71C4(r2)
-    fsubs f0, f1, f0
-    stfs f0, 0x2c(r31)
-    b Shell_UpdateState_L_8012F894
-    Shell_UpdateState_L_8012F5EC:
-    lfs f1, lbl_806D7140(r2)
-    addi r3, r1, 0x44
-    lfs f0, 0xc(r31)
-    fmr f2, f1
-    fadds f0, f0, f1
-    fmr f3, f1
-    stfs f0, 0xc(r31)
-    lfs f0, 0x1c(r31)
-    stfs f0, 0x8(r1)
-    lfs f0, 0x2c(r31)
-    stfs f0, 0xc(r1)
-    lfs f0, 0x3c(r31)
-    stfs f0, 0x10(r1)
-    bl PSMTXScale
-    addi r3, r31, 0x10
-    addi r4, r1, 0x44
-    mr r5, r3
-    bl PSMTXConcat
-    lfs f1, lbl_806D7260(r2)
-    addi r3, r1, 0x44
-    li r4, 0x59
-    bl PSMTXRotRad
-    addi r3, r31, 0x10
-    addi r4, r1, 0x44
-    mr r5, r3
-    bl PSMTXConcat
-    lfs f2, 0x5c(r31)
-    lfs f4, 0x68(r31)
-    lfs f0, 0x8(r1)
-    lfs f1, 0xc(r1)
-    fmadds f3, f2, f4, f0
-    lfs f0, 0x10(r1)
-    stfs f3, 0x8(r1)
-    lfs f2, 0x60(r31)
-    fmadds f1, f2, f4, f1
-    stfs f1, 0xc(r1)
-    lfs f1, 0x64(r31)
-    fmadds f0, f1, f4, f0
-    stfs f0, 0x10(r1)
-    stfs f3, 0x1c(r31)
-    lfs f0, 0xc(r1)
-    stfs f0, 0x2c(r31)
-    lfs f0, 0x10(r1)
-    stfs f0, 0x3c(r31)
-    lbz r0, 0x4c(r31)
-    cmplwi r0, 0x0
-    bne Shell_UpdateState_L_8012F6CC
-    lwz r3, 0x48(r31)
-    addi r4, r1, 0x8
-    bl fn_80123480
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne Shell_UpdateState_L_8012F894
-    li r0, 0x1
-    stb r0, 0x4c(r31)
-    b Shell_UpdateState_L_8012F894
-    Shell_UpdateState_L_8012F6CC:
-    lfs f1, 0xc(r1)
-    lfs f0, lbl_806D7264(r2)
-    fcmpo cr0, f1, f0
-    blt Shell_UpdateState_L_8012F6F0
-    lwz r3, 0x48(r31)
-    addi r4, r1, 0x8
-    bl fn_80123480
-    clrlwi. r0, r3, 24
-    bne Shell_UpdateState_L_8012F894
-    Shell_UpdateState_L_8012F6F0:
-    li r0, 0x5
-    lfs f0, lbl_806D7150(r2)
-    stw r0, 0x8(r31)
-    stfs f0, 0xc(r31)
-    b Shell_UpdateState_L_8012F894
-    Shell_UpdateState_L_8012F704:
-    lfs f2, 0xc(r31)
-    lfs f1, lbl_806D7198(r2)
-    fcmpo cr0, f2, f1
-    bge Shell_UpdateState_L_8012F73C
-    lfs f0, lbl_806D7140(r2)
-    fadds f0, f2, f0
-    stfs f0, 0xc(r31)
-    lfs f0, 0xc(r31)
-    lfs f2, 0x40(r31)
-    fdivs f0, f0, f1
-    fneg f1, f2
-    fmadds f0, f1, f0, f2
-    stfs f0, 0x40(r31)
-    b Shell_UpdateState_L_8012F894
-    Shell_UpdateState_L_8012F73C:
-    li r0, 0x0
-    lfs f0, lbl_806D7150(r2)
-    stw r0, 0x8(r31)
-    stfs f0, 0xc(r31)
-    stfs f0, 0x40(r31)
-    b Shell_UpdateState_L_8012F894
-    Shell_UpdateState_L_8012F754:
-    lfs f1, 0xc(r31)
-    lfs f0, lbl_806D7198(r2)
-    fcmpo cr0, f1, f0
-    bge Shell_UpdateState_L_8012F880
-    lfs f0, lbl_806D7140(r2)
-    fadds f0, f1, f0
-    stfs f0, 0xc(r31)
-    lwz r30, 0x44(r31)
-    cmplwi r30, 0x0
-    beq Shell_UpdateState_L_8012F860
-    bne Shell_UpdateState_L_8012F790
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x47c
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    Shell_UpdateState_L_8012F790:
-    cmplwi r30, 0x0
-    beq Shell_UpdateState_L_8012F7D8
-    bne Shell_UpdateState_L_8012F7AC
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x25d
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    Shell_UpdateState_L_8012F7AC:
-    lwz r4, 0x14(r30)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne Shell_UpdateState_L_8012F7C8
-    rlwinm. r0, r4, 0, 25, 25
-    beq Shell_UpdateState_L_8012F7C8
-    li r3, 0x1
-    Shell_UpdateState_L_8012F7C8:
-    clrlwi. r0, r3, 24
-    beq Shell_UpdateState_L_8012F7D8
-    mr r3, r30
-    bl HSD_JObjSetupMatrixSub
-    Shell_UpdateState_L_8012F7D8:
-    addi r30, r30, 0x44
-    addi r4, r31, 0x10
-    mr r3, r30
-    bl PSMTXCopy
-    lfs f1, lbl_806D7164(r2)
-    addi r3, r1, 0x14
-    li r4, 0x5a
-    bl PSMTXRotRad
-    addi r3, r31, 0x10
-    addi r4, r1, 0x14
-    mr r5, r3
-    bl PSMTXConcat
-    lfs f1, lbl_806D7140(r2)
-    addi r3, r1, 0x14
-    fmr f2, f1
-    fmr f3, f1
-    bl PSMTXScale
-    addi r3, r31, 0x10
-    addi r4, r1, 0x14
-    mr r5, r3
-    bl PSMTXConcat
-    lfs f2, lbl_806D7184(r2)
-    lfs f1, 0x14(r31)
-    lfs f0, 0xc(r30)
-    fmadds f0, f2, f1, f0
-    stfs f0, 0x1c(r31)
-    lfs f1, 0x24(r31)
-    lfs f0, 0x1c(r30)
-    fmadds f0, f2, f1, f0
-    stfs f0, 0x2c(r31)
-    lfs f1, 0x34(r31)
-    lfs f0, 0x2c(r30)
-    fmadds f0, f2, f1, f0
-    stfs f0, 0x3c(r31)
-    Shell_UpdateState_L_8012F860:
-    lfs f1, 0xc(r31)
-    lfs f0, lbl_806D7198(r2)
-    lfs f2, 0x40(r31)
-    fdivs f0, f1, f0
-    fneg f1, f2
-    fmadds f0, f1, f0, f2
-    stfs f0, 0x40(r31)
-    b Shell_UpdateState_L_8012F894
-    Shell_UpdateState_L_8012F880:
-    li r0, 0x0
-    lfs f0, lbl_806D7150(r2)
-    stw r0, 0x8(r31)
-    stfs f0, 0xc(r31)
-    stfs f0, 0x40(r31)
-    Shell_UpdateState_L_8012F894:
-    lwz r3, 0x0(r31)
-    bl fn_80172844
-    Shell_UpdateState_L_8012F89C:
-    lwz r0, 0xb4(r1)
-    lwz r31, 0xac(r1)
-    lwz r30, 0xa8(r1)
-    mtlr r0
-    addi r1, r1, 0xb0
-    blr
+static inline void CoinJObj_SetupMatrix(CoinJObj *jobj) {
+    unsigned int flags;
+    unsigned char dirty;
+
+    if (jobj == 0) {
+        __assert(lbl_806D7174, 0x47C, lbl_806D717C);
+    }
+    if (jobj != 0) {
+        if (jobj == 0) {
+            __assert(lbl_806D7174, 0x25D, lbl_806D717C);
+        }
+        flags = jobj->flags;
+        dirty = 0;
+        if (!(flags & 0x00800000) && (flags & 0x40)) {
+            dirty = 1;
+        }
+        if (dirty) {
+            HSD_JObjSetupMatrixSub(jobj);
+        }
+    }
 }
 
-extern "C" asm void CGameCoin_Destroy(void) { /* 0x8012F8B4 size:0x3A4 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stmw r27, 0xc(r1)
-    mr. r30, r3
-    mr r31, r4
-    beq CGameCoin_Destroy_L_8012FC40
-    lis r3, vtable@ha
-    addi r0, r3, vtable@l
-    stw r0, 0x0(r30)
-    lwz r3, 0xc0(r30)
-    cmplwi r3, 0x0
-    beq CGameCoin_Destroy_L_8012F8FC
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    CGameCoin_Destroy_L_8012F8FC:
-    bl fn_80169C44
-    lwz r3, g_weatherSystem(r13)
-    cmplwi r3, 0x0
-    beq CGameCoin_Destroy_L_8012F91C
-    li r4, 0x1
-    bl fn_8016C634
-    li r0, 0x0
-    stw r0, g_weatherSystem(r13)
-    CGameCoin_Destroy_L_8012F91C:
-    li r3, 0x0
-    li r4, 0x0
-    bl SetActiveCamera
-    li r3, 0x0
-    bl SetCourseScene3D
-    lwz r3, 0x58(r30)
-    cmplwi r3, 0x0
-    beq CGameCoin_Destroy_L_8012F950
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    CGameCoin_Destroy_L_8012F950:
-    lwz r3, 0x50(r30)
-    li r4, 0x1
-    bl LakituStart_Dtor
-    lwz r3, 0x5c(r30)
-    li r4, 0x1
-    bl fn_80124C84
-    li r3, 0x0
-    bl SetPlayerCarObject
-    lwz r3, 0xc(r30)
-    li r4, 0x1
-    bl KartDriver_Dtor
-    lwz r3, 0x10(r30)
-    li r4, 0x1
-    bl VisualEffectHolder_Dtor
-    lwz r3, 0x14(r30)
-    li r4, 0x1
-    bl AudioChannel_DtorWithSeStop
-    lwz r3, 0x48(r30)
-    li r4, 0x1
-    bl fn_8012B394
-    lwz r3, 0x8(r30)
-    li r4, 0x1
-    bl InputCmd_Dtor
-    li r0, 0x0
-    stw r0, g_raceCamera(r13)
-    lwz r3, 0x60(r30)
-    cmplwi r3, 0x0
-    beq CGameCoin_Destroy_L_8012F9D8
-    beq CGameCoin_Destroy_L_8012F9D8
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    CGameCoin_Destroy_L_8012F9D8:
-    lwz r27, 0x64(r30)
-    cmplwi r27, 0x0
-    beq CGameCoin_Destroy_L_8012FA54
-    beq CGameCoin_Destroy_L_8012FA54
-    lis r3, 0x1
-    lhz r4, 0x4(r27)
-    subi r0, r3, 0x1
-    clrlwi r0, r0, 16
-    subf r0, r4, r0
-    cntlzw r0, r0
-    extrwi. r0, r0, 8, 19
-    beq CGameCoin_Destroy_L_8012FA0C
-    b CGameCoin_Destroy_L_8012FA1C
-    CGameCoin_Destroy_L_8012FA0C:
-    subi r3, r4, 0x1
-    cntlzw r0, r4
-    sth r3, 0x4(r27)
-    extrwi r0, r0, 8, 19
-    CGameCoin_Destroy_L_8012FA1C:
-    cmpwi r0, 0x0
-    beq CGameCoin_Destroy_L_8012FA54
-    cmplwi r27, 0x0
-    beq CGameCoin_Destroy_L_8012FA54
-    lwz r4, 0x0(r27)
-    mr r3, r27
-    lwz r12, 0x30(r4)
-    mtctr r12
-    bctrl
-    lwz r4, 0x0(r27)
-    mr r3, r27
-    lwz r12, 0x34(r4)
-    mtctr r12
-    bctrl
-    CGameCoin_Destroy_L_8012FA54:
-    lwz r3, 0x54(r30)
-    li r4, 0x1
-    bl CourseEnvironment_Dtor
-    lwz r3, 0x68(r30)
-    li r4, 0x1
-    bl fn_80254134
-    lwz r29, 0x4c(r30)
-    cmplwi r29, 0x0
-    beq CGameCoin_Destroy_L_8012FAA4
-    lwz r3, 0x0(r29)
-    li r4, 0x1
-    bl fn_80173550
-    lwz r3, 0x4(r29)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    lwz r3, 0x48(r29)
-    li r4, 0x1
-    bl fn_80123B48
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    CGameCoin_Destroy_L_8012FAA4:
-    lwz r28, 0x6c(r30)
-    cmplwi r28, 0x0
-    beq CGameCoin_Destroy_L_8012FB18
-    lwz r29, 0x28(r28)
-    cmplwi r29, 0x0
-    beq CGameCoin_Destroy_L_8012FAD0
-    lwz r3, 0x0(r29)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    CGameCoin_Destroy_L_8012FAD0:
-    li r29, 0x0
-    mr r27, r28
-    CGameCoin_Destroy_L_8012FAD8:
-    lwz r3, 0x0(r27)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    addi r29, r29, 0x1
-    addi r27, r27, 0x4
-    cmpwi r29, 0x4
-    blt CGameCoin_Destroy_L_8012FAD8
-    li r3, 0x37
-    bl fn_8016C360
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne CGameCoin_Destroy_L_8012FB10
-    li r3, 0x37
-    bl fn_8016C394
-    CGameCoin_Destroy_L_8012FB10:
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    CGameCoin_Destroy_L_8012FB18:
-    lwz r3, 0x70(r30)
-    li r4, 0x1
-    bl fn_8016DFAC
-    lwz r3, 0x74(r30)
-    li r4, 0x1
-    bl fn_8016EFA8
-    lwz r28, 0x78(r30)
-    cmplwi r28, 0x0
-    beq CGameCoin_Destroy_L_8012FB88
-    lwz r3, 0x0(r28)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    lwz r3, 0x4(r28)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    lwz r3, 0x8(r28)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    lwz r3, 0xc(r28)
-    cmplwi r3, 0x0
-    beq CGameCoin_Destroy_L_8012FB80
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    CGameCoin_Destroy_L_8012FB80:
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    CGameCoin_Destroy_L_8012FB88:
-    bl ItemObjectManager_Reset
-    bl VfxSlotMgr_Shutdown
-    bl ClRomTable_PurgeAll
-    bl GetRaceContextPtr
-    bl RankingTable_Init
-    lwz r3, lbl_806D10D0(r13)
-    cmplwi r3, 0x0
-    beq CGameCoin_Destroy_L_8012FBBC
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    CGameCoin_Destroy_L_8012FBBC:
-    li r0, 0x0
-    stw r0, lbl_806D10D0(r13)
-    bl SceneDrawList_Reset
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    beq CGameCoin_Destroy_L_8012FBE8
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    CGameCoin_Destroy_L_8012FBE8:
-    li r0, 0x0
-    li r3, 0x0
-    stw r0, lbl_806D109C(r13)
-    bl SetResourceLoadingFlag
-    bl clRom_PurgeAll
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    beq CGameCoin_Destroy_L_8012FC1C
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    CGameCoin_Destroy_L_8012FC1C:
-    li r0, 0x0
-    mr r3, r30
-    stw r0, lbl_806D10AC(r13)
-    li r4, 0x0
-    bl dtor_80122FD8
-    extsh. r0, r31
-    ble CGameCoin_Destroy_L_8012FC40
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    CGameCoin_Destroy_L_8012FC40:
-    mr r3, r30
-    lmw r27, 0xc(r1)
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+static inline float (*CoinJObj_GetMtxPtr(CoinJObj *jobj))[4] {
+    CoinJObj_SetupMatrix(jobj);
+    return jobj->mtx;
+}
+
+struct CoinShell {
+    void *effect;
+    int m4;
+    int state;
+    float t;
+    float mtx[3][4];
+    float alpha;
+    CoinJObj *joint;
+    void *ground;
+    unsigned char landed;
+    unsigned char pad4D[0xF];
+    CoinVec vel;
+    float speed;
+};
+
+static inline void Shell_AttachToJoint(CoinShell *self) {
+    float (*jm)[4];
+    float m[3][4];
+
+    if (self->joint != 0) {
+        jm = CoinJObj_GetMtxPtr(self->joint);
+        PSMTXCopy(jm, self->mtx);
+        PSMTXRotRad(m, 'Z', -1.5707964f);
+        PSMTXConcat(self->mtx, m, self->mtx);
+        PSMTXScale(m, 1.0f, 1.0f, 1.0f);
+        PSMTXConcat(self->mtx, m, self->mtx);
+        self->mtx[0][3] = 2.5f * self->mtx[0][1] + jm[0][3];
+        self->mtx[1][3] = 2.5f * self->mtx[1][1] + jm[1][3];
+        self->mtx[2][3] = 2.5f * self->mtx[2][1] + jm[2][3];
+    }
+}
+
+static inline void Shell_UpdateRolling(CoinShell *self) {
+    CoinVec pos;
+    float m[3][4];
+
+    self->t += 1.0f;
+    pos.x = self->mtx[0][3];
+    pos.y = self->mtx[1][3];
+    pos.z = self->mtx[2][3];
+    PSMTXScale(m, 1.0f, 1.0f, 1.0f);
+    PSMTXConcat(self->mtx, m, self->mtx);
+    PSMTXRotRad(m, 'Y', 0.5235988f);
+    PSMTXConcat(self->mtx, m, self->mtx);
+    pos.x = self->vel.x * self->speed + pos.x;
+    pos.y = self->vel.y * self->speed + pos.y;
+    pos.z = self->vel.z * self->speed + pos.z;
+    self->mtx[0][3] = pos.x;
+    self->mtx[1][3] = pos.y;
+    self->mtx[2][3] = pos.z;
+    if (!self->landed) {
+        if (fn_80123480(self->ground, &pos) == 1) {
+            self->landed = 1;
+        }
+    } else if (pos.y < -110.0f || !fn_80123480(self->ground, &pos)) {
+        self->state = 5;
+        self->t = 0.0f;
+    }
+}
+
+extern "C" void Shell_UpdateState(CoinShell *self) { /* 0x8012F45C size:0x458 */
+    if (self->state == 0) {
+        return;
+    }
+    switch (self->state) {
+    case 3:
+        Shell_AttachToJoint(self);
+        if (self->t < 60.0f) {
+            self->t += 1.0f;
+            self->alpha = Saturate_Double(self->t / 60.0f, 0.0f, 1.0f);
+        }
+        break;
+    case 1:
+        self->mtx[1][3] -= 0.2f;
+        break;
+    case 4:
+        Shell_UpdateRolling(self);
+        break;
+    case 5:
+        if (self->t < 30.0f) {
+            self->t += 1.0f;
+            self->alpha = -self->alpha * (self->t / 30.0f) + self->alpha;
+        } else {
+            self->state = 0;
+            self->t = 0.0f;
+            self->alpha = 0.0f;
+        }
+        break;
+    case 6:
+        if (self->t < 30.0f) {
+            self->t += 1.0f;
+            Shell_AttachToJoint(self);
+            self->alpha = -self->alpha * (self->t / 30.0f) + self->alpha;
+        } else {
+            self->state = 0;
+            self->t = 0.0f;
+            self->alpha = 0.0f;
+        }
+        break;
+    }
+    fn_80172844(self->effect);
+}
+
+struct CoinHsdClassInfo {
+    unsigned char pad0[0x30];
+    void (*release)(struct CoinHsdObj *o);
+    void (*destroy)(struct CoinHsdObj *o);
+};
+
+struct CoinHsdObj {
+    CoinHsdClassInfo *info;
+    unsigned short ref;
+};
+
+static inline int CoinHsdObj_RefDec(CoinHsdObj *o) {
+    int ret = o->ref == (unsigned short)-1;
+    if (ret) {
+        return ret;
+    }
+    return o->ref-- == 0;
+}
+
+static inline void CoinHsdObj_Unref(CoinHsdObj *o) {
+    if (o == 0) {
+        return;
+    }
+    if (CoinHsdObj_RefDec(o)) {
+        if (o != 0) {
+            o->info->release(o);
+            o->info->destroy(o);
+        }
+    }
+}
+
+struct CoinShellSet {
+    void *model;
+    void *jobj;
+    unsigned char pad8[0x40];
+    void *shells;
+};
+
+struct CGameCoin {
+    void *vt;
+    unsigned char pad4[0x4];
+    void *input;
+    void *driver;
+    void *effects;
+    void *audio;
+    unsigned char pad18[0x30];
+    void *m48;
+    CoinShellSet *shellSet;
+    void *lakitu;
+    void *env;
+    CoinVObj *scene;
+    void *goalCam;
+    CoinVObj *m60;
+    CoinHsdObj *lights;
+    void *hud;
+    BossKoopa *koopa;
+    void *m70;
+    void *m74;
+    DefeatDemo *defeatDemo;
+    unsigned char pad7C[0x44];
+    CoinVObj *camera;
+};
+
+static inline void CoinShellSet_Delete(CoinShellSet *set) {
+    if (set != 0) {
+        fn_80173550(set->model, 1);
+        Object_DtorWithGXSync(set->jobj, 1);
+        fn_80123B48(set->shells, 1);
+        MemoryManager_TimedFree(set);
+    }
+}
+
+static inline void KoopaFireball_Delete(KoopaFireball *fireball) {
+    if (fireball != 0) {
+        Object_DtorWithGXSync(fireball->model, 1);
+        MemoryManager_TimedFree(fireball);
+    }
+}
+
+static inline void BossKoopa_Delete(BossKoopa *koopa) {
+    int i;
+
+    if (koopa != 0) {
+        KoopaFireball_Delete(koopa->fireball);
+        for (i = 0; i < 4; i++) {
+            Object_DtorWithGXSync(koopa->anims[i], 1);
+        }
+        if (fn_8016C360(0x37) == 1) {
+            fn_8016C394(0x37);
+        }
+        MemoryManager_TimedFree(koopa);
+    }
+}
+
+static inline void DefeatDemo_Delete(DefeatDemo *demo) {
+    if (demo != 0) {
+        Object_DtorWithGXSync(demo->body, 1);
+        Object_DtorWithGXSync(demo->hand, 1);
+        Object_DtorWithGXSync(demo->effect, 1);
+        delete demo->scene;
+        MemoryManager_TimedFree(demo);
+    }
+}
+
+extern "C" CGameCoin *CGameCoin_Destroy(CGameCoin *self, short flag) { /* 0x8012F8B4 size:0x3A4 */
+
+    if (self) {
+        self->vt = vtable;
+        delete self->camera;
+        fn_80169C44();
+        if (g_weatherSystem != 0) {
+            fn_8016C634(g_weatherSystem, 1);
+            g_weatherSystem = 0;
+        }
+        SetActiveCamera(0, 0);
+        SetCourseScene3D(0);
+        delete self->scene;
+        LakituStart_Dtor(self->lakitu, 1);
+        fn_80124C84(self->goalCam, 1);
+        SetPlayerCarObject(0);
+        KartDriver_Dtor(self->driver, 1);
+        VisualEffectHolder_Dtor(self->effects, 1);
+        AudioChannel_DtorWithSeStop(self->audio, 1);
+        fn_8012B394(self->m48, 1);
+        InputCmd_Dtor(self->input, 1);
+        g_raceCamera = 0;
+        if (self->m60 != 0) {
+            delete self->m60;
+        }
+        if (self->lights != 0) {
+            CoinHsdObj_Unref(self->lights);
+        }
+        CourseEnvironment_Dtor(self->env, 1);
+        fn_80254134(self->hud, 1);
+        CoinShellSet_Delete(self->shellSet);
+        BossKoopa_Delete(self->koopa);
+        fn_8016DFAC(self->m70, 1);
+        fn_8016EFA8(self->m74, 1);
+        DefeatDemo_Delete(self->defeatDemo);
+        ItemObjectManager_Reset();
+        VfxSlotMgr_Shutdown();
+        ClRomTable_PurgeAll();
+        RankingTable_Init(GetRaceContextPtr());
+        delete lbl_806D10D0;
+        lbl_806D10D0 = 0;
+        SceneDrawList_Reset();
+        delete lbl_806D109C;
+        lbl_806D109C = 0;
+        SetResourceLoadingFlag(0);
+        clRom_PurgeAll();
+        delete lbl_806D10AC;
+        lbl_806D10AC = 0;
+        dtor_80122FD8(self, 0);
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
 
 extern "C" asm void CGameCoin_Init(void) { /* 0x8012FC58 size:0x78C */
@@ -5709,415 +5033,209 @@ extern "C" asm void BossKoopa_Init(void) { /* 0x8013068C size:0x3FC */
     blr
 }
 
-extern "C" asm void CGameCoin_InitFields(void) { /* 0x80130A88 size:0xD4 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    li r0, 0x0
-    stw r31, 0xc(r1)
-    mr r31, r3
-    stw r0, 0x8(r3)
-    addi r3, r31, 0x18
-    stw r0, 0xc(r31)
-    stw r0, 0x10(r31)
-    stw r0, 0x14(r31)
-    bl PSMTXIdentity
-    li r3, 0x0
-    lfs f1, lbl_806D71BC(r2)
-    stw r3, 0x48(r31)
-    li r0, 0x2
-    lfs f0, lbl_806D7150(r2)
-    stw r3, 0x4c(r31)
-    stfs f1, 0x94(r31)
-    stfs f1, 0x98(r31)
-    stw r3, 0x84(r31)
-    stw r3, 0x9c(r31)
-    stfs f0, 0xa0(r31)
-    stw r0, 0x88(r31)
-    stw r0, 0x8c(r31)
-    stw r3, 0x50(r31)
-    stw r3, 0x54(r31)
-    stw r3, 0x58(r31)
-    stw r3, 0x5c(r31)
-    stw r3, 0x60(r31)
-    stw r3, 0x64(r31)
-    stw r3, 0x68(r31)
-    stw r3, 0x6c(r31)
-    stw r3, 0x70(r31)
-    stw r3, 0x74(r31)
-    stw r3, 0x78(r31)
-    stb r3, 0x7c(r31)
-    stb r3, 0x7d(r31)
-    stb r3, 0x7e(r31)
-    stb r3, 0x7f(r31)
-    stw r3, 0x80(r31)
-    stw r3, 0xa4(r31)
-    stw r3, 0xa8(r31)
-    stw r3, 0xac(r31)
-    stw r3, 0xb0(r31)
-    stw r3, 0xb4(r31)
-    stfs f0, 0xb8(r31)
-    stfs f0, 0xbc(r31)
-    lwz r31, 0xc(r1)
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+struct CGameCoinFields {
+    unsigned char pad0[0x8];
+    int m8;
+    int mC;
+    int m10;
+    int m14;
+    float mtx[3][4];
+    int m48;
+    int m4C;
+    int m50[11];
+    unsigned char m7C;
+    unsigned char m7D;
+    unsigned char m7E;
+    unsigned char m7F;
+    int m80;
+    int m84;
+    int m88;
+    int m8C;
+    int m90;
+    float m94;
+    float m98;
+    int m9C;
+    float mA0;
+    int mA4;
+    int mA8;
+    int mAC;
+    int mB0;
+    int mB4;
+    float mB8;
+    float mBC;
+};
+
+extern "C" void CGameCoin_InitFields(CGameCoinFields *self) { /* 0x80130A88 size:0xD4 */
+    self->m8 = 0;
+    self->mC = 0;
+    self->m10 = 0;
+    self->m14 = 0;
+    PSMTXIdentity(self->mtx);
+    self->m48 = 0;
+    self->m4C = 0;
+    self->m94 = -1.0f;
+    self->m98 = -1.0f;
+    self->m84 = 0;
+    self->m9C = 0;
+    self->mA0 = 0.0f;
+    self->m88 = 2;
+    self->m8C = 2;
+    self->m50[0] = 0;
+    self->m50[1] = 0;
+    self->m50[2] = 0;
+    self->m50[3] = 0;
+    self->m50[4] = 0;
+    self->m50[5] = 0;
+    self->m50[6] = 0;
+    self->m50[7] = 0;
+    self->m50[8] = 0;
+    self->m50[9] = 0;
+    self->m50[10] = 0;
+    self->m7C = 0;
+    self->m7D = 0;
+    self->m7E = 0;
+    self->m7F = 0;
+    self->m80 = 0;
+    self->mA4 = 0;
+    self->mA8 = 0;
+    self->mAC = 0;
+    self->mB0 = 0;
+    self->mB4 = 0;
+    self->mB8 = 0.0f;
+    self->mBC = 0.0f;
 }
 
-extern "C" asm void CoinParticle_Draw(void) { /* 0x80130B5C size:0x1D0 */
-    nofralloc
-    stwu r1, -0x90(r1)
-    mflr r0
-    stw r0, 0x94(r1)
-    stfd f31, 0x80(r1)
-    psq_st f31, 0x88(r1), 0, 0
-    stfd f30, 0x70(r1)
-    psq_st f30, 0x78(r1), 0, 0
-    stfd f29, 0x60(r1)
-    psq_st f29, 0x68(r1), 0, 0
-    stfd f28, 0x50(r1)
-    psq_st f28, 0x58(r1), 0, 0
-    stfd f27, 0x40(r1)
-    psq_st f27, 0x48(r1), 0, 0
-    stfd f26, 0x30(r1)
-    psq_st f26, 0x38(r1), 0, 0
-    stmw r26, 0x18(r1)
-    mr r26, r3
-    li r28, 0x0
-    mr r29, r26
-    CoinParticle_Draw_L_80130BA8:
-    lwz r0, 0x14(r29)
-    cmpwi r0, 0x0
-    beq CoinParticle_Draw_L_80130CD8
-    lwz r3, 0x4(r26)
-    addi r4, r29, 0x20
-    bl Object_SetJObjPositionVec
-    lfs f1, lbl_806D7130(r2)
-    lfs f0, 0x38(r29)
-    lwz r3, 0x4(r26)
-    fmuls f1, f1, f0
-    bl Object_SetJObjRotationY
-    lfs f1, lbl_806D7134(r2)
-    lwz r3, 0x4(r26)
-    fmr f2, f1
-    fmr f3, f1
-    bl Object_SetJObjScaleXYZ
-    lwz r3, 0x4(r26)
-    li r4, 0x0
-    lfs f1, 0x3c(r29)
-    bl Object_SetColorAlphaOnly
-    lwz r3, 0x4(r26)
-    li r4, 0x0
-    bl LinkedNode_GetField10_OrFallback
-    mr r4, r3
-    lwz r3, 0x4(r26)
-    li r5, 0x7
-    bl Object_RenderJObjEx
-    lwz r3, 0x4(r26)
-    li r4, 0x0
-    bl LinkedNode_GetField10_OrFallback
-    mr. r4, r3
-    lwz r3, 0x4(r26)
-    bne CoinParticle_Draw_L_80130C34
-    li r4, 0x0
-    b CoinParticle_Draw_L_80130C38
-    CoinParticle_Draw_L_80130C34:
-    lwz r4, 0x8(r4)
-    CoinParticle_Draw_L_80130C38:
-    li r5, 0x7
-    bl Object_RenderJObjEx
-    lfd f28, lbl_806D7148(r2)
-    mr r30, r29
-    lfs f29, lbl_806D7138(r2)
-    li r27, 0x0
-    lfs f30, lbl_806D713C(r2)
-    lis r31, 0x4330
-    lfs f31, lbl_806D7140(r2)
-    b CoinParticle_Draw_L_80130CCC
-    CoinParticle_Draw_L_80130C60:
-    lwz r0, 0x40(r30)
-    addi r4, r30, 0x44
-    stw r31, 0x8(r1)
-    xoris r0, r0, 0x8000
-    lwz r3, 0x8(r26)
-    stw r0, 0xc(r1)
-    lfd f0, 0x8(r1)
-    fsubs f0, f0, f28
-    fdivs f27, f0, f29
-    fsubs f26, f30, f27
-    bl Object_SetJObjPositionVec
-    fmr f1, f26
-    lwz r3, 0x8(r26)
-    fmr f2, f26
-    fmr f3, f26
-    bl Object_SetJObjScaleXYZ
-    fsubs f1, f31, f27
-    lfs f0, 0x3c(r29)
-    lwz r3, 0x8(r26)
-    li r4, 0x0
-    fmuls f1, f1, f0
-    bl Object_SetColorAlphaOnly
-    lwz r3, 0x8(r26)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    addi r30, r30, 0x10
-    addi r27, r27, 0x1
-    CoinParticle_Draw_L_80130CCC:
-    lwz r0, 0x89c(r26)
-    cmpw r27, r0
-    blt CoinParticle_Draw_L_80130C60
-    CoinParticle_Draw_L_80130CD8:
-    addi r28, r28, 0x1
-    addi r29, r29, 0x16c
-    cmpwi r28, 0x6
-    blt CoinParticle_Draw_L_80130BA8
-    psq_l f31, 0x88(r1), 0, 0
-    lfd f31, 0x80(r1)
-    psq_l f30, 0x78(r1), 0, 0
-    lfd f30, 0x70(r1)
-    psq_l f29, 0x68(r1), 0, 0
-    lfd f29, 0x60(r1)
-    psq_l f28, 0x58(r1), 0, 0
-    lfd f28, 0x50(r1)
-    psq_l f27, 0x48(r1), 0, 0
-    lfd f27, 0x40(r1)
-    psq_l f26, 0x38(r1), 0, 0
-    lfd f26, 0x30(r1)
-    lmw r26, 0x18(r1)
-    lwz r0, 0x94(r1)
-    mtlr r0
-    addi r1, r1, 0x90
-    blr
+struct CoinTrail {
+    int t;
+    float pos[3];
+};
+
+struct CoinParticle {
+    int active;
+    int m4;
+    int timer;
+    float pos[3];
+    float vel[3];
+    float rotY;
+    float alpha;
+    CoinTrail trail[20];
+};
+
+struct CoinParticleManager {
+    void *vtbl;
+    void *jobj;
+    void *trailJobj;
+    int sinIdx;
+    int heightIdx;
+    CoinParticle particles[6];
+    int trailCount;
+};
+
+extern "C" void CoinParticle_Draw(CoinParticleManager *self) { /* 0x80130B5C size:0x1D0 */
+    int i;
+    int j;
+    void *node;
+    float t;
+    float scale;
+
+    for (i = 0; i < 6; i++) {
+        if (self->particles[i].active != 0) {
+            Object_SetJObjPositionVec(self->jobj, self->particles[i].pos);
+            Object_SetJObjRotationY(self->jobj, 0.017453289f * self->particles[i].rotY);
+            Object_SetJObjScaleXYZ(self->jobj, 1.2f, 1.2f, 1.2f);
+            Object_SetColorAlphaOnly(self->jobj, 0, self->particles[i].alpha);
+            Object_RenderJObjEx(self->jobj, LinkedNode_GetField10_OrFallback(self->jobj, 0), 7);
+            node = LinkedNode_GetField10_OrFallback(self->jobj, 0);
+            Object_RenderJObjEx(self->jobj, node == 0 ? 0 : *(void **)((char *)node + 8), 7);
+            for (j = 0; j < self->trailCount; j++) {
+                t = self->particles[i].trail[j].t / 10.0f;
+                scale = 2.0f - t;
+                Object_SetJObjPositionVec(self->trailJobj, self->particles[i].trail[j].pos);
+                Object_SetJObjScaleXYZ(self->trailJobj, scale, scale, scale);
+                Object_SetColorAlphaOnly(self->trailJobj, 0, (1.0f - t) * self->particles[i].alpha);
+                Object_RenderJObjTree(self->trailJobj, 7);
+            }
+        }
+    }
 }
 
-extern "C" asm void CoinParticle_Update(void) { /* 0x80130D2C size:0x2B0 */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    stw r0, 0x54(r1)
-    stfd f31, 0x40(r1)
-    psq_st f31, 0x48(r1), 0, 0
-    stfd f30, 0x30(r1)
-    psq_st f30, 0x38(r1), 0, 0
-    stmw r24, 0x10(r1)
-    mr r26, r3
-    li r27, 0x0
-    mr r30, r26
-    CoinParticle_Update_L_80130D58:
-    lwz r0, 0x14(r30)
-    cmpwi r0, 0x0
-    beq CoinParticle_Update_L_80130FA8
-    lfs f1, 0x20(r30)
-    addi r28, r30, 0x40
-    lfs f0, 0x2c(r30)
-    lfs f2, lbl_806D7158(r2)
-    fadds f3, f1, f0
-    lfs f1, lbl_806D7190(r2)
-    lfs f0, lbl_806D7230(r2)
-    stfs f3, 0x20(r30)
-    lfs f4, 0x24(r30)
-    lfs f3, 0x30(r30)
-    fadds f3, f4, f3
-    stfs f3, 0x24(r30)
-    lfs f4, 0x28(r30)
-    lfs f3, 0x34(r30)
-    fadds f3, f4, f3
-    stfs f3, 0x28(r30)
-    lfs f3, 0x30(r30)
-    fsubs f2, f3, f2
-    stfs f2, 0x30(r30)
-    lfs f2, 0x38(r30)
-    fadds f1, f2, f1
-    stfs f1, 0x38(r30)
-    lfs f1, 0x38(r30)
-    fcmpo cr0, f1, f0
-    ble CoinParticle_Update_L_80130DD0
-    fsubs f0, f1, f0
-    stfs f0, 0x38(r30)
-    CoinParticle_Update_L_80130DD0:
-    lwz r3, 0x1c(r30)
-    lis r0, 0x4330
-    stw r0, 0x8(r1)
-    mr r5, r28
-    xoris r0, r3, 0x8000
-    lfd f2, lbl_806D7148(r2)
-    stw r0, 0xc(r1)
-    li r6, 0x0
-    lfs f0, lbl_806D7234(r2)
-    li r3, -0x1
-    lfd f1, 0x8(r1)
-    lfs f3, lbl_806D7140(r2)
-    fsubs f2, f1, f2
-    lfs f1, lbl_806D713C(r2)
-    fdivs f0, f2, f0
-    fsubs f0, f3, f0
-    stfs f0, 0x3c(r30)
-    b CoinParticle_Update_L_80130E50
-    CoinParticle_Update_L_80130E18:
-    lwz r0, 0x0(r5)
-    cmpwi r0, 0x0
-    blt CoinParticle_Update_L_80130E48
-    lfs f0, 0x8(r5)
-    fsubs f0, f0, f1
-    stfs f0, 0x8(r5)
-    lwz r4, 0x0(r5)
-    addi r0, r4, 0x1
-    cmpwi r0, 0xa
-    stw r0, 0x0(r5)
-    ble CoinParticle_Update_L_80130E48
-    stw r3, 0x0(r5)
-    CoinParticle_Update_L_80130E48:
-    addi r5, r5, 0x10
-    addi r6, r6, 0x1
-    CoinParticle_Update_L_80130E50:
-    lwz r0, 0x89c(r26)
-    cmpw r6, r0
-    blt CoinParticle_Update_L_80130E18
-    lwz r0, 0x1c(r30)
-    clrlwi. r0, r0, 30
-    bne CoinParticle_Update_L_80130F8C
-    lis r4, lbl_80495A94@ha
-    lis r3, lbl_80495994@ha
-    mr r31, r28
-    li r29, 0x0
-    addi r24, r4, lbl_80495A94@l
-    addi r25, r3, lbl_80495994@l
-    b CoinParticle_Update_L_80130F48
-    CoinParticle_Update_L_80130E84:
-    lwz r4, 0x10(r26)
-    lwz r3, 0xc(r26)
-    lwz r0, 0x0(r31)
-    slwi r4, r4, 2
-    slwi r3, r3, 2
-    lfsx f31, r24, r4
-    cmpwi r0, 0x0
-    lfsx f1, r25, r3
-    blt CoinParticle_Update_L_80130EB0
-    li r0, 0x0
-    b CoinParticle_Update_L_80130EF8
-    CoinParticle_Update_L_80130EB0:
-    lfs f0, lbl_806D7230(r2)
-    li r0, 0x0
-    stw r0, 0x0(r31)
-    fmuls f30, f0, f1
-    fmr f1, f30
-    bl LUT_Sin12Bit
-    lfs f2, lbl_806D7190(r2)
-    lfs f0, lbl_806D7138(r2)
-    fmuls f2, f2, f1
-    fmuls f0, f0, f31
-    fmr f1, f30
-    stfs f2, 0x4(r31)
-    stfs f0, 0x8(r31)
-    bl fn_80186960
-    lfs f0, lbl_806D7190(r2)
-    li r0, 0x1
-    fmuls f0, f0, f1
-    stfs f0, 0xc(r31)
-    CoinParticle_Update_L_80130EF8:
-    clrlwi r0, r0, 24
-    cmplwi r0, 0x1
-    bne CoinParticle_Update_L_80130F40
-    slwi r0, r29, 4
-    lfs f0, 0x20(r30)
-    add r3, r28, r0
-    lfs f1, 0x4(r3)
-    fadds f0, f1, f0
-    stfs f0, 0x4(r3)
-    lfs f1, 0x8(r3)
-    lfs f0, 0x24(r30)
-    fadds f0, f1, f0
-    stfs f0, 0x8(r3)
-    lfs f1, 0xc(r3)
-    lfs f0, 0x28(r30)
-    fadds f0, f1, f0
-    stfs f0, 0xc(r3)
-    b CoinParticle_Update_L_80130F54
-    CoinParticle_Update_L_80130F40:
-    addi r31, r31, 0x10
-    addi r29, r29, 0x1
-    CoinParticle_Update_L_80130F48:
-    lwz r0, 0x89c(r26)
-    cmpw r29, r0
-    blt CoinParticle_Update_L_80130E84
-    CoinParticle_Update_L_80130F54:
-    lwz r3, 0xc(r26)
-    addi r0, r3, 0x1
-    cmpwi r0, 0x40
-    stw r0, 0xc(r26)
-    blt CoinParticle_Update_L_80130F70
-    li r0, 0x0
-    stw r0, 0xc(r26)
-    CoinParticle_Update_L_80130F70:
-    lwz r3, 0x10(r26)
-    addi r0, r3, 0x1
-    cmpwi r0, 0x30
-    stw r0, 0x10(r26)
-    blt CoinParticle_Update_L_80130F8C
-    li r0, 0x0
-    stw r0, 0x10(r26)
-    CoinParticle_Update_L_80130F8C:
-    lwz r3, 0x1c(r30)
-    addi r0, r3, 0x1
-    cmpwi r0, 0x64
-    stw r0, 0x1c(r30)
-    blt CoinParticle_Update_L_80130FA8
-    li r0, 0x0
-    stw r0, 0x14(r30)
-    CoinParticle_Update_L_80130FA8:
-    addi r27, r27, 0x1
-    addi r30, r30, 0x16c
-    cmpwi r27, 0x6
-    blt CoinParticle_Update_L_80130D58
-    psq_l f31, 0x48(r1), 0, 0
-    lfd f31, 0x40(r1)
-    psq_l f30, 0x38(r1), 0, 0
-    lfd f30, 0x30(r1)
-    lmw r24, 0x10(r1)
-    lwz r0, 0x54(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
+static inline unsigned char CoinTrail_Spawn(CoinTrail *tr, float angle, float height) {
+    if (tr->t >= 0) {
+        return 0;
+    }
+    tr->t = 0;
+    angle = 360.0f * angle;
+    tr->pos[0] = 5.0f * LUT_Sin12Bit(angle);
+    tr->pos[1] = 10.0f * height;
+    tr->pos[2] = 5.0f * fn_80186960(angle);
+    return 1;
 }
 
-extern "C" asm void CoinParticleManager_Destroy(void) { /* 0x80130FDC size:0x80 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r4
-    stw r30, 0x8(r1)
-    mr. r30, r3
-    beq CoinParticleManager_Destroy_L_80131040
-    lis r3, lbl_8048E3C0@ha
-    addi r0, r3, lbl_8048E3C0@l
-    stw r0, 0x0(r30)
-    beq CoinParticleManager_Destroy_L_80131030
-    lis r3, lbl_8048E34C@ha
-    li r4, 0x1
-    addi r0, r3, lbl_8048E34C@l
-    stw r0, 0x0(r30)
-    lwz r3, 0x4(r30)
-    bl Object_DtorWithGXSync
-    lwz r3, 0x8(r30)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    CoinParticleManager_Destroy_L_80131030:
-    extsh. r0, r31
-    ble CoinParticleManager_Destroy_L_80131040
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    CoinParticleManager_Destroy_L_80131040:
-    lwz r0, 0x14(r1)
-    mr r3, r30
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+extern "C" void CoinParticle_Update(CoinParticleManager *self) { /* 0x80130D2C size:0x2B0 */
+    CoinTrail *trail;
+    int i;
+    int j;
+
+    for (i = 0; i < 6; i++) {
+        if (self->particles[i].active != 0) {
+            trail = self->particles[i].trail;
+            self->particles[i].pos[0] += self->particles[i].vel[0];
+            self->particles[i].pos[1] += self->particles[i].vel[1];
+            self->particles[i].pos[2] += self->particles[i].vel[2];
+            self->particles[i].vel[1] -= 0.1f;
+            self->particles[i].rotY += 5.0f;
+            if (self->particles[i].rotY > 360.0f) {
+                self->particles[i].rotY -= 360.0f;
+            }
+            self->particles[i].alpha = 1.0f - self->particles[i].timer / 100.0f;
+            for (j = 0; j < self->trailCount; j++) {
+                if (trail[j].t >= 0) {
+                    trail[j].pos[1] -= 2.0f;
+                    if (++trail[j].t > 10) {
+                        trail[j].t = -1;
+                    }
+                }
+            }
+            if ((self->particles[i].timer & 3) == 0) {
+                for (j = 0; j < self->trailCount; j++) {
+                    if (CoinTrail_Spawn(&trail[j], lbl_80495994[self->sinIdx], lbl_80495A94[self->heightIdx]) == 1) {
+                        trail[j].pos[0] += self->particles[i].pos[0];
+                        trail[j].pos[1] += self->particles[i].pos[1];
+                        trail[j].pos[2] += self->particles[i].pos[2];
+                        break;
+                    }
+                }
+                if (++self->sinIdx >= 64) {
+                    self->sinIdx = 0;
+                }
+                if (++self->heightIdx >= 48) {
+                    self->heightIdx = 0;
+                }
+            }
+            if (++self->particles[i].timer >= 100) {
+                self->particles[i].active = 0;
+            }
+        }
+    }
+}
+
+static inline void CoinParticleManagerBase_Dtor(CoinParticleManager *self) {
+    if (self != 0) {
+        self->vtbl = lbl_8048E34C;
+        Object_DtorWithGXSync(self->jobj, 1);
+        Object_DtorWithGXSync(self->trailJobj, 1);
+    }
+}
+
+extern "C" CoinParticleManager *CoinParticleManager_Destroy(CoinParticleManager *self, short flag) { /* 0x80130FDC size:0x80 */
+    if (self != 0) {
+        self->vtbl = lbl_8048E3C0;
+        CoinParticleManagerBase_Dtor(self);
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
 
 extern "C" asm void CGameCoin_ProcessInput(void) { /* 0x8013105C size:0x374 */
