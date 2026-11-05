@@ -9814,6 +9814,11 @@ game/KartController_TimedUpdate.cpp:
 	extabindex  start:0x800288EC end:0x800288F8
 	.text       start:0x801E8140 end:0x801E81D8
 
+game/fn_801E81D8.cpp:
+	extab       start:0x80016588 end:0x80016690
+	extabindex  start:0x800288F8 end:0x80028904
+	.text       start:0x801E81D8 end:0x801E83C8
+
 game/AI_KartInit.cpp:
 	extab       start:0x80016690 end:0x800169B8
 	extabindex  start:0x80028904 end:0x8002891C
@@ -9913,6 +9918,11 @@ game/fn_801E96BC.c:
 	extabindex  start:0x800289C4 end:0x800289D0
 	.text       start:0x801E96BC end:0x801E9840
 
+game/AI_DecideAndUseItem_PairTracking.cpp:
+	extab       start:0x80016AD0 end:0x80016AD8
+	extabindex  start:0x800289D0 end:0x800289DC
+	.text       start:0x801E9840 end:0x801E9A84
+
 game/AI_CalcTargetSpeed_PairTracking.c:
 	extab       start:0x80016AD8 end:0x80016AE0
 	extabindex  start:0x800289DC end:0x800289E8
@@ -9923,6 +9933,11 @@ game/fn_801E9CBC.cpp:
 	extabindex  start:0x800289E8 end:0x800289F4
 	.text       start:0x801E9CBC end:0x801E9E74
 
+game/fn_801E9E74.c:
+	extab       start:0x80016AE8 end:0x80016AF0
+	extabindex  start:0x800289F4 end:0x80028A00
+	.text       start:0x801E9E74 end:0x801EA2FC
+
 game/AI_UpdateItemUseLogic.cpp:
 	extab       start:0x80016AF0 end:0x80016AF8
 	extabindex  start:0x80028A00 end:0x80028A0C
@@ -9932,6 +9947,11 @@ game/AI_CalcItemSpeedBonus.c:
 	extab       start:0x80016AF8 end:0x80016B00
 	extabindex  start:0x80028A0C end:0x80028A18
 	.text       start:0x801EA500 end:0x801EA6F0
+
+game/AI_CalcGPTargetSpeed.c:
+	extab       start:0x80016B00 end:0x80016B08
+	extabindex  start:0x80028A18 end:0x80028A24
+	.text       start:0x801EA6F0 end:0x801EACA0
 
 game/AI_PerKartUpdate.cpp:
 	extab       start:0x80016B08 end:0x80016B10

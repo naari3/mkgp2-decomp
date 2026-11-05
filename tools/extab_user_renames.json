@@ -11006,5 +11006,15 @@
   },
   "src/game/AI_UpdatePerFrameState.cpp": {
     "__dt__15AIFramePositionFv": "dtor_80036E40"
+  },
+  "src/game/fn_801E81D8.cpp": {
+    "__dt__8AIDriverFv": "KartDriver_Dtor",
+    "__dt__9AITornadoFv": "VisualEffectHolder_Dtor",
+    "__dt__7AIAudioFv": "AudioChannel_DtorWithSeStop",
+    "__dt__7AIExtraFv": "dtor_80209180",
+    "__dt__10AISteeringFv": "fn_801DF774",
+    "__dt__5AIAuxFv": "fn_801DEE38",
+    "@125": "@etb_80016588",
+    "@126": "@eti_800288F8"
   }
 }
