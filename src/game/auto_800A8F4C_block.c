@@ -20,7 +20,7 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void Alloc();
-extern void DebugPrintf();
+extern void DebugPrintf(const char *fmt, ...);
 extern void WarpDashMgr_Init();
 extern void MemoryManager_TimedFree(void *);
 extern void dtor_800AA69C(void *, short);
@@ -46,31 +46,81 @@ extern unsigned int lbl_806D4E20;
 /* WarpDashMgr instance array: lbl_806CF238 (sdata, size 0x8 = 2 entries). */
 /* Indexed by `(u8)id != 0` -> 0 or 1, so a 2-element pointer array fits the */
 /* sda21 1-instr base load that the bundle relies on. */
-extern void *lbl_806CF238[2];
+extern struct WarpDashMgr *lbl_806CF238[2];
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 extern unsigned int dtor_80036E40[];
 extern unsigned int fn_8007C5DC[];
-extern unsigned int lbl_80328468[];
-extern unsigned int lbl_80328474[];
-extern unsigned int lbl_80328480[];
+extern char lbl_80328468[];
+extern char lbl_80328474[];
+extern char lbl_80328480[];
+
+/* --- types --- */
+#include "game/MathInline.h"
+
+/* Course-side warp node: four ground corners plus entry/exit points. */
+typedef struct WarpNode {
+    Vec3f corner[4]; /* 0x00 */
+    Vec3f exitPos;   /* 0x30 */
+    Vec3f exitAim;   /* 0x3C */
+    float speed;     /* 0x48 */
+} WarpNode;
+
+/* One warp zone (0x50): edge vectors of the node's corner quad. */
+typedef struct WarpZone {
+    WarpNode *node; /* 0x00 */
+    Vec3f edge[4];  /* 0x04 */
+    Vec3f normal;   /* 0x34 */
+    Vec3f dir;      /* 0x40 */
+    int pad4C;      /* 0x4C */
+} WarpZone;
+
+typedef struct WarpDashMgr {
+    int unk0;            /* 0x00 */
+    int zoneCount;       /* 0x04 */
+    WarpZone *zones;     /* 0x08 */
+    int unkC;            /* 0x0C */
+    int obbCount;        /* 0x10 */
+    WarpZone *obbs;      /* 0x14 */
+    unsigned char enabled; /* 0x18 */
+} WarpDashMgr;
+
+typedef struct WarpAutoRun {
+    int state;           /* 0x00 */
+    int zone;            /* 0x04 */
+    float timer;         /* 0x08 */
+    float yaw;           /* 0x0C */
+    float yawTarget;     /* 0x10 */
+    Vec3f vel;           /* 0x14 */
+    unsigned char mgrId; /* 0x20 */
+} WarpAutoRun;
+
+static inline void WarpZone_GetOBBSpeed(WarpDashMgr *mgr, int zone, float *speed) {
+    if (mgr->enabled) {
+        if (zone == -1) {
+            DebugPrintf(lbl_80328468);
+        } else {
+            *speed = mgr->obbs[zone].node->speed;
+        }
+    }
+}
 
 /* --- forward decls --- */
 asm void WarpZone_FindContainingOBB(void);
 asm void WarpZone_CalcExitPosition(void);
 asm void WarpZone_FindContaining(void);
 asm void WarpDashMgr_Cleanup(void);
-void *WarpDashMgr_GetInstance(unsigned char id);
+WarpDashMgr *WarpDashMgr_GetInstance(unsigned char id);
 asm void WarpDashMgr_GetOrCreate(void);
-asm void Free_IfOwnedShort(void);
+void *Free_IfOwnedShort(void *p, short flag);
 asm void WarpAutoRun_Init(void);
-asm void DashZone_ProcessAutoRun(void);
+int DashZone_ProcessAutoRun(WarpAutoRun *self, float x, float y, float z, float yaw);
 asm void WarpAutoRun_GetParam(void);
 void WarpAutoRun_OnEnter(void *self, float f1, float f2, float f3, float f4, float vx, float vy, float vz);
 asm void WarpZone_CheckEntry(void);
-asm void Field4NotMinusOne(void);
+int Field4NotMinusOne(WarpAutoRun *self);
 asm void WarpZone_CalcEdgeVectors(void);
 void *dtor_800A9CC8(void *this, short flag);
 void *dtor_800A9D2C(void *this, short flag);
@@ -94,12 +144,6 @@ __declspec(section ".extab_user") static const unsigned char extab_WarpDashMgr_C
     0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_WarpDashMgr_GetOrCreate = { 0x38080000, 0x00000064, 0x00000010, 0x00000000, 0x8A800019, (void *)&MemoryManager_TimedFree };
-__declspec(section ".extab_user") static const unsigned char extab_fn_800A9414[8] = {
-    0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-__declspec(section ".extab_user") static const unsigned char extab_DashZone_ProcessAutoRun[8] = {
-    0x08, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 __declspec(section ".extab_user") static const unsigned char extab_WarpAutoRun_GetParam[8] = {
     0x28, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -126,12 +170,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpDashMgr_GetOrCreate = {
     (void *)&WarpDashMgr_GetOrCreate, 0x00000080, (void *)&extab_WarpDashMgr_GetOrCreate
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_800A9414 = {
-    (void *)&Free_IfOwnedShort, 0x0000003C, (void *)extab_fn_800A9414
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_DashZone_ProcessAutoRun = {
-    (void *)&DashZone_ProcessAutoRun, 0x000001E0, (void *)extab_DashZone_ProcessAutoRun
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpAutoRun_GetParam = {
     (void *)&WarpAutoRun_GetParam, 0x000001A0, (void *)extab_WarpAutoRun_GetParam
@@ -458,7 +496,7 @@ asm void WarpDashMgr_Cleanup(void) {
     blr
 }
 
-void *WarpDashMgr_GetInstance(unsigned char id) {
+WarpDashMgr *WarpDashMgr_GetInstance(unsigned char id) {
     return lbl_806CF238[id != 0];
 }
 
@@ -500,24 +538,11 @@ asm void WarpDashMgr_GetOrCreate(void) {
     blr
 }
 
-asm void Free_IfOwnedShort(void) {
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr. r31, r3
-    beq fn_800A9414_L_800A9438
-    extsh. r0, r4
-    ble fn_800A9414_L_800A9438
-    bl MemoryManager_TimedFree
-    fn_800A9414_L_800A9438:
-    lwz r0, 0x14(r1)
-    mr r3, r31
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+void *Free_IfOwnedShort(void *p, short flag) {
+    if (p != 0 && flag > 0) {
+        MemoryManager_TimedFree(p);
+    }
+    return p;
 }
 
 asm void WarpAutoRun_Init(void) {
@@ -535,145 +560,57 @@ asm void WarpAutoRun_Init(void) {
     blr
 }
 
-asm void DashZone_ProcessAutoRun(void) {
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stfd f31, 0x10(r1)
-    psq_st f31, 0x18(r1), 0, 0
-    stw r31, 0xc(r1)
-    mr r31, r3
-    la r3, lbl_806CF238(r13)  /* lbl_806CF238 */
-    lbz r4, 0x20(r31)
-    fmr f31, f4
-    neg r0, r4
-    or r0, r0, r4
-    rlwinm r0, r0, 3, 29, 29
-    lwzx r4, r3, r0
-    cmplwi r4, 0x0
-    beq DashZone_ProcessAutoRun_L_800A94DC
-    lfs f1, 0x8(r31)
-    lfs f0, lbl_806D4DE8(r2)
-    fcmpo cr0, f1, f0
-    cror eq, lt, eq
-    beq DashZone_ProcessAutoRun_L_800A94DC
-    lwz r0, 0x4(r31)
-    cmpwi r0, -0x1
-    bne DashZone_ProcessAutoRun_L_800A9514
-    DashZone_ProcessAutoRun_L_800A94DC:
-    lfs f0, lbl_806D4DE8(r2)
-    stfs f0, 0x14(r31)
-    stfs f0, 0x18(r31)
-    stfs f0, 0x1c(r31)
-    lwz r0, 0x0(r31)
-    cmpwi r0, 0x1
-    bne DashZone_ProcessAutoRun_L_800A9504
-    li r0, 0x2
-    stw r0, 0x0(r31)
-    b DashZone_ProcessAutoRun_L_800A950C
-    DashZone_ProcessAutoRun_L_800A9504:
-    li r0, 0x0
-    stw r0, 0x0(r31)
-    DashZone_ProcessAutoRun_L_800A950C:
-    lwz r3, 0x0(r31)
-    b DashZone_ProcessAutoRun_L_800A9640
-    DashZone_ProcessAutoRun_L_800A9514:
-    lfs f0, lbl_806D4DEC(r2)
-    fsubs f0, f1, f0
-    stfs f0, 0x8(r31)
-    lbz r0, 0x18(r4)
-    lwz r3, 0x4(r31)
-    cmplwi r0, 0x0
-    beq DashZone_ProcessAutoRun_L_800A9560
-    cmpwi r3, -0x1
-    bne DashZone_ProcessAutoRun_L_800A954C
-    lis r3, lbl_80328468@ha
-    addi r3, r3, lbl_80328468@l
-    crxor 6, 6, 6
-    bl DebugPrintf
-    b DashZone_ProcessAutoRun_L_800A9560
-    DashZone_ProcessAutoRun_L_800A954C:
-    mulli r0, r3, 0x50
-    lwz r3, 0x14(r4)
-    lwzx r3, r3, r0
-    lfs f0, 0x48(r3)
-    stfs f0, 0xc(r31)
-    DashZone_ProcessAutoRun_L_800A9560:
-    lfs f1, lbl_806D4DE8(r2)
-    fmr f3, f31
-    lfs f0, 0xc(r31)
-    fcmpo cr0, f31, f1
-    stfs f0, 0x10(r31)
-    ble DashZone_ProcessAutoRun_L_800A9594
-    lfs f0, lbl_806D4DF0(r2)
-    b DashZone_ProcessAutoRun_L_800A9584
-    DashZone_ProcessAutoRun_L_800A9580:
-    fsubs f3, f3, f0
-    DashZone_ProcessAutoRun_L_800A9584:
-    fcmpo cr0, f3, f0
-    cror eq, gt, eq
-    beq DashZone_ProcessAutoRun_L_800A9580
-    b DashZone_ProcessAutoRun_L_800A95AC
-    DashZone_ProcessAutoRun_L_800A9594:
-    bge DashZone_ProcessAutoRun_L_800A95AC
-    lfs f0, lbl_806D4DF0(r2)
-    b DashZone_ProcessAutoRun_L_800A95A4
-    DashZone_ProcessAutoRun_L_800A95A0:
-    fadds f3, f3, f0
-    DashZone_ProcessAutoRun_L_800A95A4:
-    fcmpo cr0, f3, f1
-    blt DashZone_ProcessAutoRun_L_800A95A0
-    DashZone_ProcessAutoRun_L_800A95AC:
-    lfs f1, 0xc(r31)
-    lfs f0, lbl_806D4DF4(r2)
-    fsubs f1, f1, f3
-    fcmpo cr0, f1, f0
-    ble DashZone_ProcessAutoRun_L_800A95CC
-    lfs f0, lbl_806D4DF0(r2)
-    fsubs f1, f1, f0
-    b DashZone_ProcessAutoRun_L_800A95E0
-    DashZone_ProcessAutoRun_L_800A95CC:
-    lfs f0, lbl_806D4DF8(r2)
-    fcmpo cr0, f1, f0
-    bge DashZone_ProcessAutoRun_L_800A95E0
-    lfs f0, lbl_806D4DF0(r2)
-    fadds f1, f1, f0
-    DashZone_ProcessAutoRun_L_800A95E0:
-    lfs f0, lbl_806D4DE8(r2)
-    fcmpo cr0, f1, f0
-    ble DashZone_ProcessAutoRun_L_800A9614
-    fabs f0, f1
-    lfs f1, lbl_806D4DFC(r2)
-    lfs f2, 0xc(r31)
-    frsp f0, f0
-    fmuls f0, f1, f0
-    fadds f3, f3, f0
-    fcmpo cr0, f2, f3
-    bge DashZone_ProcessAutoRun_L_800A9638
-    fmr f3, f2
-    b DashZone_ProcessAutoRun_L_800A9638
-    DashZone_ProcessAutoRun_L_800A9614:
-    fabs f0, f1
-    lfs f1, lbl_806D4DFC(r2)
-    lfs f2, 0xc(r31)
-    frsp f0, f0
-    fmuls f0, f1, f0
-    fsubs f3, f3, f0
-    fcmpo cr0, f2, f3
-    ble DashZone_ProcessAutoRun_L_800A9638
-    fmr f3, f2
-    DashZone_ProcessAutoRun_L_800A9638:
-    stfs f3, 0xc(r31)
-    li r3, 0x1
-    DashZone_ProcessAutoRun_L_800A9640:
-    psq_l f31, 0x18(r1), 0, 0
-    lwz r0, 0x24(r1)
-    lfd f31, 0x10(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+int DashZone_ProcessAutoRun(WarpAutoRun *self, float x, float y, float z, float yaw) {
+    WarpDashMgr *mgr;
+    float angle;
+    float diff;
+    float step;
+    mgr = WarpDashMgr_GetInstance(self->mgrId);
+    if (mgr == 0 || self->timer <= 0.0f || self->zone == -1) {
+        self->vel.x = 0.0f;
+        self->vel.y = 0.0f;
+        self->vel.z = 0.0f;
+        if (self->state == 1) {
+            self->state = 2;
+        } else {
+            self->state = 0;
+        }
+        return self->state;
+    }
+    self->timer -= 0.016666668f;
+    WarpZone_GetOBBSpeed(mgr, self->zone, &self->yaw);
+    self->yawTarget = self->yaw;
+    angle = yaw;
+    if (angle > 0.0f) {
+        while (angle >= 360.0f) {
+            angle -= 360.0f;
+        }
+    } else if (angle < 0.0f) {
+        while (angle < 0.0f) {
+            angle += 360.0f;
+        }
+    }
+    diff = self->yaw - angle;
+    if (diff > 180.0f) {
+        diff -= 360.0f;
+    } else if (diff < -180.0f) {
+        diff += 360.0f;
+    }
+    if (diff > 0.0f) {
+        step = (float)__fabs(diff) * 0.05f;
+        angle += step;
+        if (self->yaw < angle) {
+            angle = self->yaw;
+        }
+    } else {
+        step = (float)__fabs(diff) * 0.05f;
+        angle -= step;
+        if (self->yaw > angle) {
+            angle = self->yaw;
+        }
+    }
+    self->yaw = angle;
+    return 1;
 }
 
 asm void WarpAutoRun_GetParam(void) {
@@ -907,14 +844,8 @@ asm void WarpZone_CheckEntry(void) {
     blr
 }
 
-asm void Field4NotMinusOne(void) {
-    nofralloc
-    lwz r4, 0x4(r3)
-    subfic r3, r4, -0x1
-    addi r0, r4, 0x1
-    or r0, r3, r0
-    srwi r3, r0, 31
-    blr
+int Field4NotMinusOne(WarpAutoRun *self) {
+    return self->zone != -1;
 }
 
 asm void WarpZone_CalcEdgeVectors(void) {
