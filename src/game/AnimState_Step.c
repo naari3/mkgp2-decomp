@@ -1,9 +1,9 @@
-/* AnimState (0x800AE854..0x800AF088): keyframed parameter tracks. Init scans
- * the entry list (terminated by type 13) and sets up the key sequences; Step
- * advances each sequence and writes the interpolated values back.
- * NonMatching: Step ~98% (callee-saved register permutation: the target keeps
- * the entry offset in r25 below `s`), Init ~93% (the target keeps `entries`
- * and the byte offset in separate registers instead of a moving pointer). */
+/* AnimState (0x800AE854..0x800AF088): keyframed parameter tracks.
+ * NonMatching: Step 98.84%, Init 94.18% (objdiff, 2026-11-05).
+ * Chained time/interpolation reset preserves the target's f0-to-f31 move.
+ * Remaining: register partition, repeated signed type extension, and Init's
+ * retained entries base/offset versus the compiler's moving pointer.
+ */
 typedef struct Vec { float x, y, z; } Vec;
 
 typedef struct AnimEntry {
@@ -90,8 +90,7 @@ int AnimState_Step(AnimState *s)
             case 3:
                 s->state[i] = 1;
                 key = 0;
-                t = 0.0f;
-                s->time[i] = 0.0f;
+                t = s->time[i] = 0.0f;
                 break;
             }
             if (res == -1) {
@@ -190,9 +189,11 @@ void AnimState_Init(AnimState *s, AnimEntry *entries)
 {
     int i;
     int k;
+    AnimEntry *e;
     signed char n;
     signed char j;
 
+    k = 0;
     s->entries = entries;
     s->value4 = 0;
     for (i = 0; i < 8; i++) {
@@ -208,56 +209,57 @@ void AnimState_Init(AnimState *s, AnimEntry *entries)
 
         n = 0;
         j = 0;
-        k = 0;
-        while (entries[k].type != 13) {
-            switch ((signed char)entries[k].type) {
+        e = entries;
+        while (e->type != 13) {
+            switch ((signed char)e->type) {
             case 0:
                 for (s->keyCount[n] = 0;
-                     ((int *)entries[k].data)[s->keyCount[n]] != -1 && ((int *)entries[k].data)[s->keyCount[n]] != -2;
+                     ((int *)e->data)[s->keyCount[n]] != -1 && ((int *)e->data)[s->keyCount[n]] != -2;
                      s->keyCount[n]++) {
                 }
-                s->lastKey[n] = ((int *)entries[k].data)[s->keyCount[n]];
+                s->lastKey[n] = ((int *)e->data)[s->keyCount[n]];
                 s->state[n] = 1;
                 n++;
                 break;
             case 1:
-                s->value44 = *(int *)entries[k].data;
+                s->value44 = *(int *)e->data;
                 break;
             case 2:
-                s->a[a[0]++].x = *(float *)entries[k].data;
+                s->a[a[0]++].x = *(float *)e->data;
                 break;
             case 3:
-                s->a[a[1]++].y = *(float *)entries[k].data;
+                s->a[a[1]++].y = *(float *)e->data;
                 break;
             case 4:
-                s->a[a[2]++].z = *(float *)entries[k].data;
+                s->a[a[2]++].z = *(float *)e->data;
                 break;
             case 5:
-                s->b[b[0]++].x = *(float *)entries[k].data;
+                s->b[b[0]++].x = *(float *)e->data;
                 break;
             case 6:
-                s->b[b[1]++].y = *(float *)entries[k].data;
+                s->b[b[1]++].y = *(float *)e->data;
                 break;
             case 7:
-                s->b[b[2]++].z = *(float *)entries[k].data;
+                s->b[b[2]++].z = *(float *)e->data;
                 break;
             case 8:
-                s->c[c[0]++].x = *(float *)entries[k].data;
+                s->c[c[0]++].x = *(float *)e->data;
                 break;
             case 9:
-                s->c[c[1]++].y = *(float *)entries[k].data;
+                s->c[c[1]++].y = *(float *)e->data;
                 break;
             case 10:
-                s->c[c[2]++].z = *(float *)entries[k].data;
+                s->c[c[2]++].z = *(float *)e->data;
                 break;
             case 11:
-                s->d[j++] = *(float *)entries[k].data;
+                s->d[j++] = *(float *)e->data;
                 break;
             case 12:
-                s->value4 = (int)entries[k].data;
+                s->value4 = (int)e->data;
                 break;
             }
-            k++;
+            k += sizeof(AnimEntry);
+            e = (AnimEntry *)((char *)entries + k);
         }
     }
 }

@@ -1,9 +1,8 @@
-/*
- * Sci2Card link state machine, 0x80076BBC..0x8007723C.
- * The string pool is defined in Sci2Card.cpp; the strings are addressed
- * from its base like the original code does. As one TU with the pool
- * (where CW keeps the pool base in r31) this was 98.9%; the residual is
- * the checksum loop counter copy and the enq pointer copy in state 3.
+/* Sci2Card link state machine, 0x80076BBC..0x8007723C.
+ * NonMatching: 98.94% text, exact extab (objdiff, 2026-11-05).
+ * Pass the shared string-pool base through the inlined send helpers so CW
+ * retains one base in r31. Remaining differences are the state-3 ENQ pointer
+ * copy/initialization schedule and the checksum loop-count copy.
  */
 
 extern "C" {
@@ -159,38 +158,38 @@ public:
         m_unk24 = 120;
     }
 
-    inline int SendByte(unsigned char c)
+    inline int SendByte(unsigned char c, const char *pool)
     {
         if (m_port->m_open == 0) {
-            DebugPrintf(lbl_803115B0);
+            DebugPrintf(pool + 0xE0);
             return 2;
         }
         switch (fn_80293338(1, c)) {
         case 0:
             return 0;
         case 2:
-            DebugPrintf(lbl_803115C0);
+            DebugPrintf(pool + 0xF0);
             return 1;
         case 1:
         default:
-            DebugPrintf(lbl_803115D8);
+            DebugPrintf(pool + 0x108);
             return 4;
         }
     }
 
-    inline void SendBuffer(unsigned char *data, int len)
+    inline void SendBuffer(unsigned char *data, int len, const char *pool)
     {
         if (data == 0) {
             data = m_txBuf;
             len = m_txLen;
         }
-        SendRaw(len, data);
+        SendRaw(len, data, pool);
     }
 
-    inline void SendRaw(int n, unsigned char *p)
+    inline void SendRaw(int n, unsigned char *p, const char *pool)
     {
         while (n > 0) {
-            if (SendByte(*p) == 0) {
+            if (SendByte(*p, pool) == 0) {
                 p++;
                 n--;
             }
@@ -323,6 +322,7 @@ public:
 
 extern "C" void Sci2Card_Tick(Sci2Card *card)
 {
+    const char *pool = lbl_803114D0;
     unsigned char c;
     unsigned char enq;
     int r;
@@ -339,7 +339,7 @@ extern "C" void Sci2Card_Tick(Sci2Card *card)
             return;
         }
         card->ClearRx();
-        card->SendBuffer(0, 0);
+        card->SendBuffer(0, 0, pool);
         card->SetState(2);
         break;
     case 2:
@@ -363,7 +363,7 @@ extern "C" void Sci2Card_Tick(Sci2Card *card)
         }
         card->ClearRx();
         enq = 5;
-        card->SendBuffer(&enq, 1);
+        card->SendBuffer(&enq, 1, pool);
         card->SetState(4);
         break;
     case 4:

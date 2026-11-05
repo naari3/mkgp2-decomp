@@ -230,7 +230,7 @@ extern "C" unsigned char Terrain_GetGroundHeight(float *pos, float *outHeight, f
                 float inv = b;
                 float h;
 
-                if (0.0f != b) {
+                if (lbl_806D2384 != b) {
                     inv = lbl_806D2388 / b;
                 }
                 y = pos[1];
