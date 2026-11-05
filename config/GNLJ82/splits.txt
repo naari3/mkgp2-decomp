@@ -12286,6 +12286,11 @@ game/SceneRoleVariantCUpdate.cpp:
 	extabindex  start:0x8002B5F8 end:0x8002B604
 	.text       start:0x8024CD54 end:0x8024CED0
 
+game/SceneRoleVariantCBaseDtor.cpp:
+	extab       start:0x8001E528 end:0x8001E570
+	extabindex  start:0x8002B604 end:0x8002B610
+	.text       start:0x8024CED0 end:0x8024CFE8
+
 game/SceneRoleRender.cpp:
 	extab       start:0x8001E570 end:0x8001E578
 	extabindex  start:0x8002B610 end:0x8002B61C
@@ -12310,6 +12315,22 @@ game/SceneRoleDtor.cpp:
 	extab       start:0x8001E5A0 end:0x8001E5C8
 	extabindex  start:0x8002B640 end:0x8002B64C
 	.text       start:0x8024D17C end:0x8024D244
+
+game/BattleSceneInit.cpp:
+	extab       start:0x8001E5C8 end:0x8001E614
+	extabindex  start:0x8002B64C end:0x8002B658
+	.text       start:0x8024D244 end:0x8024D36C
+
+game/ContinueSceneDraw.cpp:
+	extab       start:0x8001E614 end:0x8001E61C
+	extabindex  start:0x8002B658 end:0x8002B664
+	.text       start:0x8024D36C end:0x8024D3D4
+
+game/ContinueSceneTick.cpp:
+	extab       start:0x8001E61C end:0x8001E638
+	extabindex  start:0x8002B664 end:0x8002B670
+	.text       start:0x8024D3D4 end:0x8024D764
+	.data       start:0x804EEFBC end:0x804EEFE4
 
 game/ContinueScene.cpp:
 	extab       start:0x8001E638 end:0x8001E75C
