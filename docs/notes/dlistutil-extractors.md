@@ -1,0 +1,5 @@
+# dlistutil-extractors
+
+Source: Codex worker c7_s19_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+Both assigned auto blobs contain one function and only an 8-byte extab with no actions. fn_80184928 transforms quad/triangle-strip data into six 48-byte quad slots, returning 1 only when all six are filled. fn_80184F24 fills 60-byte records with four transformed vertices, a zero int, and two values from lbl_806D927C; it returns the number of records. Vertex descriptors use ushort stride at +0x12, float-array pointer +0x14; attr 9 is position, type 3 uses ushort indices. Matrix +0x44 lies inside the canonical HSD_JObj partial header padding. Explicit float field copies reproduce target lfs/stfs; struct assignments emit integer copies. Native first function reaches exact size and exact EH, but only argument/register differences remain. Second function hoists jobj matrix address, adds 4 bytes and one saved GPR. No handwritten asm or EH payloads used.

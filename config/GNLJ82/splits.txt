@@ -7205,6 +7205,16 @@ game/dlistutil/fn_801847DC.c:
 	extabindex  start:0x80026C6C end:0x80026C78
 	.text       start:0x801847DC end:0x80184928
 
+game/dlistutil/fn_80184928.c:
+	extab       start:0x80011BF0 end:0x80011BF8
+	extabindex  start:0x80026C78 end:0x80026C84
+	.text       start:0x80184928 end:0x80184F24
+
+game/dlistutil/fn_80184F24.c:
+	extab       start:0x80011BF8 end:0x80011C00
+	extabindex  start:0x80026C84 end:0x80026C90
+	.text       start:0x80184F24 end:0x80185630
+
 game/dlistutil/fn_801866DC.c:
 	extab       start:0x80011C10 end:0x80011C18
 	extabindex  start:0x80026CA8 end:0x80026CB4
