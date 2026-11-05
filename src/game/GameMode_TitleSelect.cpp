@@ -1,7 +1,4 @@
-/* Title / stage-select / character-select game modes (0x800AC94C..0x800ACD60).
- * NonMatching: these are C++ classes deriving GMRoot with RTTI on; the
- * target extab has new/ctor cleanup actions and the vtables + RTTI
- * (.data 0x80419DF0.., .sdata 0x806CF290..) belong to this TU. */
+/* Title, stage-select and character-select modes. */
 
 struct VObj {
     virtual ~VObj();
@@ -80,6 +77,28 @@ static inline void CreateInputState(void)
     }
 }
 
+struct SelectBase {
+    void *vtable;
+    SelectBase();
+    ~SelectBase();
+};
+struct SelectStage : SelectBase {
+    int counter;
+    SelectStage() { vtable = lbl_80419E1C; counter = 0; }
+};
+struct SelectCharacter : SelectBase {
+    int state;
+    VObj *scene;
+    SelectCharacter() {
+        vtable = lbl_80419DFC;
+        state = 0;
+        scene = 0;
+        if (input_state() == 0) CreateInputState();
+        g_characterId = 0;
+        scene = fn_8015CB5C(0);
+    }
+};
+
 #pragma exceptions on
 extern "C" GameModeTitle *GameMode_Title_Dtor(GameModeTitle *self, short flag)
 {
@@ -97,7 +116,7 @@ extern "C" GameModeTitle *GameMode_Title_Dtor(GameModeTitle *self, short flag)
 extern "C" int fn_800AC9AC(GameModeTitle *self)
 {
     self->counter++;
-    return self->counter < 180 ? -1 : -2;
+    return self->counter > 180 ? -1 : -2;
 }
 
 #pragma exceptions on
@@ -108,13 +127,7 @@ extern "C" void GameMode_Title_DrawDebugLabel(void)
 
 extern "C" GameModeTitle *GameMode_StageSelect_Ctor(void)
 {
-    GameModeTitle *self = (GameModeTitle *)Alloc(8);
-    if (self != 0) {
-        GameMode_BaseInit(self);
-        self->vtable = lbl_80419E1C;
-        self->counter = 0;
-    }
-    return self;
+    return (GameModeTitle *)new SelectStage;
 }
 
 extern "C" GameModeTitle *GameMode_StageSelect_Dtor(GameModeTitle *self, short flag)
@@ -143,19 +156,7 @@ extern "C" void GameMode_StageSelect_DrawDebugLabel(void)
 
 extern "C" GameModeSelect *GameMode_CharacterSelect_Ctor(void)
 {
-    GameModeSelect *self = (GameModeSelect *)Alloc(0xC);
-    if (self != 0) {
-        GameMode_BaseInit(self);
-        self->vtable = lbl_80419DFC;
-        self->state = 0;
-        self->scene = 0;
-        if (input_state() == 0) {
-            CreateInputState();
-        }
-        g_characterId = 0;
-        self->scene = fn_8015CB5C(0);
-    }
-    return self;
+    return (GameModeSelect *)new SelectCharacter;
 }
 
 extern "C" GameModeSelect *GameMode_CharacterSelect_Dtor(GameModeSelect *self, short flag)

@@ -1712,5 +1712,29 @@
   ],
   "src/game/EnemyFace_exact5.cpp": [
     "fn_8022BF2C"
-  ]
+  ],
+  "src/game/GameMode_TitleSelect.cpp": {
+    "extab": [
+      "GameMode_StageSelect_Ctor",
+      "GameMode_CharacterSelect_Ctor",
+      "GameMode_CharacterSelect_Dtor",
+      "GameMode_CharacterSelect_TickStateMachine",
+      "GameMode_CharacterSelect_Draw",
+      "GameMode_StageSelect_Dtor",
+      "GameMode_StageSelect_DrawDebugLabel",
+      "GameMode_Title_Dtor",
+      "GameMode_Title_DrawDebugLabel"
+    ],
+    "extabindex": [
+      "GameMode_Title_Dtor",
+      "GameMode_Title_DrawDebugLabel",
+      "GameMode_StageSelect_Ctor",
+      "GameMode_StageSelect_Dtor",
+      "GameMode_StageSelect_DrawDebugLabel",
+      "GameMode_CharacterSelect_Ctor",
+      "GameMode_CharacterSelect_Dtor",
+      "GameMode_CharacterSelect_TickStateMachine",
+      "GameMode_CharacterSelect_Draw"
+    ]
+  }
 }

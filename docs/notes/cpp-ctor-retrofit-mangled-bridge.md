@@ -269,3 +269,8 @@ anon_8021BC44: NameEntry begins with KeyBoard (0x28), containing KeyVec<KeyGroup
 Source: Codex worker c3_u12_8020007c_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 476 B.
 
 c3 unlock: FadeLogo safe cuts are E3D0/E4C4 and F02C/F080/F18C/F220; DTK accepts. Factory private TaskListBase external destructor suppresses duplicate RTTI/vtable while primary text and 100-byte EH stay exact. Bridge @78/@79 to target EH names. Generic VHolder<TaskListImpl> weak dtor EB04 migrates to factory and is exact, while strong fallback nm2 retains final target ownership. Sort no-EH split uses actual CW name and omits extab_padding. Residual loop cursor/end r4/r5 and r6/r7 swaps resist iterator/direct-End spellings; Draw retains stack-slot and assignment-copy mismatch.
+
+## c3_u18_carobject_20261105
+Source: Codex worker c3_u18_carobject_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 24 fn / 6588 B.
+
+TitleSelect fn_800AC9AC at 800AC9AC is semantically counter > 180 ? -1 : -2 after increment; the old counter < 180 ternary looked like a mere five-row register residual (97.5%). SelectBase + inline derived constructors with real new expressions preserve exact text and naturally generate DELETEPOINTER and DESTROYBASE. Explicit original vtable stores avoid emitting extra RTTI. EH order stage factory, character factory, character dtor/tick/draw, stage dtor/debug, title dtor/debug gives text/extab/extabindex all 100%.

@@ -1267,7 +1267,10 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "__dt__9CarObjectFv": "CarObject_Dtor",
     "__dt__7CarElemFv": "dtor_80036E40",
-    "__dt__10CarTrivialFv": "dtor_8019EB60"
+    "__dt__10CarTrivialFv": "dtor_8019EB60",
+    "__ct__12MovementInitFPvPUcPvfff": "KartMovement_Init",
+    "__ct__7CarElemFv": "fn_8007C5DC",
+    "__dt__7InitVecFv": "dtor_80036E40"
   },
   "src/game/kartmove/fn_8019BF80.cpp": {
     "__dt__3VecFv": "dtor_80036E40"
@@ -9752,5 +9755,29 @@
     "Update__8FadeLogoFv": "fn_8020E590",
     "__ct__8FadeLogoFii": "fn_8020E6C8",
     "EraseRange__15TaskEntriesBaseFRC8TaskIterRC8TaskIter": "DoublyLinkedList_EraseRange"
+  },
+  "src/game/GameMode_TitleSelect.cpp": {
+    "__ct__10SelectBaseFv": "GameMode_BaseInit",
+    "__dt__10SelectBaseFv": "dtor_8002CDF4",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@44": "@etb_8000A170",
+    "@82": "@etb_8000A188",
+    "@100": "@etb_8000A1B4",
+    "@112": "@etb_8000A1BC",
+    "@118": "@etb_8000A1C4",
+    "@54": "@etb_8000A1CC",
+    "@64": "@etb_8000A1D4",
+    "@21": "@etb_8000A1DC",
+    "@34": "@etb_8000A1E4",
+    "@22": "@eti_800227FC",
+    "@35": "@eti_80022808",
+    "@45": "@eti_80022814",
+    "@55": "@eti_80022820",
+    "@65": "@eti_8002282C",
+    "@83": "@eti_80022838",
+    "@101": "@eti_80022844",
+    "@113": "@eti_80022850",
+    "@119": "@eti_8002285C"
   }
 }
