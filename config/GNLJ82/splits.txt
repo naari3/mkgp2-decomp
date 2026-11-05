@@ -11937,6 +11937,26 @@ game/SpriteAnimParamBlock.c:
 	extabindex  start:0x8002AF14 end:0x8002AF38
 	.text       start:0x8023EF38 end:0x8023F1C8
 
+game/SpriteAnimHandleFlush.cpp:
+	extab       start:0x8001CDAC end:0x8001CDB4
+	extabindex  start:0x8002AF38 end:0x8002AF44
+	.text       start:0x8023F1C8 end:0x8023F254
+
+game/SpriteAnimHandleDestroy.cpp:
+	extab       start:0x8001CDB4 end:0x8001CDBC
+	extabindex  start:0x8002AF44 end:0x8002AF50
+	.text       start:0x8023F254 end:0x8023F320
+
+game/SpriteAnimHandleCtor.cpp:
+	extab       start:0x8001CDBC end:0x8001CDD4
+	extabindex  start:0x8002AF50 end:0x8002AF5C
+	.text       start:0x8023F320 end:0x8023F444
+
+game/SpriteGroupCreate.cpp:
+	extab       start:0x8001CDD4 end:0x8001CDFC
+	extabindex  start:0x8002AF5C end:0x8002AF68
+	.text       start:0x8023F444 end:0x8023F5B4
+
 game/IsCardValid.c:
 	extab       start:0x8001CE14 end:0x8001CE1C
 	extabindex  start:0x8002AF74 end:0x8002AF80

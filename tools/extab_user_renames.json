@@ -11032,5 +11032,16 @@
     "__dt__10MixDrawS56Fv": "dtor_801F6BD0",
     "@130": "@etb_80017580",
     "@131": "@eti_80028F88"
+  },
+  "src/game/SpriteAnimHandleCtor.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10AnimSpriteFiii": "Sprite_InitWithAnim",
+    "__ct__16SpriteAnimHandleFi": "fn_8023F320"
+  },
+  "src/game/SpriteGroupCreate.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10AnimSpriteFiii": "Sprite_InitWithAnim"
   }
 }

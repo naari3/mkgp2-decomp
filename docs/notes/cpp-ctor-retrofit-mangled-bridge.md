@@ -534,3 +534,8 @@ c8_s53 candidate 801EE36C: using canonical CollisionVec with float constructor a
 Source: Codex worker c8_s56_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c8_s56 partial: independent sprite texture/draw functions 801F6D58/7198/7344/7604 reconstructed as four honest NM TUs. Existing DrawDesc801F supplies canonical prefix, extended privately with blend modes and matrix at +0x64. Three scoped draw-node subclasses with inline vptr-setting destructors reproduce DESTROYLOCAL kind/stack offsets and primary 56-byte EH shape for 7604; its primary text remains four bytes long and 97.693665%. No native gain.
+
+## c8_s60_20261105
+Source: Codex worker c8_s60_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 636 B.
+
+c8_s60: SpriteAnimHandle ctor 8023F320 matches native 292B plus 24B DELETEPOINTER EH using canonical AnimSprite new and simple for(i=0;i<50;++i) sentinel copy. GC/1.3.2 naturally emits target five-way unroll, including apparently dead li/addi induction register. Standalone flush needs explicit handle cursor plus i (rather than indexed inline Flush) for exact cursor/index register identities. Native Destroy indexed inline Flush already matches. 3 fn / 636B source-linked full DOL SHA-1 OK.
