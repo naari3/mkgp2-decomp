@@ -11016,5 +11016,11 @@
     "__dt__5AIAuxFv": "fn_801DEE38",
     "@125": "@etb_80016588",
     "@126": "@eti_800288F8"
+  },
+  "src/game/fn_801EE36C.cpp": {
+    "__dt__12CollisionVecFv": "dtor_80036E40"
+  },
+  "src/game/fn_801ED798.cpp": {
+    "__dt__12CollisionVecFv": "dtor_80036E40"
   }
 }

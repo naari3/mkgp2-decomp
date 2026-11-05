@@ -10079,10 +10079,20 @@ game/PhysicsState_WallCollisionCheck.cpp:
 	extabindex  start:0x80028B44 end:0x80028B50
 	.text       start:0x801ED0E8 end:0x801ED798
 
+game/fn_801ED798.cpp:
+	extab       start:0x80016CD4 end:0x80016CEC
+	extabindex  start:0x80028B50 end:0x80028B5C
+	.text       start:0x801ED798 end:0x801EDFEC
+
 game/KartPhysics_ApplyCollisionForce.cpp:
 	extab       start:0x80016CEC end:0x80016D04
 	extabindex  start:0x80028B5C end:0x80028B68
 	.text       start:0x801EDFEC end:0x801EE36C
+
+game/fn_801EE36C.cpp:
+	extab       start:0x80016D04 end:0x80016D1C
+	extabindex  start:0x80028B68 end:0x80028B74
+	.text       start:0x801EE36C end:0x801EE7F0
 
 game/dtor_801EECD8.c:
 	extab       start:0x80016D54 end:0x80016D5C

@@ -524,3 +524,8 @@ c8_s52: AI_SystemInit genuine member-owner constructor/new AIKart gives exact 70
 Source: Codex worker c8_s51_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 496 B.
 
 fn_801E81D8 (AIKart deleting wrapper) matches 496 B text plus 264 B EH and 12 B index using canonical AIKart/AIOwn<T>, explicit reverse-order holder destruction, and real throw() destructor EH. A nullable cast from AIKart* to its secondary AIWarpResponder base added three instructions even inside the outer self guard; passing &self->AIWarpResponder::vptr to the existing C ABI base destructor avoids that adjustment and gives exact output. No manual EH or opcode emission is used. Full source-linked DOL SHA-1 verified.
+
+## c8_s53_20261105
+Source: Codex worker c8_s53_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c8_s53 candidate 801EE36C: using canonical CollisionVec with float constructor and empty destructor in all three branch scopes retains the target temporary stores/frame; using PhysicsPlainVec/set removes stores. Numeric sqrt constants 0.5/3.0 recover target FP allocation better than external double declarations. Boolean if(length) recovers target fcmpu operand order, unlike explicit comparison with literal zero. Best native text 99.81315%, exact primary 24-byte EH, remaining sqrt scratch-slot swap and transit FP web allocation. No promotion.
