@@ -63,3 +63,8 @@ Identical instruction count and addressing, but register numbers in `r` fields d
 Source: Codex worker c3_n5_bomb_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 4140 B.
 
 BombExplosion_UpdateShockwaveVfx final-ring scalar reuse across two blocks created f30/f31/f29 webs; block-local lim,h,t,sy declarations produce the exact target f27/f28/f29 and sy reuse f27. KartItemTrail_4Phase period-table const declaration caused read scheduling across self stores and lwzu; non-const extern restored exact text and all owned EH.
+
+## c5_s6_hudmanagerdisp_20261105
+Source: Codex worker c5_s6_hudmanagerdisp_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 656 B.
+
+Waypoint_FindNearest 80046680: assigning dx = dx*dx + dy*dy + dz*dz; return PathCursor_sqrtf(dx); in both private distance helpers produces exact text/EH. Returning sqrt(expression) used dz register for result; two-step dx accumulation fixes result register but changes intermediate FMADD destination. One full-expression assignment preserves scratch intermediate and coalesces result into dx. No shared header changed.

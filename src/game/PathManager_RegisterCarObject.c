@@ -2,7 +2,9 @@
  * (first free one when slot == -1) for a car and reset its progress.
  *
  * NonMatching: register numbering only. The target gives the entry pointer
- * r31 and the parameters r24..r30; here the entry lands in r24. */
+ * r31 and the parameters r24..r30; here the entry lands in r24.
+ * A later block-scoped entry and an inline registration-tail helper both
+ * preserve the same allocation (96.80451%); keep the straightforward source. */
 
 typedef struct PathEntry {
     int field0;
