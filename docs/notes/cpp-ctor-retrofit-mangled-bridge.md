@@ -614,3 +614,8 @@ EffectSpeed_Init 800650E0 matches 300B text +100B owned EH via genuine owner cto
 Source: Codex worker c9_s7_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 5 fn / 992 B.
 
 HudResultFlow 80248904..80248CE4: reuse canonical HudRoot/HudChild/HudSmall from HudFlowPrivate.h; plain vptr assignment in genuine derived constructor reproduces DESTROYBASE and real new HudSmall reproduces DELETEPOINTER. Native 992B text, 76B EH, 60B index, 56B switch tables exact on first approach. Reversed extab order places final virtual-delete helper first; per-TU extab_order and DATA_ALIGN4_TUS preserve full DOL SHA-1.
+
+## c9_s9_20261106
+Source: Codex worker c9_s9_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 49 fn / 9760 B.
+
+c9_s9_20261106: CardTaskChecks matches 49 fn / 9760 B, all owned EH and final DOL SHA-1. A timer local must be default-constructed BEFORE its explicit OSGetTick reset to reproduce EH PC 0x18; an OSGetTick-calling ctor delayed EH to PC 0x28 with identical text. Direct vs inlined ResCtrl locals change stack allocation order: final welcome frame must be direct while inner frame is inlined; printer left-choice resource is inlined while right-choice is direct. A plain C factory view preserves WaitInput_New before its real C++ virtual destructor when the compiler otherwise defers new-expression factory emission. Verify physical addresses after weak-copy discard.

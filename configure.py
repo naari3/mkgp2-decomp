@@ -1506,6 +1506,7 @@ config.libs = [
             Object(Matching, "game/CardTaskWelcome_Dtor.c"),
             Object(Matching, "game/card_task_manager_create.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardTaskWelcome_New.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/CardTaskChecks.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/OperationClockState.c"),
             Object(Matching, "game/PlayStats_Accumulate.c"),
             Object(Matching, "game/PlayStats_Counters.c"),
