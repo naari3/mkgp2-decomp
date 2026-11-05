@@ -126,21 +126,26 @@ void *fn_802407C8(TaskBucket *self) {
 }
 }
 
+static inline int TrackLength(const TrackKey *keys) {
+    const TrackKey *cursor = keys;
+    int count = 0;
+    int length;
+    for (;;) {
+        if (cursor->frame == -1) {
+            length = keys[count - 1].frame;
+            break;
+        }
+        ++cursor;
+        ++count;
+    }
+    return length;
+}
+
 static inline void SeekTrack(const TrackKey *keys, TrackState *state, int frame) {
     if (keys) {
         int i;
-        const TrackKey *cursor = keys;
         int key = 0;
-        int count = 0;
-        int length;
-        for (;;) {
-            if (cursor->frame == -1) {
-                length = keys[count - 1].frame;
-                break;
-            }
-            ++cursor;
-            ++count;
-        }
+        int length = TrackLength(keys);
         int localFrame = frame;
         while (localFrame >= length) localFrame -= length;
         i = 0;

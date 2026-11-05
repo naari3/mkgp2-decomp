@@ -1441,3 +1441,8 @@ MiniGame_GetTimerValue (ZoneList.c): an inlined `return x > 3;` gave its web a h
 Source: Codex worker c8_s37_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1232 B.
 
 c8_s37: MenuScene_Dispatch split y/scale expressions with a cached integer frame and fp_contract off produce exact 312-byte owned EH and 200-byte table but leave seven FP operand/register differences (99.90809% text). Swapping named float declaration order is invariant, consistent with short-lived expression webs. Retained NonMatching; no further permutations.
+
+## c10_u1_20261106
+Source: Codex worker c10_u1_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+JointTracks fn_80240810: extracting the sentinel scan into inline TrackLength fixes first eight channels index/length r5/r7 homes, 99.111115 -> 99.82539. Only final channel keys/cursor r7/r8 swap remains. fn_80240378 remains pure GPR coloring at 98.42262; registration-loop helper extraction and whole-function helper failed to improve. Target JointTask dtor at 80241B3C owns first extab 8001CF04, before first function extab 8001CF0C, so group 802400A4..80241B84 cannot split.
