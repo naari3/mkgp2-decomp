@@ -83,3 +83,8 @@ KartMovement speed methods 80199A84/80199B10 require GC/2.7 to sink the leaf pro
 Source: Codex worker c7_s5_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 2664 B.
 
 Stats_PacketStats_UI (8006830C): ratio0=zero; then four ascending assignment chains ratio1=...=ratio8=zero, ratio9=...=ratio16=zero, ratio17=...=ratio24=zero, ratio25=...=ratio32=zero reproduce target zero-case scheduling. Independent scalar zero assignments and one chain of all 33 produce different scheduling despite identical semantics. Entry-local table base restores r30 and exact prologue; canonical TestMenuPage.h works. Text/extab/extabindex 100%, source-linked full DOL SHA-1 OK.
+
+## c7_s14_20261105
+Source: Codex worker c7_s14_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 844 B.
+
+RumbleUpdate 80169A14 / shutdown 80169C44: fn_801DAEC0()->inline_member_setter(r->out[ch]) exactly reproduces saved argument temporary r29/r30; free inline setter and explicit assignment temp leave r30/r31 splits. Shutdown genuine inline destructor + delete removes extra incoming pointer move and preserves duplicate null branches. Verified source-linked 844B with full DOL SHA-1 OK.

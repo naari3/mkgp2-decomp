@@ -6456,6 +6456,16 @@ game/misc3d/fn_801698B4.cpp:
 game/Rumble.cpp:
 	.text       start:0x80169978 end:0x80169A14
 
+game/RumbleUpdate.cpp:
+	extab       start:0x800101C0 end:0x800101C8
+	extabindex  start:0x80025FB8 end:0x80025FC4
+	.text       start:0x80169A14 end:0x80169C44
+
+game/RumbleShutdown.cpp:
+	extab       start:0x800101C8 end:0x800101D0
+	extabindex  start:0x80025FC4 end:0x80025FD0
+	.text       start:0x80169C44 end:0x80169D60
+
 game/InitRumbleController.c:
 	extab       start:0x800101D0 end:0x800101D8
 	extabindex  start:0x80025FD0 end:0x80025FDC
@@ -6559,6 +6569,11 @@ game/mapeffect/fn_8016C850.c:
 	extabindex  start:0x8002621C end:0x80026228
 	.text       start:0x8016C850 end:0x8016C94C
 
+game/mapeffect/PointListConstruct.cpp:
+	extab       start:0x80010464 end:0x8001046C
+	extabindex  start:0x80026228 end:0x80026234
+	.text       start:0x8016C94C end:0x8016CB44
+
 sound/SoundMgr_PointSetMgr.cpp:
 	extab       start:0x8001046C end:0x80010474
 	extabindex  start:0x80026234 end:0x80026240
@@ -6578,6 +6593,11 @@ game/ItemBox_8016CEA0.cpp:
 	extab       start:0x800104A4 end:0x800104B4
 	extabindex  start:0x80026258 end:0x80026270
 	.text       start:0x8016CEA0 end:0x8016D2D0
+
+game/ItemBoxConstruct.cpp:
+	extab       start:0x800104B4 end:0x80010530
+	extabindex  start:0x80026270 end:0x8002627C
+	.text       start:0x8016D2D0 end:0x8016D79C
 
 game/Scene_8016D79C.cpp:
 	extab       start:0x80010530 end:0x80010548
