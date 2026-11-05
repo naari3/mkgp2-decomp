@@ -21,6 +21,51 @@ struct SavedGXState {
     float viewport[6];
     unsigned int scissor[4];
 };
+extern "C" void MemoryManager_TimedFree(void *p);
+
+struct Vec3 {
+    float x;
+    float y;
+    float z;
+};
+
+struct LNode {
+    LNode *prev;
+    LNode *next;
+};
+
+class LListImp {
+public:
+    int count;
+    LNode end;
+
+    inline ~LListImp() {
+        LNode *first = end.next;
+        LNode *last = &end;
+        if (first != last) {
+            LNode *lp = last->prev;
+            first->prev->next = lp->next;
+            lp->next->prev = first->prev;
+            while (first != last) {
+                LNode *n = first;
+                first = first->next;
+                MemoryManager_TimedFree(n);
+                count--;
+            }
+        }
+    }
+};
+
+class LList : public LListImp {
+public:
+    inline ~LList() {}
+};
+
+struct ProfTimer {
+    int slot;
+    unsigned int start;
+};
+
 struct SpriteNode {
     int index;
     SpriteNode *prev;
@@ -106,33 +151,33 @@ void HSD_StateInvalidate(int);
 void fn_8011E9C0(int type);
 extern unsigned char lbl_806D14F0;
 extern SavedGXState lbl_806573A0;
-extern void C_MTXLookAt();
-extern void C_MTXOrtho();
-extern void GXGetCullMode();
-extern void GXGetProjectionv();
-extern void GXGetScissor();
-extern void GXGetViewportv();
-extern void GXLoadPosMtxImm();
-extern void GXSetCurrentMtx();
-extern void GXSetProjection();
+void C_MTXLookAt(float (*)[4], const Vec3 *, const Vec3 *, const Vec3 *);
+void C_MTXOrtho(float (*)[4], float, float, float, float, float, float);
+void GXGetCullMode(int *);
+void GXGetProjectionv(float *);
+void GXGetScissor(unsigned int *, unsigned int *, unsigned int *, unsigned int *);
+void GXGetViewportv(float *);
+void GXLoadPosMtxImm(float (*)[4], unsigned int);
+void GXSetCurrentMtx(unsigned int);
+void GXSetProjection(float (*)[4], int);
 extern float g_glyphClipMaxX;
 extern float g_glyphClipMaxY;
 extern float g_glyphClipMinXY;
-extern unsigned int lbl_806D14F1;
+extern unsigned char lbl_806D14F1;
 extern unsigned int lbl_806D14F4;
 extern unsigned int lbl_806D14F8;
-extern unsigned int lbl_806D14FC;
-extern unsigned int lbl_806D6D8C;
-extern unsigned int lbl_806D6DAC;
-extern unsigned int lbl_806D6DB0;
-extern unsigned int lbl_806D6DB4;
-extern unsigned int lbl_806D6DB8;
-extern unsigned int lbl_806D6DBC;
-extern unsigned int lbl_806D6DC0;
-extern unsigned int lbl_806D6DC4;
-extern unsigned int lbl_806D6DC8;
-extern unsigned int lbl_806D6DCC;
-extern unsigned int lbl_806D6DD0;
+extern unsigned char lbl_806D14FC;
+extern const float lbl_806D6D8C;
+extern const float lbl_806D6DAC;
+extern const float lbl_806D6DB0;
+extern const float lbl_806D6DB4;
+extern const float lbl_806D6DB8;
+extern const float lbl_806D6DBC;
+extern const float lbl_806D6DC0;
+extern const float lbl_806D6DC4;
+extern const float lbl_806D6DC8;
+extern const float lbl_806D6DCC;
+extern const float lbl_806D6DD0;
 extern unsigned int lbl_80657360[];
 extern SpriteHandle g_SpriteHandlePool[];
 unsigned char IsValidResourceId(int id);
@@ -149,8 +194,8 @@ unsigned int OSGetTick(void);
 void Profiler_RecordFrame(int slot, float value);
 extern SpriteList *lbl_806D1500;
 extern const float lbl_806D6D98;
-extern unsigned int lbl_806D6D9C;
-extern unsigned int lbl_80657208[];
+extern const float lbl_806D6D9C;
+extern float lbl_80657208[];
 extern void __dt__11ScopedTimerFv();
 void MemoryManager_Free(void *p);
 void TEXReleasePalette(void **pal);
@@ -168,15 +213,15 @@ extern void ResourceTable_GetFlagsByte();
 extern void ResourceTable_GetScaleXY();
 extern unsigned int lbl_80332528[];
 void *memset(void *p, int c, unsigned long n);
-extern void __destroy_arr();
-extern void DoublyLinkedList_Init();
+void __destroy_arr(void *, void *, unsigned long, unsigned long);
+void DoublyLinkedList_Init(void *);
 extern unsigned int lbl_80657234[];
-extern void __construct_array();
-extern void __register_global_object();
+void __construct_array(void *, void *, void *, unsigned long, unsigned long);
+void *__register_global_object(void *, void *, void *);
 extern unsigned int fn_8011DF70[];
 extern unsigned int lbl_80657228[];
 void fn_8011EB1C(void);
-asm void fn_8011EC18(unsigned char a);
+void fn_8011EC18(unsigned char a);
 void SpriteHandle_RecomputeCull(int h);
 asm void SpriteLayer_SetResource(void);
 void fn_8011F870(unsigned int mask);
@@ -193,22 +238,19 @@ void Stub_NoOp_80121c34(void);
 asm void fn_80121C38(void);
 void fn_80121E10(ResCtrl *r);
 ResCtrl *ResCtrl_Init(ResCtrl *r);
-asm void fn_80121F54(void);
-asm void fn_80121FB4(void);
-asm void dtor_80122068(void);
+void *fn_80121F54(void *self, short flag);
+LList *fn_80121FB4(LList *l, short flag);
+ProfTimer *dtor_80122068(ProfTimer *t, short flag);
 asm void fn_8012215C(void);
-asm void fn_801221D4(void);
-asm void fn_80122204(void);
-asm void fn_8012223C(void);
-asm void fn_801222F0(void);
-asm void fn_80122320(void);
+LListImp *fn_801221D4(LListImp *l);
+void fn_80122204(void);
+LList *fn_8012223C(LList *l, short flag);
+LListImp *fn_801222F0(LListImp *l);
+void fn_80122320(LListImp *l);
 asm void fn_80122338(void);
 
 #pragma section R ".extab_user"
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8011EC18[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 __declspec(section ".extab_user") static const unsigned char extab_SpriteLayer_SetResource[8] = {
@@ -248,38 +290,17 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80121C38[8
 
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80121F54[8] = {
-    0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80121FB4[8] = {
-    0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-__declspec(section ".extab_user") static const unsigned char extab_dtor_80122068[8] = {
-    0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 __declspec(section ".extab_user") static const unsigned char extab_fn_8012215C[8] = {
     0x18, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_801221D4[8] = {
-    0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80122204[8] = {
-    0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8012223C[8] = {
-    0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_801222F0[8] = {
-    0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const unsigned char extab_fn_80122338[8] = {
     0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -287,9 +308,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80122338[8
 
 #pragma section R ".extabindex_user"
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8011EC18 = {
-    (void *)&fn_8011EC18, 0x00000224, (void *)extab_fn_8011EC18
-};
 
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_SpriteLayer_SetResource = {
@@ -332,38 +350,17 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80121F54 = {
-    (void *)&fn_80121F54, 0x00000060, (void *)extab_fn_80121F54
-};
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80121FB4 = {
-    (void *)&fn_80121FB4, 0x000000B4, (void *)extab_fn_80121FB4
-};
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_80122068 = {
-    (void *)&dtor_80122068, 0x000000B8, (void *)extab_dtor_80122068
-};
 
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8012215C = {
     (void *)&fn_8012215C, 0x00000078, (void *)extab_fn_8012215C
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801221D4 = {
-    (void *)&fn_801221D4, 0x00000030, (void *)extab_fn_801221D4
-};
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80122204 = {
-    (void *)&fn_80122204, 0x00000038, (void *)extab_fn_80122204
-};
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8012223C = {
-    (void *)&fn_8012223C, 0x000000B4, (void *)extab_fn_8012223C
-};
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801222F0 = {
-    (void *)&fn_801222F0, 0x00000030, (void *)extab_fn_801222F0
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80122338 = {
     (void *)&fn_80122338, 0x000000B0, (void *)extab_fn_80122338
@@ -472,149 +469,61 @@ extern "C" void fn_8011EB1C(void) {
 }
 #pragma auto_inline reset
 
-extern "C" asm void fn_8011EC18(unsigned char a) { /* 0x8011EC18 size:0x224 */
-    nofralloc
-    stwu r1, -0xb0(r1)
-    mflr r0
-    stw r0, 0xb4(r1)
-    stw r31, 0xac(r1)
-    mr r31, r3
-    li r3, 0x0
-    stb r31, lbl_806D14F0(r13)
-    bl GXSetZCompLoc
-    clrlwi r0, r31, 24
-    cmplwi r0, 0x1
-    bne fn_8011EC18_L_8011EC58
-    li r3, 0x1
-    li r4, 0x3
-    li r5, 0x1
-    bl GXSetZMode
-    b fn_8011EC18_L_8011EC68
-    fn_8011EC18_L_8011EC58:
-    li r3, 0x0
-    li r4, 0x7
-    li r5, 0x1
-    bl GXSetZMode
-    fn_8011EC18_L_8011EC68:
-    lis r3, lbl_806573A0@ha
-    addi r3, r3, lbl_806573A0@l
-    bl GXGetCullMode
-    lis r3, lbl_806573A0@ha
-    addi r3, r3, lbl_806573A0@l
-    addi r3, r3, 0x4
-    bl GXGetProjectionv
-    lis r3, lbl_806573A0@ha
-    addi r3, r3, lbl_806573A0@l
-    addi r3, r3, 0x20
-    bl GXGetViewportv
-    lis r3, lbl_806573A0@ha
-    addi r6, r3, lbl_806573A0@l
-    addi r3, r6, 0x38
-    addi r4, r6, 0x3c
-    addi r5, r6, 0x40
-    addi r6, r6, 0x44
-    bl GXGetScissor
-    li r3, 0x0
-    bl GXSetCullMode
-    lfs f1, g_glyphClipMinXY(r2)
-    lfs f3, g_glyphClipMaxX(r2)
-    fmr f2, f1
-    lfs f4, g_glyphClipMaxY(r2)
-    fmr f5, f1
-    lfs f6, lbl_806D6D8C(r2)
-    bl GXSetViewport
-    clrlwi. r0, r31, 24
-    bne fn_8011EC18_L_8011ECE8
-    lfs f5, lbl_806D6DAC(r2)
-    lfs f6, lbl_806D6DB0(r2)
-    b fn_8011EC18_L_8011ECF0
-    fn_8011EC18_L_8011ECE8:
-    lfs f5, lbl_806D6DB4(r2)
-    lfs f6, lbl_806D6DB8(r2)
-    fn_8011EC18_L_8011ECF0:
-    lfs f1, lbl_806D6DBC(r2)
-    addi r3, r1, 0x5c
-    lfs f2, lbl_806D6DC0(r2)
-    lfs f3, lbl_806D6DC4(r2)
-    lfs f4, lbl_806D6DC8(r2)
-    bl C_MTXOrtho
-    addi r3, r1, 0x5c
-    li r4, 0x1
-    bl GXSetProjection
-    li r3, 0x0
-    li r4, 0x0
-    li r5, 0x280
-    li r6, 0x1e0
-    bl GXSetScissor
-    lfs f4, g_glyphClipMinXY(r2)
-    addi r3, r1, 0x2c
-    lfs f3, lbl_806D6DCC(r2)
-    addi r4, r1, 0x20
-    lfs f0, lbl_806D6DD0(r2)
-    addi r5, r1, 0x14
-    fmuls f5, f3, f4
-    lfs f2, lbl_806D6DC8(r2)
-    lfs f1, lbl_806D6DBC(r2)
-    addi r6, r1, 0x8
-    stfs f4, 0x14(r1)
-    fsubs f2, f2, f5
-    fsubs f1, f1, f5
-    stfs f3, 0x18(r1)
-    stfs f4, 0x1c(r1)
-    stfs f2, 0x20(r1)
-    stfs f1, 0x24(r1)
-    stfs f0, 0x28(r1)
-    stfs f2, 0x8(r1)
-    stfs f1, 0xc(r1)
-    stfs f4, 0x10(r1)
-    bl C_MTXLookAt
-    addi r3, r1, 0x2c
-    li r4, 0x0
-    bl GXLoadPosMtxImm
-    li r3, 0x0
-    bl GXSetCurrentMtx
-    li r3, 0x4
-    li r4, 0x0
-    li r5, 0x1
-    li r6, 0x4
-    li r7, 0x0
-    bl GXSetAlphaCompare
-    li r3, 0x4
-    li r4, 0x0
-    li r5, 0x1
-    li r6, 0x1
-    li r7, 0x0
-    li r8, 0x0
-    li r9, 0x2
-    bl GXSetChanCtrl
-    li r0, 0x0
-    lis r3, lbl_80657360@ha
-    stwu r0, lbl_80657360@l(r3)
-    li r4, 0x5
-    stw r0, 0x4(r3)
-    stw r0, 0x8(r3)
-    stw r0, 0xc(r3)
-    stw r0, 0x10(r3)
-    stw r0, 0x14(r3)
-    stw r0, 0x18(r3)
-    stw r0, 0x1c(r3)
-    stw r0, 0x20(r3)
-    stw r0, 0x24(r3)
-    stw r0, 0x28(r3)
-    stw r0, 0x2c(r3)
-    stw r0, 0x30(r3)
-    stw r0, 0x34(r3)
-    stw r0, 0x38(r3)
-    stb r4, lbl_806D14F1(r13)
-    stw r0, lbl_806D14F4(r13)
-    stw r0, lbl_806D14F8(r13)
-    stb r0, lbl_806D14FC(r13)
-    stw r0, 0x3c(r3)
-    lwz r0, 0xb4(r1)
-    lwz r31, 0xac(r1)
-    mtlr r0
-    addi r1, r1, 0xb0
-    blr
+extern "C" void fn_8011EC18(unsigned char a) {
+    float proj[4][4];
+    float view[3][4];
+    Vec3 pos;
+    Vec3 up;
+    Vec3 at;
+    float n;
+    float f;
+    int i;
+
+    lbl_806D14F0 = a;
+    GXSetZCompLoc(0);
+    if (a == 1) {
+        GXSetZMode(1, 3, 1);
+    } else {
+        GXSetZMode(0, 7, 1);
+    }
+    GXGetCullMode(&lbl_806573A0.cullMode);
+    GXGetProjectionv(lbl_806573A0.proj);
+    GXGetViewportv(lbl_806573A0.viewport);
+    GXGetScissor(&lbl_806573A0.scissor[0], &lbl_806573A0.scissor[1], &lbl_806573A0.scissor[2], &lbl_806573A0.scissor[3]);
+    GXSetCullMode(0);
+    GXSetViewport(g_glyphClipMinXY, g_glyphClipMinXY, g_glyphClipMaxX, g_glyphClipMaxY, g_glyphClipMinXY, lbl_806D6D8C);
+    if (!a) {
+        n = lbl_806D6DAC;
+        f = lbl_806D6DB0;
+    } else {
+        n = lbl_806D6DB4;
+        f = lbl_806D6DB8;
+    }
+    C_MTXOrtho(proj, lbl_806D6DBC, lbl_806D6DC0, lbl_806D6DC4, lbl_806D6DC8, n, f);
+    GXSetProjection(proj, 1);
+    GXSetScissor(0, 0, 640, 480);
+    up.x = g_glyphClipMinXY;
+    up.y = lbl_806D6DCC;
+    up.z = g_glyphClipMinXY;
+    pos.x = lbl_806D6DC8 - up.y * up.x;
+    pos.y = lbl_806D6DBC - up.y * up.x;
+    pos.z = lbl_806D6DD0;
+    at.x = pos.x;
+    at.y = pos.y;
+    at.z = g_glyphClipMinXY;
+    C_MTXLookAt(view, &pos, &up, &at);
+    GXLoadPosMtxImm(view, 0);
+    GXSetCurrentMtx(0);
+    GXSetAlphaCompare(4, 0, 1, 4, 0);
+    GXSetChanCtrl(4, 0, 1, 1, 0, 0, 2);
+    lbl_806D14F1 = 5;
+    for (i = 0; i < 15; i++) {
+        lbl_80657360[i] = 0;
+    }
+    lbl_806D14F4 = 0;
+    lbl_806D14F8 = 0;
+    lbl_806D14FC = 0;
+    lbl_80657360[15] = 0;
 }
 
 extern "C" void SpriteHandle_Destroy(int h) {
@@ -3386,137 +3295,35 @@ extern "C" ResCtrl *ResCtrl_Init(ResCtrl *r) {
     return r;
 }
 
-extern "C" asm void fn_80121F54(void) { /* 0x80121F54 size:0x60 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r4
-    stw r30, 0x8(r1)
-    mr. r30, r3
-    beq fn_80121F54_L_80121F98
-    lis r4, fn_80121FB4@ha
-    li r5, 0xc
-    addi r4, r4, fn_80121FB4@l
-    li r6, 0x10
-    bl __destroy_arr
-    extsh. r0, r31
-    ble fn_80121F54_L_80121F98
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    fn_80121F54_L_80121F98:
-    lwz r0, 0x14(r1)
-    mr r3, r30
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+extern "C" void *fn_80121F54(void *self, short flag) {
+    if (self != 0) {
+        __destroy_arr(self, (void *)fn_80121FB4, 0xC, 0x10);
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
 
-extern "C" asm void fn_80121FB4(void) { /* 0x80121FB4 size:0xB4 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    stw r29, 0x14(r1)
-    mr r29, r4
-    stw r28, 0x10(r1)
-    mr. r28, r3
-    beq fn_80121FB4_L_80122044
-    beq fn_80121FB4_L_80122034
-    beq fn_80121FB4_L_80122034
-    lwz r30, 0x8(r28)
-    addi r31, r28, 0x4
-    cmplw r30, r31
-    beq fn_80121FB4_L_80122034
-    lwz r4, 0x0(r31)
-    lwz r3, 0x0(r30)
-    lwz r0, 0x4(r4)
-    stw r0, 0x4(r3)
-    lwz r0, 0x0(r30)
-    lwz r3, 0x4(r4)
-    stw r0, 0x0(r3)
-    b fn_80121FB4_L_8012202C
-    fn_80121FB4_L_80122014:
-    mr r3, r30
-    lwz r30, 0x4(r30)
-    bl MemoryManager_TimedFree
-    lwz r3, 0x0(r28)
-    subi r0, r3, 0x1
-    stw r0, 0x0(r28)
-    fn_80121FB4_L_8012202C:
-    cmplw r30, r31
-    bne fn_80121FB4_L_80122014
-    fn_80121FB4_L_80122034:
-    extsh. r0, r29
-    ble fn_80121FB4_L_80122044
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    fn_80121FB4_L_80122044:
-    lwz r0, 0x24(r1)
-    mr r3, r28
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+extern "C" LList *fn_80121FB4(LList *l, short flag) {
+    if (l != 0) {
+        l->~LList();
+        if (flag > 0) {
+            MemoryManager_TimedFree(l);
+        }
+    }
+    return l;
 }
 
-extern "C" asm void dtor_80122068(void) { /* 0x80122068 size:0xB8 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r4
-    stw r30, 0x18(r1)
-    mr. r30, r3
-    beq dtor_80122068_L_80122104
-    bl OSGetTick
-    lis r4, 0x8000
-    lis r6, 0x431c
-    lwz r0, 0xf8(r4)
-    lis r5, 0x4330
-    lwz r7, 0x4(r30)
-    lis r4, lbl_80657208@ha
-    srwi r0, r0, 2
-    subi r6, r6, 0x217d
-    mulhwu r6, r6, r0
-    subf r7, r7, r3
-    lwz r0, 0x0(r30)
-    addi r3, r4, lbl_80657208@l
-    slwi r7, r7, 3
-    stw r5, 0x8(r1)
-    srwi r5, r6, 15
-    slwi r4, r0, 2
-    divwu r5, r7, r5
-    lfd f3, lbl_806D6D90(r2)
-    lfs f1, lbl_806D6D9C(r2)
-    extsh. r0, r31
-    lfsx f0, r3, r4
-    stw r5, 0xc(r1)
-    lfd f2, 0x8(r1)
-    fsubs f2, f2, f3
-    fdivs f1, f2, f1
-    fadds f0, f0, f1
-    stfsx f0, r3, r4
-    ble dtor_80122068_L_80122104
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    dtor_80122068_L_80122104:
-    lwz r0, 0x24(r1)
-    mr r3, r30
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+extern "C" ProfTimer *dtor_80122068(ProfTimer *t, short flag) {
+    if (t != 0) {
+        lbl_80657208[t->slot] += (float)(((OSGetTick() - t->start) * 8) /
+            ((*(unsigned int *)0x800000F8 / 4) / 125000)) / lbl_806D6D9C;
+        if (flag > 0) {
+            MemoryManager_TimedFree(t);
+        }
+    }
+    return t;
 }
 
 extern "C" void *dtor_80122120(void *self, short flag) {
@@ -3562,117 +3369,36 @@ extern "C" asm void fn_8012215C(void) { /* 0x8012215C size:0x78 */
     blr
 }
 
-extern "C" asm void fn_801221D4(void) { /* 0x801221D4 size:0x30 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    bl DoublyLinkedList_Init
-    lwz r0, 0x14(r1)
-    mr r3, r31
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+extern "C" LListImp *fn_801221D4(LListImp *l) {
+    DoublyLinkedList_Init(l);
+    return l;
 }
 
-extern "C" asm void fn_80122204(void) { /* 0x80122204 size:0x38 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lis r3, lbl_80657234@ha
-    lis r4, fn_8012223C@ha
-    stw r0, 0x14(r1)
-    addi r3, r3, lbl_80657234@l
-    li r5, 0xc
-    addi r4, r4, fn_8012223C@l
-    li r6, 0x8
-    bl __destroy_arr
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+extern "C" void fn_80122204(void) {
+    __destroy_arr(lbl_80657234, (void *)fn_8012223C, 0xC, 8);
 }
 
-extern "C" asm void fn_8012223C(void) { /* 0x8012223C size:0xB4 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    stw r29, 0x14(r1)
-    mr r29, r4
-    stw r28, 0x10(r1)
-    mr. r28, r3
-    beq fn_8012223C_L_801222CC
-    beq fn_8012223C_L_801222BC
-    beq fn_8012223C_L_801222BC
-    lwz r30, 0x8(r28)
-    addi r31, r28, 0x4
-    cmplw r30, r31
-    beq fn_8012223C_L_801222BC
-    lwz r4, 0x0(r31)
-    lwz r3, 0x0(r30)
-    lwz r0, 0x4(r4)
-    stw r0, 0x4(r3)
-    lwz r0, 0x0(r30)
-    lwz r3, 0x4(r4)
-    stw r0, 0x0(r3)
-    b fn_8012223C_L_801222B4
-    fn_8012223C_L_8012229C:
-    mr r3, r30
-    lwz r30, 0x4(r30)
-    bl MemoryManager_TimedFree
-    lwz r3, 0x0(r28)
-    subi r0, r3, 0x1
-    stw r0, 0x0(r28)
-    fn_8012223C_L_801222B4:
-    cmplw r30, r31
-    bne fn_8012223C_L_8012229C
-    fn_8012223C_L_801222BC:
-    extsh. r0, r29
-    ble fn_8012223C_L_801222CC
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    fn_8012223C_L_801222CC:
-    lwz r0, 0x24(r1)
-    mr r3, r28
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+extern "C" LList *fn_8012223C(LList *l, short flag) {
+    if (l != 0) {
+        l->~LList();
+        if (flag > 0) {
+            MemoryManager_TimedFree(l);
+        }
+    }
+    return l;
 }
 
-extern "C" asm void fn_801222F0(void) { /* 0x801222F0 size:0x30 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    bl fn_80122320
-    lwz r0, 0x14(r1)
-    mr r3, r31
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+extern "C" LListImp *fn_801222F0(LListImp *l) {
+    fn_80122320(l);
+    return l;
 }
 
-extern "C" asm void fn_80122320(void) { /* 0x80122320 size:0x18 */
-    nofralloc
-    li r0, 0x0
-    addi r4, r3, 0x4
-    stw r0, 0x0(r3)
-    stw r4, 0x4(r4)
-    stw r4, 0x0(r4)
-    blr
+extern "C" void fn_80122320(LListImp *l) {
+    LNode *e;
+    l->count = 0;
+    e = &l->end;
+    e->next = e;
+    e->prev = e;
 }
 
 extern "C" asm void fn_80122338(void) { /* 0x80122338 size:0xB0 */
