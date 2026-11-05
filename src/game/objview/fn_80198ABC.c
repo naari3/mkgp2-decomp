@@ -7,8 +7,6 @@ typedef struct HitEffect {
     unsigned char padb4[0x11c - 0xb4];
     void *target;
 } HitEffect;
-extern const float lbl_806D9690, lbl_806D9698, lbl_806D96A0, lbl_806D96AC;
-extern const float lbl_806D96B0, lbl_806D96B4, lbl_806D96B8, lbl_806D96BC;
 extern const float lbl_8037DD48[];
 extern void *KartDriver_GetKartRootMtx(void *);
 extern void Mtx44_GetTranslation_RowMajor(Vec3 *, void *);
@@ -41,7 +39,7 @@ void fn_80198ABC(Item *self, State *state) {
     Mtx44_GetTranslation_RowMajor(&root, KartDriver_GetKartRootMtx(state->target));
     switch (self->subphase) {
     case 0:
-        GetSpawnPosition(&self->velocity, lbl_806D96A0, lbl_806D96A0, lbl_806D96A0);
+        GetSpawnPosition(&self->velocity, 0.0f, 0.0f, 0.0f);
         state->count = 3;
         self->subphase++;
         self->step = 0;
@@ -50,10 +48,10 @@ void fn_80198ABC(Item *self, State *state) {
         case 2:
             break;
         case 0:
-            state->height = lbl_806D96A0;
-            state->lift = lbl_806D96B0;
+            state->height = 0.0f;
+            state->lift = 11.0f;
             state->timer = 20;
-            state->gravity = lbl_806D96A0;
+            state->gravity = 0.0f;
             self->step++;
         case 1:
             if (state->timer == 0) self->step++;
@@ -62,24 +60,24 @@ void fn_80198ABC(Item *self, State *state) {
         {
             float step, limit, value;
             value = state->height;
-            step = lbl_806D96B4;
-            limit = lbl_806D9698;
+            step = 0.2f;
+            limit = 1.0f;
             state->height = value + step;
             if (limit < state->height) state->height = limit;
         }
-        if (state->timer == 0) state->gravity += lbl_806D96AC;
+        if (state->timer == 0) state->gravity += -0.1f;
         {
             float zero, gravity, lift;
             lift = state->lift;
             gravity = state->gravity;
-            zero = lbl_806D96A0;
+            zero = 0.0f;
             state->lift = lift + gravity;
             if (state->lift <= zero) state->lift = zero;
         }
         Mtx44_GetTranslation_RowMajor(&joint, KartDriver_GetJointByIdx(state->target, 15));
         joint.y += self->param + (state->lift + lbl_8037DD48[KartCharacterParam_GetIdentityIndex(state->target)]);
         Vec3_Lerp(&self->pos, joint, self->pos, state->height);
-        if (state->lift <= lbl_806D96A0) {
+        if (state->lift <= 0.0f) {
             result = KartItem_QueryEffectStateFromIse(state->target);
             KartItem_ApplyEffectToTarget(self, state->target, result);
             switch (result) {
@@ -124,7 +122,7 @@ void fn_80198ABC(Item *self, State *state) {
     case 2:
         switch (self->step) {
         case 0:
-            if (state->count == 0) state->height = lbl_806D9690;
+            if (state->count == 0) state->height = 2.0f;
             state->timer = 10;
             self->step++;
             break;
@@ -132,20 +130,20 @@ void fn_80198ABC(Item *self, State *state) {
             break;
         }
         if (state->timer == 0) {
-            self->scale -= lbl_806D96B8;
-            if (self->scale < lbl_806D96A0) {
+            self->scale -= 0.05f;
+            if (self->scale < 0.0f) {
                 self->visible = 0;
                 self->phase = 3;
                 self->subphase = 0;
                 return;
             }
         }
-        state->height += lbl_806D96AC;
+        state->height += -0.1f;
         state->delta.y += state->height;
         Vec3_Add_DestFirst(&self->pos, &root, &state->delta);
         break;
     }
-    Item_DecayVelocityScalar(self, lbl_806D96BC);
+    Item_DecayVelocityScalar(self, 5.0f);
     if (FinalLapCoinJump_CheckActiveForObject(state->target)) {
         self->visible = 0;
     } else {
