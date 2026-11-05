@@ -6,26 +6,25 @@ s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
     u32 off;
     u32 words;
     BackupHeader* hdr;
-    u32 size;
     u32 i;
+    u32 size;
     u32 recSize;
+    u32 alignment;
     const BackupInfo* info;
-    u32 total;
     BOOL ok[2];
-    s32 j;
     s32 k;
+    s32 j;
+    s32 result;
 
     if (chan > 1 || data == NULL || e == NULL) {
         return 1;
     }
-    info = &lbl_806DC918[chan];
     size = (e->cfg.size + 3) & ~3;
-    recSize = (size + 0xC + info->align - 1) & -info->align;
-    total = recSize;
-    if (e->cfg.flags & 2) {
-        total = recSize * 2;
-    }
-    if (fn_8028812C(chan, (e->cfg.flags >> 4) & 1, e->addr, lbl_806835E0, total)) {
+    info = &lbl_806DC918[chan];
+    alignment = info->align;
+    recSize = -alignment & (size + alignment + 0xB);
+    if (fn_8028812C(chan, (e->cfg.flags >> 4) & 1, e->addr, lbl_806835E0,
+                      (e->cfg.flags & 2) ? recSize * 2 : recSize)) {
         return 1;
     }
     ok[0] = TRUE;
@@ -44,7 +43,7 @@ s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
         if (hdr->words != words) {
             *valid = FALSE;
         }
-        if ((e->cfg.flags & 1) && Checksum((u8*)hdr + 0xC, e->cfg.size) != hdr->sum) {
+        if ((e->cfg.flags & 1) && hdr->sum != Checksum((u8*)hdr + 0xC, e->cfg.size)) {
             *valid = FALSE;
         }
     }
@@ -60,11 +59,13 @@ s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
     }
     if (e->cfg.flags & 2) {
         if (ok[0]) {
-            if (ok[1]) { return 0; }
-            return 3;
+            result = 3;
+            if (ok[1]) { result = 0; }
+            return result;
         }
-        if (ok[1]) { return 2; }
-        return 1;
+        result = 1;
+        if (ok[1]) { result = 2; }
+        return result;
     }
     return !ok[0];
 }
@@ -81,7 +82,7 @@ s32 fn_802889AC(u32 chan) {
         return 1;
     }
     info = &lbl_806DC918[chan];
-    if (fn_8028812C(0, 0, 0, lbl_806835E0, info->words * 4)) {
+    if (fn_8028812C(chan, 0, 0, lbl_806835E0, info->words * 4)) {
         return 1;
     }
     hdr = (BackupHeader*)lbl_806835E0;

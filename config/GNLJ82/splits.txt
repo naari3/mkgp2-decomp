@@ -12010,7 +12010,10 @@ triforce/amnet_probe.c:
 	.text       start:0x8028D7E8 end:0x8028D870
 
 triforce/amnet_nm2.c:
-	.text       start:0x8028D870 end:0x8028EF74
+	.text       start:0x8028D870 end:0x8028D8CC
+
+triforce/amnet_nm2_rest.c:
+	.text       start:0x8028D8CC end:0x8028EF74
 
 triforce/amnet_init.c:
 	.text       start:0x8028EF74 end:0x8028F45C
