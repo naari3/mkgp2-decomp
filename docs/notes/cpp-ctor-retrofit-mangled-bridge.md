@@ -609,3 +609,8 @@ BootDispatcher 8002DD58..8002F640: genuine C++ reconstruction reaches 96.16123% 
 Source: Codex worker c9_s3_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 880 B.
 
 EffectSpeed_Init 800650E0 matches 300B text +100B owned EH via genuine owner ctor, two inline derived virtual action constructors, tag/line placement new with no placement delete, and two distinct declared owning-holder destructors at +20/+24. Placement allocation avoids spurious DELETEPOINTER actions; inline base/derived ctors reproduce DESTROYBASE around virtual reset, owning members reproduce DESTROYMEMBER. Full source-linked DOL SHA-1 OK.
+
+## c9_s7_20261106
+Source: Codex worker c9_s7_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 5 fn / 992 B.
+
+HudResultFlow 80248904..80248CE4: reuse canonical HudRoot/HudChild/HudSmall from HudFlowPrivate.h; plain vptr assignment in genuine derived constructor reproduces DESTROYBASE and real new HudSmall reproduces DELETEPOINTER. Native 992B text, 76B EH, 60B index, 56B switch tables exact on first approach. Reversed extab order places final virtual-delete helper first; per-TU extab_order and DATA_ALIGN4_TUS preserve full DOL SHA-1.

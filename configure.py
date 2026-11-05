@@ -2734,6 +2734,7 @@ config.libs = [
             Object(Matching, "game/HudModeDestroy.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/HudModeCreate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/HudThunk802488FC.c"),
+            Object(Matching, "game/HudResultFlow.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/HudThunk80248CE4.c"),
             Object(Matching, "game/RaceFloatListInsert.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/RaceDigitPositions.cpp", extra_cflags=["-Cpp_exceptions on"]),
@@ -3891,6 +3892,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 DATA_ALIGN4_TUS = [
     "game/fn_801B1D5C",
     "game/ItemBox_ProcessPickup",
+    "game/HudResultFlow",
     "game/HudSelectionUpdate",
     "game/HudFlow",
     "game/PreloadEffectResources",

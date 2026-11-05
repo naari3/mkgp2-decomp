@@ -12500,6 +12500,12 @@ game/HudFlow.cpp:
 game/HudThunk802488FC.c:
 	.text       start:0x802488FC end:0x80248904
 
+game/HudResultFlow.cpp:
+	extab       start:0x8001DB48 end:0x8001DB94
+	extabindex  start:0x8002B388 end:0x8002B3C4
+	.text       start:0x80248904 end:0x80248CE4
+	.data       start:0x804EEBD4 end:0x804EEC0C
+
 game/HudThunk80248CE4.c:
 	.text       start:0x80248CE4 end:0x80248CEC
 

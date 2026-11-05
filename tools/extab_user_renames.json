@@ -11594,5 +11594,25 @@
     "__ct__11TextManagerFv": "TexMgr_Init",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/HudResultFlow.cpp": {
+    "__ct__7HudRootFv": "fn_8024932C",
+    "__dt__7HudRootFv": "dtor_80249274",
+    "__ct__13HudResultFlowFv": "fn_80248C10",
+    "__ct__8HudSmallFv": "fn_8023C6A8",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@84": "@etb_8001DB48",
+    "@23": "@etb_8001DB50",
+    "@51": "@etb_8001DB58",
+    "@61": "@etb_8001DB70",
+    "@74": "@etb_8001DB78",
+    "@24": "@eti_8002B388",
+    "@52": "@eti_8002B394",
+    "@62": "@eti_8002B3A0",
+    "@75": "@eti_8002B3AC",
+    "@85": "@eti_8002B3B8",
+    "@22": "jumptable_804EEBD4",
+    "@50": "jumptable_804EEBF0"
   }
 }

@@ -2099,5 +2099,21 @@
       "dtor_800A9CC8",
       "dtor_800A9D2C"
     ]
+  },
+  "src/game/HudResultFlow.cpp": {
+    "extab": [
+      "fn_80248CAC",
+      "fn_80248904",
+      "fn_80248A08",
+      "fn_80248BA8",
+      "fn_80248C10"
+    ],
+    "extabindex": [
+      "fn_80248904",
+      "fn_80248A08",
+      "fn_80248BA8",
+      "fn_80248C10",
+      "fn_80248CAC"
+    ]
   }
 }
