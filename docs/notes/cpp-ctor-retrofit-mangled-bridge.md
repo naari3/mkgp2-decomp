@@ -659,3 +659,8 @@ c10_u29: RaceDigitUpdate 80246484 state 6 must break into common update tail, no
 Source: Codex worker c11_a3_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 7 fn / 4068 B.
 
 c11_a3: SpriteSlot_SetTransform 800D6C20 exact native C requires by-value Vec3 inline setter calling a scalar XYZ inline setter; the latter owns the joint null guard. Direct vector-field call under the null guard changes copies/load scheduling (73.31373%). Nested scalar helper matches text204/EH8/index12 exactly. HUD_RegisterOverlay 80253B14 first lazy-create/early-exit/switch native C trial exact208/EH8/index12. Both source-linked, full coordinator DOL SHA-1 OK. MJObj float conversion remains parked due mr r3,r27 scheduling; CourseTables remains parked because subtable addi folds into load displacement; SceneList insert remains parked due catch/rethrow cleanup and GPR residuals.
+
+## c11_a6_20261106
+Source: Codex worker c11_a6_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 716 B.
+
+c11_a6: Jyugemu_Flag_Tick 80080748 (716 B) matches text/EH/index with an inline Flag::Tick member behind extern C wrapper, using pragma cplusplus on and automatic EH. Plain free C body reached 99.52514% but allocated self/desc/matrix as r30/r31/r29; inlined member naturally yields target r31/r29/r30. JObj dirty boolean must be initialized after the assertion/flags load, as in the canonical inline, to avoid an extra callee-saved boolean. No symbol rename or configure change required. Full source-linked DOL SHA-1 OK.
