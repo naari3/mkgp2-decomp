@@ -8398,6 +8398,11 @@ game/sprite/fn_801A13BC.c:
 	extabindex  start:0x800275FC end:0x80027608
 	.text       start:0x801A13BC end:0x801A1494
 
+game/sprite/fn_801A1494.c:
+	extab       start:0x80012A40 end:0x80012A48
+	extabindex  start:0x80027608 end:0x80027614
+	.text       start:0x801A1494 end:0x801A1678
+
 game/sprite/fn_801A1678.c:
 	extab       start:0x80012A48 end:0x80012A50
 	extabindex  start:0x80027614 end:0x80027620
@@ -8498,6 +8503,11 @@ game/sprite/fn_801ACC18.c:
 	extab       start:0x80012AD8 end:0x80012AE0
 	extabindex  start:0x800276EC end:0x800276F8
 	.text       start:0x801ACC18 end:0x801AD534
+
+game/sprite/fn_801AECF4.c:
+	extab       start:0x80012AE8 end:0x80012AF0
+	extabindex  start:0x80027704 end:0x80027710
+	.text       start:0x801AECF4 end:0x801AF850
 
 game/fn_801AF850.c:
 	.text       start:0x801AF850 end:0x801B03F0
