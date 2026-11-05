@@ -424,6 +424,10 @@ struct TextNode : FadeObj {
         scale = lbl_806D9A34;
         layer = 7;
     }
+    void SetSpacing(int spacing) {
+        text.spacing = spacing;
+        fn_801F8E90(&text);
+    }
     ~TextNode() {}
     void Draw();
 };
@@ -726,16 +730,14 @@ CardEntry::CardEntry(unsigned char items)
     n = new TextNode(*pX, lbl_806D9ADC, GetTextureByIdAndLang(0x87, -1));
     n->layer = 4;
     n->tracks[0].Set(lbl_806D9A74, lbl_806D9A34, lbl_806D9AC0);
-    n->text.spacing = (int)*pSp;
-    fn_801F8E90(&n->text);
+    n->SetSpacing((int)*pSp);
     n->scale = *pScale;
     nodes.push_back(n);
 
     n = new TextNode(*pX, lbl_806D9AE0, GetTextureByIdAndLang(0x88, -1));
     n->layer = 4;
     n->tracks[0].Set(lbl_806D9A74, lbl_806D9A34, lbl_806D9AC0);
-    n->text.spacing = (int)*pSp;
-    fn_801F8E90(&n->text);
+    n->SetSpacing((int)*pSp);
     n->scale = *pScale;
     nodes.push_back(n);
 
@@ -751,8 +753,7 @@ CardEntry::CardEntry(unsigned char items)
     n = new TextNode(*pX, lbl_806D9AEC, GetTextureByIdAndLang(0x89, -1));
     n->layer = 4;
     n->tracks[0].Set(lbl_806D9A74, lbl_806D9A34, lbl_806D9AC0);
-    n->text.spacing = (int)*pSp;
-    fn_801F8E90(&n->text);
+    n->SetSpacing((int)*pSp);
     n->scale = *pScale;
     nodes.push_back(n);
 }
@@ -2451,7 +2452,12 @@ bool KeyBoard::Navigate() {
     }
     int dx = GetInput()->dir;
     int btn = GetInput()->held;
-    int vert = dx != 0 ? 0 : (btn == 3 ? 1 : 0);
+    int vert;
+    if (dx != 0) {
+        vert = 0;
+    } else {
+        vert = btn == 3 ? 1 : 0;
+    }
     if (btn == 1) {
         SetRumbleMode(0, 1, 1);
     }
@@ -2661,7 +2667,7 @@ void NameEntry::Draw() {
     if (board.ascii == 0) {
         g = 2;
     }
-    for (; g < board.groups.count; g++) {
+    for (; (unsigned long)g < (unsigned long)board.groups.count; g++) {
         int res;
         if (g < 3) {
             res = lbl_80399E5C[lbl_80399E6C[board.page][g]];
@@ -2768,7 +2774,12 @@ void NameEntry::Update() {
     } else if (state == 1) {
         int dx = GetInput()->dir;
         int btn = GetInput()->held;
-        int vert = dx != 0 ? 0 : (btn == 3 ? 1 : 0);
+        int vert;
+        if (dx != 0) {
+            vert = 0;
+        } else {
+            vert = btn == 3 ? 1 : 0;
+        }
         int c = col;
         int r = row;
         if (btn == 1) {
@@ -2875,3 +2886,39 @@ void NameEntry::Update() {
         (*it)->Tick();
     }
 }
+
+/* Initialize the shared keyboard tables before the card flow starts. */
+extern "C" {
+extern const unsigned short *const lbl_806D99EC;
+extern const unsigned short *const lbl_806D99F0;
+extern const unsigned short *const lbl_806D99F4;
+extern const unsigned short *const lbl_806D99F8;
+extern const unsigned short *const lbl_806D99FC;
+extern const unsigned short *const lbl_806D9A00;
+extern const unsigned short *const lbl_806D9A04;
+extern const unsigned short *const lbl_806D9A08;
+extern const unsigned short *lbl_806D1860;
+extern const unsigned short *lbl_806D1864;
+extern const unsigned short *lbl_806D1868;
+extern const unsigned short *lbl_806D186C;
+
+void fn_801C1C14() {
+    lbl_806D1860 = lbl_806D9A04;
+    lbl_806D1864 = lbl_806D9A04;
+    lbl_806D1868 = lbl_806D9A08;
+    lbl_806D186C = lbl_806D9A08;
+    lbl_8049A8F8[0].chars = lbl_806D99EC;
+    lbl_8049A8F8[0].marks[0] = lbl_806D99F0;
+    lbl_8049A8F8[0].marks[1] = lbl_806D99F4;
+    lbl_8049A8F8[1].chars = lbl_806D99F8;
+    lbl_8049A8F8[1].marks[0] = lbl_806D99FC;
+    lbl_8049A8F8[1].marks[1] = lbl_806D9A00;
+    lbl_8049A8F8[2].chars = lbl_806D9A04;
+    lbl_8049A8F8[2].marks[0] = lbl_806D9A04;
+    lbl_8049A8F8[2].marks[1] = lbl_806D9A04;
+    lbl_8049A8F8[3].chars = lbl_806D9A08;
+    lbl_8049A8F8[3].marks[0] = lbl_806D9A08;
+    lbl_8049A8F8[3].marks[1] = lbl_806D9A08;
+}
+}
+__declspec(section ".ctors") static void (*const initKeyboardTables)() = fn_801C1C14;
