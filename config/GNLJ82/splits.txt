@@ -11163,9 +11163,14 @@ game/anon_8020C974_misc.cpp:
 	.text       start:0x8020CC04 end:0x8020CEE8
 
 game/anon_8020C974_nm1.cpp:
-	extab       start:0x800197AC end:0x800197E4
-	extabindex  start:0x80029D08 end:0x80029D20
-	.text       start:0x8020CEE8 end:0x8020D1C0
+	extab       start:0x800197AC end:0x800197B4
+	extabindex  start:0x80029D08 end:0x80029D14
+	.text       start:0x8020CEE8 end:0x8020D00C
+
+game/anon_8020C974_nm2.cpp:
+	extab       start:0x800197B4 end:0x800197E4
+	extabindex  start:0x80029D14 end:0x80029D20
+	.text       start:0x8020D00C end:0x8020D1B8
 
 game/anon_8020D1C0.cpp:
 	extab       start:0x800197E4 end:0x800198C8
