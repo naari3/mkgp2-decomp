@@ -369,3 +369,8 @@ Coin mileage rescue: first-declared undefined derived virtual key suppresses clC
 Source: Codex worker c5_s17_fn801f8668_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1108 B.
 
 fn_801FA310 becomes exact by declaring case-4 count then pointer at function scope before CardInput; fixes r29/r30 coloring without changing case-5 locals. All text/EH/jump-table sections 100%; full SHA-1 OK.
+
+## c5_s14_anon80218b80_20261105
+Source: Codex worker c5_s14_anon80218b80_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 752 B.
+
+c5_s14: clGetCoinLine dtor 80220780 can be rescued without owning its vtable: opt-in undefined virtual key before its destructor suppresses duplicate RTTI-off vtable and weak Draw emission; primary 224-byte text and 40-byte EH remain exact. Bridge compiler @167/@168 to @etb_8001B3D4/@eti_8002A44C. Appended weak ResCtrl dtor is discarded. CreditHud Update 80218B80 only needed Matching plus @26/@27 EH-name bridges. Coordinator full build and DOL SHA-1 verified, expected main.elf addresses checked.

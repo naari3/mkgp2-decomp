@@ -1,6 +1,7 @@
 #include "game/anon_8021B568_private.h"
 
 void TeamIconRow::Update() {
+    TeamIcon *ic;
     switch (state) {
     case 0:
         state = 1;
@@ -8,7 +9,7 @@ void TeamIconRow::Update() {
     case 1:
         for (int i = 0; i < 4; i++) {
             team[i] = SlotTeam(i);
-            TeamIcon *ic = icons[i];
+            ic = icons[i];
             int t = team[i];
             if (ic->state == t) {
                 continue;
@@ -38,10 +39,10 @@ void TeamIconRow::Update() {
                     SpriteAnimParamBlock_SetKey(ic->anim, 0x156D, ic->slot + 0x1571);
                 }
             }
-            if (ic->state == 1 || ic->state == 3) {
-                SpriteAnimParamBlock_SetKey(ic->anim, 0x156C, 0x156C);
-            } else {
+            if (ic->state != 1 && ic->state != 3) {
                 SpriteAnimParamBlock_SetKey(ic->anim, 0x156C, 0x1ECD);
+            } else {
+                SpriteAnimParamBlock_SetKey(ic->anim, 0x156C, 0x156C);
             }
             SpriteAnimParamBlock_SetKey(ic->anim, 0x157A, lbl_803C53C0[ic->state]);
         }

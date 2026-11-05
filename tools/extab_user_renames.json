@@ -4512,7 +4512,9 @@
   "src/game/anon_80218B80.cpp": {
     "__nwa__FUl": "FUN_8003b120",
     "__dla__FPv": "MemoryManager_Free",
-    "Update__9CreditHudFv": "fn_80218B80"
+    "Update__9CreditHudFv": "fn_80218B80",
+    "@26": "@etb_8001A8DC",
+    "@27": "@eti_8002A1AC"
   },
   "src/game/anon_80218D98.cpp": {
     "__nw__FUl": "Alloc",
@@ -7743,7 +7745,9 @@
     "Draw__13clGetCoinLineFv": "fn_80224300",
     "__vt__13clGetCoinLine": "lbl_804EDE8C",
     "__vt__7FadeObj": "lbl_8048EF34",
-    "__dt__6SpriteFv": "Sprite_Destroy"
+    "__dt__6SpriteFv": "Sprite_Destroy",
+    "@167": "@etb_8001B3D4",
+    "@168": "@eti_8002A44C"
   },
   "src/game/anon_8021F088_m_80220860.cpp": {
     "__dt__7ResCtrlFv": "dtor_80082960",

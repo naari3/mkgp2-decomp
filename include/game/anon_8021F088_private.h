@@ -526,6 +526,9 @@ struct clGetCoinLine : FadeObj {
     int flashTimer;
     unsigned char flash;
     clGetCoinLine(const char *label, int n, float y, Model *m);
+#ifdef COIN_LINE_EXTERNAL_VTABLE
+    virtual void _key();
+#endif
 #ifdef COIN_LINE_DTOR_INLINE
     ~clGetCoinLine() {}
 #else
