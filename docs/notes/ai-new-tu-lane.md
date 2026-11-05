@@ -13,3 +13,8 @@ c13_u8: AI_CalcVSTargetSpeed 801E93AC improves97.70492->98.85246 via TU-local li
 Source: Codex worker c13_u12_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u12:fn_801E96BC388B improves97.57732 to98.81443 under unchanged flags. Extracting reset+nearest-kart scan into static inline helper eliminates extra li by sharing zero with inner loop counter; caller-owned Vec3 scratch preserves stack layout. Helper other-before-j and px,py,pz declarations restore target GPR/FPR homes. Remaining array base addi r0;mr r28,r0;mr r29,r0 vs target addi r28;mr r29,r28 adds4B. Direct global array in inner helper worsens86.793816 and base-return inline accessor is invariant. Singleton staysNonMatching; full fallback DOL SHA-1OK.
+
+## c13_u46_20261106
+Source: Codex worker c13_u46_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u46: fn_801E66B4 improves 95.375 to 96.328125 by unsigned-char flag helper `if ((flags & mask) == 0) return 0; return 1;`, restoring both branch-over-branch islands. Passing status pointer instead is invariant. In-place pointer Length helper worsens to92.96875. Remaining cached status vs target reload (-4B), first-check GPR identities and f5/f6 length/constant swap. Singleton retained NonMatching; fallback full DOL SHA-1 OK.

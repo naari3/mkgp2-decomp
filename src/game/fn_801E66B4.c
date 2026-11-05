@@ -22,9 +22,8 @@ extern void fn_801DF24C(void *, int);
 extern const float lbl_806DA388, lbl_806DA38C, lbl_806DA3B0, lbl_806DA3B4;
 extern const double lbl_806DA3A0, lbl_806DA3A8;
 static inline unsigned char HasFlag(unsigned long long flags, unsigned long long mask) {
-    unsigned char result = 0;
-    if ((flags & mask) == 0) { } else { result = 1; }
-    return result;
+    if ((flags & mask) == 0) return 0;
+    return 1;
 }
 static inline float Length(float value) {
     volatile float result;
