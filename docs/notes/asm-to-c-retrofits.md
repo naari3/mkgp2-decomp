@@ -1,0 +1,5 @@
+# asm-to-c-retrofits
+
+Source: Codex worker c11_a4_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 6 fn / 3852 B.
+
+c11_a4: DVDReadChunkHandle 8007E178/276B matches unsigned tick conversion/countdown polling with exceptions and lmw pragmas. Sprite matrix/reseed 800D6A00/288B matches by inlining existing general animation setter. DemoWC deleting wrapper 800ADDAC/332B matches C++ virtual calls and null-safe base teardown inline helper without bridge changes. All owned text/EH/index100 and source-linked full target SHA1 exact. Backup bounded 3 hypotheses best66.746475% (calendar uses31-day months/372-day years and /3600 threshold); original asm retained. Render natural direct-manager variant91.15741%; target repeated null-to-null manager getter branches were not recreated using prohibited no-op checks; original asm retained. History records asm introductions but no per-function natural-C retreat explanation was found in searched notes.

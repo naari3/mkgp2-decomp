@@ -1,145 +1,58 @@
-/* === extracted from auto_clCGameDemoWC_Dtor_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void ClRomTable_PurgeAll();
-extern void ItemObjectManager_Reset();
-extern void KartDriver_Dtor();
-extern void MemoryManager_TimedFree();
-extern void Object_DtorWithGXSync();
-extern void SceneDrawList_Reset();
-extern void SetActiveCamera();
-extern void SetCourseScene3D();
-extern void SetPlayerCarObject();
-extern void SetResourceLoadingFlag();
-extern void TransparentDraw_RemoveByOwner();
-extern void VfxSlotMgr_Shutdown();
-extern void VisualEffectHolder_Dtor();
-extern void clRom_PurgeAll();
-extern void dtor_8002CDF4();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D10AC;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_80419ED8[];
-extern unsigned int lbl_80419F0C[];
-
-/* --- function index (1 fns, .text 0x800ADDAC..0x800ADEF8) ---
- * [  0] 0x800ADDAC size:0x14C   global clCGameDemoWC_Dtor
- */
-
-/* --- forward decls --- */
-asm void clCGameDemoWC_Dtor(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_clCGameDemoWC_Dtor[8] = {
-    0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clCGameDemoWC_Dtor = {
-    (void *)&clCGameDemoWC_Dtor, 0x0000014C, (void *)extab_clCGameDemoWC_Dtor
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void clCGameDemoWC_Dtor(void) { /* 0x800ADDAC size:0x14C */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r4
-    stw r30, 0x8(r1)
-    mr. r30, r3
-    beq clCGameDemoWC_Dtor_L_800ADEDC
-    lis r4, lbl_80419ED8@ha
-    li r3, 0x0
-    addi r0, r4, lbl_80419ED8@l
-    li r4, 0x0
-    stw r0, 0x0(r30)
-    bl SetActiveCamera
-    lwz r3, 0x10(r30)
-    cmpwi r3, 0x0
-    blt clCGameDemoWC_Dtor_L_800ADDF4
-    bl TransparentDraw_RemoveByOwner
-    clCGameDemoWC_Dtor_L_800ADDF4:
-    li r3, 0x0
-    bl SetPlayerCarObject
-    li r3, 0x0
-    bl SetCourseScene3D
-    lwz r3, 0xc(r30)
-    cmplwi r3, 0x0
-    beq clCGameDemoWC_Dtor_L_800ADE24
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    clCGameDemoWC_Dtor_L_800ADE24:
-    lwz r3, 0x14(r30)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    lwz r3, 0x58(r30)
-    cmplwi r3, 0x0
-    beq clCGameDemoWC_Dtor_L_800ADE50
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    clCGameDemoWC_Dtor_L_800ADE50:
-    lwz r3, 0x1c(r30)
-    li r4, 0x1
-    bl VisualEffectHolder_Dtor
-    lwz r3, 0x18(r30)
-    li r4, 0x1
-    bl KartDriver_Dtor
-    bl ItemObjectManager_Reset
-    bl VfxSlotMgr_Shutdown
-    bl ClRomTable_PurgeAll
-    bl SceneDrawList_Reset
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    beq clCGameDemoWC_Dtor_L_800ADE98
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    clCGameDemoWC_Dtor_L_800ADE98:
-    li r0, 0x0
-    li r3, 0x0
-    stw r0, lbl_806D10AC(r13)
-    bl SetResourceLoadingFlag
-    bl clRom_PurgeAll
-    cmplwi r30, 0x0
-    beq clCGameDemoWC_Dtor_L_800ADECC
-    lis r4, lbl_80419F0C@ha
-    mr r3, r30
-    addi r0, r4, lbl_80419F0C@l
-    li r4, 0x0
-    stw r0, 0x0(r30)
-    bl dtor_8002CDF4
-    clCGameDemoWC_Dtor_L_800ADECC:
-    extsh. r0, r31
-    ble clCGameDemoWC_Dtor_L_800ADEDC
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    clCGameDemoWC_Dtor_L_800ADEDC:
-    lwz r0, 0x14(r1)
-    mr r3, r30
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma cplusplus on
+#include "game/clCGameDemoWC_Dtor_private.h"
+extern "C" {
+extern void SetActiveCamera(void *, int);
+extern void TransparentDraw_RemoveByOwner(int);
+extern void SetPlayerCarObject(void *);
+extern void SetCourseScene3D(void *);
+extern void Object_DtorWithGXSync(void *, int);
+extern void VisualEffectHolder_Dtor(void *, int);
+extern void KartDriver_Dtor(void *, int);
+extern void ItemObjectManager_Reset(void);
+extern void VfxSlotMgr_Shutdown(void);
+extern void ClRomTable_PurgeAll(void);
+extern void SceneDrawList_Reset(void);
+extern void SetResourceLoadingFlag(int);
+extern void clRom_PurgeAll(void);
+extern void dtor_8002CDF4(void *, int);
+extern void MemoryManager_TimedFree(void *);
+extern DemoWCVirtual *lbl_806D10AC;
+extern unsigned int lbl_80419ED8[], lbl_80419F0C[];
 }
-
+/* Base teardown also accepts a null object when called independently. */
+static inline void DemoWCBaseDestroy(DemoWCDtorView *self)
+{
+    if (self) {
+        self->vptr = lbl_80419F0C;
+        dtor_8002CDF4(self, 0);
+    }
+}
+#pragma exceptions on
+extern "C" DemoWCDtorView *clCGameDemoWC_Dtor(DemoWCDtorView *self, short destroy)
+{
+    if (self) {
+        self->vptr = lbl_80419ED8;
+        SetActiveCamera(0, 0);
+        if (self->owner >= 0) TransparentDraw_RemoveByOwner(self->owner);
+        SetPlayerCarObject(0);
+        SetCourseScene3D(0);
+        if (self->camera) self->camera->Destroy(1);
+        Object_DtorWithGXSync(self->object, 1);
+        if (self->other) self->other->Destroy(1);
+        VisualEffectHolder_Dtor(self->effects, 1);
+        KartDriver_Dtor(self->driver, 1);
+        ItemObjectManager_Reset();
+        VfxSlotMgr_Shutdown();
+        ClRomTable_PurgeAll();
+        SceneDrawList_Reset();
+        if (lbl_806D10AC) lbl_806D10AC->Destroy(1);
+        lbl_806D10AC = 0;
+        SetResourceLoadingFlag(0);
+        clRom_PurgeAll();
+        DemoWCBaseDestroy(self);
+        if (destroy > 0) MemoryManager_TimedFree(self);
+    }
+    return self;
+}
+#pragma exceptions reset
+#pragma cplusplus reset
