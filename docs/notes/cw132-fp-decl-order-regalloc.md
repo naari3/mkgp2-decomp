@@ -73,3 +73,8 @@ Waypoint_FindNearest 80046680: assigning dx = dx*dx + dy*dy + dz*dz; return Path
 Source: Codex worker c6_nt3_8017b1c0_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 528 B.
 
 fn_801866DC (528 B): a local const char *messages = lbl_80376F60 preserves r31 diagnostic pool base; global lbl_80677E18[i].desc/offset indexing removes the pointer walker/stride-sum register swap. Combined result text/extab/extabindex 100%, source-linked full DOL SHA-1 OK.
+
+## c6_nt6_kartmove_20261105
+Source: Codex worker c6_nt6_kartmove_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 312 B.
+
+KartMovement speed methods 80199A84/80199B10 require GC/2.7 to sink the leaf prologue. In-place Newton-root update produces exact f4 result; returning through a separate inline root result web yielded 97% register-only residue. Both owned EH/index sections and actual source-linked ELF addresses verified. C15C has exact owned EH/index and primary size, but FP expression-temp identities remain despite scalar declaration probes; left NonMatching.

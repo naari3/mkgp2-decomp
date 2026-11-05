@@ -7686,6 +7686,21 @@ game/kartmove/fn_801999D0.c:
 game/kartmove/KartMovement_CalcMaxSpeed.c:
 	.text       start:0x801999E0 end:0x80199A84
 
+game/kartmove/KartMovement_CalcCurrentSpeed.c:
+	extab       start:0x80012600 end:0x80012608
+	extabindex  start:0x800273D4 end:0x800273E0
+	.text       start:0x80199A84 end:0x80199B10
+
+game/kartmove/KartMovement_CalcSpeedWithCoinBonus.c:
+	extab       start:0x80012608 end:0x80012610
+	extabindex  start:0x800273E0 end:0x800273EC
+	.text       start:0x80199B10 end:0x80199BBC
+
+game/kartmove/KartMovement_RotateByYaw.cpp:
+	extab       start:0x80012610 end:0x80012618
+	extabindex  start:0x800273EC end:0x800273F8
+	.text       start:0x80199BBC end:0x8019A4A0
+
 game/KartMovement_SetPosition.c:
 	.text       start:0x8019A4A0 end:0x8019A4E0
 
@@ -7708,6 +7723,16 @@ game/kartmove/KartMovement_SetTravelProgress.c:
 game/kartmove/fn_8019A8A4.c:
 	.text       start:0x8019A8A4 end:0x8019A9BC
 
+game/kartmove/fn_8019A9BC.cpp:
+	extab       start:0x80012648 end:0x80012660
+	extabindex  start:0x80027410 end:0x8002741C
+	.text       start:0x8019A9BC end:0x8019ADF4
+
+game/kartmove/fn_8019ADF4.c:
+	extab       start:0x80012660 end:0x80012668
+	extabindex  start:0x8002741C end:0x80027428
+	.text       start:0x8019ADF4 end:0x8019B080
+
 game/kartmove/fn_8019BF80.cpp:
 	extab       start:0x800126B0 end:0x800126F8
 	extabindex  start:0x80027434 end:0x80027440
@@ -7715,6 +7740,16 @@ game/kartmove/fn_8019BF80.cpp:
 
 game/kartmove/fn_8019C078.c:
 	.text       start:0x8019C078 end:0x8019C15C
+
+game/kartmove/fn_8019C15C.cpp:
+	extab       start:0x800126F8 end:0x80012710
+	extabindex  start:0x80027440 end:0x8002744C
+	.text       start:0x8019C15C end:0x8019C6B4
+
+game/kartmove/fn_8019C6B4.cpp:
+	extab       start:0x80012710 end:0x80012740
+	extabindex  start:0x8002744C end:0x80027458
+	.text       start:0x8019C6B4 end:0x8019CC2C
 
 game/kartmove/fn_8019CC2C.c:
 	.text       start:0x8019CC2C end:0x8019CD30
