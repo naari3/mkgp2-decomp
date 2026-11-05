@@ -44,6 +44,11 @@ int SetupBgSprites(unsigned char);
 void InitRumbleController(int);
 }
 
+static inline void SetSpritePosition(CourseSprite *sprite, float x, float y) {
+    sprite->x = x;
+    sprite->y = y;
+}
+
 static inline int CourseCup(int i) {
     switch (i) {
     case 0: return 7;
@@ -122,12 +127,13 @@ inline CourseBanner::CourseBanner() : state(3), timer(0) {
 }
 
 CourseFlow::CourseFlow() {
+    CourseData *data = &lbl_8049B1E0;
     SpriteSystem_EnsureInit();
     if (!PCBComm_PackAndTriggerCardSnapshot())
         DebugPrintf(lbl_8039BF5C, lbl_8039BF78, 0xA1);
     for (int i = 0; i < 9; i++) {
-        PreloadResource(lbl_8049B1E0.resources[i].id);
-        PreloadResource(lbl_8049B1E0.resources[i].id + 6);
+        PreloadResource(data->resources[i].id);
+        PreloadResource(data->resources[i].id + 6);
     }
     PreloadResource(0x196F); PreloadResource(0x197C);
     PreloadResource(0x1777); PreloadResource(0x178B);
@@ -145,16 +151,17 @@ CourseFlow::CourseFlow() {
     right = new CourseSprite(0x27, 1, 0);
     fieldC4 = 0; field06 = 0; fieldBC = 0; fieldC0 = 0;
     selected = 0; field15C = 0; field15D = 0; field18 = lbl_806D9F40;
-    left->x = lbl_806D9EFC; left->y = lbl_806D9F2C;
-    right->x = lbl_806D9F24; right->y = lbl_806D9F2C;
+    SetSpritePosition(left, lbl_806D9EFC, lbl_806D9F2C);
+    SetSpritePosition(right, lbl_806D9F24, lbl_806D9F2C);
     map = new CourseSprite(0x17F, 1, lbl_806D9F44, lbl_806D9F48,
         lbl_806D9F4C, lbl_806D9F4C, lbl_806D9EE0, lbl_806D9EE0);
     mapIdA = fn_801A0310(map, 0x1777);
     mapIdB = fn_801A0310(map, 0x1780);
     int sel = selection;
     int cup = sel / 2;
-    *mapIdA = lbl_8049B1E0.mapIds[cup][0];
-    *mapIdB = lbl_8049B1E0.mapIds[cup][1];
+    short (*mapIds)[2] = data->mapIds;
+    *mapIdA = mapIds[cup][0];
+    *mapIdB = mapIds[cup][1];
     fn_80121E10(&preview);
     preview.resId = GetCourseShortIdByCupAndMirror(CourseCup(cup), sel % 2);
     preview.Show(lbl_806D9EE8, lbl_806D9EEC, lbl_806D9EDC);
