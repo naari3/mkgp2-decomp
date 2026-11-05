@@ -7830,10 +7830,25 @@ game/clsound/fn_801934A0.c:
 	extabindex  start:0x800271C4 end:0x800271D0
 	.text       start:0x801934A0 end:0x801934F4
 
+game/clsound/fn_801934F4.c:
+	extab       start:0x800122E4 end:0x800122EC
+	extabindex  start:0x800271D0 end:0x800271DC
+	.text       start:0x801934F4 end:0x80193624
+
+game/clsound/fn_80193624.c:
+	extab       start:0x800122EC end:0x800122F4
+	extabindex  start:0x800271DC end:0x800271E8
+	.text       start:0x80193624 end:0x80193838
+
 game/clsound/fn_80193838.c:
 	extab       start:0x800122F4 end:0x800122FC
 	extabindex  start:0x800271E8 end:0x800271F4
 	.text       start:0x80193838 end:0x8019397C
+
+game/clsound/ClSound_InitSoundSystem.c:
+	extab       start:0x800122FC end:0x80012304
+	extabindex  start:0x800271F4 end:0x80027200
+	.text       start:0x8019397C end:0x80194108
 
 game/clstream/fn_80194108.c:
 	extab       start:0x80012304 end:0x8001230C
@@ -7850,6 +7865,11 @@ game/clstream/fn_80194158.c:
 
 game/clstream/fn_80194184.c:
 	.text       start:0x80194184 end:0x80194214
+
+game/clstream/ClStream_UpdateAll.c:
+	extab       start:0x80012314 end:0x8001231C
+	extabindex  start:0x80027218 end:0x80027224
+	.text       start:0x80194214 end:0x801948C0
 
 game/clstream/ClStream_FillChunk.c:
 	extab       start:0x8001231C end:0x80012324
