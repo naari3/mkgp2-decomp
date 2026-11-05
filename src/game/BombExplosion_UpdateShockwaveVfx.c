@@ -207,6 +207,10 @@ void BombExplosion_UpdateShockwaveVfx(unsigned char *self, void *mtx)
             Vec3_ScaleXZ(&dd, &dd, (1.0f / reach) * r);
             Vec3_Add_DestFirst(&p, &ctr, &dd);
             if (ItemObject_GetGroundTypeAt(p, &gy2, 0)) {
+                float lim;
+                float h;
+                float t;
+                float sy;
                 t = r / dist;
                 lim = 5.0f * t;
                 h = p.y - gy2;

@@ -8,7 +8,7 @@
 
 typedef struct { float v[4]; } PeriodTable;
 
-extern const PeriodTable lbl_8032A7D0;
+extern PeriodTable lbl_8032A7D0;
 extern unsigned char lbl_805DF3D0[];
 extern void KartDriver_GetJoint13_WorldPos(Vec *out, void *driver);
 extern int Item_AdvanceTrackedHomingState(void *item, Vec *offset, float k);
