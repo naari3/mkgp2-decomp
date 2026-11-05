@@ -14,7 +14,7 @@ void clStream_setVolume(int,int);
 }
 #pragma exceptions on
 Scene8015AFCC::Scene8015AFCC() {
-    int itemId; int i; int j; int extra; int t;
+    int itemId; int i; int extra;
     fn_80121210(); fn_8013DBF8();
     active = 0; state = 0; timer = lbl_806D8394; mode = 0;
     driver = 0; player = &g_playerData; flag1c = 0; flag1d = 0; resource = 0x708;
@@ -60,20 +60,20 @@ Scene8015AFCC::Scene8015AFCC() {
     }
     PreloadResource(0x641); PreloadResource(0x665); PreloadResource(0x666);
     PreloadResource(0x667); PreloadResource(0x668);
-    for(j=0;j<7;++j) PreloadResource(j+0x669);
+    for(i=0;i<7;++i) PreloadResource(i+0x669);
     PreloadResource(0x670);
-    for(j=0;j<5;++j) { PreloadResource(j+0x65f); PreloadResource(j+0x65a); }
+    for(i=0;i<5;++i) { PreloadResource(i+0x65f); PreloadResource(i+0x65a); }
     PreloadResource(0x664);
-    for(j=0;j<10;++j) PreloadResource(j+0x3f7);
+    for(i=0;i<10;++i) PreloadResource(i+0x3f7);
     PreloadResource(0x645); PreloadResource(0x644); PreloadResource(0x7db);
     PreloadResource(0x7dc); PreloadResource(0x7f0);
-    for(j=0;j<6;++j) PreloadResource(j+0x7dd);
-    for(j=0;j<6;++j) PreloadResource(j+0x76c);
-    for(j=0;j<12;++j) PreloadResource(j+0x7e4);
+    for(i=0;i<6;++i) PreloadResource(i+0x7dd);
+    for(i=0;i<6;++i) PreloadResource(i+0x76c);
+    for(i=0;i<12;++i) PreloadResource(i+0x7e4);
     switch(mode) {
     case 0:
         f44 = lbl_806D8394; f50 = lbl_806D8398; f54 = lbl_806D839C;
-        { t = track; if(fn_8019083C(1)) clStream_setVolume(1,WeatherSystem_PickVariant(t)); }
+        { i = track; if(fn_8019083C(1)) clStream_setVolume(1,WeatherSystem_PickVariant(i)); }
         break;
     case 1:
         i=0; f5c=lbl_806D8394; first=i; count=i;
