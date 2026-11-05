@@ -28,6 +28,13 @@ static inline void Notify(void *ctrl) {
     void *coll = lbl_806D1928;
     if (coll) fn_80208FA0(coll, fn_801E6DDC(ctrl), 0);
 }
+static inline void UpdateKart(RankingManager *self, int i) {
+    void *ctrl = Read_U32[i];
+    if (ctrl) {
+        self->box->UpdateKart(i);
+        Notify(ctrl);
+    }
+}
 void RankingMgr_UpdatePositions(RankingManager *self) {
     if (g_gameMode == 1) return;
     if (IsRaceStarted()) {
@@ -37,12 +44,6 @@ void RankingMgr_UpdatePositions(RankingManager *self) {
         self->box->Update();
         fn_801DC774();
     }
-    for (int i = 0; i < 8; ++i) {
-        void *ctrl = Read_U32[i];
-        if (ctrl) {
-            self->box->UpdateKart(i);
-            Notify(ctrl);
-        }
-    }
+    for (int i = 0; i < 8; ++i) UpdateKart(self, i);
 }
 }

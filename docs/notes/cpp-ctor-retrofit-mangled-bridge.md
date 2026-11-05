@@ -694,3 +694,8 @@ c12_u11: fn_801B739C length decrement clamp uses literal 0.0f instead of capture
 Source: Codex worker c12_u19_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 592 B.
 
 c12_u19: fn_801D4FF4 diagnostic DebugPrintf needs direct nested calls for used bytes, used bits, and 0x228 - used bits. Explicit used/version locals yield swapped r25/r26 plus extra mr through r0 (99.189186%). Nested arguments naturally reproduce exact 592-byte text and 24-byte EH/12-byte index. Existing new-expression bridge is sufficient; Matching promotion passes source-linked DOL SHA-1.
+
+## c12_u21_20261106
+Source: Codex worker c12_u21_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c12_u21: RankingMgr_UpdatePositions 801EB99C improves 99.12791 to 99.30232 via one-slot static inline UpdateKart(self,i), with original indexed outer loop and nested Notify. coll becomes exact r29; residual index=r26 vs targetr27, cursor=r28 vsr26, ctrl=r27 vsr28. Whole-loop helper invariant; explicit cursor adds mr and regresses98.139534/348B. Exact344B/EH8/index12 retained, NonMatching. Full fallback-linked DOL SHA-1 OK; no native gain.
