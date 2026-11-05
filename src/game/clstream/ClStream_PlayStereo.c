@@ -65,6 +65,10 @@ static inline unsigned int AllocStream(void) {
     return -1;
 }
 
+static inline ClStream *GetStream(unsigned int i) {
+    return &g_ClStreams[i];
+}
+
 extern int DVDClose(DVDFileInfo *file);
 
 int ClStream_PlayStereo(const char *left, const char *right, unsigned char a) {
@@ -81,14 +85,14 @@ int ClStream_PlayStereo(const char *left, const char *right, unsigned char a) {
         g_ClStreams[j].state = 0;
         return -1;
     }
-    s = &g_ClStreams[i];
+    s = GetStream(i);
     file = &s->file;
     if (!DVDOpen(left, file)) {
         s->state = 0;
         g_ClStreams[j].state = 0;
         return -1;
     }
-    t = &g_ClStreams[j];
+    t = GetStream(j);
     if (!DVDOpen(right, &t->file)) {
         DVDClose(file);
         s->state = 0;
