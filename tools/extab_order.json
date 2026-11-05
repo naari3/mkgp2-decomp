@@ -2246,5 +2246,10 @@
     "fn_80140EF0",
     "fn_80140FEC",
     "dtor_80082960"
+  ],
+  "src/game/ISESlot_Lifecycle.c": [
+    "ISESlot_Init",
+    "ISESlot_Dtor",
+    "CoinJumpFlasher_Toggle"
   ]
 }

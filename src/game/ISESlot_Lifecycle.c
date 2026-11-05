@@ -51,28 +51,12 @@ extern void *GetRaceContextPtr(void);
 extern void *RaceContextSlot_GetIfAlive(void *ctx, int idx);
 extern void ItemObject_SetByte18c(void *item, int val);
 extern void MemoryManager_TimedFree(void *);
-extern float lbl_806D26C8; /* sdata2 float const */
-
-/*
- * ISESlot_Init is asm_fn: all 50 instructions are emitted identically by C
- * (see git history for the 98%-fuzzy C body), but CW 1.3.2's scheduler
- * interleaves the final li/lfs/stw constant-store block differently
- * (expected: li r5,0; lfs; li r4,5; stw 0x10; li r0,1; li r3,1 -- generated
- * always hoists all li above the lfs). 3 source-order variants failed to
- * steer it, so the function is kept as asm with a manually emitted extab
- * pair (approach B); ISESlot_Dtor below stays plain C with CW auto-emit
- * (approach A). Mix is fine per docs/per_fn_matching_strategy.md section 14.1.
- */
-asm void ISESlot_Init(void);
 
 void *ISESlot_Dtor(ISESlot *self, short freeFlag);
 typedef struct CoinJumpFlasher_Partial CoinJumpFlasher_Partial;
 void CoinJumpFlasher_Toggle(CoinJumpFlasher_Partial *self);
 
 #pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ISESlot_Init[8] = {
-    0x28, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 __declspec(section ".extab_user") static const unsigned char extab_ISESlot_Dtor[8] = {
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -81,9 +65,6 @@ __declspec(section ".extab_user") static const unsigned char extab_CoinJumpFlash
 };
 
 #pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ISESlot_Init = {
-    (void *)&ISESlot_Init, 0x000000C8, (void *)extab_ISESlot_Init
-};
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ISESlot_Dtor = {
     (void *)&ISESlot_Dtor, 0x00000084, (void *)extab_ISESlot_Dtor
 };
@@ -91,63 +72,32 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&CoinJumpFlasher_Toggle, 0x00000058, (void *)extab_CoinJumpFlasher_Toggle
 };
 
-asm void ISESlot_Init(void) {
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stmw r27, 0xc(r1)
-    mr r27, r3
-    mr r28, r4
-    mr r29, r6
-    mr r30, r7
-    lbz r0, 0x4(r3)
-    cmplwi r0, 0x1
-    bne ISESlot_Init_L_80049DAC
-    li r3, 0x0
-    b ISESlot_Init_L_80049E2C
-    ISESlot_Init_L_80049DAC:
-    li r0, 0x0
-    cmpwi r5, 0x6
-    stw r0, 0x18(r27)
-    stb r0, 0x4(r27)
-    bne ISESlot_Init_L_80049DF4
-    bl GetRaceContextPtr
-    mr r4, r29
-    bl RaceContextSlot_GetIfAlive
-    lwz r31, 0x90(r3)
-    cmpwi r31, 0x0
-    bge ISESlot_Init_L_80049DE0
-    li r3, 0x0
-    b ISESlot_Init_L_80049E2C
-    ISESlot_Init_L_80049DE0:
-    bl GetRaceContextPtr
-    mr r4, r31
-    bl RaceContextSlot_GetIfAlive
-    stw r3, 0x20(r27)
-    b ISESlot_Init_L_80049DF8
-    ISESlot_Init_L_80049DF4:
-    stw r0, 0x20(r27)
-    ISESlot_Init_L_80049DF8:
-    stw r28, 0x1c(r27)
-    li r5, 0x0
-    lfs f0, lbl_806D26C8(r2)
-    li r4, 0x5
-    stw r29, 0x10(r27)
-    li r0, 0x1
-    li r3, 0x1
-    stw r30, 0x14(r27)
-    stfs f0, 0x0(r27)
-    stb r5, 0x5(r27)
-    stw r4, 0x8(r27)
-    stb r0, 0x4(r27)
-    stw r5, 0xc(r27)
-    ISESlot_Init_L_80049E2C:
-    lmw r27, 0xc(r1)
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+/* Literal zero is externalized to lbl_806D26C8 by postprocess_sdata2. */
+int ISESlot_Init(ISESlot *self, int a, int mode, int b, int type) {
+    if (self->active == 1) {
+        return 0;
+    }
+    self->boundItem = 0;
+    self->active = 0;
+    if (mode == 6) {
+        void *slot = RaceContextSlot_GetIfAlive(GetRaceContextPtr(), b);
+        int index = *(int *)((char *)slot + 0x90);
+        if (index < 0) {
+            return 0;
+        }
+        self->ctxSlot = RaceContextSlot_GetIfAlive(GetRaceContextPtr(), index);
+    } else {
+        self->ctxSlot = 0;
+    }
+    self->field_0x1c = a;
+    self->field_0x10 = b;
+    self->typeId = type;
+    self->field_0x00 = 0.0f;
+    self->pending = 0;
+    self->state = 5;
+    self->active = 1;
+    self->field_0x0c = 0;
+    return 1;
 }
 
 #pragma exceptions off
