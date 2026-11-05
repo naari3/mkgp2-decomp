@@ -11735,5 +11735,27 @@
     "@704": "@eti_80021D04",
     "@712": "@etb_80009128",
     "@713": "@eti_80021D10"
+  },
+  "src/game/ConfettiField.c": {
+    "Draw__13ConfettiFieldFv": "fn_8014017C",
+    "Update__13ConfettiFieldFv": "fn_80140344",
+    "__dt__13ConfettiFieldFv": "fn_80140810",
+    "__ct__13ConfettiFieldFv": "fn_80140874"
+  },
+  "src/game/ResultFxScene.c": {
+    "Stop__8ResultFxFv": "fn_8014095C",
+    "Draw__8ResultFxFv": "fn_801409B0",
+    "IsDone__8ResultFxFv": "fn_80140ECC",
+    "__dt__8ResultFxFv": "fn_80140EF0",
+    "__vt__8ResultFx": "lbl_8048EC9C",
+    "__vt__6FxBase": "lbl_8048EB44",
+    "extab_fn_80140FEC": "@etb_8000D764",
+    "extabindex_fn_80140FEC": "@eti_80025040",
+    "__dt__6FxBaseFv": "dtor_8013EB50",
+    "__dt__6TexMgrFv": "dtor_800869D0",
+    "__ct__6TexMgrFv": "TexMgr_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "Update__8ResultFxFv": "fn_80140A38"
   }
 }

@@ -2227,5 +2227,24 @@
       "dtor_800869D0",
       "dtor_8008A058"
     ]
-  }
+  },
+  "src/game/ResultFx.c#trophy": [
+    "fn_8013ECB0",
+    "fn_8013EDB8",
+    "fn_8013F428",
+    "fn_8013F940",
+    "fn_8013FE4C",
+    "fn_8013FF6C",
+    "dtor_800869D0",
+    "dtor_80082960",
+    "dtor_8013EB50"
+  ],
+  "src/game/ResultFxScene.c": [
+    "fn_8014095C",
+    "fn_801409B0",
+    "fn_80140A38",
+    "fn_80140EF0",
+    "fn_80140FEC",
+    "dtor_80082960"
+  ]
 }
