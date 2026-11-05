@@ -23,3 +23,8 @@ c5_m3: DNBress UpdFire1/UpdFire2 become exact with literal 0.0f speed clamp (ext
 Source: Codex worker c12_u18_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 404 B.
 
 c12_u18: DNBress SpawnFire2 fn_8022760C resolves the 14-instruction f6..f10 register cycle by replacing all scalar external constant uses in the function with float literals (3,1,0.4,1.2,0.1,3.141592025756836,1.570796012878418,-0.015). Existing postprocess_sdata2 maps all eight emitted constants to target labels; 404B text,8B EH,12B index exact. Flip existing TU to Matching; no split/bridge/data changes. Source-linked coordinator full build DOL SHA-1 OK.
+
+## c12_u22_20261106
+Source: Codex worker c12_u22_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 376 B.
+
+c12_u22: DNBress SpawnFire1 fn_80227318 resolves 99.09574% FP home cycle by replacing seven external float labels with plain numeric literals; postprocess_sdata2 maps all back to existing labels. Text376 100%, leaf TU has no EH/data; flip Matching. Source-linked main.elf 80227318/376 exact and full DOL SHA-1 OK.

@@ -267,15 +267,15 @@ extern "C" void fn_80227318(clDNBress *self) {
         return;
     }
     p->v.x = self->dir.x;
-    self->freeSlot->v.y = lbl_806DB44C * self->dir.y;
+    self->freeSlot->v.y = 3.6f * self->dir.y;
     self->freeSlot->v.z = self->dir.z;
     self->freeSlot->pos.x = self->pos.x;
     self->freeSlot->pos.y = self->pos.y;
     self->freeSlot->pos.z = self->pos.z;
-    self->freeSlot->scale = lbl_806DB450;
-    self->freeSlot->alpha = lbl_806DB404;
-    self->freeSlot->speed = lbl_806DB414 * lbl_80495A94[self->randIdx] + lbl_806DB454;
-    self->freeSlot->grow = lbl_806DB424 * lbl_80495A94[self->randIdx] + lbl_806DB424;
+    self->freeSlot->scale = 5.0f;
+    self->freeSlot->alpha = 1.0f;
+    self->freeSlot->speed = 0.4f * lbl_80495A94[self->randIdx] + 1.3f;
+    self->freeSlot->grow = 0.1f * lbl_80495A94[self->randIdx] + 0.1f;
     self->freeSlot->active = 1;
     *(Vec3f*)self->freeSlot->c = *(const Vec3f*)lbl_803D026C;
     self->freeSlot->dvx = self->dir.x * lbl_80495A94[self->randIdx];
@@ -283,7 +283,7 @@ extern "C" void fn_80227318(clDNBress *self) {
         self->randIdx = 0;
     }
     self->freeSlot->dvz = self->dir.z * lbl_80495A94[self->randIdx];
-    self->freeSlot->dvy = lbl_806DB458;
+    self->freeSlot->dvy = 0.15f;
     if (++self->randIdx >= 48) {
         self->randIdx = 0;
     }
