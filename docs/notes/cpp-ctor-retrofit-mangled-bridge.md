@@ -454,3 +454,8 @@ c7_s21: bitread 8018A8D4 six inline ReadBits loops match exactly with float lite
 Source: Codex worker c7_m12_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 CardCreditFlow (80241C1C..80242DE0): GC/1.3.2 real C++ using canonical FlowScene yields nine exact functions and exact complete EH/data. Two singleton ternary new expressions must finish in a local pointer initializer before the subsequent float setter call; putting new directly inside the call argument extends EH regions and emits conditional flag resets. Inline CreditUnavailable helper gives target register homes, unlike the equivalent open-coded local predicate. lbl_806D1A98 is viewed const after startup initialization to reproduce legal invariant-load scheduling. Final fn_80241C88 AND operand commutation remains; keep whole group NM. No codegen byte patches were used.
+
+## c7_s23_20261105
+Source: Codex worker c7_s23_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1308 B.
+
+fn_8018E108 and fn_8018EDE0 match exact native text/EH with inline base vptr construction and new clNormal3D. Null-safe child/next accessors must spell `if (p == 0) return 0; return p->child/next;`; ternaries select inverse branches and a return-through-r0 temporary. Early returns remove these differences and produce 100%.

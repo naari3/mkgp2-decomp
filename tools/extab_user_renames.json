@@ -10606,5 +10606,27 @@
     "@78": "@eti_80028A84",
     "@87": "@etb_80016B84",
     "@88": "@eti_80028A90"
+  },
+  "src/game/objview/fn_8018E538.cpp": {
+    "__ct__9GXChannelFP8HSD_JObjP8HSD_DObjUii": "GXChannel_Init",
+    "__dt__9GXChannelFv": "dtor_8007D9C4"
+  },
+  "src/game/objview/fn_8018EDE0.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
+    "__ct__11EmitterCtorFP10clNormal3D": "fn_8018EDE0",
+    "__dt__11EmitterBaseFv": "dtor_8016A270",
+    "__vt__11EmitterBase": "lbl_80490FE0",
+    "__vt__11EmitterCtor": "lbl_80495EB4"
+  },
+  "src/game/objview/fn_8018E108.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
+    "__ct__9GroupCtorFP10clNormal3D": "fn_8018E108",
+    "__dt__9GroupBaseFv": "dtor_8016A270",
+    "__vt__9GroupBase": "lbl_80490FE0",
+    "__vt__9GroupCtor": "lbl_80495E68"
   }
 }

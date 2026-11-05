@@ -7550,6 +7550,11 @@ game/objview/fn_8018E000.c:
 	extabindex  start:0x80026F84 end:0x80026F90
 	.text       start:0x8018E000 end:0x8018E108
 
+game/objview/fn_8018E108.cpp:
+	extab       start:0x80011F80 end:0x80011FB4
+	extabindex  start:0x80026F90 end:0x80026F9C
+	.text       start:0x8018E108 end:0x8018E37C
+
 game/objview/fn_8018E37C.c:
 	extab       start:0x80011FB4 end:0x80011FBC
 	extabindex  start:0x80026F9C end:0x80026FA8
@@ -7563,10 +7568,25 @@ game/objview/fn_8018E4B4.c:
 game/objview/fn_8018E510.c:
 	.text       start:0x8018E510 end:0x8018E538
 
+game/objview/fn_8018E538.cpp:
+	extab       start:0x80011FC4 end:0x80011FDC
+	extabindex  start:0x80026FB4 end:0x80026FC0
+	.text       start:0x8018E538 end:0x8018E6FC
+
+game/objview/fn_8018E6FC.cpp:
+	extab       start:0x80011FDC end:0x80011FE4
+	extabindex  start:0x80026FC0 end:0x80026FCC
+	.text       start:0x8018E6FC end:0x8018ED1C
+
 game/objview/fn_8018ED1C.c:
 	extab       start:0x80011FE4 end:0x80011FEC
 	extabindex  start:0x80026FCC end:0x80026FD8
 	.text       start:0x8018ED1C end:0x8018EDE0
+
+game/objview/fn_8018EDE0.cpp:
+	extab       start:0x80011FEC end:0x80012044
+	extabindex  start:0x80026FD8 end:0x80026FE4
+	.text       start:0x8018EDE0 end:0x8018F088
 
 game/zprobe/dtor_8018F088.c:
 	extab       start:0x80012044 end:0x8001204C
