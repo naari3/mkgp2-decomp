@@ -9910,9 +9910,27 @@ game/fn_8020E3AC.c:
 	.text       start:0x8020E3AC end:0x8020E3D0
 
 game/anon_8020E3D0.cpp:
-	extab       start:0x80019978 end:0x80019C90
-	extabindex  start:0x80029DD4 end:0x80029E7C
-	.text       start:0x8020E3D0 end:0x8020F220
+	extab       start:0x80019978 end:0x800199DC
+	extabindex  start:0x80029DD4 end:0x80029DE0
+	.text       start:0x8020E3D0 end:0x8020E4C4
+
+game/anon_8020E3D0_nm2.cpp:
+	extab       start:0x800199DC end:0x80019C80
+	extabindex  start:0x80029DE0 end:0x80029E64
+	.text       start:0x8020E4C4 end:0x8020F02C
+
+game/anon_8020E3D0_sort.cpp:
+	.text       start:0x8020F02C end:0x8020F080
+
+game/anon_8020E3D0_nm1.cpp:
+	extab       start:0x80019C80 end:0x80019C88
+	extabindex  start:0x80029E64 end:0x80029E70
+	.text       start:0x8020F080 end:0x8020F18C
+
+game/anon_8020E3D0_update.cpp:
+	extab       start:0x80019C88 end:0x80019C90
+	extabindex  start:0x80029E70 end:0x80029E7C
+	.text       start:0x8020F18C end:0x8020F220
 
 game/anon_8020F220.cpp:
 	extab       start:0x80019C90 end:0x80019C98

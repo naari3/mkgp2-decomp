@@ -264,3 +264,8 @@ EnemyFace 8022BEB4 text/EH is exact but emitted clEFace3D vtable under RTTI-off 
 Source: Codex worker c3_u7_8021bc44_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 anon_8021BC44: NameEntry begins with KeyBoard (0x28), containing KeyVec<KeyGroup> at +4 through KeyVecMid/KeyVecBase. Replacing fake NameEntryHead/NameEntryBase inheritance with this canonical member layout restores six destructor guards: fn_8021BC44 100% text, Update 96.737625%. dtk rejects split at 8021C560 due reversed EH group; no native gain.
+
+## c3_u12_8020007c_20261105
+Source: Codex worker c3_u12_8020007c_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 476 B.
+
+c3 unlock: FadeLogo safe cuts are E3D0/E4C4 and F02C/F080/F18C/F220; DTK accepts. Factory private TaskListBase external destructor suppresses duplicate RTTI/vtable while primary text and 100-byte EH stay exact. Bridge @78/@79 to target EH names. Generic VHolder<TaskListImpl> weak dtor EB04 migrates to factory and is exact, while strong fallback nm2 retains final target ownership. Sort no-EH split uses actual CW name and omits extab_padding. Residual loop cursor/end r4/r5 and r6/r7 swaps resist iterator/direct-End spellings; Draw retains stack-slot and assignment-copy mismatch.
