@@ -4641,7 +4641,10 @@
     "__ct__7TextRowFv": "fn_802174A8",
     "__dt__7TextRowFv": "dtor_80217404",
     "__dynamic_cast": "fn_80271340",
-    "SetAnimParam__6SpriteFis": "Sprite_SetAnimParam"
+    "SetAnimParam__6SpriteFis": "Sprite_SetAnimParam",
+    "__dt__21KeyVecBase<8KeyGroup>Fv": "dtor_801C1B78",
+    "@741": "jumptable_804EDDB0",
+    "@743": "lbl_806DB0C0"
   },
   "src/game/anon_8021ED88.cpp": {
     "__nw__FUl": "Alloc",

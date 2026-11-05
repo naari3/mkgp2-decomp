@@ -1,3 +1,5 @@
+#include "game/anon_8021BC44Private.h"
+
 /*
  * 0x8021BC44..0x8021ED1C: time attack result scene (vtable lbl_804EDD98,
  * base lbl_803FE0C8). Shows the lap time and rank, lets a new record enter
@@ -234,21 +236,15 @@ struct DetailHolder {
     ~DetailHolder();
 };
 
-struct NameEntryHead {
-    int x0;
-};
-
-struct NameEntryBase {
-    char pad04[0x2A - 0x4];
-    unsigned short name[(0x40 - 0x2A) / 2];
-    ~NameEntryBase();
-};
 
 struct NameObj {
     virtual ~NameObj();
 };
 
-struct NameEntry : NameEntryHead, NameEntryBase {
+struct NameEntry {
+    KeyBoard board;
+    char pad28[2];
+    unsigned short name[(0x40 - 0x2A) / 2];
     Own<Sprite> cursor;
     char *bufs[4][15];
     int state;

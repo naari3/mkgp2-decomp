@@ -259,3 +259,8 @@ No-EH C++ leaf split: extab_padding invokes dtk extab clean, which errors when n
 Source: Codex worker c2_r2_enemyface_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 32 fn / 5952 B.
 
 EnemyFace 8022BEB4 text/EH is exact but emitted clEFace3D vtable under RTTI-off has null at +0 whereas target 804EE134 references lbl_806D0618. Leave destructor NonMatching and isolate exact Trigger 8022BF2C; do not promote based solely on 100% text.
+
+## c3_u7_8021bc44_20261105
+Source: Codex worker c3_u7_8021bc44_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+anon_8021BC44: NameEntry begins with KeyBoard (0x28), containing KeyVec<KeyGroup> at +4 through KeyVecMid/KeyVecBase. Replacing fake NameEntryHead/NameEntryBase inheritance with this canonical member layout restores six destructor guards: fn_8021BC44 100% text, Update 96.737625%. dtk rejects split at 8021C560 due reversed EH group; no native gain.
