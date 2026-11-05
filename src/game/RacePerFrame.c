@@ -5,20 +5,22 @@ static inline unsigned char TickFanfare(TickBlock *block) {
     TickEntry *entry;
     if (g_voiceQueueMuted) return 1;
     entry = &entries[g_goalFanfarePlayerIndex];
-    if (entry->kart->finished) {
+    if (!entry->kart->finished) {
+        if (g_gameMode == 2 && (signed char)entry->player != 0) {
+            if (TickFindLeader(block)->kart->finished) {
+                g_voiceQueueMuted = 1;
+                g_goalFanfareStartTimeHi = OSGetTime();
+                g_goalFanfareSubState = 0;
+                g_currentVoiceSubId = -1;
+                g_goalFanfareVariant = 1;
+            }
+        }
+    } else {
         g_voiceQueueMuted = 1;
         g_goalFanfareStartTimeHi = OSGetTime();
         g_goalFanfareSubState = 0;
         g_currentVoiceSubId = -1;
         g_goalFanfareVariant = 0;
-    } else if (g_gameMode == 2 && (signed char)entry->player != 0) {
-        if (TickFindLeader(block)->kart->finished) {
-            g_voiceQueueMuted = 1;
-            g_goalFanfareStartTimeHi = OSGetTime();
-            g_goalFanfareSubState = 0;
-            g_currentVoiceSubId = -1;
-            g_goalFanfareVariant = 1;
-        }
     }
     return 0;
 }
@@ -143,16 +145,20 @@ int Race_PerFrameTickAndAudio(void) {
             g_voiceStreamTime = OSGetTime();
         } else SyncSlot_GetHostSend()->voiceId = -1;
     } else {
-        if (g_currentVoiceStreamHandle != -1 &&
-            (!ClStream_IsActive(g_currentVoiceStreamHandle) ||
-             (g_voiceStreamLastPollTime = OSGetTime(),
-              !(g_voicePlayCountTable[g_countdownVoiceId].length > (float)OSTicksToMilliseconds(g_voiceStreamLastPollTime - g_voiceStreamStartTime) / lbl_806D9804)))) {
+        if (g_currentVoiceStreamHandle != -1) {
+            if (ClStream_IsActive(g_currentVoiceStreamHandle)) {
+                g_voiceStreamLastPollTime = OSGetTime();
+                if (g_voicePlayCountTable[g_countdownVoiceId].length >
+                    (float)OSTicksToMilliseconds(g_voiceStreamLastPollTime - g_voiceStreamStartTime) / lbl_806D9804)
+                    goto stream_polled;
+            }
             if (g_currentVoiceStreamHandle != -1) ClStream_Stop(g_currentVoiceStreamHandle);
             g_countdownVoiceId = -1;
             g_currentVoiceStreamHandle = -1;
             g_voiceStreamStartTime = 0;
             g_voiceStreamLastPollTime = 0;
         }
+stream_polled:
         if (g_currentVoiceStreamHandle == -1) {
             int id = TickPeek(block);
             if (id != -1) {
