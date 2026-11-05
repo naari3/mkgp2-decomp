@@ -1,11 +1,12 @@
 #include "game/NetJoin_private.h"
 
 clCSSceneNextRaceBT::clCSSceneNextRaceBT() {
+    int nextJoin = lbl_806D1A78 + 1;
     state = 0;
     time = lbl_806DB35C;
     x10 = 0;
     x14 = 1;
-    x18 = lbl_806D1A78 + 1;
+    x18 = nextJoin;
     x1c = 0;
     scroll = lbl_806DB380;
     joined = 0;

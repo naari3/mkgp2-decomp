@@ -814,3 +814,8 @@ c14_u16: AI_CalcRivalAvoidance 801EE7F0 singleton text94.092354 ->94.808914 with
 Source: Codex worker c14_u21_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u21 AI_UpdatePerFrameState: inline pointer Vec subtract + separate squared-length helper and AIFramePosition proximity temporary restore target non-fused arithmetic/intermediate stores. Moving pair scan into a static inline helper restores first-loop FP homes, vector slots 8/14/20/2c and primary 24-byte EH payload. Text improves reproducibly 93.765205 to 96.175674, remains NonMatching due pair/proximity scan GPR cycles, nearest-distance FP home, rank-search base loads/result coalescing and lap homes. Singleton TU gives no mechanism B cut. Full fallback DOL SHA-1 OK.
+
+## c14_u23_20261106
+Source: Codex worker c14_u23_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u23: singleton NetJoin ctor 80225C2C baseline measured 93.824745%. Capturing lbl_806D1A78+1 before all body field stores yields 94.46907% (same 776B). Member initializer list and unsigned global access unchanged baseline. Residual initial vptr/global-load scheduling and r5/r6 zero homes, plus ResCtrl f1/f2 swap at +16C..+19C. Owned extab232/index12 raw prefixes remain exact; weak copies grow to248/36. TU stays NonMatching after three hypotheses.
