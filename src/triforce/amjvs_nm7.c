@@ -1,11 +1,11 @@
 #include <triforce/amjvs_internal.h>
 
-u32 lbl_806D1E38;
 u32 lbl_806D1E3C;
+u32 lbl_806D1E38;
 
 #define NEXT_STATE()  \
-    InitTimer = 0;    \
     Mgr.state++;      \
+    InitTimer = 0;    \
     InitNode = 0
 
 static const char lbl_803F2768[] = "namco ltd.;GC-AM BASE PCB;Ver1.00;JPN,TRIFORCE";
@@ -163,8 +163,8 @@ s32 fn_8028BAD0(void) {
         if (n->unkD9 != 0) {
             bits |= 0x4000;
         }
-        InitTimer = 0;
         Mgr.node[InitNode].flags = bits;
+        InitTimer = 0;
         Mgr.state = 6;
         InitNode++;
         break;
