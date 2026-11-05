@@ -13,3 +13,8 @@ Coordinator caught amsys SHA-1 failure despite object section/text 100%: CW reor
 Source: Codex worker c5_m1_amnet_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 92 B.
 
 c5: fn_802889AC target forwards chan to fn_8028812C, rather than zero: correction raises 94.0171 -> 95.04273. BackupReadRecord explicit result variables avoid branchless boolean return lowering; k before j fixes selection-loop registers. Call-local ternary mirrored read length and i before size yield 88.92216. Remaining align-load/address scheduling and checksum register identity did not resolve with inline stride or manual checksum locals; rejected regressions.
+
+## c14_u31_20261106
+Source: Codex worker c14_u31_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u31: BackupWriteRecord 80288364 rises 93.44697 -> 94.621216 with mirror length ternary and computing reset length before clearing e->reset, eliminating an address reload. Remaining recSize/hdr r31/r29 vs r29/r31, checksum pointer/sum r4/r3 vs r3/r4, align-load scheduling and reset shift/store scheduling. Caller checksum+declaration probe 93.56061; inline alignment plus n/sum/p probe 94.393936 rejected. BSS emitted D83C vs target D840: final BackupState 3C vs40, trailing gap 80690E1C..80690E20; no filler added. Retained NonMatching.

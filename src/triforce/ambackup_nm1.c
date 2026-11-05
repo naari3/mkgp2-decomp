@@ -21,13 +21,10 @@ s32 BackupWriteRecord(u32 chan, void* data, BackupEntry* e) {
     size = (e->cfg.size + 3) & ~3;
     recSize = (size + 0xC + info->align - 1) & -info->align;
     hdr = (BackupHeader*)lbl_806835E0;
-    total = recSize;
-    if (e->cfg.flags & 2) {
-        total = recSize * 2;
-    }
+    total = (e->cfg.flags & 2) ? recSize * 2 : recSize;
     if (e->reset && e->addr != 0) {
-        e->reset = FALSE;
         total = info->words * 4 - e->addr;
+        e->reset = FALSE;
     }
     memset(lbl_806835E0, 0, recSize);
     memcpy(hdr->data, data, e->cfg.size);
