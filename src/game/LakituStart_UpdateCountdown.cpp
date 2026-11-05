@@ -57,20 +57,22 @@ extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
         if (hold > 0) return 1;
     }
     g_lakituDropStarted = 1;
+    unsigned i;
     void *cam = GetCourseScene3D();
     if (cam) {
+        float side, forward, v, dy, dx, height;
         Vec3f eye, at, dir;
         CObj_LoadProjMatrix(cam, &eye);
         CObj_ApplyScissor(cam, &at);
         Vec3_Subtract(&at, &eye, &dir);
         dir.y = lbl_806D2510;
         Vec3_Normalize(&dir, &dir);
-        float side = lbl_806CEDC0 + self->x;
-        float forward = lbl_806CEDC8 + self->z;
-        float dx = dir.x;
-        float dy = dir.y;
-        float v = dx * forward + (-dir.z * side + eye.x);
-        float height = lbl_806CEDC4 + self->y;
+        side = lbl_806CEDC0 + self->x;
+        forward = lbl_806CEDC8 + self->z;
+        dx = dir.x;
+        dy = dir.y;
+        v = dx * forward + (-dir.z * side + eye.x);
+        height = lbl_806CEDC4 + self->y;
         SetX(Archive_GetRootJObj(self->model), v);
         v = height + (dir.y * forward + (dy * side + eye.y));
         SetY(Archive_GetRootJObj(self->model), v);
@@ -90,13 +92,13 @@ extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
     if (self->frame < lbl_806D2528) {
         if (self->phase < 1) {
             self->phase = 1;
-            for (unsigned i=0; i<6; ++i) JObj_Hide(self->model, ResolveJointByName(self->model, lbl_803F5910[i]), 0x10);
+            for (i=0; i<6; ++i) JObj_Hide(self->model, ResolveJointByName(self->model, lbl_803F5910[i]), 0x10);
         }
     }
     else if (self->frame < lbl_806D252C) {
         if (self->phase < 2) {
             self->phase = 2;
-            for (unsigned i=0; i<6; ++i) JObj_Hide(self->model, ResolveJointByName(self->model, lbl_803F5910[i]), 0x10);
+            for (i=0; i<6; ++i) JObj_Hide(self->model, ResolveJointByName(self->model, lbl_803F5910[i]), 0x10);
             g_countdownPhase = 3;
             JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[0]), 0x10);
             SoundMgr_PlaySE(69);
@@ -105,7 +107,7 @@ extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
     else if (self->frame < lbl_806D2530) {
         if (self->phase < 3) {
             self->phase = 3;
-            for (unsigned i=0; i<6; ++i) JObj_Hide(self->model, ResolveJointByName(self->model, lbl_803F5910[i]), 0x10);
+            for (i=0; i<6; ++i) JObj_Hide(self->model, ResolveJointByName(self->model, lbl_803F5910[i]), 0x10);
             g_countdownPhase = 2;
             JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[0]), 0x10);
             JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[1]), 0x10);
@@ -115,7 +117,7 @@ extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
     else if (self->frame < lbl_806D2534) {
         if (self->phase < 4) {
             self->phase = 4;
-            for (unsigned i=0; i<6; ++i) JObj_Hide(self->model, ResolveJointByName(self->model, lbl_803F5910[i]), 0x10);
+            for (i=0; i<6; ++i) JObj_Hide(self->model, ResolveJointByName(self->model, lbl_803F5910[i]), 0x10);
             g_countdownPhase = 1;
             JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[0]), 0x10);
             JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[1]), 0x10);
@@ -126,7 +128,7 @@ extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
     else if (true) {
         if (self->phase < 6) {
             self->phase = 6;
-            for (unsigned i=0; i<6; ++i) JObj_Hide(self->model, ResolveJointByName(self->model, lbl_803F5910[i]), 0x10);
+            for (i=0; i<6; ++i) JObj_Hide(self->model, ResolveJointByName(self->model, lbl_803F5910[i]), 0x10);
             g_countdownPhase = 0;
             JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[3]), 0x10);
             JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[4]), 0x10);

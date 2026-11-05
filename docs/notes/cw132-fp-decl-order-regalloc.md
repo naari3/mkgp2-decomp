@@ -113,3 +113,8 @@ KartMovement_PhysicsStep direct reconstruction: declaring yawTurn, turn, grip in
 Source: Codex worker c10_u3_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 PathManager_UpdateAll 8003B6C4 (c10_u3_20261106): draft improved 98.89709 to 99.20515, kept NonMatching. Explicit shared manager cursor in final loop removes duplicate induction pointer and restores exact text5908/extab8/index12 sizes (EH/index100%). Declaring dx,dy,dz then evaluating dy,dx,dz matches FP arithmetic homes while x/y pointer-load order remains reversed. Declaring ranking scan before slot/candidate fixes candidate r3 / scan r4. Display-loop r24/r25, rank/limit and final loop GPR identities plus final NORMAL argument scheduling remain. Inline search helper was neutral; capturing inputs before the lap condition hoisted loads and worsened the match. No native gain; full fallback build SHA-1 OK.
+
+## c10_u15_20261106
+Source: Codex worker c10_u15_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c10_u15 LakituStart_UpdateCountdown 8003D360: shared function-scope unsigned loop index declared before camera changes camera r30 to target r29, improving 98.489586 to 98.510414 while all section sizes and EH remain exact. Explicit pointer cursor loops add mr instructions; inline HideCountdown(model) caches model and adds saved r28/moves, worsening text. FP named-scalar declaration reorder changes output reuse but does not recover side/forward homes; leave singleton NonMatching. Full fallback DOL SHA-1 OK.
