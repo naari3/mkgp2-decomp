@@ -9324,6 +9324,16 @@ game/fn_801DAEC0.cpp:
 	extabindex  start:0x8002828C end:0x80028298
 	.text       start:0x801DAEC0 end:0x801DAF38
 
+game/TextRenderer_DrawEntry.c:
+	extab       start:0x800156C4 end:0x800156CC
+	extabindex  start:0x80028298 end:0x800282A4
+	.text       start:0x801DAF38 end:0x801DB278
+
+game/DisplayContext_Flush.c:
+	extab       start:0x800156CC end:0x800156D4
+	extabindex  start:0x800282A4 end:0x800282B0
+	.text       start:0x801DB278 end:0x801DB548
+
 game/DrawText.c:
 	extab       start:0x800156D4 end:0x800156DC
 	extabindex  start:0x800282B0 end:0x800282BC
@@ -9396,10 +9406,20 @@ game/fn_801DBA84.c:
 	extabindex  start:0x80028334 end:0x80028340
 	.text       start:0x801DBA84 end:0x801DBAA8
 
+game/PathFollower_Update.cpp:
+	extab       start:0x80015734 end:0x80015844
+	extabindex  start:0x80028340 end:0x8002834C
+	.text       start:0x801DBAA8 end:0x801DC29C
+
 game/fn_801DC29C.cpp:
 	extab       start:0x80015844 end:0x8001586C
 	extabindex  start:0x8002834C end:0x80028358
 	.text       start:0x801DC29C end:0x801DC320
+
+game/PathFollower_Init.cpp:
+	extab       start:0x8001586C end:0x800158D8
+	extabindex  start:0x80028358 end:0x80028364
+	.text       start:0x801DC320 end:0x801DC460
 
 game/dtor_801DC460.cpp:
 	extab       start:0x800158D8 end:0x80015900

@@ -10964,5 +10964,24 @@
   "game/fn_801D4FF4.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/PathFollower_Init.cpp": {
+    "__ct__12PathFollowerFP14FollowerDriveri": "PathFollower_Init",
+    "__ct__14FollowerCursorFPv": "PathCursor_InitFromPath",
+    "__dt__14FollowerCursorFv": "PathCursor_Free",
+    "__dt__19FollowerCursorOwnerFv": "dtor_801DC460",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@65": "@etb_8001586C",
+    "@66": "@eti_80028358"
+  },
+  "src/game/PathFollower_Update.cpp": {
+    "__ct__14FollowerCursorFPv": "PathCursor_InitFromPath",
+    "__dt__14FollowerCursorFv": "PathCursor_Free",
+    "__dt__19FollowerCursorOwnerFv": "dtor_801DC460",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@236": "@etb_80015734",
+    "@237": "@eti_80028340"
   }
 }

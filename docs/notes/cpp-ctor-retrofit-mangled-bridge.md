@@ -509,3 +509,8 @@ c8_s44: fn_801CE918 and fn_801CEB78 match 2160B text plus 160B EH, 24B index and
 Source: Codex worker c8_s45_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 272 B.
 
 fn_801D1D9C (272B) matches natively with a nontrivial copy constructor on its single-pointer iterator: CW then uses the hidden return destination for DoublyLinkedList_EraseRange and emits exact stack argument slots. Trivial aggregate iterator returns use a register instead and diverge. Three nested list null checks reproduce the inlined destructor chain. Text and 8B/12B EH sections are 100%, full DOL SHA-1 OK.
+
+## c8_s49_20261105
+Source: Codex worker c8_s49_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 2356 B.
+
+c8_s49: PathFollower_Init 801DC320 matches 320B native text plus 108B owned EH using canonical PathCursor as a base view, real new FollowerCursor, and a throw() owning pointer member. Weak owner dtor bridges to existing dtor_801DC460 and discards. Update 801DBAA8 uses inline ResetFollower expanded seven times; cooldown global lbl_806D1898 read-only declaration permits load before requested-state store and completes exact 2036B text/272B EH. Both source-linked, ELF addresses/sizes and DOL SHA-1 verified.
