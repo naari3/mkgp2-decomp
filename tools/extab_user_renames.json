@@ -10929,5 +10929,36 @@
     "__vt__10C8TaPlease": "lbl_8049B1CC",
     "@65": "@etb_80014B70",
     "@66": "@eti_80027F68"
+  },
+  "src/game/fn_801D1890.cpp": {
+    "__ct__16RankingFlowTrackFv": "fn_801D3354",
+    "__vt__11RankingAnim": "lbl_8048EF34",
+    "__vt__11RankingFade": "lbl_8049B1AC",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "Update__15RankingFlowViewFv": "fn_801D1890"
+  },
+  "src/game/ranking_display.cpp": {
+    "__ct__11RankingFlowFv": "ranking_display",
+    "__ct__10CourseBaseFv": "InitializeFrameSelection",
+    "__dt__10CourseBaseFv": "dtor_801BA14C",
+    "__ct__15RankingFlowListFv": "DoublyLinkedList_Init",
+    "__dt__15RankingFlowListFv": "dtor_801CDC68",
+    "__ct__12RankingWorldFPCc": "Scene3D_Init",
+    "__ct__13RankingLightsFPCci": "SceneModel_Init",
+    "__ct__12CourseSpriteFiii": "Sprite_InitWithAnim",
+    "__ct__12CourseSpriteFiiffffff": "Sprite_CreateWithParams",
+    "__ct__16RankingFlowTrackFv": "fn_801D3354",
+    "__vt__11RankingAnim": "lbl_8048EF34",
+    "__dt__11RankingAnimFv": "dtor_80145DB0",
+    "__vt__11RankingFlow": "lbl_8049B51C",
+    "__vt__12RankingLabel": "lbl_8048EF20",
+    "__vt__11RankingText": "lbl_8049A9E8",
+    "__vt__11RankingFade": "lbl_8049B1AC",
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "Init__12RankingPanelFiiiiUciPCciPCciP12RankingWorldP13RankingLightsfff": "fn_801D286C"
   }
 }

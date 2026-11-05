@@ -504,3 +504,8 @@ c8_s42: fn_801CCAAC real new SelectClosing plus declared SelectTween array ctor 
 Source: Codex worker c8_s44_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 2160 B.
 
 c8_s44: fn_801CE918 and fn_801CEB78 match 2160B text plus 160B EH, 24B index and 32B switch data using canonical AnimSprite new expressions. Declare RowAnimation * before RowLayout * inside each switch case to get target base-load/register scheduling. Inline SetPos and SetRowScale capture the sprite once. Single-function blobs split independently. Constructor clFlowTaPlease_Init remains NM at 93.340836%; constant table-base caching/lifetime differs, no filler or manual EH used.
+
+## c8_s45_20261105
+Source: Codex worker c8_s45_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 272 B.
+
+fn_801D1D9C (272B) matches natively with a nontrivial copy constructor on its single-pointer iterator: CW then uses the hidden return destination for DoublyLinkedList_EraseRange and emits exact stack argument slots. Trivial aggregate iterator returns use a register instead and diverge. Three nested list null checks reproduce the inlined destructor chain. Text and 8B/12B EH sections are 100%, full DOL SHA-1 OK.
