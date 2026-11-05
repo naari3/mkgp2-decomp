@@ -133,3 +133,8 @@ DebugOverlay_Dispatch 8002BE18: case 9 accumulator residual f30 vs f28 (99.61123
 Source: Codex worker c10_u23_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c10_u23: fn_8023A148 improved 98.08068 -> 99.1687 by replacing return-value ternary clamp helpers with direct in-place conditional assignments. Restored exact text1636/extab8/index12 sizes; EH/index100%. Reference-parameter in-place helpers emit same output as direct conditionals. Targeted explicit declarations for bounds/title-color/conversion locals did not change remaining scratch register allocations. Singleton kept NonMatching; full fallback DOL SHA-1 OK.
+
+## c10_u25_20261106
+Source: Codex worker c10_u25_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c10_u25: AI_CalcGPTargetSpeed 801EA6F0 improves 99.06593 to 99.34066 with TU-local numeric-literal SetSpeed/InitialSpeed helpers and lap declared before rank in inline LapBonus (assign rank before lap). Initial-speed FP scratch instructions and lap rank/lap register homes become exact. Rank-follow helper extraction fails auto-inline and regresses to 46.008244; reverted. Residual cup/round arg-home coalescing, scan volatile register homes, FollowBonus conversion/multiplier FP homes, and final render rank r25/r26. Single function retained NonMatching; full coordinator build SHA-1 OK, no native gain.
