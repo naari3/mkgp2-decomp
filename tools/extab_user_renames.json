@@ -10037,5 +10037,19 @@
     "__dt__9GXChannelFv": "dtor_8007D9C4",
     "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform",
     "__dt__16clMapEffectPartsFv": "dtor_8016A270"
+  },
+  "src/game/WarpZoneVector_Insert.cpp": {
+    "__ct__15WarpErrorStringFPv": "SharedPtr_Init",
+    "__dt__15WarpErrorStringFv": "dtor_80038E30",
+    "__vt__Q23std9exception": "lbl_803F5710",
+    "__vt__Q23std11logic_error": "lbl_803F5700",
+    "__vt__Q23std12length_error": "lbl_803F56F0",
+    "__dt__Q23std9exceptionFv": "dtor_80038DD4",
+    "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor",
+    "__dt__10WarpCornerFv": "dtor_80036E40",
+    "__dt__21WarpZoneVectorStorageFv": "dtor_800AA69C",
+    "@228": "lbl_803284C0",
+    "@230": "@etb_80009ED0",
+    "@231": "@eti_80022640"
   }
 }
