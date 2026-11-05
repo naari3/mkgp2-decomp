@@ -12067,8 +12067,29 @@ game/fn_802437AC.cpp:
 game/fn_80245700.c:
 	.text       start:0x80245700 end:0x80245704
 
+game/HudSelectionInit.c:
+	extab       start:0x8001D450 end:0x8001D458
+	extabindex  start:0x8002B208 end:0x8002B214
+	.text       start:0x802457E0 end:0x80245834
+
 game/HudSelectionStep.c:
 	.text       start:0x80245834 end:0x80245850
+
+game/HudSelectionUpdate.cpp:
+	extab       start:0x8001D458 end:0x8001D460
+	extabindex  start:0x8002B214 end:0x8002B220
+	.text       start:0x80245850 end:0x80245AC4
+	.data       start:0x804EE854 end:0x804EE870
+
+game/HudSelectionCreate.cpp:
+	extab       start:0x8001D460 end:0x8001D478
+	extabindex  start:0x8002B220 end:0x8002B22C
+	.text       start:0x80245AC4 end:0x80245B10
+
+game/HudSelectionDestroy.cpp:
+	extab       start:0x8001D478 end:0x8001D4B4
+	extabindex  start:0x8002B22C end:0x8002B238
+	.text       start:0x80245B10 end:0x80245C1C
 
 game/FlowAdvance10.c:
 	.text       start:0x80245E50 end:0x80245E6C

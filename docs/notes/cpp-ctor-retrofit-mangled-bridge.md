@@ -544,3 +544,8 @@ c8_s60: SpriteAnimHandle ctor 8023F320 matches native 292B plus 24B DELETEPOINTE
 Source: Codex worker c8_s62_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 428 B.
 
 c8_s62: fn_802437AC new RivalMarker with nested new RivalOther yields exact 428B text, 48B DELETEPOINTER EH and 12B index using GC/1.3.2 + use_lmw_stmw. Cache render slot before GetDisplayBufferIndex to preserve pre-call load; declare kart pointer before loop index for target r29/r28 allocation. Full source-linked DOL SHA-1 and 802437AC..80243958 ELF range verified. Other independent singleton TUs remain NonMatching at 99.08/98.20635/99.14286 percent.
+
+## c8_s67_20261105
+Source: Codex worker c8_s67_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 1056 B.
+
+HudSelection 802457E0/80245850/80245AC4/80245B10: canonical FlowFaderF::Step/Done and VHolder<FlowFaderF> explicit reverse-order destruction produce exact native bodies and owned EH. Two holders of the same type share one SPECIFICATION action, matching target. Compare constants on the left of final equality tests for exact fcmpu operands. Update switch table 804EE854..804EE870 requires DATA_ALIGN4_TUS. Full source-linked SHA-1 and all four ELF addresses/sizes verified.

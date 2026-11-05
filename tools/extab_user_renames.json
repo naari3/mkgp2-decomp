@@ -11047,5 +11047,23 @@
   "src/game/fn_802437AC.cpp": {
     "__ct__10RivalOtherFP11RivalRenderi": "fn_8023147C",
     "__vt__11RivalMarker": "lbl_804EE784"
+  },
+  "src/game/HudSelectionCreate.cpp": {
+    "__ct__12HudSelectionFi": "fn_80245C1C",
+    "@22": "@etb_8001D460",
+    "@23": "@eti_8002B220"
+  },
+  "src/game/HudSelectionDestroy.cpp": {
+    "@61": "@etb_8001D478",
+    "@62": "@eti_8002B22C",
+    "__dt__10FlowFaderFFv": "TweenInterp_Dtor",
+    "__vt__10FlowFaderF": "lbl_80419DE0"
+  },
+  "src/game/HudSelectionUpdate.cpp": {
+    "Value__10FlowFaderFFv": "fn_8020A6CC",
+    "Set__10FlowFaderFFffs": "fn_8020A734",
+    "@73": "jumptable_804EE854",
+    "@74": "@etb_8001D458",
+    "@75": "@eti_8002B214"
   }
 }

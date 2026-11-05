@@ -927,6 +927,10 @@ config.libs = [
             Object(Matching, "game/fn_80089F9C.c"),
             Object(Matching, "game/fn_80250F34.c"),
             Object(Matching, "game/fn_80245700.c"),
+            Object(Matching, "game/HudSelectionUpdate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/HudSelectionInit.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/HudSelectionCreate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/HudSelectionDestroy.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/FlowAdvance10.c"),
             Object(NonMatching, "game/FlowAdvance1C.c"),
             Object(Matching, "game/fn_8023D2B4.c"),
@@ -3798,6 +3802,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/HudSelectionUpdate",
     "game/HudFlow",
     "game/PreloadEffectResources",
     "game/TaMode_Init",
