@@ -8046,6 +8046,7 @@ game/clstream/ClStream_UpdateAll.c:
 	extab       start:0x80012314 end:0x8001231C
 	extabindex  start:0x80027218 end:0x80027224
 	.text       start:0x80194214 end:0x801948C0
+	.rodata     start:0x8037D178 end:0x8037D1CC
 
 game/clstream/ClStream_FillChunk.c:
 	extab       start:0x8001231C end:0x80012324

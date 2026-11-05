@@ -1,3 +1,4 @@
+#pragma readonly_strings on
 #include "game/clsound_s25_private.h"
 typedef struct StreamInfo {
     unsigned int unknown, byteLength, frequency;
@@ -26,8 +27,6 @@ extern unsigned int g_ClStream_LockDepth;
 extern int g_ClStream_SavedInterruptLevel;
 extern unsigned char lbl_806D16D1, lbl_806CFCAB, lbl_806CFCAA, lbl_806CFCA9, lbl_806CFCA8;
 extern unsigned char *lbl_806D16DC;
-typedef struct StreamMessages { char warning[0x18], end[0x18], limit[0x24]; } StreamMessages;
-extern const StreamMessages lbl_8037D178;
 extern const float lbl_806D9538, lbl_806D953C, lbl_806D9540;
 extern int OSDisableInterrupts(void);
 extern int OSRestoreInterrupts(int);
@@ -64,7 +63,6 @@ static inline unsigned int StreamFrequency(ClStream *s) {
     return frequency;
 }
 void ClStream_UpdateAll(void) {
-    const StreamMessages *strings = &lbl_8037D178;
     DVDFileInfo *firstFile;
     ClStream *end;
     ClStream *s;
@@ -85,9 +83,9 @@ void ClStream_UpdateAll(void) {
                     loopEnd = s->info->loopEnd;
                     loopEnd >>= 1;
                     if (loopEnd > s->size) {
-                        DebugPrintf(strings->warning, s->size);
-                        DebugPrintf(strings->end, loopEnd);
-                        DebugPrintf(strings->limit);
+                        DebugPrintf("Stream Length   [%d]\n", s->size);
+                        DebugPrintf("       LoopPoint[%d]\n", loopEnd);
+                        DebugPrintf("       LoopPoint is over Length...\n");
                     }
                     s->size = loopEnd;
                 }
