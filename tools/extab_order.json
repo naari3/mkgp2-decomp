@@ -1987,5 +1987,41 @@
       "fn_80241A5C",
       "dtor_80241B3C"
     ]
+  },
+  "src/game/CourseEnvironment.cpp": {
+    "extab": [
+      "JObj_EvalIfDirtyAndGetMtxPtr",
+      "JObj_EvalIfDirty",
+      "JObj_NeedsEval",
+      "Subsystem36c_DispatchPass4_Timed",
+      "Subsystem36c_DispatchPass2_Timed",
+      "CourseEnvironment_RenderObjects",
+      "CourseEnvironment_RenderObjects_Timed",
+      "CourseEnvironment_UpdateAndCullZones",
+      "CourseEnvironment_UpdateAndCullZones_Timed",
+      "CourseEnvironment_ResolveJointInSlot0",
+      "CourseScene_Load",
+      "CourseEnvironment_Dtor",
+      "dtor_800488F4",
+      "InputManager_Init",
+      "__dt__11ScopedTimerFv"
+    ],
+    "extabindex": [
+      "Subsystem36c_DispatchPass4_Timed",
+      "Subsystem36c_DispatchPass2_Timed",
+      "CourseEnvironment_RenderObjects",
+      "CourseEnvironment_RenderObjects_Timed",
+      "CourseEnvironment_UpdateAndCullZones",
+      "CourseEnvironment_UpdateAndCullZones_Timed",
+      "CourseEnvironment_ResolveJointInSlot0",
+      "CourseScene_Load",
+      "CourseEnvironment_Dtor",
+      "InputManager_Init",
+      "JObj_EvalIfDirtyAndGetMtxPtr",
+      "JObj_EvalIfDirty",
+      "JObj_NeedsEval",
+      "dtor_800488F4",
+      "__dt__11ScopedTimerFv"
+    ]
   }
 }

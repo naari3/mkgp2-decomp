@@ -985,6 +985,11 @@ game/ObjectChain_RenderInZRange.c:
 	extabindex  start:0x80020024 end:0x80020030
 	.text       start:0x80046960 end:0x80046D84
 
+game/CourseEnvironment.cpp:
+	extab       start:0x800066E8 end:0x80006848
+	extabindex  start:0x80020030 end:0x800200D8
+	.text       start:0x80046D84 end:0x8004893C
+
 game/TrampolineTo_801ba110.c:
 	extab       start:0x80006848 end:0x80006850
 	extabindex  start:0x800200D8 end:0x800200E4

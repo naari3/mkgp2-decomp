@@ -1537,6 +1537,7 @@ config.libs = [
             Object(Matching, "game/PathCursor_ResetToPath.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/PathCursor_Free.c"),
             Object(Matching, "game/PathCursor_InitFromPath.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
+            Object(NonMatching, "game/CourseEnvironment.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], extab_padding=b""),
             Object(Matching, "game/PathManager_Lookups.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PathManager_RefreshFinishPositions.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Race_CompareKartProgress.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),

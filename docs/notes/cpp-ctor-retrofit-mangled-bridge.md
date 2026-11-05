@@ -464,3 +464,8 @@ fn_8018E108 and fn_8018EDE0 match exact native text/EH with inline base vptr con
 Source: Codex worker c7_s29_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 CollisionUpdate 8019B080 standalone split owns extab 80012668..800126B0 and index 80027428..80027434. It has six DESTROYLOCAL Vec slots: contact 24, normal 30, hit point 3C, up 48, forward 54, previous position 78. Value-argument constructors and a nontrivial normal temporary recover target stack layout. In-place 4x4 matrix multiplication plus aggregate copies increases native text similarity from 70.70 to 81.33%; TU remains NonMatching after three structural hypotheses. No exact native subset exists within this one large function.
+
+## c7_m2_20261105
+Source: Codex worker c7_m2_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+CourseEnvironment 80046D84..8004893C: real C++ draft yields 15/17 text-exact and 100% owned EH. CourseScene_Load new-expression allocation pointer r22 and all 11 DELETEPOINTER PC intervals are exact. Explicit cached rodata/data bases and branch-local table additions improve load 92.11 -> 98.70. JObj_EvalIfDirty requires the early-return condition (!joint || !NeedsEval(joint)) to retain the branch-over-branch; NeedsEval public int result with byte inline predicate retains clrlwi. Complete reversed EH span ties the first dispatch functions to trailing JObj functions and dtor; no native partial promotion.
