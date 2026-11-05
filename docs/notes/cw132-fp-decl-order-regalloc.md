@@ -163,3 +163,8 @@ c12_u17: DriveBehavior_HandleWpType case11 literal constants restore phase-updat
 Source: Codex worker c12_u20_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c12_u20 fn_80243464: numeric literals in ratio/x/scale and x bounds improve text 99.14286 to 99.40476, EH8/index12 exact. Target x f2/scale f1 vs emitted f1/f0 remain. Combining multiply/add initializers worsens to 99.04762; explicit scale,x,ratio declarations with external constants are baseline-byte-invariant. Singleton stays NonMatching; no new native gain.
+
+## c13_u4_20261106
+Source: Codex worker c13_u4_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u4 PairTracking 801E9A84 improves 97.92254 to99.47183. TU-local literal speed helpers eliminate all FP scratch differences. Target-derived reverse inline declaration order fixes ctrl/record and full distance scan; ctrl != other fixes cmplw order. Remaining initial kart-offset, cup/param/round and lap rank/lap GPR identities. Flattening PairSpeed to main else grows frame50->60 and drops95.93662, reverted. Three approaches; singleton retained NonMatching; full fallback SHA-1 OK.
