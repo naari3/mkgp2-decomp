@@ -1,4 +1,6 @@
-/* Exact asm_fn implementation for the BiribiriLand unit. */
+#include "game/BiribiriLand_private.h"
+
+/* BiribiriLand: native teardown; remaining bodies retain their original asm. */
 
 /* === extracted from auto_BiribiriLand_Render_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -1057,200 +1059,102 @@ extern unsigned int lbl_8048E46C[];
  */
 
 /* --- forward decls --- */
-asm void BiribiriLand_Destroy(void);
+void *BiribiriLand_Destroy(BiribiriState *, short);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_BiribiriLand_Destroy[8] = {
-    0x28, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+#pragma cplusplus on
+struct BiribiriVirtual {
+    virtual ~BiribiriVirtual();
 };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_BiribiriLand_Destroy = {
-    (void *)&BiribiriLand_Destroy, 0x00000288, (void *)extab_BiribiriLand_Destroy
+struct BiribiriCarVirtual {
+    virtual void key();
+    virtual ~BiribiriCarVirtual();
 };
+void operator delete(void *);
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void BiribiriLand_Destroy(void) { /* 0x80134D68 size:0x288 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stmw r27, 0xc(r1)
-    mr. r30, r3
-    mr r31, r4
-    beq BiribiriLand_Destroy_L_80134FD8
-    lis r3, lbl_8048E46C@ha
-    addi r0, r3, lbl_8048E46C@l
-    stw r0, 0x0(r30)
-    lwz r3, g_weatherSystem(r13)
-    cmplwi r3, 0x0
-    beq BiribiriLand_Destroy_L_80134DAC
-    li r4, 0x1
-    bl fn_8016C634
-    li r0, 0x0
-    stw r0, g_weatherSystem(r13)
-    BiribiriLand_Destroy_L_80134DAC:
-    li r3, 0x0
-    li r4, 0x0
-    bl SetActiveCamera
-    lwz r3, 0x14(r30)
-    cmplwi r3, 0x0
-    beq BiribiriLand_Destroy_L_80134DD8
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    BiribiriLand_Destroy_L_80134DD8:
-    lwz r3, 0xc(r30)
-    li r4, 0x1
-    bl LakituStart_Dtor
-    lwz r3, 0x18(r30)
-    li r4, 0x1
-    bl fn_80124C84
-    li r3, 0x0
-    bl SetPlayerCarObject
-    lwz r3, 0x8(r30)
-    cmplwi r3, 0x0
-    beq BiribiriLand_Destroy_L_80134E18
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    BiribiriLand_Destroy_L_80134E18:
-    li r0, 0x0
-    stw r0, g_raceCamera(r13)
-    lwz r3, 0x1c(r30)
-    cmplwi r3, 0x0
-    beq BiribiriLand_Destroy_L_80134E44
-    beq BiribiriLand_Destroy_L_80134E44
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    BiribiriLand_Destroy_L_80134E44:
-    lwz r27, 0x20(r30)
-    cmplwi r27, 0x0
-    beq BiribiriLand_Destroy_L_80134EC0
-    beq BiribiriLand_Destroy_L_80134EC0
-    lis r3, 0x1
-    lhz r4, 0x4(r27)
-    subi r0, r3, 0x1
-    clrlwi r0, r0, 16
-    subf r0, r4, r0
-    cntlzw r0, r0
-    extrwi. r0, r0, 8, 19
-    beq BiribiriLand_Destroy_L_80134E78
-    b BiribiriLand_Destroy_L_80134E88
-    BiribiriLand_Destroy_L_80134E78:
-    subi r3, r4, 0x1
-    cntlzw r0, r4
-    sth r3, 0x4(r27)
-    extrwi r0, r0, 8, 19
-    BiribiriLand_Destroy_L_80134E88:
-    cmpwi r0, 0x0
-    beq BiribiriLand_Destroy_L_80134EC0
-    cmplwi r27, 0x0
-    beq BiribiriLand_Destroy_L_80134EC0
-    lwz r4, 0x0(r27)
-    mr r3, r27
-    lwz r12, 0x30(r4)
-    mtctr r12
-    bctrl
-    lwz r4, 0x0(r27)
-    mr r3, r27
-    lwz r12, 0x34(r4)
-    mtctr r12
-    bctrl
-    BiribiriLand_Destroy_L_80134EC0:
-    lwz r3, 0x10(r30)
-    li r4, 0x1
-    bl CourseEnvironment_Dtor
-    lwz r3, 0x24(r30)
-    li r4, 0x1
-    bl fn_80254134
-    lwz r28, 0x30(r30)
-    cmplwi r28, 0x0
-    beq BiribiriLand_Destroy_L_80134F10
-    li r29, 0x0
-    mr r27, r28
-    BiribiriLand_Destroy_L_80134EEC:
-    lwz r3, 0x0(r27)
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    addi r29, r29, 0x1
-    addi r27, r27, 0x4
-    cmpwi r29, 0x7
-    blt BiribiriLand_Destroy_L_80134EEC
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    BiribiriLand_Destroy_L_80134F10:
-    lwz r3, 0x34(r30)
-    cmplwi r3, 0x0
-    beq BiribiriLand_Destroy_L_80134F20
-    bl MemoryManager_TimedFree
-    BiribiriLand_Destroy_L_80134F20:
-    bl ItemObjectManager_Reset
-    bl VfxSlotMgr_Shutdown
-    bl ClRomTable_PurgeAll
-    bl GetRaceContextPtr
-    bl RankingTable_Init
-    lwz r3, lbl_806D10D0(r13)
-    cmplwi r3, 0x0
-    beq BiribiriLand_Destroy_L_80134F54
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    BiribiriLand_Destroy_L_80134F54:
-    li r0, 0x0
-    stw r0, lbl_806D10D0(r13)
-    bl SceneDrawList_Reset
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    beq BiribiriLand_Destroy_L_80134F80
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    BiribiriLand_Destroy_L_80134F80:
-    li r0, 0x0
-    li r3, 0x0
-    stw r0, lbl_806D109C(r13)
-    bl SetResourceLoadingFlag
-    bl clRom_PurgeAll
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    beq BiribiriLand_Destroy_L_80134FB4
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    BiribiriLand_Destroy_L_80134FB4:
-    li r0, 0x0
-    mr r3, r30
-    stw r0, lbl_806D10AC(r13)
-    li r4, 0x0
-    bl dtor_80122FD8
-    extsh. r0, r31
-    ble BiribiriLand_Destroy_L_80134FD8
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    BiribiriLand_Destroy_L_80134FD8:
-    mr r3, r30
-    lmw r27, 0xc(r1)
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+/* ref_DEC follows the canonical HSD object.h inline. */
+static inline int BiribiriRefDec(BiribiriLight *obj)
+{
+    unsigned char unreferenced;
+    if ((unreferenced = (obj->references == (unsigned short)0xFFFF)))
+        return unreferenced;
+    return obj->references-- == 0;
 }
+static inline void BiribiriLightDelete(BiribiriLight *obj)
+{
+    if (obj) {
+        obj->info->release(obj);
+        obj->info->destroy(obj);
+    }
+}
+static inline void BiribiriLightUnref(BiribiriLight *obj)
+{
+    if (obj && BiribiriRefDec(obj))
+        BiribiriLightDelete(obj);
+}
+static inline void BiribiriCameraRelease(BiribiriVirtual *camera)
+{
+    if (camera)
+        delete camera;
+}
+
+static inline void BiribiriDestroyObstacles(BiribiriObstacles *obstacles)
+{
+    if (obstacles) {
+        int i;
+        for (i = 0; i < 7; i++)
+            Object_DtorWithGXSync(obstacles->model[i], 1);
+        MemoryManager_TimedFree(obstacles);
+    }
+}
+
+#pragma exceptions on
+#pragma use_lmw_stmw on
+extern "C" void *BiribiriLand_Destroy(BiribiriState *self, short freeMemory)
+{
+    if (self) {
+        self->vtable = lbl_8048E46C;
+        if (g_weatherSystem) {
+            fn_8016C634((void *)g_weatherSystem, 1);
+            g_weatherSystem = 0;
+        }
+        SetActiveCamera(0, 0);
+        delete (BiribiriVirtual *)self->scene;
+        LakituStart_Dtor(self->lakitu, 1);
+        fn_80124C84(self->goalCamera, 1);
+        SetPlayerCarObject(0);
+        delete (BiribiriCarVirtual *)self->car;
+        g_raceCamera = 0;
+        BiribiriCameraRelease((BiribiriVirtual *)self->camera);
+        if (self->lights)
+            BiribiriLightUnref(self->lights);
+        CourseEnvironment_Dtor(self->environment, 1);
+        fn_80254134(self->hud, 1);
+        BiribiriDestroyObstacles(self->obstacles);
+        if (self->goal)
+            MemoryManager_TimedFree(self->goal);
+        ItemObjectManager_Reset();
+        VfxSlotMgr_Shutdown();
+        ClRomTable_PurgeAll();
+        GetRaceContextPtr();
+        RankingTable_Init();
+        delete (BiribiriVirtual *)lbl_806D10D0;
+        lbl_806D10D0 = 0;
+        SceneDrawList_Reset();
+        delete (BiribiriVirtual *)lbl_806D109C;
+        lbl_806D109C = 0;
+        SetResourceLoadingFlag(0);
+        clRom_PurgeAll();
+        delete (BiribiriVirtual *)lbl_806D10AC;
+        lbl_806D10AC = 0;
+        dtor_80122FD8(self, 0);
+        if (freeMemory > 0)
+            MemoryManager_TimedFree(self);
+    }
+    return self;
+}
+#pragma use_lmw_stmw reset
+#pragma exceptions reset
+#pragma cplusplus reset
 
 
 /* === extracted from auto_BiribiriLand_Init_text === */

@@ -2251,5 +2251,12 @@
     "ISESlot_Init",
     "ISESlot_Dtor",
     "CoinJumpFlasher_Toggle"
+  ],
+  "src/game/BiribiriLand.c": [
+    "BiribiriLand_Render",
+    "BiribiriLand_Update",
+    "BiribiriLand_UpdateObstacles",
+    "BiribiriLand_Destroy",
+    "BiribiriLand_Init"
   ]
 }

@@ -669,3 +669,8 @@ c11_a6: Jyugemu_Flag_Tick 80080748 (716 B) matches text/EH/index with an inline 
 Source: Codex worker c11_a35_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 780 B.
 
 c11_a35: 80125948 draw (444 B) and 80126728 teardown (336 B) convert within original Matching TU using canonical DemoKartScene.h, existing extab_order key and automatic EH. For teardown, directly typed self parameter matches r30 self/r31 free flag; a local self initialized from void* instead gives opposite homes. Native 80125B04 best 99.54311% has exact size/EH but residual FP coordinate ordering/homes and anchor register; inline member-wrapper hypothesis regresses to 95.2278%. No new bridges or metadata edits.
+
+## c11_a37_20261106
+Source: Codex worker c11_a37_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 648 B.
+
+c11_a37: BiribiriLand_Destroy 80134D68 (648 B) matches in existing .c via pragma cplusplus on, compiler EH and use_lmw_stmw. Canonical HSD ref_DEC should keep its byte-sized retained boolean when ported into a C++ island: builtin C++ bool introduced extra normalization; unsigned char local with int return reproduces target extrwi sequence. Inline obstacle teardown naturally restores loop/light register homes. Whole TU text/extab/extabindex 100%; source-linked DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
