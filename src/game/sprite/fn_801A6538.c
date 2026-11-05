@@ -26,10 +26,10 @@ extern unsigned char lbl_806D1750;
 extern unsigned char lbl_806D1760;
 extern unsigned char lbl_806CFD36;
 extern signed char lbl_806D178F;
-extern const float lbl_806D9804, lbl_806D9818, lbl_806D981C, lbl_806D9820;
+extern const float lbl_806D9818, lbl_806D981C, lbl_806D9820;
 
 
-#define SINCE(t) ((float)OSTicksToMilliseconds(now - (t)) / lbl_806D9804)
+#define SINCE(t) ((float)OSTicksToMilliseconds(now - (t)) / 1000.0f)
 #define CLIP_PLAYED(id) (clips[id].playCount)
 
 /* Character voice of every kart that is spinning out. */
@@ -54,7 +54,8 @@ static inline unsigned char RaceVoice_PushSpinning(RaceVoiceData *data) {
  * NonMatching (~97%): the original addressed its pooled .data/.rodata
  * (voice clip table at +0x1534, goal lines at +0xF8C) as hoisted address
  * constants; with an extern struct MWCC folds those offsets into the index,
- * and it keeps lbl_806D9804 in f31 across the last two time checks. */
+ * with residual register allocation differences.  The time divisor is a
+ * literal so each check reloads it without preserving f31 across calls. */
 void fn_801A6538(void) {
     const RaceVoiceRodata *ro = &lbl_803810A8;
     RaceVoiceData *data = &lbl_80496C38;
@@ -260,7 +261,7 @@ void fn_801A6538(void) {
     }
 
     if (SINCE(g_voiceTickTimeHi) >= lbl_806D981C) {
-        if (SINCE(g_voiceLastTime) < lbl_806D9820) {
+        if (!(SINCE(g_voiceLastTime) >= lbl_806D9820)) {
             return;
         }
         entry = &g_raceEntryArray[g_taMinLapPlayerIndex];
