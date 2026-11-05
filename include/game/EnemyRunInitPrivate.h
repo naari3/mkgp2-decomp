@@ -17,11 +17,12 @@ struct EnemyRunMatrix {
         EnemyRunMatrix result;
         int n=0;
         for(int i=0;i<4;i++) {
-            for(int j=0;j<4;j++) {
-                float value=m[i*4]*b.m[j];
-                value+=m[i*4+1]*b.m[j+4];
-                value+=m[i*4+2]*b.m[j+8];
-                value+=m[i*4+3]*b.m[j+12];
+            const float *column=b.m;
+            for(int j=0;j<4;j++,column++) {
+                float value=m[i*4]*column[0];
+                value+=m[i*4+1]*column[4];
+                value+=m[i*4+2]*column[8];
+                value+=m[i*4+3]*column[12];
                 result.m[n+j]=value;
             }
             n+=4;

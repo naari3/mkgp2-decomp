@@ -639,3 +639,8 @@ c10_u19: Object_DriveAnimAndSkin 800331E0 improved 98.521645 -> 99.02597, retain
 Source: Codex worker c10_u20_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c10_u20: Scene_8015AFCC genuine C++ ctor improved 99.55173 to 99.93104 by using one function-scope index through all preload loops and track selection. Exact 1740B size, extab 196B and extabindex 12B. Residual first preload loop 8015B320..8015B338 uses r28 instead of target r29 (five instructions). Lexical independent indices regressed to 99.45977; inline first-loop helper regressed to 99.83908. Retained NonMatching; no safe subset split in single-function TU.
+
+## c10_u27_20261106
+Source: Codex worker c10_u27_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c10_u27: EnemyRun_BaseInit explicit RHS column cursor (const float *column=b.m; j++,column++) with indexed LHS and result preserves 1300-byte text and exact owned 176-byte EH/12-byte index, improving 98.08 to 98.23385. This removes world+0xE4 folding in inner loads, but result-base materialization remains inside inner loop and GPR/FP scheduling differs. Static inline float-pointer helper gave unchanged 98.08 text and shifted anonymous EH IDs; commutative product reversal was invariant. Retained NonMatching, full build SHA-1 OK, native gain zero.
