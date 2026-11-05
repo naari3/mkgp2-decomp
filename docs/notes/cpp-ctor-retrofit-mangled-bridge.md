@@ -764,3 +764,8 @@ c13_u18: SceneListOperations insertion801F4DF0 matches136B with canonical ListIt
 Source: Codex worker c13_u29_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u29: fn_801D680C improves 96.61273 to 97.554375 by moving the final 1..8 rank loop into AllCupsComplete inline helper as in fn_801D6DF0. Still saves r26-r31 instead of r27-r31 because cc*8 survives calls in r31; draft 1504 B vs 1508 B target. Snapshot/rank-update helper regresses to 96.08223; nested canonical CupRank helper regresses to 94.034485. Remains honest NonMatching; one-function TU offers no split rescue.
+
+## c13_u32_20261106
+Source: Codex worker c13_u32_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u32: CourseEnvironment UpdateAndCullZones fresh96.197845 ->99.06475: independent object-loop index restores saved r30 offset; direct reset loop with independent reset scope restores all reset-loop homes; semantic final-edge inline helper restores FP f6/f7 homes. Remaining zone index/object walker r5/r6 swap and missing mfcr/extrwi boolean (1104 vs1112B). CourseScene_Load remains98.7021, zone r26/r28 swap, debug byte-count homes and two bool normalization triplets (3212vs3236B). Boolean return spelling/declaration probes reverted. Full reversed EH span blocks rescue split; TU staysNonMatching, native gain0. Own anonymous EH rename keys after update shifted -3 and refreshed; owned extab all100/index99.28571 unchanged. Coordinator full build SHA-1OK.

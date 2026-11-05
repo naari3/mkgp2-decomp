@@ -165,12 +165,8 @@ static inline unsigned char InsideEdge(float ax, float az, float bx, float bz, f
     if ((bx - ax) * (z - az) - (bz - az) * (x - ax) > 0.0f) return 0;
     return 1;
 }
-static inline void ResetZoneSlot(CourseZoneSlot *s) {
-    if (!s->filename && s->model) {
-        if (s->references == 100) s->references = 0;
-        else if (s->references > 100) s->references = 100;
-    }
-    s->references = 0;
+static inline int InsideLastEdge(float ax, float az, float bx, float bz, float x, float z) {
+    return (bx - ax) * (z - az) - (bz - az) * (x - ax) <= 0.0f;
 }
 extern "C" {
 void CourseEnvironment_UpdateAndCullZones(CourseEnvironmentView *self) {
@@ -183,8 +179,8 @@ void CourseEnvironment_UpdateAndCullZones(CourseEnvironmentView *self) {
     for (i = 0; i < 8; ++i) if (self->models[i]) Object_DriveAnimMatrix(self->models[i]);
     if (self->secondaryModel) Object_DriveAnimMatrix(self->secondaryModel);
     if (g_gameMode != 2 && self->objects) {
-        for (i = 0; self->objects[i].filename; ++i) {
-            if (self->objects[i].model) clNormal3D_Exec(self->objects[i].model);
+        for (int j = 0; self->objects[j].filename; ++j) {
+            if (self->objects[j].model) clNormal3D_Exec(self->objects[j].model);
         }
     }
     if (self->animationManager) fn_80173FA4(self->animationManager);
@@ -193,16 +189,25 @@ void CourseEnvironment_UpdateAndCullZones(CourseEnvironmentView *self) {
     if (self->zones) {
         float camera[3];
         CObj_LoadProjMatrix(GetCourseScene3D(), camera);
-        for (i = 0; i < 32; ++i) ResetZoneSlot(&self->slots[i]);
-        for (i = 0; self->zones[i].kind != -1; ++i) {
-            CourseZone *z = &self->zones[i];
+        for (int reset = 0; reset < 32; ++reset) {
+            CourseZoneSlot *s = &self->slots[reset];
+            if (!s->filename && s->model) {
+                if (s->references == 100) s->references = 0;
+                else if (s->references > 100) s->references = 100;
+            }
+            s->references = 0;
+        }
+        ZoneObject *objects;
+        int zoneIndex;
+        for (zoneIndex = 0; self->zones[zoneIndex].kind != -1; ++zoneIndex) {
+            CourseZone *z = &self->zones[zoneIndex];
             int kind = z->kind;
-            ZoneObject *objects = z->objects;
+            objects = z->objects;
             if (kind) {
                 if (!InsideEdge(z->x0, z->z0, z->x1, z->z1, camera[0], camera[2])) continue;
                 if (!InsideEdge(z->x1, z->z1, z->x2, z->z2, camera[0], camera[2])) continue;
                 if (!InsideEdge(z->x2, z->z2, z->x3, z->z3, camera[0], camera[2])) continue;
-                if (!((z->x0-z->x3)*(camera[2]-z->z3)-(z->z0-z->z3)*(camera[0]-z->x3) <= 0.0f)) continue;
+                if (!InsideLastEdge(z->x3, z->z3, z->x0, z->z0, camera[0], camera[2])) continue;
                 if (kind == 2) break;
             }
             if (objects) {
