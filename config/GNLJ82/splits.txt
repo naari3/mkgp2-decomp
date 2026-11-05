@@ -13,10 +13,26 @@ Sections:
 	.sdata2     type:rodata align:16
 	.sbss2      type:bss align:32
 
+game/Flow_TransitionTo.cpp:
+	extab       start:0x80005600 end:0x80005608
+	extabindex  start:0x8001F3A0 end:0x8001F3AC
+	.text       start:0x8002BCA0 end:0x8002BE18
+
+game/DebugOverlay_Dispatch.cpp:
+	extab       start:0x80005608 end:0x80005610
+	extabindex  start:0x8001F3AC end:0x8001F3B8
+	.text       start:0x8002BE18 end:0x8002C554
+	.data       start:0x803F5620 end:0x803F5658
+
 game/FlowDispatcher_Dtor.cpp:
 	extab       start:0x80005610 end:0x80005618
 	extabindex  start:0x8001F3B8 end:0x8001F3C4
 	.text       start:0x8002C554 end:0x8002C5E8
+
+game/MainGameLoop.cpp:
+	extab       start:0x80005618 end:0x800056B8
+	extabindex  start:0x8001F3C4 end:0x8001F3D0
+	.text       start:0x8002C5E8 end:0x8002CB80
 
 game/FlowDispatcher_ScopedTimer.c:
 	extab       start:0x800056B8 end:0x800056F0

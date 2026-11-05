@@ -10113,5 +10113,14 @@
   },
   "src/game/ServiceButton_Handler.cpp": {
     "__ct__11ServiceMenuFi": "ServiceMenu_Init"
+  },
+  "src/game/MainGameLoop.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__9CreditHudFi": "fn_80218E24",
+    "__dt__9CreditHudFv": "fn_80218D98",
+    "Update__9CreditHudFv": "fn_80218B80",
+    "@88": "@etb_80005618",
+    "@89": "@eti_8001F3C4"
   }
 }

@@ -319,3 +319,8 @@ The scheduler pair swap documented above (canonical dtor "CW schedules
   one-expression tail + `void *t` cam-idiom spelling (the appendix
   `unsigned int t = lbl_806D10A0;` does not compile - hard error in CW C;
   `(unsigned int)` casts on the loads un-fold the idiom into cmplw/mr +3 insns).
+
+## c7_s1_20261105
+Source: Codex worker c7_s1_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1808 B.
+
+c7_s1_20261105: MainGameLoop 8002C5E8 is byte-exact native C++ with natural ScopedTimer elapsed math ((OSGetTick()-start)<<3)/(((*(volatile unsigned int*)0x800000F8)>>2)/125000)/lbl_806D2280, no asm shim. Exact lexical lifetimes reproduce all 160 EH bytes: outer frame timer ends before Frame_PostDrawOverlay, nested draw/update timers; second update timer encloses ServiceButton break and a reset-index draw timer. CreditHud canonical constructor/new and delete bridges reproduce DELETEPOINTER r24. Extra weak timer copy discards against existing strong __dt__11ScopedTimerFv. Source main.elf input, exact addresses and full DOL SHA-1 verified.
