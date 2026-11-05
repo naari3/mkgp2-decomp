@@ -1,223 +1,122 @@
-/* === extracted from auto_CarrotItemEffect_Upd_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+/* CarrotItemEffect_Update (0x800B2164): the carrot worn on the driver's head.
+ * The first tick sets up the sprite and the 600-frame life; the effect ends
+ * early once its bus bit is gone (or, after 3 frames, when bit 16 is set it
+ * clears bit 49).  While visible the sprite follows joint 15 of the kart,
+ * scaled by 2 and offset per character. */
+typedef struct Vec {
+    float x, y, z;
+} Vec;
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void DbgScene_CopyMatrix3x4Transpose();
-extern void FinalLapCoinJump_CheckActiveForObject();
-extern void ItemEffectBus_ClearMask();
-extern void KartCharacterParam_GetIdentityIndex();
-extern void KartDriver_GetJointByIdx();
-extern void Matrix4_Identity();
-extern void Matrix4_Multiply();
-extern void Mtx44_GetTranslation_RowMajor();
-extern void Mtx44_Scale_Uniform();
-extern void Mtx44_Translate();
-extern void Mtx_TransposeToMtx44();
-extern void SpriteSlot_Container_Free();
-extern void SpriteSlot_InitNonLoop();
-extern void SpriteSlot_SetAnimFrameAndApplyScale();
-extern void SpriteSlot_SetJointVisibilityByName();
-extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed();
+typedef struct ItemEffectBus {
+    unsigned char pad00[0x10];
+    unsigned long long mask; /* 0x10 */
+} ItemEffectBus;
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D5034;
-extern unsigned int lbl_806D5040;
+typedef struct KartDriver {
+    unsigned char pad000[0x304];
+    ItemEffectBus *itemBus; /* 0x304 */
+} KartDriver;
 
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_803298F0[];
-extern unsigned int lbl_8041A000[];
+typedef struct CarrotItemEffect {
+    unsigned char pad000[0x14];
+    unsigned char sprite[0x14]; /* 0x014 */
+    signed char visible;        /* 0x028 */
+    unsigned char pad029[0x48 - 0x29];
+    float mtx[3][4];            /* 0x048 */
+    unsigned char pad078[0xA0 - 0x78];
+    Vec pos;                    /* 0x0A0 */
+    unsigned char pad0AC[0xC8 - 0xAC];
+    signed char state;          /* 0x0C8 */
+    unsigned char pad0C9[0xF0 - 0xC9];
+    unsigned int timers[4];     /* 0x0F0 */
+    unsigned char pad100[0x188 - 0x100];
+    KartDriver *driver;         /* 0x188 */
+} CarrotItemEffect;
 
-/* --- function index (1 fns, .text 0x800B2164..0x800B23CC) ---
- * [  0] 0x800B2164 size:0x268   global CarrotItemEffect_Update
- */
+extern char lbl_803298F0[];
+extern Vec lbl_8041A000[];
 
-/* --- forward decls --- */
-asm void CarrotItemEffect_Update(void);
+extern void SpriteSlot_InitNonLoop(void *slot, int id);
+extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int a, float frame);
+extern void SpriteSlot_SetJointVisibilityByName(void *slot, const char *name, int n, int visible);
+extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int enable);
+extern void ItemEffectBus_ClearMask(ItemEffectBus *bus, unsigned long long mask);
+extern unsigned char FinalLapCoinJump_CheckActiveForObject(KartDriver *driver);
+extern void SpriteSlot_Container_Free(CarrotItemEffect *self);
+extern void *KartDriver_GetJointByIdx(KartDriver *driver, int idx);
+extern void Mtx_TransposeToMtx44(float dst[4][4], void *src);
+extern void Matrix4_Identity(float m[4][4]);
+extern void Mtx44_Scale_Uniform(float dst[4][4], float src[4][4], float s);
+extern int KartCharacterParam_GetIdentityIndex(KartDriver *driver);
+extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec t);
+extern void Matrix4_Multiply(float dst[4][4], float a[4][4], float b[4][4]);
+extern void DbgScene_CopyMatrix3x4Transpose(void *dst, float src[4][4]);
+extern void Mtx44_GetTranslation_RowMajor(Vec *out, void *mtx);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_CarrotItemEffect_Update[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+#pragma exceptions on
+void CarrotItemEffect_Update(CarrotItemEffect *self)
+{
+    ItemEffectBus *bus;
+    float joint[4][4];
+    float m[4][4];
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CarrotItemEffect_Update = {
-    (void *)&CarrotItemEffect_Update, 0x00000268, (void *)extab_CarrotItemEffect_Update
-};
+    switch (self->state) {
+    case 0:
+        SpriteSlot_InitNonLoop(self->sprite, 0x8E);
+        SpriteSlot_SetAnimFrameAndApplyScale(self->sprite, 1, 0.0f);
+        SpriteSlot_SetJointVisibilityByName(self->sprite, lbl_803298F0, 0x10, 1);
+        SpriteSlot_SetMatrixSourceEnabled_WithReseed(self->sprite, 1);
+        self->timers[0] = 600;
+        self->timers[1] = 3;
+        self->timers[2] = 60;
+        self->state++;
+    case 1:
+        break;
+    }
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void CarrotItemEffect_Update(void) { /* 0x800B2164 size:0x268 */
-    nofralloc
-    stwu r1, -0xa0(r1)
-    mflr r0
-    stw r0, 0xa4(r1)
-    stw r31, 0x9c(r1)
-    mr r31, r3
-    lbz r0, 0xc8(r3)
-    extsb r0, r0
-    cmpwi r0, 0x1
-    beq CarrotItemEffect_Update_L_800B21FC
-    bge CarrotItemEffect_Update_L_800B21FC
-    cmpwi r0, 0x0
-    bge CarrotItemEffect_Update_L_800B2198
-    b CarrotItemEffect_Update_L_800B21FC
-    CarrotItemEffect_Update_L_800B2198:
-    addi r3, r31, 0x14
-    li r4, 0x8e
-    bl SpriteSlot_InitNonLoop
-    lfs f1, lbl_806D5034(r2)
-    addi r3, r31, 0x14
-    li r4, 0x1
-    bl SpriteSlot_SetAnimFrameAndApplyScale
-    lis r4, lbl_803298F0@ha
-    addi r3, r31, 0x14
-    addi r4, r4, lbl_803298F0@l
-    li r5, 0x10
-    li r6, 0x1
-    bl SpriteSlot_SetJointVisibilityByName
-    addi r3, r31, 0x14
-    li r4, 0x1
-    bl SpriteSlot_SetMatrixSourceEnabled_WithReseed
-    li r0, 0x258
-    li r3, 0x3
-    stw r0, 0xf0(r31)
-    li r0, 0x3c
-    stw r3, 0xf4(r31)
-    stw r0, 0xf8(r31)
-    lbz r3, 0xc8(r31)
-    addi r0, r3, 0x1
-    stb r0, 0xc8(r31)
-    CarrotItemEffect_Update_L_800B21FC:
-    lwz r0, 0xf4(r31)
-    cmplwi r0, 0x0
-    bne CarrotItemEffect_Update_L_800B2248
-    lwz r3, 0x188(r31)
-    lis r4, 0x1
-    li r5, 0x0
-    lwz r3, 0x304(r3)
-    lwz r0, 0x10(r3)
-    lwz r6, 0x14(r3)
-    and r0, r0, r5
-    and r4, r6, r4
-    xor r4, r4, r5
-    xor r0, r0, r5
-    or. r0, r4, r0
-    beq CarrotItemEffect_Update_L_800B2248
-    stw r5, 0xf0(r31)
-    li r6, 0x0
-    lis r5, 0x2
-    bl ItemEffectBus_ClearMask
-    CarrotItemEffect_Update_L_800B2248:
-    lwz r0, 0xf8(r31)
-    cmplwi r0, 0x0
-    bne CarrotItemEffect_Update_L_800B2288
-    lwz r3, 0x188(r31)
-    li r4, 0x0
-    lis r0, 0x2
-    lwz r5, 0x304(r3)
-    lwz r3, 0x10(r5)
-    lwz r5, 0x14(r5)
-    and r0, r3, r0
-    and r3, r5, r4
-    xor r3, r3, r4
-    xor r0, r0, r4
-    or. r0, r3, r0
-    bne CarrotItemEffect_Update_L_800B2288
-    stw r4, 0xf0(r31)
-    CarrotItemEffect_Update_L_800B2288:
-    lwz r3, 0x188(r31)
-    bl FinalLapCoinJump_CheckActiveForObject
-    clrlwi. r0, r3, 24
-    beq CarrotItemEffect_Update_L_800B22A4
-    li r0, 0x0
-    stb r0, 0x28(r31)
-    b CarrotItemEffect_Update_L_800B22AC
-    CarrotItemEffect_Update_L_800B22A4:
-    li r0, 0x1
-    stb r0, 0x28(r31)
-    CarrotItemEffect_Update_L_800B22AC:
-    lwz r0, 0xf0(r31)
-    cmplwi r0, 0x0
-    bne CarrotItemEffect_Update_L_800B22C4
-    mr r3, r31
-    bl SpriteSlot_Container_Free
-    b CarrotItemEffect_Update_L_800B23B8
-    CarrotItemEffect_Update_L_800B22C4:
-    lbz r0, 0x28(r31)
-    extsb. r0, r0
-    beq CarrotItemEffect_Update_L_800B2368
-    lwz r3, 0x188(r31)
-    li r4, 0xf
-    bl KartDriver_GetJointByIdx
-    mr r4, r3
-    addi r3, r1, 0x54
-    bl Mtx_TransposeToMtx44
-    addi r3, r1, 0x14
-    bl Matrix4_Identity
-    addi r3, r1, 0x14
-    lfs f1, lbl_806D5040(r2)
-    mr r4, r3
-    bl Mtx44_Scale_Uniform
-    lwz r3, 0x188(r31)
-    bl KartCharacterParam_GetIdentityIndex
-    mulli r5, r3, 0xc
-    lis r4, lbl_8041A000@ha
-    addi r3, r1, 0x14
-    addi r0, r4, lbl_8041A000@l
-    add r8, r0, r5
-    mr r4, r3
-    lwz r7, 0x0(r8)
-    addi r5, r1, 0x8
-    lwz r6, 0x4(r8)
-    lwz r0, 0x8(r8)
-    stw r7, 0x8(r1)
-    stw r6, 0xc(r1)
-    stw r0, 0x10(r1)
-    bl Mtx44_Translate
-    addi r3, r1, 0x14
-    addi r5, r1, 0x54
-    mr r4, r3
-    bl Matrix4_Multiply
-    addi r3, r31, 0x48
-    addi r4, r1, 0x14
-    bl DbgScene_CopyMatrix3x4Transpose
-    addi r3, r31, 0xa0
-    addi r4, r31, 0x48
-    bl Mtx44_GetTranslation_RowMajor
-    CarrotItemEffect_Update_L_800B2368:
-    lwz r3, 0xf0(r31)
-    cmplwi r3, 0x0
-    beq CarrotItemEffect_Update_L_800B237C
-    subi r0, r3, 0x1
-    stw r0, 0xf0(r31)
-    CarrotItemEffect_Update_L_800B237C:
-    lwz r3, 0xf4(r31)
-    cmplwi r3, 0x0
-    beq CarrotItemEffect_Update_L_800B2390
-    subi r0, r3, 0x1
-    stw r0, 0xf4(r31)
-    CarrotItemEffect_Update_L_800B2390:
-    lwz r3, 0xf8(r31)
-    cmplwi r3, 0x0
-    beq CarrotItemEffect_Update_L_800B23A4
-    subi r0, r3, 0x1
-    stw r0, 0xf8(r31)
-    CarrotItemEffect_Update_L_800B23A4:
-    lwz r3, 0xfc(r31)
-    cmplwi r3, 0x0
-    beq CarrotItemEffect_Update_L_800B23B8
-    subi r0, r3, 0x1
-    stw r0, 0xfc(r31)
-    CarrotItemEffect_Update_L_800B23B8:
-    lwz r0, 0xa4(r1)
-    lwz r31, 0x9c(r1)
-    mtlr r0
-    addi r1, r1, 0xa0
-    blr
+    if (self->timers[1] == 0) {
+        bus = self->driver->itemBus;
+        if ((bus->mask & 0x10000ULL) != 0) {
+            self->timers[0] = 0;
+            ItemEffectBus_ClearMask(bus, 0x2000000000000ULL);
+        }
+    }
+    if (self->timers[2] == 0 && (self->driver->itemBus->mask & 0x2000000000000ULL) == 0) {
+        self->timers[0] = 0;
+    }
+
+    if (FinalLapCoinJump_CheckActiveForObject(self->driver)) {
+        self->visible = 0;
+    } else {
+        self->visible = 1;
+    }
+
+    if (self->timers[0] == 0) {
+        SpriteSlot_Container_Free(self);
+        return;
+    }
+
+    if (self->visible) {
+        Mtx_TransposeToMtx44(joint, KartDriver_GetJointByIdx(self->driver, 15));
+        Matrix4_Identity(m);
+        Mtx44_Scale_Uniform(m, m, 2.0f);
+        Mtx44_Translate(m, m, lbl_8041A000[KartCharacterParam_GetIdentityIndex(self->driver)]);
+        Matrix4_Multiply(m, m, joint);
+        DbgScene_CopyMatrix3x4Transpose(self->mtx, m);
+        Mtx44_GetTranslation_RowMajor(&self->pos, self->mtx);
+    }
+
+    if (self->timers[0] != 0) {
+        self->timers[0]--;
+    }
+    if (self->timers[1] != 0) {
+        self->timers[1]--;
+    }
+    if (self->timers[2] != 0) {
+        self->timers[2]--;
+    }
+    if (self->timers[3] != 0) {
+        self->timers[3]--;
+    }
 }
+#pragma exceptions reset
