@@ -684,3 +684,8 @@ c12_u2: fn_801EE36C transit vector construction before scale calculation fixes i
 Source: Codex worker c12_u6_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 17 fn / 6824 B.
 
 c12_u6: PanelCda40 dtor_801CDC68 sentinel r7/r0 residual resolves by begin(){return CdaIter(head.next);} rather than ++end(). Explicit iterator copy ctor alone is invariant; remove it. Direct first-node access removes sentinel CSE/live dependency and yields r0 addi/store, all seven functions / 900B exact. Refresh per-TU anonymous EH bridges (@36/37, @50/51, @70/71, @98/99, @120/121, @147/148); existing extab order suffices. Opt-in private-header branch preserves GpPleaseInit consumer. Full source-linked DOL SHA-1 OK; actual seven ELF addresses/sizes verified.
+
+## c12_u11_20261106
+Source: Codex worker c12_u11_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 516 B.
+
+c12_u11: fn_801B739C length decrement clamp uses literal 0.0f instead of captured external lbl_806D986C. External compare/assignment without capture is byte-invariant at 99.496124%; numeric literal gives exact target FP temporary allocation and 100% text516/EH8/index12. postprocess_sdata2 maps literal to existing lbl_806D986C. Matching promotion source-linked; actual ELF 801B739C/516 and full DOL SHA-1 verified.

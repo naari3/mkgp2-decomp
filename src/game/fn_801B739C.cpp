@@ -19,10 +19,9 @@ extern "C" int fn_801B739C(VoiceBrowser *self) {
         clip->length += lbl_806D9870 * (value - lbl_806D9860);
     value = input->StickLeft();
     if (value > lbl_806D9860) {
-        float minimum = lbl_806D986C;
         clip->length = clip->length - lbl_806D9870 * (value - lbl_806D9860);
-        if (clip->length < minimum)
-            clip->length = minimum;
+        if (clip->length < 0.0f)
+            clip->length = 0.0f;
     }
     if (input->Pressed(0x800)) {
         self->selection++;

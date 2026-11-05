@@ -2450,7 +2450,7 @@ config.libs = [
             Object(Matching, "game/fn_801B75A0.c"),
             Object(Matching, "game/fn_801B70EC.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/VoiceSystem_Init.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/fn_801B739C.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_801B739C.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801B7CD0.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801B7B04.c"),
             Object(Matching, "game/fn_801B8398.c"),
