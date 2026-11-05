@@ -1,3 +1,218 @@
+/* Bounded native retrofit draft (c11_a17_20261106): 98.28571% text.
+ * Three structural approaches: direct body; explicit camera/vector locals;
+ * inline camera and timer helpers. Automatic owned extab matches 100%.
+ * Residuals include camera stack slots/FP scheduling, constant relocations,
+ * and the target's redundant null-to-null transition getter at 0x8021234C.
+ * Do not add a no-op null check to force that sequence. The original accepted
+ * assembly below remains byte-identical and source-linked; no native gain.
+ */
+#if 0
+#pragma cplusplus on
+#include "game/JumpDistanceMode.h"
+#include "game/MathInline.h"
+
+struct ScenePos {
+    int state;
+    void *camera;
+    Vec3f position, velocity;
+    float angle;
+};
+struct TimerDisplay {
+    int value, unused;
+    unsigned char active;
+    float phase;
+    void *sprites[7];
+};
+extern "C" {
+void *GetRaceContextPtr(void);
+void ItemObjectManager_PerFrameUpdate(void *);
+void fn_802128F4(JumpGauge *, CarObject *);
+void fn_8023E324(void *, int);
+void JumpDistanceMode_HandlePhysics(JumpDistanceMode *);
+void Fog_UpdateFromCourseScene3D(void);
+void CObj_ApplyScissor(void *, Vec3f *);
+void CObj_LoadProjMatrix(void *, Vec3f *);
+void CObj_LoadIntoGX(void *, Vec3f *);
+void Vec3_Subtract(const Vec3f *, const Vec3f *, Vec3f *);
+float LUT_Cosine(float);
+float LUT_Sine(float);
+unsigned char Terrain_RaycastWall(Vec3f *, Vec3f *, Vec3f *, Vec3f *);
+void LakituStart_UpdateCountdown(void *);
+void CourseEnvironment_UpdateAndCullZones_Timed(void *);
+void JumpDistanceMode_UpdateGameplay(JumpDistanceMode *);
+void ItemObjectManager_Update(void);
+void VfxSlotMgr_Update(Vec3f, Vec3f);
+unsigned char IsRaceStarted(void);
+void fn_802124FC(void *);
+void fn_80253FD8(void *, float);
+float CarObject_CalcSpeedRatio(void *);
+float KartItem_GetCurrentSpeedWithBonus(void *);
+void fn_80253EBC(void *, float);
+void fn_80253EC0(void *, float);
+void HUD_FrameUpdate(void *);
+void fn_8011F804(void *, float, float);
+void SpriteLayer_SetResource(void *, int);
+void SpriteHandle_RecomputeCull(void *);
+void RumbleUpdate(void);
+void TransitionEffect_Tick(void *);
+void SetCoinCount(int);
+int fn_801231AC(void);
+int NokoNokoChallenge_CalcResultText(void *, int, int);
+void fn_80253C74(void *, int, int, int);
+void *CarObject_GetRenderObj(void *);
+void KartMovement_ResetOnGoal(void *);
+void KartMovement_ResetOnTimeout(void *);
+void NokoNokoChallenge_SaveResult(void *, int, int);
+void Object_SetByte10_Return1(void *, int);
+unsigned char fn_80253C40(void *);
+int NokoNokoChallenge_TransitionToResult(void *);
+void fn_8016B32C(void *);
+extern unsigned char g_raceEnded, g_lakituStartAnimDone;
+extern float g_raceTimeRemaining;
+extern void *lbl_806D109C, *g_weatherSystem;
+extern float lbl_803C3CF0[][2];
+}
+
+#pragma use_lmw_stmw on
+static inline void UpdateCamera(ScenePos *scene)
+{
+    Vec3f normal, hit, previous;
+    Vec3f diff, next, cameraTarget, cameraEye;
+    switch (scene->state) {
+    case 0: break;
+    case 1: {
+        CObj_ApplyScissor(scene->camera, &cameraEye);
+        CObj_LoadProjMatrix(scene->camera, &cameraTarget);
+        Vec3_Subtract(&cameraEye, &cameraTarget, &diff);
+        float horizontalX = diff.x * diff.x;
+        float horizontalZ = diff.z * diff.z;
+        float radius = 1.4f * MathInline_sqrtf(horizontalX + horizontalZ);
+        next.x = radius * LUT_Cosine(1.570796012878418f) + cameraEye.x;
+        float z = radius * LUT_Sine(1.570796012878418f) + cameraEye.z;
+        next.y = cameraEye.y;
+        next.z = z;
+        CObj_LoadIntoGX(scene->camera, &next);
+        break;
+    }
+    case 2:
+        scene->state = 3;
+        break;
+    case 3:
+        CObj_LoadIntoGX(scene->camera, &scene->position);
+        break;
+    case 4:
+        if (scene->angle < 90.0f) {
+            previous.x = scene->position.x;
+            previous.y = scene->position.y;
+            previous.z = scene->position.z;
+            float scale = LUT_Sine(0.01745329238474369f * scene->angle);
+            scene->position.x += scene->velocity.x * scale;
+            scene->position.y += scene->velocity.y * scale;
+            scene->position.z += scene->velocity.z * scale;
+            scene->angle += 3.0f;
+            if (Terrain_RaycastWall(&previous, &scene->position, &hit, &normal) == 1) {
+                scene->position = previous;
+                scene->angle = 90.0f;
+            }
+        }
+        CObj_LoadIntoGX(scene->camera, &scene->position);
+        break;
+    }
+}
+static inline void UpdateTimer(TimerDisplay *timer)
+{
+    if (timer->active == 1) {
+        if (timer->phase >= 1.0f) return;
+        timer->phase += 0.1f;
+        for (int i = 0; i < 7; ++i) {
+            fn_8011F804(timer->sprites[i], -640.0f * timer->phase + lbl_803C3CF0[i][0], lbl_803C3CF0[i][1]);
+        }
+    }
+    {
+        int hundreds = (timer->value / 100) % 10;
+        int tens = (timer->value / 10) % 10;
+        int units = timer->value % 10;
+        int first = 0x1ecd, second = 0x1ecd;
+        if (hundreds != 0) {
+            first = hundreds + 0x1b73;
+            second = tens + 0x1b73;
+        } else if (tens != 0) second = tens + 0x1b73;
+        SpriteLayer_SetResource(timer->sprites[1], first);
+        SpriteLayer_SetResource(timer->sprites[2], second);
+        SpriteLayer_SetResource(timer->sprites[3], units + 0x1b73);
+        for (int i = 0; i < 7; ++i) SpriteHandle_RecomputeCull(timer->sprites[i]);
+    }
+}
+
+extern "C" int JumpDistanceMode_Update(JumpDistanceMode *self)
+{
+    Vec3f target, eye;
+    if (self->ready == 0) self->ready = 1;
+    ItemObjectManager_PerFrameUpdate(GetRaceContextPtr());
+    fn_802128F4(self->gauge, self->car);
+    fn_8023E324(self->itemSlot, self->ready);
+    JumpDistanceMode_HandlePhysics(self);
+    Fog_UpdateFromCourseScene3D();
+    UpdateCamera(self->scenePos);
+    LakituStart_UpdateCountdown(self->lakitu);
+    CourseEnvironment_UpdateAndCullZones_Timed(self->env);
+    if (g_raceEnded == 0) JumpDistanceMode_UpdateGameplay(self);
+    CObj_LoadProjMatrix(self->scene, &target);
+    CObj_ApplyScissor(self->scene, &eye);
+    ItemObjectManager_Update();
+    VfxSlotMgr_Update(target, eye);
+    if (IsRaceStarted() == 1 && g_raceEnded != 1 && self->x50 < 2 && g_raceTimeRemaining >= 0.0f) {
+        if (self->gauge->running == 0) g_raceTimeRemaining -= 0.01666666753590107f;
+        else g_raceTimeRemaining -= 0.01666666753590107f * self->gauge->step;
+        if (g_raceTimeRemaining < 0.0f) {
+            g_raceTimeRemaining = 0.0f;
+            g_raceEnded = 1;
+        }
+    }
+    fn_802124FC(self->grid);
+    fn_80253FD8(self->hud, g_raceTimeRemaining);
+    fn_80253EBC(self->hud, 100.0f * CarObject_CalcSpeedRatio(self->car));
+    fn_80253EC0(self->hud, KartItem_GetCurrentSpeedWithBonus(self->car));
+    HUD_FrameUpdate(self->hud);
+    UpdateTimer(self->timer);
+    RumbleUpdate();
+    TransitionEffect_Tick(lbl_806D109C);
+    if (g_raceEnded == 1) {
+        if (self->x48 > 0) --self->x48;
+        else {
+            if (self->x4C == 0) {
+                if (self->x84 > 15) self->x84 = 15;
+                self->grid->pending = self->x84 - self->grid->next;
+                SetCoinCount(self->x84);
+                int best = fn_801231AC();
+                float distance = self->x58;
+                int record = distance >= (float)best;
+                if (self->x45 != 0) {
+                    int text = NokoNokoChallenge_CalcResultText(self, 1, record);
+                    fn_80253C74(self->hud, 1, text, (int)distance);
+                    KartMovement_ResetOnGoal(CarObject_GetRenderObj(self->car));
+                } else {
+                    int text = NokoNokoChallenge_CalcResultText(self, 0, record);
+                    fn_80253C74(self->hud, 0, text, (int)distance);
+                    KartMovement_ResetOnTimeout(CarObject_GetRenderObj(self->car));
+                }
+                NokoNokoChallenge_SaveResult(self, self->x84, self->x45);
+                TimerDisplay *resultTimer = self->timer;
+                resultTimer->phase = 0.0f;
+                resultTimer->active = 1;
+                Object_SetByte10_Return1(self->scene, 1);
+                g_lakituStartAnimDone = 0;
+            } else if (fn_80253C40(self->hud)) return NokoNokoChallenge_TransitionToResult(self);
+            ++self->x4C;
+        }
+    }
+    if (g_weatherSystem) fn_8016B32C(g_weatherSystem);
+    return -2;
+}
+#pragma use_lmw_stmw reset
+
+#endif
+
 /* === extracted from auto_JumpDistanceMode_Upd_text_1 === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
