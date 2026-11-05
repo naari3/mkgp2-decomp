@@ -399,3 +399,8 @@ c7_s3: LakituStart_Init 8003DB40 is a real 0x58-byte constructor whose new clNor
 Source: Codex worker c7_m3_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 9 fn / 4324 B.
 
 clDrawMan 80079CDC..8007ADC0: both timer20/timer42 locals must live together in inline DrawBucket::Dispatch to reproduce SP+8/+10. Inner timer-only extraction fixes node/end r24/r25 but leaves stack order reversed. AllocateNode must cache nodes+nodeCount before ++nodeCount to restore the target count/stride webs. New array EH uses padding C6 02 twice; owned extab order starts with trailing base dtor, then getter/dispatch/three sort methods. Implicit uint-to-float double cookie owns 806D2F38..806D2F40.
+
+## c7_s4_20261105
+Source: Codex worker c7_s4_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 976 B.
+
+KartItemSubObject ctor: vptr+owner form the 8-byte base; the Vec at +8 is a derived member. Putting it inside the base preserves text but loses one DESTROYMEMBER per new site (60 EH bytes total). Distinct owning pointer template instantiations are necessary for separate inline throw() specifications in multi-member destructors; one repeated member type merges specification records despite exact text.

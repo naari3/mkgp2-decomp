@@ -1108,6 +1108,11 @@ game/ItemStateSlotC_TryArm.c:
 	extabindex  start:0x800205A0 end:0x800205AC
 	.text       start:0x80053290 end:0x800532D4
 
+game/ExplosionTumble_Init.cpp:
+	extab       start:0x800071AC end:0x800071DC
+	extabindex  start:0x800205AC end:0x800205B8
+	.text       start:0x800532D4 end:0x8005399C
+
 game/ItemEffectJump_Init.c:
 	extab       start:0x800071DC end:0x800071E4
 	extabindex  start:0x800205B8 end:0x800205C4
@@ -1134,6 +1139,11 @@ game/ItemEffectImpact_TryArm.c:
 game/ItemEffectImpact_Init.c:
 	.text       start:0x8005453C end:0x80054660
 
+game/KartItemSubObject_Dtor.cpp:
+	extab       start:0x80007234 end:0x800072DC
+	extabindex  start:0x80020600 end:0x8002060C
+	.text       start:0x80054660 end:0x800547D8
+
 game/ItemEffectImpact_Dtor.c:
 	extab       start:0x800072DC end:0x800072E4
 	extabindex  start:0x8002060C end:0x80020618
@@ -1158,6 +1168,11 @@ game/ItemEffectSpin_Dtor.c:
 	extab       start:0x800072FC end:0x80007304
 	extabindex  start:0x8002063C end:0x80020648
 	.text       start:0x80054948 end:0x800549A4
+
+game/KartItemSubObject_Ctor.cpp:
+	extab       start:0x80007304 end:0x8000745C
+	extabindex  start:0x80020648 end:0x80020654
+	.text       start:0x800549A4 end:0x80054B2C
 
 game/KartEffectFadeTransit_Tick.c:
 	extab       start:0x8000754C end:0x80007554
@@ -1561,6 +1576,11 @@ game/CourseBgm_Load.c:
 	extab       start:0x80007F34 end:0x80007F3C
 	extabindex  start:0x80020E94 end:0x80020EA0
 	.text       start:0x80064ED0 end:0x80064F58
+
+game/TwoSubDtor_Pending_80064f58.cpp:
+	extab       start:0x80007F3C end:0x80007F84
+	extabindex  start:0x80020EA0 end:0x80020EAC
+	.text       start:0x80064F58 end:0x80065028
 
 game/EffectSpeedAction_SpeedScale_Dtor.c:
 	extab       start:0x80007F84 end:0x80007F8C

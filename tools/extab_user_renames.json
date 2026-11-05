@@ -10187,5 +10187,42 @@
     "@289": "@eti_80028904",
     "@372": "@etb_80016690",
     "@373": "@eti_80028910"
+  },
+  "src/game/KartItemSubObject_Dtor.cpp": {
+    "__dt__12C7ItemOwnersFv": "KartItemSubObject_Dtor",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@93": "@etb_80007234",
+    "@94": "@eti_80020600"
+  },
+  "src/game/TwoSubDtor_Pending_80064f58.cpp": {
+    "__dt__13C7SpeedOwnersFv": "TwoSubDtor_Pending_80064f58",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@42": "@etb_80007F3C",
+    "@43": "@eti_80020EA0"
+  },
+  "src/game/KartItemSubObject_Ctor.cpp": {
+    "__ct__12C7ItemOwnersFPv": "KartItemSubObject_Ctor",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__5C7VecFv": "dtor_80036E40",
+    "__dt__8C7FxBaseFv": "dtor_80054B2C",
+    "__vt__8C7FxBase": "lbl_803F7738",
+    "__vt__8C7Impact": "lbl_803F7758",
+    "__vt__7C7Quake": "lbl_803F7724",
+    "__vt__6C7Jump": "lbl_803F7704",
+    "__vt__6C7Damp": "lbl_803F76E4",
+    "__vt__6C7Spin": "lbl_803F76C4",
+    "__dt__22C7Owner<11C7Effect<0>>Fv": "dtor_800560C0",
+    "__dt__22C7Owner<11C7Effect<1>>Fv": "dtor_80056030",
+    "__dt__22C7Owner<11C7Effect<2>>Fv": "dtor_80055FA0",
+    "__dt__22C7Owner<11C7Effect<3>>Fv": "dtor_80055F10",
+    "@85": "@etb_80007304",
+    "@86": "@eti_80020648"
+  },
+  "src/game/ExplosionTumble_Init.cpp": {
+    "__dt__5C7VecFv": "dtor_80036E40",
+    "__dt__6C7QuatFv": "dtor_800524CC",
+    "@227": "@etb_800071AC",
+    "@228": "@eti_800205AC"
   }
 }
