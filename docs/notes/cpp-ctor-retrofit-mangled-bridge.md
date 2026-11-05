@@ -414,3 +414,8 @@ SpecialFaceMesh 8007BE70..8007CC9C new-TU partial: canonical SpecialFaceMeshPriv
 Source: Codex worker c7_m7_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c7_m7: PanelCda40 native model uses CdaSpriteSlot::~ throw() and CdaHolder::~ throw() to reproduce both __unexpected islands and exact owned EH. Color packing in an inline four-u8 helper changes fn_801CDB00 from 96.73913 to 100%; direct packed expression adds a move and changes color register. List destructor retains r7 versus target r0 for end iterator after three hypotheses. Entire reversed EH group remains NonMatching. Warp Reserve canonical user-defined corner-copy model reaches 82.94%; implicit corner-copy falls to 60.05% via bulk-copy loop, so best restored.
+
+## c7_s10_20261105
+Source: Codex worker c7_s10_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c7_s10: WarpZone_CalcEdgeVectors is naturally modeled as a constructor of a 0x50-byte value with four nontrivial WarpCorner members. Modeling it as a returned WarpZoneValue produced a copy and two __destroy_arr cleanups (912B); a declared derived constructor produces the single 528B body with target-shaped local cleanup. Table index CSE and loop web coloring still prevent exactness.

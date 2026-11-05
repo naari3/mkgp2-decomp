@@ -2922,6 +2922,12 @@ game/TaMode_Dtor.cpp:
 	extabindex  start:0x80022328 end:0x80022334
 	.text       start:0x800A38F8 end:0x800A3C38
 
+game/TaMode_Init.cpp:
+	extab       start:0x80009A78 end:0x80009C5C
+	extabindex  start:0x80022334 end:0x80022340
+	.text       start:0x800A3C38 end:0x800A4578
+	.data       start:0x8040F0C4 end:0x8040F0E8
+
 game/RaceContextSlotGet.c:
 	.text       start:0x800A4578 end:0x800A45B8
 
@@ -3003,6 +3009,11 @@ game/RankLog.c:
 	extabindex  start:0x800223DC end:0x800225A4
 	.text       start:0x800A5CEC end:0x800A8D34
 
+game/WarpDashMgr_Init.cpp:
+	extab       start:0x80009E04 end:0x80009E60
+	extabindex  start:0x800225A4 end:0x800225B0
+	.text       start:0x800A8D34 end:0x800A8F4C
+
 game/auto_800A8F4C_block.c:
 	extab       start:0x80009E60 end:0x80009ED0
 	extabindex  start:0x800225B0 end:0x80022640
@@ -3060,6 +3071,11 @@ game/ZlibInflate_BufferToBuffer.c:
 	extab       start:0x8000A0C4 end:0x8000A0CC
 	extabindex  start:0x80022760 end:0x8002276C
 	.text       start:0x800AB958 end:0x800ABAE8
+
+game/CourseData_LoadPathTable.cpp:
+	extab       start:0x8000A0CC end:0x8000A0E8
+	extabindex  start:0x8002276C end:0x80022778
+	.text       start:0x800ABAE8 end:0x800ABD80
 
 game/CourseData_Lookup.c:
 	extab       start:0x8000A0E8 end:0x8000A110

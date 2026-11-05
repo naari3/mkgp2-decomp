@@ -1375,6 +1375,7 @@ config.libs = [
             Object(Matching, "game/RaceScene_RenderFrame.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/RaceScene_Dtor.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(NonMatching, "game/TaMode_FrameUpdate.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/TaMode_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/TaMode_Dtor.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(NonMatching, "game/RaceScene_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(NonMatching, "game/RaceScene_FrameUpdate.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -1712,6 +1713,7 @@ config.libs = [
             Object(NonMatching, "game/WarpZoneVector_Reserve.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/AI_AdjustThunks.c"),
             Object(NonMatching, "game/PanelCda40.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/WarpDashMgr_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/WarpZone_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/LiveConn.c"),
             Object(Matching, "game/PlaySoundDSP.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -2128,6 +2130,7 @@ config.libs = [
             Object(Matching, "game/PathFollower_EnsureGlobalAlloc.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GetEnemyParam.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CourseData_GetDefaultPathKey_Safe.c"),
+            Object(NonMatching, "game/CourseData_LoadPathTable.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/CourseData_Lookup.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/JObj_Visibility.c"),
             Object(Matching, "game/CourseBgm_Free.c"),
@@ -3638,6 +3641,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
     "game/PreloadEffectResources",
+    "game/TaMode_Init",
     "game/TitleNameHudUpdate",
     "game/anon_80218F40_nm1",
     "sysdolphin/baselib/mobj_update_nm",
