@@ -1,161 +1,101 @@
-/* === extracted from auto_GXChannel_PushTransf_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void GXChannel_PushChannelColors();
-extern void GXLoadTexMtxImm();
-extern void GXCallDisplayList();
-extern void GXLoadPosMtxImm();
-extern void GXSetCurrentMtx();
-extern void PSMTXCopy();
-extern void PSMTXInvXpose();
-extern void GXLoadNrmMtxImm();
-extern void _HSD_TObjGetCurrentByType();
-extern void HSD_LObjSetupSpecularInit();
-extern void HSD_JObjMakePositionMtx();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D2FB4;
-
-/* --- function index (1 fns, .text 0x8007D11C..0x8007D2AC) ---
- * [  0] 0x8007D11C size:0x190   global GXChannel_PushTransform
+/* GXChannel_PushTransform @ 0x8007D11C: draw a bound GX channel with a
+ * new model matrix.
+ *
+ * Copies `mtx` into the channel's JObj, builds the position matrix against
+ * the current camera view, loads position/normal(/texture) matrices the way
+ * HSD pobj.c SetupRigidModelMtx does, pushes the material channel colours
+ * and calls the display lists of every PObj of every DObj in the chain.
+ * Returns 0 if the channel is not bound (no value otherwise).
  */
+#include "game/GXChannelPrivate.h"
 
-/* --- forward decls --- */
-asm void GXChannel_PushTransform(void);
+typedef enum PObjSetupFlag {
+    SETUP_NONE = 0,
+    SETUP_NORMAL = 1 << 0,
+    SETUP_REFLECTION = 1 << 1,
+    SETUP_HIGHLIGHT = 1 << 2,
+    SETUP_NORMAL_PROJECTION = SETUP_REFLECTION | SETUP_HIGHLIGHT
+} PObjSetupFlag;
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_GXChannel_PushTransform[8] = {
-    0x18, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+#define TEX_COORD_REFLECTION 1
+#define TEX_COORD_HILIGHT 2
+#define GX_PNMTX0 0
+#define GX_TEXMTX0 30
+#define GX_MTX3x4 0
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_GXChannel_PushTransform = {
-    (void *)&GXChannel_PushTransform, 0x00000190, (void *)extab_GXChannel_PushTransform
-};
+/* SETUP_NORMAL, kept as a shared .sdata2 constant by the original build. */
+extern const PObjSetupFlag lbl_806D2FB4;
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void GXChannel_PushTransform(void) { /* 0x8007D11C size:0x190 */
-    nofralloc
-    stwu r1, -0x80(r1)
-    mflr r0
-    stw r0, 0x84(r1)
-    stw r31, 0x7c(r1)
-    stw r30, 0x78(r1)
-    stw r29, 0x74(r1)
-    mr r29, r3
-    lbz r0, 0xc(r3)
-    cmplwi r0, 0x0
-    bne GXChannel_PushTransform_L_8007D14C
-    li r3, 0x0
-    b GXChannel_PushTransform_L_8007D290
-    GXChannel_PushTransform_L_8007D14C:
-    lwz r5, 0x0(r29)
-    mr r3, r4
-    addi r4, r5, 0x44
-    bl PSMTXCopy
-    lwz r3, 0x0(r29)
-    addi r5, r1, 0x38
-    lwz r4, 0x10(r29)
-    bl HSD_JObjMakePositionMtx
-    lwz r31, 0x0(r29)
-    lwz r0, 0x14(r31)
-    rlwinm. r0, r0, 0, 15, 15
-    beq GXChannel_PushTransform_L_8007D184
-    addi r3, r1, 0x38
-    bl HSD_LObjSetupSpecularInit
-    GXChannel_PushTransform_L_8007D184:
-    li r3, 0x0
-    bl GXSetCurrentMtx
-    addi r3, r1, 0x38
-    li r4, 0x0
-    bl GXLoadPosMtxImm
-    lwz r0, 0x14(r31)
-    li r30, 0x0
-    rlwinm. r0, r0, 0, 24, 24
-    beq GXChannel_PushTransform_L_8007D1AC
-    lwz r30, lbl_806D2FB4(r2)
-    GXChannel_PushTransform_L_8007D1AC:
-    li r3, 0x0
-    li r4, 0x1
-    bl _HSD_TObjGetCurrentByType
-    cmplwi r3, 0x0
-    beq GXChannel_PushTransform_L_8007D1C4
-    ori r30, r30, 0x3
-    GXChannel_PushTransform_L_8007D1C4:
-    li r3, 0x0
-    li r4, 0x2
-    bl _HSD_TObjGetCurrentByType
-    cmplwi r3, 0x0
-    beq GXChannel_PushTransform_L_8007D1DC
-    ori r30, r30, 0x5
-    GXChannel_PushTransform_L_8007D1DC:
-    clrlwi. r0, r30, 31
-    beq GXChannel_PushTransform_L_8007D234
-    addi r3, r1, 0x38
-    addi r4, r1, 0x8
-    bl PSMTXInvXpose
-    cmplwi r3, 0x0
-    bne GXChannel_PushTransform_L_8007D204
-    addi r3, r1, 0x38
-    addi r4, r1, 0x8
-    bl PSMTXCopy
-    GXChannel_PushTransform_L_8007D204:
-    lwz r0, 0x14(r31)
-    rlwinm. r0, r0, 0, 24, 24
-    beq GXChannel_PushTransform_L_8007D21C
-    addi r3, r1, 0x8
-    li r4, 0x0
-    bl GXLoadNrmMtxImm
-    GXChannel_PushTransform_L_8007D21C:
-    rlwinm. r0, r30, 0, 29, 30
-    beq GXChannel_PushTransform_L_8007D234
-    addi r3, r1, 0x8
-    li r4, 0x1e
-    li r5, 0x0
-    bl GXLoadTexMtxImm
-    GXChannel_PushTransform_L_8007D234:
-    lwz r3, 0x4(r29)
-    lwz r3, 0x8(r3)
-    lwz r3, 0x1c(r3)
-    bl GXChannel_PushChannelColors
-    lwz r30, 0x4(r29)
-    b GXChannel_PushTransform_L_8007D288
-    GXChannel_PushTransform_L_8007D24C:
-    lwz r31, 0xc(r30)
-    b GXChannel_PushTransform_L_8007D268
-    GXChannel_PushTransform_L_8007D254:
-    lhz r0, 0xe(r31)
-    lwz r3, 0x10(r31)
-    slwi r4, r0, 5
-    bl GXCallDisplayList
-    lwz r31, 0x4(r31)
-    GXChannel_PushTransform_L_8007D268:
-    cmplwi r31, 0x0
-    bne GXChannel_PushTransform_L_8007D254
-    cmplwi r30, 0x0
-    beq GXChannel_PushTransform_L_8007D280
-    lwz r0, 0x4(r30)
-    b GXChannel_PushTransform_L_8007D284
-    GXChannel_PushTransform_L_8007D280:
-    li r0, 0x0
-    GXChannel_PushTransform_L_8007D284:
-    mr r30, r0
-    GXChannel_PushTransform_L_8007D288:
-    cmplwi r30, 0x0
-    bne GXChannel_PushTransform_L_8007D24C
-    GXChannel_PushTransform_L_8007D290:
-    lwz r0, 0x84(r1)
-    lwz r31, 0x7c(r1)
-    lwz r30, 0x78(r1)
-    lwz r29, 0x74(r1)
-    mtlr r0
-    addi r1, r1, 0x80
-    blr
+extern void PSMTXCopy(Mtx src, Mtx dst);
+extern u32 PSMTXInvXpose(Mtx src, Mtx dst);
+extern void HSD_JObjMakePositionMtx(HSD_JObj *jobj, MtxPtr vmtx, Mtx pmtx);
+extern void HSD_LObjSetupSpecularInit(Mtx pmtx);
+extern void GXSetCurrentMtx(u32 id);
+extern void GXLoadPosMtxImm(Mtx mtx, u32 id);
+extern void GXLoadNrmMtxImm(Mtx mtx, u32 id);
+extern void GXLoadTexMtxImm(Mtx mtx, u32 id, int type);
+extern void *_HSD_TObjGetCurrentByType(void *tobj, u32 mapping);
+extern void GXChannel_PushChannelColors(void *colors);
+extern void GXCallDisplayList(void *list, u32 nbytes);
+
+static inline HSD_DObj *HSD_DObjGetNext(HSD_DObj *dobj)
+{
+    return dobj ? dobj->next : 0;
 }
 
+#pragma exceptions on
+int GXChannel_PushTransform(GXChannel *self, Mtx mtx)
+{
+    HSD_JObj *jobj;
+    HSD_PObj *pobj;
+    HSD_DObj *dobj;
+    PObjSetupFlag flags;
+    Mtx pmtx;
+    Mtx n;
+
+    if (!self->bound) {
+        return 0;
+    }
+
+    PSMTXCopy(mtx, self->jobj->mtx);
+    HSD_JObjMakePositionMtx(self->jobj, self->view_mtx, pmtx);
+    jobj = self->jobj;
+    if (jobj->flags & JOBJ_SPECULAR) {
+        HSD_LObjSetupSpecularInit(pmtx);
+    }
+
+    GXSetCurrentMtx(GX_PNMTX0);
+    GXLoadPosMtxImm(pmtx, GX_PNMTX0);
+
+    flags = SETUP_NONE;
+    if (jobj->flags & JOBJ_LIGHTING) {
+        flags = lbl_806D2FB4;
+    }
+    if (_HSD_TObjGetCurrentByType(0, TEX_COORD_REFLECTION)) {
+        flags |= SETUP_NORMAL | SETUP_REFLECTION;
+    }
+    if (_HSD_TObjGetCurrentByType(0, TEX_COORD_HILIGHT)) {
+        flags |= SETUP_NORMAL | SETUP_HIGHLIGHT;
+    }
+
+    if (flags & SETUP_NORMAL) {
+        if (!PSMTXInvXpose(pmtx, n)) {
+            PSMTXCopy(pmtx, n);
+        }
+        if (jobj->flags & JOBJ_LIGHTING) {
+            GXLoadNrmMtxImm(n, GX_PNMTX0);
+        }
+        if (flags & SETUP_NORMAL_PROJECTION) {
+            GXLoadTexMtxImm(n, GX_TEXMTX0, GX_MTX3x4);
+        }
+    }
+
+    GXChannel_PushChannelColors(self->dobj->mobj->colors);
+
+    for (dobj = self->dobj; dobj != 0; dobj = HSD_DObjGetNext(dobj)) {
+        for (pobj = dobj->pobj; pobj != 0; pobj = pobj->next) {
+            GXCallDisplayList(pobj->display, pobj->n_display << 5);
+        }
+    }
+}
+#pragma exceptions reset

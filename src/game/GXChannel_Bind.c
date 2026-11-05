@@ -1,156 +1,70 @@
-/* === extracted from auto_GXChannel_Bind_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void GXClearVtxDesc();
-extern void GXSetArray();
-extern void HSD_StateSetCullMode();
-extern void GXSetVtxAttrFmt();
-extern void GXSetVtxDesc();
-extern void HSD_DObjSetCurrent();
-extern void HSD_MObjSetCurrent();
-extern void HSD_MObjSetup();
-extern void HSD_CObjGetCurrent();
-extern void HSD_JObjSetCurrent();
-
-/* --- function index (1 fns, .text 0x8007D834..0x8007D9C4) ---
- * [  0] 0x8007D834 size:0x190   global GXChannel_Bind
+/* GXChannel_Bind @ 0x8007D834: make a GX channel current.
+ *
+ * Selects the channel's HSD JObj/DObj/MObj, sets up the material, loads the
+ * vertex arrays and descriptors of the DObj's first PObj (the HSD pobj.c
+ * setupArrayDesc/setupVtxDesc loops without the "previous list" cache) and
+ * applies its cull mode.  Returns 0 when the channel is already bound.
  */
+#include "game/GXChannelPrivate.h"
 
-/* --- forward decls --- */
-asm void GXChannel_Bind(void);
+#pragma exceptions on
+int GXChannel_Bind(GXChannel *self)
+{
+    HSD_VtxDescList *desc;
+    HSD_PObj *pobj;
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_GXChannel_Bind[8] = {
-    0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+    if (self->bound == 1) {
+        return 0;
+    }
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_GXChannel_Bind = {
-    (void *)&GXChannel_Bind, 0x00000190, (void *)extab_GXChannel_Bind
-};
+    self->view_mtx = HSD_CObjGetCurrent()->view_mtx;
+    HSD_JObjSetCurrent(self->jobj);
+    HSD_DObjSetCurrent(self->dobj);
+    HSD_MObjSetCurrent(self->dobj->mobj);
+    HSD_MObjSetup(self->dobj->mobj, self->arg);
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void GXChannel_Bind(void) { /* 0x8007D834 size:0x190 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    stw r30, 0x8(r1)
-    lbz r0, 0xc(r3)
-    cmplwi r0, 0x1
-    bne GXChannel_Bind_L_8007D860
-    li r3, 0x0
-    b GXChannel_Bind_L_8007D9AC
-    GXChannel_Bind_L_8007D860:
-    bl HSD_CObjGetCurrent
-    addi r0, r3, 0x54
-    stw r0, 0x10(r31)
-    lwz r3, 0x0(r31)
-    bl HSD_JObjSetCurrent
-    lwz r3, 0x4(r31)
-    bl HSD_DObjSetCurrent
-    lwz r3, 0x4(r31)
-    lwz r3, 0x8(r3)
-    bl HSD_MObjSetCurrent
-    lwz r3, 0x4(r31)
-    lwz r4, 0x8(r31)
-    lwz r3, 0x8(r3)
-    bl HSD_MObjSetup
-    lwz r3, 0x4(r31)
-    lwz r3, 0xc(r3)
-    lwz r30, 0x8(r3)
-    b GXChannel_Bind_L_8007D8CC
-    GXChannel_Bind_L_8007D8A8:
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x1
-    beq GXChannel_Bind_L_8007D8C8
-    lhz r0, 0x12(r30)
-    lwz r3, 0x0(r30)
-    lwz r4, 0x14(r30)
-    clrlwi r5, r0, 24
-    bl GXSetArray
-    GXChannel_Bind_L_8007D8C8:
-    addi r30, r30, 0x18
-    GXChannel_Bind_L_8007D8CC:
-    lwz r0, 0x0(r30)
-    cmpwi r0, 0xff
-    bne GXChannel_Bind_L_8007D8A8
-    lwz r3, 0x4(r31)
-    lwz r30, 0xc(r3)
-    bl GXClearVtxDesc
-    lwz r30, 0x8(r30)
-    b GXChannel_Bind_L_8007D928
-    GXChannel_Bind_L_8007D8EC:
-    lwz r3, 0x0(r30)
-    lwz r4, 0x4(r30)
-    bl GXSetVtxDesc
-    lwz r0, 0x0(r30)
-    cmpwi r0, 0x9
-    bge GXChannel_Bind_L_8007D90C
-    cmpwi r0, 0x0
-    bge GXChannel_Bind_L_8007D924
-    GXChannel_Bind_L_8007D90C:
-    lwz r4, 0x0(r30)
-    li r3, 0x0
-    lwz r5, 0x8(r30)
-    lwz r6, 0xc(r30)
-    lbz r7, 0x10(r30)
-    bl GXSetVtxAttrFmt
-    GXChannel_Bind_L_8007D924:
-    addi r30, r30, 0x18
-    GXChannel_Bind_L_8007D928:
-    lwz r0, 0x0(r30)
-    cmpwi r0, 0xff
-    bne GXChannel_Bind_L_8007D8EC
-    lwz r4, 0x4(r31)
-    lis r3, 0x1
-    addi r0, r3, -0x8000
-    lwz r4, 0xc(r4)
-    lhz r4, 0xc(r4)
-    rlwinm r4, r4, 0, 16, 17
-    cmpw r4, r0
-    beq GXChannel_Bind_L_8007D998
-    bge GXChannel_Bind_L_8007D970
-    cmpwi r4, 0x4000
-    beq GXChannel_Bind_L_8007D98C
-    bge GXChannel_Bind_L_8007D9A0
-    cmpwi r4, 0x0
-    beq GXChannel_Bind_L_8007D980
-    b GXChannel_Bind_L_8007D9A0
-    GXChannel_Bind_L_8007D970:
-    subi r0, r3, 0x4000
-    cmpw r4, r0
-    beq GXChannel_Bind_L_8007D9A0
-    b GXChannel_Bind_L_8007D9A0
-    GXChannel_Bind_L_8007D980:
-    li r3, 0x0
-    bl HSD_StateSetCullMode
-    b GXChannel_Bind_L_8007D9A0
-    GXChannel_Bind_L_8007D98C:
-    li r3, 0x1
-    bl HSD_StateSetCullMode
-    b GXChannel_Bind_L_8007D9A0
-    GXChannel_Bind_L_8007D998:
-    li r3, 0x2
-    bl HSD_StateSetCullMode
-    GXChannel_Bind_L_8007D9A0:
-    li r0, 0x1
-    li r3, 0x1
-    stb r0, 0xc(r31)
-    GXChannel_Bind_L_8007D9AC:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+    for (desc = self->dobj->pobj->verts; desc->attr != GX_VA_NULL; desc++) {
+        if (desc->attr_type != GX_DIRECT) {
+            GXSetArray(desc->attr, desc->vertex, desc->stride);
+        }
+    }
+
+    pobj = self->dobj->pobj;
+    GXClearVtxDesc();
+    for (desc = pobj->verts; desc->attr != GX_VA_NULL; desc++) {
+        GXSetVtxDesc(desc->attr, desc->attr_type);
+        switch (desc->attr) {
+        case GX_VA_PNMTXIDX:
+        case GX_VA_TEX0MTXIDX:
+        case GX_VA_TEX1MTXIDX:
+        case GX_VA_TEX2MTXIDX:
+        case GX_VA_TEX3MTXIDX:
+        case GX_VA_TEX4MTXIDX:
+        case GX_VA_TEX5MTXIDX:
+        case GX_VA_TEX6MTXIDX:
+        case GX_VA_TEX7MTXIDX:
+            break;
+        default:
+            GXSetVtxAttrFmt(GX_VTXFMT0, desc->attr, desc->comp_cnt,
+                            desc->comp_type, desc->frac);
+        }
+    }
+
+    switch (self->dobj->pobj->flags & (POBJ_CULLFRONT | POBJ_CULLBACK)) {
+    case 0:
+        HSD_StateSetCullMode(GX_CULL_NONE);
+        break;
+    case POBJ_CULLFRONT:
+        HSD_StateSetCullMode(GX_CULL_FRONT);
+        break;
+    case POBJ_CULLBACK:
+        HSD_StateSetCullMode(GX_CULL_BACK);
+        break;
+    case POBJ_CULLFRONT | POBJ_CULLBACK:
+        break;
+    }
+
+    self->bound = 1;
+    return 1;
 }
-
+#pragma exceptions reset
