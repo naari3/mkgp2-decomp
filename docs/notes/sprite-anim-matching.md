@@ -13,3 +13,8 @@ c14_u4: fn_8019FA30 improves 94.67669 to 97.23684. Explicit nextId pointer and s
 Source: Codex worker c14_u10_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u10: fn_8019F5BC improves94.41053->95.77193 with sorted-before-ids stack declaration, explicit append cursor, and separate RotateX/RotateY inline helpers preserving cos-before-sin. Removes extra array-base instruction (source1144->1140 target size), extab remains87.5/index improves100. Residual target frame4C0/save r17 vs source4B0/save r18 and widespread GPR/FPR web partition. Folding trig calls directly into return expressions changes evaluation order and regresses90.26667. Singleton stays NonMatching; fallback full DOL SHA-1 exact.
+
+## c14_u18_20261106
+Source: Codex worker c14_u18_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u18: fn_801A0004 94.11644 -> 94.404106 via private inline Rotate and Scale helpers. Scale parameter evaluation restores target scaleY-before-scaleX loads. Translate helper is byte-invariant; Scale-only hybrid reaches94.19863. Main residual is FPR scratch graph (source f30-f31 save / 0x90 frame vs target f29-f31 / 0xA0), with final scaling products and zero/one homes differing. Single function remains NonMatching; native gain0; fallback full DOL SHA-1 exact. Three structural approaches used.
