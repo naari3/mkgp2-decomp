@@ -121,7 +121,8 @@ void ParamEditScene::Update() {
         fn_80168A4C(this->text, strings + 0x560, 100.0f, 218.0f, p->v[6]);
         field8 = Item_GetDescriptorField8(this->item);
         fieldC = Item_GetDescriptorFieldC(this->item);
-        icon8 = field8 < 0 ? -1 : field8 + 0x503;
+        if (field8 < 0) icon8 = -1;
+        else icon8 = field8 + 0x503;
         iconC = fieldC < 0 ? -1 : fieldC + 0x4f3;
         params = fn_8013BEC8(field8);
         fn_8016918C(this->text, 0x8c7, 320.0f, 373.0f, 1.1f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0);

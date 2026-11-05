@@ -15,19 +15,15 @@ void TaRecord_InsertResult(void *, int, int, int, int, float);
 unsigned char fn_801D5C88(void *, int);
 void SetCourseParams(unsigned int, int, int, int);
 }
+struct DebugPair163 {
+    int a, b;
+};
 struct DebugEntry163 {
-    int a, b, c, d, e, f; float g;
-    DebugEntry163 &operator=(const DebugEntry163 &source) {
-        int first = source.a;
-        int second = source.b;
-        a = first; b = second;
-        c = source.c;
-        first = source.d; second = source.e;
-        d = first; e = second;
-        f = source.f;
-        g = source.g;
-        return *this;
-    }
+    DebugPair163 first;
+    int c;
+    DebugPair163 second;
+    int f;
+    float g;
 };
 extern "C" DebugEntry163 *fn_8013BE98(int);
 

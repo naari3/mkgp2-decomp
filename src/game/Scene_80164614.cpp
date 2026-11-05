@@ -1,7 +1,7 @@
 #include "game/Scene_80164614Private.h"
 
 extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
-    char *strings = lbl_80369798;
+    DemoRodata163 *data = (DemoRodata163 *)lbl_80369798;
     fn_80121210();
     DrawManager_GetOrCreate();
     fn_801E93A0();
@@ -17,34 +17,33 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
     SetTimerModeEnabled(1);
     g_gameMode = 0;
     g_ccClass = 0;
-    g_cupId = ((DemoEntry163 *)(strings + 0x44c))[index].cup;
-    g_longRoundFlag = ((DemoEntry163 *)(strings + 0x44c))[index].round;
-    SetReverseRoundFlag(((DemoEntry163 *)(strings + 0x44c))[index].reverse);
-    g_courseVariantIdx = ((DemoEntry163 *)(strings + 0x44c))[index].variant;
+    g_cupId = data->entries[index].cup;
+    g_longRoundFlag = data->entries[index].round;
+    SetReverseRoundFlag(data->entries[index].reverse);
+    g_courseVariantIdx = data->entries[index].variant;
     g_roundIndex = 0;
     lbl_806D1264[0] = 0x3d;
     lbl_806D1264[1] = 0x2b;
     lbl_806D1264[2] = 0x32;
     s->recording = record;
     ProcessSystemTick(0);
-    DebugPrintf(strings + 0x550, 43200);
+    DebugPrintf(data->sizeFormat, 43200);
     s->inputs = (TraceInput163 *)FUN_8003b120(43200);
     memset(s->inputs, 0, 43200);
     if (!s->recording) {
         DVDFile163 file;
-        if (DVDOpen(((DemoEntry163 *)(strings + 0x44c))[index].file, &file)) {
+        if (DVDOpen(data->entries[index].file, &file)) {
             int size = file.length;
-            DebugPrintf(strings + 0x568, size);
+            DebugPrintf(data->fileSizeFormat, size);
             if (size > 0) {
                 size = (size + 31) & ~31;
                 void *buffer = OSAllocFromHeap(lbl_806CF010, size);
                 if (buffer) {
-                    int tail = file.length - 1;
-                    int end = file.start + tail;
+                    int end = file.start + file.length - 1;
                     DVDLoad_WaitIfSamePage();
                     int count = DVDReadPrio(&file, buffer, size, 0, 2);
                     DVDLoad_RecordOpStart(end);
-                    DebugPrintf(strings + 0x584, count);
+                    DebugPrintf(data->readFormat, count);
                     if (count > 43200) count = 43200;
                     count -= (unsigned int)count % 16;
                     if (count > 0) memcpy(s->inputs, buffer, count);
@@ -57,8 +56,8 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
     s->inputIndex = 0;
     ProcessSystemTick(0);
     RaceSlot_ResetAll();
-    RaceSlot_InitSlot(VSMode_SeedRandomItemSequence(0, ((DemoEntry163 *)(strings + 0x44c))[index].character, 5), 0, ((DemoEntry163 *)(strings + 0x44c))[index].character, 1, 0);
-    g_characterId = ((DemoEntry163 *)(strings + 0x44c))[index].character;
+    RaceSlot_InitSlot(VSMode_SeedRandomItemSequence(0, data->entries[index].character, 5), 0, data->entries[index].character, 1, 0);
+    g_characterId = data->entries[index].character;
     HSD_FObjForceLinearInterp(1);
     lbl_806CF110 = 1;
     SetLocalPcbRole(0);
@@ -114,7 +113,7 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
     CObj_UpdatePerspParam(s->scene, RaceScene_GetPerspFovyForCup());
     SetCourseScene3D(s->scene);
     ProcessSystemTick(0);
-    s->object = new Lakitu163(strings + 0x5a0, s->slot, lbl_806D88F0, lbl_806D88F0, lbl_806D88F0);
+    s->object = new Lakitu163(data->lakituName, s->slot, lbl_806D88F0, lbl_806D88F0, lbl_806D88F0);
     LakituStart_SetCountdownHoldFrames(s->object, 320);
     s->flag = new Flag163(s->scene);
     s->reverseFlag = new Reverse163(CarObject_GetRenderObj(g_carObjects[0]));
@@ -145,7 +144,6 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
         ItemSelect_AddSlotItem(g_itemSelects[0], 0x2b, 1);
         ItemSelect_AddSlotItem(g_itemSelects[0], 0x32, 1);
     }
-    RaceLimits163 *limits = &DEMO[g_cupId][g_longRoundFlag - 4];
     g_raceEnded = 0;
     g_finalRacePosition = 6;
     g_bestLapTime = lbl_806D88F0;
@@ -155,9 +153,9 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
     g_raceResultCode = -2;
     g_finalLapBannerShown = 0;
     g_lapChangePending = 0;
-    g_totalLaps = limits->laps;
-    g_raceTimeRemaining = limits->time;
-    g_lapBonusTimeDelta = limits->bonus;
+    g_totalLaps = DEMO[g_cupId][g_longRoundFlag - 4].laps;
+    g_raceTimeRemaining = DEMO[g_cupId][g_longRoundFlag - 4].time;
+    g_lapBonusTimeDelta = DEMO[g_cupId][g_longRoundFlag - 4].bonus;
     CourseBgm_Load();
     SetResourceLoadingFlag(1);
     g_raceFrameCounterLo2digits = 0;

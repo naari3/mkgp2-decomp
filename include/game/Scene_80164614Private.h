@@ -16,6 +16,15 @@ struct Select163 { char opaque[0x88]; Select163(int, int); };
 struct LoaderInit163 : LoaderTick163 { int field58; };
 struct DVDFile163 { char pad0[0x30]; int start, length; char pad38[4]; };
 struct DemoEntry163 { int character, cup, round, variant, reverse; const char *file; };
+struct DemoRodata163 {
+    char pad0[0x44c];
+    DemoEntry163 entries[4];
+    char pad4ac[0xa4];
+    char sizeFormat[0x18];
+    char fileSizeFormat[0x1c];
+    char readFormat[0x1c];
+    char lakituName[1];
+};
 struct RaceLimits163 { signed char laps; char pad1[3]; float time, bonus; };
 extern "C" {
 extern char lbl_80369798[];

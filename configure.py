@@ -2555,14 +2555,14 @@ config.libs = [
             Object(Matching, "game/Scene_8015BE0C.cpp"),
             Object(Matching, "game/Scene_8015BED4.cpp"),
             Object(Matching, "game/Scene_801622C8.cpp"),
-            Object(NonMatching, "game/Scene_8016234C.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_8016234C.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/Scene_8016219C.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Scene_80162B00.cpp"),
             Object(Matching, "game/Scene_801634C4.cpp"),
             Object(Matching, "game/Scene_8016303C.cpp", mw_version="GC/2.7", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/Scene_80162D90.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/Scene_80164614.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/Scene_80163EF4.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_80163EF4.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_80163C68.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_801636B4.cpp"),
             Object(Matching, "game/Scene_80163614.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
@@ -2571,7 +2571,7 @@ config.libs = [
             Object(Matching, "game/Scene_8015B6D0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_8015BE44.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_80165454.cpp"),
-            Object(NonMatching, "game/Scene_801654E0.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_801654E0.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_80165BCC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_80165E90.cpp"),
             Object(Matching, "game/Scene_801660EC.cpp", extra_cflags=["-use_lmw_stmw on"]),
@@ -3572,6 +3572,7 @@ DATA_ALIGN4_TUS = [
     "game/RankDispUpdate",
     "game/fn_801FAB88",
     "game/fn_801FB778",
+    "game/Scene_801654E0",
 ]
 
 
