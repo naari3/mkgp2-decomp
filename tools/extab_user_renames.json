@@ -7811,6 +7811,8 @@
     "__ct__19clCSSceneCoinMilageFv": "CoinResultScene_Init"
   },
   "src/game/anon_8021F088_nm_8022353C.cpp": {
+    "@231": "@etb_8001B554",
+    "@232": "@eti_8002A50C",
     "__dt__7ResCtrlFv": "dtor_80082960",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__dt__11TextManagerFv": "dtor_800869D0",
@@ -7858,6 +7860,8 @@
     "Draw__13clGetCoinLineFv": "fn_80224300"
   },
   "src/game/anon_8021F088_nm_80224484.cpp": {
+    "@165": "@etb_8001B71C",
+    "@166": "@eti_8002A554",
     "__dt__7ResCtrlFv": "dtor_80082960",
     "__dl__FPv": "MemoryManager_TimedFree",
     "Update__13clGetCoinLineFv": "fn_80224260",

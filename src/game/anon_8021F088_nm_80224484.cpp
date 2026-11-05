@@ -1,3 +1,4 @@
+#define COIN_EXTERNAL_VTABLE_KEY
 #define COIN_LINE_DRAW_OUTLINE
 #define COIN_LINE_DTOR_INLINE
 #include "game/anon_8021F088_private.h"

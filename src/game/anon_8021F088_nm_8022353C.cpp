@@ -1,3 +1,4 @@
+#define COIN_EXTERNAL_VTABLE_KEY
 #include "game/anon_8021F088_private.h"
 
 clCSSceneCoinMilage::~clCSSceneCoinMilage() {

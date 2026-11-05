@@ -572,6 +572,10 @@ struct clGetCoinLine : FadeObj {
 
 /* clGetSumLine (0x548): the total line. */
 struct clGetSumLine : clGetCoinLine {
+#ifdef COIN_EXTERNAL_VTABLE_KEY
+    /* An undefined first key keeps the original externally owned vtable. */
+    virtual void ExternalVtableKey();
+#endif
     ~clGetSumLine();
     unsigned char perfect;
     ResCtrl label;
@@ -813,6 +817,10 @@ struct SceneBase {
 };
 
 struct clCSSceneCoinMilage : SceneBase {
+#ifdef COIN_EXTERNAL_VTABLE_KEY
+    /* An undefined first key keeps the original externally owned vtable. */
+    virtual void ExternalVtableKey();
+#endif
     Coin coins[30];
     int numCoins;
     Model *model;

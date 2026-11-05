@@ -359,3 +359,8 @@ c5_s12: BattleMenu ctor 8020BACC cached list r28->r30 resolves by extracting fn_
 Source: Codex worker c5_s13_anon8020c974_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 728 B.
 
 c5_s13: CardModeRoot::OnTaskDone text/extab/index were 100%, but dynamic_cast emitted extra local RTTI (.data 76 B/.sdata 24 B). Explicitly calling existing fn_80271340(task,0,lbl_806D0310,lbl_806D0308,0) with canonical extern 8-byte RTTI records preserves all text and removes duplicate data; full-link SHA-1 OK. fn_8020F220 needs flag flip only. Draw Remove named result assignment restores return/argument stack slot order, 96.55224 to 96.61194; iterator SP+10 vs +14, missing assignment copy and r4 caching persist. ScoreDisplay scoped scale and explicit x/y/z/scale locals both leave final-three-block FP coloring unchanged; original retained.
+
+## c5_s15_anon8021f088_20261105
+Source: Codex worker c5_s15_anon8021f088_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 1044 B.
+
+Coin mileage rescue: first-declared undefined derived virtual key suppresses clCSSceneCoinMilage/clGetSumLine emitted RTTI-off vtables without altering inherited slots or destructor text. Own EH bridge @231/@232 -> etb8001B554/eti8002A50C and @165/@166 -> etb8001B71C/eti8002A554 makes owned EH exact; extra weak dtor EH discards. clGetCoinLine Update uses 3.0f/360.0f literals to reproduce FP colors. All three source-linked, DOL SHA-1 OK.
