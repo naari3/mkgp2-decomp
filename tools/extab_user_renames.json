@@ -11548,5 +11548,10 @@
     "__vt__20RaceDigitHudDtorBase": "lbl_804EDB28",
     "@150": "@etb_8001D684",
     "@151": "@eti_8002B298"
+  },
+  "src/game/RaceHudDraw.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10ItemMsgWndFv": "fn_802325FC"
   }
 }

@@ -12371,6 +12371,24 @@ game/HudThunk802488FC.c:
 game/HudThunk80248CE4.c:
 	.text       start:0x80248CE4 end:0x80248CEC
 
+game/RaceHudAdjust.c:
+	.text       start:0x8024904C end:0x80249054
+
+game/RaceHudDraw.cpp:
+	extab       start:0x8001DBE0 end:0x8001DBFC
+	extabindex  start:0x8002B400 end:0x8002B40C
+	.text       start:0x80249054 end:0x80249130
+
+game/RaceHudUpdate.cpp:
+	extab       start:0x8001DBFC end:0x8001DC04
+	extabindex  start:0x8002B40C end:0x8002B418
+	.text       start:0x80249130 end:0x80249274
+
+game/RaceHudDestroy.cpp:
+	extab       start:0x8001DC04 end:0x8001DC0C
+	extabindex  start:0x8002B418 end:0x8002B424
+	.text       start:0x80249274 end:0x8024932C
+
 game/RaceHudSceneCtor.cpp:
 	extab       start:0x8001DC0C end:0x8001DC50
 	extabindex  start:0x8002B424 end:0x8002B430

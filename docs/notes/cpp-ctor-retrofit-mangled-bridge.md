@@ -589,3 +589,8 @@ c8_s66: fn_802455EC text can match with one VHolder<T> type, but EH then incorre
 Source: Codex worker c8_s70_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 552 B.
 
 c8_s70: Race digit HUD deleting destructor 80246BD4 matches 528B text +180B EH +12B index. Use canonical DigitOwner and VHolder plus a private list facade with nontrivial iterator copies. Initial body call requires named end iterator before begin iterator; member list destructor uses inline Begin()/Finish() return expressions. This preserves target cached sentinel and hidden-return/argument stack slots. Scalar/class placement-copy variants for 80247C3C do not reproduce its FP/exception bookkeeping; retain NonMatching.
+
+## c8_s73_20261105
+Source: Codex worker c8_s73_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 728 B.
+
+RaceHud 80249054/80249130/80249274 native text/EH exact. Update input processing needs branch-local InputState *in=g_pInputState followed by CGameCoin_ProcessInput(in == 0 ? (InputState *)0 : in), matching existing CardModeRoot idiom. Direct GetInput() argument collapses a branch. Destroy uses canonical HudDisplayFlags::SetOther(0) to avoid zero constant hoisting across singleton accessor, recovering exact r30/r31/frame10. Draw ternary new ItemMsgWnd uses extab padding C6 02. Adjustment thunk 8024904C retained NM.
