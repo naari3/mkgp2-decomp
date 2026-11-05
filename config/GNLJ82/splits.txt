@@ -2701,6 +2701,11 @@ game/CardSession_PollFsmStatus.c:
 	extabindex  start:0x80021FE0 end:0x80021FEC
 	.text       start:0x80092F4C end:0x800930B4
 
+game/CardSavedata_LoadShadow_TriggerUnused.cpp:
+	extab       start:0x80009480 end:0x80009488
+	extabindex  start:0x80021FEC end:0x80021FF8
+	.text       start:0x800930B4 end:0x800934A8
+
 game/CardRW_GetSubState.c:
 	.text       start:0x800934A8 end:0x800934B0
 
