@@ -7702,6 +7702,21 @@ game/clsound/fn_80190A70.c:
 	extabindex  start:0x800270D4 end:0x800270E0
 	.text       start:0x80190A70 end:0x80190B3C
 
+game/clsound/ClSound_PlayBgmStream.c:
+	extab       start:0x80012244 end:0x8001224C
+	extabindex  start:0x800270E0 end:0x800270EC
+	.text       start:0x80190B3C end:0x80190D24
+
+game/clsound/fn_80190D24.c:
+	extab       start:0x8001224C end:0x80012254
+	extabindex  start:0x800270EC end:0x800270F8
+	.text       start:0x80190D24 end:0x801913B0
+
+game/clsound/fn_801913B0.c:
+	extab       start:0x80012254 end:0x8001225C
+	extabindex  start:0x800270F8 end:0x80027104
+	.text       start:0x801913B0 end:0x801915DC
+
 game/clsound/fn_801915DC.c:
 	.text       start:0x801915DC end:0x801915F4
 
@@ -7772,6 +7787,11 @@ game/SoundMgr_Play.c:
 	extab       start:0x800122A4 end:0x800122AC
 	extabindex  start:0x80027170 end:0x8002717C
 	.text       start:0x80192884 end:0x80192F04
+
+game/clsound/fn_80192F04.c:
+	extab       start:0x800122AC end:0x800122B4
+	extabindex  start:0x8002717C end:0x80027188
+	.text       start:0x80192F04 end:0x80193134
 
 game/clsound/fn_80193134.c:
 	.text       start:0x80193134 end:0x80193264
