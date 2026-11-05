@@ -1,6 +1,6 @@
 /*
  * ShadowBillboard update/flash and the play camera, 0x80061954..0x80064CD4.
- * The large Tick/StepSimple/camera functions are still asm bodies.
+ * Tick, StepSimple and PlayCamera_Init are still asm bodies.
  */
 
 #include "game/MathInline.h"
@@ -74,8 +74,8 @@ extern void Terrain_GetGroundHeightWithPenetration();
 extern void Vec3_Copy();
 extern void Vec3_Lerp();
 extern void __assert();
-extern void cos();
-extern void sin();
+double cos(double x);
+double sin(double x);
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_ccClass;
@@ -136,9 +136,9 @@ extern unsigned int lbl_803F9F30[];
 /* --- forward decls --- */
 asm void ShadowBillboard_Tick(void);
 asm void ShadowBillboard_StepSimple(void);
-asm void Camera_RotateByYaw(void);
+void Camera_RotateByYaw(PlayCamera *cam, float yaw);
 asm void PlayCamera_Init(void);
-asm void Mtx34_Orthonormalize(void);
+void Mtx34_Orthonormalize(float (*m)[4]);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
 extern void dtor_80036E40();
@@ -148,17 +148,11 @@ extern void dtor_80064CD4();
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_Mtx34_Orthonormalize[8] = {
-    0x01, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 __declspec(section ".extab_user") static const unsigned char extab_ShadowBillboard_Tick[8] = {
     0x59, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 __declspec(section ".extab_user") static const unsigned char extab_ShadowBillboard_StepSimple[8] = {
     0x21, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-__declspec(section ".extab_user") static const unsigned char extab_Camera_RotateByYaw[8] = {
-    0x10, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; void *f6; unsigned int f7; unsigned int f8; void *f9; unsigned int f10; unsigned int f11; void *f12; unsigned int f13; unsigned int f14; void *f15; unsigned int f16; unsigned int f17; void *f18; unsigned int f19; unsigned int f20; void *f21; } extab_PlayCamera_Init = { 0x208A0000, 0x000001B4, 0x00030010, 0x00000000, 0x0780001D, 0x000000B8, (void *)&dtor_8006178C, 0x0780001D, 0x000000AC, (void *)&dtor_800617C8, 0x0780001D, 0x00000088, (void *)&dtor_80036E40, 0x0780001D, 0x0000007C, (void *)&dtor_80036E40, 0x0780001D, 0x00000070, (void *)&dtor_80036E40, 0x8780001D, 0x0000005C, (void *)&dtor_80064CD4 };
 
@@ -170,14 +164,8 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ShadowBillboard_StepSimple = {
     (void *)&ShadowBillboard_StepSimple, 0x000005B4, (void *)extab_ShadowBillboard_StepSimple
 };
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_Camera_RotateByYaw = {
-    (void *)&Camera_RotateByYaw, 0x00000380, (void *)extab_Camera_RotateByYaw
-};
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_PlayCamera_Init = {
     (void *)&PlayCamera_Init, 0x00000614, (void *)&extab_PlayCamera_Init
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_Mtx34_Orthonormalize = {
-    (void *)&Mtx34_Orthonormalize, 0x000003B4, (void *)extab_Mtx34_Orthonormalize
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
@@ -2623,234 +2611,73 @@ void ShadowBillboard_BeginBoostScale(ShadowBillboard *sb) {
     sb->fadeMode = 2;
 }
 
-asm void Camera_RotateByYaw(void) { /* 0x80063F30 size:0x380 */
-    nofralloc
-    stwu r1, -0xb0(r1)
-    mflr r0
-    stw r0, 0xb4(r1)
-    stfd f31, 0xa0(r1)
-    psq_st f31, 0xa8(r1), 0, 0
-    stfd f30, 0x90(r1)
-    psq_st f30, 0x98(r1), 0, 0
-    stw r31, 0x8c(r1)
-    stw r30, 0x88(r1)
-    lfd f0, lbl_806D2B80(r2)
-    addi r30, r1, 0x48
-    lfs f2, lbl_806D2B74(r2)
-    fmul f30, f0, f1
-    lfs f0, lbl_806D2B6C(r2)
-    stfs f2, 0x48(r1)
-    lwz r31, 0x5c(r3)
-    stfs f2, 0x5c(r1)
-    frsp f1, f30
-    stfs f2, 0x70(r1)
-    stfs f2, 0x84(r1)
-    stfs f2, 0x4c(r1)
-    stfs f2, 0x50(r1)
-    stfs f2, 0x54(r1)
-    stfs f2, 0x58(r1)
-    stfs f2, 0x60(r1)
-    stfs f2, 0x64(r1)
-    stfs f2, 0x68(r1)
-    stfs f2, 0x6c(r1)
-    stfs f2, 0x74(r1)
-    stfs f2, 0x78(r1)
-    stfs f2, 0x7c(r1)
-    stfs f2, 0x80(r1)
-    stfs f0, 0x84(r1)
-    stfs f0, 0x70(r1)
-    stfs f0, 0x5c(r1)
-    stfs f0, 0x48(r1)
-    bl cos
-    frsp f31, f1
-    frsp f1, f30
-    bl sin
-    frsp f1, f1
-    li r5, 0x0
-    li r0, 0x2
-    stfs f31, 0x48(r1)
-    mr r4, r5
-    addi r6, r1, 0x8
-    fneg f0, f1
-    stfs f1, 0x68(r1)
-    stfs f31, 0x70(r1)
-    stfs f0, 0x50(r1)
-    mtctr r0
-    Camera_RotateByYaw_L_80063FFC:
-    lfs f7, 0x0(r30)
-    slwi r0, r5, 2
-    lfs f6, 0x0(r31)
-    addi r3, r5, 0x1
-    lfs f5, 0x4(r30)
-    fmuls f8, f7, f6
-    lfs f4, 0x10(r31)
-    lfs f3, 0x8(r30)
-    lfs f2, 0x20(r31)
-    fmadds f8, f5, f4, f8
-    lfs f1, 0xc(r30)
-    lfs f0, 0x30(r31)
-    lfs f6, 0x4(r31)
-    fmadds f8, f3, f2, f8
-    lfs f4, 0x14(r31)
-    lfs f2, 0x24(r31)
-    fmadds f8, f1, f0, f8
-    lfs f0, 0x34(r31)
-    stfsx f8, r6, r0
-    fmuls f8, f7, f6
-    slwi r0, r3, 2
-    lfs f6, 0x8(r31)
-    addi r3, r5, 0x2
-    fmadds f8, f5, f4, f8
-    lfs f4, 0x18(r31)
-    fmadds f8, f3, f2, f8
-    lfs f2, 0x28(r31)
-    fmadds f8, f1, f0, f8
-    lfs f0, 0x38(r31)
-    stfsx f8, r6, r0
-    fmuls f8, f7, f6
-    slwi r0, r3, 2
-    addi r3, r5, 0x3
-    lfs f6, 0xc(r31)
-    addi r5, r5, 0x4
-    fmadds f8, f5, f4, f8
-    lfs f4, 0x1c(r31)
-    fmadds f8, f3, f2, f8
-    lfs f2, 0x2c(r31)
-    fmadds f8, f1, f0, f8
-    lfs f0, 0x3c(r31)
-    stfsx f8, r6, r0
-    fmuls f8, f7, f6
-    slwi r0, r3, 2
-    fmadds f8, f5, f4, f8
-    fmadds f8, f3, f2, f8
-    fmadds f8, f1, f0, f8
-    stfsx f8, r6, r0
-    lfs f7, 0x10(r30)
-    slwi r0, r5, 2
-    lfs f6, 0x0(r31)
-    addi r3, r5, 0x1
-    lfs f5, 0x14(r30)
-    addi r4, r4, 0x1
-    fmuls f8, f7, f6
-    lfs f4, 0x10(r31)
-    lfs f3, 0x18(r30)
-    lfs f1, 0x1c(r30)
-    addi r30, r30, 0x20
-    fmadds f8, f5, f4, f8
-    lfs f2, 0x20(r31)
-    lfs f0, 0x30(r31)
-    fmadds f8, f3, f2, f8
-    lfs f6, 0x4(r31)
-    lfs f4, 0x14(r31)
-    lfs f2, 0x24(r31)
-    fmadds f8, f1, f0, f8
-    lfs f0, 0x34(r31)
-    stfsx f8, r6, r0
-    fmuls f8, f7, f6
-    slwi r0, r3, 2
-    lfs f6, 0x8(r31)
-    addi r3, r5, 0x2
-    fmadds f8, f5, f4, f8
-    lfs f4, 0x18(r31)
-    fmadds f8, f3, f2, f8
-    lfs f2, 0x28(r31)
-    fmadds f8, f1, f0, f8
-    lfs f0, 0x38(r31)
-    stfsx f8, r6, r0
-    fmuls f8, f7, f6
-    slwi r0, r3, 2
-    addi r3, r5, 0x3
-    lfs f6, 0xc(r31)
-    addi r5, r5, 0x4
-    fmadds f8, f5, f4, f8
-    lfs f4, 0x1c(r31)
-    fmadds f8, f3, f2, f8
-    lfs f2, 0x2c(r31)
-    fmadds f8, f1, f0, f8
-    lfs f0, 0x3c(r31)
-    stfsx f8, r6, r0
-    fmuls f8, f7, f6
-    slwi r0, r3, 2
-    fmadds f8, f5, f4, f8
-    fmadds f8, f3, f2, f8
-    fmadds f8, f1, f0, f8
-    stfsx f8, r6, r0
-    bdnz Camera_RotateByYaw_L_80063FFC
-    lfs f1, 0x8(r1)
-    lfs f0, 0xc(r1)
-    stfs f1, 0x48(r1)
-    lfs f1, 0x10(r1)
-    stfs f0, 0x4c(r1)
-    lwz r3, 0x48(r1)
-    stfs f1, 0x50(r1)
-    lfs f0, 0x14(r1)
-    lfs f1, 0x18(r1)
-    stfs f0, 0x54(r1)
-    lfs f0, 0x1c(r1)
-    stfs f1, 0x58(r1)
-    lfs f1, 0x20(r1)
-    stfs f0, 0x5c(r1)
-    lfs f0, 0x24(r1)
-    stfs f1, 0x60(r1)
-    lfs f1, 0x28(r1)
-    stfs f0, 0x64(r1)
-    lfs f0, 0x2c(r1)
-    stfs f1, 0x68(r1)
-    lfs f1, 0x30(r1)
-    stfs f0, 0x6c(r1)
-    lfs f0, 0x34(r1)
-    stfs f1, 0x70(r1)
-    lfs f1, 0x38(r1)
-    stfs f0, 0x74(r1)
-    lfs f0, 0x3c(r1)
-    stfs f1, 0x78(r1)
-    lfs f1, 0x40(r1)
-    stfs f0, 0x7c(r1)
-    lfs f0, 0x44(r1)
-    stfs f1, 0x80(r1)
-    lwz r0, 0x4c(r1)
-    stw r3, 0x0(r31)
-    lwz r3, 0x50(r1)
-    stw r0, 0x4(r31)
-    lwz r0, 0x54(r1)
-    stw r3, 0x8(r31)
-    lwz r3, 0x58(r1)
-    stw r0, 0xc(r31)
-    lwz r0, 0x5c(r1)
-    stw r3, 0x10(r31)
-    lwz r3, 0x60(r1)
-    stw r0, 0x14(r31)
-    lwz r0, 0x64(r1)
-    stw r3, 0x18(r31)
-    lwz r3, 0x68(r1)
-    stw r0, 0x1c(r31)
-    lwz r0, 0x6c(r1)
-    stw r3, 0x20(r31)
-    lwz r3, 0x70(r1)
-    stw r0, 0x24(r31)
-    lwz r0, 0x74(r1)
-    stw r3, 0x28(r31)
-    lwz r3, 0x78(r1)
-    stw r0, 0x2c(r31)
-    lwz r0, 0x7c(r1)
-    stw r3, 0x30(r31)
-    lwz r3, 0x80(r1)
-    stfs f0, 0x84(r1)
-    stw r0, 0x34(r31)
-    lwz r0, 0x84(r1)
-    stw r3, 0x38(r31)
-    stw r0, 0x3c(r31)
-    psq_l f31, 0xa8(r1), 0, 0
-    lfd f31, 0xa0(r1)
-    psq_l f30, 0x98(r1), 0, 0
-    lfd f30, 0x90(r1)
-    lwz r31, 0x8c(r1)
-    lwz r0, 0xb4(r1)
-    lwz r30, 0x88(r1)
-    mtlr r0
-    addi r1, r1, 0xb0
-    blr
+typedef struct Mtx44S {
+    float v[16];
+} Mtx44S;
+
+static inline float cosf(float x) {
+    return (float)cos(x);
 }
+
+static inline float sinf(float x) {
+    return (float)sin(x);
+}
+
+/* Alias-safe 4x4 product (out may be a or b), result through a scratch buffer. */
+static inline void Mtx44S_Mul(Mtx44S *out, const Mtx44S *a, const Mtx44S *b) {
+    float tmp[16];
+    float *m;
+    int k;
+    int i;
+    int j;
+
+    if (out == a || out == b) {
+        m = tmp;
+    } else {
+        m = out->v;
+    }
+    k = 0;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+            float sum = a->v[k + 0] * b->v[0 * 4 + j];
+            sum += a->v[k + 1] * b->v[1 * 4 + j];
+            sum += a->v[k + 2] * b->v[2 * 4 + j];
+            sum += a->v[k + 3] * b->v[3 * 4 + j];
+            m[k + j] = sum;
+        }
+        k += 4;
+    }
+    if (out == a || out == b) {
+        for (i = 0; i < 16; i++) {
+            out->v[i] = tmp[i];
+        }
+    }
+}
+
+#pragma exceptions on
+
+void Camera_RotateByYaw(PlayCamera *cam, float yaw) {
+    Mtx44S rot;
+    Mtx44S *dst = (Mtx44S *)cam->buffer;
+    float c;
+    float s;
+    int i;
+
+    for (i = 0; i < 16; i++) {
+        rot.v[i] = 0.0f;
+    }
+    rot.v[0] = rot.v[5] = rot.v[10] = rot.v[15] = 1.0f;
+    c = cosf(0.017453292519943295 * yaw);
+    s = sinf(0.017453292519943295 * yaw);
+    rot.v[0] = c;
+    rot.v[8] = s;
+    rot.v[10] = c;
+    rot.v[2] = -s;
+    Mtx44S_Mul(&rot, &rot, dst);
+    *dst = rot;
+}
+
+#pragma exceptions reset
 
 #pragma exceptions on
 
@@ -3276,253 +3103,71 @@ asm void PlayCamera_Init(void) { /* 0x8006430C size:0x614 */
     blr
 }
 
-asm void Mtx34_Orthonormalize(void) { /* 0x80064920 size:0x3B4 */
-    nofralloc
-    stwu r1, -0xa0(r1)
-    stfd f31, 0x90(r1)
-    psq_st f31, 0x98(r1), 0, 0
-    stfd f30, 0x80(r1)
-    psq_st f30, 0x88(r1), 0, 0
-    stfd f29, 0x70(r1)
-    psq_st f29, 0x78(r1), 0, 0
-    stfd f28, 0x60(r1)
-    psq_st f28, 0x68(r1), 0, 0
-    stfd f27, 0x50(r1)
-    psq_st f27, 0x58(r1), 0, 0
-    stfd f26, 0x40(r1)
-    psq_st f26, 0x48(r1), 0, 0
-    lfs f9, 0x4(r3)
-    lfs f8, 0x0(r3)
-    frsp f4, f9
-    lfs f31, 0x28(r3)
-    lfs f10, 0x8(r3)
-    frsp f3, f8
-    lfs f13, 0x24(r3)
-    frsp f26, f31
-    lfs f6, 0x20(r3)
-    frsp f5, f10
-    fmuls f1, f13, f3
-    lfs f12, 0x18(r3)
-    fmuls f0, f31, f4
-    lfs f11, 0x14(r3)
-    fmuls f2, f6, f5
-    fmsubs f30, f6, f4, f1
-    fmsubs f5, f13, f5, f0
-    lfs f7, 0x10(r3)
-    frsp f28, f13
-    stfs f8, 0x2c(r1)
-    fmsubs f29, f31, f3, f2
-    frsp f4, f6
-    fmuls f3, f5, f26
-    stfs f9, 0x30(r1)
-    fmuls f1, f30, f28
-    lfs f0, lbl_806D2B74(r2)
-    fmuls f2, f29, f4
-    fmsubs f27, f30, f4, f3
-    fmsubs f4, f29, f26, f1
-    stfs f10, 0x34(r1)
-    fmsubs f28, f5, f28, f2
-    fmuls f1, f27, f27
-    stfs f7, 0x20(r1)
-    fmuls f2, f4, f4
-    stfs f11, 0x24(r1)
-    fmuls f3, f28, f28
-    fadds f1, f2, f1
-    stfs f12, 0x28(r1)
-    stfs f8, 0x20(r1)
-    fadds f7, f3, f1
-    stfs f9, 0x24(r1)
-    stfs f10, 0x28(r1)
-    fcmpo cr0, f7, f0
-    stfs f6, 0x2c(r1)
-    stfs f13, 0x30(r1)
-    stfs f31, 0x34(r1)
-    stfs f6, 0x14(r1)
-    stfs f13, 0x18(r1)
-    stfs f31, 0x1c(r1)
-    stfs f5, 0x20(r1)
-    stfs f29, 0x24(r1)
-    stfs f30, 0x28(r1)
-    stfs f4, 0x2c(r1)
-    stfs f27, 0x30(r1)
-    stfs f28, 0x34(r1)
-    ble Mtx34_Orthonormalize_L_80064A80
-    frsqrte f1, f7
-    lfd f3, lbl_806D2B90(r2)
-    lfd f2, lbl_806D2B98(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f7, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f7, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f7, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f7, f0
-    frsp f0, f0
-    stfs f0, 0x10(r1)
-    lfs f7, 0x10(r1)
-    Mtx34_Orthonormalize_L_80064A80:
-    lfs f0, lbl_806D2B74(r2)
-    fcmpo cr0, f7, f0
-    cror eq, lt, eq
-    bne Mtx34_Orthonormalize_L_80064AA0
-    stfs f0, 0x34(r1)
-    stfs f0, 0x30(r1)
-    stfs f0, 0x2c(r1)
-    b Mtx34_Orthonormalize_L_80064ACC
-    Mtx34_Orthonormalize_L_80064AA0:
-    lfs f0, lbl_806D2B6C(r2)
-    lfs f2, 0x2c(r1)
-    fdivs f3, f0, f7
-    lfs f1, 0x30(r1)
-    lfs f0, 0x34(r1)
-    fmuls f2, f2, f3
-    fmuls f1, f1, f3
-    fmuls f0, f0, f3
-    stfs f2, 0x2c(r1)
-    stfs f1, 0x30(r1)
-    stfs f0, 0x34(r1)
-    Mtx34_Orthonormalize_L_80064ACC:
-    lfs f1, 0x20(r1)
-    lfs f0, 0x24(r1)
-    fmuls f2, f1, f1
-    lfs f3, 0x28(r1)
-    fmuls f1, f0, f0
-    lfs f0, lbl_806D2B74(r2)
-    fmuls f3, f3, f3
-    fadds f1, f2, f1
-    fadds f4, f3, f1
-    fcmpo cr0, f4, f0
-    ble Mtx34_Orthonormalize_L_80064B44
-    frsqrte f1, f4
-    lfd f3, lbl_806D2B90(r2)
-    lfd f2, lbl_806D2B98(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f4, f0
-    frsp f0, f0
-    stfs f0, 0xc(r1)
-    lfs f4, 0xc(r1)
-    Mtx34_Orthonormalize_L_80064B44:
-    lfs f0, lbl_806D2B74(r2)
-    fcmpo cr0, f4, f0
-    cror eq, lt, eq
-    bne Mtx34_Orthonormalize_L_80064B64
-    stfs f0, 0x28(r1)
-    stfs f0, 0x24(r1)
-    stfs f0, 0x20(r1)
-    b Mtx34_Orthonormalize_L_80064B90
-    Mtx34_Orthonormalize_L_80064B64:
-    lfs f0, lbl_806D2B6C(r2)
-    lfs f2, 0x20(r1)
-    fdivs f3, f0, f4
-    lfs f1, 0x24(r1)
-    lfs f0, 0x28(r1)
-    fmuls f2, f2, f3
-    fmuls f1, f1, f3
-    fmuls f0, f0, f3
-    stfs f2, 0x20(r1)
-    stfs f1, 0x24(r1)
-    stfs f0, 0x28(r1)
-    Mtx34_Orthonormalize_L_80064B90:
-    lfs f1, 0x14(r1)
-    lfs f0, 0x18(r1)
-    fmuls f2, f1, f1
-    lfs f3, 0x1c(r1)
-    fmuls f1, f0, f0
-    lfs f0, lbl_806D2B74(r2)
-    fmuls f3, f3, f3
-    fadds f1, f2, f1
-    fadds f4, f3, f1
-    fcmpo cr0, f4, f0
-    ble Mtx34_Orthonormalize_L_80064C08
-    frsqrte f1, f4
-    lfd f3, lbl_806D2B90(r2)
-    lfd f2, lbl_806D2B98(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f4, f0
-    frsp f0, f0
-    stfs f0, 0x8(r1)
-    lfs f4, 0x8(r1)
-    Mtx34_Orthonormalize_L_80064C08:
-    lfs f0, lbl_806D2B74(r2)
-    fcmpo cr0, f4, f0
-    cror eq, lt, eq
-    bne Mtx34_Orthonormalize_L_80064C28
-    stfs f0, 0x1c(r1)
-    stfs f0, 0x18(r1)
-    stfs f0, 0x14(r1)
-    b Mtx34_Orthonormalize_L_80064C54
-    Mtx34_Orthonormalize_L_80064C28:
-    lfs f0, lbl_806D2B6C(r2)
-    lfs f2, 0x14(r1)
-    fdivs f3, f0, f4
-    lfs f1, 0x18(r1)
-    lfs f0, 0x1c(r1)
-    fmuls f2, f2, f3
-    fmuls f1, f1, f3
-    fmuls f0, f0, f3
-    stfs f2, 0x14(r1)
-    stfs f1, 0x18(r1)
-    stfs f0, 0x1c(r1)
-    Mtx34_Orthonormalize_L_80064C54:
-    lfs f0, 0x2c(r1)
-    lfs f1, 0x30(r1)
-    stfs f0, 0x0(r3)
-    lfs f0, 0x34(r1)
-    stfs f1, 0x4(r3)
-    lfs f1, 0x20(r1)
-    stfs f0, 0x8(r3)
-    lfs f0, 0x24(r1)
-    stfs f1, 0x10(r3)
-    lfs f1, 0x28(r1)
-    stfs f0, 0x14(r3)
-    lfs f0, 0x14(r1)
-    stfs f1, 0x18(r3)
-    lfs f1, 0x18(r1)
-    stfs f0, 0x20(r3)
-    lfs f0, 0x1c(r1)
-    stfs f1, 0x24(r3)
-    stfs f0, 0x28(r3)
-    psq_l f31, 0x98(r1), 0, 0
-    lfd f31, 0x90(r1)
-    psq_l f30, 0x88(r1), 0, 0
-    lfd f30, 0x80(r1)
-    psq_l f29, 0x78(r1), 0, 0
-    lfd f29, 0x70(r1)
-    psq_l f28, 0x68(r1), 0, 0
-    lfd f28, 0x60(r1)
-    psq_l f27, 0x58(r1), 0, 0
-    lfd f27, 0x50(r1)
-    psq_l f26, 0x48(r1), 0, 0
-    lfd f26, 0x40(r1)
-    addi r1, r1, 0xa0
-    blr
+#pragma exceptions on
+#pragma cplusplus on
+
+struct OrthoVec {
+    float x, y, z;
+    OrthoVec(float ax, float ay, float az) : x(ax), y(ay), z(az) {}
+    ~OrthoVec() {}
+    OrthoVec &operator=(const OrthoVec &o) {
+        x = o.x;
+        y = o.y;
+        z = o.z;
+        return *this;
+    }
+    float Dot(const OrthoVec &o) const {
+        float xx = x * o.x;
+        float yy = y * o.y;
+        float zz = z * o.z;
+        return zz + (xx + yy);
+    }
+    void Cross(const OrthoVec &a, const OrthoVec &b) {
+        float cx = a.y * b.z - a.z * b.y;
+        float cy = a.z * b.x - a.x * b.z;
+        float cz = a.x * b.y - a.y * b.x;
+        x = cx;
+        y = cy;
+        z = cz;
+    }
+    void Normalize() {
+        float len = MathInline_sqrtf(Dot(*this));
+        if (len <= 0.0f) {
+            z = 0.0f;
+            y = 0.0f;
+            x = 0.0f;
+        } else {
+            float s = 1.0f / len;
+            x *= s;
+            y *= s;
+            z *= s;
+        }
+    }
+};
+
+extern "C" void Mtx34_Orthonormalize(float (*m)[4]) {
+    OrthoVec x(m[0][0], m[0][1], m[0][2]);
+    OrthoVec y(m[1][0], m[1][1], m[1][2]);
+    OrthoVec z(m[2][0], m[2][1], m[2][2]);
+
+    y = x;
+    y.Cross(z, y);
+    x = z;
+    x.Cross(y, x);
+    x.Normalize();
+    y.Normalize();
+    z.Normalize();
+    m[0][0] = x.x;
+    m[0][1] = x.y;
+    m[0][2] = x.z;
+    m[1][0] = y.x;
+    m[1][1] = y.y;
+    m[1][2] = y.z;
+    m[2][0] = z.x;
+    m[2][1] = z.y;
+    m[2][2] = z.z;
 }
+
+#pragma cplusplus reset
+#pragma exceptions reset
 

@@ -1,0 +1,5 @@
+# asm2c-idioms
+
+Source: Codex worker c11_oz_asm2c_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1844 B.
+
+MWCC GC/2.6: (a) A C++ class with an empty user dtor keeps local Vec3 objects in memory (store->load forwarding emits frsp on forwarded copies); in C, or without a dtor, they are scalarised into registers. Under `#pragma cplusplus on` an implicitly generated operator= drops the function's extab entry; a user-written memberwise operator= keeps it. (b) Float-param inline wrappers `static inline float cosf(float x){return (float)cos(x);}` reproduce `fmul fD,K,yaw; frsp f1,fD` re-rounded before each call with the double product in a callee-saved FPR. (c) 4x4 concat with `m[k + j]` and row offset k += 4 gives the `addi r3,r5,j; slwi r0,r3,2; stfsx` store pattern; the scratch pointer must be a real variable (SDK MTX44Concat alias test) or the base/temp GPRs swap. (d) `x > 0` materialised as neg/andc/srwi. comes from an inline returning unsigned char tested with `!= 0` / `== 1`. (e) `0.5f * (m[0] * dir)` with dir an inline float param keeps the multiply by +-1.0f.
