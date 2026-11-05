@@ -97,7 +97,8 @@ struct CoursePanel {
 
 struct NamCamObj {
     unsigned char active;
-    char pad1[3];
+    unsigned char loaded;
+    char pad2[2];
     void *buf;
 };
 
@@ -112,6 +113,85 @@ struct CamPanel {
 
 struct GXColorB {
     unsigned char r, g, b, a;
+};
+
+struct Vec3f {
+    float x, y, z;
+};
+
+struct CamVecs {
+    Vec3f eye;
+    Vec3f up;
+    Vec3f target;
+};
+
+union WGPipe {
+    unsigned char u8;
+    float f32;
+};
+
+#define GXFIFO (*(volatile WGPipe *)0xCC008000)
+
+class VObjE {
+public:
+    virtual void v8();
+    virtual void vC();
+    virtual void v10();
+    virtual void v14();
+};
+
+struct AttractEntry {
+    int f0;
+    int f4;
+    unsigned char on;
+};
+
+struct AttractPanel {
+    void *vt;
+    unsigned char done;
+    char pad5[3];
+    VObjE *obj;
+    int idx;
+    char pad10[0x18];
+    float t;
+    int blink;
+};
+
+struct TexFadePanel {
+    void *vt;
+    int state;
+    float t;
+    unsigned char alpha;
+    char padD[7];
+    char texObj[0x20];
+    char tlut[0x10];
+};
+
+struct ScrollSprite {
+    char pad0[0xC];
+    float x;
+    float y;
+    char pad14[8];
+    float z;
+    inline void SetPos(float px, float py) {
+        x = px;
+        y = py;
+    }
+};
+
+struct NamCamPanel {
+    void *vt;
+    int state;
+    float t;
+    float scroll;
+    NamCamObj *cam;
+    float alpha;
+    int mode;
+    unsigned char logo;
+    char pad1D[3];
+    struct ScrollSprite *sprA;
+    struct ScrollSprite *sprB;
+    float width;
 };
 
 union ColWord {
@@ -257,7 +337,7 @@ extern void fn_8014E004();
 extern void fn_8014E028();
 extern void fn_80157B20();
 extern void fn_80157D18();
-extern void fn_80169E10();
+extern unsigned char fn_80169E10(void);
 extern void fn_80169E20();
 extern void fn_80171CD0();
 extern void fn_80293BBC();
@@ -277,25 +357,25 @@ extern unsigned int fn_8014E04C[];
 extern char lbl_80363D30[];
 extern unsigned int lbl_8048FED8[];
 extern unsigned int lbl_8048FF80[];
-extern void CreditMgr_DrawCoinCreditBanner();
-extern void HSD_StateInvalidate();
-extern void IsCardValid();
-extern void LUT_Sin12Bit();
-extern void PcbSync_CountJoinedPcbsAdvancedKarts();
+extern void CreditMgr_DrawCoinCreditBanner(int slot, unsigned int color, int count);
+extern void HSD_StateInvalidate(int mask);
+extern unsigned char IsCardValid(void);
+extern float LUT_Sin12Bit(float x);
+extern int PcbSync_CountJoinedPcbsAdvancedKarts(void);
 float Saturate_Double(float x, float lo, float hi);
-extern void Sci2Card_GetReceiptTestFlag();
-extern void ServiceEnable_Get();
-extern void ServiceMode_UpdateScheduleGate();
-extern void ServiceValue_Get();
+extern unsigned char Sci2Card_GetReceiptTestFlag(void);
+extern unsigned char ServiceEnable_Get(void);
+extern void ServiceMode_UpdateScheduleGate(void);
+extern unsigned char ServiceValue_Get(void);
 extern void __cvt_fp2unsigned();
 void fn_8011F994(int layer);
-extern void fn_80169334();
+extern void fn_80169334(int a, int res, int b, float x, float y, float sx, float sy, float alpha);
 extern unsigned int lbl_806D8084;
 extern unsigned int lbl_806D8088;
 extern unsigned int lbl_806D808C;
 extern unsigned int lbl_806D8090;
 extern unsigned int lbl_806D8094;
-extern unsigned int lbl_80367488[];
+extern struct AttractEntry lbl_80367488[];
 int CreditMgr_GetCreditCount(int slot);
 void GXDrawDone(void);
 unsigned char GetVBlankFlag(void);
@@ -305,7 +385,7 @@ extern void OperationClock_Commit();
 extern void RaceFlow_ResetState_FullColdInit();
 extern void RumbleUpdate();
 extern void SetCourseParams();
-extern void SetSyncTarget();
+extern void SetSyncTarget(int target);
 extern void Sprite_InitWithAnim();
 extern void StrPcb_GetInstance();
 extern void StrPcb_ResetCommands_NeutralDefault();
@@ -320,7 +400,7 @@ extern void fn_80163614();
 void fn_801699D8(int a, int b);
 extern void fn_8019FEF4();
 void fn_801B7CD0(int a);
-extern void fn_801F6804();
+extern void fn_801F6804(void *p);
 extern unsigned int g_cupId;
 extern unsigned int g_currentSceneState;
 extern unsigned int lbl_806D10A0;
@@ -333,7 +413,7 @@ extern unsigned int lbl_8048FE8C[];
 extern unsigned int lbl_8048FF64[];
 extern void dtor_80080330();
 unsigned char Sprite_AdvanceAnim(void *s, float dt);
-extern unsigned int lbl_806D8060;
+extern const float lbl_806D8060;
 extern unsigned int lbl_806D8098;
 extern unsigned int lbl_806D80A0;
 void CreditMgr_SetActiveSlot(int slot);
@@ -362,13 +442,13 @@ extern unsigned int lbl_806D80A8;
 extern unsigned int lbl_806D80AC;
 extern unsigned int lbl_806D80B0;
 extern unsigned int lbl_806D80B4;
-extern void NamCam_GetImageHandle();
-extern void NamCam_LoadImage();
-extern void PcbSync_AllKartsInValidSelectState();
+extern int NamCam_GetImageHandle(void *out, int arg);
+extern void NamCam_LoadImage(void *handle, void *buf, void *out);
+extern unsigned char PcbSync_AllKartsInValidSelectState(void);
 extern void ResCtrl_Init();
 void fn_8011FAFC(struct ResCtrl *c, int layer);
-extern void fn_80121E10();
-extern void fn_801698B4();
+extern void fn_80121E10(struct ResCtrl *c);
+extern void fn_801698B4(int layer, int id, int flag, float x, float y);
 void fn_801A0004(void *p);
 void fn_801A1280(void);
 extern unsigned int lbl_806D80B8;
@@ -534,28 +614,28 @@ extern unsigned int lbl_806D8184;
 extern unsigned int lbl_80367200[];
 extern unsigned int lbl_8041BC00[];
 extern unsigned int lbl_8048F178[];
-extern void C_MTXLookAt();
-extern void C_MTXOrtho();
-extern void GXBegin();
-extern void GXClearVtxDesc();
-extern void GXLoadPosMtxImm();
-extern void GXSetBlendMode();
-extern void GXSetChanCtrl();
-extern void GXSetChanMatColor();
-extern void GXSetCurrentMtx();
-extern void GXSetNumChans();
-extern void GXSetNumTevStages();
-extern void GXSetNumTexGens();
-extern void GXSetProjection();
-extern void GXSetScissor();
-extern void GXSetTevOp();
-extern void GXSetTevOrder();
-extern void GXSetViewport();
-extern void GXSetVtxAttrFmt();
-extern void GXSetVtxDesc();
-extern void GXSetZCompLoc();
-extern void GXSetZMode();
-extern unsigned int lbl_806DCF38;
+extern void C_MTXLookAt(float m[3][4], const struct Vec3f *eye, const struct Vec3f *up, const struct Vec3f *target);
+extern void C_MTXOrtho(float m[4][4], float t, float b, float l, float r, float n, float f);
+extern void GXBegin(int prim, int fmt, unsigned short n);
+extern void GXClearVtxDesc(void);
+extern void GXLoadPosMtxImm(float m[3][4], unsigned long id);
+extern void GXSetBlendMode(int type, int src, int dst, int op);
+extern void GXSetChanCtrl(int chan, unsigned char enable, int amb, int mat, unsigned long lights, int diff, int attn);
+extern void GXSetChanMatColor(int chan, struct GXColorB color);
+extern void GXSetCurrentMtx(unsigned long id);
+extern void GXSetNumChans(unsigned char n);
+extern void GXSetNumTevStages(unsigned char n);
+extern void GXSetNumTexGens(unsigned char n);
+extern void GXSetProjection(float m[4][4], int type);
+extern void GXSetScissor(unsigned long x, unsigned long y, unsigned long w, unsigned long h);
+extern void GXSetTevOp(int stage, int mode);
+extern void GXSetTevOrder(int stage, int coord, int map, int color);
+extern void GXSetViewport(float x, float y, float w, float h, float n, float f);
+extern void GXSetVtxAttrFmt(int fmt, int attr, int cnt, int type, unsigned char frac);
+extern void GXSetVtxDesc(int attr, int type);
+extern void GXSetZCompLoc(unsigned char before);
+extern void GXSetZMode(unsigned char enable, int func, unsigned char update);
+extern const GXColorB lbl_806DCF38;
 extern unsigned int lbl_806D8188;
 extern void TaRecord_GetEntry_Indexed();
 extern void TaRecord_GetTime_Indexed();
@@ -607,9 +687,8 @@ extern unsigned int lbl_803677B0[];
 extern unsigned int lbl_803677C8[];
 void TEXReleasePalette(void **pal);
 extern unsigned int lbl_806D8224;
-extern void GXLoadTexObj();
-extern void GXSetTexCoordGen2();
-extern unsigned int lbl_806D7F64;
+extern void GXLoadTexObj(void *obj, int id);
+extern void GXSetTexCoordGen2(int dst, int func, int src, unsigned long mtx, unsigned char normalize, unsigned long postmtx);
 extern unsigned int lbl_806D8228;
 extern unsigned int lbl_806D822C;
 extern unsigned int lbl_806D8230;
@@ -618,8 +697,7 @@ extern unsigned int lbl_806D8238;
 extern unsigned int lbl_806D823C;
 extern unsigned int lbl_806D8240;
 extern unsigned int lbl_806D8244;
-extern void fn_801F6790();
-extern unsigned int lbl_806D7F60;
+extern void fn_801F6790(void *p);
 extern void fn_80140810();
 extern void __destroy_arr();
 void fn_80157940(struct LIter *ret, void *list, struct LIter *b, struct LIter *e);
@@ -741,8 +819,8 @@ extern unsigned int lbl_806D834C;
 extern void clItemBoxManager_Draw();
 extern void fn_80139810();
 extern void fn_801737CC();
-extern void fn_801696E4();
-extern void fn_801697C0();
+extern void fn_801696E4(int layer, int id, int flag, float x, float y, float rot);
+extern void fn_801697C0(int layer, int id, int flag, float x, float y, float sx, float sy);
 extern unsigned int lbl_806D8350;
 extern unsigned int lbl_806D8354;
 extern unsigned int lbl_806D8358;
@@ -761,9 +839,9 @@ extern unsigned int lbl_806D8388;
 void fn_80157EA8(void *l);
 void *fn_8014E0C4(int a);
 asm void fn_8014E118(void *self, int a);
-asm void fn_8014E618(void);
+void fn_8014E618(AttractPanel *self);
 asm void fn_8014E804(void);
-asm void fn_8014F164(void);
+void fn_8014F164(CreditPanel *self);
 DemoPanel *fn_8014F2DC(DemoPanel *self, short flag);
 asm void fn_8014F3D8(void *self);
 void fn_8014F5A8(VObj *p);
@@ -773,7 +851,7 @@ unsigned char fn_8014F6E0(StateObj *o);
 CamPanel *fn_8014F6F4(CamPanel *self, short flag);
 void fn_8014F81C(VObj *p);
 void fn_8014F854(FadeHolder *self);
-asm void fn_8014F8FC(void);
+void fn_8014F8FC(NamCamPanel *self);
 asm void fn_8014FC40(void);
 unsigned char fn_8014FE08(unsigned char *o);
 Base *fn_8014FE10(Base *self, short flag);
@@ -789,7 +867,7 @@ void fn_80150BE4(VObj *p);
 asm void fn_80150C1C(void);
 asm void fn_80151234(void);
 asm void fn_80151F08(void);
-asm void DrawColoredQuad(int r, int g, int b, int a, float x, float y, float w, float h);
+void DrawColoredQuad(int r, int g, int b, int a, float x, float y, float w, float h);
 void fn_80152930(VObj *p);
 Base *fn_80152968(Base *self, short flag);
 unsigned char fn_801529EC(StateObj *o);
@@ -803,12 +881,12 @@ void fn_80153594(VObj *p);
 PalObj *fn_801535CC(PalObj *self, short flag);
 void fn_80153668(FadeTimer *o);
 unsigned char fn_80153758(StateObj *o);
-asm void fn_8015376C(void);
+void fn_8015376C(TexFadePanel *self);
 void fn_80153A3C(VObj *p);
 PalObj *fn_80153A74(PalObj *self, short flag);
 void fn_80153AFC(FadeTimer *o);
 unsigned char fn_80153BEC(StateObj *o);
-asm void fn_80153C00(void);
+void fn_80153C00(TexFadePanel *self);
 void fn_80153ED0(VObj *p);
 asm void fn_80153F08(void);
 asm void fn_801540E0(void *o, int flag);
@@ -826,7 +904,7 @@ unsigned char fn_80156FC0(StateObj *o);
 asm void fn_80156FD4(void);
 void fn_80157240(VObj *p);
 CamPanel *fn_80157278(CamPanel *self, short flag);
-asm void fn_80157378(void);
+void fn_80157378(NamCamPanel *self);
 unsigned char fn_801576D8(StateObj *o);
 void fn_801576EC(FadeHolder2 *self);
 void fn_801577C4(void);
@@ -842,15 +920,9 @@ ListHead *dtor_801578C8(ListHead *self, short flag);
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; void *f45; unsigned int f46; unsigned int f47; void *f48; unsigned int f49; void *f50; unsigned int f51; unsigned int f52; void *f53; unsigned int f54; void *f55; unsigned int f56; unsigned int f57; void *f58; unsigned int f59; void *f60; unsigned int f61; unsigned int f62; void *f63; unsigned int f64; void *f65; unsigned int f66; unsigned int f67; void *f68; unsigned int f69; void *f70; unsigned int f71; void *f72; unsigned int f73; unsigned int f74; void *f75; unsigned int f76; void *f77; unsigned int f78; unsigned int f79; void *f80; unsigned int f81; unsigned int f82; void *f83; unsigned int f84; unsigned int f85; void *f86; unsigned int f87; unsigned int f88; void *f89; unsigned int f90; void *f91; unsigned int f92; unsigned int f93; void *f94; } extab_fn_8014E118 = { 0x400A0000, 0x0000003C, 0x003D00B8, 0x0000013C, 0x000000B0, 0x00000168, 0x000200B8, 0x0000019C, 0x000000C4, 0x000001B8, 0x000C00B8, 0x000001FC, 0x000000D8, 0x00000208, 0x000000B8, 0x0000021C, 0x000600EC, 0x00000240, 0x000400B8, 0x0000025C, 0x00000100, 0x000002A4, 0x000000B8, 0x000002B4, 0x0000011C, 0x000002C8, 0x00000114, 0x000002D4, 0x0000011C, 0x000002E8, 0x00000130, 0x000003A8, 0x0009013C, 0x000003EC, 0x000E00B8, 0x00000430, 0x00000168, 0x00000438, 0x0000015C, 0x00000458, 0x00000150, 0x00000464, 0x002100B8, 0x00000000, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801577D4, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801577D4, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801577D4, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801577D4, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801577D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801577D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x0100011C, 0x0A80001D, (void *)&MemoryManager_Free, 0x8680001E, 0x00000000, (void *)&dtor_801577D4, 0x07800018, 0x0000000C, (void *)&dtor_80157850, 0x07800018, 0x00000000, (void *)&dtor_801578C8, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801577D4 };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8014E618[8] = {
-    0x10, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; unsigned int f45; unsigned int f46; unsigned int f47; unsigned int f48; unsigned int f49; unsigned int f50; unsigned int f51; unsigned int f52; unsigned int f53; unsigned int f54; unsigned int f55; void *f56; unsigned int f57; unsigned int f58; void *f59; unsigned int f60; void *f61; unsigned int f62; unsigned int f63; void *f64; unsigned int f65; unsigned int f66; void *f67; unsigned int f68; void *f69; unsigned int f70; unsigned int f71; void *f72; unsigned int f73; void *f74; unsigned int f75; void *f76; unsigned int f77; unsigned int f78; void *f79; unsigned int f80; void *f81; unsigned int f82; void *f83; unsigned int f84; unsigned int f85; void *f86; unsigned int f87; unsigned int f88; void *f89; unsigned int f90; void *f91; unsigned int f92; void *f93; unsigned int f94; unsigned int f95; void *f96; unsigned int f97; unsigned int f98; void *f99; unsigned int f100; void *f101; unsigned int f102; void *f103; unsigned int f104; void *f105; unsigned int f106; void *f107; unsigned int f108; void *f109; unsigned int f110; void *f111; unsigned int f112; void *f113; unsigned int f114; void *f115; unsigned int f116; void *f117; } extab_fn_8014E804 = { 0x180A0000, 0x00000248, 0x000000E4, 0x00000260, 0x001700D8, 0x000002FC, 0x00000104, 0x00000314, 0x000D00F8, 0x00000430, 0x00000118, 0x00000498, 0x00120134, 0x000004F8, 0x0000012C, 0x00000508, 0x00000134, 0x00000520, 0x00000148, 0x00000540, 0x00050134, 0x000005B4, 0x0011015C, 0x00000610, 0x00000154, 0x00000620, 0x0000015C, 0x00000638, 0x00000170, 0x00000658, 0x0005015C, 0x000006C0, 0x000E0184, 0x0000071C, 0x0000017C, 0x0000072C, 0x00130184, 0x000007DC, 0x00000198, 0x00000808, 0x000001A0, 0x00000850, 0x000001A8, 0x00000874, 0x000001B0, 0x000008A0, 0x000001B8, 0x000008C4, 0x000001C0, 0x000008E8, 0x000001C8, 0x0000090C, 0x000001D0, 0x00000000, 0x0780001D, 0x00000034, (void *)&dtor_80080330, 0x0680001D, 0x00000000, (void *)&dtor_801577D4, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x0780001D, 0x00000034, (void *)&dtor_80080330, 0x0680001D, 0x00000000, (void *)&dtor_801577D4, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x0680001D, 0x00000000, (void *)&dtor_801577D4, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0680001E, 0x00000000, (void *)&dtor_801577D4, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x01000134, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0680001E, 0x00000000, (void *)&dtor_801577D4, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0100015C, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0680001E, 0x00000000, (void *)&dtor_801577D4, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8014F164[8] = {
-    0x10, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; void *f6; } extab_fn_8014F3D8 = { 0x080A0000, 0x00000060, 0x00560010, 0x00000000, 0x8680001F, 0x00000000, (void *)&dtor_8007D0D4 };
@@ -861,7 +933,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_8014F8FC = { 0x104A0000, 0x000002B4, 0x001C0010, 0x00000000, 0x82000018, (void *)&dtor_80082960 };
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; void *f19; unsigned int f20; unsigned int f21; void *f22; unsigned int f23; void *f24; unsigned int f25; unsigned int f26; void *f27; unsigned int f28; void *f29; unsigned int f30; unsigned int f31; void *f32; unsigned int f33; void *f34; unsigned int f35; unsigned int f36; void *f37; } extab_fn_8014FC40 = { 0x100A0000, 0x00000050, 0x00080050, 0x00000094, 0x00000048, 0x000000A4, 0x001A0050, 0x00000124, 0x0000005C, 0x00000148, 0x00040050, 0x00000170, 0x00000070, 0x00000188, 0x00000050, 0x000001A0, 0x00000084, 0x00000000, 0x0A80001E, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801577D4, 0x0A80001E, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801577D4, 0x0A80001E, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801577D4, 0x0A80001E, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801577D4 };
 
@@ -886,9 +957,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; void *f21; unsigned int f22; unsigned int f23; void *f24; unsigned int f25; void *f26; unsigned int f27; unsigned int f28; void *f29; unsigned int f30; void *f31; unsigned int f32; unsigned int f33; void *f34; unsigned int f35; void *f36; unsigned int f37; unsigned int f38; void *f39; } extab_fn_80151F08 = { 0x384A0000, 0x00000048, 0x00F70058, 0x00000430, 0x00000050, 0x00000438, 0x00040058, 0x00000468, 0x00000064, 0x00000478, 0x001C0058, 0x000004F4, 0x00000078, 0x00000528, 0x00020058, 0x0000055C, 0x0000008C, 0x00000574, 0x008A0058, 0x00000000, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001A, 0x00000000, (void *)&dtor_801577D4, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001A, 0x00000000, (void *)&dtor_801577D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x8680001A, 0x00000000, (void *)&dtor_801577D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x8680001A, 0x00000000, (void *)&dtor_801577D4 };
 
-__declspec(section ".extab_user") static const unsigned char extab_DrawColoredQuad[8] = {
-    0x39, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
@@ -903,16 +971,10 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80152C00[8
 
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8015376C[8] = {
-    0x20, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80153C00[8] = {
-    0x20, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 __declspec(section ".extab_user") static const unsigned char extab_fn_80153F08[8] = {
@@ -945,9 +1007,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80156FD4[8
 
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80157378[8] = {
-    0x10, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
@@ -960,17 +1019,11 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_8014E118, 0x00000500, (void *)&extab_fn_8014E118
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014E618 = {
-    (void *)&fn_8014E618, 0x000001EC, (void *)extab_fn_8014E618
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014E804 = {
     (void *)&fn_8014E804, 0x00000960, (void *)&extab_fn_8014E804
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014F164 = {
-    (void *)&fn_8014F164, 0x00000178, (void *)extab_fn_8014F164
-};
 
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014F3D8 = {
@@ -983,9 +1036,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014F8FC = {
-    (void *)&fn_8014F8FC, 0x00000344, (void *)&extab_fn_8014F8FC
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014FC40 = {
     (void *)&fn_8014FC40, 0x000001C8, (void *)&extab_fn_8014FC40
@@ -1024,9 +1074,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_80151F08, 0x000007BC, (void *)&extab_fn_80151F08
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_DrawColoredQuad = {
-    (void *)&DrawColoredQuad, 0x0000026C, (void *)extab_DrawColoredQuad
-};
 
 
 
@@ -1041,16 +1088,10 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8015376C = {
-    (void *)&fn_8015376C, 0x000002D0, (void *)extab_fn_8015376C
-};
 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80153C00 = {
-    (void *)&fn_80153C00, 0x000002D0, (void *)extab_fn_80153C00
-};
 
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80153F08 = {
@@ -1087,9 +1128,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80157378 = {
-    (void *)&fn_80157378, 0x00000360, (void *)extab_fn_80157378
-};
 
 
 
@@ -1457,139 +1495,37 @@ extern "C" asm void fn_8014E118(void *self, int a) { /* 0x8014E118 size:0x500 */
     blr
 }
 
-extern "C" asm void fn_8014E618(void) { /* 0x8014E618 size:0x1EC */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stfd f31, 0x10(r1)
-    psq_st f31, 0x18(r1), 0, 0
-    stw r31, 0xc(r1)
-    stw r30, 0x8(r1)
-    mr r31, r3
-    lbz r0, 0x4(r3)
-    cmplwi r0, 0x0
-    bne fn_8014E618_L_8014E7E4
-    lwz r3, 0x8(r31)
-    cmplwi r3, 0x0
-    beq fn_8014E618_L_8014E660
-    lwz r12, 0x0(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    fn_8014E618_L_8014E660:
-    bl ServiceMode_UpdateScheduleGate
-    bl fn_80169E10
-    clrlwi. r0, r3, 24
-    beq fn_8014E618_L_8014E718
-    bl IsCardValid
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne fn_8014E618_L_8014E718
-    bl ServiceEnable_Get
-    clrlwi. r0, r3, 24
-    beq fn_8014E618_L_8014E698
-    bl ServiceValue_Get
-    clrlwi. r0, r3, 24
-    beq fn_8014E618_L_8014E6C0
-    fn_8014E618_L_8014E698:
-    lfs f3, lbl_806D8068(r2)
-    li r3, 0x0
-    lfs f1, lbl_806D8084(r2)
-    li r4, 0x1553
-    fmr f4, f3
-    li r5, 0x0
-    fmr f2, f1
-    fmr f5, f3
-    bl fn_80169334
-    b fn_8014E618_L_8014E718
-    fn_8014E618_L_8014E6C0:
-    bl Sci2Card_GetReceiptTestFlag
-    clrlwi. r0, r3, 24
-    beq fn_8014E618_L_8014E6F4
-    lfs f3, lbl_806D8068(r2)
-    li r3, 0x0
-    lfs f1, lbl_806D8084(r2)
-    li r4, 0x1554
-    fmr f4, f3
-    li r5, 0x0
-    fmr f2, f1
-    fmr f5, f3
-    bl fn_80169334
-    b fn_8014E618_L_8014E718
-    fn_8014E618_L_8014E6F4:
-    lfs f1, lbl_806D8084(r2)
-    li r3, 0x0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x1554
-    fmr f2, f1
-    lfs f5, lbl_806D8064(r2)
-    fmr f4, f3
-    li r5, 0x0
-    bl fn_80169334
-    fn_8014E618_L_8014E718:
-    li r3, 0x0
-    bl fn_8011F994
-    lwz r0, 0xc(r31)
-    lis r3, lbl_80367488@ha
-    addi r3, r3, lbl_80367488@l
-    mulli r0, r0, 0xc
-    add r3, r3, r0
-    lbz r0, 0x8(r3)
-    cmplwi r0, 0x0
-    beq fn_8014E618_L_8014E7C4
-    lfs f1, lbl_806D8088(r2)
-    lfs f0, 0x28(r31)
-    lfs f2, lbl_806D8064(r2)
-    fmuls f1, f1, f0
-    lfs f3, lbl_806D808C(r2)
-    bl Saturate_Double
-    bl LUT_Sin12Bit
-    fmr f31, f1
-    bl PcbSync_CountJoinedPcbsAdvancedKarts
-    lfs f0, lbl_806D8090(r2)
-    mr r30, r3
-    fmuls f1, f0, f31
-    bl __cvt_fp2unsigned
-    li r4, -0x100
-    mr r5, r30
-    rlwimi r4, r3, 0, 24, 31
-    li r3, 0x0
-    bl CreditMgr_DrawCoinCreditBanner
-    lfs f2, 0x28(r31)
-    lfs f1, lbl_806D8068(r2)
-    lfs f0, lbl_806D8094(r2)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0x28(r31)
-    cror eq, gt, eq
-    bne fn_8014E618_L_8014E7D4
-    lfs f0, lbl_806D8064(r2)
-    stfs f0, 0x28(r31)
-    lwz r3, 0x2c(r31)
-    addi r0, r3, 0x1
-    clrlwi r0, r0, 31
-    stw r0, 0x2c(r31)
-    b fn_8014E618_L_8014E7D4
-    fn_8014E618_L_8014E7C4:
-    lfs f0, lbl_806D8064(r2)
-    li r0, 0x0
-    stfs f0, 0x28(r31)
-    stw r0, 0x2c(r31)
-    fn_8014E618_L_8014E7D4:
-    li r3, 0x6
-    bl fn_8011F994
-    li r3, -0x1
-    bl HSD_StateInvalidate
-    fn_8014E618_L_8014E7E4:
-    psq_l f31, 0x18(r1), 0, 0
-    lwz r0, 0x24(r1)
-    lfd f31, 0x10(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+extern "C" void fn_8014E618(AttractPanel *self) {
+    if (!self->done) {
+        if (self->obj != 0) {
+            self->obj->v14();
+        }
+        ServiceMode_UpdateScheduleGate();
+        if (fn_80169E10() && IsCardValid() == 1) {
+            if (!ServiceEnable_Get() || ServiceValue_Get()) {
+                fn_80169334(0, 0x1553, 0, 8.0f, 8.0f, 1.0f, 1.0f, 1.0f);
+            } else if (Sci2Card_GetReceiptTestFlag()) {
+                fn_80169334(0, 0x1554, 0, 8.0f, 8.0f, 1.0f, 1.0f, 1.0f);
+            } else {
+                fn_80169334(0, 0x1554, 0, 8.0f, 8.0f, 1.0f, 1.0f, 0.0f);
+            }
+        }
+        fn_8011F994(0);
+        if (lbl_80367488[self->idx].on) {
+            float s = LUT_Sin12Bit(Saturate_Double(1.5f * self->t, 0.0f, 180.0f));
+            int n = PcbSync_CountJoinedPcbsAdvancedKarts();
+            CreditMgr_DrawCoinCreditBanner(0, 0xFFFFFF00 | ((unsigned int)(255.0f * s) & 0xFF), n);
+            if ((self->t += 1.0f) >= 120.0f) {
+                self->t = 0.0f;
+                self->blink = (self->blink + 1) & 1;
+            }
+        } else {
+            self->t = 0.0f;
+            self->blink = 0;
+        }
+        fn_8011F994(6);
+        HSD_StateInvalidate(-1);
+    }
 }
 
 extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
@@ -2248,109 +2184,39 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     blr
 }
 
-extern "C" asm void fn_8014F164(void) { /* 0x8014F164 size:0x178 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stfd f31, 0x20(r1)
-    psq_st f31, 0x28(r1), 0, 0
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    mr r31, r3
-    lwz r0, 0x8(r3)
-    cmpwi r0, 0x9
-    beq fn_8014F164_L_8014F2BC
-    lbz r0, 0x1c(r31)
-    cmplwi r0, 0x0
-    bne fn_8014F164_L_8014F1A4
-    li r0, 0x1
-    stb r0, 0x1c(r31)
-    fn_8014F164_L_8014F1A4:
-    lwz r3, 0x24(r31)
-    cmplwi r3, 0x0
-    beq fn_8014F164_L_8014F1B8
-    lfs f1, lbl_806D8098(r2)
-    bl Sprite_AdvanceAnim
-    fn_8014F164_L_8014F1B8:
-    lwz r30, 0x20(r31)
-    li r3, 0x0
-    bl CreditMgr_GetCreditCount
-    stw r3, 0x20(r31)
-    lwz r0, 0x20(r31)
-    cmpw r0, r30
-    beq fn_8014F164_L_8014F1DC
-    li r0, 0x0
-    stw r0, 0x14(r31)
-    fn_8014F164_L_8014F1DC:
-    lwz r3, 0x14(r31)
-    lfs f2, lbl_806D8064(r2)
-    addi r0, r3, 0x1
-    lfs f31, lbl_806D8060(r2)
-    stw r0, 0x14(r31)
-    lfs f0, 0xc(r31)
-    fcmpu cr0, f0, f2
-    beq fn_8014F164_L_8014F244
-    fctiwz f0, f31
-    lwz r3, 0x14(r31)
-    stfd f0, 0x8(r1)
-    lwz r0, 0xc(r1)
-    cmpw r3, r0
-    bge fn_8014F164_L_8014F244
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0xc(r1)
-    lfd f1, lbl_806D80A0(r2)
-    stw r0, 0x8(r1)
-    lfs f3, lbl_806D8068(r2)
-    lfd f0, 0x8(r1)
-    fsubs f0, f0, f1
-    fdivs f0, f0, f31
-    fsubs f1, f3, f0
-    bl Saturate_Double
-    stfs f1, 0xc(r31)
-    fn_8014F164_L_8014F244:
-    fctiwz f0, f31
-    lwz r0, 0x18(r31)
-    lwz r4, 0x14(r31)
-    stfd f0, 0x8(r1)
-    lwz r3, 0xc(r1)
-    subf r0, r3, r0
-    cmpw r4, r0
-    ble fn_8014F164_L_8014F29C
-    subf r3, r0, r4
-    lis r0, 0x4330
-    xoris r3, r3, 0x8000
-    stw r0, 0x8(r1)
-    lfd f1, lbl_806D80A0(r2)
-    stw r3, 0xc(r1)
-    lfs f2, lbl_806D8064(r2)
-    lfd f0, 0x8(r1)
-    lfs f3, lbl_806D8068(r2)
-    fsubs f0, f0, f1
-    fdivs f1, f0, f31
-    bl Saturate_Double
-    stfs f1, 0xc(r31)
-    b fn_8014F164_L_8014F2A4
-    fn_8014F164_L_8014F29C:
-    lfs f0, lbl_806D8064(r2)
-    stfs f0, 0xc(r31)
-    fn_8014F164_L_8014F2A4:
-    lwz r3, 0x14(r31)
-    lwz r0, 0x18(r31)
-    cmpw r3, r0
-    blt fn_8014F164_L_8014F2BC
-    li r0, 0x9
-    stw r0, 0x8(r31)
-    fn_8014F164_L_8014F2BC:
-    psq_l f31, 0x28(r1), 0, 0
-    lwz r0, 0x34(r1)
-    lfd f31, 0x20(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+extern "C" void fn_8014F164(CreditPanel *self) {
+    float fade;
+    int prev;
+    int start;
+
+    if (self->state == 9) {
+        return;
+    }
+    if (!self->on) {
+        self->on = 1;
+    }
+    if (self->sprite != 0) {
+        Sprite_AdvanceAnim(self->sprite, 0.0165f);
+    }
+    prev = self->credits;
+    self->credits = CreditMgr_GetCreditCount(0);
+    if (self->credits != prev) {
+        self->timer = 0;
+    }
+    self->timer++;
+    fade = lbl_806D8060;
+    if (self->alpha && self->timer < (int)fade) {
+        self->alpha = Saturate_Double(1.0f - self->timer / fade, 0.0f, 1.0f);
+    }
+    start = self->duration - (int)fade;
+    if (self->timer > start) {
+        self->alpha = Saturate_Double((self->timer - start) / fade, 0.0f, 1.0f);
+    } else {
+        self->alpha = 0.0f;
+    }
+    if (self->timer >= self->duration) {
+        self->state = 9;
+    }
 }
 
 extern "C" DemoPanel *fn_8014F2DC(DemoPanel *self, short flag) {
@@ -2589,231 +2455,88 @@ extern "C" void fn_8014F854(FadeHolder *self) {
     fn_8011F994(6);
 }
 
-extern "C" asm void fn_8014F8FC(void) { /* 0x8014F8FC size:0x344 */
-    nofralloc
-    stwu r1, -0x90(r1)
-    mflr r0
-    stw r0, 0x94(r1)
-    stfd f31, 0x80(r1)
-    psq_st f31, 0x88(r1), 0, 0
-    stw r31, 0x7c(r1)
-    stw r30, 0x78(r1)
-    mr r31, r3
-    lwz r0, 0x4(r3)
-    cmpwi r0, 0x9
-    beq fn_8014F8FC_L_8014FC20
-    lfs f1, lbl_806D80B8(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D8070(r2)
-    li r4, 0x1499
-    li r5, 0x0
-    bl fn_801698B4
-    lfs f1, lbl_806D80D4(r2)
-    li r3, 0x5
-    lfs f2, lbl_806D80D8(r2)
-    li r4, 0x149b
-    li r5, 0x0
-    bl fn_801698B4
-    lfs f1, lbl_806D80DC(r2)
-    li r3, 0x5
-    lfs f2, lbl_806D80D8(r2)
-    li r4, 0x149c
-    li r5, 0x0
-    bl fn_801698B4
-    lbz r0, 0x1c(r31)
-    cmplwi r0, 0x0
-    beq fn_8014F8FC_L_8014F994
-    lfs f1, lbl_806D80B8(r2)
-    li r3, 0x6
-    lfs f2, lbl_806D80E0(r2)
-    li r4, 0x50d
-    li r5, 0x0
-    bl fn_801698B4
-    fn_8014F8FC_L_8014F994:
-    bl fn_801A1280
-    lwz r3, 0x20(r31)
-    cmplwi r3, 0x0
-    beq fn_8014F8FC_L_8014F9AC
-    lfs f1, lbl_806D8098(r2)
-    bl Sprite_AdvanceAnim
-    fn_8014F8FC_L_8014F9AC:
-    lwz r3, 0x20(r31)
-    cmplwi r3, 0x0
-    beq fn_8014F8FC_L_8014F9BC
-    bl fn_801A0004
-    fn_8014F8FC_L_8014F9BC:
-    lwz r0, 0x24(r31)
-    cmplwi r0, 0x0
-    beq fn_8014F8FC_L_8014FA44
-    lfs f1, 0xc(r31)
-    lfs f0, lbl_806D80E4(r2)
-    lfs f2, lbl_806D80C4(r2)
-    fadds f0, f1, f0
-    stfs f0, 0xc(r31)
-    lfs f1, 0x28(r31)
-    lfs f0, 0xc(r31)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    bge fn_8014F8FC_L_8014F9F8
-    lfs f0, lbl_806D8064(r2)
-    stfs f0, 0xc(r31)
-    fn_8014F8FC_L_8014F9F8:
-    lfs f4, 0x28(r31)
-    lfs f0, lbl_806D80C4(r2)
-    lfs f1, 0xc(r31)
-    fadds f2, f0, f4
-    lfs f3, lbl_806D8064(r2)
-    lwz r3, 0x24(r31)
-    lfs f0, lbl_806D80E8(r2)
-    fsubs f2, f2, f1
-    lfs f1, lbl_806D8098(r2)
-    fsubs f2, f2, f4
-    fadds f2, f2, f3
-    stfs f2, 0xc(r3)
-    stfs f0, 0x10(r3)
-    lwz r3, 0x24(r31)
-    stfs f3, 0x1c(r3)
-    lwz r3, 0x24(r31)
-    bl Sprite_AdvanceAnim
-    lwz r3, 0x24(r31)
-    bl fn_801A0004
-    fn_8014F8FC_L_8014FA44:
-    lwz r30, 0x10(r31)
-    cmplwi r30, 0x0
-    beq fn_8014F8FC_L_8014FA94
-    bl GetVBlankFlag
-    clrlwi. r0, r3, 24
-    beq fn_8014F8FC_L_8014FA94
-    lbz r0, 0x0(r30)
-    cmplwi r0, 0x0
-    beq fn_8014F8FC_L_8014FA94
-    addi r3, r1, 0x8
-    li r4, 0x0
-    bl NamCam_GetImageHandle
-    cmpwi r3, 0x1
-    bne fn_8014F8FC_L_8014FA94
-    lwz r3, 0x8(r1)
-    addi r5, r1, 0xc
-    lwz r4, 0x4(r30)
-    bl NamCam_LoadImage
-    li r0, 0x1
-    stb r0, 0x1(r30)
-    fn_8014F8FC_L_8014FA94:
-    lwz r0, 0x4(r31)
-    lfs f31, lbl_806D8060(r2)
-    cmpwi r0, 0x1
-    beq fn_8014F8FC_L_8014FB2C
-    bge fn_8014F8FC_L_8014FAB4
-    cmpwi r0, 0x0
-    bge fn_8014F8FC_L_8014FAC0
-    b fn_8014F8FC_L_8014FB90
-    fn_8014F8FC_L_8014FAB4:
-    cmpwi r0, 0x3
-    bge fn_8014F8FC_L_8014FB90
-    b fn_8014F8FC_L_8014FB54
-    fn_8014F8FC_L_8014FAC0:
-    lfs f0, 0x8(r31)
-    lfs f3, lbl_806D8068(r2)
-    fadds f0, f0, f3
-    stfs f0, 0x8(r31)
-    lfs f0, 0x8(r31)
-    fcmpo cr0, f0, f31
-    bge fn_8014F8FC_L_8014FAF4
-    fdivs f0, f0, f31
-    lfs f2, lbl_806D8064(r2)
-    fsubs f1, f3, f0
-    bl Saturate_Double
-    stfs f1, 0x14(r31)
-    b fn_8014F8FC_L_8014FAFC
-    fn_8014F8FC_L_8014FAF4:
-    lfs f0, lbl_806D8064(r2)
-    stfs f0, 0x14(r31)
-    fn_8014F8FC_L_8014FAFC:
-    lfs f1, 0x8(r31)
-    lfs f0, lbl_806D80EC(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8014F8FC_L_8014FB90
-    li r3, 0x5
-    bl SetSyncTarget
-    li r0, 0x1
-    lfs f0, lbl_806D8064(r2)
-    stw r0, 0x4(r31)
-    stfs f0, 0x8(r31)
-    b fn_8014F8FC_L_8014FB90
-    fn_8014F8FC_L_8014FB2C:
-    lfs f0, lbl_806D8064(r2)
-    stfs f0, 0x14(r31)
-    bl PcbSync_AllKartsInValidSelectState
-    clrlwi. r0, r3, 24
-    beq fn_8014F8FC_L_8014FB90
-    li r0, 0x2
-    lfs f0, lbl_806D8064(r2)
-    stw r0, 0x4(r31)
-    stfs f0, 0x8(r31)
-    b fn_8014F8FC_L_8014FB90
-    fn_8014F8FC_L_8014FB54:
-    lfs f3, lbl_806D8068(r2)
-    lfs f0, 0x8(r31)
-    lfs f2, lbl_806D8064(r2)
-    fadds f0, f0, f3
-    stfs f0, 0x8(r31)
-    lfs f0, 0x8(r31)
-    fdivs f1, f0, f31
-    bl Saturate_Double
-    stfs f1, 0x14(r31)
-    lfs f0, 0x8(r31)
-    fcmpo cr0, f0, f31
-    cror eq, gt, eq
-    bne fn_8014F8FC_L_8014FB90
-    li r0, 0x9
-    stw r0, 0x4(r31)
-    fn_8014F8FC_L_8014FB90:
-    lfs f1, lbl_806D8064(r2)
-    lfs f0, 0x14(r31)
-    fcmpo cr0, f1, f0
-    bge fn_8014F8FC_L_8014FC20
-    addi r3, r1, 0x18
-    bl ResCtrl_Init
-    addi r3, r1, 0x18
-    bl fn_80121E10
-    lfs f5, lbl_806D80B8(r2)
-    li r5, 0x2
-    lfs f4, lbl_806D8070(r2)
-    li r0, 0x1
-    lfs f3, lbl_806D8068(r2)
-    addi r3, r1, 0x18
-    lfs f2, lbl_806D80C4(r2)
-    li r4, 0x7
-    lfs f0, lbl_806D80C8(r2)
-    stw r5, 0x20(r1)
-    lfs f1, lbl_806D8090(r2)
-    stb r0, 0x28(r1)
-    stfs f5, 0x2c(r1)
-    stfs f4, 0x30(r1)
-    stfs f3, 0x34(r1)
-    stfs f2, 0x38(r1)
-    stfs f0, 0x3c(r1)
-    lfs f0, 0x14(r31)
-    fmuls f0, f1, f0
-    fctiwz f0, f0
-    stfd f0, 0x70(r1)
-    lwz r0, 0x74(r1)
-    clrlwi r0, r0, 24
-    stw r0, 0x4c(r1)
-    stw r0, 0x50(r1)
-    stw r0, 0x54(r1)
-    stw r0, 0x58(r1)
-    bl fn_8011FAFC
-    fn_8014F8FC_L_8014FC20:
-    psq_l f31, 0x88(r1), 0, 0
-    lwz r0, 0x94(r1)
-    lfd f31, 0x80(r1)
-    lwz r31, 0x7c(r1)
-    lwz r30, 0x78(r1)
-    mtlr r0
-    addi r1, r1, 0x90
-    blr
+extern "C" void fn_8014F8FC(NamCamPanel *self) {
+    float fade;
+    NamCamObj *cam;
+    char info[0xC];
+    void *handle;
+
+    if (self->state == 9) {
+        return;
+    }
+    fn_801698B4(0, 0x1499, 0, 320.0f, 240.0f);
+    fn_801698B4(5, 0x149B, 0, 97.0f, 284.0f);
+    fn_801698B4(5, 0x149C, 0, 544.0f, 284.0f);
+    if (self->logo) {
+        fn_801698B4(6, 0x50D, 0, 320.0f, 160.0f);
+    }
+    fn_801A1280();
+    if (self->sprA != 0) {
+        Sprite_AdvanceAnim(self->sprA, 0.0165f);
+    }
+    if (self->sprA != 0) {
+        fn_801A0004(self->sprA);
+    }
+    if (self->sprB != 0) {
+        self->scroll += 4.0f;
+        if (640.0f + self->width < self->scroll) {
+            self->scroll = 0.0f;
+        }
+        {
+            float ofs = 0.0f;
+            float left = 640.0f + self->width - self->scroll - self->width;
+            self->sprB->SetPos(left + ofs, 409.0f);
+            self->sprB->z = ofs;
+        }
+        Sprite_AdvanceAnim(self->sprB, 0.0165f);
+        fn_801A0004(self->sprB);
+    }
+    cam = self->cam;
+    if (cam != 0 && GetVBlankFlag() && cam->active) {
+        if (NamCam_GetImageHandle(&handle, 0) == 1) {
+            NamCam_LoadImage(handle, cam->buf, info);
+            cam->loaded = 1;
+        }
+    }
+    fade = lbl_806D8060;
+    switch (self->state) {
+    case 0:
+        self->t += 1.0f;
+        if (self->t < fade) {
+            self->alpha = Saturate_Double(1.0f - self->t / fade, 0.0f, 1.0f);
+        } else {
+            self->alpha = 0.0f;
+        }
+        if (self->t >= 600.0f) {
+            SetSyncTarget(5);
+            self->state = 1;
+            self->t = 0.0f;
+        }
+        break;
+    case 1:
+        self->alpha = 0.0f;
+        if (PcbSync_AllKartsInValidSelectState()) {
+            self->state = 2;
+            self->t = 0.0f;
+        }
+        break;
+    case 2:
+        self->t += 1.0f;
+        self->alpha = Saturate_Double(self->t / fade, 0.0f, 1.0f);
+        if (self->t >= fade) {
+            self->state = 9;
+        }
+        break;
+    }
+    if (0.0f < self->alpha) {
+        ResCtrl c;
+        fn_80121E10(&c);
+        c.mode = 2;
+        c.Show(320.0f, 240.0f, 1.0f);
+        c.SetSize(640.0f, 480.0f);
+        c.SetColor((unsigned char)(255.0f * self->alpha));
+        fn_8011FAFC(&c, 7);
+    }
 }
 
 extern "C" asm void fn_8014FC40(void) { /* 0x8014FC40 size:0x1C8 */
@@ -5662,164 +5385,59 @@ extern "C" asm void fn_80151F08(void) { /* 0x80151F08 size:0x7BC */
     blr
 }
 
-extern "C" asm void DrawColoredQuad(int r, int g, int b, int a, float x, float y, float w, float h) { /* 0x801526C4 size:0x26C */
-    nofralloc
-    stwu r1, -0x110(r1)
-    mflr r0
-    stw r0, 0x114(r1)
-    stfd f31, 0x100(r1)
-    psq_st f31, 0x108(r1), 0, 0
-    stfd f30, 0xf0(r1)
-    psq_st f30, 0xf8(r1), 0, 0
-    stfd f29, 0xe0(r1)
-    psq_st f29, 0xe8(r1), 0, 0
-    stfd f28, 0xd0(r1)
-    psq_st f28, 0xd8(r1), 0, 0
-    stmw r25, 0xb4(r1)
-    fmr f28, f1
-    lis r7, lbl_80363D30@ha
-    fmr f29, f2
-    mr r25, r3
-    mr r26, r4
-    mr r27, r5
-    fmr f30, f3
-    mr r28, r6
-    fmr f31, f4
-    addi r29, r7, lbl_80363D30@l
-    li r3, 0x0
-    li r4, 0x7
-    li r5, 0x1
-    bl GXSetZMode
-    li r3, 0x0
-    bl GXSetZCompLoc
-    li r3, 0x1
-    li r4, 0x4
-    li r5, 0x5
-    li r6, 0x0
-    bl GXSetBlendMode
-    lfs f1, lbl_806D8064(r2)
-    lfs f3, lbl_806D80C4(r2)
-    fmr f2, f1
-    lfs f4, lbl_806D80C8(r2)
-    fmr f5, f1
-    lfs f6, lbl_806D8068(r2)
-    bl GXSetViewport
-    li r3, 0x0
-    li r4, 0x0
-    li r5, 0x280
-    li r6, 0x1e0
-    bl GXSetScissor
-    lfs f1, lbl_806D8064(r2)
-    addi r3, r1, 0x64
-    lfs f2, lbl_806D80C8(r2)
-    fmr f3, f1
-    lfs f4, lbl_806D80C4(r2)
-    fmr f5, f1
-    lfs f6, lbl_806D80BC(r2)
-    bl C_MTXOrtho
-    addi r3, r1, 0x64
-    li r4, 0x1
-    bl GXSetProjection
-    lwz r30, 0x30b0(r29)
-    addi r3, r1, 0x34
-    lwz r31, 0x30b4(r29)
-    addi r4, r1, 0x28
-    lwz r12, 0x30b8(r29)
-    addi r5, r1, 0x1c
-    lwz r11, 0x30bc(r29)
-    addi r6, r1, 0x10
-    lwz r10, 0x30c0(r29)
-    lwz r9, 0x30c4(r29)
-    lwz r8, 0x30c8(r29)
-    lwz r7, 0x30cc(r29)
-    lwz r0, 0x30d0(r29)
-    stw r30, 0x28(r1)
-    stw r31, 0x2c(r1)
-    stw r12, 0x30(r1)
-    stw r11, 0x1c(r1)
-    stw r10, 0x20(r1)
-    stw r9, 0x24(r1)
-    stw r8, 0x10(r1)
-    stw r7, 0x14(r1)
-    stw r0, 0x18(r1)
-    bl C_MTXLookAt
-    addi r3, r1, 0x34
-    li r4, 0x0
-    bl GXLoadPosMtxImm
-    li r3, 0x0
-    bl GXSetCurrentMtx
-    li r3, 0x0
-    bl GXSetNumTexGens
-    li r3, 0x1
-    bl GXSetNumTevStages
-    li r3, 0x1
-    bl GXSetNumChans
-    li r3, 0x0
-    li r4, 0x4
-    bl GXSetTevOp
-    li r3, 0x0
-    li r4, 0xff
-    li r5, 0xff
-    li r6, 0x4
-    bl GXSetTevOrder
-    li r3, 0x4
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    li r7, 0x0
-    li r8, 0x0
-    li r9, 0x2
-    bl GXSetChanCtrl
-    lwz r0, lbl_806DCF38(r2)
-    addi r4, r1, 0x8
-    li r3, 0x4
-    stw r0, 0xc(r1)
-    stb r25, 0xc(r1)
-    stb r26, 0xd(r1)
-    stb r27, 0xe(r1)
-    stb r28, 0xf(r1)
-    lwz r0, 0xc(r1)
-    stw r0, 0x8(r1)
-    bl GXSetChanMatColor
-    bl GXClearVtxDesc
-    li r3, 0x9
-    li r4, 0x1
-    bl GXSetVtxDesc
-    li r3, 0x0
-    li r4, 0x9
-    li r5, 0x0
-    li r6, 0x4
-    li r7, 0x0
-    bl GXSetVtxAttrFmt
-    li r3, 0x80
-    li r4, 0x0
-    li r5, 0x4
-    bl GXBegin
-    lis r3, 0xcc01
-    fadds f0, f28, f30
-    stfs f28, -0x8000(r3)
-    fadds f1, f29, f31
-    stfs f29, -0x8000(r3)
-    stfs f0, -0x8000(r3)
-    stfs f29, -0x8000(r3)
-    stfs f0, -0x8000(r3)
-    stfs f1, -0x8000(r3)
-    stfs f28, -0x8000(r3)
-    stfs f1, -0x8000(r3)
-    psq_l f31, 0x108(r1), 0, 0
-    lfd f31, 0x100(r1)
-    psq_l f30, 0xf8(r1), 0, 0
-    lfd f30, 0xf0(r1)
-    psq_l f29, 0xe8(r1), 0, 0
-    lfd f29, 0xe0(r1)
-    psq_l f28, 0xd8(r1), 0, 0
-    lfd f28, 0xd0(r1)
-    lmw r25, 0xb4(r1)
-    lwz r0, 0x114(r1)
-    mtlr r0
-    addi r1, r1, 0x110
-    blr
+#pragma use_lmw_stmw on
+static inline void GXPosition2f32(float x, float y) {
+    GXFIFO.f32 = x;
+    GXFIFO.f32 = y;
 }
+
+static inline void GXTexCoord2f32(float s, float t) {
+    GXFIFO.f32 = s;
+    GXFIFO.f32 = t;
+}
+
+#pragma use_lmw_stmw on
+extern "C" void DrawColoredQuad(int r, int g, int b, int a, float x, float y, float w, float h) {
+    CamVecs *cam = (CamVecs *)(lbl_80363D30 + 0x30B0);
+    float proj[4][4];
+    float view[3][4];
+
+    GXSetZMode(0, 7, 1);
+    GXSetZCompLoc(0);
+    GXSetBlendMode(1, 4, 5, 0);
+    GXSetViewport(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
+    GXSetScissor(0, 0, 640, 480);
+    C_MTXOrtho(proj, 0.0f, 480.0f, 0.0f, 640.0f, 0.0f, 100.0f);
+    GXSetProjection(proj, 1);
+    Vec3f eye = cam->eye;
+    Vec3f up = cam->up;
+    Vec3f target = cam->target;
+    C_MTXLookAt(view, &eye, &up, &target);
+    GXLoadPosMtxImm(view, 0);
+    GXSetCurrentMtx(0);
+    GXSetNumTexGens(0);
+    GXSetNumTevStages(1);
+    GXSetNumChans(1);
+    GXSetTevOp(0, 4);
+    GXSetTevOrder(0, 0xFF, 0xFF, 4);
+    GXSetChanCtrl(4, 0, 0, 0, 0, 0, 2);
+    GXColorB color = lbl_806DCF38;
+    color.r = r;
+    color.g = g;
+    color.b = b;
+    color.a = a;
+    GXSetChanMatColor(4, color);
+    GXClearVtxDesc();
+    GXSetVtxDesc(9, 1);
+    GXSetVtxAttrFmt(0, 9, 0, 4, 0);
+    GXBegin(0x80, 0, 4);
+    GXPosition2f32(x, y);
+    GXPosition2f32(x + w, y);
+    GXPosition2f32(x + w, y + h);
+    GXPosition2f32(x, y + h);
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw reset
 
 extern "C" void fn_80152930(VObj *p) {
     delete p;
@@ -6559,188 +6177,59 @@ extern "C" unsigned char fn_80153758(StateObj *o) {
     return o->state == 9;
 }
 
-extern "C" asm void fn_8015376C(void) { /* 0x8015376C size:0x2D0 */
-    nofralloc
-    stwu r1, -0xc0(r1)
-    mflr r0
-    stw r0, 0xc4(r1)
-    stw r31, 0xbc(r1)
-    stw r30, 0xb8(r1)
-    stw r29, 0xb4(r1)
-    stw r28, 0xb0(r1)
-    mr r28, r3
-    lis r3, lbl_80363D30@ha
-    addi r29, r3, lbl_80363D30@l
-    addi r3, r28, 0x34
-    bl fn_801F6804
-    lfs f1, lbl_806D8064(r2)
-    li r3, 0xff
-    lfs f3, lbl_806D80C4(r2)
-    li r4, 0xff
-    fmr f2, f1
-    lfs f4, lbl_806D80C8(r2)
-    li r5, 0xff
-    li r6, 0xff
-    bl DrawColoredQuad
-    li r3, 0x0
-    li r4, 0x7
-    li r5, 0x1
-    bl GXSetZMode
-    li r3, 0x0
-    bl GXSetZCompLoc
-    li r3, 0x1
-    li r4, 0x4
-    li r5, 0x5
-    li r6, 0x0
-    bl GXSetBlendMode
-    lfs f1, lbl_806D8064(r2)
-    lfs f3, lbl_806D80C4(r2)
-    fmr f2, f1
-    lfs f4, lbl_806D80C8(r2)
-    lfs f5, lbl_806D806C(r2)
-    lfs f6, lbl_806D8068(r2)
-    bl GXSetViewport
-    li r3, 0x0
-    li r4, 0x0
-    li r5, 0x280
-    li r6, 0x1e0
-    bl GXSetScissor
-    lfs f1, lbl_806D8228(r2)
-    addi r3, r1, 0x64
-    lfs f2, lbl_806D822C(r2)
-    lfs f3, lbl_806D8064(r2)
-    lfs f4, lbl_806D8230(r2)
-    lfs f5, lbl_806D8234(r2)
-    lfs f6, lbl_806D80BC(r2)
-    bl C_MTXOrtho
-    addi r3, r1, 0x64
-    li r4, 0x1
-    bl GXSetProjection
-    lwz r30, 0x30f8(r29)
-    addi r3, r1, 0x34
-    lwz r31, 0x30fc(r29)
-    addi r4, r1, 0x28
-    lwz r12, 0x3100(r29)
-    addi r5, r1, 0x1c
-    lwz r11, 0x3104(r29)
-    addi r6, r1, 0x10
-    lwz r10, 0x3108(r29)
-    lwz r9, 0x310c(r29)
-    lwz r8, 0x3110(r29)
-    lwz r7, 0x3114(r29)
-    lwz r0, 0x3118(r29)
-    stw r30, 0x28(r1)
-    stw r31, 0x2c(r1)
-    stw r12, 0x30(r1)
-    stw r11, 0x1c(r1)
-    stw r10, 0x20(r1)
-    stw r9, 0x24(r1)
-    stw r8, 0x10(r1)
-    stw r7, 0x14(r1)
-    stw r0, 0x18(r1)
-    bl C_MTXLookAt
-    addi r3, r1, 0x34
-    li r4, 0x0
-    bl GXLoadPosMtxImm
-    li r3, 0x0
-    bl GXSetCurrentMtx
-    li r3, 0x1
-    bl GXSetNumTexGens
-    li r3, 0x0
-    li r4, 0x1
-    li r5, 0x4
-    li r6, 0x3c
-    li r7, 0x0
-    li r8, 0x7d
-    bl GXSetTexCoordGen2
-    li r3, 0x1
-    bl GXSetNumTevStages
-    li r3, 0x1
-    bl GXSetNumChans
-    li r3, 0x0
-    li r4, 0x1
-    bl GXSetTevOp
-    li r3, 0x0
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x4
-    bl GXSetTevOrder
-    li r3, 0x4
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    li r7, 0x0
-    li r8, 0x0
-    li r9, 0x2
-    bl GXSetChanCtrl
-    lwz r5, lbl_806D7F64(r2)
-    addi r4, r1, 0x8
-    lbz r0, 0xc(r28)
-    li r3, 0x4
-    stw r5, 0xc(r1)
-    stb r0, 0xf(r1)
-    lwz r0, 0xc(r1)
-    stw r0, 0x8(r1)
-    bl GXSetChanMatColor
-    addi r3, r28, 0x14
-    li r4, 0x0
-    bl GXLoadTexObj
-    bl GXClearVtxDesc
-    li r3, 0x9
-    li r4, 0x1
-    bl GXSetVtxDesc
-    li r3, 0x0
-    li r4, 0x9
-    li r5, 0x0
-    li r6, 0x4
-    li r7, 0x0
-    bl GXSetVtxAttrFmt
-    li r3, 0xd
-    li r4, 0x1
-    bl GXSetVtxDesc
-    li r3, 0x0
-    li r4, 0xd
-    li r5, 0x1
-    li r6, 0x4
-    li r7, 0x0
-    bl GXSetVtxAttrFmt
-    li r3, 0x80
-    li r4, 0x0
-    li r5, 0x4
-    bl GXBegin
-    lfs f5, lbl_806D8238(r2)
-    lis r4, 0xcc01
-    lfs f4, lbl_806D823C(r2)
-    addi r3, r28, 0x34
-    stfs f5, -0x8000(r4)
-    lfs f3, lbl_806D8064(r2)
-    stfs f4, -0x8000(r4)
-    lfs f2, lbl_806D8240(r2)
-    stfs f3, -0x8000(r4)
-    lfs f1, lbl_806D8068(r2)
-    stfs f3, -0x8000(r4)
-    lfs f0, lbl_806D8244(r2)
-    stfs f2, -0x8000(r4)
-    stfs f4, -0x8000(r4)
-    stfs f1, -0x8000(r4)
-    stfs f3, -0x8000(r4)
-    stfs f2, -0x8000(r4)
-    stfs f0, -0x8000(r4)
-    stfs f1, -0x8000(r4)
-    stfs f1, -0x8000(r4)
-    stfs f5, -0x8000(r4)
-    stfs f0, -0x8000(r4)
-    stfs f3, -0x8000(r4)
-    stfs f1, -0x8000(r4)
-    bl fn_801F6804
-    lwz r0, 0xc4(r1)
-    lwz r31, 0xbc(r1)
-    lwz r30, 0xb8(r1)
-    lwz r29, 0xb4(r1)
-    lwz r28, 0xb0(r1)
-    mtlr r0
-    addi r1, r1, 0xc0
-    blr
+extern "C" void fn_8015376C(TexFadePanel *self) {
+    CamVecs *cam = (CamVecs *)(lbl_80363D30 + 0x30F8);
+    float proj[4][4];
+    float view[3][4];
+
+    fn_801F6804(self->tlut);
+    DrawColoredQuad(0xFF, 0xFF, 0xFF, 0xFF, 0.0f, 0.0f, 640.0f, 480.0f);
+    GXSetZMode(0, 7, 1);
+    GXSetZCompLoc(0);
+    GXSetBlendMode(1, 4, 5, 0);
+    GXSetViewport(0.0f, 0.0f, 640.0f, 480.0f, -1.0f, 1.0f);
+    GXSetScissor(0, 0, 640, 480);
+    C_MTXOrtho(proj, -23.0f, 448.0f, 0.0f, 608.0f, -100.0f, 100.0f);
+    GXSetProjection(proj, 1);
+    Vec3f eye = cam->eye;
+    Vec3f up = cam->up;
+    Vec3f target = cam->target;
+    C_MTXLookAt(view, &eye, &up, &target);
+    GXLoadPosMtxImm(view, 0);
+    GXSetCurrentMtx(0);
+    GXSetNumTexGens(1);
+    GXSetTexCoordGen2(0, 1, 4, 0x3C, 0, 0x7D);
+    GXSetNumTevStages(1);
+    GXSetNumChans(1);
+    GXSetTevOp(0, 1);
+    GXSetTevOrder(0, 0, 0, 4);
+    GXSetChanCtrl(4, 0, 0, 0, 0, 0, 2);
+    GXColorB color = {0xFF, 0xFF, 0xFF, self->alpha};
+    GXSetChanMatColor(4, color);
+    GXLoadTexObj(self->texObj, 0);
+    GXClearVtxDesc();
+    GXSetVtxDesc(9, 1);
+    GXSetVtxAttrFmt(0, 9, 0, 4, 0);
+    GXSetVtxDesc(13, 1);
+    GXSetVtxAttrFmt(0, 13, 1, 4, 0);
+    GXBegin(0x80, 0, 4);
+    {
+        float left = 117.0f;
+        float top = 154.0f;
+        float right = 493.0f;
+        float bottom = 258.0f;
+        float u0 = 0.0f;
+        float u1 = 1.0f;
+        GXPosition2f32(left, top);
+        GXTexCoord2f32(u0, u0);
+        GXPosition2f32(right, top);
+        GXTexCoord2f32(u1, u0);
+        GXPosition2f32(right, bottom);
+        GXTexCoord2f32(u1, u1);
+        GXPosition2f32(left, bottom);
+        GXTexCoord2f32(u0, u1);
+    }
+    fn_801F6804(self->tlut);
 }
 
 extern "C" void fn_80153A3C(VObj *p) {
@@ -6785,188 +6274,59 @@ extern "C" unsigned char fn_80153BEC(StateObj *o) {
     return o->state == 9;
 }
 
-extern "C" asm void fn_80153C00(void) { /* 0x80153C00 size:0x2D0 */
-    nofralloc
-    stwu r1, -0xc0(r1)
-    mflr r0
-    stw r0, 0xc4(r1)
-    stw r31, 0xbc(r1)
-    stw r30, 0xb8(r1)
-    stw r29, 0xb4(r1)
-    stw r28, 0xb0(r1)
-    mr r28, r3
-    lis r3, lbl_80363D30@ha
-    addi r29, r3, lbl_80363D30@l
-    addi r3, r28, 0x34
-    bl fn_801F6804
-    lfs f1, lbl_806D8064(r2)
-    li r3, 0xff
-    lfs f3, lbl_806D80C4(r2)
-    li r4, 0xff
-    fmr f2, f1
-    lfs f4, lbl_806D80C8(r2)
-    li r5, 0xff
-    li r6, 0xff
-    bl DrawColoredQuad
-    li r3, 0x0
-    li r4, 0x7
-    li r5, 0x1
-    bl GXSetZMode
-    li r3, 0x0
-    bl GXSetZCompLoc
-    li r3, 0x1
-    li r4, 0x4
-    li r5, 0x5
-    li r6, 0x0
-    bl GXSetBlendMode
-    lfs f1, lbl_806D8064(r2)
-    lfs f3, lbl_806D80C4(r2)
-    fmr f2, f1
-    lfs f4, lbl_806D80C8(r2)
-    lfs f5, lbl_806D806C(r2)
-    lfs f6, lbl_806D8068(r2)
-    bl GXSetViewport
-    li r3, 0x0
-    li r4, 0x0
-    li r5, 0x280
-    li r6, 0x1e0
-    bl GXSetScissor
-    lfs f1, lbl_806D8228(r2)
-    addi r3, r1, 0x64
-    lfs f2, lbl_806D822C(r2)
-    lfs f3, lbl_806D8064(r2)
-    lfs f4, lbl_806D8230(r2)
-    lfs f5, lbl_806D8234(r2)
-    lfs f6, lbl_806D80BC(r2)
-    bl C_MTXOrtho
-    addi r3, r1, 0x64
-    li r4, 0x1
-    bl GXSetProjection
-    lwz r30, 0x30d4(r29)
-    addi r3, r1, 0x34
-    lwz r31, 0x30d8(r29)
-    addi r4, r1, 0x28
-    lwz r12, 0x30dc(r29)
-    addi r5, r1, 0x1c
-    lwz r11, 0x30e0(r29)
-    addi r6, r1, 0x10
-    lwz r10, 0x30e4(r29)
-    lwz r9, 0x30e8(r29)
-    lwz r8, 0x30ec(r29)
-    lwz r7, 0x30f0(r29)
-    lwz r0, 0x30f4(r29)
-    stw r30, 0x28(r1)
-    stw r31, 0x2c(r1)
-    stw r12, 0x30(r1)
-    stw r11, 0x1c(r1)
-    stw r10, 0x20(r1)
-    stw r9, 0x24(r1)
-    stw r8, 0x10(r1)
-    stw r7, 0x14(r1)
-    stw r0, 0x18(r1)
-    bl C_MTXLookAt
-    addi r3, r1, 0x34
-    li r4, 0x0
-    bl GXLoadPosMtxImm
-    li r3, 0x0
-    bl GXSetCurrentMtx
-    li r3, 0x1
-    bl GXSetNumTexGens
-    li r3, 0x0
-    li r4, 0x1
-    li r5, 0x4
-    li r6, 0x3c
-    li r7, 0x0
-    li r8, 0x7d
-    bl GXSetTexCoordGen2
-    li r3, 0x1
-    bl GXSetNumTevStages
-    li r3, 0x1
-    bl GXSetNumChans
-    li r3, 0x0
-    li r4, 0x1
-    bl GXSetTevOp
-    li r3, 0x0
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x4
-    bl GXSetTevOrder
-    li r3, 0x4
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    li r7, 0x0
-    li r8, 0x0
-    li r9, 0x2
-    bl GXSetChanCtrl
-    lwz r5, lbl_806D7F60(r2)
-    addi r4, r1, 0x8
-    lbz r0, 0xc(r28)
-    li r3, 0x4
-    stw r5, 0xc(r1)
-    stb r0, 0xf(r1)
-    lwz r0, 0xc(r1)
-    stw r0, 0x8(r1)
-    bl GXSetChanMatColor
-    addi r3, r28, 0x14
-    li r4, 0x0
-    bl GXLoadTexObj
-    bl GXClearVtxDesc
-    li r3, 0x9
-    li r4, 0x1
-    bl GXSetVtxDesc
-    li r3, 0x0
-    li r4, 0x9
-    li r5, 0x0
-    li r6, 0x4
-    li r7, 0x0
-    bl GXSetVtxAttrFmt
-    li r3, 0xd
-    li r4, 0x1
-    bl GXSetVtxDesc
-    li r3, 0x0
-    li r4, 0xd
-    li r5, 0x1
-    li r6, 0x4
-    li r7, 0x0
-    bl GXSetVtxAttrFmt
-    li r3, 0x80
-    li r4, 0x0
-    li r5, 0x4
-    bl GXBegin
-    lfs f5, lbl_806D8238(r2)
-    lis r4, 0xcc01
-    lfs f4, lbl_806D823C(r2)
-    addi r3, r28, 0x34
-    stfs f5, -0x8000(r4)
-    lfs f3, lbl_806D8064(r2)
-    stfs f4, -0x8000(r4)
-    lfs f2, lbl_806D8240(r2)
-    stfs f3, -0x8000(r4)
-    lfs f1, lbl_806D8068(r2)
-    stfs f3, -0x8000(r4)
-    lfs f0, lbl_806D8244(r2)
-    stfs f2, -0x8000(r4)
-    stfs f4, -0x8000(r4)
-    stfs f1, -0x8000(r4)
-    stfs f3, -0x8000(r4)
-    stfs f2, -0x8000(r4)
-    stfs f0, -0x8000(r4)
-    stfs f1, -0x8000(r4)
-    stfs f1, -0x8000(r4)
-    stfs f5, -0x8000(r4)
-    stfs f0, -0x8000(r4)
-    stfs f3, -0x8000(r4)
-    stfs f1, -0x8000(r4)
-    bl fn_801F6790
-    lwz r0, 0xc4(r1)
-    lwz r31, 0xbc(r1)
-    lwz r30, 0xb8(r1)
-    lwz r29, 0xb4(r1)
-    lwz r28, 0xb0(r1)
-    mtlr r0
-    addi r1, r1, 0xc0
-    blr
+extern "C" void fn_80153C00(TexFadePanel *self) {
+    CamVecs *cam = (CamVecs *)(lbl_80363D30 + 0x30D4);
+    float proj[4][4];
+    float view[3][4];
+
+    fn_801F6804(self->tlut);
+    DrawColoredQuad(0xFF, 0xFF, 0xFF, 0xFF, 0.0f, 0.0f, 640.0f, 480.0f);
+    GXSetZMode(0, 7, 1);
+    GXSetZCompLoc(0);
+    GXSetBlendMode(1, 4, 5, 0);
+    GXSetViewport(0.0f, 0.0f, 640.0f, 480.0f, -1.0f, 1.0f);
+    GXSetScissor(0, 0, 640, 480);
+    C_MTXOrtho(proj, -23.0f, 448.0f, 0.0f, 608.0f, -100.0f, 100.0f);
+    GXSetProjection(proj, 1);
+    Vec3f eye = cam->eye;
+    Vec3f up = cam->up;
+    Vec3f target = cam->target;
+    C_MTXLookAt(view, &eye, &up, &target);
+    GXLoadPosMtxImm(view, 0);
+    GXSetCurrentMtx(0);
+    GXSetNumTexGens(1);
+    GXSetTexCoordGen2(0, 1, 4, 0x3C, 0, 0x7D);
+    GXSetNumTevStages(1);
+    GXSetNumChans(1);
+    GXSetTevOp(0, 1);
+    GXSetTevOrder(0, 0, 0, 4);
+    GXSetChanCtrl(4, 0, 0, 0, 0, 0, 2);
+    GXColorB color = {0xFF, 0xFF, 0xFF, self->alpha};
+    GXSetChanMatColor(4, color);
+    GXLoadTexObj(self->texObj, 0);
+    GXClearVtxDesc();
+    GXSetVtxDesc(9, 1);
+    GXSetVtxAttrFmt(0, 9, 0, 4, 0);
+    GXSetVtxDesc(13, 1);
+    GXSetVtxAttrFmt(0, 13, 1, 4, 0);
+    GXBegin(0x80, 0, 4);
+    {
+        float left = 117.0f;
+        float top = 154.0f;
+        float right = 493.0f;
+        float bottom = 258.0f;
+        float u0 = 0.0f;
+        float u1 = 1.0f;
+        GXPosition2f32(left, top);
+        GXTexCoord2f32(u0, u0);
+        GXPosition2f32(right, top);
+        GXTexCoord2f32(u1, u0);
+        GXPosition2f32(right, bottom);
+        GXTexCoord2f32(u1, u1);
+        GXPosition2f32(left, bottom);
+        GXTexCoord2f32(u0, u1);
+    }
+    fn_801F6790(self->tlut);
 }
 
 extern "C" void fn_80153ED0(VObj *p) {
@@ -10424,238 +9784,83 @@ extern "C" CamPanel *fn_80157278(CamPanel *self, short flag) {
     return self;
 }
 
-extern "C" asm void fn_80157378(void) { /* 0x80157378 size:0x360 */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    stw r0, 0x54(r1)
-    stfd f31, 0x40(r1)
-    psq_st f31, 0x48(r1), 0, 0
-    stfd f30, 0x30(r1)
-    psq_st f30, 0x38(r1), 0, 0
-    stfd f29, 0x20(r1)
-    psq_st f29, 0x28(r1), 0, 0
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    mr r30, r3
-    lwz r0, 0x4(r3)
-    cmpwi r0, 0x9
-    beq fn_80157378_L_801576A8
-    lfs f4, 0xc(r30)
-    lfs f3, lbl_806D8354(r2)
-    fcmpo cr0, f4, f3
-    cror eq, lt, eq
-    bne fn_80157378_L_801573DC
-    fdivs f1, f4, f3
-    lfs f2, lbl_806D8350(r2)
-    lfs f0, lbl_806D81D4(r2)
-    fnmsubs f31, f2, f1, f0
-    b fn_80157378_L_801573F4
-    fn_80157378_L_801573DC:
-    lfs f0, lbl_806D835C(r2)
-    lfs f2, lbl_806D8350(r2)
-    fsubs f1, f4, f0
-    lfs f0, lbl_806D8358(r2)
-    fdivs f1, f1, f3
-    fnmsubs f31, f2, f1, f0
-    fn_80157378_L_801573F4:
-    lfs f0, lbl_806D8294(r2)
-    lwz r0, 0x18(r30)
-    fdivs f4, f4, f0
-    lfs f3, lbl_806D8360(r2)
-    lfs f2, lbl_806D8358(r2)
-    cmpwi r0, 0x1
-    lfs f1, lbl_806D8368(r2)
-    lfs f0, lbl_806D8364(r2)
-    fnmsubs f30, f3, f4, f2
-    fnmsubs f29, f1, f4, f0
-    bne fn_80157378_L_80157488
-    lfs f1, lbl_806D80B8(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D8070(r2)
-    li r4, 0x72
-    li r5, 0x0
-    bl fn_801698B4
-    fmr f1, f31
-    lfs f2, lbl_806D836C(r2)
-    li r3, 0x0
-    li r4, 0x71
-    li r5, 0x1
-    bl fn_801698B4
-    fmr f1, f30
-    lfs f2, lbl_806D8370(r2)
-    li r3, 0x0
-    li r4, 0x71
-    li r5, 0x1
-    bl fn_801698B4
-    fmr f1, f29
-    lfs f2, lbl_806D8374(r2)
-    lfs f3, lbl_806D8378(r2)
-    li r3, 0x0
-    li r4, 0x70
-    li r5, 0x0
-    bl fn_801696E4
-    b fn_80157378_L_801574EC
-    fn_80157378_L_80157488:
-    lfs f1, lbl_806D80B8(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D8070(r2)
-    li r4, 0x9
-    li r5, 0x0
-    bl fn_801698B4
-    fmr f1, f31
-    lfs f2, lbl_806D836C(r2)
-    li r3, 0x0
-    li r4, 0x8
-    li r5, 0x1
-    bl fn_801698B4
-    fmr f1, f30
-    lfs f2, lbl_806D8370(r2)
-    li r3, 0x0
-    li r4, 0x8
-    li r5, 0x1
-    bl fn_801698B4
-    fmr f1, f29
-    lfs f2, lbl_806D8374(r2)
-    lfs f3, lbl_806D8378(r2)
-    li r3, 0x0
-    li r4, 0x7
-    li r5, 0x0
-    bl fn_801696E4
-    fn_80157378_L_801574EC:
-    lfs f3, lbl_806D837C(r2)
-    li r3, 0x1
-    lfs f1, lbl_806D80B8(r2)
-    li r4, 0x55c
-    fmr f4, f3
-    lfs f2, lbl_806D81C0(r2)
-    li r5, 0x0
-    bl fn_801697C0
-    lbz r0, 0x1c(r30)
-    cmplwi r0, 0x0
-    beq fn_80157378_L_80157530
-    lfs f1, lbl_806D80B8(r2)
-    li r3, 0x1
-    lfs f2, lbl_806D80E0(r2)
-    li r4, 0x50d
-    li r5, 0x0
-    bl fn_801698B4
-    fn_80157378_L_80157530:
-    lwz r31, 0x10(r30)
-    cmplwi r31, 0x0
-    beq fn_80157378_L_80157580
-    bl GetVBlankFlag
-    clrlwi. r0, r3, 24
-    beq fn_80157378_L_80157580
-    lbz r0, 0x0(r31)
-    cmplwi r0, 0x0
-    beq fn_80157378_L_80157580
-    addi r3, r1, 0x8
-    li r4, 0x0
-    bl NamCam_GetImageHandle
-    cmpwi r3, 0x1
-    bne fn_80157378_L_80157580
-    lwz r3, 0x8(r1)
-    addi r5, r1, 0xc
-    lwz r4, 0x4(r31)
-    bl NamCam_LoadImage
-    li r0, 0x1
-    stb r0, 0x1(r31)
-    fn_80157378_L_80157580:
-    lfs f2, 0xc(r30)
-    lfs f1, lbl_806D8068(r2)
-    lfs f0, lbl_806D8220(r2)
-    fadds f1, f2, f1
-    stfs f1, 0xc(r30)
-    lfs f1, 0xc(r30)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_80157378_L_801575AC
-    lfs f0, lbl_806D8064(r2)
-    stfs f0, 0xc(r30)
-    fn_80157378_L_801575AC:
-    lwz r0, 0x4(r30)
-    lfs f29, lbl_806D8060(r2)
-    cmpwi r0, 0x1
-    beq fn_80157378_L_80157644
-    bge fn_80157378_L_801575CC
-    cmpwi r0, 0x0
-    bge fn_80157378_L_801575D8
-    b fn_80157378_L_801576A8
-    fn_80157378_L_801575CC:
-    cmpwi r0, 0x3
-    bge fn_80157378_L_801576A8
-    b fn_80157378_L_8015766C
-    fn_80157378_L_801575D8:
-    lfs f0, 0x8(r30)
-    lfs f3, lbl_806D8068(r2)
-    fadds f0, f0, f3
-    stfs f0, 0x8(r30)
-    lfs f0, 0x8(r30)
-    fcmpo cr0, f0, f29
-    bge fn_80157378_L_8015760C
-    fdivs f0, f0, f29
-    lfs f2, lbl_806D8064(r2)
-    fsubs f1, f3, f0
-    bl Saturate_Double
-    stfs f1, 0x14(r30)
-    b fn_80157378_L_80157614
-    fn_80157378_L_8015760C:
-    lfs f0, lbl_806D8064(r2)
-    stfs f0, 0x14(r30)
-    fn_80157378_L_80157614:
-    lfs f1, 0x8(r30)
-    lfs f0, lbl_806D80EC(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_80157378_L_801576A8
-    li r3, 0x5
-    bl SetSyncTarget
-    li r0, 0x1
-    lfs f0, lbl_806D8064(r2)
-    stw r0, 0x4(r30)
-    stfs f0, 0x8(r30)
-    b fn_80157378_L_801576A8
-    fn_80157378_L_80157644:
-    lfs f0, lbl_806D8064(r2)
-    stfs f0, 0x14(r30)
-    bl PcbSync_AllKartsInValidSelectState
-    clrlwi. r0, r3, 24
-    beq fn_80157378_L_801576A8
-    li r0, 0x2
-    lfs f0, lbl_806D8064(r2)
-    stw r0, 0x4(r30)
-    stfs f0, 0x8(r30)
-    b fn_80157378_L_801576A8
-    fn_80157378_L_8015766C:
-    lfs f3, lbl_806D8068(r2)
-    lfs f0, 0x8(r30)
-    lfs f2, lbl_806D8064(r2)
-    fadds f0, f0, f3
-    stfs f0, 0x8(r30)
-    lfs f0, 0x8(r30)
-    fdivs f1, f0, f29
-    bl Saturate_Double
-    stfs f1, 0x14(r30)
-    lfs f0, 0x8(r30)
-    fcmpo cr0, f0, f29
-    cror eq, gt, eq
-    bne fn_80157378_L_801576A8
-    li r0, 0x9
-    stw r0, 0x4(r30)
-    fn_80157378_L_801576A8:
-    psq_l f31, 0x48(r1), 0, 0
-    lfd f31, 0x40(r1)
-    psq_l f30, 0x38(r1), 0, 0
-    lfd f30, 0x30(r1)
-    psq_l f29, 0x28(r1), 0, 0
-    lfd f29, 0x20(r1)
-    lwz r31, 0x1c(r1)
-    lwz r0, 0x54(r1)
-    lwz r30, 0x18(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
+extern "C" void fn_80157378(NamCamPanel *self) {
+    float x;
+    float y1;
+    float y2;
+    float u;
+    float fade;
+    NamCamObj *cam;
+    char info[4];
+    void *handle;
+
+    if (self->state == 9) {
+        return;
+    }
+    if (self->scroll <= 149.0f) {
+        x = 317.0f - 438.0f * (self->scroll / 149.0f);
+    } else {
+        x = 758.0f - 438.0f * ((self->scroll - 150.0f) / 149.0f);
+    }
+    u = self->scroll / 299.0f;
+    y1 = 758.0f - 879.0f * u;
+    y2 = 876.0f - 1120.0f * u;
+    if (self->mode == 1) {
+        fn_801698B4(0, 0x72, 0, 320.0f, 240.0f);
+        fn_801698B4(0, 0x71, 1, x, 95.0f);
+        fn_801698B4(0, 0x71, 1, y1, 288.0f);
+        fn_801696E4(0, 0x70, 0, y2, 411.0f, -1.570796f);
+    } else {
+        fn_801698B4(0, 0x9, 0, 320.0f, 240.0f);
+        fn_801698B4(0, 0x8, 1, x, 95.0f);
+        fn_801698B4(0, 0x8, 1, y1, 288.0f);
+        fn_801696E4(0, 0x7, 0, y2, 411.0f, -1.570796f);
+    }
+    fn_801697C0(1, 0x55C, 0, 320.0f, 144.0f, 0.75f, 0.75f);
+    if (self->logo) {
+        fn_801698B4(1, 0x50D, 0, 320.0f, 160.0f);
+    }
+    cam = self->cam;
+    if (cam != 0 && GetVBlankFlag() && cam->active) {
+        if (NamCam_GetImageHandle(&handle, 0) == 1) {
+            NamCam_LoadImage(handle, cam->buf, info);
+            cam->loaded = 1;
+        }
+    }
+    self->scroll += 1.0f;
+    if (self->scroll >= 300.0f) {
+        self->scroll = 0.0f;
+    }
+    fade = lbl_806D8060;
+    switch (self->state) {
+    case 0:
+        self->t += 1.0f;
+        if (self->t < fade) {
+            self->alpha = Saturate_Double(1.0f - self->t / fade, 0.0f, 1.0f);
+        } else {
+            self->alpha = 0.0f;
+        }
+        if (self->t >= 600.0f) {
+            SetSyncTarget(5);
+            self->state = 1;
+            self->t = 0.0f;
+        }
+        break;
+    case 1:
+        self->alpha = 0.0f;
+        if (PcbSync_AllKartsInValidSelectState()) {
+            self->state = 2;
+            self->t = 0.0f;
+        }
+        break;
+    case 2:
+        self->t += 1.0f;
+        self->alpha = Saturate_Double(self->t / fade, 0.0f, 1.0f);
+        if (self->t >= fade) {
+            self->state = 9;
+        }
+        break;
+    }
 }
 
 extern "C" unsigned char fn_801576D8(StateObj *o) {
