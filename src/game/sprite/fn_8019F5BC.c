@@ -1,16 +1,29 @@
 #include "game/SpriteAnimTraversal_private.h"
 
+static inline float SpriteAnim_RotateX(float x, float y, float angle) {
+    float c = (float)cos(angle);
+    float sn = (float)sin(angle);
+    return x * c - y * sn;
+}
+
+static inline float SpriteAnim_RotateY(float x, float y, float angle) {
+    float c = (float)cos(angle);
+    float sn = (float)sin(angle);
+    return x * sn + y * c;
+}
+
 unsigned char fn_8019F5BC(SpriteAnim *s, SpriteAnimFrame *frames,
                              int r, int g, int b, int a, int wanted, SpriteAnimSample *out,
                              float x, float y, float sx, float sy, float angle, float alpha) {
-    int ids[120], sorted[120];
+    int sorted[120], ids[120];
+    int *nextId = ids;
     int count = 0, i, j, rank;
     SpriteAnimFrame *scan;
     short red, green, blue, opacity;
     for (i = 0; i < 120; i++) { ids[i] = -1; sorted[i] = -1; }
     for (scan = frames;; scan++) {
         for (i = 0; i < count; i++) { if (ids[i] == scan->layer) break; }
-        if (i == count) ids[count++] = scan->layer;
+        if (i == count) { *nextId++ = scan->layer; count++; }
         if (scan->flags & 1) break;
         if (count >= 120) return 0;
     }
@@ -37,16 +50,8 @@ unsigned char fn_8019F5BC(SpriteAnim *s, SpriteAnimFrame *frames,
         }
         if (resource == -1 && child == -1) continue;
         f = &frames[last];
-        {
-            float fx = f->x, fy = f->y;
-            float c = (float)cos(angle);
-            float sn = (float)sin(angle);
-            float fx2 = f->x, fy2 = f->y;
-            px = (fx * c - fy * sn) * (float)__fabs(sx) + x;
-            c = (float)cos(angle);
-            sn = (float)sin(angle);
-            py = (fx2 * sn + fy2 * c) * (float)__fabs(sy) + y;
-        }
+        px = SpriteAnim_RotateX(f->x, f->y, angle) * (float)__fabs(sx) + x;
+        py = SpriteAnim_RotateY(f->x, f->y, angle) * (float)__fabs(sy) + y;
         scaleX = sx * f->scaleX; scaleY = sy * f->scaleY;
         rotation = angle + f->rotation;
         newAlpha = alpha * f->alpha;
