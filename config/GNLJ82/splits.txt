@@ -8718,6 +8718,16 @@ game/fn_801B7CD0.cpp:
 	extabindex  start:0x800278D8 end:0x800278E4
 	.text       start:0x801B7CD0 end:0x801B7EF8
 
+game/fn_801B7EF8.c:
+	extab       start:0x80012C80 end:0x80012C88
+	extabindex  start:0x800278E4 end:0x800278F0
+	.text       start:0x801B7EF8 end:0x801B8154
+
+game/SetScreenBrightness.c:
+	extab       start:0x80012C88 end:0x80012C90
+	extabindex  start:0x800278F0 end:0x800278FC
+	.text       start:0x801B8154 end:0x801B833C
+
 game/InitBGM.c:
 	extab       start:0x80012C90 end:0x80012C98
 	extabindex  start:0x800278FC end:0x80027908
@@ -8775,6 +8785,17 @@ game/SetupBgSprites.cpp:
 	extab       start:0x80012D40 end:0x80012D88
 	extabindex  start:0x80027974 end:0x80027980
 	.text       start:0x801B8A80 end:0x801B8BD8
+
+game/fn_801B8BD8.cpp:
+	extab       start:0x80012D88 end:0x80012D90
+	extabindex  start:0x80027980 end:0x8002798C
+	.text       start:0x801B8BD8 end:0x801B8EC0
+
+game/MenuScene_Dispatch.cpp:
+	extab       start:0x80012D90 end:0x80012EC8
+	extabindex  start:0x8002798C end:0x80027998
+	.text       start:0x801B8EC0 end:0x801B9740
+	.data       start:0x8049A77C end:0x8049A844
 
 game/fn_801B9740.cpp:
 	extab       start:0x80012EC8 end:0x80012ED0

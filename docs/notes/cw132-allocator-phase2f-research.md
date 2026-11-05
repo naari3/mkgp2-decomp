@@ -1436,3 +1436,8 @@ TexMgr_SetTexture 801F91EC: direct glyph loops produce 92.45378% text (current c
 Source: Codex worker c7_oe_asm2c_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 820 B.
 
 MiniGame_GetTimerValue (ZoneList.c): an inlined `return x > 3;` gave its web a higher key than the if/else-merged cup web (cup r30 / ura r31). Writing the inline as `return x > 3 ? 1 : 0;` gives the same branchless code but a later-born web, so cup=r31 / ura=r30 / cc=r29 match. Separately, `if (f() == 0)` keeps the then-arm first; `if (!f())` is folded and the arms are swapped.
+
+## c8_s37_20261105
+Source: Codex worker c8_s37_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1232 B.
+
+c8_s37: MenuScene_Dispatch split y/scale expressions with a cached integer frame and fp_contract off produce exact 312-byte owned EH and 200-byte table but leave seven FP operand/register differences (99.90809% text). Swapping named float declaration order is invariant, consistent with short-lived expression webs. Retained NonMatching; no further permutations.

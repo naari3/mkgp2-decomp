@@ -11248,5 +11248,27 @@
     "@111": "jumptable_804EEFBC",
     "@112": "@etb_8001E61C",
     "@113": "@eti_8002B664"
+  },
+  "src/game/MenuScene_Dispatch.cpp": {
+    "__ct__14MenuEntrySceneFv": "clFlowEntry_Init",
+    "__ct__14MenuTitleSceneFv": "clFlowTitle_Init",
+    "__ct__16MenuAttractSceneFv": "clFlowAttract_Init",
+    "__ct__24MenuUnknown8020E0E0SceneFv": "fn_8020E0E0",
+    "__ct__24MenuUnknown8020D850SceneFv": "fn_8020D850",
+    "__ct__13MenuCardSceneFv": "clFlowCard_Init",
+    "__ct__14MenuClassSceneFv": "clFlowClass_Init",
+    "__ct__23MenuFrameSelectionSceneFv": "FrameSelection_Init",
+    "__ct__13MenuKartSceneFv": "clFlowKart_Init",
+    "__ct__15MenuFigureSceneFv": "clFlowFigure_Init",
+    "__ct__12MenuCupSceneFv": "clFlowCup_Init",
+    "__ct__14MenuRoundSceneFv": "clFlowRound_Init",
+    "__ct__15MenuCourseSceneFv": "clFlowCourse_Init",
+    "__ct__19MenuItemSelectSceneFv": "clFlowItemSelect_Init",
+    "__ct__13MenuItemSceneFv": "clFlowItem_Init",
+    "__ct__17MenuGpPleaseSceneFv": "clFlowGpPlease_Init",
+    "__ct__17MenuTaPleaseSceneFv": "clFlowTaPlease_Init",
+    "__ct__24Menuranking_displaySceneFv": "ranking_display",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
