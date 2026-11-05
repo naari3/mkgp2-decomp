@@ -9405,6 +9405,11 @@ game/fn_801F8E90.c:
 game/fn_801F8FCC.c:
 	.text       start:0x801F8FCC end:0x801F9014
 
+game/TexMgr_SetTexture.cpp:
+	extab       start:0x800176B8 end:0x800176C0
+	extabindex  start:0x8002909C end:0x800290A8
+	.text       start:0x801F91EC end:0x801F93C8
+
 game/fn_801F93C8.c:
 	.text       start:0x801F93C8 end:0x801F93F8
 

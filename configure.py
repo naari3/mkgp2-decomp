@@ -2395,6 +2395,7 @@ config.libs = [
             Object(Matching, "game/fn_801F6804.c"),
             Object(Matching, "game/fn_801F8E58.c"),
             Object(Matching, "game/fn_801F8FCC.c"),
+            Object(Matching, "game/TexMgr_SetTexture.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801F93C8.c"),
             Object(Matching, "game/fn_801F98CC.c"),
             Object(Matching, "game/fn_801FBD14.c"),

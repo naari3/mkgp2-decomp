@@ -1426,3 +1426,8 @@ frida で `DAT_005e21cc` の当該 bit を読めば融合可否を事前確認�
 Source: Codex worker c6_nt11_8016c850_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 984 B.
 
 fn_80173FA4 ZoneVisibility Update: function-scope unsigned mask and Zone* cursor changes 98.89831% to 99.49152% with exact 236-byte text size and exact 8-byte extab/12-byte extabindex. Remaining mask/array-offset registers swap r28/r29; extracting whole ApplyMask inline helper regresses to 94.49152%. Retain NonMatching.
+
+## c6_nt12_stl_20261105
+Source: Codex worker c6_nt12_stl_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 476 B.
+
+TexMgr_SetTexture 801F91EC: direct glyph loops produce 92.45378% text (current character loads hoisted out of inner searches). Separate inline LookupWide/LookupNarrow preserve target reloads and reach exact size/owned EH, 98.06723% text; count/out/cursor are r3/r4/r5 versus target r4/r5/r6 and scratch r6 versus r3. Extracting conversion verbatim into static inline DecodeText(TextDraw801F *self, char *cursor), called after OSRestoreInterrupts, resolves all registers under GC/1.3.2. All text/extab/extabindex 100%; full source-linked DOL SHA-1 OK.
