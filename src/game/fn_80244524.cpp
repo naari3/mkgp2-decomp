@@ -43,6 +43,9 @@ extern "C" void fn_80244524(GaugeDisplay *self,unsigned char visible) {
         case 1:
             if (count < self->count14) { self->count14=count; changed=1; }
             break;
+        case 2:
+        default:
+            goto draw;
         case 3:
             if (banana < self->count1c) { changed=1; self->count1c=banana; }
             if (shell < self->count20) { changed=1; self->count20=shell; }
@@ -56,6 +59,7 @@ extern "C" void fn_80244524(GaugeDisplay *self,unsigned char visible) {
             self->state=5;
         }
     }
+draw:
     ResCtrl r;
     int layer=self->layer;
     float scale=self->scale;
@@ -65,24 +69,27 @@ extern "C" void fn_80244524(GaugeDisplay *self,unsigned char visible) {
         self->mark->scale=scale;
         if (!fn_80245420(self->mark,visible)) { delete self->mark; self->mark=0; }
     }
-    float size;
-    size=scale*self->f34->Value();
-    fn_80121E10(&r);
-    r.resId=0xc2d;
-    offset=offset*scale;
-    r.Show(self->x,self->y+offset,1.0f);
-    r.SetScale(size);
-    r.SetColor(MaskColor(self->f38->Value()));
-    if (visible) fn_8011FAFC(&r,layer);
-    size=scale*self->f3c->Value();
-    fn_80121E10(&r);
-    r.resId=self->resource;
-    r.Show(self->x,self->y+offset,1.0f);
-    r.SetScale(size);
-    r.SetColor(MaskColor(self->f40->Value()));
-    if (visible) fn_8011FAFC(&r,layer);
-    r.mode=3;
-    r.SetColor(MaskColor(self->f44->Value()));
-    if (visible) fn_8011FAFC(&r,layer);
+    {
+        float size=scale*self->f34->Value();
+        fn_80121E10(&r);
+        r.resId=0xc2d;
+        offset=offset*scale;
+        r.Show(self->x,self->y+offset,1.0f);
+        r.SetScale(size);
+        r.SetColor(MaskColor(self->f38->Value()));
+        if (visible) fn_8011FAFC(&r,layer);
+    }
+    {
+        float size=scale*self->f3c->Value();
+        fn_80121E10(&r);
+        r.resId=self->resource;
+        r.Show(self->x,self->y+offset,1.0f);
+        r.SetScale(size);
+        r.SetColor(MaskColor(self->f40->Value()));
+        if (visible) fn_8011FAFC(&r,layer);
+        r.mode=3;
+        r.SetColor(MaskColor(self->f44->Value()));
+        if (visible) fn_8011FAFC(&r,layer);
+    }
     fn_80244840(self);
 }
