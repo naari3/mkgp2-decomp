@@ -10831,5 +10831,17 @@
     "__ct__6SpriteFiii": "Sprite_InitWithAnim",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/CupTile_StateChange.cpp": {
+    "__ct__10TileSpriteFiii": "Sprite_InitWithAnim",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@139": "@etb_80014234",
+    "@140": "@eti_80027DF4"
+  },
+  "src/game/fn_801C9288.cpp": {
+    "__ct__10TileSpriteFiii": "Sprite_InitWithAnim",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

@@ -8866,10 +8866,20 @@ game/fn_801C5C34.cpp:
 	extabindex  start:0x80027DC4 end:0x80027DD0
 	.text       start:0x801C5C34 end:0x801C5E00
 
+game/CupTile_StateChange.cpp:
+	extab       start:0x80014234 end:0x8001428C
+	extabindex  start:0x80027DF4 end:0x80027E00
+	.text       start:0x801C6C0C end:0x801C7360
+
 game/clFlowCup.c:
 	extab       start:0x8001428C end:0x8001457C
 	extabindex  start:0x80027E00 end:0x80027E30
 	.text       start:0x801C7360 end:0x801C9288
+
+game/fn_801C9288.cpp:
+	extab       start:0x8001457C end:0x800145E4
+	extabindex  start:0x80027E30 end:0x80027E3C
+	.text       start:0x801C9288 end:0x801C9C28
 
 game/clFlowRound.c:
 	extab       start:0x800145E4 end:0x80014720
