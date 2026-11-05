@@ -6,13 +6,43 @@ extern unsigned char lbl_806D7B0C[1];
  */
 #pragma cplusplus on
 
+extern "C" void MemoryManager_TimedFree(void *p);
+extern "C" void Sprite_Destroy(void *s, int flag);
+
+struct SpriteObj {
+    char pad0[0xc];
+    float fC, f10, f14, f18, f1C, f20;
+};
+struct Tween {
+    unsigned char on;
+    char pad1[3];
+    float from, to, speed, t, value;
+    void Start(float a, float b, float s) {
+        from = a;
+        to = b;
+        speed = s;
+        t = 0.0f;
+        value = a;
+        on = 1;
+    }
+    void Update() {
+        if (on == 1) {
+            value = from * (1.0f - t) + to * t;
+            t += speed;
+            if (t > 1.0f) {
+                t = 1.0f;
+            }
+        }
+    }
+};
 class PanelItem {
 public:
-    virtual void v8();
-    virtual void vC();
+    virtual ~PanelItem();
+    virtual void Update();
     virtual void Draw();
-    void *sprite;
-    char pad8[0x84 - 8];
+    SpriteObj *sprite;
+    int delay;
+    Tween tw[5];
     unsigned char active;
     unsigned char flag85;
 };
@@ -22,29 +52,50 @@ struct PanelEntry {
     char padD[3];
     float f10, f14, f18, f1c, f20;
 };
-struct EntryVec {
+struct PtrVecStorage {
     int cap;
     int size;
     PanelItem **data;
+    ~PtrVecStorage() { if (data) MemoryManager_TimedFree(data); }
+};
+struct PtrVecBase : PtrVecStorage {
+    ~PtrVecBase() {}
+};
+struct EntryVec : PtrVecBase {
+    ~EntryVec() {}
     PanelItem **begin() { return data; }
     PanelItem **end() { return data + size; }
 };
 struct Cursor {
-    void *sprite;
+    SpriteObj *sprite;
     unsigned char on;
     unsigned char state;
     char pad6[2];
     int timer;
 };
+struct CursorPtr {
+    Cursor *p;
+    Cursor *operator->() { return p; }
+    ~CursorPtr() throw() {
+        Cursor *c = p;
+        if (c) {
+            Sprite_Destroy(c->sprite, 1);
+            MemoryManager_TimedFree(c);
+        }
+    }
+};
 struct RankPanel {
-    char pad0[0x18];
+    char pad0[0x14];
+    void **vt14;
     unsigned char visible;
     char pad19[3];
     float f1c;
     int state;
-    char pad24[0xc0 - 0x24];
+    unsigned char b24;
+    char pad25[3];
+    float xs[0x26];
     EntryVec vec;
-    Cursor *cursor;
+    CursorPtr cursor;
 };
 struct Pair { char pad[0xc]; float a, b; };
 struct SpriteHolder { void **vt; void *sprite; };
@@ -55,10 +106,10 @@ struct VecHolder { int pad0; int pad4; void *data; };
 extern "C" {
 void fn_8011FAB8(void);
 void fn_801A0004(void *s);
-extern void IsCardValid();
-extern void Sprite_AdvanceAnim();
-extern void fn_801699D8();
-extern unsigned int g_reverseRoundFlag;
+extern unsigned char IsCardValid(void);
+extern void Sprite_AdvanceAnim(SpriteObj *s, float dt);
+extern void fn_801699D8(int a, int b);
+extern int g_reverseRoundFlag;
 extern unsigned int lbl_806D7AE0;
 extern const float lbl_806D7AE4;
 extern unsigned int lbl_806D7AE8;
@@ -67,7 +118,7 @@ extern const float lbl_806D7AF0;
 extern unsigned int lbl_806D7AF4;
 extern const float lbl_806D7AF8;
 extern unsigned int lbl_806D7B00;
-extern unsigned int lbl_80361DCC[];
+extern const float lbl_80361DCC[2][3];
 extern const float lbl_806D7B08;
 void MemoryManager_TimedFree(void *p);
 void Sprite_Destroy(void *s, int flag);
@@ -131,12 +182,12 @@ extern unsigned int lbl_803F5700[];
 extern unsigned int lbl_803F5710[];
 extern unsigned int lbl_8048EF68[];
 extern void dtor_80038DD4();
-extern void dtor_80038E30();
+extern void dtor_80038E30(struct ExcString *s, int flag);
 void fn_80144430(RankPanel *self);
 asm void fn_80144500(void);
 void fn_801449D4(RankPanel *self);
 void fn_80144ADC(RankPanel *self);
-asm void fn_80144AF0(void);
+RankPanel *fn_80144AF0(RankPanel *self, short flag);
 asm void fn_80144C1C(void);
 void fn_801458A4(Pair *p);
 asm void fn_801458B4(void);
@@ -146,10 +197,10 @@ void fn_80145DA8(void);
 void fn_80145DAC(void);
 SpriteHolder *dtor_80145DB0(SpriteHolder *self, short flag);
 asm void fn_80145E14(void);
-asm void dtor_80145F04(void);
+struct SpriteBoxPtr *dtor_80145F04(struct SpriteBoxPtr *self, short flag) throw();
 VecHolder *dtor_80145F9C(VecHolder *self, short flag);
 asm struct PanelEntry **fn_80146000(struct EntryVec *v, int id);
-asm void fn_801460D0(void);
+struct ExcObj *fn_801460D0(struct ExcObj *self, short flag);
 
 #pragma section R ".extab_user"
 
@@ -158,13 +209,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80144500[8
 };
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80144AF0[40] = {
-    0x20, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x9C,
-    0x00, 0x02, 0x00, 0x18, 0x00, 0x00, 0x00, 0xB0,
-    0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xA8,
-    0x00, 0x00, 0x00, 0x08, 0x8D, 0x00, 0x00, 0x08
-};
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; void *f25; unsigned int f26; void *f27; unsigned int f28; void *f29; unsigned int f30; void *f31; unsigned int f32; void *f33; unsigned int f34; void *f35; unsigned int f36; void *f37; unsigned int f38; void *f39; unsigned int f40; void *f41; unsigned int f42; void *f43; unsigned int f44; void *f45; } extab_fn_80144C1C = { 0x590A0000, 0x000000E8, 0x00000060, 0x000001A4, 0x00110068, 0x000002F0, 0x00000070, 0x00000490, 0x00000078, 0x000005A0, 0x00000080, 0x000006B8, 0x00000088, 0x000007E0, 0x00000090, 0x000008F4, 0x00000098, 0x00000A2C, 0x000000A0, 0x00000A8C, 0x000000A8, 0x00000B40, 0x000000B0, 0x00000000, 0x8A800016, (void *)&MemoryManager_TimedFree, 0x8A800016, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800016, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree };
 
@@ -176,20 +220,10 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_80145E14 = { 0x080A0000, 0x000000DC, 0x00000010, 0x00000000, 0x82000008, (void *)&dtor_80082960 };
 
-__declspec(section ".extab_user") static const unsigned char extab_dtor_80145F04[40] = {
-    0x20, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x44,
-    0x00, 0x06, 0x00, 0x18, 0x00, 0x00, 0x00, 0x6C,
-    0x00, 0x00, 0x00, 0x24, 0x00, 0x00, 0x00, 0x00,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x64,
-    0x00, 0x00, 0x00, 0x08, 0x8D, 0x00, 0x00, 0x08
-};
 
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; void *f8; unsigned int f9; unsigned int f10; void *f11; } extab_fn_80146000 = { 0x20080000, 0x0000005C, 0x00050024, 0x00000080, 0x00000018, 0x00000000, 0x0780001C, 0x00000000, (void *)&dtor_80038E30, 0x8680001D, 0x00000000, (void *)&dtor_80038DD4 };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_801460D0[8] = {
-    0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 #pragma section R ".extabindex_user"
 
@@ -198,9 +232,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80144AF0 = {
-    (void *)&fn_80144AF0, 0x0000012C, (void *)extab_fn_80144AF0
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80144C1C = {
     (void *)&fn_80144C1C, 0x00000C88, (void *)&extab_fn_80144C1C
@@ -220,18 +251,12 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_80145E14, 0x000000F0, (void *)&extab_fn_80145E14
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_80145F04 = {
-    (void *)&dtor_80145F04, 0x00000098, (void *)extab_dtor_80145F04
-};
 
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80146000 = {
     (void *)&fn_80146000, 0x000000D0, (void *)&extab_fn_80146000
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801460D0 = {
-    (void *)&fn_801460D0, 0x00000090, (void *)extab_fn_801460D0
-};
 
 }
 
@@ -624,7 +649,7 @@ extern "C" void fn_801449D4(RankPanel *self)
     e->f10 = lbl_806D7AF0; e->f14 = lbl_806D7AE4; e->f18 = lbl_806D7B08; e->f1c = lbl_806D7AE4; e->f20 = lbl_806D7AF0; e->on = 1;
     e = *fn_80146000(&self->vec, 0x17f);
     e->f10 = lbl_806D7AF0; e->f14 = lbl_806D7AE4; e->f18 = lbl_806D7B08; e->f1c = lbl_806D7AE4; e->f20 = lbl_806D7AF0; e->on = 1;
-    Cursor *c = self->cursor;
+    Cursor *c = self->cursor.p;
     if (c->on && c->state != 1) {
         c->state = 1;
         c->timer = 0;
@@ -637,91 +662,19 @@ extern "C" void fn_80144ADC(RankPanel *self)
     self->f1c = lbl_806D7AE4;
 }
 
-extern "C" asm void fn_80144AF0(void) { /* 0x80144AF0 size:0x12C */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stw r31, 0x2c(r1)
-    mr r31, r1
-    stw r30, 0x28(r1)
-    mr r30, r4
-    stw r29, 0x24(r1)
-    mr. r29, r3
-    stw r28, 0x20(r1)
-    beq fn_80144AF0_L_80144BF0
-    lis r3, lbl_8048EEF4@ha
-    addi r0, r3, lbl_8048EEF4@l
-    stw r0, 0x14(r29)
-    lwz r28, 0xc8(r29)
-    b fn_80144AF0_L_80144B54
-    fn_80144AF0_L_80144B30:
-    lwz r3, 0x0(r28)
-    cmplwi r3, 0x0
-    beq fn_80144AF0_L_80144B50
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_80144AF0_L_80144B50:
-    addi r28, r28, 0x4
-    fn_80144AF0_L_80144B54:
-    lwz r0, 0xc4(r29)
-    lwz r3, 0xc8(r29)
-    slwi r0, r0, 2
-    add r0, r3, r0
-    cmplw r28, r0
-    bne fn_80144AF0_L_80144B30
-    addic. r0, r29, 0xcc
-    beq fn_80144AF0_L_80144BA4
-    lwz r28, 0xcc(r29)
-    cmplwi r28, 0x0
-    beq fn_80144AF0_L_80144BA4
-    lwz r3, 0x0(r28)
-    li r4, 0x1
-    bl Sprite_Destroy
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    b fn_80144AF0_L_80144BA4
-    addi r3, r31, 0x8
-    bl __unexpected
-    fn_80144AF0_L_80144BA0:
-    b fn_80144AF0_L_80144BA0
-    fn_80144AF0_L_80144BA4:
-    addic. r0, r29, 0xc0
-    beq fn_80144AF0_L_80144BCC
-    addic. r0, r29, 0xc0
-    beq fn_80144AF0_L_80144BCC
-    addic. r0, r29, 0xc0
-    beq fn_80144AF0_L_80144BCC
-    lwz r3, 0xc8(r29)
-    cmplwi r3, 0x0
-    beq fn_80144AF0_L_80144BCC
-    bl MemoryManager_TimedFree
-    fn_80144AF0_L_80144BCC:
-    cmplwi r29, 0x0
-    beq fn_80144AF0_L_80144BE0
-    lis r3, lbl_8048EB44@ha
-    addi r0, r3, lbl_8048EB44@l
-    stw r0, 0x14(r29)
-    fn_80144AF0_L_80144BE0:
-    extsh. r0, r30
-    ble fn_80144AF0_L_80144BF0
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    fn_80144AF0_L_80144BF0:
-    mr r10, r31
-    lwz r31, 0x2c(r31)
-    mr r3, r29
-    lwz r30, 0x28(r10)
-    lwz r29, 0x24(r10)
-    lwz r28, 0x20(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+extern "C" RankPanel *fn_80144AF0(RankPanel *self, short flag)
+{
+    if (self) {
+        self->vt14 = (void **)lbl_8048EEF4;
+        for (PanelItem **it = self->vec.begin(); it != self->vec.end(); it++) {
+            delete *it;
+        }
+        self->cursor.~CursorPtr();
+        self->vec.~EntryVec();
+        if (self) self->vt14 = (void **)lbl_8048EB44;
+        if (flag > 0) MemoryManager_TimedFree(self);
+    }
+    return self;
 }
 
 extern "C" asm void fn_80144C1C(void) { /* 0x80144C1C size:0xC88 */
@@ -1966,50 +1919,21 @@ extern "C" asm void fn_80145E14(void) { /* 0x80145E14 size:0xF0 */
     blr
 }
 
-extern "C" asm void dtor_80145F04(void) { /* 0x80145F04 size:0x98 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stw r31, 0x2c(r1)
-    mr r31, r1
-    stw r30, 0x28(r1)
-    stw r29, 0x24(r1)
-    mr r29, r4
-    stw r28, 0x20(r1)
-    mr. r28, r3
-    beq dtor_80145F04_L_80145F60
-    lwz r30, 0x0(r28)
-    cmplwi r30, 0x0
-    beq dtor_80145F04_L_80145F50
-    lwz r3, 0x0(r30)
-    li r4, 0x1
-    bl Sprite_Destroy
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    dtor_80145F04_L_80145F50:
-    extsh. r0, r29
-    ble dtor_80145F04_L_80145F60
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    dtor_80145F04_L_80145F60:
-    mr r3, r28
-    b dtor_80145F04_L_80145F74
-    addi r3, r31, 0x8
-    bl __unexpected
-    dtor_80145F04_L_80145F70:
-    b dtor_80145F04_L_80145F70
-    dtor_80145F04_L_80145F74:
-    mr r10, r31
-    lwz r31, 0x2c(r31)
-    lwz r30, 0x28(r10)
-    lwz r29, 0x24(r10)
-    lwz r28, 0x20(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+struct SpriteBox { void *sprite; };
+struct SpriteBoxPtr { SpriteBox *p; };
+
+/* deleting destructor of a sprite owner pointer: ~SpriteBoxPtr() throw() { delete p; } */
+extern "C" SpriteBoxPtr *dtor_80145F04(SpriteBoxPtr *self, short flag) throw()
+{
+    if (self) {
+        SpriteBox *box = self->p;
+        if (box) {
+            Sprite_Destroy(box->sprite, 1);
+            MemoryManager_TimedFree(box);
+        }
+        if (flag > 0) MemoryManager_TimedFree(self);
+    }
+    return self;
 }
 
 extern "C" VecHolder *dtor_80145F9C(VecHolder *self, short flag)
@@ -2082,46 +2006,20 @@ extern "C" asm struct PanelEntry **fn_80146000(struct EntryVec *v, int id) { /* 
     blr
 }
 
-extern "C" asm void fn_801460D0(void) { /* 0x801460D0 size:0x90 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r4
-    stw r30, 0x8(r1)
-    mr. r30, r3
-    beq fn_801460D0_L_80146144
-    lis r3, lbl_8048EF68@ha
-    addi r0, r3, lbl_8048EF68@l
-    stw r0, 0x0(r30)
-    beq fn_801460D0_L_80146134
-    lis r3, lbl_803F5700@ha
-    addic. r0, r30, 0x4
-    addi r0, r3, lbl_803F5700@l
-    stw r0, 0x0(r30)
-    beq fn_801460D0_L_80146120
-    addi r3, r30, 0x4
-    li r4, -0x1
-    bl dtor_80038E30
-    fn_801460D0_L_80146120:
-    cmplwi r30, 0x0
-    beq fn_801460D0_L_80146134
-    lis r3, lbl_803F5710@ha
-    addi r0, r3, lbl_803F5710@l
-    stw r0, 0x0(r30)
-    fn_801460D0_L_80146134:
-    extsh. r0, r31
-    ble fn_801460D0_L_80146144
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    fn_801460D0_L_80146144:
-    lwz r0, 0x14(r1)
-    mr r3, r30
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+struct ExcString { char *p; };
+struct ExcObj { void **vt; ExcString str; };
+
+extern "C" ExcObj *fn_801460D0(ExcObj *self, short flag)
+{
+    if (self) {
+        self->vt = (void **)lbl_8048EF68;
+        if (self) {
+            self->vt = (void **)lbl_803F5700;
+            if (&self->str) dtor_80038E30(&self->str, -1);
+            if (self) self->vt = (void **)lbl_803F5710;
+        }
+        if (flag > 0) MemoryManager_TimedFree(self);
+    }
+    return self;
 }
 
