@@ -10380,5 +10380,40 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "@582": "jumptable_803FE388",
     "@679": "jumptable_803FE3A4"
+  },
+  "src/game/Scene_8015BCC4.cpp": {
+    "__ct__13ViewerScene3DFUi": "Scene3D_Init",
+    "__ct__14ViewerNormal3DFUii": "clNormal3D_Construct",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/Scene_8015AFCC.cpp": {
+    "__ct__13Scene8015AFCCFv": "fn_8015AFCC",
+    "__vt__13Scene8015AFCC": "lbl_8049003C",
+    "__vt__15SelectSceneBase": "lbl_803FE0C8",
+    "__dt__15SelectSceneBaseFv": "dtor_8007D0D4",
+    "__ct__11SelectBadgeFv": "fn_8013EAFC",
+    "__ct__12SelectPromptFv": "fn_8013E14C",
+    "__ct__10SelectItemFi": "fn_8013E6F8",
+    "__ct__12SelectDriverFii": "fn_8013CC24",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/Scene_8015BF18.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__10ResultPart": "lbl_80490A58",
+    "__dt__10ResultPartFv": "dtor_8015E864",
+    "__ct__12ResultDialogFi": "fn_8015C41C",
+    "__vt__11ResultAward": "lbl_80490A40",
+    "__vt__11ResultIntro": "lbl_80490A1C",
+    "__ct__17ResultEnvironmentFv": "fn_80140874",
+    "__ct__16ResultInnerModelFi": "fn_80142964",
+    "__ct__17ResultPopupSpriteFiii": "Sprite_InitWithAnim",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__dt__12SpriteHolderFv": "dtor_8015E8AC",
+    "@164": "@etb_8000F2F8",
+    "@165": "@eti_80025A00"
   }
 }

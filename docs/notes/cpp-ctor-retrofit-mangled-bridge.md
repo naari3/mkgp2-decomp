@@ -424,3 +424,8 @@ c7_s10: WarpZone_CalcEdgeVectors is naturally modeled as a constructor of a 0x50
 Source: Codex worker c7_m8_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 New Menu801F0CC0 reconstruction: final helper fn_801F2690 owns extab 80016E94, before the first method extab 80016E9C. This reversed dependency spans all 25 functions through 801F26C8; no safe positive subset split. A real destructor with delete[] sprites, context cleanup and VHolder<FlowFaderI> member reproduces fn_801F25BC text exactly. Native source remains NonMatching; no linked gain claimed.
+
+## c7_s13_20261105
+Source: Codex worker c7_s13_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1284 B.
+
+c7_s13: fn_8015BF18 matches 1284-byte text and owned 356-byte EH/12-byte index with genuine ResultAward/ResultIntro inline ctors and canonical ResCtrl. A small inline sprite ctor loading size then alpha before Sprite_CreateWithParams fixes reversed FP common-value load order without changing call timing. Bridge primary compiler @164/@165 to @etb_8000F2F8/@eti_80025A00. Appended weak ResCtrl destructor is discarded; source-input link and full DOL SHA-1 verified.

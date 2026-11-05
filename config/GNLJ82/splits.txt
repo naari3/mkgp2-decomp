@@ -6143,6 +6143,11 @@ game/Scene_8015AE3C.cpp:
 	extabindex  start:0x8002597C end:0x80025988
 	.text       start:0x8015AE3C end:0x8015AFCC
 
+game/Scene_8015AFCC.cpp:
+	extab       start:0x8000F1A0 end:0x8000F264
+	extabindex  start:0x80025988 end:0x80025994
+	.text       start:0x8015AFCC end:0x8015B698
+
 game/Scene_8015B698.cpp:
 	extab       start:0x8000F264 end:0x8000F26C
 	extabindex  start:0x80025994 end:0x800259A0
@@ -6158,10 +6163,20 @@ game/Scene_8015B70C.cpp:
 	extabindex  start:0x800259AC end:0x800259B8
 	.text       start:0x8015B70C end:0x8015B790
 
+game/Scene_8015B790.cpp:
+	extab       start:0x8000F28C end:0x8000F294
+	extabindex  start:0x800259B8 end:0x800259C4
+	.text       start:0x8015B790 end:0x8015BC08
+
 game/Scene_8015BC08.cpp:
 	extab       start:0x8000F294 end:0x8000F29C
 	extabindex  start:0x800259C4 end:0x800259D0
 	.text       start:0x8015BC08 end:0x8015BCC4
+
+game/Scene_8015BCC4.cpp:
+	extab       start:0x8000F29C end:0x8000F2C4
+	extabindex  start:0x800259D0 end:0x800259DC
+	.text       start:0x8015BCC4 end:0x8015BE0C
 
 game/Scene_8015BE0C.cpp:
 	extab       start:0x8000F2C4 end:0x8000F2CC
@@ -6177,6 +6192,11 @@ game/Scene_8015BED4.cpp:
 	extab       start:0x8000F2F0 end:0x8000F2F8
 	extabindex  start:0x800259F4 end:0x80025A00
 	.text       start:0x8015BED4 end:0x8015BF18
+
+game/Scene_8015BF18.cpp:
+	extab       start:0x8000F2F8 end:0x8000F45C
+	extabindex  start:0x80025A00 end:0x80025A0C
+	.text       start:0x8015BF18 end:0x8015C41C
 
 game/resultscene/resultscene.cpp:
 	extab       start:0x8000F45C end:0x8000F9D8
