@@ -6,6 +6,14 @@ extern unsigned char lbl_806D9BC4[7];
  * fallback remains linked. Only instruction-observed fields are modeled.
  * Ghidra/runtime types were unavailable; ABIs were checked against full asm. */
 #if 0
+/* Retry c11_a33: captured SetPos arguments improve native text to 95.86775%.
+ * Still disabled: foreign switch table, resource-base caching and EH PCs differ.
+ * Activation requires C++ constructor bridges; see HANDOFF evidence. */
+#pragma cplusplus on
+#pragma exceptions on
+#pragma use_lmw_stmw on
+void *operator new(unsigned long);
+void operator delete(void*);
 typedef float CharaMatrix[3][4];
 class CharaNormal {
     unsigned char storage[92];
@@ -24,6 +32,7 @@ public:
     unsigned char beforePosition[12];
     float x, y;
     unsigned char remaining[28];
+    void SetPos(float px, float py) { x = px; y = py; }
     CharaSprite(int, unsigned char, int);
 };
 struct CharaInput { unsigned char pad[0x14]; int delta; };
@@ -61,7 +70,7 @@ struct CharaView {
 };
 extern "C" {
 extern CharaInput* g_pInputState;
-extern CharaFrame lbl_8049AAD0[];
+extern CharaFrame FrameParam_ARRAY_8049aad0[];
 extern float g_tierCursorPosTable[][2];
 extern const unsigned char lbl_8039AA40[];
 extern signed char lbl_806D184C, lbl_806D184D;
@@ -69,7 +78,7 @@ extern const float FLOAT_ARROW_RIGHT_OFFSET, FLOAT_ARROW_SCALE;
 extern const float FLOAT_BRIGHTNESS_DARK, FLOAT_FULL_ALPHA, FLOAT_SPRITE_INIT_TIME;
 extern const float lbl_806D9B7C, lbl_806D9B80, lbl_806D9BA8;
 extern const float lbl_806D9BB0, lbl_806D9BB4, lbl_806D9BBC, lbl_806D9BC0;
-extern const char lbl_806D9BC4[], lbl_806D9BCC[];
+extern const char lbl_806D9BC4[7], lbl_806D9BCC[5];
 void RumbleUpdate();
 void* FileLoader_Open(const char*);
 int GetFrameIdxFromVisualIdx(CharaView*, int);
@@ -201,9 +210,8 @@ extern "C" int clFlowChara_Update(CharaView* self)
         unsigned char done = 1;
         for (int i = 0; i < 13; ++i) {
             if (self->sprites[i]) {
-                self->sprites[i]->x = lbl_8049AAD0[i].dx * (float)lbl_8049AAD0[i].ticks + lbl_8049AAD0[i].x;
-                self->sprites[i]->y = lbl_8049AAD0[i].y;
-                if (lbl_8049AAD0[i].ticks) { --lbl_8049AAD0[i].ticks; done = 0; }
+                self->sprites[i]->SetPos(FrameParam_ARRAY_8049aad0[i].dx * (float)FrameParam_ARRAY_8049aad0[i].ticks + FrameParam_ARRAY_8049aad0[i].x, FrameParam_ARRAY_8049aad0[i].y);
+                if (FrameParam_ARRAY_8049aad0[i].ticks) { --FrameParam_ARRAY_8049aad0[i].ticks; done = 0; }
             }
         }
         if (done && self->frame >= 30) {
@@ -247,12 +255,10 @@ extern "C" int clFlowChara_Update(CharaView* self)
                 CharaSelect_SetupCharacterDisplay(self, GetFrameIdxFromVisualIdx(self, self->selection));
                 fn_801B84B4(soundIds[self->selection]); fn_801B7CAC();
             if (self->leftArrow) {
-                self->leftArrow->x = g_tierCursorPosTable[self->selection][0];
-                self->leftArrow->y = g_tierCursorPosTable[self->selection][1];
+                self->leftArrow->SetPos(g_tierCursorPosTable[self->selection][0], g_tierCursorPosTable[self->selection][1]);
             }
             if (self->rightArrow) {
-                self->rightArrow->x = FLOAT_ARROW_RIGHT_OFFSET + g_tierCursorPosTable[self->selection][0];
-                self->rightArrow->y = g_tierCursorPosTable[self->selection][1];
+                self->rightArrow->SetPos(FLOAT_ARROW_RIGHT_OFFSET + g_tierCursorPosTable[self->selection][0], g_tierCursorPosTable[self->selection][1]);
             }
             }
         }
@@ -273,7 +279,7 @@ extern "C" int clFlowChara_Update(CharaView* self)
             fn_801C37E8(self, self->selection, 0x1D, -1, FLOAT_FULL_ALPHA);
             fn_801B87D8(); self->frame = 0; self->pending = 1;
         }
-        for (int i = 0; i < 13; ++i) if (i != self->selection) lbl_8049AAD0[i].ticks = 0;
+        for (int i = 0; i < 13; ++i) if (i != self->selection) FrameParam_ARRAY_8049aad0[i].ticks = 0;
         break;
     case 5:
         if (self->frame == 14) {
@@ -314,9 +320,8 @@ extern "C" int clFlowChara_Update(CharaView* self)
         if (self->frame == 36 && self->selection != 0) fn_801C37E8(self, 0, 0x169, 1, FLOAT_ARROW_SCALE);
         for (int i = 0; i < 13; ++i) {
             if (self->sprites[i]) {
-                self->sprites[i]->x = lbl_8049AAD0[i].x - lbl_8049AAD0[i].dx * (float)lbl_8049AAD0[i].ticks;
-                self->sprites[i]->y = lbl_8049AAD0[i].y;
-                if (lbl_8049AAD0[i].ticks != 0 && lbl_8049AAD0[i].ticks != -16) ++lbl_8049AAD0[i].ticks;
+                self->sprites[i]->SetPos(FrameParam_ARRAY_8049aad0[i].x - FrameParam_ARRAY_8049aad0[i].dx * (float)FrameParam_ARRAY_8049aad0[i].ticks, FrameParam_ARRAY_8049aad0[i].y);
+                if (FrameParam_ARRAY_8049aad0[i].ticks != 0 && FrameParam_ARRAY_8049aad0[i].ticks != -16) ++FrameParam_ARRAY_8049aad0[i].ticks;
             }
         }
         if (self->frame == 60) self->pending = 1;
