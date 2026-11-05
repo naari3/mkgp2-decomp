@@ -1,6 +1,6 @@
 #include "game/VoiceEventPushRacePrivate.h"
 
-#define PUSH(id) SpriteVoice_Push((id), -1, 0, 1)
+#define PUSH(id) RaceEvent_Push((id), -1, 0, 1)
 #define SELECT(entry) RaceEvent_Select((entry)->character, (entry)->id, tables)
 
 /* Announce the active player's race events while keeping short queues and

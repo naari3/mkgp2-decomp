@@ -17,14 +17,41 @@ extern unsigned int lbl_806D17C8, lbl_806D17CC;
 extern unsigned int lbl_806D17D0, lbl_806D17D4;
 extern unsigned int lbl_806D17D8, lbl_806D17DC;
 
+static inline int RaceEvent_Push(short id, short priority, unsigned char flag, unsigned char flush) {
+    if (id == -1) {
+        return 0;
+    }
+    if (g_voiceQueueHead >= 0x40) {
+        return 0;
+    }
+    if (g_voiceQueueMuted && priority != -2) {
+        return 0;
+    }
+    if (!VoiceQueue_CanPush(priority, flush)) {
+        return 0;
+    }
+    if (flush && g_voiceQueueHead == 0 && g_countdownVoiceId >= 0x36 && g_countdownVoiceId <= 0xB7 &&
+        id >= 0x36 && id <= 0xB7) {
+        g_voiceQueue[g_voiceQueueHead].id = 0x1CD;
+        g_voiceQueue[g_voiceQueueHead].priority = priority;
+        g_voiceQueue[g_voiceQueueHead].flag = flag;
+        g_voiceQueueHead++;
+    }
+    g_voiceQueue[g_voiceQueueHead].id = id;
+    g_voiceQueue[g_voiceQueueHead].priority = priority;
+    g_voiceQueue[g_voiceQueueHead].flag = flag;
+    g_voiceQueueHead++;
+    return 1;
+}
+
 static inline OSTime RaceEvent_Time(unsigned int lo, unsigned int hi) {
     return (OSTime)(((unsigned long long)hi << 32) | lo);
 }
 static inline float RaceEvent_QueueTime(short *tables) {
-    RaceEventVoiceClip *clips = (RaceEventVoiceClip *)((char *)tables + 0x1534);
     float time = 0.0f;
     int i;
     if (g_voiceQueueHead != 0) {
+        RaceEventVoiceClip *clips = (RaceEventVoiceClip *)((char *)tables + 0x1534);
         for (i = g_voiceQueueTail; i < g_voiceQueueHead; i++)
             time += clips[g_voiceQueue[i].id].length;
         time -= (float)OSTicksToMilliseconds(g_voiceStreamLastPollTime - g_voiceStreamStartTime) / 1000.0f;
