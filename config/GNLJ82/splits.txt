@@ -9516,6 +9516,11 @@ game/AI_SystemDtor.cpp:
 	extabindex  start:0x80028A6C end:0x80028A78
 	.text       start:0x801EBAF4 end:0x801EBC8C
 
+game/ThinkBoxCreate.cpp:
+	extab       start:0x80016B84 end:0x80016BD4
+	extabindex  start:0x80028A84 end:0x80028A9C
+	.text       start:0x801EBF48 end:0x801EC3DC
+
 game/fn_801EC3DC.c:
 	extab       start:0x80016BD4 end:0x80016BDC
 	extabindex  start:0x80028A9C end:0x80028AA8
@@ -9833,6 +9838,9 @@ game/fn_801F8A34.cpp:
 
 game/fn_801F8D58.c:
 	.text       start:0x801F8D58 end:0x801F8E08
+
+game/CardCharLookup.c:
+	.text       start:0x801F8E08 end:0x801F8E58
 
 game/fn_801F8E58.c:
 	extab       start:0x800176A0 end:0x800176A8
@@ -11450,6 +11458,9 @@ game/fn_80242DE0.c:
 
 game/fn_80245700.c:
 	.text       start:0x80245700 end:0x80245704
+
+game/HudSelectionStep.c:
+	.text       start:0x80245834 end:0x80245850
 
 game/RaceHudSceneCtor.cpp:
 	extab       start:0x8001DC0C end:0x8001DC50

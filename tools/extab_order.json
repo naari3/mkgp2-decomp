@@ -1951,5 +1951,15 @@
       "fn_80242C44",
       "fn_80242DA8"
     ]
+  },
+  "src/game/ThinkBoxCreate.cpp": {
+    "extab": [
+      "dtor_801EC388",
+      "ThinkBox_Create"
+    ],
+    "extabindex": [
+      "ThinkBox_Create",
+      "dtor_801EC388"
+    ]
   }
 }

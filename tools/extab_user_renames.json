@@ -10598,5 +10598,13 @@
     "@412": "@etb_8001D020",
     "@422": "@eti_8002B100",
     "@421": "@etb_8001CF90"
+  },
+  "src/game/ThinkBoxCreate.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@77": "@etb_80016B8C",
+    "@78": "@eti_80028A84",
+    "@87": "@etb_80016B84",
+    "@88": "@eti_80028A90"
   }
 }
