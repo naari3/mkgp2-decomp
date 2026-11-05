@@ -774,3 +774,8 @@ c13_u32: CourseEnvironment UpdateAndCullZones fresh96.197845 ->99.06475: indepen
 Source: Codex worker c13_u33_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u33: fn_801B4548 singleton fresh96.02687 ->96.06223 using TU-local typed map/clip inline scopes. C++ table member helpers emit identical output; const int& id/character helper worsens92.785. Remaining saved r23 vsr24, stride/entry/index GPR homes, folded subobject-base addi, timestamp/return scheduling. Text5616 vs target5656, EH87.5/index83.333/.data0. No safe subset; retained NonMatching, fallback-linked DOL SHA-1 OK; native gain0.
+
+## c13_u34_20261106
+Source: Codex worker c13_u34_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u34: BootDispatcher 8002DD58 improves 96.16123 to 98.645546. Inline SetBootColor(BootColor color) restores four 4-byte stack copies, moving RAII locals and conversion scratch to target offsets. Captured BootConfig* plus int disabled before ternary restores configuration-base lifetime and most GPR homes. Done()!=1 recovers mfcr but keeps an extra cmplwi; int Done plus !predicate regresses to98.281685. Nested 20-byte BootState channel assignment is output-invariant. Best source6412 vs target6376 B, saves r20 vs r21 and retains subobject-base, global reload, BootNotice and conversion-cookie relocation residuals. Singleton stays NonMatching. Full fallback-linked DOL SHA-1 OK; no native gain.

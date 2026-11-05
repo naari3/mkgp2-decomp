@@ -219,6 +219,9 @@ static inline void CopyFrame(const char *text) {
         GXCopyTex(lbl_804FE080,0);
     }
 }
+static inline void SetBootColor(BootColor color) {
+    HSD_VIData.color=color;
+}
 static inline void FinishFrame(const char *text) {
     if (lbl_806D0F8E==1) {
         OverlayText(1,12,28,text+0x620,&lbl_80594080.f18);
@@ -226,7 +229,7 @@ static inline void FinishFrame(const char *text) {
     }
     GXDrawDone();
     fn_8018F14C();
-    HSD_VIData.color=lbl_806CED34;
+    SetBootColor(lbl_806CED34);
     HSD_VICopyXFBAsync(0);
     HSD_VIDrawDoneXFBAll();
     VIWaitForRetrace();
@@ -319,26 +322,29 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
     lbl_806D0F9C=(BootTimer *)Alloc(4);
     while (!fn_80293BCC()) {
         BootWait wait;
-        while (!wait.Done()) {}
+        while (wait.Done()!=1) {}
         RefreshBootState();
     }
     GameBoot_Init();
     PlayStats_LoadOrInitForBoot();
     RaceContext_EnsureSingleton();
     if (lbl_80598A60.receiptTest==1) Sci2Card_FlagReceiptTestEnable();
-    unsigned char enabled=lbl_80598A60.card;
+    BootConfig *config=&lbl_80598A60;
+    unsigned char enabled=config->card;
     lbl_806D0F94=enabled;
     if (!enabled) lbl_806D0F98=1;
     vblank_flag=1;
-    lbl_806D0F98=enabled ? !lbl_80598A60.cardDisabled : 1;
-    lbl_806D0F99=!lbl_80598A60.otherDisabled;
+    int disabled=config->cardDisabled==0;
+    lbl_806D0F98=enabled ? disabled : 1;
+    lbl_806D0F99=(int)(config->otherDisabled==0);
     InputMgr_Init();
     StrPcb_EnsureInstance();
-    JvsInput_SetSteeringCalibration(lbl_80598A60.steering);
-    JvsInput_SetAccelCalibration(lbl_80598A60.accel);
-    JvsInput_SetBrakeCalibration(lbl_80598A60.brake);
-    StrPcb_SetPositionTarget(StrPcb_GetInstance(),(short)lbl_80598A60.position);
-    StrPcb_SetIntensityMode(StrPcb_GetInstance(),lbl_80598A60.intensity);
+    BootConfig *calibration=&lbl_80598A60;
+    JvsInput_SetSteeringCalibration(calibration->steering);
+    JvsInput_SetAccelCalibration(calibration->accel);
+    JvsInput_SetBrakeCalibration(calibration->brake);
+    StrPcb_SetPositionTarget(StrPcb_GetInstance(),(short)calibration->position);
+    StrPcb_SetIntensityMode(StrPcb_GetInstance(),config->intensity);
     ClSound_InitSoundSystem();
     fn_801934A0((unsigned char)((lbl_80598A60.volume<<7)/15));
     fn_8019345C((unsigned char)((lbl_80598A60.volume<<7)/15));
@@ -404,11 +410,11 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
         BootState state=*fn_80293BBC();
         if (((unsigned char *)&state)[0x14] && ((unsigned char *)&state)[0x15]) break;
         BootWait wait;
-        while (!wait.Done()) {}
+        while (wait.Done()!=1) {}
         RefreshBootState();
     }
     fn_802928DC(); fn_80290ED8(); InitGlobalTimer(); PCBComm_Init();
-    HSD_VIData.color=lbl_806CED34;
+    SetBootColor(lbl_806CED34);
     BootPCBCheck_Init();
     while (BootPCBCheck_Poll()) {
         if (lbl_806CED28.begin) lbl_806CED28.begin->Tick();
