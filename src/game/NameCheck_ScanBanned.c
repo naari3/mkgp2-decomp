@@ -186,7 +186,11 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
                 for (p = open + 1; *p != *close; p++) {
                     single[0] = *p; single[1] = 0;
                     DebugPrintf(lbl_806D4750, single);
-                    if (!contains(*p, symbols, 25)) { invalid = 1; break; }
+                    found = 0;
+                    for (j = 0; j < 25; j++) {
+                        if (*p == symbols[j]) { found = 1; break; }
+                    }
+                    if (!found) { invalid = 1; break; }
                 }
                 if (invalid == 1) break;
                 for (p = open + 1; *p != *close; p++) {
@@ -205,7 +209,10 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
             for (j = 0; j < 3; j++) {
                 if (*p == lbl_806D4740[j]) { count++; break; }
             }
-            found = contains(*p, symbols, 25);
+            found = 0;
+            for (j = 0; j < 25; j++) {
+                if (*p == symbols[j]) { found = 1; break; }
+            }
             if (!found) count = 0;
         }
         if (count >= 2) {
@@ -226,7 +233,10 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
             for (j = 0; j < 3; j++) {
                 if (*p == lbl_806D4740[j]) { count++; break; }
             }
-            found = contains(*p, symbols, 25);
+            found = 0;
+            for (j = 0; j < 25; j++) {
+                if (*p == symbols[j]) { found = 1; break; }
+            }
             if (!found) count = 0;
         }
         DebugPrintf(base - 0x7920, count);
