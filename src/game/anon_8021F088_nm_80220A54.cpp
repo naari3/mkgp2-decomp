@@ -1,3 +1,4 @@
+#define COIN_RESCTRL_IMPLICIT_PADDING
 #include "game/anon_8021F088_private.h"
 
 
@@ -33,7 +34,7 @@ void clGetCoinLine::Layout(float y) {
             if (v > 0xFF) {
                 v = 0xFF;
             }
-            a = (unsigned char)v;
+            a = v & 255;
             float s = lbl_806DB20C * f + lbl_806DB1F0;
             digits[0].scaleX = s;
             digits[0].scaleY = s;
@@ -55,7 +56,7 @@ void clGetCoinLine::Layout(float y) {
             if (v > 0xFF) {
                 v = 0xFF;
             }
-            a = (unsigned char)v;
+            a = v & 255;
             float s = lbl_806DB1F8 * f + lbl_806DB1F0;
             digits[0].scaleX = s;
             digits[0].scaleY = s;
@@ -75,83 +76,6 @@ void clGetCoinLine::Layout(float y) {
             glow[i] = digits[i];
             glow[i].mode = 3;
             glow[i].SetColor(PackColor(0xFF, 0xFF, 0xFF, a));
-        }
-    }
-}
-
-#pragma auto_inline off
-void clCSSceneCoinMilage::StateCoins() {
-    unsigned char end = 0;
-    if (timer == 1) {
-        SoundMgr_Play(0x72);
-    }
-    int landed = 0;
-    for (int i = 0; i < numCoins; i++) {
-        Coin *c = &coins[i];
-        if (c->y >= lbl_806DB224) {
-            landed++;
-        } else {
-            c->x += c->vx;
-            c->y += c->vy;
-            c->rot += c->vrot;
-            c->vy += lbl_806DB1F0;
-            if (c->rot > lbl_806DB270) {
-                c->rot -= lbl_806DB270;
-            }
-            if (c->rot < lbl_806DB190) {
-                c->rot += lbl_806DB270;
-            }
-            if (c->bounced == 0 && c->y >= lbl_806DB274) {
-                c->bounced = 1;
-                c->vy = lbl_806DB20C * -c->vy;
-                c->vx = rand() % 2 ? lbl_806DB278 : lbl_806DB27C;
-            }
-        }
-    }
-    if (--wait < 0) {
-        if (numCoins < 30) {
-            numCoins++;
-            wait = rand() % 2 + 2;
-        } else {
-            wait = 0;
-            if (landed == 30) {
-                end = 1;
-            }
-        }
-    }
-    if (GetInput()->held == 1) {
-        end = 1;
-    }
-    if (end == 1) {
-        fn_80192688(0x72, 1);
-        timer = 0;
-        sub = 0;
-        wait = 0;
-        state = 2;
-        fn_8013D634(model, lbl_806DB190, lbl_806DB190, lbl_806DB190);
-        fn_8013D59C(model, lbl_806DB190, lbl_806DB190, lbl_806DB190);
-    }
-}
-#pragma auto_inline reset
-
-void clCSSceneCoinMilage::Draw() {
-    fn_8011FAB8();
-    fn_801A1280();
-    if (state == 4) {
-        wnd->Draw();
-    }
-    if (state == 5) {
-        next->Draw();
-    }
-    for (FadeObj **it = nodes.begin(); it != nodes.end(); it++) {
-        (*it)->Render();
-    }
-    if (state == 1) {
-        for (int i = 0; i < numCoins; i++) {
-            fn_8013D634(model, lbl_806DB190, lbl_806DB190, coins[i].z);
-            fn_8013D660(model, coins[i].x, coins[i].y);
-            fn_8013D59C(model, lbl_806DB190, lbl_806DB1D8 * coins[i].rot, lbl_806DB190);
-            model->Draw();
         }
     }
 }

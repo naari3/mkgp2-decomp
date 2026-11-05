@@ -9807,5 +9807,39 @@
     "__vt__Q23std12length_error": "lbl_803F56F0",
     "@436": "@etb_8001632C",
     "@437": "@eti_800287A8"
+  },
+  "src/game/anon_8021F088_nm_80221C94_nm1.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "ShowKart__7ItemWndFv": "fn_80221C94",
+    "ShowOther__7ItemWndFv": "fn_80221FC4",
+    "ShowTicket__7ItemWndFv": "fn_80222564",
+    "ShowItem__7ItemWndFv": "fn_80222968",
+    "Open__7ItemWndFv": "fn_802230C0",
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim",
+    "__dt__6SpriteFv": "Sprite_Destroy",
+    "SetAnimParam__6SpriteFis": "Sprite_SetAnimParam"
+  },
+  "src/game/anon_8021F088_nm_80221C94_m1.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "ShowKart__7ItemWndFv": "fn_80221C94",
+    "ShowOther__7ItemWndFv": "fn_80221FC4",
+    "ShowTicket__7ItemWndFv": "fn_80222564",
+    "ShowItem__7ItemWndFv": "fn_80222968",
+    "Open__7ItemWndFv": "fn_802230C0",
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim",
+    "__dt__6SpriteFv": "Sprite_Destroy",
+    "SetAnimParam__6SpriteFis": "Sprite_SetAnimParam"
+  },
+  "src/game/anon_8021F088_nm_80220A54_m1.cpp": {
+    "Layout__13clGetCoinLineFf": "fn_80220A54",
+    "StateCoins__19clCSSceneCoinMilageFv": "fn_80220ECC",
+    "Draw__19clCSSceneCoinMilageFv": "fn_80221104"
+  },
+  "src/game/anon_8021F088_nm_80220A54_nm1.cpp": {
+    "Layout__13clGetCoinLineFf": "fn_80220A54",
+    "StateCoins__19clCSSceneCoinMilageFv": "fn_80220ECC",
+    "Draw__19clCSSceneCoinMilageFv": "fn_80221104"
   }
 }

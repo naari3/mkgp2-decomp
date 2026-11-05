@@ -25,16 +25,26 @@ struct InputState {
     int edge;
 };
 
+/* Layout copies only real fields; opt in without changing older TUs. */
 struct ResCtrl {
     int resId;
     int field4, mode, fieldc;
-    unsigned char flag, pad11[3];
+    unsigned char flag;
+#ifndef COIN_RESCTRL_IMPLICIT_PADDING
+    unsigned char pad11[3];
+#endif
     float x, y, z, width, height, field28, scaleX, scaleY;
     unsigned int colors[4];
     bool flipX;
     bool flipY;
+#ifndef COIN_RESCTRL_IMPLICIT_PADDING
     char pad46[2];
+#endif
+#ifdef COIN_RESCTRL_IMPLICIT_PADDING
+    int tail0, tail1, tail2, tail3;
+#else
     int tail[4];
+#endif
     ResCtrl();
     ~ResCtrl() {}
     void Show(float px, float py, float pz) {
