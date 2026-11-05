@@ -449,3 +449,8 @@ MenuModeLane 801F5BF4: inline MenuScene constructor must be visible before the o
 Source: Codex worker c7_s21_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1432 B.
 
 c7_s21: bitread 8018A8D4 six inline ReadBits loops match exactly with float literals 0/60/10/100/1000; external const divisor caches across inline loops and changes scheduling. 8018B14C needs int fn_801F8DB0 argument, out[i] rather than postincrement, and i<5 && i<5 for exact bottom branch pair. Both text/EH/index 100, linked source ranges and DOL SHA-1 verified. SoundProp ctor 8018A70C genuine C++ with CourseMarkerBase/new clNormal3D gives exact EH; explicit case0 retains EH PCs but remaining prologue/switch tree differs. Kept NonMatching.
+
+## c7_m12_20261105
+Source: Codex worker c7_m12_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+CardCreditFlow (80241C1C..80242DE0): GC/1.3.2 real C++ using canonical FlowScene yields nine exact functions and exact complete EH/data. Two singleton ternary new expressions must finish in a local pointer initializer before the subsequent float setter call; putting new directly inside the call argument extends EH regions and emits conditional flag resets. Inline CreditUnavailable helper gives target register homes, unlike the equivalent open-coded local predicate. lbl_806D1A98 is viewed const after startup initialization to reproduce legal invariant-load scheduling. Final fn_80241C88 AND operand commutation remains; keep whole group NM. No codegen byte patches were used.

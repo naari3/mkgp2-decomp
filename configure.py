@@ -868,6 +868,7 @@ config.libs = [
             Object(Matching, "game/fn_801DAA84.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80169DF0.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80241C04.c"),
+            Object(NonMatching, "game/CardCreditFlow.cpp", mw_version="GC/1.3.2", extab_padding=b"\xC7\x02" * 2, extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/SpritePairOwner.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/SpritePairOwnerTick.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SpritePairOwnerLife.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
@@ -3671,6 +3672,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 DATA_ALIGN4_TUS = [
     "game/PreloadEffectResources",
     "game/TaMode_Init",
+    "game/CardCreditFlow",
     "game/TitleNameHudUpdate",
     "game/anon_80218F40_nm1",
     "sysdolphin/baselib/mobj_update_nm",

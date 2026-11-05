@@ -11438,6 +11438,12 @@ game/fn_80241BE0.c:
 game/fn_80241C04.c:
 	.text       start:0x80241C04 end:0x80241C1C
 
+game/CardCreditFlow.cpp:
+	extab       start:0x8001CF90 end:0x8001D09C
+	extabindex  start:0x8002B094 end:0x8002B10C
+	.text       start:0x80241C1C end:0x80242DE0
+	.data       start:0x804EE72C end:0x804EE760
+
 game/fn_80242DE0.c:
 	.text       start:0x80242DE0 end:0x80242DEC
 	.ctors      start:0x802E895C end:0x802E8960

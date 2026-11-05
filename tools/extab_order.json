@@ -1925,5 +1925,31 @@
     "ParticleBurst_Draw",
     "ParticleBurst_DrawCb",
     "ParticleBurst_Update"
-  ]
+  ],
+  "src/game/CardCreditFlow.cpp": {
+    "extab": [
+      "fn_80242DA8",
+      "fn_80241C1C",
+      "fn_80241C88",
+      "fn_802422B8",
+      "fn_80242530",
+      "fn_8024270C",
+      "fn_80242790",
+      "fn_80242814",
+      "fn_80242B88",
+      "fn_80242C44"
+    ],
+    "extabindex": [
+      "fn_80241C1C",
+      "fn_80241C88",
+      "fn_802422B8",
+      "fn_80242530",
+      "fn_8024270C",
+      "fn_80242790",
+      "fn_80242814",
+      "fn_80242B88",
+      "fn_80242C44",
+      "fn_80242DA8"
+    ]
+  }
 }
