@@ -61,6 +61,10 @@ extern const char lbl_803D085C[0x1E] = " CreateMapEffect : clDNFlash\n";
 extern const char lbl_803D087C[0x10] = "ef_camflash.dat";
 extern const char lbl_803D088C[0x16] = "DNA_cameraF_trans.dat";
 
+/* fakematch (layout): zero word that fills the 4-byte dtk gap 0x803D08A4-0x803D08A8 at the end of this TU's .rodata,
+ * so DNLensflare's .rodata starts at 0x803D08A8. The original most likely had no such object: this is probably the normal
+ * inter-TU padding up to an 8-byte boundary, coming from section/object alignment. Replace it when a natural layout match
+ * is found. Pending the repo owner's decision on rodata gap fillers. */
 __declspec(section ".rodata") extern const unsigned int gap_06_803D08A4_rodata = 0;
 
 void clDNFlash::Update() {
