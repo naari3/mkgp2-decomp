@@ -624,3 +624,8 @@ c9_s9_20261106: CardTaskChecks matches 49 fn / 9760 B, all owned EH and final DO
 Source: Codex worker c10_u12_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c10_u12: GpPleaseInit 801CD030 retained NonMatching. Inline GpPanelBase::Fade restores cached tween receiver for the second label and improves 99.298134 to 99.352486 with identical 2576B size and unchanged 468B EH/12B index. Loop-member extraction regresses to 99.21429 and moves stack slots; explicit C ABI Append regresses to 99.31056. Remaining list/sentinel/index/new-pointer register partition and active/end scratch swap are unresolved. Do not repeat these three hypotheses. Full fallback-linked DOL SHA-1 OK; no native gain.
+
+## c10_u17_20261106
+Source: Codex worker c10_u17_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c10_u17 ShowItem 80222968: unsigned char SetItemLabels alpha preserves separate packed white colors and restores exact 1880-byte size/EH. Direct sprintf(... fn(first), fn(second)) in FormatItemNames restores kind=r25 and name=r30; named helper local instead gives kind=r26/name=r25. Combined text 98.78723%, extab/extabindex 100%. Residual: Case 1/3 timer conversion: high-word stw scheduled before li instead of after; xoris/store uses r0 instead of r3; second white constant is li r5,-256 instead of mr r5,r4. Case 3 conversion additionally uses f0/f2/f3 instead of f2/f3/f4. Float helper re-conversion introduces duplicate stack stores; explicit white color argument swaps text/label registers. Remains NonMatching; full coordinator build SHA-1 OK.

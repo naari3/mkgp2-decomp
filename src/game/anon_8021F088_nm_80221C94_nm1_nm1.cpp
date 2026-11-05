@@ -1,11 +1,10 @@
 #include "game/anon_8021F088_private.h"
 
 static inline void FormatItemNames(char *buf, int first, int second) {
-    const char *name = fn_8013C26C(second, -1);
-    sprintf(buf, lbl_806DB2A0, fn_8013C26C(first, -1), name);
+    sprintf(buf, lbl_806DB2A0, fn_8013C26C(first, -1), fn_8013C26C(second, -1));
 }
 
-static inline void SetItemLabels(ItemWnd *w, int alpha) {
+static inline void SetItemLabels(ItemWnd *w, unsigned char alpha) {
     unsigned int color = PackColor(0xFF, 0xFF, 0xFF, alpha);
     w->label.SetColor(color);
     w->SetTextAlpha(color);
