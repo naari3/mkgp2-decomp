@@ -1802,5 +1802,33 @@
       "dtor_8007AD78",
       "__dt__11ScopedTimerFv"
     ]
+  },
+  "src/game/AI_KartInit.cpp": {
+    "extab": [
+      "fn_801E89A0",
+      "AI_KartInit",
+      "dtor_80036E40",
+      "dtor_801E89E8",
+      "dtor_801E8A64",
+      "dtor_801E8AE0",
+      "dtor_801E8B70",
+      "dtor_801E8C00",
+      "dtor_80052D40",
+      "dtor_80052B50",
+      "dtor_80052C48"
+    ],
+    "extabindex": [
+      "AI_KartInit",
+      "fn_801E89A0",
+      "dtor_80036E40",
+      "dtor_801E89E8",
+      "dtor_801E8A64",
+      "dtor_801E8AE0",
+      "dtor_801E8B70",
+      "dtor_801E8C00",
+      "dtor_80052D40",
+      "dtor_80052B50",
+      "dtor_80052C48"
+    ]
   }
 }

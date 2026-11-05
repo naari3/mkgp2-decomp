@@ -2398,6 +2398,7 @@ config.libs = [
             Object(Matching, "game/fn_801E6670.c"),
             Object(Matching, "game/fn_801E6E4C.c"),
             Object(Matching, "game/KartController_TimedUpdate.cpp", extab_padding=b""),
+            Object(Matching, "game/AI_KartInit.cpp", extab_padding=b"\x00\x00" * 11, extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/dtor_801CCA30.cpp", extab_padding=b"\x00\x00"),
             Object(Matching, "game/dtor_801DC460.cpp", extab_padding=b"\x00\x00"),
             Object(Matching, "game/dtor_801E89E8.cpp", extab_padding=b"\x00\x00"),

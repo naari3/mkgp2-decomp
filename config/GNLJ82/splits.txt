@@ -9173,6 +9173,11 @@ game/KartController_TimedUpdate.cpp:
 	extabindex  start:0x800288EC end:0x800288F8
 	.text       start:0x801E8140 end:0x801E81D8
 
+game/AI_KartInit.cpp:
+	extab       start:0x80016690 end:0x800169B8
+	extabindex  start:0x80028904 end:0x8002891C
+	.text       start:0x801E83C8 end:0x801E89E8
+
 game/dtor_801E89E8.cpp:
 	extab       start:0x800169B8 end:0x800169E0
 	extabindex  start:0x8002891C end:0x80028928
