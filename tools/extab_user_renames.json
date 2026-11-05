@@ -10374,5 +10374,11 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "__dla__FPv": "MemoryManager_TimedFree",
     "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724"
+  },
+  "src/game/TransitionEffect.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@582": "jumptable_803FE388",
+    "@679": "jumptable_803FE3A4"
   }
 }

@@ -2107,6 +2107,12 @@ game/TransitionEffect_Dtor.cpp:
 	extabindex  start:0x80021638 end:0x80021644
 	.text       start:0x8007E390 end:0x8007E4CC
 
+game/TransitionEffect.cpp:
+	extab       start:0x80008848 end:0x800089FC
+	extabindex  start:0x80021644 end:0x800216F8
+	.text       start:0x8007E4CC end:0x800806D4
+	.data       start:0x803FE388 end:0x803FE3C0
+
 game/Jyugemu_Flag_SetKartDriver.c:
 	.text       start:0x800806D4 end:0x800806F4
 

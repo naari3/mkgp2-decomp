@@ -1843,6 +1843,7 @@ config.libs = [
             Object(Matching, "game/DVDLoad_WaitIfSamePage.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/FUN_8007e344.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/TransitionEffect_Dtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/TransitionEffect.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-i include/libc"]),
             Object(Matching, "game/DVDLoad_RecordOpStart.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/RingBuffer_Getters.c"),
             Object(Matching, "game/SyncSlot_ApplyCourseChoice.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -3714,6 +3715,7 @@ def _inject_data_align4_tus() -> None:
 # (e.g. shared dtors). Dropping .comment would lose MWLD's weak flags, so
 # only the .data alignment inside .comment and the section header is pinned.
 DATA_ALIGN4_WEAK_TUS = [
+    "game/TransitionEffect",
     "game/SpeedHud",
     "game/ItemViewer",
     "game/anon_8021550C",

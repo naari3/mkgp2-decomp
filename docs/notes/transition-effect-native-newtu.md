@@ -1,0 +1,5 @@
+# transition-effect-native-newtu
+
+Source: Codex worker c7_m5_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+The 17 functions 8007E4CC..800806D4 form one indivisible reversed EH group (extab 80008848..800089FC, index 80021644..800216F8). Tail deleting dtors match directly as extern C C++ functions; 80080444 needs throw(), while 800803A8 invokes an inline throw() overlay-object dtor before delete. Their primary text and 8/40-byte EH payloads are exact. Both setters match with local payload pointers to avoid repeated alias-sensitive member loads; mode 0 must be an explicit switch case for SetEffectParams. TransitionQuad values are RGBA. Whole group remains NonMatching: Tick duplicate flash flag loads/FPR webs; GetOrCreate allocation identities and genuine member/base cleanup types; RenderPass camera stack/base allocation and graphics scheduling; overlay loop unrolling. Exact methods cannot be independently promoted under this group boundary. DATA_ALIGN4_WEAK_TUS is used for two compiler jump tables (803FE388..803FE3C0); no padding objects or manual EH were emitted.
