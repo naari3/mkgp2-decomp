@@ -379,3 +379,8 @@ c5_s14: clGetCoinLine dtor 80220780 can be rescued without owning its vtable: op
 Source: Codex worker c5_s16_anon8021f088_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 392 B.
 
 Coin destructors 802246A4/80224800 unlock with existing undefined Update override declared before destructor (opt-in header declaration ordering). This suppresses incorrect RTTI-off vtables without changing inherited virtual slots or text. Owned compiler EH symbol bridges give text/extab/extabindex 100%; source inputs and exact main.elf addresses plus coordinator DOL SHA-1 verified. Native gain 2 / 392 bytes.
+
+## c6_nt8_playerdata_20261105
+Source: Codex worker c6_nt8_playerdata_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 756 B.
+
+c6 NT8: PlayerData fn_801D6558 matches 436B text/8B EH/12B index with a genuine 0x1DC-byte snapshot and CupRank inline validation. Initialize normalized=cup, then initialized cc=g_ccClass, then normalize 9..16; this gives exact load scheduling (a deferred cc assignment or helper extraction left residuals). fn_801D6DF0 becomes exact 320B when the 1..8 loop lives in AllCupsComplete inline helper, with a signed int rank temporary before >=4 comparison. Source inputs and ELF ranges verified; full DOL SHA-1 OK.

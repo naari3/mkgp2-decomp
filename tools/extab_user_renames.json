@@ -10051,5 +10051,28 @@
     "@228": "lbl_803284C0",
     "@230": "@etb_80009ED0",
     "@231": "@eti_80022640"
+  },
+  "src/game/SpecialFace_Init.cpp": {
+    "__ct__17SpecialFaceNativeFPC17SpecialFaceSource": "SpecialFace_Init",
+    "__ct__14SpecialFaceVecFv": "fn_8007C5DC",
+    "__dt__14SpecialFaceVecFv": "dtor_80036E40"
+  },
+  "src/game/SpecialFaceMesh_Ctor.cpp": {
+    "__ct__17SpecialFaceNativeFPC17SpecialFaceSource": "SpecialFace_Init",
+    "__ct__14SpecialFaceVecFv": "fn_8007C5DC",
+    "__dt__14SpecialFaceVecFv": "dtor_80036E40",
+    "__ct__21SpecialFaceMeshNativeFP15FaceSourceGroupi": "SpecialFaceMesh_Ctor",
+    "__dt__21SpecialFaceMeshNativeFv": "SpecialFaceMesh_Dtor",
+    "__dt__10FacePtrVecFv": "dtor_8007C5E0",
+    "__dt__12FaceMeshBaseFv": "dtor_8007CC54"
+  },
+  "src/game/SpecialFaceMesh_Dtor.cpp": {
+    "__ct__17SpecialFaceNativeFPC17SpecialFaceSource": "SpecialFace_Init",
+    "__ct__14SpecialFaceVecFv": "fn_8007C5DC",
+    "__dt__14SpecialFaceVecFv": "dtor_80036E40",
+    "__ct__21SpecialFaceMeshNativeFP15FaceSourceGroupi": "SpecialFaceMesh_Ctor",
+    "__dt__21SpecialFaceMeshNativeFv": "SpecialFaceMesh_Dtor",
+    "__dt__10FacePtrVecFv": "dtor_8007C5E0",
+    "__dt__12FaceMeshBaseFv": "dtor_8007CC54"
   }
 }

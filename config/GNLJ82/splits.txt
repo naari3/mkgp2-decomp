@@ -1900,6 +1900,26 @@ game/ItemEffectMgr_TickPickLowestTimer.cpp:
 game/ItemEffectState_DefaultInit.c:
 	.text       start:0x8007B74C end:0x8007B798
 
+game/SpecialFaceMesh_Dtor.cpp:
+	extab       start:0x80008640 end:0x80008648
+	extabindex  start:0x800214C4 end:0x800214D0
+	.text       start:0x8007B798 end:0x8007B878
+
+game/SpecialFaceMesh_Ctor.cpp:
+	extab       start:0x80008648 end:0x80008688
+	extabindex  start:0x800214D0 end:0x800214DC
+	.text       start:0x8007B878 end:0x8007B944
+
+game/SpecialFace_Init.cpp:
+	extab       start:0x80008688 end:0x800086C0
+	extabindex  start:0x800214DC end:0x800214E8
+	.text       start:0x8007B944 end:0x8007BB08
+
+game/SpecialFace_BuildPlaneAndEdges.cpp:
+	extab       start:0x800086C0 end:0x800086C8
+	extabindex  start:0x800214E8 end:0x800214F4
+	.text       start:0x8007BB08 end:0x8007BE70
+
 game/CourseAuxClass_VtableDtor.c:
 	extab       start:0x800087A0 end:0x800087A8
 	extabindex  start:0x80021578 end:0x80021584
@@ -8389,8 +8409,24 @@ game/fn_801D647C.c:
 	extabindex  start:0x800280DC end:0x800280E8
 	.text       start:0x801D647C end:0x801D6558
 
+game/fn_801D6558.c:
+	extab       start:0x80015304 end:0x8001530C
+	extabindex  start:0x800280E8 end:0x800280F4
+	.text       start:0x801D6558 end:0x801D670C
+
+game/fn_801D670C.c:
+	.text       start:0x801D670C end:0x801D676C
+
+game/fn_801D676C.c:
+	extab       start:0x8001530C end:0x80015314
+	extabindex  start:0x800280F4 end:0x80028100
+	.text       start:0x801D676C end:0x801D67F4
+
 game/fn_801D67F4.c:
 	.text       start:0x801D67F4 end:0x801D680C
+
+game/fn_801D6DF0.c:
+	.text       start:0x801D6DF0 end:0x801D6F30
 
 game/clFlowKart_UpdateDisplay.c:
 	extab       start:0x80015334 end:0x8001536C
