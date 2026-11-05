@@ -789,3 +789,8 @@ c13_u37: debug viewer fn_8015B790 95.6958 ->96.12937 via block-local ModelEntry*
 Source: Codex worker c13_u38_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u38: fn_80244524 rendering uses separate block-local size variables for two sequential ResCtrl render passes. Reusing one size variable creates four saved FPRs and812B; scopes reproduce three saved FPRs and796B. Explicit switch case2/default goto draw reproduces target direct exits. Text95.698494->98.190956. Residual three li(-256)/or pairs compile as oris/ori; pre-call initialized color shifts GPRs, const-reference mask emits constant-pool loads. Singleton stays NM; final fallback-linked DOL SHA-1 OK.
+
+## c13_u43_20261106
+Source: Codex worker c13_u43_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u43: fn_801F7344 fresh95.44886 ->99.03409 using a TU-local zero-texture helper: height-before-width fixes FP f8/f9 and conversion scratch slots; count then local index=0 fixes r29/r30. Bounds remains cmplwi/bne vs target cntlzw/extrwi./beq (source700 vs target704B). Inline unsigned-char empty-bank predicate invariant. Local conversion cookie @84 remains vs target lbl_806DA720. Three hypotheses exhausted; singleton stays NonMatching. Full fallback-linked DOL SHA-1 OK; native gain0.
