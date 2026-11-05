@@ -1,4 +1,4 @@
-#include "game/FlowYesNo.h"
+#include "game/YesNoButtonAnimationPrivate.h"
 
 /*
  * Left-hand selector button and the shared button animation
@@ -43,7 +43,9 @@ void YesNoButton::Animate() {
     field38 = fn_8020A6CC(offY.p);
     FlowFaderF *ap = appear.p;
     float p = fn_8020A6CC(pulse.p);
-    scale = lbl_806DAB18 * (fn_8020A6CC(ap) * p);
+    float a = fn_8020A6CC(ap);
+    a *= p;
+    scale = lbl_806DAB18 * a;
     scaleX = scale * fn_8020A6CC(zoomX.p);
     scaleY = scale * fn_8020A6CC(zoomY.p);
     alpha = fn_8020A788(alphaF.p);
@@ -129,11 +131,4 @@ void YesNoButton::Animate() {
     }
 }
 
-/* Out-of-line deleting dtor of the abstract YesNoButton (vtable lbl_804EC54C). */
-extern "C" YesNoButton *dtor_802070EC(YesNoButton *self, short flag) {
-    self->~YesNoButton();
-    if (flag > 0) {
-        operator delete(self);
-    }
-    return self;
-}
+YesNoButton::~YesNoButton() {}

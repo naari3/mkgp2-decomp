@@ -8558,7 +8558,14 @@
     "__ct__11TextManagerFv": "fn_80149214",
     "__dt__11TextManagerFv": "dtor_800869D0",
     "__vt__9FlowFader": "lbl_80419DC8",
-    "__vt__10FlowFaderF": "lbl_80419DE0"
+    "__vt__10FlowFaderF": "lbl_80419DE0",
+    "__dt__11YesNoButtonFv": "dtor_802070EC",
+    "__dt__10FlowFaderIFv": "fn_801F26C8",
+    "__dt__10FlowFaderFFv": "TweenInterp_Dtor",
+    "@138": "@etb_80019148",
+    "@139": "@eti_80029960",
+    "@226": "@etb_80019150",
+    "@227": "@eti_8002996C"
   },
   "src/game/anon_8021A7C8_nm1.cpp": {
     "__nwa__FUl": "FUN_8003b120",

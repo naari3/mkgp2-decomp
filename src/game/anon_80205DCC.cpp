@@ -1,4 +1,4 @@
-#include "game/FlowYesNo.h"
+#include "game/YesNoButtonDrawPrivate.h"
 
 /*
  * Left-hand selector button and the shared button animation
@@ -156,7 +156,7 @@ void YesNoButtonL::DrawCredits() {
     f = lbl_806DAB88 + f;
     for (int i = 0; i < 2; i++) {
         texts[i].color = col;
-        fn_801F93EC(&texts[i], scaleX * f + (x + field34), scaleY * ((float)(i * 0x1C) + oy) + (y + field38));
+        fn_801F93EC(&texts[i], scaleX * f + (x + field34), scaleY * (oy + (float)(i * 0x1C)) + (y + field38));
         fn_801F93D0(&texts[i], scaleX, scaleY);
         fn_801F8A34(fn_801F8E58(), &texts[i], lay);
     }

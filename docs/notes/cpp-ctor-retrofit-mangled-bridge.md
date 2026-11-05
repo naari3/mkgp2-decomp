@@ -284,3 +284,8 @@ Resultscene partial: CoinPopupDetail ctor 80161914 matches 1556 text bytes and i
 Source: Codex worker c3_u19_8021f088_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 3224 B.
 
 c3_u19: Coin StateCoins 80220ECC becomes exact when gravity/angle-limit use ordinary 0.8f/360.0f literals rather than named external const floats. ItemWnd ShowKart 80221C94 requires cached bool input comparison and truth test. Open 802230C0 requires existing 803C6BC4 aggregate initializer and units-to-thousands calculation order. Update 8022134C owns jump table .data 804EDE5C..804EDE80 and DATA_ALIGN4_TUS. All four have 100% owned text/EH/data and source main.elf inputs; full-build acceptance pending. Layout copies require implicit ResCtrl padding and scalar tail fields. fn_8019FF8C writes 0x30-byte sprite node record, not two floats.
+
+## c3_n4_80205dcc_20261105
+Source: Codex worker c3_n4_80205dcc_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1884 B.
+
+c3_n4: YesNoButton Animate +0x58 multiply resolves by naming the appearance call result a, then a *= pulse before storing scale. Genuine out-of-line YesNoButton::~YesNoButton() resolves a wrapper null-branch mismatch: target null skips both member destruction and delete. Private first-key declaration suppresses vtables. Owned EH 80019148..80019210 and index 80029960..80029978 compare 100% after bridge @138/@139/@226/@227; weak Fader I/F copies remain appended and must discard. Full-link acceptance pending.

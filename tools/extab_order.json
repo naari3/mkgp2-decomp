@@ -1736,5 +1736,11 @@
       "GameMode_CharacterSelect_TickStateMachine",
       "GameMode_CharacterSelect_Draw"
     ]
-  }
+  },
+  "src/game/anon_80205DCC_nm1.cpp": [
+    "fn_80206BC8",
+    "dtor_802070EC",
+    "fn_801F26C8",
+    "TweenInterp_Dtor"
+  ]
 }

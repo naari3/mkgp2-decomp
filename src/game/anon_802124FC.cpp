@@ -151,7 +151,12 @@ extern "C" void fn_802128F4(JumpGauge *g, CarObject *car) {
                 g->running = 1;
                 CarObject_GetRenderObj(car)->scale37C = g->step;
                 CarObject_GetRenderObj(car)->scale1CC = g->step;
-                CarObject_GetRenderObj(car)->speed = g->step * CarObject_GetRenderObj(car)->speed;
+                {
+                    float speed = CarObject_GetRenderObj(car)->speed;
+                    float factor = g->step;
+                    factor *= speed;
+                    CarObject_GetRenderObj(car)->speed = factor;
+                }
                 g->lift = -(lbl_806DAE04 * (lbl_806DAD70 - g->step));
             }
         }
@@ -160,9 +165,14 @@ extern "C" void fn_802128F4(JumpGauge *g, CarObject *car) {
             g->running = 0;
             g->landed = 0;
             car->stepping = 1;
-            CarObject_GetRenderObj(car)->scale37C = lbl_806DAD70;
-            CarObject_GetRenderObj(car)->scale1CC = lbl_806DAD70;
-            CarObject_GetRenderObj(car)->speed = g->div * CarObject_GetRenderObj(car)->speed;
+            { KartRender *r = CarObject_GetRenderObj(car); r->scale37C = lbl_806DAD70; }
+            { KartRender *r = CarObject_GetRenderObj(car); r->scale1CC = lbl_806DAD70; }
+            {
+                float speed = CarObject_GetRenderObj(car)->speed;
+                float factor = g->div;
+                factor *= speed;
+                CarObject_GetRenderObj(car)->speed = factor;
+            }
             if (CarObject_GetRenderObj(car)->jobj != 0) {
                 Object_SetField14_IfValid(CarObject_GetRenderObj(car)->jobj, lbl_806DAD70);
             }
@@ -194,12 +204,18 @@ extern "C" void fn_802128F4(JumpGauge *g, CarObject *car) {
             g->delta[13] = g->step * (y - pos.y);
             g->delta[14] = g->step * (z - pos.z);
             g->spin = g->step * (TornadoEffect_GetField114(KartItem_GetCarObjectSoundCh(car)) - h);
-            CarObject_GetRenderObj(car)->lift += g->lift;
+            {
+                float lift = g->lift;
+                KartRender *r = CarObject_GetRenderObj(car);
+                r->lift += lift;
+            }
             if (CarObject_GetRenderObj(car)->jobj != 0) {
                 Object_SetField14_IfValid(CarObject_GetRenderObj(car)->jobj, g->step);
             }
         }
-        CarObject_GetRenderObj(car)->lift += g->lift;
+        float lift = g->lift;
+        KartRender *r = CarObject_GetRenderObj(car);
+        r->lift += lift;
         g->mtx[12] = pos.x;
         g->mtx[13] = pos.y;
         g->mtx[14] = pos.z;
