@@ -1764,5 +1764,23 @@
     "TwinSpriteOverlay_Render",
     "TwinSpriteOverlay_AddDraw",
     "TwinSpriteOverlay_Update"
-  ]
+  ],
+  "src/game/STLContainer.cpp": {
+    "extab": [
+      "dtor_80038DD4",
+      "dtor_80038E30",
+      "SharedPtr_Init",
+      "STLContainer_GlobalInit_854",
+      "STLContainer_Dtor",
+      "STLContainer_DisposeRecursive"
+    ],
+    "extabindex": [
+      "STLContainer_GlobalInit_854",
+      "STLContainer_Dtor",
+      "STLContainer_DisposeRecursive",
+      "dtor_80038DD4",
+      "dtor_80038E30",
+      "SharedPtr_Init"
+    ]
+  }
 }

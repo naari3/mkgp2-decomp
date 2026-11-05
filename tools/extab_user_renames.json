@@ -10086,5 +10086,29 @@
   "src/game/kartmove/fn_8019C6B4.cpp": {
     "__dt__12MovementQuatFv": "dtor_800524CC",
     "__dt__7InitVecFv": "dtor_80036E40"
+  },
+  "src/game/STLContainer.cpp": {
+    "__dt__7STLTreeFv": "STLContainer_Dtor",
+    "__dt__7PcbBaseFv": "dtor_80038DD4",
+    "__vt__7PcbBase": "lbl_803F5710",
+    "__dt__9SharedPtrFv": "dtor_80038E30",
+    "__ct__9SharedPtrFPv": "SharedPtr_Init",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__nw__FUl": "Alloc",
+    "dispose__7STLTreeFP7STLNode": "STLContainer_DisposeRecursive",
+    "__sinit_STLContainer_cpp": "global:STLContainer_GlobalInit_854",
+    "@1": "lbl_80598548",
+    "@151": "@etb_80005D8C",
+    "@171": "@etb_80005D94",
+    "@186": "@etb_80005D9C",
+    "@193": "@etb_80005DC8",
+    "@18": "@etb_80005DD0",
+    "@135": "@etb_80005DD8",
+    "@194": "@eti_8001F9F4",
+    "@19": "@eti_8001FA00",
+    "@136": "@eti_8001FA0C",
+    "@152": "@eti_8001FA18",
+    "@172": "@eti_8001FA24",
+    "@187": "@eti_8001FA30"
   }
 }
