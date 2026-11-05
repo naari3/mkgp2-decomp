@@ -78,3 +78,8 @@ fn_801866DC (528 B): a local const char *messages = lbl_80376F60 preserves r31 d
 Source: Codex worker c6_nt6_kartmove_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 312 B.
 
 KartMovement speed methods 80199A84/80199B10 require GC/2.7 to sink the leaf prologue. In-place Newton-root update produces exact f4 result; returning through a separate inline root result web yielded 97% register-only residue. Both owned EH/index sections and actual source-linked ELF addresses verified. C15C has exact owned EH/index and primary size, but FP expression-temp identities remain despite scalar declaration probes; left NonMatching.
+
+## c7_s5_20261105
+Source: Codex worker c7_s5_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 2664 B.
+
+Stats_PacketStats_UI (8006830C): ratio0=zero; then four ascending assignment chains ratio1=...=ratio8=zero, ratio9=...=ratio16=zero, ratio17=...=ratio24=zero, ratio25=...=ratio32=zero reproduce target zero-case scheduling. Independent scalar zero assignments and one chain of all 33 produce different scheduling despite identical semantics. Entry-local table base restores r30 and exact prologue; canonical TestMenuPage.h works. Text/extab/extabindex 100%, source-linked full DOL SHA-1 OK.

@@ -1572,6 +1572,11 @@ game/EffectSpeedAction_MueScale_Dtor.c:
 	extabindex  start:0x80020EB8 end:0x80020EC4
 	.text       start:0x80065084 end:0x800650E0
 
+game/Cosf_LUT_Wrap.c:
+	extab       start:0x80008090 end:0x80008098
+	extabindex  start:0x80020F54 end:0x80020F60
+	.text       start:0x800657D8 end:0x8006584C
+
 game/Sinf_LUT_Wrap.c:
 	extab       start:0x80008098 end:0x800080A0
 	extabindex  start:0x80020F60 end:0x80020F6C
@@ -1632,6 +1637,11 @@ game/NetDiag_CounterPage.c:
 	extab       start:0x80008118 end:0x80008120
 	extabindex  start:0x80021008 end:0x80021014
 	.text       start:0x80067F74 end:0x8006830C
+
+game/Stats_PacketStats_UI.cpp:
+	extab       start:0x80008120 end:0x80008128
+	extabindex  start:0x80021014 end:0x80021020
+	.text       start:0x8006830C end:0x80068D00
 
 game/NetDiag_PacketPage.c:
 	extab       start:0x80008128 end:0x80008130
@@ -1733,6 +1743,11 @@ game/CameraTest_Page.cpp:
 	extab       start:0x800081D8 end:0x800081F0
 	extabindex  start:0x80021110 end:0x8002111C
 	.text       start:0x8007044C end:0x80070EA8
+
+game/FlashFadeOverlay_Draw.c:
+	extab       start:0x800081F0 end:0x800081F8
+	extabindex  start:0x8002111C end:0x80021128
+	.text       start:0x80070EA8 end:0x800712D8
 
 game/LampTestIndiv_Page.cpp:
 	extab       start:0x800081F8 end:0x80008200
@@ -1856,6 +1871,11 @@ game/Backup_PublishShadowCopy_Inline.c:
 	extab       start:0x80008340 end:0x80008348
 	extabindex  start:0x80021290 end:0x8002129C
 	.text       start:0x80075470 end:0x80075690
+
+game/FrameUpdate.c:
+	extab       start:0x80008348 end:0x80008350
+	extabindex  start:0x8002129C end:0x800212A8
+	.text       start:0x80075690 end:0x800758EC
 
 game/Backup_Shutdown.c:
 	extab       start:0x80008350 end:0x80008358
