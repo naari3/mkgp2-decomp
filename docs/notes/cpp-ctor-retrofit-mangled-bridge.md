@@ -549,3 +549,8 @@ c8_s62: fn_802437AC new RivalMarker with nested new RivalOther yields exact 428B
 Source: Codex worker c8_s67_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 1056 B.
 
 HudSelection 802457E0/80245850/80245AC4/80245B10: canonical FlowFaderF::Step/Done and VHolder<FlowFaderF> explicit reverse-order destruction produce exact native bodies and owned EH. Two holders of the same type share one SPECIFICATION action, matching target. Compare constants on the left of final equality tests for exact fcmpu operands. Update switch table 804EE854..804EE870 requires DATA_ALIGN4_TUS. Full source-linked SHA-1 and all four ELF addresses/sizes verified.
+
+## c8_s69_20261105
+Source: Codex worker c8_s69_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 544 B.
+
+c8_s69: isolated AdvanceCard ctor 8024629C uses canonical DigitHudBase, two VHolder<FlowFaderF> members and ResCtrl local. All 452B text and owned 84B EH match with GC/2.6. Real new DigitHud factory 80246B78 matches 92B text and 24B EH. Whole ctor EH section scores below 100 only from discarded weak destructors. Full DOL SHA-1 exact, source link edges and ELF addresses verified.

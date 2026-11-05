@@ -12094,8 +12094,29 @@ game/HudSelectionDestroy.cpp:
 game/FlowAdvance10.c:
 	.text       start:0x80245E50 end:0x80245E6C
 
+game/AdvanceCardCtor.cpp:
+	extab       start:0x8001D56C end:0x8001D5C0
+	extabindex  start:0x8002B268 end:0x8002B274
+	.text       start:0x8024629C end:0x80246460
+
 game/FlowAdvance1C.c:
 	.text       start:0x80246460 end:0x80246484
+
+game/RaceDigitUpdate.cpp:
+	extab       start:0x8001D5C0 end:0x8001D5C8
+	extabindex  start:0x8002B274 end:0x8002B280
+	.text       start:0x80246484 end:0x80246988
+	.data       start:0x804EEAA4 end:0x804EEAC4
+
+game/RaceDigitLap.cpp:
+	extab       start:0x8001D5C8 end:0x8001D66C
+	extabindex  start:0x8002B280 end:0x8002B28C
+	.text       start:0x80246988 end:0x80246B78
+
+game/RaceDigitFactory.cpp:
+	extab       start:0x8001D66C end:0x8001D684
+	extabindex  start:0x8002B28C end:0x8002B298
+	.text       start:0x80246B78 end:0x80246BD4
 
 game/RaceDigits.cpp:
 	extab       start:0x8001D738 end:0x8001DA34
