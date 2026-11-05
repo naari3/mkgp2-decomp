@@ -819,7 +819,7 @@ config.libs = [
             Object(Matching, "game/Object_SetByte48.c"),
             Object(Matching, "game/Object_GetJObjPositionVec.c"),
             Object(Matching, "game/fn_801DEC3C.c"),
-            Object(NonMatching, "game/fn_801E68B4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_801E68B4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/AI_UpdateItemEffects.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801DEC74.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/DriveBehavior_HandleWpType.c", extra_cflags=["-Cpp_exceptions on"]),

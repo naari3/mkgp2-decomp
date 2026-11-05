@@ -148,3 +148,8 @@ c10_u26: fn_8019C15C improves 99.67836 to99.9269 by direct compression = corner-
 Source: Codex worker c11_a1_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 32 B.
 
 AssocTree_Init80089C08: direct header initialization with restrict on tree and flags exactly matches32 B under unchangedGC/1.3.2 flags. Cached flag before stores allocates flagr5/zeror4 and changes instruction order; direct restricted field assignments permit lir5;lbzr4;stwr5;addir0 sequence. Full source-linked build SHA-1 OK.
+
+## c12_u10_20261106
+Source: Codex worker c12_u10_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 600 B.
+
+fn_801E68B4 600B: by-value inline sqrt helper left squared-length/result f3 vs target f4 and Newton half constant f4 vs f3 (99.53333%). Compute squared length into caller float length, then pass by reference to void in-place helper; replacing return result with value=result resolves all FPR identities at 100% with unchanged instructions/EH. Existing weak Vec3c destructor bridge discards extra 8B EH/12B index at link. Matching source edge and full DOL SHA-1 verified.

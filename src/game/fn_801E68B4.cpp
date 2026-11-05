@@ -22,7 +22,7 @@ extern const float lbl_806DA388;
 extern const double lbl_806DA3A0, lbl_806DA3A8;
 }
 
-static inline float ItemVectorLength(float value) {
+static inline void ItemVectorLength(float &value) {
     volatile float result;
     if (value > lbl_806DA388) {
         double estimate = __frsqrte(value);
@@ -30,9 +30,8 @@ static inline float ItemVectorLength(float value) {
         estimate = lbl_806DA3A0 * estimate * (lbl_806DA3A8 - value * (estimate * estimate));
         estimate = lbl_806DA3A0 * estimate * (lbl_806DA3A8 - value * (estimate * estimate));
         result = value * estimate;
-        return result;
+        value = result;
     }
-    return value;
 }
 
 int AIItemController::ApplyIncomingItem(AIIncomingItem *incoming) {
@@ -50,8 +49,9 @@ int AIItemController::ApplyIncomingItem(AIIncomingItem *incoming) {
     velocity.y = y;
     velocity.z = z;
     Vec3c direction = velocity;
-    float length = ItemVectorLength((float)direction.x * (float)direction.x +
-        (float)direction.y * (float)direction.y + (float)direction.z * (float)direction.z);
+    float length = (float)direction.x * (float)direction.x +
+        (float)direction.y * (float)direction.y + (float)direction.z * (float)direction.z;
+    ItemVectorLength(length);
     if (length <= lbl_806DA388) {
         direction.z = lbl_806DA388;
         direction.y = lbl_806DA388;
