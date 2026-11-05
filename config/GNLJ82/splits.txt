@@ -11876,9 +11876,24 @@ triforce/amboot.c:
 	.sdata      start:0x806D0C20 end:0x806D0C28
 
 triforce/ambackup.c:
-	.text       start:0x80288048 end:0x80288CC8
+	.text       start:0x80288048 end:0x80288364
+
+triforce/ambackup_nm1.c:
+	.text       start:0x80288364 end:0x80288574
 	.bss        start:0x806835E0 end:0x80690E20
 	.sdata2     start:0x806DC918 end:0x806DC920
+
+triforce/ambackup_access.c:
+	.text       start:0x80288574 end:0x80288710
+
+triforce/ambackup_nm2.c:
+	.text       start:0x80288710 end:0x80288B80
+
+triforce/ambackup_shutdown.c:
+	.text       start:0x80288B80 end:0x80288BCC
+
+triforce/ambackup_nm3.c:
+	.text       start:0x80288BCC end:0x80288CC8
 
 triforce/amcoin.c:
 	.text       start:0x80288CC8 end:0x8028A598
