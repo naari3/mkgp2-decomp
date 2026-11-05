@@ -6760,6 +6760,11 @@ game/Scene_80172844.cpp:
 	.text       start:0x80172844 end:0x80172948
 	.rodata     start:0x8036E8B0 end:0x8036E978
 
+game/HomingMarkerUpdate.cpp:
+	extab       start:0x80010964 end:0x8001096C
+	extabindex  start:0x800264BC end:0x800264C8
+	.text       start:0x80172948 end:0x801734B0
+
 game/Scene_801734B0.cpp:
 	extab       start:0x8001096C end:0x80010A4C
 	extabindex  start:0x800264C8 end:0x8002651C
@@ -6787,6 +6792,16 @@ game/ShadowCaster.cpp:
 	extab       start:0x80010A94 end:0x80010B00
 	extabindex  start:0x80026558 end:0x800265C4
 	.text       start:0x801746A8 end:0x80174D94
+
+game/ShadowTreeFree.c:
+	extab       start:0x80010B00 end:0x80010B08
+	extabindex  start:0x800265C4 end:0x800265D0
+	.text       start:0x80174D94 end:0x80175048
+
+game/ShadowTreeClone.c:
+	extab       start:0x80010B08 end:0x80010B10
+	extabindex  start:0x800265D0 end:0x800265DC
+	.text       start:0x80175048 end:0x801752A8
 
 game/mapobject/fn_801752A8.c:
 	.text       start:0x801752A8 end:0x801752C0
