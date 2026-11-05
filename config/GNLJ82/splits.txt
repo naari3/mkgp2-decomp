@@ -11858,11 +11858,54 @@ triforce/amcoin.c:
 	.sdata2     start:0x806DC920 end:0x806DC930
 
 triforce/amjvs.c:
-	.text       start:0x8028A598 end:0x8028C158
+	.text       start:0x8028A598 end:0x8028A740
+	.bss        start:0x806910B8 end:0x806937C0
+
+triforce/amjvs_nm1.c:
+	.text       start:0x8028A740 end:0x8028A808
+
+triforce/amjvs_m2.c:
+	.text       start:0x8028A808 end:0x8028A934
+
+triforce/amjvs_nm2.c:
+	.text       start:0x8028A934 end:0x8028AA40
+
+triforce/amjvs_m3.c:
+	.text       start:0x8028AA40 end:0x8028AAC0
+
+triforce/amjvs_nm3.c:
+	.text       start:0x8028AAC0 end:0x8028ACEC
+	.sbss       start:0x806D1E30 end:0x806D1E38
+
+triforce/amjvs_m4.c:
+	.text       start:0x8028ACEC end:0x8028AE64
+
+triforce/amjvs_nm4.c:
+	.text       start:0x8028AE64 end:0x8028AF48
+
+triforce/amjvs_m5.c:
+	.text       start:0x8028AF48 end:0x8028B180
+
+triforce/amjvs_nm5.c:
+	.text       start:0x8028B180 end:0x8028B3D0
+
+triforce/amjvs_m6.c:
+	.text       start:0x8028B3D0 end:0x8028B48C
+
+triforce/amjvs_nm6.c:
+	.text       start:0x8028B48C end:0x8028B9A4
+
+triforce/amjvs_m7.c:
+	.text       start:0x8028B9A4 end:0x8028BAD0
+
+triforce/amjvs_nm7.c:
+	.text       start:0x8028BAD0 end:0x8028BFB0
 	.rodata     start:0x803F2768 end:0x803F2798
 	.data       start:0x804F57D0 end:0x804F5800
-	.bss        start:0x806910B8 end:0x806937C0
-	.sbss       start:0x806D1E30 end:0x806D1E40
+	.sbss       start:0x806D1E38 end:0x806D1E40
+
+triforce/amjvs_m8.c:
+	.text       start:0x8028BFB0 end:0x8028C158
 
 triforce/amnet.c:
 	.text       start:0x8028C158 end:0x8028F45C
