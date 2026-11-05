@@ -2421,6 +2421,7 @@ config.libs = [
             Object(Matching, "game/fn_801B14B8.c"),
             Object(Matching, "game/fn_801B158C.c"),
             Object(Matching, "game/fn_801B1660.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(NonMatching, "game/fn_801B1D5C.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/Voice_TryEnqueueAnnouncerByPhase.c"),
             Object(Matching, "game/fn_801B377C.c", extab_padding=b""),
             Object(Matching, "game/VoiceSystem_SetCheckpointsForTotalLaps.c", extra_cflags=["-use_lmw_stmw on"]),
@@ -3876,6 +3877,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/fn_801B1D5C",
     "game/HudSelectionUpdate",
     "game/HudFlow",
     "game/PreloadEffectResources",
