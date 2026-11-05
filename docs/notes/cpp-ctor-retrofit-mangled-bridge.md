@@ -799,3 +799,8 @@ c13_u43: fn_801F7344 fresh95.44886 ->99.03409 using a TU-local zero-texture help
 Source: Codex worker c14_u11_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 EnemyFace_nm3 ctor 8022BBC8: target clEFace3D +8 is destructible Vec3c; face selection and model allocation belong within inline clEFace3D ctor EH lifetime, not caller post-new initialization. FaceIcon sizeof=0x28, FaceRing sizeof=0x24. TU-private view raises text 94.35 to 98.72 and matches owned EH exactly after FaceHolder->dtor_8020EB04/base->dtor_8021617C bridges. Residual is local initialization register/scheduling; stop after unchanged member-initializer/default-vector probes. TU remains NonMatching.
+
+## c14_u12_20261106
+Source: Codex worker c14_u12_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+Scene_80170B5C GrowSet ctor: TU-local inline GetJointPObj(j) wrapping GetPObj(HSD_JObjGetDObj(j)) fixes first face extraction sequence from mr. r4,r3 / early mr r3,r24 to target cmplwi r3,0 / lwz r4,0xC(r3) / late mr r3,r24. Current objdiff rises 94.08 to 95.257774 with EH 100%. Explicit componentwise Vec3 snapshot scalarizes across new into preserved f29-f31; returning vector by value produces target float snapshot plus unwanted extra aggregate copy. Retain original vector spelling until canonical vector lifetime/type is recovered.

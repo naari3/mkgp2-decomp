@@ -21,6 +21,9 @@ static inline void *GetPObj(GrowDObj *d) {
     if (d) return d->pobj;
     return 0;
 }
+static inline void *GetJointPObj(GrowJoint *j) {
+    return GetPObj(HSD_JObjGetDObj(j));
+}
 static inline Vec3Grow *GetPosition(GrowJoint *j) {
     if (!j) __assert(lbl_806D8CD8,0x3E4,lbl_806D8CE0);
     return &j->pos;
@@ -67,10 +70,10 @@ GrowSet::GrowSet() {
             e->jobj=ResolveJointByName(model,name);
             if (!e->jobj || !a || !b) continue;
             GrowFace face;
-            if (fn_80184F24(b,GetPObj(HSD_JObjGetDObj(b)),&face,1)) {
+            if (fn_80184F24(b,GetJointPObj(b),&face,1)) {
                 e->anim=new GrowAnim(&face,1);
             }
-            void *pobj=GetPObj(HSD_JObjGetDObj(a));
+            void *pobj=GetJointPObj(a);
             e->faceCount=fn_80183A5C(pobj);
             if (e->faceCount) {
                 e->faces=FUN_8003b120(e->faceCount*0x34);
