@@ -115,7 +115,7 @@ extern void KartItemAudio_PlayHitConfirmSE();
 extern void KartItemAudio_PlayThrowConfirmSE();
 extern void KartItemAudio_StopSEByItemId();
 extern void KartItemSubObject_Ctor();
-extern void KartItemSubObject_Dtor();
+extern void KartItemSubObject_Dtor(void *self, short flag);
 extern int KartItem_CancelIfNotForced(void *driver);
 extern void KartItem_DispatchEffectRenderByState();
 extern void KartItem_FlushPendingRender();
@@ -137,7 +137,7 @@ extern void KartReaction_Side();
 extern void MediaBoard_PollCompletion(void *snd, float v);
 extern void MediaBoard_SendAndCheck();
 extern void MemoryManager_AllocTagged();
-extern void MemoryManager_TimedFree();
+extern void MemoryManager_TimedFree(void *p);
 extern void Mtx4x4_TransposeTo4x3();
 extern unsigned long OSGetTick(void);
 extern void PlayCamera_Dtor();
@@ -833,6 +833,13 @@ typedef struct ItemLaneRunCursor {
 } ItemLaneRunCursor;
 
 /* item object position view (world pos at +0xa0) */
+/* obstacle hit event, copied by value (0x1EC bytes) before dispatch */
+typedef struct ObstacleHitEvent {
+    char pad_0x0[0x8];
+    int kind8;                         /* 0x8 */
+    char pad_0xc[0x1e0];
+} ObstacleHitEvent;
+
 typedef struct ItemObjectPosView {
     char pad_0x0[0x8];
     int itemId8;                       /* 0x8 */
@@ -1129,7 +1136,7 @@ typedef struct CarObjFrameView {
 asm void KartItem_OnKartHit(void);
 void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, int channel);
 int CarObject_OnItemHit(KartItemOpsView *self, void *itemObj, int itemIdArg);
-asm void CarObject_HandleObstacleHit(void);
+int CarObject_HandleObstacleHit(KartItemOpsView *self, ObstacleHitEvent *evt);
 void KartItem_PlaySE_0x09(KartItemHitSEView *self);
 asm void KartItem_ApplyImpactReflectAndDampVelocity(void);
 unsigned char KartItem_TryDropCoinsAndPlaySE(KartItemDropView *self, int count, unsigned char force);
@@ -1156,7 +1163,7 @@ KartMovementSpeedView *CarObject_GetKartMovementPtr(CarObjGetterView *self);
 void *KartItem_GetCarObjectSoundCh(CarObjGetterView *self);
 void *CarObject_GetRenderObj(CarObjGetterView *self);
 unsigned char KartItem_GetByte_f4(CarObjGetterView *self);
-asm void KartItem_GetBoostArmedAndTimer(void);
+unsigned char KartItem_GetBoostArmedAndTimer(CarObjGetterView *self, float *outTimer);
 unsigned char CarObject_IsAirborne(CarObjGetterView *self);
 unsigned char KartItem_GetCarObjectState_2bc(CarObjGetterView *self);
 void KartItem_ResetStrPcbToIdle(KartItemOpsView *self);
@@ -1224,7 +1231,9 @@ void *dtor_80052808(void *self, short flag);
 void *dtor_8005285C(void *self, short flag);
 asm void dtor_800528B0(void);
 asm void dtor_8005292C(void);
-asm void dtor_800529A8(void);
+#pragma cplusplus on
+extern "C" void *dtor_800529A8(void *self, short flag) throw();
+#pragma cplusplus off
 asm void dtor_80052A58(void);
 asm void dtor_80052AD4(void);
 asm void dtor_80052B50(void);
@@ -1274,9 +1283,7 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; void *f7; unsigned int f8; void *f9; unsigned int f10; void *f11; } extab_ItemEffect_Explosion = { 0x180A0000, 0x0000011C, 0x001A0020, 0x000001B0, 0x00000018, 0x00000000, 0x0200000C, (void *)&dtor_80036E40, 0x02000018, (void *)&dtor_80036E40, 0x82000024, (void *)&dtor_80036E40 };
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_ItemEffect_Trap = { 0x10CA0000, 0x000001E0, 0x00000010, 0x00000000, 0x82000014, (void *)&dtor_80036E40 };
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; unsigned int f6; void *f7; } extab_ItemEffect_Projectile = { 0x100A0000, 0x00000214, 0x00000010, 0x00000000, 0x0200001C, (void *)&dtor_80036E40, 0x82000028, (void *)&dtor_80036E40 };
-__declspec(section ".extab_user") static const unsigned char extab_CarObject_HandleObstacleHit[8] = {
-    0x50, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+/* extab_CarObject_HandleObstacleHit: auto-emitted */
 __declspec(section ".extab_user") static const unsigned char extab_KartItem_PlaySE_0x09[8] = {
     0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -1389,19 +1396,7 @@ __declspec(section ".extab_user") static const unsigned char extab_dtor_8005285C
 };
 /* extab_dtor_800528B0: auto-emitted (real C++ dtor, see body) */
 /* extab_dtor_8005292C: auto-emitted (real C++ dtor, see body) */
-__declspec(section ".extab_user") static const unsigned char extab_dtor_800529A8[84] = {
-    0x20, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4C,
-    0x00, 0x00, 0x00, 0x28, 0x00, 0x00, 0x00, 0x58,
-    0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x64,
-    0x00, 0x04, 0x00, 0x34, 0x00, 0x00, 0x00, 0x84,
-    0x00, 0x00, 0x00, 0x50, 0x00, 0x00, 0x00, 0x00,
-    0x0F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50,
-    0x00, 0x00, 0x00, 0x08, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x7C, 0x00, 0x00, 0x00, 0x20,
-    0x0D, 0x00, 0x00, 0x08, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x7C, 0x00, 0x00, 0x00, 0x20,
-    0x8D, 0x00, 0x00, 0x20
-};
+/* extab_dtor_800529A8: auto-emitted */
 /* extab_dtor_80052A58: auto-emitted (real C++ dtor, see body) */
 /* extab_dtor_80052AD4: auto-emitted (real C++ dtor, see body) */
 /* extab_dtor_80052B50: auto-emitted (real C++ dtor, see body) */
@@ -1494,9 +1489,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CarObject_OnItemHit = {
     (void *)&CarObject_OnItemHit, 0x00000510, (void *)extab_CarObject_OnItemHit
 };
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CarObject_HandleObstacleHit = {
-    (void *)&CarObject_HandleObstacleHit, 0x000002F0, (void *)extab_CarObject_HandleObstacleHit
-};
+/* extabindex_CarObject_HandleObstacleHit: auto-emitted */
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_KartItem_PlaySE_0x09 = {
     (void *)&KartItem_PlaySE_0x09, 0x00000028, (void *)extab_KartItem_PlaySE_0x09
 };
@@ -1680,9 +1673,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 /* extabindex_dtor_800528B0: auto-emitted */
 /* extabindex_dtor_8005292C: auto-emitted */
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_800529A8 = {
-    (void *)&dtor_800529A8, 0x000000B0, (void *)extab_dtor_800529A8
-};
+/* extabindex_dtor_800529A8: auto-emitted */
 /* extabindex_dtor_80052A58: auto-emitted */
 /* extabindex_dtor_80052AD4: auto-emitted */
 /* extabindex_dtor_80052B50: auto-emitted */
@@ -2343,217 +2334,110 @@ int CarObject_OnItemHit(KartItemOpsView *self, void *itemObj, int itemIdArg) { /
 }
 #pragma exceptions reset
 
-asm void CarObject_HandleObstacleHit(void) { /* 0x8004AE28 size:0x2F0 */
-    nofralloc
-    stwu r1, -0x220(r1)
-    mflr r0
-    stw r0, 0x224(r1)
-    stmw r22, 0x1f8(r1)
-    mr r30, r3
-    mr r22, r4
-    lwz r3, 0x54(r3)
-    bl Field4NotMinusOne
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne CarObject_HandleObstacleHit_L_8004AE5C
-    li r3, 0x0
-    b CarObject_HandleObstacleHit_L_8004B104
-    CarObject_HandleObstacleHit_L_8004AE5C:
-    lwz r3, 0x40(r30)
-    lwz r3, 0x4(r3)
-    bl ItemStateGuard_IsActive
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne CarObject_HandleObstacleHit_L_8004AE7C
-    li r3, 0x0
-    b CarObject_HandleObstacleHit_L_8004B104
-    CarObject_HandleObstacleHit_L_8004AE7C:
-    lwz r3, 0x4c(r30)
-    lwz r3, 0x14(r3)
-    neg r0, r3
-    andc r0, r0, r3
-    srwi r0, r0, 31
-    cmplwi r0, 0x1
-    bne CarObject_HandleObstacleHit_L_8004AEA0
-    li r3, 0x0
-    b CarObject_HandleObstacleHit_L_8004B104
-    CarObject_HandleObstacleHit_L_8004AEA0:
-    li r0, 0x3d
-    addi r5, r1, 0x4
-    subi r4, r22, 0x4
-    mtctr r0
-    CarObject_HandleObstacleHit_L_8004AEB0:
-    lwz r3, 0x4(r4)
-    lwzu r0, 0x8(r4)
-    stw r3, 0x4(r5)
-    stwu r0, 0x8(r5)
-    bdnz CarObject_HandleObstacleHit_L_8004AEB0
-    lwz r0, 0x4(r4)
-    stw r0, 0x4(r5)
-    lwz r0, 0x8(r22)
-    cmpwi r0, 0x32
-    bne CarObject_HandleObstacleHit_L_8004AEE0
-    li r31, 0x32
-    b CarObject_HandleObstacleHit_L_8004AEF8
-    CarObject_HandleObstacleHit_L_8004AEE0:
-    cmpwi r0, 0x8
-    bne CarObject_HandleObstacleHit_L_8004AEF0
-    li r31, 0x11c
-    b CarObject_HandleObstacleHit_L_8004AEF8
-    CarObject_HandleObstacleHit_L_8004AEF0:
-    li r3, 0x0
-    b CarObject_HandleObstacleHit_L_8004B104
-    CarObject_HandleObstacleHit_L_8004AEF8:
-    lwz r3, 0x2c(r30)
-    mr r4, r31
-    lwz r25, 0x304(r3)
-    mr r3, r25
-    bl ItemEffectBus_ArmTornadoAndQuery
-    clrlwi. r0, r3, 24
-    bne CarObject_HandleObstacleHit_L_8004AF1C
-    li r3, 0x0
-    b CarObject_HandleObstacleHit_L_8004B104
-    CarObject_HandleObstacleHit_L_8004AF1C:
-    lwz r3, 0x40(r30)
-    mr r4, r31
-    addi r5, r1, 0x8
-    bl ItemEffect_TryStartByCategory_Wrap
-    cmpwi r3, 0x1
-    beq CarObject_HandleObstacleHit_L_8004B100
-    bge CarObject_HandleObstacleHit_L_8004AF44
-    cmpwi r3, 0x0
-    bge CarObject_HandleObstacleHit_L_8004AF54
-    b CarObject_HandleObstacleHit_L_8004B100
-    CarObject_HandleObstacleHit_L_8004AF44:
-    cmpwi r3, 0x3
-    bge CarObject_HandleObstacleHit_L_8004B100
-    li r3, 0x0
-    b CarObject_HandleObstacleHit_L_8004B104
-    CarObject_HandleObstacleHit_L_8004AF54:
-    lwz r24, 0x4c(r30)
-    li r29, 0x0
-    mr r23, r24
-    CarObject_HandleObstacleHit_L_8004AF60:
-    lwz r22, 0x28(r23)
-    lwz r26, 0x8(r24)
-    cmpwi r22, 0x0
-    lwz r27, 0x4(r24)
-    lwz r28, 0x0(r24)
-    blt CarObject_HandleObstacleHit_L_8004AFE0
-    lwz r3, 0x34(r28)
-    mr r4, r22
-    bl TornadoEffect_ApplyItemVisual_Primary
-    lwz r3, 0x24(r28)
-    mr r4, r22
-    bl KartItemAudio_StopSEByItemId
-    lwz r3, 0x2c(r28)
-    mr r4, r22
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ApplyItemEventClear
-    mr r3, r27
-    bl EffectState_ReleaseAndClear
-    mr r3, r26
-    bl MediaBoard_SendAndCheck
-    lwz r3, 0x38(r28)
-    lfs f1, lbl_806D26EC(r2)
-    bl ShadowBillboard_SetField0xA4
-    li r3, -0x1
-    li r0, 0x0
-    stw r3, 0x28(r23)
-    lfs f0, lbl_806D26FC(r2)
-    stw r3, 0x2c(r23)
-    stw r0, 0x30(r23)
-    stw r0, 0x34(r23)
-    stw r0, 0x38(r23)
-    stfs f0, 0x3c(r23)
-    CarObject_HandleObstacleHit_L_8004AFE0:
-    addi r29, r29, 0x1
-    addi r23, r23, 0x18
-    cmplwi r29, 0x2
-    blt CarObject_HandleObstacleHit_L_8004AF60
-    li r0, 0x0
-    lfs f0, lbl_806D26EC(r2)
-    stw r0, 0x14(r24)
-    mr r3, r25
-    mr r4, r31
-    stw r0, 0x1c(r24)
-    stfs f0, 0x20(r24)
-    stfs f0, 0x24(r24)
-    stb r0, 0xb0(r30)
-    lwz r5, 0x4c(r30)
-    lwz r0, 0x28(r5)
-    srwi r0, r0, 31
-    xori r0, r0, 0x1
-    clrlwi r0, r0, 24
-    cmplwi r0, 0x1
-    bne CarObject_HandleObstacleHit_L_8004B038
-    lwz r5, 0x38(r5)
-    b CarObject_HandleObstacleHit_L_8004B03C
-    CarObject_HandleObstacleHit_L_8004B038:
-    li r5, 0x0
-    CarObject_HandleObstacleHit_L_8004B03C:
-    bl ItemEffectBus_ApplyItemEventSet
-    lwz r3, 0x34(r30)
-    mr r4, r31
-    li r5, 0x1
-    bl TornadoEffect_ApplyItemVisual_Secondary
-    lwz r3, 0x24(r30)
-    mr r4, r31
-    bl KartItemAudio_PlayHitConfirmSE
-    lwz r24, 0x50(r30)
-    lwz r4, 0x8(r24)
-    cmpwi r4, 0x0
-    blt CarObject_HandleObstacleHit_L_8004B0AC
-    lwz r3, 0x0(r24)
-    lwz r3, 0x34(r3)
-    bl TornadoEffect_ApplyItemVisual_Primary
-    lwz r3, 0x0(r24)
-    lwz r4, 0x8(r24)
-    lwz r3, 0x24(r3)
-    bl KartItemAudio_StopSEByItemId
-    lwz r3, 0x0(r24)
-    lwz r4, 0x8(r24)
-    lwz r3, 0x2c(r3)
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ApplyItemEventClear
-    li r0, -0x1
-    lfs f0, lbl_806D26EC(r2)
-    stw r0, 0x8(r24)
-    stfs f0, 0xc(r24)
-    CarObject_HandleObstacleHit_L_8004B0AC:
-    lbz r0, 0xfd(r30)
-    cmplwi r0, 0x0
-    beq CarObject_HandleObstacleHit_L_8004B0F8
-    lwz r0, 0x10(r30)
-    cmpwi r0, 0x4
-    beq CarObject_HandleObstacleHit_L_8004B0D4
-    lwz r3, 0x2c(r30)
-    li r4, 0x1
-    bl CoinSystem_RemoveCoins
-    b CarObject_HandleObstacleHit_L_8004B0EC
-    CarObject_HandleObstacleHit_L_8004B0D4:
-    lwz r4, 0x2c(r30)
-    lwz r3, 0x2cc(r4)
-    subic. r0, r3, 0x1
-    bge CarObject_HandleObstacleHit_L_8004B0E8
-    li r0, 0x0
-    CarObject_HandleObstacleHit_L_8004B0E8:
-    stw r0, 0x2cc(r4)
-    CarObject_HandleObstacleHit_L_8004B0EC:
-    lwz r3, 0x2c(r30)
-    lwz r0, 0x2cc(r3)
-    stw r0, 0xc8(r30)
-    CarObject_HandleObstacleHit_L_8004B0F8:
-    li r3, 0x1
-    b CarObject_HandleObstacleHit_L_8004B104
-    CarObject_HandleObstacleHit_L_8004B100:
-    li r3, 0x1
-    CarObject_HandleObstacleHit_L_8004B104:
-    lmw r22, 0x1f8(r1)
-    lwz r0, 0x224(r1)
-    mtlr r0
-    addi r1, r1, 0x220
-    blr
+int CarObject_HandleObstacleHit(KartItemOpsView *self, ObstacleHitEvent *evt) { /* 0x8004AE28 size:0x2F0 */
+    unsigned int i;
+    KartItemOpsView *owner;
+    void *effectState;
+    void *mediaReq;
+    ItemBusFlagsView *bus;
+    ItemEffectTable *tbl;
+    ItemSecondaryLane *sec;
+    ItemLaneCursor *cursor;
+    int itemId;
+    ItemEffectTable *tbl2;
+    KartDriverBusView *drv;
+    int t;
+    int arg5;
+    ObstacleHitEvent copy;
+    int id;
+
+    if (Field4NotMinusOne(self->warpCtx54) == 1) {
+        return 0;
+    }
+    if (ItemStateGuard_IsActive(self->stateBlock->guard) == 1) {
+        return 0;
+    }
+    if ((unsigned char)(self->effectTable->run14 > 0) == 1) {
+        return 0;
+    }
+    copy = *evt;
+    if (evt->kind8 == 0x32) {
+        id = 0x32;
+    } else if (evt->kind8 == 8) {
+        id = 0x11c;
+    } else {
+        return 0;
+    }
+    bus = self->ownerDriver->itemBus;
+    if (!ItemEffectBus_ArmTornadoAndQuery(bus, id)) {
+        return 0;
+    }
+    switch (ItemEffect_TryStartByCategory_Wrap(self->stateBlock, id, &copy)) {
+    case 2:
+        return 0;
+    case 0:
+        tbl = self->effectTable;
+        cursor = (ItemLaneCursor *)tbl;
+        for (i = 0; i < 2; i++) {
+            itemId = cursor->itemId;
+            mediaReq = tbl->mediaReq;
+            effectState = tbl->effectState;
+            owner = tbl->owner;
+            if (itemId >= 0) {
+                TornadoEffect_ApplyItemVisual_Primary(owner->effectObj, itemId);
+                KartItemAudio_StopSEByItemId(owner->soundCtrl, itemId);
+                ItemEffectBus_ApplyItemEventClear(owner->ownerDriver->itemBus, itemId);
+                EffectState_ReleaseAndClear(effectState);
+                MediaBoard_SendAndCheck(mediaReq);
+                ShadowBillboard_SetField0xA4(owner->billboard, lbl_806D26EC);
+                cursor->itemId = -1;
+                cursor->itemKind = -1;
+                cursor->state8 = 0;
+                cursor->stateC = 0;
+                cursor->state10 = 0;
+                cursor->blend = lbl_806D26FC;
+            }
+            cursor = (ItemLaneCursor *)((char *)cursor + 0x18);
+        }
+        tbl->run14 = 0;
+        tbl->run1c = 0;
+        tbl->runBlend20 = lbl_806D26EC;
+        tbl->runBlend24 = lbl_806D26EC;
+        self->boostArmedB0 = 0;
+        tbl2 = self->effectTable;
+        if ((unsigned char)(tbl2->lanes[0].itemId >= 0) == 1) {
+            arg5 = tbl2->lanes[0].state10;
+        } else {
+            arg5 = 0;
+        }
+        ItemEffectBus_ApplyItemEventSet(bus, id, arg5);
+        TornadoEffect_ApplyItemVisual_Secondary(self->effectObj, id, 1);
+        KartItemAudio_PlayHitConfirmSE(self->soundCtrl, id);
+        sec = self->secondary;
+        if (sec->itemId >= 0) {
+            TornadoEffect_ApplyItemVisual_Primary(sec->owner->effectObj, sec->itemId);
+            KartItemAudio_StopSEByItemId(sec->owner->soundCtrl, sec->itemId);
+            ItemEffectBus_ApplyItemEventClear(sec->owner->ownerDriver->itemBus, sec->itemId);
+            sec->itemId = -1;
+            sec->blend = lbl_806D26EC;
+        }
+        if (self->coinPenaltyFD != 0) {
+            if (self->raceScore10 != 4) {
+                CoinSystem_RemoveCoins(self->ownerDriver, 1);
+            } else {
+                drv = self->ownerDriver;
+                t = drv->coins2cc - 1;
+                if (t < 0) {
+                    t = 0;
+                }
+                drv->coins2cc = t;
+            }
+            self->coinCountC8 = self->ownerDriver->coins2cc;
+        }
+        return 1;
+    default:
+        return 1;
+    }
 }
 
 #pragma exceptions off
@@ -6592,13 +6476,12 @@ unsigned char KartItem_GetByte_f4(CarObjGetterView *self) { /* 0x8004F144 size:0
 }
 #pragma exceptions reset
 
-asm void KartItem_GetBoostArmedAndTimer(void) { /* 0x8004F14C size:0x10 */
-    nofralloc
-    lfs f0, 0xb4(r3)
-    lbz r3, 0xb1(r3)
-    stfs f0, 0x0(r4)
-    blr
+#pragma exceptions off
+unsigned char KartItem_GetBoostArmedAndTimer(CarObjGetterView *__restrict self, float *__restrict outTimer) { /* 0x8004F14C size:0x10 */
+    *outTimer = self->boostTimer;
+    return self->boostArmed;
 }
+#pragma exceptions reset
 
 #pragma exceptions off
 unsigned char CarObject_IsAirborne(CarObjGetterView *self) { /* 0x8004F15C size:0xC */
@@ -10177,59 +10060,32 @@ Holder8005292C::~Holder8005292C() throw() {
 #pragma exceptions reset
 #pragma cplusplus off
 
-asm void dtor_800529A8(void) { /* 0x800529A8 size:0xB0 */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    stw r0, 0x54(r1)
-    stw r31, 0x4c(r1)
-    mr r31, r1
-    stw r30, 0x48(r1)
-    stw r29, 0x44(r1)
-    mr r29, r4
-    stw r28, 0x40(r1)
-    mr. r28, r3
-    beq dtor_800529A8_L_80052A1C
-    lwz r30, 0x0(r28)
-    cmplwi r30, 0x0
-    beq dtor_800529A8_L_80052A0C
-    addic. r0, r30, 0x4
-    beq dtor_800529A8_L_80052A04
-    lwz r3, 0x4(r30)
-    li r4, 0x1
-    bl KartItemSubObject_Dtor
-    b dtor_800529A8_L_80052A04
-    addi r3, r31, 0x8
-    bl __unexpected
-    dtor_800529A8_L_80052A00:
-    b dtor_800529A8_L_80052A00
-    dtor_800529A8_L_80052A04:
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    dtor_800529A8_L_80052A0C:
-    extsh. r0, r29
-    ble dtor_800529A8_L_80052A1C
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    dtor_800529A8_L_80052A1C:
-    mr r3, r28
-    b dtor_800529A8_L_80052A30
-    addi r3, r31, 0x20
-    bl __unexpected
-    dtor_800529A8_L_80052A2C:
-    b dtor_800529A8_L_80052A2C
-    dtor_800529A8_L_80052A30:
-    mr r10, r31
-    lwz r31, 0x4c(r31)
-    lwz r30, 0x48(r10)
-    lwz r29, 0x44(r10)
-    lwz r28, 0x40(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+#pragma cplusplus on
+#pragma exceptions on
+struct SubHolder800529A8 {
+    void *sub; /* 0x0: KartItemSubObject */
+    ~SubHolder800529A8() throw() {
+        KartItemSubObject_Dtor(sub, 1);
+    }
+};
+struct Owned800529A8 {
+    char pad_0x0[0x4];
+    SubHolder800529A8 subHolder; /* 0x4 */
+};
+struct Holder800529A8 {
+    Owned800529A8 *p; /* 0x0 */
+};
+extern "C" void *dtor_800529A8(void *self, short flag) throw() { /* 0x800529A8 size:0xB0 */
+    if (self) {
+        delete ((Holder800529A8 *)self)->p;
+        if (flag > 0) {
+            ::operator delete(self);
+        }
+    }
+    return self;
 }
+#pragma exceptions reset
+#pragma cplusplus off
 
 #pragma cplusplus on
 #pragma exceptions on
