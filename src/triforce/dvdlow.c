@@ -20,13 +20,8 @@ typedef struct DVDCommand {
     DVDLowCallback callback;
 } DVDCommand;
 
-typedef struct DIKey {
-    u32 cmd;
-    u32 offset;
-    u32 length;
-} DIKey;
+#include <triforce/dvdlow_private.h>
 
-DIKey* __DIKey;
 static BOOL FirstRead = TRUE;
 static volatile BOOL StopAtNextInt;
 static u32 LastLength;
@@ -41,7 +36,7 @@ static u32 WorkAroundSeekLocation;
 static volatile OSTime LastReadFinished;
 static OSTime LastReadIssued;
 static volatile BOOL LastCommandWasRead;
-static OSTime LastCommandIssued;
+static volatile OSTime LastCommandIssued;
 static vu32 NextCommandNumber;
 
 static DVDCommand CommandList[3];
@@ -67,7 +62,6 @@ static BOOL fn_80285EAC(DVDLowCallback callback);
 static BOOL fn_80285F48(u32 arg, DVDLowCallback callback);
 static BOOL fn_8028607C(u32, u32, u32, DVDLowCallback callback);
 static BOOL fn_80285FE8(void);
-static void fn_8028625C(u32 cmd, u32 offset, u32 length);
 
 void fn_802857E0(void) {
     fn_802867B0();
@@ -377,19 +371,4 @@ void __DVDLowSetWAType(u32 type, u32 location) {
     WorkAroundType = type;
     WorkAroundSeekLocation = location;
     OSRestoreInterrupts(enabled);
-}
-
-static void fn_8028625C(u32 cmd, u32 offset, u32 length) {
-    u32 v[11];
-    u16 key = ((fn_802867B8(0, 0x7FFF) << 1) & 0x1FFFE) + 1;
-
-    v[0] = ((key << 16) | cmd) ^ __DIKey->cmd;
-    v[1] = offset ^ __DIKey->offset;
-    v[2] = length ^ __DIKey->length;
-    __DIKey->cmd *= key;
-    __DIKey->offset *= key;
-    __DIKey->length *= key;
-    __DIRegs[2] = v[0];
-    __DIRegs[3] = v[1];
-    __DIRegs[4] = v[2];
 }

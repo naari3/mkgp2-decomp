@@ -11805,16 +11805,22 @@ dolphin/si/SISamplingRate.c:
 	.data       start:0x804F5598 end:0x804F5630
 	.sbss       start:0x806D1DA0 end:0x806D1DA8
 
+triforce/dvdlow_data.c:
+	.sbss       start:0x806D1DA8 end:0x806D1DB0
+
 triforce/jvsio.c:
 	.text       start:0x8028250C end:0x802857E0
 	.bss        start:0x8067E2A0 end:0x806834F0
 
 triforce/dvdlow.c:
-	.text       start:0x802857E0 end:0x80286314
+	.text       start:0x802857E0 end:0x8028625C
 	.data       start:0x804F56E8 end:0x804F5718
 	.bss        start:0x806834F0 end:0x806835C0
 	.sdata      start:0x806D0C08 end:0x806D0C10
-	.sbss       start:0x806D1DA8 end:0x806D1E08
+	.sbss       start:0x806D1DB0 end:0x806D1E08
+
+triforce/dvdlow_nm1.c:
+	.text       start:0x8028625C end:0x80286314
 
 triforce/dikey.c:
 	.text       start:0x80286314 end:0x802867B0
@@ -11870,8 +11876,14 @@ triforce/amsock.c:
 	.text       start:0x8028F45C end:0x80290ED8
 
 triforce/amsrv.c:
-	.text       start:0x80290ED8 end:0x8029179C
+	.text       start:0x80290ED8 end:0x80291134
 	.bss        start:0x80699220 end:0x806992A0
+
+triforce/amsrv_nm1.c:
+	.text       start:0x80291134 end:0x80291314
+
+triforce/amsrv_tail.c:
+	.text       start:0x80291314 end:0x8029179C
 
 triforce/acsocket.c:
 	.text       start:0x8029179C end:0x8029321C
