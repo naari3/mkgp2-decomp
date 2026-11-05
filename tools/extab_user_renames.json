@@ -10363,5 +10363,16 @@
   },
   "src/game/mapeffect/PointListConstruct.cpp": {
     "__ct__9PointListFP10SpawnPoint": "fn_8016C94C"
+  },
+  "src/game/Menu801F0CC0.cpp": {
+    "__dt__8Menu801FFv": "fn_801F25BC",
+    "__vt__8Menu801F": "lbl_804E5254",
+    "__vt__12MenuBase801F": "lbl_803FE0C8",
+    "__dt__14MenuSprite801FFv": "dtor_80122120",
+    "__dt__10FlowFaderIFv": "fn_801F26C8",
+    "__vt__10FlowFaderI": "lbl_804E5284",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dla__FPv": "MemoryManager_TimedFree",
+    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724"
   }
 }

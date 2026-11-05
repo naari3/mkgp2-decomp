@@ -419,3 +419,8 @@ c7_m7: PanelCda40 native model uses CdaSpriteSlot::~ throw() and CdaHolder::~ th
 Source: Codex worker c7_s10_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c7_s10: WarpZone_CalcEdgeVectors is naturally modeled as a constructor of a 0x50-byte value with four nontrivial WarpCorner members. Modeling it as a returned WarpZoneValue produced a copy and two __destroy_arr cleanups (912B); a declared derived constructor produces the single 528B body with target-shaped local cleanup. Table index CSE and loop web coloring still prevent exactness.
+
+## c7_m8_20261105
+Source: Codex worker c7_m8_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+New Menu801F0CC0 reconstruction: final helper fn_801F2690 owns extab 80016E94, before the first method extab 80016E9C. This reversed dependency spans all 25 functions through 801F26C8; no safe positive subset split. A real destructor with delete[] sprites, context cleanup and VHolder<FlowFaderI> member reproduces fn_801F25BC text exactly. Native source remains NonMatching; no linked gain claimed.
