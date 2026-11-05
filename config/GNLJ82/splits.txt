@@ -11812,6 +11812,11 @@ game/KartChoiceFinish.cpp:
 	extabindex  start:0x8002AD34 end:0x8002AD70
 	.text       start:0x8023C394 end:0x8023C8B0
 
+game/ItemSelectAllowed.c:
+	extab       start:0x8001CAAC end:0x8001CAB4
+	extabindex  start:0x8002AD70 end:0x8002AD7C
+	.text       start:0x8023C8B0 end:0x8023CC74
+
 game/SpritePairOwner.cpp:
 	extab       start:0x8001CAB4 end:0x8001CADC
 	extabindex  start:0x8002AD7C end:0x8002ADB8
@@ -11871,15 +11876,30 @@ game/ItemRes_Thunk.c:
 	extabindex  start:0x8002AE54 end:0x8002AE60
 	.text       start:0x8023D918 end:0x8023D938
 
+game/ItemAliasLocalizedVariant.c:
+	extab       start:0x8001CB8C end:0x8001CB94
+	extabindex  start:0x8002AE60 end:0x8002AE6C
+	.text       start:0x8023D938 end:0x8023D9F0
+
 game/ItemLocalizedAsset.c:
 	extab       start:0x8001CB94 end:0x8001CB9C
 	extabindex  start:0x8002AE6C end:0x8002AE78
 	.text       start:0x8023D9F0 end:0x8023DAA8
 
+game/ItemLocalizedName.c:
+	extab       start:0x8001CB9C end:0x8001CBA4
+	extabindex  start:0x8002AE78 end:0x8002AE84
+	.text       start:0x8023DAA8 end:0x8023DB24
+
 game/Item_GetDescriptor.c:
 	extab       start:0x8001CBA4 end:0x8001CBB4
 	extabindex  start:0x8002AE84 end:0x8002AE9C
 	.text       start:0x8023DB24 end:0x8023DBEC
+
+game/ItemDescriptorField4.c:
+	extab       start:0x8001CBB4 end:0x8001CBBC
+	extabindex  start:0x8002AE9C end:0x8002AEA8
+	.text       start:0x8023DBEC end:0x8023DC50
 
 game/Item_GetDescriptorField0.c:
 	extab       start:0x8001CBBC end:0x8001CBC4
