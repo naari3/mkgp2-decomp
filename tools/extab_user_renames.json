@@ -10679,5 +10679,14 @@
     "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/objview/fn_801987C4.cpp": {
+    "__ct__6Obj987Fv": "fn_801987C4",
+    "__dt__10Obj987BaseFv": "dtor_8016A270",
+    "__vt__10Obj987Base": "lbl_80490FE0",
+    "__vt__6Obj987": "lbl_804963A4",
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

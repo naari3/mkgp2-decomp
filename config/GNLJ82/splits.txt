@@ -8018,6 +8018,11 @@ game/objview/fn_80197130.cpp:
 	extabindex  start:0x80027344 end:0x80027350
 	.text       start:0x80197130 end:0x801972E0
 
+game/objview/fn_801972E0.c:
+	extab       start:0x800124F8 end:0x80012500
+	extabindex  start:0x80027350 end:0x8002735C
+	.text       start:0x801972E0 end:0x80197C84
+
 game/objview/fn_80197C84.c:
 	extab       start:0x80012500 end:0x80012508
 	extabindex  start:0x8002735C end:0x80027368
@@ -8042,6 +8047,11 @@ game/objview/fn_801986D8.c:
 	extab       start:0x80012580 end:0x80012588
 	extabindex  start:0x8002738C end:0x80027398
 	.text       start:0x801986D8 end:0x801987C4
+
+game/objview/fn_801987C4.cpp:
+	extab       start:0x80012588 end:0x800125E0
+	extabindex  start:0x80027398 end:0x800273A4
+	.text       start:0x801987C4 end:0x80198ABC
 
 game/objview/fn_80198ABC.c:
 	extab       start:0x800125E0 end:0x800125E8
