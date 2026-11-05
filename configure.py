@@ -3135,6 +3135,7 @@ config.libs = [
             Object(Matching, "game/bitread/fn_8018B248.c"),
             Object(Matching, "game/bitread/fn_8018B2E4.c"),
             Object(Matching, "game/bitread/fn_8018B300.c"),
+            Object(NonMatching, "game/bitread/fn_8018B31C.c"),
             Object(Matching, "game/clsound/fn_80192010.c"),
             Object(Matching, "game/misc3d/fn_8016E7E4.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/zprobe/fn_8018F7D4.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),

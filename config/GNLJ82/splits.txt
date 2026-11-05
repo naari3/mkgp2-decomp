@@ -7567,6 +7567,13 @@ game/bitread/fn_8018B2E4.c:
 game/bitread/fn_8018B300.c:
 	.text       start:0x8018B300 end:0x8018B31C
 
+game/bitread/fn_8018B31C.c:
+	extab       start:0x80011E88 end:0x80011E90
+	extabindex  start:0x80026EC4 end:0x80026ED0
+	.text       start:0x8018B31C end:0x8018CC64
+	.rodata     start:0x80377BC0 end:0x80377E60
+	.bss        start:0x80677EE8 end:0x80677F40
+
 game/bitread/fn_8018CC64.c:
 	.text       start:0x8018CC64 end:0x8018CD68
 
