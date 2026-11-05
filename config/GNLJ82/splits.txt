@@ -10585,12 +10585,20 @@ game/TimerDisp.cpp:
 	.text       start:0x802321D4 end:0x80232884
 
 game/FlowCardCheck.cpp:
-	extab       start:0x8001C3CC end:0x8001C704
-	extabindex  start:0x8002AAAC end:0x8002AC14
-	.text       start:0x80232884 end:0x802379F8
+	extab       start:0x8001C3CC end:0x8001C3D4
+	extabindex  start:0x8002AAAC end:0x8002AAB8
+	.text       start:0x80232884 end:0x80232924
+
+game/FlowCardCheck_nm1.cpp:
+	extab       start:0x8001C3D4 end:0x8001C704
+	extabindex  start:0x8002AAB8 end:0x8002AC14
+	.text       start:0x80232924 end:0x802379E8
 	.rodata     start:0x803DB6E0 end:0x803DC0C0
 	.data       start:0x804EE3A8 end:0x804EE520
 	.sdata      start:0x806D0650 end:0x806D0728
+
+game/FlowCardCheck_hooks.cpp:
+	.text       start:0x802379E8 end:0x802379F8
 
 game/clFlowItem.c:
 	extab       start:0x8001C704 end:0x8001C814
