@@ -3,6 +3,8 @@ extern "C" {
 extern const float lbl_806DA1B0, lbl_806DA1B4, lbl_806DA1B8, lbl_806DA1BC;
 }
 FlowPanel::FlowPanel() {
+    // Keep the first allocation loop cursor separate from its element count.
+    FlowPanel *cursor = this;
     int i = 0;
     state = 0;
     layout = 0;
@@ -14,7 +16,8 @@ FlowPanel::FlowPanel() {
     labelB = 0;
     labelA = 0;
     for (; i < 3; i++) {
-        icons[i] = new ResCtrl;
+        cursor->icons[0] = new ResCtrl;
+        cursor = (FlowPanel *)((char *)cursor + sizeof(ResCtrl *));
     }
     float scale;
     float spacing;

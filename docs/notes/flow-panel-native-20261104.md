@@ -8,3 +8,8 @@ Direct control-flow reconstruction using canonical InputState/GetInput and TestM
 Source: Codex worker c4_t4_noko_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c4_t4: Scalar unsigned color initialized 0xFFFFFF00, OR with (unsigned char)(int)(lbl_806DA1EC*t), improves Update from 97.061066 to 98.20611 and reduces primary text 1064 to 1056 bytes (target 1048). Owned EH remains 95.83333/index 91.66667 due length/PC deltas. Residual clrlwi+or versus rlwimi at both fade colors and FP scratch identities. Explicit scalar masks, union bitfield OR, and RGB-field initialization were worse. No Matching flip/native gain.
+
+## c5_s5_flowpanelctor_20261105
+Source: Codex worker c5_s5_flowpanelctor_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c5_s5: Explicit first-loop FlowPanel cursor (advance sizeof(ResCtrl*) while writing cursor->icons[0]) fixes first-loop walker/index homes r30/r31, improving 95.639534 to 96.04651. Remaining initial zero web uses r4 rather than shared r31 and source remains +4 bytes. Explicit index zero reuse and member initializer list are byte invariant. Automatic EH remains 95%/index91.66667; no Matching flip or native gain.
