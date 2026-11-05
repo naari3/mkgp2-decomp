@@ -1,3 +1,4 @@
+#define PANEL_CDA40_DIRECT_BEGIN
 #include "game/PanelCda40Private.h"
 #pragma exceptions on
 extern "C" void fn_801CDA40(CdaPanelView *p) {

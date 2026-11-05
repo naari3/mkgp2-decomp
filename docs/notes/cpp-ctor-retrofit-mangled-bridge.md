@@ -679,3 +679,8 @@ c11_a37: BiribiriLand_Destroy 80134D68 (648 B) matches in existing .c via pragma
 Source: Codex worker c12_u2_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1844 B.
 
 c12_u2: fn_801EE36C transit vector construction before scale calculation fixes initial-X f2 -> f4 and improves native draft 99.81315 -> 99.83045. Extracted sqrt inline helper and named previous-X local leave same 12-instruction residual. Scratch SP+0x0C/+0x10 swapped; transit previous-X f9 vs target f2, coefficient f2 vs f3, scale f10 vs f9. Single-function TU remains NonMatching.
+
+## c12_u6_20261106
+Source: Codex worker c12_u6_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 17 fn / 6824 B.
+
+c12_u6: PanelCda40 dtor_801CDC68 sentinel r7/r0 residual resolves by begin(){return CdaIter(head.next);} rather than ++end(). Explicit iterator copy ctor alone is invariant; remove it. Direct first-node access removes sentinel CSE/live dependency and yields r0 addi/store, all seven functions / 900B exact. Refresh per-TU anonymous EH bridges (@36/37, @50/51, @70/71, @98/99, @120/121, @147/148); existing extab order suffices. Opt-in private-header branch preserves GpPleaseInit consumer. Full source-linked DOL SHA-1 OK; actual seven ELF addresses/sizes verified.

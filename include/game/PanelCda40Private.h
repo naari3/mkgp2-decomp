@@ -53,7 +53,11 @@ struct CdaIter {
 };
 struct CdaListImpl {
     int size; CdaNode head;
+#ifdef PANEL_CDA40_DIRECT_BEGIN
+    CdaIter begin(){return CdaIter(head.next);}
+#else
     CdaIter begin(){return ++end();}
+#endif
     CdaIter end(){return CdaIter(&head);}
     CdaIter EraseRange(const CdaIter &,const CdaIter &);
     ~CdaListImpl(){EraseRange(begin(),end());}
