@@ -6,9 +6,10 @@ extern unsigned char lbl_806D12E4[3];
 
 void fn_801D7610(PlayerDataReset *self, unsigned char updateVolume) {
     int i;
+    int j;
     for (i = 0; i < 6; i++) self->name[i] = 0;
     for (i = 0; i < 0x79; i++) self->unlockFlags[i] = 0;
-    for (i = 0; i < 0x69; i++) self->remapFlags[i] = 0;
+    for (j = 0; j < 0x69; j++) self->remapFlags[j] = 0;
     self->selected[0] = -1;
     self->selected[1] = -1;
     self->selected[2] = -1;

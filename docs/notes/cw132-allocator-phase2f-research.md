@@ -1451,3 +1451,8 @@ JointTracks fn_80240810: extracting the sentinel scan into inline TrackLength fi
 Source: Codex worker c12_u12_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 236 B.
 
 c12_u12: ZoneVisibilityUpdate fn_80173FA4 resolves its r28/r29 mask/array-offset swap by replacing zone->mask with an inline Zone::GetMask() const accessor returning mask. Text236/extab8/index12 all 100%. Named byte-offset induction local regresses to99.20339 and changes initialization/increment ordering. Matching promotion verified source-linked, full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
+
+## c13_u47_20261106
+Source: Codex worker c13_u47_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u47: fn_801D7610 remapFlags clear reusing the preceding loops int i emits eight distinct zero-store registers and seven redundant mr copies under GC/1.3.2. Independent int j for the remap loop removes all seven copies and gives exact 784-byte text size, improving 95.33673 to 99.938774. Only r0 LR/r30 adjacent epilogue restore order remains. Nested trailing clear loops do not change residual; whole reset helper exceeds auto-inline budget. Retained NonMatching.
