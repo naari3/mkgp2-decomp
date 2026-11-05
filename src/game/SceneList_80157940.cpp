@@ -234,7 +234,7 @@ asm void fn_80157DE0(void);
 void fn_80157EA8(List *l);
 DataBuf *dtor_80157EC0(DataBuf *self, short flag);
 void fn_80157F1C(DrawScene *self);
-asm void fn_80157FB4(void);
+void fn_80157FB4(void);
 void fn_801589BC(OptionMenu *self, int mode);
 asm void fn_80158CE4(void);
 asm void fn_8015915C(void);

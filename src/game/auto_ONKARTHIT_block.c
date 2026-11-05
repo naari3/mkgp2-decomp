@@ -1229,18 +1229,18 @@ void *dtor_80052744(void *self, short flag);
 void dtor_8005278C(void);
 void *dtor_80052808(void *self, short flag);
 void *dtor_8005285C(void *self, short flag);
-asm void dtor_800528B0(void);
-asm void dtor_8005292C(void);
+void dtor_800528B0(void);
+void dtor_8005292C(void);
 #pragma cplusplus on
 extern "C" void *dtor_800529A8(void *self, short flag) throw();
 #pragma cplusplus off
-asm void dtor_80052A58(void);
-asm void dtor_80052AD4(void);
-asm void dtor_80052B50(void);
-asm void dtor_80052BCC(void);
-asm void dtor_80052C48(void);
-asm void dtor_80052CC4(void);
-asm void dtor_80052D40(void);
+void dtor_80052A58(void);
+void dtor_80052AD4(void);
+void dtor_80052B50(void);
+void dtor_80052BCC(void);
+void dtor_80052C48(void);
+void dtor_80052CC4(void);
+void dtor_80052D40(void);
 asm void KartMovement_UpdateBoostVisualBlend(KartDriverBusView *drv, KartMovementSpeedView *mv, float *outA, float *outB, float *blend);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
