@@ -644,3 +644,8 @@ c10_u20: Scene_8015AFCC genuine C++ ctor improved 99.55173 to 99.93104 by using 
 Source: Codex worker c10_u27_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c10_u27: EnemyRun_BaseInit explicit RHS column cursor (const float *column=b.m; j++,column++) with indexed LHS and result preserves 1300-byte text and exact owned 176-byte EH/12-byte index, improving 98.08 to 98.23385. This removes world+0xE4 folding in inner loads, but result-base materialization remains inside inner loop and GPR/FP scheduling differs. Static inline float-pointer helper gave unchanged 98.08 text and shifted anonymous EH IDs; commutative product reversal was invariant. Retained NonMatching, full build SHA-1 OK, native gain zero.
+
+## c10_u28_20261106
+Source: Codex worker c10_u28_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c10_u28: RankingFlowView::Update singleton 801D1890 retains NM at 97.993805% (1292 B), owned EH 95%, index100. Inline list-insert wrapper slightly improves stack layout vs97.990715 baseline. Player-loop helper regresses97.35604; hoisting node/entry declarations before self is byte-invariant. Remaining param/self r28 vsr30, loop/new pointer partition and iterator stack slots. Both EH DELETEPOINTER bytes encode r29 vs targetr28. All three hypotheses used; final fallback DOL SHA-1 OK.
