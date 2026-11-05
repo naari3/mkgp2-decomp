@@ -20,26 +20,58 @@
  *   bitpack_init          - populate per-entry offsets, derive totals,
  *                            optionally zero the destination buffer
  *
- * Ghidra has no struct type for the bitpack object yet, so we use opaque
- * pointer + raw offset.
- *
  * dtk reversed-extab group: bitpack_write_field and bitpack_init each own
  * one extab/extabindex entry (frame-bearing functions). The two leaf
- * accessors have no extab.
+ * accessors have no extab. extab/extabindex entries are manually emitted
+ * via `.extab_user`/`.extabindex_user` sections (this TU builds with -lang=c
+ * and no -Cpp_exceptions; tools/postprocess_extab_user.py renames them).
  *
- * Both frame-bearing fns are held as asm_fn (CW reg-allocator quirk:
- * source C produces identical instruction structure + size but with the
- * register-numbering shifted by 1, see docs/per_fn_matching_strategy.md
- * §14.3). The leaf getters remain C-matched. extab/extabindex entries are
- * manually emitted via `.extab_user`/`.extabindex_user` sections
- * (tools/postprocess_extab_user.py renames them).
+ * bitpack_write_field is C: the tag lookup and the per-bit write loop are
+ * static inline helpers (the inlined helper parameters give the target's
+ * register assignment: entry r3 / dest r4 / value copy r11); the 6-GPR
+ * save uses stmw, hence `#pragma use_lmw_stmw on` around it.
+ *
+ * bitpack_init stays asm_fn: the best C (below) is instruction-identical
+ * except the coloring of the strength-reduced schema-offset IV (target
+ * off=r8/bits=r9/i=r10, C off=r4 after the param stores die; ~12 natural
+ * variants of decl order / init placement / for-while / inline param-setter
+ * did not move it). Best C:
+ *
+ *   int i; int bits;
+ *   bits = 0;
+ *   self->schema = schema; self->count = count;
+ *   self->dest = dest; self->clear = clear;
+ *   for (i = 0; i < self->count; i++) {
+ *       self->schema[i].offset = bits;
+ *       bits += self->schema[i].width * self->schema[i].slots;
+ *   }
+ *   self->total_bits = bits;
+ *   self->total_bytes = self->total_bits / 8 + (self->total_bits != 0 ? 1 : 0);
+ *   if (self->clear == 1) memset(self->dest, 0, self->total_bytes);
+ *   return self;
  */
 
-extern void strcmp();
-extern void memset();
+typedef struct BitpackEntry {
+    const char *tag; /* 0x00 */
+    int width;       /* 0x04 bits per slot */
+    int slots;       /* 0x08 slot count */
+    int offset;      /* 0x0C bit offset (filled by bitpack_init) */
+} BitpackEntry;
 
-/* --- forward decls for asm fns (so extabindex can reference them) --- */
-asm void bitpack_write_field(void);
+typedef struct Bitpack {
+    BitpackEntry *schema;  /* 0x00 */
+    int count;             /* 0x04 */
+    unsigned char *dest;   /* 0x08 */
+    unsigned char clear;   /* 0x0C */
+    int total_bits;        /* 0x10 */
+    int total_bytes;       /* 0x14 */
+} Bitpack;
+
+extern int strcmp(const char *a, const char *b);
+extern void *memset(void *dst, int c, unsigned long n);
+
+/* --- forward decls (so extabindex can reference them) --- */
+int bitpack_write_field(Bitpack *self, unsigned int value, const char *tag, int index);
 asm void bitpack_init(void);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
@@ -60,105 +92,61 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&bitpack_init, 0x000000C4, (void *)extab_bitpack_init
 };
 
-/* --- asm function: bitpack_write_field @ 0x80088A5C, size 0x14C --- */
-asm void bitpack_write_field(void) {
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stmw r26, 0x8(r1)
-    li r29, 0x0
-    mr r30, r3
-    mr r31, r4
-    mr r26, r5
-    mr r27, r6
-    mr r28, r29
-    b bitpack_write_field_L_80088AB4
-bitpack_write_field_L_80088A88:
-    lwz r4, 0x0(r30)
-    mr r3, r26
-    lwzx r4, r4, r28
-    bl strcmp
-    cntlzw r0, r3
-    extrwi r0, r0, 8, 19
-    cmplwi r0, 0x1
-    bne bitpack_write_field_L_80088AAC
-    b bitpack_write_field_L_80088AC4
-bitpack_write_field_L_80088AAC:
-    addi r28, r28, 0x10
-    addi r29, r29, 0x1
-bitpack_write_field_L_80088AB4:
-    lwz r0, 0x4(r30)
-    cmpw r29, r0
-    blt bitpack_write_field_L_80088A88
-    li r29, -0x1
-bitpack_write_field_L_80088AC4:
-    cmpwi r29, 0x0
-    bge bitpack_write_field_L_80088AD4
-    li r3, 0x0
-    b bitpack_write_field_L_80088B94
-bitpack_write_field_L_80088AD4:
-    lwz r3, 0x0(r30)
-    slwi r0, r29, 4
-    lwz r4, 0x8(r30)
-    add r3, r3, r0
-    lwz r0, 0x8(r3)
-    cmpw r27, r0
-    bge bitpack_write_field_L_80088B7C
-    lwz r0, 0x4(r3)
-    addi r5, r27, 0x1
-    lwz r6, 0xc(r3)
-    mr r11, r31
-    mullw r0, r5, r0
-    li r9, 0x0
-    add r10, r6, r0
-    b bitpack_write_field_L_80088B70
-bitpack_write_field_L_80088B10:
-    subi r10, r10, 0x1
-    clrlwi r0, r11, 31
-    slwi r5, r10, 29
-    li r7, 0x1
-    srwi r6, r10, 31
-    srawi r8, r10, 3
-    subf r5, r6, r5
-    cmplwi r0, 0x1
-    rotlwi r0, r5, 3
-    addze r8, r8
-    add r0, r0, r6
-    subfic r0, r0, 0x7
-    slw r0, r7, r0
-    clrlwi r5, r0, 24
-    bne bitpack_write_field_L_80088B5C
-    lbzx r0, r4, r8
-    or r0, r0, r5
-    stbx r0, r4, r8
-    b bitpack_write_field_L_80088B68
-bitpack_write_field_L_80088B5C:
-    lbzx r0, r4, r8
-    andc r0, r0, r5
-    stbx r0, r4, r8
-bitpack_write_field_L_80088B68:
-    srwi r11, r11, 1
-    addi r9, r9, 0x1
-bitpack_write_field_L_80088B70:
-    lwz r0, 0x4(r3)
-    cmpw r9, r0
-    blt bitpack_write_field_L_80088B10
-bitpack_write_field_L_80088B7C:
-    lbz r0, 0xc(r30)
-    cmplwi r0, 0x0
-    bne bitpack_write_field_L_80088B90
-    li r3, 0x0
-    b bitpack_write_field_L_80088B94
-bitpack_write_field_L_80088B90:
-    li r3, 0x1
-bitpack_write_field_L_80088B94:
-    lmw r26, 0x8(r1)
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+static inline unsigned char bitpack_tag_equal(const char *a, const char *b) {
+    return strcmp(a, b) == 0;
 }
+
+static inline int bitpack_find(Bitpack *self, const char *tag) {
+    int i;
+
+    for (i = 0; i < self->count; i++) {
+        if (bitpack_tag_equal(tag, self->schema[i].tag) == 1) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+static inline void bitpack_put_bits(BitpackEntry *entry, unsigned char *dest, int bit, unsigned int value) {
+    int byte;
+    int i;
+    unsigned char mask;
+
+    for (i = 0; i < entry->width; i++) {
+        bit--;
+        byte = bit / 8;
+        mask = 1 << (7 - bit % 8);
+        if ((value & 1) == 1) {
+            dest[byte] |= mask;
+        } else {
+            dest[byte] &= ~mask;
+        }
+        value >>= 1;
+    }
+}
+
+/* --- C function: bitpack_write_field @ 0x80088A5C, size 0x14C --- */
+#pragma use_lmw_stmw on
+int bitpack_write_field(Bitpack *self, unsigned int value, const char *tag, int index) {
+    int idx;
+    BitpackEntry *entry;
+    unsigned char *dest;
+
+    idx = bitpack_find(self, tag);
+    if (idx < 0) {
+        return 0;
+    }
+    entry = &self->schema[idx];
+    dest = self->dest;
+    if (index < entry->slots) {
+        bitpack_put_bits(entry, dest, entry->offset + (index + 1) * entry->width, value);
+    }
+    if (self->clear == 0) {
+        return 0;
+    }
+    return 1;
+}
+#pragma use_lmw_stmw reset
 
 /* --- C function: bitpack_get_used_bytes @ 0x80088BA8 (leaf accessor) --- */
 unsigned int bitpack_get_used_bytes(int self) {
