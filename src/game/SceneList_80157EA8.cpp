@@ -64,16 +64,57 @@ struct InputView {
 struct MenuTarget {
     char pad0[0xc];
     unsigned char sel;
-    char padD[0x19d - 0xd];
+    char padD[0xa8 - 0xd];
+    unsigned char unlocked[60];
+    char padE4[0x19d - 0xe4];
     unsigned char flag;
 };
 
+struct InputPlayer {
+    virtual void v8();
+    virtual void vC();
+    virtual void v10();
+    virtual void v14();
+    virtual void v18();
+    virtual float Stick();
+    virtual unsigned char Pressed(int mask);
+};
+
+struct WidgetBase {
+    char pad0[0x14];
+};
+
+class Widget : public WidgetBase {
+public:
+    virtual void v8();
+    virtual void vC();
+    virtual void v10();
+    virtual void Update();
+    virtual void Draw();
+};
+
 struct OptionMenu {
-    char pad0[0x1d];
+    char pad0[4];
+    unsigned char done;
+    char pad5[3];
+    unsigned char started;
+    char pad9[3];
+    int state;
+    float timer;
+    int page;
+    int nextPage;
+    unsigned char stickHeld;
     unsigned char toggleEnabled;
     char pad1E[2];
     MenuTarget *target;
-    char pad24[0x20];
+    char pad24[4];
+    int timeout;
+    DrawObj *bg;
+    DrawObj *frame;
+    Widget *w34;
+    Widget *w38;
+    Widget *w3C;
+    Widget *w40;
     float blink;
     char pad48[4];
     bool toggle;
@@ -83,11 +124,24 @@ struct OptionMenu {
     unsigned char sel;
     char pad59[3];
     float blink2;
-    char pad60[4];
+    int count;
     int value;
-    char pad68[0x1c];
+    char pad68[4];
+    int rule;
+    unsigned char flags[6];
+    char pad76[2];
+    unsigned short wins;
+    unsigned short losses;
+    signed char digitsA[3];
+    signed char digitsB[3];
+    char pad82[2];
     int scroll;
     int scrollTimer;
+    float time[6];
+    int course[6];
+    int mode[6];
+    int isNew[6];
+    int kind[6];
 };
 
 /* TOP-END */
@@ -100,96 +154,96 @@ extern void fn_801F7DAC();
 void HSD_StateInvalidate(int state);
 void fn_8011F994(int i);
 void fn_8013D940(int i);
-extern void GetInputManager();
-extern void InputMgr_GetPlayer();
-extern void RumbleUpdate();
-extern void SetRumbleMode();
-extern void SetSyncTarget();
+void *GetInputManager(void);
+InputPlayer *InputMgr_GetPlayer(void *mgr, int index);
+void RumbleUpdate(void);
+void SetRumbleMode(int a, int b, int c);
+void SetSyncTarget(int id);
 int WeatherSystem_PickVariant(int sel);
 void clStream_setVolume(int ch, int vol);
-extern void fn_8015A6E4();
-extern void fn_801678FC();
-extern void fn_801698B4();
+void fn_8015A6E4(OptionMenu *self, int layer, float x, float y, float alpha);
+void fn_801678FC(int layer, float r, float g, float b, float a);
+void fn_801698B4(int layer, int id, int flag, float x, float y);
 unsigned char fn_8019083C(int ch);
-extern void fn_801932F8();
-extern void fn_801FE27C();
-extern void fn_801FE348();
-extern void fn_801FE390();
-extern void fn_801FEF18();
-extern unsigned int lbl_806D8390;
+int fn_801932F8(void);
+void fn_801FE27C(int t);
+void fn_801FE348(void);
+void fn_801FE390(void);
+void fn_801FEF18(void *obj, int t);
+extern const float lbl_806D8390;
 extern const float lbl_806D8394;
 extern const float lbl_806D8398;
 extern const float lbl_806D839C;
-extern unsigned int lbl_806D83A0;
-extern unsigned int lbl_806D83A4;
-extern unsigned int lbl_806D83A8;
-extern unsigned int lbl_806D83AC;
+extern const float lbl_806D83A0;
+extern const float lbl_806D83A4;
+extern const float lbl_806D83A8;
+extern const float lbl_806D83AC;
 extern const float lbl_806D83B0;
-extern unsigned int lbl_806D83B4;
-extern unsigned int lbl_806D83B8;
-extern unsigned int lbl_806D83BC;
-extern unsigned int lbl_806D83C0;
+extern const float lbl_806D83B4;
+extern const float lbl_806D83B8;
+extern const float lbl_806D83BC;
+extern const float lbl_806D83C0;
 void fn_801FE36C(void);
 extern struct InputView *g_pInputState;
 extern const float lbl_806D83C4;
 extern const float lbl_806D83C8;
-extern void GetTextureByIdAndLang();
-extern void fn_80167744();
-extern void fn_80168798();
-extern void fn_80168D84();
-extern void fn_80169334();
-extern void fn_801695E0();
-extern void isJapanese();
-extern unsigned int lbl_806D83CC;
-extern unsigned int lbl_806D83D0;
-extern unsigned int lbl_806D83D4;
-extern unsigned int lbl_806D83DC;
-extern unsigned int lbl_806D83E0;
-extern unsigned int lbl_806D83EC;
-extern unsigned int lbl_806D83F8;
-extern unsigned int lbl_806D83FC;
-extern unsigned int lbl_806D8400;
-extern unsigned int lbl_806D8404;
-extern unsigned int lbl_806D8408;
-extern unsigned int lbl_806D840C;
-extern unsigned int lbl_806D8410;
-extern unsigned int lbl_806D8414;
-extern unsigned int lbl_806D8418;
-extern unsigned int lbl_806D841C;
-extern unsigned int lbl_806D8420;
-extern unsigned int lbl_806D8424;
-extern unsigned int lbl_806D8428;
-extern unsigned int lbl_806D842C;
-extern unsigned int lbl_806D8430;
-extern unsigned int lbl_806D8434;
-extern unsigned int lbl_806D843C;
+const char *GetTextureByIdAndLang(int id, int lang);
+int fn_80167744(int digit, float v);
+void fn_80168798(int layer, const void *s, float x, float y, float a, ...);
+void fn_80168D84(int layer, const void *s, float x, float y, float a, ...);
+void fn_80169334(int layer, int id, int f, float x, float y, float sx, float sy, float a);
+void fn_801695E0(int layer, int id, int f, float x, float y, float a);
+int isJapanese(void);
+extern const float lbl_806D83CC;
+extern const float lbl_806D83D0;
+extern const float lbl_806D83D4;
+extern const float lbl_806D83DC;
+extern const float lbl_806D83E0;
+extern const float lbl_806D83EC;
+extern const float lbl_806D83F8;
+extern const float lbl_806D83FC;
+extern const float lbl_806D8400;
+extern const float lbl_806D8404;
+extern const float lbl_806D8408;
+extern const float lbl_806D840C;
+extern const float lbl_806D8410;
+extern const float lbl_806D8414;
+extern const float lbl_806D8418;
+extern const float lbl_806D841C;
+extern const float lbl_806D8420;
+extern const float lbl_806D8424;
+extern const float lbl_806D8428;
+extern const float lbl_806D842C;
+extern const float lbl_806D8430;
+extern const float lbl_806D8434;
+extern const float lbl_806D843C;
 extern unsigned int lbl_806D8448;
 extern unsigned int lbl_80367E24[];
 extern unsigned int lbl_80367E38[];
-extern void fn_80168404();
-extern unsigned int lbl_806D8454;
-extern unsigned int lbl_806D8458;
-extern unsigned int lbl_806D845C;
-extern unsigned int lbl_806D8460;
-extern unsigned int lbl_806D8464;
-extern unsigned int lbl_806D8470;
-extern unsigned int lbl_806D8484;
-extern unsigned int lbl_806D8488;
-extern unsigned int lbl_806D848C;
-extern unsigned int lbl_806D8490;
-extern unsigned int lbl_806D8494;
-extern unsigned int lbl_806D84A0;
+void fn_80168404(int layer, const void *s, float x, float y, float sx, float sy, float a, ...);
+extern const float lbl_806D8454;
+extern const float lbl_806D8458;
+extern const float lbl_806D845C;
+extern const float lbl_806D8460;
+extern const float lbl_806D8464;
+extern const float lbl_806D8470;
+extern const float lbl_806D8484;
+extern const float lbl_806D8488;
+extern const float lbl_806D848C;
+extern const float lbl_806D8490;
+extern const float lbl_806D8494;
+extern const float lbl_806D84A0;
 extern unsigned int lbl_803678D8[];
-extern unsigned int lbl_806D84B0;
-extern unsigned int lbl_806D84B4;
-extern unsigned int lbl_806D84B8;
-extern unsigned int lbl_806D84BC;
-extern unsigned int lbl_806D84C0;
-extern unsigned int lbl_806D84C4;
-extern unsigned int lbl_806D84C8;
-extern unsigned int lbl_806D84CC;
-extern unsigned int lbl_806D84D0;
-extern unsigned int lbl_806D84D4;
+extern const float lbl_806D84B0;
+extern const float lbl_806D84B4;
+extern const float lbl_806D84B8;
+extern const float lbl_806D84BC;
+extern const float lbl_806D84C0;
+extern const float lbl_806D84C4;
+extern const float lbl_806D84C8;
+extern const float lbl_806D84CC;
+extern const float lbl_806D84D0;
+extern const float lbl_806D84D4;
 extern void Item_GetDescriptorField0();
 extern void Item_GetDescriptorField8();
 extern void Item_GetDescriptorFieldC();
@@ -199,44 +253,44 @@ extern void fn_80168B90();
 extern void fn_8016918C();
 extern void fn_8023D938();
 extern void fn_8023DAA8();
-extern unsigned int lbl_806D84DC;
-extern unsigned int lbl_806D84E0;
-extern unsigned int lbl_806D84E4;
-extern unsigned int lbl_806D84E8;
-extern unsigned int lbl_806D84EC;
-extern unsigned int lbl_806D84F0;
-extern unsigned int lbl_806D84F4;
-extern unsigned int lbl_806D84F8;
-extern unsigned int lbl_806D84FC;
-extern unsigned int lbl_806D8500;
-extern unsigned int lbl_806D8504;
-extern unsigned int lbl_806D8508;
-extern unsigned int lbl_806D850C;
-extern unsigned int lbl_806D8510;
-extern unsigned int lbl_806D8514;
-extern unsigned int lbl_806D8518;
-extern unsigned int lbl_806D851C;
-extern unsigned int lbl_806D8520;
-extern unsigned int lbl_806D8524;
-extern unsigned int lbl_806D8528;
-extern unsigned int lbl_806D852C;
-extern unsigned int lbl_806D8530;
-extern unsigned int lbl_806D8534;
-extern unsigned int lbl_806D8538;
-extern unsigned int lbl_806D853C;
-extern unsigned int lbl_806D8540;
-extern unsigned int lbl_806D8544;
-extern unsigned int lbl_806D8548;
-extern unsigned int lbl_806D854C;
-extern unsigned int lbl_806D8550;
-extern unsigned int lbl_806D8554;
-extern unsigned int lbl_806D8558;
-extern unsigned int lbl_806D855C;
-extern unsigned int lbl_806D8560;
-extern unsigned int lbl_806D8564;
-extern unsigned int lbl_806D8568;
-extern unsigned int lbl_806D856C;
-extern unsigned int lbl_806D8570;
+extern const float lbl_806D84DC;
+extern const float lbl_806D84E0;
+extern const float lbl_806D84E4;
+extern const float lbl_806D84E8;
+extern const float lbl_806D84EC;
+extern const float lbl_806D84F0;
+extern const float lbl_806D84F4;
+extern const float lbl_806D84F8;
+extern const float lbl_806D84FC;
+extern const float lbl_806D8500;
+extern const float lbl_806D8504;
+extern const float lbl_806D8508;
+extern const float lbl_806D850C;
+extern const float lbl_806D8510;
+extern const float lbl_806D8514;
+extern const float lbl_806D8518;
+extern const float lbl_806D851C;
+extern const float lbl_806D8520;
+extern const float lbl_806D8524;
+extern const float lbl_806D8528;
+extern const float lbl_806D852C;
+extern const float lbl_806D8530;
+extern const float lbl_806D8534;
+extern const float lbl_806D8538;
+extern const float lbl_806D853C;
+extern const float lbl_806D8540;
+extern const float lbl_806D8544;
+extern const float lbl_806D8548;
+extern const float lbl_806D854C;
+extern const float lbl_806D8550;
+extern const float lbl_806D8554;
+extern const float lbl_806D8558;
+extern const float lbl_806D855C;
+extern const float lbl_806D8560;
+extern const float lbl_806D8564;
+extern const float lbl_806D8568;
+extern const float lbl_806D856C;
+extern const float lbl_806D8570;
 asm void fn_80157940(void);
 void fn_801579F0(ListIter *ret, List *l, ListIter *it);
 asm void fn_80157A68(void);
@@ -250,21 +304,18 @@ asm void fn_80157DE0(void);
 void fn_80157EA8(List *l);
 DataBuf *dtor_80157EC0(DataBuf *self, short flag);
 void fn_80157F1C(DrawScene *self);
-asm void fn_80157FB4(void);
+void fn_80157FB4(OptionMenu *self);
 void fn_801589BC(OptionMenu *self, int mode);
-asm void fn_80158CE4(void);
-asm void fn_8015915C(void);
-asm void fn_801596D4(void);
-asm void fn_80159BD0(void);
+asm void fn_80158CE4(OptionMenu *self, int layer, float x, float y, float alpha);
+asm void fn_8015915C(OptionMenu *self, int layer, float x, float y, float alpha);
+asm void fn_801596D4(OptionMenu *self, int layer, float x, float y, float alpha);
+asm void fn_80159BD0(OptionMenu *self, int layer, float x, float y, float alpha);
 
 #pragma section R ".extab_user"
 
 
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80157FB4[8] = {
-    0x10, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 __declspec(section ".extab_user") static const unsigned char extab_fn_80158CE4[8] = {
@@ -288,9 +339,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80159BD0[8
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80157FB4 = {
-    (void *)&fn_80157FB4, 0x00000A08, (void *)extab_fn_80157FB4
-};
 
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80158CE4 = {
@@ -356,717 +404,162 @@ extern "C" void fn_80157F1C(DrawScene *self)
     }
 }
 
-extern "C" asm void fn_80157FB4(void) { /* 0x80157FB4 size:0xA08 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stfd f31, 0x10(r1)
-    psq_st f31, 0x18(r1), 0, 0
-    stw r31, 0xc(r1)
-    stw r30, 0x8(r1)
-    mr r31, r3
-    lbz r0, 0x4(r3)
-    cmplwi r0, 0x0
-    bne fn_80157FB4_L_8015899C
-    lwz r3, 0x28(r31)
-    bl fn_801FE27C
-    lwz r3, 0x2c(r31)
-    lwz r4, 0x28(r31)
-    bl fn_801FEF18
-    lwz r3, 0x28(r31)
-    cmpwi r3, 0x0
-    beq fn_80157FB4_L_80158008
-    subi r0, r3, 0x1
-    stw r0, 0x28(r31)
-    fn_80157FB4_L_80158008:
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lwz r12, 0x0(r3)
-    lwz r12, 0x1c(r12)
-    mtctr r12
-    bctrl
-    lfs f0, lbl_806D8390(r2)
-    fcmpo cr0, f1, f0
-    ble fn_80157FB4_L_80158058
-    lbz r0, 0x1c(r31)
-    cmplwi r0, 0x0
-    bne fn_80157FB4_L_8015804C
-    li r0, 0x1
-    stb r0, 0x1c(r31)
-    stb r0, 0x1d(r31)
-    b fn_80157FB4_L_80158064
-    fn_80157FB4_L_8015804C:
-    li r0, 0x0
-    stb r0, 0x1d(r31)
-    b fn_80157FB4_L_80158064
-    fn_80157FB4_L_80158058:
-    li r0, 0x0
-    stb r0, 0x1c(r31)
-    stb r0, 0x1d(r31)
-    fn_80157FB4_L_80158064:
-    lwz r0, 0xc(r31)
-    cmpwi r0, 0x1
-    bne fn_80157FB4_L_80158314
-    lwz r0, 0x28(r31)
-    cmpwi r0, 0x0
-    beq fn_80157FB4_L_801580CC
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lwz r12, 0x0(r3)
-    li r4, 0x100
-    lwz r12, 0x20(r12)
-    mtctr r12
-    bctrl
-    clrlwi. r0, r3, 24
-    bne fn_80157FB4_L_801580CC
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lwz r12, 0x0(r3)
-    li r4, 0x2000
-    lwz r12, 0x20(r12)
-    mtctr r12
-    bctrl
-    clrlwi. r0, r3, 24
-    beq fn_80157FB4_L_801580F4
-    fn_80157FB4_L_801580CC:
-    li r3, 0x0
-    li r4, 0x4
-    li r5, 0xa
-    bl SetRumbleMode
-    bl fn_801FE348
-    li r3, 0xe
-    bl SetSyncTarget
-    li r0, 0x8
-    stw r0, 0xc(r31)
-    b fn_80157FB4_L_80158314
-    fn_80157FB4_L_801580F4:
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lwz r12, 0x0(r3)
-    li r4, 0x400
-    lwz r12, 0x20(r12)
-    mtctr r12
-    bctrl
-    clrlwi. r0, r3, 24
-    beq fn_80157FB4_L_80158314
-    bl fn_801FE390
-    lwz r3, 0x14(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x18(r31)
-    lwz r0, 0x18(r31)
-    cmpwi r0, 0x5
-    blt fn_80157FB4_L_80158140
-    li r0, 0x0
-    stw r0, 0x18(r31)
-    fn_80157FB4_L_80158140:
-    li r0, 0x2
-    lfs f0, lbl_806D8394(r2)
-    stw r0, 0xc(r31)
-    stfs f0, 0x10(r31)
-    lwz r0, 0x18(r31)
-    cmpwi r0, 0x2
-    beq fn_80157FB4_L_80158314
-    bge fn_80157FB4_L_80158170
-    cmpwi r0, 0x0
-    beq fn_80157FB4_L_80158180
-    bge fn_80157FB4_L_801581C0
-    b fn_80157FB4_L_80158314
-    fn_80157FB4_L_80158170:
-    cmpwi r0, 0x4
-    beq fn_80157FB4_L_80158314
-    bge fn_80157FB4_L_80158314
-    b fn_80157FB4_L_80158304
-    fn_80157FB4_L_80158180:
-    stfs f0, 0x44(r31)
-    li r3, 0x1
-    lfs f1, lbl_806D8398(r2)
-    lfs f0, lbl_806D839C(r2)
-    stfs f1, 0x50(r31)
-    stfs f0, 0x54(r31)
-    lbz r30, 0x58(r31)
-    bl fn_8019083C
-    clrlwi. r0, r3, 24
-    beq fn_80157FB4_L_80158314
-    mr r3, r30
-    bl WeatherSystem_PickVariant
-    mr r4, r3
-    li r3, 0x1
-    bl clStream_setVolume
-    b fn_80157FB4_L_80158314
-    fn_80157FB4_L_801581C0:
-    stfs f0, 0x5c(r31)
-    li r4, 0x0
-    li r0, 0xc
-    stw r4, 0x64(r31)
-    stw r4, 0x60(r31)
-    mtctr r0
-    fn_80157FB4_L_801581D8:
-    lwz r3, 0x20(r31)
-    addi r0, r4, 0xa8
-    lbzx r0, r3, r0
-    cmplwi r0, 0x0
-    beq fn_80157FB4_L_80158208
-    lwz r3, 0x60(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x60(r31)
-    lwz r0, 0x64(r31)
-    cmpwi r0, 0x0
-    bge fn_80157FB4_L_80158208
-    stw r4, 0x64(r31)
-    fn_80157FB4_L_80158208:
-    lwz r3, 0x20(r31)
-    addi r0, r4, 0xa9
-    addi r4, r4, 0x1
-    lbzx r0, r3, r0
-    cmplwi r0, 0x0
-    beq fn_80157FB4_L_8015823C
-    lwz r3, 0x60(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x60(r31)
-    lwz r0, 0x64(r31)
-    cmpwi r0, 0x0
-    bge fn_80157FB4_L_8015823C
-    stw r4, 0x64(r31)
-    fn_80157FB4_L_8015823C:
-    lwz r3, 0x20(r31)
-    addi r0, r4, 0xa9
-    addi r4, r4, 0x1
-    lbzx r0, r3, r0
-    cmplwi r0, 0x0
-    beq fn_80157FB4_L_80158270
-    lwz r3, 0x60(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x60(r31)
-    lwz r0, 0x64(r31)
-    cmpwi r0, 0x0
-    bge fn_80157FB4_L_80158270
-    stw r4, 0x64(r31)
-    fn_80157FB4_L_80158270:
-    lwz r3, 0x20(r31)
-    addi r0, r4, 0xa9
-    addi r4, r4, 0x1
-    lbzx r0, r3, r0
-    cmplwi r0, 0x0
-    beq fn_80157FB4_L_801582A4
-    lwz r3, 0x60(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x60(r31)
-    lwz r0, 0x64(r31)
-    cmpwi r0, 0x0
-    bge fn_80157FB4_L_801582A4
-    stw r4, 0x64(r31)
-    fn_80157FB4_L_801582A4:
-    lwz r3, 0x20(r31)
-    addi r0, r4, 0xa9
-    addi r4, r4, 0x1
-    lbzx r0, r3, r0
-    cmplwi r0, 0x0
-    beq fn_80157FB4_L_801582D8
-    lwz r3, 0x60(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x60(r31)
-    lwz r0, 0x64(r31)
-    cmpwi r0, 0x0
-    bge fn_80157FB4_L_801582D8
-    stw r4, 0x64(r31)
-    fn_80157FB4_L_801582D8:
-    addi r4, r4, 0x1
-    bdnz fn_80157FB4_L_801581D8
-    li r3, 0x1
-    bl fn_8019083C
-    clrlwi. r0, r3, 24
-    beq fn_80157FB4_L_80158314
-    bl fn_801932F8
-    mr r4, r3
-    li r3, 0x1
-    bl clStream_setVolume
-    b fn_80157FB4_L_80158314
-    fn_80157FB4_L_80158304:
-    li r3, -0x1
-    li r0, 0x0
-    stw r3, 0x84(r31)
-    stw r0, 0x88(r31)
-    fn_80157FB4_L_80158314:
-    lfs f1, lbl_806D83A0(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D83A4(r2)
-    li r4, 0x640
-    li r5, 0x0
-    bl fn_801698B4
-    lfs f1, lbl_806D83A8(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D83AC(r2)
-    li r4, 0x63f
-    li r5, 0x0
-    bl fn_801698B4
-    lwz r3, 0x2c(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x30(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x34(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x34(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x38(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x3c(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x40(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r0, 0xc(r31)
-    cmpwi r0, 0x2
-    beq fn_80157FB4_L_801585D4
-    bge fn_80157FB4_L_801583F0
-    cmpwi r0, 0x0
-    beq fn_80157FB4_L_80158408
-    bge fn_80157FB4_L_8015850C
-    b fn_80157FB4_L_80158984
-    fn_80157FB4_L_801583F0:
-    cmpwi r0, 0x9
-    beq fn_80157FB4_L_80158890
-    bge fn_80157FB4_L_80158984
-    cmpwi r0, 0x8
-    bge fn_80157FB4_L_801587C4
-    b fn_80157FB4_L_80158984
-    fn_80157FB4_L_80158408:
-    lfs f1, 0x10(r31)
-    lfs f3, lbl_806D83B0(r2)
-    lfs f0, lbl_806D83B4(r2)
-    fadds f1, f1, f3
-    stfs f1, 0x10(r31)
-    lfs f1, 0x10(r31)
-    lwz r0, 0x14(r31)
-    fdivs f31, f1, f0
-    cmpwi r0, 0x2
-    beq fn_80157FB4_L_80158484
-    bge fn_80157FB4_L_80158444
-    cmpwi r0, 0x0
-    beq fn_80157FB4_L_80158454
-    bge fn_80157FB4_L_8015846C
-    b fn_80157FB4_L_801584C8
-    fn_80157FB4_L_80158444:
-    cmpwi r0, 0x4
-    beq fn_80157FB4_L_801584B4
-    bge fn_80157FB4_L_801584C8
-    b fn_80157FB4_L_8015849C
-    fn_80157FB4_L_80158454:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_8015A6E4
-    b fn_80157FB4_L_801584C8
-    fn_80157FB4_L_8015846C:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_80159BD0
-    b fn_80157FB4_L_801584C8
-    fn_80157FB4_L_80158484:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_801596D4
-    b fn_80157FB4_L_801584C8
-    fn_80157FB4_L_8015849C:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_8015915C
-    b fn_80157FB4_L_801584C8
-    fn_80157FB4_L_801584B4:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_80158CE4
-    fn_80157FB4_L_801584C8:
-    lfs f1, lbl_806D8394(r2)
-    li r3, 0x2
-    lfs f0, lbl_806D83B0(r2)
-    fmr f2, f1
-    fmr f3, f1
-    fsubs f4, f0, f31
-    bl fn_801678FC
-    lfs f1, 0x10(r31)
-    lfs f0, lbl_806D83B4(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_80157FB4_L_80158984
-    li r0, 0x1
-    lfs f0, lbl_806D8394(r2)
-    stw r0, 0xc(r31)
-    stfs f0, 0x10(r31)
-    b fn_80157FB4_L_80158984
-    fn_80157FB4_L_8015850C:
-    lwz r4, 0x14(r31)
-    mr r3, r31
-    bl fn_801589BC
-    lwz r0, 0x14(r31)
-    cmpwi r0, 0x2
-    beq fn_80157FB4_L_80158580
-    bge fn_80157FB4_L_80158538
-    cmpwi r0, 0x0
-    beq fn_80157FB4_L_80158548
-    bge fn_80157FB4_L_80158564
-    b fn_80157FB4_L_80158984
-    fn_80157FB4_L_80158538:
-    cmpwi r0, 0x4
-    beq fn_80157FB4_L_801585B8
-    bge fn_80157FB4_L_80158984
-    b fn_80157FB4_L_8015859C
-    fn_80157FB4_L_80158548:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    lfs f3, lbl_806D83B0(r2)
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_8015A6E4
-    b fn_80157FB4_L_80158984
-    fn_80157FB4_L_80158564:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    lfs f3, lbl_806D83B0(r2)
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_80159BD0
-    b fn_80157FB4_L_80158984
-    fn_80157FB4_L_80158580:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    lfs f3, lbl_806D83B0(r2)
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_801596D4
-    b fn_80157FB4_L_80158984
-    fn_80157FB4_L_8015859C:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    lfs f3, lbl_806D83B0(r2)
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_8015915C
-    b fn_80157FB4_L_80158984
-    fn_80157FB4_L_801585B8:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    lfs f3, lbl_806D83B0(r2)
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_80158CE4
-    b fn_80157FB4_L_80158984
-    fn_80157FB4_L_801585D4:
-    lfs f2, 0x10(r31)
-    lfs f1, lbl_806D83B0(r2)
-    lfs f0, lbl_806D83B8(r2)
-    fadds f1, f2, f1
-    stfs f1, 0x10(r31)
-    lfs f1, 0x10(r31)
-    lwz r0, 0x18(r31)
-    fdivs f31, f1, f0
-    cmpwi r0, 0x2
-    beq fn_80157FB4_L_80158658
-    bge fn_80157FB4_L_80158610
-    cmpwi r0, 0x0
-    beq fn_80157FB4_L_80158620
-    bge fn_80157FB4_L_8015863C
-    b fn_80157FB4_L_801586A8
-    fn_80157FB4_L_80158610:
-    cmpwi r0, 0x4
-    beq fn_80157FB4_L_80158690
-    bge fn_80157FB4_L_801586A8
-    b fn_80157FB4_L_80158674
-    fn_80157FB4_L_80158620:
-    lfs f1, lbl_806D8394(r2)
-    fmr f3, f31
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_8015A6E4
-    b fn_80157FB4_L_801586A8
-    fn_80157FB4_L_8015863C:
-    lfs f1, lbl_806D8394(r2)
-    fmr f3, f31
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_80159BD0
-    b fn_80157FB4_L_801586A8
-    fn_80157FB4_L_80158658:
-    lfs f1, lbl_806D8394(r2)
-    fmr f3, f31
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_801596D4
-    b fn_80157FB4_L_801586A8
-    fn_80157FB4_L_80158674:
-    lfs f1, lbl_806D8394(r2)
-    fmr f3, f31
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_8015915C
-    b fn_80157FB4_L_801586A8
-    fn_80157FB4_L_80158690:
-    lfs f1, lbl_806D8394(r2)
-    fmr f3, f31
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_80158CE4
-    fn_80157FB4_L_801586A8:
-    lfs f1, lbl_806D83BC(r2)
-    li r3, 0x1
-    lfs f0, lbl_806D83A8(r2)
-    li r4, 0x63f
-    lfs f2, lbl_806D83AC(r2)
-    li r5, 0x0
-    fnmsubs f1, f1, f31, f0
-    bl fn_801698B4
-    lwz r0, 0x14(r31)
-    cmpwi r0, 0x2
-    beq fn_80157FB4_L_80158738
-    bge fn_80157FB4_L_801586E8
-    cmpwi r0, 0x0
-    beq fn_80157FB4_L_801586F8
-    bge fn_80157FB4_L_80158718
-    b fn_80157FB4_L_80158794
-    fn_80157FB4_L_801586E8:
-    cmpwi r0, 0x4
-    beq fn_80157FB4_L_80158778
-    bge fn_80157FB4_L_80158794
-    b fn_80157FB4_L_80158758
-    fn_80157FB4_L_801586F8:
-    lfs f0, lbl_806D83C0(r2)
-    mr r3, r31
-    lfs f2, lbl_806D8394(r2)
-    li r4, 0x2
-    fmuls f1, f0, f31
-    lfs f3, lbl_806D83B0(r2)
-    bl fn_8015A6E4
-    b fn_80157FB4_L_80158794
-    fn_80157FB4_L_80158718:
-    lfs f0, lbl_806D83C0(r2)
-    mr r3, r31
-    lfs f2, lbl_806D8394(r2)
-    li r4, 0x2
-    fmuls f1, f0, f31
-    lfs f3, lbl_806D83B0(r2)
-    bl fn_80159BD0
-    b fn_80157FB4_L_80158794
-    fn_80157FB4_L_80158738:
-    lfs f0, lbl_806D83C0(r2)
-    mr r3, r31
-    lfs f2, lbl_806D8394(r2)
-    li r4, 0x2
-    fmuls f1, f0, f31
-    lfs f3, lbl_806D83B0(r2)
-    bl fn_801596D4
-    b fn_80157FB4_L_80158794
-    fn_80157FB4_L_80158758:
-    lfs f0, lbl_806D83C0(r2)
-    mr r3, r31
-    lfs f2, lbl_806D8394(r2)
-    li r4, 0x2
-    fmuls f1, f0, f31
-    lfs f3, lbl_806D83B0(r2)
-    bl fn_8015915C
-    b fn_80157FB4_L_80158794
-    fn_80157FB4_L_80158778:
-    lfs f0, lbl_806D83C0(r2)
-    mr r3, r31
-    lfs f2, lbl_806D8394(r2)
-    li r4, 0x2
-    fmuls f1, f0, f31
-    lfs f3, lbl_806D83B0(r2)
-    bl fn_80158CE4
-    fn_80157FB4_L_80158794:
-    lfs f1, 0x10(r31)
-    lfs f0, lbl_806D83B8(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_80157FB4_L_80158984
-    lwz r3, 0x18(r31)
-    li r0, 0x1
-    lfs f0, lbl_806D8394(r2)
-    stw r3, 0x14(r31)
-    stw r0, 0xc(r31)
-    stfs f0, 0x10(r31)
-    b fn_80157FB4_L_80158984
-    fn_80157FB4_L_801587C4:
-    lwz r0, 0x14(r31)
-    cmpwi r0, 0x2
-    beq fn_80157FB4_L_8015882C
-    bge fn_80157FB4_L_801587E4
-    cmpwi r0, 0x0
-    beq fn_80157FB4_L_801587F4
-    bge fn_80157FB4_L_80158810
-    b fn_80157FB4_L_8015887C
-    fn_80157FB4_L_801587E4:
-    cmpwi r0, 0x4
-    beq fn_80157FB4_L_80158864
-    bge fn_80157FB4_L_8015887C
-    b fn_80157FB4_L_80158848
-    fn_80157FB4_L_801587F4:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    lfs f3, lbl_806D83B0(r2)
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_8015A6E4
-    b fn_80157FB4_L_8015887C
-    fn_80157FB4_L_80158810:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    lfs f3, lbl_806D83B0(r2)
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_80159BD0
-    b fn_80157FB4_L_8015887C
-    fn_80157FB4_L_8015882C:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    lfs f3, lbl_806D83B0(r2)
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_801596D4
-    b fn_80157FB4_L_8015887C
-    fn_80157FB4_L_80158848:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    lfs f3, lbl_806D83B0(r2)
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_8015915C
-    b fn_80157FB4_L_8015887C
-    fn_80157FB4_L_80158864:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    lfs f3, lbl_806D83B0(r2)
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_80158CE4
-    fn_80157FB4_L_8015887C:
-    li r0, 0x9
-    lfs f0, lbl_806D8394(r2)
-    stw r0, 0xc(r31)
-    stfs f0, 0x10(r31)
-    b fn_80157FB4_L_80158984
-    fn_80157FB4_L_80158890:
-    lfs f1, 0x10(r31)
-    lfs f3, lbl_806D83B0(r2)
-    lfs f0, lbl_806D83B4(r2)
-    fadds f1, f1, f3
-    stfs f1, 0x10(r31)
-    lfs f1, 0x10(r31)
-    lwz r0, 0x14(r31)
-    fdivs f31, f1, f0
-    cmpwi r0, 0x2
-    beq fn_80157FB4_L_8015890C
-    bge fn_80157FB4_L_801588CC
-    cmpwi r0, 0x0
-    beq fn_80157FB4_L_801588DC
-    bge fn_80157FB4_L_801588F4
-    b fn_80157FB4_L_80158950
-    fn_80157FB4_L_801588CC:
-    cmpwi r0, 0x4
-    beq fn_80157FB4_L_8015893C
-    bge fn_80157FB4_L_80158950
-    b fn_80157FB4_L_80158924
-    fn_80157FB4_L_801588DC:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_8015A6E4
-    b fn_80157FB4_L_80158950
-    fn_80157FB4_L_801588F4:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_80159BD0
-    b fn_80157FB4_L_80158950
-    fn_80157FB4_L_8015890C:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_801596D4
-    b fn_80157FB4_L_80158950
-    fn_80157FB4_L_80158924:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_8015915C
-    b fn_80157FB4_L_80158950
-    fn_80157FB4_L_8015893C:
-    lfs f1, lbl_806D8394(r2)
-    mr r3, r31
-    li r4, 0x1
-    fmr f2, f1
-    bl fn_80158CE4
-    fn_80157FB4_L_80158950:
-    lfs f1, lbl_806D8394(r2)
-    fmr f4, f31
-    li r3, 0x2
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_801678FC
-    lfs f1, 0x10(r31)
-    lfs f0, lbl_806D83B4(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_80157FB4_L_80158984
-    li r0, 0x1
-    stb r0, 0x4(r31)
-    fn_80157FB4_L_80158984:
-    bl RumbleUpdate
-    lbz r0, 0x8(r31)
-    cmplwi r0, 0x0
-    bne fn_80157FB4_L_8015899C
-    li r0, 0x1
-    stb r0, 0x8(r31)
-    fn_80157FB4_L_8015899C:
-    psq_l f31, 0x18(r1), 0, 0
-    lwz r0, 0x24(r1)
-    lfd f31, 0x10(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+static inline InputPlayer *player0(void)
+{
+    return InputMgr_GetPlayer(GetInputManager(), 0);
+}
+
+static inline void DrawPage(OptionMenu *self, int page, int layer, float x, float y, float alpha)
+{
+    switch (page) {
+    case 0:
+        fn_8015A6E4(self, layer, x, y, alpha);
+        break;
+    case 1:
+        fn_80159BD0(self, layer, x, y, alpha);
+        break;
+    case 2:
+        fn_801596D4(self, layer, x, y, alpha);
+        break;
+    case 3:
+        fn_8015915C(self, layer, x, y, alpha);
+        break;
+    case 4:
+        fn_80158CE4(self, layer, x, y, alpha);
+        break;
+    }
+}
+
+extern "C" void fn_80157FB4(OptionMenu *self)
+{
+    float t;
+
+    if (self->done != 0) {
+        return;
+    }
+    fn_801FE27C(self->timeout);
+    fn_801FEF18(self->bg, self->timeout);
+    if (self->timeout != 0) {
+        self->timeout--;
+    }
+    if (player0()->Stick() > lbl_806D8390) {
+        if (self->stickHeld == 0) {
+            self->stickHeld = 1;
+            self->toggleEnabled = 1;
+        } else {
+            self->toggleEnabled = 0;
+        }
+    } else {
+        self->stickHeld = 0;
+        self->toggleEnabled = 0;
+    }
+    if (self->state == 1) {
+        if (self->timeout == 0 || player0()->Pressed(0x100) || player0()->Pressed(0x2000)) {
+            SetRumbleMode(0, 4, 10);
+            fn_801FE348();
+            SetSyncTarget(14);
+            self->state = 8;
+        } else if (player0()->Pressed(0x400)) {
+            fn_801FE390();
+            self->nextPage = self->page + 1;
+            if (self->nextPage >= 5) {
+                self->nextPage = 0;
+            }
+            self->state = 2;
+            self->timer = lbl_806D8394;
+            switch (self->nextPage) {
+            case 0: {
+                self->blink = lbl_806D8394;
+                self->fade50 = lbl_806D8398;
+                self->fade54 = lbl_806D839C;
+                unsigned char v = self->sel;
+                if (fn_8019083C(1)) {
+                    clStream_setVolume(1, WeatherSystem_PickVariant(v));
+                }
+                break;
+            }
+            case 1:
+                self->blink2 = lbl_806D8394;
+                int k;
+                self->count = self->value = k = 0;
+                for (; k < 60; k++) {
+                    if (self->target->unlocked[k]) {
+                        self->count++;
+                        if (self->value < 0) {
+                            self->value = k;
+                        }
+                    }
+                }
+                if (fn_8019083C(1)) {
+                    clStream_setVolume(1, fn_801932F8());
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                self->scroll = -1;
+                self->scrollTimer = 0;
+                break;
+            case 4:
+                break;
+            }
+        }
+    }
+    fn_801698B4(0, 0x640, 0, lbl_806D83A0, lbl_806D83A4);
+    fn_801698B4(0, 0x63f, 0, lbl_806D83A8, lbl_806D83AC);
+    self->bg->v10();
+    self->frame->v10();
+    self->w34->Update();
+    self->w34->Draw();
+    self->w38->Update();
+    self->w3C->Update();
+    self->w40->Update();
+    switch (self->state) {
+    case 0:
+        self->timer += lbl_806D83B0;
+        t = self->timer / lbl_806D83B4;
+        DrawPage(self, self->page, 1, lbl_806D8394, lbl_806D8394, lbl_806D83B0);
+        fn_801678FC(2, lbl_806D8394, lbl_806D8394, lbl_806D8394, lbl_806D83B0 - t);
+        if (self->timer >= lbl_806D83B4) {
+            self->state = 1;
+            self->timer = lbl_806D8394;
+        }
+        break;
+    case 1:
+        fn_801589BC(self, self->page);
+        DrawPage(self, self->page, 1, lbl_806D8394, lbl_806D8394, lbl_806D83B0);
+        break;
+    case 2:
+        self->timer += lbl_806D83B0;
+        t = self->timer / lbl_806D83B8;
+        DrawPage(self, self->nextPage, 1, lbl_806D8394, lbl_806D8394, t);
+        fn_801698B4(1, 0x63f, 0, lbl_806D83A8 - lbl_806D83BC * t, lbl_806D83AC);
+        DrawPage(self, self->page, 2, lbl_806D83C0 * t, lbl_806D8394, lbl_806D83B0);
+        if (self->timer >= lbl_806D83B8) {
+            self->page = self->nextPage;
+            self->state = 1;
+            self->timer = lbl_806D8394;
+        }
+        break;
+    case 8:
+        DrawPage(self, self->page, 1, lbl_806D8394, lbl_806D8394, lbl_806D83B0);
+        self->state = 9;
+        self->timer = lbl_806D8394;
+        break;
+    case 9:
+        self->timer += lbl_806D83B0;
+        t = self->timer / lbl_806D83B4;
+        DrawPage(self, self->page, 1, lbl_806D8394, lbl_806D8394, lbl_806D83B0);
+        fn_801678FC(2, lbl_806D8394, lbl_806D8394, lbl_806D8394, t);
+        if (self->timer >= lbl_806D83B4) {
+            self->done = 1;
+        }
+        break;
+    }
+    RumbleUpdate();
+    if (self->started == 0) {
+        self->started = 1;
+    }
 }
 
 extern "C" void fn_801589BC(OptionMenu *self, int mode) {
@@ -1138,7 +631,7 @@ extern "C" void fn_801589BC(OptionMenu *self, int mode) {
     }
 }
 
-extern "C" asm void fn_80158CE4(void) { /* 0x80158CE4 size:0x478 */
+extern "C" asm void fn_80158CE4(OptionMenu *self, int layer, float x, float y, float alpha) { /* 0x80158CE4 size:0x478 */
     nofralloc
     stwu r1, -0xe0(r1)
     mflr r0
@@ -1437,7 +930,7 @@ extern "C" asm void fn_80158CE4(void) { /* 0x80158CE4 size:0x478 */
     blr
 }
 
-extern "C" asm void fn_8015915C(void) { /* 0x8015915C size:0x578 */
+extern "C" asm void fn_8015915C(OptionMenu *self, int layer, float x, float y, float alpha) { /* 0x8015915C size:0x578 */
     nofralloc
     stwu r1, -0xb0(r1)
     mflr r0
@@ -1805,7 +1298,7 @@ extern "C" asm void fn_8015915C(void) { /* 0x8015915C size:0x578 */
     blr
 }
 
-extern "C" asm void fn_801596D4(void) { /* 0x801596D4 size:0x4FC */
+extern "C" asm void fn_801596D4(OptionMenu *self, int layer, float x, float y, float alpha) { /* 0x801596D4 size:0x4FC */
     nofralloc
     stwu r1, -0xe0(r1)
     mflr r0
@@ -2145,7 +1638,7 @@ extern "C" asm void fn_801596D4(void) { /* 0x801596D4 size:0x4FC */
     blr
 }
 
-extern "C" asm void fn_80159BD0(void) { /* 0x80159BD0 size:0xB14 */
+extern "C" asm void fn_80159BD0(OptionMenu *self, int layer, float x, float y, float alpha) { /* 0x80159BD0 size:0xB14 */
     nofralloc
     stwu r1, -0xf0(r1)
     mflr r0
