@@ -70,8 +70,9 @@ extern "C" void KartPhysics_UpdateSmoothing(SmoothingState *self) {
     scale.m[10]=factor;
     scale*=self->world;
     self->world=scale;
+    float yaw;
     float pitch=self->targetPitch;
-    float yaw=self->targetYaw;
+    yaw=self->targetYaw;
     int round=g_roundIndex;
     int cup=g_cupId;
     float *tuning=GetKartTuningEntry(GetEnemyParam(),cup,round,self->kartId);
@@ -81,9 +82,9 @@ extern "C" void KartPhysics_UpdateSmoothing(SmoothingState *self) {
     else if(delta < -step) self->smoothYaw-=step;
     else self->smoothYaw=yaw;
     self->targetYaw=yaw;
-    delta=pitch-self->smoothPitch;
-    if(step<delta) self->smoothPitch+=step;
-    else if(delta < -step) self->smoothPitch-=step;
+    float pitchDelta=pitch-self->smoothPitch;
+    if(step<pitchDelta) self->smoothPitch+=step;
+    else if(pitchDelta < -step) self->smoothPitch-=step;
     else self->smoothPitch=pitch;
     self->targetPitch=pitch;
     PathFollower_Update(self->path);

@@ -168,3 +168,8 @@ c12_u20 fn_80243464: numeric literals in ratio/x/scale and x bounds improve text
 Source: Codex worker c13_u4_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u4 PairTracking 801E9A84 improves 97.92254 to99.47183. TU-local literal speed helpers eliminate all FP scratch differences. Target-derived reverse inline declaration order fixes ctrl/record and full distance scan; ctrl != other fixes cmplw order. Remaining initial kart-offset, cup/param/round and lap rank/lap GPR identities. Flattening PairSpeed to main else grows frame50->60 and drops95.93662, reverted. Three approaches; singleton retained NonMatching; full fallback SHA-1 OK.
+
+## c13_u22_20261106
+Source: Codex worker c13_u22_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u22: KartPhysics_UpdateSmoothing 801EFFA4: declare yaw before pitch but define pitch then yaw, and use a distinct pitchDelta rather than reassigning yaw delta. This makes the final 0x801F04C4..0x801F0578 adjustment block exact, improving 96.88312 to 97.181816 with unchanged 1540B and exact EH. Matrix operand reversal in a local inline helper was byte-identical; preloading row components shrank/unrolled differently (1344B, 81.56364), rejected. Singleton remains NonMatching.
