@@ -754,3 +754,8 @@ c13_u13: SwitchList ctor 8017A68C inline AppendSwitchPair(list,ResolveJointByNam
 Source: Codex worker c13_u16_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u16: CharaSelect_SetupCharacterDisplay 801C3470 improves fresh97.18343 to97.89349. Capture external FLOAT_FULL_ALPHA then FLOAT_SPRITE_INIT_TIME before alternate-normal call for exact FP order; cursor-before-stat and k-before-stat3 fix most loop homes (do not hoist i). Numeric literals fixed FP but remain anonymous when source text is4B short; final captures avoid extra sdata2. Inline scale/texture accessors are invariant. Residual scale-base addi folded away, third stat pointer r25 vsr26, texture-table base folded into lwz displacement. Single-function TU remains NM; full fallback DOL SHA-1 OK.
+
+## c13_u18_20261106
+Source: Codex worker c13_u18_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u18: SceneListOperations insertion801F4DF0 matches136B with canonical ListIter n/end locals, accesses through.node and position.node=n.node; raw ListNode* cursor/sentinel were r7/r6 instead of targetr6/r7. Shutdown801F4D3C98.93939 and lookup801F4DC097.083336 retain swapped cursor/sentinel registers after declaration swap, aggregate iterators and begin-before-end construction. No-gain edits reverted there. EH24B/index36B exact. Reversed extab order(delete800173C0, shutdown800173C8, insert800173D0) crosses whole801F4D3C..801F4EB0 range; no safe exact subset split. TU remains NM; full fallback DOL SHA-1 OK; zero native gain.
