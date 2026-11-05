@@ -434,3 +434,8 @@ c7_s13: fn_8015BF18 matches 1284-byte text and owned 356-byte EH/12-byte index w
 Source: Codex worker c7_s15_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 2120 B.
 
 fn_8016F158 draw: moving asserted root-matrix setup into an inline pointer-returning GetMatrix helper removes an extra lwz-r0/mr-r27 copy. Naming alphaFactor=self->alpha before partAlpha=constant*channel.x restores f2/f3 assignments; both changes together give exact 1068B text and 8B EH/12B index. fn_8016F584 state/keyframe update matches first native compile. fn_8016FA50 constructor has exact owned EH and size but independent loop-web register identities remain; preserve NonMatching.
+
+## c7_m9_20261105
+Source: Codex worker c7_m9_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c7_m9 partial: NamCamFlow group 801F2B70..801F4D3C has no safe internal EH cut. Genuine ownership hierarchy reproduces dtors 3970/402C/480C/490C/498C/4A24/4A80/4B10 exactly with GC/1.3.2 and -use_lmw_stmw on. Scalar-byte holder needs explicit if(p) before delete p to preserve target null guards; a raw delete char* calls free unconditionally. fn3198 uses open external position array (large data), calls isJapanese before initializing the default resource variable, then branches to the alternate. These yield exact text/owned EH. Whole TU stays NonMatching (14 exact, four partial, four pending), no native gain. Native source definition/emission order and emitted helper ctors also need resolution before eventual promotion.

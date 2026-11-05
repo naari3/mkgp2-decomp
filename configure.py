@@ -2574,6 +2574,7 @@ config.libs = [
             Object(NonMatching, "game/DisplayBuffersReset.c"),
             Object(NonMatching, "game/OverlayViewSetup.cpp"),
             Object(NonMatching, "game/PaletteBufferCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/NamCamFlow.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/SceneListOperations.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CardSlotFlag.cpp"),
             Object(Matching, "game/LapDispControls.c"),
