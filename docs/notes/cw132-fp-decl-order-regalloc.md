@@ -158,3 +158,8 @@ fn_801E68B4 600B: by-value inline sqrt helper left squared-length/result f3 vs t
 Source: Codex worker c12_u17_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c12_u17: DriveBehavior_HandleWpType case11 literal constants restore phase-update FP scratch homes, improving 99.210526 to 99.5614 under unchanged GC/1.3.2 flags. Explicit named matrix outputs and named amplitude/bias/inverse-wave components each compile identically to the literal version. Remaining eight post-sin FP register differences; singleton stays NonMatching. All owned data/EH100%; fallback full DOL SHA-1 OK.
+
+## c12_u20_20261106
+Source: Codex worker c12_u20_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c12_u20 fn_80243464: numeric literals in ratio/x/scale and x bounds improve text 99.14286 to 99.40476, EH8/index12 exact. Target x f2/scale f1 vs emitted f1/f0 remain. Combining multiply/add initializers worsens to 99.04762; explicit scale,x,ratio declarations with external constants are baseline-byte-invariant. Singleton stays NonMatching; no new native gain.
