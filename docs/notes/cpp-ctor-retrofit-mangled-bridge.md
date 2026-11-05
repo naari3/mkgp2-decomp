@@ -744,3 +744,8 @@ c13_u3: fn_801CDF10 improves 97.9235 to 98.68852. Inline EnterRace(VSMode_SeedRa
 Source: Codex worker c13_u10_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 348 B.
 
 c13_u10: TextRow layout fn_8021713C reaches 100% with inline Advance(TextSprite*,float): named delta = gap - width; return delta + spacing. This restores target width f1/spacing f0 and fadds operand order. Safe split at 8021713C isolates leaf alpha fn_802170F0 (97.63158%, sprite/alpha/color GPR homes r5/r4/r7 vs target r7/r6/r5). Single SetAlpha and nested SetColor helper probes invariant; original alpha source retained. Original two-function object emitted reversed strong function order; standalone Matching layout owns EH8001A53C/index8002A0B0. Full source-linked SHA-1 and ELF8021713C/348 verified.
+
+## c13_u13_20261106
+Source: Codex worker c13_u13_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u13: SwitchList ctor 8017A68C inline AppendSwitchPair(list,ResolveJointByName(second),ResolveJointByName(first),messages) removes two r3->r0->r26 copies under production MWCC right-to-left argument evaluation. Text 97.56917 ->98.39921, size1020->1012 and EH40/index12 exact. Remaining bge vs blt switch direction and two lwz-before-stw scheduling pairs. Separate declarations/case placement invariant; empty case2 adds compare; single six-float bounds aggregate introduces subobject-address saved web and regresses94.87352. Retained NonMatching, no safe subset in singleton.
