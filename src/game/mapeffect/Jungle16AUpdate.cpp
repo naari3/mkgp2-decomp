@@ -1,8 +1,8 @@
 #include "../src/game/mapeffect/mapfx16a_private.h"
 extern "C" void fn_8016A854(Jungle16A *self) {
-    unsigned char hit;
-    int i;
     const Desc16A *d;
+    int i;
+    unsigned char hit;
     hit = 0;
     for (i=0; i<8; ++i) {
         void *kart = GetKartSlotKartVariant(i);
@@ -14,8 +14,8 @@ extern "C" void fn_8016A854(Jungle16A *self) {
             if (fn_80123480(self->zone, &p)) hit = 1;
         }
     }
-    d = (const Desc16A *)lbl_8036CE88;
-    for (i=0; i<2; ++i, ++d) {
+    for (i=0; i<2; ++i) {
+        d = &((const Desc16A *)lbl_8036CE88)[i];
         Motion16A *m = &self->motions[i];
         switch (m->state) {
         case 0:

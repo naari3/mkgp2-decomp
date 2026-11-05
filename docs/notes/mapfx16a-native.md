@@ -8,3 +8,8 @@ Source: Codex worker cxb_b2_mapfx16a_20261104 (gpt-6.1-sol/medium) + coordinator
 - Saturate_Double actually has float/float/float ABI (see Clamp.c). Literal 0/1 clamp limits give exact FP identities.
 - Caution: tools/postprocess_sdata2.py renames by relocation offset without checking literal values; only trust its names once text offsets align (mismatching NM text can get wrong symbol names).
 - Honest NonMatching: fn_8016A854 97.69% (GPR web identities + extra descriptor-pointer copy), fn_8016AB58 97.84% (real C++ new guards/base cleanup exact; pool materialization / GPR identities), fn_8016AF3C 93.31% (prologue pool/vtable register scheduling, next-DObj copy).
+
+## c5_s18_fn801fbe14_20261105
+Source: Codex worker c5_s18_fn801fbe14_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c5_s18: Jungle16AUpdate descriptor/index/hit declarations plus indexed descriptor access inside the loop removes the extra descriptor-copy instruction: direct objdiff 97.69481 -> 98.181816, text size 620 -> target 616, extab/extabindex both 100. Remaining differences are descriptor/stride r31/r30 swap and frame-increment FP identities. Naming frame/step/delay temps did not move FP allocation. Constructor declaration hoist and split descriptor cursor did not improve; fn_801FBE14 direct input load gets desired colors but adds mr, while inline getter/direct ternary retain swapped input/creditOnly registers. clModelM copy/helper/open-index probes did not improve. All remain honest NonMatching; final coordinator full build SHA-1 OK.
