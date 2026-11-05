@@ -1770,6 +1770,11 @@ game/CardDataTransfer_UI.cpp:
 	extabindex  start:0x800210A4 end:0x800210B0
 	.text       start:0x8006D308 end:0x8006DB90
 
+game/CardDataCheck_UI.cpp:
+	extab       start:0x80008188 end:0x80008190
+	extabindex  start:0x800210B0 end:0x800210BC
+	.text       start:0x8006DB90 end:0x8006E308
+
 game/CardRW_PrintTest_Page.c:
 	extab       start:0x80008190 end:0x80008198
 	extabindex  start:0x800210BC end:0x800210C8
