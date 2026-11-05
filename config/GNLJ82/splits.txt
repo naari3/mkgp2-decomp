@@ -7405,10 +7405,25 @@ game/bbox/fn_8018A32C.c:
 	extabindex  start:0x80026E40 end:0x80026E4C
 	.text       start:0x8018A32C end:0x8018A418
 
+game/bbox/fn_8018A418.c:
+	extab       start:0x80011E0C end:0x80011E14
+	extabindex  start:0x80026E4C end:0x80026E58
+	.text       start:0x8018A418 end:0x8018A66C
+
 game/objview/fn_8018A66C.c:
 	extab       start:0x80011E14 end:0x80011E1C
 	extabindex  start:0x80026E58 end:0x80026E64
 	.text       start:0x8018A66C end:0x8018A70C
+
+game/objview/fn_8018A70C.cpp:
+	extab       start:0x80011E1C end:0x80011E50
+	extabindex  start:0x80026E64 end:0x80026E70
+	.text       start:0x8018A70C end:0x8018A8D4
+
+game/bitread/fn_8018A8D4.c:
+	extab       start:0x80011E50 end:0x80011E58
+	extabindex  start:0x80026E70 end:0x80026E7C
+	.text       start:0x8018A8D4 end:0x8018AD70
 
 game/bitread/fn_8018AD70.c:
 	extab       start:0x80011E58 end:0x80011E60
@@ -7434,6 +7449,11 @@ game/bitread/fn_8018B088.c:
 	extab       start:0x80011E78 end:0x80011E80
 	extabindex  start:0x80026EAC end:0x80026EB8
 	.text       start:0x8018B088 end:0x8018B14C
+
+game/bitread/fn_8018B14C.c:
+	extab       start:0x80011E80 end:0x80011E88
+	extabindex  start:0x80026EB8 end:0x80026EC4
+	.text       start:0x8018B14C end:0x8018B248
 
 game/bitread/fn_8018B248.c:
 	.text       start:0x8018B248 end:0x8018B2E4

@@ -10536,5 +10536,14 @@
     "@135": "@eti_80028E98",
     "@145": "@eti_80028EA4",
     "@155": "@eti_80028EB0"
+  },
+  "src/game/objview/fn_8018A70C.cpp": {
+    "__ct__9SoundPropFv": "fn_8018A70C",
+    "__vt__9SoundProp": "lbl_80495DB4",
+    "__vt__16CourseMarkerBase": "lbl_80490FE0",
+    "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
+    "__ct__10clNormal3DFPvi": "clNormal3D_Construct",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

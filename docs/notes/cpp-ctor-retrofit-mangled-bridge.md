@@ -444,3 +444,8 @@ c7_m9 partial: NamCamFlow group 801F2B70..801F4D3C has no safe internal EH cut. 
 Source: Codex worker c7_m10_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 MenuModeLane 801F5BF4: inline MenuScene constructor must be visible before the owning MenuMode constructor. Add an undefined first-declared virtual key to suppress synthetic MenuScene vtable emission. Use inline MenuWidget::SetPosition(x,y) to capture each pointer once: direct widgets[i]->x/y writes caused three extra pointer reloads; method form gives exact 956-byte text and all owned EH. fn_801F6178 remains NonMatching after three hypotheses, despite the other seven functions and owned EH being exact. Reversed EH group 801F5A9C..801F6454 cannot be split to promote the exact subset.
+
+## c7_s21_20261105
+Source: Codex worker c7_s21_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1432 B.
+
+c7_s21: bitread 8018A8D4 six inline ReadBits loops match exactly with float literals 0/60/10/100/1000; external const divisor caches across inline loops and changes scheduling. 8018B14C needs int fn_801F8DB0 argument, out[i] rather than postincrement, and i<5 && i<5 for exact bottom branch pair. Both text/EH/index 100, linked source ranges and DOL SHA-1 verified. SoundProp ctor 8018A70C genuine C++ with CourseMarkerBase/new clNormal3D gives exact EH; explicit case0 retains EH PCs but remaining prologue/switch tree differs. Kept NonMatching.
