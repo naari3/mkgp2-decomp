@@ -250,13 +250,14 @@ extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
         angle = Saturate_Double(angle, -Param(k, 0x6c), Param(k, 0x6c));
         if (Abs(angle) > Param(k, 0x64)) {
             k->field2dc = 1;
-            float correction;
             if (k->field2fc == 1 || k->field2fd == 1) {
                 float a = angle*Param(k, 0x70);
                 float b = (angle-lbl_806D9704*angle)*(yawTurn*Param(k, 0x74));
-                correction = a + b;
-            } else correction = angle*(Param(k, 0x7c)*(Param(k, 0x78)+Abs(turn)));
-            k->yaw -= correction;
+                k->yaw -= a + b;
+            } else {
+                float correction = angle*(Param(k, 0x7c)*(Param(k, 0x78)+Abs(turn)));
+                k->yaw -= correction;
+            }
         } else if (lbl_806D96D0 == k->pad1c4) {
             float correction = angle*Param(k, 0x68);
             k->yaw += correction;

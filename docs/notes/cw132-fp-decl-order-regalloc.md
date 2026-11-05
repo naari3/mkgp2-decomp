@@ -183,3 +183,8 @@ c13_u24: Collision setup 802090F0/80209138 scalar inline SetVector(Vec*,float x,
 Source: Codex worker c13_u26_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 PointList constructor 8016C94C improves96.65873->99.15873 with independent copy/diagnostic loop indices (i,k) under unchanged GC1.3.2 flags. Direct delta field stores regress91.82539; named dz/dx before Set optimize to original96.65873. Literal zero in Set is text-neutral and adds unused sdata2, removed. Final text504/EH8/index12 sizes unchanged, EH/index100. Remaining reversed x/z argument evaluation, mr vs li copy-offset initialization, print indexr26 vs targetr25. Singleton stays NM; full fallback DOL SHA-1 OK.
+
+## c13_u36_20261106
+Source: Codex worker c13_u36_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c13_u36: KartMovement_PhysicsStep 8019CD30 improves 95.86947 to 96.40763 by moving yaw subtraction into each field2fc/field2fd branch and retaining a named correction product in the else branch. Shared outer correction merges branch tails and removes target separate yaw load/sub/store. Copy-initializing all InitVec snapshots worsens 88.84199; default-constructed displacement component writes alter EH. Literal zero at throttle compare restores missing target reload but worsens other scratch webs; literal quantization/blend also below retained best. Singleton stays NonMatching, unchanged EH scores, full fallback DOL SHA-1 OK.
