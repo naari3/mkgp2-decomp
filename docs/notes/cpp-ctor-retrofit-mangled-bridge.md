@@ -584,3 +584,8 @@ c8_s65: four new singleton ItemUseEffect TUs at 80244840..80245420 match 3040 B 
 Source: Codex worker c8_s66_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 956 B.
 
 c8_s66: fn_802455EC text can match with one VHolder<T> type, but EH then incorrectly merges all SPECIFICATION actions. A distinct byte-tween type for the final member versus shared float-tween type for the first two reproduces exact 92-byte EH. ResCtrl Show(self->x,self->y,z) evaluates y before x; staging x and y locals restores target load order in fn_80245420/fn_80245704. Native source-linked 4 fn/956 B and full DOL SHA-1 verified.
+
+## c8_s70_20261105
+Source: Codex worker c8_s70_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 552 B.
+
+c8_s70: Race digit HUD deleting destructor 80246BD4 matches 528B text +180B EH +12B index. Use canonical DigitOwner and VHolder plus a private list facade with nontrivial iterator copies. Initial body call requires named end iterator before begin iterator; member list destructor uses inline Begin()/Finish() return expressions. This preserves target cached sentinel and hidden-return/argument stack slots. Scalar/class placement-copy variants for 80247C3C do not reproduce its FP/exception bookkeeping; retain NonMatching.

@@ -11534,5 +11534,19 @@
     "__ct__9HudFlow24Fi": "fn_80245C1C",
     "__vt__9HudFlow24": "lbl_804EE83C",
     "__ct__11TextManagerFv": "TexMgr_Init"
+  },
+  "src/game/RaceDigitHudDtor.cpp": {
+    "__dt__10DigitOwnerFv": "dtor_80247980",
+    "__dt__10FlowFaderFFv": "TweenInterp_Dtor",
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "__vt__10FlowFaderF": "lbl_80419DE0",
+    "__vt__10FlowFaderI": "lbl_804E5284",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__10FlowFaderIFv": "fn_801F26C8",
+    "__dt__16RaceDigitHudDtorFv": "fn_80246BD4",
+    "__vt__16RaceDigitHudDtor": "lbl_804EEA8C",
+    "__vt__20RaceDigitHudDtorBase": "lbl_804EDB28",
+    "@150": "@etb_8001D684",
+    "@151": "@eti_8002B298"
   }
 }

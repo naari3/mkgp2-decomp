@@ -12325,11 +12325,29 @@ game/RaceDigitFactory.cpp:
 	extabindex  start:0x8002B28C end:0x8002B298
 	.text       start:0x80246B78 end:0x80246BD4
 
+game/RaceDigitHudDtor.cpp:
+	extab       start:0x8001D684 end:0x8001D738
+	extabindex  start:0x8002B298 end:0x8002B2A4
+	.text       start:0x80246BD4 end:0x80246DE4
+
 game/RaceDigits.cpp:
 	extab       start:0x8001D738 end:0x8001DA34
 	extabindex  start:0x8002B2A4 end:0x8002B2EC
 	.text       start:0x80246DE4 end:0x80247B8C
 	.data       start:0x804EEAC4 end:0x804EEAE0
+
+game/RaceDigitListErase.cpp:
+	extab       start:0x8001DA34 end:0x8001DA3C
+	extabindex  start:0x8002B2EC end:0x8002B2F8
+	.text       start:0x80247B8C end:0x80247C3C
+
+game/RaceDigitListInsert.cpp:
+	extab       start:0x8001DA3C end:0x8001DA44
+	extabindex  start:0x8002B2F8 end:0x8002B304
+	.text       start:0x80247C3C end:0x80247CE4
+
+game/RaceDigitListInit.cpp:
+	.text       start:0x80247CE4 end:0x80247CFC
 
 game/HudModeDestroy.cpp:
 	extab       start:0x8001DA64 end:0x8001DA6C
