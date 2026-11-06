@@ -1703,7 +1703,7 @@ config.libs = [
             Object(Matching, "game/KartFxDriftParticle.cpp", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/KartFxDrift.cpp", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/KartFxHorn.cpp", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/KartFxDriftSparkParticle.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/KartFxDriftSparkParticle.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFxChargeIcon.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFxDispatchA.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/KartFxDispatchE.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
