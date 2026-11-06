@@ -1,6 +1,6 @@
 /* Local views of the fields consumed by the ring-burst dispatcher.
- * NonMatching: independent stack aggregates and signed comparison codegen
- * remain different. Native EH is compiler-generated; no resource is owned here.
+ * Local declaration order preserves the target stack layout. Native EH is
+ * compiler-generated; no resource is owned here.
  */
 struct RingVec { float x, y, z; };
 struct RingAngles { float value[8]; };
@@ -27,7 +27,7 @@ struct RingEffect {
     unsigned char pad120[0x30];
     float phase, strength, color;
     unsigned char pad15c[0x34];
-    unsigned char firstPair;
+    unsigned char afterFirstPair;
 };
 extern "C" {
 extern const RingResources lbl_80329E20;
@@ -48,10 +48,10 @@ RingEffect *DrawEffect_SpawnDirect(void (*)(RingEffect *));
 
 void KartFx_DispatchGroupD_RingBurst(void *, RingPayload *payload, void *, int enabled) {
     const RingResources *resources = &lbl_80329E20;
-    RingColor color;
     RingVec position;
-    RingOrder order;
+    RingColor color;
     RingAngles angles;
+    RingOrder order;
     float base[16];
     float strength = payload->strength;
     strength *= lbl_806D51E8;
@@ -91,7 +91,7 @@ void KartFx_DispatchGroupD_RingBurst(void *, RingPayload *payload, void *, int e
                     effect->phase = angles.value[i];
                     effect->strength = strength;
                     effect->color = color.value[order.value[i]];
-                    effect->firstPair = i < 2 ? 1 : 0;
+                    effect->afterFirstPair = i >= 2 ? 1 : 0;
                 }
             }
         }

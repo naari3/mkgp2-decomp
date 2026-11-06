@@ -38,3 +38,8 @@ Group E StateByte 0x800C0398: complete1900-byte ordinary C++ NM99.89474%, native
 
 
 Group A complete2492B matches with native EH8B/index12B. Natural u64 masks plus inline unsigned-byte normalization (if masked==0 result=0; else result=1) reproduce full diamonds. FAbs_FloatAsDouble is double-return ABI: a named double magnitude inside the enabled block is load-bearing for fcmpu cr0,f1,f0; direct inequality and reversed operands both emit fcmpu cr0,f0,f1 (99.98395%). External two-byte aggregate lbl_806DCF30 copies via lhz/sth to stack08/09 and remains foreign-owned. FlashIndex+1 uses signed promoted modulo4. Keep enabled-independent JumpDust/Dust/Slot60/fire/status/trail/burst, immediate Slot60 tick, captured wheel edge and per-iteration WheelSpark delay3 including allocation failure. Actual source-linked full DOL SHA1 exact; genuine C gain2492B/1fn.
+
+## c15_u67_20261106
+Source: Codex worker c15_u67_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 812 B.
+
+Group D RingBurst unlocked: previous i<2 lowering residual was actually a reversed predicate. Target subfc/adde computes i>=2 (zero for first two sparks, one thereafter). Changing that expression reduces 816B to exact 812B and makes EH/index exact, leaving only stack offsets. For the independent locals, declaration order position, color, angles, order, base produces target color08/position14/order20/angles40/base60. Ordinary native C++ text/EH/index all100%; Matching source-linked full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. No new bridge, split, data or compiler flags required.
