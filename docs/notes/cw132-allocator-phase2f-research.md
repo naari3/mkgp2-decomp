@@ -1466,3 +1466,8 @@ c15_u10: ItemCollision_Check 0x800DD1EC owner-team/RankLog r29/r27 swap resolves
 Source: Codex worker c15_u12_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2260 B.
 
 Sci2Card_BuildScoreReceiptLine (80095388): early-null-return inline title accessor removes extra branch versus positive-guard return. Isolating wins-digit conversion in static inline helper resolves label/cursor r24/r26 swap; int wins parameter leaves wins in r24 instead of r25, but helper-local int wins = g_playerData.wins reaches 100% text2260/data40/extab8/index12. Full source-linked DOL SHA-1 verified.
+
+## c15_u44_20261106
+Source: Codex worker c15_u44_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c15_u44: ItemObject_SpawnWithAlias 800D7D08, 552 B. Baseline 98.00725 has first allocation object/index r28/r27 versus target r27/r28 and early return-copy scheduling. Extract special-ID helper: 99.347824, first site exact but second site swaps. Extract normal-path helper too: 99.42029, instruction shape exact, first site swaps and second exact. Reverse pool object/index declaration order with both helpers: 99.347824, first site exact and second swaps. Retain two semantic helpers at 99.42029, NonMatching. Both sites depend on inline-site ranking; do not repeat these three shapes.

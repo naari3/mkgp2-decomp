@@ -79,19 +79,23 @@ static inline int ItemAlias_FindSource(int id, signed char *found)
     return id;
 }
 
-ItemObject *ItemObject_SpawnWithAlias(int id, int arg)
+static inline ItemObject *ItemObject_CreateSpecial(int id, int arg)
 {
     ItemObject *obj = 0;
-    signed char found;
 
     if (id == 0x10E || (id == 0x45 && arg == 0x10E)) {
         obj = ItemObject_Create(lbl_8041CBA8[0x45].def);
         obj->kind = 0x45;
         obj->aliased = 1;
     }
-    if (obj) {
-        return obj;
-    }
+    return obj;
+}
+
+static inline ItemObject *ItemObject_CreateAliased(int id, int arg)
+{
+    ItemObject *obj;
+    signed char found;
+
     found = 0;
     id = ItemAlias_FindSource(id, &found);
     obj = ItemObject_Create(lbl_8041CBA8[id].def);
@@ -106,4 +110,13 @@ ItemObject *ItemObject_SpawnWithAlias(int id, int arg)
         obj->arg = arg;
     }
     return obj;
+}
+
+ItemObject *ItemObject_SpawnWithAlias(int id, int arg)
+{
+    ItemObject *obj = ItemObject_CreateSpecial(id, arg);
+    if (obj) {
+        return obj;
+    }
+    return ItemObject_CreateAliased(id, arg);
 }
