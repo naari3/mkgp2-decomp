@@ -9,3 +9,8 @@ This work actually used context-mode1.0.169 MCP for target ASM and objdiff/build
 Main independently rebuilt the unchanged native body with actual source input and no fallback: CHECK exited1 with SHA-1 `e6a5ded7440dc7673133aa6172362430f76c6886`, reproducing the worker's final source trial. Direct objdiff independently confirmed text98.89764%, automatic EH100%, and index91.66667%. The NonMatching declaration preserves target fallback and must not be counted as genuine matched progress.
 
 Final independent foreground `all_source progress build/GNLJ82/report.json build/GNLJ82/ok` exited0 with target SHA-1 `ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65`. Actual main input is the target object, not the compiled source. Aggregate matched1057/7614 did not increase; genuine gain remains0.
+
+## c15_u31_20261106
+Source: Codex worker c15_u31_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c15_u31: explicit case 2: break; default: break; before case 0 (as in neighboring EffectStarBurst) restores target-only dead switch branch at +0x44. Text improves 98.89764/504B to 99.685036/508B; extab8/index12 both100. FP residual remains lifetime f4 vs source f2 and wave f2 vs source f4/f3 at 800C5968..5980 (five rows). Declaration reorder invariant; inline polynomial helper99.6063 reverted. Singleton stays NonMatching; coordinator fallback full DOL SHA1 exact, zero native gain.

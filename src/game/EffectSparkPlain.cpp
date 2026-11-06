@@ -27,6 +27,10 @@ double sin(double);
 
 void Effect_SparkPlain_Update(SparkPlainEffect* effect) {
     switch (effect->state) {
+    case 2:
+        break;
+    default:
+        break;
     case 0:
         VfxSlot_BindResourceEx(effect->slot, 0x7f, 0);
         effect->visible = 0;
@@ -59,8 +63,6 @@ void Effect_SparkPlain_Update(SparkPlainEffect* effect) {
             effect->cleanup = 1;
             ++effect->state;
         }
-        break;
-    default:
         break;
     }
 }
