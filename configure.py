@@ -2482,7 +2482,7 @@ config.libs = [
             Object(NonMatching, "game/SpecialFaceMesh_Raycast.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/SpecialFaceMesh_Dtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/SpecialFaceMesh_Ctor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/SpecialFace_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/SpecialFace_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/SpecialFace_BuildPlaneAndEdges.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
             Object(Matching, "game/fn_801D6558.c", mw_version="GC/2.6", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801D6DF0.c"),

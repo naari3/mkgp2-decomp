@@ -10159,6 +10159,8 @@
     "@231": "@eti_80022640"
   },
   "src/game/SpecialFace_Init.cpp": {
+    "@89": "@etb_80008688",
+    "@90": "@eti_800214DC",
     "__ct__17SpecialFaceNativeFPC17SpecialFaceSource": "SpecialFace_Init",
     "__ct__14SpecialFaceVecFv": "fn_8007C5DC",
     "__dt__14SpecialFaceVecFv": "dtor_80036E40"

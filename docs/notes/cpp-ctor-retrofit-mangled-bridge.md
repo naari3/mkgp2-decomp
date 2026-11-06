@@ -914,3 +914,8 @@ c16_u9 Menu801F0CC0: no missing functions. Declaring offset before index makes 0
 Source: Codex worker c16_u12_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u12 ExplosionTumble_Init 800532D4 singleton: baseline89.013824/1704B. Separate rounded Dot products plus pointer Scale/Subtract helpers restore target1736B and improve89.82258; scalar AxisAngle/QuaternionMatrix helpers restore axis z/y/x evaluation order and improve89.89171. Add @262/@263 bridges to owned etb800071AC/eti800205AC: owned EH48/index12 exact100, extra weak dtor entries remain. Residual initial vector squared-load x/y order, Dot/Scale redundant up reloads and FP root/quaternion matrix webs/scheduling. No B cut; remains NonMatching. Full fallback-linked DOL SHA1 exact; zero native gain.
+
+## c16_u14_20261106
+Source: Codex worker c16_u14_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 452 B.
+
+SpecialFace_Init 8007B944 (452B): old GC/1.3.2 compiled aggregate assignment as two-word load/store pairs, leaving 88.89381% while all constructor and bounds-loop code was exact. Existing native constructor under GC/2.6 pipelines the 52-byte copy exactly and reaches 100%; bridge @89/@90 to @etb_80008688/@eti_800214DC. Matching promotion source-links at original address/size, all owned text/EH/index100%, full DOL SHA-1 exact. No C++ source or shared header edits needed.
