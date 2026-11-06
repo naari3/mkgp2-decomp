@@ -13611,7 +13611,10 @@ triforce/dikey.c:
 	.sbss       start:0x806D1E08 end:0x806D1E28
 
 triforce/random.c:
-	.text       start:0x802867B0 end:0x80286934
+	.text       start:0x802867B0 end:0x802867B8
+
+triforce/random_nm1.c:
+	.text       start:0x802867B8 end:0x80286934
 	.sdata      start:0x806D0C18 end:0x806D0C20
 
 triforce/dvdcmd.c:
