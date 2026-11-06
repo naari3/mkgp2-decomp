@@ -2321,5 +2321,11 @@
     "ItemEffectBus_TickTornadoCooldown",
     "ItemEffectBus_SnapshotAndClearSpawnFlags",
     "ItemEffectBus_SnapshotAndFullReset"
+  ],
+  "src/game/StarItem.c": [
+    "StarItem_BoundToVictimTick",
+    "StarItem_FallRecoveryTick",
+    "StarItem_FlightAndLockOnTick",
+    "StarItem_Tick"
   ]
 }

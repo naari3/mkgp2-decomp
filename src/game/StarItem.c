@@ -1,3 +1,5 @@
+#include "game/objview/item_state_private.h"
+#include "game/StarItemPrivate.h"
 /* === extracted from auto_StarItem_BoundToVict_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -5,15 +7,15 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void BuildOrientationFromYaw();
+extern float BuildOrientationFromYaw();
 extern void FAbs_FloatAsDouble();
-extern void FinalLapCoinJump_CheckActiveForObject();
-extern void GetSpawnPosition();
-extern void Item_DecayVelocityScalar();
+extern unsigned char FinalLapCoinJump_CheckActiveForObject();
+extern void GetSpawnPosition(Vec3 *, float, float, float);
+extern void Item_DecayVelocityScalar(Item *, float);
 extern void Item_SpawnHitBurstParticles();
 extern void JointByName_GetMatrix4x4Transposed();
 extern void KartDriver_GetJointByIdx();
-extern void KartDriver_GetKartRootMtx();
+extern void * KartDriver_GetKartRootMtx();
 extern void KartFxParam_GetConst1p5();
 extern void Mtx44_GetPitchOfPosZ();
 extern void Mtx44_GetTranslation_ColMajor();
@@ -25,10 +27,10 @@ extern void Mtx_TransposeToMtx44();
 extern void SpriteSlot_SetAnimFrameAndApplyScale();
 extern void SpriteSlot_SetScale();
 extern void Vec2_RotateY();
-extern void Vec3_Add_DestFirst();
-extern void Vec3_Copy();
+extern void Vec3_Add_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);
+extern void Vec3_Copy(Vec3 *, const Vec3 *);
 extern void Vec3_Lerp();
-extern void Vec3_Subtract_DestFirst();
+extern void Vec3_Subtract_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);
 extern void Vec3_ToYaw();
 
 /* --- extern decls: sda21-referenced data --- */
@@ -473,17 +475,17 @@ asm void StarItem_BoundToVictimTick(void) { /* 0x800FD948 size:0x5DC */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void BuildOrientationFromYaw();
-extern void FinalLapCoinJump_CheckActiveForObject();
-extern void GetSpawnPosition();
-extern void ItemObject_GetGroundTypeAt();
-extern void Item_DecayVelocityScalar();
-extern void KartDriver_GetKartRootMtx();
+extern float BuildOrientationFromYaw();
+extern unsigned char FinalLapCoinJump_CheckActiveForObject();
+extern void GetSpawnPosition(Vec3 *, float, float, float);
+extern signed char ItemObject_GetGroundTypeAt();
+extern void Item_DecayVelocityScalar(Item *, float);
+extern void * KartDriver_GetKartRootMtx();
 extern void Mtx44_GetTranslation_RowMajor();
-extern void Vec3_Add_DestFirst();
-extern void Vec3_Copy();
-extern void Vec3_Subtract_DestFirst();
-extern void Vec3_ToPitch();
+extern void Vec3_Add_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);
+extern void Vec3_Copy(Vec3 *, const Vec3 *);
+extern void Vec3_Subtract_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);
+extern float Vec3_ToPitch();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D63F8;
@@ -497,220 +499,64 @@ extern unsigned int lbl_806D6458;
  */
 
 /* --- forward decls --- */
-asm void StarItem_FallRecoveryTick(void);
+void StarItem_FallRecoveryTick(Item *, StarWork *);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_StarItem_FallRecoveryTick[8] = {
-    0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_StarItem_FallRecoveryTick = {
-    (void *)&StarItem_FallRecoveryTick, 0x000002C8, (void *)extab_StarItem_FallRecoveryTick
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void StarItem_FallRecoveryTick(void) { /* 0x800FDF24 size:0x2C8 */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    stw r0, 0x54(r1)
-    stw r31, 0x4c(r1)
-    mr r31, r4
-    stw r30, 0x48(r1)
-    mr r30, r3
-    lbz r0, 0xc9(r3)
-    extsb r0, r0
-    cmpwi r0, 0x1
-    beq StarItem_FallRecoveryTick_L_800FE014
-    bge StarItem_FallRecoveryTick_L_800FE014
-    cmpwi r0, 0x0
-    bge StarItem_FallRecoveryTick_L_800FDF60
-    b StarItem_FallRecoveryTick_L_800FE014
-    StarItem_FallRecoveryTick_L_800FDF60:
-    lwz r6, 0xa0(r30)
-    addi r3, r1, 0x18
-    lwz r0, 0xa4(r30)
-    addi r4, r31, 0x14
-    li r5, 0x0
-    stw r6, 0x18(r1)
-    stw r0, 0x1c(r1)
-    lwz r0, 0xa8(r30)
-    stw r0, 0x20(r1)
-    bl ItemObject_GetGroundTypeAt
-    lbz r0, 0xcb(r30)
-    cmpwi r0, 0x5
-    beq StarItem_FallRecoveryTick_L_800FDFA0
-    li r0, 0xa
-    stw r0, 0x4(r31)
-    b StarItem_FallRecoveryTick_L_800FDFA8
-    StarItem_FallRecoveryTick_L_800FDFA0:
-    li r0, 0x0
-    stw r0, 0x4(r31)
-    StarItem_FallRecoveryTick_L_800FDFA8:
-    lbz r0, 0xcb(r30)
-    cmpwi r0, 0x5
-    bne StarItem_FallRecoveryTick_L_800FDFBC
-    lfs f0, lbl_806D63F8(r2)
-    stfs f0, 0xbc(r30)
-    StarItem_FallRecoveryTick_L_800FDFBC:
-    lwz r3, 0x9c(r31)
-    cmplwi r3, 0x0
-    beq StarItem_FallRecoveryTick_L_800FE008
-    bl KartDriver_GetKartRootMtx
-    mr r4, r3
-    addi r3, r1, 0x30
-    bl Mtx44_GetTranslation_RowMajor
-    addi r3, r31, 0x34
-    addi r4, r30, 0xa0
-    addi r5, r1, 0x30
-    bl Vec3_Subtract_DestFirst
-    addi r3, r31, 0x40
-    addi r4, r30, 0xb8
-    bl Vec3_Copy
-    lfs f1, lbl_806D63F8(r2)
-    addi r3, r30, 0xb8
-    fmr f2, f1
-    fmr f3, f1
-    bl GetSpawnPosition
-    StarItem_FallRecoveryTick_L_800FE008:
-    lbz r3, 0xc9(r30)
-    addi r0, r3, 0x1
-    stb r0, 0xc9(r30)
-    StarItem_FallRecoveryTick_L_800FE014:
-    lwz r0, 0x4(r31)
-    cmplwi r0, 0x0
-    bne StarItem_FallRecoveryTick_L_800FE058
-    lfs f2, 0x2c(r30)
-    lfs f1, lbl_806D644C(r2)
-    lfs f0, lbl_806D63F8(r2)
-    fsubs f1, f2, f1
-    stfs f1, 0x2c(r30)
-    lfs f1, 0x2c(r30)
-    fcmpo cr0, f1, f0
-    bge StarItem_FallRecoveryTick_L_800FE058
-    li r3, 0x0
-    li r0, 0x3
-    stb r3, 0x28(r30)
-    stb r0, 0xc8(r30)
-    stb r3, 0xc9(r30)
-    b StarItem_FallRecoveryTick_L_800FE1D4
-    StarItem_FallRecoveryTick_L_800FE058:
-    lwz r0, 0x9c(r31)
-    cmplwi r0, 0x0
-    bne StarItem_FallRecoveryTick_L_800FE0D4
-    lbz r0, 0xcb(r30)
-    cmpwi r0, 0x5
-    beq StarItem_FallRecoveryTick_L_800FE080
-    lfs f1, 0xbc(r30)
-    lfs f0, lbl_806D6458(r2)
-    fadds f0, f1, f0
-    stfs f0, 0xbc(r30)
-    StarItem_FallRecoveryTick_L_800FE080:
-    lwz r6, 0xa0(r30)
-    addi r3, r1, 0xc
-    lwz r0, 0xa4(r30)
-    addi r4, r1, 0x8
-    li r5, 0x0
-    stw r6, 0xc(r1)
-    stw r0, 0x10(r1)
-    lwz r0, 0xa8(r30)
-    stw r0, 0x14(r1)
-    bl ItemObject_GetGroundTypeAt
-    extsb. r0, r3
-    beq StarItem_FallRecoveryTick_L_800FE118
-    lfs f1, 0x8(r1)
-    lfs f0, 0x14(r31)
-    lfs f2, 0xa4(r30)
-    fsubs f0, f1, f0
-    fadds f0, f2, f0
-    stfs f0, 0xa4(r30)
-    lfs f0, 0x8(r1)
-    stfs f0, 0x14(r31)
-    b StarItem_FallRecoveryTick_L_800FE118
-    StarItem_FallRecoveryTick_L_800FE0D4:
-    lfs f1, 0x44(r31)
-    addi r3, r31, 0x34
-    lfs f0, lbl_806D6458(r2)
-    mr r4, r3
-    addi r5, r31, 0x40
-    fadds f0, f1, f0
-    stfs f0, 0x44(r31)
-    bl Vec3_Add_DestFirst
-    lwz r3, 0x9c(r31)
-    bl KartDriver_GetKartRootMtx
-    mr r4, r3
-    addi r3, r1, 0x24
-    bl Mtx44_GetTranslation_RowMajor
-    addi r3, r30, 0xa0
-    addi r4, r1, 0x24
-    addi r5, r31, 0x34
-    bl Vec3_Add_DestFirst
-    StarItem_FallRecoveryTick_L_800FE118:
-    lbz r0, 0xcb(r30)
-    extsb r0, r0
-    cmpwi r0, 0x5
-    beq StarItem_FallRecoveryTick_L_800FE198
-    bge StarItem_FallRecoveryTick_L_800FE144
-    cmpwi r0, 0x1
-    beq StarItem_FallRecoveryTick_L_800FE150
-    blt StarItem_FallRecoveryTick_L_800FE1A4
-    cmpwi r0, 0x4
-    bge StarItem_FallRecoveryTick_L_800FE168
-    b StarItem_FallRecoveryTick_L_800FE1A4
-    StarItem_FallRecoveryTick_L_800FE144:
-    cmpwi r0, 0x9
-    beq StarItem_FallRecoveryTick_L_800FE180
-    b StarItem_FallRecoveryTick_L_800FE1A4
-    StarItem_FallRecoveryTick_L_800FE150:
-    lfs f1, 0xac(r30)
-    lfs f0, lbl_806D6440(r2)
-    fsubs f1, f1, f0
-    bl BuildOrientationFromYaw
-    stfs f1, 0xac(r30)
-    b StarItem_FallRecoveryTick_L_800FE1A4
-    StarItem_FallRecoveryTick_L_800FE168:
-    lfs f1, 0xac(r30)
-    lfs f0, lbl_806D6440(r2)
-    fsubs f1, f1, f0
-    bl BuildOrientationFromYaw
-    stfs f1, 0xac(r30)
-    b StarItem_FallRecoveryTick_L_800FE1A4
-    StarItem_FallRecoveryTick_L_800FE180:
-    lfs f1, lbl_806D6440(r2)
-    lfs f0, 0xac(r30)
-    fadds f1, f1, f0
-    bl BuildOrientationFromYaw
-    stfs f1, 0xac(r30)
-    b StarItem_FallRecoveryTick_L_800FE1A4
-    StarItem_FallRecoveryTick_L_800FE198:
-    addi r3, r30, 0xb8
-    bl Vec3_ToPitch
-    stfs f1, 0xac(r30)
-    StarItem_FallRecoveryTick_L_800FE1A4:
-    lfs f1, lbl_806D6430(r2)
-    mr r3, r30
-    bl Item_DecayVelocityScalar
-    lwz r3, 0x9c(r31)
-    bl FinalLapCoinJump_CheckActiveForObject
-    clrlwi. r0, r3, 24
-    beq StarItem_FallRecoveryTick_L_800FE1CC
-    li r0, 0x0
-    stb r0, 0x28(r30)
-    b StarItem_FallRecoveryTick_L_800FE1D4
-    StarItem_FallRecoveryTick_L_800FE1CC:
-    li r0, 0x1
-    stb r0, 0x28(r30)
-    StarItem_FallRecoveryTick_L_800FE1D4:
-    lwz r0, 0x54(r1)
-    lwz r31, 0x4c(r1)
-    lwz r30, 0x48(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
+#pragma exceptions on
+void StarItem_FallRecoveryTick(Item *item, StarWork *work)
+{
+    Vec3 initialRoot, followingRoot, initialPosition, groundPosition;
+    float ground;
+    switch (item->subphase) {
+    case 0: {
+        initialPosition = item->pos;
+        ItemObject_GetGroundTypeAt(&initialPosition, &work->height, 0);
+        if (item->reason != 5) work->timer = 10;
+        else work->timer = 0;
+        if (item->reason == 5) item->velocity.y = 0.0f;
+        if (work->target != 0) {
+            Mtx44_GetTranslation_RowMajor(&initialRoot, KartDriver_GetKartRootMtx(work->target));
+            Vec3_Subtract_DestFirst(&work->delta, &item->pos, &initialRoot);
+            Vec3_Copy(&work->velocity, &item->velocity);
+            GetSpawnPosition(&item->velocity, 0.0f, 0.0f, 0.0f);
+        }
+        item->subphase++;
+        break;
+    }
+    case 1: break;
+    }
+    if (work->timer == 0) {
+        item->scale -= 0.05f;
+        if (item->scale < 0.0f) {
+            item->visible = 0;
+            item->phase = 3;
+            item->subphase = 0;
+            return;
+        }
+    }
+    if (work->target == 0) {
+        if (item->reason != 5) item->velocity.y += -0.1f;
+        groundPosition = item->pos;
+        if (ItemObject_GetGroundTypeAt(&groundPosition, &ground, 0)) {
+            item->pos.y += ground - work->height;
+            work->height = ground;
+        }
+    } else {
+        work->velocity.y += -0.1f;
+        Vec3_Add_DestFirst(&work->delta, &work->delta, &work->velocity);
+        Mtx44_GetTranslation_RowMajor(&followingRoot, KartDriver_GetKartRootMtx(work->target));
+        Vec3_Add_DestFirst(&item->pos, &followingRoot, &work->delta);
+    }
+    switch (item->reason) {
+    case 1: item->rotation.x = BuildOrientationFromYaw(item->rotation.x - 0.17453289f); break;
+    case 4: item->rotation.x = BuildOrientationFromYaw(item->rotation.x - 0.17453289f); break;
+    case 9: item->rotation.x = BuildOrientationFromYaw(0.17453289f + item->rotation.x); break;
+    case 5: item->rotation.x = Vec3_ToPitch(&item->velocity); break;
+    }
+    Item_DecayVelocityScalar(item, 1.0f);
+    if (FinalLapCoinJump_CheckActiveForObject(work->target)) item->visible = 0;
+    else item->visible = 1;
 }
+#pragma exceptions reset
 
 /* === extracted from auto_StarItem_FlightAndLo_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -720,12 +566,12 @@ asm void StarItem_FallRecoveryTick(void) { /* 0x800FDF24 size:0x2C8 */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void DrawEffect_SpawnDirect();
-extern void FinalLapCoinJump_CheckActiveForObject();
-extern void GetSpawnPosition();
+extern unsigned char FinalLapCoinJump_CheckActiveForObject();
+extern void GetSpawnPosition(Vec3 *, float, float, float);
 extern void ItemAlias_HitRemapLookup();
 extern void ItemCollision_Check();
 extern void ItemHit_Dispatch();
-extern void ItemObject_GetGroundTypeAt();
+extern signed char ItemObject_GetGroundTypeAt();
 extern void ItemTracker_AcquireLock();
 extern void ItemTracker_GetTargetKart();
 extern void ItemTracker_ReleaseLock();
@@ -734,7 +580,7 @@ extern void Item_AccelClampVelocity();
 extern void Item_AdvanceProjectileSimple();
 extern void Item_CheckWallCollision();
 extern void Item_ComputeYawRelativeApproach();
-extern void Item_DecayVelocityScalar();
+extern void Item_DecayVelocityScalar(Item *, float);
 extern void Item_HomingScanAndSteer();
 extern void Item_InitLaunchFromKart();
 extern void Item_RenderCharacterScaledFromJoint12();
@@ -746,12 +592,12 @@ extern void SoundMgr_PlaySE_Positional();
 extern void SpriteSlot_SetAnimFrameAndApplyScale();
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed();
 extern void SpriteSlot_SetScale();
-extern void Vec3_Add_DestFirst();
-extern void Vec3_Copy();
+extern void Vec3_Add_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);
+extern void Vec3_Copy(Vec3 *, const Vec3 *);
 extern void Vec3_HorizontalMagnitude();
 extern void Vec3_Scale();
-extern void Vec3_Subtract_DestFirst();
-extern void Vec3_ToPitch();
+extern void Vec3_Subtract_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);
+extern float Vec3_ToPitch();
 extern void Vec3_ToYaw();
 extern void fn_801B129C();
 extern void fn_801B14B8();
@@ -1400,11 +1246,11 @@ asm void StarItem_FlightAndLockOnTick(void) { /* 0x800FE1EC size:0x8A8 */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void AngleStepTowards_Shortest();
-extern void BuildOrientationFromYaw();
-extern void GetSpawnPosition();
+extern float BuildOrientationFromYaw();
+extern void GetSpawnPosition(Vec3 *, float, float, float);
 extern void ItemObject_DecrementCategoryBudget();
 extern void Item_AdvanceTetherToJoint13();
-extern void Item_DecayVelocityScalar();
+extern void Item_DecayVelocityScalar(Item *, float);
 extern void Item_OrbitAnchorKart();
 extern void SpriteSlot_Container_Free();
 extern void SpriteSlot_InitNonLoop();
@@ -1412,8 +1258,8 @@ extern void SpriteSlot_SetTransform();
 extern void StarItem_BoundToVictimTick();
 extern void StarItem_FallRecoveryTick();
 extern void StarItem_FlightAndLockOnTick();
-extern void Vec3_Add_DestFirst();
-extern void Vec3_Subtract_DestFirst();
+extern void Vec3_Add_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);
+extern void Vec3_Subtract_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D63F8;
