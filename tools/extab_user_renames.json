@@ -8745,6 +8745,9 @@
     "@227": "@eti_8002996C"
   },
   "src/game/anon_8021A7C8_nm1.cpp": {
+    "__dt__18clCSModelInterfaceFv": "dtor_8013DCBC",
+    "@172": "@etb_8001AB80",
+    "@173": "@eti_8002A2CC",
     "__nwa__FUl": "FUN_8003b120",
     "__dla__FPv": "MemoryManager_Free",
     "__nw__FUl": "Alloc",

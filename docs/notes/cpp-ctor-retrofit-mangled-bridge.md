@@ -1004,3 +1004,8 @@ c16_u51 WarpZoneVector_Insert 800A9D84/1792B: standard empty inline placement op
 Source: Codex worker c16_u65_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 716 B.
 
 c16_u65: anon_80209FA4_nm1 safely cuts at A6CC/A734/A788. Reverse prefix out-of-line definition order under GC/2.6 -inline deferred, and retain Tween::Set verbatim as inline helper in prefix so Update and ctor stay exact. Prefix A454/A584/A5C8 plus isolated Set A734 text/EH/index all 100%; linked primary addresses/sizes exact, DOL SHA-1 OK. Value float and integer return coalescing residuals unaffected by conditional-vs-if returns and addition operand reversal; keep both NM.
+
+## c16_u76_20261106
+Source: Codex worker c16_u76_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u76: clCSOrgKartModel ctor 8021ABFC was semantically incomplete: only 4 of 28 target tire hide calls present (missing kaku/oil tire/oil grid/punk grid/punk tire/snow groups, 24 calls). Restoring them and typed foreign lbl_803C4E60 pool (anim IDs at+0, strings +180..548) raises fresh72.58707 to95.21559, removes emitted duplicate strings/IDs. switch(character) restores target case3 branch-over-branch. Cached foreign pools retain r29/r30 swapped; direct-symbol aggregate references regress72.95357. Own base dtor bridge targets dtor_8013DCBC; @172/@173 identify primary EH. Singleton remainsNonMatching after3 hypotheses; full fallback DOL SHA1 exact.
