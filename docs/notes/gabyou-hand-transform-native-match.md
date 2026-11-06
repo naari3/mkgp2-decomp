@@ -1,0 +1,5 @@
+# gabyou-hand-transform-native-match
+
+Source: Codex worker c15_a31_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 716 B.
+
+GabyouItem_BuildLocalTransformFromHandJoint (800DABBC, 716 B) matches genuine C with #pragma exceptions on/reset and no manual EH. Explicit empty mode case 0 plus active case 1 emits target cmpwi/beq/bge/b decision tree. A real inline growth helper with local maximum=1.0f and rate argument 0.1f reproduces f2 current/f0 rate/f1 maximum and early maximum load; extern floats instead swap the current/maximum FP webs. Three matrices declared root/local/adjust followed by rootPos/handPos reproduce stack AC/6C/2C/20/14; Mtx44_Translate takes Vec3 by value, producing stack 08 argument copy. Both 13-way kind switches retain separate case arms. Their compiler-generated 104 B tables must be owned in same TU (.data 8041E980..8041E9E8), previously auto data blob. History had only extraction commit 2a0a8098 and no recorded C blocker. Direct text/EH/index/data all 100%; source input confirmed on main.elf edge; coordinator build service original SHA-1 verified.
