@@ -1,6 +1,14 @@
-#include "game/SteeringRingPrivate.h"
+#include "game/SteeringRingInsertPrivate.h"
+static inline const unsigned long &RingMinRef(const unsigned long &a, const unsigned long &b) {
+    return a < b ? a : b;
+}
+static inline unsigned long RingMaxSize() {
+    unsigned long limit = 0xFFFFFFFFUL / sizeof(int);
+    unsigned long max = 0xFFFFFFFFUL;
+    return RingMinRef(limit, max);
+}
 extern "C" void fn_801E5454(SteeringRing *s, const int &value) {
-    if(s->count==RingMax()) throw std::length_error(lbl_803BD2DC);
+    if(s->count==RingMaxSize()) throw std::length_error(lbl_803BD2DC);
     if(s->count<s->capacity) {
         unsigned long i=s->count+s->head;
         if(i>=s->capacity) i-=s->capacity;

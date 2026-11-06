@@ -23,3 +23,8 @@ E4544: existing SteeringRingInsertPrivate RingString wrapper restores independen
 Source: Codex worker c16_u15_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u15 fn_801E5724: existing SteeringRingInsertPrivate.h RingString wrapper restores independent r27 shared member/frame and EH identity. A TU-local const-reference min with two mutable locals (0xffffffffUL/sizeof(int), 0xffffffffUL) replaces artificial volatile RingMax and restores exact target compare/prologue: 732B text +116B EH +12B index all100 after name bridges. Native promotion fails because compiler throw type string emits 55B .data retained (+64B section growth), while original lbl_803BD228 lies in shared .rodata. Explicit placement construction plus __throw suppresses type string but regresses to744B/89.016396; reverted. Final NonMatching fallback DOL SHA1 exact, zero native gain. No padding or tool-code edits.
+
+## c16_u25_20261106
+Source: Codex worker c16_u25_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u25 fn_801E5454 push_back: reuse existing SteeringRingInsertPrivate.h RingString and canonical RingMinRef/RingMaxSize from E5724. Fresh87.55 ->98.97222, 720B exact instruction/stack skeleton. Own @128/@130/@131 and standard exception/vtable bridges added. Residual s/exception-capacity r28/r30 exchange (35 rows), EH three base-register bytes only; capacity helper98.77778 regresses. 55B compiler throw type-name .data remains, as documented for push_front. Single function stays NonMatching; full fallback-linked DOL SHA1 exact, zero native gain.
