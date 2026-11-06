@@ -18,15 +18,21 @@ struct exception {
 }
 struct ClStr {
     char *ptr;
+    unsigned long *refs;
     ClStr(void *p);
     ~ClStr();
 };
 namespace std {
-struct logic_error : exception {
-    ClStr message;
-    logic_error(const char *s) : message(FUN_8003b120(strlen(s) + 1)) {
-        strcpy(message.ptr, s);
+struct SceneString {
+    ClStr value;
+    SceneString(const char *s) : value(FUN_8003b120(strlen(s) + 1)) {
+        strcpy(value.ptr, s);
     }
+    ~SceneString();
+};
+struct logic_error : exception {
+    SceneString message;
+    logic_error(const char *s) : message(s) {}
     virtual ~logic_error();
 };
 struct length_error : logic_error {

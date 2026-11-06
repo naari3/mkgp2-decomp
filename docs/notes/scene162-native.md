@@ -16,3 +16,8 @@ No asm / manual EH.
 Source: Codex worker c3_n3_scene16_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 5568 B.
 
 2026-11-05 c3_n3_scene16: fn_8016234C matched: float literals; a function-scope float t shared by cases 1 and 3; the repeated credit draw block is a static inline helper (s, alpha) called with t / lbl_806D8888 / 1.0f - t (case 2 keeps the extern const so scale * 1.0 is not folded); inside it `int special = (s->item >= 159) ? 1 : 0;` materializes the srawi/srwi/subfc/adde bool (a direct bool/int/uchar compare is forwarded and does not).
+
+## c16_u57_20261106
+Source: Codex worker c16_u57_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u57 fn_8016219C: expand ClStr to ptr+refs and add an intervening std::SceneString wrapper with native ctor/dtor declaration. This restores independent r27 member base, r28 exception base, 0x30 frame, stmw/lmw and exact48B EH/12B index; 79.85333 ->97.2 at target300B. Residual mr r3,r30 before lwz r4,0(r31) (target reverse) plus compiler throw type descriptor @23 vs lbl_8036924C. -rostr DOES move generated55B exception type string to .rodata, offering a valid future ownership route; flag reverted here because text still nonexact. Placement-new+explicit __throw produces null guard/304B83.68%; inline fill helper swaps destination/value r4/r5 (95.6%); both rejected. Singleton remains NM; full fallback DOL SHA1 exact.
