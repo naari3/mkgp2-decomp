@@ -1,5 +1,13 @@
 #include "game/Menu801F0CC0_private.h"
 
+static inline unsigned int MenuRGBA(unsigned int r, unsigned int g, unsigned int b, unsigned int a) {
+    return (r << 24) | ((g & 255) << 16) | ((b & 255) << 8) | (a & 255);
+}
+
+static inline unsigned int WithAlpha(unsigned int color, unsigned char alpha) {
+    return (color & 0xFFFFFF00) | alpha;
+}
+
 // Shared option artwork; inlined by both input handlers.
 static inline void SetOption(Menu801F *self, char *table) {
     if (self->option == 0) {
@@ -23,8 +31,8 @@ extern "C" void fn_801F0CC0(Menu801F *self) {
 }
 
 extern "C" void fn_801F0D04(Menu801F *self) {
-    unsigned char v = fn_8020A788(self->fade.p);
-    unsigned int c = (v << 24) | (v << 16) | (v << 8) | 255;
+    unsigned int v = fn_8020A788(self->fade.p);
+    unsigned int c = MenuRGBA(v, v, v, 255);
     for (int i = 26; i < 32; ++i) fn_801F6E98(&self->sprites[i], c);
     for (int i = 32; i < 35; ++i) fn_801F6E98(&self->sprites[i], c);
     self->fade.p->Step();
@@ -36,8 +44,8 @@ extern "C" void fn_801F0D04(Menu801F *self) {
 }
 
 extern "C" void fn_801F0E3C(Menu801F *self) {
-    int i;
     int offset;
+    int i;
     {
         i = 26;
         offset = 0xf08;
@@ -52,8 +60,8 @@ extern "C" void fn_801F0E3C(Menu801F *self) {
 
 extern "C" void fn_801F0ECC(Menu801F *self) {
     char *table = lbl_804E4C28;
-    int i;
     int offset;
+    int i;
     InputPlayer *input = InputMgr_GetPlayer(GetInputManager(), 0);
     float v = input->v2();
     if (v >= lbl_806DA550 && v <= lbl_806DA554) self->level = 0;
@@ -86,8 +94,8 @@ extern "C" void fn_801F0ECC(Menu801F *self) {
 }
 
 extern "C" void fn_801F115C(Menu801F *self) {
-    int i;
     int offset;
+    int i;
     {
         i = 6;
         offset = 0x378;
@@ -215,8 +223,8 @@ extern "C" void fn_801F140C(Menu801F *self) {
 }
 
 extern "C" void fn_801F15D4(Menu801F *self) {
-    int i;
     int offset;
+    int i;
     {
         i = 6;
         offset = 0x378;
@@ -263,8 +271,8 @@ extern "C" void fn_801F1664(Menu801F *self) {
 }
 
 extern "C" void fn_801F190C(Menu801F *self) {
-    int i;
     int offset;
+    int i;
     {
         i = 6;
         offset = 0x378;
@@ -284,15 +292,13 @@ extern "C" void fn_801F190C(Menu801F *self) {
 
 extern "C" void fn_801F19C8(Menu801F *self) {
     unsigned char v = fn_8020A788(self->fade.p);
-    unsigned int c = 0xFFFFFF00;
-    c = (c & 0xFFFFFF00) | v;
+    unsigned int c = WithAlpha(0xFFFFFF00, v);
     {
         int i = 12;
         int offset = 0x6f0;
         for (; i < 19; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
     }
-    unsigned int d = 0xFFFFFF00;
-    d = (d & 0xFFFFFF00) | (unsigned char)(255 - v);
+    unsigned int d = WithAlpha(0xFFFFFF00, (unsigned char)(255 - v));
     {
         int i = 19;
         int offset = 0xafc;
@@ -311,15 +317,13 @@ extern "C" void fn_801F19C8(Menu801F *self) {
 
 extern "C" void fn_801F1AC8(Menu801F *self) {
     unsigned char v = fn_8020A788(self->fade.p);
-    unsigned int c = 0xFFFFFF00;
-    c = (c & 0xFFFFFF00) | (unsigned char)(255 - v);
+    unsigned int c = WithAlpha(0xFFFFFF00, (unsigned char)(255 - v));
     {
         int i = 12;
         int offset = 0x6f0;
         for (; i < 19; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
     }
-    unsigned int d = 0xFFFFFF00;
-    d = (d & 0xFFFFFF00) | v;
+    unsigned int d = WithAlpha(0xFFFFFF00, v);
     {
         int i = 19;
         int offset = 0xafc;
@@ -337,8 +341,8 @@ extern "C" void fn_801F1AC8(Menu801F *self) {
 }
 
 extern "C" void fn_801F1BC8(Menu801F *self) {
-    int i;
     int offset;
+    int i;
     {
         i = 6;
         offset = 0x378;
@@ -353,8 +357,8 @@ extern "C" void fn_801F1BC8(Menu801F *self) {
 
 extern "C" void fn_801F1C58(Menu801F *self) {
     char *table = lbl_804E4C28;
-    int i;
     int offset;
+    int i;
     InputPlayer *input = InputMgr_GetPlayer(GetInputManager(), 0);
     if (input->Pressed(0x10) == 1) self->selection = 0;
     else if (input->Pressed(0x20) == 1) self->selection = 1;
@@ -381,12 +385,18 @@ extern "C" void fn_801F1C58(Menu801F *self) {
 }
 
 extern "C" void fn_801F1EE0(Menu801F *self) {
-    unsigned char v = fn_8020A788(self->fade.p);
-    unsigned int c = (v << 24) | (v << 16) | (v << 8) | 255;
-    for (int i = 6; i < 19; ++i) fn_801F6E98(&self->sprites[i], c);
+    int offset;
+    int i;
+    unsigned int v = fn_8020A788(self->fade.p);
+    unsigned int c = MenuRGBA(v, v, v, 255);
+    i = 6;
+    offset = 0x378;
+    for (; i < 19; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
     self->fade.p->Step();
     if (self->fade.p->Done()) {
-        for (int i = 6; i < 19; ++i) fn_801F6E98(&self->sprites[i], 0xFFFFFFFF);
+        i = 6;
+        offset = 0x378;
+        for (; i < 19; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFFFF);
         StrPcb_RunAndWaitIdle(StrPcb_GetInstance());
         StrPcb_ResetCommands_Neutral(StrPcb_GetInstance(), 1);
         self->state = 5;
@@ -395,8 +405,8 @@ extern "C" void fn_801F1EE0(Menu801F *self) {
 }
 
 extern "C" void fn_801F1FE4(Menu801F *self) {
-    int i;
     int offset;
+    int i;
     {
         i = 6;
         offset = 0x378;
@@ -416,15 +426,13 @@ extern "C" void fn_801F1FE4(Menu801F *self) {
 
 extern "C" void fn_801F20A0(Menu801F *self) {
     unsigned char v = fn_8020A788(self->fade.p);
-    unsigned int c = 0xFFFFFF00;
-    c = (c & 0xFFFFFF00) | (unsigned char)(255 - v);
+    unsigned int c = WithAlpha(0xFFFFFF00, (unsigned char)(255 - v));
     {
         int i = 0;
         int offset = 0x0;
         for (; i < 6; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
     }
-    unsigned int d = 0xFFFFFF00;
-    d = (d & 0xFFFFFF00) | v;
+    unsigned int d = WithAlpha(0xFFFFFF00, v);
     {
         int i = 12;
         int offset = 0x6f0;
@@ -448,15 +456,13 @@ extern "C" void fn_801F20A0(Menu801F *self) {
 
 extern "C" void fn_801F21C8(Menu801F *self) {
     unsigned char v = fn_8020A788(self->fade.p);
-    unsigned int c = 0xFFFFFF00;
-    c = (c & 0xFFFFFF00) | v;
+    unsigned int c = WithAlpha(0xFFFFFF00, v);
     {
         int i = 0;
         int offset = 0x0;
         for (; i < 6; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
     }
-    unsigned int d = 0xFFFFFF00;
-    d = (d & 0xFFFFFF00) | (unsigned char)(255 - v);
+    unsigned int d = WithAlpha(0xFFFFFF00, (unsigned char)(255 - v));
     {
         int i = 12;
         int offset = 0x6f0;
@@ -500,12 +506,18 @@ extern "C" void fn_801F2370(Menu801F *self) {
 }
 
 extern "C" void fn_801F2400(Menu801F *self) {
-    unsigned char v = fn_8020A788(self->fade.p);
-    unsigned int c = (v << 24) | (v << 16) | (v << 8) | 255;
-    for (int i = 0; i < 6; ++i) fn_801F6E98(&self->sprites[i], c);
+    int offset;
+    int i;
+    unsigned int v = fn_8020A788(self->fade.p);
+    unsigned int c = MenuRGBA(v, v, v, 255);
+    i = 0;
+    offset = 0x0;
+    for (; i < 6; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
     self->fade.p->Step();
     if (self->fade.p->Done()) {
-        for (int i = 0; i < 6; ++i) fn_801F6E98(&self->sprites[i], 0xFFFFFFFF);
+        i = 0;
+        offset = 0x0;
+        for (; i < 6; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFFFF);
         self->state = 1;
     }
 }

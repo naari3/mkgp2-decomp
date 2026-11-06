@@ -904,3 +904,8 @@ c15_u66 CardSetupFlowInitial fn_8024AD8C singleton: explicit int duration=lbl_80
 Source: Codex worker c16_u3_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u3 fn_801D8E28: direct native baseline89.443924 ->90.09813 by computing y before x in TU-local offset helper for first two text placements of each mode branch. Same856B and owned EH100; icon FP homes unchanged. Scalar staging returns baseline, canonical vector operator+ regresses39.182243, local position constructor/setter89.2757. Residual streaming aggregate copies via r0 and volatile FP coloring; singleton remains NonMatching. Full fallback-linked DOL SHA1OK, zero native gain.
+
+## c16_u9_20261106
+Source: Codex worker c16_u9_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u9 Menu801F0CC0: no missing functions. Declaring offset before index makes 0E3C/115C/15D4/190C/1BC8/1FE4 text100 (1040 B). Unsigned getter result + four-unsigned RGBA packer removes redundant clrlwi; 1EE0/2400 improve to99.53846/99.48276 with shared explicit offset loops, residual color/offset r29/r30 exchange. Pure WithAlpha slightly improves four crossfade methods; reference setter invariant and bitfield union spills. Input handlers retain target two-stage base+element adds versus folded source addi; pointer-return and call-containing helpers are invariant. Existing full-TU reversed EH grouping still blocks subset rescue. TU remains NonMatching; fallback full DOL SHA1 exact, zero native gain.
