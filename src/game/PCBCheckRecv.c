@@ -52,7 +52,7 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
     localSample = PCBCheck_LocalSample(localSample);
     for (i = 0; i < 4; ++i, output += 0x28, status += 0x45, ++slot) {
         if (slot->flags.local == 1) {
-            memcpy(slot, localSample - 0x2C, 0x2C);
+            memcpy(slot, base + 0x204, 0x2C);
             memcpy(slot->samples[slot->writeIndex], localSample, 0x28);
             slot->readIndex = (slot->readIndex + 1) % 64;
             slot->writeIndex = (slot->writeIndex + 1) % 64;
@@ -73,7 +73,7 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
                                 slot->writeIndex = (slot->writeIndex + 1) % 64;
                             }
                             if (type == 2) {
-                                memcpy(base + 0x2C98 + lbl_806D11A0 * 0xDC, payload, 0xDC);
+                                memcpy(((unsigned char (*)[0xDC])(base + 0x2C98))[lbl_806D11A0], payload, 0xDC);
                                 lbl_806D11A0 = (lbl_806D11A0 + 1) % 64;
                             }
                             if (type == 3) {
@@ -100,13 +100,17 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
                     }
                 }
                 if (g_isCommHost == 1) {
-                    int start = slot->readIndex;
-                    int cursor = start;
-                    int end = slot->writeIndex;
+                    int cursor;
+                    int end;
+                    int start;
                     int distance = 0;
+                    start = slot->readIndex;
+                    cursor = start;
+                    end = slot->writeIndex;
                     for (; end != cursor % 64; ++cursor, ++distance) {}
                     if (distance > 3) {
-                        slot->readIndex = (distance + start - 1) % 64;
+                        distance += start;
+                        slot->readIndex = (distance - 1) % 64;
                     }
                     memcpy(output, slot->samples[slot->readIndex], 0x28);
                 }
