@@ -117,11 +117,11 @@ static inline float WarpAutoRun_cosf(float x) {
 
 /* --- forward decls --- */
 int WarpZone_FindContainingOBB(WarpDashMgr *mgr, float x, float y, float z);
-asm void WarpZone_CalcExitPosition(void);
+void WarpZone_CalcExitPosition(WarpDashMgr *mgr, int zone, float x, float y, float z, float *ox, float *oy, float *oz, float *speed);
 int WarpZone_FindContaining(WarpDashMgr *mgr, float x, float y, float z);
-asm void WarpDashMgr_Cleanup(void);
+void WarpDashMgr_Cleanup(void);
 WarpDashMgr *WarpDashMgr_GetInstance(unsigned char id);
-asm void WarpDashMgr_GetOrCreate(void);
+WarpDashMgr *WarpDashMgr_GetOrCreate(int cup, unsigned char course, unsigned char reverse, unsigned char id);
 void *Free_IfOwnedShort(void *p, short flag);
 asm void WarpAutoRun_Init(void);
 int DashZone_ProcessAutoRun(WarpAutoRun *self, float x, float y, float z, float yaw);
@@ -134,18 +134,11 @@ void *dtor_800A9CC8(void *this, short flag);
 void *dtor_800A9D2C(void *this, short flag);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-/* dtor_800A9CC8 promoted to C; CW auto-emits its extab/extabindex. */
+/* dtor_800A9CC8, WarpZone_CalcExitPosition, WarpDashMgr_Cleanup and WarpDashMgr_GetOrCreate promoted; CW auto-emits their extab/extabindex. */
 #pragma section R ".extab_user"
 __declspec(section ".extab_user") static const unsigned char extab_dtor_800A9D2C[8] = {
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const unsigned char extab_WarpZone_CalcExitPosition[8] = {
-    0x00, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-__declspec(section ".extab_user") static const unsigned char extab_WarpDashMgr_Cleanup[8] = {
-    0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_WarpDashMgr_GetOrCreate = { 0x38080000, 0x00000064, 0x00000010, 0x00000000, 0x8A800019, (void *)&MemoryManager_TimedFree };
 __declspec(section ".extab_user") static const unsigned char extab_WarpZone_CheckEntry[8] = {
     0x00, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -155,15 +148,6 @@ __declspec(section ".extab_user") static const unsigned char extab_WarpZone_Calc
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpZone_CalcExitPosition = {
-    (void *)&WarpZone_CalcExitPosition, 0x00000118, (void *)extab_WarpZone_CalcExitPosition
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpDashMgr_Cleanup = {
-    (void *)&WarpDashMgr_Cleanup, 0x000000A4, (void *)extab_WarpDashMgr_Cleanup
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpDashMgr_GetOrCreate = {
-    (void *)&WarpDashMgr_GetOrCreate, 0x00000080, (void *)&extab_WarpDashMgr_GetOrCreate
-};
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpZone_CheckEntry = {
     (void *)&WarpZone_CheckEntry, 0x00000170, (void *)extab_WarpZone_CheckEntry
 };
@@ -181,6 +165,21 @@ struct WarpVec {
     WarpVec(float ax, float ay, float az) { x = ax; y = ay; z = az; }
     ~WarpVec() {}
 };
+
+static inline float WarpVec_Dot(const WarpVec &a, const Vec3f &b) {
+    float x = a.x * b.x;
+    float y = a.y * b.y;
+    float z = a.z * b.z;
+    return z + (x + y);
+}
+
+static inline float WarpZone_PlaneDistance(const WarpZone &zone, float x, float y, float z) {
+    WarpVec p(x, y, z);
+    p.x -= zone.node->corner[0].x;
+    p.y -= zone.node->corner[0].y;
+    p.z -= zone.node->corner[0].z;
+    return WarpVec_Dot(p, zone.normal);
+}
 
 static inline bool WarpZone_Contains(const WarpZone &zone, const WarpVec &p) {
     float dx = p.x - zone.node->corner[1].x;
@@ -219,81 +218,26 @@ extern "C" int WarpZone_FindContainingOBB(WarpDashMgr *mgr, float x, float y, fl
 }
 #pragma cplusplus off
 
-asm void WarpZone_CalcExitPosition(void) {
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    lbz r0, 0x18(r3)
-    cmplwi r0, 0x0
-    beq WarpZone_CalcExitPosition_L_800A918C
-    cmpwi r4, -0x1
-    bne WarpZone_CalcExitPosition_L_800A90B8
-    lis r3, lbl_80328474@ha
-    addi r3, r3, lbl_80328474@l
-    crxor 6, 6, 6
-    bl DebugPrintf
-    b WarpZone_CalcExitPosition_L_800A918C
-    WarpZone_CalcExitPosition_L_800A90B8:
-    mulli r0, r4, 0x50
-    lwz r3, 0x8(r3)
-    frsp f5, f1
-    stfs f1, 0x8(r1)
-    frsp f7, f2
-    add r4, r3, r0
-    lwz r3, 0x0(r4)
-    frsp f6, f3
-    lfs f1, 0x40(r4)
-    lfs f4, 0x0(r3)
-    lfs f0, 0x4(r3)
-    fsubs f8, f5, f4
-    lfs f5, 0x8(r3)
-    lfs f4, 0x34(r4)
-    fsubs f7, f7, f0
-    lfs f0, 0x38(r4)
-    fsubs f6, f6, f5
-    lfs f5, 0x3c(r4)
-    fmuls f4, f8, f4
-    fmuls f0, f7, f0
-    lfs f10, 0x48(r4)
-    fmuls f5, f6, f5
-    lfs f9, 0x44(r4)
-    stfs f2, 0xc(r1)
-    fadds f2, f4, f0
-    stfs f3, 0x10(r1)
-    lfs f0, 0x30(r3)
-    fadds f4, f5, f2
-    stfs f1, 0x14(r1)
-    stfs f9, 0x18(r1)
-    fmuls f3, f1, f4
-    fmuls f2, f9, f4
-    stfs f10, 0x1c(r1)
-    fmuls f1, f10, f4
-    fadds f0, f3, f0
-    stfs f8, 0x8(r1)
-    stfs f7, 0xc(r1)
-    stfs f0, 0x0(r5)
-    lwz r3, 0x0(r4)
-    stfs f6, 0x10(r1)
-    lfs f0, 0x34(r3)
-    stfs f3, 0x14(r1)
-    fadds f0, f2, f0
-    stfs f2, 0x18(r1)
-    stfs f0, 0x0(r6)
-    lwz r3, 0x0(r4)
-    stfs f1, 0x1c(r1)
-    lfs f0, 0x38(r3)
-    fadds f0, f1, f0
-    stfs f0, 0x0(r7)
-    lwz r3, 0x0(r4)
-    lfs f0, 0x48(r3)
-    stfs f0, 0x0(r8)
-    WarpZone_CalcExitPosition_L_800A918C:
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma cplusplus on
+extern "C" void WarpZone_CalcExitPosition(WarpDashMgr *mgr, int zone, float x, float y, float z, float *ox, float *oy, float *oz, float *speed) {
+    if (mgr->enabled) {
+        if (zone == -1) {
+            DebugPrintf(lbl_80328474);
+        } else {
+            WarpZone *wz = &mgr->zones[zone];
+            float t = WarpZone_PlaneDistance(*wz, x, y, z);
+            WarpVec d(wz->dir.x, wz->dir.y, wz->dir.z);
+            d.x *= t;
+            d.y *= t;
+            d.z *= t;
+            *ox = d.x + wz->node->exitPos.x;
+            *oy = d.y + wz->node->exitPos.y;
+            *oz = d.z + wz->node->exitPos.z;
+            *speed = wz->node->speed;
+        }
+    }
 }
+#pragma cplusplus off
 
 #pragma cplusplus on
 extern "C" int WarpZone_FindContaining(WarpDashMgr *mgr, float x, float y, float z) {
@@ -313,96 +257,53 @@ extern "C" int WarpZone_FindContaining(WarpDashMgr *mgr, float x, float y, float
 }
 #pragma cplusplus off
 
-asm void WarpDashMgr_Cleanup(void) {
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    li r31, 0x0
-    stw r30, 0x18(r1)
-    stw r29, 0x14(r1)
-    la r29, lbl_806CF238(r13)  /* lbl_806CF238 */
-    stw r28, 0x10(r1)
-    li r28, 0x0
-    WarpDashMgr_Cleanup_L_800A92FC:
-    lwz r30, 0x0(r29)
-    cmplwi r30, 0x0
-    beq WarpDashMgr_Cleanup_L_800A9344
-    addic. r0, r30, 0xc
-    beq WarpDashMgr_Cleanup_L_800A9324
-    addic. r0, r30, 0xc
-    beq WarpDashMgr_Cleanup_L_800A9324
-    addi r3, r30, 0xc
-    li r4, 0x0
-    bl dtor_800AA69C
-    WarpDashMgr_Cleanup_L_800A9324:
-    cmplwi r30, 0x0
-    beq WarpDashMgr_Cleanup_L_800A933C
-    beq WarpDashMgr_Cleanup_L_800A933C
-    mr r3, r30
-    li r4, 0x0
-    bl dtor_800AA69C
-    WarpDashMgr_Cleanup_L_800A933C:
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    WarpDashMgr_Cleanup_L_800A9344:
-    addi r28, r28, 0x1
-    stw r31, 0x0(r29)
-    cmpwi r28, 0x2
-    addi r29, r29, 0x4
-    blt WarpDashMgr_Cleanup_L_800A92FC
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma cplusplus on
+/* C++ view of WarpDashMgr for new/delete (layout matches struct WarpDashMgr). */
+struct WarpZoneList {
+    int unk0;
+    int count;
+    WarpZone *zones;
+    ~WarpZoneList();
+};
+
+struct WarpZoneListBase : WarpZoneList {
+    ~WarpZoneListBase() {}
+};
+
+struct WarpZoneSet : WarpZoneListBase {
+    ~WarpZoneSet() {}
+};
+
+struct WarpDashMgrObj {
+    WarpZoneSet zones;       /* 0x00 */
+    WarpZoneSet obbs;        /* 0x0C */
+    unsigned char enabled;   /* 0x18 */
+    WarpDashMgrObj(int cup, unsigned char course, unsigned char reverse, unsigned char id);
+    ~WarpDashMgrObj() {}
+};
+
+extern "C" void WarpDashMgr_Cleanup(void) {
+    for (int i = 0; i < 2; i++) {
+        delete (WarpDashMgrObj *)lbl_806CF238[i];
+        lbl_806CF238[i] = 0;
+    }
 }
+#pragma cplusplus off
 
 WarpDashMgr *WarpDashMgr_GetInstance(unsigned char id) {
     return lbl_806CF238[id != 0];
 }
 
-asm void WarpDashMgr_GetOrCreate(void) {
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stmw r25, 0x14(r1)
-    mr r29, r6
-    clrlwi r6, r6, 24
-    la r30, lbl_806CF238(r13)  /* lbl_806CF238 */
-    neg r0, r6
-    mr r26, r3
-    or r0, r0, r6
-    mr r27, r4
-    rlwinm r31, r0, 3, 29, 29
-    mr r28, r5
-    lwzx r0, r30, r31
-    cmplwi r0, 0x0
-    bne WarpDashMgr_GetOrCreate_L_800A93FC
-    li r3, 0x1c
-    bl Alloc
-    mr. r25, r3
-    beq WarpDashMgr_GetOrCreate_L_800A93F8
-    mr r4, r26
-    mr r5, r27
-    mr r6, r28
-    mr r7, r29
-    bl WarpDashMgr_Init
-    WarpDashMgr_GetOrCreate_L_800A93F8:
-    stwx r25, r30, r31
-    WarpDashMgr_GetOrCreate_L_800A93FC:
-    lwzx r3, r30, r31
-    lmw r25, 0x14(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+#pragma cplusplus on
+#pragma use_lmw_stmw on
+extern "C" WarpDashMgr *WarpDashMgr_GetOrCreate(int cup, unsigned char course, unsigned char reverse, unsigned char id) {
+    if (lbl_806CF238[id != 0] == 0) {
+        lbl_806CF238[id != 0] = (WarpDashMgr *)new WarpDashMgrObj(cup, course, reverse, id);
+    }
+    return lbl_806CF238[id != 0];
 }
+#pragma use_lmw_stmw reset
+#pragma cplusplus off
 
 void *Free_IfOwnedShort(void *p, short flag) {
     if (p != 0 && flag > 0) {

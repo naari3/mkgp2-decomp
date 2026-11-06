@@ -12026,5 +12026,9 @@
   "src/game/RaceDigitListInsert.cpp": {
     "@41": "@etb_8001DA3C",
     "@42": "@eti_8002B2F8"
+  },
+  "src/game/auto_800A8F4C_block.c": {
+    "__dt__12WarpZoneListFv": "dtor_800AA69C",
+    "__ct__14WarpDashMgrObjFiUcUcUc": "WarpDashMgr_Init"
   }
 }
