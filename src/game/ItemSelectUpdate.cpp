@@ -19,13 +19,21 @@ void fn_8023AC14(RefillChoice *);
 unsigned char Sprite_AdvanceAnim(RefillSprite *, float);
 void SpriteHandle_RecomputeCull(int);
 }
-static inline void SelectChoice(RefillChoice *choice, int slot, const RefillLayout *layout) {
+static inline int GridItem(const int (*items)[10], int column, int row) {
+    int character = g_characterId;
+    if (character < 0) character = 0;
+    if (character >= 13) character = 0;
+    if (column >= 10) return fn_8023D844(character, row);
+    int offset = row * sizeof(items[0]) + column * sizeof(items[0][0]);
+    return *(const int *)((const char *)items + offset);
+}
+static inline void SelectChoice(RefillChoice *choice, int slot, const RefillLayout *layout, const int *resources, void *playerData) {
     choice->selected = 1;
     choice->timer = 0;
     SpriteAnimParamBlock_Reload(choice->groups[1], slot + 0x4e);
-    int resource = (short)Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(g_playerData,
-        RefillItem(layout, choice->column, choice->row)), 0);
-    SpriteAnimParamBlock_SetAnimParamCached(choice->groups[1], layout->resources[slot], resource);
+    int resource = (short)Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(playerData,
+        GridItem(layout->items, choice->column, choice->row)), 0);
+    SpriteAnimParamBlock_SetAnimParamCached(choice->groups[1], resources[slot], resource);
     SpriteAnimParamBlock_SetAnimParamCached(choice->groups[1], 0x13b9, resource);
     choice->slots[slot][0] = choice->column;
     choice->slots[slot][1] = choice->row;
@@ -34,7 +42,8 @@ static inline void SelectChoice(RefillChoice *choice, int slot, const RefillLayo
 }
 #pragma fp_contract off
 static inline float SlideX(int offset, float x) {
-    return lbl_806DB8D4 * (offset * lbl_806DB918) + x;
+    float slide = lbl_806DB8D4 * (offset * lbl_806DB918);
+    return slide + x;
 }
 #pragma fp_contract reset
 static inline RefillSingleton *GetRefillSingleton() {
@@ -51,7 +60,7 @@ static inline void AnimateIntro(ItemSelectState *self, const RefillLayout *layou
             SpriteHandle_SetActiveFlag(self->sprites[1], 1);
             SpriteHandle_SetActiveFlag(self->sprites[2], 1);
             unsigned int color = -256;
-            color = (color & ~0xffU) + (alpha & 0xff);
+            color = (color & ~0xffU) | (alpha & 0xff);
             *(unsigned int *)(self->auxBuffer->data + 0x20) = color;
         }
         if (self->resultCode < 25) {
@@ -84,6 +93,7 @@ extern "C" void fn_80238D9C(ItemSelectState *self) {
     const RefillLayout *layout = &lbl_803DC0C0;
     if (self->doneFlag == 1) return;
     RefillInput *input = g_pInputState == 0 ? (RefillInput *)0 : g_pInputState;
+    void *playerData = g_playerData;
     switch (self->phase) {
     case 0: break;
     case 2: break;
@@ -113,9 +123,9 @@ extern "C" void fn_80238D9C(ItemSelectState *self) {
             SlotsView *view = (SlotsView *)self;
             view->slots[self->field14c][0] = column;
             view->slots[self->field14c][1] = row;
-            view->slots[self->field14c][2] = RefillItem(layout, column, row);
-            SelectChoice((RefillChoice *)self->iconArray, self->field14c, layout);
-            int item = Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(g_playerData,
+            view->slots[self->field14c][2] = GridItem(layout->items, column, row);
+            SelectChoice((RefillChoice *)self->iconArray, self->field14c, layout, layout->resources, g_playerData);
+            int item = Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(playerData,
                 view->slots[self->field14c][2]), 0);
             SpriteAnimParamBlock_SetAnimParamCached(self->groups[self->field14c + 3], 0x13b9, item);
             RefillSprite *sprite = GroupSprite(self->groups[self->field14c + 3]);
