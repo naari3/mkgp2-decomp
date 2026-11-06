@@ -16,10 +16,6 @@ struct FourSparkEffect {
     signed char state; char padB5[0x17]; FourSparkGroup group;
 };
 extern "C" {
-extern const float lbl_806D5770, lbl_806D5774, lbl_806D5790, lbl_806D57A0;
-extern const float lbl_806D57C8, lbl_806D57D8, lbl_806D57E8, lbl_806D57EC;
-extern const float lbl_806D57F0, lbl_806D57F4, lbl_806D57F8, lbl_806D57FC;
-extern const float lbl_806D5800, lbl_806D5804, lbl_806D5808;
 void *KartDriver_GetKartRootMtx(void *);
 void Mtx44_GetTranslation_RowMajor(FourSparkVec *, const void *);
 FourSparkEffect *DrawEffect_SpawnDirect(void (*)(FourSparkEffect *));
@@ -51,15 +47,15 @@ void Effect_FourSpark_Res65_68_Update(FourSparkEffect *effect) {
                 }
             }
         }
-        effect->scale *= lbl_806D57EC;
+        effect->scale *= 0.8f;
         if(group->kart) Vec3_Subtract_DestFirst(&group->offset,&effect->position,&root);
-        group->phase=lbl_806D5770;
+        group->phase=0.0f;
         ++effect->state;
         break;
     case 1: break;
     }
-    group->phase += lbl_806D5790;
-    if(lbl_806D57F0 < group->phase) {
+    group->phase += 1.0f;
+    if(24.0f < group->phase) {
         for(i=0;i<4;++i) { DrawEffect_Free(group->children[i]); group->children[i]=0; }
         DrawEffect_Free(effect);
         return;
@@ -71,10 +67,10 @@ void Effect_FourSpark_Res65_68_Update(FourSparkEffect *effect) {
         if(group->children[i]) {
             switch(group->children[i]->resource) {
             case 0x68: {
-                float t=group->phase / lbl_806D57F4;
-                if(lbl_806D5770<=t && t<=lbl_806D5790) {
+                float t=group->phase / 6.0f;
+                if(0.0f<=t && t<=1.0f) {
                     Vec3_Copy(&group->children[i]->position,&effect->position);
-                    group->children[i]->rotation=lbl_806D57F8*t;
+                    group->children[i]->rotation=3.141592f*t;
                     group->children[i]->scale=t*effect->scale;
                     VfxSlot_SetPositionFromVec(group->children[i]->slot,group->children[i]->position);
                     VfxSlot_SetRotationZ(group->children[i]->slot,group->children[i]->rotation);
@@ -84,16 +80,14 @@ void Effect_FourSpark_Res65_68_Update(FourSparkEffect *effect) {
                 break;
             }
             case 0x65: {
-                float t=group->phase;
-                t -= lbl_806D57F4;
-                t /= lbl_806D57F4;
-                if(lbl_806D5770<=t && t<=lbl_806D5790) {
+                float t=(group->phase-6.0f)/6.0f;
+                if(0.0f<=t && t<=1.0f) {
                     Vec3_Copy(&group->children[i]->position,&effect->position);
-                    float threshold=lbl_806D57FC;
-                    group->children[i]->rotation=lbl_806D57F8*t;
+                    float threshold=0.3f;
+                    group->children[i]->rotation=3.141592f*t;
                     group->children[i]->scale=effect->scale;
                     if(t<threshold) group->children[i]->scale *= t/threshold;
-                    else group->children[i]->scale *= lbl_806D5790-(t-threshold)/lbl_806D5774;
+                    else group->children[i]->scale *= 1.0f-(t-threshold)/0.7f;
                     VfxSlot_SetPositionFromVec(group->children[i]->slot,group->children[i]->position);
                     VfxSlot_SetRotationZ(group->children[i]->slot,group->children[i]->rotation);
                     VfxSlot_SetScaleUniform(group->children[i]->slot,group->children[i]->scale);
@@ -102,11 +96,11 @@ void Effect_FourSpark_Res65_68_Update(FourSparkEffect *effect) {
                 break;
             }
             case 0x66: {
-                float t=(group->phase-lbl_806D5800)/lbl_806D57F4;
-                if(lbl_806D5770<=t && t<=lbl_806D5790) {
+                float t=(group->phase-12.0f)/6.0f;
+                if(0.0f<=t && t<=1.0f) {
                     Vec3_Copy(&group->children[i]->position,&effect->position);
-                    group->children[i]->rotation=lbl_806D57A0*t;
-                    group->children[i]->scale=lbl_806D5804*effect->scale;
+                    group->children[i]->rotation=1.570796f*t;
+                    group->children[i]->scale=1.5f*effect->scale;
                     VfxSlot_SetPositionFromVec(group->children[i]->slot,group->children[i]->position);
                     VfxSlot_SetRotationZ(group->children[i]->slot,group->children[i]->rotation);
                     VfxSlot_SetScaleUniform(group->children[i]->slot,group->children[i]->scale);
@@ -115,16 +109,12 @@ void Effect_FourSpark_Res65_68_Update(FourSparkEffect *effect) {
                 break;
             }
             case 0x67: {
-                float t=group->phase;
-                t -= lbl_806D5800;
-                t /= lbl_806D5800;
-                if(lbl_806D5770<=t && t<=lbl_806D5790) {
+                float t=(group->phase-12.0f)/12.0f;
+                if(0.0f<=t && t<=1.0f) {
                     Vec3_Copy(&group->children[i]->position,&effect->position);
-                    group->children[i]->rotation=lbl_806D5808*t;
-                    float growth=lbl_806D5790+lbl_806D57C8*t;
-                    growth=lbl_806D57E8*growth;
-                    group->children[i]->scale=growth*effect->scale;
-                    group->children[i]->alpha=lbl_806D5790-lbl_806D57D8*t;
+                    group->children[i]->rotation=6.283184f*t;
+                    group->children[i]->scale=(0.6f*(1.0f+2.0f*t))*effect->scale;
+                    group->children[i]->alpha=1.0f-0.5f*t;
                     VfxSlot_SetPositionFromVec(group->children[i]->slot,group->children[i]->position);
                     VfxSlot_SetRotationZ(group->children[i]->slot,group->children[i]->rotation);
                     VfxSlot_SetScaleUniform(group->children[i]->slot,group->children[i]->scale);

@@ -166,3 +166,8 @@ Trial1 local loop declarations: grid93.75281%, spawn98.888885%. Trial2 hoisted p
 
 ## DebrisArray 2026-10-23
 Update 800b4b20 (264B) matched first native trial. Real new of four-byte DebrisResponder with two by-value vectors reproduces pointer r30, PC84 DELETEPOINTER and all text/EH/index100%; scoped mangled bridges map ctor/new/delete only. Existing DrawForward ABI remains self+CC responder. DrawCb 800b4ad0 remains NM94.5: direct manager local79.25, inline present getter94.5, reversed null-first getter94.5; both inline forms add one branch-over-branch (84 vs80B). Three structural trials exhausted; no scalar/register sweeps. Separate singleton TUs preserve Update native264B while DrawCb fallback contributes no genuine bytes.
+
+## c15_u17_20261106
+Source: Codex worker c15_u17_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1452 B.
+
+c15_u17: FourSpark 800CD5F4 native exact1452B. Baseline99.51791 has only25 FP identity rows. Converting external constant references to numeric literals improves99.65565 and resolves resource65 threshold registers. Direct (phase-6)/6 and (phase-12)/12 initializers plus direct (0.6f*(1.0f+2.0f*t))*scale envelope resolve remaining16 rows, reaching text/EH/index100 under unchangedGC1.3.2 flags. Standard sdata2 postprocess maps all15 float literals to original labels, with no owned data added. Existing singleton Matching promotion; source edge excludes fallback, coordinator full DOL SHA-1 ea30f3b1 OK. Two hypotheses, no split/bridge needed.
