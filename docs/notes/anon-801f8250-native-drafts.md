@@ -23,3 +23,8 @@ c14_u2: fn_801F8250 typed local pointer fmt = tables->mixedDepthFmt (or mixedFmt
 Source: Codex worker c14_u7_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u7: fn_801F8A34 improves 94.60199 -> 98.1592. Named local TextDraw801F* instead of parameter-cast macro plus counter initialization before sin/cos restores all target GPR homes. Block-local font width reused for normalAdvance and factor*width restores f1 load + fmr f28,f1 in both font branches. Remaining body glyph lhz is CSE-eliminated, compare and FP schedule differ; primary text800 vs804 B. Fully indexed glyph traversal regresses97.860695, reverted. Singleton remains NonMatching; full fallback-linked DOL SHA-1 OK. Three hypotheses exhausted; no source-closed claim.
+
+## c16_u63_20261106
+Source: Codex worker c16_u63_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u63: fn_801F95A0 79.20588 -> 93.23529 under existing GC/2.6 flags. ID-taking inline ReleaseGlyph with table lookup inside helper gives target add r3/table/index then lwz +4 rather than folded addi+lwzx. Flatten outer loop helper; named TextDraw801F local from void* entry plus for-scoped counter restores early table lis r4 and counter r28. Remaining self/cursor r30/r29 versus target r29/r30 and prologue schedule. Owned 136B size/EH unchanged, extab/index 100%. Three structural hypotheses exhausted; no source-closed claim.
