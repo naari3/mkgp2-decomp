@@ -884,3 +884,8 @@ c15_u15: CardDataTransfer_UI 8006D308/2184B matches fully by extracting natural 
 Source: Codex worker c15_u24_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 572 B.
 
 CardUnpackLegacy 8009060C: explicit version=552-get_used_bits(pack); used=get_used_bits(pack); DebugPrintf(...get_used_bytes(pack),used,version) caused r26/r27 reversal and extra r3->r0->r26 move. Direct DebugPrintf(format,get_used_bytes(pack),get_used_bits(pack),552-get_used_bits(pack)) restores right-to-left argument expression temporaries, all 572 text bytes and owned EH40/index12 exact. Existing real new expressions/EH bridge unchanged; full source-linked DOL SHA-1 exact.
+
+## c15_u38_20261106
+Source: Codex worker c15_u38_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 452 B.
+
+EffectFA ctor fn_8016FA50 unlock: move the complete three-model creation loop into static inline InitModels() with local global-array references. Keep six-part loop in ctor, but declare int i before MapEffectDef *defs and initialize i in for. This fixes both r26/r27/r28 cycles and preserves all scheduling, 452B text and 40B/12B EH exact. Putting parts loop in helper also fixes registers but shares zero stores and hoists defs, yielding448B; widening that helper is invariant. Existing bridges/flags suffice; full native-linked DOL SHA1 exact.
