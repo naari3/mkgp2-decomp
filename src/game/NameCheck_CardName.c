@@ -5,6 +5,11 @@ extern void DebugPrintf(const char *, ...);
 extern unsigned char NameCheck_ScanBannedWords(unsigned short *);
 extern const char lbl_80318270[];
 
+static inline const unsigned short *NameCheck_ConversionTable(const char *base, int offset)
+{
+    return (const unsigned short *)(base + offset);
+}
+
 unsigned char NameCheck_CardName(const unsigned short *name)
 {
     const char *base = lbl_80318270 + 0x10000;
@@ -32,7 +37,7 @@ unsigned char NameCheck_CardName(const unsigned short *name)
         buf[i] = 0;
     }
     if (NameCheck_ScanBannedWords(buf) == 1) return 1;
-    converted = (const unsigned short *)(base - 0x7b48);
+    converted = NameCheck_ConversionTable(base, -0x7b48);
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 81; j++) {
             if (cursor[i] == ((const unsigned short *)(base - 0x7bec))[j]) {
@@ -42,7 +47,7 @@ unsigned char NameCheck_CardName(const unsigned short *name)
         }
     }
     if (NameCheck_ScanBannedWords(buf) == 1) return 1;
-    converted = (const unsigned short *)(base - 0x7c20);
+    converted = NameCheck_ConversionTable(base, -0x7c20);
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 26; j++) {
             if (*cursor == ((const unsigned short *)(base - 0x7c54))[j]) {
