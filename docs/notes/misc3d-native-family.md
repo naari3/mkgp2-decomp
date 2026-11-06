@@ -12,3 +12,8 @@ Source: Codex worker cxc_u2_misc3d167_20261105 (gpt-6.1-sol/medium) + coordinato
 - Timer fn_80167A24 99.62 %: 9 instructions differing only in f10/f11/f12 identities; named constant locals and inline switch invariant.
 - Text helpers keep a sibling-private 0x234 TextManager layout (FlowScene.h TextManager is 0x230 with an out-of-line dtor).
 No impossibility claim.
+
+## c14_u43_20261106
+Source: Codex worker c14_u43_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u43: fn_801681E8 RGBA packing grouped as ((r<<8)|g)<<16 | ((b<<8)|a) improves fresh 92.162964 to 97.881485 (536 vs target540B). Constant literal conversion invariant; byte aggregate + setter adds stack stores and regresses88.95556. Residual conversion/FP/GPR scheduling remains; singleton NonMatching, no split rescue. Full fallback build SHA1 OK.
