@@ -11969,5 +11969,11 @@
     "@128": "lbl_803BD228",
     "@130": "@etb_800163A0",
     "@131": "@eti_800287B4"
+  },
+  "src/game/ItemSelectChildSpriteDraw.cpp": {
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "@132": "@etb_8001CBC4",
+    "@133": "@eti_8002AEB4"
   }
 }
