@@ -23,3 +23,8 @@ c13_u42 fn_80185630: explicit x/y/z strip copies restore target floating lfs/stf
 Source: Codex worker c13_u50_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u50: fn_80184F24 TU-local matrix getter returning (MtxPtr)&jobj->_pad_1c[0x28] removes matrix-address hoist, extra instruction and saved GPR: text95.028824 ->97.52772, exact1804B/extab8/index12. Inline transform wrapper and separate SetupMatrix with DListJObjMatrixView address were byte-identical to baseline. Residual saved-register partition plus quad-address scheduling remains; retain NonMatching. Coordinator full fallback build SHA-1 OK.
+
+## c16_u56_20261106
+Source: Codex worker c16_u56_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 332 B.
+
+fn_801847DC 0x801847DC (332B): existing traversal body/register allocation was exact; 80.24097% residual came entirely from nullable JObj getter branch layout. Both if (!p) return 0; return field and if (p) return field; return 0 emit load-first blocks. return p == 0 ? 0 : p->field preserves null-first blocks, matching GetChild/GetNext/GetParent including nested parent/next reuse. DNext remains p ? p->next : 0 because its target is load-first. Text332/extab8/index12 all100; sole TU flipped Matching; source-linked full DOL SHA-1 verified.

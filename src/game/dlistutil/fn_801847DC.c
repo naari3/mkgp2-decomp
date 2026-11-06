@@ -9,9 +9,9 @@ typedef struct DObj {
 extern unsigned int HSD_JObjGetFlags(JObj *);
 extern DObj *HSD_JObjGetDObj(JObj *);
 extern int fn_80184374(JObj *, DObj *, void *, void *);
-static inline JObj *GetChild(JObj *p) { if (!p) return 0; return p->child; }
-static inline JObj *GetNext(JObj *p) { if (!p) return 0; return p->next; }
-static inline JObj *GetParent(JObj *p) { if (!p) return 0; return p->parent; }
+static inline JObj *GetChild(JObj *p) { return p == 0 ? 0 : p->child; }
+static inline JObj *GetNext(JObj *p) { return p == 0 ? 0 : p->next; }
+static inline JObj *GetParent(JObj *p) { return p == 0 ? 0 : p->parent; }
 static inline DObj *DNext(DObj *p) { return p ? p->next : 0; }
 int fn_801847DC(JObj *root, void *min, void *max) {
     JObj *jobj;
