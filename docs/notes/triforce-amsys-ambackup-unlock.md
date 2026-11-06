@@ -18,3 +18,8 @@ c5: fn_802889AC target forwards chan to fn_8028812C, rather than zero: correctio
 Source: Codex worker c14_u31_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u31: BackupWriteRecord 80288364 rises 93.44697 -> 94.621216 with mirror length ternary and computing reset length before clearing e->reset, eliminating an address reload. Remaining recSize/hdr r31/r29 vs r29/r31, checksum pointer/sum r4/r3 vs r3/r4, align-load scheduling and reset shift/store scheduling. Caller checksum+declaration probe 93.56061; inline alignment plus n/sum/p probe 94.393936 rejected. BSS emitted D83C vs target D840: final BackupState 3C vs40, trailing gap 80690E1C..80690E20; no filler added. Retained NonMatching.
+
+## c16_u73_20261106
+Source: Codex worker c16_u73_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u73 fn_80288BCC fresh baseline73.01588 (assignment74.05), 236B vs252B. Inline cfg/entry/info helper unchanged; memcpy emits call73.92063. Volatile BackupEntry pointer preserves post-copy size/flags and post-store mirror reloads; const volatile BackupInfo plus one cached alignment load yields92.93651,248B. Retained NonMatching. Residual extra target branch at80288C44 plus info-base materialization/scratch register differences. Volatile provenance remains a hypothesis from target repeated loads. Single function prevents mechanismB; zero native gain; no config/split/EH/data changes.
