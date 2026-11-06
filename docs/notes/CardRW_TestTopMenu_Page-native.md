@@ -1,0 +1,5 @@
+# CardRW_TestTopMenu_Page-native
+
+Source: Codex worker c15_a47_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1044 B.
+
+Original bd396cef commit is an asm-only extraction and supplies no parking rationale; no existing docs/notes hits for this TU. Native reconstruction matches with #pragma cplusplus on, canonical TestMenuPage InputPlayer/DrawItems declarations, private CardRW state/callback layout, and compiler-emitted save-only EH records. Preserve a local selected cursor for both next-page calculation and UI_PageDispatcher arg; rereading self->cursor after storing next inserts a 4-byte reload. The apparent float relocation mismatch in an initially shifted function disappeared after correcting text offsets: canonical TestPage_DrawItems literal is translated by existing postprocess_sdata2. Directly writing the helper loop in the page changes register allocation; canonical inline helper gives exact output.
