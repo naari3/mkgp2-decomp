@@ -1014,3 +1014,8 @@ c16_u76: clCSOrgKartModel ctor 8021ABFC was semantically incomplete: only 4 of 2
 Source: Codex worker c16_u77_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 168 B.
 
 c16_u77 RaceDigitListInsert 80247C3C: pair existing placement new with standard inline empty placement delete(void*,void*) to restore CW frame pointer, frame40 and construction SP marker (72.7619 ->98.690475). Extract splice/count/iterator result to static inline InsertNode(self,at,node), invoked with position.node and guard.Release(), to restore at=r5/node=r6 (100% text168). Reordering local declarations alone invariant. Own @41/@42 bridges to etb8001DA3C/eti8002B2F8 give all owned sections100; Matching source-linked ELF address/size exact, full DOL SHA1 exact.
+
+## c16_u78_20261106
+Source: Codex worker c16_u78_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u78 fn_801ED798: nested ApplyYaw/Multiply helpers with product local in Multiply, shared accumulator outside loops and flat output[index+col] recover target sequential fmadds/stfsx and temporary stack slots. Flat16 Copy helper and scalar translation setter improve fresh72.73358 to87.84991. Numeric constants give95.21576 but introduce28B sdata2 and unsafe offset-based postprocessor mapping (0.1f -> lbl_806DA42C); rejected, extern constants restored. Remaining matrix operands/GPR homes, identity diagonal store order, FP saves/frame, frame9 export and EH PC/name residuals. Singleton remains NonMatching; no rescue cut.

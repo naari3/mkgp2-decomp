@@ -1,7 +1,54 @@
-/* Native candidate: 72.73358% text. Matrix expression scheduling,
- * stack layout and FP allocation remain unresolved. No assembly fallback
- * is embedded here; configure keeps this TU NonMatching. */
+/* Native candidate: 87.84991% text. Nested matrix helpers recover the
+ * target temporary layout and sequential element accumulation. Matrix
+ * operand scheduling, FP allocation and frame export remain unresolved. */
 #include "game/PhysicsGroundPrivate.h"
+
+static inline void CopyGroundMatrix(PhysicsGroundMatrix &to, const PhysicsGroundMatrix &from)
+{
+    for (int i = 0; i < 16; ++i) ((float *)to.m)[i] = ((const float *)from.m)[i];
+}
+
+static inline void SetGroundTranslation(PhysicsGroundMatrix &matrix, float x, float y, float z)
+{
+    matrix.m[3][0] = x;
+    matrix.m[3][1] = y;
+    matrix.m[3][2] = z;
+}
+
+static inline void MultiplyGroundMatrix(PhysicsGroundMatrix &rotation,
+                                        const PhysicsGroundMatrix &original)
+{
+    PhysicsGroundMatrix product;
+    float value;
+    int index = 0;
+    for (int row = 0; row < 4; ++row) {
+        for (int col = 0; col < 4; ++col) {
+            value = rotation.m[row][0] * original.m[0][col];
+            value += rotation.m[row][1] * original.m[1][col];
+            value += rotation.m[row][2] * original.m[2][col];
+            value += rotation.m[row][3] * original.m[3][col];
+            ((float *)product.m)[index + col] = value;
+        }
+        index += 4;
+    }
+    CopyGroundMatrix(rotation, product);
+}
+
+static inline void ApplyYaw(PhysicsGroundMatrix &original, float yaw)
+{
+    PhysicsGroundMatrix rotation;
+    for (int row = 0; row < 4; ++row)
+        for (int col = 0; col < 4; ++col) rotation.m[row][col] = lbl_806DA42C;
+    rotation.m[3][3] = rotation.m[2][2] = rotation.m[1][1] = rotation.m[0][0] = lbl_806DA450;
+    float cosine = (float)cos(yaw);
+    float sine = (float)sin(yaw);
+    rotation.m[0][0] = cosine;
+    rotation.m[2][0] = sine;
+    rotation.m[2][2] = cosine;
+    rotation.m[0][2] = -sine;
+    MultiplyGroundMatrix(rotation, original);
+    original = rotation;
+}
 
 extern "C" void fn_801ED798(PhysicsGroundState *self, Vec3 *position,
                            PhysicsGroundMatrix *orientation, float yaw)
@@ -16,31 +63,10 @@ extern "C" void fn_801ED798(PhysicsGroundState *self, Vec3 *position,
     if (self->landingTimer > 0) --self->landingTimer;
     else self->landingTimer = 0;
 
-    PhysicsGroundMatrix original(*orientation);
-    PhysicsGroundMatrix rotation;
-    PhysicsGroundMatrix product;
-    for (int row = 0; row < 4; ++row)
-        for (int col = 0; col < 4; ++col) rotation.m[row][col] = lbl_806DA42C;
-    rotation.m[3][3] = rotation.m[2][2] = rotation.m[1][1] = rotation.m[0][0] = lbl_806DA450;
-    float cosine = (float)cos(yaw);
-    float sine = (float)sin(yaw);
-    rotation.m[0][0] = cosine;
-    rotation.m[2][0] = sine;
-    rotation.m[2][2] = cosine;
-    rotation.m[0][2] = -sine;
-    for (int row = 0; row < 4; ++row) {
-        for (int col = 0; col < 4; ++col) {
-            product.m[row][col] =
-                ((rotation.m[row][0] * original.m[0][col] + rotation.m[row][1] * original.m[1][col]) +
-                 rotation.m[row][2] * original.m[2][col]) + rotation.m[row][3] * original.m[3][col];
-        }
-    }
-    for (int row = 0; row < 4; ++row)
-        for (int col = 0; col < 4; ++col) rotation.m[row][col] = product.m[row][col];
-    original = rotation;
-    original.m[3][0] = position->x;
-    original.m[3][1] = position->y;
-    original.m[3][2] = position->z;
+    PhysicsGroundMatrix original;
+    CopyGroundMatrix(original, *orientation);
+    ApplyYaw(original, yaw);
+    SetGroundTranslation(original, position->x, position->y, position->z);
     float penetration = lbl_806DA444 * self->scale;
     float fallbackPenetration = lbl_806DA428 * self->scale;
     for (int corner = 0; corner < 4; ++corner) {
