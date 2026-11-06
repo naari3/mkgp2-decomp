@@ -2621,7 +2621,7 @@ config.libs = [
             Object(NonMatching, "game/Menu801F0CC0.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801F26C8.c"),
             Object(Matching, "game/dtor_801F6BD0.c"),
-            Object(NonMatching, "game/fn_801F6C2C.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_801F6C2C.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/dtor_801F7A74.c"),
             Object(Matching, "game/dtor_801F7AD0.c"),
             Object(NonMatching, "game/fn_801F8250.c"),

@@ -1,4 +1,7 @@
 #include "game/TextureRect801FPrivate.h"
+static inline float TextureScaleCoordinate(float coordinate, float inverseSize) {
+    return coordinate * inverseSize;
+}
 extern "C" {
 void GXLoadTexMtxImm(const float (*)[4], unsigned int, int);
 void fn_801F6C2C(TextureSprite801F *self, const TextureRect801F *rect,
@@ -21,9 +24,9 @@ void fn_801F6C2C(TextureSprite801F *self, const TextureRect801F *rect,
     width = rect->width;
     self->desc.width = width;
     self->desc.height = height;
-    float left = (half + x) * invWidth;
+    float left = TextureScaleCoordinate(half + x, invWidth);
     float right = invWidth * ((x + width) - half);
-    float top = (half + y) * invHeight;
+    float top = TextureScaleCoordinate(half + y, invHeight);
     float bottom = invHeight * ((y + height) - half);
     if (flipX) { self->desc.u0 = right; self->desc.u1 = left; }
     else { self->desc.u0 = left; self->desc.u1 = right; }
