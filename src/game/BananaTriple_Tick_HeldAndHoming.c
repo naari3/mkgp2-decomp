@@ -1,975 +1,381 @@
-/* === extracted from auto_BananaTriple_Tick_He_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+/* BananaTriple_Tick_HeldAndHoming_32to36 (0x800E8CAC): banana variants
+ * 0x32..0x36 while held on the kart (state 1) and while thrown/homing or
+ * lying on the ground (state 2). Raw offsets as in fn_801025C0.c.
+ * w = self + 0xec: [0] render, [1] landed-on-ground flag, [2] direct hit,
+ * [3] variant, +4 life/registry id, +8 settle timer, +0xc track timer,
+ * +0x18 ground height, +0x4c chained item, +0x98 driver, +0x9c target.
+ * Compiled as C++: the hit call's last parameter is a bool, and the int
+ * ternary argument is normalised (neg/or/srwi) at the call. */
+#pragma cplusplus on
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void AngleStepTowards_Shortest();
-extern void BuildOrientationFromYaw();
-extern void DrawEffect_ItemHitBurst_Spawn();
-extern void FinalLapCoinJump_CheckActiveForObject();
-extern void GetSpawnPosition();
-extern void ItemAlias_HitRemapLookup();
-extern void ItemCollision_Check();
-extern void ItemHitRegistry_AddEntry();
-extern void ItemHitRegistry_RemoveEntry();
-extern void ItemObject_DecrementCategoryBudget();
-extern void ItemObject_GetGroundTypeAt();
-extern void ItemTracker_AcquireLock();
-extern void ItemTracker_GetTargetKart();
-extern void ItemTracker_ReleaseLock();
-extern void ItemTracker_SetTrackPhase();
-extern void Item_AccelClampVelocity();
-extern void Item_AdvanceFallingDrop();
-extern void Item_AdvanceProjectileSimple();
-extern void Item_BendVelocityByGroundProbe();
-extern void Item_BounceOffWall();
-extern void Item_CheckWallCollision();
-extern void Item_ComputeYawRelativeApproach();
-extern void Item_DecayVelocityScalar();
-extern void Item_HomingScanAndSteer();
-extern void Item_InitLaunchFromKart();
-extern void Item_ProbeForwardGroundPitch();
-extern void Item_ProbeLateralGroundPitch();
-extern void Item_RenderCharacterScaledFromJoint12();
-extern void Item_SpawnGroundExplosionAndFX();
-extern void KartDriver_TransformWorldToLocalY0();
-extern void SpriteSlot_Container_Free();
-extern void SpriteSlot_SetAnimFrameAndApplyScale();
-extern void SpriteSlot_SetJointVisibilityByName();
-extern void SpriteSlot_SetScale();
-extern void Vec3_Add_DestFirst();
-extern void Vec3_ToPitch();
-extern void Vec3_ToYaw();
-extern void fn_801B14B8();
-extern void fn_801B158C();
-extern void fn_801B1660();
-extern void fn_801B1D5C();
+extern "C" {
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int g_ccClass;
-extern unsigned int lbl_806D5D90;
-extern unsigned int lbl_806D5D94;
-extern unsigned int lbl_806D5D98;
-extern unsigned int lbl_806D5DA0;
-extern unsigned int lbl_806D5DA4;
-extern unsigned int lbl_806D5DAC;
-extern unsigned int lbl_806D5DB4;
-extern unsigned int lbl_806D5DB8;
-extern unsigned int lbl_806D5DBC;
-extern unsigned int lbl_806D5DC0;
-extern unsigned int lbl_806D5DC4;
-extern unsigned int lbl_806D5DC8;
-extern unsigned int lbl_806D5DCC;
-extern unsigned int lbl_806D5DD0;
-extern unsigned int lbl_806D5DD4;
-extern unsigned int lbl_806D5DD8;
+typedef struct Vec3 {
+    float x;
+    float y;
+    float z;
+} Vec3;
 
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_8032EFF0[];
-extern unsigned int lbl_804211B0[];
+extern float AngleStepTowards_Shortest(float cur, float target, float step);
+extern float BuildOrientationFromYaw(float yaw);
+extern void DrawEffect_ItemHitBurst_Spawn(Vec3 pos, Vec3 vel, int kind);
+extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
+extern void GetSpawnPosition(void *out, float x, float y, float z);
+extern short ItemAlias_HitRemapLookup(int id);
+extern int ItemCollision_Check(char *self);
+extern void ItemHitRegistry_AddEntry(char *self);
+extern unsigned char ItemHitRegistry_RemoveEntry(char *self, int id, int flag);
+extern signed char ItemObject_GetGroundTypeAt(Vec3 pos, float *groundY, int mode);
+extern void ItemObject_DecrementCategoryBudget(char *self);
+extern void ItemTracker_AcquireLock(char *self);
+extern void *ItemTracker_GetTargetKart(char *self);
+extern void ItemTracker_ReleaseLock(char *self);
+extern void ItemTracker_SetTrackPhase(char *self, int phase);
+extern void Item_AccelClampVelocity(char *self, float accel, float maxv);
+extern int Item_AdvanceFallingDrop(char *self, float gravity, int *landed, float *groundY);
+extern int Item_AdvanceProjectileSimple(char *self, void *groundY, float a, float b);
+extern void Item_BendVelocityByGroundProbe(void *vel, Vec3 pos, float yaw, float speed, float pitch);
+extern void Item_BounceOffWall(char *self, Vec3 n, int se, int flag, float k1, float k2);
+extern int Item_CheckWallCollision(char *self, Vec3 *n, int flag);
+extern void Item_ComputeYawRelativeApproach(void *vel, void *target, Vec3 pos, Vec3 v);
+extern void Item_DecayVelocityScalar(char *self, float k);
+extern void Item_HomingScanAndSteer(char *self, void *yaw, int flag);
+extern void Item_InitLaunchFromKart(char *self, void *pos, float x, float y);
+extern float Item_ProbeForwardGroundPitch(Vec3 pos, float yaw, float a, float b);
+extern float Item_ProbeLateralGroundPitch(Vec3 pos, float yaw, float a, float b);
+extern void Item_RenderCharacterScaledFromJoint12(char *self, Vec3 a, Vec3 b, int flag, float s);
+extern void Item_SpawnGroundExplosionAndFX(char *self);
+extern void KartDriver_TransformWorldToLocalY0(void *dst, Vec3 src, void *kart);
+extern void SpriteSlot_Container_Free(char *self);
+extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float scale);
+extern void SpriteSlot_SetJointVisibilityByName(void *slot, const char *name, int a, int visible);
+extern void SpriteSlot_SetScale(void *slot, float scale);
+extern void Vec3_Add_DestFirst(void *dst, void *a, void *b);
+extern float Vec3_ToPitch(void *v);
+extern float Vec3_ToYaw(void *v);
+extern void fn_801B14B8(void *kart, void *target);
+extern void fn_801B158C(void *kart, void *target);
+extern void fn_801B1660(void *kart, void *target);
+extern void fn_801B1D5C(void *kart, void *target, int alias, bool flag);
 
-/* --- function index (1 fns, .text 0x800E8CAC..0x800E9934) ---
- * [  0] 0x800E8CAC size:0xC88   global BananaTriple_Tick_HeldAndHoming_32to36
- */
+extern int g_ccClass;
+extern unsigned char lbl_8032EFF0[];
+extern char lbl_804211B0[][0xC0];
+extern const float lbl_806D5D90;
+extern const float lbl_806D5D94;
+extern const float lbl_806D5D98;
+extern const float lbl_806D5DA0;
+extern const float lbl_806D5DA4;
+extern const float lbl_806D5DAC;
+extern const float lbl_806D5DB4;
+extern const float lbl_806D5DB8;
+extern const float lbl_806D5DBC;
+extern const float lbl_806D5DC0;
+extern const float lbl_806D5DC4;
+extern const float lbl_806D5DC8;
+extern const float lbl_806D5DCC;
+extern const float lbl_806D5DD0;
+extern const float lbl_806D5DD4;
+extern const float lbl_806D5DD8;
 
-/* --- forward decls --- */
-asm void BananaTriple_Tick_HeldAndHoming_32to36(void);
+#define F(o) (*(float *)(self + (o)))
+#define I(o) (*(int *)(self + (o)))
+#define S8(o) (*(signed char *)(self + (o)))
+#define U8(o) ((int)*(unsigned char *)(self + (o)))
+#define WF(o) (*(float *)(w + (o)))
+#define WU(o) (*(unsigned int *)(w + (o)))
+#define WP(o) (*(void **)(w + (o)))
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_BananaTriple_Tick_HeldAndHoming_32to36[8] = {
-    0x28, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_BananaTriple_Tick_HeldAndHoming_32to36 = {
-    (void *)&BananaTriple_Tick_HeldAndHoming_32to36, 0x00000C88, (void *)extab_BananaTriple_Tick_HeldAndHoming_32to36
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void BananaTriple_Tick_HeldAndHoming_32to36(void) { /* 0x800E8CAC size:0xC88 */
-    nofralloc
-    stwu r1, -0x100(r1)
-    mflr r0
-    lis r6, lbl_8032EFF0@ha
-    stw r0, 0x104(r1)
-    stmw r27, 0xec(r1)
-    mr r29, r3
-    mr r30, r4
-    addi r31, r6, lbl_8032EFF0@l
-    lbz r5, 0xc9(r3)
-    extsb r0, r5
-    cmpwi r0, 0x1
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E8DC4
-    bge BananaTriple_Tick_HeldAndHoming_32to36_L_800E8CEC
-    cmpwi r0, 0x0
-    bge BananaTriple_Tick_HeldAndHoming_32to36_L_800E8CF8
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8CEC:
-    cmpwi r0, 0x3
-    bge BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E8F90
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8CF8:
-    lwz r3, 0x8(r29)
-    cmpwi r3, 0x35
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E8D18
-    cmpwi r3, 0x36
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E8D18
-    lwz r0, 0x10(r29)
-    cmpwi r0, 0x0
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E8DB4
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8D18:
-    cmpwi r3, 0x35
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E8D28
-    cmpwi r3, 0x36
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E8D34
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8D28:
-    mr r3, r29
-    bl Item_SpawnGroundExplosionAndFX
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E8D8C
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8D34:
-    lwz r5, 0xa0(r29)
-    addi r3, r29, 0xb8
-    lwz r0, 0xa4(r29)
-    addi r4, r1, 0xd0
-    lfs f2, lbl_806D5DAC(r2)
-    stw r5, 0xd0(r1)
-    lfs f3, lbl_806D5D90(r2)
-    stw r0, 0xd4(r1)
-    lwz r0, 0xa8(r29)
-    stw r0, 0xd8(r1)
-    lfs f1, 0xb0(r29)
-    bl Item_BendVelocityByGroundProbe
-    lwz r5, 0xa0(r29)
-    addi r3, r29, 0xa0
-    lwz r0, 0xa4(r29)
-    addi r4, r1, 0xc4
-    stw r5, 0xc4(r1)
-    stw r0, 0xc8(r1)
-    lwz r0, 0xa8(r29)
-    stw r0, 0xcc(r1)
-    lwz r5, 0x98(r30)
-    bl KartDriver_TransformWorldToLocalY0
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8D8C:
-    lfs f1, lbl_806D5D94(r2)
-    li r3, 0x0
-    lfs f0, lbl_806D5DAC(r2)
-    li r0, 0x2
-    stfs f1, 0xc4(r29)
-    stfs f0, 0x2c(r29)
-    stb r3, 0x28(r29)
-    stb r0, 0xc9(r29)
-    stb r3, 0xca(r29)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8DB4:
-    addi r3, r5, 0x1
-    li r0, 0x0
-    stb r3, 0xc9(r29)
-    stb r0, 0xca(r29)
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8DC4:
-    lbz r0, 0xca(r29)
-    extsb r0, r0
-    cmpwi r0, 0x1
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E8E50
-    bge BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    cmpwi r0, 0x0
-    bge BananaTriple_Tick_HeldAndHoming_32to36_L_800E8DE4
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8DE4:
-    li r0, 0x0
-    stb r0, 0x0(r30)
-    lwz r0, 0x8(r29)
-    cmpwi r0, 0x34
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E8E18
-    lfs f1, lbl_806D5D90(r2)
-    addi r3, r29, 0x14
-    li r4, 0x5
-    bl SpriteSlot_SetAnimFrameAndApplyScale
-    lfs f1, lbl_806D5D90(r2)
-    addi r3, r29, 0x14
-    bl SpriteSlot_SetScale
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E8E34
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8E18:
-    lfs f1, lbl_806D5D90(r2)
-    addi r3, r29, 0x14
-    li r4, 0x0
-    bl SpriteSlot_SetAnimFrameAndApplyScale
-    lfs f1, lbl_806D5D90(r2)
-    addi r3, r29, 0x14
-    bl SpriteSlot_SetScale
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8E34:
-    li r0, 0x1
-    lfs f0, lbl_806D5D90(r2)
-    stb r0, 0x28(r29)
-    stfs f0, 0x2c(r29)
-    lbz r3, 0xca(r29)
-    addi r0, r3, 0x1
-    stb r0, 0xca(r29)
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8E50:
-    lwz r0, 0x8(r29)
-    cmpwi r0, 0x34
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E8EA8
-    lwz r11, 0x408(r31)
-    mr r3, r29
-    lwz r10, 0x40c(r31)
-    addi r4, r1, 0xb8
-    lwz r9, 0x410(r31)
-    addi r5, r1, 0xac
-    lwz r8, 0x3fc(r31)
-    li r6, 0x1
-    lwz r7, 0x400(r31)
-    lwz r0, 0x404(r31)
-    stw r11, 0xac(r1)
-    lfs f1, lbl_806D5DB8(r2)
-    stw r10, 0xb0(r1)
-    stw r9, 0xb4(r1)
-    stw r8, 0xb8(r1)
-    stw r7, 0xbc(r1)
-    stw r0, 0xc0(r1)
-    bl Item_RenderCharacterScaledFromJoint12
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E8EF0
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8EA8:
-    lwz r11, 0x420(r31)
-    mr r3, r29
-    lwz r10, 0x424(r31)
-    addi r4, r1, 0xa0
-    lwz r9, 0x428(r31)
-    addi r5, r1, 0x94
-    lwz r8, 0x414(r31)
-    li r6, 0x1
-    lwz r7, 0x418(r31)
-    lwz r0, 0x41c(r31)
-    stw r11, 0x94(r1)
-    lfs f1, lbl_806D5DBC(r2)
-    stw r10, 0x98(r1)
-    stw r9, 0x9c(r1)
-    stw r8, 0xa0(r1)
-    stw r7, 0xa4(r1)
-    stw r0, 0xa8(r1)
-    bl Item_RenderCharacterScaledFromJoint12
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8EF0:
-    lwz r3, 0x98(r30)
-    bl FinalLapCoinJump_CheckActiveForObject
-    clrlwi. r0, r3, 24
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E8F0C
-    li r0, 0x0
-    stb r0, 0x28(r29)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E8F14
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8F0C:
-    li r0, 0x1
-    stb r0, 0x28(r29)
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8F14:
-    lbz r0, 0xa0(r30)
-    extsb r0, r0
-    cmpwi r0, 0x2
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E8F74
-    bge BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    cmpwi r0, 0x1
-    bge BananaTriple_Tick_HeldAndHoming_32to36_L_800E8F34
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8F34:
-    li r5, 0x1
-    li r0, 0x0
-    stb r5, 0x28(r29)
-    mr r3, r29
-    lfs f1, lbl_806D5DAC(r2)
-    li r4, 0x0
-    stb r0, 0xa0(r30)
-    lfs f2, lbl_806D5D90(r2)
-    stb r5, 0x0(r30)
-    bl Item_InitLaunchFromKart
-    lbz r3, 0xc9(r29)
-    li r0, 0x0
-    addi r3, r3, 0x1
-    stb r3, 0xc9(r29)
-    stb r0, 0xca(r29)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8F74:
-    li r3, 0x0
-    li r0, 0x3
-    stb r3, 0xa0(r30)
-    stb r3, 0x28(r29)
-    stb r0, 0xc8(r29)
-    stb r3, 0xc9(r29)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8F90:
-    lbz r0, 0xca(r29)
-    extsb r0, r0
-    cmpwi r0, 0x2
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E914C
-    bge BananaTriple_Tick_HeldAndHoming_32to36_L_800E8FB4
-    cmpwi r0, 0x0
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E8FC0
-    bge BananaTriple_Tick_HeldAndHoming_32to36_L_800E90F0
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E919C
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8FB4:
-    cmpwi r0, 0x4
-    bge BananaTriple_Tick_HeldAndHoming_32to36_L_800E919C
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E918C
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E8FC0:
-    li r0, 0x1
-    stb r0, 0x28(r29)
-    bl ItemTracker_AcquireLock
-    mr r3, r29
-    li r4, 0x1
-    bl ItemTracker_SetTrackPhase
-    li r4, 0x1
-    lis r3, lbl_804211B0@ha
-    stb r4, 0x8d(r29)
-    addi r0, r3, lbl_804211B0@l
-    addi r3, r29, 0x14
-    li r5, 0x10
-    stb r4, 0x3c(r29)
-    li r6, 0x0
-    lbz r4, 0x3(r30)
-    mulli r4, r4, 0xc0
-    add r4, r0, r4
-    bl SpriteSlot_SetJointVisibilityByName
-    lbz r4, 0x3(r30)
-    lis r3, lbl_804211B0@ha
-    addi r0, r3, lbl_804211B0@l
-    addi r3, r29, 0x14
-    mulli r4, r4, 0xc0
-    li r5, 0x10
-    li r6, 0x1
-    add r4, r0, r4
-    addi r4, r4, 0x40
-    bl SpriteSlot_SetJointVisibilityByName
-    lwz r6, 0xa0(r29)
-    addi r3, r1, 0x88
-    lwz r0, 0xa4(r29)
-    addi r4, r30, 0x18
-    li r5, 0x0
-    stw r6, 0x88(r1)
-    stw r0, 0x8c(r1)
-    lwz r0, 0xa8(r29)
-    stw r0, 0x90(r1)
-    bl ItemObject_GetGroundTypeAt
-    lfs f1, 0xa4(r29)
-    li r0, 0x0
-    lfs f0, 0x18(r30)
-    fsubs f0, f1, f0
-    stfs f0, 0x18(r30)
-    stw r0, 0xc(r30)
-    lwz r0, 0x8(r29)
-    cmpwi r0, 0x35
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9084
-    cmpwi r0, 0x36
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E90BC
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9084:
-    lfs f1, lbl_806D5D90(r2)
-    addi r3, r29, 0x14
-    li r4, 0x1
-    bl SpriteSlot_SetAnimFrameAndApplyScale
-    lfs f1, lbl_806D5DAC(r2)
-    addi r3, r29, 0x14
-    bl SpriteSlot_SetScale
-    li r0, 0x12c
-    li r3, 0x3c
-    stw r0, 0x4(r30)
-    li r0, 0x1
-    stw r3, 0x8(r30)
-    stb r0, 0xca(r29)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E919C
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E90BC:
-    lfs f1, lbl_806D5D90(r2)
-    addi r3, r29, 0x14
-    li r4, 0x4
-    bl SpriteSlot_SetAnimFrameAndApplyScale
-    lfs f1, lbl_806D5DAC(r2)
-    addi r3, r29, 0x14
-    bl SpriteSlot_SetScale
-    li r3, 0x0
-    li r0, 0x2
-    stw r3, 0x4(r30)
-    stw r3, 0x8(r30)
-    stb r0, 0xca(r29)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E919C
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E90F0:
-    addi r4, r29, 0xb0
-    li r5, 0x0
-    bl Item_HomingScanAndSteer
-    lwz r0, g_ccClass(r13)
-    cmpwi r0, 0x0
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E9110
-    lfs f2, lbl_806D5DAC(r2)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9114
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9110:
-    lfs f2, lbl_806D5DA4(r2)
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9114:
-    cmpwi r0, 0x0
-    mr r3, r29
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E9128
-    lfs f1, lbl_806D5DC0(r2)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E912C
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9128:
-    lfs f1, lbl_806D5DC4(r2)
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E912C:
-    bl Item_AccelClampVelocity
-    lwz r0, 0x4(r30)
-    cmplwi r0, 0x0
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E919C
-    lbz r3, 0xca(r29)
-    addi r0, r3, 0x1
-    stb r0, 0xca(r29)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E919C
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E914C:
-    lfs f1, 0xbc(r29)
-    lfs f0, lbl_806D5DB4(r2)
-    fadds f0, f1, f0
-    stfs f0, 0xbc(r29)
-    lwz r0, 0x8(r29)
-    cmpwi r0, 0x32
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9178
-    cmpwi r0, 0x33
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9178
-    cmpwi r0, 0x34
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E919C
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9178:
-    mr r3, r29
-    addi r4, r29, 0xb0
-    li r5, 0x1
-    bl Item_HomingScanAndSteer
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E919C
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E918C:
-    lfs f1, 0xbc(r29)
-    lfs f0, lbl_806D5DB4(r2)
-    fadds f0, f1, f0
-    stfs f0, 0xbc(r29)
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E919C:
-    lwz r0, 0x8(r30)
-    cmplwi r0, 0x0
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E91D0
-    lbz r0, 0x1d(r29)
-    cmpwi r0, 0x4
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E91D0
-    lfs f1, lbl_806D5D90(r2)
-    addi r3, r29, 0x14
-    li r4, 0x4
-    bl SpriteSlot_SetAnimFrameAndApplyScale
-    lfs f1, lbl_806D5DAC(r2)
-    addi r3, r29, 0x14
-    bl SpriteSlot_SetScale
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E91D0:
-    lwz r0, 0x8(r29)
-    cmpwi r0, 0x34
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E91EC
-    lfs f1, lbl_806D5D94(r2)
-    mr r3, r29
-    bl Item_DecayVelocityScalar
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E91F8
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E91EC:
-    lfs f1, lbl_806D5D98(r2)
-    mr r3, r29
-    bl Item_DecayVelocityScalar
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E91F8:
-    mr r3, r29
-    bl ItemCollision_Check
-    mr r31, r3
-    cmpwi r31, 0x3
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9290
-    bge BananaTriple_Tick_HeldAndHoming_32to36_L_800E9220
-    cmpwi r31, 0x1
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9230
-    bge BananaTriple_Tick_HeldAndHoming_32to36_L_800E9274
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9464
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9220:
-    cmpwi r31, 0x5
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9458
-    bge BananaTriple_Tick_HeldAndHoming_32to36_L_800E9464
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E93E4
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9230:
-    lbz r0, 0xca(r29)
-    lwz r3, 0x8(r29)
-    extsb r0, r0
-    subfic r0, r0, 0x3
-    cntlzw r0, r0
-    srwi r27, r0, 5
-    bl ItemAlias_HitRemapLookup
-    extsh r28, r3
-    mr r3, r29
-    bl ItemTracker_GetTargetKart
-    neg r0, r27
-    mr r4, r3
-    or r0, r0, r27
-    lwz r3, 0x98(r30)
-    srwi r6, r0, 31
-    mr r5, r28
-    bl fn_801B1D5C
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9274:
-    cmpwi r31, 0x2
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E9290
-    mr r3, r29
-    bl ItemTracker_GetTargetKart
-    mr r4, r3
-    lwz r3, 0x98(r30)
-    bl fn_801B1660
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9290:
-    cmpwi r31, 0x3
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E92AC
-    mr r3, r29
-    bl ItemTracker_GetTargetKart
-    mr r4, r3
-    lwz r3, 0x98(r30)
-    bl fn_801B158C
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E92AC:
-    mr r3, r29
-    bl ItemTracker_GetTargetKart
-    mr r4, r3
-    lwz r3, 0x98(r30)
-    bl fn_801B14B8
-    lbz r0, 0xca(r29)
-    cmpwi r0, 0x3
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E934C
-    cmpwi r31, 0x3
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E934C
-    li r0, 0x0
-    mr r3, r29
-    stw r0, 0x7c(r30)
-    lwz r4, 0xb8(r29)
-    lwz r0, 0xbc(r29)
-    stw r4, 0x70(r1)
-    stw r0, 0x74(r1)
-    lwz r0, 0xc0(r29)
-    stw r0, 0x78(r1)
-    lwz r4, 0xa0(r29)
-    lwz r0, 0xa4(r29)
-    stw r4, 0x7c(r1)
-    stw r0, 0x80(r1)
-    lwz r0, 0xa8(r29)
-    stw r0, 0x84(r1)
-    bl ItemTracker_GetTargetKart
-    mr r4, r3
-    addi r3, r29, 0xb8
-    addi r5, r1, 0x7c
-    addi r6, r1, 0x70
-    bl Item_ComputeYawRelativeApproach
-    addi r3, r29, 0xb8
-    bl Vec3_ToYaw
-    stfs f1, 0xb0(r29)
-    mr r3, r29
-    li r4, 0x0
-    bl ItemTracker_SetTrackPhase
-    li r0, 0x5
-    stw r0, 0xc(r30)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9464
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E934C:
-    mr r3, r29
-    bl ItemTracker_GetTargetKart
-    stw r3, 0x9c(r30)
-    mr r3, r29
-    bl ItemTracker_ReleaseLock
-    li r0, 0x0
-    stb r0, 0x8d(r29)
-    lbz r0, 0x1d(r29)
-    cmpwi r0, 0x4
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9390
-    lfs f1, lbl_806D5D90(r2)
-    addi r3, r29, 0x14
-    li r4, 0x4
-    bl SpriteSlot_SetAnimFrameAndApplyScale
-    lfs f1, lbl_806D5DAC(r2)
-    addi r3, r29, 0x14
-    bl SpriteSlot_SetScale
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9390:
-    lbz r0, 0xca(r29)
-    cmpwi r0, 0x1
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E93A8
-    li r0, 0x1
-    stb r0, 0x1(r30)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E93B0
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E93A8:
-    li r0, 0x0
-    stb r0, 0x1(r30)
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E93B0:
-    cmpwi r31, 0x1
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E93C4
-    li r0, 0x1
-    stb r0, 0x2(r30)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E93CC
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E93C4:
-    li r0, 0x0
-    stb r0, 0x2(r30)
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E93CC:
-    li r3, 0x2
-    li r0, 0x0
-    stb r3, 0xc8(r29)
-    stb r0, 0xc9(r29)
-    stb r0, 0xcb(r29)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E93E4:
-    mr r3, r29
-    bl ItemTracker_GetTargetKart
-    mr r4, r3
-    lwz r3, 0x98(r30)
-    bl fn_801B14B8
-    mr r3, r29
-    bl ItemTracker_GetTargetKart
-    stw r3, 0x9c(r30)
-    mr r3, r29
-    bl ItemTracker_ReleaseLock
-    li r0, 0x0
-    stb r0, 0x8d(r29)
-    lbz r0, 0x1d(r29)
-    cmpwi r0, 0x4
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E943C
-    lfs f1, lbl_806D5D90(r2)
-    addi r3, r29, 0x14
-    li r4, 0x4
-    bl SpriteSlot_SetAnimFrameAndApplyScale
-    lfs f1, lbl_806D5DAC(r2)
-    addi r3, r29, 0x14
-    bl SpriteSlot_SetScale
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E943C:
-    li r0, 0x2
-    li r3, 0x0
-    stb r0, 0xc8(r29)
-    li r0, 0x3
-    stb r3, 0xc9(r29)
-    stb r0, 0xcb(r29)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9458:
-    mr r3, r29
-    li r4, 0x1
-    bl ItemTracker_SetTrackPhase
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9464:
-    lwz r0, 0xc(r30)
-    cmplwi r0, 0x0
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E947C
-    mr r3, r29
-    li r4, 0x1
-    bl ItemTracker_SetTrackPhase
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E947C:
-    lbz r0, 0x8d(r29)
-    cmpwi r0, 0x2
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E9538
-    mr r3, r29
-    bl ItemTracker_ReleaseLock
-    li r0, 0x0
-    stb r0, 0x8d(r29)
-    lbz r0, 0x1d(r29)
-    cmpwi r0, 0x4
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E94C0
-    lfs f1, lbl_806D5D90(r2)
-    addi r3, r29, 0x14
-    li r4, 0x4
-    bl SpriteSlot_SetAnimFrameAndApplyScale
-    lfs f1, lbl_806D5DAC(r2)
-    addi r3, r29, 0x14
-    bl SpriteSlot_SetScale
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E94C0:
-    lbz r0, 0x8e(r29)
-    cmpwi r0, 0x1
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E951C
-    addi r3, r29, 0xb8
-    addi r5, r29, 0x90
-    mr r4, r3
-    bl Vec3_Add_DestFirst
-    lfs f0, lbl_806D5DA4(r2)
-    li r4, 0x2
-    lfs f1, lbl_806D5DC8(r2)
-    li r3, 0x0
-    stfs f0, 0xbc(r29)
-    li r0, 0x4
-    lfs f0, 0xb8(r29)
-    fmuls f0, f0, f1
-    stfs f0, 0xb8(r29)
-    lfs f0, 0xc0(r29)
-    fmuls f0, f0, f1
-    stfs f0, 0xc0(r29)
-    stb r4, 0xc8(r29)
-    stb r3, 0xc9(r29)
-    stb r0, 0xcb(r29)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E951C:
-    li r0, 0x2
-    li r3, 0x0
-    stb r0, 0xc8(r29)
-    li r0, 0x6
-    stb r3, 0xc9(r29)
-    stb r0, 0xcb(r29)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9538:
-    lbz r0, 0xca(r29)
-    cmpwi r0, 0x3
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9610
-    mr r3, r29
-    addi r4, r1, 0xdc
-    li r5, 0x0
-    bl Item_CheckWallCollision
-    cmpwi r3, 0x0
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9610
-    lwz r0, 0x8(r29)
-    cmpwi r0, 0x34
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E95A0
-    lwz r6, 0xdc(r1)
-    mr r3, r29
-    lwz r7, 0xe0(r1)
-    addi r4, r1, 0x64
-    lwz r0, 0xe4(r1)
-    li r5, 0x0
-    stw r6, 0x64(r1)
-    li r6, 0x2
-    lfs f1, lbl_806D5DC8(r2)
-    stw r7, 0x68(r1)
-    lfs f2, lbl_806D5D90(r2)
-    stw r0, 0x6c(r1)
-    bl Item_BounceOffWall
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E95D4
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E95A0:
-    lwz r6, 0xdc(r1)
-    mr r3, r29
-    lwz r7, 0xe0(r1)
-    addi r4, r1, 0x58
-    lwz r0, 0xe4(r1)
-    li r5, 0x0
-    stw r6, 0x58(r1)
-    li r6, 0x3
-    lfs f1, lbl_806D5DC8(r2)
-    stw r7, 0x5c(r1)
-    lfs f2, lbl_806D5D90(r2)
-    stw r0, 0x60(r1)
-    bl Item_BounceOffWall
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E95D4:
-    lbz r0, 0x1d(r29)
-    cmpwi r0, 0x4
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E95FC
-    lfs f1, lbl_806D5D90(r2)
-    addi r3, r29, 0x14
-    li r4, 0x4
-    bl SpriteSlot_SetAnimFrameAndApplyScale
-    lfs f1, lbl_806D5DAC(r2)
-    addi r3, r29, 0x14
-    bl SpriteSlot_SetScale
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E95FC:
-    lbz r0, 0xca(r29)
-    cmpwi r0, 0x1
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E9610
-    li r0, 0x0
-    stw r0, 0x4(r30)
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9610:
-    lbz r3, 0xca(r29)
-    extsb. r0, r3
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9628
-    extsb r0, r3
-    cmpwi r0, 0x1
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E9680
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9628:
-    lfs f1, lbl_806D5DCC(r2)
-    mr r3, r29
-    addi r4, r30, 0x18
-    fmr f2, f1
-    bl Item_AdvanceProjectileSimple
-    lwz r0, 0x8(r29)
-    mr r31, r3
-    cmpwi r0, 0x35
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9654
-    cmpwi r0, 0x36
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E9670
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9654:
-    addi r3, r29, 0xb8
-    bl Vec3_ToPitch
-    lfs f0, lbl_806D5DD0(r2)
-    fadds f1, f0, f1
-    bl BuildOrientationFromYaw
-    stfs f1, 0xac(r29)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9850
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9670:
-    addi r3, r29, 0xb8
-    bl Vec3_ToPitch
-    stfs f1, 0xac(r29)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9850
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9680:
-    lwz r0, 0x8(r29)
-    cmpwi r0, 0x34
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E96A4
-    lfs f1, lbl_806D5DD4(r2)
-    mr r3, r29
-    addi r4, r1, 0xc
-    addi r5, r1, 0x8
-    bl Item_AdvanceFallingDrop
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E96B8
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E96A4:
-    lfs f1, lbl_806D5DD4(r2)
-    mr r3, r29
-    addi r4, r1, 0xc
-    addi r5, r1, 0x8
-    bl Item_AdvanceFallingDrop
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E96B8:
-    lwz r0, 0xc(r1)
-    mr r31, r3
-    cmpwi r0, 0x0
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E97B8
-    lbz r0, 0xca(r29)
-    cmpwi r0, 0x2
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E977C
-    lwz r0, 0x8(r29)
-    cmpwi r0, 0x34
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9724
-    lwz r6, 0xb8(r29)
-    addi r3, r1, 0x4c
-    lwz r0, 0xbc(r29)
-    addi r4, r1, 0x40
-    li r5, 0x2
-    stw r6, 0x40(r1)
-    stw r0, 0x44(r1)
-    lwz r0, 0xc0(r29)
-    stw r0, 0x48(r1)
-    lwz r6, 0xa0(r29)
-    lwz r0, 0xa4(r29)
-    stw r6, 0x4c(r1)
-    stw r0, 0x50(r1)
-    lwz r0, 0xa8(r29)
-    stw r0, 0x54(r1)
-    bl DrawEffect_ItemHitBurst_Spawn
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9764
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9724:
-    lwz r6, 0xb8(r29)
-    addi r3, r1, 0x34
-    lwz r0, 0xbc(r29)
-    addi r4, r1, 0x28
-    li r5, 0x3
-    stw r6, 0x28(r1)
-    stw r0, 0x2c(r1)
-    lwz r0, 0xc0(r29)
-    stw r0, 0x30(r1)
-    lwz r6, 0xa0(r29)
-    lwz r0, 0xa4(r29)
-    stw r6, 0x34(r1)
-    stw r0, 0x38(r1)
-    lwz r0, 0xa8(r29)
-    stw r0, 0x3c(r1)
-    bl DrawEffect_ItemHitBurst_Spawn
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9764:
-    li r3, 0x384
-    li r0, 0x3
-    stw r3, 0x4(r30)
-    mr r3, r29
-    stb r0, 0xca(r29)
-    bl ItemHitRegistry_AddEntry
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E977C:
-    lbz r0, 0x1d(r29)
-    cmpwi r0, 0x4
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E97A4
-    lfs f1, lbl_806D5D90(r2)
-    addi r3, r29, 0x14
-    li r4, 0x4
-    bl SpriteSlot_SetAnimFrameAndApplyScale
-    lfs f1, lbl_806D5DAC(r2)
-    addi r3, r29, 0x14
-    bl SpriteSlot_SetScale
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E97A4:
-    lfs f1, lbl_806D5D90(r2)
-    addi r3, r29, 0xb8
-    fmr f2, f1
-    fmr f3, f1
-    bl GetSpawnPosition
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E97B8:
-    lwz r4, 0xa0(r29)
-    addi r3, r1, 0x1c
-    lwz r0, 0xa4(r29)
-    lfs f0, 0x8(r1)
-    stw r4, 0x1c(r1)
-    lfs f2, lbl_806D5DD8(r2)
-    stw r0, 0x20(r1)
-    lwz r0, 0xa8(r29)
-    stw r0, 0x24(r1)
-    lfs f3, 0xa4(r29)
-    lfs f1, 0xb0(r29)
-    fsubs f3, f3, f0
-    bl Item_ProbeForwardGroundPitch
-    fmr f0, f1
-    lfs f1, 0xac(r29)
-    lfs f3, lbl_806D5DA0(r2)
-    fmr f2, f0
-    bl AngleStepTowards_Shortest
-    stfs f1, 0xac(r29)
-    addi r3, r1, 0x10
-    lfs f2, lbl_806D5DD8(r2)
-    lwz r4, 0xa0(r29)
-    lwz r0, 0xa4(r29)
-    lfs f0, 0x8(r1)
-    stw r4, 0x10(r1)
-    stw r0, 0x14(r1)
-    lwz r0, 0xa8(r29)
-    stw r0, 0x18(r1)
-    lfs f3, 0xa4(r29)
-    lfs f1, 0xb0(r29)
-    fsubs f3, f3, f0
-    bl Item_ProbeLateralGroundPitch
-    fmr f0, f1
-    lfs f1, 0xb4(r29)
-    lfs f3, lbl_806D5DA0(r2)
-    fmr f2, f0
-    bl AngleStepTowards_Shortest
-    stfs f1, 0xb4(r29)
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9850:
-    cmpwi r31, 0x0
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E98AC
-    mr r3, r29
-    bl ItemTracker_ReleaseLock
-    li r0, 0x0
-    stb r0, 0x8d(r29)
-    lbz r0, 0x1d(r29)
-    cmpwi r0, 0x4
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9890
-    lfs f1, lbl_806D5D90(r2)
-    addi r3, r29, 0x14
-    li r4, 0x4
-    bl SpriteSlot_SetAnimFrameAndApplyScale
-    lfs f1, lbl_806D5DAC(r2)
-    addi r3, r29, 0x14
-    bl SpriteSlot_SetScale
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9890:
-    li r0, 0x2
-    li r3, 0x0
-    stb r0, 0xc8(r29)
-    li r0, 0x9
-    stb r3, 0xc9(r29)
-    stb r0, 0xcb(r29)
-    b BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E98AC:
-    lbz r0, 0xca(r29)
-    cmpwi r0, 0x3
-    bne BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    lwz r4, 0x4(r30)
-    mr r3, r29
-    li r5, 0x0
-    bl ItemHitRegistry_RemoveEntry
-    clrlwi. r0, r3, 24
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920
-    mr r3, r29
-    bl ItemTracker_ReleaseLock
-    li r0, 0x0
-    stb r0, 0x8d(r29)
-    lwz r3, 0x4c(r30)
-    cmplwi r3, 0x0
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E98F4
-    li r0, 0x1
-    stb r0, 0xc9(r3)
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E98F4:
-    li r0, 0x0
-    stw r0, 0x4c(r30)
-    lwz r0, 0x8(r29)
-    cmpwi r0, 0x35
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9918
-    cmpwi r0, 0x36
-    beq BananaTriple_Tick_HeldAndHoming_32to36_L_800E9918
-    mr r3, r29
-    bl ItemObject_DecrementCategoryBudget
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9918:
-    mr r3, r29
-    bl SpriteSlot_Container_Free
-    BananaTriple_Tick_HeldAndHoming_32to36_L_800E9920:
-    lmw r27, 0xec(r1)
-    lwz r0, 0x104(r1)
-    mtlr r0
-    addi r1, r1, 0x100
-    blr
+static inline void BananaTriple_SetIdleAnim(char *self)
+{
+    if (U8(0x1d) != 4) {
+        SpriteSlot_SetAnimFrameAndApplyScale(self + 0x14, 4, lbl_806D5D90);
+        SpriteSlot_SetScale(self + 0x14, lbl_806D5DAC);
+    }
 }
 
+#pragma exceptions on
+#pragma use_lmw_stmw on
+void BananaTriple_Tick_HeldAndHoming_32to36(char *self, char *w)
+{
+    unsigned char *base = lbl_8032EFF0;
+    Vec3 n;
+    int landed;
+    float groundY;
+    float pitch;
+    float roll;
+    int result;
+    char *chained;
+
+    switch (S8(0xc9)) {
+    case 0:
+        if (I(8) == 0x35 || I(8) == 0x36 || I(0x10) != 0) {
+            if (I(8) == 0x35 || I(8) == 0x36) {
+                Item_SpawnGroundExplosionAndFX(self);
+            } else {
+                Item_BendVelocityByGroundProbe(self + 0xb8, *(Vec3 *)(self + 0xa0), F(0xb0), lbl_806D5DAC,
+                                               lbl_806D5D90);
+                KartDriver_TransformWorldToLocalY0(self + 0xa0, *(Vec3 *)(self + 0xa0), WP(0x98));
+            }
+            F(0xc4) = lbl_806D5D94;
+            F(0x2c) = lbl_806D5DAC;
+            self[0x28] = 0;
+            self[0xc9] = 2;
+            self[0xca] = 0;
+            break;
+        }
+        self[0xc9]++;
+        self[0xca] = 0;
+        /* fallthrough */
+    case 1:
+        switch (S8(0xca)) {
+        case 0:
+            w[0] = 0;
+            if (I(8) != 0x34) {
+                SpriteSlot_SetAnimFrameAndApplyScale(self + 0x14, 5, lbl_806D5D90);
+                SpriteSlot_SetScale(self + 0x14, lbl_806D5D90);
+            } else {
+                SpriteSlot_SetAnimFrameAndApplyScale(self + 0x14, 0, lbl_806D5D90);
+                SpriteSlot_SetScale(self + 0x14, lbl_806D5D90);
+            }
+            self[0x28] = 1;
+            F(0x2c) = lbl_806D5D90;
+            self[0xca]++;
+            /* fallthrough */
+        case 1:
+            if (I(8) != 0x34) {
+                Item_RenderCharacterScaledFromJoint12(self, *(Vec3 *)(base + 0x3fc), *(Vec3 *)(base + 0x408), 1,
+                                                      lbl_806D5DB8);
+            } else {
+                Item_RenderCharacterScaledFromJoint12(self, *(Vec3 *)(base + 0x414), *(Vec3 *)(base + 0x420), 1,
+                                                      lbl_806D5DBC);
+            }
+            if (FinalLapCoinJump_CheckActiveForObject(WP(0x98))) {
+                self[0x28] = 0;
+            } else {
+                self[0x28] = 1;
+            }
+            switch (*(signed char *)(w + 0xa0)) {
+            case 1:
+                self[0x28] = 1;
+                w[0xa0] = 0;
+                w[0] = 1;
+                Item_InitLaunchFromKart(self, 0, lbl_806D5DAC, lbl_806D5D90);
+                self[0xc9]++;
+                self[0xca] = 0;
+                break;
+            case 2:
+                w[0xa0] = 0;
+                self[0x28] = 0;
+                self[0xc8] = 3;
+                self[0xc9] = 0;
+                break;
+            }
+            break;
+        }
+        break;
+    case 2:
+        switch (S8(0xca)) {
+        case 0:
+            self[0x28] = 1;
+            ItemTracker_AcquireLock(self);
+            ItemTracker_SetTrackPhase(self, 1);
+            self[0x8d] = 1;
+            self[0x3c] = 1;
+            SpriteSlot_SetJointVisibilityByName(self + 0x14, lbl_804211B0[*(unsigned char *)(w + 3)], 0x10, 0);
+            SpriteSlot_SetJointVisibilityByName(self + 0x14, lbl_804211B0[*(unsigned char *)(w + 3)] + 0x40, 0x10,
+                                                1);
+            ItemObject_GetGroundTypeAt(*(Vec3 *)(self + 0xa0), (float *)(w + 0x18), 0);
+            WF(0x18) = F(0xa4) - WF(0x18);
+            WU(0xc) = 0;
+            if (I(8) == 0x35 || I(8) == 0x36) {
+                SpriteSlot_SetAnimFrameAndApplyScale(self + 0x14, 1, lbl_806D5D90);
+                SpriteSlot_SetScale(self + 0x14, lbl_806D5DAC);
+                WU(4) = 300;
+                WU(8) = 60;
+                self[0xca] = 1;
+            } else {
+                SpriteSlot_SetAnimFrameAndApplyScale(self + 0x14, 4, lbl_806D5D90);
+                SpriteSlot_SetScale(self + 0x14, lbl_806D5DAC);
+                WU(4) = 0;
+                WU(8) = 0;
+                self[0xca] = 2;
+            }
+            break;
+        case 1:
+            Item_HomingScanAndSteer(self, self + 0xb0, 0);
+            Item_AccelClampVelocity(self, g_ccClass == 0 ? lbl_806D5DC0 : lbl_806D5DC4,
+                                    g_ccClass == 0 ? lbl_806D5DAC : lbl_806D5DA4);
+            if (WU(4) == 0) {
+                self[0xca]++;
+            }
+            break;
+        case 2:
+            F(0xbc) = F(0xbc) + lbl_806D5DB4;
+            if (I(8) == 0x32 || I(8) == 0x33 || I(8) == 0x34) {
+                Item_HomingScanAndSteer(self, self + 0xb0, 1);
+            }
+            break;
+        case 3:
+            F(0xbc) = F(0xbc) + lbl_806D5DB4;
+            break;
+        }
+        if (WU(8) == 0) {
+            BananaTriple_SetIdleAnim(self);
+        }
+        if (I(8) != 0x34) {
+            Item_DecayVelocityScalar(self, lbl_806D5D94);
+        } else {
+            Item_DecayVelocityScalar(self, lbl_806D5D98);
+        }
+        result = ItemCollision_Check(self);
+        switch (result) {
+        case 1:
+            fn_801B1D5C(WP(0x98), ItemTracker_GetTargetKart(self), ItemAlias_HitRemapLookup(I(8)),
+                        S8(0xca) == 3 ? 1 : 0);
+            /* fallthrough */
+        case 2:
+            if (result == 2) {
+                fn_801B1660(WP(0x98), ItemTracker_GetTargetKart(self));
+            }
+            /* fallthrough */
+        case 3:
+            if (result == 3) {
+                fn_801B158C(WP(0x98), ItemTracker_GetTargetKart(self));
+            }
+            fn_801B14B8(WP(0x98), ItemTracker_GetTargetKart(self));
+            if (U8(0xca) != 3 && result == 3) {
+                *(int *)(w + 0x7c) = 0;
+                Item_ComputeYawRelativeApproach(self + 0xb8, ItemTracker_GetTargetKart(self),
+                                                *(Vec3 *)(self + 0xa0), *(Vec3 *)(self + 0xb8));
+                F(0xb0) = Vec3_ToYaw(self + 0xb8);
+                ItemTracker_SetTrackPhase(self, 0);
+                WU(0xc) = 5;
+                break;
+            }
+            WP(0x9c) = ItemTracker_GetTargetKart(self);
+            ItemTracker_ReleaseLock(self);
+            self[0x8d] = 0;
+            BananaTriple_SetIdleAnim(self);
+            if (U8(0xca) == 1) {
+                w[1] = 1;
+            } else {
+                w[1] = 0;
+            }
+            if (result == 1) {
+                w[2] = 1;
+            } else {
+                w[2] = 0;
+            }
+            self[0xc8] = 2;
+            self[0xc9] = 0;
+            self[0xcb] = 0;
+            return;
+        case 4:
+            fn_801B14B8(WP(0x98), ItemTracker_GetTargetKart(self));
+            WP(0x9c) = ItemTracker_GetTargetKart(self);
+            ItemTracker_ReleaseLock(self);
+            self[0x8d] = 0;
+            BananaTriple_SetIdleAnim(self);
+            self[0xc8] = 2;
+            self[0xc9] = 0;
+            self[0xcb] = 3;
+            return;
+        case 5:
+            ItemTracker_SetTrackPhase(self, 1);
+            break;
+        }
+        if (WU(0xc) == 0) {
+            ItemTracker_SetTrackPhase(self, 1);
+        }
+        if (U8(0x8d) == 2) {
+            ItemTracker_ReleaseLock(self);
+            self[0x8d] = 0;
+            BananaTriple_SetIdleAnim(self);
+            if (U8(0x8e) == 1) {
+                Vec3_Add_DestFirst(self + 0xb8, self + 0xb8, self + 0x90);
+                F(0xbc) = lbl_806D5DA4;
+                F(0xb8) = F(0xb8) * lbl_806D5DC8;
+                F(0xc0) = F(0xc0) * lbl_806D5DC8;
+                self[0xc8] = 2;
+                self[0xc9] = 0;
+                self[0xcb] = 4;
+                return;
+            }
+            self[0xc8] = 2;
+            self[0xc9] = 0;
+            self[0xcb] = 6;
+            return;
+        }
+        if (U8(0xca) != 3 && Item_CheckWallCollision(self, &n, 0)) {
+            if (I(8) != 0x34) {
+                Item_BounceOffWall(self, n, 0, 2, lbl_806D5DC8, lbl_806D5D90);
+            } else {
+                Item_BounceOffWall(self, n, 0, 3, lbl_806D5DC8, lbl_806D5D90);
+            }
+            BananaTriple_SetIdleAnim(self);
+            if (U8(0xca) == 1) {
+                WU(4) = 0;
+            }
+        }
+        if (S8(0xca) == 0 || S8(0xca) == 1) {
+            result = Item_AdvanceProjectileSimple(self, w + 0x18, lbl_806D5DCC, lbl_806D5DCC);
+            if (I(8) == 0x35 || I(8) == 0x36) {
+                F(0xac) = BuildOrientationFromYaw(lbl_806D5DD0 + Vec3_ToPitch(self + 0xb8));
+            } else {
+                F(0xac) = Vec3_ToPitch(self + 0xb8);
+            }
+        } else {
+            if (I(8) != 0x34) {
+                result = Item_AdvanceFallingDrop(self, lbl_806D5DD4, &landed, &groundY);
+            } else {
+                result = Item_AdvanceFallingDrop(self, lbl_806D5DD4, &landed, &groundY);
+            }
+            if (landed != 0) {
+                if (U8(0xca) == 2) {
+                    if (I(8) != 0x34) {
+                        DrawEffect_ItemHitBurst_Spawn(*(Vec3 *)(self + 0xa0), *(Vec3 *)(self + 0xb8), 2);
+                    } else {
+                        DrawEffect_ItemHitBurst_Spawn(*(Vec3 *)(self + 0xa0), *(Vec3 *)(self + 0xb8), 3);
+                    }
+                    WU(4) = 900;
+                    self[0xca] = 3;
+                    ItemHitRegistry_AddEntry(self);
+                }
+                BananaTriple_SetIdleAnim(self);
+                GetSpawnPosition(self + 0xb8, lbl_806D5D90, lbl_806D5D90, lbl_806D5D90);
+            }
+            pitch = Item_ProbeForwardGroundPitch(*(Vec3 *)(self + 0xa0), F(0xb0), lbl_806D5DD8, F(0xa4) - groundY);
+            F(0xac) = AngleStepTowards_Shortest(F(0xac), pitch, lbl_806D5DA0);
+            roll = Item_ProbeLateralGroundPitch(*(Vec3 *)(self + 0xa0), F(0xb0), lbl_806D5DD8, F(0xa4) - groundY);
+            F(0xb4) = AngleStepTowards_Shortest(F(0xb4), roll, lbl_806D5DA0);
+        }
+        if (result == 0) {
+            ItemTracker_ReleaseLock(self);
+            self[0x8d] = 0;
+            BananaTriple_SetIdleAnim(self);
+            self[0xc8] = 2;
+            self[0xc9] = 0;
+            self[0xcb] = 9;
+            return;
+        }
+        if (U8(0xca) == 3 && ItemHitRegistry_RemoveEntry(self, WU(4), 0)) {
+            ItemTracker_ReleaseLock(self);
+            self[0x8d] = 0;
+            chained = *(char **)(w + 0x4c);
+            if (chained != 0) {
+                chained[0xc9] = 1;
+            }
+            *(char **)(w + 0x4c) = 0;
+            if (I(8) != 0x35 && I(8) != 0x36) {
+                ItemObject_DecrementCategoryBudget(self);
+            }
+            SpriteSlot_Container_Free(self);
+        }
+        break;
+    }
+}
+#pragma use_lmw_stmw reset
+#pragma exceptions reset
+
+}
