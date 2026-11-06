@@ -1253,7 +1253,7 @@ config.libs = [
             Object(Matching, "game/ItemObject_GetGroundTypeAt.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/Vec3_AddNormalizedXZ.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ItemObject_AllocGabyou.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(NonMatching, "game/KartItem_QueryEffectStateFromIse.c"),  #g2
+            Object(Matching, "game/KartItem_QueryEffectStateFromIse.c"),  #g2
             Object(Matching, "game/ItemObject_Tick_AwaitInitThenFree.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartShadow_TwoSlot.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/DrawEffect_SpawnWithMatrix.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2

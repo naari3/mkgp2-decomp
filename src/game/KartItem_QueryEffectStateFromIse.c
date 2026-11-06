@@ -8,16 +8,20 @@ typedef struct KartItemIseView {
     ItemStateEntity *ise;
 } KartItemIseView;
 
+static inline unsigned char Ise_HasFlag(ItemStateEntity *ise, unsigned long long mask)
+{
+    if ((ise->flags & mask) == 0) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
 int KartItem_QueryEffectStateFromIse(KartItemIseView *self)
 {
     ItemStateEntity *ise = self->ise;
-    unsigned long long zero = 0;
-    unsigned char hit = zero;
+    unsigned char hit = Ise_HasFlag(ise, 0x0080000000000000ULL);
 
-    if (((ise->flags & 0x0080000000000000ULL) ^ zero) == 0) {
-    } else {
-        hit = 1;
-    }
     if (hit) {
         return 2;
     }
