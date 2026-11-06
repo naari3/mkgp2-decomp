@@ -6,7 +6,9 @@ typedef struct StarWork {
     float height, lift, gravity;
     unsigned char pad20[0x14];
     Vec3 delta, velocity;
-    unsigned char pad4c[0x4C];
+    unsigned char pad4c[0x30];
+    int contact;
+    unsigned char pad80[0x18];
     void *owner, *target;
     signed char action;
 } StarWork;
