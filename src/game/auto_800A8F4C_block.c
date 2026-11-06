@@ -26,8 +26,8 @@ extern void MemoryManager_TimedFree(void *);
 extern void dtor_800AA69C(void *, short);
 extern void __destroy_arr();
 extern void __construct_array();
-extern void cos();
-extern void sin();
+extern double cos(double);
+extern double sin(double);
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D4DE8;
@@ -107,17 +107,25 @@ static inline void WarpZone_GetOBBSpeed(WarpDashMgr *mgr, int zone, float *speed
     }
 }
 
+static inline float WarpAutoRun_sinf(float x) {
+    return sin(x);
+}
+
+static inline float WarpAutoRun_cosf(float x) {
+    return cos(x);
+}
+
 /* --- forward decls --- */
-asm void WarpZone_FindContainingOBB(void);
+int WarpZone_FindContainingOBB(WarpDashMgr *mgr, float x, float y, float z);
 asm void WarpZone_CalcExitPosition(void);
-asm void WarpZone_FindContaining(void);
+int WarpZone_FindContaining(WarpDashMgr *mgr, float x, float y, float z);
 asm void WarpDashMgr_Cleanup(void);
 WarpDashMgr *WarpDashMgr_GetInstance(unsigned char id);
 asm void WarpDashMgr_GetOrCreate(void);
 void *Free_IfOwnedShort(void *p, short flag);
 asm void WarpAutoRun_Init(void);
 int DashZone_ProcessAutoRun(WarpAutoRun *self, float x, float y, float z, float yaw);
-asm void WarpAutoRun_GetParam(void);
+int WarpAutoRun_GetParam(WarpAutoRun *self, float *vx, float *vy, float *vz, float *yaw);
 void WarpAutoRun_OnEnter(void *self, float f1, float f2, float f3, float f4, float vx, float vy, float vz);
 asm void WarpZone_CheckEntry(void);
 int Field4NotMinusOne(WarpAutoRun *self);
@@ -131,22 +139,13 @@ void *dtor_800A9D2C(void *this, short flag);
 __declspec(section ".extab_user") static const unsigned char extab_dtor_800A9D2C[8] = {
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const unsigned char extab_fn_800A8F4C[8] = {
-    0x00, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 __declspec(section ".extab_user") static const unsigned char extab_WarpZone_CalcExitPosition[8] = {
-    0x00, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-__declspec(section ".extab_user") static const unsigned char extab_WarpZone_FindContaining[8] = {
     0x00, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 __declspec(section ".extab_user") static const unsigned char extab_WarpDashMgr_Cleanup[8] = {
     0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_WarpDashMgr_GetOrCreate = { 0x38080000, 0x00000064, 0x00000010, 0x00000000, 0x8A800019, (void *)&MemoryManager_TimedFree };
-__declspec(section ".extab_user") static const unsigned char extab_WarpAutoRun_GetParam[8] = {
-    0x28, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 __declspec(section ".extab_user") static const unsigned char extab_WarpZone_CheckEntry[8] = {
     0x00, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -156,23 +155,14 @@ __declspec(section ".extab_user") static const unsigned char extab_WarpZone_Calc
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_800A8F4C = {
-    (void *)&WarpZone_FindContainingOBB, 0x00000138, (void *)extab_fn_800A8F4C
-};
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpZone_CalcExitPosition = {
     (void *)&WarpZone_CalcExitPosition, 0x00000118, (void *)extab_WarpZone_CalcExitPosition
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpZone_FindContaining = {
-    (void *)&WarpZone_FindContaining, 0x00000138, (void *)extab_WarpZone_FindContaining
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpDashMgr_Cleanup = {
     (void *)&WarpDashMgr_Cleanup, 0x000000A4, (void *)extab_WarpDashMgr_Cleanup
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpDashMgr_GetOrCreate = {
     (void *)&WarpDashMgr_GetOrCreate, 0x00000080, (void *)&extab_WarpDashMgr_GetOrCreate
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpAutoRun_GetParam = {
-    (void *)&WarpAutoRun_GetParam, 0x000001A0, (void *)extab_WarpAutoRun_GetParam
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpZone_CheckEntry = {
     (void *)&WarpZone_CheckEntry, 0x00000170, (void *)extab_WarpZone_CheckEntry
@@ -185,98 +175,49 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void WarpZone_FindContainingOBB(void) {
-    nofralloc
-    stwu r1, -0x20(r1)
-    lbz r0, 0x18(r3)
-    cmplwi r0, 0x0
-    bne fn_800A8F4C_L_800A8F64
-    li r3, -0x1
-    b fn_800A8F4C_L_800A907C
-    fn_800A8F4C_L_800A8F64:
-    lwz r0, 0x10(r3)
-    cmpwi r0, 0x0
-    bgt fn_800A8F4C_L_800A8F78
-    li r3, -0x1
-    b fn_800A8F4C_L_800A907C
-    fn_800A8F4C_L_800A8F78:
-    frsp f5, f3
-    stfs f1, 0x8(r1)
-    frsp f6, f1
-    lfs f4, lbl_806D4DE8(r2)
-    stfs f2, 0xc(r1)
-    li r7, 0x0
-    stfs f3, 0x10(r1)
-    li r4, 0x0
-    mtctr r0
-    ble fn_800A8F4C_L_800A9078
-    fn_800A8F4C_L_800A8FA0:
-    lwz r0, 0x14(r3)
-    add r5, r0, r4
-    lwz r6, 0x0(r5)
-    lfs f0, 0xc(r5)
-    lfs f1, 0xc(r6)
-    lfs f2, 0x14(r6)
-    fsubs f3, f6, f1
-    lfs f1, 0x4(r5)
-    fsubs f2, f5, f2
-    fmuls f0, f3, f0
-    fneg f2, f2
-    fmadds f0, f2, f1, f0
-    fcmpo cr0, f0, f4
-    ble fn_800A8F4C_L_800A8FE0
-    li r0, 0x0
-    b fn_800A8F4C_L_800A9058
-    fn_800A8F4C_L_800A8FE0:
-    lfs f0, 0x18(r5)
-    lfs f1, 0x10(r5)
-    fmuls f0, f3, f0
-    fmadds f0, f2, f1, f0
-    fcmpo cr0, f0, f4
-    ble fn_800A8F4C_L_800A9000
-    li r0, 0x0
-    b fn_800A8F4C_L_800A9058
-    fn_800A8F4C_L_800A9000:
-    lfs f0, 0x24(r6)
-    lfs f1, 0x2c(r6)
-    fsubs f3, f6, f0
-    lfs f0, 0x24(r5)
-    fsubs f2, f5, f1
-    lfs f1, 0x1c(r5)
-    fmuls f0, f3, f0
-    fneg f2, f2
-    fmadds f0, f2, f1, f0
-    fcmpo cr0, f0, f4
-    ble fn_800A8F4C_L_800A9034
-    li r0, 0x0
-    b fn_800A8F4C_L_800A9058
-    fn_800A8F4C_L_800A9034:
-    lfs f0, 0x30(r5)
-    lfs f1, 0x28(r5)
-    fmuls f0, f3, f0
-    fmadds f0, f2, f1, f0
-    fcmpo cr0, f0, f4
-    ble fn_800A8F4C_L_800A9054
-    li r0, 0x0
-    b fn_800A8F4C_L_800A9058
-    fn_800A8F4C_L_800A9054:
-    li r0, 0x1
-    fn_800A8F4C_L_800A9058:
-    clrlwi r0, r0, 24
-    cmplwi r0, 0x1
-    bne fn_800A8F4C_L_800A906C
-    mr r3, r7
-    b fn_800A8F4C_L_800A907C
-    fn_800A8F4C_L_800A906C:
-    addi r7, r7, 0x1
-    addi r4, r4, 0x50
-    bdnz fn_800A8F4C_L_800A8FA0
-    fn_800A8F4C_L_800A9078:
-    li r3, -0x1
-    fn_800A8F4C_L_800A907C:
-    addi r1, r1, 0x20
-    blr
+#pragma cplusplus on
+struct WarpVec {
+    float x, y, z;
+    WarpVec(float ax, float ay, float az) { x = ax; y = ay; z = az; }
+    ~WarpVec() {}
+};
+
+static inline bool WarpZone_Contains(const WarpZone &zone, const WarpVec &p) {
+    float dx = p.x - zone.node->corner[1].x;
+    float dz = p.z - zone.node->corner[1].z;
+    if (-dz * zone.edge[0].x + dx * zone.edge[0].z > 0.0f) {
+        return false;
+    }
+    if (-dz * zone.edge[1].x + dx * zone.edge[1].z > 0.0f) {
+        return false;
+    }
+    dx = p.x - zone.node->corner[3].x;
+    dz = p.z - zone.node->corner[3].z;
+    if (-dz * zone.edge[2].x + dx * zone.edge[2].z > 0.0f) {
+        return false;
+    }
+    if (-dz * zone.edge[3].x + dx * zone.edge[3].z > 0.0f) {
+        return false;
+    }
+    return true;
 }
+
+extern "C" int WarpZone_FindContainingOBB(WarpDashMgr *mgr, float x, float y, float z) {
+    if (!mgr->enabled) {
+        return -1;
+    }
+    if (mgr->obbCount <= 0) {
+        return -1;
+    }
+    WarpVec p(x, y, z);
+    for (int i = 0; i < mgr->obbCount; i++) {
+        if (WarpZone_Contains(*(WarpZone *)((char *)mgr->obbs + i * sizeof(WarpZone)), p) == true) {
+            return i;
+        }
+    }
+    return -1;
+}
+#pragma cplusplus off
 
 asm void WarpZone_CalcExitPosition(void) {
     nofralloc
@@ -354,98 +295,23 @@ asm void WarpZone_CalcExitPosition(void) {
     blr
 }
 
-asm void WarpZone_FindContaining(void) {
-    nofralloc
-    stwu r1, -0x20(r1)
-    lbz r0, 0x18(r3)
-    cmplwi r0, 0x0
-    bne WarpZone_FindContaining_L_800A91B4
-    li r3, -0x1
-    b WarpZone_FindContaining_L_800A92CC
-    WarpZone_FindContaining_L_800A91B4:
-    lwz r0, 0x4(r3)
-    cmpwi r0, 0x0
-    bgt WarpZone_FindContaining_L_800A91C8
-    li r3, -0x1
-    b WarpZone_FindContaining_L_800A92CC
-    WarpZone_FindContaining_L_800A91C8:
-    frsp f5, f3
-    stfs f1, 0x8(r1)
-    frsp f6, f1
-    lfs f4, lbl_806D4DE8(r2)
-    stfs f2, 0xc(r1)
-    li r7, 0x0
-    stfs f3, 0x10(r1)
-    li r4, 0x0
-    mtctr r0
-    ble WarpZone_FindContaining_L_800A92C8
-    WarpZone_FindContaining_L_800A91F0:
-    lwz r0, 0x8(r3)
-    add r5, r0, r4
-    lwz r6, 0x0(r5)
-    lfs f0, 0xc(r5)
-    lfs f1, 0xc(r6)
-    lfs f2, 0x14(r6)
-    fsubs f3, f6, f1
-    lfs f1, 0x4(r5)
-    fsubs f2, f5, f2
-    fmuls f0, f3, f0
-    fneg f2, f2
-    fmadds f0, f2, f1, f0
-    fcmpo cr0, f0, f4
-    ble WarpZone_FindContaining_L_800A9230
-    li r0, 0x0
-    b WarpZone_FindContaining_L_800A92A8
-    WarpZone_FindContaining_L_800A9230:
-    lfs f0, 0x18(r5)
-    lfs f1, 0x10(r5)
-    fmuls f0, f3, f0
-    fmadds f0, f2, f1, f0
-    fcmpo cr0, f0, f4
-    ble WarpZone_FindContaining_L_800A9250
-    li r0, 0x0
-    b WarpZone_FindContaining_L_800A92A8
-    WarpZone_FindContaining_L_800A9250:
-    lfs f0, 0x24(r6)
-    lfs f1, 0x2c(r6)
-    fsubs f3, f6, f0
-    lfs f0, 0x24(r5)
-    fsubs f2, f5, f1
-    lfs f1, 0x1c(r5)
-    fmuls f0, f3, f0
-    fneg f2, f2
-    fmadds f0, f2, f1, f0
-    fcmpo cr0, f0, f4
-    ble WarpZone_FindContaining_L_800A9284
-    li r0, 0x0
-    b WarpZone_FindContaining_L_800A92A8
-    WarpZone_FindContaining_L_800A9284:
-    lfs f0, 0x30(r5)
-    lfs f1, 0x28(r5)
-    fmuls f0, f3, f0
-    fmadds f0, f2, f1, f0
-    fcmpo cr0, f0, f4
-    ble WarpZone_FindContaining_L_800A92A4
-    li r0, 0x0
-    b WarpZone_FindContaining_L_800A92A8
-    WarpZone_FindContaining_L_800A92A4:
-    li r0, 0x1
-    WarpZone_FindContaining_L_800A92A8:
-    clrlwi r0, r0, 24
-    cmplwi r0, 0x1
-    bne WarpZone_FindContaining_L_800A92BC
-    mr r3, r7
-    b WarpZone_FindContaining_L_800A92CC
-    WarpZone_FindContaining_L_800A92BC:
-    addi r7, r7, 0x1
-    addi r4, r4, 0x50
-    bdnz WarpZone_FindContaining_L_800A91F0
-    WarpZone_FindContaining_L_800A92C8:
-    li r3, -0x1
-    WarpZone_FindContaining_L_800A92CC:
-    addi r1, r1, 0x20
-    blr
+#pragma cplusplus on
+extern "C" int WarpZone_FindContaining(WarpDashMgr *mgr, float x, float y, float z) {
+    if (!mgr->enabled) {
+        return -1;
+    }
+    if (mgr->zoneCount <= 0) {
+        return -1;
+    }
+    WarpVec p(x, y, z);
+    for (int i = 0; i < mgr->zoneCount; i++) {
+        if (WarpZone_Contains(*(WarpZone *)((char *)mgr->zones + i * sizeof(WarpZone)), p) == true) {
+            return i;
+        }
+    }
+    return -1;
 }
+#pragma cplusplus off
 
 asm void WarpDashMgr_Cleanup(void) {
     nofralloc
@@ -613,119 +479,39 @@ int DashZone_ProcessAutoRun(WarpAutoRun *self, float x, float y, float z, float 
     return 1;
 }
 
-asm void WarpAutoRun_GetParam(void) {
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stmw r27, 0x1c(r1)
-    mr r28, r4
-    mr r27, r3
-    mr r29, r5
-    mr r30, r6
-    mr r31, r7
-    lwz r4, 0x4(r3)
-    cmpwi r4, -0x1
-    bne WarpAutoRun_GetParam_L_800A9694
-    li r3, 0x0
-    b WarpAutoRun_GetParam_L_800A97E8
-    WarpAutoRun_GetParam_L_800A9694:
-    lbz r5, 0x20(r27)
-    la r3, lbl_806CF238(r13)  /* lbl_806CF238 */
-    neg r0, r5
-    or r0, r0, r5
-    rlwinm r0, r0, 3, 29, 29
-    lwzx r0, r3, r0
-    cmplwi r0, 0x0
-    beq WarpAutoRun_GetParam_L_800A9700
-    lfd f1, lbl_806D4E00(r2)
-    lfs f0, 0x10(r27)
-    fmul f1, f1, f0
-    frsp f1, f1
-    bl sin
-    frsp f2, f1
-    lfs f0, 0x14(r27)
-    lfd f1, lbl_806D4E00(r2)
-    fadds f0, f0, f2
-    stfs f0, 0x14(r27)
-    lfs f0, 0x10(r27)
-    fmul f1, f1, f0
-    frsp f1, f1
-    bl cos
-    frsp f1, f1
-    lfs f0, 0x1c(r27)
-    fadds f0, f0, f1
-    stfs f0, 0x1c(r27)
-    b WarpAutoRun_GetParam_L_800A9718
-    WarpAutoRun_GetParam_L_800A9700:
-    lis r3, lbl_80328480@ha
-    addi r3, r3, lbl_80328480@l
-    crxor 6, 6, 6
-    bl DebugPrintf
-    li r3, 0x0
-    b WarpAutoRun_GetParam_L_800A97E8
-    WarpAutoRun_GetParam_L_800A9718:
-    lfs f1, 0x14(r27)
-    lfs f0, 0x18(r27)
-    fmuls f2, f1, f1
-    lfs f3, 0x1c(r27)
-    fmuls f1, f0, f0
-    lfs f0, lbl_806D4DE8(r2)
-    fmuls f3, f3, f3
-    fadds f1, f2, f1
-    fadds f4, f3, f1
-    fcmpo cr0, f4, f0
-    ble WarpAutoRun_GetParam_L_800A9790
-    frsqrte f1, f4
-    lfd f3, lbl_806D4E08(r2)
-    lfd f2, lbl_806D4E10(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f4, f0
-    frsp f0, f0
-    stfs f0, 0x8(r1)
-    lfs f4, 0x8(r1)
-    WarpAutoRun_GetParam_L_800A9790:
-    lfs f0, lbl_806D4E18(r2)
-    fcmpo cr0, f4, f0
-    ble WarpAutoRun_GetParam_L_800A97C4
-    fdivs f1, f0, f4
-    lfs f0, 0x14(r27)
-    fmuls f0, f0, f1
-    stfs f0, 0x14(r27)
-    lfs f0, 0x18(r27)
-    fmuls f0, f0, f1
-    stfs f0, 0x18(r27)
-    lfs f0, 0x1c(r27)
-    fmuls f0, f0, f1
-    stfs f0, 0x1c(r27)
-    WarpAutoRun_GetParam_L_800A97C4:
-    lfs f0, 0x14(r27)
-    li r3, 0x1
-    stfs f0, 0x0(r28)
-    lfs f0, 0x18(r27)
-    stfs f0, 0x0(r29)
-    lfs f0, 0x1c(r27)
-    stfs f0, 0x0(r30)
-    lfs f0, 0xc(r27)
-    stfs f0, 0x0(r31)
-    WarpAutoRun_GetParam_L_800A97E8:
-    lmw r27, 0x1c(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+#pragma use_lmw_stmw on
+int WarpAutoRun_GetParam(WarpAutoRun *self, float *vx, float *vy, float *vz, float *yaw) {
+    WarpDashMgr *mgr;
+    int zone;
+    float len;
+    float scale;
+
+    zone = self->zone;
+    if (zone == -1) {
+        return 0;
+    }
+    mgr = WarpDashMgr_GetInstance(self->mgrId);
+    if (mgr != 0) {
+        self->vel.x += WarpAutoRun_sinf(0.017453292519943295 * self->yawTarget);
+        self->vel.z += WarpAutoRun_cosf(0.017453292519943295 * self->yawTarget);
+    } else {
+        DebugPrintf(lbl_80328480, zone);
+        return 0;
+    }
+    len = MathInline_sqrtf(self->vel.x * self->vel.x + self->vel.y * self->vel.y + self->vel.z * self->vel.z);
+    if (len > 100.0f) {
+        scale = 100.0f / len;
+        self->vel.x *= scale;
+        self->vel.y *= scale;
+        self->vel.z *= scale;
+    }
+    *vx = self->vel.x;
+    *vy = self->vel.y;
+    *vz = self->vel.z;
+    *yaw = self->yaw;
+    return 1;
 }
+#pragma use_lmw_stmw reset
 
 void WarpAutoRun_OnEnter(void *self, float f1, float f2, float f3, float f4, float vx, float vy, float vz) {
     *(float *)((char *)self + 0x8) = lbl_806D4E1C;

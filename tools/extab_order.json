@@ -2274,5 +2274,37 @@
     "EffectSteering_InitForVibrate",
     "EffectSteering_InitForLock",
     "ActionLock_Reset"
-  ]
+  ],
+  "src/game/auto_800A8F4C_block.c#warpvec": {
+    "extab": [
+      "dtor_800A9CC8",
+      "dtor_800A9D2C",
+      "WarpZone_FindContainingOBB",
+      "WarpZone_CalcExitPosition",
+      "WarpZone_FindContaining",
+      "WarpDashMgr_Cleanup",
+      "WarpDashMgr_GetOrCreate",
+      "Free_IfOwnedShort",
+      "DashZone_ProcessAutoRun",
+      "WarpAutoRun_GetParam",
+      "WarpZone_CheckEntry",
+      "WarpZone_CalcEdgeVectors",
+      "__dt__7WarpVecFv"
+    ],
+    "extabindex": [
+      "WarpZone_FindContainingOBB",
+      "WarpZone_CalcExitPosition",
+      "WarpZone_FindContaining",
+      "WarpDashMgr_Cleanup",
+      "WarpDashMgr_GetOrCreate",
+      "Free_IfOwnedShort",
+      "DashZone_ProcessAutoRun",
+      "WarpAutoRun_GetParam",
+      "WarpZone_CheckEntry",
+      "WarpZone_CalcEdgeVectors",
+      "dtor_800A9CC8",
+      "dtor_800A9D2C",
+      "__dt__7WarpVecFv"
+    ]
+  }
 }
