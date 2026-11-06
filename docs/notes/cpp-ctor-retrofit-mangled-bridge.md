@@ -899,3 +899,8 @@ c15_u64: ItemEffectImpact_TryArmInit target cross product is normalized projecte
 Source: Codex worker c15_u66_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c15_u66 CardSetupFlowInitial fn_8024AD8C singleton: explicit int duration=lbl_806D1AB0 before state=2 in first service and receipt paths improves fresh93.29949 to95.878174, preserving788B and EH. Target li2/lwz/stw/li0 vs source lwz/li2/li0/stw remains in both blocks; inline BeginFade state helper and explicit short frames snapshot emit identical output. Primary EH raw176/index12 bytes exact, extra four weak dtor EH entries; anonymous @96/@97 bridges still absent. Remains NonMatching; fallback full DOL SHA1OK; zero native gain.
+
+## c16_u3_20261106
+Source: Codex worker c16_u3_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u3 fn_801D8E28: direct native baseline89.443924 ->90.09813 by computing y before x in TU-local offset helper for first two text placements of each mode branch. Same856B and owned EH100; icon FP homes unchanged. Scalar staging returns baseline, canonical vector operator+ regresses39.182243, local position constructor/setter89.2757. Residual streaming aggregate copies via r0 and volatile FP coloring; singleton remains NonMatching. Full fallback-linked DOL SHA1OK, zero native gain.
