@@ -49,13 +49,8 @@ void Effect_SparkPlain_Update(SparkPlainEffect* effect) {
         effect->phase -= lbl_806D5524;
         effect->angle = BuildOrientationFromYaw(lbl_806D5528 + effect->angle);
         {
-            float lifetime;
             float oscillation = (float)sin(effect->angle);
-            oscillation = lbl_806D54B8 + oscillation;
-            oscillation = oscillation * lbl_806D54C0;
-            oscillation = oscillation * lbl_806D54C0 + lbl_806D54C0;
-            lifetime = effect->lifetime;
-            effect->scale = lifetime * oscillation;
+            effect->scale = effect->lifetime * (((1.0f + oscillation) / 2.0f) / 2.0f + 0.5f);
         }
         effect->lifetime -= lbl_806D5510;
         if (effect->lifetime < lbl_806D54E8) {

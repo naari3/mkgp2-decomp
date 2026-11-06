@@ -14,3 +14,8 @@ Final independent foreground `all_source progress build/GNLJ82/report.json build
 Source: Codex worker c15_u31_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c15_u31: explicit case 2: break; default: break; before case 0 (as in neighboring EffectStarBurst) restores target-only dead switch branch at +0x44. Text improves 98.89764/504B to 99.685036/508B; extab8/index12 both100. FP residual remains lifetime f4 vs source f2 and wave f2 vs source f4/f3 at 800C5968..5980 (five rows). Declaration reorder invariant; inline polynomial helper99.6063 reverted. Singleton stays NonMatching; coordinator fallback full DOL SHA1 exact, zero native gain.
+
+## c16_u134_20261106
+Source: Codex worker c16_u134_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 508 B.
+
+c16_u134: compound scale = lifetime * (((1.0f + float-rounded sin(angle))/2.0f)/2.0f +0.5f) resolves all five residual FP register rows. Staged literal polynomial alone regresses99.6063 (operand reversal). Compound division form yields100% text508/extab8/index12. Existing Matching flag promotion needs no split/data/EH changes. Final source-linked full build SHA1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65, gain1fn/508B.
