@@ -176,3 +176,8 @@ c15_u17: FourSpark 800CD5F4 native exact1452B. Baseline99.51791 has only25 FP id
 Source: Codex worker c15_u25_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1076 B.
 
 c15_u25: Cluster16 Update 800C6074/1076B now native exact. Numeric literals resolve growth/limit FP homes; direct envelopes 0.9f*((16.0f-(ordinal-8.0f))/16.0f)+0.1f and 0.8f*((16.0f-ordinal)/16.0f)+0.2f resolve remaining FP homes. Alpha switch must lead with explicit empty case 2 and case 3 before distinct case 0/1 multipliers. This full-domain source shape emits target unreachable branch at 800C63DC; missing branch had also prevented offset-based sdata2 externalization of 0.15f. All text1076/EH8/index12 are 100. Matching promotion, unchanged flags/splits; full source-linked DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65; ELF function address/size exact. Three structural hypotheses.
+
+## c15_u36_20261106
+Source: Codex worker c15_u36_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c15_u36: Joint12 fresh98.06879 ->98.51852 using stageFraction(start,end,age) returning (age-start)*(one/(end-start)). Restores start f3/end f1/reciprocal f1, but amount stays f1 versus target f2; alpha base swaps accordingly. Child-loop helper with local index regresses97.96296; caller-index reference helper is byte-invariant. Reciprocal-only helper also invariant. Retain singleton NonMatching; text756/EH8/index12, EH/index100. No safe split. Final coordinator fallback-linked DOL SHA1 exact; native gain0.

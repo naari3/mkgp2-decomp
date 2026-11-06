@@ -24,10 +24,12 @@ void Vec3_Copy(JointVec *, const JointVec *);
 void VfxSlot_SetPositionFromVec(void *, JointVec);
 void VfxSlot_SetScaleUniform(void *, float);
 }
+static inline float stageFraction(float start, float end, float age) {
+ return (age - start) * (lbl_806D5584 / (end - start));
+}
 static inline void interpolate(Joint12Effect **child, float *row, float age) {
  if (row[0] <= age && age < row[1]) {
-  float t = lbl_806D5584 / (row[1] - row[0]);
-  t = (age - row[0]) * t;
+  float t = stageFraction(row[0], row[1], age);
   (*child)->scale = row[3] + t * (row[4] - row[3]);
   (*child)->alpha = row[6] + t * (row[7] - row[6]);
  }
