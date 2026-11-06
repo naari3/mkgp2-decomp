@@ -1,0 +1,5 @@
+# card-backup-native
+
+Source: Codex worker c15_a27_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 616 B.
+
+card_backup (800746A8, 616 B) matches naturally by combining OSTicksToCalendarTime(OSGetTime(), &calendar), OSCalendarTime structure assignment into lbl_80598A60.blk064.w[1] (+0x68), and the existing Backup_CopyToPublished helper under the available/idle guard. fn_80288210(0, &lbl_80598A60) needs no extra r4 setup because the calendar store already leaves the global address there. pragma use_lmw_stmw on reproduces the large saved-register set; existing Cpp_exceptions on emits exact extab/extabindex after removing manual objects. First structural hypothesis: 100% text/EH. History shows 5f309c38 introduced a generated asm scaffold; 9315f7a0 only renamed the SDK calendar conversion. No historical C failure rationale or dedicated parking note was found in targeted docs/notes search. Canonical backup types/helper arrived in 56e05928 and avoid reconstructing the packed copy. Full build service confirmed target SHA-1.
