@@ -11,17 +11,17 @@ struct KCMatrix {
         m[3][3]=m[2][2]=m[1][1]=m[0][0]=1.0f;
     }
     void multiply(const KCMatrix *b) {
-        KCMatrix out;
+        float out[16];
         for (int i=0; i<4; ++i) {
             for(int j=0;j<4;++j) {
                 float v=m[i][0]*b->m[0][j];
                 v=m[i][1]*b->m[1][j]+v;
                 v=m[i][2]*b->m[2][j]+v;
                 v=m[i][3]*b->m[3][j]+v;
-                out.m[i][j]=v;
+                out[i*4+j]=v;
             }
         }
-        for(int i=0;i<16;++i) (&m[0][0])[i]=(&out.m[0][0])[i];
+        for(int i=0;i<16;++i) (&m[0][0])[i]=out[i];
     }
 };
 struct KCDispatch {
