@@ -10435,7 +10435,9 @@
     "__vt__16CourseLookupBase": "lbl_80419DBC",
     "__vt__12CourseLookup": "lbl_80419DB0",
     "@60": "@etb_8000A0CC",
-    "@61": "@eti_8002276C"
+    "@61": "@eti_8002276C",
+    "@90": "@etb_8000A0CC",
+    "@91": "@eti_8002276C"
   },
   "src/game/WarpDashMgr_Init.cpp": {
     "__ct__15WarpDashManagerFiUcUcUc": "WarpDashMgr_Init",
