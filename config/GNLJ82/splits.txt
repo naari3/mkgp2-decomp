@@ -3009,6 +3009,7 @@ game/CarObjects_FindByEventType.c:
 
 game/RaceScene_PlayerSlots.c:
 	.text       start:0x800A0B34 end:0x800A0BAC
+	.bss        start:0x805D2AE0 end:0x805D2B10
 
 game/CourseData_GetDefaultPathKey_Safe.c:
 	extab       start:0x80009814 end:0x8000981C
