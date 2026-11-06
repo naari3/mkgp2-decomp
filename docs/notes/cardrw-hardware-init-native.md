@@ -1,0 +1,5 @@
+# cardrw-hardware-init-native
+
+Source: Codex worker c15_a63_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1520 B.
+
+CardRW_HardwareInit_Page (0x8006BB04, 1520 B) converts naturally using #pragma cplusplus on / use_lmw_stmw on, canonical TestMenuPage.h InputPlayer/MenuItem, a private HardwareInitPage layout, and an inline draw loop. Keep strings base at entry and response bytes c,b,a as in CleaningTest. Rendering states must use if (step == 1 || step == 2 || step == 3 || step == 4), rather than switch cases: switch emits a compact range dispatch (1512 B, 98.836845%); the OR emits target compare-1 / unsigned range-2..3 / compare-4 sequence and gives exact 1520 B. Remove manual extab/index; existing Cpp_exceptions on emits both exactly. Original history is only cb24bad4 generated all-asm extraction, with no failed-C rationale; targeted docs/notes search found no prior HardwareInit blocker. No flags, splits, symbols, bridges or extab ordering changed. Coordinator build service request 1 verifies ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
