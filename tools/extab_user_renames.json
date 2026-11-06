@@ -11864,5 +11864,11 @@
     "__dt__12MenuModeBaseFv": "dtor_801F63F8",
     "@57": "@etb_800197B4",
     "@58": "@eti_80029D14"
+  },
+  "src/game/PcbDebugOverlay_link.cpp": {
+    "@18": "@etb_80008DC4",
+    "@19": "@eti_800218E4",
+    "__ct__5FKTexFv": "TexMgr_Init",
+    "__dt__5FKTexFv": "dtor_800869D0"
   }
 }

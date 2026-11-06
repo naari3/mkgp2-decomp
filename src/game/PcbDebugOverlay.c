@@ -1,13 +1,10 @@
 /*
- * PCB link debug overlay and link-error screen, 0x80085E3C..0x80086170.
+ * PCB link debug overlay, 0x80085E3C..0x8008604C.
  *
- * This TU owns the .rodata pool at 0x80311E38..0x803123B0. Both functions
- * address their strings off one section base, so the pool is defined here
- * in its original order (the leading float tables and lbl_80312234 are
- * used by other units).
+ * Owns the shared .rodata pool at 0x80311E38..0x803123B0, also used by
+ * PcbDebugOverlay_link.cpp and other units. Keep the original pool order.
  *
- * NonMatching: DebugOverlay_DumpPcbState keeps the listener in r27 where the
- * target reuses r25; everything else, including DrawLinkErrorOverlay, matches.
+ * NonMatching: the listener uses r27 where the target reuses r25.
  */
 
 typedef union PcbLinkFlags {
@@ -220,33 +217,4 @@ void DebugOverlay_DumpPcbState(void)
     OverlayText(1, 0, 8, lbl_80312320, DVDLoad_GetMaxReadSec());
 }
 
-int DrawLinkErrorOverlay(void)
-{
-    FKTex tex;
-
-    if (lbl_806D1191 == 0) {
-        return 0;
-    }
-    TexMgr_Init(&tex);
-    tex.field18 = 1;
-    tex.field20 = -1;
-    fn_801F93EC(&tex, lbl_806D3180, lbl_806D3184);
-    if (isJapanese() == 0) {
-        TexMgr_SetTexture(&tex, lbl_80312338);
-    } else {
-        TexMgr_SetTexture(&tex, lbl_80312350);
-        fn_801F93EC(&tex, lbl_806D3188, lbl_806D3184);
-    }
-    fn_801F8A34(fn_801F8E58(), &tex, 0);
-    fn_801F93EC(&tex, lbl_806D318C, lbl_806D3190);
-    if (isJapanese() == 0) {
-        TexMgr_SetTexture(&tex, lbl_8031236C);
-    } else {
-        TexMgr_SetTexture(&tex, lbl_80312388);
-        fn_801F93EC(&tex, lbl_806D3194, lbl_806D3190);
-    }
-    fn_801F8A34(fn_801F8E58(), &tex, 0);
-    fn_8011F994(0);
-    return 1;
-}
 #pragma exceptions reset
