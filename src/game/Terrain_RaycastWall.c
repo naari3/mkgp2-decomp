@@ -1,9 +1,8 @@
 /*
  * Wall raycast between two positions, 0x80035AE4..0x80035ED4: special-face
  * mesh first, then the terrain grid stepper.
- * NonMatching: the special-face Vec3 copies are scheduled differently
- * (the target copies both .y words first) and the stepper start position
- * lands in f1..f3 instead of f0..f2. The control flow and stack layout match.
+ * The input ranges are independent. The first triangle query belongs to
+ * the stepper constructor so exception cleanup starts after it completes.
  */
 #pragma cplusplus on
 extern "C" {
@@ -27,6 +26,9 @@ typedef struct TerrainSample {
     unsigned char pad_15[3];
 } TerrainSample;
 
+struct TerrainStepper;
+extern "C" unsigned char Terrain_FindTriangleAtPosition(TerrainStepper *, float, float, float);
+
 struct TerrainStepper {
     TerrainSample samples[2];
     Vec3 normal;
@@ -48,6 +50,7 @@ struct TerrainStepper {
         samples[1].z = z;
         samples[1].cell = 0;
         samples[1].triangle = 0;
+        samples[index].onTriangle = Terrain_FindTriangleAtPosition(this, x, y, z);
     }
 
     void Advance(float x, float y, float z)
@@ -57,6 +60,7 @@ struct TerrainStepper {
         samples[index].x = x;
         samples[index].y = y;
         samples[index].z = z;
+        samples[index].onTriangle = Terrain_FindTriangleAtPosition(this, x, y, z);
     }
 
     ~TerrainStepper() {} /* out of line: dtor_80036988 */
@@ -72,7 +76,7 @@ extern const float lbl_806D238C;
 unsigned char SpecialFaceMesh_RaycastThunk(SpecialFaceMesh *mesh, Vec3 *from, Vec3 *to, float *outPos, float *outNormal);
 unsigned char Terrain_GetGroundHeightWithPenetration(float *pos, float *outHeight, float *outNormal,
                                                      unsigned int *outAttr, float penetration);
-unsigned char Terrain_FindTriangleAtPosition(TerrainStepper *st);
+unsigned char Terrain_FindTriangleAtPosition(TerrainStepper *st, float x, float y, float z);
 unsigned char Terrain_WallEdgeTest(TerrainStepper *st);
 unsigned char Terrain_StepAndResolve(TerrainStepper *st);
 }
@@ -106,7 +110,7 @@ static inline SpecialFaceMesh *SpecialFaceMesh_Get(void)
     return m;
 }
 
-extern "C" unsigned char Terrain_RaycastWall(float *from, float *to, float *outPos, float *outNormal)
+extern "C" unsigned char Terrain_RaycastWall(float *__restrict from, float *__restrict to, float *outPos, float *outNormal)
 {
     ScopedTimer timer(0x10);
     SpecialFaceMesh *mesh = SpecialFaceMesh_Get();
@@ -127,14 +131,13 @@ extern "C" unsigned char Terrain_RaycastWall(float *from, float *to, float *outP
         float *xs = &st.samples[0].x;
         float *ys = &st.samples[0].y;
         float *zs = &st.samples[0].z;
-
-        st.samples[st.index].onTriangle = Terrain_FindTriangleAtPosition(&st);
+        float x = to[0], y = to[1], z = to[2];
         st.index++;
         st.index &= 1;
-        *(float *)((char *)xs + st.index * 0x18) = to[0];
-        *(float *)((char *)ys + st.index * 0x18) = to[1];
-        *(float *)((char *)zs + st.index * 0x18) = to[2];
-        st.samples[st.index].onTriangle = Terrain_FindTriangleAtPosition(&st);
+        *(float *)((char *)xs + st.index * 0x18) = x;
+        *(float *)((char *)ys + st.index * 0x18) = y;
+        *(float *)((char *)zs + st.index * 0x18) = z;
+        st.samples[st.index].onTriangle = Terrain_FindTriangleAtPosition(&st, x, y, z);
         if (st.samples[st.index].onTriangle == 1) {
             return 0;
         }

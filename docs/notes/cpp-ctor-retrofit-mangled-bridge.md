@@ -854,3 +854,8 @@ c14_u56: ranking_display 801D1EAC fresh90.60096 (2500B vs2496 target). Nontrivia
 Source: Codex worker c14_u57_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u57 fn_8018B31C: fresh native baseline90.33684; name loop i<5 && i<5 restores target guard/branch pair and improves to90.64771 (6456B vs target6472B). Generic pointer-taking bit/text/clear inline helpers emit identical output; mask-first explicit assignment regresses90.63226. Remaining long-lived GPR webs, inline bit-writer scratch allocation and checksum mask/load scheduling; BSS84 vs target88 pre-existing. One function only, no mechanism-B split. Honest NonMatching; final coordinator build SHA-1 OK, zero native gain.
+
+## c14_u58_20261106
+Source: Codex worker c14_u58_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1008 B.
+
+Terrain_RaycastWall80035AE4: existing declaration omitted three FindTriangle float args, hiding semantic bug as FP regalloc. Initial query belongs in inline stepper ctor (target PC180 cleans timer only); endpoint query needs captured x/y/z. Correct prototype/lifetime plus __restrict from/to permits target y-first aggregate copies and stepper scheduling, reaching100% text1008 and owned EH72/index12. Own @68/@69 bridge restores EH names; full native-linked DOL SHA1 exact.

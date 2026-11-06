@@ -2737,6 +2737,8 @@
     "__vt__8clShadow": "lbl_803F58FC"
   },
   "src/game/Terrain_RaycastWall.c": {
+    "@68": "@etb_80005C28",
+    "@69": "@eti_8001F898",
     "__dt__14TerrainStepperFv": "dtor_80036988"
   },
   "src/game/FileLoader_Open.cpp": {
