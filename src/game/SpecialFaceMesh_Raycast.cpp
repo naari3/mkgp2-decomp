@@ -5,9 +5,9 @@ extern "C" unsigned char SpecialFaceMesh_Raycast(SpecialFaceMeshNative *self,
         const Vec3f *from, const Vec3f *to, Vec3f *out, Vec3f *normal) {
     FaceRaySegment ray;
     ray.delta.x = to->x; ray.delta.y = to->y; ray.delta.z = to->z;
-    ray.delta.x -= from->x; ray.delta.y -= from->y; ray.delta.z -= from->z;
     ray.endpoints[0].x = from->x; ray.endpoints[0].y = from->y; ray.endpoints[0].z = from->z;
     ray.endpoints[1].x = to->x; ray.endpoints[1].y = to->y; ray.endpoints[1].z = to->z;
+    ray.delta.x -= from->x; ray.delta.y -= from->y; ray.delta.z -= from->z;
     float minZ, maxZ = ray.endpoints[1].z;
     if (ray.endpoints[0].z < maxZ) minZ = ray.endpoints[0].z;
     else { minZ = maxZ; maxZ = ray.endpoints[0].z; }
@@ -112,6 +112,7 @@ extern "C" void PtrVec_InsertFill(void *storage, SpecialFaceNative **position,
     FacePtrStorage *s = (FacePtrStorage *)storage;
     if (n != 0) {
         if (n > 0x3fffffff || s->count > 0x3fffffff - n) throw std::length_error(lbl_80311BDC);
+        SpecialFaceNative **old;
         unsigned int size = s->count + n;
         if (size <= s->capacity) {
             SpecialFaceNative **end = s->data + s->count;
@@ -126,7 +127,7 @@ extern "C" void PtrVec_InsertFill(void *storage, SpecialFaceNative **position,
             for (unsigned int i = n; i; --i) *out++ = *source;
             s->count += n;
         } else {
-            SpecialFaceNative **old = s->data;
+            old = s->data;
             int offset = position - old;
             unsigned int capacity = s->capacity ? s->capacity : 1;
             while (size > capacity) {
@@ -159,7 +160,7 @@ extern "C" void PtrVec_Reserve(void *storage, unsigned int capacity) {
         SpecialFaceNative **old = s->data;
         s->data = (SpecialFaceNative **)Alloc(capacity * 4);
         if (old) {
-            SpecialFaceNative **p = old, **end = old + s->count, **out = s->data;
+            SpecialFaceNative **end = old + s->count, **p = old, **out = s->data;
             while (p < end) *out++ = *p++;
             operator delete(old);
         }
