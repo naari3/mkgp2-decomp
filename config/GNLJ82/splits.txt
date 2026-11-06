@@ -4761,6 +4761,7 @@ game/Item_ComputeBiasedTargetPos.c:
 	extab       start:0x8000B35C end:0x8000B364
 	extabindex  start:0x80023A20 end:0x80023A2C
 	.text       start:0x800D8E20 end:0x800D8F6C
+	.data       start:0x8041E8B0 end:0x8041E8E4
 
 game/Vec3_AddNormalizedXZ.c:
 	extab       start:0x8000B364 end:0x8000B36C
