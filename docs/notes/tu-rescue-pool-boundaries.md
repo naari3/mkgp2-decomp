@@ -38,3 +38,8 @@ c14_u8: HSD_LObjGetLightVector 802C42F0 text296/rodata24 reaches objdiff100 with
 Source: Codex worker c16_u40_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u40: DNBress ctor 80227B98 is a single-function NonMatching TU. Target strings use lbl_803C6ED0+0x10000 retained across calls; actual strings are addressed with negative offsets. Retain spawn/update FireFuncs view at lbl_804EDF80+0x18 to reproduce tail offsets and new-expression pointer r26. These two changes improve default objdiff84.09267->93.413124 (service report93.683395), primary size1080->1040 vs target1036. Remaining independent implicit vtable load (target derives vtable from same data base+0x54), prologue schedule and self/string register partition prevent promotion. Literal zero/one probe93.316605 reverted. No flags/splits changed; full build SHA-1 OK with fallback, native gain0.
+
+## c16_u75_20261106
+Source: Codex worker c16_u75_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u75: LObjInfoInit 802C63B0 uses persistent hsdLObj data base, class-name strings at +0x13C/+0x154. Shared-base C improves default objdiff69.53125->91.25 (service report73.59->93.125); reconstructing lbl_804FC43C[0x44] and lbl_804FC480[0x48] string pools makes .data100. Residual: target addi-zero copies for call/store base versus compiler mr/direct r31 stores, producing124 vs128 bytes. Parent-member address and base+0 probes byte-invariant; reverted. Remains NonMatching, no native gain. Pool-disabling objdiff92.78125. Future promotion should check 4-byte data alignment at804FC43C.
