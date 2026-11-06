@@ -14,7 +14,19 @@ extern int Race_CompareKartProgress(void *, void *, void *);
 
 extern int g_ccClass;
 #define PUSH(id) VoiceQueue_Push((id), -1, 0, 1)
-#define SELECT(entry) VoiceGoal_Select((entry)->character, (entry)->id, tables + 14, tables + 94)
+#define SELECT(entry) Goal_Select(tables, (entry)->character, (entry)->id)
+static inline short Goal_Select(short *tables, int character, int id) {
+    short *normal = tables + 14;
+    short *special = tables + 94;
+    short voice = 0x43;
+    if (character > -1 && character < 13) {
+        if (g_gameMode == 2) {
+            if (id >= 0 && id <= 3) voice = special[character + id * 13];
+            else voice = normal[character];
+        } else voice = normal[character];
+    }
+    return voice;
+}
 static inline float *Goal_Line(float *lines) {
     return &lines[g_ccClass * 128 + ((g_cupId - 1) * 16 + (g_longRoundFlag * 8 + g_reverseRoundFlag * 4))];
 }
