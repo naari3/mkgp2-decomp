@@ -5382,7 +5382,16 @@
     "extab_fn_801461B0": "@etb_8000DE6C",
     "extabindex_fn_801461B0": "@eti_80025298",
     "extab_fn_80146260": "@etb_8000DE74",
-    "extabindex_fn_80146260": "@eti_800252A4"
+    "extabindex_fn_80146260": "@eti_800252A4",
+    "__ct__20clCSPartsResultPanelFv": "fn_80146260",
+    "__vt__20clCSPartsResultPanel": "lbl_8048EF98",
+    "__vt__9clCSParts": "lbl_8048EE48",
+    "__vt__17clCSPartsInerface": "lbl_8048EB44",
+    "__dt__9clCSPartsFv": "dtor_80143F0C",
+    "__dt__17clCSPartsInerfaceFv": "dtor_8013EB50",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__9clCSModelFiiiPCvi": "fn_8013B9A0"
   },
   "src/game/LapSelect_80146410.cpp": {
     "extab_fn_80146410": "@etb_8000DF14",

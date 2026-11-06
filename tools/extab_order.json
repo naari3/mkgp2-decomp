@@ -944,7 +944,8 @@
   ],
   "src/game/RankPanelBase_801461B0.cpp": [
     "fn_801461B0",
-    "fn_80146260"
+    "fn_80146260",
+    "dtor_8013EB50"
   ],
   "src/game/LapSelect_80146410.cpp": [
     "fn_80146410",
