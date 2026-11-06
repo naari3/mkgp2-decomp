@@ -6,6 +6,60 @@
  */
 #pragma cplusplus on
 extern "C" {
+void GXBegin(int type, int vtxfmt, unsigned short nverts);
+void GXClearVtxDesc(void);
+void GXLoadTexObj(void *obj, int id);
+void GXLoadTlut(void *obj, unsigned int name);
+void GXSetAlphaCompare(int comp0, unsigned char ref0, int op, int comp1, unsigned char ref1);
+void GXSetBlendMode(int type, int src, int dst, int op);
+void GXSetChanCtrl(int chan, unsigned char enable, int amb, int mat, unsigned int mask, int diff, int attn);
+void GXSetCullMode(int mode);
+void GXSetNumChans(unsigned char n);
+void GXSetNumTevStages(unsigned char n);
+void GXSetNumTexGens(unsigned char n);
+void GXSetProjectionv(const float *p);
+void GXSetScissor(unsigned int left, unsigned int top, unsigned int wd, unsigned int ht);
+void GXSetTevAlphaIn(int stage, int a, int b, int c, int d);
+void GXSetTevAlphaOp(int stage, int op, int bias, int scale, unsigned char clamp, int reg);
+void GXSetTevColorIn(int stage, int a, int b, int c, int d);
+void GXSetTevColorOp(int stage, int op, int bias, int scale, unsigned char clamp, int reg);
+void GXSetTevOp(int stage, int mode);
+void GXSetTevOrder(int stage, int coord, int map, int color);
+void GXSetTexCoordGen2(int dst, int func, int src, unsigned int mtx, unsigned char normalize, unsigned int ptmtx);
+void GXSetViewport(float x, float y, float w, float h, float nearz, float farz);
+void GXSetVtxAttrFmt(int vtxfmt, int attr, int cnt, int type, unsigned char frac);
+void GXSetVtxDesc(int attr, int type);
+void GXSetZCompLoc(unsigned char before);
+void GXSetZMode(unsigned char compare, int func, unsigned char update);
+}
+
+union GXFifoPipe {
+    unsigned int u32;
+    float f32;
+};
+volatile GXFifoPipe GXWGFifo : 0xCC008000;
+
+static inline void GXPosition2f32(float x, float y) {
+    GXWGFifo.f32 = x;
+    GXWGFifo.f32 = y;
+}
+
+static inline void GXPosition3f32(float x, float y, float z) {
+    GXWGFifo.f32 = x;
+    GXWGFifo.f32 = y;
+    GXWGFifo.f32 = z;
+}
+
+static inline void GXColor1u32(unsigned int c) {
+    GXWGFifo.u32 = c;
+}
+
+static inline void GXTexCoord2f32(float s, float t) {
+    GXWGFifo.f32 = s;
+    GXWGFifo.f32 = t;
+}
+
+extern "C" {
 unsigned int OSGetTick(void);
 void Profiler_RecordFrame(int slot, float value);
 extern const float lbl_806D6D98;
@@ -20,7 +74,30 @@ typedef struct SpriteHandle {
     int next;
     unsigned char keep;
     unsigned char released;
-    char padE[0xD8 - 0xE];
+    char padE[0x14 - 0xE];
+    void *texObj;
+    void *tlut;
+    char pad1C[0x24 - 0x1C];
+    signed char tevMode;
+    unsigned char posMode;
+    char pad26[0x30 - 0x26];
+    float z;
+    char pad34[0x48 - 0x34];
+    signed char uvFlip;
+    char pad49[0x64 - 0x49];
+    unsigned int color[4];
+    char pad74[4];
+    int blendType;
+    int blendSrc;
+    int blendDst;
+    int blendOp;
+    float corner[4][2];
+    float uv[2][2];
+    unsigned char hasTex2;
+    char padB9[0xC0 - 0xB9];
+    void *texObj2;
+    void *tlut2;
+    float uv2[2][2];
     unsigned char hasCallback;
     unsigned char callbackOn;
     char padDA[2];
@@ -81,53 +158,28 @@ private:
     unsigned int m_startTick;
 };
 
+struct SpriteUVTable {
+    int idx[4][4][2];
+};
+
+struct SavedGXState {
+    int cullMode;
+    float proj[7];
+    float viewport[6];
+    unsigned int scissor[4];
+};
+
 extern "C" {
-extern void GXBegin();
-extern void GXClearVtxDesc();
-extern void GXLoadTexObj();
-extern void GXLoadTlut();
-extern void GXSetAlphaCompare();
-extern void GXSetBlendMode();
-extern void GXSetChanCtrl();
-extern void GXSetCullMode();
-extern void GXSetNumChans();
-extern void GXSetNumTevStages();
-extern void GXSetNumTexGens();
-extern void GXSetProjectionv();
-extern void GXSetScissor();
-extern void GXSetTevAlphaIn();
-extern void GXSetTevAlphaOp();
-extern void GXSetTevColorIn();
-extern void GXSetTevColorOp();
-extern void GXSetTevOp();
-extern void GXSetTevOrder();
-extern void GXSetTexCoordGen2();
-extern void GXSetViewport();
-extern void GXSetVtxAttrFmt();
-extern void GXSetVtxDesc();
-extern void GXSetZCompLoc();
-extern void GXSetZMode();
-extern void fn_8011EC18();
-extern void HSD_StateInvalidate();
-extern unsigned int lbl_806D14F0;
-extern unsigned int lbl_806D14F1;
-extern unsigned int lbl_806D14F4;
-extern unsigned int lbl_806D14F8;
-extern unsigned int lbl_806D14FC;
-extern unsigned int lbl_803325D0[];
-extern unsigned int lbl_806573A0[];
-asm void fn_8011E31C(struct SpriteHandle *);
-
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_fn_8011E31C[8] = {
-    0x38, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8011E31C = {
-    (void *)&fn_8011E31C, 0x000006A4, (void *)extab_fn_8011E31C
-};
-
+void fn_8011EC18(unsigned char a);
+void HSD_StateInvalidate(int state);
+extern unsigned char lbl_806D14F0;
+extern signed char lbl_806D14F1;
+extern void *lbl_806D14F4;
+extern void *lbl_806D14F8;
+extern signed char lbl_806D14FC;
+extern const SpriteUVTable lbl_803325D0;
+extern SavedGXState lbl_806573A0;
+void fn_8011E31C(SpriteHandle *h);
 }
 
 
@@ -151,478 +203,177 @@ extern "C" void fn_8011DF98(SpriteHandle *h) {
     }
 }
 
-extern "C" asm void fn_8011E31C(struct SpriteHandle *) { /* 0x8011E31C size:0x6A4 */
-    nofralloc
-    stwu r1, -0xb0(r1)
-    mflr r0
-    lis r4, lbl_803325D0@ha
-    stw r0, 0xb4(r1)
-    addi r4, r4, lbl_803325D0@l
-    li r0, 0x10
-    addi r5, r1, 0x4
-    stmw r25, 0x94(r1)
-    mr r25, r3
-    li r31, 0x0
-    subi r4, r4, 0x4
-    li r30, 0x0
-    li r29, 0x0
-    li r28, 0x0
-    li r27, 0x0
-    li r26, 0x0
-    mtctr r0
-    fn_8011E31C_L_8011E360:
-    lwz r3, 0x4(r4)
-    lwzu r0, 0x8(r4)
-    stw r3, 0x4(r5)
-    stwu r0, 0x8(r5)
-    bdnz fn_8011E31C_L_8011E360
-    lbz r0, lbl_806D14F0(r13)
-    lbz r3, 0x25(r25)
-    cmplw r0, r3
-    beq fn_8011E31C_L_8011E388
-    li r27, 0x1
-    fn_8011E31C_L_8011E388:
-    stb r3, lbl_806D14F0(r13)
-    lbz r0, lbl_806D14F1(r13)
-    lbz r4, 0x24(r25)
-    extsb r0, r0
-    extsb r3, r4
-    cmpw r3, r0
-    beq fn_8011E31C_L_8011E3A8
-    li r26, 0x1
-    fn_8011E31C_L_8011E3A8:
-    stb r4, lbl_806D14F1(r13)
-    lbz r0, 0x25(r25)
-    cmplwi r0, 0x1
-    bne fn_8011E31C_L_8011E3BC
-    li r31, 0x1
-    fn_8011E31C_L_8011E3BC:
-    lbz r3, 0x24(r25)
-    cmpwi r3, 0x1
-    beq fn_8011E31C_L_8011E3CC
-    li r30, 0x1
-    fn_8011E31C_L_8011E3CC:
-    extsb r0, r3
-    cmpwi r0, 0x2
-    beq fn_8011E31C_L_8011E3DC
-    li r29, 0x1
-    fn_8011E31C_L_8011E3DC:
-    lbz r0, 0xb8(r25)
-    cmplwi r0, 0x0
-    beq fn_8011E31C_L_8011E3EC
-    li r28, 0x1
-    fn_8011E31C_L_8011E3EC:
-    lbz r0, lbl_806D14FC(r13)
-    extsb r0, r0
-    cmpw r28, r0
-    beq fn_8011E31C_L_8011E400
-    li r26, 0x1
-    fn_8011E31C_L_8011E400:
-    cmpwi r27, 0x0
-    stb r28, lbl_806D14FC(r13)
-    beq fn_8011E31C_L_8011E4CC
-    li r3, 0x4
-    li r4, 0x1
-    li r5, 0x1
-    li r6, 0x1
-    li r7, 0x1
-    li r8, 0x2
-    li r9, 0x2
-    bl GXSetChanCtrl
-    li r3, 0x7
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x7
-    li r7, 0x0
-    bl GXSetAlphaCompare
-    li r3, 0x1
-    bl GXSetZCompLoc
-    li r3, 0x1
-    li r4, 0x3
-    li r5, 0x1
-    bl GXSetZMode
-    lis r3, lbl_806573A0@ha
-    addi r6, r3, lbl_806573A0@l
-    lwz r3, 0x38(r6)
-    lwz r4, 0x3c(r6)
-    lwz r5, 0x40(r6)
-    lwz r6, 0x44(r6)
-    bl GXSetScissor
-    lis r3, lbl_806573A0@ha
-    addi r3, r3, lbl_806573A0@l
-    lfs f1, 0x20(r3)
-    lfs f2, 0x24(r3)
-    lfs f3, 0x28(r3)
-    lfs f4, 0x2c(r3)
-    lfs f5, 0x30(r3)
-    lfs f6, 0x34(r3)
-    bl GXSetViewport
-    lis r3, lbl_806573A0@ha
-    addi r3, r3, lbl_806573A0@l
-    addi r3, r3, 0x4
-    bl GXSetProjectionv
-    lis r3, lbl_806573A0@ha
-    addi r3, r3, lbl_806573A0@l
-    lwz r3, 0x0(r3)
-    bl GXSetCullMode
-    li r3, -0x1
-    bl HSD_StateInvalidate
-    lbz r3, 0x25(r25)
-    bl fn_8011EC18
-    fn_8011E31C_L_8011E4CC:
-    lwz r3, 0x78(r25)
-    lwz r4, 0x7c(r25)
-    lwz r5, 0x80(r25)
-    lwz r6, 0x84(r25)
-    bl GXSetBlendMode
-    cmpwi r26, 0x0
-    beq fn_8011E31C_L_8011E56C
-    cmpwi r28, 0x0
-    beq fn_8011E31C_L_8011E534
-    li r3, 0x2
-    bl GXSetNumTexGens
-    li r3, 0x0
-    li r4, 0x1
-    li r5, 0x4
-    li r6, 0x3c
-    li r7, 0x0
-    li r8, 0x7d
-    bl GXSetTexCoordGen2
-    li r3, 0x1
-    li r4, 0x1
-    li r5, 0x5
-    li r6, 0x3c
-    li r7, 0x0
-    li r8, 0x7d
-    bl GXSetTexCoordGen2
-    b fn_8011E31C_L_8011E56C
-    fn_8011E31C_L_8011E534:
-    cmpwi r29, 0x0
-    beq fn_8011E31C_L_8011E564
-    li r3, 0x1
-    bl GXSetNumTexGens
-    li r3, 0x0
-    li r4, 0x1
-    li r5, 0x4
-    li r6, 0x3c
-    li r7, 0x0
-    li r8, 0x7d
-    bl GXSetTexCoordGen2
-    b fn_8011E31C_L_8011E56C
-    fn_8011E31C_L_8011E564:
-    li r3, 0x0
-    bl GXSetNumTexGens
-    fn_8011E31C_L_8011E56C:
-    cmpwi r26, 0x0
-    beq fn_8011E31C_L_8011E590
-    cmpwi r30, 0x0
-    bne fn_8011E31C_L_8011E588
-    li r3, 0x0
-    bl GXSetNumChans
-    b fn_8011E31C_L_8011E590
-    fn_8011E31C_L_8011E588:
-    li r3, 0x1
-    bl GXSetNumChans
-    fn_8011E31C_L_8011E590:
-    cmpwi r26, 0x0
-    beq fn_8011E31C_L_8011E740
-    cmpwi r28, 0x0
-    beq fn_8011E31C_L_8011E5AC
-    li r3, 0x2
-    bl GXSetNumTevStages
-    b fn_8011E31C_L_8011E5B4
-    fn_8011E31C_L_8011E5AC:
-    li r3, 0x1
-    bl GXSetNumTevStages
-    fn_8011E31C_L_8011E5B4:
-    cmpwi r29, 0x0
-    bne fn_8011E31C_L_8011E5C8
-    li r4, 0xff
-    li r5, 0xff
-    b fn_8011E31C_L_8011E5D0
-    fn_8011E31C_L_8011E5C8:
-    li r4, 0x0
-    li r5, 0x0
-    fn_8011E31C_L_8011E5D0:
-    cmpwi r30, 0x0
-    li r3, 0x0
-    li r6, 0xff
-    beq fn_8011E31C_L_8011E5E4
-    li r6, 0x4
-    fn_8011E31C_L_8011E5E4:
-    bl GXSetTevOrder
-    cmpwi r28, 0x0
-    beq fn_8011E31C_L_8011E604
-    li r3, 0x1
-    li r4, 0x1
-    li r5, 0x1
-    li r6, 0xff
-    bl GXSetTevOrder
-    fn_8011E31C_L_8011E604:
-    lbz r0, 0x24(r25)
-    extsb r0, r0
-    cmpwi r0, 0x3
-    beq fn_8011E31C_L_8011E654
-    bge fn_8011E31C_L_8011E628
-    cmpwi r0, 0x1
-    beq fn_8011E31C_L_8011E634
-    bge fn_8011E31C_L_8011E644
-    b fn_8011E31C_L_8011E6C4
-    fn_8011E31C_L_8011E628:
-    cmpwi r0, 0x5
-    bge fn_8011E31C_L_8011E6C4
-    b fn_8011E31C_L_8011E68C
-    fn_8011E31C_L_8011E634:
-    li r3, 0x0
-    li r4, 0x3
-    bl GXSetTevOp
-    b fn_8011E31C_L_8011E6D0
-    fn_8011E31C_L_8011E644:
-    li r3, 0x0
-    li r4, 0x4
-    bl GXSetTevOp
-    b fn_8011E31C_L_8011E6D0
-    fn_8011E31C_L_8011E654:
-    li r3, 0x0
-    li r4, 0x8
-    li r5, 0x9
-    li r6, 0xb
-    li r7, 0xa
-    bl GXSetTevColorIn
-    li r3, 0x0
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    li r7, 0x1
-    li r8, 0x0
-    bl GXSetTevColorOp
-    b fn_8011E31C_L_8011E6D0
-    fn_8011E31C_L_8011E68C:
-    li r3, 0x0
-    li r4, 0x8
-    li r5, 0xf
-    li r6, 0xf
-    li r7, 0xa
-    bl GXSetTevColorIn
-    li r3, 0x0
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    li r7, 0x1
-    li r8, 0x0
-    bl GXSetTevColorOp
-    b fn_8011E31C_L_8011E6D0
-    fn_8011E31C_L_8011E6C4:
-    li r3, 0x0
-    li r4, 0x0
-    bl GXSetTevOp
-    fn_8011E31C_L_8011E6D0:
-    cmpwi r28, 0x0
-    beq fn_8011E31C_L_8011E740
-    li r3, 0x1
-    li r4, 0x0
-    li r5, 0xf
-    li r6, 0xf
-    li r7, 0xf
-    bl GXSetTevColorIn
-    li r3, 0x1
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    li r7, 0x1
-    li r8, 0x0
-    bl GXSetTevColorOp
-    li r3, 0x1
-    li r4, 0x7
-    li r5, 0x4
-    li r6, 0x0
-    li r7, 0x7
-    bl GXSetTevAlphaIn
-    li r3, 0x1
-    li r4, 0x0
-    li r5, 0x0
-    li r6, 0x0
-    li r7, 0x1
-    li r8, 0x0
-    bl GXSetTevAlphaOp
-    fn_8011E31C_L_8011E740:
-    cmpwi r26, 0x0
-    bne fn_8011E31C_L_8011E750
-    cmpwi r27, 0x0
-    beq fn_8011E31C_L_8011E7C8
-    fn_8011E31C_L_8011E750:
-    bl GXClearVtxDesc
-    li r3, 0x9
-    li r4, 0x1
-    bl GXSetVtxDesc
-    cmpwi r31, 0x0
-    bne fn_8011E31C_L_8011E784
-    li r3, 0x0
-    li r4, 0x9
-    li r5, 0x0
-    li r6, 0x4
-    li r7, 0x0
-    bl GXSetVtxAttrFmt
-    b fn_8011E31C_L_8011E79C
-    fn_8011E31C_L_8011E784:
-    li r3, 0x0
-    li r4, 0x9
-    li r5, 0x1
-    li r6, 0x4
-    li r7, 0x0
-    bl GXSetVtxAttrFmt
-    fn_8011E31C_L_8011E79C:
-    cmpwi r30, 0x0
-    beq fn_8011E31C_L_8011E7C8
-    li r3, 0xb
-    li r4, 0x1
-    bl GXSetVtxDesc
-    li r3, 0x0
-    li r4, 0xb
-    li r5, 0x1
-    li r6, 0x5
-    li r7, 0x0
-    bl GXSetVtxAttrFmt
-    fn_8011E31C_L_8011E7C8:
-    cmpwi r29, 0x0
-    beq fn_8011E31C_L_8011E83C
-    lwz r3, 0x14(r25)
-    lwz r0, lbl_806D14F4(r13)
-    cmplw r3, r0
-    beq fn_8011E31C_L_8011E808
-    lwz r3, 0x18(r25)
-    cmplwi r3, 0x0
-    beq fn_8011E31C_L_8011E7F4
-    li r4, 0x0
-    bl GXLoadTlut
-    fn_8011E31C_L_8011E7F4:
-    lwz r3, 0x14(r25)
-    li r4, 0x0
-    bl GXLoadTexObj
-    lwz r0, 0x14(r25)
-    stw r0, lbl_806D14F4(r13)
-    fn_8011E31C_L_8011E808:
-    cmpwi r26, 0x0
-    bne fn_8011E31C_L_8011E818
-    cmpwi r27, 0x0
-    beq fn_8011E31C_L_8011E83C
-    fn_8011E31C_L_8011E818:
-    li r3, 0xd
-    li r4, 0x1
-    bl GXSetVtxDesc
-    li r3, 0x0
-    li r4, 0xd
-    li r5, 0x1
-    li r6, 0x4
-    li r7, 0x0
-    bl GXSetVtxAttrFmt
-    fn_8011E31C_L_8011E83C:
-    cmpwi r28, 0x0
-    beq fn_8011E31C_L_8011E890
-    lwz r3, 0xc4(r25)
-    cmplwi r3, 0x0
-    beq fn_8011E31C_L_8011E858
-    li r4, 0x1
-    bl GXLoadTlut
-    fn_8011E31C_L_8011E858:
-    lwz r3, 0xc0(r25)
-    li r4, 0x1
-    bl GXLoadTexObj
-    lwz r0, 0xc0(r25)
-    li r3, 0xe
-    li r4, 0x1
-    stw r0, lbl_806D14F8(r13)
-    bl GXSetVtxDesc
-    li r3, 0x0
-    li r4, 0xe
-    li r5, 0x1
-    li r6, 0x4
-    li r7, 0x0
-    bl GXSetVtxAttrFmt
-    fn_8011E31C_L_8011E890:
-    li r3, 0x80
-    li r4, 0x0
-    li r5, 0x4
-    bl GXBegin
-    li r0, 0x4
-    mr r3, r25
-    mr r4, r25
-    li r5, 0x0
-    mtctr r0
-    fn_8011E31C_L_8011E8B4:
-    cmpwi r31, 0x0
-    bne fn_8011E31C_L_8011E8D4
-    lfs f1, 0x8c(r3)
-    lis r6, 0xcc01
-    lfs f0, 0x88(r3)
-    stfs f0, -0x8000(r6)
-    stfs f1, -0x8000(r6)
-    b fn_8011E31C_L_8011E8F0
-    fn_8011E31C_L_8011E8D4:
-    lfs f2, 0x30(r25)
-    lis r6, 0xcc01
-    lfs f1, 0x8c(r3)
-    lfs f0, 0x88(r3)
-    stfs f0, -0x8000(r6)
-    stfs f1, -0x8000(r6)
-    stfs f2, -0x8000(r6)
-    fn_8011E31C_L_8011E8F0:
-    cmpwi r30, 0x0
-    beq fn_8011E31C_L_8011E904
-    lwz r0, 0x64(r4)
-    lis r6, 0xcc01
-    stw r0, -0x8000(r6)
-    fn_8011E31C_L_8011E904:
-    cmpwi r29, 0x0
-    beq fn_8011E31C_L_8011E950
-    lbz r7, 0x48(r25)
-    addi r0, r1, 0x8
-    lis r6, 0xcc01
-    extsb r7, r7
-    slwi r7, r7, 5
-    add r8, r7, r5
-    add r8, r0, r8
-    lwz r7, 0x4(r8)
-    lwz r0, 0x0(r8)
-    slwi r8, r7, 3
-    slwi r7, r0, 3
-    addi r8, r8, 0xac
-    addi r0, r7, 0xa8
-    lfsx f1, r25, r8
-    lfsx f0, r25, r0
-    stfs f0, -0x8000(r6)
-    stfs f1, -0x8000(r6)
-    fn_8011E31C_L_8011E950:
-    cmpwi r28, 0x0
-    beq fn_8011E31C_L_8011E99C
-    lbz r7, 0x48(r25)
-    addi r0, r1, 0x8
-    lis r6, 0xcc01
-    extsb r7, r7
-    slwi r7, r7, 5
-    add r8, r7, r5
-    add r8, r0, r8
-    lwz r7, 0x4(r8)
-    lwz r0, 0x0(r8)
-    slwi r8, r7, 3
-    slwi r7, r0, 3
-    addi r8, r8, 0xcc
-    addi r0, r7, 0xc8
-    lfsx f1, r25, r8
-    lfsx f0, r25, r0
-    stfs f0, -0x8000(r6)
-    stfs f1, -0x8000(r6)
-    fn_8011E31C_L_8011E99C:
-    addi r3, r3, 0x8
-    addi r4, r4, 0x4
-    addi r5, r5, 0x8
-    bdnz fn_8011E31C_L_8011E8B4
-    lmw r25, 0x94(r1)
-    lwz r0, 0xb4(r1)
-    mtlr r0
-    addi r1, r1, 0xb0
-    blr
+#pragma use_lmw_stmw on
+extern "C" void fn_8011E31C(SpriteHandle *h) {
+    int is3D = 0;
+    int useColor = 0;
+    int useTex = 0;
+    int useTex2 = 0;
+    int modeChanged = 0;
+    int tevChanged = 0;
+    SpriteUVTable tbl = lbl_803325D0;
+    int i;
+    int coord;
+    int map;
+
+    if (lbl_806D14F0 != h->posMode) {
+        modeChanged = 1;
+    }
+    lbl_806D14F0 = h->posMode;
+    if (h->tevMode != lbl_806D14F1) {
+        tevChanged = 1;
+    }
+    lbl_806D14F1 = h->tevMode;
+    if (h->posMode == 1) {
+        is3D = 1;
+    }
+    if (h->tevMode != 1) {
+        useColor = 1;
+    }
+    if (h->tevMode != 2) {
+        useTex = 1;
+    }
+    if (h->hasTex2 != 0) {
+        useTex2 = 1;
+    }
+    if (useTex2 != lbl_806D14FC) {
+        tevChanged = 1;
+    }
+    lbl_806D14FC = useTex2;
+
+    if (modeChanged) {
+        GXSetChanCtrl(4, 1, 1, 1, 1, 2, 2);
+        GXSetAlphaCompare(7, 0, 0, 7, 0);
+        GXSetZCompLoc(1);
+        GXSetZMode(1, 3, 1);
+        GXSetScissor(lbl_806573A0.scissor[0], lbl_806573A0.scissor[1], lbl_806573A0.scissor[2], lbl_806573A0.scissor[3]);
+        GXSetViewport(lbl_806573A0.viewport[0], lbl_806573A0.viewport[1], lbl_806573A0.viewport[2],
+            lbl_806573A0.viewport[3], lbl_806573A0.viewport[4], lbl_806573A0.viewport[5]);
+        GXSetProjectionv(lbl_806573A0.proj);
+        GXSetCullMode(lbl_806573A0.cullMode);
+        HSD_StateInvalidate(-1);
+        fn_8011EC18(h->posMode);
+    }
+    GXSetBlendMode(h->blendType, h->blendSrc, h->blendDst, h->blendOp);
+
+    if (tevChanged) {
+        if (useTex2) {
+            GXSetNumTexGens(2);
+            GXSetTexCoordGen2(0, 1, 4, 0x3C, 0, 0x7D);
+            GXSetTexCoordGen2(1, 1, 5, 0x3C, 0, 0x7D);
+        } else if (useTex) {
+            GXSetNumTexGens(1);
+            GXSetTexCoordGen2(0, 1, 4, 0x3C, 0, 0x7D);
+        } else {
+            GXSetNumTexGens(0);
+        }
+    }
+    if (tevChanged) {
+        if (!useColor) {
+            GXSetNumChans(0);
+        } else {
+            GXSetNumChans(1);
+        }
+    }
+    if (tevChanged) {
+        if (useTex2) {
+            GXSetNumTevStages(2);
+        } else {
+            GXSetNumTevStages(1);
+        }
+        if (!useTex) {
+            coord = 0xFF;
+            map = 0xFF;
+        } else {
+            coord = 0;
+            map = 0;
+        }
+        GXSetTevOrder(0, coord, map, useColor ? 4 : 0xFF);
+        if (useTex2) {
+            GXSetTevOrder(1, 1, 1, 0xFF);
+        }
+        switch (h->tevMode) {
+        case 1:
+            GXSetTevOp(0, 3);
+            break;
+        case 2:
+            GXSetTevOp(0, 4);
+            break;
+        case 3:
+            GXSetTevColorIn(0, 8, 9, 0xB, 0xA);
+            GXSetTevColorOp(0, 0, 0, 0, 1, 0);
+            break;
+        case 4:
+            GXSetTevColorIn(0, 8, 0xF, 0xF, 0xA);
+            GXSetTevColorOp(0, 0, 0, 0, 1, 0);
+            break;
+        default:
+            GXSetTevOp(0, 0);
+            break;
+        }
+        if (useTex2) {
+            GXSetTevColorIn(1, 0, 0xF, 0xF, 0xF);
+            GXSetTevColorOp(1, 0, 0, 0, 1, 0);
+            GXSetTevAlphaIn(1, 7, 4, 0, 7);
+            GXSetTevAlphaOp(1, 0, 0, 0, 1, 0);
+        }
+    }
+
+    if (tevChanged || modeChanged) {
+        GXClearVtxDesc();
+        GXSetVtxDesc(9, 1);
+        if (!is3D) {
+            GXSetVtxAttrFmt(0, 9, 0, 4, 0);
+        } else {
+            GXSetVtxAttrFmt(0, 9, 1, 4, 0);
+        }
+        if (useColor) {
+            GXSetVtxDesc(0xB, 1);
+            GXSetVtxAttrFmt(0, 0xB, 1, 5, 0);
+        }
+    }
+    if (useTex) {
+        if (h->texObj != lbl_806D14F4) {
+            if (h->tlut != 0) {
+                GXLoadTlut(h->tlut, 0);
+            }
+            GXLoadTexObj(h->texObj, 0);
+            lbl_806D14F4 = h->texObj;
+        }
+        if (tevChanged || modeChanged) {
+            GXSetVtxDesc(0xD, 1);
+            GXSetVtxAttrFmt(0, 0xD, 1, 4, 0);
+        }
+    }
+    if (useTex2) {
+        if (h->tlut2 != 0) {
+            GXLoadTlut(h->tlut2, 1);
+        }
+        GXLoadTexObj(h->texObj2, 1);
+        lbl_806D14F8 = h->texObj2;
+        GXSetVtxDesc(0xE, 1);
+        GXSetVtxAttrFmt(0, 0xE, 1, 4, 0);
+    }
+
+    GXBegin(0x80, 0, 4);
+    for (i = 0; i < 4; i++) {
+        if (!is3D) {
+            GXPosition2f32(h->corner[i][0], h->corner[i][1]);
+        } else {
+            GXPosition3f32(h->corner[i][0], h->corner[i][1], h->z);
+        }
+        if (useColor) {
+            GXColor1u32(h->color[i]);
+        }
+        if (useTex) {
+            GXTexCoord2f32(h->uv[tbl.idx[h->uvFlip][i][0]][0], h->uv[tbl.idx[h->uvFlip][i][1]][1]);
+        }
+        if (useTex2) {
+            GXTexCoord2f32(h->uv2[tbl.idx[h->uvFlip][i][0]][0], h->uv2[tbl.idx[h->uvFlip][i][1]][1]);
+        }
+    }
 }
+#pragma use_lmw_stmw reset
 
 extern "C" void fn_8011E9C0(int type) {
     ScopedAccum accum(1);

@@ -4,16 +4,34 @@
  */
 #pragma cplusplus on
 
+struct TexObjData {
+    unsigned int words[8];
+};
+
+struct TlutObjData {
+    unsigned int words[3];
+};
+
 struct ResEntry {
     int id;
     int prev;
     void *palette;
     int fC;
-    void *data0;
-    void *data1;
-    void *data2;
+    TexObjData *data0;
+    TlutObjData *data1;
+    unsigned char *data2;
 };
 
+
+struct TEXHeader {
+    unsigned short height;
+    unsigned short width;
+};
+
+struct TEXDescriptor {
+    TEXHeader *tex;
+    void *clut;
+};
 
 struct SavedGXState {
     int cullMode;
@@ -71,14 +89,44 @@ struct SpriteNode {
     SpriteNode *prev;
     SpriteNode *next;
 };
+void *operator new(unsigned long size);
+void *operator new[](unsigned long size);
+void operator delete(void *p) throw();
+
 struct SpriteList {
-    char pad0[4];
+    int capacity;
     int count;
-    char pad8[4];
+    SpriteNode *nodes;
     SpriteNode *freeHead;
     SpriteNode *freeTail;
     SpriteNode *head;
     SpriteNode *tail;
+
+    inline SpriteList(int n) {
+        int i;
+        capacity = n;
+        nodes = new SpriteNode[n];
+        for (i = 0; i < n; i++) {
+            nodes[i].index = i;
+        }
+        count = 0;
+        freeHead = nodes;
+        freeTail = &nodes[capacity - 1];
+        for (i = 0; i < capacity; i++) {
+            if (i == 0) {
+                nodes[i].prev = 0;
+            } else {
+                nodes[i].prev = &nodes[i - 1];
+            }
+            if (i == capacity - 1) {
+                nodes[i].next = 0;
+            } else {
+                nodes[i].next = &nodes[i + 1];
+            }
+        }
+        head = 0;
+        tail = 0;
+    }
 };
 
 
@@ -115,12 +163,21 @@ struct SpriteHandle {
     int next;
     unsigned char keep;
     unsigned char released;
-    char padE[0x28 - 0xE];
+    char padE[2];
+    int resId;
+    void *texObj;
+    void *tlut;
+    unsigned char texFmt;
+    char pad1D[3];
+    int baseResId;
+    signed char tevMode;
+    char pad25[3];
     float sizeX;
     float sizeY;
     char pad30[4];
     float rot;
-    char pad38[8];
+    float texW;
+    float texH;
     float posX;
     float posY;
     char pad48;
@@ -128,9 +185,16 @@ struct SpriteHandle {
     char pad4A[2];
     float uv[6];
     unsigned int color[4];
-    char pad74[0x88 - 0x74];
+    unsigned char flip;
+    char pad75[0x88 - 0x75];
     float corner[4][2];
-    char padA8[0xD8 - 0xA8];
+    float texUV[2][2];
+    unsigned char hasTex2;
+    char padB9[3];
+    int resId2;
+    void *texObj2;
+    void *tlut2;
+    float uv2[4];
     unsigned char activeFlag;
     unsigned char visible;
     signed char dirty;
@@ -181,12 +245,12 @@ extern const float lbl_806D6DD0;
 extern unsigned int lbl_80657360[];
 extern SpriteHandle g_SpriteHandlePool[];
 unsigned char IsValidResourceId(int id);
-extern void ResourceTable_GetChainNextId();
-extern void ResourceTable_GetGroupKey();
-extern void ResourceTable_GetOffsetXY();
+int ResourceTable_GetChainNextId(int id);
+int ResourceTable_GetGroupKey(int id);
+void ResourceTable_GetOffsetXY(int id, float *x, float *y);
 void ResourceTable_GetSizeXY(int id, float *x, float *y);
-extern void ResourceTable_GetSlotIndex();
-extern void TEXGetPaletteEntry();
+int ResourceTable_GetSlotIndex(int id);
+TEXDescriptor *TEXGetPaletteEntry(void *pal, unsigned int idx);
 extern unsigned int lbl_806D6D88;
 extern unsigned int lbl_806D6D90;
 extern ResEntry lbl_806573E8[600];
@@ -205,8 +269,8 @@ extern void ResourceSlot_Load();
 extern void Alloc();
 extern void FUN_8003b120();
 void MemoryManager_TimedFree(void *p);
-extern void fn_801F6494();
-extern unsigned int lbl_806D14FD;
+void fn_801F6494(void);
+extern unsigned char lbl_806D14FD;
 extern void LUT_Cosine();
 extern void LUT_Sine();
 extern void ResourceTable_GetFlagsByte();
@@ -223,16 +287,16 @@ extern unsigned int lbl_80657228[];
 void fn_8011EB1C(void);
 void fn_8011EC18(unsigned char a);
 void SpriteHandle_RecomputeCull(int h);
-asm void SpriteLayer_SetResource(void);
+void SpriteLayer_SetResource(int h, int id);
 void fn_8011F870(unsigned int mask);
 void fn_8011F994(int type);
 asm int SpriteHandle_CreateEx(int a, int b, int c);
 void fn_8012094C(void);
 asm void fn_80120A08(void);
-asm void PreloadResource(void);
+asm unsigned char PreloadResource(int id);
 void SpriteHandlePool_GC(void);
 void fn_80121210(void);
-asm void fn_801213EC(void);
+void fn_801213EC(void);
 asm void fn_801217E8(SpriteHandle *s);
 void Stub_NoOp_80121c34(void);
 asm void fn_80121C38(void);
@@ -253,9 +317,6 @@ asm void fn_80122338(void);
 
 
 
-__declspec(section ".extab_user") static const unsigned char extab_SpriteLayer_SetResource[8] = {
-    0x28, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
@@ -278,7 +339,6 @@ __declspec(section ".extab_user") static const unsigned char extab_PreloadResour
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_80121210 = { 0x180A0000, 0x0000005C, 0x00060010, 0x00000000, 0x82000008, (void *)&__dt__11ScopedTimerFv };
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; void *f7; unsigned int f8; void *f9; } extab_fn_801213EC = { 0x380A0000, 0x00000030, 0x00000018, 0x00000278, 0x00060020, 0x00000000, 0x8A80001F, (void *)&MemoryManager_TimedFree, 0x82000008, (void *)&__dt__11ScopedTimerFv };
 
 __declspec(section ".extab_user") static const unsigned char extab_fn_801217E8[8] = {
     0x18, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -310,9 +370,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80122338[8
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_SpriteLayer_SetResource = {
-    (void *)&SpriteLayer_SetResource, 0x00000504, (void *)extab_SpriteLayer_SetResource
-};
 
 
 
@@ -336,9 +393,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801213EC = {
-    (void *)&fn_801213EC, 0x000003FC, (void *)&extab_fn_801213EC
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801217E8 = {
     (void *)&fn_801217E8, 0x0000044C, (void *)extab_fn_801217E8
@@ -586,354 +640,124 @@ extern "C" void SpriteHandle_SetActiveFlag(int h, unsigned char on) {
     }
 }
 
-extern "C" asm void SpriteLayer_SetResource(void) { /* 0x8011F094 size:0x504 */
-    nofralloc
-    stwu r1, -0x70(r1)
-    mflr r0
-    stw r0, 0x74(r1)
-    stfd f31, 0x60(r1)
-    psq_st f31, 0x68(r1), 0, 0
-    stfd f30, 0x50(r1)
-    psq_st f30, 0x58(r1), 0, 0
-    stmw r27, 0x3c(r1)
-    cmpwi r3, 0x0
-    mr r29, r4
-    beq SpriteLayer_SetResource_L_8011F574
-    lis r5, 0x1062
-    subi r6, r3, 0x1
-    addi r3, r5, 0x4dd3
-    lis r4, g_SpriteHandlePool@ha
-    mulhw r3, r3, r6
-    addi r0, r4, g_SpriteHandlePool@l
-    srawi r3, r3, 5
-    srwi r4, r3, 31
-    add r3, r3, r4
-    mulli r3, r3, 0x1f4
-    subf r3, r3, r6
-    mulli r3, r3, 0xe4
-    add r30, r0, r3
-    lbz r0, 0x24(r30)
-    cmpwi r0, 0x2
-    beq SpriteLayer_SetResource_L_8011F574
-    lwz r0, 0x10(r30)
-    cmpw r0, r29
-    beq SpriteLayer_SetResource_L_8011F574
-    mr r3, r29
-    bl IsValidResourceId
-    clrlwi. r0, r3, 24
-    beq SpriteLayer_SetResource_L_8011F574
-    mr r3, r29
-    bl ResourceTable_GetGroupKey
-    lis r4, lbl_806573E8@ha
-    li r0, 0x258
-    addi r31, r4, lbl_806573E8@l
-    li r4, 0x0
-    mr r5, r31
-    mtctr r0
-    SpriteLayer_SetResource_L_8011F13C:
-    lwz r0, 0x4(r5)
-    cmpw r3, r0
-    bne SpriteLayer_SetResource_L_8011F15C
-    mulli r4, r4, 0x1c
-    lis r3, lbl_806573E8@ha
-    addi r0, r3, lbl_806573E8@l
-    add r0, r0, r4
-    b SpriteLayer_SetResource_L_8011F16C
-    SpriteLayer_SetResource_L_8011F15C:
-    addi r5, r5, 0x1c
-    addi r4, r4, 0x1
-    bdnz SpriteLayer_SetResource_L_8011F13C
-    li r0, 0x0
-    SpriteLayer_SetResource_L_8011F16C:
-    cmplwi r0, 0x0
-    mr r28, r0
-    bne SpriteLayer_SetResource_L_8011F1D4
-    mr r3, r29
-    bl PreloadResource
-    clrlwi. r0, r3, 24
-    beq SpriteLayer_SetResource_L_8011F574
-    mr r3, r29
-    bl ResourceTable_GetGroupKey
-    li r0, 0x258
-    mr r5, r31
-    li r4, 0x0
-    mtctr r0
-    SpriteLayer_SetResource_L_8011F1A0:
-    lwz r0, 0x4(r5)
-    cmpw r3, r0
-    bne SpriteLayer_SetResource_L_8011F1C0
-    mulli r4, r4, 0x1c
-    lis r3, lbl_806573E8@ha
-    addi r0, r3, lbl_806573E8@l
-    add r0, r0, r4
-    b SpriteLayer_SetResource_L_8011F1D0
-    SpriteLayer_SetResource_L_8011F1C0:
-    addi r5, r5, 0x1c
-    addi r4, r4, 0x1
-    bdnz SpriteLayer_SetResource_L_8011F1A0
-    li r0, 0x0
-    SpriteLayer_SetResource_L_8011F1D0:
-    mr r28, r0
-    SpriteLayer_SetResource_L_8011F1D4:
-    stw r29, 0x20(r30)
-    mr r3, r29
-    stw r29, 0x10(r30)
-    bl ResourceTable_GetSlotIndex
-    mr r0, r3
-    lwz r3, 0x8(r28)
-    mr r27, r0
-    mr r4, r27
-    bl TEXGetPaletteEntry
-    lwz r4, 0x10(r28)
-    slwi r0, r27, 5
-    add r0, r4, r0
-    stw r0, 0x14(r30)
-    lwz r0, 0x4(r3)
-    cmplwi r0, 0x0
-    beq SpriteLayer_SetResource_L_8011F228
-    mulli r0, r27, 0xc
-    lwz r3, 0x14(r28)
-    add r0, r3, r0
-    stw r0, 0x18(r30)
-    b SpriteLayer_SetResource_L_8011F230
-    SpriteLayer_SetResource_L_8011F228:
-    li r0, 0x0
-    stw r0, 0x18(r30)
-    SpriteLayer_SetResource_L_8011F230:
-    lwz r6, 0x18(r28)
-    mr r3, r29
-    addi r4, r30, 0x38
-    addi r5, r30, 0x3c
-    lbzx r0, r6, r27
-    stb r0, 0x1c(r30)
-    bl ResourceTable_GetSizeXY
-    mr r3, r29
-    bl ResourceTable_GetSlotIndex
-    mr r0, r3
-    lwz r3, 0x8(r28)
-    mr r4, r0
-    bl TEXGetPaletteEntry
-    lwz r5, 0x0(r3)
-    lis r6, 0x4330
-    stw r6, 0x20(r1)
-    mr r3, r29
-    lhz r7, 0x2(r5)
-    addi r4, r30, 0xa8
-    lhz r0, 0x0(r5)
-    addi r5, r30, 0xac
-    stw r7, 0x24(r1)
-    lfd f1, lbl_806D6D90(r2)
-    lfd f0, 0x20(r1)
-    stw r0, 0x2c(r1)
-    fsubs f31, f0, f1
-    stw r6, 0x28(r1)
-    lfd f0, 0x28(r1)
-    fsubs f30, f0, f1
-    bl ResourceTable_GetOffsetXY
-    lfs f2, lbl_806D6D8C(r2)
-    lfs f0, 0xa8(r30)
-    fdivs f3, f2, f31
-    lfs f1, lbl_806D6D88(r2)
-    fadds f0, f0, f1
-    fdivs f4, f2, f30
-    stfs f0, 0xa8(r30)
-    lfs f0, 0xac(r30)
-    fadds f0, f0, f1
-    stfs f0, 0xac(r30)
-    lfs f0, 0xa8(r30)
-    fmuls f0, f3, f0
-    stfs f0, 0xa8(r30)
-    lfs f0, 0xac(r30)
-    fmuls f0, f4, f0
-    stfs f0, 0xac(r30)
-    lfs f1, 0x38(r30)
-    lfs f0, 0xa8(r30)
-    fsubs f1, f1, f2
-    fmadds f0, f3, f1, f0
-    stfs f0, 0xb0(r30)
-    lfs f1, 0x3c(r30)
-    lfs f0, 0xac(r30)
-    fsubs f1, f1, f2
-    fmadds f0, f4, f1, f0
-    stfs f0, 0xb4(r30)
-    lbz r0, 0x74(r30)
-    clrlwi. r0, r0, 31
-    beq SpriteLayer_SetResource_L_8011F32C
-    lfs f1, 0xa8(r30)
-    lfs f0, 0xb0(r30)
-    stfs f0, 0xa8(r30)
-    stfs f1, 0xb0(r30)
-    SpriteLayer_SetResource_L_8011F32C:
-    lbz r0, 0x74(r30)
-    rlwinm. r0, r0, 0, 30, 30
-    beq SpriteLayer_SetResource_L_8011F348
-    lfs f1, 0xac(r30)
-    lfs f0, 0xb4(r30)
-    stfs f0, 0xac(r30)
-    stfs f1, 0xb4(r30)
-    SpriteLayer_SetResource_L_8011F348:
-    li r0, 0x0
-    mr r3, r29
-    stb r0, 0xb8(r30)
-    bl ResourceTable_GetChainNextId
-    mr r29, r3
-    cmpwi r29, -0x1
-    beq SpriteLayer_SetResource_L_8011F56C
-    bl ResourceTable_GetGroupKey
-    li r0, 0x258
-    mr r5, r31
-    li r4, 0x0
-    mtctr r0
-    SpriteLayer_SetResource_L_8011F378:
-    lwz r0, 0x4(r5)
-    cmpw r3, r0
-    bne SpriteLayer_SetResource_L_8011F398
-    mulli r4, r4, 0x1c
-    lis r3, lbl_806573E8@ha
-    addi r0, r3, lbl_806573E8@l
-    add r0, r0, r4
-    b SpriteLayer_SetResource_L_8011F3A8
-    SpriteLayer_SetResource_L_8011F398:
-    addi r5, r5, 0x1c
-    addi r4, r4, 0x1
-    bdnz SpriteLayer_SetResource_L_8011F378
-    li r0, 0x0
-    SpriteLayer_SetResource_L_8011F3A8:
-    cmplwi r0, 0x0
-    mr r27, r0
-    bne SpriteLayer_SetResource_L_8011F404
-    mr r3, r29
-    bl PreloadResource
-    mr r3, r29
-    bl ResourceTable_GetGroupKey
-    li r0, 0x258
-    li r4, 0x0
-    mtctr r0
-    SpriteLayer_SetResource_L_8011F3D0:
-    lwz r0, 0x4(r31)
-    cmpw r3, r0
-    bne SpriteLayer_SetResource_L_8011F3F0
-    mulli r4, r4, 0x1c
-    lis r3, lbl_806573E8@ha
-    addi r0, r3, lbl_806573E8@l
-    add r0, r0, r4
-    b SpriteLayer_SetResource_L_8011F400
-    SpriteLayer_SetResource_L_8011F3F0:
-    addi r31, r31, 0x1c
-    addi r4, r4, 0x1
-    bdnz SpriteLayer_SetResource_L_8011F3D0
-    li r0, 0x0
-    SpriteLayer_SetResource_L_8011F400:
-    mr r27, r0
-    SpriteLayer_SetResource_L_8011F404:
-    cmplwi r27, 0x0
-    beq SpriteLayer_SetResource_L_8011F56C
-    li r0, 0x1
-    mr r3, r29
-    stb r0, 0xb8(r30)
-    stw r29, 0xbc(r30)
-    bl ResourceTable_GetSlotIndex
-    mr r0, r3
-    lwz r3, 0x8(r27)
-    mr r28, r0
-    mr r4, r28
-    bl TEXGetPaletteEntry
-    lwz r4, 0x10(r27)
-    slwi r0, r28, 5
-    mr r31, r3
-    add r0, r4, r0
-    stw r0, 0xc0(r30)
-    lwz r0, 0x4(r3)
-    cmplwi r0, 0x0
-    beq SpriteLayer_SetResource_L_8011F468
-    mulli r0, r28, 0xc
-    lwz r3, 0x14(r27)
-    add r0, r3, r0
-    stw r0, 0xc4(r30)
-    b SpriteLayer_SetResource_L_8011F470
-    SpriteLayer_SetResource_L_8011F468:
-    li r0, 0x0
-    stw r0, 0xc4(r30)
-    SpriteLayer_SetResource_L_8011F470:
-    mr r3, r29
-    addi r4, r1, 0xc
-    addi r5, r1, 0x8
-    bl ResourceTable_GetSizeXY
-    lwz r7, 0x0(r31)
-    lis r6, 0x4330
-    stw r6, 0x28(r1)
-    addi r5, r1, 0x14
-    lhz r4, 0x2(r7)
-    mr r3, r29
-    lhz r0, 0x0(r7)
-    stw r4, 0x2c(r1)
-    addi r4, r1, 0x10
-    lfd f1, lbl_806D6D90(r2)
-    lfd f0, 0x28(r1)
-    stw r0, 0x24(r1)
-    fsubs f30, f0, f1
-    stw r6, 0x20(r1)
-    lfd f0, 0x20(r1)
-    fsubs f31, f0, f1
-    bl ResourceTable_GetOffsetXY
-    lfs f4, lbl_806D6D8C(r2)
-    lfs f1, 0xc(r1)
-    fdivs f6, f4, f30
-    lfs f0, 0x8(r1)
-    lbz r0, 0x74(r30)
-    lfs f2, 0x10(r1)
-    lfs f5, lbl_806D6D88(r2)
-    clrlwi. r0, r0, 31
-    fadds f3, f2, f5
-    lfs f2, 0x14(r1)
-    fdivs f7, f4, f31
-    stfs f3, 0x10(r1)
-    fadds f5, f2, f5
-    fmuls f3, f6, f3
-    fsubs f1, f1, f4
-    fmuls f2, f7, f5
-    stfs f5, 0x14(r1)
-    fsubs f0, f0, f4
-    fmadds f1, f6, f1, f3
-    stfs f3, 0x10(r1)
-    fmadds f0, f7, f0, f2
-    stfs f2, 0x14(r1)
-    stfs f1, 0x18(r1)
-    stfs f0, 0x1c(r1)
-    beq SpriteLayer_SetResource_L_8011F530
-    stfs f1, 0x10(r1)
-    stfs f3, 0x18(r1)
-    SpriteLayer_SetResource_L_8011F530:
-    lbz r0, 0x74(r30)
-    rlwinm. r0, r0, 0, 30, 30
-    beq SpriteLayer_SetResource_L_8011F54C
-    lfs f1, 0x14(r1)
-    lfs f0, 0x1c(r1)
-    stfs f0, 0x14(r1)
-    stfs f1, 0x1c(r1)
-    SpriteLayer_SetResource_L_8011F54C:
-    lfs f1, 0x10(r1)
-    lfs f0, 0x14(r1)
-    stfs f1, 0xc8(r30)
-    lfs f1, 0x18(r1)
-    stfs f0, 0xcc(r30)
-    lfs f0, 0x1c(r1)
-    stfs f1, 0xd0(r30)
-    stfs f0, 0xd4(r30)
-    SpriteLayer_SetResource_L_8011F56C:
-    li r0, 0x1
-    stb r0, 0xda(r30)
-    SpriteLayer_SetResource_L_8011F574:
-    psq_l f31, 0x68(r1), 0, 0
-    lfd f31, 0x60(r1)
-    psq_l f30, 0x58(r1), 0, 0
-    lfd f30, 0x50(r1)
-    lmw r27, 0x3c(r1)
-    lwz r0, 0x74(r1)
-    mtlr r0
-    addi r1, r1, 0x70
-    blr
+static inline ResEntry *FindResEntry(int id) {
+    int key = ResourceTable_GetGroupKey(id);
+    int i;
+    for (i = 0; i < 600; i++) {
+        if (key == lbl_806573E8[i].prev) {
+            return &lbl_806573E8[i];
+        }
+    }
+    return 0;
 }
+
+#pragma use_lmw_stmw on
+extern "C" void SpriteLayer_SetResource(int h, int id) {
+    if (h != 0) {
+        SpriteHandle *s = &g_SpriteHandlePool[(h - 1) % 500];
+        if (s->tevMode != 2 && s->resId != id && IsValidResourceId(id)) {
+            ResEntry *e = FindResEntry(id);
+            unsigned int slot;
+            TEXDescriptor *d;
+            float texW, texH;
+            float iw, ih;
+            if (e == 0) {
+                if (!PreloadResource(id)) {
+                    return;
+                }
+                e = FindResEntry(id);
+            }
+            s->baseResId = id;
+            s->resId = id;
+            slot = ResourceTable_GetSlotIndex(id);
+            d = TEXGetPaletteEntry(e->palette, slot);
+            s->texObj = &e->data0[slot];
+            if (d->clut != 0) {
+                s->tlut = &e->data1[slot];
+            } else {
+                s->tlut = 0;
+            }
+            s->texFmt = e->data2[slot];
+            ResourceTable_GetSizeXY(id, &s->texW, &s->texH);
+            unsigned int texSlot = ResourceTable_GetSlotIndex(id);
+            d = TEXGetPaletteEntry(e->palette, texSlot);
+            texW = d->tex->width;
+            texH = d->tex->height;
+            ResourceTable_GetOffsetXY(id, &s->texUV[0][0], &s->texUV[0][1]);
+            iw = 1.0f / texW;
+            ih = 1.0f / texH;
+            s->texUV[0][0] += 0.5f;
+            s->texUV[0][1] += 0.5f;
+            s->texUV[0][0] = iw * s->texUV[0][0];
+            s->texUV[0][1] = ih * s->texUV[0][1];
+            s->texUV[1][0] = iw * (s->texW - 1.0f) + s->texUV[0][0];
+            s->texUV[1][1] = ih * (s->texH - 1.0f) + s->texUV[0][1];
+            if (s->flip & 1) {
+                float t = s->texUV[0][0];
+                s->texUV[0][0] = s->texUV[1][0];
+                s->texUV[1][0] = t;
+            }
+            if (s->flip & 2) {
+                float t = s->texUV[0][1];
+                s->texUV[0][1] = s->texUV[1][1];
+                s->texUV[1][1] = t;
+            }
+            s->hasTex2 = 0;
+            id = ResourceTable_GetChainNextId(id);
+            if (id != -1) {
+                ResEntry *e2 = FindResEntry(id);
+                if (e2 == 0) {
+                    PreloadResource(id);
+                    e2 = FindResEntry(id);
+                }
+                if (e2 != 0) {
+                    float w2, h2;
+                    float uv[4];
+                    float tw, th;
+                    float iw2, ih2;
+                    s->hasTex2 = 1;
+                    s->resId2 = id;
+                    unsigned int slot2 = ResourceTable_GetSlotIndex(id);
+                    d = TEXGetPaletteEntry(e2->palette, slot2);
+                    s->texObj2 = &e2->data0[slot2];
+                    if (d->clut != 0) {
+                        s->tlut2 = &e2->data1[slot2];
+                    } else {
+                        s->tlut2 = 0;
+                    }
+                    ResourceTable_GetSizeXY(id, &w2, &h2);
+                    tw = d->tex->width;
+                    th = d->tex->height;
+                    ResourceTable_GetOffsetXY(id, &uv[0], &uv[1]);
+                    uv[0] += 0.5f;
+                    uv[1] += 0.5f;
+                    iw2 = 1.0f / tw;
+                    ih2 = 1.0f / th;
+                    uv[0] = iw2 * uv[0];
+                    uv[1] = ih2 * uv[1];
+                    uv[2] = iw2 * (w2 - 1.0f) + uv[0];
+                    uv[3] = ih2 * (h2 - 1.0f) + uv[1];
+                    if (s->flip & 1) {
+                        float t = uv[0];
+                        uv[0] = uv[2];
+                        uv[2] = t;
+                    }
+                    if (s->flip & 2) {
+                        float t = uv[1];
+                        uv[1] = uv[3];
+                        uv[3] = t;
+                    }
+                    s->uv2[0] = uv[0];
+                    s->uv2[1] = uv[1];
+                    s->uv2[2] = uv[2];
+                    s->uv2[3] = uv[3];
+                }
+            }
+            s->dirty = 1;
+        }
+    }
+}
+#pragma use_lmw_stmw reset
 
 extern "C" void SpriteHandle_SetCornerAlpha(int h, unsigned char a) {
     if (h != 0) {
@@ -2280,7 +2104,7 @@ extern "C" asm void fn_80120A08(void) { /* 0x80120A08 size:0x378 */
     blr
 }
 
-extern "C" asm void PreloadResource(void) { /* 0x80120D80 size:0x3A0 */
+extern "C" asm unsigned char PreloadResource(int id) { /* 0x80120D80 size:0x3A0 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -2581,285 +2405,14 @@ extern "C" void fn_80121210(void) {
     SpriteList_Clear(lbl_806D1500);
 }
 
-extern "C" asm void fn_801213EC(void) { /* 0x801213EC size:0x3FC */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    li r3, 0x1c
-    stw r0, 0x44(r1)
-    stmw r25, 0x24(r1)
-    bl Alloc
-    mr. r31, r3
-    beq fn_801213EC_L_8012161C
-    li r0, 0x1f4
-    li r3, 0x1770
-    stw r0, 0x0(r31)
-    bl FUN_8003b120
-    li r4, 0x0
-    li r0, 0x1f
-    mr r25, r4
-    stw r3, 0x8(r31)
-    mtctr r0
-    fn_801213EC_L_80121430:
-    lwz r3, 0x8(r31)
-    addi r26, r4, 0x1
-    addi r27, r25, 0xc
-    addi r28, r4, 0x2
-    stwx r4, r3, r25
-    addi r29, r25, 0x18
-    addi r30, r4, 0x3
-    addi r12, r25, 0x24
-    lwz r3, 0x8(r31)
-    addi r11, r4, 0x4
-    addi r10, r25, 0x30
-    addi r9, r4, 0x5
-    stwx r26, r3, r27
-    addi r8, r25, 0x3c
-    addi r7, r4, 0x6
-    addi r6, r25, 0x48
-    lwz r3, 0x8(r31)
-    addi r5, r4, 0x7
-    addi r0, r25, 0x54
-    addi r26, r4, 0x9
-    stwx r28, r3, r29
-    addi r28, r4, 0xa
-    addi r27, r25, 0x6c
-    addi r29, r25, 0x78
-    lwz r3, 0x8(r31)
-    stwx r30, r3, r12
-    addi r30, r4, 0xb
-    addi r12, r25, 0x84
-    lwz r3, 0x8(r31)
-    stwx r11, r3, r10
-    addi r11, r4, 0xc
-    addi r10, r25, 0x90
-    lwz r3, 0x8(r31)
-    stwx r9, r3, r8
-    addi r9, r4, 0xd
-    addi r8, r25, 0x9c
-    lwz r3, 0x8(r31)
-    stwx r7, r3, r6
-    addi r7, r4, 0xe
-    addi r6, r25, 0xa8
-    lwz r3, 0x8(r31)
-    stwx r5, r3, r0
-    addi r5, r4, 0xf
-    addi r0, r25, 0xb4
-    addi r4, r4, 0x8
-    lwz r3, 0x8(r31)
-    addi r25, r25, 0x60
-    stwx r4, r3, r25
-    addi r25, r25, 0x60
-    addi r4, r4, 0x8
-    lwz r3, 0x8(r31)
-    stwx r26, r3, r27
-    lwz r3, 0x8(r31)
-    stwx r28, r3, r29
-    lwz r3, 0x8(r31)
-    stwx r30, r3, r12
-    lwz r3, 0x8(r31)
-    stwx r11, r3, r10
-    lwz r3, 0x8(r31)
-    stwx r9, r3, r8
-    lwz r3, 0x8(r31)
-    stwx r7, r3, r6
-    lwz r3, 0x8(r31)
-    stwx r5, r3, r0
-    bdnz fn_801213EC_L_80121430
-    subfic r0, r4, 0x1f4
-    mulli r5, r4, 0xc
-    mtctr r0
-    cmpwi r4, 0x1f4
-    bge fn_801213EC_L_8012155C
-    fn_801213EC_L_80121548:
-    lwz r3, 0x8(r31)
-    stwx r4, r3, r5
-    addi r5, r5, 0xc
-    addi r4, r4, 0x1
-    bdnz fn_801213EC_L_80121548
-    fn_801213EC_L_8012155C:
-    li r3, 0x0
-    stw r3, 0x4(r31)
-    mr r6, r3
-    lwz r0, 0x8(r31)
-    stw r0, 0xc(r31)
-    lwz r4, 0x0(r31)
-    lwz r5, 0x8(r31)
-    subi r0, r4, 0x1
-    mulli r0, r0, 0xc
-    add r0, r5, r0
-    stw r0, 0x10(r31)
-    b fn_801213EC_L_80121604
-    fn_801213EC_L_8012158C:
-    cmpwi r3, 0x0
-    bne fn_801213EC_L_801215A8
-    lwz r4, 0x8(r31)
-    addi r0, r6, 0x4
-    li r5, 0x0
-    stwx r5, r4, r0
-    b fn_801213EC_L_801215C0
-    fn_801213EC_L_801215A8:
-    subi r0, r3, 0x1
-    lwz r5, 0x8(r31)
-    mulli r4, r0, 0xc
-    addi r0, r6, 0x4
-    add r4, r5, r4
-    stwx r4, r5, r0
-    fn_801213EC_L_801215C0:
-    lwz r4, 0x0(r31)
-    subi r0, r4, 0x1
-    cmpw r3, r0
-    bne fn_801213EC_L_801215E4
-    lwz r4, 0x8(r31)
-    addi r0, r6, 0x8
-    li r5, 0x0
-    stwx r5, r4, r0
-    b fn_801213EC_L_801215FC
-    fn_801213EC_L_801215E4:
-    addi r0, r3, 0x1
-    lwz r5, 0x8(r31)
-    mulli r4, r0, 0xc
-    addi r0, r6, 0x8
-    add r4, r5, r4
-    stwx r4, r5, r0
-    fn_801213EC_L_801215FC:
-    addi r6, r6, 0xc
-    addi r3, r3, 0x1
-    fn_801213EC_L_80121604:
-    lwz r0, 0x0(r31)
-    cmpw r3, r0
-    blt fn_801213EC_L_8012158C
-    li r0, 0x0
-    stw r0, 0x14(r31)
-    stw r0, 0x18(r31)
-    fn_801213EC_L_8012161C:
-    li r0, 0xd
-    stw r31, lbl_806D1500(r13)
-    stw r0, 0xc(r1)
-    bl OSGetTick
-    lis r5, lbl_806573E8@ha
-    lis r4, lbl_8065B588@ha
-    stw r3, 0x8(r1)
-    addi r25, r5, lbl_806573E8@l
-    addi r27, r4, lbl_8065B588@l
-    li r26, 0x0
-    fn_801213EC_L_80121644:
-    lwz r0, 0x8(r25)
-    cmplwi r0, 0x0
-    beq fn_801213EC_L_80121664
-    lwz r0, 0x0(r25)
-    cmpwi r0, 0x2b00
-    bge fn_801213EC_L_80121664
-    addi r3, r25, 0x8
-    bl TEXReleasePalette
-    fn_801213EC_L_80121664:
-    lwz r3, 0x10(r25)
-    bl MemoryManager_Free
-    lwz r3, 0x14(r25)
-    bl MemoryManager_Free
-    lwz r3, 0x18(r25)
-    bl MemoryManager_Free
-    li r3, 0x0
-    addi r26, r26, 0x1
-    stw r3, 0x0(r25)
-    li r0, -0x1
-    cmpwi r26, 0x258
-    stw r0, 0x4(r25)
-    stw r3, 0x8(r25)
-    stw r3, 0xc(r25)
-    stw r3, 0x10(r25)
-    stw r3, 0x14(r25)
-    stw r3, 0x18(r25)
-    addi r25, r25, 0x1c
-    stw r3, 0x0(r27)
-    addi r27, r27, 0x4
-    blt fn_801213EC_L_80121644
-    lwz r5, lbl_806D1500(r13)
-    lwz r0, 0x4(r5)
-    cmpwi r0, 0x0
-    beq fn_801213EC_L_80121770
-    lwz r4, 0x14(r5)
-    b fn_801213EC_L_80121768
-    fn_801213EC_L_801216D0:
-    lwz r6, 0x4(r4)
-    lwz r3, 0x8(r4)
-    cmplwi r6, 0x0
-    beq fn_801213EC_L_801216E4
-    stw r3, 0x8(r6)
-    fn_801213EC_L_801216E4:
-    lwz r6, 0x8(r4)
-    cmplwi r6, 0x0
-    beq fn_801213EC_L_801216F8
-    lwz r0, 0x4(r4)
-    stw r0, 0x4(r6)
-    fn_801213EC_L_801216F8:
-    lwz r0, 0x14(r5)
-    cmplw r0, r4
-    bne fn_801213EC_L_8012170C
-    lwz r0, 0x8(r4)
-    stw r0, 0x14(r5)
-    fn_801213EC_L_8012170C:
-    lwz r0, 0x18(r5)
-    cmplw r0, r4
-    bne fn_801213EC_L_80121720
-    lwz r0, 0x4(r4)
-    stw r0, 0x18(r5)
-    fn_801213EC_L_80121720:
-    li r0, 0x0
-    stw r0, 0x4(r4)
-    stw r0, 0x8(r4)
-    lwz r6, 0x10(r5)
-    cmplwi r6, 0x0
-    beq fn_801213EC_L_8012173C
-    stw r4, 0x8(r6)
-    fn_801213EC_L_8012173C:
-    lwz r0, 0x10(r5)
-    stw r0, 0x4(r4)
-    lwz r0, 0xc(r5)
-    cmplwi r0, 0x0
-    bne fn_801213EC_L_80121754
-    stw r4, 0xc(r5)
-    fn_801213EC_L_80121754:
-    stw r4, 0x10(r5)
-    mr r4, r3
-    lwz r3, 0x4(r5)
-    subi r0, r3, 0x1
-    stw r0, 0x4(r5)
-    fn_801213EC_L_80121768:
-    cmplwi r4, 0x0
-    bne fn_801213EC_L_801216D0
-    fn_801213EC_L_80121770:
-    bl OSGetTick
-    lis r5, 0x8000
-    lis r4, 0x431c
-    lwz r5, 0xf8(r5)
-    lis r0, 0x4330
-    subi r6, r4, 0x217d
-    lwz r7, 0x8(r1)
-    srwi r4, r5, 2
-    stw r0, 0x10(r1)
-    mulhwu r0, r6, r4
-    subf r3, r7, r3
-    lfd f2, lbl_806D6D90(r2)
-    slwi r4, r3, 3
-    lfs f0, lbl_806D6D98(r2)
-    lwz r3, 0xc(r1)
-    srwi r0, r0, 15
-    divwu r0, r4, r0
-    stw r0, 0x14(r1)
-    lfd f1, 0x10(r1)
-    fsubs f1, f1, f2
-    fdivs f1, f1, f0
-    bl Profiler_RecordFrame
-    li r0, 0x0
-    stb r0, lbl_806D14FD(r13)
-    bl fn_801F6494
-    lmw r25, 0x24(r1)
-    lwz r0, 0x44(r1)
-    mtlr r0
-    addi r1, r1, 0x40
-    blr
+#pragma use_lmw_stmw on
+extern "C" void fn_801213EC(void) {
+    lbl_806D1500 = new SpriteList(500);
+    fn_80121210();
+    lbl_806D14FD = 0;
+    fn_801F6494();
 }
+#pragma use_lmw_stmw reset
 
 extern "C" asm void fn_801217E8(SpriteHandle *s) { /* 0x801217E8 size:0x44C */
     nofralloc

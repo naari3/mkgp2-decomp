@@ -4887,6 +4887,9 @@
     "__nw__FUl": "Alloc"
   },
   "src/game/SpriteHandle.cpp": {
+    "__nw__FUl": "Alloc",
+    "__nwa__FUl": "FUN_8003b120",
+    "__dl__FPv": "MemoryManager_TimedFree",
     "extab_fn_8011EB1C": "@etb_8000BB54",
     "extabindex_fn_8011EB1C": "@eti_800245CC",
     "extab_fn_8011EC18": "@etb_8000BB5C",
