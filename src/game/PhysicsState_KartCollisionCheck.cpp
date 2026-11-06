@@ -1,6 +1,25 @@
-/* Native candidate: 88.084305% text. Cleanup targets and local object
- * offsets agree; register scheduling and EH PC intervals still differ. */
+/* Native candidate. Cleanup targets and local object offsets agree;
+ * FP scheduling, flag tests and EH PC intervals still differ. */
 #include "game/PhysicsCollisionPrivate.h"
+
+static inline float WrapHitRadians(float yaw)
+{
+    while (lbl_806DA488 <= yaw) yaw -= lbl_806DA484;
+    while (yaw < lbl_806DA48C) yaw += lbl_806DA484;
+    return yaw;
+}
+
+static inline float WrapHitDegrees(float yaw)
+{
+    while (yaw >= lbl_806DA494) yaw -= lbl_806DA494;
+    while (yaw < lbl_806DA42C) yaw += lbl_806DA494;
+    return yaw;
+}
+
+static inline float RelativeHitYaw(float yaw, float heading)
+{
+    return WrapHitDegrees(lbl_806DA490 * WrapHitRadians(yaw - heading));
+}
 
 /* Native candidate. The flag words are a big-endian 64-bit mask. */
 extern "C" int PhysicsState_KartCollisionCheck(char *self)
@@ -34,11 +53,15 @@ extern "C" int PhysicsState_KartCollisionCheck(char *self)
                 PhysicsPlainVec angles = *(PhysicsPlainVec *)(strings + 0x510);
                 PhysicsPlainVec position = *(PhysicsPlainVec *)(strings + 0x51C);
                 angles.set(lbl_806DA470 * rotation[0], lbl_806DA470 * rotation[1], lbl_806DA470 * rotation[2]);
-                position.set(matrix[12], matrix[13], matrix[14]);
+                position.x = matrix[12];
+                position.y = matrix[13];
+                position.z = matrix[14];
                 PhysicsCollisionShape shape(-1, 0);
                 fn_802090F0(&shape, &position, &angles, lbl_806DA474, lbl_806DA478, lbl_806DA444);
                 if (lbl_806DA42C < CollisionTest_CalcPenetration(g_objCollChecker, &shape, PH_P(self, 0x124))) {
-                    PhysicsPlainVec previous = *(PhysicsPlainVec *)(self + 0x58);
+                    hit = 1;
+                    PhysicsPlainVec previous;
+                    previous.set(PH_F(self, 0x58), PH_F(self, 0x5C), PH_F(self, 0x60));
                     PhysicsPlainVec otherPosition;
                     PhysicsPlainVec delta;
                     otherPosition.set(matrix[12], matrix[13], matrix[14]);
@@ -50,7 +73,6 @@ extern "C" int PhysicsState_KartCollisionCheck(char *self)
                     direction.set(delta.x, delta.y, delta.z);
                     penetration = PH_F(strings, 0x3FC) * PH_F(self, 0x13C) + PH_F(strings, 0x3FC) - Vec3_Distance(&otherPosition, &previous);
                     car->OnKartHit(KartController_GetRenderObj(Read_U32[PH_I(self, 0x10)]));
-                    hit = 1;
                     break;
                 }
             }
@@ -87,12 +109,7 @@ extern "C" int PhysicsState_KartCollisionCheck(char *self)
         PH_F(self, 0x50) = PH_F(self, 0x5C) + movement.y;
         PH_F(self, 0x54) = PH_F(self, 0x60) + movement.z;
         if (penetration >= lbl_806DA480) {
-            float yaw = (float)atan2(PH_F(self, 0x58) - centerX, PH_F(self, 0x60) - centerZ) - PH_F(self, 0x84);
-            while (yaw >= lbl_806DA488) yaw -= lbl_806DA484;
-            while (yaw < lbl_806DA48C) yaw += lbl_806DA484;
-            yaw *= lbl_806DA490;
-            while (yaw >= lbl_806DA494) yaw -= lbl_806DA494;
-            while (yaw < lbl_806DA42C) yaw += lbl_806DA494;
+            float yaw = RelativeHitYaw((float)atan2(PH_F(self, 0x58) - centerX, PH_F(self, 0x60) - centerZ), PH_F(self, 0x84));
             if (yaw > lbl_806DA498 && yaw < lbl_806DA494) KartReaction_Front(render);
             else if (yaw > lbl_806DA42C && yaw < lbl_806DA498) KartReaction_Side(render);
             else KartReaction_Rear(render);

@@ -929,3 +929,8 @@ c16_u16 ItemWnd::Setup 8021F508: fresh baseline88.15076 vs report88.83. A TU-pri
 Source: Codex worker c16_u20_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u20 fn_80225124 singleton destructor: canonical DeleteSprite(spr) fixes target conditional null assignment and improves fresh88.304344 to89.5 (176 vs184 B). Target zero r31 live across Sprite_Destroy remains absent; replacement-parameter helper invariant, pointer-return helper88.41304. Existing compiler emits unowned24B clCSSceneBanner vtable, another blocker for promotion. EH87.5/index91.66667 unchanged. Remains NonMatching after3 hypotheses; full fallback DOL SHA1 exact; zero native gain.
+
+## c16_u21_20261106
+Source: Codex worker c16_u21_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u21 PhysicsState_KartCollisionCheck 801ECB88 singleton: scalar previous-position set versus trivial aggregate copy restores lfs/stfs; fieldwise matrix-position stores and early hit=1 improve 88.084305 to91.46221. Per-car inline output-reference helper regresses89.88663 with changed stack slots/additional hit test, rejected. RelativeHitYaw(float angle,float heading) containing separate inline radians/degrees wrappers evaluates heading before atan2 and incidentally restores all target callee-saved GPR homes, reaching92.14535. Primary1356B versus target1376B; residual movement FP webs/store scheduling, 64-bit immune branch island, repeated yaw constant loads, EH PC intervals. Remains NonMatching, no B cut/native gain; full fallback-linked DOL SHA1OK.
