@@ -1,8 +1,7 @@
 /* Complete native BurnoutCharge callback. Local views contain observed fields;
  * children are independent draw effects, not C++ owned allocations.
- * NonMatching: text 99.75%, native EH and index 100%, size 3920B.
- * Remaining differences are owner/charging/camera/traversal GPR homes,
- * camera-distance FP homes, and character scale multiply operand order.
+ * Text 3920B, native EH and index are byte-identical.
+ * Accumulator expressions preserve the scale calculation webs.
  * Float literals preserve native clamp webs; FAbs returns float. */
 struct BurnVec { float x,y,z; };
 struct BurnMtx { float m[16]; };
@@ -81,8 +80,11 @@ static inline int BurnCharacter(BurnKart *kart) {
 void KartFx_BurnoutChargeTick(BurnEffect *e) {
     BurnMtx root, matrix;
     BurnVec rotated, offset, world;
-    int charging=0;
     BurnOwner *owner=e->owner;
+    int charging=0;
+    BurnVec *camera;
+    BurnChildCursor *cursor;
+    int i;
     BurnMotion *motion=e->kart->motion;
     if (e->index==0 && (motion->flags & 0x40ULL)!=0) charging=1;
     if (e->index==0 && (motion->flags & 0x400ULL)!=0) charging=0;
@@ -228,14 +230,20 @@ void KartFx_BurnoutChargeTick(BurnEffect *e) {
     GetSpawnPosition(&offset,0.0f,7.0f,0.0f);
     Vec3_Scale(&offset,&offset,KartCharacterParam_GetFxSizeFactor(e->kart));
     Mtx44_TransformVec3(&world,&root,offset);
-    BurnVec *camera=&lbl_805DF3D0.position;
+    camera=&lbl_805DF3D0.position;
     Vec3_Subtract_DestFirst(&offset,&world,camera);
     float distance=Vec3_Magnitude_Wrapper(&offset);
-    Vec3_Scale(&offset,&offset,e->scale*(-8.0f*(1.0f/distance)));
+    distance=1.0f/distance;
+    distance=-8.0f*distance;
+    distance=e->scale*distance;
+    Vec3_Scale(&offset,&offset,distance);
     Vec3_Add_DestFirst(&e->position,&world,&offset);
     int character=BurnCharacter(e->kart);
     float factor=character<0 ? 1.0f : lbl_8032A30C[character];
-    e->scale=(e->size*(1.3f*KartCharacterParam_GetFxSizeFactor(e->kart)))*factor;
+    float scale=1.3f*KartCharacterParam_GetFxSizeFactor(e->kart);
+    scale=e->size*scale;
+    scale=scale*factor;
+    e->scale=scale;
     if(e->index!=0) {
         float f=Vec3_Magnitude_Wrapper(&owner->velocity)/100.0f;
         if(0.033333335f<f) f=0.033333335f;
@@ -247,8 +255,8 @@ void KartFx_BurnoutChargeTick(BurnEffect *e) {
     VfxSlot_SetScaleUniform(e->slot,e->scale);
     if(FinalLapCoinJump_CheckActiveForObject(e->kart)) e->slot[0]|=2;
     else e->slot[0]&=~2;
-    BurnChildCursor *cursor=(BurnChildCursor *)((unsigned char *)e+0xD0);
-    for(int i=1;i<5;++i,cursor=(BurnChildCursor *)((unsigned char *)cursor+4)) {
+    cursor=(BurnChildCursor *)((unsigned char *)e+0xD0);
+    for(i=1;i<5;++i,cursor=(BurnChildCursor *)((unsigned char *)cursor+4)) {
         if(cursor->child) {
             if(FinalLapCoinJump_CheckActiveForObject(e->kart)) cursor->child->slot[0]|=2;
             else cursor->child->slot[0]&=~2;
