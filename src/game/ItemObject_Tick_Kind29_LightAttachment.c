@@ -34,6 +34,12 @@ extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *driver);
 #define SU32(o) (*(unsigned int *)(sub + (o)))
 #define SP(o) (*(unsigned char **)(sub + (o)))
 
+/* Keep both terms when this general interpolation is inlined at a zero target. */
+static inline float LerpScalar(float a, float b, float t)
+{
+    return a * t + b * (1.0f - t);
+}
+
 void ItemObject_Tick_Kind29_LightAttachment(unsigned char *self, unsigned char *sub)
 {
     float root[4][4];
@@ -95,7 +101,7 @@ void ItemObject_Tick_Kind29_LightAttachment(unsigned char *self, unsigned char *
     a = lbl_8032E534;
     Vec3_Lerp(sub + 0x34, &a, &b, SF(0x14));
     t = SF(0x14);
-    F(0xAC) = 0.0f * t + F(0xAC) * (1.0f - t);
+    F(0xAC) = LerpScalar(0.0f, F(0xAC), t);
     if (SP(0x98) != 0) {
         Mtx_TransposeToMtx44(root, KartDriver_GetKartRootMtx(SP(0x98)));
         local = *(Vec *)(sub + 0x34);
