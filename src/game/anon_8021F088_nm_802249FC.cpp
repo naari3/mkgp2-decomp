@@ -1,3 +1,4 @@
+#define COIN_RESCTRL_IMPLICIT_PADDING
 #include "game/anon_8021F088_private.h"
 
 void clGetCoinSum::Layout() {

@@ -834,3 +834,8 @@ c14_u28 WarpDashMgr_Init: fresh baseline 92.791046 (assignment report 93.57). Ca
 Source: Codex worker c14_u35_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u35: TaMode_Init fresh92.60642 ->93.5946 (2376 vs2368B). Inline RegisterGhost(matrix,CarObject_GetRenderObj(...)) removes extra r3->r0->r8 copy; inline CreatePlayerPath is invariant. Keeping one-based cup index in params pointer then reading params[-6] yields target -0x48/-0x44/-0x40 field offsets and removes early cup subtraction. Bonus captured before time gives target FP homes but reversed load order. Typed multidimensional ghost indexing regresses92.16216 and folds table base incorrectly. Residual prologue derived-vptr BATTLE+658 CSE, first2 log rematerializations, allocation/argument GPR webs, ghost table association and scheduling. Refresh TU-only anonymous keys to @92/@93/@91. Text93.5946/extab94.897964/index95/data50. Singleton staysNM; fallback DOL SHA1OK.
+
+## c14_u44_20261106
+Source: Codex worker c14_u44_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1060 B.
+
+clGetCoinSum::Layout (802249FC) matches all 1060 text bytes and both EH sections with existing COIN_RESCTRL_IMPLICIT_PADDING opt-in. Explicit pad arrays generated __copy and padding stores; implicit padding and separate tail members restore native memberwise assignment and CTR loop, resolving apparent register residuals. Full source-linked DOL SHA-1 OK.
