@@ -53,23 +53,37 @@ struct TexMgr {
     TexMgr();
 };
 
-static const float kOffsetX[4] = {7.0f, 0.0f, 14.0f, 0.0f};
+extern const char lbl_806DB680[8];
+extern const char lbl_806DB688[8];
+extern const char lbl_806DB690[8];
+extern const char lbl_806DB698[8];
+extern const char lbl_806DB6A0[8];
+extern const char lbl_806DB6A8[8];
+extern const char lbl_806DB6B0[8];
 
 static const char *kNamesJ[13] = {
-    "マリオ", "ルイージ", "ワリオ", "ピーチ", "クッパ", "キノピオ", "ドンキー",
+    lbl_806DB680, "ルイージ", lbl_806DB688, lbl_806DB690, lbl_806DB698, "キノピオ", "ドンキー",
     "ヨッシー", "パックマン", "ミズパック", "アカベイ", "ワルイージ", "まめっち",
 };
 
 static const char *kNamesE[13] = {
-    "ＭＡＲＩＯ", "ＬＵＩＧＩ", "ＷＡＲＩＯ", "ＰＥＡＣＨ", "ＫＩＮＧ", "ＴＯＡＤ", "ＤＫ",
-    "ＹＯＳＨＩ", "ＰＡＣ", "Ｍｓ．Ｐ", "ＲＥＤ", "ＷＡＬＵ", "ＭＡＭＥ",
+    "ＭＡＲＩＯ", "ＬＵＩＧＩ", "ＷＡＲＩＯ", "ＰＥＡＣＨ", "ＫＩＮＧ", "ＴＯＡＤ", lbl_806DB6A0,
+    "ＹＯＳＨＩ", lbl_806DB6A8, "Ｍｓ．Ｐ", lbl_806DB6B0, "ＷＡＬＵ", "ＭＡＭＥ",
+};
+
+static const float kOffsetX[4] = {7.0f, 0.0f, 14.0f, 0.0f};
+
+struct Vec3c {
+    float x, y, z;
+    Vec3c() {}
+    ~Vec3c() {}
 };
 
 class clEName3D {
 public:
     virtual ~clEName3D();
     KartRender *kart;
-    float x, y, z;
+    Vec3c pos;
     float scale;
     int prio;
     int big;
@@ -81,41 +95,11 @@ public:
     void SetPos(const float *pos);
 };
 
-void clEName3D::Draw() {
-    unsigned char hidden;
-    float s = 1.5300002f * scale;
-    if ((kart->status->bits & 0x8000000000ULL) == 0) {
-        hidden = 0;
-    } else {
-        hidden = 1;
-    }
-    if (hidden != 1 && !(scale < 0.5f)) {
-        float px = s * kOffsetX[big * 2] + x;
-        s *= 0.875f;
-        fn_801F93DC(tex, px, y, z);
-        fn_801F93D0(tex, s, s);
-        fn_801F8A34(list, tex, prio);
-    }
-}
-
-void clEName3D::SetPos(const float *pos) {
-    x = pos[0];
-    y = pos[1];
-    z = pos[2];
-}
-
-clEName3D::~clEName3D() {
-    if (tex) {
-        delete tex;
-    }
-    fn_801F8E54();
-}
-
 clEName3D::clEName3D(KartRender *k, int p) {
     kart = k;
-    x = 0.0f;
-    y = 0.0f;
-    z = 0.0f;
+    pos.x = 0.0f;
+    pos.y = 0.0f;
+    pos.z = 0.0f;
     scale = 1.0f;
     prio = p;
     big = 0;
@@ -152,4 +136,34 @@ clEName3D::clEName3D(KartRender *k, int p) {
     fn_801F8FF0(tex, 1);
     fn_801F8E90(tex);
     TexMgr_Apply(tex);
+}
+
+clEName3D::~clEName3D() {
+    if (tex) {
+        delete tex;
+    }
+    fn_801F8E54();
+}
+
+void clEName3D::SetPos(const float *v) {
+    pos.x = v[0];
+    pos.y = v[1];
+    pos.z = v[2];
+}
+
+void clEName3D::Draw() {
+    unsigned char hidden;
+    float s = 1.5300002f * scale;
+    if ((kart->status->bits & 0x8000000000ULL) == 0) {
+        hidden = 0;
+    } else {
+        hidden = 1;
+    }
+    if (hidden != 1 && !(scale < 0.5f)) {
+        float px = s * kOffsetX[big * 2] + pos.x;
+        s *= 0.875f;
+        fn_801F93DC(tex, px, pos.y, pos.z);
+        fn_801F93D0(tex, s, s);
+        fn_801F8A34(list, tex, prio);
+    }
 }

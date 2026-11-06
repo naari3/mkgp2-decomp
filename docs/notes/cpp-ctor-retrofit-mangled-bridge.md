@@ -839,3 +839,8 @@ c14_u35: TaMode_Init fresh92.60642 ->93.5946 (2376 vs2368B). Inline RegisterGhos
 Source: Codex worker c14_u44_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1060 B.
 
 clGetCoinSum::Layout (802249FC) matches all 1060 text bytes and both EH sections with existing COIN_RESCTRL_IMPLICIT_PADDING opt-in. Explicit pad arrays generated __copy and padding stores; implicit padding and separate tail members restore native memberwise assignment and CTR loop, resolving apparent register residuals. Full source-linked DOL SHA-1 OK.
+
+## c14_u45_20261106
+Source: Codex worker c14_u45_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 820 B.
+
+EName3D ctor target EH identifies destructible Vec3c at +8. Empty inline ctor/dtor plus canonical dtor_80036E40 bridge restores member cleanup. GC/2.6 -rostr and -inline deferred, with reversed source definitions, restores pooling across name tables/vtable, saved registers and all 452B ctor instructions. Shared short SJIS strings must reference existing lbl_806DB680..B6B0 rather than emit duplicates. Default objdiff pool inference shows 99.91151% for second 13-entry table although actual relocations compare 100% with ppc_calculate_pool_relocations=false. Entire source-linked DOL SHA-1 exact, four original function addresses/sizes verified.
