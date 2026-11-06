@@ -54,6 +54,19 @@ extern int rand(void);
 /* Actual callee reads four pointer words through r3 and returns an integer. */
 extern int CardSnapshot_ResolveCommonItems(CardRow** rows);
 
+static inline u8 PeersReady(PeerSlot* peer, int role)
+{
+    int i;
+    u8 ready = 1;
+    if (role != 0) {
+        unsigned int scene = g_currentSceneState;
+        for (i = 0; i < 4; ++i, ++peer)
+            if (peer->first.bytes.header.role == role &&
+                ((peer->first.word >> 15) & 255) != scene) ready = 0;
+    }
+    return ready;
+}
+
 static inline SyncOutput* HostOutput(CommStorage* storage)
 {
     if (g_isCommHost == 0) return 0;
@@ -73,20 +86,13 @@ int PCBComm_ComputeSyncState(void)
     SyncOutput* out = HostOutput(storage);
     PeerSlot* peer;
     int i, winner, role;
-    u8 ready = 1;
+    u8 ready;
 
     if (out == 0) {
         if (g_localPcbRole != 0) return 0;
         out = &storage->output[0];
     }
-    role = g_localPcbRole;
-    if (role != 0) {
-        unsigned int scene = g_currentSceneState;
-        peer = storage->peer;
-        for (i = 0; i < 4; ++i, ++peer)
-            if (peer->first.bytes.header.role == role &&
-                ((peer->first.word >> 15) & 255) != scene) ready = 0;
-    }
+    ready = PeersReady(storage->peer, g_localPcbRole);
     if (ready == 1) out->scene = g_currentSceneState;
 
     if ((int)out->scene == 12) {
