@@ -50,3 +50,8 @@ if (has_dobj) {
 を `if (!(jobj->flags & (JOBJ_PTCL | JOBJ_SPLINE))) HSD_DObjReqAnimAllByFlags(...);` に flatten すると、mwcceppc が `andi. / bne` の短い branch を出して 2 instruction 短くなり、byte-identical を失う。元 binary は `andi. / cntlzw / srwi. / beq` の boolean 化を出している、 = SSBM の中間変数経由の表現が compile されたことを示唆。
 
 教訓: HSD のような他 decomp project から source を借用するときは **SSBM 源の冗長な書き方をそのまま残す**。中間変数の elision は compiler 出力を変える。
+
+## c16_u43_20261106
+Source: Codex worker c16_u43_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 116 B.
+
+state_color HSD_SetMaterialColor @802C0FF8 is an exception to blanket GC/1.3.2 choice: unchanged native C is84.13793% with1.3.2 and100% text withGC/2.7. The distinguishing initial instruction order is lfs/lis/lwz before stack stwu. This identifies newer scheduling behavior;2.5/2.6 were not tested, so2.7 is a verified compatible choice, not uniquely identified historical version. Target sdata2 has4 trailing alignment zero bytes beyond12 meaningful constants; normal linker alignment reproduces them without source padding. Full source-linked DOL SHA-1 OK.
