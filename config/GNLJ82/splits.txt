@@ -5262,6 +5262,7 @@ game/BombItem_Update.c:
 	extab       start:0x8000B704 end:0x8000B70C
 	extabindex  start:0x80023F9C end:0x80023FA8
 	.text       start:0x800F7584 end:0x800F7AFC
+	.data       start:0x804217B0 end:0x804217D8
 
 game/TornadoItem.c:
 	extab       start:0x8000B70C end:0x8000B73C

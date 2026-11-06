@@ -1,0 +1,5 @@
+# BombItem_Update-native-c
+
+Source: Codex worker c15_a59_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1400 B.
+
+BombItem_Update (0x800F7584, 0x578 bytes) converts exactly using nested signed-byte state/phase switches and a generic static inline fade helper called by modes 9 and 5. Keep explicit case 1 in phase switches: case 0 alone collapses the dispatch and removes 16 bytes per occurrence. mode at +0xCB is signed char: this yields extsb for jump-table indexing but cmpwi for later equality tests. Assign .data 0x804217B0..0x804217D8 (the 10-entry compiler-generated switch table) to the TU; it was previously left in an auto data object. Real C emits exact 8-byte extab automatically under existing flags, so delete old manual extab/extabindex definitions. No rename-map or configure edits needed. Objdiff .text/.data/extab/extabindex all 100%; coordinator service request 1 DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
