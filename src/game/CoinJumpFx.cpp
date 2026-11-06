@@ -16,8 +16,6 @@ struct CoinJumpEffect {
 struct CoinJumpCamera { char pad[0x80]; CoinJumpVec position; };
 extern "C" {
 extern CoinJumpCamera lbl_805DF3D0;
-extern const float lbl_806D5770, lbl_806D577C, lbl_806D5780, lbl_806D5784, lbl_806D5790, lbl_806D5798, lbl_806D57D8, lbl_806D57F4;
-extern const float lbl_806D5810, lbl_806D5814, lbl_806D581C, lbl_806D5820, lbl_806D5824, lbl_806D5828, lbl_806D582C, lbl_806D5830, lbl_806D5834, lbl_806D5838, lbl_806D583C, lbl_806D5840, lbl_806D5844, lbl_806D5848, lbl_806D584C;
 void Vec3_Copy(CoinJumpVec *,const CoinJumpVec *);
 void Vec3_Subtract_DestFirst(CoinJumpVec *,const CoinJumpVec *,const CoinJumpVec *);
 void Vec3_Add_DestFirst(CoinJumpVec *,const CoinJumpVec *,const CoinJumpVec *);
@@ -35,7 +33,7 @@ void DrawEffect_Free(CoinJumpEffect *);
 void CoinJumpFx_UpdateParticleGrid(CoinJumpEffect *effect,const CoinJumpVec *position,float scale,float alpha) {
     CoinJumpEffect *child;
     if(effect) {
-        float particleScale=lbl_806D581C*scale;
+        float particleScale=1.8f*scale;
         CoinJumpGroup *group=&effect->group;
         for(int i=0;i<2;++i) {
             for(int j=0;j<2;++j) {
@@ -46,28 +44,28 @@ void CoinJumpFx_UpdateParticleGrid(CoinJumpEffect *effect,const CoinJumpVec *pos
                     child->scale=particleScale;
                     child->alpha=alpha;
                     if(i==0) {
-                        group->phase[index]+=lbl_806D57D8;
-                        if(lbl_806D5820<group->phase[index]) group->phase[index]-=lbl_806D5820;
-                        child->rotation=BuildOrientationFromYaw(lbl_806D577C*(lbl_806D5824*group->phase[index]));
-                        child->scale*=lbl_806D5828*group->phase[index]+lbl_806D5790;
-                        if(lbl_806D5770<=group->phase[index] && group->phase[index]<=lbl_806D582C)
-                            child->alpha*=lbl_806D5830*group->phase[index];
-                        else if(lbl_806D582C<=group->phase[index] && group->phase[index]<=lbl_806D5834) { }
-                        else if(lbl_806D5834<=group->phase[index] && group->phase[index]<=lbl_806D5820)
-                            child->alpha*=lbl_806D5798*(group->phase[index]-lbl_806D5834)+lbl_806D5790;
+                        group->phase[index]+=0.5f;
+                        if(90.0f<group->phase[index]) group->phase[index]-=90.0f;
+                        child->rotation=BuildOrientationFromYaw(0.017453288659453392f*((-6.0f)*group->phase[index]));
+                        child->scale*=(-0.006666666828095913f)*group->phase[index]+1.0f;
+                        if(0.0f<=group->phase[index] && group->phase[index]<=15.0f)
+                            child->alpha*=0.06666667014360428f*group->phase[index];
+                        else if(15.0f<=group->phase[index] && group->phase[index]<=70.0f) { }
+                        else if(70.0f<=group->phase[index] && group->phase[index]<=90.0f)
+                            child->alpha*=(-0.05f)*(group->phase[index]-70.0f)+1.0f;
                     } else {
-                        group->phase[index]+=lbl_806D57D8;
-                        if(lbl_806D5784<group->phase[index]) group->phase[index]-=lbl_806D5784;
+                        group->phase[index]+=0.5f;
+                        if(60.0f<group->phase[index]) group->phase[index]-=60.0f;
                         CoinJumpVec delta;
                         Vec3_Subtract_DestFirst(&delta,&lbl_805DF3D0.position,&child->position);
-                        float inv=lbl_806D5790/Vec3_Magnitude_Wrapper(&delta);
-                        Vec3_Scale(&delta,&delta,scale*(lbl_806D5810*inv));
+                        float inv=1.0f/Vec3_Magnitude_Wrapper(&delta);
+                        Vec3_Scale(&delta,&delta,scale*(5.0f*inv));
                         Vec3_Add_DestFirst(&child->position,&child->position,&delta);
-                        if(lbl_806D5770<=group->phase[index] && group->phase[index]<=lbl_806D5780)
-                            child->scale*=lbl_806D5838*group->phase[index]+lbl_806D5790;
-                        else child->scale*=lbl_806D5840*(group->phase[index]-lbl_806D5780)+lbl_806D583C;
-                        if(lbl_806D5770<=group->phase[index] && group->phase[index]<=lbl_806D582C)
-                            child->alpha*=lbl_806D5830*group->phase[index];
+                        if(0.0f<=group->phase[index] && group->phase[index]<=30.0f)
+                            child->scale*=(-0.0033333341125398874f)*group->phase[index]+1.0f;
+                        else child->scale*=(-0.026666665449738503f)*(group->phase[index]-30.0f)+0.9f;
+                        if(0.0f<=group->phase[index] && group->phase[index]<=15.0f)
+                            child->alpha*=0.06666667014360428f*group->phase[index];
                     }
                     VfxSlot_SetPositionFromVec(child->slot,child->position);
                     VfxSlot_SetRotationZ(child->slot,child->rotation);
@@ -80,16 +78,16 @@ void CoinJumpFx_UpdateParticleGrid(CoinJumpEffect *effect,const CoinJumpVec *pos
             CoinJumpEffect *child=group->children[4];
             if(child) {
                 Vec3_Copy(&child->position,position);
-                child->scale=lbl_806D5844*scale;
+                child->scale=1.2f*scale;
                 child->alpha=alpha;
-                group->phase[4]+=lbl_806D5790;
-                if(lbl_806D5848<group->phase[4]) group->phase[4]-=lbl_806D5848;
+                group->phase[4]+=1.0f;
+                if(360.0f<group->phase[4]) group->phase[4]-=360.0f;
                 CoinJumpVec delta;
                 Vec3_Subtract_DestFirst(&delta,&lbl_805DF3D0.position,&child->position);
-                float inv=lbl_806D5790/Vec3_Magnitude_Wrapper(&delta);
-                Vec3_Scale(&delta,&delta,scale*(lbl_806D57F4*inv));
+                float inv=1.0f/Vec3_Magnitude_Wrapper(&delta);
+                Vec3_Scale(&delta,&delta,scale*(6.0f*inv));
                 Vec3_Add_DestFirst(&child->position,&child->position,&delta);
-                child->rotation=BuildOrientationFromYaw(lbl_806D577C*(-group->phase[4]));
+                child->rotation=BuildOrientationFromYaw(0.017453288659453392f*(-group->phase[4]));
                 VfxSlot_SetPositionFromVec(child->slot,child->position);
                 VfxSlot_SetRotationZ(child->slot,child->rotation);
                 VfxSlot_SetScaleUniform(child->slot,child->scale);

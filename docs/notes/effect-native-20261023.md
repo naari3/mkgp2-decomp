@@ -181,3 +181,8 @@ c15_u25: Cluster16 Update 800C6074/1076B now native exact. Numeric literals reso
 Source: Codex worker c15_u36_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c15_u36: Joint12 fresh98.06879 ->98.51852 using stageFraction(start,end,age) returning (age-start)*(one/(end-start)). Restores start f3/end f1/reciprocal f1, but amount stays f1 versus target f2; alpha base swaps accordingly. Child-loop helper with local index regresses97.96296; caller-index reference helper is byte-invariant. Reciprocal-only helper also invariant. Retain singleton NonMatching; text756/EH8/index12, EH/index100. No safe split. Final coordinator fallback-linked DOL SHA1 exact; native gain0.
+
+## c15_u40_20261106
+Source: Codex worker c15_u40_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c15_u40: CoinJumpFx_UpdateParticleGrid 800CDE7C/1068B improves 98.48315 to 98.8015 with numeric float literals, resolving all phase-wrap and optional-child FP scratch differences. Remaining 63 rows are GPR identities (camera24/25, lane25/26, grid child26/24, optional child25/21 target/source). Inner-loop child scope regresses98.48315; explicit camera/lane addressing regresses98.20225. Both reverted. Text size1068/EH8/index12 unchanged, EH/index100. Singleton staysNonMatching; no rescue split, no native gain. Full fallback-linked DOL SHA1 exact.
