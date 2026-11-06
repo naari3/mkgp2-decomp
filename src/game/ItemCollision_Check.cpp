@@ -2,8 +2,7 @@
  * the kart it touched and classify the contact from the kart's status flags.
  * Returns 0 (no contact), 1 (hit), 2 (blocked/guarded), 3, or 5 (lost).
  * C++ for the virtual-call sequence (lwz r12; lwz r12, 0xC(r12)).
- * NonMatching (99.8%): the owner team id and the RankLog pointer swap
- * callee-saved registers (r29/r27). */
+ * The team accessor mirrors the inline getter used by the hit path. */
 typedef struct Vec { float x, y, z; } Vec;
 
 typedef struct ItemClassEntry {
@@ -126,12 +125,15 @@ static inline int ItemCollision_Classify(unsigned char *kart)
 
 static inline void *RankLog_Get(void)
 {
-    void *p = lbl_806D10A0;
-
-    if (p == 0) {
-        p = 0;
+    if (lbl_806D10A0 == 0) {
+        return 0;
     }
-    return p;
+    return lbl_806D10A0;
+}
+
+static inline int ItemCollision_GetTeam(unsigned char *kart)
+{
+    return *(int *)(kart + 0x1F4);
 }
 
 static inline void ItemCollision_LogDefeat(unsigned char *self, int team)
@@ -196,7 +198,7 @@ extern "C" int ItemCollision_Check(unsigned char *self)
         case 1:
             if (S8(0x17C) == 0 || U32(0x178) != 0) {
                 if (P(0x184) != 0) {
-                    team = *(int *)(P(0x184) + 0x1F4);
+                    team = ItemCollision_GetTeam(P(0x184));
                     if (team != *(int *)(kart + 0x1F4)) {
                         ItemHit_CommonKnockdown(P(0x184), *(int *)(kart + 0x248));
                     }

@@ -1456,3 +1456,8 @@ c12_u12: ZoneVisibilityUpdate fn_80173FA4 resolves its r28/r29 mask/array-offset
 Source: Codex worker c13_u47_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u47: fn_801D7610 remapFlags clear reusing the preceding loops int i emits eight distinct zero-store registers and seven redundant mr copies under GC/1.3.2. Independent int j for the remap loop removes all seven copies and gives exact 784-byte text size, improving 95.33673 to 99.938774. Only r0 LR/r30 adjacent epilogue restore order remains. Nested trailing clear loops do not change residual; whole reset helper exceeds auto-inline budget. Retained NonMatching.
+
+## c15_u10_20261106
+Source: Codex worker c15_u10_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1040 B.
+
+c15_u10: ItemCollision_Check 0x800DD1EC owner-team/RankLog r29/r27 swap resolves by extracting the owner team load at +0x1F4 into static inline int ItemCollision_GetTeam(unsigned char *kart). Direct load 99.82692%, getter call 100% text1040/extab8/index12. Replace old RankLog_Get if(p==0)p=0 with if(global==0)return 0; return global; first: identical output. Matching source object linked; coordinator full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
