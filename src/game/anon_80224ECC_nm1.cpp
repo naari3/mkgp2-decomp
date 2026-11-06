@@ -7,8 +7,5 @@ clCSSceneBanner::~clCSSceneBanner() {
         delete obj;
         obj = 0;
     }
-    if (spr) {
-        delete spr;
-    }
-    spr = 0;
+    DeleteSprite(spr);
 }

@@ -924,3 +924,8 @@ SpecialFace_Init 8007B944 (452B): old GC/1.3.2 compiled aggregate assignment as 
 Source: Codex worker c16_u16_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u16 ItemWnd::Setup 8021F508: fresh baseline88.15076 vs report88.83. A TU-private typed view of shared pool lbl_803C6610 with poses at+428 and explicit entry-scope pool pointer restores cached r30 prologue/base and allocation GPR homes, improves92.41708 (784 vs796B). Merely replacing external labels with casts to common root gives88.25126. Multidimensional float[6] accessor is invariant to typed struct access. Residual target base+428 then index association/rematerialization vs folded source field offsets; itemId comparison r0/r3. Owned EH still not exact; singleton stays NonMatching. Full fallback DOL SHA1 exact; zero native gain.
+
+## c16_u20_20261106
+Source: Codex worker c16_u20_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u20 fn_80225124 singleton destructor: canonical DeleteSprite(spr) fixes target conditional null assignment and improves fresh88.304344 to89.5 (176 vs184 B). Target zero r31 live across Sprite_Destroy remains absent; replacement-parameter helper invariant, pointer-return helper88.41304. Existing compiler emits unowned24B clCSSceneBanner vtable, another blocker for promotion. EH87.5/index91.66667 unchanged. Remains NonMatching after3 hypotheses; full fallback DOL SHA1 exact; zero native gain.
