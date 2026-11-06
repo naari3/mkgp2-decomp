@@ -939,3 +939,8 @@ c16_u21 PhysicsState_KartCollisionCheck 801ECB88 singleton: scalar previous-posi
 Source: Codex worker c16_u24_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u24 CourseData_LoadPathTable singleton 800ABAE8: fresh baseline86.89759 (report87.8), native656B vs target664. Separate LoadMemoryTable and LoadFileTable static inline path helpers yield89.09638; memory source/size and first counting-loop homes now match. Typed full-pool arrays87.75301/648B rejected; common InitializePaths helper is invariant89.09638. Remaining table-base CSE/hoist/asymmetric branch layout, prologue scheduling, memory fixup r22/r23 and file-population GPR homes. Add-only own @90/@91 aliases maintain extab93.75/index95. Singleton remainsNonMatching; full fallback DOL SHA1OK, zero native gain.
+
+## c16_u27_20261106
+Source: Codex worker c16_u27_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 204 B.
+
+SpecialFaceMesh_Ctor 8007B878/204B: GC/2.6 alone invariant87.54902; src __restrict under2.6 permits target source count load before member zero stores, reaching98.43137 (1.3.2 remains87.54902). Keep assignments data,i,count,offset in original order, declare locals count,data,offset,i to restore count r31,data r30,offset r29,index r28 and source parameter reuse r29. All204 text bytes exact. Natural inline loop helper regresses93.882355 and is unnecessary. Add TU anonymous @41/@42 bridges to etb80008648/eti800214D0. Owned text64B EH/12B index all100; source-linked main.elf constructor at8007B878 size204; full DOL SHA1 exact.

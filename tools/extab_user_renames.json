@@ -10194,6 +10194,8 @@
     "__dt__14SpecialFaceVecFv": "dtor_80036E40"
   },
   "src/game/SpecialFaceMesh_Ctor.cpp": {
+    "@41": "@etb_80008648",
+    "@42": "@eti_800214D0",
     "__ct__17SpecialFaceNativeFPC17SpecialFaceSource": "SpecialFace_Init",
     "__ct__14SpecialFaceVecFv": "fn_8007C5DC",
     "__dt__14SpecialFaceVecFv": "dtor_80036E40",
