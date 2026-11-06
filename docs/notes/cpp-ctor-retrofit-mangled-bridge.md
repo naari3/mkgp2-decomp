@@ -879,3 +879,8 @@ PcbDebugOverlay: DrawLinkErrorOverlay has exact C text but target DESTROYLOCAL T
 Source: Codex worker c15_u15_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2184 B.
 
 c15_u15: CardDataTransfer_UI 8006D308/2184B matches fully by extracting natural inline Begin(TestPage*, int initialStatus) around initialization and six card-status checks, using the parameter for STEP and STATUS then returning error status. Flat local constant duplicates li 1. TU-local DrawItems(TestPage*,int) mirrors TestPage_DrawItems but declares MenuItem* it=lbl_803FCC00 locally instead of passing the table as an inline parameter; target walker r30/index r27/selection r29 restored. Combined native text/EH100 and source-linked full DOL SHA1 exact; no EH bridges or split changes.
+
+## c15_u24_20261106
+Source: Codex worker c15_u24_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 572 B.
+
+CardUnpackLegacy 8009060C: explicit version=552-get_used_bits(pack); used=get_used_bits(pack); DebugPrintf(...get_used_bytes(pack),used,version) caused r26/r27 reversal and extra r3->r0->r26 move. Direct DebugPrintf(format,get_used_bytes(pack),get_used_bits(pack),552-get_used_bits(pack)) restores right-to-left argument expression temporaries, all 572 text bytes and owned EH40/index12 exact. Existing real new expressions/EH bridge unchanged; full source-linked DOL SHA-1 exact.

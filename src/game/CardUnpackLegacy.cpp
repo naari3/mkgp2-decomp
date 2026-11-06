@@ -1,8 +1,6 @@
 /*
- * Complete assembly-grounded legacy dispatch draft (NonMatching).
- * Real new expressions retain both constructor-failure delete actions.
- * The remaining source-object difference is version/used register coloring
- * and one extra move after the second used-bits call, not manual EH.
+ * Legacy card dispatch with native new-expression cleanup.
+ * Keep usage queries as call arguments for right-to-left evaluation.
  */
 typedef unsigned char u8;
 extern "C" {
@@ -38,7 +36,6 @@ extern "C" u8 card_unpack_legacy_dispatch(u8 *dest, const void *raw, u8 publish)
     const char *messages = lbl_80315378;
     u8 result;
     int version;
-    int used;
     CardBitpack *pack;
     u8 copy[0x45];
 
@@ -71,9 +68,8 @@ extern "C" u8 card_unpack_legacy_dispatch(u8 *dest, const void *raw, u8 publish)
         DebugPrintf(messages + 0x225C);
         return 0;
     }
-    version = 0x228 - bitpack_get_used_bits(pack);
-    used = bitpack_get_used_bits(pack);
-    DebugPrintf(messages + 0x226C, bitpack_get_used_bytes(pack), used, version);
+    DebugPrintf(messages + 0x226C, bitpack_get_used_bytes(pack),
+                bitpack_get_used_bits(pack), 0x228 - bitpack_get_used_bits(pack));
     /* The original overflow path returns before releasing pack. */
     if (bitpack_get_used_bytes(pack) > 0x45) return 0;
     MemoryManager_TimedFree(pack);
