@@ -202,94 +202,37 @@ static inline unsigned char SphereNotOccluded(const Occluder *o, const Vec3f *v,
     return 0;
 }
 
-extern "C" asm unsigned char fn_801375D8(const Vec3f *p, float r) { /* 0x801375D8 size:0x140 */
-    nofralloc
-    lwz r5, lbl_806D1518(r13)
-    lis r4, lbl_80677CB8@ha
-    lfs f7, 0x4(r3)
-    addi r4, r4, lbl_80677CB8@l
-    lfs f0, 0x24(r5)
-    lfs f3, 0x20(r5)
-    fmuls f0, f0, f7
-    lfs f8, 0x0(r3)
-    lfs f4, 0x28(r5)
-    lfs f2, 0x8(r3)
-    fmadds f0, f3, f8, f0
-    lfs f3, 0x2c(r5)
-    lwz r3, lbl_806D151C(r13)
-    fmadds f0, f4, f2, f0
-    fadds f0, f3, f0
-    stfs f0, 0x8(r4)
-    fsubs f4, f0, f1
-    lfs f3, 0x40(r3)
-    fcmpo cr0, f4, f3
-    ble fn_801375D8_L_80137630
-    li r3, 0x0
-    blr
-    fn_801375D8_L_80137630:
-    fadds f4, f0, f1
-    lfs f3, 0x44(r3)
-    fcmpo cr0, f4, f3
-    bge fn_801375D8_L_80137648
-    li r3, 0x0
-    blr
-    fn_801375D8_L_80137648:
-    lfs f3, 0x4(r5)
-    lfs f4, 0x0(r5)
-    fmuls f3, f3, f7
-    lfs f5, 0x8(r5)
-    lfs f6, 0xc(r5)
-    fmadds f3, f4, f8, f3
-    fmadds f3, f5, f2, f3
-    fadds f5, f6, f3
-    stfs f5, 0x0(r4)
-    lfs f3, 0x8(r3)
-    lfs f4, 0x0(r3)
-    fmuls f3, f0, f3
-    fmadds f3, f5, f4, f3
-    fcmpo cr0, f3, f1
-    ble fn_801375D8_L_8013768C
-    li r3, 0x0
-    blr
-    fn_801375D8_L_8013768C:
-    lfs f3, 0x18(r3)
-    lfs f4, 0x10(r3)
-    fmuls f3, f0, f3
-    fmadds f3, f5, f4, f3
-    fcmpo cr0, f3, f1
-    ble fn_801375D8_L_801376AC
-    li r3, 0x0
-    blr
-    fn_801375D8_L_801376AC:
-    lfs f3, 0x14(r5)
-    lfs f4, 0x10(r5)
-    fmuls f3, f3, f7
-    lfs f5, 0x18(r5)
-    lfs f6, 0x1c(r5)
-    fmadds f3, f4, f8, f3
-    fmadds f2, f5, f2, f3
-    fadds f4, f6, f2
-    stfs f4, 0x4(r4)
-    lfs f2, 0x28(r3)
-    lfs f3, 0x24(r3)
-    fmuls f2, f0, f2
-    fmadds f2, f4, f3, f2
-    fcmpo cr0, f2, f1
-    ble fn_801375D8_L_801376F0
-    li r3, 0x0
-    blr
-    fn_801375D8_L_801376F0:
-    lfs f2, 0x38(r3)
-    lfs f3, 0x34(r3)
-    fmuls f0, f0, f2
-    fmadds f0, f4, f3, f0
-    fcmpo cr0, f0, f1
-    ble fn_801375D8_L_80137710
-    li r3, 0x0
-    blr
-    fn_801375D8_L_80137710:
-    li r3, 0x1
-    blr
+/* Same frustum test as SphereInViewFrustum, writing the view-space centre to lbl_80677CB8. */
+static inline unsigned char SphereInViewFrustumGlobal(const Vec3f *p, float r)
+{
+    lbl_80677CB8.z = lbl_806D1518[2][0] * p->x + lbl_806D1518[2][1] * p->y + lbl_806D1518[2][2] * p->z + lbl_806D1518[2][3];
+    if (lbl_80677CB8.z - r > lbl_806D151C[16]) {
+        return 0;
+    }
+    if (lbl_80677CB8.z + r < lbl_806D151C[17]) {
+        return 0;
+    }
+    float x = lbl_806D1518[0][0] * p->x + lbl_806D1518[0][1] * p->y + lbl_806D1518[0][2] * p->z + lbl_806D1518[0][3];
+    lbl_80677CB8.x = x;
+    if (x * lbl_806D151C[0] + lbl_80677CB8.z * lbl_806D151C[2] > r) {
+        return 0;
+    }
+    if (x * lbl_806D151C[4] + lbl_80677CB8.z * lbl_806D151C[6] > r) {
+        return 0;
+    }
+    lbl_80677CB8.y = lbl_806D1518[1][0] * p->x + lbl_806D1518[1][1] * p->y + lbl_806D1518[1][2] * p->z + lbl_806D1518[1][3];
+    if (lbl_80677CB8.y * lbl_806D151C[9] + lbl_80677CB8.z * lbl_806D151C[10] > r) {
+        return 0;
+    }
+    if (lbl_80677CB8.y * lbl_806D151C[13] + lbl_80677CB8.z * lbl_806D151C[14] > r) {
+        return 0;
+    }
+    return 1;
+}
+
+extern "C" unsigned char fn_801375D8(const Vec3f *p, float r)
+{
+    return SphereInViewFrustumGlobal(p, r);
 }
 
 extern "C" unsigned char fn_80137718(const Vec3f *p, Vec3f *out, float r)
@@ -308,193 +251,17 @@ extern "C" unsigned char fn_80137718(const Vec3f *p, Vec3f *out, float r)
     return 1;
 }
 
-extern "C" asm unsigned char fn_801379F0(const Vec3f *p, float r) { /* 0x801379F0 size:0x29C */
-    nofralloc
-    lwz r5, lbl_806D1518(r13)
-    lis r4, lbl_80677CB8@ha
-    lfs f7, 0x4(r3)
-    addi r4, r4, lbl_80677CB8@l
-    lfs f0, 0x24(r5)
-    lfs f3, 0x20(r5)
-    fmuls f0, f0, f7
-    lfs f8, 0x0(r3)
-    lfs f4, 0x28(r5)
-    lfs f2, 0x8(r3)
-    fmadds f0, f3, f8, f0
-    lfs f3, 0x2c(r5)
-    lwz r3, lbl_806D151C(r13)
-    fmadds f0, f4, f2, f0
-    fadds f0, f3, f0
-    stfs f0, 0x8(r4)
-    fsubs f4, f0, f1
-    lfs f3, 0x40(r3)
-    fcmpo cr0, f4, f3
-    ble fn_801379F0_L_80137A48
-    li r0, 0x0
-    b fn_801379F0_L_80137B2C
-    fn_801379F0_L_80137A48:
-    fadds f4, f0, f1
-    lfs f3, 0x44(r3)
-    fcmpo cr0, f4, f3
-    bge fn_801379F0_L_80137A60
-    li r0, 0x0
-    b fn_801379F0_L_80137B2C
-    fn_801379F0_L_80137A60:
-    lfs f3, 0x4(r5)
-    lfs f4, 0x0(r5)
-    fmuls f3, f3, f7
-    lfs f5, 0x8(r5)
-    lfs f6, 0xc(r5)
-    fmadds f3, f4, f8, f3
-    fmadds f3, f5, f2, f3
-    fadds f5, f6, f3
-    stfs f5, 0x0(r4)
-    lfs f3, 0x8(r3)
-    lfs f4, 0x0(r3)
-    fmuls f3, f0, f3
-    fmadds f3, f5, f4, f3
-    fcmpo cr0, f3, f1
-    ble fn_801379F0_L_80137AA4
-    li r0, 0x0
-    b fn_801379F0_L_80137B2C
-    fn_801379F0_L_80137AA4:
-    lfs f3, 0x18(r3)
-    lfs f4, 0x10(r3)
-    fmuls f3, f0, f3
-    fmadds f3, f5, f4, f3
-    fcmpo cr0, f3, f1
-    ble fn_801379F0_L_80137AC4
-    li r0, 0x0
-    b fn_801379F0_L_80137B2C
-    fn_801379F0_L_80137AC4:
-    lfs f3, 0x14(r5)
-    lfs f4, 0x10(r5)
-    fmuls f3, f3, f7
-    lfs f5, 0x18(r5)
-    lfs f6, 0x1c(r5)
-    fmadds f3, f4, f8, f3
-    fmadds f2, f5, f2, f3
-    fadds f4, f6, f2
-    stfs f4, 0x4(r4)
-    lfs f2, 0x28(r3)
-    lfs f3, 0x24(r3)
-    fmuls f2, f0, f2
-    fmadds f2, f4, f3, f2
-    fcmpo cr0, f2, f1
-    ble fn_801379F0_L_80137B08
-    li r0, 0x0
-    b fn_801379F0_L_80137B2C
-    fn_801379F0_L_80137B08:
-    lfs f2, 0x38(r3)
-    lfs f3, 0x34(r3)
-    fmuls f0, f0, f2
-    fmadds f0, f4, f3, f0
-    fcmpo cr0, f0, f1
-    ble fn_801379F0_L_80137B28
-    li r0, 0x0
-    b fn_801379F0_L_80137B2C
-    fn_801379F0_L_80137B28:
-    li r0, 0x1
-    fn_801379F0_L_80137B2C:
-    clrlwi. r0, r0, 24
-    bne fn_801379F0_L_80137B3C
-    li r3, 0x0
-    blr
-    fn_801379F0_L_80137B3C:
-    lfs f4, 0x8(r4)
-    lis r3, lbl_80677CB8@ha
-    addi r3, r3, lbl_80677CB8@l
-    fneg f3, f1
-    fadds f0, f4, f1
-    lwz r4, lbl_806D1524(r13)
-    lfs f1, 0x4(r3)
-    lfs f2, 0x0(r3)
-    b fn_801379F0_L_80137C7C
-    fn_801379F0_L_80137B60:
-    lfs f5, 0x38(r4)
-    fcmpo cr0, f5, f0
-    bge fn_801379F0_L_80137B74
-    li r0, 0x1
-    b fn_801379F0_L_80137C68
-    fn_801379F0_L_80137B74:
-    lfs f5, 0x40(r4)
-    lfs f6, 0x3c(r4)
-    fmuls f5, f1, f5
-    lfs f7, 0x44(r4)
-    lfs f8, 0x48(r4)
-    fmadds f5, f2, f6, f5
-    fmadds f5, f4, f7, f5
-    fadds f5, f8, f5
-    fcmpo cr0, f5, f3
-    ble fn_801379F0_L_80137BA4
-    li r0, 0x1
-    b fn_801379F0_L_80137C68
-    fn_801379F0_L_80137BA4:
-    lfs f5, 0x50(r4)
-    lfs f6, 0x4c(r4)
-    fmuls f5, f1, f5
-    lfs f7, 0x54(r4)
-    lfs f8, 0x58(r4)
-    fmadds f5, f2, f6, f5
-    fmadds f5, f4, f7, f5
-    fadds f5, f8, f5
-    fcmpo cr0, f5, f3
-    ble fn_801379F0_L_80137BD4
-    li r0, 0x1
-    b fn_801379F0_L_80137C68
-    fn_801379F0_L_80137BD4:
-    lfs f5, 0x60(r4)
-    lfs f6, 0x5c(r4)
-    fmuls f5, f1, f5
-    lfs f7, 0x64(r4)
-    lfs f8, 0x68(r4)
-    fmadds f5, f2, f6, f5
-    fmadds f5, f4, f7, f5
-    fadds f5, f8, f5
-    fcmpo cr0, f5, f3
-    ble fn_801379F0_L_80137C04
-    li r0, 0x1
-    b fn_801379F0_L_80137C68
-    fn_801379F0_L_80137C04:
-    lfs f5, 0x70(r4)
-    lfs f6, 0x6c(r4)
-    fmuls f5, f1, f5
-    lfs f7, 0x74(r4)
-    lfs f8, 0x78(r4)
-    fmadds f5, f2, f6, f5
-    fmadds f5, f4, f7, f5
-    fadds f5, f8, f5
-    fcmpo cr0, f5, f3
-    ble fn_801379F0_L_80137C34
-    li r0, 0x1
-    b fn_801379F0_L_80137C68
-    fn_801379F0_L_80137C34:
-    lfs f5, 0x80(r4)
-    lfs f6, 0x7c(r4)
-    fmuls f5, f1, f5
-    lfs f7, 0x84(r4)
-    lfs f8, 0x88(r4)
-    fmadds f5, f2, f6, f5
-    fmadds f5, f4, f7, f5
-    fadds f5, f8, f5
-    fcmpo cr0, f5, f3
-    ble fn_801379F0_L_80137C64
-    li r0, 0x1
-    b fn_801379F0_L_80137C68
-    fn_801379F0_L_80137C64:
-    li r0, 0x0
-    fn_801379F0_L_80137C68:
-    clrlwi. r0, r0, 24
-    bne fn_801379F0_L_80137C78
-    li r3, 0x0
-    blr
-    fn_801379F0_L_80137C78:
-    lwz r4, 0x4(r4)
-    fn_801379F0_L_80137C7C:
-    cmplwi r4, 0x0
-    bne fn_801379F0_L_80137B60
-    li r3, 0x1
-    blr
+extern "C" unsigned char fn_801379F0(const Vec3f *p, float r)
+{
+    if (!SphereInViewFrustumGlobal(p, r)) {
+        return 0;
+    }
+    for (Occluder *o = lbl_806D1524; o != 0; o = o->activeNext) {
+        if (!SphereNotOccluded(o, &lbl_80677CB8, r)) {
+            return 0;
+        }
+    }
+    return 1;
 }
 
 extern "C" void fn_80137C8C(float (*m)[4], float *frustum)
