@@ -18,19 +18,17 @@ extern const float lbl_806D3158, lbl_806D315C, lbl_806D3160;
 extern const float lbl_806D3164, lbl_806D3168;
 
 #pragma exceptions on
-static inline unsigned char PublishValue(float timer, char *phases)
+static inline void PublishValue(float timer, char *phases, unsigned char *idle)
 {
-    unsigned char idle = 1;
     char *cursor = phases;
     unsigned char *out = g_pcbSyncTable;
     int i;
     for (i = 0; i < 4; ++i, ++cursor, out += 4) {
         if (*cursor == 5) {
             *(float *)(out + 8) = timer;
-            idle = 0;
+            *idle = 0;
         }
     }
-    return idle;
 }
 static inline void PublishTimers(int roleCount, unsigned char truncate,
                                  unsigned char reset, char *phases)
@@ -42,7 +40,7 @@ static inline void PublishTimers(int roleCount, unsigned char truncate,
         if (truncate) lbl_806D11C0[1] = (int)lbl_806D11C0[1];
         if (reset) lbl_806D11C0[1] = lbl_806D3168;
         timer = lbl_806D11C0[1];
-        idle = PublishValue(timer, phases);
+        PublishValue(timer, phases, &idle);
     }
     if (idle) lbl_806D11C0[1] = lbl_806D3168;
 }
