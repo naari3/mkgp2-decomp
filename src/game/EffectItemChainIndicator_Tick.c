@@ -5,9 +5,10 @@
  * segment rebuilds its billboard matrix and the two end points the
  * ribbon renderer joins. Command 1 detaches the children, command 2
  * fades the chain out.
- * NonMatching (99.7%): the s8 -> float conversions use this TU's own
- * 0x4330000080000000 literal instead of the pooled lbl_806D5378, and one
- * loop-setup move is scheduled earlier. */
+ * NonMatching (99.7%): the child-update loop's cursor setup (mr r31, r28)
+ * precedes the endpoint-buffer setup (addi r30, r1, 0x9c); the target
+ * has these two instructions in the opposite order. Conversion literals
+ * are already mapped to pooled lbl_806D5378 by the standard postprocess. */
 
 typedef struct Vec {
     float x, y, z;
