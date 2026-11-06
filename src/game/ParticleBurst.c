@@ -58,7 +58,7 @@ extern void Matrix4_PreMultiplyRotZ(Mtx44 *dst, Mtx44 *src, float a);
 extern void Matrix4_PreMultiplyTranslation(Mtx44 *dst, Mtx44 *src, float x, float y, float z);
 extern float BuildOrientationFromYaw(float yaw);
 extern void DrawEffect_Free(void *eff);
-extern void *FUN_8003b120(unsigned long size);
+extern Particle *FUN_8003b120(unsigned long size);
 extern void MemoryManager_Free(void *p);
 extern float Rand_RangeFloat(float lo, float hi);
 extern float Rand_RangeFloatMax(float max);
@@ -212,294 +212,101 @@ asm void ParticleBurst_DrawCb(void) { /* 0x800B4388 size:0x94 */
     blr
 }
 
-/*
- * ParticleBurst_Update stays an exact asm body: a C form matches every GPR,
- * branch and instruction, but MWCC rotates the callee-saved float registers
- * for the hoisted loop constants (99.6 %), so the asm is kept.
- */
-asm void ParticleBurst_Update(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ParticleBurst_Update[8] = {
-    0x29, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ParticleBurst_Update = {
-    (void *)&ParticleBurst_Update, 0x000003E8, (void *)extab_ParticleBurst_Update
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void ParticleBurst_Update(void) { /* 0x800B441C size:0x3E8 */
-    nofralloc
-    stwu r1, -0x90(r1)
-    mflr r0
-    stw r0, 0x94(r1)
-    stfd f31, 0x80(r1)
-    psq_st f31, 0x88(r1), 0, 0
-    stfd f30, 0x70(r1)
-    psq_st f30, 0x78(r1), 0, 0
-    stfd f29, 0x60(r1)
-    psq_st f29, 0x68(r1), 0, 0
-    stfd f28, 0x50(r1)
-    psq_st f28, 0x58(r1), 0, 0
-    stfd f27, 0x40(r1)
-    psq_st f27, 0x48(r1), 0, 0
-    stfd f26, 0x30(r1)
-    psq_st f26, 0x38(r1), 0, 0
-    stfd f25, 0x20(r1)
-    psq_st f25, 0x28(r1), 0, 0
-    stmw r27, 0xc(r1)
-    mr r27, r3
-    li r29, 0x1
-    lbz r0, 0xb4(r3)
-    extsb r0, r0
-    cmpwi r0, 0x1
-    beq ParticleBurst_Update_L_800B4660
-    bge ParticleBurst_Update_L_800B47B8
-    cmpwi r0, 0x0
-    bge ParticleBurst_Update_L_800B448C
-    b ParticleBurst_Update_L_800B47B8
-    ParticleBurst_Update_L_800B448C:
-    li r0, 0x1
-    li r3, 0x480
-    stb r0, 0x14(r27)
-    bl FUN_8003b120
-    stw r3, 0xcc(r27)
-    li r30, 0x0
-    lfs f26, lbl_806D5020(r2)
-    li r31, 0x0
-    lfs f27, lbl_806D5024(r2)
-    lfs f29, lbl_806D5090(r2)
-    lfs f30, lbl_806D5080(r2)
-    lfs f31, lbl_806D5034(r2)
-    ParticleBurst_Update_L_800B44BC:
-    lwz r3, 0xcc(r27)
-    li r6, 0x12
-    srawi r5, r30, 31
-    addi r0, r31, 0x4
-    stfsx f26, r3, r31
-    subfc r3, r6, r30
-    srwi r4, r6, 31
-    lwz r3, 0xcc(r27)
-    adde. r28, r5, r4
-    stfsx f27, r3, r0
-    bne ParticleBurst_Update_L_800B44FC
-    lfs f0, lbl_806D5044(r2)
-    addi r0, r31, 0x8
-    lwz r3, 0xcc(r27)
-    stfsx f0, r3, r0
-    b ParticleBurst_Update_L_800B450C
-    ParticleBurst_Update_L_800B44FC:
-    lfs f0, lbl_806D5074(r2)
-    addi r0, r31, 0x8
-    lwz r3, 0xcc(r27)
-    stfsx f0, r3, r0
-    ParticleBurst_Update_L_800B450C:
-    cmpwi r28, 0x0
-    beq ParticleBurst_Update_L_800B4528
-    lfs f1, lbl_806D5140(r2)
-    lfs f2, lbl_806D5144(r2)
-    bl Rand_RangeFloat
-    fmr f28, f1
-    b ParticleBurst_Update_L_800B4538
-    ParticleBurst_Update_L_800B4528:
-    lfs f1, lbl_806D5140(r2)
-    lfs f2, lbl_806D5148(r2)
-    bl Rand_RangeFloat
-    fmr f28, f1
-    ParticleBurst_Update_L_800B4538:
-    lfs f1, lbl_806D5084(r2)
-    lfs f2, lbl_806D5134(r2)
-    bl Rand_RangeFloat
-    fadds f0, f29, f1
-    fmuls f25, f30, f0
-    fmr f1, f25
-    bl sin
-    frsp f0, f1
-    lwz r3, 0xcc(r27)
-    fmr f1, f25
-    addi r0, r31, 0x10
-    fmuls f0, f28, f0
-    stfsx f0, r3, r0
-    bl cos
-    frsp f0, f1
-    lwz r3, 0xcc(r27)
-    addi r0, r31, 0x14
-    lfs f1, lbl_806D514C(r2)
-    fmuls f0, f28, f0
-    stfsx f0, r3, r0
-    bl Rand_RangeFloatMax
-    fmuls f1, f30, f1
-    bl BuildOrientationFromYaw
-    lwz r3, 0xcc(r27)
-    addi r0, r31, 0xc
-    lfs f2, lbl_806D5154(r2)
-    stfsx f1, r3, r0
-    lfs f1, lbl_806D5150(r2)
-    bl Rand_RangeFloat
-    lwz r3, 0xcc(r27)
-    addi r0, r31, 0x18
-    stfsx f1, r3, r0
-    lwz r0, 0xcc(r27)
-    add r3, r0, r31
-    lfs f0, 0x10(r3)
-    fcmpo cr0, f31, f0
-    bge ParticleBurst_Update_L_800B45DC
-    lfs f1, 0x18(r3)
-    lfs f0, lbl_806D5070(r2)
-    fmuls f0, f1, f0
-    stfs f0, 0x18(r3)
-    ParticleBurst_Update_L_800B45DC:
-    cmpwi r28, 0x0
-    bne ParticleBurst_Update_L_800B45F8
-    lwz r3, 0xcc(r27)
-    addi r0, r31, 0x1c
-    li r4, 0x0
-    stbx r4, r3, r0
-    b ParticleBurst_Update_L_800B4624
-    ParticleBurst_Update_L_800B45F8:
-    lis r4, 0x6666
-    lwz r3, 0xcc(r27)
-    addi r4, r4, 0x6667
-    addi r0, r31, 0x1c
-    mulhw r4, r4, r30
-    srawi r4, r4, 2
-    srwi r5, r4, 31
-    add r4, r4, r5
-    mulli r4, r4, 0xa
-    subf r4, r4, r30
-    stbx r4, r3, r0
-    ParticleBurst_Update_L_800B4624:
-    addi r30, r30, 0x1
-    lwz r3, 0xcc(r27)
-    addi r0, r31, 0x1d
-    li r4, 0x0
-    cmpwi r30, 0x24
-    stbx r4, r3, r0
-    addi r31, r31, 0x20
-    blt ParticleBurst_Update_L_800B44BC
-    lis r3, ParticleBurst_DrawCb@ha
-    addi r0, r3, ParticleBurst_DrawCb@l
-    stw r0, 0x78(r27)
-    stw r27, 0x7c(r27)
-    lbz r3, 0xb4(r27)
-    addi r0, r3, 0x1
-    stb r0, 0xb4(r27)
-    ParticleBurst_Update_L_800B4660:
-    lfs f0, lbl_806D50E4(r2)
-    li r30, 0x0
-    mr r31, r30
-    fneg f26, f0
-    ParticleBurst_Update_L_800B4670:
-    lwz r0, 0xcc(r27)
-    add r4, r0, r31
-    lbz r0, 0x1d(r4)
-    extsb. r0, r0
-    bne ParticleBurst_Update_L_800B4778
-    lbz r3, 0x1c(r4)
-    extsb. r0, r3
-    beq ParticleBurst_Update_L_800B469C
-    subi r0, r3, 0x1
-    stb r0, 0x1c(r4)
-    b ParticleBurst_Update_L_800B4778
-    ParticleBurst_Update_L_800B469C:
-    lfs f1, 0x14(r4)
-    lfs f0, lbl_806D5044(r2)
-    fadds f0, f1, f0
-    stfs f0, 0x14(r4)
-    lwz r0, 0xcc(r27)
-    add r3, r0, r31
-    lfs f1, 0x0(r3)
-    lfs f0, 0x10(r3)
-    fadds f0, f1, f0
-    stfs f0, 0x0(r3)
-    lwz r0, 0xcc(r27)
-    add r3, r0, r31
-    lfs f1, 0x4(r3)
-    lfs f0, 0x14(r3)
-    fadds f0, f1, f0
-    stfs f0, 0x4(r3)
-    lwz r0, 0xcc(r27)
-    add r3, r0, r31
-    lfs f1, 0xc(r3)
-    lfs f0, 0x18(r3)
-    fadds f1, f1, f0
-    bl BuildOrientationFromYaw
-    lwz r3, 0xcc(r27)
-    addi r0, r31, 0xc
-    stfsx f1, r3, r0
-    lwz r0, 0xcc(r27)
-    add r3, r0, r31
-    lfs f0, 0x0(r3)
-    fcmpo cr0, f0, f26
-    bge ParticleBurst_Update_L_800B471C
-    li r0, 0x1
-    stb r0, 0x1d(r3)
-    ParticleBurst_Update_L_800B471C:
-    lwz r0, 0xcc(r27)
-    lfs f1, lbl_806D5158(r2)
-    add r3, r0, r31
-    lfs f0, 0x0(r3)
-    fcmpo cr0, f1, f0
-    bge ParticleBurst_Update_L_800B473C
-    li r0, 0x1
-    stb r0, 0x1d(r3)
-    ParticleBurst_Update_L_800B473C:
-    lwz r0, 0xcc(r27)
-    add r3, r0, r31
-    lfs f0, 0x4(r3)
-    fcmpo cr0, f0, f26
-    bge ParticleBurst_Update_L_800B4758
-    li r0, 0x1
-    stb r0, 0x1d(r3)
-    ParticleBurst_Update_L_800B4758:
-    lwz r0, 0xcc(r27)
-    lfs f1, lbl_806D515C(r2)
-    add r3, r0, r31
-    lfs f0, 0x4(r3)
-    fcmpo cr0, f1, f0
-    bge ParticleBurst_Update_L_800B4778
-    li r0, 0x1
-    stb r0, 0x1d(r3)
-    ParticleBurst_Update_L_800B4778:
-    lwz r3, 0xcc(r27)
-    addi r0, r31, 0x1d
-    lbzx r0, r3, r0
-    extsb. r0, r0
-    bne ParticleBurst_Update_L_800B4790
-    li r29, 0x0
-    ParticleBurst_Update_L_800B4790:
-    addi r30, r30, 0x1
-    addi r31, r31, 0x20
-    cmpwi r30, 0x24
-    blt ParticleBurst_Update_L_800B4670
-    cmpwi r29, 0x0
-    beq ParticleBurst_Update_L_800B47B8
-    lwz r3, 0xcc(r27)
-    bl MemoryManager_Free
-    mr r3, r27
-    bl DrawEffect_Free
-    ParticleBurst_Update_L_800B47B8:
-    psq_l f31, 0x88(r1), 0, 0
-    lfd f31, 0x80(r1)
-    psq_l f30, 0x78(r1), 0, 0
-    lfd f30, 0x70(r1)
-    psq_l f29, 0x68(r1), 0, 0
-    lfd f29, 0x60(r1)
-    psq_l f28, 0x58(r1), 0, 0
-    lfd f28, 0x50(r1)
-    psq_l f27, 0x48(r1), 0, 0
-    lfd f27, 0x40(r1)
-    psq_l f26, 0x38(r1), 0, 0
-    lfd f26, 0x30(r1)
-    psq_l f25, 0x28(r1), 0, 0
-    lfd f25, 0x20(r1)
-    lmw r27, 0xc(r1)
-    lwz r0, 0x94(r1)
-    mtlr r0
-    addi r1, r1, 0x90
-    blr
+static inline float sinf(float x)
+{
+    return (float)sin(x);
 }
+
+static inline float cosf(float x)
+{
+    return (float)cos(x);
+}
+
+#pragma exceptions on
+#pragma use_lmw_stmw on
+
+void ParticleBurst_Update(char *self)
+{
+    float edge;
+    float angle;
+    int i;
+    int allDead;
+    float speed;
+    int late;
+
+    allDead = 1;
+    switch (*(signed char *)(self + 0xB4)) {
+    case 0:
+        self[0x14] = 1;
+        PARTICLES(self) = FUN_8003b120(NUM_PARTICLES * sizeof(Particle));
+        for (i = 0; i < NUM_PARTICLES; i++) {
+            late = i >= NUM_PARTICLES / 2;
+            PARTICLES(self)[i].x = 320.0f;
+            PARTICLES(self)[i].y = 240.0f;
+            if (!late) {
+                PARTICLES(self)[i].z = 0.1f;
+            } else {
+                PARTICLES(self)[i].z = -0.1f;
+            }
+            if (late) {
+                speed = Rand_RangeFloat(8.0f, 12.0f);
+            } else {
+                speed = Rand_RangeFloat(8.0f, 15.0f);
+            }
+            angle = 0.017453289f * (180.0f + Rand_RangeFloat(-90.0f, 90.0f));
+            PARTICLES(self)[i].vx = speed * sinf(angle);
+            PARTICLES(self)[i].vy = speed * cosf(angle);
+            PARTICLES(self)[i].rot = BuildOrientationFromYaw(0.017453289f * Rand_RangeFloatMax(360.0f));
+            PARTICLES(self)[i].vrot = Rand_RangeFloat(0.087266445f, 0.17453289f);
+            if (0.0f < PARTICLES(self)[i].vx) {
+                PARTICLES(self)[i].vrot *= -1.0f;
+            }
+            if (!late) {
+                PARTICLES(self)[i].delay = 0;
+            } else {
+                PARTICLES(self)[i].delay = i % 10;
+            }
+            PARTICLES(self)[i].dead = 0;
+        }
+        *(void (**)(char *))(self + 0x78) = (void (*)(char *))ParticleBurst_DrawCb;
+        *(char **)(self + 0x7C) = self;
+        self[0xB4]++;
+    case 1:
+        edge = -lbl_806D50E4;
+        for (i = 0; i < NUM_PARTICLES; i++) {
+            if (PARTICLES(self)[i].dead == 0) {
+                if (PARTICLES(self)[i].delay != 0) {
+                    PARTICLES(self)[i].delay--;
+                } else {
+                    PARTICLES(self)[i].vy += 0.1f;
+                    PARTICLES(self)[i].x += PARTICLES(self)[i].vx;
+                    PARTICLES(self)[i].y += PARTICLES(self)[i].vy;
+                    PARTICLES(self)[i].rot = BuildOrientationFromYaw(PARTICLES(self)[i].rot + PARTICLES(self)[i].vrot);
+                    if (PARTICLES(self)[i].x < edge) {
+                        PARTICLES(self)[i].dead = 1;
+                    }
+                    if (690.0f < PARTICLES(self)[i].x) {
+                        PARTICLES(self)[i].dead = 1;
+                    }
+                    if (PARTICLES(self)[i].y < edge) {
+                        PARTICLES(self)[i].dead = 1;
+                    }
+                    if (530.0f < PARTICLES(self)[i].y) {
+                        PARTICLES(self)[i].dead = 1;
+                    }
+                }
+            }
+            if (PARTICLES(self)[i].dead == 0) {
+                allDead = 0;
+            }
+        }
+        if (allDead) {
+            MemoryManager_Free(PARTICLES(self));
+            DrawEffect_Free(self);
+        }
+        break;
+    }
+}
+
+#pragma use_lmw_stmw reset
+#pragma exceptions reset

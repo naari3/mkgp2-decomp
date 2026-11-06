@@ -1,373 +1,200 @@
-/* === extracted from auto_BombItem_Tick_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+/* BombItem_Tick (0x800FC854): the bomb held in the kart's hand.
+ * State 1 keeps it on the hand joint until it is thrown (arm flag 1) or
+ * discarded (arm flag 2). Once thrown, phase 0 starts the fuse (900 or 600
+ * frames by team) and phase 1 grows it in and spawns the explosion item,
+ * phase 2 detonates it when the fuse runs out or the kart loses the bomb
+ * flag, and phase 3 fades it out. While thrown it rides in front of the
+ * kart, lerped from the hand matrix. State 3 frees the item. */
+typedef struct Vec {
+    float x, y, z;
+} Vec;
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void BombExplosion_InitOrDestroy();
-extern void BombExplosion_UpdateShockwaveVfx();
-extern void DbgScene_CopyMatrix3x4Transpose();
-extern void FinalLapCoinJump_CheckActiveForObject();
-extern void GabyouItem_BuildLocalTransformFromHandJoint();
-extern void ItemObject_AllocFromPool();
-extern void ItemObject_DecrementCategoryBudget();
-extern void KartDriver_GetKartRootMtx();
-extern void KartFxParam_GetConst1p5();
-extern void Matrix4_Identity();
-extern void Matrix4_Multiply();
-extern void Matrix4_PreMultiplyRotX();
-extern void Matrix4_PreMultiplyTranslation();
-extern void Mtx44_GetTranslation_RowMajor();
-extern void Mtx44_Scale_Uniform();
-extern void Mtx_Lerp();
-extern void Mtx_TransposeToMtx44();
-extern void SoundMgr_PlaySE_Positional();
-extern void SpriteSlot_Container_Free();
-extern void SpriteSlot_InitNonLoop();
-extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed();
+typedef float Mtx44[4][4];
+typedef float Mtx34[3][4];
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D6348;
-extern unsigned int lbl_806D6350;
-extern unsigned int lbl_806D6354;
-extern unsigned int lbl_806D6360;
-extern unsigned int lbl_806D6370;
-extern unsigned int lbl_806D637C;
-extern unsigned int lbl_806D63A8;
-extern unsigned int lbl_806D63B0;
-extern unsigned int lbl_806D63B4;
-extern unsigned int lbl_806D63B8;
+typedef struct BombItem {
+    unsigned char pad000[0x14];
+    unsigned char slot[0x28 - 0x14]; /* 0x014 */
+    unsigned char visible;    /* 0x028 */
+    unsigned char pad029[0x2C - 0x29];
+    float alpha;              /* 0x02C */
+    unsigned char pad030[0x48 - 0x30];
+    Mtx34 mtx;                /* 0x048 */
+    unsigned char pad078[0xA0 - 0x78];
+    Vec pos;                  /* 0x0A0 */
+    unsigned char pad0AC[0xC4 - 0xAC];
+    float scale;              /* 0x0C4 */
+    signed char state;        /* 0x0C8 */
+    signed char sub;          /* 0x0C9 */
+    signed char phase;        /* 0x0CA */
+    unsigned char pad0CB[0xF0 - 0xCB];
+    unsigned int timers[4];   /* 0x0F0 */
+    float grow;               /* 0x100 */
+    unsigned char pad104[0x148 - 0x104];
+    struct BombItem *blast;   /* 0x148 */
+    unsigned char pad14C[0x180 - 0x14C];
+    void *owner;              /* 0x180 */
+    void *driver;             /* 0x184 */
+    unsigned char pad188[0x18C - 0x188];
+    signed char armed;        /* 0x18C */
+    unsigned char pad18D[0x1DC - 0x18D];
+    signed char team;         /* 0x1DC */
+} BombItem;
 
-/* --- function index (1 fns, .text 0x800FC854..0x800FCCAC) ---
- * [  0] 0x800FC854 size:0x458   global BombItem_Tick
- */
+typedef struct KartFlags {
+    unsigned char pad00[0x10];
+    unsigned long long flags; /* 0x10 */
+} KartFlags;
 
-/* --- forward decls --- */
-asm void BombItem_Tick(void);
+extern void BombExplosion_InitOrDestroy(BombItem *self);
+extern void BombExplosion_UpdateShockwaveVfx(BombItem *blast, Mtx34 *mtx);
+extern void DbgScene_CopyMatrix3x4Transpose(Mtx34 *dst, Mtx44 *src);
+extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *driver);
+extern void GabyouItem_BuildLocalTransformFromHandJoint(BombItem *self, int flag, float a, float b, float c);
+extern BombItem *ItemObject_AllocFromPool(void (*fn)(BombItem *));
+extern void ItemObject_DecrementCategoryBudget(BombItem *self);
+extern void *KartDriver_GetKartRootMtx(void *driver);
+extern float KartFxParam_GetConst1p5(void *driver);
+extern void Matrix4_Identity(Mtx44 *m);
+extern void Matrix4_Multiply(Mtx44 *dst, Mtx44 *a, Mtx44 *b);
+extern void Matrix4_PreMultiplyRotX(Mtx44 *dst, Mtx44 *src, float a);
+extern void Matrix4_PreMultiplyTranslation(Mtx44 *dst, Mtx44 *src, float x, float y, float z);
+extern void Mtx44_GetTranslation_RowMajor(Vec *out, Mtx34 *mtx);
+extern void Mtx44_Scale_Uniform(Mtx44 *dst, Mtx44 *src, float s);
+extern void Mtx_Lerp(Mtx34 *dst, Mtx34 *a, Mtx34 *b, float t);
+extern void Mtx_TransposeToMtx44(Mtx44 *dst, void *src);
+extern void SoundMgr_PlaySE_Positional(unsigned int se, Vec pos, int ch);
+extern void SpriteSlot_Container_Free(BombItem *self);
+extern void SpriteSlot_InitNonLoop(void *slot, int id);
+extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int enabled);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_BombItem_Tick[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+#define KART_FLAGS(drv) (*(KartFlags **)((unsigned char *)(drv) + 0x304))
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_BombItem_Tick = {
-    (void *)&BombItem_Tick, 0x00000458, (void *)extab_BombItem_Tick
-};
+void BombItem_Tick(BombItem *self)
+{
+    Mtx44 m;
+    Mtx44 root;
+    Mtx44 local;
+    Mtx34 m34;
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void BombItem_Tick(void) { /* 0x800FC854 size:0x458 */
-    nofralloc
-    stwu r1, -0x110(r1)
-    mflr r0
-    stw r0, 0x114(r1)
-    stw r31, 0x10c(r1)
-    mr r31, r3
-    lbz r0, 0xc8(r3)
-    extsb r0, r0
-    cmpwi r0, 0x2
-    beq BombItem_Tick_L_800FCC48
-    bge BombItem_Tick_L_800FC88C
-    cmpwi r0, 0x0
-    beq BombItem_Tick_L_800FC898
-    bge BombItem_Tick_L_800FC8C0
-    b BombItem_Tick_L_800FCC48
-    BombItem_Tick_L_800FC88C:
-    cmpwi r0, 0x4
-    bge BombItem_Tick_L_800FCC48
-    b BombItem_Tick_L_800FCC38
-    BombItem_Tick_L_800FC898:
-    addi r3, r31, 0x14
-    li r4, 0x52
-    bl SpriteSlot_InitNonLoop
-    addi r3, r31, 0x14
-    li r4, 0x1
-    bl SpriteSlot_SetMatrixSourceEnabled_WithReseed
-    li r3, 0x1
-    li r0, 0x0
-    stb r3, 0xc8(r31)
-    stb r0, 0xc9(r31)
-    BombItem_Tick_L_800FC8C0:
-    lbz r0, 0xc9(r31)
-    extsb r0, r0
-    cmpwi r0, 0x1
-    beq BombItem_Tick_L_800FC900
-    bge BombItem_Tick_L_800FC8E0
-    cmpwi r0, 0x0
-    bge BombItem_Tick_L_800FC8EC
-    b BombItem_Tick_L_800FCC48
-    BombItem_Tick_L_800FC8E0:
-    cmpwi r0, 0x3
-    bge BombItem_Tick_L_800FCC48
-    b BombItem_Tick_L_800FC9A4
-    BombItem_Tick_L_800FC8EC:
-    lfs f0, lbl_806D6348(r2)
-    stfs f0, 0x2c(r31)
-    lbz r3, 0xc9(r31)
-    addi r0, r3, 0x1
-    stb r0, 0xc9(r31)
-    BombItem_Tick_L_800FC900:
-    lfs f1, lbl_806D637C(r2)
-    mr r3, r31
-    lfs f2, lbl_806D63B0(r2)
-    li r4, 0x1
-    lfs f3, lbl_806D63B4(r2)
-    bl GabyouItem_BuildLocalTransformFromHandJoint
-    lwz r3, 0x184(r31)
-    bl FinalLapCoinJump_CheckActiveForObject
-    clrlwi. r0, r3, 24
-    beq BombItem_Tick_L_800FC934
-    li r0, 0x0
-    stb r0, 0x28(r31)
-    b BombItem_Tick_L_800FC93C
-    BombItem_Tick_L_800FC934:
-    li r0, 0x1
-    stb r0, 0x28(r31)
-    BombItem_Tick_L_800FC93C:
-    lbz r0, 0x18c(r31)
-    extsb r0, r0
-    cmpwi r0, 0x2
-    beq BombItem_Tick_L_800FC988
-    bge BombItem_Tick_L_800FCC48
-    cmpwi r0, 0x1
-    bge BombItem_Tick_L_800FC95C
-    b BombItem_Tick_L_800FCC48
-    BombItem_Tick_L_800FC95C:
-    li r0, 0x1
-    li r4, 0x0
-    stb r0, 0x28(r31)
-    lfs f0, lbl_806D6360(r2)
-    stb r4, 0x18c(r31)
-    stfs f0, 0x2c(r31)
-    lbz r3, 0xc9(r31)
-    addi r0, r3, 0x1
-    stb r0, 0xc9(r31)
-    stb r4, 0xca(r31)
-    b BombItem_Tick_L_800FCC48
-    BombItem_Tick_L_800FC988:
-    li r3, 0x0
-    li r0, 0x3
-    stb r3, 0x18c(r31)
-    stb r3, 0x28(r31)
-    stb r0, 0xc8(r31)
-    stb r3, 0xc9(r31)
-    b BombItem_Tick_L_800FCC48
-    BombItem_Tick_L_800FC9A4:
-    lbz r0, 0xca(r31)
-    extsb r0, r0
-    cmpwi r0, 0x2
-    beq BombItem_Tick_L_800FCAA0
-    bge BombItem_Tick_L_800FC9C8
-    cmpwi r0, 0x0
-    beq BombItem_Tick_L_800FC9D4
-    bge BombItem_Tick_L_800FCA30
-    b BombItem_Tick_L_800FCB48
-    BombItem_Tick_L_800FC9C8:
-    cmpwi r0, 0x4
-    bge BombItem_Tick_L_800FCB48
-    b BombItem_Tick_L_800FCB14
-    BombItem_Tick_L_800FC9D4:
-    lfs f0, lbl_806D6348(r2)
-    stfs f0, 0x100(r31)
-    lbz r0, 0x1dc(r31)
-    extsb. r0, r0
-    beq BombItem_Tick_L_800FC9F4
-    li r0, 0x384
-    stw r0, 0xf0(r31)
-    b BombItem_Tick_L_800FC9FC
-    BombItem_Tick_L_800FC9F4:
-    li r0, 0x258
-    stw r0, 0xf0(r31)
-    BombItem_Tick_L_800FC9FC:
-    lwz r6, 0xa0(r31)
-    addi r4, r1, 0x8
-    lwz r0, 0xa4(r31)
-    li r3, 0x83
-    li r5, 0x0
-    stw r6, 0x8(r1)
-    stw r0, 0xc(r1)
-    lwz r0, 0xa8(r31)
-    stw r0, 0x10(r1)
-    bl SoundMgr_PlaySE_Positional
-    lbz r3, 0xca(r31)
-    addi r0, r3, 0x1
-    stb r0, 0xca(r31)
-    BombItem_Tick_L_800FCA30:
-    lfs f2, 0x100(r31)
-    lfs f0, lbl_806D63A8(r2)
-    lfs f1, lbl_806D6360(r2)
-    fadds f0, f2, f0
-    stfs f0, 0x100(r31)
-    lfs f0, 0x100(r31)
-    fcmpo cr0, f1, f0
-    bge BombItem_Tick_L_800FCB48
-    lis r3, BombExplosion_InitOrDestroy@ha
-    stfs f1, 0x100(r31)
-    addi r3, r3, BombExplosion_InitOrDestroy@l
-    bl ItemObject_AllocFromPool
-    stw r3, 0x148(r31)
-    lwz r3, 0x148(r31)
-    cmplwi r3, 0x0
-    beq BombItem_Tick_L_800FCA90
-    lbz r0, 0x1dc(r31)
-    stb r0, 0x1dc(r3)
-    lwz r0, 0x184(r31)
-    lwz r3, 0x148(r31)
-    stw r0, 0x184(r3)
-    lwz r0, 0x180(r31)
-    lwz r3, 0x148(r31)
-    stw r0, 0x180(r3)
-    BombItem_Tick_L_800FCA90:
-    lbz r3, 0xca(r31)
-    addi r0, r3, 0x1
-    stb r0, 0xca(r31)
-    b BombItem_Tick_L_800FCB48
-    BombItem_Tick_L_800FCAA0:
-    lwz r5, 0x184(r31)
-    lis r3, 0x400
-    li r4, 0x0
-    lwz r5, 0x304(r5)
-    lwz r0, 0x10(r5)
-    lwz r5, 0x14(r5)
-    and r0, r0, r4
-    and r3, r5, r3
-    xor r3, r3, r4
-    xor r0, r0, r4
-    or. r0, r3, r0
-    bne BombItem_Tick_L_800FCAD4
-    stw r4, 0xf0(r31)
-    BombItem_Tick_L_800FCAD4:
-    lwz r0, 0xf0(r31)
-    cmplwi r0, 0x0
-    bne BombItem_Tick_L_800FCB48
-    lwz r3, 0x148(r31)
-    cmplwi r3, 0x0
-    beq BombItem_Tick_L_800FCB04
-    li r0, 0x1
-    stb r0, 0x18c(r3)
-    lwz r3, 0x148(r31)
-    bl BombExplosion_InitOrDestroy
-    li r0, 0x0
-    stw r0, 0x148(r31)
-    BombItem_Tick_L_800FCB04:
-    lbz r3, 0xca(r31)
-    addi r0, r3, 0x1
-    stb r0, 0xca(r31)
-    b BombItem_Tick_L_800FCB48
-    BombItem_Tick_L_800FCB14:
-    lfs f2, 0x2c(r31)
-    lfs f1, lbl_806D63A8(r2)
-    lfs f0, lbl_806D6348(r2)
-    fsubs f1, f2, f1
-    stfs f1, 0x2c(r31)
-    lfs f1, 0x2c(r31)
-    fcmpo cr0, f1, f0
-    bge BombItem_Tick_L_800FCB48
-    li r3, 0x0
-    li r0, 0x3
-    stb r3, 0x28(r31)
-    stb r0, 0xc8(r31)
-    stb r3, 0xc9(r31)
-    BombItem_Tick_L_800FCB48:
-    lwz r3, 0x184(r31)
-    bl FinalLapCoinJump_CheckActiveForObject
-    clrlwi. r0, r3, 24
-    beq BombItem_Tick_L_800FCB64
-    li r0, 0x0
-    stb r0, 0x28(r31)
-    b BombItem_Tick_L_800FCB6C
-    BombItem_Tick_L_800FCB64:
-    li r0, 0x1
-    stb r0, 0x28(r31)
-    BombItem_Tick_L_800FCB6C:
-    lwz r3, 0x184(r31)
-    bl KartDriver_GetKartRootMtx
-    mr r4, r3
-    addi r3, r1, 0x84
-    bl Mtx_TransposeToMtx44
-    addi r3, r1, 0x44
-    bl Matrix4_Identity
-    addi r3, r1, 0x44
-    lfs f1, lbl_806D63B8(r2)
-    mr r4, r3
-    bl Matrix4_PreMultiplyRotX
-    addi r3, r1, 0x44
-    lfs f1, lbl_806D6348(r2)
-    lfs f2, lbl_806D6370(r2)
-    mr r4, r3
-    lfs f3, lbl_806D6350(r2)
-    bl Matrix4_PreMultiplyTranslation
-    addi r3, r1, 0xc4
-    addi r4, r1, 0x44
-    addi r5, r1, 0x84
-    bl Matrix4_Multiply
-    addi r3, r1, 0x44
-    bl Matrix4_Identity
-    addi r3, r1, 0x44
-    lfs f1, lbl_806D6354(r2)
-    mr r4, r3
-    bl Mtx44_Scale_Uniform
-    addi r3, r1, 0xc4
-    addi r4, r1, 0x44
-    mr r5, r3
-    bl Matrix4_Multiply
-    addi r3, r1, 0x14
-    addi r4, r1, 0xc4
-    bl DbgScene_CopyMatrix3x4Transpose
-    addi r3, r31, 0x48
-    lfs f1, 0x100(r31)
-    mr r5, r3
-    addi r4, r1, 0x14
-    bl Mtx_Lerp
-    addi r3, r31, 0xa0
-    addi r4, r31, 0x48
-    bl Mtx44_GetTranslation_RowMajor
-    lwz r3, 0x184(r31)
-    bl KartFxParam_GetConst1p5
-    lfs f0, lbl_806D6354(r2)
-    addi r4, r31, 0x48
-    fmuls f0, f0, f1
-    stfs f0, 0xc4(r31)
-    lwz r3, 0x148(r31)
-    bl BombExplosion_UpdateShockwaveVfx
-    b BombItem_Tick_L_800FCC48
-    BombItem_Tick_L_800FCC38:
-    bl ItemObject_DecrementCategoryBudget
-    mr r3, r31
-    bl SpriteSlot_Container_Free
-    b BombItem_Tick_L_800FCC98
-    BombItem_Tick_L_800FCC48:
-    lwz r3, 0xf0(r31)
-    cmplwi r3, 0x0
-    beq BombItem_Tick_L_800FCC5C
-    subi r0, r3, 0x1
-    stw r0, 0xf0(r31)
-    BombItem_Tick_L_800FCC5C:
-    lwz r3, 0xf4(r31)
-    cmplwi r3, 0x0
-    beq BombItem_Tick_L_800FCC70
-    subi r0, r3, 0x1
-    stw r0, 0xf4(r31)
-    BombItem_Tick_L_800FCC70:
-    lwz r3, 0xf8(r31)
-    cmplwi r3, 0x0
-    beq BombItem_Tick_L_800FCC84
-    subi r0, r3, 0x1
-    stw r0, 0xf8(r31)
-    BombItem_Tick_L_800FCC84:
-    lwz r3, 0xfc(r31)
-    cmplwi r3, 0x0
-    beq BombItem_Tick_L_800FCC98
-    subi r0, r3, 0x1
-    stw r0, 0xfc(r31)
-    BombItem_Tick_L_800FCC98:
-    lwz r0, 0x114(r1)
-    lwz r31, 0x10c(r1)
-    mtlr r0
-    addi r1, r1, 0x110
-    blr
+    switch (self->state) {
+    case 0:
+        SpriteSlot_InitNonLoop(self->slot, 0x52);
+        SpriteSlot_SetMatrixSourceEnabled_WithReseed(self->slot, 1);
+        self->state = 1;
+        self->sub = 0;
+    case 1:
+        switch (self->sub) {
+        case 0:
+            self->alpha = 0.0f;
+            self->sub++;
+        case 1:
+            GabyouItem_BuildLocalTransformFromHandJoint(self, 1, 2.0f, 2.356194f, 1.2f);
+            if (FinalLapCoinJump_CheckActiveForObject(self->driver)) {
+                self->visible = 0;
+            } else {
+                self->visible = 1;
+            }
+            switch (self->armed) {
+            case 1:
+                self->visible = 1;
+                self->armed = 0;
+                self->alpha = 1.0f;
+                self->sub++;
+                self->phase = 0;
+                break;
+            case 2:
+                self->armed = 0;
+                self->visible = 0;
+                self->state = 3;
+                self->sub = 0;
+                break;
+            }
+            break;
+        case 2:
+            switch (self->phase) {
+            case 0:
+                self->grow = 0.0f;
+                if (self->team) {
+                    self->timers[0] = 900;
+                } else {
+                    self->timers[0] = 600;
+                }
+                SoundMgr_PlaySE_Positional(0x83, self->pos, 0);
+                self->phase++;
+            case 1:
+                self->grow += 0.1f;
+                if (1.0f < self->grow) {
+                    self->grow = 1.0f;
+                    self->blast = ItemObject_AllocFromPool(BombExplosion_InitOrDestroy);
+                    if (self->blast != 0) {
+                        self->blast->team = self->team;
+                        self->blast->driver = self->driver;
+                        self->blast->owner = self->owner;
+                    }
+                    self->phase++;
+                }
+                break;
+            case 2:
+                if ((KART_FLAGS(self->driver)->flags & 0x4000000) == 0) {
+                    self->timers[0] = 0;
+                }
+                if (self->timers[0] == 0) {
+                    if (self->blast != 0) {
+                        self->blast->armed = 1;
+                        BombExplosion_InitOrDestroy(self->blast);
+                        self->blast = 0;
+                    }
+                    self->phase++;
+                }
+                break;
+            case 3:
+                self->alpha -= 0.1f;
+                if (self->alpha < 0.0f) {
+                    self->visible = 0;
+                    self->state = 3;
+                    self->sub = 0;
+                }
+                break;
+            }
+            if (FinalLapCoinJump_CheckActiveForObject(self->driver)) {
+                self->visible = 0;
+            } else {
+                self->visible = 1;
+            }
+            Mtx_TransposeToMtx44(&root, KartDriver_GetKartRootMtx(self->driver));
+            Matrix4_Identity(&local);
+            Matrix4_PreMultiplyRotX(&local, &local, 0.087266445f);
+            Matrix4_PreMultiplyTranslation(&local, &local, 0.0f, 3.0f, 10.0f);
+            Matrix4_Multiply(&m, &local, &root);
+            Matrix4_Identity(&local);
+            Mtx44_Scale_Uniform(&local, &local, 1.5f);
+            Matrix4_Multiply(&m, &local, &m);
+            DbgScene_CopyMatrix3x4Transpose(&m34, &m);
+            Mtx_Lerp(&self->mtx, &m34, &self->mtx, self->grow);
+            Mtx44_GetTranslation_RowMajor(&self->pos, &self->mtx);
+            self->scale = 1.5f * KartFxParam_GetConst1p5(self->driver);
+            BombExplosion_UpdateShockwaveVfx(self->blast, &self->mtx);
+            break;
+        }
+        break;
+    case 2:
+        break;
+    case 3:
+        ItemObject_DecrementCategoryBudget(self);
+        SpriteSlot_Container_Free(self);
+        return;
+    }
+    if (self->timers[0] != 0) {
+        self->timers[0]--;
+    }
+    if (self->timers[1] != 0) {
+        self->timers[1]--;
+    }
+    if (self->timers[2] != 0) {
+        self->timers[2]--;
+    }
+    if (self->timers[3] != 0) {
+        self->timers[3]--;
+    }
 }
-
