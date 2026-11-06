@@ -849,3 +849,8 @@ EName3D ctor target EH identifies destructible Vec3c at +8. Empty inline ctor/dt
 Source: Codex worker c14_u56_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u56: ranking_display 801D1EAC fresh90.60096 (2500B vs2496 target). Nontrivial iterator-return helper boundaries and separate UI-construction scopes each emit identical output; both reverted. Genuine nullable title-source getter replaces pre-existing no-op null assignment, byte-invariant. Residual shared name-table/vptr base pooling, iterator stack slots, allocation GPR webs and final panel flag/conversion scheduling. Singleton stays NonMatching; full fallback DOL SHA1 OK, zero native gain.
+
+## c14_u57_20261106
+Source: Codex worker c14_u57_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u57 fn_8018B31C: fresh native baseline90.33684; name loop i<5 && i<5 restores target guard/branch pair and improves to90.64771 (6456B vs target6472B). Generic pointer-taking bit/text/clear inline helpers emit identical output; mask-first explicit assignment regresses90.63226. Remaining long-lived GPR webs, inline bit-writer scratch allocation and checksum mask/load scheduling; BSS84 vs target88 pre-existing. One function only, no mechanism-B split. Honest NonMatching; final coordinator build SHA-1 OK, zero native gain.

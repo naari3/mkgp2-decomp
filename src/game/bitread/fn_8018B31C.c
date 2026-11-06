@@ -82,7 +82,7 @@ void fn_8018B31C(const unsigned short *name, int item, int ccClass,
     }
     seed = (unsigned int)(1000.0f * (float)OSTicksToMilliseconds(OSGetTime()));
     ClearPacked();
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 5 && i < 5; i++) {
         WriteField(i, (unsigned char)wchar_to_card_char(name + i));
     }
     WriteField(5, (unsigned char)item);
