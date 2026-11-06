@@ -159,14 +159,6 @@ extern unsigned int lbl_806D7B3C;
 extern unsigned int lbl_80361D60[];
 extern void *lbl_8048EF20[];
 extern void *lbl_8048EF34[];
-extern void Sprite_CreateWithParams();
-extern void fn_8019FF8C();
-extern void isJapanese();
-extern unsigned int lbl_806D7B40;
-extern unsigned int lbl_806D7B44;
-extern unsigned int lbl_806D7B48;
-extern unsigned int lbl_80361D80[];
-extern void dtor_8013EB50();
 extern void ResCtrl_Init();
 extern void fn_8011FAFC();
 extern unsigned int lbl_806D7B4C;
@@ -190,8 +182,6 @@ void fn_80144ADC(RankPanel *self);
 RankPanel *fn_80144AF0(RankPanel *self, short flag);
 asm void fn_80144C1C(void);
 void fn_801458A4(Pair *p);
-asm void fn_801458B4(void);
-asm void fn_80145AF4(void);
 SpriteHolder *fn_80145D34(SpriteHolder *self, short flag);
 void fn_80145DA8(void);
 void fn_80145DAC(void);
@@ -212,9 +202,7 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80144500[8
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; void *f25; unsigned int f26; void *f27; unsigned int f28; void *f29; unsigned int f30; void *f31; unsigned int f32; void *f33; unsigned int f34; void *f35; unsigned int f36; void *f37; unsigned int f38; void *f39; unsigned int f40; void *f41; unsigned int f42; void *f43; unsigned int f44; void *f45; } extab_fn_80144C1C = { 0x590A0000, 0x000000E8, 0x00000060, 0x000001A4, 0x00110068, 0x000002F0, 0x00000070, 0x00000490, 0x00000078, 0x000005A0, 0x00000080, 0x000006B8, 0x00000088, 0x000007E0, 0x00000090, 0x000008F4, 0x00000098, 0x00000A2C, 0x000000A0, 0x00000A8C, 0x000000A8, 0x00000B40, 0x000000B0, 0x00000000, 0x8A800016, (void *)&MemoryManager_TimedFree, 0x8A800016, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800016, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree };
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; void *f15; unsigned int f16; void *f17; unsigned int f18; unsigned int f19; void *f20; unsigned int f21; unsigned int f22; void *f23; unsigned int f24; void *f25; unsigned int f26; unsigned int f27; void *f28; unsigned int f29; } extab_fn_801458B4 = { 0x280A0000, 0x00000070, 0x00000048, 0x00000090, 0x00000040, 0x000000BC, 0x00000038, 0x000000CC, 0x00000068, 0x000000E4, 0x00000060, 0x00000104, 0x00490068, 0x00000000, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x000000C0, (void *)&dtor_80145F9C, 0x8680001F, 0x00000000, (void *)&dtor_8013EB50, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x000000CC, (void *)&dtor_80145F04, 0x01000048 };
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; void *f15; unsigned int f16; void *f17; unsigned int f18; unsigned int f19; void *f20; unsigned int f21; unsigned int f22; void *f23; unsigned int f24; void *f25; unsigned int f26; unsigned int f27; void *f28; unsigned int f29; } extab_fn_80145AF4 = { 0x280A0000, 0x00000070, 0x00000048, 0x00000090, 0x00000040, 0x000000BC, 0x00000038, 0x000000CC, 0x00000068, 0x000000E4, 0x00000060, 0x00000104, 0x00490068, 0x00000000, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x000000C0, (void *)&dtor_80145F9C, 0x8680001F, 0x00000000, (void *)&dtor_8013EB50, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x000000CC, (void *)&dtor_80145F04, 0x01000048 };
 
 
 
@@ -237,13 +225,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_80144C1C, 0x00000C88, (void *)&extab_fn_80144C1C
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801458B4 = {
-    (void *)&fn_801458B4, 0x00000240, (void *)&extab_fn_801458B4
-};
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80145AF4 = {
-    (void *)&fn_80145AF4, 0x00000240, (void *)&extab_fn_80145AF4
-};
 
 
 
@@ -259,6 +241,90 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 }
+
+/* C++ view of the record panel for its constructors (fn_801458B4, fn_80145AF4). */
+void *operator new(unsigned long size);
+void operator delete(void *p);
+
+struct Sprite {
+    char body[0x30];
+    Sprite(int id, int a, int b);
+    Sprite(int id, int a, float x, float y, float sx, float sy, float r, float rot);
+    ~Sprite();
+};
+extern "C" {
+extern const float lbl_806D7B40;
+extern const float lbl_806D7B44;
+extern short lbl_80361D80[];
+void fn_8019FF8C(Sprite *s, int id, struct SpriteNodeInfo *out);
+int isJapanese(void);
+}
+struct SpriteNodeInfo {
+    float x, y;
+    char rest[0x28];
+};
+struct RecCursor {
+    Sprite *sprite;
+    unsigned char on;
+    unsigned char state;
+    int timer;
+    RecCursor() {
+        on = 0;
+        state = 0;
+        timer = 0;
+        sprite = new Sprite(0x9e, 1, 394.0f, 394.0f, 1.0f, 1.0f, 0.0f, 0.0f);
+    }
+};
+struct RecCursorPtr {
+    RecCursor *p;
+    RecCursorPtr(RecCursor *c) : p(c) {}
+    ~RecCursorPtr() throw();
+};
+struct RecVec {
+    int cap;
+    int size;
+    void **data;
+    RecVec() : cap(0), size(0), data(0) {}
+    ~RecVec();
+};
+struct clCSPartsInerface {
+    int obj;
+    unsigned char active;
+    float x, y;
+    float alpha;
+    clCSPartsInerface() {
+        obj = 0;
+        active = 0;
+        x = lbl_806D7AE4;
+        y = lbl_806D7AE4;
+        alpha = lbl_806D7AF0;
+    }
+    virtual ~clCSPartsInerface();
+    virtual void m0C();
+    virtual void m10();
+    virtual void Update();
+    virtual void Draw();
+    virtual void m1C();
+};
+struct clCSPartsResultRecord : clCSPartsInerface {
+    unsigned char visible;
+    float f1c;
+    int state;
+    unsigned char b24;
+    float xs[0x26];
+    RecVec vec;
+    RecCursorPtr cursor;
+    virtual ~clCSPartsResultRecord();
+    clCSPartsResultRecord();
+    clCSPartsResultRecord(int a, int b, int c);
+    void LoadColumns(Sprite *s) {
+        for (int i = 0; i < 0x26; i++) {
+            SpriteNodeInfo info;
+            fn_8019FF8C(s, lbl_80361D80[i], &info);
+            xs[i] = info.x;
+        }
+    }
+};
 
 static inline void DrawItem(PanelItem *p)
 {
@@ -1514,314 +1580,36 @@ extern "C" void fn_801458A4(Pair *p)
     p->b = lbl_806D7AE4;
 }
 
-extern "C" asm void fn_801458B4(void) { /* 0x801458B4 size:0x240 */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    lis r4, lbl_8048EB44@ha
-    lfs f1, lbl_806D7AE4(r2)
-    stw r0, 0x54(r1)
-    addi r0, r4, lbl_8048EB44@l
-    li r4, 0x0
-    lfs f0, lbl_806D7AF0(r2)
-    stmw r27, 0x3c(r1)
-    mr r31, r3
-    lis r3, lbl_8048EEF4@ha
-    stw r0, 0x14(r31)
-    addi r0, r3, lbl_8048EEF4@l
-    li r3, 0xc
-    stw r4, 0x0(r31)
-    stb r4, 0x4(r31)
-    stfs f1, 0x8(r31)
-    stfs f1, 0xc(r31)
-    stfs f0, 0x10(r31)
-    stw r0, 0x14(r31)
-    stb r4, 0x18(r31)
-    stfs f1, 0x1c(r31)
-    stw r4, 0x20(r31)
-    stb r4, 0x24(r31)
-    stw r4, 0xc0(r31)
-    stw r4, 0xc4(r31)
-    stw r4, 0xc8(r31)
-    bl Alloc
-    mr. r28, r3
-    beq fn_801458B4_L_80145974
-    li r0, 0x0
-    li r3, 0x30
-    stb r0, 0x4(r28)
-    stb r0, 0x5(r28)
-    stw r0, 0x8(r28)
-    bl Alloc
-    mr. r29, r3
-    beq fn_801458B4_L_80145970
-    lfs f1, lbl_806D7B48(r2)
-    li r4, 0x9e
-    lfs f3, lbl_806D7AF0(r2)
-    li r5, 0x1
-    lfs f5, lbl_806D7AE4(r2)
-    fmr f2, f1
-    fmr f4, f3
-    fmr f6, f5
-    bl Sprite_CreateWithParams
-    fn_801458B4_L_80145970:
-    stw r29, 0x0(r28)
-    fn_801458B4_L_80145974:
-    stw r28, 0xcc(r31)
-    li r3, 0x30
-    bl Alloc
-    mr. r27, r3
-    beq fn_801458B4_L_80145998
-    li r4, 0x1c5
-    li r5, 0x0
-    li r6, 0x0
-    bl Sprite_InitWithAnim
-    fn_801458B4_L_80145998:
-    lis r3, lbl_80361D80@ha
-    li r30, 0x0
-    addi r29, r3, lbl_80361D80@l
-    mr r28, r30
-    fn_801458B4_L_801459A8:
-    lha r4, 0x0(r29)
-    mr r3, r27
-    addi r5, r1, 0x8
-    bl fn_8019FF8C
-    addi r30, r30, 0x1
-    lfs f0, 0x8(r1)
-    addi r0, r28, 0x28
-    addi r28, r28, 0x4
-    cmpwi r30, 0x26
-    stfsx f0, r31, r0
-    addi r29, r29, 0x2
-    blt fn_801458B4_L_801459A8
-    bl isJapanese
-    cmpwi r3, 0x0
-    beq fn_801458B4_L_80145AC0
-    lfs f1, 0x44(r31)
-    li r4, 0x15
-    lfs f0, lbl_806D7B40(r2)
-    subfic r0, r4, 0x16
-    slwi r3, r4, 2
-    fadds f1, f1, f0
-    stfs f1, 0x48(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x4c(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x50(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x54(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x58(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x5c(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x60(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x64(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x68(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x6c(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x70(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x74(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x78(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x7c(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x80(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x84(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x88(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x8c(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x90(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x94(r31)
-    fadds f1, f1, f0
-    mtctr r0
-    cmpwi r4, 0x16
-    bge fn_801458B4_L_80145AD0
-    fn_801458B4_L_80145AA8:
-    addi r0, r3, 0x44
-    addi r3, r3, 0x4
-    stfsx f1, r31, r0
-    fadds f1, f1, f0
-    bdnz fn_801458B4_L_80145AA8
-    b fn_801458B4_L_80145AD0
-    fn_801458B4_L_80145AC0:
-    lfs f1, lbl_806D7B44(r2)
-    lfs f0, 0x6c(r31)
-    fadds f0, f1, f0
-    stfs f0, 0x70(r31)
-    fn_801458B4_L_80145AD0:
-    mr r3, r27
-    li r4, 0x1
-    bl Sprite_Destroy
-    mr r3, r31
-    lmw r27, 0x3c(r1)
-    lwz r0, 0x54(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
+clCSPartsResultRecord::clCSPartsResultRecord() : visible(0), f1c(lbl_806D7AE4), state(0), b24(0), cursor(new RecCursor)
+{
+    Sprite *s = new Sprite(0x1c5, 0, 0);
+    LoadColumns(s);
+    if (isJapanese()) {
+        float x = xs[7];
+        for (int i = 0; i < 0x16; i++) {
+            xs[7 + i] = x;
+            x += lbl_806D7B40;
+        }
+    } else {
+        xs[0x12] = lbl_806D7B44 + xs[0x11];
+    }
+    delete s;
 }
 
-extern "C" asm void fn_80145AF4(void) { /* 0x80145AF4 size:0x240 */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    lis r4, lbl_8048EB44@ha
-    lfs f1, lbl_806D7AE4(r2)
-    stw r0, 0x54(r1)
-    addi r0, r4, lbl_8048EB44@l
-    li r4, 0x0
-    lfs f0, lbl_806D7AF0(r2)
-    stmw r27, 0x3c(r1)
-    mr r31, r3
-    lis r3, lbl_8048EEF4@ha
-    stw r0, 0x14(r31)
-    addi r0, r3, lbl_8048EEF4@l
-    li r3, 0xc
-    stw r4, 0x0(r31)
-    stb r4, 0x4(r31)
-    stfs f1, 0x8(r31)
-    stfs f1, 0xc(r31)
-    stfs f0, 0x10(r31)
-    stw r0, 0x14(r31)
-    stb r4, 0x18(r31)
-    stfs f1, 0x1c(r31)
-    stw r4, 0x20(r31)
-    stb r4, 0x24(r31)
-    stw r4, 0xc0(r31)
-    stw r4, 0xc4(r31)
-    stw r4, 0xc8(r31)
-    bl Alloc
-    mr. r28, r3
-    beq fn_80145AF4_L_80145BB4
-    li r0, 0x0
-    li r3, 0x30
-    stb r0, 0x4(r28)
-    stb r0, 0x5(r28)
-    stw r0, 0x8(r28)
-    bl Alloc
-    mr. r29, r3
-    beq fn_80145AF4_L_80145BB0
-    lfs f1, lbl_806D7B48(r2)
-    li r4, 0x9e
-    lfs f3, lbl_806D7AF0(r2)
-    li r5, 0x1
-    lfs f5, lbl_806D7AE4(r2)
-    fmr f2, f1
-    fmr f4, f3
-    fmr f6, f5
-    bl Sprite_CreateWithParams
-    fn_80145AF4_L_80145BB0:
-    stw r29, 0x0(r28)
-    fn_80145AF4_L_80145BB4:
-    stw r28, 0xcc(r31)
-    li r3, 0x30
-    bl Alloc
-    mr. r27, r3
-    beq fn_80145AF4_L_80145BD8
-    li r4, 0x1c5
-    li r5, 0x0
-    li r6, 0x0
-    bl Sprite_InitWithAnim
-    fn_80145AF4_L_80145BD8:
-    lis r3, lbl_80361D80@ha
-    li r30, 0x0
-    addi r29, r3, lbl_80361D80@l
-    mr r28, r30
-    fn_80145AF4_L_80145BE8:
-    lha r4, 0x0(r29)
-    mr r3, r27
-    addi r5, r1, 0x8
-    bl fn_8019FF8C
-    addi r30, r30, 0x1
-    lfs f0, 0x8(r1)
-    addi r0, r28, 0x28
-    addi r28, r28, 0x4
-    cmpwi r30, 0x26
-    stfsx f0, r31, r0
-    addi r29, r29, 0x2
-    blt fn_80145AF4_L_80145BE8
-    bl isJapanese
-    cmpwi r3, 0x0
-    beq fn_80145AF4_L_80145D00
-    lfs f1, 0x44(r31)
-    li r4, 0x15
-    lfs f0, lbl_806D7B40(r2)
-    subfic r0, r4, 0x16
-    slwi r3, r4, 2
-    fadds f1, f1, f0
-    stfs f1, 0x48(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x4c(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x50(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x54(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x58(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x5c(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x60(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x64(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x68(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x6c(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x70(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x74(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x78(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x7c(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x80(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x84(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x88(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x8c(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x90(r31)
-    fadds f1, f1, f0
-    stfs f1, 0x94(r31)
-    fadds f1, f1, f0
-    mtctr r0
-    cmpwi r4, 0x16
-    bge fn_80145AF4_L_80145D10
-    fn_80145AF4_L_80145CE8:
-    addi r0, r3, 0x44
-    addi r3, r3, 0x4
-    stfsx f1, r31, r0
-    fadds f1, f1, f0
-    bdnz fn_80145AF4_L_80145CE8
-    b fn_80145AF4_L_80145D10
-    fn_80145AF4_L_80145D00:
-    lfs f1, lbl_806D7B44(r2)
-    lfs f0, 0x6c(r31)
-    fadds f0, f1, f0
-    stfs f0, 0x70(r31)
-    fn_80145AF4_L_80145D10:
-    mr r3, r27
-    li r4, 0x1
-    bl Sprite_Destroy
-    mr r3, r31
-    lmw r27, 0x3c(r1)
-    lwz r0, 0x54(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
+clCSPartsResultRecord::clCSPartsResultRecord(int, int, int) : visible(0), f1c(lbl_806D7AE4), state(0), b24(0), cursor(new RecCursor)
+{
+    Sprite *s = new Sprite(0x1c5, 0, 0);
+    LoadColumns(s);
+    if (isJapanese()) {
+        float x = xs[7];
+        for (int i = 0; i < 0x16; i++) {
+            xs[7 + i] = x;
+            x += lbl_806D7B40;
+        }
+    } else {
+        xs[0x12] = lbl_806D7B44 + xs[0x11];
+    }
+    delete s;
 }
 
 extern "C" SpriteHolder *fn_80145D34(SpriteHolder *self, short flag)

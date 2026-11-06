@@ -5278,7 +5278,19 @@
     "extab_fn_80146000": "@etb_8000DE24",
     "extabindex_fn_80146000": "@eti_80025268",
     "extab_fn_801460D0": "@etb_8000DE54",
-    "extabindex_fn_801460D0": "@eti_80025274"
+    "extabindex_fn_801460D0": "@eti_80025274",
+    "__ct__21clCSPartsResultRecordFv": "fn_801458B4",
+    "__ct__21clCSPartsResultRecordFiii": "fn_80145AF4",
+    "__vt__21clCSPartsResultRecord": "lbl_8048EEF4",
+    "__vt__17clCSPartsInerface": "lbl_8048EB44",
+    "__dt__17clCSPartsInerfaceFv": "dtor_8013EB50",
+    "__dt__12RecCursorPtrFv": "dtor_80145F04",
+    "__dt__6RecVecFv": "dtor_80145F9C",
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim",
+    "__ct__6SpriteFiiffffff": "Sprite_CreateWithParams",
+    "__dt__6SpriteFv": "Sprite_Destroy",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/RankPanelBase_801461B0.cpp": {
     "extab_fn_801461B0": "@etb_8000DE6C",
