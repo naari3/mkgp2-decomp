@@ -174,7 +174,7 @@ extern void Alloc();
 extern void fn_80146260();
 extern void fn_80167730();
 extern unsigned int lbl_806D7B60;
-extern unsigned int lbl_806D7BA4;
+extern const float lbl_806D7BA4;
 extern void dtor_8013EB50();
 extern unsigned int lbl_806D7C0C;
 extern unsigned int lbl_806D7C10;
@@ -189,15 +189,15 @@ extern int g_cupId;
 extern unsigned int dtor_800869D0[];
 extern unsigned int lbl_80362790[];
 extern const float lbl_806D7C2C;
-extern void GetInputManager();
-extern void InputMgr_GetPlayer();
+void *GetInputManager(void);
+class HudInput *InputMgr_GetPlayer(void *mgr, int idx);
 extern unsigned int lbl_806D7C20;
 extern unsigned int lbl_806D7C34;
 extern const float lbl_806D7C38;
 extern unsigned int lbl_806D7C3C;
 extern unsigned int lbl_806D7C40;
 extern unsigned int lbl_806D7C44;
-extern void SoundMgr_Play();
+void SoundMgr_Play(int id);
 extern unsigned int lbl_806D7C48;
 extern unsigned int lbl_806D7C4C;
 extern unsigned int lbl_806D7C50;
@@ -335,13 +335,13 @@ void fn_8014196C(void);
 void fn_80143DB0(void);
 extern int g_gameMode;
 void fn_8023CD54(void *p);
-extern void RumbleUpdate();
+void RumbleUpdate(void);
 extern void Saturate_Double();
 void *StrPcb_GetInstance(void);
 extern void StrPcb_SetStatusBits();
 extern void TaRecord_GetEntry_Current();
 extern void fn_801420DC();
-extern void fn_801678FC();
+void fn_801678FC(int layer, float r, float g, float b, float a);
 extern void fn_8023CDA8();
 extern void fn_8023CFC8();
 extern void fn_8023CFD4();
@@ -393,18 +393,18 @@ void fn_8014205C(void *self, int flag);
 void StrPcb_ClearStatusBits(void *p, int bits);
 void fn_8023CFE0(void *p, int flag);
 extern unsigned int lbl_8048F090[];
-extern void TaRecord_GetLastInsertedRank();
+int TaRecord_GetLastInsertedRank(void);
 extern void fn_8014403C();
 extern void fn_80144308();
-extern void fn_80167744();
-extern void fn_80169DF0();
-extern void fn_8023CCF8();
-extern void fn_8023CD3C();
-extern void fn_8023CEB4();
+char *fn_80167744(int n, float t);
+int fn_80169DF0(void);
+void fn_8023CCF8(struct StrBox *p, float x, float y);
+void fn_8023CD3C(struct StrBox *p, float x, float y);
+void fn_8023CEB4(struct StrBox *p);
 extern void fn_8023D080();
-extern void fn_8024F588();
-extern unsigned int g_totalRaceTime;
-extern unsigned int lbl_806D7E00;
+unsigned char *fn_8024F588(void);
+extern float g_totalRaceTime;
+extern const float lbl_806D7E00;
 extern unsigned int lbl_806D7E04;
 extern unsigned int lbl_806D7E08;
 extern unsigned int lbl_806D7E0C;
@@ -425,29 +425,29 @@ extern void fn_801A0004();
 extern void fn_80231644();
 extern void fn_802317E0();
 extern void fn_80231B74();
-extern unsigned int lbl_806D7E28;
+extern const float lbl_806D7E28;
 extern const float lbl_806D7E2C;
-extern unsigned int lbl_806D7E30;
+extern const float lbl_806D7E30;
 extern unsigned int lbl_806D7E34;
 extern unsigned int lbl_806D7E38;
 extern unsigned int lbl_806D7E3C;
 extern unsigned int lbl_80362D90[];
-extern void ClSound_PlayBgmStream();
-extern void SetRumbleMode();
-extern void Sprite_AdvanceAnim();
-extern void clStream_setVolume();
-extern void fn_80140ECC();
-extern void fn_8014219C();
-extern void fn_801699D8();
-extern void fn_8019083C();
-extern void fn_80192010();
-extern void fn_80192688();
-extern void fn_801932F8();
-extern unsigned int lbl_806D7E40;
-extern unsigned int lbl_806D7E44;
-extern unsigned int lbl_806D7E48;
-extern unsigned int lbl_806D7E4C;
-extern unsigned int lbl_806D7E50;
+void ClSound_PlayBgmStream(int slot, int id);
+void SetRumbleMode(int a, int b, int c);
+unsigned char Sprite_AdvanceAnim(void *s, float step);
+void clStream_setVolume(int slot, int vol);
+unsigned char fn_80140ECC(void *p);
+unsigned char fn_8014219C(void *p);
+void fn_801699D8(int a, int b);
+unsigned char fn_8019083C(int slot);
+unsigned char fn_80192010(int id);
+void fn_80192688(int id, int a);
+int fn_801932F8(void);
+extern const float lbl_806D7E40;
+extern const float lbl_806D7E44;
+extern const float lbl_806D7E48;
+extern const float lbl_806D7E4C;
+extern const float lbl_806D7E50;
 extern unsigned int lbl_806D7E54;
 extern unsigned int jumptable_8048F130[];
 int Item_GetDescriptorField0(int item, int a);
@@ -551,7 +551,6 @@ void fn_801474FC(LapCtrl *self, int idx);
 int fn_80147530(char *self);
 void fn_80147574(char *self, int v);
 HudPanel *dtor_80147584(HudPanel *self, short flag);
-asm void fn_80147638(void);
 void fn_80147778(void);
 asm void fn_801477BC(void);
 void fn_801478B0(StepHolder *self);
@@ -572,19 +571,16 @@ void fn_801493B0(CountList *self);
 void fn_80149420(CdHolder *self);
 void fn_801494A4(struct CountListFull *self);
 struct CountListFull *fn_80149A88(struct CountListFull *self, short flag);
-asm void fn_80149B8C(void);
 void fn_80149CD8(void);
 void fn_80149D58(VObj *p);
 void fn_80149D90(CdHolder2 *self);
 asm void fn_80149E44(void);
 HudPanel *fn_8014A890(HudPanel *self, short flag);
 struct StrPanel *fn_8014A8FC(struct StrPanel *self, short flag);
-asm void fn_8014AA38(void);
 void fn_8014AC48(void *self);
 void fn_8014AD7C(VObj *p);
 asm void fn_8014ADB4(void);
-asm void fn_8014B118(void);
-asm void fn_8014BBE4(void);
+asm void fn_8014BBE4(struct ResultPanel *self, float alpha);
 void fn_8014BF80(struct ResultPanel *self, float alpha);
 struct ResultPanel *fn_8014C308(struct ResultPanel *self, short flag);
 asm void fn_8014C53C(void);
@@ -593,7 +589,6 @@ asm void fn_8014C53C(void);
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; void *f11; unsigned int f12; unsigned int f13; void *f14; unsigned int f15; void *f16; unsigned int f17; unsigned int f18; void *f19; } extab_fn_80147638 = { 0x100A0000, 0x00000070, 0x00000030, 0x00000080, 0x00000028, 0x0000008C, 0x00000030, 0x00000098, 0x0000003C, 0x00000000, 0x0A80001E, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_8013EB50, 0x0A80001E, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_8013EB50 };
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_801477BC = { 0x08080000, 0x0000004C, 0x00250010, 0x00000000, 0x82000008, (void *)&dtor_800869D0 };
 
@@ -614,6 +609,7 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
+
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; void *f29; unsigned int f30; unsigned int f31; void *f32; unsigned int f33; void *f34; unsigned int f35; unsigned int f36; void *f37; unsigned int f38; unsigned int f39; void *f40; unsigned int f41; void *f42; unsigned int f43; unsigned int f44; void *f45; unsigned int f46; unsigned int f47; void *f48; unsigned int f49; unsigned int f50; void *f51; unsigned int f52; unsigned int f53; void *f54; unsigned int f55; unsigned int f56; void *f57; unsigned int f58; } extab_fn_80148810 = { 0x280A0000, 0x00000080, 0x00000078, 0x00000094, 0x00000070, 0x000000A0, 0x0000008C, 0x000000B4, 0x00000084, 0x000000C0, 0x000000AC, 0x000000CC, 0x000000A4, 0x000000E0, 0x000000AC, 0x000000EC, 0x000800BC, 0x00000130, 0x000000D0, 0x00000144, 0x000000C8, 0x00000158, 0x000000D0, 0x0000016C, 0x000000E0, 0x00000180, 0x001A00D0, 0x00000000, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801419C8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x00000024, (void *)&dtor_80149320, 0x8680001F, 0x00000000, (void *)&dtor_801419C8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x00000028, (void *)&dtor_80149320, 0x0100008C, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x010000AC, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x00000098, (void *)&dtor_80149244, 0x010000AC, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x010000D0 };
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; void *f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; void *f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; void *f20; } extab_fn_80148A44 = { 0x388A0000, 0x00000090, 0x00000040, 0x000000B0, 0x0000002C, 0x000000C4, 0x018F0020, 0x00000000, 0x0780001F, 0x00000A68, (void *)&dtor_8014917C, 0x0980001F, 0x000003D8, 0x00000003, 0x00000230, (void *)&dtor_800869D0, 0x8980001F, 0x00000010, 0x0000000B, 0x00000058, (void *)&dtor_80082960 };
@@ -627,7 +623,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; void *f13; unsigned int f14; unsigned int f15; void *f16; unsigned int f17; void *f18; unsigned int f19; unsigned int f20; void *f21; } extab_fn_80149B8C = { 0x180A0000, 0x00000070, 0x00000038, 0x00000084, 0x00000030, 0x00000090, 0x00000038, 0x0000009C, 0x00000044, 0x000000CC, 0x00000038, 0x00000000, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801419C8, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801419C8 };
 
 
 
@@ -636,7 +631,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; void *f21; unsigned int f22; unsigned int f23; void *f24; unsigned int f25; void *f26; unsigned int f27; unsigned int f28; void *f29; unsigned int f30; void *f31; unsigned int f32; unsigned int f33; void *f34; unsigned int f35; void *f36; unsigned int f37; unsigned int f38; void *f39; } extab_fn_8014AA38 = { 0x300A0000, 0x00000080, 0x00150058, 0x000000E4, 0x00000050, 0x0000011C, 0x00060058, 0x00000148, 0x00000064, 0x00000154, 0x00000058, 0x00000160, 0x00000078, 0x0000018C, 0x00000058, 0x000001AC, 0x0000008C, 0x000001B8, 0x00100058, 0x00000000, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801419C8, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801419C8, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801419C8, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801419C8 };
 
 
 
@@ -644,9 +638,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_8014ADB4[8
     0x40, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8014B118[8] = {
-    0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_8014BBE4 = { 0x204A0000, 0x0000004C, 0x00C80010, 0x00000000, 0x82000008, (void *)&dtor_800869D0 };
 
@@ -658,14 +649,12 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80147638 = {
-    (void *)&fn_80147638, 0x00000140, (void *)&extab_fn_80147638
-};
+
+
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801477BC = {
     (void *)&fn_801477BC, 0x000000F4, (void *)&extab_fn_801477BC
 };
-
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80147900 = {
     (void *)&fn_80147900, 0x000001F4, (void *)extab_fn_80147900
@@ -682,6 +671,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80147EE8 = {
     (void *)&fn_80147EE8, 0x00000284, (void *)&extab_fn_80147EE8
 };
+
 
 
 
@@ -702,9 +692,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80149B8C = {
-    (void *)&fn_80149B8C, 0x0000014C, (void *)&extab_fn_80149B8C
-};
 
 
 
@@ -715,9 +702,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014AA38 = {
-    (void *)&fn_8014AA38, 0x00000210, (void *)&extab_fn_8014AA38
-};
 
 
 
@@ -725,9 +709,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_8014ADB4, 0x00000364, (void *)extab_fn_8014ADB4
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014B118 = {
-    (void *)&fn_8014B118, 0x00000ACC, (void *)extab_fn_8014B118
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014BBE4 = {
     (void *)&fn_8014BBE4, 0x0000039C, (void *)&extab_fn_8014BBE4
@@ -856,26 +837,74 @@ struct ResultFader {
     float alpha;
 };
 
+struct Pad14F {
+    char pad0[4];
+    unsigned char f4;
+    char pad5[0xF];
+};
+
+class VObj14F : public Pad14F {
+public:
+    virtual ~VObj14F();
+    virtual void vC();
+    virtual void v10();
+    virtual void v14();
+    virtual void v18();
+    virtual void v1C();
+};
+
+class VObjCF : public VObjC {
+public:
+    unsigned char f4;
+};
+
+class HudInput {
+public:
+    virtual void v8();
+    virtual void vC();
+    virtual void v10();
+    virtual void v14();
+    virtual float v18();
+    virtual void v1C();
+    virtual unsigned char Pressed(int mask);
+};
+
 struct ResultPanel {
     void *vt;
-    char pad4[4];
+    unsigned char done;
+    char pad5[3];
     VObj14 *f8;
     VObj14 *fC;
     VObj14 *f10;
     void *f14;
     void *f18;
-    char pad1C[0x38 - 0x1C];
+    char pad1C[4];
+    unsigned char f20;
+    unsigned char f21;
+    char pad22[2];
+    int state;
+    float t;
+    char pad2C[8];
+    unsigned char f34;
+    char pad35[3];
     int item;
     VObj *f3C;
-    char pad40[4];
-    VObj14 *f44;
-    char pad48[8];
+    unsigned char f40;
+    char pad41[3];
+    VObj14F *f44;
+    char pad48[4];
+    unsigned char f4C;
+    char pad4D[3];
     VObj14 *f50;
-    VObjC *f54;
-    char pad58[0x64 - 0x58];
+    VObjCF *f54;
+    unsigned char f58;
+    char pad59[3];
+    float f5C;
+    char pad60[4];
     ResultFader *f64;
     ObjTrio *f68;
     ObjPair *f6C;
+    unsigned char f70;
 };
 
 struct HudRankSlot {
@@ -975,95 +1004,101 @@ extern "C" HudPanel *dtor_80147584(HudPanel *self, short flag) {
     return self;
 }
 
-extern "C" asm void fn_80147638(void) { /* 0x80147638 size:0x140 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lis r5, lbl_8048EB44@ha
-    li r6, 0x0
-    stw r0, 0x14(r1)
-    addi r0, r5, lbl_8048EB44@l
-    lfs f1, lbl_806D7B58(r2)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    lis r3, lbl_8048EFD4@ha
-    lfs f0, lbl_806D7BA4(r2)
-    stw r30, 0x8(r1)
-    addi r5, r3, lbl_8048EFD4@l
-    li r3, 0xc
-    stw r0, 0x14(r31)
-    li r0, 0x4b0
-    stw r6, 0x0(r31)
-    stb r6, 0x4(r31)
-    stfs f1, 0x8(r31)
-    stfs f1, 0xc(r31)
-    stfs f0, 0x10(r31)
-    stw r5, 0x14(r31)
-    stw r6, 0x18(r31)
-    stfs f1, 0x1c(r31)
-    stw r4, 0x20(r31)
-    stw r0, 0x74(r31)
-    stw r6, 0x78(r31)
-    bl Alloc
-    mr. r30, r3
-    beq fn_80147638_L_801476B8
-    li r4, 0x0
-    bl fn_80167730
-    fn_80147638_L_801476B8:
-    stw r30, 0x7c(r31)
-    li r3, 0x1c
-    bl Alloc
-    mr. r30, r3
-    beq fn_80147638_L_801476D0
-    bl fn_80146260
-    fn_80147638_L_801476D0:
-    stw r30, 0x80(r31)
-    lwz r0, 0x0(r31)
-    lwz r3, 0x80(r31)
-    cmpwi r0, 0x0
-    blt fn_80147638_L_801476F0
-    cmpwi r0, 0x8
-    bge fn_80147638_L_801476F0
-    stw r0, 0x0(r3)
-    fn_80147638_L_801476F0:
-    lfs f2, lbl_806D7B58(r2)
-    li r3, 0x0
-    lfs f1, lbl_806D7B60(r2)
-    stfs f2, 0x24(r31)
-    lfs f0, lbl_806D7B5C(r2)
-    stfs f2, 0x28(r31)
-    stfs f2, 0x2c(r31)
-    stfs f2, 0x30(r31)
-    lwz r0, 0x20(r31)
-    cmpw r3, r0
-    bne fn_80147638_L_80147724
-    stfs f1, 0x44(r31)
-    b fn_80147638_L_80147728
-    fn_80147638_L_80147724:
-    stfs f2, 0x44(r31)
-    fn_80147638_L_80147728:
-    stfs f0, 0x48(r31)
-    li r3, 0x1
-    stfs f2, 0x4c(r31)
-    stfs f2, 0x50(r31)
-    stfs f2, 0x54(r31)
-    stfs f2, 0x58(r31)
-    lwz r0, 0x20(r31)
-    cmpw r3, r0
-    bne fn_80147638_L_80147754
-    stfs f1, 0x6c(r31)
-    b fn_80147638_L_80147758
-    fn_80147638_L_80147754:
-    stfs f2, 0x6c(r31)
-    fn_80147638_L_80147758:
-    stfs f0, 0x70(r31)
-    mr r3, r31
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+struct LapHudData {
+    int f0;
+    unsigned char f4;
+    float f8;
+    float fC;
+    float f10;
+};
+
+class LapHudBase : public LapHudData {
+public:
+    LapHudBase() {
+        f0 = 0;
+        f4 = 0;
+        f8 = 0.0f;
+        fC = 0.0f;
+        f10 = lbl_806D7BA4;
+    }
+    virtual ~LapHudBase();
+};
+
+struct LapHudText {
+    int f0;
+    int f4;
+    int f8;
+    LapHudText(int v);
+};
+
+struct HudGaugeData {
+    int kind;
+    char pad4[0x10];
+};
+
+class HudGauge : public HudGaugeData {
+public:
+    virtual ~HudGauge();
+    virtual void Start();
+    void SetKind(int v) {
+        if (v >= 0 && v < 8) {
+            kind = v;
+        }
+    }
+};
+
+class LapHudGauge : public HudGauge {
+public:
+    int f18;
+    LapHudGauge();
+};
+
+struct LapHudSlot {
+    float x;
+    float y;
+    float w;
+    float h;
+    char pad10[0x10];
+    float hl;
+    float t;
+};
+
+class LapHud : public LapHudBase {
+public:
+    int f18;
+    float f1C;
+    int cur;
+    LapHudSlot slots[2];
+    int f74;
+    int f78;
+    LapHudText *text;
+    LapHudGauge *gauge;
+    LapHud(int cur);
+    virtual ~LapHud();
+};
+
+LapHud::LapHud(int n) {
+    int i;
+    f18 = 0;
+    f1C = 0.0f;
+    cur = n;
+    f74 = 1200;
+    f78 = 0;
+    text = new LapHudText(0);
+    gauge = new LapHudGauge;
+    gauge->SetKind(f0);
+    for (i = 0; i < 2; i++) {
+        slots[i].x = 0.0f;
+        slots[i].y = 0.0f;
+        slots[i].w = 0.0f;
+        slots[i].h = 0.0f;
+        if (i == cur) {
+            slots[i].hl = 15.0f;
+        } else {
+            slots[i].hl = 0.0f;
+        }
+        slots[i].t = -1.0f;
+    }
 }
 
 extern "C" void fn_80147778(void) {
@@ -1860,6 +1895,21 @@ extern "C" RecordPanel *fn_80148648(RecordPanel *self, short flag) {
     }
     return self;
 }
+
+class HudRoot {
+public:
+    virtual ~HudRoot();
+    int id;
+    int f8;
+    int fC;
+    HudRoot(int i) : id(i), f8(0), fC(0) {}
+};
+
+class HudTask : public HudRoot {
+public:
+    HudTask(int i) : HudRoot(i) {}
+    virtual ~HudTask();
+};
 
 extern "C" asm void fn_80148810(void) { /* 0x80148810 size:0x234 */
     nofralloc
@@ -2717,94 +2767,54 @@ extern "C" CountListFull *fn_80149A88(CountListFull *self, short flag) {
     return self;
 }
 
-extern "C" asm void fn_80149B8C(void) { /* 0x80149B8C size:0x14C */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    lis r6, lbl_8048ED10@ha
-    lfs f0, lbl_806D7CE8(r2)
-    stw r0, 0x24(r1)
-    addi r6, r6, lbl_8048ED10@l
-    stw r31, 0x1c(r1)
-    mr r31, r4
-    stw r30, 0x18(r1)
-    mr r30, r3
-    lis r3, lbl_8048ECF8@ha
-    stw r29, 0x14(r1)
-    addi r0, r3, lbl_8048ECF8@l
-    mr r7, r30
-    lis r3, lbl_8048F058@ha
-    stw r0, 0x0(r30)
-    mr r8, r7
-    addi r0, r3, lbl_8048F058@l
-    li r7, 0x0
-    stw r5, 0x4(r8)
-    li r3, 0x1c
-    stw r7, 0x8(r8)
-    stw r7, 0xc(r8)
-    stw r6, 0x0(r8)
-    stw r0, 0x0(r30)
-    stw r31, 0x10(r30)
-    stfs f0, 0x14(r30)
-    bl Alloc
-    mr. r29, r3
-    beq fn_80149B8C_L_80149C10
-    mr r4, r31
-    li r5, 0x0
-    bl fn_80141924
-    fn_80149B8C_L_80149C10:
-    stw r29, 0x1c(r30)
-    li r3, 0x28
-    bl Alloc
-    mr. r29, r3
-    beq fn_80149B8C_L_80149C28
-    bl fn_8014393C
-    fn_80149B8C_L_80149C28:
-    stw r29, 0x24(r30)
-    cmpwi r31, 0x0
-    lwz r3, 0x24(r30)
-    blt fn_80149B8C_L_80149C44
-    cmpwi r31, 0x8
-    bge fn_80149B8C_L_80149C44
-    stw r31, 0x0(r3)
-    fn_80149B8C_L_80149C44:
-    lwz r3, 0x24(r30)
-    lwz r12, 0x14(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    li r4, 0x0
-    lfs f0, lbl_806D7CE8(r2)
-    stw r4, 0x28(r30)
-    li r0, 0x6
-    mr r3, r30
-    stw r4, 0x2c(r30)
-    stfs f0, 0x30(r30)
-    stw r4, 0x34(r30)
-    stw r4, 0x38(r30)
-    stfs f0, 0x3c(r30)
-    stw r4, 0x40(r30)
-    stw r4, 0x44(r30)
-    stfs f0, 0x48(r30)
-    stw r4, 0x4c(r30)
-    stw r4, 0x50(r30)
-    stfs f0, 0x54(r30)
-    stw r4, 0x58(r30)
-    stw r4, 0x5c(r30)
-    stfs f0, 0x60(r30)
-    stw r4, 0x64(r30)
-    stw r4, 0x68(r30)
-    stfs f0, 0x6c(r30)
-    stw r4, 0x70(r30)
-    stw r0, 0x74(r30)
-    stb r4, 0x18(r30)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+struct CountText {
+    char pad0[0x1C];
+    CountText(int layer, int flag);
+};
+
+class CountGauge : public HudGauge {
+public:
+    char pad18[0x10];
+    CountGauge();
+};
+
+struct CountHudEntry {
+    int count;
+    float t;
+    void *obj;
+};
+
+class CountHud : public HudTask {
+public:
+    int layer;
+    float t;
+    unsigned char on;
+    CountText *text;
+    int f20;
+    CountGauge *gauge;
+    int f28;
+    CountHudEntry e[6];
+    int highlight;
+    CountHud(int layer, int id);
+    virtual ~CountHud();
+};
+
+CountHud::CountHud(int ly, int id) : HudTask(id) {
+    int i;
+    layer = ly;
+    t = lbl_806D7CE8;
+    text = new CountText(ly, 0);
+    gauge = new CountGauge;
+    gauge->SetKind(ly);
+    gauge->Start();
+    f28 = 0;
+    for (i = 0; i < 6; i++) {
+        e[i].count = 0;
+        e[i].t = lbl_806D7CE8;
+        e[i].obj = 0;
+    }
+    highlight = 6;
+    on = 0;
 }
 
 extern "C" void fn_80149CD8(void) {
@@ -3599,148 +3609,83 @@ extern "C" StrPanel *fn_8014A8FC(StrPanel *self, short flag) {
     return self;
 }
 
-extern "C" asm void fn_8014AA38(void) { /* 0x8014AA38 size:0x210 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    lis r6, lbl_8048ED10@ha
-    lfs f1, lbl_806D7D68(r2)
-    stw r0, 0x24(r1)
-    addi r6, r6, lbl_8048ED10@l
-    lfs f0, lbl_806D7E00(r2)
-    stmw r26, 0x8(r1)
-    mr r31, r3
-    lis r3, lbl_8048ECF8@ha
-    mr r27, r4
-    addi r0, r3, lbl_8048ECF8@l
-    mr r7, r31
-    mr r8, r7
-    lis r3, lbl_8048F090@ha
-    li r7, 0x0
-    stw r0, 0x0(r31)
-    addi r0, r3, lbl_8048F090@l
-    stw r5, 0x4(r8)
-    stw r7, 0x8(r8)
-    stw r7, 0xc(r8)
-    stw r6, 0x0(r8)
-    stw r0, 0x0(r31)
-    stw r27, 0x10(r31)
-    stfs f1, 0x14(r31)
-    stfs f1, 0x18(r31)
-    stfs f1, 0x1c(r31)
-    stw r7, 0x20(r31)
-    lfs f1, g_totalRaceTime(r13)
-    stfs f1, 0x2c(r31)
-    stfs f0, 0x30(r31)
-    bl TaRecord_GetLastInsertedRank
-    stw r3, 0x24(r31)
-    bl fn_80169DF0
-    stb r3, 0x28(r31)
-    bl fn_8024F588
-    lbz r0, 0x1(r3)
-    li r30, 0x0
-    li r29, 0x0
-    stb r0, 0x29(r31)
-    stw r30, 0x60(r31)
-    sth r30, 0x70(r31)
-    sth r30, 0x72(r31)
-    sth r30, 0x74(r31)
-    sth r30, 0x76(r31)
-    sth r30, 0x78(r31)
-    sth r30, 0x7a(r31)
-    fn_8014AA38_L_8014AAF4:
-    lfs f1, 0x2c(r31)
-    subfic r3, r29, 0x8
-    bl fn_80167744
-    addi r28, r3, 0x998
-    li r3, 0x1c
-    bl Alloc
-    mr. r26, r3
-    beq fn_8014AA38_L_8014AB1C
-    mr r4, r28
-    bl fn_80144308
-    fn_8014AA38_L_8014AB1C:
-    addi r0, r30, 0x3c
-    cmpwi r27, 0x0
-    stwx r26, r31, r0
-    lwzx r3, r31, r0
-    blt fn_8014AA38_L_8014AB3C
-    cmpwi r27, 0x8
-    bge fn_8014AA38_L_8014AB3C
-    stw r27, 0x0(r3)
-    fn_8014AA38_L_8014AB3C:
-    addi r0, r30, 0x3c
-    lwzx r3, r31, r0
-    lwz r12, 0x14(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    addi r29, r29, 0x1
-    addi r30, r30, 0x4
-    cmpwi r29, 0x9
-    blt fn_8014AA38_L_8014AAF4
-    li r3, 0x1c
-    bl Alloc
-    mr. r26, r3
-    beq fn_8014AA38_L_8014AB80
-    mr r4, r27
-    li r5, 0x0
-    bl fn_80141924
-    fn_8014AA38_L_8014AB80:
-    stw r26, 0x34(r31)
-    li r3, 0x28
-    bl Alloc
-    mr. r26, r3
-    beq fn_8014AA38_L_8014AB98
-    bl fn_8014403C
-    fn_8014AA38_L_8014AB98:
-    stw r26, 0x38(r31)
-    li r0, 0x0
-    cmpwi r27, 0x0
-    stw r0, 0x64(r31)
-    lwz r3, 0x38(r31)
-    blt fn_8014AA38_L_8014ABBC
-    cmpwi r27, 0x8
-    bge fn_8014AA38_L_8014ABBC
-    stw r27, 0x0(r3)
-    fn_8014AA38_L_8014ABBC:
-    li r3, 0x20
-    bl Alloc
-    mr. r26, r3
-    beq fn_8014AA38_L_8014ABE4
-    li r4, 0x74
-    li r5, -0x1
-    li r6, 0x1872
-    li r7, -0x1
-    li r8, 0x4
-    bl fn_8023D080
-    fn_8014AA38_L_8014ABE4:
-    stw r26, 0x68(r31)
-    lwz r3, 0x68(r31)
-    bl fn_8023CEB4
-    lwz r3, 0x68(r31)
-    lfs f1, lbl_806D7E04(r2)
-    lfs f2, lbl_806D7E08(r2)
-    bl fn_8023CD3C
-    lwz r3, 0x68(r31)
-    lfs f1, lbl_806D7E0C(r2)
-    lfs f2, lbl_806D7D94(r2)
-    bl fn_8023CCF8
-    li r0, 0x0
-    stw r0, 0x6c(r31)
-    bl StrPcb_GetInstance
-    li r4, 0x4
-    bl StrPcb_ClearStatusBits
-    bl StrPcb_GetInstance
-    li r4, 0x8
-    bl StrPcb_ClearStatusBits
-    mr r3, r31
-    lmw r26, 0x8(r1)
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+class StrDigit : public HudGauge {
+public:
+    int f18;
+    StrDigit(char *res);
+};
+
+class StrGauge : public HudGauge {
+public:
+    char pad18[0x10];
+    StrGauge();
+};
+
+struct StrBox {
+    char pad0[0x20];
+    StrBox(int a, int b, int c, int d, int e);
+};
+
+class StrHud : public HudTask {
+public:
+    int layer;
+    float f14;
+    float f18;
+    float f1C;
+    int f20;
+    int rank;
+    unsigned char f28;
+    unsigned char f29;
+    float time;
+    float f30;
+    CountText *text;
+    StrGauge *gauge;
+    StrDigit *digits[9];
+    int f60;
+    int f64;
+    StrBox *box;
+    int f6C;
+    short f70[6];
+    StrHud(int layer, int id);
+    virtual ~StrHud();
+};
+
+#pragma use_lmw_stmw on
+StrHud::StrHud(int ly, int id) : HudTask(id) {
+    int i;
+    layer = ly;
+    f14 = lbl_806D7D68;
+    f18 = lbl_806D7D68;
+    f1C = lbl_806D7D68;
+    f20 = 0;
+    time = g_totalRaceTime;
+    f30 = lbl_806D7E00;
+    rank = TaRecord_GetLastInsertedRank();
+    f28 = fn_80169DF0();
+    f29 = fn_8024F588()[1];
+    f60 = 0;
+    for (i = 0; i < 6; i++) {
+        f70[i] = 0;
+    }
+    for (i = 0; i < 9; i++) {
+        char *res = fn_80167744(8 - i, time) + 0x998;
+        digits[i] = new StrDigit(res);
+        digits[i]->SetKind(ly);
+        digits[i]->Start();
+    }
+    text = new CountText(ly, 0);
+    gauge = new StrGauge;
+    f64 = 0;
+    gauge->SetKind(ly);
+    box = new StrBox(0x74, -1, 0x1872, -1, 4);
+    fn_8023CEB4(box);
+    fn_8023CD3C(box, 286.0f, 454.0f);
+    fn_8023CCF8(box, 345.0f, 450.0f);
+    f6C = 0;
+    StrPcb_ClearStatusBits(StrPcb_GetInstance(), 4);
+    StrPcb_ClearStatusBits(StrPcb_GetInstance(), 8);
 }
+#pragma use_lmw_stmw reset
 
 extern "C" void fn_8014AC48(void *self) {
     char *str = lbl_803628A8;
@@ -3995,730 +3940,256 @@ extern "C" asm void fn_8014ADB4(void) { /* 0x8014ADB4 size:0x364 */
     blr
 }
 
-extern "C" asm void fn_8014B118(void) { /* 0x8014B118 size:0xACC */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    stw r30, 0x8(r1)
-    lbz r0, 0x4(r3)
-    cmplwi r0, 0x0
-    bne fn_8014B118_L_8014BBCC
-    lwz r0, 0x24(r31)
-    li r30, 0x0
-    cmpwi r0, 0x12
-    bne fn_8014B118_L_8014B158
-    li r0, 0x1
-    stb r0, 0x4(r31)
-    b fn_8014B118_L_8014BBCC
-    fn_8014B118_L_8014B158:
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lwz r12, 0x0(r3)
-    li r4, 0x100
-    lwz r12, 0x20(r12)
-    mtctr r12
-    bctrl
-    clrlwi. r0, r3, 24
-    bne fn_8014B118_L_8014B1A8
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lwz r12, 0x0(r3)
-    li r4, 0x2000
-    lwz r12, 0x20(r12)
-    mtctr r12
-    bctrl
-    clrlwi. r0, r3, 24
-    beq fn_8014B118_L_8014B1BC
-    fn_8014B118_L_8014B1A8:
-    li r3, 0x0
-    li r4, 0x1
-    li r5, 0x1
-    bl SetRumbleMode
-    li r30, 0x1
-    fn_8014B118_L_8014B1BC:
-    lwz r0, 0x24(r31)
-    cmplwi r0, 0x11
-    bgt fn_8014B118_L_8014BB00
-    lis r3, jumptable_8048F130@ha
-    slwi r0, r0, 2
-    addi r3, r3, jumptable_8048F130@l
-    lwzx r0, r3, r0
-    mtctr r0
-    bctr
-    lbz r0, 0x21(r31)
-    cmplwi r0, 0x0
-    bne fn_8014B118_L_8014B1FC
-    li r3, 0x1f
-    bl SoundMgr_Play
-    li r0, 0x1
-    stb r0, 0x21(r31)
-    fn_8014B118_L_8014B1FC:
-    lfs f2, 0x28(r31)
-    li r3, 0x6
-    lfs f0, lbl_806D7E40(r2)
-    lfs f1, lbl_806D7E30(r2)
-    fdivs f0, f2, f0
-    lfs f4, lbl_806D7E2C(r2)
-    fmr f2, f1
-    fmr f3, f1
-    fsubs f4, f4, f0
-    bl fn_801678FC
-    lfs f1, 0x28(r31)
-    lfs f0, lbl_806D7E40(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8014B118_L_8014BB00
-    li r0, 0x1
-    lfs f0, lbl_806D7E30(r2)
-    stw r0, 0x24(r31)
-    stfs f0, 0x28(r31)
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    li r3, 0x0
-    li r4, 0x1
-    bl fn_801699D8
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x8(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    lfs f0, lbl_806D7E30(r2)
-    li r0, 0x2
-    stfs f0, 0x28(r31)
-    stw r0, 0x24(r31)
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x8(r31)
-    bl fn_8014219C
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne fn_8014B118_L_8014BB00
-    li r0, 0x3
-    lfs f0, lbl_806D7E30(r2)
-    stw r0, 0x24(r31)
-    stfs f0, 0x28(r31)
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    li r0, 0x4
-    lfs f0, lbl_806D7E30(r2)
-    stw r0, 0x24(r31)
-    stfs f0, 0x28(r31)
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lfs f1, 0x28(r31)
-    lfs f0, lbl_806D7E44(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8014B118_L_8014BB00
-    lwz r0, 0x38(r31)
-    cmpwi r0, 0x0
-    beq fn_8014B118_L_8014B39C
-    li r0, 0x5
-    stw r0, 0x24(r31)
-    b fn_8014B118_L_8014B3EC
-    fn_8014B118_L_8014B39C:
-    lbz r0, 0x4c(r31)
-    cmplwi r0, 0x0
-    beq fn_8014B118_L_8014B3B4
-    li r0, 0xb
-    stw r0, 0x24(r31)
-    b fn_8014B118_L_8014B3EC
-    fn_8014B118_L_8014B3B4:
-    lbz r0, 0x40(r31)
-    cmplwi r0, 0x0
-    beq fn_8014B118_L_8014B3CC
-    li r0, 0xe
-    stw r0, 0x24(r31)
-    b fn_8014B118_L_8014B3EC
-    fn_8014B118_L_8014B3CC:
-    lbz r0, 0x70(r31)
-    cmplwi r0, 0x0
-    beq fn_8014B118_L_8014B3E4
-    li r0, 0x8
-    stw r0, 0x24(r31)
-    b fn_8014B118_L_8014B3EC
-    fn_8014B118_L_8014B3E4:
-    li r0, 0x11
-    stw r0, 0x24(r31)
-    fn_8014B118_L_8014B3EC:
-    lfs f0, lbl_806D7E30(r2)
-    stfs f0, 0x28(r31)
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lbz r0, 0x34(r31)
-    cmplwi r0, 0x0
-    beq fn_8014B118_L_8014B444
-    lfs f1, 0x28(r31)
-    mr r3, r31
-    lfs f0, lbl_806D7E40(r2)
-    fdivs f1, f1, f0
-    bl fn_8014BF80
-    b fn_8014B118_L_8014B458
-    fn_8014B118_L_8014B444:
-    lfs f1, 0x28(r31)
-    mr r3, r31
-    lfs f0, lbl_806D7E40(r2)
-    fdivs f1, f1, f0
-    bl fn_8014BBE4
-    fn_8014B118_L_8014B458:
-    lfs f1, 0x28(r31)
-    lfs f0, lbl_806D7E40(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8014B118_L_8014BB00
-    lfs f0, lbl_806D7E30(r2)
-    li r0, 0x6
-    stfs f0, 0x28(r31)
-    stw r0, 0x24(r31)
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lbz r0, 0x34(r31)
-    cmplwi r0, 0x0
-    beq fn_8014B118_L_8014B4C4
-    lfs f1, lbl_806D7E2C(r2)
-    mr r3, r31
-    bl fn_8014BF80
-    b fn_8014B118_L_8014B4D0
-    fn_8014B118_L_8014B4C4:
-    lfs f1, lbl_806D7E2C(r2)
-    mr r3, r31
-    bl fn_8014BBE4
-    fn_8014B118_L_8014B4D0:
-    lfs f1, 0x28(r31)
-    lfs f0, lbl_806D7E48(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    beq fn_8014B118_L_8014B4EC
-    clrlwi. r0, r30, 24
-    beq fn_8014B118_L_8014BB00
-    fn_8014B118_L_8014B4EC:
-    li r0, 0x7
-    lfs f0, lbl_806D7E30(r2)
-    stw r0, 0x24(r31)
-    stfs f0, 0x28(r31)
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lbz r0, 0x34(r31)
-    cmplwi r0, 0x0
-    beq fn_8014B118_L_8014B554
-    lfs f1, 0x28(r31)
-    mr r3, r31
-    lfs f0, lbl_806D7E40(r2)
-    lfs f2, lbl_806D7E2C(r2)
-    fdivs f0, f1, f0
-    fsubs f1, f2, f0
-    bl fn_8014BF80
-    b fn_8014B118_L_8014B570
-    fn_8014B118_L_8014B554:
-    lfs f1, 0x28(r31)
-    mr r3, r31
-    lfs f0, lbl_806D7E40(r2)
-    lfs f2, lbl_806D7E2C(r2)
-    fdivs f0, f1, f0
-    fsubs f1, f2, f0
-    bl fn_8014BBE4
-    fn_8014B118_L_8014B570:
-    lfs f1, 0x28(r31)
-    lfs f0, lbl_806D7E40(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8014B118_L_8014BB00
-    lfs f0, lbl_806D7E30(r2)
-    stfs f0, 0x28(r31)
-    lbz r0, 0x4c(r31)
-    cmplwi r0, 0x0
-    beq fn_8014B118_L_8014B5A4
-    li r0, 0xb
-    stw r0, 0x24(r31)
-    b fn_8014B118_L_8014BB00
-    fn_8014B118_L_8014B5A4:
-    lbz r0, 0x40(r31)
-    cmplwi r0, 0x0
-    beq fn_8014B118_L_8014B5BC
-    li r0, 0xe
-    stw r0, 0x24(r31)
-    b fn_8014B118_L_8014BB00
-    fn_8014B118_L_8014B5BC:
-    lbz r0, 0x70(r31)
-    cmplwi r0, 0x0
-    beq fn_8014B118_L_8014B5D4
-    li r0, 0x8
-    stw r0, 0x24(r31)
-    b fn_8014B118_L_8014BB00
-    fn_8014B118_L_8014B5D4:
-    li r0, 0x11
-    stw r0, 0x24(r31)
-    b fn_8014B118_L_8014BB00
-    li r0, 0x1
-    stb r0, 0x58(r31)
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lfs f2, lbl_806D7E4C(r2)
-    lfs f1, 0x28(r31)
-    lfs f0, lbl_806D7E40(r2)
-    fmuls f1, f2, f1
-    fdivs f0, f1, f0
-    stfs f0, 0x5c(r31)
-    lwz r3, 0x54(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x54(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lfs f1, 0x28(r31)
-    lfs f0, lbl_806D7E40(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8014B118_L_8014BB00
-    li r0, 0x9
-    lfs f0, lbl_806D7E30(r2)
-    stw r0, 0x24(r31)
-    stfs f0, 0x28(r31)
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x54(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x54(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x54(r31)
-    lbz r0, 0x4(r3)
-    cmplwi r0, 0x1
-    bne fn_8014B118_L_8014BB00
-    lfs f1, lbl_806D7E30(r2)
-    li r3, 0x7
-    lfs f4, lbl_806D7E2C(r2)
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_801678FC
-    li r3, 0x12
-    li r0, 0x1
-    stw r3, 0x24(r31)
-    lfs f0, lbl_806D7E30(r2)
-    stb r0, 0x4(r31)
-    stfs f0, 0x28(r31)
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x54(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x54(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lfs f1, 0x28(r31)
-    lfs f0, lbl_806D7E50(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8014B118_L_8014BB00
-    li r3, 0x12
-    li r0, 0x1
-    stw r3, 0x24(r31)
-    lfs f0, lbl_806D7E30(r2)
-    stb r0, 0x4(r31)
-    stfs f0, 0x28(r31)
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lfs f0, 0x5c(r31)
-    lfs f2, lbl_806D7E4C(r2)
-    fcmpo cr0, f0, f2
-    bge fn_8014B118_L_8014B7D8
-    lfs f1, 0x28(r31)
-    lfs f0, lbl_806D7E40(r2)
-    fmuls f1, f2, f1
-    fdivs f0, f1, f0
-    stfs f0, 0x5c(r31)
-    fn_8014B118_L_8014B7D8:
-    lfs f1, 0x28(r31)
-    lfs f0, lbl_806D7E40(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8014B118_L_8014BB00
-    li r0, 0xc
-    lfs f0, lbl_806D7E30(r2)
-    stw r0, 0x24(r31)
-    stfs f0, 0x28(r31)
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x50(r31)
-    cmplwi r3, 0x0
-    beq fn_8014B118_L_8014B858
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x50(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    fn_8014B118_L_8014B858:
-    lwz r3, 0x50(r31)
-    cmplwi r3, 0x0
-    beq fn_8014B118_L_8014BB00
-    bl fn_80140ECC
-    clrlwi. r0, r3, 24
-    beq fn_8014B118_L_8014BB00
-    li r0, 0xd
-    lfs f0, lbl_806D7E30(r2)
-    stw r0, 0x24(r31)
-    stfs f0, 0x28(r31)
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    li r0, 0xe
-    lfs f0, lbl_806D7E30(r2)
-    stw r0, 0x24(r31)
-    stfs f0, 0x28(r31)
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lfs f0, 0x5c(r31)
-    lfs f2, lbl_806D7E4C(r2)
-    fcmpo cr0, f0, f2
-    bge fn_8014B118_L_8014B90C
-    lfs f1, 0x28(r31)
-    lfs f0, lbl_806D7E40(r2)
-    fmuls f1, f2, f1
-    fdivs f0, f1, f0
-    stfs f0, 0x5c(r31)
-    fn_8014B118_L_8014B90C:
-    lfs f1, 0x28(r31)
-    lfs f0, lbl_806D7E40(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8014B118_L_8014BB00
-    li r0, 0xf
-    lfs f0, lbl_806D7E30(r2)
-    stw r0, 0x24(r31)
-    stfs f0, 0x28(r31)
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x44(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x44(r31)
-    lbz r0, 0x4(r3)
-    cmplwi r0, 0x0
-    beq fn_8014B118_L_8014BB00
-    li r0, 0x10
-    lfs f0, lbl_806D7E30(r2)
-    stw r0, 0x24(r31)
-    stfs f0, 0x28(r31)
-    b fn_8014B118_L_8014BB00
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x44(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lfs f2, 0x28(r31)
-    li r3, 0x7
-    lfs f0, lbl_806D7E40(r2)
-    lfs f1, lbl_806D7E30(r2)
-    fdivs f4, f2, f0
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_801678FC
-    lfs f0, 0x28(r31)
-    lfs f1, lbl_806D7E40(r2)
-    fdivs f0, f0, f1
-    stfs f0, 0x5c(r31)
-    lfs f0, 0x28(r31)
-    fcmpo cr0, f0, f1
-    cror eq, gt, eq
-    bne fn_8014B118_L_8014BB00
-    li r3, 0x12
-    li r0, 0x1
-    stw r3, 0x24(r31)
-    lfs f0, lbl_806D7E30(r2)
-    stb r0, 0x4(r31)
-    stfs f0, 0x28(r31)
-    b fn_8014B118_L_8014BB00
-    lbz r0, 0x21(r31)
-    cmplwi r0, 0x0
-    beq fn_8014B118_L_8014BA4C
-    li r3, 0x1f
-    li r4, 0x5
-    bl fn_80192688
-    li r0, 0x0
-    stb r0, 0x21(r31)
-    fn_8014B118_L_8014BA4C:
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0xc(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lbz r0, 0x58(r31)
-    cmplwi r0, 0x0
-    beq fn_8014B118_L_8014BAA8
-    lwz r3, 0x54(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x54(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    fn_8014B118_L_8014BAA8:
-    lfs f2, 0x28(r31)
-    li r3, 0x7
-    lfs f0, lbl_806D7E40(r2)
-    lfs f1, lbl_806D7E30(r2)
-    fdivs f4, f2, f0
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_801678FC
-    lfs f1, 0x28(r31)
-    lfs f0, lbl_806D7E40(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8014B118_L_8014BB00
-    li r3, 0x12
-    li r0, 0x1
-    stw r3, 0x24(r31)
-    li r3, 0x0
-    lfs f0, lbl_806D7E30(r2)
-    li r4, 0x0
-    stb r0, 0x4(r31)
-    stfs f0, 0x28(r31)
-    bl fn_801699D8
-    fn_8014B118_L_8014BB00:
-    lwz r3, 0x8(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x14(r31)
-    bl fn_80140344
-    lwz r3, 0x64(r31)
-    cmplwi r3, 0x0
-    beq fn_8014B118_L_8014BB30
-    lfs f1, lbl_806D7E54(r2)
-    bl Sprite_AdvanceAnim
-    fn_8014B118_L_8014BB30:
-    lwz r0, 0x24(r31)
-    cmpwi r0, 0xa
-    bgt fn_8014B118_L_8014BBA4
-    cmpwi r0, 0x5
-    blt fn_8014B118_L_8014BBA4
-    lbz r0, 0x70(r31)
-    cmplwi r0, 0x1
-    bne fn_8014B118_L_8014BBA4
-    lbz r0, 0x4c(r31)
-    cmplwi r0, 0x0
-    bne fn_8014B118_L_8014BBA4
-    lbz r0, 0x40(r31)
-    cmplwi r0, 0x0
-    bne fn_8014B118_L_8014BBA4
-    li r3, 0x1f
-    bl fn_80192010
-    clrlwi. r0, r3, 24
-    bne fn_8014B118_L_8014BBA4
-    li r3, 0x1
-    bl fn_8019083C
-    clrlwi. r0, r3, 24
-    bne fn_8014B118_L_8014BBA4
-    li r3, 0x1
-    li r4, 0x0
-    bl ClSound_PlayBgmStream
-    bl fn_801932F8
-    mr r4, r3
-    li r3, 0x1
-    bl clStream_setVolume
-    fn_8014B118_L_8014BBA4:
-    bl RumbleUpdate
-    lfs f1, 0x28(r31)
-    lfs f0, lbl_806D7E2C(r2)
-    fadds f0, f1, f0
-    stfs f0, 0x28(r31)
-    lbz r0, 0x20(r31)
-    cmplwi r0, 0x0
-    bne fn_8014B118_L_8014BBCC
-    li r0, 0x1
-    stb r0, 0x20(r31)
-    fn_8014B118_L_8014BBCC:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+extern "C" void fn_8014B118(ResultPanel *self) {
+    unsigned char hit;
+    if (self->done != 0) {
+        return;
+    }
+    hit = 0;
+    if (self->state == 18) {
+        self->done = 1;
+        return;
+    }
+    if (InputMgr_GetPlayer(GetInputManager(), 0)->Pressed(0x100) ||
+        InputMgr_GetPlayer(GetInputManager(), 0)->Pressed(0x2000)) {
+        SetRumbleMode(0, 1, 1);
+        hit = 1;
+    }
+    switch (self->state) {
+    case 0:
+        if (self->f21 == 0) {
+            SoundMgr_Play(0x1F);
+            self->f21 = 1;
+        }
+        fn_801678FC(6, lbl_806D7E30, lbl_806D7E30, lbl_806D7E30, lbl_806D7E2C - self->t / lbl_806D7E40);
+        if (self->t >= lbl_806D7E40) {
+            self->state = 1;
+            self->t = lbl_806D7E30;
+            self->fC->vC();
+            fn_801699D8(0, 1);
+        }
+        break;
+    case 1:
+        self->fC->v14();
+        self->fC->v18();
+        self->f8->vC();
+        self->t = lbl_806D7E30;
+        self->state = 2;
+        break;
+    case 2:
+        self->fC->v14();
+        self->fC->v18();
+        if (fn_8014219C(self->f8) == 1) {
+            self->state = 3;
+            self->t = lbl_806D7E30;
+        }
+        break;
+    case 3:
+        self->fC->v14();
+        self->fC->v18();
+        self->state = 4;
+        self->t = lbl_806D7E30;
+        break;
+    case 4:
+        self->fC->v14();
+        self->fC->v18();
+        if (self->t >= lbl_806D7E44) {
+            if (self->item != 0) {
+                self->state = 5;
+            } else if (self->f4C != 0) {
+                self->state = 11;
+            } else if (self->f40 != 0) {
+                self->state = 14;
+            } else if (self->f70 != 0) {
+                self->state = 8;
+            } else {
+                self->state = 17;
+            }
+            self->t = lbl_806D7E30;
+        }
+        break;
+    case 5:
+        self->fC->v14();
+        self->fC->v18();
+        if (self->f34 != 0) {
+            fn_8014BF80(self, self->t / lbl_806D7E40);
+        } else {
+            fn_8014BBE4(self, self->t / lbl_806D7E40);
+        }
+        if (self->t >= lbl_806D7E40) {
+            self->t = lbl_806D7E30;
+            self->state = 6;
+        }
+        break;
+    case 6:
+        self->fC->v14();
+        self->fC->v18();
+        if (self->f34 != 0) {
+            fn_8014BF80(self, lbl_806D7E2C);
+        } else {
+            fn_8014BBE4(self, lbl_806D7E2C);
+        }
+        if (self->t >= lbl_806D7E48 || hit) {
+            self->state = 7;
+            self->t = lbl_806D7E30;
+        }
+        break;
+    case 7:
+        self->fC->v14();
+        self->fC->v18();
+        if (self->f34 != 0) {
+            fn_8014BF80(self, lbl_806D7E2C - self->t / lbl_806D7E40);
+        } else {
+            fn_8014BBE4(self, lbl_806D7E2C - self->t / lbl_806D7E40);
+        }
+        if (self->t >= lbl_806D7E40) {
+            self->t = lbl_806D7E30;
+            if (self->f4C != 0) {
+                self->state = 11;
+            } else if (self->f40 != 0) {
+                self->state = 14;
+            } else if (self->f70 != 0) {
+                self->state = 8;
+            } else {
+                self->state = 17;
+            }
+        }
+        break;
+    case 8:
+        self->f58 = 1;
+        self->fC->v14();
+        self->fC->v18();
+        self->f5C = lbl_806D7E4C * self->t / lbl_806D7E40;
+        self->f54->v10();
+        self->f54->v14();
+        if (self->t >= lbl_806D7E40) {
+            self->state = 9;
+            self->t = lbl_806D7E30;
+        }
+        break;
+    case 9:
+        self->fC->v14();
+        self->fC->v18();
+        self->f54->v10();
+        self->f54->v14();
+        if (self->f54->f4 == 1) {
+            fn_801678FC(7, lbl_806D7E30, lbl_806D7E30, lbl_806D7E30, lbl_806D7E2C);
+            self->state = 18;
+            self->done = 1;
+            self->t = lbl_806D7E30;
+        }
+        break;
+    case 10:
+        self->fC->v14();
+        self->fC->v18();
+        self->f54->v10();
+        self->f54->v14();
+        if (self->t >= lbl_806D7E50) {
+            self->state = 18;
+            self->done = 1;
+            self->t = lbl_806D7E30;
+        }
+        break;
+    case 11:
+        self->fC->v14();
+        self->fC->v18();
+        if (self->f5C < lbl_806D7E4C) {
+            self->f5C = lbl_806D7E4C * self->t / lbl_806D7E40;
+        }
+        if (self->t >= lbl_806D7E40) {
+            self->state = 12;
+            self->t = lbl_806D7E30;
+        }
+        break;
+    case 12:
+        self->fC->v14();
+        self->fC->v18();
+        if (self->f50 != 0) {
+            self->f50->v14();
+            self->f50->v18();
+        }
+        if (self->f50 != 0 && fn_80140ECC(self->f50)) {
+            self->state = 13;
+            self->t = lbl_806D7E30;
+        }
+        break;
+    case 13:
+        self->fC->v14();
+        self->fC->v18();
+        self->state = 14;
+        self->t = lbl_806D7E30;
+        break;
+    case 14:
+        self->fC->v14();
+        self->fC->v18();
+        if (self->f5C < lbl_806D7E4C) {
+            self->f5C = lbl_806D7E4C * self->t / lbl_806D7E40;
+        }
+        if (self->t >= lbl_806D7E40) {
+            self->state = 15;
+            self->t = lbl_806D7E30;
+        }
+        break;
+    case 15:
+        self->fC->v14();
+        self->fC->v18();
+        self->f44->v14();
+        if (self->f44->f4 != 0) {
+            self->state = 16;
+            self->t = lbl_806D7E30;
+        }
+        break;
+    case 16:
+        self->fC->v14();
+        self->fC->v18();
+        self->f44->v14();
+        fn_801678FC(7, lbl_806D7E30, lbl_806D7E30, lbl_806D7E30, self->t / lbl_806D7E40);
+        self->f5C = self->t / lbl_806D7E40;
+        if (self->t >= lbl_806D7E40) {
+            self->state = 18;
+            self->done = 1;
+            self->t = lbl_806D7E30;
+        }
+        break;
+    case 17:
+        if (self->f21 != 0) {
+            fn_80192688(0x1F, 5);
+            self->f21 = 0;
+        }
+        self->fC->v14();
+        self->fC->v18();
+        if (self->f58 != 0) {
+            self->f54->v10();
+            self->f54->v14();
+        }
+        fn_801678FC(7, lbl_806D7E30, lbl_806D7E30, lbl_806D7E30, self->t / lbl_806D7E40);
+        if (self->t >= lbl_806D7E40) {
+            self->state = 18;
+            self->done = 1;
+            self->t = lbl_806D7E30;
+            fn_801699D8(0, 0);
+        }
+        break;
+    }
+    self->f8->v14();
+    fn_80140344(self->f14);
+    if (self->f64 != 0) {
+        Sprite_AdvanceAnim(self->f64, 0.0165f);
+    }
+    if (self->state <= 10 && self->state >= 5 && self->f70 == 1 && self->f4C == 0 && self->f40 == 0 &&
+        !fn_80192010(0x1F) && !fn_8019083C(1)) {
+        ClSound_PlayBgmStream(1, 0);
+        clStream_setVolume(1, fn_801932F8());
+    }
+    RumbleUpdate();
+    self->t += lbl_806D7E2C;
+    if (self->f20 == 0) {
+        self->f20 = 1;
+    }
 }
 
-extern "C" asm void fn_8014BBE4(void) { /* 0x8014BBE4 size:0x39C */
+
+extern "C" asm void fn_8014BBE4(struct ResultPanel *self, float alpha) { /* 0x8014BBE4 size:0x39C */
     nofralloc
     stwu r1, -0x280(r1)
     mflr r0
