@@ -8,3 +8,8 @@ For 0x800D3278, target is identity, native X/Y/Z rotations, then translation; LU
 Source: Codex worker c14_u6_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u6: 0x800D3278 literal identity constants in TU-local helpers raise text 94.61436 to 94.71452, still2396B, EH8/index12 exact. Residual lies in initial angle load scheduling, f1/f2 copy temporaries at X/Y and Y/Z transitions, and translation-copy tail scheduling. Loop copy with original constants94.63105; separate const-input multiply/copy helpers92.978294 and EH changed, both reverted. One function only; remainsNonMatching. Full fallback DOL SHA1 exact, native gain0.
+
+## c16_u34_20261106
+Source: Codex worker c16_u34_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 492 B.
+
+c16_u34: Matrix4_PreMultiplyTranslation 800D50FC492B now native100 text/EH/index. Mirror matched Matrix4RotZ: typedef float Matrix4[4][4], explicit identity assignments, inline float-parameter translation setter, translation then product locals, nested row/column multiply left[row][0]*right[0][column] + right[1][column]*left[row][1] + right[2][column]*left[row][2] + right[3][column]*left[row][3], nested scalar copy product[(unsigned int)row][column]. This restores target coefficient forwarding, two-row unrolling, scratch slots and all FP homes in one structural trial. Earlier flat scalar/accumulator helper failed; nested shape matters. Matching flag only; source-linked main.elf range and whole DOL SHA1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65 verified by coordinator build service.

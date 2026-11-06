@@ -1890,7 +1890,7 @@ config.libs = [
             Object(Matching, "game/PCBCommHostConfirm.c"),
             Object(Matching, "game/PcbSync_AnyPeer.c"),
             Object(Matching, "game/PCBCommSnapshot.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/Matrix4Translation.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Matrix4Translation.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Matrix4RotZ.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Matrix4Leaf.c"),
             Object(NonMatching, "game/PCBCommLifecycle.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
