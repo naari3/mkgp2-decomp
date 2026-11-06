@@ -919,3 +919,8 @@ c16_u12 ExplosionTumble_Init 800532D4 singleton: baseline89.013824/1704B. Separa
 Source: Codex worker c16_u14_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 452 B.
 
 SpecialFace_Init 8007B944 (452B): old GC/1.3.2 compiled aggregate assignment as two-word load/store pairs, leaving 88.89381% while all constructor and bounds-loop code was exact. Existing native constructor under GC/2.6 pipelines the 52-byte copy exactly and reaches 100%; bridge @89/@90 to @etb_80008688/@eti_800214DC. Matching promotion source-links at original address/size, all owned text/EH/index100%, full DOL SHA-1 exact. No C++ source or shared header edits needed.
+
+## c16_u16_20261106
+Source: Codex worker c16_u16_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u16 ItemWnd::Setup 8021F508: fresh baseline88.15076 vs report88.83. A TU-private typed view of shared pool lbl_803C6610 with poses at+428 and explicit entry-scope pool pointer restores cached r30 prologue/base and allocation GPR homes, improves92.41708 (784 vs796B). Merely replacing external labels with casts to common root gives88.25126. Multidimensional float[6] accessor is invariant to typed struct access. Residual target base+428 then index association/rematerialization vs folded source field offsets; itemId comparison r0/r3. Owned EH still not exact; singleton stays NonMatching. Full fallback DOL SHA1 exact; zero native gain.

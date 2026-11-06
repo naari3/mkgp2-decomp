@@ -1,7 +1,8 @@
-#include "game/anon_8021F088_private.h"
+#include "game/anon_8021F088_nm_8021F508_private.h"
 
 
 void ItemWnd::Setup(int n, MilageItem *e) {
+    const SetupPool *pool = &lbl_803C6610;
     if (e != 0) {
         coins = n;
         entry = e;
@@ -11,7 +12,7 @@ void ItemWnd::Setup(int n, MilageItem *e) {
         if (e->type == 1) {
             itemId = fn_8021620C();
             if (itemId <= 0) {
-                DebugPrintf(lbl_803C6C70 + 0x10, lbl_803C6C70 + 0x34, 950);
+                DebugPrintf((const char *)pool + 0x670, (const char *)pool + 0x694, 950);
                 state = 0;
                 return;
             }
@@ -44,10 +45,10 @@ void ItemWnd::Setup(int n, MilageItem *e) {
                 item = 0;
             }
             item = new ItemModel(k, 2, 0, 1);
-            fn_8021A7BC(item, ItemPoses()[k].x, ItemPoses()[k].y);
-            fn_8021A578(item, lbl_806DB1D8 * ItemPoses()[k].rot[0], lbl_806DB1D8 * ItemPoses()[k].rot[1],
-                        lbl_806DB1D8 * ItemPoses()[k].rot[2]);
-            fn_8021A660(item, ItemPoses()[k].scale, ItemPoses()[k].scale, ItemPoses()[k].scale);
+            fn_8021A7BC(item, pool->poses[k].x, pool->poses[k].y);
+            fn_8021A578(item, lbl_806DB1D8 * pool->poses[k].rot[0], lbl_806DB1D8 * pool->poses[k].rot[1],
+                        lbl_806DB1D8 * pool->poses[k].rot[2]);
+            fn_8021A660(item, pool->poses[k].scale, pool->poses[k].scale, pool->poses[k].scale);
             fn_8021A430(item, lbl_806DB190);
         }
     }
