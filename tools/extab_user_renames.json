@@ -8396,7 +8396,11 @@
     "__vt__7FadeKey": "lbl_804EC1F4",
     "Append__7FadeKeyFif": "fn_8020A7F8",
     "__dt__11FadeKeyBaseFv": "fn_801FEA28",
-    "__dt__17VHolder<7FadeKey>Fv": "fn_801FE8B8"
+    "__dt__17VHolder<7FadeKey>Fv": "fn_801FE8B8",
+    "@93": "@etb_800193FC",
+    "@118": "@etb_80019404",
+    "@94": "@eti_80029B04",
+    "@119": "@eti_80029B10"
   },
   "src/game/anon_80209FA4_tail.cpp": {
     "__vt__13JobRunnerMode": "lbl_804EC7F4",
@@ -11999,5 +12003,15 @@
     "__dt__12StrPcbBufferFv": "dtor_8003871C",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/anon_80209FA4_nm2.cpp": {
+    "Value__5TweenFv": "fn_8020A6CC",
+    "@56": "@etb_80019420",
+    "@57": "@eti_80029B1C"
+  },
+  "src/game/anon_80209FA4_set.cpp": {
+    "Set__5TweenFffs": "fn_8020A734",
+    "@50": "@etb_80019428",
+    "@51": "@eti_80029B28"
   }
 }

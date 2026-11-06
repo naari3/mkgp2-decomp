@@ -230,6 +230,28 @@ extern const float lbl_806DABF0;
 
 
 
+inline void Tween::Set(float f, float t, short d) {
+    from = f;
+    to = t;
+    a = d;
+    b = 0;
+    rate = (lbl_806DABD8 * (t - f)) / d;
+}
+
+FadeSeq::FadeSeq(FadeKey *h, bool l) : FadeSeqBase(l), head(h), cur(head), tween(new Tween(lbl_806DABE8)) {
+    Load();
+}
+
+
+bool FadeSeq::Done() {
+    if (!loop) {
+        Tween *t = tween;
+        return t->Done() && cur == 0;
+    }
+    return false;
+}
+
+
 void FadeSeq::Update() {
     tween->Step();
     if (tween->Done()) {
@@ -240,42 +262,4 @@ void FadeSeq::Update() {
             Load();
         }
     }
-}
-
-bool FadeSeq::Done() {
-    if (!loop) {
-        Tween *t = tween;
-        return t->Done() && cur == 0;
-    }
-    return false;
-}
-
-FadeSeq::FadeSeq(FadeKey *h, bool l) : FadeSeqBase(l), head(h), cur(head), tween(new Tween(lbl_806DABE8)) {
-    Load();
-}
-
-float Tween::Value() {
-    short t = b;
-    short n = a;
-    if (t <= 0) {
-        return from;
-    }
-    if (t >= n) {
-        return to;
-    }
-    return from + lbl_806DABEC * (rate * t);
-}
-
-void Tween::Set(float f, float t, short d) {
-    from = f;
-    to = t;
-    a = d;
-    b = 0;
-    rate = (lbl_806DABD8 * (t - f)) / d;
-}
-
-int TweenI::Value() {
-    short n = a;
-    short t = b;
-    return t <= 0 ? from : (t >= n ? to : ((rate * t) >> 16) + from);
 }

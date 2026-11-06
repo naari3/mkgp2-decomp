@@ -11108,9 +11108,22 @@ game/anon_80209FA4.cpp:
 	.data       start:0x804EC7F4 end:0x804EC808
 
 game/anon_80209FA4_nm1.cpp:
-	extab       start:0x800193FC end:0x80019430
-	extabindex  start:0x80029B04 end:0x80029B34
-	.text       start:0x8020A454 end:0x8020A7CC
+	extab       start:0x800193FC end:0x80019420
+	extabindex  start:0x80029B04 end:0x80029B1C
+	.text       start:0x8020A454 end:0x8020A6CC
+
+game/anon_80209FA4_nm2.cpp:
+	extab       start:0x80019420 end:0x80019428
+	extabindex  start:0x80029B1C end:0x80029B28
+	.text       start:0x8020A6CC end:0x8020A734
+
+game/anon_80209FA4_set.cpp:
+	extab       start:0x80019428 end:0x80019430
+	extabindex  start:0x80029B28 end:0x80029B34
+	.text       start:0x8020A734 end:0x8020A788
+
+game/anon_80209FA4_nm3.cpp:
+	.text       start:0x8020A788 end:0x8020A7CC
 
 game/anon_80209FA4_tail.cpp:
 	extab       start:0x80019430 end:0x80019460
