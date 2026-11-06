@@ -48,66 +48,25 @@ int ItemAlias_DestToSource(int destId, unsigned char *foundOut) {
     return destId;
 }
 
-/* asm_fn 退避: CW 1.3.2 が 5-unrolled 比較で p の displacement を fold して
- * target の inline `addi r4, r4, 0xC` pattern を再現できない。`p += 3; p[1]` /
- * `p[4]` / `(volatile *)` 形を 6+ サイクル試行したが 0x94-0xA4 で停滞、target
- * 0xB8 に届かず。sibling ItemAliasTable_LookupSlotIndex が完全同パターン (5-unroll、offset 0x10
- * 反復、inline addi) なので idiom 解明できれば 2 fn 同時に unlock 可能。
- */
-asm void ItemAlias_HitRemapLookup(int srcId) {
-    nofralloc
-    lis r4, g_itemAliasTable@ha
-    li r0, 0x1f
-    addi r5, r4, g_itemAliasTable@l
-    li r4, 0x0
-    mtctr r0
-HitRemapLookup_L_800D7554:
-    lwz r0, 0x4(r5)
-    cmpw r3, r0
-    bne HitRemapLookup_L_800D7564
-    b HitRemapLookup_L_800D75D4
-HitRemapLookup_L_800D7564:
-    lwz r0, 0x10(r5)
-    addi r4, r4, 0x1
-    addi r5, r5, 0xC
-    cmpw r3, r0
-    bne HitRemapLookup_L_800D757C
-    b HitRemapLookup_L_800D75D4
-HitRemapLookup_L_800D757C:
-    lwz r0, 0x10(r5)
-    addi r4, r4, 0x1
-    addi r5, r5, 0xC
-    cmpw r3, r0
-    bne HitRemapLookup_L_800D7594
-    b HitRemapLookup_L_800D75D4
-HitRemapLookup_L_800D7594:
-    lwz r0, 0x10(r5)
-    addi r4, r4, 0x1
-    addi r5, r5, 0xC
-    cmpw r3, r0
-    bne HitRemapLookup_L_800D75AC
-    b HitRemapLookup_L_800D75D4
-HitRemapLookup_L_800D75AC:
-    lwz r0, 0x10(r5)
-    addi r4, r4, 0x1
-    addi r5, r5, 0xC
-    cmpw r3, r0
-    bne HitRemapLookup_L_800D75C4
-    b HitRemapLookup_L_800D75D4
-HitRemapLookup_L_800D75C4:
-    addi r5, r5, 0xC
-    addi r4, r4, 0x1
-    bdnz HitRemapLookup_L_800D7554
-    li r4, 0x0
-HitRemapLookup_L_800D75D4:
-    cmpwi r4, 0x9b
-    blt HitRemapLookup_L_800D75E4
-    li r3, 0x0
-    blr
-HitRemapLookup_L_800D75E4:
-    mulli r0, r4, 0xc
-    lis r3, g_itemAliasTable@ha
-    addi r3, r3, g_itemAliasTable@l
-    lwzx r3, r3, r0
-    blr
+/* The index lookup uses slot zero as its fallback, like
+ * ItemAliasTable_LookupSlotIndex. Keep it separate from indexed access. */
+static inline int ItemAlias_FindHitIndex(int srcId) {
+    int i;
+    for (i = 0; i < 0x9b; i++) {
+        if (srcId == g_itemAliasTable[i][1]) {
+            return i;
+        }
+    }
+    return 0;
+}
+
+static inline int ItemAlias_SourceAtIndex(int i) {
+    if (i >= 0x9b) {
+        return 0;
+    }
+    return g_itemAliasTable[i][0];
+}
+
+int ItemAlias_HitRemapLookup(int srcId) {
+    return ItemAlias_SourceAtIndex(ItemAlias_FindHitIndex(srcId));
 }
