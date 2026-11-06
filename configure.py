@@ -1562,6 +1562,8 @@ config.libs = [
             Object(NonMatching, "game/StrPcb_WaitForState1.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/StrPcb_Commands.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/StrPcb_Lifetime.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-inline deferred"]),
+            Object(Matching, "game/StrPcb_Lifetime_get.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-inline deferred"]),
+            Object(NonMatching, "game/StrPcb_Lifetime_nm1.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-inline deferred"]),
             Object(Matching, "game/StrPcb_RegisterAtExitCleanup.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SetPcbScratchFlag_806d11a4.c"),
             Object(Matching, "game/PcbConn_MarkDisabled.c"),

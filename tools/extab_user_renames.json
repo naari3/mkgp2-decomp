@@ -11988,5 +11988,11 @@
     "__dt__7ResCtrlFv": "dtor_80082960",
     "@132": "@etb_8001CBC4",
     "@133": "@eti_8002AEB4"
+  },
+  "src/game/StrPcb_Lifetime_nm1.cpp": {
+    "__ct__6StrPcbFi": "StrPcb_Init",
+    "__dt__12StrPcbBufferFv": "dtor_8003871C",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

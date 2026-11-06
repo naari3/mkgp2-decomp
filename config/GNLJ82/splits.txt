@@ -425,9 +425,17 @@ game/StrPcb_Commands.c:
 	.text       start:0x80037E08 end:0x80038288
 
 game/StrPcb_Lifetime.cpp:
-	extab       start:0x80005D18 end:0x80005D74
-	extabindex  start:0x8001F9A0 end:0x8001F9D0
-	.text       start:0x80038288 end:0x80038778
+	extab       start:0x80005D18 end:0x80005D4C
+	extabindex  start:0x8001F9A0 end:0x8001F9AC
+	.text       start:0x80038288 end:0x80038574
+
+game/StrPcb_Lifetime_get.cpp:
+	.text       start:0x80038574 end:0x8003857C
+
+game/StrPcb_Lifetime_nm1.cpp:
+	extab       start:0x80005D4C end:0x80005D74
+	extabindex  start:0x8001F9AC end:0x8001F9D0
+	.text       start:0x8003857C end:0x80038778
 
 game/Clamp.c:
 	.text       start:0x80038778 end:0x800387D8
