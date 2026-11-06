@@ -1,0 +1,5 @@
+# vfx-two-child-spin-sound-native
+
+Source: Codex worker c15_a28_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 624 B.
+
+VfxEffect_UpdateTwoChildSpinAndSound_Helper 800C6A40 (624B) converts using canonical DrawEffectAccess.h. History 91475ab introduced an asm scaffold without a C mismatch explanation; 49d81e64 only renamed sin. No target-specific parking note found. Existing -Cpp_exceptions on emits exact 8B extab/12B index after deleting manual objects; pragma use_lmw_stmw on/reset produces original saves. Direct loop and sound-channel signed-byte branches already match control flow. Declare cursor, state, i in that order; separate childScale = 0.2f * scale instead of modifying parameter; branch-local float pulse=(float)sin(...) then childScaleField *= 0.2f*pulse+1.0f yields exact FPR identities. Reversing the final multiplication caches the child pointer across sin and adds a callee-save. Final text/EH100; full source-linked DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. No config, splits, symbols, shared headers or rename-map changes.
