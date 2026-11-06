@@ -164,3 +164,8 @@ inline/block restructuring (H1/c9). Suggested 2-probe retry: (1) wrap the dash-a
 (9-clear + GetParam + stores) in a static inline helper taking self (arg-coalescing keeps the
 web count but changes allocation order); (2) split mov into per-region variables (warp-mov
 block-local, dash uses existing m temps) to see if self can win r31.
+
+## c16_u67_20261106
+Source: Codex worker c16_u67_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u67 RotateByYaw 80199BBC: paired a0,b0,a1,b1,a2,b2,a3,b3 inner-loop locals and sequential += accumulation in a separate inline MultiplyRow returning the next flat index improve77.123024 to80.05624 (2176 vs2276B). Operand homes match target f7..f0 and result f8. Output still row-pointer strength-reduced rather than target per-element slwi/stfsx. Unsigned-short index gives indexed stores but clrlslwi16 and nested loop mismatch54.544815; outer row-local accumulation75.96485. No flag/split/bridge changes, singleton staysNonMatching; full fallback DOL SHA1 exact.

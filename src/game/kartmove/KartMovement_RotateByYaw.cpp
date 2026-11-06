@@ -14,20 +14,30 @@ static inline void Identity(Matrix44 *a) {
     a->m[0][0] = a->m[1][1] = a->m[2][2] = a->m[3][3] = lbl_806D96D4;
 }
 
-static inline void Multiply(Matrix44 *a, const volatile Matrix44 *b) {
+static inline int MultiplyRow(const float *a, const Matrix44 *b, float *out, int index) {
+    for (int j = 0; j < 4; j++, index++) {
+        float a0 = a[0];
+        float b0 = b->m[0][j];
+        float a1 = a[1];
+        float b1 = b->m[1][j];
+        float a2 = a[2];
+        float b2 = b->m[2][j];
+        float a3 = a[3];
+        float b3 = b->m[3][j];
+        float sum = a0*b0;
+        sum += a1*b1;
+        sum += a2*b2;
+        sum += a3*b3;
+        out[index] = sum;
+    }
+    return index;
+}
+
+static inline void Multiply(Matrix44 *a, const Matrix44 *b) {
     float out[16];
     int index = 0;
     for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++, index++) {
-            float b0 = b->m[0][j];
-            float sum = a->m[i][0]*b0;
-            float b1 = b->m[1][j];
-            sum = a->m[i][1]*b1 + sum;
-            float b2 = b->m[2][j];
-            sum = a->m[i][2]*b2 + sum;
-            float b3 = b->m[3][j];
-            out[index] = a->m[i][3]*b3 + sum;
-        }
+        index = MultiplyRow(a->m[i], b, out, index);
     }
     for (int i = 0; i < 16; i++) ((float *)a)[i] = out[i];
 }
