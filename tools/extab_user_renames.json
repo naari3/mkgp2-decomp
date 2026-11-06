@@ -12022,5 +12022,9 @@
     "__dla__FPv": "MemoryManager_Free",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/RaceDigitListInsert.cpp": {
+    "@41": "@etb_8001DA3C",
+    "@42": "@eti_8002B2F8"
   }
 }

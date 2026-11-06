@@ -2745,7 +2745,7 @@ config.libs = [
             Object(NonMatching, "game/RaceDigitUpdate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/RaceDigitLap.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/RaceDigitHudDtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/RaceDigitListInsert.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/RaceDigitListInsert.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/RaceDigitListInit.cpp"),
             Object(NonMatching, "game/RaceDigitListErase.cpp", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/RaceDigits.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),

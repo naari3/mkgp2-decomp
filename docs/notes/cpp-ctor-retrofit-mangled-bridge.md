@@ -1009,3 +1009,8 @@ c16_u65: anon_80209FA4_nm1 safely cuts at A6CC/A734/A788. Reverse prefix out-of-
 Source: Codex worker c16_u76_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u76: clCSOrgKartModel ctor 8021ABFC was semantically incomplete: only 4 of 28 target tire hide calls present (missing kaku/oil tire/oil grid/punk grid/punk tire/snow groups, 24 calls). Restoring them and typed foreign lbl_803C4E60 pool (anim IDs at+0, strings +180..548) raises fresh72.58707 to95.21559, removes emitted duplicate strings/IDs. switch(character) restores target case3 branch-over-branch. Cached foreign pools retain r29/r30 swapped; direct-symbol aggregate references regress72.95357. Own base dtor bridge targets dtor_8013DCBC; @172/@173 identify primary EH. Singleton remainsNonMatching after3 hypotheses; full fallback DOL SHA1 exact.
+
+## c16_u77_20261106
+Source: Codex worker c16_u77_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 168 B.
+
+c16_u77 RaceDigitListInsert 80247C3C: pair existing placement new with standard inline empty placement delete(void*,void*) to restore CW frame pointer, frame40 and construction SP marker (72.7619 ->98.690475). Extract splice/count/iterator result to static inline InsertNode(self,at,node), invoked with position.node and guard.Release(), to restore at=r5/node=r6 (100% text168). Reordering local declarations alone invariant. Own @41/@42 bridges to etb8001DA3C/eti8002B2F8 give all owned sections100; Matching source-linked ELF address/size exact, full DOL SHA1 exact.
