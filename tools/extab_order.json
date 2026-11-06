@@ -2306,5 +2306,20 @@
       "dtor_800A9D2C",
       "__dt__7WarpVecFv"
     ]
-  }
+  },
+  "src/game/ItemEffectBus.c": [
+    "ItemEffectBus_Commit",
+    "dtor_80091284",
+    "ItemEffectBus_ClearByTable8",
+    "ItemEffectBus_RegisterBonkPosition",
+    "ItemEffectBus_ApplyItemEventClear",
+    "ItemEffectBus_ApplyItemEventSet",
+    "ItemEffectBus_ArmTornadoAndQuery",
+    "ItemEffectBus_ApplyItemConfirm",
+    "ItemEffectBus_ClearMask",
+    "ItemEffectBus_OrMask",
+    "ItemEffectBus_TickTornadoCooldown",
+    "ItemEffectBus_SnapshotAndClearSpawnFlags",
+    "ItemEffectBus_SnapshotAndFullReset"
+  ]
 }

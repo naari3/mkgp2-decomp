@@ -1,4 +1,9 @@
-/* ItemEffectBus reversed extab-group bundle: asm_fn fallback. */
+#include "game/ItemEffectBusPrivate.h"
+#pragma auto_inline off
+#pragma section R ".extab_user"
+#pragma section R ".extabindex_user"
+
+/* Item-effect state and driver action dispatch. Unconverted bodies retain the original assembly. */
 
 /* === extracted from auto_ItemEffectBus_Commit_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -16,196 +21,57 @@ extern void KartDriver_TickAction_78d00();
  */
 
 /* --- forward decls --- */
-asm void ItemEffectBus_Commit(void);
+void ItemEffectBus_Commit(ItemEffectBus *bus, ItemEffectMask mask);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ItemEffectBus_Commit[8] = {
-    0x18, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectBus_Commit = {
-    (void *)&ItemEffectBus_Commit, 0x00000208, (void *)extab_ItemEffectBus_Commit
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void ItemEffectBus_Commit(void) { /* 0x8009107C size:0x208 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    li r0, 0x0
-    stw r31, 0x1c(r1)
-    mr r31, r5
-    and r5, r31, r0
-    stw r30, 0x18(r1)
-    mr r30, r6
-    lis r6, 0x4
-    and r4, r30, r6
-    stw r29, 0x14(r1)
-    mr r29, r3
-    xor r3, r5, r0
-    xor r4, r4, r0
-    or. r3, r4, r3
-    beq ItemEffectBus_Commit_L_800910F0
-    lwz r3, 0x10(r29)
-    lwz r5, 0x14(r29)
-    and r4, r3, r0
-    and r3, r5, r6
-    xor r3, r3, r0
-    xor r0, r4, r0
-    or. r0, r3, r0
-    bne ItemEffectBus_Commit_L_80091260
-    lwz r3, 0x0(r29)
-    li r4, 0x2
-    bl KartDriver_TickAction_78d00
-    b ItemEffectBus_Commit_L_80091260
-    ItemEffectBus_Commit_L_800910F0:
-    li r6, 0x20
-    xor r3, r5, r0
-    and r4, r30, r6
-    xor r4, r4, r0
-    or. r3, r4, r3
-    beq ItemEffectBus_Commit_L_80091154
-    lwz r3, 0x10(r29)
-    lwz r5, 0x14(r29)
-    and r4, r3, r0
-    and r3, r5, r6
-    xor r3, r3, r0
-    xor r0, r4, r0
-    or. r0, r3, r0
-    bne ItemEffectBus_Commit_L_80091260
-    lwz r0, 0x2c(r29)
-    cmpwi r0, 0x1
-    bne ItemEffectBus_Commit_L_80091144
-    lwz r3, 0x0(r29)
-    li r4, 0x3
-    bl KartDriver_TickAction_78a3c
-    b ItemEffectBus_Commit_L_80091260
-    ItemEffectBus_Commit_L_80091144:
-    lwz r3, 0x0(r29)
-    li r4, 0x3
-    bl KartDriver_TickAction_78778
-    b ItemEffectBus_Commit_L_80091260
-    ItemEffectBus_Commit_L_80091154:
-    li r6, 0x8
-    xor r3, r5, r0
-    and r4, r30, r6
-    xor r4, r4, r0
-    or. r3, r4, r3
-    beq ItemEffectBus_Commit_L_8009119C
-    lwz r3, 0x10(r29)
-    lwz r5, 0x14(r29)
-    and r4, r3, r0
-    and r3, r5, r6
-    xor r3, r3, r0
-    xor r0, r4, r0
-    or. r0, r3, r0
-    bne ItemEffectBus_Commit_L_80091260
-    lwz r3, 0x0(r29)
-    li r4, 0x0
-    bl KartDriver_TickAction_78d00
-    b ItemEffectBus_Commit_L_80091260
-    ItemEffectBus_Commit_L_8009119C:
-    li r6, 0x10
-    xor r3, r5, r0
-    and r4, r30, r6
-    xor r4, r4, r0
-    or. r3, r4, r3
-    beq ItemEffectBus_Commit_L_800911E4
-    lwz r3, 0x10(r29)
-    lwz r5, 0x14(r29)
-    and r4, r3, r0
-    and r3, r5, r6
-    xor r3, r3, r0
-    xor r0, r4, r0
-    or. r0, r3, r0
-    bne ItemEffectBus_Commit_L_80091260
-    lwz r3, 0x0(r29)
-    li r4, 0x1
-    bl KartDriver_TickAction_78d00
-    b ItemEffectBus_Commit_L_80091260
-    ItemEffectBus_Commit_L_800911E4:
-    lis r6, 0x40
-    xor r3, r5, r0
-    and r4, r30, r6
-    xor r4, r4, r0
-    or. r3, r4, r3
-    beq ItemEffectBus_Commit_L_8009122C
-    lwz r3, 0x10(r29)
-    lwz r5, 0x14(r29)
-    and r4, r3, r0
-    and r3, r5, r6
-    xor r3, r3, r0
-    xor r0, r4, r0
-    or. r0, r3, r0
-    bne ItemEffectBus_Commit_L_80091260
-    lwz r3, 0x0(r29)
-    li r4, 0x4
-    bl KartDriver_TickAction_78d00
-    b ItemEffectBus_Commit_L_80091260
-    ItemEffectBus_Commit_L_8009122C:
-    lwz r4, 0x10(r29)
-    lis r3, 0x44
-    lwz r5, 0x14(r29)
-    addi r3, r3, 0x38
-    and r4, r4, r0
-    and r3, r5, r3
-    xor r3, r3, r0
-    xor r0, r4, r0
-    or. r0, r3, r0
-    beq ItemEffectBus_Commit_L_80091260
-    lwz r3, 0x0(r29)
-    li r4, 0x0
-    bl KartDriver_TickAction_78d00
-    ItemEffectBus_Commit_L_80091260:
-    stw r30, 0x14(r29)
-    stw r31, 0x10(r29)
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+/* Native body; exception tables are compiler emitted. */
+#pragma exceptions on
+void ItemEffectBus_Commit(ItemEffectBus *bus, ItemEffectMask mask)
+{
+    if (mask & 0x40000ULL) {
+        if (!(bus->mask & 0x40000ULL))
+            KartDriver_TickAction_78d00(bus->driver, 2);
+    } else if (mask & 0x20ULL) {
+        if (!(bus->mask & 0x20ULL)) {
+            if (bus->actionMode == 1)
+                KartDriver_TickAction_78a3c(bus->driver, 3);
+            else
+                KartDriver_TickAction_78778(bus->driver, 3);
+        }
+    } else if (mask & 0x8ULL) {
+        if (!(bus->mask & 0x8ULL))
+            KartDriver_TickAction_78d00(bus->driver, 0);
+    } else if (mask & 0x10ULL) {
+        if (!(bus->mask & 0x10ULL))
+            KartDriver_TickAction_78d00(bus->driver, 1);
+    } else if (mask & 0x400000ULL) {
+        if (!(bus->mask & 0x400000ULL))
+            KartDriver_TickAction_78d00(bus->driver, 4);
+    } else if (bus->mask & 0x440038ULL) {
+        KartDriver_TickAction_78d00(bus->driver, 0);
+    }
+    bus->mask = mask;
 }
+#pragma exceptions reset
 
 /* Contiguous incumbent dtor at 0x80091284; folded into this TU so the
  * promoted split remains a single uninterrupted .text range. */
 extern void MemoryManager_TimedFree(void *this);
-asm void dtor_80091284(void);
+void *dtor_80091284(void *bus, short deleting);
 
 #pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_dtor_80091284[8] = {
-    0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+
 
 #pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_80091284 = {
-    (void *)&dtor_80091284, 0x0000003C, (void *)extab_dtor_80091284
-};
 
-asm void dtor_80091284(void) { /* 0x80091284 size:0x3C */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr. r31, r3
-    beq dtor_80091284_L_800912A8
-    extsh. r0, r4
-    ble dtor_80091284_L_800912A8
-    bl MemoryManager_TimedFree
-    dtor_80091284_L_800912A8:
-    lwz r0, 0x14(r1)
-    mr r3, r31
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+
+#pragma exceptions on
+void *dtor_80091284(void *bus, short deleting)
+{
+    if (bus != 0 && deleting > 0)
+        MemoryManager_TimedFree(bus);
+    return bus;
 }
+#pragma exceptions reset
 
 /* === extracted from auto_03_800912C0_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -219,28 +85,25 @@ extern unsigned int lbl_806D34B0;
  */
 
 /* --- forward decls --- */
-asm void ItemEffectBus_Init(void);
+void ItemEffectBus_Init(ItemEffectBus *bus, void *driver);
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void ItemEffectBus_Init(void) { /* 0x800912C0 size:0x40 */
-    nofralloc
-    stw r4, 0x0(r3)
-    li r0, 0x0
-    lfs f0, lbl_806D34B0(r2)
-    stb r0, 0x4(r3)
-    stw r0, 0x8(r3)
-    stw r0, 0x14(r3)
-    stw r0, 0x10(r3)
-    stw r0, 0x1c(r3)
-    stw r0, 0x18(r3)
-    stb r0, 0x20(r3)
-    stfs f0, 0x24(r3)
-    stfs f0, 0x28(r3)
-    stfs f0, 0x48(r3)
-    stw r0, 0x4c(r3)
-    stw r0, 0x50(r3)
-    blr
+/* Native body; exception tables are compiler emitted. */
+#pragma exceptions on
+void ItemEffectBus_Init(ItemEffectBus *bus, void *driver)
+{
+    bus->driver = driver;
+    bus->bonkPending = 0;
+    bus->eventFlags = 0;
+    bus->mask = 0;
+    bus->snapshot = 0;
+    bus->positionPending = 0;
+    bus->timer24 = 0.0f;
+    bus->timer28 = 0.0f;
+    bus->timer48 = 0.0f;
+    bus->field4C = 0;
+    bus->tornadoCooldown = 0;
 }
+#pragma exceptions reset
 
 /* === extracted from auto_ItemEffectBus_ClearB_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -249,7 +112,7 @@ asm void ItemEffectBus_Init(void) { /* 0x800912C0 size:0x40 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void ItemEffectBus_Commit();
+
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D34B8;
@@ -276,19 +139,14 @@ extern unsigned int lbl_806D34F4;
 /* --- forward decls --- */
 asm void ItemEffectBus_ClearByTable8(void);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
+/* --- asm function bodies (.text order = fn address order) --- */
 __declspec(section ".extab_user") static const unsigned char extab_ItemEffectBus_ClearByTable8[8] = {
     0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectBus_ClearByTable8 = {
     (void *)&ItemEffectBus_ClearByTable8, 0x000000F8, (void *)extab_ItemEffectBus_ClearByTable8
 };
 
-/* --- asm function bodies (.text order = fn address order) --- */
 asm void ItemEffectBus_ClearByTable8(void) { /* 0x80091300 size:0xF8 */
     nofralloc
     stwu r1, -0x10(r1)
@@ -370,47 +228,26 @@ asm void ItemEffectBus_ClearByTable8(void) { /* 0x80091300 size:0xF8 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void ItemEffectBus_Commit();
+
 
 /* --- function index (1 fns, .text 0x800913F8..0x80091438) ---
  * [  0] 0x800913F8 size:0x40    global ItemEffectBus_RegisterBonkPosition
  */
 
 /* --- forward decls --- */
-asm void ItemEffectBus_RegisterBonkPosition(void);
+void ItemEffectBus_RegisterBonkPosition(ItemEffectBus *bus, float x, float y, float z);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ItemEffectBus_RegisterBonkPosition[8] = {
-    0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectBus_RegisterBonkPosition = {
-    (void *)&ItemEffectBus_RegisterBonkPosition, 0x00000040, (void *)extab_ItemEffectBus_RegisterBonkPosition
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void ItemEffectBus_RegisterBonkPosition(void) { /* 0x800913F8 size:0x40 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    li r0, 0x1
-    stfs f1, 0x3c(r3)
-    stfs f2, 0x40(r3)
-    stfs f3, 0x44(r3)
-    stb r0, 0x4(r3)
-    lwz r0, 0x10(r3)
-    lwz r6, 0x14(r3)
-    ori r5, r0, 0x1
-    bl ItemEffectBus_Commit
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+/* Native body; exception tables are compiler emitted. */
+#pragma exceptions on
+void ItemEffectBus_RegisterBonkPosition(ItemEffectBus *bus, float x, float y, float z)
+{
+    bus->bonkPosition[0] = x;
+    bus->bonkPosition[1] = y;
+    bus->bonkPosition[2] = z;
+    bus->bonkPending = 1;
+    ItemEffectBus_Commit(bus, bus->mask | 0x100000000ULL);
 }
+#pragma exceptions reset
 
 /* === extracted from auto_ItemEffectBus_ApplyI_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -419,7 +256,7 @@ asm void ItemEffectBus_RegisterBonkPosition(void) { /* 0x800913F8 size:0x40 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void ItemEffectBus_Commit();
+
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D34B0;
@@ -755,7 +592,7 @@ asm void ItemEffectBus_ApplyItemEventClear(void) { /* 0x80091438 size:0x424 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void ItemEffectBus_Commit();
+
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -767,179 +604,139 @@ extern unsigned int jumptable_803FF968[];
  */
 
 /* --- forward decls --- */
-asm void ItemEffectBus_ApplyItemEventSet(void);
+void ItemEffectBus_ApplyItemEventSet(ItemEffectBus *bus, unsigned int event, int mode);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ItemEffectBus_ApplyItemEventSet[8] = {
-    0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectBus_ApplyItemEventSet = {
-    (void *)&ItemEffectBus_ApplyItemEventSet, 0x00000268, (void *)extab_ItemEffectBus_ApplyItemEventSet
-};
+
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void ItemEffectBus_ApplyItemEventSet(void) { /* 0x8009185C size:0x268 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    lis r6, 0x9000
-    stw r0, 0x24(r1)
-    subi r0, r6, 0x1
-    li r6, -0x1
-    stw r31, 0x1c(r1)
-    li r31, 0x0
-    stw r30, 0x18(r1)
-    li r30, 0x0
-    stw r29, 0x14(r1)
-    mr r29, r4
-    stw r28, 0x10(r1)
-    mr r28, r3
-    stw r5, 0x2c(r3)
-    lwz r4, 0x10(r3)
-    lwz r7, 0x14(r3)
-    and r5, r4, r0
-    and r6, r7, r6
-    bl ItemEffectBus_Commit
-    cmplwi r29, 0x121
-    bgt ItemEffectBus_ApplyItemEventSet_L_80091A84
-    lis r3, jumptable_803FF968@ha
-    slwi r0, r29, 2
-    addi r3, r3, jumptable_803FF968@l
-    lwzx r0, r3, r0
-    mtctr r0
-    bctr
-    li r30, 0x0
-    li r31, 0x20
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    lis r31, 0x4
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    lis r31, 0x8
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    lis r31, 0x10
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    lis r31, 0x20
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    lis r30, 0x8
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    lis r31, 0x200
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    li r31, 0x10
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    li r31, 0x8
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    li r31, 0x8
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x2
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x20
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x20
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x20
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x8
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x10
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x200
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x800
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x800
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    lis r30, 0x4
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    lis r30, 0x20
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    lis r30, 0x40
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    lis r30, 0x10
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    lis r30, 0x800
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    li r31, 0x40
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    li r31, 0x2
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    li r31, 0x4
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    lis r30, 0x80
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    li r31, 0x1000
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    lis r30, 0x2
-    lis r31, 0x100
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    lis r31, 0x100
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    li r31, 0x800
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    lis r30, 0x4000
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x0
-    lis r31, 0x2
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    li r30, 0x2000
-    li r31, 0x0
-    b ItemEffectBus_ApplyItemEventSet_L_80091A84
-    lis r30, 0x200
-    li r31, 0x0
-    ItemEffectBus_ApplyItemEventSet_L_80091A84:
-    lwz r0, 0x10(r28)
-    mr r3, r28
-    lwz r4, 0x14(r28)
-    or r31, r31, r0
-    or r30, r30, r4
-    mr r6, r30
-    mr r5, r31
-    bl ItemEffectBus_Commit
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma exceptions on
+void ItemEffectBus_ApplyItemEventSet(ItemEffectBus *bus, unsigned int event, int mode)
+{
+    ItemEffectMask add = 0;
+    bus->actionMode = mode;
+    ItemEffectBus_Commit(bus, bus->mask & 0x8FFFFFFFFFFFFFFFULL);
+    switch (event) {
+    case 0x58:
+        add = 0x0000002000000000ULL; break;
+    case 0x88:
+        add = 0x0004000000000000ULL; break;
+    case 0x8F:
+        add = 0x0008000000000000ULL; break;
+    case 0x93:
+        add = 0x0010000000000000ULL; break;
+    case 0x94:
+        add = 0x0020000000000000ULL; break;
+    case 0x12:
+    case 0x45:
+    case 0x5F:
+    case 0x60:
+    case 0x70:
+        add = 0x0000000000080000ULL; break;
+    case 0x39:
+    case 0x3A:
+    case 0x8E:
+        add = 0x0200000000000000ULL; break;
+    case 0x75:
+        add = 0x0000001000000000ULL; break;
+    case 0x55:
+        add = 0x0000000800000000ULL; break;
+    case 0x85:
+        add = 0x0000000800000000ULL; break;
+    case 0x2B:
+        add = 0x0000000000000002ULL; break;
+    case 0x2D:
+        add = 0x0000000000000020ULL; break;
+    case 0x46:
+        add = 0x0000000000000020ULL; break;
+    case 0x8D:
+        add = 0x0000000000000020ULL; break;
+    case 0x5C:
+        add = 0x0000000000000008ULL; break;
+    case 0x5D:
+        add = 0x0000000000000010ULL; break;
+    case 0x50:
+        add = 0x0000000000000200ULL; break;
+    case 0x65:
+        add = 0x0000000000000800ULL; break;
+    case 0x40:
+        add = 0x0000000000000800ULL; break;
+    case 0x4A:
+    case 0x4B:
+        add = 0x0000000000040000ULL; break;
+    case 0x71:
+        add = 0x0000000000200000ULL; break;
+    case 0x72:
+        add = 0x0000000000400000ULL; break;
+    case 0x73:
+        add = 0x0000000000100000ULL; break;
+    case 0x53:
+        add = 0x0000000008000000ULL; break;
+    case 0x68:
+    case 0x79:
+        add = 0x0000004000000000ULL; break;
+    case 0x5A:
+        add = 0x0000000000000000ULL; break;
+    case 0x67:
+        add = 0x0000000200000000ULL; break;
+    case 0x6B:
+        add = 0x0000000400000000ULL; break;
+    case 0x59:
+        add = 0x0000000000800000ULL; break;
+    case 0x98:
+        add = 0x0000100000000000ULL; break;
+    case 0x8:
+    case 0x11C:
+        add = 0x0100000000020000ULL; break;
+    case 0x1:
+    case 0x2:
+    case 0x3:
+    case 0x4:
+    case 0x5:
+    case 0x6:
+    case 0x9:
+    case 0xB:
+    case 0x2E:
+    case 0x32:
+    case 0x33:
+    case 0x34:
+    case 0x35:
+    case 0x37:
+    case 0x38:
+    case 0x3D:
+    case 0x3E:
+    case 0x3F:
+    case 0x4D:
+    case 0x4F:
+    case 0x61:
+    case 0x63:
+    case 0x6A:
+    case 0x76:
+    case 0x89:
+    case 0x8A:
+    case 0x96:
+    case 0x121:
+        add = 0x0100000000000000ULL; break;
+    case 0x9E:
+        add = 0x0000080000000000ULL; break;
+    case 0x74:
+        add = 0x0000000040000000ULL; break;
+    case 0x95:
+        add = 0x0002000000000000ULL; break;
+    case 0x2C:
+        add = 0x0000000000002000ULL; break;
+    case 0x3C:
+        add = 0x0000000002000000ULL; break;
+    }
+    add |= bus->mask;
+    ItemEffectBus_Commit(bus, add);
 }
+#pragma exceptions reset
 
 /* === extracted from auto_ItemEffectBus_ArmTor_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -948,89 +745,27 @@ asm void ItemEffectBus_ApplyItemEventSet(void) { /* 0x8009185C size:0x268 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void ItemEffectBus_Commit();
+
 
 /* --- function index (1 fns, .text 0x80091AC4..0x80091B9C) ---
  * [  0] 0x80091AC4 size:0xD8    global ItemEffectBus_ArmTornadoAndQuery
  */
 
 /* --- forward decls --- */
-asm void ItemEffectBus_ArmTornadoAndQuery(void);
+int ItemEffectBus_ArmTornadoAndQuery(ItemEffectBus *bus);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ItemEffectBus_ArmTornadoAndQuery[8] = {
-    0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectBus_ArmTornadoAndQuery = {
-    (void *)&ItemEffectBus_ArmTornadoAndQuery, 0x000000D8, (void *)extab_ItemEffectBus_ArmTornadoAndQuery
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void ItemEffectBus_ArmTornadoAndQuery(void) { /* 0x80091AC4 size:0xD8 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lis r4, 0x1
-    stw r0, 0x14(r1)
-    li r0, 0x1
-    stw r31, 0xc(r1)
-    mr r31, r3
-    stw r0, 0x50(r3)
-    addi r0, r4, 0x1
-    lwz r4, 0x14(r3)
-    lwz r5, 0x10(r3)
-    or r6, r4, r0
-    bl ItemEffectBus_Commit
-    lwz r6, 0x10(r31)
-    li r5, 0x0
-    lwz r7, 0x14(r31)
-    li r0, 0x40
-    and r4, r6, r5
-    and r0, r7, r0
-    xor r3, r0, r5
-    xor r0, r4, r5
-    or. r0, r3, r0
-    beq ItemEffectBus_ArmTornadoAndQuery_L_80091B28
-    li r3, 0x0
-    b ItemEffectBus_ArmTornadoAndQuery_L_80091B88
-    ItemEffectBus_ArmTornadoAndQuery_L_80091B28:
-    li r3, 0x400
-    xor r0, r4, r5
-    and r3, r7, r3
-    xor r3, r3, r5
-    or. r0, r3, r0
-    beq ItemEffectBus_ArmTornadoAndQuery_L_80091B48
-    li r3, 0x0
-    b ItemEffectBus_ArmTornadoAndQuery_L_80091B88
-    ItemEffectBus_ArmTornadoAndQuery_L_80091B48:
-    li r3, 0x80
-    xor r0, r4, r5
-    and r3, r7, r3
-    xor r3, r3, r5
-    or. r0, r3, r0
-    beq ItemEffectBus_ArmTornadoAndQuery_L_80091B68
-    li r3, 0x0
-    b ItemEffectBus_ArmTornadoAndQuery_L_80091B88
-    ItemEffectBus_ArmTornadoAndQuery_L_80091B68:
-    lis r3, 0x100
-    and r0, r7, r5
-    and r3, r6, r3
-    xor r0, r0, r5
-    xor r3, r3, r5
-    or r3, r0, r3
-    cntlzw r3, r3
-    srwi r3, r3, 5
-    ItemEffectBus_ArmTornadoAndQuery_L_80091B88:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+/* Native body; exception tables are compiler emitted. */
+#pragma exceptions on
+int ItemEffectBus_ArmTornadoAndQuery(ItemEffectBus *bus)
+{
+    bus->tornadoCooldown = 1;
+    ItemEffectBus_Commit(bus, bus->mask | 0x10001ULL);
+    if (bus->mask & 0x40ULL) return 0;
+    if (bus->mask & 0x400ULL) return 0;
+    if (bus->mask & 0x80ULL) return 0;
+    return (bus->mask & 0x100000000000000ULL) == 0;
 }
+#pragma exceptions reset
 
 /* === extracted from auto_ItemEffectBus_ApplyI_text_2 === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -1039,7 +774,7 @@ asm void ItemEffectBus_ArmTornadoAndQuery(void) { /* 0x80091AC4 size:0xD8 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void ItemEffectBus_Commit();
+
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D3508;
@@ -1076,19 +811,14 @@ extern unsigned int lbl_806D356C;
 /* --- forward decls --- */
 asm void ItemEffectBus_ApplyItemConfirm(void);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
+/* --- asm function bodies (.text order = fn address order) --- */
 __declspec(section ".extab_user") static const unsigned char extab_ItemEffectBus_ApplyItemConfirm[8] = {
     0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectBus_ApplyItemConfirm = {
     (void *)&ItemEffectBus_ApplyItemConfirm, 0x000002A4, (void *)extab_ItemEffectBus_ApplyItemConfirm
 };
 
-/* --- asm function bodies (.text order = fn address order) --- */
 asm void ItemEffectBus_ApplyItemConfirm(void) { /* 0x80091B9C size:0x2A4 */
     nofralloc
     stwu r1, -0x10(r1)
@@ -1297,45 +1027,22 @@ asm void ItemEffectBus_ApplyItemConfirm(void) { /* 0x80091B9C size:0x2A4 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void ItemEffectBus_Commit();
+
 
 /* --- function index (1 fns, .text 0x80091E40..0x80091E78) ---
  * [  0] 0x80091E40 size:0x38    global ItemEffectBus_ClearMask
  */
 
 /* --- forward decls --- */
-asm void ItemEffectBus_ClearMask(void);
+void ItemEffectBus_ClearMask(ItemEffectBus *bus, ItemEffectMask mask);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ItemEffectBus_ClearMask[8] = {
-    0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectBus_ClearMask = {
-    (void *)&ItemEffectBus_ClearMask, 0x00000038, (void *)extab_ItemEffectBus_ClearMask
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void ItemEffectBus_ClearMask(void) { /* 0x80091E40 size:0x38 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    nor r4, r6, r6
-    stw r0, 0x14(r1)
-    nor r0, r5, r5
-    lwz r7, 0x10(r3)
-    lwz r8, 0x14(r3)
-    and r5, r7, r0
-    and r6, r8, r4
-    bl ItemEffectBus_Commit
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+/* Native body; exception tables are compiler emitted. */
+#pragma exceptions on
+void ItemEffectBus_ClearMask(ItemEffectBus *bus, ItemEffectMask mask)
+{
+    ItemEffectBus_Commit(bus, bus->mask & ~mask);
 }
+#pragma exceptions reset
 
 /* === extracted from auto_ItemEffectBus_OrMask_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -1344,43 +1051,22 @@ asm void ItemEffectBus_ClearMask(void) { /* 0x80091E40 size:0x38 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void ItemEffectBus_Commit();
+
 
 /* --- function index (1 fns, .text 0x80091E78..0x80091EA8) ---
  * [  0] 0x80091E78 size:0x30    global ItemEffectBus_OrMask
  */
 
 /* --- forward decls --- */
-asm void ItemEffectBus_OrMask(void);
+void ItemEffectBus_OrMask(ItemEffectBus *bus, ItemEffectMask mask);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ItemEffectBus_OrMask[8] = {
-    0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectBus_OrMask = {
-    (void *)&ItemEffectBus_OrMask, 0x00000030, (void *)extab_ItemEffectBus_OrMask
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void ItemEffectBus_OrMask(void) { /* 0x80091E78 size:0x30 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    lwz r0, 0x10(r3)
-    lwz r4, 0x14(r3)
-    or r5, r5, r0
-    or r6, r6, r4
-    bl ItemEffectBus_Commit
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+/* Native body; exception tables are compiler emitted. */
+#pragma exceptions on
+void ItemEffectBus_OrMask(ItemEffectBus *bus, ItemEffectMask mask)
+{
+    ItemEffectBus_Commit(bus, mask | bus->mask);
 }
+#pragma exceptions reset
 
 /* === extracted from auto_ItemEffectBus_TickTo_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -1389,7 +1075,7 @@ asm void ItemEffectBus_OrMask(void) { /* 0x80091E78 size:0x30 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void ItemEffectBus_Commit();
+
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D3570;
@@ -1402,19 +1088,14 @@ extern unsigned int lbl_806D3574;
 /* --- forward decls --- */
 asm void ItemEffectBus_TickTornadoCooldown(void);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
+/* --- asm function bodies (.text order = fn address order) --- */
 __declspec(section ".extab_user") static const unsigned char extab_ItemEffectBus_TickTornadoCooldown[8] = {
     0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectBus_TickTornadoCooldown = {
     (void *)&ItemEffectBus_TickTornadoCooldown, 0x00000064, (void *)extab_ItemEffectBus_TickTornadoCooldown
 };
 
-/* --- asm function bodies (.text order = fn address order) --- */
 asm void ItemEffectBus_TickTornadoCooldown(void) { /* 0x80091EA8 size:0x64 */
     nofralloc
     stwu r1, -0x10(r1)
@@ -1453,50 +1134,23 @@ asm void ItemEffectBus_TickTornadoCooldown(void) { /* 0x80091EA8 size:0x64 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void ItemEffectBus_Commit();
+
 
 /* --- function index (1 fns, .text 0x80091F0C..0x80091F58) ---
  * [  0] 0x80091F0C size:0x4C    global ItemEffectBus_SnapshotAndClearSpawnFlags
  */
 
 /* --- forward decls --- */
-asm void ItemEffectBus_SnapshotAndClearSpawnFlags(void);
+void ItemEffectBus_SnapshotAndClearSpawnFlags(ItemEffectBus *bus);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ItemEffectBus_SnapshotAndClearSpawnFlags[8] = {
-    0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectBus_SnapshotAndClearSpawnFlags = {
-    (void *)&ItemEffectBus_SnapshotAndClearSpawnFlags, 0x0000004C, (void *)extab_ItemEffectBus_SnapshotAndClearSpawnFlags
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void ItemEffectBus_SnapshotAndClearSpawnFlags(void) { /* 0x80091F0C size:0x4C */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lis r4, 0xffff
-    stw r0, 0x14(r1)
-    addi r4, r4, 0x3eff
-    li r0, -0x1
-    lwz r5, 0x10(r3)
-    lwz r6, 0x14(r3)
-    stw r6, 0x1c(r3)
-    stw r5, 0x18(r3)
-    lwz r5, 0x10(r3)
-    lwz r6, 0x14(r3)
-    and r5, r5, r0
-    and r6, r6, r4
-    bl ItemEffectBus_Commit
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+/* Native body; exception tables are compiler emitted. */
+#pragma exceptions on
+void ItemEffectBus_SnapshotAndClearSpawnFlags(ItemEffectBus *bus)
+{
+    bus->snapshot = bus->mask;
+    ItemEffectBus_Commit(bus, bus->mask & 0xFFFFFFFFFFFF3EFFULL);
 }
+#pragma exceptions reset
 
 /* === extracted from auto_ItemEffectBus_Snapsh_text_1 === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -1505,7 +1159,7 @@ asm void ItemEffectBus_SnapshotAndClearSpawnFlags(void) { /* 0x80091F0C size:0x4
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void ItemEffectBus_Commit();
+
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D34B0;
@@ -1515,53 +1169,20 @@ extern unsigned int lbl_806D34B0;
  */
 
 /* --- forward decls --- */
-asm void ItemEffectBus_SnapshotAndFullReset(void);
+void ItemEffectBus_SnapshotAndFullReset(ItemEffectBus *bus);
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ItemEffectBus_SnapshotAndFullReset[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectBus_SnapshotAndFullReset = {
-    (void *)&ItemEffectBus_SnapshotAndFullReset, 0x0000007C, (void *)extab_ItemEffectBus_SnapshotAndFullReset
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void ItemEffectBus_SnapshotAndFullReset(void) { /* 0x80091F58 size:0x7C */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lis r5, 0x77ff
-    lis r4, 0xfd80
-    stw r0, 0x14(r1)
-    subi r0, r4, 0x24
-    addi r6, r5, 0x14fe
-    stw r31, 0xc(r1)
-    mr r31, r3
-    lwz r7, 0x10(r3)
-    lwz r8, 0x14(r3)
-    stw r8, 0x1c(r3)
-    stw r7, 0x18(r3)
-    lwz r4, 0x10(r3)
-    lwz r7, 0x14(r3)
-    and r5, r4, r0
-    and r6, r7, r6
-    bl ItemEffectBus_Commit
-    li r0, 0x0
-    lfs f0, lbl_806D34B0(r2)
-    stw r0, 0x8(r31)
-    stb r0, 0x4(r31)
-    stb r0, 0x20(r31)
-    stfs f0, 0x30(r31)
-    stfs f0, 0x34(r31)
-    stfs f0, 0x38(r31)
-    lwz r31, 0xc(r1)
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+/* Native body; exception tables are compiler emitted. */
+#pragma exceptions on
+void ItemEffectBus_SnapshotAndFullReset(ItemEffectBus *bus)
+{
+    bus->snapshot = bus->mask;
+    ItemEffectBus_Commit(bus, bus->mask & 0xFD7FFFDC77FF14FEULL);
+    bus->eventFlags = 0;
+    bus->bonkPending = 0;
+    bus->positionPending = 0;
+    bus->position[0] = 0.0f;
+    bus->position[1] = 0.0f;
+    bus->position[2] = 0.0f;
 }
+#pragma exceptions reset
 

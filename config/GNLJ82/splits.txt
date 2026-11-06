@@ -2660,6 +2660,7 @@ game/ItemEffectBus.c:
 	extab       start:0x800093C0 end:0x80009428
 	extabindex  start:0x80021ECC end:0x80021F68
 	.text       start:0x8009107C end:0x80091FD4
+	.data       start:0x803FF968 end:0x803FFDF0
 
 game/Sci2Card_PollAndAdvanceState.c:
 	extab       start:0x80009428 end:0x80009430

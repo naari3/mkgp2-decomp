@@ -249,7 +249,8 @@
     "extab_ItemEffectBus_SnapshotAndClearSpawnFlags": "@etb_80009418",
     "extabindex_ItemEffectBus_SnapshotAndClearSpawnFlags": "@eti_80021F50",
     "extab_ItemEffectBus_SnapshotAndFullReset": "@etb_80009420",
-    "extabindex_ItemEffectBus_SnapshotAndFullReset": "@eti_80021F5C"
+    "extabindex_ItemEffectBus_SnapshotAndFullReset": "@eti_80021F5C",
+    "@153": "jumptable_803FF968"
   },
   "src/game/GXChannel_PushTransform.c": {
     "extab_GXChannel_PushTransform": "@etb_800087A8",
