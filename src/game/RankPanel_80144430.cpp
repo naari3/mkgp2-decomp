@@ -17,6 +17,7 @@ struct Tween {
     unsigned char on;
     char pad1[3];
     float from, to, speed, t, value;
+    float Get() { return value; }
     void Start(float a, float b, float s) {
         from = a;
         to = b;
@@ -160,8 +161,8 @@ extern unsigned int lbl_80361D60[];
 extern void *lbl_8048EF20[];
 extern void *lbl_8048EF34[];
 extern void ResCtrl_Init();
-extern void fn_8011FAFC();
-extern unsigned int lbl_806D7B4C;
+void fn_8011FAFC(struct ResCtrl *ctrl, int layer);
+extern const float lbl_806D7B4C;
 extern void dtor_80082960();
 extern void FUN_8003b120();
 extern void SharedPtr_Init();
@@ -186,7 +187,7 @@ SpriteHolder *fn_80145D34(SpriteHolder *self, short flag);
 void fn_80145DA8(void);
 void fn_80145DAC(void);
 SpriteHolder *dtor_80145DB0(SpriteHolder *self, short flag);
-asm void fn_80145E14(void);
+void fn_80145E14(struct PanelIcon *self);
 struct SpriteBoxPtr *dtor_80145F04(struct SpriteBoxPtr *self, short flag) throw();
 VecHolder *dtor_80145F9C(VecHolder *self, short flag);
 asm struct PanelEntry **fn_80146000(struct EntryVec *v, int id);
@@ -206,7 +207,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_80145E14 = { 0x080A0000, 0x000000DC, 0x00000010, 0x00000000, 0x82000008, (void *)&dtor_80082960 };
 
 
 
@@ -229,9 +229,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80145E14 = {
-    (void *)&fn_80145E14, 0x000000F0, (void *)&extab_fn_80145E14
-};
 
 
 
@@ -1639,72 +1636,67 @@ extern "C" SpriteHolder *dtor_80145DB0(SpriteHolder *self, short flag)
     return self;
 }
 
-extern "C" asm void fn_80145E14(void) { /* 0x80145E14 size:0xF0 */
-    nofralloc
-    stwu r1, -0x70(r1)
-    mflr r0
-    stw r0, 0x74(r1)
-    stw r31, 0x6c(r1)
-    mr r31, r3
-    addi r3, r1, 0x8
-    bl ResCtrl_Init
-    lha r3, 0x88(r31)
-    li r0, 0x1
-    lfs f0, lbl_806D7AF0(r2)
-    stw r3, 0x8(r1)
-    lfs f1, 0x80(r31)
-    lfs f2, 0x68(r31)
-    stb r0, 0x18(r1)
-    stfs f2, 0x1c(r1)
-    stfs f1, 0x20(r1)
-    stfs f0, 0x24(r1)
-    lbz r0, 0xc(r31)
-    cmplwi r0, 0x1
-    bne fn_80145E14_L_80145E94
-    lfs f1, lbl_806D7B4C(r2)
-    li r3, -0x100
-    lfs f0, 0x20(r31)
-    fmuls f0, f1, f0
-    fctiwz f0, f0
-    stfd f0, 0x60(r1)
-    lwz r0, 0x64(r1)
-    rlwimi r3, r0, 0, 24, 31
-    stw r3, 0x3c(r1)
-    stw r3, 0x40(r1)
-    stw r3, 0x44(r1)
-    stw r3, 0x48(r1)
-    fn_80145E14_L_80145E94:
-    lfs f0, lbl_806D7AF0(r2)
-    lbz r0, 0x24(r31)
-    fmr f1, f0
-    cmplwi r0, 0x1
-    bne fn_80145E14_L_80145EAC
-    lfs f0, 0x38(r31)
-    fn_80145E14_L_80145EAC:
-    lbz r0, 0x3c(r31)
-    cmplwi r0, 0x1
-    bne fn_80145E14_L_80145EBC
-    lfs f1, 0x50(r31)
-    fn_80145E14_L_80145EBC:
-    stfs f0, 0x34(r1)
-    stfs f1, 0x38(r1)
-    lbz r0, 0x90(r31)
-    cmplwi r0, 0x0
-    beq fn_80145E14_L_80145EE4
-    li r3, 0x1
-    li r0, 0x4
-    stw r3, 0x50(r1)
-    stw r0, 0x54(r1)
-    stw r3, 0x58(r1)
-    fn_80145E14_L_80145EE4:
-    lwz r4, 0x8c(r31)
-    addi r3, r1, 0x8
-    bl fn_8011FAFC
-    lwz r0, 0x74(r1)
-    lwz r31, 0x6c(r1)
-    mtlr r0
-    addi r1, r1, 0x70
-    blr
+struct ResCtrl {
+    int resId;
+    int field4;
+    int mode;
+    int fieldc;
+    unsigned char flag;
+    char pad11[3];
+    float x, y, z, width, height, field28, scaleX, scaleY;
+    unsigned int colors[4];
+    bool flipX;
+    bool flipY;
+    char pad46[2];
+    int tail[4];
+    ResCtrl();
+    ~ResCtrl() {}
+    void Show(float px, float py, float pz) {
+        flag = 1;
+        x = px;
+        y = py;
+        z = pz;
+    }
+    void SetColor(unsigned int c) {
+        colors[0] = c;
+        colors[1] = c;
+        colors[2] = c;
+        colors[3] = c;
+    }
+};
+
+class PanelIcon : public PanelItem {
+public:
+    short resId;
+    char pad8A[2];
+    int layer;
+    unsigned char flip;
+};
+
+extern "C" void fn_80145E14(PanelIcon *self)
+{
+    ResCtrl rc;
+    rc.resId = self->resId;
+    rc.Show(self->tw[3].Get(), self->tw[4].Get(), 1.0f);
+    if (self->tw[0].on == 1) {
+        rc.SetColor(0xFFFFFF00 | ((int)(255.0f * self->tw[0].Get()) & 0xFF));
+    }
+    float sx = 1.0f;
+    float sy = 1.0f;
+    if (self->tw[1].on == 1) {
+        sx = self->tw[1].Get();
+    }
+    if (self->tw[2].on == 1) {
+        sy = self->tw[2].Get();
+    }
+    rc.scaleX = sx;
+    rc.scaleY = sy;
+    if (self->flip) {
+        rc.tail[0] = 1;
+        rc.tail[1] = 4;
+        rc.tail[2] = 1;
+    }
+    fn_8011FAFC(&rc, self->layer);
 }
 
 struct SpriteBox { void *sprite; };

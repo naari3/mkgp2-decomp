@@ -59,18 +59,25 @@ struct LapCtrl {
     char pad98[0x74 - 0x98 + 0x50];
 };
 
-struct StepObj {
-    int state;
-};
-
 class RecordCounter {
 public:
     virtual void v8();
     virtual void vC();
     virtual void Start();
+    virtual void v14();
     int f4;
     int busy;
     int count;
+    bool Tick() {
+        if (busy > 0) {
+            busy--;
+            return 0;
+        }
+        if (count == 1) {
+            count = 2;
+        }
+        return count <= 0;
+    }
     bool Idle() {
         if (busy > 0) {
             return 0;
@@ -90,10 +97,13 @@ struct StepHolder {
     char pad0[0xC];
     int done;
     unsigned char active;
-    char pad11[7];
+    char pad11[3];
+    int layer;
     int state;
     float t;
-    char pad20[0xC];
+    char pad20[4];
+    VObjC *m24;
+    VObjC *m28;
     float cx;
     float cy;
     char pad34[4];
@@ -102,7 +112,7 @@ struct StepHolder {
     Spark sparks[5];
     void *f90;
     RecordCounter *counter;
-    StepObj *step;
+    struct HudResSet *step;
     unsigned char glow;
 };
 
@@ -182,12 +192,12 @@ extern const float lbl_80362620[4];
 extern float lbl_8048EFB8[4];
 const char *GetTextureByIdAndLang(int id, int lang);
 void PreloadResource(int id);
-extern void TexMgr_Apply();
+void TexMgr_Apply(struct TextManager *t);
 void TexMgr_Init(void *t);
-extern void TexMgr_SetTexture();
+void TexMgr_SetTexture(struct TextManager *t, const char *s, ...);
 extern int g_cupId;
 extern unsigned int dtor_800869D0[];
-extern unsigned int lbl_80362790[];
+extern struct TexIdPair lbl_80362790[];
 extern const float lbl_806D7C2C;
 void *GetInputManager(void);
 class HudInput *InputMgr_GetPlayer(void *mgr, int idx);
@@ -203,22 +213,22 @@ extern unsigned int lbl_806D7C4C;
 extern unsigned int lbl_806D7C50;
 unsigned char IsCardValid(void);
 extern void ResCtrl_Init();
-extern void fn_8011F994();
-extern void fn_8011FAFC();
+void fn_8011F994(int layer);
+void fn_8011FAFC(void *ctrl, int layer);
 void fn_8013D4B0(void *model, float a);
-extern void fn_8013D570();
-extern void fn_8013D608();
-extern void fn_8013D660();
-extern void fn_8014017C();
-extern void fn_801F8A34();
-extern void fn_801F8E58();
-extern unsigned int lbl_806D7C74;
-extern unsigned int lbl_806D7C78;
-extern unsigned int lbl_806D7C7C;
-extern unsigned int lbl_806D7C80;
-extern unsigned int lbl_806D7C84;
-extern unsigned int lbl_806D7C88;
-extern unsigned int lbl_806D7C8C;
+void fn_8013D570(void *m, float a);
+void fn_8013D608(void *m, float x, float y, float z);
+void fn_8013D660(void *m, float x, float y);
+void fn_8014017C(void *p);
+void fn_801F8A34(void *ctx, void *tm, int layer);
+void *fn_801F8E58(void);
+extern const float lbl_806D7C74;
+extern const float lbl_806D7C78;
+extern const float lbl_806D7C7C;
+extern const float lbl_806D7C80;
+extern const float lbl_806D7C84;
+extern const float lbl_806D7C88;
+extern const float lbl_806D7C8C;
 extern unsigned int dtor_80082960[];
 float Cosf_LUT_Wrap(float a);
 float Sinf_LUT_Wrap(float a);
@@ -552,12 +562,12 @@ int fn_80147530(char *self);
 void fn_80147574(char *self, int v);
 HudPanel *dtor_80147584(HudPanel *self, short flag);
 void fn_80147778(void);
-asm void fn_801477BC(void);
+void fn_801477BC(void);
 void fn_801478B0(StepHolder *self);
-asm void fn_80147900(struct StepObj *o);
+asm void fn_80147900(struct HudResSet *o);
 asm void fn_80147AF4(void);
 asm void fn_80147CE8(void);
-asm void fn_80147EE8(void);
+void fn_80147EE8(StepHolder *self);
 void fn_8014816C(StepHolder *self);
 struct RecordPanel *fn_80148648(struct RecordPanel *self, short flag);
 asm void fn_80148810(void);
@@ -590,7 +600,6 @@ asm void fn_8014C53C(void);
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_801477BC = { 0x08080000, 0x0000004C, 0x00250010, 0x00000000, 0x82000008, (void *)&dtor_800869D0 };
 
 
 __declspec(section ".extab_user") static const unsigned char extab_fn_80147900[8] = {
@@ -605,7 +614,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80147CE8[8
     0x00, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_80147EE8 = { 0x284A0000, 0x0000007C, 0x00770010, 0x00000000, 0x82000008, (void *)&dtor_80082960 };
 
 
 
@@ -652,9 +660,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801477BC = {
-    (void *)&fn_801477BC, 0x000000F4, (void *)&extab_fn_801477BC
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80147900 = {
     (void *)&fn_80147900, 0x000001F4, (void *)extab_fn_80147900
@@ -668,9 +673,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_80147CE8, 0x00000200, (void *)extab_fn_80147CE8
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80147EE8 = {
-    (void *)&fn_80147EE8, 0x00000284, (void *)&extab_fn_80147EE8
-};
 
 
 
@@ -738,7 +740,9 @@ inline ResTrio *ResTrio_Destroy(ResTrio *self, short flag) {
 }
 
 struct HudResSet {
-    char pad0[0x10];
+    int state;
+    int layer;
+    char pad8[8];
     char res[11][0x58];
     char texts[3][0x230];
     ResTrio tail;
@@ -1108,70 +1112,35 @@ extern "C" void fn_80147778(void) {
     lbl_8048EFB8[3] = 262.0f - lbl_80362620[3];
 }
 
-extern "C" asm void fn_801477BC(void) { /* 0x801477BC size:0xF4 */
-    nofralloc
-    stwu r1, -0x240(r1)
-    mflr r0
-    li r3, 0x16d8
-    stw r0, 0x244(r1)
-    stw r31, 0x23c(r1)
-    bl PreloadResource
-    li r3, 0x14ba
-    bl PreloadResource
-    li r3, 0x16d1
-    bl PreloadResource
-    li r3, 0x16d2
-    bl PreloadResource
-    addi r3, r1, 0x8
-    bl TexMgr_Init
-    li r0, 0x1
-    li r3, 0x8a
-    stw r0, 0x20(r1)
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    mr r4, r3
-    addi r3, r1, 0x8
-    crxor 6, 6, 6
-    bl TexMgr_SetTexture
-    addi r3, r1, 0x8
-    bl TexMgr_Apply
-    lwz r3, g_cupId(r13)
-    subi r0, r3, 0x8
-    cmpwi r0, 0x9
-    beq fn_801477BC_L_8014789C
-    cmpwi r0, 0x6
-    beq fn_801477BC_L_8014789C
-    lis r3, lbl_80362790@ha
-    slwi r31, r0, 3
-    addi r0, r3, lbl_80362790@l
-    li r4, -0x1
-    add r3, r0, r31
-    lwz r3, -0x8(r3)
-    bl GetTextureByIdAndLang
-    mr r4, r3
-    addi r3, r1, 0x8
-    crxor 6, 6, 6
-    bl TexMgr_SetTexture
-    addi r3, r1, 0x8
-    bl TexMgr_Apply
-    lis r3, lbl_80362790@ha
-    li r4, -0x1
-    addi r0, r3, lbl_80362790@l
-    add r3, r0, r31
-    lwz r3, -0x4(r3)
-    bl GetTextureByIdAndLang
-    mr r4, r3
-    addi r3, r1, 0x8
-    crxor 6, 6, 6
-    bl TexMgr_SetTexture
-    addi r3, r1, 0x8
-    bl TexMgr_Apply
-    fn_801477BC_L_8014789C:
-    lwz r0, 0x244(r1)
-    lwz r31, 0x23c(r1)
-    mtlr r0
-    addi r1, r1, 0x240
-    blr
+struct TextManager {
+    TextManager();
+    ~TextManager() {}
+    char pad0[0x18];
+    int x18;
+    char pad1C[0x230 - 0x1C];
+};
+
+struct TexIdPair {
+    int a;
+    int b;
+};
+
+extern "C" void fn_801477BC(void) {
+    PreloadResource(0x16D8);
+    PreloadResource(0x14BA);
+    PreloadResource(0x16D1);
+    PreloadResource(0x16D2);
+    TextManager tm;
+    tm.x18 = 1;
+    TexMgr_SetTexture(&tm, GetTextureByIdAndLang(0x8A, -1));
+    TexMgr_Apply(&tm);
+    int idx = g_cupId - 8;
+    if (idx != 9 && idx != 6) {
+        TexMgr_SetTexture(&tm, GetTextureByIdAndLang(lbl_80362790[idx - 1].a, -1));
+        TexMgr_Apply(&tm);
+        TexMgr_SetTexture(&tm, GetTextureByIdAndLang(lbl_80362790[idx - 1].b, -1));
+        TexMgr_Apply(&tm);
+    }
 }
 
 #pragma auto_inline off
@@ -1184,7 +1153,7 @@ extern "C" void fn_801478B0(StepHolder *self) {
 }
 #pragma auto_inline reset
 
-extern "C" asm void fn_80147900(struct StepObj *o) { /* 0x80147900 size:0x1F4 */
+extern "C" asm void fn_80147900(struct HudResSet *o) { /* 0x80147900 size:0x1F4 */
     nofralloc
     stwu r1, -0x20(r1)
     mflr r0
@@ -1594,179 +1563,97 @@ extern "C" asm void fn_80147CE8(void) { /* 0x80147CE8 size:0x200 */
     blr
 }
 
-extern "C" asm void fn_80147EE8(void) { /* 0x80147EE8 size:0x284 */
-    nofralloc
-    stwu r1, -0x90(r1)
-    mflr r0
-    stw r0, 0x94(r1)
-    stfd f31, 0x80(r1)
-    psq_st f31, 0x88(r1), 0, 0
-    stmw r27, 0x6c(r1)
-    mr r31, r3
-    addi r3, r1, 0x8
-    bl ResCtrl_Init
-    lbz r5, 0x9c(r31)
-    li r4, 0x2
-    lfs f4, lbl_806D7C74(r2)
-    li r0, 0x1
-    lfs f3, lbl_806D7C78(r2)
-    addi r3, r1, 0x8
-    lfs f2, lbl_806D7C7C(r2)
-    lfs f1, lbl_806D7C80(r2)
-    lfs f0, lbl_806D7C38(r2)
-    stw r5, 0x3c(r1)
-    stw r5, 0x40(r1)
-    stw r5, 0x44(r1)
-    stw r5, 0x48(r1)
-    stw r4, 0x10(r1)
-    stfs f4, 0x28(r1)
-    stfs f3, 0x2c(r1)
-    stb r0, 0x18(r1)
-    stfs f2, 0x1c(r1)
-    stfs f1, 0x20(r1)
-    stfs f0, 0x24(r1)
-    lwz r4, 0x14(r31)
-    bl fn_8011FAFC
-    lwz r3, 0x14(r31)
-    bl fn_8011F994
-    lwz r0, 0x18(r31)
-    cmpwi r0, 0x0
-    bne fn_80147EE8_L_80147FDC
-    lwz r4, 0x94(r31)
-    lwz r3, 0x8(r4)
-    cmpwi r3, 0x0
-    ble fn_80147EE8_L_80147F98
-    subi r0, r3, 0x1
-    li r3, 0x0
-    stw r0, 0x8(r4)
-    b fn_80147EE8_L_80147FBC
-    fn_80147EE8_L_80147F98:
-    lwz r0, 0xc(r4)
-    cmpwi r0, 0x1
-    bne fn_80147EE8_L_80147FAC
-    li r0, 0x2
-    stw r0, 0xc(r4)
-    fn_80147EE8_L_80147FAC:
-    lwz r0, 0xc(r4)
-    li r3, 0x1
-    cntlzw r0, r0
-    rlwnm r3, r3, r0, 31, 31
-    fn_80147EE8_L_80147FBC:
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne fn_80147EE8_L_80147FDC
-    lwz r3, 0x94(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    fn_80147EE8_L_80147FDC:
-    bl IsCardValid
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne fn_80147EE8_L_80148000
-    lbz r0, 0x10(r31)
-    cmplwi r0, 0x1
-    bne fn_80147EE8_L_80148000
-    lwz r3, 0x90(r31)
-    bl fn_8014017C
-    fn_80147EE8_L_80148000:
-    lwz r28, 0x98(r31)
-    bl fn_801F8E58
-    lwz r29, 0x4(r28)
-    mr r30, r3
-    addi r3, r28, 0xa68
-    mr r4, r29
-    bl fn_8011FAFC
-    mr r4, r29
-    addi r3, r28, 0xac0
-    bl fn_8011FAFC
-    mr r4, r29
-    addi r3, r28, 0xb18
-    bl fn_8011FAFC
-    li r29, 0x0
-    mr r27, r28
-    fn_80147EE8_L_8014803C:
-    lwz r5, 0x4(r28)
-    mr r3, r30
-    addi r4, r27, 0x3d8
-    bl fn_801F8A34
-    addi r29, r29, 0x1
-    addi r27, r27, 0x230
-    cmpwi r29, 0x3
-    blt fn_80147EE8_L_8014803C
-    li r29, 0x0
-    mr r27, r28
-    fn_80147EE8_L_80148064:
-    lwz r4, 0x4(r28)
-    addi r3, r27, 0x10
-    bl fn_8011FAFC
-    addi r29, r29, 0x1
-    addi r27, r27, 0x58
-    cmpwi r29, 0xb
-    blt fn_80147EE8_L_80148064
-    lwz r3, 0x24(r31)
-    lfs f1, 0x2c(r31)
-    lfs f2, 0x30(r31)
-    bl fn_8013D660
-    lfs f1, lbl_806D7C84(r2)
-    lfs f0, 0x38(r31)
-    lwz r3, 0x24(r31)
-    fmuls f1, f1, f0
-    bl fn_8013D570
-    lwz r3, 0x24(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    li r28, 0x0
-    mr r27, r31
-    fn_80147EE8_L_801480C0:
-    lwz r0, 0x4c(r27)
-    cmpwi r0, 0x0
-    blt fn_80147EE8_L_80148140
-    xoris r3, r0, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x64(r1)
-    lfd f2, lbl_806D7C20(r2)
-    stw r0, 0x60(r1)
-    lfs f0, lbl_806D7C88(r2)
-    lfd f1, 0x60(r1)
-    lfs f4, lbl_806D7C38(r2)
-    fsubs f3, f1, f2
-    lwz r3, 0x28(r31)
-    lfs f1, 0x40(r27)
-    lfs f2, 0x44(r27)
-    fdivs f0, f3, f0
-    fsubs f31, f4, f0
-    bl fn_8013D660
-    fmr f1, f31
-    lwz r3, 0x28(r31)
-    bl fn_8013D4B0
-    lfs f0, lbl_806D7C8C(r2)
-    lwz r3, 0x28(r31)
-    fmuls f1, f0, f31
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_8013D608
-    lwz r3, 0x28(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    fn_80147EE8_L_80148140:
-    addi r28, r28, 0x1
-    addi r27, r27, 0x10
-    cmpwi r28, 0x5
-    blt fn_80147EE8_L_801480C0
-    psq_l f31, 0x88(r1), 0, 0
-    lfd f31, 0x80(r1)
-    lmw r27, 0x6c(r1)
-    lwz r0, 0x94(r1)
-    mtlr r0
-    addi r1, r1, 0x90
-    blr
+struct ResCtrl {
+    int resId;
+    int field4;
+    int mode;
+    int fieldc;
+    unsigned char flag;
+    char pad11[3];
+    float x;
+    float y;
+    float z;
+    float width;
+    float height;
+    float field28;
+    float scaleX;
+    float scaleY;
+    unsigned int colors[4];
+    char pad44[0x58 - 0x44];
+    ResCtrl();
+    ~ResCtrl() {}
+    void Show(float px, float py, float pz) {
+        flag = 1;
+        x = px;
+        y = py;
+        z = pz;
+    }
+    void SetSize(float w, float h) {
+        width = w;
+        height = h;
+    }
+    void SetColor(unsigned int c) {
+        colors[0] = c;
+        colors[1] = c;
+        colors[2] = c;
+        colors[3] = c;
+    }
+};
+
+inline void ResTrio_Draw(ResTrio *t, int layer) {
+    fn_8011FAFC(t->res[0], layer);
+    fn_8011FAFC(t->res[1], layer);
+    fn_8011FAFC(t->res[2], layer);
 }
+
+inline void HudResSet_Draw(HudResSet *res) {
+    int i;
+    void *ctx = fn_801F8E58();
+    ResTrio_Draw(&res->tail, res->layer);
+    for (i = 0; i < 3; i++) {
+        fn_801F8A34(ctx, res->texts[i], res->layer);
+    }
+    for (i = 0; i < 11; i++) {
+        fn_8011FAFC(res->res[i], res->layer);
+    }
+}
+
+inline void Record_DrawSparks(StepHolder *self) {
+    int i;
+    for (i = 0; i < 5; i++) {
+        if (self->sparks[i].life >= 0) {
+            float a = lbl_806D7C38 - self->sparks[i].life / lbl_806D7C88;
+            fn_8013D660(self->m28, self->sparks[i].x, self->sparks[i].y);
+            fn_8013D4B0(self->m28, a);
+            float sc = lbl_806D7C8C * a;
+            fn_8013D608(self->m28, sc, sc, sc);
+            self->m28->vC();
+        }
+    }
+}
+
+#pragma use_lmw_stmw on
+extern "C" void fn_80147EE8(StepHolder *self) {
+    ResCtrl rc;
+    rc.SetColor(self->glow);
+    rc.mode = 2;
+    rc.SetSize(lbl_806D7C74, lbl_806D7C78);
+    rc.Show(lbl_806D7C7C, lbl_806D7C80, lbl_806D7C38);
+    fn_8011FAFC(&rc, self->layer);
+    fn_8011F994(self->layer);
+    if (self->state == 0 && self->counter->Tick() == 1) {
+        self->counter->v14();
+    }
+    if (IsCardValid() == 1 && self->active == 1) {
+        fn_8014017C(self->f90);
+    }
+    HudResSet_Draw(self->step);
+    fn_8013D660(self->m24, self->cx, self->cy);
+    fn_8013D570(self->m24, lbl_806D7C84 * self->rot);
+    self->m24->vC();
+    Record_DrawSparks(self);
+}
+#pragma use_lmw_stmw reset
 
 inline void Record_SpawnSpark(StepHolder *self) {
     int i;

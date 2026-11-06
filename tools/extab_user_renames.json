@@ -5234,7 +5234,11 @@
     "__vt__6StrHud": "lbl_8048F090",
     "__ct__8StrDigitFPc": "fn_80144308",
     "__ct__8StrGaugeFv": "fn_8014403C",
-    "__ct__6StrBoxFiiiii": "fn_8023D080"
+    "__ct__6StrBoxFiiiii": "fn_8023D080",
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
   },
   "src/game/SceneList_80157940.cpp": {
     "extab_fn_80157940": "@etb_8000F0DC",
@@ -5364,7 +5368,9 @@
     "__ct__6SpriteFiiffffff": "Sprite_CreateWithParams",
     "__dt__6SpriteFv": "Sprite_Destroy",
     "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
   },
   "src/game/RankPanelBase_801461B0.cpp": {
     "extab_fn_801461B0": "@etb_8000DE6C",
