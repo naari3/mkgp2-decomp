@@ -3755,7 +3755,11 @@
     "@159": "jumptable_804EF06C"
   },
   "src/game/RoundResult.cpp": {
-    "__dl__11RoundResultFPv": "dtor_8024F40C"
+    "__dl__11RoundResultFPv": "dtor_8024F40C",
+    "@42": "@etb_8001E960",
+    "@43": "@eti_8002B784",
+    "@55": "@etb_8001E968",
+    "@56": "@eti_8002B790"
   },
   "src/game/ItemBanner.cpp": {
     "__ct__9clRubMarkFv": "fn_802503A0",

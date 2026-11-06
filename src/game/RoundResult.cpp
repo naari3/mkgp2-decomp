@@ -61,21 +61,8 @@ struct RoundResult {
 
 extern "C" RoundResult *lbl_806D1AC8;
 
-extern "C" RoundResult *fn_8024F588(void) {
-    if (lbl_806D1AC8 == 0) {
-        lbl_806D1AC8 = new (lbl_80679E00) RoundResult;
-    }
-    return lbl_806D1AC8;
-}
-
-extern "C" void fn_8024F530(void) {
-    if (lbl_806D1AC8) {
-        delete lbl_806D1AC8;
-        lbl_806D1AC8 = 0;
-    }
-}
-
-static inline bool ShouldShowResult(PlayerData &pd) {
+static inline bool ShouldShowResult() {
+    PlayerData *pd = &g_playerData;
     int mode = g_gameMode;
     int cup = g_cupId;
     int round = g_roundIndex;
@@ -86,7 +73,7 @@ static inline bool ShouldShowResult(PlayerData &pd) {
             }
         } else {
             int cc = g_ccClass;
-            if (!RoundCupIsCompleted(&pd, cc, cup, fn_801D5C88(&pd, cc)) && g_raceEnded) {
+            if (!RoundCupIsCompleted(pd, cc, cup, fn_801D5C88(pd, cc)) && g_raceEnded) {
                 return 1;
             }
         }
@@ -99,5 +86,13 @@ static inline bool ShouldShowResult(PlayerData &pd) {
 }
 
 extern "C" void fn_8024F43C(RoundResult *r) {
-    r->showResult = ShouldShowResult(g_playerData);
+    r->showResult = ShouldShowResult();
 }
+
+extern "C" void fn_8024F530(void) {
+    if (lbl_806D1AC8) {
+        delete lbl_806D1AC8;
+        lbl_806D1AC8 = 0;
+    }
+}
+
