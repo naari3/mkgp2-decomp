@@ -1,0 +1,5 @@
+# cardrw-readwrite-native
+
+Source: Codex worker c15_a62_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1500 B.
+
+CardRW_ReadWriteTest_Page 0x8006EC24 (1500 B) converts naturally in one approach with #pragma cplusplus on/use_lmw_stmw on, canonical TestMenuPage InputPlayer/MenuItem and CardDataCheck_Private CardCheckData. Private ReadWritePage embeds CardCheckData at +0x60; backup data begins self->data+0x64. Separate enabled/settings/records/count/flag assignments generate the exact unrolled 10-word settings copy and 119-word records loop in both directions. Use Print page CheckError helper with error=1 before singleton and inline drawing helper; response bytes declared c,b,a. Draw cases 1/2, 3/4/5/6, 7/8. Remove manual extab/index; existing Cpp_exceptions on emits exact metadata. Original history only 70f455a9 asm extraction, with no documented native blocker. First successful compile text/extab/index all 100%; coordinator build service request 1 verifies ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. No flags, symbols, split, extab order or bridge changes.
