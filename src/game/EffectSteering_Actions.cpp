@@ -4,8 +4,8 @@
  * cleanup calls; their extab entries come first (extab_order.json).
  *
  * NonMatching: ActionDelay_Step allocates r4/r5 the other way round in the
- * push half. The target also keeps `out` in a stack slot, which the
- * volatile reproduces.
+ * push half (99.29%). Read-before-write comparison in IsEmpty reproduces
+ * the target pop operand order. The target keeps `out` in a stack slot.
  */
 void operator delete(void *);
 
@@ -96,7 +96,7 @@ struct ESRing {
 
     int Next(int i) { i++; if (i >= count) i = 0; return i; }
     unsigned char IsFull() { return Next(writeIndex) == readIndex; }
-    unsigned char IsEmpty() { return writeIndex == readIndex; }
+    unsigned char IsEmpty() { return readIndex == writeIndex; }
 
     void Pop(float *out)
     {
