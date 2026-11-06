@@ -14,6 +14,11 @@ void fn_8023CFC8(void *); void card_save_trigger(int);
 void fn_801D919C(void *); unsigned char fn_801D5F40(void *);
 void clFlowKart_SetupTextLayout(void *, int);
 }
+static inline unsigned char IsCreditOnly() {
+    if (CreditMgr_GetPlayState(0) == 3) return 1;
+    if (CreditMgr_GetCreditCount(2) == 0) return 1;
+    return 0;
+}
 extern "C" void fn_801FBE14(BuyCardStep *self) {
     InputState *input;
     unsigned char creditOnly;
@@ -30,9 +35,7 @@ extern "C" void fn_801FBE14(BuyCardStep *self) {
     int coins = CreditMgr_GetCoinCount(0, -1);
     if (self->coins != coins) self->timeout = lbl_803BFF54[1] + 1;
     self->coins = coins;
-    if (CreditMgr_GetPlayState(0) == 3) creditOnly = 1;
-    else if (CreditMgr_GetCreditCount(2) == 0) creditOnly = 1;
-    else creditOnly = 0;
+    creditOnly = IsCreditOnly();
     if (creditOnly && self->creditOnly != creditOnly && !self->automatic && self->selection > 0) {
         fn_8020A7CC(self->fader, 0, 15, 15);
         self->automatic = 1; self->state = 3; self->next = 2;
