@@ -20,6 +20,11 @@ struct Path186View : Path186Base {
     Path186View();
     virtual ~Path186View();
 };
+static inline void CopyPoint(Vec3f *dst, const Vec3f *src) {
+    dst->x = src->x;
+    dst->y = src->y;
+    dst->z = src->z;
+}
 Path186View::Path186View() {
     const char *pool = lbl_80377030;
     DebugPrintf(pool + 0x250);
@@ -48,18 +53,16 @@ Path186View::Path186View() {
         paths[i].index = 0;
         paths[i].time = 0.0f;
         Path186 *p = &paths[i];
-        { Vec3f *v = Path186_Point(p,p->index); p->a.x=v->x; p->a.y=v->y; p->a.z=v->z; }
-        { Vec3f *v = Path186_Point(p,p->index+1); p->b.x=v->x; p->b.y=v->y; p->b.z=v->z; }
-        { Vec3f *v = Path186_Point(p,p->index+2); p->c.x=v->x; p->c.y=v->y; p->c.z=v->z; }
+        CopyPoint(&p->a, Path186_Point(p,p->index));
+        CopyPoint(&p->b, Path186_Point(p,p->index+1));
+        CopyPoint(&p->c, Path186_Point(p,p->index+2));
         p->a.x = 0.5f * (p->a.x+p->b.x);
         p->a.y = 0.5f * (p->a.y+p->b.y);
         p->a.z = 0.5f * (p->a.z+p->b.z);
         p->c.x = 0.5f * (p->b.x+p->c.x);
         p->c.y = 0.5f * (p->b.y+p->c.y);
         p->c.z = 0.5f * (p->b.z+p->c.z);
-        paths[i].position.x = paths[i].a.x;
-        paths[i].position.y = paths[i].a.y;
-        paths[i].position.z = paths[i].a.z;
+        CopyPoint(&paths[i].position, &paths[i].a);
         paths[i].yaw = 0.0f;
     }
 }

@@ -56,3 +56,8 @@ c14_u50: fn_8018DAD0 remains NonMatching, 91.69401 ->94.49527. Writable random t
 Source: Codex worker c14_u53_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u53: fn_801972E0 correct writable random tables lbl_80495994/lbl_80495A94 (.data) removes const-driven scheduling divergence: 91.0859 ->99.88655, exact text size2468/extab8/index12. Only enabled flag r30/r28 at +34/+140 and final-loop li r30,0 versus mr r30,r28 at +7CC remain. Reusing outer loop i reproduces shared zero but swaps other homes; p reuse 99.70827, decl order unchanged. Inline UpdateParticles with index pointer 99.71637 leaves pointer/stride r29/r30 swap; explicit stride99.700165. All loop probes reverted. Honest NonMatching retained; no new native functions.
+
+## c16_u17_20261106
+Source: Codex worker c16_u17_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u17: fn_80187410 fresh87.502396->89.88039 via small CopyPoint(dst,src) inline helper. Three control copies remain scalar exact; final position copy now loads paths[i] once rather than three times, reducing852->836B and index100. Owned EH52B100. Initializer helper folds indexed stores, whole loop exceeds auto inline budget. Remaining def/stride r30/r31 exchange, point index/count scratch homes and pre-store loads; NonMatching, no native gain.
