@@ -18,3 +18,8 @@ c13_u21: fn_801AF850 (single fn, text 2976 B) improves 96.80779 -> 99.879036. TU
 Source: Codex worker c14_u32_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u32: Race_PerFrameTickAndAudio report 93.44 -> 96.02781 (raw objdiff 92.607185 -> 95.1854). Inverting TickFanfare to unfinished-player first/finished-player else restores target block order. Direct positive stream-length comparison with branch to next dispatch block removes mfcr/extrwi emitted for !(length > elapsed). Per-entry overtake helper changes only volatile homes and does not stop predecessor-rank load hoisting; reverted. Residual includes r30/r31 block/entries homes, merged address calculations, signed-byte extension reuse and goal-table association. Singleton function stays NonMatching; fallback full DOL SHA-1 OK.
+
+## c16_u101_20261106
+Source: Codex worker c16_u101_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2976 B.
+
+c16_u101: fn_801AF850 resolves c13 remaining 15 GPR differences with static inline int CourseVoiceId(int base, int round) { return base + round; } used by cups 6/7/8. Caller int voice and shared SpriteVoice_Push retained. Inline arithmetic return changes sum/queue-offset homes to target r8/r9 (cup8 r7/r8). One structural hypothesis: 99.879036 ->100%, text2976. Matching source-linked full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. No split/EH/data changes.

@@ -27,6 +27,10 @@ static inline void PushDriverVoice(short voice) {
     g_voiceQueueHead++;
 }
 
+static inline int CourseVoiceId(int base, int round) {
+    return base + round;
+}
+
 /* Queue the cup/course introduction, participating drivers, and start prompt. */
 void fn_801AF850(void) {
     int cup = g_cupId;
@@ -40,15 +44,15 @@ void fn_801AF850(void) {
     if (cup == 4) SpriteVoice_Push(0x22 + longRound * 2 + variant % 2, -1, 0, 1);
     if (cup == 5) SpriteVoice_Push(0x26 + longRound * 2 + variant % 2, -1, 0, 1);
     if (cup == 6) {
-        int voice = 0x2B + longRound;
+        int voice = CourseVoiceId(0x2B, longRound);
         SpriteVoice_Push(voice, -1, 0, 1);
     }
     if (cup == 7) {
-        int voice = 0x2E + longRound;
+        int voice = CourseVoiceId(0x2E, longRound);
         SpriteVoice_Push(voice, -1, 0, 1);
     }
     if (cup == 8) {
-        int voice = 0x32 + longRound;
+        int voice = CourseVoiceId(0x32, longRound);
         SpriteVoice_Push(voice, -1, 0, 1);
     }
     participants = 0;
