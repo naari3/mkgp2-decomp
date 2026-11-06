@@ -874,3 +874,8 @@ c15_a42: Jyugemu_ReverseFlag_Tick 80080C10 (924B) native100. Mirror Jyugemu_Flag
 Source: Codex worker c15_u8_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 292 B.
 
 PcbDebugOverlay: DrawLinkErrorOverlay has exact C text but target DESTROYLOCAL TexMgr unwind metadata. External FKTex default ctor mapped to TexMgr_Init plus empty inline destructor mapped to dtor_800869D0 yields target PC54..10C, local8, exact24B EH. Inline ctor wrapping setup+position shifts EH start to58; explicit TexMgr_Init after trivial local starts34. Isolating Draw in its own TU and referring to shared pool via one external base preserves text100%; weak dtor discards at full link. Dump listener r27 vs r25 unchanged by targeted declaration order or inline listener helper.
+
+## c15_u15_20261106
+Source: Codex worker c15_u15_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2184 B.
+
+c15_u15: CardDataTransfer_UI 8006D308/2184B matches fully by extracting natural inline Begin(TestPage*, int initialStatus) around initialization and six card-status checks, using the parameter for STEP and STATUS then returning error status. Flat local constant duplicates li 1. TU-local DrawItems(TestPage*,int) mirrors TestPage_DrawItems but declares MenuItem* it=lbl_803FCC00 locally instead of passing the table as an inline parameter; target walker r30/index r27/selection r29 restored. Combined native text/EH100 and source-linked full DOL SHA1 exact; no EH bridges or split changes.

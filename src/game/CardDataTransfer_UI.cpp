@@ -1,9 +1,7 @@
 /*
  * CardDataTransfer_UI @ 0x8006D308..0x8006DB90: the card data transfer
  * test page. Runs the step table at lbl_803FDC98 (one card R/W task per
- * step) and shows the reader/writer status or error. NonMatching: the
- * constant 1 for step/status is not shared with the status default in r30,
- * and the menu-table loop gets different registers.
+ * step) and shows the reader/writer status or error.
  */
 #include "game/TestMenuPage.h"
 
@@ -79,6 +77,46 @@ static inline unsigned char CardDataTransfer_IsError(TestPage *self)
     return 0;
 }
 
+static inline int CardDataTransfer_Begin(TestPage *self, int st)
+{
+    void *card;
+    self->sub = 0x64;
+    STEP(self) = st;
+    self->blink = 0;
+    STEP_FN(self) = lbl_803FDC98[STEP(self)].fn;
+    STATUS(self) = st;
+    SHOWN(self) = 0;
+    card = Sci2Card_Singleton_Get();
+    if (Sci2Card_IsRetryExhausted(card) == 1) {
+        st = 0x65;
+    } else if (Sci2Card_IsStatus2Two(card) == 1) {
+        st = 0x66;
+    } else if (Sci2Card_IsStatus2Three(card) == 1) {
+        st = 0x68;
+    } else if (Sci2Card_IsStatus2Five(card) == 1) {
+        st = 0x69;
+    } else if (Sci2Card_IsStatus2A(card) == 1) {
+        st = 0x6A;
+    } else if (Sci2Card_IsStatus3Five(card) == 1) {
+        st = 2;
+    }
+    return st;
+}
+
+static inline void CardDataTransfer_DrawItems(TestPage *self, int sel)
+{
+    MenuItem *it = lbl_803FCC00;
+    int i;
+
+    for (i = 0; it[i].text != 0; i++) {
+        if (i != sel || self->blink <= 0x1E) {
+            if (self->text != 0) {
+                DrawText(self->text, it[i].x * 14, it[i].y * 24, 7, 1.0f, it[i].text);
+            }
+        }
+    }
+}
+
 #pragma exceptions on
 
 extern "C" int CardDataTransfer_UI(TestPage *self, int phase)
@@ -105,30 +143,9 @@ extern "C" int CardDataTransfer_UI(TestPage *self, int phase)
             }
             if (pl->Pressed(0x1000)) {
                 if (self->sub == 0) {
-                    void *card;
                     int st;
 
-                    st = 1;
-                    self->sub = 0x64;
-                    STEP(self) = 1;
-                    self->blink = 0;
-                    STEP_FN(self) = lbl_803FDC98[STEP(self)].fn;
-                    STATUS(self) = 1;
-                    SHOWN(self) = 0;
-                    card = Sci2Card_Singleton_Get();
-                    if (Sci2Card_IsRetryExhausted(card) == 1) {
-                        st = 0x65;
-                    } else if (Sci2Card_IsStatus2Two(card) == 1) {
-                        st = 0x66;
-                    } else if (Sci2Card_IsStatus2Three(card) == 1) {
-                        st = 0x68;
-                    } else if (Sci2Card_IsStatus2Five(card) == 1) {
-                        st = 0x69;
-                    } else if (Sci2Card_IsStatus2A(card) == 1) {
-                        st = 0x6A;
-                    } else if (Sci2Card_IsStatus3Five(card) == 1) {
-                        st = 2;
-                    }
+                    st = CardDataTransfer_Begin(self, 1);
                     STATUS(self) = st;
                     if (STATUS(self) != 1) {
                         SHOWN(self) = 1;
@@ -184,7 +201,7 @@ extern "C" int CardDataTransfer_UI(TestPage *self, int phase)
         }
     }
     if (phase == 2) {
-        TestPage_DrawItems(self, lbl_803FCC00, self->sub + 3);
+        CardDataTransfer_DrawItems(self, self->sub + 3);
         if (self->text != 0) {
             unsigned char c;
             unsigned char b;
