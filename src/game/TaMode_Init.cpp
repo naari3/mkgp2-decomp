@@ -5,6 +5,10 @@ static inline int CcClass_Get() { return g_ccClass; }
 static inline int KartVariant_Get() { return g_kartVariant; }
 static inline void Render_SetReady(void *p) { *(int *)((char *)p + 0x238) = 1; }
 
+static inline int RegisterGhost(float *matrix, void *render) {
+    return PathManager_RegisterCarObject(lbl_806D13A4, matrix + 12, matrix + 13, matrix + 14, lbl_806D1398, render, 1);
+}
+
 TaMode::TaMode() {
     const char *log = lbl_80321980;
     const char *data = BATTLE;
@@ -69,8 +73,7 @@ TaMode::TaMode() {
         if (!reverse) ghost = (const TaGhostSource *)(data + 0x340 + cup * 32 + round * 16);
         lbl_806D1398 = new CarObject(4, ghost->character, startX, startY, GetCourseStartYaw(), 2, 3, 0, -1, 0, 0);
         float *matrix = CarObject_GetTransformMatrix(lbl_806D1398);
-        void *render = CarObject_GetRenderObj(lbl_806D1398);
-        lbl_806D139C = PathManager_RegisterCarObject(lbl_806D13A4, matrix + 12, matrix + 13, matrix + 14, lbl_806D1398, render, 1);
+        lbl_806D139C = RegisterGhost(matrix, CarObject_GetRenderObj(lbl_806D1398));
         lbl_806CF198 = 3;
         lbl_806D1390 = DVDFile_LoadSync(ghost->file);
         lbl_806D1388 = lbl_806D1390;
@@ -118,15 +121,16 @@ TaMode::TaMode() {
     g_raceEnded = 0;
     ai = 0;
     flag38 = 0;
-    const RaceParams *params = &((const RaceParams (*)[3][2])data)[g_cupId - 1][g_ccClass][g_longRoundFlag];
+    /* Cups are one-based; one cup contains six (class, round) records. */
+    const RaceParams *params = &((const RaceParams (*)[3][2])data)[g_cupId][g_ccClass][g_longRoundFlag];
     g_bestLapTime = lbl_806D4830;
     g_currentLapTime = lbl_806D4830;
     g_totalRaceTime = lbl_806D4830;
     lbl_806D13A1 = 0;
     g_finalRacePosition = 0;
-    int laps = params->laps;
-    float time = params->timeLimit;
-    float bonus = params->lapBonus;
+    int laps = params[-6].laps;
+    float bonus = params[-6].lapBonus;
+    float time = params[-6].timeLimit;
     g_currentLap = 1;
     g_raceResultCode = -2;
     g_finalLapBannerShown = 0;

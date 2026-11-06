@@ -10359,9 +10359,9 @@
     "__ct__6TaModeFv": "TaMode_Init",
     "__vt__6TaMode": "lbl_8040F0B0",
     "__ct__7TaSoundFi": "fn_8023EA80",
-    "@86": "@etb_80009A78",
-    "@87": "@eti_80022334",
-    "@85": "jumptable_8040F0C4"
+    "@92": "@etb_80009A78",
+    "@93": "@eti_80022334",
+    "@91": "jumptable_8040F0C4"
   },
   "src/game/ItemBoxConstruct.cpp": {
     "__ct__12BoxConstructFP8BoxJoint": "fn_8016D2D0",
