@@ -660,7 +660,8 @@
     "extab_TransparentDraw_DestroyEntry": "@etb_800080B8",
     "extab_TransparentDraw_SortAndDispatch": "@etb_800080C0",
     "extabindex_TransparentDraw_DestroyEntry": "@eti_80020F90",
-    "extabindex_TransparentDraw_SortAndDispatch": "@eti_80020F9C"
+    "extabindex_TransparentDraw_SortAndDispatch": "@eti_80020F9C",
+    "__dt__15TDrawEntryOwnerFv": "TransparentDraw_DestroyEntry"
   },
   "src/game/clMiyoshiCardCreate.c": {
     "__ct__11MiyoshiBaseFv": "GameMode_BaseInit",

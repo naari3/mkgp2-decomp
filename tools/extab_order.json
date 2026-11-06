@@ -2330,5 +2330,16 @@
     "StarItem_FallRecoveryTick",
     "StarItem_FlightAndLockOnTick",
     "StarItem_Tick"
+  ],
+  "src/game/RivalRun.c": [
+    "RivalRun_Draw",
+    "RivalRun_Update",
+    "RivalRun_RivalAIUpdate",
+    "RivalRun_UpdatePathFollower",
+    "RivalRun_RivalTactics",
+    "RivalRun_CalcPathDistance",
+    "RivalRun_Destroy",
+    "RivalRun_Init",
+    "RivalRun_RivalInit"
   ]
 }

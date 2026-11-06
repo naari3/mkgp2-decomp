@@ -204,105 +204,51 @@ int TransparentDraw_InitEntry(TDrawEntry *self, TDrawDesc *desc) {
 
 #pragma exceptions reset
 
-/* asm_fn park: the C form below compiles to byte-identical CONTENT (63/63
- * instructions, extab/extabindex identical) but CW 1.3.2 colors the three
- * callee-saved webs (self/obj/flag) as flag=r31, self=r30, obj=r29 while the
- * target has self=r31, obj=r30, flag=r29. ~16 source-form probes (helpers,
- * e-local, decl order, register kw, int/short param, 3rd param, exceptions
- * on/off, -lang=c++) all produce the identical rotation -- source-closed
- * register-identity family (same class as CarObject_ProcessWarpAndDash park,
- * docs/notes/cw132-allocator-phase2f-research.md). Retry with the parked C:
- *
- * void *TransparentDraw_DestroyEntry(TDrawEntry *self, short flag) {
- *     TDrawEntry *e = self;
- *     TDrawObj *obj;
- *     if (e != 0) {
- *         if (e->handle != 0) {
- *             e->handle->next = 0;
- *             obj = e->handle;
- *             if (obj != 0) {
- *                 if (TDraw_DecRef(obj)) {
- *                     if (obj != 0) {
- *                         obj->vt->fn30(obj);
- *                         obj->vt->fn34(obj);
- *                     }
- *                 }
- *             }
- *             e->handle = 0;
- *         }
- *         if (flag > 0) {
- *             MemoryManager_TimedFree(e);
- *         }
- *     }
- *     return e;
- * }
+/* DestroyEntry is the CW deleting destructor of the entry (hidden short
+ * flag, `delete this` when flag > 0). The handle release mirrors the
+ * canonical HSD ref_DEC / hsdDelete inlines (object.h / class.h). The
+ * mangled names are bridged in tools/extab_user_renames.json:
+ * __dt__15TDrawEntryOwnerFv -> TransparentDraw_DestroyEntry.
  */
-asm void TransparentDraw_DestroyEntry(void) { /* 0x80065B74 size:0xE8 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr. r31, r3
-    stw r30, 0x18(r1)
-    stw r29, 0x14(r1)
-    mr r29, r4
-    beq TransparentDraw_DestroyEntry_L_80065C3C
-    lwz r3, 0x0(r31)
-    cmplwi r3, 0x0
-    beq TransparentDraw_DestroyEntry_L_80065C2C
-    li r0, 0x0
-    stw r0, 0xc(r3)
-    lwz r30, 0x0(r31)
-    cmplwi r30, 0x0
-    beq TransparentDraw_DestroyEntry_L_80065C24
-    lis r3, 0x1
-    lhz r4, 0x4(r30)
-    subi r0, r3, 0x1
-    clrlwi r0, r0, 16
-    subf r0, r4, r0
-    cntlzw r0, r0
-    extrwi. r0, r0, 8, 19
-    beq TransparentDraw_DestroyEntry_L_80065BDC
-    b TransparentDraw_DestroyEntry_L_80065BEC
-    TransparentDraw_DestroyEntry_L_80065BDC:
-    subi r3, r4, 0x1
-    cntlzw r0, r4
-    sth r3, 0x4(r30)
-    extrwi r0, r0, 8, 19
-    TransparentDraw_DestroyEntry_L_80065BEC:
-    cmpwi r0, 0x0
-    beq TransparentDraw_DestroyEntry_L_80065C24
-    cmplwi r30, 0x0
-    beq TransparentDraw_DestroyEntry_L_80065C24
-    lwz r4, 0x0(r30)
-    mr r3, r30
-    lwz r12, 0x30(r4)
-    mtctr r12
-    bctrl
-    lwz r4, 0x0(r30)
-    mr r3, r30
-    lwz r12, 0x34(r4)
-    mtctr r12
-    bctrl
-    TransparentDraw_DestroyEntry_L_80065C24:
-    li r0, 0x0
-    stw r0, 0x0(r31)
-    TransparentDraw_DestroyEntry_L_80065C2C:
-    extsh. r0, r29
-    ble TransparentDraw_DestroyEntry_L_80065C3C
-    mr r3, r31
-    bl MemoryManager_TimedFree
-    TransparentDraw_DestroyEntry_L_80065C3C:
-    lwz r0, 0x24(r1)
-    mr r3, r31
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma cplusplus on
+#pragma exceptions on
+
+static inline int TDraw_RefDec(TDrawObj *obj) {
+    unsigned char unreferenced;
+    if ((unreferenced = (obj->refcount == (unsigned short)0xFFFF))) {
+        return unreferenced;
+    }
+    return obj->refcount-- == 0;
 }
+
+static inline void TDraw_Delete(TDrawObj *obj) {
+    if (obj != 0) {
+        obj->vt->fn30(obj);
+        obj->vt->fn34(obj);
+    }
+}
+
+static inline void TDraw_Unref(TDrawObj *obj) {
+    if (obj != 0 && TDraw_RefDec(obj)) {
+        TDraw_Delete(obj);
+    }
+}
+
+struct TDrawEntryOwner {
+    TDrawObj *handle;
+    ~TDrawEntryOwner();
+};
+
+TDrawEntryOwner::~TDrawEntryOwner() {
+    if (handle != 0) {
+        handle->next = 0;
+        TDraw_Unref(handle);
+        handle = 0;
+    }
+}
+
+#pragma exceptions reset
+#pragma cplusplus reset
 
 void TransparentDraw_ResetEntry(TDrawEntry *self) {
     self->handle = 0;
@@ -443,9 +389,9 @@ int TransparentDraw_RemoveByOwner(int owner) {
 }
 
 /* --- manual extab/extabindex emit (approach B) ---
- * DestroyEntry is an asm fn (no auto emit); SortAndDispatch is C compiled
- * with exceptions off (auto emit suppressed). InitEntry keeps CW auto emit
- * (approach A) and its extab/extabindex sort first in link order, so the
+ * SortAndDispatch is C compiled with exceptions off (auto emit
+ * suppressed). InitEntry and the DestroyEntry destructor keep CW auto emit
+ * (approach A) and their extab/extabindex sort first in link order, so the
  * final section order matches the target: InitEntry(0x800080B0),
  * DestroyEntry(0x800080B8), SortAndDispatch(0x800080C0) / extabindex
  * 0x80020F84 / 0x80020F90 / 0x80020F9C. Renames via
@@ -454,19 +400,11 @@ int TransparentDraw_RemoveByOwner(int owner) {
  */
 #pragma section R ".extab_user"
 
-__declspec(section ".extab_user") static const unsigned char extab_TransparentDraw_DestroyEntry[8] = {
-    0x18, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
 __declspec(section ".extab_user") static const unsigned char extab_TransparentDraw_SortAndDispatch[8] = {
     0x20, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
 #pragma section R ".extabindex_user"
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_TransparentDraw_DestroyEntry = {
-    (void *)&TransparentDraw_DestroyEntry, 0x000000E8, (void *)extab_TransparentDraw_DestroyEntry
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_TransparentDraw_SortAndDispatch = {
     (void *)&TransparentDraw_SortAndDispatch, 0x0000033C, (void *)extab_TransparentDraw_SortAndDispatch

@@ -2,6 +2,43 @@
 /* Generated from the nine dtk auto_RivalRun_* target assembly fragments. */
 /* Keep function/extab/extabindex order aligned with the target ranges. */
 
+/* --- shared types for the native C members --- */
+typedef struct RRVec3 {
+    float x, y, z;
+} RRVec3;
+
+/* PathFollower context (0x2C bytes, see RivalRun_PathFollowerInit.c) */
+typedef struct RRPathFollower {
+    unsigned char needsSearch; /* 0x00 */
+    int lane;                  /* 0x04 (row of lbl_8035C1E4) */
+    int route;                 /* 0x08 (0/1, toggled by warp zones) */
+    int seg;                   /* 0x0C */
+    RRVec3 target;             /* 0x10 */
+    RRVec3 dir;                /* 0x1C */
+    float endDist;             /* 0x28 */
+} RRPathFollower;
+
+/* rival driver block (built by RivalRun_RivalInit) */
+typedef struct RRRivalAI {
+    void *info;                /* 0x00 */
+    void *car;                 /* 0x04 */
+    RRVec3 pos;                /* 0x08 */
+    void *path;                /* 0x14 */
+    int pathSlot;              /* 0x18 */
+    int raceSlot;              /* 0x1C */
+    RRPathFollower *follower;  /* 0x20 */
+    int laneCooldown;          /* 0x24 */
+    RRVec3 aim;                /* 0x28 */
+    int driftDir;              /* 0x34 */
+    unsigned char fast;        /* 0x38 */
+    int holdFrames;            /* 0x3C */
+    int itemCooldown;          /* 0x40 */
+    int item;                  /* 0x44 */
+    int aimFrames;             /* 0x48 */
+    float accelScale;          /* 0x4C */
+    void *rivalRender;         /* 0x50 */
+} RRRivalAI;
+
 /* === extracted from auto_RivalRun_Draw_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -185,9 +222,9 @@ asm void RivalRun_Draw(void) { /* 0x8013558C size:0x1A8 */
 /* refine if the real prototype matters for header consumers. */
 extern void CObj_ApplyScissor();
 extern void CObj_LoadProjMatrix();
-extern void CarObject_ApplyInput();
-extern void CarObject_FrameUpdate();
-extern void CarObject_GetRenderObj();
+extern void CarObject_ApplyInput(void *car, unsigned char started, float steer, float accel, float brake);
+extern void CarObject_FrameUpdate(void *car, int flag);
+extern void *CarObject_GetRenderObj(void *car);
 extern void ChallengeGoalCamera_Update();
 extern void CourseEnvironment_UpdateAndCullZones_Timed();
 extern void Fog_UpdateFromCourseScene3D();
@@ -195,10 +232,10 @@ extern void GetInputManager();
 extern void GetRaceContextPtr();
 extern void HUD_FrameUpdate();
 extern void InputMgr_GetPlayer();
-extern void IsRaceStarted();
+extern unsigned char IsRaceStarted(void);
 extern void ItemObjectManager_PerFrameUpdate();
 extern void ItemObjectManager_Update();
-extern void KartDriver_GetKartRootMtx();
+extern float *KartDriver_GetKartRootMtx(void *render);
 extern void KartItem_UpdateShadowBillboardAndViewport();
 extern void KartMovement_ResetOnGoal();
 extern void KartMovement_ResetOnTimeout();
@@ -231,9 +268,9 @@ extern unsigned int lbl_806D109C;
 extern unsigned int lbl_806D10D0;
 extern unsigned int lbl_806D1290;
 extern unsigned int lbl_806D7380;
-extern unsigned int lbl_806D7384;
+extern const float lbl_806D7384;
 extern unsigned int lbl_806D7388;
-extern unsigned int lbl_806D738C;
+extern const float lbl_806D738C;
 extern unsigned int lbl_806D7390;
 extern unsigned int lbl_806D7394;
 
@@ -567,298 +604,137 @@ asm void RivalRun_Update(void) { /* 0x80135734 size:0x448 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void CarObject_ApplyInput();
-extern void CarObject_FrameUpdate();
-extern void CarObject_GetRenderObj();
-extern void CarObject_IsAirborne();
-extern void IsRaceStarted();
-extern void ItemEffectBus_OrMask();
-extern void KartDriver_GetKartRootMtx();
-extern void KartItem_GetCurrentSpeedWithBonus();
+extern void CarObject_ApplyInput(void *car, unsigned char started, float steer, float accel, float brake);
+extern void CarObject_FrameUpdate(void *car, int flag);
+extern void *CarObject_GetRenderObj(void *car);
+extern unsigned char CarObject_IsAirborne(void *car);
+extern unsigned char IsRaceStarted(void);
+extern void ItemEffectBus_OrMask(void *bus, unsigned long long mask);
+extern float *KartDriver_GetKartRootMtx(void *render);
+extern float KartItem_GetCurrentSpeedWithBonus(void *car);
 extern void KartItem_TryArmBoostOnLanding();
 extern void RivalRun_RivalTactics();
 extern void RivalRun_UpdatePathFollower();
-extern void Saturate_Double();
-extern void Vec3_Dot();
-extern void Vec3_Normalize();
-extern void Vec3_Subtract();
-extern void WarpDashMgr_GetInstance();
-extern void WarpZone_FindContaining();
+extern float Saturate_Double(float value, float lo, float hi);
+extern float Vec3_Dot(const RRVec3 *a, const RRVec3 *b);
+extern void Vec3_Normalize(const RRVec3 *v, RRVec3 *out);
+extern void Vec3_Subtract(const RRVec3 *a, const RRVec3 *b, RRVec3 *out);
+extern void *WarpDashMgr_GetInstance(int create);
+extern int WarpZone_FindContaining(void *mgr, float x, float y, float z);
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806CF610;
-extern unsigned int lbl_806CF614;
-extern unsigned int lbl_806CF618;
-extern unsigned int lbl_806CF61C;
-extern unsigned int lbl_806CF620;
-extern unsigned int lbl_806D7384;
-extern unsigned int lbl_806D738C;
-extern unsigned int lbl_806D7398;
-extern unsigned int lbl_806D739C;
+extern float lbl_806CF610;
+extern float lbl_806CF614;
+extern float lbl_806CF618;
+extern float lbl_806CF61C;
+extern float lbl_806CF620;
+extern const float lbl_806D7384;
+extern const float lbl_806D738C;
+extern const float lbl_806D7398;
+extern const float lbl_806D739C;
 
 /* --- function index (1 fns, .text 0x80135B7C..0x80135EFC) ---
  * [  0] 0x80135B7C size:0x380   global RivalRun_RivalAIUpdate
  */
 
-/* --- forward decls --- */
-asm void RivalRun_RivalAIUpdate(void);
+#pragma exceptions on
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_RivalRun_RivalAIUpdate[8] = {
-    0x10, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+void RivalRun_RivalAIUpdate(RRRivalAI *self) {
+    float steer;
+    float accel;
+    float *mtx;
+    float speed;
+    float side;
+    float t;
+    RRVec3 toAim;
+    RRVec3 fwd;
+    RRVec3 right;
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_RivalRun_RivalAIUpdate = {
-    (void *)&RivalRun_RivalAIUpdate, 0x00000380, (void *)extab_RivalRun_RivalAIUpdate
-};
+    accel = steer = lbl_806D738C;
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void RivalRun_RivalAIUpdate(void) { /* 0x80135B7C size:0x380 */
-    nofralloc
-    stwu r1, -0x70(r1)
-    mflr r0
-    stw r0, 0x74(r1)
-    stfd f31, 0x60(r1)
-    psq_st f31, 0x68(r1), 0, 0
-    stfd f30, 0x50(r1)
-    psq_st f30, 0x58(r1), 0, 0
-    stfd f29, 0x40(r1)
-    psq_st f29, 0x48(r1), 0, 0
-    stw r31, 0x3c(r1)
-    stw r30, 0x38(r1)
-    lfs f30, lbl_806D738C(r2)
-    mr r30, r3
-    lwz r3, 0x4(r3)
-    fmr f29, f30
-    bl CarObject_GetRenderObj
-    bl KartDriver_GetKartRootMtx
-    mr r31, r3
-    lwz r3, 0x4(r30)
-    bl KartItem_GetCurrentSpeedWithBonus
-    fmr f31, f1
-    mr r3, r30
-    bl RivalRun_RivalTactics
-    addi r3, r30, 0x28
-    addi r4, r30, 0x8
-    addi r5, r1, 0x20
-    bl Vec3_Subtract
-    lfs f0, lbl_806D738C(r2)
-    addi r3, r1, 0x20
-    mr r4, r3
-    stfs f0, 0x24(r1)
-    bl Vec3_Normalize
-    lfs f0, 0x0(r31)
-    addi r3, r1, 0x8
-    lfs f1, lbl_806D738C(r2)
-    mr r4, r3
-    stfs f0, 0x8(r1)
-    stfs f1, 0xc(r1)
-    lfs f0, 0x20(r31)
-    stfs f0, 0x10(r1)
-    lfs f0, 0x8(r31)
-    stfs f0, 0x14(r1)
-    stfs f1, 0x18(r1)
-    lfs f0, 0x28(r31)
-    stfs f0, 0x1c(r1)
-    bl Vec3_Normalize
-    addi r3, r1, 0x14
-    mr r4, r3
-    bl Vec3_Normalize
-    bl IsRaceStarted
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne RivalRun_RivalAIUpdate_L_80135DE8
-    lwz r3, 0x3c(r30)
-    cmpwi r3, 0x0
-    ble RivalRun_RivalAIUpdate_L_80135C64
-    subi r0, r3, 0x1
-    stw r0, 0x3c(r30)
-    RivalRun_RivalAIUpdate_L_80135C64:
-    addi r3, r1, 0x20
-    addi r4, r1, 0x8
-    bl Vec3_Dot
-    fmr f29, f1
-    addi r3, r1, 0x20
-    addi r4, r1, 0x14
-    bl Vec3_Dot
-    lfs f0, lbl_806D738C(r2)
-    fcmpo cr0, f1, f0
-    cror eq, lt, eq
-    bne RivalRun_RivalAIUpdate_L_80135CA4
-    fcmpo cr0, f29, f0
-    ble RivalRun_RivalAIUpdate_L_80135CA0
-    lfs f29, lbl_806D7384(r2)
-    b RivalRun_RivalAIUpdate_L_80135CA4
-    RivalRun_RivalAIUpdate_L_80135CA0:
-    lfs f29, lbl_806D7398(r2)
-    RivalRun_RivalAIUpdate_L_80135CA4:
-    fneg f1, f29
-    lfs f0, lbl_806CF610(r13)
-    lfs f2, lbl_806D7398(r2)
-    lfs f3, lbl_806D7384(r2)
-    fmuls f1, f1, f0
-    bl Saturate_Double
-    lfs f2, lbl_806CF618(r13)
-    fmr f30, f1
-    lfs f3, lbl_806CF614(r13)
-    fsubs f2, f31, f2
-    lfs f0, lbl_806CF61C(r13)
-    fcmpo cr0, f30, f3
-    fdivs f1, f2, f0
-    ble RivalRun_RivalAIUpdate_L_80135CF8
-    fsubs f0, f30, f3
-    lfs f3, lbl_806D7384(r2)
-    lfs f2, lbl_806D738C(r2)
-    fnmsubs f1, f1, f0, f3
-    bl Saturate_Double
-    fmr f29, f1
-    b RivalRun_RivalAIUpdate_L_80135D24
-    RivalRun_RivalAIUpdate_L_80135CF8:
-    fneg f0, f3
-    fcmpo cr0, f30, f0
-    bge RivalRun_RivalAIUpdate_L_80135D20
-    fadds f0, f30, f3
-    lfs f3, lbl_806D7384(r2)
-    lfs f2, lbl_806D738C(r2)
-    fmadds f1, f1, f0, f3
-    bl Saturate_Double
-    fmr f29, f1
-    b RivalRun_RivalAIUpdate_L_80135D24
-    RivalRun_RivalAIUpdate_L_80135D20:
-    lfs f29, lbl_806D7384(r2)
-    RivalRun_RivalAIUpdate_L_80135D24:
-    lfs f0, 0x4c(r30)
-    lwz r0, 0x34(r30)
-    fmuls f29, f29, f0
-    cmpwi r0, 0x0
-    bne RivalRun_RivalAIUpdate_L_80135DA4
-    lfs f0, lbl_806D739C(r2)
-    fcmpo cr0, f31, f0
-    ble RivalRun_RivalAIUpdate_L_80135DE8
-    lwz r3, 0x4(r30)
-    bl CarObject_IsAirborne
-    clrlwi. r0, r3, 24
-    bne RivalRun_RivalAIUpdate_L_80135DE8
-    lfs f0, lbl_806CF620(r13)
-    fcmpo cr0, f30, f0
-    cror eq, gt, eq
-    beq RivalRun_RivalAIUpdate_L_80135D74
-    fneg f0, f0
-    fcmpo cr0, f30, f0
-    cror eq, lt, eq
-    bne RivalRun_RivalAIUpdate_L_80135DE8
-    RivalRun_RivalAIUpdate_L_80135D74:
-    lwz r3, 0x4(r30)
-    li r4, 0x1
-    bl KartItem_TryArmBoostOnLanding
-    lfs f0, lbl_806D738C(r2)
-    fcmpo cr0, f30, f0
-    ble RivalRun_RivalAIUpdate_L_80135D98
-    li r0, 0x1
-    stw r0, 0x34(r30)
-    b RivalRun_RivalAIUpdate_L_80135DE8
-    RivalRun_RivalAIUpdate_L_80135D98:
-    li r0, -0x1
-    stw r0, 0x34(r30)
-    b RivalRun_RivalAIUpdate_L_80135DE8
-    RivalRun_RivalAIUpdate_L_80135DA4:
-    cmpwi r0, 0x1
-    bne RivalRun_RivalAIUpdate_L_80135DC4
-    lfs f0, lbl_806D738C(r2)
-    fcmpo cr0, f30, f0
-    cror eq, lt, eq
-    bne RivalRun_RivalAIUpdate_L_80135DC4
-    li r0, 0x0
-    stw r0, 0x34(r30)
-    RivalRun_RivalAIUpdate_L_80135DC4:
-    lwz r0, 0x34(r30)
-    cmpwi r0, -0x1
-    bne RivalRun_RivalAIUpdate_L_80135DE8
-    lfs f0, lbl_806D738C(r2)
-    fcmpo cr0, f30, f0
-    cror eq, gt, eq
-    bne RivalRun_RivalAIUpdate_L_80135DE8
-    li r0, 0x0
-    stw r0, 0x34(r30)
-    RivalRun_RivalAIUpdate_L_80135DE8:
-    lwz r0, 0x3c(r30)
-    cmpwi r0, 0x0
-    beq RivalRun_RivalAIUpdate_L_80135E14
-    bl IsRaceStarted
-    lfs f1, lbl_806D738C(r2)
-    mr r4, r3
-    lwz r3, 0x4(r30)
-    fmr f2, f1
-    fmr f3, f1
-    bl CarObject_ApplyInput
-    b RivalRun_RivalAIUpdate_L_80135E30
-    RivalRun_RivalAIUpdate_L_80135E14:
-    bl IsRaceStarted
-    fmr f1, f30
-    mr r4, r3
-    fmr f2, f29
-    lwz r3, 0x4(r30)
-    lfs f3, lbl_806D738C(r2)
-    bl CarObject_ApplyInput
-    RivalRun_RivalAIUpdate_L_80135E30:
-    lwz r3, 0x4(r30)
-    li r4, 0x0
-    bl CarObject_FrameUpdate
-    lwz r3, 0x4(r30)
-    bl CarObject_GetRenderObj
-    lwz r3, 0x304(r3)
-    li r6, 0x0
-    lis r5, 0x80
-    bl ItemEffectBus_OrMask
-    lfs f0, 0xc(r31)
-    li r3, 0x0
-    stfs f0, 0x8(r30)
-    lfs f0, 0x1c(r31)
-    stfs f0, 0xc(r30)
-    lfs f0, 0x2c(r31)
-    stfs f0, 0x10(r30)
-    bl WarpDashMgr_GetInstance
-    lfs f1, 0x8(r30)
-    lfs f2, 0xc(r30)
-    lfs f3, 0x10(r30)
-    bl WarpZone_FindContaining
-    cmpwi r3, -0x1
-    beq RivalRun_RivalAIUpdate_L_80135EB8
-    lwz r4, 0x20(r30)
-    lwz r3, 0x8(r4)
-    addi r0, r3, 0x1
-    cmpwi r0, 0x2
-    stw r0, 0x8(r4)
-    blt RivalRun_RivalAIUpdate_L_80135EAC
-    li r0, 0x0
-    stw r0, 0x8(r4)
-    RivalRun_RivalAIUpdate_L_80135EAC:
-    li r0, 0x0
-    stw r0, 0xc(r4)
-    b RivalRun_RivalAIUpdate_L_80135ECC
-    RivalRun_RivalAIUpdate_L_80135EB8:
-    lwz r3, 0x20(r30)
-    addi r4, r30, 0x8
-    stfs f31, 0x28(r3)
-    lwz r3, 0x20(r30)
-    bl RivalRun_UpdatePathFollower
-    RivalRun_RivalAIUpdate_L_80135ECC:
-    psq_l f31, 0x68(r1), 0, 0
-    lfd f31, 0x60(r1)
-    psq_l f30, 0x58(r1), 0, 0
-    lfd f30, 0x50(r1)
-    psq_l f29, 0x48(r1), 0, 0
-    lfd f29, 0x40(r1)
-    lwz r31, 0x3c(r1)
-    lwz r0, 0x74(r1)
-    lwz r30, 0x38(r1)
-    mtlr r0
-    addi r1, r1, 0x70
-    blr
+    mtx = KartDriver_GetKartRootMtx(CarObject_GetRenderObj(self->car));
+    speed = KartItem_GetCurrentSpeedWithBonus(self->car);
+    RivalRun_RivalTactics(self);
+    Vec3_Subtract(&self->aim, &self->pos, &toAim);
+    toAim.y = lbl_806D738C;
+    Vec3_Normalize(&toAim, &toAim);
+    right.x = mtx[0];
+    right.y = lbl_806D738C;
+    right.z = mtx[8];
+    fwd.x = mtx[2];
+    fwd.y = lbl_806D738C;
+    fwd.z = mtx[10];
+    Vec3_Normalize(&right, &right);
+    Vec3_Normalize(&fwd, &fwd);
+
+    if (IsRaceStarted() == 1) {
+        if (self->holdFrames > 0) {
+            self->holdFrames--;
+        }
+        side = Vec3_Dot(&toAim, &right);
+        if (Vec3_Dot(&toAim, &fwd) <= lbl_806D738C) {
+            if (side > lbl_806D738C) {
+                side = lbl_806D7384;
+            } else {
+                side = lbl_806D7398;
+            }
+        }
+        steer = Saturate_Double(-side * lbl_806CF610, lbl_806D7398, lbl_806D7384);
+        t = (speed - lbl_806CF618) / lbl_806CF61C;
+        if (steer > lbl_806CF614) {
+            accel = Saturate_Double(lbl_806D7384 - t * (steer - lbl_806CF614), lbl_806D738C, lbl_806D7384);
+        } else if (steer < -lbl_806CF614) {
+            accel = Saturate_Double(t * (steer + lbl_806CF614) + lbl_806D7384, lbl_806D738C, lbl_806D7384);
+        } else {
+            accel = lbl_806D7384;
+        }
+        accel *= self->accelScale;
+        if (self->driftDir == 0) {
+            if (speed > lbl_806D739C && !CarObject_IsAirborne(self->car)) {
+                if (steer >= lbl_806CF620 || steer <= -lbl_806CF620) {
+                    KartItem_TryArmBoostOnLanding(self->car, 1);
+                    if (steer > lbl_806D738C) {
+                        self->driftDir = 1;
+                    } else {
+                        self->driftDir = -1;
+                    }
+                }
+            }
+        } else {
+            if (self->driftDir == 1 && steer <= lbl_806D738C) {
+                self->driftDir = 0;
+            }
+            if (self->driftDir == -1 && steer >= lbl_806D738C) {
+                self->driftDir = 0;
+            }
+        }
+    }
+
+    if (self->holdFrames != 0) {
+        unsigned char started = IsRaceStarted();
+        CarObject_ApplyInput(self->car, started, lbl_806D738C, lbl_806D738C, lbl_806D738C);
+    } else {
+        CarObject_ApplyInput(self->car, IsRaceStarted(), steer, accel, lbl_806D738C);
+    }
+    CarObject_FrameUpdate(self->car, 0);
+    ItemEffectBus_OrMask(*(void **)((char *)CarObject_GetRenderObj(self->car) + 0x304), 0x0080000000000000ULL);
+    self->pos.x = mtx[3];
+    self->pos.y = mtx[7];
+    self->pos.z = mtx[11];
+    if (WarpZone_FindContaining(WarpDashMgr_GetInstance(0), self->pos.x, self->pos.y, self->pos.z) != -1) {
+        RRPathFollower *follower = self->follower;
+        if (++follower->route >= 2) {
+            follower->route = 0;
+        }
+        follower->seg = 0;
+    } else {
+        self->follower->endDist = speed;
+        RivalRun_UpdatePathFollower(self->follower, &self->pos);
+    }
 }
+
+#pragma exceptions reset
+
 
 /* === extracted from auto_RivalRun_UpdatePathF_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -867,12 +743,12 @@ asm void RivalRun_RivalAIUpdate(void) { /* 0x80135B7C size:0x380 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void Vec3_Dot();
-extern void Vec3_Normalize();
+extern float Vec3_Dot(const RRVec3 *a, const RRVec3 *b);
+extern void Vec3_Normalize(const RRVec3 *v, RRVec3 *out);
 extern void PSVECSquareMag();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D738C;
+extern const float lbl_806D738C;
 extern unsigned int lbl_806D73A0;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
@@ -1069,10 +945,10 @@ asm void RivalRun_UpdatePathFollower(void) { /* 0x80135EFC size:0x24C */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void CarObject_ApplyDriftBoost();
-extern void CarObject_GetRenderObj();
+extern void *CarObject_GetRenderObj(void *car);
 extern void GetRaceContextPtr();
-extern void IsRaceStarted();
-extern void KartDriver_GetKartRootMtx();
+extern unsigned char IsRaceStarted(void);
+extern float *KartDriver_GetKartRootMtx(void *render);
 extern void KartItem_CancelAndQueueDefault();
 extern void KartItem_CancelIfNotForced();
 extern void KartMovement_EquipItem();
@@ -1081,13 +957,13 @@ extern void RaceContextSlot_GetIfAlive();
 extern void RenderObj_UseItem();
 extern void RivalRun_CalcPathDistance();
 extern void Terrain_RaycastWall();
-extern void Vec3_Dot();
-extern void Vec3_Normalize();
-extern void Vec3_Subtract();
+extern float Vec3_Dot(const RRVec3 *a, const RRVec3 *b);
+extern void Vec3_Normalize(const RRVec3 *v, RRVec3 *out);
+extern void Vec3_Subtract(const RRVec3 *a, const RRVec3 *b, RRVec3 *out);
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_raceEnded;
-extern unsigned int lbl_806D738C;
+extern const float lbl_806D738C;
 extern unsigned int lbl_806D73A4;
 extern unsigned int lbl_806D73A8;
 extern unsigned int lbl_806D73AC;
@@ -1593,14 +1469,14 @@ asm void RivalRun_RivalTactics(void) { /* 0x80136148 size:0x6AC */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void Vec3_Dot();
+extern float Vec3_Dot(const RRVec3 *a, const RRVec3 *b);
 extern void Vec3_Magnitude();
-extern void Vec3_Normalize();
-extern void Vec3_Subtract();
+extern void Vec3_Normalize(const RRVec3 *v, RRVec3 *out);
+extern void Vec3_Subtract(const RRVec3 *a, const RRVec3 *b, RRVec3 *out);
 extern void PSVECSquareMag();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D738C;
+extern const float lbl_806D738C;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -1932,231 +1808,143 @@ extern unsigned int lbl_8048E4A0[];
  * [  0] 0x80136BA8 size:0x2F8   global RivalRun_Destroy
  */
 
-/* --- forward decls --- */
-asm void RivalRun_Destroy(void);
+/* --- native C++ island (deleting-destructor shape, see BiribiriLand.c) --- */
+typedef struct RRLight {
+    struct RRLightInfo *info; /* 0x00 */
+    unsigned short references; /* 0x04 */
+} RRLight;
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_RivalRun_Destroy[8] = {
-    0x18, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+typedef struct RRLightInfo {
+    unsigned char pad0[0x30];
+    void (*release)(RRLight *); /* 0x30 */
+    void (*destroy)(RRLight *); /* 0x34 */
+} RRLightInfo;
+
+/* per-rival AI block (self->rival) */
+typedef struct RRRival {
+    unsigned char pad0[4];
+    void *car;            /* 0x04 */
+    unsigned char pad8[0xC];
+    void *path;           /* 0x14 */
+    int pathSlot;         /* 0x18 */
+    unsigned char pad1C[4];
+    void *buffer;         /* 0x20 */
+} RRRival;
+
+typedef struct RivalRunState {
+    void *vtable;         /* 0x00 */
+    unsigned char pad4[4];
+    void *car;            /* 0x08 */
+    void *lakitu;         /* 0x0C */
+    void *environment;    /* 0x10 */
+    void *scene;          /* 0x14 */
+    void *goalCamera;     /* 0x18 */
+    void *camera;         /* 0x1C */
+    RRLight *lights;      /* 0x20 */
+    void *participants;   /* 0x24 */
+    void *hud;            /* 0x28 */
+    void *collision;      /* 0x2C */
+    RRRival *rival;       /* 0x30 */
+} RivalRunState;
+
+void *RivalRun_Destroy(RivalRunState *, short);
+
+#pragma cplusplus on
+struct RRVirtual {
+    virtual ~RRVirtual();
+};
+struct RRCarVirtual {
+    virtual void key();
+    virtual ~RRCarVirtual();
 };
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_RivalRun_Destroy = {
-    (void *)&RivalRun_Destroy, 0x000002F8, (void *)extab_RivalRun_Destroy
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void RivalRun_Destroy(void) { /* 0x80136BA8 size:0x2F8 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r4
-    stw r30, 0x18(r1)
-    mr. r30, r3
-    stw r29, 0x14(r1)
-    beq RivalRun_Destroy_L_80136E80
-    lis r3, lbl_8048E4A0@ha
-    addi r0, r3, lbl_8048E4A0@l
-    stw r0, 0x0(r30)
-    lwz r3, g_weatherSystem(r13)
-    cmplwi r3, 0x0
-    beq RivalRun_Destroy_L_80136BF4
-    li r4, 0x1
-    bl fn_8016C634
-    li r0, 0x0
-    stw r0, g_weatherSystem(r13)
-    RivalRun_Destroy_L_80136BF4:
-    li r3, 0x0
-    li r4, 0x0
-    bl SetActiveCamera
-    li r0, 0x0
-    li r4, 0x1
-    stw r0, g_objCollChecker(r13)
-    lwz r3, 0x2c(r30)
-    bl fn_80208FE4
-    lwz r3, 0x14(r30)
-    cmplwi r3, 0x0
-    beq RivalRun_Destroy_L_80136C34
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    RivalRun_Destroy_L_80136C34:
-    lwz r3, 0xc(r30)
-    li r4, 0x1
-    bl LakituStart_Dtor
-    lwz r3, 0x18(r30)
-    li r4, 0x1
-    bl fn_80124C84
-    li r3, 0x0
-    bl SetPlayerCarObject
-    lwz r3, 0x8(r30)
-    cmplwi r3, 0x0
-    beq RivalRun_Destroy_L_80136C74
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    RivalRun_Destroy_L_80136C74:
-    lwz r29, 0x30(r30)
-    cmplwi r29, 0x0
-    beq RivalRun_Destroy_L_80136CD4
-    lwz r3, 0x14(r29)
-    cmplwi r3, 0x0
-    beq RivalRun_Destroy_L_80136C9C
-    lwz r4, 0x18(r29)
-    cmpwi r4, 0x0
-    blt RivalRun_Destroy_L_80136C9C
-    bl Path_ResetCursorForKart
-    RivalRun_Destroy_L_80136C9C:
-    lwz r3, 0x4(r29)
-    cmplwi r3, 0x0
-    beq RivalRun_Destroy_L_80136CBC
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    RivalRun_Destroy_L_80136CBC:
-    lwz r3, 0x20(r29)
-    cmplwi r3, 0x0
-    beq RivalRun_Destroy_L_80136CCC
-    bl MemoryManager_TimedFree
-    RivalRun_Destroy_L_80136CCC:
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    RivalRun_Destroy_L_80136CD4:
-    li r0, 0x0
-    stw r0, g_raceCamera(r13)
-    lwz r3, 0x1c(r30)
-    cmplwi r3, 0x0
-    beq RivalRun_Destroy_L_80136D00
-    beq RivalRun_Destroy_L_80136D00
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    RivalRun_Destroy_L_80136D00:
-    lwz r29, 0x20(r30)
-    cmplwi r29, 0x0
-    beq RivalRun_Destroy_L_80136D7C
-    beq RivalRun_Destroy_L_80136D7C
-    lis r3, 0x1
-    lhz r4, 0x4(r29)
-    subi r0, r3, 0x1
-    clrlwi r0, r0, 16
-    subf r0, r4, r0
-    cntlzw r0, r0
-    extrwi. r0, r0, 8, 19
-    beq RivalRun_Destroy_L_80136D34
-    b RivalRun_Destroy_L_80136D44
-    RivalRun_Destroy_L_80136D34:
-    subi r3, r4, 0x1
-    cntlzw r0, r4
-    sth r3, 0x4(r29)
-    extrwi r0, r0, 8, 19
-    RivalRun_Destroy_L_80136D44:
-    cmpwi r0, 0x0
-    beq RivalRun_Destroy_L_80136D7C
-    cmplwi r29, 0x0
-    beq RivalRun_Destroy_L_80136D7C
-    lwz r4, 0x0(r29)
-    mr r3, r29
-    lwz r12, 0x30(r4)
-    mtctr r12
-    bctrl
-    lwz r4, 0x0(r29)
-    mr r3, r29
-    lwz r12, 0x34(r4)
-    mtctr r12
-    bctrl
-    RivalRun_Destroy_L_80136D7C:
-    lwz r3, 0x10(r30)
-    li r4, 0x1
-    bl CourseEnvironment_Dtor
-    lwz r3, 0x28(r30)
-    li r4, 0x1
-    bl fn_80254134
-    lwz r3, 0x24(r30)
-    li r4, 0x1
-    bl PathParticipantArray_Dtor
-    bl ItemObjectManager_Reset
-    bl VfxSlotMgr_Shutdown
-    bl ClRomTable_PurgeAll
-    bl GetRaceContextPtr
-    bl RankingTable_Init
-    lwz r3, lbl_806D10D0(r13)
-    cmplwi r3, 0x0
-    beq RivalRun_Destroy_L_80136DD4
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    RivalRun_Destroy_L_80136DD4:
-    li r0, 0x0
-    stw r0, lbl_806D10D0(r13)
-    bl SceneDrawList_Reset
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    beq RivalRun_Destroy_L_80136E00
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    RivalRun_Destroy_L_80136E00:
-    li r0, 0x0
-    li r3, 0x0
-    stw r0, lbl_806D109C(r13)
-    bl SetResourceLoadingFlag
-    bl clRom_PurgeAll
-    lwz r3, g_courseData(r13)
-    cmplwi r3, 0x0
-    beq RivalRun_Destroy_L_80136E34
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    RivalRun_Destroy_L_80136E34:
-    lwz r3, lbl_806D10AC(r13)
-    li r0, 0x0
-    stw r0, g_courseData(r13)
-    cmplwi r3, 0x0
-    beq RivalRun_Destroy_L_80136E5C
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    RivalRun_Destroy_L_80136E5C:
-    li r0, 0x0
-    mr r3, r30
-    stw r0, lbl_806D10AC(r13)
-    li r4, 0x0
-    bl dtor_80122FD8
-    extsh. r0, r31
-    ble RivalRun_Destroy_L_80136E80
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    RivalRun_Destroy_L_80136E80:
-    lwz r0, 0x24(r1)
-    mr r3, r30
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+/* ref_DEC follows the canonical HSD object.h inline. */
+static inline int RRLightRefDec(RRLight *obj)
+{
+    unsigned char unreferenced;
+    if ((unreferenced = (obj->references == (unsigned short)0xFFFF)))
+        return unreferenced;
+    return obj->references-- == 0;
 }
+static inline void RRLightDelete(RRLight *obj)
+{
+    if (obj) {
+        obj->info->release(obj);
+        obj->info->destroy(obj);
+    }
+}
+static inline void RRLightUnref(RRLight *obj)
+{
+    if (obj && RRLightRefDec(obj))
+        RRLightDelete(obj);
+}
+static inline void RRCameraRelease(RRVirtual *camera)
+{
+    if (camera)
+        delete camera;
+}
+
+static inline void RRDestroyRival(RRRival *rival)
+{
+    if (rival) {
+        if (rival->path && rival->pathSlot >= 0)
+            Path_ResetCursorForKart(rival->path, rival->pathSlot);
+        delete (RRCarVirtual *)rival->car;
+        if (rival->buffer)
+            MemoryManager_TimedFree(rival->buffer);
+        MemoryManager_TimedFree(rival);
+    }
+}
+
+#pragma exceptions on
+extern "C" void *RivalRun_Destroy(RivalRunState *self, short freeMemory)
+{
+    if (self) {
+        self->vtable = lbl_8048E4A0;
+        if (g_weatherSystem) {
+            fn_8016C634((void *)g_weatherSystem, 1);
+            g_weatherSystem = 0;
+        }
+        SetActiveCamera(0, 0);
+        g_objCollChecker = 0;
+        fn_80208FE4(self->collision, 1);
+        delete (RRVirtual *)self->scene;
+        LakituStart_Dtor(self->lakitu, 1);
+        fn_80124C84(self->goalCamera, 1);
+        SetPlayerCarObject(0);
+        delete (RRCarVirtual *)self->car;
+        RRDestroyRival(self->rival);
+        g_raceCamera = 0;
+        RRCameraRelease((RRVirtual *)self->camera);
+        if (self->lights)
+            RRLightUnref(self->lights);
+        CourseEnvironment_Dtor(self->environment, 1);
+        fn_80254134(self->hud, 1);
+        PathParticipantArray_Dtor(self->participants, 1);
+        ItemObjectManager_Reset();
+        VfxSlotMgr_Shutdown();
+        ClRomTable_PurgeAll();
+        GetRaceContextPtr();
+        RankingTable_Init();
+        delete (RRVirtual *)lbl_806D10D0;
+        lbl_806D10D0 = 0;
+        SceneDrawList_Reset();
+        delete (RRVirtual *)lbl_806D109C;
+        lbl_806D109C = 0;
+        SetResourceLoadingFlag(0);
+        clRom_PurgeAll();
+        delete (RRVirtual *)g_courseData;
+        g_courseData = 0;
+        delete (RRVirtual *)lbl_806D10AC;
+        lbl_806D10AC = 0;
+        dtor_80122FD8(self, 0);
+        if (freeMemory > 0)
+            MemoryManager_TimedFree(self);
+    }
+    return self;
+}
+#pragma exceptions reset
+#pragma cplusplus reset
 
 /* === extracted from auto_RivalRun_Init_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -2167,7 +1955,7 @@ asm void RivalRun_Destroy(void) { /* 0x80136BA8 size:0x2F8 */
 /* refine if the real prototype matters for header consumers. */
 extern void Alloc();
 extern void Camera_Create();
-extern void CarObject_GetRenderObj();
+extern void *CarObject_GetRenderObj(void *car);
 extern void CarObject_GetTransformMatrix();
 extern void CarObject_Init();
 extern void CarObject_SetPosition();
@@ -2226,7 +2014,7 @@ extern unsigned int g_totalLaps;
 extern unsigned int g_weatherSystem;
 extern unsigned int lbl_806D12BC;
 extern unsigned int lbl_806D7388;
-extern unsigned int lbl_806D738C;
+extern const float lbl_806D738C;
 extern unsigned int lbl_806D73CC;
 extern unsigned int lbl_806D73D0;
 extern unsigned int lbl_806D73D8;
@@ -2575,20 +2363,20 @@ asm void RivalRun_Init(void) { /* 0x80136EA0 size:0x48C */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void Alloc();
-extern void CarObject_GetRenderObj();
+extern void *CarObject_GetRenderObj(void *car);
 extern void CarObject_Init();
 extern void CarObject_SetPosition();
 extern void GetCourseStartYaw();
 extern void GetRaceContextPtr();
 extern void GetStartPosition();
-extern void ItemEffectBus_OrMask();
+extern void ItemEffectBus_OrMask(void *bus, unsigned long long mask);
 extern void PathManager_RegisterCarObject();
 extern void RaceContextSlot_GetIfAlive();
 extern void RivalRun_PathFollowerInit();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_ccClass;
-extern unsigned int lbl_806D738C;
+extern const float lbl_806D738C;
 
 /* --- function index (1 fns, .text 0x8013732C..0x80137588) ---
  * [  0] 0x8013732C size:0x25C   global RivalRun_RivalInit
