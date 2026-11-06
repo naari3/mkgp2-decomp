@@ -7,10 +7,10 @@
 /* refine if the real prototype matters for header consumers. */
 extern void DebugPrintf(const char *, ...);
 extern void KartItem_ResetStrPcbToIdle(void *owner);
-extern void StrPcb_GetInstance();
-extern void StrPcb_GetIntensityScale();
-extern void KartItem_SetStrPcbCmd2dFromFloat();
-extern void KartItem_SetStrPcbCmd2eFromFloat();
+extern void *StrPcb_GetInstance(void);
+extern float StrPcb_GetIntensityScale(void *pcb);
+extern void KartItem_SetStrPcbCmd2dFromFloat(void *kart, float value);
+extern void KartItem_SetStrPcbCmd2eFromFloat(void *kart, float value);
 extern unsigned int lbl_806D2984;
 extern unsigned int lbl_806D2988;
 
@@ -25,7 +25,6 @@ extern const float lbl_806D2980;
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 extern unsigned int jumptable_803F99E0[];
 extern unsigned int jumptable_803F9A08[];
-extern void *jumptable_803F9A58[];
 extern unsigned int lbl_802EDD98[];
 
 /* --- function index (1 fns, .text 0x8005B288..0x8005B43C) ---
@@ -312,19 +311,6 @@ done:
 #include "src/game/TmpActionSplit.c"
 
 #pragma cplusplus on
-#pragma section RW ".data"
-__declspec(section ".data") void *jumptable_803F9A58[10] = {
-    (char *)&EffectSteering_InitForSplit + 0x13C,
-    (char *)&EffectSteering_InitForSplit + 0x0DC,
-    (char *)&EffectSteering_InitForSplit + 0x0E8,
-    (char *)&EffectSteering_InitForSplit + 0x0F4,
-    (char *)&EffectSteering_InitForSplit + 0x0E8,
-    (char *)&EffectSteering_InitForSplit + 0x100,
-    (char *)&EffectSteering_InitForSplit + 0x10C,
-    (char *)&EffectSteering_InitForSplit + 0x118,
-    (char *)&EffectSteering_InitForSplit + 0x124,
-    (char *)&EffectSteering_InitForSplit + 0x130
-};
 
 extern "C" void EffectSteering_InputViscosity_SetFieldC(EffectSteeringScale *self, float value) {
     ((EffectInputViscosity *)self->inputs[5])->fieldC = value;

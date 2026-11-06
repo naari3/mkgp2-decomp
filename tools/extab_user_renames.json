@@ -2251,7 +2251,9 @@
   },
   "src/game/EffectSteering.c": {
     "@33": "jumptable_803F99E0",
-    "@162": "jumptable_803F9A80"
+    "@162": "jumptable_803F9A80",
+    "@156": "jumptable_803F9A58",
+    "@198": "jumptable_803F9A80"
   },
   "src/game/EffectSteering_Dtor.cpp": {
     "__dt__6ESCtorFv": "EffectSteering_Dtor",

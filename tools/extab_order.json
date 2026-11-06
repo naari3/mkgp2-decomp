@@ -2258,5 +2258,21 @@
     "BiribiriLand_UpdateObstacles",
     "BiribiriLand_Destroy",
     "BiribiriLand_Init"
+  ],
+  "src/game/EffectSteering.c": [
+    "EffectSteering_InitForDelay",
+    "ActionDelay_Reset",
+    "EffectSteering_InitForScale",
+    "EffectSteering_InitForShake",
+    "ActionShake_Reset",
+    "EffectSteering_InitForSplit",
+    "ActionSplit_Reset",
+    "EffectSteering_InitForViscosity",
+    "EffectSteering_InitForViscosity_Uniform",
+    "EffectSteering_InitForVibrate_Sub",
+    "ActionVibrate_Reset",
+    "EffectSteering_InitForVibrate",
+    "EffectSteering_InitForLock",
+    "ActionLock_Reset"
   ]
 }
