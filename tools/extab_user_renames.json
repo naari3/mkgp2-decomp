@@ -2820,7 +2820,9 @@
     "extab_fn_8013AE20": "@etb_8000D330",
     "extabindex_fn_8013AE20": "@eti_80024CBC",
     "extab_fn_8013B87C": "@etb_8000D350",
-    "extabindex_fn_8013B87C": "@eti_80024CEC"
+    "extabindex_fn_8013B87C": "@eti_80024CEC",
+    "__dt__6CSAnimFv": "fn_8013B87C",
+    "__dt__7ResCtrlFv": "dtor_80082960"
   },
   "src/game/CourseTables.c": {
     "extab_fn_8013BFF8": "@etb_8000D3A8",
@@ -3658,7 +3660,8 @@
     "__dt__7ResCtrlFv": "dtor_80082960",
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "extab_fn_8013F428": "@etb_8000D6C0",
-    "extabindex_fn_8013F428": "@eti_80024FB0"
+    "extabindex_fn_8013F428": "@eti_80024FB0",
+    "DrawTitle__8TrophyFxFf": "fn_8013F428"
   },
   "src/game/PodiumPose.c": {
     "IsDone__7WinPoseFv": "fn_8014219C",
@@ -5458,7 +5461,9 @@
   },
   "src/game/fn_8012B48C.cpp": {
     "extab_fn_8012B48C": "@etb_8000C6A8",
-    "extabindex_fn_8012B48C": "@eti_80024A40"
+    "extabindex_fn_8012B48C": "@eti_80024A40",
+    "__ct__10clNormal3DFPvi": "clNormal3D_Construct",
+    "__ct__10KartTireFXFiiP4JObjP4JObjP4JObjP4JObj": "KartTireFX_Ctor"
   },
   "src/game/CGameCoin_8012BF5C.cpp": {
     "extab_fn_8012BF5C": "@etb_8000C730",

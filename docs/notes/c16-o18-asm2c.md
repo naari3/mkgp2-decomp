@@ -1,0 +1,5 @@
+# c16-o18-asm2c
+
+Source: Codex worker c16_o18_asm2c_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 4356 B.
+
+c16_o18 (Opus): ResultFx fn_8013F428 'float register choice' = extern const float labels + inline (int)strlen() conversions; literals + an `int len` local match. csAnim fn_8013B87C = CSAnim::~CSAnim with a ResCtrl member (recursive delete inlined to MWCC's depth limit; member dtor out of line only at the innermost level). GXChannel_PushChannelColors (extlib.cpp copy of HSD_TExpSetReg): C++ + readonly_strings + TU-local statics reproduce the pooled base; 97.85%, blocked on clist->reg r0/r5 allocation (same as texp_nm1 HSD_TExpSetReg 97.89%). In C++ mode with -Cpp_exceptions off, `#pragma exceptions reset` before EOF suppresses extab (C++ codegen is deferred to end of file). fn_8013AE20 best 86.9% (compute all lerps into locals first -> f25-f31 save set matches; scheduler order remains). clMiyoshiCardCreate_Tick best 99.88% via default-first switch (branch polarity remains).

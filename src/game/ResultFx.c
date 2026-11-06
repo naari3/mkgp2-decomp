@@ -2,8 +2,6 @@
  * Result-screen cup trophy effect on the shared sprite-effect base
  * (vtable lbl_8048EBCC; ctor, dtor). The base declares a virtual that is
  * not defined here first, so no vtable is emitted.
- *
- * Still asm: the title draw (float register choice).
  */
 #pragma cplusplus on
 
@@ -221,33 +219,21 @@ struct TrophyFx : FxBase {
     virtual void Draw();
     virtual void Update();
     void DrawCaption(float a);
+    void DrawTitle(float a);
 };
 
-extern "C" {
-extern unsigned int lbl_806D7838;
-asm void fn_8013F428(void);
-
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_8013F428 = { 0x304A0000, 0x000000F4, 0x01020010, 0x00000000, 0x82000088, (void *)&dtor_800869D0 };
-
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013F428 = {
-    (void *)&fn_8013F428, 0x00000518, (void *)&extab_fn_8013F428
-};
-
-}
 
 
 void TrophyFx::Draw() {
     switch (state) {
     case 0:
-        ((void (*)(TrophyFx *, float))fn_8013F428)(this, t / 15.0f);
+        DrawTitle(t / 15.0f);
         break;
     case 1:
-        ((void (*)(TrophyFx *, float))fn_8013F428)(this, 1.0f);
+        DrawTitle(1.0f);
         break;
     case 2:
-        ((void (*)(TrophyFx *, float))fn_8013F428)(this, 1.0f);
+        DrawTitle(1.0f);
         fn_801678FC(7, 0.0f, 0.0f, 0.0f, t / 15.0f);
         break;
     case 3:
@@ -386,338 +372,87 @@ void TrophyFx::DrawCaption(float a) {
     fn_801F8A34(ctx, &t2, 5);
 }
 
-extern "C" asm void fn_8013F428(void) { /* 0x8013F428 size:0x518 */
-    nofralloc
-    stwu r1, -0x300(r1)
-    mflr r0
-    stw r0, 0x304(r1)
-    stfd f31, 0x2f0(r1)
-    psq_st f31, 0x2f8(r1), 0, 0
-    stmw r26, 0x2d8(r1)
-    fmr f31, f1
-    lfs f4, lbl_806D77AC(r2)
-    mr r28, r3
-    lfs f1, lbl_806D77B8(r2)
-    fmr f5, f4
-    lwz r3, 0x0(r3)
-    fmr f6, f4
-    lfs f2, lbl_806D77F4(r2)
-    fmr f7, f4
-    lfs f3, lbl_806D77F8(r2)
-    fmr f8, f31
-    li r4, 0x14e5
-    li r5, 0x0
-    bl fn_8016918C
-    fmr f3, f31
-    lwz r3, 0x0(r28)
-    lfs f1, lbl_806D77B8(r2)
-    li r4, 0x1cda
-    lfs f2, lbl_806D77FC(r2)
-    li r5, 0x0
-    bl fn_801695E0
-    lfs f1, 0x40(r28)
-    lfs f0, lbl_806D7800(r2)
-    lfs f3, lbl_806D77B0(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8013F428_L_8013F4B4
-    stfs f3, 0x40(r28)
-    b fn_8013F428_L_8013F4E4
-    fn_8013F428_L_8013F4B4:
-    lfs f0, lbl_806D7804(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8013F428_L_8013F4E4
-    fsubs f2, f1, f0
-    lfs f0, lbl_806D77A8(r2)
-    lfs f1, lbl_806D77AC(r2)
-    fdivs f3, f2, f0
-    fcmpo cr0, f3, f1
-    ble fn_8013F428_L_8013F4E4
-    fsubs f0, f3, f1
-    fsubs f3, f1, f0
-    fn_8013F428_L_8013F4E4:
-    lwz r3, 0x0(r28)
-    li r4, 0x1cda
-    lfs f1, lbl_806D77B8(r2)
-    li r5, 0x2
-    lfs f2, lbl_806D77FC(r2)
-    bl fn_801695E0
-    bl fn_801F8E58
-    mr r0, r3
-    addi r3, r1, 0x88
-    mr r29, r0
-    bl TexMgr_Init
-    addi r3, r1, 0x88
-    li r4, 0x1
-    bl fn_801F8FCC
-    lwz r3, 0x18(r28)
-    li r4, -0x1
-    bl fn_8013C198
-    mr r26, r3
-    li r3, 0x55
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    mr r4, r3
-    mr r5, r26
-    addi r3, r1, 0x88
-    crxor 6, 6, 6
-    bl TexMgr_SetTexture
-    lfs f0, lbl_806D77D8(r2)
-    addi r3, r1, 0x88
-    lfs f1, lbl_806D77B8(r2)
-    stfs f0, 0x2b4(r1)
-    lfs f2, lbl_806D77CC(r2)
-    bl fn_801F93EC
-    lfs f0, lbl_806D77B4(r2)
-    li r0, 0x1
-    stw r0, 0xa0(r1)
-    li r30, -0x100
-    fmuls f0, f0, f31
-    addi r3, r1, 0x88
-    fctiwz f0, f0
-    stfd f0, 0x2b8(r1)
-    lwz r0, 0x2bc(r1)
-    rlwimi r30, r0, 0, 24, 31
-    clrlwi r31, r0, 24
-    stw r30, 0xa8(r1)
-    bl fn_801F8E90
-    lwz r5, 0x0(r28)
-    mr r3, r29
-    addi r4, r1, 0x88
-    bl fn_801F8A34
-    addi r3, r1, 0x88
-    li r4, 0x0
-    bl fn_801F8FCC
-    addi r3, r1, 0x88
-    bl fn_801F8E90
-    lfs f0, lbl_806D7808(r2)
-    li r0, 0x1
-    stw r0, 0xa0(r1)
-    stfs f0, 0x2b4(r1)
-    bl isJapanese
-    cmpwi r3, 0x0
-    bne fn_8013F428_L_8013F790
-    li r3, 0x58
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    mr r26, r3
-    li r3, 0x57
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    mr r27, r3
-    li r3, 0x56
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    mr r5, r3
-    mr r6, r27
-    mr r7, r26
-    addi r3, r1, 0x8
-    la r4, lbl_806D780C(r2)  /* lbl_806D780C */
-    crxor 6, 6, 6
-    bl sprintf
-    addi r3, r1, 0x8
-    bl strlen
-    subi r3, r3, 0x1
-    lis r0, 0x4330
-    xoris r4, r3, 0x8000
-    stw r0, 0x2b8(r1)
-    lfd f1, lbl_806D7838(r2)
-    addi r3, r1, 0x88
-    stw r4, 0x2bc(r1)
-    lfs f3, lbl_806D7818(r2)
-    lfd f0, 0x2b8(r1)
-    lfs f4, lbl_806D7814(r2)
-    fsubs f1, f0, f1
-    lfs f0, lbl_806D77B8(r2)
-    lfs f2, lbl_806D781C(r2)
-    fmuls f1, f3, f1
-    fnmsubs f31, f4, f1, f0
-    fmr f1, f31
-    bl fn_801F93EC
-    li r3, 0x56
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    mr r4, r3
-    addi r3, r1, 0x88
-    crxor 6, 6, 6
-    bl TexMgr_SetTexture
-    stw r30, 0xa8(r1)
-    mr r3, r29
-    addi r4, r1, 0x88
-    lwz r5, 0x0(r28)
-    bl fn_801F8A34
-    li r3, 0x56
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    bl strlen
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x2c4(r1)
-    addi r3, r1, 0x88
-    lfd f1, lbl_806D7838(r2)
-    stw r0, 0x2c0(r1)
-    lfs f3, lbl_806D7814(r2)
-    lfd f0, 0x2c0(r1)
-    lfs f2, lbl_806D781C(r2)
-    fsubs f0, f0, f1
-    fmadds f31, f3, f0, f31
-    fmr f1, f31
-    bl fn_801F93EC
-    li r3, 0x57
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    mr r4, r3
-    addi r3, r1, 0x88
-    crxor 6, 6, 6
-    bl TexMgr_SetTexture
-    oris r0, r31, 0xe0e0
-    mr r3, r29
-    ori r0, r0, 0x2000
-    addi r4, r1, 0x88
-    stw r0, 0xa8(r1)
-    lwz r5, 0x0(r28)
-    bl fn_801F8A34
-    li r3, 0x57
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    bl strlen
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x2cc(r1)
-    addi r3, r1, 0x88
-    lfd f1, lbl_806D7838(r2)
-    stw r0, 0x2c8(r1)
-    lfs f3, lbl_806D7814(r2)
-    lfd f0, 0x2c8(r1)
-    lfs f2, lbl_806D781C(r2)
-    fsubs f0, f0, f1
-    fmadds f31, f3, f0, f31
-    fmr f1, f31
-    bl fn_801F93EC
-    li r3, 0x58
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    mr r4, r3
-    addi r3, r1, 0x88
-    crxor 6, 6, 6
-    bl TexMgr_SetTexture
-    stw r30, 0xa8(r1)
-    mr r3, r29
-    addi r4, r1, 0x88
-    lwz r5, 0x0(r28)
-    bl fn_801F8A34
-    b fn_8013F428_L_8013F924
-    fn_8013F428_L_8013F790:
-    lfs f1, lbl_806D77B8(r2)
-    addi r3, r1, 0x88
-    lfs f2, lbl_806D7820(r2)
-    bl fn_801F93EC
-    li r3, 0x59
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    mr r4, r3
-    addi r3, r1, 0x88
-    crxor 6, 6, 6
-    bl TexMgr_SetTexture
-    stw r30, 0xa8(r1)
-    addi r3, r1, 0x88
-    li r4, 0x1
-    bl fn_801F8FCC
-    addi r3, r1, 0x88
-    bl fn_801F8E90
-    lwz r5, 0x0(r28)
-    mr r3, r29
-    addi r4, r1, 0x88
-    bl fn_801F8A34
-    addi r3, r1, 0x88
-    li r4, 0x0
-    bl fn_801F8FCC
-    li r3, 0x5b
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    mr r27, r3
-    li r3, 0x5a
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    mr r5, r3
-    mr r6, r27
-    addi r3, r1, 0x8
-    la r4, lbl_806D7824(r2)  /* lbl_806D7824 */
-    crxor 6, 6, 6
-    bl sprintf
-    addi r3, r1, 0x8
-    bl strlen
-    subi r3, r3, 0x1
-    lis r0, 0x4330
-    xoris r4, r3, 0x8000
-    stw r0, 0x2c8(r1)
-    lfd f1, lbl_806D7838(r2)
-    addi r3, r1, 0x88
-    stw r4, 0x2cc(r1)
-    lfs f3, lbl_806D7818(r2)
-    lfd f0, 0x2c8(r1)
-    lfs f4, lbl_806D782C(r2)
-    fsubs f1, f0, f1
-    lfs f0, lbl_806D77B8(r2)
-    lfs f2, lbl_806D7830(r2)
-    fmuls f1, f3, f1
-    fnmsubs f31, f4, f1, f0
-    fmr f1, f31
-    bl fn_801F93EC
-    li r3, 0x5a
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    mr r4, r3
-    addi r3, r1, 0x88
-    crxor 6, 6, 6
-    bl TexMgr_SetTexture
-    stw r30, 0xa8(r1)
-    addi r3, r1, 0x88
-    bl fn_801F8E90
-    lwz r5, 0x0(r28)
-    mr r3, r29
-    addi r4, r1, 0x88
-    bl fn_801F8A34
-    li r3, 0x5a
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    bl strlen
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x2c4(r1)
-    addi r3, r1, 0x88
-    lfd f1, lbl_806D7838(r2)
-    stw r0, 0x2c0(r1)
-    lfs f3, lbl_806D782C(r2)
-    lfd f0, 0x2c0(r1)
-    lfs f2, lbl_806D7830(r2)
-    fsubs f0, f0, f1
-    fmadds f31, f3, f0, f31
-    fmr f1, f31
-    bl fn_801F93EC
-    li r3, 0x5b
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    mr r4, r3
-    addi r3, r1, 0x88
-    crxor 6, 6, 6
-    bl TexMgr_SetTexture
-    oris r0, r31, 0xe0e0
-    mr r3, r29
-    ori r0, r0, 0x2000
-    addi r4, r1, 0x88
-    stw r0, 0xa8(r1)
-    lwz r5, 0x0(r28)
-    bl fn_801F8A34
-    fn_8013F428_L_8013F924:
-    psq_l f31, 0x2f8(r1), 0, 0
-    lfd f31, 0x2f0(r1)
-    lmw r26, 0x2d8(r1)
-    lwz r0, 0x304(r1)
-    mtlr r0
-    addi r1, r1, 0x300
-    blr
+void TrophyFx::DrawTitle(float a) {
+    unsigned char alpha;
+    unsigned int color;
+    float k;
+    void *ctx;
+    float x;
+    char buf[0x80];
+    int len;
+
+    fn_8016918C(obj, 0x14E5, 0, 320.0f, 373.0f, 1.25f, 1.0f, 1.0f,
+                1.0f, 1.0f, a);
+    fn_801695E0(obj, 0x1CDA, 0, 320.0f, 266.0f, a);
+    k = 0.0f;
+    if (t3 >= 90.0f) {
+        t3 = 0.0f;
+    } else if (t3 >= 60.0f) {
+        k = (t3 - 60.0f) / 15.0f;
+        if (k > 1.0f) {
+            k = 1.0f - (k - 1.0f);
+        }
+    }
+    fn_801695E0(obj, 0x1CDA, 2, 320.0f, 266.0f, k);
+    ctx = fn_801F8E58();
+    TexMgr tm;
+    fn_801F8FCC(&tm, 1);
+    TexMgr_SetTexture(&tm, GetTextureByIdAndLang(0x55, -1), fn_8013C198(cup, -1));
+    tm.fade = -2.0f;
+    fn_801F93EC(&tm, 320.0f, 340.0f);
+    alpha = (int)(255.0f * a);
+    color = alpha | 0xFFFFFF00;
+    tm.SetColor(color);
+    fn_801F8E90(&tm);
+    fn_801F8A34(ctx, &tm, obj);
+    fn_801F8FCC(&tm, 0);
+    fn_801F8E90(&tm);
+    tm.mode = 1;
+    tm.fade = -3.0f;
+    if (isJapanese() == 0) {
+        sprintf(buf, lbl_806D780C, GetTextureByIdAndLang(0x56, -1), GetTextureByIdAndLang(0x57, -1),
+                GetTextureByIdAndLang(0x58, -1));
+        len = strlen(buf);
+        x = 320.0f - 10.5f * (0.5f * (len - 1));
+        fn_801F93EC(&tm, x, 377.0f);
+        TexMgr_SetTexture(&tm, GetTextureByIdAndLang(0x56, -1));
+        tm.color = color;
+        fn_801F8A34(ctx, &tm, obj);
+        len = strlen(GetTextureByIdAndLang(0x56, -1));
+        x += 10.5f * len;
+        fn_801F93EC(&tm, x, 377.0f);
+        TexMgr_SetTexture(&tm, GetTextureByIdAndLang(0x57, -1));
+        tm.color = alpha | 0xE0E02000;
+        fn_801F8A34(ctx, &tm, obj);
+        len = strlen(GetTextureByIdAndLang(0x57, -1));
+        x += 10.5f * len;
+        fn_801F93EC(&tm, x, 377.0f);
+        TexMgr_SetTexture(&tm, GetTextureByIdAndLang(0x58, -1));
+        tm.color = color;
+        fn_801F8A34(ctx, &tm, obj);
+    } else {
+        fn_801F93EC(&tm, 320.0f, 370.0f);
+        TexMgr_SetTexture(&tm, GetTextureByIdAndLang(0x59, -1));
+        tm.color = color;
+        fn_801F8FCC(&tm, 1);
+        fn_801F8E90(&tm);
+        fn_801F8A34(ctx, &tm, obj);
+        fn_801F8FCC(&tm, 0);
+        sprintf(buf, lbl_806D7824, GetTextureByIdAndLang(0x5A, -1), GetTextureByIdAndLang(0x5B, -1));
+        len = strlen(buf);
+        x = 320.0f - 15.5f * (0.5f * (len - 1));
+        fn_801F93EC(&tm, x, 400.0f);
+        TexMgr_SetTexture(&tm, GetTextureByIdAndLang(0x5A, -1));
+        tm.color = color;
+        fn_801F8E90(&tm);
+        fn_801F8A34(ctx, &tm, obj);
+        len = strlen(GetTextureByIdAndLang(0x5A, -1));
+        x += 15.5f * len;
+        fn_801F93EC(&tm, x, 400.0f);
+        TexMgr_SetTexture(&tm, GetTextureByIdAndLang(0x5B, -1));
+        tm.color = alpha | 0xE0E02000;
+        fn_801F8A34(ctx, &tm, obj);
+    }
 }
 
 void TrophyFx::Update() {

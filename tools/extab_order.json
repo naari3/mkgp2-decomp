@@ -551,7 +551,8 @@
     "fn_8013B4FC",
     "fn_8013B7A8",
     "fn_8013B87C",
-    "fn_8013B9A0"
+    "fn_8013B9A0",
+    "dtor_80082960"
   ],
   "src/game/CourseTables.c": [
     "fn_8013BFF8",

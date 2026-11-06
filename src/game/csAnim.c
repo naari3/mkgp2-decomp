@@ -6,9 +6,12 @@
  * out-of-line copy CW emits is superseded by the strong definition in
  * csAnim_Reset.c, which sits at the address following this TU.
  *
- * fn_8013AE20 (fp register count) and fn_8013B87C (member dtor only on the
- * innermost inlined level) do not match from C yet; they stay as asm with
- * manual extab, ordered via tools/extab_order.json.
+ * fn_8013B87C is the CSAnim destructor: deleting `next` inlines the dtor
+ * recursively up to the inline depth limit, and only the innermost level
+ * calls the ResCtrl member dtor out of line (weak copy dtor_80082960).
+ *
+ * fn_8013AE20 (fp register count) does not match from C yet; it stays as
+ * asm with manual extab, ordered via tools/extab_order.json.
  */
 
 typedef struct CSAnimKey {
@@ -25,18 +28,24 @@ typedef struct CSAnimKey {
     float a;
 } CSAnimKey;
 
-typedef struct CSAnim {
-    int id;
-    struct CSAnim *next;
-    int flags;
-    int frame;
-    int index;
-    CSAnimKey *keys;
-    /* 0x18: ResCtrl-like sprite resource */
+#pragma cplusplus on
+struct ResCtrl {
     int res;
     int pad1C;
     int res20;
     int pad24;
+    ~ResCtrl() {}
+};
+
+struct CSAnim {
+    int id;
+    CSAnim *next;
+    int flags;
+    int frame;
+    int index;
+    CSAnimKey *keys;
+    /* 0x18: ResCtrl sprite resource */
+    ResCtrl res;
     unsigned char visible;
     float x;
     float y;
@@ -51,7 +60,10 @@ typedef struct CSAnim {
     int u60;
     int u64;
     int u68;
-} CSAnim;
+    ~CSAnim();
+};
+#pragma cplusplus off
+typedef struct CSAnim CSAnim;
 
 extern const int lbl_806D7480;
 extern const int lbl_806D7498;
@@ -64,10 +76,7 @@ extern const int lbl_806D7490;
 extern void fn_8011FAFC(void *res, void *arg);
 extern void OSPanic(const char *file, int line, const char *msg, ...);
 extern void ResCtrl_Init(void *res);
-extern void dtor_80082960();
-extern void MemoryManager_TimedFree();
 
-asm void fn_8013B87C(void);
 asm void fn_8013AE20(void);
 
 inline void fn_8013BA78(CSAnim *n) {
@@ -457,105 +466,17 @@ void fn_8013B7A8(CSAnim *n, CSAnim *add) {
     n->next = add;
 }
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_fn_8013B87C[8] = {
-    0x50, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+#pragma cplusplus on
+#pragma exceptions on
+void operator delete(void *p);
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013B87C = {
-    (void *)&fn_8013B87C, 0x00000124, (void *)extab_fn_8013B87C
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void fn_8013B87C(void) { /* 0x8013B87C size:0x124 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stmw r22, 0x8(r1)
-    mr. r22, r3
-    mr r23, r4
-    beq fn_8013B87C_L_8013B988
-    lwz r31, 0x4(r22)
-    cmplwi r31, 0x0
-    beq fn_8013B87C_L_8013B978
-    beq fn_8013B87C_L_8013B978
-    lwz r30, 0x4(r31)
-    cmplwi r30, 0x0
-    beq fn_8013B87C_L_8013B970
-    beq fn_8013B87C_L_8013B970
-    lwz r29, 0x4(r30)
-    cmplwi r29, 0x0
-    beq fn_8013B87C_L_8013B968
-    beq fn_8013B87C_L_8013B968
-    lwz r28, 0x4(r29)
-    cmplwi r28, 0x0
-    beq fn_8013B87C_L_8013B960
-    beq fn_8013B87C_L_8013B960
-    lwz r27, 0x4(r28)
-    cmplwi r27, 0x0
-    beq fn_8013B87C_L_8013B958
-    beq fn_8013B87C_L_8013B958
-    lwz r26, 0x4(r27)
-    cmplwi r26, 0x0
-    beq fn_8013B87C_L_8013B950
-    beq fn_8013B87C_L_8013B950
-    lwz r25, 0x4(r26)
-    cmplwi r25, 0x0
-    beq fn_8013B87C_L_8013B948
-    beq fn_8013B87C_L_8013B948
-    lwz r24, 0x4(r25)
-    cmplwi r24, 0x0
-    beq fn_8013B87C_L_8013B940
-    beq fn_8013B87C_L_8013B940
-    lwz r3, 0x4(r24)
-    cmplwi r3, 0x0
-    beq fn_8013B87C_L_8013B92C
-    li r4, 0x1
-    bl fn_8013B87C
-    fn_8013B87C_L_8013B92C:
-    addi r3, r24, 0x18
-    li r4, -0x1
-    bl dtor_80082960
-    mr r3, r24
-    bl MemoryManager_TimedFree
-    fn_8013B87C_L_8013B940:
-    mr r3, r25
-    bl MemoryManager_TimedFree
-    fn_8013B87C_L_8013B948:
-    mr r3, r26
-    bl MemoryManager_TimedFree
-    fn_8013B87C_L_8013B950:
-    mr r3, r27
-    bl MemoryManager_TimedFree
-    fn_8013B87C_L_8013B958:
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    fn_8013B87C_L_8013B960:
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    fn_8013B87C_L_8013B968:
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    fn_8013B87C_L_8013B970:
-    mr r3, r31
-    bl MemoryManager_TimedFree
-    fn_8013B87C_L_8013B978:
-    extsh. r0, r23
-    ble fn_8013B87C_L_8013B988
-    mr r3, r22
-    bl MemoryManager_TimedFree
-    fn_8013B87C_L_8013B988:
-    mr r3, r22
-    lmw r22, 0x8(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+CSAnim::~CSAnim() {
+    if (next) {
+        delete next;
+    }
 }
+#pragma exceptions reset
+#pragma cplusplus off
 
 CSAnim *fn_8013B9A0(CSAnim *n, int res, int res20, int mode, CSAnimKey *keys, int id) {
     n->id = id;
@@ -567,10 +488,10 @@ CSAnim *fn_8013B9A0(CSAnim *n, int res, int res20, int mode, CSAnimKey *keys, in
         return n;
     }
     n->keys = keys;
-    n->res = res;
-    n->res20 = res20;
+    n->res.res = res;
+    n->res.res20 = res20;
     if (res20 <= -1 || res20 >= 5) {
-        n->res20 = 0;
+        n->res.res20 = 0;
     }
     switch (mode) {
     case 1:
