@@ -18,3 +18,8 @@ c3_u2 verified partial: fn_801DEF94 lacked 13 queue/ring definitions despite lis
 Source: Codex worker c5_s16_anon8021f088_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 392 B.
 
 E4544: existing SteeringRingInsertPrivate RingString wrapper restores independent r25 member base and exact 116-byte EH. A reference-taking inline AssignDistance wrapping by-value RingDistance4 restores all target iterator stack slots. Residual only stw data before/after first last.ring load (98.91304%); combined allocation/copy and restrict forms regress and were reverted.
+
+## c16_u15_20261106
+Source: Codex worker c16_u15_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u15 fn_801E5724: existing SteeringRingInsertPrivate.h RingString wrapper restores independent r27 shared member/frame and EH identity. A TU-local const-reference min with two mutable locals (0xffffffffUL/sizeof(int), 0xffffffffUL) replaces artificial volatile RingMax and restores exact target compare/prologue: 732B text +116B EH +12B index all100 after name bridges. Native promotion fails because compiler throw type string emits 55B .data retained (+64B section growth), while original lbl_803BD228 lies in shared .rodata. Explicit placement construction plus __throw suppresses type string but regresses to744B/89.016396; reverted. Final NonMatching fallback DOL SHA1 exact, zero native gain. No padding or tool-code edits.
