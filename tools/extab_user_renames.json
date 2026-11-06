@@ -5122,7 +5122,15 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__ct__7ResCtrlFv": "ResCtrl_Init",
-    "__dt__7ResCtrlFv": "dtor_80082960"
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__12NamCamPanelCFv": "fn_8014FC40",
+    "__vt__9SceneBase": "lbl_8048FF80",
+    "__vt__12NamCamPanelC": "lbl_8048FFC0",
+    "__dt__9SceneBaseFv": "dtor_801577D4",
+    "__ct__11SceneSpriteFiii": "Sprite_InitWithAnim",
+    "__ct__6SprResFPc": "fn_801F7D50",
+    "__dt__7SprInstFv": "dtor_8015535C",
+    "Draw__8SprSceneFUiUiUifffffffff": "fn_80154FB0"
   },
   "src/game/RaceHud_80147470.cpp": {
     "extab_fn_80147470": "@etb_8000DF44",
