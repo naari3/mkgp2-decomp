@@ -1,8 +1,9 @@
 /* Complete native BurnoutCharge callback. Local views contain observed fields;
  * children are independent draw effects, not C++ owned allocations.
- * NonMatching: text 98.97959%, native EH 100%, index 91.66667%.
- * Target 3920B, candidate 3916B; FP clamp webs/constant reloads and GPR
- * partitions remain different. No instruction patch or manual EH is used. */
+ * NonMatching: text 99.75%, native EH and index 100%, size 3920B.
+ * Remaining differences are owner/charging/camera/traversal GPR homes,
+ * camera-distance FP homes, and character scale multiply operand order.
+ * Float literals preserve native clamp webs; FAbs returns float. */
 struct BurnVec { float x,y,z; };
 struct BurnMtx { float m[16]; };
 struct BurnMotion { unsigned char pad00[0x10]; unsigned long long flags; };
@@ -23,9 +24,6 @@ extern "C" {
 extern BurnCamera lbl_805DF3D0;
 extern float lbl_8032A30C[15];
 extern int g_gameMode,g_kartVariant,g_cupId;
-extern const float lbl_806D51C0,lbl_806D51C4,lbl_806D51C8,lbl_806D51D0,lbl_806D51D4,lbl_806D51D8,lbl_806D51E8;
-extern const float lbl_806D5200,lbl_806D5230,lbl_806D5268,lbl_806D5274,lbl_806D527C,lbl_806D5284,lbl_806D5288,lbl_806D5290,lbl_806D52B8;
-extern const float lbl_806D5324,lbl_806D5328,lbl_806D532C,lbl_806D5330,lbl_806D5334,lbl_806D5338,lbl_806D533C,lbl_806D5340,lbl_806D5344;
 void fn_800AF4F8(BurnEffect *);
 BurnEffect *DrawEffect_SpawnDirect(void (*)(BurnEffect *));
 void DrawEffect_Free(BurnEffect *);
@@ -38,7 +36,7 @@ void VfxSlot_SetRotationZ(void *,float);
 void VfxSlot_SetScaleUniform(void *,float);
 float BuildOrientationFromYaw(float);
 double sin(double);
-double FAbs_FloatAsDouble(float);
+float FAbs_FloatAsDouble(float);
 void *KartDriver_GetKartRootMtx(BurnKart *);
 float Mtx44_GetYawOfPosZ_Padded(const void *);
 float Mtx44_GetPitchOfPosZ_Padded(const void *);
@@ -112,88 +110,88 @@ void KartFx_BurnoutChargeTick(BurnEffect *e) {
             e->child3=DrawEffect_SpawnDirect(fn_800AF4F8);
             if(e->child3) { VfxSlot_BindResource(e->child3->slot,0x30); e->child3->visible=0; VfxSlot_SetMatrixSourceEnabled(e->child3->slot,1); }
         }
-        e->size=lbl_806D51C4; e->active=0; e->channel=-1; e->state=2; e->phase=0;
+        e->size=1.0f; e->active=0; e->channel=-1; e->state=2; e->phase=0;
         break;
     case 1:
         switch(e->phase) {
         case 0:
-            e->visible=1; e->opacity=lbl_806D51C4; e->rotation.z=lbl_806D51C0;
-            if(e->child0) { e->child0->visible=1; e->child0->opacity=lbl_806D51C4; }
+            e->visible=1; e->opacity=1.0f; e->rotation.z=0.0f;
+            if(e->child0) { e->child0->visible=1; e->child0->opacity=1.0f; }
             if(e->child1) e->child1->visible=0;
-            if(e->child2) { e->child2->visible=1; e->child2->opacity=lbl_806D51C4; }
+            if(e->child2) { e->child2->visible=1; e->child2->opacity=1.0f; }
             if(e->child3) e->child3->visible=0;
-            e->size=lbl_806D51C4; e->progress=lbl_806D51C0; ++e->phase;
+            e->size=1.0f; e->progress=0.0f; ++e->phase;
             break;
         case 1: break;
         }
         if(e->index==0) {
-            float f=lbl_806D51D0*e->progress-lbl_806D51C4;
-            if(f<lbl_806D51C0) f=lbl_806D51C0;
-            if(lbl_806D51C4<f) f=lbl_806D51C4;
-            e->rotation.z=BuildOrientationFromYaw(lbl_806D5324 * -f);
+            float f=3.0f*e->progress-1.0f;
+            if(f<0.0f) f=0.0f;
+            if(1.0f<f) f=1.0f;
+            e->rotation.z=BuildOrientationFromYaw(6.283184f * -f);
         }
-        if(e->child0) e->child0->rotation.z=BuildOrientationFromYaw(lbl_806D5324*e->progress+lbl_806D527C);
-        if(e->child2) e->child2->rotation.z=BuildOrientationFromYaw(lbl_806D5324*e->progress+lbl_806D527C);
-        e->progress+=lbl_806D5328;
-        if(lbl_806D51C4<e->progress) { e->state=2; e->phase=0; }
+        if(e->child0) e->child0->rotation.z=BuildOrientationFromYaw(6.283184f*e->progress+-0.785398f);
+        if(e->child2) e->child2->rotation.z=BuildOrientationFromYaw(6.283184f*e->progress+-0.785398f);
+        e->progress+=0.033333335f;
+        if(1.0f<e->progress) { e->state=2; e->phase=0; }
         else if(e->active && released) { e->state=3; e->phase=0; }
         break;
     case 2:
         switch(e->phase) {
         case 0:
             e->visible=1;
-            if(charging) e->opacity=lbl_806D51C4; else e->opacity=lbl_806D51C0;
-            e->rotation.z=lbl_806D51C0;
+            if(charging) e->opacity=1.0f; else e->opacity=0.0f;
+            e->rotation.z=0.0f;
             if(e->child0) {
                 e->child0->visible=1;
-                if(charging) e->child0->opacity=lbl_806D51C4; else e->child0->opacity=lbl_806D51C0;
-                e->child0->rotation.z=lbl_806D527C;
+                if(charging) e->child0->opacity=1.0f; else e->child0->opacity=0.0f;
+                e->child0->rotation.z=-0.785398f;
             }
             if(e->child1) e->child1->visible=0;
             if(e->child2) {
                 e->child2->visible=1;
-                if(charging) e->child2->opacity=lbl_806D51C4; else e->child2->opacity=lbl_806D51C0;
-                e->child2->rotation.z=lbl_806D527C;
+                if(charging) e->child2->opacity=1.0f; else e->child2->opacity=0.0f;
+                e->child2->rotation.z=-0.785398f;
             }
-            if(e->child3) { e->child3->visible=1; e->child3->opacity=lbl_806D51C0; }
-            e->size=lbl_806D51C4; e->progress=lbl_806D51C0; ++e->phase;
+            if(e->child3) { e->child3->visible=1; e->child3->opacity=0.0f; }
+            e->size=1.0f; e->progress=0.0f; ++e->phase;
             break;
         case 1: break;
         }
         if(charging) {
-            if(!e->active) { e->opacity=lbl_806D51C4; e->active=1; e->state=1; e->phase=0; break; }
+            if(!e->active) { e->opacity=1.0f; e->active=1; e->state=1; e->phase=0; break; }
         } else {
             if(e->index==0 && e->channel>=0) e->channel=-1;
-            e->opacity-=lbl_806D51D8;
-            if(e->opacity<lbl_806D51C0) e->opacity=lbl_806D51C0;
+            e->opacity-=0.05f;
+            if(e->opacity<0.0f) e->opacity=0.0f;
             e->active=0;
         }
-        e->progress=BuildOrientationFromYaw(lbl_806D5288+e->progress);
-        if(e->index==0) e->size=lbl_806D5284*(float)sin(e->progress)+lbl_806D51C4;
+        e->progress=BuildOrientationFromYaw(0.087266445f+e->progress);
+        if(e->index==0) e->size=0.02f*(float)sin(e->progress)+1.0f;
         if(e->index==0) {
-            if(lbl_806D51E8<=owner->speed) {
+            if(0.5f<=owner->speed) {
                 Vec2_RotateY(&rotated,&owner->velocity,-Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(e->kart)));
-                float f=rotated.x/lbl_806D5200;
-                if(f<lbl_806D5230) f=lbl_806D5230;
-                if(lbl_806D51C4<f) f=lbl_806D51C4;
-                e->rotation.z=lbl_806D52B8*f;
+                float f=rotated.x/10.0f;
+                if(f<-1.0f) f=-1.0f;
+                if(1.0f<f) f=1.0f;
+                e->rotation.z=1.570796f*f;
                 if(e->child3) {
                     float yaw;
-                    if(lbl_806D51C0<f) yaw=lbl_806D52B8; else yaw=lbl_806D532C;
-                    if(yaw!=e->child3->rotation.y) e->child3->opacity=lbl_806D51C0;
+                    if(0.0f<f) yaw=1.570796f; else yaw=-1.570796f;
+                    if(yaw!=e->child3->rotation.y) e->child3->opacity=0.0f;
                     e->child3->rotation.y=yaw;
                 }
-            } else e->rotation.z*=lbl_806D5268;
+            } else e->rotation.z*=0.95f;
         }
-        if(e->child0) { e->child0->opacity-=lbl_806D51C8; if(e->child0->opacity<lbl_806D51C0) e->child0->opacity=lbl_806D51C0; }
-        if(e->child2) { e->child2->opacity-=lbl_806D51C8; if(e->child2->opacity<lbl_806D51C0) e->child2->opacity=lbl_806D51C0; }
+        if(e->child0) { e->child0->opacity-=0.1f; if(e->child0->opacity<0.0f) e->child0->opacity=0.0f; }
+        if(e->child2) { e->child2->opacity-=0.1f; if(e->child2->opacity<0.0f) e->child2->opacity=0.0f; }
         if(e->child3) {
-            if(charging && lbl_806D51E8<=owner->speed) {
-                e->child3->opacity+=lbl_806D51C8;
-                if(lbl_806D51C4<e->child3->opacity) e->child3->opacity=lbl_806D51C4;
+            if(charging && 0.5f<=owner->speed) {
+                e->child3->opacity+=0.1f;
+                if(1.0f<e->child3->opacity) e->child3->opacity=1.0f;
             } else {
-                e->child3->opacity-=lbl_806D51D8;
-                if(e->child3->opacity<lbl_806D51C0) e->child3->opacity=lbl_806D51C0;
+                e->child3->opacity-=0.05f;
+                if(e->child3->opacity<0.0f) e->child3->opacity=0.0f;
             }
         }
         if(e->active && released) { e->state=3; e->phase=0; }
@@ -202,21 +200,21 @@ void KartFx_BurnoutChargeTick(BurnEffect *e) {
         switch(e->phase) {
         case 0:
             if(e->index==0) e->visible=0;
-            else { e->visible=1; e->opacity=lbl_806D51C4; e->rotation.z=lbl_806D51C0; }
+            else { e->visible=1; e->opacity=1.0f; e->rotation.z=0.0f; }
             if(e->child0) e->child0->visible=0;
-            if(e->child1) { e->child1->visible=1; e->child1->opacity=lbl_806D51C4; }
-            if(e->child2) { e->child2->visible=1; e->child2->opacity=lbl_806D51C4; e->child2->rotation.z=lbl_806D51C0; }
+            if(e->child1) { e->child1->visible=1; e->child1->opacity=1.0f; }
+            if(e->child2) { e->child2->visible=1; e->child2->opacity=1.0f; e->child2->rotation.z=0.0f; }
             if(e->child3) e->child3->visible=0;
-            e->size=lbl_806D51C4; e->progress=lbl_806D51C0;
+            e->size=1.0f; e->progress=0.0f;
             if(e->index!=0) SoundMgr_PlaySE_Positional(0xA4,e->position,0);
             ++e->phase;
             break;
         case 1: break;
         }
-        if(e->index==0) e->size=lbl_806D51D4*(float)FAbs_FloatAsDouble((float)sin(lbl_806D5330*e->progress))+lbl_806D51C4;
-        if(e->child2) e->child2->rotation.z=BuildOrientationFromYaw(lbl_806D5324*e->progress+lbl_806D527C);
-        e->progress+=lbl_806D5334;
-        if(lbl_806D51C4<e->progress) { e->state=1; e->phase=0; }
+        if(e->index==0) e->size=0.2f*FAbs_FloatAsDouble((float)sin(4.712388f*e->progress))+1.0f;
+        if(e->child2) e->child2->rotation.z=BuildOrientationFromYaw(6.283184f*e->progress+-0.785398f);
+        e->progress+=0.125f;
+        if(1.0f<e->progress) { e->state=1; e->phase=0; }
         else if(e->active && released) { e->state=3; e->phase=0; }
         break;
     }
@@ -227,22 +225,22 @@ void KartFx_BurnoutChargeTick(BurnEffect *e) {
         DrawEffect_Free(e); return;
     }
     Mtx_TransposeToMtx44(&root,KartDriver_GetKartRootMtx(e->kart));
-    GetSpawnPosition(&offset,lbl_806D51C0,lbl_806D5338,lbl_806D51C0);
+    GetSpawnPosition(&offset,0.0f,7.0f,0.0f);
     Vec3_Scale(&offset,&offset,KartCharacterParam_GetFxSizeFactor(e->kart));
     Mtx44_TransformVec3(&world,&root,offset);
     BurnVec *camera=&lbl_805DF3D0.position;
     Vec3_Subtract_DestFirst(&offset,&world,camera);
     float distance=Vec3_Magnitude_Wrapper(&offset);
-    Vec3_Scale(&offset,&offset,e->scale*(lbl_806D533C*(lbl_806D51C4/distance)));
+    Vec3_Scale(&offset,&offset,e->scale*(-8.0f*(1.0f/distance)));
     Vec3_Add_DestFirst(&e->position,&world,&offset);
     int character=BurnCharacter(e->kart);
-    float factor=character<0 ? lbl_806D51C4 : lbl_8032A30C[character];
-    e->scale=(e->size*(lbl_806D5340*KartCharacterParam_GetFxSizeFactor(e->kart)))*factor;
+    float factor=character<0 ? 1.0f : lbl_8032A30C[character];
+    e->scale=(e->size*(1.3f*KartCharacterParam_GetFxSizeFactor(e->kart)))*factor;
     if(e->index!=0) {
-        float f=Vec3_Magnitude_Wrapper(&owner->velocity)/lbl_806D5344;
-        if(lbl_806D5328<f) f=lbl_806D5328;
-        if(f<lbl_806D5290) f=lbl_806D5290;
-        VfxSlot_SetUVScroll(e->slot,f,lbl_806D51C0);
+        float f=Vec3_Magnitude_Wrapper(&owner->velocity)/100.0f;
+        if(0.033333335f<f) f=0.033333335f;
+        if(f<0.001f) f=0.001f;
+        VfxSlot_SetUVScroll(e->slot,f,0.0f);
     }
     VfxSlot_SetPositionFromVec(e->slot,e->position);
     VfxSlot_SetRotationZ(e->slot,e->rotation.z);
@@ -256,7 +254,7 @@ void KartFx_BurnoutChargeTick(BurnEffect *e) {
             else cursor->child->slot[0]&=~2;
             Vec3_Copy(&cursor->child->position,&e->position);
             cursor->child->scale=e->scale;
-            if(i==4) cursor->child->scale*=lbl_806D5274;
+            if(i==4) cursor->child->scale*=0.9f;
             if(i!=4) {
                 VfxSlot_SetPositionFromVec(cursor->child->slot,cursor->child->position);
                 VfxSlot_SetRotationZ(cursor->child->slot,cursor->child->rotation.z);

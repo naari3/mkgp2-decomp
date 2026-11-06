@@ -4,3 +4,8 @@ Complete 3920B target retained as 3916B ordinary C++ NonMatching 98.97959%; nati
 
 Remaining 113 aligned diff rows include r29/r30 charging-owner partition, camera/character/cursor/count GPR allocation, clamp FP identities and two missing constant reloads (800BC60C/800BC958), motion scale multiply identities/operand order and FAbs conversion. Stop on known FP-web family absent provenance for a concrete new lever. No manual EH or instruction patch. Source-linked actual ELF3916B and DOL38aac8b4f6804682d4bbfd6008292f83d92d09d6 fail expected SHA. Final NM ELF uses original3920B object; target range identical and full DOL SHA ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. Fallback safety is not a genuine C gain. Runtime/CI/Ghidra validation not performed.
 
+
+## c15_u28_20261106
+Source: Codex worker c15_u28_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c15_u28: prior FAbs double-return limitation is stale: current src/game/BuildOrientationFromYaw.c defines float FAbs_FloatAsDouble(float). Correcting this TU prototype removes extra frsp. Native float literals (values checked against original DOL, shortest round-tripping spellings) restore all clamp FP identities and both missing constant reloads. Combined text99.75%, exact3920B, owned EH8/index12 both100. Remaining GPR partition, camera-distance FP homes and scale multiply operand order. Inline charging + child traversal extraction regresses99.12041%/3916B and stack slots; reverted. Singleton remains NM; no native gain.
