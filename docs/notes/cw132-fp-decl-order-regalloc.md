@@ -238,3 +238,8 @@ c16_u6 HomingMarkerUpdate fn_80172948: fresh text89.37534/2920B, EH100. Complete
 Source: Codex worker c16_u44_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u44: fn_8019ADF4 separate scalar xx/yy/zz product statements in two lengths and dot prevent contraction across each expression; restores target652B and EH/index100%, improves83.993866 to87.533745. Normalize/Length helper factoring restores target root spill order10/8/c but adds volatile loads and changes FPR webs (77.74233%). GC2.7 regression77.21472%; retain GC1.3.2. Remaining early prologue, FP homes/scheduling and root slots; singleton NonMatching, fallback full SHA-1 OK.
+
+## c16_u108_20261106
+Source: Codex worker c16_u108_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u108: DrawEffect_KartWheel_TripleChildUpdate 800C2AAC (900B) improves99.844444->99.91111 by replacing m=offs[i]*len; Scale(k*(childScale*m)) with len=offs[i]*len; len=childScale*len; Scale(k*len). Offset/childScale load homes become exact, leaving multiply result f2 vs target f1 and associated operand order at800C2C88/8C. Named m compound multiply and inline offset*inverse helper each99.86667; neither exact. EH8/index12 exact, singleton remains NonMatching; full fallback DOL SHA1 OK. Do not repeat these three source shapes.

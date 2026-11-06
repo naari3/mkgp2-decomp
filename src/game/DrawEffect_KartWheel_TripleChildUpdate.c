@@ -77,8 +77,9 @@ void DrawEffect_KartWheel_TripleChildUpdate(unsigned char *self, Vec *pos, float
                 Vec3_Subtract_DestFirst(&dir, V(0x8C), (Vec *)(lbl_805DF3D0 + 0x80));
                 len = Vec3_Magnitude_Wrapper(&dir);
                 len = 1.0f / len;
-                m = offs.v[i] * len;
-                Vec3_Scale(&dir, &dir, k * (C(0xB0) * m));
+                len = offs.v[i] * len;
+                len = C(0xB0) * len;
+                Vec3_Scale(&dir, &dir, k * len);
                 Vec3_Add_DestFirst(V_(CH, 0x8C), V(0x8C), &dir);
                 if (i != 0) {
                     t = C(0x150);
