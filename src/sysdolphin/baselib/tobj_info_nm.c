@@ -1,4 +1,11 @@
+#define hsdTObj hsdTObj_type_declaration
 #include "tobj.h"
+#undef hsdTObj
+
+/* This TU uses the original contiguous data pool as its address base.
+ * hsdTObj itself remains defined with the canonical HSD_TObjInfo type in
+ * its owning TU; the local byte-array view also reaches the nearby strings. */
+extern char hsdTObj[];
 
 #include <placeholder.h>
 #include <string.h>
@@ -19,19 +26,22 @@
 static char tobj_unused_descendant[36] = "hsdIsDescendantOf(info, &hsdTObj)";
 static char tobj_library[24] = "sysdolphin_base_library";
 static char tobj_classname[16] = "hsd_tobj";
-#define hsdInitClassInfo(info, parent, lib, name, isize, osize) hsdInitClassInfo(info, parent, tobj_library, tobj_classname, isize, osize)
 void TObjInfoInit(void)
 {
-    hsdInitClassInfo(HSD_CLASS_INFO(&hsdTObj), HSD_CLASS_INFO(&hsdObj),
-                     "sysdolphin_base_library", "hsd_tobj",
+    char* pool = hsdTObj;
+    HSD_TObjInfo* info = (HSD_TObjInfo*) pool;
+
+    /* The original tobj data pool addresses these strings from hsdTObj. */
+    hsdInitClassInfo(HSD_CLASS_INFO(info), HSD_CLASS_INFO(&hsdObj),
+                     pool + 0x4A8, pool + 0x4C0,
                      sizeof(HSD_TObjInfo), sizeof(HSD_TObj));
 
-    HSD_CLASS_INFO(&hsdTObj)->init = TObjInit;
-    HSD_CLASS_INFO(&hsdTObj)->release = TObjRelease;
-    HSD_CLASS_INFO(&hsdTObj)->amnesia = TObjAmnesia;
-    HSD_TOBJ_INFO(&hsdTObj)->load = TObjLoad;
-    HSD_TOBJ_INFO(&hsdTObj)->make_texp = TObjMakeTExp;
+    HSD_CLASS_INFO(info)->init = TObjInit;
+    HSD_CLASS_INFO(info)->release = TObjRelease;
+    HSD_CLASS_INFO(info)->amnesia = TObjAmnesia;
+    HSD_TOBJ_INFO(info)->load = TObjLoad;
+    HSD_TOBJ_INFO(info)->make_texp = TObjMakeTExp;
 
-    hsdTObj.make_mtx = MakeTextureMtx;
-    HSD_TOBJ_INFO(&hsdTObj)->update = TObjUpdateFunc;
+    info->make_mtx = MakeTextureMtx;
+    HSD_TOBJ_INFO(info)->update = TObjUpdateFunc;
 }
