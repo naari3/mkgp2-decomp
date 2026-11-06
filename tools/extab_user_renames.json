@@ -432,8 +432,9 @@
     "extabindex_MemoryManager_TimedFree": "@eti_8001FC34"
   },
   "src/game/KartPhysics_ApplyCollisionForce.cpp": {
-    "extab_KartPhysics_ApplyCollisionForce": "@etb_80016CEC",
-    "extabindex_KartPhysics_ApplyCollisionForce": "@eti_80028B5C"
+    "__dt__19PhysicsCollisionVecFv": "dtor_80036E40",
+    "@84": "@etb_80016CEC",
+    "@85": "@eti_80028B5C"
   },
   "src/game/Object_Color.c": {
     "extab_Object_SetColorRGBA": "@etb_80005960",

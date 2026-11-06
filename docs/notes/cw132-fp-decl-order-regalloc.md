@@ -203,3 +203,8 @@ ZlibInflate_BufferToBuffer 0x800AB958 (400B, GC/1.3.2): assigning next_out befor
 Source: Codex worker c14_u33_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 356 B.
 
 c14_u33: GameModeBase_FrameUpdate 800A07EC 93.4375 ->100 by established GetRankLog inline accessor; caller-local null assignment had changed the r0/r3 web. GameModeBase_Dtor 800A086C 99.47369 ->100 with signed remaining byte at playerData+198 and inline member decrement. Free unsigned-byte decrement helper was neutral. Both text356/EH16/index24 exact; Matching source edge and ELF addresses verified, full DOL SHA-1 OK. Prior register-allocator dead end was missing inline/type structure.
+
+## c14_u48_20261106
+Source: Codex worker c14_u48_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u48 KartPhysics_ApplyCollisionForce 801EDFEC: move squared magnitude inside vector-length inline helper and use literal sqrt constants to restore target f4/half f3/three f2 allocation. Native PhysicsCollisionVec offset declared first, pragma exceptions on around function, and own per-TU destructor/name bridge generate exact 24-byte EH (PC1A0, local28) and index12 without manual tables. Text91.8125 ->93.85714, same896B. Plain nonvolatile push/callVec reduces848B and regresses92.07143; reverted. Angle/push FP homes and scheduling remain; singleton NM, fallback fullSHA1OK, zero native gain.
