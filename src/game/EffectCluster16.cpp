@@ -26,10 +26,6 @@ struct ClusterEffect {
     ClusterGroup group;
 };
 extern "C" {
-extern const float lbl_806D54E8,lbl_806D54E4,lbl_806D54B8,lbl_806D54D4;
-extern const float lbl_806D54C8,lbl_806D54CC,lbl_806D54C4;
-extern const float lbl_806D5540,lbl_806D553C,lbl_806D5544,lbl_806D5538,lbl_806D5524;
-extern const float lbl_806D5508,lbl_806D54AC,lbl_806D54F8,lbl_806D551C,lbl_806D5548;
 ClusterEffect *DrawEffect_SpawnDirect(void (*)(ClusterEffect *));
 void fn_800AF4F8(ClusterEffect *);
 void DrawEffect_Free(ClusterEffect *);
@@ -63,49 +59,46 @@ void Effect_Cluster16_Update(ClusterEffect *effect) {
                 Vec3_Copy(&group->children[spawn]->position,&effect->position);
             }
         }
-        group->growth=lbl_806D54E8;
+        group->growth=0.0f;
         ++effect->state;
     case 1:
-        group->growth+=lbl_806D54E4;
-        if(lbl_806D54B8<group->growth) group->growth=lbl_806D54B8;
+        group->growth+=0.05f;
+        if(1.0f<group->growth) group->growth=1.0f;
         for(shift=0;shift<15;++shift) {
             if(group->children[15-shift] && group->children[14-shift])
                 Vec3_Copy(&group->children[15-shift]->position,&group->children[14-shift]->position);
         }
         if(group->children[0]) Vec3_Copy(&group->children[0]->position,&effect->position);
-        ordinal=lbl_806D54E8;
-        for(i=0;i<16;++i,ordinal+=lbl_806D54B8) {
+        ordinal=0.0f;
+        for(i=0;i<16;++i,ordinal+=1.0f) {
             if(group->children[i]) {
                 ClusterVec delta;
                 Vec3_Subtract_DestFirst(&delta,&group->children[i]->position,&effect->position);
                 float magnitude=Vec3_Magnitude_Wrapper(&delta);
-                float limit=lbl_806D54D4*((lbl_806D54B8+ordinal)*(effect->scale*group->growth));
+                float limit=10.0f*((1.0f+ordinal)*(effect->scale*group->growth));
                 if(limit<magnitude) {
-                    Vec3_Scale(&delta,&delta,lbl_806D54B8/limit);
+                    Vec3_Scale(&delta,&delta,1.0f/limit);
                     Vec3_Add_DestFirst(&group->children[i]->position,&effect->position,&delta);
                 }
                 VfxSlot_SetPositionFromVec(group->children[i]->slot,group->children[i]->position);
                 if(effect->variant==2 || effect->variant==3)
-                    VfxSlot_SetRotationZ(group->children[i]->slot,lbl_806D54C4*Rand_RangeFloat(lbl_806D54C8,lbl_806D54CC));
-                float scale=ordinal-lbl_806D5540;
-                scale=lbl_806D553C-scale;
-                scale=scale*lbl_806D5544;
-                scale=lbl_806D5538*scale+lbl_806D5524;
-                if(lbl_806D54B8<scale) scale=lbl_806D54B8;
+                    VfxSlot_SetRotationZ(group->children[i]->slot,0.017453288659453392f*Rand_RangeFloat(-180.0f,180.0f));
+                float scale=0.9f*((16.0f-(ordinal-8.0f))/16.0f)+0.1f;
+                if(1.0f<scale) scale=1.0f;
                 switch(effect->variant) {
                 case 0: break;
-                case 1: scale*=lbl_806D5508; break;
-                case 2: scale*=lbl_806D54AC; break;
-                case 3: scale*=lbl_806D54AC; break;
+                case 1: scale*=2.0f; break;
+                case 2: scale*=1.3f; break;
+                case 3: scale*=1.3f; break;
                 }
                 group->children[i]->scale=scale*effect->scale;
                 VfxSlot_SetScaleUniform(group->children[i]->slot,group->children[i]->scale);
-                float alpha=lbl_806D553C-ordinal;
-                alpha=alpha*lbl_806D5544;
-                alpha=lbl_806D54F8*alpha+lbl_806D551C;
+                float alpha=0.8f*((16.0f-ordinal)/16.0f)+0.2f;
                 switch(effect->variant) {
-                case 0: alpha*=lbl_806D5548; break;
-                case 1: alpha*=lbl_806D5548; break;
+                case 2: break;
+                case 3: break;
+                case 0: alpha*=0.15f; break;
+                case 1: alpha*=0.15f; break;
                 }
                 group->children[i]->alpha=alpha*effect->alpha;
                 group->children[i]->visible=effect->visible;
