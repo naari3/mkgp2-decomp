@@ -2242,6 +2242,7 @@ game/CreditMgr.c:
 	extab       start:0x80008A64 end:0x80008D0C
 	extabindex  start:0x80021764 end:0x800217E8
 	.text       start:0x80081184 end:0x8008299C
+	.sbss       start:0x806D1178 end:0x806D117C
 
 game/PCBCommBroadcast.c:
 	extab       start:0x80008D0C end:0x80008D14

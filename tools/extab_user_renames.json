@@ -510,7 +510,9 @@
   },
   "src/game/CreditMgr.c": {
     "extab_CreditMgr_DrawCoinCreditBanner": "@etb_80008A6C",
-    "extabindex_CreditMgr_DrawCoinCreditBanner": "@eti_80021764"
+    "extabindex_CreditMgr_DrawCoinCreditBanner": "@eti_80021764",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
   },
   "src/game/CardPrinterChecker_Draw.c": {
     "extab_TexMgr_DrawText_Format_Variant3": "@etb_80009328",
