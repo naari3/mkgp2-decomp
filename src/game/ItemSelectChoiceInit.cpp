@@ -37,11 +37,11 @@ extern "C" RefillChoice *fn_8023B1A8(RefillChoice *self) {
     self->text[3] = 0;
     TextManager text;
     const int *item;
-    const int (*rowItems)[10] = lbl_803DC180;
+    const int (*rowItems)[10];
     unsigned char *player = g_playerData;
     int row;
     int column;
-    for (row = 0; row < 6; ++row, ++rowItems) {
+    for (row = 0, rowItems = lbl_803DC180; row < 6; ++row, ++rowItems) {
         for (column = 0, item = *rowItems; column < 11; ++column, ++item) {
             int character = ChoiceCharacter();
             int id;
