@@ -23,64 +23,69 @@ static inline void setup(ViewJoint *j) {
 }
 static inline ViewBillboardParticle *freeParticle(ViewEmitter *o) {
     for (int i = 0; i < 60; i++) {
-        if (o->particles[i].age < lbl_806D9440) return &o->particles[i];
+        if (o->particles[i].age < 0.0f) return &o->particles[i];
     }
     return 0;
 }
-extern "C" void fn_8018E6FC(ViewEmitter *o) {
+static inline void updateParticle(ViewBillboardParticle *q) {
+    if (q->age < 0.0f) return;
+    q->scale += q->speed;
+    if (q->age < 10.0f) q->alpha = q->maxAlpha * (q->age / 10.0f);
+    else q->alpha = q->maxAlpha - q->maxAlpha * ((q->age - 10.0f) / 30.0f);
+    if ((q->age += 1.0f) > 40.0f) q->age = -1.0f;
+}
+static inline void initializeMatrix(ViewEmitter *o, int index) {
     ViewJoint *joint;
-    int index;
     void *scene;
+    scene = GetCourseScene3D();
+    o->matrices[index].age = 0.0f;
+    joint = o->matrices[index].joint;
+    setup(joint);
+    PSMTXScale(o->matrices[index].matrix, 1.0f + variation(o), 1.0f, 1.0f);
+    PSMTXConcat(o->matrices[index].matrix, *CObj_GetProjMatrix_Cached(scene), o->matrices[index].matrix);
+    o->matrices[index].matrix[0][3] = joint->matrix[0][3];
+    o->matrices[index].matrix[1][3] = joint->matrix[1][3];
+    o->matrices[index].matrix[2][3] = joint->matrix[2][3];
+    o->delay = (int)(30.0f + 30.0f * variation(o));
+}
+static inline void updateMatrices(ViewEmitter *o) {
+    int i;
+    ViewBillboardParticle *q;
+    ViewMatrixParticle *p;
+    for (i = 0; i < o->count; i++) {
+        p = &o->matrices[i];
+        if (p->age < 0.0f) continue;
+        if ((p->age += 1.0f) >= 89.0f) { p->age = -1.0f; continue; }
+        if (p->age >= 20.0f) {
+            unsigned int point = ((int)(p->age - 20.0f)) >> 1;
+            if (point < 12) {
+                q = freeParticle(o);
+                if (q) {
+                    q->age = 0.0f;
+                    q->scale = 0.0f;
+                    q->alpha = 0.0f;
+                    q->speed = 0.025f + 0.05f * variation(o);
+                    q->maxAlpha = 0.5f + 0.5f * variation(o);
+                    PSMTXMultVec(p->matrix, &lbl_803780EC[point], &q->pos);
+                }
+            }
+        }
+    }
+}
+extern "C" void fn_8018E6FC(ViewEmitter *o) {
+    int index;
     if (o->count == 0) return;
     if (o->delay > 0) o->delay--;
     else {
         if (o->randomIndex >= 64) o->randomIndex = 0;
         float random = lbl_80495994[o->randomIndex++];
         index = (int)(o->count * random);
-        if (lbl_806D944C == o->matrices[index].age) {
-            scene = GetCourseScene3D();
-            o->matrices[index].age = lbl_806D9440;
-            joint = o->matrices[index].joint;
-            setup(joint);
-            PSMTXScale(o->matrices[index].matrix, lbl_806D9460 + variation(o), lbl_806D9460, lbl_806D9460);
-            PSMTXConcat(o->matrices[index].matrix, *CObj_GetProjMatrix_Cached(scene), o->matrices[index].matrix);
-            o->matrices[index].matrix[0][3] = joint->matrix[0][3];
-            o->matrices[index].matrix[1][3] = joint->matrix[1][3];
-            o->matrices[index].matrix[2][3] = joint->matrix[2][3];
-            o->delay = (int)(lbl_806D9464 + lbl_806D9464 * variation(o));
+        if (-1.0f == o->matrices[index].age) {
+            initializeMatrix(o, index);
         }
     }
-    int i;
-    ViewMatrixParticle *p;
-    for (i = 0; i < o->count; i++) {
-        p = &o->matrices[i];
-        if (p->age < lbl_806D9440) continue;
-        p->age += lbl_806D9460;
-        if (p->age >= lbl_806D9468) { p->age = lbl_806D944C; continue; }
-        if (p->age >= lbl_806D946C) {
-            unsigned int point = ((int)(p->age - lbl_806D946C)) >> 1;
-            if (point < 12) {
-                ViewBillboardParticle *q = freeParticle(o);
-                if (q) {
-                    q->age = lbl_806D9440;
-                    q->scale = lbl_806D9440;
-                    q->alpha = lbl_806D9440;
-                    q->speed = lbl_806D9470 + lbl_806D9474 * variation(o);
-                    q->maxAlpha = lbl_806D9478 + lbl_806D9478 * variation(o);
-                    PSMTXMultVec(p->matrix, &lbl_803780EC[point], &q->pos);
-                }
-            }
-        }
-    }
-    ViewBillboardParticle *q;
-    for (i = 0; i < 60; i++) {
-        q = &o->particles[i];
-        if (!(q->age < lbl_806D9440)) {
-        q->scale += q->speed;
-        if (q->age < lbl_806D9448) q->alpha = q->maxAlpha * (q->age / lbl_806D9448);
-        else q->alpha = q->maxAlpha - q->maxAlpha * ((q->age - lbl_806D9448) / lbl_806D9464);
-        q->age += lbl_806D9460;
-        if (q->age > lbl_806D947C) q->age = lbl_806D944C;
-        }
+    updateMatrices(o);
+    for (int k = 0; k < 60; k++) {
+        updateParticle(&o->particles[k]);
     }
 }
