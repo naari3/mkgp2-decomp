@@ -1019,3 +1019,8 @@ c16_u77 RaceDigitListInsert 80247C3C: pair existing placement new with standard 
 Source: Codex worker c16_u78_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u78 fn_801ED798: nested ApplyYaw/Multiply helpers with product local in Multiply, shared accumulator outside loops and flat output[index+col] recover target sequential fmadds/stfsx and temporary stack slots. Flat16 Copy helper and scalar translation setter improve fresh72.73358 to87.84991. Numeric constants give95.21576 but introduce28B sdata2 and unsafe offset-based postprocessor mapping (0.1f -> lbl_806DA42C); rejected, extern constants restored. Remaining matrix operands/GPR homes, identity diagonal store order, FP saves/frame, frame9 export and EH PC/name residuals. Singleton remains NonMatching; no rescue cut.
+
+## c16_u82_20261106
+Source: Codex worker c16_u82_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u82 RaceScene_Init 800A1D80: actual 99.97931% residual is clrlwi. destination r26 vs target r3 and following mr direction, not copy scheduling described in old source comment. PreloadItem helper inside caller guard is invariant; lookup+guard helper and guarded PreloadItem helper both regress to 99.93793% via i r26/item r28 instead of i r27/item r26. All reverted. Single function TU cannot isolate exact subset.

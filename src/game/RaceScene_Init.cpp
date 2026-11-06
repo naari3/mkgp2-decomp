@@ -2,9 +2,9 @@
  * course, camera, player kart, path manager, Lakitu, HUD and the per-race
  * managers, logging the heap use after each step, then preloads the
  * effect and item resources the race can need.
- * NonMatching (99.98%): in the first item preload loop the slot item id
- * is copied to its callee-saved register after the zero test instead of
- * before it. */
+ * NonMatching (99.98%): in the first item preload loop the target masks
+ * and tests the slot item id in r3, then copies it to r26; this source
+ * masks directly into r26 and copies it back to r3 for the first call. */
 
 typedef struct RaceParams {
     signed char laps;
