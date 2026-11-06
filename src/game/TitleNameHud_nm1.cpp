@@ -67,10 +67,10 @@ TitleNameHud::TitleNameHud(int layer_)
                 x += *pw;
                 sprites[i] = SpriteHandle_CreateDefault(&rc, layer);
             }
-            int k, n;
-            for (k = 0, n = k; k < count; n++, k++) {
-                SpriteHandle_SetActiveFlag(sprites[n], 0);
-                SpriteHandle_RecomputeCull(sprites[n]);
+            int k;
+            for (k = 0; k < count; k++) {
+                SpriteHandle_SetActiveFlag(sprites[k], 0);
+                SpriteHandle_RecomputeCull(sprites[k]);
             }
         }
     }

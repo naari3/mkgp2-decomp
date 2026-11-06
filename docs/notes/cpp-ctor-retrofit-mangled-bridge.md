@@ -1044,3 +1044,8 @@ c16_u111: AI_SystemInit 801EBC8C 700B improves 99.828575 to 99.88571 by moving r
 Source: Codex worker c16_u112_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u112 fn_801EE36C: native99.83045 ->99.9135, remains singleton NonMatching. MovementInverseLength(const CollisionVec&) returning1.0f/MovementLength(v), with speed multiplication retained in caller, fixes scratch slot14/0C/10/08 order. Extracting entire ScaleMovement(delta,speed) hoists speed load and regresses97.99308. Inline ScaleTransit(delta,0.0125f*(float)timer+1.0f), after delta subtraction, restores scale f9 (previous f10). Residual five instructions: previous-X f10 vs targetf2; coefficient f2 vs targetf3. Inline typed vector subtraction adds previous-X reload,1160B/98.14187; rejected. Exact owned24B EH/index12 preserved; extra weak destructor EH unchanged. No flags/splits/bridges modified; no full build requested, no native gain.
+
+## c16_u127_20261106
+Source: Codex worker c16_u127_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u127 TitleNameHud ctor: redundant final k/n counter pair is unnecessary; a fresh block-local single k emits identical primary instruction JSON and exact owned EH (99.745766 text). Reusing function i or static inline final-loop helper generates mr for byte-offset initialization but final count web becomes r24 rather than target r22; anonymous constant/EH IDs also shift. Function-scoped fresh k leaves original li residual. No flag flip or native gain.
