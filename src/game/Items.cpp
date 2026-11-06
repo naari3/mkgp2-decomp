@@ -32,18 +32,15 @@ static inline int Resolve(Items* self, int slot) {
 }
 extern "C" int Items_ResolveOwnedAlias(Items* self, int slot) {
     if (slot < 0 || (unsigned int)slot >= 60) return 0;
-    const AliasRow* row;
     int item = lbl_803159B8[slot];
     int i;
     if (item >= 0x115 && item <= 0x11A) {
         item -= 0x115;
         item = lbl_803FED28[item][g_playerData.character];
     }
-    row = lbl_80315AA8;
     for (i = 0; i < 104; ++i) {
-        int alias = OwnedAlias(self, row, item);
+        int alias = OwnedAlias(self, &lbl_80315AA8[i], item);
         if (alias >= 0) { item = alias; break; }
-        ++row;
     }
     return item;
 }
