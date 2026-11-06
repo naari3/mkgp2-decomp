@@ -969,3 +969,8 @@ c16_u33: RaceDigitPositions fn_80247DAC (636B) fresh84.949684 ->100% by replacin
 Source: Codex worker c16_u42_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 524 B.
 
 c16_u42: HudManagerModes fn_80253C40 (80253C40,52B) baseline84.61539 has only lwz list-pointer prologue scheduling residual. HudManager *__restrict self lets GC/2.6 load before LR store, reaching100%; all four functions/524B and extab80B/index48B exact. Existing bridges suffice; Matching promotion full DOL SHA1 exact, actual ELF addresses/sizes verified.
+
+## c16_u49_20261106
+Source: Codex worker c16_u49_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u49 ItemEffect_TornadoLift80053AE0: fresh82.47 ->86.44 by replacing aggregate TLVec cast-copy with explicit z/y/x loads then x/y/z stores. Restricted public args, restricted inline state initializer and restricted scalar float-copy helper all retain paired matrix loads/stores. Native432B vs target400B; target retains last8 floats across second matrix copy. EH8B100%, index12B91.66667 due size word. Three approaches exhausted; singleton remains NonMatching; full fallback DOL SHA1 exact, native gain0.

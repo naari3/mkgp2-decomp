@@ -1,9 +1,8 @@
 /* ItemEffect_TornadoLift @ 0x80053AE0: arm the tornado lift effect from a
  * pose matrix, seeding both the start and current matrices.
  *
- * NonMatching: the target schedules the two matrix copies as if the pose
- * could not alias the state (loads hoisted, pose[8..15] kept in f10..f3 for
- * the second copy); every copy form tried here stays load/store paired. */
+ * NonMatching: matrix loads remain paired with stores instead of being
+ * pipelined and retained across copies as in the target. */
 
 extern "C" {
 extern const float lbl_806D27F8; /* 0.0f */
@@ -71,7 +70,10 @@ extern "C" int ItemEffect_TornadoLift(TLEffect *self, TLMtx *pose)
         st->cur.m[i] = pose->m[i];
     }
     st->duration = 0x3C;
-    st->pos = *(TLVec *)&st->start.m[12];
+    float z = st->start.m[14], y = st->start.m[13], x = st->start.m[12];
+    st->pos.x = x;
+    st->pos.y = y;
+    st->pos.z = z;
     st->owner->car->fieldD4 = 0;
     return 1;
 }
