@@ -570,7 +570,10 @@ typedef struct KartMovementSpeedView {
     float speedScale2d8;             /* 0x2d8 */
     char pad_0x2dc[0x4];
     float coinBonus;                 /* 0x2e0 */
-    char pad_0x2e4[0x14];
+    float boostBlendR;               /* 0x2e4 */
+    float boostBlendG;               /* 0x2e8 */
+    float boostBlendB;               /* 0x2ec */
+    char pad_0x2f0[0x8];
     float mueScale2f8;               /* 0x2f8 */
     char pad_0x2fc[0x14];
     float rumbleX310;                /* 0x310 */
@@ -701,7 +704,9 @@ typedef struct ItemBusFlagsView {
 } ItemBusFlagsView;
 
 typedef struct KartDriverBusView {
-    char pad_0x0[0x23c];
+    char pad_0x0[0x1b4];
+    int boostTicks1b4;                 /* 0x1b4 */
+    char pad_0x1b8[0x84];
     int syncTarget23c;                 /* 0x23c */
     char pad_0x240[0x78];
     unsigned char deathState2b8;       /* 0x2b8 */
@@ -742,7 +747,7 @@ typedef struct KartItemOpsView {
     char pad_0xd4[0x8];
     unsigned char driftFlagDC;         /* 0xdc */
     char pad_0xdd[0x3];
-    float boostBlendE0;                /* 0xe0 */
+    int boostCounterE0;                /* 0xe0 */
     char pad_0xe4[0xc];
     int prevSyncF0;                    /* 0xf0 */
     char pad_0xf4[0x8];
@@ -915,22 +920,6 @@ typedef struct StlListValRef {
     char pad_0x0[0x4];
     SweepCarObj *val;       /* 0x4 */
 } StlListValRef;
-
-/* views for KartMovement_UpdateBoostVisualBlend (self = CarObj+0x2c render obj,
- * m = movement object; consumed by the parked C, HANDOFF appendix C) */
-typedef struct BoostTicksView {
-    char pad_0x0[0x1b4];
-    int boostTicks;         /* 0x1b4 */
-} BoostTicksView;
-
-typedef struct BoostBlendView {
-    char pad_0x0[0x2c];
-    float weight2c;         /* 0x2c */
-    char pad_0x30[0x2b4];
-    float blendR;           /* 0x2e4 */
-    float blendG;           /* 0x2e8 */
-    float blendB;           /* 0x2ec */
-} BoostBlendView;
 
 /* vector<bool>::reference-style proxy temp; the original keeps the dead ctor
  * stores, volatile fields reproduce them without disturbing the call args */
@@ -1155,7 +1144,7 @@ asm void *KartItem_Dtor(void *self, short flag);
 asm void CarObject_Init(void);
 void KartItem_UpdateShadowBillboardAndViewport(KartItemOpsView *self, int arg2, int arg3);
 asm void KartItem_AdvanceAnim3c(void);
-asm void CarObject_CalcSpeedRatio(void);
+float CarObject_CalcSpeedRatio(KartItemOpsView *self);
 float KartItem_GetMaxSpeedWithBonus(KartItemOpsView *self);
 asm void KartItem_GetCurrentSpeedWithBonus(void);
 float *CarObject_GetTransformMatrix(CarObjGetterView *self);
@@ -1241,7 +1230,7 @@ void dtor_80052BCC(void);
 void dtor_80052C48(void);
 void dtor_80052CC4(void);
 void dtor_80052D40(void);
-asm void KartMovement_UpdateBoostVisualBlend(KartDriverBusView *drv, KartMovementSpeedView *mv, float *outA, float *outB, float *blend);
+void KartMovement_UpdateBoostVisualBlend(KartDriverBusView *drv, KartMovementSpeedView *mv, float *outA, float *outB, int *counter);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
 extern void __dt__11ScopedTimerFv();
@@ -1464,9 +1453,7 @@ __declspec(section ".extab_user") static const unsigned char extab_ItemEffectDes
 __declspec(section ".extab_user") static const unsigned char extab_ItemEffectDesc_OnApply_MushroomBoost[8] = {
     0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const unsigned char extab_KartMovement_UpdateBoostVisualBlend[8] = {
-    0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+/* extab_KartMovement_UpdateBoostVisualBlend: auto-emitted */
 __declspec(section ".extab_user") static const unsigned char extab_StlList_RemoveByValueField[8] = {
     0x28, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -1681,10 +1668,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 /* extabindex_dtor_80052C48: auto-emitted */
 /* extabindex_dtor_80052CC4: auto-emitted */
 /* extabindex_dtor_80052D40: auto-emitted */
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_KartMovement_UpdateBoostVisualBlend = {
-    (void *)&KartMovement_UpdateBoostVisualBlend, 0x00000164, (void *)extab_KartMovement_UpdateBoostVisualBlend
-};
-
+/* extabindex_KartMovement_UpdateBoostVisualBlend: auto-emitted */
 /* --- asm function bodies (.text order = fn address order) --- */
 asm void KartItem_OnKartHit(void) { /* 0x8004A238 size:0x680 */
     nofralloc
@@ -4475,7 +4459,7 @@ void CarObject_UpdateCoinSpeedBonus(KartItemOpsView *self) { /* 0x8004CF64 size:
     self->movement->accelFactor2c = lbl_806D2778;
     bonus = Saturate_Double(lbl_806D2784 * (float)self->coinCountC8, lbl_806D26EC, lbl_806D2788);
     if ((int)g_gameMode == 2) {
-        KartMovement_UpdateBoostVisualBlend(self->ownerDriver, self->movement, &outA, &outB, &self->boostBlendE0);
+        KartMovement_UpdateBoostVisualBlend(self->ownerDriver, self->movement, &outA, &outB, &self->boostCounterE0);
         bonus += outA;
     }
     cur = self->smoothBonusCC;
@@ -6379,26 +6363,20 @@ asm void KartItem_AdvanceAnim3c(void) { /* 0x8004EFD8 size:0x24 */
     blr
 }
 
-asm void CarObject_CalcSpeedRatio(void) { /* 0x8004EFFC size:0x44 */
-    nofralloc
-    lwz r3, 0x28(r3)
-    lfs f1, lbl_806D26EC(r2)
-    lfs f2, 0xc(r3)
-    fcmpo cr0, f2, f1
-    cror eq, lt, eq
-    beqlr
-    lwz r0, 0x8(r3)
-    lwz r3, 0x24(r3)
-    mulli r0, r0, 0x18
-    lfs f0, lbl_806D26FC(r2)
-    add r3, r3, r0
-    lfs f1, 0x8(r3)
-    fdivs f1, f2, f1
-    fcmpo cr0, f1, f0
-    blelr
-    fmr f1, f0
-    blr
+#pragma exceptions off
+float CarObject_CalcSpeedRatio(KartItemOpsView *self) { /* 0x8004EFFC size:0x44 */
+    KartMovementSpeedView *mv = self->movement;
+    float ratio;
+    if (mv->speed <= 0.0f) {
+        return 0.0f;
+    }
+    ratio = mv->speed / mv->table[mv->tableIdx].refSpeed;
+    if (ratio > 1.0f) {
+        ratio = 1.0f;
+    }
+    return ratio;
 }
+#pragma exceptions reset
 
 static inline float KartItem_CalcMaxSpeedWithBonus_inl(KartItemOpsView *self) {
     SpeedTableEntry *e;
@@ -10194,108 +10172,42 @@ Holder80052D40::~Holder80052D40() throw() {
 #pragma exceptions reset
 #pragma cplusplus off
 
-/* parked at 98.88% (3 probes): scratch-fp tie-break cascade in the lerp block -
- * target assigns the first table temp (t[5]) to f0, CW picks f4 and five other
- * transient regs cascade (schedule + instruction content fully identical; named
- * webs sat=f1/one=f8/s=f9/inv=f10 all match target). Probed: lane addend order
- * (s-first regresses the load schedule, 89%), one-local elimination (no effect).
- * ItemEffect_Explosion 88.99% family. itof, zero branch and the whole GPR side
- * are solved - `(float)t` works in this TU: postprocess_sdata2 renames the CW
- * anonymous cookie to lbl_806D2790 once upstream fn sizes match. Paste-ready C
- * in HANDOFF appendix C (uses BoostTicksView/BoostBlendView). */
-asm void KartMovement_UpdateBoostVisualBlend(KartDriverBusView *drv, KartMovementSpeedView *mv, float *outA, float *outB, float *blend) { /* 0x80052DBC size:0x164 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r5
-    stw r30, 0x18(r1)
-    mr r30, r4
-    lwz r0, 0x1b4(r3)
-    cmpwi r0, 0x0
-    bgt KartMovement_UpdateBoostVisualBlend_L_80052E5C
-    lfs f1, lbl_806D26EC(r2)
-    stfs f1, lbl_806D1080(r13)
-    stfs f1, lbl_806D1084(r13)
-    lwz r4, 0x0(r7)
-    cmpwi r4, 0x0
-    ble KartMovement_UpdateBoostVisualBlend_L_80052E38
-    lis r3, lbl_802EBE14@ha
-    subi r0, r4, 0x1
-    addi r3, r3, lbl_802EBE14@l
-    stw r0, 0x0(r7)
-    lfs f0, 0x4(r3)
-    lfs f1, 0x8(r3)
-    stfs f0, 0x2e4(r30)
-    lfs f0, 0xc(r3)
-    stfs f1, 0x2e8(r30)
-    lfs f1, lbl_806D26FC(r2)
-    stfs f0, 0x2ec(r30)
-    lfs f0, 0x0(r3)
-    stfs f1, 0x2c(r30)
-    stfs f0, 0x0(r31)
-    b KartMovement_UpdateBoostVisualBlend_L_80052F08
-    KartMovement_UpdateBoostVisualBlend_L_80052E38:
-    stfs f1, 0x2e4(r30)
-    lfs f0, lbl_806D27F0(r2)
-    stfs f1, 0x2e8(r30)
-    lfs f1, lbl_806D2778(r2)
-    stfs f0, 0x2ec(r30)
-    lfs f0, lbl_806D27F4(r2)
-    stfs f1, 0x2c(r30)
-    stfs f0, 0x0(r31)
-    b KartMovement_UpdateBoostVisualBlend_L_80052F08
-    KartMovement_UpdateBoostVisualBlend_L_80052E5C:
-    xoris r3, r0, 0x8000
-    lis r0, 0x4330
-    stw r3, 0xc(r1)
-    li r3, 0x78
-    lfd f2, lbl_806D2790(r2)
-    stw r0, 0x8(r1)
-    lfs f0, lbl_806D26FC(r2)
-    lfd f1, 0x8(r1)
-    stw r3, 0x0(r7)
-    fsubs f1, f1, f2
-    lfs f2, lbl_806D26EC(r2)
-    lfs f3, lbl_806D2744(r2)
-    fsubs f1, f1, f0
-    bl Saturate_Double
-    lfs f0, lbl_806D2700(r2)
-    lis r3, lbl_802EBE14@ha
-    addi r3, r3, lbl_802EBE14@l
-    lfs f8, lbl_806D26FC(r2)
-    fmuls f9, f1, f0
-    lfs f0, 0x14(r3)
-    lfs f4, 0x18(r3)
-    lfs f3, 0x1c(r3)
-    fsubs f10, f8, f9
-    lfs f7, 0x10(r3)
-    fmuls f0, f9, f0
-    lfs f2, 0x4(r3)
-    fmuls f5, f9, f4
-    lfs f6, 0x8(r3)
-    fmadds f0, f10, f2, f0
-    lfs f4, 0xc(r3)
-    fmuls f2, f9, f3
-    lfs f3, 0x0(r3)
-    fmadds f5, f10, f6, f5
-    stfs f0, 0x2e4(r30)
-    fmuls f0, f9, f7
-    fmadds f2, f10, f4, f2
-    stfs f5, 0x2e8(r30)
-    fmadds f0, f10, f3, f0
-    stfs f2, 0x2ec(r30)
-    stfs f8, 0x2c(r30)
-    stfs f0, 0x0(r31)
-    stfs f1, lbl_806D1080(r13)
-    stfs f9, lbl_806D1084(r13)
-    KartMovement_UpdateBoostVisualBlend_L_80052F08:
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+void KartMovement_UpdateBoostVisualBlend(KartDriverBusView *drv, KartMovementSpeedView *mv, float *outA, float *outB, int *counter) { /* 0x80052DBC size:0x164 */
+    int ticks = drv->boostTicks1b4;
+    if (ticks <= 0) {
+        lbl_806D1080 = 0.0f;
+        lbl_806D1084 = 0.0f;
+        if (*counter > 0) {
+            (*counter)--;
+            mv->boostBlendR = lbl_802EBE14[1];
+            mv->boostBlendG = lbl_802EBE14[2];
+            mv->boostBlendB = lbl_802EBE14[3];
+            mv->accelFactor2c = 1.0f;
+            *outA = lbl_802EBE14[0];
+        } else {
+            mv->boostBlendR = 0.0f;
+            mv->boostBlendG = 0.0f;
+            mv->boostBlendB = -0.0015f;
+            mv->accelFactor2c = 0.7f;
+            *outA = -0.05f;
+        }
+    } else {
+        float sat, s, inv, r, g, b, a;
+        *counter = 120;
+        sat = Saturate_Double((float)ticks - 1.0f, 0.0f, 2.0f);
+        s = sat * lbl_806D2700;
+        inv = 1.0f - s;
+        a = inv * lbl_802EBE14[0] + s * lbl_802EBE14[4];
+        r = inv * lbl_802EBE14[1] + s * lbl_802EBE14[5];
+        g = inv * lbl_802EBE14[2] + s * lbl_802EBE14[6];
+        b = inv * lbl_802EBE14[3] + s * lbl_802EBE14[7];
+        mv->boostBlendR = r;
+        mv->boostBlendG = g;
+        mv->boostBlendB = b;
+        mv->accelFactor2c = 1.0f;
+        *outA = a;
+        lbl_806D1080 = sat;
+        lbl_806D1084 = s;
+    }
 }
 
