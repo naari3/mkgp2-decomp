@@ -125,6 +125,7 @@ struct clDNBress : clMapEffectParts {
 };
 
 extern "C" {
+extern const char lbl_803C6ED0[];
 extern int g_gameMode;
 extern int g_longRoundFlag;
 extern int g_reverseRoundFlag;
@@ -262,6 +263,10 @@ static inline bool InRect(float x, float z, const float *r) {
 }
 
 clDNBress::clDNBress() {
+    // The original unit addresses its shared strings from one retained base.
+    const char *strings = lbl_803C6ED0 + 0x10000;
+    // The spawn/update member tables follow the two spawn-range vectors.
+    const FireFuncs *fireFuncs = (const FireFuncs *)((const char *)lbl_804EDF80 + 0x18);
     type = 0;
     xc = 0;
     anim = 0;
@@ -279,7 +284,7 @@ clDNBress::clDNBress() {
     hidden = 0;
     x68 = 0;
     freeSlot = 0;
-    DebugPrintf(lbl_803D0320);
+    DebugPrintf((strings - 0x6BB0));
     model = 0;
     if (g_longRoundFlag == 0) {
         return;
@@ -289,27 +294,27 @@ clDNBress::clDNBress() {
     }
     anim = new AnimCtrl;
     if (type == 0) {
-        model = new clNormal3D(lbl_803D01BC, 0);
-        fn_80240378(anim, lbl_803D01BC, 0, model, lbl_803D01DC);
+        model = new clNormal3D((strings - 0x6D14), 0);
+        fn_80240378(anim, (strings - 0x6D14), 0, model, (const char **)(strings - 0x6CF4));
     } else {
-        model = new clNormal3D(lbl_803D01CC, 0);
-        fn_80240378(anim, lbl_803D01CC, 0, model, lbl_803D01DC);
+        model = new clNormal3D((strings - 0x6D04), 0);
+        fn_80240378(anim, (strings - 0x6D04), 0, model, (const char **)(strings - 0x6CF4));
     }
     if (model) {
         clNormal3D_SetScale(model, 0, lbl_806DB400, lbl_806DB404, lbl_806DB400, lbl_806DB400);
     }
     if (model) {
         if (type == 0) {
-            joint = ResolveJointByName(model, lbl_803D0340);
+            joint = ResolveJointByName(model, (strings - 0x6B90));
         } else {
-            joint = ResolveJointByName(model, lbl_803D0340);
+            joint = ResolveJointByName(model, (strings - 0x6B90));
         }
     }
     if (joint == 0) {
-        DebugPrintf(lbl_803D0354);
+        DebugPrintf((strings - 0x6B7C));
         return;
     }
-    fx = new clNormal3D(lbl_803D037C, 1);
+    fx = new clNormal3D((strings - 0x6B54), 1);
     if (fx) {
         JObj_Hide(fx, Archive_GetRootJObj(fx), 4);
         fn_80182954(Archive_GetRootJObj(fx), 1);
@@ -329,10 +334,10 @@ clDNBress::clDNBress() {
     dir.x = dir.y = dir.z = lbl_806DB400;
     x58.x = x58.y = x58.z = lbl_806DB400;
     if (type == 1) {
-        spawn = lbl_804EDF98[0].spawn;
-        upd = lbl_804EDF98[0].upd;
+        spawn = fireFuncs[0].spawn;
+        upd = fireFuncs[0].upd;
     } else {
-        spawn = lbl_804EDF98[1].spawn;
-        upd = lbl_804EDF98[1].upd;
+        spawn = fireFuncs[1].spawn;
+        upd = fireFuncs[1].upd;
     }
 }
