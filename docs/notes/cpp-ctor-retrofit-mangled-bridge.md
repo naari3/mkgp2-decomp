@@ -1034,3 +1034,8 @@ c16_u106: PcbDebugOverlay DebugOverlay_DumpPcbState 80085E3C/528B resolves prior
 Source: Codex worker c16_u105_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 584 B.
 
 c16_u105: YesNoCursor Update 80204F68/584B reaches 100% by keeping the cached visible local bool, matching its canonical member type; unsigned char produces the persistent list/visible r30/r31 swap. A separately named allocation result with the old unsigned-char local is invariant. TU-owned private declaration view with undefined Cursor _key2 before Update suppresses duplicate vtable/RTTI while reusing canonical FlowScene types and verbatim YesNoSpark ctor. Add @73/@74 owned EH/index bridges and FlowFaderF dtor -> TweenInterp_Dtor. Owned text/EH104/index12 all100; extra weak dtors discarded. Matching source-linked ELF 80204F68 size584 and EH80018DEC/index800298AC verified; full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
+
+## c16_u111_20261106
+Source: Codex worker c16_u111_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u111: AI_SystemInit 801EBC8C 700B improves 99.828575 to 99.88571 by moving round/cup captures and GetKartTuningEntry into static inline GetSlotTuning(i). Character home becomes exact r27. Four round/cup instructions still swap r26/r27. Direct globals in nested helper call regress95.38857 (save set changes); helper cup/round capture arguments are invariant at99.88571. Retained NonMatching, owned EH payload and section scores unchanged; full fallback DOL SHA-1 OK. Singleton prevents mechanism B.
