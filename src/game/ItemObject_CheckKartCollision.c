@@ -5,8 +5,6 @@
 #include "game/DrawEffectAccess.h"
 
 extern const float lbl_806D5A80; /* 60.0 */
-extern const float lbl_806D5A84; /* 10.0 */
-extern const float lbl_806D5A88; /* 40.0 */
 extern const float lbl_806D5A8C; /* 0.0 */
 extern const float lbl_806D5A90; /* 1.0 */
 extern float Vec3_HorizontalDistance(const Vec *a, const Vec *b);
@@ -35,8 +33,8 @@ void ItemObject_CheckKartCollision(unsigned char *kart, unsigned char *item)
     scale = *(float *)(kart + 0xC4);
     k = *(float *)(kart + 0x10C);
     height = lbl_806D5A80 * scale;
-    baseR = k * (lbl_806D5A84 * scale);
-    topR = k * (lbl_806D5A88 * scale);
+    baseR = (10.0f * scale) * k;
+    topR = (40.0f * scale) * k;
     Vec3_Copy(&itemPos, (Vec *)(item + 0xCC));
 
     kartY = kartPos.y;
