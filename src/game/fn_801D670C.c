@@ -2,7 +2,8 @@
 static inline void Mark(PlayerProgress *self, int cc, int index) {
     if (cc <= 0) return;
     if (cc > 2) return;
-    self = (PlayerProgress *)((unsigned char *)self + (cc - 1) * 32 + index);
+    self = (PlayerProgress *)((unsigned char *)self + (cc - 1) * 32);
+    self = (PlayerProgress *)((unsigned char *)self + index);
     if (self->visited[0][0] == 0) {
         self->visited[0][0] = 1;
     }
