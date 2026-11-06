@@ -56,31 +56,46 @@ static inline void JObjUnlockSetRotationZ(HSD_JObj* jobj, f32 v, char* pool)
     if (!(jobj->flags & JOBJ_MTX_INDEP_SRT)) HSD_JObjSetMtxDirty(jobj);
 }
 
+static inline void JObjUnlockCallCallbacks(HSD_JObj* jobj, enum_t type,
+                                           HSD_ObjData* val, int byte_value)
+{
+    HSD_SList* node;
+    for (node = ufc_callbacks; node != NULL; node = node->next) {
+        ufc_callback cb = node->data;
+        if (byte_value) cb(jobj, type, val->iv);
+        else cb(jobj, type, val->fv);
+    }
+}
+
+static inline void JObjUnlockPathPoint(HSD_JObj* jobj, HSD_ObjData* val,
+                                       Vec3* p, char* pool)
+{
+    HSD_JObj* jp;
+    if (val->fv < 0.0L) {
+        val->fv = 0.0F;
+    }
+    if (1.0L < val->fv) {
+        val->fv = 1.0F;
+    }
+    if (!jobj->aobj) __assert(lbl_806D0DB0, 590, pool + 0x64);
+    jp = jobj->aobj->jobj;
+    if (!jp) __assert(lbl_806D0DB0, 592, lbl_806D0DB8);
+    if (!jp->u.spline) __assert(lbl_806D0DB0, 593, pool + 0x70);
+    splArcLengthPoint(p, jp->u.spline, val->fv);
+}
+
 void JObjUpdateFunc(void* obj, enum_t type, HSD_ObjData* val)
 {
     char* pool = lbl_804FC9A8;
     HSD_JObj* jobj = obj;
-    ufc_callback cb;
-    HSD_SList* callback_node;
     Vec3 p;
-    HSD_JObj* jp;
     HSD_RObj* robj;
     Mtx mtx;
 
     if (jobj != NULL) {
         switch (type) {
         case HSD_A_J_PATH:
-            if (val->fv < 0.0L) {
-                val->fv = 0.0F;
-            }
-            if (1.0L < val->fv) {
-                val->fv = 1.0F;
-            }
-            if (!jobj->aobj) __assert(lbl_806D0DB0, 590, pool + 0x64);
-            jp = jobj->aobj->jobj;
-            if (!jp) __assert(lbl_806D0DB0, 592, lbl_806D0DB8);
-            if (!jp->u.spline) __assert(lbl_806D0DB0, 593, pool + 0x70);
-            splArcLengthPoint(&p, jp->u.spline, val->fv);
+            JObjUnlockPathPoint(jobj, val, &p, pool);
             HSD_JObjSetTranslateX(jobj, p.x);
             HSD_JObjSetTranslateY(jobj, p.y);
             HSD_JObjSetTranslateZ(jobj, p.z);
@@ -142,12 +157,7 @@ void JObjUpdateFunc(void* obj, enum_t type, HSD_ObjData* val)
         case HSD_A_J_SETBYTE7:
         case HSD_A_J_SETBYTE8:
         case HSD_A_J_SETBYTE9: {
-            callback_node = ufc_callbacks;
-            while (callback_node != NULL) {
-                cb = callback_node->data;
-                cb(jobj, type, val->iv);
-                callback_node = callback_node->next;
-            }
+            JObjUnlockCallCallbacks(jobj, type, val, 1);
             break;
         }
         case HSD_A_J_SETFLOAT0:
@@ -160,12 +170,7 @@ void JObjUpdateFunc(void* obj, enum_t type, HSD_ObjData* val)
         case HSD_A_J_SETFLOAT7:
         case HSD_A_J_SETFLOAT8:
         case HSD_A_J_SETFLOAT9: {
-            callback_node = ufc_callbacks;
-            while (callback_node != NULL) {
-                cb = callback_node->data;
-                cb(jobj, type, val->fv);
-                callback_node = callback_node->next;
-            }
+            JObjUnlockCallCallbacks(jobj, type, val, 0);
             break;
         }
         case 0x28: {

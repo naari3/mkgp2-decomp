@@ -14194,7 +14194,7 @@ sysdolphin/baselib/pobj.c:
 	.sdata2     start:0x806DCC80 end:0x806DCCB0
 
 sysdolphin/baselib/jobj_data_nm.c:
-	.data       start:0x804FC9A8 end:0x804FCD80
+	.data       start:0x804FC9A8 end:0x804FCA50
 	.sbss       start:0x806D21B0 end:0x806D21C8
 	.sdata2     start:0x806DCCB0 end:0x806DCD00
 
@@ -14218,6 +14218,10 @@ sysdolphin/baselib/jobj_anim.c:
 
 sysdolphin/baselib/jobj_tail.c:
 	.text       start:0x802CE454 end:0x802CED98
+	.data       start:0x804FCA50 end:0x804FCB38
+
+sysdolphin/baselib/jobj_tail_data_nm.c:
+	.data       start:0x804FCB38 end:0x804FCD80
 
 sysdolphin/baselib/jobj_anim_eval.c:
 	.text       start:0x802CED98 end:0x802CF3B0
