@@ -413,7 +413,12 @@
   },
   "src/game/ItemObjectManager_Init.c": {
     "extab_ItemObjectManager_Init": "@etb_8000B334",
-    "extabindex_ItemObjectManager_Init": "@eti_800239FC"
+    "extabindex_ItemObjectManager_Init": "@eti_800239FC",
+    "@20": "@etb_8000B334",
+    "@21": "@eti_800239FC",
+    "__ct__10clNormal3DFPvi": "clNormal3D_Construct",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/ItemHolder_Init.c": {
     "extab_ItemHolder_Init": "@etb_80016A98",
