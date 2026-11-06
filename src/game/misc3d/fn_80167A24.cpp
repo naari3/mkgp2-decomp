@@ -1,16 +1,15 @@
 extern "C" {
-extern const float lbl_806D89F0, lbl_806D89F4, lbl_806D89F8, lbl_806D89FC, lbl_806D8A00;
 extern const unsigned char lbl_8036A390[0x200];
 void fn_801685A4(void *, const char *, float, float, float, float, float, float, ...);
 static inline int GetTimeDigit(unsigned int digit, float t) {
     switch (digit) {
-    case 0: return (int)(lbl_806D89F0 * t) % 10;
-    case 1: return (int)(lbl_806D89F4 * t) % 10;
-    case 2: return (int)(lbl_806D89F8 * t) % 10;
+    case 0: return (int)(1000.0f * t) % 10;
+    case 1: return (int)(100.0f * t) % 10;
+    case 2: return (int)(10.0f * t) % 10;
     case 4: return (int)t % 10;
-    case 5: return (int)(t / lbl_806D89F8) % 6;
-    case 7: return (int)(t / lbl_806D89FC) % 10;
-    case 8: return (int)(t / lbl_806D8A00) % 6;
+    case 5: return (int)(t / 10.0f) % 6;
+    case 7: return (int)(t / 60.0f) % 10;
+    case 8: return (int)(t / 600.0f) % 6;
     case 3: return 11;
     case 6: return 10;
     }

@@ -3215,7 +3215,7 @@ config.libs = [
             Object(Matching, "game/misc3d/fn_8016918C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/misc3d/fn_80169334.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/misc3d/fn_80169040.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/misc3d/fn_80167A24.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/misc3d/fn_80167A24.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/misc3d/fn_801696E4.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/misc3d/fn_801697C0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/misc3d/fn_80168A4C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),

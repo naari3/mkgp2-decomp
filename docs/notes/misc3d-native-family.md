@@ -32,3 +32,8 @@ c14_u52: fn_80168B90 grouped RG/BA packing improves fresh 91.536 to 97.712% (496
 Source: Codex worker c14_u54_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u54: fn_801695E0 alpha-only singleton improves 91.07692 ->92.61539 by removing unsigned-char cast before OR with 0xFFFFFF00 (upper bits forced to one). Text 264->260B and primary EH PC 0xD4->0xD0. Target early li(-256)/rlwimi remains oris/ori plus scheduling differences. Union RGB24/alpha8 spills to stack (90.215385); inline generic color-mask helper is invariant (91.07692). Three hypotheses exhausted, remains NonMatching, no split rescue. Coordinator full fallback-linked DOL SHA1 OK.
+
+## c16_u138_20261106
+Source: Codex worker c16_u138_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 572 B.
+
+c16_u138: Timer fn_80167A24 matches all572B text plus8B extab/12B index by replacing external named float constants with ordinary literals1000.0f,100.0f,10.0f,60.0f,600.0f in existing GetTimeDigit inline switch. Fixes nine f10/f11/f12 identity instructions; postprocess_sdata2 maps emitted literals to original labels. Existing flags unchanged, Matching promotion; full source-linked DOL SHA1 OK; actual ELF80167A24 size572. One hypothesis; no register permutations.
