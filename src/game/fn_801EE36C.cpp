@@ -1,5 +1,5 @@
-/* Native candidate: 99.83045% text. Remaining differences are two
- * square-root scratch slots and FP registers in the transit interpolation.
+/* Native candidate: 99.9135% text. Remaining differences are five
+ * FP register operands in the transit interpolation.
  * The primary EH payload is exact; the extra weak Vec destructor is unowned. */
 #include "game/kartmove/collision_private.h"
 
@@ -25,6 +25,18 @@ template <class V> static inline float MovementLength(const V &v)
     return squared;
 }
 
+static inline float MovementInverseLength(const CollisionVec &v)
+{
+    return 1.0f / MovementLength(v);
+}
+
+static inline void ScaleTransit(CollisionVec &v, float scale)
+{
+    v.x *= scale;
+    v.y *= scale;
+    v.z *= scale;
+}
+
 extern "C" void fn_801EE36C(char *self)
 {
     if (STEP_I(self, 0x158) > 0) {
@@ -34,7 +46,7 @@ extern "C" void fn_801EE36C(char *self)
         delta.z -= STEP_F(self, 0x60);
         float length = MovementLength(delta);
         if (length) {
-            float scale = STEP_F(self, 0x154) * (1.0f / MovementLength(delta));
+            float scale = STEP_F(self, 0x154) * MovementInverseLength(delta);
             delta.x *= scale;
             delta.y *= scale;
             delta.z *= scale;
@@ -52,7 +64,7 @@ extern "C" void fn_801EE36C(char *self)
         delta.z -= STEP_F(self, 0x60);
         float length = MovementLength(delta);
         if (length) {
-            float scale = STEP_F(self, 0x154) * (1.0f / MovementLength(delta));
+            float scale = STEP_F(self, 0x154) * MovementInverseLength(delta);
             delta.x *= scale;
             delta.y *= scale;
             delta.z *= scale;
@@ -65,13 +77,10 @@ extern "C" void fn_801EE36C(char *self)
     }
     if (STEP_I(self, 0xC8) > 0) {
         CollisionVec delta(STEP_F(self, 0x4C), STEP_F(self, 0x50), STEP_F(self, 0x54));
-        float scale = 0.0125f * (float)STEP_I(self, 0xC8) + 1.0f;
         delta.x -= STEP_F(self, 0x58);
         delta.y -= STEP_F(self, 0x5C);
         delta.z -= STEP_F(self, 0x60);
-        delta.x *= scale;
-        delta.y *= scale;
-        delta.z *= scale;
+        ScaleTransit(delta, 0.0125f * (float)STEP_I(self, 0xC8) + 1.0f);
         STEP_F(self, 0x4C) = delta.x + STEP_F(self, 0x58);
         STEP_F(self, 0x50) = delta.y + STEP_F(self, 0x5C);
         STEP_F(self, 0x54) = delta.z + STEP_F(self, 0x60);
