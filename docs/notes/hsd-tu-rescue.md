@@ -13,3 +13,8 @@ Even 100% object text/data and a source link edge do not ensure every static fun
 Source: Codex worker c5_s24_tobjresetnm_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 372 B.
 
 tobj_reset native rescue: reverse chained float stores; separate genuine named zero constant into native tobj_reset_consts.c so existing sdata2 postprocessor maps the reset literal to exported lbl_806DCB88. tobj_texmap isolated static helper retained with established force_active pragma; source-linked final ELF address/size and full DOL SHA-1 verified.
+
+## c16_u55_20261106
+Source: Codex worker c16_u55_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u55: MObjInfoInit802C3A74 target keeps material-block base hsdMObj in r31, strings at +148/+160 and separate addi-zero class pointer for callback stores. Char-base reuse improves directly measured76.931816 to91.818184 (172/176B). Canonical global info expressions lose across-call base (82.931816); indexed zero-offset and typed aggregate subobject views fold address copies too (91.818184). Remains NonMatching; avoid repeating these shapes. Full fallback DOL SHA1 exact, native gain0.

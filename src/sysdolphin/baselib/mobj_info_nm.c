@@ -13,16 +13,19 @@
 #include "mobj_private.h"
 void MObjInfoInit(void)
 {
-    hsdInitClassInfo(HSD_CLASS_INFO(&hsdMObj), HSD_CLASS_INFO(&hsdClass),
-                     "sysdolphin_base_library", "hsd_mobj",
+    /* The original material data block also contains the class-name strings. */
+    char* base = (char*) &hsdMObj;
+
+    hsdInitClassInfo(HSD_CLASS_INFO(base), HSD_CLASS_INFO(&hsdClass),
+                     base + 0x148, base + 0x160,
                      sizeof(HSD_MObjInfo), sizeof(HSD_MObj));
 
-    HSD_CLASS_INFO(&hsdMObj)->release = MObjRelease;
-    HSD_CLASS_INFO(&hsdMObj)->amnesia = MObjAmnesia;
-    HSD_MOBJ_INFO(&hsdMObj)->setup = HSD_MObjSetup;
-    HSD_MOBJ_INFO(&hsdMObj)->unset = HSD_MObjUnset;
-    HSD_MOBJ_INFO(&hsdMObj)->load = MObjLoad;
-    HSD_MOBJ_INFO(&hsdMObj)->make_texp = MObjMakeTExp;
-    HSD_MOBJ_INFO(&hsdMObj)->setup_tev = MObjSetupTev;
-    HSD_MOBJ_INFO(&hsdMObj)->update = MObjUpdateFunc;
+    HSD_CLASS_INFO(base)->release = MObjRelease;
+    HSD_CLASS_INFO(base)->amnesia = MObjAmnesia;
+    HSD_MOBJ_INFO(base)->setup = HSD_MObjSetup;
+    HSD_MOBJ_INFO(base)->unset = HSD_MObjUnset;
+    HSD_MOBJ_INFO(base)->load = MObjLoad;
+    HSD_MOBJ_INFO(base)->make_texp = MObjMakeTExp;
+    HSD_MOBJ_INFO(base)->setup_tev = MObjSetupTev;
+    HSD_MOBJ_INFO(base)->update = MObjUpdateFunc;
 }
