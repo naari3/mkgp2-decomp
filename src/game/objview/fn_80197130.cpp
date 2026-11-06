@@ -11,9 +11,6 @@ struct Owner {
     void *item;
     Particle *particles;
 };
-extern "C" {
-extern const float lbl_806D95E8, lbl_806D95EC, lbl_806D95F0, lbl_806D95F4;
-}
 extern "C" void fn_80197130(Owner *o) {
     Particle *p;
     void *scene;
@@ -28,20 +25,20 @@ extern "C" void fn_80197130(Owner *o) {
         float aspect;
         Vec3f pos;
         Scene3D_GetCameraPos(scene, &angle, &aspect);
-        height = tan(lbl_806D95E8 * (lbl_806D95EC * angle));
+        height = tan(0.5f * (0.01745329238474369f * angle));
         width = height * aspect;
         GXChannel ch(Archive_GetRootJObj(o->model), HSD_JObjGetDObj(Archive_GetRootJObj(o->model)), 0x40000000, 1);
         Mtx m;
         for (i = 0; i < 50; i++) {
             p = &o->particles[i];
-            if (p->active != 0 && lbl_806D95F0 != p->alpha) {
+            if (p->active != 0 && 0.0f != p->alpha) {
                 float y = -p->depth * height;
                 float x = p->depth * width;
                 pos.x = p->x * (-x - x) + x;
                 pos.y = p->y * (-y - y) + y;
                 pos.z = p->depth;
                 PSMTXMultVec(*view, &pos, &pos);
-                PSMTXScale(m, lbl_806D95F4, lbl_806D95F4, lbl_806D95F4);
+                PSMTXScale(m, 0.1f, 0.1f, 0.1f);
                 PSMTXConcat(m, *view, m);
                 float z, py, px;
                 px = pos.x; py = pos.y; z = pos.z;

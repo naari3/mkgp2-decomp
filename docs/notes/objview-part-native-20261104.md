@@ -61,3 +61,8 @@ c14_u53: fn_801972E0 correct writable random tables lbl_80495994/lbl_80495A94 (.
 Source: Codex worker c16_u17_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u17: fn_80187410 fresh87.502396->89.88039 via small CopyPoint(dst,src) inline helper. Three control copies remain scalar exact; final position copy now loads paths[i] once rather than three times, reducing852->836B and index100. Owned EH52B100. Initializer helper folds indexed stores, whole loop exceeds auto inline budget. Remaining def/stride r30/r31 exchange, point index/count scratch homes and pre-store loads; NonMatching, no native gain.
+
+## c16_u122_20261106
+Source: Codex worker c16_u122_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 432 B.
+
+c16_u122: fn_80197130 reaches exact432B text/extab24/index12 by replacing external constants lbl_806D95E8/EC/F0/F4 with float literals 0.5f, 0.01745329238474369f, 0.0f, 0.1f. Baseline only four FP operands differed: height f31/width f30 versus target f30/f31. Existing GXChannel lifetime and typed bridge remain unchanged. Matching promotion source-linked on main.elf edge and coordinator full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65 verified. No split/data/header/EH bridge edits.
