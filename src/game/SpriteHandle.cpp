@@ -271,8 +271,8 @@ extern void FUN_8003b120();
 void MemoryManager_TimedFree(void *p);
 void fn_801F6494(void);
 extern unsigned char lbl_806D14FD;
-extern void LUT_Cosine();
-extern void LUT_Sine();
+float LUT_Cosine(float);
+float LUT_Sine(float);
 extern void ResourceTable_GetFlagsByte();
 extern void ResourceTable_GetScaleXY();
 extern unsigned int lbl_80332528[];
@@ -299,7 +299,7 @@ void fn_80121210(void);
 void fn_801213EC(void);
 asm void fn_801217E8(SpriteHandle *s);
 void Stub_NoOp_80121c34(void);
-asm void fn_80121C38(void);
+unsigned char fn_80121C38(ResCtrl *r);
 void fn_80121E10(ResCtrl *r);
 ResCtrl *ResCtrl_Init(ResCtrl *r);
 void *fn_80121F54(void *self, short flag);
@@ -344,9 +344,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_801217E8[8
     0x18, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80121C38[8] = {
-    0x09, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
@@ -398,9 +395,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_801217E8, 0x0000044C, (void *)extab_fn_801217E8
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80121C38 = {
-    (void *)&fn_80121C38, 0x000001D8, (void *)extab_fn_80121C38
-};
 
 
 
@@ -2707,136 +2701,75 @@ extern "C" asm void fn_801217E8(SpriteHandle *s) { /* 0x801217E8 size:0x44C */
 extern "C" void Stub_NoOp_80121c34(void) {
 }
 
-extern "C" asm void fn_80121C38(void) { /* 0x80121C38 size:0x1D8 */
-    nofralloc
-    stwu r1, -0x90(r1)
-    mflr r0
-    stw r0, 0x94(r1)
-    stfd f31, 0x80(r1)
-    psq_st f31, 0x88(r1), 0, 0
-    stfd f30, 0x70(r1)
-    psq_st f30, 0x78(r1), 0, 0
-    stfd f29, 0x60(r1)
-    psq_st f29, 0x68(r1), 0, 0
-    stfd f28, 0x50(r1)
-    psq_st f28, 0x58(r1), 0, 0
-    stfd f27, 0x40(r1)
-    psq_st f27, 0x48(r1), 0, 0
-    stfd f26, 0x30(r1)
-    psq_st f26, 0x38(r1), 0, 0
-    stfd f25, 0x20(r1)
-    psq_st f25, 0x28(r1), 0, 0
-    stw r31, 0x1c(r1)
-    mr r31, r3
-    li r3, 0x1b8c
-    lwz r0, 0x8(r31)
-    cmpwi r0, 0x2
-    beq fn_80121C38_L_80121C98
-    lwz r3, 0x0(r31)
-    fn_80121C38_L_80121C98:
-    lfs f26, 0x2c(r31)
-    lfs f25, 0x30(r31)
-    lfs f0, 0x20(r31)
-    stfs f0, 0xc(r1)
-    lfs f0, 0x24(r31)
-    stfs f0, 0x8(r1)
-    lwz r0, 0x0(r31)
-    cmpwi r0, 0x2
-    beq fn_80121C38_L_80121CC8
-    addi r4, r1, 0xc
-    addi r5, r1, 0x8
-    bl ResourceTable_GetSizeXY
-    fn_80121C38_L_80121CC8:
-    lfs f0, 0x14(r31)
-    lfs f2, 0x18(r31)
-    fmr f31, f0
-    lfs f1, 0x28(r31)
-    fmr f30, f0
-    fmr f29, f2
-    fmr f28, f2
-    bl LUT_Cosine
-    fmr f27, f1
-    lfs f1, 0x28(r31)
-    bl LUT_Sine
-    lfs f0, 0x8(r1)
-    lfs f2, 0xc(r1)
-    fmuls f4, f0, f25
-    lbz r0, 0x10(r31)
-    fmuls f5, f2, f26
-    lfs f3, lbl_806D6D88(r2)
-    cmplwi r0, 0x0
-    fmuls f2, f27, f4
-    fmuls f0, f1, f4
-    fmsubs f1, f1, f5, f2
-    fmadds f0, f27, f5, f0
-    fmuls f2, f3, f1
-    fmuls f6, f3, f0
-    bne fn_80121C38_L_80121D44
-    fmuls f0, f3, f5
-    fmuls f1, f3, f4
-    fadds f31, f31, f0
-    fadds f29, f29, f1
-    fadds f30, f30, f0
-    fadds f28, f28, f1
-    fn_80121C38_L_80121D44:
-    fsubs f31, f31, f2
-    fadds f30, f30, f2
-    fsubs f29, f29, f6
-    fadds f28, f28, f6
-    fcmpo cr0, f31, f30
-    ble fn_80121C38_L_80121D68
-    fmr f0, f31
-    fmr f31, f30
-    fmr f30, f0
-    fn_80121C38_L_80121D68:
-    fcmpo cr0, f29, f28
-    ble fn_80121C38_L_80121D7C
-    fmr f0, f29
-    fmr f29, f28
-    fmr f28, f0
-    fn_80121C38_L_80121D7C:
-    lfs f0, g_glyphClipMaxX(r2)
-    fcmpo cr0, f31, f0
-    cror eq, gt, eq
-    beq fn_80121C38_L_80121D98
-    lfs f1, g_glyphClipMinXY(r2)
-    fcmpo cr0, f30, f1
-    bge fn_80121C38_L_80121DA0
-    fn_80121C38_L_80121D98:
-    li r3, 0x0
-    b fn_80121C38_L_80121DC4
-    fn_80121C38_L_80121DA0:
-    lfs f0, g_glyphClipMaxY(r2)
-    fcmpo cr0, f29, f0
-    cror eq, gt, eq
-    beq fn_80121C38_L_80121DB8
-    fcmpo cr0, f28, f1
-    bge fn_80121C38_L_80121DC0
-    fn_80121C38_L_80121DB8:
-    li r3, 0x0
-    b fn_80121C38_L_80121DC4
-    fn_80121C38_L_80121DC0:
-    li r3, 0x1
-    fn_80121C38_L_80121DC4:
-    psq_l f31, 0x88(r1), 0, 0
-    lfd f31, 0x80(r1)
-    psq_l f30, 0x78(r1), 0, 0
-    lfd f30, 0x70(r1)
-    psq_l f29, 0x68(r1), 0, 0
-    lfd f29, 0x60(r1)
-    psq_l f28, 0x58(r1), 0, 0
-    lfd f28, 0x50(r1)
-    psq_l f27, 0x48(r1), 0, 0
-    lfd f27, 0x40(r1)
-    psq_l f26, 0x38(r1), 0, 0
-    lfd f26, 0x30(r1)
-    psq_l f25, 0x28(r1), 0, 0
-    lfd f25, 0x20(r1)
-    lwz r0, 0x94(r1)
-    lwz r31, 0x1c(r1)
-    mtlr r0
-    addi r1, r1, 0x90
-    blr
+static inline void SortPair(float &a, float &b) {
+    if (a > b) {
+        float t = a;
+        a = b;
+        b = t;
+    }
+}
+
+extern "C" unsigned char fn_80121C38(ResCtrl *r) {
+    int id;
+    float sx;
+    float sy;
+    float w;
+    float h;
+    float minX;
+    float maxX;
+    float minY;
+    float maxY;
+    float c;
+    float sn;
+    float hh;
+    float hw;
+    float ex;
+    float ey;
+    float x;
+    float y;
+
+    id = 0x1B8C;
+    if (r->f8 != 2) {
+        id = r->id;
+    }
+    sx = r->f2C;
+    sy = r->f30;
+    w = r->f20;
+    h = r->f24;
+    if (r->id != 2) {
+        ResourceTable_GetSizeXY(id, &w, &h);
+    }
+    x = r->f14;
+    y = r->f18;
+    minX = x;
+    maxX = x;
+    minY = y;
+    maxY = y;
+    c = LUT_Cosine(r->f28);
+    sn = LUT_Sine(r->f28);
+    hw = w * sx;
+    hh = h * sy;
+    ex = 0.5f * (sn * hw - c * hh);
+    ey = 0.5f * (c * hw + sn * hh);
+    if (!r->f10) {
+        minX += 0.5f * hw;
+        minY += 0.5f * hh;
+        maxX += 0.5f * hw;
+        maxY += 0.5f * hh;
+    }
+    minX -= ex;
+    maxX += ex;
+    minY -= ey;
+    maxY += ey;
+    SortPair(minX, maxX);
+    SortPair(minY, maxY);
+    if (minX >= g_glyphClipMaxX || maxX < g_glyphClipMinXY) {
+        return 0;
+    }
+    if (minY >= g_glyphClipMaxY || maxY < g_glyphClipMinXY) {
+        return 0;
+    }
+    return 1;
 }
 
 extern "C" void fn_80121E10(ResCtrl *r) {
