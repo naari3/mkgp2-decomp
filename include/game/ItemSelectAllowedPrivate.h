@@ -22,12 +22,13 @@ static inline unsigned char IsSpecialItemRound(void) {
     return 0;
 }
 static inline int SelectRoundItem(const struct ItemSelectionTable *table, int cup, int round, int slot) {
-    int item, replacement;
+    int item, replacement, roundInCup;
     if (cup < 1 || cup > 8) return 0x3D;
     if (round < 0 || round > 7) return 0x3D;
-    if (round >= 4) round -= 4;
     cup -= 1;
-    item = table->items[cup][round][slot];
+    roundInCup = round;
+    if (round >= 4) roundInCup -= 4;
+    item = table->items[cup][roundInCup][slot];
     if (lbl_806D12AD == 1) {
         void *player = g_playerData;
         replacement = 0;
