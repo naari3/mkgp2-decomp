@@ -1,6 +1,5 @@
 /* Observed Gabyou item fields; no unobserved layout is asserted. */
 struct Vec3 { float x, y, z; };
-struct Vec3Words { unsigned int x, y, z; };
 struct GabyouUpdateContext {
     unsigned char matrixEnabled;
     unsigned char pad01[3];
@@ -73,6 +72,11 @@ static inline bool DecayLifetime(GabyouUpdateItem *item, float decay)
         return true;
     return false;
 }
+static inline void ApplyGravityAndTurn(GabyouUpdateItem *item, float turn)
+{
+    item->velocity.y += lbl_806D6098;
+    item->rotationX = BuildOrientationFromYaw(turn + item->rotationX);
+}
 static inline void TickExpiry(GabyouUpdateItem *item, GabyouUpdateContext *context, int kind)
 {
     switch (item->phase) {
@@ -94,12 +98,7 @@ static inline void TickExpiry(GabyouUpdateItem *item, GabyouUpdateContext *conte
     }
     Item_DecayVelocityScalar(item, lbl_806D6094);
     if ((int)item->kind == 9) {
-        float gravity, velocity, turn;
-        turn = lbl_806D608C;
-        velocity = item->velocity.y;
-        gravity = lbl_806D6098;
-        item->velocity.y = velocity + gravity;
-        item->rotationX = BuildOrientationFromYaw(turn + item->rotationX);
+        ApplyGravityAndTurn(item, lbl_806D608C);
     }
 }
 
@@ -108,7 +107,6 @@ void GabyouItem_Update(GabyouUpdateItem *item)
     GabyouUpdateContext *context = &item->context;
     const char *names = lbl_8032F598;
     float matrix[16];
-    Vec3 matrixPosition;
     switch (item->state) {
     case 0:
         context->flag90 = 1;
@@ -181,13 +179,7 @@ void GabyouItem_Update(GabyouUpdateItem *item)
         Matrix4_PreMultiplyRotZ(matrix, matrix, item->rotationZ);
         Matrix4_PreMultiplyRotX(matrix, matrix, item->rotationX);
         Matrix4_PreMultiplyRotY(matrix, matrix, item->rotationY);
-        /* Preserve the three IEEE-754 words when copying the ABI argument. */
-        unsigned int first, second;
-        first = ((const Vec3Words *)&item->position)->x;
-        second = ((const Vec3Words *)&item->position)->y;
-        ((Vec3Words *)&matrixPosition)->x = first;
-        ((Vec3Words *)&matrixPosition)->y = second;
-        ((Vec3Words *)&matrixPosition)->z = ((const Vec3Words *)&item->position)->z;
+        Vec3 matrixPosition = item->position;
         Mtx44_Translate(matrix, matrix, &matrixPosition);
         DbgScene_CopyMatrix3x4Transpose(item->matrix, matrix);
     }

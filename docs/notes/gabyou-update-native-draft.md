@@ -1,0 +1,5 @@
+# gabyou-update-native-draft
+
+Source: Codex worker c16_u109_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u109: GabyouItem_Update 800F33DC/1308B improves 99.84098 to99.87768 by replacing Vec3Words alias casts/manual x,y,z word copies with block-local Vec3 matrixPosition = item->position and passing its address to Mtx44_Translate. This naturally emits exact lwz r6,x / lwz r0,y / stw r6,x / stw r0,y at stack20. Changing external prototype to by-value Vec3 instead produces correct registers but rotates all three argument-copy slots (sound14->20, sound08->14, translation20->08). Inline translation-by-value wrapper has same slot problem. AdvanceRotation helper delays turn constant load; ApplyGravityAndTurn(item,float turn) preserves exact schedule but does not fix FP colors. Remaining eight operand rows at offsets314/31C/320/32C and3E0/3E8/3EC/3F8: velocity f1 vs target f2, turn f2 vs target f1. EH8/index12/data40 remain100; TU staysNonMatching. No mechanism B cut in singleton.
