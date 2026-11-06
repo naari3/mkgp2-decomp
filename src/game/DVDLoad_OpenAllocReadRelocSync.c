@@ -1,234 +1,165 @@
-/* === extracted from auto_DVDLoad_OpenAllocRea_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void DVDOpen();
-extern void FUN_8007dfe4();
-extern void DVDClose();
-extern void HSD_MemAlloc();
-extern void HSD_ArchiveFree();
-extern void memcpy();
-extern void memset();
-extern void strlen();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D2238;
-
-/* --- function index (1 fns, .text 0x8007DD00..0x8007DFD4) ---
- * [  0] 0x8007DD00 size:0x2D4   global DVDLoad_OpenAllocReadRelocSync
+/*
+ * DVDLoad_OpenAllocReadRelocSync, 0x8007DD00..0x8007DFD4: loads a relocatable
+ * archive synchronously. It reads the 0x20-byte header, checks the file size,
+ * reads the data block, the relocation/public/extern tables and the symbol
+ * strings into separate 32-byte rounded buffers, keeps a copy of the path and
+ * applies the relocations. The idle callback is told the current stage.
  */
 
-/* --- forward decls --- */
-asm void DVDLoad_OpenAllocReadRelocSync(void);
+typedef unsigned long u32;
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_DVDLoad_OpenAllocReadRelocSync[8] = {
-    0x28, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+typedef struct DVDFileInfo {
+    unsigned char cb[0x30];
+    u32 startAddr; /* 0x30 */
+    u32 length;    /* 0x34 */
+    unsigned char pad38[0x3C - 0x38];
+} DVDFileInfo;
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_DVDLoad_OpenAllocReadRelocSync = {
-    (void *)&DVDLoad_OpenAllocReadRelocSync, 0x000002D4, (void *)extab_DVDLoad_OpenAllocReadRelocSync
-};
+typedef struct ArchiveHeader {
+    u32 file_size;  /* 0x00 */
+    u32 data_size;  /* 0x04 */
+    u32 nb_reloc;   /* 0x08 */
+    u32 nb_public;  /* 0x0C */
+    u32 nb_extern;  /* 0x10 */
+    u32 pad[3];     /* 0x14 */
+} ArchiveHeader;
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void DVDLoad_OpenAllocReadRelocSync(void) { /* 0x8007DD00 size:0x2D4 */
-    nofralloc
-    stwu r1, -0x60(r1)
-    mflr r0
-    stw r0, 0x64(r1)
-    stmw r27, 0x4c(r1)
-    mr r29, r3
-    li r3, 0x0
-    lwz r12, lbl_806D2238(r13)
-    mtctr r12
-    bctrl
-    lwz r12, lbl_806D2238(r13)
-    li r3, 0x1
-    mtctr r12
-    bctrl
-    li r3, 0x44
-    bl HSD_MemAlloc
-    mr. r31, r3
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
-    li r4, 0x0
-    li r5, 0x44
-    bl memset
-    mr r3, r29
-    mr r4, r31
-    li r5, 0x20
-    li r6, 0x0
-    li r7, 0x2
-    bl FUN_8007dfe4
-    clrlwi. r0, r3, 24
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
-    mr r3, r29
-    addi r4, r1, 0x8
-    bl DVDOpen
-    cmpwi r3, 0x0
-    bne DVDLoad_OpenAllocReadRelocSync_L_8007DD8C
-    li r3, 0x0
-    b DVDLoad_OpenAllocReadRelocSync_L_8007DFC0
-    DVDLoad_OpenAllocReadRelocSync_L_8007DD8C:
-    lwz r27, 0x3c(r1)
-    addi r3, r1, 0x8
-    bl DVDClose
-    lwz r0, 0x0(r31)
-    cmplw r0, r27
-    bne DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
-    lwz r27, 0x4(r31)
-    addi r0, r27, 0x1f
-    clrrwi r30, r0, 5
-    mr r3, r30
-    bl HSD_MemAlloc
-    stw r3, 0x20(r31)
-    lwz r0, 0x20(r31)
-    cmplwi r0, 0x0
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
-    li r0, 0x0
-    mr r3, r29
-    stw r0, 0x40(r31)
-    mr r5, r30
-    li r6, 0x20
-    li r7, 0x3
-    lwz r4, 0x20(r31)
-    bl FUN_8007dfe4
-    clrlwi. r0, r3, 24
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
-    lwz r0, 0x8(r31)
-    addi r30, r27, 0x20
-    cmplwi r0, 0x0
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DE44
-    slwi r27, r0, 2
-    addi r0, r27, 0x1f
-    clrrwi r28, r0, 5
-    mr r3, r28
-    bl HSD_MemAlloc
-    stw r3, 0x24(r31)
-    lwz r4, 0x24(r31)
-    cmplwi r4, 0x0
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
-    mr r3, r29
-    mr r5, r28
-    mr r6, r30
-    li r7, 0x4
-    bl FUN_8007dfe4
-    clrlwi. r0, r3, 24
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
-    add r30, r30, r27
-    DVDLoad_OpenAllocReadRelocSync_L_8007DE44:
-    lwz r0, 0xc(r31)
-    cmplwi r0, 0x0
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DE94
-    slwi r27, r0, 3
-    addi r0, r27, 0x1f
-    clrrwi r28, r0, 5
-    mr r3, r28
-    bl HSD_MemAlloc
-    stw r3, 0x28(r31)
-    lwz r4, 0x28(r31)
-    cmplwi r4, 0x0
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
-    mr r3, r29
-    mr r5, r28
-    mr r6, r30
-    li r7, 0x5
-    bl FUN_8007dfe4
-    clrlwi. r0, r3, 24
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
-    add r30, r30, r27
-    DVDLoad_OpenAllocReadRelocSync_L_8007DE94:
-    lwz r0, 0x10(r31)
-    cmplwi r0, 0x0
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DEE4
-    slwi r27, r0, 3
-    addi r0, r27, 0x1f
-    clrrwi r28, r0, 5
-    mr r3, r28
-    bl HSD_MemAlloc
-    stw r3, 0x2c(r31)
-    lwz r4, 0x2c(r31)
-    cmplwi r4, 0x0
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
-    mr r3, r29
-    mr r5, r28
-    mr r6, r30
-    li r7, 0x6
-    bl FUN_8007dfe4
-    clrlwi. r0, r3, 24
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
-    add r30, r30, r27
-    DVDLoad_OpenAllocReadRelocSync_L_8007DEE4:
-    lwz r0, 0x0(r31)
-    subf. r3, r30, r0
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DF2C
-    addi r0, r3, 0x1f
-    clrrwi r28, r0, 5
-    mr r3, r28
-    bl HSD_MemAlloc
-    stw r3, 0x30(r31)
-    lwz r4, 0x30(r31)
-    cmplwi r4, 0x0
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
-    mr r3, r29
-    mr r5, r28
-    mr r6, r30
-    li r7, 0x7
-    bl FUN_8007dfe4
-    clrlwi. r0, r3, 24
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
-    DVDLoad_OpenAllocReadRelocSync_L_8007DF2C:
-    mr r3, r29
-    bl strlen
-    mr r30, r3
-    addi r3, r30, 0x1
-    bl HSD_MemAlloc
-    stw r3, 0x38(r31)
-    lwz r3, 0x38(r31)
-    cmplwi r3, 0x0
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DFAC
-    mr r4, r29
-    addi r5, r30, 0x1
-    bl memcpy
-    li r4, 0x0
-    mr r5, r4
-    b DVDLoad_OpenAllocReadRelocSync_L_8007DF88
-    DVDLoad_OpenAllocReadRelocSync_L_8007DF68:
-    lwz r3, 0x24(r31)
-    addi r4, r4, 0x1
-    lwz r6, 0x20(r31)
-    lwzx r3, r3, r5
-    addi r5, r5, 0x4
-    lwzx r0, r6, r3
-    add r0, r0, r6
-    stwx r0, r6, r3
-    DVDLoad_OpenAllocReadRelocSync_L_8007DF88:
-    lwz r0, 0x8(r31)
-    cmplw r4, r0
-    blt DVDLoad_OpenAllocReadRelocSync_L_8007DF68
-    lwz r12, lbl_806D2238(r13)
-    li r3, 0x8
-    mtctr r12
-    bctrl
-    mr r3, r31
-    b DVDLoad_OpenAllocReadRelocSync_L_8007DFC0
-    DVDLoad_OpenAllocReadRelocSync_L_8007DFAC:
-    cmplwi r31, 0x0
-    beq DVDLoad_OpenAllocReadRelocSync_L_8007DFBC
-    mr r3, r31
-    bl HSD_ArchiveFree
-    DVDLoad_OpenAllocReadRelocSync_L_8007DFBC:
-    li r3, 0x0
-    DVDLoad_OpenAllocReadRelocSync_L_8007DFC0:
-    lmw r27, 0x4c(r1)
-    lwz r0, 0x64(r1)
-    mtlr r0
-    addi r1, r1, 0x60
-    blr
+typedef struct Archive {
+    ArchiveHeader header; /* 0x00 */
+    unsigned char *data;  /* 0x20 */
+    u32 *reloc_info;      /* 0x24 */
+    void *public_info;    /* 0x28 */
+    void *extern_info;    /* 0x2C */
+    char *symbols;        /* 0x30 */
+    void *next;           /* 0x34 */
+    char *name;           /* 0x38 */
+    u32 pad3C;            /* 0x3C */
+    u32 flags;            /* 0x40 */
+} Archive;
+
+extern int DVDOpen(const char *path, DVDFileInfo *info);
+extern int DVDClose(DVDFileInfo *info);
+extern unsigned char FUN_8007dfe4(const char *path, void *buf, long len, long offset, int stage);
+extern void *HSD_MemAlloc(u32 size);
+extern void HSD_ArchiveFree(Archive *archive);
+extern void *memcpy(void *dst, const void *src, u32 n);
+extern void *memset(void *dst, int c, u32 n);
+extern u32 strlen(const char *s);
+extern void (*lbl_806D2238)(int stage); /* idle callback while reading */
+
+#define ROUND32(x) (((x) + 0x1F) & ~0x1F)
+
+static inline void ArchiveRelocate(Archive *archive)
+{
+    u32 i;
+
+    for (i = 0; i < archive->header.nb_reloc; i++) {
+        *(u32 *)(archive->data + archive->reloc_info[i]) += (u32)archive->data;
+    }
 }
 
+#pragma exceptions on
+#pragma use_lmw_stmw on
+
+Archive *DVDLoad_OpenAllocReadRelocSync(const char *path)
+{
+    Archive *archive;
+    DVDFileInfo info;
+    u32 length;
+    u32 offset;
+    u32 size;
+    u32 data_size;
+
+    lbl_806D2238(0);
+    lbl_806D2238(1);
+    archive = HSD_MemAlloc(sizeof(Archive));
+    if (archive == 0) {
+        goto fail;
+    }
+    memset(archive, 0, sizeof(Archive));
+    if (!FUN_8007dfe4(path, archive, 0x20, 0, 2)) {
+        goto fail;
+    }
+    if (DVDOpen(path, &info) == 0) {
+        return 0;
+    }
+    length = info.length;
+    DVDClose(&info);
+    if (archive->header.file_size != length) {
+        goto fail;
+    }
+
+    data_size = archive->header.data_size;
+    archive->data = HSD_MemAlloc(ROUND32(data_size));
+    if (archive->data == 0) {
+        goto fail;
+    }
+    archive->flags = 0;
+    if (!FUN_8007dfe4(path, archive->data, ROUND32(data_size), 0x20, 3)) {
+        goto fail;
+    }
+    offset = data_size + 0x20;
+
+    if (archive->header.nb_reloc != 0) {
+        size = archive->header.nb_reloc * 4;
+            archive->reloc_info = HSD_MemAlloc(ROUND32(size));
+        if (archive->reloc_info == 0) {
+            goto fail;
+        }
+        if (!FUN_8007dfe4(path, archive->reloc_info, ROUND32(size), offset, 4)) {
+            goto fail;
+        }
+        offset += size;
+    }
+    if (archive->header.nb_public != 0) {
+        size = archive->header.nb_public * 8;
+            archive->public_info = HSD_MemAlloc(ROUND32(size));
+        if (archive->public_info == 0) {
+            goto fail;
+        }
+        if (!FUN_8007dfe4(path, archive->public_info, ROUND32(size), offset, 5)) {
+            goto fail;
+        }
+        offset += size;
+    }
+    if (archive->header.nb_extern != 0) {
+        size = archive->header.nb_extern * 8;
+            archive->extern_info = HSD_MemAlloc(ROUND32(size));
+        if (archive->extern_info == 0) {
+            goto fail;
+        }
+        if (!FUN_8007dfe4(path, archive->extern_info, ROUND32(size), offset, 6)) {
+            goto fail;
+        }
+        offset += size;
+    }
+    if ((size = archive->header.file_size - offset) != 0) {
+            archive->symbols = HSD_MemAlloc(ROUND32(size));
+        if (archive->symbols == 0) {
+            goto fail;
+        }
+        if (!FUN_8007dfe4(path, archive->symbols, ROUND32(size), offset, 7)) {
+            goto fail;
+        }
+    }
+
+    length = strlen(path);
+    archive->name = HSD_MemAlloc(length + 1);
+    if (archive->name == 0) {
+        goto fail;
+    }
+    memcpy(archive->name, path, length + 1);
+
+    ArchiveRelocate(archive);
+    lbl_806D2238(8);
+    return archive;
+
+fail:
+    if (archive != 0) {
+        HSD_ArchiveFree(archive);
+    }
+    return 0;
+}
+
+#pragma use_lmw_stmw reset
+#pragma exceptions reset
