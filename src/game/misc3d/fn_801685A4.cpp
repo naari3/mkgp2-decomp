@@ -52,6 +52,6 @@ extern "C" void fn_801685A4(void *dst, const char *fmt, float x, float y, float 
     unsigned char cg = (int)(lbl_806D8A10 * green);
     unsigned char cb = (int)(lbl_806D8A10 * blue);
     unsigned char ca = (int)(lbl_806D8A10 * alpha);
-    tex.color = (cr << 24) | (cg << 16) | (cb << 8) | ca;
+    tex.color = (((cr << 8) | cg) << 16) | ((cb << 8) | ca);
     fn_801F8A34(fn_801F8E58(), &tex, dst);
 }

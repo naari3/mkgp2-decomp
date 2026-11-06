@@ -17,3 +17,8 @@ No impossibility claim.
 Source: Codex worker c14_u43_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u43: fn_801681E8 RGBA packing grouped as ((r<<8)|g)<<16 | ((b<<8)|a) improves fresh 92.162964 to 97.881485 (536 vs target540B). Constant literal conversion invariant; byte aggregate + setter adds stack stores and regresses88.95556. Residual conversion/FP/GPR scheduling remains; singleton NonMatching, no split rescue. Full fallback build SHA1 OK.
+
+## c14_u51_20261106
+Source: Codex worker c14_u51_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u51 fn_801685A4 singleton: grouped RG/BA pair expression (((cr<<8)|cg)<<16)|((cb<<8)|ca) improves fresh91.536 to97.712, primary492->496B vs target500B. Target red/green/blue/alpha conversion schedule and per-channel rlwimi packing remain different from pair expression. Left-associated repeated shift8 emits500B but91.232; unsigned-int promotions are invariant91.536. Owned EH/index section scores unchanged82.14286/61.11111. Existing ctor/dtor bridges retained. No singleton split rescue, NonMatching retained; full fallback-linked DOL SHA1OK, native gain0.
