@@ -1774,7 +1774,7 @@ config.libs = [
             Object(Matching, "game/clFlowChara_Update.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clFlowChara_Destructor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/NokoNoko.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/GameModeBase.cpp"),
+            Object(Matching, "game/GameModeBase.cpp"),
             Object(Matching, "game/KartMovement_SetPosition.c"),
             Object(Matching, "game/TrampolineTo_801ba110.c"),
             Object(Matching, "game/AcError_LogIfError.c"),

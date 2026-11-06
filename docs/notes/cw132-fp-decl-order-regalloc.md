@@ -198,3 +198,8 @@ c13_u39: fn_801F6D58 300B texture-rectangle setter reaches exact text/EH under u
 Source: Codex worker c14_u5_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 400 B.
 
 ZlibInflate_BufferToBuffer 0x800AB958 (400B, GC/1.3.2): assigning next_out before avail_out at both setup/reset sites improves 94.65 ->95.05. Declaring local input after remain/out and setting input=src+8, instead of mutating the src parameter, restores input=r29/dst=r28 and initialization scheduling, reaching exact text/extab/extabindex. Canonical z_stream header adoption preserves exact output. Matching promotion verified source-linked with full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
+
+## c14_u33_20261106
+Source: Codex worker c14_u33_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 356 B.
+
+c14_u33: GameModeBase_FrameUpdate 800A07EC 93.4375 ->100 by established GetRankLog inline accessor; caller-local null assignment had changed the r0/r3 web. GameModeBase_Dtor 800A086C 99.47369 ->100 with signed remaining byte at playerData+198 and inline member decrement. Free unsigned-byte decrement helper was neutral. Both text356/EH16/index24 exact; Matching source edge and ELF addresses verified, full DOL SHA-1 OK. Prior register-allocator dead end was missing inline/type structure.
