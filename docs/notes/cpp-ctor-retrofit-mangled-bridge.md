@@ -964,3 +964,8 @@ c16_u32 fn_8018E6FC singleton: fresh86.22194 ->97.188774; verified scalar litera
 Source: Codex worker c16_u33_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 636 B.
 
 c16_u33: RaceDigitPositions fn_80247DAC (636B) fresh84.949684 ->100% by replacing extern const float references with numeric literals 11/7/24/18/12/16.8. This restores target FP homes and arithmetic/store scheduling; existing postprocess_sdata2 maps literals back to all six shared pool labels. Genuine .ctors startup pointer restores owned registration at802E8960. Text636/EH8/index12/ctors4 all100; Matching source-linked final ELF80247DAC/636, full DOL SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
+
+## c16_u42_20261106
+Source: Codex worker c16_u42_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 524 B.
+
+c16_u42: HudManagerModes fn_80253C40 (80253C40,52B) baseline84.61539 has only lwz list-pointer prologue scheduling residual. HudManager *__restrict self lets GC/2.6 load before LR store, reaching100%; all four functions/524B and extab80B/index48B exact. Existing bridges suffice; Matching promotion full DOL SHA1 exact, actual ELF addresses/sizes verified.

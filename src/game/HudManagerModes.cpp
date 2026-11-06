@@ -40,7 +40,7 @@ extern "C" void fn_80253BE4(HudManager *self) {
     }
 }
 
-extern "C" bool fn_80253C40(HudManager *self) {
+extern "C" bool fn_80253C40(HudManager *__restrict self) {
     return !fn_80254360(self->list.p, 0x10);
 }
 
