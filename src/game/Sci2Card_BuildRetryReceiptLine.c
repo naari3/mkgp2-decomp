@@ -1,10 +1,24 @@
 #include "game/Sci2CardRetryReceipt.h"
 
+static inline char *Retry_WinDigits(void)
+{
+    char number[4];
+    char *cursor;
+    int i;
+    memset(lbl_806D1230, 0, 7);
+    sprintf(number, lbl_806D35D0, 999);
+    cursor = number;
+    for (i = 0; i < 3; ++i, ++cursor) {
+        if (*cursor != ' ') strcat(lbl_806D1230, lbl_803FFDF0[*cursor - '0']);
+        else strcat(lbl_806D1230, lbl_806D35D4);
+    }
+    return lbl_806D1230;
+}
+
 int Sci2Card_BuildRetryReceiptLine(int line)
 {
     char output[0x1400];
     char scratch[0x200];
-    char number[4];
     /* Original rodata pool: formats at +0x468 and localized strings at +0x7B4. */
     const unsigned char *pool = lbl_80317948;
     unsigned char finish = 0;
@@ -31,7 +45,7 @@ int Sci2Card_BuildRetryReceiptLine(int line)
     case 1: {
         const char *text;
         CLEAR();
-        if (!isJapanese()) text = Sci2Card_GetReceiptStringEntry(22);
+        if (isJapanese() == 0) text = Sci2Card_GetReceiptStringEntry(22);
         else text = Sci2Card_GetReceiptStringEntry(23);
         sprintf(scratch, FORMAT, text, lbl_806D35C0);
         MARK();
@@ -58,23 +72,10 @@ int Sci2Card_BuildRetryReceiptLine(int line)
         const char *label;
         char *digits;
         const char *suffix;
-        const char **table;
-        int i;
-        char *cursor;
         CLEAR();
-        label = lbl_806D35C8;
-        if (!isJapanese()) label = (const char *)pool + 0x7C0;
-        memset(lbl_806D1230, 0, 7);
-        sprintf(number, lbl_806D35D0, 999);
-        cursor = number;
-        table = lbl_803FFDF0;
-        for (i = 0; i < 3; ++i, ++cursor) {
-            if (*cursor != ' ') strcat(lbl_806D1230, table[*cursor - '0']);
-            else strcat(lbl_806D1230, lbl_806D35D4);
-        }
-        digits = lbl_806D1230;
-        suffix = lbl_806D35DC;
-        if (!isJapanese()) suffix = lbl_806D35D8;
+        label = isJapanese() == 0 ? (const char *)pool + 0x7C0 : lbl_806D35C8;
+        digits = Retry_WinDigits();
+        suffix = isJapanese() == 0 ? lbl_806D35D8 : lbl_806D35DC;
         sprintf(scratch, FORMAT, label, digits, suffix);
         MARK();
         APPEND();
