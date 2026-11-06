@@ -959,3 +959,8 @@ fn_801F9DA4: passing a typed resource-pool pointer from getter entry scope into 
 Source: Codex worker c16_u32_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u32 fn_8018E6FC singleton: fresh86.22194 ->97.188774; verified scalar literals plus inline updateParticle and compound age comparisons restore target1568B/two-way final unroll/EH8/index12 exact. Separate initializeMatrix(o,index) and updateMatrices(o) improve volatile pointer/search webs. Remaining initialization stride/scene/joint r30/r29/r31 vs r29/r31/r30; point/free result r9/r7 vs r7/r9; tail offset/pointer r3/r4 vs r4/r3; delay/speed/maxAlpha FP homes. Three hypotheses exhausted, staysNonMatching, full fallback DOL SHA1OK, zero native gain.
+
+## c16_u33_20261106
+Source: Codex worker c16_u33_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 636 B.
+
+c16_u33: RaceDigitPositions fn_80247DAC (636B) fresh84.949684 ->100% by replacing extern const float references with numeric literals 11/7/24/18/12/16.8. This restores target FP homes and arithmetic/store scheduling; existing postprocess_sdata2 maps literals back to all six shared pool labels. Genuine .ctors startup pointer restores owned registration at802E8960. Text636/EH8/index12/ctors4 all100; Matching source-linked final ELF80247DAC/636, full DOL SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.

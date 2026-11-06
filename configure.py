@@ -2748,7 +2748,7 @@ config.libs = [
             Object(NonMatching, "game/HudThunk80248CE4.c"),
             Object(Matching, "game/HudAlternate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/RaceFloatListInsert.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/RaceDigitPositions.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/RaceDigitPositions.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/RaceHudTransition.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/HudFlow.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/RaceHudAdjust.c", extra_cflags=["-Cpp_exceptions off"]),
