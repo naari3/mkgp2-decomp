@@ -30,6 +30,9 @@ void fn_8017EFFC(unsigned int);
 void DMAChannelManager_Init();
 void fn_801D7610(void *,int);
 }
+static inline void AddBankNames(Menu *m) {
+    for (int i=0;i<9;i++) fn_801804CC(m,lbl_80491768[i]);
+}
 static inline void AddSoundKinds(Menu *m,const char *s) {
     fn_801804CC(m,lbl_806D91E0);
     fn_801804CC(m,lbl_806D91E8);
@@ -80,7 +83,7 @@ extern "C" int fn_8017F538(unsigned int msg,void *,int cursor,int,unsigned int s
             switch(cursor) {
             case 0: {
                 menu=fn_80180670(s+0x5d8,1);
-                if (menu!=0) for (int i=0;i<9;i++) fn_801804CC(menu,lbl_80491768[i]);
+                if (menu!=0) AddBankNames(menu);
                 break;
             }
             case 1: {
