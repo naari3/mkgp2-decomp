@@ -1,0 +1,5 @@
+# taruitem-dispatch-25-native
+
+Source: Codex worker c15_a52_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1116 B.
+
+TaruItem_Dispatch_25 800EA958 (1116 B): straightforward C nested switches compile byte-identically with pragma exceptions on/reset. Canonical Item/Vec3 in game/objview/item_state_private.h fit; TaruState private view adds offset Vec3 at +0x40 and driver at +0x9C. Declare local Vec3 velocity before base so base uses sp+0x2C and velocity sp+0x38. Separate scoped sound-position copies preserve target stack slots +0x20/+0x14/+0x08. Preserve reason case source order 0,3,4,7,9,5; shared no-op reason cases 1,2,6,8. Add .data 80421598..804215C0 to this TU for compiler-emitted ten-entry switch table; no rename bridge needed. Original 8478ccb6 merely introduced extracted asm, with no native blocker note. Text1116/extab8/extabindex12/data40 all100; coordinator service request2 source-linked DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
