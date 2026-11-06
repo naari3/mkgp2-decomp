@@ -974,3 +974,8 @@ c16_u42: HudManagerModes fn_80253C40 (80253C40,52B) baseline84.61539 has only lw
 Source: Codex worker c16_u49_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u49 ItemEffect_TornadoLift80053AE0: fresh82.47 ->86.44 by replacing aggregate TLVec cast-copy with explicit z/y/x loads then x/y/z stores. Restricted public args, restricted inline state initializer and restricted scalar float-copy helper all retain paired matrix loads/stores. Native432B vs target400B; target retains last8 floats across second matrix copy. EH8B100%, index12B91.66667 due size word. Three approaches exhausted; singleton remains NonMatching; full fallback DOL SHA1 exact, native gain0.
+
+## c16_u46_20261106
+Source: Codex worker c16_u46_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u46: canonical FlowFaderI out-of-line ctor at 80218B28 emits exact 52B including r6 base vtable. Existing bridge needs extab_padding routing, but dtk extab clean fails with No extab section found for this leaf ctor. No build logic changed per worker contract. Bridge-only postprocess support would unlock this TU without changing native constructor semantics; requires coordinator/owner decision. Reproduction evidence retained in build/c16_fader_a1.json and .s. Final allowed C ABI-view initializer is 98.46154%, register-only base-vtable residual, NonMatching.
