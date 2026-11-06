@@ -25,45 +25,12 @@ void Vec3_Add_DestFirst(DustVec *, const DustVec *, const DustVec *);
 void VfxSlot_SetPositionFromVec(void *, DustVec);
 void VfxSlot_SetScaleUniform(void *, float);
 
-void Effect_DustBurst4_Update(DustEffect *self) {
-    DustVec delta;
+static inline void UpdateChildren(DustEffect *self, DustGroup *group) {
     int i;
-    DustGroup *cursor;
     DustCurve *curve;
+    DustGroup *cursor;
     const DustVec *globalPosition;
-    DustGroup *group = (DustGroup *)((unsigned char *)self + 0xCC);
-    switch (self->state) {
-    case 0: {
-        cursor = group;
-        for (i=0; i<4; ++i, cursor=(DustGroup *)((unsigned char *)cursor+4)) {
-            cursor->children[0] = DrawEffect_SpawnDirect(fn_800AF4F8);
-            if (cursor->children[0]) {
-                switch (i) {
-                case 0: VfxSlot_BindResourceEx(cursor->children[0]->slot,0x69,0); break;
-                case 1: VfxSlot_BindResourceEx(cursor->children[0]->slot,0x6B,0); break;
-                case 2: VfxSlot_BindResourceEx(cursor->children[0]->slot,0x6A,0); break;
-                case 3: VfxSlot_BindResourceEx(cursor->children[0]->slot,0x6C,0); break;
-                }
-                Vec3_Copy(&cursor->children[0]->position, &self->position);
-            }
-        }
-        group->phase=lbl_806D5400;
-        ++self->state;
-        break;
-    }
-    case 1: break;
-    }
-    group->phase += lbl_806D540C;
-    if (lbl_806D549C <= group->phase) {
-        i=0;
-        cursor=group;
-        for (; i<4; ++i, cursor=(DustGroup *)((unsigned char *)cursor+4)) {
-            DrawEffect_Free(cursor->children[0]);
-            cursor->children[0]=0;
-        }
-        DrawEffect_Free(self);
-        return;
-    }
+    DustVec delta;
     globalPosition=(const DustVec *)(lbl_805DF3D0+0x80);
     cursor=group;
     curve=lbl_8041A398;
@@ -99,5 +66,44 @@ void Effect_DustBurst4_Update(DustEffect *self) {
             VfxSlot_SetScaleUniform(cursor->children[0]->slot,cursor->children[0]->scale);
         }
     }
+}
+
+void Effect_DustBurst4_Update(DustEffect *self) {
+    int i;
+    DustGroup *cursor;
+    DustGroup *group = (DustGroup *)((unsigned char *)self + 0xCC);
+    switch (self->state) {
+    case 0: {
+        cursor = group;
+        for (i=0; i<4; ++i, cursor=(DustGroup *)((unsigned char *)cursor+4)) {
+            cursor->children[0] = DrawEffect_SpawnDirect(fn_800AF4F8);
+            if (cursor->children[0]) {
+                switch (i) {
+                case 0: VfxSlot_BindResourceEx(cursor->children[0]->slot,0x69,0); break;
+                case 1: VfxSlot_BindResourceEx(cursor->children[0]->slot,0x6B,0); break;
+                case 2: VfxSlot_BindResourceEx(cursor->children[0]->slot,0x6A,0); break;
+                case 3: VfxSlot_BindResourceEx(cursor->children[0]->slot,0x6C,0); break;
+                }
+                Vec3_Copy(&cursor->children[0]->position, &self->position);
+            }
+        }
+        group->phase=lbl_806D5400;
+        ++self->state;
+        break;
+    }
+    case 1: break;
+    }
+    group->phase += lbl_806D540C;
+    if (lbl_806D549C <= group->phase) {
+        i=0;
+        cursor=group;
+        for (; i<4; ++i, cursor=(DustGroup *)((unsigned char *)cursor+4)) {
+            DrawEffect_Free(cursor->children[0]);
+            cursor->children[0]=0;
+        }
+        DrawEffect_Free(self);
+        return;
+    }
+    UpdateChildren(self, group);
 }
 }
