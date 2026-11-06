@@ -1,6 +1,6 @@
-/* NonMatching: 89.013824% text. Retained after three structural approaches.
- * Scalar matrix copies and normalized-copy helpers recover the target shape;
- * scheduling, FPR allocation and primary size still differ. */
+/* NonMatching: 89.89171% text, exact 1736-byte primary size.
+ * Vector operation and scalar quaternion helpers preserve native rounding
+ * and recover the target size; FPR allocation and scheduling still differ. */
 #include "game/C7ItemCtorPrivate.h"
 
 extern "C" {
@@ -41,6 +41,33 @@ static inline void NormalizeCopy(C7Vec* v, const C7Vec* src) {
     if(length<=lbl_806D27F8) {v->z=lbl_806D27F8;v->y=lbl_806D27F8;v->x=lbl_806D27F8;}
     else {float inv=lbl_806D27FC/length;v->x*=inv;v->y*=inv;v->z*=inv;}
 }
+static inline float Dot(const C7Vec* a, const C7Vec* b) {
+    float x=a->x*b->x, y=a->y*b->y, z=a->z*b->z;
+    return z+(x+y);
+}
+static inline void Scale(C7Vec* a, float scale) {
+    a->x*=scale; a->y*=scale; a->z*=scale;
+}
+static inline void Subtract(C7Vec* a, const C7Vec* b) {
+    a->x-=b->x; a->y-=b->y; a->z-=b->z;
+}
+static inline void AxisAngle(C7Quat* q, float x, float y, float z) {
+    float sine=(float)sin(lbl_806D2818);
+    q->x=x*sine; q->y=y*sine; q->z=z*sine;
+    q->w=(float)cos(lbl_806D2818);
+}
+static inline void QuaternionMatrix(C7Matrix* m, float x, float y, float z, float w) {
+    float two=lbl_806D281C, one=lbl_806D27FC;
+    m->m[0][0]=one-two*(y*y+z*z);
+    m->m[1][0]=two*(x*y-w*z);
+    m->m[2][0]=two*(x*z+w*y);
+    m->m[0][1]=two*(x*y+w*z);
+    m->m[1][1]=one-two*(x*x+z*z);
+    m->m[2][1]=two*(y*z-w*x);
+    m->m[0][2]=two*(x*z-w*y);
+    m->m[1][2]=two*(y*z+w*x);
+    m->m[2][2]=one-two*(x*x+y*y);
+}
 extern "C" void ExplosionTumble_Init(C7Tumble* __restrict self, C7Vec* __restrict position, C7Vec* __restrict velocity, C7Matrix* __restrict pose) {
     self->Reset();
     self->pos=*position;
@@ -52,9 +79,8 @@ extern "C" void ExplosionTumble_Init(C7Tumble* __restrict self, C7Vec* __restric
     NormalizeCopy(&v,velocity);
     C7Vec up;
     NormalizeCopy(&up,(C7Vec*)&self->start.m[1][0]);
-    float dot=up.z*v.z+(up.x*v.x+up.y*v.y);
-    up.x*=dot; up.y*=dot; up.z*=dot;
-    v.x-=up.x; v.y-=up.y; v.z-=up.z;
+    Scale(&up,Dot(&up,&v));
+    Subtract(&v,&up);
     Normalize(&v);
     C7Vec axis=v;
     axis.x=up.y*v.z-up.z*v.y;
@@ -65,19 +91,6 @@ extern "C" void ExplosionTumble_Init(C7Tumble* __restrict self, C7Vec* __restric
     else { self->axis.x=self->start.m[0][0]; self->axis.y=self->start.m[0][1]; self->axis.z=self->start.m[0][2]; }
     C7Quat q;
     q.w=lbl_806D27F8; q.z=lbl_806D27F8; q.y=lbl_806D27F8; q.x=lbl_806D27F8;
-    float ax=self->axis.x, ay=self->axis.y, az=self->axis.z;
-    float sine=(float)sin(lbl_806D2818);
-    q.x=ax*sine; q.y=ay*sine; q.z=az*sine;
-    q.w=(float)cos(lbl_806D2818);
-    float x=q.x,y=q.y,z=q.z,w=q.w;
-    float two=lbl_806D281C, one=lbl_806D27FC;
-    self->rotation.m[0][0]=one-two*(y*y+z*z);
-    self->rotation.m[1][0]=two*(x*y-w*z);
-    self->rotation.m[2][0]=two*(x*z+w*y);
-    self->rotation.m[0][1]=two*(x*y+w*z);
-    self->rotation.m[1][1]=one-two*(x*x+z*z);
-    self->rotation.m[2][1]=two*(y*z-w*x);
-    self->rotation.m[0][2]=two*(x*z-w*y);
-    self->rotation.m[1][2]=two*(y*z+w*x);
-    self->rotation.m[2][2]=one-two*(x*x+y*y);
+    AxisAngle(&q,self->axis.x,self->axis.y,self->axis.z);
+    QuaternionMatrix(&self->rotation,q.x,q.y,q.z,q.w);
 }

@@ -909,3 +909,8 @@ c16_u3 fn_801D8E28: direct native baseline89.443924 ->90.09813 by computing y be
 Source: Codex worker c16_u9_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u9 Menu801F0CC0: no missing functions. Declaring offset before index makes 0E3C/115C/15D4/190C/1BC8/1FE4 text100 (1040 B). Unsigned getter result + four-unsigned RGBA packer removes redundant clrlwi; 1EE0/2400 improve to99.53846/99.48276 with shared explicit offset loops, residual color/offset r29/r30 exchange. Pure WithAlpha slightly improves four crossfade methods; reference setter invariant and bitfield union spills. Input handlers retain target two-stage base+element adds versus folded source addi; pointer-return and call-containing helpers are invariant. Existing full-TU reversed EH grouping still blocks subset rescue. TU remains NonMatching; fallback full DOL SHA1 exact, zero native gain.
+
+## c16_u12_20261106
+Source: Codex worker c16_u12_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u12 ExplosionTumble_Init 800532D4 singleton: baseline89.013824/1704B. Separate rounded Dot products plus pointer Scale/Subtract helpers restore target1736B and improve89.82258; scalar AxisAngle/QuaternionMatrix helpers restore axis z/y/x evaluation order and improve89.89171. Add @262/@263 bridges to owned etb800071AC/eti800205AC: owned EH48/index12 exact100, extra weak dtor entries remain. Residual initial vector squared-load x/y order, Dot/Scale redundant up reloads and FP root/quaternion matrix webs/scheduling. No B cut; remains NonMatching. Full fallback-linked DOL SHA1 exact; zero native gain.
