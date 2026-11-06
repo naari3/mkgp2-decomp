@@ -24,12 +24,16 @@ extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec v);
 extern void Mtx44_GetTranslation_ColMajor(Vec *out, float m[4][4]);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
 
+static inline void SetPosition(void *slot, Vec pos)
+{
+    VfxSlot_SetPositionFromVec(slot, &pos);
+}
+
 void EffectVfx84_85_BoostChargeRing_Tick(unsigned char *self)
 {
     float kart[4][4];
     Vec origin;
     float yaw;
-    Vec pos;
 
     Mtx_TransposeToMtx44(kart, KartDriver_GetKartRootMtx(P(0x11C)));
     Mtx44_GetTranslation_ColMajor(&origin, kart);
@@ -68,8 +72,7 @@ void EffectVfx84_85_BoostChargeRing_Tick(unsigned char *self)
     F(0xA8) -= lbl_806D5390;
     Vec3_Add_DestFirst(V(0x120), V(0x120), V(0xA4));
     Vec3_Add_DestFirst(V(0x8C), &origin, V(0x120));
-    pos = *V(0x8C);
-    VfxSlot_SetPositionFromVec(SLOT(self), &pos);
+    SetPosition(SLOT(self), *V(0x8C));
     VfxSlot_SetScaleUniform(SLOT(self), F(0xB0));
     TICK_TIMERS();
     if (FinalLapCoinJump_CheckActiveForObject(P(0x11C))) {

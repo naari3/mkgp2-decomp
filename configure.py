@@ -1352,7 +1352,7 @@ config.libs = [
             Object(Matching, "game/fn_801022E0.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/CharaPop12_Update.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/Boomerang_ReturnAndAcquireTargetTick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(NonMatching, "game/EffectVfx84_85_BoostChargeRing_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/EffectVfx84_85_BoostChargeRing_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/RaceSys_8009B98C.c"),  #g2
             Object(NonMatching, "game/RaceScene_GetPerspFovyForCup.c"),  #g2
             Object(Matching, "game/RaceSys_8009BAC4.c"),  #g2
