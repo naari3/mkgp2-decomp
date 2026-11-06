@@ -13,3 +13,8 @@ acInetAddr: static inline clear-and-return helper (u8* p=BufPtr(0); memset(p,0,0
 Source: Codex worker c14_u19_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u19: acModifyMyIPaddr measured baseline 93.38461% (assignment 94.03%). Retaining a buffer pointer across memset/strlen/memcpy using a paired inline buffer/offset getter improves to 95.25641%. Source text remains 308 B versus target 312 B: target has addi r29,r5,0 and uses offset r29, source folds add and assigns offset r25. BufDev(k,0) alone and byte-pointer offset arithmetic do not preserve the zero add; no register permutations tried. NonMatching remains; full build SHA-1 OK, fallback source_input false.
+
+## c16_u5_20261106
+Source: Codex worker c16_u5_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u5: acBind inline GetSocketBuffer(n,&off) plus ClearBindBuffer(k,&off), retaining returned pointer through memcpy, improves 95.21176 to 96.76471%. Source stays 336 vs 340 B; target zero add at 0x80292688 still folded, and helper out-parameter changes register partition. Independent offset getters and native aggregate buffer views do not reproduce acAccept separate base+offset calculations (89.27928, 88.15315, 78.03603 vs 89.4955 baseline); acAccept restored unchanged. No flags/splits changed, NonMatching retained, full coordinator build DOL SHA-1 OK, zero native gain.
