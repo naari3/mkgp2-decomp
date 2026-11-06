@@ -1,13 +1,18 @@
 #include "game/kartmove/collision_private.h"
 
+#pragma fp_contract off
+static inline float LengthSquared(const CollisionVec& v) {
+    return v.z*v.z + (v.x*v.x + v.y*v.y);
+}
+#pragma fp_contract on
 static inline float Length(const CollisionVec& v) {
-    float len = v.z*v.z + (v.x*v.x + v.y*v.y);
+    float len = LengthSquared(v);
     KART_SPEED_ROOT(len);
     return len;
 }
 static inline void Normalize(CollisionVec& v) {
     float x = v.x, y = v.y, z = v.z;
-    float len = z*z + (x*x + y*y);
+    float len = LengthSquared(v);
     KART_SPEED_ROOT(len);
     if (len <= lbl_806D96D0) {
         v.z = lbl_806D96D0; v.y = lbl_806D96D0; v.x = lbl_806D96D0;
@@ -31,9 +36,13 @@ struct CollisionMatrix {
         float out[16];
         int index = 0;
         for (int i = 0; i < 4; ++i) {
+            float a0 = m[i*4], a1 = m[i*4+1], a2 = m[i*4+2], a3 = m[i*4+3];
             for (int j = 0; j < 4; ++j, ++index) {
-                out[index] = ((m[i*4]*b.m[j] + m[i*4+1]*b.m[4+j]) +
-                    m[i*4+2]*b.m[8+j]) + m[i*4+3]*b.m[12+j];
+                float value = a0*b.m[j];
+                value += a1*b.m[4+j];
+                value += a2*b.m[8+j];
+                value += a3*b.m[12+j];
+                out[index] = value;
             }
         }
         for (int i = 0; i < 16; ++i) m[i] = out[i];

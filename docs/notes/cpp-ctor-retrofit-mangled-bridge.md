@@ -984,3 +984,8 @@ c16_u46: canonical FlowFaderI out-of-line ctor at 80218B28 emits exact 52B inclu
 Source: Codex worker c16_u47_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 Warp Reserve: placement new without its placement-delete counterpart loses CW's per-construction SP save/FP and turns pointer traversal into a CTR count loop. Adding standard inline placement delete restores those naturally. A string wrapper owning the SharedPtr-like member restores exception cleanup member r27 and base r28, reaching 536-byte native body shape and exact owned EH. Remaining 99.92538 is solely descriptor relocations; current raw @119 collides with an old @eti_80022658 bridge. Primary object order also differs, so do not flip Matching merely from percentages.
+
+## c16_u52_20261106
+Source: Codex worker c16_u52_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u52 CollisionUpdate8019B080: fresh81.33437 ->82.11667 with separate rounded LengthSquared helper (existing-family fp_contract off), then87.22083 with row-local a0/a1/a2/a3 and sequential matrix accumulator. Numeric constant/local-root probe87.1375 reverted. Primary3720B vs3840B. Matrix loop still strength-reduces out stores rather than target slwi/stfsx; extra f21 save/frame+16 and GPR home shift remain. EH88.15789/index61.11111 unchanged. Singleton staysNonMatching, no rescue cut; full fallback-linked SHA1 exact, zero native gain.
