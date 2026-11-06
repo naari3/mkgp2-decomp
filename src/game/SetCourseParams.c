@@ -80,6 +80,20 @@ extern int lbl_806D12D8;
 extern const float lbl_806D4790;
 extern const float lbl_806D4798;
 
+static inline void ResetRankSlot(RankSlot *slot)
+{
+    slot->active = 0;
+    slot->count = 0;
+    slot->target = -1;
+    slot->source = -1;
+    slot->flag18 = 0;
+    slot->flag19 = 0;
+    slot->timer = 0;
+    slot->value20 = lbl_806D4790;
+    slot->value24 = lbl_806D4790;
+    slot->enabled = 1;
+}
+
 int SetCourseParams(int cup, int longRound, int variant, int reverse)
 {
     int i;
@@ -127,18 +141,15 @@ int SetCourseParams(int cup, int longRound, int variant, int reverse)
         lbl_805B256C.e.d = lbl_806D4798;
         lbl_806D1280 = 4;
         lbl_806D1258 = 1;
-        for (i = 0; i < 8; i++) {
-            lbl_805D2948[i].active = 0;
-            lbl_805D2948[i].count = 0;
-            lbl_805D2948[i].target = -1;
-            lbl_805D2948[i].source = -1;
-            lbl_805D2948[i].flag18 = 0;
-            lbl_805D2948[i].flag19 = 0;
-            lbl_805D2948[i].timer = 0;
-            lbl_805D2948[i].value20 = lbl_806D4790;
-            lbl_805D2948[i].value24 = lbl_806D4790;
-            lbl_805D2948[i].enabled = 1;
-        }
+        /* The original resets each rank explicitly rather than retaining a loop. */
+        ResetRankSlot(&lbl_805D2948[0]);
+        ResetRankSlot(&lbl_805D2948[1]);
+        ResetRankSlot(&lbl_805D2948[2]);
+        ResetRankSlot(&lbl_805D2948[3]);
+        ResetRankSlot(&lbl_805D2948[4]);
+        ResetRankSlot(&lbl_805D2948[5]);
+        ResetRankSlot(&lbl_805D2948[6]);
+        ResetRankSlot(&lbl_805D2948[7]);
         lbl_806D12D8 = 0;
     }
     return 1;
