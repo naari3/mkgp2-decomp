@@ -1,6 +1,5 @@
 #include "game/ItemAliasSprite.h"
-void ItemAliasSprite::Draw() {
-    ItemAliasSprite *self=this;
+static inline void DrawPrimarySprite(ItemAliasSprite *self) {
     SpriteLayer_SetResource(self->handles[0],self->resource);
     fn_8011F804(self->handles[0],self->x,self->y);
     fn_8011F744(self->handles[0],self->scaleX,self->scaleY);
@@ -9,6 +8,11 @@ void ItemAliasSprite::Draw() {
     SpriteHandle_SetCornerAlpha(self->handles[0],color&255);
     SpriteHandle_SetActiveFlag(self->handles[0],self->active);
     SpriteHandle_RecomputeCull(self->handles[0]);
+}
+
+void ItemAliasSprite::Draw() {
+    ItemAliasSprite *self=this;
+    DrawPrimarySprite(self);
     unsigned char show=0;
     if (self->alias) {
         int resource;
@@ -26,7 +30,7 @@ void ItemAliasSprite::Draw() {
         SpriteLayer_SetResource(self->handles[1],resource);
         fn_8011F804(self->handles[1],x,y);
         fn_8011F744(self->handles[1],self->scaleX,self->scaleY);
-        color=self->color;
+        unsigned int color=self->color;
         fn_8011F610(self->handles[1],color>>24,(color>>16)&255,(color>>8)&255);
         SpriteHandle_SetCornerAlpha(self->handles[1],color&255);
     }

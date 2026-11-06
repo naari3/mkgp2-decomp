@@ -1471,3 +1471,8 @@ Sci2Card_BuildScoreReceiptLine (80095388): early-null-return inline title access
 Source: Codex worker c15_u44_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c15_u44: ItemObject_SpawnWithAlias 800D7D08, 552 B. Baseline 98.00725 has first allocation object/index r28/r27 versus target r27/r28 and early return-copy scheduling. Extract special-ID helper: 99.347824, first site exact but second site swaps. Extract normal-path helper too: 99.42029, instruction shape exact, first site swaps and second exact. Reverse pool object/index declaration order with both helpers: 99.347824, first site exact and second swaps. Retain two semantic helpers at 99.42029, NonMatching. Both sites depend on inline-site ranking; do not repeat these three shapes.
+
+## c15_u47_20261106
+Source: Codex worker c15_u47_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c15_u47: ItemAliasSprite::Draw 8023D2B8 is 416B with pure GPR rotation self/color/show (baseline 97.69231). Whole-body inline helper gives 97.64423 and swaps FP homes; direct this access is invariant. Extracting primary sprite rendering into static inline DrawPrimarySprite makes alias color r30 exact, improves 97.93269, preserves text416/extab8/index12. Remaining self r29 vs31, show r31 vs29, primary color r31 vs30; retained NonMatching after 3 hypotheses.
