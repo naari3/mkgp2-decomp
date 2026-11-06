@@ -218,3 +218,8 @@ c15_a44: clFlowItemSelect_Update 801CBD58 (940 B) native exact under unchanged G
 Source: Codex worker c15_u9_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 464 B.
 
 ItemObject_CheckKartCollision 800D78FC: named extern constants in k*(const*scale), even after swapping outer operands, produced fmuls f29,f4,f1 and f28,f4,f0. Literal expressions (10.0f*scale)*k and (40.0f*scale)*k produce exact target f29,f1,f4 and f28,f0,f4. Standard sdata2 postprocess maps literals to lbl_806D5A84/88. All text/EH exact, source-input full DOL SHA-1 OK. Separate radius assignments with *=k worsened intermediate FP register allocation.
+
+## c15_u29_20261106
+Source: Codex worker c15_u29_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 152 B.
+
+c15_u29_20261106: ItemUnlockGridResolve fn_8023D710 (152B) reaches exact GC/1.3.2 text/EH by removing manual inner entry cursor and using lbl_803E56B0[row][column]. Original explicit inner cursor plus synthesized outer row pointer had r30/r31 exchanged (98.947365%). Explicit outer pointer restores homes but emits an extra initialization mr (96.97369%); pure two-dimensional indexing produces both strength-reduced cursors with exact homes and no extra instructions. Existing Matching promotion source-linked; full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
