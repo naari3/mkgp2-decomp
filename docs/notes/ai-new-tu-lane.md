@@ -18,3 +18,8 @@ c13_u12:fn_801E96BC388B improves97.57732 to98.81443 under unchanged flags. Extra
 Source: Codex worker c13_u46_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u46: fn_801E66B4 improves 95.375 to 96.328125 by unsigned-char flag helper `if ((flags & mask) == 0) return 0; return 1;`, restoring both branch-over-branch islands. Passing status pointer instead is invariant. In-place pointer Length helper worsens to92.96875. Remaining cached status vs target reload (-4B), first-check GPR identities and f5/f6 length/constant swap. Singleton retained NonMatching; fallback full DOL SHA-1 OK.
+
+## c16_u8_20261106
+Source: Codex worker c16_u8_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u8: AI_CalcLapSpeedBonus 801DD480 recompiled baseline88.96797 (assignment report89.34) improves90.03203 by expressing pointer-table row/column strides in bytes before pointer dereference. Nested arrays89.836296 shorten text1108; typed aggregate pool view82.08541 changes extab and text1148, both reverted. Retained text1120 vs target1124, extab100/index91.66667. Residual table-base grouping/scheduling, first scan cc/table r29/r30 swap, later cursor/index homes, common-table success add+lfs versus target addi+lfsx. Singleton staysNonMatching; full fallback DOL SHA-1 OK; zero native gain.
