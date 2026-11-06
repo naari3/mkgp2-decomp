@@ -32,8 +32,8 @@ extern const float lbl_806D6410, lbl_806D6414, lbl_806D6418, lbl_806D641C;
 
 void Item_SpawnHitBurstParticles(BurstItem *item, BurstItem *other, signed char kind, float yaw) {
     BurstEffect *effect;
-    int signedKind;
     int count = 1;
+    int signedKind;
     int i;
     BurstVec3 velocity;
 
@@ -46,11 +46,9 @@ void Item_SpawnHitBurstParticles(BurstItem *item, BurstItem *other, signed char 
             effect = DrawEffect_SpawnDirect(Effect_HitFlash_Update);
         }
         if (effect != 0) {
-            float z;
             effect->state = 2;
             Vec3_Copy(&effect->position, &item->position);
-            z = Rand_RangeFloat(lbl_806D63FC, lbl_806D6400);
-            GetSpawnPosition(&velocity, lbl_806D63F8, lbl_806D63F8, z);
+            GetSpawnPosition(&velocity, 0.0f, 0.0f, Rand_RangeFloat(lbl_806D63FC, lbl_806D6400));
             switch (signedKind) {
             case 0:
             case 3:

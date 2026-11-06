@@ -223,3 +223,8 @@ ItemObject_CheckKartCollision 800D78FC: named extern constants in k*(const*scale
 Source: Codex worker c15_u29_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 152 B.
 
 c15_u29_20261106: ItemUnlockGridResolve fn_8023D710 (152B) reaches exact GC/1.3.2 text/EH by removing manual inner entry cursor and using lbl_803E56B0[row][column]. Original explicit inner cursor plus synthesized outer row pointer had r30/r31 exchanged (98.947365%). Explicit outer pointer restores homes but emits an extra initialization mr (96.97369%); pure two-dimensional indexing produces both strength-reduced cursors with exact homes and no extra instructions. Existing Matching promotion source-linked; full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
+
+## c15_u34_20261106
+Source: Codex worker c15_u34_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 452 B.
+
+Item_SpawnHitBurstParticles 800FD784: removing the z temporary and directly nesting Rand_RangeFloat with named extern zero args caused zero to be held across the random call in a saved FPR. Literal 0.0f args instead restore target post-call lfs/fmr and remove extra fmr; sdata2 postprocess maps the literal to lbl_806D63F8. Declaring count before signedKind resolves their r28/r29 swap. Combined text452/EH8/index12 exact and full source-linked DOL SHA-1 OK.
