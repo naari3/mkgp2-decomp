@@ -979,3 +979,8 @@ c16_u49 ItemEffect_TornadoLift80053AE0: fresh82.47 ->86.44 by replacing aggregat
 Source: Codex worker c16_u46_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u46: canonical FlowFaderI out-of-line ctor at 80218B28 emits exact 52B including r6 base vtable. Existing bridge needs extab_padding routing, but dtk extab clean fails with No extab section found for this leaf ctor. No build logic changed per worker contract. Bridge-only postprocess support would unlock this TU without changing native constructor semantics; requires coordinator/owner decision. Reproduction evidence retained in build/c16_fader_a1.json and .s. Final allowed C ABI-view initializer is 98.46154%, register-only base-vtable residual, NonMatching.
+
+## c16_u47_20261106
+Source: Codex worker c16_u47_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+Warp Reserve: placement new without its placement-delete counterpart loses CW's per-construction SP save/FP and turns pointer traversal into a CTR count loop. Adding standard inline placement delete restores those naturally. A string wrapper owning the SharedPtr-like member restores exception cleanup member r27 and base r28, reaching 536-byte native body shape and exact owned EH. Remaining 99.92538 is solely descriptor relocations; current raw @119 collides with an old @eti_80022658 bridge. Primary object order also differs, so do not flip Matching merely from percentages.

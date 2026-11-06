@@ -9,7 +9,8 @@ void *Alloc(unsigned long);
 void MemoryManager_TimedFree(void *);
 extern const char lbl_803284A4[];
 }
-inline void *operator new(unsigned long, void *p) { return p; }
+inline void *operator new(unsigned long, void *p) throw() { return p; }
+inline void operator delete(void *, void *) throw() {}
 
 /* Four corners have nontrivial lifetime; the two remaining vectors are plain. */
 struct WarpPlainVector { float x, y, z; };
@@ -30,13 +31,18 @@ struct WarpErrorString {
     WarpErrorString(void *);
     ~WarpErrorString();
 };
+struct WarpErrorMessage {
+    WarpErrorString storage;
+    ~WarpErrorMessage();
+    WarpErrorMessage(const char *s) : storage(FUN_8003b120(strlen(s) + 1)) {
+        strcpy(storage.ptr, s);
+    }
+};
 namespace std {
 struct exception { exception() {} virtual ~exception(); };
 struct logic_error : exception {
-    WarpErrorString message;
-    logic_error(const char *s) : message(FUN_8003b120(strlen(s) + 1)) {
-        strcpy(message.ptr, s);
-    }
+    WarpErrorMessage message;
+    logic_error(const char *s) : message(s) {}
     virtual ~logic_error();
 };
 struct length_error : logic_error {
