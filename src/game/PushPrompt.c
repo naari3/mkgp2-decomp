@@ -3,8 +3,6 @@
  * (vtable lbl_8048ED34): it zooms in, waits for a button press (or a
  * timeout), then zooms out and finishes. The base declares a virtual
  * that is not defined here first, so neither vtable is emitted.
- *
- * Still asm: the update (float register assignment).
  */
 #pragma cplusplus on
 
@@ -61,20 +59,8 @@ extern void *GetInputManager(void);
 extern InputPlayer *InputMgr_GetPlayer(void *, int);
 }
 
-extern "C" {
-asm void fn_80141B08(void);
-
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_fn_80141B08[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80141B08 = {
-    (void *)&fn_80141B08, 0x00000368, (void *)extab_fn_80141B08
-};
-
-}
+struct PushPrompt;
+extern "C" void fn_80141B08(PushPrompt *self);
 
 
 struct SpriteAnim {
@@ -142,237 +128,98 @@ void PushPrompt::Draw() {
     }
 }
 
-extern "C" asm void fn_80141B08(void) { /* 0x80141B08 size:0x368 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    lwz r0, 0x18(r3)
-    cmpwi r0, 0x3
-    beq fn_80141B08_L_80141E5C
-    lfs f0, 0x1c(r31)
-    lfs f5, lbl_806D7998(r2)
-    fadds f0, f0, f5
-    stfs f0, 0x1c(r31)
-    lwz r0, 0x18(r31)
-    cmpwi r0, 0x1
-    beq fn_80141B08_L_80141C60
-    bge fn_80141B08_L_80141B54
-    cmpwi r0, 0x0
-    bge fn_80141B08_L_80141B60
-    b fn_80141B08_L_80141E24
-    fn_80141B08_L_80141B54:
-    cmpwi r0, 0x3
-    bge fn_80141B08_L_80141E24
-    b fn_80141B08_L_80141D20
-    fn_80141B08_L_80141B60:
-    lfs f1, 0x1c(r31)
-    lfs f0, lbl_806D799C(r2)
-    fcmpo cr0, f1, f0
-    bge fn_80141B08_L_80141BCC
-    lfs f0, lbl_806D79A0(r2)
-    lfs f2, lbl_806D79A4(r2)
-    fmuls f7, f0, f1
-    lfs f5, lbl_806D79A8(r2)
-    lfs f1, lbl_806D79B0(r2)
-    lfs f0, lbl_806D79AC(r2)
-    fmuls f6, f2, f7
-    lfs f3, lbl_806D79B8(r2)
-    lfs f2, lbl_806D79B4(r2)
-    fmadds f4, f1, f7, f0
-    lfs f1, lbl_806D79C0(r2)
-    stfs f6, 0x30(r31)
-    lfs f0, lbl_806D79BC(r2)
-    fmadds f2, f3, f7, f2
-    stfs f6, 0x34(r31)
-    fmadds f0, f1, f7, f0
-    stfs f5, 0x20(r31)
-    stfs f5, 0x24(r31)
-    stfs f4, 0x38(r31)
-    stfs f2, 0x3c(r31)
-    stfs f0, 0x28(r31)
-    stfs f0, 0x2c(r31)
-    b fn_80141B08_L_80141C28
-    fn_80141B08_L_80141BCC:
-    fsubs f0, f1, f0
-    lfs f1, lbl_806D79C4(r2)
-    lfs f2, lbl_806D79A4(r2)
-    lfs f5, lbl_806D79A8(r2)
-    fmuls f7, f1, f0
-    lfs f1, lbl_806D79CC(r2)
-    lfs f0, lbl_806D79C8(r2)
-    lfs f3, lbl_806D79D4(r2)
-    fnmsubs f6, f2, f7, f2
-    lfs f2, lbl_806D79D0(r2)
-    fmadds f4, f1, f7, f0
-    lfs f1, lbl_806D79D8(r2)
-    lfs f0, lbl_806D79AC(r2)
-    fmadds f2, f3, f7, f2
-    stfs f6, 0x30(r31)
-    fmadds f0, f1, f7, f0
-    stfs f6, 0x34(r31)
-    stfs f5, 0x20(r31)
-    stfs f5, 0x24(r31)
-    stfs f4, 0x38(r31)
-    stfs f2, 0x3c(r31)
-    stfs f0, 0x28(r31)
-    stfs f0, 0x2c(r31)
-    fn_80141B08_L_80141C28:
-    lfs f1, lbl_806D7998(r2)
-    lfs f0, lbl_806D79DC(r2)
-    stfs f1, 0x40(r31)
-    lfs f1, 0x1c(r31)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_80141B08_L_80141E24
-    li r0, 0x1
-    lfs f0, lbl_806D79A8(r2)
-    stw r0, 0x18(r31)
-    stfs f0, 0x1c(r31)
-    lwz r3, 0x44(r31)
-    bl fn_80167440
-    b fn_80141B08_L_80141E24
-    fn_80141B08_L_80141C60:
-    lfs f3, lbl_806D79A8(r2)
-    lfs f2, lbl_806D79E0(r2)
-    stfs f3, 0x20(r31)
-    lfs f1, lbl_806D79E4(r2)
-    stfs f3, 0x24(r31)
-    lfs f0, lbl_806D79E8(r2)
-    stfs f3, 0x30(r31)
-    stfs f3, 0x34(r31)
-    stfs f2, 0x38(r31)
-    stfs f1, 0x3c(r31)
-    stfs f5, 0x28(r31)
-    stfs f5, 0x2c(r31)
-    stfs f5, 0x40(r31)
-    lfs f1, 0x1c(r31)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    beq fn_80141B08_L_80141CF4
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lwz r12, 0x0(r3)
-    li r4, 0x100
-    lwz r12, 0x20(r12)
-    mtctr r12
-    bctrl
-    clrlwi. r0, r3, 24
-    bne fn_80141B08_L_80141CF4
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lwz r12, 0x0(r3)
-    li r4, 0x2000
-    lwz r12, 0x20(r12)
-    mtctr r12
-    bctrl
-    clrlwi. r0, r3, 24
-    beq fn_80141B08_L_80141E24
-    fn_80141B08_L_80141CF4:
-    li r0, 0x2
-    lfs f0, lbl_806D79A8(r2)
-    stw r0, 0x18(r31)
-    stfs f0, 0x1c(r31)
-    lwz r3, 0x44(r31)
-    bl fn_801673A8
-    li r3, 0x0
-    li r4, 0x1
-    li r5, 0x1
-    bl SetRumbleMode
-    b fn_80141B08_L_80141E24
-    fn_80141B08_L_80141D20:
-    lfs f2, 0x1c(r31)
-    lfs f0, lbl_806D79EC(r2)
-    fcmpo cr0, f2, f0
-    bge fn_80141B08_L_80141D88
-    lfs f0, lbl_806D79C4(r2)
-    lfs f1, lbl_806D79A4(r2)
-    fmuls f7, f0, f2
-    lfs f0, lbl_806D79F8(r2)
-    lfs f4, lbl_806D79A8(r2)
-    lfs f3, lbl_806D79F0(r2)
-    fmuls f6, f1, f7
-    lfs f2, lbl_806D79E0(r2)
-    lfs f1, lbl_806D79F4(r2)
-    fmadds f5, f0, f7, f5
-    lfs f0, lbl_806D79E4(r2)
-    fmadds f2, f3, f7, f2
-    stfs f6, 0x30(r31)
-    fmadds f0, f1, f7, f0
-    stfs f6, 0x34(r31)
-    stfs f4, 0x20(r31)
-    stfs f4, 0x24(r31)
-    stfs f2, 0x38(r31)
-    stfs f0, 0x3c(r31)
-    stfs f5, 0x28(r31)
-    stfs f5, 0x2c(r31)
-    b fn_80141B08_L_80141DE4
-    fn_80141B08_L_80141D88:
-    fsubs f0, f2, f0
-    lfs f1, lbl_806D79A0(r2)
-    lfs f2, lbl_806D79A4(r2)
-    lfs f5, lbl_806D79A8(r2)
-    fmuls f7, f1, f0
-    lfs f1, lbl_806D79FC(r2)
-    lfs f0, lbl_806D79C8(r2)
-    lfs f3, lbl_806D7A00(r2)
-    fnmsubs f6, f2, f7, f2
-    lfs f2, lbl_806D79D0(r2)
-    fmadds f4, f1, f7, f0
-    lfs f1, lbl_806D7A04(r2)
-    lfs f0, lbl_806D79AC(r2)
-    fmadds f2, f3, f7, f2
-    stfs f6, 0x30(r31)
-    fmadds f0, f1, f7, f0
-    stfs f6, 0x34(r31)
-    stfs f5, 0x20(r31)
-    stfs f5, 0x24(r31)
-    stfs f4, 0x38(r31)
-    stfs f2, 0x3c(r31)
-    stfs f0, 0x28(r31)
-    stfs f0, 0x2c(r31)
-    fn_80141B08_L_80141DE4:
-    lfs f3, lbl_806D7A08(r2)
-    lfs f2, 0x1c(r31)
-    lfs f1, lbl_806D7998(r2)
-    lfs f0, lbl_806D79DC(r2)
-    fnmsubs f1, f3, f2, f1
-    stfs f1, 0x40(r31)
-    lfs f1, 0x1c(r31)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_80141B08_L_80141E24
-    li r0, 0x3
-    lfs f0, lbl_806D79A8(r2)
-    stw r0, 0x18(r31)
-    li r0, 0x1
-    stfs f0, 0x1c(r31)
-    stb r0, 0x4(r31)
-    fn_80141B08_L_80141E24:
-    lfs f0, 0x20(r31)
-    lfs f2, lbl_806D7A0C(r2)
-    lfs f1, lbl_806D7A10(r2)
-    fadds f0, f0, f2
-    stfs f0, 0x20(r31)
-    lfs f0, 0x24(r31)
-    fadds f0, f0, f1
-    stfs f0, 0x24(r31)
-    lfs f0, 0x30(r31)
-    fadds f0, f0, f2
-    stfs f0, 0x30(r31)
-    lfs f0, 0x34(r31)
-    fadds f0, f0, f1
-    stfs f0, 0x34(r31)
-    fn_80141B08_L_80141E5C:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#define LERP(a, b, t) ((a) + ((b) - (a)) * (t))
+
+extern "C" void fn_80141B08(PushPrompt *self)
+{
+    float k;
+
+    if (self->state == 3) {
+        return;
+    }
+    self->t += 1.0f;
+    switch (self->state) {
+    case 0:
+        if (self->t < 10.0f) {
+            k = 0.1f * self->t;
+            self->px2 = 20.0f * k;
+            self->py2 = 20.0f * k;
+            self->px = 0.0f;
+            self->py = 0.0f;
+            self->sx2 = LERP(1.1f, 2.0f, k);
+            self->sy2 = LERP(0.35f, 0.63f, k);
+            self->sx = LERP(0.4f, 1.1f, k);
+            self->sy = LERP(0.4f, 1.1f, k);
+        } else {
+            k = 0.2f * (self->t - 10.0f);
+            self->px2 = 20.0f - 20.0f * k;
+            self->py2 = 20.0f - 20.0f * k;
+            self->px = 0.0f;
+            self->py = 0.0f;
+            self->sx2 = LERP(2.0f, 1.8f, k);
+            self->sy2 = LERP(0.63f, 0.57f, k);
+            self->sx = LERP(1.1f, 1.0f, k);
+            self->sy = LERP(1.1f, 1.0f, k);
+        }
+        self->fade = 1.0f;
+        if (self->t >= 15.0f) {
+            self->state = 1;
+            self->t = 0.0f;
+            fn_80167440(self->anim);
+        }
+        break;
+    case 1:
+        self->px = 0.0f;
+        self->py = 0.0f;
+        self->px2 = 0.0f;
+        self->py2 = 0.0f;
+        self->sx2 = 1.8f;
+        self->sy2 = 0.57f;
+        self->sx = 1.0f;
+        self->sy = 1.0f;
+        self->fade = 1.0f;
+        if (self->t >= 180.0f || InputMgr_GetPlayer(GetInputManager(), 0)->Pressed(0x100) ||
+            InputMgr_GetPlayer(GetInputManager(), 0)->Pressed(0x2000)) {
+            self->state = 2;
+            self->t = 0.0f;
+            fn_801673A8(self->anim);
+            SetRumbleMode(0, 1, 1);
+        }
+        break;
+    case 2:
+        if (self->t < 5.0f) {
+            k = 0.2f * self->t;
+            self->px2 = 20.0f * k;
+            self->py2 = 20.0f * k;
+            self->px = 0.0f;
+            self->py = 0.0f;
+            self->sx2 = LERP(1.8f, 2.0f, k);
+            self->sy2 = LERP(0.57f, 0.63f, k);
+            self->sx = LERP(1.0f, 1.1f, k);
+            self->sy = LERP(1.0f, 1.1f, k);
+        } else {
+            k = 0.1f * (self->t - 5.0f);
+            self->px2 = 20.0f - 20.0f * k;
+            self->py2 = 20.0f - 20.0f * k;
+            self->px = 0.0f;
+            self->py = 0.0f;
+            self->sx2 = LERP(2.0f, 0.0f, k);
+            self->sy2 = LERP(0.63f, 0.0f, k);
+            self->sx = LERP(1.1f, 0.0f, k);
+            self->sy = LERP(1.1f, 0.0f, k);
+        }
+        self->fade = 1.0f - (1.0f / 15.0f) * self->t;
+        if (self->t >= 15.0f) {
+            self->state = 3;
+            self->t = 0.0f;
+            self->active = 1;
+        }
+        break;
+    }
+    self->px += 320.0f;
+    self->py += 262.0f;
+    self->px2 += 320.0f;
+    self->py2 += 262.0f;
 }
 
 void PushPrompt::Print(float x, float y, float w, float h, float r, float g, float b, float a, const char *fmt, ...) {
