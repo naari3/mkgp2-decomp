@@ -114,112 +114,56 @@ void ItemEffectBus_Init(ItemEffectBus *bus, void *driver)
 /* refine if the real prototype matters for header consumers. */
 
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D34B8;
-extern unsigned int lbl_806D34BC;
-extern unsigned int lbl_806D34C0;
-extern unsigned int lbl_806D34C4;
-extern unsigned int lbl_806D34C8;
-extern unsigned int lbl_806D34CC;
-extern unsigned int lbl_806D34D0;
-extern unsigned int lbl_806D34D4;
-extern unsigned int lbl_806D34D8;
-extern unsigned int lbl_806D34DC;
-extern unsigned int lbl_806D34E0;
-extern unsigned int lbl_806D34E4;
-extern unsigned int lbl_806D34E8;
-extern unsigned int lbl_806D34EC;
-extern unsigned int lbl_806D34F0;
-extern unsigned int lbl_806D34F4;
+/* --- extern decls: sda21-referenced data (64-bit mask constants) --- */
+extern const ItemEffectMask lbl_806D34B8;
+extern const ItemEffectMask lbl_806D34C0;
+extern const ItemEffectMask lbl_806D34C8;
+extern const ItemEffectMask lbl_806D34D0;
+extern const ItemEffectMask lbl_806D34D8;
+extern const ItemEffectMask lbl_806D34E0;
+extern const ItemEffectMask lbl_806D34E8;
+extern const ItemEffectMask lbl_806D34F0;
 
 /* --- function index (1 fns, .text 0x80091300..0x800913F8) ---
  * [  0] 0x80091300 size:0xF8    global ItemEffectBus_ClearByTable8
  */
 
 /* --- forward decls --- */
-asm void ItemEffectBus_ClearByTable8(void);
+void ItemEffectBus_ClearByTable8(ItemEffectBus *bus, unsigned int flags);
 
-/* --- asm function bodies (.text order = fn address order) --- */
-__declspec(section ".extab_user") static const unsigned char extab_ItemEffectBus_ClearByTable8[8] = {
-    0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectBus_ClearByTable8 = {
-    (void *)&ItemEffectBus_ClearByTable8, 0x000000F8, (void *)extab_ItemEffectBus_ClearByTable8
-};
+/* Native body; exception tables are compiler emitted. */
+#pragma exceptions on
+void ItemEffectBus_ClearByTable8(ItemEffectBus *bus, unsigned int flags)
+{
+    ItemEffectMask clear = 0;
 
-asm void ItemEffectBus_ClearByTable8(void) { /* 0x80091300 size:0xF8 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    li r7, 0x0
-    li r6, 0x0
-    stw r0, 0x14(r1)
-    clrlwi. r0, r4, 31
-    beq ItemEffectBus_ClearByTable8_L_80091324
-    lwz r6, lbl_806D34B8(r2)
-    lwz r7, lbl_806D34BC(r2)
-    ItemEffectBus_ClearByTable8_L_80091324:
-    rlwinm. r0, r4, 0, 30, 30
-    beq ItemEffectBus_ClearByTable8_L_8009133C
-    lwz r0, lbl_806D34C0(r2)
-    lwz r5, lbl_806D34C4(r2)
-    or r6, r6, r0
-    or r7, r7, r5
-    ItemEffectBus_ClearByTable8_L_8009133C:
-    rlwinm. r0, r4, 0, 29, 29
-    beq ItemEffectBus_ClearByTable8_L_80091354
-    lwz r0, lbl_806D34C8(r2)
-    lwz r5, lbl_806D34CC(r2)
-    or r6, r6, r0
-    or r7, r7, r5
-    ItemEffectBus_ClearByTable8_L_80091354:
-    rlwinm. r0, r4, 0, 28, 28
-    beq ItemEffectBus_ClearByTable8_L_8009136C
-    lwz r0, lbl_806D34D0(r2)
-    lwz r5, lbl_806D34D4(r2)
-    or r6, r6, r0
-    or r7, r7, r5
-    ItemEffectBus_ClearByTable8_L_8009136C:
-    rlwinm. r0, r4, 0, 27, 27
-    beq ItemEffectBus_ClearByTable8_L_80091384
-    lwz r0, lbl_806D34D8(r2)
-    lwz r5, lbl_806D34DC(r2)
-    or r6, r6, r0
-    or r7, r7, r5
-    ItemEffectBus_ClearByTable8_L_80091384:
-    rlwinm. r0, r4, 0, 26, 26
-    beq ItemEffectBus_ClearByTable8_L_8009139C
-    lwz r0, lbl_806D34E0(r2)
-    lwz r5, lbl_806D34E4(r2)
-    or r6, r6, r0
-    or r7, r7, r5
-    ItemEffectBus_ClearByTable8_L_8009139C:
-    rlwinm. r0, r4, 0, 25, 25
-    beq ItemEffectBus_ClearByTable8_L_800913B4
-    lwz r0, lbl_806D34E8(r2)
-    lwz r5, lbl_806D34EC(r2)
-    or r6, r6, r0
-    or r7, r7, r5
-    ItemEffectBus_ClearByTable8_L_800913B4:
-    rlwinm. r0, r4, 0, 24, 24
-    beq ItemEffectBus_ClearByTable8_L_800913CC
-    lwz r0, lbl_806D34F0(r2)
-    lwz r4, lbl_806D34F4(r2)
-    or r6, r6, r0
-    or r7, r7, r4
-    ItemEffectBus_ClearByTable8_L_800913CC:
-    nor r0, r6, r6
-    lwz r5, 0x10(r3)
-    lwz r6, 0x14(r3)
-    nor r4, r7, r7
-    and r5, r5, r0
-    and r6, r6, r4
-    bl ItemEffectBus_Commit
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+    if (flags & 0x1) {
+        clear |= lbl_806D34B8;
+    }
+    if (flags & 0x2) {
+        clear |= lbl_806D34C0;
+    }
+    if (flags & 0x4) {
+        clear |= lbl_806D34C8;
+    }
+    if (flags & 0x8) {
+        clear |= lbl_806D34D0;
+    }
+    if (flags & 0x10) {
+        clear |= lbl_806D34D8;
+    }
+    if (flags & 0x20) {
+        clear |= lbl_806D34E0;
+    }
+    if (flags & 0x40) {
+        clear |= lbl_806D34E8;
+    }
+    if (flags & 0x80) {
+        clear |= lbl_806D34F0;
+    }
+    ItemEffectBus_Commit(bus, bus->mask & ~clear);
 }
+#pragma exceptions reset
 
 /* === extracted from auto_ItemEffectBus_Regist_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -260,22 +204,6 @@ void ItemEffectBus_RegisterBonkPosition(ItemEffectBus *bus, float x, float y, fl
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D34B0;
-extern unsigned int lbl_806D34B8;
-extern unsigned int lbl_806D34BC;
-extern unsigned int lbl_806D34C0;
-extern unsigned int lbl_806D34C4;
-extern unsigned int lbl_806D34C8;
-extern unsigned int lbl_806D34CC;
-extern unsigned int lbl_806D34D0;
-extern unsigned int lbl_806D34D4;
-extern unsigned int lbl_806D34D8;
-extern unsigned int lbl_806D34DC;
-extern unsigned int lbl_806D34E0;
-extern unsigned int lbl_806D34E4;
-extern unsigned int lbl_806D34E8;
-extern unsigned int lbl_806D34EC;
-extern unsigned int lbl_806D34F0;
-extern unsigned int lbl_806D34F4;
 extern unsigned int lbl_806D34F8;
 extern unsigned int lbl_806D34FC;
 extern unsigned int lbl_806D3500;
@@ -517,54 +445,54 @@ asm void ItemEffectBus_ApplyItemEventClear(void) { /* 0x80091438 size:0x424 */
     mr r6, r0
     beq ItemEffectBus_ApplyItemEventClear_L_8009177C
     lwz r6, lbl_806D34B8(r2)
-    lwz r0, lbl_806D34BC(r2)
+    lwz r0, lbl_806D34B8+4(r2)
     ItemEffectBus_ApplyItemEventClear_L_8009177C:
     rlwinm. r3, r31, 0, 30, 30
     beq ItemEffectBus_ApplyItemEventClear_L_80091794
     lwz r3, lbl_806D34C0(r2)
-    lwz r4, lbl_806D34C4(r2)
+    lwz r4, lbl_806D34C0+4(r2)
     or r6, r6, r3
     or r0, r0, r4
     ItemEffectBus_ApplyItemEventClear_L_80091794:
     rlwinm. r3, r31, 0, 29, 29
     beq ItemEffectBus_ApplyItemEventClear_L_800917AC
     lwz r3, lbl_806D34C8(r2)
-    lwz r4, lbl_806D34CC(r2)
+    lwz r4, lbl_806D34C8+4(r2)
     or r6, r6, r3
     or r0, r0, r4
     ItemEffectBus_ApplyItemEventClear_L_800917AC:
     rlwinm. r3, r31, 0, 28, 28
     beq ItemEffectBus_ApplyItemEventClear_L_800917C4
     lwz r3, lbl_806D34D0(r2)
-    lwz r4, lbl_806D34D4(r2)
+    lwz r4, lbl_806D34D0+4(r2)
     or r6, r6, r3
     or r0, r0, r4
     ItemEffectBus_ApplyItemEventClear_L_800917C4:
     rlwinm. r3, r31, 0, 27, 27
     beq ItemEffectBus_ApplyItemEventClear_L_800917DC
     lwz r3, lbl_806D34D8(r2)
-    lwz r4, lbl_806D34DC(r2)
+    lwz r4, lbl_806D34D8+4(r2)
     or r6, r6, r3
     or r0, r0, r4
     ItemEffectBus_ApplyItemEventClear_L_800917DC:
     rlwinm. r3, r31, 0, 26, 26
     beq ItemEffectBus_ApplyItemEventClear_L_800917F4
     lwz r3, lbl_806D34E0(r2)
-    lwz r4, lbl_806D34E4(r2)
+    lwz r4, lbl_806D34E0+4(r2)
     or r6, r6, r3
     or r0, r0, r4
     ItemEffectBus_ApplyItemEventClear_L_800917F4:
     rlwinm. r3, r31, 0, 25, 25
     beq ItemEffectBus_ApplyItemEventClear_L_8009180C
     lwz r3, lbl_806D34E8(r2)
-    lwz r4, lbl_806D34EC(r2)
+    lwz r4, lbl_806D34E8+4(r2)
     or r6, r6, r3
     or r0, r0, r4
     ItemEffectBus_ApplyItemEventClear_L_8009180C:
     rlwinm. r3, r31, 0, 24, 24
     beq ItemEffectBus_ApplyItemEventClear_L_80091824
     lwz r3, lbl_806D34F0(r2)
-    lwz r4, lbl_806D34F4(r2)
+    lwz r4, lbl_806D34F0+4(r2)
     or r6, r6, r3
     or r0, r0, r4
     ItemEffectBus_ApplyItemEventClear_L_80091824:
@@ -776,249 +704,116 @@ int ItemEffectBus_ArmTornadoAndQuery(ItemEffectBus *bus)
 /* refine if the real prototype matters for header consumers. */
 
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D3508;
-extern unsigned int lbl_806D350C;
-extern unsigned int lbl_806D3510;
-extern unsigned int lbl_806D3514;
-extern unsigned int lbl_806D3518;
-extern unsigned int lbl_806D351C;
-extern unsigned int lbl_806D3520;
-extern unsigned int lbl_806D3524;
-extern unsigned int lbl_806D3528;
-extern unsigned int lbl_806D352C;
-extern unsigned int lbl_806D3530;
-extern unsigned int lbl_806D3534;
-extern unsigned int lbl_806D3538;
-extern unsigned int lbl_806D353C;
-extern unsigned int lbl_806D3540;
-extern unsigned int lbl_806D3544;
-extern unsigned int lbl_806D3548;
-extern unsigned int lbl_806D354C;
-extern unsigned int lbl_806D3550;
-extern unsigned int lbl_806D3554;
-extern unsigned int lbl_806D3558;
-extern unsigned int lbl_806D355C;
-extern unsigned int lbl_806D3560;
-extern unsigned int lbl_806D3564;
-extern unsigned int lbl_806D3568;
-extern unsigned int lbl_806D356C;
+/* --- extern decls: sda21-referenced data (64-bit mask constants) --- */
+extern const ItemEffectMask lbl_806D3508;
+extern const ItemEffectMask lbl_806D3510;
+extern const ItemEffectMask lbl_806D3518;
+extern const ItemEffectMask lbl_806D3520;
+extern const ItemEffectMask lbl_806D3528;
+extern const ItemEffectMask lbl_806D3530;
+extern const ItemEffectMask lbl_806D3538;
+extern const ItemEffectMask lbl_806D3540;
+extern const ItemEffectMask lbl_806D3548;
+extern const ItemEffectMask lbl_806D3550;
+extern const ItemEffectMask lbl_806D3558;
+extern const ItemEffectMask lbl_806D3560;
+extern const ItemEffectMask lbl_806D3568;
 
 /* --- function index (1 fns, .text 0x80091B9C..0x80091E40) ---
  * [  0] 0x80091B9C size:0x2A4   global ItemEffectBus_ApplyItemConfirm
  */
 
 /* --- forward decls --- */
-asm void ItemEffectBus_ApplyItemConfirm(void);
+void ItemEffectBus_ApplyItemConfirm(ItemEffectBus *bus, int item);
 
-/* --- asm function bodies (.text order = fn address order) --- */
-__declspec(section ".extab_user") static const unsigned char extab_ItemEffectBus_ApplyItemConfirm[8] = {
-    0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectBus_ApplyItemConfirm = {
-    (void *)&ItemEffectBus_ApplyItemConfirm, 0x000002A4, (void *)extab_ItemEffectBus_ApplyItemConfirm
-};
+/* Native body; exception tables are compiler emitted. */
+#pragma exceptions on
+void ItemEffectBus_ApplyItemConfirm(ItemEffectBus *bus, int item)
+{
+    ItemEffectMask mask = bus->mask;
 
-asm void ItemEffectBus_ApplyItemConfirm(void) { /* 0x80091B9C size:0x2A4 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    cmpwi r4, 0x28
-    stw r0, 0x14(r1)
-    lwz r5, 0x10(r3)
-    lwz r6, 0x14(r3)
-    beq ItemEffectBus_ApplyItemConfirm_L_80091DAC
-    bge ItemEffectBus_ApplyItemConfirm_L_80091C60
-    cmpwi r4, 0x19
-    beq ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    bge ItemEffectBus_ApplyItemConfirm_L_80091C18
-    cmpwi r4, 0x11
-    beq ItemEffectBus_ApplyItemConfirm_L_80091DD8
-    bge ItemEffectBus_ApplyItemConfirm_L_80091BF8
-    cmpwi r4, 0xe
-    beq ItemEffectBus_ApplyItemConfirm_L_80091DAC
-    bge ItemEffectBus_ApplyItemConfirm_L_80091BEC
-    cmpwi r4, 0xc
-    bge ItemEffectBus_ApplyItemConfirm_L_80091DD8
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091BEC:
-    cmpwi r4, 0x10
-    bge ItemEffectBus_ApplyItemConfirm_L_80091DAC
-    b ItemEffectBus_ApplyItemConfirm_L_80091DD8
-    ItemEffectBus_ApplyItemConfirm_L_80091BF8:
-    cmpwi r4, 0x17
-    beq ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    bge ItemEffectBus_ApplyItemConfirm_L_80091DD8
-    cmpwi r4, 0x15
-    bge ItemEffectBus_ApplyItemConfirm_L_80091DAC
-    cmpwi r4, 0x13
-    bge ItemEffectBus_ApplyItemConfirm_L_80091DD8
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091C18:
-    cmpwi r4, 0x21
-    beq ItemEffectBus_ApplyItemConfirm_L_80091DC0
-    bge ItemEffectBus_ApplyItemConfirm_L_80091C48
-    cmpwi r4, 0x1c
-    beq ItemEffectBus_ApplyItemConfirm_L_80091DCC
-    bge ItemEffectBus_ApplyItemConfirm_L_80091C3C
-    cmpwi r4, 0x1b
-    bge ItemEffectBus_ApplyItemConfirm_L_80091D0C
-    b ItemEffectBus_ApplyItemConfirm_L_80091D84
-    ItemEffectBus_ApplyItemConfirm_L_80091C3C:
-    cmpwi r4, 0x1e
-    bge ItemEffectBus_ApplyItemConfirm_L_80091DAC
-    b ItemEffectBus_ApplyItemConfirm_L_80091D70
-    ItemEffectBus_ApplyItemConfirm_L_80091C48:
-    cmpwi r4, 0x24
-    beq ItemEffectBus_ApplyItemConfirm_L_80091DAC
-    bge ItemEffectBus_ApplyItemConfirm_L_80091DD8
-    cmpwi r4, 0x23
-    bge ItemEffectBus_ApplyItemConfirm_L_80091D48
-    b ItemEffectBus_ApplyItemConfirm_L_80091CF8
-    ItemEffectBus_ApplyItemConfirm_L_80091C60:
-    cmpwi r4, 0x91
-    beq ItemEffectBus_ApplyItemConfirm_L_80091DD8
-    bge ItemEffectBus_ApplyItemConfirm_L_80091CA8
-    cmpwi r4, 0x52
-    beq ItemEffectBus_ApplyItemConfirm_L_80091D5C
-    bge ItemEffectBus_ApplyItemConfirm_L_80091C90
-    cmpwi r4, 0x3c
-    beq ItemEffectBus_ApplyItemConfirm_L_80091D34
-    bge ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    cmpwi r4, 0x2c
-    beq ItemEffectBus_ApplyItemConfirm_L_80091D20
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091C90:
-    cmpwi r4, 0x8c
-    beq ItemEffectBus_ApplyItemConfirm_L_80091E08
-    bge ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    cmpwi r4, 0x8b
-    bge ItemEffectBus_ApplyItemConfirm_L_80091DD8
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091CA8:
-    cmpwi r4, 0x9c
-    beq ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    bge ItemEffectBus_ApplyItemConfirm_L_80091CCC
-    cmpwi r4, 0x9a
-    beq ItemEffectBus_ApplyItemConfirm_L_80091DF4
-    bge ItemEffectBus_ApplyItemConfirm_L_80091D98
-    cmpwi r4, 0x99
-    bge ItemEffectBus_ApplyItemConfirm_L_80091DE0
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091CCC:
-    cmpwi r4, 0x142
-    beq ItemEffectBus_ApplyItemConfirm_L_80091CE4
-    bge ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    cmpwi r4, 0x9e
-    bge ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    b ItemEffectBus_ApplyItemConfirm_L_80091E1C
-    ItemEffectBus_ApplyItemConfirm_L_80091CE4:
-    lwz r0, lbl_806D3508(r2)
-    lwz r4, lbl_806D350C(r2)
-    or r5, r5, r0
-    or r6, r6, r4
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091CF8:
-    lwz r0, lbl_806D3510(r2)
-    lwz r4, lbl_806D3514(r2)
-    or r5, r5, r0
-    or r6, r6, r4
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091D0C:
-    lwz r0, lbl_806D3518(r2)
-    lwz r4, lbl_806D351C(r2)
-    or r5, r5, r0
-    or r6, r6, r4
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091D20:
-    lwz r0, lbl_806D3520(r2)
-    lwz r4, lbl_806D3524(r2)
-    or r5, r5, r0
-    or r6, r6, r4
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091D34:
-    lwz r0, lbl_806D3528(r2)
-    lwz r4, lbl_806D352C(r2)
-    or r5, r5, r0
-    or r6, r6, r4
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091D48:
-    lwz r0, lbl_806D3530(r2)
-    lwz r4, lbl_806D3534(r2)
-    or r5, r5, r0
-    or r6, r6, r4
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091D5C:
-    lwz r0, lbl_806D3538(r2)
-    lwz r4, lbl_806D353C(r2)
-    or r5, r5, r0
-    or r6, r6, r4
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091D70:
-    lwz r0, lbl_806D3540(r2)
-    lwz r4, lbl_806D3544(r2)
-    or r5, r5, r0
-    or r6, r6, r4
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091D84:
-    lwz r0, lbl_806D3508(r2)
-    lwz r4, lbl_806D350C(r2)
-    or r5, r5, r0
-    or r6, r6, r4
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091D98:
-    lwz r0, lbl_806D3548(r2)
-    lwz r4, lbl_806D354C(r2)
-    or r5, r5, r0
-    or r6, r6, r4
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091DAC:
-    lis r4, 0x2000
-    ori r5, r5, 0x100
-    addi r0, r4, 0x40
-    or r6, r6, r0
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091DC0:
-    li r6, 0x80
-    li r5, 0x80
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091DCC:
-    li r6, 0x0
-    li r5, 0x80
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091DD8:
-    ori r6, r6, 0x140
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091DE0:
-    lwz r0, lbl_806D3550(r2)
-    lwz r4, lbl_806D3554(r2)
-    or r5, r5, r0
-    or r6, r6, r4
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091DF4:
-    lwz r0, lbl_806D3558(r2)
-    lwz r4, lbl_806D355C(r2)
-    or r5, r5, r0
-    or r6, r6, r4
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091E08:
-    lwz r0, lbl_806D3560(r2)
-    lwz r4, lbl_806D3564(r2)
-    or r5, r5, r0
-    or r6, r6, r4
-    b ItemEffectBus_ApplyItemConfirm_L_80091E2C
-    ItemEffectBus_ApplyItemConfirm_L_80091E1C:
-    lwz r0, lbl_806D3568(r2)
-    lwz r4, lbl_806D356C(r2)
-    or r5, r5, r0
-    or r6, r6, r4
-    ItemEffectBus_ApplyItemConfirm_L_80091E2C:
-    bl ItemEffectBus_Commit
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+    switch (item) {
+    case 0x142:
+        mask |= lbl_806D3508;
+        break;
+    case 0x22:
+        mask |= lbl_806D3510;
+        break;
+    case 0x1B:
+        mask |= lbl_806D3518;
+        break;
+    case 0x2C:
+        mask |= lbl_806D3520;
+        break;
+    case 0x3C:
+        mask |= lbl_806D3528;
+        break;
+    case 0x23:
+        mask |= lbl_806D3530;
+        break;
+    case 0x52:
+        mask |= lbl_806D3538;
+        break;
+    case 0x1D:
+        mask |= lbl_806D3540;
+        break;
+    case 0x1A:
+        mask |= lbl_806D3508;
+        break;
+    case 0x9B:
+        mask |= lbl_806D3548;
+        break;
+    case 0x0E:
+    case 0x10:
+    case 0x15:
+    case 0x16:
+    case 0x1E:
+    case 0x1F:
+    case 0x20:
+    case 0x24:
+    case 0x28:
+        mask |= 0x0000010020000040ULL;
+        break;
+    case 0x21:
+        mask = 0x0000008000000080ULL;
+        break;
+    case 0x1C:
+        mask = 0x0000008000000000ULL;
+        break;
+    case 0x0C:
+    case 0x0D:
+    case 0x0F:
+    case 0x11:
+    case 0x13:
+    case 0x14:
+    case 0x18:
+    case 0x25:
+    case 0x26:
+    case 0x27:
+    case 0x8B:
+    case 0x91:
+        mask |= 0x140ULL;
+        break;
+    case 0x99:
+        mask |= lbl_806D3550;
+        break;
+    case 0x9A:
+        mask |= lbl_806D3558;
+        break;
+    case 0x8C:
+        mask |= lbl_806D3560;
+        break;
+    case 0x9D:
+        mask |= lbl_806D3568;
+        break;
+    case 0x17:
+    case 0x19:
+    case 0x9C:
+        break;
+    }
+    ItemEffectBus_Commit(bus, mask);
 }
+#pragma exceptions reset
 
 /* === extracted from auto_ItemEffectBus_ClearM_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -1077,55 +872,25 @@ void ItemEffectBus_OrMask(ItemEffectBus *bus, ItemEffectMask mask)
 /* refine if the real prototype matters for header consumers. */
 
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D3570;
-extern unsigned int lbl_806D3574;
-
-/* --- function index (1 fns, .text 0x80091EA8..0x80091F0C) ---
- * [  0] 0x80091EA8 size:0x64    global ItemEffectBus_TickTornadoCooldown
- */
+extern const ItemEffectMask lbl_806D3570;
 
 /* --- forward decls --- */
-asm void ItemEffectBus_TickTornadoCooldown(void);
+void ItemEffectBus_TickTornadoCooldown(ItemEffectBus *bus);
 
-/* --- asm function bodies (.text order = fn address order) --- */
-__declspec(section ".extab_user") static const unsigned char extab_ItemEffectBus_TickTornadoCooldown[8] = {
-    0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectBus_TickTornadoCooldown = {
-    (void *)&ItemEffectBus_TickTornadoCooldown, 0x00000064, (void *)extab_ItemEffectBus_TickTornadoCooldown
-};
+/* Native body; exception tables are compiler emitted. */
+#pragma exceptions on
+void ItemEffectBus_TickTornadoCooldown(ItemEffectBus *bus)
+{
+    ItemEffectMask clear = 0xC000000000000000ULL;
 
-asm void ItemEffectBus_TickTornadoCooldown(void) { /* 0x80091EA8 size:0x64 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    li r7, 0x0
-    lis r6, 0xc000
-    stw r0, 0x14(r1)
-    lwz r4, 0x50(r3)
-    cmpwi r4, 0x0
-    ble ItemEffectBus_TickTornadoCooldown_L_80091ED4
-    subi r0, r4, 0x1
-    stw r0, 0x50(r3)
-    b ItemEffectBus_TickTornadoCooldown_L_80091EE0
-    ItemEffectBus_TickTornadoCooldown_L_80091ED4:
-    lwz r0, lbl_806D3570(r2)
-    lwz r7, lbl_806D3574(r2)
-    or r6, r6, r0
-    ItemEffectBus_TickTornadoCooldown_L_80091EE0:
-    nor r0, r6, r6
-    lwz r5, 0x10(r3)
-    lwz r6, 0x14(r3)
-    nor r4, r7, r7
-    and r5, r5, r0
-    and r6, r6, r4
-    bl ItemEffectBus_Commit
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+    if (bus->tornadoCooldown > 0) {
+        bus->tornadoCooldown--;
+    } else {
+        clear |= lbl_806D3570;
+    }
+    ItemEffectBus_Commit(bus, bus->mask & ~clear);
 }
+#pragma exceptions reset
 
 /* === extracted from auto_ItemEffectBus_Snapsh_text === */
 /* Copy into the TU between forward decls and function bodies; */
