@@ -1,4 +1,4 @@
-#include "game/FlowYesNo.h"
+#include "game/YesNoCursorUpdate_private.h"
 
 static inline void SpawnSpark(FlowSceneList *l, int id, int layer, float x, float y, unsigned char flag) {
     fn_801F4DF0(l, new YesNoSpark(id, layer, x, y, flag), 0);
@@ -9,7 +9,7 @@ void YesNoCursor::Update() {
     if (t % 15 == 0) {
         int id = (t / 15) * 2;
         FlowSceneList *l;
-        unsigned char f;
+        bool f;
         int lay;
         float px;
         float py;

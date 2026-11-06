@@ -7092,7 +7092,10 @@
     "__RTTI__10YesNoSpark": "lbl_806D02D0",
     "__vt__8FlowRoot": "lbl_8048ECF8",
     "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
-    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80"
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "@73": "@etb_80018DEC",
+    "@74": "@eti_800298AC",
+    "__dt__10FlowFaderFFv": "TweenInterp_Dtor"
   },
   "src/game/anon_80204474_part4.cpp": {
     "__ct__9YesNoTaskFiUcii": "fn_80204884",

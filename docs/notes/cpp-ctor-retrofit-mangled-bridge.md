@@ -1029,3 +1029,8 @@ c16_u82 RaceScene_Init 800A1D80: actual 99.97931% residual is clrlwi. destinatio
 Source: Codex worker c16_u106_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 528 B.
 
 c16_u106: PcbDebugOverlay DebugOverlay_DumpPcbState 80085E3C/528B resolves prior listener r27-vs-r25 residual by static inline int PcbConn_GetPortCycle(const PcbConnView*) and PcbConn_GetCloseCount(const PcbConnView*) accessors used only for the two cached loads in the primary+secondary branch. Native text528/rodata1400/extab8/index12 all100. Pending ring-count helper regressed to98.333336 with loop register rotation and listener unchanged (reverted). Matching source object in main.elf; ELF symbol80085E3C size528; full DOL SHA1 exact.
+
+## c16_u105_20261106
+Source: Codex worker c16_u105_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 584 B.
+
+c16_u105: YesNoCursor Update 80204F68/584B reaches 100% by keeping the cached visible local bool, matching its canonical member type; unsigned char produces the persistent list/visible r30/r31 swap. A separately named allocation result with the old unsigned-char local is invariant. TU-owned private declaration view with undefined Cursor _key2 before Update suppresses duplicate vtable/RTTI while reusing canonical FlowScene types and verbatim YesNoSpark ctor. Add @73/@74 owned EH/index bridges and FlowFaderF dtor -> TweenInterp_Dtor. Owned text/EH104/index12 all100; extra weak dtors discarded. Matching source-linked ELF 80204F68 size584 and EH80018DEC/index800298AC verified; full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
