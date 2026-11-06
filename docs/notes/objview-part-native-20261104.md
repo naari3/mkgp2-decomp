@@ -51,3 +51,8 @@ c14_u26: fn_8018D0F4 556B promoted native. Null-first inline Child/Next accessor
 Source: Codex worker c14_u50_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u50: fn_8018DAD0 remains NonMatching, 91.69401 ->94.49527. Writable random tables fix random-factor/position load-store scheduling. Typed aggregate table view improves addressing versus char-pointer offsets but still folds per-type table bases into index+offset. Inline array-pointer helpers do not prevent folding; float literals slightly worsen scheduling. Residual table-base shape, factor FP homes, and final-loop GPR reuse; 3 hypotheses used, no native gain.
+
+## c14_u53_20261106
+Source: Codex worker c14_u53_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u53: fn_801972E0 correct writable random tables lbl_80495994/lbl_80495A94 (.data) removes const-driven scheduling divergence: 91.0859 ->99.88655, exact text size2468/extab8/index12. Only enabled flag r30/r28 at +34/+140 and final-loop li r30,0 versus mr r30,r28 at +7CC remain. Reusing outer loop i reproduces shared zero but swaps other homes; p reuse 99.70827, decl order unchanged. Inline UpdateParticles with index pointer 99.71637 leaves pointer/stride r29/r30 swap; explicit stride99.700165. All loop probes reverted. Honest NonMatching retained; no new native functions.

@@ -8,8 +8,8 @@ extern void Vec3_Subtract(const ParticleUpdateVec *, const ParticleUpdateVec *, 
 extern void Vec3_Normalize(const ParticleUpdateVec *, ParticleUpdateVec *);
 extern float Vec3_Dot(const ParticleUpdateVec *, const ParticleUpdateVec *);
 extern float LUT_Sin12Bit(float);
-extern const float lbl_80495994[];
-extern const float lbl_80495A94[];
+extern float lbl_80495994[];
+extern float lbl_80495A94[];
 
 static inline ViewParticle *FindFree(ViewParticleOwner *o) {
     int i;
