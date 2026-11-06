@@ -27,3 +27,8 @@ c14_u51 fn_801685A4 singleton: grouped RG/BA pair expression (((cr<<8)|cg)<<16)|
 Source: Codex worker c14_u52_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u52: fn_80168B90 grouped RG/BA packing improves fresh 91.536 to 97.712% (496 vs target500B). Typed inline byte pack is identical to flat baseline; explicit unsigned-short pairs identical to grouped expression. Residual color conversion/spill scheduling, FP/GPR homes and word insertion shape; owned EH range length remains one instruction short. Singleton retained NonMatching. Coordinator fallback build DOL SHA-1 OK; native gain0.
+
+## c14_u54_20261106
+Source: Codex worker c14_u54_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u54: fn_801695E0 alpha-only singleton improves 91.07692 ->92.61539 by removing unsigned-char cast before OR with 0xFFFFFF00 (upper bits forced to one). Text 264->260B and primary EH PC 0xD4->0xD0. Target early li(-256)/rlwimi remains oris/ori plus scheduling differences. Union RGB24/alpha8 spills to stack (90.215385); inline generic color-mask helper is invariant (91.07692). Three hypotheses exhausted, remains NonMatching, no split rescue. Coordinator full fallback-linked DOL SHA1 OK.
