@@ -4,7 +4,7 @@
  * Owns the shared .rodata pool at 0x80311E38..0x803123B0, also used by
  * PcbDebugOverlay_link.cpp and other units. Keep the original pool order.
  *
- * NonMatching: the listener uses r27 where the target reuses r25.
+ * Connection accessors preserve the original inline register lifetimes.
  */
 
 typedef union PcbLinkFlags {
@@ -167,6 +167,16 @@ const char lbl_803123A0[14] = "PROCESS_ERROR";
 
 #define PCB_CHAR_ID(s) (((s)->hdr.word >> 15) & 0xFF)
 
+static inline int PcbConn_GetPortCycle(const PcbConnView *conn)
+{
+    return conn->portCycle;
+}
+
+static inline int PcbConn_GetCloseCount(const PcbConnView *conn)
+{
+    return conn->closeCount;
+}
+
 #pragma exceptions on
 void DebugOverlay_DumpPcbState(void)
 {
@@ -199,8 +209,8 @@ void DebugOverlay_DumpPcbState(void)
         } else {
             primary = lbl_805A6154[i].primary;
             if (primary != 0 && (secondary = lbl_805A6154[i].secondary) != 0) {
-                closeCount = primary->closeCount;
-                portCycle = primary->portCycle;
+                closeCount = PcbConn_GetCloseCount(primary);
+                portCycle = PcbConn_GetPortCycle(primary);
                 secondaryName = PcbConn_GetStateName(secondary);
                 OverlayText(1, 0, i + 2, lbl_803122A8, lbl_805A6154[i].flags.half.id,
                             PcbConn_GetStateName(lbl_805A6154[i].primary), portCycle, closeCount,

@@ -1024,3 +1024,8 @@ c16_u78 fn_801ED798: nested ApplyYaw/Multiply helpers with product local in Mult
 Source: Codex worker c16_u82_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u82 RaceScene_Init 800A1D80: actual 99.97931% residual is clrlwi. destination r26 vs target r3 and following mr direction, not copy scheduling described in old source comment. PreloadItem helper inside caller guard is invariant; lookup+guard helper and guarded PreloadItem helper both regress to 99.93793% via i r26/item r28 instead of i r27/item r26. All reverted. Single function TU cannot isolate exact subset.
+
+## c16_u106_20261106
+Source: Codex worker c16_u106_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 528 B.
+
+c16_u106: PcbDebugOverlay DebugOverlay_DumpPcbState 80085E3C/528B resolves prior listener r27-vs-r25 residual by static inline int PcbConn_GetPortCycle(const PcbConnView*) and PcbConn_GetCloseCount(const PcbConnView*) accessors used only for the two cached loads in the primary+secondary branch. Native text528/rodata1400/extab8/index12 all100. Pending ring-count helper regressed to98.333336 with loop register rotation and listener unchanged (reverted). Matching source object in main.elf; ELF symbol80085E3C size528; full DOL SHA1 exact.

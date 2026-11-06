@@ -1932,7 +1932,7 @@ config.libs = [
             Object(Matching, "game/DVDLoad_RecordOpStart.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/RingBuffer_Getters.c"),
             Object(Matching, "game/SyncSlot_ApplyCourseChoice.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/PcbDebugOverlay.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/PcbDebugOverlay.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/PcbDebugOverlay_link.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/PCBComm_PromoteToClientConfirmed.c"),
             Object(Matching, "game/PcbSync_Counts.c"),
