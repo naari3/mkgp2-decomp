@@ -1,5 +1,5 @@
 #include "game/ItemSelectRefillPrivate.h"
-static inline void CompleteChoice(RefillChoice *choice, int slot, const RefillLayout *layout, const int *resources) {
+static inline void CompleteChoice(RefillChoice *choice, int slot, const RefillLayout *layout, const int *resources, void *playerData) {
 
         if (choice->selected == 1) fn_8023AA0C(choice, 1);
         while (true) {
@@ -9,7 +9,7 @@ static inline void CompleteChoice(RefillChoice *choice, int slot, const RefillLa
         choice->selected = 1;
         choice->timer = 0;
         SpriteAnimParamBlock_Reload(choice->groups[1], slot + 0x4e);
-        int resource = (short) Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(g_playerData,
+        int resource = (short) Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(playerData,
             RefillItem(layout, choice->column, choice->row)), 0);
         SpriteAnimParamBlock_SetAnimParamCached(choice->groups[1], resources[slot], resource);
         SpriteAnimParamBlock_SetAnimParamCached(choice->groups[1], 0x13b9, resource);
@@ -20,13 +20,14 @@ static inline void CompleteChoice(RefillChoice *choice, int slot, const RefillLa
         choice->done = 0;
 }
 extern "C" void fn_802386E0(ItemSelectState *self) {
+    void *playerData = g_playerData;
     const RefillLayout *layout = &lbl_803DC0C0;
     const int *resources = layout->resources;
     const float *ys = layout->y;
     const float *xs = layout->x;
     while (self->field14c < 3) {
         int slot = self->field14c;
-        CompleteChoice((RefillChoice *)self->iconArray, slot, layout, resources);
+        CompleteChoice((RefillChoice *)self->iconArray, slot, layout, resources, g_playerData);
         RefillChoice *choice;
         choice = (RefillChoice *)self->iconArray;
         int column = choice->column;
@@ -35,7 +36,7 @@ extern "C" void fn_802386E0(ItemSelectState *self) {
         slots[self->field14c * 3 + 0x57] = column;
         slots[self->field14c * 3 + 0x58] = row;
         slots[self->field14c * 3 + 0x59] = RefillItem(layout, column, row);
-        int item = Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(g_playerData,
+        int item = Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(playerData,
             slots[self->field14c * 3 + 0x59]), 0);
         SpriteAnimParamBlock_SetAnimParamCached(self->groups[self->field14c + 3], 0x13b9, item);
         RefillSprite *sprite = ((RefillGroup *)self->groups[self->field14c + 3])->sprite;
