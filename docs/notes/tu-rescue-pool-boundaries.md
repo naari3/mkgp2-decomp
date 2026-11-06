@@ -43,3 +43,8 @@ c16_u40: DNBress ctor 80227B98 is a single-function NonMatching TU. Target strin
 Source: Codex worker c16_u75_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u75: LObjInfoInit 802C63B0 uses persistent hsdLObj data base, class-name strings at +0x13C/+0x154. Shared-base C improves default objdiff69.53125->91.25 (service report73.59->93.125); reconstructing lbl_804FC43C[0x44] and lbl_804FC480[0x48] string pools makes .data100. Residual: target addi-zero copies for call/store base versus compiler mr/direct r31 stores, producing124 vs128 bytes. Parent-member address and base+0 probes byte-invariant; reverted. Remains NonMatching, no native gain. Pool-disabling objdiff92.78125. Future promotion should check 4-byte data alignment at804FC43C.
+
+## c16_u125_20261106
+Source: Codex worker c16_u125_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 972 B.
+
+c16_u125: DNBress Update 80226B20 baseline99.75309 has one instruction residual: zero initialization li r30,0 vs target mr r30,r29. Extract unchanged kart search into static inline KartRender *FindActiveKart(), return selected/null kart and retain player fallback in caller. This restores target shared zero initialization; native text972/EH8/index12 all100. Signed long loop index alone is invariant. Existing bridges and compiler flags suffice; Matching full source-linked DOL SHA1 exact.

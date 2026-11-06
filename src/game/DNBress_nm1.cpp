@@ -261,20 +261,25 @@ static inline bool InRect(float x, float z, const float *r) {
     return 1;
 }
 
+static inline KartRender *FindActiveKart() {
+    KartRender *kart = 0;
+    for (int i = 0; i < 8; i++) {
+        KartRender *k = GetKartSlotKartVariant(i);
+        if (k && k->x23c == 0) {
+            kart = k;
+            break;
+        }
+    }
+    return kart;
+}
+
 void clDNBress::Update() {
     if (model == 0 || fx == 0) {
         return;
     }
     switch (state) {
     case 0: {
-        KartRender *kart = 0;
-        for (int i = 0; i < 8; i++) {
-            KartRender *k = GetKartSlotKartVariant(i);
-            if (k && k->x23c == 0) {
-                kart = k;
-                break;
-            }
-        }
+        KartRender *kart = FindActiveKart();
         if (kart == 0 && GetPlayerCarObject()) {
             kart = CarObject_GetRenderObj(GetPlayerCarObject());
         }
