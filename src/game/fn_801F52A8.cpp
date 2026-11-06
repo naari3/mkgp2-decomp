@@ -96,7 +96,7 @@ extern "C" void fn_801F52A8(MenuScene *self) {
         }
         break;
     case 13: {
-        unsigned int backward;
+        bool backward;
         unsigned char held;
         unsigned char down;
         InputPlayer *player;
@@ -123,7 +123,7 @@ extern "C" void fn_801F52A8(MenuScene *self) {
         break;
     }
     case 14: {
-        unsigned int backward;
+        bool backward;
         unsigned char held;
         unsigned char down;
         InputPlayer *player;
@@ -150,7 +150,7 @@ extern "C" void fn_801F52A8(MenuScene *self) {
         break;
     }
     case 15: {
-        unsigned int backward;
+        bool backward;
         unsigned char held;
         unsigned char down;
         InputPlayer *player;

@@ -2772,7 +2772,7 @@ config.libs = [
             Object(NonMatching, "game/NamCamFlow.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/SceneListOperations.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/DebugOverlay_RaceConfig.cpp", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/fn_801F52A8.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_801F52A8.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/CardSlotFlag.cpp"),
             Object(Matching, "game/LapDispControls.c"),
             Object(Matching, "game/LapDispUpdate.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
@@ -3954,6 +3954,7 @@ DATA_ALIGN4_TUS = [
     "game/fn_801FAB88",
     "game/fn_801FB778",
     "game/Scene_801654E0",
+    "game/fn_801F52A8",
 ]
 
 
