@@ -2723,6 +2723,7 @@ config.libs = [
             Object(Matching, "game/ThinkBoxCreate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801F8D58.c"),
             Object(NonMatching, "game/CardCharLookup.c"),
+            Object(Matching, "game/CardCharLookup_tail.c"),
             Object(Matching, "game/HudSelectionStep.c"),
             Object(Matching, "game/fn_80245420.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
             Object(Matching, "game/fn_802455EC.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),

@@ -15,4 +15,3 @@ unsigned short wchar_to_card_char(const unsigned short *text) {
     }
     return result;
 }
-void fn_801F8E54(void) {}

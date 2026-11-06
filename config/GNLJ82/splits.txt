@@ -10591,7 +10591,10 @@ game/fn_801F8D58.c:
 	.text       start:0x801F8D58 end:0x801F8E08
 
 game/CardCharLookup.c:
-	.text       start:0x801F8E08 end:0x801F8E58
+	.text       start:0x801F8E08 end:0x801F8E54
+
+game/CardCharLookup_tail.c:
+	.text       start:0x801F8E54 end:0x801F8E58
 
 game/fn_801F8E58.c:
 	extab       start:0x800176A0 end:0x800176A8
