@@ -1,14 +1,7 @@
-typedef struct Vec3 { float x,y,z; } Vec3;
-typedef struct Joint { char pad[0x38]; Vec3 pos; } Joint;
-typedef struct Emitter { Joint *joint; unsigned char delay, burst; char pad[2]; } Emitter;
-typedef struct Particle {
-    unsigned char type; char pad[3]; Vec3 pos;
-    float age, scale, speed, frequency, amplitude, offset, alpha;
-} Particle;
-typedef struct Owner { void *vt; Emitter *emitters; int count; void *models; Particle *parts; int rand64, rand48; } Owner;
-extern const char lbl_80377F70[];
+#include "game/fn_8018DAD0_private.h"
+extern const ParticleTables lbl_80377F70;
 extern const float lbl_806D93F0, lbl_806D93F8, lbl_806D940C, lbl_806D9410, lbl_806D9414, lbl_806D9418, lbl_806D941C;
-extern const float lbl_80495994[64], lbl_80495A94[48];
+extern float lbl_80495994[64], lbl_80495A94[48];
 extern char lbl_806D93FC[7], lbl_806D9404[5];
 extern void *GetCourseScene3D(void);
 extern void CObj_LoadProjMatrix(void *, Vec3 *);
@@ -31,12 +24,12 @@ void fn_8018DAD0(Owner *o) {
     int i;
     Emitter *e;
     Particle *p;
-    const char *data=lbl_80377F70;
+    const ParticleTables *data=&lbl_80377F70;
     if (!o->count) return;
     camera=GetCourseScene3D();
     if (!camera) return;
     CObj_LoadProjMatrix(camera,&eye);
-    nearest=*(const Vec3 *)(data+0x9c);
+    nearest=data->nearest;
     best=lbl_806D93F8;
     zero=lbl_806D93F0;
     for(i=0;i<o->count;i++) {
@@ -58,10 +51,10 @@ void fn_8018DAD0(Owner *o) {
         if(++o->rand48>=48) o->rand48=0;
         p->type=(int)(lbl_806D9418*lbl_80495A94[o->rand48]);
         p->age=lbl_806D93F0;
-        p->scale=r*((const float *)(data+0x3c))[p->type]+((const float *)(data+0x3c))[p->type];
-        p->speed=r*((const float *)(data+0x48))[p->type]+((const float *)(data+0x48))[p->type];
-        p->frequency=((const float *)(data+0x54))[p->type]-r*((const float *)(data+0x54))[p->type];
-        p->amplitude=((const float *)(data+0x60))[p->type]-r*((const float *)(data+0x60))[p->type];
+        p->scale=r*data->scale[p->type]+data->scale[p->type];
+        p->speed=r*data->speed[p->type]+data->speed[p->type];
+        p->frequency=data->frequency[p->type]-r*data->frequency[p->type];
+        p->amplitude=data->amplitude[p->type]-r*data->amplitude[p->type];
         p->offset=lbl_806D93F0;
         p->alpha=lbl_806D941C;
         e->burst++;
@@ -76,11 +69,11 @@ void fn_8018DAD0(Owner *o) {
         if(p->type==3) continue;
         p->pos.y+=p->speed;
         p->offset=p->amplitude*LUT_Sin12Bit(p->age*p->frequency);
-        start=((const float *)(data+0x6c))[p->type];
+        start=data->fadeStart[p->type];
         if(p->age<start) p->alpha=lbl_806D941C;
-        else p->alpha=lbl_806D941C-(p->age-start)/(((const float *)(data+0x78))[p->type]-start);
+        else p->alpha=lbl_806D941C-(p->age-start)/(data->fadeEnd[p->type]-start);
         { float age=p->age+lbl_806D941C;
         p->age=age;
-        if(age>=((const float *)(data+0x78))[p->type]) p->type=3; }
+        if(age>=data->fadeEnd[p->type]) p->type=3; }
     }
 }

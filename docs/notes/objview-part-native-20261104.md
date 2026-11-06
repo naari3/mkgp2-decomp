@@ -46,3 +46,8 @@ c5_s23: fn_80197F24 reaches exact 420-byte text and 24/12-byte EH/index by passi
 Source: Codex worker c14_u26_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 556 B.
 
 c14_u26: fn_8018D0F4 556B promoted native. Null-first inline Child/Next accessors restore target branch arm order (93.66907 ->99.568344). Plain float literals restore angle FP homes; direct o->angle += 1.0f restores field-before-constant load order. All text/extab8/index12 100%, existing TU flag Matching, source main.elf edge and full DOL SHA-1 verified. No split, EH bridge, data ownership or header edits.
+
+## c14_u50_20261106
+Source: Codex worker c14_u50_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u50: fn_8018DAD0 remains NonMatching, 91.69401 ->94.49527. Writable random tables fix random-factor/position load-store scheduling. Typed aggregate table view improves addressing versus char-pointer offsets but still folds per-type table bases into index+offset. Inline array-pointer helpers do not prevent folding; float literals slightly worsen scheduling. Residual table-base shape, factor FP homes, and final-loop GPR reuse; 3 hypotheses used, no native gain.
