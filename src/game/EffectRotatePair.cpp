@@ -19,16 +19,14 @@ struct RotateGroup {
     unsigned char pad18[0x6C];
     float alpha;
     float phase;
+    unsigned char pad8C[0x38];
+    signed char enabled;
 };
 struct RotateEffect {
     unsigned char pad00[0xCC];
     RotateGroup group;
-    unsigned char pad158[0x38];
-    signed char enabled;
 };
 extern "C" {
-extern const float lbl_806D5794, lbl_806D5790, lbl_806D5770;
-extern const float lbl_806D57CC, lbl_806D57D0, lbl_806D57D4;
 void Vec3_Copy(RotateVec *, const RotateVec *);
 void VfxSlot_SetPositionFromVec(void *, RotateVec);
 void VfxSlot_SetRotationZ(void *, float);
@@ -36,20 +34,20 @@ void VfxSlot_SetScaleUniform(void *, float);
 void Effect_TwoChildRotate_FromPhase150(RotateEffect *effect, RotateVec *position, float scale, float alpha) {
     if (effect) {
         RotateGroup *group = &effect->group;
-        if (effect->enabled) {
-            group->alpha += lbl_806D5794;
-            if (lbl_806D5790 < group->alpha) group->alpha = lbl_806D5790;
+        if (group->enabled) {
+            group->alpha += 0.05f;
+            if (1.0f < group->alpha) group->alpha = 1.0f;
         } else {
-            group->alpha -= lbl_806D5794;
-            if (group->alpha < lbl_806D5770) group->alpha = lbl_806D5770;
+            group->alpha -= 0.05f;
+            if (group->alpha < 0.0f) group->alpha = 0.0f;
         }
-        group->phase += lbl_806D57CC;
-        if (lbl_806D5790 < group->phase) group->phase -= lbl_806D5790;
+        group->phase += 0.0033333334f;
+        if (1.0f < group->phase) group->phase -= 1.0f;
         for (int i = 0; i < 2; ++i) {
             if (group->children[i]) {
                 Vec3_Copy(&group->children[i]->position, position);
-                if (i == 0) group->children[i]->rotationZ = lbl_806D57D0 * group->phase;
-                else group->children[i]->rotationZ = lbl_806D57D4 * group->phase;
+                if (i == 0) group->children[i]->rotationZ = -18.849552f * group->phase;
+                else group->children[i]->rotationZ = -31.41592f * group->phase;
                 group->children[i]->scale = scale;
                 group->children[i]->alpha = group->alpha * alpha;
                 group->children[i]->visible = 1;

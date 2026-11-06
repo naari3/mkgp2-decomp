@@ -186,3 +186,8 @@ c15_u36: Joint12 fresh98.06879 ->98.51852 using stageFraction(start,end,age) ret
 Source: Codex worker c15_u40_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c15_u40: CoinJumpFx_UpdateParticleGrid 800CDE7C/1068B improves 98.48315 to 98.8015 with numeric float literals, resolving all phase-wrap and optional-child FP scratch differences. Remaining 63 rows are GPR identities (camera24/25, lane25/26, grid child26/24, optional child25/21 target/source). Inner-loop child scope regresses98.48315; explicit camera/lane addressing regresses98.20225. Both reverted. Text size1068/EH8/index12 unchanged, EH/index100. Singleton staysNonMatching; no rescue split, no native gain. Full fallback-linked DOL SHA1 exact.
+
+## c15_u50_20261106
+Source: Codex worker c15_u50_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 452 B.
+
+c15_u50: Effect_TwoChildRotate_FromPhase150 800CCC84/452B now native exact. Numeric float literals resolve alpha/phase FP identities (97.30089 to 98.23009). Enable accessed as group+0xC4, same parent+0x190 address, restores addi r31,r3,0xCC before lbz and yields text452/extab8/index12 all100. Matching promotion with unchanged flags/splits. All six literals externalized by standard postprocessor; no owned pool added. Actual main.elf uses source object, excludes fallback; linked function bytes exact and full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. Two hypotheses, native gain1fn452B.
