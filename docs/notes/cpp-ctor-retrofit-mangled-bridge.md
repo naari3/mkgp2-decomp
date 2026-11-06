@@ -889,3 +889,8 @@ CardUnpackLegacy 8009060C: explicit version=552-get_used_bits(pack); used=get_us
 Source: Codex worker c15_u38_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 452 B.
 
 EffectFA ctor fn_8016FA50 unlock: move the complete three-model creation loop into static inline InitModels() with local global-array references. Keep six-part loop in ctor, but declare int i before MapEffectDef *defs and initialize i in for. This fixes both r26/r27/r28 cycles and preserves all scheduling, 452B text and 40B/12B EH exact. Putting parts loop in helper also fixes registers but shares zero stores and hoists defs, yielding448B; widening that helper is invariant. Existing bridges/flags suffice; full native-linked DOL SHA1 exact.
+
+## c15_u64_20261106
+Source: Codex worker c15_u64_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c15_u64: ItemEffectImpact_TryArmInit target cross product is normalized projected velocity v cross projected up, not up cross v. Correcting three expressions raises fresh text93.69586 to93.771286, source1636 vs target1644B, owned extab98.4375/index95 unchanged. Natural vector pointer helper probe91.7056 and scalar axis-angle/quat-matrix helper probe93.73966 regress and were reverted. Remaining projection reload and FP scheduling/homes; singleton stays NonMatching. Full fallback-linked DOL SHA1 exact; zero native gain.

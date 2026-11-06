@@ -20,9 +20,9 @@ extern "C" void ItemEffectImpact_TryArmInit(ImpactArmState* __restrict self, C7V
     C7Vec v;
     NormalizeCopy(&v,&self->pos);
     C7Vec axis=up;
-    axis.x=up.y*v.z-up.z*v.y;
-    axis.y=up.z*v.x-up.x*v.z;
-    axis.z=up.x*v.y-up.y*v.x;
+    axis.x=v.y*up.z-v.z*up.y;
+    axis.y=v.z*up.x-v.x*up.z;
+    axis.z=v.x*up.y-v.y*up.x;
     float length2=axis.z*axis.z+(axis.x*axis.x+axis.y*axis.y);
     if(length2>lbl_806D27F8) { Normalize(&axis); self->axis=axis; }
     else { float z=self->start.m[0][2], y=self->start.m[0][1], x=self->start.m[0][0]; self->axis.x=x; self->axis.y=y; self->axis.z=z; }
