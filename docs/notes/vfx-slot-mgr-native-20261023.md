@@ -1,3 +1,8 @@
 
 ## VfxSlotMgr bounded native pass (2026-10-23)
 Shutdown 0x800AFA5C/140B matches via typed global-index512-slot array (stride0x1CC), VfxSlot_Release at+0x14, active clear, and unconditional real C++ virtual delete (explicit if adds redundant null branch). Pointer iteration adds r0/mr initialization. Update 0x800AFAE8/496B: existing ScopedTimer single-expression destructor with volatile slot25 reproduces timer tail and owned24B automatic DESTROYLOCAL record (SP8, PC78..148), canonical __dt__11ScopedTimerFv relocation exact. Three attempts: trivial Vec camera95.59677%; native copy-constructor/index array98.6371%; reordered camera parameter boundary/local rotation-first99.01613%. Size496B correct; camera argument/local stack slots and r30/r31 loop identities remain. No further same-axis exploration absent new structural evidence. Independent actual singleton auto groups allow shutdown Matching TU and Update NonMatching TU, preserving140B gain. Weak ScopedTimer dtor adds8B EH/12B index in draft source; not genuine progress.
+
+## c15_u26_20261106
+Source: Codex worker c15_u26_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c15_u26: nested inline BuildCamera(Vec origin,const Vec& target), called by SetCamera(Vec target,Vec position), reproduces origin SP+40 and matrix argument copies SP+28/SP+34 naturally, improving Update 99.01613 -> 99.145164 (496 B). Residual outer argument copies SP+4C/SP+58 reversed, ToYawPitch setup r5/r3/r4 vs target r3/r4/r5, and loop r30/r31 swap. Value-parameter Update plus trivial Vec worsens to90.21774; retained integer-copy Vec with position-first SetCamera worsens98.66936. No native gain; TU remains NM.

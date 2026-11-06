@@ -39,10 +39,9 @@ private:
     unsigned int m_startTick;
     volatile int m_slot;
 };
-static inline void SetCamera(Vec target,Vec position) {
+static inline void BuildCamera(Vec origin,const Vec& target) {
     Vec rotation;
     Vec direction;
-    Vec origin=position;
     Vec3_Subtract_DestFirst(&direction,&target,&origin);
     Vec3_ToYawPitch(&direction,&rotation.x,&rotation.y);
     rotation.z=lbl_806D4FE8;
@@ -50,6 +49,9 @@ static inline void SetCamera(Vec target,Vec position) {
     Mtx44_Inverse_GaussJordan(&lbl_805DF3D0.inverse,&lbl_805DF3D0.view);
     Vec3_Copy(&lbl_805DF3D0.position,&origin);
     Vec3_Copy(&lbl_805DF3D0.target,&target);
+}
+static inline void SetCamera(Vec target,Vec position) {
+    BuildCamera(position,target);
 }
 extern "C" void VfxSlotMgr_Update(const Vec *position,const Vec *target) {
     ScopedTimer timer(25);
