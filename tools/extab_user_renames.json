@@ -12013,5 +12013,11 @@
     "Set__5TweenFffs": "fn_8020A734",
     "@50": "@etb_80019428",
     "@51": "@eti_80029B28"
+  },
+  "src/game/anon_80209330_nm1.cpp": {
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
