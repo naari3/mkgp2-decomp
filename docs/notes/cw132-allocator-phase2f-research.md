@@ -1461,3 +1461,8 @@ c13_u47: fn_801D7610 remapFlags clear reusing the preceding loops int i emits ei
 Source: Codex worker c15_u10_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1040 B.
 
 c15_u10: ItemCollision_Check 0x800DD1EC owner-team/RankLog r29/r27 swap resolves by extracting the owner team load at +0x1F4 into static inline int ItemCollision_GetTeam(unsigned char *kart). Direct load 99.82692%, getter call 100% text1040/extab8/index12. Replace old RankLog_Get if(p==0)p=0 with if(global==0)return 0; return global; first: identical output. Matching source object linked; coordinator full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
+
+## c15_u12_20261106
+Source: Codex worker c15_u12_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2260 B.
+
+Sci2Card_BuildScoreReceiptLine (80095388): early-null-return inline title accessor removes extra branch versus positive-guard return. Isolating wins-digit conversion in static inline helper resolves label/cursor r24/r26 swap; int wins parameter leaves wins in r24 instead of r25, but helper-local int wins = g_playerData.wins reaches 100% text2260/data40/extab8/index12. Full source-linked DOL SHA-1 verified.

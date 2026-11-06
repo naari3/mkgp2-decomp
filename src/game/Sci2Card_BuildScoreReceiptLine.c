@@ -3,8 +3,8 @@
 static inline void *Receipt_TitleTracker(void)
 {
     void *tracker = lbl_806D10A0;
-    if (tracker != 0) return tracker;
-    return 0;
+    if (tracker == 0) return 0;
+    return tracker;
 }
 
 static inline const char *Receipt_RankText(unsigned char flag, unsigned char mode, int rank)
@@ -15,6 +15,22 @@ static inline const char *Receipt_RankText(unsigned char flag, unsigned char mod
     return Sci2Card_GetReceiptStringEntry(offset + rank);
 }
 
+static inline const char *Receipt_WinDigits(void)
+{
+    char number[4];
+    char *numberCursor;
+    int i;
+    int wins = g_playerData.wins;
+    memset(lbl_806D1230, 0, 7);
+    sprintf(number, lbl_806D35D0, wins > 999 ? 999 : wins);
+    numberCursor = number;
+    for (i = 0; i < 3; i++, numberCursor++) {
+        if (*numberCursor != ' ') strcat(lbl_806D1230, lbl_803FFDF0[*numberCursor - '0']);
+        else strcat(lbl_806D1230, lbl_806D35D4);
+    }
+    return lbl_806D1230;
+}
+
 int Sci2Card_BuildScoreReceiptLine(int line)
 {
     char output[0x1400];
@@ -22,7 +38,6 @@ int Sci2Card_BuildScoreReceiptLine(int line)
     char scratch[0x200];
     int key7;
     int key8;
-    char number[4];
     unsigned char final = 0;
     unsigned char highlight = 0;
     void *card = Sci2Card_Singleton_Get();
@@ -76,23 +91,12 @@ int Sci2Card_BuildScoreReceiptLine(int line)
         /* fall through */
     case 4:
         if (g_playerData.wins != 0) {
-            char *numberCursor;
-            int wins;
-            const char *digits;
             const char *label;
+            const char *digits;
             const char *suffix;
-            int i;
             memset(row, 0, sizeof(row));
             label = isJapanese() == 0 ? lbl_80318108 : lbl_806D35C8;
-            wins = g_playerData.wins;
-            memset(lbl_806D1230, 0, 7);
-            sprintf(number, lbl_806D35D0, wins > 999 ? 999 : wins);
-            numberCursor = number;
-            for (i = 0; i < 3; i++, numberCursor++) {
-                if (*numberCursor != ' ') strcat(lbl_806D1230, lbl_803FFDF0[*numberCursor - '0']);
-                else strcat(lbl_806D1230, lbl_806D35D4);
-            }
-            digits = lbl_806D1230;
+            digits = Receipt_WinDigits();
             suffix = isJapanese() == 0 ? lbl_806D35D8 : lbl_806D35DC;
             sprintf(row, lbl_80317DB0[line].format, label, digits, suffix);
             if (lbl_806D123C == line) highlight = 1;
