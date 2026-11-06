@@ -44,12 +44,18 @@ extern int TCPConn_EnqueueMessage(void *connection, unsigned short type,
 extern int TCPConn_PollSend(void *connection);
 extern void *memcpy(void *destination, const void *source, unsigned long length);
 
-static inline int SendPeers(SendStorage *storage, unsigned char *snapshot,
-                            unsigned char *block)
+int PCBComm_SendToAllPeers(void)
 {
+    SendStorage *storage = &lbl_805A5EC0;
+    unsigned char *snapshot;
+    unsigned char *block;
     int i;
     int scene;
     PeerSlot *peer;
+    if (g_pcbCommEnabled == 0) return 0;
+    PCBComm_BuildBroadcastSlot();
+    snapshot = storage->snapshotHeader;
+    block = (unsigned char *)&storage->blockIndex;
     scene = g_currentSceneState;
     peer = storage->peers;
     snapshot += sizeof(storage->snapshotHeader);
@@ -95,13 +101,4 @@ static inline int SendPeers(SendStorage *storage, unsigned char *snapshot,
         TCPConn_PollSend(peer->connection);
     }
     return 1;
-}
-
-int PCBComm_SendToAllPeers(void)
-{
-    SendStorage *storage = &lbl_805A5EC0;
-    if (g_pcbCommEnabled == 0) return 0;
-    PCBComm_BuildBroadcastSlot();
-    return SendPeers(storage, storage->snapshotHeader,
-                     (unsigned char *)&storage->blockIndex);
 }
