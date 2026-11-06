@@ -1897,7 +1897,7 @@ config.libs = [
             Object(Matching, "game/Matrix4Leaf.c"),
             Object(NonMatching, "game/PCBCommLifecycle.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Matrix4RotXY.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/Matrix4Multiply.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Matrix4Multiply.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/PCBCommPhase5.c", extra_cflags=["-use_lmw_stmw on"], extab_padding=b""),
             Object(NonMatching, "game/PCBCommBroadcast.c", extra_cflags=["-lang=c++", "-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/PCBCommPhase1.c", extab_padding=b""),
