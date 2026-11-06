@@ -10186,6 +10186,9 @@
     "__dt__16clMapEffectPartsFv": "dtor_8016A270"
   },
   "src/game/WarpZoneVector_Insert.cpp": {
+    "@267": "global:lbl_803284C0",
+    "@269": "@etb_80009ED0",
+    "@270": "@eti_80022640",
     "__ct__15WarpErrorStringFPv": "SharedPtr_Init",
     "__dt__15WarpErrorStringFv": "dtor_80038E30",
     "__vt__Q23std9exception": "lbl_803F5710",

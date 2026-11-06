@@ -3158,6 +3158,7 @@ game/WarpZoneVector_Insert.cpp:
 	extab       start:0x80009ED0 end:0x80009F10
 	extabindex  start:0x80022640 end:0x8002264C
 	.text       start:0x800A9D84 end:0x800AA484
+	.rodata     start:0x803284C0 end:0x803284F8
 
 game/WarpZoneVector_Reserve.cpp:
 	extab       start:0x80009F10 end:0x80009F80
