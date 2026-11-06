@@ -233,3 +233,8 @@ Item_SpawnHitBurstParticles 800FD784: removing the z temporary and directly nest
 Source: Codex worker c16_u6_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u6 HomingMarkerUpdate fn_80172948: fresh text89.37534/2920B, EH100. Complete inline scalar setter SetScalar(scale,rotation,red,green,blue,alpha), called by existing pointer wrappers, improves89.83424 without size/EH changes. Nested color-only scalar helper89.73836; explicit named channel locals invariant89.37534. Residual scratch FP allocation and interpolation/blend scheduling; singleton stays NonMatching, no B cut. Coordinator full fallback DOL SHA1 OK; zero native gain.
+
+## c16_u44_20261106
+Source: Codex worker c16_u44_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c16_u44: fn_8019ADF4 separate scalar xx/yy/zz product statements in two lengths and dot prevent contraction across each expression; restores target652B and EH/index100%, improves83.993866 to87.533745. Normalize/Length helper factoring restores target root spill order10/8/c but adds volatile loads and changes FPR webs (77.74233%). GC2.7 regression77.21472%; retain GC1.3.2. Remaining early prologue, FP homes/scheduling and root slots; singleton NonMatching, fallback full SHA-1 OK.

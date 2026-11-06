@@ -16,12 +16,23 @@ void fn_8019ADF4(KartForceState *__restrict k, Vec3 *__restrict input) {
     v.x = vx; v.y = vy; v.z = vz;
     vy = lbl_806D96D0;
     v.y = vy;
-    len = vz*vz + (vx*vx + vy*vy);
+    /* Preserve the separate products used by the vector length operation. */
+    {
+        float xx = vx*vx;
+        float yy = vy*vy;
+        float zz = vz*vz;
+        len = zz + (xx + yy);
+    }
     KART_SPEED_ROOT(len);
     if (len <= lbl_806D96D0) return;
     nx = k->forward.x; ny = lbl_806D96D0; nz = k->forward.z;
     n.x = nx; n.y = ny; n.z = nz;
-    len = nz*nz + (nx*nx + ny*ny);
+    {
+        float xx = nx*nx;
+        float yy = ny*ny;
+        float zz = nz*nz;
+        len = zz + (xx + yy);
+    }
     KART_SPEED_ROOT(len);
     if (len <= lbl_806D96D0) {
         n.z = lbl_806D96D0;
@@ -34,7 +45,12 @@ void fn_8019ADF4(KartForceState *__restrict k, Vec3 *__restrict input) {
         n.x = nx; n.y = ny; n.z = nz;
     }
     nx = n.x; vx = v.x; ny = n.y; vy = v.y; nz = n.z; vz = v.z;
-    dot = nz*vz + (nx*vx + ny*vy);
+    {
+        float xx = nx*vx;
+        float yy = ny*vy;
+        float zz = nz*vz;
+        dot = zz + (xx + yy);
+    }
     vx = v.x; vz = v.z;
     vx += lbl_806D9710 * (nx * dot);
     vz += lbl_806D9710 * (nz * dot);
