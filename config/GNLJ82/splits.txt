@@ -5138,6 +5138,7 @@ game/MukadeItem.c:
 	extab       start:0x8000B5F4 end:0x8000B60C
 	extabindex  start:0x80023E04 end:0x80023E28
 	.text       start:0x800EBC00 end:0x800ED010
+	.data       start:0x804215E8 end:0x80421610
 
 game/Dossun_State2_Drop.c:
 	extab       start:0x8000B60C end:0x8000B614
