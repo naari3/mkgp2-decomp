@@ -59,7 +59,7 @@ void Effect_KartOrbitSpark_Update(OrbitSparkEffect *effect) {
         effect->offset.y -= lbl_806D5524;
         effect->angle = BuildOrientationFromYaw(lbl_806D5528 + effect->angle);
         float wave = (float)sin(effect->angle);
-        float pulse = ((lbl_806D54B8 + wave) * lbl_806D54C0) * lbl_806D54C0 + lbl_806D54C0;
+        float pulse = ((1.0f + wave) / 2.0f) / 2.0f + 0.5f;
         effect->scale = effect->amplitude * pulse;
         if (effect->kart) {
             OrbitSparkVec3 translation;
