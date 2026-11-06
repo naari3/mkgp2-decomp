@@ -39,14 +39,13 @@ extern void fn_801951B4(unsigned char);
 
 static inline void *LoadSoundFile(const char *strings, unsigned int offset) {
     DVDFileInfo file;
-    const char *path = strings + offset;
     unsigned int size, end;
     int result;
     void *data = 0;
-    if (!DVDOpen(path, &file)) {
-        DebugPrintf(strings + 0x3fbc, path);
+    if (!DVDOpen(strings + offset, &file)) {
+        DebugPrintf(strings + 0x3fbc, strings + offset);
     } else if (file.length == 0) {
-        DebugPrintf(strings + 0x3fd8, path);
+        DebugPrintf(strings + 0x3fd8, strings + offset);
     } else {
         size = (file.length + 31) & ~31;
         data = OSAllocFromHeap(lbl_806CF010, size);
@@ -59,7 +58,7 @@ static inline void *LoadSoundFile(const char *strings, unsigned int offset) {
             result = DVDReadPrio(&file, data, size, 0, 2);
             DVDLoad_RecordOpStart(end);
             if (result <= 0) {
-                DebugPrintf(strings + 0x401c, path);
+                DebugPrintf(strings + 0x401c, strings + offset);
                 OSFreeToHeap(lbl_806CF010, data);
                 data = 0;
             } else DVDClose(&file);
@@ -67,15 +66,37 @@ static inline void *LoadSoundFile(const char *strings, unsigned int offset) {
     }
     return data;
 }
+static inline void PrepareEffects(SND_AUX_REVERBHI *reverb, SND_AUX_CHORUS *chorus) {
+        reverb->tempDisableFX = 0;
+        reverb->time = lbl_806D9524;
+        reverb->preDelay = lbl_806D9528;
+        reverb->damping = lbl_806D952C;
+        reverb->coloration = lbl_806D9530;
+        reverb->crosstalk = lbl_806D950C;
+        reverb->mix = lbl_806D9534;
+        chorus->baseDelay = 15;
+        chorus->variation = 0;
+        chorus->period = 500;
+        sndAuxCallbackPrepareReverbHI(reverb);
+        sndAuxCallbackPrepareChorus(chorus);
+}
+static inline void ResetEvents(SoundEvent *events) {
+    int i;
+    for (i = 0; i < 37; i++) events[i].id = -1;
+}
+static inline void ResetStreams(ActiveStream *streams) {
+    int i;
+    for (i = 0; i < 4; i++) streams[i].id = -1;
+}
 void ClSound_InitSoundSystem(void) {
-    const char *strings = lbl_80379100;
     SoundWorkspace *work = &lbl_80677F40;
+    const char *strings = lbl_80379100;
     void *samples;
     unsigned int hooks[2];
     int i;
     if (!ClSound_Initialized) {
         DebugPrintf(strings + 0x3f64);
-        for (i = 0; i < 37; i++) work->events[i].id = -1;
+        ResetEvents(work->events);
         samples = 0;
         hooks[0] = lbl_806D94F0;
         hooks[1] = lbl_806D94F4;
@@ -97,18 +118,7 @@ void ClSound_InitSoundSystem(void) {
             if (group >= 0) sndPushGroup(lbl_806D16B8, (unsigned short)group, samples, lbl_806D16BC, lbl_806D16B4);
         }
         OSFreeToHeap(lbl_806CF010, samples);
-        work->reverb.tempDisableFX = 0;
-        work->reverb.time = lbl_806D9524;
-        work->reverb.preDelay = lbl_806D9528;
-        work->reverb.damping = lbl_806D952C;
-        work->reverb.coloration = lbl_806D9530;
-        work->reverb.crosstalk = lbl_806D950C;
-        work->reverb.mix = lbl_806D9534;
-        work->chorus.baseDelay = 15;
-        work->chorus.variation = 0;
-        work->chorus.period = 500;
-        sndAuxCallbackPrepareReverbHI(&work->reverb);
-        sndAuxCallbackPrepareChorus(&work->chorus);
+        PrepareEffects(&work->reverb, &work->chorus);
         sndSetAuxProcessingCallbacks(0, sndAuxCallbackReverbHI, &work->reverb, 255, 0, sndAuxCallbackChorus, &work->chorus, 255, 0);
         sndVolume(127, 0, 255);
         for (i = 0; i < 32; i++) {
@@ -117,7 +127,7 @@ void ClSound_InitSoundSystem(void) {
             ((SoundSlot *)work->slots)[i].channel = 255;
             ((SoundSlot *)work->slots)[i].flags = 0;
         }
-        for (i = 0; i < 4; i++) ((ActiveStream *)work->streams)[i].id = -1;
+        ResetStreams((ActiveStream *)work->streams);
         fn_801952EC();
         fn_80195214(lbl_806CFCA1);
         fn_801951FC(lbl_806CFCA2);
