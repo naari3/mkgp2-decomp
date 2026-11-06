@@ -5451,7 +5451,12 @@
     "extab_CoinParticleManager_Destroy": "@etb_8000C790",
     "extabindex_CoinParticleManager_Destroy": "@eti_80024B00",
     "extab_CGameCoin_ProcessInput": "@etb_8000C780",
-    "extabindex_CGameCoin_ProcessInput": "@eti_80024B0C"
+    "extabindex_CGameCoin_ProcessInput": "@eti_80024B0C",
+    "__ct__9BossKoopaFii": "BossKoopa_Init",
+    "__ct__10DefeatDemoFv": "CGameCoin_InitDefeatDemo",
+    "__ct__12CoinNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__11CoinScene3DFPCc": "Scene3D_Init",
+    "__vt__15CoinAnimScene3D": "lbl_80419EF8"
   },
   "src/game/SuikaBall_801313D0.cpp": {
     "extab_SuikaBall_Render": "@etb_8000CBA0",

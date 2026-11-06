@@ -191,7 +191,7 @@ extern unsigned int lbl_806D71FC;
 extern unsigned int lbl_806D7200;
 extern unsigned int lbl_806D7204;
 extern unsigned int lbl_806D7208;
-extern unsigned int lbl_80356730[];
+extern char lbl_80356730[];
 extern void HSD_CObjAnim(void *);
 extern void HSD_CObjReqAnim(void *, float);
 extern void HSD_JObjClearFlagsAll(struct CoinJObj *, int);
@@ -314,14 +314,14 @@ extern unsigned int lbl_803FDF40[];
 extern unsigned int lbl_8048E144[];
 extern unsigned int lbl_8048E34C[];
 extern unsigned int lbl_8048E3C0[];
-extern void HSD_CObjAddAnim();
-extern void ResolveJointByName();
-extern void clNormal3D_SetScale();
+extern void HSD_CObjAddAnim(void *, void *);
+extern struct CoinJObj *ResolveJointByName(void *, const char *);
+extern void clNormal3D_SetScale(void *, int, float, float, float, float);
 extern unsigned int lbl_80419EF8[];
-extern void OSGetTick();
-extern void Object_SetJObjPositionXYZ();
-extern unsigned int lbl_806CF570;
-extern unsigned int lbl_806CF574;
+extern unsigned long OSGetTick(void);
+extern void Object_SetJObjPositionXYZ(void *, float, float, float);
+extern float lbl_806CF570;
+extern float lbl_806CF574;
 extern void PSMTXIdentity(float (*)[4]);
 extern void *LinkedNode_GetField10_OrFallback(void *, int);
 extern void Object_RenderJObjEx(void *, void *, int);
@@ -346,14 +346,14 @@ void DefeatDemo_Update(DefeatDemo *self);
 struct BossKoopa;
 void BossKoopa_UpdateAnim(BossKoopa *self);
 struct KoopaFireball;
-asm void KoopaFireball_Update(KoopaFireball *self);
+void KoopaFireball_Update(KoopaFireball *self);
 struct CoinShell;
 void Shell_UpdateState(CoinShell *self);
 struct CGameCoin;
 CGameCoin *CGameCoin_Destroy(CGameCoin *self, short flag);
 asm void CGameCoin_Init(void);
-asm void CGameCoin_InitDefeatDemo(void);
-asm void BossKoopa_Init(void);
+void CGameCoin_InitDefeatDemo(void);
+void BossKoopa_Init(void);
 struct CGameCoinFields;
 void CGameCoin_InitFields(CGameCoinFields *self);
 struct CoinParticleManager;
@@ -373,15 +373,7 @@ __declspec(section ".extab_user") static const unsigned char extab_CGameCoin_Upd
     0x38, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const unsigned char extab_KoopaFireball_Update[8] = {
-    0x18, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; unsigned int f45; unsigned int f46; unsigned int f47; unsigned int f48; unsigned int f49; unsigned int f50; unsigned int f51; unsigned int f52; unsigned int f53; unsigned int f54; unsigned int f55; unsigned int f56; unsigned int f57; unsigned int f58; unsigned int f59; unsigned int f60; unsigned int f61; unsigned int f62; unsigned int f63; unsigned int f64; unsigned int f65; unsigned int f66; unsigned int f67; unsigned int f68; unsigned int f69; unsigned int f70; unsigned int f71; unsigned int f72; unsigned int f73; unsigned int f74; unsigned int f75; unsigned int f76; unsigned int f77; unsigned int f78; unsigned int f79; unsigned int f80; unsigned int f81; unsigned int f82; unsigned int f83; unsigned int f84; unsigned int f85; unsigned int f86; unsigned int f87; unsigned int f88; unsigned int f89; unsigned int f90; void *f91; unsigned int f92; unsigned int f93; void *f94; unsigned int f95; void *f96; unsigned int f97; unsigned int f98; void *f99; unsigned int f100; void *f101; unsigned int f102; unsigned int f103; void *f104; unsigned int f105; void *f106; unsigned int f107; unsigned int f108; void *f109; unsigned int f110; void *f111; unsigned int f112; unsigned int f113; void *f114; unsigned int f115; void *f116; unsigned int f117; unsigned int f118; void *f119; unsigned int f120; void *f121; unsigned int f122; unsigned int f123; void *f124; unsigned int f125; void *f126; unsigned int f127; unsigned int f128; void *f129; unsigned int f130; void *f131; unsigned int f132; unsigned int f133; void *f134; unsigned int f135; void *f136; unsigned int f137; unsigned int f138; void *f139; unsigned int f140; void *f141; unsigned int f142; void *f143; unsigned int f144; unsigned int f145; void *f146; unsigned int f147; void *f148; unsigned int f149; unsigned int f150; void *f151; unsigned int f152; unsigned int f153; void *f154; unsigned int f155; unsigned int f156; void *f157; unsigned int f158; void *f159; unsigned int f160; unsigned int f161; void *f162; unsigned int f163; void *f164; unsigned int f165; unsigned int f166; void *f167; unsigned int f168; void *f169; unsigned int f170; unsigned int f171; void *f172; unsigned int f173; void *f174; unsigned int f175; void *f176; unsigned int f177; unsigned int f178; void *f179; unsigned int f180; void *f181; unsigned int f182; unsigned int f183; void *f184; unsigned int f185; unsigned int f186; void *f187; } extab_CGameCoin_Init = { 0x284A0000, 0x00000058, 0x000A0170, 0x0000008C, 0x00000168, 0x000000A8, 0x00020170, 0x000000C0, 0x0000017C, 0x000000C8, 0x000C0170, 0x00000108, 0x00080190, 0x00000140, 0x00000170, 0x00000168, 0x000001A4, 0x0000017C, 0x00060170, 0x000001B4, 0x000001B8, 0x000001C4, 0x00020170, 0x000001E0, 0x000001CC, 0x000001EC, 0x00000170, 0x0000020C, 0x000001E0, 0x00000218, 0x00000170, 0x0000022C, 0x000401F4, 0x00000248, 0x00000170, 0x00000254, 0x00000208, 0x00000260, 0x00020170, 0x00000278, 0x0000021C, 0x0000028C, 0x002A0170, 0x00000388, 0x00000238, 0x00000394, 0x00000230, 0x000003A0, 0x00000238, 0x000003B4, 0x0000024C, 0x000003C8, 0x00040238, 0x000003EC, 0x00000258, 0x000003FC, 0x00000170, 0x00000414, 0x00000264, 0x00000420, 0x00000170, 0x0000042C, 0x00000278, 0x00000438, 0x00000170, 0x00000444, 0x0000028C, 0x00000450, 0x00000170, 0x0000045C, 0x000002A0, 0x0000046C, 0x00130170, 0x000004E8, 0x000002BC, 0x000004FC, 0x000002B4, 0x00000510, 0x000202BC, 0x0000052C, 0x000002D0, 0x00000538, 0x000202BC, 0x00000698, 0x00000170, 0x000006A8, 0x000002DC, 0x000006B4, 0x00250170, 0x00000000, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x01000238, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x01000238, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x010002BC, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8 };
-
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; void *f15; unsigned int f16; void *f17; unsigned int f18; void *f19; unsigned int f20; void *f21; unsigned int f22; void *f23; unsigned int f24; void *f25; } extab_CGameCoin_InitDefeatDemo = { 0x180A0000, 0x00000090, 0x00000038, 0x000000B0, 0x00000040, 0x000000D4, 0x00000048, 0x000000F4, 0x00000050, 0x00000114, 0x00000058, 0x00000184, 0x00000060, 0x00000000, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree };
-
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; void *f23; unsigned int f24; void *f25; unsigned int f26; void *f27; unsigned int f28; void *f29; unsigned int f30; void *f31; unsigned int f32; void *f33; unsigned int f34; void *f35; unsigned int f36; void *f37; unsigned int f38; void *f39; unsigned int f40; void *f41; } extab_BossKoopa_Init = { 0x200A0000, 0x000001AC, 0x00000060, 0x000001C0, 0x00000058, 0x000001F0, 0x00000068, 0x00000210, 0x00000070, 0x00000230, 0x00000078, 0x00000250, 0x00000080, 0x00000294, 0x00000088, 0x000002B4, 0x00000090, 0x000002D4, 0x00000098, 0x000002F4, 0x000000A0, 0x00000000, 0x0A80001E, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree };
 
 __declspec(section ".extab_user") static const unsigned char extab_CGameCoin_ProcessInput[8] = {
     0x38, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -400,20 +392,8 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&CGameCoin_Update, 0x00002164, (void *)extab_CGameCoin_Update
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_KoopaFireball_Update = {
-    (void *)&KoopaFireball_Update, 0x000003E0, (void *)extab_KoopaFireball_Update
-};
-
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CGameCoin_Init = {
     (void *)&CGameCoin_Init, 0x0000078C, (void *)&extab_CGameCoin_Init
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CGameCoin_InitDefeatDemo = {
-    (void *)&CGameCoin_InitDefeatDemo, 0x000002A8, (void *)&extab_CGameCoin_InitDefeatDemo
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_BossKoopa_Init = {
-    (void *)&BossKoopa_Init, 0x000003FC, (void *)&extab_BossKoopa_Init
 };
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CGameCoin_ProcessInput = {
@@ -3167,13 +3147,68 @@ struct CoinJObj {
     float mtx[3][4];
 };
 
+struct CoinNormal3D {
+    unsigned char opaque[0x5C];
+    CoinNormal3D(const char *path, int flags);
+};
+
+struct CoinAnimLeaf {
+    void *value;
+};
+
+struct CoinAnimNode {
+    void *opaque;
+    CoinAnimLeaf *next;
+};
+
+struct CoinAnimDesc {
+    void *opaque;
+    CoinAnimNode *next;
+};
+
+static inline void *CoinAnimLeaf_Value(CoinAnimLeaf *leaf) {
+    if (leaf == 0) return 0;
+    return leaf->value;
+}
+
+static inline void *CoinAnimNode_Value(CoinAnimNode *node) {
+    if (node == 0) return 0;
+    return CoinAnimLeaf_Value(node->next);
+}
+
+static inline void *CoinAnimDesc_Value(CoinAnimDesc *desc) {
+    if (desc == 0) return 0;
+    return CoinAnimNode_Value(desc->next);
+}
+
 struct CoinScene3D : CoinVObj {
+    CoinScene3D(const char *path);
     virtual ~CoinScene3D();
     void *cobj;
-    unsigned char pad8[0x307C];
+    unsigned char pad8[0x24];
+    CoinAnimDesc *animDesc;
+    unsigned char pad30[0x3054];
     unsigned char animFirst;
     float animSpeed;
     float animFrame;
+};
+
+struct CoinAnimScene3D : CoinScene3D {
+    CoinAnimScene3D(const char *path) : CoinScene3D(path) {
+        animSpeed = -1.0f;
+        animFrame = 0.0f;
+    }
+    virtual void key();
+    void Start() {
+        if (cobj) {
+            animFirst = 1;
+            animFrame = 0.0f;
+            animSpeed = 1.0f;
+            HSD_CObjAddAnim(cobj, CoinAnimDesc_Value(animDesc));
+            HSD_CObjReqAnim(cobj, animFrame);
+            HSD_CObjAnim(cobj);
+        }
+    }
 };
 
 struct DefeatDemo {
@@ -3191,6 +3226,8 @@ struct DefeatDemo {
     float wheelAngleA;
     float wheelAngleB;
     CoinJObj *flash;
+
+    DefeatDemo();
 };
 
 static inline void CoinJObj_SetMtxDirty(CoinJObj *jobj) {
@@ -3346,6 +3383,26 @@ struct KoopaFireball {
     unsigned char first;
     CoinVec dir;
     KoopaFlame flames[64];
+
+    KoopaFireball(const char *modelPath) {
+        int i;
+
+        model = 0;
+        jobj = 0;
+        angle = 0.0f;
+        cooldown = 0;
+        active = 0;
+        first = 1;
+        rnd64 = 0;
+        rnd48 = 0;
+        dir.x = 0.0f;
+        dir.y = 0.0f;
+        dir.z = 0.0f;
+        for (i = 0; i < 64; i++) {
+            flames[i].life = -1.0f;
+        }
+        model = new CoinNormal3D(modelPath, 1);
+    }
 };
 
 struct BossKoopa {
@@ -3362,6 +3419,8 @@ struct BossKoopa {
     int waitMax;
     int waitRndIdx;
     int attackRndIdx;
+
+    BossKoopa(int waitMin, int waitMax);
 };
 
 static inline void KoopaFireball_SetActive(KoopaFireball *fb, unsigned char on) {
@@ -3496,278 +3555,6 @@ extern "C" void BossKoopa_UpdateAnim(BossKoopa *self) { /* 0x8012EC44 size:0x438
     KoopaFireball_Update(self->fireball);
 }
 
-extern "C" asm void KoopaFireball_Update(KoopaFireball *self) { /* 0x8012F07C size:0x3E0 */
-    nofralloc
-    stwu r1, -0x60(r1)
-    mflr r0
-    stw r0, 0x64(r1)
-    stw r31, 0x5c(r1)
-    stw r30, 0x58(r1)
-    stw r29, 0x54(r1)
-    mr r29, r3
-    lwz r0, 0x4(r3)
-    cmplwi r0, 0x0
-    beq KoopaFireball_Update_L_8012F440
-    lwz r3, 0xc(r29)
-    cmpwi r3, 0x0
-    beq KoopaFireball_Update_L_8012F0B8
-    subi r0, r3, 0x1
-    stw r0, 0xc(r29)
-    KoopaFireball_Update_L_8012F0B8:
-    lbz r0, 0x10(r29)
-    cmplwi r0, 0x0
-    beq KoopaFireball_Update_L_8012F378
-    lwz r31, 0x4(r29)
-    cmplwi r31, 0x0
-    bne KoopaFireball_Update_L_8012F0E0
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x47c
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    KoopaFireball_Update_L_8012F0E0:
-    cmplwi r31, 0x0
-    beq KoopaFireball_Update_L_8012F128
-    bne KoopaFireball_Update_L_8012F0FC
-    la r3, lbl_806D7174(r2)  /* lbl_806D7174 */
-    li r4, 0x25d
-    la r5, lbl_806D717C(r2)  /* lbl_806D717C */
-    bl __assert
-    KoopaFireball_Update_L_8012F0FC:
-    lwz r4, 0x14(r31)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne KoopaFireball_Update_L_8012F118
-    rlwinm. r0, r4, 0, 25, 25
-    beq KoopaFireball_Update_L_8012F118
-    li r3, 0x1
-    KoopaFireball_Update_L_8012F118:
-    clrlwi. r0, r3, 24
-    beq KoopaFireball_Update_L_8012F128
-    mr r3, r31
-    bl HSD_JObjSetupMatrixSub
-    KoopaFireball_Update_L_8012F128:
-    li r0, 0x40
-    mr r3, r29
-    lfs f0, lbl_806D7150(r2)
-    li r4, 0x0
-    mtctr r0
-    KoopaFireball_Update_L_8012F13C:
-    lfs f1, 0x2c(r3)
-    fcmpo cr0, f1, f0
-    bge KoopaFireball_Update_L_8012F36C
-    mulli r30, r4, 0x28
-    lfs f0, 0x50(r31)
-    lfs f1, lbl_806D71CC(r2)
-    addi r3, r1, 0x14
-    li r4, 0x58
-    add r5, r29, r30
-    stfs f0, 0x3c(r5)
-    lfs f0, 0x60(r31)
-    stfs f0, 0x40(r5)
-    lfs f0, 0x70(r31)
-    stfs f0, 0x44(r5)
-    lfs f0, 0x4c(r31)
-    stfs f0, 0x30(r5)
-    lfs f0, 0x5c(r31)
-    stfs f0, 0x34(r5)
-    lfs f0, 0x6c(r31)
-    stfs f0, 0x38(r5)
-    lfs f0, 0x8(r29)
-    fmuls f1, f1, f0
-    bl PSMTXRotRad
-    addi r4, r30, 0x30
-    addi r3, r1, 0x14
-    add r4, r29, r4
-    mr r5, r4
-    bl PSMTXMultVec
-    lwz r0, 0x14(r29)
-    cmpwi r0, 0x40
-    blt KoopaFireball_Update_L_8012F1C0
-    li r0, 0x0
-    stw r0, 0x14(r29)
-    KoopaFireball_Update_L_8012F1C0:
-    lwz r6, 0x14(r29)
-    lis r3, lbl_80495994@ha
-    addi r4, r3, lbl_80495994@l
-    add r3, r29, r30
-    addi r5, r6, 0x1
-    slwi r0, r6, 2
-    stw r5, 0x14(r29)
-    lfsx f2, r4, r0
-    lfs f1, lbl_806CF57C(r13)
-    lfs f0, lbl_806CF578(r13)
-    fmadds f0, f1, f2, f0
-    stfs f0, 0x48(r3)
-    lwz r0, 0x18(r29)
-    cmpwi r0, 0x30
-    blt KoopaFireball_Update_L_8012F204
-    li r0, 0x0
-    stw r0, 0x18(r29)
-    KoopaFireball_Update_L_8012F204:
-    lwz r6, 0x18(r29)
-    lis r3, lbl_80495A94@ha
-    addi r4, r3, lbl_80495A94@l
-    add r3, r29, r30
-    addi r5, r6, 0x1
-    slwi r0, r6, 2
-    stw r5, 0x18(r29)
-    lfsx f2, r4, r0
-    lfs f1, lbl_806CF588(r13)
-    lfs f0, lbl_806CF584(r13)
-    fmadds f0, f1, f2, f0
-    stfs f0, 0x50(r3)
-    lwz r0, 0x18(r29)
-    cmpwi r0, 0x30
-    blt KoopaFireball_Update_L_8012F248
-    li r0, 0x0
-    stw r0, 0x18(r29)
-    KoopaFireball_Update_L_8012F248:
-    lwz r5, 0x18(r29)
-    lis r3, lbl_80495A94@ha
-    addi r3, r3, lbl_80495A94@l
-    lfs f1, lbl_806D71C4(r2)
-    addi r4, r5, 0x1
-    slwi r0, r5, 2
-    stw r4, 0x18(r29)
-    add r4, r29, r30
-    lfs f0, lbl_806D7140(r2)
-    lfsx f2, r3, r0
-    fnmsubs f0, f1, f2, f0
-    stfs f0, 0x4c(r4)
-    lwz r0, 0xc(r29)
-    cmpwi r0, 0x0
-    beq KoopaFireball_Update_L_8012F294
-    lfs f1, 0x4c(r4)
-    lfs f0, lbl_806D71B4(r2)
-    fmuls f0, f1, f0
-    stfs f0, 0x4c(r4)
-    KoopaFireball_Update_L_8012F294:
-    lfs f0, lbl_806D7150(r2)
-    add r3, r29, r30
-    stfs f0, 0x2c(r3)
-    lwz r0, 0xc(r29)
-    cmpwi r0, 0x0
-    bne KoopaFireball_Update_L_8012F378
-    lbz r0, 0x1c(r29)
-    cmplwi r0, 0x0
-    beq KoopaFireball_Update_L_8012F2F0
-    lwz r4, lbl_806D1510(r13)
-    addi r3, r29, 0x20
-    li r0, 0x0
-    stw r4, 0xc(r29)
-    mr r4, r3
-    stb r0, 0x1c(r29)
-    lfs f0, 0x4c(r31)
-    stfs f0, 0x20(r29)
-    lfs f0, 0x5c(r31)
-    stfs f0, 0x24(r29)
-    lfs f0, 0x6c(r31)
-    stfs f0, 0x28(r29)
-    bl Vec3_Normalize
-    b KoopaFireball_Update_L_8012F378
-    KoopaFireball_Update_L_8012F2F0:
-    lfs f0, 0x4c(r31)
-    addi r3, r1, 0x8
-    mr r4, r3
-    stfs f0, 0x8(r1)
-    lfs f0, 0x5c(r31)
-    stfs f0, 0xc(r1)
-    lfs f0, 0x6c(r31)
-    stfs f0, 0x10(r1)
-    bl Vec3_Normalize
-    addi r3, r1, 0x8
-    addi r4, r29, 0x20
-    bl Vec3_Dot
-    lfs f0, lbl_806D7150(r2)
-    fcmpo cr0, f1, f0
-    bge KoopaFireball_Update_L_8012F330
-    fneg f1, f1
-    KoopaFireball_Update_L_8012F330:
-    lfs f0, lbl_806D7254(r2)
-    fcmpo cr0, f1, f0
-    ble KoopaFireball_Update_L_8012F348
-    lwz r0, lbl_806D1510(r13)
-    stw r0, 0xc(r29)
-    b KoopaFireball_Update_L_8012F350
-    KoopaFireball_Update_L_8012F348:
-    li r0, 0x0
-    stw r0, 0xc(r29)
-    KoopaFireball_Update_L_8012F350:
-    lfs f0, 0x8(r1)
-    stfs f0, 0x20(r29)
-    lfs f0, 0xc(r1)
-    stfs f0, 0x24(r29)
-    lfs f0, 0x10(r1)
-    stfs f0, 0x28(r29)
-    b KoopaFireball_Update_L_8012F378
-    KoopaFireball_Update_L_8012F36C:
-    addi r3, r3, 0x28
-    addi r4, r4, 0x1
-    bdnz KoopaFireball_Update_L_8012F13C
-    KoopaFireball_Update_L_8012F378:
-    li r0, 0x40
-    mr r3, r29
-    lfs f4, lbl_806D7150(r2)
-    mtctr r0
-    KoopaFireball_Update_L_8012F388:
-    lfs f0, 0x2c(r3)
-    fcmpo cr0, f0, f4
-    cror eq, gt, eq
-    bne KoopaFireball_Update_L_8012F438
-    lfs f3, 0x30(r3)
-    lfs f2, lbl_806CF580(r13)
-    lfs f0, 0x3c(r3)
-    lfs f1, lbl_806D71B4(r2)
-    fmadds f0, f3, f2, f0
-    stfs f0, 0x3c(r3)
-    lfs f3, 0x34(r3)
-    lfs f2, lbl_806CF580(r13)
-    lfs f0, 0x40(r3)
-    fmadds f0, f3, f2, f0
-    stfs f0, 0x40(r3)
-    lfs f3, 0x38(r3)
-    lfs f2, lbl_806CF580(r13)
-    lfs f0, 0x44(r3)
-    fmadds f0, f3, f2, f0
-    stfs f0, 0x44(r3)
-    lfs f2, 0x34(r3)
-    fcmpo cr0, f2, f1
-    bge KoopaFireball_Update_L_8012F400
-    lfs f0, lbl_806D7258(r2)
-    fadds f0, f2, f0
-    stfs f0, 0x34(r3)
-    lfs f0, 0x34(r3)
-    fcmpo cr0, f0, f1
-    ble KoopaFireball_Update_L_8012F400
-    stfs f1, 0x34(r3)
-    KoopaFireball_Update_L_8012F400:
-    lfs f2, 0x48(r3)
-    lfs f0, 0x50(r3)
-    lfs f1, lbl_806D7140(r2)
-    fadds f2, f2, f0
-    lfs f0, lbl_806D725C(r2)
-    stfs f2, 0x48(r3)
-    lfs f2, 0x2c(r3)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0x2c(r3)
-    cror eq, gt, eq
-    bne KoopaFireball_Update_L_8012F438
-    lfs f0, lbl_806D71BC(r2)
-    stfs f0, 0x2c(r3)
-    KoopaFireball_Update_L_8012F438:
-    addi r3, r3, 0x28
-    bdnz KoopaFireball_Update_L_8012F388
-    KoopaFireball_Update_L_8012F440:
-    lwz r0, 0x64(r1)
-    lwz r31, 0x5c(r1)
-    lwz r30, 0x58(r1)
-    lwz r29, 0x54(r1)
-    mtlr r0
-    addi r1, r1, 0x60
-    blr
-}
-
 static inline void CoinJObj_SetupMatrix(CoinJObj *jobj) {
     unsigned int flags;
     unsigned char dirty;
@@ -3793,6 +3580,102 @@ static inline void CoinJObj_SetupMatrix(CoinJObj *jobj) {
 static inline float (*CoinJObj_GetMtxPtr(CoinJObj *jobj))[4] {
     CoinJObj_SetupMatrix(jobj);
     return jobj->mtx;
+}
+
+static inline float KoopaFireball_Rand64(KoopaFireball *self) {
+    if (self->rnd64 >= 64) {
+        self->rnd64 = 0;
+    }
+    return lbl_80495994[self->rnd64++];
+}
+
+static inline float KoopaFireball_Rand48(KoopaFireball *self) {
+    if (self->rnd48 >= 48) {
+        self->rnd48 = 0;
+    }
+    return lbl_80495A94[self->rnd48++];
+}
+
+extern "C" void KoopaFireball_Update(KoopaFireball *self) { /* 0x8012F07C size:0x3E0 */
+    float (*mtx)[4];
+    int i;
+    float m[3][4];
+    CoinVec d;
+    float dot;
+
+    if (self->jobj == 0) {
+        return;
+    }
+    if (self->cooldown != 0) {
+        self->cooldown--;
+    }
+    if (self->active) {
+        mtx = CoinJObj_GetMtxPtr(self->jobj);
+        for (i = 0; i < 64; i++) {
+            if (self->flames[i].life < 0.0f) {
+                self->flames[i].pos.x = mtx[0][3];
+                self->flames[i].pos.y = mtx[1][3];
+                self->flames[i].pos.z = mtx[2][3];
+                self->flames[i].vel.x = mtx[0][2];
+                self->flames[i].vel.y = mtx[1][2];
+                self->flames[i].vel.z = mtx[2][2];
+                PSMTXRotRad(m, 'X', 0.017453292f * self->angle);
+                PSMTXMultVec(m, &self->flames[i].vel, &self->flames[i].vel);
+                self->flames[i].scale = lbl_806CF57C * KoopaFireball_Rand64(self) + lbl_806CF578;
+                self->flames[i].grow = lbl_806CF588 * KoopaFireball_Rand48(self) + lbl_806CF584;
+                self->flames[i].alpha = 1.0f - 0.2f * KoopaFireball_Rand48(self);
+                if (self->cooldown != 0) {
+                    self->flames[i].alpha *= 0.5f;
+                }
+                self->flames[i].life = 0.0f;
+                if (self->cooldown == 0) {
+                    if (self->first) {
+                        self->cooldown = lbl_806D1510;
+                        self->first = 0;
+                        self->dir.x = mtx[0][2];
+                        self->dir.y = mtx[1][2];
+                        self->dir.z = mtx[2][2];
+                        Vec3_Normalize(&self->dir, &self->dir);
+                    } else {
+                        d.x = mtx[0][2];
+                        d.y = mtx[1][2];
+                        d.z = mtx[2][2];
+                        Vec3_Normalize(&d, &d);
+                        dot = Vec3_Dot(&d, &self->dir);
+                        if (dot < 0.0f) {
+                            dot = -dot;
+                        }
+                        if (dot > 0.999f) {
+                            self->cooldown = lbl_806D1510;
+                        } else {
+                            self->cooldown = 0;
+                        }
+                        self->dir.x = d.x;
+                        self->dir.y = d.y;
+                        self->dir.z = d.z;
+                    }
+                }
+                break;
+            }
+        }
+    }
+    for (i = 0; i < 64; i++) {
+        if (self->flames[i].life >= 0.0f) {
+            self->flames[i].pos.x += self->flames[i].vel.x * lbl_806CF580;
+            self->flames[i].pos.y += self->flames[i].vel.y * lbl_806CF580;
+            self->flames[i].pos.z += self->flames[i].vel.z * lbl_806CF580;
+            if (self->flames[i].vel.y < 0.5f) {
+                self->flames[i].vel.y += 0.01f;
+                if (self->flames[i].vel.y > 0.5f) {
+                    self->flames[i].vel.y = 0.5f;
+                }
+            }
+            self->flames[i].scale += self->flames[i].grow;
+            if ((self->flames[i].life += 1.0f) >= 64.0f) {
+                self->flames[i].life = -1.0f;
+            }
+        }
+    }
 }
 
 struct CoinShell {
@@ -4574,463 +4457,91 @@ extern "C" asm void CGameCoin_Init(void) { /* 0x8012FC58 size:0x78C */
     blr
 }
 
-extern "C" asm void CGameCoin_InitDefeatDemo(void) { /* 0x801303E4 size:0x2A8 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    lfs f0, lbl_806D7150(r2)
-    lis r4, lbl_80356730@ha
-    stw r0, 0x24(r1)
-    li r0, 0x1
-    stw r31, 0x1c(r1)
-    mr r31, r3
-    li r3, 0x0
-    stw r30, 0x18(r1)
-    addi r30, r4, lbl_80356730@l
-    stw r29, 0x14(r1)
-    stw r3, 0x0(r31)
-    stw r3, 0x4(r31)
-    stw r3, 0x8(r31)
-    stw r3, 0xc(r31)
-    stfs f0, 0x10(r31)
-    stb r0, 0x14(r31)
-    stw r3, 0x18(r31)
-    stw r3, 0x1c(r31)
-    stw r3, 0x20(r31)
-    stw r3, 0x24(r31)
-    stw r3, 0x28(r31)
-    stfs f0, 0x2c(r31)
-    stfs f0, 0x30(r31)
-    stw r3, 0x34(r31)
-    lwz r0, g_characterId(r13)
-    cmpwi r0, 0x4
-    bne CGameCoin_InitDefeatDemo_L_8013049C
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq CGameCoin_InitDefeatDemo_L_80130474
-    addi r4, r30, 0x630
-    li r5, 0x0
-    bl clNormal3D_Construct
-    CGameCoin_InitDefeatDemo_L_80130474:
-    stw r29, 0x0(r31)
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq CGameCoin_InitDefeatDemo_L_80130494
-    addi r4, r30, 0x64c
-    li r5, 0x0
-    bl clNormal3D_Construct
-    CGameCoin_InitDefeatDemo_L_80130494:
-    stw r29, 0x4(r31)
-    b CGameCoin_InitDefeatDemo_L_801304DC
-    CGameCoin_InitDefeatDemo_L_8013049C:
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq CGameCoin_InitDefeatDemo_L_801304B8
-    addi r4, r30, 0x630
-    li r5, 0x0
-    bl clNormal3D_Construct
-    CGameCoin_InitDefeatDemo_L_801304B8:
-    stw r29, 0x0(r31)
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq CGameCoin_InitDefeatDemo_L_801304D8
-    addi r4, r30, 0x664
-    li r5, 0x0
-    bl clNormal3D_Construct
-    CGameCoin_InitDefeatDemo_L_801304D8:
-    stw r29, 0x4(r31)
-    CGameCoin_InitDefeatDemo_L_801304DC:
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq CGameCoin_InitDefeatDemo_L_801304F8
-    addi r4, r30, 0x678
-    li r5, 0x0
-    bl clNormal3D_Construct
-    CGameCoin_InitDefeatDemo_L_801304F8:
-    lfs f1, lbl_806D7150(r2)
-    li r4, 0x0
-    stw r29, 0x8(r31)
-    fmr f3, f1
-    lfs f2, lbl_806D7140(r2)
-    fmr f4, f1
-    lwz r3, 0x0(r31)
-    bl clNormal3D_SetScale
-    lfs f1, lbl_806D7150(r2)
-    li r4, 0x0
-    lwz r3, 0x4(r31)
-    fmr f3, f1
-    lfs f2, lbl_806D7140(r2)
-    fmr f4, f1
-    bl clNormal3D_SetScale
-    lfs f1, lbl_806D7150(r2)
-    li r4, 0x0
-    lwz r3, 0x8(r31)
-    fmr f3, f1
-    lfs f2, lbl_806D7140(r2)
-    fmr f4, f1
-    bl clNormal3D_SetScale
-    li r3, 0x3090
-    bl Alloc
-    mr. r29, r3
-    beq CGameCoin_InitDefeatDemo_L_80130584
-    addi r4, r30, 0x630
-    bl Scene3D_Init
-    lis r3, lbl_80419EF8@ha
-    lfs f1, lbl_806D71BC(r2)
-    addi r0, r3, lbl_80419EF8@l
-    lfs f0, lbl_806D7150(r2)
-    stw r0, 0x0(r29)
-    stfs f1, 0x3088(r29)
-    stfs f0, 0x308c(r29)
-    CGameCoin_InitDefeatDemo_L_80130584:
-    stw r29, 0xc(r31)
-    lwz r29, 0xc(r31)
-    lwz r0, 0x4(r29)
-    cmplwi r0, 0x0
-    beq CGameCoin_InitDefeatDemo_L_8013060C
-    li r0, 0x1
-    lfs f1, lbl_806D7150(r2)
-    stb r0, 0x3084(r29)
-    lfs f0, lbl_806D7140(r2)
-    stfs f1, 0x308c(r29)
-    stfs f0, 0x3088(r29)
-    lwz r3, 0x2c(r29)
-    cmplwi r3, 0x0
-    bne CGameCoin_InitDefeatDemo_L_801305C4
-    li r4, 0x0
-    b CGameCoin_InitDefeatDemo_L_801305F0
-    CGameCoin_InitDefeatDemo_L_801305C4:
-    lwz r3, 0x4(r3)
-    cmplwi r3, 0x0
-    bne CGameCoin_InitDefeatDemo_L_801305D8
-    li r4, 0x0
-    b CGameCoin_InitDefeatDemo_L_801305F0
-    CGameCoin_InitDefeatDemo_L_801305D8:
-    lwz r3, 0x4(r3)
-    cmplwi r3, 0x0
-    bne CGameCoin_InitDefeatDemo_L_801305EC
-    li r4, 0x0
-    b CGameCoin_InitDefeatDemo_L_801305F0
-    CGameCoin_InitDefeatDemo_L_801305EC:
-    lwz r4, 0x0(r3)
-    CGameCoin_InitDefeatDemo_L_801305F0:
-    lwz r3, 0x4(r29)
-    bl HSD_CObjAddAnim
-    lwz r3, 0x4(r29)
-    lfs f1, 0x308c(r29)
-    bl HSD_CObjReqAnim
-    lwz r3, 0x4(r29)
-    bl HSD_CObjAnim
-    CGameCoin_InitDefeatDemo_L_8013060C:
-    lwz r3, 0x0(r31)
-    addi r4, r30, 0x688
-    bl ResolveJointByName
-    stw r3, 0x18(r31)
-    addi r4, r30, 0x6a4
-    lwz r3, 0x0(r31)
-    bl ResolveJointByName
-    stw r3, 0x1c(r31)
-    addi r4, r30, 0x6c0
-    lwz r3, 0x0(r31)
-    bl ResolveJointByName
-    stw r3, 0x20(r31)
-    addi r4, r30, 0x6dc
-    lwz r3, 0x0(r31)
-    bl ResolveJointByName
-    stw r3, 0x24(r31)
-    addi r4, r30, 0x6fc
-    lwz r3, 0x0(r31)
-    bl ResolveJointByName
-    stw r3, 0x28(r31)
-    addi r4, r30, 0x71c
-    lwz r3, 0x8(r31)
-    bl ResolveJointByName
-    stw r3, 0x34(r31)
-    mr r3, r31
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+DefeatDemo::DefeatDemo() { /* 0x801303E4 size:0x2A8 */
+    const char *pool = lbl_80356730;
+
+    body = 0;
+    hand = 0;
+    effect = 0;
+    scene = 0;
+    frame = 0.0f;
+    first = 1;
+    spinA = 0;
+    spinB = 0;
+    spinC = 0;
+    wheelA = 0;
+    wheelB = 0;
+    wheelAngleA = 0.0f;
+    wheelAngleB = 0.0f;
+    flash = 0;
+    if (g_characterId == 4) {
+        body = new CoinNormal3D(pool + 0x630, 0);
+        hand = new CoinNormal3D(pool + 0x64C, 0);
+    } else {
+        body = new CoinNormal3D(pool + 0x630, 0);
+        hand = new CoinNormal3D(pool + 0x664, 0);
+    }
+    effect = new CoinNormal3D(pool + 0x678, 0);
+    clNormal3D_SetScale(body, 0, 0.0f, 1.0f, 0.0f, 0.0f);
+    clNormal3D_SetScale(hand, 0, 0.0f, 1.0f, 0.0f, 0.0f);
+    clNormal3D_SetScale(effect, 0, 0.0f, 1.0f, 0.0f, 0.0f);
+    scene = new CoinAnimScene3D(pool + 0x630);
+    ((CoinAnimScene3D *)scene)->Start();
+    spinA = ResolveJointByName(body, pool + 0x688);
+    spinB = ResolveJointByName(body, pool + 0x6A4);
+    spinC = ResolveJointByName(body, pool + 0x6C0);
+    wheelA = ResolveJointByName(body, pool + 0x6DC);
+    wheelB = ResolveJointByName(body, pool + 0x6FC);
+    flash = ResolveJointByName(effect, pool + 0x71C);
 }
 
-extern "C" asm void BossKoopa_Init(void) { /* 0x8013068C size:0x3FC */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    li r6, 0x0
-    lfs f0, lbl_806D7150(r2)
-    stw r0, 0x24(r1)
-    li r0, 0x3c
-    lis r7, lbl_80356730@ha
-    stw r31, 0x1c(r1)
-    addi r31, r7, lbl_80356730@l
-    stw r30, 0x18(r1)
-    mr r30, r5
-    stw r29, 0x14(r1)
-    mr r29, r4
-    stw r28, 0x10(r1)
-    mr r28, r3
-    stw r6, 0x0(r3)
-    li r3, 0x1
-    stw r6, 0x4(r28)
-    stw r6, 0x8(r28)
-    stw r6, 0xc(r28)
-    stw r6, 0x10(r28)
-    stw r6, 0x14(r28)
-    stfs f0, 0x18(r28)
-    stb r3, 0x1c(r28)
-    stfs f0, 0x20(r28)
-    stw r0, 0x2c(r28)
-    stw r6, 0x24(r28)
-    stw r6, 0x28(r28)
-    bl OSGetTick
-    lis r4, 0x8000
-    lwz r0, 0xf8(r4)
-    srwi r0, r0, 2
-    divwu r0, r3, r0
-    clrlwi r0, r0, 26
-    stw r0, 0x38(r28)
-    bl OSGetTick
-    lis r5, 0x8000
-    lis r4, 0xaaab
-    lwz r5, 0xf8(r5)
-    subi r0, r4, 0x5555
-    srwi r4, r5, 2
-    divwu r4, r3, r4
-    li r3, 0xa2c
-    mulhwu r0, r0, r4
-    srwi r0, r0, 5
-    mulli r0, r0, 0x30
-    subf r0, r0, r4
-    stw r0, 0x3c(r28)
-    stw r29, 0x30(r28)
-    stw r30, 0x34(r28)
-    bl Alloc
-    mr. r29, r3
-    beq BossKoopa_Init_L_80130850
-    li r4, 0x0
-    lfs f1, lbl_806D7150(r2)
-    stw r4, 0x0(r29)
-    li r3, 0x1
-    li r0, 0x2
-    mr r5, r29
-    stw r4, 0x4(r29)
-    lfs f0, lbl_806D71BC(r2)
-    stfs f1, 0x8(r29)
-    stw r4, 0xc(r29)
-    stb r4, 0x10(r29)
-    stb r3, 0x1c(r29)
-    stw r4, 0x14(r29)
-    stw r4, 0x18(r29)
-    stfs f1, 0x20(r29)
-    stfs f1, 0x24(r29)
-    stfs f1, 0x28(r29)
-    mtctr r0
-    BossKoopa_Init_L_801307A8:
-    stfs f0, 0x2c(r5)
-    stfs f0, 0x54(r5)
-    stfs f0, 0x7c(r5)
-    stfs f0, 0xa4(r5)
-    stfs f0, 0xcc(r5)
-    stfs f0, 0xf4(r5)
-    stfs f0, 0x11c(r5)
-    stfs f0, 0x144(r5)
-    stfs f0, 0x16c(r5)
-    stfs f0, 0x194(r5)
-    stfs f0, 0x1bc(r5)
-    stfs f0, 0x1e4(r5)
-    stfs f0, 0x20c(r5)
-    stfs f0, 0x234(r5)
-    stfs f0, 0x25c(r5)
-    stfs f0, 0x284(r5)
-    stfs f0, 0x2ac(r5)
-    stfs f0, 0x2d4(r5)
-    stfs f0, 0x2fc(r5)
-    stfs f0, 0x324(r5)
-    stfs f0, 0x34c(r5)
-    stfs f0, 0x374(r5)
-    stfs f0, 0x39c(r5)
-    stfs f0, 0x3c4(r5)
-    stfs f0, 0x3ec(r5)
-    stfs f0, 0x414(r5)
-    stfs f0, 0x43c(r5)
-    stfs f0, 0x464(r5)
-    stfs f0, 0x48c(r5)
-    stfs f0, 0x4b4(r5)
-    stfs f0, 0x4dc(r5)
-    stfs f0, 0x504(r5)
-    addi r5, r5, 0x500
-    bdnz BossKoopa_Init_L_801307A8
-    li r3, 0x5c
-    bl Alloc
-    mr. r30, r3
-    beq BossKoopa_Init_L_8013084C
-    addi r4, r31, 0x744
-    li r5, 0x1
-    bl clNormal3D_Construct
-    BossKoopa_Init_L_8013084C:
-    stw r30, 0x0(r29)
-    BossKoopa_Init_L_80130850:
-    stw r29, 0x28(r28)
-    lwz r0, g_characterId(r13)
-    cmpwi r0, 0x4
-    bne BossKoopa_Init_L_80130904
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq BossKoopa_Init_L_8013087C
-    addi r4, r31, 0x754
-    li r5, 0x0
-    bl clNormal3D_Construct
-    BossKoopa_Init_L_8013087C:
-    stw r29, 0x0(r28)
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq BossKoopa_Init_L_8013089C
-    addi r4, r31, 0x770
-    li r5, 0x0
-    bl clNormal3D_Construct
-    BossKoopa_Init_L_8013089C:
-    stw r29, 0x4(r28)
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq BossKoopa_Init_L_801308BC
-    addi r4, r31, 0x78c
-    li r5, 0x0
-    bl clNormal3D_Construct
-    BossKoopa_Init_L_801308BC:
-    stw r29, 0x8(r28)
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq BossKoopa_Init_L_801308DC
-    addi r4, r31, 0x7ac
-    li r5, 0x0
-    bl clNormal3D_Construct
-    BossKoopa_Init_L_801308DC:
-    stw r29, 0xc(r28)
-    addi r4, r31, 0x7cc
-    lwz r3, 0x4(r28)
-    bl ResolveJointByName
-    lwz r4, 0x28(r28)
-    stw r3, 0x4(r4)
-    lfs f0, lbl_806CF574(r13)
-    lwz r3, 0x28(r28)
-    stfs f0, 0x8(r3)
-    b BossKoopa_Init_L_801309A4
-    BossKoopa_Init_L_80130904:
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq BossKoopa_Init_L_80130920
-    addi r4, r31, 0x7f4
-    li r5, 0x0
-    bl clNormal3D_Construct
-    BossKoopa_Init_L_80130920:
-    stw r29, 0x0(r28)
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq BossKoopa_Init_L_80130940
-    addi r4, r31, 0x808
-    li r5, 0x0
-    bl clNormal3D_Construct
-    BossKoopa_Init_L_80130940:
-    stw r29, 0x4(r28)
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq BossKoopa_Init_L_80130960
-    addi r4, r31, 0x820
-    li r5, 0x0
-    bl clNormal3D_Construct
-    BossKoopa_Init_L_80130960:
-    stw r29, 0x8(r28)
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq BossKoopa_Init_L_80130980
-    addi r4, r31, 0x838
-    li r5, 0x0
-    bl clNormal3D_Construct
-    BossKoopa_Init_L_80130980:
-    stw r29, 0xc(r28)
-    addi r4, r31, 0x850
-    lwz r3, 0x4(r28)
-    bl ResolveJointByName
-    lwz r4, 0x28(r28)
-    stw r3, 0x4(r4)
-    lfs f0, lbl_806CF570(r13)
-    lwz r3, 0x28(r28)
-    stfs f0, 0x8(r3)
-    BossKoopa_Init_L_801309A4:
-    lfs f1, lbl_806D7150(r2)
-    li r4, 0x0
-    lwz r3, 0x0(r28)
-    fmr f3, f1
-    lfs f2, lbl_806D7140(r2)
-    fmr f4, f1
-    bl clNormal3D_SetScale
-    lwz r3, 0x0(r28)
-    lfs f1, lbl_806D7150(r2)
-    lfs f2, lbl_806D71C0(r2)
-    lfs f3, lbl_806D71D8(r2)
-    bl Object_SetJObjPositionXYZ
-    lfs f1, lbl_806D7150(r2)
-    li r4, 0x0
-    lwz r3, 0x4(r28)
-    fmr f3, f1
-    lfs f2, lbl_806D7140(r2)
-    fmr f4, f1
-    bl clNormal3D_SetScale
-    lwz r3, 0x4(r28)
-    lfs f1, lbl_806D7150(r2)
-    lfs f2, lbl_806D71C0(r2)
-    lfs f3, lbl_806D71D8(r2)
-    bl Object_SetJObjPositionXYZ
-    lfs f1, lbl_806D7150(r2)
-    li r4, 0x0
-    lwz r3, 0x8(r28)
-    fmr f3, f1
-    lfs f2, lbl_806D7140(r2)
-    fmr f4, f1
-    bl clNormal3D_SetScale
-    lwz r3, 0x8(r28)
-    lfs f1, lbl_806D7150(r2)
-    lfs f2, lbl_806D71C0(r2)
-    lfs f3, lbl_806D71D8(r2)
-    bl Object_SetJObjPositionXYZ
-    lfs f1, lbl_806D7150(r2)
-    li r4, 0x0
-    lwz r3, 0xc(r28)
-    fmr f3, f1
-    lfs f2, lbl_806D7140(r2)
-    fmr f4, f1
-    bl clNormal3D_SetScale
-    lwz r3, 0xc(r28)
-    lfs f1, lbl_806D7150(r2)
-    lfs f2, lbl_806D71C0(r2)
-    lfs f3, lbl_806D71D8(r2)
-    bl Object_SetJObjPositionXYZ
-    lwz r0, 0x24(r1)
-    mr r3, r28
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#define OS_BUS_CLOCK (*(unsigned long *)0x800000F8)
+#define OS_TIMER_CLOCK (OS_BUS_CLOCK / 4)
+#define OSTicksToSeconds(ticks) ((ticks) / OS_TIMER_CLOCK)
+
+BossKoopa::BossKoopa(int waitMin, int waitMax) { /* 0x8013068C size:0x3FC */
+    const char *pool = lbl_80356730;
+
+    anims[0] = 0;
+    anims[1] = 0;
+    anims[2] = 0;
+    anims[3] = 0;
+    state = 0;
+    reqState = 0;
+    frame = 0.0f;
+    justChanged = 1;
+    timer = 0.0f;
+    wait = 60;
+    attack = 0;
+    fireball = 0;
+    waitRndIdx = OSTicksToSeconds(OSGetTick()) % 64;
+    attackRndIdx = OSTicksToSeconds(OSGetTick()) % 48;
+    this->waitMin = waitMin;
+    this->waitMax = waitMax;
+    fireball = new KoopaFireball(pool + 0x744);
+    if (g_characterId == 4) {
+        anims[0] = new CoinNormal3D(pool + 0x754, 0);
+        anims[1] = new CoinNormal3D(pool + 0x770, 0);
+        anims[2] = new CoinNormal3D(pool + 0x78C, 0);
+        anims[3] = new CoinNormal3D(pool + 0x7AC, 0);
+        fireball->jobj = ResolveJointByName(anims[1], pool + 0x7CC);
+        fireball->angle = lbl_806CF574;
+    } else {
+        anims[0] = new CoinNormal3D(pool + 0x7F4, 0);
+        anims[1] = new CoinNormal3D(pool + 0x808, 0);
+        anims[2] = new CoinNormal3D(pool + 0x820, 0);
+        anims[3] = new CoinNormal3D(pool + 0x838, 0);
+        fireball->jobj = ResolveJointByName(anims[1], pool + 0x850);
+        fireball->angle = lbl_806CF570;
+    }
+    clNormal3D_SetScale(anims[0], 0, 0.0f, 1.0f, 0.0f, 0.0f);
+    Object_SetJObjPositionXYZ(anims[0], 0.0f, 15.0f, 40.0f);
+    clNormal3D_SetScale(anims[1], 0, 0.0f, 1.0f, 0.0f, 0.0f);
+    Object_SetJObjPositionXYZ(anims[1], 0.0f, 15.0f, 40.0f);
+    clNormal3D_SetScale(anims[2], 0, 0.0f, 1.0f, 0.0f, 0.0f);
+    Object_SetJObjPositionXYZ(anims[2], 0.0f, 15.0f, 40.0f);
+    clNormal3D_SetScale(anims[3], 0, 0.0f, 1.0f, 0.0f, 0.0f);
+    Object_SetJObjPositionXYZ(anims[3], 0.0f, 15.0f, 40.0f);
 }
 
 struct CGameCoinFields {
