@@ -6223,6 +6223,7 @@ game/LapSelect_80146410.cpp:
 	extab       start:0x8000DF14 end:0x8000DF44
 	extabindex  start:0x800252B0 end:0x800252F8
 	.text       start:0x80146410 end:0x80147468
+	.rodata     start:0x80362650 end:0x80362750
 
 game/fn_80147468.c:
 	.text       start:0x80147468 end:0x80147470

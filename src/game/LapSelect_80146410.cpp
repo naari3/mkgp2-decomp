@@ -2,6 +2,7 @@
  * 0x80146410..0x80147468: lap select controller.
  */
 #pragma cplusplus on
+#include "libc/stdarg.h"
 
 class InputPlayer {
 public:
@@ -138,36 +139,15 @@ extern unsigned int lbl_806D7C08;
 extern const float lbl_80362620[2][2];
 extern const float lbl_80362630[2][4];
 extern const float lbl_8048EFB8[2][2];
-extern void fn_801681E8();
-extern void vsprintf();
-extern unsigned int lbl_80362650[];
+void fn_801681E8(int ctx, const char *fmt, ...);
+int vsprintf(char *buf, const char *fmt, va_list ap);
 int fn_80146410(LapSel *self);
 void fn_80146574(LapSel *self);
 class LapPanel;
 void fn_8014660C(LapPanel *self);
 void fn_80146960(LapPanel *self);
-asm void fn_80147200(void);
+void fn_80147200(XfPanel *self, int idx, const char *fmt, float x, float y, float sx, float sy, float c0, float c1, float c2, float c3, ...);
 void fn_801473DC(XfPanel *self, int idx, int a, int b, float x, float y, float sx, float sy, float c0, float c1, float c2, float c3);
-
-#pragma section R ".extab_user"
-
-
-
-
-__declspec(section ".extab_user") static const unsigned char extab_fn_80147200[8] = {
-    0x12, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-
-#pragma section R ".extabindex_user"
-
-
-
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80147200 = {
-    (void *)&fn_80147200, 0x000001DC, (void *)extab_fn_80147200
-};
-
 
 }
 
@@ -550,131 +530,17 @@ extern "C" void fn_80146960(LapPanel *self)
     }
 }
 
-extern "C" asm void fn_80147200(void) { /* 0x80147200 size:0x1DC */
-    nofralloc
-    stwu r1, -0x200(r1)
-    mflr r0
-    stw r0, 0x204(r1)
-    stfd f31, 0x1f0(r1)
-    psq_st f31, 0x1f8(r1), 0, 0
-    stfd f30, 0x1e0(r1)
-    psq_st f30, 0x1e8(r1), 0, 0
-    stfd f29, 0x1d0(r1)
-    psq_st f29, 0x1d8(r1), 0, 0
-    stfd f28, 0x1c0(r1)
-    psq_st f28, 0x1c8(r1), 0, 0
-    stfd f27, 0x1b0(r1)
-    psq_st f27, 0x1b8(r1), 0, 0
-    stfd f26, 0x1a0(r1)
-    psq_st f26, 0x1a8(r1), 0, 0
-    stfd f25, 0x190(r1)
-    psq_st f25, 0x198(r1), 0, 0
-    stfd f24, 0x180(r1)
-    psq_st f24, 0x188(r1), 0, 0
-    stw r31, 0x17c(r1)
-    stw r30, 0x178(r1)
-    fmr f24, f1
-    mr r30, r3
-    fmr f25, f2
-    mr r31, r4
-    fmr f26, f3
-    fmr f27, f4
-    fmr f28, f5
-    fmr f29, f6
-    fmr f30, f7
-    fmr f31, f8
-    bne cr1, fn_80147200_L_801472A0
-    stfd f1, 0x28(r1)
-    stfd f2, 0x30(r1)
-    stfd f3, 0x38(r1)
-    stfd f4, 0x40(r1)
-    stfd f5, 0x48(r1)
-    stfd f6, 0x50(r1)
-    stfd f7, 0x58(r1)
-    stfd f8, 0x60(r1)
-    fn_80147200_L_801472A0:
-    cmpwi r31, 0x0
-    stw r3, 0x8(r1)
-    stw r4, 0xc(r1)
-    stw r5, 0x10(r1)
-    stw r6, 0x14(r1)
-    stw r7, 0x18(r1)
-    stw r8, 0x1c(r1)
-    stw r9, 0x20(r1)
-    stw r10, 0x24(r1)
-    blt fn_80147200_L_80147384
-    cmpwi r31, 0x2
-    blt fn_80147200_L_801472D4
-    b fn_80147200_L_80147384
-    fn_80147200_L_801472D4:
-    lis r3, lbl_80362650@ha
-    li r0, 0x20
-    addi r3, r3, lbl_80362650@l
-    addi r6, r1, 0x70
-    subi r4, r3, 0x4
-    mtctr r0
-    fn_80147200_L_801472EC:
-    lwz r3, 0x4(r4)
-    lwzu r0, 0x8(r4)
-    stw r3, 0x4(r6)
-    stwu r0, 0x8(r6)
-    bdnz fn_80147200_L_801472EC
-    addi r6, r1, 0x208
-    addi r0, r1, 0x8
-    lis r3, 0x308
-    addi r7, r1, 0x68
-    stw r3, 0x68(r1)
-    mr r4, r5
-    mr r5, r7
-    addi r3, r1, 0x74
-    stw r6, 0x6c(r1)
-    stw r0, 0x70(r1)
-    bl vsprintf
-    mulli r0, r31, 0x28
-    lwz r3, 0x0(r30)
-    addi r4, r1, 0x74
-    add r5, r30, r0
-    lfs f2, 0x30(r5)
-    lfs f6, 0x2c(r5)
-    lfs f1, 0x24(r5)
-    fmuls f4, f27, f2
-    lfs f0, 0x28(r5)
-    fmuls f3, f26, f6
-    lfs f5, 0x34(r5)
-    fmadds f1, f24, f6, f1
-    lfs f6, 0x38(r5)
-    lfs f7, 0x3c(r5)
-    fmadds f2, f25, f2, f0
-    lfs f0, 0x40(r5)
-    fmuls f5, f28, f5
-    fmuls f6, f29, f6
-    fmuls f7, f30, f7
-    fmuls f8, f31, f0
-    creqv 6, 6, 6
-    bl fn_801681E8
-    fn_80147200_L_80147384:
-    psq_l f31, 0x1f8(r1), 0, 0
-    lfd f31, 0x1f0(r1)
-    psq_l f30, 0x1e8(r1), 0, 0
-    lfd f30, 0x1e0(r1)
-    psq_l f29, 0x1d8(r1), 0, 0
-    lfd f29, 0x1d0(r1)
-    psq_l f28, 0x1c8(r1), 0, 0
-    lfd f28, 0x1c0(r1)
-    psq_l f27, 0x1b8(r1), 0, 0
-    lfd f27, 0x1b0(r1)
-    psq_l f26, 0x1a8(r1), 0, 0
-    lfd f26, 0x1a0(r1)
-    psq_l f25, 0x198(r1), 0, 0
-    lfd f25, 0x190(r1)
-    psq_l f24, 0x188(r1), 0, 0
-    lfd f24, 0x180(r1)
-    lwz r31, 0x17c(r1)
-    lwz r0, 0x204(r1)
-    lwz r30, 0x178(r1)
-    mtlr r0
-    addi r1, r1, 0x200
-    blr
+extern "C" void fn_80147200(XfPanel *self, int idx, const char *fmt, float x, float y, float sx, float sy, float c0, float c1, float c2, float c3, ...)
+{
+    if (idx < 0 || idx >= 2) {
+        return;
+    }
+    char buf[256] = {0};
+    va_list ap;
+    va_start(ap, c3);
+    vsprintf(buf, fmt, ap);
+    va_end(ap);
+    fn_801681E8(self->ctx, buf, x * self->slots[idx].scx + self->slots[idx].ox, y * self->slots[idx].scy + self->slots[idx].oy, sx * self->slots[idx].scx, sy * self->slots[idx].scy, c0 * self->slots[idx].m0, c1 * self->slots[idx].m1, c2 * self->slots[idx].m2, c3 * self->slots[idx].m3);
 }
 
 extern "C" void fn_801473DC(XfPanel *self, int idx, int a, int b, float x, float y, float sx, float sy, float c0, float c1, float c2, float c3)
