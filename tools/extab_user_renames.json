@@ -6214,6 +6214,9 @@
   },
   "src/game/CardSetupFlowUpdate.cpp": {},
   "src/game/CardSetupFlowResult.cpp": {
+    "@164": "@etb_8001DE24",
+    "@165": "@eti_8002B490",
+    "__dt__10FlowFaderIFv": "fn_801F26C8",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__ct__8FlowTaskFi": "fn_80204448",

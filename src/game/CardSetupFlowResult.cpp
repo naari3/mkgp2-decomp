@@ -1,7 +1,7 @@
 #pragma inline_max_size(1000)
 #include "CardSetupFlowView.h"
-#include "CardSetupFlowPlayerView.h"
-extern "C" { extern SetupPlayerSnapshot g_playerData, lbl_805D275C; extern char lbl_806D0928[8]; }
+#include "CardSetupFlowResultPlayerView.h"
+extern "C" { extern ResultPlayerSnapshot g_playerData, lbl_805D275C; extern char lbl_806D0928[8]; }
 extern "C" void fn_8024A2F0(CardSetupFlow *self) {
     FlowTask *task = fn_801F4DC0(self->list, 2);
     if (task) {
@@ -22,7 +22,7 @@ extern "C" void fn_8024A2F0(CardSetupFlow *self) {
         } else if ((int)g_playerData.byte1D9 == 2) {
             self->state = 13;
         } else {
-            SetupPlayerSnapshot *player = &g_playerData;
+            ResultPlayerSnapshot *player = &g_playerData;
             *player = lbl_805D275C;
             FlowSceneList *list = self->list;
             fn_801F4DF0(list, new SetupPrintTask, 0);
