@@ -844,3 +844,8 @@ clGetCoinSum::Layout (802249FC) matches all 1060 text bytes and both EH sections
 Source: Codex worker c14_u45_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 820 B.
 
 EName3D ctor target EH identifies destructible Vec3c at +8. Empty inline ctor/dtor plus canonical dtor_80036E40 bridge restores member cleanup. GC/2.6 -rostr and -inline deferred, with reversed source definitions, restores pooling across name tables/vtable, saved registers and all 452B ctor instructions. Shared short SJIS strings must reference existing lbl_806DB680..B6B0 rather than emit duplicates. Default objdiff pool inference shows 99.91151% for second 13-entry table although actual relocations compare 100% with ppc_calculate_pool_relocations=false. Entire source-linked DOL SHA-1 exact, four original function addresses/sizes verified.
+
+## c14_u56_20261106
+Source: Codex worker c14_u56_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c14_u56: ranking_display 801D1EAC fresh90.60096 (2500B vs2496 target). Nontrivial iterator-return helper boundaries and separate UI-construction scopes each emit identical output; both reverted. Genuine nullable title-source getter replaces pre-existing no-op null assignment, byte-invariant. Residual shared name-table/vptr base pooling, iterator stack slots, allocation GPR webs and final panel flag/conversion scheduling. Singleton stays NonMatching; full fallback DOL SHA1 OK, zero native gain.

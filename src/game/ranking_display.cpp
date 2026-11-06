@@ -119,6 +119,10 @@ inline RankingPanel::RankingPanel(RankingFlow *owner, int i, unsigned char *slot
 static inline void SetTrack(RankingFlowTrack *t, float from, float to, float speed) {
     t->from = from; t->to = to; t->speed = speed; t->time = lbl_806D9FA8; t->value = from; t->active = 1;
 }
+static inline void *RankingTitleSource() {
+    if (lbl_806D10A0) return lbl_806D10A0;
+    return 0;
+}
 #pragma inline_max_size(10000)
 RankingFlow::RankingFlow() : CourseBase(), list() {
     world = new RankingWorld(lbl_8039C5BC);
@@ -176,8 +180,7 @@ RankingFlow::RankingFlow() : CourseBase(), list() {
             else name = lbl_8049B4A8.japanese[character];
             if ((slot[3] >> 7) & 1) name = (const char *)(slot + 0x16);
             int number = *(unsigned short *)(slot + 0x22);
-            void *titleSource = lbl_806D10A0;
-            if (titleSource == 0) titleSource = 0;
+            void *titleSource = RankingTitleSource();
             const char *title = get_title_name(titleSource, slot[0x26], slot[0x27], (slot[4] >> 4) & 15, slot[0x28]);
             if (!IsCardValid()) title = lbl_806D9FEC;
             RankingPanel *panel = new RankingPanel(this, i, slot, name, number, title);
