@@ -3,13 +3,15 @@ struct MarkerPart {
     unsigned char visible;
     float sx, sy, angle;
     float color[4];
-    void Set(float scale, float rotation, const float *rgb, float alpha) {
+    void SetScalar(float scale, float rotation, float red, float green, float blue, float alpha) {
         visible = 1; sy = scale; sx = scale; angle = rotation;
-        color[0] = rgb[0]; color[1] = rgb[1]; color[2] = rgb[2]; color[3] = alpha;
+        color[0] = red; color[1] = green; color[2] = blue; color[3] = alpha;
+    }
+    void Set(float scale, float rotation, const float *rgb, float alpha) {
+        SetScalar(scale, rotation, rgb[0], rgb[1], rgb[2], alpha);
     }
     void SetRGBA(float scale, float rotation, const float *rgba) {
-        visible = 1; sy = scale; sx = scale; angle = rotation;
-        color[0] = rgba[0]; color[1] = rgba[1]; color[2] = rgba[2]; color[3] = rgba[3];
+        SetScalar(scale, rotation, rgba[0], rgba[1], rgba[2], rgba[3]);
     }
     void Fade(float scale, float rotation, const float *rgb, float t) {
         sx += (scale - sx) * t; sy += (scale - sy) * t; angle = rotation;
