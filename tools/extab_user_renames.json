@@ -6758,6 +6758,8 @@
     "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/fn_801F9DA4.cpp": {
+    "@135": "@etb_80017740",
+    "@136": "@eti_80029120",
     "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"

@@ -2685,7 +2685,7 @@ config.libs = [
             Object(Matching, "game/fn_801CE918.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801F6F7C.c"),
             Object(NonMatching, "game/fn_801F9B64.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/fn_801F9DA4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_801F9DA4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801F9AAC.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801DBA34.c", mw_version="GC/2.6"),
             Object(Matching, "game/fn_801EC698.c", mw_version="GC/2.6"),

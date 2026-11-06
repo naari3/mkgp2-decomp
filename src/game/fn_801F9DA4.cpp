@@ -15,26 +15,28 @@ void JObj_Hide(clNormal3D *, HSD_JObj *, int);
 struct CourseObjSet {
     clNormal3D *objs[3][30];
     clNormal3D *extra[3];
-    CourseObjSet() {
+    CourseObjSet(const CourseRodata *pool) {
         for (int i = 0; i < 3; i++) {
+            clNormal3D **o;
             ObjEntry *e;
             if (ServiceEnable_Get() && !ServiceValue_Get()) e = lbl_804EBD50[i];
             else e = lbl_804EBD5C[i];
-            clNormal3D **o = objs[i];
+            o = objs[i];
             for (; e->id != -1; e++, o++) {
                 const void *desc = fn_8023D8F8(e->id);
                 if (desc) *o = new clNormal3D(desc, 1);
                 else *o = 0;
                 if (*o) Object_SetColorAlphaOnly(*o, 0, lbl_806DA7D8);
             }
-            extra[i] = new clNormal3D(lbl_803BF440.extra, 1);
-            JObj_Hide(extra[i], ResolveJointByName(extra[i], lbl_803BF440.joint), 0x10);
+            extra[i] = new clNormal3D(pool->extra, 1);
+            JObj_Hide(extra[i], ResolveJointByName(extra[i], pool->joint), 0x10);
         }
-        DebugPrintf(lbl_803BF440.ready);
+        DebugPrintf(pool->ready);
     }
 };
 extern "C" CourseObjSet *lbl_806D19B0;
 extern "C" CourseObjSet *fn_801F9DA4() {
-    if (!lbl_806D19B0) lbl_806D19B0 = new CourseObjSet;
+    const CourseRodata *pool = &lbl_803BF440;
+    if (!lbl_806D19B0) lbl_806D19B0 = new CourseObjSet(pool);
     return lbl_806D19B0;
 }

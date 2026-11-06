@@ -949,3 +949,8 @@ SpecialFaceMesh_Ctor 8007B878/204B: GC/2.6 alone invariant87.54902; src __restri
 Source: Codex worker c16_u28_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 332 B.
 
 RoundResult 8024F43C: changing static inline ShouldShowResult(PlayerData &pd) called with global to no-argument helper with local PlayerData *pd=&g_playerData restores cached r30 prologue/address and all saved GPRs, 86.90164 ->100% (244B). Move 8024F530 after it and split before 8024F588; DTK accepts forward EH cut. Prefix text332/EH16/index24 exact with @42/@43/@55/@56 bridges; full source-linked SHA1 exact. Getter original placement new text144 exact but missing DELETEPOINTER; standard class new emits EH but extra r5->r31 move,148B/95.27778%. Corresponding global placement delete gives catch/rethrow; out-of-class inline ctor is invariant. Getter remains NM; gain2fn/332B.
+
+## c16_u30_20261106
+Source: Codex worker c16_u30_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 352 B.
+
+fn_801F9DA4: passing a typed resource-pool pointer from getter entry scope into inline CourseObjSet constructor replaces separate hoisted extra/joint addresses and final pool rematerialization with target r31 base; fresh86.170456 ->99.375, source368 ->352B, owned EH exact. Declaring output cursor before entry cursor restores target r22/r23 and reaches100. Own @135/@136 bridges plus Matching promotion give full source-linked DOL SHA1 exact.
