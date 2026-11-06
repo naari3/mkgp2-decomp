@@ -76,6 +76,15 @@ int KartCharacterParam_GetIdentityIndex(BoostKart *);
 unsigned char FinalLapCoinJump_CheckActiveForObject(BoostKart *);
 
 #ifndef BOOST_FLAME_ONLY
+static inline void FreeBoostChildren(BoostPayload *payload) {
+    BoostPayload *walker = payload;
+    for (int i = 0; i < 3; ++i) {
+        DrawEffect_Free(walker->children[0]);
+        walker->children[0] = 0;
+        walker = (BoostPayload *)((unsigned char *)walker + 4);
+    }
+}
+
 void KartFx_Slot5C_TripleStreakTick(BoostEffect *effect) {
     BoostResources *resources = &lbl_80329E20;
     BoostPayload *payload = &effect->payload;
@@ -96,12 +105,7 @@ void KartFx_Slot5C_TripleStreakTick(BoostEffect *effect) {
     case 1: break;
     }
     if (effect->destroy) {
-        BoostPayload *walker = payload;
-        for (int i = 0; i < 3; ++i) {
-            DrawEffect_Free(walker->children[0]);
-            walker->children[0] = 0;
-            walker = (BoostPayload *)((unsigned char *)walker + 4);
-        }
+        FreeBoostChildren(payload);
         DrawEffect_Free(effect);
         return;
     }
