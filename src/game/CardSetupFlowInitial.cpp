@@ -10,12 +10,14 @@ FlowTask *fn_801FC1E0(int);
 void fn_8024AD8C(CardSetupFlow *self) {
     if (!Sci2Card_GetByteFlag1224()) {
         if (ServiceValue_Get()) {
+            int duration = lbl_806D1AB0;
             self->state = 2;
-            self->fader->Set(0, lbl_806D1AB0, (short)lbl_806D1AB0);
+            self->fader->Set(0, duration, (short)duration);
             clFlowKart_SetupTextLayout(self->kart, 6);
         } else if (Sci2Card_GetReceiptTestFlag()) {
+            int duration = lbl_806D1AB0;
             self->state = 2;
-            self->fader->Set(0, lbl_806D1AB0, (short)lbl_806D1AB0);
+            self->fader->Set(0, duration, (short)duration);
             clFlowKart_SetupTextLayout(self->kart, 7);
         } else {
             lbl_806D19B8 = 5;
