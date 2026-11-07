@@ -24,35 +24,35 @@ void MemoryManager_TimedFree(void *);
 
 static inline void UpdateRankingTransform(RankingSpriteOwnerView *self) {
     Mtx scale, rotate, translate;
-    self->value = self->from * (lbl_806D9FAC - self->time) + self->to * self->time;
+    self->value = self->from * (1.0f - self->time) + self->to * self->time;
     self->time += self->speed;
-    if (self->time > lbl_806D9FAC) self->time = lbl_806D9FAC;
-    PSMTXScale(scale, lbl_806DA004, lbl_806DA004, lbl_806DA004);
+    if (self->time > 1.0f) self->time = 1.0f;
+    PSMTXScale(scale, 0.45f, 0.45f, 0.45f);
     PSMTXTrans(translate, self->value, self->placement->y, self->placement->z);
     PSMTXIdentity(self->matrix);
     PSMTXConcat(scale, self->matrix, self->matrix);
-    PSMTXRotRad(rotate, 'x', lbl_806DA008 * self->placement->rx);
+    PSMTXRotRad(rotate, 'x', 0.017453292f * self->placement->rx);
     PSMTXConcat(rotate, self->matrix, self->matrix);
-    PSMTXRotRad(rotate, 'y', lbl_806DA008 * self->placement->ry);
+    PSMTXRotRad(rotate, 'y', 0.017453292f * self->placement->ry);
     PSMTXConcat(rotate, self->matrix, self->matrix);
     PSMTXConcat(translate, self->matrix, self->matrix);
-    RenderObj_ItemStateMachine_Timed(self->driver.p, 0, lbl_806D9FA8, lbl_806D9FA8);
+    RenderObj_ItemStateMachine_Timed(self->driver.p, 0, 0.0f, 0.0f);
 }
 
 extern "C" void fn_801D2F0C(RankingSpriteOwnerView *self) {
     float x = self->tracks[3].value;
     self->back.p->SetPos(x, self->y);
     self->front.p->SetPos(x, self->y);
-    self->mark.p->SetPos(lbl_806DA010 + x, self->y - lbl_806DA00C);
+    self->mark.p->SetPos(72.0f + x, self->y - 38.0f);
     fn_801F93EC(&self->text0, x + self->labelPos[0][0], self->y + self->labelPos[0][1]);
     fn_801F93EC(&self->text2, x + self->labelPos[1][0], self->y + self->labelPos[1][1]);
     fn_801F93EC(&self->text1, x + self->labelPos[2][0], self->y + self->labelPos[2][1]);
     fn_801F8E90(&self->text0);
     fn_801F8E90(&self->text2);
     fn_801F8E90(&self->text1);
-    Sprite_AdvanceAnim(self->back.p, lbl_806D9FC0);
-    Sprite_AdvanceAnim(self->front.p, lbl_806D9FC0);
-    Sprite_AdvanceAnim(self->mark.p, lbl_806D9FC0);
+    Sprite_AdvanceAnim(self->back.p, 0.0165f);
+    Sprite_AdvanceAnim(self->front.p, 0.0165f);
+    Sprite_AdvanceAnim(self->mark.p, 0.0165f);
     UpdateRankingTransform(self);
 }
 
@@ -75,25 +75,25 @@ extern "C" void fn_801D3118(RankingSpriteOwnerView *self) {
     ResCtrl ctrl;
     ctrl.resId = self->resource;
     ctrl.Show(self->labelPos[3][0] + self->tracks[3].value,
-              self->y + self->labelPos[3][1], lbl_806D9FAC);
-    if (self->alternate == 0) ctrl.SetScaleXY(lbl_806D6DE4, lbl_806D6DE8);
+              self->y + self->labelPos[3][1], 1.0f);
+    if (self->alternate == 0) ctrl.SetScaleXY(0.45410156f, 0.4947917f);
     fn_8011FAFC(&ctrl, 6);
     if (self->labelB >= 0) {
         fn_80121E10(&ctrl);
         ctrl.resId = self->labelB;
         ctrl.Show(self->labelPos[3][0] + self->tracks[3].value,
-                  self->y + self->labelPos[3][1], lbl_806D9FAC);
-        ctrl.SetScaleXY(lbl_806DA014, lbl_806DA018);
+                  self->y + self->labelPos[3][1], 1.0f);
+        ctrl.SetScaleXY(0.6888889f, 0.6972477f);
         fn_8011FAFC(&ctrl, 6);
     }
     if (self->labelA >= 0) {
         fn_80121E10(&ctrl);
         ctrl.resId = self->labelA;
-        float offset = lbl_806D9FA8;
-        if (self->labelVariant == 0) offset = lbl_806DA01C;
+        float offset = 0.0f;
+        if (self->labelVariant == 0) offset = 6.8888893f;
         ctrl.Show(self->labelPos[3][0] + self->tracks[3].value,
-                  (self->y + self->labelPos[3][1]) - offset, lbl_806D9FAC);
-        ctrl.SetScale(lbl_806DA014);
+                  (self->y + self->labelPos[3][1]) - offset, 1.0f);
+        ctrl.SetScale(0.6888889f);
         fn_8011FAFC(&ctrl, 6);
     }
     fn_801A0004(self->front.p);
@@ -101,8 +101,8 @@ extern "C" void fn_801D3118(RankingSpriteOwnerView *self) {
 }
 
 extern "C" void fn_801D3354(RankingTrack *self) {
-    self->speed = lbl_806D9FA8;
-    self->time = lbl_806D9FA8;
+    self->speed = 0.0f;
+    self->time = 0.0f;
 }
 
 extern "C" void *fn_801D3364(RankingSpriteOwnerView *self, short flag) {
