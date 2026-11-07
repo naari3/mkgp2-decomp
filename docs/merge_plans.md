@@ -84,25 +84,20 @@ the table reads in fn_801540E0 (docs/gave_up.md). The target forms
 `addi rB, base, OFF; lwzx/add rX, rB, idx`; any `pool+OFF` we write is reassociated to
 `add; lwz OFF(r)`.
 
-Finding (2026-11-07, asm→C (A) thread): **only GC/1.2.5n pools separate `static const`
-arrays** into one `...rodata.0` object and addresses them as `base + off`. GC/1.3, 1.3.2,
-2.0 and 2.6 emit one `lis/addi` per object (tested with `-sdata 0`, `pool_data`,
-`-inline deferred`, `defer_codegen`). Test: two statics `sA[100]`, `sB[48]`;
-1.2.5n gives `addi r7, ...rodata.0@l; add r6, r7, idx; lwz 0x190(r6)`.
+Finding (2026-11-07, asm→C (A) thread, corrected): GC/2.6 (and 1.3.x) DO anchor
+separate statics on `...rodata.0` (`addi r30, ...rodata.0@l; addi r29, r30, 0x190`), but
+only when the function uses the objects often enough (a loop with three tables did; one
+or two reads in a tiny function give one `lis/addi` per object). GC/1.2.5n anchors even
+tiny cases, but switching these TUs to it breaks them, so stay on 2.6. This matches the
+section-anchor recipe in setup/TIPS.md (CoursePropCtor fn_8016E568).
 
 Plan:
-1. Check that the current matched functions of these TUs still match under GC/1.2.5n
-   (they are on GC/2.6 now, so this is the big risk). If not, the pool owner may be
-   only one TU, and the others keep `extern` references to it.
-2. Merge the referencing TUs into one TU that owns `.rodata 0x80362778..0x803678D8`
-   (RaceHud's own 0x80362778..0x80362858 included) and define every pool object as a
-   file `static const`, in address order.
+1. Merge the referencing TUs into one TU that owns `.rodata 0x80362778..0x803678D8`
+   (RaceHud's own 0x80362778..0x80362858 included) and define every pool object in it,
+   in address order with exact bytes. Objects other TUs use keep their `lbl_` names.
+2. Check that the already matched functions still match after the merge (they now
+   reference the objects by name, and CW may anchor them too).
 3. Then convert fn_8014ADB4, fn_8015061C and fn_801540E0 against the pooled tables.
-
-Quick check: rebuilding SceneFactory_8014D540.cpp with GC/1.2.5n changes ~500 asm lines,
-and RaceHud/Scene_8014E0C4 do not even compile with it, so a plain compiler switch is out.
-The original probably used another way to pool (or a 1.2.5n-era build with other flags);
-find it before merging.
 
 Status: not started. The TUs are not claimed by onmokoworks (checked 2026-11-07), but the
 1.2.5n switch touches ~9 TUs, so do it as one dedicated job.
