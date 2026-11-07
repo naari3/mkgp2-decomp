@@ -84,11 +84,17 @@ struct InputPlayer {
 };
 
 struct SuikaBallObj {
-    char pad0[0x38];
+    void *archive;          /* 0x00 */
+    char pad4[0x34];
     Vec3 pos;               /* 0x38 */
     char pad44[0x60 - 0x44];
     unsigned char hit;      /* 0x60 */
     unsigned char goal;     /* 0x61 */
+    char pad62[2];
+    float x64, x68, x6C, x70, x74, x78;
+    SuikaBallObj(const char *file);
+    void SetPos(float x, float y, float z) { pos.x = x; pos.y = y; pos.z = z; }
+    void SetParams(float a, float b, float c, float d, float e, float f) { x64 = a; x68 = b; x6C = c; x70 = d; x74 = e; x78 = f; }
 };
 
 struct Gate {
@@ -275,7 +281,7 @@ void MemoryManager_TimedFree(void *p);
 void Object_DtorWithGXSync(void *o, int flag);
 void RankingTable_Init(void *ctx);
 extern void SceneDrawList_Reset();
-void SetActiveCamera(void *cam, int flag);
+void SetActiveCamera(int idx, void *cam);
 void SetPlayerCarObject(void *car);
 void SetResourceLoadingFlag(int flag);
 extern void VfxSlotMgr_Shutdown();
@@ -288,64 +294,47 @@ void fn_80254134(void *p, int flag);
 extern void *g_raceCamera;
 extern Deletable *lbl_806D10D0;
 extern char lbl_8048E3F8[];
-extern void Alloc();
-extern void Archive_GetRootJObj();
-extern void Camera_Create();
-extern void CarObject_Init();
-extern void CarObject_SetPosition();
-extern void ChallengeGoalCamera_Init();
-extern void CourseObjectManager_Init();
-extern void DMAChannelManager_Init();
-extern void DrawManager_GetOrCreate();
-extern void FUN_8003b120();
-extern void GameMode_BaseInit();
-extern void GetCourseDataPtr();
-extern void GetCourseStartYaw();
-extern void GetDisplayBufferIndex();
-extern void GetKartModelNameEntry();
-extern void GetStartPosition();
-extern void HSD_JObjSetFlags();
-extern void HSD_LObjLoadDesc();
-extern void HUD_Init();
-extern void HUD_RegisterOverlay();
-extern void InputManager_Init();
-extern void ItemObjectManager_Init();
-extern void LakituStart_Init();
-extern void MiniGame_GetCourseData();
-extern void MiniGame_GetTimerValue();
-extern void PreloadEffectResources();
-extern void ProcessSystemTick();
-extern void ResolveJointByName();
-extern void Scene3D_GetCameraPos();
-extern void Scene3D_Init();
-extern void Scene3D_SetupProjection();
-extern void SceneRender_CmdB_8aa20();
-extern void SetCourseScene3D();
-extern void SoundChannels_ClearAll();
-extern void SoundDriver_GetOrCreate();
-extern void SuikaBallObj_Init();
-extern void TransitionEffect_GetOrCreate();
-extern void Vec3_Normalize();
-extern void WeatherSystem_Init();
-extern void clNormal3D_Construct();
-extern void clNormal3D_SetFlags();
-extern void clNormal3D_SetScale();
-extern void fn_8018F614();
-extern void fn_8018FEAC();
-extern unsigned int g_characterId;
-extern unsigned int lbl_806D12BC;
+extern const float lbl_806D72FC;
+extern const float lbl_806D72F8;
+extern const float lbl_806D7300;
+extern const float lbl_806D7304;
+extern int g_characterId;
+extern int lbl_806D12BC;
+void DrawManager_GetOrCreate(void);
+void DMAChannelManager_Init(void);
+void TransitionEffect_GetOrCreate(void);
+void SoundChannels_ClearAll(void);
+void ItemObjectManager_Init(void);
+void CourseObjectManager_Init(void);
+void GetCourseDataPtr(void);
+int HSD_LObjLoadDesc(void);
+void ProcessSystemTick(int arg);
+void SoundDriver_GetOrCreate(int arg);
+int GetDisplayBufferIndex(void);
+void GetStartPosition(int idx, float *x, float *y, float *z);
+float GetCourseStartYaw(void);
+int *GetKartModelNameEntry(int chara, int arg);
+void Scene3D_GetCameraPos(void *scene, float *a, float *b);
+void Scene3D_SetupProjection(void *scene, float a, float b);
+void HUD_RegisterOverlay(void *hud, int id, int arg);
+void SetCourseScene3D(void *scene);
+int MiniGame_GetTimerValue(void);
+void PreloadEffectResources(int id);
+float *MiniGame_GetCourseData(void);
+void clNormal3D_SetFlags(void *o, unsigned int flags, int arg);
+void *Archive_GetRootJObj(void *o);
+void HSD_JObjSetFlags(void *jobj, unsigned int flags);
+extern const float lbl_806D7308;
+extern const float lbl_806D730C;
+extern const float lbl_806D7310;
+extern const float lbl_806D7314;
+void CarObject_SetPosition(void *car, Vec3 *pos);
+void clNormal3D_SetScale(void *obj, int arg, float a, float b, float c, float d);
+void *FUN_8003b120(unsigned long size);
+void *ResolveJointByName(void *obj, const char *name);
+void SceneRender_CmdB_8aa20(void *cam, void *jobj);
+void Vec3_Normalize(Vec3 *src, Vec3 *dst);
 extern const float lbl_806D729C;
-extern unsigned int lbl_806D72A8;
-extern unsigned int lbl_806D72F8;
-extern unsigned int lbl_806D72FC;
-extern unsigned int lbl_806D7300;
-extern unsigned int lbl_806D7304;
-extern unsigned int lbl_806D7308;
-extern unsigned int lbl_806D730C;
-extern unsigned int lbl_806D7310;
-extern unsigned int lbl_806D7314;
-extern unsigned int lbl_80357008[];
-extern unsigned int lbl_8048E144[];
 extern void *lbl_8048E34C[];
 extern void *lbl_8048E418[];
 struct LNode *LinkedNode_GetField10_OrFallback(void *o, int idx);
@@ -367,7 +356,6 @@ extern float lbl_80495A94[];
 void SuikaBall_Render(SuikaBall *self);
 int SuikaBall_Update(SuikaBall *self);
 struct SuikaBall *fn_80133008(struct SuikaBall *self, short flag);
-asm void SuikaBall_Init(void);
 void fn_80133CA8(ShotOwner *self);
 void fn_80133E64(ShotOwner *self);
 ModelPair *fn_80134164(ModelPair *self, short flag);
@@ -375,7 +363,6 @@ ModelPair *fn_80134164(ModelPair *self, short flag);
 #pragma section R ".extab_user"
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; unsigned int f45; unsigned int f46; unsigned int f47; unsigned int f48; unsigned int f49; unsigned int f50; unsigned int f51; unsigned int f52; unsigned int f53; unsigned int f54; unsigned int f55; unsigned int f56; unsigned int f57; unsigned int f58; unsigned int f59; unsigned int f60; unsigned int f61; unsigned int f62; unsigned int f63; unsigned int f64; unsigned int f65; unsigned int f66; unsigned int f67; unsigned int f68; unsigned int f69; unsigned int f70; unsigned int f71; unsigned int f72; unsigned int f73; unsigned int f74; unsigned int f75; unsigned int f76; unsigned int f77; unsigned int f78; void *f79; unsigned int f80; unsigned int f81; void *f82; unsigned int f83; void *f84; unsigned int f85; unsigned int f86; void *f87; unsigned int f88; void *f89; unsigned int f90; unsigned int f91; void *f92; unsigned int f93; void *f94; unsigned int f95; unsigned int f96; void *f97; unsigned int f98; void *f99; unsigned int f100; unsigned int f101; void *f102; unsigned int f103; void *f104; unsigned int f105; unsigned int f106; void *f107; unsigned int f108; void *f109; unsigned int f110; unsigned int f111; void *f112; unsigned int f113; void *f114; unsigned int f115; unsigned int f116; void *f117; unsigned int f118; void *f119; unsigned int f120; unsigned int f121; void *f122; unsigned int f123; void *f124; unsigned int f125; unsigned int f126; void *f127; unsigned int f128; void *f129; unsigned int f130; unsigned int f131; void *f132; unsigned int f133; void *f134; unsigned int f135; unsigned int f136; void *f137; unsigned int f138; void *f139; unsigned int f140; unsigned int f141; void *f142; unsigned int f143; void *f144; unsigned int f145; void *f146; unsigned int f147; unsigned int f148; void *f149; unsigned int f150; void *f151; unsigned int f152; unsigned int f153; void *f154; unsigned int f155; void *f156; unsigned int f157; unsigned int f158; void *f159; unsigned int f160; void *f161; unsigned int f162; unsigned int f163; void *f164; } extab_SuikaBall_Init = { 0x504A0000, 0x00000054, 0x000B0140, 0x0000008C, 0x00000138, 0x00000094, 0x00040140, 0x000000C4, 0x0000014C, 0x000000D4, 0x00110140, 0x00000128, 0x00100160, 0x00000178, 0x00080140, 0x000001B8, 0x00000174, 0x000001C4, 0x00000140, 0x000001D8, 0x00040188, 0x000001F4, 0x00000140, 0x00000200, 0x0000019C, 0x0000020C, 0x000D0140, 0x00000250, 0x000001B0, 0x00000264, 0x002F0140, 0x00000330, 0x000001C4, 0x00000378, 0x00150140, 0x000003D8, 0x000001D8, 0x000003E4, 0x00000140, 0x000003F0, 0x000001EC, 0x000003FC, 0x00000140, 0x000004A0, 0x00030200, 0x000004D4, 0x00080140, 0x00000508, 0x00000214, 0x00000528, 0x00020140, 0x00000544, 0x00000228, 0x00000564, 0x00290140, 0x00000638, 0x00000244, 0x0000064C, 0x0000023C, 0x00000660, 0x00020244, 0x0000067C, 0x00000258, 0x00000688, 0x00020244, 0x000007DC, 0x00000140, 0x000007FC, 0x0000026C, 0x00000874, 0x00030264, 0x000008D4, 0x00000140, 0x000008E4, 0x00000280, 0x000008F0, 0x00000140, 0x00000000, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x01000244, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A800016, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8 };
 
 
 
@@ -383,9 +370,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 #pragma section R ".extabindex_user"
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_SuikaBall_Init = {
-    (void *)&SuikaBall_Init, 0x00000910, (void *)&extab_SuikaBall_Init
-};
 
 
 
@@ -395,6 +379,129 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
+
+/* .rodata pool 0x80357008..0x80357B00, defined before its first use */
+struct JointSetDesc {
+    const char *model;
+    const char *setModel;
+    const char *const *joints;
+    int count;
+};
+extern "C" const unsigned int lbl_80357008[0x102] = {
+    0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000,
+    0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000,
+    0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000,
+    0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000,
+    0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
+    0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000,
+    0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000,
+    0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000,
+    0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000,
+    0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
+    0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x00000000,
+};
+extern "C" const char lbl_80357410[] = "MH_challenge_kino_a_joint";
+extern "C" const char lbl_8035742C[] = "MH_challenge_kino_set_a1_joint";
+extern "C" const char lbl_8035744C[] = "MH_challenge_kino_set_a2_joint";
+extern "C" const char lbl_8035746C[] = "MH_challenge_kino_set_a3_joint";
+extern "C" const char lbl_8035748C[] = "MH_challenge_kino_b_joint";
+extern "C" const char lbl_803574A8[] = "MH_challenge_kino_set_b1_joint";
+extern "C" const char lbl_803574C8[] = "MH_challenge_kino_set_b2_joint";
+extern "C" const char lbl_803574E8[] = "MH_challenge_kino_set_b3_joint";
+extern "C" const char lbl_80357508[] = "MH_challenge_kino_c_joint";
+extern "C" const char lbl_80357524[] = "MH_challenge_kino_set_c1_joint";
+extern "C" const char lbl_80357544[] = "MH_challenge_kino_set_c2_joint";
+extern "C" const char lbl_80357564[] = "MH_challenge_kino_d_joint";
+extern "C" const char lbl_80357580[] = "MH_challenge_kino_set_d1_joint";
+extern "C" const char lbl_803575A0[] = "MH_challenge_kino_set_d2_joint";
+extern "C" const char *const lbl_803575C0[20] = {
+    lbl_80357410, lbl_8035742C, lbl_80357410, lbl_8035744C, lbl_80357410, lbl_8035746C, lbl_8035748C, lbl_803574A8, lbl_8035748C, lbl_803574C8, lbl_8035748C, lbl_803574E8, lbl_80357508, lbl_80357524, lbl_80357508, lbl_80357544, lbl_80357564, lbl_80357580, lbl_80357564, lbl_803575A0,
+};
+extern "C" const char lbl_80357610[] = "MH_challenge_monte_a_joint";
+extern "C" const char lbl_8035762C[] = "MH_challenge_monte_set_a1_joint";
+extern "C" const char lbl_8035764C[] = "MH_challenge_monte_set_a2_joint";
+extern "C" const char lbl_8035766C[] = "MH_challenge_monte_set_a3_joint";
+extern "C" const char lbl_8035768C[] = "MH_challenge_monte_b_joint";
+extern "C" const char lbl_803576A8[] = "MH_challenge_monte_set_b1_joint";
+extern "C" const char lbl_803576C8[] = "MH_challenge_monte_set_b2_joint";
+extern "C" const char lbl_803576E8[] = "MH_challenge_monte_set_b3_joint";
+extern "C" const char *const lbl_80357708[12] = {
+    lbl_80357610, lbl_8035762C, lbl_80357610, lbl_8035764C, lbl_80357610, lbl_8035766C, lbl_8035768C, lbl_803576A8, lbl_8035768C, lbl_803576C8, lbl_8035768C, lbl_803576E8,
+};
+extern "C" const char lbl_80357738[] = "MH_challenge_poihana_a_joint";
+extern "C" const char lbl_80357758[] = "MH_challenge_poihana_set_a1_joint";
+extern "C" const char lbl_8035777C[] = "MH_challenge_poihana_set_a2_joint";
+extern "C" const char lbl_803577A0[] = "MH_challenge_poihana_set_a3_joint";
+extern "C" const char lbl_803577C4[] = "MH_challenge_poihana_b_joint";
+extern "C" const char lbl_803577E4[] = "MH_challenge_poihana_set_b1_joint";
+extern "C" const char lbl_80357808[] = "MH_challenge_poihana_c_joint";
+extern "C" const char lbl_80357828[] = "MH_challenge_poihana_set_c1_joint";
+extern "C" const char lbl_8035784C[] = "MH_challenge_poihana_d_joint";
+extern "C" const char lbl_8035786C[] = "MH_challenge_poihana_set_d1_joint";
+extern "C" const char lbl_80357890[] = "MH_challenge_poihana_set_d2_joint";
+extern "C" const char lbl_803578B4[] = "MH_challenge_poihana_set_d3_joint";
+extern "C" const char *const lbl_803578D8[16] = {
+    lbl_80357738, lbl_80357758, lbl_80357738, lbl_8035777C, lbl_80357738, lbl_803577A0, lbl_803577C4, lbl_803577E4, lbl_80357808, lbl_80357828, lbl_8035784C, lbl_8035786C, lbl_8035784C, lbl_80357890, lbl_8035784C, lbl_803578B4,
+};
+extern "C" const char lbl_80357918[] = "MH_challenge_kinopio.dat";
+extern "C" const char lbl_80357934[] = "MH_challenge_kinopio_set.dat";
+extern "C" const char lbl_80357954[] = "MH_challenge_monte.dat";
+extern "C" const char lbl_8035796C[] = "MH_challenge_monte_set.dat";
+extern "C" const char lbl_80357988[] = "MH_challenge_poihana.dat";
+extern "C" const char lbl_803579A4[] = "MH_challenge_poihana_set.dat";
+static const JointSetDesc s_jointSets[3] = {
+    { lbl_80357918, lbl_80357934, lbl_803575C0, 10 },
+    { lbl_80357954, lbl_8035796C, lbl_80357708, 6 },
+    { lbl_80357988, lbl_803579A4, lbl_803578D8, 8 },
+};
+extern "C" const Vec3 lbl_803579F4[4][2] = {
+    { { 1603.87f, 0.0f, 875.05f }, { 1659.19f, 0.0f, 958.76f } },
+    { { 1166.56f, 0.0f, 949.29f }, { 1142.48f, 0.0f, 1045.98f } },
+    { { 648.89f, 0.0f, 991.32f }, { 684.98f, 0.0f, 1083.0f } },
+    { { 313.91f, 0.0f, 960.16f }, { 260.2f, 0.0f, 1042.56f } },
+};
+extern "C" const char lbl_80357A54[] = "clCGameMR";
+extern "C" const char lbl_80357A60[] = "clJobRunner";
+extern "C" const char lbl_80357A6C[] = "Start to MRCoin.  %s - %d\n";
+extern "C" const char lbl_80357A88[] = "CGameCoin.hpp";
+static const char s_lakituFile[20] = "jyugemu_start.dat";
+static const char s_ballFile[20] = "MRO_suikaball.dat";
+static const char s_coinFile[16] = "mario_coin.dat";
+static const char s_kiraFile[16] = "k_kira13.dat";
+extern "C" const char lbl_80357AE0[] = "clCGameCoinBase";
+extern "C" const char lbl_80357AF0[] = "clCGameMRCoin";
 
 #include "game/singleton.h"
 
@@ -944,616 +1051,264 @@ extern "C" SuikaBall *fn_80133008(SuikaBall *self, short flag)
     return self;
 }
 
-extern "C" asm void SuikaBall_Init(void) { /* 0x80133398 size:0x910 */
-    nofralloc
-    stwu r1, -0xb0(r1)
-    mflr r0
-    stw r0, 0xb4(r1)
-    stfd f31, 0xa0(r1)
-    psq_st f31, 0xa8(r1), 0, 0
-    stmw r22, 0x78(r1)
-    mr r31, r3
-    lis r4, lbl_80357008@ha
-    mr r0, r31
-    mr r22, r0
-    addi r30, r4, lbl_80357008@l
-    bl GameMode_BaseInit
-    lis r4, lbl_8048E144@ha
-    lis r3, lbl_8048E3F8@ha
-    addi r0, r4, lbl_8048E144@l
-    lfs f0, lbl_806D72B8(r2)
-    stw r0, 0x0(r22)
-    addi r0, r3, lbl_8048E3F8@l
-    stfs f0, 0x4(r22)
-    stw r0, 0x0(r31)
-    bl MiniGame_GetCourseData
-    stw r3, 0x8(r31)
-    bl DrawManager_GetOrCreate
-    li r3, 0x0
-    bl SetResourceLoadingFlag
-    bl DMAChannelManager_Init
-    bl TransitionEffect_GetOrCreate
-    bl SoundChannels_ClearAll
-    bl ItemObjectManager_Init
-    bl CourseObjectManager_Init
-    li r3, 0x37c
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_80133424
-    bl InputManager_Init
-    SuikaBall_Init_L_80133424:
-    stw r22, 0x14(r31)
-    bl GetCourseDataPtr
-    bl HSD_LObjLoadDesc
-    stw r3, 0x24(r31)
-    li r3, 0x2c
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_8013345C
-    lfs f1, lbl_806D72F8(r2)
-    li r4, 0x100
-    lfs f2, lbl_806D72B4(r2)
-    li r5, 0x100
-    lwz r6, 0x24(r31)
-    bl Camera_Create
-    SuikaBall_Init_L_8013345C:
-    stw r22, 0x20(r31)
-    li r3, 0x0
-    lwz r4, 0x20(r31)
-    bl SetActiveCamera
-    lwz r0, 0x20(r31)
-    li r3, 0x0
-    stw r0, g_raceCamera(r13)
-    bl ProcessSystemTick
-    bl GetRaceContextPtr
-    bl RankingTable_Init
-    li r0, 0x0
-    li r3, 0x0
-    stw r0, lbl_806D12BC(r13)
-    bl SoundDriver_GetOrCreate
-    addi r6, r1, 0x68
-    addi r4, r1, 0x60
-    addi r5, r1, 0x64
-    li r3, 0x0
-    bl GetStartPosition
-    li r3, 0x118
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_80133500
-    lwz r26, g_characterId(r13)
-    bl GetCourseStartYaw
-    fmr f31, f1
-    bl GetDisplayBufferIndex
-    li r0, 0x0
-    mr r4, r3
-    stw r0, 0x8(r1)
-    fmr f3, f31
-    mr r3, r22
-    mr r5, r26
-    lfs f1, 0x60(r1)
-    li r6, 0x0
-    lfs f2, 0x68(r1)
-    li r7, 0x0
-    li r8, 0x1
-    li r9, 0x0
-    li r10, 0x0
-    bl CarObject_Init
-    SuikaBall_Init_L_80133500:
-    stw r22, 0xc(r31)
-    addi r4, r1, 0x60
-    lwz r3, 0xc(r31)
-    bl CarObject_SetPosition
-    lwz r3, 0xc(r31)
-    bl CarObject_GetRenderObj
-    li r0, 0x1
-    stw r0, 0x238(r3)
-    lwz r3, 0xc(r31)
-    bl SetPlayerCarObject
-    li r3, 0x58
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_80133550
-    lfs f1, lbl_806D72B8(r2)
-    addi r4, r30, 0xa90
-    li r5, 0x0
-    fmr f2, f1
-    fmr f3, f1
-    bl LakituStart_Init
-    SuikaBall_Init_L_80133550:
-    stw r22, 0x10(r31)
-    li r3, 0x3084
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_80133580
-    lwz r3, g_characterId(r13)
-    li r4, -0x1
-    bl GetKartModelNameEntry
-    mr r4, r3
-    mr r3, r22
-    lwz r4, 0x0(r4)
-    bl Scene3D_Init
-    SuikaBall_Init_L_80133580:
-    stw r22, 0x18(r31)
-    li r3, 0x8
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_80133598
-    bl ChallengeGoalCamera_Init
-    SuikaBall_Init_L_80133598:
-    stw r22, 0x1c(r31)
-    li r3, 0x0
-    bl ProcessSystemTick
-    lwz r3, 0x18(r31)
-    addi r4, r1, 0x14
-    addi r5, r1, 0x10
-    bl Scene3D_GetCameraPos
-    lfs f1, 0x14(r1)
-    lfs f0, lbl_806D729C(r2)
-    lfs f2, 0x10(r1)
-    fadds f1, f1, f0
-    stfs f1, 0x14(r1)
-    lwz r3, 0x18(r31)
-    bl Scene3D_SetupProjection
-    li r3, 0x80
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_801335E8
-    li r4, 0x0
-    bl HUD_Init
-    SuikaBall_Init_L_801335E8:
-    stw r22, 0x2c(r31)
-    li r4, 0x6
-    li r5, 0x0
-    lwz r3, 0x2c(r31)
-    bl HUD_RegisterOverlay
-    lwz r3, 0x2c(r31)
-    li r4, 0x11
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    lwz r3, 0x2c(r31)
-    li r4, 0x12
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    lwz r3, 0x2c(r31)
-    li r4, 0xe
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    li r0, 0x0
-    stb r0, g_lakituStartAnimDone(r13)
-    lwz r3, 0x18(r31)
-    bl SetCourseScene3D
-    li r0, 0x0
-    stb r0, g_raceEnded(r13)
-    bl MiniGame_GetTimerValue
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x74(r1)
-    li r3, 0x1
-    lfd f1, lbl_806D72A8(r2)
-    stw r0, 0x70(r1)
-    lfd f0, 0x70(r1)
-    fsubs f0, f0, f1
-    stfs f0, g_raceTimeRemaining(r13)
-    bl PreloadEffectResources
-    li r3, 0x9
-    bl PreloadEffectResources
-    li r3, 0xa
-    bl PreloadEffectResources
-    li r0, 0x0
-    lfs f1, lbl_806D72A4(r2)
-    stb r0, 0x30(r31)
-    li r3, 0x7c
-    lfs f0, lbl_806D72B8(r2)
-    stb r0, 0x32(r31)
-    stb r0, 0x33(r31)
-    stw r0, 0x34(r31)
-    stb r0, 0x31(r31)
-    stfs f1, 0x4c(r31)
-    stfs f0, 0x50(r31)
-    stfs f0, 0x54(r31)
-    stfs f0, 0x58(r31)
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_801336C8
-    addi r4, r30, 0xaa4
-    bl SuikaBallObj_Init
-    SuikaBall_Init_L_801336C8:
-    cmplwi r22, 0x0
-    stw r22, 0x3c(r31)
-    beq SuikaBall_Init_L_8013375C
-    lwz r3, 0x3c(r31)
-    lfs f0, lbl_806D72FC(r2)
-    lfs f1, lbl_806D7300(r2)
-    stfs f0, 0x38(r3)
-    lfs f0, lbl_806D7304(r2)
-    stfs f1, 0x3c(r3)
-    stfs f0, 0x40(r3)
-    lwz r23, g_raceCamera(r13)
-    cmplwi r23, 0x0
-    beq SuikaBall_Init_L_8013371C
-    lwz r3, 0x3c(r31)
-    lwz r3, 0x0(r3)
-    cmplwi r3, 0x0
-    beq SuikaBall_Init_L_8013371C
-    bl Archive_GetRootJObj
-    mr r4, r3
-    mr r3, r23
-    bl SceneRender_CmdB_8aa20
-    SuikaBall_Init_L_8013371C:
-    lwz r4, 0x8(r31)
-    cmplwi r4, 0x0
-    beq SuikaBall_Init_L_8013375C
-    lfs f5, 0x14(r4)
-    lfs f4, 0x10(r4)
-    lfs f3, 0xc(r4)
-    lfs f2, 0x8(r4)
-    lfs f1, 0x4(r4)
-    lwz r3, 0x3c(r31)
-    lfs f0, 0x0(r4)
-    stfs f0, 0x64(r3)
-    stfs f1, 0x68(r3)
-    stfs f2, 0x6c(r3)
-    stfs f3, 0x70(r3)
-    stfs f4, 0x74(r3)
-    stfs f5, 0x78(r3)
-    SuikaBall_Init_L_8013375C:
-    li r3, 0xc
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_80133770
-    bl fn_8018FEAC
-    SuikaBall_Init_L_80133770:
-    stw r22, 0x44(r31)
-    li r3, 0x10
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_80133788
-    bl fn_8018F614
-    SuikaBall_Init_L_80133788:
-    stw r22, 0x48(r31)
-    li r3, 0x30
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_80133860
-    lfs f0, lbl_806D7308(r2)
-    mr r4, r22
-    lfs f2, lbl_806D7300(r2)
-    addi r3, r22, 0xc
-    stfs f0, 0x30(r1)
-    addi r5, r22, 0x18
-    lfs f0, lbl_806D730C(r2)
-    stfs f2, 0x34(r1)
-    lwz r0, 0x30(r1)
-    stfs f0, 0x38(r1)
-    lfs f0, lbl_806D7310(r2)
-    stw r0, 0x48(r1)
-    lwz r6, 0x34(r1)
-    stfs f0, 0x3c(r1)
-    lwz r0, 0x38(r1)
-    stw r6, 0x4c(r1)
-    lfs f1, 0x48(r1)
-    stfs f2, 0x40(r1)
-    lfs f0, lbl_806D7314(r2)
-    stw r0, 0x50(r1)
-    lwz r0, 0x3c(r1)
-    stfs f0, 0x44(r1)
-    lwz r6, 0x40(r1)
-    stw r0, 0x54(r1)
-    lwz r0, 0x44(r1)
-    stw r6, 0x58(r1)
-    lfs f0, 0x4c(r1)
-    stfs f1, 0x0(r22)
-    lfs f1, 0x50(r1)
-    stfs f0, 0x4(r22)
-    lfs f0, 0x54(r1)
-    stfs f1, 0x8(r22)
-    lfs f1, 0x58(r1)
-    stw r0, 0x5c(r1)
-    stfs f0, 0xc(r22)
-    lfs f0, 0x5c(r1)
-    stfs f1, 0x10(r22)
-    stfs f0, 0x14(r22)
-    bl Vec3_Subtract
-    addi r3, r22, 0x18
-    mr r4, r3
-    bl Vec3_Normalize
-    lfs f0, 0x20(r22)
-    fneg f0, f0
-    stfs f0, 0x24(r22)
-    lfs f0, 0x1c(r22)
-    stfs f0, 0x28(r22)
-    lfs f0, 0x18(r22)
-    stfs f0, 0x2c(r22)
-    SuikaBall_Init_L_80133860:
-    stw r22, 0x40(r31)
-    li r3, 0x3c
-    bl FUN_8003b120
-    stw r3, 0x5c(r31)
-    addi r28, r30, 0x9bc
-    li r27, 0x0
-    li r29, 0x0
-    SuikaBall_Init_L_8013387C:
-    lwz r0, 0x5c(r31)
-    li r3, 0x5c
-    add r26, r0, r29
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_801338A0
-    lwz r4, 0x0(r28)
-    li r5, 0x0
-    bl clNormal3D_Construct
-    SuikaBall_Init_L_801338A0:
-    lfs f1, lbl_806D72B8(r2)
-    li r4, 0x0
-    stw r22, 0x0(r26)
-    fmr f3, f1
-    lfs f2, lbl_806D72A4(r2)
-    fmr f4, f1
-    lwz r3, 0x0(r26)
-    bl clNormal3D_SetScale
-    li r3, 0x5c
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_801338DC
-    lwz r4, 0x4(r28)
-    li r5, 0x0
-    bl clNormal3D_Construct
-    SuikaBall_Init_L_801338DC:
-    lfs f1, lbl_806D72B8(r2)
-    li r4, 0x0
-    stw r22, 0x4(r26)
-    fmr f3, f1
-    lfs f2, lbl_806D72A4(r2)
-    fmr f4, f1
-    lwz r3, 0x4(r26)
-    bl clNormal3D_SetScale
-    lwz r0, 0xc(r28)
-    stw r0, 0x10(r26)
-    lwz r0, 0x10(r26)
-    slwi r3, r0, 2
-    bl FUN_8003b120
-    stw r3, 0x8(r26)
-    lwz r0, 0x10(r26)
-    slwi r3, r0, 2
-    bl FUN_8003b120
-    li r25, 0x0
-    stw r3, 0xc(r26)
-    mr r24, r25
-    addi r23, r28, 0x8
-    li r22, 0x0
-    b SuikaBall_Init_L_80133978
-    SuikaBall_Init_L_80133938:
-    lwz r4, 0x0(r23)
-    lwz r3, 0x0(r26)
-    lwzx r4, r4, r25
-    bl ResolveJointByName
-    lwz r5, 0x8(r26)
-    addi r0, r25, 0x4
-    lwz r4, 0x0(r23)
-    stwx r3, r5, r24
-    lwz r3, 0x4(r26)
-    lwzx r4, r4, r0
-    bl ResolveJointByName
-    lwz r4, 0xc(r26)
-    addi r25, r25, 0x8
-    addi r22, r22, 0x1
-    stwx r3, r4, r24
-    addi r24, r24, 0x4
-    SuikaBall_Init_L_80133978:
-    lwz r0, 0x10(r26)
-    cmpw r22, r0
-    blt SuikaBall_Init_L_80133938
-    addi r27, r27, 0x1
-    addi r28, r28, 0x10
-    cmplwi r27, 0x3
-    addi r29, r29, 0x14
-    blt SuikaBall_Init_L_8013387C
-    li r3, 0x8a0
-    bl Alloc
-    mr. r26, r3
-    beq SuikaBall_Init_L_80133B68
-    lis r3, lbl_8048E34C@ha
-    li r4, 0x0
-    addi r3, r3, lbl_8048E34C@l
-    li r0, 0x5
-    stw r3, 0x0(r26)
-    li r3, 0x5c
-    stw r4, 0xc(r26)
-    stw r4, 0x10(r26)
-    stw r0, 0x89c(r26)
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_801339E4
-    addi r4, r30, 0xab8
-    li r5, 0x1
-    bl clNormal3D_Construct
-    SuikaBall_Init_L_801339E4:
-    stw r22, 0x4(r26)
-    lis r4, 0x4000
-    li r5, 0x0
-    lwz r3, 0x4(r26)
-    bl clNormal3D_SetFlags
-    li r3, 0x5c
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_80133A14
-    addi r4, r30, 0xac8
-    li r5, 0x1
-    bl clNormal3D_Construct
-    SuikaBall_Init_L_80133A14:
-    stw r22, 0x8(r26)
-    lwz r3, 0x8(r26)
-    bl Archive_GetRootJObj
-    li r4, 0x200
-    bl HSD_JObjSetFlags
-    li r0, 0x3
-    mr r5, r26
-    lfs f0, lbl_806D72B8(r2)
-    li r4, 0x0
-    mtctr r0
-    SuikaBall_Init_L_80133A3C:
-    li r3, 0x0
-    li r0, -0x1
-    stw r3, 0x14(r5)
-    stw r3, 0x1c(r5)
-    stfs f0, 0x38(r5)
-    stfs f0, 0x3c(r5)
-    stw r3, 0x18(r5)
-    stfs f0, 0x28(r5)
-    stfs f0, 0x24(r5)
-    stfs f0, 0x20(r5)
-    stfs f0, 0x34(r5)
-    stfs f0, 0x30(r5)
-    stfs f0, 0x2c(r5)
-    stw r0, 0x40(r5)
-    stw r0, 0x50(r5)
-    stw r0, 0x60(r5)
-    stw r0, 0x70(r5)
-    stw r0, 0x80(r5)
-    stw r0, 0x90(r5)
-    stw r0, 0xa0(r5)
-    stw r0, 0xb0(r5)
-    stw r0, 0xc0(r5)
-    stw r0, 0xd0(r5)
-    stw r0, 0xe0(r5)
-    stw r0, 0xf0(r5)
-    stw r0, 0x100(r5)
-    stw r0, 0x110(r5)
-    stw r0, 0x120(r5)
-    stw r0, 0x130(r5)
-    stw r0, 0x140(r5)
-    stw r0, 0x150(r5)
-    stw r0, 0x160(r5)
-    stw r0, 0x170(r5)
-    stw r3, 0x180(r5)
-    stw r3, 0x188(r5)
-    stfs f0, 0x1a4(r5)
-    stfs f0, 0x1a8(r5)
-    stw r3, 0x184(r5)
-    stfs f0, 0x194(r5)
-    stfs f0, 0x190(r5)
-    stfs f0, 0x18c(r5)
-    stfs f0, 0x1a0(r5)
-    stfs f0, 0x19c(r5)
-    stfs f0, 0x198(r5)
-    stw r0, 0x1ac(r5)
-    addi r4, r4, 0x1
-    stw r0, 0x1bc(r5)
-    stw r0, 0x1cc(r5)
-    stw r0, 0x1dc(r5)
-    stw r0, 0x1ec(r5)
-    stw r0, 0x1fc(r5)
-    stw r0, 0x20c(r5)
-    stw r0, 0x21c(r5)
-    stw r0, 0x22c(r5)
-    stw r0, 0x23c(r5)
-    stw r0, 0x24c(r5)
-    stw r0, 0x25c(r5)
-    stw r0, 0x26c(r5)
-    stw r0, 0x27c(r5)
-    stw r0, 0x28c(r5)
-    stw r0, 0x29c(r5)
-    stw r0, 0x2ac(r5)
-    stw r0, 0x2bc(r5)
-    stw r0, 0x2cc(r5)
-    stw r0, 0x2dc(r5)
-    addi r5, r5, 0x2d8
-    bdnz SuikaBall_Init_L_80133A3C
-    lwz r0, 0x89c(r26)
-    cmpwi r0, 0x14
-    blt SuikaBall_Init_L_80133B5C
-    li r0, 0x13
-    stw r0, 0x89c(r26)
-    SuikaBall_Init_L_80133B5C:
-    lis r3, lbl_8048E418@ha
-    addi r0, r3, lbl_8048E418@l
-    stw r0, 0x0(r26)
-    SuikaBall_Init_L_80133B68:
-    stw r26, 0x60(r31)
-    li r3, 0x14
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_80133C4C
-    li r26, 0x0
-    mr r24, r22
-    stw r26, 0x10(r22)
-    addi r23, r30, 0x9ec
-    SuikaBall_Init_L_80133B8C:
-    li r3, 0x30
-    bl Alloc
-    mr. r25, r3
-    beq SuikaBall_Init_L_80133C34
-    lwz r0, 0x0(r23)
-    mr r4, r25
-    lwz r6, 0x4(r23)
-    addi r3, r25, 0xc
-    stw r0, 0x18(r1)
-    addi r5, r25, 0x18
-    lwz r0, 0x8(r23)
-    stw r6, 0x1c(r1)
-    lfs f1, 0x18(r1)
-    stw r0, 0x20(r1)
-    lwz r0, 0xc(r23)
-    lwz r6, 0x10(r23)
-    stw r0, 0x24(r1)
-    lwz r0, 0x14(r23)
-    stw r6, 0x28(r1)
-    lfs f0, 0x1c(r1)
-    stfs f1, 0x0(r25)
-    lfs f1, 0x20(r1)
-    stfs f0, 0x4(r25)
-    lfs f0, 0x24(r1)
-    stfs f1, 0x8(r25)
-    lfs f1, 0x28(r1)
-    stw r0, 0x2c(r1)
-    stfs f0, 0xc(r25)
-    lfs f0, 0x2c(r1)
-    stfs f1, 0x10(r25)
-    stfs f0, 0x14(r25)
-    bl Vec3_Subtract
-    addi r3, r25, 0x18
-    mr r4, r3
-    bl Vec3_Normalize
-    lfs f0, 0x20(r25)
-    fneg f0, f0
-    stfs f0, 0x24(r25)
-    lfs f0, 0x1c(r25)
-    stfs f0, 0x28(r25)
-    lfs f0, 0x18(r25)
-    stfs f0, 0x2c(r25)
-    SuikaBall_Init_L_80133C34:
-    addi r26, r26, 0x1
-    stw r25, 0x0(r24)
-    cmpwi r26, 0x4
-    addi r23, r23, 0x18
-    addi r24, r24, 0x4
-    blt SuikaBall_Init_L_80133B8C
-    SuikaBall_Init_L_80133C4C:
-    stw r22, 0x64(r31)
-    li r0, 0x0
-    stw r0, 0x68(r31)
-    lwz r0, g_weatherSystem(r13)
-    cmplwi r0, 0x0
-    bne SuikaBall_Init_L_80133C80
-    li r3, 0x1b4
-    bl Alloc
-    mr. r22, r3
-    beq SuikaBall_Init_L_80133C7C
-    li r4, 0x1
-    bl WeatherSystem_Init
-    SuikaBall_Init_L_80133C7C:
-    stw r22, g_weatherSystem(r13)
-    SuikaBall_Init_L_80133C80:
-    li r3, 0x1
-    bl SetResourceLoadingFlag
-    mr r3, r31
-    psq_l f31, 0xa8(r1), 0, 0
-    lfd f31, 0xa0(r1)
-    lmw r22, 0x78(r1)
-    lwz r0, 0xb4(r1)
-    mtlr r0
-    addi r1, r1, 0xb0
-    blr
+struct RenderObj {
+    char pad0[0x238];
+    int x238;
+};
+
+struct InputManager { char data[0x37C]; InputManager(); };
+struct Camera { char data[0x2C]; Camera(float a, float b, int w, int h, int target); };
+struct CarObject {
+    char data[0x118];
+    CarObject(int disp, int chara, int cc, int a, int b, int c, int d, int e, float x, float z, float yaw);
+};
+static inline int GetChara() { return g_characterId; }
+struct PlayerCar : CarObject {
+    PlayerCar(const float *x, const float *z, int chara)
+        : CarObject(GetDisplayBufferIndex(), chara, 0, 0, 1, 0, 0, 0, *x, *z, GetCourseStartYaw()) {}
+};
+struct LakituStart { char data[0x58]; LakituStart(const void *data, int arg, float x, float y, float z); };
+struct Scene3D { char data[0x3084]; Scene3D(int name); };
+struct ChallengeGoalCamera { char data[8]; ChallengeGoalCamera(); };
+struct HUD { char data[0x80]; HUD(int arg); };
+struct WeatherSystem { char data[0x1B4]; WeatherSystem(int arg); };
+struct clNormal3D { char data[0x5C]; clNormal3D(const char *file, int arg); };
+
+struct ShotVec {
+    float x, y, z;
+    void Zero() { x = y = z = lbl_806D72B8; }
+};
+struct CoinShotTrail { int age; ShotVec pos; };
+struct CoinShot {
+    int active;
+    int x4;
+    int timer;
+    ShotVec pos;
+    ShotVec vel;
+    float rot;
+    float alpha;
+    CoinShotTrail trail[20];
+};
+
+struct CoinShotBase {
+    virtual ~CoinShotBase();
+    clNormal3D *model;
+    clNormal3D *trailModel;
+    int xC;
+    int x10;
+    CoinShot shots[6];
+    int trailCount;
+    CoinShotBase(const char *modelFile, const char *trailFile);
+};
+
+inline CoinShotBase::CoinShotBase(const char *modelFile, const char *trailFile) {
+    xC = 0;
+    x10 = 0;
+    trailCount = 5;
+    model = new clNormal3D(modelFile, 1);
+    clNormal3D_SetFlags(model, 0x40000000, 0);
+    trailModel = new clNormal3D(trailFile, 1);
+    HSD_JObjSetFlags(Archive_GetRootJObj(trailModel), 0x200);
+    for (int i = 0; i < 6; i++) {
+        shots[i].active = 0;
+        shots[i].timer = 0;
+        shots[i].rot = lbl_806D72B8;
+        shots[i].alpha = lbl_806D72B8;
+        shots[i].x4 = 0;
+        shots[i].pos.Zero();
+        shots[i].vel.Zero();
+        for (int j = 0; j < 20; j++) {
+            shots[i].trail[j].age = -1;
+        }
+    }
+    if (trailCount >= 20) {
+        trailCount = 19;
+    }
+}
+
+struct SuikaCoinShots : CoinShotBase {
+    SuikaCoinShots(const char *modelFile, const char *trailFile) : CoinShotBase(modelFile, trailFile) {}
+    virtual ~SuikaCoinShots();
+};
+
+struct GameModeBase {
+    virtual void _key();
+    virtual ~GameModeBase();
+    GameModeBase();
+};
+
+struct ModeBase : GameModeBase {
+    float x4;
+    ModeBase() {
+        x4 = lbl_806D72B8;
+    }
+    virtual void _key2();
+    virtual ~ModeBase();
+};
+
+
+struct GVec { float x, y, z; };
+static inline GVec MkVec(float x, float y, float z) { GVec v; v.x = x; v.y = y; v.z = z; return v; }
+struct GoalLine {
+    Vec3 p0, p1, dir, normal;
+    GoalLine(GVec a, GVec b) { Set(a, b); }
+    void Set(GVec a, GVec b) {
+        p0.x = a.x; p0.y = a.y; p0.z = a.z;
+        p1.x = b.x; p1.y = b.y; p1.z = b.z;
+        Vec3_Subtract(&p1, &p0, &dir);
+        Vec3_Normalize(&dir, &dir);
+        normal.x = -dir.z; normal.y = dir.y; normal.z = dir.x;
+    }
+};
+struct GoalLineSet {
+    GoalLine *lines[4];
+    int next;
+    GoalLineSet(const Vec3 (*tbl)[2]) {
+        next = 0;
+        for (int i = 0; i < 4; i++) {
+            lines[i] = new GoalLine(*(const GVec *)&tbl[i][0], *(const GVec *)&tbl[i][1]);
+        }
+    }
+};
+struct JointSet {
+    clNormal3D *a;
+    clNormal3D *b;
+    void **ja;
+    void **jb;
+    int count;
+};
+struct SuikaUnk44 { char data[0xC]; SuikaUnk44(); };
+struct SuikaUnk48 { char data[0x10]; SuikaUnk48(); };
+
+/*
+ * SuikaBall_Init: the mode's constructor. The goal-line constructor takes
+ * its two end points by value and forwards them to Set() by value; that
+ * extra copy (and MkVec's local) is what gives the target's stack layout.
+ * Float literals in the joint-set loop keep 0.0f from being hoisted into f31.
+ */
+struct SuikaBallMode : ModeBase {
+    virtual void _key3();
+    float *courseData;
+    CarObject *car;
+    LakituStart *lakitu;
+    InputManager *input;
+    Scene3D *scene;
+    ChallengeGoalCamera *goalCam;
+    Camera *camera;
+    int renderTarget;
+    int x28;
+    HUD *hud;
+    unsigned char x30, x31, x32, x33;
+    int x34;
+    int x38;
+    SuikaBallObj *ball;
+    GoalLine *goal;
+    SuikaUnk44 *x44;
+    SuikaUnk48 *x48;
+    float x4C;
+    Vec3 x50;
+    JointSet *sets;
+    SuikaCoinShots *shots;
+    GoalLineSet *lines;
+    int coins;
+    SuikaBallMode();
+    void AddBallToCamera(void *cam) {
+        if (cam != 0 && ball->archive != 0) {
+            SceneRender_CmdB_8aa20(cam, Archive_GetRootJObj(ball->archive));
+        }
+    }
+};
+
+SuikaBallMode::SuikaBallMode() {
+    Vec3 pos;
+    float camA, camB;
+
+    courseData = MiniGame_GetCourseData();
+    DrawManager_GetOrCreate();
+    SetResourceLoadingFlag(0);
+    DMAChannelManager_Init();
+    TransitionEffect_GetOrCreate();
+    SoundChannels_ClearAll();
+    ItemObjectManager_Init();
+    CourseObjectManager_Init();
+    input = new InputManager;
+    GetCourseDataPtr();
+    renderTarget = HSD_LObjLoadDesc();
+    camera = new Camera(lbl_806D72F8, lbl_806D72B4, 0x100, 0x100, renderTarget);
+    SetActiveCamera(0, camera);
+    g_raceCamera = camera;
+    ProcessSystemTick(0);
+    RankingTable_Init(GetRaceContextPtr());
+    lbl_806D12BC = 0;
+    SoundDriver_GetOrCreate(0);
+    GetStartPosition(0, &pos.x, &pos.y, &pos.z);
+    car = new PlayerCar(&pos.x, &pos.z, GetChara());
+    CarObject_SetPosition(car, &pos);
+    {
+        RenderObj *r = (RenderObj *)CarObject_GetRenderObj(car);
+        r->x238 = 1;
+    }
+    SetPlayerCarObject(car);
+    lakitu = new LakituStart(s_lakituFile, 0, lbl_806D72B8, lbl_806D72B8, lbl_806D72B8);
+    scene = new Scene3D(*GetKartModelNameEntry(g_characterId, -1));
+    goalCam = new ChallengeGoalCamera;
+    ProcessSystemTick(0);
+    Scene3D_GetCameraPos(scene, &camA, &camB);
+    camA += lbl_806D729C;
+    Scene3D_SetupProjection(scene, camA, camB);
+    hud = new HUD(0);
+    HUD_RegisterOverlay(hud, 6, 0);
+    HUD_RegisterOverlay(hud, 0x11, 0);
+    HUD_RegisterOverlay(hud, 0x12, 0);
+    HUD_RegisterOverlay(hud, 0xE, 0);
+    g_lakituStartAnimDone = 0;
+    SetCourseScene3D(scene);
+    g_raceEnded = 0;
+    g_raceTimeRemaining = MiniGame_GetTimerValue();
+    PreloadEffectResources(1);
+    PreloadEffectResources(9);
+    PreloadEffectResources(0xA);
+    x30 = 0;
+    x32 = 0;
+    x33 = 0;
+    x34 = 0;
+    x31 = 0;
+    x4C = lbl_806D72A4;
+    x50.x = lbl_806D72B8;
+    x50.y = lbl_806D72B8;
+    x50.z = lbl_806D72B8;
+    if ((ball = new SuikaBallObj(s_ballFile)) != 0) {
+        ball->SetPos(lbl_806D72FC, lbl_806D7300, lbl_806D7304);
+        AddBallToCamera(g_raceCamera);
+        if (courseData != 0) {
+            ball->SetParams(courseData[0], courseData[1], courseData[2], courseData[3], courseData[4], courseData[5]);
+        }
+    }
+    x44 = new SuikaUnk44;
+    x48 = new SuikaUnk48;
+    goal = new GoalLine(MkVec(lbl_806D7308, lbl_806D7300, lbl_806D730C), MkVec(lbl_806D7310, lbl_806D7300, lbl_806D7314));
+    sets = (JointSet *)FUN_8003b120(sizeof(JointSet) * 3);
+    for (unsigned int i = 0; i < 3; i++) {
+        JointSet *s = &sets[i];
+        s->a = new clNormal3D(s_jointSets[i].model, 0);
+        clNormal3D_SetScale(s->a, 0, 0.0f, 1.0f, 0.0f, 0.0f);
+        s->b = new clNormal3D(s_jointSets[i].setModel, 0);
+        clNormal3D_SetScale(s->b, 0, 0.0f, 1.0f, 0.0f, 0.0f);
+        s->count = s_jointSets[i].count;
+        s->ja = (void **)FUN_8003b120(s->count * 4);
+        s->jb = (void **)FUN_8003b120(s->count * 4);
+        for (int j = 0; j < s->count; j++) {
+            s->ja[j] = ResolveJointByName(s->a, s_jointSets[i].joints[j * 2]);
+            s->jb[j] = ResolveJointByName(s->b, s_jointSets[i].joints[j * 2 + 1]);
+        }
+    }
+    shots = new SuikaCoinShots(s_coinFile, s_kiraFile);
+    lines = new GoalLineSet(lbl_803579F4);
+    coins = 0;
+    if (g_weatherSystem == 0) {
+        g_weatherSystem = new WeatherSystem(1);
+    }
+    SetResourceLoadingFlag(1);
 }
 
 extern "C" void fn_80133CA8(ShotOwner *self)
