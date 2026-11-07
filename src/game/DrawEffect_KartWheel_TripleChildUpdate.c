@@ -14,6 +14,15 @@ extern double sin(double x);
 #define CH (*(unsigned char **)(d + 0x10 + i * 4))
 #define C(o) (*(float *)(CH + (o)))
 
+/* Keep the offset and child-size products separate: each rounds to float. */
+static inline float ChildLineScale(float inverseLength, float offset,
+                                   float childScale, float factor)
+{
+    offset *= inverseLength;
+    offset = childScale * offset;
+    return factor * offset;
+}
+
 void DrawEffect_KartWheel_TripleChildUpdate(unsigned char *self, Vec *pos, float scale, float alpha)
 {
     Vec diff;
@@ -77,9 +86,7 @@ void DrawEffect_KartWheel_TripleChildUpdate(unsigned char *self, Vec *pos, float
                 Vec3_Subtract_DestFirst(&dir, V(0x8C), (Vec *)(lbl_805DF3D0 + 0x80));
                 len = Vec3_Magnitude_Wrapper(&dir);
                 len = 1.0f / len;
-                len = offs.v[i] * len;
-                len = C(0xB0) * len;
-                Vec3_Scale(&dir, &dir, k * len);
+                Vec3_Scale(&dir, &dir, ChildLineScale(len, offs.v[i], C(0xB0), k));
                 Vec3_Add_DestFirst(V_(CH, 0x8C), V(0x8C), &dir);
                 if (i != 0) {
                     t = C(0x150);
