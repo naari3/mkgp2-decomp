@@ -1,21 +1,21 @@
 #include "triforce/acsocket_private.h"
 
-static inline u8* GetInetBuffer(u32 n, u32* boardOff) {
-    *boardOff = State.bufOff + n;
+static inline u8* GetInetBuffer(u32 n, u8** boardOff) {
+    *boardOff = (u8*)State.bufOff + n;
     return BufPtr(n);
 }
 
-static inline u8* ClearInetBuf(AcSock* k, u32* off) {
+static inline u8* ClearInetBuf(AcSock* k, u8** off) {
     u8* buf = GetInetBuffer(0, off);
-    *off = k->bufAddr + *off;
+    *off = *off + k->bufAddr;
     memset(buf, 0, 0x40);
     return buf;
 }
 
-s32 acInetAddr(const char* str) {
+static inline s32 InetAddr(const char* str) {
     OSSemaphore* sem;
     AcSock* k = &State.sock[0];
-    u32 off;
+    u8* off;
     u8* buf;
 
     if (k->ready == 0) {
@@ -32,9 +32,13 @@ s32 acInetAddr(const char* str) {
     memcpy(buf, str, strlen(str));
     fn_8028D530(Buf, k->bufAddr + State.bufOff, 0x40);
     k->cmd = 6;
-    k->result = fn_80290060(State.devBase + off, strlen(str));
+    k->result = fn_80290060(State.devBase + (u32)off, strlen(str));
     OSWaitSemaphore(sem);
     k->ready = 1;
     OSSignalSemaphore(sem);
     return k->result;
+}
+
+s32 acInetAddr(const char* str) {
+    return InetAddr(str);
 }
