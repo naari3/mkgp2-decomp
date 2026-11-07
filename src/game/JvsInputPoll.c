@@ -1,11 +1,8 @@
 /*
- * NonMatching draft for 0x80039780..0x80039A34 (90.1%).
- * The player button buffer is volatile: the target reloads every halfword
- * after each store in the snapshot and edge blocks, and keeps the
- * per-player button pointer live across the two fn_8028AE64 calls.
- * The loop body matches. What is left is register choice in the prologue
- * (operatorBits is built through an extra mr r30 instead of directly into r30)
- * and in the edge block (ops values in r3/r0, button temps in r6/r5).
+ * NonMatching draft for 0x80039780..0x80039A34 (90.23122%).
+ * Player button accesses are volatile, including the edge helper reads.
+ * The polling loops match; the entry snapshot scheduling and edge-block
+ * registers still differ. This draft emits 700 bytes versus target 692.
  */
 enum { CURRENT, PREVIOUS, PRESSED, RELEASED };
 enum { PLAYER_STRIDE = 4, ANALOG_BASE = 4, COUNTER_BASE = 12 };
@@ -21,6 +18,20 @@ extern int fn_8028AE64(int node, unsigned char player, unsigned char byte);
 extern int fn_8028A740(int node, unsigned char channel);
 extern int fn_8028AC1C(int node, unsigned char counter);
 extern int fn_80293580(void);
+
+static inline unsigned short PressedButtons(volatile unsigned short *p)
+{
+    unsigned short current = p[CURRENT];
+    unsigned short previous = p[PREVIOUS];
+    return current & ~previous;
+}
+
+static inline unsigned short ReleasedButtons(volatile unsigned short *p)
+{
+    unsigned short previous = p[PREVIOUS];
+    unsigned short current = p[CURRENT];
+    return previous & ~current;
+}
 
 int JvsInput_PollAndUpdate(void)
 {
@@ -76,16 +87,16 @@ int JvsInput_PollAndUpdate(void)
     {
         unsigned short previous = operatorEdges[PREVIOUS];
         g_jvsOperatorBits[PRESSED] = operatorBits & ~previous;
-        g_jvsPlayerButtons[PRESSED] = g_jvsPlayerButtons[CURRENT] & ~g_jvsPlayerButtons[PREVIOUS];
+        g_jvsPlayerButtons[PRESSED] = PressedButtons(g_jvsPlayerButtons);
         g_jvsOperatorBits[CURRENT] = operatorBits;
-        g_jvsPlayerButtons[RELEASED] = g_jvsPlayerButtons[PREVIOUS] & ~g_jvsPlayerButtons[CURRENT];
+        g_jvsPlayerButtons[RELEASED] = ReleasedButtons(g_jvsPlayerButtons);
         g_jvsOperatorBits[RELEASED] = previous & ~operatorBits;
-        g_jvsPlayerButtons[PLAYER_STRIDE + PRESSED] = g_jvsPlayerButtons[PLAYER_STRIDE + CURRENT] & ~g_jvsPlayerButtons[PLAYER_STRIDE + PREVIOUS];
-        g_jvsPlayerButtons[PLAYER_STRIDE + RELEASED] = g_jvsPlayerButtons[PLAYER_STRIDE + PREVIOUS] & ~g_jvsPlayerButtons[PLAYER_STRIDE + CURRENT];
-        g_jvsPlayerButtons[2 * PLAYER_STRIDE + PRESSED] = g_jvsPlayerButtons[2 * PLAYER_STRIDE + CURRENT] & ~g_jvsPlayerButtons[2 * PLAYER_STRIDE + PREVIOUS];
-        g_jvsPlayerButtons[2 * PLAYER_STRIDE + RELEASED] = g_jvsPlayerButtons[2 * PLAYER_STRIDE + PREVIOUS] & ~g_jvsPlayerButtons[2 * PLAYER_STRIDE + CURRENT];
-        g_jvsPlayerButtons[3 * PLAYER_STRIDE + PRESSED] = g_jvsPlayerButtons[3 * PLAYER_STRIDE + CURRENT] & ~g_jvsPlayerButtons[3 * PLAYER_STRIDE + PREVIOUS];
-        g_jvsPlayerButtons[3 * PLAYER_STRIDE + RELEASED] = g_jvsPlayerButtons[3 * PLAYER_STRIDE + PREVIOUS] & ~g_jvsPlayerButtons[3 * PLAYER_STRIDE + CURRENT];
+        g_jvsPlayerButtons[PLAYER_STRIDE + PRESSED] = PressedButtons(&g_jvsPlayerButtons[PLAYER_STRIDE]);
+        g_jvsPlayerButtons[PLAYER_STRIDE + RELEASED] = ReleasedButtons(&g_jvsPlayerButtons[PLAYER_STRIDE]);
+        g_jvsPlayerButtons[2 * PLAYER_STRIDE + PRESSED] = PressedButtons(&g_jvsPlayerButtons[2 * PLAYER_STRIDE]);
+        g_jvsPlayerButtons[2 * PLAYER_STRIDE + RELEASED] = ReleasedButtons(&g_jvsPlayerButtons[2 * PLAYER_STRIDE]);
+        g_jvsPlayerButtons[3 * PLAYER_STRIDE + PRESSED] = PressedButtons(&g_jvsPlayerButtons[3 * PLAYER_STRIDE]);
+        g_jvsPlayerButtons[3 * PLAYER_STRIDE + RELEASED] = ReleasedButtons(&g_jvsPlayerButtons[3 * PLAYER_STRIDE]);
     }
     fn_80293580();
     return 1;
