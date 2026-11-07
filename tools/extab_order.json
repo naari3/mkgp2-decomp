@@ -2784,5 +2784,31 @@
     "dtor_801FEB48",
     "dtor_801419C8",
     "fn_80141A24"
-  ]
+  ],
+  "src/game/cLNormal3DWrap.cpp": {
+    "extab": [
+      "cLNormal3DWrap_Mgr_ReleaseSlot",
+      "cLNormal3DWrap_Mgr_AcquireSlot",
+      "cLNormal3DWrap_Mgr_Dtor",
+      "cLNormal3DWrap_Mgr_Ctor",
+      "dtor_800897B8",
+      "cLNormal3DWrap_Slot_Dtor",
+      "cLNormal3DWrap_Slot_ResolveJoint",
+      "cLNormal3DWrap_Slot_AdvanceUVScrollWrapped",
+      "cLNormal3DWrap_Slot_GetOrLoadJointTransform",
+      "cLNormal3DWrap_Slot_Render"
+    ],
+    "extabindex": [
+      "cLNormal3DWrap_Mgr_ReleaseSlot",
+      "cLNormal3DWrap_Mgr_AcquireSlot",
+      "cLNormal3DWrap_Mgr_Dtor",
+      "cLNormal3DWrap_Mgr_Ctor",
+      "cLNormal3DWrap_Slot_Dtor",
+      "cLNormal3DWrap_Slot_ResolveJoint",
+      "cLNormal3DWrap_Slot_AdvanceUVScrollWrapped",
+      "cLNormal3DWrap_Slot_GetOrLoadJointTransform",
+      "cLNormal3DWrap_Slot_Render",
+      "dtor_800897B8"
+    ]
+  }
 }

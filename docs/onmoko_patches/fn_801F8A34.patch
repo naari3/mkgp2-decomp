@@ -1,0 +1,31 @@
+diff --git a/configure.py b/configure.py
+index 76d6269..9360358 100644
+--- a/configure.py
++++ b/configure.py
+@@ -2608,7 +2608,7 @@ config.libs = [
+             Object(NonMatching, "game/fn_801F8728.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+             Object(Matching, "game/fn_801F8668.c"),
+             Object(NonMatching, "game/fn_801F894C.c"),
+-            Object(NonMatching, "game/fn_801F8A34.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
++            Object(Matching, "game/fn_801F8A34.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+             Object(Matching, "game/fn_801F89F0.c"),
+             Object(Matching, "game/fn_801FA024.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+             Object(Matching, "game/fn_801FA214.cpp", extab_padding=b""),
+diff --git a/src/game/fn_801F8A34.cpp b/src/game/fn_801F8A34.cpp
+index c0287c1..dcbfe50 100644
+--- a/src/game/fn_801F8A34.cpp
++++ b/src/game/fn_801F8A34.cpp
+@@ -1,5 +1,7 @@
+ #include "game/TextDraw801F.h"
+ 
++#pragma push
++#pragma opt_common_subs off
+ extern "C" void fn_801F8A34(void *, TextManager *manager, int layer) {
+     TextDraw801F *text = (TextDraw801F *)manager;
+     float sine, cosine;
+@@ -80,3 +82,5 @@ extern "C" void fn_801F8A34(void *, TextManager *manager, int layer) {
+         ++i;
+     }
+ }
++#pragma pop
++
