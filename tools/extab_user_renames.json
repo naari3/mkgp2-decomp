@@ -5523,7 +5523,9 @@
     "__ct__10DefeatDemoFv": "CGameCoin_InitDefeatDemo",
     "__ct__12CoinNormal3DFPCci": "clNormal3D_Construct",
     "__ct__11CoinScene3DFPCc": "Scene3D_Init",
-    "__vt__15CoinAnimScene3D": "lbl_80419EF8"
+    "__vt__15CoinAnimScene3D": "lbl_80419EF8",
+    "__ct__9GXChannelFPvPvii": "GXChannel_Init",
+    "__dt__9GXChannelFv": "dtor_8007D9C4"
   },
   "src/game/SuikaBall_801313D0.cpp": {
     "extab_SuikaBall_Render": "@etb_8000CBA0",

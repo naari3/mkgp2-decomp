@@ -7,48 +7,57 @@ extern char lbl_806D717C[5];
  */
 #pragma cplusplus on
 
+#include "game/singleton.h"
+
 struct CoinVObj {
     virtual ~CoinVObj();
+    virtual unsigned char Begin();
+    virtual void Draw();
+};
+
+class GXChannel {
+public:
+    GXChannel(void *jobj, void *dobj, int flags, int bind);
+    ~GXChannel();
+    unsigned char data[0x14];
 };
 
 extern "C" {
-extern void Archive_GetRootJObj();
-extern void CObj_DebugVizPathFlush();
-extern void CObj_GetProjMatrix_Cached();
-extern void CourseEnvironment_RenderObjects_Timed();
-extern void DrawEffect_TickAndCull();
-extern void GXChannel_Init();
-extern void GXChannel_PushTransform();
-extern void GetCourseScene3D();
-extern void HSD_JObjGetDObj();
-extern void ItemObjectManager_Render();
-extern void KartItem_DispatchEffectRenderByState();
-extern void KartItem_FlushPendingRender_v2();
-extern void Object_DriveAnimMatrix();
-extern void Object_RenderJObjIfWithinRange();
+extern void *Archive_GetRootJObj(void *);
+extern void CObj_DebugVizPathFlush(void *);
+extern float (*CObj_GetProjMatrix_Cached(void *))[4];
+extern void CourseEnvironment_RenderObjects_Timed(void *);
+extern void DrawEffect_TickAndCull(void);
+extern void GXChannel_PushTransform(GXChannel *, float (*)[4]);
+extern void *GetCourseScene3D(void);
+extern void *HSD_JObjGetDObj(void *);
+extern void ItemObjectManager_Render(void);
+extern void KartItem_DispatchEffectRenderByState(void *);
+extern void KartItem_FlushPendingRender_v2(void *);
+extern void Object_DriveAnimMatrix(void *);
+extern void Object_RenderJObjIfWithinRange(void *);
 extern void Object_RenderJObjTree(void *, int);
-extern void Object_SetAnimBinding();
+extern void Object_SetAnimBinding(void *, void *, int);
 extern void Object_SetColorAlphaOnly(void *, int, float);
 extern void PSMTXConcat(float (*)[4], float (*)[4], float (*)[4]);
 extern void PSMTXRotRad(float (*)[4], char, float);
 extern void PSMTXScale(float (*)[4], float, float, float);
-extern void Subsystem36c_DispatchPass2_Timed();
-extern void Subsystem36c_DispatchPass4_Timed();
-extern void TransitionEffect_RenderPass();
-extern void TransparentDraw_SortAndDispatch();
-extern void clDrawMan_Buckets_Dispatch();
-extern void clDrawMan_Buckets_Reset();
-extern void clDrawMan_EndFrame_NoOp();
-extern void dtor_8007D9C4();
-extern void fn_8012A61C();
-extern void fn_8016B0C4();
-extern void fn_8016DA30();
-extern void fn_8016EACC();
-extern void fn_8017218C();
-extern unsigned int lbl_806CF58C;
-extern unsigned int lbl_806CF590;
-extern unsigned int lbl_806CF594;
-extern unsigned int lbl_806CF598;
+extern void Subsystem36c_DispatchPass2_Timed(void *);
+extern void Subsystem36c_DispatchPass4_Timed(void *);
+extern void TransitionEffect_RenderPass(CoinVObj *, int);
+extern void TransparentDraw_SortAndDispatch(void);
+extern void clDrawMan_Buckets_Dispatch(CoinVObj *);
+extern void clDrawMan_Buckets_Reset(CoinVObj *);
+extern void clDrawMan_EndFrame_NoOp(CoinVObj *);
+extern void fn_8012A61C(void *);
+extern void fn_8016B0C4(void);
+extern void fn_8016DA30(void *);
+extern void fn_8016EACC(void *);
+extern void fn_8017218C(void *);
+extern float lbl_806CF58C;
+extern float lbl_806CF590;
+extern float lbl_806CF594;
+extern float lbl_806CF598;
 extern CoinVObj *lbl_806D109C;
 extern CoinVObj *lbl_806D10AC;
 extern unsigned int lbl_806D7138;
@@ -56,10 +65,10 @@ extern unsigned int lbl_806D7140;
 extern unsigned int lbl_806D7150;
 extern unsigned int lbl_806D7154;
 extern unsigned int lbl_806D7158;
-extern void HSD_StateInvalidate();
-extern void fn_80253448();
-extern void fn_802535D4();
-extern unsigned int lbl_806DC1B8;
+extern void HSD_StateInvalidate(int);
+extern void fn_80253448(void *, unsigned int);
+extern void fn_802535D4(void *);
+extern const unsigned int lbl_806DC1B8;
 extern void CObj_ApplyScissor();
 extern void CObj_ApplyViewport();
 extern void CObj_LoadIntoGX();
@@ -338,8 +347,9 @@ extern int abs(int);
 extern const unsigned int lbl_806D7268;
 extern const unsigned int lbl_806D726C;
 extern unsigned int lbl_806D7270;
-asm void fn_8012BF5C(void);
-asm void CGameCoin_Draw(void);
+struct CGameCoin;
+void fn_8012BF5C(CGameCoin *self);
+void CGameCoin_Draw(CGameCoin *self);
 asm void CGameCoin_Update(void);
 struct DefeatDemo;
 void DefeatDemo_Update(DefeatDemo *self);
@@ -363,12 +373,6 @@ CoinParticleManager *CoinParticleManager_Destroy(CoinParticleManager *self, shor
 asm void CGameCoin_ProcessInput(void);
 
 #pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_8012BF5C = { 0x288A0000, 0x000001C4, 0x003B0010, 0x00000000, 0x82000008, (void *)&dtor_8007D9C4 };
-
-__declspec(section ".extab_user") static const unsigned char extab_CGameCoin_Draw[8] = {
-    0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
 __declspec(section ".extab_user") static const unsigned char extab_CGameCoin_Update[8] = {
     0x38, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -380,14 +384,6 @@ __declspec(section ".extab_user") static const unsigned char extab_CGameCoin_Pro
 };
 
 #pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8012BF5C = {
-    (void *)&fn_8012BF5C, 0x00000370, (void *)&extab_fn_8012BF5C
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CGameCoin_Draw = {
-    (void *)&CGameCoin_Draw, 0x0000026C, (void *)extab_CGameCoin_Draw
-};
-
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CGameCoin_Update = {
     (void *)&CGameCoin_Update, 0x00002164, (void *)extab_CGameCoin_Update
 };
@@ -402,414 +398,357 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 }
 
+struct CoinVec {
+    float x;
+    float y;
+    float z;
+};
 
-extern "C" asm void fn_8012BF5C(void) { /* 0x8012BF5C size:0x370 */
-    nofralloc
-    stwu r1, -0xc0(r1)
-    mflr r0
-    stw r0, 0xc4(r1)
-    stfd f31, 0xb0(r1)
-    psq_st f31, 0xb8(r1), 0, 0
-    stfd f30, 0xa0(r1)
-    psq_st f30, 0xa8(r1), 0, 0
-    stmw r27, 0x8c(r1)
-    mr r31, r3
-    lwz r3, 0x58(r3)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne fn_8012BF5C_L_8012C2A8
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne fn_8012BF5C_L_8012BFB0
-    li r3, 0x0
-    fn_8012BF5C_L_8012BFB0:
-    bl clDrawMan_Buckets_Reset
-    bl TransparentDraw_SortAndDispatch
-    lwz r3, 0x58(r31)
-    bl CObj_DebugVizPathFlush
-    bl fn_8016B0C4
-    lwz r3, 0x10(r31)
-    bl KartItem_DispatchEffectRenderByState
-    lwz r3, 0x48(r31)
-    bl fn_8012A61C
-    lwz r3, 0x10(r31)
-    bl KartItem_FlushPendingRender_v2
-    lwz r3, 0x50(r31)
-    bl Object_RenderJObjIfWithinRange
-    lwz r3, 0x54(r31)
-    bl CourseEnvironment_RenderObjects_Timed
-    lwz r3, 0x70(r31)
-    bl fn_8016DA30
-    lwz r3, 0x54(r31)
-    bl Subsystem36c_DispatchPass2_Timed
-    lwz r3, 0xc0(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    lwz r30, 0x4c(r31)
-    lwz r0, 0x8(r30)
-    cmpwi r0, 0x0
-    beq fn_8012BF5C_L_8012C070
-    lfs f1, 0x40(r30)
-    lfs f0, lbl_806D7150(r2)
-    fcmpo cr0, f1, f0
-    cror eq, lt, eq
-    beq fn_8012BF5C_L_8012C070
-    lwz r3, 0x4(r30)
-    addi r4, r30, 0x10
-    li r5, 0x0
-    bl Object_SetAnimBinding
-    lwz r3, 0x4(r30)
-    bl Object_DriveAnimMatrix
-    lwz r3, 0x4(r30)
-    li r4, 0x0
-    lfs f1, 0x40(r30)
-    bl Object_SetColorAlphaOnly
-    lwz r3, 0x4(r30)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    lwz r3, 0x0(r30)
-    bl fn_8017218C
-    fn_8012BF5C_L_8012C070:
-    bl ItemObjectManager_Render
-    lwz r30, 0x6c(r31)
-    lwz r0, 0x10(r30)
-    cmpwi r0, 0x4
-    bge fn_8012BF5C_L_8012C228
-    slwi r0, r0, 2
-    li r4, 0x7
-    lwzx r3, r30, r0
-    bl Object_RenderJObjTree
-    lwz r28, 0x28(r30)
-    lwz r0, 0x4(r28)
-    cmplwi r0, 0x0
-    beq fn_8012BF5C_L_8012C228
-    bl GetCourseScene3D
-    bl CObj_GetProjMatrix_Cached
-    mr r29, r3
-    lwz r3, 0x0(r28)
-    bl Archive_GetRootJObj
-    bl HSD_JObjGetDObj
-    mr r30, r3
-    lwz r3, 0x0(r28)
-    bl Archive_GetRootJObj
-    mr r4, r3
-    mr r5, r30
-    addi r3, r1, 0x8
-    lis r6, 0x4000
-    li r7, 0x1
-    bl GXChannel_Init
-    lfs f31, lbl_806D7150(r2)
-    mr r27, r28
-    li r30, 0x0
-    fn_8012BF5C_L_8012C0EC:
-    lfs f0, 0x2c(r27)
-    fcmpo cr0, f0, f31
-    blt fn_8012BF5C_L_8012C20C
-    lfs f1, 0x48(r27)
-    addi r3, r1, 0x1c
-    lfs f0, lbl_806CF58C(r13)
-    lfs f2, 0x4c(r27)
-    fmuls f1, f1, f0
-    lfs f0, lbl_806CF590(r13)
-    lfs f3, lbl_806D7140(r2)
-    fmuls f30, f2, f0
-    fmr f2, f1
-    bl PSMTXScale
-    addi r3, r1, 0x1c
-    mr r4, r29
-    mr r5, r3
-    bl PSMTXConcat
-    lfs f1, lbl_806D7154(r2)
-    addi r3, r1, 0x4c
-    li r4, 0x58
-    bl PSMTXRotRad
-    addi r3, r1, 0x1c
-    addi r4, r1, 0x4c
-    mr r5, r3
-    bl PSMTXConcat
-    lfs f0, 0x3c(r27)
-    fmr f1, f30
-    li r4, 0x0
-    stfs f0, 0x28(r1)
-    lfs f0, 0x40(r27)
-    stfs f0, 0x38(r1)
-    lfs f0, 0x44(r27)
-    stfs f0, 0x48(r1)
-    lwz r3, 0x0(r28)
-    bl Object_SetColorAlphaOnly
-    addi r3, r1, 0x8
-    addi r4, r1, 0x1c
-    bl GXChannel_PushTransform
-    lfs f1, 0x48(r27)
-    lfs f0, lbl_806CF594(r13)
-    lfs f3, 0x4c(r27)
-    lfs f2, lbl_806CF598(r13)
-    fmuls f1, f1, f0
-    lfs f4, 0x2c(r27)
-    lfs f0, lbl_806D7138(r2)
-    fmuls f30, f3, f2
-    fcmpo cr0, f4, f0
-    bge fn_8012BF5C_L_8012C1B8
-    lfs f0, lbl_806D7158(r2)
-    fmuls f0, f0, f4
-    fmuls f30, f30, f0
-    fn_8012BF5C_L_8012C1B8:
-    fmr f2, f1
-    lfs f3, lbl_806D7140(r2)
-    addi r3, r1, 0x1c
-    bl PSMTXScale
-    addi r3, r1, 0x1c
-    mr r4, r29
-    mr r5, r3
-    bl PSMTXConcat
-    lfs f0, 0x3c(r27)
-    fmr f1, f30
-    li r4, 0x0
-    stfs f0, 0x28(r1)
-    lfs f0, 0x40(r27)
-    stfs f0, 0x38(r1)
-    lfs f0, 0x44(r27)
-    stfs f0, 0x48(r1)
-    lwz r3, 0x0(r28)
-    bl Object_SetColorAlphaOnly
-    addi r3, r1, 0x8
-    addi r4, r1, 0x1c
-    bl GXChannel_PushTransform
-    fn_8012BF5C_L_8012C20C:
-    addi r30, r30, 0x1
-    addi r27, r27, 0x28
-    cmpwi r30, 0x40
-    blt fn_8012BF5C_L_8012C0EC
-    addi r3, r1, 0x8
-    li r4, -0x1
-    bl dtor_8007D9C4
-    fn_8012BF5C_L_8012C228:
-    bl DrawEffect_TickAndCull
-    lwz r3, 0x74(r31)
-    bl fn_8016EACC
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne fn_8012BF5C_L_8012C244
-    li r3, 0x0
-    fn_8012BF5C_L_8012C244:
-    bl clDrawMan_EndFrame_NoOp
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne fn_8012BF5C_L_8012C258
-    li r3, 0x0
-    fn_8012BF5C_L_8012C258:
-    bl clDrawMan_Buckets_Dispatch
-    lwz r3, 0x54(r31)
-    bl Subsystem36c_DispatchPass4_Timed
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne fn_8012BF5C_L_8012C274
-    li r3, 0x0
-    fn_8012BF5C_L_8012C274:
-    li r4, 0x2
-    bl TransitionEffect_RenderPass
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne fn_8012BF5C_L_8012C28C
-    li r3, 0x0
-    fn_8012BF5C_L_8012C28C:
-    li r4, 0x4
-    bl TransitionEffect_RenderPass
-    lwz r3, 0x58(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    fn_8012BF5C_L_8012C2A8:
-    psq_l f31, 0xb8(r1), 0, 0
-    lfd f31, 0xb0(r1)
-    psq_l f30, 0xa8(r1), 0, 0
-    lfd f30, 0xa0(r1)
-    lmw r27, 0x8c(r1)
-    lwz r0, 0xc4(r1)
-    mtlr r0
-    addi r1, r1, 0xc0
-    blr
+struct CoinQuat {
+    float x;
+    float y;
+    float z;
+    float w;
+};
+
+struct CoinJObj {
+    unsigned char pad0[0x14];
+    unsigned int flags;
+    unsigned char pad18[0x4];
+    CoinQuat rotate;
+    CoinVec scale;
+    CoinVec translate;
+    float mtx[3][4];
+};
+
+struct CoinNormal3D {
+    unsigned char opaque[0x5C];
+    CoinNormal3D(const char *path, int flags);
+};
+
+struct CoinAnimLeaf {
+    void *value;
+};
+
+struct CoinAnimNode {
+    void *opaque;
+    CoinAnimLeaf *next;
+};
+
+struct CoinAnimDesc {
+    void *opaque;
+    CoinAnimNode *next;
+};
+
+static inline void *CoinAnimLeaf_Value(CoinAnimLeaf *leaf) {
+    if (leaf == 0) return 0;
+    return leaf->value;
 }
 
-extern "C" asm void CGameCoin_Draw(void) { /* 0x8012C2CC size:0x26C */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    stw r30, 0x8(r1)
-    lbz r0, 0x7c(r3)
-    cmplwi r0, 0x0
-    beq CGameCoin_Draw_L_8012C520
-    lbz r0, 0x7e(r31)
-    cmplwi r0, 0x0
-    bne CGameCoin_Draw_L_8012C304
-    bl fn_8012BF5C
-    b CGameCoin_Draw_L_8012C4EC
-    CGameCoin_Draw_L_8012C304:
-    lbz r0, 0x7f(r31)
-    cmplwi r0, 0x0
-    beq CGameCoin_Draw_L_8012C414
-    lwz r3, 0x78(r31)
-    lwz r3, 0xc(r3)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne CGameCoin_Draw_L_8012C4EC
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne CGameCoin_Draw_L_8012C344
-    li r3, 0x0
-    CGameCoin_Draw_L_8012C344:
-    bl clDrawMan_Buckets_Reset
-    bl TransparentDraw_SortAndDispatch
-    lwz r3, 0x78(r31)
-    lwz r3, 0xc(r3)
-    bl CObj_DebugVizPathFlush
-    bl fn_8016B0C4
-    lwz r30, 0x78(r31)
-    li r4, 0x7
-    lwz r3, 0x0(r30)
-    bl Object_RenderJObjTree
-    lwz r3, 0x4(r30)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    lwz r3, 0x8(r30)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    lwz r3, 0x74(r31)
-    bl fn_8016EACC
-    lwz r3, 0xc0(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne CGameCoin_Draw_L_8012C3B0
-    li r3, 0x0
-    CGameCoin_Draw_L_8012C3B0:
-    bl clDrawMan_EndFrame_NoOp
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne CGameCoin_Draw_L_8012C3C4
-    li r3, 0x0
-    CGameCoin_Draw_L_8012C3C4:
-    bl clDrawMan_Buckets_Dispatch
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne CGameCoin_Draw_L_8012C3D8
-    li r3, 0x0
-    CGameCoin_Draw_L_8012C3D8:
-    li r4, 0x2
-    bl TransitionEffect_RenderPass
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne CGameCoin_Draw_L_8012C3F0
-    li r3, 0x0
-    CGameCoin_Draw_L_8012C3F0:
-    li r4, 0x4
-    bl TransitionEffect_RenderPass
-    lwz r3, 0x78(r31)
-    lwz r3, 0xc(r3)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    b CGameCoin_Draw_L_8012C4EC
-    CGameCoin_Draw_L_8012C414:
-    lwz r3, 0x58(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne CGameCoin_Draw_L_8012C4EC
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne CGameCoin_Draw_L_8012C444
-    li r3, 0x0
-    CGameCoin_Draw_L_8012C444:
-    bl clDrawMan_Buckets_Reset
-    bl TransparentDraw_SortAndDispatch
-    lwz r3, 0x58(r31)
-    bl CObj_DebugVizPathFlush
-    bl fn_8016B0C4
-    lwz r3, 0x48(r31)
-    bl fn_8012A61C
-    lwz r3, 0x50(r31)
-    bl Object_RenderJObjIfWithinRange
-    lwz r3, 0x54(r31)
-    bl CourseEnvironment_RenderObjects_Timed
-    lwz r3, 0x54(r31)
-    bl Subsystem36c_DispatchPass2_Timed
-    lwz r3, 0x74(r31)
-    bl fn_8016EACC
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne CGameCoin_Draw_L_8012C490
-    li r3, 0x0
-    CGameCoin_Draw_L_8012C490:
-    bl clDrawMan_EndFrame_NoOp
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne CGameCoin_Draw_L_8012C4A4
-    li r3, 0x0
-    CGameCoin_Draw_L_8012C4A4:
-    bl clDrawMan_Buckets_Dispatch
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne CGameCoin_Draw_L_8012C4B8
-    li r3, 0x0
-    CGameCoin_Draw_L_8012C4B8:
-    li r4, 0x2
-    bl TransitionEffect_RenderPass
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne CGameCoin_Draw_L_8012C4D0
-    li r3, 0x0
-    CGameCoin_Draw_L_8012C4D0:
-    li r4, 0x4
-    bl TransitionEffect_RenderPass
-    lwz r3, 0x58(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    CGameCoin_Draw_L_8012C4EC:
-    lwz r3, 0x68(r31)
-    lwz r4, lbl_806DC1B8(r2)
-    bl fn_80253448
-    lwz r3, 0x68(r31)
-    bl fn_802535D4
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne CGameCoin_Draw_L_8012C510
-    li r3, 0x0
-    CGameCoin_Draw_L_8012C510:
-    li r4, 0x1
-    bl TransitionEffect_RenderPass
-    li r3, 0x7f
-    bl HSD_StateInvalidate
-    CGameCoin_Draw_L_8012C520:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+static inline void *CoinAnimNode_Value(CoinAnimNode *node) {
+    if (node == 0) return 0;
+    return CoinAnimLeaf_Value(node->next);
+}
+
+static inline void *CoinAnimDesc_Value(CoinAnimDesc *desc) {
+    if (desc == 0) return 0;
+    return CoinAnimNode_Value(desc->next);
+}
+
+struct CoinScene3D : CoinVObj {
+    CoinScene3D(const char *path);
+    virtual ~CoinScene3D();
+    void *cobj;
+    unsigned char pad8[0x24];
+    CoinAnimDesc *animDesc;
+    unsigned char pad30[0x3054];
+    unsigned char animFirst;
+    float animSpeed;
+    float animFrame;
+};
+
+struct CoinAnimScene3D : CoinScene3D {
+    CoinAnimScene3D(const char *path) : CoinScene3D(path) {
+        animSpeed = -1.0f;
+        animFrame = 0.0f;
+    }
+    virtual void key();
+    void Start() {
+        if (cobj) {
+            animFirst = 1;
+            animFrame = 0.0f;
+            animSpeed = 1.0f;
+            HSD_CObjAddAnim(cobj, CoinAnimDesc_Value(animDesc));
+            HSD_CObjReqAnim(cobj, animFrame);
+            HSD_CObjAnim(cobj);
+        }
+    }
+};
+
+struct DefeatDemo {
+    void *body;
+    void *hand;
+    void *effect;
+    CoinScene3D *scene;
+    float frame;
+    unsigned char first;
+    void *spinA;
+    void *spinB;
+    void *spinC;
+    CoinJObj *wheelA;
+    CoinJObj *wheelB;
+    float wheelAngleA;
+    float wheelAngleB;
+    CoinJObj *flash;
+
+    DefeatDemo();
+};
+
+struct KoopaFlame {
+    float life;
+    CoinVec vel;
+    CoinVec pos;
+    float scale;
+    float alpha;
+    float grow;
+};
+
+struct KoopaFireball {
+    void *model;
+    CoinJObj *jobj;
+    float angle;
+    int cooldown;
+    unsigned char active;
+    int rnd64;
+    int rnd48;
+    unsigned char first;
+    CoinVec dir;
+    KoopaFlame flames[64];
+
+    KoopaFireball(const char *modelPath) {
+        int i;
+
+        model = 0;
+        jobj = 0;
+        angle = 0.0f;
+        cooldown = 0;
+        active = 0;
+        first = 1;
+        rnd64 = 0;
+        rnd48 = 0;
+        dir.x = 0.0f;
+        dir.y = 0.0f;
+        dir.z = 0.0f;
+        for (i = 0; i < 64; i++) {
+            flames[i].life = -1.0f;
+        }
+        model = new CoinNormal3D(modelPath, 1);
+    }
+};
+
+struct BossKoopa {
+    void *anims[4];
+    int state;
+    int reqState;
+    float frame;
+    unsigned char justChanged;
+    float timer;
+    int attack;
+    KoopaFireball *fireball;
+    int wait;
+    int waitMin;
+    int waitMax;
+    int waitRndIdx;
+    int attackRndIdx;
+
+    BossKoopa(int waitMin, int waitMax);
+};
+
+struct CoinHsdObj;
+
+struct CoinShellSet {
+    void *model;
+    void *jobj;
+    int visible;
+    float mC;
+    unsigned char anim[0x30];
+    float alpha;
+    void *kartJoint;
+    void *shells;
+};
+
+struct CGameCoin {
+    void *vt;
+    unsigned char pad4[0x4];
+    void *input;
+    void *driver;
+    void *effects;
+    void *audio;
+    unsigned char pad18[0x30];
+    void *m48;
+    CoinShellSet *shellSet;
+    void *lakitu;
+    void *env;
+    CoinScene3D *scene;
+    void *goalCam;
+    CoinVObj *m60;
+    CoinHsdObj *lights;
+    void *hud;
+    BossKoopa *koopa;
+    void *m70;
+    void *m74;
+    DefeatDemo *defeatDemo;
+    unsigned char active;
+    unsigned char m7D;
+    unsigned char demoMode;
+    unsigned char defeated;
+    unsigned char pad80[0x40];
+    CoinVObj *particles;
+};
+
+
+
+static inline void CoinShellSet_Draw(CoinShellSet *self) {
+    if (self->visible == 0) {
+        return;
+    }
+    if (self->alpha <= 0.0f) {
+        return;
+    }
+    Object_SetAnimBinding(self->jobj, self->anim, 0);
+    Object_DriveAnimMatrix(self->jobj);
+    Object_SetColorAlphaOnly(self->jobj, 0, self->alpha);
+    Object_RenderJObjTree(self->jobj, 7);
+    fn_8017218C(self->model);
+}
+
+static inline void KoopaFireball_Draw(KoopaFireball *self) {
+    float (*proj)[4];
+    int i;
+    float scale;
+    float alpha;
+    float m[3][4];
+    float rot[3][4];
+
+    if (self->jobj == 0) {
+        return;
+    }
+    proj = CObj_GetProjMatrix_Cached(GetCourseScene3D());
+    GXChannel channel(Archive_GetRootJObj(self->model), HSD_JObjGetDObj(Archive_GetRootJObj(self->model)), 0x40000000, 1);
+    for (i = 0; i < 64; i++) {
+        if (self->flames[i].life < 0.0f) {
+            continue;
+        }
+        scale = self->flames[i].scale * lbl_806CF58C;
+        alpha = self->flames[i].alpha * lbl_806CF590;
+        PSMTXScale(m, scale, scale, 1.0f);
+        PSMTXConcat(m, proj, m);
+        PSMTXRotRad(rot, 'X', -0.7853982f);
+        PSMTXConcat(m, rot, m);
+        m[0][3] = self->flames[i].pos.x;
+        m[1][3] = self->flames[i].pos.y;
+        m[2][3] = self->flames[i].pos.z;
+        Object_SetColorAlphaOnly(self->model, 0, alpha);
+        GXChannel_PushTransform(&channel, m);
+        scale = self->flames[i].scale * lbl_806CF594;
+        alpha = self->flames[i].alpha * lbl_806CF598;
+        if (self->flames[i].life < 10.0f) {
+            alpha *= 0.1f * self->flames[i].life;
+        }
+        PSMTXScale(m, scale, scale, 1.0f);
+        PSMTXConcat(m, proj, m);
+        m[0][3] = self->flames[i].pos.x;
+        m[1][3] = self->flames[i].pos.y;
+        m[2][3] = self->flames[i].pos.z;
+        Object_SetColorAlphaOnly(self->model, 0, alpha);
+        GXChannel_PushTransform(&channel, m);
+    }
+}
+
+static inline void BossKoopa_Draw(BossKoopa *self) {
+    if (self->state >= 4) {
+        return;
+    }
+    Object_RenderJObjTree(self->anims[self->state], 7);
+    KoopaFireball_Draw(self->fireball);
+}
+
+extern "C" void fn_8012BF5C(CGameCoin *self) { /* 0x8012BF5C size:0x370 */
+    if (self->scene->Begin() == 1) {
+        clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
+        TransparentDraw_SortAndDispatch();
+        CObj_DebugVizPathFlush(self->scene);
+        fn_8016B0C4();
+        KartItem_DispatchEffectRenderByState(self->effects);
+        fn_8012A61C(self->m48);
+        KartItem_FlushPendingRender_v2(self->effects);
+        Object_RenderJObjIfWithinRange(self->lakitu);
+        CourseEnvironment_RenderObjects_Timed(self->env);
+        fn_8016DA30(self->m70);
+        Subsystem36c_DispatchPass2_Timed(self->env);
+        self->particles->Draw();
+        CoinShellSet_Draw(self->shellSet);
+        ItemObjectManager_Render();
+        BossKoopa_Draw(self->koopa);
+        DrawEffect_TickAndCull();
+        fn_8016EACC(self->m74);
+        clDrawMan_EndFrame_NoOp(SINGLETON_INSTANCE(lbl_806D10AC));
+        clDrawMan_Buckets_Dispatch(SINGLETON_INSTANCE(lbl_806D10AC));
+        Subsystem36c_DispatchPass4_Timed(self->env);
+        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 2);
+        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 4);
+        self->scene->Draw();
+    }
+}
+
+extern "C" void CGameCoin_Draw(CGameCoin *self) { /* 0x8012C2CC size:0x26C */
+    DefeatDemo *demo;
+
+    if (self->active == 0) {
+        return;
+    }
+    if (self->demoMode == 0) {
+        fn_8012BF5C(self);
+    } else if (self->defeated != 0) {
+        if (self->defeatDemo->scene->Begin() == 1) {
+            clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
+            TransparentDraw_SortAndDispatch();
+            CObj_DebugVizPathFlush(self->defeatDemo->scene);
+            fn_8016B0C4();
+            demo = self->defeatDemo;
+            Object_RenderJObjTree(demo->body, 7);
+            Object_RenderJObjTree(demo->hand, 7);
+            Object_RenderJObjTree(demo->effect, 7);
+            fn_8016EACC(self->m74);
+            self->particles->Draw();
+            clDrawMan_EndFrame_NoOp(SINGLETON_INSTANCE(lbl_806D10AC));
+            clDrawMan_Buckets_Dispatch(SINGLETON_INSTANCE(lbl_806D10AC));
+            TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 2);
+            TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 4);
+            self->defeatDemo->scene->Draw();
+        }
+    } else {
+        if (self->scene->Begin() == 1) {
+            clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
+            TransparentDraw_SortAndDispatch();
+            CObj_DebugVizPathFlush(self->scene);
+            fn_8016B0C4();
+            fn_8012A61C(self->m48);
+            Object_RenderJObjIfWithinRange(self->lakitu);
+            CourseEnvironment_RenderObjects_Timed(self->env);
+            Subsystem36c_DispatchPass2_Timed(self->env);
+            fn_8016EACC(self->m74);
+            clDrawMan_EndFrame_NoOp(SINGLETON_INSTANCE(lbl_806D10AC));
+            clDrawMan_Buckets_Dispatch(SINGLETON_INSTANCE(lbl_806D10AC));
+            TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 2);
+            TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 4);
+            self->scene->Draw();
+        }
+    }
+    fn_80253448(self->hud, lbl_806DC1B8);
+    fn_802535D4(self->hud);
+    TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 1);
+    HSD_StateInvalidate(0x7F);
 }
 
 extern "C" asm void CGameCoin_Update(void) { /* 0x8012C538 size:0x2164 */
@@ -3124,111 +3063,6 @@ extern "C" asm void CGameCoin_Update(void) { /* 0x8012C538 size:0x2164 */
     blr
 }
 
-struct CoinVec {
-    float x;
-    float y;
-    float z;
-};
-
-struct CoinQuat {
-    float x;
-    float y;
-    float z;
-    float w;
-};
-
-struct CoinJObj {
-    unsigned char pad0[0x14];
-    unsigned int flags;
-    unsigned char pad18[0x4];
-    CoinQuat rotate;
-    CoinVec scale;
-    CoinVec translate;
-    float mtx[3][4];
-};
-
-struct CoinNormal3D {
-    unsigned char opaque[0x5C];
-    CoinNormal3D(const char *path, int flags);
-};
-
-struct CoinAnimLeaf {
-    void *value;
-};
-
-struct CoinAnimNode {
-    void *opaque;
-    CoinAnimLeaf *next;
-};
-
-struct CoinAnimDesc {
-    void *opaque;
-    CoinAnimNode *next;
-};
-
-static inline void *CoinAnimLeaf_Value(CoinAnimLeaf *leaf) {
-    if (leaf == 0) return 0;
-    return leaf->value;
-}
-
-static inline void *CoinAnimNode_Value(CoinAnimNode *node) {
-    if (node == 0) return 0;
-    return CoinAnimLeaf_Value(node->next);
-}
-
-static inline void *CoinAnimDesc_Value(CoinAnimDesc *desc) {
-    if (desc == 0) return 0;
-    return CoinAnimNode_Value(desc->next);
-}
-
-struct CoinScene3D : CoinVObj {
-    CoinScene3D(const char *path);
-    virtual ~CoinScene3D();
-    void *cobj;
-    unsigned char pad8[0x24];
-    CoinAnimDesc *animDesc;
-    unsigned char pad30[0x3054];
-    unsigned char animFirst;
-    float animSpeed;
-    float animFrame;
-};
-
-struct CoinAnimScene3D : CoinScene3D {
-    CoinAnimScene3D(const char *path) : CoinScene3D(path) {
-        animSpeed = -1.0f;
-        animFrame = 0.0f;
-    }
-    virtual void key();
-    void Start() {
-        if (cobj) {
-            animFirst = 1;
-            animFrame = 0.0f;
-            animSpeed = 1.0f;
-            HSD_CObjAddAnim(cobj, CoinAnimDesc_Value(animDesc));
-            HSD_CObjReqAnim(cobj, animFrame);
-            HSD_CObjAnim(cobj);
-        }
-    }
-};
-
-struct DefeatDemo {
-    void *body;
-    void *hand;
-    void *effect;
-    CoinScene3D *scene;
-    float frame;
-    unsigned char first;
-    void *spinA;
-    void *spinB;
-    void *spinC;
-    CoinJObj *wheelA;
-    CoinJObj *wheelB;
-    float wheelAngleA;
-    float wheelAngleB;
-    CoinJObj *flash;
-
-    DefeatDemo();
-};
 
 static inline void CoinJObj_SetMtxDirty(CoinJObj *jobj) {
     unsigned int flags;
@@ -3363,65 +3197,6 @@ extern "C" void DefeatDemo_Update(DefeatDemo *self) { /* 0x8012E69C size:0x5A8 *
     }
 }
 
-struct KoopaFlame {
-    float life;
-    CoinVec vel;
-    CoinVec pos;
-    float scale;
-    float alpha;
-    float grow;
-};
-
-struct KoopaFireball {
-    void *model;
-    CoinJObj *jobj;
-    float angle;
-    int cooldown;
-    unsigned char active;
-    int rnd64;
-    int rnd48;
-    unsigned char first;
-    CoinVec dir;
-    KoopaFlame flames[64];
-
-    KoopaFireball(const char *modelPath) {
-        int i;
-
-        model = 0;
-        jobj = 0;
-        angle = 0.0f;
-        cooldown = 0;
-        active = 0;
-        first = 1;
-        rnd64 = 0;
-        rnd48 = 0;
-        dir.x = 0.0f;
-        dir.y = 0.0f;
-        dir.z = 0.0f;
-        for (i = 0; i < 64; i++) {
-            flames[i].life = -1.0f;
-        }
-        model = new CoinNormal3D(modelPath, 1);
-    }
-};
-
-struct BossKoopa {
-    void *anims[4];
-    int state;
-    int reqState;
-    float frame;
-    unsigned char justChanged;
-    float timer;
-    int attack;
-    KoopaFireball *fireball;
-    int wait;
-    int waitMin;
-    int waitMax;
-    int waitRndIdx;
-    int attackRndIdx;
-
-    BossKoopa(int waitMin, int waitMax);
-};
 
 static inline void KoopaFireball_SetActive(KoopaFireball *fb, unsigned char on) {
     if (fb->active != on) {
@@ -3812,37 +3587,6 @@ static inline void CoinHsdObj_Unref(CoinHsdObj *o) {
     }
 }
 
-struct CoinShellSet {
-    void *model;
-    void *jobj;
-    unsigned char pad8[0x40];
-    void *shells;
-};
-
-struct CGameCoin {
-    void *vt;
-    unsigned char pad4[0x4];
-    void *input;
-    void *driver;
-    void *effects;
-    void *audio;
-    unsigned char pad18[0x30];
-    void *m48;
-    CoinShellSet *shellSet;
-    void *lakitu;
-    void *env;
-    CoinVObj *scene;
-    void *goalCam;
-    CoinVObj *m60;
-    CoinHsdObj *lights;
-    void *hud;
-    BossKoopa *koopa;
-    void *m70;
-    void *m74;
-    DefeatDemo *defeatDemo;
-    unsigned char pad7C[0x44];
-    CoinVObj *camera;
-};
 
 static inline void CoinShellSet_Delete(CoinShellSet *set) {
     if (set != 0) {
@@ -3889,7 +3633,7 @@ extern "C" CGameCoin *CGameCoin_Destroy(CGameCoin *self, short flag) { /* 0x8012
 
     if (self) {
         self->vt = vtable;
-        delete self->camera;
+        delete self->particles;
         fn_80169C44();
         if (g_weatherSystem != 0) {
             fn_8016C634(g_weatherSystem, 1);
