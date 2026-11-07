@@ -1,11 +1,15 @@
 #include "game/clsound_spatial_private.h"
-int fn_801913B0(int index, const ClSoundVec* position) {
-    ClSoundListener* listener = &lbl_80495F20;
+static inline int UpdateSpatialVoice(int index, const ClSoundVec* position) {
+    unsigned int sound_id;
+    const ClSoundDef* definition;
     ClSoundVec delta;
-    float near_distance, far_distance, distance;
-    int volume, pan, surround;
-    near_distance = lbl_80379554[lbl_80678378[index].id & ~0x78000000].near_distance;
-    far_distance = lbl_80379554[lbl_80678378[index].id & ~0x78000000].far_distance;
+    float far_distance, near_distance, distance;
+    int pan, volume, surround;
+    ClSoundListener* listener = &lbl_80495F20;
+    sound_id = lbl_80678378[index].id & ~0x78000000;
+    definition = &lbl_80379554[sound_id];
+    near_distance = definition->near_distance;
+    far_distance = definition->far_distance;
     Vec3_Subtract(position, &listener->position, &delta);
     distance = Vec3_Magnitude(&delta);
     if (distance >= far_distance) { volume=0; pan=64; surround=64; }
@@ -25,4 +29,8 @@ int fn_801913B0(int index, const ClSoundVec* position) {
     if ((unsigned char)pan != lbl_80678378[index].pan) { lbl_80678378[index].pan=pan; lbl_80678378[index].flags |= 0x20; }
     if ((unsigned char)surround != lbl_80678378[index].surround) { lbl_80678378[index].surround=surround; lbl_80678378[index].flags |= 0x40; }
     return 1;
+}
+
+int fn_801913B0(int index, const ClSoundVec* position) {
+    return UpdateSpatialVoice(index, position);
 }
