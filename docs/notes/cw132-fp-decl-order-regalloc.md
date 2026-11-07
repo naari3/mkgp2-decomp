@@ -243,3 +243,8 @@ c16_u44: fn_8019ADF4 separate scalar xx/yy/zz product statements in two lengths 
 Source: Codex worker c16_u108_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u108: DrawEffect_KartWheel_TripleChildUpdate 800C2AAC (900B) improves99.844444->99.91111 by replacing m=offs[i]*len; Scale(k*(childScale*m)) with len=offs[i]*len; len=childScale*len; Scale(k*len). Offset/childScale load homes become exact, leaving multiply result f2 vs target f1 and associated operand order at800C2C88/8C. Named m compound multiply and inline offset*inverse helper each99.86667; neither exact. EH8/index12 exact, singleton remains NonMatching; full fallback DOL SHA1 OK. Do not repeat these three source shapes.
+
+## c17_u13_20261107
+Source: Codex worker c17_u13_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u13 fn_8019A9BC: sequential accumulator shared across matrix inner iterations plus out[index+col], index+=4 restores target two-row unroll/slwi/stfsx. A nine-scalar inline SetRotation groups quaternion calculations before matrix stores; with lifted-Y arithmetic before multiplication recovers exact1080B/frame110 and primary24B EH bytes, fresh61.533333 ->94.155556. Caching source matrix rows enables scalar propagation and regresses45.055557; reverted. Numeric constants probe94.47037 but emits1084B and retained sdata2 (sin/cos double-folded0.5 becomes lfd), rejected. Remaining axis load order/FP homes and matrix operand/GPR allocation. Singleton remains NonMatching; zero native gain.
