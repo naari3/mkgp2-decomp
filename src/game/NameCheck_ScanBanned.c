@@ -55,23 +55,25 @@ static inline NameBool at_boundary(const NameCode *p, const NameCode *set, int c
 static inline int extract_one(const NameCode *buf, NameCode *out, int position,
                              const NameCode *set, int count)
 {
+    int cursor;
     int length = 0;
-    for (; position < 5; position++) {
-        if (contains(buf[position], set, count) == 1) out[length++] = buf[position];
+    for (cursor = position; cursor < 5; cursor++) {
+        if (contains(buf[cursor], set, count) == 1) out[length++] = buf[cursor];
         else if (length > 0) break;
     }
-    return position;
+    return cursor;
 }
 static inline int extract_two(const NameCode *buf, NameCode *out, int position,
                              const NameCode *a, int na, const NameCode *b, int nb)
 {
+    int cursor;
     int length = 0;
-    for (; position < 5; position++) {
-        if (contains(buf[position], a, na) == 1) out[length++] = buf[position];
-        else if (contains(buf[position], b, nb) == 1) out[length++] = buf[position];
+    for (cursor = position; cursor < 5; cursor++) {
+        if (contains(buf[cursor], a, na) == 1) out[length++] = buf[cursor];
+        else if (contains(buf[cursor], b, nb) == 1) out[length++] = buf[cursor];
         else if (length > 0) break;
     }
-    return position;
+    return cursor;
 }
 
 /* A scan may consume several characters while it walks the table. */

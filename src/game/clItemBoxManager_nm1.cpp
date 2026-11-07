@@ -6,7 +6,8 @@
 extern "C" void clItemBoxManager_UnregisterResponder(clItemBoxManager *self, void *responder)
 {
     equal_to<void *> equal;
-    self->responders.remove_if(bind2nd(equal, responder));
+    binder2nd<equal_to<void *>, void *> pred(equal, responder);
+    self->responders.remove_if(pred);
 }
 
 extern "C" void clItemBoxManager_RegisterResponder(clItemBoxManager *self, void *responder)

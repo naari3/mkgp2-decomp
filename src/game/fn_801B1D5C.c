@@ -1,16 +1,7 @@
 #include "game/VoiceItemEventPrivate.h"
 
-#pragma use_lmw_stmw on
-#pragma exceptions on
-int fn_801B1D5C(RaceVoiceRival *kart, RaceVoiceRival *target, short item, unsigned char mode) {
+static inline short RemapItemVoice(short item) {
     short voice;
-    void *held;
-    VoiceItemData *data = (VoiceItemData *)&lbl_80496C38;
-    if (!g_voiceSystemInitDone) return 0;
-    if (!kart) return 0;
-    if (!target) return 0;
-    held = g_raceEntryArray[target->playerIndex].item;
-    if (held && KartItem_GetByte_f4(held)) { g_bgmStateId = 0; return 0; }
     voice=item;
     switch (item) {
     case 0x7B: voice=0x3D; break;
@@ -27,6 +18,21 @@ int fn_801B1D5C(RaceVoiceRival *kart, RaceVoiceRival *target, short item, unsign
     case 0x86: voice=0x4E; break;
     case 0x87: voice=0x3E; break;
     }
+    return voice;
+}
+
+#pragma use_lmw_stmw on
+#pragma exceptions on
+int fn_801B1D5C(RaceVoiceRival *kart, RaceVoiceRival *target, short item, unsigned char mode) {
+    short voice;
+    void *held;
+    VoiceItemData *data = (VoiceItemData *)&lbl_80496C38;
+    if (!g_voiceSystemInitDone) return 0;
+    if (!kart) return 0;
+    if (!target) return 0;
+    held = g_raceEntryArray[target->playerIndex].item;
+    if (held && KartItem_GetByte_f4(held)) { g_bgmStateId = 0; return 0; }
+    voice=RemapItemVoice(item);
     g_raceEntryArray[target->playerIndex].state=3;
     g_raceEntryArray[kart->playerIndex].state=2;
     g_raceEntryArray[kart->playerIndex].driver=(RaceVoiceDriver *)target;

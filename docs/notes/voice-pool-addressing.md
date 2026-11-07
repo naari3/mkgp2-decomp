@@ -8,3 +8,8 @@ Voice module TU (0x801A....) used MWCC data pooling: .data tables addressed as l
 Source: Codex worker c10_u2_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c10_u2: fn_801A6538 literal 1000.0f divisor removes undesired saved f31 and makes simple owned extab exact. Final time guard must be !(elapsed >= 12 threshold) to retain target cror/bne unordered semantics; previous < form omitted cror. Fresh baseline 97.25574%, retained 97.65049% (6096 vs 6100 B), index section 91.66667%. Inline clip/goal accessors do not preserve pooled subtable bases (97.65705%, discarded); open-coded spin loop worsens to 97.530495% (discarded). TU stays NonMatching, source_input false; full coordinator DOL SHA-1 passes.
+
+## c19_u6_20261107
+Source: Codex worker c19_u6_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 11 fn / 6328 B.
+
+c19_u6: fn_801A6538 direct objdiff97.65049->97.72918, unchanged6096vs6100B/EH100/index91.66667. TU-local DriverCharacter(data,driver) snapshots character then id, with id declared before character; fixes all16 spinning selector volatile-register rows. Typed RaceVoice_Item(playerIndex) plus block-local item fixes all4 boost setup rows. Every changed instruction now target-exact; all other instruction spellings/EH unchanged. Removing spinning data parameter rematerializes a pool base97.40131; CountRivals helper is byte-invariant97.72918 and removed. Prior c18 pool cycle not repeated, no config/range/bridge/header edits. Whole fallback-linked coordinator build SHA1ea30f3b1 OK; singleton stays NM, zero native gain.

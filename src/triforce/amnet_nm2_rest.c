@@ -136,7 +136,11 @@ s32 fn_8028D8CC(u8 id, NetBlob* blob) {
             WriteDeviceCommand(0x80000040, cmd);
             return 5;
         }
-        base = (BSWAP16(hdr[1]) << 16) | BSWAP16(hdr[0]);
+        {
+            u16 high = BSWAP16(hdr[1]);
+            u16 low = BSWAP16(hdr[0]);
+            base = ((u32)high << 16) | low;
+        }
         lbl_80699140.hwFlags = ReadDeviceHalf(0x80000000);
         if (lbl_80699140.hwFlags & 0x100) {
             lbl_80699140.prio = 0;

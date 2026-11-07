@@ -302,16 +302,16 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
             Vec3 scaledOffset;
             Vec3_Scale(&scaledOffset, &context->offset, 1.0f - context->progress);
             Vec3_Add_DestFirst(&item->position, &targetPosition, &scaledOffset);
+            float targetValue;
             float progress;
             if (0.9f < (progress = context->progress)) {
-                float yaw;
                 switch (item->type) {
-                case 0x2E: yaw = Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(context->target)); break;
-                case 0x2F: yaw = Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(context->target)); break;
-                case 0x30: yaw = BuildOrientationFromYaw(3.141592f + Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(context->target))); break;
-                case 0x31: yaw = BuildOrientationFromYaw(3.141592f + Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(context->target))); break;
+                case 0x2E: targetValue = Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(context->target)); break;
+                case 0x2F: targetValue = Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(context->target)); break;
+                case 0x30: targetValue = BuildOrientationFromYaw(3.141592f + Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(context->target))); break;
+                case 0x31: targetValue = BuildOrientationFromYaw(3.141592f + Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(context->target))); break;
                 }
-                item->rotation.y = AngleStepTowards_Shortest(item->rotation.y, yaw, 0.087266445f);
+                item->rotation.y = AngleStepTowards_Shortest(item->rotation.y, targetValue, 0.087266445f);
             } else {
                 float yaw = Vec3_HorizontalYawTo(&item->position, &targetPosition);
                 yaw = progress * yaw;
@@ -343,8 +343,9 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
                 if (item->type == 0x30) ItemEffectBus_OrMask(bus, 0x2000000000000000ULL);
                 ItemEffectBus_OrMask(bus, 0x0800000000000000ULL);
                 bus->itemType = item->type;
+                HeldKart *effectTarget = context->target;
                 if (item->type == 0x2E || item->type == 0x2F) {
-                    if (KartItem_QueryEffectStateFromIse(context->target) == 2)
+                    if (KartItem_QueryEffectStateFromIse(effectTarget) == 2)
                         fn_801B13B0(context->target, context->timer, 1);
                     else if (KartItem_QueryEffectStateFromIse(context->target) == 4)
                         fn_801B13B0(context->target, context->timer, 1);
@@ -377,9 +378,9 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
                     context->attached = 0;
                     Vec3 newPosition;
                     Mtx44_GetTranslation_RowMajor(&newPosition, KartDriver_GetJointByIdx(context->target, 15));
-                    float nextRadius = radii.entry[KartCharacterParam_GetIdentityIndex(context->target)].y;
+                    targetValue = radii.entry[KartCharacterParam_GetIdentityIndex(context->target)].y;
                     float nextScale = KartFxParam_GetConst1p5(context->owner);
-                    newPosition.y = nextScale * nextRadius + newPosition.y;
+                    newPosition.y = nextScale * targetValue + newPosition.y;
                     Vec3_Subtract_DestFirst(&context->offset, &item->position, &newPosition);
                     Mtx44_GetTranslation_RowMajor(&newPosition, KartDriver_GetKartRootMtx(context->target));
                     float difference = BuildOrientationFromYaw(Vec3_HorizontalYawTo(&item->position, &newPosition) - item->rotation.y);

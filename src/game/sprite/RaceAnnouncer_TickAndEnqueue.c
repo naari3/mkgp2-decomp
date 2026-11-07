@@ -1,9 +1,22 @@
 #include "game/RaceAnnouncerTickPrivate.h"
 
+static inline short TickCharacter(RaceVoiceData *data, int character, int id) {
+    short voice = 0x43;
+    short *normal = data->normal;
+    short *special = data->special;
+    if (character > -1 && character < 13) {
+        if (g_gameMode == 2) {
+            if (id >= 0 && id <= 3) voice = special[character + id * 13];
+            else voice = normal[character];
+        } else voice = normal[character];
+    }
+    return voice;
+}
+
 #define ME g_raceEntryArray[g_taMinLapPlayerIndex]
 #define PUSH(id) TickPush(id)
-#define CHARACTER(e) RaceVoice_Character(data, (e)->character, (e)->id)
-#define SOLO_CHARACTER() RaceVoice_Character(data, ME.character, -1)
+#define CHARACTER(e) TickCharacter(data, (e)->character, (e)->id)
+#define SOLO_CHARACTER() TickCharacter(data, ME.character, -1)
 
 unsigned char RaceAnnouncer_TickAndEnqueue(void) {
     RaceVoiceEntry *byRank[8];

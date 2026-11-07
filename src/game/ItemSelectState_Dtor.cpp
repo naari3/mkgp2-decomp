@@ -11,14 +11,17 @@ int fn_8023D844(int,int);
 int Item_GetDescriptorField0(int,void *);
 void fn_80120A08(int);
 }
+/* fakematch (permuter-style, manual): the target reloads selectedItemId0 for the
+   first Resolve call, which a read through a pointer to the {row,col,id} slots gives.
+   Natural code was probably:
+     g_playerData.selected[0]=selectedItemId0; ... selected[2]=selectedItemId2; */
+static inline void setSel(PlayerData *p,const int *a){p->selected[0]=a[0];p->selected[1]=a[3];p->selected[2]=a[6];}
 static inline int characterId() {
  int id=g_characterId; if(id<0) id=0; if(id>=13) id=0; return id;
 }
 ItemSelectState::~ItemSelectState() {
     PlayerData *player=&g_playerData;
-    g_playerData.selected[0]=selectedItemId0;
-    g_playerData.selected[1]=selectedItemId1;
-    g_playerData.selected[2]=selectedItemId2;
+    setSel(&g_playerData,&selectedItemId0);
     lbl_806D1264[0]=PlayerData_ResolveUnlockedIdByIndex(&g_playerData,selectedItemId0);
     lbl_806D1264[1]=PlayerData_ResolveUnlockedIdByIndex(&g_playerData,selectedItemId1);
     lbl_806D1264[2]=PlayerData_ResolveUnlockedIdByIndex(&g_playerData,selectedItemId2);

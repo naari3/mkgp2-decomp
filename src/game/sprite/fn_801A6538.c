@@ -32,6 +32,18 @@ extern const float lbl_806D9818, lbl_806D981C, lbl_806D9820;
 #define SINCE(t) ((float)OSTicksToMilliseconds(now - (t)) / 1000.0f)
 #define CLIP_PLAYED(id) (clips[id].playCount)
 
+static inline short RaceVoice_DriverCharacter(RaceVoiceData *data, RaceVoiceDriver *driver) {
+    int id;
+    int character;
+    character = driver->character;
+    id = driver->id;
+    return RaceVoice_Character(data, character, id);
+}
+
+static inline void *RaceVoice_Item(int playerIndex) {
+    return g_raceEntryArray[playerIndex].item;
+}
+
 /* Character voice of every kart that is spinning out. */
 static inline unsigned char RaceVoice_PushSpinning(RaceVoiceData *data) {
     unsigned char pushed = 0;
@@ -39,8 +51,7 @@ static inline unsigned char RaceVoice_PushSpinning(RaceVoiceData *data) {
 
     for (i = 0; i < 8; i++) {
         if (g_raceEntryArray[i].state == 5) {
-            if (VoiceQueue_Push(RaceVoice_Character(data, g_raceEntryArray[i].driver->character,
-                                                    g_raceEntryArray[i].driver->id),
+            if (VoiceQueue_Push(RaceVoice_DriverCharacter(data, g_raceEntryArray[i].driver),
                                 0x10, 0, 1)) {
                 pushed = 1;
             }
@@ -239,8 +250,8 @@ void fn_801A6538(void) {
     }
 
     if (g_gameMode == 0) {
-        entry = &g_raceEntryArray[g_taMinLapPlayerIndex];
-        if (entry->item != 0 && KartItem_GetBoostArmedAndTimer(entry->item, &timer)) {
+        void *item = RaceVoice_Item(g_taMinLapPlayerIndex);
+        if (item != 0 && KartItem_GetBoostArmedAndTimer(item, &timer)) {
             if (!lbl_806CFD36 && timer >= lbl_806D9818 &&
                 VoiceQueue_Push(ENTRY_VOICE(&g_raceEntryArray[g_taMinLapPlayerIndex]), 0x1E, 0, 1)) {
                 if (g_voiceTickCounter % 3 == 0) VoiceQueue_Push(0x25C, 0x1E, 0, 0);
