@@ -1,5 +1,6 @@
 /* GP please panel: update anchor positions, animate badge, and enter race. */
 #include "game/FlowScene.h"
+#include "game/singleton.h"
 #include "game/GpPleaseUpdate_private.h"
 struct SpriteUpdateView { char pad[0x20]; float scale; };
 struct BadgeUpdateView { SpriteUpdateView *sprite; unsigned char active, reverse; int frame; };
@@ -37,6 +38,16 @@ static inline void EnterRace(int seed) {
     g_rendererGateFlag = 1;
     fn_801B7CD0(-1);
 }
+static inline void UpdateFade(GpPleaseUpdate *self) {
+    bool pressed = SINGLETON_INSTANCE(g_pInputState)->held == 1;
+    self->timer++;
+    if (self->timer == 100) fn_801699D8(0, 1);
+    if ((self->timer >= 240 || (pressed && self->timer >= 120)) && !self->fading) {
+        self->fading = 1;
+        self->timer = 0;
+        fn_801699D8(0, 0);
+    }
+}
 int fn_801CDF10(GpPleaseUpdate *self) {
     float pos[12]; // Complete 0x30-byte sprite node record.
     RumbleUpdate();
@@ -65,14 +76,7 @@ int fn_801CDF10(GpPleaseUpdate *self) {
         Sprite_AdvanceAnim(badge->sprite, lbl_806D9EB0);
     }
     if (self->next != -1) return self->next;
-    bool pressed = GetInput()->held == 1;
-    self->timer++;
-    if (self->timer == 100) fn_801699D8(0, 1);
-    if ((self->timer >= 240 || (pressed && self->timer >= 120)) && !self->fading) {
-        self->fading = 1;
-        self->timer = 0;
-        fn_801699D8(0, 0);
-    }
+    UpdateFade(self);
     if (self->fading == 1 && self->timer > lbl_806D9E88) {
         EnterRace(VSMode_SeedRandomItemSequence(0, g_characterId, 0));
         self->next = 42;
