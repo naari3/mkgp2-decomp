@@ -3103,7 +3103,7 @@ config.libs = [
             Object(NonMatching, "game/clsound/ClSound_InitSoundSystem.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/clstream/ClStream_UpdateAll.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/clsound/fn_801934F4.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/clsound/fn_80193624.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/clsound/fn_80193624.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clstream/fn_80194108.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clstream/fn_80194130.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clstream/fn_80194158.c"),
