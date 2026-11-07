@@ -10707,6 +10707,8 @@
     "@525": "@eti_800206D8"
   },
   "src/game/ExplosionTumble_Init.cpp": {
+    "@279": "@etb_800071AC",
+    "@280": "@eti_800205AC",
     "@262": "@etb_800071AC",
     "@263": "@eti_800205AC",
     "__dt__5C7VecFv": "dtor_80036E40",
