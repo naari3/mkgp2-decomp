@@ -46,11 +46,15 @@ void DriveBehavior_HandleWpType(DriveBehavior *self, int waypoint) {
         break;
     case 11: {
         float wave;
+        float first;
         self->phase += 0.008333333767950535f;
         if (self->phase > 1.0f) self->phase -= 1.0f;
         wave = sin(3.1415927410125732f * self->phase);
-        self->matrix[0] = 1.1f * wave + 0.1f;
-        self->matrix[5] = 1.1f * (1.0f - wave) + 0.1f;
+        first = 1.1f * wave + 0.1f;
+        wave = 1.0f - wave;
+        wave = 1.1f * wave + 0.1f;
+        self->matrix[0] = first;
+        self->matrix[5] = wave;
         break;
     }
     case 12:
