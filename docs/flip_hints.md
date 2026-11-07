@@ -39,3 +39,14 @@ All five targets do the same thing: `lwz r5, 0x10(State)` (`State.bufOff`), then
 - **A side effect to avoid.** `*off = k->bufAddr + *off;` in acBind's `ClearBindBuffer` cuts the diff to only this one instruction (41 → 3 lines). But objdiff fuzzy drops from 96.76 to 96.41, so it was not applied.
 
 Untested idea: the `+0` / `+4` immediates may be section offsets of TU-local objects, i.e. the device-side offset is computed from a `.bss` object's position (`(u32)&local_obj - (u32)&anchor`). That would need the TU to own `lbl_806A12A0` / `lbl_806A14A0`, which belong to acsocket.c. Repro harness: `/tmp/claude-0/rp/rp.py` (ephemeral). It compiles a file with the triforce_am flags under a list of compilers and flags each `addi rX, rY, 0`.
+
+## What triggers section-anchor pooling (R5, 2026-11-07)
+
+In KartItemAudio_PlaySEByItemId (GC/1.3.2), the TU's .rodata is addressed through one pooled base (`...rodata.0@l` in the .o, then `addi rX, base, 0x0` for the object at +0). The trigger is the struct copy `Vec3 pos = lbl_802EDD24;` inside the function. Replace it with `Vec3 pos;` and every reference in the function goes back to per-symbol `lis/addi` (diff 4 -> 493).
+
+These do *not* pool (amnet flags and KartItemAudio flags both tested):
+- A TU that only defines several const objects (global or static) and passes or loads their addresses.
+- A struct copy from a const object in another function of the same TU.
+- A dead struct copy (`{ T t = obj; (void)t; }`) in the function itself. This was tried as a fakematch for fn_8028D8CC; it gets removed before the pooling decision.
+
+So `addi rX, rY, 0` on 1.3+ points to a function that does a *live* struct copy of a const object the TU owns.
