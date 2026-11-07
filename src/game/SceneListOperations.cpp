@@ -1,20 +1,22 @@
 /* Ordered scene insertion, lookup, shutdown and virtual deletion.
- * NonMatching: shutdown/lookup iterator registers differ; insertion and EH match. */
+ * Matching. */
 #include "game/FlowScene.h"
 extern "C" ListIter DoublyLinkedList_PushBefore(DoublyLinkedList *, const ListIter &, FlowTask *const &);
 extern "C" void fn_801F4D3C(FlowSceneList *list) {
-    ListNode *end;
-    ListNode *n;
+    ListIter n;
+    ListIter end;
+    n = list->entries.first;
     end = list->entries.End();
-    for (n = list->entries.first; n != end; n = n->next) n->task->field0C = 1;
+    for (; n.node != end.node; n.node = n.node->next) n.node->task->field0C = 1;
     while (list->entries.count > 0) { list->Update(); list->Draw(); }
 }
 extern "C" FlowTask *fn_801F4DC0(FlowSceneList *list, int id) {
-    ListNode *end;
-    ListNode *n;
+    ListIter n;
+    ListIter end;
+    n = list->entries.first;
     end = list->entries.End();
-    for (n = list->entries.first; n != end; n = n->next) {
-        FlowTask *task = n->task;
+    for (; n.node != end.node; n.node = n.node->next) {
+        FlowTask *task = n.node->task;
         if ((unsigned)id == (unsigned)task->id) return task;
     }
     return 0;

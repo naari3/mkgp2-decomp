@@ -356,8 +356,11 @@ Mtx44f *fn_801DF3A8(SteeringMgr *self) {
 
 void fn_801E08A0(SteerAction *self) {
     float s = sin(Mul2((float)(20 - self->timer) / 20.0f, 3.1415927f));
-    s *= 5.0f;
-    self->trans.SetTrans(0.0f, s, 0.0f);
+    /* fakematch: the copy into y gives the product its own FPR.
+     * Natural code: s *= 5.0f; self->trans.SetTrans(0.0f, s, 0.0f); */
+    float y = s;
+    y *= 5.0f;
+    self->trans.SetTrans(0.0f, y, 0.0f);
 }
 
 int fn_801E091C(SteerAction *self) { return 0; }
