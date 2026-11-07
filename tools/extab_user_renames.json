@@ -12102,5 +12102,20 @@
     "@112": "@etb_800086C0",
     "@113": "@eti_800214E8",
     "__dt__14SpecialFaceVecFv": "dtor_80036E40"
+  },
+  "src/game/anon_801D286C.cpp": {
+    "__ct__22RankingSpriteOwnerCtorFiiiiUciPCciPCciP12RankingScenePvfff": "fn_801D286C",
+    "__vt__15RankingCtorBase": "lbl_8048EF34",
+    "__vt__22RankingSpriteOwnerCtor": "lbl_8049B53C",
+    "__ct__16RankingCtorTrackFv": "fn_801D3354",
+    "__dt__15RankingCtorBaseFv": "dtor_80145DB0",
+    "__ct__13RankingSpriteFiii": "Sprite_InitWithAnim",
+    "__ct__13RankingDriverFiiPA4_fiii": "KartDriver_New_Full",
+    "__ct__15RankingCtorTextFv": "TexMgr_Init",
+    "__dt__15RankingCtorTextFv": "dtor_800869D0",
+    "__dt__17RankingSpriteSlotFv": "dtor_8015E8AC",
+    "__dt__17RankingDriverSlotFv": "dtor_80052C48",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
