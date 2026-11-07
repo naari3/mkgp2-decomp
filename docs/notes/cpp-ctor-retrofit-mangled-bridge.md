@@ -1074,3 +1074,8 @@ clItemBoxManager: the target Update_Inner has DESTROYLOCAL dtor_80036E40 for its
 Source: Codex worker c17_u15_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c17_u15: fn_80202E78 text176: preserve read-only line parameter and normalize separate selectedLine local to restore incoming-r4 compares and all prologue scheduling. Fresh objdiff59.295456 ->82.5, EH8/index12 remain100. Flat indexing53.886364; inline table lookups invariant baseline. Residual table-base+index association: target addi base then lwzx, source index-add then displacement lwz. Singleton remainsNonMatching, no native gain.
+
+## c17_u10_20261107
+Source: Codex worker c17_u10_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 872 B.
+
+c17_u10: SpecialFace_BuildPlaneAndEdges 8007BB08/872B: plain Vec3f locals scalarize target stack vectors (fresh64.004585). Canonical SpecialFaceVec locals restore frame30 and vector stores/reloads (95.30275). Inline scalar SetVector and x=y=z=0 restore difference argument scheduling, edge FP homes and z/y/x zero stores (99.701836). Alias-safe inline CrossVector with x/y/z temporaries before output writes resolves remaining f5/f6/f7/f8 rotation (100%). Bridge @112/@113 to owned EH800086C0/index800214E8 and weak SpecialFaceVec dtor to dtor_80036E40. Owned text872/EH8/index12 all100; Matching source-linked exact main.elf ranges and full DOL SHA1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. No split/data/header/flag-recipe changes.

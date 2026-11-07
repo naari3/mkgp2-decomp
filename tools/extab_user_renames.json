@@ -12093,5 +12093,10 @@
     "__vt__20clItemBoxManagerBase": "lbl_803F9CF0",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/SpecialFace_BuildPlaneAndEdges.cpp": {
+    "@112": "@etb_800086C0",
+    "@113": "@eti_800214E8",
+    "__dt__14SpecialFaceVecFv": "dtor_80036E40"
   }
 }
