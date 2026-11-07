@@ -104,6 +104,10 @@
     "clFlowRound_Init",
     "dtor_80082960"
   ],
+  "src/game/ItemSelectState_Init.cpp": [
+    "ItemSelectState_Init",
+    "dtor_80082960"
+  ],
   "src/game/clFlowCup.c": [
     "clFlowCup_Draw",
     "clFlowCup_Update",
@@ -1949,7 +1953,8 @@
       "FUN_8007c56c",
       "PtrVec_InsertFill",
       "PtrVec_Reserve",
-      "dtor_80036E40"
+      "dtor_80036E40",
+      "__dt__10WarpStringFv"
     ],
     "extabindex": [
       "SpecialFaceMesh_Raycast",
@@ -1962,27 +1967,8 @@
       "PtrVec_InsertFill",
       "PtrVec_Reserve",
       "dtor_8007CC54",
-      "dtor_80036E40"
-    ]
-  },
-  "src/game/WarpZoneVector_Reserve.cpp": {
-    "extab": [
-      "WarpZoneArray_UninitFillN",
-      "WarpZone_OperatorAssign_LinkerStub",
-      "WarpZoneArray_CopyBackward",
-      "WarpZoneArray_CopyBackwardImpl",
-      "WarpZoneVector_Reserve",
-      "dtor_800AA69C",
-      "WarpZoneVector_Clear"
-    ],
-    "extabindex": [
-      "WarpZoneVector_Reserve",
-      "dtor_800AA69C",
-      "WarpZoneVector_Clear",
-      "WarpZoneArray_UninitFillN",
-      "WarpZoneArray_CopyBackward",
-      "WarpZoneArray_CopyBackwardImpl",
-      "WarpZone_OperatorAssign_LinkerStub"
+      "dtor_80036E40",
+      "__dt__10WarpStringFv"
     ]
   },
   "src/game/PanelCda40.cpp": {
@@ -2764,5 +2750,71 @@
     "fn_802055F4",
     "fn_8020579C",
     "dtor_80082960"
-  ]
+  ],
+  "src/game/anon_8020E3D0_nm2.cpp": [
+    "dtor_8020EB04",
+    "fn_8020EB94",
+    "fn_8020EC70",
+    "fn_8020E4C4",
+    "fn_8020E590",
+    "fn_8020E690",
+    "fn_8020EE3C",
+    "fn_8020E6C8",
+    "dtor_8020EA98",
+    "fn_8020ED30",
+    "fn_8020EDB4",
+    "dtor_80082960",
+    "dtor_801FEAB8",
+    "dtor_801FEB48",
+    "dtor_801419C8",
+    "fn_80141A24"
+  ],
+  "src/game/cLNormal3DWrap.cpp": {
+    "extab": [
+      "cLNormal3DWrap_Mgr_ReleaseSlot",
+      "cLNormal3DWrap_Mgr_AcquireSlot",
+      "cLNormal3DWrap_Mgr_Dtor",
+      "cLNormal3DWrap_Mgr_Ctor",
+      "dtor_800897B8",
+      "cLNormal3DWrap_Slot_Dtor",
+      "cLNormal3DWrap_Slot_ResolveJoint",
+      "cLNormal3DWrap_Slot_AdvanceUVScrollWrapped",
+      "cLNormal3DWrap_Slot_GetOrLoadJointTransform",
+      "cLNormal3DWrap_Slot_Render"
+    ],
+    "extabindex": [
+      "cLNormal3DWrap_Mgr_ReleaseSlot",
+      "cLNormal3DWrap_Mgr_AcquireSlot",
+      "cLNormal3DWrap_Mgr_Dtor",
+      "cLNormal3DWrap_Mgr_Ctor",
+      "cLNormal3DWrap_Slot_Dtor",
+      "cLNormal3DWrap_Slot_ResolveJoint",
+      "cLNormal3DWrap_Slot_AdvanceUVScrollWrapped",
+      "cLNormal3DWrap_Slot_GetOrLoadJointTransform",
+      "cLNormal3DWrap_Slot_Render",
+      "dtor_800897B8"
+    ]
+  },
+  "src/game/WarpZoneVector_Insert.cpp": {
+    "extab": [
+      "WarpZoneVector_Insert",
+      "WarpZoneArray_UninitFillN",
+      "WarpZone_OperatorAssign_LinkerStub",
+      "WarpZoneArray_CopyBackward",
+      "WarpZoneArray_CopyBackwardImpl",
+      "WarpZoneVector_Reserve",
+      "dtor_800AA69C",
+      "WarpZoneVector_Clear"
+    ],
+    "extabindex": [
+      "WarpZoneVector_Insert",
+      "WarpZoneVector_Reserve",
+      "dtor_800AA69C",
+      "WarpZoneVector_Clear",
+      "WarpZoneArray_UninitFillN",
+      "WarpZoneArray_CopyBackward",
+      "WarpZoneArray_CopyBackwardImpl",
+      "WarpZone_OperatorAssign_LinkerStub"
+    ]
+  }
 }

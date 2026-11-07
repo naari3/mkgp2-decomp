@@ -1,0 +1,39 @@
+diff --git a/configure.py b/configure.py
+index 7f0fe6a..c728ff5 100644
+--- a/configure.py
++++ b/configure.py
+@@ -2103,7 +2103,7 @@ config.libs = [
+             Object(Matching, "game/anon_80218F40_exact3.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+             Object(NonMatching, "game/anon_8021B568_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+             Object(Matching, "game/anon_8021B568_exact2.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+-            Object(NonMatching, "game/anon_80226670.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
++            Object(Matching, "game/anon_80226670.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+             Object(Matching, "game/DNBress.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+             Object(Matching, "game/DNBress_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+             Object(Matching, "game/DNBress_tick.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+diff --git a/src/game/anon_80226670.cpp b/src/game/anon_80226670.cpp
+index b0a9276..f1c621c 100644
+--- a/src/game/anon_80226670.cpp
++++ b/src/game/anon_80226670.cpp
+@@ -59,6 +59,7 @@ struct clCSSceneJoinMsg : SceneBase {
+     int state;
+     float time;
+     FlowPanel *panel;
++    virtual void _key(); /* undefined key stub: vtable lbl_804EDF64 is not owned */
+     clCSSceneJoinMsg();
+     ~clCSSceneJoinMsg();
+     void Destroy();
+diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
+index 1bcf5b9..cde4e0b 100644
+--- a/tools/extab_user_renames.json
++++ b/tools/extab_user_renames.json
+@@ -4932,7 +4932,8 @@
+     "Destroy__16clCSSceneJoinMsgFv": "fn_80226828",
+     "__vt__16clCSSceneJoinMsg": "lbl_804EDF64",
+     "__vt__9SceneBase": "lbl_803FE0C8",
+-    "__ct__9FlowPanelFv": "fn_801DA06C"
++    "__ct__9FlowPanelFv": "fn_801DA06C",
++    "__dt__9SceneBaseFv": "dtor_8007D0D4"
+   },
+   "src/game/ChallengeGoalCamera_Init.cpp": {
+     "__nw__FUl": "Alloc",

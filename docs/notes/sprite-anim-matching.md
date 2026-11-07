@@ -18,3 +18,8 @@ c14_u10: fn_8019F5BC improves94.41053->95.77193 with sorted-before-ids stack dec
 Source: Codex worker c14_u18_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c14_u18: fn_801A0004 94.11644 -> 94.404106 via private inline Rotate and Scale helpers. Scale parameter evaluation restores target scaleY-before-scaleX loads. Translate helper is byte-invariant; Scale-only hybrid reaches94.19863. Main residual is FPR scratch graph (source f30-f31 save / 0x90 frame vs target f29-f31 / 0xA0), with final scaling products and zero/one homes differing. Single function remains NonMatching; native gain0; fallback full DOL SHA-1 exact. Three structural approaches used.
+
+## c19_u132_20261107
+Source: Codex worker c19_u132_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u132 retry fn_8019FA30 97.23684->97.44361: independent layerIndex for drawing instead of reusing collection/sorting i makes count exact r30 and reduces mismatched target rows70->62. Text1064/extab8/index12 unchanged; retain NonMatching. Unique-layer search inline helper97.23684 only changes volatile search homes; declaration refinement placing layerIndex before arrays97.23684; short-color child-drawing inline wrapper is instruction-invariant97.44361. All probes archived build/w. Residual sorted/index homes r31/r29 vs targetr15/r31, scan/search homes, base/output color partition and resource-only opacity copy. No applicable singleton/pool rescue or single-fn split. Coordinator full build target SHA-1 OK, zero native gain.

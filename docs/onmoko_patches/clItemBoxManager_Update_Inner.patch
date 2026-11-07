@@ -1,0 +1,22 @@
+diff --git a/src/game/clItemBoxManager_nm1.cpp b/src/game/clItemBoxManager_nm1.cpp
+index 59e680f..efc1ecb 100644
+--- a/src/game/clItemBoxManager_nm1.cpp
++++ b/src/game/clItemBoxManager_nm1.cpp
+@@ -56,6 +56,8 @@ struct Vec3 {
+ };
+ 
+ #pragma auto_inline off
++#pragma push
++#pragma opt_lifetimes off
+ extern "C" void clItemBoxManager_Update_Inner(clItemBoxManager *self)
+ {
+     ListNode<void *> *it;
+@@ -99,6 +101,8 @@ extern "C" void clItemBoxManager_Update_Inner(clItemBoxManager *self)
+         clItemBoxResponder_CmdSlotCountdown(rt->value);
+     }
+ }
++#pragma pop
++
+ #pragma auto_inline reset
+ 
+ extern "C" void clItemBoxManager_Update(clItemBoxManager *self)

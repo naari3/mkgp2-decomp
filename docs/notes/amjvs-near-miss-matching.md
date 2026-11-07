@@ -18,3 +18,8 @@ c18_u11_20261107: fn_8028B180 (592 B) promoted from 98.75% to 100%. Pointer-walk
 Source: Codex worker c18_u116_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u116: fn_8028B48C BOOL r -> u8 r improves 95.70552 to 96.809814 and source text 1268 to exact target 1304 bytes. Nine target mr r27,r26 positions instead emit clrlwi r26,r26,24; accumulator/manager/node/index saved homes still rotate. Entire-function inline helper exceeds inline budget (32-byte wrapper); explicit reuse of node for result and loop index is invariant at baseline. No native gain; retain NonMatching one-line draft.
+
+## c19_u154_20261107
+Source: Codex worker c19_u154_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1304 B.
+
+c19_u154: fn_8028B48C promoted 96.809814% to 100%, 1304 B. Reorder function locals to nodes, m, sem, ok, i, r: 98.34356%, every saved-register home matches, only nine clrlwi r27,r26,24 vs mr r27,r26 remain. THEN restore u8 r to BOOL r: exact 100%; with the old declaration order a full-width temporary coalesces away the nine copies. No helper/pragma/flags/data/EH changes; Matching flip, actual main.elf source input and symbol range verified; coordinator full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65 OK. C++ bool r (94.00307%), u32 r with original declarations (95.70552%), C++ bool ok + BOOL r (91.93252%) were rejected.

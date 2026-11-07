@@ -58,9 +58,9 @@ void Object_SetJObjRotationY(clNormal3D *, float);
 }
 
 Obj987::Obj987() {
+    int i;
     const char *resource;
     const Obj987Position *positions;
-    int i;
     DebugPrintf(lbl_8037DC24);
     items = 0;
     count = 0;

@@ -32,6 +32,18 @@ struct CollisionMatrix {
         m[14] = m[13] = m[12] = m[11] = lbl_806D96D0;
         m[0] = m[5] = m[10] = m[15] = lbl_806D96D4;
     }
+    void Scale(float scale) {
+        for (int row = 0; row < 3; ++row) {
+            m[row*4] *= scale;
+            m[row*4+1] *= scale;
+            m[row*4+2] *= scale;
+        }
+    }
+    void Transform(const Vec3& v, CollisionVec& out) const {
+        out.x = m[12] + (v.z*m[8] + (m[0]*v.x + v.y*m[4]));
+        out.y = m[13] + (v.z*m[9] + (m[1]*v.x + v.y*m[5]));
+        out.z = m[14] + (v.z*m[10] + (v.x*m[2] + v.y*m[6]));
+    }
     void Multiply(const CollisionMatrix& b) {
         float out[16];
         int index = 0;
@@ -50,7 +62,10 @@ struct CollisionMatrix {
 };
 #pragma fp_contract off
 static inline float PlainDot(const CollisionVec& a, const CollisionVec& b) {
-    return a.z*b.z + (a.x*b.x + a.y*b.y);
+    float x = a.x*b.x;
+    float y = a.y*b.y;
+    float z = a.z*b.z;
+    return z + (x + y);
 }
 #pragma fp_contract on
 static inline void RemoveNormal(Vec3& v, const Vec3& n) {
@@ -78,17 +93,11 @@ extern "C" void KartMovement_CollisionUpdate(KartCollisionState* k) {
         collided = 0;
         for (int corner = 0; corner < 4; ++corner) {
             CollisionVec hitPoint, hitNormal, contact;
-            float transform[16];
-            for (int j = 0; j < 16; ++j) transform[j] = k->matrix[j];
-            for (int row = 0; row < 3; ++row) {
-                transform[row*4] *= k->scale;
-                transform[row*4+1] *= k->scale;
-                transform[row*4+2] *= k->scale;
-            }
+            CollisionMatrix transform;
+            for (int j = 0; j < 16; ++j) transform.m[j] = k->matrix[j];
+            transform.Scale(k->scale);
             const Vec3* local = &k->params->probes[corner];
-            contact.x = transform[12] + (local->z*transform[8] + (transform[0]*local->x + local->y*transform[4]));
-            contact.y = transform[13] + (local->z*transform[9] + (transform[1]*local->x + local->y*transform[5]));
-            contact.z = transform[14] + (local->z*transform[10] + (local->x*transform[2] + local->y*transform[6]));
+            transform.Transform(*local, contact);
             if (Terrain_RaycastWall(&k->pos, &contact, &hitPoint, &hitNormal) != 1) continue;
             k->wallPoint.x = hitPoint.x; k->wallPoint.y = hitPoint.y; k->wallPoint.z = hitPoint.z;
             hitPoint.x -= contact.x; hitPoint.y -= contact.y; hitPoint.z -= contact.z;

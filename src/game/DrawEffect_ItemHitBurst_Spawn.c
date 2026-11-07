@@ -157,8 +157,8 @@ void DrawEffect_ItemHitBurst_Spawn(Vec *pos, Vec *vel, signed char strength)
     Vec b;
     Vec *tints = lbl_8041A4D0;
     signed char ground;
-    float pitch;
     float roll;
+    float pitch;
     float speed;
 
     if (5e+02f < fn_800D3184((Vec *)(lbl_805DF3D0 + 0x80), pos)) {

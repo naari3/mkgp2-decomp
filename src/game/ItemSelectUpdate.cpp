@@ -159,9 +159,13 @@ extern "C" void fn_80238D9C(ItemSelectState *self) {
         GroupSprite(self->groups[7])->y = lbl_806DB89C * ((RefillChoice *)self->iconArray)->row + lbl_806DB8E8;
     }
     fn_8011F804(self->sprites[3], lbl_806DB8DC, layout->y[((RefillChoice *)self->iconArray)->row]);
-    for (int i = 0; i < 9; ++i) {
-        if (self->groups[i]) Sprite_AdvanceAnim(GroupSprite(self->groups[i]), lbl_806DB8A8);
+    int i;
+    ItemSelectState *cursor;
+    for (i = 0, cursor = self; i < 9; ++i, cursor = (ItemSelectState *)((char *)cursor + 4)) {
+        if (cursor->groups[0]) Sprite_AdvanceAnim(GroupSprite(cursor->groups[0]), lbl_806DB8A8);
     }
-    for (int i = 0; i < 66; ++i) SpriteHandle_RecomputeCull(self->itemSprites[i]);
-    for (int i = 0; i < 5; ++i) SpriteHandle_RecomputeCull(self->sprites[i]);
+    for (i = 0, cursor = self; i < 66; ++i, cursor = (ItemSelectState *)((char *)cursor + 4))
+        SpriteHandle_RecomputeCull(cursor->itemSprites[0]);
+    for (i = 0, cursor = self; i < 5; ++i, cursor = (ItemSelectState *)((char *)cursor + 4))
+        SpriteHandle_RecomputeCull(cursor->sprites[0]);
 }

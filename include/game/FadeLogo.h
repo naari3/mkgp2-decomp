@@ -91,6 +91,9 @@ struct TaskListBase {
     }
     virtual void Update() = 0;
     virtual void Draw() = 0;
+    /* Undefined key stubs (_keyB/_keyL/_key): these vtables live in
+     * unowned .data, so no TU may emit them. */
+    virtual void _keyB();
     TaskEntries entries;
     TaskListBase() {}
     void KillAll();
@@ -98,6 +101,7 @@ struct TaskListBase {
 };
 
 struct TaskListImpl : TaskListBase {
+    virtual void _keyL();
     TaskListImpl() {}
     ~TaskListImpl();
     virtual void Update();
@@ -107,6 +111,7 @@ struct TaskListImpl : TaskListBase {
 };
 
 struct FadeLogoScene : PopupTask {
+    virtual void _key();
     int layer;
     VHolder<TaskListImpl> list;
     FadeLogoScene(int layer_, int id_);
@@ -114,7 +119,6 @@ struct FadeLogoScene : PopupTask {
     void Finish();
     void Update();
     void Draw();
-    virtual void _key();
 };
 
 #endif

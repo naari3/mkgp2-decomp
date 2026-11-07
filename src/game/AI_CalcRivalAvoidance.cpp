@@ -1,5 +1,5 @@
-/* Native reconstruction. Read-only interval constants preserve load scheduling;
- * the candidate-position lifetime and FP allocation remain NonMatching. */
+/* Native reconstruction. The upper and lower angle ranges use separate
+ * inline reductions; candidate-position lifetime and FP allocation remain NM. */
 #include "game/RivalAvoidanceUnlockPrivate.h"
 extern "C" {
 extern void *g_pathSystem;
@@ -19,10 +19,17 @@ float LUT_Cosine(float);
 float LUT_Sine(float);
 float PSVECSquareDistance(const void *,const void *);
 }
-static inline float normalizeRivalAngle(float angle) {
-    while(lbl_806DA488<=angle) angle-=lbl_806DA484;
-    while(angle<lbl_806DA48C) angle+=lbl_806DA484;
+static inline float reduceRivalAngle(float angle, float turn, float bound) {
+    while(bound<=angle) angle-=turn;
     return angle;
+}
+static inline float raiseRivalAngle(float angle, float turn, float bound) {
+    while(angle<bound) angle+=turn;
+    return angle;
+}
+static inline float normalizeRivalAngle(float angle) {
+    angle=reduceRivalAngle(angle,lbl_806DA484,lbl_806DA488);
+    return raiseRivalAngle(angle,lbl_806DA484,lbl_806DA48C);
 }
 static inline unsigned char findRival(RivalAvoidanceState *self,RivalAvoidanceCandidate &candidate) {
     AIPairRecord *tracking=&lbl_806793D8[self->kartId];

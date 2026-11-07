@@ -1,4 +1,8 @@
 /* Homing-target marker animation. Constants and colors are owned by adjacent TUs. */
+static inline float Interpolate(float from, float to, float t) {
+    return t * (to - from) + from;
+}
+
 struct MarkerPart {
     unsigned char visible;
     float sx, sy, angle;
@@ -15,24 +19,24 @@ struct MarkerPart {
     }
     void Fade(float scale, float rotation, const float *rgb, float t) {
         sx += (scale - sx) * t; sy += (scale - sy) * t; angle = rotation;
-        color[0] += t * (rgb[0] - color[0]);
-        color[1] += t * (rgb[1] - color[1]);
-        color[2] += t * (rgb[2] - color[2]);
+        color[0] = Interpolate(color[0], rgb[0], t);
+        color[1] = Interpolate(color[1], rgb[1], t);
+        color[2] = Interpolate(color[2], rgb[2], t);
         color[3] += -color[3] * t;
     }
     void SetInterpolated(float scale, float rotation, const float *a, const float *b, float t, float alpha) {
         visible = 1; sy = scale; sx = scale; angle = rotation;
-        color[0] = t * (b[0] - a[0]) + a[0];
-        color[1] = t * (b[1] - a[1]) + a[1];
-        color[2] = t * (b[2] - a[2]) + a[2];
+        color[0] = Interpolate(a[0], b[0], t);
+        color[1] = Interpolate(a[1], b[1], t);
+        color[2] = Interpolate(a[2], b[2], t);
         color[3] = alpha;
     }
     void Blend(float scale, float rotation, const float *rgb, float alpha, float t) {
         sx += (scale - sx) * t; sy += (scale - sy) * t; angle = rotation;
-        color[0] += t * (rgb[0] - color[0]);
-        color[1] += t * (rgb[1] - color[1]);
-        color[2] += t * (rgb[2] - color[2]);
-        color[3] += (alpha - color[3]) * t;
+        color[0] = Interpolate(color[0], rgb[0], t);
+        color[1] = Interpolate(color[1], rgb[1], t);
+        color[2] = Interpolate(color[2], rgb[2], t);
+        color[3] = Interpolate(color[3], alpha, t);
     }
 };
 struct Marker {
@@ -48,71 +52,71 @@ float fn_80173F7C(float, float, float);
 }
 extern const float lbl_8036E924[4], lbl_8036E934[4], lbl_8036E944[4];
 extern const float lbl_806D8D90;
-#define C8D90 lbl_806D8D90
+#define C8D90 0.0f
 extern const float lbl_806D8D94;
-#define C8D94 lbl_806D8D94
+#define C8D94 1.0f
 extern const float lbl_806D8D98;
-#define C8D98 lbl_806D8D98
+#define C8D98 255.0f
 extern const float lbl_806D8D9C;
-#define C8D9C lbl_806D8D9C
+#define C8D9C -1.0f
 extern const float lbl_806D8DA0;
-#define C8DA0 lbl_806D8DA0
+#define C8DA0 0.0333333351f
 extern const float lbl_806D8DA4;
-#define C8DA4 lbl_806D8DA4
+#define C8DA4 10.0f
 extern const float lbl_806D8DA8;
-#define C8DA8 lbl_806D8DA8
+#define C8DA8 32.0f
 extern const float lbl_806D8DAC;
-#define C8DAC lbl_806D8DAC
+#define C8DAC 116.0f
 extern const float lbl_806D8DB0;
-#define C8DB0 lbl_806D8DB0
+#define C8DB0 -74.0f
 extern const float lbl_806D8DB4;
-#define C8DB4 lbl_806D8DB4
+#define C8DB4 5.0f
 extern const float lbl_806D8DB8;
-#define C8DB8 lbl_806D8DB8
+#define C8DB8 42.0f
 extern const float lbl_806D8DBC;
-#define C8DBC lbl_806D8DBC
+#define C8DBC 22.0f
 extern const float lbl_806D8DC0;
-#define C8DC0 lbl_806D8DC0
+#define C8DC0 15.0f
 extern const float lbl_806D8DC4;
-#define C8DC4 lbl_806D8DC4
+#define C8DC4 30.0f
 extern const float lbl_806D8DC8;
-#define C8DC8 lbl_806D8DC8
+#define C8DC8 54.0f
 extern const float lbl_806D8DCC;
-#define C8DCC lbl_806D8DCC
+#define C8DCC 2.0f
 extern const float lbl_806D8DD0;
-#define C8DD0 lbl_806D8DD0
+#define C8DD0 0.5f
 extern const float lbl_806D8DD4;
-#define C8DD4 lbl_806D8DD4
+#define C8DD4 78.0f
 extern const float lbl_806D8DD8;
-#define C8DD8 lbl_806D8DD8
+#define C8DD8 13.0f
 extern const float lbl_806D8DDC;
-#define C8DDC lbl_806D8DDC
+#define C8DDC 17.0f
 extern const float lbl_806D8DE0;
-#define C8DE0 lbl_806D8DE0
+#define C8DE0 300.0f
 extern const float lbl_806D8DE4;
-#define C8DE4 lbl_806D8DE4
+#define C8DE4 -244.0f
 extern const float lbl_806D8DE8;
-#define C8DE8 lbl_806D8DE8
+#define C8DE8 0.785398185f
 extern const float lbl_806D8DEC;
-#define C8DEC lbl_806D8DEC
+#define C8DEC 7.0f
 extern const float lbl_806D8DF0;
-#define C8DF0 lbl_806D8DF0
+#define C8DF0 20.0f
 extern const float lbl_806D8DF4;
-#define C8DF4 lbl_806D8DF4
+#define C8DF4 800.0f
 extern const float lbl_806D8DF8;
-#define C8DF8 lbl_806D8DF8
+#define C8DF8 86.0f
 extern const float lbl_806D8DFC;
-#define C8DFC lbl_806D8DFC
+#define C8DFC 120.0f
 extern const float lbl_806D8E00;
-#define C8E00 lbl_806D8E00
+#define C8E00 150.0f
 extern const float lbl_806D8E04;
-#define C8E04 lbl_806D8E04
+#define C8E04 -30.0f
 extern const float lbl_806D8E08;
-#define C8E08 lbl_806D8E08
+#define C8E08 56.0f
 extern const float lbl_806D8E0C;
-#define C8E0C lbl_806D8E0C
+#define C8E0C 60.0f
 extern const float lbl_806D8E10;
-#define C8E10 lbl_806D8E10
+#define C8E10 0.87266463f
 
 static inline float Clamp(float v) { return fn_80173F5C(v, C8D90, C8D94); }
 static inline float Pulse(float v) {

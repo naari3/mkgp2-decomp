@@ -1,5 +1,6 @@
 /* Whole reversed EH group: retain NonMatching until every owned range matches. */
 #include "game/SpecialFaceRaycastPrivate.h"
+#include "game/singleton.h"
 
 extern "C" unsigned char SpecialFaceMesh_Raycast(SpecialFaceMeshNative *self,
         const Vec3f *from, const Vec3f *to, Vec3f *out, Vec3f *normal) {
@@ -31,18 +32,20 @@ extern "C" unsigned char SpecialFace_RaycastSegment(SpecialFaceNative *self,
     if (bounds->maxZ < self->minZ) return 0;
     if (bounds->maxX < self->minX) return 0;
     if (bounds->minX > self->maxX) return 0;
-    if (self->normal.x*ray->delta.x + self->normal.y*ray->delta.y + self->normal.z*ray->delta.z > 0.0f) return 0;
+    float normalX = self->normal.x, normalY = self->normal.y, normalZ = self->normal.z;
+    if (normalX*ray->delta.x + normalY*ray->delta.y + normalZ*ray->delta.z > 0.0f) return 0;
     SpecialFaceVec a; a.x = ray->endpoints[0].x; a.y = ray->endpoints[0].y; a.z = ray->endpoints[0].z;
     SpecialFaceVec b; b.x = ray->endpoints[1].x; b.y = ray->endpoints[1].y; b.z = ray->endpoints[1].z;
     a.x -= self->source.vertices[0].x; a.y -= self->source.vertices[0].y; a.z -= self->source.vertices[0].z;
     b.x -= self->source.vertices[0].x; b.y -= self->source.vertices[0].y; b.z -= self->source.vertices[0].z;
-    float da = FaceDot(a, self->normal), db = FaceDot(b, self->normal);
+    float ax = a.x*normalX, ay = a.y*normalY, az = a.z*normalZ;
+    float bx = b.x*normalX, by = b.y*normalY, bz = b.z*normalZ;
+    float da = az + (ax + ay), db = bz + (bx + by);
     if (da > 0.0f && db > 0.0f) return 0;
     if (da < 0.0f && db < 0.0f) return 0;
     int count = self->source.count;
     const Vec3f *vertex = self->source.vertices + count;
-    while (count-- > 0) {
-        --vertex;
+    while (--vertex, count-- > 0) {
         const SpecialFaceVec *edge = (const SpecialFaceVec *)((const char *)vertex + sizeof(SpecialFaceSource) + sizeof(SpecialFaceVec) + sizeof(float));
         SpecialFaceVec cross; cross.x = edge->x; cross.y = edge->y; cross.z = edge->z;
         float cx = ray->delta.y*cross.z - ray->delta.z*cross.y;
@@ -68,7 +71,7 @@ extern "C" unsigned char SpecialFace_RaycastSegment(SpecialFaceNative *self,
     out->x = origin.x + offset.x; out->y = origin.y + offset.y; out->z = origin.z + offset.z;
     float xx = offset.x*offset.x, yy = offset.y*offset.y, zz = offset.z*offset.z;
     float length = MathInline_sqrtf(zz + (xx + yy));
-    if (length <= 0.0f) offset.z = offset.y = offset.x = 0.0f;
+    if (length <= 0.0f) offset.x = offset.y = offset.z = 0.0f;
     else { float inv = 1.0f / length; offset.x *= inv; offset.y *= inv; offset.z *= inv; }
     offset.x *= lbl_806D2F7C; offset.y *= lbl_806D2F7C; offset.z *= lbl_806D2F7C;
     out->x += offset.x; out->y += offset.y; out->z += offset.z;
@@ -92,8 +95,7 @@ extern "C" unsigned char SpecialFaceMesh_AddFace(SpecialFaceMeshNative *self, co
 }
 
 extern "C" void FUN_8007c56c(FaceSourceGroup *src, int extra) {
-    SpecialFaceMeshNative *mesh = lbl_806D1138;
-    if (!mesh) mesh = 0;
+    SpecialFaceMeshNative *mesh = SINGLETON_INSTANCE(lbl_806D1138);
     if (!mesh) new SpecialFaceMeshNative(src, extra);
 }
 
@@ -107,6 +109,11 @@ extern "C" FacePtrVec *dtor_8007C5E0(FacePtrVec *self, short release) {
     return self;
 }
 
+static inline void FaceCopyBackward(SpecialFaceNative **first,
+        SpecialFaceNative **last, SpecialFaceNative **result) {
+    while (last > first) *--result = *--last;
+}
+
 extern "C" void PtrVec_InsertFill(void *storage, SpecialFaceNative **position,
         unsigned int n, SpecialFaceNative **value) {
     FacePtrStorage *s = (FacePtrStorage *)storage;
@@ -115,13 +122,12 @@ extern "C" void PtrVec_InsertFill(void *storage, SpecialFaceNative **position,
         SpecialFaceNative **old;
         unsigned int size = s->count + n;
         if (size <= s->capacity) {
-            SpecialFaceNative **end = s->data + s->count;
             SpecialFaceNative **source = value;
+            SpecialFaceNative **end = s->data + s->count;
             int tail = end - position;
             if (end - (tail - n) <= value && value < end) source += n;
             if (tail != 0) {
-                SpecialFaceNative **out = end+n;
-                while (end > position) *--out = *--end;
+                FaceCopyBackward(position, end, end + n);
             }
             SpecialFaceNative **out = position;
             for (unsigned int i = n; i; --i) *out++ = *source;

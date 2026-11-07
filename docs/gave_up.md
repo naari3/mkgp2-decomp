@@ -54,7 +54,7 @@ all of these.
 | `fn_8028A934` | triforce/amjvs_nm2 | 99.6 | target reuses r3 (`nodes`) for `n = &nodes[node]`; we copy to r5 | `nodes += node`, direct `nodes[node].x`, u32/u8 idx casts, split early return |
 | `fn_80286864` | triforce/random_nm1 | 84.8 | target shares `ret`'s `li r31, 0` with the zero high word of the inlined u64 range; we emit a separate `li r8, 0` | ret/range variants; 10+20 min permuter |
 | `clItemBoxManager_InitStateTable` | game/clItemBoxManager_StepTable | 91.8 | target __sinit addresses both tables from one pool base (`lbl_803F9C60`); CW pools only static objects and only when a function touches 3+, and the sinit touches 2. Other clItemBox_* TUs use the tables by name | statics (still per-symbol), hand-written sinit through a base pointer (becomes a leaf, extab lost), GC/1.2.5n..2.7 |
-| `fn_80291134` | triforce/amsrv_nm1 | 93.71 | target keeps `mr r3, ch` late so temps use r3; `p` not coalesced into r3 | |
+| `fn_80291134` | triforce/amsrv_nm1 | 93.71 | e9b8ded: opt_common_subs off + spelled-out reply header gets 62 -> 16 diff lines; left: req->result / req->arg[0] loads get r6/r4 instead of r5/r6 | 20 min cperm; compiler x pragma sweep (psweep); addr/p/arg0 local forms |
 | `KartShellRibbonDraw` | game/KartShellRibbonDraw | 99.91 | f30/f31 swap only (GC/2.6) | |
 | `fn_8023A148` | game/fn_8023A148 | 99.44 | title / color r0/r4 swap | |
 | `fn_8023AC14` | game/ItemSelectChoiceUpdate | 97.91 | register coloring | `notes/r4/fn_8023AC14_9889.diff` |
@@ -187,7 +187,7 @@ See "Pooled base registers" and "Over-split TUs" in `docs/matching_rules.md`.
 
 | Function | TU | % | What is left | Tried / WIP |
 | --- | --- | --- | --- | --- |
-| `SetCourseParams` | game/SetCourseParams | ~98 | .bss pool order fixed by compiling as C++ (definition order); left ~50 lines: constant/pointer register order in the lap/rank reset block; `volatile` reload of g_cupId is a marked fakematch | 2x20-min permuter, opt_* pragmas, GC/1.2.5n-2.6 |
+| `SetCourseParams` | game/SetCourseParams | ~98 | .bss pool order fixed by compiling as C++ (definition order); left ~50 lines: constant/pointer register order in the lap/rank reset block; `volatile` reload of g_cupId is a marked fakematch | 2x20-min permuter, opt_* pragmas, GC/1.2.5n-2.6; R5 2026-11-07: first LapExtra store as the global (52 -> 50), pointer decl orders/late extra scope, GC/2.0-2.7 (same 50), psweep pragmas x 1.3.2/2.6, 20 min cperm: no gain |
 | `RaceScene_GetPerspFovyForCup` | game/RaceScene_GetPerspFovyForCup | 80.98 | needs TU-owned `.data` base `0x80401118` (+0x10000) | |
 | `fn_801ECA14` | game/fn_801ECA14 | 74.07 | pool base `lbl_803BD920` owned by another TU | |
 | `Card_VerifyChecksum` | game/Card_VerifyChecksum | 91.97 | pooled data base | |
@@ -213,8 +213,9 @@ See "Pooled base registers" and "Over-split TUs" in `docs/matching_rules.md`.
 | `RankLog_OnMatchEnd` | game/RankLog | 93.43 | table index shape | |
 | `fn_8015E928` | game/resultscene/resultscene | 61.37 | not tuned much | |
 | `KartMovement_Init` | game/kartmove/carobject | 66.69 | large schedule difference; GC/2.6 no help | |
-| `fn_8020F080` (TaskListImpl::Draw) | game/anon_8020E3D0_nm1 | 96.61 | WIP is 4 lines off: needs `opt_dead_assignments off`, `operator*` returning node->task, `bool operator!=(TaskNode*)`, Remove by value with a `result` temp; left is one dead Remove-param store | `wip/fn_8020F080_draw_wip.cpp` |
-| `ItemSelectState_Init` | game/ItemSelectState_Init | ~99.5 | now on main (R6): `long character` declared before `resource` fixed the clamp; left is only nonvolatile reg numbering of the 7 loop vars (see file header) | 4! decl-order sweep, 2x20-min permuter, GC/2.6 |
+| `fn_801F27B4` (.ctors sinit) | game/fn_801F27B4 | 79.95 | Static init that copies two 14-entry pointer-to-member tables (lbl_804E4C28+0x380 -> lbl_804E5050, +0x4D0 -> lbl_804E51A0). The target addresses the destinations as `addi r26, base, 0x428` / `addi r17, base, 0x578` off one pooled base, so it is the __sinit of the Menu801F0CC0 TU, which must own .data 0x804E4AF0..~0x804E5248 (now auto data). Needs that merge; Menu801F0CC0 is claimed by onmokoworks (#2252). Plain struct assignment gives the right shape, but the spill registers and schedule differ | none |
+| `fn_8019ADF4` | game/kartmove/fn_8019ADF4 | 87.53 | WIP is 28 lines off (from 86): entry-block stwu/v.y store scheduling and the dot-product sum register (zz f3 vs f9). Decl-order sweep, compiler versions, load/store/product permutations tried | `wip/fn_8019ADF4_wip.c` |
+| `fn_8020F080` (TaskListImpl::Draw) | game/anon_8020E3D0_nm1 | 96.61 | WIP2 is 2 lines off (one dead store placement): Erase(const TaskIter&) + inline by-value erase wrapper + Remove with result temp + `opt_dead_assignments off`. Target keeps no dead Remove-param store before the call but copies the result 0x8 -> 0x10 -> it. ~300 forms swept | `wip/fn_8020F080_draw_wip2.cpp` |
 | `QuadFrame_FromCornerPtrs` | game/QuadFrame_FromCornerPtrs | 52.02 | `Vec ~Vec(){}` gives mem structs + `fmadds`; not finished | `notes/r4/QuadFrame_wip.c` |
 
 ## Still inline asm (the report counts these as 100%)

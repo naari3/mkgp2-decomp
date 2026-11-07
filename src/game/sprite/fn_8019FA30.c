@@ -26,6 +26,7 @@ void fn_8019FA30(SpriteAnim *s, SpriteAnimFrame *frames, float *matrix,
     int sorted[120], ids[120];
     int *nextId;
     int count = 0, i, j, rank;
+    int layerIndex;
     SpriteAnimFrame *scan;
     short red, green, blue, opacity;
     for (i = 0; i < 120; i++) { ids[i] = -1; sorted[i] = -1; }
@@ -42,14 +43,14 @@ void fn_8019FA30(SpriteAnim *s, SpriteAnimFrame *frames, float *matrix,
         sorted[rank] = ids[i];
     }
     red = r; green = g; blue = b; opacity = a;
-    for (i = 0; i < count; i++) {
+    for (layerIndex = 0; layerIndex < count; layerIndex++) {
         SpriteAnimFrame *f;
         int resource = -1, child = -1, last = 0, index = 0;
         float composed[6];
         float newAlpha;
         short rr, gg, bb, aa;
         for (f = frames;; f++, index++) {
-            if (f->layer == sorted[i]) {
+            if (f->layer == sorted[layerIndex]) {
                 if (f->time > s->time) break;
                 if (f->flags & 2) { resource = -1; child = -1; }
                 if (f->resource != -1) { resource = index; child = -1; }

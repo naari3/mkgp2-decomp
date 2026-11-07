@@ -9,10 +9,10 @@ static inline u32 Step(void) {
 }
 
 static inline u32 Next(void) {
-    u32 a = Step();
-    u32 b = Step();
-    u32 c = Step();
-    return ((a << 1) & 0xFFFE0000) | ((b >> 14) & 0x1FFFC) | ((c >> 16) & 3);
+    u32 a = Step() << 1;
+    u32 b = Step() >> 14;
+    u32 c = Step() >> 16;
+    return (a & 0xFFFE0000) | (b & 0x1FFFC) | (c & 3);
 }
 
 static inline u32 RandRange(u32 min, u32 max) {

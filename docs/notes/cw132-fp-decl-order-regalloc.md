@@ -373,3 +373,18 @@ c19_u59 AI_CalcGPTargetSpeed improves99.34066->99.89011, unchanged1456B/EH8/inde
 Source: Codex worker c19_u98_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c19_u98 retry FlashFadeOverlay_Draw80070EA8: eliminating separate uplus/vplus locals and reusing u1/v1 through plus, scale, complement improves99.55224->99.60821 at unchanged1072B/extab8/index12, EH100. Residual13 scratch FPR rows in8007119C..711F8; saved homes/FIFO exact. Explicit centers99.55224 (expanded declaration99.4403); scalar Add helper99.38433; products retained in uplus/vplus99.49627; selective one literal99.55224, reciprocal scale literals99.49627; UV lexical scope invariant; struct scale/inset pairs99.49627. Retain attempt3b; singleton NonMatching, native gain0.
+
+## c19_u126_20261107
+Source: Codex worker c19_u126_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u126 retry fn_80243464 improves99.40476->99.45238 (840B unchanged) with ScaleFromOffset(float offset) helper reusing offset through /29,1-offset,0.6*offset,+0.4; signed int conversion remains in caller. Unlike c17 int-input scale-return helper, this float parameter owns all intermediate values. Conversion double/load/subtract and divisor now exact;15 FPR operand rows remain, x=f4 vs targetf2, scale=f0 vsf1. Complete scale+store helper99.190475, explicit x/scale accumulators99.04762, hybrid external final-add constants99.14286, geometry aggregate byte-invariant99.40476, combined geometry helper99.09524; all rejected. Six hypotheses exhausted, retain higher draft as NonMatching; EH8/index12 exact, no A/B rescue. Full coordinator fallback DOL SHA1ea30f3b1 exact; zero native gain.
+
+## c19_u142_20261107
+Source: Codex worker c19_u142_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u142 HomingMarkerUpdate fn_80172948 fresh89.83424->90.60959/2920B, owned EH8/index12 both100. Literal constants89.87534 fix complete first setter block. Caller-local shared radius/opacity89.80685 rejected. Common scalar Interpolate(from,to,t) for RGB interpolation and Blend alpha raises90.60959; retained with literals. Remaining Pulse/result and RGB/old-channel FP homes plus interpolation scheduling, no valid B cut or unowned pool. All attempts build/w. Coordinator full fallback DOL SHA1 exact, zero native gain.
+
+## c19_u150_20261107
+Source: Codex worker c19_u150_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 684 B.
+
+c19_u150: DriveBehavior_HandleWpType801DE848 reaches100% from99.82456 by extracting static inline float DriveWave(float phase){return sin(3.1415927410125732f*phase);} and using wave=DriveWave(self->phase). Keep c18 first/wave accumulator sequence. Unlike earlier affine/matrix-output inline helpers, this owns phase multiplication and double-sin-to-float return conversion. Five post-sin scratch rows become exact: complementf4, firstf0, secondf1. Text684/data40/extab8/index12 all100. Matching flag only; no ranges/maps/flags other than matching status changed. Source edge excludes fallback, four actual ELF ranges byte-equal original DOL, coordinator full DOL SHA1ea30f3b1 exact. +1 native function/+684B; first targeted hypothesis succeeded.
