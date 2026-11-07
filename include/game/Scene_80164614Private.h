@@ -14,7 +14,7 @@ struct Collision163 { char opaque[0x18]; Collision163(); };
 struct AI163 { char opaque[0x4]; AI163(void *, void *, int); };
 struct Select163 { char opaque[0x88]; Select163(int, int); };
 struct LoaderInit163 : LoaderTick163 { int field58; };
-struct DVDFile163 { char pad0[0x30]; int start, length; char pad38[4]; };
+struct DVDFile163 { char pad0[0x30]; unsigned int start, length; char pad38[4]; };
 struct DemoEntry163 { int character, cup, round, variant, reverse; const char *file; };
 struct DemoRodata163 {
     char pad0[0x44c];
@@ -87,7 +87,7 @@ void LakituStart_SetCountdownHoldFrames(void *, int);
 void ItemSelect_AddSlotItem(void *, int, int);
 void CourseBgm_Load();
 void PreloadEffectResources(int);
-unsigned char ItemSelect_GetSlotItemId(void *, int);
+int ItemSelect_GetSlotItemId(void *, int);
 void PreloadItemResources(int);
 void *GetEnemyParam();
 void clEnemyParam_FillItemListIds(void *, int, int, int);
