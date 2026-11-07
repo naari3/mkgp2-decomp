@@ -50,7 +50,7 @@ float *GetFinishLineSegment(void);
 int GetDisplayBufferIndex(void);
 int PathManager_HasPathLoaded(UpdateManager *);
 int Path_GetTotalCount(UpdateManager *);
-int Waypoint_FindBestAhead(UpdateManager *, float, float, float, int, int, int, float *);
+int Waypoint_FindBestAhead(UpdateManager *, int, int, int, float, float, float, float *);
 signed char CommBroadcast_GetKartLap(int);
 void CommBroadcast_SetKartLap(int, signed char);
 int CommBroadcast_GetKartRankNibble(int);

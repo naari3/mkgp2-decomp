@@ -1,6 +1,6 @@
 #include "game/PathManager_UpdateAllPrivate.h"
 
-#define FIND(start, from, to) Waypoint_FindBestAhead(self, *e->px, *e->py, *e->pz, start, from, to, &e->distance)
+#define FIND(start, from, to) Waypoint_FindBestAhead(self, start, from, to, *e->px, *e->py, *e->pz, &e->distance)
 #define NORMAL() do { if (e->lap >= 0) node = FIND(e->node, -2, 4); else node = FIND(e->node, 0, 4); } while (0)
 #define RANGE(lo, hi) (e->node >= (lo) && e->node <= (hi))
 
@@ -14,9 +14,6 @@ int PathManager_UpdateAll(UpdateManager *self)
     int i;
     float *finish;
     UpdateEntry *own;
-    int j;
-    int rank;
-    int limit;
     float u, t;
 
     finish = GetFinishLineSegment();
@@ -185,56 +182,62 @@ int PathManager_UpdateAll(UpdateManager *self)
         e->previous[1] = *e->py;
         e->previous[2] = *e->pz;
     }
-    rank = -1;
-    limit = 8;
-    if (g_gameMode == 1) limit = 2;
-    for (i = 0; i < limit; i++) {
-        e = &self->entries[i];
-        if (e->node >= 0 && rank < e->rank) rank = e->rank;
-    }
-    rank++;
-    if (g_gameMode != 2 || g_isCommHost) {
+    {
+        int rank;
+        int j;
+        int limit;
+        UpdateEntry *e;
+        rank = -1;
+        limit = 8;
+        if (g_gameMode == 1) limit = 2;
         for (i = 0; i < limit; i++) {
-            UpdateManager *scan;
-            UpdateManager *slot = self;
-            UpdateEntry *candidate;
-            slot = (UpdateManager *)((char *)slot + i*0x98);
-            candidate = &slot->entries[0];
-            if (slot->entries[0].node < 0 || candidate->rank != -1) continue;
-            for (j = 0; j < limit; j++) {
-                scan = (UpdateManager *)((char *)self + j*0x98);
-                if (scan->entries[0].node < 0 || scan->entries[0].rank != -1) continue;
-                if (candidate->lap < scan->entries[0].lap) candidate = &scan->entries[0];
-                else if (candidate->lap == scan->entries[0].lap) {
-                    if (candidate->progress < scan->entries[0].progress) candidate = &scan->entries[0];
-                    else if (candidate->progress == scan->entries[0].progress && scan->entries[0].distance < candidate->distance) candidate = &scan->entries[0];
+            e = &self->entries[i];
+            if (e->node >= 0 && rank < e->rank) rank = e->rank;
+        }
+        rank++;
+        if (g_gameMode != 2 || g_isCommHost) {
+            for (i = 0; i < limit; i++) {
+                UpdateManager *scan;
+                UpdateManager *slot = self;
+                UpdateEntry *candidate;
+                slot = (UpdateManager *)((char *)slot + i*0x98);
+                candidate = &slot->entries[0];
+                if (slot->entries[0].node < 0 || candidate->rank != -1) continue;
+                for (j = 0; j < limit; j++) {
+                    scan = (UpdateManager *)((char *)self + j*0x98);
+                    if (scan->entries[0].node < 0 || scan->entries[0].rank != -1) continue;
+                    if (candidate->lap < scan->entries[0].lap) candidate = &scan->entries[0];
+                    else if (candidate->lap == scan->entries[0].lap) {
+                        if (candidate->progress < scan->entries[0].progress) candidate = &scan->entries[0];
+                        else if (candidate->progress == scan->entries[0].progress && scan->entries[0].distance < candidate->distance) candidate = &scan->entries[0];
+                    }
                 }
-            }
-            if (!lbl_806D1048) {
-                if (!candidate->kart->finished) {
+                if (!lbl_806D1048) {
+                    if (!candidate->kart->finished) {
+                        candidate->rank = rank;
+                        candidate->kart->rank = rank;
+                    }
+                } else {
                     candidate->rank = rank;
                     candidate->kart->rank = rank;
                 }
-            } else {
-                candidate->rank = rank;
-                candidate->kart->rank = rank;
+                if (slot->entries[0].rank == -1) i--;
+                else if (rank < candidate->rank) candidate->rankImproved = 1;
+                else candidate->rankImproved = 0;
+                rank++;
+                if (rank >= limit) break;
+                if (g_gameMode == 2) CommBroadcast_SetKartRankNibble(candidate->kart->commId,candidate->rank);
             }
-            if (slot->entries[0].rank == -1) i--;
-            else if (rank < candidate->rank) candidate->rankImproved = 1;
-            else candidate->rankImproved = 0;
-            rank++;
-            if (rank >= limit) break;
-            if (g_gameMode == 2) CommBroadcast_SetKartRankNibble(candidate->kart->commId,candidate->rank);
-        }
-    } else {
-        for (i = 0; i < 4; i++) {
-            e = &self->entries[i];
-            rank = CommBroadcast_GetKartRankNibble(e->kart->commId);
-            if (!e->kart->finished) {
-                if (rank < e->rank) e->rankImproved = 1; else e->rankImproved = 0;
-                e->rank = rank;
-                e->kart->rank = rank;
-            } else if (lbl_806D1048) e->rank = KartMovement_CalcFinishPosition(e->kart,1);
+        } else {
+            for (i = 0; i < 4; i++) {
+                e = &self->entries[i];
+                rank = CommBroadcast_GetKartRankNibble(e->kart->commId);
+                if (!e->kart->finished) {
+                    if (rank < e->rank) e->rankImproved = 1; else e->rankImproved = 0;
+                    e->rank = rank;
+                    e->kart->rank = rank;
+                } else if (lbl_806D1048) e->rank = KartMovement_CalcFinishPosition(e->kart,1);
+            }
         }
     }
     node = own->lap;
@@ -262,11 +265,12 @@ int PathManager_UpdateAll(UpdateManager *self)
                         else {
                             UpdateManager *a = slot;
                             UpdateManager *b = (UpdateManager *)((char *)self + otherIndex*0x98);
-                            float dx, dy, dz;
+                            float dy, dx, dz;
                             dy = *a->entries[0].py-*b->entries[0].py;
                             dx = *a->entries[0].px-*b->entries[0].px;
                             dz = *a->entries[0].pz-*b->entries[0].pz;
-                            distance = (dy*dy + dx*dx) + dz*dz;
+                            /* Square Y before the fused X term, as in the original. */
+                            distance = (dx*dx + dy*dy) + dz*dz;
                             if (distance > lbl_806D24E8) {
                                 double guess = __frsqrte(distance);
                                 guess = lbl_806D24F0*guess*(lbl_806D24F8-distance*(guess*guess));
