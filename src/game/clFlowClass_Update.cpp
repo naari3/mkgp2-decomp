@@ -1,4 +1,5 @@
 #include "game/ClassUpdatePrivate.h"
+#include "game/singleton.h"
 extern "C" {
 extern unsigned char lbl_8039A5A0[];
 extern int g_gameMode, g_currentSceneState, g_ccClass;
@@ -30,7 +31,7 @@ unsigned char IsSyncReached();
 unsigned char *SyncSlot_GetRecv();
 void fn_801B7B04(int);
 }
-static inline ClassInputState *input() { if (g_pInputState == 0) return 0; return g_pInputState; }
+static inline ClassInputState *input() { return SINGLETON_INSTANCE(g_pInputState); }
 static inline float interpolate(float start, float end, int frame, float duration) {
     float step = (end-start)/duration;
     return step * frame + start;
