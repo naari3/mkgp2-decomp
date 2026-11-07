@@ -2606,7 +2606,7 @@ config.libs = [
             Object(NonMatching, "game/fn_801F8728.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801F8668.c"),
             Object(NonMatching, "game/fn_801F894C.c"),
-            Object(NonMatching, "game/fn_801F8A34.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_801F8A34.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801F89F0.c"),
             Object(Matching, "game/fn_801FA024.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801FA214.cpp", extab_padding=b""),

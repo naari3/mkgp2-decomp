@@ -6901,7 +6901,9 @@
   },
   "src/game/fn_801F8A34.cpp": {
     "__ct__7ResCtrlFv": "ResCtrl_Init",
-    "__dt__7ResCtrlFv": "dtor_80082960"
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "@81": "@etb_80017688",
+    "@82": "@eti_8002906C"
   },
   "src/game/miyazakiconsole/fn_8017FD68.cpp": {
     "__ct__8DemoRootFv": "GameMode_BaseInit",
