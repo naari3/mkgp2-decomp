@@ -21,13 +21,21 @@ extern f32 tobj_unk_f0;
 extern f32 tobj_unk_f1;
 extern int tobj_unk_flag;
 void fn_802D47F4(int);
-static int DifferentTluts(HSD_Tlut* t0, HSD_Tlut* t1)
+extern char lbl_806D0C94[7];
+extern char lbl_806D0CAC[2];
+extern char lbl_806D0CB0[5];
+void TObjSetupMtx_802BE3C4(HSD_TObj*);
+static HSD_TexLODDesc default_lod = {
+    GX_LIN_MIP_LIN, 0.0F, GX_FALSE, GX_FALSE, GX_ANISO_1,
+};
+static char setup_imagedesc[10] = "imagedesc";
+static char setup_image_ptr[21] = "imagedesc->image_ptr";
+static inline void CompareTlutEntries(HSD_Tlut* t0, HSD_Tlut* t1, int* different)
 {
-    return
-#ifdef MUST_MATCH
-        (t0->lut != t0->lut) ||
-#endif
-        (t0->n_entries != t1->n_entries);
+    *different = 1;
+    if (t0->n_entries == t1->n_entries) {
+        *different = 0;
+    }
 }
 
 void HSD_TObjSetup(HSD_TObj* tobj)
@@ -39,6 +47,7 @@ void HSD_TObjSetup(HSD_TObj* tobj)
     int nb_tluts = 0;
     u32 tlut_name = GX_TLUT0;
     u32 big_tlut_name = GX_BIGTLUT0;
+    int different;
     int i;
 
     tobj_head = tobj;
@@ -53,9 +62,6 @@ void HSD_TObjSetup(HSD_TObj* tobj)
     }
 
     for (; tobj; tobj = tobj->next) {
-        static HSD_TexLODDesc default_lod = {
-            GX_LIN_MIP_LIN, 0.0F, GX_FALSE, GX_FALSE, GX_ANISO_1,
-        };
         HSD_TexLODDesc* lod;
         HSD_ImageDesc* imagedesc = tobj->imagedesc;
         GXTexFilter min_filter;
@@ -64,9 +70,13 @@ void HSD_TObjSetup(HSD_TObj* tobj)
             continue;
         }
 
-        TObjSetupMtx(tobj);
-        HSD_ASSERT(1750, imagedesc);
-        HSD_ASSERT(1751, imagedesc->image_ptr);
+        TObjSetupMtx_802BE3C4(tobj);
+        if (!imagedesc) {
+            __assert(lbl_806D0C94, 1750, setup_imagedesc);
+        }
+        if (!imagedesc->image_ptr) {
+            __assert(lbl_806D0C94, 1751, setup_image_ptr);
+        }
 
         lod = tobj->lod != NULL ? tobj->lod : &default_lod;
         min_filter = lod->minFilt;
@@ -83,10 +93,13 @@ void HSD_TObjSetup(HSD_TObj* tobj)
                 tlut = tobj->tlut;
             }
 
-            HSD_ASSERT(1767, tlut);
+            if (!tlut) {
+                __assert(lbl_806D0C94, 1767, lbl_806D0CB0);
+            }
 
             for (i = 0; i < nb_tluts; i++) {
-                if (!DifferentTluts(tluts[i], tlut)) {
+                CompareTlutEntries(tluts[i], tlut, &different);
+                if (!different) {
                     break;
                 }
             }
@@ -129,7 +142,7 @@ void HSD_TObjSetup(HSD_TObj* tobj)
             break;
 
         default:
-            HSD_ASSERT(1827, 0);
+            __assert(lbl_806D0C94, 1827, lbl_806D0CAC);
         }
 
         if (!imagedesc->mipmap) {
