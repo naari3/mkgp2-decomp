@@ -31,24 +31,9 @@
  * register assignment: entry r3 / dest r4 / value copy r11); the 6-GPR
  * save uses stmw, hence `#pragma use_lmw_stmw on` around it.
  *
- * bitpack_init stays asm_fn: the best C (below) is instruction-identical
- * except the coloring of the strength-reduced schema-offset IV (target
- * off=r8/bits=r9/i=r10, C off=r4 after the param stores die; ~12 natural
- * variants of decl order / init placement / for-while / inline param-setter
- * did not move it). Best C:
- *
- *   int i; int bits;
- *   bits = 0;
- *   self->schema = schema; self->count = count;
- *   self->dest = dest; self->clear = clear;
- *   for (i = 0; i < self->count; i++) {
- *       self->schema[i].offset = bits;
- *       bits += self->schema[i].width * self->schema[i].slots;
- *   }
- *   self->total_bits = bits;
- *   self->total_bytes = self->total_bits / 8 + (self->total_bits != 0 ? 1 : 0);
- *   if (self->clear == 1) memset(self->dest, 0, self->total_bytes);
- *   return self;
+ * bitpack_init walks the schema by byte offset: the target's offset IV
+ * (r8) is live before the parameter stores, which only an explicit offset
+ * variable declared ahead of `bits`/`i` reproduces.
  */
 
 typedef struct BitpackEntry {
@@ -72,7 +57,7 @@ extern void *memset(void *dst, int c, unsigned long n);
 
 /* --- forward decls (so extabindex can reference them) --- */
 int bitpack_write_field(Bitpack *self, unsigned int value, const char *tag, int index);
-asm void bitpack_init(void);
+Bitpack *bitpack_init(Bitpack *self, BitpackEntry *schema, int count, unsigned char *dest, unsigned char clear);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -158,59 +143,30 @@ unsigned int bitpack_get_used_bits(int self) {
     return *(unsigned int *)(self + 0x10);
 }
 
-/* --- asm function: bitpack_init @ 0x80088BB8, size 0xC4 --- */
-asm void bitpack_init(void) {
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    li r9, 0x0
-    li r10, 0x0
-    stw r0, 0x14(r1)
-    li r8, 0x0
-    stw r31, 0xc(r1)
-    mr r31, r3
-    stw r4, 0x0(r3)
-    stw r5, 0x4(r3)
-    stw r6, 0x8(r3)
-    stb r7, 0xc(r3)
-    b bitpack_init_L_80088C18
-bitpack_init_L_80088BEC:
-    lwz r3, 0x0(r31)
-    addi r0, r8, 0xc
-    addi r10, r10, 0x1
-    stwx r9, r3, r0
-    lwz r0, 0x0(r31)
-    add r4, r0, r8
-    addi r8, r8, 0x10
-    lwz r3, 0x4(r4)
-    lwz r0, 0x8(r4)
-    mullw r0, r3, r0
-    add r9, r9, r0
-bitpack_init_L_80088C18:
-    lwz r0, 0x4(r31)
-    cmpw r10, r0
-    blt bitpack_init_L_80088BEC
-    stw r9, 0x10(r31)
-    lwz r4, 0x10(r31)
-    neg r3, r4
-    srawi r0, r4, 3
-    or r3, r3, r4
-    srwi r3, r3, 31
-    addze r0, r0
-    add r0, r0, r3
-    stw r0, 0x14(r31)
-    lbz r0, 0xc(r31)
-    cmplwi r0, 0x1
-    bne bitpack_init_L_80088C64
-    lwz r3, 0x8(r31)
-    li r4, 0x0
-    lwz r5, 0x14(r31)
-    bl memset
-bitpack_init_L_80088C64:
-    lwz r0, 0x14(r1)
-    mr r3, r31
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+/* --- C function: bitpack_init @ 0x80088BB8, size 0xC4 --- */
+#define BITPACK_ENTRY_AT(self, ofs) ((BitpackEntry *)((char *)(self)->schema + (ofs)))
+
+/* fakematch (byte-offset walk): natural form is the self->schema[i] loop. */
+Bitpack *bitpack_init(Bitpack *self, BitpackEntry *schema, int count, unsigned char *dest, unsigned char clear) {
+    int ofs;
+    int bits;
+    int i;
+
+    bits = 0;
+    i = 0;
+    ofs = 0;
+    self->schema = schema;
+    self->count = count;
+    self->dest = dest;
+    self->clear = clear;
+    for (; i < self->count; i++, ofs += sizeof(BitpackEntry)) {
+        BITPACK_ENTRY_AT(self, ofs)->offset = bits;
+        bits += BITPACK_ENTRY_AT(self, ofs)->width * BITPACK_ENTRY_AT(self, ofs)->slots;
+    }
+    self->total_bits = bits;
+    self->total_bytes = self->total_bits / 8 + (self->total_bits != 0 ? 1 : 0);
+    if (self->clear == 1) {
+        memset(self->dest, 0, self->total_bytes);
+    }
+    return self;
 }
