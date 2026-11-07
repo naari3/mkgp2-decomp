@@ -1,6 +1,8 @@
 /* Native work in progress for the indivisible 8007E4CC..800806D4 group.
- * All methods use native C++; the group remains NonMatching pending exact EH and code generation. */
+ * All owned EH and data match; RenderPass and the roulette overlay retain
+ * register/stack residuals, so the reversed group remains NonMatching. */
 #include "game/TransitionEffectPrivate.h"
+#include "game/singleton.h"
 
 void operator delete(void *) throw();
 extern "C" void Object_DtorWithGXSync(void *, int);
@@ -150,9 +152,20 @@ struct TransitionModelInit {
     unsigned char opaque[0x5C];
     TransitionModelInit() { clNormal3D_Construct(this, lbl_80311DA4, 1); }
 };
-struct TransitionRouletteInit : TransitionRoulette {
+/* Destructor declarations bridge to the owned deleting dtors below. The
+ * model owner is constructed only after its nested new expression completes. */
+struct TransitionModelOwner {
+    void *object;
+    TransitionModelOwner() : object(new TransitionModelInit) {}
+    ~TransitionModelOwner();
+};
+struct TransitionRouletteInit {
+    TransitionModelOwner holder;
+    float remaining, speed, fade;
+    int phase;
+    float elapsed;
+    unsigned char active;
     TransitionRouletteInit() {
-        holder.object = new TransitionModelInit;
         Object_JObjUpdate_870(holder.object, 0x200);
         Object_SetByte48(holder.object, 1);
         remaining = lbl_806D2FD0;
@@ -163,7 +176,7 @@ struct TransitionRouletteInit : TransitionRoulette {
 template <class T> struct TransitionOwner {
     T *p;
     TransitionOwner() : p(new T) {}
-    ~TransitionOwner() { delete p; }
+    ~TransitionOwner();
 };
 struct TransitionInitBase {
     void **vtable;
@@ -172,7 +185,10 @@ struct TransitionInitBase {
         lbl_806D109C = (TransitionEffectView *)this;
         vtable = derivedVtable;
     }
-    ~TransitionInitBase() { vtable = lbl_803FE3C0; }
+    ~TransitionInitBase();
+};
+struct TransitionEmptyMember {
+    ~TransitionEmptyMember();
 };
 struct TransitionEffectInit : TransitionInitBase {
     TransitionOwner<TransitionFadeInit> fade;
@@ -184,7 +200,7 @@ struct TransitionEffectInit : TransitionInitBase {
     int mode;
     float duration;
     unsigned char active;
-    unsigned char emptyMember;
+    TransitionEmptyMember emptyMember;
     unsigned char align[2];
     unsigned char renderState[0x4C];
     TransitionEffectInit() :
@@ -196,8 +212,8 @@ struct TransitionEffectInit : TransitionInitBase {
 };
 extern "C" TransitionEffectView *TransitionEffect_GetOrCreate()
 {
-    if ((!lbl_806D109C ? 0 : lbl_806D109C) == 0) new TransitionEffectInit;
-    return (!lbl_806D109C ? 0 : lbl_806D109C);
+    if (SINGLETON_INSTANCE(lbl_806D109C) == 0) new TransitionEffectInit;
+    return SINGLETON_INSTANCE(lbl_806D109C);
 }
 
 /* GX setup shared by the screen-space effects. */
@@ -225,7 +241,7 @@ GXTexObj *BackupBuffer_InitAsTexture();
 float Saturate_Double(float, float, float);
 }
 struct TransitionTextureVertex { float x, y, u, v; unsigned int color; };
-extern "C" const TransitionTextureVertex lbl_803FE230[16];
+extern "C" TransitionTextureVertex lbl_803FE230[16];
 
 static inline void ScreenProjection(Mtx44 projection)
 {
@@ -303,7 +319,7 @@ static inline void ScreenTexturedMaterial()
 {
     GXLoadTexObj(BackupBuffer_InitAsTexture(), GX_TEXMAP0);
     GXSetNumTexGens(1);
-    GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
+    GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
     GXSetNumTevStages(1);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
     GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
@@ -343,6 +359,18 @@ static inline void ScreenRotatedCamera(Mtx view, const Vec *camera, int index, f
 extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass)
 {
     const Vec *camera = lbl_80311CA0;
+    void *payload;
+    /* Keep each pass's escaped matrices in the target stack order. */
+    Mtx view1;
+    Mtx44 projection1;
+    Mtx view2;
+    Mtx44 projection2;
+    Mtx view4;
+    Mtx44 projection4;
+    Mtx view5;
+    Mtx44 projection5;
+    Mtx view3;
+    Mtx44 projection3;
     ScopedTimer timer(0x2C);
     if (self->mode != pass) return;
     if (self->mode != 3) {
@@ -352,26 +380,24 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
     switch (pass) {
     case 0: break;
     case 1: {
-        TransitionFade *p = self->fade;
-        if (p->delay <= lbl_806D2FD0 && p->remaining <= lbl_806D2FD0) break;
+        payload = self->fade;
+        if (((TransitionFade *)payload)->delay <= lbl_806D2FD0 && ((TransitionFade *)payload)->remaining <= lbl_806D2FD0) break;
         GXSetZMode(GX_DISABLE, GX_ALWAYS, GX_ENABLE);
         GXSetZCompLoc(GX_FALSE);
         GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetCullMode(GX_CULL_BACK);
-        Mtx view;
-        Mtx44 projection;
-        ScreenProjection(projection);
-        ScreenRotatedCamera(view, camera, 3, &lbl_806D1160, &lbl_806D1164);
+        ScreenProjection(projection1);
+        ScreenRotatedCamera(view1, camera, 3, &lbl_806D1160, &lbl_806D1164);
         GXLoadTexObj(BackupBuffer_InitAsTexture(), GX_TEXMAP0);
         GXSetNumTexGens(1);
-        GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
+        GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
         GXSetNumChans(1);
         GXSetNumTevStages(1);
         GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
         GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
         GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_SET);
         ScreenVertexFormat(true);
-        unsigned int a = (int)Saturate_Double(lbl_806D3028 * p->remaining, lbl_806D2FD0, lbl_806D3028);
+        unsigned int a = (int)Saturate_Double(lbl_806D3028 * ((TransitionFade *)payload)->remaining, lbl_806D2FD0, lbl_806D3028);
         GXBegin(GX_QUADS, GX_VTXFMT0, 4);
         ScreenPosition(lbl_806D3008, lbl_806D3004); ScreenColor(255,255,255,a);
         ScreenPosition(lbl_806D2FD0, lbl_806D2FD0);
@@ -385,45 +411,41 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
         break;
     }
     case 2: {
-        TransitionIris *p = self->iris;
-        if (p->remaining <= lbl_806D2FD0 && p->closing == 1) break;
+        payload = self->iris;
+        if (((TransitionIris *)payload)->remaining <= lbl_806D2FD0 && ((TransitionIris *)payload)->closing == 1) break;
         GXSetZMode(GX_DISABLE, GX_ALWAYS, GX_ENABLE);
         GXSetZCompLoc(GX_FALSE);
         GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetCullMode(GX_CULL_BACK);
-        Mtx view;
-        Mtx44 projection;
-        ScreenProjection(projection);
-        ScreenCamera(view, camera, 0, lbl_806D3030);
+        ScreenProjection(projection2);
+        ScreenCamera(view2, camera, 0, lbl_806D3030);
         ScreenFlatMaterial(GX_BL_INVSRCALPHA);
         GXBegin(GX_QUADS, GX_VTXFMT0, 4);
         ScreenPosition(lbl_806D3008, lbl_806D3004);
         *(volatile unsigned int *)0xCC008000 = 255;
         ScreenPosition(lbl_806D300C, lbl_806D3004);
         *(volatile unsigned int *)0xCC008000 = 255;
-        ScreenPosition(lbl_806D300C, lbl_806D3000 - p->radius);
+        ScreenPosition(lbl_806D300C, lbl_806D3000 - ((TransitionIris *)payload)->radius);
         *(volatile unsigned int *)0xCC008000 = 0;
-        ScreenPosition(lbl_806D3008, lbl_806D3000 - p->radius);
+        ScreenPosition(lbl_806D3008, lbl_806D3000 - ((TransitionIris *)payload)->radius);
         *(volatile unsigned int *)0xCC008000 = 0;
         RestoreScreenChannel();
         break;
     }
     case 3: {
-        TransitionFlash *p = self->flash;
-        if (!p->active) break;
+        payload = self->flash;
+        if (!((TransitionFlash *)payload)->active) break;
         GXSetZMode(GX_DISABLE, GX_ALWAYS, GX_ENABLE);
         GXSetZCompLoc(GX_FALSE);
         GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetCullMode(GX_CULL_BACK);
-        Mtx view;
-        Mtx44 projection;
-        ScreenProjection(projection);
-        ScreenCamera(view, camera, 9, lbl_806D3030);
+        ScreenProjection(projection3);
+        ScreenCamera(view3, camera, 9, lbl_806D3030);
         ScreenFlatMaterial(GX_BL_INVSRCALPHA);
-        unsigned int r = (int)Saturate_Double(lbl_806D2FE0 * p->r, lbl_806D2FD0, lbl_806D2FE0);
-        unsigned int g = (int)Saturate_Double(lbl_806D2FE0 * p->g, lbl_806D2FD0, lbl_806D2FE0);
-        unsigned int b = (int)Saturate_Double(lbl_806D2FE0 * p->b, lbl_806D2FD0, lbl_806D2FE0);
-        unsigned int a = (int)Saturate_Double(lbl_806D2FE0 * p->alpha, lbl_806D2FD0, lbl_806D2FE0);
+        unsigned int r = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionFlash *)payload)->r, lbl_806D2FD0, lbl_806D2FE0);
+        unsigned int g = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionFlash *)payload)->g, lbl_806D2FD0, lbl_806D2FE0);
+        unsigned int b = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionFlash *)payload)->b, lbl_806D2FD0, lbl_806D2FE0);
+        unsigned int a = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionFlash *)payload)->alpha, lbl_806D2FD0, lbl_806D2FE0);
         ScreenFlatQuad(r,g,b,a);
         RestoreScreenChannel();
         break;
@@ -433,10 +455,8 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
         GXSetZMode(GX_DISABLE, GX_NEVER, GX_DISABLE);
         GXSetZCompLoc(GX_FALSE);
         GXSetCullMode(GX_CULL_BACK);
-        Mtx view;
-        Mtx44 projection;
-        ScreenProjection(projection);
-        ScreenRotatedCamera(view, camera, 6, &lbl_806D1168, &lbl_806D116C);
+        ScreenProjection(projection4);
+        ScreenRotatedCamera(view4, camera, 6, &lbl_806D1168, &lbl_806D116C);
         ScreenTexturedMaterial();
         GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetNumChans(1);
@@ -446,21 +466,19 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
         break;
     }
     case 5: {
-        TransitionQuad *p = self->quad;
-        if (!p->active) break;
+        payload = self->quad;
+        if (!((TransitionQuad *)payload)->active) break;
         GXSetZMode(GX_DISABLE, GX_ALWAYS, GX_ENABLE);
         GXSetZCompLoc(GX_FALSE);
         GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetCullMode(GX_CULL_BACK);
-        Mtx view;
-        Mtx44 projection;
-        ScreenProjection(projection);
-        ScreenCamera(view, camera, 9, lbl_806D3030);
+        ScreenProjection(projection5);
+        ScreenCamera(view5, camera, 9, lbl_806D3030);
         ScreenFlatMaterial(GX_BL_INVSRCALPHA);
-        unsigned int r = (int)Saturate_Double(lbl_806D2FE0 * p->r, lbl_806D2FD0, lbl_806D2FE0);
-        unsigned int g = (int)Saturate_Double(lbl_806D2FE0 * p->g, lbl_806D2FD0, lbl_806D2FE0);
-        unsigned int b = (int)Saturate_Double(lbl_806D2FE0 * p->b, lbl_806D2FD0, lbl_806D2FE0);
-        unsigned int a = (int)Saturate_Double(lbl_806D2FE0 * p->alpha, lbl_806D2FD0, lbl_806D2FE0);
+        unsigned int r = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionQuad *)payload)->r, lbl_806D2FD0, lbl_806D2FE0);
+        unsigned int g = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionQuad *)payload)->g, lbl_806D2FD0, lbl_806D2FE0);
+        unsigned int b = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionQuad *)payload)->b, lbl_806D2FD0, lbl_806D2FE0);
+        unsigned int a = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionQuad *)payload)->alpha, lbl_806D2FD0, lbl_806D2FE0);
         ScreenFlatQuad(r,g,b,a);
         RestoreScreenChannel();
         break;
@@ -474,6 +492,19 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
     }
 }
 
+static inline void ScreenRouletteTableQuad()
+{
+    GXBegin(GX_QUADS, GX_VTXFMT0, 16);
+    TransitionTextureVertex *v = lbl_803FE230;
+    for (int i = 0; i < 16; ++i) {
+        ScreenPosition((v[0].x - lbl_806D300C) + lbl_806D2FD0,
+                       (v[0].y - lbl_806D3000) + lbl_806D2FD0);
+        *(volatile unsigned int *)0xCC008000 = v[0].color;
+        ScreenPosition(lbl_806D303C * v[0].u, lbl_806D3038 * v[0].v);
+        ++v;
+    }
+}
+
 extern "C" void TransitionEffect_DrawCarRouletteOverlay(TransitionRoulette *self)
 {
     const Vec *camera = lbl_80311CA0;
@@ -483,13 +514,13 @@ extern "C" void TransitionEffect_DrawCarRouletteOverlay(TransitionRoulette *self
     GXSetZMode(GX_DISABLE, GX_NEVER, GX_DISABLE);
     GXSetZCompLoc(GX_FALSE);
     GXSetCullMode(GX_CULL_BACK);
+    Mtx view;
     Mtx44 projection;
     ScreenProjection(projection);
-    Mtx view;
     ScreenRotatedCamera(view, camera, 15, &lbl_806D1170, &lbl_806D1174);
     GXLoadTexObj(BackupBuffer_InitAsTexture(), GX_TEXMAP0);
     GXSetNumTexGens(1);
-    GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
+    GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
     GXSetNumTevStages(1);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
     GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
@@ -497,15 +528,7 @@ extern "C" void TransitionEffect_DrawCarRouletteOverlay(TransitionRoulette *self
     GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
     GXSetNumChans(1);
     ScreenVertexFormat(true);
-    GXBegin(GX_QUADS, GX_VTXFMT0, 16);
-    const TransitionTextureVertex *v = lbl_803FE230;
-    for (int i = 0; i < 16; ++i) {
-        ScreenPosition((v[0].x - lbl_806D300C) + lbl_806D2FD0,
-                       (v[0].y - lbl_806D3000) + lbl_806D2FD0);
-        *(volatile unsigned int *)0xCC008000 = v[0].color;
-        ScreenPosition(lbl_806D303C * v[0].u, lbl_806D3038 * v[0].v);
-        ++v;
-    }
+    ScreenRouletteTableQuad();
     RestoreScreenChannel();
 }
 
