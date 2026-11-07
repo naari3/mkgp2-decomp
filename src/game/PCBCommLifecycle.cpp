@@ -136,6 +136,10 @@ static inline void ResetScratch(Slot *slot, int index) {
     }
 }
 
+static inline void CopyHostSnapshot(u8 *snapshots, int next) {
+    memcpy(snapshots, snapshots + next * 0x1C, 0x1C);
+}
+
 extern "C" int PCBComm_Process(u8 receive, u8 send)
 {
     Storage *storage = &lbl_805A5EC0;
@@ -190,11 +194,11 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
             PCBComm_UpdateSyncPhase5();
             signed char *phase = phases;
             u8 *scenePtr = sync->scenes;
-            float *timerPtr = sync->timers;
-            for (i = 0; i < 4; ++i, ++phase, ++scenePtr, ++timerPtr) {
+            u8 *timerPtr = (u8 *)sync;
+            for (i = 0; i < 4; ++i, ++phase, ++scenePtr, timerPtr += sizeof(float)) {
                 if (*phase == 0) {
-                    if (*scenePtr < 45) *timerPtr = lbl_806D316C;
-                    else *timerPtr = lbl_806D3168;
+                    if (*scenePtr < 45) *(float *)(timerPtr + 8) = lbl_806D316C;
+                    else *(float *)(timerPtr + 8) = lbl_806D3168;
                 }
             }
             sync->ready = 1;
@@ -216,9 +220,7 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
     }
     PCBCheck_RecvLinkData(receive);
     if (update && g_isCommHost == 1) {
-        u8 *snapshots = storage->hostSnapshots[0];
-        int next = 1;
-        memcpy(snapshots, snapshots + next * 0x1C, 0x1C);
+        CopyHostSnapshot(storage->hostSnapshots[0], 1);
     }
     return 1;
 }
