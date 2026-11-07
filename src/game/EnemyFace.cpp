@@ -9,17 +9,58 @@ extern const char lbl_803DA6EC[0x14] = "clCDispInterface";
 extern const char lbl_803DA700[0x10] = "clEFace3D";
 
 
+static inline void LoadTireSpriteResources() {
+    DebugPrintf(lbl_803DA6A0);
+    void **tluts;
+    const int *resources;
+    TPLPalette **palettes;
+    void **textures;
+    int i;
+    i = 0;
+    textures = lbl_806D05F0;
+    palettes = lbl_806D05F8;
+    resources = lbl_806DB590;
+    tluts = lbl_806D0600;
+    for (; i < 2; ++i) {
+        if (*textures != 0 || *palettes != 0) return;
+        const char *path = ResourceTable_GetFilePathPtr(*resources);
+        if (path == 0) return;
+        TEXLoadPalette_Retry(palettes, path);
+        if (*palettes == 0) return;
+        unsigned int count = (*palettes)->count;
+        *textures = FUN_8003b120(count << 5);
+        *tluts = FUN_8003b120(count * 0xC);
+        for (unsigned int k = 0; k < count; ++k) {
+            if (TEXGetPaletteEntry(*palettes, k)->clut) {
+                TEXBindPaletteEntry_CI(*palettes, *textures, *tluts, 0, k);
+            } else {
+                TEXBindPaletteEntry_RGB(*palettes, *textures, k);
+            }
+        }
+        ++palettes;
+        ++resources;
+        ++tluts;
+        ++textures;
+    }
+    DebugPrintf(lbl_803DA6C0);
+}
+
 static inline void TirePosition(float x, float y, float z) {
     GXFIFO.f32 = x;
     GXFIFO.f32 = y;
     GXFIFO.f32 = z;
 }
 
+static inline void TireTexCoord(float u, float v) {
+    GXFIFO.f32 = u;
+    GXFIFO.f32 = v;
+}
+
 void TireSprite_Draw(TireSprite *s) {
     Mtx m;
 
     if (lbl_806D05F0[0] == 0) {
-        LoadTireSprites();
+        LoadTireSpriteResources();
         if (lbl_806D05F0[0] == 0) {
             return;
         }
@@ -69,21 +110,21 @@ void TireSprite_Draw(TireSprite *s) {
     unsigned int color = 0xFFFFFF00;
     color = (color & ~0xFF) | ((int)(255.0f * s->alpha) & 0xFF);
     GXBegin(0x80, 0, 4);
-    const float *uv = (const float *)lbl_803DA680;
     TireSprite *p = s;
+    const float *uv = (const float *)lbl_803DA680;
     for (int i = 0; i < 2; i++) {
         TirePosition(p->vx[0], p->vy[0], p->vz[0]);
         GXFIFO.u32 = color;
-        GXFIFO.f32 = u + uv[0];
-        GXFIFO.f32 = v + uv[1];
-        GXFIFO.f32 = u + uv[0];
-        GXFIFO.f32 = v + uv[1];
+        float tu = u + uv[0];
+        float tv = v + uv[1];
+        TireTexCoord(tu, tv);
+        TireTexCoord(tu, tv);
         TirePosition(p->vx[1], p->vy[1], p->vz[1]);
         GXFIFO.u32 = color;
-        GXFIFO.f32 = u + uv[2];
-        GXFIFO.f32 = v + uv[3];
-        GXFIFO.f32 = u + uv[2];
-        GXFIFO.f32 = v + uv[3];
+        tu = u + uv[2];
+        tv = v + uv[3];
+        TireTexCoord(tu, tv);
+        TireTexCoord(tu, tv);
         uv += 4;
         p = (TireSprite *)((char *)p + 8);
     }
