@@ -2,6 +2,14 @@
 #pragma fp_contract off
 static inline void SetPosition(RivalMarker *p, float x, float y) { p->x = x; p->y = y; }
 
+static inline float ScaleFromOffset(float offset) {
+    offset = offset / 29.0f;
+    offset = 1.0f - offset;
+    offset = 0.6f * offset;
+    offset = offset + 0.4f;
+    return offset;
+}
+
 extern "C" void fn_80243464(RivalMarkerHud *self) {
     float fade = fn_8020A6CC(self->fade);
     void *player = GetPlayerCarObject();
@@ -33,9 +41,8 @@ extern "C" void fn_80243464(RivalMarkerHud *self) {
                 if (CarObject_GetRenderObj(player)->lap < self->karts[i]->lap && delta[i] < 0) delta[i] += total;
                 float ratio = (120.0f - (otherDistance - playerDistance)) / 120.0f;
                 float x = 261.0f * ratio;
-                float scale = 0.6f * (1.0f - (float)(delta[i] - 1) / 29.0f);
+                float scale = ScaleFromOffset((float)(delta[i] - 1));
                 x = x + 46.0f;
-                scale = scale + 0.4f;
                 self->markers[i]->scale = scale;
                 if (delta[i] <= 30 && delta[i] >= 1 && x >= 46.0f && x <= 568.0f && self->karts[i]->active != 0) active = 1;
                 SetPosition(self->markers[i], x, y);
