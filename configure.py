@@ -1705,7 +1705,7 @@ config.libs = [
             Object(Matching, "game/clItemBox_Ctor_GroundSnap.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clItemBoxManager_Assets.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/clItemBoxManager_StepTable.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/clItemBox_FactoryCreate.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/clItemBox_FactoryCreate.cpp", mw_version="GC/2.7", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/clItemBoxManager.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/clItemBoxManager_ListDtors.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/clItemBoxManager_nm1.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
