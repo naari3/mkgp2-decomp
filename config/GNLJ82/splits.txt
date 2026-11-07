@@ -11038,18 +11038,10 @@ game/anon_80202BCC.cpp:
 	.text       start:0x80202BCC end:0x80202CC0
 
 game/anon_80202BCC_nm1.cpp:
-	extab       start:0x80018994 end:0x800189A4
-	extabindex  start:0x8002975C end:0x80029774
-	.text       start:0x80202CC0 end:0x80202E20
+	extab       start:0x80018994 end:0x800189AC
+	extabindex  start:0x8002975C end:0x80029780
+	.text       start:0x80202CC0 end:0x80202F28
 	.rodata     start:0x803C0390 end:0x803C24C8
-
-game/anon_80202BCC_m1.cpp:
-	.text       start:0x80202E20 end:0x80202E78
-
-game/anon_80202BCC_nm2.cpp:
-	extab       start:0x800189A4 end:0x800189AC
-	extabindex  start:0x80029774 end:0x80029780
-	.text       start:0x80202E78 end:0x80202F28
 
 game/anon_80202BCC_m2.cpp:
 	extab       start:0x800189AC end:0x80018A24
