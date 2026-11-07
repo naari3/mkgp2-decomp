@@ -1229,3 +1229,8 @@ c18_u20: fn_8015BCC4 98.65854 -> 100% by moving SetupCamera inline body into the
 Source: Codex worker c18_u21_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u21 CopyStatsBlock 8008DE60 retry: baseline is 98.63666%, not source comment 99.7%. Four instruction positions differ: +334/+338 delay load19C past store198; +344/+348 hoist load1A4 before store1A0. Whole-block assignment emits 48-byte loop (1.96463%). Restricted scalar copies over-hoist loads and spill (38.758842%); large static inline section helpers remain calls (0.109325%). Small inline pair-copy helper reproduces baseline identically. No flags/ranges changed; single-function TU stays NonMatching. Native gain 0.
+
+## c18_u36_20261107
+Source: Codex worker c18_u36_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u36: SceneListImpl::Draw 80204218 baseline98.35821/264B vs268B target. TU-local inline RemoveTask(DoublyLinkedList*,ListIter) with named result assigned from entries->Erase fixes Erase result/argument stack order (SP+8/+C), improving98.41791. Still lacks target store at802042E8: intermediateSP+10 then loopSP+14 versus source loopSP+10. Return-assignment spelling is byte-identical; explicit private iterator copy ctor regresses80.029854/244B and is reverted. Task logic/registers otherwise agree. Single-function TU staysNonMatching; no singleton/pool mechanism or B cut, no native gain.
