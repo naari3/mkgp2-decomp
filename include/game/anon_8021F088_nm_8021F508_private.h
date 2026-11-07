@@ -3,11 +3,8 @@
 
 #include "game/anon_8021F088_private.h"
 
-/* View of the shared coin-mileage resource pool at 0x803C6610. */
-struct SetupPool {
-    char prefix[0x428];
-    ItemPose poses[1];
-};
-extern "C" const SetupPool lbl_803C6610;
+/* Typed overload of the legacy no-argument declaration in the family header.
+ * CourseTables selects the pose using the unlocked item's resource ID. */
+KartPose *fn_8013BE98(int id);
 
 #endif
