@@ -2803,6 +2803,7 @@ config.libs = [
             Object(Matching, "game/LapDispControls.c"),
             Object(Matching, "game/LapDispUpdate.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/RankDispControls.c"),
+            Object(Matching, "game/RankDispControls_tail.c"),
             Object(Matching, "game/RankDispUpdate.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801AF850.c"),
             Object(Matching, "game/fn_801B0CE4.c", mw_version="GC/1.2.5n"),

@@ -12683,7 +12683,10 @@ game/RaceHudSceneCtor.cpp:
 	.text       start:0x8024932C end:0x802494B4
 
 game/RankDispControls.c:
-	.text       start:0x802494B4 end:0x802494E0
+	.text       start:0x802494B4 end:0x802494BC
+
+game/RankDispControls_tail.c:
+	.text       start:0x802494BC end:0x802494E0
 
 game/RankDispUpdate.cpp:
 	extab       start:0x8001DC50 end:0x8001DC58
