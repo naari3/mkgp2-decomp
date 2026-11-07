@@ -91,7 +91,6 @@ See "Pooled base registers" and "Over-split TUs" in `docs/matching_rules.md`.
 | `RaceScene_GetPerspFovyForCup` | game/RaceScene_GetPerspFovyForCup | 80.98 | needs TU-owned `.data` base `0x80401118` (+0x10000) | |
 | `fn_801ECA14` | game/fn_801ECA14 | 74.07 | pool base `lbl_803BD920` owned by another TU | |
 | `Card_VerifyChecksum` | game/Card_VerifyChecksum | 91.97 | pooled data base | |
-| `fn_8018CFC4` (S22Single ctor) | game/objview/fn_8018CFC4 | 79.73 | schedule right in C form but data/self/m register order wrong. Real fix is probably merging the objview TUs `0x8018CD68..0x8018DFC4` (shared rodata pool `0x80377E60`) | `wip/fn_8018CFC4_c_extab_wip.c`; permuter 45k iterations stuck |
 | `fn_8020B234` | game/anon_8020AF08_nm1 | 97.54 | with TU-owned rodata it reaches 99.92; left is r3 vs r0 for itemId in the 0x9B/0x9D compares | `notes/r4/anon_8020AF08_nm1_rodata_99.92.diff` |
 | `WarpDashMgr_Init` | game/WarpDashMgr_Init | 94.48 | target adds `course*8 + alt*4` then `lwzx` from `pool+0x1660` | |
 | `LObjInfoInit`, `CObjInfoInit` | sysdolphin/baselib/lobj_load_nm, cobj_info_nm | 93.12 / 99.94 | `addi r3, r31, 0` + string offsets = class data and strings in one `.data` block; needs the whole-file TU merge (as done for tobj/mobj/jobj) | merge blocked by open claims |

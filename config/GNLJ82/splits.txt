@@ -7726,6 +7726,7 @@ game/objview/fn_8018CFC4.cpp:
 	extab       start:0x80011EA8 end:0x80011EDC
 	extabindex  start:0x80026EF4 end:0x80026F00
 	.text       start:0x8018CFC4 end:0x8018D068
+	.rodata     start:0x80377E60 end:0x80377EF0
 
 game/objview/fn_8018D068.c:
 	extab       start:0x80011EDC end:0x80011EE4
