@@ -13,12 +13,12 @@ extern void DebugPrintf(const char *, ...);
 extern void *FUN_8003b120(int);
 }
 #pragma exceptions on
-PointList::PointList(SpawnPoint *spawn) {
+PointList::PointList(SpawnPoint *__restrict spawn) {
     PointList *l = this;
     Vec points[20];
     Vec delta;
     int j, n;
-    SpawnPoint *cur;
+    SpawnPoint *__restrict cur;
     l->count = 0;
     l->pts = 0;
     if (!spawn) return;

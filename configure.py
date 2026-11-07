@@ -2844,7 +2844,7 @@ config.libs = [
             Object(Matching, "game/Sound_801674AC.cpp"),
             Object(Matching, "game/Rumble.cpp"),
             Object(Matching, "game/ItemBoxConstruct.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/mapeffect/PointListConstruct.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/mapeffect/PointListConstruct.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/RumbleUpdate.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/RumbleShutdown.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CourseMarker.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
