@@ -26,6 +26,12 @@ on its own with a fresh link; main.dol stayed OK.
 Not needed any more: STLContainer_DisposeRecursive and fn_801987C4 are already
 100% on current main (fixed after the sweep table was generated).
 
+## Switch case-set patch (R6, 2026-11-07)
+
+| Patch | Function | TU | Before | Fix | After | TU flip |
+| --- | --- | --- | --- | --- | --- | --- |
+| AI_UpdateItemUseLogic.patch | AI_UpdateItemUseLogic (#2404) | game/AI_UpdateItemUseLogic.cpp | 97.63% | the switch has `case 9: break;` (no `case 8`), so the compare tree gets the target's `cmpwi 8; beq; bge` node. Found by trying every subset of empty cases {0,5..11} | 100% | yes, included (clean build, main.dol OK) |
+
 ## Matching-flip patches for TUs already at 100% (thread B, 2026-11-07)
 
 From docs/flip_hints.md. Verified on a throwaway branch off main: all four applied together, clean build, main.dol OK (+13 functions).
