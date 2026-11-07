@@ -1,15 +1,13 @@
 /* Complete ASM-derived flight/lock-on state machine. Ghidra unavailable.
  * Views are local to this TU and describe only observed fields.
  * Vec3 value arguments use the native C++ ABI and compiler-owned copies.
- * NonMatching: text 99.22019%, automatic EH 100%, index 91.66667%.
- * Remaining size +4: flight-phase switch, lock-byte comparisons, particle
- * counter scheduling and pitch-result FP staging. */
+ * Text and compiler-owned EH match the target exactly. */
 struct FlightVec { float x,y,z; };
 struct FlightItem {
     unsigned char pad00[8]; int alias; unsigned char pad0C[4]; int launched;
     unsigned char sprite[0x14]; unsigned char active; unsigned char pad29[3]; float lifetime;
     unsigned char pad30[0xC]; unsigned char flag3C; unsigned char pad3D[0x50];
-    unsigned char lockState, lockKind; unsigned char pad8F;
+    signed char lockState, lockKind; unsigned char pad8F;
     FlightVec impulse; int effectId; FlightVec position; float pitch,yaw,roll;
     FlightVec velocity; float speed; unsigned char state; signed char phase,flightPhase;
     unsigned char reason;
@@ -110,11 +108,11 @@ static inline void InitializeParticle(FlightEffect *effect, FlightItem *item, Fl
     effect->target=context->target;
     if(kind==1) effect->id=item->effectId;
 }
-#define PARTICLES(kind,angle) for(int i=0;i<8;++i) { FlightEffect *effect=DrawEffect_SpawnDirect(Effect_HitFlash_Update); if(effect) InitializeParticle(effect,item,context,kind,angle); }
+#define PARTICLES(kind,angle) for(i=0;i<8;++i) { FlightEffect *effect=DrawEffect_SpawnDirect(Effect_HitFlash_Update); if(effect) InitializeParticle(effect,item,context,kind,angle); }
 extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *context)
 {
     FlightVec hand,wall;
-    int alive,hitGround;
+    int alive,hitGround,i;
     float height,angle;
     switch(item->phase) {
     case 0:
@@ -149,6 +147,9 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
         return;
     case 2:
         switch(item->flightPhase) {
+        case 3:
+        case 4:
+            break;
         case 0:
             ItemTracker_AcquireLock(item); ItemTracker_SetTrackPhase(item,1);
             item->lockState=1; item->flag3C=1;
@@ -168,8 +169,7 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
         Item_DecayVelocityScalar(item,lbl_806D6300);
         switch(ItemCollision_Check(item)) {
         case 1: {
-            int alias=ItemAlias_HitRemapLookup(item->alias);
-            fn_801B1D5C(context->kart,ItemTracker_GetTargetKart(item),alias,0);
+            fn_801B1D5C(context->kart,ItemTracker_GetTargetKart(item),(short)ItemAlias_HitRemapLookup(item->alias),0);
             ItemHit_Dispatch(item,0,0,0); context->target=ItemTracker_GetTargetKart(item);
             ItemTracker_ReleaseLock(item); item->lockState=0;
             SoundMgr_PlaySE_Positional(0x84,item->position,0);
@@ -197,7 +197,9 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
         }
         if(context->trackTimer==0) ItemTracker_SetTrackPhase(item,1);
         if(item->lockState==2) {
-            ItemTracker_ReleaseLock(item); item->lockState=0;
+            ItemTracker_ReleaseLock(item);
+            i=0;
+            item->lockState=0;
             if(item->lockKind==1) {
                 SoundMgr_PlaySE_Positional(0x84,item->position,0);
                 PARTICLES(0,0.0f)
@@ -205,7 +207,7 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
                 item->velocity.y=lbl_806D6300; item->velocity.x*=lbl_806D632C; item->velocity.z*=lbl_806D632C;
                 SET_REASON(4); return;
             }
-            PARTICLES(1,0.0f)
+            for(;i<8;++i) { FlightEffect *effect=DrawEffect_SpawnDirect(Effect_HitFlash_Update); if(effect) InitializeParticle(effect,item,context,1,0.0f); }
             SET_REASON(6); return;
         }
         if(Item_CheckWallCollision(item,&wall,0)) {
@@ -234,19 +236,21 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
                     Vec2_RotateY(&item->velocity,&item->velocity,item->yaw); ++item->flightPhase; return;
                 }
                 break;
-            case 3:
+            case 3: {
+                float groundPitch;
                 item->position.y=angle*item->speed+height;
                 if(context->effectTimer==0) {
                     DrawEffect_ItemHitOriented_Spawn(item->position,item->velocity,2); context->effectTimer=3;
                 }
-                angle=BuildOrientationFromYaw(lbl_806D6338+Item_ProbeForwardGroundPitch(item->position,item->yaw,lbl_806D630C,item->position.y-height));
-                item->pitch=AngleStepForward_OrSnap(item->pitch,angle,lbl_806D62FC);
-                if(item->pitch==angle) {
+                groundPitch=BuildOrientationFromYaw(lbl_806D6338+Item_ProbeForwardGroundPitch(item->position,item->yaw,lbl_806D630C,item->position.y-height));
+                item->pitch=AngleStepForward_OrSnap(item->pitch,groundPitch,lbl_806D62FC);
+                if(item->pitch==groundPitch) {
                     PARTICLES(3,0.0f)
                     GetSpawnPosition(&item->velocity,lbl_806D62C0,lbl_806D62C0,lbl_806D633C*context->ground);
                     Vec2_RotateY(&item->velocity,&item->velocity,item->yaw); ++item->flightPhase; return;
                 }
                 break;
+            }
             case 4:
                 item->position.y=height;
                 if(context->effectTimer==0) {
