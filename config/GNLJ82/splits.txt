@@ -9412,6 +9412,7 @@ game/fn_801D5F74.c:
 	extab       start:0x800152F4 end:0x800152FC
 	extabindex  start:0x800280D0 end:0x800280DC
 	.text       start:0x801D5F74 end:0x801D6398
+	.rodata     start:0x8039C718 end:0x8039D8C0
 
 game/PlayerData_ResolveUnlockedIdByIndex.c:
 	.text       start:0x801D6398 end:0x801D647C

@@ -1,0 +1,5 @@
+# playerdata-unlock-grant
+
+Source: Codex worker c18_u99_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1060 B.
+
+c18_u99: fn_801D5F74 matches 1060B native C. Original external UnlockTables aggregate folded initial baseIds/remap pointers into offsets and swapped table-base/count registers. Owning .rodata 8039C718..8039D8C0 as separate typed arrays restores one shared pool base and pointer materialization. Declare Resolve remap before id/i/r. Grant loop must use indexed kItemUnlockGrants[i] with a block-local pointer; persistent grant++ cursor leaves r9/r10 swapped. Named flagIdx is reused for unlockFlags/extraFlags stores. Split original kItemUnlockRemap 0x984 into remaps 0x24 and grants 0x960 at8039CF60. Export lbl_8039C718, kItemBaseIdTable and kItemUnlockRemap for other TUs; other pool arrays remain static. Text1060/extab8/index12/rodata4520 all100. Matching source object is main.elf input; actual symbol801D5F74 size1060; full DOL SHA1 exact.
