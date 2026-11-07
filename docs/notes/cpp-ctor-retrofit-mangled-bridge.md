@@ -1064,3 +1064,8 @@ c17_u8: MWRTTI __dynamic_cast NULL target and equal-type cases must share a shor
 Source: Codex worker c17_u5_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c17_u5: fn_8020A6CC 104B float Value draft improves 78.65385 -> 92.88461 with direct extern-C const Tween *__restrict parameter and int duration cache. Restrict moves elapsed load before stwu; int duration removes extra extsh. Inline restricted whole-body helper regresses74.23077; double return type is invariant78.65385. Remaining elapsed/duration GPR and float-return coalescing residuals leave source100B vs target104B. Keep singleton NonMatching. Add owned @61/@62 EH bridges; full fallback DOL SHA-1 exact, no native gain.
+
+## c17_u7_20261107
+Source: Codex worker c17_u7_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 240 B.
+
+clItemBoxManager: the target Update_Inner has DESTROYLOCAL dtor_80036E40 for its vector at SP+0x14. A three-float C++ constructor plus empty destructor restores the exact FP load/store/arithmetic sequence; plain aggregate copy emits lwz/stw and loses cleanup. Named node/sentinel traversals bring text to 99.73684%, leaving only the final countdown loop r31/r30 reuse. Direct next/sentinel construction in a private three-level list destructor hierarchy gives exact 120-byte dtors at 8005F778 and 8005F7F0. Isolate those two with EH CCC..CDC / index C9C..CB4; tail base dtor 8005FF74 has early EH at 80007CDC, binding the remaining tail as a reversed-order group. No padding or manual EH was used.

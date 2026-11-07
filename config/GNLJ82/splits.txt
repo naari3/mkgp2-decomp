@@ -1534,9 +1534,19 @@ game/clItemBox_FactoryCreate.c:
 	.text       start:0x8005F5D8 end:0x8005F65C
 
 game/clItemBoxManager.cpp:
-	extab       start:0x80007CC4 end:0x80007DA8
-	extabindex  start:0x80020C90 end:0x80020D38
-	.text       start:0x8005F65C end:0x8005FFBC
+	extab       start:0x80007CC4 end:0x80007CCC
+	extabindex  start:0x80020C90 end:0x80020C9C
+	.text       start:0x8005F65C end:0x8005F778
+
+game/clItemBoxManager_ListDtors.cpp:
+	extab       start:0x80007CCC end:0x80007CDC
+	extabindex  start:0x80020C9C end:0x80020CB4
+	.text       start:0x8005F778 end:0x8005F868
+
+game/clItemBoxManager_nm1.cpp:
+	extab       start:0x80007CDC end:0x80007DA8
+	extabindex  start:0x80020CB4 end:0x80020D38
+	.text       start:0x8005F868 end:0x8005FFBC
 
 game/clItemBoxResponder.c:
 	extab       start:0x80007DA8 end:0x80007DB0
