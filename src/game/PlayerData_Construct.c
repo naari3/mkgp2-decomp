@@ -1,9 +1,8 @@
-#include "game/PlayerDataResetPrivate.h"
+#include "game/PlayerDataConstructPrivate.h"
 extern int isJapanese(void);
 extern char *strcpy(char *, const char *);
 extern int rand(void);
 extern const char *lbl_8049B608[][2];
-extern const unsigned char lbl_8039C718[];
 extern PlayerDataRecord g_playerData;
 extern int g_roundIndex;
 extern void fn_80209C88(void);
@@ -16,24 +15,24 @@ extern MilageEntry *fn_802169F4(int);
 extern int fn_80209338(int);
 extern int fn_80209330(void);
 extern void DebugPrintf(const char *, ...);
-typedef struct ThreeModes { int modes[3]; } ThreeModes;
+extern const ConstructPool lbl_8039C718;
 
 static inline int RollRareItem(void) {
     return rand() % 20 == 0;
 }
 
-static inline void GrantMilageItem(int character, const unsigned char *pool) {
+static inline void GrantMilageItem(int character, const ConstructPool *pool) {
     int item;
     fn_80209338(character);
     item = fn_80209330();
     fn_801D5F74(&g_playerData, item, 1);
-    DebugPrintf((const char *)pool + 0x1DC8, item, 0x22B);
+    DebugPrintf(pool->grantMessage, item, 0x22B);
 }
 
-void PlayerData_Construct(PlayerDataReset *self, int character, int a, int b, int c,
+void PlayerData_Construct(PlayerDataReset *self, int character, int count, int b, int c,
     unsigned char freePlay, unsigned char allRare, unsigned char special,
     int value, int coins, unsigned char allItems) {
-    const unsigned char *pool = lbl_8039C718;
+    const ConstructPool *pool = &lbl_8039C718;
     strcpy((char *)self->name, lbl_8049B608[character][isJapanese()]);
     *(unsigned short *)((unsigned char *)self + 0xE) = value;
     self->coinMilage = coins;
@@ -41,15 +40,14 @@ void PlayerData_Construct(PlayerDataReset *self, int character, int a, int b, in
     if (freePlay == 1) self->speed = 0;
     if (special == 1) self->speed = 0;
     if (self->field1B0 != 1) {
-        ThreeModes modes = *(const ThreeModes *)(pool + 0x1280);
+        ThreeModes modes = pool->defaults;
         int cc;
-        int count;
         int mode;
         int cup;
         int round;
         int maximum;
         int i;
-        modes.modes[0] = a;
+        modes.modes[0] = count;
         modes.modes[1] = b;
         modes.modes[2] = c;
         for (cc = 0; cc < 3; cc++) {
@@ -89,7 +87,7 @@ void PlayerData_Construct(PlayerDataReset *self, int character, int a, int b, in
         for (i = 0; i < coins; i++) {
             int index = fn_80216988(i);
             if (index < 0) {
-                DebugPrintf((const char *)pool + 0x1DA4, 0x219);
+                DebugPrintf(pool->mileageError, 0x219);
                 return;
             }
             if (maximum < index) {
