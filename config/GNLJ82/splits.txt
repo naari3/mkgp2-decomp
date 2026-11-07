@@ -7184,6 +7184,7 @@ game/miyazakiconsole/fn_8017EC90.cpp:
 	extab       start:0x800119F4 end:0x800119FC
 	extabindex  start:0x800269E4 end:0x800269F0
 	.text       start:0x8017EC90 end:0x8017EFFC
+	.rodata     start:0x80376220 end:0x80376E10
 	.data       start:0x804918C4 end:0x804918F4
 
 game/miyazakiconsole/fn_8017EFFC.cpp:
