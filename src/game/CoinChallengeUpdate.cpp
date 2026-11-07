@@ -1,3 +1,5 @@
+#include "game/singleton.h"
+
 /* Local observed views; reconstructed from the target DOL disassembly. */
 struct Vec3 { float x, y, z; };
 struct CoinInput {
@@ -79,9 +81,7 @@ int NokoNokoChallenge_TransitionToResult(void *);
 void fn_8016B32C(void *);
 
 static inline void *getTransition() {
-    void *p = lbl_806D109C;
-    if (!p) p = 0;
-    return p;
+    return SINGLETON_INSTANCE(lbl_806D109C);
 }
 
 static inline void UpdateCoinSprites(CoinSprites *sprites) {

@@ -1129,3 +1129,8 @@ c17_u38: anon_801FC1E0 initial 0% methods were absent definitions. Reconstructed
 Source: Codex worker c17_u49_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 112 B.
 
 c17_u49: fresh clFlowClass_Update object is 99.81191%, EH88 exact. Approved SINGLETON_INSTANCE spelling is instruction-equivalent to the old input getter. Compound selection += input()->delta and static inline addSelection(self,input()->delta) both leave exactly the prior missing lwz r3,0xc(r31) at target801C2860; no new information after two probes, stopped. Original selection source restored, only getter spelling normalized. Text3420 vs target3424 shifts switch-table relocations and prevents postprocess_sdata2 mapping of the later int-to-float double. Single-function TU cannot use mechanism B; no range/flag/bridge changes and no native gain.
+
+## c17_u51_20261107
+Source: Codex worker c17_u51_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u51 CoinChallengeUpdate: replacing handwritten transition getter with SINGLETON_INSTANCE is instruction-identical. Return/local/argument byte-vs-int type variants do not remove r3->r0->r27 started-result copy. Nesting IsRaceStarted and virtual steering as ApplyInput arguments reverses call order and regresses to94.939224/EH87.5. Inline whole input phase removes one copy and restores target1448B/index100 but changes FP homes and hoists virtual vptr load, text97.776245; rejected. Retain original98.24586/1452B draft. Broad self/before/after/sprites/tens GPR rotation remains. No singleton/data unlock here; single fn prevents rescue split.
