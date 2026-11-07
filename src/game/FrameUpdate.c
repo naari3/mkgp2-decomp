@@ -64,14 +64,20 @@ static inline void FrameBackup_Copy(void)
     lbl_8059F480.block31E0 = lbl_80598A60.block31E0;
 }
 
+static inline void FrameBackup_CaptureCalibration(struct FrameBackup *backup,
+                                                 const unsigned short *bits)
+{
+    backup->word40 = bits[5];
+    backup->word3C = bits[6];
+}
+
 #pragma exceptions on
 void FrameUpdate(void)
 {
     if (lbl_806D1124 != 0 && --lbl_806D1124 <= 0) {
-        lbl_80598A60.word40 = *(unsigned short *)(g_jvsOperatorBits + 0xA);
-        lbl_80598A60.word3C = *(unsigned short *)(g_jvsOperatorBits + 0xC);
-        if (lbl_806D1120 && lbl_806D1128 == 0) {
-            fn_80288210(0);
+        FrameBackup_CaptureCalibration(&lbl_80598A60, (const unsigned short *)g_jvsOperatorBits);
+        if (lbl_806D1120 != 0 && lbl_806D1128 == 0) {
+            fn_80288210(0, &lbl_80598A60);
             FrameBackup_Copy();
         }
     }

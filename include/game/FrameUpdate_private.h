@@ -27,5 +27,5 @@ extern struct FrameBackup lbl_80598A60, lbl_8059F480;
 extern unsigned char g_jvsOperatorBits[];
 extern unsigned char lbl_806D1120;
 extern int lbl_806D1124, lbl_806D1128, lbl_806D1114, lbl_806D1110;
-extern void fn_80288210(int);
+extern void fn_80288210(int, struct FrameBackup *);
 #endif
