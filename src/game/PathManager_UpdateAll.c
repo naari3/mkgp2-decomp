@@ -9,6 +9,7 @@ int PathManager_UpdateAll(UpdateManager *self)
 {
     int node;
     UpdateEntry *e;
+    UpdateManager *displaySlot;
     int count;
     int i;
     float *finish;
@@ -21,8 +22,8 @@ int PathManager_UpdateAll(UpdateManager *self)
     finish = GetFinishLineSegment();
     if (!PathManager_HasPathLoaded(self)) return -1;
     if (g_gameMode == 2) {
-        for (count = 0; count < 8; count++) {
-            own = &self->entries[count];
+        for (count = 0, displaySlot = self; count < 8; count++, displaySlot = (UpdateManager *)((char *)displaySlot + 0x98)) {
+            own = &displaySlot->entries[0];
             if (own->kart) {
                 node = own->kart->playerId;
                 if (node == GetDisplayBufferIndex()) break;
@@ -246,18 +247,21 @@ int PathManager_UpdateAll(UpdateManager *self)
     g_totalRaceTime = own->totalTime;
     lbl_806CF128 = node+1;
     {
+        UpdateEntry *feedbackEntry;
+        int feedbackIndex;
         UpdateManager *slot = self;
-        for (i = 0; i < 8; i++, slot = (UpdateManager *)((char *)slot + 0x98)) {
-            e = &slot->entries[0];
-            if (e == own && e->item && e->rankImproved == 1) {
-                for (j = 0; j < 8; j++) {
-                    /* Original compares with this slot's rank before measuring j. */
-                    if (slot->entries[0].rank == e->rank-1) {
+        int otherIndex;
+        for (feedbackIndex = 0; feedbackIndex < 8; feedbackIndex++, slot = (UpdateManager *)((char *)slot + 0x98)) {
+            feedbackEntry = &slot->entries[0];
+            if (feedbackEntry == own && feedbackEntry->item && feedbackEntry->rankImproved == 1) {
+                for (otherIndex = 0; otherIndex < 8; otherIndex++) {
+                    /* Original compares with this slot's rank before measuring otherIndex. */
+                    if (slot->entries[0].rank == feedbackEntry->rank-1) {
                         float distance;
                         if (!PathManager_HasPathLoaded(self)) distance = lbl_806D2508;
                         else {
                             UpdateManager *a = slot;
-                            UpdateManager *b = (UpdateManager *)((char *)self + j*0x98);
+                            UpdateManager *b = (UpdateManager *)((char *)self + otherIndex*0x98);
                             float dx, dy, dz;
                             dy = *a->entries[0].py-*b->entries[0].py;
                             dx = *a->entries[0].px-*b->entries[0].px;
@@ -275,8 +279,8 @@ int PathManager_UpdateAll(UpdateManager *self)
                             }
                         }
                         if (distance > lbl_806D250C) {
-                            CoinEvent_PlayAlternatingSE(e->item);
-                            e->rankImproved = 0;
+                            CoinEvent_PlayAlternatingSE(feedbackEntry->item);
+                            feedbackEntry->rankImproved = 0;
                         }
                         break;
                     }
