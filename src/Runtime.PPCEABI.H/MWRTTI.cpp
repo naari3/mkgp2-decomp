@@ -1,5 +1,7 @@
 #include "PowerPC_EABI_Support/Runtime/MWCPlusLib.h"
 
+extern "C" const char lbl_803F1CBC[9];
+
 #define AMBIGUOUS_BASE 0x80000000
 
 namespace std {
@@ -20,7 +22,7 @@ class bad_cast : public exception {
 public:
 	bad_cast() { }
 	virtual ~bad_cast() { }
-	virtual const char* what() const { return "bad_cast"; }
+	virtual const char* what() const { return lbl_803F1CBC; }
 };
 } // namespace std
 
@@ -57,10 +59,7 @@ extern "C" void* __dynamic_cast(void* ptr, long vtoffset, const std::type_info* 
 	vtab = *(RTTIVTableHeader**)((char*)ptr + vtoffset);
 	if (vtab->type != NULL) {
 		ptr = (char*)ptr + vtab->offset;
-		if (!totype) {
-			return ptr;
-		}
-		if (__rtti_strcmp(vtab->type->tname, totype->tname) == 0) {
+		if (!totype || __rtti_strcmp(vtab->type->tname, totype->tname) == 0) {
 			return ptr;
 		}
 		if ((bases = (const RTTIBaseDesc*)vtab->type->tbase) != NULL) {

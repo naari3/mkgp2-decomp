@@ -1054,3 +1054,8 @@ c16_u127 TitleNameHud ctor: redundant final k/n counter pair is unnecessary; a f
 Source: Codex worker c17_u3_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c17_u3: fn_8020A788 accumulator spelling (int value=rate*t; value >>=16; value +=from; return value) improves 92.05882 to93.82353 under unchanged GC/2.6 flags. All target instructions through srawi match; target final add r0,r3,r0 + mr r3,r0 remains versus source add r3,r3,r0. Static inline fixed-multiply helper is baseline-identical; separate origin accumulator reverts to baseline. Keep NM; one-function TU offers no rescue split.
+
+## c17_u8_20261107
+Source: Codex worker c17_u8_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 104 B.
+
+c17_u8: MWRTTI __dynamic_cast NULL target and equal-type cases must share a short-circuit return (!totype || strcmp(...) == 0): separate early returns add one branch. bad_cast::what returning external existing lbl_803F1CBC avoids pooled-literal extra addi. Safe forward-EH split at 802715A4 promotes dtor+what 104B using an undefined first virtual key (inherited slots preserved) and @15/@16 EH bridges; all sections100, source-linked DOL SHA1 exact. Remaining dynamic-cast offset/strcmp r12/r31 swap is invariant under moving offset declaration before count and removing named offset for direct member references; do not repeat these probes.

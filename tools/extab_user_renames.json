@@ -12050,5 +12050,14 @@
   "src/game/auto_800A8F4C_block.c": {
     "__dt__12WarpZoneListFv": "dtor_800AA69C",
     "__ct__14WarpDashMgrObjFiUcUcUc": "WarpDashMgr_Init"
+  },
+  "src/Runtime.PPCEABI.H/MWRTTI_bad_cast.cpp": {
+    "@15": "@etb_8001F2B0",
+    "@16": "@eti_8002BB68",
+    "__dt__Q23std8bad_castFv": "fn_802715A4",
+    "what__Q23std8bad_castCFv": "fn_80271600",
+    "__vt__Q23std8bad_cast": "lbl_804F47B4",
+    "__vt__Q23std9exception": "lbl_803F5710",
+    "__dt__Q23std9exceptionFv": "dtor_80038DD4"
   }
 }
