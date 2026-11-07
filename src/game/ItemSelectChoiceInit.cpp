@@ -36,17 +36,15 @@ extern "C" RefillChoice *fn_8023B1A8(RefillChoice *self) {
     self->text[2] = 0;
     self->text[3] = 0;
     TextManager text;
-    const int *item;
-    const int (*rowItems)[10];
     unsigned char *player = g_playerData;
     int row;
     int column;
-    for (row = 0, rowItems = lbl_803DC180; row < 6; ++row, ++rowItems) {
-        for (column = 0, item = *rowItems; column < 11; ++column, ++item) {
+    for (row = 0; row < 6; ++row) {
+        for (column = 0; column < 11; ++column) {
             int character = ChoiceCharacter();
             int id;
             if (column >= 10) id = fn_8023D844(character, row);
-            else id = *item;
+            else id = lbl_803DC180[row][column];
             if (player[id + 0xa8] == 1) {
                 int descriptor = PlayerData_ResolveUnlockedIdByIndex(player, id);
                 TexMgr_SetTexture(&text, Item_GetLocalizedAsset(descriptor, 0));
