@@ -17,7 +17,7 @@ PointList::PointList(SpawnPoint *spawn) {
     PointList *l = this;
     Vec points[20];
     Vec delta;
-    int j, n, i;
+    int j, n;
     SpawnPoint *cur;
     l->count = 0;
     l->pts = 0;
@@ -26,7 +26,11 @@ PointList::PointList(SpawnPoint *spawn) {
     n = 0;
     while (!IsSpawnTableTerminator(cur)) {
         for (j = 0; j < n; ++j) {
-            delta.Set(points[j].x-cur->x, lbl_806D8B00, points[j].z-cur->z);
+            float dx = points[j].x-cur->x;
+            float dz = points[j].z-cur->z;
+            delta.y = lbl_806D8B00;
+            delta.x = dx;
+            delta.z = dz;
             if (PSVECSquareMag(&delta) < lbl_806D8B04) break;
         }
         if (j >= n) {
@@ -46,8 +50,8 @@ PointList::PointList(SpawnPoint *spawn) {
         l->pts = 0;
         return;
     }
-    for (i = 0; i < l->count; ++i) {
-        l->pts[i] = points[i];
+    for (j = 0; j < l->count; ++j) {
+        l->pts[j] = points[j];
     }
     int k;
     for (k = 0; k < l->count; ++k) DebugPrintf(lbl_8036D564, l->pts[k].x, l->pts[k].y, l->pts[k].z);
