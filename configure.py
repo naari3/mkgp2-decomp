@@ -2174,7 +2174,7 @@ config.libs = [
             Object(Matching, "game/DNFlashBounds.c", mw_version="GC/2.6"),
             Object(NonMatching, "game/DNLensflare.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/DNStartCamera.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/DNStartCamera_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(Matching, "game/DNStartCamera_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/DNStartCamera_m2.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/DNStartDino.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/DNStartDino_hinoko.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),

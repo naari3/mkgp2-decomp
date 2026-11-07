@@ -1,5 +1,29 @@
 #include "game/DNStartCameraPrivate.h"
 
+static inline void UpdateFlash(clDNStartCamera *self, int i) {
+    FlashPart *fp = &self->flashes[i].fp;
+    if (!fp->active) {
+        if (--self->flashes[i].timer > 0) {
+            return;
+        }
+        if (self->hidden == 1) {
+            self->flashes[i].timer = 60;
+            return;
+        }
+        HSD_JObj *j = self->flashJoints[i];
+        JObjSetupMatrix(j);
+        self->flashes[i].pt.pos.x = j->mtx[0][3];
+        self->flashes[i].pt.pos.y = j->mtx[1][3];
+        self->flashes[i].pt.pos.z = j->mtx[2][3];
+        self->flashes[i].fp.Start(&self->flashes[i].pt);
+    } else {
+        fp->Tick();
+        if (!fp->active) {
+            self->flashes[i].timer = rand() % 60;
+        }
+    }
+}
+
 void clDNStartCamera::Update() {
     KartRender *k;
     if ((k = g_playerRenderObj) == 0) {
@@ -20,27 +44,7 @@ void clDNStartCamera::Update() {
         }
     }
     for (int i = 0; i < 6; i++) {
-        FlashPart *fp = &flashes[i].fp;
-        if (!fp->active) {
-            if (--flashes[i].timer > 0) {
-                continue;
-            }
-            if (hidden == 1) {
-                flashes[i].timer = 60;
-                continue;
-            }
-            HSD_JObj *j = flashJoints[i];
-            JObjSetupMatrix(j);
-            flashes[i].pt.pos.x = j->mtx[0][3];
-            flashes[i].pt.pos.y = j->mtx[1][3];
-            flashes[i].pt.pos.z = j->mtx[2][3];
-            flashes[i].fp.Start(&flashes[i].pt);
-        } else {
-            fp->Tick();
-            if (!fp->active) {
-                flashes[i].timer = rand() % 60;
-            }
-        }
+        UpdateFlash(this, i);
     }
     if (hidden == 0) {
         clNormal3D_Exec(cam);
