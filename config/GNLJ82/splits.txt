@@ -3135,7 +3135,10 @@ game/Terrain_FlagsToTypeId.c:
 	.text       start:0x800A51C4 end:0x800A5284
 
 game/Terrain_FlagsToTypeId_nm1.c:
-	.text       start:0x800A5284 end:0x800A5384
+	.text       start:0x800A5284 end:0x800A52F8
+
+game/Terrain_FlagsToTypeId_nm2.c:
+	.text       start:0x800A52F8 end:0x800A5384
 
 game/Terrain_FlagsToDebugString.c:
 	extab       start:0x80009C94 end:0x80009C9C

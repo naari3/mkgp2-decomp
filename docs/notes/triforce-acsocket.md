@@ -28,3 +28,8 @@ c17_u24: acsocket_nm7 remains NonMatching, native gain 0. Fresh direct objdiff: 
 Source: Codex worker c18_u121_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 44 B.
 
 c18_u121: acConnect 95.62366 -> 96.344086 by inline ClearConnectBuffer(k,&off): capture base=k->bufAddr, buf=BufPtr(0), *off=base+State.bufOff; memset(buf,0,0x40); return buf. Caller retains returned buf through memcpy. This restores target off r24 / buf r25 and removes bounce address rematerialization before memcpy. Source remains 368 versus target 372 bytes: target addi r24,r5,0 at 8029243C absent; State/Buf address scratch r3/r4 and loaded bufAddr/bufOff r0/r5 swapped; add/mr schedule differs. Optional-output generic getter retains stack-pointer null check/spill (85.129036); aggregate pair get/clear returns emit stack copies (80.02151). Both rejected. NonMatching retained, full fallback DOL SHA-1 exact; no native gain, no range/flag changes.
+
+## c18_u120_20261107
+Source: Codex worker c18_u120_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u120: acInetAddr paired CPU/board getter plus ClearInetBuf(k,&off) improves 95.61644 to95.821915, still288 vs292B. Writing *off=k->bufAddr+*off restores target operand/load order. Target +0x80 addi r26,r5,0 remains folded; target mr-before-add is source add-before-mr. Cursor reserve variant95.753426; optional-null output retains branch/stack home71.49315; native by-value CPU/board descriptor spills66.21918. Three structural approaches exhausted; no flags/data/splits changed, no split rescue or native gain.

@@ -18,3 +18,8 @@ c5_s5: Explicit first-loop FlowPanel cursor (advance sizeof(ResCtrl*) while writ
 Source: Codex worker c18_u41_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1048 B.
 
 c18_u41: fn_801D9B70 unlocks 98.20611->100% with existing presentation-family __rlwimi(0xFFFFFF00,(int)(255*t),0,24,31) packing, removing both clrlwi+or extra instructions. Preserve mixed constant provenance: fade-in ((float)timer-8.0f)*lbl_806DA1E8 with literal1 clamp; fade-out1.0f-timer/lbl_806DA1F0 with literal0 clamp. All-external fade-in changes FP webs adversely; explicit elapsed/fraction intermediates are byte-invariant. Typed union setter spills. Existing real new PanelSprite and EH bridge suffice. text1048/extab24/index12 all100; Matching source object at801D9B70/1048 and owned ELF bytes exact, full DOL SHA-1ea30f3b1 OK. No split/data/header/EH-map changes, native gain1fn1048B.
+
+## c18_u109_20261107
+Source: Codex worker c18_u109_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u109: Extract initial state stores plus first icon allocation loop into static inline InitIcons(FlowPanel*) to merge zero with index r31, removing extra 4B. Fresh96.04651 ->97.674416; exact344B size,40B EH/12B index100. Sole residual target li r31,0 then mr r28,r3 at offsets20/24; source transposes them. Declaring index before cursor or passing initial index from caller both regress96.80232 via r30/r31 swap and retain transposition. Retain H1 NonMatching. Single function cannot B-split. Coordinator build service full fallback SHA1 exact, zero native gain.
