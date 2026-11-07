@@ -10750,6 +10750,7 @@ game/fn_801F9B64.cpp:
 	extab       start:0x80017700 end:0x80017738
 	extabindex  start:0x80029108 end:0x80029114
 	.text       start:0x801F9B64 end:0x801F9CA8
+	.rodata     start:0x803BF440 end:0x803BFB30
 
 game/fn_801F9CA8.cpp:
 	extab       start:0x80017738 end:0x80017740
