@@ -116,6 +116,15 @@ inline void Vec3f::Normalize()
     }
 }
 
+static inline void CrossInto(Vec3f *o, const Vec3f &a, const Vec3f &b)
+{
+    float cx, cy, cz;
+    cy = a.z * b.x - a.x * b.z;
+    cz = a.x * b.y - a.y * b.x;
+    cx = a.y * b.z - a.z * b.y;
+    o->Set(cx, cy, cz);
+}
+
 extern "C" int ShadowAreaEntry_ComputeEdgeNormals(ShadowAreaEntry *self, ShadowAreaSrc *src)
 {
     int i;
@@ -125,15 +134,16 @@ extern "C" int ShadowAreaEntry_ComputeEdgeNormals(ShadowAreaEntry *self, ShadowA
         return 0;
     }
     for (i = 0; i < 6; i++) {
+        ShadowAreaSrc *s = &src[i];
         edge = &self->edges[i];
-        edge->point.Set(src[i].origin.x, src[i].origin.y, src[i].origin.z);
-        Vec3f a(src[i].a.x - src[i].origin.x, src[i].a.y - src[i].origin.y,
-                src[i].a.z - src[i].origin.z);
+        edge->point.Set(s->origin.x, s->origin.y, s->origin.z);
+        Vec3f a(s->a.x - s->origin.x, s->a.y - s->origin.y,
+                s->a.z - s->origin.z);
         a.Normalize();
-        Vec3f b(src[i].b.x - src[i].origin.x, src[i].b.y - src[i].origin.y,
-                src[i].b.z - src[i].origin.z);
+        Vec3f b(s->b.x - s->origin.x, s->b.y - s->origin.y,
+                s->b.z - s->origin.z);
         b.Normalize();
-        b.CrossFrom(a, b);
+        CrossInto(&b, a, b);
         edge->normal.Set(b.x, b.y, b.z);
     }
     self->src = *(ShadowAreaMesh *)src;
