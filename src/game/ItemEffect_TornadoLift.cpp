@@ -1,8 +1,8 @@
 /* ItemEffect_TornadoLift @ 0x80053AE0: arm the tornado lift effect from a
  * pose matrix, seeding both the start and current matrices.
  *
- * NonMatching: matrix loads remain paired with stores instead of being
- * pipelined and retained across copies as in the target. */
+ * Built with GC/2.6: with a const pose, the compiler keeps pose[8..15]
+ * in registers across both matrix copies as in the target. */
 
 extern "C" {
 extern const float lbl_806D27F8; /* 0.0f */
@@ -48,7 +48,7 @@ struct TLEffect {
     TLState *armed;
 };
 
-extern "C" int ItemEffect_TornadoLift(TLEffect *self, TLMtx *pose)
+extern "C" int ItemEffect_TornadoLift(TLEffect *self, const TLMtx *pose)
 {
     TLState *st;
     int i;
@@ -70,7 +70,10 @@ extern "C" int ItemEffect_TornadoLift(TLEffect *self, TLMtx *pose)
         st->cur.m[i] = pose->m[i];
     }
     st->duration = 0x3C;
-    float z = st->start.m[14], y = st->start.m[13], x = st->start.m[12];
+    float x, y, z;
+    z = st->start.m[14];
+    y = st->start.m[13];
+    x = st->start.m[12];
     st->pos.x = x;
     st->pos.y = y;
     st->pos.z = z;

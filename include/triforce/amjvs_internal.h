@@ -169,7 +169,7 @@ s32 fn_8028A8B4(s32 node, u8 idx, s16 v);
 s32 fn_8028A934(s32 node, u8 idx, s16 v);
 s32 fn_8028AA40(s32 node, s16** out, u8* count);
 s32 fn_8028AAC0(s32 node, s16** out, u8* chans);
-s32 fn_8028AC1C(s32 node, u8 ch);
+s32 fn_8028AC1C(s32 node, u32 ch);
 s32 fn_8028ACEC(s32 node, u8* chans);
 s32 fn_8028AD94(s32 node, u8** sw, u8* players, u8* bits);
 s32 fn_8028AE64(s32 node, u8 player, u8 byte);

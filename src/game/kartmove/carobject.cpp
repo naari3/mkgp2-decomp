@@ -146,15 +146,60 @@ void fn_8019EB9C(Matrix44 *a, Vec3 *out, const Vec3 *v) {
     out->x = x; out->y = y; out->z = z;
 }
 
+struct Mtx44S {
+    float v[16];
+};
+
+/* Alias-safe 4x4 product (out may be a or b), result through a scratch buffer. */
+static inline void Mtx44S_Mul(Mtx44S *out, const Mtx44S *a, const Mtx44S *b) {
+    float tmp[16];
+    float *m;
+    int k;
+    int i;
+    int j;
+
+    if (out == a || out == b) {
+        m = tmp;
+    } else {
+        m = out->v;
+    }
+    k = 0;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+            float sum = a->v[k + 0] * b->v[0 * 4 + j];
+            sum += a->v[k + 1] * b->v[1 * 4 + j];
+            sum += a->v[k + 2] * b->v[2 * 4 + j];
+            sum += a->v[k + 3] * b->v[3 * 4 + j];
+            m[k + j] = sum;
+        }
+        k += 4;
+    }
+    if (out == a || out == b) {
+        for (i = 0; i < 16; i++) {
+            out->v[i] = tmp[i];
+        }
+    }
+}
+
 void fn_8019EC18(Matrix44 *a, float angle) {
-    Matrix44 rotation;
-    MatrixIdentity(&rotation);
-    float c = (float)cos(angle);
-    float s = (float)sin(angle);
-    rotation.m[0][0] = c; rotation.m[2][0] = s;
-    rotation.m[2][2] = c; rotation.m[0][2] = -s;
-    MatrixMultiply(&rotation, a);
-    *a = rotation;
+    Mtx44S rot;
+    Mtx44S *dst = (Mtx44S *)a;
+    float c;
+    float s;
+    int i;
+
+    for (i = 0; i < 16; i++) {
+        rot.v[i] = 0.0f;
+    }
+    rot.v[0] = rot.v[5] = rot.v[10] = rot.v[15] = 1.0f;
+    c = (float)cos(angle);
+    s = (float)sin(angle);
+    rot.v[0] = c;
+    rot.v[8] = s;
+    rot.v[10] = c;
+    rot.v[2] = -s;
+    Mtx44S_Mul(&rot, &rot, dst);
+    *dst = rot;
 }
 
 void SpeedCurve_UpdateSpeedCap(SpeedCurve *s, float v) {

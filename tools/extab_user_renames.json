@@ -1703,8 +1703,9 @@
     "extabindex_JumpDistanceMode_PredictLanding": "@eti_80029F30"
   },
   "src/game/JumpDistanceMode_InitTimerDisplay.c": {
-    "extab_JumpDistanceMode_InitTimerDisplay": "@etb_8001A17C",
-    "extabindex_JumpDistanceMode_InitTimerDisplay": "@eti_80029F9C"
+    "__ct__9JumpTimerFi": "JumpDistanceMode_InitTimerDisplay",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
   },
   "src/game/JumpDistanceMode_HandlePhysics.c": {
     "extab_JumpDistanceMode_HandlePhysics": "@etb_80019EDC",
@@ -2606,7 +2607,11 @@
     "__vt__9SteerBase": "lbl_804E4A08",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__dt__13QueueBlockMapFv": "dtor_801E3200"
+    "__dt__13QueueBlockMapFv": "dtor_801E3200",
+    "__vt__Q23std9exception": "lbl_803F5710",
+    "__vt__Q23std11logic_error": "lbl_803F5700",
+    "__vt__Q23std12length_error": "lbl_803F56F0",
+    "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor"
   },
   "src/game/fn_801B85DC.cpp": {
     "__ct__6SpriteFiii": "Sprite_InitWithAnim",
@@ -9175,48 +9180,6 @@
     "__dt__20OwnPtr<10AnimSprite>Fv": "dtor_8015E8AC"
   },
   "src/game/anon_80202BCC_nm1.cpp": {
-    "__ct__16DoublyLinkedListFv": "DoublyLinkedList_Init",
-    "__dt__7ResCtrlFv": "dtor_80082960",
-    "__dt__8FlowTaskFv": "dtor_802043EC",
-    "__dt__24VHolder<13FlowSceneList>Fv": "dtor_801F4B10",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "__ct__9FlowSceneFi": "fn_801FD41C",
-    "__dt__9FlowSceneFv": "dtor_801FD32C",
-    "__vt__13FlowSceneList": "lbl_804E533C",
-    "__vt__13SceneListImpl": "lbl_804EC404",
-    "__vt__9FlowFader": "lbl_80419DC8",
-    "__vt__9FlowScene": "lbl_804EC098",
-    "__dt__12MsgPopupCoinFv": "fn_80202F54",
-    "__vt__12MsgPopupCoin": "lbl_804EC3AC",
-    "__vt__8MsgPopup": "lbl_804EC3E0",
-    "__dt__11TextManagerFv": "dtor_800869D0",
-    "Tick__8MsgPopupFv": "fn_80203224",
-    "__dt__10FlowFaderIFv": "fn_801F26C8",
-    "__dt__10FlowFaderFFv": "TweenInterp_Dtor"
-  },
-  "src/game/anon_80202BCC_m1.cpp": {
-    "__ct__16DoublyLinkedListFv": "DoublyLinkedList_Init",
-    "__dt__7ResCtrlFv": "dtor_80082960",
-    "__dt__8FlowTaskFv": "dtor_802043EC",
-    "__dt__24VHolder<13FlowSceneList>Fv": "dtor_801F4B10",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "__ct__9FlowSceneFi": "fn_801FD41C",
-    "__dt__9FlowSceneFv": "dtor_801FD32C",
-    "__vt__13FlowSceneList": "lbl_804E533C",
-    "__vt__13SceneListImpl": "lbl_804EC404",
-    "__vt__9FlowFader": "lbl_80419DC8",
-    "__vt__9FlowScene": "lbl_804EC098",
-    "__dt__12MsgPopupCoinFv": "fn_80202F54",
-    "__vt__12MsgPopupCoin": "lbl_804EC3AC",
-    "__vt__8MsgPopup": "lbl_804EC3E0",
-    "__dt__11TextManagerFv": "dtor_800869D0",
-    "Tick__8MsgPopupFv": "fn_80203224",
-    "__dt__10FlowFaderIFv": "fn_801F26C8",
-    "__dt__10FlowFaderFFv": "TweenInterp_Dtor"
-  },
-  "src/game/anon_80202BCC_nm2.cpp": {
     "__ct__16DoublyLinkedListFv": "DoublyLinkedList_Init",
     "__dt__7ResCtrlFv": "dtor_80082960",
     "__dt__8FlowTaskFv": "dtor_802043EC",

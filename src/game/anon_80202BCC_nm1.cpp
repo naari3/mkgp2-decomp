@@ -1144,3 +1144,31 @@ extern "C" const char *fn_80202D70(int msg, int line) {
     }
     return msgTable_803C2390[msg][checkedLine];
 }
+
+extern "C" int fn_80202E20(int msg) {
+    if (msg <= -1 || msg >= 14) {
+        return 0x734;
+    }
+    return lbl_803C210C[msg];
+}
+
+extern "C" int fn_80202E4C(int msg) {
+    if (msg <= -1 || msg >= 14) {
+        return 0x734;
+    }
+    return lbl_803C20D4[msg];
+}
+
+extern "C" const char *fn_80202E78(int msg, int line) {
+    int checkedLine = line;
+    if (line > 3 || line < 0) {
+        checkedLine = 0;
+    }
+    if (msg <= -1 || msg >= 30) {
+        return msgTable_803C24B4[checkedLine];
+    }
+    if (isJapanese() == 0) {
+        return ((const char *const (*)[4])msgTable_803C1A30)[msg][checkedLine];
+    }
+    return ((const char *const (*)[4])msgTable_803C1EF4)[msg][checkedLine];
+}

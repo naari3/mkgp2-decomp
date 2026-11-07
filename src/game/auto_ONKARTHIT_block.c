@@ -1226,7 +1226,7 @@ int ItemEffectDesc_OnApply_FreezeKartOrSlowdown(const ItemEffectDesc *desc, Kart
 int ItemEffectDesc_OnApply_MushroomBoost(const ItemEffectDesc *desc, KartItemOpsView *owner, void *effectState, void *mediaReq, void *itemObj, unsigned char kind, unsigned char isPrimary);
 int ItemEffect_TryStartByCategory_Wrap(ItemStateBlock *self, int itemId, void *arg);
 int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg);
-asm void ItemEffect_Explosion(ItemStateBlock *self, int idx, void *arg);
+void ItemEffect_Explosion(ItemStateBlock *self, int idx, const void *arg);
 asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg);
 asm void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg);
 int ItemTable_FindEntryByIdStride16(ItemCatEntry16 *tbl, int count, int itemId);
@@ -1236,7 +1236,7 @@ int ItemTable_FindEntryByIdStride24(ItemCatEntry24 *tbl, int count, int itemId);
 int ItemTable_FindEntryByIdStride20(ItemCatEntry20 *tbl, int count, int itemId);
 void CarObject_GetField304Vec3(Vec3 *out, CarObjAux304View *car);
 asm void CarObjectManager_RunKartKartCollisionSweep(void);
-asm void CarObjectManager_Dtor(void);
+CarObjectManager *CarObjectManager_Dtor(CarObjectManager *self, short flag);
 Bitset *dtor_80052200(Bitset *self, short flag);
 unsigned char Bitset_TestBit(Bitset *self, unsigned long idx);
 void Bitset_SetBit(Bitset *self, unsigned long idx, unsigned char val);
@@ -1249,8 +1249,15 @@ asm void fn_800524B4(void);
 asm void KartItem_PlayHitSE_DifferentVictim_AdjThunk(void);
 asm void KartItem_ApplyEffectToVictim_AdjThunk(void);
 void *dtor_800524CC(void *self, short flag);
-asm void StlList_RemoveByValueField(void);
-asm void StlList_EraseRange(void *ret, StlList *l, StlListNode **beg, StlListNode **end);
+void StlList_RemoveByValueField(StlList *l, StlListValRef *key);
+#pragma cplusplus on
+struct StlEraseIter {
+    StlListNode *node;
+    StlEraseIter(StlListNode *n) : node(n) {}
+    StlEraseIter(const StlEraseIter &o) : node(o.node) {}
+};
+extern "C" StlEraseIter StlList_EraseRange(StlList *l, StlEraseIter first, StlEraseIter last);
+#pragma cplusplus off
 #pragma cplusplus on
 /* list<T>::insert node/value/iterator types (0x80052684) */
 struct StlInsValue {
@@ -7415,91 +7422,42 @@ int ItemEffect_GenericHandler(ItemEffectTable *self, int itemId, void *itemObj, 
 }
 #pragma exceptions reset
 
-/* C probe history (2026-06-10): body is 71/72 instructions identical; the
- * sole residue is prologue scheduling of the first load (target: lwz r0,
- * 0x0(r4) sits between the LR-save stw and stmw; CW emits it after the five
- * param mr's). Probes: lane-stmt-first / laneIdx-local-first /
- * decl-with-initializer / const-qualified desc param / exceptions on-off
- * (codegen identical, so not the approach-B class) - none move the load.
- * Allocator-internal scheduler artifact (ProcessWarpAndDash tie-break
- * family). Kept as asm. */
-asm int ItemEffect_OnHit(ItemEffectTable *self, const ItemEffectDesc *desc, int itemId, void *itemObj, int arg4) { /* 0x800502F0 size:0x120 */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    stw r0, 0x44(r1)
-    lwz r0, 0x0(r4)
-    stmw r22, 0x18(r1)
-    mr r22, r3
-    mr r23, r4
-    mr r24, r5
-    mr r25, r6
-    mr r26, r7
-    lwz r29, 0x8(r3)
-    mulli r3, r0, 0x18
-    lwz r30, 0x4(r22)
-    lwz r31, 0x0(r22)
-    addi r27, r3, 0x28
-    add r27, r22, r27
-    lwz r28, 0x0(r27)
-    cmpwi r28, 0x0
-    blt ItemEffect_OnHit_L_800503A4
-    lwz r3, 0x34(r31)
-    mr r4, r28
-    bl TornadoEffect_ApplyItemVisual_Primary
-    lwz r3, 0x24(r31)
-    mr r4, r28
-    bl KartItemAudio_StopSEByItemId
-    lwz r3, 0x2c(r31)
-    mr r4, r28
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ApplyItemEventClear
-    mr r3, r30
-    bl EffectState_ReleaseAndClear
-    mr r3, r29
-    bl MediaBoard_SendAndCheck
-    lwz r3, 0x38(r31)
-    lfs f1, lbl_806D26EC(r2)
-    bl ShadowBillboard_SetField0xA4
-    li r3, -0x1
-    li r0, 0x0
-    stw r3, 0x0(r27)
-    lfs f0, lbl_806D26FC(r2)
-    stw r3, 0x4(r27)
-    stw r0, 0x8(r27)
-    stw r0, 0xc(r27)
-    stw r0, 0x10(r27)
-    stfs f0, 0x14(r27)
-    ItemEffect_OnHit_L_800503A4:
-    lfs f1, 0x10(r22)
-    mr r3, r27
-    lfs f0, lbl_806D26E4(r2)
-    mr r8, r23
-    mr r9, r24
-    mr r10, r25
-    fmuls f0, f1, f0
-    stfs f0, 0x10(r22)
-    stw r26, 0x8(r1)
-    lwz r4, 0x0(r22)
-    lbz r5, 0xc(r22)
-    lwz r6, 0x4(r22)
-    lwz r7, 0x8(r22)
-    lfs f1, 0x10(r22)
-    bl ItemEffect_Dispatch
-    lwz r0, 0x14(r22)
-    lwz r3, 0xc(r23)
-    cmpw r0, r3
-    bge ItemEffect_OnHit_L_800503F4
-    stw r3, 0x14(r22)
-    ItemEffect_OnHit_L_800503F4:
-    stw r24, 0x18(r22)
-    li r3, 0x0
-    lmw r22, 0x18(r1)
-    lwz r0, 0x44(r1)
-    mtlr r0
-    addi r1, r1, 0x40
-    blr
+/* GC/2.6 (TU setting) hoists the desc->laneIdx load into the prologue. */
+#pragma exceptions off
+int ItemEffect_OnHit(ItemEffectTable *self, const ItemEffectDesc *desc, int itemId, void *itemObj, int arg4) { /* 0x800502F0 size:0x120 */
+    KartItemOpsView *owner;
+    void *effectState;
+    void *mediaReq;
+    int id;
+    ItemEffectLane *lane;
+    mediaReq = self->mediaReq;
+    lane = &self->lanes[desc->laneIdx];
+    effectState = self->effectState;
+    owner = self->owner;
+    id = lane->itemId;
+    if (id >= 0) {
+        TornadoEffect_ApplyItemVisual_Primary(owner->effectObj, id);
+        KartItemAudio_StopSEByItemId(owner->soundCtrl, id);
+        ItemEffectBus_ApplyItemEventClear(owner->ownerDriver->itemBus, id);
+        EffectState_ReleaseAndClear(effectState);
+        MediaBoard_SendAndCheck(mediaReq);
+        ShadowBillboard_SetField0xA4(owner->billboard, lbl_806D26EC);
+        lane->itemId = -1;
+        lane->itemKind = -1;
+        lane->state8 = 0;
+        lane->stateC = 0;
+        lane->state10 = 0;
+        lane->blend = lbl_806D26FC;
+    }
+    self->intensity10 *= lbl_806D26E4;
+    ItemEffect_Dispatch(lane, self->owner, self->laneKindC, self->effectState, self->mediaReq, desc, itemId, itemObj, arg4, self->intensity10);
+    if (self->run14 < desc->priorityC) {
+        self->run14 = desc->priorityC;
+    }
+    self->run18 = itemId;
+    return 0;
 }
+#pragma exceptions reset
 
 asm int ItemEffect_Dispatch(ItemEffectLane *lane, KartItemOpsView *owner, int kind, void *effectState, void *mediaReq, const ItemEffectDesc *desc, int itemId, void *itemObj, int arg4, float intensity) { /* 0x80050410 size:0x53C */
     nofralloc
@@ -8424,155 +8382,82 @@ asm int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *ar
     addi r1, r1, 0x40
     blr
 }
-/* C probe history (2026-06-10, batch_promote_80051648_effectsrun): best form
- * reaches 88.99% over 11 builds; ENTIRE function byte-exact except one fp
- * volatile web tie-break: target assigns vx=f3 / constC(lbl_806D271C)=f4,
- * CW 1.3.2 emits constC=f3 / vx=f4 (plus the schedule cascade: d.x store
- * cannot sink below the sqrtf fcmpo because vx=f4 must die before mag=f4).
- * Solved pieces (keep for retry): (a) MSL inline sqrtf w/ volatile y +
- * lbl_806D2720/2728 double externs reproduces the frsqrte block byte-exact;
- * (b) statement order d-fill THEN a-fill THEN mag moves both const webs into
- * the fp pool (a-fill-first leaves constC as scratch f0 and shifts
- * zero/vy/vz down one); (c) named float trio vx/vy/vz + sum from d members
- * (NOT from the locals - that fuses fmadds) gives 3 fmuls + 2 fadds shape;
- * (d) tail 8-byte IdFlagPair struct copy reproduces lwz r3/lwz r0/stw/stw
- * with the add coalescing into the mulli web (named int pair probes always
- * canonicalize to reversed loads). Negative probes for the f3/f4 swap:
- * vel assign order x,y,z vs y,x,z (canonicalized), a.y = mag = C fold
- * (copy-propagated), cv named local (propagated), #pragma opt_propagation
- * off (no effect), exceptions on/off (identical codegen -> not approach-B
- * class). Same family as CarObject_ProcessWarpAndDash tie-break swap.
- * Salvage C in batch HANDOFF appendix. Kept as asm. */
-asm void ItemEffect_Explosion(ItemStateBlock *self, int idx, void *arg) { /* 0x80051648 size:0x1EC */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    lfs f6, 0xbc(r5)
-    stw r0, 0x44(r1)
-    lfs f3, 0xb8(r5)
-    fmuls f0, f6, f6
-    stw r31, 0x3c(r1)
-    mr r31, r3
-    fmuls f1, f3, f3
-    lfs f7, 0xc0(r5)
-    stw r30, 0x38(r1)
-    fmuls f2, f7, f7
-    lfs f4, lbl_806D271C(r2)
-    stw r29, 0x34(r1)
-    fadds f0, f1, f0
-    lfs f5, lbl_806D26EC(r2)
-    stfs f4, 0x28(r1)
-    mr r29, r4
-    fadds f4, f2, f0
-    stfs f5, 0x24(r1)
-    stfs f5, 0x2c(r1)
-    fcmpo cr0, f4, f5
-    stfs f3, 0x18(r1)
-    stfs f6, 0x1c(r1)
-    stfs f7, 0x20(r1)
-    ble ItemEffect_Explosion_L_800516FC
-    frsqrte f1, f4
-    lfd f3, lbl_806D2720(r2)
-    lfd f2, lbl_806D2728(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f4, f0
-    frsp f0, f0
-    stfs f0, 0x8(r1)
-    lfs f4, 0x8(r1)
-    ItemEffect_Explosion_L_800516FC:
-    lfs f0, lbl_806D26EC(r2)
-    fcmpo cr0, f4, f0
-    cror eq, lt, eq
-    bne ItemEffect_Explosion_L_8005171C
-    stfs f0, 0x20(r1)
-    stfs f0, 0x1c(r1)
-    stfs f0, 0x18(r1)
-    b ItemEffect_Explosion_L_80051748
-    ItemEffect_Explosion_L_8005171C:
-    lfs f0, lbl_806D26FC(r2)
-    lfs f2, 0x18(r1)
-    fdivs f3, f0, f4
-    lfs f1, 0x1c(r1)
-    lfs f0, 0x20(r1)
-    fmuls f2, f2, f3
-    fmuls f1, f1, f3
-    fmuls f0, f0, f3
-    stfs f2, 0x18(r1)
-    stfs f1, 0x1c(r1)
-    stfs f0, 0x20(r1)
-    ItemEffect_Explosion_L_80051748:
-    lwz r6, 0x0(r31)
-    addi r4, r1, 0x24
-    lwz r3, 0x4(r31)
-    addi r5, r1, 0x18
-    lwz r6, 0x28(r6)
-    addi r6, r6, 0x58
-    bl ItemStateSlotC_TryArm
-    lwz r3, 0x0(r31)
-    lbz r0, 0x20(r3)
-    cmplwi r0, 0x0
-    beq ItemEffect_Explosion_L_80051788
-    bl StrPcb_GetInstance
-    lfs f1, lbl_806D26E4(r2)
-    li r4, 0xc
-    li r5, 0x2
-    bl StrPcb_SetTimer3034_38
-    ItemEffect_Explosion_L_80051788:
-    lwz r3, 0x0(r31)
-    li r4, 0x3
-    lfs f0, lbl_806D26EC(r2)
-    lwz r3, 0x28(r3)
-    stfs f0, 0x17c(r3)
-    stfs f0, 0x180(r3)
-    stfs f0, 0x184(r3)
-    stfs f0, 0x194(r3)
-    stfs f0, 0x198(r3)
-    stfs f0, 0x19c(r3)
-    stfs f0, 0x1ac(r3)
-    stfs f0, 0x1b0(r3)
-    stfs f0, 0x1b4(r3)
-    lwz r3, 0x0(r31)
-    lwz r30, 0x38(r3)
-    mr r3, r30
-    bl ShadowBillboard_SetField0x6CAndComputeAxis
-    lwz r5, 0x0(r31)
-    mr r3, r30
-    addi r4, r1, 0xc
-    lwz r5, 0x28(r5)
-    lfs f2, 0x90(r5)
-    lfs f1, 0x8c(r5)
-    lfs f0, 0x88(r5)
-    stfs f0, 0xc(r1)
-    stfs f1, 0x10(r1)
-    stfs f2, 0x14(r1)
-    bl ShadowBillboard_SetVec3At0x70
-    mulli r4, r29, 0xc
-    lis r3, lbl_802ED8C4@ha
-    addi r0, r3, lbl_802ED8C4@l
-    add r4, r0, r4
-    lwz r3, 0x4(r4)
-    lwz r0, 0x8(r4)
-    stw r3, 0xc(r31)
-    stw r0, 0x10(r31)
-    lwz r31, 0x3c(r1)
-    lwz r30, 0x38(r1)
-    lwz r29, 0x34(r1)
-    lwz r0, 0x44(r1)
-    mtlr r0
-    addi r1, r1, 0x40
-    blr
+
+/* MSL-style inline sqrtf (frsqrte + 3 NR steps, volatile store-reload);
+ * consts referenced via lbl externs so no local rodata is emitted. */
+static inline float ItemEffect_sqrtf(float x) {
+    volatile float y;
+    if (x > lbl_806D26EC) {
+        double guess = __frsqrte(x);
+        guess = lbl_806D2720 * guess * (lbl_806D2728 - x * (guess * guess));
+        guess = lbl_806D2720 * guess * (lbl_806D2728 - x * (guess * guess));
+        guess = lbl_806D2720 * guess * (lbl_806D2728 - x * (guess * guess));
+        y = (float)(x * guess);
+        return y;
+    }
+    return x;
 }
+
+#pragma exceptions off
+/* const arg: GC/2.6 then hoists the velocity loads into the prologue. */
+void ItemEffect_Explosion(ItemStateBlock *self, int idx, const void *arg) { /* 0x80051648 size:0x1EC */
+    const ItemObjectPosView *obj = (const ItemObjectPosView *)arg;
+    Vec3 a; /* sp+0x24 */
+    Vec3 d; /* sp+0x18 */
+    Vec3 p; /* sp+0xc */
+    void *bb;
+    float vx, mag, vy, vz;
+
+    a.y = lbl_806D271C;
+    a.x = lbl_806D26EC;
+    a.z = lbl_806D26EC;
+    vx = obj->velX;
+    vy = obj->velY;
+    vz = obj->velZ;
+    d.x = vx;
+    d.y = vy;
+    d.z = vz;
+    mag = ItemEffect_sqrtf(d.z * d.z + (d.x * d.x + d.y * d.y));
+    if (mag <= lbl_806D26EC) {
+        d.x = d.y = d.z = lbl_806D26EC;
+    } else {
+        float inv = lbl_806D26FC / mag;
+        d.x = d.x * inv;
+        d.y = d.y * inv;
+        d.z = d.z * inv;
+    }
+    ItemStateSlotC_TryArm(self->guard, &a, &d, self->owner->movement->transform);
+    if (self->owner->strPcbGate20 != 0) {
+        StrPcb_SetTimer3034_38(StrPcb_GetInstance(), 0xc, 2, lbl_806D26E4);
+    }
+    {
+        KartMovementSpeedView *m = self->owner->movement;
+        m->velX = lbl_806D26EC;
+        m->velY = lbl_806D26EC;
+        m->velZ = lbl_806D26EC;
+        m->impact194 = lbl_806D26EC;
+        m->impact198 = lbl_806D26EC;
+        m->impact19c = lbl_806D26EC;
+        m->impact1ac = lbl_806D26EC;
+        m->impact1b0 = lbl_806D26EC;
+        m->impact1b4 = lbl_806D26EC;
+    }
+    bb = self->owner->billboard;
+    ShadowBillboard_SetField0x6CAndComputeAxis(bb, 3);
+    {
+        KartMovementSpeedView *m2 = self->owner->movement;
+        float fx, fy, fz;
+        fz = m2->transform[14];
+        fy = m2->transform[13];
+        fx = m2->transform[12];
+        p.x = fx;
+        p.y = fy;
+        p.z = fz;
+    }
+    ShadowBillboard_SetVec3At0x70(bb, &p);
+    *(IdFlagPair *)&self->activeId = *(const IdFlagPair *)&lbl_802ED8C4[idx].valA;
+}
+#pragma exceptions reset
 
 /* Precan park (2026-06-10, batch_promote_80051648_effectsrun, 0 probes):
  * ItemEffect_Trap carries TWO documented hard-block classes at once.
@@ -9212,57 +9097,43 @@ asm void CarObjectManager_RunKartKartCollisionSweep(void) { /* 0x80051DEC size:0
     blr
 }
 
-/* parked at 99.76% (4 probes): single scratch-reg tie-break, end-value web target r7 vs CW r0.
- * Triple addic. guard chain + EraseRange shape fully reproduced by nested static inline
- * StlList dtor->clear->erase helpers each re-guarding `if (l)`; see HANDOFF appendix C. */
-asm void CarObjectManager_Dtor(void) { /* 0x80052158 size:0xA8 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r4
-    stw r30, 0x18(r1)
-    mr. r30, r3
-    beq CarObjectManager_Dtor_L_800521E4
-    lis r3, lbl_803F76A8@ha
-    addic. r0, r30, 0x4
-    addi r0, r3, lbl_803F76A8@l
-    stw r0, 0x0(r30)
-    beq CarObjectManager_Dtor_L_800521C0
-    addic. r0, r30, 0x4
-    beq CarObjectManager_Dtor_L_800521C0
-    addic. r0, r30, 0x4
-    beq CarObjectManager_Dtor_L_800521C0
-    addi r7, r30, 0x8
-    addi r3, r1, 0x8
-    stw r7, 0x10(r1)
-    addi r4, r30, 0x4
-    addi r5, r1, 0xc
-    addi r6, r1, 0x10
-    lwz r0, 0xc(r30)
-    stw r0, 0xc(r1)
-    bl StlList_EraseRange
-    CarObjectManager_Dtor_L_800521C0:
-    cmplwi r30, 0x0
-    beq CarObjectManager_Dtor_L_800521D4
-    lis r3, lbl_803F7690@ha
-    addi r0, r3, lbl_803F7690@l
-    stw r0, 0x0(r30)
-    CarObjectManager_Dtor_L_800521D4:
-    extsh. r0, r31
-    ble CarObjectManager_Dtor_L_800521E4
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    CarObjectManager_Dtor_L_800521E4:
-    lwz r0, 0x24(r1)
-    mr r3, r30
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma cplusplus on
+/* inlined std-list dtor chain: each inline level re-guards its `this` */
+static inline void StlList_EraseAllInner(StlList *l) {
+    if (l) {
+        StlListNode *e = (StlListNode *)&l->head;
+        StlList_EraseRange(l, StlEraseIter(e->next), StlEraseIter(e));
+    }
 }
+
+static inline void StlList_ClearInline(StlList *l) {
+    if (l) {
+        StlList_EraseAllInner(l);
+    }
+}
+
+static inline void StlList_DtorInline(StlList *l) {
+    if (l) {
+        StlList_ClearInline(l);
+    }
+}
+
+#pragma exceptions off
+extern "C" CarObjectManager *CarObjectManager_Dtor(CarObjectManager *self, short flag) { /* 0x80052158 */
+    if (self) {
+        self->vtable = lbl_803F76A8;
+        StlList_DtorInline(&self->list);
+        if (self) {
+            self->vtable = lbl_803F7690;
+        }
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
+}
+#pragma exceptions reset
+#pragma cplusplus off
 
 #pragma exceptions off
 /* Bitset deleting dtor: free word buffer, then free self when flag > 0 */
@@ -9467,6 +9338,53 @@ asm void KartItem_ApplyEffectToVictim_AdjThunk(void) { /* 0x800524C4 size:0x8 */
     b CarObject_OnItemHit
 }
 
+/* std::list<T> written as C++ with a by-value iterator class: erase(first,last)
+ * inlined into remove(); begin is end()->next of the head/tail sentinel.
+ * Defined ahead of dtor_800524CC on purpose: the erase() return temporary makes
+ * CW emit this function one slot late, so this source position yields the
+ * target .text order (dtor_800524CC, remove, StlList_EraseRange); here it also
+ * gets no auto extab, so the manual entry above stays. */
+#pragma cplusplus on
+#pragma exceptions off
+static inline StlEraseIter StlList_EraseInl(StlList *l, StlEraseIter first, StlEraseIter last) {
+    if (first.node == last.node) {
+        return last;
+    }
+    StlListNode *lastNode = last.node->prev;
+    first.node->prev->next = lastNode->next;
+    lastNode->next->prev = first.node->prev;
+    while (first.node != last.node) {
+        StlListNode *n = first.node;
+        first.node = n->next;
+        MemoryManager_TimedFree(n);
+        l->count -= 1;
+    }
+    return last;
+}
+/* std::list::remove(value): erase every run of nodes whose obj equals key->val */
+extern "C" void StlList_RemoveByValueField(StlList *l, StlListValRef *key) { /* 0x80052508 size:0xCC */
+    StlEraseIter last((StlListNode *)&l->head);
+    StlEraseIter first(last.node->next);
+    while (first.node != last.node) {
+        if (first.node->obj == key->val) {
+            StlEraseIter next(first);
+            next.node = next.node->next;
+            while (next.node != last.node) {
+                if (next.node->obj != key->val) {
+                    break;
+                }
+                next.node = next.node->next;
+            }
+            first = StlList_EraseInl(l, first, next);
+            if (first.node == last.node) {
+                break;
+            }
+        }
+        first.node = first.node->next;
+    }
+}
+#pragma exceptions reset
+#pragma cplusplus off
 #pragma exceptions off
 void *dtor_800524CC(void *self, short flag) { /* 0x800524CC size:0x3C */
     if (self) {
@@ -9478,137 +9396,29 @@ void *dtor_800524CC(void *self, short flag) { /* 0x800524CC size:0x3C */
 }
 #pragma exceptions reset
 
-/* parked at 94.51% (4 probes): (1) class-1 branch-over-branch at the erase-range
- * guard (target `cmplw r28,r27; bne unlink; b merge` - CW folds every C form to
- * `beq merge`, KartItem_OnKartHit family; a res-merge local materializes as a
- * real r0 web instead of coalescing), and (2) callee-saved group partition:
- * target ranks params on top (key=r31, l=r30) above locals (end=r29, cur=r28,
- * run=r27); CW puts locals on top in every probed decl shape (flat,
- * block-scoped, param-to-local copies). Body otherwise instruction-identical.
- * Paste-ready C in HANDOFF appendix A (uses StlListValRef view). */
-asm void StlList_RemoveByValueField(void) { /* 0x80052508 size:0xCC */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stmw r27, 0xc(r1)
-    mr r30, r3
-    mr r31, r4
-    addi r29, r30, 0x4
-    lwz r28, 0x8(r3)
-    b StlList_RemoveByValueField_L_800525B8
-    StlList_RemoveByValueField_L_8005252C:
-    lwz r0, 0x8(r28)
-    lwz r3, 0x4(r31)
-    cmplw r0, r3
-    bne StlList_RemoveByValueField_L_800525B4
-    lwz r27, 0x4(r28)
-    b StlList_RemoveByValueField_L_80052554
-    StlList_RemoveByValueField_L_80052544:
-    lwz r0, 0x8(r27)
-    cmplw r0, r3
-    bne StlList_RemoveByValueField_L_8005255C
-    lwz r27, 0x4(r27)
-    StlList_RemoveByValueField_L_80052554:
-    cmplw r27, r29
-    bne StlList_RemoveByValueField_L_80052544
-    StlList_RemoveByValueField_L_8005255C:
-    cmplw r28, r27
-    bne StlList_RemoveByValueField_L_80052568
-    b StlList_RemoveByValueField_L_800525A8
-    StlList_RemoveByValueField_L_80052568:
-    lwz r4, 0x0(r27)
-    lwz r3, 0x0(r28)
-    lwz r0, 0x4(r4)
-    stw r0, 0x4(r3)
-    lwz r0, 0x0(r28)
-    lwz r3, 0x4(r4)
-    stw r0, 0x0(r3)
-    b StlList_RemoveByValueField_L_800525A0
-    StlList_RemoveByValueField_L_80052588:
-    mr r3, r28
-    lwz r28, 0x4(r28)
-    bl MemoryManager_TimedFree
-    lwz r3, 0x0(r30)
-    subi r0, r3, 0x1
-    stw r0, 0x0(r30)
-    StlList_RemoveByValueField_L_800525A0:
-    cmplw r28, r27
-    bne StlList_RemoveByValueField_L_80052588
-    StlList_RemoveByValueField_L_800525A8:
-    cmplw r27, r29
-    mr r28, r27
-    beq StlList_RemoveByValueField_L_800525C0
-    StlList_RemoveByValueField_L_800525B4:
-    lwz r28, 0x4(r28)
-    StlList_RemoveByValueField_L_800525B8:
-    cmplw r28, r29
-    bne StlList_RemoveByValueField_L_8005252C
-    StlList_RemoveByValueField_L_800525C0:
-    lmw r27, 0xc(r1)
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
-}
 
-/* parked at 95.23% (2 probes): prologue load interleave - target slots
- * `lwz r5,0x0(r5)` (first = *beg) between the r30 and r29 save pairs; CW 1.3.2
- * never schedules a load above the remaining callee-save stores (smallrun
- * prologue-load-hoist family). exceptions on/off identical -> not approach-B
- * class. All 36 body instructions + registers match. Paste-ready C in HANDOFF
- * appendix B. */
-asm void StlList_EraseRange(void *ret, StlList *l, StlListNode **beg, StlListNode **end) { /* 0x800525D4 size:0xB0 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r6
-    stw r30, 0x18(r1)
-    mr r30, r5
-    lwz r5, 0x0(r5)
-    stw r29, 0x14(r1)
-    mr r29, r4
-    stw r28, 0x10(r1)
-    mr r28, r3
-    lwz r3, 0x0(r6)
-    cmplw r5, r3
-    bne StlList_EraseRange_L_80052618
-    stw r3, 0x0(r28)
-    b StlList_EraseRange_L_80052664
-    StlList_EraseRange_L_80052618:
-    lwz r4, 0x0(r3)
-    lwz r3, 0x0(r5)
-    lwz r0, 0x4(r4)
-    stw r0, 0x4(r3)
-    lwz r0, 0x0(r5)
-    lwz r3, 0x4(r4)
-    stw r0, 0x0(r3)
-    b StlList_EraseRange_L_80052650
-    StlList_EraseRange_L_80052638:
-    lwz r0, 0x4(r3)
-    stw r0, 0x0(r30)
-    bl MemoryManager_TimedFree
-    lwz r3, 0x0(r29)
-    subi r0, r3, 0x1
-    stw r0, 0x0(r29)
-    StlList_EraseRange_L_80052650:
-    lwz r3, 0x0(r30)
-    lwz r0, 0x0(r31)
-    cmplw r3, r0
-    bne StlList_EraseRange_L_80052638
-    stw r0, 0x0(r28)
-    StlList_EraseRange_L_80052664:
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma cplusplus on
+#pragma exceptions off
+/* std::list::erase(first, last): unlink the whole range, then free node by node.
+ * The iterators are by-value class params (hidden pointers), which lets the
+ * first->node load schedule into the prologue as in the target. */
+extern "C" StlEraseIter StlList_EraseRange(StlList *l, StlEraseIter first, StlEraseIter last) { /* 0x800525D4 size:0xB0 */
+    if (first.node == last.node) {
+        return last;
+    }
+    StlListNode *lastNode = last.node->prev;
+    first.node->prev->next = lastNode->next;
+    lastNode->next->prev = first.node->prev;
+    while (first.node != last.node) {
+        StlListNode *n = first.node;
+        first.node = n->next;
+        MemoryManager_TimedFree(n);
+        l->count -= 1;
+    }
+    return last;
 }
+#pragma exceptions reset
+#pragma cplusplus off
 
 /* skipped (0 probes): -Cpp_exceptions on EH scaffolding class - FP prologue
  * `mr r31,r1`, back-chain epilogue, EH state store `stw r1,0x24(r31)` and dead
