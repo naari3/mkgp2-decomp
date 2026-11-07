@@ -8688,6 +8688,17 @@ game/sprite/fn_801AECF4.c:
 game/fn_801AF850.c:
 	.text       start:0x801AF850 end:0x801B03F0
 
+game/VoiceIntro_PushForRaceMode.c:
+	extab       start:0x80012AF0 end:0x80012AF8
+	extabindex  start:0x80027710 end:0x8002771C
+	.text       start:0x801B03F0 end:0x801B0AF4
+	.data       start:0x8049A094 end:0x8049A134
+
+game/VoiceIntro_PushRaceStart.c:
+	extab       start:0x80012AF8 end:0x80012B00
+	extabindex  start:0x8002771C end:0x80027728
+	.text       start:0x801B0AF4 end:0x801B0CE4
+
 game/fn_801B0CE4.c:
 	.text       start:0x801B0CE4 end:0x801B0D80
 
