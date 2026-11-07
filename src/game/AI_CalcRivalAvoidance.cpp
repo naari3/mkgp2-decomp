@@ -1,10 +1,11 @@
-/* Native reconstruction. Literal candidate defaults preserve constant loads;
- * the first EH interval and register allocation remain NonMatching. */
+/* Native reconstruction. Read-only interval constants preserve load scheduling;
+ * the candidate-position lifetime and FP allocation remain NonMatching. */
 #include "game/RivalAvoidanceUnlockPrivate.h"
 extern "C" {
 extern void *g_pathSystem;
 extern AIPairRecord lbl_806793D8[8];
-extern float lbl_806DA4E0,lbl_806DA4E4,lbl_806DA4E8,lbl_806DA4EC,lbl_806DA4F0;
+extern const float lbl_806DA4E0,lbl_806DA4E8,lbl_806DA4EC,lbl_806DA4F0;
+extern float lbl_806DA4E4;
 extern float lbl_806DA4F4,lbl_806DA4F8,lbl_806DA448;
 extern float lbl_806D1934,lbl_806D1938,lbl_806D194C,lbl_806D1954;
 extern signed char lbl_806D1950,lbl_806D1958;

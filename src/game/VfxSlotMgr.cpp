@@ -4,6 +4,7 @@ struct Vec {
     Vec() {}
     Vec(const Vec& other) { *(int*)&x=*(const int*)&other.x; *(int*)&y=*(const int*)&other.y; *(int*)&z=*(const int*)&other.z; }
 };
+struct EulerAngles { float x,y,z; };
 struct Matrix { float m[16]; };
 struct Camera { Matrix view,inverse; Vec position,target; };
 struct Slot {
@@ -19,7 +20,7 @@ void VfxSlot_Release(void*);
 void fn_8022B1C8();
 void Vec3_Subtract_DestFirst(Vec*,const Vec*,const Vec*);
 void Vec3_ToYawPitch(const Vec*,float*,float*);
-void Mtx44_FromEulerXYZTrans(Matrix*,Vec,Vec);
+void Mtx44_FromEulerXYZTrans(Matrix*,Vec,EulerAngles);
 void Mtx44_Inverse_GaussJordan(Matrix*,const Matrix*);
 void Vec3_Copy(Vec*,const Vec*);
 extern Slot lbl_805DF468[512];
@@ -40,7 +41,7 @@ private:
     volatile int m_slot;
 };
 static inline void BuildCamera(Vec origin,const Vec& target) {
-    Vec rotation;
+    EulerAngles rotation;
     Vec direction;
     Vec3_Subtract_DestFirst(&direction,&target,&origin);
     Vec3_ToYawPitch(&direction,&rotation.x,&rotation.y);

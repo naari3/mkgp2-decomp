@@ -282,7 +282,7 @@ float fn_801DF310(SteeringMgr *self) {
     return self->scale;
 }
 
-int fn_801DF318(SteeringMgr *self) {
+int fn_801DF318(const SteeringMgr *self) {
     SteerAction *a = self->cur;
     if (a) {
         return a->IsDone();
@@ -290,7 +290,7 @@ int fn_801DF318(SteeringMgr *self) {
     return 0;
 }
 
-int fn_801DF358(SteeringMgr *self) {
+int fn_801DF358(const SteeringMgr *self) {
     if (self->cur) {
         return self->cur->IsBlocking();
     }
