@@ -74,6 +74,34 @@ Already known before this pass:
   0x801F7604..0x801F89F0 (claims #2434, #2320, #2376, #2395).
 * fn_801ECA14 uses the pool `lbl_803BD920`.
 
+## Plan: RaceHud..Scene .rodata pool (0x80362858..0x803678D8)
+
+Unsplit pool in `auto_06_80362858_rodata.s`, referenced through the bases `lbl_80362D90`
+and `lbl_80363D30` from RaceHud_80147470.cpp, CSPartsHolders.c, SceneFactory_8014D540.cpp and
+Scene_8014E0C4.cpp (`.text 0x80147470..0x80157940`). Blocked functions:
+fn_8014ADB4 (RankBoard draw, tables at +0x4B0/+0x720/+0xC00), fn_8015061C case 8 and
+the table reads in fn_801540E0 (docs/gave_up.md). The target forms
+`addi rB, base, OFF; lwzx/add rX, rB, idx`; any `pool+OFF` we write is reassociated to
+`add; lwz OFF(r)`.
+
+Finding (2026-11-07, asm→C (A) thread): **only GC/1.2.5n pools separate `static const`
+arrays** into one `...rodata.0` object and addresses them as `base + off`. GC/1.3, 1.3.2,
+2.0 and 2.6 emit one `lis/addi` per object (tested with `-sdata 0`, `pool_data`,
+`-inline deferred`, `defer_codegen`). Test: two statics `sA[100]`, `sB[48]`;
+1.2.5n gives `addi r7, ...rodata.0@l; add r6, r7, idx; lwz 0x190(r6)`.
+
+Plan:
+1. Check that the current matched functions of these TUs still match under GC/1.2.5n
+   (they are on GC/2.6 now, so this is the big risk). If not, the pool owner may be
+   only one TU, and the others keep `extern` references to it.
+2. Merge the referencing TUs into one TU that owns `.rodata 0x80362778..0x803678D8`
+   (RaceHud's own 0x80362778..0x80362858 included) and define every pool object as a
+   file `static const`, in address order.
+3. Then convert fn_8014ADB4, fn_8015061C and fn_801540E0 against the pooled tables.
+
+Status: not started. The TUs are not claimed by onmokoworks (checked 2026-11-07), but the
+1.2.5n switch touches ~9 TUs, so do it as one dedicated job.
+
 ## Not pool, naming only
 
 Some near-100% functions differ only in symbol names (`jumptable_X` vs `@N`, `lbl_` vs
