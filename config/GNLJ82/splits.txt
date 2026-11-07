@@ -9618,6 +9618,7 @@ game/DisplayContext_Flush.c:
 	extab       start:0x800156CC end:0x800156D4
 	extabindex  start:0x800282A4 end:0x800282B0
 	.text       start:0x801DB278 end:0x801DB548
+	.rodata     start:0x8039FD18 end:0x8039FD8C
 
 game/DrawText.c:
 	extab       start:0x800156D4 end:0x800156DC

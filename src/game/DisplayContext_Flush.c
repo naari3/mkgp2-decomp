@@ -1,11 +1,20 @@
-#include <game/DebugTextPrivate.h>
+#include <game/DisplayContextFlushPrivate.h>
+
+static const unsigned short sDebugColors[] = {
+    0x000F, 0x00FF, 0x0F0F, 0x0FFF, 0xF00F, 0xF0FF, 0xFF0F, 0xFFFF, 0x888F
+};
+static const DebugVtxDesc sDebugVtxDesc[] = {
+    {9, 1}, {11, 2}, {13, 1}, {255, 1}
+};
+static const DebugVtxFmt sDebugVtxFmt[] = {
+    {9, 0, 3, 0}, {11, 1, 3, 0}, {13, 1, 3, 0}, {255, 1, 3, 0}
+};
 
 void DisplayContext_Flush(DebugDisplayContext *self)
 {
     Mtx texture;
     Mtx position;
     Mtx44 projection;
-    const unsigned char *palette = kDbgColorPalette;
     DebugFontHeader *font;
     int count;
     int i;
@@ -40,9 +49,9 @@ void DisplayContext_Flush(DebugDisplayContext *self)
         GXSetTevOrder(0, 0, 7, 4);
         GXSetBlendMode(1, 4, 5, 0);
         GXClearVtxDesc();
-        GXSetVtxDescv((const void *)(palette + 0x14));
-        GXSetVtxAttrFmtv(0, (const void *)(palette + 0x34));
-        GXSetArray(11, (void *)palette, 2);
+        GXSetVtxDescv(sDebugVtxDesc);
+        GXSetVtxAttrFmtv(0, sDebugVtxFmt);
+        GXSetArray(11, (void *)sDebugColors, 2);
         count = self->count;
         for (i = 0; i < count; i++) {
             TextRenderer_DrawEntry(self, &self->entries[i]);
