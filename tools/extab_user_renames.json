@@ -12747,5 +12747,8 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "extab_clCab_Update": "@etb_80005EA8",
     "extabindex_clCab_Update": "@eti_8001FB38"
+  },
+  "src/game/RoundResult_nm1.cpp": {
+    "__dl__11RoundResultFPv": "dtor_8024F40C"
   }
 }

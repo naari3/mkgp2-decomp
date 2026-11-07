@@ -23,8 +23,6 @@ unsigned char fn_801D5C88(PlayerData *data, int cc);
 unsigned char RoundCupIsCompleted(PlayerData *data, int cc, int cup, int mode);
 }
 
-inline void *operator new(unsigned long, void *p) { return p; }
-
 struct RoundResult {
     unsigned char flag0;
     unsigned char flag1;
@@ -56,14 +54,16 @@ struct RoundResult {
         DebugPrintf(lbl_803F0A58);
     }
     ~RoundResult() { DebugPrintf(lbl_803F0A40); }
-    static void operator delete(void *) { memset(lbl_80679E00, 0, 0x24); }
+    static void *operator new(unsigned long) { void *p = lbl_80679E00; return p; }
+    /* Clears the static buffer (dtor_8024F40C). */
+    static void operator delete(void *);
 };
 
 extern "C" RoundResult *lbl_806D1AC8;
 
 extern "C" RoundResult *fn_8024F588(void) {
     if (lbl_806D1AC8 == 0) {
-        lbl_806D1AC8 = new (lbl_80679E00) RoundResult;
+        lbl_806D1AC8 = new RoundResult;
     }
     return lbl_806D1AC8;
 }
