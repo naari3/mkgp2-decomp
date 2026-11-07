@@ -10001,7 +10001,7 @@
     "__vt__12TaskListImpl": "lbl_804ECB44",
     "__vt__8FadeLogo": "lbl_804ECB04",
     "__vt__12FadeTaskBase": "lbl_804ECB1C",
-    "Insert__11TaskEntriesF8TaskIterRCP9PopupTask": "DoublyLinkedList_PushBefore",
+    "Insert__11TaskEntriesFRC8TaskIterRCP9PopupTask": "DoublyLinkedList_PushBefore",
     "__dt__9PopupTaskFv": "dtor_801419C8",
     "__dt__9PopupRootFv": "fn_80141A24",
     "__dt__17VHolder<7FadeKey>Fv": "dtor_801FEB48",
