@@ -25,7 +25,8 @@ struct ResultInner;
 struct PopupInputState {
     char pad[4];
     unsigned char active;
-    char pad5[0x18 - 5];
+    char pad5[0x14 - 5];
+    int x14;
     int x18;
     int x1c;
 };
