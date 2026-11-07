@@ -93,7 +93,17 @@ void TexMgr_SetTexture(DisplayTexture*, void*, ...);
 void fn_801F93EC(DisplayTexture*, float, float);
 int isJapanese();
 }
+/* Declaration order below is load-bearing: it decides the register colouring of the three stat loops. */
 extern "C" void CharaSelect_SetupCharacterDisplay(CharaDisplay *self, int character) {
+    signed char *stat2;
+    const int *cursor;
+    signed char *stat3;
+    signed char *stat;
+    const int *cursor2;
+    int j;
+    const int *anims;
+    int i;
+    int k;
     if (character <= -1 || character >= 13) self->character = 0;
     else self->character = character;
     const float *scale = displayScale;
@@ -110,17 +120,17 @@ extern "C" void CharaSelect_SetupCharacterDisplay(CharaDisplay *self, int charac
     self->stats[0] = new DisplaySprite(0x16B, 1, lbl_806D9B60, lbl_806D9B64);
     self->stats[1] = new DisplaySprite(0x16B, 1, lbl_806D9B60, lbl_806D9B68);
     self->stats[2] = new DisplaySprite(0x16B, 1, lbl_806D9B60, lbl_806D9B6C);
-    const int *anims = statAnims;
-    const int *cursor = anims;
-    signed char *stat = g_charaStatTable[self->variants[self->character]][character];
-    int i = 0;
+    anims = statAnims;
+    cursor = anims;
+    stat = g_charaStatTable[self->variants[self->character]][character];
+    i = 0;
     while (i < 5 - stat[0]) { Sprite_SetAnimParam(self->stats[0], (short)*cursor, -1); ++cursor; ++i; }
-    const int *cursor2 = anims;
-    signed char *stat2 = stat + 1;
-    int j = 0;
+    cursor2 = anims;
+    stat2 = stat + 1;
+    j = 0;
     while (j < 5 - *stat2) { Sprite_SetAnimParam(self->stats[1], (short)*cursor2, -1); ++cursor2; ++j; }
-    int k = 0;
-    signed char *stat3 = stat + 2;
+    k = 0;
+    stat3 = stat + 2;
     while (k < 5 - *stat3) { Sprite_SetAnimParam(self->stats[2], (short)*anims, -1); ++anims; ++k; }
     TexMgr_SetTexture(self->texture, GetTextureByIdAndLang(textureIds[character] + 0x95, -1));
     fn_801F93EC(self->texture, FLOAT_ARROW_RIGHT_OFFSET, lbl_806D9B74);
