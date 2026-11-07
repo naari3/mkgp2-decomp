@@ -1,5 +1,21 @@
 #include "game/anon_8020314C_private.h"
 
+static inline void LayoutPopupTexts(MsgPopup *popup, float s) {
+    int i;
+    float ts = s;
+    if (popup->msgId == 4) {
+        ts = s * lbl_806DAAC0;
+    }
+    int dy = 0;
+    float ox = lbl_806DAAC4 * s;
+    float base = lbl_806DAAC8;
+    for (i = 0; i < 4; i++, dy += 30) {
+        float yy = s * (base + (float)dy);
+        fn_801F93EC(&popup->texts[i], popup->x + ox, popup->y + yy);
+        fn_801F93D0(&popup->texts[i], ts, ts);
+    }
+}
+
 void MsgPopup::Tick() {
     switch (state) {
     case 0:
@@ -65,21 +81,7 @@ void MsgPopup::Tick() {
         ctrls[2].Show(px, py, lbl_806DAAAC);
     }
     UpdateBadge();
-    {
-        int i;
-        float ts = s;
-        if (msgId == 4) {
-            ts = s * lbl_806DAAC0;
-        }
-        int dy = 0;
-        float base = lbl_806DAAC8;
-        float ox = lbl_806DAAC4 * s;
-        for (i = 0; i < 4; i++, dy += 30) {
-            float yy = s * (base + (float)dy);
-            fn_801F93EC(&texts[i], x + ox, y + yy);
-            fn_801F93D0(&texts[i], ts, ts);
-        }
-    }
+    LayoutPopupTexts(this, s);
     fade.p->Step();
     scaleX.p->Step();
     scaleY.p->Step();
