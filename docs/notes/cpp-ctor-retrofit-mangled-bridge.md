@@ -1219,3 +1219,8 @@ c18_u16: fn_801CDF10 improves98.68852->98.74317 with static inline void UpdateFa
 Source: Codex worker c18_u9_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u9: clItemBoxManager_nm1 retains NM improvements RemoveByKey94.5098->97.64706 using a raw-node inline erase helper (iterator-reference/value helpers spill); exact204B/branch shape leaves r27/r28 walker swap invariant under search-iterator earlier declaration. PushBefore77.42857->93.666664 by giving private NodeHolder<void*> a real RAII destructor; exact168B now stores owner/node on stack and clears released pointer. Remaining try-region SP-store placement and position/node r5/r6 swap. Removing explicit try gives72.5; declaration/evaluation-order probes invariant. Existing 100% functions unchanged; all11 owned EH payloads/relocations exact. Tail base dtor EH at80007CDC binds full reversed group, preventing B. No Matching flip/native gain; fallback DOL SHA1 exact.
+
+## c18_u20_20261107
+Source: Codex worker c18_u20_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 328 B.
+
+c18_u20: fn_8015BCC4 98.65854 -> 100% by moving SetupCamera inline body into the main function and using a real function-level early return when either viewer is null. Guard inside inline helper remains byte-invariant (324 B): it emits beq exit. Direct main-function guard emits target bne setup / b exit and 328 B. text328/extab40/index12 all100, existing EH bridges unchanged, Matching source-linked full DOL SHA-1 OK; ELF 8015BCC4/328 verified.

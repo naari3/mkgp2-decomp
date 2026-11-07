@@ -13,24 +13,6 @@ void HSD_CObjSetInterest(void *, const ViewerVec *);
 void HSD_CObjSetRoll(void *, float);
 float HSD_CObjGetFov(void *);
 }
-static inline void SetupCamera(float scale) {
-        if (lbl_806D1588 && lbl_806D158C) {
-        lbl_80677CD8.x = lbl_806D85EC;
-        lbl_80677CD8.y = scale;
-        lbl_80677CD8.z = lbl_806D85EC;
-        void *camera = lbl_806D1588->camera;
-        if (camera) {
-            ViewerVec interest;
-            interest.x = lbl_806D85EC;
-            interest.y = lbl_806D85EC;
-            interest.z = lbl_806D85EC;
-            HSD_CObjSetEyePosition(camera, &lbl_80677CD8);
-            HSD_CObjSetInterest(camera, &interest);
-            HSD_CObjSetRoll(camera, lbl_806D8648);
-            lbl_806D1590 = HSD_CObjGetFov(camera);
-        }
-    }
-}
 #pragma exceptions on
 extern "C" void fn_8015BCC4(unsigned int resId, float scale) {
     GXDrawDone();
@@ -45,7 +27,22 @@ extern "C" void fn_8015BCC4(unsigned int resId, float scale) {
     if (resId) {
         lbl_806D1588 = new ViewerScene3D(resId);
         lbl_806D158C = new ViewerNormal3D(resId, 0);
-        SetupCamera(scale);
+
+        if (!lbl_806D1588 || !lbl_806D158C) return;
+        lbl_80677CD8.x = lbl_806D85EC;
+        lbl_80677CD8.y = scale;
+        lbl_80677CD8.z = lbl_806D85EC;
+        void *camera = lbl_806D1588->camera;
+        if (camera) {
+            ViewerVec interest;
+            interest.x = lbl_806D85EC;
+            interest.y = lbl_806D85EC;
+            interest.z = lbl_806D85EC;
+            HSD_CObjSetEyePosition(camera, &lbl_80677CD8);
+            HSD_CObjSetInterest(camera, &interest);
+            HSD_CObjSetRoll(camera, lbl_806D8648);
+            lbl_806D1590 = HSD_CObjGetFov(camera);
+        }
     }
 }
 #pragma exceptions reset
