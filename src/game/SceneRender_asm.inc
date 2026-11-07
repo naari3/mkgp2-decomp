@@ -3,221 +3,112 @@
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void OSGetTick();
-extern void Profiler_RecordFrame();
-extern void HSD_CObjSetInterest();
-extern void HSD_CObjGetEyePosition();
-extern void HSD_CObjGetUpVector();
-extern void HSD_StartRender();
-extern void fn_802D47E8();
-extern void HSD_MtxGetTranslate();
-extern void HSD_ShadowInit();
-extern void HSD_ShadowStartRender();
-extern void HSD_ShadowEndRender();
-extern void fn_802DBB84();
-extern void HSD_ShadowSetViewingRect();
-extern void HSD_ViewingRectInit();
-extern void HSD_ViewingRectCheck();
-extern void HSD_ViewingRectAddSphere();
+#pragma cplusplus on
+extern "C" {
+unsigned int OSGetTick(void);
+void Profiler_RecordFrame(int slot, float value);
+typedef struct SRVec3 { float x, y, z; } SRVec3;
+typedef struct SRViewingRect {
+    SRVec3 origin, up_v, right_v, eye_v, eye_vn;
+    float distance;
+    float top, bottom, left, right;
+    int bits;
+} SRViewingRect;
+typedef struct SRSList { struct SRSList *next; void *data; } SRSList;
+typedef struct SRShadow { SRSList *objects; void *camera; } SRShadow;
+typedef struct SRLObj { char pad[8]; unsigned short flags; } SRLObj;
+typedef struct SRScene {
+    void *vtbl;
+    SRShadow *shadow;   /* 0x04 */
+    SRLObj *light;      /* 0x08 */
+    char pad0C[8];
+    SRVec3 interest;    /* 0x14 */
+} SRScene;
+void HSD_CObjSetInterest(void *cobj, SRVec3 *interest);
+void HSD_CObjGetEyePosition(void *cobj, SRVec3 *out);
+void HSD_CObjGetUpVector(void *cobj, SRVec3 *out);
+void HSD_StartRender(int pass);
+void fn_802D47E8(void);
+void HSD_MtxGetTranslate(void *mtx, SRVec3 *out);
+void HSD_ShadowInit(SRShadow *shadow);
+void HSD_ShadowStartRender(SRShadow *shadow);
+void HSD_ShadowEndRender(SRShadow *shadow);
+void fn_802DBB84(SRShadow *shadow, SRLObj *lobj, float f);
+void HSD_ShadowSetViewingRect(SRShadow *shadow, float top, float bottom, float left, float right);
+void HSD_ViewingRectInit(SRViewingRect *rect, SRVec3 *position, SRVec3 *interest, SRVec3 *up, int perspective);
+int HSD_ViewingRectCheck(SRViewingRect *rect);
+void HSD_ViewingRectAddSphere(SRViewingRect *rect, SRVec3 *position, float radius);
+extern const float lbl_806D24A8;
+extern const float lbl_806D24AC;
+extern const float lbl_806D24B0;
+extern const float lbl_806D24B4;
+extern const float lbl_806D24B8;
+extern const float lbl_806D24C4;
+}
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D24A8;
-extern unsigned int lbl_806D24AC;
-extern unsigned int lbl_806D24B0;
-extern unsigned int lbl_806D24B4;
-extern unsigned int lbl_806D24B8;
-extern unsigned int lbl_806D24C4;
-extern unsigned int lbl_806D24C8;
+class ScopedTimer {
+public:
+    inline ScopedTimer(int slot)
+    {
+        m_slot = slot;
+        m_startTick = OSGetTick();
+    }
 
-/* --- function index (1 fns, .text 0x8003A780..0x8003A9E8) ---
- * [  0] 0x8003A780 size:0x268   global SceneRender_DrawObjectWithLights
- */
+    inline ~ScopedTimer()
+    {
+        Profiler_RecordFrame(m_slot,
+            (float)(((OSGetTick() - m_startTick) * 8) /
+                ((*(unsigned int *)0x800000F8 / 4) / 125000)) / lbl_806D24C4);
+    }
 
-/* --- forward decls --- */
-asm void SceneRender_DrawObjectWithLights(void);
-
-/* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void __dt__11ScopedTimerFv();
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_SceneRender_DrawObjectWithLights = { 0x104A0000, 0x000000B4, 0x004F0010, 0x00000000, 0x82000008, (void *)&__dt__11ScopedTimerFv };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_SceneRender_DrawObjectWithLights = {
-    (void *)&SceneRender_DrawObjectWithLights, 0x00000268, (void *)&extab_SceneRender_DrawObjectWithLights
+private:
+    unsigned int m_startTick;
+    volatile int m_slot;
 };
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void SceneRender_DrawObjectWithLights(void) { /* 0x8003A780 size:0x268 */
-    nofralloc
-    stwu r1, -0xa0(r1)
-    mflr r0
-    stw r0, 0xa4(r1)
-    stfd f31, 0x90(r1)
-    psq_st f31, 0x98(r1), 0, 0
-    stw r31, 0x8c(r1)
-    stw r30, 0x88(r1)
-    li r0, 0x12
-    mr r30, r3
-    stw r0, 0xc(r1)
-    bl OSGetTick
-    lwz r4, 0x4(r30)
-    stw r3, 0x8(r1)
-    lwz r0, 0x0(r4)
-    cmplwi r0, 0x0
-    bne SceneRender_DrawObjectWithLights_L_8003A81C
-    bl OSGetTick
-    lis r5, 0x8000
-    lis r4, 0x431c
-    lwz r5, 0xf8(r5)
-    lis r0, 0x4330
-    subi r6, r4, 0x217d
-    lwz r7, 0x8(r1)
-    srwi r4, r5, 2
-    stw r0, 0x80(r1)
-    mulhwu r0, r6, r4
-    subf r3, r7, r3
-    lfd f2, lbl_806D24C8(r2)
-    slwi r4, r3, 3
-    lfs f0, lbl_806D24C4(r2)
-    lwz r3, 0xc(r1)
-    srwi r0, r0, 15
-    divwu r0, r4, r0
-    stw r0, 0x84(r1)
-    lfd f1, 0x80(r1)
-    fsubs f1, f1, f2
-    fdivs f1, f1, f0
-    bl Profiler_RecordFrame
-    b SceneRender_DrawObjectWithLights_L_8003A9C8
-    SceneRender_DrawObjectWithLights_L_8003A81C:
-    lwz r0, 0x8(r30)
-    cmplwi r0, 0x0
-    beq SceneRender_DrawObjectWithLights_L_8003A970
-    lwz r3, 0x4(r4)
-    addi r4, r30, 0x14
-    bl HSD_CObjSetInterest
-    lwz r3, 0x4(r30)
-    lwz r4, 0x8(r30)
-    lfs f1, lbl_806D24A8(r2)
-    bl fn_802DBB84
-    lwz r3, 0x4(r30)
-    addi r4, r1, 0x10
-    lwz r3, 0x4(r3)
-    bl HSD_CObjGetEyePosition
-    lwz r3, 0x4(r30)
-    addi r4, r1, 0x1c
-    lwz r3, 0x4(r3)
-    bl HSD_CObjGetUpVector
-    lwz r6, 0x8(r30)
-    addi r3, r1, 0x28
-    addi r4, r1, 0x10
-    addi r5, r30, 0x14
-    lhz r0, 0x8(r6)
-    addi r6, r1, 0x1c
-    clrlwi r8, r0, 30
-    subfic r7, r8, 0x1
-    subi r0, r8, 0x1
-    or r0, r7, r0
-    srwi r7, r0, 31
-    bl HSD_ViewingRectInit
-    lwz r3, 0x4(r30)
-    lfs f31, lbl_806D24AC(r2)
-    lwz r31, 0x0(r3)
-    b SceneRender_DrawObjectWithLights_L_8003A900
-    SceneRender_DrawObjectWithLights_L_8003A8A4:
-    lwz r3, 0x4(r31)
-    addi r4, r1, 0x10
-    addi r3, r3, 0x44
-    bl HSD_MtxGetTranslate
-    lfs f1, 0x14(r1)
-    lfs f0, 0x18(r30)
-    lfs f3, 0x10(r1)
-    fsubs f4, f1, f0
-    lfs f0, 0x14(r30)
-    lfs f2, 0x18(r1)
-    fsubs f3, f3, f0
-    lfs f1, 0x1c(r30)
-    fmuls f0, f4, f4
-    fsubs f1, f2, f1
-    fmadds f0, f3, f3, f0
-    fmadds f0, f1, f1, f0
-    fcmpo cr0, f0, f31
-    bge SceneRender_DrawObjectWithLights_L_8003A8FC
-    lfs f1, lbl_806D24B0(r2)
-    addi r3, r1, 0x28
-    addi r4, r1, 0x10
-    bl HSD_ViewingRectAddSphere
-    SceneRender_DrawObjectWithLights_L_8003A8FC:
-    lwz r31, 0x0(r31)
-    SceneRender_DrawObjectWithLights_L_8003A900:
-    cmplwi r31, 0x0
-    bne SceneRender_DrawObjectWithLights_L_8003A8A4
-    addi r3, r1, 0x28
-    bl HSD_ViewingRectCheck
-    cmpwi r3, 0x0
-    beq SceneRender_DrawObjectWithLights_L_8003A934
-    lwz r3, 0x4(r30)
-    lfs f1, 0x68(r1)
-    lfs f2, 0x6c(r1)
-    lfs f3, 0x70(r1)
-    lfs f4, 0x74(r1)
-    bl HSD_ShadowSetViewingRect
-    b SceneRender_DrawObjectWithLights_L_8003A94C
-    SceneRender_DrawObjectWithLights_L_8003A934:
-    lfs f2, lbl_806D24B4(r2)
-    lwz r3, 0x4(r30)
-    fmr f3, f2
-    lfs f1, lbl_806D24B0(r2)
-    lfs f4, lbl_806D24B8(r2)
-    bl HSD_ShadowSetViewingRect
-    SceneRender_DrawObjectWithLights_L_8003A94C:
-    li r3, 0x3
-    bl HSD_StartRender
-    lwz r3, 0x4(r30)
-    bl HSD_ShadowInit
-    lwz r3, 0x4(r30)
-    bl HSD_ShadowStartRender
-    lwz r3, 0x4(r30)
-    bl HSD_ShadowEndRender
-    bl fn_802D47E8
-    SceneRender_DrawObjectWithLights_L_8003A970:
-    bl OSGetTick
-    lis r5, 0x8000
-    lis r4, 0x431c
-    lwz r5, 0xf8(r5)
-    lis r0, 0x4330
-    subi r6, r4, 0x217d
-    lwz r7, 0x8(r1)
-    srwi r4, r5, 2
-    stw r0, 0x80(r1)
-    mulhwu r0, r6, r4
-    subf r3, r7, r3
-    lfd f2, lbl_806D24C8(r2)
-    slwi r4, r3, 3
-    lfs f0, lbl_806D24C4(r2)
-    lwz r3, 0xc(r1)
-    srwi r0, r0, 15
-    divwu r0, r4, r0
-    stw r0, 0x84(r1)
-    lfd f1, 0x80(r1)
-    fsubs f1, f1, f2
-    fdivs f1, f1, f0
-    bl Profiler_RecordFrame
-    SceneRender_DrawObjectWithLights_L_8003A9C8:
-    psq_l f31, 0x98(r1), 0, 0
-    lwz r0, 0xa4(r1)
-    lfd f31, 0x90(r1)
-    lwz r31, 0x8c(r1)
-    lwz r30, 0x88(r1)
-    mtlr r0
-    addi r1, r1, 0xa0
-    blr
+#pragma exceptions on
+extern "C" void SceneRender_DrawObjectWithLights(SRScene *self)
+{
+    ScopedTimer timer(0x12);
+    SRViewingRect rect;
+    SRVec3 up;
+    SRVec3 pos;
+    SRSList *node;
+
+    if (self->shadow->objects == 0) {
+        return;
+    }
+    if (self->light != 0) {
+        HSD_CObjSetInterest(self->shadow->camera, &self->interest);
+        fn_802DBB84(self->shadow, self->light, lbl_806D24A8);
+        HSD_CObjGetEyePosition(self->shadow->camera, &pos);
+        HSD_CObjGetUpVector(self->shadow->camera, &up);
+        HSD_ViewingRectInit(&rect, &pos, &self->interest, &up, (self->light->flags & 3) != 1);
+        for (node = self->shadow->objects; node != 0; node = node->next) {
+            float dx, dy, dz;
+            HSD_MtxGetTranslate((char *)node->data + 0x44, &pos);
+            dx = pos.x - self->interest.x;
+            dy = pos.y - self->interest.y;
+            dz = pos.z - self->interest.z;
+            if (dx * dx + dy * dy + dz * dz < lbl_806D24AC) {
+                HSD_ViewingRectAddSphere(&rect, &pos, lbl_806D24B0);
+            }
+        }
+        if (HSD_ViewingRectCheck(&rect)) {
+            HSD_ShadowSetViewingRect(self->shadow, rect.top, rect.bottom, rect.left, rect.right);
+        } else {
+            HSD_ShadowSetViewingRect(self->shadow, lbl_806D24B0, lbl_806D24B4, lbl_806D24B4, lbl_806D24B8);
+        }
+        HSD_StartRender(3);
+        HSD_ShadowInit(self->shadow);
+        HSD_ShadowStartRender(self->shadow);
+        HSD_ShadowEndRender(self->shadow);
+        fn_802D47E8();
+    }
 }
+#pragma exceptions reset
+#pragma cplusplus reset
+
 
 
 /* === extracted from auto_SceneRender_CmdA_8a9_text === */
@@ -227,47 +118,21 @@ asm void SceneRender_DrawObjectWithLights(void) { /* 0x8003A780 size:0x268 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void HSD_ShadowDeleteObject();
+typedef struct SRShadowOwner { void *x0; void *shadow; } SRShadowOwner;
+extern void HSD_ShadowDeleteObject(void *shadow, void *jobj);
 
 /* --- function index (1 fns, .text 0x8003A9E8..0x8003AA20) ---
  * [  0] 0x8003A9E8 size:0x38    global SceneRender_CmdA_8a9e8
  */
 
-/* --- forward decls --- */
-asm void SceneRender_CmdA_8a9e8(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_SceneRender_CmdA_8a9e8[8] = {
-    0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_SceneRender_CmdA_8a9e8 = {
-    (void *)&SceneRender_CmdA_8a9e8, 0x00000038, (void *)extab_SceneRender_CmdA_8a9e8
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void SceneRender_CmdA_8a9e8(void) { /* 0x8003A9E8 size:0x38 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    cmplwi r4, 0x0
-    stw r0, 0x14(r1)
-    beq SceneRender_CmdA_8a9e8_L_8003AA10
-    lwz r3, 0x4(r3)
-    cmplwi r3, 0x0
-    bne SceneRender_CmdA_8a9e8_L_8003AA0C
-    b SceneRender_CmdA_8a9e8_L_8003AA10
-    SceneRender_CmdA_8a9e8_L_8003AA0C:
-    bl HSD_ShadowDeleteObject
-    SceneRender_CmdA_8a9e8_L_8003AA10:
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions on
+void SceneRender_CmdA_8a9e8(SRShadowOwner *scene, void *jobj) {
+    if (jobj == 0 || scene->shadow == 0) {
+        return;
+    }
+    HSD_ShadowDeleteObject(scene->shadow, jobj);
 }
+#pragma exceptions reset
 
 
 /* === extracted from auto_SceneRender_CmdB_8aa_text === */
@@ -277,47 +142,20 @@ asm void SceneRender_CmdA_8a9e8(void) { /* 0x8003A9E8 size:0x38 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void HSD_ShadowAddObject();
+extern void HSD_ShadowAddObject(void *shadow, void *jobj);
 
 /* --- function index (1 fns, .text 0x8003AA20..0x8003AA58) ---
  * [  0] 0x8003AA20 size:0x38    global SceneRender_CmdB_8aa20
  */
 
-/* --- forward decls --- */
-asm void SceneRender_CmdB_8aa20(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_SceneRender_CmdB_8aa20[8] = {
-    0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_SceneRender_CmdB_8aa20 = {
-    (void *)&SceneRender_CmdB_8aa20, 0x00000038, (void *)extab_SceneRender_CmdB_8aa20
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void SceneRender_CmdB_8aa20(void) { /* 0x8003AA20 size:0x38 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    cmplwi r4, 0x0
-    stw r0, 0x14(r1)
-    beq SceneRender_CmdB_8aa20_L_8003AA48
-    lwz r3, 0x4(r3)
-    cmplwi r3, 0x0
-    bne SceneRender_CmdB_8aa20_L_8003AA44
-    b SceneRender_CmdB_8aa20_L_8003AA48
-    SceneRender_CmdB_8aa20_L_8003AA44:
-    bl HSD_ShadowAddObject
-    SceneRender_CmdB_8aa20_L_8003AA48:
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions on
+void SceneRender_CmdB_8aa20(SRShadowOwner *scene, void *jobj) {
+    if (jobj == 0 || scene->shadow == 0) {
+        return;
+    }
+    HSD_ShadowAddObject(scene->shadow, jobj);
 }
+#pragma exceptions reset
 
 
 /* === extracted from auto_SceneRender_Dtor_text === */
