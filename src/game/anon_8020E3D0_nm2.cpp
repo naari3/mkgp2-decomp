@@ -3,7 +3,7 @@
  * list that runs it.
  */
 
-#include "game/FadeLogo.h"
+#include "game/FadeLogoTaskListOwner.h"
 
 #pragma auto_inline off
 
@@ -115,16 +115,22 @@ FadeLogo::FadeLogo(int layer_, int id_) : FadeTaskBase(layer_, id_) {
     seq3.Reset(new FadeSeq(key3.p, false));
 }
 
+TaskListOwner::~TaskListOwner() throw() {
+    delete p;
+}
+
 TaskListImpl::~TaskListImpl() {
     KillAll();
 }
 
-void TaskListBase::KillAll() {
-    TaskNode *end = entries.End();
-    TaskNode *n;
-    for (n = entries.first; n != end; n = n->next) {
+static inline void MarkTasksFinished(TaskNode *n, TaskNode *end) {
+    for (; n != end; n = n->next) {
         n->task->field0C = 1;
     }
+}
+
+void TaskListBase::KillAll() {
+    MarkTasksFinished(entries.first, entries.End());
     while (entries.count > 0) {
         Update();
         Draw();
