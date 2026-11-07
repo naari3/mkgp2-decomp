@@ -1226,7 +1226,7 @@ int ItemEffectDesc_OnApply_FreezeKartOrSlowdown(const ItemEffectDesc *desc, Kart
 int ItemEffectDesc_OnApply_MushroomBoost(const ItemEffectDesc *desc, KartItemOpsView *owner, void *effectState, void *mediaReq, void *itemObj, unsigned char kind, unsigned char isPrimary);
 int ItemEffect_TryStartByCategory_Wrap(ItemStateBlock *self, int itemId, void *arg);
 int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg);
-asm void ItemEffect_Explosion(ItemStateBlock *self, int idx, void *arg);
+void ItemEffect_Explosion(ItemStateBlock *self, int idx, const void *arg);
 asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg);
 asm void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg);
 int ItemTable_FindEntryByIdStride16(ItemCatEntry16 *tbl, int count, int itemId);
@@ -8382,155 +8382,82 @@ asm int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *ar
     addi r1, r1, 0x40
     blr
 }
-/* C probe history (2026-06-10, batch_promote_80051648_effectsrun): best form
- * reaches 88.99% over 11 builds; ENTIRE function byte-exact except one fp
- * volatile web tie-break: target assigns vx=f3 / constC(lbl_806D271C)=f4,
- * CW 1.3.2 emits constC=f3 / vx=f4 (plus the schedule cascade: d.x store
- * cannot sink below the sqrtf fcmpo because vx=f4 must die before mag=f4).
- * Solved pieces (keep for retry): (a) MSL inline sqrtf w/ volatile y +
- * lbl_806D2720/2728 double externs reproduces the frsqrte block byte-exact;
- * (b) statement order d-fill THEN a-fill THEN mag moves both const webs into
- * the fp pool (a-fill-first leaves constC as scratch f0 and shifts
- * zero/vy/vz down one); (c) named float trio vx/vy/vz + sum from d members
- * (NOT from the locals - that fuses fmadds) gives 3 fmuls + 2 fadds shape;
- * (d) tail 8-byte IdFlagPair struct copy reproduces lwz r3/lwz r0/stw/stw
- * with the add coalescing into the mulli web (named int pair probes always
- * canonicalize to reversed loads). Negative probes for the f3/f4 swap:
- * vel assign order x,y,z vs y,x,z (canonicalized), a.y = mag = C fold
- * (copy-propagated), cv named local (propagated), #pragma opt_propagation
- * off (no effect), exceptions on/off (identical codegen -> not approach-B
- * class). Same family as CarObject_ProcessWarpAndDash tie-break swap.
- * Salvage C in batch HANDOFF appendix. Kept as asm. */
-asm void ItemEffect_Explosion(ItemStateBlock *self, int idx, void *arg) { /* 0x80051648 size:0x1EC */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    lfs f6, 0xbc(r5)
-    stw r0, 0x44(r1)
-    lfs f3, 0xb8(r5)
-    fmuls f0, f6, f6
-    stw r31, 0x3c(r1)
-    mr r31, r3
-    fmuls f1, f3, f3
-    lfs f7, 0xc0(r5)
-    stw r30, 0x38(r1)
-    fmuls f2, f7, f7
-    lfs f4, lbl_806D271C(r2)
-    stw r29, 0x34(r1)
-    fadds f0, f1, f0
-    lfs f5, lbl_806D26EC(r2)
-    stfs f4, 0x28(r1)
-    mr r29, r4
-    fadds f4, f2, f0
-    stfs f5, 0x24(r1)
-    stfs f5, 0x2c(r1)
-    fcmpo cr0, f4, f5
-    stfs f3, 0x18(r1)
-    stfs f6, 0x1c(r1)
-    stfs f7, 0x20(r1)
-    ble ItemEffect_Explosion_L_800516FC
-    frsqrte f1, f4
-    lfd f3, lbl_806D2720(r2)
-    lfd f2, lbl_806D2728(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f4, f0
-    frsp f0, f0
-    stfs f0, 0x8(r1)
-    lfs f4, 0x8(r1)
-    ItemEffect_Explosion_L_800516FC:
-    lfs f0, lbl_806D26EC(r2)
-    fcmpo cr0, f4, f0
-    cror eq, lt, eq
-    bne ItemEffect_Explosion_L_8005171C
-    stfs f0, 0x20(r1)
-    stfs f0, 0x1c(r1)
-    stfs f0, 0x18(r1)
-    b ItemEffect_Explosion_L_80051748
-    ItemEffect_Explosion_L_8005171C:
-    lfs f0, lbl_806D26FC(r2)
-    lfs f2, 0x18(r1)
-    fdivs f3, f0, f4
-    lfs f1, 0x1c(r1)
-    lfs f0, 0x20(r1)
-    fmuls f2, f2, f3
-    fmuls f1, f1, f3
-    fmuls f0, f0, f3
-    stfs f2, 0x18(r1)
-    stfs f1, 0x1c(r1)
-    stfs f0, 0x20(r1)
-    ItemEffect_Explosion_L_80051748:
-    lwz r6, 0x0(r31)
-    addi r4, r1, 0x24
-    lwz r3, 0x4(r31)
-    addi r5, r1, 0x18
-    lwz r6, 0x28(r6)
-    addi r6, r6, 0x58
-    bl ItemStateSlotC_TryArm
-    lwz r3, 0x0(r31)
-    lbz r0, 0x20(r3)
-    cmplwi r0, 0x0
-    beq ItemEffect_Explosion_L_80051788
-    bl StrPcb_GetInstance
-    lfs f1, lbl_806D26E4(r2)
-    li r4, 0xc
-    li r5, 0x2
-    bl StrPcb_SetTimer3034_38
-    ItemEffect_Explosion_L_80051788:
-    lwz r3, 0x0(r31)
-    li r4, 0x3
-    lfs f0, lbl_806D26EC(r2)
-    lwz r3, 0x28(r3)
-    stfs f0, 0x17c(r3)
-    stfs f0, 0x180(r3)
-    stfs f0, 0x184(r3)
-    stfs f0, 0x194(r3)
-    stfs f0, 0x198(r3)
-    stfs f0, 0x19c(r3)
-    stfs f0, 0x1ac(r3)
-    stfs f0, 0x1b0(r3)
-    stfs f0, 0x1b4(r3)
-    lwz r3, 0x0(r31)
-    lwz r30, 0x38(r3)
-    mr r3, r30
-    bl ShadowBillboard_SetField0x6CAndComputeAxis
-    lwz r5, 0x0(r31)
-    mr r3, r30
-    addi r4, r1, 0xc
-    lwz r5, 0x28(r5)
-    lfs f2, 0x90(r5)
-    lfs f1, 0x8c(r5)
-    lfs f0, 0x88(r5)
-    stfs f0, 0xc(r1)
-    stfs f1, 0x10(r1)
-    stfs f2, 0x14(r1)
-    bl ShadowBillboard_SetVec3At0x70
-    mulli r4, r29, 0xc
-    lis r3, lbl_802ED8C4@ha
-    addi r0, r3, lbl_802ED8C4@l
-    add r4, r0, r4
-    lwz r3, 0x4(r4)
-    lwz r0, 0x8(r4)
-    stw r3, 0xc(r31)
-    stw r0, 0x10(r31)
-    lwz r31, 0x3c(r1)
-    lwz r30, 0x38(r1)
-    lwz r29, 0x34(r1)
-    lwz r0, 0x44(r1)
-    mtlr r0
-    addi r1, r1, 0x40
-    blr
+
+/* MSL-style inline sqrtf (frsqrte + 3 NR steps, volatile store-reload);
+ * consts referenced via lbl externs so no local rodata is emitted. */
+static inline float ItemEffect_sqrtf(float x) {
+    volatile float y;
+    if (x > lbl_806D26EC) {
+        double guess = __frsqrte(x);
+        guess = lbl_806D2720 * guess * (lbl_806D2728 - x * (guess * guess));
+        guess = lbl_806D2720 * guess * (lbl_806D2728 - x * (guess * guess));
+        guess = lbl_806D2720 * guess * (lbl_806D2728 - x * (guess * guess));
+        y = (float)(x * guess);
+        return y;
+    }
+    return x;
 }
+
+#pragma exceptions off
+/* const arg: GC/2.6 then hoists the velocity loads into the prologue. */
+void ItemEffect_Explosion(ItemStateBlock *self, int idx, const void *arg) { /* 0x80051648 size:0x1EC */
+    const ItemObjectPosView *obj = (const ItemObjectPosView *)arg;
+    Vec3 a; /* sp+0x24 */
+    Vec3 d; /* sp+0x18 */
+    Vec3 p; /* sp+0xc */
+    void *bb;
+    float vx, mag, vy, vz;
+
+    a.y = lbl_806D271C;
+    a.x = lbl_806D26EC;
+    a.z = lbl_806D26EC;
+    vx = obj->velX;
+    vy = obj->velY;
+    vz = obj->velZ;
+    d.x = vx;
+    d.y = vy;
+    d.z = vz;
+    mag = ItemEffect_sqrtf(d.z * d.z + (d.x * d.x + d.y * d.y));
+    if (mag <= lbl_806D26EC) {
+        d.x = d.y = d.z = lbl_806D26EC;
+    } else {
+        float inv = lbl_806D26FC / mag;
+        d.x = d.x * inv;
+        d.y = d.y * inv;
+        d.z = d.z * inv;
+    }
+    ItemStateSlotC_TryArm(self->guard, &a, &d, self->owner->movement->transform);
+    if (self->owner->strPcbGate20 != 0) {
+        StrPcb_SetTimer3034_38(StrPcb_GetInstance(), 0xc, 2, lbl_806D26E4);
+    }
+    {
+        KartMovementSpeedView *m = self->owner->movement;
+        m->velX = lbl_806D26EC;
+        m->velY = lbl_806D26EC;
+        m->velZ = lbl_806D26EC;
+        m->impact194 = lbl_806D26EC;
+        m->impact198 = lbl_806D26EC;
+        m->impact19c = lbl_806D26EC;
+        m->impact1ac = lbl_806D26EC;
+        m->impact1b0 = lbl_806D26EC;
+        m->impact1b4 = lbl_806D26EC;
+    }
+    bb = self->owner->billboard;
+    ShadowBillboard_SetField0x6CAndComputeAxis(bb, 3);
+    {
+        KartMovementSpeedView *m2 = self->owner->movement;
+        float fx, fy, fz;
+        fz = m2->transform[14];
+        fy = m2->transform[13];
+        fx = m2->transform[12];
+        p.x = fx;
+        p.y = fy;
+        p.z = fz;
+    }
+    ShadowBillboard_SetVec3At0x70(bb, &p);
+    *(IdFlagPair *)&self->activeId = *(const IdFlagPair *)&lbl_802ED8C4[idx].valA;
+}
+#pragma exceptions reset
 
 /* Precan park (2026-06-10, batch_promote_80051648_effectsrun, 0 probes):
  * ItemEffect_Trap carries TWO documented hard-block classes at once.
