@@ -1034,10 +1034,7 @@
     "fn_80138578",
     "fn_801385CC",
     "fn_8013879C",
-    "fn_80138A50",
-    "fn_80138DB8",
-    "fn_80139810",
-    "__dt__11ScopedTimerFv"
+    "fn_80138A50"
   ],
   "src/game/NokoNoko_801287F8.cpp": [
     "TimeTrial_Render",
@@ -2460,5 +2457,10 @@
       "fn_801D3364",
       "dtor_80082960"
     ]
-  }
+  },
+  "src/game/CourseObjects_80138CE4.cpp": [
+    "fn_80138DB8",
+    "fn_80139810",
+    "__dt__11ScopedTimerFv"
+  ]
 }

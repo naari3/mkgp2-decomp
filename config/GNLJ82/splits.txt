@@ -6104,9 +6104,14 @@ game/RivalRun_PathFollowerInit.c:
 	.text       start:0x80137588 end:0x801375D8
 
 game/CourseObjects_801375D8.cpp:
-	extab       start:0x8000D228 end:0x8000D2C8
-	extabindex  start:0x80024C20 end:0x80024C80
-	.text       start:0x801375D8 end:0x80139898
+	extab       start:0x8000D228 end:0x8000D268
+	extabindex  start:0x80024C20 end:0x80024C68
+	.text       start:0x801375D8 end:0x80138CE4
+
+game/CourseObjects_80138CE4.cpp:
+	extab       start:0x8000D268 end:0x8000D2C8
+	extabindex  start:0x80024C68 end:0x80024C80
+	.text       start:0x80138CE4 end:0x80139898
 
 game/CoinSystem_UpdateAll.c:
 	extab       start:0x8000D2C8 end:0x8000D2D0

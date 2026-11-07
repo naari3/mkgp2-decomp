@@ -5488,11 +5488,7 @@
     "extab_fn_8013879C": "@etb_8000D258",
     "extabindex_fn_8013879C": "@eti_80024C50",
     "extab_fn_80138A50": "@etb_8000D260",
-    "extabindex_fn_80138A50": "@eti_80024C5C",
-    "extab_fn_80138DB8": "@etb_8000D268",
-    "extabindex_fn_80138DB8": "@eti_80024C68",
-    "extab_fn_80139810": "@etb_8000D2B0",
-    "extabindex_fn_80139810": "@eti_80024C74"
+    "extabindex_fn_80138A50": "@eti_80024C5C"
   },
   "src/game/NokoNoko_801287F8.cpp": {
     "extab_TimeTrial_Render": "@etb_8000C444",
@@ -12382,5 +12378,13 @@
     "@96": "@eti_8002801C",
     "@139": "@etb_80015174",
     "@140": "@eti_80028028"
+  },
+  "src/game/CourseObjects_80138CE4.cpp": {
+    "extab_fn_80138DB8": "@etb_8000D268",
+    "extabindex_fn_80138DB8": "@eti_80024C68",
+    "extab_fn_80139810": "@etb_8000D2B0",
+    "extabindex_fn_80139810": "@eti_80024C74",
+    "__ct__9GXChannelFP4JObjP4DObjUii": "GXChannel_Init",
+    "__dt__9GXChannelFv": "dtor_8007D9C4"
   }
 }
