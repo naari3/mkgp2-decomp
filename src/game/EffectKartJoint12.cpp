@@ -27,11 +27,29 @@ void VfxSlot_SetScaleUniform(void *, float);
 static inline float stageFraction(float start, float end, float age) {
  return (age - start) * (lbl_806D5584 / (end - start));
 }
+static inline float stageValue(float start, float end, float fraction) {
+ return start + fraction * (end - start);
+}
 static inline void interpolate(Joint12Effect **child, float *row, float age) {
  if (row[0] <= age && age < row[1]) {
   float t = stageFraction(row[0], row[1], age);
-  (*child)->scale = row[3] + t * (row[4] - row[3]);
-  (*child)->alpha = row[6] + t * (row[7] - row[6]);
+  (*child)->scale = stageValue(row[3], row[4], t);
+  (*child)->alpha = stageValue(row[6], row[7], t);
+ }
+}
+static inline void updateChild(float *row, Joint12Group *group, Joint12Effect *effect, int i) {
+ if (group->children[i]) {
+  Vec3_Copy(&group->children[i]->position, &effect->position);
+  if (row[0] <= group->age && group->age < row[2]) {
+   for (int stage = 0; stage < 2; ++stage) {
+    interpolate(&group->children[i], row + stage, group->age);
+   }
+  } else {
+   group->children[i]->scale = lbl_806D555C;
+   group->children[i]->alpha = lbl_806D555C;
+  }
+  VfxSlot_SetPositionFromVec(group->children[i]->slot, group->children[i]->position);
+  VfxSlot_SetScaleUniform(group->children[i]->slot, group->children[i]->scale);
  }
 }
 extern "C" void Effect_KartJoint12_3Stage_Update(Joint12Effect *effect) {
@@ -64,19 +82,6 @@ extern "C" void Effect_KartJoint12_3Stage_Update(Joint12Effect *effect) {
  Mtx_TransposeToMtx44(matrix, KartDriver_GetKartRootMtx(group->kart));
  Mtx44_TransformVec3(&effect->position, matrix, group->offset);
  for (i = 0; i < 3; ++i) {
-  float *row = lbl_8041A428[i];
-  if (group->children[i]) {
-   Vec3_Copy(&group->children[i]->position, &effect->position);
-   if (row[0] <= group->age && group->age < row[2]) {
-    for (int stage = 0; stage < 2; ++stage) {
-     interpolate(&group->children[i], row + stage, group->age);
-    }
-   } else {
-    group->children[i]->scale = lbl_806D555C;
-    group->children[i]->alpha = lbl_806D555C;
-   }
-   VfxSlot_SetPositionFromVec(group->children[i]->slot, group->children[i]->position);
-   VfxSlot_SetScaleUniform(group->children[i]->slot, group->children[i]->scale);
-  }
+  updateChild(lbl_8041A428[i], group, effect, i);
  }
 }
