@@ -10263,7 +10263,10 @@
     "__vt__Q23std12length_error": "lbl_803F56F0",
     "@113": "lbl_803BD228",
     "@116": "@etb_800162B0",
-    "@117": "@eti_80028790"
+    "@117": "@eti_80028790",
+    "@129": "global:lbl_803BD228",
+    "@132": "@etb_800162B0",
+    "@133": "@eti_80028790"
   },
   "src/game/objview/fn_80197130.cpp": {
     "__ct__9GXChannelFP8HSD_JObjP8HSD_DObjUii": "GXChannel_Init",

@@ -902,7 +902,7 @@ config.libs = [
             Object(Matching, "game/fn_8022CDE4.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801E4524.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801E4824.cpp", mw_version="GC/2.7", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/fn_801E4544.cpp", mw_version="GC/2.7", extab_padding=b"\x02\x55", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_801E4544.cpp", mw_version="GC/2.7", extab_padding=b"\x02\x55", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-rostr"]),
             Object(NonMatching, "game/fn_801E4AF4.cpp", mw_version="GC/2.7", extab_padding=b"\x02\x55", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801E5A00.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/fn_801E5454.cpp", mw_version="GC/2.7", extab_padding=b"\x02\x55", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
