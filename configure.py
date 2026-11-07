@@ -2299,7 +2299,7 @@ config.libs = [
             Object(Matching, "game/RenderTargetSingleton.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CourseTables.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/OrthoCam.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/ZoneList.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/ZoneList.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"], mw_version="GC/2.7"),
             Object(Matching, "game/LogoAnim.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/PushPrompt.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/ResultFx.c", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),

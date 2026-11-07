@@ -2905,6 +2905,7 @@
     "__dt__8ZoneListFv": "fn_80123B48",
     "__ct__8ZoneListFPC7ZoneSrci": "fn_80123BB4",
     "__dt__8QuadZoneFv": "fn_80123BEC",
+    "__dt__4ZoneFv": "dtor_80123870",
     "__dt__7BoxZoneFv": "fn_80123D90",
     "__dt__8TaskModeFv": "fn_80123FDC",
     "__ct__8TaskModeFv": "fn_8012409C",
@@ -2919,11 +2920,7 @@
     "extab_MiniGame_GetTimerValue": "@etb_8000BD8C",
     "extabindex_MiniGame_GetTimerValue": "@eti_80024794",
     "extab_fn_801232E0": "@etb_8000BD94",
-    "extabindex_fn_801232E0": "@eti_800247A0",
-    "extab_fn_80123674": "@etb_8000BDD4",
-    "extabindex_fn_80123674": "@eti_800247D0",
-    "extab_fn_801238EC": "@etb_8000BDF8",
-    "extabindex_fn_801238EC": "@eti_800247E8"
+    "extabindex_fn_801232E0": "@eti_800247A0"
   },
   "src/game/anon_801FC1E0.cpp": {
     "__ct__13CoinFlowSceneFi": "fn_801FC364",

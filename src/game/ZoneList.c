@@ -4,9 +4,11 @@
  * game-mode wrapper. Each class declares a virtual that is not defined
  * here first, so the vtables (in data) are not emitted by this unit.
  *
+ * Built with GC/2.7: the zone ctors schedule src loads across the stores
+ * to `this`, which GC/1.3.2 never does.
+ *
  * Still asm: the colour table init (dynamic init of tables this unit does
- * not own) and the two zone ctors (their src loads are scheduled across the
- * stores to `this` as if the two could not alias).
+ * not own).
  */
 #pragma cplusplus on
 
@@ -33,8 +35,6 @@ extern float Vec3_Dot(const Vec3 *a, const Vec3 *b);
 extern void *fn_8014F6A4(void);
 }
 
-struct Zone;
-extern "C" Zone *dtor_80123870(Zone *z, short flag);
 
 extern "C" {
 extern unsigned int lbl_806D6E18;
@@ -47,30 +47,20 @@ extern unsigned int lbl_806D6E30;
 extern unsigned int lbl_806D6E34;
 extern unsigned int lbl_8048DAA8[];
 asm void fn_801232E0(void);
-asm void fn_80123674(void);
-asm void fn_801238EC(void);
 
 #pragma section R ".extab_user"
 __declspec(section ".extab_user") static const unsigned char extab_fn_801232E0[8] = {
     0x90, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; void *f6; } extab_fn_80123674 = { 0x100A0000, 0x000000B0, 0x000A0010, 0x00000000, 0x8680001E, 0x00000000, (void *)&dtor_80123870 };
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; void *f6; } extab_fn_801238EC = { 0x180A0000, 0x0000016C, 0x000D0010, 0x00000000, 0x8680001F, 0x00000000, (void *)&dtor_80123870 };
 
 #pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801232E0 = {
     (void *)&fn_801232E0, 0x0000019C, (void *)extab_fn_801232E0
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80123674 = {
-    (void *)&fn_80123674, 0x000001FC, (void *)&extab_fn_80123674
-};
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801238EC = {
-    (void *)&fn_801238EC, 0x0000025C, (void *)&extab_fn_801238EC
-};
 
 }
 
@@ -324,325 +314,94 @@ extern "C" void fn_801235A0(Zone *z, Zone *add) {
     }
 }
 
-extern "C" asm void fn_80123674(void) { /* 0x80123674 size:0x1FC */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lis r5, lbl_8048E1B0@ha
-    lfs f3, lbl_806D6E50(r2)
-    stw r0, 0x14(r1)
-    addi r0, r5, lbl_8048E1B0@l
-    li r5, 0x0
-    stw r31, 0xc(r1)
-    mr r31, r4
-    lfs f0, 0x34(r31)
-    stw r30, 0x8(r1)
-    mr r30, r3
-    lis r3, lbl_8048E1A0@ha
-    lfs f1, 0x38(r31)
-    stw r0, 0x4(r30)
-    addi r4, r3, lbl_8048E1A0@l
-    lwz r0, 0x30(r31)
-    addi r3, r30, 0x20
-    stw r5, 0x0(r30)
-    lfs f5, 0x0(r31)
-    stw r4, 0x4(r30)
-    lfs f2, 0x4(r31)
-    stw r0, 0x8(r30)
-    lfs f4, 0x8(r31)
-    stfs f0, 0xc(r30)
-    lfs f0, 0xc(r31)
-    stfs f1, 0x10(r30)
-    fsubs f1, f0, f5
-    lfs f0, 0x14(r31)
-    stfs f5, 0x14(r30)
-    stfs f2, 0x18(r30)
-    fsubs f2, f0, f4
-    lfs f0, 0x24(r31)
-    stfs f4, 0x1c(r30)
-    stfs f1, 0x20(r30)
-    fsubs f1, f0, f5
-    lfs f0, 0x2c(r31)
-    stfs f3, 0x24(r30)
-    fsubs f0, f0, f4
-    stfs f2, 0x28(r30)
-    stfs f1, 0x2c(r30)
-    stfs f3, 0x30(r30)
-    stfs f0, 0x34(r30)
-    bl Vec3_Magnitude
-    stfs f1, 0x38(r30)
-    addi r3, r30, 0x2c
-    bl Vec3_Magnitude
-    addi r3, r30, 0x20
-    stfs f1, 0x3c(r30)
-    mr r4, r3
-    bl Vec3_Normalize
-    addi r3, r30, 0x2c
-    mr r4, r3
-    bl Vec3_Normalize
-    lfs f1, 0x0(r31)
-    lfs f0, 0x8(r31)
-    stfs f1, 0x40(r30)
-    lfs f2, 0xc(r31)
-    stfs f1, 0x48(r30)
-    stfs f0, 0x44(r30)
-    stfs f0, 0x4c(r30)
-    lfs f0, 0x48(r30)
-    fcmpo cr0, f2, f0
-    bge fn_80123674_L_80123778
-    stfs f2, 0x48(r30)
-    fn_80123674_L_80123778:
-    lfs f1, 0xc(r31)
-    lfs f0, 0x40(r30)
-    fcmpo cr0, f1, f0
-    ble fn_80123674_L_8012378C
-    stfs f1, 0x40(r30)
-    fn_80123674_L_8012378C:
-    lfs f1, 0x14(r31)
-    lfs f0, 0x4c(r30)
-    fcmpo cr0, f1, f0
-    bge fn_80123674_L_801237A0
-    stfs f1, 0x4c(r30)
-    fn_80123674_L_801237A0:
-    lfs f1, 0x14(r31)
-    lfs f0, 0x44(r30)
-    fcmpo cr0, f1, f0
-    ble fn_80123674_L_801237B4
-    stfs f1, 0x44(r30)
-    fn_80123674_L_801237B4:
-    lfs f1, 0x18(r31)
-    lfs f0, 0x48(r30)
-    fcmpo cr0, f1, f0
-    bge fn_80123674_L_801237C8
-    stfs f1, 0x48(r30)
-    fn_80123674_L_801237C8:
-    lfs f1, 0x18(r31)
-    lfs f0, 0x40(r30)
-    fcmpo cr0, f1, f0
-    ble fn_80123674_L_801237DC
-    stfs f1, 0x40(r30)
-    fn_80123674_L_801237DC:
-    lfs f1, 0x20(r31)
-    lfs f0, 0x4c(r30)
-    fcmpo cr0, f1, f0
-    bge fn_80123674_L_801237F0
-    stfs f1, 0x4c(r30)
-    fn_80123674_L_801237F0:
-    lfs f1, 0x20(r31)
-    lfs f0, 0x44(r30)
-    fcmpo cr0, f1, f0
-    ble fn_80123674_L_80123804
-    stfs f1, 0x44(r30)
-    fn_80123674_L_80123804:
-    lfs f1, 0x24(r31)
-    lfs f0, 0x48(r30)
-    fcmpo cr0, f1, f0
-    bge fn_80123674_L_80123818
-    stfs f1, 0x48(r30)
-    fn_80123674_L_80123818:
-    lfs f1, 0x24(r31)
-    lfs f0, 0x40(r30)
-    fcmpo cr0, f1, f0
-    ble fn_80123674_L_8012382C
-    stfs f1, 0x40(r30)
-    fn_80123674_L_8012382C:
-    lfs f1, 0x2c(r31)
-    lfs f0, 0x4c(r30)
-    fcmpo cr0, f1, f0
-    bge fn_80123674_L_80123840
-    stfs f1, 0x4c(r30)
-    fn_80123674_L_80123840:
-    lfs f1, 0x2c(r31)
-    lfs f0, 0x44(r30)
-    fcmpo cr0, f1, f0
-    ble fn_80123674_L_80123854
-    stfs f1, 0x44(r30)
-    fn_80123674_L_80123854:
-    lwz r0, 0x14(r1)
-    mr r3, r30
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+static inline void BoxZone_Extend(BoxZone *z, const Vec3 *p) {
+    if (p->x < z->minX) {
+        z->minX = p->x;
+    }
+    if (p->x > z->maxX) {
+        z->maxX = p->x;
+    }
+    if (p->z < z->minZ) {
+        z->minZ = p->z;
+    }
+    if (p->z > z->maxZ) {
+        z->maxZ = p->z;
+    }
+}
+
+BoxZone::BoxZone(const ZoneSrc *src) {
+    flags = src->flags;
+    top = src->top;
+    bottom = src->bottom;
+    origin = src->p[0];
+    u.x = src->p[1].x - src->p[0].x;
+    u.y = lbl_806D6E50;
+    u.z = src->p[1].z - src->p[0].z;
+    v.x = src->p[3].x - src->p[0].x;
+    v.y = lbl_806D6E50;
+    v.z = src->p[3].z - src->p[0].z;
+    lenU = Vec3_Magnitude(&u);
+    lenV = Vec3_Magnitude(&v);
+    Vec3_Normalize(&u, &u);
+    Vec3_Normalize(&v, &v);
+    minX = maxX = src->p[0].x;
+    minZ = maxZ = src->p[0].z;
+    BoxZone_Extend(this, &src->p[1]);
+    BoxZone_Extend(this, &src->p[2]);
+    BoxZone_Extend(this, &src->p[3]);
 }
 
 
-extern "C" Zone *dtor_80123870(Zone *z, short flag) {
-    if (z) {
-        *(void **)((char *)z + 4) = lbl_8048E1B0;
-        if (z->next) {
-            delete z->next;
+/* dtor_80123870 is Zone::~Zone (emitted here for the ctors' cleanup). */
+
+QuadZone::QuadZone(const ZoneSrc *src) {
+    flags = src->flags;
+    top = src->top;
+    bottom = src->bottom;
+    if (flags & 8) {
+        p[0] = src->p[3];
+        p[1] = src->p[2];
+        p[2] = src->p[1];
+        p[3] = src->p[0];
+    } else {
+        p[0] = src->p[0];
+        p[1] = src->p[1];
+        p[2] = src->p[2];
+        p[3] = src->p[3];
+    }
+    p[0].y = lbl_806D6E50;
+    p[1].y = lbl_806D6E50;
+    p[2].y = lbl_806D6E50;
+    p[3].y = lbl_806D6E50;
+    for (int i = 0; i < 4; i++) {
+        Vec3 d;
+        int j = i + 1;
+        if (j >= 4) {
+            j -= 4;
         }
-        if (flag > 0) {
-            operator delete(z);
+        Vec3_Subtract(&p[j], &p[i], &d);
+        n[i].x = -d.z;
+        n[i].y = d.y;
+        n[i].z = d.x;
+        Vec3_Normalize(&n[i], &n[i]);
+        if (i == 0) {
+            minX = maxX = p[i].x;
+            minZ = maxZ = p[i].z;
+        } else {
+            if (p[i].x < minX) {
+                minX = p[i].x;
+            }
+            if (p[i].x > maxX) {
+                maxX = p[i].x;
+            }
+            if (p[i].z < minZ) {
+                minZ = p[i].z;
+            }
+            if (p[i].z > maxZ) {
+                maxZ = p[i].z;
+            }
         }
     }
-    return z;
-}
-
-extern "C" asm void fn_801238EC(void) { /* 0x801238EC size:0x25C */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    lis r7, lbl_8048E1B0@ha
-    li r6, 0x0
-    stw r0, 0x34(r1)
-    addi r0, r7, lbl_8048E1B0@l
-    lis r5, lbl_8048E184@ha
-    lfs f1, 0x34(r4)
-    stw r31, 0x2c(r1)
-    mr r31, r3
-    addi r3, r5, lbl_8048E184@l
-    lfs f0, 0x38(r4)
-    stw r30, 0x28(r1)
-    stw r29, 0x24(r1)
-    stw r0, 0x4(r31)
-    lwz r0, 0x30(r4)
-    stw r6, 0x0(r31)
-    stw r3, 0x4(r31)
-    stw r0, 0x8(r31)
-    stfs f1, 0xc(r31)
-    stfs f0, 0x10(r31)
-    lwz r0, 0x8(r31)
-    rlwinm. r0, r0, 0, 28, 28
-    beq fn_801238EC_L_801239B0
-    lfs f1, 0x24(r4)
-    lfs f0, 0x28(r4)
-    stfs f1, 0x14(r31)
-    lfs f1, 0x2c(r4)
-    stfs f0, 0x18(r31)
-    lfs f0, 0x18(r4)
-    stfs f1, 0x1c(r31)
-    lfs f1, 0x1c(r4)
-    stfs f0, 0x20(r31)
-    lfs f0, 0x20(r4)
-    stfs f1, 0x24(r31)
-    lfs f1, 0xc(r4)
-    stfs f0, 0x28(r31)
-    lfs f0, 0x10(r4)
-    stfs f1, 0x2c(r31)
-    lfs f1, 0x14(r4)
-    stfs f0, 0x30(r31)
-    lfs f0, 0x0(r4)
-    stfs f1, 0x34(r31)
-    lfs f1, 0x4(r4)
-    stfs f0, 0x38(r31)
-    lfs f0, 0x8(r4)
-    stfs f1, 0x3c(r31)
-    stfs f0, 0x40(r31)
-    b fn_801238EC_L_80123A10
-    fn_801238EC_L_801239B0:
-    lfs f1, 0x0(r4)
-    lfs f0, 0x4(r4)
-    stfs f1, 0x14(r31)
-    lfs f1, 0x8(r4)
-    stfs f0, 0x18(r31)
-    lfs f0, 0xc(r4)
-    stfs f1, 0x1c(r31)
-    lfs f1, 0x10(r4)
-    stfs f0, 0x20(r31)
-    lfs f0, 0x14(r4)
-    stfs f1, 0x24(r31)
-    lfs f1, 0x18(r4)
-    stfs f0, 0x28(r31)
-    lfs f0, 0x1c(r4)
-    stfs f1, 0x2c(r31)
-    lfs f1, 0x20(r4)
-    stfs f0, 0x30(r31)
-    lfs f0, 0x24(r4)
-    stfs f1, 0x34(r31)
-    lfs f1, 0x28(r4)
-    stfs f0, 0x38(r31)
-    lfs f0, 0x2c(r4)
-    stfs f1, 0x3c(r31)
-    stfs f0, 0x40(r31)
-    fn_801238EC_L_80123A10:
-    lfs f0, lbl_806D6E50(r2)
-    li r29, 0x0
-    li r30, 0x0
-    stfs f0, 0x18(r31)
-    stfs f0, 0x24(r31)
-    stfs f0, 0x30(r31)
-    stfs f0, 0x3c(r31)
-    fn_801238EC_L_80123A2C:
-    addi r3, r29, 0x1
-    cmpwi r3, 0x4
-    blt fn_801238EC_L_80123A3C
-    subi r3, r3, 0x4
-    fn_801238EC_L_80123A3C:
-    mulli r3, r3, 0xc
-    addi r4, r30, 0x14
-    addi r5, r1, 0x8
-    add r4, r31, r4
-    addi r3, r3, 0x14
-    add r3, r31, r3
-    bl Vec3_Subtract
-    lfs f0, 0x10(r1)
-    addi r6, r30, 0x44
-    add r3, r31, r6
-    addi r5, r30, 0x48
-    fneg f0, f0
-    addi r0, r30, 0x4c
-    mr r4, r3
-    stfsx f0, r31, r6
-    lfs f0, 0xc(r1)
-    stfsx f0, r31, r5
-    lfs f0, 0x8(r1)
-    stfsx f0, r31, r0
-    bl Vec3_Normalize
-    cmpwi r29, 0x0
-    bne fn_801238EC_L_80123AB8
-    addi r3, r30, 0x14
-    addi r0, r30, 0x1c
-    lfsx f0, r31, r3
-    stfs f0, 0x74(r31)
-    stfs f0, 0x7c(r31)
-    lfsx f0, r31, r0
-    stfs f0, 0x78(r31)
-    stfs f0, 0x80(r31)
-    b fn_801238EC_L_80123B18
-    fn_801238EC_L_80123AB8:
-    addi r0, r30, 0x14
-    lfs f0, 0x7c(r31)
-    lfsx f1, r31, r0
-    fcmpo cr0, f1, f0
-    bge fn_801238EC_L_80123AD0
-    stfs f1, 0x7c(r31)
-    fn_801238EC_L_80123AD0:
-    addi r0, r30, 0x14
-    lfs f0, 0x74(r31)
-    lfsx f1, r31, r0
-    fcmpo cr0, f1, f0
-    ble fn_801238EC_L_80123AE8
-    stfs f1, 0x74(r31)
-    fn_801238EC_L_80123AE8:
-    addi r0, r30, 0x1c
-    lfs f0, 0x80(r31)
-    lfsx f1, r31, r0
-    fcmpo cr0, f1, f0
-    bge fn_801238EC_L_80123B00
-    stfs f1, 0x80(r31)
-    fn_801238EC_L_80123B00:
-    addi r0, r30, 0x1c
-    lfs f0, 0x78(r31)
-    lfsx f1, r31, r0
-    fcmpo cr0, f1, f0
-    ble fn_801238EC_L_80123B18
-    stfs f1, 0x78(r31)
-    fn_801238EC_L_80123B18:
-    addi r29, r29, 0x1
-    addi r30, r30, 0xc
-    cmpwi r29, 0x4
-    blt fn_801238EC_L_80123A2C
-    lwz r0, 0x34(r1)
-    mr r3, r31
-    lwz r31, 0x2c(r1)
-    lwz r30, 0x28(r1)
-    lwz r29, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
 }
 
 ZoneList::~ZoneList() {
@@ -681,7 +440,7 @@ extern "C" int fn_80123C78(QuadZone *q, const Vec3 *pos) {
 BoxZone::~BoxZone() {
 }
 
-extern "C" int fn_80123E1C(BoxZone *b, const Vec3 *pos) {
+extern "C" int fn_80123E1C(BoxZone *b, Vec3 *pos) {
     Vec3 d;
     float t;
     if (pos->x < b->minX || pos->x > b->maxX || pos->z < b->minZ || pos->z > b->maxZ) {
