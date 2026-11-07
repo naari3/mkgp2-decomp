@@ -1173,7 +1173,7 @@ config.libs = [
             Object(Matching, "game/ItemState_InitKeyframeBufferAndArm.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemStateSlotC_TryArm.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemEffectJump_Init.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/ItemEffect_TornadoLift.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ItemEffect_TornadoLift.cpp", mw_version="GC/2.6", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemEffectQuake_Init.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemEffectDamp_TryArm.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemEffectDamp_Init.c"),
