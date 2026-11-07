@@ -2421,5 +2421,27 @@
       "dtor_800869D0",
       "__dt__11ScopedTimerFv"
     ]
+  },
+  "src/game/anon_801FC1E0_nm1.cpp": {
+    "extab": [
+      "fn_801FD2E8",
+      "fn_801FC614",
+      "fn_801FC644",
+      "fn_801FCBCC",
+      "fn_801FCD9C",
+      "fn_801FCF58",
+      "fn_801FD1D4",
+      "fn_801FD240"
+    ],
+    "extabindex": [
+      "fn_801FC614",
+      "fn_801FC644",
+      "fn_801FCBCC",
+      "fn_801FCD9C",
+      "fn_801FCF58",
+      "fn_801FD1D4",
+      "fn_801FD240",
+      "fn_801FD2E8"
+    ]
   }
 }
