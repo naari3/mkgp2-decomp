@@ -1,6 +1,6 @@
 // Compound ring placement, 0x800C3EBC..0x800C4204.
 // Layout names describe the accesses in this routine; the effect is otherwise opaque.
-// Native reconstruction is NonMatching (99.309525% text; auto EH/index 100%).
+// Native reconstruction is NonMatching (99.35714% text; auto EH/index 100%).
 // Unsupported mode values deliberately leave orientation/tilt live, as in target.
 struct RingVec { float value[3]; };
 struct RingPair { float value[2]; };
@@ -31,6 +31,11 @@ struct RingEffect {
     unsigned char padB4[0x18];
     RingChildren children;
 };
+static inline float RingApplyAngle(float value, float sign, float parentAngle)
+{
+    return value * sign + parentAngle;
+}
+
 extern "C" {
 extern const RingVec lbl_8032A754, lbl_8032A760;
 extern const RingPair lbl_806D53E0;
@@ -79,7 +84,7 @@ void Effect_CompoundRing_PlaceChildren(RingEffect* effect, const void* source,
             switch (ring->mode) {
             case 0:
                 tilt = signs.value[i / 3];
-                orientation = BuildOrientationFromYaw(tilt * (ring->phase - offsets.value[i % 3]) + effect->angle);
+                orientation = BuildOrientationFromYaw(RingApplyAngle(ring->phase - offsets.value[i % 3], tilt, effect->angle));
                 tilt *= lbl_806D5488 * (float)sin(lbl_806D544C * orientation);
                 break;
             case 1:
