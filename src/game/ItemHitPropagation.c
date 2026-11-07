@@ -44,10 +44,11 @@ extern const float lbl_806D5B24;
 /* Private layout views expose only fields read here and by the callees.
  * The slot kind predicate is an unsigned 0..3 range plus kind 6, as in
  * the target. The classifier mirrors KartItem_QueryEffectStateFromIse.
- * This TU remains NonMatching: the compiler retains the effect-bus pointer
- * across classification and omits the target's duplicate switch exit.
+ * Classification uses a const view; this preserves the target effect-bus
+ * reload and classifier register lifetimes. The TU remains NonMatching
+ * because each dispatch switch omits the target's duplicate exit branch.
  */
-static inline unsigned char HitEffect_HasProtected(HitEffectBus *effects)
+static inline unsigned char HitEffect_HasProtected(const HitEffectBus *effects)
 {
     unsigned char result;
     if ((effects->flags & 0x0080000000000000ULL) == 0) {
@@ -58,9 +59,9 @@ static inline unsigned char HitEffect_HasProtected(HitEffectBus *effects)
     return result;
 }
 
-static inline int HitDriver_Classify(HitDriver *driver)
+static inline int HitDriver_Classify(const HitDriver *driver)
 {
-    HitEffectBus *effects = driver->effects;
+    const HitEffectBus *effects = driver->effects;
     if (HitEffect_HasProtected(effects)) {
         return 2;
     }
