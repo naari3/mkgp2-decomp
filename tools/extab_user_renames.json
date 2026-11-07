@@ -2607,7 +2607,11 @@
     "__vt__9SteerBase": "lbl_804E4A08",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__dt__13QueueBlockMapFv": "dtor_801E3200"
+    "__dt__13QueueBlockMapFv": "dtor_801E3200",
+    "__vt__Q23std9exception": "lbl_803F5710",
+    "__vt__Q23std11logic_error": "lbl_803F5700",
+    "__vt__Q23std12length_error": "lbl_803F56F0",
+    "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor"
   },
   "src/game/fn_801B85DC.cpp": {
     "__ct__6SpriteFiii": "Sprite_InitWithAnim",
