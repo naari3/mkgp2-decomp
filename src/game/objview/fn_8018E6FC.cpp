@@ -34,10 +34,8 @@ static inline void updateParticle(ViewBillboardParticle *q) {
     else q->alpha = q->maxAlpha - q->maxAlpha * ((q->age - 10.0f) / 30.0f);
     if ((q->age += 1.0f) > 40.0f) q->age = -1.0f;
 }
-static inline void initializeMatrix(ViewEmitter *o, int index) {
+static inline void initializeMatrix(ViewEmitter *o, void *scene, int index) {
     ViewJoint *joint;
-    void *scene;
-    scene = GetCourseScene3D();
     o->matrices[index].age = 0.0f;
     joint = o->matrices[index].joint;
     setup(joint);
@@ -74,6 +72,7 @@ static inline void updateMatrices(ViewEmitter *o) {
 }
 extern "C" void fn_8018E6FC(ViewEmitter *o) {
     int index;
+    void *scene;
     if (o->count == 0) return;
     if (o->delay > 0) o->delay--;
     else {
@@ -81,7 +80,8 @@ extern "C" void fn_8018E6FC(ViewEmitter *o) {
         float random = lbl_80495994[o->randomIndex++];
         index = (int)(o->count * random);
         if (-1.0f == o->matrices[index].age) {
-            initializeMatrix(o, index);
+            scene = GetCourseScene3D();
+            initializeMatrix(o, scene, index);
         }
     }
     updateMatrices(o);
