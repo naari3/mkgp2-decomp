@@ -1282,7 +1282,12 @@
     "__vt__9ResultSub": "lbl_80490A90",
     "__dt__9ResultMidFv": "dtor_801419C8",
     "__ct__10CoinPromptFiiiii": "fn_8023D080",
-    "__dt__8ResCtrlRFv": "dtor_80082960"
+    "__dt__8ResCtrlRFv": "dtor_80082960",
+    "__ct__11ResultPartYFi": "fn_8015C41C",
+    "__ct__9ResultCamFPCc": "Scene3D_Init",
+    "__ct__11ResultModelFPCcUc": "SceneModel_Init",
+    "__ct__12ResultDriverFiiPfiii": "KartDriver_New_Full",
+    "__ct__11ResultFlakeFPCci": "fn_8013D800"
   },
   "src/game/kartmove/carobject.cpp": {
     "__nw__FUl": "Alloc",
