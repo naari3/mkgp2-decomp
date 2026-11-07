@@ -3226,6 +3226,7 @@ game/CourseData_LoadPathTable.cpp:
 	extab       start:0x8000A0CC end:0x8000A0E8
 	extabindex  start:0x8002276C end:0x80022778
 	.text       start:0x800ABAE8 end:0x800ABD80
+	.rodata     start:0x803285C0 end:0x80328B7C
 
 game/CourseData_Lookup.c:
 	extab       start:0x8000A0E8 end:0x8000A110
