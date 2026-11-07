@@ -126,3 +126,14 @@ Verified on main with the patch applied: clean build (`rm -rf build/GNLJ82/src b
 | Patch | TU | Fix | Verified |
 | --- | --- | --- | --- |
 | cobj_data_nm2.patch | sysdolphin/baselib/cobj_data_nm2.c | The TU defines its `.data` 0x804FC560..0x804FC620 itself (strings, three Vec3s, and CObjInfoInit's `"sysdolphin_base_library"` / `"hsd_cobj"` as `lbl_804FC5FC`), each object sized up to the next one, under `force_active`, then flips to Matching. It doesn't include cobj_private.h (that header declares the strings at their string lengths). Left for the cobj owner because CObjInfoInit / the cobj merge would move these strings. | clean build off main 835bac3: main.dol OK |
+
+## Partial fixes (mid-range thread, 2026-11-07 21:40)
+
+| Patch | Function | TU | Issue | Before | Fix | After | TU flip |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| ClSound_InitSoundSystem.patch | ClSound_InitSoundSystem | game/clsound/ClSound_InitSoundSystem.c | #2234 | 97.35% | `#pragma opt_common_subs off` around the fn (from pragmasweep, 161 → 57 diff lines); in the ReadSoundFile inline write `end = length - 1; end = end + start;` (gets the target's `subi; add` into the same register) | 99.53% (build main.dol OK; the TU stays NonMatching, so it is not linked) | no: about 20 lines of r26/r27 coloring left, plus `mr r0, r3; …; mr r4, r0` around ARInit's result. Casts/locals don't help; 25-min cperm found only the `end + start` order |
+
+Checked without a patch:
+- **sprite fn_801A4F38 (98.13%).** It needs the voice tables (`addi rX, r31, 0x0/0x1C/0x54/0xBC` off lbl_80496C38) as TU-owned `.data` objects. Giving the TU `.data 0x80496C38..0x80496D5C` with the real arrays breaks `dtk split` with a link-order cycle: fn_801A1798.c (text before) owns the switch jumptable at .data 0x8049A060 (after). So the original was one voice TU spanning about fn_801A1798..fn_801A4F38 (text) and 0x80496C38..0x8049A094 (data), and it needs that merge.
+- **sprite fn_801A7D0C (99.63%).** The TU already owns its .bss pool. What's left is `addi r4, r31, 0x190; addi r4, r4, 0x40; lwzx` for the item column, against ours `add; lwz 0x40`. Pointer/array/cast forms and pragmas didn't help.
+- **THPDec.** Its `addi rX, rY, 0x0` are GC ≤1.2.5n register copies, not anchors.
