@@ -2895,7 +2895,10 @@
     "extabindex_fn_8013D800": "@eti_80024EC0",
     "extabindex_fn_8013D940": "@eti_80024ED8",
     "extabindex_fn_8013DA00": "@eti_80024EE4",
-    "extabindex_dtor_8013DCBC": "@eti_80024F20"
+    "extabindex_dtor_8013DCBC": "@eti_80024F20",
+    "__ct__16PreviewModelCtorFPvUc": "fn_8013D800",
+    "__dt__14PreviewBaseOOLFv": "dtor_8013DCBC",
+    "__ct__8Normal3DFPvUc": "clNormal3D_Construct"
   },
   "src/game/SpriteEffects.c": {
     "__dt__7Effect1Fv": "fn_8013DD38",
