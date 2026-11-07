@@ -1,6 +1,8 @@
-/* Native candidate: 56.565422% text. Volatile matrix storage retains
- * per-iteration loads; matrix codegen and stack/register layout remain open. */
+/* Native candidate: 63.242992% text. Flat matrix copy construction and
+ * in-place multiplication recover aggregate assignment. Remaining input-load
+ * hoisting and FP save allocation differ from the target. */
 #include "game/PhysicsCollisionPrivate.h"
+#include "game/PhysicsWallMatrixPrivate.h"
 
 static inline float CollisionLength(float squared)
 {
@@ -19,38 +21,17 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
 {
     float hitPosition[3];
     float hitNormal[3];
-    volatile float original[16];
-    volatile float rotation[16];
-    float product[16];
     PH_B(self, 0x138) = 0;
     if (Terrain_RaycastWall(self + 0x58, self + 0x4C, hitPosition, hitNormal)) {
         PH_F(self, 0x4C) = hitPosition[0];
         PH_F(self, 0x50) = hitPosition[1];
         PH_F(self, 0x54) = hitPosition[2];
     }
-    for (int n = 0; n < 16; ++n) original[n] = ((float *)(self + 0xE4))[n];
-    float yaw = PH_F(self, 0x84);
-    for (int n = 0; n < 16; ++n) rotation[n] = lbl_806DA42C;
-    rotation[15] = rotation[10] = rotation[5] = rotation[0] = lbl_806DA450;
-    float cosine = (float)cos(yaw);
-    float sine = (float)sin(yaw);
-    rotation[0] = cosine;
-    rotation[8] = sine;
-    rotation[10] = cosine;
-    rotation[2] = -sine;
-    for (int row = 0; row < 4; ++row) {
-        for (int col = 0; col < 4; ++col) {
-            product[row * 4 + col] =
-                ((rotation[row * 4] * original[col] + rotation[row * 4 + 1] * original[4 + col]) +
-                 rotation[row * 4 + 2] * original[8 + col]) + rotation[row * 4 + 3] * original[12 + col];
-        }
-    }
-    /* The inlined multiply copies its product without transposing it. */
-    for (int n = 0; n < 16; ++n) rotation[n] = product[n];
-    for (int n = 0; n < 16; ++n) original[n] = rotation[n];
-    original[12] = PH_F(self, 0x4C);
-    original[13] = PH_F(self, 0x50);
-    original[14] = PH_F(self, 0x54);
+    PhysicsWallMatrix original(*(PhysicsWallMatrix *)(self + 0xE4));
+    original.applyYaw(PH_F(self, 0x84));
+    original.m[12] = PH_F(self, 0x4C);
+    original.m[13] = PH_F(self, 0x50);
+    original.m[14] = PH_F(self, 0x54);
     unsigned char applied = 0;
     for (int corner = 0; corner < 4; ++corner) {
         PhysicsCollisionVec endpoint;
@@ -60,9 +41,9 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
         scaled.x *= PH_F(self, 0x13C);
         scaled.y *= PH_F(self, 0x13C);
         scaled.z *= PH_F(self, 0x13C);
-        endpoint.x = original[12] + (original[0] * scaled.x + scaled.y * original[4] + scaled.z * original[8]);
-        endpoint.y = original[13] + (original[1] * scaled.x + scaled.y * original[5] + scaled.z * original[9]);
-        endpoint.z = original[14] + (original[2] * scaled.x + scaled.y * original[6] + scaled.z * original[10]);
+        endpoint.x = original.m[12] + (original.m[0] * scaled.x + scaled.y * original.m[4] + scaled.z * original.m[8]);
+        endpoint.y = original.m[13] + (original.m[1] * scaled.x + scaled.y * original.m[5] + scaled.z * original.m[9]);
+        endpoint.z = original.m[14] + (original.m[2] * scaled.x + scaled.y * original.m[6] + scaled.z * original.m[10]);
         if (Terrain_RaycastWall(self + 0x4C, &endpoint, &correction, &normal)) {
             correction.x -= endpoint.x;
             correction.y -= endpoint.y;
@@ -71,9 +52,9 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
             PH_F(self, 0x4C) += correction.x;
             PH_F(self, 0x50) += correction.y;
             PH_F(self, 0x54) += correction.z;
-            original[12] = PH_F(self, 0x4C);
-            original[13] = PH_F(self, 0x50);
-            original[14] = PH_F(self, 0x54);
+            original.m[12] = PH_F(self, 0x4C);
+            original.m[13] = PH_F(self, 0x50);
+            original.m[14] = PH_F(self, 0x54);
             if (!applied) {
                 float length = CollisionLength((correction.x * correction.x + correction.y * correction.y) + correction.z * correction.z);
                 float force = length;
