@@ -32,3 +32,13 @@ From docs/flip_hints.md. Verified on a throwaway branch off main: all four appli
 | anon_80214B3C.patch | game/anon_80214B3C.cpp | #495 | the TU emits vtable lbl_804EDA98 (multiply-defined) | `virtual void _key();` key stub in CoinChallengeMode, then flip |
 | anon_80226670.patch | game/anon_80226670.cpp | #493 | emits vtable lbl_804EDF64 + unrenamed weak `__dt__9SceneBaseFv` | key stub + rename to dtor_8007D0D4, then flip |
 | STLContainer.patch | game/STLContainer.cpp | #2281 | CW puts __sinit last, the target has it first (text shifted 0x4C) | hand-written static init first + `.ctors` entry (fakematch), then flip |
+
+## Pool / TU-merge patches (thread B, 2026-11-07)
+
+See docs/merge_plans.md for the full list of plans. Files are in `merge/`.
+
+| Patch | Function | Kind | Result |
+| --- | --- | --- | --- |
+| merge/anon_8020AF08_nm1_pool.patch | fn_8020B234 (#2361) | link-ready: TU owns .rodata 0x803C2E50..0x803C3508, three static arrays | 97.54% -> 99.86%, clean build main.dol OK |
+| merge/fn_80192F04_codegen_probe.patch | fn_80192F04 (#2394) | probe only (the data is owned by the Fog TU; merge needed) | all instructions match |
+| merge/fn_801913B0_codegen_probe.patch | fn_801913B0 (#2439) | probe only | pool fixed, about 10 lines left |

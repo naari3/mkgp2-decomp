@@ -1,0 +1,41 @@
+diff --git a/src/game/clsound/fn_80192F04.c b/src/game/clsound/fn_80192F04.c
+index 5e86ea5..0acee18 100644
+--- a/src/game/clsound/fn_80192F04.c
++++ b/src/game/clsound/fn_80192F04.c
+@@ -1,6 +1,10 @@
++#define lbl_80495F20 lbl_80495F20_hdr
+ #include "game/clsound_spatial_private.h"
++#undef lbl_80495F20
++ClSoundVec lbl_80495F20 = {0.0f, 0.0f, 0.0f};
++ClSoundVec lbl_80495F2C = {0.0f, 0.0f, 0.0f};
++struct { ClSoundVec pos; float w; } lbl_80495F38 = {{0.0f, 0.0f, 0.0f}, 0.0f};
+ int fn_80192F04(unsigned int id, const ClSoundVec* position, unsigned char* volume, unsigned char* pan, unsigned char* surround) {
+-    ClSoundListener* listener = &lbl_80495F20;
+     ClSoundVec delta;
+     float near_distance, far_distance, distance;
+     if (!ClSound_Initialized) return 0;
+@@ -9,7 +13,7 @@ int fn_80192F04(unsigned int id, const ClSoundVec* position, unsigned char* volu
+     if (id >= 490) return 0;
+     near_distance = lbl_80379554[id].near_distance;
+     far_distance = lbl_80379554[id].far_distance;
+-    Vec3_Subtract(position, &listener->position, &delta);
++    Vec3_Subtract(position, &lbl_80495F38.pos, &delta);
+     distance = Vec3_Magnitude(&delta);
+     if (distance >= far_distance) {
+         if (volume) *volume = 0;
+@@ -21,13 +25,13 @@ int fn_80192F04(unsigned int id, const ClSoundVec* position, unsigned char* volu
+             else *volume = (int)(lbl_806D9514 - lbl_806D9514 * ((distance-near_distance)/(far_distance-near_distance)));
+         }
+         if (pan) {
+-            distance = Vec3_Dot(&delta, &listener->right);
++            distance = Vec3_Dot(&delta, &lbl_80495F20);
+             if (distance >= near_distance) *pan = 0;
+             else if (distance <= -near_distance) *pan = 127;
+             else *pan = (int)(lbl_806D9518 - lbl_806D951C*(distance/near_distance));
+         }
+         if (surround) {
+-            distance = Vec3_Dot(&delta, &listener->forward);
++            distance = Vec3_Dot(&delta, &lbl_80495F2C);
+             if (distance >= near_distance) *surround = 127;
+             else if (distance <= -near_distance) *surround = 0;
+             else *surround = (int)(lbl_806D9518 + lbl_806D951C*(distance/near_distance));
