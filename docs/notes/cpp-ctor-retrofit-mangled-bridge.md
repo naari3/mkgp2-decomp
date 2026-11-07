@@ -1069,3 +1069,8 @@ c17_u5: fn_8020A6CC 104B float Value draft improves 78.65385 -> 92.88461 with di
 Source: Codex worker c17_u7_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 240 B.
 
 clItemBoxManager: the target Update_Inner has DESTROYLOCAL dtor_80036E40 for its vector at SP+0x14. A three-float C++ constructor plus empty destructor restores the exact FP load/store/arithmetic sequence; plain aggregate copy emits lwz/stw and loses cleanup. Named node/sentinel traversals bring text to 99.73684%, leaving only the final countdown loop r31/r30 reuse. Direct next/sentinel construction in a private three-level list destructor hierarchy gives exact 120-byte dtors at 8005F778 and 8005F7F0. Isolate those two with EH CCC..CDC / index C9C..CB4; tail base dtor 8005FF74 has early EH at 80007CDC, binding the remaining tail as a reversed-order group. No padding or manual EH was used.
+
+## c17_u15_20261107
+Source: Codex worker c17_u15_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u15: fn_80202E78 text176: preserve read-only line parameter and normalize separate selectedLine local to restore incoming-r4 compares and all prologue scheduling. Fresh objdiff59.295456 ->82.5, EH8/index12 remain100. Flat indexing53.886364; inline table lookups invariant baseline. Residual table-base+index association: target addi base then lwzx, source index-add then displacement lwz. Singleton remainsNonMatching, no native gain.

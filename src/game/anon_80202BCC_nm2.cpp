@@ -20,14 +20,15 @@ extern "C" const MsgTables lbl_803C0390;
 
 extern "C" const char *fn_80202E78(int msg, int line) {
     const MsgTables *t = &lbl_803C0390;
+    int selectedLine = line;
     if (line > 3 || line < 0) {
-        line = 0;
+        selectedLine = 0;
     }
     if (msg <= -1 || msg >= 30) {
-        return t->fallback[line];
+        return t->fallback[selectedLine];
     }
     if (isJapanese() == 0) {
-        return t->msgEN[msg][line];
+        return t->msgEN[msg][selectedLine];
     }
-    return t->msgJP[msg][line];
+    return t->msgJP[msg][selectedLine];
 }
