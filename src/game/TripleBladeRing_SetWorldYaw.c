@@ -1,31 +1,23 @@
 /*
- * TripleBladeRing_SetWorldYaw (0x800B3ED4 size:0x1C0) - NonMatching, 97.72%
+ * TripleBladeRing_SetWorldYaw (0x800B3ED4 size:0x1C0) - NonMatching, 98.71%
  *
  * Per-frame pose setter: copies the kart world matrix into self->mtx,
  * stores the yaw, derives the world position, and advances the master
  * phase + sin phase + 3 staggered per-arm blade phases (wrap-normalize
  * against sdata2 limits, staggers from rodata lbl_803292D4).
  *
- * PARKED: fp-numbering tie-break family (see
+ * NonMatching: FP scratch register identities differ from the target.
+ * A counted three-arm loop is fully unrolled by CW 1.3.2 and places the
+ * working value in f0, improving 97.72321% to 98.70536% (c19_u238).
+ * Instruction order, count, stack layout, and EH remain exact.
+ * Remaining differences:
+ *   master: target phase=f2, wrap limit=f1; source phase=f1, limit=f2
+ *   arms: target one=f1, amp=f2, limit=f3, stagger=f4;
+ *         source stagger=f1, one=f2, amp=f3, limit=f4
+ * Compound master assignments and a cached-argument inline arm helper
+ * were allocation-invariant. Prior probes and compiler observations:
  * docs/notes/cw132-fp-scratch-web-order-levers.md and
- * per_fn_matching_strategy.md sec 14.2 fp-scratch numbering family).
- * Instruction sequence, schedule, stack layout and instruction count are
- * byte-exact; the residual is ONLY fp scratch register naming:
- *   block1: target (5028=f0, lim134=f1, phase0tmp=f2) vs mine (f0, f2, f1)
- *   tail:   target (wk=f0, one=f1, amp=f2, limit=f3, stag=f4)
- *           vs mine (stag=f0, wk=f1, one=f2, amp=f3, limit=f4)
- * Probes tried (all allocation-invariant, 8 builds):
- *   - const init order permutations (limit/amp/one x2 orders)
- *   - decl order permutations (incl. stag first/last)
- *   - Vec3 struct copy vs float[3] array copy for the staggers
- *   - direct stag[i] reads vs single reused named local `s`
- *   - assign-in-condition for the block-1 limit
- *   - named local vs direct const for block-1 limit, before/after `+=`
- *   - explicit `x = x - k` vs compound `-=` in while bodies
- *     (the compound form IS load-bearing: it keeps the redundant
- *     re-load in the while body that the explicit form CSEs away)
- * If the fp-numbering family gets a lever later, this TU should
- * self-correct; flip Object() to Matching and verify.
+ * docs/notes/cw132-const-float-hoist-vs-reload.md.
  */
 
 #include "game/TripleBladeRing.h"
@@ -45,11 +37,11 @@ extern const float lbl_806D513C;
 
 void TripleBladeRing_SetWorldYaw(TripleBladeRing *self, float yaw, void *worldMtx)
 {
-    float one; /* reused as the block-1 wrap limit */
+    float one; /* also used as the master-phase wrap limit */
     float amp;
     float limit;
-    float s;
     float stag[3];
+    int i;
 
     if (self != 0) {
         Mtx_TransposeToMtx44(self->mtx, worldMtx);
@@ -69,32 +61,17 @@ void TripleBladeRing_SetWorldYaw(TripleBladeRing *self, float yaw, void *worldMt
         self->phaseSin = (float)sin(lbl_806D5138 * self->phaseSin);
 
         *(TBRVec3 *)stag = lbl_803292D4;
-        s = stag[0];
         limit = lbl_806D513C;
         amp = lbl_806D507C;
         one = lbl_806D5028;
 
-        self->phases[0] = self->phase0 + s;
-        while (limit < self->phases[0]) {
-            self->phases[0] -= limit;
+        for (i = 0; i < 3; ++i) {
+            self->phases[i] = self->phase0 + stag[i];
+            while (limit < self->phases[i]) {
+                self->phases[i] -= limit;
+            }
+            self->phases[i] = self->phases[i] / limit;
+            self->phases[i] = amp * (one - self->phases[i]);
         }
-        self->phases[0] = self->phases[0] / limit;
-        self->phases[0] = amp * (one - self->phases[0]);
-
-        s = stag[1];
-        self->phases[1] = self->phase0 + s;
-        while (limit < self->phases[1]) {
-            self->phases[1] -= limit;
-        }
-        self->phases[1] = self->phases[1] / limit;
-        self->phases[1] = amp * (one - self->phases[1]);
-
-        s = stag[2];
-        self->phases[2] = self->phase0 + s;
-        while (limit < self->phases[2]) {
-            self->phases[2] -= limit;
-        }
-        self->phases[2] = self->phases[2] / limit;
-        self->phases[2] = amp * (one - self->phases[2]);
     }
 }

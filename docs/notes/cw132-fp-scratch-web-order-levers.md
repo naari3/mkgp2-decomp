@@ -12,3 +12,8 @@ lever 3 点 (組合せで有効、src/game/Vec2.c header にも記載):
 3. 回転結果は named local (rx/ry) 経由で store する。naming により result web が b*c の fmuls temp と merge され、temp が b/a より先に f2 を取る。直接 expression store だと t=f3/b=f2 に swap する。
 
 試行の dead end (再試行不要): plain named locals の宣言順 permutation は割付不変 (use-order 支配、3 permutation で同一出力)。struct copy `Vec3 v = *in;` は stack frame 経由 (frame 0x40) になり形状崩壊。static inline helper 化 (Phase 2f re-key 期待、passthrough を引数に含む形も含む) はこのケースでは無効。
+
+## c19_u238_20261107
+Source: Codex worker c19_u238_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u238 SetWorldYaw 800B3ED4: counted for(i=0;i<3;++i) arm loop with direct stag[i] reads improves97.72321->98.70536%,448B; production O4,p fully unrolls it. Working value becomes target f0 across all three arms; residual falls38->29 instruction rows. Constants/stagger remain target one1/amp2/limit3/stagger4 versus source stagger1/one2/amp3/limit4; early phase/limit f1/f2 swap remains. Compound master assignments/direct guard and cached-argument inline arm helper are invariant on the counted-loop version. Retain loop source NonMatching; EH8/index12 both100; full fallback-linked DOL SHA-1 exact. No native gain.
