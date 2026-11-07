@@ -3156,6 +3156,7 @@ game/RankLog.c:
 	extab       start:0x80009CD4 end:0x80009E04
 	extabindex  start:0x800223DC end:0x800225A4
 	.text       start:0x800A5CEC end:0x800A8D34
+	.data       start:0x80411458 end:0x80411B18
 
 game/WarpDashMgr_Init.cpp:
 	extab       start:0x80009E04 end:0x80009E60
