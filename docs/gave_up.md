@@ -213,7 +213,7 @@ See "Pooled base registers" and "Over-split TUs" in `docs/matching_rules.md`.
 | `RankLog_OnMatchEnd` | game/RankLog | 93.43 | table index shape | |
 | `fn_8015E928` | game/resultscene/resultscene | 61.37 | not tuned much | |
 | `KartMovement_Init` | game/kartmove/carobject | 66.69 | large schedule difference; GC/2.6 no help | |
-| `fn_8020F080` (TaskListImpl::Draw) | game/anon_8020E3D0_nm1 | 96.61 | WIP is 4 lines off: needs `opt_dead_assignments off`, `operator*` returning node->task, `bool operator!=(TaskNode*)`, Remove by value with a `result` temp; left is one dead Remove-param store | `wip/fn_8020F080_draw_wip.cpp` |
+| `fn_8020F080` (TaskListImpl::Draw) | game/anon_8020E3D0_nm1 | 96.61 | WIP2 is 2 lines off (one dead store placement): Erase(const TaskIter&) + inline by-value erase wrapper + Remove with result temp + `opt_dead_assignments off`. Target keeps no dead Remove-param store before the call but copies the result 0x8 -> 0x10 -> it. ~300 forms swept | `wip/fn_8020F080_draw_wip2.cpp` |
 | `ItemSelectState_Init` | game/ItemSelectState_Init | ~99.5 | now on main (R6): `long character` declared before `resource` fixed the clamp; left is only nonvolatile reg numbering of the 7 loop vars (see file header) | 4! decl-order sweep, 2x20-min permuter, GC/2.6 |
 | `QuadFrame_FromCornerPtrs` | game/QuadFrame_FromCornerPtrs | 52.02 | `Vec ~Vec(){}` gives mem structs + `fmadds`; not finished | `notes/r4/QuadFrame_wip.c` |
 
