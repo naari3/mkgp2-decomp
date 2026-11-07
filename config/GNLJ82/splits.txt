@@ -11434,9 +11434,14 @@ game/JumpDistanceMode_Update.c:
 	.text       start:0x80211E6C end:0x802124FC
 
 game/anon_802124FC.cpp:
-	extab       start:0x80019EF4 end:0x80019F14
-	extabindex  start:0x80029F6C end:0x80029F84
-	.text       start:0x802124FC end:0x80212EA4
+	extab       start:0x80019EF4 end:0x80019EFC
+	extabindex  start:0x80029F6C end:0x80029F78
+	.text       start:0x802124FC end:0x802128F4
+
+game/anon_802124FC_nm1.cpp:
+	extab       start:0x80019EFC end:0x80019F14
+	extabindex  start:0x80029F78 end:0x80029F84
+	.text       start:0x802128F4 end:0x80212EA4
 
 game/anon_802124FC_m1.cpp:
 	extab       start:0x80019F14 end:0x80019F1C
