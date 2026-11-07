@@ -1,0 +1,5 @@
+# itemhoming-native-unlock-c17
+
+Source: Codex worker c17_u78_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 932 B.
+
+Item_HomingScanAndSteer 800D9D74 (932 B): prior 99.29185% residual was structural inline composition. Reusing outer adjustment for targetYaw is byte-invariant and does not fix f0 intermediary. Extracting driver root translation + horizontal yaw into static inline ItemHoming_GetTargetYaw removes extra fmr, but moves its target buffer below the caller candidate buffer (99.72103%). Extracting candidate selection into static inline ItemHoming_FindTarget with caller-owned scanOrigin copy restores both vector stack offsets and li bestDriver / mr index initialization. This leaves best/candidate GPR and best/current angle FPR swaps; declaration order bestDriver,index,driver,bestAngle,angle,candidatePosition resolves them. Text932/extab8/index12 all 100%; flag promoted without splits, data, flags, EH mappings or alignment edits. Full source-linked build SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65; actual linked ranges independently compared exact.
