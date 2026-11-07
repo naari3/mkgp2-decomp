@@ -17,8 +17,8 @@ extern const char lbl_802E98D0[];
 extern "C" void STLContainer_HeaderInit(STLTree *, const STLPolicy *, const STLCompare *);
 inline STLTree::STLTree()
 {
-    STLCompare compare;
     STLPolicy policy;
+    STLCompare compare;
     STLContainer_HeaderInit(this, &policy, &compare);
 }
 STLTree lbl_80598554;
