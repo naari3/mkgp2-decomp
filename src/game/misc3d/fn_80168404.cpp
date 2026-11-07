@@ -48,6 +48,6 @@ extern "C" void fn_80168404(void *dst, const char *fmt, float x, float y, float 
     tex.x18 = 1;
     fn_801F93EC(&tex, x, y);
     fn_801F93D0(&tex, sx, sy);
-    tex.color = 0xFFFFFF00 + ((int)(lbl_806D8A10 * alpha) & 255);
+    tex.color = __rlwimi(-0x100, (unsigned char)(int)(lbl_806D8A10 * alpha), 0, 24, 31);
     fn_801F8A34(fn_801F8E58(), &tex, dst);
 }
