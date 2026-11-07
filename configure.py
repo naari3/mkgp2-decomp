@@ -1120,7 +1120,7 @@ config.libs = [
             Object(Matching, "game/SpriteAnimHandleDestroy.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SpriteAnimHandleCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/SpriteGroupCreate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(Matching, "game/VolumeCalibration.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
+            Object(Matching, "game/VolumeCalibration.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr", "-use_lmw_stmw on"]),
             Object(Matching, "game/ItemHitRegistry.c"),
             Object(Matching, "game/ItemAliasLocalizedVariant.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/ItemSelectAllowed.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
