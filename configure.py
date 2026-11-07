@@ -3073,7 +3073,7 @@ config.libs = [
             Object(Matching, "game/objview/fn_8018D3E0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/misc3d/fn_8018D638.c"),
             Object(NonMatching, "game/misc3d/fn_8018D64C.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/objview/fn_8018E510.c"),
+            Object(NonMatching, "game/objview/fn_8018E510.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/objview/fn_8018E108.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/objview/fn_8018E6FC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/objview/fn_8018EDE0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),

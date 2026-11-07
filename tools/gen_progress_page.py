@@ -301,11 +301,12 @@ def format_bytes(n: int) -> str:
     return f"{n:.1f} TiB"
 
 
-def render_bar(pct: float, width: int = 320) -> str:
+def render_bar(pct: float) -> str:
     pct = max(0.0, min(100.0, pct))
-    fill_w = int(width * pct / 100)
+    # Percent width: the bar is a flexible grid column, so a fixed px fill
+    # (previously 320px max) drew 78% as roughly a third of the track.
     return (
-        f'<div class="bar"><div class="bar-fill" style="width:{fill_w}px;background:{color_for_pct(pct)}"></div>'
+        f'<div class="bar"><div class="bar-fill" style="width:{pct:.2f}%;background:{color_for_pct(pct)}"></div>'
         f'<span class="bar-label">{pct:.2f}%</span></div>'
     )
 

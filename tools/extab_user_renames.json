@@ -12564,5 +12564,10 @@
   "src/game/anon_8020C974_thunk.cpp": {
     "@92@__dt__11RaceSetupMIFv": "fn_8020D1B8",
     "__dt__11RaceSetupMIFv": "fn_8020CEE8"
+  },
+  "src/game/objview/fn_8018E510.cpp": {
+    "__ct__12ObjViewEntryFPv": "fn_8018E510",
+    "__vt__7ObjBase": "lbl_80490FE0",
+    "__vt__12ObjViewEntry": "lbl_80495E8C"
   }
 }
