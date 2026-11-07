@@ -803,7 +803,7 @@ config.libs = [
             Object(Matching, "game/fn_801E68B4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/AI_UpdateItemEffects.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801DEC74.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/DriveBehavior_HandleWpType.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/DriveBehavior_HandleWpType.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80253DF0.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801DB99C.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80146188.c", extra_cflags=["-Cpp_exceptions on"]),
