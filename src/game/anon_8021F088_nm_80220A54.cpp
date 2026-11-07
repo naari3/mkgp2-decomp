@@ -51,8 +51,12 @@ void clGetCoinLine::Layout(float y) {
             digits[2].scaleX = lbl_806DB264;
             digits[2].scaleY = lbl_806DB264;
         } else if (flashTimer <= 30) {
-            float f = lbl_806DB194 - (flashTimer - 23) / lbl_806DB25C;
-            int v = (int)(lbl_806DB260 * f);
+            /* fakematch (permuter): natural code is
+             *   float f = lbl_806DB194 - (flashTimer - 23) / lbl_806DB25C;
+             *   int v = (int)(lbl_806DB260 * f);
+             * the assignment inside the cast gives the target's float regs. */
+            float f;
+            int v = (int)(lbl_806DB260 * (f = lbl_806DB194 - (flashTimer - 23) / lbl_806DB25C));
             if (v > 0xFF) {
                 v = 0xFF;
             }
