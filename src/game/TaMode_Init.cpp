@@ -130,8 +130,9 @@ TaMode::TaMode() {
     lbl_806D13A1 = 0;
     g_finalRacePosition = 0;
     int laps = params[-6].laps;
-    float bonus = params[-6].lapBonus;
-    float time = params[-6].timeLimit;
+    float bonus, time;
+    time = params[-6].timeLimit;
+    bonus = params[-6].lapBonus;
     g_currentLap = 1;
     g_raceResultCode = -2;
     g_finalLapBannerShown = 0;
