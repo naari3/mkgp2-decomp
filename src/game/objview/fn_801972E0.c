@@ -37,10 +37,10 @@ static inline float RandomParam(ViewParticleOwner *o, float lo, float hi) {
 
 static inline void UpdateParticles(ViewParticleOwner *o, float motion) {
     {
-        int offset;
-        ViewParticle *q;
         int j;
-        for (offset = 0, j = 0; j < 50; offset += sizeof(ViewParticle), j++) {
+        ViewParticle *q;
+        int offset;
+        for (j = 0, offset = 0; j < 50; offset += sizeof(ViewParticle), j++) {
             q = (ViewParticle *)((char *)o->particles + offset);
             if (q->active) {
                 float speed;
