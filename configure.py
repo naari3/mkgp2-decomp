@@ -1308,7 +1308,7 @@ config.libs = [
             Object(Matching, "game/ItemObject_Tick_Kind2426_FastDrop.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/Terrain_FlagsToTypeId.c"),  #g2
             Object(Matching, "game/Terrain_FlagsToTypeId_nm1.c"),  #g2
-            Object(NonMatching, "game/Terrain_FlagsToTypeId_nm2.c"),  #g2
+            Object(Matching, "game/Terrain_FlagsToTypeId_nm2.c"),  #g2
             Object(Matching, "game/ItemObject_CheckPairCollision.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartVfx_Bind1_Damage.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartVfx_Bind6_YawZ.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -2621,7 +2621,7 @@ config.libs = [
             Object(Matching, "game/fn_801BA6A4.c"),
             Object(Matching, "game/clFlowTitle_Init.cpp", extab_padding=b""),
             Object(NonMatching, "game/clFlowClass_Update.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/CharaSelect_SetupCharacterDisplay.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/1.3.2r"),
+            Object(NonMatching, "game/CharaSelect_SetupCharacterDisplay.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/clFlowClass_Init.cpp", extab_padding=b""),
             Object(NonMatching, "game/clFlowCourse.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/clFlowCourse_Update.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
@@ -2698,7 +2698,7 @@ config.libs = [
             Object(Matching, "game/fn_801F6D58.cpp"),
             Object(Matching, "game/fn_801F7198.cpp"),
             Object(NonMatching, "game/fn_801F7344.cpp"),
-            Object(NonMatching, "game/fn_801F7604.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/1.2.5n"),
+            Object(NonMatching, "game/fn_801F7604.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
             Object(Matching, "game/fn_801B7B64.c"),
             Object(Matching, "game/fn_801CE800.c"),
             Object(NonMatching, "game/clFlowTaPlease_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
