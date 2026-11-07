@@ -157,14 +157,7 @@ static inline float QuantizeInput(float v)
 
 struct TaBookend { Vec eye, target; };
 extern "C" {
-struct TaRecord { unsigned char pad[12]; float time; };
-struct TaBattleTables {
-    unsigned char pad[0x340];
-    TaRecord normal[16][2];
-    TaRecord reverse[8][2];
-    unsigned char memberFunction[12];
-};
-extern TaBattleTables BATTLE;
+struct TaRecord { int character; const char *name; int score; float time; };
 extern Vec lbl_805D2B28, lbl_805D2B34;
 extern void *lbl_806D13B4, *lbl_806D13A4, *lbl_806D1398;
 extern void *g_raceCamera;

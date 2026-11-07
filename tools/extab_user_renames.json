@@ -12502,5 +12502,8 @@
     "fn_80231B74__Fi": "fn_80231B74",
     "fn_80231A50__Fi": "fn_80231A50",
     "__sinit_EnmyFaceEffect_nm1_cpp": "fn_8023001C"
+  },
+  "src/game/anon_802124FC_nm1.cpp": {
+    "__dt__7KartPosFv": "dtor_80036E40"
   }
 }

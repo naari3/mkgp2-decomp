@@ -1,6 +1,7 @@
 /* Grounded AI movement, reconstructed from 0x801EED14..0x801EFFA4.
  * NonMatching: see HANDOFF.md for measured code-generation differences. */
 #include "game/GroundedMovementPrivate.h"
+#include "game/singleton.h"
 
 extern "C" {
 extern AIPairRecord lbl_806793D8[8];
@@ -60,7 +61,7 @@ static inline void groundedAngle(float &a) {
 }
 /* The singleton accessor keeps its null fallback in the target. */
 static inline void *courseData() {
-    return g_courseData ? g_courseData : 0;
+    return SINGLETON_INSTANCE(g_courseData);
 }
 
 #pragma use_lmw_stmw on
@@ -73,7 +74,7 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
     else {
         void *lateral=self->controller->lateralOffset;
         float random=PseudoRandom_Next();
-        self->lateralWander=LateralOffset_GetMagnitude(lateral)*random;
+        self->lateralWander=random*LateralOffset_GetMagnitude(lateral);
         self->wanderTimer=fn_801EB708()%120+160;
     }
     if (self->avoidanceTimer>0) --self->avoidanceTimer;
@@ -352,7 +353,8 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
     if (self->slip<slip) self->slip+=step;
     if (lbl_806DA528<self->slip) self->slip=lbl_806DA528;
     if (self->slip<lbl_806DA52C) self->slip=lbl_806DA52C;
-    self->matrixYaw=self->yaw+lbl_806DA470*self->slip;
+    float slipYaw=lbl_806DA470*self->slip;
+    self->matrixYaw=self->yaw+slipYaw;
     speed=self->speed;
     speed/=lbl_806DA44C; speed/=lbl_806DA44C; speed/=lbl_806DA44C;
     if (speed<lbl_806DA450) speed=lbl_806DA450;

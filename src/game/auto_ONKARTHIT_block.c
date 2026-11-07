@@ -1182,10 +1182,10 @@ void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float i
 asm void *KartItem_Dtor(void *self, short flag);
 asm void CarObject_Init(void);
 void KartItem_UpdateShadowBillboardAndViewport(KartItemOpsView *self, int arg2, int arg3);
-asm void KartItem_AdvanceAnim3c(void);
+float KartItem_AdvanceAnim3c(const KartItemOpsView *self);
 float CarObject_CalcSpeedRatio(KartItemOpsView *self);
 float KartItem_GetMaxSpeedWithBonus(KartItemOpsView *self);
-asm void KartItem_GetCurrentSpeedWithBonus(void);
+float KartItem_GetCurrentSpeedWithBonus(const KartItemOpsView *self);
 float *CarObject_GetTransformMatrix(CarObjGetterView *self);
 KartMovementSpeedView *CarObject_GetKartMovementPtr(CarObjGetterView *self);
 void *KartItem_GetCarObjectSoundCh(CarObjGetterView *self);
@@ -1210,8 +1210,8 @@ unsigned char KartItem_TryArmBoostOnLanding(KartItemOpsView *self, unsigned char
 void KartItem_SetCarObjectField2d4Float(KartItemOpsView *self, float v);
 void KartItem_SetCarObjectField1c8Float(KartItemOpsView *self, float v);
 void CarObject_SetPosition(KartItemOpsView *self, void *pos);
-asm void KartItem_ForwardToCarMovement_8019a4e0(void);
-asm void KartItem_ForwardToCarMovement_8019a6a4(void);
+void KartItem_ForwardToCarMovement_8019a4e0(const KartItemOpsView *self);
+void KartItem_ForwardToCarMovement_8019a6a4(const KartItemOpsView *self);
 void KartItem_OnFallOffOrDeath(KartItemOpsView *self);
 asm void CarObject_HandleItemEffect(void);
 int ItemEffect_SelectAndDispatch_Wrap(ItemEffectTable *self, int itemId, void *itemObj, int arg4);
@@ -6313,18 +6313,14 @@ void KartItem_UpdateShadowBillboardAndViewport(KartItemOpsView *self, int arg2, 
 }
 #pragma exceptions reset
 
-asm void KartItem_AdvanceAnim3c(void) { /* 0x8004EFD8 size:0x24 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lwz r3, 0x3c(r3)
-    stw r0, 0x14(r1)
-    bl KartEffectFadeTransit_GetActiveValue
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+/* Built with GC/2.6 (configure.py): with a const-qualified self its scheduler
+ * hoists the field load above the LR save, as in the target. 1.3.2 never
+ * does, and the rest of this TU compiles identically under both. */
+#pragma exceptions off
+float KartItem_AdvanceAnim3c(const KartItemOpsView *self) { /* 0x8004EFD8 size:0x24 */
+    return KartEffectFadeTransit_GetActiveValue(self->boostObj);
 }
+#pragma exceptions reset
 
 #pragma exceptions off
 float CarObject_CalcSpeedRatio(KartItemOpsView *self) { /* 0x8004EFFC size:0x44 */
@@ -6373,19 +6369,11 @@ float KartItem_GetMaxSpeedWithBonus(KartItemOpsView *self) { /* 0x8004F040 size:
 }
 #pragma exceptions reset
 
-asm void KartItem_GetCurrentSpeedWithBonus(void) { /* 0x8004F0F8 size:0x28 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lwz r3, 0x28(r3)
-    li r4, 0x0
-    stw r0, 0x14(r1)
-    bl KartMovement_CalcSpeedWithCoinBonus
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+float KartItem_GetCurrentSpeedWithBonus(const KartItemOpsView *self) { /* 0x8004F0F8 size:0x28 */
+    return KartMovement_CalcSpeedWithCoinBonus(self->movement, 0);
 }
+#pragma exceptions reset
 
 #pragma exceptions off
 float *CarObject_GetTransformMatrix(CarObjGetterView *self) { /* 0x8004F120 size:0xC */
@@ -6633,31 +6621,17 @@ void CarObject_SetPosition(KartItemOpsView *self, void *pos) { /* 0x8004F640 siz
 }
 #pragma exceptions reset
 
-asm void KartItem_ForwardToCarMovement_8019a4e0(void) { /* 0x8004F668 size:0x24 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lwz r3, 0x28(r3)
-    stw r0, 0x14(r1)
-    bl fn_8019A4E0
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+void KartItem_ForwardToCarMovement_8019a4e0(const KartItemOpsView *self) { /* 0x8004F668 size:0x24 */
+    fn_8019A4E0(self->movement);
 }
+#pragma exceptions reset
 
-asm void KartItem_ForwardToCarMovement_8019a6a4(void) { /* 0x8004F68C size:0x24 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lwz r3, 0x28(r3)
-    stw r0, 0x14(r1)
-    bl fn_8019A6A4
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+void KartItem_ForwardToCarMovement_8019a6a4(const KartItemOpsView *self) { /* 0x8004F68C size:0x24 */
+    fn_8019A6A4(self->movement);
 }
+#pragma exceptions reset
 
 #pragma exceptions off
 void KartItem_OnFallOffOrDeath(KartItemOpsView *self) { /* 0x8004F6B0 size:0x1A8 */

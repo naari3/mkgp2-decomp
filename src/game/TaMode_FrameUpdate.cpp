@@ -1,9 +1,157 @@
-/* Time-attack update, 0x800A2B90..0x800A38F8. */
+/* Time-attack update, 0x800A2B90..0x800A38F8; retained NonMatching. */
 #include "game/TaMode_FrameUpdate_private.h"
+
+
+extern "C" {
+extern char lbl_80321D7C[];
+extern char lbl_80321D8C[];
+extern char lbl_80321D9C[];
+extern char lbl_80321DAC[];
+extern char lbl_80321DBC[];
+extern char lbl_80321DCC[];
+extern char lbl_80321DDC[];
+extern char lbl_80321DEC[];
+extern char lbl_80321DFC[];
+extern char lbl_80321E0C[];
+extern char lbl_80321E1C[];
+extern char lbl_80321E2C[];
+extern char lbl_80321E3C[];
+extern char lbl_80321E4C[];
+extern char lbl_80321E5C[];
+extern char lbl_80321E6C[];
+extern char lbl_80321E7C[];
+extern char lbl_80321E90[];
+extern char lbl_80321EA0[];
+extern char lbl_80321EB4[];
+extern char lbl_80321EC4[];
+extern char lbl_80321ED8[];
+extern char lbl_80321EE8[];
+extern char lbl_80321EFC[];
+extern char lbl_80321F0C[];
+extern char lbl_80321F20[];
+extern char lbl_80321F30[];
+extern char lbl_80321F44[];
+extern char lbl_80321F54[];
+extern char lbl_80321F68[];
+extern char lbl_80321F78[];
+extern char lbl_80321F8C[];
+}
+
+/* Shared BATTLE prefix, followed by the time-attack record tables. */
+struct TaRaceParams { unsigned char laps; float timeLimit, lapBonus; };
+struct TaBattlePrefix { TaRaceParams params[48]; TaRecord records[16]; };
+extern "C" TaBattlePrefix BATTLE = {
+    {
+        { 6, 120.0f, 15.0f },
+        { 4, 120.0f, 20.0f },
+        { 6, 120.0f, 15.0f },
+        { 4, 120.0f, 20.0f },
+        { 9, 90.0f, 15.0f },
+        { 6, 90.0f, 20.0f },
+        { 8, 120.0f, 10.0f },
+        { 4, 120.0f, 20.0f },
+        { 8, 120.0f, 10.0f },
+        { 4, 120.0f, 20.0f },
+        { 9, 90.0f, 10.0f },
+        { 6, 90.0f, 20.0f },
+        { 4, 120.0f, 20.0f },
+        { 4, 120.0f, 30.0f },
+        { 4, 120.0f, 20.0f },
+        { 4, 120.0f, 30.0f },
+        { 6, 90.0f, 20.0f },
+        { 5, 90.0f, 30.0f },
+        { 3, 120.0f, 40.0f },
+        { 3, 120.0f, 50.0f },
+        { 3, 120.0f, 40.0f },
+        { 3, 120.0f, 50.0f },
+        { 4, 100.0f, 40.0f },
+        { 4, 100.0f, 50.0f },
+        { 4, 120.0f, 30.0f },
+        { 4, 120.0f, 35.0f },
+        { 4, 120.0f, 30.0f },
+        { 4, 120.0f, 35.0f },
+        { 5, 100.0f, 30.0f },
+        { 5, 100.0f, 35.0f },
+        { 2, 120.0f, 90.0f },
+        { 2, 120.0f, 100.0f },
+        { 2, 120.0f, 90.0f },
+        { 2, 120.0f, 100.0f },
+        { 3, 100.0f, 90.0f },
+        { 3, 100.0f, 100.0f },
+        { 3, 120.0f, 90.0f },
+        { 2, 150.0f, 100.0f },
+        { 3, 120.0f, 90.0f },
+        { 2, 150.0f, 100.0f },
+        { 4, 100.0f, 90.0f },
+        { 3, 150.0f, 100.0f },
+        { 4, 120.0f, 30.0f },
+        { 4, 120.0f, 30.0f },
+        { 4, 120.0f, 30.0f },
+        { 4, 120.0f, 30.0f },
+        { 5, 100.0f, 30.0f },
+        { 5, 100.0f, 30.0f },
+    },
+    {
+        { 0, lbl_80321D7C, 7128, 117.0f },
+        { 1, lbl_80321D8C, 7192, 118.0f },
+        { 6, lbl_80321D9C, 6653, 111.0f },
+        { 6, lbl_80321DAC, 6976, 120.0f },
+        { 2, lbl_80321DBC, 7052, 119.0f },
+        { 2, lbl_80321DCC, 8605, 144.0f },
+        { 8, lbl_80321DDC, 7793, 127.0f },
+        { 8, lbl_80321DEC, 8983, 150.0f },
+        { 4, lbl_80321DFC, 7730, 130.0f },
+        { 4, lbl_80321E0C, 7086, 119.0f },
+        { 3, lbl_80321E1C, 8575, 140.0f },
+        { 10, lbl_80321E2C, 8784, 147.0f },
+        { 3, lbl_80321E3C, 8575, 140.0f },
+        { 10, lbl_80321E2C, 8784, 147.0f },
+        { 3, lbl_80321E1C, 8575, 140.0f },
+        { 10, lbl_80321E2C, 8784, 147.0f },
+    }
+};
+
+static TaRecord taNormalRecords[16][2] = {
+    { { 0, lbl_80321D7C, 7443, 122.0999984741211f }, { 1, lbl_80321D8C, 7714, 126.5f } },
+    { { 10, lbl_80321D9C, 6472, 105.9000015258789f }, { 8, lbl_80321DAC, 7686, 126.0999984741211f } },
+    { { 2, lbl_80321DBC, 7847, 128.6999969482422f }, { 12, lbl_80321DCC, 7876, 129.1999969482422f } },
+    { { 8, lbl_80321DDC, 7373, 120.80000305175781f }, { 9, lbl_80321DEC, 8542, 140.3000030517578f } },
+    { { 7, lbl_80321DFC, 7400, 121.30000305175781f }, { 3, lbl_80321E0C, 8932, 146.8000030517578f } },
+    { { 11, lbl_80321E1C, 9052, 148.8000030517578f }, { 5, lbl_80321E2C, 9548, 154.10000610351562f } },
+    { { 4, lbl_80321E3C, 7528, 123.4000015258789f }, { 2, lbl_80321E4C, 8170, 132.0f } },
+    { { 0, lbl_80321E5C, 7746, 127.0999984741211f }, { 4, lbl_80321E6C, 7580, 125.30000305175781f } },
+    { { 0, lbl_80321E7C, 7146, 117.5f }, { 1, lbl_80321E90, 7316, 118.5f } },
+    { { 6, lbl_80321EA0, 6748, 112.0f }, { 6, lbl_80321EB4, 7067, 119.5f } },
+    { { 2, lbl_80321EC4, 7143, 118.5f }, { 2, lbl_80321ED8, 8652, 142.0f } },
+    { { 8, lbl_80321EE8, 7727, 127.0f }, { 8, lbl_80321EFC, 9021, 152.0f } },
+    { { 4, lbl_80321F0C, 7880, 130.5f }, { 4, lbl_80321F20, 7216, 118.5f } },
+    { { 7, lbl_80321F30, 8577, 138.5f }, { 5, lbl_80321F44, 8829, 146.5f } },
+    { { 7, lbl_80321F30, 8577, 138.5f }, { 5, lbl_80321F44, 8829, 146.5f } },
+    { { 7, lbl_80321F30, 8577, 138.5f }, { 5, lbl_80321F44, 8829, 146.5f } },
+};
+
+static TaRecord taReverseRecords[8][2] = {
+    { { 6, lbl_80321E7C, 7503, 123.0999984741211f }, { 1, lbl_80321E90, 7627, 125.0999984741211f } },
+    { { 7, lbl_80321EA0, 6487, 106.0999984741211f }, { 12, lbl_80321EB4, 7626, 125.0999984741211f } },
+    { { 6, lbl_80321EC4, 7929, 130.10000610351562f }, { 5, lbl_80321ED8, 7818, 131.3000030517578f } },
+    { { 3, lbl_80321EE8, 7526, 123.4000015258789f }, { 10, lbl_80321EFC, 8630, 141.8000030517578f } },
+    { { 10, lbl_80321F0C, 7372, 120.80000305175781f }, { 12, lbl_80321F20, 8836, 145.1999969482422f } },
+    { { 9, lbl_80321F30, 9018, 148.1999969482422f }, { 7, lbl_80321F44, 9888, 162.6999969482422f } },
+    { { 2, lbl_80321F54, 7558, 123.9000015258789f }, { 4, lbl_80321F68, 8199, 134.60000610351562f } },
+    { { 11, lbl_80321F78, 7708, 126.4000015258789f }, { 0, lbl_80321F8C, 7687, 126.0999984741211f } },
+};
+
+static unsigned int taMemberFunction[3] = { 0, 16, 0 };
+
+static inline TaRecord *SelectTaRecord(int round, int reversed, int cup)
+{
+    TaRecord *record = &taReverseRecords[cup - 1][round];
+    if (!reversed) record = &taNormalRecords[cup - 1][round];
+    return record;
+}
 
 extern "C" int TaMode_FrameUpdate(RaceScene *self)
 {
-    TaBattleTables *battle = &BATTLE;
     InputPlayer *pad = InputMgr_GetPlayer(GetInputManager(), 0);
     if (g_sceneTransitionTimer > 0 && --g_sceneTransitionTimer == 0) {
         SetSyncTarget(0x2d);
@@ -16,7 +164,7 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
     signed char coins;
     signed char started;
     ItemObjectManager_PerFrameUpdate(GetRaceContextPtr());
-    if (lbl_806D13B4) fn_8023E324(lbl_806D13B4, __ptmf_test(battle->memberFunction) != 0);
+    if (lbl_806D13B4) fn_8023E324(lbl_806D13B4, __ptmf_test(taMemberFunction) != 0);
     if (g_raceEnded != 1) {
         long long now = OSGetTime();
         steer = QuantizeInput(pad->Steer());
@@ -197,15 +345,8 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
                 if (lbl_806D13A0) {
                     if (g_finalRacePosition == 0) fn_801D670C(g_playerData);
                 } else {
-                    TaRecord (*reverse)[2] = battle->reverse;
-                    int cup = g_cupId - 1;
-                    int round = g_longRoundFlag;
-                    TaRecord *record = &reverse[cup][round];
                     float time = g_totalRaceTime;
-                    if (g_reverseRoundFlag == 0) {
-                        TaRecord (*normal)[2] = battle->normal;
-                        record = &normal[cup][round];
-                    }
+                    TaRecord *record = SelectTaRecord(g_longRoundFlag, g_reverseRoundFlag, g_cupId);
                     if (time < record->time) {
                         fn_801D676C(g_playerData);
                         PlayStats_IncTaBestRecord();

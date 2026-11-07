@@ -416,7 +416,7 @@ struct InputPlayer {
     virtual void v14();
     virtual float Stick();
     virtual void v1C();
-    virtual void v20();
+    virtual unsigned char Held(int mask);
     virtual void v24();
     virtual unsigned int Pressed(int mask);
 };
@@ -979,6 +979,7 @@ struct ResultPartYD {
 
 extern "C" {
 extern void fn_8013D660(VObj *p, float x, float y);
+extern const float lbl_806D8760, lbl_806D86B8, lbl_806D86B4;
 extern void fn_8013D4B0(VObj *p, float a);
 extern void fn_8013D608(VObj *p, float x, float y, float z);
 extern void fn_8013D59C(VObj *p, float x, float y, float z);
@@ -1570,20 +1571,24 @@ static inline void RYEntry_AdvanceSubs(RYEntry *entry) {
     }
 }
 
+static inline void RYPair_Spawn(RYPair *p) {
+    for (int i = 0; i < 3; ++i) {
+        if (p->e[i].on < 0) {
+            p->e[i].on = 0;
+            p->e[i].vx = lbl_806D86EC * (float)-(rand() % 20 + 40);
+            p->e[i].vy = lbl_806D8678;
+            p->e[i].vz = lbl_806D8678;
+            p->e[i].x = lbl_806D8770 + (float)(rand() % 600);
+            p->e[i].y = lbl_806D8774;
+            break;
+        }
+    }
+}
+
 void fn_8015D9F0(RYPair *p) {
     if (!p->stopped) {
         if (++p->timer >= p->interval) {
-            for (int i = 0; i < 3; ++i) {
-                if (p->e[i].on < 0) {
-                    p->e[i].on = 0;
-                    p->e[i].vx = lbl_806D86EC * (float)-(rand() % 20 + 40);
-                    p->e[i].vy = lbl_806D8678;
-                    p->e[i].vz = lbl_806D8678;
-                    p->e[i].x = lbl_806D8770 + (float)(rand() % 600);
-                    p->e[i].y = lbl_806D8774;
-                    break;
-                }
-            }
+            RYPair_Spawn(p);
             p->timer = 0;
             p->interval = rand() % 100 + 60;
         }
@@ -1739,10 +1744,12 @@ void fn_8015D4F8(void *unused, int color, const char *text, float x, float y) {
     if (!text) return;
     unsigned long length = strlen(text);
     float alpha = lbl_806D8674;
-    if (y >= lbl_806D8758) alpha -= (y - lbl_806D8758) * lbl_806D875C;
-    const float *r = &lbl_80368704[color][0];
-    const float *g = &lbl_80368704[color][1];
-    const float *b = &lbl_80368704[color][2];
+    if (y >= lbl_806D8758) { float d = y - lbl_806D8758; alpha -= d * lbl_806D875C; }
+    const float *b;
+    const float *g;
+    const float *r = lbl_80368704[color];
+    b = r + 2;
+    g = r + 1;
     for (unsigned int i = 0; i < length; ++i, ++text) {
         if (!*text) return;
         if (*text == 'i') {
@@ -1971,4 +1978,234 @@ ResultPartY::ResultPartY(int n) {
     PreloadResource(0x50a);
     ClSound_PlayBgmStream(2, 0);
     clStream_setVolume(2, fn_801932F8());
+}
+
+struct ResultFadeV {
+    int idA;
+    char pad04[0x2c - 0x04];
+    float sx, sy;
+    unsigned int colA[4];
+    char pad44[0x58 - 0x44];
+    int idB;
+    char pad5c[0x8c - 0x5c];
+    unsigned int colB[4];
+    char pad9c[0xb0 - 0x9c];
+    int timer;
+    int state;
+    int step;
+    int half;
+};
+
+struct ResultPartYU {
+    void *vt;
+    int mode;
+    int half;
+    int idx;
+    float timer;
+    unsigned char started;
+    char pad15[3];
+    int x18;
+    float wait;
+    int x20;
+    float x24;
+    float fade;
+    ResultKartSet *karts;
+    ResultFadeV *fadeObj;
+    RYPair *pair;
+    char pad38[0x6c - 0x38];
+    unsigned int colA[4];
+    char pad7c[0xc4 - 0x7c];
+    unsigned int colB[4];
+};
+
+extern "C" {
+extern void KartDriver_TriggerSlotC3Action(ResultDriver *d, float t);
+extern void KartDriver_TickAction_79234(ResultDriver *d, float t);
+extern void RenderObj_ItemStateMachine_Timed(ResultDriver *d, int n, float a, float b);
+extern float Saturate_Double(float v, float lo, float hi);
+extern void fn_801695E0(int obj, int id, int flag, float x, float y, float a);
+extern void fn_80169334(int obj, int id, int flag, float x, float y, float z, float a, float b);
+extern void fn_80190A70(int a, int b);
+extern const float lbl_806D86DC, lbl_806D86E0, lbl_806D86E4, lbl_806D86F4, lbl_806D86F8, lbl_806D86FC;
+extern const float lbl_806D8700, lbl_806D8704, lbl_806D8708, lbl_806D870C, lbl_806D8710, lbl_806D8714;
+extern const float lbl_806D8718, lbl_806D871C, lbl_806D8720, lbl_806D8724, lbl_806D8728, lbl_806D872C;
+extern const float lbl_806D8730, lbl_806D8734, lbl_806D8738, lbl_806D873C, lbl_806D8740, lbl_806D8744;
+extern const float lbl_806D8748, lbl_806D874C, lbl_806D8750, lbl_806D8754;
+
+static inline void Slot_ResetPose(ResultKartSlot *k) {
+    float s[3][4];
+    float r[3][4];
+    PSMTXScale(s, lbl_806D8674, lbl_806D8674, lbl_806D8674);
+    PSMTXIdentity(k->m);
+    PSMTXConcat(s, k->m, k->m);
+    PSMTXRotRad(r, 'Z', lbl_806D8690);
+    PSMTXConcat(r, k->m, k->m);
+    PSMTXRotRad(r, 'Y', lbl_806D8694);
+    PSMTXConcat(r, k->m, k->m);
+}
+
+static inline void Slot_Tilt(ResultKartSlot *k) {
+    float x = k->x;
+    if (x < lbl_806D86A0) {
+        float s[3][4];
+        float r[3][4];
+        PSMTXScale(s, lbl_806D8674, lbl_806D8674, lbl_806D8674);
+        PSMTXIdentity(k->m);
+        PSMTXConcat(s, k->m, k->m);
+        PSMTXRotRad(r, 'Z', lbl_806D8690);
+        PSMTXConcat(r, k->m, k->m);
+        PSMTXRotRad(r, 'Y', lbl_806D8700 * (lbl_806D8704 * (lbl_806D8674 - (x - lbl_806D86FC) / lbl_806D8708)) + lbl_806D8694);
+        PSMTXConcat(r, k->m, k->m);
+    }
+}
+
+static inline void Slot_Place(ResultKartSlot *k) {
+    float t[3][4];
+    PSMTXTrans(t, k->x, lbl_806D86A8, lbl_806D869C);
+    PSMTXConcat(t, k->m, k->out);
+}
+
+static inline void Slot_Tick(ResultKartSlot *k) {
+    KartDriver_TriggerSlotC3Action(k->driver, lbl_806D870C);
+    KartDriver_TickAction_79234(k->driver, lbl_806D870C);
+    RenderObj_ItemStateMachine_Timed(k->driver, 0, lbl_806D8678, lbl_806D8678);
+}
+
+static inline void KartSet_Update(ResultKartSet *ks) {
+    int i;
+    if (ks->on) {
+        for (i = 0; i < 13; i++) {
+            ResultKartSlot *k;
+            if (ks->on2 == 1 && ks->karts[i]->x >= lbl_806D86A0) continue;
+            ks->karts[i]->x -= lbl_806D86F8;
+            k = ks->karts[i];
+            if (k->x < lbl_806D86FC && ks->on2 == 0) {
+                int j = i - 1;
+                if (j < 0) j = 12;
+                k->x = lbl_806D86A4 + ks->karts[j]->x;
+                Slot_ResetPose(ks->karts[i]);
+            }
+            Slot_Tilt(ks->karts[i]);
+            Slot_Place(ks->karts[i]);
+            Slot_Tick(ks->karts[i]);
+        }
+    }
+}
+
+static inline void Fade_Next(ResultFadeV *f) {
+    if (f->half == 0 && f->step == 1) f->step++;
+    f->timer = 0;
+    f->state = 1;
+    f->idB = f->idA;
+    f->colB[0] = -1;
+    f->colB[1] = -1;
+    f->colB[2] = -1;
+    f->colB[3] = -1;
+    f->colA[0] = -0x100;
+    f->colA[1] = -0x100;
+    f->colA[2] = -0x100;
+    f->colA[3] = -0x100;
+    if (f->step >= 13) {
+        f->idA = 0x1ecd;
+    } else {
+        f->idA = f->step++ + lbl_806D8664[f->half];
+    }
+}
+
+static inline void Col_SetAlpha(unsigned int *col, int a) {
+    unsigned int c = __rlwimi(-0x100, a, 0, 24, 31);
+    col[0] = c;
+    col[1] = c;
+    col[2] = c;
+    col[3] = c;
+}
+
+static inline void Fade_Update(ResultFadeV *f) {
+    if (f->state == 1) {
+        float t = (float)f->timer / lbl_806D86A4;
+        int a = (int)(lbl_806D86E8 * t);
+        float sc = lbl_806D86EC * (lbl_806D8674 - t) + lbl_806D8674;
+        f->sx = sc;
+        f->sy = sc;
+        Col_SetAlpha(f->colA, a);
+        Col_SetAlpha(f->colB, 0xff - a);
+        if ((float)f->timer >= lbl_806D86A4) f->state = 2;
+        f->timer++;
+    }
+}
+
+void fn_8015CD74(ResultPartYU *o) {
+    int i;
+    float a;
+    o->timer += lbl_806D8674;
+    if (o->timer > lbl_806D86DC) {
+        float lim;
+        if (o->half == 0) {
+            lim = lbl_806D86E0;
+        } else {
+            lim = lbl_806D86E4;
+        }
+        if ((o->wait += lbl_806D8674) > lim) {
+            Fade_Next(o->fadeObj);
+            o->wait = lbl_806D8678;
+        }
+        Fade_Update(o->fadeObj);
+    }
+    if (lbl_806D86F0 == o->timer) o->karts->on = 1;
+    if (lbl_806D86F4 == o->timer) o->karts->on2 = 1;
+    KartSet_Update(o->karts);
+    if (lbl_806D8710 == o->timer) o->pair->stopped = 1;
+    fn_8015D9F0(o->pair);
+    {
+        float base = lbl_806D8718 * (o->timer - lbl_806D871C) + lbl_806D8714;
+        for (i = 0;; i++) {
+            const char *text = lbl_80490080[i].text;
+            float y;
+            if (!text) break;
+            y = lbl_80490080[i].y - base;
+            if (y > lbl_806D8720 && y < lbl_806D8724) {
+                float x = lbl_80490080[i].big == 1 ? lbl_806D8728 : lbl_806D872C;
+                fn_8015D4F8(o, lbl_80490080[i].color, text, x, y);
+            }
+        }
+    }
+    if (lbl_806D8730 == o->timer) {
+        o->colA[0] = -0x100;
+        o->colA[1] = -0x100;
+        o->colA[2] = -0x100;
+        o->colA[3] = -0x100;
+    }
+    if (o->timer > lbl_806D8730) {
+        a = lbl_806D8680 - Saturate_Double(lbl_806D8734 * (o->timer - lbl_806D8730), lbl_806D8678, lbl_806D8680);
+        if (o->fade < lbl_806D8678 && o->timer - lbl_806D8730 - lbl_806D8738 >= lbl_806D8678) {
+            o->fade = lbl_806D8678;
+        }
+        if (o->mode != 0) {
+            fn_801695E0(5, 0xfc1, 0, lbl_806D866C, lbl_806D873C + a, lbl_806D8674);
+            fn_801695E0(5, 0xfc2, 0, lbl_806D866C, lbl_806D8740 + a, lbl_806D8674);
+            fn_801695E0(5, 0x2afc, 0, lbl_806D8744, lbl_806D8748 + a, lbl_806D8674);
+        } else {
+            fn_801695E0(5, 0x17a1, 0, lbl_806D866C, lbl_806D873C + a, lbl_806D8674);
+            fn_801695E0(5, 0x17a2, 0, lbl_806D866C, lbl_806D8740 + a, lbl_806D8674);
+            fn_80169334(5, 0x2afc, 0, lbl_806D874C, lbl_806D8750 + a, lbl_806D8754, lbl_806D8674, lbl_806D8674);
+        }
+    }
+    if ((InputMgr_GetPlayer(GetInputManager(), 0)->Held(0x2000) || InputMgr_GetPlayer(GetInputManager(), 0)->Held(0x100)) &&
+        o->fade < lbl_806D8678) {
+        if (fn_8019083C(2)) fn_80190A70(2, 1);
+        o->fade = lbl_806D8678;
+    }
+    float fd = o->fade;
+    if (fd >= lbl_806D8678) {
+        unsigned int c;
+        if (lbl_806D86A4 < (o->fade = fd + lbl_806D8674)) o->fade = lbl_806D86A4;
+        fn_801678FC(0, lbl_806D8678, lbl_806D8678, lbl_806D8678, o->fade / lbl_806D86A4);
+        c = (unsigned char)(int)(lbl_806D86E8 * (o->fade / lbl_806D86A4));
+        o->colB[0] = c;
+        o->colB[1] = c;
+        o->colB[2] = c;
+        o->colB[3] = c;
+    }
+    if (!o->started) o->started = 1;
+}
 }

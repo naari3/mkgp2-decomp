@@ -1,6 +1,5 @@
 /* CardDataCheck_UI @ 0x8006DB90: operator card-data check page.
- * NonMatching: the drawing loop cursor and index occupy r27/r30 instead
- * of the target r30/r27; text size and both EH sections are exact. */
+ * The local drawing helper preserves the original cursor/index lifetimes. */
 #include "game/CardDataCheck_Private.h"
 
 extern "C" {
@@ -69,6 +68,21 @@ static inline unsigned char CardDataCheck_IsError(TestPage *self)
         return 1;
     }
     return 0;
+}
+
+static inline void CardDataCheck_DrawItems(TestPage *self)
+{
+    int i;
+    int sel = self->sub + 3;
+    MenuItem *it;
+
+    for (it = lbl_803FCBA0, i = 0; it->text != 0; ++it, ++i) {
+        if (i != sel || self->blink <= 0x1E) {
+            if (self->text != 0) {
+                DrawText(self->text, it->x * 14, it->y * 24, 7, 1.0f, it->text);
+            }
+        }
+    }
 }
 
 #pragma exceptions on
@@ -167,7 +181,7 @@ extern "C" int CardDataCheck_UI(TestPage *self, int phase)
         }
     }
     if (phase == 2) {
-        TestPage_DrawItems(self, lbl_803FCBA0, self->sub + 3);
+        CardDataCheck_DrawItems(self);
         if (self->text != 0) {
             unsigned char c;
             unsigned char b;

@@ -41,6 +41,18 @@ static inline unsigned char ReadBits(int start, int n) {
     return result;
 }
 
+static inline unsigned char PackedChecksum(void) {
+    unsigned int sum = 0;
+    int i;
+    for (i = 0; i < 128; i += 4) {
+        sum += ReadBits(i, 4);
+    }
+    while (sum >> 4) {
+        sum = (sum & 15) + (sum >> 4);
+    }
+    return (unsigned char)sum;
+}
+
 static inline void EncodeText(unsigned char *dst) {
     unsigned char text[26];
     int i, j;
@@ -74,7 +86,7 @@ void fn_8018B31C(const unsigned short *name, int item, int ccClass,
     unsigned char rotation;
     unsigned char schedule;
     const int (*swap)[2];
-    unsigned int sum;
+    unsigned char checksum;
 
     int encodedClass = ccClass;
     if (ccClass >= 2) {
@@ -125,15 +137,9 @@ void fn_8018B31C(const unsigned short *name, int item, int ccClass,
     WriteField(23, rotation);
     WriteField(24, schedule);
 
-    sum = 0;
-    for (i = 0; i < 128; i += 4) {
-        sum += ReadBits(i, 4);
-    }
-    while (sum >> 4) {
-        sum = (sum & 15) + (sum >> 4);
-    }
-    WriteBits(0, 2, (unsigned char)(sum >> 2));
-    WriteBits(123, 2, (unsigned char)sum);
+    checksum = PackedChecksum();
+    WriteBits(0, 2, checksum >> 2);
+    WriteBits(123, 2, checksum);
     EncodeText(lbl_80677F04);
     lbl_806D1698 = 1;
     if (saveBackup == 1) {
