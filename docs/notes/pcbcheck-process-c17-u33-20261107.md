@@ -1,0 +1,5 @@
+# pcbcheck-process-c17-u33-20261107
+
+Source: Codex worker c17_u33_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+PCBCheck_ProcessLinks: fresh exact-command objdiff 0.0%, native1416B/target1424B. Source is semantically close: poll/timeout/flag operations and reset bodies correspond. Main structural residual is target ResetLinks mulli/lis/addi/add/b setup displaced to 80083320 after final return, with branch-over-branch at80083034/38; source setup remains before reset loop. Inline trivial getter and switch dispatch do not move it; placing helper definition after caller prevents inline and regresses owned EH. Retained for(j=0,sample=slot;...) initializes counter before cursor; declaring reset,index,count fixes reset loop homes to target r29/r30/r31. Outer candidate/slot r28/r26 still swap targetr26/r28, base copy and clear cursor homes remain. Three hypotheses exhausted. Singleton remainsNonMatching; no A/B rescue, no native gain.

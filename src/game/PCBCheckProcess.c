@@ -43,8 +43,7 @@ static inline void PCBCheck_ClearSlotData(PcbLinkSlot* slot, int index)
             slot->writeIndex = 1;
         }
         memset(slot, 0, 0x2C);
-        sample = (unsigned char*)slot;
-        for (j = 0; j < 64; ++j, sample += 0x28) {
+        for (j = 0, sample = (unsigned char*)slot; j < 64; ++j, sample += 0x28) {
             memset(sample + 0x2C, 0, 0x28);
         }
     }
@@ -72,9 +71,9 @@ static inline void PCBCheck_ResetAll(PcbLinkSlot* base)
 
 static inline void PCBCheck_ResetLinks(int requested)
 {
-    int count = 4;
-    int index = 0;
     PcbLinkSlot* reset;
+    int index = 0;
+    int count = 4;
     if (requested != -1) { index = requested; count = 1; }
     reset = &lbl_805A6154[index];
     while (count != 0) {
