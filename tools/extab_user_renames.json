@@ -2846,10 +2846,6 @@
     "__dt__6CSAnimFv": "fn_8013B87C",
     "__dt__7ResCtrlFv": "dtor_80082960"
   },
-  "src/game/CourseTables.c": {
-    "extab_fn_8013BFF8": "@etb_8000D3A8",
-    "extabindex_fn_8013BFF8": "@eti_80024D58"
-  },
   "src/game/KartPreview.c": {
     "extab_fn_8013C4A4": "@etb_8000D400",
     "extabindex_fn_8013C4A4": "@eti_80024DC4",
