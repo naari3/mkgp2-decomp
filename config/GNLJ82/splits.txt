@@ -14245,9 +14245,6 @@ sysdolphin/baselib/state_color.c:
 	.text       start:0x802C0FF8 end:0x802C106C
 	.sdata2     start:0x806DCBB8 end:0x806DCBC8
 
-sysdolphin/baselib/mobj_update_consts.c:
-	.sdata2     start:0x806DCBC8 end:0x806DCBD4
-
 sysdolphin/baselib/state_cache.c:
 	.text       start:0x802C106C end:0x802C1518
 	.data       start:0x804FBF50 end:0x804FBF90
@@ -14261,39 +14258,11 @@ sysdolphin/baselib/tev.c:
 	.sbss       start:0x806D2110 end:0x806D2130
 
 sysdolphin/baselib/mobj.c:
-	.text       start:0x802C22D8 end:0x802C23AC
-	.data       start:0x804FC1C0 end:0x804FC214
-	.sbss       start:0x806D2130 end:0x806D2138
-
-sysdolphin/baselib/mobj_update_nm.c:
-	.text       start:0x802C23AC end:0x802C2848
-	.data       start:0x804FC214 end:0x804FC24C
-
-sysdolphin/baselib/mobj_data_nm.c:
-	.data       start:0x804FC24C end:0x804FC330
+	.text       start:0x802C22D8 end:0x802C3B24
+	.data       start:0x804FC1C0 end:0x804FC330
 	.sdata      start:0x806D0CE8 end:0x806D0D10
-	.sbss       start:0x806D2138 end:0x806D2150
-
-sysdolphin/baselib/mobj_anim.c:
-	.text       start:0x802C2848 end:0x802C2890
-
-sysdolphin/baselib/mobj_nm.c:
-	.text       start:0x802C2890 end:0x802C2A40
-
-sysdolphin/baselib/mobj_nm1.c:
-	.text       start:0x802C2A40 end:0x802C340C
-
-sysdolphin/baselib/mobj_setup.c:
-	.text       start:0x802C340C end:0x802C384C
-
-sysdolphin/baselib/mobj_material_nm.c:
-	.text       start:0x802C384C end:0x802C38AC
-
-sysdolphin/baselib/mobj_release.c:
-	.text       start:0x802C38AC end:0x802C3A74
-
-sysdolphin/baselib/mobj_info_nm.c:
-	.text       start:0x802C3A74 end:0x802C3B24
+	.sbss       start:0x806D2130 end:0x806D2150
+	.sdata2     start:0x806DCBC8 end:0x806DCBD4
 
 sysdolphin/baselib/aobj.c:
 	.text       start:0x802C3B24 end:0x802C4010
