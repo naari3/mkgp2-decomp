@@ -35,6 +35,43 @@ static inline float RandomParam(ViewParticleOwner *o, float lo, float hi) {
     return (hi - lo) * lbl_80495A94[o->randomParam++] + lo;
 }
 
+static inline void UpdateParticles(ViewParticleOwner *o, float motion) {
+    {
+        int offset;
+        ViewParticle *q;
+        int j;
+        for (offset = 0, j = 0; j < 50; offset += sizeof(ViewParticle), j++) {
+            q = (ViewParticle *)((char *)o->particles + offset);
+            if (q->active) {
+                float speed;
+                q->angle += q->angularSpeed;
+                if (motion > 0.0f) q->depth += motion;
+                speed = q->speed;
+                q->x = q->amplitude * LUT_Sin12Bit(q->angle) + q->x;
+                if (q->x < 0.0f) q->x += 1.0f;
+                if (q->x > 1.0f) q->x -= 1.0f;
+                q->y += speed;
+                if (q->depth < -65.0f) {
+                    if (o->enabled) { q->depth = -3.0f; q->alpha = 0.0f; }
+                    else q->active = 0;
+                } else if (q->depth > -3.0f) {
+                    if (o->enabled) { q->depth = -65.0f; q->alpha = 0.0f; }
+                    else q->active = 0;
+                } else if (q->depth < -60.0f || q->depth > -5.0f) {
+                    q->alpha = 0.0f;
+                } else if (q->depth < -55.0f) {
+                    q->alpha = 1.0f - -0.2f * (q->depth - -55.0f);
+                } else if (q->depth > -10.0f) {
+                    q->alpha = 1.0f - -0.2f * (-10.0f - q->depth);
+                } else {
+                    q->alpha = 1.0f;
+                }
+                if (q->y > 1.0f) q->active = 0;
+            }
+        }
+    }
+}
+
 void fn_801972E0(ViewParticleOwner *o) {
     int i;
     ViewParticle *p;
@@ -107,37 +144,5 @@ void fn_801972E0(ViewParticleOwner *o) {
             }
         }
     }
-    {
-        ViewParticle *q;
-        int j;
-        for (j = 0; j < 50; j++) {
-            q = &o->particles[j];
-            if (q->active) {
-                float speed;
-                q->angle += q->angularSpeed;
-                if (motion > 0.0f) q->depth += motion;
-                speed = q->speed;
-                q->x = q->amplitude * LUT_Sin12Bit(q->angle) + q->x;
-                if (q->x < 0.0f) q->x += 1.0f;
-                if (q->x > 1.0f) q->x -= 1.0f;
-                q->y += speed;
-                if (q->depth < -65.0f) {
-                    if (o->enabled) { q->depth = -3.0f; q->alpha = 0.0f; }
-                    else q->active = 0;
-                } else if (q->depth > -3.0f) {
-                    if (o->enabled) { q->depth = -65.0f; q->alpha = 0.0f; }
-                    else q->active = 0;
-                } else if (q->depth < -60.0f || q->depth > -5.0f) {
-                    q->alpha = 0.0f;
-                } else if (q->depth < -55.0f) {
-                    q->alpha = 1.0f - -0.2f * (q->depth - -55.0f);
-                } else if (q->depth > -10.0f) {
-                    q->alpha = 1.0f - -0.2f * (-10.0f - q->depth);
-                } else {
-                    q->alpha = 1.0f;
-                }
-                if (q->y > 1.0f) q->active = 0;
-            }
-        }
-    }
+    UpdateParticles(o, motion);
 }
