@@ -58,10 +58,6 @@ struct HeldRadii { Vec3 entry[11]; };
 extern "C" {
 extern const HeldRadii lbl_8032EEAC;
 extern int g_ccClass;
-extern float lbl_806D5D20, lbl_806D5D24, lbl_806D5D2C, lbl_806D5D30;
-extern float lbl_806D5D34, lbl_806D5D4C, lbl_806D5D50, lbl_806D5D64;
-extern float lbl_806D5D68, lbl_806D5D6C, lbl_806D5D70, lbl_806D5D74;
-extern float lbl_806D5D78, lbl_806D5D7C, lbl_806D5D80, lbl_806D5D84, lbl_806D5D88;
 void SpriteSlot_SetMatrixSourceEnabled_WithReseed(HeldSprite *, int);
 void SpriteSlot_SetAnimFrameAndApplyScale(HeldSprite *, int, float);
 void SpriteSlot_SetScale(HeldSprite *, float);
@@ -128,23 +124,23 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
         switch (item->subphase) {
         case 0:
             SpriteSlot_SetMatrixSourceEnabled_WithReseed(&item->sprite, 1);
-            SpriteSlot_SetAnimFrameAndApplyScale(&item->sprite, 0, lbl_806D5D20);
-            SpriteSlot_SetScale(&item->sprite, lbl_806D5D24);
-            item->lifetime = lbl_806D5D20;
+            SpriteSlot_SetAnimFrameAndApplyScale(&item->sprite, 0, 0.0f);
+            SpriteSlot_SetScale(&item->sprite, 1.0f);
             item->active = 1;
+            item->lifetime = 0.0f;
             if (item->type == 0x31 && context->effect) context->effect->held = 1;
             context->timer = 0;
             ++item->subphase;
         case 1:
             switch (item->type) {
             case 0x2E:
-                GabyouItem_BuildLocalTransformFromHandJoint(item, 1, lbl_806D5D20, lbl_806D5D64, lbl_806D5D24); break;
+                GabyouItem_BuildLocalTransformFromHandJoint(item, 1, 0.0f, -0.26179934f, 1.0f); break;
             case 0x2F:
-                GabyouItem_BuildLocalTransformFromHandJoint(item, 1, lbl_806D5D20, lbl_806D5D64, lbl_806D5D24); break;
+                GabyouItem_BuildLocalTransformFromHandJoint(item, 1, 0.0f, -0.26179934f, 1.0f); break;
             case 0x30:
-                GabyouItem_BuildLocalTransformFromHandJoint(item, 1, lbl_806D5D20, lbl_806D5D68, lbl_806D5D2C); break;
+                GabyouItem_BuildLocalTransformFromHandJoint(item, 1, 0.0f, 2.8797927f, 0.6f); break;
             case 0x31:
-                GabyouItem_BuildLocalTransformFromHandJoint(item, 1, lbl_806D5D20, lbl_806D5D68, lbl_806D5D2C); break;
+                GabyouItem_BuildLocalTransformFromHandJoint(item, 1, 0.0f, 2.8797927f, 0.6f); break;
             }
             if (FinalLapCoinJump_CheckActiveForObject(context->owner)) item->active = 0;
             else item->active = 1;
@@ -153,9 +149,9 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
                 item->active = 1;
                 context->command = 0;
                 SpriteSlot_SetMatrixSourceEnabled_WithReseed(&item->sprite, 0);
-                item->lifetime = lbl_806D5D24;
+                item->lifetime = 1.0f;
                 if (item->type == 0x31 && context->effect) context->effect->held = 0;
-                Item_InitLaunchFromKart(item, &context->offset, lbl_806D5D6C, lbl_806D5D20);
+                Item_InitLaunchFromKart(item, &context->offset, 5.0f, 0.0f);
                 ++item->phase;
                 item->subphase = 0;
                 break;
@@ -176,8 +172,8 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
             ItemTracker_SetTrackPhase(item, 1);
             item->trackPhase = 1;
             item->collisionEnabled = 1;
-            SpriteSlot_SetAnimFrameAndApplyScale(&item->sprite, 5, lbl_806D5D20);
-            SpriteSlot_SetScale(&item->sprite, lbl_806D5D24);
+            SpriteSlot_SetAnimFrameAndApplyScale(&item->sprite, 5, 0.0f);
+            SpriteSlot_SetScale(&item->sprite, 1.0f);
             ItemObject_GetGroundTypeAt(item->position, &context->progress, 0);
             context->progress = item->position.y - context->progress;
             context->timer = 0;
@@ -187,16 +183,16 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
             break;
         case 1: break;
         }
-        Item_AccelClampVelocity(item, g_ccClass == 0 ? lbl_806D5D70 : lbl_806D5D74,
-            g_ccClass == 0 ? lbl_806D5D24 : lbl_806D5D50);
+        Item_AccelClampVelocity(item, g_ccClass == 0 ? 17.0f : 22.0f,
+            g_ccClass == 0 ? 1.0f : 2.0f);
         fn_801B129C(&item->position);
         Item_HomingScanAndSteer(item, &item->rotation.y, 0);
-        Item_DecayVelocityScalar(item, lbl_806D5D24);
+        Item_DecayVelocityScalar(item, 1.0f);
         switch (item->type) {
-        case 0x2E: Item_DecayVelocityScalar(item, lbl_806D5D24); break;
-        case 0x2F: Item_DecayVelocityScalar(item, lbl_806D5D24); break;
-        case 0x30: Item_DecayVelocityScalar(item, lbl_806D5D2C); break;
-        case 0x31: Item_DecayVelocityScalar(item, lbl_806D5D2C); break;
+        case 0x2E: Item_DecayVelocityScalar(item, 1.0f); break;
+        case 0x2F: Item_DecayVelocityScalar(item, 1.0f); break;
+        case 0x30: Item_DecayVelocityScalar(item, 0.6f); break;
+        case 0x31: Item_DecayVelocityScalar(item, 0.6f); break;
         }
         collision = ItemCollision_Check(item);
         switch (collision) {
@@ -231,7 +227,7 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
             ItemTracker_ReleaseLock(item);
             item->trackPhase = 0;
             if ((int)item->surface == 1) {
-                GetSpawnPosition(&item->velocity, lbl_806D5D20, lbl_806D5D20, lbl_806D5D20);
+                GetSpawnPosition(&item->velocity, 0.0f, 0.0f, 0.0f);
                 Recover(item, 4);
                 return;
             }
@@ -241,11 +237,11 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
         if (Item_CheckWallCollision(item, 0, 0)) {
             ItemTracker_ReleaseLock(item);
             item->trackPhase = 0;
-            GetSpawnPosition(&item->velocity, lbl_806D5D20, lbl_806D5D20, lbl_806D5D20);
+            GetSpawnPosition(&item->velocity, 0.0f, 0.0f, 0.0f);
             Recover(item, 7);
             return;
         }
-        if (!Item_AdvanceProjectileSimple(item, &context->progress, lbl_806D5D78, lbl_806D5D78)) {
+        if (!Item_AdvanceProjectileSimple(item, &context->progress, 7.0f, 7.0f)) {
             ItemTracker_ReleaseLock(item);
             item->trackPhase = 0;
             Recover(item, 9);
@@ -264,10 +260,10 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
         HeldRadii radii = lbl_8032EEAC;
         switch (item->subphase) {
         case 0: {
-            GetSpawnPosition(&item->velocity, lbl_806D5D20, lbl_806D5D20, lbl_806D5D20);
-            SpriteSlot_SetAnimFrameAndApplyScale(&item->sprite, 1, lbl_806D5D20);
-            SpriteSlot_SetScale(&item->sprite, lbl_806D5D24);
-            context->progress = lbl_806D5D20;
+            GetSpawnPosition(&item->velocity, 0.0f, 0.0f, 0.0f);
+            SpriteSlot_SetAnimFrameAndApplyScale(&item->sprite, 1, 0.0f);
+            SpriteSlot_SetScale(&item->sprite, 1.0f);
+            context->progress = 0.0f;
             context->attached = 0;
             Vec3 initialPosition;
             Mtx44_GetTranslation_RowMajor(&initialPosition, KartDriver_GetJointByIdx(context->target, 15));
@@ -290,44 +286,44 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
         }
         case 1: {
             switch (item->type) {
-            case 0x2E: Item_DecayVelocityScalar(item, lbl_806D5D34 * KartFxParam_GetConst1p5(context->target)); break;
-            case 0x2F: Item_DecayVelocityScalar(item, lbl_806D5D34 * KartFxParam_GetConst1p5(context->target)); break;
-            case 0x30: Item_DecayVelocityScalar(item, lbl_806D5D4C * KartFxParam_GetConst1p5(context->target)); break;
-            case 0x31: Item_DecayVelocityScalar(item, lbl_806D5D4C * KartFxParam_GetConst1p5(context->target)); break;
+            case 0x2E: Item_DecayVelocityScalar(item, 0.7f * KartFxParam_GetConst1p5(context->target)); break;
+            case 0x2F: Item_DecayVelocityScalar(item, 0.7f * KartFxParam_GetConst1p5(context->target)); break;
+            case 0x30: Item_DecayVelocityScalar(item, 0.5f * KartFxParam_GetConst1p5(context->target)); break;
+            case 0x31: Item_DecayVelocityScalar(item, 0.5f * KartFxParam_GetConst1p5(context->target)); break;
             }
-            if ((int)item->sprite.advancing == 1) context->progress += lbl_806D5D7C;
-            else context->progress += lbl_806D5D80;
-            if (lbl_806D5D24 < context->progress) context->progress = lbl_806D5D24;
+            if ((int)item->sprite.advancing == 1) context->progress += 0.016666668f;
+            else context->progress += 0.033333335f;
+            if (1.0f < context->progress) context->progress = 1.0f;
             Vec3 targetPosition;
             Mtx44_GetTranslation_RowMajor(&targetPosition, KartDriver_GetJointByIdx(context->target, 15));
             float radius = radii.entry[KartCharacterParam_GetIdentityIndex(context->target)].y;
             float ownerScale = KartFxParam_GetConst1p5(context->owner);
             targetPosition.y = ownerScale * radius + targetPosition.y;
             Vec3 scaledOffset;
-            Vec3_Scale(&scaledOffset, &context->offset, lbl_806D5D24 - context->progress);
+            Vec3_Scale(&scaledOffset, &context->offset, 1.0f - context->progress);
             Vec3_Add_DestFirst(&item->position, &targetPosition, &scaledOffset);
             float progress;
-            if (lbl_806D5D84 < (progress = context->progress)) {
+            if (0.9f < (progress = context->progress)) {
                 float yaw;
                 switch (item->type) {
                 case 0x2E: yaw = Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(context->target)); break;
                 case 0x2F: yaw = Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(context->target)); break;
-                case 0x30: yaw = BuildOrientationFromYaw(lbl_806D5D88 + Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(context->target))); break;
-                case 0x31: yaw = BuildOrientationFromYaw(lbl_806D5D88 + Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(context->target))); break;
+                case 0x30: yaw = BuildOrientationFromYaw(3.141592f + Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(context->target))); break;
+                case 0x31: yaw = BuildOrientationFromYaw(3.141592f + Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(context->target))); break;
                 }
-                item->rotation.y = AngleStepTowards_Shortest(item->rotation.y, yaw, lbl_806D5D30);
+                item->rotation.y = AngleStepTowards_Shortest(item->rotation.y, yaw, 0.087266445f);
             } else {
                 float yaw = Vec3_HorizontalYawTo(&item->position, &targetPosition);
                 yaw = progress * yaw;
-                progress = lbl_806D5D24 - progress;
+                progress = 1.0f - progress;
                 yaw = progress * item->rotation.y + yaw;
                 item->rotation.y = BuildOrientationFromYaw(yaw);
             }
-            if (lbl_806D5D24 == context->progress) {
+            if (1.0f == context->progress) {
                 if (FinalLapCoinJump_CheckActiveForObject(context->target)) item->active = 0;
                 else item->active = 1;
             } else item->active = 1;
-            if (lbl_806D5D24 == context->progress) {
+            if (1.0f == context->progress) {
                 if (context->attached == 0) {
                     context->attached = 1;
                     ItemObject_TargetFirstHomingMatch(item, context->target);
@@ -377,7 +373,7 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
                     if (item->type == 0x30) ItemEffectBus_ClearMask(previousBus, 0x2000000000000000ULL);
                     ItemEffectBus_ClearMask(previousBus, 0x0800000000000000ULL);
                     context->target = nextTarget;
-                    context->progress = lbl_806D5D20;
+                    context->progress = 0.0f;
                     context->attached = 0;
                     Vec3 newPosition;
                     Mtx44_GetTranslation_RowMajor(&newPosition, KartDriver_GetJointByIdx(context->target, 15));
@@ -387,25 +383,25 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
                     Vec3_Subtract_DestFirst(&context->offset, &item->position, &newPosition);
                     Mtx44_GetTranslation_RowMajor(&newPosition, KartDriver_GetKartRootMtx(context->target));
                     float difference = BuildOrientationFromYaw(Vec3_HorizontalYawTo(&item->position, &newPosition) - item->rotation.y);
-                    if (lbl_806D5D20 < difference) {
-                        SpriteSlot_SetAnimFrameAndApplyScale(&item->sprite, 3, lbl_806D5D20);
-                        SpriteSlot_SetScale(&item->sprite, lbl_806D5D24);
+                    if (0.0f < difference) {
+                        SpriteSlot_SetAnimFrameAndApplyScale(&item->sprite, 3, 0.0f);
+                        SpriteSlot_SetScale(&item->sprite, 1.0f);
                     } else {
-                        SpriteSlot_SetAnimFrameAndApplyScale(&item->sprite, 4, lbl_806D5D20);
-                        SpriteSlot_SetScale(&item->sprite, lbl_806D5D24);
+                        SpriteSlot_SetAnimFrameAndApplyScale(&item->sprite, 4, 0.0f);
+                        SpriteSlot_SetScale(&item->sprite, 1.0f);
                     }
                     SoundMgr_PlaySE_Positional(0x98, item->position, 0);
                 }
                 if ((int)item->sprite.completed == 1) {
-                    SpriteSlot_SetAnimFrameAndApplyScale(&item->sprite, 2, lbl_806D5D20);
-                    SpriteSlot_SetScale(&item->sprite, lbl_806D5D24);
+                    SpriteSlot_SetAnimFrameAndApplyScale(&item->sprite, 2, 0.0f);
+                    SpriteSlot_SetScale(&item->sprite, 1.0f);
                 }
             }
             if ((item->type == 0x2E || item->type == 0x2F) && context->timer < 300) {
                 unsigned int interval = (context->timer / 60) * 3 + 3;
                 if (context->timer % interval < 2)
-                    GetSpawnPosition(&item->displayScale, lbl_806D5D50, lbl_806D5D24, lbl_806D5D24);
-                else GetSpawnPosition(&item->displayScale, lbl_806D5D24, lbl_806D5D24, lbl_806D5D24);
+                    GetSpawnPosition(&item->displayScale, 2.0f, 1.0f, 1.0f);
+                else GetSpawnPosition(&item->displayScale, 1.0f, 1.0f, 1.0f);
             }
             break;
         }
