@@ -86,7 +86,7 @@ extern "C" {
 extern CourseLayout lbl_8049B1E0[];
 extern short lbl_8049B388[][2];
 extern int g_gameMode, g_roundIndex, g_localPcbRole, lbl_806CF12C;
-extern unsigned char lbl_806D184C, lbl_806D184D;
+extern signed char lbl_806D184C, lbl_806D184D;
 extern unsigned char g_playerData[];
 extern const float lbl_806D9ED8, lbl_806D9EDC, lbl_806D9EE0, lbl_806D9EE4;
 extern const float lbl_806D9EE8, lbl_806D9EEC, lbl_806D9EF0, lbl_806D9EF4;
@@ -196,6 +196,7 @@ static inline void SetupExitSprites(CourseFlow *self) {
 }
 
 extern "C" int clFlowCourse_Update(CourseFlow *self) {
+    int remoteIndex;
     RumbleUpdate();
     if (self->advance) { self->state++; self->advance = 0; }
     self->timer++;
@@ -272,7 +273,9 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
         if (InputMgr_GetPlayer(GetInputManager(), 0)->Test(0x400)) {
             self->reverse = 1; ShowPulse(self->pulse);
         } else { self->reverse = 0; HidePulse(self->pulse); }
-        if (self->field20 == -1) {
+        int next = self->field20;
+        switch (next) {
+        case -1: {
             self->field18 -= lbl_806D9EF4;
             InputMgr_GetPlayer(GetInputManager(), 0);
             if (CourseInput()->held == 1 || self->field18 < lbl_806D9EE0) {
@@ -284,8 +287,9 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
                 CourseParams *params = GetCourseSelectEntry(self->selection);
                 lbl_806CF12C = self->selection;
                 SetCourseParams(params->cup, params->round, params->field08, self->reverse);
+                int extra;
                 int round = self->selection % 2;
-                int extra = 4;
+                extra = 4;
                 if (self->reverse == 0) extra = 0;
                 g_roundIndex = round + extra;
                 if (g_gameMode == 1) self->field20 = 0x26; else self->field04 = 1;
@@ -294,8 +298,12 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
                 self->field140 = 0; self->field141 = 0;
             }
             SetScreenBrightness(self->field18);
+            next = self->field20;
+            break;
         }
-        if (self->field20 != -1 || self->field04) {
+        default: break;
+        }
+        if (next != -1 || self->field04) {
             fn_801CEB78(self, self->selection, 3);
             delete self->fieldBC; delete self->fieldC0;
             self->fieldBC = 0; self->fieldC0 = 0; self->timer = 0;
@@ -344,8 +352,9 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
         }
         if (self->timer < 20) break;
         if (self->timer <= 30) {
+            CourseLayout *p;
             float t = (float)(self->timer - 20) / lbl_806D9F04;
-            CourseLayout *p = &lbl_8049B1E0[self->selected];
+            p = &lbl_8049B1E0[self->selected];
             float y = p->y + t * (lbl_806D9F18 - p->y);
             float x;
             if (self->selection > 8) {
@@ -443,21 +452,23 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
         SetSpritePosition(self->slots[self->selected].sprite, lbl_806D9EFC, lbl_806D9F18);
     }
     if (g_gameMode == 2) {
-        for (int i = 0; i < 4; i++) {
-            if (i != GetDisplayBufferIndex()) {
+        for (remoteIndex = 0; remoteIndex < 4; remoteIndex++) {
+            if (remoteIndex != GetDisplayBufferIndex()) {
                 int role = g_localPcbRole;
-                if (((PcbSlot_GetByIndex(i)[0] >> 4) & 7) == role) {
-                    int selected = (PcbSlot_GetByIndex(i)[5] >> 1) & 0x7F;
-                    CourseLayout *layout = &lbl_8049B1E0[selected];
+                if (((PcbSlot_GetByIndex(remoteIndex)[0] >> 4) & 7) == role) {
+                    float a;
+                    CourseLayout *layout;
+                    int selected = (PcbSlot_GetByIndex(remoteIndex)[5] >> 1) & 0x7F;
+                    layout = &lbl_8049B1E0[selected];
                     float x = layout->x;
                     if (self->selection >= 8) x -= lbl_806D9ED8;
-                    CourseIcon *icon = self->icons[i];
+                    CourseIcon *icon = self->icons[remoteIndex];
+                    a = lbl_806D9EDC;
                     icon->ctrl.Show(x + iconOffsets[icon->index][0],
-                        layout->y + iconOffsets[icon->index][1], lbl_806D9EDC);
-                    float a = lbl_806D9EDC;
+                        layout->y + iconOffsets[icon->index][1], a);
                     if (self->state >= 3) a = lbl_806D9EE0;
                     if (self->selection / 8 != selected / 8) a = lbl_806D9EE0;
-                    SetAlpha(&self->icons[i]->ctrl, 0xFFFFFF00, a);
+                    SetAlpha(&self->icons[remoteIndex]->ctrl, 0xFFFFFF00, a);
                 }
             }
         }
