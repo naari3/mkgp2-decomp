@@ -12786,8 +12786,6 @@
     "@162": "global:@etb_80007BBC"
   },
   "src/game/clFlowChara.cpp": {
-    "extab_clFlowChara_Update": "@etb_80013EC4",
-    "extabindex_clFlowChara_Update": "@eti_80027D7C",
     "partialThresholds": "global:g_frameUnlockThresholds_Partial",
     "fullThresholds": "global:g_frameUnlockThresholds_Full",
     "textureIds": "global:g_tierTextureIdTable",
@@ -12840,6 +12838,9 @@
     "__dt__6TexMgrFv": "dtor_800869D0",
     "__ct__7Scene3DFPCc": "Scene3D_Init",
     "__ct__10SceneModelFPCci": "SceneModel_Init",
-    "__ct__10InitSpriteFiiffffff": "Sprite_CreateWithParams"
+    "__ct__10InitSpriteFiiffffff": "Sprite_CreateWithParams",
+    "__ct__11CharaNormalFPCci": "clNormal3D_Construct",
+    "__ct__10CharaModelFiiUcUc": "fn_8021ABFC",
+    "__ct__11CharaSpriteFiUci": "Sprite_InitWithAnim"
   }
 }
