@@ -29,6 +29,7 @@ static inline int Tachometer_CoinSteps(void) {
     return (int)g_tachometer_coinCount > 15 ? 15 : (int)g_tachometer_coinCount;
 }
 #pragma exceptions on
+#pragma auto_inline off
 int Tachometer_UpdateDisplaySpeed(float speed, float maxSpeed) {
     float step;
     float display;
@@ -54,5 +55,6 @@ int Tachometer_UpdateDisplaySpeed(float speed, float maxSpeed) {
     }
     return 1;
 }
+#pragma auto_inline reset
 #pragma exceptions reset
 

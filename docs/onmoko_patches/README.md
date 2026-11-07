@@ -1,5 +1,36 @@
 # Pragma fixes for onmokoworks-claimed TUs (verified, not applied)
 
+## Status on main 610292b (re-verified 2026-11-07 21:00, mid-range thread)
+
+Each patch was applied **alone** to a throwaway checkout of main, then built from clean (`rm -rf build/GNLJ82/src build/GNLJ82/ok`, ninja). Baseline on that main: main.dol OK, 7251 matched functions (report.json `matched_functions`). "+fns" is the change against the baseline.
+
+| Patch | Applies | main.dol | Flip to Matching | +fns | Depends on / conflicts with |
+| --- | --- | --- | --- | --- | --- |
+| AI_UpdateItemUseLogic.patch | yes | OK | yes | +1 | - |
+| DNLensflare.patch | yes | OK | yes (already 100%) | 0 | touches tools/extab_user_renames.json, as does anon_80226670 (different TU blocks, both apply) |
+| FrameUpdate.patch | yes | OK | yes | +1 | - |
+| ItemHitPropagation.patch | yes | OK | yes | +2 | - |
+| PCBComm_UpdateSyncPhase1.patch | yes | OK | yes | +1 | regenerated with 1-line configure.py context; the old version conflicted with Phase5 (adjacent lines). Both now apply in either order |
+| PCBComm_UpdateSyncPhase5.patch | yes | OK | yes | +1 | same as Phase1 |
+| STLContainer.patch | yes | OK | yes (already 100%) | 0 | - |
+| VfxSlotMgr.patch | yes | OK | yes | +1 | - |
+| amnet_nm2_rest.patch | yes | OK | no (fn_8028D8CC 99.83%) | +1 | **supersedes fn_8028EAA8.patch** (same file, contains its change); apply only one |
+| fn_8028EAA8.patch | yes | OK | no | +1 | conflicts with amnet_nm2_rest.patch, so use that one instead |
+| anon_80214B3C.patch | yes | OK | yes (already 100%) | 0 | - |
+| anon_80226670.patch | yes | OK | yes (already 100%) | 0 | see DNLensflare |
+| card_unpack_v1.patch | yes | OK | yes | +1 | - |
+| cobj_data_nm2.patch | yes | OK | yes (data-only) | 0 | the cobj owner may move these strings in a CObjInfoInit / cobj merge |
+| fn_8021E0FC.patch | yes | OK | no (4 other fns < 100%) | +1 | - |
+| fn_80243C70.patch | yes | OK | yes | +1 | - |
+| fn_80246DE4.patch | yes | OK | yes | +1 | - |
+| merge/anon_8020AF08_nm1_pool.patch | yes | OK | no (99.86%) | 0 | edits config/GNLJ82/splits.txt |
+| merge/fn_801913B0_codegen_probe.patch | yes | OK | no (probe) | 0 | probe only; the real fix needs the Fog-TU data merge |
+| merge/fn_80192F04_codegen_probe.patch | yes | OK | no (probe) | +1 | probe only, same as above |
+| fn_801F8A34.patch | **obsolete** | - | - | - | already on main (Codex batch ecd8bf9/5034e3f, fn 100%, TU Matching) |
+| clItemBoxManager_Update_Inner.patch | **obsolete** | - | - | - | onmokoworks fixed it differently on main (ListIter rewrite); Update_Inner is 100% on main |
+
+**All together:** every patch except the two obsolete ones and fn_8028EAA8.patch, applied in alphabetical order (top dir, then merge/), clean build gives main.dol OK and 7264 matched functions (**+13**). That equals the sum of the single-patch gains, so no two patches interfere. The patches with "new blank line at EOF" warnings (card_unpack_v1, fn_80243C70, fn_8028EAA8, amnet_nm2_rest) still apply cleanly.
+
 These patches come from the zero-diff hits in docs/pragmasweep_results.md
 (tools/pragmasweep.py). They were verified by R5 on a throwaway branch off main
 ce0e1c8, 2026-11-07. The TU sources on main are untouched: the
@@ -52,6 +83,7 @@ See docs/merge_plans.md for the full list of plans. Files are in `merge/`.
 | merge/anon_8020AF08_nm1_pool.patch | fn_8020B234 (#2361) | link-ready: TU owns .rodata 0x803C2E50..0x803C3508, three static arrays | 97.54% -> 99.86%, clean build main.dol OK |
 | merge/fn_80192F04_codegen_probe.patch | fn_80192F04 (#2394) | probe only (the data is owned by the Fog TU; merge needed) | all instructions match |
 | merge/fn_801913B0_codegen_probe.patch | fn_801913B0 (#2439) | probe only | pool fixed, about 10 lines left |
+| merge/cobj_merge.patch | CObjInfoInit, HSD_CObjSetRoll (cobj_info_nm, cobj_nm4 #2270; also touches cobj_nm1 #2342, cobj_nm3 #2347) | link-ready whole-file merge (R6): the 12 cobj_* TUs (all but cobj_constants.c) become one cobj.c that owns .text 0x802C6430..0x802C8B48, .data 0x804FC4C8..0x804FC620, .sdata and .sbss. hsdCObj is split to 0x44 + the two dead-stripped assert strings (lbl_804FC50C/51C). fabs is a plain (weak) inline so SetRoll's out-of-line call resolves to MSL fabs, and cobj leaves DATA_ALIGN4_TUS so MWLD keeps the weak flag and strips the copy. | cobj 52/53 functions at 100% (CObjInfoInit and SetRoll now match); only HSD_CObjSetUpVector is left (97.08%, saved-register order up/cobj/pool vs cobj/pool/up), so the TU stays NonMatching. Clean build main.dol OK on e522333. With Configure Matching, the only DOL diff is SetUpVector (0x802C7A34..7D3C). |
 
 ## Full sweep over onmokoworks-claimed TUs (2026-11-07 18:00)
 
@@ -75,6 +107,19 @@ Verified on main with the patch applied: clean build (`rm -rf build/GNLJ82/src b
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | VfxSlotMgr.patch | VfxSlotMgr_Update | game/VfxSlotMgr.cpp | #2369 | 99.94% | copy `*position` then `*target` into locals in the caller and call BuildCamera directly (SetCamera's by-value params took their stack slots in the opposite order) | 100% | yes, included |
 | PCBComm_UpdateSyncPhase5.patch | PCBComm_UpdateSyncPhase5 | game/PCBCommPhase5.c | #2327 | 98.59% | chained `slot = slots = lbl_805A6154; phase = phases = g_pcbSyncPhasePerPcb;` keeps the `mr r5,r31` copy; inline `first + 2` at the store (no `hostRole` local) fixes the out/value r5/r6 swap. `lbl_806D11C8+0x4` vs `lbl_806D11CC` reloc is cosmetic (objdiff 100%) | 100% | yes, included |
+| PCBComm_UpdateSyncPhase1.patch | PCBComm_UpdateSyncPhase1 | game/PCBCommPhase1.c | #2402 | 94.97% | same as Phase5: decls first (`phase` before `phases`), then chained `slot = slots = lbl_805A6154; phase = phases = g_pcbSyncPhasePerPcb;`; `first + 2` inline at the store; in PublishTimers declare `cursor`/`out` in an inner block after `timer` is read (Phase5's layout) | 100% | yes, included |
+| ItemHitPropagation.patch | Item_PropagateHitToAllDrivers, Item_PropagateHitToDriversInRadius | game/ItemHitPropagation.c | #2363 | 94.52% / 96.11% | the classifier reads `effects` through a separate kart-object type (`HitKartObject`), so case 2's `driver->effects` is reloaded instead of CSE'd (that freed r3 and fixed the whole register shift); add an empty `case 3: break;` before `default:` for the target's dead second `b` | 100% / 100% | yes, included |
+| CoursePropCtor.patch | fn_8016E568 | game/mapeffect/CoursePropCtor.cpp | #2373 | 97.39% | TU owns `.data` 0x80491150..0x804911C4 (splits.txt): the four null-terminated item lists as separate static arrays, plus the global `lbl_804911A0` typeinfo and `lbl_804911AC` vtable (Scene_8016E1C0 still references the vtable by name). mwcc then addresses all of them off the section anchor (`addi r31+0x5c/0x0/0x1c/...`). Pick the list in an inline `SelectItems()` with a `return` per branch; that gives the `addi r0` + `mr r31, r0` at the join | 100% (data 100%) | yes, included |
+| acsocket_nm7_acReadResponse.patch | acReadResponse | triforce/acsocket_nm7.c | #2443 | 98.83% | move the per-case read-out into `static inline void ReadOut(AcSock* k, u32 addrOff)` (decls `len, addr, lenOff, base, n`), so each case gets its own registers; in the caller declare `u32 addrOff;` before `AcSock* k = SOCK(s);` | 100% | no (fn_80292D18 96%, fn_80293070 74% left) |
+
+### Diagnoses without a patch (R2)
+
+- **miyazakiconsole / mapobject `lwzx` tables (fn_8017EFFC 97.8%, fn_8017F1E8 94.1%, and likely fn_8017EC90, fn_8017F538, fn_8017CE1C, fn_8017D660, fn_8017DF00).** The target indexes its tables as `addi rT, r31, 0x57c` (or `0x4c8`), then `lwzx rD, rT, idx`. The tables are separate .rodata objects (lbl_80376790 + 0xC, lbl_803766DC + 0xC), not part of lbl_80376220 (size 0x4A4). That is how mwcc addresses a static array that lives in the TU's own section: anchor plus object offset, then an indexed load. Source written as `(strings + 0x57c)[i]` always folds the offset into the displacement (`add; lwz 0x57c(r)`). Casts, member-array structs, references, locals and every psweep pragma failed to stop that. A fix needs all of 0x80376220..0x80376E10 owned by one TU (today fn_8017EC90.cpp owns it), with these tables as real static arrays, i.e. a merge of the TUs that share the pool. A struct with `char pad[0x57c]; unsigned int ids[13];` gets fn_8017EFFC from 97.79 to 98.15% but not to 100%.
+- **Same section-anchor family:** CoursePropCtor fixed this way (see CoursePropCtor.patch above). The section was unowned (auto), so the TU could just take it over. mapeffect_nm1 fn_80179F60 (97.7%) has `addi r3, r31, 0x408`, then reads the quad from r3, off the .rodata pool lbl_80370870, which mapeffect_nm1.cpp doesn't own. Both need the pool defined as real static objects in the TU that owns the section.
+- **DetermineTitle (RankLog.c) 98.47 -> 99.71%, WIP `/mnt/project-files/wip/RankLog_DetermineTitle_99.71.patch`.** Make the outer decls plain and order them as skip, checks, i, tbl, count, pool, pre. Inside the DetermineCurrentNameId inline, declare score, chara, k, j, i. What's left is a single chara/i r23/r20 swap; 20 minutes of cperm found nothing.
+- **fn_801F894C (game/fn_801F894C.c, 97.44%, unclaimed).** The only diff: the target passes `tables->colorDesc` (offset 0) as `addi r3, r31, 0x0`, with r31 = &lbl_803BEDC0, while mine rematerializes `lis/addi lbl_803BEDC0`. Every cast and offset-0 spelling folds. This is the TU-local object behavior: lbl_803BEDC0 sits in dtor_801F8214.cpp's .rodata (0x803BEDC0..0x803BF020). So fn_801F894C has to be merged with dtor_801F8214 through fn_801F8728 (fn_801F8404 #2376 and fn_801F8728 #2395 are onmokoworks claims in between), with the tables defined in the merged TU.
+- **CObjInfoInit (sysdolphin/baselib/cobj_info_nm.c, 99.94%).** The target addresses the class-name strings as `hsdCObj + 0x134 / 0x14C`, so hsdCObj (0x804FC4C8) and the strings (0x804FC5FC, in cobj_data_nm2) are in one TU's .data. It needs the cobj merge (cobj_data_nm1 + cobj.c data + cobj_data_nm2 + cobj_info_nm .text). See the R4 cobj_data_nm2 note below. **Done as merge/cobj_merge.patch (R6).**
+- **acsocket_nm2..5 (acModifyMyIPaddr, acInetAddr, acConnect, acBind; 94.7..96.8%, unclaimed).** They all share one unsolved idiom. The target computes the board offset as `lwz r5, bufOff; addi rOff, r5, 0x0; ... add rOff, bufAddr, rOff`, with rOff the lowest saved register. Inline-param `State.bufOff + n`, pointer `(u8*)bufOff + n`, SockAddr/BufDev chains, `off += k->bufAddr`, and the order of the Buf/off assignments all failed (best: acModifyMyIPaddr 97.76% with `off += k->bufAddr;`).
 
 ## Data-only TU flip (R4, 2026-11-07)
 

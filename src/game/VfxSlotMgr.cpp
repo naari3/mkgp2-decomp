@@ -2,6 +2,12 @@
 struct Vec {
     float x,y,z;
     Vec() {}
+    Vec& operator=(const Vec& other) {
+        *(int*)&x=*(const int*)&other.x;
+        *(int*)&y=*(const int*)&other.y;
+        *(int*)&z=*(const int*)&other.z;
+        return *this;
+    }
     Vec(const Vec& other) { *(int*)&x=*(const int*)&other.x; *(int*)&y=*(const int*)&other.y; *(int*)&z=*(const int*)&other.z; }
 };
 struct EulerAngles { float x,y,z; };
@@ -51,8 +57,18 @@ static inline void BuildCamera(Vec origin,const Vec& target) {
     Vec3_Copy(&lbl_805DF3D0.position,&origin);
     Vec3_Copy(&lbl_805DF3D0.target,&target);
 }
-static inline void SetCamera(Vec target,Vec position) {
-    BuildCamera(position,target);
+/* Retain both input vectors while the camera matrices are rebuilt. */
+struct CameraInputs {
+    Vec target;
+    Vec position;
+    CameraInputs(const Vec* positionIn,const Vec* targetIn) {
+        position=*positionIn;
+        target=*targetIn;
+    }
+};
+static inline void SetCamera(const Vec* position,const Vec* target) {
+    CameraInputs inputs(position,target);
+    BuildCamera(inputs.position,inputs.target);
 }
 static inline void UpdateSlots(Slot *slot) {
     int i=0;
@@ -69,6 +85,6 @@ static inline void UpdateSlots(Slot *slot) {
 }
 extern "C" void VfxSlotMgr_Update(const Vec *position,const Vec *target) {
     ScopedTimer timer(25);
-    SetCamera(*target,*position);
+    SetCamera(position,target);
     UpdateSlots(lbl_805DF468);
 }

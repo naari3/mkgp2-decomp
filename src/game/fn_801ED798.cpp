@@ -1,6 +1,6 @@
-/* Native candidate: 87.84991% text. Nested matrix helpers recover the
- * target temporary layout and sequential element accumulation. Matrix
- * operand scheduling, FP allocation and frame export remain unresolved. */
+/* Native candidate: 97.94372% text. Literal identity constants retain the
+ * target FP save range and stack frame. Matrix operand scheduling and
+ * register allocation remain unresolved; this TU stays NonMatching. */
 #include "game/PhysicsGroundPrivate.h"
 
 static inline void CopyGroundMatrix(PhysicsGroundMatrix &to, const PhysicsGroundMatrix &from)
@@ -38,8 +38,8 @@ static inline void ApplyYaw(PhysicsGroundMatrix &original, float yaw)
 {
     PhysicsGroundMatrix rotation;
     for (int row = 0; row < 4; ++row)
-        for (int col = 0; col < 4; ++col) rotation.m[row][col] = lbl_806DA42C;
-    rotation.m[3][3] = rotation.m[2][2] = rotation.m[1][1] = rotation.m[0][0] = lbl_806DA450;
+        for (int col = 0; col < 4; ++col) rotation.m[row][col] = 0.0f;
+    rotation.m[0][0] = rotation.m[1][1] = rotation.m[2][2] = rotation.m[3][3] = 1.0f;
     float cosine = (float)cos(yaw);
     float sine = (float)sin(yaw);
     rotation.m[0][0] = cosine;
@@ -70,7 +70,7 @@ extern "C" void fn_801ED798(PhysicsGroundState *self, Vec3 *position,
     float penetration = lbl_806DA444 * self->scale;
     float fallbackPenetration = lbl_806DA428 * self->scale;
     for (int corner = 0; corner < 4; ++corner) {
-        float height = lbl_806DA42C;
+        float height = 0.0f;
         CollisionVec scaled(lbl_803BDD28[corner].x, lbl_803BDD28[corner].y, lbl_803BDD28[corner].z);
         scaled.x *= self->scale;
         scaled.y *= self->scale;
@@ -87,7 +87,7 @@ extern "C" void fn_801ED798(PhysicsGroundState *self, Vec3 *position,
         } else if (Terrain_GetGroundHeightWithPenetration(&query, &height, 0, 0, fallbackPenetration)) {
             self->corners[corner].y = height;
         } else {
-            self->corners[corner].y = lbl_806DA42C;
+            self->corners[corner].y = 0.0f;
         }
     }
     float packed[12];
@@ -100,25 +100,32 @@ extern "C" void fn_801ED798(PhysicsGroundState *self, Vec3 *position,
         packed[i * 3 + 2] = self->corners[order].z;
     }
     QuadFrame_FromPackedCorners(packed, frame, &groundHeight);
-    for (int row = 0; row < 3; ++row)
-        for (int col = 0; col < 3; ++col) orientation->m[row][col] = frame[row * 3 + col];
+    orientation->m[0][0] = frame[0];
+    orientation->m[0][1] = frame[1];
+    orientation->m[0][2] = frame[2];
+    orientation->m[1][0] = frame[3];
+    orientation->m[1][1] = frame[4];
+    orientation->m[1][2] = frame[5];
+    orientation->m[2][0] = frame[6];
+    orientation->m[2][1] = frame[7];
+    orientation->m[2][2] = frame[8];
     Mtx34_Orthonormalize(orientation);
     if (wasAirborne) {
         if (airborneHeight <= groundHeight) {
             self->airborne = 0;
-            for (int i = 0; i < 6; ++i) self->jumpFields[i] = lbl_806DA42C;
+            for (int i = 0; i < 6; ++i) self->jumpFields[i] = 0.0f;
             self->landingTimer = 20;
             position->y = groundHeight;
         } else {
             position->y = airborneHeight;
         }
-        self->fallingVelocity = lbl_806DA42C;
+        self->fallingVelocity = 0.0f;
     } else {
         self->fallingVelocity += lbl_806DA4AC;
         position->y += self->fallingVelocity;
         if (position->y - lbl_806DA43C < groundHeight) {
             self->fallingVelocity = (groundHeight - self->previous.y) - lbl_806DA43C;
-            if (lbl_806DA42C < self->fallingVelocity) self->fallingVelocity = lbl_806DA42C;
+            if (0.0f < self->fallingVelocity) self->fallingVelocity = 0.0f;
             position->y = groundHeight;
         } else {
             self->aboveGround = 1;

@@ -57,16 +57,18 @@ static inline void Multiply(Matrix44 *a, const Matrix44 *b) {
     for (int i = 0; i < 16; i++) ((float *)a)[i] = out[i];
 }
 
+static inline void SetAxisAngle(MovementQuat *q, float x, float y, float z) {
+    float s = (float)sin(lbl_806D9704);
+    q->x = x*s; q->y = y*s; q->z = z*s;
+    q->w = (float)cos(lbl_806D9704);
+}
+
 extern "C" void fn_8019A9BC(MovementInit *k) {
     Matrix44 rotation;
     MovementQuat q;
     Identity(&rotation);
-    float x = k->orientation.m[0][0];
-    float y = k->orientation.m[0][1];
-    float z = k->orientation.m[0][2];
-    float s = (float)sin(lbl_806D9704);
-    q.x = x*s; q.y = y*s; q.z = z*s;
-    q.w = (float)cos(lbl_806D9704);
+    SetAxisAngle(&q, k->orientation.m[0][0],
+                 k->orientation.m[0][1], k->orientation.m[0][2]);
     float px = k->orientation.m[3][0];
     float py = lbl_806D970C + k->orientation.m[3][1];
     float pz = k->orientation.m[3][2];

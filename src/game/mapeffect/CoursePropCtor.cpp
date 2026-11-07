@@ -10,12 +10,37 @@ struct CoursePropResource {
     float radius, height, scale;
 };
 extern "C" {
-extern char lbl_80490FE0[], lbl_80491150[], lbl_8036D8BC[];
+extern char lbl_80490FE0[], lbl_8036D8BC[];
 extern const CoursePropResource lbl_8036D75C[3];
 extern const float lbl_806D8BAC;
 extern int g_longRoundFlag, g_reverseRoundFlag;
 void fn_8016E7E4(void *, void *);
+extern CoursePropData lbl_8036D78C, lbl_8036D7A0, lbl_8036D7B4, lbl_8036D7C8;
+extern CoursePropData lbl_8036D7DC, lbl_8036D7F0, lbl_8036D804, lbl_8036D818;
+extern CoursePropData lbl_8036D82C, lbl_8036D840, lbl_8036D854, lbl_8036D868;
+extern char lbl_806CFA50[], lbl_806CFA58[];
+void fn_8016E358();
+void fn_8016E308();
+void fn_8016E1C0();
+void fn_8016A26C();
 }
+static CoursePropData *normalProps[7] = {
+    &lbl_8036D78C, &lbl_8036D7DC, &lbl_8036D82C, &lbl_8036D840,
+    &lbl_8036D854, &lbl_8036D868, 0
+};
+static CoursePropData *reverseProps[7] = {
+    &lbl_8036D7A0, &lbl_8036D7F0, &lbl_8036D82C, &lbl_8036D840,
+    &lbl_8036D854, &lbl_8036D868, 0
+};
+static CoursePropData *longProps[3] = { &lbl_8036D7B4, &lbl_8036D804, 0 };
+static CoursePropData *longReverseProps[3] = { &lbl_8036D7C8, &lbl_8036D818, 0 };
+// RTTI hierarchy record followed by the list virtual table.
+static void *propTypeInfo[3] = { lbl_806CFA50, 0, 0 };
+static void *propVtable[6] = {
+    lbl_806CFA58, 0, (void *)fn_8016E358, (void *)fn_8016E308,
+    (void *)fn_8016E1C0, (void *)fn_8016A26C
+};
+
 struct CoursePropBase {
     void *vtable;
     CoursePropBase() { vtable = lbl_80490FE0; }
@@ -42,23 +67,26 @@ struct CoursePropList : CoursePropBase {
     CoursePropNode *nodes;
     CoursePropList();
 };
+
+static inline CoursePropData **SelectCourseProps() {
+    if (!g_longRoundFlag) {
+        if (!g_reverseRoundFlag) return normalProps;
+        else return reverseProps;
+    } else {
+        if (!g_reverseRoundFlag) return longProps;
+        else return longReverseProps;
+    }
+}
+
 CoursePropList::CoursePropList() {
-    char *table = lbl_80491150;
-    vtable = table + 0x5c;
+    vtable = propVtable;
     DebugPrintf(lbl_8036D8BC);
     for (int i = 0; i < 3; i++) {
         models[i] = new clNormal3D(lbl_8036D75C[i].resource, 0);
         clNormal3D_SetScale(models[i], 0, 0.0f, lbl_806D8BAC, 0.0f, 0.0f);
     }
     nodes = 0;
-    CoursePropData **items;
-    if (!g_longRoundFlag) {
-        if (!g_reverseRoundFlag) items = (CoursePropData **)(table + 0);
-        else items = (CoursePropData **)(table + 0x1c);
-    } else {
-        if (!g_reverseRoundFlag) items = (CoursePropData **)(table + 0x38);
-        else items = (CoursePropData **)(table + 0x44);
-    }
+    CoursePropData **items = SelectCourseProps();
     while (*items) {
         CoursePropNode *node;
         switch ((*items)->kind) {

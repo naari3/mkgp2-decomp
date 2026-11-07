@@ -5,27 +5,24 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void AngleStepTowards_Shortest();
-extern void BuildOrientationFromYaw();
-extern void GetSpawnPosition();
+
+
 extern void ItemObject_DecrementCategoryBudget();
 extern void ItemObject_GetGroundTypeAt();
 extern void Item_AdvanceTetherToJoint13();
 extern void Item_DecayVelocityScalar();
-extern void SpriteSlot_Container_Free();
 extern void SpriteSlot_InitNonLoop();
 extern void SpriteSlot_SetTransform();
 extern void TornadoItem_TickActive();
-extern void Vec3_Add_DestFirst();
-extern void Vec3_ToPitch();
+
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D61F0;
-extern unsigned int lbl_806D61F4;
-extern unsigned int lbl_806D61F8;
-extern unsigned int lbl_806D61FC;
-extern unsigned int lbl_806D6200;
-extern unsigned int lbl_806D6204;
+extern const float lbl_806D61F0;
+extern const float lbl_806D61F4;
+extern const float lbl_806D61F8;
+extern const float lbl_806D61FC;
+extern const float lbl_806D6200;
+extern const float lbl_806D6204;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */

@@ -74,6 +74,34 @@ Already known before this pass:
   0x801F7604..0x801F89F0 (claims #2434, #2320, #2376, #2395).
 * fn_801ECA14 uses the pool `lbl_803BD920`.
 
+## Plan: RaceHud..Scene .rodata pool (0x80362858..0x803678D8)
+
+Unsplit pool in `auto_06_80362858_rodata.s`, referenced through the bases `lbl_80362D90`
+and `lbl_80363D30` from RaceHud_80147470.cpp, CSPartsHolders.c, SceneFactory_8014D540.cpp and
+Scene_8014E0C4.cpp (`.text 0x80147470..0x80157940`). Blocked functions:
+fn_8014ADB4 (RankBoard draw, tables at +0x4B0/+0x720/+0xC00), fn_8015061C case 8 and
+the table reads in fn_801540E0 (docs/gave_up.md). The target forms
+`addi rB, base, OFF; lwzx/add rX, rB, idx`; any `pool+OFF` we write is reassociated to
+`add; lwz OFF(r)`.
+
+Finding (2026-11-07, asm→C (A) thread, corrected): GC/2.6 (and 1.3.x) DO anchor
+separate statics on `...rodata.0` (`addi r30, ...rodata.0@l; addi r29, r30, 0x190`), but
+only when the function uses the objects often enough (a loop with three tables did; one
+or two reads in a tiny function give one `lis/addi` per object). GC/1.2.5n anchors even
+tiny cases, but switching these TUs to it breaks them, so stay on 2.6. This matches the
+section-anchor recipe in setup/TIPS.md (CoursePropCtor fn_8016E568).
+
+Plan:
+1. Merge the referencing TUs into one TU that owns `.rodata 0x80362778..0x803678D8`
+   (RaceHud's own 0x80362778..0x80362858 included) and define every pool object in it,
+   in address order with exact bytes. Objects other TUs use keep their `lbl_` names.
+2. Check that the already matched functions still match after the merge (they now
+   reference the objects by name, and CW may anchor them too).
+3. Then convert fn_8014ADB4, fn_8015061C and fn_801540E0 against the pooled tables.
+
+Status: not started. The TUs are not claimed by onmokoworks (checked 2026-11-07), but the
+1.2.5n switch touches ~9 TUs, so do it as one dedicated job.
+
 ## Not pool, naming only
 
 Some near-100% functions differ only in symbol names (`jumptable_X` vs `@N`, `lbl_` vs

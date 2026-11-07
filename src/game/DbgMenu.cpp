@@ -2158,6 +2158,13 @@ extern "C" unsigned char DbgScene01_SprMng2Test_InputCheck(void)
     return 0;
 }
 
+/* The target keeps two pointer IVs in the id-count loop (the -2 compare
+ * reloads the id), so the second read goes through another struct type and
+ * mwcc does not CSE it with the first.
+ * NonMatching: the target also keeps a dead offset IV there, and each
+ * self-inlined level walks the nodes as base + offset (`add`) instead of a
+ * pointer IV. */
+struct ResIdAlt { int id; };
 extern "C" void DbgScene_PreloadResourceTree(ResNode *tree)
 {
     int i;
@@ -2168,7 +2175,7 @@ extern "C" void DbgScene_PreloadResourceTree(ResNode *tree)
         case 0: {
             int *ids = (int *)tree[i].data;
             count = 0;
-            while (ids[count] != -1 && ids[count] != -2) {
+            while (ids[count] != -1 && ((ResIdAlt *)ids)[count].id != -2) {
                 count++;
             }
             break;

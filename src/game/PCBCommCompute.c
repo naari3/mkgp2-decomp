@@ -8,10 +8,14 @@ typedef struct PeerHeader {
     unsigned char role : 3;
     unsigned char reserved0 : 4;
 } PeerHeader;
+typedef struct VoteByte {
+    unsigned char track : 7;
+    unsigned char option : 1;
+} VoteByte;
 typedef struct PeerSlot {
     union { u32 word; struct { PeerHeader header; u8 rest[3]; } bytes; } first;
     u8 character;
-    u8 vote;
+    VoteByte vote;
     u8 mode;
     u8 pad7[0xA35];
 } PeerSlot;
@@ -67,6 +71,16 @@ static inline u8 PeersReady(PeerSlot* peer, int role)
     return ready;
 }
 
+static inline int RoleCount(u8* sync, int role)
+{
+    int count = 0;
+    int i;
+    if (role == 0) return 1;
+    for (i = 0; i < 4; ++i, ++sync)
+        if (sync[4] == role) ++count;
+    return count;
+}
+
 static inline SyncOutput* HostOutput(CommStorage* storage)
 {
     if (g_isCommHost == 0) return 0;
@@ -83,6 +97,7 @@ int PCBComm_ComputeSyncState(void)
     int optionVotes[2];
     u8 usedPositions[4];
     CommStorage* storage = lbl_805A5EC0;
+    PeerSlot* firstPeer;
     SyncOutput* out = HostOutput(storage);
     PeerSlot* peer;
     int i, winner, role;
@@ -118,7 +133,7 @@ int PCBComm_ComputeSyncState(void)
         peer = storage->peer;
         for (i = 0; i < 4; ++i, ++peer)
             if (peer->first.bytes.header.role == role)
-                ++trackVotes[peer->vote >> 1];
+                ++trackVotes[peer->vote.track];
         winner = 0;
         for (i = 0; i < 16; ++i)
             if (trackVotes[i] > trackVotes[winner]) winner = i;
@@ -130,7 +145,7 @@ int PCBComm_ComputeSyncState(void)
         peer = storage->peer;
         for (i = 0; i < 4; ++i, ++peer)
             if (peer->first.bytes.header.role == role)
-                ++optionVotes[peer->vote & 1];
+                ++optionVotes[peer->vote.option];
         winner = 0;
         for (i = 0; i < 2; ++i)
             if (optionVotes[i] > optionVotes[winner]) winner = i;
@@ -138,7 +153,8 @@ int PCBComm_ComputeSyncState(void)
     }
     if ((int)out->scene == 26 && out->commonItem == -1) {
         CardRow* card = storage->card;
-        peer = storage->peer;
+        firstPeer = storage->peer;
+        peer = firstPeer;
         cards = lbl_80312234[0];
         role = g_localPcbRole;
         for (i = 0; i < 4; ++i, ++peer, ++card) {
@@ -148,20 +164,9 @@ int PCBComm_ComputeSyncState(void)
         out->commonItem = CardSnapshot_ResolveCommonItems(cards.row);
         for (i = 0; i < 4; ++i) usedPositions[i] = 0;
         role = g_localPcbRole;
-        i = 0;
-        for (;;) {
-            int count;
-            if (role == 0) count = 1;
-            else {
-                int j;
-                count = 0;
-                for (j = 0; j < 4; ++j)
-                    if (storage->sync[j + 4] == role) ++count;
-            }
-            if (i >= 4 - count) break;
-            usedPositions[i++] = 1;
-        }
-        peer = storage->peer;
+        for (i = 0; i < 4 - RoleCount(storage->sync, role); ++i)
+            usedPositions[i] = 1;
+        peer = firstPeer;
         for (i = 0; i < 4; ++i, ++peer) {
             if (peer->first.bytes.header.role == g_localPcbRole) {
                 int position;
@@ -173,7 +178,7 @@ int PCBComm_ComputeSyncState(void)
         }
         for (i = 0; i < 13; ++i) usedCharacters[i] = 0;
         role = g_localPcbRole;
-        peer = storage->peer;
+        peer = firstPeer;
         for (i = 0; i < 4; ++i, ++peer)
             if (peer->first.bytes.header.role == role)
                 usedCharacters[(peer->character >> 4) & 15] = 1;

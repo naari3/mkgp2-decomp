@@ -1,10 +1,14 @@
+#ifndef DRAW_QUAD_SCALED_801F_PRIVATE_H
+#define DRAW_QUAD_SCALED_801F_PRIVATE_H
 #include "game/DrawQuad801F.h"
 struct DrawQuad7F50 {
     float x0,y0,x1,y1,x2,y2,x3,y3;
     DrawQuad7F50(DrawDesc801F *d) {
-        double width = __fabs(d->width * d->scaleX);
-        double height = __fabs(d->height * d->scaleY);
         float dy, cosPart, dx, w, h, sinPart, left, top, wx, right, bottom;
+        w = d->width * d->scaleX;
+        h = d->height * d->scaleY;
+        double width = __fabs(w);
+        double height = __fabs(h);
         w = width;
         h = height;
         if (lbl_806DA718 == d->angle) {
@@ -34,3 +38,5 @@ struct DrawQuad7F50 {
     }
     ~DrawQuad7F50() {}
 };
+
+#endif

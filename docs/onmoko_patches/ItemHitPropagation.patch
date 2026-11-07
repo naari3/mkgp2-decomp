@@ -1,0 +1,78 @@
+diff --git a/configure.py b/configure.py
+index 6ccde74..1290717 100644
+--- a/configure.py
++++ b/configure.py
+@@ -1107,7 +1107,7 @@ config.libs = [
+             Object(Matching, "game/ItemDescriptorField4.c", extra_cflags=["-Cpp_exceptions on"]),
+             Object(Matching, "game/ItemLocalizedAsset.c", extra_cflags=["-Cpp_exceptions on"]),
+             Object(Matching, "game/ItemHitBurst.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+-            Object(NonMatching, "game/ItemHitPropagation.c", extra_cflags=["-Cpp_exceptions on"]),
++            Object(Matching, "game/ItemHitPropagation.c", extra_cflags=["-Cpp_exceptions on"]),
+             Object(Matching, "game/ItemGroundExplosion.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+             Object(Matching, "game/Item.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+             Object(Matching, "game/ItemMotion.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+diff --git a/src/game/ItemHitPropagation.c b/src/game/ItemHitPropagation.c
+index c46c27b..8a89a3d 100644
+--- a/src/game/ItemHitPropagation.c
++++ b/src/game/ItemHitPropagation.c
+@@ -8,6 +8,12 @@ typedef struct HitDriver {
+     unsigned char pad_00[0x304];
+     HitEffectBus *effects;
+ } HitDriver;
++/* The classifier reads the effect bus through the kart object's own layout;
++ * using a separate type keeps its load from being CSE'd with driver->effects. */
++typedef struct HitKartObject {
++    unsigned char pad_00[0x304];
++    HitEffectBus *effects;
++} HitKartObject;
+ typedef struct HitRaceSlot {
+     int kind;
+     unsigned char pad_04[0xB0];
+@@ -58,9 +64,9 @@ static inline unsigned char HitEffect_HasProtected(HitEffectBus *effects)
+     return result;
+ }
+ 
+-static inline int HitDriver_Classify(HitDriver *driver)
++static inline int HitDriver_Classify(HitKartObject *kart)
+ {
+-    HitEffectBus *effects = driver->effects;
++    HitEffectBus *effects = kart->effects;
+     if (HitEffect_HasProtected(effects)) {
+         return 2;
+     }
+@@ -94,7 +100,7 @@ void Item_PropagateHitToAllDrivers(HitItem *item, HitDriver *excluded)
+             if (excluded != 0 && excluded == driver) {
+                 continue;
+             }
+-            classification = HitDriver_Classify(driver);
++            classification = HitDriver_Classify((HitKartObject *)driver);
+             switch (classification) {
+             case 1:
+                 ItemHit_Dispatch(item, 0, &item->position, driver);
+@@ -104,6 +110,8 @@ void Item_PropagateHitToAllDrivers(HitItem *item, HitDriver *excluded)
+                     ItemEffectBus_OrMask(driver->effects, 0x8000000000000000ULL);
+                 }
+                 break;
++            case 3:
++                break;
+             default:
+                 break;
+             }
+@@ -140,7 +148,7 @@ void Item_PropagateHitToDriversInRadius(HitItem *item, HitDriver *excluded)
+             origin = position;
+             Mtx44_TransformVec3(&position, &matrix, &origin);
+             if (fn_800D3184(&item->position, &position) < radius) {
+-                classification = HitDriver_Classify(driver);
++                classification = HitDriver_Classify((HitKartObject *)driver);
+                 switch (classification) {
+                 case 1:
+                     ItemHit_Dispatch(item, 0, &position, driver);
+@@ -150,6 +158,8 @@ void Item_PropagateHitToDriversInRadius(HitItem *item, HitDriver *excluded)
+                         ItemEffectBus_OrMask(driver->effects, 0x8000000000000000ULL);
+                     }
+                     break;
++                case 3:
++                    break;
+                 default:
+                     break;
+                 }

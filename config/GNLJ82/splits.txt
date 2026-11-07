@@ -6033,6 +6033,7 @@ game/NokoNoko_801287F8.cpp:
 	extab       start:0x8000C444 end:0x8000C688
 	extabindex  start:0x800249BC end:0x80024A10
 	.text       start:0x801287F8 end:0x8012A5AC
+	.rodata     start:0x803561E8 end:0x80356708
 
 game/dtor_8012A5AC.c:
 	extab       start:0x8000C688 end:0x8000C690
@@ -6079,6 +6080,7 @@ game/SuikaBall_801313D0.cpp:
 	extab       start:0x8000CBA0 end:0x8000CE64
 	extabindex  start:0x80024B18 end:0x80024B6C
 	.text       start:0x801313D0 end:0x801341E4
+	.rodata     start:0x80357008 end:0x80357B00
 
 game/BiribiriLand.c:
 	extab       start:0x8000CE64 end:0x8000D014
@@ -6361,6 +6363,7 @@ game/Scene_8015B790.cpp:
 	extab       start:0x8000F28C end:0x8000F294
 	extabindex  start:0x800259B8 end:0x800259C4
 	.text       start:0x8015B790 end:0x8015BC08
+	.rodata     start:0x80367F68 end:0x803682AC
 
 game/Scene_8015BC08.cpp:
 	extab       start:0x8000F294 end:0x8000F29C
@@ -6844,6 +6847,7 @@ game/mapeffect/CoursePropCtor.cpp:
 	extab       start:0x800105E4 end:0x80010618
 	extabindex  start:0x80026318 end:0x80026324
 	.text       start:0x8016E568 end:0x8016E7E4
+	.data       start:0x80491150 end:0x804911C4
 
 game/misc3d/fn_8016E7E4.c:
 	extab       start:0x80010618 end:0x80010620
@@ -10558,7 +10562,6 @@ game/fn_801F7604.cpp:
 	extab       start:0x80017580 end:0x800175B8
 	extabindex  start:0x80028F88 end:0x80028F94
 	.text       start:0x801F7604 end:0x801F7A74
-	.rodata     start:0x803BEDC0 end:0x803BF020
 
 game/dtor_801F7A74.c:
 	extab       start:0x800175B8 end:0x800175C0
@@ -10615,15 +10618,11 @@ game/fn_801F7F50.cpp:
 	extabindex  start:0x8002900C end:0x80029018
 	.text       start:0x801F7F50 end:0x801F8214
 
-game/dtor_801F8214.c:
-	extab       start:0x80017630 end:0x80017638
-	extabindex  start:0x80029018 end:0x80029024
-	.text       start:0x801F8214 end:0x801F8250
-
-game/fn_801F8250.c:
-	extab       start:0x80017638 end:0x80017640
-	extabindex  start:0x80029024 end:0x80029030
-	.text       start:0x801F8250 end:0x801F8404
+game/dtor_801F8214.cpp:
+	extab       start:0x80017630 end:0x80017640
+	extabindex  start:0x80029018 end:0x80029030
+	.text       start:0x801F8214 end:0x801F8404
+	.rodata     start:0x803BEDC0 end:0x803BF020
 
 game/fn_801F8404.cpp:
 	extab       start:0x80017640 end:0x80017658
@@ -11248,6 +11247,7 @@ game/anon_8020AF08_nm1.cpp:
 	extab       start:0x800194D0 end:0x80019538
 	extabindex  start:0x80029BC4 end:0x80029BD0
 	.text       start:0x8020B234 end:0x8020B4F8
+	.rodata     start:0x803C2E50 end:0x803C3504
 
 game/anon_8020B4F8.cpp:
 	extab       start:0x80019538 end:0x800195C8

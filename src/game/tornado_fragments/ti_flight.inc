@@ -5,16 +5,14 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void BuildOrientationFromYaw();
-extern void GetSpawnPosition();
-extern void ItemObject_AllocFromPool();
-extern void Item_AdvanceFallingDrop();
+
+extern char *ItemObject_AllocFromPool();
+extern int Item_AdvanceFallingDrop();
 extern void Item_AdvanceTetherToJoint13();
 extern void SoundMgr_CountActiveSEInstances();
 extern void SoundMgr_PlaySE_Positional();
 extern void SoundMgr_PlaySE_WithChannel();
 extern void SoundMgr_StopSE_OrSpecial();
-extern void SpriteSlot_Container_Free();
 extern void SpriteSlot_InitNonLoop();
 extern void SpriteSlot_SetJointVisibilityByName();
 extern void SpriteSlot_SetPositionFromVec();
@@ -22,27 +20,25 @@ extern void SpriteSlot_SetRotationQuatFromVec();
 extern void SpriteSlot_SetScaleXYZ();
 extern void SpriteSlot_SetTranslateDxDy();
 extern void Tornado_LockOnHomingTick();
-extern void Vec3_Add_DestFirst();
-extern void Vec3_Copy();
 extern void Vec3_Scale();
 extern void sin();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D6260;
-extern unsigned int lbl_806D6264;
-extern unsigned int lbl_806D6268;
-extern unsigned int lbl_806D626C;
-extern unsigned int lbl_806D6270;
-extern unsigned int lbl_806D6274;
-extern unsigned int lbl_806D6278;
-extern unsigned int lbl_806D628C;
-extern unsigned int lbl_806D6290;
-extern unsigned int lbl_806D6294;
-extern unsigned int lbl_806D6298;
-extern unsigned int lbl_806D629C;
-extern unsigned int lbl_806D62A0;
-extern unsigned int lbl_806D62A4;
-extern unsigned int lbl_806D62A8;
+extern const float lbl_806D6260;
+extern const float lbl_806D6264;
+extern const float lbl_806D6268;
+extern const float lbl_806D626C;
+extern const float lbl_806D6270;
+extern const float lbl_806D6274;
+extern const float lbl_806D6278;
+extern const float lbl_806D628C;
+extern const float lbl_806D6290;
+extern const float lbl_806D6294;
+extern const float lbl_806D6298;
+extern const float lbl_806D629C;
+extern const float lbl_806D62A0;
+extern const float lbl_806D62A4;
+extern const float lbl_806D62A8;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */

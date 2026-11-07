@@ -1,4 +1,5 @@
 #include "game/TextDraw801F.h"
+#include "libc/stddef.h"
 
 extern "C" void fn_801F8A34(void *, TextManager *manager, int layer) {
     TextDraw801F *text = (TextDraw801F *)manager;
@@ -37,7 +38,7 @@ extern "C" void fn_801F8A34(void *, TextManager *manager, int layer) {
     cosine = (float)cos(text->angle);
     extraAdvance = lbl_806DA76C;
     walker = text;
-    while (walker->glyphs[0] != 0xFFFF && i<256) {
+    while (*(unsigned short *)((char *)walker + offsetof(TextDraw801F, glyphs)) != 0xFFFF && i<256) {
         float y = cursorY * text->scaleY;
         float x = cursorX * text->scaleX;
         extraAdvance += text->advance;

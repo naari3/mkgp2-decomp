@@ -30,12 +30,6 @@ struct ShowAnim {
     ~ShowAnim();
 };
 
-struct ShowAnimSet {
-    char a[0x18C];
-    char b[0x4D0 - 0x18C];
-    char c[0x6B8 - 0x4D0];
-};
-
 struct ShowXform {
     float pos[3];
     float rot[3];
@@ -44,7 +38,6 @@ struct ShowXform {
 
 extern "C" {
 extern int g_humanPlayerCount;
-extern const struct ShowAnimSet lbl_803C2E50;
 extern const float lbl_806DAC08;
 extern const float lbl_806DAC0C;
 extern const float lbl_806DAC10;
@@ -74,7 +67,7 @@ void fn_8013DA00(void);
 void fn_8013DAC8(ShowModel *m, int layer);
 void fn_8013DB9C(void);
 void fn_8013DBF8(void);
-ShowXform *fn_8013BE98(void);
+ShowXform *fn_8013BE98(int item);
 void fn_8014D1E0(ShowShellA *s, float alpha);
 void fn_8014D250(ShowShellA *s);
 void fn_8014D2AC(ShowShellA *s);
@@ -104,8 +97,61 @@ struct ItemShowcase {
     int Update();
 };
 
+struct ShowAnimCommand {
+    int op, frames;
+    float x, y, sx, sy, angle, r, g, b, alpha;
+};
+
+/* Separate programs share the compiler-generated section base. */
+static const ShowAnimCommand sparkleA[9] = {
+    {1, 45, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f},
+    {2, 10, 241.0f, 156.0f, 0.300000012f, 0.300000012f, -1.57079637f, 1.0f, 1.0f, 1.0f, 0.5f},
+    {2, 5, 241.0f, 156.0f, 1.0f, 1.0f, -0.52359879f, 1.0f, 1.0f, 1.0f, 1.0f},
+    {2, 15, 241.0f, 156.0f, 1.125f, 1.125f, 0.0f, 1.0f, 1.0f, 1.0f, 0.75f},
+    {1, 10, 241.0f, 156.0f, 1.5f, 1.5f, 1.57079637f, 1.0f, 1.0f, 1.0f, 0.0f},
+    {2, 10, 368.0f, 166.0f, 0.300000012f, 0.300000012f, -1.57079637f, 1.0f, 1.0f, 1.0f, 0.5f},
+    {2, 5, 368.0f, 166.0f, 1.0f, 1.0f, -0.52359879f, 1.0f, 1.0f, 1.0f, 1.0f},
+    {2, 15, 368.0f, 166.0f, 1.125f, 1.125f, 0.0f, 1.0f, 1.0f, 1.0f, 0.75f},
+    {5, 0, 368.0f, 166.0f, 1.5f, 1.5f, 1.57079637f, 1.0f, 1.0f, 1.0f, 0.0f},
+};
+
+static const ShowAnimCommand sparkleB[19] = {
+    {1, 55, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f},
+    {2, 10, 438.0f, 60.0f, 0.300000012f, 0.300000012f, -1.57079637f, 1.0f, 1.0f, 1.0f, 0.5f},
+    {2, 5, 438.0f, 60.0f, 1.0f, 1.0f, -0.52359879f, 1.0f, 1.0f, 1.0f, 1.0f},
+    {2, 15, 438.0f, 60.0f, 1.125f, 1.125f, 0.0f, 1.0f, 1.0f, 1.0f, 0.75f},
+    {1, 30, 438.0f, 60.0f, 1.5f, 1.5f, 1.57079637f, 1.0f, 1.0f, 1.0f, 0.0f},
+    {0, 0, 0.0f, 0.0f, 0.0f, 0.0f, -1.57079637f, 1.0f, 1.0f, 1.0f, 0.5f},
+    {2, 10, 350.0f, 100.0f, 0.300000012f, 0.300000012f, -1.57079637f, 1.0f, 1.0f, 1.0f, 0.5f},
+    {2, 30, 350.0f, 100.0f, 1.0f, 1.0f, -0.52359879f, 1.0f, 1.0f, 1.0f, 1.0f},
+    {1, 20, 350.0f, 100.0f, 2.0f, 2.0f, 1.57079637f, 1.0f, 1.0f, 1.0f, 0.0f},
+    {2, 10, 360.0f, 166.0f, 0.300000012f, 0.300000012f, -1.57079637f, 1.0f, 1.0f, 1.0f, 0.5f},
+    {2, 10, 360.0f, 166.0f, 1.0f, 1.0f, -0.52359879f, 1.0f, 1.0f, 1.0f, 1.0f},
+    {1, 13, 360.0f, 166.0f, 2.0f, 2.0f, 1.57079637f, 1.0f, 1.0f, 1.0f, 0.0f},
+    {2, 10, 278.0f, 60.0f, 0.300000012f, 0.300000012f, -1.57079637f, 1.0f, 1.0f, 1.0f, 0.5f},
+    {2, 10, 278.0f, 60.0f, 1.0f, 1.0f, -0.52359879f, 1.0f, 1.0f, 1.0f, 1.0f},
+    {1, 3, 278.0f, 60.0f, 2.0f, 2.0f, 1.57079637f, 1.0f, 1.0f, 1.0f, 0.0f},
+    {2, 10, 368.0f, 166.0f, 0.300000012f, 0.300000012f, -1.57079637f, 1.0f, 1.0f, 1.0f, 0.5f},
+    {2, 10, 368.0f, 166.0f, 1.0f, 1.0f, -0.52359879f, 1.0f, 1.0f, 1.0f, 1.0f},
+    {1, 4, 368.0f, 166.0f, 2.0f, 2.0f, 1.57079637f, 1.0f, 1.0f, 1.0f, 0.0f},
+    {3, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+};
+
+static const ShowAnimCommand sparkleC[11] = {
+    {1, 65, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f},
+    {2, 10, 241.0f, 130.0f, 0.300000012f, 0.300000012f, -1.57079637f, 1.0f, 1.0f, 1.0f, 0.5f},
+    {2, 5, 241.0f, 130.0f, 1.0f, 1.0f, -0.52359879f, 1.0f, 1.0f, 1.0f, 1.0f},
+    {2, 15, 241.0f, 130.0f, 1.125f, 1.125f, 0.0f, 1.0f, 1.0f, 1.0f, 0.75f},
+    {1, 20, 241.0f, 130.0f, 1.5f, 1.5f, 1.57079637f, 1.0f, 1.0f, 1.0f, 0.0f},
+    {0, 0, 0.0f, 0.0f, 0.0f, 0.0f, -1.57079637f, 1.0f, 1.0f, 1.0f, 0.5f},
+    {1, 15, 241.0f, 130.0f, 1.5f, 1.5f, 1.57079637f, 1.0f, 1.0f, 1.0f, 0.0f},
+    {2, 10, 270.0f, 176.0f, 0.300000012f, 0.300000012f, -1.57079637f, 1.0f, 1.0f, 1.0f, 0.5f},
+    {2, 30, 270.0f, 176.0f, 1.0f, 1.0f, -0.52359879f, 1.0f, 1.0f, 1.0f, 1.0f},
+    {1, 20, 270.0f, 176.0f, 2.0f, 2.0f, 1.57079637f, 1.0f, 1.0f, 1.0f, 0.0f},
+    {3, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+};
+
 ItemShowcase::ItemShowcase(int t) {
-    const ShowAnimSet *data = &lbl_803C2E50;
     timer = 0;
     itemId = 0;
     model = 0;
@@ -130,7 +176,7 @@ ItemShowcase::ItemShowcase(int t) {
         shellB = new ShowShellB(7, lbl_806DAC18, lbl_806DAC30, lbl_806DAC34);
         fn_8014CEE8(shellB, alpha);
     } else {
-        ShowXform *xf = fn_8013BE98();
+        ShowXform *xf = fn_8013BE98(id);
         model = new ShowModel(ItemRes_LookupByKey_Thunk(itemId), 1);
         fn_8013D738(model, lbl_806DAC10, lbl_806DAC14);
         fn_8013D660(model, lbl_806DAC18, lbl_806DAC30);
@@ -147,8 +193,8 @@ ItemShowcase::ItemShowcase(int t) {
     PreloadResource(0xBFF);
     loaded = true;
     PreloadResource(0x96A);
-    anim = new ShowAnim(0x96A, 0, 1, data->a, 0);
-    fn_8013B7A8(anim, new ShowAnim(0x96A, 0, 1, data->b, 0));
-    fn_8013B7A8(anim, new ShowAnim(0x96A, 0, 1, data->c, 0));
+    anim = new ShowAnim(0x96A, 0, 1, sparkleA, 0);
+    fn_8013B7A8(anim, new ShowAnim(0x96A, 0, 1, sparkleB, 0));
+    fn_8013B7A8(anim, new ShowAnim(0x96A, 0, 1, sparkleC, 0));
     fn_8013B4FC(anim, -1);
 }

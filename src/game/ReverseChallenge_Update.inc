@@ -13,7 +13,7 @@ extern void CObj_LoadProjMatrix();
 extern void CarObject_ApplyInput();
 extern void CarObject_CalcSpeedRatio();
 extern void CarObject_FrameUpdate();
-extern void CarObject_GetRenderObj();
+extern void *CarObject_GetRenderObj(void *car);
 extern void CarObject_HandleObstacleHit();
 extern void ChallengeGoalCamera_Update();
 extern void CourseEnvironment_UpdateAndCullZones_Timed();
@@ -32,7 +32,7 @@ extern void KartMovement_ResetOnGoal();
 extern void KartMovement_ResetOnTimeout();
 extern void KartMovement_SetSpeedScale();
 extern void LakituStart_UpdateCountdown();
-extern void MiniGame_GetTimerValue();
+extern int MiniGame_GetTimerValue(void);
 extern void Mtx44_GetTranslation_RowMajor();
 extern void NokoNokoChallenge_CalcResultText();
 extern void NokoNokoChallenge_GetCoinDivisor();
@@ -45,7 +45,7 @@ extern void TransitionEffect_Tick();
 extern void Vec2_RotateY();
 extern void Vec3_Add_DestFirst();
 extern void Vec3_Dot();
-extern void Vec3_Subtract();
+extern void Vec3_Subtract(void *a, void *b, void *out);
 extern void Vec3_Subtract_DestFirst();
 extern void VfxSlotMgr_Update();
 extern void fn_8016B32C();
@@ -77,7 +77,8 @@ extern unsigned int lbl_806D4F70;
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_80328DD8[];
+typedef struct RCQuadPtsC { float p[4][2]; } RCQuadPtsC;
+extern const RCQuadPtsC lbl_80328DD8;
 extern unsigned int lbl_805DF338[];
 extern unsigned int lbl_805DF344[];
 

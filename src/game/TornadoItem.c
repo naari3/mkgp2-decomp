@@ -5,6 +5,25 @@
  * Keep both the include order and the manual extab metadata in target order.
  */
 
+typedef struct TIVec3 {
+    float x, y, z;
+} TIVec3;
+
+extern float *KartDriver_GetKartRootMtx(void *kart);
+extern void Mtx44_GetTranslation_RowMajor(float *out, float *mtx);
+extern void SpriteSlot_Container_Free(void *self);
+extern void Vec3_Add_DestFirst(float *dst, float *a, float *b);
+extern void Vec3_Copy(float *dst, float *src);
+extern void Vec3_Subtract_DestFirst(float *dst, float *a, float *b);
+extern void GetSpawnPosition(void *out, float x, float y, float z);
+extern int Item_AdvanceTrackedHomingState(void *target, float *pos, float speed);
+
+#define TI_S8(p, o) (*(signed char *)((char *)(p) + (o)))
+#define TI_U8(p, o) (*(unsigned char *)((char *)(p) + (o)))
+#define TI_U32(p, o) (*(unsigned int *)((char *)(p) + (o)))
+#define TI_F32(p, o) (*(float *)((char *)(p) + (o)))
+#define TI_PTR(p, o) (*(char **)((char *)(p) + (o)))
+
 #include "src/game/tornado_fragments/ti_active.inc"
 #include "src/game/tornado_fragments/ti_launch.inc"
 #include "src/game/tornado_fragments/ti_homing_child.inc"

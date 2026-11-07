@@ -388,3 +388,18 @@ c19_u142 HomingMarkerUpdate fn_80172948 fresh89.83424->90.60959/2920B, owned EH8
 Source: Codex worker c19_u150_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 684 B.
 
 c19_u150: DriveBehavior_HandleWpType801DE848 reaches100% from99.82456 by extracting static inline float DriveWave(float phase){return sin(3.1415927410125732f*phase);} and using wave=DriveWave(self->phase). Keep c18 first/wave accumulator sequence. Unlike earlier affine/matrix-output inline helpers, this owns phase multiplication and double-sin-to-float return conversion. Five post-sin scratch rows become exact: complementf4, firstf0, secondf1. Text684/data40/extab8/index12 all100. Matching flag only; no ranges/maps/flags other than matching status changed. Source edge excludes fallback, four actual ELF ranges byte-equal original DOL, coordinator full DOL SHA1ea30f3b1 exact. +1 native function/+684B; first targeted hypothesis succeeded.
+
+## c19_u175_20261107
+Source: Codex worker c19_u175_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u175 PairTracking801E9A84 improves99.47183->99.71831. Semantic PairSpeedContext fieldwise parameter/cup/round grouping restores roundr25 (99.57746). Read lap/rank in PairSpeed caller and pass into calculation-only PairLapBonus; rank-before-cursor declarations in distance helper recover scan while caller snapshots restore target rankr27/lapr26. Text568/EH8/index12 preserved, EH exact. Remaining8 GPR instructions: initial offsetr24 vsr26, cup r26 vsr27, paramr24 vsr26. Explicit offset moves to31; direct declaration reorder regresses; C++ aggregate initializer adds template copy/frame; lap aggregate invariant. Six hypotheses exhausted. Singleton staysNonMatching, no A/B, zero native gain. Full fallback DOL SHA1ea30f3b1 exact.
+
+## c19_u183_20261107
+Source: Codex worker c19_u183_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u183 retry fn_8019A9BC: inline SetAxisAngle(MovementQuat*,float x,float y,float z) called directly with orientation row fields restores target pre-sin Z/Y/X load order via argument evaluation, 94.155556->94.162964, primary1080/frame110 and owned24-byte EH unchanged. Axis homes still X/Y/Z29/30/31 vs target30/31/29. sum=a*b+sum recurrence is byte-invariant here (unlike c19_u125 constructor); scalar QuatMatrix(m,x,y,z,w) reverses q-field reload order and scores94.155556, reverted. Remaining quaternion/translation/constant FP and matrix GPR/operand homes. No singleton or pool-base site; one-function B unavailable. Source remainsNonMatching, nativegain0, coordinator full fallback DOL SHA1exact.
+
+## c19_u191_20261107
+Source: Codex worker c19_u191_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 504 B.
+
+c19_u191: PointList constructor fn_8016C94C (504 B) promotes from99.84127 to100 by qualifying both constructor SpawnPoint *spawn and walking SpawnPoint *cur with __restrict. Only adjacent Z loads at +0x70/+0x74 change: target loads points[j].z into f1 before cur->z into f0. Named single/all operand snapshots, ComponentDifference helper, and reversed-parameter Displacement helper are invariant. Addition of negated source regresses96.13492/512B. Retain original direct dx/dz source plus alias qualifiers. Text504/extab8/index12 all100. Existing bridge/ranges/flags unchanged except Matching status. Full source-linked DOL SHA1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65; gain1 native fn/504B.

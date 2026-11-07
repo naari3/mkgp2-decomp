@@ -1,0 +1,75 @@
+diff --git a/configure.py b/configure.py
+index ce4a190..75a65c0 100644
+--- a/configure.py
++++ b/configure.py
+@@ -1877,3 +1877,3 @@ config.libs = [
+             Object(NonMatching, "game/PCBCommBroadcast.c", extra_cflags=["-lang=c++", "-Cpp_exceptions on", "-use_lmw_stmw on"]),
+-            Object(NonMatching, "game/PCBCommPhase1.c", extab_padding=b""),
++            Object(Matching, "game/PCBCommPhase1.c", extab_padding=b""),
+             Object(Matching, "game/CommBroadcast_ClearTable.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
+diff --git a/src/game/PCBCommPhase1.c b/src/game/PCBCommPhase1.c
+index 4c200cb..60e6806 100644
+--- a/src/game/PCBCommPhase1.c
++++ b/src/game/PCBCommPhase1.c
+@@ -29,17 +29,19 @@ static inline void PublishTimers(int roleCount, unsigned char truncate,
+     unsigned char idle = 1;
+     if (roleCount > 0) {
+         float timer;
+-        char *cursor = phases;
+-        unsigned char *out = g_pcbSyncTable;
+         int i;
+         lbl_806D11C0[0] -= lbl_806D3164;
+         if (truncate) lbl_806D11C0[0] = (int)lbl_806D11C0[0];
+         if (reset) lbl_806D11C0[0] = lbl_806D316C;
+         timer = lbl_806D11C0[0];
+-        for (i = 0; i < 4; ++i, ++cursor, out += 4) {
+-            if (*cursor == 1) {
+-                *(float *)(out + 8) = timer;
+-                idle = 0;
++        {
++            char *cursor = phases;
++            unsigned char *out = g_pcbSyncTable;
++            for (i = 0; i < 4; ++i, ++cursor, out += 4) {
++                if (*cursor == 1) {
++                    *(float *)(out + 8) = timer;
++                    idle = 0;
++                }
+             }
+         }
+     }
+@@ -47,16 +49,18 @@ static inline void PublishTimers(int roleCount, unsigned char truncate,
+ }
+ int PCBComm_UpdateSyncPhase1(void)
+ {
+-    SlotView *slots = lbl_805A6154;
+-    SlotView *slot = slots;
+-    char *phases = g_pcbSyncPhasePerPcb;
+-    char *phase = phases;
++    SlotView *slots;
++    SlotView *slot;
++    char *phase;
++    char *phases;
+     int roleCount = 0;
+     int sceneCount = 0;
+     int first = -1;
+     unsigned char truncate = 0;
+     unsigned char reset = 0;
+     int i;
++    slot = slots = lbl_805A6154;
++    phase = phases = g_pcbSyncPhasePerPcb;
+     for (i = 0; i < 4;) {
+         unsigned int role;
+         if (((slot->header.word >> 15) & 0xFF) == 8) ++sceneCount;
+@@ -85,11 +89,10 @@ int PCBComm_UpdateSyncPhase1(void)
+         ++i;
+     }
+     if (sceneCount > 0 && roleCount == sceneCount) {
+-        int hostRole = first + 2;
+         unsigned char *out = g_pcbSyncTable;
+         for (i = 0; i < 4; ++i, ++slots, ++out) {
+             if (roleCount >= 2) {
+-                if (slots->header.bytes.role.role == 1) out[4] = hostRole;
++                if (slots->header.bytes.role.role == 1) out[4] = first + 2;
+             } else {
+                 if (slots->header.bytes.role.role == 1) out[4] = 0;
+             }

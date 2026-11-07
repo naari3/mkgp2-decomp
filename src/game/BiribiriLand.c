@@ -643,471 +643,226 @@ extern "C" void *BiribiriLand_Destroy(BiribiriState *self, short freeMemory)
 #pragma cplusplus reset
 
 
-/* === extracted from auto_BiribiriLand_Init_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+/* === BiribiriLand_Init: C++ ctor (same template as ReverseChallenge_Init / RivalRun_Init) === */
+#pragma cplusplus on
+void *operator new(unsigned long size);
+void operator delete(void *p);
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void Alloc();
-extern void Camera_Create();
-extern void CarObject_Init();
-extern void CarObject_SetPosition();
-extern void ChallengeGoalCamera_Init();
-extern void CourseObjectManager_Init();
-extern void DMAChannelManager_Init();
-extern void DrawManager_GetOrCreate();
-extern void GameMode_BaseInit();
-extern void GetCourseDataPtr();
-extern void GetCourseStartYaw();
-extern void GetDisplayBufferIndex();
-extern void GetKartModelNameEntry();
-extern void GetRaceContextPtr();
-extern void GetStartPosition();
-extern void HUD_Init();
-extern void HUD_RegisterOverlay();
-extern void InputManager_Init();
-extern void ItemObjectManager_Init();
-extern void LakituStart_Init();
-extern void Object_SetJObjScaleXYZ();
-extern void PreloadEffectResources();
-extern void ProcessSystemTick();
-extern void RankingTable_Init();
-extern void HSD_LObjLoadDesc();
-extern void Scene3D_GetCameraPos();
-extern void Scene3D_Init();
-extern void Scene3D_SetupProjection();
-extern void SetActiveCamera();
-extern void SetCourseScene3D();
-extern void SetPlayerCarObject();
-extern void SetResourceLoadingFlag();
-extern void SoundChannels_ClearAll();
-extern void SoundDriver_GetOrCreate();
-extern void TransitionEffect_GetOrCreate();
-extern void Vec3_Normalize();
-extern void Vec3_Subtract();
-extern void WeatherSystem_Init();
-extern void clNormal3D_Construct();
-extern void clNormal3D_SetScale();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int g_characterId;
-extern unsigned int g_raceCamera;
-extern unsigned int g_weatherSystem;
-extern unsigned int lbl_806D12BC;
-extern unsigned int lbl_806D7348;
-extern unsigned int lbl_806D7364;
-extern unsigned int lbl_806D7368;
-extern unsigned int lbl_806D736C;
-extern unsigned int lbl_806D7370;
-extern unsigned int lbl_806D7374;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_8048E144[];
-extern unsigned int lbl_8048E430[];
-extern unsigned int lbl_8048E46C[];
-
-/* --- function index (1 fns, .text 0x80134FF0..0x8013558C) ---
- * [  0] 0x80134FF0 size:0x59C   global BiribiriLand_Init
- */
-
-/* --- forward decls --- */
-asm void BiribiriLand_Init(void);
-
-/* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void MemoryManager_TimedFree();
-extern void dtor_80122FD8();
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; unsigned int f45; unsigned int f46; unsigned int f47; unsigned int f48; void *f49; unsigned int f50; unsigned int f51; void *f52; unsigned int f53; void *f54; unsigned int f55; unsigned int f56; void *f57; unsigned int f58; void *f59; unsigned int f60; unsigned int f61; void *f62; unsigned int f63; void *f64; unsigned int f65; unsigned int f66; void *f67; unsigned int f68; void *f69; unsigned int f70; unsigned int f71; void *f72; unsigned int f73; void *f74; unsigned int f75; unsigned int f76; void *f77; unsigned int f78; void *f79; unsigned int f80; unsigned int f81; void *f82; unsigned int f83; void *f84; unsigned int f85; void *f86; unsigned int f87; unsigned int f88; void *f89; unsigned int f90; void *f91; unsigned int f92; unsigned int f93; void *f94; unsigned int f95; void *f96; unsigned int f97; unsigned int f98; void *f99; } extab_BiribiriLand_Init = { 0x30CA0000, 0x000000A8, 0x000900C8, 0x000000D8, 0x000000C0, 0x000000E0, 0x000400C8, 0x00000110, 0x000000D4, 0x00000120, 0x001100C8, 0x00000174, 0x001000E8, 0x000001C4, 0x000800C8, 0x00000208, 0x000000FC, 0x00000214, 0x000000C8, 0x00000228, 0x00040110, 0x00000244, 0x000000C8, 0x00000250, 0x00000124, 0x0000025C, 0x000D00C8, 0x000002A0, 0x00000138, 0x000002B4, 0x002300C8, 0x00000360, 0x00000154, 0x00000374, 0x0000014C, 0x00000394, 0x003D0154, 0x000004D0, 0x000000C8, 0x00000510, 0x00030168, 0x00000550, 0x000000C8, 0x00000560, 0x0000017C, 0x0000056C, 0x000000C8, 0x00000000, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8 };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_BiribiriLand_Init = {
-    (void *)&BiribiriLand_Init, 0x0000059C, (void *)&extab_BiribiriLand_Init
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void BiribiriLand_Init(void) { /* 0x80134FF0 size:0x59C */
-    nofralloc
-    stwu r1, -0x80(r1)
-    mflr r0
-    stw r0, 0x84(r1)
-    stfd f31, 0x70(r1)
-    psq_st f31, 0x78(r1), 0, 0
-    stfd f30, 0x60(r1)
-    psq_st f30, 0x68(r1), 0, 0
-    stfd f29, 0x50(r1)
-    psq_st f29, 0x58(r1), 0, 0
-    stmw r26, 0x38(r1)
-    mr r31, r3
-    mr r0, r31
-    mr r28, r0
-    bl GameMode_BaseInit
-    lis r4, lbl_8048E144@ha
-    lis r3, lbl_8048E46C@ha
-    addi r0, r4, lbl_8048E144@l
-    lfs f0, lbl_806D7330(r2)
-    stw r0, 0x0(r28)
-    addi r3, r3, lbl_8048E46C@l
-    li r0, 0x0
-    stfs f0, 0x4(r28)
-    stw r3, 0x0(r31)
-    stw r0, 0x8(r31)
-    stw r0, 0xc(r31)
-    stw r0, 0x10(r31)
-    stw r0, 0x14(r31)
-    stw r0, 0x18(r31)
-    stw r0, 0x1c(r31)
-    stw r0, 0x20(r31)
-    stw r0, 0x24(r31)
-    stb r0, 0x28(r31)
-    stb r0, 0x29(r31)
-    stb r0, 0x2a(r31)
-    stb r0, 0x2b(r31)
-    stw r0, 0x2c(r31)
-    stw r0, 0x30(r31)
-    stw r0, 0x34(r31)
-    stfs f0, 0x38(r31)
-    stfs f0, 0x3c(r31)
-    stfs f0, 0x40(r31)
-    bl DrawManager_GetOrCreate
-    li r3, 0x0
-    bl SetResourceLoadingFlag
-    bl DMAChannelManager_Init
-    bl TransitionEffect_GetOrCreate
-    bl SoundChannels_ClearAll
-    bl ItemObjectManager_Init
-    bl CourseObjectManager_Init
-    li r3, 0x37c
-    bl Alloc
-    mr. r28, r3
-    beq BiribiriLand_Init_L_801350C8
-    bl InputManager_Init
-    BiribiriLand_Init_L_801350C8:
-    stw r28, 0x10(r31)
-    bl GetCourseDataPtr
-    bl HSD_LObjLoadDesc
-    stw r3, 0x20(r31)
-    li r3, 0x2c
-    bl Alloc
-    mr. r28, r3
-    beq BiribiriLand_Init_L_80135100
-    lfs f1, lbl_806D7364(r2)
-    li r4, 0x100
-    lfs f2, lbl_806D732C(r2)
-    li r5, 0x100
-    lwz r6, 0x20(r31)
-    bl Camera_Create
-    BiribiriLand_Init_L_80135100:
-    stw r28, 0x1c(r31)
-    li r3, 0x0
-    lwz r4, 0x1c(r31)
-    bl SetActiveCamera
-    lwz r0, 0x1c(r31)
-    li r3, 0x0
-    stw r0, g_raceCamera(r13)
-    bl ProcessSystemTick
-    bl GetRaceContextPtr
-    bl RankingTable_Init
-    li r0, 0x0
-    li r3, 0x0
-    stw r0, lbl_806D12BC(r13)
-    bl SoundDriver_GetOrCreate
-    addi r6, r1, 0x2c
-    addi r4, r1, 0x24
-    addi r5, r1, 0x28
-    li r3, 0x0
-    bl GetStartPosition
-    li r3, 0x118
-    bl Alloc
-    mr. r28, r3
-    beq BiribiriLand_Init_L_801351A4
-    lwz r30, g_characterId(r13)
-    bl GetCourseStartYaw
-    fmr f29, f1
-    bl GetDisplayBufferIndex
-    li r0, 0x0
-    mr r4, r3
-    stw r0, 0x8(r1)
-    fmr f3, f29
-    mr r3, r28
-    mr r5, r30
-    lfs f1, 0x24(r1)
-    li r6, 0x0
-    lfs f2, 0x2c(r1)
-    li r7, 0x0
-    li r8, 0x1
-    li r9, 0x3
-    li r10, 0x0
-    bl CarObject_Init
-    BiribiriLand_Init_L_801351A4:
-    stw r28, 0x8(r31)
-    addi r4, r1, 0x24
-    lwz r3, 0x8(r31)
-    bl CarObject_SetPosition
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    li r0, 0x1
-    stw r0, 0x238(r3)
-    lwz r3, 0x8(r31)
-    bl SetPlayerCarObject
-    li r3, 0x58
-    bl Alloc
-    mr. r28, r3
-    beq BiribiriLand_Init_L_801351F8
-    lfs f1, lbl_806D7330(r2)
-    lis r4, lbl_803580E0@ha
-    addi r4, r4, lbl_803580E0@l
-    li r5, 0x0
-    fmr f2, f1
-    fmr f3, f1
-    bl LakituStart_Init
-    BiribiriLand_Init_L_801351F8:
-    stw r28, 0xc(r31)
-    li r3, 0x3084
-    bl Alloc
-    mr. r28, r3
-    beq BiribiriLand_Init_L_80135228
-    lwz r3, g_characterId(r13)
-    li r4, -0x1
-    bl GetKartModelNameEntry
-    mr r4, r3
-    mr r3, r28
-    lwz r4, 0x0(r4)
-    bl Scene3D_Init
-    BiribiriLand_Init_L_80135228:
-    stw r28, 0x14(r31)
-    li r3, 0x8
-    bl Alloc
-    mr. r28, r3
-    beq BiribiriLand_Init_L_80135240
-    bl ChallengeGoalCamera_Init
-    BiribiriLand_Init_L_80135240:
-    stw r28, 0x18(r31)
-    li r3, 0x0
-    bl ProcessSystemTick
-    lwz r3, 0x14(r31)
-    addi r4, r1, 0x14
-    addi r5, r1, 0x10
-    bl Scene3D_GetCameraPos
-    lfs f1, 0x14(r1)
-    lfs f0, lbl_806D7338(r2)
-    lfs f2, 0x10(r1)
-    fadds f1, f1, f0
-    stfs f1, 0x14(r1)
-    lwz r3, 0x14(r31)
-    bl Scene3D_SetupProjection
-    li r3, 0x80
-    bl Alloc
-    mr. r28, r3
-    beq BiribiriLand_Init_L_80135290
-    li r4, 0x0
-    bl HUD_Init
-    BiribiriLand_Init_L_80135290:
-    stw r28, 0x24(r31)
-    li r4, 0x6
-    li r5, 0x0
-    lwz r3, 0x24(r31)
-    bl HUD_RegisterOverlay
-    lwz r3, 0x24(r31)
-    li r4, 0x11
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    lwz r3, 0x24(r31)
-    li r4, 0x12
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    lwz r3, 0x24(r31)
-    li r4, 0xe
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    li r0, 0x0
-    stb r0, g_lakituStartAnimDone(r13)
-    lwz r3, 0x14(r31)
-    bl SetCourseScene3D
-    li r0, 0x0
-    stb r0, g_raceEnded(r13)
-    bl MiniGame_GetTimerValue
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x34(r1)
-    li r3, 0x1
-    lfd f1, lbl_806D7348(r2)
-    stw r0, 0x30(r1)
-    lfd f0, 0x30(r1)
-    fsubs f0, f0, f1
-    stfs f0, g_raceTimeRemaining(r13)
-    bl PreloadEffectResources
-    li r3, 0x9
-    bl PreloadEffectResources
-    li r3, 0xa
-    bl PreloadEffectResources
-    li r3, 0x214
-    bl Alloc
-    mr. r27, r3
-    beq BiribiriLand_Init_L_801354B4
-    lis r3, lbl_8048E430@ha
-    mr r28, r27
-    addi r29, r3, lbl_8048E430@l
-    li r30, 0x0
-    BiribiriLand_Init_L_80135348:
-    li r3, 0x5c
-    bl Alloc
-    mr. r26, r3
-    beq BiribiriLand_Init_L_80135364
-    lwz r4, 0x0(r29)
-    li r5, 0x0
-    bl clNormal3D_Construct
-    BiribiriLand_Init_L_80135364:
-    cmpwi r30, 0x5
-    stw r26, 0x0(r28)
-    bgt BiribiriLand_Init_L_80135384
-    lfs f1, lbl_806D7368(r2)
-    lwz r3, 0x0(r28)
-    fmr f2, f1
-    fmr f3, f1
-    bl Object_SetJObjScaleXYZ
-    BiribiriLand_Init_L_80135384:
-    addi r30, r30, 0x1
-    addi r28, r28, 0x4
-    cmpwi r30, 0x7
-    addi r29, r29, 0x4
-    blt BiribiriLand_Init_L_80135348
-    lfs f1, lbl_806D7330(r2)
-    li r4, 0x0
-    lwz r3, 0x18(r27)
-    fmr f3, f1
-    lfs f2, lbl_806D7328(r2)
-    fmr f4, f1
-    bl clNormal3D_SetScale
-    lis r3, lbl_80357F6C@ha
-    lfs f30, lbl_806D7334(r2)
-    lfs f31, lbl_806D7360(r2)
-    addi r28, r3, lbl_80357F6C@l
-    lfs f29, lbl_806D7330(r2)
-    mr r29, r27
-    li r30, 0x0
-    BiribiriLand_Init_L_801353D0:
-    lfs f1, 0x0(r28)
-    addi r3, r1, 0x18
-    lfs f0, 0x4(r28)
-    mr r4, r3
-    stfs f1, 0x1c(r29)
-    lfs f1, 0x8(r28)
-    stfs f0, 0x20(r29)
-    lfs f0, 0xc(r28)
-    stfs f1, 0x24(r29)
-    lfs f1, 0x10(r28)
-    stfs f0, 0x28(r29)
-    lfs f0, 0x14(r28)
-    stfs f1, 0x2c(r29)
-    stfs f0, 0x30(r29)
-    lfs f1, 0x1c(r29)
-    lfs f0, 0x28(r29)
-    fadds f0, f1, f0
-    fmuls f0, f30, f0
-    stfs f0, 0x34(r29)
-    lfs f1, 0x20(r29)
-    lfs f0, 0x2c(r29)
-    fadds f0, f1, f0
-    fmadds f0, f30, f0, f31
-    stfs f0, 0x38(r29)
-    lfs f1, 0x24(r29)
-    lfs f0, 0x30(r29)
-    fadds f0, f1, f0
-    fmuls f0, f30, f0
-    stfs f0, 0x3c(r29)
-    lfs f1, 0x28(r29)
-    lfs f0, 0x1c(r29)
-    fsubs f0, f1, f0
-    stfs f0, 0x18(r1)
-    lfs f1, 0x2c(r29)
-    lfs f0, 0x20(r29)
-    fsubs f0, f1, f0
-    stfs f0, 0x1c(r1)
-    lfs f1, 0x30(r29)
-    lfs f0, 0x24(r29)
-    fsubs f0, f1, f0
-    stfs f0, 0x20(r1)
-    bl Vec3_Normalize
-    lfs f0, 0x20(r1)
-    addi r30, r30, 0x1
-    cmplwi r30, 0x9
-    li r0, 0x0
-    fneg f0, f0
-    addi r28, r28, 0x24
-    stfs f0, 0x40(r29)
-    lfs f0, 0x1c(r1)
-    stfs f0, 0x44(r29)
-    lfs f0, 0x18(r1)
-    stfs f0, 0x48(r29)
-    stfs f29, 0x4c(r29)
-    stb r0, 0x50(r29)
-    addi r29, r29, 0x38
-    blt BiribiriLand_Init_L_801353D0
-    BiribiriLand_Init_L_801354B4:
-    stw r27, 0x30(r31)
-    li r3, 0x30
-    bl Alloc
-    mr. r26, r3
-    beq BiribiriLand_Init_L_80135528
-    lfs f3, lbl_806D736C(r2)
-    mr r4, r26
-    lfs f2, lbl_806D7330(r2)
-    addi r3, r26, 0xc
-    stfs f3, 0x0(r26)
-    addi r5, r26, 0x18
-    lfs f1, lbl_806D7370(r2)
-    stfs f2, 0x4(r26)
-    lfs f0, lbl_806D7374(r2)
-    stfs f1, 0x8(r26)
-    stfs f3, 0xc(r26)
-    stfs f2, 0x10(r26)
-    stfs f0, 0x14(r26)
-    bl Vec3_Subtract
-    addi r3, r26, 0x18
-    mr r4, r3
-    bl Vec3_Normalize
-    lfs f0, 0x20(r26)
-    fneg f0, f0
-    stfs f0, 0x24(r26)
-    lfs f0, 0x1c(r26)
-    stfs f0, 0x28(r26)
-    lfs f0, 0x18(r26)
-    stfs f0, 0x2c(r26)
-    BiribiriLand_Init_L_80135528:
-    stw r26, 0x34(r31)
-    lwz r0, g_weatherSystem(r13)
-    cmplwi r0, 0x0
-    bne BiribiriLand_Init_L_80135554
-    li r3, 0x1b4
-    bl Alloc
-    mr. r26, r3
-    beq BiribiriLand_Init_L_80135550
-    li r4, 0x1
-    bl WeatherSystem_Init
-    BiribiriLand_Init_L_80135550:
-    stw r26, g_weatherSystem(r13)
-    BiribiriLand_Init_L_80135554:
-    li r3, 0x1
-    bl SetResourceLoadingFlag
-    mr r3, r31
-    psq_l f31, 0x78(r1), 0, 0
-    lfd f31, 0x70(r1)
-    psq_l f30, 0x68(r1), 0, 0
-    lfd f30, 0x60(r1)
-    psq_l f29, 0x58(r1), 0, 0
-    lfd f29, 0x50(r1)
-    lmw r26, 0x38(r1)
-    lwz r0, 0x84(r1)
-    mtlr r0
-    addi r1, r1, 0x80
-    blr
+extern "C" {
+void GameMode_BaseInit();
+void DrawManager_GetOrCreate(void);
+void DMAChannelManager_Init(void);
+void TransitionEffect_GetOrCreate(void);
+void SoundChannels_ClearAll(void);
+void ItemObjectManager_Init(void);
+void CourseObjectManager_Init(void);
+void GetCourseDataPtr(void);
+int HSD_LObjLoadDesc(void);
+void ProcessSystemTick(int arg);
+void SoundDriver_GetOrCreate(int arg);
+int GetDisplayBufferIndex(void);
+void GetStartPosition(int idx, float *x, float *y, float *z);
+float GetCourseStartYaw(void);
+void CarObject_SetPosition(void *car, Vec *pos);
+int *GetKartModelNameEntry(int chara, int arg);
+void Vec3_Normalize(Vec *src, Vec *dst);
+void Scene3D_GetCameraPos(void *scene, float *a, float *b);
+void Scene3D_SetupProjection(void *scene, float a, float b);
+void HUD_RegisterOverlay(void *hud, int id, int arg);
+void SetCourseScene3D(void *scene);
+void PreloadEffectResources(int id);
+void Object_SetJObjScaleXYZ(void *obj, float x, float y, float z);
+void clNormal3D_SetScale(void *obj, int arg, float a, float b, float c, float d);
+extern int g_characterId;
+extern int lbl_806D12BC;
+extern const char *lbl_8048E430[7];
+extern char lbl_8048E144[];
 }
 
+#pragma exceptions on
+struct BLInputManager { char data[0x37C]; BLInputManager(); };
+struct BLCamera { char data[0x2C]; BLCamera(float a, float b, int w, int h, int target); };
+struct BLCarObject {
+    char data[0x118];
+    BLCarObject(int disp, int chara, int cc, int a, int b, int c, int d, int e, float x, float z, float yaw);
+};
+struct BLPlayerCar : BLCarObject {
+    BLPlayerCar(Vec *pos, int chara)
+        : BLCarObject(GetDisplayBufferIndex(), chara, 0, 0, 1, 3, 0, 0, pos->x, pos->z, GetCourseStartYaw()) {}
+};
+struct BLRenderObj { char pad0[0x238]; int x238; };
+struct BLLakituStart { char data[0x58]; BLLakituStart(const void *data, int arg, float x, float y, float z); };
+struct BLScene3D { char data[0x3084]; BLScene3D(int name); };
+struct BLGoalCamera { char data[8]; BLGoalCamera(); };
+struct BLHUD { char data[0x80]; BLHUD(int arg); };
+struct BLWeatherSystem { char data[0x1B4]; BLWeatherSystem(int arg); };
+struct BLNormal3D { char data[0x5C]; BLNormal3D(const char *name, int arg); };
 
+struct BLObstacles {
+    BLNormal3D *model[7];
+    BiribiriObstacle obstacles[9];
+    BLObstacles() {
+        int i;
+        unsigned int j;
+        for (i = 0; i < 7; i++) {
+            model[i] = new BLNormal3D(lbl_8048E430[i], 0);
+            if (i <= 5) {
+                Object_SetJObjScaleXYZ(model[i], 12.5f, 12.5f, 12.5f);
+            }
+        }
+        clNormal3D_SetScale(model[6], 0, 0.0f, 1.0f, 0.0f, 0.0f);
+        for (j = 0; j < 9; j++) {
+            Vec d;
+            obstacles[j].a.x = lbl_80357F6C[j].a.x;
+            obstacles[j].a.y = lbl_80357F6C[j].a.y;
+            obstacles[j].a.z = lbl_80357F6C[j].a.z;
+            obstacles[j].b.x = lbl_80357F6C[j].b.x;
+            obstacles[j].b.y = lbl_80357F6C[j].b.y;
+            obstacles[j].b.z = lbl_80357F6C[j].b.z;
+            obstacles[j].center.x = 0.5f * (obstacles[j].a.x + obstacles[j].b.x);
+            obstacles[j].center.y = 0.5f * (obstacles[j].a.y + obstacles[j].b.y) + 5.8f;
+            obstacles[j].center.z = 0.5f * (obstacles[j].a.z + obstacles[j].b.z);
+            d.x = obstacles[j].b.x - obstacles[j].a.x;
+            d.y = obstacles[j].b.y - obstacles[j].a.y;
+            d.z = obstacles[j].b.z - obstacles[j].a.z;
+            Vec3_Normalize(&d, &d);
+            obstacles[j].direction.x = -d.z;
+            obstacles[j].direction.y = d.y;
+            obstacles[j].direction.z = d.x;
+            obstacles[j].phase = 0.0f;
+            obstacles[j].hit = 0;
+        }
+    }
+};
+
+struct BLGoalLine {
+    Vec a;
+    Vec b;
+    Vec dir;
+    Vec normal;
+    BLGoalLine() {
+        a.x = 6249.4f;
+        a.y = 0.0f;
+        a.z = -8690.3f;
+        b.x = 6249.4f;
+        b.y = 0.0f;
+        b.z = -8983.7f;
+        Vec3_Subtract(&b, &a, &dir);
+        Vec3_Normalize(&dir, &dir);
+        normal.x = -dir.z;
+        normal.y = dir.y;
+        normal.z = dir.x;
+    }
+};
+
+struct GameModeBase {
+    virtual void _key();
+    virtual ~GameModeBase();
+    GameModeBase();
+};
+
+struct ModeBase : GameModeBase {
+    float x4;
+    ModeBase() {
+        x4 = 0.0f;
+    }
+    virtual void _key2();
+    virtual ~ModeBase();
+};
+
+struct BiribiriLand : ModeBase {
+    virtual void _key3();
+    BLCarObject *car;
+    BLLakituStart *lakitu;
+    BLInputManager *input;
+    BLScene3D *scene;
+    BLGoalCamera *goalCam;
+    BLCamera *camera;
+    int renderTarget;
+    BLHUD *hud;
+    unsigned char x28, x29, x2A, x2B;
+    int x2C;
+    BLObstacles *obstacles;
+    BLGoalLine *goal;
+    Vec unused;
+    BiribiriLand();
+};
+
+#pragma use_lmw_stmw on
+BiribiriLand::BiribiriLand() {
+    Vec pos;
+    float camA, camB;
+
+    car = 0;
+    lakitu = 0;
+    input = 0;
+    scene = 0;
+    goalCam = 0;
+    camera = 0;
+    renderTarget = 0;
+    hud = 0;
+    x28 = 0;
+    x29 = 0;
+    x2A = 0;
+    x2B = 0;
+    x2C = 0;
+    obstacles = 0;
+    goal = 0;
+    unused.x = 0.0f;
+    unused.y = 0.0f;
+    unused.z = 0.0f;
+    DrawManager_GetOrCreate();
+    SetResourceLoadingFlag(0);
+    DMAChannelManager_Init();
+    TransitionEffect_GetOrCreate();
+    SoundChannels_ClearAll();
+    ItemObjectManager_Init();
+    CourseObjectManager_Init();
+    input = new BLInputManager;
+    GetCourseDataPtr();
+    renderTarget = HSD_LObjLoadDesc();
+    camera = new BLCamera(1000.0f, 0.1f, 0x100, 0x100, renderTarget);
+    SetActiveCamera(0, camera);
+    *(BLCamera **)&g_raceCamera = camera;
+    ProcessSystemTick(0);
+    GetRaceContextPtr();
+    RankingTable_Init();
+    lbl_806D12BC = 0;
+    SoundDriver_GetOrCreate(0);
+    GetStartPosition(0, &pos.x, &pos.y, &pos.z);
+    car = new BLPlayerCar(&pos, g_characterId);
+    CarObject_SetPosition(car, &pos);
+    {
+        BLRenderObj *r = (BLRenderObj *)CarObject_GetRenderObj(car);
+        r->x238 = 1;
+    }
+    SetPlayerCarObject(car);
+    lakitu = new BLLakituStart(lbl_803580E0, 0, 0.0f, 0.0f, 0.0f);
+    scene = new BLScene3D(*GetKartModelNameEntry(g_characterId, -1));
+    goalCam = new BLGoalCamera;
+    ProcessSystemTick(0);
+    Scene3D_GetCameraPos(scene, &camA, &camB);
+    camA += 10.0f;
+    Scene3D_SetupProjection(scene, camA, camB);
+    hud = new BLHUD(0);
+    HUD_RegisterOverlay(hud, 6, 0);
+    HUD_RegisterOverlay(hud, 0x11, 0);
+    HUD_RegisterOverlay(hud, 0x12, 0);
+    HUD_RegisterOverlay(hud, 0xE, 0);
+    g_lakituStartAnimDone = 0;
+    SetCourseScene3D(scene);
+    g_raceEnded = 0;
+    g_raceTimeRemaining = MiniGame_GetTimerValue();
+    PreloadEffectResources(1);
+    PreloadEffectResources(9);
+    PreloadEffectResources(0xA);
+    obstacles = new BLObstacles;
+    goal = new BLGoalLine;
+    if ((void *)g_weatherSystem == 0) {
+        *(void **)&g_weatherSystem = new BLWeatherSystem(1);
+    }
+    SetResourceLoadingFlag(1);
+}
+#pragma use_lmw_stmw reset
+#pragma exceptions reset
+#pragma cplusplus reset

@@ -370,7 +370,8 @@ struct CoinParticleManager;
 void CoinParticle_Draw(CoinParticleManager *self);
 void CoinParticle_Update(CoinParticleManager *self);
 CoinParticleManager *CoinParticleManager_Destroy(CoinParticleManager *self, short flag);
-asm void CGameCoin_ProcessInput(void);
+struct CoinInput;
+void CGameCoin_ProcessInput(CoinInput *s);
 
 #pragma section R ".extab_user"
 __declspec(section ".extab_user") static const unsigned char extab_CGameCoin_Update[8] = {
@@ -379,10 +380,6 @@ __declspec(section ".extab_user") static const unsigned char extab_CGameCoin_Upd
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; unsigned int f45; unsigned int f46; unsigned int f47; unsigned int f48; unsigned int f49; unsigned int f50; unsigned int f51; unsigned int f52; unsigned int f53; unsigned int f54; unsigned int f55; unsigned int f56; unsigned int f57; unsigned int f58; unsigned int f59; unsigned int f60; unsigned int f61; unsigned int f62; unsigned int f63; unsigned int f64; unsigned int f65; unsigned int f66; unsigned int f67; unsigned int f68; unsigned int f69; unsigned int f70; unsigned int f71; unsigned int f72; unsigned int f73; unsigned int f74; unsigned int f75; unsigned int f76; unsigned int f77; unsigned int f78; unsigned int f79; unsigned int f80; unsigned int f81; unsigned int f82; unsigned int f83; unsigned int f84; unsigned int f85; unsigned int f86; unsigned int f87; unsigned int f88; unsigned int f89; unsigned int f90; void *f91; unsigned int f92; unsigned int f93; void *f94; unsigned int f95; void *f96; unsigned int f97; unsigned int f98; void *f99; unsigned int f100; void *f101; unsigned int f102; unsigned int f103; void *f104; unsigned int f105; void *f106; unsigned int f107; unsigned int f108; void *f109; unsigned int f110; void *f111; unsigned int f112; unsigned int f113; void *f114; unsigned int f115; void *f116; unsigned int f117; unsigned int f118; void *f119; unsigned int f120; void *f121; unsigned int f122; unsigned int f123; void *f124; unsigned int f125; void *f126; unsigned int f127; unsigned int f128; void *f129; unsigned int f130; void *f131; unsigned int f132; unsigned int f133; void *f134; unsigned int f135; void *f136; unsigned int f137; unsigned int f138; void *f139; unsigned int f140; void *f141; unsigned int f142; void *f143; unsigned int f144; unsigned int f145; void *f146; unsigned int f147; void *f148; unsigned int f149; unsigned int f150; void *f151; unsigned int f152; unsigned int f153; void *f154; unsigned int f155; unsigned int f156; void *f157; unsigned int f158; void *f159; unsigned int f160; unsigned int f161; void *f162; unsigned int f163; void *f164; unsigned int f165; unsigned int f166; void *f167; unsigned int f168; void *f169; unsigned int f170; unsigned int f171; void *f172; unsigned int f173; void *f174; unsigned int f175; void *f176; unsigned int f177; unsigned int f178; void *f179; unsigned int f180; void *f181; unsigned int f182; unsigned int f183; void *f184; unsigned int f185; unsigned int f186; void *f187; } extab_CGameCoin_Init = { 0x284A0000, 0x00000058, 0x000A0170, 0x0000008C, 0x00000168, 0x000000A8, 0x00020170, 0x000000C0, 0x0000017C, 0x000000C8, 0x000C0170, 0x00000108, 0x00080190, 0x00000140, 0x00000170, 0x00000168, 0x000001A4, 0x0000017C, 0x00060170, 0x000001B4, 0x000001B8, 0x000001C4, 0x00020170, 0x000001E0, 0x000001CC, 0x000001EC, 0x00000170, 0x0000020C, 0x000001E0, 0x00000218, 0x00000170, 0x0000022C, 0x000401F4, 0x00000248, 0x00000170, 0x00000254, 0x00000208, 0x00000260, 0x00020170, 0x00000278, 0x0000021C, 0x0000028C, 0x002A0170, 0x00000388, 0x00000238, 0x00000394, 0x00000230, 0x000003A0, 0x00000238, 0x000003B4, 0x0000024C, 0x000003C8, 0x00040238, 0x000003EC, 0x00000258, 0x000003FC, 0x00000170, 0x00000414, 0x00000264, 0x00000420, 0x00000170, 0x0000042C, 0x00000278, 0x00000438, 0x00000170, 0x00000444, 0x0000028C, 0x00000450, 0x00000170, 0x0000045C, 0x000002A0, 0x0000046C, 0x00130170, 0x000004E8, 0x000002BC, 0x000004FC, 0x000002B4, 0x00000510, 0x000202BC, 0x0000052C, 0x000002D0, 0x00000538, 0x000202BC, 0x00000698, 0x00000170, 0x000006A8, 0x000002DC, 0x000006B4, 0x00250170, 0x00000000, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x01000238, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x01000238, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x010002BC, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8 };
 
-__declspec(section ".extab_user") static const unsigned char extab_CGameCoin_ProcessInput[8] = {
-    0x38, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
 #pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CGameCoin_Update = {
     (void *)&CGameCoin_Update, 0x00002164, (void *)extab_CGameCoin_Update
@@ -390,10 +387,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CGameCoin_Init = {
     (void *)&CGameCoin_Init, 0x0000078C, (void *)&extab_CGameCoin_Init
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CGameCoin_ProcessInput = {
-    (void *)&CGameCoin_ProcessInput, 0x00000374, (void *)extab_CGameCoin_ProcessInput
 };
 
 }
@@ -4493,255 +4486,162 @@ extern "C" CoinParticleManager *CoinParticleManager_Destroy(CoinParticleManager 
     return self;
 }
 
-extern "C" asm void CGameCoin_ProcessInput(void) { /* 0x8013105C size:0x374 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stmw r25, 0x14(r1)
-    mr r27, r3
-    bl StrPcb_GetInstance
-    lfs f1, 0x48(r3)
-    lfs f0, lbl_806D7140(r2)
-    fcmpo cr0, f1, f0
-    blt CGameCoin_ProcessInput_L_801310A8
-    lwz r3, 0xc(r27)
-    subic. r0, r3, 0x1
-    stw r0, 0xc(r27)
-    bgt CGameCoin_ProcessInput_L_801310A8
-    bl StrPcb_GetInstance
-    cmplwi r3, 0x0
-    beq CGameCoin_ProcessInput_L_801310A8
-    li r4, 0x0
-    bl StrPcb_ResetCommands_Neutral
-    CGameCoin_ProcessInput_L_801310A8:
-    lbz r0, 0x4(r27)
-    cmplwi r0, 0x0
-    beq CGameCoin_ProcessInput_L_801313BC
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    li r0, 0x0
-    mr r30, r3
-    stw r0, 0x14(r27)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    lfs f0, lbl_806D7194(r2)
-    li r4, -0x3
-    li r5, 0x3
-    fmuls f0, f0, f1
-    fctiwz f0, f0
-    stfd f0, 0x8(r1)
-    lwz r3, 0xc(r1)
-    bl Clamp_Int
-    lwz r28, 0x8(r27)
-    mr r31, r3
-    li r25, 0x0
-    li r29, 0x0
-    CGameCoin_ProcessInput_L_8013110C:
-    cmpw r28, r31
-    ble CGameCoin_ProcessInput_L_8013111C
-    subi r28, r28, 0x1
-    b CGameCoin_ProcessInput_L_80131124
-    CGameCoin_ProcessInput_L_8013111C:
-    bge CGameCoin_ProcessInput_L_80131124
-    addi r28, r28, 0x1
-    CGameCoin_ProcessInput_L_80131124:
-    lwz r3, 0x8(r27)
-    bl abs
-    mr r26, r3
-    mr r3, r28
-    bl abs
-    cmpwi r3, 0x3
-    bge CGameCoin_ProcessInput_L_80131150
-    cmpwi r3, 0x0
-    beq CGameCoin_ProcessInput_L_8013115C
-    bge CGameCoin_ProcessInput_L_80131170
-    b CGameCoin_ProcessInput_L_8013122C
-    CGameCoin_ProcessInput_L_80131150:
-    cmpwi r3, 0x5
-    bge CGameCoin_ProcessInput_L_8013122C
-    b CGameCoin_ProcessInput_L_801311D4
-    CGameCoin_ProcessInput_L_8013115C:
-    li r3, 0x1
-    li r0, 0x0
-    stb r3, 0x6(r27)
-    stw r0, 0x10(r27)
-    b CGameCoin_ProcessInput_L_8013122C
-    CGameCoin_ProcessInput_L_80131170:
-    cmpwi r26, 0x0
-    bgt CGameCoin_ProcessInput_L_8013118C
-    li r3, 0x1
-    li r0, 0x0
-    stb r3, 0x6(r27)
-    stw r0, 0x10(r27)
-    b CGameCoin_ProcessInput_L_8013122C
-    CGameCoin_ProcessInput_L_8013118C:
-    cmpwi r26, 0x2
-    bgt CGameCoin_ProcessInput_L_8013122C
-    lwz r0, 0x10(r27)
-    cmpwi r0, 0x0
-    bgt CGameCoin_ProcessInput_L_8013122C
-    lbz r0, 0x6(r27)
-    cmplwi r0, 0x1
-    bne CGameCoin_ProcessInput_L_801311C4
-    li r3, 0x0
-    li r0, 0x28
-    stb r3, 0x6(r27)
-    li r29, 0x1
-    stw r0, 0x10(r27)
-    b CGameCoin_ProcessInput_L_801311CC
-    CGameCoin_ProcessInput_L_801311C4:
-    li r0, 0xa
-    stw r0, 0x10(r27)
-    CGameCoin_ProcessInput_L_801311CC:
-    li r25, 0x1
-    b CGameCoin_ProcessInput_L_8013122C
-    CGameCoin_ProcessInput_L_801311D4:
-    cmpwi r26, 0x2
-    bgt CGameCoin_ProcessInput_L_801311F0
-    li r3, 0x1
-    li r0, 0x8
-    stb r3, 0x6(r27)
-    stw r0, 0x10(r27)
-    b CGameCoin_ProcessInput_L_8013122C
-    CGameCoin_ProcessInput_L_801311F0:
-    lwz r0, 0x10(r27)
-    cmpwi r0, 0x0
-    bgt CGameCoin_ProcessInput_L_8013122C
-    lbz r0, 0x6(r27)
-    cmplwi r0, 0x1
-    bne CGameCoin_ProcessInput_L_80131220
-    li r3, 0x0
-    li r0, 0x6
-    stb r3, 0x6(r27)
-    li r29, 0x1
-    stw r0, 0x10(r27)
-    b CGameCoin_ProcessInput_L_80131228
-    CGameCoin_ProcessInput_L_80131220:
-    li r0, 0x6
-    stw r0, 0x10(r27)
-    CGameCoin_ProcessInput_L_80131228:
-    li r25, 0x1
-    CGameCoin_ProcessInput_L_8013122C:
-    cmpw r28, r31
-    stw r28, 0x8(r27)
-    bne CGameCoin_ProcessInput_L_8013110C
-    lwz r3, 0x10(r27)
-    cmpwi r3, 0x0
-    ble CGameCoin_ProcessInput_L_8013124C
-    subi r0, r3, 0x1
-    stw r0, 0x10(r27)
-    CGameCoin_ProcessInput_L_8013124C:
-    clrlwi r0, r25, 24
-    cmplwi r0, 0x1
-    bne CGameCoin_ProcessInput_L_80131278
-    cmpwi r31, 0x0
-    ble CGameCoin_ProcessInput_L_8013126C
-    li r0, 0x1
-    stw r0, 0x14(r27)
-    b CGameCoin_ProcessInput_L_80131278
-    CGameCoin_ProcessInput_L_8013126C:
-    bge CGameCoin_ProcessInput_L_80131278
-    li r0, -0x1
-    stw r0, 0x14(r27)
-    CGameCoin_ProcessInput_L_80131278:
-    clrlwi r0, r29, 24
-    cmplwi r0, 0x1
-    bne CGameCoin_ProcessInput_L_801312BC
-    li r0, 0x0
-    stw r0, 0xc(r27)
-    bl StrPcb_GetInstance
-    lfs f1, 0x48(r3)
-    lfs f0, lbl_806D7140(r2)
-    fcmpo cr0, f1, f0
-    blt CGameCoin_ProcessInput_L_801312BC
-    li r0, 0x2
-    stw r0, 0xc(r27)
-    bl StrPcb_GetInstance
-    cmplwi r3, 0x0
-    beq CGameCoin_ProcessInput_L_801312BC
-    li r4, 0x0
-    bl StrPcb_ResetCommands_Zero
-    CGameCoin_ProcessInput_L_801312BC:
-    li r0, 0x0
-    mr r3, r30
-    stw r0, 0x20(r27)
-    li r25, 0x0
-    li r4, 0x2000
-    lwz r12, 0x0(r30)
-    lwz r12, 0x2c(r12)
-    mtctr r12
-    bctrl
-    cmplwi r3, 0x0
-    beq CGameCoin_ProcessInput_L_801312F8
-    lwz r3, 0x20(r27)
-    lwz r0, lbl_806D7268(r2)
-    or r0, r3, r0
-    stw r0, 0x20(r27)
-    CGameCoin_ProcessInput_L_801312F8:
-    mr r3, r30
-    lwz r12, 0x0(r30)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lfs f0, lbl_806D7270(r2)
-    fcmpo cr0, f1, f0
-    ble CGameCoin_ProcessInput_L_80131328
-    lwz r3, 0x20(r27)
-    lwz r0, lbl_806D726C(r2)
-    or r0, r3, r0
-    stw r0, 0x20(r27)
-    CGameCoin_ProcessInput_L_80131328:
-    lwz r3, 0x20(r27)
-    lwz r0, 0x24(r27)
-    andc. r0, r3, r0
-    beq CGameCoin_ProcessInput_L_80131340
-    li r25, 0x1
-    b CGameCoin_ProcessInput_L_8013138C
-    CGameCoin_ProcessInput_L_80131340:
-    mr r3, r30
-    lwz r12, 0x0(r30)
-    lwz r12, 0x1c(r12)
-    mtctr r12
-    bctrl
-    lfs f0, lbl_806D7270(r2)
-    fcmpo cr0, f1, f0
-    ble CGameCoin_ProcessInput_L_80131368
-    li r25, 0x2
-    b CGameCoin_ProcessInput_L_8013138C
-    CGameCoin_ProcessInput_L_80131368:
-    mr r3, r30
-    li r4, 0x400
-    lwz r12, 0x0(r30)
-    lwz r12, 0x2c(r12)
-    mtctr r12
-    bctrl
-    cmplwi r3, 0x0
-    beq CGameCoin_ProcessInput_L_8013138C
-    li r25, 0x3
-    CGameCoin_ProcessInput_L_8013138C:
-    lwz r0, 0x1c(r27)
-    cmpw r25, r0
-    bne CGameCoin_ProcessInput_L_801313AC
-    cmpwi r25, 0x1
-    stw r25, 0x1c(r27)
-    beq CGameCoin_ProcessInput_L_801313B0
-    li r25, 0x0
-    b CGameCoin_ProcessInput_L_801313B0
-    CGameCoin_ProcessInput_L_801313AC:
-    stw r25, 0x1c(r27)
-    CGameCoin_ProcessInput_L_801313B0:
-    lwz r0, 0x20(r27)
-    stw r0, 0x24(r27)
-    stw r25, 0x18(r27)
-    CGameCoin_ProcessInput_L_801313BC:
-    lmw r25, 0x14(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+struct CoinInputPlayer {
+    virtual void v08();
+    virtual void v0C();
+    virtual float Steer();
+    virtual void v14();
+    virtual float Accel();
+    virtual float Brake();
+    virtual unsigned char Pressed(int mask);
+    virtual unsigned char Held(int mask);
+    virtual void v28();
+    virtual unsigned int Down(int mask);
+};
+
+/* Steering-wheel coin input: walks the wheel notch position one step at a
+ * time towards the clamped stick position and turns notch crossings into
+ * coin pulses, then latches the button command for this frame. */
+struct CoinInput {
+    char pad0[4];
+    unsigned char active;      /* 0x04 */
+    char pad5;
+    unsigned char armed;       /* 0x06 */
+    char pad7;
+    int notch;                 /* 0x08 */
+    int idleTimer;             /* 0x0C */
+    int cooldown;              /* 0x10 */
+    int dir;                   /* 0x14 */
+    int cmd;                   /* 0x18 */
+    int lastCmd;               /* 0x1C */
+    unsigned int buttons;      /* 0x20 */
+    unsigned int prevButtons;  /* 0x24 */
+};
+
+static inline float CoinPcbSpeed(void)
+{
+    return *(float *)((char *)StrPcb_GetInstance() + 0x48);
+}
+
+extern "C" void CGameCoin_ProcessInput(CoinInput *s)
+{
+    CoinInputPlayer *pl;
+    int target;
+    unsigned char flipped;
+    int notch;
+    int oldAbs;
+    unsigned char moved;
+    int cmd;
+
+    if (!(CoinPcbSpeed() < *(float *)&lbl_806D7140)) {
+        if (--s->idleTimer <= 0) {
+            CoinStrPcb *pcb = StrPcb_GetInstance();
+            if (pcb != 0) {
+                StrPcb_ResetCommands_Neutral(pcb, 0);
+            }
+        }
+    }
+    if (!s->active) {
+        return;
+    }
+    pl = InputMgr_GetPlayer(GetInputManager(), 0);
+    s->dir = 0;
+    target = Clamp_Int((int)(*(float *)&lbl_806D7194 * pl->Steer()), -3, 3);
+    notch = s->notch;
+    moved = 0;
+    flipped = 0;
+    do {
+        if (notch > target) {
+            notch--;
+        } else if (notch < target) {
+            notch++;
+        }
+        oldAbs = abs(s->notch);
+        switch (abs(notch)) {
+        case 0:
+            s->armed = 1;
+            s->cooldown = 0;
+            break;
+        case 1:
+        case 2:
+            if (oldAbs <= 0) {
+                s->armed = 1;
+                s->cooldown = 0;
+            } else if (oldAbs <= 2 && s->cooldown <= 0) {
+                if (s->armed == 1) {
+                    s->armed = 0;
+                    flipped = 1;
+                    s->cooldown = 40;
+                } else {
+                    s->cooldown = 10;
+                }
+                moved = 1;
+            }
+            break;
+        case 3:
+        case 4:
+            if (oldAbs <= 2) {
+                s->armed = 1;
+                s->cooldown = 8;
+            } else if (s->cooldown <= 0) {
+                if (s->armed == 1) {
+                    s->armed = 0;
+                    flipped = 1;
+                    s->cooldown = 6;
+                } else {
+                    s->cooldown = 6;
+                }
+                moved = 1;
+            }
+            break;
+        }
+        s->notch = notch;
+    } while (notch != target);
+    if (s->cooldown > 0) {
+        s->cooldown--;
+    }
+    if (moved == 1) {
+        if (target > 0) {
+            s->dir = 1;
+        } else if (target < 0) {
+            s->dir = -1;
+        }
+    }
+    if (flipped == 1) {
+        s->idleTimer = 0;
+        if (!(CoinPcbSpeed() < *(float *)&lbl_806D7140)) {
+            CoinStrPcb *pcb;
+            s->idleTimer = 2;
+            pcb = StrPcb_GetInstance();
+            if (pcb != 0) {
+                StrPcb_ResetCommands_Zero(pcb, 0);
+            }
+        }
+    }
+    s->buttons = 0;
+    cmd = 0;
+    if (pl->Down(0x2000)) {
+        s->buttons |= lbl_806D7268;
+    }
+    if (pl->Accel() > *(float *)&lbl_806D7270) {
+        s->buttons |= lbl_806D726C;
+    }
+    if (s->buttons & ~s->prevButtons) {
+        cmd = 1;
+    } else if (pl->Brake() > *(float *)&lbl_806D7270) {
+        cmd = 2;
+    } else if (pl->Down(0x400)) {
+        cmd = 3;
+    }
+    if (cmd == s->lastCmd) {
+        s->lastCmd = cmd;
+        if (cmd != 1) {
+            cmd = 0;
+        }
+    } else {
+        s->lastCmd = cmd;
+    }
+    s->prevButtons = s->buttons;
+    s->cmd = cmd;
 }
 

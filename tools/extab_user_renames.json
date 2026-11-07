@@ -277,12 +277,6 @@
     "extab_TexMgr_Apply": "@etb_800176C8",
     "extabindex_TexMgr_Apply": "@eti_800290B4"
   },
-  "src/game/TEXBindPaletteEntry.c": {
-    "extab_TEXBindPaletteEntry_CI": "@etb_800092C0",
-    "extab_TEXBindPaletteEntry_RGB": "@etb_800092C8",
-    "extabindex_TEXBindPaletteEntry_CI": "@eti_80021DAC",
-    "extabindex_TEXBindPaletteEntry_RGB": "@eti_80021DB8"
-  },
   "src/game/dtor_801FE870.c": {
     "extab_dtor_801FE870": "@etb_80017D70",
     "extab_fn_801FE4D0": "@etb_80017D78",
@@ -431,12 +425,6 @@
     "extabindex_SeqMenuScene_Init": "@eti_8001F4F0"
   },
   "src/game/SceneRender.c": {
-    "extab_SceneRender_DrawObjectWithLights": "@etb_80005F20",
-    "extabindex_SceneRender_DrawObjectWithLights": "@eti_8001FBD4",
-    "extab_SceneRender_CmdA_8a9e8": "@etb_80005F38",
-    "extabindex_SceneRender_CmdA_8a9e8": "@eti_8001FBE0",
-    "extab_SceneRender_CmdB_8aa20": "@etb_80005F40",
-    "extabindex_SceneRender_CmdB_8aa20": "@eti_8001FBEC",
     "extab_SceneRender_Dtor": "@etb_80005F48",
     "extabindex_SceneRender_Dtor": "@eti_8001FBF8"
   },
@@ -562,8 +550,8 @@
     "extabindex_Tachometer_RenderDigits": "@eti_8002273C",
     "extab_Tachometer_Destroy": "@etb_8000A084",
     "extabindex_Tachometer_Destroy": "@eti_80022748",
-    "extab_Tachometer_Init": "@etb_8000A08C",
-    "extabindex_Tachometer_Init": "@eti_80022754"
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
   },
   "src/game/ParticleBurst.c": {
     "extab_ParticleBurst_Draw": "@etb_8000A6C0",
@@ -653,12 +641,26 @@
     "extab_BiribiriLand_Update": "@etb_8000CE6C",
     "extab_BiribiriLand_UpdateObstacles": "@etb_8000CE74",
     "extab_BiribiriLand_Destroy": "@etb_8000CE7C",
-    "extab_BiribiriLand_Init": "@etb_8000CE84",
     "extabindex_BiribiriLand_Render": "@eti_80024B6C",
     "extabindex_BiribiriLand_Update": "@eti_80024B78",
     "extabindex_BiribiriLand_UpdateObstacles": "@eti_80024B84",
     "extabindex_BiribiriLand_Destroy": "@eti_80024B90",
-    "extabindex_BiribiriLand_Init": "@eti_80024B9C"
+    "__ct__12BiribiriLandFv": "BiribiriLand_Init",
+    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
+    "__dt__8ModeBaseFv": "dtor_80122FD8",
+    "__vt__12BiribiriLand": "lbl_8048E46C",
+    "__vt__8ModeBase": "lbl_8048E144",
+    "__ct__14BLInputManagerFv": "InputManager_Init",
+    "__ct__8BLCameraFffiii": "Camera_Create",
+    "__ct__11BLCarObjectFiiiiiiiifff": "CarObject_Init",
+    "__ct__13BLLakituStartFPCvifff": "LakituStart_Init",
+    "__ct__9BLScene3DFi": "Scene3D_Init",
+    "__ct__12BLGoalCameraFv": "ChallengeGoalCamera_Init",
+    "__ct__5BLHUDFi": "HUD_Init",
+    "__ct__15BLWeatherSystemFi": "WeatherSystem_Init",
+    "__ct__10BLNormal3DFPCci": "clNormal3D_Construct",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/CardSave_Tick.c": {
     "@etb_80009488": "@etb_80009488",
@@ -1358,15 +1360,9 @@
     "extabindex_KartItemAudio_PlayHitConfirmSE": "@eti_8002093C",
     "extabindex_KartItemAudio_PlayThrowConfirmSE": "@eti_80020948"
   },
-  "src/game/PowItem.c": {
-    "extab_PowItem_TickActive": "@etb_8000B6EC",
-    "extabindex_PowItem_TickActive": "@eti_80023F78"
-  },
   "src/game/RivalRun.c": {
     "extab_RivalRun_Draw": "@etb_8000D014",
     "extabindex_RivalRun_Draw": "@eti_80024BA8",
-    "extab_RivalRun_Update": "@etb_8000D01C",
-    "extabindex_RivalRun_Update": "@eti_80024BB4",
     "extab_RivalRun_RivalAIUpdate": "@etb_8000D024",
     "extabindex_RivalRun_RivalAIUpdate": "@eti_80024BC0",
     "extab_RivalRun_UpdatePathFollower": "@etb_8000D02C",
@@ -1377,10 +1373,26 @@
     "extabindex_RivalRun_CalcPathDistance": "@eti_80024BE4",
     "extab_RivalRun_Destroy": "@etb_8000D044",
     "extabindex_RivalRun_Destroy": "@eti_80024BF0",
-    "extab_RivalRun_Init": "@etb_8000D04C",
-    "extabindex_RivalRun_Init": "@eti_80024BFC",
     "extab_RivalRun_RivalInit": "@etb_8000D1E8",
-    "extabindex_RivalRun_RivalInit": "@eti_80024C08"
+    "extabindex_RivalRun_RivalInit": "@eti_80024C08",
+    "__ct__8RivalRunFv": "RivalRun_Init",
+    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
+    "__dt__8ModeBaseFv": "dtor_80122FD8",
+    "__vt__8RivalRun": "lbl_8048E4A0",
+    "__vt__8ModeBase": "lbl_8048E144",
+    "__ct__14RIInputManagerFv": "InputManager_Init",
+    "__ct__8RICameraFffiii": "Camera_Create",
+    "__ct__11RICarObjectFiiiiiiiifff": "CarObject_Init",
+    "__ct__13RIPathManagerFiPvPvPfPfPf": "PathManager_Init",
+    "__ct__13RICollCheckerFv": "fn_802090A8",
+    "__ct__7RIRivalFP13RIPathManageriPv": "RivalRun_RivalInit",
+    "__ct__13RILakituStartFPCvifff": "LakituStart_Init",
+    "__ct__9RIScene3DFi": "Scene3D_Init",
+    "__ct__12RIGoalCameraFv": "ChallengeGoalCamera_Init",
+    "__ct__5RIHUDFP13RIPathManager": "HUD_Init",
+    "__ct__15RIWeatherSystemFi": "WeatherSystem_Init",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/EggItem.c": {
     "extab_EggItem_OnGroundDriftTick_3B3C": "@etb_8000B5DC",
@@ -1397,8 +1409,6 @@
     "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/GabyouTripleChild.c": {
-    "extab_GabyouTripleChild_TickActive": "@etb_8000B6AC",
-    "extabindex_GabyouTripleChild_TickActive": "@eti_80023F18",
     "extab_GabyouTripleChild_Update": "@etb_8000B6B4",
     "extabindex_GabyouTripleChild_Update": "@eti_80023F24"
   },
@@ -1417,8 +1427,22 @@
   "src/game/ReverseChallenge.c": {
     "extab_ReverseChallenge_Update": "@etb_8000A1FC",
     "extabindex_ReverseChallenge_Update": "@eti_80022880",
-    "extab_ReverseChallenge_Init": "@etb_8000A204",
-    "extabindex_ReverseChallenge_Init": "@eti_8002288C"
+    "__ct__16ReverseChallengeFv": "ReverseChallenge_Init",
+    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
+    "__dt__8ModeBaseFv": "dtor_80122FD8",
+    "__vt__16ReverseChallenge": "lbl_80419E70",
+    "__vt__8ModeBase": "lbl_8048E144",
+    "__ct__14RCInputManagerFv": "InputManager_Init",
+    "__ct__8RCCameraFffiii": "Camera_Create",
+    "__ct__11RCCarObjectFiiiiiiiifff": "CarObject_Init",
+    "__ct__13RCLakituStartFPCvifff": "LakituStart_Init",
+    "__ct__9RCScene3DFi": "Scene3D_Init",
+    "__ct__12RCGoalCameraFv": "ChallengeGoalCamera_Init",
+    "__ct__5RCHUDFi": "HUD_Init",
+    "__ct__12RCBananaDataFi": "BananaPositionData_Init",
+    "__ct__15RCWeatherSystemFi": "WeatherSystem_Init",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/OnchiSpeaker_State2_Active.c": {
     "extab_OnchiSpeaker_State2_Active": "@etb_8000B624",
@@ -1453,10 +1477,6 @@
     "extabindex_BananaTriple_Dispatch_32to36": "@eti_80023DB0"
   },
   "src/game/TornadoEffect.c": {
-    "extab_TornadoEffect_InitDetails": "@etb_800075FC",
-    "extabindex_TornadoEffect_InitDetails": "@eti_800207EC",
-    "extab_TornadoEffect_Ctor": "@etb_80007614",
-    "extabindex_TornadoEffect_Ctor": "@eti_800207F8",
     "extab_TornadoEffect_RenderCallback": "@etb_80007648",
     "extabindex_TornadoEffect_RenderCallback": "@eti_80020804",
     "extab_TornadoEffect_SubmitRender": "@etb_80007650",
@@ -1479,10 +1499,11 @@
     "extabindex_TornadoEffect_ComposeRenderMatrix": "@eti_80020870",
     "extab_TornadoEffect_ApplyItemVisual_Primary": "@etb_80007698",
     "extabindex_TornadoEffect_ApplyItemVisual_Primary": "@eti_8002087C",
-    "extab_TornadoEffect_ApplyItemVisual_Secondary": "@etb_800076A0",
-    "extabindex_TornadoEffect_ApplyItemVisual_Secondary": "@eti_80020888",
     "extab_TornadoEffect_ApplyItemVisual_Compact": "@etb_800076A8",
-    "extabindex_TornadoEffect_ApplyItemVisual_Compact": "@eti_80020894"
+    "extabindex_TornadoEffect_ApplyItemVisual_Compact": "@eti_80020894",
+    "__dt__6TEVec3Fv": "dtor_80036E40",
+    "__ct__10TENormal3DFPvi": "clNormal3D_Construct",
+    "__ct__13TornadoEffectFUciiUcfff": "TornadoEffect_Ctor"
   },
   "src/game/TornadoItem.c": {
     "extab_TornadoItem_TickActive": "@etb_8000B70C",
@@ -2235,9 +2256,7 @@
   },
   "src/game/Effect.c": {
     "extab_Effect_SmokeCloud_DriveSubslots": "@etb_8000A950",
-    "extabindex_Effect_SmokeCloud_DriveSubslots": "@eti_80022F64",
-    "extab_Effect_SmokeCloud_Update": "@etb_8000A958",
-    "extabindex_Effect_SmokeCloud_Update": "@eti_80022F70"
+    "extabindex_Effect_SmokeCloud_DriveSubslots": "@eti_80022F64"
   },
   "src/game/EffectSteering.c": {
     "@33": "jumptable_803F99E0",
@@ -5569,14 +5588,33 @@
     "extabindex_NokoNokoChallenge_Update": "@eti_800249C8",
     "extab_TimeTrial_Destroy": "@etb_8000C474",
     "extabindex_TimeTrial_Destroy": "@eti_800249D4",
-    "extab_NokoNokoChallenge_Init": "@etb_8000C484",
-    "extabindex_NokoNokoChallenge_Init": "@eti_800249E0",
     "extab_fn_8012A070": "@etb_8000C44C",
     "extabindex_fn_8012A070": "@eti_800249EC",
     "extab_fn_8012A22C": "@etb_8000C46C",
     "extabindex_fn_8012A22C": "@eti_800249F8",
     "extab_fn_8012A52C": "@etb_8000C47C",
-    "extabindex_fn_8012A52C": "@eti_80024A04"
+    "extabindex_fn_8012A52C": "@eti_80024A04",
+    "__ct__17NokoNokoChallengeFv": "NokoNokoChallenge_Init",
+    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
+    "__dt__8ModeBaseFv": "dtor_80122FD8",
+    "__vt__8ModeBase": "lbl_8048E144",
+    "__vt__17NokoNokoChallenge": "lbl_8048E338",
+    "__vt__12CoinShotBase": "lbl_8048E34C",
+    "__vt__9CoinShots": "lbl_8048E36C",
+    "__dt__12CoinShotBaseFv": "dtor_8012A5AC",
+    "__ct__12InputManagerFv": "InputManager_Init",
+    "__ct__6CameraFffiii": "Camera_Create",
+    "__ct__9CarObjectFiiiiiiiifff": "CarObject_Init",
+    "__ct__11LakituStartFPCvifff": "LakituStart_Init",
+    "__ct__7Scene3DFi": "Scene3D_Init",
+    "__ct__19ChallengeGoalCameraFv": "ChallengeGoalCamera_Init",
+    "__ct__14MapWaterEffectFv": "MapWaterEffect_Init",
+    "__ct__3HUDFi": "HUD_Init",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__13WeatherSystemFi": "WeatherSystem_Init",
+    "__nw__FUl": "Alloc"
   },
   "src/game/fn_8012A71C.cpp": {
     "extab_fn_8012A71C": "@etb_8000C698",
@@ -5636,14 +5674,33 @@
     "extabindex_SuikaBall_Update": "@eti_80024B24",
     "extab_fn_80133008": "@etb_8000CBC0",
     "extabindex_fn_80133008": "@eti_80024B30",
-    "extab_SuikaBall_Init": "@etb_8000CBD0",
-    "extabindex_SuikaBall_Init": "@eti_80024B3C",
     "extab_fn_80133CA8": "@etb_8000CBA8",
     "extabindex_fn_80133CA8": "@eti_80024B48",
     "extab_fn_80133E64": "@etb_8000CBB8",
     "extabindex_fn_80133E64": "@eti_80024B54",
     "extab_fn_80134164": "@etb_8000CBC8",
-    "extabindex_fn_80134164": "@eti_80024B60"
+    "extabindex_fn_80134164": "@eti_80024B60",
+    "__ct__13SuikaBallModeFv": "SuikaBall_Init",
+    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
+    "__dt__8ModeBaseFv": "dtor_80122FD8",
+    "__vt__8ModeBase": "lbl_8048E144",
+    "__vt__13SuikaBallMode": "lbl_8048E3F8",
+    "__vt__12CoinShotBase": "lbl_8048E34C",
+    "__vt__14SuikaCoinShots": "lbl_8048E418",
+    "__ct__12InputManagerFv": "InputManager_Init",
+    "__ct__6CameraFffiii": "Camera_Create",
+    "__ct__9CarObjectFiiiiiiiifff": "CarObject_Init",
+    "__ct__11LakituStartFPCvifff": "LakituStart_Init",
+    "__ct__7Scene3DFi": "Scene3D_Init",
+    "__ct__19ChallengeGoalCameraFv": "ChallengeGoalCamera_Init",
+    "__ct__3HUDFi": "HUD_Init",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__13WeatherSystemFi": "WeatherSystem_Init",
+    "__ct__12SuikaBallObjFPCc": "SuikaBallObj_Init",
+    "__ct__10SuikaUnk44Fv": "fn_8018FEAC",
+    "__ct__10SuikaUnk48Fv": "fn_8018F614",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/fn_8013A534.cpp": {
     "extab_fn_8013A534": "@etb_8000D2D0",
@@ -6840,15 +6897,23 @@
     "@121": "@etb_80017640",
     "@122": "@eti_80029030",
     "@127": "@etb_80017640",
-    "@128": "@eti_80029030"
+    "@128": "@eti_80029030",
+    "__dt__12DrawQuad7F50Fv": "dtor_801F8214",
+    "@137": "@etb_80017640",
+    "@138": "@eti_80029030"
   },
   "src/game/fn_801F8728.cpp": {
     "__dt__12DrawQuad801FFv": "dtor_801F8214",
-    "__dt__12DrawQuad8728Fv": "dtor_801F8214"
+    "__dt__12DrawQuad8728Fv": "dtor_801F8214",
+    "__dt__12DrawQuad7F50Fv": "dtor_801F8214",
+    "@121": "@etb_80017660",
+    "@122": "@eti_80029048"
   },
   "src/game/fn_801F8A34.cpp": {
     "__ct__7ResCtrlFv": "ResCtrl_Init",
-    "__dt__7ResCtrlFv": "dtor_80082960"
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "@81": "@etb_80017688",
+    "@82": "@eti_8002906C"
   },
   "src/game/miyazakiconsole/fn_8017FD68.cpp": {
     "__ct__8DemoRootFv": "GameMode_BaseInit",
@@ -8925,6 +8990,9 @@
     "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/anon_8020AF08_nm1.cpp": {
+    "...rodata.0": "global:lbl_803C2E50",
+    "sparkleB": "lbl_803C2FDC",
+    "sparkleC": "lbl_803C3320",
     "@110": "lbl_806DAC34",
     "@111": "lbl_806DAC38",
     "@112": "lbl_806DAC3C",
@@ -10884,6 +10952,14 @@
     "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/mapeffect/CoursePropCtor.cpp": {
+    "normalProps": "global:lbl_80491150",
+    "reverseProps": "lbl_8049116C",
+    "longProps": "lbl_80491188",
+    "longReverseProps": "lbl_80491194",
+    "propTypeInfo": "global:lbl_804911A0",
+    "propVtable": "global:lbl_804911AC",
+    "@146": "@etb_800105E4",
+    "@147": "@eti_80026318",
     "__ct__14CoursePropListFv": "fn_8016E568",
     "__dt__14CoursePropBaseFv": "dtor_8016A270",
     "__vt__14CoursePropNode": "lbl_804911F4",
@@ -11542,17 +11618,36 @@
     "__dt__12CollisionVecFv": "dtor_80036E40"
   },
   "src/game/fn_801ED798.cpp": {
-    "__dt__12CollisionVecFv": "dtor_80036E40"
+    "__dt__12CollisionVecFv": "dtor_80036E40",
+    "@244": "@etb_80016CD4",
+    "@245": "@eti_80028B50"
   },
   "src/game/fn_801F7F50.cpp": {
-    "__dt__12DrawQuad7F50Fv": "dtor_801F8214"
+    "__dt__12DrawQuad7F50Fv": "dtor_801F8214",
+    "@153": "@etb_80017618",
+    "@154": "@eti_8002900C"
+  },
+  "src/game/dtor_801F8214.cpp": {
+    "@8": "@etb_80017630",
+    "@9": "@eti_80029018",
+    "@25": "@etb_80017638",
+    "@26": "@eti_80029024",
+    "colorFlatS56": "lbl_803BEDE0",
+    "colorDepthS56": "lbl_803BEE20",
+    "texDescS56": "lbl_803BEE60",
+    "texFlatS56": "lbl_803BEE80",
+    "texDepthS56": "lbl_803BEEC0",
+    "mixDescS56": "lbl_803BEF00",
+    "mixFlatS56": "lbl_803BEF20",
+    "mixDepthS56": "lbl_803BEFA0"
   },
   "src/game/fn_801F7604.cpp": {
     "__dt__12ColorDrawS56Fv": "dtor_801F7AD0",
     "__dt__10TexDrawS56Fv": "dtor_801F7A74",
     "__dt__10MixDrawS56Fv": "dtor_801F6BD0",
     "@130": "@etb_80017580",
-    "@131": "@eti_80028F88"
+    "@131": "@eti_80028F88",
+    "...rodata.0": "lbl_803BEDC0"
   },
   "src/game/SpriteAnimHandleCtor.cpp": {
     "__nw__FUl": "Alloc",
@@ -12618,7 +12713,13 @@
     "@95": "@etb_800151EC",
     "@96": "@eti_8002801C",
     "@139": "@etb_80015174",
-    "@140": "@eti_80028028"
+    "@140": "@eti_80028028",
+    "@74": "@etb_800151E4",
+    "@75": "@eti_80028010",
+    "@115": "@etb_800151EC",
+    "@116": "@eti_8002801C",
+    "@159": "@etb_80015174",
+    "@160": "@eti_80028028"
   },
   "src/game/CourseObjects_80138CE4.cpp": {
     "extab_fn_80138DB8": "@etb_8000D268",

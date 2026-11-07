@@ -5,8 +5,8 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void SpriteHandle_RecomputeCull();
-extern void SpriteHandle_SetActiveFlag();
+extern void SpriteHandle_RecomputeCull(int h);
+extern void SpriteHandle_SetActiveFlag(int h, unsigned char on);
 extern void SpriteLayer_SetResource();
 extern void fn_8011F744();
 extern void fn_8011F804();

@@ -80,6 +80,10 @@ static inline int SlotTeam(int i) {
 }
 
 struct TeamIconRow : clCSPartsInerface {
+/* Update-only TU uses the externally defined Draw method as its vtable key. */
+#ifdef TEAM_ICON_ROW_EXTERNAL_VTABLE
+    virtual void Draw();
+#endif
     virtual void Update();
     int state;
     float x1C;
@@ -90,7 +94,9 @@ struct TeamIconRow : clCSPartsInerface {
     TeamIcon *icons[4];
     TeamIconRow();
     virtual ~TeamIconRow();
+#ifndef TEAM_ICON_ROW_EXTERNAL_VTABLE
     virtual void Draw();
+#endif
     int CountFlagged();
     void Close();
     void SetLayer(int layer);

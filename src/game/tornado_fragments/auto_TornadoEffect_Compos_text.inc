@@ -14,7 +14,7 @@ extern const float lbl_806D28CC;
 extern unsigned int lbl_806D2908;
 extern unsigned int lbl_806D290C;
 extern unsigned int lbl_806D2918;
-extern unsigned int lbl_806D2938;
+extern const float lbl_806D2938;
 
 /* --- function index (1 fns, .text 0x80057A8C..0x80058510) ---
  * [  0] 0x80057A8C size:0xA84   global TornadoEffect_ComposeRenderMatrix

@@ -23,7 +23,7 @@ void DrawEffect_SetByte10C(void *, int);
 unsigned int Terrain_ApplyCup2FlagPatch(unsigned int);
 int Terrain_FlagsToTypeId(unsigned int);
 float Saturate_Double(float, float, float);
-void DrawEffect_SpawnWithDescriptor(int, TornadoSpawnPos);
+void *DrawEffect_SpawnWithDescriptor(int, TornadoSpawnPos);
 void Object_RenderJObjTree(void *, int);
 
 #include "tornado_fragments/auto_TornadoEffect_InitDe_text.inc"

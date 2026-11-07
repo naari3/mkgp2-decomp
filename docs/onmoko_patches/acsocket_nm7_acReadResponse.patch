@@ -1,0 +1,78 @@
+diff --git a/src/triforce/acsocket_nm7.c b/src/triforce/acsocket_nm7.c
+index 62b9b75..31cf22a 100644
+--- a/src/triforce/acsocket_nm7.c
++++ b/src/triforce/acsocket_nm7.c
+@@ -68,15 +68,32 @@ s32 acPollResponse(s32 s) {
+     return *(volatile s32*)&k->ready;
+ }
+ 
+-s32 acReadResponse(s32 s) {
+-    AcSock* k = SOCK(s);
+-    u32 addrOff;
+-    void* addr;
++static inline void ReadOut(AcSock* k, u32 addrOff) {
+     u32* len;
++    void* addr;
+     u32 lenOff;
+     u32 base;
+     u32 n;
+ 
++    addr = k->addr;
++    len = k->len;
++    lenOff = k->lenOff;
++    if (addr != NULL) {
++        base = k->bufAddr + State.bufOff;
++        fn_8028D5E8(base, Buf, State.bufSize);
++        n = 0x10;
++        *len = BSWAP32(*(u32*)(Buf + lenOff - base));
++        if (*len >= 0x10) {
++            n = *len;
++        }
++        memcpy(addr, Buf + addrOff - base, n);
++    }
++}
++
++s32 acReadResponse(s32 s) {
++    u32 addrOff;
++    AcSock* k = SOCK(s);
++
+     if (k->ready != 1 || k->cmd == 0) {
+         return -2;
+     }
+@@ -84,34 +101,10 @@ s32 acReadResponse(s32 s) {
+     if (addrOff != 0) {
+         switch (k->cmd) {
+         case 1:
+-            addr = k->addr;
+-            len = k->len;
+-            lenOff = k->lenOff;
+-            if (addr != NULL) {
+-                base = k->bufAddr + State.bufOff;
+-                fn_8028D5E8(base, Buf, State.bufSize);
+-                n = 0x10;
+-                *len = BSWAP32(*(u32*)(Buf + lenOff - base));
+-                if (*len >= 0x10) {
+-                    n = *len;
+-                }
+-                memcpy(addr, Buf + addrOff - base, n);
+-            }
++            ReadOut(k, addrOff);
+             break;
+         case 22:
+-            addr = k->addr;
+-            len = k->len;
+-            lenOff = k->lenOff;
+-            if (addr != NULL) {
+-                base = k->bufAddr + State.bufOff;
+-                fn_8028D5E8(base, Buf, State.bufSize);
+-                n = 0x10;
+-                *len = BSWAP32(*(u32*)(Buf + lenOff - base));
+-                if (*len >= 0x10) {
+-                    n = *len;
+-                }
+-                memcpy(addr, Buf + addrOff - base, n);
+-            }
++            ReadOut(k, addrOff);
+             break;
+         }
+     }

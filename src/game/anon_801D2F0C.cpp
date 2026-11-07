@@ -22,13 +22,16 @@ void fn_80121E10(ResCtrl *);
 void MemoryManager_TimedFree(void *);
 }
 
+static inline float RankingPlacementY(const RankingPlacement *p) { return p->y; }
+static inline float RankingPlacementZ(const RankingPlacement *p) { return p->z; }
+
 static inline void UpdateRankingTransform(RankingSpriteOwnerView *self) {
     Mtx scale, rotate, translate;
     self->value = self->from * (1.0f - self->time) + self->to * self->time;
     self->time += self->speed;
     if (self->time > 1.0f) self->time = 1.0f;
     PSMTXScale(scale, 0.45f, 0.45f, 0.45f);
-    PSMTXTrans(translate, self->value, self->placement->y, self->placement->z);
+    PSMTXTrans(translate, self->value, RankingPlacementY(self->placement), RankingPlacementZ(self->placement));
     PSMTXIdentity(self->matrix);
     PSMTXConcat(scale, self->matrix, self->matrix);
     PSMTXRotRad(rotate, 'x', 0.017453292f * self->placement->rx);
