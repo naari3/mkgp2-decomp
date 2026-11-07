@@ -202,8 +202,17 @@
     "__dt__12FlowBaseDtorFv": "dtor_801BA14C"
   },
   "src/game/clFlowItemSelect_Init.c": {
-    "extab_clFlowItemSelect_Init": "@etb_80014768",
-    "extabindex_clFlowItemSelect_Init": "@eti_80027EA8"
+    "__ct__14FlowItemSelectFv": "clFlowItemSelect_Init",
+    "__vt__14FlowItemSelect": "lbl_8049B148",
+    "__ct__14FrameSelectionFv": "InitializeFrameSelection",
+    "__dt__14FrameSelectionFv": "dtor_801BA14C",
+    "__ct__9FlowChildFiiiii": "fn_8023D080",
+    "__dt__14FlowChildOwnerFv": "dtor_801CCA30",
+    "__ct__6TexMgrFv": "TexMgr_Init",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "@242": "@etb_80014768",
+    "@243": "@eti_80027EA8"
   },
   "src/game/BananaField_Render.c": {
     "extab_BananaField_Render": "@etb_800124B0",

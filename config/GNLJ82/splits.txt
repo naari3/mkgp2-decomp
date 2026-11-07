@@ -3522,6 +3522,7 @@ game/CelebPop17Update.cpp:
 	extab       start:0x8000A610 end:0x8000A618
 	extabindex  start:0x80022A9C end:0x80022AA8
 	.text       start:0x800B0C0C end:0x800B0FA4
+	.rodata     start:0x80328EB8 end:0x80329908
 
 game/CharaPop12_SpawnAll.c:
 	extab       start:0x8000A618 end:0x8000A620
@@ -14343,83 +14344,13 @@ sysdolphin/baselib/pobj.c:
 	.sbss       start:0x806D2190 end:0x806D21B0
 	.sdata2     start:0x806DCC80 end:0x806DCCB0
 
-sysdolphin/baselib/jobj_data_nm.c:
-	.data       start:0x804FC9A8 end:0x804FCA50
+sysdolphin/baselib/jobj.c:
+	.text       start:0x802CD2B0 end:0x802D2AD0
+	.rodata     start:0x803F2BD0 end:0x803F2BF8
+	.data       start:0x804FC9A8 end:0x804FCD80
+	.sdata      start:0x806D0DA0 end:0x806D0DD0
 	.sbss       start:0x806D21B0 end:0x806D21C8
 	.sdata2     start:0x806DCCB0 end:0x806DCD00
-
-sysdolphin/baselib/jobj.c:
-	.text       start:0x802CD2B0 end:0x802CD3DC
-
-sysdolphin/baselib/jobj_depend.c:
-	.text       start:0x802CD3DC end:0x802CD760
-
-sysdolphin/baselib/jobj_mtx_dirty.c:
-	.text       start:0x802CD760 end:0x802CD7B8
-
-sysdolphin/baselib/jobj_dirty.c:
-	.text       start:0x802CD7B8 end:0x802CD828
-
-sysdolphin/baselib/jobj_matrix.c:
-	.text       start:0x802CD828 end:0x802CDAF8
-
-sysdolphin/baselib/jobj_anim.c:
-	.text       start:0x802CDAF8 end:0x802CE454
-
-sysdolphin/baselib/jobj_tail.c:
-	.text       start:0x802CE454 end:0x802CED98
-	.data       start:0x804FCA50 end:0x804FCB38
-
-sysdolphin/baselib/jobj_tail_data_nm.c:
-	.data       start:0x804FCB38 end:0x804FCD80
-
-sysdolphin/baselib/jobj_anim_eval.c:
-	.text       start:0x802CED98 end:0x802CF3B0
-
-sysdolphin/baselib/jobj_display.c:
-	.text       start:0x802CF3B0 end:0x802CF8F4
-
-sysdolphin/baselib/jobj_get_matrix.c:
-	.text       start:0x802CF8F4 end:0x802CF96C
-
-sysdolphin/baselib/jobj_load.c:
-	.text       start:0x802CF96C end:0x802D007C
-
-sysdolphin/baselib/jobj_load_nm1.c:
-	.text       start:0x802D007C end:0x802D0350
-
-sysdolphin/baselib/jobj_load_refs.c:
-	.text       start:0x802D0350 end:0x802D0758
-
-sysdolphin/baselib/jobj_flags.c:
-	.text       start:0x802D0758 end:0x802D0EF4
-	.sdata      start:0x806D0DA0 end:0x806D0DB0
-
-sysdolphin/baselib/jobj_alloc.c:
-	.text       start:0x802D0EF4 end:0x802D0F50
-
-sysdolphin/baselib/jobj_end.c:
-	.text       start:0x802D0F50 end:0x802D10E0
-	.sdata      start:0x806D0DB0 end:0x806D0DD0
-
-sysdolphin/baselib/jobj_current.c:
-	.text       start:0x802D10E0 end:0x802D10E8
-
-sysdolphin/baselib/jobj_ik.c:
-	.text       start:0x802D10E8 end:0x802D23E0
-	.rodata     start:0x803F2BD0 end:0x803F2BF8
-
-sysdolphin/baselib/jobj_init.c:
-	.text       start:0x802D23E0 end:0x802D2444
-
-sysdolphin/baselib/jobj_class.c:
-	.text       start:0x802D2444 end:0x802D2918
-
-sysdolphin/baselib/jobj_release.c:
-	.text       start:0x802D2918 end:0x802D2A14
-
-sysdolphin/baselib/jobj_info.c:
-	.text       start:0x802D2A14 end:0x802D2AD0
 
 sysdolphin/baselib/displayfunc.c:
 	.text       start:0x802D2AD0 end:0x802D4030
