@@ -1,6 +1,7 @@
 #ifndef C8_TA_PLEASE_PRIVATE_H
 #define C8_TA_PLEASE_PRIVATE_H
 #include "game/CreditHud.h"
+#include "game/singleton.h"
 struct C8FlowBase { virtual void Key(); C8FlowBase(); ~C8FlowBase(); };
 struct C8Prompt { char pad[0x20]; C8Prompt(int,int,int,int,int); };
 struct C8PromptHolder {
@@ -63,7 +64,7 @@ void fn_8023CCF8(C8Prompt *,float,float);
 float fn_801D8D3C(int,int);
 void InitRumbleController(int);
 }
-inline C8Input *C8GetInput() { if (g_pInputState == 0) { return 0; } return g_pInputState; }
+inline C8Input *C8GetInput() { return SINGLETON_INSTANCE(g_pInputState); }
 inline C8ParamSprite::C8ParamSprite(int resource,int mode) {
     float pos=lbl_806D9EB8;
     float scale=lbl_806D9EA8;
