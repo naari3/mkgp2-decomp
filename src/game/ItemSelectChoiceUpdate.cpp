@@ -1,4 +1,39 @@
-#include "game/ItemSelectRefillPrivate.h"
+#include "game/ItemSelectChoiceUpdatePrivate.h"
+#include "game/singleton.h"
+
+extern "C" {
+// Shared item-selection palette and default item IDs.
+const int lbl_803DC0C0[15][3] = {
+    {0, 0, 0},
+    {96, 255, 0},
+    {200, 64, 0},
+    {0, 96, 255},
+    {0, 96, 255},
+    {0, 96, 255},
+    {0, 96, 255},
+    {0, 96, 255},
+    {0, 96, 255},
+    {0, 96, 255},
+    {0, 96, 255},
+    {0, 96, 255},
+    {0, 96, 255},
+    {0, 96, 255},
+    {0, 96, 255},
+};
+const int lbl_803DC174[3] = {6, 1, 0};
+const int lbl_803DC180[6][10] = {
+    {6, 2, 1, 0, 11, 8, 10, 9, 13, 12},
+    {7, 3, 4, 5, 22, 23, 44, 27, 43, 59},
+    {42, 15, 30, 14, 41, 45, 19, 25, 29, 20},
+    {38, 40, 39, 58, 28, 32, 21, 36, 26, 17},
+    {24, 31, 35, 34, 33, 18, 37, 16, 47, 51},
+    {46, 54, 48, 50, 53, 57, 55, 56, 49, 52},
+};
+}
+static const float choiceX[11] = {102.0f, 144.0f, 185.0f, 227.0f, 269.0f, 310.0f, 352.0f, 394.0f, 435.0f, 477.0f, 532.0f};
+static const float choiceY[6] = {230.0f, 261.0f, 292.0f, 323.0f, 354.0f, 385.0f};
+static const int choiceResources[3] = {0x1424, 0x1423, 0x1425};
+
 struct ChoiceInput { char pad00[0x14]; int dir, held; };
 struct ChoicePoint { float x, y; char rest[0x28]; };
 extern "C" {
@@ -20,7 +55,6 @@ static inline unsigned char ChoiceOccupied(RefillChoice *self) {
     return occupied;
 }
 extern "C" void fn_8023AC14(RefillChoice *self) {
-    const RefillLayout *layout = &lbl_803DC0C0;
     if (!self->active) return;
     if (self->count >= 3) return;
     int horizontal = 0;
@@ -36,7 +70,7 @@ extern "C" void fn_8023AC14(RefillChoice *self) {
         }
         self->phase = 0;
     } else {
-        ChoiceInput *input = g_pInputState == 0 ? (ChoiceInput *)0 : g_pInputState;
+        ChoiceInput *input = SINGLETON_INSTANCE(g_pInputState);
         horizontal = input->dir;
         if (input->held == 3) {
             do {
@@ -44,9 +78,9 @@ extern "C" void fn_8023AC14(RefillChoice *self) {
                 if (self->row >= 6) self->row = 0;
             } while (ChoiceOccupied(self) == 1);
             unsigned char *player = g_playerData;
-            self->done = player[RefillItem(layout, self->column, self->row) + 0xa8];
+            self->done = player[ChoiceItem(self) + 0xa8];
             int resource = (short)Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(player,
-                RefillItem(layout, self->column, self->row)), 0);
+                ChoiceItem(self)), 0);
             if (!self->done) resource = 0x1422;
             SpriteAnimParamBlock_SetAnimParamCached(self->groups[1], self->resource, resource);
             fn_8019FF6C(self->groups[1]->sprite, 1);
@@ -70,7 +104,7 @@ extern "C" void fn_8023AC14(RefillChoice *self) {
                 fn_8019FF8C(self->groups[0]->sprite, 0x1ed3, &pos);
                 fn_801F93EC(self->text[3], pos.x, pos.y);
                 int descriptor = PlayerData_ResolveUnlockedIdByIndex(player,
-                    RefillItem(layout, self->column, self->row));
+                    ChoiceItem(self));
                 TexMgr_SetTexture(self->text[0], fn_8023DAA8(descriptor));
                 TexMgr_SetTexture(self->text[1], Item_GetLocalizedAsset(descriptor, 0));
                 TexMgr_SetTexture(self->text[2], Item_GetLocalizedAsset(descriptor, 1));
@@ -102,10 +136,13 @@ extern "C" void fn_8023AC14(RefillChoice *self) {
         *(unsigned int *)(self->text[2]->data + 0x20) = 0xffffff00;
         *(unsigned int *)(self->text[3]->data + 0x20) = 0xffffff00;
     }
+    RefillChoice *cursor;
+    const float *xs;
+    const float *ys;
     int i;
-    RefillChoice *cursor = self;
-    const float *ys = layout->y;
-    const float *xs = layout->x;
+    cursor = self;
+    ys = choiceY;
+    xs = choiceX;
     for (i = 0; i < 4; ++i, cursor = (RefillChoice *)((char *)cursor + 4)) {
         if (cursor->groups[0]) {
             RefillSprite *sprite = cursor->groups[0]->sprite;

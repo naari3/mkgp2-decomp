@@ -12132,6 +12132,7 @@ game/ItemSelectChoiceUpdate.cpp:
 	extab       start:0x8001C918 end:0x8001C920
 	extabindex  start:0x8002ACB0 end:0x8002ACBC
 	.text       start:0x8023AC14 end:0x8023B1A8
+	.rodata     start:0x803DC0C0 end:0x803DC2C0
 
 game/ItemSelectChoiceInit.cpp:
 	extab       start:0x8001C920 end:0x8001C938
