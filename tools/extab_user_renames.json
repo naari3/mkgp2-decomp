@@ -6716,7 +6716,9 @@
     "__vt__Q23std12length_error": "lbl_803F56F0",
     "__dt__Q23std9exceptionFv": "dtor_80038DD4",
     "__dt__5ClStrFv": "dtor_80038E30",
-    "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor"
+    "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor",
+    "@23": "global:lbl_8036924C",
+    "lbl_80369238": "global:lbl_80369238"
   },
   "src/game/Scene_80162D90.cpp": {
     "Tick__14CreditPanel162Fv": "fn_80162D90"
