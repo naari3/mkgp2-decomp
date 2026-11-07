@@ -12,24 +12,20 @@ void fn_801B7CD0(int);
 void SetTimerModeEnabled(int);
 void SyncSlot_ApplyCourseChoice();
 }
-static inline RankingFlowIter RankingInsertFade(RankingFlowList *list, RankingFlowNode *end, RankingAnim *const &fade) {
-    RankingFlowIter last(end);
-    return DoublyLinkedList_PushBefore(list, &last, &fade);
+static inline void RankingInsertFade(RankingFlowList *list, const RankingFlowIter &last, RankingAnim *const &fade) {
+    DoublyLinkedList_PushBefore(list, &last, &fade);
 }
-int RankingFlowView::Update() {
-    RankingFlowView *self = this;
-    int i;
-    for (i = 0; i < 4; ++i) {
-        RankingPcbSlot *slot = PcbSlot_GetByIndex(i);
-        if ((int)((slot->bytes[0] >> 4) & 7) == g_localPcbRole &&
-            (((slot->flags >> 15) & 255) == 0x27 || ((slot->flags >> 15) & 255) == 0x28)) {
-            if (self->players[i]) self->players[i]->hideMark = 1;
-        }
-    }
-    RankingFlowNode *node;
-    RankingFlowNode *end = self->list.End();
-    for (node = self->list.first; node != end; node = node->next) {
-        RankingAnim *entry = node->entry;
+static inline bool operator!=(const RankingFlowIter &a, const RankingFlowIter &b) {
+    return a.node != b.node;
+}
+static inline RankingFlowIter &operator++(RankingFlowIter &it) {
+    it.node = it.node->next;
+    return it;
+}
+static inline RankingFlowIter RankingAdvanceFlow(RankingFlowList *list) {
+    RankingFlowIter end(list->End());
+    for (RankingFlowIter node(list->first); node != end; ++node) {
+        RankingAnim *entry = node.node->entry;
         if (entry->delay > 0) {
             --entry->delay;
         } else {
@@ -53,6 +49,19 @@ int RankingFlowView::Update() {
             }
         }
     }
+    return end;
+}
+int RankingFlowView::Update() {
+    RankingFlowView *self = this;
+    int i;
+    for (i = 0; i < 4; ++i) {
+        RankingPcbSlot *slot = PcbSlot_GetByIndex(i);
+        if ((int)((slot->bytes[0] >> 4) & 7) == g_localPcbRole &&
+            (((slot->flags >> 15) & 255) == 0x27 || ((slot->flags >> 15) & 255) == 0x28)) {
+            if (self->players[i]) self->players[i]->hideMark = 1;
+        }
+    }
+    RankingFlowIter end = RankingAdvanceFlow(&self->list);
     if (self->phase == 0) {
         if (self->delay-- > 0) return -1;
         SetSyncTarget(0x28);
@@ -62,7 +71,7 @@ int RankingFlowView::Update() {
             self->timer = 0;
             RankingAnim *fade = new RankingFade;
             RankingStartFade(fade);
-            RankingInsertFade(&self->list, end, fade);
+            RankingInsertFade(&self->list, RankingFlowIter(end), fade);
         }
         if (self->phase == 1) {
             if ((float)self->timer > lbl_806D9FB4) {
@@ -85,7 +94,7 @@ int RankingFlowView::Update() {
             self->timer = 0;
             RankingAnim *fade = new RankingFade;
             RankingStartFade(fade);
-            RankingInsertFade(&self->list, end, fade);
+            RankingInsertFade(&self->list, RankingFlowIter(end), fade);
         }
         if (self->phase == 1) {
             if ((float)self->timer > lbl_806D9FB4) {
