@@ -4,8 +4,8 @@
  * time limit down, and handles the finish: result ranking, the 1st place
  * Jyugemu and the exit timer. Returns the next scene id (0xD after the
  * finish wait, 2 on the debug exit button) or -2 to stay.
- * NonMatching (99.99%): the hold-reset branch materialises its 0 in r3
- * instead of r0. */
+ * Matches; stays a NonMatching Object only because RaceScene_Init also
+ * reads this TU's .sdata2 floats (lbl_806D47DC..) by name. */
 
 #include "game/singleton.h"
 
@@ -239,7 +239,7 @@ extern "C" int RaceScene_FrameUpdate(RaceScene *self)
     pad = InputMgr_GetPlayer(GetInputManager(), 0);
     ItemObjectManager_PerFrameUpdate(GetRaceContextPtr());
     if (g_raceEnded != 1) {
-        long long now = OSGetTime();
+        unsigned long long now = OSGetTime();
 
         steer = QuantizeInput(pad->Steer());
         brake = QuantizeInput(pad->Brake());
@@ -250,7 +250,7 @@ extern "C" int RaceScene_FrameUpdate(RaceScene *self)
             } else if (steer < 0.1f && brake < 0.1f) {
                 if (!g_fullThrottleHoldFlag) {
                     long long prev = ((long long)g_prevFrameTimestampHi << 32) | g_prevFrameTimestampLo;
-                    long long ms = (now - prev) / ((*(unsigned int *)0x800000F8 / 4) / 1000);
+                    long long ms = (long long)(now - prev) / ((*(unsigned int *)0x800000F8 / 4) / 1000);
                     if ((float)ms / 1000.0f >= 4.0f) {
                         g_fullThrottleHoldFlag = 1;
                     }
