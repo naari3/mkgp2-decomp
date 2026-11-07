@@ -7422,91 +7422,42 @@ int ItemEffect_GenericHandler(ItemEffectTable *self, int itemId, void *itemObj, 
 }
 #pragma exceptions reset
 
-/* C probe history (2026-06-10): body is 71/72 instructions identical; the
- * sole residue is prologue scheduling of the first load (target: lwz r0,
- * 0x0(r4) sits between the LR-save stw and stmw; CW emits it after the five
- * param mr's). Probes: lane-stmt-first / laneIdx-local-first /
- * decl-with-initializer / const-qualified desc param / exceptions on-off
- * (codegen identical, so not the approach-B class) - none move the load.
- * Allocator-internal scheduler artifact (ProcessWarpAndDash tie-break
- * family). Kept as asm. */
-asm int ItemEffect_OnHit(ItemEffectTable *self, const ItemEffectDesc *desc, int itemId, void *itemObj, int arg4) { /* 0x800502F0 size:0x120 */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    stw r0, 0x44(r1)
-    lwz r0, 0x0(r4)
-    stmw r22, 0x18(r1)
-    mr r22, r3
-    mr r23, r4
-    mr r24, r5
-    mr r25, r6
-    mr r26, r7
-    lwz r29, 0x8(r3)
-    mulli r3, r0, 0x18
-    lwz r30, 0x4(r22)
-    lwz r31, 0x0(r22)
-    addi r27, r3, 0x28
-    add r27, r22, r27
-    lwz r28, 0x0(r27)
-    cmpwi r28, 0x0
-    blt ItemEffect_OnHit_L_800503A4
-    lwz r3, 0x34(r31)
-    mr r4, r28
-    bl TornadoEffect_ApplyItemVisual_Primary
-    lwz r3, 0x24(r31)
-    mr r4, r28
-    bl KartItemAudio_StopSEByItemId
-    lwz r3, 0x2c(r31)
-    mr r4, r28
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ApplyItemEventClear
-    mr r3, r30
-    bl EffectState_ReleaseAndClear
-    mr r3, r29
-    bl MediaBoard_SendAndCheck
-    lwz r3, 0x38(r31)
-    lfs f1, lbl_806D26EC(r2)
-    bl ShadowBillboard_SetField0xA4
-    li r3, -0x1
-    li r0, 0x0
-    stw r3, 0x0(r27)
-    lfs f0, lbl_806D26FC(r2)
-    stw r3, 0x4(r27)
-    stw r0, 0x8(r27)
-    stw r0, 0xc(r27)
-    stw r0, 0x10(r27)
-    stfs f0, 0x14(r27)
-    ItemEffect_OnHit_L_800503A4:
-    lfs f1, 0x10(r22)
-    mr r3, r27
-    lfs f0, lbl_806D26E4(r2)
-    mr r8, r23
-    mr r9, r24
-    mr r10, r25
-    fmuls f0, f1, f0
-    stfs f0, 0x10(r22)
-    stw r26, 0x8(r1)
-    lwz r4, 0x0(r22)
-    lbz r5, 0xc(r22)
-    lwz r6, 0x4(r22)
-    lwz r7, 0x8(r22)
-    lfs f1, 0x10(r22)
-    bl ItemEffect_Dispatch
-    lwz r0, 0x14(r22)
-    lwz r3, 0xc(r23)
-    cmpw r0, r3
-    bge ItemEffect_OnHit_L_800503F4
-    stw r3, 0x14(r22)
-    ItemEffect_OnHit_L_800503F4:
-    stw r24, 0x18(r22)
-    li r3, 0x0
-    lmw r22, 0x18(r1)
-    lwz r0, 0x44(r1)
-    mtlr r0
-    addi r1, r1, 0x40
-    blr
+/* GC/2.6 (TU setting) hoists the desc->laneIdx load into the prologue. */
+#pragma exceptions off
+int ItemEffect_OnHit(ItemEffectTable *self, const ItemEffectDesc *desc, int itemId, void *itemObj, int arg4) { /* 0x800502F0 size:0x120 */
+    KartItemOpsView *owner;
+    void *effectState;
+    void *mediaReq;
+    int id;
+    ItemEffectLane *lane;
+    mediaReq = self->mediaReq;
+    lane = &self->lanes[desc->laneIdx];
+    effectState = self->effectState;
+    owner = self->owner;
+    id = lane->itemId;
+    if (id >= 0) {
+        TornadoEffect_ApplyItemVisual_Primary(owner->effectObj, id);
+        KartItemAudio_StopSEByItemId(owner->soundCtrl, id);
+        ItemEffectBus_ApplyItemEventClear(owner->ownerDriver->itemBus, id);
+        EffectState_ReleaseAndClear(effectState);
+        MediaBoard_SendAndCheck(mediaReq);
+        ShadowBillboard_SetField0xA4(owner->billboard, lbl_806D26EC);
+        lane->itemId = -1;
+        lane->itemKind = -1;
+        lane->state8 = 0;
+        lane->stateC = 0;
+        lane->state10 = 0;
+        lane->blend = lbl_806D26FC;
+    }
+    self->intensity10 *= lbl_806D26E4;
+    ItemEffect_Dispatch(lane, self->owner, self->laneKindC, self->effectState, self->mediaReq, desc, itemId, itemObj, arg4, self->intensity10);
+    if (self->run14 < desc->priorityC) {
+        self->run14 = desc->priorityC;
+    }
+    self->run18 = itemId;
+    return 0;
 }
+#pragma exceptions reset
 
 asm int ItemEffect_Dispatch(ItemEffectLane *lane, KartItemOpsView *owner, int kind, void *effectState, void *mediaReq, const ItemEffectDesc *desc, int itemId, void *itemObj, int arg4, float intensity) { /* 0x80050410 size:0x53C */
     nofralloc
