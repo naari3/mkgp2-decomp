@@ -90,6 +90,9 @@ struct GpInitList {
     ~GpInitList();
     GpInitIter Insert(const GpInitIter &,GpPanelBase * const &);
     GpInitIter End() {return GpInitIter((GpInitNode *)&last);}
+    void InsertAt(GpInitNode *where,GpPanelBase * const &p) {
+        GpInitIter result=Insert(GpInitIter(where),p);
+    }
     void Append(GpPanelBase * const &p) {
         GpInitIter result=Insert(End(),p);
     }
