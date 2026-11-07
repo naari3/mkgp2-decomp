@@ -1509,3 +1509,8 @@ c19_u62 fn_801FB778 unlocks99.387184->100%. Actual fn801D9B70 second arg is unsi
 Source: Codex worker c19_u72_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c19_u72 EnemyRun_BaseInit: declaration order row,column,output,right,n with column assignment inside outer loop fixes all matrix-loop colors (n=r5,i=r4,row=r9,column=r8). Move row+=4 into body before n+=4 to restore target outer scheduling. Text99.08->99.36616,1300B; owned EH176B/index12B100. Only target mr r9,r29 vs source addi r9,r31,0x70 remains. This-pointer cast and pointer-to-float[4] row type are invariant; reusing mutable row for copyback loses long-lived r29; rotateY helper swaps saved FP homes without fixing base. Retained simpler declaration/scope change, no metadata edits, NonMatching. Single function precludes B; final fallback DOL SHA1 exact.
+
+## c19_u77_20261107
+Source: Codex worker c19_u77_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 18 fn / 16760 B.
+
+c19_u77 ranking_display: target panel variant arithmetic at 801D2734..2754 computes flag>=2, not previous flag<2. For flag0/1/2/3, ((flag|~2)-((flag-2 unsigned)>>1))>>31 gives0/0/1/1. Correcting comparison improves fresh91.104164->91.464745, restores2496B and extabindex100; data100/EH91.581635. Genuine weak compiler-vtable emission using inline undefined virtual declarations does not restore persistent name-table/vptr pool (text invariant, extra data); reverted. Inline unsigned comparison helper invariant. No new pools/bridges/flags; singleton function stays NonMatching, fallback DOL SHA1 exact.
