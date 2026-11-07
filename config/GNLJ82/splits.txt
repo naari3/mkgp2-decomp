@@ -7829,7 +7829,7 @@ game/objview/fn_8018E4B4.c:
 	extabindex  start:0x80026FA8 end:0x80026FB4
 	.text       start:0x8018E4B4 end:0x8018E510
 
-game/objview/fn_8018E510.c:
+game/objview/fn_8018E510.cpp:
 	.text       start:0x8018E510 end:0x8018E538
 
 game/objview/fn_8018E538.cpp:
