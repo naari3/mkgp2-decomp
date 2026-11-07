@@ -11988,7 +11988,9 @@
     "__dt__5C7VecFv": "dtor_80036E40",
     "__dt__13ImpactArmQuatFv": "dtor_800524CC",
     "@200": "@etb_80007204",
-    "@201": "@eti_800205F4"
+    "@201": "@eti_800205F4",
+    "@216": "@etb_80007204",
+    "@217": "@eti_800205F4"
   },
   "src/game/EffectSpeed_Init.cpp": {
     "__ct__14SpeedInitOwnerFPv": "EffectSpeed_Init",
