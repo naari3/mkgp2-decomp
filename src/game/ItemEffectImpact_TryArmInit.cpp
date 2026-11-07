@@ -1,5 +1,20 @@
-/* NonMatching: projection, cross-product and quaternion FPR scheduling differ. */
+/* NonMatching: projection reload and cross/quaternion FPR scheduling differ. */
 #include "game/ItemEffectImpactArmPrivate.h"
+
+// Scalar length arguments preserve the matrix-row evaluation boundary.
+static inline float ArmLengthSquared(float x, float y, float z) {
+    float yy=y*y;
+    float xx=x*x;
+    float zz=z*z;
+    return zz+(xx+yy);
+}
+static inline void ArmNormalizeCopy(C7Vec* v, const C7Vec* src) {
+    float squared=ArmLengthSquared(src->x,src->y,src->z);
+    *v=*src;
+    float length=Root(squared);
+    if(length<=lbl_806D27F8) {v->z=lbl_806D27F8;v->y=lbl_806D27F8;v->x=lbl_806D27F8;}
+    else {float inv=lbl_806D27FC/length;v->x*=inv;v->y*=inv;v->z*=inv;}
+}
 
 extern "C" void ItemEffectImpact_TryArmInit(ImpactArmState* __restrict self, C7Vec* __restrict velocity, ImpactArmMatrix* __restrict pose, int timer) {
     self->Reset();
@@ -10,7 +25,7 @@ extern "C" void ItemEffectImpact_TryArmInit(ImpactArmState* __restrict self, C7V
     self->rotation.m[3][3]=lbl_806D27FC; self->rotation.m[2][2]=lbl_806D27FC; self->rotation.m[1][1]=lbl_806D27FC; self->rotation.m[0][0]=lbl_806D27FC;
     self->timer=timer;
     C7Vec up;
-    NormalizeCopy(&up,(C7Vec*)&self->start.m[1][0]);
+    ArmNormalizeCopy(&up,(C7Vec*)&self->start.m[1][0]);
     #pragma fp_contract off
     float dx=up.x*self->pos.x, dy=up.y*self->pos.y, dz=up.z*self->pos.z;
     float dot=dz+(dx+dy);

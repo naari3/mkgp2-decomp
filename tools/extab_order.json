@@ -2501,5 +2501,12 @@
   "src/game/anon_80205DCC_m2.cpp": [
     "fn_802064D8",
     "dtor_80082960"
+  ],
+  "src/game/anon_8020BD68_nm1.cpp": [
+    "fn_8020C38C",
+    "dtor_801F2724",
+    "__dt__10FlowFaderIFv",
+    "dtor_801F4B10",
+    "dtor_8007D0D4"
   ]
 }

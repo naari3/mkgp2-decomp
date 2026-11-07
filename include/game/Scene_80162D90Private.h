@@ -2,6 +2,7 @@
 #define GAME_SCENE_80162D90_PRIVATE_H
 
 #include "game/DemoKartScene.h"
+#include "game/singleton.h"
 
 struct CreditPanel162 {
     int Tick();
@@ -31,7 +32,7 @@ void TitleStats_ResetRaceStagingState(void *);
 void RankLog_OnRoundComplete(void *);
 }
 
-static inline InputState162 *InputState() { return g_pInputState == 0 ? 0 : g_pInputState; }
-static inline void *TitleTracker() { return lbl_806D10A0 == 0 ? 0 : lbl_806D10A0; }
+static inline InputState162 *InputState() { return SINGLETON_INSTANCE(g_pInputState); }
+static inline void *TitleTracker() { return SINGLETON_INSTANCE(lbl_806D10A0); }
 
 #endif

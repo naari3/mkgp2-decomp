@@ -14,8 +14,8 @@ struct DrawQuad7F50 {
         } else {
             float sine = lbl_806DA714 * d->anchorX;
             cosPart = lbl_806DA714 * d->anchorY;
-            dx = h * sine;
             sinPart = w * sine;
+            dx = h * sine;
         }
         dy = h * cosPart;
         wx = w * cosPart;
