@@ -66,3 +66,8 @@ c16_u17: fn_80187410 fresh87.502396->89.88039 via small CopyPoint(dst,src) inlin
 Source: Codex worker c16_u122_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 432 B.
 
 c16_u122: fn_80197130 reaches exact432B text/extab24/index12 by replacing external constants lbl_806D95E8/EC/F0/F4 with float literals 0.5f, 0.01745329238474369f, 0.0f, 0.1f. Baseline only four FP operands differed: height f31/width f30 versus target f30/f31. Existing GXChannel lifetime and typed bridge remain unchanged. Matching promotion source-linked on main.elf edge and coordinator full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65 verified. No split/data/header/EH bridge edits.
+
+## c17_u35_20261107
+Source: Codex worker c17_u35_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 1832 B.
+
+c17_u35: fn_80197D20/516B promoted native. The external char-pointer resource-base local caused extra mr and wrong prologue/vptr scheduling (bridged 95.92248%). Direct typed external pool members lose the hoist (90.209305%). Reconstructing original native bounds[2][5] and exact-sized class/base/delete/create/model strings at 8037DA90..8037DB74 makes CW emit one pooled rodata base and exact offsets, including addi r4,r30,0. Split old lbl_8037DB28 size50 into 1D-byte delete string, 1D-byte create string at DB48, and C-byte model string at DB68. Leave DB74..DB78 alignment in auto rodata; no filler needed. Per-TU ctor/vtable/callee/base-dtor and @102/@103 bridges restore all text516/EH88/index12/rodata228 object sections100. Matching source edge, all four main.elf ranges, and full DOL SHA-1 verified.

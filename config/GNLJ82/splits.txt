@@ -6263,6 +6263,7 @@ game/RaceHud_80147470.cpp:
 	extabindex  start:0x800252F8 end:0x800254CC
 	.text       start:0x80147470 end:0x8014CE74
 	.ctors      start:0x802E890C end:0x802E8910
+	.rodata     start:0x80362778 end:0x80362858
 	.data       start:0x8048F130 end:0x8048F178
 
 game/CSPartsHolders.c:
@@ -8268,6 +8269,7 @@ game/objview/fn_80197D20.cpp:
 	extab       start:0x80012508 end:0x80012560
 	extabindex  start:0x80027368 end:0x80027374
 	.text       start:0x80197D20 end:0x80197F24
+	.rodata     start:0x8037DA90 end:0x8037DB74
 
 game/objview/fn_80197F24.cpp:
 	extab       start:0x80012560 end:0x80012578
@@ -9344,6 +9346,11 @@ game/fn_801D4118.cpp:
 	extabindex  start:0x80028094 end:0x800280A0
 	.text       start:0x801D4118 end:0x801D43C4
 
+game/card_unpack.cpp:
+	extab       start:0x800152C4 end:0x800152CC
+	extabindex  start:0x800280A0 end:0x800280AC
+	.text       start:0x801D43C4 end:0x801D4DC0
+
 game/fn_801D4DC0.cpp:
 	extab       start:0x800152CC end:0x800152D4
 	extabindex  start:0x800280AC end:0x800280B8
@@ -9353,6 +9360,11 @@ game/fn_801D4FF4.cpp:
 	extab       start:0x800152D4 end:0x800152EC
 	extabindex  start:0x800280B8 end:0x800280C4
 	.text       start:0x801D4FF4 end:0x801D5244
+
+game/card_pack.cpp:
+	extab       start:0x800152EC end:0x800152F4
+	extabindex  start:0x800280C4 end:0x800280D0
+	.text       start:0x801D5244 end:0x801D5970
 
 game/fn_801D5970.c:
 	.text       start:0x801D5970 end:0x801D5C88

@@ -129,7 +129,6 @@ int WarpAutoRun_GetParam(WarpAutoRun *self, float *vx, float *vy, float *vz, flo
 void WarpAutoRun_OnEnter(void *self, float f1, float f2, float f3, float f4, float vx, float vy, float vz);
 asm void WarpZone_CheckEntry(void);
 int Field4NotMinusOne(WarpAutoRun *self);
-asm void WarpZone_CalcEdgeVectors(void);
 void *dtor_800A9CC8(void *this, short flag);
 void *dtor_800A9D2C(void *this, short flag);
 
@@ -142,17 +141,11 @@ __declspec(section ".extab_user") static const unsigned char extab_dtor_800A9D2C
 __declspec(section ".extab_user") static const unsigned char extab_WarpZone_CheckEntry[8] = {
     0x00, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const unsigned char extab_WarpZone_CalcEdgeVectors[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpZone_CheckEntry = {
     (void *)&WarpZone_CheckEntry, 0x00000170, (void *)extab_WarpZone_CheckEntry
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpZone_CalcEdgeVectors = {
-    (void *)&WarpZone_CalcEdgeVectors, 0x00000324, (void *)extab_WarpZone_CalcEdgeVectors
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_800A9D2C = {
     (void *)&dtor_800A9D2C, 0x00000058, (void *)extab_dtor_800A9D2C
@@ -535,217 +528,58 @@ int Field4NotMinusOne(WarpAutoRun *self) {
     return self->zone != -1;
 }
 
-asm void WarpZone_CalcEdgeVectors(void) {
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    lis r5, dtor_80036E40@ha
-    li r6, 0xc
-    stw r0, 0x24(r1)
-    addi r5, r5, dtor_80036E40@l
-    li r7, 0x4
-    stw r31, 0x1c(r1)
-    mr r31, r3
-    lis r3, fn_8007C5DC@ha
-    stw r4, 0x0(r31)
-    addi r4, r3, fn_8007C5DC@l
-    addi r3, r31, 0x4
-    bl __construct_array
-    li r0, 0x2
-    li r12, 0x0
-    li r9, 0x0
-    mtctr r0
-    WarpZone_CalcEdgeVectors_L_800A99EC:
-    addi r5, r12, 0x1
-    lwz r10, 0x0(r31)
-    slwi r3, r5, 30
-    addi r6, r9, 0x4
-    srwi r8, r5, 31
-    addi r5, r12, 0x2
-    subf r3, r8, r3
-    lfsx f0, r10, r9
-    rotlwi r7, r3, 2
-    addi r4, r9, 0x8
-    add r7, r7, r8
-    slwi r3, r5, 30
-    mulli r11, r7, 0xc
-    srwi r8, r5, 31
-    addi r0, r9, 0xc
-    subf r3, r8, r3
-    lfsx f1, r10, r11
-    rotlwi r7, r3, 2
-    add r7, r7, r8
-    addi r5, r11, 0x4
-    fsubs f0, f1, f0
-    addi r3, r11, 0x8
-    mulli r11, r7, 0xc
-    addi r12, r12, 0x2
-    stfsx f0, r31, r6
-    lwz r7, 0x0(r31)
-    lfsx f1, r7, r5
-    addi r5, r11, 0x4
-    lfsx f0, r7, r6
-    addi r6, r9, 0x10
-    fsubs f0, f1, f0
-    stfsx f0, r31, r4
-    lwz r7, 0x0(r31)
-    lfsx f1, r7, r3
-    addi r3, r11, 0x8
-    lfsx f0, r7, r4
-    addi r4, r9, 0x14
-    fsubs f0, f1, f0
-    stfsx f0, r31, r0
-    addi r0, r9, 0x18
-    addi r9, r9, 0xc
-    lwz r10, 0x0(r31)
-    lfsx f0, r10, r9
-    addi r9, r9, 0xc
-    lfsx f1, r10, r11
-    fsubs f0, f1, f0
-    stfsx f0, r31, r6
-    lwz r7, 0x0(r31)
-    lfsx f1, r7, r5
-    lfsx f0, r7, r6
-    fsubs f0, f1, f0
-    stfsx f0, r31, r4
-    lwz r7, 0x0(r31)
-    lfsx f1, r7, r3
-    lfsx f0, r7, r4
-    fsubs f0, f1, f0
-    stfsx f0, r31, r0
-    bdnz WarpZone_CalcEdgeVectors_L_800A99EC
-    lfs f3, 0xc(r31)
-    lfs f2, 0x8(r31)
-    lfs f1, 0x4(r31)
-    lfs f0, lbl_806D4DE8(r2)
-    stfs f1, 0x34(r31)
-    stfs f2, 0x38(r31)
-    stfs f3, 0x3c(r31)
-    lfs f2, 0x34(r31)
-    lfs f1, 0x38(r31)
-    lfs f3, 0x3c(r31)
-    fmuls f2, f2, f2
-    fmuls f1, f1, f1
-    fmuls f3, f3, f3
-    fadds f1, f2, f1
-    fadds f4, f3, f1
-    fcmpo cr0, f4, f0
-    ble WarpZone_CalcEdgeVectors_L_800A9B64
-    frsqrte f1, f4
-    lfd f3, lbl_806D4E08(r2)
-    lfd f2, lbl_806D4E10(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f4, f0
-    frsp f0, f0
-    stfs f0, 0xc(r1)
-    lfs f4, 0xc(r1)
-    WarpZone_CalcEdgeVectors_L_800A9B64:
-    lfs f0, lbl_806D4DE8(r2)
-    fcmpo cr0, f4, f0
-    cror eq, lt, eq
-    bne WarpZone_CalcEdgeVectors_L_800A9B84
-    stfs f0, 0x3c(r31)
-    stfs f0, 0x38(r31)
-    stfs f0, 0x34(r31)
-    b WarpZone_CalcEdgeVectors_L_800A9BB0
-    WarpZone_CalcEdgeVectors_L_800A9B84:
-    lfs f1, lbl_806D4E20(r2)
-    lfs f0, 0x34(r31)
-    fdivs f1, f1, f4
-    fmuls f0, f0, f1
-    stfs f0, 0x34(r31)
-    lfs f0, 0x38(r31)
-    fmuls f0, f0, f1
-    stfs f0, 0x38(r31)
-    lfs f0, 0x3c(r31)
-    fmuls f0, f0, f1
-    stfs f0, 0x3c(r31)
-    WarpZone_CalcEdgeVectors_L_800A9BB0:
-    lwz r3, 0x0(r31)
-    lfs f0, lbl_806D4DE8(r2)
-    lfs f2, 0x3c(r3)
-    lfs f1, 0x30(r3)
-    fsubs f1, f2, f1
-    stfs f1, 0x40(r31)
-    lwz r3, 0x0(r31)
-    lfs f2, 0x40(r3)
-    lfs f1, 0x34(r3)
-    fsubs f1, f2, f1
-    stfs f1, 0x44(r31)
-    lwz r3, 0x0(r31)
-    lfs f2, 0x44(r3)
-    lfs f1, 0x38(r3)
-    fsubs f1, f2, f1
-    stfs f1, 0x48(r31)
-    lfs f2, 0x40(r31)
-    lfs f1, 0x44(r31)
-    lfs f3, 0x48(r31)
-    fmuls f2, f2, f2
-    fmuls f1, f1, f1
-    fmuls f3, f3, f3
-    fadds f1, f2, f1
-    fadds f4, f3, f1
-    fcmpo cr0, f4, f0
-    ble WarpZone_CalcEdgeVectors_L_800A9C64
-    frsqrte f1, f4
-    lfd f3, lbl_806D4E08(r2)
-    lfd f2, lbl_806D4E10(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f4, f0
-    frsp f0, f0
-    stfs f0, 0x8(r1)
-    lfs f4, 0x8(r1)
-    WarpZone_CalcEdgeVectors_L_800A9C64:
-    lfs f0, lbl_806D4DE8(r2)
-    fcmpo cr0, f4, f0
-    cror eq, lt, eq
-    bne WarpZone_CalcEdgeVectors_L_800A9C84
-    stfs f0, 0x48(r31)
-    stfs f0, 0x44(r31)
-    stfs f0, 0x40(r31)
-    b WarpZone_CalcEdgeVectors_L_800A9CB0
-    WarpZone_CalcEdgeVectors_L_800A9C84:
-    lfs f1, lbl_806D4E20(r2)
-    lfs f0, 0x40(r31)
-    fdivs f1, f1, f4
-    fmuls f0, f0, f1
-    stfs f0, 0x40(r31)
-    lfs f0, 0x44(r31)
-    fmuls f0, f0, f1
-    stfs f0, 0x44(r31)
-    lfs f0, 0x48(r31)
-    fmuls f0, f0, f1
-    stfs f0, 0x48(r31)
-    WarpZone_CalcEdgeVectors_L_800A9CB0:
-    lwz r0, 0x24(r1)
-    mr r3, r31
-    lwz r31, 0x1c(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma cplusplus on
+struct WarpEdgeVec {
+    float x, y, z;
+    WarpEdgeVec();
+    ~WarpEdgeVec();
+};
+
+struct WarpZoneObj {
+    WarpNode *node;      /* 0x00 */
+    WarpEdgeVec edge[4]; /* 0x04 */
+    Vec3f normal;        /* 0x34 */
+    Vec3f dir;           /* 0x40 */
+    int pad4C;           /* 0x4C */
+    WarpZoneObj(WarpNode *n);
+};
+
+static inline void WarpZone_SetVec(Vec3f *v, float x, float y, float z) {
+    v->x = x;
+    v->y = y;
+    v->z = z;
 }
+
+static inline void WarpZone_Normalize(Vec3f *v) {
+    float len = MathInline_sqrtf(v->x * v->x + v->y * v->y + v->z * v->z);
+    if (len <= 0.0f) {
+        v->z = 0.0f;
+        v->y = 0.0f;
+        v->x = 0.0f;
+    } else {
+        float inv = 1.0f / len;
+        v->x *= inv;
+        v->y *= inv;
+        v->z *= inv;
+    }
+}
+
+WarpZoneObj::WarpZoneObj(WarpNode *n) : node(n) {
+    int i;
+    for (i = 0; i < 4; i++) {
+        int j = (i + 1) % 4;
+        edge[i].x = node->corner[j].x - node->corner[i].x;
+        edge[i].y = node->corner[j].y - node->corner[i].y;
+        edge[i].z = node->corner[j].z - node->corner[i].z;
+    }
+    WarpZone_SetVec(&normal, edge[0].x, edge[0].y, edge[0].z);
+    WarpZone_Normalize(&normal);
+    dir.x = node->exitAim.x - node->exitPos.x;
+    dir.y = node->exitAim.y - node->exitPos.y;
+    dir.z = node->exitAim.z - node->exitPos.z;
+    WarpZone_Normalize(&dir);
+}
+#pragma cplusplus off
 
 void *dtor_800A9CC8(void *this, short flag) {
     if (this != 0) {

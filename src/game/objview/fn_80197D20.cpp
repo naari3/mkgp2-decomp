@@ -12,6 +12,7 @@ struct PartTable {
     void *data;
     PartTable(const void *, int);
 };
+// Each particle record starts with its active flag.
 struct Particle {
     unsigned char active;
     unsigned char rest[0x23];
@@ -29,16 +30,36 @@ struct P_fn_80197D20 : clMapEffectParts {
     P_fn_80197D20();
     virtual ~P_fn_80197D20();
 };
+// Original shared resource pool: bounds, RTTI names, messages, model name.
+extern "C" const Vec3f lbl_8037DA90[2][5] = {
+  {
+    {154.16258239746094f, 0.0f, -3856.409423828125f},
+    {2851.61767578125f, 0.0f, -3856.40966796875f},
+    {2851.617431640625f, 0.0f, -2856.40966796875f},
+    {154.16261291503906f, 0.0f, -2856.409423828125f},
+    {0.0f, 0.0f, 0.0f}
+  },
+  {
+    {2431.533203125f, 0.0f, -3633.733642578125f},
+    {3803.733154296875f, 0.0f, -4088.46630859375f},
+    {4258.4658203125f, 0.0f, -2716.266357421875f},
+    {2886.265869140625f, 0.0f, -2261.53369140625f},
+    {0.0f, 0.0f, 0.0f}
+  }
+};
+extern "C" const char lbl_8037DB08[9] = "clWCSnow";
+extern "C" const char lbl_8037DB14[17] = "clMapEffectParts";
+extern "C" const char lbl_8037DB28[29] = " DeleteMapEffect : clWCSnow\n";
+extern "C" const char lbl_8037DB48[29] = " CreateMapEffect : clWCSnow\n";
+extern "C" const char lbl_8037DB68[12] = "ef_snow.dat";
 extern "C" {
-extern const char lbl_8037DA90[];
 extern const float lbl_806D95F0;
 void clNormal3D_SetFlags(clNormal3D *, unsigned int, int);
 void *FUN_8003b120(unsigned long);
 }
 P_fn_80197D20::P_fn_80197D20() {
-    const char *data = lbl_8037DA90;
     int i;
-    DebugPrintf(data + 0xB8);
+    DebugPrintf(lbl_8037DB48);
     model = 0;
     table = 0;
     particles = 0;
@@ -52,9 +73,9 @@ P_fn_80197D20::P_fn_80197D20() {
     x28 = 0;
     x2c = 0;
     x30 = 0;
-    model = new clNormal3D(data + 0xD8, 1);
+    model = new clNormal3D(lbl_8037DB68, 1);
     clNormal3D_SetFlags(model, 0x40000000, 0);
-    table = new PartTable(data, 2);
+    table = new PartTable(lbl_8037DA90, 2);
     particles = (Particle *)FUN_8003b120(50 * sizeof(Particle));
     for (i = 0; i < 50; i++) {
         particles[i].active = 0;

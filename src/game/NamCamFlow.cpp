@@ -1,5 +1,5 @@
-/* Partial native reconstruction of the indivisible 801F2B70 EH group.
- * Unimplemented methods remain in the target fallback; keep NonMatching. */
+/* Native reconstruction of the indivisible 801F2B70 EH group.
+ * Several methods remain non-exact; keep NonMatching. */
 #include "game/NamCamFlow_private.h"
 
 extern "C" void fn_801F2B70(NamCamFlow *self) {
@@ -228,4 +228,191 @@ NamCamScene::NamCamScene(int whichPlayer, int mode) : NamCamBase(whichPlayer),
         fn_801F93EC(text + 2, lbl_803BE55C[2], lbl_803BE55C[3]);
         TexMgr_SetTexture(text + 2, lbl_806DA9EC[1]);
     }
+}
+
+#include "game/NamCamFlow_missing_private.h"
+
+NamCamList::~NamCamList() {
+    fn_801F4D3C((FlowSceneList *)this);
+    entries.EraseAll();
+}
+NamCamListImpl::~NamCamListImpl() {
+    fn_801F4D3C((FlowSceneList *)this);
+}
+
+extern "C" void fn_801F2BC8(NamCamFlow *self) {
+    if (self->finished) return;
+    NamCamPlayerInput *input = InputMgr_GetPlayer(GetInputManager(), 0);
+    NamCamSyncState *sync;
+    switch (self->state) {
+    case 0:
+        sync = fn_801DAEC0();
+        sync->state = 1;
+        self->fade->Step();
+        if (self->fade->Done()) self->state = 1;
+        break;
+    case 1:
+        fn_801F32BC(self);
+        break;
+    case 2:
+        sync = fn_801DAEC0();
+        sync->state = 4;
+        self->fade->Step();
+        if (self->fade->Done()) {
+            self->timer = lbl_806DA858;
+            self->state = 3;
+            self->color = 0;
+        }
+        break;
+    case 3:
+        sync = fn_801DAEC0();
+        sync->state = 0;
+        if (self->timer > 0) --self->timer;
+        if (input->Pressed(0x2500) || self->timer <= 0) {
+            SetSyncTarget(20);
+            self->state = 4;
+        }
+        break;
+    case 4:
+        if (IsSyncReached()) self->state = 5;
+        break;
+    case 5:
+        if (self->camera == 1) {
+            GX_BeginDraw();
+            GXTexModeSync();
+            int width = lbl_80598A60.width;
+            int height = lbl_80598A60.height;
+            DrawNamCamImage(GetDisplayContext(GetDisplayBufferIndex()),
+                self->capture->buffers.p->pixels, 320, 240, 6,
+                (unsigned short)((int)lbl_806DA5B4 - width),
+                (unsigned short)((int)lbl_806DA5B8 - height),
+                (unsigned short)((int)lbl_806DA5BC - width),
+                (unsigned short)((int)lbl_806DA5C0 - height), 128, 128, 4);
+            GX_EndDraw(0);
+            if (self->camera == 1) ResetIOPorts();
+        }
+        self->fade->Set(0, 255, 22);
+        self->state = 6;
+        break;
+    case 6:
+        self->fade->Step();
+        if (self->fade->Done()) self->state = 7;
+        break;
+    case 7:
+        self->finished = 1;
+        self->state = -1;
+        break;
+    }
+    {
+        ResCtrl rc;
+        rc.mode = 2;
+        rc.SetSize(lbl_806DA580, lbl_806DA584);
+        rc.Show(lbl_806DA588, lbl_806DA58C, lbl_806DA590);
+        rc.SetColor(0x1BFFFF);
+        fn_8011FAFC(&rc, 0);
+        for (int i = 0; i < 4; ++i) {
+            fn_80121E10(&rc);
+            rc.resId = 0x50B;
+            rc.Show(lbl_803BE3C4[i][0], lbl_803BE3C4[i][1], lbl_806DA590);
+            fn_8011FAFC(&rc, 0);
+            fn_80121E10(&rc);
+            rc.resId = 0x50C;
+            rc.Show(lbl_803BE3E4[i][0], lbl_803BE3E4[i][1], lbl_806DA590);
+            fn_8011FAFC(&rc, 0);
+        }
+    }
+    fn_801F36D0(self);
+    fn_801F3198(self);
+    if (self->state >= 0 && self->state <= 2) {
+        NamCamCapture *capture = self->capture;
+        if (!lbl_806D1964) { lbl_806D1960 = 0; lbl_806D1964 = 1; }
+        if (lbl_806D1960 > 0) --lbl_806D1960;
+        if (lbl_806D1960 <= 0) {
+            void *handle;
+            unsigned char descriptor[12];
+            if (NamCam_GetImageHandle(&handle, 0) == 1) {
+                if (NamCam_LoadImage(handle, capture->pixels, descriptor) == 1) {
+                    NamCamBuffers *buffer = capture->buffers.p;
+                    void *pixels = capture->pixels;
+                    memcpy(buffer->descriptor, descriptor, 12);
+                    memcpy(buffer->pixels, pixels, buffer->size);
+                    buffer = capture->buffers.p;
+                    NamCamImage *image = capture->image.p;
+                    pixels = buffer->pixels;
+                    unsigned short *size = (unsigned short *)buffer->descriptor;
+                    DCFlushRange(pixels, GXGetTexBufferSize(size[2], size[3], 6, 0, 0));
+                    GXInitTexObj(image->texture, pixels, size[2], size[3],
+                        6, 0, 0, 0);
+                    GXInitTexObjLOD(image->texture, 0, 0,
+                        lbl_806DA59C, lbl_806DA59C, lbl_806DA59C, 0, 0, 0);
+                    image->ready = 1;
+                }
+                capture->ready = 1;
+            }
+            lbl_806D1960 = 0;
+        }
+    }
+    self->list->Update();
+    ResCtrl overlay;
+    unsigned int color = self->color | (unsigned char)self->fade->Value();
+    fn_80121E10(&overlay);
+    overlay.mode = 2;
+    overlay.SetSize(lbl_806DA580, lbl_806DA584);
+    overlay.Show(lbl_806DA588, lbl_806DA58C, lbl_806DA590);
+    overlay.SetColor(color);
+    fn_8011FAFC(&overlay, 7);
+}
+
+extern "C" void fn_801F43F8(NamCamImage *self) {
+    if (!self->ready) return;
+    float width = lbl_80598A60.width;
+    float height = lbl_80598A60.height;
+    int left = (int)(lbl_806DA5E0 - width);
+    int right = (int)(lbl_806DA5E0 + width);
+    int top = (int)(lbl_806DA5E4 - height);
+    int bottom = (int)(lbl_806DA5E4 + height);
+    int x0 = (int)(lbl_806DA5E8 + (float)-(160 - left));
+    int x1 = (int)(lbl_806DA5E8 + (float)(160 - right));
+    int y0 = (int)(lbl_806DA5EC + (float)-(120 - top));
+    int y1 = (int)(lbl_806DA5EC + (float)(120 - bottom));
+    int u0 = (int)(lbl_806DA5F0 * (float)left);
+    int u1 = (int)(lbl_806DA5F0 * (lbl_806DA588 - (float)right));
+    int v0 = (int)(lbl_806DA5F4 * (float)top);
+    int v1 = (int)(lbl_806DA5F4 * (lbl_806DA58C - (float)bottom));
+    lbl_804E52E0[0] = x0; lbl_804E52E0[1] = y0;
+    lbl_804E52E0[2] = x1; lbl_804E52E0[3] = y0;
+    lbl_804E52E0[4] = x1; lbl_804E52E0[5] = y1;
+    lbl_804E52E0[6] = x0; lbl_804E52E0[7] = y1;
+    lbl_804E52C0[0] = u0; lbl_804E52C0[1] = v0;
+    lbl_804E52C0[2] = u1; lbl_804E52C0[3] = v0;
+    lbl_804E52C0[4] = u1; lbl_804E52C0[5] = v1;
+    lbl_804E52C0[6] = u0; lbl_804E52C0[7] = v1;
+    fn_801F6804(self->display.p);
+    fn_801F6588(0);
+    GXSetZCompLoc(0);
+    GXSetZMode(0, 7, 1);
+    GXLoadTexObj(self->texture, 0);
+    GXSetNumTexGens(1);
+    GXSetTexCoordGen2(0, 1, 4, 60, 0, 125);
+    GXSetNumChans(0);
+    GXSetNumTevStages(1);
+    GXSetTevOrder(0, 0, 0, 255);
+    GXSetTevOp(0, 3);
+    GXClearVtxDesc();
+    GXSetVtxAttrFmt(0, 9, 0, 3, 0);
+    GXSetVtxAttrFmt(0, 13, 1, 2, 8);
+    GXSetVtxDesc(9, 1);
+    GXSetVtxDesc(13, 2);
+    GXSetArray(13, lbl_804E52C0, 4);
+    GXBegin(128, 0, 4);
+    short halfWidth = (short)(lbl_806DA594 * lbl_806D0014);
+    short halfHeight = (short)(lbl_806DA5F8 * lbl_806D0014);
+    short x = lbl_806D0010, y = lbl_806D0012;
+    NamCamPosition(x - halfWidth, y - halfHeight); NamCamTexCoord(0);
+    NamCamPosition(x + halfWidth, y - halfHeight); NamCamTexCoord(1);
+    NamCamPosition(x + halfWidth, y + halfHeight); NamCamTexCoord(2);
+    NamCamPosition(x - halfWidth, y + halfHeight); NamCamTexCoord(3);
+    GXSetZCompLoc(1);
+    GXSetZMode(1, 3, 1);
+    fn_801F6790(self->display.p);
 }

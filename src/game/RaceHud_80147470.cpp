@@ -197,7 +197,6 @@ void TexMgr_Init(void *t);
 void TexMgr_SetTexture(struct TextManager *t, const char *s, ...);
 extern int g_cupId;
 extern unsigned int dtor_800869D0[];
-extern struct TexIdPair lbl_80362790[];
 extern const float lbl_806D7C2C;
 void *GetInputManager(void);
 class HudInput *InputMgr_GetPlayer(void *mgr, int idx);
@@ -255,16 +254,13 @@ extern void fn_801F8E54();
 extern unsigned int lbl_8048ECF8[];
 extern unsigned int lbl_8048ED10[];
 extern unsigned int lbl_8048F020[];
-extern void Clamp_Int();
-extern void GetCoinCount();
-extern void fn_8013D634();
-extern void fn_8013D738();
+int Clamp_Int(int v, int lo, int hi);
+int GetCoinCount(void);
+void fn_8013D634(void *m, float x, float y, float z);
+void fn_8013D738(void *m, float a, float b);
 extern void fn_8013D800();
 extern void fn_80140874();
-extern void fn_80217F78();
-extern void fn_802182BC();
-extern unsigned int lbl_806D7C98;
-extern unsigned int lbl_80362778[];
+extern const float lbl_806D7C98;
 extern void dtor_801419C8();
 extern void DebugPrintf();
 extern void __construct_array();
@@ -570,7 +566,6 @@ asm void fn_80147CE8(void);
 void fn_80147EE8(StepHolder *self);
 void fn_8014816C(StepHolder *self);
 struct RecordPanel *fn_80148648(struct RecordPanel *self, short flag);
-asm void fn_80148810(void);
 asm void fn_80148A44(void);
 void *dtor_8014917C(void *self, short flag);
 void fn_801491DC(VObj *p);
@@ -618,7 +613,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80147CE8[8
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; void *f29; unsigned int f30; unsigned int f31; void *f32; unsigned int f33; void *f34; unsigned int f35; unsigned int f36; void *f37; unsigned int f38; unsigned int f39; void *f40; unsigned int f41; void *f42; unsigned int f43; unsigned int f44; void *f45; unsigned int f46; unsigned int f47; void *f48; unsigned int f49; unsigned int f50; void *f51; unsigned int f52; unsigned int f53; void *f54; unsigned int f55; unsigned int f56; void *f57; unsigned int f58; } extab_fn_80148810 = { 0x280A0000, 0x00000080, 0x00000078, 0x00000094, 0x00000070, 0x000000A0, 0x0000008C, 0x000000B4, 0x00000084, 0x000000C0, 0x000000AC, 0x000000CC, 0x000000A4, 0x000000E0, 0x000000AC, 0x000000EC, 0x000800BC, 0x00000130, 0x000000D0, 0x00000144, 0x000000C8, 0x00000158, 0x000000D0, 0x0000016C, 0x000000E0, 0x00000180, 0x001A00D0, 0x00000000, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_801419C8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x00000024, (void *)&dtor_80149320, 0x8680001F, 0x00000000, (void *)&dtor_801419C8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x00000028, (void *)&dtor_80149320, 0x0100008C, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x010000AC, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x00000098, (void *)&dtor_80149244, 0x010000AC, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x010000D0 };
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; void *f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; void *f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; void *f20; } extab_fn_80148A44 = { 0x388A0000, 0x00000090, 0x00000040, 0x000000B0, 0x0000002C, 0x000000C4, 0x018F0020, 0x00000000, 0x0780001F, 0x00000A68, (void *)&dtor_8014917C, 0x0980001F, 0x000003D8, 0x00000003, 0x00000230, (void *)&dtor_800869D0, 0x8980001F, 0x00000010, 0x0000000B, 0x00000058, (void *)&dtor_80082960 };
 
@@ -677,9 +671,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80148810 = {
-    (void *)&fn_80148810, 0x00000234, (void *)&extab_fn_80148810
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80148A44 = {
     (void *)&fn_80148A44, 0x00000738, (void *)&extab_fn_80148A44
@@ -740,6 +731,7 @@ inline ResTrio *ResTrio_Destroy(ResTrio *self, short flag) {
 }
 
 struct HudResSet {
+    HudResSet(int coins, int layer, int mode);
     int state;
     int layer;
     char pad8[8];
@@ -751,17 +743,18 @@ struct HudResSet {
         __destroy_arr(texts, (void *)dtor_800869D0, 0x230, 3);
         __destroy_arr(res, (void *)dtor_80082960, 0x58, 11);
     }
-    static void operator delete(void *p) {
-        MemoryManager_TimedFree(p);
-    }
 };
 
 struct HudResHolder {
     HudResSet *p;
+    HudResHolder(HudResSet *q) : p(q) {}
+    ~HudResHolder() throw();
 };
 
 struct PtrHolder {
     VObj *p;
+    PtrHolder(VObj *q) : p(q) {}
+    ~PtrHolder() throw();
 };
 
 inline HudResHolder *HudResHolder_Destroy(HudResHolder *self, short flag) throw() {
@@ -1124,6 +1117,23 @@ struct TexIdPair {
     int a;
     int b;
 };
+
+/* .rodata 0x80362778..0x80362858 (record HUD). */
+extern const float lbl_80362778[3] = {0.0f, 0.0f, 0.0f};
+static const float sRecordModelPos[3] = {0.0f, 0.0f, -5.0f};
+extern const TexIdPair lbl_80362790[8] = {
+    {0, 0}, {0x8D, 0x92}, {0x8E, 0x93}, {0x8E, 0x93},
+    {0x8F, 0x94}, {0, 0}, {0x8B, 0x90}, {0x8C, 0x91},
+};
+static const unsigned short sRecordDigitTex[10] = {
+    0x23E7, 0x23E9, 0x23EB, 0x23ED, 0x23EF, 0x23F1, 0x23F3, 0x23F5, 0x23F7, 0x23F9,
+};
+extern const char lbl_803627E4[] = "clCSResultChallenge";
+extern const char lbl_803627F8[] = "clYTaskInterface";
+extern const char lbl_8036280C[] = "clCTaskInterface";
+static const char sRecordCoinModel[] = "mario_coin.dat";
+static const char sRecordKiraModel[] = "k_kira13.dat";
+static const char sRecordParamFmt[] = "Param : %d, Coin : %d\n";
 
 extern "C" void fn_801477BC(void) {
     PreloadResource(0x16D8);
@@ -1798,158 +1808,85 @@ public:
     virtual ~HudTask();
 };
 
-extern "C" asm void fn_80148810(void) { /* 0x80148810 size:0x234 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    lis r8, lbl_8048ED10@ha
-    lfs f0, lbl_806D7C2C(r2)
-    stw r0, 0x24(r1)
-    lis r10, lbl_80362778@ha
-    stmw r27, 0xc(r1)
-    mr r31, r3
-    lis r3, lbl_8048ECF8@ha
-    mr r29, r4
-    addi r0, r3, lbl_8048ECF8@l
-    mr r9, r31
-    mr r11, r9
-    lis r3, lbl_8048F020@ha
-    li r9, 0x0
-    mr r28, r6
-    addi r30, r10, lbl_80362778@l
-    stw r0, 0x0(r31)
-    addi r0, r3, lbl_8048F020@l
-    li r3, 0x20
-    stw r7, 0x4(r11)
-    addi r7, r8, lbl_8048ED10@l
-    stw r9, 0x8(r11)
-    stw r9, 0xc(r11)
-    stw r7, 0x0(r11)
-    stw r0, 0x0(r31)
-    stb r5, 0x10(r31)
-    stw r29, 0x14(r31)
-    stw r9, 0x18(r31)
-    stfs f0, 0x1c(r31)
-    stw r28, 0x20(r31)
-    bl Alloc
-    mr. r27, r3
-    beq fn_80148810_L_801488A4
-    addi r4, r30, 0xa8
-    li r5, 0x0
-    bl fn_8013D800
-    fn_80148810_L_801488A4:
-    stw r27, 0x24(r31)
-    li r3, 0x20
-    bl Alloc
-    mr. r27, r3
-    beq fn_80148810_L_801488C4
-    addi r4, r30, 0xb8
-    li r5, 0x1
-    bl fn_8013D800
-    fn_80148810_L_801488C4:
-    stw r27, 0x28(r31)
-    li r3, 0x24
-    bl Alloc
-    mr. r27, r3
-    beq fn_80148810_L_801488DC
-    bl fn_80140874
-    fn_80148810_L_801488DC:
-    stw r27, 0x90(r31)
-    li r0, 0x0
-    li r3, 0xb70
-    stw r0, 0x94(r31)
-    bl Alloc
-    mr. r27, r3
-    beq fn_80148810_L_8014891C
-    bl GetCoinCount
-    li r4, 0x0
-    li r5, 0xf
-    bl Clamp_Int
-    mr r4, r3
-    mr r3, r27
-    mr r5, r28
-    mr r6, r29
-    bl fn_80148A44
-    fn_80148810_L_8014891C:
-    stw r27, 0x98(r31)
-    li r0, 0x0
-    stb r0, 0x9c(r31)
-    lbz r0, 0x10(r31)
-    cmplwi r0, 0x1
-    bne fn_80148810_L_8014895C
-    lwz r29, 0x14(r31)
-    li r3, 0x20
-    bl Alloc
-    mr. r27, r3
-    beq fn_80148810_L_80148954
-    mr r4, r29
-    li r5, 0x0
-    bl fn_80217F78
-    fn_80148810_L_80148954:
-    stw r27, 0x94(r31)
-    b fn_80148810_L_80148980
-    fn_80148810_L_8014895C:
-    lwz r29, 0x14(r31)
-    li r3, 0x14
-    bl Alloc
-    mr. r27, r3
-    beq fn_80148810_L_8014897C
-    mr r4, r29
-    li r5, 0x0
-    bl fn_802182BC
-    fn_80148810_L_8014897C:
-    stw r27, 0x94(r31)
-    fn_80148810_L_80148980:
-    lwz r3, 0x24(r31)
-    lfs f1, lbl_806D7C2C(r2)
-    lfs f2, lbl_806D7C38(r2)
-    bl fn_8013D738
-    lfs f1, lbl_806D7C8C(r2)
-    lwz r3, 0x24(r31)
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_8013D608
-    addi r28, r30, 0xc
-    lwz r3, 0x24(r31)
-    lfs f1, 0xc(r30)
-    addi r29, r28, 0x8
-    lfs f2, 0x4(r28)
-    lfs f3, 0x8(r28)
-    bl fn_8013D634
-    lwz r3, 0x28(r31)
-    lfs f1, lbl_806D7C2C(r2)
-    lfs f2, lbl_806D7C38(r2)
-    bl fn_8013D738
-    lfs f1, lbl_806D7C8C(r2)
-    lwz r3, 0x28(r31)
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_8013D608
-    lwz r3, 0x28(r31)
-    lfs f1, 0xc(r30)
-    lfs f2, 0x4(r28)
-    lfs f3, 0x0(r29)
-    bl fn_8013D634
-    lfs f0, lbl_806D7C7C(r2)
-    li r0, -0x1
-    lfs f1, lbl_806D7C98(r2)
-    mr r3, r31
-    stfs f0, 0x2c(r31)
-    lfs f0, lbl_806D7C2C(r2)
-    stfs f1, 0x30(r31)
-    stfs f0, 0x38(r31)
-    stfs f0, 0x3c(r31)
-    stw r0, 0x4c(r31)
-    stw r0, 0x5c(r31)
-    stw r0, 0x6c(r31)
-    stw r0, 0x7c(r31)
-    stw r0, 0x8c(r31)
-    lmw r27, 0xc(r1)
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+class RecSprite : public VObj {
+public:
+    char pad4[0x1C];
+    RecSprite(const char *file, int flag);
+};
+
+struct RecFx {
+    char pad0[0x24];
+    RecFx();
+};
+
+class RecCounterCard : public RecordCounter {
+public:
+    char pad10[0x10];
+    RecCounterCard(int layer, int flag);
+    static RecordCounter *Create(int layer) {
+        return new RecCounterCard(layer, 0);
+    }
+};
+
+class RecCounterFree : public RecordCounter {
+public:
+    char pad10[0x4];
+    RecCounterFree(int layer, int flag);
+    static RecordCounter *Create(int layer) {
+        return new RecCounterFree(layer, 0);
+    }
+};
+
+class RecordHud : public HudTask {
+public:
+    unsigned char active;
+    int layer;
+    int state;
+    float t;
+    int mode;
+    PtrHolder m24;
+    PtrHolder m28;
+    float cx;
+    float cy;
+    char pad34[4];
+    float rot;
+    float rotSpeed;
+    Spark sparks[5];
+    RecFx *f90;
+    RecordCounter *counter;
+    HudResHolder step;
+    unsigned char glow;
+    RecordHud(int layer, unsigned char active, int mode, int id);
+    virtual ~RecordHud();
+};
+
+#pragma use_lmw_stmw on
+RecordHud::RecordHud(int ly, unsigned char act, int md, int id)
+    : HudTask(id), active(act), layer(ly), state(0), t(lbl_806D7C2C), mode(md),
+      m24(new RecSprite(sRecordCoinModel, 0)), m28(new RecSprite(sRecordKiraModel, 1)),
+      f90(new RecFx), counter(0), step(new HudResSet(Clamp_Int(GetCoinCount(), 0, 15), md, ly)) {
+    int i;
+    glow = 0;
+    if (active == 1) {
+        counter = RecCounterCard::Create(layer);
+    } else {
+        counter = RecCounterFree::Create(layer);
+    }
+    fn_8013D738(m24.p, lbl_806D7C2C, lbl_806D7C38);
+    fn_8013D608(m24.p, lbl_806D7C8C, lbl_806D7C8C, lbl_806D7C8C);
+    fn_8013D634(m24.p, sRecordModelPos[0], sRecordModelPos[1], sRecordModelPos[2]);
+    fn_8013D738(m28.p, lbl_806D7C2C, lbl_806D7C38);
+    fn_8013D608(m28.p, lbl_806D7C8C, lbl_806D7C8C, lbl_806D7C8C);
+    fn_8013D634(m28.p, sRecordModelPos[0], sRecordModelPos[1], sRecordModelPos[2]);
+    cx = lbl_806D7C7C;
+    cy = lbl_806D7C98;
+    rot = lbl_806D7C2C;
+    rotSpeed = lbl_806D7C2C;
+    for (i = 0; i < 5; i++) {
+        sparks[i].life = -1;
+    }
 }
+#pragma use_lmw_stmw reset
 
 extern "C" asm void fn_80148A44(void) { /* 0x80148A44 size:0x738 */
     nofralloc
