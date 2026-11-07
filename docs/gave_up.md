@@ -65,6 +65,7 @@ all of these.
 | `fn_8021B68C` (TeamIconRow::Update) | game/anon_8021B568_nm1 | 98.84 | cursor/t swap (target t r31, `this+i*4` r30) and one `cmpw` operand order in inline `SlotTeam` | 8 variants incl. hand-inlined SlotTeam, 15 min permuter |
 | `PCBCheck_ProcessLinks` | game/PCBCheckProcess | 99.90 | 10 lines: base/slot registers swapped, one ClearSlotData loop counter (r24 vs r29) | 178 -> 10 lines in d36e695; 20 min permuter |
 | `fn_80219538` (MinimapHud::UpdateMarkers) | game/anon_80218F40_nm1_tail | 85.31 | target keeps px/pz in stack slots (0xc/0x8, stored at entry, reloaded after sin/cos) while every ref/pointer/array/struct/non-inline variant gets promoted to f28/f29; only `volatile` reproduces the frame (174 -> 109 lines with locals declared at the top), rest is GPR coloring | pragma sweep, CW 1.3.2-2.7 same |
+| `HSD_SetupChannelMode` | sysdolphin/baselib/state | 85.44 | target keeps `chan_table` in r30 but never folds `&chans[k]` into the displacement (`addi r4, r30, 0x0; stw r3, 0x20(r4)`, `addi r5, r30, 0x30; addi r5, r5, 0xc`); using `chan_table` directly gives that shape but rematerializes lis/addi each time; local pointer / `&chan_table[0]` / const / register / index vars / inline-helper all fold | CW 1.0-2.7, 6 opt pragmas |
 | `fn_8024AD8C` | game/CardSetupFlowInitial | 95.88 | `lwz lbl_806D1AB0` scheduling | |
 | `fn_8022BBC8` | game/EnemyFace_nm3 | 98.72 | scheduling | |
 | `clFlowCourse_Dtor` | game/clFlowCourse | 99.62 | `selected % 2` register swap | |
