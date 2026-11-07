@@ -333,230 +333,79 @@ struct clFlowItem : clFlowBase {
  * groups, the icon pack, and the roulette grid cells, then hand the item
  * display and message window their draw passes.
  *
- * asm_fn park (2026-07-19): the C++ body below reaches 96.6% with a
- * byte-identical instruction stream; the residue is pure callee-saved
- * register coloring (walker webs refuse to coalesce with their dying base
- * pointers, decl-order/member-fn/destructive-walk probes all plateau).
- * Parked per the 6-cycle retreat rule; promote later if the coloring
- * lever is found. Manual extab emission + tools/extab_order.json keeps
- * the target extab/extabindex layout (Draw first, then the three
- * auto-emitted siblings).
+ * Each sub-object draw is its own inline (IconPack / ItemGrid / ItemSelect):
+ * the strength-reduced walker of a loop that is the last use of the inline's
+ * parameter then reuses the parameter's register (no `mr` copy), as in the
+ * target. Loop counters of later loops are separately scoped (`int k`): one
+ * shared `i` merges their webs and shifts the callee-saved coloring.
+ * tools/extab_order.json keeps the target extab/extabindex layout.
  */
-#if 0
-void clFlowItem::Draw() {
-    ItemGridState *grid;
-    void *ctx;
-    int j;
-    int i;
-    ItemSelectState *sel;
-    IconPack *icons;
-    f32 th;
-
-    for (i = 0; i < 2; i++) {
-        if (this->bgSpr[i]) {
-            fn_801A0004(*this->bgSpr[i]);
+static inline void IconPack_Draw(IconPack *icons) {
+    if (icons->mode < 3) {
+        int i;
+        for (i = 0; i < 4; i++) {
+            if (icons->handles[i]) {
+                fn_801A0004(*(void **)icons->handles[i]);
+            }
+        }
+        void *ctx = fn_801F8E58();
+        for (int k = 0; k < 4; k++) {
+            if (icons->vals[k]) {
+                fn_801F8A34(ctx, icons->vals[k], 6);
+            }
         }
     }
-    sel = this->itemSelection;
+}
+
+static inline void ItemGrid_Draw(ItemGridState *grid) {
+    int i;
+    int j;
+    void *ctx;
+
+    for (i = 0; i < 7; i++) {
+        if (grid->anims[i]) {
+            if (((AnimObj *)*(void **)grid->anims[i])->y > lbl_806DB888) {
+                fn_801A0004(*(void **)grid->anims[i]);
+            }
+        }
+    }
+    ctx = fn_801F8E58();
+    for (j = 0; j < 3; j++) {
+        for (int k = 0; k < 4; k++) {
+            if (grid->cells[j][k]) {
+                fn_801F8A34(ctx, grid->cells[j][k], 6);
+            }
+        }
+    }
+}
+
+static inline void ItemSelect_Draw(ItemSelectState *sel) {
+    int i;
+
     for (i = 0; i < 9; i++) {
         if (sel->groups[i]) {
             fn_801A0004(*sel->groups[i]);
         }
     }
     fn_801F8A34(fn_801F8E58(), sel->aux, 5);
-    icons = sel->icons;
-    if (icons->mode < 3) {
-        for (i = 0; i < 4; i++) {
-            if (icons->handles[i]) {
-                fn_801A0004(*(void **)icons->handles[i]);
-            }
-        }
-        ctx = fn_801F8E58();
-        for (i = 0; i < 4; i++) {
-            if (icons->vals[i]) {
-                fn_801F8A34(ctx, icons->vals[i], 6);
-            }
+    IconPack_Draw(sel->icons);
+}
+
+extern "C" void clFlowItem_Draw(clFlowItem *self) {
+    int i;
+
+    for (i = 0; i < 2; i++) {
+        if (self->bgSpr[i]) {
+            fn_801A0004(*self->bgSpr[i]);
         }
     }
-    grid = this->itemGrid;
-    if (grid) {
-        th = lbl_806DB888;
-        for (i = 0; i < 7; i++) {
-            if (grid->anims[i]) {
-                if (((AnimObj *)*(void **)grid->anims[i])->y > th) {
-                    fn_801A0004(*(void **)grid->anims[i]);
-                }
-            }
-        }
-        ctx = fn_801F8E58();
-        for (j = 0; j < 3; j++) {
-            for (i = 0; i < 4; i++) {
-                if (grid->cells[j][i]) {
-                    fn_801F8A34(ctx, grid->cells[j][i], 6);
-                }
-            }
-        }
+    ItemSelect_Draw(self->itemSelection);
+    if (self->itemGrid) {
+        ItemGrid_Draw(self->itemGrid);
     }
     ItemDisplay_GetOrCreate();
     fn_8020AC34();
     fn_802321F8(ItemMsg_Get());
-}
-#endif
-
-extern "C" asm void clFlowItem_Draw(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; void *f6; } extab_clFlowItem_Draw = { 0x304A0000, 0x000001B0, 0x00040010, 0x00000000, 0x8BC0001A, 0x001EC702, (void *)&MemoryManager_TimedFree };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clFlowItem_Draw = {
-    (void *)&clFlowItem_Draw, 0x000001E8, (void *)&extab_clFlowItem_Draw
-};
-
-extern "C" asm void clFlowItem_Draw(void) { /* 0x802379F8 size:0x1E8 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stfd f31, 0x20(r1)
-    psq_st f31, 0x28(r1), 0, 0
-    stmw r26, 0x8(r1)
-    mr r31, r3
-    li r26, 0x0
-    mr r28, r31
-    clFlowItem_Draw_L_80237A1C:
-    lwz r3, 0x1c(r28)
-    cmplwi r3, 0x0
-    beq clFlowItem_Draw_L_80237A30
-    lwz r3, 0x0(r3)
-    bl fn_801A0004
-    clFlowItem_Draw_L_80237A30:
-    addi r26, r26, 0x1
-    addi r28, r28, 0x4
-    cmpwi r26, 0x2
-    blt clFlowItem_Draw_L_80237A1C
-    lwz r28, 0x18(r31)
-    li r29, 0x0
-    mr r27, r28
-    clFlowItem_Draw_L_80237A4C:
-    lwz r3, 0x4(r27)
-    cmplwi r3, 0x0
-    beq clFlowItem_Draw_L_80237A60
-    lwz r3, 0x0(r3)
-    bl fn_801A0004
-    clFlowItem_Draw_L_80237A60:
-    addi r29, r29, 0x1
-    addi r27, r27, 0x4
-    cmpwi r29, 0x9
-    blt clFlowItem_Draw_L_80237A4C
-    bl fn_801F8E58
-    lwz r4, 0x144(r28)
-    li r5, 0x5
-    bl fn_801F8A34
-    lwz r26, 0x0(r28)
-    lwz r0, 0x38(r26)
-    cmpwi r0, 0x3
-    bge clFlowItem_Draw_L_80237AF0
-    li r28, 0x0
-    mr r27, r26
-    clFlowItem_Draw_L_80237A98:
-    lwz r3, 0x0(r27)
-    cmplwi r3, 0x0
-    beq clFlowItem_Draw_L_80237AAC
-    lwz r3, 0x0(r3)
-    bl fn_801A0004
-    clFlowItem_Draw_L_80237AAC:
-    addi r28, r28, 0x1
-    addi r27, r27, 0x4
-    cmpwi r28, 0x4
-    blt clFlowItem_Draw_L_80237A98
-    bl fn_801F8E58
-    mr r29, r3
-    li r28, 0x0
-    clFlowItem_Draw_L_80237AC8:
-    lwz r4, 0x10(r26)
-    cmplwi r4, 0x0
-    beq clFlowItem_Draw_L_80237AE0
-    mr r3, r29
-    li r5, 0x6
-    bl fn_801F8A34
-    clFlowItem_Draw_L_80237AE0:
-    addi r28, r28, 0x1
-    addi r26, r26, 0x4
-    cmpwi r28, 0x4
-    blt clFlowItem_Draw_L_80237AC8
-    clFlowItem_Draw_L_80237AF0:
-    lwz r27, 0x14(r31)
-    cmplwi r27, 0x0
-    beq clFlowItem_Draw_L_80237B84
-    lfs f31, lbl_806DB888(r2)
-    mr r26, r27
-    li r28, 0x0
-    clFlowItem_Draw_L_80237B08:
-    lwz r3, 0x0(r26)
-    cmplwi r3, 0x0
-    beq clFlowItem_Draw_L_80237B28
-    lwz r3, 0x0(r3)
-    lfs f0, 0x20(r3)
-    fcmpo cr0, f0, f31
-    ble clFlowItem_Draw_L_80237B28
-    bl fn_801A0004
-    clFlowItem_Draw_L_80237B28:
-    addi r28, r28, 0x1
-    addi r26, r26, 0x4
-    cmpwi r28, 0x7
-    blt clFlowItem_Draw_L_80237B08
-    bl fn_801F8E58
-    mr r29, r3
-    li r31, 0x0
-    clFlowItem_Draw_L_80237B44:
-    li r28, 0x0
-    mr r26, r27
-    clFlowItem_Draw_L_80237B4C:
-    lwz r4, 0x20(r26)
-    cmplwi r4, 0x0
-    beq clFlowItem_Draw_L_80237B64
-    mr r3, r29
-    li r5, 0x6
-    bl fn_801F8A34
-    clFlowItem_Draw_L_80237B64:
-    addi r28, r28, 0x1
-    addi r26, r26, 0x4
-    cmpwi r28, 0x4
-    blt clFlowItem_Draw_L_80237B4C
-    addi r31, r31, 0x1
-    addi r27, r27, 0x10
-    cmpwi r31, 0x3
-    blt clFlowItem_Draw_L_80237B44
-    clFlowItem_Draw_L_80237B84:
-    bl ItemDisplay_GetOrCreate
-    bl fn_8020AC34
-    lwz r3, lbl_806D1A88(r13)
-    li r26, 0x0
-    cmplwi r3, 0x0
-    beq clFlowItem_Draw_L_80237BA0
-    b clFlowItem_Draw_L_80237BC0
-    clFlowItem_Draw_L_80237BA0:
-    li r3, 0x5c
-    bl Alloc
-    mr. r30, r3
-    beq clFlowItem_Draw_L_80237BB8
-    li r26, 0x1
-    bl fn_802325FC
-    clFlowItem_Draw_L_80237BB8:
-    stw r30, lbl_806D1A88(r13)
-    mr r3, r30
-    clFlowItem_Draw_L_80237BC0:
-    bl fn_802321F8
-    psq_l f31, 0x28(r1), 0, 0
-    lfd f31, 0x20(r1)
-    lmw r26, 0x8(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
 }
 
 extern "C" {
