@@ -1,5 +1,8 @@
 #include "game/ItemGridInitPrivate.h"
 #pragma use_lmw_stmw on
+static inline int GridFallbackCandidate(int index) {
+    return lbl_803DC174[index];
+}
 static inline void CreateGridTexts(GridInitState *self) {
     for (int row=0;row<3;++row) {
         for (int col=0;col<4;++col) {
@@ -36,12 +39,12 @@ extern "C" GridInitState *ItemGridState_Init(GridInitState *self) {
             id=fn_8023D844(character,fn_8023D7A8(*(int *)(player+0x18c+i*4)));
             if(player[id+0xa8]==0) {
                 for(int j=0;j<3;++j) {
-                    int candidate=lbl_803DC174[j];
+                    int candidate=GridFallbackCandidate(j);
                     unsigned char found=0;
                     for (int k=0;k<3;++k) {
                         if (candidate==ids[k]) { found=1; break; }
                     }
-                    if (!found) {id=lbl_803DC174[j];break;}
+                    if (!found) {id=GridFallbackCandidate(j);break;}
                 }
             }
         } else id=*(int *)(player+0x18c+i*4);
