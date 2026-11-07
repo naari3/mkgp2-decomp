@@ -1780,7 +1780,7 @@ config.libs = [
             Object(NonMatching, "game/WarpZoneVector_Reserve.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/AI_AdjustThunks.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PanelCda40.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/WarpDashMgr_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/WarpDashMgr_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/WarpZone_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/LiveConn.c"),
             Object(Matching, "game/PlaySoundDSP.c", extra_cflags=["-Cpp_exceptions on"]),
