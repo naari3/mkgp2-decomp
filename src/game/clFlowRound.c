@@ -1,70 +1,10 @@
-/* clFlowRound extab-backed unit.
- * Generated from the four target asm groups in address order; each body remains
- * inline asm until individually promoted to C.  Manual extab emits preserve the
- * target extab/extabindex layout for this combined TU.
+/* clFlowRound: the round (race 1-4) select flow of a cup.
+ * A real polymorphic class with RTTI: the ctor stores the vtable between the
+ * clFlowProcess base ctor and the ResCtrl member ctors, and -inline deferred
+ * makes CW pool the compiler-generated vtable with the TU's .data.
+ * Draw and Update stay C/asm functions that the vtable reaches by rename.
  */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/* === extracted from auto_clFlowRound_Draw_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern short GetCourseShortIdByCupAndMirror(int cup, int mirror);
-extern void fn_8011FAFC(void *obj, int layer);
-extern void fn_801A0004(void *spr);
-extern void fn_801A0DF0(void);
-extern void fn_801A0FD4(float r, float g, float b, float a);
-extern void fn_801A10DC(float sx, float sy);
-extern void fn_801A1128(float x, float y);
-extern void fn_801A1174(int id, int layer, int a, int b, int c);
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int g_cupId;
-extern const float lbl_806D9D28;
-extern const float lbl_806D9D4C;
-extern const float lbl_806D9D50;
-extern const float lbl_806D9D54;
-extern const float lbl_806D9D58;
-extern const float lbl_806D9D5C;
-extern const float lbl_806D9D60;
-extern const float lbl_806D9D64;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern short lbl_8049AF8C[];
-extern char lbl_806CFDF8[];
-extern char lbl_806CFE00[];
-extern short lbl_806CFDF0[4];
-extern short lbl_8049AFA0[];
-
-/* --- function index (1 fns, .text 0x801C9C28..0x801C9EAC) ---
- * [  0] 0x801C9C28 size:0x284   global clFlowRound_Draw
- */
-
-/* --- forward decls --- */
-struct clFlowRound;
-void clFlowRound_Draw(struct clFlowRound *self);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_clFlowRound_Draw[8] = {
-    0x18, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clFlowRound_Draw = {
-    (void *)&clFlowRound_Draw, 0x00000284, (void *)extab_clFlowRound_Draw
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
 struct InputState {
     unsigned char pad_00[4];
     unsigned char active;
@@ -73,7 +13,86 @@ struct InputState {
     int value1C;
 };
 
+struct ResCtrl {
+    int resId;
+    int field4, mode, fieldc;
+    unsigned char flag, pad11[3];
+    float x, y, z, width, height, field28, scaleX, scaleY;
+    unsigned int colors[4];
+    unsigned char flipX;
+    unsigned char flipY;
+    char pad46[2];
+    int tail[4];
+    ResCtrl();
+    ~ResCtrl() {}
+};
+
+struct Sprite {
+    char pad0[0xC];
+    float x;
+    float y;
+    char pad14[0x30 - 0x14];
+    Sprite(int id, int flag, float a, float b, float c, float d, float e, float f);
+    Sprite(int id, int a, int b);
+};
+
 struct RoundSlot {
+    Sprite *spr;
+    int x4;
+    int state;
+    int xC;
+    int x10;
+};
+
+struct SprFlag {
+    Sprite *spr;
+    unsigned char visible;
+    unsigned char x5;
+    int x8;
+    inline SprFlag();
+};
+
+struct clFlowProcess {
+    clFlowProcess();
+    virtual ~clFlowProcess();
+};
+
+struct clFlowRound : clFlowProcess {
+    int round;
+    int unlocked;
+    char padC[0x1C - 0xC];
+    int x1C;
+    unsigned char x20;
+    int x24;
+    RoundSlot slots[4];
+    Sprite *spr78;
+    int x7C;
+    int x80;
+    int x84;
+    Sprite *spr88;
+    unsigned char x8C;
+    float x90;
+    ResCtrl layer94;
+    Sprite *sprEC;
+    Sprite *sprF0;
+    ResCtrl layerF4;
+    unsigned char mode;
+    float alpha150;
+    float alpha154;
+    float alpha158;
+    Sprite *spr15C;
+    Sprite *spr160;
+    unsigned char show164;
+    unsigned char show165;
+    SprFlag *flag168;
+    clFlowRound();
+    virtual ~clFlowRound();
+    virtual int Update();
+    virtual void Draw();
+};
+
+/* Field view used by the C Draw/Update code. */
+struct RoundViewSlot {
     void *spr;
     int x4;
     int x8;
@@ -81,16 +100,11 @@ struct RoundSlot {
     void *sub;
 };
 
-struct SprFlag {
-    void *spr;
-    unsigned char visible;
-};
-
-struct clFlowRound {
+struct RoundView {
     void *vtbl;
     int mirror;
     char pad8[0x28 - 0x8];
-    RoundSlot slots[5];
+    RoundViewSlot slots[5];
     char pad8C[0x94 - 0x8C];
     char layer94[0xEC - 0x94];
     void *sprEC;
@@ -107,13 +121,188 @@ struct clFlowRound {
     SprFlag *flag168;
 };
 
+void *operator new(unsigned long size);
+void operator delete(void *p);
+
+extern "C" {
+void DebugPrintf(const char *fmt, ...);
+void InitBGM(void);
+void InitRumbleController(int);
+void InitializeFrameSelection(void *self);
+void PreloadResource(int id);
+void ResCtrl_Init(ResCtrl *ctrl);
+unsigned char RoundCupIsCompleted(void *data, int cc, int cup, int mirror);
+unsigned char RoundIsUnlocked(void *data, int round);
+void SetScreenBrightness(float);
+void SetSyncTarget(int);
+void SetupBgSprites(int);
+void SpriteSystem_EnsureInit(void);
+void Sprite_CreateWithParams(void *spr, int id, int flag, float a, float b, float c, float d, float e, float f);
+void Sprite_InitWithAnim(void *spr, int id, int a, int b);
+void Sprite_SetAnimParam(void *spr, int a, int b);
+void fn_801A0550(void *spr);
+void fn_801B8540(int);
+void fn_801B85DC(int, int, int);
+void fn_801C9288(clFlowRound *self, int i, int flag);
+extern int g_ccClass;
+extern int g_cupId;
+extern InputState *g_pInputState;
+extern int g_roundIndex;
+extern const float lbl_806D9D10;
+extern const float lbl_806D9D14;
+extern const float lbl_806D9D28;
+extern const float lbl_806D9D38;
+extern const float lbl_806D9D3C;
+extern const float lbl_806D9D48;
+extern const float lbl_806D9D68;
+extern const float lbl_806D9D6C;
+extern const float lbl_806D9D70;
+extern const float lbl_806D9D74;
+extern const float lbl_806D9D78;
+extern const float lbl_806D9D80;
+extern const float lbl_806D9D98;
+extern const float lbl_806D9D9C;
+extern const float lbl_806D9DA0;
+extern const float lbl_806D9DA4;
+extern const float lbl_806D9DA8;
+extern const float lbl_806D9DAC;
+extern char g_playerData[];
+short GetCourseShortIdByCupAndMirror(int cup, int mirror);
+void fn_8011FAFC(void *obj, int layer);
+void fn_801A0004(void *spr);
+void fn_801A0DF0(void);
+void fn_801A0FD4(float r, float g, float b, float a);
+void fn_801A10DC(float sx, float sy);
+void fn_801A1128(float x, float y);
+void fn_801A1174(int id, int layer, int a, int b, int c);
+extern const float lbl_806D9D4C;
+extern const float lbl_806D9D50;
+extern const float lbl_806D9D54;
+extern const float lbl_806D9D58;
+extern const float lbl_806D9D5C;
+extern const float lbl_806D9D60;
+extern const float lbl_806D9D64;
+void MemoryManager_TimedFree(void *);
+void Sprite_Destroy(void *, int);
+void fn_80120A08(int);
+void fn_80169C44(void);
+void fn_801A1678(void);
+void Alloc();
+void GetInputManager();
+void InputMgr_GetPlayer();
+void IsItemSelectAllowed();
+void RumbleUpdate();
+void SetCourseParams();
+void SetRumbleMode();
+void Sprite_AdvanceAnim();
+void Sprite_SetupAnim();
+void fn_801699D8();
+void fn_8019FF6C();
+void fn_801B7C64();
+void fn_801B7CAC();
+void fn_801B8434();
+void fn_801B87D8();
+void fn_801BA060();
+void targets();
+void clFlowRound_Update(void);
+extern unsigned int lbl_806D184C;
+extern unsigned int lbl_806D184D;
+extern unsigned int lbl_806D9D08;
+extern unsigned int lbl_806D9D18;
+extern unsigned int lbl_806D9D1C;
+extern unsigned int lbl_806D9D20;
+extern unsigned int lbl_806D9D24;
+extern unsigned int lbl_806D9D30;
+extern unsigned int lbl_806D9D44;
+extern unsigned int lbl_806D9D7C;
+extern unsigned int lbl_806D9D84;
+extern unsigned int lbl_806D9D88;
+extern unsigned int lbl_806D9D8C;
+extern unsigned int lbl_806D9D90;
+extern unsigned int lbl_806D9D94;
+void clFlowRound_Draw(RoundView *self);
+
+/* === .data 0x8049AE70..0x8049AFD0 === */
+struct RoundPos {
+    short id0;
+    short id1;
+    float x;
+    float y;
+};
+
+RoundPos lbl_8049AE70[4] = { { 6481, 6476, 84.0f, 200.0f }, { 6482, 6477, 208.0f, 260.0f }, { 6483, 6478, 323.0f, 200.0f }, { 6484, 6479, 456.0f, 260.0f } };
+static short s_roundRes[8][8] = {
+        6758, 6624, 6759, 6625, 6758, 6624, 6759, 6625,
+        6686, 6576, 6687, 6577, 6686, 6576, 6687, 6577,
+        6741, 6612, 6740, 6613, 6741, 6612, 6740, 6613,
+        6650, 6552, 6651, 6553, 6650, 6552, 6651, 6553,
+        6632, 6540, 6633, 6541, 6632, 6540, 6633, 6541,
+        6704, 6588, 6705, 6589, 6704, 6588, 6705, 6589,
+        6668, 6564, 6669, 6565, 6668, 6564, 6669, 6565,
+        6722, 6600, 6723, 6601, 6722, 6600, 6723, 6601
+};
+static int s_roundB0[22] = {
+        0, 0, 0, 0, 401, 446, 442, 60,
+        128, 60, 62, 130, 62, 61, 129, 61,
+        59, 127, 114, 400, 445, 441
+};
+static short s_roundTitle[10] = { 6511, 6512, 6513, 6514, 6515, 6516, 6517, 6518, 0, 0 };
+short lbl_8049AF8C[10] = {
+    -1, 1, 3, 4, 5, 6, 7, 0,
+    2, 0
+};
+short lbl_8049AFA0[8] = {
+    5869, 5870, 5871, 5872, 5893, 5894, 5895, 5896
+};
+
+/* === .sdata 0x806CFDF0 (RTTI objects follow) === */
+short lbl_806CFDF0[4] = { 0x1977, 0x1978, 0x1979, 0x197A };
+
+/* === .rodata 0x8039B308..0x8039B3C8 (class names and the debug string follow) === */
+extern const short lbl_8039B308[8][3];
+extern const float lbl_8039B338[24];
+const short lbl_8039B308[8][3] = {
+    { 0x1A24, 0x1A25, 0x1A26 }, { 0x1A00, 0x1A01, 0x1A02 }, { 0x19EE, 0x19EF, 0x19F0 },
+    { 0x1A36, 0x1A37, 0x1A38 }, { 0x1A12, 0x1A13, 0x1A14 }, { 0x1A48, 0x1A49, 0x1A4A },
+    { 0x1A6C, 0x1A6D, 0x1A6E }, { 0x1A5A, 0x1A5B, 0x1A5C },
+};
+const float lbl_8039B338[24] = {
+    0.0f, 0.0f, 0.0f, 144.0f, 204.0f, -40.0f, 124.0f, 195.0f, 150.0f, 260.0f, 195.0f, 40.0f,
+    254.0f, 204.0f, -150.0f, 388.0f, 204.0f, -40.0f, 384.0f, 195.0f, 150.0f, 0.0f, 0.0f, 0.0f,
+};
+}
+
+static inline InputState *input_state(void) {
+    InputState *state = g_pInputState;
+
+    if (state == 0) {
+        return 0;
+    }
+    return state;
+}
+
+/* Draw is generated in place; with -inline deferred the rest of the TU is
+ * generated at the end in reverse order (Init after Dtor in .text). */
+#pragma defer_codegen off
+#pragma exceptions off
+extern "C" {
+#pragma section R ".extab_user"
+__declspec(section ".extab_user") static const unsigned char extab_clFlowRound_Draw[8] = {
+    0x18, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+#pragma section R ".extabindex_user"
+__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clFlowRound_Draw = {
+    (void *)&clFlowRound_Draw, 0x00000284, (void *)extab_clFlowRound_Draw
+};
+
 static inline void DrawSprite(void *spr) {
     if (spr != 0) {
         fn_801A0004(spr);
     }
 }
 
-void clFlowRound_Draw(clFlowRound *self) {
+void clFlowRound_Draw(RoundView *self) {
     short cup;
     int i;
 
@@ -171,6 +360,7 @@ void clFlowRound_Draw(clFlowRound *self) {
     }
 }
 
+
 /* === extracted from auto_clFlowRound_Update_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -178,63 +368,12 @@ void clFlowRound_Draw(clFlowRound *self) {
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void Alloc();
-extern void GetInputManager();
-extern void InputMgr_GetPlayer();
-extern void IsItemSelectAllowed();
-extern void RumbleUpdate();
-extern void SetCourseParams();
-extern void SetRumbleMode();
-extern void SetScreenBrightness(float);
-extern void Sprite_AdvanceAnim();
-extern void Sprite_Destroy(void *, int);
-extern void Sprite_InitWithAnim();
-extern void Sprite_SetAnimParam();
-extern void Sprite_SetupAnim();
-extern void fn_801699D8();
-extern void fn_8019FF6C();
-extern void fn_801A0550();
-extern void fn_801B7C64();
-extern void fn_801B7CAC();
-extern void fn_801B8434();
-extern void fn_801B87D8();
-extern void fn_801BA060();
-extern void fn_801C9288();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int g_cupId;
-extern struct InputState *g_pInputState;
-extern unsigned int g_roundIndex;
-extern unsigned int lbl_806D184C;
-extern unsigned int lbl_806D184D;
-extern unsigned int lbl_806D9D08;
-extern unsigned int lbl_806D9D18;
-extern unsigned int lbl_806D9D1C;
-extern unsigned int lbl_806D9D20;
-extern unsigned int lbl_806D9D24;
-extern const float lbl_806D9D28;
-extern unsigned int lbl_806D9D30;
-extern unsigned int lbl_806D9D38;
-extern unsigned int lbl_806D9D44;
-extern const float lbl_806D9D48;
-extern unsigned int lbl_806D9D68;
-extern unsigned int lbl_806D9D6C;
-extern unsigned int lbl_806D9D70;
-extern unsigned int lbl_806D9D74;
-extern unsigned int lbl_806D9D78;
-extern unsigned int lbl_806D9D7C;
-extern unsigned int lbl_806D9D80;
-extern unsigned int lbl_806D9D84;
-extern unsigned int lbl_806D9D88;
-extern unsigned int lbl_806D9D8C;
-extern unsigned int lbl_806D9D90;
-extern unsigned int lbl_806D9D94;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_8039B338[];
-extern short lbl_8049AE70[];
 
 /* --- function index (1 fns, .text 0x801C9EAC..0x801CADBC) ---
  * [  0] 0x801C9EAC size:0xF10   global clFlowRound_Update
@@ -244,7 +383,6 @@ extern short lbl_8049AE70[];
 asm void clFlowRound_Update(void);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void MemoryManager_TimedFree(void *);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -1306,702 +1444,197 @@ asm void clFlowRound_Update(void) { /* 0x801C9EAC size:0xF10 */
     blr
 }
 
+}
+#pragma exceptions reset
+#pragma defer_codegen reset
 
-/* === extracted from auto_clFlowRound_Dtor_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void MemoryManager_TimedFree(void *);
-extern void SetScreenBrightness(float);
-extern void Sprite_Destroy(void *, int);
-extern void dtor_801BA14C(void *, int);
-extern void fn_80120A08(int);
-extern void fn_80169C44(void);
-extern void fn_801A1678(void);
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int g_cupId;
-extern struct InputState *g_pInputState;
-extern short lbl_806CFDF0[4];
-extern const float lbl_806D9D48;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern short lbl_8049AE70[];
-
-/* --- function index (1 fns, .text 0x801CADBC..0x801CAF34) ---
- * [  0] 0x801CADBC size:0x178   global clFlowRound_Dtor
- */
-
-/* --- forward decls --- */
-struct clFlowRound *clFlowRound_Dtor(struct clFlowRound *self, short flags);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_clFlowRound_Dtor[8] = {
-    0x20, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clFlowRound_Dtor = {
-    (void *)&clFlowRound_Dtor, 0x00000178, (void *)extab_clFlowRound_Dtor
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-/* .data 0x8049AE70..0x8049AFD0 is owned by this TU so the Dtor pools it. */
-short lbl_8049AE70[142] = {
-    6481, 6476, 17064, 0, 17224, 0, 6482, 6477,
-    17232, 0, 17282, 0, 6483, 6478, 17313, -32768,
-    17224, 0, 6484, 6479, 17380, 0, 17282, 0,
-    6758, 6624, 6759, 6625, 6758, 6624, 6759, 6625,
-    6686, 6576, 6687, 6577, 6686, 6576, 6687, 6577,
-    6741, 6612, 6740, 6613, 6741, 6612, 6740, 6613,
-    6650, 6552, 6651, 6553, 6650, 6552, 6651, 6553,
-    6632, 6540, 6633, 6541, 6632, 6540, 6633, 6541,
-    6704, 6588, 6705, 6589, 6704, 6588, 6705, 6589,
-    6668, 6564, 6669, 6565, 6668, 6564, 6669, 6565,
-    6722, 6600, 6723, 6601, 6722, 6600, 6723, 6601,
-    0, 0, 0, 0, 0, 0, 0, 0,
-    0, 401, 0, 446, 0, 442, 0, 60,
-    0, 128, 0, 60, 0, 62, 0, 130,
-    0, 62, 0, 61, 0, 129, 0, 61,
-    0, 59, 0, 127, 0, 114, 0, 400,
-    0, 445, 0, 441, 6511, 6512, 6513, 6514,
-    6515, 6516, 6517, 6518, 0, 0
-};
-short lbl_8049AF8C[10] = {
-    -1, 1, 3, 4, 5, 6, 7, 0,
-    2, 0
-};
-short lbl_8049AFA0[8] = {
-    5869, 5870, 5871, 5872, 5893, 5894, 5895, 5896
-};
-void *lbl_8049AFB0[3] = { lbl_806CFDF8, 0, 0 };
-/* Only the asm clFlowRound_Init references this vtable (through the pooled
- * .data base), so keep it alive for the linker until Init is C. */
-#pragma force_active on
-static void *clFlowRound_vtbl[5] = {
-    lbl_806CFE00, 0, (void *)clFlowRound_Dtor, (void *)clFlowRound_Update, (void *)clFlowRound_Draw
-};
-#pragma force_active reset
-
-static inline InputState *input_state(void) {
-    InputState *state = g_pInputState;
-
-    if (state == 0) {
-        return 0;
-    }
-    return state;
+inline SprFlag::SprFlag() {
+    visible = 0;
+    x5 = 0;
+    x8 = 0;
+    spr = new Sprite(0x9E, 1, lbl_806D9DAC, lbl_806D9DAC, 1.0f, 1.0f, 0.0f, 0.0f);
 }
 
-clFlowRound *clFlowRound_Dtor(clFlowRound *self, short flags) {
+clFlowRound::clFlowRound() {
+#define self this
+    int first;
+    short cup;
+    int i;
+    int base;
+    int level;
+    Sprite *spr;
+
+    SpriteSystem_EnsureInit();
+    cup = lbl_8049AF8C[g_cupId];
+    SetSyncTarget(0x1B);
+    PreloadResource(lbl_8049AFA0[cup]);
+    PreloadResource(lbl_8049AFA0[cup] + 12);
+    PreloadResource(s_roundRes[cup][1]);
+    PreloadResource(s_roundRes[cup][1] + 6);
+    PreloadResource(s_roundRes[cup][0]);
+    PreloadResource(s_roundRes[cup][0] + 9);
+    PreloadResource(s_roundRes[cup][3]);
+    PreloadResource(s_roundRes[cup][3] + 6);
+    PreloadResource(s_roundRes[cup][2]);
+    PreloadResource(s_roundRes[cup][2] + 9);
+    PreloadResource(lbl_8039B308[cup][0]);
+    PreloadResource(lbl_8039B308[cup][0] + 9);
+    PreloadResource(0x194C);
+    PreloadResource(0x195E);
+    PreloadResource(0x196F);
+    PreloadResource(0x197C);
+    PreloadResource(0x1DEC);
+    PreloadResource(0x195B);
+    PreloadResource(0x196D);
+    PreloadResource(0x1863);
+    PreloadResource(0x18BA);
+    PreloadResource(0x1843);
+    PreloadResource(0x189A);
+    PreloadResource(0x196E);
+    PreloadResource(0x197B);
+    first = 1;
+    self->mode = g_roundIndex >= 4;
+    self->unlocked = 0;
+    base = self->mode == 1 ? 4 : 0;
+    for (i = 0; i < 4; i++) {
+        self->slots[i].x4 = 0;
+        self->slots[i].xC = 0;
+        self->slots[i].x10 = 0;
+        self->slots[i + 1].spr = 0;
+        if (RoundIsUnlocked(g_playerData, i + base)) {
+            self->slots[i].state = 0;
+            self->unlocked++;
+        } else if ((unsigned char)first) {
+            self->slots[i].state = 1;
+            first = 0;
+            self->unlocked++;
+        } else {
+            self->slots[i].state = 2;
+        }
+        fn_801C9288(self, i, 1);
+    }
+    self->round = 0;
+    self->x7C = -1;
+    self->x1C = 0;
+    self->x20 = 0;
+    self->x24 = 0;
+    self->slots[0].spr = 0;
+    self->sprEC = 0;
+    self->flag168 = 0;
+    self->spr88 = 0;
+    self->x80 = 0;
+    self->x8C = 0;
+    self->x90 = lbl_806D9D80;
+    self->alpha150 = lbl_806D9D38;
+    self->alpha154 = lbl_806D9D38;
+    self->alpha158 = lbl_806D9D38;
+    self->slots[0].spr = new Sprite(0x1C0, 1, lbl_806D9D98, lbl_806D9D9C, 1.0f, 1.0f, 0.0f, 0.0f);
+    for (i = 3; i >= 0; i--) {
+        if (RoundIsUnlocked(g_playerData, base + i) == 1) {
+            self->round = i == 3 ? 3 : i + 1;
+            break;
+        }
+    }
+    level = 0;
+    if (RoundIsUnlocked(g_playerData, self->mode == 1 ? 7 : 3) == 1) {
+        level = 1;
+    }
+    if (RoundCupIsCompleted(g_playerData, g_ccClass, g_cupId, self->mode == 1 ? 1 : 0)) {
+        level = 2;
+    }
+    self->layer94.resId = lbl_8039B308[g_cupId - 1][level];
+    self->layer94.flag = 1;
+    self->layer94.x = lbl_806D9D68;
+    self->layer94.y = lbl_806D9D6C;
+    self->layer94.z = lbl_806D9D28;
+    self->layer94.colors[0] = -1;
+    self->layer94.colors[1] = -1;
+    self->layer94.colors[2] = -1;
+    self->layer94.colors[3] = -1;
+    if (RoundIsUnlocked(g_playerData, self->mode == 1 ? 7 : 3) == 1) {
+        self->sprEC = new Sprite(0x85, 1, lbl_806D9DA0, lbl_806D9DA4, 1.0f, 1.0f, 0.0f, 0.0f);
+    }
+    self->sprF0 = new Sprite(0x1DD, 0, lbl_806D9DA8, lbl_806D9D78, lbl_806D9D28, lbl_806D9D28, lbl_806D9D38, lbl_806D9D28);
+    Sprite_SetAnimParam(self->sprF0, 0x1AD4, 0x1AE4);
+    if (self->mode == 1) {
+        PreloadResource(0x15F4);
+        PreloadResource(0x15FE);
+        spr = self->sprF0;
+        spr->x = lbl_806D9D70;
+        spr->y = lbl_806D9D78;
+        self->layerF4.resId = 0x15F4;
+        self->layerF4.flag = 1;
+        self->layerF4.x = lbl_806D9D74;
+        self->layerF4.y = lbl_806D9D78;
+        self->layerF4.z = lbl_806D9D28;
+    } else {
+        self->layerF4.resId = 0x1ECD;
+    }
+    self->spr15C = new Sprite(0x9C, 1, lbl_806D9D38, lbl_806D9D38, lbl_806D9D3C, lbl_806D9D3C, lbl_806D9D38, lbl_806D9D28);
+    self->spr160 = new Sprite(0x9C, 1, lbl_806D9D38, lbl_806D9D38, lbl_806D9D3C, lbl_806D9D3C, lbl_806D9D38, lbl_806D9D28);
+    self->show164 = 0;
+    self->show165 = 0;
+    if (self->mode == 1) {
+        self->flag168 = new SprFlag;
+    }
+    if (input_state() != 0) {
+        InputState *state = input_state();
+
+        state->active = 1;
+        state->value18 = 0;
+        state->value1C = 0;
+    }
+    SetScreenBrightness(lbl_806D9D48);
+    fn_801B85DC(0x1B, self->mode, 0);
+    fn_801B8540(0);
+    InitBGM();
+    SetupBgSprites(1);
+    if (self->spr88 == 0) {
+        self->x80 = 0;
+        self->x84 = 0;
+        self->spr88 = new Sprite(0x84, 0, 0);
+        Sprite_SetAnimParam(self->spr88, 0x1970, s_roundTitle[lbl_8049AF8C[g_cupId]]);
+        fn_801A0550(self->spr88);
+        spr = self->spr88;
+        spr->x = lbl_806D9D10;
+        spr->y = lbl_806D9D14;
+    }
+    DebugPrintf("after_constructer\n");
+    InitRumbleController(1);
+}
+#undef self
+
+clFlowRound::~clFlowRound() {
     SprFlag *owned;
     int i;
 
-    if (self != 0) {
-        self->vtbl = clFlowRound_vtbl;
-        fn_80169C44();
-        if (input_state() != 0) {
-            InputState *state = input_state();
+    fn_80169C44();
+    if (input_state() != 0) {
+        InputState *state = input_state();
 
-            state->active = 0;
-            state->value18 = 0;
-            state->value1C = 0;
-        }
-        SetScreenBrightness(lbl_806D9D48);
-        fn_80120A08(lbl_8049AFA0[lbl_8049AF8C[g_cupId]]);
-        fn_80120A08(lbl_806CFDF0[0]);
-        Sprite_Destroy(self->spr160, 1);
-        Sprite_Destroy(self->spr15C, 1);
-        Sprite_Destroy(self->sprEC, 1);
-        Sprite_Destroy(self->slots[4].sub, 1);
-        Sprite_Destroy(self->slots[0].spr, 1);
-        Sprite_Destroy(self->sprF0, 1);
-        {
-            owned = self->flag168;
+        state->active = 0;
+        state->value18 = 0;
+        state->value1C = 0;
+    }
+    SetScreenBrightness(lbl_806D9D48);
+    fn_80120A08(lbl_8049AFA0[lbl_8049AF8C[g_cupId]]);
+    fn_80120A08(lbl_806CFDF0[0]);
+    Sprite_Destroy(spr160, 1);
+    Sprite_Destroy(spr15C, 1);
+    Sprite_Destroy(sprEC, 1);
+    Sprite_Destroy(spr88, 1);
+    Sprite_Destroy(slots[0].spr, 1);
+    Sprite_Destroy(sprF0, 1);
+    {
+        owned = flag168;
 
-            if (owned != 0) {
-                Sprite_Destroy(owned->spr, 1);
-                MemoryManager_TimedFree(owned);
-            }
-        }
-        for (i = 0; i < 4; i++) {
-            Sprite_Destroy(self->slots[i + 1].spr, 1);
-        }
-        fn_801A1678();
-        dtor_801BA14C(self, 0);
-        if (flags > 0) {
-            MemoryManager_TimedFree(self);
+        if (owned != 0) {
+            Sprite_Destroy(owned->spr, 1);
+            MemoryManager_TimedFree(owned);
         }
     }
-    return self;
+    for (i = 0; i < 4; i++) {
+        Sprite_Destroy(slots[i + 1].spr, 1);
+    }
+    fn_801A1678();
 }
-
-
-/* === extracted from auto_clFlowRound_Init_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void Alloc();
-extern void DebugPrintf();
-extern void InitBGM();
-extern void InitRumbleController();
-extern void InitializeFrameSelection();
-extern void PreloadResource();
-extern void ResCtrl_Init();
-extern void RoundCupIsCompleted();
-extern void RoundIsUnlocked();
-extern void SetScreenBrightness(float);
-extern void SetSyncTarget();
-extern void SetupBgSprites();
-extern void SpriteSystem_EnsureInit();
-extern void Sprite_CreateWithParams();
-extern void Sprite_InitWithAnim();
-extern void Sprite_SetAnimParam();
-extern void fn_801A0550();
-extern void fn_801B8540();
-extern void fn_801B85DC();
-extern void fn_801C9288();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int g_ccClass;
-extern unsigned int g_cupId;
-extern struct InputState *g_pInputState;
-extern unsigned int g_roundIndex;
-extern unsigned int lbl_806D9D10;
-extern unsigned int lbl_806D9D14;
-extern const float lbl_806D9D28;
-extern unsigned int lbl_806D9D38;
-extern unsigned int lbl_806D9D3C;
-extern const float lbl_806D9D48;
-extern unsigned int lbl_806D9D68;
-extern unsigned int lbl_806D9D6C;
-extern unsigned int lbl_806D9D70;
-extern unsigned int lbl_806D9D74;
-extern unsigned int lbl_806D9D78;
-extern unsigned int lbl_806D9D80;
-extern unsigned int lbl_806D9D98;
-extern unsigned int lbl_806D9D9C;
-extern unsigned int lbl_806D9DA0;
-extern unsigned int lbl_806D9DA4;
-extern unsigned int lbl_806D9DA8;
-extern unsigned int lbl_806D9DAC;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int g_playerData[];
-extern unsigned int lbl_8039B308[];
-extern unsigned int lbl_8039B3B4[];
-extern short lbl_8049AE70[];
-
-/* --- function index (1 fns, .text 0x801CAF34..0x801CB620) ---
- * [  0] 0x801CAF34 size:0x6EC   global clFlowRound_Init
- */
-
-/* --- forward decls --- */
-asm void clFlowRound_Init(void);
-
-/* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void MemoryManager_TimedFree(void *);
-extern void dtor_80082960();
-extern void dtor_801BA14C(void *, int);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; void *f39; unsigned int f40; unsigned int f41; void *f42; unsigned int f43; unsigned int f44; void *f45; unsigned int f46; unsigned int f47; void *f48; unsigned int f49; void *f50; unsigned int f51; unsigned int f52; void *f53; unsigned int f54; unsigned int f55; void *f56; unsigned int f57; unsigned int f58; void *f59; unsigned int f60; unsigned int f61; void *f62; unsigned int f63; void *f64; unsigned int f65; unsigned int f66; void *f67; unsigned int f68; } extab_clFlowRound_Init = { 0x380A0000, 0x00000030, 0x000000B8, 0x00000038, 0x000000AC, 0x0000003C, 0x009D00A0, 0x000002DC, 0x00000098, 0x000002F8, 0x004700A0, 0x00000440, 0x000000C4, 0x0000044C, 0x000000A0, 0x00000478, 0x000000D0, 0x0000048C, 0x001A00A0, 0x00000520, 0x000000DC, 0x0000052C, 0x000000A0, 0x00000558, 0x000000E8, 0x0000057C, 0x000000A0, 0x0000059C, 0x000000FC, 0x000005C8, 0x000000F4, 0x00000618, 0x001100A0, 0x00000674, 0x00000108, 0x000006A0, 0x000D00A0, 0x00000000, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x000000F4, (void *)&dtor_80082960, 0x0780001F, 0x00000094, (void *)&dtor_80082960, 0x8680001F, 0x00000000, (void *)&dtor_801BA14C, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x010000A0, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x010000A0, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x010000A0, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x010000A0, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x010000A0, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x010000A0 };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clFlowRound_Init = {
-    (void *)&clFlowRound_Init, 0x000006EC, (void *)&extab_clFlowRound_Init
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void clFlowRound_Init(void) { /* 0x801CAF34 size:0x6EC */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    lis r4, lbl_8049AE70@ha
-    stw r0, 0x34(r1)
-    stmw r25, 0x14(r1)
-    mr r31, r3
-    addi r29, r4, lbl_8049AE70@l
-    bl InitializeFrameSelection
-    addi r0, r29, 0x14c
-    addi r3, r31, 0x94
-    stw r0, 0x0(r31)
-    bl ResCtrl_Init
-    addi r3, r31, 0xf4
-    bl ResCtrl_Init
-    bl SpriteSystem_EnsureInit
-    lwz r0, g_cupId(r13)
-    addi r4, r29, 0x11c
-    li r3, 0x1b
-    slwi r0, r0, 1
-    lhax r27, r4, r0
-    bl SetSyncTarget
-    slwi r25, r27, 1
-    addi r26, r29, 0x130
-    lhax r3, r26, r25
-    bl PreloadResource
-    lhax r3, r26, r25
-    addi r3, r3, 0xc
-    bl PreloadResource
-    addi r0, r29, 0x30
-    slwi r26, r27, 4
-    add r25, r0, r26
-    lhau r3, 0x2(r25)
-    bl PreloadResource
-    lha r3, 0x0(r25)
-    addi r3, r3, 0x6
-    bl PreloadResource
-    addi r25, r29, 0x30
-    lhax r3, r25, r26
-    bl PreloadResource
-    lhax r3, r25, r26
-    addi r3, r3, 0x9
-    bl PreloadResource
-    mr r0, r25
-    add r25, r0, r26
-    lhau r3, 0x6(r25)
-    bl PreloadResource
-    lha r3, 0x0(r25)
-    addi r3, r3, 0x6
-    bl PreloadResource
-    addi r0, r29, 0x30
-    add r25, r0, r26
-    lhau r3, 0x4(r25)
-    bl PreloadResource
-    lha r3, 0x0(r25)
-    addi r3, r3, 0x9
-    bl PreloadResource
-    mulli r26, r27, 0x6
-    lis r3, lbl_8039B308@ha
-    addi r25, r3, lbl_8039B308@l
-    lhax r3, r25, r26
-    bl PreloadResource
-    lhax r3, r25, r26
-    addi r3, r3, 0x9
-    bl PreloadResource
-    li r3, 0x194c
-    bl PreloadResource
-    li r3, 0x195e
-    bl PreloadResource
-    li r3, 0x196f
-    bl PreloadResource
-    li r3, 0x197c
-    bl PreloadResource
-    li r3, 0x1dec
-    bl PreloadResource
-    li r3, 0x195b
-    bl PreloadResource
-    li r3, 0x196d
-    bl PreloadResource
-    li r3, 0x1863
-    bl PreloadResource
-    li r3, 0x18ba
-    bl PreloadResource
-    li r3, 0x1843
-    bl PreloadResource
-    li r3, 0x189a
-    bl PreloadResource
-    li r3, 0x196e
-    bl PreloadResource
-    li r3, 0x197b
-    bl PreloadResource
-    lwz r0, g_roundIndex(r13)
-    li r6, 0x4
-    lis r3, g_playerData@ha
-    li r27, 0x0
-    srawi r5, r0, 31
-    srwi r4, r6, 31
-    subfc r0, r6, r0
-    addi r30, r3, g_playerData@l
-    adde r0, r5, r4
-    li r26, 0x1
-    stb r0, 0x14c(r31)
-    li r25, 0x0
-    stw r27, 0x8(r31)
-    lbz r4, 0x14c(r31)
-    subi r3, r4, 0x1
-    subfic r0, r4, 0x1
-    nor r0, r3, r0
-    srawi r0, r0, 31
-    and r28, r6, r0
-    clFlowRound_Init_L_801CB0E8:
-    addi r0, r27, 0x2c
-    li r6, 0x0
-    stwx r6, r31, r0
-    addi r3, r27, 0x34
-    addi r5, r27, 0x38
-    addi r0, r27, 0x3c
-    stwx r6, r31, r3
-    mr r3, r30
-    add r4, r25, r28
-    stwx r6, r31, r5
-    stwx r6, r31, r0
-    bl RoundIsUnlocked
-    clrlwi. r0, r3, 24
-    beq clFlowRound_Init_L_801CB13C
-    addi r0, r27, 0x30
-    li r3, 0x0
-    stwx r3, r31, r0
-    lwz r3, 0x8(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x8(r31)
-    b clFlowRound_Init_L_801CB170
-    clFlowRound_Init_L_801CB13C:
-    clrlwi. r0, r26, 24
-    beq clFlowRound_Init_L_801CB164
-    addi r0, r27, 0x30
-    li r3, 0x1
-    stwx r3, r31, r0
-    li r26, 0x0
-    lwz r3, 0x8(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x8(r31)
-    b clFlowRound_Init_L_801CB170
-    clFlowRound_Init_L_801CB164:
-    addi r0, r27, 0x30
-    li r3, 0x2
-    stwx r3, r31, r0
-    clFlowRound_Init_L_801CB170:
-    mr r3, r31
-    mr r4, r25
-    li r5, 0x1
-    bl fn_801C9288
-    addi r25, r25, 0x1
-    addi r27, r27, 0x14
-    cmpwi r25, 0x4
-    blt clFlowRound_Init_L_801CB0E8
-    li r4, 0x0
-    li r0, -0x1
-    stw r4, 0x4(r31)
-    li r3, 0x30
-    lfs f1, lbl_806D9D80(r2)
-    stw r0, 0x7c(r31)
-    lfs f0, lbl_806D9D38(r2)
-    stw r4, 0x1c(r31)
-    stb r4, 0x20(r31)
-    stw r4, 0x24(r31)
-    stw r4, 0x28(r31)
-    stw r4, 0xec(r31)
-    stw r4, 0x168(r31)
-    stw r4, 0x88(r31)
-    stw r4, 0x80(r31)
-    stb r4, 0x8c(r31)
-    stfs f1, 0x90(r31)
-    stfs f0, 0x150(r31)
-    stfs f0, 0x154(r31)
-    stfs f0, 0x158(r31)
-    bl Alloc
-    mr. r25, r3
-    beq clFlowRound_Init_L_801CB210
-    lfs f3, lbl_806D9D28(r2)
-    li r4, 0x1c0
-    lfs f5, lbl_806D9D38(r2)
-    li r5, 0x1
-    fmr f4, f3
-    lfs f1, lbl_806D9D98(r2)
-    fmr f6, f5
-    lfs f2, lbl_806D9D9C(r2)
-    bl Sprite_CreateWithParams
-    clFlowRound_Init_L_801CB210:
-    lis r3, g_playerData@ha
-    stw r25, 0x28(r31)
-    addi r25, r3, g_playerData@l
-    li r26, 0x3
-    clFlowRound_Init_L_801CB220:
-    mr r3, r25
-    add r4, r28, r26
-    bl RoundIsUnlocked
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne clFlowRound_Init_L_801CB250
-    cmpwi r26, 0x3
-    li r0, 0x3
-    beq clFlowRound_Init_L_801CB248
-    addi r0, r26, 0x1
-    clFlowRound_Init_L_801CB248:
-    stw r0, 0x4(r31)
-    b clFlowRound_Init_L_801CB258
-    clFlowRound_Init_L_801CB250:
-    subic. r26, r26, 0x1
-    bge clFlowRound_Init_L_801CB220
-    clFlowRound_Init_L_801CB258:
-    lbz r0, 0x14c(r31)
-    lis r3, g_playerData@ha
-    addi r3, r3, g_playerData@l
-    li r25, 0x0
-    cmplwi r0, 0x1
-    li r4, 0x3
-    bne clFlowRound_Init_L_801CB278
-    li r4, 0x7
-    clFlowRound_Init_L_801CB278:
-    bl RoundIsUnlocked
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne clFlowRound_Init_L_801CB28C
-    li r25, 0x1
-    clFlowRound_Init_L_801CB28C:
-    lbz r0, 0x14c(r31)
-    lis r3, g_playerData@ha
-    lwz r4, g_ccClass(r13)
-    addi r3, r3, g_playerData@l
-    subfic r0, r0, 0x1
-    lwz r5, g_cupId(r13)
-    cntlzw r0, r0
-    srwi r6, r0, 5
-    bl RoundCupIsCompleted
-    clrlwi. r0, r3, 24
-    beq clFlowRound_Init_L_801CB2BC
-    li r25, 0x2
-    clFlowRound_Init_L_801CB2BC:
-    lwz r4, g_cupId(r13)
-    lis r5, lbl_8039B308@ha
-    addi r6, r5, lbl_8039B308@l
-    lis r3, g_playerData@ha
-    mulli r4, r4, 0x6
-    slwi r0, r25, 1
-    li r5, 0x1
-    lfs f2, lbl_806D9D68(r2)
-    lfs f1, lbl_806D9D6C(r2)
-    addi r3, r3, g_playerData@l
-    add r4, r6, r4
-    lfs f0, lbl_806D9D28(r2)
-    add r4, r4, r0
-    li r0, -0x1
-    lha r6, -0x6(r4)
-    li r4, 0x3
-    stw r6, 0x94(r31)
-    stb r5, 0xa4(r31)
-    stfs f2, 0xa8(r31)
-    stfs f1, 0xac(r31)
-    stfs f0, 0xb0(r31)
-    stw r0, 0xc8(r31)
-    stw r0, 0xcc(r31)
-    stw r0, 0xd0(r31)
-    stw r0, 0xd4(r31)
-    lbz r0, 0x14c(r31)
-    cmplwi r0, 0x1
-    bne clFlowRound_Init_L_801CB330
-    li r4, 0x7
-    clFlowRound_Init_L_801CB330:
-    bl RoundIsUnlocked
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne clFlowRound_Init_L_801CB378
-    li r3, 0x30
-    bl Alloc
-    mr. r25, r3
-    beq clFlowRound_Init_L_801CB374
-    lfs f3, lbl_806D9D28(r2)
-    li r4, 0x85
-    lfs f5, lbl_806D9D38(r2)
-    li r5, 0x1
-    fmr f4, f3
-    lfs f1, lbl_806D9DA0(r2)
-    fmr f6, f5
-    lfs f2, lbl_806D9DA4(r2)
-    bl Sprite_CreateWithParams
-    clFlowRound_Init_L_801CB374:
-    stw r25, 0xec(r31)
-    clFlowRound_Init_L_801CB378:
-    li r3, 0x30
-    bl Alloc
-    mr. r25, r3
-    beq clFlowRound_Init_L_801CB3AC
-    lfs f3, lbl_806D9D28(r2)
-    li r4, 0x1dd
-    lfs f1, lbl_806D9DA8(r2)
-    li r5, 0x0
-    fmr f4, f3
-    lfs f2, lbl_806D9D78(r2)
-    fmr f6, f3
-    lfs f5, lbl_806D9D38(r2)
-    bl Sprite_CreateWithParams
-    clFlowRound_Init_L_801CB3AC:
-    stw r25, 0xf0(r31)
-    li r4, 0x1ad4
-    li r5, 0x1ae4
-    lwz r3, 0xf0(r31)
-    bl Sprite_SetAnimParam
-    lbz r0, 0x14c(r31)
-    cmplwi r0, 0x1
-    bne clFlowRound_Init_L_801CB418
-    li r3, 0x15f4
-    bl PreloadResource
-    li r3, 0x15fe
-    bl PreloadResource
-    lwz r4, 0xf0(r31)
-    li r3, 0x15f4
-    lfs f0, lbl_806D9D70(r2)
-    li r0, 0x1
-    lfs f2, lbl_806D9D78(r2)
-    stfs f0, 0xc(r4)
-    lfs f1, lbl_806D9D74(r2)
-    stfs f2, 0x10(r4)
-    lfs f0, lbl_806D9D28(r2)
-    stw r3, 0xf4(r31)
-    stb r0, 0x104(r31)
-    stfs f1, 0x108(r31)
-    stfs f2, 0x10c(r31)
-    stfs f0, 0x110(r31)
-    b clFlowRound_Init_L_801CB420
-    clFlowRound_Init_L_801CB418:
-    li r0, 0x1ecd
-    stw r0, 0xf4(r31)
-    clFlowRound_Init_L_801CB420:
-    li r3, 0x30
-    bl Alloc
-    mr. r25, r3
-    beq clFlowRound_Init_L_801CB454
-    lfs f1, lbl_806D9D38(r2)
-    li r4, 0x9c
-    lfs f3, lbl_806D9D3C(r2)
-    li r5, 0x1
-    fmr f2, f1
-    lfs f6, lbl_806D9D28(r2)
-    fmr f4, f3
-    fmr f5, f1
-    bl Sprite_CreateWithParams
-    clFlowRound_Init_L_801CB454:
-    stw r25, 0x15c(r31)
-    li r3, 0x30
-    bl Alloc
-    mr. r25, r3
-    beq clFlowRound_Init_L_801CB48C
-    lfs f1, lbl_806D9D38(r2)
-    li r4, 0x9c
-    lfs f3, lbl_806D9D3C(r2)
-    li r5, 0x1
-    fmr f2, f1
-    lfs f6, lbl_806D9D28(r2)
-    fmr f4, f3
-    fmr f5, f1
-    bl Sprite_CreateWithParams
-    clFlowRound_Init_L_801CB48C:
-    stw r25, 0x160(r31)
-    li r0, 0x0
-    stb r0, 0x164(r31)
-    stb r0, 0x165(r31)
-    lbz r0, 0x14c(r31)
-    cmplwi r0, 0x1
-    bne clFlowRound_Init_L_801CB504
-    li r3, 0xc
-    bl Alloc
-    mr. r25, r3
-    beq clFlowRound_Init_L_801CB500
-    li r0, 0x0
-    li r3, 0x30
-    stb r0, 0x4(r25)
-    stb r0, 0x5(r25)
-    stw r0, 0x8(r25)
-    bl Alloc
-    mr. r26, r3
-    beq clFlowRound_Init_L_801CB4FC
-    lfs f1, lbl_806D9DAC(r2)
-    li r4, 0x9e
-    lfs f3, lbl_806D9D28(r2)
-    li r5, 0x1
-    lfs f5, lbl_806D9D38(r2)
-    fmr f2, f1
-    fmr f4, f3
-    fmr f6, f5
-    bl Sprite_CreateWithParams
-    clFlowRound_Init_L_801CB4FC:
-    stw r26, 0x0(r25)
-    clFlowRound_Init_L_801CB500:
-    stw r25, 0x168(r31)
-    clFlowRound_Init_L_801CB504:
-    lwz r4, g_pInputState(r13)
-    cmplwi r4, 0x0
-    bne clFlowRound_Init_L_801CB518
-    li r0, 0x0
-    b clFlowRound_Init_L_801CB51C
-    clFlowRound_Init_L_801CB518:
-    mr r0, r4
-    clFlowRound_Init_L_801CB51C:
-    cmplwi r0, 0x0
-    beq clFlowRound_Init_L_801CB544
-    cmplwi r4, 0x0
-    bne clFlowRound_Init_L_801CB530
-    li r4, 0x0
-    clFlowRound_Init_L_801CB530:
-    li r3, 0x1
-    li r0, 0x0
-    stb r3, 0x4(r4)
-    stw r0, 0x18(r4)
-    stw r0, 0x1c(r4)
-    clFlowRound_Init_L_801CB544:
-    lfs f1, lbl_806D9D48(r2)
-    bl SetScreenBrightness
-    lbz r4, 0x14c(r31)
-    li r3, 0x1b
-    li r5, 0x0
-    bl fn_801B85DC
-    li r3, 0x0
-    bl fn_801B8540
-    bl InitBGM
-    li r3, 0x1
-    bl SetupBgSprites
-    lwz r0, 0x88(r31)
-    cmplwi r0, 0x0
-    bne clFlowRound_Init_L_801CB5F0
-    li r0, 0x0
-    li r3, 0x30
-    stw r0, 0x80(r31)
-    stw r0, 0x84(r31)
-    bl Alloc
-    mr. r25, r3
-    beq clFlowRound_Init_L_801CB5A8
-    li r4, 0x84
-    li r5, 0x0
-    li r6, 0x0
-    bl Sprite_InitWithAnim
-    clFlowRound_Init_L_801CB5A8:
-    stw r25, 0x88(r31)
-    addi r6, r29, 0x11c
-    addi r5, r29, 0x108
-    li r4, 0x1970
-    lwz r0, g_cupId(r13)
-    lwz r3, 0x88(r31)
-    slwi r0, r0, 1
-    lhax r0, r6, r0
-    slwi r0, r0, 1
-    lhax r5, r5, r0
-    bl Sprite_SetAnimParam
-    lwz r3, 0x88(r31)
-    bl fn_801A0550
-    lwz r3, 0x88(r31)
-    lfs f1, lbl_806D9D10(r2)
-    lfs f0, lbl_806D9D14(r2)
-    stfs f1, 0xc(r3)
-    stfs f0, 0x10(r3)
-    clFlowRound_Init_L_801CB5F0:
-    lis r3, lbl_8039B3B4@ha
-    addi r3, r3, lbl_8039B3B4@l
-    crxor 6, 6, 6
-    bl DebugPrintf
-    li r3, 0x1
-    bl InitRumbleController
-    mr r3, r31
-    lmw r25, 0x14(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
-}
-
-#ifdef __cplusplus
-}
-#endif
