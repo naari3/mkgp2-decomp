@@ -9197,6 +9197,7 @@ game/clFlowCup.c:
 	extab       start:0x8001428C end:0x8001457C
 	extabindex  start:0x80027E00 end:0x80027E30
 	.text       start:0x801C7360 end:0x801C9288
+	.data       start:0x8049AD58 end:0x8049AE70
 
 game/fn_801C9288.cpp:
 	extab       start:0x8001457C end:0x800145E4

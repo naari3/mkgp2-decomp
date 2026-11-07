@@ -1569,8 +1569,9 @@
     "__ct__6CupSprFiii": "Sprite_InitWithAnim",
     "extab_clFlowCup_Dtor": "@etb_800142DC",
     "extabindex_clFlowCup_Dtor": "@eti_80027E18",
-    "extab_clFlowCup_Init": "@etb_800142E4",
-    "extabindex_clFlowCup_Init": "@eti_80027E24"
+    "__ct__7CupFlowFv": "clFlowCup_Init",
+    "__ct__8FlowBaseFv": "InitializeFrameSelection",
+    "__dt__8FlowBaseFv": "dtor_801BA14C"
   },
   "src/game/clFlowRound.c": {
     "extab_clFlowRound_Draw": "@etb_800145E4",
