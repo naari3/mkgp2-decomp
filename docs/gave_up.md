@@ -36,7 +36,7 @@ all of these.
 | `CardData_InitDefaults` | game/CardData_InitDefaults | 99.92 | epilogue `lwz r0` order | no flag or version fixes it |
 | `fn_801E96BC` | game/fn_801E96BC | 99.85 | base / iterator register swap | |
 | `SpecialFaceMesh_Dtor` | game/SpecialFaceMesh_Dtor | 99.46 | base / iterator register swap (same pattern as fn_801E96BC) | 40 min permuter |
-| `AI_PerKartUpdate`, `fn_801E9CBC` | game/AI_PerKartUpdate, game/fn_801E9CBC | 99.80 / 99.73 | ItemList items register | |
+| `AI_PerKartUpdate`, `fn_801E9CBC` | game/AI_PerKartUpdate, game/fn_801E9CBC | 99.80 / 99.73 | ItemList items register | all 6 decl orders of mode/round/cup in ItemList, for/while count loops; 5 min permuter |
 | `SwitchTest_Page` | game/SwitchTest_Page | 99.91 | `steer` / `st` not coalesced | |
 | `fn_801DABFC` | game/fn_801DABFC | 99.20 | bool compare emitted as `cmplwi` | int/u8/bool |
 | `EffectItemChainIndicator_Tick` | game/EffectItemChainIndicator_Tick | 99.70 | register coloring | |
@@ -50,11 +50,15 @@ all of these.
 | `fn_8020615C` | game/anon_80205DCC | 99.78 | f29/f30 swap | |
 | `fn_801BDEB4` | game/fn_801BAA88 | 99.71 | ResCtrl t0/t1/t2 store order vs `li` registers | |
 | `fn_8028A3EC` | triforce/amcoin_nm2 | 99.49 | r0/r3 swap | |
+| `fn_8028A934` | triforce/amjvs_nm2 | 99.6 | target reuses r3 (`nodes`) for `n = &nodes[node]`; we copy to r5 | `nodes += node`, direct `nodes[node].x`, u32/u8 idx casts, split early return |
+| `BackupWriteRecord` | triforce/ambackup_nm1 | 94.6 | with GC/1.3 the permuter got 64 -> 31: recSize/hdr r29/r31 swap plus Checksum p/sum r3/r4 | 5+20 min permuter at GC/1.3; open-coded checksum loops |
+| `fn_80286864` | triforce/random_nm1 | 84.8 | target shares `ret`'s `li r31, 0` with the zero high word of the inlined u64 range; we emit a separate `li r8, 0` | ret/range variants; 10+20 min permuter |
+| `clItemBoxManager_InitStateTable` | game/clItemBoxManager_StepTable | 91.8 | target __sinit addresses both tables from one pool base (`lbl_803F9C60`); CW pools only static objects and only when a function touches 3+, and the sinit touches 2. Other clItemBox_* TUs use the tables by name | statics (still per-symbol), hand-written sinit through a base pointer (becomes a leaf, extab lost), GC/1.2.5n..2.7 |
 | `fn_80291134` | triforce/amsrv_nm1 | 93.71 | target keeps `mr r3, ch` late so temps use r3; `p` not coalesced into r3 | |
 | `KartShellRibbonDraw` | game/KartShellRibbonDraw | 99.91 | f30/f31 swap only (GC/2.6) | |
 | `fn_8023A148` | game/fn_8023A148 | 99.44 | title / color r0/r4 swap | |
 | `fn_8023AC14` | game/ItemSelectChoiceUpdate | 97.91 | register coloring | `notes/r4/fn_8023AC14_9889.diff` |
-| `fn_801D2F0C` | game/anon_801D2F0C | 99.91 | `PSMTXTrans` y/z argument registers | |
+| `fn_801D2F0C` | game/anon_801D2F0C | 99.91 | `PSMTXTrans` y/z argument registers | locals for y/z/x in both orders, `const &` placement, non-const placement member, Vec temp, GC/1.3..2.7: all identical |
 | `fn_80242E80` | game/fn_80242E80 | 99.40 | scheduling | |
 | `fn_80228394` | game/DNFlash_nm2 | 94.60 | sibling `fn_802281F0` matched with `extern const` tables + `dx` then `nx = -dx`; this one did not follow | |
 | `SpriteGroup_CreateOrInit` | game/SpriteGroupCreate | 95.65 | `lwz`/`stw` (and `li`) order | |
@@ -102,7 +106,7 @@ See "Pooled base registers" and "Over-split TUs" in `docs/matching_rules.md`.
 | `fn_80288BCC` | triforce/ambackup_nm3 | 92.94 | `opt_propagation off` gets it to 1 line; target keeps a dead `b` after `li r3,1; b ret` | |
 | `fn_801934F4` | game/clsound/fn_801934F4 | 90.86 | `opt_dead_assignments off` + `peephole off` gets 5 lines; target `mr r30, r29` (i = row copy) | |
 | `fn_801F8250` | game/fn_801F8250 | 96.33 | `slwi`/`addi` order (4 lines); table shared with fn_801F7604..fn_801F8A34 TUs | |
-| `fn_801F894C` | game/fn_801F894C | 97.44 | rodata table `lbl_803BEDC0` shared by 4 TUs | |
+| `fn_801F894C` | game/fn_801F894C | 97.44 | rodata table `lbl_803BEDC0` shared by 4 TUs | target `addi r3, r31, 0` = section-pool base, so 0x801F7604..0x801F89F0 was one TU owning that .rodata (merge). `opt_propagation off` only gives `mr` |
 | `Effect_KartAuraCompound_Update` | game/EffectKartAuraCompound | 94.68 | `opt_common_subs off` gets 48 lines; `li 0` / `li 1` order | |
 | `RankLog_OnMatchEnd` | game/RankLog | 93.43 | table index shape | |
 | `fn_8015E928` | game/resultscene/resultscene | 61.37 | not tuned much | |
