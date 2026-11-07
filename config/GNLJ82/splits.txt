@@ -6033,6 +6033,7 @@ game/NokoNoko_801287F8.cpp:
 	extab       start:0x8000C444 end:0x8000C688
 	extabindex  start:0x800249BC end:0x80024A10
 	.text       start:0x801287F8 end:0x8012A5AC
+	.rodata     start:0x803561E8 end:0x80356708
 
 game/dtor_8012A5AC.c:
 	extab       start:0x8000C688 end:0x8000C690

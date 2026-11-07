@@ -8,6 +8,10 @@ extern unsigned char lbl_806D708C[5];
  */
 #pragma cplusplus on
 
+typedef struct { float x, y, z; } Vec;
+void *operator new(unsigned long size);
+void operator delete(void *p);
+
 struct Vec3 { float x, y, z; };
 struct LNode { char pad[8]; void *f8; };
 struct Trail { int age; Vec3 pos; };
@@ -86,6 +90,59 @@ struct TimeTrialMode {
 /* TOP-END */
 
 extern "C" {
+
+extern const float lbl_806D7050;
+extern const float lbl_806D7058;
+extern const float lbl_806D7068;
+extern const float lbl_806D706C;
+extern const float lbl_806D7070;
+extern const float lbl_806D70B0;
+extern const float lbl_806D70BC;
+extern const float lbl_806D70C0;
+extern const float lbl_806D70C4;
+extern int g_characterId;
+extern unsigned char g_lakituStartAnimDone;
+extern void *g_raceCamera;
+extern unsigned char g_raceEnded;
+extern float g_raceTimeRemaining;
+extern void *g_weatherSystem;
+extern int lbl_806D12BC;
+
+void DrawManager_GetOrCreate(void);
+void SetResourceLoadingFlag(int on);
+void DMAChannelManager_Init(void);
+void TransitionEffect_GetOrCreate(void);
+void SoundChannels_ClearAll(void);
+void ItemObjectManager_Init(void);
+void CourseObjectManager_Init(void);
+void GetCourseDataPtr(void);
+int HSD_LObjLoadDesc(void);
+void SetActiveCamera(int idx, void *camera);
+void ProcessSystemTick(int arg);
+void *GetRaceContextPtr(void);
+void RankingTable_Init(void *ctx);
+void SoundDriver_GetOrCreate(int arg);
+int GetDisplayBufferIndex(void);
+void GetStartPosition(int idx, float *x, float *y, float *z);
+float GetCourseStartYaw(void);
+struct RenderObj *CarObject_GetRenderObj(void *car);
+void KartMovement_EquipItem(void *obj, int item);
+void SetPlayerCarObject(void *car);
+int *GetKartModelNameEntry(int chara, int arg);
+void Scene3D_GetCameraPos(void *scene, float *a, float *b);
+void Scene3D_SetupProjection(void *scene, float a, float b);
+void HUD_RegisterOverlay(void *hud, int id, int arg);
+void SetCourseScene3D(void *scene);
+int MiniGame_GetTimerValue(void);
+void PreloadEffectResources(int id);
+float *MiniGame_GetCourseData(void);
+void NokoNoko_Init(float speed);
+void PreloadResource(int id);
+void clNormal3D_SetFlags(void *o, unsigned int flags, int arg);
+void *Archive_GetRootJObj(void *o);
+void HSD_JObjSetFlags(void *jobj, unsigned int flags);
+void Object_SetJObjScaleXYZ(void *o, float x, float y, float z);
+
 void CObj_DebugVizPathFlush(void *scene);
 void CourseEnvironment_RenderObjects_Timed(void *env);
 void DrawEffect_TickAndCull(void);
@@ -119,14 +176,12 @@ extern void CObj_LoadProjMatrix();
 extern void CarObject_ApplyInput();
 extern void CarObject_CalcSpeedRatio();
 extern void CarObject_FrameUpdate();
-extern void CarObject_GetRenderObj();
 extern void ChallengeGoalCamera_Update();
 extern void Clamp_Int();
 extern void CourseEnvironment_UpdateAndCullZones_Timed();
 extern void DebugPrintf();
 extern void Fog_UpdateFromCourseScene3D();
 extern void GetInputManager();
-void *GetRaceContextPtr(void);
 extern void HSD_JObjSetupMatrixSub();
 extern void HUD_FrameUpdate();
 extern void InputMgr_GetPlayer();
@@ -175,16 +230,8 @@ extern void fn_80253C74();
 extern void fn_80253EBC();
 extern void fn_80253EC0();
 extern void fn_80253FD8();
-extern unsigned int g_lakituStartAnimDone;
-extern unsigned int g_raceEnded;
-extern unsigned int g_raceTimeRemaining;
-extern void *g_weatherSystem;
 extern unsigned int lbl_806D1290;
 extern const float lbl_806D7054;
-extern const float lbl_806D7058;
-extern unsigned int lbl_806D7068;
-extern const float lbl_806D706C;
-extern const float lbl_806D7070;
 extern unsigned int lbl_806D7074;
 extern unsigned int lbl_806D7078;
 extern unsigned int lbl_806D707C;
@@ -195,7 +242,7 @@ extern unsigned int lbl_806D709C;
 extern unsigned int lbl_806D70A0;
 extern unsigned int lbl_806D70A4;
 extern unsigned int lbl_806D70A8;
-extern unsigned int lbl_803561E8[];
+extern const unsigned int lbl_803561E8[0x10C];
 extern unsigned int lbl_80677C58[];
 extern unsigned int lbl_80677C64[];
 extern void dtor_80036E40();
@@ -204,11 +251,7 @@ void CourseEnvironment_Dtor(void *env, int del);
 void ItemObjectManager_Reset(void);
 void LakituStart_Dtor(void *l, int del);
 void MemoryManager_TimedFree(void *p);
-void RankingTable_Init(void *ctx);
 void SceneDrawList_Reset(void);
-void SetActiveCamera(int a, void *cam);
-void SetPlayerCarObject(void *car);
-void SetResourceLoadingFlag(unsigned char on);
 void VfxSlotMgr_Shutdown(void);
 void __destroy_arr(void *block, void *dtor, unsigned long size, unsigned long count);
 void clRom_PurgeAll(void);
@@ -218,58 +261,22 @@ void fn_80124C84(void *cam, int del);
 void fn_8016C634(void *w, int del);
 void fn_80188DA8(void);
 void fn_80254134(void *hud, int del);
-extern void *g_raceCamera;
 void dtor_80082960(void);
 extern void *lbl_8048E338[];
 extern void Alloc();
-extern void Archive_GetRootJObj();
 extern void Camera_Create();
 extern void CarObject_Init();
 extern void ChallengeGoalCamera_Init();
-extern void CourseObjectManager_Init();
-extern void DMAChannelManager_Init();
-extern void DrawManager_GetOrCreate();
 extern void GameMode_BaseInit();
-extern void GetCourseDataPtr();
-extern void GetCourseStartYaw();
-extern void GetDisplayBufferIndex();
-extern void GetKartModelNameEntry();
-extern void GetStartPosition();
-extern void HSD_JObjSetFlags();
-extern void HSD_LObjLoadDesc();
 extern void HUD_Init();
-extern void HUD_RegisterOverlay();
 extern void InputManager_Init();
-extern void ItemObjectManager_Init();
-extern void KartMovement_EquipItem();
 extern void LakituStart_Init();
 extern void MapWaterEffect_Init();
-extern void MiniGame_GetCourseData();
-extern void MiniGame_GetTimerValue();
-extern void NokoNoko_Init();
-void Object_SetJObjScaleXYZ(void *o, float x, float y, float z);
-extern void PreloadEffectResources();
-extern void PreloadResource();
-extern void ProcessSystemTick();
-extern void Scene3D_GetCameraPos();
 extern void Scene3D_Init();
-extern void Scene3D_SetupProjection();
-extern void SetCourseScene3D();
-extern void SoundChannels_ClearAll();
-extern void SoundDriver_GetOrCreate();
-extern void TransitionEffect_GetOrCreate();
 extern void WeatherSystem_Init();
 extern void __construct_array();
 extern void clNormal3D_Construct();
-extern void clNormal3D_SetFlags();
-extern unsigned int g_characterId;
-extern unsigned int lbl_806D12BC;
-extern const float lbl_806D7050;
 extern unsigned int lbl_806D7060;
-extern const float lbl_806D70B0;
-extern unsigned int lbl_806D70BC;
-extern unsigned int lbl_806D70C0;
-extern unsigned int lbl_806D70C4;
 extern unsigned int ResCtrl_Init[];
 extern unsigned int lbl_8048E144[];
 extern void *lbl_8048E34C[];
@@ -294,7 +301,6 @@ void Object_DtorWithGXSync(void *o, int flag);
 void TimeTrial_Render(TimeTrialMode *self);
 asm void NokoNokoChallenge_Update(void);
 TimeTrialMode *TimeTrial_Destroy(TimeTrialMode *self, short flag);
-asm void NokoNokoChallenge_Init(void);
 void fn_8012A070(ShotOwner *self);
 void fn_8012A22C(ShotOwner *self);
 ModelPair *fn_8012A52C(ModelPair *self, short flag);
@@ -304,7 +310,6 @@ ModelPair *fn_8012A52C(ModelPair *self, short flag);
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_NokoNokoChallenge_Update = { 0x308A0000, 0x00000258, 0x028F0010, 0x00000000, 0x8200002C, (void *)&dtor_80036E40 };
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; unsigned int f45; unsigned int f46; unsigned int f47; unsigned int f48; unsigned int f49; unsigned int f50; unsigned int f51; unsigned int f52; unsigned int f53; unsigned int f54; unsigned int f55; unsigned int f56; unsigned int f57; unsigned int f58; unsigned int f59; unsigned int f60; void *f61; unsigned int f62; unsigned int f63; void *f64; unsigned int f65; void *f66; unsigned int f67; unsigned int f68; void *f69; unsigned int f70; void *f71; unsigned int f72; unsigned int f73; void *f74; unsigned int f75; void *f76; unsigned int f77; unsigned int f78; void *f79; unsigned int f80; void *f81; unsigned int f82; unsigned int f83; void *f84; unsigned int f85; void *f86; unsigned int f87; unsigned int f88; void *f89; unsigned int f90; void *f91; unsigned int f92; unsigned int f93; void *f94; unsigned int f95; void *f96; unsigned int f97; unsigned int f98; void *f99; unsigned int f100; unsigned int f101; unsigned int f102; unsigned int f103; void *f104; unsigned int f105; void *f106; unsigned int f107; unsigned int f108; void *f109; unsigned int f110; void *f111; unsigned int f112; void *f113; unsigned int f114; unsigned int f115; void *f116; unsigned int f117; void *f118; unsigned int f119; unsigned int f120; unsigned int f121; void *f122; unsigned int f123; unsigned int f124; void *f125; unsigned int f126; unsigned int f127; void *f128; } extab_NokoNokoChallenge_Init = { 0x204A0000, 0x00000060, 0x000900F8, 0x00000090, 0x000000F0, 0x00000098, 0x000400F8, 0x000000C8, 0x00000104, 0x000000D8, 0x001100F8, 0x0000012C, 0x00100118, 0x00000178, 0x000E00F8, 0x000001D0, 0x0000012C, 0x000001DC, 0x000000F8, 0x000001F0, 0x00040140, 0x0000020C, 0x000000F8, 0x00000218, 0x00000154, 0x00000224, 0x000000F8, 0x00000230, 0x00000168, 0x0000023C, 0x000D00F8, 0x00000280, 0x0000017C, 0x00000294, 0x003100F8, 0x00000380, 0x000001A4, 0x00000388, 0x00040190, 0x0000050C, 0x000000F8, 0x0000053C, 0x000001C0, 0x00000550, 0x000001B8, 0x00000564, 0x000201C0, 0x00000580, 0x000001D4, 0x0000058C, 0x000201C0, 0x000006D8, 0x000001E0, 0x000006F0, 0x000000F8, 0x00000700, 0x000001F0, 0x0000070C, 0x000000F8, 0x00000000, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0980001C, 0x00000000, 0x00000008, 0x00000058, (void *)&dtor_80082960, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x010001C0, 0x0680001C, 0x00000000, (void *)&dtor_8012A5AC, 0x010001C0, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8 };
 
 
 
@@ -316,9 +321,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_NokoNokoChallenge_Init = {
-    (void *)&NokoNokoChallenge_Init, 0x00000738, (void *)&extab_NokoNokoChallenge_Init
-};
 
 
 
@@ -328,6 +330,71 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
+
+/* .rodata 0x803561E8..0x80356708, owned by this TU (pool base of the mode ctor). */
+struct IconPos { float x, y; };
+
+extern "C" const unsigned int lbl_803561E8[0x10C] = {
+    0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000,
+    0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000,
+    0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000,
+    0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000,
+    0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
+    0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000,
+    0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000,
+    0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000,
+    0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000,
+    0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
+    0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x00000000,
+    0x000014BA, 0x000014BB, 0x000014BC, 0x000014BD, 0x000014BE, 0x000014BF,
+    0x000014C0, 0x000014C1, 0x000014C2, 0x000014C3,
+};
+static const IconPos s_iconPos[8] = {
+    { 520.0f, 421.25f }, { 450.0f, 419.25f }, { 485.0f, 421.25f }, { 515.0f, 419.25f },
+    { 545.0f, 419.25f }, { 565.0f, 426.25f }, { 580.0f, 433.25f }, { 598.0f, 433.25f },
+};
+extern "C" const char lbl_80356658[] = "clCGameDK";
+extern "C" const char lbl_80356664[] = "clJobRunner";
+extern "C" const char lbl_80356670[] = "Start to DKCoin.  %s - %d\n";
+extern "C" const char lbl_8035668C[] = "CGameCoin.hpp";
+extern "C" const char lbl_8035669C[] = "item_center_joint";
+static const char s_lakituFile[20] = "jyugemu_start.dat";
+static const char s_coinFile[16] = "mario_coin.dat";
+static const char s_kiraFile[16] = "k_kira13.dat";
+extern "C" const char lbl_803566E4[] = "clCGameCoinBase";
+extern "C" const char lbl_803566F4[] = "clCGameDKCoin";
 
 extern "C" void TimeTrial_Render(TimeTrialMode *self)
 {
@@ -1312,487 +1379,252 @@ extern "C" TimeTrialMode *TimeTrial_Destroy(TimeTrialMode *self, short flag)
     return self;
 }
 
-extern "C" asm void NokoNokoChallenge_Init(void) { /* 0x80129938 size:0x738 */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    stw r0, 0x54(r1)
-    stfd f31, 0x40(r1)
-    psq_st f31, 0x48(r1), 0, 0
-    stw r31, 0x3c(r1)
-    stw r30, 0x38(r1)
-    stw r29, 0x34(r1)
-    stw r28, 0x30(r1)
-    mr r31, r3
-    lis r4, lbl_803561E8@ha
-    mr r0, r31
-    mr r28, r0
-    addi r30, r4, lbl_803561E8@l
-    bl GameMode_BaseInit
-    lis r4, lbl_8048E144@ha
-    lis r3, lbl_8048E338@ha
-    addi r0, r4, lbl_8048E144@l
-    lfs f0, lbl_806D7070(r2)
-    stw r0, 0x0(r28)
-    addi r0, r3, lbl_8048E338@l
-    stfs f0, 0x4(r28)
-    stw r0, 0x0(r31)
-    bl DrawManager_GetOrCreate
-    li r3, 0x0
-    bl SetResourceLoadingFlag
-    bl DMAChannelManager_Init
-    bl TransitionEffect_GetOrCreate
-    bl SoundChannels_ClearAll
-    bl ItemObjectManager_Init
-    bl CourseObjectManager_Init
-    li r3, 0x37c
-    bl Alloc
-    mr. r28, r3
-    beq NokoNokoChallenge_Init_L_801299C8
-    bl InputManager_Init
-    NokoNokoChallenge_Init_L_801299C8:
-    stw r28, 0x10(r31)
-    bl GetCourseDataPtr
-    bl HSD_LObjLoadDesc
-    stw r3, 0x20(r31)
-    li r3, 0x2c
-    bl Alloc
-    mr. r28, r3
-    beq NokoNokoChallenge_Init_L_80129A00
-    lfs f1, lbl_806D70BC(r2)
-    li r4, 0x100
-    lfs f2, lbl_806D706C(r2)
-    li r5, 0x100
-    lwz r6, 0x20(r31)
-    bl Camera_Create
-    NokoNokoChallenge_Init_L_80129A00:
-    stw r28, 0x1c(r31)
-    li r3, 0x0
-    lwz r4, 0x1c(r31)
-    bl SetActiveCamera
-    lwz r0, 0x1c(r31)
-    li r3, 0x0
-    stw r0, g_raceCamera(r13)
-    bl ProcessSystemTick
-    bl GetRaceContextPtr
-    bl RankingTable_Init
-    li r0, 0x0
-    li r3, 0x0
-    stw r0, lbl_806D12BC(r13)
-    bl SoundDriver_GetOrCreate
-    addi r4, r1, 0x1c
-    addi r6, r1, 0x18
-    li r3, 0x0
-    li r5, 0x0
-    bl GetStartPosition
-    li r3, 0x118
-    bl Alloc
-    mr. r29, r3
-    beq NokoNokoChallenge_Init_L_80129AA4
-    lwz r28, g_characterId(r13)
-    bl GetCourseStartYaw
-    fmr f31, f1
-    bl GetDisplayBufferIndex
-    li r0, 0x0
-    mr r4, r3
-    stw r0, 0x8(r1)
-    fmr f3, f31
-    mr r3, r29
-    mr r5, r28
-    lfs f1, 0x1c(r1)
-    li r6, 0x0
-    lfs f2, 0x18(r1)
-    li r7, 0x0
-    li r8, 0x1
-    li r9, 0x1
-    li r10, 0x0
-    bl CarObject_Init
-    NokoNokoChallenge_Init_L_80129AA4:
-    stw r29, 0x8(r31)
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    li r0, 0x1
-    stw r0, 0x238(r3)
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    li r0, 0x1
-    stb r0, 0x2d0(r3)
-    lwz r3, 0x8(r31)
-    bl SetPlayerCarObject
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    li r4, 0x6
-    bl KartMovement_EquipItem
-    li r3, 0x58
-    bl Alloc
-    mr. r28, r3
-    beq NokoNokoChallenge_Init_L_80129B08
-    lfs f2, lbl_806D7070(r2)
-    addi r4, r30, 0x4c8
-    lfs f1, lbl_806D70B0(r2)
-    li r5, 0x0
-    fmr f3, f2
-    bl LakituStart_Init
-    NokoNokoChallenge_Init_L_80129B08:
-    stw r28, 0xc(r31)
-    li r3, 0x3084
-    bl Alloc
-    mr. r28, r3
-    beq NokoNokoChallenge_Init_L_80129B38
-    lwz r3, g_characterId(r13)
-    li r4, -0x1
-    bl GetKartModelNameEntry
-    mr r4, r3
-    mr r3, r28
-    lwz r4, 0x0(r4)
-    bl Scene3D_Init
-    NokoNokoChallenge_Init_L_80129B38:
-    stw r28, 0x14(r31)
-    li r3, 0x8
-    bl Alloc
-    mr. r28, r3
-    beq NokoNokoChallenge_Init_L_80129B50
-    bl ChallengeGoalCamera_Init
-    NokoNokoChallenge_Init_L_80129B50:
-    stw r28, 0x18(r31)
-    li r3, 0x10
-    bl Alloc
-    mr. r28, r3
-    beq NokoNokoChallenge_Init_L_80129B68
-    bl MapWaterEffect_Init
-    NokoNokoChallenge_Init_L_80129B68:
-    stw r28, 0x30(r31)
-    li r3, 0x0
-    bl ProcessSystemTick
-    lwz r3, 0x14(r31)
-    addi r4, r1, 0x14
-    addi r5, r1, 0x10
-    bl Scene3D_GetCameraPos
-    lfs f1, 0x14(r1)
-    lfs f0, lbl_806D7050(r2)
-    lfs f2, 0x10(r1)
-    fadds f1, f1, f0
-    stfs f1, 0x14(r1)
-    lwz r3, 0x14(r31)
-    bl Scene3D_SetupProjection
-    li r3, 0x80
-    bl Alloc
-    mr. r28, r3
-    beq NokoNokoChallenge_Init_L_80129BB8
-    li r4, 0x0
-    bl HUD_Init
-    NokoNokoChallenge_Init_L_80129BB8:
-    stw r28, 0x28(r31)
-    li r4, 0x6
-    li r5, 0x0
-    lwz r3, 0x28(r31)
-    bl HUD_RegisterOverlay
-    lwz r3, 0x28(r31)
-    li r4, 0x11
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    lwz r3, 0x28(r31)
-    li r4, 0x12
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    lwz r3, 0x28(r31)
-    li r4, 0xe
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    li r0, 0x0
-    stb r0, g_lakituStartAnimDone(r13)
-    lwz r3, 0x14(r31)
-    bl SetCourseScene3D
-    li r0, 0x0
-    stb r0, g_raceEnded(r13)
-    stb r0, 0x34(r31)
-    stb r0, 0x36(r31)
-    stw r0, 0x38(r31)
-    stw r0, 0x3c(r31)
-    bl MiniGame_GetTimerValue
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x24(r1)
-    li r3, 0x2
-    lfd f1, lbl_806D7060(r2)
-    stw r0, 0x20(r1)
-    lfd f0, 0x20(r1)
-    fsubs f0, f0, f1
-    stfs f0, g_raceTimeRemaining(r13)
-    bl PreloadEffectResources
-    li r3, 0x9
-    bl PreloadEffectResources
-    li r3, 0xa
-    bl PreloadEffectResources
-    bl MiniGame_GetCourseData
-    li r0, 0xf
-    cmplwi r3, 0x0
-    stw r0, 0x40(r31)
-    lfs f1, lbl_806D7058(r2)
-    beq NokoNokoChallenge_Init_L_80129C84
-    lfs f1, 0x0(r3)
-    lwz r0, 0x4(r3)
-    stw r0, 0x40(r31)
-    NokoNokoChallenge_Init_L_80129C84:
-    bl NokoNoko_Init
-    li r3, 0x2c8
-    bl Alloc
-    mr. r28, r3
-    beq NokoNokoChallenge_Init_L_80129E38
-    lis r4, ResCtrl_Init@ha
-    lis r5, dtor_80082960@ha
-    lwz r29, 0x40(r31)
-    addi r4, r4, ResCtrl_Init@l
-    addi r5, r5, dtor_80082960@l
-    li r6, 0x58
-    li r7, 0x8
-    bl __construct_array
-    li r3, 0x14b9
-    bl PreloadResource
-    li r3, 0x14c4
-    bl PreloadResource
-    li r3, 0x14ba
-    bl PreloadResource
-    lis r3, 0x6666
-    addi r4, r30, 0x430
-    addi r0, r3, 0x6667
-    li r3, 0x14b9
-    mulhw r0, r0, r29
-    stw r3, 0x0(r28)
-    li r3, 0x14c7
-    lfs f2, lbl_806D7068(r2)
-    stw r3, 0x58(r28)
-    li r3, 0x14c5
-    srawi r5, r0, 2
-    stw r3, 0xb0(r28)
-    li r6, 0x1ecd
-    srawi r0, r0, 2
-    srwi r3, r0, 31
-    stw r6, 0x108(r28)
-    li r7, 0x14ba
-    srwi r6, r5, 31
-    add r0, r0, r3
-    stw r7, 0x160(r28)
-    mulli r0, r0, 0xa
-    li r3, 0x14c4
-    add r5, r5, r6
-    stw r3, 0x1b8(r28)
-    lfs f0, lbl_806D70C0(r2)
-    li r3, 0x1
-    addi r6, r5, 0x14ba
-    subf r5, r0, r29
-    stw r6, 0x210(r28)
-    addi r5, r5, 0x14ba
-    lfs f3, 0x430(r30)
-    li r0, 0x0
-    stw r5, 0x268(r28)
-    lfs f4, 0x4(r4)
-    stfs f2, 0x1e4(r28)
-    lfs f1, lbl_806D7058(r2)
-    stfs f2, 0x1e8(r28)
-    lfs f8, 0x8(r4)
-    stfs f0, 0x23c(r28)
-    lfs f2, 0xc(r4)
-    stfs f0, 0x240(r28)
-    lfs f13, 0x10(r4)
-    stfs f0, 0x294(r28)
-    lfs f7, 0x14(r4)
-    stfs f0, 0x298(r28)
-    lfs f12, 0x18(r4)
-    stb r3, 0x10(r28)
-    lfs f6, 0x1c(r4)
-    stfs f3, 0x14(r28)
-    lfs f11, 0x20(r4)
-    stfs f4, 0x18(r28)
-    lfs f5, 0x24(r4)
-    stfs f1, 0x1c(r28)
-    lfs f10, 0x28(r4)
-    stb r3, 0x68(r28)
-    lfs f4, 0x2c(r4)
-    stfs f8, 0x6c(r28)
-    lfs f9, 0x30(r4)
-    stfs f2, 0x70(r28)
-    lfs f3, 0x34(r4)
-    stfs f1, 0x74(r28)
-    lfs f8, 0x38(r4)
-    stb r3, 0xc0(r28)
-    lfs f2, 0x3c(r4)
-    stfs f13, 0xc4(r28)
-    lfs f0, lbl_806D7070(r2)
-    stfs f7, 0xc8(r28)
-    stfs f1, 0xcc(r28)
-    stb r3, 0x118(r28)
-    stfs f12, 0x11c(r28)
-    stfs f6, 0x120(r28)
-    stfs f1, 0x124(r28)
-    stb r3, 0x170(r28)
-    stfs f11, 0x174(r28)
-    stfs f5, 0x178(r28)
-    stfs f1, 0x17c(r28)
-    stb r3, 0x1c8(r28)
-    stfs f10, 0x1cc(r28)
-    stfs f4, 0x1d0(r28)
-    stfs f1, 0x1d4(r28)
-    stb r3, 0x220(r28)
-    stfs f9, 0x224(r28)
-    stfs f3, 0x228(r28)
-    stfs f1, 0x22c(r28)
-    stb r3, 0x278(r28)
-    stfs f8, 0x27c(r28)
-    stfs f2, 0x280(r28)
-    stfs f1, 0x284(r28)
-    stb r0, 0x2c0(r28)
-    stfs f0, 0x2c4(r28)
-    NokoNokoChallenge_Init_L_80129E38:
-    stw r28, 0x2c(r31)
-    li r3, 0x8a0
-    bl Alloc
-    mr. r28, r3
-    beq NokoNokoChallenge_Init_L_8012A010
-    lis r3, lbl_8048E34C@ha
-    li r4, 0x0
-    addi r0, r3, lbl_8048E34C@l
-    stw r0, 0x0(r28)
-    li r0, 0x5
-    li r3, 0x5c
-    stw r4, 0xc(r28)
-    stw r4, 0x10(r28)
-    stw r0, 0x89c(r28)
-    bl Alloc
-    mr. r29, r3
-    beq NokoNokoChallenge_Init_L_80129E88
-    addi r4, r30, 0x4dc
-    li r5, 0x1
-    bl clNormal3D_Construct
-    NokoNokoChallenge_Init_L_80129E88:
-    stw r29, 0x4(r28)
-    lis r4, 0x4000
-    li r5, 0x0
-    lwz r3, 0x4(r28)
-    bl clNormal3D_SetFlags
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq NokoNokoChallenge_Init_L_80129EB8
-    addi r4, r30, 0x4ec
-    li r5, 0x1
-    bl clNormal3D_Construct
-    NokoNokoChallenge_Init_L_80129EB8:
-    stw r29, 0x8(r28)
-    lwz r3, 0x8(r28)
-    bl Archive_GetRootJObj
-    li r4, 0x200
-    bl HSD_JObjSetFlags
-    li r0, 0x6
-    lfs f0, lbl_806D7070(r2)
-    li r11, 0x0
-    mtctr r0
-    NokoNokoChallenge_Init_L_80129EDC:
-    addi r0, r11, 0x14
-    li r8, 0x0
-    stwx r8, r28, r0
-    addi r0, r11, 0x1c
-    addi r9, r11, 0x20
-    addi r10, r11, 0x2c
-    stwx r8, r28, r0
-    addi r4, r11, 0x38
-    addi r3, r11, 0x3c
-    addi r0, r11, 0x18
-    stfsx f0, r28, r4
-    add r9, r28, r9
-    add r10, r28, r10
-    addi r6, r28, 0x40
-    stfsx f0, r28, r3
-    li r7, -0x1
-    addi r5, r28, 0x50
-    addi r4, r28, 0x60
-    stwx r8, r28, r0
-    addi r3, r28, 0x70
-    addi r0, r28, 0x80
-    stfs f0, 0x8(r9)
-    stfs f0, 0x4(r9)
-    stfs f0, 0x0(r9)
-    stfs f0, 0x8(r10)
-    stfs f0, 0x4(r10)
-    stfs f0, 0x0(r10)
-    stwx r7, r11, r6
-    addi r6, r28, 0x90
-    stwx r7, r11, r5
-    addi r5, r28, 0xa0
-    stwx r7, r11, r4
-    addi r4, r28, 0xb0
-    stwx r7, r11, r3
-    addi r3, r28, 0xc0
-    stwx r7, r11, r0
-    addi r0, r28, 0xd0
-    stwx r7, r11, r6
-    addi r6, r28, 0xe0
-    stwx r7, r11, r5
-    addi r5, r28, 0xf0
-    stwx r7, r11, r4
-    addi r4, r28, 0x100
-    stwx r7, r11, r3
-    addi r3, r28, 0x110
-    stwx r7, r11, r0
-    addi r0, r28, 0x120
-    stwx r7, r11, r6
-    addi r6, r28, 0x130
-    stwx r7, r11, r5
-    addi r5, r28, 0x140
-    stwx r7, r11, r4
-    addi r4, r28, 0x150
-    stwx r7, r11, r3
-    addi r3, r28, 0x160
-    stwx r7, r11, r0
-    addi r0, r28, 0x170
-    stwx r7, r11, r6
-    stwx r7, r11, r5
-    stwx r7, r11, r4
-    stwx r7, r11, r3
-    stwx r7, r11, r0
-    addi r11, r11, 0x16c
-    bdnz NokoNokoChallenge_Init_L_80129EDC
-    lwz r0, 0x89c(r28)
-    cmpwi r0, 0x14
-    blt NokoNokoChallenge_Init_L_80129FF0
-    li r0, 0x13
-    stw r0, 0x89c(r28)
-    NokoNokoChallenge_Init_L_80129FF0:
-    lis r3, lbl_8048E36C@ha
-    lfs f1, lbl_806D70C4(r2)
-    addi r0, r3, lbl_8048E36C@l
-    stw r0, 0x0(r28)
-    fmr f2, f1
-    fmr f3, f1
-    lwz r3, 0x4(r28)
-    bl Object_SetJObjScaleXYZ
-    NokoNokoChallenge_Init_L_8012A010:
-    stw r28, 0x44(r31)
-    lwz r0, g_weatherSystem(r13)
-    cmplwi r0, 0x0
-    bne NokoNokoChallenge_Init_L_8012A03C
-    li r3, 0x1b4
-    bl Alloc
-    mr. r28, r3
-    beq NokoNokoChallenge_Init_L_8012A038
-    li r4, 0x1
-    bl WeatherSystem_Init
-    NokoNokoChallenge_Init_L_8012A038:
-    stw r28, g_weatherSystem(r13)
-    NokoNokoChallenge_Init_L_8012A03C:
-    li r3, 0x1
-    bl SetResourceLoadingFlag
-    mr r3, r31
-    psq_l f31, 0x48(r1), 0, 0
-    lwz r0, 0x54(r1)
-    lfd f31, 0x40(r1)
-    lwz r31, 0x3c(r1)
-    lwz r30, 0x38(r1)
-    lwz r29, 0x34(r1)
-    lwz r28, 0x30(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
+/* NokoNokoChallenge_Init (0x80129938): constructor of the Noko Noko
+ * challenge mode, the same minigame-ctor shape as JumpDistanceMode_Init.
+ * The TU owns .rodata 0x803561E8..0x80356708, so the icon table and the
+ * model file names are addressed off one pool base (r30). Mangled names
+ * are mapped in tools/extab_user_renames.json. */
+#pragma exceptions on
+
+struct RenderObj {
+    char pad0[0x238];
+    int x238;
+    char pad23C[0x94];
+    unsigned char x2D0;
+};
+
+struct InputManager { char data[0x37C]; InputManager(); };
+struct Camera { char data[0x2C]; Camera(float a, float b, int w, int h, int target); };
+struct CarObject {
+    char data[0x118];
+    CarObject(int disp, int chara, int cc, int a, int b, int c, int d, int e, float x, float z, float yaw);
+};
+static inline int GetChara() { return g_characterId; }
+struct PlayerCar : CarObject {
+    PlayerCar(const float *x, const float *z, int chara)
+        : CarObject(GetDisplayBufferIndex(), chara, 0, 0, 1, 1, 0, 0, *x, *z, GetCourseStartYaw()) {}
+};
+struct LakituStart { char data[0x58]; LakituStart(const void *data, int arg, float x, float y, float z); };
+struct Scene3D { char data[0x3084]; Scene3D(int name); };
+struct ChallengeGoalCamera { char data[8]; ChallengeGoalCamera(); };
+struct MapWaterEffect { char data[0x10]; MapWaterEffect(); };
+struct HUD { char data[0x80]; HUD(int arg); };
+struct WeatherSystem { char data[0x1B4]; WeatherSystem(int arg); };
+struct clNormal3D { char data[0x5C]; clNormal3D(const char *file, int arg); };
+
+struct ResCtrl {
+    int id;
+    char pad4[0xC];
+    unsigned char x10;
+    char pad11[3];
+    float x14, x18, x1C;
+    char pad20[0xC];
+    float x2C, x30;
+    char pad34[0x24];
+    ResCtrl();
+    void Set(float x, float y) { x10 = 1; x14 = x; x18 = y; x1C = lbl_806D7058; }
+    ~ResCtrl();
+};
+
+
+struct IconSet {
+    ResCtrl icons[8];
+    unsigned char x2C0;
+    float x2C4;
+    IconSet(int count, const IconPos *pos) {
+        PreloadResource(0x14B9);
+        PreloadResource(0x14C4);
+        PreloadResource(0x14BA);
+        icons[0].id = 0x14B9;
+        icons[1].id = 0x14C7;
+        icons[2].id = 0x14C5;
+        icons[3].id = 0x1ECD;
+        icons[4].id = 0x14BA;
+        icons[5].id = 0x14C4;
+        icons[6].id = count / 10 + 0x14BA;
+        icons[7].id = count % 10 + 0x14BA;
+        icons[5].x2C = lbl_806D7068;
+        icons[5].x30 = lbl_806D7068;
+        icons[6].x2C = lbl_806D70C0;
+        icons[6].x30 = lbl_806D70C0;
+        icons[7].x2C = lbl_806D70C0;
+        icons[7].x30 = lbl_806D70C0;
+        for (int i = 0; i < 8; i++) {
+            icons[i].Set(pos[i].x, pos[i].y);
+        }
+        x2C0 = 0;
+        x2C4 = lbl_806D7070;
+    }
+};
+
+struct ShotVec {
+    float x, y, z;
+    void Zero() { x = y = z = lbl_806D7070; }
+};
+struct CoinShotTrail { int age; ShotVec pos; };
+struct CoinShot {
+    int active;
+    int x4;
+    int timer;
+    ShotVec pos;
+    ShotVec vel;
+    float rot;
+    float alpha;
+    CoinShotTrail trail[20];
+};
+
+struct CoinShotBase {
+    virtual ~CoinShotBase();
+    clNormal3D *model;
+    clNormal3D *trailModel;
+    int xC;
+    int x10;
+    CoinShot shots[6];
+    int trailCount;
+    CoinShotBase(const char *modelFile, const char *trailFile);
+};
+
+inline CoinShotBase::CoinShotBase(const char *modelFile, const char *trailFile) {
+    xC = 0;
+    x10 = 0;
+    trailCount = 5;
+    model = new clNormal3D(modelFile, 1);
+    clNormal3D_SetFlags(model, 0x40000000, 0);
+    trailModel = new clNormal3D(trailFile, 1);
+    HSD_JObjSetFlags(Archive_GetRootJObj(trailModel), 0x200);
+    for (int i = 0; i < 6; i++) {
+        shots[i].active = 0;
+        shots[i].timer = 0;
+        shots[i].rot = lbl_806D7070;
+        shots[i].alpha = lbl_806D7070;
+        shots[i].x4 = 0;
+        shots[i].pos.Zero();
+        shots[i].vel.Zero();
+        for (int j = 0; j < 20; j++) {
+            shots[i].trail[j].age = -1;
+        }
+    }
+    if (trailCount >= 20) {
+        trailCount = 19;
+    }
+}
+
+struct CoinShots : CoinShotBase {
+    CoinShots(const char *modelFile, const char *trailFile) : CoinShotBase(modelFile, trailFile) {
+        Object_SetJObjScaleXYZ(model, lbl_806D70C4, lbl_806D70C4, lbl_806D70C4);
+    }
+    virtual ~CoinShots();
+};
+
+struct GameModeBase {
+    virtual void _key();
+    virtual ~GameModeBase();
+    GameModeBase();
+};
+
+struct ModeBase : GameModeBase {
+    float x4;
+    ModeBase() {
+        x4 = lbl_806D7070;
+    }
+    virtual void _key2();
+    virtual ~ModeBase();
+};
+
+
+struct NokoNokoChallenge : ModeBase {
+    virtual void _key3();
+    CarObject *car;
+    LakituStart *lakitu;
+    InputManager *input;
+    Scene3D *scene;
+    ChallengeGoalCamera *goalCam;
+    Camera *camera;
+    int renderTarget;
+    int x24;
+    HUD *hud;
+    IconSet *icons;
+    MapWaterEffect *water;
+    unsigned char x34, x35, x36;
+    int x38, x3C;
+    int count;
+    CoinShots *shots;
+    NokoNokoChallenge();
+};
+
+NokoNokoChallenge::NokoNokoChallenge() {
+    float x, z;
+    float camA, camB;
+    float *course;
+    float speed;
+
+    DrawManager_GetOrCreate();
+    SetResourceLoadingFlag(0);
+    DMAChannelManager_Init();
+    TransitionEffect_GetOrCreate();
+    SoundChannels_ClearAll();
+    ItemObjectManager_Init();
+    CourseObjectManager_Init();
+    input = new InputManager;
+    GetCourseDataPtr();
+    renderTarget = HSD_LObjLoadDesc();
+    camera = new Camera(lbl_806D70BC, lbl_806D706C, 0x100, 0x100, renderTarget);
+    SetActiveCamera(0, camera);
+    g_raceCamera = camera;
+    ProcessSystemTick(0);
+    RankingTable_Init(GetRaceContextPtr());
+    lbl_806D12BC = 0;
+    SoundDriver_GetOrCreate(0);
+    GetStartPosition(0, &x, 0, &z);
+    car = new PlayerCar(&x, &z, GetChara());
+    {
+        RenderObj *r = CarObject_GetRenderObj(car);
+        r->x238 = 1;
+    }
+    {
+        RenderObj *r = CarObject_GetRenderObj(car);
+        r->x2D0 = 1;
+    }
+    SetPlayerCarObject(car);
+    KartMovement_EquipItem(CarObject_GetRenderObj(car), 6);
+    lakitu = new LakituStart(s_lakituFile, 0, lbl_806D70B0, lbl_806D7070, lbl_806D7070);
+    scene = new Scene3D(*GetKartModelNameEntry(g_characterId, -1));
+    goalCam = new ChallengeGoalCamera;
+    water = new MapWaterEffect;
+    ProcessSystemTick(0);
+    Scene3D_GetCameraPos(scene, &camA, &camB);
+    camA += lbl_806D7050;
+    Scene3D_SetupProjection(scene, camA, camB);
+    hud = new HUD(0);
+    HUD_RegisterOverlay(hud, 6, 0);
+    HUD_RegisterOverlay(hud, 0x11, 0);
+    HUD_RegisterOverlay(hud, 0x12, 0);
+    HUD_RegisterOverlay(hud, 0xE, 0);
+    g_lakituStartAnimDone = 0;
+    SetCourseScene3D(scene);
+    g_raceEnded = 0;
+    x34 = 0;
+    x36 = 0;
+    x38 = 0;
+    x3C = 0;
+    g_raceTimeRemaining = MiniGame_GetTimerValue();
+    PreloadEffectResources(2);
+    PreloadEffectResources(9);
+    PreloadEffectResources(0xA);
+    course = MiniGame_GetCourseData();
+    count = 15;
+    speed = lbl_806D7058;
+    if (course != 0) {
+        speed = course[0];
+        count = ((int *)course)[1];
+    }
+    NokoNoko_Init(speed);
+    icons = new IconSet(count, s_iconPos);
+    shots = new CoinShots(s_coinFile, s_kiraFile);
+    if (g_weatherSystem == 0) {
+        g_weatherSystem = new WeatherSystem(1);
+    }
+    SetResourceLoadingFlag(1);
 }
 
 extern "C" void fn_8012A070(ShotOwner *self)
