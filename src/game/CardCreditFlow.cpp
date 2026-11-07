@@ -87,7 +87,7 @@ extern "C" void fn_80241C88(CardCreditFlow *s) {
     }
     }
     s->list.p->Update(); fn_8024E094(s->prompt);
-    if(s->text) { int mask=-(oldState!=10); unsigned char value=pressed; fn_801D9B70(s->text,(mask & value)!=0); }
+    if(s->text) { fn_801D9B70(s->text,(oldState!=10 ? (unsigned char)pressed : 0) != 0); }
     if(s->choice) {
         if(s->state==5) fn_80160588(s->choice,in->dir,pressed);
         else fn_80160588(s->choice,0,0);
