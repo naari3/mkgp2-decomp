@@ -7,8 +7,8 @@ TUs are claimed by onmokoworks, so the owner applies them (`git apply docs/onmok
 
 Verification: all five source patches applied together, then a clean build
 (`rm -rf build/GNLJ82/src build/GNLJ82/ok`, ninja). main.dol SHA OK and every
-listed function at 100% in report.json (matched functions 7244 -> 7248 on that build;
-the clItemBox function was already counted). Each Matching flip was then checked
+listed function at 100% in report.json (7248 matched functions on that build;
+before count not measured). Each Matching flip was then checked
 on its own with a fresh link; main.dol stayed OK.
 
 | Patch | Function | TU | Before | Fix | After | TU flip |
