@@ -1344,3 +1344,8 @@ c18_u136: fn_802124FC resolves99.76378->100 with literal1.0f/360.0f in final spi
 Source: Codex worker c18_u147_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u147: Object_DriveAnimAndSkin improves 99.123375 -> 99.43723, same 1848B. Extract entire callback-init/AnimateDrive/callback-invoke block into AnimateAllDrive(self) with timer in caller, then declare explicit JObj *joint before rotation in SaveRotations/RestoreRotations. Restore and conversion match exactly; residual40 GPR-only rows: save19, clear3, request14, animate4. Whole-function inline exceeds budget; shared open-coded request locals98.93939, DriveTable getter97.943726, count-before-table decl99.166664. Owned88B EH and12B index payload bytes exact; weak timer adds8/12B. No flag/splits/maps changed; final fallback full DOL SHA-1 exact. Single function cannot mechanism-B split.
+
+## c18_u149_20261107
+Source: Codex worker c18_u149_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 20 fn / 4964 B.
+
+c18_u149 Scene_8015AFCC retry: fresh baseline99.93104, five first-preload-loop r28 vs targetr29 differences. Full resource-phase inline helper regresses99.45977; reuse i in earlier unrolled member init is byte-invariant. Declare i before itemId (int i; int itemId; int extra;) with all code otherwise unchanged: text1740/EH196/index12 all100. Existing name bridges/flags suffice; flip Matching. Full source-linked DOL SHA1 exact, ELF fn8015AFCC/1740 verified; +1 native fn/1740B.
