@@ -5,9 +5,10 @@
  * monitor test page.
  *
  * NonMatching: the axis values. The target divides each clamped difference
- * by 64 in place (same register); written that way CW rematerializes the
- * division at every use, and with separate result variables the
- * differences land in volatile registers. The rest matches.
+ * by 64 in place (same register). Reusing the phase argument for the
+ * acceleration difference preserves its register through division. The
+ * steering and brake differences still use volatile registers before
+ * division; writing those divisions in place rematerializes them at use.
  */
 #include "game/TestMenuPage.h"
 
@@ -55,7 +56,6 @@ extern "C" int SwitchTest_Page(SwitchTestPage *self, int phase)
     InputPlayer *pl;
     unsigned short coin = g_jvsOperatorBits[12];
     int steer;
-    int accel;
     int brake;
     int st;
     int ac;
@@ -87,16 +87,17 @@ extern "C" int SwitchTest_Page(SwitchTestPage *self, int phase)
     if (phase == 2) {
         pl = InputMgr_GetPlayer(GetInputManager(), 0);
         steer = g_jvsOperatorBits[4] - self->steer;
-        accel = g_jvsOperatorBits[5] - self->accel;
+        /* The phase dispatch is complete; reuse its saved value for acceleration. */
+        phase = g_jvsOperatorBits[5] - self->accel;
         brake = g_jvsOperatorBits[6] - self->brake;
-        if (accel < 0) {
-            accel = 0;
+        if (phase < 0) {
+            phase = 0;
         }
         if (brake < 0) {
             brake = 0;
         }
         st = steer / 64;
-        ac = accel / 64;
+        ac = phase / 64;
         br = brake / 64;
         if (self->text != 0) {
             DrawText(self->text, 0x134, 0x48, 4, 1.0f, lbl_806D2E50);
