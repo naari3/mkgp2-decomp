@@ -1,2 +1,7 @@
 
 RaceContextArray 2026-10-23: Dtor 800A4CD4 native 96B / automatic EH/index all 100%. Runtime fn_80270CF4 destroys 128 entries stride BC, then TimedFree if signed short freeFlag>0. Init 800A4D34 calls fn_80270D6C with entry ctor/dtor then clears the same fields as existing RaceContextSlotDriver Slot_Clear. Three structural forms (inline helper, direct indexed fields, decrementing pointer walk) all produce 4-way unroll/32 iterations with hoisted constants, while target is 8-way/16 iterations with constants inside loop. 56.838097%, 260B vs420B; isolated NM singleton to retain Dtor native. Do not repeat these forms without new compiler/unroll evidence. No hand-unrolled opcode/stores or manual EH.
+
+## c17_u19_20261107
+Source: Codex worker c17_u19_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u19: GC/2.6 probe with otherwise production flags is instruction-identical to GC/1.3.2 (56.838097%,260B). Inline the whole 128-slot clear loop in InitializeSlots:57.58095%,260B, -1 moves to target r3 but cursor=r5 and zero=r4; constants still hoisted and unroll still four, not target eight. Real C++ owning RaceContextSlot[128] constructor emits implicit __construct_array but otherwise same A2 text after symbol bridging; no new EH actions. Retained whole-array helper NM, no flag/split/bridge edits, zero native gain. Singleton cannot use rescue B. Do not repeat these probes without new optimizer-pipeline evidence.
