@@ -819,6 +819,23 @@
     "fn_801272D8",
     "clCGameDemo_Dtor"
   ],
+  "src/game/TornadoEffect.c": [
+    "TornadoEffect_InitDetails",
+    "TornadoEffect_Ctor",
+    "TornadoEffect_RenderCallback",
+    "TornadoEffect_SubmitRender",
+    "TornadoEffect_Tick",
+    "TornadoEffect_TriggerFlagD2WithTimer",
+    "TornadoEffect_SetColorPairC8CC",
+    "TornadoEffect_SetFlagC0",
+    "TornadoEffect_SetScalePairB0BC",
+    "TireEffect_ResetSpin",
+    "fn_80057960",
+    "TornadoEffect_ComposeRenderMatrix",
+    "TornadoEffect_ApplyItemVisual_Primary",
+    "TornadoEffect_ApplyItemVisual_Secondary",
+    "TornadoEffect_ApplyItemVisual_Compact"
+  ],
   "src/game/ChallengeDemoTornado.cpp": [
     "fn_80127584",
     "fn_8012772C",

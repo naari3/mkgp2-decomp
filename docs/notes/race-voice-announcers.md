@@ -23,3 +23,8 @@ c14_u32: Race_PerFrameTickAndAudio report 93.44 -> 96.02781 (raw objdiff 92.6071
 Source: Codex worker c16_u101_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2976 B.
 
 c16_u101: fn_801AF850 resolves c13 remaining 15 GPR differences with static inline int CourseVoiceId(int base, int round) { return base + round; } used by cups 6/7/8. Caller int voice and shared SpriteVoice_Push retained. Inline arithmetic return changes sum/queue-offset homes to target r8/r9 (cup8 r7/r8). One structural hypothesis: 99.879036 ->100%, text2976. Matching source-linked full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. No split/EH/data changes.
+
+## c18_u130_20261107
+Source: Codex worker c18_u130_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 5 fn / 5264 B.
+
+c18_u130 fn_801A9D58: resolves c10/c16 12-row path-load scheduling residual by correcting semantic types, 99.66234 ->100%/4620B. Race_CompareKartProgress definition takes integer participant indices; existing RaceVoiceKart::progress void* and pointer parameters were incorrect. TU-private MidRaceKart has int participantIndex at +0x2AC, accessor uses existing entry pad44 kart pointer, call prototype uses int a/b. This restores target kart scratch homes and late global-path load. Typed entry pointer overlay alone regressed99.588745 and was reverted. Text4620/EH8/index12 all100. Matching source-linked main.elf range801A9D58..801AAF64 byte-equal target; full DOL SHA1ea30f3b1 OK. New private include/game/MidRaceVoicePrivate.h; no split/shared header/EH bridge changes.

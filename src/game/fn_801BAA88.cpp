@@ -1680,7 +1680,8 @@ extern "C" void fn_801C14A0(CardRead *self) {
     }
     InputState *in = GetInput();
     int dir = in->dir;
-    bool press = in->held == 1;
+    /* fakematch: the (unsigned char) cast forces the extrwi truncation. Natural code: bool press = in->held == 1; */
+    bool press = (unsigned char)(in->held == 1);
     if (Sci2Card_GetByteFlag1224() == 1) {
         dir = 0;
         press = 0;
@@ -1859,11 +1860,16 @@ inline void *operator new(unsigned long, void *p) {
     return p;
 }
 
-struct ClStr {
+struct ClStrRef {
     char *ptr;
-    ClStr(const char *s) {
-        SharedPtr_Init(this, FUN_8003b120(strlen(s) + 1));
-        strcpy(ptr, s);
+    unsigned long *refs;
+    ClStrRef(void *p) { SharedPtr_Init(this, p); }
+    ~ClStrRef();
+};
+struct ClStr {
+    ClStrRef value;
+    ClStr(const char *s) : value(FUN_8003b120(strlen(s) + 1)) {
+        strcpy(value.ptr, s);
     }
     ~ClStr();
 };
@@ -1937,8 +1943,9 @@ template <class T> KeyVecBase<T>::~KeyVecBase() {
 
 template <class T> void KeyVecBase<T>::clear() {
     T *end = data + count;
-    for (T *p = data; p < end; p++) {
-        p->~T();
+    while (end > data) {
+        --end;
+        end->~T();
     }
     count = 0;
 }

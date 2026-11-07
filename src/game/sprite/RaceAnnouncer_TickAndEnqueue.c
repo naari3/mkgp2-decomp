@@ -85,7 +85,7 @@ unsigned char RaceAnnouncer_TickAndEnqueue(void) {
         return 0;
     }
     if (byRank[0]->active && byRank[1]->active && byRank[2]->active && byRank[3]->active &&
-        byRank[1]->distance + (byRank[2]->distance + byRank[3]->distance) < 2) {
+        (byRank[3]->distance + byRank[2]->distance) + byRank[1]->distance < 2) {
         PUSH(0x1BC);
         PUSH(0x1BD);
         lbl_806D1770 = 1;

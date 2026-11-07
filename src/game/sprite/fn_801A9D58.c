@@ -1,4 +1,4 @@
-#include "game/RaceVoiceGoalPrivate.h"
+#include "game/MidRaceVoicePrivate.h"
 
 /* Mid-race checkpoint trigger: rank to watch and whether a trigger line must
  * also be crossed. */
@@ -20,13 +20,16 @@ extern int fn_801B0F20(short id, short arg);
 extern short fn_801B0CE4(int character, int id, short variant);
 extern float fn_801B0D80(void);
 extern SpriteVoiceRaceEntry *fn_801A1D40(int rank);
-extern int Race_CompareKartProgress(void *path, void *a, void *b);
+extern int Race_CompareKartProgress(void *path, int a, int b);
+static inline int MidRaceParticipant(SpriteVoiceRaceEntry *entry) {
+    return (*(MidRaceKart **)entry->pad44)->participantIndex;
+}
 
 #define ME g_raceEntryArray[g_taMinLapPlayerIndex]
 #define PUSH(id) fn_801B0F20((id), 4)
 #define ME_VOICE() fn_801B0CE4(ME.character, -1, 1)
 #define KART_VOICE(e) fn_801B0CE4((e)->character, (e)->id, 1)
-#define COMPARE(a, b) Race_CompareKartProgress(g_raceRankingPathObject, RACE_VOICE_PROGRESS(a), RACE_VOICE_PROGRESS(b))
+#define COMPARE(a, b) Race_CompareKartProgress(g_raceRankingPathObject, MidRaceParticipant(a), MidRaceParticipant(b))
 #define MID_LINE() (lbl_80498058 + ((g_cupId - 1) * 8 + g_longRoundFlag * 4))
 
 static inline short RankVoice(int rank) {

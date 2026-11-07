@@ -200,12 +200,47 @@ struct ResultKarts {
     }
 };
 
+struct ResCtrlR {
+    ResCtrlR();
+    ~ResCtrlR() {}
+    int id;
+    int pad4;
+    int mode;
+    int padc;
+    unsigned char enable;
+    unsigned char pad11[3];
+    float x;
+    float y;
+    float z;
+    float u;
+    float v;
+    char pad28[0x34 - 0x28];
+    int c0;
+    int c1;
+    int c2;
+    int c3;
+    char pad44[0x58 - 0x44];
+};
+
 struct ResultPartY : ResultPart {
+    ResultPartY(int idx);
     virtual ~ResultPartY();
-    char pad4[0x2c - 4];
+    int mode;
+    int half;
+    int idx;
+    float x10;
+    unsigned char x14;
+    char pad15[3];
+    int x18;
+    float x1c;
+    int x20;
+    float x24;
+    float x28;
     ResultKarts *karts;
     char *buf;
     ResultPair *pair;
+    ResCtrlR r38;
+    ResCtrlR r90;
 };
 
 ResultPartY::~ResultPartY() {
@@ -647,27 +682,6 @@ void fn_8015F0FC(ResultScreen *s) {
     fn_801678FC(7, 0.0f, 0.0f, 0.0f, s->alpha);
 }
 
-struct ResCtrlR {
-    ResCtrlR();
-    ~ResCtrlR() {}
-    int id;
-    int pad4;
-    int mode;
-    int padc;
-    unsigned char enable;
-    unsigned char pad11[3];
-    float x;
-    float y;
-    float z;
-    float u;
-    float v;
-    char pad28[0x34 - 0x28];
-    int c0;
-    int c1;
-    int c2;
-    int c3;
-    char pad44[0x58 - 0x44];
-};
 
 extern void fn_80121E10(ResCtrlR *r);
 extern void fn_8011FAFC_r(ResCtrlR *r, int n);
@@ -1760,4 +1774,201 @@ void fn_8015D4F8(void *unused, int color, const char *text, float x, float y) {
         }
     }
 }
+}
+
+struct ResultFlake;
+struct ResultVec { float x, y, z; };
+extern "C" {
+extern void KartMovement_ResetOnGoal(void *drv);
+extern void PSMTXScale(float m[3][4], float x, float y, float z);
+extern void PSMTXIdentity(float m[3][4]);
+extern void PSMTXConcat(float a[3][4], float b[3][4], float ab[3][4]);
+extern void PSMTXRotRad(float m[3][4], char axis, float rad);
+extern void PSMTXTrans(float m[3][4], float x, float y, float z);
+extern void CObj_LoadIntoGX(VObj *cam, ResultVec *v);
+extern void CObj_ApplyViewport(VObj *cam, ResultVec *v);
+extern void ProcessSystemTick(int);
+extern int fn_80169E20(void);
+extern void fn_8013D738(VObj *f, float a, float b);
+extern void fn_8013D634(VObj *f, float x, float y, float z);
+extern void ClSound_PlayBgmStream(int ch, int n);
+extern unsigned char fn_801932F8(void);
+extern void clStream_setVolume(int ch, unsigned char vol);
+extern const short lbl_806D8664[4];
+extern const float lbl_806D866C, lbl_806D8670, lbl_806D867C, lbl_806D8680, lbl_806D8684, lbl_806D8688;
+extern const float lbl_806D868C, lbl_806D8690, lbl_806D8694, lbl_806D8698, lbl_806D869C, lbl_806D86A0;
+extern const float lbl_806D86A8, lbl_806D86AC, lbl_806D86B0, lbl_806D86B4, lbl_806D86B8, lbl_806D86BC;
+extern const float lbl_806D86C0, lbl_806D86C4, lbl_806D86C8;
+}
+
+struct ResultCam { char d[0x3084]; ResultCam(const char *path); };
+struct ResultModel { char d[0x28]; ResultModel(const char *path, unsigned char flag); };
+struct ResultDriver { char d[0x384]; ResultDriver(int a, int id, float *mtx, int b, int c, int d); };
+struct ResultFlake { char d[0x20]; ResultFlake(const char *path, int flag); };
+
+
+struct ResultKartSlot {
+    ResultKartSlot(int n) {
+        float t[3][4];
+        float s[3][4];
+        float r[3][4];
+        driver = new ResultDriver(6, n, &out[0][0], 0, 0, 0);
+        id = n;
+        x = lbl_806D868C;
+        KartMovement_ResetOnGoal(driver);
+        PSMTXScale(s, lbl_806D8674, lbl_806D8674, lbl_806D8674);
+        PSMTXIdentity(m);
+        PSMTXConcat(s, m, m);
+        PSMTXRotRad(r, 'Z', lbl_806D8690);
+        PSMTXConcat(r, m, m);
+        PSMTXRotRad(r, 'Y', lbl_806D8694);
+        PSMTXConcat(r, m, m);
+        PSMTXTrans(t, lbl_806D8698, lbl_806D8698, lbl_806D869C);
+        PSMTXConcat(t, m, out);
+    }
+    ResultDriver *driver;
+    int id;
+    float x;
+    float out[3][4];
+    float m[3][4];
+};
+
+struct ResultKartSet {
+    ResultKartSet(const char *pool) {
+        int i;
+        ResultVec v;
+        cam = (VObj *)new ResultCam(pool + 0xa10);
+        model = new ResultModel(pool + 0xa10, 0);
+        on = 0;
+        on2 = 0;
+        v.x = lbl_806D8678;
+        v.y = lbl_806D8678;
+        v.z = lbl_806D8688;
+        CObj_LoadIntoGX(cam, &v);
+        v.z = lbl_806D8678;
+        CObj_ApplyViewport(cam, &v);
+        for (i = 0; i < 13; i++) {
+            float t[3][4];
+            ResultKartSlot *k;
+            karts[i] = new ResultKartSlot(((const int *)(pool + 0x408))[i]);
+            karts[i]->x = lbl_806D86A4 * (float)i + lbl_806D86A0;
+            k = karts[i];
+            PSMTXTrans(t, k->x, lbl_806D86A8, lbl_806D869C);
+            PSMTXConcat(t, k->m, k->out);
+            ProcessSystemTick(0);
+        }
+    }
+    VObj *cam;
+    void *model;
+    ResultKartSlot *karts[13];
+    unsigned char on;
+    unsigned char on2;
+};
+
+struct ResultFade {
+    ResultFade(int h) {
+        xb0 = 0;
+        xb4 = 0;
+        xb8 = 0;
+        half = h;
+        a.enable = 1;
+        a.x = lbl_806D86AC;
+        a.y = lbl_806D86B0;
+        a.z = lbl_806D8674;
+        a.c0 = -0x100;
+        a.c1 = -0x100;
+        a.c2 = -0x100;
+        a.c3 = -0x100;
+        b.enable = 1;
+        b.x = lbl_806D86AC;
+        b.y = lbl_806D86B0;
+        b.z = lbl_806D8674;
+        b.c0 = -0x100;
+        b.c1 = -0x100;
+        b.c2 = -0x100;
+        b.c3 = -0x100;
+    }
+    ResCtrlR a;
+    ResCtrlR b;
+    int xb0, xb4, xb8;
+    int half;
+};
+
+
+static inline void Flake_SetPos(VObj *f, const ResultVec &v) {
+    fn_8013D634(f, v.x, v.y, v.z);
+}
+
+
+struct ResultFlakes : RYPair {
+    ResultFlakes(const char *pool) {
+        int i;
+        stopped = 0;
+        timer = 0;
+        interval = 0x78;
+        a = (VObj *)new ResultFlake(pool + 0xa1c, 1);
+        b = (VObj *)new ResultFlake(pool + 0xa30, 1);
+        fn_8013D738(a, lbl_806D8678, lbl_806D8674);
+        { const ResultVec *v = (const ResultVec *)(pool + 0x43c); fn_8013D634(a, (*v).x, v[0].y, v->z); }
+        fn_8013D608(a, lbl_806D86B4, lbl_806D86B4, lbl_806D86B4);
+        fn_8013D738(b, lbl_806D8678, lbl_806D8674);
+        { const ResultVec *v = (const ResultVec *)(pool + 0x448); fn_8013D634(b, (*v).x, v[0].y, v->z); }
+        fn_8013D608(b, lbl_806D86B8, lbl_806D86B8, lbl_806D86B8);
+        for (i = 0; i < 3; i++) RYEntry_Reset(&e[i]);
+    }
+};
+
+ResultPartY::ResultPartY(int n) {
+    const char *pool = lbl_803682B0;
+    fn_80121210();
+    mode = fn_80169E20();
+    half = n / 2;
+    idx = n;
+    x10 = lbl_806D8678;
+    x14 = 0;
+    x18 = 0;
+    x1c = lbl_806D8678;
+    x20 = -1;
+    x24 = lbl_806D8678;
+    x28 = lbl_806D8684;
+    karts = (ResultKarts *)new ResultKartSet(pool);
+    buf = (char *)new ResultFade(half);
+    pair = (ResultPair *)new ResultFlakes(pool);
+    r38.mode = 2;
+    r38.u = lbl_806D86BC;
+    r38.v = lbl_806D86C0;
+    r38.enable = 1;
+    r38.x = lbl_806D86C4;
+    r38.y = lbl_806D86C8;
+    r38.z = lbl_806D8674;
+    r38.c1 = 0;
+    r38.c2 = 0;
+    r38.c0 = 0xff;
+    r38.c3 = 0xff;
+    r90.mode = 2;
+    r90.u = lbl_806D867C;
+    r90.v = lbl_806D8680;
+    r90.enable = 1;
+    r90.x = lbl_806D866C;
+    r90.y = lbl_806D8670;
+    r90.z = lbl_806D8674;
+    r90.c0 = 0;
+    r90.c1 = 0;
+    r90.c2 = 0;
+    r90.c3 = 0;
+    int i;
+    for (i = 0; i < 13; i++) PreloadResource(lbl_806D8664[half] + i);
+    for (i = 0x1da1; i <= 0x1de9; i++) PreloadResource(i);
+    if (mode == 2) {
+        PreloadResource(0x358);
+        PreloadResource(0x359);
+        PreloadResource(0x8d9);
+    } else {
+        PreloadResource(0x8d7);
+        PreloadResource(0x8d8);
+        PreloadResource(0x35a);
+    }
+    PreloadResource(0x50a);
+    ClSound_PlayBgmStream(2, 0);
+    clStream_setVolume(2, fn_801932F8());
 }
