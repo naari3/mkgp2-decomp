@@ -1,3 +1,5 @@
+#include "game/singleton.h"
+
 /* RankLog / TitleTracker (0x800A5CEC..0x800A8D34): per-race stat counters
  * used to pick the player's title after a race, the title check
  * predicates and the name/title lookup. Each counter method takes the
@@ -7,8 +9,8 @@
  * NonMatching: InitStartRace uses a native fieldwise snapshot with the
  * packed 0x1BA words kept at their target offsets. Residual scheduling and
  * register allocation remain in it, the title-name lookups, DetermineTitle,
- * OnMatchEnd and NewClearedRecord_Race. The score predicates still need
- * the target table-pool address generation. Reversed EH ordering prevents
+ * OnMatchEnd and NewClearedRecord_Race. The score predicates now use their
+ * own pooled target tables and match exactly. Reversed EH ordering prevents
  * isolating the exact methods into independently linked TUs.
  */
 
@@ -167,7 +169,143 @@ typedef struct OSCalendarTime {
 } OSCalendarTime;
 
 extern DisplayState lbl_80598A60;
-extern unsigned char lbl_80411458[];
+/* Per cup, CC class and round length: score and two floating limits. */
+typedef struct TitleTarget {
+    signed char score;
+    float limitA;
+    float limitB;
+} TitleTarget;
+
+typedef TitleTarget TargetCup[3][2];
+
+TargetCup lbl_80411458[8] = {
+    {
+        { { 6, 120.0f, 15.0f }, { 4, 120.0f, 20.0f } },
+        { { 6, 120.0f, 15.0f }, { 4, 120.0f, 20.0f } },
+        { { 9, 90.0f, 15.0f }, { 6, 90.0f, 20.0f } },
+    },
+    {
+        { { 8, 120.0f, 10.0f }, { 4, 120.0f, 20.0f } },
+        { { 8, 120.0f, 10.0f }, { 4, 120.0f, 20.0f } },
+        { { 9, 90.0f, 10.0f }, { 6, 90.0f, 20.0f } },
+    },
+    {
+        { { 4, 120.0f, 20.0f }, { 4, 120.0f, 30.0f } },
+        { { 4, 120.0f, 20.0f }, { 4, 120.0f, 30.0f } },
+        { { 6, 90.0f, 20.0f }, { 5, 90.0f, 30.0f } },
+    },
+    {
+        { { 3, 120.0f, 40.0f }, { 3, 120.0f, 50.0f } },
+        { { 3, 120.0f, 40.0f }, { 3, 120.0f, 50.0f } },
+        { { 4, 100.0f, 40.0f }, { 4, 100.0f, 50.0f } },
+    },
+    {
+        { { 4, 120.0f, 30.0f }, { 4, 120.0f, 35.0f } },
+        { { 4, 120.0f, 30.0f }, { 4, 120.0f, 35.0f } },
+        { { 5, 100.0f, 30.0f }, { 5, 100.0f, 35.0f } },
+    },
+    {
+        { { 2, 120.0f, 90.0f }, { 2, 120.0f, 100.0f } },
+        { { 2, 120.0f, 90.0f }, { 2, 120.0f, 100.0f } },
+        { { 3, 100.0f, 90.0f }, { 3, 100.0f, 100.0f } },
+    },
+    {
+        { { 3, 120.0f, 90.0f }, { 2, 150.0f, 100.0f } },
+        { { 3, 120.0f, 90.0f }, { 2, 150.0f, 100.0f } },
+        { { 4, 100.0f, 90.0f }, { 3, 150.0f, 100.0f } },
+    },
+    {
+        { { 4, 120.0f, 30.0f }, { 4, 120.0f, 30.0f } },
+        { { 4, 120.0f, 30.0f }, { 4, 120.0f, 30.0f } },
+        { { 5, 100.0f, 30.0f }, { 5, 100.0f, 30.0f } },
+    },
+};
+
+static TargetCup sTimeAttackTargets[8] = {
+    {
+        { { 6, 120.0f, 15.0f }, { 4, 120.0f, 20.0f } },
+        { { 6, 120.0f, 15.0f }, { 4, 120.0f, 20.0f } },
+        { { 9, 90.0f, 15.0f }, { 6, 90.0f, 20.0f } },
+    },
+    {
+        { { 8, 120.0f, 10.0f }, { 4, 120.0f, 20.0f } },
+        { { 8, 120.0f, 10.0f }, { 4, 120.0f, 20.0f } },
+        { { 9, 90.0f, 10.0f }, { 6, 90.0f, 20.0f } },
+    },
+    {
+        { { 4, 120.0f, 20.0f }, { 4, 120.0f, 30.0f } },
+        { { 4, 120.0f, 20.0f }, { 4, 120.0f, 30.0f } },
+        { { 6, 90.0f, 20.0f }, { 5, 90.0f, 30.0f } },
+    },
+    {
+        { { 3, 120.0f, 40.0f }, { 3, 120.0f, 50.0f } },
+        { { 3, 120.0f, 40.0f }, { 3, 120.0f, 50.0f } },
+        { { 4, 100.0f, 40.0f }, { 4, 100.0f, 50.0f } },
+    },
+    {
+        { { 4, 120.0f, 30.0f }, { 4, 120.0f, 35.0f } },
+        { { 4, 120.0f, 30.0f }, { 4, 120.0f, 35.0f } },
+        { { 5, 100.0f, 30.0f }, { 5, 100.0f, 35.0f } },
+    },
+    {
+        { { 2, 120.0f, 90.0f }, { 2, 120.0f, 100.0f } },
+        { { 2, 120.0f, 90.0f }, { 2, 120.0f, 100.0f } },
+        { { 3, 100.0f, 90.0f }, { 3, 100.0f, 100.0f } },
+    },
+    {
+        { { 3, 120.0f, 90.0f }, { 2, 150.0f, 100.0f } },
+        { { 3, 120.0f, 90.0f }, { 2, 150.0f, 100.0f } },
+        { { 4, 100.0f, 90.0f }, { 3, 150.0f, 100.0f } },
+    },
+    {
+        { { 4, 120.0f, 30.0f }, { 4, 120.0f, 30.0f } },
+        { { 4, 120.0f, 30.0f }, { 4, 120.0f, 30.0f } },
+        { { 5, 100.0f, 30.0f }, { 5, 100.0f, 30.0f } },
+    },
+};
+
+static TargetCup sBattleTargets[8] = {
+    {
+        { { 6, 120.0f, 15.0f }, { 4, 120.0f, 20.0f } },
+        { { 6, 120.0f, 15.0f }, { 4, 120.0f, 20.0f } },
+        { { 9, 90.0f, 15.0f }, { 6, 90.0f, 20.0f } },
+    },
+    {
+        { { 8, 120.0f, 10.0f }, { 4, 120.0f, 20.0f } },
+        { { 8, 120.0f, 10.0f }, { 4, 120.0f, 20.0f } },
+        { { 9, 90.0f, 10.0f }, { 6, 90.0f, 20.0f } },
+    },
+    {
+        { { 4, 120.0f, 20.0f }, { 4, 120.0f, 30.0f } },
+        { { 4, 120.0f, 20.0f }, { 4, 120.0f, 30.0f } },
+        { { 6, 90.0f, 20.0f }, { 5, 90.0f, 30.0f } },
+    },
+    {
+        { { 3, 120.0f, 40.0f }, { 3, 120.0f, 50.0f } },
+        { { 3, 120.0f, 40.0f }, { 3, 120.0f, 50.0f } },
+        { { 4, 100.0f, 40.0f }, { 4, 100.0f, 50.0f } },
+    },
+    {
+        { { 4, 120.0f, 30.0f }, { 4, 120.0f, 35.0f } },
+        { { 4, 120.0f, 30.0f }, { 4, 120.0f, 35.0f } },
+        { { 5, 100.0f, 30.0f }, { 5, 100.0f, 35.0f } },
+    },
+    {
+        { { 2, 120.0f, 90.0f }, { 2, 120.0f, 100.0f } },
+        { { 2, 120.0f, 90.0f }, { 2, 120.0f, 100.0f } },
+        { { 3, 100.0f, 90.0f }, { 3, 100.0f, 100.0f } },
+    },
+    {
+        { { 3, 120.0f, 90.0f }, { 2, 150.0f, 100.0f } },
+        { { 3, 120.0f, 90.0f }, { 2, 150.0f, 100.0f } },
+        { { 4, 100.0f, 90.0f }, { 3, 150.0f, 100.0f } },
+    },
+    {
+        { { 4, 120.0f, 30.0f }, { 4, 120.0f, 30.0f } },
+        { { 4, 120.0f, 30.0f }, { 4, 120.0f, 30.0f } },
+        { { 5, 100.0f, 30.0f }, { 5, 100.0f, 30.0f } },
+    },
+};
 extern TitleCheckFn lbl_806CF220[1];
 extern TitleCheckFn lbl_806CF224[1];
 extern int g_characterId;
@@ -689,10 +827,7 @@ typedef struct TitleTracker {
 
 static inline TitleTracker *tracker(void)
 {
-    if (lbl_806D10A0 == 0) {
-        return 0;
-    }
-    return (TitleTracker *)lbl_806D10A0;
+    return (TitleTracker *)SINGLETON_INSTANCE(lbl_806D10A0);
 }
 
 TitleTracker *TitleTracker_GetOrCreateSingleton(void)
@@ -709,26 +844,13 @@ TitleTracker *TitleTracker_GetOrCreateSingleton(void)
 }
 
 
-void DetermineTitle(unsigned char mode)
+static inline int DetermineCurrentNameId(void)
 {
     int k;
     int chara;
     int j;
     int score;
-    unsigned char skip;
-    TitleCheckFn *checks = 0;
-    int count = 0;
-    TitleCheckFn pre = 0;
     int i;
-    unsigned char *tbl = lbl_80411458;
-    unsigned char *pool = lbl_80324B98;
-
-    if (lbl_80598A60.mode == 2 || (lbl_80598A60.mode == 1 && lbl_80598A60.flag24 == 0)) {
-        g_stagingTitleId = 0;
-        g_titleParam = 0;
-        g_nameId = 0;
-        return;
-    }
     score = 0;
     chara = g_characterId;
     for (i = 0; i < 2; i++) {
@@ -748,7 +870,26 @@ void DetermineTitle(unsigned char mode)
         }
     }
     score += g_playerData.wins;
-    g_nameId = DetermineNameId(score, chara);
+    return DetermineNameId(score, chara);
+}
+
+void DetermineTitle(unsigned char mode)
+{
+    unsigned char skip;
+    TitleCheckFn *checks = 0;
+    int count = 0;
+    TitleCheckFn pre = 0;
+    int i;
+    unsigned char *tbl = (unsigned char *)lbl_80411458;
+    unsigned char *pool = lbl_80324B98;
+
+    if (lbl_80598A60.mode == 2 || (lbl_80598A60.mode == 1 && lbl_80598A60.flag24 == 0)) {
+        g_stagingTitleId = 0;
+        g_titleParam = 0;
+        g_nameId = 0;
+        return;
+    }
+    g_nameId = DetermineCurrentNameId();
     if (mode == 1) {
         return;
     }
@@ -1160,25 +1301,22 @@ unsigned char TitleCheck_TechGrade0(void)
     return 0;
 }
 
-typedef signed char TargetCup[3][2][12];
-
 static inline signed char LookupTarget(TargetCup *m)
 {
-    return m[g_cupId][g_ccClass][g_longRoundFlag][0];
+    return m[g_cupId][g_ccClass][g_longRoundFlag].score;
 }
 
 static inline int TargetScore(void)
 {
-    unsigned char *tbl = lbl_80411458;
     int t;
     int n;
 
     if (g_gameMode == 0) {
-        t = LookupTarget((TargetCup *)(tbl + 0));
+        t = LookupTarget((TargetCup *)lbl_80411458);
     } else if (g_gameMode == 1) {
-        t = LookupTarget((TargetCup *)(tbl + 0x480));
+        t = LookupTarget((TargetCup *)sBattleTargets);
     } else if (g_gameMode == 2) {
-        t = LookupTarget((TargetCup *)(tbl + 0x240));
+        t = LookupTarget((TargetCup *)sTimeAttackTargets);
     } else {
         t = 0;
     }

@@ -1,4 +1,5 @@
 #include "game/PlayerDataConstructPrivate.h"
+#include "game/CoinMilestone.h"
 extern int isJapanese(void);
 extern char *strcpy(char *, const char *);
 extern int rand(void);
@@ -10,8 +11,7 @@ extern void fn_80209AC4(int, int);
 extern int fn_80209A84(void);
 extern void fn_801D5F74(void *, int, unsigned char);
 extern int fn_80216988(int);
-typedef struct MilageEntry { int threshold, kind; } MilageEntry;
-extern MilageEntry *fn_802169F4(int);
+extern CoinMilestone *fn_802169F4(int);
 extern int fn_80209338(int);
 extern int fn_80209330(void);
 extern void DebugPrintf(const char *, ...);
@@ -45,7 +45,6 @@ void PlayerData_Construct(PlayerDataReset *self, int character, int count, int b
         int mode;
         int cup;
         int round;
-        int maximum;
         int i;
         modes.modes[0] = count;
         modes.modes[1] = b;
@@ -83,19 +82,23 @@ void PlayerData_Construct(PlayerDataReset *self, int character, int count, int b
             self->remapFlags[1] = RollRareItem() != 0;
             self->remapFlags[2] = RollRareItem() != 0;
         }
-        maximum = -1;
-        for (i = 0; i < coins; i++) {
-            int index = fn_80216988(i);
-            if (index < 0) {
-                DebugPrintf(pool->mileageError, 0x219);
-                return;
-            }
-            if (maximum < index) {
-                MilageEntry *entry;
-                maximum = index;
-                entry = fn_802169F4(index);
-                if (entry != 0 && entry->kind == 1) {
-                    GrantMilageItem(character, pool);
+        {
+            int maximum;
+            int mileage;
+            maximum = -1;
+            for (mileage = 0; mileage < coins; mileage++) {
+                int index = fn_80216988(mileage);
+                if (index < 0) {
+                    DebugPrintf(pool->mileageError, 0x219);
+                    return;
+                }
+                if (maximum < index) {
+                    CoinMilestone *entry;
+                    maximum = index;
+                    entry = fn_802169F4(index);
+                    if (entry != 0 && entry->type == 1) {
+                        GrantMilageItem(character, pool);
+                    }
                 }
             }
         }
