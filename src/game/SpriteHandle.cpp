@@ -305,7 +305,9 @@ ResCtrl *ResCtrl_Init(ResCtrl *r);
 void *fn_80121F54(void *self, short flag);
 LList *fn_80121FB4(LList *l, short flag);
 ProfTimer *dtor_80122068(ProfTimer *t, short flag);
-asm void fn_8012215C(void);
+struct LIter;
+struct LListImp;
+void fn_8012215C(LIter *ret, LListImp *l, LIter *it);
 LListImp *fn_801221D4(LListImp *l);
 void fn_80122204(void);
 LList *fn_8012223C(LList *l, short flag);
@@ -351,9 +353,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_801217E8[8
 
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_8012215C[8] = {
-    0x18, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
@@ -402,9 +401,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8012215C = {
-    (void *)&fn_8012215C, 0x00000078, (void *)extab_fn_8012215C
-};
 
 
 
@@ -2821,38 +2817,22 @@ extern "C" void *dtor_80122120(void *self, short flag) {
     return self;
 }
 
-extern "C" asm void fn_8012215C(void) { /* 0x8012215C size:0x78 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r5
-    stw r30, 0x18(r1)
-    mr r30, r4
-    stw r29, 0x14(r1)
-    mr r29, r3
-    lwz r3, 0x0(r5)
-    lwz r0, 0x4(r3)
-    lwz r4, 0x0(r3)
-    stw r0, 0x0(r5)
-    stw r0, 0x4(r4)
-    lwz r0, 0x0(r3)
-    lwz r4, 0x4(r3)
-    stw r0, 0x0(r4)
-    bl MemoryManager_TimedFree
-    lwz r3, 0x0(r30)
-    lwz r0, 0x0(r31)
-    subi r3, r3, 0x1
-    stw r3, 0x0(r30)
-    stw r0, 0x0(r29)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+struct LIter {
+    LNode *n;
+};
+
+extern "C" void fn_8012215C(LIter *ret, LListImp *l, LIter *it) {
+    LNode *p = it->n;
+    LNode *next = p->next;
+    LNode *prev = p->prev;
+    it->n = next;
+    prev->next = next;
+    p->next->prev = p->prev;
+    MemoryManager_TimedFree(p);
+    LNode *r = it->n;
+    int c = l->count;
+    l->count = --c;
+    ret->n = r;
 }
 
 extern "C" LListImp *fn_801221D4(LListImp *l) {
