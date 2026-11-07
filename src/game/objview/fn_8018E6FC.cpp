@@ -48,10 +48,11 @@ static inline void initializeMatrix(ViewEmitter *o, void *scene, int index) {
 }
 static inline void updateMatrices(ViewEmitter *o) {
     int i;
+    unsigned int matrixOffset;
     ViewBillboardParticle *q;
     ViewMatrixParticle *p;
-    for (i = 0; i < o->count; i++) {
-        p = &o->matrices[i];
+    for (i = 0, matrixOffset = 0; i < o->count; matrixOffset += sizeof(ViewMatrixParticle), i++) {
+        p = (ViewMatrixParticle *)((char *)o->matrices + matrixOffset);
         if (p->age < 0.0f) continue;
         if ((p->age += 1.0f) >= 89.0f) { p->age = -1.0f; continue; }
         if (p->age >= 20.0f) {
@@ -70,6 +71,15 @@ static inline void updateMatrices(ViewEmitter *o) {
         }
     }
 }
+static inline void updateBillboards(ViewEmitter *o) {
+    int k;
+    ViewBillboardParticle *q;
+    unsigned int particleOffset;
+    for (k = 0, particleOffset = 0; k < 60; particleOffset += sizeof(ViewBillboardParticle), k++) {
+        q = (ViewBillboardParticle *)((char *)o->particles + particleOffset);
+        updateParticle(q);
+    }
+}
 extern "C" void fn_8018E6FC(ViewEmitter *o) {
     int index;
     void *scene;
@@ -85,7 +95,5 @@ extern "C" void fn_8018E6FC(ViewEmitter *o) {
         }
     }
     updateMatrices(o);
-    for (int k = 0; k < 60; k++) {
-        updateParticle(&o->particles[k]);
-    }
+    updateBillboards(o);
 }
