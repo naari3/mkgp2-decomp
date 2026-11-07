@@ -565,7 +565,7 @@ config.libs = [
             Object(Matching, "game/ItemSelectChoiceStep.cpp"),
             Object(NonMatching, "game/ItemSelectChoiceUpdate.cpp", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/ItemSelectChoiceInit.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/KartChoiceSelect.cpp", extab_padding=b""),
+            Object(Matching, "game/KartChoiceSelect.cpp", extab_padding=b""),
             Object(Matching, "game/KartChoiceRequest.cpp"),
             Object(Matching, "game/KartChoiceOtherUpdate.cpp", extab_padding=b""),
             Object(Matching, "game/KartChoiceUpdate.cpp", extab_padding=b""),
