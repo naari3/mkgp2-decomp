@@ -1,11 +1,11 @@
-#include "game/DrawQuadScaled801FPrivate.h"
+#include "game/DrawQuad8404Private.h"
 
 static inline void DrawPositionDepth8404(float x, float y, const DrawDesc801F *description) {
     float z = description->z;
     DrawPositionDepth801F(x, y, z);
 }
 extern "C" void fn_801F8404(DrawNode801F *self) {
-    DrawQuad7F50 quad(self->description);
+    DrawQuad8404 quad(self->description);
     GXBegin(128,0,4);
     if (!self->depth) {
         DrawPosition801F(quad.x0,quad.y0);

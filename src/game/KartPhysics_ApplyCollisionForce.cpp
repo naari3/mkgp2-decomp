@@ -1,10 +1,11 @@
-/* Native C++ candidate: 95.62054% text, exact owned EH.
+/* Native C++ candidate: 98.33036% text, exact owned EH.
  * Vector-length inline boundaries reproduce the target square-root FP homes.
- * Separate scaled-set and vector-subtraction helpers retain native snapshots.
+ * Typed state and literal constants recover the damping/zero-load schedule.
+ * The push helper preserves a separate by-value input snapshot.
  * Remaining differences: angle/offset and push FP allocation/scheduling.
  * The empty canonical vector destructor supplies compiler-generated cleanup.
  */
-#include "game/PhysicsCollisionPrivate.h"
+#include "game/KartPhysicsCollisionForcePrivate.h"
 
 struct Vec3 {
     float x;
@@ -25,35 +26,12 @@ struct Vec3 {
 
 };
 
-union IntToDouble {
-    double d;
-    struct {
-        unsigned int hi;
-        unsigned int lo;
-    } w;
-};
-
 extern "C" {
 extern void PSVECScale(Vec3 *dst, Vec3 *src, float scale);
-extern void dtor_80036E40(void *ptr, short flag);
 
 extern float lbl_806D1940;
 extern float lbl_806D1944;
-extern float lbl_806DA42C;
-extern float lbl_806DA440;
-extern double lbl_806DA458;
-extern double lbl_806DA460;
-extern float lbl_806DA4B0;
-extern float lbl_806DA4B4;
-extern float lbl_806DA4B8;
-extern float lbl_806DA4BC;
-extern float lbl_806DA4C0;
-extern double lbl_806DA4C8;
 }
-
-#define F32(base, offset) (*(float *)((char *)(base) + (offset)))
-#define U8(base, offset) (*(unsigned char *)((char *)(base) + (offset)))
-#define S32(base, offset) (*(int *)((char *)(base) + (offset)))
 
 static inline float vector_length(const Vec3 &v) {
     float value = (v.x * v.x + v.y * v.y) + v.z * v.z;
@@ -86,8 +64,33 @@ static inline void set_scaled(volatile Vec3 &dest, float ax, float ay, float az,
     dest.z = az * factor;
 }
 
+static inline void apply_push(CollisionForceState *self, volatile Vec3 &push, float dx, float dy, float dz) {
+    float scale;
+    int timer;
+    push.y = dy;
+    push.x = dx;
+    push.z = dz;
+
+    if (self->airborne == 0) {
+        /* Original damping is one ULP below 0.6f. */
+        scale = 0.599999964f;
+        dx *= scale;
+        dy *= scale;
+        dz *= scale;
+        push.set(dx, dy, dz);
+
+        timer = self->landingTimer;
+        if (timer > 0) {
+            scale = (float)(20 - timer) / 20.0f;
+            set_scaled(push, dx, dy, dz, scale);
+        }
+    }
+
+    subtract_vector(*(Vec3 *)&self->position, push);
+}
+
 #pragma exceptions on
-extern "C" void KartPhysics_ApplyCollisionForce(void *self) {
+extern "C" void KartPhysics_ApplyCollisionForce(CollisionForceState *self) {
     PhysicsCollisionVec offset;
     volatile Vec3 callVec;
     volatile Vec3 push;
@@ -98,86 +101,59 @@ extern "C" void KartPhysics_ApplyCollisionForce(void *self) {
     float dz;
     float dy;
     float dx;
-    int timer;
 
-    len = vector_length(*(Vec3 *)((char *)self + 0xd8));
+    len = vector_length(*(Vec3 *)&self->impact);
     limit = lbl_806D1940;
     if (limit < len) {
         scale = limit / len;
-        F32(self, 0xd8) *= scale;
-        F32(self, 0xdc) *= scale;
-        F32(self, 0xe0) *= scale;
+        self->impact.x *= scale;
+        self->impact.y *= scale;
+        self->impact.z *= scale;
     }
 
-    if (U8(self, 0x64) != 0) {
-        F32(self, 0x4c) -= F32(self, 0xd8);
-        F32(self, 0x50) -= F32(self, 0xdc);
-        F32(self, 0x54) -= F32(self, 0xe0);
+    if (self->applyForce != 0) {
+        self->position.x -= self->impact.x;
+        self->position.y -= self->impact.y;
+        self->position.z -= self->impact.z;
     }
 
-    scale = lbl_806DA4B0;
-    F32(self, 0xd8) *= scale;
-    F32(self, 0xdc) *= scale;
-    F32(self, 0xe0) *= scale;
+    scale = 0.92f;
+    self->impact.x *= scale;
+    self->impact.y *= scale;
+    self->impact.z *= scale;
 
-    angleDelta = (float)__fabs(F32(self, 0x7c) - F32(self, 0x84));
-    dx = F32(self, 0x4c) - F32(self, 0x58);
-    dy = F32(self, 0x50) - F32(self, 0x5c);
-    dz = F32(self, 0x54) - F32(self, 0x60);
+    angleDelta = (float)__fabs(self->yaw - self->collisionYaw);
+    dx = self->position.x - self->previous.x;
+    dy = self->position.y - self->previous.y;
+    dz = self->position.z - self->previous.z;
     offset.set(dx, dy, dz);
 
-    if (lbl_806DA42C < angleDelta) {
+    if (0.0f < angleDelta) {
         callVec.set(dx, dy, dz);
-        scale = lbl_806DA4B4 + angleDelta;
-        PSVECScale((Vec3 *)&callVec, (Vec3 *)&callVec, (scale * scale) * lbl_806DA4B8);
-        F32(self, 0xcc) += callVec.x;
-        F32(self, 0xd0) += callVec.y;
-        F32(self, 0xd4) += callVec.z;
+        scale = 1.1f + angleDelta;
+        PSVECScale((Vec3 *)&callVec, (Vec3 *)&callVec, (scale * scale) * 0.009f);
+        self->push.x += callVec.x;
+        self->push.y += callVec.y;
+        self->push.z += callVec.z;
     }
 
-    len = vector_length(*(Vec3 *)((char *)self + 0xcc));
+    len = vector_length(*(Vec3 *)&self->push);
     limit = lbl_806D1944;
     if (limit < len) {
         scale = limit / len;
-        F32(self, 0xcc) *= scale;
-        F32(self, 0xd0) *= scale;
-        F32(self, 0xd4) *= scale;
+        self->push.x *= scale;
+        self->push.y *= scale;
+        self->push.z *= scale;
     }
 
-    if (U8(self, 0x64) != 0) {
-        dy = F32(self, 0xd0);
-        dz = F32(self, 0xd4);
-        dx = F32(self, 0xcc);
-        push.y = dy;
-        push.x = dx;
-        push.z = dz;
-
-        if (U8(self, 0xa5) == 0) {
-            scale = lbl_806DA440;
-            dx *= scale;
-            dy *= scale;
-            dz *= scale;
-            push.set(dx, dy, dz);
-
-            timer = S32(self, 0xc0);
-            if (timer > 0) {
-                scale = (float)(20 - timer) / lbl_806DA4BC;
-                set_scaled(push, dx, dy, dz, scale);
-            }
-        }
-
-        subtract_vector(*(Vec3 *)((char *)self + 0x4c), push);
+    if (self->applyForce != 0) {
+        apply_push(self, push, self->push.x, self->push.y, self->push.z);
     }
 
-    scale = lbl_806DA4C0;
-    F32(self, 0xcc) *= scale;
-    F32(self, 0xd0) *= scale;
-    F32(self, 0xd4) *= scale;
+    scale = 0.88f;
+    self->push.x *= scale;
+    self->push.y *= scale;
+    self->push.z *= scale;
 }
-
-#undef F32
-#undef U8
-#undef S32
-
 
 #pragma exceptions reset

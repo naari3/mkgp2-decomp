@@ -1252,9 +1252,12 @@ void Hinoko::Spawn() {
                 embers[k].vel.x = dir[i].x * (lbl_806DB50C * Rand() + lbl_806DB508);
                 embers[k].vel.y = dir[i].y;
                 embers[k].vel.z = lbl_806DB50C * (Rand() - lbl_806DB508) + dir[i].z;
-                embers[k].pos.x = lbl_806DB508 * (embers[k].vel.x * lbl_804EE0E0.x) + pos[i].x;
-                embers[k].pos.y = lbl_806DB508 * (embers[k].vel.y * lbl_804EE0E0.y) + pos[i].y;
-                embers[k].pos.z = lbl_806DB508 * (embers[k].vel.z * lbl_804EE0E0.z) + pos[i].z;
+                float sx = lbl_804EE0E0.x;
+                float sy = lbl_804EE0E0.y;
+                float sz = lbl_804EE0E0.z;
+                embers[k].pos.x = lbl_806DB508 * (embers[k].vel.x * sx) + pos[i].x;
+                embers[k].pos.y = lbl_806DB508 * (embers[k].vel.y * sy) + pos[i].y;
+                embers[k].pos.z = lbl_806DB508 * (embers[k].vel.z * sz) + pos[i].z;
                 embers[k].color = lbl_806DB528 * Rand();
                 embers[k].speed = lbl_806DB52C;
                 embers[k].scale = lbl_806DB530;

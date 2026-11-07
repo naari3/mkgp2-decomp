@@ -1659,3 +1659,38 @@ c19_u192 fn_80242E80 closes99.4->100,500B. Reusing loop index raises99.56 but re
 Source: Codex worker c19_u197_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 636 B.
 
 c19_u197 unlocks CoursePropCtor8016E568/636B97.32704->100. Four independent file-static pointer tables normal/reverse/long/long-reverse plus actual RTTI hierarchy and vtable records, referenced directly (no retained external base local), make CW emit native ...data.0 pool base inr31 and restore resource-r29/model-offset-r28/counter-r27/self-r30; intermediate632B98.74214. Inline zero-argument SelectCourseProps() returns the arrays and restores targetr0 merge then mrr31,r0,636B/EH100; pre-split99.559746 only relocation identities. Own data80491150..804911C4, split original80-byte pointer blob into28/28/12/12 symbols; six data bridges plus own @146/@147 EH aliases. Final text636/EH52/index12/data116 all100; actual main.elf ranges exact, source edge true, DOL SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. Matching,+1native636B. No filler/DATA_ALIGN4/weak dtor/new flags. Combination of native independent objects and selector return boundary resolves earlier external aggregate/helper dead ends.
+
+## c19_u210_20261107
+Source: Codex worker c19_u210_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u210 ExplosionTumble_Init: scalar LengthSquared(x,y,z) with yy=y*y;xx=x*x;zz=z*z;return zz+(xx+yy) restores early Y-square and improves89.89171->89.99078, same1736B. Add own @279/@280 EH bridges, owned EH48/index12 remain100. Restrict Dot/Scale/Subtract gives90.36175/1740B but shifts EH+4 and still reloads up; scalar combined Project gives90.156685/1724B and EH-12; both rejected. Initial X/Z load order, FP homes, projection reloads and quaternion q.z/q.y evaluation remain. Singleton cannot use B; staysNonMatching, final coordinator fallback DOL SHA1 exact, native gain0.
+
+## c19_u213_20261107
+Source: Codex worker c19_u213_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u213 PhysicsState_WallCollisionCheck 801ED0E8 fresh56.565422 ->63.242992 using a TU-private flat16 matrix with flat copy ctor, nested applyYaw/operator*=, separate float accumulator and n+j product index, then native aggregate assignment. This recovers eight-wide initial copy grouping and two-row multiply unroll without volatile matrix storage. EH86.53847 ->88.46153 and index61.11111 unchanged; cleanup locals18/24/30/3C/dtor_80036E40 intact. Return-by-value canonical matrix46.390186 adds fourth matrix temp; in-place result[k] += terms54.32944 causes memory roundtrips. Final1768B/frame1E0 savesf22-f31/r27-r31 versus target1712B/frame170/f30-f31/r22-r31. Matrix input hoisting and cross-raycast FP liveness remain open. Singleton NM; no flag/split/bridge changes or native gain. Three approaches capped; all drafts under build/w/c19.
+
+## c19_u221_20261107
+Source: Codex worker c19_u221_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u221 retry CardSetupFlowInitial fn_8024AD8C: restrict ownership of self plus state-before-duration snapshot makes both opening fade blocks exact, improving 95.878174 to97.96954 at same788B. Remaining target global-path li0,5/li3,1/stw lbl_806D19B8/lwz list versus source li0,5/li3,1/lwz list/stw lbl. Restricted inline BeginFade with unrestricted main regresses93.29949; unrestricted inline PrepareCardScene under restricted main stays97.96954. Best minimal source retained NonMatching. Owned raw EH176/index12 unchanged/exact; existing extra weak entries and anonymous EH symbols left unchanged. Single-function TU cannot use mechanism B. Full coordinator build DOL SHA1OK, fallback linked, zero native gain.
+
+## c19_u219_20261107
+Source: Codex worker c19_u219_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u219 DNFlash Spawn: direct objdiff baseline93.545 ->94.395 (final coordinator report95.45) without native gain. Flattening FindSpawnPoint fixes point/start/tries/list callee-saved allocation (93.920); declaring n before col fixes r8/r9 list-builder swap (94.395). Explicit FlashPart** slot removes target-required reload/index instructions and regresses to90.340; reverted. Postincrement threshold spelling is invariant. Retained primary792/target800, aggregate table address folding instead of addi/lfsu/lfsx and final free-slot address/part registers remain. Pool803D0390..803D08A8 already belongs to Matching tail and was not taken. Add-only own EH bridges @148/@149 restore extab/index symbol names, sections100/95. Full DOL SHA1 OK with honest original-object fallback; no flag/split changes.
+
+## c19_u220_20261107
+Source: Codex worker c19_u220_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 796 B.
+
+c19_u220 ItemWnd::Setup 8021F508 unlocked from fresh92.41708 to100%/796B. File-static real pool 803C6610..803C6CBC (floats, 13 ItemPose rows, existing aggregate defaults and strings) restores MWCC common .rodata base+offset addressing and table-base rematerialization; extern struct view could not. Residual r0-vs-r3 compare was a semantic prototype defect: canonical CourseTables fn_8013BE98(int id) consumes itemId, despite family header incorrectly declaring void. Private C++ overload + per-TU fn_8013BE98__Fi bridge avoids shared-header changes. Bridge owned @183/@184 EH names and pool array/string symbols, split pose/string sublabels, promote Matching. Owned text/EH/index/rodata100, source-linked function at8021F508 size796, full DOL SHA1 exact. Preserved existing zero aggregate templates are real named target data; no filler objects added.
+
+## c19_u225_20261107
+Source: Codex worker c19_u225_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u225 retry fn_80225C2C: fresh baseline94.46907 ->94.62371, 776B. Plain verified 320.0f/1.0f literals ONLY in ResCtrl Show and scaleY recover exact target +16C..19C f2=320/f1=1; external scaleX1.25 retained. Inline SetupJoinBox formal argument ordering is invariant; inline ResetJoinState field initialization boundary also invariant. Entry +C..80 still differs in zero r5/r6, derived-vptr r4/r5, nextJoin load/result r4 vs r3/r0 and scheduling. Three hypotheses exhausted; singleton stays NM. Owned EH raw prefixes unchanged; final fallback full DOL SHA1 exact. Beware postprocess_sdata2 can retarget an incorrect initial literal to target name; verify literal values directly. No new maps/flags/ranges.
+
+## c19_u246_20261107
+Source: Codex worker c19_u246_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u246: DNStartDino Spawn 80229998 reproducible direct objdiff baseline is 89.442955% (584 B emitted vs 596 B target), despite assignment summary 90.44%. Three scalar snapshots sx/sy/sz of lbl_804EE0E0 before position writes improve to 90.020134%, same extab 100% and extabindex 91.66667%. Aggregate copy adds stack traffic; while is invariant; infinite loop with guarded return worsens; inline SetEmberPosition with float scale arguments ties scalar result. Remaining target top-tested outer loop and FP loads/registers not recovered. Single-function TU cannot rescue exact subsets.

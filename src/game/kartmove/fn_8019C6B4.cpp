@@ -37,20 +37,19 @@ static inline void QuatMatrix(Matrix44 *m, MovementQuat *q) {
     m->m[2][2] = lbl_806D96D4 - lbl_806D9708*(xx+yy);
 }
 
-static inline void Multiply(Matrix44 *a, const volatile Matrix44 *b) {
+static inline void Multiply(Matrix44 *a, const Matrix44 *b) {
     float out[16];
+    float sum;
     int index = 0;
     for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++, index++) {
-            float b0 = b->m[0][j];
-            float sum = a->m[i][0]*b0;
-            float b1 = b->m[1][j];
-            sum = a->m[i][1]*b1 + sum;
-            float b2 = b->m[2][j];
-            sum = a->m[i][2]*b2 + sum;
-            float b3 = b->m[3][j];
-            out[index] = a->m[i][3]*b3 + sum;
+        for (int j = 0; j < 4; j++) {
+            sum = a->m[i][0]*b->m[0][j];
+            sum = a->m[i][1]*b->m[1][j] + sum;
+            sum = a->m[i][2]*b->m[2][j] + sum;
+            sum = a->m[i][3]*b->m[3][j] + sum;
+            out[index+j] = sum;
         }
+        index += 4;
     }
     for (int i = 0; i < 16; i++) ((float *)a)[i] = out[i];
 }
@@ -72,17 +71,17 @@ extern "C" void fn_8019C6B4(MovementInit *k) {
     }
     float s = LUT_Sine((float)(lbl_806D96F0 * k->yaw));
     InitVec target(LUT_Cosine((float)(lbl_806D96F0 * k->yaw)), lbl_806D96D0, s);
+    MovementQuat q;
     float x = direction.y*target.z - direction.z*target.y;
     float y = direction.z*target.x - direction.x*target.z;
     float z = direction.x*target.y - direction.y*target.x;
     target.x = x; target.y = y; target.z = z;
     float angle = z + (x+y);
-    MovementQuat q;
     if (lbl_806D96D0 != angle) {
         float half = lbl_806D9704 * angle;
         float scale = LUT_Cosine(half) / angle;
         float w = LUT_Sine(half);
-        q.x = target.x*scale; q.y = target.y*scale; q.z = target.z*scale; q.w = w;
+        q.z = target.z*scale; q.y = target.y*scale; q.x = target.x*scale; q.w = w;
         Matrix44 rotation;
         Identity(&rotation);
         QuatMatrix(&rotation, &q);

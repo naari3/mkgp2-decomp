@@ -1,8 +1,86 @@
 #include "game/anon_8021F088_nm_8021F508_private.h"
 
+/* Coin mileage animation, display poses, and diagnostic resource pool. */
+static const float kCoinAnimation[258] = {
+    0.0f, 0.0f, 0.0f, 1.0f, 0.7f, 0.9f, 0.0f, 0.0f,
+    500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f,
+    4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f,
+    1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f,
+    5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f,
+    2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f,
+    3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f,
+    500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f,
+    4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f,
+    1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f,
+    5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f,
+    2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f,
+    3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f,
+    500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f,
+    4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f,
+    1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f,
+    5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f,
+    2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f,
+    3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f,
+    500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f,
+    4000.0f, 83.333336f, 5000.0f, 83.333336f, 0.0f, 0.0f, 500.0f, 83.333336f,
+    1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f,
+    5000.0f, 83.333336f, 0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f,
+    2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f,
+    0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f,
+    3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f, 0.0f, 0.0f,
+    500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f,
+    4000.0f, 83.333336f, 5000.0f, 83.333336f, 0.0f, 0.0f, 500.0f, 83.333336f,
+    1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f,
+    5000.0f, 83.333336f,
+};
+static const float kOrigin[3] = {
+    0.0f, 0.0f, 0.0f,
+};
+static const float kLineY[5] = {
+    102.5f, 161.5f, 221.5f, 299.5f, 265.5f,
+};
+static const ItemPose kItemPoses[13] = {
+    {335.0f, 272.0f, {28.0f, -31.0f, -12.0f}, 0.0125f},
+    {340.0f, 281.0f, {30.0f, -40.0f, -14.0f}, 0.013f},
+    {346.0f, 257.0f, {26.0f, -28.0f, -8.0f}, 0.014f},
+    {335.0f, 265.0f, {26.0f, -30.0f, -12.0f}, 0.013f},
+    {329.0f, 277.0f, {25.0f, -34.0f, -12.0f}, 0.016f},
+    {327.0f, 295.0f, {30.0f, -35.0f, -14.0f}, 0.0155f},
+    {318.0f, 300.0f, {27.0f, -35.0f, -12.0f}, 0.013f},
+    {323.0f, 277.0f, {25.0f, -34.0f, -14.0f}, 0.016f},
+    {323.0f, 289.0f, {25.0f, -32.0f, -12.0f}, 0.0145f},
+    {332.0f, 280.0f, {29.0f, -36.0f, -14.0f}, 0.0125f},
+    {324.0f, 279.0f, {25.0f, -28.0f, -10.0f}, 0.0145f},
+    {322.0f, 284.0f, {29.0f, -30.0f, -14.0f}, 0.0125f},
+    {347.0f, 273.0f, {25.0f, -34.0f, -12.0f}, 0.015f},
+};
+// Zero-valued aggregate defaults from the original resource pool.
+static const int kCounters[5] = {
+    0, 0, 0, 0, 0,
+};
+static const int kWork[16] = {
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+};
+static const int kDigits[4] = {
+    0, 0, 0, 0,
+};
+static const float kDigitPositions[12] = {
+    268.5f, 213.5f, 158.5f, 103.5f, 360.5f, 305.5f, 250.5f, -100.0f,
+    375.0f, 328.0f, 286.0f, 244.0f,
+};
+static const char kSceneName[] = "clCSSceneCoinMilage";
+static const char kBaseName[] = "clSceneInterface";
+static const char kNextCoin[] = "Next coin is %d, num : %d, afterCoin : %d\n";
+static const char kNoItem[] = "Can't get item struct.";
+static const char kLastItem[] = "Have last item.";
+static const char kItemError[] = "Get Item Scene Error!!, %s - %d\n";
+static const char kSourceName[] = "csSceneCoinMilage.cpp";
 
 void ItemWnd::Setup(int n, MilageItem *e) {
-    const SetupPool *pool = &lbl_803C6610;
     if (e != 0) {
         coins = n;
         entry = e;
@@ -12,11 +90,11 @@ void ItemWnd::Setup(int n, MilageItem *e) {
         if (e->type == 1) {
             itemId = fn_8021620C();
             if (itemId <= 0) {
-                DebugPrintf((const char *)pool + 0x670, (const char *)pool + 0x694, 950);
+                DebugPrintf(kItemError, kSourceName, 950);
                 state = 0;
                 return;
             }
-            KartPose *pose = fn_8013BE98();
+            KartPose *pose = fn_8013BE98(itemId);
             if (kart) {
                 delete kart;
                 kart = 0;
@@ -45,10 +123,10 @@ void ItemWnd::Setup(int n, MilageItem *e) {
                 item = 0;
             }
             item = new ItemModel(k, 2, 0, 1);
-            fn_8021A7BC(item, pool->poses[k].x, pool->poses[k].y);
-            fn_8021A578(item, lbl_806DB1D8 * pool->poses[k].rot[0], lbl_806DB1D8 * pool->poses[k].rot[1],
-                        lbl_806DB1D8 * pool->poses[k].rot[2]);
-            fn_8021A660(item, pool->poses[k].scale, pool->poses[k].scale, pool->poses[k].scale);
+            fn_8021A7BC(item, kItemPoses[k].x, kItemPoses[k].y);
+            fn_8021A578(item, lbl_806DB1D8 * kItemPoses[k].rot[0], lbl_806DB1D8 * kItemPoses[k].rot[1],
+                        lbl_806DB1D8 * kItemPoses[k].rot[2]);
+            fn_8021A660(item, kItemPoses[k].scale, kItemPoses[k].scale, kItemPoses[k].scale);
             fn_8021A430(item, lbl_806DB190);
         }
     }

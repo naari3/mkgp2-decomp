@@ -1,12 +1,16 @@
 /* RaceFlow_ResetState_FullColdInit (0x8009D07C): cold reset of the race
- * flow state. Clears the player data, the eight race entries and the kart
- * slots and the flow flags; on the very first call it also resets the
- * ranking table. The race globals all live in one pooled .bss block that
- * starts at lbl_805AC600, so they are modelled as one struct here.
- * NonMatching (90%): the target is compiled in the TU that defines that
- * block (see SetCourseParams.c), so it keeps base and base+0x20000 in
- * registers and reloads the globals it just stored; the struct model
- * folds the addresses and propagates the constants instead. */
+ * flow state. Clears player data, eight race entries, kart slots and flow
+ * flags; on the first call it also resets the ranking table.
+ *
+ * These objects share the .bss pool defined in SetCourseParams.c. Keep a
+ * byte-addressed view because the eight score stores at pool+0x26338
+ * extend into the first race entry at pool+0x26348. A four-element score
+ * member indexed eight times would exceed that member's bounds.
+ *
+ * NonMatching (90%): the target retains separate entry/rank bases and
+ * reloads cup/round globals after the slot stores. This view retains the
+ * upper pool base across the initial calls, but still folds field offsets
+ * and propagates the just-stored globals. */
 
 typedef struct KartSlot {
     int character;      /* 0x00 */
@@ -44,19 +48,9 @@ typedef struct RaceEntry {
     unsigned char pad29[3];
 } RaceEntry;
 
-typedef struct RaceGlobals {
-    KartSlot slots[8];                         /* 0x00000 */
-    unsigned char pad000C0[0x5ECC - 0xC0];
-    RankRow ranks[10];                         /* 0x05ECC */
-    RankRow rankTail;                          /* 0x05F6C */
-    unsigned char pad05F7C[0x25F80 - 0x5F7C];
-    unsigned char playerData[0x1DC];           /* 0x25F80 */
-    unsigned char playerData2[0x1DC];          /* 0x2615C */
-    int slotScore[4];                          /* 0x26338 */
-    RaceEntry entries[8];                      /* 0x26348 */
-} RaceGlobals;
+/* The score view extends into the race-entry storage. */
+extern unsigned char lbl_805AC600[];
 
-extern RaceGlobals lbl_805AC600;
 extern const float lbl_806D4790; /* 0.0 */
 extern const float lbl_806D4798; /* 1000.0 */
 
@@ -103,24 +97,25 @@ static inline void RaceEntry_Init(RaceEntry *e, float zero)
     e->alive = 1;
 }
 
-static inline void RaceEntries_Reset(RaceGlobals *g)
+static inline void RaceEntries_Reset(unsigned char *bank)
 {
     int i;
 
     for (i = 0; i < 8; i++) {
-        RaceEntry_Init(&g->entries[i], lbl_806D4790);
+        RaceEntry_Init(&((RaceEntry *)(bank + 0x6348))[i], lbl_806D4790);
     }
     lbl_806D12D8 = 0;
 }
 
 void RaceFlow_ResetState_FullColdInit(void)
 {
-    RaceGlobals *g = &lbl_805AC600;
+    unsigned char *base = lbl_805AC600;
+    unsigned char *bank = base + 0x20000;
     int i;
 
-    memset(g->playerData, 0, 0x1DC);
-    fn_801D7610(g->playerData, 1);
-    RaceEntries_Reset(g);
+    memset(bank + 0x5F80, 0, 0x1DC);
+    fn_801D7610(bank + 0x5F80, 1);
+    RaceEntries_Reset(bank);
     fn_8018CC64();
 
     lbl_806D12AD = 0;
@@ -140,7 +135,7 @@ void RaceFlow_ResetState_FullColdInit(void)
     g_reverseRoundFlag = 0;
 
     for (i = 0; i < 8; i++) {
-        KartSlot *s = &g->slots[i];
+        KartSlot *s = &((KartSlot *)base)[i];
         s->character = -1;
         s->variant = -1;
         s->active = 1;
@@ -148,7 +143,7 @@ void RaceFlow_ResetState_FullColdInit(void)
         s->colorB = 0x25;
         s->colorC = 0x26;
         s->score = 0;
-        g->slotScore[i] = 0;
+        ((int *)(bank + 0x6338))[i] = 0;
     }
 
     if (g_cupId >= 0 && g_longRoundFlag >= 0) {
@@ -158,24 +153,24 @@ void RaceFlow_ResetState_FullColdInit(void)
     lbl_806CF10C = 0;
     if (!lbl_806D1258) {
         for (i = 0; i < 5; i++) {
-            g->ranks[i].id = 0;
-            g->ranks[i].group = 0;
-            g->ranks[i].time = lbl_806D4790;
-            g->ranks[i].best = lbl_806D4798;
+            ((RankRow *)(base + 0x5ECC))[i].id = 0;
+            ((RankRow *)(base + 0x5ECC))[i].group = 0;
+            ((RankRow *)(base + 0x5ECC))[i].time = lbl_806D4790;
+            ((RankRow *)(base + 0x5ECC))[i].best = lbl_806D4798;
         }
         for (i = 5; i < 10; i++) {
-            g->ranks[i].id = 0;
-            g->ranks[i].group = 1;
-            g->ranks[i].time = lbl_806D4790;
-            g->ranks[i].best = lbl_806D4798;
+            ((RankRow *)(base + 0x5ECC))[i].id = 0;
+            ((RankRow *)(base + 0x5ECC))[i].group = 1;
+            ((RankRow *)(base + 0x5ECC))[i].time = lbl_806D4790;
+            ((RankRow *)(base + 0x5ECC))[i].best = lbl_806D4798;
         }
-        g->rankTail.id = 0;
-        g->rankTail.group = 0;
-        g->rankTail.time = lbl_806D4790;
-        g->rankTail.best = lbl_806D4798;
+        ((RankRow *)(base + 0x5F6C))->id = 0;
+        ((RankRow *)(base + 0x5F6C))->group = 0;
+        ((RankRow *)(base + 0x5F6C))->time = lbl_806D4790;
+        ((RankRow *)(base + 0x5F6C))->best = lbl_806D4798;
         lbl_806D1280 = 4;
         lbl_806D1258 = 1;
-        RaceEntries_Reset(g);
+        RaceEntries_Reset(bank);
     }
 
     g_ccClass = 0;

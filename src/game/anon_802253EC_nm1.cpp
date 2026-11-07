@@ -30,8 +30,8 @@ clCSSceneNextRaceBT::clCSSceneNextRaceBT() {
     fn_801D9180(panel, 1);
     ResCtrl rc;
     rc.resId = 0x157C;
-    rc.Show(lbl_806DB374, lbl_806DB374, lbl_806DB37C);
-    rc.SetScaleXY(lbl_806DB388, lbl_806DB37C);
+    rc.Show(320.0f, 320.0f, 1.0f);
+    rc.SetScaleXY(lbl_806DB388, 1.0f);
     box = new SpriteBox(&rc, 1);
     box->Cull();
     text = new TextSprite;

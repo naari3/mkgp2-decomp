@@ -1,4 +1,4 @@
-/* NonMatching: 89.89171% text, exact 1736-byte primary size.
+/* NonMatching: 89.99078% text, exact 1736-byte primary size.
  * Vector operation and scalar quaternion helpers preserve native rounding
  * and recover the target size; FPR allocation and scheduling still differ. */
 #include "game/C7ItemCtorPrivate.h"
@@ -34,8 +34,15 @@ static inline void Normalize(C7Vec* v) {
     if(length<=lbl_806D27F8) { v->z=lbl_806D27F8; v->y=lbl_806D27F8; v->x=lbl_806D27F8; }
     else { float inv=lbl_806D27FC/length; v->x*=inv; v->y*=inv; v->z*=inv; }
 }
+static inline float LengthSquared(float x, float y, float z) {
+    // Preserve the rounded component products before summing X + Y, then Z.
+    float yy=y*y;
+    float xx=x*x;
+    float zz=z*z;
+    return zz+(xx+yy);
+}
 static inline void NormalizeCopy(C7Vec* v, const C7Vec* src) {
-    float x=src->z*src->z+(src->x*src->x+src->y*src->y);
+    float x=LengthSquared(src->x,src->y,src->z);
     *v=*src;
     float length=Root(x);
     if(length<=lbl_806D27F8) {v->z=lbl_806D27F8;v->y=lbl_806D27F8;v->x=lbl_806D27F8;}

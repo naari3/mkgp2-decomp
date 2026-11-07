@@ -13,32 +13,6 @@ static inline int SpawnArea(const float *xLimits, const float *zLimits, float x,
     return ix + iz * 3;
 }
 
-static inline FlashPoint *FindSpawnPoint(clDNFlash *self, int *list) {
-    FlashPoint *pt = 0;
-    int start = rand() % 5;
-    for (int tries = 0; tries < 5; tries++) {
-        int k = rand() % self->counts[list[start]];
-        int count = Min(self->counts[list[start]], lbl_806DB494);
-        for (int j = 0; j < count; j++) {
-            if (k >= self->counts[list[start]]) {
-                k = 0;
-            }
-            if (self->points[list[start]][k].used != 1) {
-                pt = &self->points[list[start]][k];
-                break;
-            }
-            k++;
-        }
-        if (pt) {
-            break;
-        }
-        if (++start >= 5) {
-            start = 0;
-        }
-    }
-    return pt;
-}
-
 void clDNFlash::Spawn() {
     const DNFlashSpawnTables &tables = *(const DNFlashSpawnTables *)lbl_803D0390;
     int list[5];
@@ -51,8 +25,8 @@ void clDNFlash::Spawn() {
     if (area < 0) {
         return;
     }
-    int col = area % 3;
     int n = 0;
+    int col = area % 3;
     list[n++] = area - col;
     list[n++] = list[0] + 1;
     list[n++] = list[1] + 1;
@@ -65,7 +39,28 @@ void clDNFlash::Spawn() {
     if (area != col + 6) {
         list[n++] = col + 6;
     }
-    FlashPoint *pt = FindSpawnPoint(this, list);
+    FlashPoint *pt = 0;
+    int start = rand() % 5;
+    for (int tries = 0; tries < 5; tries++) {
+        int k = rand() % counts[list[start]];
+        int count = Min(counts[list[start]], lbl_806DB494);
+        for (int j = 0; j < count; j++) {
+            if (k >= counts[list[start]]) {
+                k = 0;
+            }
+            if (points[list[start]][k].used != 1) {
+                pt = &points[list[start]][k];
+                break;
+            }
+            k++;
+        }
+        if (pt) {
+            break;
+        }
+        if (++start >= 5) {
+            start = 0;
+        }
+    }
     if (pt == 0) {
         return;
     }

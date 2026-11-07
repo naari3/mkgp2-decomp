@@ -7,16 +7,16 @@ int Sci2Card_GetUnpackStatusCode();
 extern unsigned char g_playerData[0x1DC];
 extern int lbl_806D19B8;
 FlowTask *fn_801FC1E0(int);
-void fn_8024AD8C(CardSetupFlow *self) {
+void fn_8024AD8C(CardSetupFlow *__restrict self) {
     if (!Sci2Card_GetByteFlag1224()) {
         if (ServiceValue_Get()) {
-            int duration = lbl_806D1AB0;
             self->state = 2;
+            int duration = lbl_806D1AB0;
             self->fader->Set(0, duration, (short)duration);
             clFlowKart_SetupTextLayout(self->kart, 6);
         } else if (Sci2Card_GetReceiptTestFlag()) {
-            int duration = lbl_806D1AB0;
             self->state = 2;
+            int duration = lbl_806D1AB0;
             self->fader->Set(0, duration, (short)duration);
             clFlowKart_SetupTextLayout(self->kart, 7);
         } else {

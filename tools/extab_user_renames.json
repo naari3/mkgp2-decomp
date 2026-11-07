@@ -5324,18 +5324,6 @@
     "extabindex_fn_8014AC48": "@eti_8002546C",
     "extab_fn_8014AD7C": "@etb_8000E2A0",
     "extabindex_fn_8014AD7C": "@eti_80025478",
-    "extab_fn_8014ADB4": "@etb_8000E380",
-    "extabindex_fn_8014ADB4": "@eti_80025484",
-    "extab_fn_8014B118": "@etb_8000E388",
-    "extabindex_fn_8014B118": "@eti_80025490",
-    "extab_fn_8014BBE4": "@etb_8000E390",
-    "extabindex_fn_8014BBE4": "@eti_8002549C",
-    "extab_fn_8014BF80": "@etb_8000E3A8",
-    "extabindex_fn_8014BF80": "@eti_800254A8",
-    "extab_fn_8014C308": "@etb_8000E3B0",
-    "extabindex_fn_8014C308": "@eti_800254B4",
-    "extab_fn_8014C53C": "@etb_8000E3B8",
-    "extabindex_fn_8014C53C": "@eti_800254C0",
     "__ct__6LapHudFi": "fn_80147638",
     "__dt__10LapHudBaseFv": "dtor_8013EB50",
     "__vt__10LapHudBase": "lbl_8048EB44",
@@ -8147,6 +8135,24 @@
     "__vt__Q216MapEffectPrivate9clMoveTex": "lbl_8049162C"
   },
   "src/game/anon_8021F088_nm_8021F508.cpp": {
+    "fn_8013BE98__Fi": "fn_8013BE98",
+    "kCoinAnimation": "global:lbl_803C6610",
+    "kOrigin": "global:lbl_803C6A18",
+    "kLineY": "global:lbl_803C6A24",
+    "kItemPoses": "global:lbl_803C6A38",
+    "kCounters": "global:lbl_803C6B70",
+    "kWork": "global:lbl_803C6B84",
+    "kDigits": "global:lbl_803C6BC4",
+    "kDigitPositions": "global:lbl_803C6BD4",
+    "kSceneName": "global:lbl_803C6C04",
+    "kBaseName": "global:lbl_803C6C18",
+    "kNextCoin": "global:lbl_803C6C2C",
+    "kNoItem": "global:lbl_803C6C58",
+    "kLastItem": "global:lbl_803C6C70",
+    "kItemError": "global:lbl_803C6C80",
+    "kSourceName": "global:lbl_803C6CA4",
+    "@183": "@etb_8001B19C",
+    "@184": "@eti_8002A410",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__dt__11TextManagerFv": "dtor_800869D0",
@@ -10707,6 +10713,8 @@
     "@525": "@eti_800206D8"
   },
   "src/game/ExplosionTumble_Init.cpp": {
+    "@279": "@etb_800071AC",
+    "@280": "@eti_800205AC",
     "@262": "@etb_800071AC",
     "@263": "@eti_800205AC",
     "__dt__5C7VecFv": "dtor_80036E40",
@@ -11233,6 +11241,14 @@
     "__dt__12CollisionVecFv": "dtor_80036E40"
   },
   "src/game/objview/fn_801967F0.cpp": {
+    "kEmitters": "global:lbl_8037D888",
+    "lbl_8037D930": "global:lbl_8037D930",
+    "lbl_8037D93C": "global:lbl_8037D93C",
+    "lbl_8037D950": "global:lbl_8037D950",
+    "lbl_8037D970": "global:lbl_8037D970",
+    "lbl_8037D990": "global:lbl_8037D990",
+    "lbl_8037D9A8": "global:lbl_8037D9A8",
+    "lbl_8037D9C4": "global:lbl_8037D9C4",
     "__ct__12ParticleViewFv": "fn_801967F0",
     "__dt__16ParticleViewBaseFv": "dtor_8016A270",
     "__vt__16ParticleViewBase": "lbl_80490FE0",
@@ -12835,6 +12851,8 @@
     "__vt__12ObjViewEntry": "lbl_80495E8C"
   },
   "src/game/DNFlash_nm2.cpp": {
+    "@148": "@etb_8001BB98",
+    "@149": "@eti_8002A734",
     "@168": "@etb_8001BB98",
     "@169": "@eti_8002A734",
     "Min<i>__FRCiRCi": "fn_80228D48",
@@ -12980,5 +12998,23 @@
   "src/sysdolphin/baselib/lobj_vector_nm.c": {
     "@294": "global:HSD_LObj_803B94A0_803F2BB8",
     "@295": "global:HSD_LObj_803B94AC_803F2BC4"
+  },
+  "src/game/CSSceneGetTitle_8014ADB4.cpp": {
+    "extab_fn_8014ADB4": "@etb_8000E380",
+    "extabindex_fn_8014ADB4": "@eti_80025484",
+    "extab_fn_8014B118": "@etb_8000E388",
+    "extabindex_fn_8014B118": "@eti_80025490",
+    "extab_fn_8014BBE4": "@etb_8000E390",
+    "extabindex_fn_8014BBE4": "@eti_8002549C",
+    "extab_fn_8014BF80": "@etb_8000E3A8",
+    "extabindex_fn_8014BF80": "@eti_800254A8",
+    "extab_fn_8014C308": "@etb_8000E3B0",
+    "extabindex_fn_8014C308": "@eti_800254B4",
+    "extab_fn_8014C53C": "@etb_8000E3B8",
+    "extabindex_fn_8014C53C": "@eti_800254C0",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__ct__7ResCtrlFv": "ResCtrl_Init"
   }
 }

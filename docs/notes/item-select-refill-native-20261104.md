@@ -19,3 +19,8 @@ c16_u19: fn_80238D9C baseline87.93535/1840B ->90.24354/1856B. Caller playerData 
 Source: Codex worker c19_u112_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 12 fn / 2920 B.
 
 c19_u112: fresh90.24354->90.37285 with shared int index/explicit self-based cursor across three disjoint tail sprite loops. Counter reaches targetr22; cursorr23 still targetr24. Size1856/EH28/index12 unchanged100,data0. Native __rlwimi alpha precedent restores packing and raises90.706894 but source1852 shifts EH (96.42857/index91.66667), rejected by section-regression rule; nested signed-short ChoiceResource helper invariant. Archived c17u57 best95.70905 depends on pool803DC0C0..803DC2C0 now owned by out-of-scope ItemSelectChoiceUpdate.cpp, so not replayed. One function prevents B; honestNM, full coordinator fallback SHA1ea30f3b1exact; no native gain.
+
+## c19_u239_20261107
+Source: Codex worker c19_u239_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u239: fresh baseline93.9881 (assignment94.7); static inline SetRefillPosition(sprite,x,y) fixes position scratch at802388E0..F8 and raises94.10714, exact672B/EH8/index12. Self local plus target-ranked x/y/resources declarations and early nextCount temporary are both invariant; reverted those probes. Remaining callee GPR webs, two +C0 table-base folds and choice count/zero scheduling. Pool803DC0C0..803DC2C0 is already owned by out-of-scope ItemSelectChoiceUpdate.cpp and was not touched. Singleton staysNM; no B cut; coordinator fallback DOL SHA1exact; zero native gain.

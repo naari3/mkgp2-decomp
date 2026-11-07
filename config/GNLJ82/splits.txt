@@ -6265,11 +6265,17 @@ game/fn_80147468.c:
 	.text       start:0x80147468 end:0x80147470
 
 game/RaceHud_80147470.cpp:
-	extab       start:0x8000DF44 end:0x8000E5A0
-	extabindex  start:0x800252F8 end:0x800254CC
-	.text       start:0x80147470 end:0x8014CE74
+	extab       start:0x8000DF44 end:0x8000E380
+	extabindex  start:0x800252F8 end:0x80025484
+	.text       start:0x80147470 end:0x8014ADB4
 	.ctors      start:0x802E890C end:0x802E8910
 	.rodata     start:0x80362778 end:0x80362858
+
+game/CSSceneGetTitle_8014ADB4.cpp:
+	extab       start:0x8000E380 end:0x8000E5A0
+	extabindex  start:0x80025484 end:0x800254CC
+	.text       start:0x8014ADB4 end:0x8014CE74
+	.rodata     start:0x80362D90 end:0x80363D30
 	.data       start:0x8048F130 end:0x8048F178
 
 game/CSPartsHolders.c:
@@ -8243,6 +8249,7 @@ game/objview/fn_801967F0.cpp:
 	extab       start:0x80012410 end:0x800124B0
 	extabindex  start:0x80027308 end:0x80027314
 	.text       start:0x801967F0 end:0x80196AA0
+	.rodata     start:0x8037D888 end:0x8037D9E0
 
 game/BananaField_Render.c:
 	extab       start:0x800124B0 end:0x800124B8
@@ -11649,6 +11656,7 @@ game/anon_8021F088_nm_8021F508.cpp:
 	extab       start:0x8001B19C end:0x8001B1D4
 	extabindex  start:0x8002A410 end:0x8002A41C
 	.text       start:0x8021F508 end:0x8021F824
+	.rodata     start:0x803C6610 end:0x803C6CBC
 
 game/anon_8021F088_m_8021F824.cpp:
 	extab       start:0x8001B1D4 end:0x8001B2A0
