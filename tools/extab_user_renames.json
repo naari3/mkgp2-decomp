@@ -11451,7 +11451,10 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "__vt__10C8TaPlease": "lbl_8049B1CC",
     "@65": "@etb_80014B70",
-    "@66": "@eti_80027F68"
+    "@66": "@eti_80027F68",
+    "@71": "@etb_80014B70",
+    "@72": "@eti_80027F68",
+    "taScales": "lbl_8039B470"
   },
   "src/game/fn_801D1890.cpp": {
     "__ct__16RankingFlowTrackFv": "fn_801D3354",
