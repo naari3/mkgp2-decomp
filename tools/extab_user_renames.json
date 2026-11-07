@@ -1848,7 +1848,21 @@
   "src/game/ShadowAreaMgr.cpp": {
     "__ct__13ShadowAreaMgrFPv": "ShadowAreaMgr_Ctor",
     "__ct__14SAArchiveModelFPvi": "clNormal3D_Construct",
-    "__dt__14SAArchiveOwnerFv": "dtor_80080444"
+    "__dt__14SAArchiveOwnerFv": "dtor_80080444",
+    "@76": "@etb_80009FE0",
+    "@77": "@eti_800226DC",
+    "@151": "@etb_8000A03C",
+    "@152": "@eti_800226E8",
+    "@162": "@etb_8000A044",
+    "@163": "@eti_800226F4",
+    "@172": "@etb_8000A04C",
+    "@173": "@eti_80022700",
+    "@307": "@etb_8000A064",
+    "@308": "@eti_8002270C",
+    "@203": "@etb_8000A06C",
+    "@204": "@eti_80022718",
+    "@217": "@etb_80009FD8",
+    "@218": "@eti_80022724"
   },
   "src/game/SpriteSlot_TickAnim.c": {
     "extab_SpriteSlot_TickAnim": "@etb_8000B284",

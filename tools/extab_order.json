@@ -2839,5 +2839,29 @@
     "fn_8014C308",
     "fn_8014C53C",
     "dtor_800869D0"
-  ]
+  ],
+  "src/game/ShadowAreaMgr.cpp": {
+    "extab": [
+      "dtor_800AB134",
+      "ShadowAreaMgr_BuildFromArchive",
+      "ShadowAreaMgr_QueryPoint",
+      "ShadowAreaMgr_Destroy",
+      "ShadowAreaMgr_GetOrCreate",
+      "ShadowAreaEntry_ComputeEdgeNormals",
+      "ShadowAreaEntry_Ctor",
+      "dtor_80080444",
+      "__dt__5Vec3fFv"
+    ],
+    "extabindex": [
+      "ShadowAreaMgr_BuildFromArchive",
+      "ShadowAreaMgr_QueryPoint",
+      "ShadowAreaMgr_Destroy",
+      "ShadowAreaMgr_GetOrCreate",
+      "ShadowAreaEntry_ComputeEdgeNormals",
+      "ShadowAreaEntry_Ctor",
+      "dtor_800AB134",
+      "dtor_80080444",
+      "__dt__5Vec3fFv"
+    ]
+  }
 }
