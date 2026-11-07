@@ -19,12 +19,17 @@ static inline void SetHidden(void *dobj, int hidden) {
     }
 }
 
+#pragma opt_propagation off
 void fn_8018D64C(LightView *self) {
     if (self->object != 0 && self->visible != 0) {
         void *dobj = self->dobj;
         int hidden = 0;
         if (dobj == 0) return;
-        SetHidden(dobj, hidden);
+        {
+            int z = 0;
+            if (z == hidden) HSD_DObjClearFlags(dobj, 1);
+            else HSD_DObjSetFlags(dobj, 1);
+        }
         Object_SetJObjPositionXYZ(self->object, self->x, self->y, self->z);
         Object_SetJObjScaleXYZ(self->object, self->scale, self->scale, self->scale);
         Object_RenderJObjTree(self->object, 7);
