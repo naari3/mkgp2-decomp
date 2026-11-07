@@ -2802,7 +2802,7 @@ config.libs = [
             Object(Matching, "game/fn_801F8E90.c"),
             Object(Matching, "game/fn_801D9A2C.cpp", extab_padding=b""),
             Object(Matching, "game/FlowPanelUpdate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/FlowPanelCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/FlowPanelCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/DrawText.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801D919C.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801DA574.c"),
