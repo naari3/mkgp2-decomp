@@ -230,14 +230,16 @@ extern const float lbl_806DABF0;
 
 
 
-float Tween::Value() {
-    short t = b;
-    short n = a;
+extern "C" float fn_8020A6CC(const Tween *__restrict self) {
+    short t = self->b;
+    int n = self->a;
+    float value;
     if (t <= 0) {
-        return from;
+        value = self->from;
+    } else if (t >= n) {
+        value = self->to;
+    } else {
+        value = self->from + lbl_806DABEC * (self->rate * t);
     }
-    if (t >= n) {
-        return to;
-    }
-    return from + lbl_806DABEC * (rate * t);
+    return value;
 }

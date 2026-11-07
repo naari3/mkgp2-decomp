@@ -1059,3 +1059,8 @@ c17_u3: fn_8020A788 accumulator spelling (int value=rate*t; value >>=16; value +
 Source: Codex worker c17_u8_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 104 B.
 
 c17_u8: MWRTTI __dynamic_cast NULL target and equal-type cases must share a short-circuit return (!totype || strcmp(...) == 0): separate early returns add one branch. bad_cast::what returning external existing lbl_803F1CBC avoids pooled-literal extra addi. Safe forward-EH split at 802715A4 promotes dtor+what 104B using an undefined first virtual key (inherited slots preserved) and @15/@16 EH bridges; all sections100, source-linked DOL SHA1 exact. Remaining dynamic-cast offset/strcmp r12/r31 swap is invariant under moving offset declaration before count and removing named offset for direct member references; do not repeat these probes.
+
+## c17_u5_20261107
+Source: Codex worker c17_u5_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u5: fn_8020A6CC 104B float Value draft improves 78.65385 -> 92.88461 with direct extern-C const Tween *__restrict parameter and int duration cache. Restrict moves elapsed load before stwu; int duration removes extra extsh. Inline restricted whole-body helper regresses74.23077; double return type is invariant78.65385. Remaining elapsed/duration GPR and float-return coalescing residuals leave source100B vs target104B. Keep singleton NonMatching. Add owned @61/@62 EH bridges; full fallback DOL SHA-1 exact, no native gain.

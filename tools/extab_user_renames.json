@@ -12030,7 +12030,9 @@
   "src/game/anon_80209FA4_nm2.cpp": {
     "Value__5TweenFv": "fn_8020A6CC",
     "@56": "@etb_80019420",
-    "@57": "@eti_80029B1C"
+    "@57": "@eti_80029B1C",
+    "@61": "@etb_80019420",
+    "@62": "@eti_80029B1C"
   },
   "src/game/anon_80209FA4_set.cpp": {
     "Set__5TweenFffs": "fn_8020A734",
