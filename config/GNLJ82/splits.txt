@@ -522,6 +522,7 @@ game/JvsInputReset.c:
 	extab       start:0x80005E60 end:0x80005E68
 	extabindex  start:0x8001FACC end:0x8001FAD8
 	.text       start:0x800396E4 end:0x80039780
+	.rodata     start:0x802E98E0 end:0x802E994C
 
 game/JvsInputPoll.c:
 	extab       start:0x80005E68 end:0x80005E70

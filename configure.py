@@ -1584,7 +1584,7 @@ config.libs = [
             Object(Matching, "game/InputObj.c"),
             Object(Matching, "game/InputObj_ReadRawInput.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/JvsInput_Calibration.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/JvsInputReset.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/JvsInputReset.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/JvsInput_TickPoll.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/JvsInputPoll.c", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/JvsInputClear.c", extra_cflags=["-Cpp_exceptions on"]),
