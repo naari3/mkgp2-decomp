@@ -14,8 +14,9 @@ static inline void ResetRecord(AIPairRecord *p) {
 }
 struct SlotTuning { char pad[0x50]; int mode; };
 static inline SlotTuning *GetSlotTuning(int i) {
+    int cup;
     int round = g_roundIndex;
-    int cup = g_cupId;
+    cup = g_cupId;
     return (SlotTuning *)GetKartTuningEntry(GetEnemyParam(), cup, round, i);
 }
 static inline void InitializeSlot(int i, int flag) {
