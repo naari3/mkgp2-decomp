@@ -453,7 +453,7 @@ config.libs = [
             Object(NonMatching, "sysdolphin/baselib/jobj_data_nm.c"),
             Object(Matching, "sysdolphin/baselib/jobj_depend.c"),
             Object(Matching, "sysdolphin/baselib/jobj_mtx_dirty.c"),
-            Object(NonMatching, "sysdolphin/baselib/jobj_dirty.c"),
+            Object(Matching, "sysdolphin/baselib/jobj_dirty.c"),
             Object(Matching, "sysdolphin/baselib/jobj_matrix.c"),
             Object(Matching, "sysdolphin/baselib/jobj_anim.c"),
             Object(Matching, "sysdolphin/baselib/jobj_tail.c"),
