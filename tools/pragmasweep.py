@@ -19,6 +19,10 @@ All near misses:
   and writes a Markdown table (original vs best diff lines, best setting,
   who claims the TU). Resumable: results are cached in /tmp/pragmasweep/cache.json.
 
+Pragma sets (--set, for fn and batch): default = the opt_* list below;
+extended = optimization_level 1/2/3, optimize_for_size, fp_contract off,
+unroll/vectorize off plus the three strongest opt_* ones; all = both.
+
 What is swept:
   - mw_version: --cc (default 1.2.5n,1.3,1.3.2,2.0,2.6,2.7; the TU's own first)
   - pragmas: none, each of PRAGMAS alone, and every pair (--k 2), wrapped
@@ -35,6 +39,14 @@ from concurrent.futures import ThreadPoolExecutor
 PRAGMAS = ['opt_common_subs off', 'opt_propagation off', 'opt_lifetimes off',
            'opt_dead_assignments off', 'opt_loop_invariants off',
            'opt_strength_reduction off', 'peephole off', 'scheduling off']
+# --set extended: optimizer-level pragmas. These found fn_80246DE4
+# (optimization_level 3) and fn_8021E0FC (optimization_level 2) after the
+# default set had been run.
+PRAGMAS_EXT = ['optimization_level 3', 'optimization_level 2', 'optimization_level 1',
+               'optimize_for_size on', 'fp_contract off', 'opt_unroll_loops off',
+               'opt_vectorize_loops off', 'opt_lifetimes off', 'opt_common_subs off',
+               'opt_propagation off']
+PRAGMA_SETS = {'default': PRAGMAS, 'extended': PRAGMAS_EXT, 'all': list(dict.fromkeys(PRAGMAS + PRAGMAS_EXT))}
 CCS = ['1.2.5n', '1.3', '1.3.2', '2.0', '2.6', '2.7']
 TMP = '/tmp/pragmasweep'
 
@@ -249,7 +261,7 @@ def cmd_batch(a):
     nm = set(re.findall(r'Object\(NonMatching,\s*"([^"]+)\.(?:c|cpp|cp)"', open('configure.py').read()))
     cl = claims()
     os.makedirs(TMP, exist_ok=True)
-    cpath = f'{TMP}/cache.json'
+    cpath = f'{TMP}/cache.json' if a.set == 'default' else f'{TMP}/cache_{a.set}.json'
     cache = json.load(open(cpath)) if os.path.exists(cpath) else {}
     todo = []
     for u in rep['units']:
@@ -299,12 +311,16 @@ def main():
     p.add_argument('--k', type=int, default=2); p.add_argument('--decl', type=int, default=0)
     p.add_argument('-j', '--jobs', type=int, default=os.cpu_count() or 4)
     p.add_argument('--demangled', help='Class::Method, if the def is not found by symbol name')
+    p.add_argument('--set', choices=sorted(PRAGMA_SETS), default='default', help='pragma set to sweep')
     p = sp.add_parser('batch'); p.add_argument('--min', type=float, default=90)
     p.add_argument('--max-size', type=int, default=2000)
     p.add_argument('--k', type=int, default=2); p.add_argument('--decl', type=int, default=0)
     p.add_argument('-j', '--jobs', type=int, default=os.cpu_count() or 4)
     p.add_argument('--md', default='docs/pragmasweep_results.md')
+    p.add_argument('--set', choices=sorted(PRAGMA_SETS), default='default', help='pragma set to sweep')
     a = ap.parse_args()
+    global PRAGMAS
+    PRAGMAS = PRAGMA_SETS[a.set]
     if a.cmd == 'fn':
         r = sweep(a.obj, a.fn, a.cc, a.k, a.decl, a.jobs, a.demangled)
         if 'error' in r: sys.exit(r['error'])
