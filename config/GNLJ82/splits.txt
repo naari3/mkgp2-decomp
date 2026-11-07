@@ -11944,9 +11944,14 @@ game/DNFlash.cpp:
 	.text       start:0x802280F8 end:0x802281F0
 
 game/DNFlash_nm1.cpp:
-	extab       start:0x8001BB90 end:0x8001BBA0
-	extabindex  start:0x8002A728 end:0x8002A740
-	.text       start:0x802281F0 end:0x802286B4
+	extab       start:0x8001BB90 end:0x8001BB98
+	extabindex  start:0x8002A728 end:0x8002A734
+	.text       start:0x802281F0 end:0x80228394
+
+game/DNFlash_nm2.cpp:
+	extab       start:0x8001BB98 end:0x8001BBA0
+	extabindex  start:0x8002A734 end:0x8002A740
+	.text       start:0x80228394 end:0x802286B4
 
 game/DNFlash_tail.cpp:
 	extab       start:0x8001BBA0 end:0x8001BC10

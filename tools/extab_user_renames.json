@@ -7685,7 +7685,9 @@
     "__dt__10clNormal3DFv": "Object_DtorWithGXSync",
     "__ct__9GXChannelFPvPvii": "GXChannel_Init",
     "__dt__9GXChannelFv": "dtor_8007D9C4",
-    "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform"
+    "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform",
+    "@83": "@etb_8001BB90",
+    "@84": "@eti_8002A728"
   },
   "src/game/DNFlash_tail.cpp": {
     "Min<i>__FRCiRCi": "fn_80228D48",
@@ -12666,5 +12668,29 @@
     "__ct__12ObjViewEntryFPv": "fn_8018E510",
     "__vt__7ObjBase": "lbl_80490FE0",
     "__vt__12ObjViewEntry": "lbl_80495E8C"
+  },
+  "src/game/DNFlash_nm2.cpp": {
+    "@168": "@etb_8001BB98",
+    "@169": "@eti_8002A734",
+    "Min<i>__FRCiRCi": "fn_80228D48",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "Draw__9clDNFlashFv": "fn_802280F8",
+    "Check__9clDNFlashFv": "fn_802281F0",
+    "Spawn__9clDNFlashFv": "fn_80228394",
+    "Update__9clDNFlashFv": "fn_802286B4",
+    "__dt__9clDNFlashFv": "fn_802287EC",
+    "__ct__9clDNFlashFv": "fn_80228884",
+    "Tick__9FlashPartFv": "fn_80228C38",
+    "Start__9FlashPartFP10FlashPoint": "fn_80228C9C",
+    "__ct__12FlashPartObjFv": "fn_80228D20",
+    "Min<i>__FRCiRCi_i": "fn_80228D48",
+    "__vt__9clDNFlash": "lbl_804EE074",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__dt__10clNormal3DFv": "Object_DtorWithGXSync",
+    "__ct__9GXChannelFPvPvii": "GXChannel_Init",
+    "__dt__9GXChannelFv": "dtor_8007D9C4",
+    "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform"
   }
 }
