@@ -63,7 +63,9 @@ s32 acPollResponse(s32 s) {
             OSSignalSemaphore(sem);
         }
     }
-    return k->ready;
+    /* fakematch (volatile read): the target reloads k->ready after the
+     * saved-register restores. Natural code: return k->ready; */
+    return *(volatile s32*)&k->ready;
 }
 
 s32 acReadResponse(s32 s) {
