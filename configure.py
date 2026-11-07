@@ -3073,7 +3073,7 @@ config.libs = [
             Object(Matching, "game/objview/fn_8018D3E0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/misc3d/fn_8018D638.c"),
             Object(NonMatching, "game/misc3d/fn_8018D64C.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/objview/fn_8018E510.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/objview/fn_8018E510.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/objview/fn_8018E108.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/objview/fn_8018E6FC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/objview/fn_8018EDE0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
@@ -3894,8 +3894,8 @@ def _inject_jvs_metrics_ctor_bridge() -> None:
     assert hook in rule
     rule = rule.replace(hook, " && $python tools/postprocess_extab_user.py $out" + hook, 1)
     # EH-free TUs that only need the symbol renames (no `dtk extab clean`).
-    for tu in ("JvsInputMetrics", "anon_80216568_fader"):
-        target = f"build build\\GNLJ82\\src\\game\\{tu}.o: mwcc_sjis_extab"
+    for tu in ("JvsInputMetrics", "anon_80216568_fader", "objview/fn_8018E510"):
+        target = f"build build\\GNLJ82\\src\\game\\{tu.replace('/', chr(92))}.o: mwcc_sjis_extab"
         if sys.platform != "win32":
             target = f"build build/GNLJ82/src/game/{tu}.o: mwcc_sjis_extab"
         assert target in text
