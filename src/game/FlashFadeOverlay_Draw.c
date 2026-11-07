@@ -32,7 +32,6 @@ void FlashFadeOverlay_Draw(struct FlashOverlay *self, float x0, float y0, float 
     Vec eye, up, target;
     float v1, u1;
     float one, vm, vscale, um, uscale, yc, xc;
-    float uplus, vplus;
     if (GetVBlankFlag() && self->enabled) {
         GXSetZMode(0, 0, 0);
         GXSetZCompLoc(0);
@@ -69,14 +68,14 @@ void FlashFadeOverlay_Draw(struct FlashOverlay *self, float x0, float y0, float 
         GXSetVtxDesc(11, 1);
         GXSetVtxAttrFmt(0, 13, 1, 4, 0);
         GXSetVtxDesc(13, 1);
-        uplus = lbl_806D2E44 + u;
-        vplus = lbl_806D2E4C + v;
+        u1 = lbl_806D2E44 + u;
+        v1 = lbl_806D2E4C + v;
         um = lbl_806D2E44 - u;
         vm = lbl_806D2E4C - v;
         uscale = lbl_806D2E40;
         vscale = lbl_806D2E48;
-        u1 = uscale * uplus;
-        v1 = vscale * vplus;
+        u1 = uscale * u1;
+        v1 = vscale * v1;
         xc = lbl_806D2E24;
         yc = lbl_806D2E18;
         one = lbl_806D2D44;
