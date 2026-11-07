@@ -1,7 +1,4 @@
-/* ItemSelectState ctor. NonMatching: only the nonvolatile register numbering
- * of the row/col loop variables differs (target: k r31, entry r30, total r29,
- * table r28, ys r27, player r26, row r25). Declaration-order sweep and two
- * 20-min permuter runs plateau here. */
+/* ItemSelectState ctor: preload resources and build the 6x11 item grid. */
 #include "game/ItemSelectState.h"
 struct ResCtrl {
  int resId; int field4,mode,fieldc; unsigned char flag,pad11[3];
@@ -52,6 +49,7 @@ static inline unsigned int MakeCell(unsigned int resource,const float *y) {
 }
 ItemSelectState::ItemSelectState() {
  char *data=lbl_803DC0C0;
+
  iconArray=0;auxBuffer=0;field148=0;field14c=0;resultCode=0;phase=0;doneFlag=0;shownFlag=0;
  for(int i=0;i<9;i++)groups[i]=0;
  for(int i=0;i<66;i++)itemSprites[i]=-1;
@@ -71,27 +69,26 @@ ItemSelectState::ItemSelectState() {
  *(int *)(auxBuffer->data+0x18)=1;
  fn_801F93EC(lbl_806DB92C,lbl_806DB930,auxBuffer);fn_801F8E90(auxBuffer);
  *(unsigned int *)(auxBuffer->data+0x20)=0xffffff00;
- unsigned int *table=(unsigned int *)(data+0xc0);
- float *ys=(float *)(data+0x1dc);
- int total=0;
- unsigned char *player=g_playerData;
- for(int row=0;row<6;row++,table+=10,ys++,total+=11) {
- unsigned int *entry=table;
- int k=total;
- for(int col=0;col<11;col++,entry++){
+ unsigned int *table; float *ys; unsigned char *player; int row; int col;
+ table=(unsigned int *)(data+0xc0);
+ ys=(float *)(data+0x1dc);
+ player=g_playerData;
+ for(row=0;row<6;row++,table+=10,ys++) {
+ for(col=0;col<11;col++){
+   int idx=row*11+col;
    long character=g_characterId;
    unsigned int resource=0x1422;
    if(character<0)character=0;if(character>=13)character=0;
    int index;
-   if(col>=10)index=fn_8023D844(character,row);else index=*entry;
+   if(col>=10)index=fn_8023D844(character,row);else index=table[col];
    if(player[index+0xa8]==1)resource=Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(player,index),0);
-   itemSprites[k++]=MakeCell(resource,ys);
+   itemSprites[idx]=MakeCell(resource,ys);
  }
  }
  fn_80121E10(&res);
  res.tail[1]=1;res.tail[2]=1;res.tail[3]=1;
- res.resId=0x1e3d;res.flag=1;res.x=lbl_806DB8DC;res.y=lbl_806DB934;res.scaleY=res.z=lbl_806DB8CC;
- res.scaleX=lbl_806DB938;
+ res.resId=0x1e3d;res.flag=1;res.x=lbl_806DB8DC;res.y=lbl_806DB934;res.z=1.0f;
+ res.scaleX=lbl_806DB938;res.scaleY=1.0f;
  sprites[3]=SpriteHandle_CreateDefault(&res,6);
  fn_80121E10(&res);
  res.resId=0x17ed;res.flag=1;res.x=lbl_806DB900;res.y=lbl_806DB93C;res.z=lbl_806DB8CC;
@@ -101,8 +98,8 @@ ItemSelectState::ItemSelectState() {
  last.x=lbl_806DB8DC;last.y=lbl_806DB8E0;last.z=lbl_806DB8CC;
  last.colors[0]=0;last.colors[1]=0;last.colors[2]=0;last.colors[3]=0;
  sprites[4]=SpriteHandle_CreateDefault(&last,6);
- SpriteHandle_SetActiveFlag(sprites[4],0);SpriteHandle_RecomputeCull(sprites[4]);}
- iconArray=new IconPack;
+ SpriteHandle_SetActiveFlag(sprites[4],0);SpriteHandle_RecomputeCull(sprites[4]);
+ iconArray=new IconPack;}
 }
 
 

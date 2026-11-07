@@ -621,7 +621,7 @@ config.libs = [
             Object(Matching, "game/OperationClock.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFootEffect_Tick.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFootEffect_Spawn.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/ItemSelectState_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/ItemSelectState_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/ItemSelectState_Dtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/SceneDrawList.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/RaceContextSlot.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
