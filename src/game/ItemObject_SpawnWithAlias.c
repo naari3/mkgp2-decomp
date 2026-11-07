@@ -39,8 +39,8 @@ static inline ItemObject *ItemPool_Alloc(void)
 
     for (i = 0; i < 256; i++) {
         int idx = (cur + 1) % 256;
-        ItemObject *obj = &lbl_80638300[idx];
-        if (obj->active == 0) {
+        if (lbl_80638300[idx].active == 0) {
+            ItemObject *obj = &lbl_80638300[idx];
             memset(obj, 0, sizeof(ItemObject));
             lbl_806D14D0 = idx;
             obj->active = 1;
