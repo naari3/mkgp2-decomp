@@ -1499,3 +1499,8 @@ c19_u47 AI_UpdatePerFrameState: baseline97.34122 ->97.40878. Whole-body static-i
 Source: Codex worker c19_u58_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 3112 B.
 
 c19_u58: fn_802128F4 resolves99.86264->100 with inline const KartRender::GetSpeed() plus static inline MultiplySpeed(float factor,float speed){return factor*speed;} at both scaling sites. Getter alone99.94505 fixes speed/conversion scratch ordering but leaves factor/result coalescing; product helper resolves remaining4rows. Native text1456/ownedEH24/index12 all100 after add-only @92/@93 metadata bridges. Existing KartPos weak empty dtor copy discarded; final source-linked ELF ranges and full DOL SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65 exact. Matching promotion; no pool/split/flags/shared-header changes. Gain1nativefn1456B.
+
+## c19_u62_20261107
+Source: Codex worker c19_u62_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1436 B.
+
+c19_u62 fn_801FB778 unlocks99.387184->100%. Actual fn801D9B70 second arg is unsigned char; correcting declaration alone is invariant. Receiver-only static inline UpdateKart(void *kart), with singleton lookup and dir!=0 normalization INSIDE helper, moves receiver load before null branch and gives singletonr4/kartr3 exactly. Prior two-argument helper/direct-expression negatives do not imply receiver-only boundary is closed. Text1436/EH44/index12/data40 all100. Existing alignment/EH settings reused, only Matching flag promoted. Source-linked ELF symbol and all owned ranges exact; full DOL SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. +1native fn1436B.
