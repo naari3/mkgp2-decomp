@@ -1,0 +1,83 @@
+// Shared GX format pool and the contiguous quad cleanup / mixed setup methods.
+extern "C" {
+#pragma force_active on
+// GX descriptor pairs and four-word vertex attribute formats share this pool.
+struct DrawFormatS56 { unsigned int words[4]; };
+extern const unsigned int lbl_803BEDC0[8] = {9, 1, 11, 1, 255, 1, 0, 0};
+static const unsigned int colorFlatS56[16] = {9, 0, 4, 0, 11, 1, 5, 0, 255, 1, 4, 0, 0, 0, 0, 0};
+static const unsigned int colorDepthS56[16] = {9, 1, 4, 0, 11, 1, 5, 0, 255, 1, 4, 0, 0, 0, 0, 0};
+static const unsigned int texDescS56[8] = {9, 1, 13, 1, 255, 1, 0, 0};
+static const unsigned int texFlatS56[16] = {9, 0, 4, 0, 13, 1, 4, 0, 255, 1, 5, 0, 0, 0, 0, 0};
+static const unsigned int texDepthS56[16] = {9, 1, 4, 0, 13, 1, 4, 0, 255, 1, 5, 0, 0, 0, 0, 0};
+static const unsigned int mixDescS56[8] = {9, 1, 11, 1, 13, 1, 255, 1};
+static const DrawFormatS56 mixFlatS56[8] = {
+        {{9, 0, 4, 0}},
+        {{11, 1, 5, 0}},
+        {{13, 1, 4, 0}},
+        {{255, 1, 4, 0}},
+        {{9, 0, 4, 0}},
+        {{11, 1, 5, 0}},
+        {{13, 1, 4, 0}},
+        {{255, 1, 4, 0}}
+    };
+static const DrawFormatS56 mixDepthS56[8] = {
+        {{9, 1, 4, 0}},
+        {{11, 1, 5, 0}},
+        {{13, 1, 4, 0}},
+        {{255, 1, 4, 0}},
+        {{9, 1, 4, 0}},
+        {{11, 1, 5, 0}},
+        {{13, 1, 4, 0}},
+        {{255, 1, 4, 0}}
+    };
+#pragma force_active reset
+
+void MemoryManager_TimedFree(void *);
+void GXSetNumTexGens(int); void GXSetNumChans(int); void GXSetNumTevStages(int);
+void GXSetTexCoordGen2(int,int,int,int,int,int);
+void GXSetTevOrder(int,int,int,int); void GXSetTevOp(int,int);
+void GXSetTevColorIn(int,int,int,int,int); void GXSetTevColorOp(int,int,int,int,int,int);
+void GXSetTevAlphaIn(int,int,int,int,int); void GXSetTevAlphaOp(int,int,int,int,int,int);
+void GXClearVtxDesc(); void GXSetVtxDescv(const void *); void GXSetVtxAttrFmtv(int,const void *);
+struct DrawNode801F {
+    void *vtable; void *description; unsigned char depth; unsigned char pad[3]; int mode;
+};
+void *dtor_801F8214(void *self, short flag) {
+    if (self != 0 && flag > 0) MemoryManager_TimedFree(self);
+    return self;
+}
+
+void fn_801F8250(DrawNode801F *self) {
+    int offset;
+    GXSetNumTexGens(1);
+    GXSetTexCoordGen2(0, 1, 4, 60, 0, 125);
+    GXSetNumChans(1);
+    GXSetNumTevStages(1);
+    switch (self->mode) {
+    case 1:
+        GXSetTevColorIn(0,8,9,11,10);
+        GXSetTevColorOp(0,0,0,0,1,0);
+        break;
+    case 2:
+        GXSetTevColorIn(0,15,15,11,10);
+        GXSetTevColorOp(0,0,0,0,1,0);
+        GXSetTevAlphaIn(0,7,4,5,7);
+        GXSetTevAlphaOp(0,0,0,0,1,0);
+        break;
+    default:
+        GXSetTevOp(0,0);
+        break;
+    }
+    GXSetTevOrder(0,0,7,4);
+    GXClearVtxDesc();
+    offset = 0;
+    if (self->mode == 1 || self->mode == 2) offset = 4;
+    GXSetVtxDescv(mixDescS56);
+    if (self->depth) {
+        GXSetVtxAttrFmtv(0,&mixDepthS56[offset]);
+    } else {
+        GXSetVtxAttrFmtv(0,&mixFlatS56[offset]);
+    }
+}
+
+}

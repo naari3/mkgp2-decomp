@@ -6889,11 +6889,17 @@
     "@121": "@etb_80017640",
     "@122": "@eti_80029030",
     "@127": "@etb_80017640",
-    "@128": "@eti_80029030"
+    "@128": "@eti_80029030",
+    "__dt__12DrawQuad7F50Fv": "dtor_801F8214",
+    "@137": "@etb_80017640",
+    "@138": "@eti_80029030"
   },
   "src/game/fn_801F8728.cpp": {
     "__dt__12DrawQuad801FFv": "dtor_801F8214",
-    "__dt__12DrawQuad8728Fv": "dtor_801F8214"
+    "__dt__12DrawQuad8728Fv": "dtor_801F8214",
+    "__dt__12DrawQuad7F50Fv": "dtor_801F8214",
+    "@121": "@etb_80017660",
+    "@122": "@eti_80029048"
   },
   "src/game/fn_801F8A34.cpp": {
     "__ct__7ResCtrlFv": "ResCtrl_Init",
@@ -11594,14 +11600,31 @@
     "__dt__12CollisionVecFv": "dtor_80036E40"
   },
   "src/game/fn_801F7F50.cpp": {
-    "__dt__12DrawQuad7F50Fv": "dtor_801F8214"
+    "__dt__12DrawQuad7F50Fv": "dtor_801F8214",
+    "@153": "@etb_80017618",
+    "@154": "@eti_8002900C"
+  },
+  "src/game/dtor_801F8214.cpp": {
+    "@8": "@etb_80017630",
+    "@9": "@eti_80029018",
+    "@25": "@etb_80017638",
+    "@26": "@eti_80029024",
+    "colorFlatS56": "lbl_803BEDE0",
+    "colorDepthS56": "lbl_803BEE20",
+    "texDescS56": "lbl_803BEE60",
+    "texFlatS56": "lbl_803BEE80",
+    "texDepthS56": "lbl_803BEEC0",
+    "mixDescS56": "lbl_803BEF00",
+    "mixFlatS56": "lbl_803BEF20",
+    "mixDepthS56": "lbl_803BEFA0"
   },
   "src/game/fn_801F7604.cpp": {
     "__dt__12ColorDrawS56Fv": "dtor_801F7AD0",
     "__dt__10TexDrawS56Fv": "dtor_801F7A74",
     "__dt__10MixDrawS56Fv": "dtor_801F6BD0",
     "@130": "@etb_80017580",
-    "@131": "@eti_80028F88"
+    "@131": "@eti_80028F88",
+    "...rodata.0": "lbl_803BEDC0"
   },
   "src/game/SpriteAnimHandleCtor.cpp": {
     "__nw__FUl": "Alloc",
