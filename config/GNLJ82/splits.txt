@@ -6766,15 +6766,11 @@ game/mapeffect/Jungle16ACtor.cpp:
 	extabindex  start:0x8002606C end:0x80026078
 	.text       start:0x8016AB58 end:0x8016ACD4
 
-game/Scene_8016ACD4.cpp:
-	extab       start:0x800102D0 end:0x800102E8
-	extabindex  start:0x80026078 end:0x8002609C
-	.text       start:0x8016ACD4 end:0x8016AF3C
-
 game/mapeffect/Cave16ACtor.cpp:
-	extab       start:0x800102E8 end:0x80010364
-	extabindex  start:0x8002609C end:0x800260A8
-	.text       start:0x8016AF3C end:0x8016B0A0
+	extab       start:0x800102D0 end:0x80010364
+	extabindex  start:0x80026078 end:0x800260A8
+	.text       start:0x8016ACD4 end:0x8016B0A0
+	.rodata     start:0x8036CF68 end:0x8036D540
 
 game/HsdRes_8016B0A0.c:
 	extab       start:0x80010364 end:0x8001038C

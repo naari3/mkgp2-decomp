@@ -51,7 +51,7 @@ struct Cave16A : MapPart16A {
     virtual ~Cave16A();
 };
 extern "C" {
-extern const char lbl_8036CA00[], lbl_8036CF68[];
+extern const char lbl_8036CA00[];
 extern const char lbl_8036CE88[];
 extern const float lbl_806D8A40, lbl_806D8A54, lbl_806D8A58, lbl_806D8A5C;
 extern const float lbl_806D8A60, lbl_806D8A64, lbl_806D8A68, lbl_806D8A70;
