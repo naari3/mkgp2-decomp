@@ -8,11 +8,11 @@ extern const char lbl_803EF600[];
 extern const double lbl_806DBE68, lbl_806DBE70, lbl_806DBE78;
 }
 static inline float Root(float x) {
-    if (x > lbl_806DBE64) {
+    if (x > 0.0f) {
         double guess = __frsqrte(x);
-        guess = lbl_806DBE70 * guess * (lbl_806DBE78 - guess * guess * x);
-        guess = lbl_806DBE70 * guess * (lbl_806DBE78 - guess * guess * x);
-        guess = lbl_806DBE70 * guess * (lbl_806DBE78 - guess * guess * x);
+        guess = 0.5 * guess * (3.0 - guess * guess * x);
+        guess = 0.5 * guess * (3.0 - guess * guess * x);
+        guess = 0.5 * guess * (3.0 - guess * guess * x);
         volatile float result = (float)(x * guess);
         x = result;
     }
@@ -42,7 +42,7 @@ extern "C" float fn_80243074(RivalMarkerHud *self, int index, const RivalPositio
     RivalWaypoint *b = Path_GetWaypointPtr(path, index);
     if (!a || !b) {
         DebugPrintf(lbl_803EF600);
-        return lbl_806DBE64;
+        return 0.0f;
     }
     float x = a->x - b->x;
     float z = a->z - b->z;
@@ -61,6 +61,6 @@ extern "C" float fn_80243074(RivalMarkerHud *self, int index, const RivalPositio
     projection.Scale(amount);
     offset.Sub(projection);
     float distance = offset.Length();
-    if (side < lbl_806DBE64) distance = -distance;
+    if (side < 0.0f) distance = -distance;
     return distance;
 }

@@ -278,3 +278,8 @@ c17_u115 fn_801046C4: baseline by-value Bus_TestFlag causes -4B boolean island. 
 Source: Codex worker c18_u18_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 376 B.
 
 c18_u18 SceneModel_Init 80076494 (376B): inline LoadSceneLights(self,chainLights), including first-null early return and default-light fallback, fixes chain prev/index/base homes. Nested inline LoadSeparateLights(self) fixes count/output/stride callee-saved homes. Pure local-scope changes and explicit byte cursors regress. Combined native helpers match text376/extab8/index12 100%, existing TU promoted Matching, source link and final ELF range verified, full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. No shared pool or EH metadata changes needed.
+
+## c18_u25_20261107
+Source: Codex worker c18_u25_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u25: fn_80243074 1008B improves fresh 98.583336 ->99.27778% by replacing Root zero/Newton external const references with 0.0f/0.5/3.0 (also zero return/sign test). Fixes second/third Root sum and Newton FP homes. Caller-expanded rotation retains wrong FP homes (99.218254); explicit next local worsens95.230156. Whole-geometry inline helper does not inline (176B primary,14.861111). Retained residual: index/position r28/r29 swap, rotation callee FP homes, projection x/y/z load order vs target y/x/z. Single function stays NonMatching. Final fallback DOL SHA-1 exact; no native gain.
