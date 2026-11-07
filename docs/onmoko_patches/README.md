@@ -59,3 +59,11 @@ main 295cfd3) was swept:
 - Near misses left by the sweep: fn_8028EAA8 (amnet_nm2_rest) 49 -> 1 with
   GC/1.3.2 + optimization_level 3; FrameUpdate 107 -> 2 with GC/1.3.2 +
   opt_common_subs off (own cc is 3.0a5). Solved later: see FrameUpdate.patch.
+
+## Hand fixes (R2, 2026-11-07)
+
+Verified on main with the patch applied: clean build (`rm -rf build/GNLJ82/src build/GNLJ82/ok`), main.dol OK.
+
+| Patch | Function | TU | Issue | Before | Fix | After | TU flip |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| VfxSlotMgr.patch | VfxSlotMgr_Update | game/VfxSlotMgr.cpp | #2369 | 99.94% | copy `*position` then `*target` into locals in the caller and call BuildCamera directly (SetCamera's by-value params took their stack slots in the opposite order) | 100% | yes, included |
