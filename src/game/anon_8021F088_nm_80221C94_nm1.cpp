@@ -1,7 +1,8 @@
 #include "game/anon_8021F088_private.h"
+#include "game/singleton.h"
 
 void ItemWnd::ShowOther() {
-    bool pressed = GetInput()->held == 1;
+    bool pressed = SINGLETON_INSTANCE(g_pInputState)->held == 1;
     switch (sub) {
     case 0: {
         if (spr[1] != 0) {
@@ -63,7 +64,7 @@ void ItemWnd::ShowOther() {
             s = s - lbl_806DB20C * f;
         }
         if (item != 0) {
-            fn_8021A4B8(item, s, s, s, lbl_806DB194);
+            fn_8021A4B8(item, s, s, s, 1.0f);
         }
         label.SetColor(PackColor(0xFF, 0xFF, 0xFF, (int)(lbl_806DB24C * f)));
         if (timer >= 15) {
