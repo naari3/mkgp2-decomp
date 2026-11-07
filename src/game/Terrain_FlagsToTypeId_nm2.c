@@ -19,11 +19,11 @@ static inline unsigned int Terrain_PatchHi(unsigned int flags)
     return flags;
 }
 
-static inline float Terrain_SlipForFlags(unsigned int flags)
+static inline float Terrain_SlipForFlags(unsigned int flags, int cup)
 {
     unsigned int f = flags & 0xA00000;
     float v = lbl_806D48B8;
-    if (g_cupId == 2 && g_courseVariantIdx == 1) {
+    if (cup == 2 && g_courseVariantIdx == 1) {
         v = lbl_806D48BC;
     }
     if (f & 0x200000) {
@@ -35,15 +35,20 @@ static inline float Terrain_SlipForFlags(unsigned int flags)
     return v;
 }
 
+/* Matches with common-subexpression elimination off for this function: the
+ * cup id is read once into a local and shared with the slip helper. */
+#pragma opt_common_subs off
 float Terrain_GetSlipFactor(unsigned int flags)
 {
     unsigned int hi = flags;
     unsigned int f = flags & 0xFF0FFFFF;
-    if (g_cupId == 2 && (f & 0x80)) {
+    int cup = g_cupId;
+    if (cup == 2 && (f & 0x80)) {
         f &= ~0x80;
         f |= 0x40;
         hi = Terrain_PatchHi(flags);
     }
     f |= hi & 0xF00000;
-    return Terrain_SlipForFlags(f);
+    return Terrain_SlipForFlags(f, cup);
 }
+#pragma opt_common_subs reset

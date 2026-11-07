@@ -1,6 +1,7 @@
 #pragma inline_max_size(10000)
 #pragma inline_max_total_size(100000)
 #include "game/BootDispatcher_private.h"
+#include "game/TestMenuPage.h"
 
 extern "C" {
 unsigned int OSGetTick();
@@ -42,7 +43,7 @@ void JvsInput_SetAccelCalibration(int);
 void JvsInput_SetBrakeCalibration(int);
 void *StrPcb_GetInstance();
 void StrPcb_SetPositionTarget(void *, short);
-void StrPcb_SetIntensityMode(void *, signed char);
+void StrPcb_SetIntensityMode(void *, int);
 void ClSound_InitSoundSystem();
 void fn_801934A0(unsigned char);
 void fn_8019345C(unsigned char);
@@ -103,7 +104,6 @@ void Timer_Decrement();
 void PCBComm_Process(int,int);
 int BootNotice_CheckEnterCondition();
 void SetSyncTarget(int);
-void DrawText(void *,int,int,int,const char *,...);
 void DisplayContext_Flush(void *);
 void fn_8011F994(int);
 void fn_801DB68C(void *,int);
@@ -124,8 +124,17 @@ extern BootColor lbl_806CED34;
 extern void *lbl_806D0F90, *lbl_806D1880, *lbl_806D12DC;
 extern char *lbl_806D0FC8;
 extern unsigned int lbl_806D0FCC, lbl_806D0FD0, lbl_806D0FD4;
-extern const char *lbl_803F5670[10];
+extern const char lbl_806D2290[4];
+extern const char lbl_802E8F5C[], lbl_802E8F80[], lbl_802E8F8C[];
+extern const char lbl_802E8FB0[], lbl_802E8FD4[], lbl_802E8FF8[];
+extern const char lbl_802E901C[], lbl_802E9040[];
 }
+
+static const char *lbl_803F5670[10] = {
+    lbl_802E8F48, lbl_806D2290, lbl_802E8F5C, lbl_802E8F80,
+    lbl_802E8F8C, lbl_802E8FB0, lbl_802E8FD4, lbl_802E8FF8,
+    lbl_802E901C, lbl_802E9040
+};
 
 inline void *operator new(unsigned long n) { return Alloc(n); }
 inline void operator delete(void *p) { MemoryManager_TimedFree(p); }
@@ -183,8 +192,8 @@ public:
     void Draw() {
         if (display) {
             for (unsigned int i=0, y=32;i<10;++i,y+=36)
-                DrawText(display,78,y,7,lbl_803F5670[i],lbl_806D22A8);
-            DrawText(display,588,24,7,lbl_806D22AC,remaining/60,lbl_806D22A8);
+                DrawText(display,78,y,7,lbl_806D22A8,lbl_803F5670[i]);
+            DrawText(display,588,24,7,lbl_806D22A8,lbl_806D22AC,remaining/60);
             DisplayContext_Flush(display);
         }
     }

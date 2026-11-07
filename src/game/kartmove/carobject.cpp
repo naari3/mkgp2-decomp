@@ -215,17 +215,16 @@ void SpeedCurve_UpdateSpeedCap(SpeedCurve *s, float v) {
             s->speed = SpeedCurve_LookupFromSpeed(s, s->prog);
         }
     } else {
-        float x10 = s->x10;
-        float a;
         float target;
+        float a;
         float maxSpeed;
-        float d;
+        float x10 = s->x10;
         s->capped = 1;
         a = s->x14 * s->tbl[s->idx].accel;
         maxSpeed = s->tbl[s->idx].maxSpeed;
         target = x0C * maxSpeed;
-        d = x10 * a;
-        s->speed = s->speed - d;
+        x10 *= a;
+        s->speed = s->speed - x10;
         if (s->speed < 0.0f) s->speed = 0.0f;
         if (s->speed > target) {
             s->speed -= a;

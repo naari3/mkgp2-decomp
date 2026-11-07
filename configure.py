@@ -482,16 +482,7 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/tobj_reset_consts.c"),
             Object(Matching, "sysdolphin/baselib/tobj_anim.c"),
             Object(Matching, "sysdolphin/baselib/tobj_nm.c"),
-            Object(Matching, "sysdolphin/baselib/tobj_load.c"),
-            Object(Matching, "sysdolphin/baselib/tobj_texmap_nm.c"),
-            Object(Matching, "sysdolphin/baselib/tobj_mtx_nm.c"),
             Object(NonMatching, "sysdolphin/baselib/tobj_mtx_pool_nm.c"),
-            Object(Matching, "sysdolphin/baselib/tobj_color.c"),
-            Object(Matching, "sysdolphin/baselib/tobj_setup_nm.c"),
-            Object(NonMatching, "sysdolphin/baselib/tobj_setup_nm1.c"),
-            Object(Matching, "sysdolphin/baselib/tobj_index.c"),
-            Object(Matching, "sysdolphin/baselib/tobj_class.c"),
-            Object(NonMatching, "sysdolphin/baselib/tobj_info_nm.c"),
             Object(NonMatching, "sysdolphin/baselib/state.c"),
             Object(Matching, "sysdolphin/baselib/state_render.c"),
             Object(Matching, "sysdolphin/baselib/state_color.c", mw_version="GC/2.7"),
@@ -508,16 +499,6 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/lobj_position.c"),
             Object(Matching, "sysdolphin/baselib/lobj_load.c"),
             Object(NonMatching, "sysdolphin/baselib/lobj_load_nm.c"),
-            Object(Matching, "sysdolphin/baselib/mobj_update_nm.c"),
-            Object(Matching, "sysdolphin/baselib/mobj_update_consts.c"),
-            Object(Matching, "sysdolphin/baselib/mobj_anim.c"),
-            Object(Matching, "sysdolphin/baselib/mobj_nm.c"),
-            Object(Matching, "sysdolphin/baselib/mobj_nm1.c"),
-            Object(NonMatching, "sysdolphin/baselib/mobj_data_nm.c"),
-            Object(Matching, "sysdolphin/baselib/mobj_setup.c"),
-            Object(Matching, "sysdolphin/baselib/mobj_material_nm.c"),
-            Object(Matching, "sysdolphin/baselib/mobj_release.c"),
-            Object(NonMatching, "sysdolphin/baselib/mobj_info_nm.c"),
             Object(Matching, "sysdolphin/baselib/cobj.c"),
             Object(NonMatching, "sysdolphin/baselib/cobj_nm1.c"),
             Object(Matching, "sysdolphin/baselib/cobj_bottom.c"),
@@ -1327,7 +1308,7 @@ config.libs = [
             Object(Matching, "game/ItemObject_Tick_Kind2426_FastDrop.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/Terrain_FlagsToTypeId.c"),  #g2
             Object(Matching, "game/Terrain_FlagsToTypeId_nm1.c"),  #g2
-            Object(NonMatching, "game/Terrain_FlagsToTypeId_nm2.c"),  #g2
+            Object(Matching, "game/Terrain_FlagsToTypeId_nm2.c"),  #g2
             Object(Matching, "game/ItemObject_CheckPairCollision.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartVfx_Bind1_Damage.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartVfx_Bind6_YawZ.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -3971,7 +3952,6 @@ DATA_ALIGN4_TUS = [
     "game/CardCreditFlow",
     "game/TitleNameHudUpdate",
     "game/anon_80218F40_nm1",
-    "sysdolphin/baselib/mobj_update_nm",
     "game/anon_8021F088_nm_8022134C",
     "game/HudManager",
     "game/anon_8020D1C0",
@@ -3981,8 +3961,6 @@ DATA_ALIGN4_TUS = [
     "game/anon_801FD924_nm1",
     "game/anon_801FD924_tail",
     "sysdolphin/baselib/texp_assign",
-    "sysdolphin/baselib/tobj_index",
-    "sysdolphin/baselib/tobj_color",
     "sysdolphin/baselib/mobj",
     "game/KartChoiceUpdate",
     "game/CardSetupFlowUpdate",

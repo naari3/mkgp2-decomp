@@ -36,6 +36,7 @@ static inline float interpolate(float start, float end, int frame, float duratio
     float step = (end-start)/duration;
     return step * frame + start;
 }
+static inline int selection(const ClassUpdate *self) { return self->selection; }
 extern "C" int clFlowClass_Update(ClassUpdate *self) {
     unsigned char *data = lbl_8039A5A0;
     RumbleUpdate();
@@ -103,7 +104,7 @@ extern "C" int clFlowClass_Update(ClassUpdate *self) {
         if (input()) {
             int old = self->selection;
             int delta = input()->delta;
-            self->selection = self->selection + delta;
+            self->selection = selection(self) + delta;
             if (self->mode) {
                 if (self->selection>2) self->selection=2;
                 if (self->selection<1) self->selection=1;

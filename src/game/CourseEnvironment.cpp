@@ -207,7 +207,7 @@ void CourseEnvironment_UpdateAndCullZones(CourseEnvironmentView *self) {
                 if (!InsideEdge(z->x0, z->z0, z->x1, z->z1, camera[0], camera[2])) continue;
                 if (!InsideEdge(z->x1, z->z1, z->x2, z->z2, camera[0], camera[2])) continue;
                 if (!InsideEdge(z->x2, z->z2, z->x3, z->z3, camera[0], camera[2])) continue;
-                if (!InsideLastEdge(z->x3, z->z3, z->x0, z->z0, camera[0], camera[2])) continue;
+                if (!((unsigned char)InsideLastEdge(z->x3, z->z3, z->x0, z->z0, camera[0], camera[2]) > 0)) continue;
                 if (kind == 2) break;
             }
             if (objects) {
@@ -440,8 +440,8 @@ int CourseScene_Load(CourseEnvironmentView *self, int course) {
     DebugPrintf(strings + 0x588, fn_801746A0(self->renderers[0]), bytes);
     bytes = fn_80174698(self->renderers[0]) * 0x18;
     DebugPrintf(strings + 0x5A4, fn_80174698(self->renderers[0]), bytes);
-    WarpDashMgr_GetOrCreate(g_cupId, (unsigned char)!g_longRoundFlag, IsReverseRound(), 0);
-    if (g_gameMode == 1) WarpDashMgr_GetOrCreate(g_cupId, (unsigned char)!g_longRoundFlag, IsReverseRound(), 1);
+    WarpDashMgr_GetOrCreate(g_cupId, (unsigned char)!g_longRoundFlag, (unsigned char)IsReverseRound() > 0, 0);
+    if (g_gameMode == 1) WarpDashMgr_GetOrCreate(g_cupId, (unsigned char)!g_longRoundFlag, (unsigned char)IsReverseRound() > 0, 1);
     ProcessSystemTick(0);
     ShadowAreaMgr_GetOrCreate(CourseVariantTableLookup());
     return 1;
