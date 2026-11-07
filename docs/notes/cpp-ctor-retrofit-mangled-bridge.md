@@ -1689,3 +1689,8 @@ c19_u220 ItemWnd::Setup 8021F508 unlocked from fresh92.41708 to100%/796B. File-s
 Source: Codex worker c19_u225_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c19_u225 retry fn_80225C2C: fresh baseline94.46907 ->94.62371, 776B. Plain verified 320.0f/1.0f literals ONLY in ResCtrl Show and scaleY recover exact target +16C..19C f2=320/f1=1; external scaleX1.25 retained. Inline SetupJoinBox formal argument ordering is invariant; inline ResetJoinState field initialization boundary also invariant. Entry +C..80 still differs in zero r5/r6, derived-vptr r4/r5, nextJoin load/result r4 vs r3/r0 and scheduling. Three hypotheses exhausted; singleton stays NM. Owned EH raw prefixes unchanged; final fallback full DOL SHA1 exact. Beware postprocess_sdata2 can retarget an incorrect initial literal to target name; verify literal values directly. No new maps/flags/ranges.
+
+## c19_u246_20261107
+Source: Codex worker c19_u246_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u246: DNStartDino Spawn 80229998 reproducible direct objdiff baseline is 89.442955% (584 B emitted vs 596 B target), despite assignment summary 90.44%. Three scalar snapshots sx/sy/sz of lbl_804EE0E0 before position writes improve to 90.020134%, same extab 100% and extabindex 91.66667%. Aggregate copy adds stack traffic; while is invariant; infinite loop with guarded return worsens; inline SetEmberPosition with float scale arguments ties scalar result. Remaining target top-tested outer loop and FP loads/registers not recovered. Single-function TU cannot rescue exact subsets.
