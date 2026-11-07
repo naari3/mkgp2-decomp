@@ -10434,6 +10434,7 @@ game/DisplayBuffersReset.c:
 	extab       start:0x800174EC end:0x800174F4
 	extabindex  start:0x80028EC8 end:0x80028ED4
 	.text       start:0x801F6494 end:0x801F6574
+	.bss        start:0x806795B8 end:0x80679698
 
 game/fn_801F6574.c:
 	.text       start:0x801F6574 end:0x801F6588

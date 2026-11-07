@@ -1,5 +1,6 @@
 /* Four display-buffer descriptors, their links, and render state.
- * NonMatching: initialization address materialization differs. */
+ * The TU owns the three .bss arrays, so the loop addresses them from one pooled base.
+ * Built as C++: C++ lays out the uninitialized arrays in definition order (C uses first-use order). */
 typedef struct DisplayBufferState {
     unsigned short width, height;
     int mode;
@@ -10,16 +11,22 @@ typedef struct DisplayBufferState {
 } DisplayBufferState;
 typedef struct BufferLink { DisplayBufferState *buffer; int value; } BufferLink;
 typedef struct BufferEntry { int a,b; BufferLink *link; } BufferEntry;
-typedef struct BufferPool { BufferEntry entries[4]; BufferLink links[4]; DisplayBufferState states[4]; } BufferPool;
-extern BufferPool lbl_806795B8;
-extern const float lbl_806DA6A8;
-extern void *GetDisplayContext(int);
+extern "C" {
+BufferEntry lbl_806795B8[4];
+BufferLink lbl_806795E8[4];
+DisplayBufferState lbl_80679608[4];
+}
+extern "C" const float lbl_806DA6A8;
+extern "C" void *GetDisplayContext(int);
 #pragma exceptions on
-void fn_801F6494(void) {
-    DisplayBufferState *state = lbl_806795B8.states;
-    BufferLink *link = lbl_806795B8.links;
-    BufferEntry *entry = lbl_806795B8.entries;
+extern "C" void fn_801F6494(void) {
+    DisplayBufferState *state;
+    BufferLink *link;
+    BufferEntry *entry;
     int i;
+    state = lbl_80679608;
+    link = lbl_806795E8;
+    entry = lbl_806795B8;
     for(i=0;i<=3;i++) {
         state->width = 128;
         state->height = 128;
