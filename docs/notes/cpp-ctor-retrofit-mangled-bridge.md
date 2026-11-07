@@ -1554,3 +1554,8 @@ c19_u91 RaceDigits: inline scalar x/y getters inside a position-copy helper solv
 Source: Codex worker c19_u101_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1344 B.
 
 c19_u101 unlocks R-button 802055F4/8020579C (424/920B): TextRow(row,origin){return row+origin;} around ONLY the text row sum fixes sole reversed fadds, unlike prior whole-Y helper. Complete DrawButtonSprites(receiver) inline lifetime resolves layer/color GPR swap and narrows ResCtrl EH to target span0x46. First sprite X uses offset-first multiplication, second X scale-first; both Y offset-first. Local axis helpers preserve scale reloads. TU-private YesNoButtonR declaration with undefined _key3 first suppresses extra vtable; add owned @126/@127/@196/@197 EH bridges and order Update,DrawLabel,weak ResCtrl dtor. Text/extab/index100, source-linked fn addresses/sizes exact, full DOL SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65; +2 native functions/1344B.
+
+## c19_u104_20261107
+Source: Codex worker c19_u104_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u104 MsgPopup::Tick direct baseline99.49794 ->99.547325, unchanged972B primary/owned EH, by for-clause dy+=30 before i++. It restores stride-before-dy scheduling. Counter-parameter98.860085, loop-local counter99.45679, derived integer30*i99.485596, inline text accessor99.49794 invariant, inline offset helper99.485596. Remaining index/stride r28/r27 vs targetr27/r28 and index-zero mr vs li; two table relocation names remain. Six hypotheses exhausted; keep honest NM. No flag/range/bridge edits; fallback full DOL SHA1 exact, zero native gain.
