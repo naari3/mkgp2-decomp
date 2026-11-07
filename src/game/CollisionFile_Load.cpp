@@ -1,4 +1,4 @@
-/* CollisionFile_Load @ : really the CECollision/DemoCollision
+/* CollisionFile_Load @ 0x801F9954: really the CECollision/DemoCollision
  * ctor (see extab_user_renames.json). C++ (cmplwi pointer tests) at the
  * default compiler; strength reduction off keeps the lwzx table walk.
  * NonMatching: the shared zero register (target reuses count's r6 for the

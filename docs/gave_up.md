@@ -38,7 +38,7 @@ all of these.
 | `SpecialFaceMesh_Dtor` | game/SpecialFaceMesh_Dtor | 99.46 | base / iterator register swap (same pattern as fn_801E96BC) | 40 min permuter |
 | `AI_PerKartUpdate`, `fn_801E9CBC` | game/AI_PerKartUpdate, game/fn_801E9CBC | 99.80 / 99.73 | ItemList items register | all 6 decl orders of mode/round/cup in ItemList, for/while count loops; 5 min permuter |
 | `SwitchTest_Page` | game/SwitchTest_Page | 99.91 | `steer` / `st` not coalesced | |
-| `fn_801DABFC` | game/fn_801DABFC | 99.20 | bool compare emitted as `cmplwi` | int/u8/bool |
+| `fn_801DABFC` | game/fn_801DABFC | 99.20 | 4 lines: the two `switch (out[k])` tests are `cmplwi` in the target | int/u8/bool; a `u8 out[2]` field fixes the `cmplwi` but then `out = !out` becomes `extrwi` instead of `srwi` (16 lines); casts, unions, `*(u8 *)&`, inline u8 helpers all keep `cmpwi` |
 | `EffectItemChainIndicator_Tick` | game/EffectItemChainIndicator_Tick | 99.70 | register coloring | |
 | `fn_801C64DC` | game/clFlowFigure_Unlocks | 99.94 | register coloring | |
 | `PlayStats_CopyStatsBlock` | game/PlayStats_CopyStatsBlock | 98.64 | copy scheduling barrier (target interleaves differently) | `__restrict`, temps |
@@ -70,6 +70,8 @@ all of these.
 | `PCBCheck_ProcessLinks` | game/PCBCheckProcess | 99.90 | 10 lines: base/slot registers swapped, one ClearSlotData loop counter (r24 vs r29) | 178 -> 10 lines in d36e695; 20 min permuter |
 | `fn_80219538` (MinimapHud::UpdateMarkers) | game/anon_80218F40_nm1_tail | 85.31 | target keeps px/pz in stack slots (0xc/0x8, stored at entry, reloaded after sin/cos) while every ref/pointer/array/struct/non-inline variant gets promoted to f28/f29; only `volatile` reproduces the frame (174 -> 109 lines with locals declared at the top), rest is GPR coloring | pragma sweep, CW 1.3.2-2.7 same |
 | `HSD_SetupChannelMode` | sysdolphin/baselib/state | 85.44 | target keeps `chan_table` in r30 but never folds `&chans[k]` into the displacement (`addi r4, r30, 0x0; stw r3, 0x20(r4)`, `addi r5, r30, 0x30; addi r5, r5, 0xc`); using `chan_table` directly gives that shape but rematerializes lis/addi each time; local pointer / `&chan_table[0]` / const / register / index vars / inline-helper all fold | CW 1.0-2.7, 6 opt pragmas |
+| `acInetAddr` (also acConnect/acBind/acModifyMyIPaddr) | triforce/acsocket_nm3 (nm2/nm4/nm5) | 95.82 | 3 lines: target keeps a `+ 0` as `addi r26, r5, 0x0; add r26, r0, r26` for `bufAddr + (bufOff + 0)`; every inline/const/static-const/`n * 1` form folds it to one `add`, pointer-difference forms do not fold at all | CW 1.0-2.7 |
+| `CollisionFile_Load` | game/CollisionFile_Load | 97.0 | now C++ (c215945); left: target reuses the loop counter's zero register for the three member stores, and one `add` operand order | 15 min permuter, ~40 variants |
 | `fn_8024AD8C` | game/CardSetupFlowInitial | 95.88 | `lwz lbl_806D1AB0` scheduling | |
 | `fn_8022BBC8` | game/EnemyFace_nm3 | 98.72 | scheduling | |
 | `clFlowCourse_Dtor` | game/clFlowCourse | 99.62 | `selected % 2` register swap | |
