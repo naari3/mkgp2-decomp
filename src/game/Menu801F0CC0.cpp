@@ -5,7 +5,7 @@ static inline unsigned int MenuRGBA(unsigned int r, unsigned int g, unsigned int
 }
 
 static inline unsigned int WithAlpha(unsigned int color, unsigned char alpha) {
-    return (color & 0xFFFFFF00) | alpha;
+    return __rlwimi(color, alpha, 0, 24, 31);
 }
 
 // Shared option artwork; inlined by both input handlers.
@@ -124,7 +124,7 @@ extern "C" void fn_801F115C(Menu801F *self) {
 extern "C" void fn_801F1244(Menu801F *self) {
     unsigned char v = fn_8020A788(self->fade.p);
     unsigned int c = 0xFFFFFF00;
-    c = (c & 0xFFFFFF00) | v;
+    c = WithAlpha(c, v);
     {
         int i = 6;
         int offset = 0x378;
@@ -136,7 +136,7 @@ extern "C" void fn_801F1244(Menu801F *self) {
         for (; i < 26; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
     }
     unsigned int d = 0xFFFFFF00;
-    d = (d & 0xFFFFFF00) | (unsigned char)(255 - v);
+    d = WithAlpha(d, (unsigned char)(255 - v));
     {
         int i = 26;
         int offset = 0xf08;
@@ -176,7 +176,7 @@ extern "C" void fn_801F1244(Menu801F *self) {
 extern "C" void fn_801F140C(Menu801F *self) {
     unsigned char v = fn_8020A788(self->fade.p);
     unsigned int c = 0xFFFFFF00;
-    c = (c & 0xFFFFFF00) | (unsigned char)(255 - v);
+    c = WithAlpha(c, (unsigned char)(255 - v));
     {
         int i = 6;
         int offset = 0x378;
@@ -188,7 +188,7 @@ extern "C" void fn_801F140C(Menu801F *self) {
         for (; i < 26; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
     }
     unsigned int d = 0xFFFFFF00;
-    d = (d & 0xFFFFFF00) | v;
+    d = WithAlpha(d, v);
     {
         int i = 26;
         int offset = 0xf08;
