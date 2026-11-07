@@ -18,6 +18,9 @@ s32 fn_80291134(u8 ch) {
     return 1;
 }
 
+/* Matches with opt_common_subs off; the reply header is spelled out so the
+ * flag word still goes through one byte-reversed store. */
+#pragma opt_common_subs off
 s32 fn_8029121C(u8 ch) {
     NetPacket* req = fn_8028CF1C(ch);
     NetPacket* rsp = fn_8028CE34(ch);
@@ -32,7 +35,14 @@ s32 fn_8029121C(u8 ch) {
     rsp->arg[3] = BSWAP32(p[4]);
     rsp->arg[4] = BSWAP32(p[5]);
     rsp->arg[5] = BSWAP32(p[6]);
-    REPLY(rsp, req);
+    {
+        u32 fl;
+        rsp->id = req->id;
+        rsp->sub = req->sub;
+        fl = BSWAP16(req->flags) | 0x8000;
+        rsp->flags = BSWAP16(fl);
+    }
     fn_8028D3E4(ch);
     return 1;
 }
+#pragma opt_common_subs reset
