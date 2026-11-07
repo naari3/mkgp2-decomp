@@ -9,11 +9,11 @@ static inline u8 HandlerRlen(s32 cmd) {
 
 s32 fn_8028B48C(s32 node) {
     JvsNode* nodes = fn_802857B8();
-    s32 i;
-    OSSemaphore* sem;
     JvsMgrNode* m;
+    OSSemaphore* sem;
     BOOL ok = TRUE;
-    u8 r;
+    s32 i;
+    BOOL r;
 
     if (!Mgr.ready) {
         return 5;
