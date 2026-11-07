@@ -41,6 +41,7 @@ from __future__ import annotations
 
 import json
 import shutil
+import struct
 import subprocess
 import sys
 from pathlib import Path
@@ -174,6 +175,39 @@ def load_tu_renames(obj: Path) -> dict[str, str]:
     return renames
 
 
+
+def make_undefined(obj: Path, names: list[str]) -> None:
+    """Turn the named defined symbols into undefined globals. A data section
+    left with no defined symbols is emptied (size 0), so the object no longer
+    contributes those bytes to the link."""
+    d = bytearray(obj.read_bytes())
+    shoff = struct.unpack_from(">I", d, 0x20)[0]
+    shentsize, shnum, shstrndx = struct.unpack_from(">HHH", d, 0x2E)
+    secs = [list(struct.unpack_from(">10I", d, shoff + i * shentsize)) for i in range(shnum)]
+    symtab = next(s for s in secs if s[1] == 2)
+    strtab = secs[symtab[6]]
+
+    def sname(off: int) -> str:
+        base = strtab[4]
+        return d[base + off:d.index(b"\0", base + off)].decode()
+
+    touched = set()
+    for i in range(symtab[5] // 16):
+        off = symtab[4] + i * 16
+        st_name, _, _, st_info, st_other, shndx = struct.unpack_from(">IIIBBH", d, off)
+        if st_name and sname(st_name) in names and shndx != 0:
+            touched.add(shndx)
+            struct.pack_into(">IIIBBH", d, off, st_name, 0, 0, (1 << 4) | 0, st_other, 0)
+    for idx in touched:
+        still = False
+        for i in range(symtab[5] // 16):
+            _, _, _, st_info, _, shndx = struct.unpack_from(">IIIBBH", d, symtab[4] + i * 16)
+            if shndx == idx and (st_info & 0xF) != 3:  # ignore the STT_SECTION symbol
+                still = True
+        if not still:
+            struct.pack_into(">I", d, shoff + idx * shentsize + 0x14, 0)
+    obj.write_bytes(d)
+
 def main() -> int:
     if len(sys.argv) != 2:
         sys.exit("usage: postprocess_extab_user.py <object.o>")
@@ -188,7 +222,17 @@ def main() -> int:
         "--rename-section=.extabindex_user=extabindex",
     ]
     renames = load_tu_renames(obj)
+    externs: list[str] = []
     for src, dst in renames.items():
+        # "extern:<name>" renames a TU-local object (e.g. an RTTI type-name
+        # string) and turns it into an undefined reference: the target keeps
+        # that object in another TU's section.
+        if dst.startswith("extern:"):
+            dst = dst[len("extern:"):]
+            externs.append(dst)
+            cmd.append(f"--globalize-symbol={src}")
+            cmd.append(f"--redefine-sym={src}={dst}")
+            continue
         # "global:<name>" also gives the renamed symbol global binding, for
         # a TU-local object (e.g. a pooled string literal) that another
         # split TU references by name.
@@ -198,6 +242,8 @@ def main() -> int:
         cmd.append(f"--redefine-sym={src}={dst}")
     cmd.append(str(obj))
     subprocess.check_call(cmd)
+    if externs:
+        make_undefined(obj, externs)
     patch_memorymanager_timedfree_extab(obj)
     # Mixed auto/manual extab TUs: consolidate entries into fn-address order
     # (no-op for single-pair or already-sorted objects). See
