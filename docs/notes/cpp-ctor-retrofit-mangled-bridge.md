@@ -1224,3 +1224,8 @@ c18_u9: clItemBoxManager_nm1 retains NM improvements RemoveByKey94.5098->97.6470
 Source: Codex worker c18_u20_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 328 B.
 
 c18_u20: fn_8015BCC4 98.65854 -> 100% by moving SetupCamera inline body into the main function and using a real function-level early return when either viewer is null. Guard inside inline helper remains byte-invariant (324 B): it emits beq exit. Direct main-function guard emits target bne setup / b exit and 328 B. text328/extab40/index12 all100, existing EH bridges unchanged, Matching source-linked full DOL SHA-1 OK; ELF 8015BCC4/328 verified.
+
+## c18_u21_20261107
+Source: Codex worker c18_u21_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u21 CopyStatsBlock 8008DE60 retry: baseline is 98.63666%, not source comment 99.7%. Four instruction positions differ: +334/+338 delay load19C past store198; +344/+348 hoist load1A4 before store1A0. Whole-block assignment emits 48-byte loop (1.96463%). Restricted scalar copies over-hoist loads and spill (38.758842%); large static inline section helpers remain calls (0.109325%). Small inline pair-copy helper reproduces baseline identically. No flags/ranges changed; single-function TU stays NonMatching. Native gain 0.
