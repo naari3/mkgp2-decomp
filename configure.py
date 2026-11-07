@@ -966,7 +966,7 @@ config.libs = [
             Object(Matching, "game/CalcSoundDirection.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/InitGlobalTimer.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/dtor_801D8284.cpp", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/ServiceMode_UpdateScheduleGate.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ServiceMode_UpdateScheduleGate.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/NokoNokoChallenge_GetCoinDivisor.c"),
             Object(Matching, "game/DVDFile_LoadSync.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/FileLoader_LoadBin.c", extra_cflags=["-Cpp_exceptions on"]),

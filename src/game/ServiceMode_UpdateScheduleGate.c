@@ -1,5 +1,3 @@
-/* NonMatching 99.44%: only volatile register numbers differ (target keeps
- * wday in r11 and the schedule base+0x53/+0x54 pointers in r9/r10). */
 typedef struct OSCalendarTime {
     int sec;
     int min;
@@ -36,21 +34,21 @@ extern void OSTicksToCalendarTime(long long ticks, OSCalendarTime *td);
 static inline int in_window(OSCalendarTime *time) {
     int now = time->hour * 60 + time->min;
     int start;
-    int prev;
+    int day = time->wday;
 
-    start = lbl_80598A60.schedule[time->wday].hour * 60 + lbl_80598A60.schedule[time->wday].minute;
-    if (lbl_80598A60.schedule[time->wday].hour != 0 && start - 10 <= now && now <= start + 10) {
+    start = lbl_80598A60.schedule[day].hour * 60 + lbl_80598A60.schedule[day].minute;
+    if (lbl_80598A60.schedule[day].hour != 0 && start - 10 <= now && now <= start + 10) {
         return 1;
     }
     if (time->hour != 0) {
         return 0;
     }
-    prev = time->wday - 1;
-    if (prev == -1) {
-        prev = 6;
+    day -= 1;
+    if (day == -1) {
+        day = 6;
     }
-    if (lbl_80598A60.schedule[prev].hour != 0) {
-        start = lbl_80598A60.schedule[prev].hour * 60 + lbl_80598A60.schedule[prev].minute;
+    if (lbl_80598A60.schedule[day].hour != 0) {
+        start = lbl_80598A60.schedule[day].hour * 60 + lbl_80598A60.schedule[day].minute;
         now += 0x5A0;
         if (start - 10 <= now && now <= start + 10) {
             return 1;
