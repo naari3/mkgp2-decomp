@@ -30,6 +30,8 @@ extern "C" void fn_801F0CC0(Menu801F *self) {
     self->active = 1;
 }
 
+/* The target indexes sprites[i] without strength reduction in this function. */
+#pragma opt_strength_reduction off
 extern "C" void fn_801F0D04(Menu801F *self) {
     unsigned int v = fn_8020A788(self->fade.p);
     unsigned int c = MenuRGBA(v, v, v, 255);
@@ -42,6 +44,7 @@ extern "C" void fn_801F0D04(Menu801F *self) {
         self->state = 13;
     }
 }
+#pragma opt_strength_reduction reset
 
 extern "C" void fn_801F0E3C(Menu801F *self) {
     int offset;
