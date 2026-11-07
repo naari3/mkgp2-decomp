@@ -66,7 +66,7 @@ template <class T> struct PtrVec : PtrVecBase<T> {
     void push_back(const T &v) { PtrVec_InsertFill(this, end(), 1, &v); }
 };
 
-static inline unsigned int PackColor(int r, int g, int b, int a) {
+static inline unsigned int PackColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
     return ((r & 0xFF) << 24) | ((g & 0xFF) << 16) | ((b & 0xFF) << 8) | (a & 0xFF);
 }
 
@@ -85,9 +85,15 @@ struct TextRow {
 };
 
 extern "C" void fn_802170F0(TextRow *row, unsigned char alpha) {
+    TextSprite *sprite;
     row->alpha = alpha;
     for (TextSprite **it = row->sprites.begin(); it != row->sprites.end(); it++) {
-        (*it)->color = PackColor((*it)->color >> 24, (*it)->color >> 16, (*it)->color >> 8, row->alpha);
+        unsigned char a;
+        unsigned int color;
+        sprite = *it;
+        a = row->alpha;
+        color = sprite->color;
+        sprite->color = PackColor(color >> 24, color >> 16, color >> 8, a);
     }
 }
 
