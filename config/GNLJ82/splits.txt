@@ -9148,6 +9148,7 @@ game/MileageFlow_Init.cpp:
 	extab       start:0x80014020 end:0x80014204
 	extabindex  start:0x80027DD0 end:0x80027DDC
 	.text       start:0x801C5E00 end:0x801C64DC
+	.data       start:0x8049ACB0 end:0x8049AD58
 
 game/clFlowFigure_Unlocks.c:
 	extab       start:0x80014204 end:0x8001420C

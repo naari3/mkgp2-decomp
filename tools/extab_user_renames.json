@@ -11621,7 +11621,11 @@
     "__ct__12FigureSpriteFiii": "Sprite_InitWithAnim",
     "__ct__12FigureSpriteFiiff": "fn_801A08B8",
     "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "mileageCharacter": "lbl_8049ACB0",
+    "mileageEntries": "lbl_8049ACE4",
+    "@137": "@etb_80014020",
+    "@138": "@eti_80027DD0"
   },
   "src/game/AI_CalcRivalAvoidance.cpp": {
     "__dt__19PhysicsCollisionVecFv": "dtor_80036E40",
