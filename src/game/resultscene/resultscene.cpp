@@ -307,6 +307,7 @@ struct CoinPopupDetail {
     SpriteHolder h60;
     SpriteHolder h64;
     SpriteHolder h68;
+    float offs[4][2];
 };
 
 
@@ -353,7 +354,8 @@ struct ResultSub : ResultMid {
     float timer2;
     float scale;
     int resource;
-    unsigned char hasTitle, titleChanged;
+    unsigned char hasTitle;
+    bool titleChanged;
     char pad2e[2];
     int title, rank, character;
     void *sprite;
@@ -525,7 +527,7 @@ extern "C" {
 extern void MemoryManager_TimedFree(void *p);
 extern void fn_8011FAFC(void *p, int n);
 extern void fn_801A0004(void *p);
-extern void fn_80160588(void *self, int n, unsigned char confirm);
+extern void fn_80160588(void *self, int n, bool confirm);
 extern void fn_80161720(CoinPopupDetail *self);
 extern char lbl_80490A58[];
 extern const float lbl_806D86A4;
@@ -588,21 +590,9 @@ typedef struct {
     int next;
 } Obj80161888;
 
-int fn_801618CC(Obj80161888 *o, int v, unsigned char unused);
+int fn_801618CC(Obj80161888 *o, int v, bool unused);
 
-void fn_80161888(Obj80161888 *o) {
-    o->active = 1;
-    fn_801618CC(o, o->next, 1);
-    fn_80161720((CoinPopupDetail *)o);
-}
-
-int fn_801618CC(Obj80161888 *o, int v, unsigned char unused) {
-    if (o->ready == 0) return 0;
-    o->next = v;
-    o->cur = -1;
-    fn_80160588(o, 0, unused);
-    return 1;
-}
+void fn_80161888(Obj80161888 *o);
 
 SceneBase *fn_80160238(void) {
     return new ResultSceneA;
@@ -1228,9 +1218,8 @@ static inline int Popup_CountIdle(CoinPopupDetail *o) {
     return cnt;
 }
 
-void fn_80160588(void *self, int step, unsigned char inputConfirm) {
+void fn_80160588(void *self, int step, bool confirm) {
     CoinPopupDetail *o = (CoinPopupDetail *)self;
-    unsigned char confirm = inputConfirm;
     if (o->state == 0) {
         if (o->x44 <= 10) {
             o->x40 = (int)(lbl_806D8834 * ((float)o->x44 / lbl_806D880C));
@@ -1547,6 +1536,226 @@ ResultSub::ResultSub(int a, int b) : ResultMid(b) {
     fn_8023CD3C(prompt, lbl_806D8874, lbl_806D8800);
     fn_8023CCF8(prompt, lbl_806D8878, lbl_806D87E8);
     fn_8023CCA0(prompt, 0);
+}
+
+extern "C" {
+extern void SetRumbleMode(int a, int b, int c);
+extern void RumbleUpdate(void);
+extern void SpriteAnimParamBlock_Reload(void *, int);
+extern void SpriteHandle_SetCornerAlpha(void *, int);
+extern void fn_8023CD24(CoinPrompt *, float, float);
+extern void fn_8023CCCC(CoinPrompt *, float, float);
+extern void fn_8023CDA8(CoinPrompt *);
+extern void fn_8021A0B0(void *);
+extern void *lbl_806D1A60;
+extern const float lbl_806D87F8, lbl_806D8808, lbl_806D8810, lbl_806D8814;
+extern const float lbl_806D8820, lbl_806D8824, lbl_806D882C;
+
+static inline bool RSInput_Pressed(PopupInputState *in) {
+    return in->x18 == 1;
+}
+
+static inline void RSDetail_Layout(CoinPopupDetail *d) {
+    PopupSprite_SetPos(POPUP_SPR(d, 0), d->ax, d->ay);
+    PopupSprite_SetPos(POPUP_SPR(d, 1), d->bx, d->by);
+    fn_801F93EC(*fn_80146000(&d->bufs, 0), d->ax + d->offs[0][0], d->ay + d->offs[0][1]);
+    fn_801F93EC(*fn_80146000(&d->bufs, 1), d->ax + d->offs[1][0], d->ay + d->offs[1][1]);
+    fn_801F93EC(*fn_80146000(&d->bufs, 2), d->bx + d->offs[2][0], d->by + d->offs[2][1]);
+    fn_801F93EC(*fn_80146000(&d->bufs, 3), d->bx + d->offs[3][0], d->by + d->offs[3][1]);
+    {
+        float k = lbl_806D8820;
+        PopupSprite_SetPos((PopupSprite *)d->h60.s, k * (d->bx - d->ax) + d->ax, k * (d->by - d->ay) + d->ay);
+    }
+}
+
+static inline void RSDetail_SetPos(CoinPopupDetail *d, float ax, float ay, float bx, float by) {
+    d->ax = ax;
+    d->ay = ay;
+    d->bx = bx;
+    d->by = by;
+    RSDetail_Layout(d);
+}
+
+static inline int RSDetail_Mode(CoinPopupDetail *d) {
+    return d->state < 2 ? 2 : d->mode;
+}
+
+static inline bool RSDetail_Accept(CoinPopupDetail *d) {
+    return RSDetail_Mode(d) == 0;
+}
+
+static inline unsigned char RSDetail_Done(CoinPopupDetail *d) {
+    return d->state == 6;
+}
+
+static inline void RSSub_SaveTitle(ResultSub *s) {
+    void *t = TitleTracker_Get();
+    if (s->titleChanged == 1 && t && get_title_result(t, &s->title, &s->rank, &s->character) == 1) {
+        g_playerData[0x19b] = s->title;
+        g_playerData[0x19c] = s->rank;
+        g_playerData[0x1b1] = s->character;
+    }
+}
+
+static inline void RSSub_DeletePrompt(ResultSub *s) {
+    if (s->prompt) {
+        delete s->prompt;
+        s->prompt = 0;
+    }
+}
+
+/* ResultSub::Update (vtable slot of lbl_80490A90). NonMatching: only the
+ * input pointer (r29) and the ItemMsgWnd singleton temp (r30) are swapped. */
+void result_screen_update(ResultSub *s) {
+    PopupInputState *in = PopupInput_Get();
+    bool pressed = RSInput_Pressed(in);
+    int i;
+    if (pressed == 1) SetRumbleMode(0, 1, 1);
+    switch (s->state) {
+    case 0:
+        if (lbl_806D87C8 == s->timer) fn_8023CCA0(s->prompt, 1);
+        {
+            float a = s->timer / lbl_806D87F0;
+            ((ResultPopupSprite *)*(void **)s->anims[1])->alpha = a;
+            s->texts[0]->color = __rlwimi(0xFFFFFF00, (int)(lbl_806D87F4 * a), 0, 24, 31);
+        }
+        if (s->timer >= lbl_806D87F0) {
+            SpriteAnimParamBlock_Reload(s->anims[2], 0x1dd);
+            SpriteAnimParamBlock_SetAnimParamCached(s->anims[2], 0x1ad4, 0x1ad9);
+            SpriteAnimParamBlock_Reload(s->anims[0], 0x1c1);
+            ((ResultPopupSprite *)*(void **)s->anims[1])->alpha = lbl_806D87DC;
+            s->texts[0]->color = 0xFFFFFFFF;
+            s->state = 1;
+            s->timer = lbl_806D87C8;
+        }
+        break;
+    case 1:
+        fn_801699D8(0, 1);
+        s->state = 2;
+        s->timer = lbl_806D87C8;
+        break;
+    case 2:
+        if (s->timer >= lbl_806D87F8 || pressed) {
+            RSSub_DeletePrompt(s);
+            if (s->hasTitle) {
+                s->state = 5;
+                SpriteHandle_SetCornerAlpha(s->sprite, 0);
+                SpriteHandle_SetActiveFlag(s->sprite, 1);
+                SpriteAnimParamBlock_Reload(s->anims[2], 0xc7);
+                SpriteAnimParamBlock_SetAnimParamCached(s->anims[2], 0x1ad4, 0x1ad9);
+                s->prompt = new CoinPrompt(0x74, 0x4a, 0x1874, 0x1875, 5);
+                fn_8023CD3C(s->prompt, lbl_806D87FC, lbl_806D8800);
+                fn_8023CCF8(s->prompt, lbl_806D87EC, lbl_806D87E8);
+                fn_8023CD24(s->prompt, lbl_806D8804, lbl_806D87E8);
+                fn_8023CCCC(s->prompt, lbl_806D87E4, lbl_806D87E8);
+            } else {
+                s->state = 3;
+            }
+            s->timer = lbl_806D87C8;
+        }
+        break;
+    case 3:
+        s->alpha = s->timer / lbl_806D8808;
+        if (s->timer >= lbl_806D8808) {
+            s->state = 4;
+            fn_8021A0B0(lbl_806D1A60);
+        }
+        break;
+    case 4:
+        s->titleChanged = 1;
+        s->state = 99;
+        s->timer = lbl_806D87C8;
+        RSSub_SaveTitle(s);
+        break;
+    case 5:
+        if (s->timer <= lbl_806D880C) {
+            float y = lbl_806D8810 * (s->timer / lbl_806D880C) + lbl_806D87D8;
+            ((ResultPopupSprite *)*(void **)s->anims[0])->y = y;
+            ((ResultPopupSprite *)*(void **)s->anims[1])->y = y;
+        }
+        if (lbl_806D87F0 == s->timer) {
+            SpriteAnimParamBlock_Reload(s->anims[2], 0xc8);
+            SpriteAnimParamBlock_SetAnimParamCached(s->anims[2], 0x1ad4, 0x1ada);
+        }
+        if (s->timer >= lbl_806D8808) {
+            int v = (int)(lbl_806D87F4 * ((s->timer - lbl_806D8808) / lbl_806D880C));
+            s->texts[1]->color = __rlwimi(0xFFFFFF00, v, 0, 24, 31);
+            SpriteHandle_SetCornerAlpha(s->sprite, v);
+        }
+        if (s->timer >= lbl_806D8814) {
+            s->state = 6;
+            s->timer = lbl_806D87C8;
+            SpriteAnimParamBlock_Reload(s->anims[2], 0x1dd);
+            SpriteAnimParamBlock_SetAnimParamCached(s->anims[2], 0x1ad4, 0x1ada);
+            s->detail = new CoinPopupDetail(0, 1, 0);
+            RSDetail_SetPos(s->detail, lbl_806D8818, lbl_806D87D4, lbl_806D881C, lbl_806D87D4);
+            s->scale = lbl_806D880C;
+        }
+        break;
+    case 6:
+        if (!s->detail) {
+            s->detail = new CoinPopupDetail(0, 1, 0);
+            RSDetail_SetPos(s->detail, lbl_806D8818, lbl_806D87D4, lbl_806D881C, lbl_806D87D4);
+        }
+        s->scale -= lbl_806D8824;
+        if (s->scale <= lbl_806D87C8) {
+            s->scale = lbl_806D8828;
+            fn_801618CC((Obj80161888 *)s->detail, 1, 0);
+            fn_80161888((Obj80161888 *)s->detail);
+        }
+        if (RSDetail_Mode(s->detail) != 2 || s->scale <= lbl_806D87C8) {
+            s->titleChanged = RSDetail_Accept(s->detail);
+            s->state = 7;
+            s->timer = lbl_806D87C8;
+            s->scale = lbl_806D8828;
+            RSSub_SaveTitle(s);
+        }
+        break;
+    case 7:
+        if (s->timer >= lbl_806D882C && RSDetail_Done(s->detail) == 1) {
+            s->state = 8;
+            s->timer = lbl_806D87C8;
+        }
+        break;
+    case 8:
+        s->alpha = s->timer / lbl_806D8808;
+        if (s->timer >= lbl_806D8808) {
+            SpriteHandle_SetActiveFlag(s->sprite, 0);
+            s->state = 99;
+            s->timer = lbl_806D87C8;
+            fn_8021A0B0(lbl_806D1A60);
+            RSSub_DeletePrompt(s);
+            s->scale = lbl_806D8828;
+        }
+        break;
+    }
+    s->timer += lbl_806D87DC;
+    for (i = 0; i < 3; i++) {
+        if (s->anims[i]) Sprite_AdvanceAnim(*(void **)s->anims[i], lbl_806D8830);
+    }
+    if (s->prompt) fn_8023CDA8(s->prompt);
+    if (s->detail) {
+        if (s->state == 6) fn_80160588(s->detail, in->x14, RSInput_Pressed(in));
+        else fn_80160588(s->detail, 0, 0);
+    }
+    SpriteHandle_RecomputeCull(s->sprite);
+    RumbleUpdate();
+    fn_80232284(ItemMsg_Get(), s->scale);
+}
+
+void fn_80161888(Obj80161888 *o) {
+    o->active = 1;
+    fn_801618CC(o, o->next, 1);
+    fn_80161720((CoinPopupDetail *)o);
+}
+
+int fn_801618CC(Obj80161888 *o, int v, bool unused) {
+    if (o->ready == 0) return 0;
+    o->next = v;
+    o->cur = -1;
+    fn_80160588(o, 0, unused);
+    return 1;
+}
 }
 
 extern "C" {
