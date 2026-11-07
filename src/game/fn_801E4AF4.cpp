@@ -1,7 +1,27 @@
 #include "game/SteeringRingInsertPrivate.h"
+static inline const unsigned long &InsertMin(const unsigned long &a, const unsigned long &b) {
+    return a < b ? a : b;
+}
+static inline unsigned long InsertMaxSize() {
+    unsigned long limit = 0xFFFFFFFFUL / sizeof(int);
+    unsigned long max = 0xFFFFFFFFUL;
+    return InsertMin(limit, max);
+}
+// Iterator addition returns the result of the mutating advance by reference.
+static inline SteeringRingIter &InsertPlusAssign(SteeringRingIter &p, unsigned long n) {
+    p.index += n;
+    unsigned long i = p.ring->head + p.index;
+    if(i >= p.ring->capacity) i -= p.ring->capacity;
+    p.ptr = p.ring->data + i;
+    return p;
+}
+static inline SteeringRingIter InsertAdvance(const SteeringRingIter &p, unsigned long n) {
+    SteeringRingIter result(p);
+    return InsertPlusAssign(result, n);
+}
 extern "C" void fn_801E4AF4(SteeringRing *s, const SteeringRingIter &position, unsigned long n, const int &value) {
     if(n) {
-        unsigned long max=RingMax();
+        unsigned long max=InsertMaxSize();
         if(n>max || s->count>max-n) throw std::length_error(lbl_803BD2C0);
         unsigned long newCount=s->count+n;
         if(newCount<=s->capacity) {
@@ -14,8 +34,8 @@ extern "C" void fn_801E4AF4(SteeringRing *s, const SteeringRingIter &position, u
                 if(before==0) RingFillN(s->begin(),n,value);
                 else {
                     SteeringRingIter start=s->begin();
-                    RingCopyForward(RingAdvance(start,n),RingAdvance(start,n+before),start);
-                    RingFillN(RingAdvance(start,before),n,value);
+                    RingCopyForward(InsertAdvance(start,n),InsertAdvance(start,n+before),start);
+                    RingFillN(InsertAdvance(start,before),n,value);
                 }
             } else {
                 if(after==0) RingFillN(s->end(),n,value);
