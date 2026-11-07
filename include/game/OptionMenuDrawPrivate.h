@@ -15,8 +15,6 @@ struct RankLog;
 extern "C" {
 int isJapanese();
 extern RankLog *lbl_806D10A0;
-struct OptionDrawData { char pad[0x4A4]; float positions[5]; char pad4B8[0x658-0x4B8]; char text658[12]; char text664[8]; };
-extern const OptionDrawData lbl_803678D8;
 const char *get_title_name_global(RankLog *log);
 const char *GetTextureByIdAndLang(int,int);
 const char *fn_8013C26C(int,int);

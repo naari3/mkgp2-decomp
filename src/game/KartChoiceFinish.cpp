@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 #include "game/KartChoiceFinishPrivate.h"
 struct FinishInput {
     virtual void v0();
@@ -82,8 +83,8 @@ ChoiceFinish::~ChoiceFinish() {
     SetKartVariant(0);
     g_gameMode = 0;
     fn_8020F220();
-    if (lbl_806D10A0 == 0 ? (void *)0 : lbl_806D10A0)
-        RankLog_Reset(lbl_806D10A0 == 0 ? (void *)0 : lbl_806D10A0);
+    if (SINGLETON_INSTANCE(lbl_806D10A0))
+        RankLog_Reset(SINGLETON_INSTANCE(lbl_806D10A0));
     lbl_806D09C8 = -1;
     lbl_806D1ACC = 0;
     SpriteHandle_Destroy(handle);

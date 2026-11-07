@@ -1,5 +1,10 @@
 #include "cobj_private.h"
 
+extern inline void HSD_CObjSetMtxDirty(HSD_CObj* cobj)
+{
+    cobj->flags |= (1 << 30) | (1 << 31);
+}
+
 extern inline HSD_WObj* HSD_CObjGetInterestWObj(HSD_CObj* cobj)
 {
     COBJ_ASSERT(700, cobj, lbl_806D0D58);
@@ -24,13 +29,14 @@ extern inline void HSD_CObjGetEyePosition(HSD_CObj* cobj, Vec3* position)
     HSD_WObjGetPosition(HSD_CObjGetEyePositionWObj(cobj), position);
 }
 
-extern inline int HSD_CObjGetEyeVector(HSD_CObj* cobj, Vec3* eye)
+// Internal callers provide a local output vector.
+static inline int cobj_get_eye_vector(HSD_CObj* cobj, Vec3* eye)
 {
     Vec3 eyepos;
     Vec3 interest;
 
     int result;
-    if (!cobj || !cobj->eyepos || !cobj->interest || !eye) {
+    if (!cobj || !cobj->eyepos || !cobj->interest) {
         result = 0;
     } else {
         HSD_CObjGetEyePosition(cobj, &eyepos);
@@ -43,7 +49,7 @@ extern inline int HSD_CObjGetEyeVector(HSD_CObj* cobj, Vec3* eye)
 
 extern inline float cobj_absf(float x)
 {
-    x = fabs(x);
+    x = __fabs(x);
     return x;
 }
 
@@ -54,7 +60,7 @@ extern inline float upvec2roll(HSD_CObj* cobj, Vec3* up)
     Mtx vmtx;
     f32 dot;
 
-    if (!HSD_CObjGetEyeVector(cobj, &eye)) {
+    if (!cobj_get_eye_vector(cobj, &eye)) {
         dot = 0.0f;
     } else {
         dot = cobj_absf(VECDotProduct(up, &eye));
@@ -96,11 +102,11 @@ extern inline int roll2upvec(HSD_CObj* cobj, Vec3* up, float roll)
     Vec3 v1;
     Mtx m;
 
-    res = HSD_CObjGetEyeVector(cobj, &eye);
+    res = cobj_get_eye_vector(cobj, &eye);
     if (!res) {
         return 0;
     }
-    if (1.0 - vec_get_abs_y(&eye) < 0.0001) {
+    if (1.0 - (float) __fabs(eye.y) < 0.0001) {
         v0.x = sqrtf(eye.y * eye.y + eye.z * eye.z);
         v0.y = eye.y * (-vec_get_x(&eye) / v0.x);
         v0.z = eye.z * (-eye.x / v0.x);

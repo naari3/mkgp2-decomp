@@ -28,3 +28,13 @@ c14_u7: fn_801F8A34 improves 94.60199 -> 98.1592. Named local TextDraw801F* inst
 Source: Codex worker c16_u63_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u63: fn_801F95A0 79.20588 -> 93.23529 under existing GC/2.6 flags. ID-taking inline ReleaseGlyph with table lookup inside helper gives target add r3/table/index then lwz +4 rather than folded addi+lwzx. Flatten outer loop helper; named TextDraw801F local from void* entry plus for-scoped counter restores early table lis r4 and counter r28. Remaining self/cursor r30/r29 versus target r29/r30 and prologue schedule. Owned 136B size/EH unchanged, extab/index 100%. Three structural hypotheses exhausted; no source-closed claim.
+
+## c18_u24_20261107
+Source: Codex worker c18_u24_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u24: fn_801F8404 fresh98.59477 ->98.66013 by extracting dy/wx/center-offset/corner stores as inline DrawQuad8404::SetCorners(d,w,h,sinPart,cosPart,dx). Text612B, primary EH24/index12 all exact after append-only @127/@128 bridges; original bridges preserved. Two-Edge projected-half-extent aggregate regresses98.496735; const-reference x/y depth writer regresses97.61438; both reverted. Final residual: constructor FP register homes at +44..C8 and first depth vertex Y/Z f1/f3 swap (+198/+19C/+1A8/+1B0). Weak dtor instructions unchanged. Only one primary function, so mechanism B unavailable; no singleton/base-pool unlock. Three approaches exhausted. No flags/splits/data changes, no full build requested; remains honest NM, zero native gain.
+
+## c18_u93_20261107
+Source: Codex worker c18_u93_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u93: fn_801F8728 improves96.71533->98.32117 with private DrawQuad8728. Double fabs products preserved before float narrowing repair initial multiply/load schedule. Project(d,w,h, reference outputs) and SetCorners(d,double-to-float args) boundaries alter FP homes; zero-angle dx=zero; sinPart=dx changes constant coalescing and yields best draft. Three hypotheses exhausted. Primary548B and owned24B EH/12B index payloads exact; extra weak dtor adds60B text/8B EH/12B index. Add-only __dt__12DrawQuad8728Fv->dtor_801F8214 bridge. Remaining construction FP colors + first depth vertex Y/Z f1/f3 swap. One function prevents B rescue; no singleton or base-pool opportunity. Honest NonMatching retained; full fallback-linked DOL SHA1 exact, zero native gain.

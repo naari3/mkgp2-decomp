@@ -27,10 +27,11 @@ from typing import Any, Dict
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 
-# `asm void Name(`, optionally prefixed by __declspec(section ...) / static.
+# `asm void Name(`, optionally prefixed by extern "C" / __declspec(section ...) / static / inline,
+# with single- or multi-word return types (`asm unsigned char f(`, `asm struct X **f(`).
 ASM_FN_RE = re.compile(
-    r"^\s*(?:__declspec\([^)]*\)\s*)?(?:static\s+)?"
-    r"asm\s+[A-Za-z_][\w]*(?:\s*\*+|\s+)\s*([A-Za-z_]\w*)\s*\(",
+    r'^\s*(?:extern\s+"C"\s+)?(?:__declspec\([^)]*\)\s*)?(?:static\s+)?(?:inline\s+)?'
+    r"asm\s+(?:[A-Za-z_]\w*(?:\s*\*+\s*|\s+))+?([A-Za-z_]\w*)\s*\(",
     re.MULTILINE,
 )
 

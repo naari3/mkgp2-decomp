@@ -1,4 +1,5 @@
 #include "game/clFlowCourse.h"
+#include "game/singleton.h"
 
 /* 801D0C30..801D1800: indivisible reversed-extab group.
  * Native C++ draft; retain Object(NonMatching) until all four functions and
@@ -65,8 +66,8 @@ static inline int CourseCup(int i) {
 
 CourseFlow::~CourseFlow() {
     fn_80169C44();
-    if (GetInput()) {
-        InputState *input = GetInput();
+    if (SINGLETON_INSTANCE(g_pInputState)) {
+        InputState *input = SINGLETON_INSTANCE(g_pInputState);
         input->enabled = 0;
         input->held = 0;
         input->edge = 0;
@@ -181,8 +182,8 @@ CourseFlow::CourseFlow() {
     for (int i = 0; i < 4; i++) icons[i] = new CourseIcon(i);
     banner = new CourseBanner;
     if (g_ccClass == 0 && g_gameMode == 2) field15D = 1;
-    if (GetInput()) {
-        InputState *input = GetInput();
+    if (SINGLETON_INSTANCE(g_pInputState)) {
+        InputState *input = SINGLETON_INSTANCE(g_pInputState);
         input->enabled = 1; input->held = 0; input->edge = 0;
     }
     SetScreenBrightness(lbl_806D9EF8);

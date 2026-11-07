@@ -4,3 +4,8 @@
 Source: Codex worker c3_n2_gabyou_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1660 B.
 
 c3_n2: anonymous short alias arg plus accumulator yaw blend reaches 98.068436% (3916B); EH/index100. Remaining aggregate-copy tail, several store/load schedules, previousBus coalescing and final-radius FP web persist. Folding bus/target assignment into condition has no effect.
+
+## c18_u48_20261107
+Source: Codex worker c18_u48_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u48 retry: 800E6F78 improves 98.068436 -> 99.13687 with exact3916B text/EH8/index12 unchanged. Replace all external float pseudo-constants with exact literals via existing pool postprocess, and put active=1 before lifetime=0.0f. Fixes held init, tracking init, wall recovery and retarget zero-load scheduling. BlendYaw inline helper (direct expression or named product/complement) regresses99.12666; complete TickAttached phase helper is not inlined (exported1780B/43.733402), both reverted. Remaining +700 aggregate-tail r0/r3+lbz scheduling; +A84..A90 yaw FP web; +BEC context target load delayed; +D34..D50 bus coalescing; +DC8/+DE0 final-radius f30/f31. No missing function, singleton, shared-pool unlock or legal B split. Remains NonMatching; final coordinator fallback build DOL SHA1 exact, native gain0.

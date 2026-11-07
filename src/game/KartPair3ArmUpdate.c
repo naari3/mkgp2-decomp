@@ -1,9 +1,7 @@
 /* KartPair3ArmUpdate (0x800B2AF8): carrot item effect (sprite 0x8D). Three
  * carrots wander around the screen, bouncing off its edges, while the
  * horn SE loops; once the timer runs out they leave the screen and the
- * effect frees itself. Picks the character voice lines on its first frame.
- * NonMatching (98.8%): stack slot order of the line table / yaw copies and
- * the character / loop-pointer callee-saved registers differ. */
+ * effect frees itself. Picks the character voice lines on its first frame. */
 
 typedef struct Vec { float x, y, z; } Vec;
 typedef struct Vec2 { float x, y; } Vec2;
@@ -51,27 +49,6 @@ extern unsigned char g_playerData[];
 extern Int4 lbl_803292E0;
 extern Vec lbl_803293D0;
 extern Camera lbl_805DF3D0;
-extern const float lbl_806D5020;
-extern const float lbl_806D5024;
-extern const float lbl_806D5034;
-extern const float lbl_806D5054;
-extern const float lbl_806D5070;
-extern const float lbl_806D5080;
-extern const float lbl_806D50C4;
-extern const float lbl_806D50D0;
-extern const float lbl_806D50E4;
-extern const float lbl_806D50E8;
-extern const float lbl_806D50EC;
-extern const float lbl_806D50F0;
-extern const float lbl_806D50F4;
-extern const float lbl_806D50F8;
-extern const float lbl_806D50FC;
-extern const float lbl_806D5100;
-extern const float lbl_806D5104;
-extern const float lbl_806D5108;
-extern const float lbl_806D510C;
-extern const float lbl_806D5110;
-extern const float lbl_806D5114;
 
 extern void CarrotItemEffect_AddDraw(void *self);
 extern void SpriteSlot_InitNonLoop(void *slot, int res);
@@ -85,66 +62,65 @@ extern void fn_80120A08(int id);
 extern int SoundMgr_CountActiveSEInstances(int se);
 extern void SoundMgr_PlaySE_Positional(int se, Vec pos, int ch);
 extern void SoundMgr_PlaySE_WithChannel(int se, Vec pos, int ch);
-extern void SoundMgr_StopSE_OrSpecial(int se);
+extern void SoundMgr_StopSE_OrSpecial(int se, int ch);
 extern float BuildOrientationFromYaw(float yaw);
 extern float Rand_RangeFloatMax(float max);
 extern double sin(double);
 extern double cos(double);
 
-static inline void Carrot_Init(Carrots *c, int i)
+static inline void Carrot_InitVoice(Carrots *c)
 {
-    Vec yaw = lbl_803293D0;
-    c->pos[i].x = lbl_806D5020;
-    c->pos[i].y = lbl_806D5024;
-    c->yaw[i] = (&yaw.x)[i];
-    c->gone[i] = 0;
+    CarrotKart *kart;
+    Int4 lines;
+    int character;
+    kart = c->kart;
+    c->voice = -1;
+    c->line = -1;
+    lines = lbl_803292E0;
+    character = kart->character;
+    if (g_gameMode == 0) {
+        if (GetVBlankFlag() && VBlankValue_Get() != 1 && g_playerData[0x19D] && g_namCamFlag &&
+            character != 6) {
+            c->voice = fn_80231BD4(character, kart->lineSet, 0);
+            c->line = lines.v[character];
+        }
+    } else if (g_gameMode == 2 && character != 6 && ((PcbSlot_GetByIndex(character)[3] >> 5) & 1)) {
+        c->voice = fn_80231BD4(character, kart->lineSet, 1);
+        c->line = lines.v[character];
+    }
+    if (c->voice == -1 && c->line == -1) {
+        c->voice = fn_80231BD4(6, kart->lineSet, 0);
+        c->line = -1;
+    }
+    if (c->voice != -1) {
+        PreloadResource(c->voice);
+    }
+    if (c->line != -1) {
+        PreloadResource(c->line);
+    }
 }
 
 void KartPair3ArmUpdate(unsigned char *self)
 {
-    CarrotKart *kart;
     Carrots *c = (Carrots *)(self + 0xEC);
     int i;
-    int character;
 
     switch ((signed char)self[0xC8]) {
     case 0: {
-        Int4 lines;
-
         SpriteSlot_InitNonLoop(self + 0x14, 0x8D);
         self[0x14] = 1;
         *(void **)(self + 0x78) = CarrotItemEffect_AddDraw;
         *(void **)(self + 0x7C) = self;
-        kart = c->kart;
-        c->voice = -1;
-        c->line = -1;
-        lines = lbl_803292E0;
-        character = kart->character;
-        if (g_gameMode == 0) {
-            if (GetVBlankFlag() && VBlankValue_Get() != 1 && g_playerData[0x19D] && g_namCamFlag &&
-                character != 6) {
-                c->voice = fn_80231BD4(character, kart->lineSet, 0);
-                c->line = lines.v[character];
-            }
-        } else if (g_gameMode == 2 && character != 6 && ((PcbSlot_GetByIndex(character)[3] >> 5) & 1)) {
-            c->voice = fn_80231BD4(character, kart->lineSet, 1);
-            c->line = lines.v[character];
-        }
-        if (c->voice == -1 && c->line == -1) {
-            c->voice = fn_80231BD4(6, kart->lineSet, 0);
-            c->line = -1;
-        }
-        if (c->voice != -1) {
-            PreloadResource(c->voice);
-        }
-        if (c->line != -1) {
-            PreloadResource(c->line);
-        }
+        Carrot_InitVoice(c);
         c->timer = 600;
         c->skipDelay = 3;
         c->holdDelay = 3;
         for (i = 0; i < 3; i++) {
-            Carrot_Init(c, i);
+            Vec yaw = lbl_803293D0;
+            c->pos[i].x = 320.0f;
+            c->pos[i].y = 240.0f;
+            c->yaw[i] = (&yaw.x)[i];
+            c->gone[i] = 0;
         }
         c->se = -1;
         self[0xC8]++;
@@ -166,69 +142,69 @@ void KartPair3ArmUpdate(unsigned char *self)
         if (c->gone[i]) {
             continue;
         }
-        c->pos[i].x += lbl_806D5054 * (float)sin(c->yaw[i]);
-        c->pos[i].y += lbl_806D5054 * (float)cos(c->yaw[i]);
+        c->pos[i].x += 10.0f * (float)sin(c->yaw[i]);
+        c->pos[i].y += 10.0f * (float)cos(c->yaw[i]);
         if (c->timer != 0) {
             int hit = 0;
-            if (c->pos[i].x < lbl_806D50E4 || lbl_806D50E8 < c->pos[i].x) {
-                if (c->pos[i].x < lbl_806D50E4) {
-                    c->pos[i].x = lbl_806D50E4;
+            if (c->pos[i].x < 50.0f || 590.0f < c->pos[i].x) {
+                if (c->pos[i].x < 50.0f) {
+                    c->pos[i].x = 50.0f;
                 } else {
-                    c->pos[i].x = lbl_806D50E8;
+                    c->pos[i].x = 590.0f;
                 }
                 c->yaw[i] = BuildOrientationFromYaw(c->yaw[i]);
-                c->yaw[i] = c->yaw[i] * lbl_806D5070;
+                c->yaw[i] *= -1.0f;
                 c->yaw[i] = BuildOrientationFromYaw(c->yaw[i]);
                 hit = 1;
             }
-            if (c->pos[i].y < lbl_806D50EC || lbl_806D50F0 < c->pos[i].y) {
-                if (c->pos[i].y < lbl_806D50EC) {
-                    c->pos[i].y = lbl_806D50EC;
+            if (c->pos[i].y < 140.0f || 520.0f < c->pos[i].y) {
+                if (c->pos[i].y < 140.0f) {
+                    c->pos[i].y = 140.0f;
                 } else {
-                    c->pos[i].y = lbl_806D50F0;
+                    c->pos[i].y = 520.0f;
                 }
-                c->yaw[i] = BuildOrientationFromYaw(lbl_806D50F4 + c->yaw[i]);
-                c->yaw[i] = c->yaw[i] * lbl_806D5070;
-                c->yaw[i] = BuildOrientationFromYaw(c->yaw[i] - lbl_806D50F4);
+                c->yaw[i] = BuildOrientationFromYaw(1.570796f + c->yaw[i]);
+                c->yaw[i] *= -1.0f;
+                c->yaw[i] = BuildOrientationFromYaw(c->yaw[i] - 1.570796f);
                 hit = 1;
             }
             if (hit) {
                 float a = c->yaw[i];
-                if (a < lbl_806D50D0) {
-                    if (a < lbl_806D50F8) {
-                        c->yaw[i] = BuildOrientationFromYaw(lbl_806D5080 * Rand_RangeFloatMax(lbl_806D50FC) + c->yaw[i]);
+                if (a < -1.570796f) {
+                    if (a < -2.356194f) {
+                        c->yaw[i] = BuildOrientationFromYaw(0.017453289f * Rand_RangeFloatMax(30.0f) + c->yaw[i]);
                     } else {
-                        c->yaw[i] = BuildOrientationFromYaw(c->yaw[i] - lbl_806D5080 * Rand_RangeFloatMax(lbl_806D50FC));
+                        c->yaw[i] = BuildOrientationFromYaw(c->yaw[i] - 0.017453289f * Rand_RangeFloatMax(30.0f));
                     }
-                } else if (a < lbl_806D5034) {
-                    if (a < lbl_806D5100) {
-                        c->yaw[i] = BuildOrientationFromYaw(lbl_806D5080 * Rand_RangeFloatMax(lbl_806D50FC) + c->yaw[i]);
+                } else if (a < 0.0f) {
+                    if (a < -0.785398f) {
+                        c->yaw[i] = BuildOrientationFromYaw(0.017453289f * Rand_RangeFloatMax(30.0f) + c->yaw[i]);
                     } else {
-                        c->yaw[i] = BuildOrientationFromYaw(c->yaw[i] - lbl_806D5080 * Rand_RangeFloatMax(lbl_806D50FC));
+                        c->yaw[i] = BuildOrientationFromYaw(c->yaw[i] - 0.017453289f * Rand_RangeFloatMax(30.0f));
                     }
-                } else if (a < lbl_806D50F4) {
-                    if (a < lbl_806D50C4) {
-                        c->yaw[i] = BuildOrientationFromYaw(lbl_806D5080 * Rand_RangeFloatMax(lbl_806D50FC) + c->yaw[i]);
+                } else if (a < 1.570796f) {
+                    if (a < 0.785398f) {
+                        c->yaw[i] = BuildOrientationFromYaw(0.017453289f * Rand_RangeFloatMax(30.0f) + c->yaw[i]);
                     } else {
-                        c->yaw[i] = BuildOrientationFromYaw(c->yaw[i] - lbl_806D5080 * Rand_RangeFloatMax(lbl_806D50FC));
+                        c->yaw[i] = BuildOrientationFromYaw(c->yaw[i] - 0.017453289f * Rand_RangeFloatMax(30.0f));
                     }
-                } else if (a < lbl_806D5104) {
-                    c->yaw[i] = BuildOrientationFromYaw(lbl_806D5080 * Rand_RangeFloatMax(lbl_806D50FC) + c->yaw[i]);
+                } else if (a < 2.356194f) {
+                    c->yaw[i] = BuildOrientationFromYaw(0.017453289f * Rand_RangeFloatMax(30.0f) + c->yaw[i]);
                 } else {
-                    c->yaw[i] = BuildOrientationFromYaw(c->yaw[i] - lbl_806D5080 * Rand_RangeFloatMax(lbl_806D50FC));
+                    c->yaw[i] = BuildOrientationFromYaw(c->yaw[i] - 0.017453289f * Rand_RangeFloatMax(30.0f));
                 }
             }
         } else {
-            if (c->pos[i].x < lbl_806D5108) {
+            if (c->pos[i].x < -640.0f) {
                 c->gone[i] = 1;
             }
-            if (c->pos[i].y < lbl_806D510C) {
+            if (c->pos[i].y < -480.0f) {
                 c->gone[i] = 1;
             }
-            if (lbl_806D5110 < c->pos[i].x) {
+            if (1280.0f < c->pos[i].x) {
                 c->gone[i] = 1;
             }
-            if (lbl_806D5114 < c->pos[i].y) {
+            if (960.0f < c->pos[i].y) {
                 c->gone[i] = 1;
             }
         }
@@ -243,7 +219,7 @@ void KartPair3ArmUpdate(unsigned char *self)
 
     if (c->gone[0] && c->gone[1] && c->gone[2]) {
         if (c->se >= 0) {
-            SoundMgr_StopSE_OrSpecial(0xCD);
+            SoundMgr_StopSE_OrSpecial(0xCD, c->se);
             c->se = -1;
         }
         if (c->voice != -1) {

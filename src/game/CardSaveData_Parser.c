@@ -51,10 +51,11 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
     bitpack_read_field_by_name(pack, lbl_806D3458, &value, 0); dest[0x16D] = value != 0;
     bitpack_read_field_by_name(pack, pool + 0x2024, &value, 0); dest[0x17D] = value != 0;
     {
-        int i, j;
-        unsigned int group;
-        u8 *row, *cursor;
+        u8 *cursor;
+        u8 *row;
         const char *const *fields;
+        unsigned int group;
+        int i, j;
     row = dest;
     fields = (const char *const *)(pool + 0x20DC);
     for (group = 0; group < 6; group++, fields++, row += 4) {
@@ -66,9 +67,10 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
     }
     }
     {
+        u8 *row;
         int i, j;
         unsigned int group;
-        u8 *row, *cursor;
+        u8 *cursor;
         const char *const *fields;
     row = dest;
     for (i = 0; i < 4; i++, row += 4) {
@@ -103,9 +105,9 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
         *(u32 *)(dest+0x80) = progress;
     }
     {
-        int i, j;
         unsigned int group;
-        u8 *row, *cursor;
+        int i, j;
+        u8 *cursor, *row;
         const char *const *fields;
     row = dest;
     fields = (const char *const *)(pool + 0x210C);
@@ -118,9 +120,9 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
     }
     }
     {
-        int i, j;
         unsigned int group;
-        u8 *row, *cursor;
+        int i, j;
+        u8 *cursor, *row;
         const char *const *fields;
     row = dest;
     fields = (const char *const *)(pool + 0x20F4);
@@ -146,10 +148,11 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
             dest[(rule->group*4+rule->slot)+0x23] = 1;
     }
     {
-        int i, j;
-        unsigned int group;
-        u8 *row, *cursor;
         const char *const *fields;
+        int i;
+        unsigned int group;
+        u8 *cursor, *row;
+        int j;
     row = dest;
     fields = lbl_806D349C;
     for (group = 0; group < 2; group++, fields++, row += 12) {

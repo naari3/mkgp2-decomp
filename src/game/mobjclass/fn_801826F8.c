@@ -19,7 +19,9 @@ extern DObj *fn_801869C8(DObj *);
 extern MObj *fn_801869E0(DObj *);
 extern void fn_80182684(MObj *, void *);
 extern void fn_80182990(JObj *, void *);
-static inline DObj *Next(DObj *d) { return d ? d->next : 0; }
+static inline void Advance(DObj **cursor) {
+    *cursor = *cursor ? (*cursor)->next : 0;
+}
 static inline MObj *Material(DObj *d) { return d ? d->mobj : 0; }
 static inline void SetBuffer(MObj *m, void *src) {
     if (m && src) {
@@ -35,13 +37,13 @@ void fn_801826F8(JObj *root, void *src) {
     JObj *a, *b, *c, *e;
     if (root && src) {
         if (root && src) {
-            for (d=HSD_JObjGetDObj(root);d;d=Next(d)) SetBuffer(Material(d),src);
+            for (d=HSD_JObjGetDObj(root);d;Advance(&d)) SetBuffer(Material(d),src);
         }
         if (!(root->flags & 0x1000)) {
             for (a=root->child;a;a=a->next) {
                 if (a && src) {
                     if (a && src) {
-                        for (d=HSD_JObjGetDObj(a);d;d=Next(d)) SetBuffer(fn_801869E0(d),src);
+                        for (d=HSD_JObjGetDObj(a);d;Advance(&d)) SetBuffer(fn_801869E0(d),src);
                     }
                     if (!(a->flags & 0x1000)) {
                         for (b=a->child;b;b=b->next) {

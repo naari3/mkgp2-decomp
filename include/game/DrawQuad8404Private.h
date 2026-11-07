@@ -7,7 +7,7 @@ struct DrawQuad8404 {
         float w = width;
         float h = height;
         float sinPart, cosPart;
-        float dx, dy;
+        float dx;
         if (lbl_806DA718 == d->angle) {
             dx = lbl_806DA718;
             sinPart = dx;
@@ -18,7 +18,10 @@ struct DrawQuad8404 {
             dx = h * sine;
             sinPart = w * sine;
         }
-        dy = h * cosPart;
+        SetCorners(d, w, h, sinPart, cosPart, dx);
+    }
+    void SetCorners(DrawDesc801F *d, float w, float h, float sinPart, float cosPart, float dx) {
+        float dy = h * cosPart;
         float wx = w * cosPart;
         float left = d->x - dx;
         float top = d->y - dy;

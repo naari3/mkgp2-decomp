@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 #include "game/CardModeRoot_private.h"
 
 void CardModeRoot::StartTask(int st) {
@@ -51,7 +52,7 @@ void CardModeRoot::Draw() {
 void CardModeRoot::Update() {
     if (GetInput()) {
         InputState *in = g_pInputState;
-        CGameCoin_ProcessInput(in == 0 ? (InputState *)0 : in);
+        CGameCoin_ProcessInput(SINGLETON_INSTANCE(in));
     }
     if (task == 0) {
         int st = state;

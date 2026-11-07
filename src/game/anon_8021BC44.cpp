@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 #include "game/anon_8021BC44Private.h"
 
 /*
@@ -489,7 +490,7 @@ static inline int IsReverse() {
 }
 
 static inline InputState *GetInput() {
-    return g_pInputState == 0 ? (InputState *)0 : g_pInputState;
+    return SINGLETON_INSTANCE(g_pInputState);
 }
 
 static inline void SetInput(unsigned char en) {

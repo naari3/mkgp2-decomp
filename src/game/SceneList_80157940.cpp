@@ -17,6 +17,43 @@ struct List {
     ListNode head;
 };
 
+extern "C" {
+void MemoryManager_TimedFree(void *p);
+void *Alloc(unsigned long size);
+}
+
+inline void *operator new(unsigned long, void *p) { return p; }
+inline void operator delete(void *, void *) {}
+
+/* Iterator passed and returned by value (copy ctor: hidden pointer ABI). */
+struct ListPos {
+    ListNode *n;
+    ListPos(ListNode *p) : n(p) {}
+    ListPos(const ListPos &p) : n(p.n) {}
+};
+
+struct ListValue {
+    int a, b, c;
+    ListValue(const ListValue &v) : a(v.a), b(v.b), c(v.c) {}
+};
+
+struct ListValueNode {
+    ListNode link;
+    ListValue value;
+};
+
+struct ListNodeGuard {
+    ListNode **allocator;
+    ListValueNode *node;
+    ListNodeGuard(ListNode **a, ListValueNode *n) : allocator(a), node(n) {}
+    ~ListNodeGuard() { if (node) MemoryManager_TimedFree(node); }
+    ListValueNode *Release() {
+        ListValueNode *p = node;
+        node = 0;
+        return p;
+    }
+};
+
 struct DataBuf {
     int pad0;
     void *data;
@@ -78,7 +115,6 @@ struct OptionMenu {
 
 extern "C" {
 void MemoryManager_TimedFree(void *p);
-extern void Alloc();
 extern void __throw();
 extern void fn_801F7DAC();
 void HSD_StateInvalidate(int state);
@@ -221,15 +257,15 @@ extern unsigned int lbl_806D8564;
 extern unsigned int lbl_806D8568;
 extern unsigned int lbl_806D856C;
 extern unsigned int lbl_806D8570;
-asm void fn_80157940(void);
+ListPos fn_80157940(List *l, ListPos first, ListPos last);
 void fn_801579F0(ListIter *ret, List *l, ListIter *it);
-asm void fn_80157A68(void);
+ListPos fn_80157A68(List *l, const ListPos &pos, const ListValue &value);
 void fn_80157B20(List *l);
-asm void fn_80157B38(void);
+ListPos fn_80157B38(List *l, ListPos first, ListPos last);
 void fn_80157BE8(ListIter *ret, List *l, ListIter *it);
-asm void fn_80157C60(void);
+ListPos fn_80157C60(List *l, const ListPos &pos, const ListValue &value);
 void fn_80157D18(List *l);
-asm void fn_80157D30(void);
+ListPos fn_80157D30(List *l, ListPos first, ListPos last);
 asm void fn_80157DE0(void);
 void fn_80157EA8(List *l);
 DataBuf *dtor_80157EC0(DataBuf *self, short flag);
@@ -242,57 +278,44 @@ asm void fn_801596D4(void);
 asm void fn_80159BD0(void);
 
 #pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_fn_80157940[8] = {
-    0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80157A68[8] = {
-    0x28, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-__declspec(section ".extab_user") static const unsigned char extab_fn_80157B38[8] = {
-    0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80157C60[8] = {
-    0x28, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80157D30[8] = {
-    0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+
 
 
 
 
 #pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80157940 = {
-    (void *)&fn_80157940, 0x000000B0, (void *)extab_fn_80157940
-};
-
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80157A68 = {
-    (void *)&fn_80157A68, 0x000000B8, (void *)extab_fn_80157A68
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80157B38 = {
-    (void *)&fn_80157B38, 0x000000B0, (void *)extab_fn_80157B38
-};
-
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80157C60 = {
-    (void *)&fn_80157C60, 0x000000B8, (void *)extab_fn_80157C60
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80157D30 = {
-    (void *)&fn_80157D30, 0x000000B0, (void *)extab_fn_80157D30
-};
 
 
 
 
+
+
+
+
+
+
+}
+
+static inline void UnlinkRange(ListNode *head, ListNode *last)
+{
+    ListNode *tail = last->prev;
+    head->prev->next = tail->next;
+    tail->next->prev = head->prev;
+}
+
+static inline ListPos InsertNode(List *l, ListNode *at, ListValueNode *node)
+{
+    at->prev->next = &node->link;
+    node->link.prev = at->prev;
+    at->prev = &node->link;
+    node->link.next = at;
+    ++l->size;
+    return ListPos(&node->link);
 }
 
 static inline InputView *input_state(void)
@@ -305,56 +328,19 @@ static inline InputView *input_state(void)
 
 
 
-extern "C" asm void fn_80157940(void) { /* 0x80157940 size:0xB0 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r6
-    stw r30, 0x18(r1)
-    mr r30, r5
-    lwz r5, 0x0(r5)
-    stw r29, 0x14(r1)
-    mr r29, r4
-    stw r28, 0x10(r1)
-    mr r28, r3
-    lwz r3, 0x0(r6)
-    cmplw r5, r3
-    bne fn_80157940_L_80157984
-    stw r3, 0x0(r28)
-    b fn_80157940_L_801579D0
-    fn_80157940_L_80157984:
-    lwz r4, 0x0(r3)
-    lwz r3, 0x0(r5)
-    lwz r0, 0x4(r4)
-    stw r0, 0x4(r3)
-    lwz r0, 0x0(r5)
-    lwz r3, 0x4(r4)
-    stw r0, 0x0(r3)
-    b fn_80157940_L_801579BC
-    fn_80157940_L_801579A4:
-    lwz r0, 0x4(r3)
-    stw r0, 0x0(r30)
-    bl MemoryManager_TimedFree
-    lwz r3, 0x0(r29)
-    subi r0, r3, 0x1
-    stw r0, 0x0(r29)
-    fn_80157940_L_801579BC:
-    lwz r3, 0x0(r30)
-    lwz r0, 0x0(r31)
-    cmplw r3, r0
-    bne fn_80157940_L_801579A4
-    stw r0, 0x0(r28)
-    fn_80157940_L_801579D0:
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+extern "C" ListPos fn_80157940(List *l, ListPos first, ListPos last)
+{
+    if (first.n == last.n) {
+        return last;
+    }
+    UnlinkRange(first.n, last.n);
+    while (first.n != last.n) {
+        ListNode *p = first.n;
+        first.n = p->next;
+        MemoryManager_TimedFree(p);
+        --l->size;
+    }
+    return last;
 }
 
 extern "C" void fn_801579F0(ListIter *ret, List *l, ListIter *it)
@@ -372,56 +358,11 @@ extern "C" void fn_801579F0(ListIter *ret, List *l, ListIter *it)
     ret->n = r;
 }
 
-extern "C" asm void fn_80157A68(void) { /* 0x80157A68 size:0xB8 */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    stw r0, 0x44(r1)
-    stmw r27, 0x2c(r1)
-    mr r29, r3
-    mr r31, r1
-    mr r30, r4
-    mr r27, r5
-    mr r28, r6
-    li r3, 0x14
-    bl Alloc
-    addi r0, r30, 0x4
-    addic. r4, r3, 0x8
-    stw r0, 0x8(r31)
-    stw r3, 0xc(r31)
-    beq fn_80157A68_L_80157AC4
-    lwz r0, 0x0(r28)
-    lwz r3, 0x4(r28)
-    stw r0, 0x0(r4)
-    lwz r0, 0x8(r28)
-    stw r3, 0x4(r4)
-    stw r1, 0x24(r31)
-    stw r0, 0x8(r4)
-    fn_80157A68_L_80157AC4:
-    lwz r5, 0x0(r27)
-    li r3, 0x0
-    lwz r6, 0xc(r31)
-    lwz r4, 0x0(r5)
-    stw r3, 0xc(r31)
-    stw r6, 0x4(r4)
-    lwz r0, 0x0(r5)
-    stw r0, 0x0(r6)
-    stw r6, 0x0(r5)
-    stw r5, 0x4(r6)
-    lwz r4, 0x0(r30)
-    addi r0, r4, 0x1
-    stw r0, 0x0(r30)
-    stw r6, 0x0(r29)
-    b fn_80157A68_L_80157B04
-    bl MemoryManager_TimedFree
-    fn_80157A68_L_80157B04:
-    mr r10, r31
-    lmw r27, 0x2c(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+extern "C" ListPos fn_80157A68(List *l, const ListPos &pos, const ListValue &value)
+{
+    ListNodeGuard guard(&l->head.prev, (ListValueNode *)Alloc(sizeof(ListValueNode)));
+    new (&guard.node->value) ListValue(value);
+    return InsertNode(l, pos.n, guard.Release());
 }
 
 extern "C" void fn_80157B20(List *l)
@@ -432,56 +373,19 @@ extern "C" void fn_80157B20(List *l)
     h->prev = h;
 }
 
-extern "C" asm void fn_80157B38(void) { /* 0x80157B38 size:0xB0 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r6
-    stw r30, 0x18(r1)
-    mr r30, r5
-    lwz r5, 0x0(r5)
-    stw r29, 0x14(r1)
-    mr r29, r4
-    stw r28, 0x10(r1)
-    mr r28, r3
-    lwz r3, 0x0(r6)
-    cmplw r5, r3
-    bne fn_80157B38_L_80157B7C
-    stw r3, 0x0(r28)
-    b fn_80157B38_L_80157BC8
-    fn_80157B38_L_80157B7C:
-    lwz r4, 0x0(r3)
-    lwz r3, 0x0(r5)
-    lwz r0, 0x4(r4)
-    stw r0, 0x4(r3)
-    lwz r0, 0x0(r5)
-    lwz r3, 0x4(r4)
-    stw r0, 0x0(r3)
-    b fn_80157B38_L_80157BB4
-    fn_80157B38_L_80157B9C:
-    lwz r0, 0x4(r3)
-    stw r0, 0x0(r30)
-    bl MemoryManager_TimedFree
-    lwz r3, 0x0(r29)
-    subi r0, r3, 0x1
-    stw r0, 0x0(r29)
-    fn_80157B38_L_80157BB4:
-    lwz r3, 0x0(r30)
-    lwz r0, 0x0(r31)
-    cmplw r3, r0
-    bne fn_80157B38_L_80157B9C
-    stw r0, 0x0(r28)
-    fn_80157B38_L_80157BC8:
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+extern "C" ListPos fn_80157B38(List *l, ListPos first, ListPos last)
+{
+    if (first.n == last.n) {
+        return last;
+    }
+    UnlinkRange(first.n, last.n);
+    while (first.n != last.n) {
+        ListNode *p = first.n;
+        first.n = p->next;
+        MemoryManager_TimedFree(p);
+        --l->size;
+    }
+    return last;
 }
 
 extern "C" void fn_80157BE8(ListIter *ret, List *l, ListIter *it)
@@ -499,56 +403,11 @@ extern "C" void fn_80157BE8(ListIter *ret, List *l, ListIter *it)
     ret->n = r;
 }
 
-extern "C" asm void fn_80157C60(void) { /* 0x80157C60 size:0xB8 */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    stw r0, 0x44(r1)
-    stmw r27, 0x2c(r1)
-    mr r29, r3
-    mr r31, r1
-    mr r30, r4
-    mr r27, r5
-    mr r28, r6
-    li r3, 0x14
-    bl Alloc
-    addi r0, r30, 0x4
-    addic. r4, r3, 0x8
-    stw r0, 0x8(r31)
-    stw r3, 0xc(r31)
-    beq fn_80157C60_L_80157CBC
-    lwz r0, 0x0(r28)
-    lwz r3, 0x4(r28)
-    stw r0, 0x0(r4)
-    lwz r0, 0x8(r28)
-    stw r3, 0x4(r4)
-    stw r1, 0x24(r31)
-    stw r0, 0x8(r4)
-    fn_80157C60_L_80157CBC:
-    lwz r5, 0x0(r27)
-    li r3, 0x0
-    lwz r6, 0xc(r31)
-    lwz r4, 0x0(r5)
-    stw r3, 0xc(r31)
-    stw r6, 0x4(r4)
-    lwz r0, 0x0(r5)
-    stw r0, 0x0(r6)
-    stw r6, 0x0(r5)
-    stw r5, 0x4(r6)
-    lwz r4, 0x0(r30)
-    addi r0, r4, 0x1
-    stw r0, 0x0(r30)
-    stw r6, 0x0(r29)
-    b fn_80157C60_L_80157CFC
-    bl MemoryManager_TimedFree
-    fn_80157C60_L_80157CFC:
-    mr r10, r31
-    lmw r27, 0x2c(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+extern "C" ListPos fn_80157C60(List *l, const ListPos &pos, const ListValue &value)
+{
+    ListNodeGuard guard(&l->head.prev, (ListValueNode *)Alloc(sizeof(ListValueNode)));
+    new (&guard.node->value) ListValue(value);
+    return InsertNode(l, pos.n, guard.Release());
 }
 
 extern "C" void fn_80157D18(List *l)
@@ -559,54 +418,17 @@ extern "C" void fn_80157D18(List *l)
     h->prev = h;
 }
 
-extern "C" asm void fn_80157D30(void) { /* 0x80157D30 size:0xB0 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r6
-    stw r30, 0x18(r1)
-    mr r30, r5
-    lwz r5, 0x0(r5)
-    stw r29, 0x14(r1)
-    mr r29, r4
-    stw r28, 0x10(r1)
-    mr r28, r3
-    lwz r3, 0x0(r6)
-    cmplw r5, r3
-    bne fn_80157D30_L_80157D74
-    stw r3, 0x0(r28)
-    b fn_80157D30_L_80157DC0
-    fn_80157D30_L_80157D74:
-    lwz r4, 0x0(r3)
-    lwz r3, 0x0(r5)
-    lwz r0, 0x4(r4)
-    stw r0, 0x4(r3)
-    lwz r0, 0x0(r5)
-    lwz r3, 0x4(r4)
-    stw r0, 0x0(r3)
-    b fn_80157D30_L_80157DAC
-    fn_80157D30_L_80157D94:
-    lwz r0, 0x4(r3)
-    stw r0, 0x0(r30)
-    bl MemoryManager_TimedFree
-    lwz r3, 0x0(r29)
-    subi r0, r3, 0x1
-    stw r0, 0x0(r29)
-    fn_80157D30_L_80157DAC:
-    lwz r3, 0x0(r30)
-    lwz r0, 0x0(r31)
-    cmplw r3, r0
-    bne fn_80157D30_L_80157D94
-    stw r0, 0x0(r28)
-    fn_80157D30_L_80157DC0:
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+extern "C" ListPos fn_80157D30(List *l, ListPos first, ListPos last)
+{
+    if (first.n == last.n) {
+        return last;
+    }
+    UnlinkRange(first.n, last.n);
+    while (first.n != last.n) {
+        ListNode *p = first.n;
+        first.n = p->next;
+        MemoryManager_TimedFree(p);
+        --l->size;
+    }
+    return last;
 }

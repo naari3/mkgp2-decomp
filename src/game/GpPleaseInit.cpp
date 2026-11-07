@@ -1,10 +1,11 @@
 /* GP please scene construction, 0x801CD030..0x801CDA40. */
 #include "game/GpPleaseInitPrivate.h"
+#include "game/singleton.h"
 clFlowGpPlease::clFlowGpPlease() {
     SetSyncTarget(37);
     active=0; timer=0; next=-1;
     SetupBgSprites(0);
-    InputState *input=GetInput();
+    InputState *input=SINGLETON_INSTANCE(g_pInputState);
     input->enabled=1; input->held=0; input->edge=0;
     CourseSprite *sprite=new CourseSprite(0x14f,0,0);
     sprite->x=lbl_806D9E30; sprite->y=lbl_806D9E34;

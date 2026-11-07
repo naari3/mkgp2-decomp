@@ -33,8 +33,14 @@ extern "C" void fn_801DABFC(StatusOutput *self) {
         default: self->out[1] = 0; break;
         }
         on = 0; off = 0;
-        if (self->out[0]) on |= lbl_806DA260; else off |= lbl_806DA260;
-        if (self->out[1]) on |= lbl_806DA261; else off |= lbl_806DA261;
+        switch ((unsigned int)self->out[0]) {
+        default: on |= lbl_806DA260; break;
+        case 0: off |= lbl_806DA260; break;
+        }
+        switch ((unsigned int)self->out[1]) {
+        default: on |= lbl_806DA261; break;
+        case 0: off |= lbl_806DA261; break;
+        }
         if (StrPcb_GetInstance()) {
             if ((unsigned char)on) StrPcb_SetStatusBits(StrPcb_GetInstance(), on, self->status);
             if ((unsigned char)off) StrPcb_ClearStatusBits(StrPcb_GetInstance(), off);

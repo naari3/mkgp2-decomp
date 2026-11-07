@@ -1,5 +1,11 @@
 #include "game/anon_8021F088_private.h"
 
+static inline void DrawNodes(PtrVec<FadeObj *> &nodes) {
+    for (FadeObj **it = nodes.begin(); it != nodes.end(); it++) {
+        (*it)->Render();
+    }
+}
+
 void clCSSceneCoinMilage::Draw() {
     fn_8011FAB8();
     fn_801A1280();
@@ -9,9 +15,7 @@ void clCSSceneCoinMilage::Draw() {
     if (state == 5) {
         next->Draw();
     }
-    for (FadeObj **it = nodes.begin(); it != nodes.end(); it++) {
-        (*it)->Render();
-    }
+    DrawNodes(nodes);
     if (state == 1) {
         for (int i = 0; i < numCoins; i++) {
             fn_8013D634(model, 0.0f, 0.0f, coins[i].z);

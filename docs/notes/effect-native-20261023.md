@@ -191,3 +191,13 @@ c15_u40: CoinJumpFx_UpdateParticleGrid 800CDE7C/1068B improves 98.48315 to 98.80
 Source: Codex worker c15_u50_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 452 B.
 
 c15_u50: Effect_TwoChildRotate_FromPhase150 800CCC84/452B now native exact. Numeric float literals resolve alpha/phase FP identities (97.30089 to 98.23009). Enable accessed as group+0xC4, same parent+0x190 address, restores addi r31,r3,0xCC before lbz and yields text452/extab8/index12 all100. Matching promotion with unchanged flags/splits. All six literals externalized by standard postprocessor; no owned pool added. Actual main.elf uses source object, excludes fallback; linked function bytes exact and full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. Two hypotheses, native gain1fn452B.
+
+## c17_u54_20261107
+Source: Codex worker c17_u54_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 156 B.
+
+c17_u54_20261107: RenderHook 800C26EC/156B now native exact. Prior 94.35897 branch residual has two independent causes. Owner-approved SINGLETON_INSTANCE(lbl_806D10AC) fixes manager getter polarity (97.17949, source152B). switch(effect->flags & 2) with case0 render body produces the target mask beq-over-b and restores156B; text/extab8/index12 all100. Existing TU promoted Matching; unchanged flags/splits/data ownership. Coordinator build service exit0, whole DOL SHA1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65; actual source input and all three linked ELF ranges independently verified exact. Two hypotheses; native gain1fn156B.
+
+## c17_u122_20261107
+Source: Codex worker c17_u122_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u122: CoinJumpFx_UpdateParticleGrid 800CDE7C/1068B improves98.8015 to98.94382 by extracting child lookup plus per-particle update/render into static inline CoinJumpGroup_UpdateParticle. Camera and lane now target r24/r25; grid child becomesr28 vs targetr26, row/index synthetics shift and vector stack slots reorder; optional child remainsr21 vstargetr25. Exactly63 operand-only rows remain. Whole-effect inline member (40B wrapper+1068B method) and whole-grid-loop helper (396B caller+800B helper) exceed production inline threshold, rejected and reverted. All three structural approaches exhausted; no declaration/register sweeps. Final text1068/EH8/index12 with EH/index100; retain NonMatching singleton, no rescue split/native gain. No full-build request or config changes. Frida unavailable; no install.

@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 #include "game/ItemSelectRefillPrivate.h"
 void *operator new(unsigned long);
 void operator delete(void *) throw();
@@ -92,7 +93,7 @@ static inline void AnimateIntro(ItemSelectState *self, const RefillLayout *layou
 extern "C" void fn_80238D9C(ItemSelectState *self) {
     const RefillLayout *layout = &lbl_803DC0C0;
     if (self->doneFlag == 1) return;
-    RefillInput *input = g_pInputState == 0 ? (RefillInput *)0 : g_pInputState;
+    RefillInput *input = SINGLETON_INSTANCE(g_pInputState);
     void *playerData = g_playerData;
     switch (self->phase) {
     case 0: break;

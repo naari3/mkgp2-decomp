@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 /*
  * 0x80211B10..0x80211E6C: JumpDistanceMode draw (vtable lbl_804ECC08:
  * JumpDistanceMode_Update, this, dtor fn_80212EA4). Draws the course
@@ -46,15 +47,15 @@ void HSD_StateInvalidate(int state);
 }
 
 static inline DrawMan *GetDrawMan() {
-    return lbl_806D10AC == 0 ? (DrawMan *)0 : lbl_806D10AC;
+    return SINGLETON_INSTANCE(lbl_806D10AC);
 }
 
 static inline TransitionEffect *GetTransition() {
-    return lbl_806D109C == 0 ? (TransitionEffect *)0 : lbl_806D109C;
+    return SINGLETON_INSTANCE(lbl_806D109C);
 }
 
 static inline ItemBoxManager *GetItemBoxMan() {
-    return lbl_806D10D0 == 0 ? (ItemBoxManager *)0 : lbl_806D10D0;
+    return SINGLETON_INSTANCE(lbl_806D10D0);
 }
 
 static inline void DrawDigit(LandingGrid *d, GridCell *g) {

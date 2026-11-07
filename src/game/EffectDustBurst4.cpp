@@ -25,12 +25,10 @@ void Vec3_Add_DestFirst(DustVec *, const DustVec *, const DustVec *);
 void VfxSlot_SetPositionFromVec(void *, DustVec);
 void VfxSlot_SetScaleUniform(void *, float);
 
-static inline void UpdateChildren(DustEffect *self, DustGroup *group) {
+static inline void UpdateChildren(DustEffect *self, DustGroup *group, DustVec &delta, DustGroup *&cursor) {
     int i;
     DustCurve *curve;
-    DustGroup *cursor;
     const DustVec *globalPosition;
-    DustVec delta;
     globalPosition=(const DustVec *)(lbl_805DF3D0+0x80);
     cursor=group;
     curve=lbl_8041A398;
@@ -38,14 +36,16 @@ static inline void UpdateChildren(DustEffect *self, DustGroup *group) {
         if (cursor->children[0]) {
             if (curve->time[0] <= group->phase && group->phase < curve->time[2]) {
                 if (curve->time[0] <= group->phase && group->phase < curve->time[1]) {
-                    float ratio=(group->phase-curve->time[0])*(lbl_806D5424/(curve->time[1]-curve->time[0]));
+                    float ratio=group->phase-curve->time[0];
+                    ratio *= lbl_806D5424/(curve->time[1]-curve->time[0]);
                     cursor->children[0]->scale=ratio*(curve->scale[1]-curve->scale[0])+curve->scale[0];
                     cursor->children[0]->alpha=ratio*(curve->alpha[1]-curve->alpha[0])+curve->alpha[0];
                     cursor->children[0]->scale *= lbl_806D54A0;
                 }
                 float *next=&curve->time[1];
                 if (next[0] <= group->phase && group->phase < next[1]) {
-                    float ratio=(group->phase-next[0])*(lbl_806D5424/(next[1]-next[0]));
+                    float ratio=group->phase-next[0];
+                    ratio *= lbl_806D5424/(next[1]-next[0]);
                     cursor->children[0]->scale=ratio*(next[4]-next[3])+next[3];
                     cursor->children[0]->alpha=ratio*(next[7]-next[6])+next[6];
                     cursor->children[0]->scale *= lbl_806D54A0;
@@ -69,6 +69,7 @@ static inline void UpdateChildren(DustEffect *self, DustGroup *group) {
 }
 
 void Effect_DustBurst4_Update(DustEffect *self) {
+    DustVec delta;
     int i;
     DustGroup *cursor;
     DustGroup *group = (DustGroup *)((unsigned char *)self + 0xCC);
@@ -104,6 +105,6 @@ void Effect_DustBurst4_Update(DustEffect *self) {
         DrawEffect_Free(self);
         return;
     }
-    UpdateChildren(self, group);
+    UpdateChildren(self, group, delta, cursor);
 }
 }

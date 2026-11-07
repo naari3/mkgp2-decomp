@@ -120,13 +120,12 @@ void ItemObject_Tick_Kind29_LightAttachment(unsigned char *self, unsigned char *
         c = &lbl_80420ED8;
         for (i = 0; i < 4; i++) {
             if (c->t[i] <= t && t <= c->t[i + 1]) {
-                float *x = &lbl_80420ED8.x[i];
-                float *y = &lbl_80420ED8.y[i];
-                float *z = &lbl_80420ED8.z[i];
+                /* View all three channels at the same key offset. */
+                ScaleCurve *segment = (ScaleCurve *)((char *)c + i * sizeof(float));
                 f = (1.0f / (c->t[i + 1] - c->t[i])) * (t - c->t[i]);
-                sp->x = sp->x * (f * (x[1] - x[0]) + x[0]);
-                sp->y = sp->y * (f * (y[1] - y[0]) + y[0]);
-                sp->z = sp->z * (f * (z[1] - z[0]) + z[0]);
+                sp->x = sp->x * (f * (segment->x[1] - segment->x[0]) + segment->x[0]);
+                sp->y = sp->y * (f * (segment->y[1] - segment->y[0]) + segment->y[0]);
+                sp->z = sp->z * (f * (segment->z[1] - segment->z[0]) + segment->z[0]);
             }
         }
         SpriteSlot_SetScaleXYZ(self + 0x14, sp->x, sp->y, sp->z);

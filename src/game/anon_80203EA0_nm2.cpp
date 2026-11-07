@@ -22,6 +22,12 @@ void fn_802040B0(void);
 void fn_80204130(int layer);
 }
 
+static inline ListIter RemoveTask(DoublyLinkedList *entries, ListIter it) {
+    ListIter result;
+    result = entries->Erase(it);
+    return result;
+}
+
 void SceneListImpl::Draw() {
     ListNode *end = entries.End();
     ListIter it;
@@ -43,7 +49,7 @@ void SceneListImpl::Draw() {
         }
         if (t->field0C >= 2) {
             t->Finish();
-            it = Remove(it);
+            it = RemoveTask(&entries, it);
         } else {
             it.node = it.node->next;
         }

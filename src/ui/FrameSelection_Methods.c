@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 /*
  * FrameSelection method bundle (compiled as C++: -lang=c++ -Cpp_exceptions on).
  *
@@ -188,7 +189,7 @@ struct InputState {
 extern "C" InputState *g_pInputState;
 
 static inline InputState *GetInput(void) {
-    return g_pInputState == 0 ? (InputState *)0 : g_pInputState;
+    return SINGLETON_INSTANCE(g_pInputState);
 }
 
 struct InputPlayer {

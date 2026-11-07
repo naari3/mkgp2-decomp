@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 /* Observed FlowKart update layout only; Sprite lifetime supplies automatic EH. */
 class FlowSprite {
     unsigned char observed[48];
@@ -44,7 +45,7 @@ int RenderObj_ItemStateMachine_Timed(void*, int, float, float);
 }
 static inline FlowInput* CurrentFlowInput()
 {
-    return g_pInputState == 0 ? (FlowInput*)0 : g_pInputState;
+    return SINGLETON_INSTANCE(g_pInputState);
 }
 /* Evaluate the nullable input getter before reading the current selection. */
 static inline void ApplyFlowInput(FlowUpdateView* self, FlowInput* input)

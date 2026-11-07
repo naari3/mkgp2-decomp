@@ -4,8 +4,8 @@
  * GabyouTripleChild objects in a spread and frees itself. */
 typedef struct { float v[3]; } FloatTriple;
 
-extern const FloatTriple lbl_8032FA1C;
-extern const FloatTriple lbl_8032FA10;
+extern FloatTriple lbl_8032FA1C;
+extern FloatTriple lbl_8032FA10;
 extern const float lbl_806D611C;
 extern const float lbl_806D60D0;
 extern const float lbl_806D6120;

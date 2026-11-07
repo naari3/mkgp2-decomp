@@ -1,4 +1,5 @@
 #include "game/clFlowCourse.h"
+#include "game/singleton.h"
 
 /* clFlowCourse_Update, 801CF360..801D0C30 (6352 bytes).
  * Complete state-machine draft, retained as Object(NonMatching).
@@ -10,12 +11,6 @@ struct CourseLayout {
     float x, y, field10;
 };
 struct ArrowLayout { float x, y, angle, x2, y2, angle2; };
-struct CourseUpdateData {
-    char pad000[0x3FC];
-    float iconOffsets[4][2];
-    short animIds[8];
-    ArrowLayout arrows[16];
-};
 struct CourseParams { int cup, round, field08; };
 struct CoursePlayerInput {
     virtual void slot08(); virtual void slot0C();
@@ -24,8 +19,70 @@ struct CoursePlayerInput {
     virtual void slot20(); virtual void slot24();
     virtual void slot28(); virtual unsigned int Test(int);
 };
+/* Shared constant pool, 8039B990..8039BF3C. The leading three scales and
+ * eighteen seven-key XY curves are also read by the course slot helpers.
+ * Keeping each table distinct lets MWCC address it from one pooled base. */
+static const float motionCurves[255] = {
+        1.0f, 0.699999988f, 0.899999976f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+        1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+        66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+        1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+        66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+        1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+        66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+        1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+        66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+        1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+        66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+        1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+        66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+        1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+        66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+        1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+        66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+        1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+        66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+        1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+        66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+        1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+        66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+        1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+        66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+        1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+        83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+        1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+        83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+        1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+        83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+        1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+        83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+        1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+        83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+        1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+        83.3333359f, 5000.0f, 83.3333359f,
+    };
+static const float iconOffsets[4][2] = { { -28.0f, -28.0f }, { 28.0f, -28.0f }, { -28.0f, 28.0f }, { 28.0f, 28.0f } };
+static const short animIds[8] = { 6511, 6512, 6513, 6514, 6515, 6516, 6517, 6518 };
+static const ArrowLayout courseArrows[16] = {
+        { 0.0f, 0.0f, 0.0f, 145.0f, 185.0f, -50.0f },
+        { 115.0f, 225.0f, 130.0f, 205.0f, 225.0f, 50.0f },
+        { 170.0f, 185.0f, -130.0f, 260.0f, 185.0f, -50.0f },
+        { 240.0f, 225.0f, 130.0f, 330.0f, 225.0f, 50.0f },
+        { 295.0f, 185.0f, -130.0f, 385.0f, 185.0f, -50.0f },
+        { 365.0f, 225.0f, 130.0f, 455.0f, 225.0f, 50.0f },
+        { 420.0f, 185.0f, -130.0f, 510.0f, 185.0f, -50.0f },
+        { 490.0f, 225.0f, 130.0f, 580.0f, 225.0f, 50.0f },
+        { 60.0f, 225.0f, 130.0f, 150.0f, 225.0f, 50.0f },
+        { 134.0f, 185.0f, -130.0f, 224.0f, 185.0f, -50.0f },
+        { 192.0f, 225.0f, 130.0f, 282.0f, 225.0f, 50.0f },
+        { 248.0f, 185.0f, -130.0f, 338.0f, 185.0f, -50.0f },
+        { 284.0f, 225.0f, 130.0f, 394.0f, 225.0f, 50.0f },
+        { 372.0f, 185.0f, -130.0f, 460.0f, 185.0f, -50.0f },
+        { 426.0f, 225.0f, 130.0f, 516.0f, 225.0f, 50.0f },
+        { 492.0f, 185.0f, -130.0f, 0.0f, 0.0f, 0.0f },
+    };
+
 extern "C" {
-extern CourseUpdateData lbl_8039B990;
 extern CourseLayout lbl_8049B1E0[];
 extern short lbl_8049B388[][2];
 extern int g_gameMode, g_roundIndex, g_localPcbRole, lbl_806CF12C;
@@ -63,9 +120,18 @@ int GetDisplayBufferIndex();
 unsigned char *PcbSlot_GetByIndex(int);
 }
 
+static inline InputState *CourseInput() {
+    return SINGLETON_INSTANCE(g_pInputState);
+}
+
 static inline void SetSpritePosition(CourseSprite *sprite, float x, float y) {
     sprite->x = x;
     sprite->y = y;
+}
+
+static inline void SetAlpha(ResCtrl *ctrl, unsigned int color, float a) {
+    color = __rlwimi(color, (int)(lbl_806D9EE4 * a), 0, 24, 31);
+    ctrl->SetColor(color);
 }
 
 static inline int CourseCup(int i) {
@@ -83,46 +149,53 @@ static inline void UpdatePreview(CourseFlow *self, int selection) {
     self->preview.resId = GetCourseShortIdByCupAndMirror(CourseCup(cup), selection % 2);
     self->preview.Show(lbl_806D9EE8, lbl_806D9EEC, lbl_806D9EDC);
 }
-static inline void UpdateArrows(CourseFlow *self, ArrowLayout *arrows) {
+static inline void UpdateArrows(CourseFlow *self, const ArrowLayout *arrows) {
     self->field140 = 0;
     if (self->field138) {
+        float y;
         float x = arrows[self->selection].x;
-        float y = arrows[self->selection].y;
+        y = arrows[self->selection].y;
         SetSpritePosition(self->field138, x, y);
         self->field138->rotation = arrows[self->selection].angle;
         if (self->selection != 0) self->field140 = 1;
     }
     self->field141 = 0;
     if (self->field13C) {
+        float y;
         float x = arrows[self->selection].x2;
-        float y = arrows[self->selection].y2;
+        y = arrows[self->selection].y2;
         SetSpritePosition(self->field13C, x, y);
         self->field13C->rotation = arrows[self->selection].angle2;
         if (self->selection != 15) self->field141 = 1;
         if (self->field15D == 1 && self->selection == 7) self->field141 = 0;
     }
 }
-static inline void ShowPulse(CoursePulse *p) {
-    if (p && (p->active != 1 || p->flag != 0)) {
+static inline void ActivatePulse(CoursePulse *p) {
+    if ( (p->active != 1 || p->flag != 0)) {
         p->active = 1; p->flag = 0; p->timer = 0;
     }
 }
-static inline void HidePulse(CoursePulse *p) {
-    if (p && p->active != 0 && p->flag != 1) {
+static inline void DeactivatePulse(CoursePulse *p) {
+    if (p->active != 0 && p->flag != 1) {
         p->flag = 1; p->timer = 0;
     }
 }
-static inline void SetupExitSprites(CourseFlow *self, CourseUpdateData *data) {
+static inline void ShowPulse(CoursePulse *p) { if (p) ActivatePulse(p); }
+static inline void HidePulse(CoursePulse *p) { if (p) DeactivatePulse(p); }
+static inline float PulseAlpha(CoursePulse *p) {
+    if (p->flag == 0) return (float)p->timer * lbl_806D9F30;
+    return lbl_806D9EDC - (float)p->timer * lbl_806D9F30;
+}
+static inline void SetupExitSprites(CourseFlow *self) {
     if (self->left) Sprite_SetupAnim(self->left, 0x23, 1, 0);
     if (self->right) Sprite_SetupAnim(self->right, 0x26, 1, 0);
     if (self->fieldC4) {
         Sprite_SetupAnim(self->fieldC4, 0x83, 1, 0);
-        Sprite_SetAnimParam(self->fieldC4, 0x1970, data->animIds[self->selection / 2]);
+        Sprite_SetAnimParam(self->fieldC4, 0x1970, animIds[self->selection / 2]);
     }
 }
 
 extern "C" int clFlowCourse_Update(CourseFlow *self) {
-    CourseUpdateData *data = &lbl_8039B990;
     RumbleUpdate();
     if (self->advance) { self->state++; self->advance = 0; }
     self->timer++;
@@ -143,14 +216,13 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
         }
         if (self->timer >= 54) {
             float a = (float)(self->timer - 50) / lbl_806D9F04;
-            int alpha = (int)(lbl_806D9EE4 * a);
             self->map->alpha = a; self->field12C->alpha = a; self->field130->alpha = a;
-            self->preview.SetColor(__rlwimi(0xFFFFFF00, alpha, 0, 24, 31));
+            SetAlpha(&self->preview, 0xFFFFFF00, a);
         }
         if (self->timer == 60) {
             SetScreenBrightness(self->field18);
             lbl_806D184C = 1; lbl_806D184D = 0;
-            UpdateArrows(self, data->arrows);
+            UpdateArrows(self, courseArrows);
             fn_801CEB78(self, 0, 2);
             for (int i = 1; i < 8; i++) fn_801CEB78(self, i, 6);
             for (int i = 8; i < 16; i++) fn_801CEB78(self, i, 5);
@@ -168,8 +240,8 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
         break;
     case 1: {
         int previous = self->selection;
-        if (GetInput()) {
-            self->selection += GetInput()->dir;
+        if (CourseInput()) {
+            self->selection += CourseInput()->dir;
             if (self->selection > 15) self->selection = 15;
             if (self->selection < 0) self->selection = 0;
             if (self->field15D && self->selection > 7) self->selection = 7;
@@ -178,7 +250,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
             fn_801CEB78(self, previous, 6);
             fn_801CEB78(self, self->selection, 2);
             UpdatePreview(self, self->selection);
-            UpdateArrows(self, data->arrows);
+            UpdateArrows(self, courseArrows);
             if (previous == 7 && self->selection == 8) {
                 self->state = 98; self->timer = 0;
                 self->field140 = 0; self->field141 = 0;
@@ -190,7 +262,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
             if (self->fieldC4) {
                 delete self->fieldC4;
                 self->fieldC4 = new CourseSprite(0x1BF, 0, 0);
-                Sprite_SetAnimParam(self->fieldC4, 0x1970, data->animIds[self->selection / 2]);
+                Sprite_SetAnimParam(self->fieldC4, 0x1970, animIds[self->selection / 2]);
                 fn_801A0550(self->fieldC4);
                 SetSpritePosition(self->fieldC4, lbl_806D9EFC, lbl_806D9F00);
                 fn_8019FF6C(self->fieldC4, 1);
@@ -203,10 +275,10 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
         if (self->field20 == -1) {
             self->field18 -= lbl_806D9EF4;
             InputMgr_GetPlayer(GetInputManager(), 0);
-            if (GetInput()->held == 1 || self->field18 < lbl_806D9EE0) {
+            if (CourseInput()->held == 1 || self->field18 < lbl_806D9EE0) {
                 SetRumbleMode(0, 1, 1);
-                if (GetInput()) {
-                    InputState *input = GetInput();
+                if (CourseInput()) {
+                    InputState *input = CourseInput();
                     input->enabled = 0; input->held = 0; input->edge = 0;
                 }
                 CourseParams *params = GetCourseSelectEntry(self->selection);
@@ -254,7 +326,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
             self->reverse = (SyncSlot_GetRecv()[1] >> 3) & 1;
             CoursePulse *pulse = self->pulse;
             if (pulse) {
-                if (self->reverse == 0) HidePulse(pulse); else ShowPulse(pulse);
+                if (self->reverse == 0) DeactivatePulse(pulse); else ActivatePulse(pulse);
             }
             UpdatePreview(self, self->selected);
             self->timer = 0; self->advance = 1;
@@ -285,7 +357,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
         if (self->timer == 30) self->field15C = 1;
         if (self->timer == 120) {
             fn_801CEB78(self, self->selected, 4);
-            SetupExitSprites(self, data);
+            SetupExitSprites(self);
             self->field06 = 1; self->timer = 0; self->state = 5;
         }
         break;
@@ -295,7 +367,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
             self->field12C->alpha = a; self->field130->alpha = a;
         }
         if (self->timer > 42) {
-            fn_801CEB78(self, self->selection, 4); SetupExitSprites(self, data);
+            fn_801CEB78(self, self->selection, 4); SetupExitSprites(self);
             self->field06 = 1; self->advance = 1; self->timer = 0;
         }
         break;
@@ -303,7 +375,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
         if (self->timer <= 5) {
             float a = lbl_806D9EDC - (float)self->timer / lbl_806D9F14;
             self->map->alpha = a;
-            self->preview.SetColor(__rlwimi(0xFFFFFF00, (int)(lbl_806D9EE4 * a), 0, 24, 31));
+            SetAlpha(&self->preview, 0xFFFFFF00, a);
             HidePulse(self->pulse);
         }
         if (self->timer >= 30) {
@@ -317,7 +389,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
             if (self->slots[i].sprite) self->slots[i].sprite->x = self->field14 + lbl_8049B1E0[i].x;
         if (self->field12C) self->field12C->x = lbl_806D9F20 + self->field14;
         if (self->field130) self->field130->x = lbl_806D9F24 + self->field14;
-        if (self->timer >= 20) { self->state = 1; UpdateArrows(self, data->arrows); }
+        if (self->timer >= 20) { self->state = 1; UpdateArrows(self, courseArrows); }
         break;
     case 99:
         self->field14 = lbl_806D9F1C * (float)self->timer + lbl_806D9F28;
@@ -325,7 +397,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
             if (self->slots[i].sprite) self->slots[i].sprite->x = self->field14 + lbl_8049B1E0[i].x;
         if (self->field12C) self->field12C->x = lbl_806D9F20 + self->field14;
         if (self->field130) self->field130->x = lbl_806D9F24 + self->field14;
-        if (self->timer >= 20) { self->state = 1; UpdateArrows(self, data->arrows); }
+        if (self->timer >= 20) { self->state = 1; UpdateArrows(self, courseArrows); }
         break;
     }
     if (self->left) {
@@ -359,10 +431,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
     CoursePulse *p = self->pulse;
     if (p && p->active) {
         if (p->timer <= 8) {
-            float a;
-            if (!p->flag) a = (float)p->timer * lbl_806D9F30;
-            else a = lbl_806D9EDC - (float)p->timer * lbl_806D9F30;
-            p->sprite->alpha = a;
+            p->sprite->alpha = PulseAlpha(p);
             if (p->timer++ == 8 && p->flag) { p->active = 0; p->flag = 0; }
         }
         Sprite_AdvanceAnim(p->sprite, lbl_806D9EF0);
@@ -383,12 +452,12 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
                     float x = layout->x;
                     if (self->selection >= 8) x -= lbl_806D9ED8;
                     CourseIcon *icon = self->icons[i];
-                    icon->ctrl.Show(x + data->iconOffsets[icon->index][0],
-                        layout->y + data->iconOffsets[icon->index][1], lbl_806D9EDC);
+                    icon->ctrl.Show(x + iconOffsets[icon->index][0],
+                        layout->y + iconOffsets[icon->index][1], lbl_806D9EDC);
                     float a = lbl_806D9EDC;
                     if (self->state >= 3) a = lbl_806D9EE0;
                     if (self->selection / 8 != selected / 8) a = lbl_806D9EE0;
-                    icon->ctrl.SetColor(__rlwimi(0xFFFFFF00, (int)(lbl_806D9EE4 * a), 0, 24, 31));
+                    SetAlpha(&self->icons[i]->ctrl, 0xFFFFFF00, a);
                 }
             }
         }

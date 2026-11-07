@@ -104,3 +104,18 @@ c17_u29: HSD_JObjSetCurrent 802D0F50 (400B) requires inline canonical reference/
 Source: Codex worker c17_u47_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 112 B.
 
 c17_u47: jobj_dirty baseline reported 0% because its global inline SetMtxDirty had no emitted symbol, while unrelated reset/walk scaffolding emitted outside its split. Strong native C definition using jobj_rescue_private.h restores canonical shared assertions. if(dirty)return folds target branch pair (96.07143%,108B); switch(dirty){case 0: SetMtxDirtySub(jobj); break;} preserves target112B exactly, the same established CheckDepend zero-case idiom. Only assigned source and Matching flag changed. Final ELF strong global802CD7B8/112, actual source link edge, full DOL SHA-1 OK.
+
+## c18_u4_20261107
+Source: Codex worker c18_u4_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1240 B.
+
+c18_u4: cobj_nm2 upvec2roll802C74F4/496B and roll2upvec802C76E4/744B become exact by retaining camera/eye-object validation as the outer if/else and moving !eye failure into a nested early return in its valid branch. The original combined four-way OR folds the known stack output pointer but leaves beq plus an extra b; the nested form produces target bne into the valid body. Both +4B size errors disappear and standard sdata2 postprocessing resolves all constant relocations without any data/split/tool changes. Fresh objdiff98.870964/99.19355 ->100/100, whole text1240 exact. Promote existing TU; source edge and final ELF addresses/sizes verified; full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. Native gain2fn/1240B.
+
+## c18_u8_20261107
+Source: Codex worker c18_u8_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u8: SetUpVector802C7A34 fresh text94.58763 improves97.08247 at exact776B by caller-local class-descriptor pool (hsdCObj+0xD8 origin,+0xE4 up,+0xF0 diagnostic) passed to inline upvec helper and checking eye output separately before cobj/eyepos/interest validity. The latter removes a compiler-retained branch from folded stack output NULL test. Only r31/r30/r29 allocation/prologue residual remains. Whole-setter pool helper worsens93.68557/772B; helper-local pool worsens95.07732/788B. Original data range cannot move wholesale because matched cobj.c switch table occupies804FC52C..560 between hsdCObj and vectors/messages. No ranges transferred; singleton function stays honest NM.
+
+## c18_u7_20261107
+Source: Codex worker c18_u7_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u7: HSD_CObjSetRoll 802C7EC8 (1088 B) improves fresh96.04412 to99.88971. Mirror canonical dirty setter as extern inline and use __fabs in local float abs helper; specialize private eye-vector helper for known local output to remove folded output-pointer branch; direct (float)__fabs(eye.y) under double comparison restores abs result f1. Final five operand-only rows at7FFC/8000/8004/8010/8020 swap eye.y f2 vs targetf3 and double1.0 f3 vs targetf2. Three hypotheses exhausted; singleton remains NonMatching. No owned data/EH or split changes; full fallback DOL SHA-1 OK; native gain0.

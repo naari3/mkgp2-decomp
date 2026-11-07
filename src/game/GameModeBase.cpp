@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 /* GameModeBase @ 0x800A07EC..0x800A0950: native text and EH exact. */
 #include "game/GameModeBase_private.h"
 
@@ -33,7 +34,7 @@ extern Scene *lbl_806D10AC;
 
 /* Same singleton accessor as TitleNameHud and ContinueScene. */
 static inline void *GetRankLog() {
-    return lbl_806D10A0 == 0 ? (void *)0 : lbl_806D10A0;
+    return SINGLETON_INSTANCE(lbl_806D10A0);
 }
 
 extern "C" int GameModeBase_FrameUpdate(GameModeBase *self) {

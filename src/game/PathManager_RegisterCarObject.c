@@ -3,8 +3,10 @@
  *
  * NonMatching: register numbering only. The target gives the entry pointer
  * r31 and the parameters r24..r30; here the entry lands in r24.
- * A later block-scoped entry and an inline registration-tail helper both
- * preserve the same allocation (96.80451%); keep the straightforward source. */
+ * c5: later entry scope and an inline registration tail were invariant.
+ * c18: a whole-function helper was not auto-inlined; an inline entry
+ * accessor was invariant; a C++ entry reference retained the same homes.
+ * Native exception metadata is exact with exceptions enabled below. */
 
 typedef struct PathEntry {
     int field0;
@@ -50,6 +52,8 @@ int Path_GetTotalCount(PathMgr *mgr);
 int Waypoint_FindBestAhead(PathMgr *path, float x, float y, float z,
                            int start, int from, int to, float *outDist);
 void KartItem_SetField2ac(void *kart, int slot);
+
+#pragma exceptions on
 
 int PathManager_RegisterCarObject(PathMgr *self, float *px, float *py, float *pz, void *obj,
                                   void *kart, int slot)
@@ -124,3 +128,5 @@ int PathManager_RegisterCarObject(PathMgr *self, float *px, float *py, float *pz
     }
     return slot;
 }
+
+#pragma exceptions reset

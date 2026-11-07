@@ -3845,6 +3845,7 @@ game/EffectVfx10_KartTrail_Tick.c:
 	extab       start:0x8000A870 end:0x8000A878
 	extabindex  start:0x80022E14 end:0x80022E20
 	.text       start:0x800BD900 end:0x800BDD74
+	.rodata     start:0x80329E20 end:0x8032A430
 
 game/EffectVfx9_DriftSpark_Tick.c:
 	extab       start:0x8000A878 end:0x8000A880
@@ -4291,6 +4292,7 @@ game/DrawEffect_KartDustRing_Update.c:
 	extab       start:0x8000AB40 end:0x8000AB48
 	extabindex  start:0x8002324C end:0x80023258
 	.text       start:0x800CAE78 end:0x800CB0C8
+	.data       start:0x8041A4D0 end:0x8041A4F4
 
 game/DrawEffect_SmokeRingTimed_Update.c:
 	extab       start:0x8000AB48 end:0x8000AB50
@@ -5376,6 +5378,7 @@ game/StarItem.c:
 	extab       start:0x8000B794 end:0x8000B7B4
 	extabindex  start:0x80024074 end:0x800240A4
 	.text       start:0x800FD948 end:0x800FEE8C
+	.data       start:0x80421840 end:0x80421868
 
 game/Boomerang_ReturnAndAcquireTargetTick.c:
 	extab       start:0x8000B7B4 end:0x8000B7BC
@@ -6017,6 +6020,7 @@ game/fn_80125948.c:
 	extab       start:0x8000C044 end:0x8000C18C
 	extabindex  start:0x800248FC end:0x8002492C
 	.text       start:0x80125948 end:0x80126CC4
+	.rodata     start:0x80355A58 end:0x80356070
 
 game/ChallengeDemoObj.cpp:
 	extab       start:0x8000C18C end:0x8000C268
@@ -6088,6 +6092,7 @@ game/BiribiriLand.c:
 	extab       start:0x8000CE64 end:0x8000D014
 	extabindex  start:0x80024B6C end:0x80024BA8
 	.text       start:0x801341E4 end:0x8013558C
+	.rodata     start:0x80357B00 end:0x803580F8
 
 game/RivalRun.c:
 	extab       start:0x8000D014 end:0x8000D220
@@ -6100,9 +6105,14 @@ game/RivalRun_PathFollowerInit.c:
 	.text       start:0x80137588 end:0x801375D8
 
 game/CourseObjects_801375D8.cpp:
-	extab       start:0x8000D228 end:0x8000D2C8
-	extabindex  start:0x80024C20 end:0x80024C80
-	.text       start:0x801375D8 end:0x80139898
+	extab       start:0x8000D228 end:0x8000D268
+	extabindex  start:0x80024C20 end:0x80024C68
+	.text       start:0x801375D8 end:0x80138CE4
+
+game/CourseObjects_80138CE4.cpp:
+	extab       start:0x8000D268 end:0x8000D2C8
+	extabindex  start:0x80024C68 end:0x80024C80
+	.text       start:0x80138CE4 end:0x80139898
 
 game/CoinSystem_UpdateAll.c:
 	extab       start:0x8000D2C8 end:0x8000D2D0
@@ -6185,6 +6195,8 @@ game/ResultFxScene.c:
 	extab       start:0x8000D734 end:0x8000D7AC
 	extabindex  start:0x80025010 end:0x8002504C
 	.text       start:0x8014095C end:0x80141450
+	.rodata     start:0x80360538 end:0x80360744
+	.data       start:0x8048EC50 end:0x8048EC90
 
 game/LogoAnim.c:
 	extab       start:0x8000D7AC end:0x8000D7DC
@@ -6275,6 +6287,7 @@ game/SceneFactory_8014D540.cpp:
 	extab       start:0x8000E640 end:0x8000E86C
 	extabindex  start:0x8002555C end:0x80025580
 	.text       start:0x8014D540 end:0x8014DD5C
+	.data       start:0x8048FDB0 end:0x8048FDCC
 
 game/fn_8014DD5C.c:
 	extab       start:0x8000E86C end:0x8000E874
@@ -6325,6 +6338,7 @@ game/OptionMenuDraw.cpp:
 	extab       start:0x8000F190 end:0x8000F198
 	extabindex  start:0x80025970 end:0x8002597C
 	.text       start:0x8015A6E4 end:0x8015AE3C
+	.rodata     start:0x803678D8 end:0x80367F68
 
 game/Scene_8015AE3C.cpp:
 	extab       start:0x8000F198 end:0x8000F1A0
@@ -6471,6 +6485,7 @@ game/Scene_80164614.cpp:
 	extab       start:0x8000FB48 end:0x8000FC20
 	extabindex  start:0x80025D18 end:0x80025D24
 	.text       start:0x80164614 end:0x8016504C
+	.rodata     start:0x80369798 end:0x80369D78
 	.data       start:0x80490DC8 end:0x80490DEC
 
 game/misc3d/fn_8016504C.cpp:
@@ -7040,6 +7055,7 @@ game/mapobject/fn_8017A68C.cpp:
 	extab       start:0x80011888 end:0x800118B0
 	extabindex  start:0x800268D0 end:0x800268DC
 	.text       start:0x8017A68C end:0x8017AA80
+	.rodata     start:0x80371E98 end:0x80371F28
 
 game/mapobject/fn_8017AA80.cpp:
 	extab       start:0x800118B0 end:0x800118B8
@@ -7901,6 +7917,7 @@ game/objtable/fn_801903D0.cpp:
 	extab       start:0x8001214C end:0x80012204
 	extabindex  start:0x8002708C end:0x80027098
 	.text       start:0x801903D0 end:0x80190658
+	.rodata     start:0x803785F8 end:0x803790FC
 
 game/fn_80190658.c:
 	.text       start:0x80190658 end:0x80190660
@@ -8290,6 +8307,7 @@ game/objview/fn_801987C4.cpp:
 	extab       start:0x80012588 end:0x800125E0
 	extabindex  start:0x80027398 end:0x800273A4
 	.text       start:0x801987C4 end:0x80198ABC
+	.rodata     start:0x8037DB78 end:0x8037DD48
 
 game/objview/fn_80198ABC.c:
 	extab       start:0x800125E0 end:0x800125E8
@@ -9088,6 +9106,7 @@ game/CharaSelect_SetupCharacterDisplay.cpp:
 	extab       start:0x80013E64 end:0x80013E9C
 	extabindex  start:0x80027D4C end:0x80027D58
 	.text       start:0x801C3470 end:0x801C3714
+	.rodata     start:0x8039AA40 end:0x8039B1F4
 
 game/GetFrameIdxFromVisualIdx.c:
 	.text       start:0x801C3714 end:0x801C37E8
@@ -9131,6 +9150,7 @@ game/MileageFlow_Init.cpp:
 	extab       start:0x80014020 end:0x80014204
 	extabindex  start:0x80027DD0 end:0x80027DDC
 	.text       start:0x801C5E00 end:0x801C64DC
+	.data       start:0x8049ACB0 end:0x8049AD58
 
 game/clFlowFigure_Unlocks.c:
 	extab       start:0x80014204 end:0x8001420C
@@ -9274,6 +9294,7 @@ game/clFlowCourse_Update.cpp:
 	extab       start:0x80014CF4 end:0x80014D3C
 	extabindex  start:0x80027FA4 end:0x80027FB0
 	.text       start:0x801CF360 end:0x801D0C30
+	.rodata     start:0x8039B990 end:0x8039BF3C
 	.data       start:0x8049B408 end:0x8049B448
 
 game/clFlowCourse.cpp:
@@ -9301,6 +9322,7 @@ game/ranking_display.cpp:
 	extab       start:0x80014EEC end:0x80015074
 	extabindex  start:0x80027FF8 end:0x80028004
 	.text       start:0x801D1EAC end:0x801D286C
+	.data       start:0x8049B4A8 end:0x8049B510
 
 game/anon_801D286C.cpp:
 	extab       start:0x80015074 end:0x80015174
@@ -9390,6 +9412,7 @@ game/fn_801D5F74.c:
 	extab       start:0x800152F4 end:0x800152FC
 	extabindex  start:0x800280D0 end:0x800280DC
 	.text       start:0x801D5F74 end:0x801D6398
+	.rodata     start:0x8039C718 end:0x8039D8C0
 
 game/PlayerData_ResolveUnlockedIdByIndex.c:
 	.text       start:0x801D6398 end:0x801D647C
@@ -9613,6 +9636,7 @@ game/DisplayContext_Flush.c:
 	extab       start:0x800156CC end:0x800156D4
 	extabindex  start:0x800282A4 end:0x800282B0
 	.text       start:0x801DB278 end:0x801DB548
+	.rodata     start:0x8039FD18 end:0x8039FD8C
 
 game/DrawText.c:
 	extab       start:0x800156D4 end:0x800156DC
@@ -9915,6 +9939,7 @@ game/fn_801E4544.cpp:
 	extab       start:0x800162B0 end:0x80016324
 	extabindex  start:0x80028790 end:0x8002879C
 	.text       start:0x801E4544 end:0x801E4824
+	.rodata     start:0x803BD228 end:0x803BD260
 
 game/fn_801E4824.cpp:
 	extab       start:0x80016324 end:0x8001632C
@@ -10557,6 +10582,7 @@ game/fn_801F7604.cpp:
 	extab       start:0x80017580 end:0x800175B8
 	extabindex  start:0x80028F88 end:0x80028F94
 	.text       start:0x801F7604 end:0x801F7A74
+	.rodata     start:0x803BEDC0 end:0x803BF020
 
 game/dtor_801F7A74.c:
 	extab       start:0x800175B8 end:0x800175C0
@@ -10896,6 +10922,7 @@ game/anon_801FD320_nm1.cpp:
 	extab       start:0x80017C00 end:0x80017C2C
 	extabindex  start:0x8002930C end:0x80029318
 	.text       start:0x801FD5FC end:0x801FD800
+	.rodata     start:0x803BFE48 end:0x803BFEF8
 
 game/anon_801FD320_m2.cpp:
 	extab       start:0x80017C2C end:0x80017C5C
@@ -11177,6 +11204,8 @@ game/anon_80209330_nm2.cpp:
 	extab       start:0x800193A4 end:0x800193B4
 	extabindex  start:0x80029AB0 end:0x80029AC8
 	.text       start:0x80209AC4 end:0x80209FA4
+	.rodata     start:0x803C2820 end:0x803C2840
+	.data       start:0x804EC568 end:0x804EC754
 
 game/anon_80209FA4.cpp:
 	extab       start:0x800193B4 end:0x800193FC
@@ -12007,9 +12036,14 @@ game/fn_8022CDE4.c:
 	.text       start:0x8022CDE4 end:0x8022CE04
 
 game/EnmyFaceEffect.cpp:
-	extab       start:0x8001BFE8 end:0x8001C15C
-	extabindex  start:0x8002A8D8 end:0x8002A98C
-	.text       start:0x8022CE04 end:0x802300C8
+	extab       start:0x8001BFE8 end:0x8001BFF0
+	extabindex  start:0x8002A8D8 end:0x8002A8E4
+	.text       start:0x8022CE04 end:0x8022CE34
+
+game/EnmyFaceEffect_nm1.cpp:
+	extab       start:0x8001BFF0 end:0x8001C15C
+	extabindex  start:0x8002A8E4 end:0x8002A98C
+	.text       start:0x8022CE34 end:0x802300C8
 	.ctors      start:0x802E8954 end:0x802E8958
 	.rodata     start:0x803DAB54 end:0x803DAE88
 	.data       start:0x804EE14C end:0x804EE1B8
@@ -12130,6 +12164,7 @@ game/ItemSelectChoiceUpdate.cpp:
 	extab       start:0x8001C918 end:0x8001C920
 	extabindex  start:0x8002ACB0 end:0x8002ACBC
 	.text       start:0x8023AC14 end:0x8023B1A8
+	.rodata     start:0x803DC0C0 end:0x803DC2C0
 
 game/ItemSelectChoiceInit.cpp:
 	extab       start:0x8001C920 end:0x8001C938
@@ -13742,6 +13777,9 @@ triforce/amboot.c:
 	.rodata     start:0x803F25F0 end:0x803F2668
 	.sdata      start:0x806D0C20 end:0x806D0C28
 
+triforce/amcoin_tables.c:
+	.rodata     start:0x803F2668 end:0x803F2768
+
 triforce/ambackup.c:
 	.text       start:0x80288048 end:0x80288364
 
@@ -13749,6 +13787,10 @@ triforce/ambackup_nm1.c:
 	.text       start:0x80288364 end:0x80288574
 	.bss        start:0x806835E0 end:0x80690E20
 	.sdata2     start:0x806DC918 end:0x806DC920
+
+triforce/amcoin_state.c:
+	.bss        start:0x80690E20 end:0x806910B8
+	.sdata2     start:0x806DC920 end:0x806DC930
 
 triforce/ambackup_access.c:
 	.text       start:0x80288574 end:0x80288710
@@ -13763,10 +13805,16 @@ triforce/ambackup_nm3.c:
 	.text       start:0x80288BCC end:0x80288CC8
 
 triforce/amcoin.c:
-	.text       start:0x80288CC8 end:0x8028A598
-	.rodata     start:0x803F2668 end:0x803F2768
-	.bss        start:0x80690E20 end:0x806910B8
-	.sdata2     start:0x806DC920 end:0x806DC930
+	.text       start:0x80288CC8 end:0x802895E4
+
+triforce/amcoin_nm1.c:
+	.text       start:0x802895E4 end:0x80289A90
+
+triforce/amcoin_tail.c:
+	.text       start:0x80289A90 end:0x8028A3EC
+
+triforce/amcoin_nm2.c:
+	.text       start:0x8028A3EC end:0x8028A598
 
 triforce/amjvs.c:
 	.text       start:0x8028A598 end:0x8028A740
@@ -14183,6 +14231,11 @@ sysdolphin/baselib/mobj_update_nm.c:
 	.text       start:0x802C23AC end:0x802C2848
 	.data       start:0x804FC214 end:0x804FC24C
 
+sysdolphin/baselib/mobj_data_nm.c:
+	.data       start:0x804FC24C end:0x804FC330
+	.sdata      start:0x806D0CE8 end:0x806D0D10
+	.sbss       start:0x806D2138 end:0x806D2150
+
 sysdolphin/baselib/mobj_anim.c:
 	.text       start:0x802C2848 end:0x802C2890
 
@@ -14191,9 +14244,6 @@ sysdolphin/baselib/mobj_nm.c:
 
 sysdolphin/baselib/mobj_nm1.c:
 	.text       start:0x802C2A40 end:0x802C340C
-	.data       start:0x804FC24C end:0x804FC330
-	.sdata      start:0x806D0CE8 end:0x806D0D10
-	.sbss       start:0x806D2138 end:0x806D2150
 
 sysdolphin/baselib/mobj_setup.c:
 	.text       start:0x802C340C end:0x802C384C

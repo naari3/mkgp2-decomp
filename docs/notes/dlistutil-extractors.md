@@ -28,3 +28,28 @@ c13_u50: fn_80184F24 TU-local matrix getter returning (MtxPtr)&jobj->_pad_1c[0x2
 Source: Codex worker c16_u56_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 332 B.
 
 fn_801847DC 0x801847DC (332B): existing traversal body/register allocation was exact; 80.24097% residual came entirely from nullable JObj getter branch layout. Both if (!p) return 0; return field and if (p) return field; return 0 emit load-first blocks. return p == 0 ? 0 : p->field preserves null-first blocks, matching GetChild/GetNext/GetParent including nested parent/next reuse. DNext remains p ? p->next : 0 because its target is load-first. Text332/extab8/index12 all100; sole TU flipped Matching; source-linked full DOL SHA-1 verified.
+
+## c18_u30_20261107
+Source: Codex worker c18_u30_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u30 fn_80185630: separate read-only incoming faces from mutable output cursor out, and display base from mutable p. This restores mr r31,r5 at +5C and mr r25,r17 at +7C structurally (with different actual register homes), text2480->2488, extab/index100. Target-derived plain-local declarations yield98.95499 versus98.49679 baseline. Final121 differing rows are GPR operands only, no insertion/deletion. Target/source: p31/26,count30/25,capacity29/31,jobj28/30,attr table27/29,face26/24,out25/23,second vertex24/28,third23/27; primitive22,n21,needed20,parity19,i18,end16,fourth17 exact. Whole-scan static inline outlines (public160 + helper2400); explicit vertex pointers add8B and regress97.840836. No singleton or table ownership unlock, one-function TU staysNonMatching. Coordinator fallback DOL SHA1 exact; native gain0.
+
+## c18_u76_20261107
+Source: Codex worker c18_u76_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u76 fn_80184F24: first matrix getter into a block-local MtxPtr before assigning quad fixes premature output-base add in both primitive branches (97.52772 -> 98.59202). Target-derived plain-local declaration order plus scan-scoped offset reaches 99.37916, exact text1804/extab8/index12. Remaining 52 rows are only four-register rotation: target jobj23/out24/capacity25/offset22 vs source22/23/24/25; all loops, table and vertex pointers exact, no inserted/deleted rows. Inline stride helper and unsigned offset invariant; combined matrix/quad helper regresses98.7694. Keep best NonMatching; singleton no safe subset, no bridge/pool rescue needed. Coordinator fallback-linked full DOL SHA-1 exact. Six hypotheses exhausted.
+
+## c18_u47_20261107
+Source: Codex worker c18_u47_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u47 fn_80184928: TU-local DListGetPosition equivalent using src=desc->array; src+=index*(desc->stride/4) improves text98.08094->98.18538 with exact1532B/extab8/index12. Canonical matrix member getter is byte-identical; independent per-primitive loop state regresses97.663185. Retained source; residual99 instruction rows are GPR homes plus three stack coordinate addressing forms. Single-function TU staysNonMatching, no A/B unlock. Full coordinator fallback DOL SHA1 exact.
+
+## c18_u67_20261107
+Source: Codex worker c18_u67_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1712 B.
+
+c18_u67 fn_80183CC4: canonical member address &j->_pad_1c[0x28] after each SetupMatrix eliminates cross-call matrix CSE (97.693924 ->99.03505). Guard nonzero billboard mask before switch and explicit ordered component stores restore target guard and 1712B size (99.299065). TU-local ExtendBounds using 0.0f comparisons instead of extern const lbl_806D927C prevents loop-hoisted zero/FPR web, reaches text1712/extab8/index12 all100. Existing sdata2 postprocess maps literal back to UND lbl_806D927C. Matching flag only; no split/header/pool/bridge changes. Source-linked full DOL SHA-1 exact, +1 native /1712B.
+
+## c18_u94_20261107
+Source: Codex worker c18_u94_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1780 B.
+
+c18_u94 fn_80185FE8: c13 retry unlocks 96.66292 ->100% with three structural changes. TU-local matrix getter uses canonical (float (*)[4])&jobj->_pad_1c[0x28] after existing checks/setup; unrelated DListJObjMatrix view had cached matrix across calls. This fixes saved GPR partition and reaches99.70786 (1776B). Separate immutable display base and mutable p, with end computed from display before p=display, restores missing mr r30,r5 and reaches99.955055 (1780B). TU-local ReadPosition stages v=desc->array; v+=index*(desc->stride/4), giving final pointer r8 instead of r7 and all100 text1780/extab8/index12. Matching source object appears in main.elf edge, ELF symbol80185FE8/1780, coordinator full DOL SHA1 exact. No shared header, EH bridge, order, data, split or symbol changes.

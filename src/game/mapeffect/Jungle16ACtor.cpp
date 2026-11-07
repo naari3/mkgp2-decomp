@@ -6,11 +6,10 @@ Jungle16A::Jungle16A() {
     clNormal3D_SetScale(model, 0, lbl_806D8A68, lbl_806D8A54, lbl_806D8A68, lbl_806D8A68);
     zone = new Zone16A((const char *)d + 0x40c, 1);
     motions = (Motion16A *)FUN_8003b120(0x40);
-    d = (const Desc16A *)((const char *)d + 0x488);
-    for (int i=0; i<2; ++i, ++d) {
-        motions[i].joint = ResolveJointByName(model, d->name);
-        motions[i].pos = d->start;
-        motions[i].rot = d->rot;
+    for (int i=0; i<2; ++i) {
+        motions[i].joint = ResolveJointByName(model, ((const Desc16A *)((const char *)d + 0x488))[i].name);
+        motions[i].pos = ((const Desc16A *)((const char *)d + 0x488))[i].start;
+        motions[i].rot = ((const Desc16A *)((const char *)d + 0x488))[i].rot;
         motions[i].state = 0;
         motions[i].unused = lbl_806D8A68;
         motions[i].frame = lbl_806D8A68;

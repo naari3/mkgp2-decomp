@@ -1,5 +1,6 @@
 #include "game/RankingFlow_private.h"
 #include "game/clFlowCourse.h"
+#include "game/singleton.h"
 extern "C" {
 extern const char lbl_8039C5BC[];
 extern const float lbl_8039C55C[];
@@ -7,11 +8,45 @@ extern const float lbl_806D9FC4, lbl_806D9FC8, lbl_806D9FCC, lbl_806D9FD0, lbl_8
 extern const float lbl_806D9FD8, lbl_806D9FDC, lbl_806D9FE0, lbl_806D9FE4, lbl_806D9FE8;
 extern const char lbl_806D9FEC[4];
 extern int g_cupId, g_longRoundFlag, g_reverseRoundFlag, g_localPcbRole;
-struct RankingNameTables {
-    const char *english[13];
-    const char *japanese[13];
+extern const char lbl_806D9F70[];
+extern const char lbl_8039C384[];
+extern const char lbl_806D9F78[];
+extern const char lbl_806D9F80[];
+extern const char lbl_806D9F88[];
+extern const char lbl_8039C390[];
+extern const char lbl_8039C39C[];
+extern const char lbl_8039C3A8[];
+extern const char lbl_8039C3B4[];
+extern const char lbl_8039C3C0[];
+extern const char lbl_8039C3CC[];
+extern const char lbl_8039C3D8[];
+extern const char lbl_8039C3E4[];
+extern const char lbl_8039C3F0[];
+extern const char lbl_8039C3FC[];
+extern const char lbl_8039C408[];
+extern const char lbl_8039C414[];
+extern const char lbl_8039C420[];
+extern const char lbl_8039C42C[];
+extern const char lbl_806D9F90[];
+extern const char lbl_8039C438[];
+extern const char lbl_806D9F98[];
+extern const char lbl_8039C444[];
+extern const char lbl_806D9FA0[];
+extern const char lbl_8039C450[];
+extern const char lbl_8039C45C[];
+static const char *rankingEnglish[13] = {
+    lbl_806D9F70, lbl_8039C384, lbl_806D9F78, lbl_806D9F80,
+    lbl_806D9F88, lbl_8039C390, lbl_8039C39C, lbl_8039C3A8,
+    lbl_8039C3B4, lbl_8039C3C0, lbl_8039C3CC, lbl_8039C3D8,
+    lbl_8039C3E4
 };
-extern RankingNameTables lbl_8049B4A8;
+static const char *rankingJapanese[13] = {
+    lbl_8039C3F0, lbl_8039C3FC, lbl_8039C408, lbl_8039C414,
+    lbl_8039C420, lbl_8039C42C, lbl_806D9F90, lbl_8039C438,
+    lbl_806D9F98, lbl_8039C444, lbl_806D9FA0, lbl_8039C450,
+    lbl_8039C45C
+};
+
 extern void *lbl_806D10A0;
 void CObj_LoadIntoGX(void *, const float *);
 void CObj_ApplyViewport(void *, const float *);
@@ -120,8 +155,7 @@ static inline void SetTrack(RankingFlowTrack *t, float from, float to, float spe
     t->from = from; t->to = to; t->speed = speed; t->time = lbl_806D9FA8; t->value = from; t->active = 1;
 }
 static inline void *RankingTitleSource() {
-    if (lbl_806D10A0) return lbl_806D10A0;
-    return 0;
+    return SINGLETON_INSTANCE(lbl_806D10A0);
 }
 #pragma inline_max_size(10000)
 RankingFlow::RankingFlow() : CourseBase(), list() {
@@ -176,8 +210,8 @@ RankingFlow::RankingFlow() : CourseBase(), list() {
         if ((int)((slot[0] >> 4) & 7) == g_localPcbRole) {
             int character = (slot[4] >> 4) & 15;
             const char *name;
-            if (isJapanese() == 0) name = lbl_8049B4A8.english[character];
-            else name = lbl_8049B4A8.japanese[character];
+            if (isJapanese() == 0) name = rankingEnglish[character];
+            else name = rankingJapanese[character];
             if ((slot[3] >> 7) & 1) name = (const char *)(slot + 0x16);
             int number = *(unsigned short *)(slot + 0x22);
             void *titleSource = RankingTitleSource();

@@ -1,8 +1,9 @@
 #include "game/anon_8021F088_private.h"
+#include "game/singleton.h"
 
 #pragma auto_inline off
 void clCSSceneCoinMilage::StateLines() {
-    bool pressed = GetInput()->held == 1;
+    bool pressed = SINGLETON_INSTANCE(g_pInputState)->held == 1;
     switch (sub) {
     case 0:
         if (timer == 10) {
@@ -60,7 +61,7 @@ void clCSSceneCoinMilage::StateLines() {
     case 4:
         if (timer == 1) {
             int n = Total();
-            lines[3] = new clGetSumLine(n, hasPerfect, lbl_803C6A24[(hasBonus2 == 1 ? -1 : 0) + 4]);
+            lines[3] = new clGetSumLine(n, hasPerfect, lbl_803C6A24[hasBonus2 == 1 ? 3 : 4]);
             nodes.push_back((FadeObj *&)lines[3]);
         }
         if (timer >= 140) {
@@ -77,7 +78,7 @@ void clCSSceneCoinMilage::StateLines() {
         }
         return;
     }
-    if (GetInput()->held == 1) {
+    if (SINGLETON_INSTANCE(g_pInputState)->held == 1) {
         if (lines[0] == 0) {
             lines[0] = new clGetCoinLine(GetTextureByIdAndLang(0x6C, -1), earned, lbl_803C6A24[0], model);
             nodes.push_back((FadeObj *&)lines[0]);
@@ -103,11 +104,13 @@ void clCSSceneCoinMilage::StateLines() {
         }
         if (lines[3] == 0) {
             int n = Total();
-            lines[3] = new clGetSumLine(n, hasPerfect, lbl_803C6A24[(hasBonus2 == 1 ? -1 : 0) + 4]);
+            lines[3] = new clGetSumLine(n, hasPerfect, lbl_803C6A24[hasBonus2 == 1 ? 3 : 4]);
             nodes.push_back((FadeObj *&)lines[3]);
         }
-        for (int i = 0; i < 4; i++) {
-            clGetCoinLine *l = lines[i];
+        clGetCoinLine *l;
+        int i;
+        for (i = 0; i < 4; i++) {
+            l = lines[i];
             if (l != 0) {
                 l->tracks[3].Set(lbl_806DB21C, lbl_806DB21C, lbl_806DB1E0);
                 l->timer = 80;

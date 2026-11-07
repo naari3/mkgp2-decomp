@@ -17,7 +17,7 @@ PointList::PointList(SpawnPoint *spawn) {
     PointList *l = this;
     Vec points[20];
     Vec delta;
-    int j, n, i, k;
+    int j, n, i;
     SpawnPoint *cur;
     l->count = 0;
     l->pts = 0;
@@ -49,6 +49,7 @@ PointList::PointList(SpawnPoint *spawn) {
     for (i = 0; i < l->count; ++i) {
         l->pts[i] = points[i];
     }
+    int k;
     for (k = 0; k < l->count; ++k) DebugPrintf(lbl_8036D564, l->pts[k].x, l->pts[k].y, l->pts[k].z);
     return;
 }

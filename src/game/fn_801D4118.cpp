@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 /* Copy player unlocks and course progress into the selection screen snapshot. */
 struct UnlockPlayerView {
     unsigned short values[6];
@@ -36,7 +37,7 @@ extern RankLog *lbl_806D10A0;
 unsigned char get_title_result(RankLog *, int *, int *, int *);
 }
 static inline RankLog *GetSnapshotRankLog() {
-    return lbl_806D10A0 == 0 ? (RankLog *)0 : lbl_806D10A0;
+    return SINGLETON_INSTANCE(lbl_806D10A0);
 }
 extern "C" int fn_801D4118(UnlockSnapshot *self, UnlockPlayerView *player) {
     if (player == 0) return 0;

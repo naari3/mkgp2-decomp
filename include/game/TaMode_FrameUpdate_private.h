@@ -1,5 +1,6 @@
 #ifndef TAMODE_FRAMEUPDATE_PRIVATE_H
 #define TAMODE_FRAMEUPDATE_PRIVATE_H
+#include "game/singleton.h"
 struct TaRender {
     unsigned char pad0[0x23c];
     int position;
@@ -135,26 +136,17 @@ void fn_8016B32C(void *weather);
 
 static inline void *TitleStats(void)
 {
-    if (lbl_806D10A0 == 0) {
-        return 0;
-    }
-    return lbl_806D10A0;
+    return SINGLETON_INSTANCE(lbl_806D10A0);
 }
 
 static inline void *Transition(void)
 {
-    if (lbl_806D109C == 0) {
-        return 0;
-    }
-    return lbl_806D109C;
+    return SINGLETON_INSTANCE(lbl_806D109C);
 }
 
 static inline void *ItemBoxMgr(void)
 {
-    if (lbl_806D10D0 == 0) {
-        return 0;
-    }
-    return lbl_806D10D0;
+    return SINGLETON_INSTANCE(lbl_806D10D0);
 }
 
 static inline float QuantizeInput(float v)

@@ -22,9 +22,9 @@ extern "C" void fn_8016A854(Jungle16A *self) {
             if (hit) m->state = 1;
             break;
         case 1:
-            m->frame += lbl_806D8A54;
-            if (m->frame > lbl_806D8A58) {
-                float t = lbl_806D8A54 - fn_80186960(lbl_806D8A5C * ((m->frame - lbl_806D8A58) / lbl_806D8A60));
+            m->frame += 1.0f;
+            if (m->frame > 25.0f) {
+                float t = lbl_806D8A54 - fn_80186960(lbl_806D8A5C * ((m->frame - 25.0f) / lbl_806D8A60));
                 m->pos.x = t * (d->end.x - d->start.x) + d->start.x;
                 m->pos.y = t * (d->end.y - d->start.y) + d->start.y;
                 m->pos.z = t * (d->end.z - d->start.z) + d->start.z;

@@ -2,8 +2,10 @@
 
 MinimapHud::~MinimapHud() {
     int i;
+    MinimapHud *cursor = this;
     for (i = 0; i < 11; i++) {
-        SpriteHandle_Destroy(sprites[i]);
+        SpriteHandle_Destroy(cursor->sprites[0]);
+        cursor = (MinimapHud *)((char *)cursor + sizeof(int));
     }
     delete[] order;
     fn_80120A08(resId);

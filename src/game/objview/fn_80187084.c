@@ -2,6 +2,11 @@
 extern void fn_80181EA4(Vec3f *, Vec3f *, Vec3f *, Vec3f *, float);
 extern void Vec3_Subtract(Vec3f *, Vec3f *, Vec3f *);
 extern double atan2(double, double);
+/* Point storage and cyclic bounds are separate inputs to the lookup. */
+static inline Vec3f *CyclicPoint(Path186 *path, int count, int index) {
+    if (index >= count) index -= count;
+    return &path->points[index];
+}
 void fn_80187084(View186 *self) {
     int i;
     Path186 *p;
@@ -14,9 +19,9 @@ void fn_80187084(View186 *self) {
             p->time -= 1.0f;
             p->index++;
             if (p->index >= p->count) p->index = 0;
-            { Vec3f *v = Path186_Point(p,p->index); p->a.x = v->x; p->a.y = v->y; p->a.z = v->z; }
-            { Vec3f *v = Path186_Point(p,p->index+1); p->b.x = v->x; p->b.y = v->y; p->b.z = v->z; }
-            { Vec3f *v = Path186_Point(p,p->index+2); p->c.x = v->x; p->c.y = v->y; p->c.z = v->z; }
+            { Vec3f *v = CyclicPoint(p, p->count, p->index); p->a.x = v->x; p->a.y = v->y; p->a.z = v->z; }
+            { Vec3f *v = CyclicPoint(p, p->count, p->index+1); p->b.x = v->x; p->b.y = v->y; p->b.z = v->z; }
+            { Vec3f *v = CyclicPoint(p, p->count, p->index+2); p->c.x = v->x; p->c.y = v->y; p->c.z = v->z; }
             p->a.x = 0.5f * (p->a.x + p->b.x);
             p->a.y = 0.5f * (p->a.y + p->b.y);
             p->a.z = 0.5f * (p->a.z + p->b.z);

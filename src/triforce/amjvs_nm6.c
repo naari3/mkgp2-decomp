@@ -13,7 +13,7 @@ s32 fn_8028B48C(s32 node) {
     OSSemaphore* sem;
     JvsMgrNode* m;
     BOOL ok = TRUE;
-    BOOL r;
+    u8 r;
 
     if (!Mgr.ready) {
         return 5;

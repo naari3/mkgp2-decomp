@@ -1,3 +1,5 @@
+#include "game/ItemEffectBusPrivate.h"
+
 typedef struct Vec { float x, y, z; } Vec;
 
 extern void *KartDriver_GetKartRootMtx(void *kart);
@@ -36,14 +38,18 @@ extern Vec lbl_803315D8;
 #define WU(o) (*(unsigned int *)(w + (o)))
 #define WP(o) (*(void **)(w + (o)))
 
-static inline unsigned char Bus_TestFlag(unsigned long long flags, unsigned long long mask)
+static inline unsigned char Bus_TestFlag(ItemEffectBus *bus, ItemEffectMask mask)
 {
-    unsigned char r = 0;
-
-    if (flags & mask) {
-        r = 1;
+    if ((bus->mask & mask) == 0) {
+        return 0;
+    } else {
+        return 1;
     }
-    return r;
+}
+
+static inline float LerpF(float a, float b, float t)
+{
+    return a * (1.0f - t) + t * b;
 }
 
 void fn_801046C4(unsigned char *self, unsigned char *w)
@@ -54,6 +60,7 @@ void fn_801046C4(unsigned char *self, unsigned char *w)
     Vec root;
     Vec rot;
     Vec fw;
+    ItemEffectBus *bus;
     unsigned long long flags;
     int boost;
     int mode;
@@ -65,10 +72,11 @@ void fn_801046C4(unsigned char *self, unsigned char *w)
     Mtx_TransposeToMtx44(m, KartDriver_GetKartRootMtx(WP(0x9C)));
     Mtx44_GetTranslation_ColMajor(&root, m);
     boost = 0;
-    flags = *(unsigned long long *)(*(unsigned char **)(*(unsigned char **)(w + 0x9C) + 0x304) + 0x10);
-    if (Bus_TestFlag(flags, 0x10000)) {
+    bus = *(ItemEffectBus **)(*(unsigned char **)(w + 0x9C) + 0x304);
+    if (Bus_TestFlag(bus, 0x10000)) {
         boost = 1;
     }
+    flags = bus->mask;
     mode = 0;
     if (flags & 0x80000000) {
         mode = 1;
@@ -119,7 +127,7 @@ void fn_801046C4(unsigned char *self, unsigned char *w)
             }
             y0 = Vec3_ToYaw(w + 0x34);
             t = WF(0x1C);
-            Vec2_RotateY(w + 0x34, w + 0x34, -y0 + (y0 * (1.0f - t) + t * Vec3_ToYaw(&home)));
+            Vec2_RotateY(w + 0x34, w + 0x34, -y0 + LerpF(y0, Vec3_ToYaw(&home), t));
             WF(0x1C) += WF(0x20);
             if (1.0f < WF(0x1C)) {
                 Vec3_Copy(w + 0x34, &home);

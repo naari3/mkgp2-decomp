@@ -2,7 +2,7 @@
 static inline void SelectSpriteTextureU43(TextureOwner801F *owner,SpriteTex801F *s) {
     unsigned int count=owner->bank->count;
     unsigned int index=0;
-    if ((unsigned char)(count == 0)) __assert(lbl_803BF050,0x476,lbl_803BF05C);
+    if ((unsigned char)(count == 0) == 1) __assert(lbl_803BF050,0x476,lbl_803BF05C);
     unsigned int last=count-1;
     while(index>=count) index=last;
     s->i14=index;

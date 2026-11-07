@@ -1034,10 +1034,7 @@
     "fn_80138578",
     "fn_801385CC",
     "fn_8013879C",
-    "fn_80138A50",
-    "fn_80138DB8",
-    "fn_80139810",
-    "__dt__11ScopedTimerFv"
+    "fn_80138A50"
   ],
   "src/game/NokoNoko_801287F8.cpp": [
     "TimeTrial_Render",
@@ -1121,7 +1118,8 @@
     "fn_80125948",
     "fn_80125B04",
     "fn_80126728",
-    "fn_80126878"
+    "fn_80126878",
+    "clCGameDemo_Dtor"
   ],
   "src/game/CountdownOwner.cpp": [
     "fn_8023FB4C",
@@ -2312,7 +2310,9 @@
     "fn_80140A38",
     "fn_80140EF0",
     "fn_80140FEC",
-    "dtor_80082960"
+    "dtor_80082960",
+    "dtor_800869D0",
+    "dtor_8013EB50"
   ],
   "src/game/ISESlot_Lifecycle.c": [
     "ISESlot_Init",
@@ -2443,5 +2443,24 @@
       "fn_801FD240",
       "fn_801FD2E8"
     ]
-  }
+  },
+  "src/game/anon_801D2F0C.cpp": {
+    "extab": [
+      "fn_801D3364",
+      "fn_801D2F0C",
+      "fn_801D3118",
+      "dtor_80082960"
+    ],
+    "extabindex": [
+      "fn_801D2F0C",
+      "fn_801D3118",
+      "fn_801D3364",
+      "dtor_80082960"
+    ]
+  },
+  "src/game/CourseObjects_80138CE4.cpp": [
+    "fn_80138DB8",
+    "fn_80139810",
+    "__dt__11ScopedTimerFv"
+  ]
 }

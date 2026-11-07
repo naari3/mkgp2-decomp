@@ -1,7 +1,8 @@
 /*
  * Statistics block copy, 0x8008DE60..0x8008E33C (GC/2.6).
- * The copy is three runs of pair copies; it is 99.7%: the scheduler
- * hoists the 0x1A4 load above the 0x1A0 store, the target does not.
+ * The copy is three runs of pair copies; it is 98.64%: the scheduler
+ * delays the 0x19C load past the 0x198 store and hoists the 0x1A4 load
+ * above the 0x1A0 store, unlike the target.
  */
 
 typedef struct PlayStatsPair {

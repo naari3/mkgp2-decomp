@@ -1486,3 +1486,18 @@ c16_u31: Sci2Card_BuildRetryReceiptLine 80094D80 single-fn1544B. Explicit isJapa
 Source: Codex worker c17_u48_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c17_u48 RaceScene_FrameUpdate 800A0EF4 (2856B): actual residual is only zero scratch r3 versus target r0 at +0x2CC/+0x2D4, 99.98599%. Extracting reset stores alone or the entire cc-class/timing/throttle-assist decision into semantic inline helpers both leave byte-identical output and same residual; both reverted. Approved SINGLETON_INSTANCE conversions for lbl_806D10A0/109C/10D0 are also byte-invariant and retained. No missing functions or structural instruction mismatch; no rescue split possible for a single-function TU.
+
+## c17_u80_20261107
+Source: Codex worker c17_u80_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u80: SpecialFaceMesh_Dtor 8007B798/224B explicit unsigned byte-offset walk, initialized after logical i and incremented after i, improves 99.25 -> 99.46429 by fixing loop increment order. Remaining five instructions swap offset r30 vs target r31 and hoisted SpecialFaceVec dtor pointer r31 vs target r30. Small DeleteFace inline helper and family GC/2.6 are invariant; remove helper, retain GC/1.3.2 and honest NonMatching. Owned EH unchanged; extra weak dtor_80036E40 copy. Singleton cannot use mechanism B. Coordinator full fallback-linked DOL SHA-1 OK, zero native gain.
+
+## c18_u88_20261107
+Source: Codex worker c18_u88_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u88 retry fn_801826F8 improves97.08609->97.748344 by replacing static inline DObj *Next(DObj *d){return d?d->next:0;} with static inline void Advance(DObj **cursor){*cursor=*cursor?(*cursor)->next:0;} and using Advance(&d) in first two loops. First-loop return had forced lwz/li r0 then mr cursor,r0; update emits directly into cursor. Text608->604 and extab8/index12 both100. Saved-register homes remain wrong (root27 vs29, src31 vs30, cursor29 vs28, material30 vs27, outer child28 vs31). Depth-limited helper hierarchy exceeded auto-inline budget70.49007/776B; first ApplyInline-only helper97.45033/604B; SetBuffer parameter-order reversal invariant97.748344. Retained H1, NonMatching. Full fallback DOL SHA1 exact; zero native gain.
+
+## c18_u68_20261107
+Source: Codex worker c18_u68_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u68 fn_801DABFC: two ordinary bool if/else mask selections split into repeated compare/conditional branches (608 vs600B). Inline helper is invariant, u8 fields repeat prior negative. switch((unsigned int)out) with default/on first, case0/off second emits exact target branch layout and r0 homes, text97.666664->99.2%, exact600B/extab100/index100. Only two cmpwi0 vs target cmplwi0 remain. Case-true/default-off switch remains608B/97.8%. Kept best honest NonMatching; coordinator build request2 DOL SHA-1 OK, zero native gain.

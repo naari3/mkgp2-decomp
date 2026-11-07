@@ -3,8 +3,8 @@
  * Field 0x168 is a target driver here, not the wall-response mode used by
  * other item helpers. FAbs returns double: retain that precision in the scan.
  * Keep table reads inside each probe iteration and ordered integer Vec3 copies.
- * The complete C draft remains NonMatching: the direct-yaw temporary has one
- * extra fmr, and scan initialization uses li instead of the target's mr.
+ * Inline target-yaw and candidate-selection helpers preserve the original
+ * temporary lifetimes, stack vectors, and scan initialization.
  */
 typedef struct Vec3 {
     float x, y, z;
@@ -56,6 +56,47 @@ extern const float lbl_806D5B0C;
 extern const float lbl_806D5B10;
 extern const float lbl_806D5B14;
 
+static inline float ItemHoming_GetTargetYaw(const Vec3 *origin, void *driver)
+{
+    Vec3 targetPosition;
+    Mtx44_GetTranslation_RowMajor(&targetPosition,
+                                 KartDriver_GetKartRootMtx(driver));
+    return Vec3_HorizontalYawTo(origin, &targetPosition);
+}
+
+static inline void *ItemHoming_FindTarget(Vec3 *scanOrigin, void *owner, float currentYaw)
+{
+    void *bestDriver;
+    int index;
+    void *driver;
+    double bestAngle;
+    double angle;
+    Vec3 candidatePosition;
+
+    bestDriver = 0;
+    index = 0;
+    for (; index < 128; index++) {
+        RaceSlotView *slot = RaceContextSlot_GetIfAlive(GetRaceContextPtr(), index);
+        if (slot != 0 && ((unsigned int)slot->type <= 3 || slot->type == 6)) {
+            driver = slot->driver;
+            if (owner == 0 || owner != driver) {
+                float distance;
+                Mtx44_GetTranslation_RowMajor(&candidatePosition,
+                                             KartDriver_GetKartRootMtx(driver));
+                angle = FAbs_FloatAsDouble(BuildOrientationFromYaw(
+                    Vec3_HorizontalYawTo(scanOrigin, &candidatePosition) - currentYaw));
+                distance = Vec3_HorizontalDistance(scanOrigin, &candidatePosition);
+                if (angle < lbl_806D5B00 && distance < lbl_806D5B04 &&
+                    (bestDriver == 0 || angle < bestAngle)) {
+                    bestDriver = driver;
+                    bestAngle = angle;
+                }
+            }
+        }
+    }
+    return bestDriver;
+}
+
 void Item_HomingScanAndSteer(ItemHomingView *item, float *yaw, int scanEnabled)
 {
     Vec3 origin;
@@ -72,8 +113,6 @@ void Item_HomingScanAndSteer(ItemHomingView *item, float *yaw, int scanEnabled)
     Vec3 directNormal;
     Vec3 directHit;
     Vec3 directProbe;
-    Vec3 targetPosition;
-    Vec3 candidatePosition;
     float currentYaw;
     float adjustment;
 
@@ -87,10 +126,8 @@ void Item_HomingScanAndSteer(ItemHomingView *item, float *yaw, int scanEnabled)
     }
     origin = item->position;
     if (item->targetDriver != 0) {
-        Mtx44_GetTranslation_RowMajor(&targetPosition,
-                                     KartDriver_GetKartRootMtx(item->targetDriver));
         {
-            float targetYaw = Vec3_HorizontalYawTo(&origin, &targetPosition);
+            float targetYaw = ItemHoming_GetTargetYaw(&origin, item->targetDriver);
             GetSpawnPosition(&directProbe, lbl_806D5AC8, lbl_806D5AC8, lbl_806D5AC4);
             Vec2_RotateY(&directProbe, &directProbe, targetYaw);
             Vec3_Add_DestFirst(&directProbe, &origin, &directProbe);
@@ -103,37 +140,8 @@ void Item_HomingScanAndSteer(ItemHomingView *item, float *yaw, int scanEnabled)
             }
         }
     } else if (scanEnabled != 0) {
-        void *driver;
-        int index;
-        void *bestDriver;
-        void *owner;
-        double angle;
-        double bestAngle;
-
         scanOrigin = origin;
-        bestDriver = 0;
-        index = 0;
-        owner = item->ownerDriver;
-        for (; index < 128; index++) {
-            RaceSlotView *slot = RaceContextSlot_GetIfAlive(GetRaceContextPtr(), index);
-            if (slot != 0 && ((unsigned int)slot->type <= 3 || slot->type == 6)) {
-                driver = slot->driver;
-                if (owner == 0 || owner != driver) {
-                    float distance;
-                    Mtx44_GetTranslation_RowMajor(&candidatePosition,
-                                                 KartDriver_GetKartRootMtx(driver));
-                    angle = FAbs_FloatAsDouble(BuildOrientationFromYaw(
-                        Vec3_HorizontalYawTo(&scanOrigin, &candidatePosition) - currentYaw));
-                    distance = Vec3_HorizontalDistance(&scanOrigin, &candidatePosition);
-                    if (angle < lbl_806D5B00 && distance < lbl_806D5B04 &&
-                        (bestDriver == 0 || angle < bestAngle)) {
-                        bestDriver = driver;
-                        bestAngle = angle;
-                    }
-                }
-            }
-        }
-        item->targetDriver = bestDriver;
+        item->targetDriver = ItemHoming_FindTarget(&scanOrigin, item->ownerDriver, currentYaw);
     }
     if (item->targetDriver != 0) {
         int index;

@@ -1,7 +1,7 @@
 /* Remaining manager/list methods, 0x8005F868..0x8005FFBC.
  * NonMatching: retain native C++ improvements while the reversed EH group
  * keeps these functions together. */
-#include "game/clItemBoxManagerPrivate.h"
+#include "game/clItemBoxManagerUnlockPrivate.h"
 
 extern "C" void clItemBoxManager_UnregisterResponder(clItemBoxManager *self, void *responder)
 {
@@ -132,6 +132,23 @@ extern "C" clItemBoxManager *SoundDriver_GetOrCreate(void *table)
     return clItemBoxManager_Get();
 }
 
+template <class T> inline ListNode<T> *EraseListNodes(ListImpl<T> *self, ListNode<T> *first, ListNode<T> *last)
+{
+    if (first == last) {
+        return last;
+    }
+    ListNode<T> *lp = last->prev;
+    first->prev->next = lp->next;
+    lp->next->prev = first->prev;
+    while (first != last) {
+        ListNode<T> *n = first;
+        first = first->next;
+        delete n;
+        self->size--;
+    }
+    return last;
+}
+
 template <class T> template <class Pred> void ListImpl<T>::remove_if(Pred pred)
 {
     iterator e = end();
@@ -144,18 +161,7 @@ template <class T> template <class Pred> void ListImpl<T>::remove_if(Pred pred)
                     break;
                 }
             }
-            if (i != j) {
-                Node *lp = j.node->prev;
-                i.node->prev->next = lp->next;
-                lp->next->prev = i.node->prev;
-                while (i != j) {
-                    Node *n = i.node;
-                    ++i;
-                    delete n;
-                    size--;
-                }
-            }
-            i = j;
+            i.node = EraseListNodes(this, i.node, j.node);
             if (i == e) {
                 break;
             }
@@ -198,7 +204,7 @@ template <class T> ListIter<T> ListImpl<T>::insert(const iterator &pos, const T 
         size++;
         return iterator(n);
     } catch (...) {
-        operator delete(h.p);
+        operator delete(h.release());
     }
 }
 

@@ -20,7 +20,21 @@ extern double sin(double);
 extern double cos(double);
 extern void DebugTextOutput(int, const char *, ...);
 extern const char lbl_802E96B8[12];
+extern const float lbl_806D2310, lbl_806D2314, lbl_806D2318;
 extern const char lbl_806D2334[4], lbl_806D2338[2];
+/* Inlined camera setters mirror CObjViewport.c's defensive wrappers. */
+static inline int CObj_ApplyViewport(CObjLinePathView *self, const LinePoint *value) {
+    if (self->ready == 0) return 0;
+    HSD_CObjSetInterest(self->camera, value);
+    return 1;
+}
+
+static inline int CObj_LoadIntoGX(CObjLinePathView *self, const LinePoint *value) {
+    if (self->ready == 0) return 0;
+    HSD_CObjSetEyePosition(self->camera, value);
+    return 1;
+}
+
 /* MSL sqrtf: three Newton refinements and a single-precision spill. */
 static inline float LinePath_sqrtf(float x) {
     volatile float y;
@@ -38,13 +52,15 @@ static inline float LinePath_sqrtf(float x) {
 int CObj_LinePath_Step(CObjLinePathView *self, const float *matrix,
                       float height, float y, float z) {
     volatile LinePoint vector;
+    /* Preserve ordered component reads while assembling camera vectors. */
+    const volatile float *translation = matrix;
     const char *formats = lbl_802E96B8;
     float x = 0.0f;
     if (self->ready == 0) return 0;
-    vector.x = matrix[3];
-    vector.y = matrix[7] + height;
-    vector.z = matrix[11];
-    if (self->ready != 0) HSD_CObjSetInterest(self->camera, (const LinePoint *)&vector);
+    vector.x = translation[3];
+    vector.y = translation[7] + height;
+    vector.z = translation[11];
+    CObj_ApplyViewport(self, (const LinePoint *)&vector);
 
     if (self->mode == 1) {
         float a;
@@ -57,10 +73,10 @@ int CObj_LinePath_Step(CObjLinePathView *self, const float *matrix,
         self->offset.x = -(13.0f * (float)sin((float)radians));
         self->offset.y = y - 5.0f;
         self->offset.z = 13.0f * (float)cos((float)radians);
-        a = 195.0f + self->angle;
+        a = lbl_806D2310 + self->angle;
         if (a >= 360.0f) a -= 360.0f;
-        self->angleAux = 180.0f - a;
-        a = self->angle + 0.8f;
+        self->angleAux = lbl_806D2314 - a;
+        a = self->angle + lbl_806D2318;
         self->angle = a;
         if (a >= 360.0f) self->angle -= 360.0f;
     } else self->radius = z;
@@ -72,11 +88,11 @@ int CObj_LinePath_Step(CObjLinePathView *self, const float *matrix,
         float tx = (float)(double)x;
         float ty = (float)(double)y;
         float tz = (float)(double)z;
-        vector.x = tx + matrix[3];
-        vector.y = ty + matrix[7];
-        vector.z = tz + matrix[11];
+        vector.x = tx + translation[3];
+        vector.y = ty + translation[7];
+        vector.z = tz + translation[11];
     } else C_MTXMultVec(matrix, (const LinePoint *)&vector, (LinePoint *)&vector);
-    if (self->ready != 0) HSD_CObjSetEyePosition(self->camera, (const LinePoint *)&vector);
+    CObj_LoadIntoGX(self, (const LinePoint *)&vector);
 
     if (self->recording == 1 && self->count > 10) {
         float dz = matrix[11] - self->points[1].z;

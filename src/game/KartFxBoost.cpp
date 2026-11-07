@@ -77,8 +77,9 @@ unsigned char FinalLapCoinJump_CheckActiveForObject(BoostKart *);
 
 #ifndef BOOST_FLAME_ONLY
 static inline void FreeBoostChildren(BoostPayload *payload) {
+    int i;
     BoostPayload *walker = payload;
-    for (int i = 0; i < 3; ++i) {
+    for (i = 0; i < 3; ++i) {
         DrawEffect_Free(walker->children[0]);
         walker->children[0] = 0;
         walker = (BoostPayload *)((unsigned char *)walker + 4);
@@ -87,6 +88,7 @@ static inline void FreeBoostChildren(BoostPayload *payload) {
 
 void KartFx_Slot5C_TripleStreakTick(BoostEffect *effect) {
     BoostResources *resources = &lbl_80329E20;
+    int childIndex;
     BoostPayload *payload = &effect->payload;
     switch (effect->state) {
     case 0:
@@ -113,9 +115,10 @@ void KartFx_Slot5C_TripleStreakTick(BoostEffect *effect) {
         payload->timer0 = 120;
     if (payload->timer0) effect->opacity = lbl_806D51C4;
     else {
-        float minimum = lbl_806D51C0;
         float current = effect->opacity;
-        effect->opacity = current - lbl_806D51D8;
+        float decrement = lbl_806D51D8;
+        float minimum = lbl_806D51C0;
+        effect->opacity = current - decrement;
         if (effect->opacity < minimum) effect->opacity = minimum;
     }
     if (effect->opacity != lbl_806D51C0) {
@@ -125,7 +128,7 @@ void KartFx_Slot5C_TripleStreakTick(BoostEffect *effect) {
     effect->scale = KartCharacterParam_GetBoostFxSizeFactor(payload->kart);
     effect->rotation.y = Mtx44_GetYawOfPosZ_Padded(KartDriver_GetKartRootMtx(payload->kart));
     payload->phase = BuildOrientationFromYaw(lbl_806D52BC + payload->phase);
-    for (int i = 0; i < 3; ++i) {
+    for (childIndex = 0; childIndex < 3; ++childIndex) {
         Vec3 yaw = resources->yaw;
         Vec3 pitch = resources->pitch;
         struct OffsetTable { Vec3 entries[11]; };
@@ -137,16 +140,16 @@ void KartFx_Slot5C_TripleStreakTick(BoostEffect *effect) {
         GetSpawnPosition(&position, lbl_806D51C0, lbl_806D51C0, offset.z);
         Vec3_Scale(&position, &position, effect->scale);
         Vec2_RotateY(&position, &position,
-            BuildOrientationFromYaw(payload->phase + effect->rotation.y + (&yaw.x)[i]));
-        Vec2_RotateX(&position, &position, (&pitch.x)[i]);
+            BuildOrientationFromYaw(payload->phase + effect->rotation.y + (&yaw.x)[childIndex]));
+        Vec2_RotateX(&position, &position, (&pitch.x)[childIndex]);
         position.y += offset.y;
         Mtx_TransposeToMtx44(&matrix, KartDriver_GetJointByIdx(payload->kart, 15));
-        Mtx44_TransformVec3(&payload->children[i]->position, &matrix, position);
-        payload->children[i]->scale = lbl_806D52C0;
-        payload->children[i]->opacity = effect->opacity;
-        payload->children[i]->active = effect->active;
-        VfxSlot_SetPositionFromVec(payload->children[i]->slot, payload->children[i]->position);
-        VfxSlot_SetScaleUniform(payload->children[i]->slot, payload->children[i]->scale);
+        Mtx44_TransformVec3(&payload->children[childIndex]->position, &matrix, position);
+        payload->children[childIndex]->scale = lbl_806D52C0;
+        payload->children[childIndex]->opacity = effect->opacity;
+        payload->children[childIndex]->active = effect->active;
+        VfxSlot_SetPositionFromVec(payload->children[childIndex]->slot, payload->children[childIndex]->position);
+        VfxSlot_SetScaleUniform(payload->children[childIndex]->slot, payload->children[childIndex]->scale);
     }
     if (payload->timer0) --payload->timer0;
     if (payload->timer1) --payload->timer1;

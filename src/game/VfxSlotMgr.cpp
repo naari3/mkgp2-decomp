@@ -53,16 +53,21 @@ static inline void BuildCamera(Vec origin,const Vec& target) {
 static inline void SetCamera(Vec target,Vec position) {
     BuildCamera(position,target);
 }
-extern "C" void VfxSlotMgr_Update(const Vec *position,const Vec *target) {
-    ScopedTimer timer(25);
-    SetCamera(*target,*position);
-    for(int i=0;i<512;++i) {
-        Slot *slot=&lbl_805DF468[i];
+static inline void UpdateSlots(Slot *slot) {
+    int i=0;
+    do {
         if(slot->active) {
             if(slot->tick) slot->tick(slot);
             Vec3_Copy(&slot->renderPosition,&slot->position);
             slot->renderScale=lbl_806D4FEC*slot->scale;
             if(slot->renderScale<lbl_806D4FE8) slot->renderScale=lbl_806D4FF0;
         }
-    }
+        ++i;
+        ++slot;
+    } while(i<512);
+}
+extern "C" void VfxSlotMgr_Update(const Vec *position,const Vec *target) {
+    ScopedTimer timer(25);
+    SetCamera(*target,*position);
+    UpdateSlots(lbl_805DF468);
 }

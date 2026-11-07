@@ -1,4 +1,5 @@
 #include "game/cxc_buy_card.h"
+#include "game/singleton.h"
 struct PanelText { TextManager *p; };
 struct BuyMode { int pad[2]; int light; };
 extern "C" {
@@ -16,35 +17,33 @@ void *fn_801F8E58(); void fn_801F8A34(void *, void *, int);
 void fn_80160588(void *, int, int); void fn_8024E094(void *);
 void fn_801D9B70(void *, int); void fn_8023CDA8(void *);
 }
+static inline void SetPanelTextPosition(TextManager *tm, float x, float y) {
+    *(float *)((char *)tm + 0xC) = x;
+    *(float *)((char *)tm + 0x10) = y;
+}
 static inline void PanelPosition(CardChoicePanel *p, float px, float py, float px2, float py2) {
     p->x = px; p->y = py; p->x2 = px2; p->y2 = py2;
-    float y = p->y;
-    float x = p->x;
-    TextManager *tm = fn_80146000((char *)p + 4, 0)->p;
-    *(float *)((char *)tm + 0xC) = x;
-    *(float *)((char *)tm + 0x10) = y;
-    y = p->y2;
-    x = p->x2;
-    tm = fn_80146000((char *)p + 4, 1)->p;
-    *(float *)((char *)tm + 0xC) = x;
-    *(float *)((char *)tm + 0x10) = y;
-    tm = fn_80146000(p->group50, 0)->p;
-    fn_801F93EC(tm, p->x + p->offset[0], p->y + p->offset[1]);
-    tm = fn_80146000(p->group50, 1)->p;
-    fn_801F93EC(tm, p->x + p->offset[2], p->y + p->offset[3]);
-    tm = fn_80146000(p->group50, 2)->p;
-    fn_801F93EC(tm, p->x2 + p->offset[4], p->y2 + p->offset[5]);
-    tm = fn_80146000(p->group50, 3)->p;
-    fn_801F93EC(tm, p->x2 + p->offset[6], p->y2 + p->offset[7]);
-    float cx = p->x + lbl_806DA7FC * (p->x2 - p->x);
-    float cy = p->y + lbl_806DA7FC * (p->y2 - p->y);
-    TextManager *center = p->center;
-    *(float *)((char *)center + 0xC) = cx;
-    *(float *)((char *)center + 0x10) = cy;
+    SetPanelTextPosition(fn_80146000(p->pad + 4, 0)->p, p->x, p->y);
+    SetPanelTextPosition(fn_80146000(p->pad + 4, 1)->p, p->x2, p->y2);
+    fn_801F93EC(fn_80146000(p->group50, 0)->p, p->x + p->offset[0], p->y + p->offset[1]);
+    fn_801F93EC(fn_80146000(p->group50, 1)->p, p->x + p->offset[2], p->y + p->offset[3]);
+    fn_801F93EC(fn_80146000(p->group50, 2)->p, p->x2 + p->offset[4], p->y2 + p->offset[5]);
+    fn_801F93EC(fn_80146000(p->group50, 3)->p, p->x2 + p->offset[6], p->y2 + p->offset[7]);
+    SetPanelTextPosition(p->center,
+        p->x + 0.5f * (p->x2 - p->x),
+        p->y + 0.5f * (p->y2 - p->y));
 }
 static inline void BuyFadeTick(FlowFaderI *f) { f->Step(); }
+static inline void StepSaveFade(BuyCardStep *self, InputState *input) {
+    FlowFaderI *f = (FlowFaderI *)self->fader;
+    BuyFadeTick(f);
+    if (input->held == 1 || ((FlowFaderI *)self->fader)->Done()) {
+        fn_801D919C(self->kart);
+        self->result = 3;
+    }
+}
 extern "C" void fn_801FB778(BuyCardStep *self) {
-    InputState *input = GetInput();
+    InputState *input = SINGLETON_INSTANCE(g_pInputState);
     if (input->held == 1) self->flash = 10;
     if (self->flash > 0) {
         self->flash--; BuyMode *m = fn_801DAEC0(); m->light = 4;
@@ -76,7 +75,7 @@ extern "C" void fn_801FB778(BuyCardStep *self) {
     case 3: fn_801FBD94(self); break;
     case 4: fn_801FBD14(self); break;
     case 6: {
-        InputState *input = GetInput();
+        InputState *input = SINGLETON_INSTANCE(g_pInputState);
         switch (self->result) {
         case 1:
             if (CardSave_Tick()) {
@@ -91,9 +90,7 @@ extern "C" void fn_801FB778(BuyCardStep *self) {
             }
             break;
         case 2: {
-            FlowFaderI *f = (FlowFaderI *)self->fader;
-            BuyFadeTick(f);
-            if (input->held == 1 || ((FlowFaderI *)self->fader)->Done()) { fn_801D919C(self->kart); self->result = 3; }
+            StepSaveFade(self, input);
             break;
         }
         case 3:
@@ -118,10 +115,10 @@ extern "C" void fn_801FB778(BuyCardStep *self) {
     }
     if (self->panel) {
         if (self->state == 5) fn_80160588(self->panel, 0, 0);
-        else fn_80160588(self->panel, GetInput()->dir, 0);
+        else fn_80160588(self->panel, SINGLETON_INSTANCE(g_pInputState)->dir, 0);
     }
     fn_8024E094(self->indicator);
-    input = GetInput();
+    input = SINGLETON_INSTANCE(g_pInputState);
     fn_801D9B70(self->kart, input->dir != 0);
     fn_8023CDA8(self->choice);
 }

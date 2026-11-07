@@ -25,7 +25,9 @@ static inline void SwapQueued(int index) {
     ClSoundQueue* a = &lbl_80677F40[index];
     ClSoundQueue* b = &lbl_80677F40[index-1];
     ClSoundQueue tmp = *a;
-    *a = *b;
+    a->id = b->id;
+    a->state = b->state;
+    a->delay = b->delay;
     *b = tmp;
 }
 static inline void RemoveQueued(unsigned int id) {

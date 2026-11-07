@@ -10,7 +10,16 @@ extern void Vec3_Add_DestFirst(Vec3 *dst, const Vec3 *a, const Vec3 *b);
 extern void Vec3_Subtract_DestFirst(Vec3 *dst, const Vec3 *a, const Vec3 *b);
 extern float Vec3_Magnitude_Wrapper(const Vec3 *v);
 extern void Vec3_Scale(Vec3 *dst, const Vec3 *src, float scale);
-extern double Vec3_ToYaw(const Vec3 *v);
+extern float Vec3_ToYaw(const Vec3 *v);
+
+/* Rotate around the velocity's yaw so pitch bends in its local frame. */
+static inline void BendInYawFrame(Vec3 *vel, float pitch, float *yaw)
+{
+    *yaw = Vec3_ToYaw(vel);
+    Vec2_RotateY(vel, vel, -*yaw);
+    Vec2_RotateX(vel, vel, pitch);
+    Vec2_RotateY(vel, vel, *yaw);
+}
 
 void Item_BendVelocityByGroundProbe(Vec3 *vel, const Vec3 *pos, float yaw, float speed, float pitch)
 {
@@ -31,11 +40,5 @@ void Item_BendVelocityByGroundProbe(Vec3 *vel, const Vec3 *pos, float yaw, float
             Vec3_Scale(vel, vel, speed * (1.0f / Vec3_Magnitude_Wrapper(vel)));
         }
     }
-    {
-        double d = Vec3_ToYaw(vel);
-        groundY = d;
-        Vec2_RotateY(vel, vel, -(float)d);
-    }
-    Vec2_RotateX(vel, vel, pitch);
-    Vec2_RotateY(vel, vel, groundY);
+    BendInYawFrame(vel, pitch, &groundY);
 }

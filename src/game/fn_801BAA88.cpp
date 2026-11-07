@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 /*
  * 0x801BAA88..0x801C1F88: clFlowCard, the card flow that runs after
  * credits go in: it reads (or cleans) the player's magnetic card, offers
@@ -286,7 +287,7 @@ int Sci2Card_GetUnpackStatusCode(void);
 
 static inline InputState *GetInput() {
     InputState *p = g_pInputState;
-    return p == 0 ? (InputState *)0 : p;
+    return SINGLETON_INSTANCE(p);
 }
 
 static inline void SetInput(unsigned char en) {

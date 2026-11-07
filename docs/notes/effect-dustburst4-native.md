@@ -10,3 +10,8 @@ Complete four-child initialization, independent69/6B/6A/6C resource switch, exte
 Source: Codex worker c15_u49_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c15_u49: fresh baseline96.985985/860B. Whole active-child loop in static inline UpdateChildren(self,group) removes extra curve-base mr and restores target856B plus extab/index100; text97.13551. Common interval helper96.1215 removes required second-interval pointer addi; scalar ratio helper is invariant. Remaining self/group and loop GPR partition, first-interval FP homes, vector/scratch stack reversal, and increment scheduling. Singleton remains NonMatching, fallback-linked full DOL SHA1 OK; three hypotheses exhausted, no native gain.
+
+## c18_u72_20261107
+Source: Codex worker c18_u72_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u72 fresh baseline97.13551/856B (assignment says97.59). Staged ratio assignment then *= reciprocal restores ratio f3/alpha-base f2:97.415886. Caller-owned delta passed by reference restores deltaSP+14/by-valueSP+8:97.45327. Passing caller cursor by reference instead of helper-local cursor restores active-loop r28:97.71028. All retained cumulatively;856B,8B EH/12B index100. self/group, init/free/active-loop saved GPR partition, first time/phase FP homes, global base registers and curve/cursor increment scheduling remain. Three new hypotheses exhausted; single function staysNonMatching, no A/B rescue. Final coordinator fallback build SHA1 exact; native gain0.

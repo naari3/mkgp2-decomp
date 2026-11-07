@@ -1,4 +1,5 @@
 #include "game/anon_8021F088_private.h"
+#include "game/singleton.h"
 
 static inline void FormatItemNames(char *buf, int first, int second) {
     sprintf(buf, lbl_806DB2A0, fn_8013C26C(first, -1), fn_8013C26C(second, -1));
@@ -17,7 +18,7 @@ static inline void SetItemSprites(ItemWnd *w, float alpha) {
 
 void ItemWnd::ShowItem() {
     float f = lbl_806DB190;
-    bool pressed = GetInput()->held == 1;
+    bool pressed = SINGLETON_INSTANCE(g_pInputState)->held == 1;
     switch (sub) {
     case 0: {
         int a = Item_GetDescriptorField8(itemId);

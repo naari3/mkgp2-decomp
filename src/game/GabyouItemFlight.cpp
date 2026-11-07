@@ -1,8 +1,9 @@
 /* Complete ASM-derived flight/lock-on state machine. Ghidra unavailable.
  * Views are local to this TU and describe only observed fields.
  * Vec3 value arguments use the native C++ ABI and compiler-owned copies.
- * NonMatching: text 98.566055%, automatic EH 100%, index 91.66667%.
- * Remaining size +0x18, vector stack placement and particle/switch scheduling. */
+ * NonMatching: text 99.22019%, automatic EH 100%, index 91.66667%.
+ * Remaining size +4: flight-phase switch, lock-byte comparisons, particle
+ * counter scheduling and pitch-result FP staging. */
 struct FlightVec { float x,y,z; };
 struct FlightItem {
     unsigned char pad00[8]; int alias; unsigned char pad0C[4]; int launched;
@@ -86,19 +87,39 @@ float AngleStepForward_OrSnap(float,float,float);
 void Vec3_Scale(FlightVec *,const FlightVec *,float);
 }
 #define SET_REASON(n) do { item->state=2; item->phase=0; item->reason=(n); } while(0)
-#define PARTICLE_BEGIN(v) for(int i=0;i<8;++i) { FlightEffect *effect=DrawEffect_SpawnDirect(Effect_HitFlash_Update); if(effect) { effect->enabled=1; Vec3_Copy(&effect->position,&item->position); float random=Rand_RangeFloat(lbl_806D62C4,lbl_806D62C8); GetSpawnPosition(&v,lbl_806D62C0,lbl_806D62C0,random);
-#define PARTICLE_END(v) Vec3_Copy(&effect->velocity,&v); effect->target=context->target; } }
-#define RANDOM_PARTICLES(v) PARTICLE_BEGIN(v) Vec2_RotateX(&v,&v,lbl_806D62CC*Rand_RangeFloat(lbl_806D62D0,lbl_806D62D4)); Vec2_RotateY(&v,&v,lbl_806D62CC*Rand_RangeFloat(lbl_806D62D8,lbl_806D62DC)); PARTICLE_END(v)
+static inline void InitializeParticle(FlightEffect *effect, FlightItem *item, FlightContext *context, int kind, float angle)
+{
+    FlightVec velocity;
+    effect->enabled=1;
+    Vec3_Copy(&effect->position,&item->position);
+    GetSpawnPosition(&velocity,0.0f,0.0f,Rand_RangeFloat(lbl_806D62C4,lbl_806D62C8));
+    if(kind==0) {
+        Vec2_RotateX(&velocity,&velocity,lbl_806D62CC*Rand_RangeFloat(lbl_806D62D0,lbl_806D62D4));
+        Vec2_RotateY(&velocity,&velocity,lbl_806D62CC*Rand_RangeFloat(lbl_806D62D8,lbl_806D62DC));
+    } else if(kind==1) {
+        GetSpawnPosition(&velocity,lbl_806D62C0,lbl_806D62C0,lbl_806D62C0);
+    } else if(kind==2) {
+        Vec2_RotateX(&velocity,&velocity,lbl_806D62CC*Rand_RangeFloat(lbl_806D62D0,lbl_806D62D4));
+        Vec2_RotateY(&velocity,&velocity,BuildOrientationFromYaw(lbl_806D62CC*Rand_RangeFloat(lbl_806D62E0,lbl_806D62E4)+angle));
+    } else {
+        Vec2_RotateY(&velocity,&velocity,lbl_806D62CC*Rand_RangeFloat(lbl_806D62D8,lbl_806D62DC));
+        Vec2_RotateX(&velocity,&velocity,BuildOrientationFromYaw(lbl_806D62CC*Rand_RangeFloat(lbl_806D62E8,lbl_806D62E0)+item->pitch));
+        Vec2_RotateY(&velocity,&velocity,item->yaw);
+    }
+    Vec3_Copy(&effect->velocity,&velocity);
+    effect->target=context->target;
+    if(kind==1) effect->id=item->effectId;
+}
+#define PARTICLES(kind,angle) for(int i=0;i<8;++i) { FlightEffect *effect=DrawEffect_SpawnDirect(Effect_HitFlash_Update); if(effect) InitializeParticle(effect,item,context,kind,angle); }
 extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *context)
 {
     FlightVec hand,wall;
-    FlightVec v1,v2,v3,v4,v5;
     int alive,hitGround;
     float height,angle;
     switch(item->phase) {
     case 0:
         if(item->launched) {
-            Item_BendVelocityByGroundProbe(&item->velocity,item->position,item->yaw,lbl_806D6314,lbl_806D62C0);
+            Item_BendVelocityByGroundProbe(&item->velocity,item->position,item->yaw,lbl_806D6314,0.0f);
             KartDriver_TransformWorldToLocalY0(&item->position,item->position,context->kart);
             item->speed=lbl_806D6300; item->lifetime=lbl_806D62C4;
             item->active=1; item->phase=2; item->flightPhase=0; return;
@@ -152,7 +173,7 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
             ItemHit_Dispatch(item,0,0,0); context->target=ItemTracker_GetTargetKart(item);
             ItemTracker_ReleaseLock(item); item->lockState=0;
             SoundMgr_PlaySE_Positional(0x84,item->position,0);
-            RANDOM_PARTICLES(v1)
+            PARTICLES(0,0.0f)
             Mtx44_GetTranslation_RowMajor(&hand,KartDriver_GetJointByIdx(context->target,15));
             if(fn_800D3184(&item->position,&hand)<lbl_806D6324) {SET_REASON(0); return;}
             item->velocity.y=lbl_806D6300; item->velocity.x*=lbl_806D6328; item->velocity.z*=lbl_806D6328;
@@ -179,15 +200,12 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
             ItemTracker_ReleaseLock(item); item->lockState=0;
             if(item->lockKind==1) {
                 SoundMgr_PlaySE_Positional(0x84,item->position,0);
-                RANDOM_PARTICLES(v2)
+                PARTICLES(0,0.0f)
                 Vec3_Add_DestFirst(&item->velocity,&item->velocity,&item->impulse);
                 item->velocity.y=lbl_806D6300; item->velocity.x*=lbl_806D632C; item->velocity.z*=lbl_806D632C;
                 SET_REASON(4); return;
             }
-            PARTICLE_BEGIN(v3)
-                GetSpawnPosition(&v3,lbl_806D62C0,lbl_806D62C0,lbl_806D62C0);
-                Vec3_Copy(&effect->velocity,&v3); effect->target=context->target; effect->id=item->effectId;
-            } }
+            PARTICLES(1,0.0f)
             SET_REASON(6); return;
         }
         if(Item_CheckWallCollision(item,&wall,0)) {
@@ -196,10 +214,7 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
                 ItemTracker_ReleaseLock(item); item->lockState=0; context->ground=Vec3_ToYaw(&wall);
                 SoundMgr_PlaySE_Positional(0x84,item->position,0);
                 angle=context->ground;
-                PARTICLE_BEGIN(v4)
-                    Vec2_RotateX(&v4,&v4,lbl_806D62CC*Rand_RangeFloat(lbl_806D62D0,lbl_806D62D4));
-                    Vec2_RotateY(&v4,&v4,BuildOrientationFromYaw(lbl_806D62CC*Rand_RangeFloat(lbl_806D62E0,lbl_806D62E4)+angle));
-                PARTICLE_END(v4)
+                PARTICLES(2,angle)
                 SET_REASON(7); return;
             }
         }
@@ -227,11 +242,7 @@ extern "C" void GabyouItem_FlightAndLockOnTick(FlightItem *item,FlightContext *c
                 angle=BuildOrientationFromYaw(lbl_806D6338+Item_ProbeForwardGroundPitch(item->position,item->yaw,lbl_806D630C,item->position.y-height));
                 item->pitch=AngleStepForward_OrSnap(item->pitch,angle,lbl_806D62FC);
                 if(item->pitch==angle) {
-                    PARTICLE_BEGIN(v5)
-                        Vec2_RotateY(&v5,&v5,lbl_806D62CC*Rand_RangeFloat(lbl_806D62D8,lbl_806D62DC));
-                        Vec2_RotateX(&v5,&v5,BuildOrientationFromYaw(lbl_806D62CC*Rand_RangeFloat(lbl_806D62E8,lbl_806D62E0)+item->pitch));
-                        Vec2_RotateY(&v5,&v5,item->yaw);
-                    PARTICLE_END(v5)
+                    PARTICLES(3,0.0f)
                     GetSpawnPosition(&item->velocity,lbl_806D62C0,lbl_806D62C0,lbl_806D633C*context->ground);
                     Vec2_RotateY(&item->velocity,&item->velocity,item->yaw); ++item->flightPhase; return;
                 }

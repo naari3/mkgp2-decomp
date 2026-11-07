@@ -30,7 +30,10 @@ extern inline int HSD_CObjGetEyeVector(HSD_CObj* cobj, Vec3* eye)
     Vec3 interest;
 
     int result;
-    if (!cobj || !cobj->eyepos || !cobj->interest || !eye) {
+    /* Validate the output before the camera inputs so stack outputs fold cleanly. */
+    if (!eye) {
+        result = 0;
+    } else if (!cobj || !cobj->eyepos || !cobj->interest) {
         result = 0;
     } else {
         HSD_CObjGetEyePosition(cobj, &eyepos);
@@ -47,7 +50,7 @@ extern inline float cobj_absf(float x)
     return x;
 }
 
-extern inline float upvec2roll(HSD_CObj* cobj, Vec3* up)
+static inline float upvec2roll_pool(HSD_CObj* cobj, Vec3* up, char* pool)
 {
     Vec3 v;
     Vec3 eye;
@@ -62,7 +65,8 @@ extern inline float upvec2roll(HSD_CObj* cobj, Vec3* up)
         if (dot < FLT_MIN) {
             dot = 0.0f;
         } else {
-            C_MTXLookAt(vmtx, &orig, &uy, &eye);
+            C_MTXLookAt(vmtx, (Vec3*) (pool + 0xD8),
+                        (Vec3*) (pool + 0xE4), &eye);
             PSMTXMultVecSR(vmtx, up, &v);
             {
                 float x = -v.x;
@@ -96,12 +100,15 @@ extern inline f32 cobj_get_up_x(Vec3* up)
 void HSD_CObjSetUpVector(HSD_CObj* cobj, Vec3* up)
 {
     Vec3 v;
+    /* The shared cobj data pool starts at its class descriptor. Its intervening
+     * jump table is owned by cobj.c, so retain the existing external pool. */
+    char* pool = (char*) &hsdCObj;
     if (!cobj || !up) {
         return;
     }
     if ((cobj->flags & 1) != 0) {
         if (vec_normalize_check(up, &v)) {
-            OSReport(lbl_804FC5B8);
+            OSReport(pool + 0xF0);
             __assert(lbl_806D0D50, 976, lbl_806D0D60);
         }
         if (cobj->u.up.x != cobj_get_up_x(&v) || cobj->u.up.y != v.y ||
@@ -111,6 +118,6 @@ void HSD_CObjSetUpVector(HSD_CObj* cobj, Vec3* up)
             cobj->u.up = v;
         }
     } else {
-        HSD_CObjSetRoll(cobj, upvec2roll(cobj, up));
+        HSD_CObjSetRoll(cobj, upvec2roll_pool(cobj, up, pool));
     }
 }

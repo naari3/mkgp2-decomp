@@ -1,5 +1,27 @@
 #include <game/dlistutil_extract_private.h>
 
+static inline unsigned char ReadQuadPosition(unsigned char *p, Vec *out) {
+    int i;
+    for (i = 0; i < 22; ++i) {
+        if (!lbl_80677E18[i].desc || lbl_80677E18[i].desc->attr == 0xff) break;
+        if (lbl_80677E18[i].desc->attr == 9) {
+            unsigned int index;
+            float *src;
+            if (lbl_80677E18[i].desc->type == 3)
+                index = *(unsigned short *)(p + lbl_80677E18[i].offset);
+            else
+                index = *(unsigned char *)(p + lbl_80677E18[i].offset);
+            src = lbl_80677E18[i].desc->array;
+            src += index * (lbl_80677E18[i].desc->stride / 4);
+            out->x = src[0];
+            out->y = src[1];
+            out->z = src[2];
+            return 1;
+        }
+    }
+    return 0;
+}
+
 int fn_80184928(HSD_JObj *jobj, DListPObj *pobj, DListQuad *out) {
     Vec pos[4];
     int n;
@@ -41,7 +63,7 @@ int fn_80184928(HSD_JObj *jobj, DListPObj *pobj, DListQuad *out) {
             dst = pos;
             quad = (DListQuad *)((unsigned char *)out + offset);
             for (j = 0; j < n; ++j) {
-                if (j < 3) DListGetPosition(p, dst);
+                if (j < 3) ReadQuadPosition(p, dst);
                 else {
                     pos[0].x = pos[1].x;
                     pos[0].y = pos[1].y;
@@ -49,7 +71,7 @@ int fn_80184928(HSD_JObj *jobj, DListPObj *pobj, DListQuad *out) {
                     pos[1].x = pos[2].x;
                     pos[1].y = pos[2].y;
                     pos[1].z = pos[2].z;
-                    DListGetPosition(p, &pos[2]);
+                    ReadQuadPosition(p, &pos[2]);
                 }
                 if (j >= 2) {
                     if (!half) {
@@ -73,7 +95,7 @@ int fn_80184928(HSD_JObj *jobj, DListPObj *pobj, DListQuad *out) {
             quad = (DListQuad *)((unsigned char *)out + offset);
             for (j = 0; j < n; ++j) {
                 half = j & 3;
-                DListGetPosition(p, &pos[half]);
+                ReadQuadPosition(p, &pos[half]);
                 if (half == 3) {
                     PSMTXMultVec(matrix, &pos[0], &quad->vertex[0]);
                     PSMTXMultVec(matrix, &pos[1], &quad->vertex[1]);

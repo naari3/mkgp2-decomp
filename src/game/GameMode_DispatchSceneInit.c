@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 /* GameMode_DispatchSceneInit (0x800A0950): builds the race game mode.
  * Cups 9..16 go to the mini-game path. Otherwise it refreshes the player
  * record, saves the backup, and creates the BtMode / TaMode / RaceScene
@@ -79,7 +80,7 @@ extern "C" void *GameMode_DispatchSceneInit(void)
     case 16:
         return fn_80124DF8();
     }
-    rec = lbl_806D10A0 == 0 ? (GMPlayerRecord *)0 : lbl_806D10A0;
+    rec = SINGLETON_INSTANCE(lbl_806D10A0);
     if (rec != 0) {
         RankLog_InitStartRace(rec);
         PlayerData_RefreshDerivedStats(rec);

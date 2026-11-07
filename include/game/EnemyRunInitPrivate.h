@@ -16,14 +16,17 @@ struct EnemyRunMatrix {
     EnemyRunMatrix &operator*=(const EnemyRunMatrix &b) {
         EnemyRunMatrix result;
         int n=0;
-        for(int i=0;i<4;i++) {
-            const float *column=b.m;
+        const float *row=m;
+        float *output=result.m;
+        const float *right=b.m;
+        for(int i=0;i<4;i++,row+=4) {
+            const float *column=right;
             for(int j=0;j<4;j++,column++) {
-                float value=m[i*4]*column[0];
-                value+=m[i*4+1]*column[4];
-                value+=m[i*4+2]*column[8];
-                value+=m[i*4+3]*column[12];
-                result.m[n+j]=value;
+                float value=row[0]*column[0];
+                value+=row[1]*column[4];
+                value+=row[2]*column[8];
+                value+=row[3]*column[12];
+                output[n+j]=value;
             }
             n+=4;
         }

@@ -2,6 +2,7 @@
 #define GAME_COURSE_MODE_INIT_PRIVATE_H
 #include "game/MenuModeLane_private.h"
 #include "game/FlowScene.h"
+#include "game/singleton.h"
 struct CourseSprite {
     char pad0[12]; float x,y; char tail[0x30-0x14];
     CourseSprite(int, int, int);
@@ -58,7 +59,7 @@ struct CourseInputImpl {
 };
 extern "C" { extern void *lbl_803FDF28[], *lbl_803FDF40[]; void *Alloc(unsigned long); }
 inline void CourseEnsureInput() {
-    if (GetInput() == 0) {
+    if (SINGLETON_INSTANCE(g_pInputState) == 0) {
         CourseInputImpl *p = (CourseInputImpl *)Alloc(0x28);
         if (p) {
             p->vt = lbl_803FDF28;

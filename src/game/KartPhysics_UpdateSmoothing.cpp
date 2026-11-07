@@ -1,5 +1,5 @@
-/* Native reconstruction. Matrix-loop code generation and FP register homes
- * remain NonMatching; the function size and simple EH are exact. */
+/* Native reconstruction. The airborne division and scale initialization retain
+ * FP register/scheduling differences; matrix multiply and simple EH are exact. */
 #include "game/PhysicsCollisionPrivate.h"
 
 #include "game/SmoothingPrivate.h"
@@ -19,12 +19,34 @@ void *GetEnemyParam();
 float *GetKartTuningEntry(void *,int,int,int);
 void PathFollower_Update(void *);
 }
+static inline void smoothingIdentity(SmoothingMatrix &matrix) {
+    for(int i=0;i<16;i++) matrix.m[i]=0.0f;
+    matrix.m[0]=matrix.m[5]=matrix.m[10]=matrix.m[15]=1.0f;
+}
+static inline void smoothingMultiply(SmoothingMatrix &a, const SmoothingMatrix &b) {
+    SmoothingMatrix out;
+    float *result=out.m;
+    int n=0;
+    for(int i=0;i<4;i++) {
+        for(int j=0;j<4;j++) {
+            float sum;
+            float left0, right0, left1, right1, left2, right2, left3, right3;
+            left0=a.m[i*4]; right0=b.m[j]; sum=left0*right0;
+            left1=a.m[i*4+1]; right1=b.m[4+j]; sum+=left1*right1;
+            left2=a.m[i*4+2]; right2=b.m[8+j]; sum+=left2*right2;
+            left3=a.m[i*4+3]; right3=b.m[12+j]; sum+=left3*right3;
+            result[n+j]=sum;
+        }
+        n+=4;
+    }
+    for(int k=0;k<16;k++) a.m[k]=out.m[k];
+}
 static inline float smoothingSqrt(float v) {
     if(v>lbl_806DA42C) {
         double e=__frsqrte(v);
-        e=lbl_806DA458*e*(lbl_806DA460-v*(e*e));
-        e=lbl_806DA458*e*(lbl_806DA460-v*(e*e));
-        e=lbl_806DA458*e*(lbl_806DA460-v*(e*e));
+        e=0.5*e*(3.0-v*(e*e));
+        e=0.5*e*(3.0-v*(e*e));
+        e=0.5*e*(3.0-v*(e*e));
         volatile float result=v*e;
         return result;
     }
@@ -43,11 +65,11 @@ extern "C" void KartPhysics_UpdateSmoothing(SmoothingState *self) {
         KartPhysics_GroundedMovement(self);
         fn_801EE36C(self);
     } else {
-        float speed=self->speed;
-        speed/=lbl_806DA44C;
-        speed/=lbl_806DA44C;
-        speed/=lbl_806DA44C;
-        if(speed<lbl_806DA450) speed=lbl_806DA450;
+        float divided=self->speed;
+        divided/=lbl_806DA44C;
+        divided/=lbl_806DA44C;
+        float speed=divided/lbl_806DA44C;
+        if(speed<1.0f) speed=1.0f;
         float length=smoothingSqrt(speed*speed+self->velocityY*self->velocityY);
         float delta=length-speed;
         if(lbl_806DA42C<speed) {
@@ -62,13 +84,14 @@ extern "C" void KartPhysics_UpdateSmoothing(SmoothingState *self) {
     PhysicsState_WallCollisionCheck(self);
     if(PhysicsState_KartCollisionCheck(self)==1) PhysicsState_WallCollisionCheck(self);
     fn_801ED798(self,&self->positionX,&self->world,self->matrixYaw);
+    float factor;
     SmoothingMatrix scale;
-    scale.identity();
-    float factor=self->scale;
+    smoothingIdentity(scale);
+    factor=self->scale;
     scale.m[0]=factor;
     scale.m[5]=factor;
     scale.m[10]=factor;
-    scale*=self->world;
+    smoothingMultiply(scale,self->world);
     self->world=scale;
     float yaw;
     float pitch=self->targetPitch;
