@@ -2669,7 +2669,7 @@ config.libs = [
             Object(NonMatching, "game/AI_SystemDtor.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/fn_801E9CBC.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/AI_CalcVSTargetSpeed.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/fn_801E66B4.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_801E66B4.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/AI_CalcTargetSpeed_PairTracking.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/AI_UpdateItemUseLogic.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-proc 750"]),
             Object(NonMatching, "game/AI_CalcLapSpeedBonus.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -2697,7 +2697,7 @@ config.libs = [
             Object(Matching, "game/fn_801F70F0.c"),
             Object(Matching, "game/fn_801F6D58.cpp"),
             Object(Matching, "game/fn_801F7198.cpp"),
-            Object(NonMatching, "game/fn_801F7344.cpp"),
+            Object(Matching, "game/fn_801F7344.cpp"),
             Object(NonMatching, "game/fn_801F7604.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
             Object(Matching, "game/fn_801B7B64.c"),
             Object(Matching, "game/fn_801CE800.c"),
@@ -3211,7 +3211,7 @@ config.libs = [
             Object(Matching, "game/clsound/fn_80193134.c"),
             Object(Matching, "game/clsound/fn_80193838.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clstream/ClStream_Stop.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/objview/MapWaterEffect_Init.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/objview/MapWaterEffect_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/clstream/ClStream_PlayStereo.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/clstream/fn_801952EC.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/objview/fn_801957AC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
@@ -3939,6 +3939,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/objview/MapWaterEffect_Init",
     "sysdolphin/baselib/cobj",
     "game/VoiceIntro_PushForRaceMode",
     "game/fn_801B1D5C",

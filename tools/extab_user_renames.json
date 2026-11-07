@@ -11076,14 +11076,8 @@
     "__dt__4NodeFv": "fn_80195A7C",
     "__dt__5ModelFv": "Object_DtorWithGXSync"
   },
-  "src/game/objview/MapWaterEffect_Init.cpp": {
-    "__ct__14MapWaterEffectFv": "MapWaterEffect_Init",
-    "__dt__9WaterBaseFv": "dtor_8016A270",
-    "__vt__9WaterBase": "lbl_80490FE0",
-    "__vt__14MapWaterEffect": "lbl_80495F54",
-    "__ct__5GroupFP11GroupParams": "fn_80195DA8",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
+  "src/game/objview/MapWaterEffect_Init.c": {
+    "@33": "jumptable_80495F6C"
   },
   "src/game/kartmove/KartMovement_CollisionUpdate.cpp": {
     "__dt__12CollisionVecFv": "dtor_80036E40"
