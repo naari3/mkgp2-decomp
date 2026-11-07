@@ -93,7 +93,7 @@ int VoiceSystem_Init(void) {
     if (g_cupId == 6 && g_longRoundFlag == 1)
         g_voiceCupLongRoundTable = (RaceVoiceCourseLine *)((char *)data + 0x3400);
     for (i = 0; i < 8; i++) {
-        RaceVoiceEntry *entry = &state->entries[i];
+        RaceVoiceEntry *entry = (RaceVoiceEntry *)((unsigned int)state + 0x190) + i;
         entry->id = -1;
         entry->character = -1;
         entry->rank = 0;
@@ -121,6 +121,7 @@ int VoiceSystem_Init(void) {
         entry->pad02[0] = 0;
         entry->f64 = 0;
     }
-    for (i = 0; i < 0x282; i++) data->clips[i].playCount = 0;
+    for (i = 0; i < 0x282; i++) ((VoiceClip *)((unsigned int)data + 0x1534))[i].playCount = 0;
     return 1;
 }
+
