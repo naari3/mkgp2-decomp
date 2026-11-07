@@ -4767,7 +4767,9 @@
     "SetAnimParam__6SpriteFis": "Sprite_SetAnimParam",
     "__dt__21KeyVecBase<8KeyGroup>Fv": "dtor_801C1B78",
     "@741": "jumptable_804EDDB0",
-    "@743": "lbl_806DB0C0"
+    "@743": "lbl_806DB0C0",
+    "@749": "jumptable_804EDDB0",
+    "@751": "lbl_806DB0C0"
   },
   "src/game/anon_8021ED88.cpp": {
     "__nw__FUl": "Alloc",
