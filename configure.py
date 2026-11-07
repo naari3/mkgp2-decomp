@@ -3602,6 +3602,7 @@ config.libs = [
             Object(Matching, "triforce/amsock.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/amsrv.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "triforce/amsrv_nm1.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "triforce/amsrv_m1.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/amsrv_tail.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/acsocket.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/acsocket_nm1.c", extra_cflags=["-use_lmw_stmw on"]),

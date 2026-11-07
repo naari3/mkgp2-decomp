@@ -13906,7 +13906,10 @@ triforce/amsrv.c:
 	.bss        start:0x80699220 end:0x806992A0
 
 triforce/amsrv_nm1.c:
-	.text       start:0x80291134 end:0x80291314
+	.text       start:0x80291134 end:0x8029121C
+
+triforce/amsrv_m1.c:
+	.text       start:0x8029121C end:0x80291314
 
 triforce/amsrv_tail.c:
 	.text       start:0x80291314 end:0x8029179C
