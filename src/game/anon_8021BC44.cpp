@@ -1486,12 +1486,13 @@ void CoinContinue::Update() {
 
 void CoinContinue::Select() {
     int dir = GetInput()->dir;
-    fn_80160588(detail.p, dir, GetInput()->held == 1);
-    timer -= lbl_806DB0F8;
-    if (timer < lbl_806DB074) {
-        timer = lbl_806DB074;
+    InputState *in = GetInput();
+    fn_80160588(detail.p, dir, in->held == 1);
+    timer -= 0.016666668f;
+    if (timer < 0.0f) {
+        timer = 0.0f;
     }
-    if (timer <= lbl_806DB074) {
+    if (timer <= 0.0f) {
         fn_801618CC(detail.p, 1, 0);
         fn_80161888(detail.p);
         state = 2;
@@ -1505,7 +1506,7 @@ void CoinContinue::Select() {
     }
     if (state == 2) {
         fn_8023CFC8(prompt.p);
-        timer = lbl_806DB078;
+        timer = -1.0f;
     }
 }
 
