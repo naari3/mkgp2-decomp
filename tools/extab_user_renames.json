@@ -2803,7 +2803,9 @@
     "__ct__8clShadowFiiP8HSD_LObjff": "Camera_Create",
     "__dt__10clCallbackFv": "dtor_8003A71C",
     "__vt__10clCallback": "lbl_803F58E0",
-    "__vt__8clShadow": "lbl_803F58FC"
+    "__vt__8clShadow": "lbl_803F58FC",
+    "lbl_802E9D38": "global:lbl_802E9D38",
+    "callback_name": "global:lbl_802E9D44"
   },
   "src/game/Terrain_RaycastWall.c": {
     "@68": "@etb_80005C28",

@@ -4,9 +4,8 @@
  * (SceneRender.c); its own dtor and Exec live in SceneRender.c too. Both
  * dtors are declared-only here so neither vtable is emitted.
  *
- * NonMatching: only the string-pool base register differs (target r9, here
- * r3). The original used pooled literals from shadow.cpp's .rodata
- * (0x802E9D38..), which is not split out yet.
+ * File-static strings share shadow.cpp's original constant pool. Direct
+ * references let MWCC form one pool base and retain the original schedule.
  */
 struct HSD_CObj;
 
@@ -25,7 +24,6 @@ struct HSD_Shadow {
 };
 
 extern "C" {
-extern const char lbl_802E9D38[]; /* shadow.cpp string pool */
 extern char lbl_806D24BC[7]; /* "shadow" */
 extern char lbl_806D24D0[2]; /* "0" */
 extern const float lbl_806D24D4;
@@ -39,23 +37,25 @@ void HSD_CObjSetNear(HSD_CObj *cobj, float near);
 void HSD_CObjSetFar(HSD_CObj *cobj, float far);
 }
 
-#define SHADOW_STR_SHADOW_H 0x18
-#define SHADOW_STR_INFINITE 0x24
-#define SHADOW_STR_POINT_SPOT 0x34
-#define SHADOW_STR_SHADOW_CPP 0x48
+static const char lbl_802E9D38[] = "clShadow";
+static const char callback_name[] = "clCallback";
+static const char shadow_header[] = "shadow.h";
+static const char infinite_message[] = "LOBJ_INFINITE\n";
+static const char point_spot_message[] = "LOBJ_POINT or SPOT\n";
+static const char shadow_source[] = "shadow.cpp";
 
-static inline void HSD_ShadowSetLObj(const char *strings, HSD_Shadow *shadow, HSD_LObj *lobj)
+static inline void HSD_ShadowSetLObj(HSD_Shadow *shadow, HSD_LObj *lobj)
 {
     if (shadow == 0) {
-        __assert(strings + SHADOW_STR_SHADOW_H, 0x76, lbl_806D24BC);
+        __assert(shadow_header, 0x76, lbl_806D24BC);
     }
     shadow->lobj = lobj;
 }
 
-static inline void HSD_ShadowSetFlags80(const char *strings, HSD_Shadow *shadow)
+static inline void HSD_ShadowSetFlags80(HSD_Shadow *shadow)
 {
     if (shadow == 0) {
-        __assert(strings + SHADOW_STR_SHADOW_H, 0x67, lbl_806D24BC);
+        __assert(shadow_header, 0x67, lbl_806D24BC);
     }
     shadow->flags = 0x80;
 }
@@ -86,28 +86,26 @@ private:
 clShadow::clShadow(int width, int height, HSD_LObj *lobj, float far, float near)
     : m_shadow(0), m_lobj(lobj), m_width(width), m_height(height)
 {
-    const char *strings = lbl_802E9D38;
-
     m_shadow = HSD_ShadowAlloc();
-    HSD_ShadowSetLObj(strings, m_shadow, m_lobj);
+    HSD_ShadowSetLObj(m_shadow, m_lobj);
     switch (m_lobj->flags & 3) {
     case 1:
         HSD_CObjSetProjectionType(m_shadow->cobj, 3);
-        DebugPrintf(strings + SHADOW_STR_INFINITE);
+        DebugPrintf(infinite_message);
         break;
     case 2:
     case 3:
         HSD_CObjSetProjectionType(m_shadow->cobj, 2);
-        DebugPrintf(strings + SHADOW_STR_POINT_SPOT);
+        DebugPrintf(point_spot_message);
         break;
     default:
-        __assert(strings + SHADOW_STR_SHADOW_CPP, 0x28, lbl_806D24D0);
+        __assert(shadow_source, 0x28, lbl_806D24D0);
         break;
     }
     HSD_ShadowSetSize(m_shadow, m_width, m_height);
     HSD_CObjSetNear(m_shadow->cobj, near);
     HSD_CObjSetFar(m_shadow->cobj, far);
     HSD_ShadowSetActive(m_shadow, 1);
-    HSD_ShadowSetFlags80(strings, m_shadow);
+    HSD_ShadowSetFlags80(m_shadow);
     m_x = m_y = m_z = lbl_806D24D4;
 }
