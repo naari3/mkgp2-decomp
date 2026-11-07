@@ -74,7 +74,7 @@ static inline bool DecayLifetime(GabyouUpdateItem *item, float decay)
 }
 static inline void ApplyGravityAndTurn(GabyouUpdateItem *item, float turn)
 {
-    item->velocity.y += lbl_806D6098;
+    item->velocity.y += -0.1f;
     item->rotationX = BuildOrientationFromYaw(turn + item->rotationX);
 }
 static inline void TickExpiry(GabyouUpdateItem *item, GabyouUpdateContext *context, int kind)
@@ -98,7 +98,7 @@ static inline void TickExpiry(GabyouUpdateItem *item, GabyouUpdateContext *conte
     }
     Item_DecayVelocityScalar(item, lbl_806D6094);
     if ((int)item->kind == 9) {
-        ApplyGravityAndTurn(item, lbl_806D608C);
+        ApplyGravityAndTurn(item, 0.087266445f);
     }
 }
 
