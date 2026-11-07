@@ -481,7 +481,7 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/tobj_reset_nm.c"),
             Object(Matching, "sysdolphin/baselib/tobj_reset_consts.c"),
             Object(Matching, "sysdolphin/baselib/tobj_anim.c"),
-            Object(NonMatching, "sysdolphin/baselib/tobj_nm.c"),
+            Object(Matching, "sysdolphin/baselib/tobj_nm.c"),
             Object(Matching, "sysdolphin/baselib/tobj_load.c"),
             Object(Matching, "sysdolphin/baselib/tobj_texmap_nm.c"),
             Object(NonMatching, "sysdolphin/baselib/tobj_mtx_nm.c"),

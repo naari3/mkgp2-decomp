@@ -17,6 +17,19 @@
 
 #include "tobj_private.h"
 HSD_TObjInfo hsdTObj = { TObjInfoInit };
+static char update_imagetbl[0xF] = "tobj->imagetbl";
+extern char lbl_806D0C94[7];
+
+static inline f32 TObjClamp(f32 x, f32 lo, f32 hi)
+{
+    if (x <= lo) {
+        return lo;
+    }
+    if (x >= hi) {
+        return hi;
+    }
+    return x;
+}
 extern void* tobj_unk_ptr;
 extern f32 tobj_unk_f0;
 extern f32 tobj_unk_f1;
@@ -33,7 +46,9 @@ void TObjUpdateFunc(void* obj, enum_t type, HSD_ObjData* val)
     switch (type) {
     case HSD_A_T_TIMG: {
         int n;
-        HSD_ASSERT(385, tobj->imagetbl);
+        if (!tobj->imagetbl) {
+            __assert(lbl_806D0C94, 385, update_imagetbl);
+        }
         n = (int) val->fv;
         if (tobj->imagetbl[n]) {
             tobj->imagedesc = tobj->imagetbl[n];
@@ -41,11 +56,11 @@ void TObjUpdateFunc(void* obj, enum_t type, HSD_ObjData* val)
     } break;
     case HSD_A_T_TCLT: {
         if (tobj->tluttbl) {
-            tobj->tlut_no = (u8) val->fv;
+            tobj->tlut_no = (int) val->fv;
         }
     } break;
     case HSD_A_T_BLEND:
-        tobj->blending = val->fv;
+        tobj->blending = TObjClamp(val->fv, 0.0F, 1.0F);
         break;
     case HSD_A_T_ROTX:
         tobj->rotate.x = val->fv;
@@ -72,46 +87,72 @@ void TObjUpdateFunc(void* obj, enum_t type, HSD_ObjData* val)
         tobj->flags |= TEX_MTX_DIRTY;
         break;
     case HSD_A_T_LOD_BIAS:
-        tobj->lod->LODBias = val->fv;
+        if (tobj->lod) {
+            tobj->lod->LODBias = val->fv;
+        }
         break;
     case HSD_A_T_KONST_R:
-        tobj->tev->konst.r = (u8) (255.0 * val->fv);
+        if (tobj->tev) {
+            tobj->tev->konst.r = (u8) (255.0F * TObjClamp(val->fv, 0.0F, 1.0F));
+        }
         break;
     case HSD_A_T_KONST_G:
-        tobj->tev->konst.g = (u8) (255.0 * val->fv);
+        if (tobj->tev) {
+            tobj->tev->konst.g = (u8) (255.0F * TObjClamp(val->fv, 0.0F, 1.0F));
+        }
         break;
     case HSD_A_T_KONST_B:
-        tobj->tev->konst.b = (u8) (255.0 * val->fv);
+        if (tobj->tev) {
+            tobj->tev->konst.b = (u8) (255.0F * TObjClamp(val->fv, 0.0F, 1.0F));
+        }
         break;
     case HSD_A_T_KONST_A:
-        tobj->tev->konst.a = (u8) (255.0 * val->fv);
+        if (tobj->tev) {
+            tobj->tev->konst.a = (u8) (255.0F * TObjClamp(val->fv, 0.0F, 1.0F));
+        }
         break;
     case HSD_A_T_TEV0_R:
-        tobj->tev->tev0.r = (u8) (255.0 * val->fv);
+        if (tobj->tev) {
+            tobj->tev->tev0.r = (u8) (255.0F * TObjClamp(val->fv, 0.0F, 1.0F));
+        }
         break;
     case HSD_A_T_TEV0_G:
-        tobj->tev->tev0.g = (u8) (255.0 * val->fv);
+        if (tobj->tev) {
+            tobj->tev->tev0.g = (u8) (255.0F * TObjClamp(val->fv, 0.0F, 1.0F));
+        }
         break;
     case HSD_A_T_TEV0_B:
-        tobj->tev->tev0.b = (u8) (255.0 * val->fv);
+        if (tobj->tev) {
+            tobj->tev->tev0.b = (u8) (255.0F * TObjClamp(val->fv, 0.0F, 1.0F));
+        }
         break;
     case HSD_A_T_TEV0_A:
-        tobj->tev->tev0.a = (u8) (255.0 * val->fv);
+        if (tobj->tev) {
+            tobj->tev->tev0.a = (u8) (255.0F * TObjClamp(val->fv, 0.0F, 1.0F));
+        }
         break;
     case HSD_A_T_TEV1_R:
-        tobj->tev->tev1.r = (u8) (255.0 * val->fv);
+        if (tobj->tev) {
+            tobj->tev->tev1.r = (u8) (255.0F * TObjClamp(val->fv, 0.0F, 1.0F));
+        }
         break;
     case HSD_A_T_TEV1_G:
-        tobj->tev->tev1.g = (u8) (255.0 * val->fv);
+        if (tobj->tev) {
+            tobj->tev->tev1.g = (u8) (255.0F * TObjClamp(val->fv, 0.0F, 1.0F));
+        }
         break;
     case HSD_A_T_TEV1_B:
-        tobj->tev->tev1.b = (u8) (255.0 * val->fv);
+        if (tobj->tev) {
+            tobj->tev->tev1.b = (u8) (255.0F * TObjClamp(val->fv, 0.0F, 1.0F));
+        }
         break;
     case HSD_A_T_TEV1_A:
-        tobj->tev->tev1.a = (u8) (255.0 * val->fv);
+        if (tobj->tev) {
+            tobj->tev->tev1.a = (u8) (255.0F * TObjClamp(val->fv, 0.0F, 1.0F));
+        }
         break;
     case HSD_A_T_TS_BLEND:
-        tobj->blending = val->fv;
+        tobj->blending = TObjClamp(val->fv, 0.0F, 1.0F);
         break;
     }
 }
