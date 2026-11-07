@@ -8115,6 +8115,7 @@ game/clsound/ClSound_InitSoundSystem.c:
 	extab       start:0x800122FC end:0x80012304
 	extabindex  start:0x800271F4 end:0x80027200
 	.text       start:0x8019397C end:0x80194108
+	.bss        start:0x80677F40 end:0x80678718
 
 game/clstream/fn_80194108.c:
 	extab       start:0x80012304 end:0x8001230C

@@ -1,21 +1,14 @@
 #include "game/clsound_s25_private.h"
+#include "game/clsound_spatial_private.h"
 
 typedef struct SoundEvent { unsigned int id; int state; int countdown; } SoundEvent;
-typedef struct SoundWorkspace {
-    SoundEvent events[37];
-    SND_AUX_REVERBHI reverb;
-    SND_AUX_CHORUS chorus;
-    unsigned char slots[0x380];
-    unsigned int streams[8];
-} SoundWorkspace;
-typedef struct SoundSlot {
-    unsigned int flags, id;
-    unsigned char group, pad9[15], channel, pad19[3];
-} SoundSlot;
 typedef struct ActiveStream { unsigned int handle, id; } ActiveStream;
-extern SoundWorkspace lbl_80677F40;
-extern SoundSlot lbl_80678378[32];
-extern ActiveStream ClSound_ActiveStreams[4];
+/* Separate objects let MWCC retain the shared BSS base and subobject addresses. */
+SoundEvent lbl_80677F40[37];
+static SND_AUX_REVERBHI ClSound_ReverbHI;
+static SND_AUX_CHORUS ClSound_Chorus;
+ClSoundVoice lbl_80678378[32];
+ActiveStream ClSound_ActiveStreams[4];
 extern const char lbl_80379100[];
 extern const unsigned int lbl_806D94F0, lbl_806D94F4;
 extern const float lbl_806D9524, lbl_806D9528, lbl_806D952C, lbl_806D9530, lbl_806D950C, lbl_806D9534;
@@ -89,14 +82,13 @@ static inline void ResetStreams(ActiveStream *streams) {
     for (i = 0; i < 4; i++) streams[i].id = -1;
 }
 void ClSound_InitSoundSystem(void) {
-    SoundWorkspace *work = &lbl_80677F40;
     const char *strings = lbl_80379100;
     void *samples;
     unsigned int hooks[2];
     int i;
     if (!ClSound_Initialized) {
         DebugPrintf(strings + 0x3f64);
-        ResetEvents(work->events);
+        ResetEvents(lbl_80677F40);
         samples = 0;
         hooks[0] = lbl_806D94F0;
         hooks[1] = lbl_806D94F4;
@@ -118,16 +110,16 @@ void ClSound_InitSoundSystem(void) {
             if (group >= 0) sndPushGroup(lbl_806D16B8, (unsigned short)group, samples, lbl_806D16BC, lbl_806D16B4);
         }
         OSFreeToHeap(lbl_806CF010, samples);
-        PrepareEffects(&work->reverb, &work->chorus);
-        sndSetAuxProcessingCallbacks(0, sndAuxCallbackReverbHI, &work->reverb, 255, 0, sndAuxCallbackChorus, &work->chorus, 255, 0);
+        PrepareEffects(&ClSound_ReverbHI, &ClSound_Chorus);
+        sndSetAuxProcessingCallbacks(0, sndAuxCallbackReverbHI, &ClSound_ReverbHI, 255, 0, sndAuxCallbackChorus, &ClSound_Chorus, 255, 0);
         sndVolume(127, 0, 255);
         for (i = 0; i < 32; i++) {
-            ((SoundSlot *)work->slots)[i].id = -1;
-            ((SoundSlot *)work->slots)[i].group = 255;
-            ((SoundSlot *)work->slots)[i].channel = 255;
-            ((SoundSlot *)work->slots)[i].flags = 0;
+            lbl_80678378[i].id = -1;
+            lbl_80678378[i].group = 255;
+            lbl_80678378[i].category = 255;
+            lbl_80678378[i].flags = 0;
         }
-        ResetStreams((ActiveStream *)work->streams);
+        ResetStreams(ClSound_ActiveStreams);
         fn_801952EC();
         fn_80195214(lbl_806CFCA1);
         fn_801951FC(lbl_806CFCA2);
