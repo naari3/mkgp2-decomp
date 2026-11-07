@@ -1413,8 +1413,6 @@
     "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/GabyouTripleChild.c": {
-    "extab_GabyouTripleChild_TickActive": "@etb_8000B6AC",
-    "extabindex_GabyouTripleChild_TickActive": "@eti_80023F18",
     "extab_GabyouTripleChild_Update": "@etb_8000B6B4",
     "extabindex_GabyouTripleChild_Update": "@eti_80023F24"
   },
