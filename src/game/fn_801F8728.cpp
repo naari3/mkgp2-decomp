@@ -1,7 +1,7 @@
-#include "game/DrawQuad801F.h"
+#include "game/DrawQuad8728Private.h"
 
 extern "C" void fn_801F8728(DrawNode801F *self) {
-    DrawQuad801F quad(self->description);
+    DrawQuad8728 quad(self->description);
     GXBegin(128,0,4);
     if (!self->depth) {
         DrawPosition801F(quad.x0,quad.y0);
