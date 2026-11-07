@@ -8,3 +8,8 @@ c14_u9: KartPhysics_GroundedMovement 801EED14 remains singleton NM. Move lateral
 Source: Codex worker c18_u141_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 148 B.
 
 c18_u141 fresh baseline94.43771/4748B. Approved SINGLETON_INSTANCE(g_courseData) fixes old getter polarity,95.35354/4700B. random*magnitude plus named slipYaw product before adding yaw restores multiply order and separate fmuls/fadds,95.37037/4704B. groundedApproach helper with heading/distance output references regresses95.28872, reverted. Residual constant reload CSE, heading/distance/side saved FPR homes, vector/remainder scratch homes and scheduling. EH100/index91.66667. No literals/pools/flags/splits/bridges changed. Single function cannot B-split. Kept NM improvement; coordinator full fallback DOL SHA1 exact; native gain0.
+
+## c19_u28_20261107
+Source: Codex worker c19_u28_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u28 fresh95.37037/source4704B improves95.702866 by declaring only TU-local sdata2 float externs const; writable sbss806D1930/193C remain mutable. No new literals/data/bridges/ranges. Return-value groundedAngle regresses95.253365/4716B; independent slip/travel speed locals95.64815/4704B. Both reverted. Remaining heading/distance/side saved FPR homes, constant reload CSE, early zero-copy extra fmr, vector/remainder GPR homes and scheduling. EH100/index91.66667 unchanged. Three hypotheses exhausted; singleton TU cannot B-split. Final coordinator fallback-linked DOL SHA1 exact; native gain0.

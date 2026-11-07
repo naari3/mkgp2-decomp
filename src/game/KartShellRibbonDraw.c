@@ -6,8 +6,8 @@
  * the panel. The local tables are copied from the shared .rodata block
  * that starts at lbl_80328EB8.
  *
- * NonMatching (GC/2.6): only a f30/f31 swap remains in the stretched-ribbon
- * loop (target keeps the hoisted 0.5f in f30 and halfW in f31). */
+ * The stretched-ribbon loop shares its half-scale value with the width
+ * calculation. */
 typedef struct Vec { float x, y, z; } Vec;
 
 typedef struct RibbonPts { Vec p[8]; } RibbonPts;
@@ -114,6 +114,12 @@ static inline int Ribbon_GetKind(int id)
     }
 }
 
+static inline float Ribbon_ScaledHalfWidth(float half, float width)
+{
+    width *= half;
+    return width * lbl_806D5118;
+}
+
 void KartShellRibbonDraw(unsigned char *self)
 {
     RibbonRodata *rd = &lbl_80328EB8;
@@ -177,6 +183,7 @@ void KartShellRibbonDraw(unsigned char *self)
                 float sx;
                 float sy;
                 float halfW;
+                float half;
                 float h;
                 float cy;
                 float scale = lbl_806D5028 / (lbl_806D50DC * lbl_806D6DE4);
@@ -186,14 +193,14 @@ void KartShellRibbonDraw(unsigned char *self)
                     off = lbl_806D5054;
                 }
                 ResourceTable_GetSizeXY(id, &sx, &sy);
-                halfW = (dims[0] * lbl_806D50AC) * lbl_806D5118;
+                halfW = Ribbon_ScaledHalfWidth(half = lbl_806D50AC, dims[0]);
                 h = dims[1];
                 cy = ctr[1];
                 for (i = 0; i < 4; i++) {
                     p.x = pts[i].x;
                     p.y = pts[i].y;
                     p.z = pts[i].z;
-                    p.x = scale * (halfW * (sx * lbl_806D50AC));
+                    p.x = scale * (halfW * (sx * half));
                     if (signs[i][0] == 1) {
                         p.x = ctr[0] + p.x;
                     } else {

@@ -19,7 +19,11 @@ static inline SteeringRingIter InsertAdvance(const SteeringRingIter &p, unsigned
     SteeringRingIter result(p);
     return InsertPlusAssign(result, n);
 }
-extern "C" void fn_801E4AF4(SteeringRing *s, const SteeringRingIter &position, unsigned long n, const int &value) {
+static inline int *InsertFillN(int *out, unsigned long n, const int &value) {
+    while(n) { *out++ = value; --n; }
+    return out;
+}
+extern "C" void fn_801E4AF4(SteeringRing *s, SteeringRingIter position, unsigned long n, const int &value) {
     if(n) {
         unsigned long max=InsertMaxSize();
         if(n>max || s->count>max-n) throw std::length_error(lbl_803BD2C0);
@@ -51,9 +55,7 @@ extern "C" void fn_801E4AF4(SteeringRing *s, const SteeringRingIter &position, u
             unsigned long before=position.index;
             int *p=(int *)Alloc(cap*4);
             if(before) RingCopy(s->begin(),position,p);
-            int *q=p+before;
-            unsigned long remaining=n;
-            while(remaining) { *q++=value; --remaining; }
+            InsertFillN(p+before,n,value);
             if(before<s->count) RingCopy(position,s->end(),p+before+n);
             if(s->data) MemoryManager_TimedFree(s->data);
             s->data=p;

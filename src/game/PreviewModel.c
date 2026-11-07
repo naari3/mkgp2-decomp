@@ -5,10 +5,15 @@
  * The vtables (lbl_8048EAE8 base, lbl_8048EB04 model) stay in data, so the
  * vptr stores and the virtual Render call are spelled out by hand.
  *
- * Still asm: the model ctor (the out-of-line base dtor it names in its
- * cleanup actions would be emitted right after it instead of at the end of
- * the unit), the base dtor itself, and the two render-and-clear loops, which
- * keep their list iterator in a stack slot that no C++ form tried here does.
+ * The base dtor (dtor_8013DCBC) is written as a plain deleting-dtor
+ * function: as a real inline ~PreviewBase, CW would emit its weak copy right
+ * after the model ctor instead of at the end of the unit.
+ *
+ * Still asm: the model ctor (a real C++ ctor matches except that weak-copy
+ * placement; an extern "C" version with `new` matches the code but gets an
+ * auto extab without the DESTROYBASE action), and the two render-and-clear
+ * loops, which keep their list iterator in a stack slot that no C++ form
+ * tried here does.
  */
 #pragma cplusplus on
 
@@ -67,16 +72,16 @@ struct PreviewModel : PreviewBase {
 extern "C" {
 extern void DoublyLinkedList_EraseRange();
 extern void clNormal3D_Construct();
-extern float lbl_806D76E0;
-extern float lbl_806D76E4;
-asm void fn_8013D800(void);
+extern const float lbl_806D76E0;
+extern const float lbl_806D76E4;
+
 asm void fn_8013D940(void);
 asm void fn_8013DA00(void);
-asm void dtor_8013DCBC(void);
+struct PreviewBase;
+PreviewBase *dtor_8013DCBC(PreviewBase *self, short flag);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; void *f9; unsigned int f10; unsigned int f11; void *f12; } extab_fn_8013D800 = { 0x200A0000, 0x00000044, 0x000C0028, 0x00000088, 0x00000020, 0x000000A4, 0x00000028, 0x00000000, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001D, 0x00000000, (void *)&dtor_8013DCBC };
 
 __declspec(section ".extab_user") static const unsigned char extab_fn_8013D940[8] = {
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -92,9 +97,6 @@ __declspec(section ".extab_user") static const unsigned char extab_dtor_8013DCBC
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013D800 = {
-    (void *)&fn_8013D800, 0x000000C8, (void *)&extab_fn_8013D800
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013D940 = {
     (void *)&fn_8013D940, 0x000000C0, (void *)extab_fn_8013D940
@@ -194,60 +196,38 @@ PreviewModel::~PreviewModel() {
     fn_8013C3C0();
 }
 
-extern "C" asm void fn_8013D800(void) { /* 0x8013D800 size:0xC8 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    lis r7, lbl_8048EAE8@ha
-    lis r6, lbl_8048EB04@ha
-    stw r0, 0x24(r1)
-    addi r0, r6, lbl_8048EB04@l
-    stw r31, 0x1c(r1)
-    mr r31, r5
-    stw r30, 0x18(r1)
-    mr r30, r4
-    stw r29, 0x14(r1)
-    mr r29, r3
-    addi r3, r7, lbl_8048EAE8@l
-    stw r28, 0x10(r1)
-    stw r3, 0x0(r29)
-    stw r0, 0x0(r29)
-    bl fn_8013BD7C
-    bl fn_8013C428
-    li r0, 0x0
-    lfs f1, lbl_806D76E0(r2)
-    stw r0, 0x4(r29)
-    li r3, 0x5c
-    lfs f0, lbl_806D76E4(r2)
-    stfs f1, 0x8(r29)
-    stfs f1, 0xc(r29)
-    stfs f0, 0x10(r29)
-    stfs f0, 0x14(r29)
-    stfs f0, 0x18(r29)
-    bl Alloc
-    mr. r28, r3
-    beq fn_8013D800_L_8013D888
-    mr r4, r30
-    mr r5, r31
-    bl clNormal3D_Construct
-    fn_8013D800_L_8013D888:
-    clrlwi. r0, r31, 24
-    stw r28, 0x4(r29)
-    beq fn_8013D800_L_8013D8A4
-    lwz r3, 0x4(r29)
-    lis r4, 0x4000
-    li r5, 0x0
-    bl clNormal3D_SetFlags
-    fn_8013D800_L_8013D8A4:
-    lwz r0, 0x24(r1)
-    mr r3, r29
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+/* fakematch (class view): the ctor is built on a second view of the base
+ * whose dtor is only declared, so the DESTROYBASE cleanup names the
+ * out-of-line dtor_8013DCBC instead of emitting a weak copy of the inline
+ * base dtor right after this function. Natural code: the same ctor on
+ * PreviewModel/PreviewBase. */
+struct PreviewBaseOOL {
+    void *vptr;
+    PreviewBaseOOL() { vptr = lbl_8048EAE8; }
+    ~PreviewBaseOOL();
+};
+
+struct PreviewModelCtor : PreviewBaseOOL {
+    Normal3D *model;
+    float x, y;
+    float r, g, b, a;
+    PreviewModelCtor(void *resource, unsigned char flag);
+};
+
+PreviewModelCtor::PreviewModelCtor(void *resource, unsigned char flag) {
+    vptr = lbl_8048EB04;
+    fn_8013BD7C();
+    fn_8013C428();
+    model = 0;
+    x = lbl_806D76E0;
+    y = lbl_806D76E0;
+    r = lbl_806D76E4;
+    g = lbl_806D76E4;
+    b = lbl_806D76E4;
+    model = new Normal3D(resource, flag);
+    if (flag) {
+        clNormal3D_SetFlags(model, 0x40000000, 0);
+    }
 }
 
 struct ListNodeBase {
@@ -464,28 +444,17 @@ extern "C" int fn_8013DBF8(void) {
     return 1;
 }
 
-extern "C" asm void dtor_8013DCBC(void) { /* 0x8013DCBC size:0x48 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr. r31, r3
-    beq dtor_8013DCBC_L_8013DCEC
-    lis r5, lbl_8048EAE8@ha
-    extsh. r0, r4
-    addi r0, r5, lbl_8048EAE8@l
-    stw r0, 0x0(r31)
-    ble dtor_8013DCBC_L_8013DCEC
-    bl MemoryManager_TimedFree
-    dtor_8013DCBC_L_8013DCEC:
-    lwz r0, 0x14(r1)
-    mr r3, r31
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+extern "C" PreviewBase *dtor_8013DCBC(PreviewBase *self, short flag) {
+    if (self != 0) {
+        self->vptr = lbl_8048EAE8;
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
+#pragma exceptions reset
 
 extern "C" void fn_8013DD04(void) {
 }

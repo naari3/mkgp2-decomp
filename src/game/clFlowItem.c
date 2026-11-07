@@ -189,8 +189,8 @@ extern void ItemDisplay_Destroy(void);
 extern void fn_802321F8(ItemMsgWnd *wnd);
 extern void fn_80232284(ItemMsgWnd *wnd, f32 alpha);
 extern void fn_80232550(ItemMsgWnd *wnd, int flag);
-extern void fn_802325FC(ItemMsgWnd *wnd); /* ItemMsgWnd ctor (asm Draw calls it directly) */
-extern void *Alloc(unsigned long size);   /* operator new impl (asm Draw calls it directly) */
+extern void fn_802325FC(ItemMsgWnd *wnd); /* ItemMsgWnd ctor */
+extern void *Alloc(unsigned long size);   /* operator new impl */
 extern void SpriteGroup_CreateOrInit(void *slot, void *desc, int flag, f32 a, f32 b);
 extern void SpriteHandle_SetActiveFlag(void *h, int flag);
 extern void SpriteHandle_SetCornerAlpha(void *h, int alpha);
@@ -333,230 +333,79 @@ struct clFlowItem : clFlowBase {
  * groups, the icon pack, and the roulette grid cells, then hand the item
  * display and message window their draw passes.
  *
- * asm_fn park (2026-07-19): the C++ body below reaches 96.6% with a
- * byte-identical instruction stream; the residue is pure callee-saved
- * register coloring (walker webs refuse to coalesce with their dying base
- * pointers, decl-order/member-fn/destructive-walk probes all plateau).
- * Parked per the 6-cycle retreat rule; promote later if the coloring
- * lever is found. Manual extab emission + tools/extab_order.json keeps
- * the target extab/extabindex layout (Draw first, then the three
- * auto-emitted siblings).
+ * Each sub-object draw is its own inline (IconPack / ItemGrid / ItemSelect):
+ * the strength-reduced walker of a loop that is the last use of the inline's
+ * parameter then reuses the parameter's register (no `mr` copy), as in the
+ * target. Loop counters of later loops are separately scoped (`int k`): one
+ * shared `i` merges their webs and shifts the callee-saved coloring.
+ * tools/extab_order.json keeps the target extab/extabindex layout.
  */
-#if 0
-void clFlowItem::Draw() {
-    ItemGridState *grid;
-    void *ctx;
-    int j;
-    int i;
-    ItemSelectState *sel;
-    IconPack *icons;
-    f32 th;
-
-    for (i = 0; i < 2; i++) {
-        if (this->bgSpr[i]) {
-            fn_801A0004(*this->bgSpr[i]);
+static inline void IconPack_Draw(IconPack *icons) {
+    if (icons->mode < 3) {
+        int i;
+        for (i = 0; i < 4; i++) {
+            if (icons->handles[i]) {
+                fn_801A0004(*(void **)icons->handles[i]);
+            }
+        }
+        void *ctx = fn_801F8E58();
+        for (int k = 0; k < 4; k++) {
+            if (icons->vals[k]) {
+                fn_801F8A34(ctx, icons->vals[k], 6);
+            }
         }
     }
-    sel = this->itemSelection;
+}
+
+static inline void ItemGrid_Draw(ItemGridState *grid) {
+    int i;
+    int j;
+    void *ctx;
+
+    for (i = 0; i < 7; i++) {
+        if (grid->anims[i]) {
+            if (((AnimObj *)*(void **)grid->anims[i])->y > lbl_806DB888) {
+                fn_801A0004(*(void **)grid->anims[i]);
+            }
+        }
+    }
+    ctx = fn_801F8E58();
+    for (j = 0; j < 3; j++) {
+        for (int k = 0; k < 4; k++) {
+            if (grid->cells[j][k]) {
+                fn_801F8A34(ctx, grid->cells[j][k], 6);
+            }
+        }
+    }
+}
+
+static inline void ItemSelect_Draw(ItemSelectState *sel) {
+    int i;
+
     for (i = 0; i < 9; i++) {
         if (sel->groups[i]) {
             fn_801A0004(*sel->groups[i]);
         }
     }
     fn_801F8A34(fn_801F8E58(), sel->aux, 5);
-    icons = sel->icons;
-    if (icons->mode < 3) {
-        for (i = 0; i < 4; i++) {
-            if (icons->handles[i]) {
-                fn_801A0004(*(void **)icons->handles[i]);
-            }
-        }
-        ctx = fn_801F8E58();
-        for (i = 0; i < 4; i++) {
-            if (icons->vals[i]) {
-                fn_801F8A34(ctx, icons->vals[i], 6);
-            }
+    IconPack_Draw(sel->icons);
+}
+
+extern "C" void clFlowItem_Draw(clFlowItem *self) {
+    int i;
+
+    for (i = 0; i < 2; i++) {
+        if (self->bgSpr[i]) {
+            fn_801A0004(*self->bgSpr[i]);
         }
     }
-    grid = this->itemGrid;
-    if (grid) {
-        th = lbl_806DB888;
-        for (i = 0; i < 7; i++) {
-            if (grid->anims[i]) {
-                if (((AnimObj *)*(void **)grid->anims[i])->y > th) {
-                    fn_801A0004(*(void **)grid->anims[i]);
-                }
-            }
-        }
-        ctx = fn_801F8E58();
-        for (j = 0; j < 3; j++) {
-            for (i = 0; i < 4; i++) {
-                if (grid->cells[j][i]) {
-                    fn_801F8A34(ctx, grid->cells[j][i], 6);
-                }
-            }
-        }
+    ItemSelect_Draw(self->itemSelection);
+    if (self->itemGrid) {
+        ItemGrid_Draw(self->itemGrid);
     }
     ItemDisplay_GetOrCreate();
     fn_8020AC34();
     fn_802321F8(ItemMsg_Get());
-}
-#endif
-
-extern "C" asm void clFlowItem_Draw(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; void *f6; } extab_clFlowItem_Draw = { 0x304A0000, 0x000001B0, 0x00040010, 0x00000000, 0x8BC0001A, 0x001EC702, (void *)&MemoryManager_TimedFree };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clFlowItem_Draw = {
-    (void *)&clFlowItem_Draw, 0x000001E8, (void *)&extab_clFlowItem_Draw
-};
-
-extern "C" asm void clFlowItem_Draw(void) { /* 0x802379F8 size:0x1E8 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stfd f31, 0x20(r1)
-    psq_st f31, 0x28(r1), 0, 0
-    stmw r26, 0x8(r1)
-    mr r31, r3
-    li r26, 0x0
-    mr r28, r31
-    clFlowItem_Draw_L_80237A1C:
-    lwz r3, 0x1c(r28)
-    cmplwi r3, 0x0
-    beq clFlowItem_Draw_L_80237A30
-    lwz r3, 0x0(r3)
-    bl fn_801A0004
-    clFlowItem_Draw_L_80237A30:
-    addi r26, r26, 0x1
-    addi r28, r28, 0x4
-    cmpwi r26, 0x2
-    blt clFlowItem_Draw_L_80237A1C
-    lwz r28, 0x18(r31)
-    li r29, 0x0
-    mr r27, r28
-    clFlowItem_Draw_L_80237A4C:
-    lwz r3, 0x4(r27)
-    cmplwi r3, 0x0
-    beq clFlowItem_Draw_L_80237A60
-    lwz r3, 0x0(r3)
-    bl fn_801A0004
-    clFlowItem_Draw_L_80237A60:
-    addi r29, r29, 0x1
-    addi r27, r27, 0x4
-    cmpwi r29, 0x9
-    blt clFlowItem_Draw_L_80237A4C
-    bl fn_801F8E58
-    lwz r4, 0x144(r28)
-    li r5, 0x5
-    bl fn_801F8A34
-    lwz r26, 0x0(r28)
-    lwz r0, 0x38(r26)
-    cmpwi r0, 0x3
-    bge clFlowItem_Draw_L_80237AF0
-    li r28, 0x0
-    mr r27, r26
-    clFlowItem_Draw_L_80237A98:
-    lwz r3, 0x0(r27)
-    cmplwi r3, 0x0
-    beq clFlowItem_Draw_L_80237AAC
-    lwz r3, 0x0(r3)
-    bl fn_801A0004
-    clFlowItem_Draw_L_80237AAC:
-    addi r28, r28, 0x1
-    addi r27, r27, 0x4
-    cmpwi r28, 0x4
-    blt clFlowItem_Draw_L_80237A98
-    bl fn_801F8E58
-    mr r29, r3
-    li r28, 0x0
-    clFlowItem_Draw_L_80237AC8:
-    lwz r4, 0x10(r26)
-    cmplwi r4, 0x0
-    beq clFlowItem_Draw_L_80237AE0
-    mr r3, r29
-    li r5, 0x6
-    bl fn_801F8A34
-    clFlowItem_Draw_L_80237AE0:
-    addi r28, r28, 0x1
-    addi r26, r26, 0x4
-    cmpwi r28, 0x4
-    blt clFlowItem_Draw_L_80237AC8
-    clFlowItem_Draw_L_80237AF0:
-    lwz r27, 0x14(r31)
-    cmplwi r27, 0x0
-    beq clFlowItem_Draw_L_80237B84
-    lfs f31, lbl_806DB888(r2)
-    mr r26, r27
-    li r28, 0x0
-    clFlowItem_Draw_L_80237B08:
-    lwz r3, 0x0(r26)
-    cmplwi r3, 0x0
-    beq clFlowItem_Draw_L_80237B28
-    lwz r3, 0x0(r3)
-    lfs f0, 0x20(r3)
-    fcmpo cr0, f0, f31
-    ble clFlowItem_Draw_L_80237B28
-    bl fn_801A0004
-    clFlowItem_Draw_L_80237B28:
-    addi r28, r28, 0x1
-    addi r26, r26, 0x4
-    cmpwi r28, 0x7
-    blt clFlowItem_Draw_L_80237B08
-    bl fn_801F8E58
-    mr r29, r3
-    li r31, 0x0
-    clFlowItem_Draw_L_80237B44:
-    li r28, 0x0
-    mr r26, r27
-    clFlowItem_Draw_L_80237B4C:
-    lwz r4, 0x20(r26)
-    cmplwi r4, 0x0
-    beq clFlowItem_Draw_L_80237B64
-    mr r3, r29
-    li r5, 0x6
-    bl fn_801F8A34
-    clFlowItem_Draw_L_80237B64:
-    addi r28, r28, 0x1
-    addi r26, r26, 0x4
-    cmpwi r28, 0x4
-    blt clFlowItem_Draw_L_80237B4C
-    addi r31, r31, 0x1
-    addi r27, r27, 0x10
-    cmpwi r31, 0x3
-    blt clFlowItem_Draw_L_80237B44
-    clFlowItem_Draw_L_80237B84:
-    bl ItemDisplay_GetOrCreate
-    bl fn_8020AC34
-    lwz r3, lbl_806D1A88(r13)
-    li r26, 0x0
-    cmplwi r3, 0x0
-    beq clFlowItem_Draw_L_80237BA0
-    b clFlowItem_Draw_L_80237BC0
-    clFlowItem_Draw_L_80237BA0:
-    li r3, 0x5c
-    bl Alloc
-    mr. r30, r3
-    beq clFlowItem_Draw_L_80237BB8
-    li r26, 0x1
-    bl fn_802325FC
-    clFlowItem_Draw_L_80237BB8:
-    stw r30, lbl_806D1A88(r13)
-    mr r3, r30
-    clFlowItem_Draw_L_80237BC0:
-    bl fn_802321F8
-    psq_l f31, 0x28(r1), 0, 0
-    lfd f31, 0x20(r1)
-    lmw r26, 0x8(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
 }
 
 extern "C" {
@@ -565,22 +414,25 @@ extern "C" {
  * machine, sprite anim advance, and the display/message window updates.
  * Returns the next scene id (-1 = stay).
  *
- * asm_fn park (2026-07-19): the C body below is byte-identical except for
- * one callee-saved coloring residue - the selection-pointer web (case 0 /
- * case 1-else) takes r24 while the target shares r31 with the
- * &g_playerData cursor. Single-shared-variable, scoped-local and
- * decl-order (36 perm) probes all leave the live-range split colored r24
- * (register-identity park family, cf. ItemObjectManager_Init). Promote
- * later if the split-affinity lever is found.
+ * The two selection-state updates are inline helpers taking the selection
+ * pointer: a plain local `sel` gets its own web colored r24, while the
+ * inlined parameter shares r31 with the &g_playerData cursor as in the
+ * target.
  */
-#if 0
+static inline void ItemSel_Begin(ItemSelectState *sel) {
+    SpriteGroup_CreateOrInit(&sel->groups[0], lbl_806D0758, 0, lbl_806DB88C, lbl_806DB890);
+    (*sel->groups[0])->mode = 5;
+    sel->resultCode = 0;
+    sel->phase = 1;
+}
+static inline void ItemSel_Ready(ItemSelectState *sel) {
+    SpriteHandle_SetActiveFlag(sel->readySprite, 1);
+    sel->resultCode = 0;
+    sel->phase = 3;
+}
 int clFlowItem_Update(clFlowItemRec *self) {
-    /* One pointer local serves both roles (player-data cursor in case 1,
-     * selection pointer in cases 0/1-else): the shared web is what puts
-     * both in the same callee-saved register, with &g_playerData
-     * materialized once at entry. */
-    ItemSelectState *sel = (ItemSelectState *)&g_playerData;
-#define pd_ ((PlayerDataRec *)sel)
+    PlayerDataRec *pd = &g_playerData;
+#define pd_ pd
     int alpha;
     int flag;
     u8 ok;
@@ -596,11 +448,7 @@ int clFlowItem_Update(clFlowItemRec *self) {
     RumbleUpdate();
     switch (self->subState) {
     case 0:
-        sel = self->itemSelection;
-        SpriteGroup_CreateOrInit(&sel->groups[0], lbl_806D0758, 0, lbl_806DB88C, lbl_806DB890);
-        (*sel->groups[0])->mode = 5;
-        sel->resultCode = 0;
-        sel->phase = 1;
+        ItemSel_Begin(self->itemSelection);
         self->subState = 1;
         self->frameCounter = 0;
         break;
@@ -630,10 +478,7 @@ int clFlowItem_Update(clFlowItemRec *self) {
             } else {
                 self->subState = 2;
                 fn_80239D6C(self->itemGrid);
-                sel = self->itemSelection;
-                SpriteHandle_SetActiveFlag(sel->readySprite, 1);
-                sel->resultCode = 0;
-                sel->phase = 3;
+                ItemSel_Ready(self->itemSelection);
                 self->fadeAlpha = lbl_806DB898;
             }
             fn_801699D8(0, 1);
@@ -717,438 +562,7 @@ int clFlowItem_Update(clFlowItemRec *self) {
     return self->nextSceneId;
 #undef pd_
 }
-#endif
 
-extern "C" asm void clFlowItem_Update(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; void *f8; unsigned int f9; unsigned int f10; void *f11; } extab_clFlowItem_Update = { 0x400A0000, 0x00000430, 0x00040018, 0x00000598, 0x00040024, 0x00000000, 0x8BC00019, 0x0018C702, (void *)&MemoryManager_TimedFree, 0x8BC00018, 0x001DC702, (void *)&MemoryManager_TimedFree };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clFlowItem_Update = {
-    (void *)&clFlowItem_Update, 0x000005D8, (void *)&extab_clFlowItem_Update
-};
-
-extern "C" asm void clFlowItem_Update(void) { /* 0x80237BE0 size:0x5D8 */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    lis r4, g_playerData@ha
-    stw r0, 0x44(r1)
-    addi r0, r4, g_playerData@l
-    stmw r24, 0x20(r1)
-    mr r30, r3
-    mr r31, r0
-    lwz r5, g_pInputState(r13)
-    cmplwi r5, 0x0
-    bne clFlowItem_Update_L_80237C10
-    li r5, 0x0
-    clFlowItem_Update_L_80237C10:
-    lwz r0, 0x18(r5)
-    cmpwi r0, 0x1
-    bne clFlowItem_Update_L_80237C2C
-    li r3, 0x0
-    li r4, 0x1
-    li r5, 0x1
-    bl SetRumbleMode
-    clFlowItem_Update_L_80237C2C:
-    lwz r3, g_pInputState(r13)
-    cmplwi r3, 0x0
-    bne clFlowItem_Update_L_80237C3C
-    li r3, 0x0
-    clFlowItem_Update_L_80237C3C:
-    lwz r0, 0x18(r3)
-    cmpwi r0, 0x3
-    bne clFlowItem_Update_L_80237C64
-    lwz r0, 0x8(r30)
-    cmpwi r0, 0x3
-    bne clFlowItem_Update_L_80237C64
-    li r3, 0x1
-    li r4, 0x1
-    li r5, 0x1
-    bl SetRumbleMode
-    clFlowItem_Update_L_80237C64:
-    bl RumbleUpdate
-    lwz r0, 0x8(r30)
-    cmpwi r0, 0x2
-    beq clFlowItem_Update_L_80237E18
-    bge clFlowItem_Update_L_80237C88
-    cmpwi r0, 0x0
-    beq clFlowItem_Update_L_80237C98
-    bge clFlowItem_Update_L_80237CE0
-    b clFlowItem_Update_L_802380B8
-    clFlowItem_Update_L_80237C88:
-    cmpwi r0, 0x4
-    beq clFlowItem_Update_L_80237FD4
-    bge clFlowItem_Update_L_802380B8
-    b clFlowItem_Update_L_80237F88
-    clFlowItem_Update_L_80237C98:
-    lwz r31, 0x18(r30)
-    la r4, lbl_806D0758(r13)  /* lbl_806D0758 (r13 = _SDA_BASE_ 0x806D6D20) */
-    lfs f1, lbl_806DB88C(r2)
-    li r5, 0x0
-    lfs f2, lbl_806DB890(r2)
-    addi r3, r31, 0x4
-    bl SpriteGroup_CreateOrInit
-    lwz r4, 0x4(r31)
-    li r5, 0x5
-    li r3, 0x0
-    li r0, 0x1
-    lwz r4, 0x0(r4)
-    stw r5, 0x4(r4)
-    stw r3, 0x150(r31)
-    stw r0, 0x154(r31)
-    stw r0, 0x8(r30)
-    stw r3, 0x4(r30)
-    b clFlowItem_Update_L_802380B8
-    clFlowItem_Update_L_80237CE0:
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0xa
-    bgt clFlowItem_Update_L_80237D58
-    lwz r3, 0x28(r30)
-    li r4, 0x1
-    bl SpriteHandle_SetActiveFlag
-    lwz r3, 0x24(r30)
-    li r4, 0x1
-    bl SpriteHandle_SetActiveFlag
-    lwz r3, 0x4(r30)
-    lis r0, 0x4330
-    stw r0, 0x8(r1)
-    xoris r0, r3, 0x8000
-    lfd f2, lbl_806DB8B0(r2)
-    stw r0, 0xc(r1)
-    lfs f0, lbl_806DB898(r2)
-    lfd f1, 0x8(r1)
-    lfs f3, lbl_806DB894(r2)
-    fsubs f1, f1, f2
-    lwz r3, 0x28(r30)
-    fdivs f0, f1, f0
-    fmuls f0, f3, f0
-    fctiwz f0, f0
-    stfd f0, 0x10(r1)
-    lwz r24, 0x14(r1)
-    mr r4, r24
-    bl SpriteHandle_SetCornerAlpha
-    lwz r3, 0x24(r30)
-    mr r4, r24
-    bl SpriteHandle_SetCornerAlpha
-    clFlowItem_Update_L_80237D58:
-    lwz r3, 0x18(r30)
-    lbz r0, 0x159(r3)
-    cmplwi r0, 0x1
-    bne clFlowItem_Update_L_802380B8
-    li r24, 0x0
-    clFlowItem_Update_L_80237D6C:
-    lwz r4, 0x18c(r31)
-    mr r3, r31
-    bl PlayerData_ResolveUnlockedIdByIndex
-    mr r0, r3
-    mr r3, r31
-    mr r4, r0
-    li r5, 0x0
-    bl fn_801D6F30
-    clrlwi. r0, r3, 24
-    beq clFlowItem_Update_L_80237DA0
-    addi r24, r24, 0x1
-    cmpwi r24, 0x3
-    blt clFlowItem_Update_L_80237D6C
-    clFlowItem_Update_L_80237DA0:
-    clrlwi. r0, r3, 24
-    bne clFlowItem_Update_L_80237DD0
-    li r0, 0x3
-    stw r0, 0x8(r30)
-    lwz r3, 0x18(r30)
-    bl fn_80238980
-    lfs f0, lbl_806DB89C(r2)
-    li r3, 0x1
-    li r4, 0x1
-    stfs f0, 0xc(r30)
-    bl fn_801699D8
-    b clFlowItem_Update_L_80237E08
-    clFlowItem_Update_L_80237DD0:
-    li r0, 0x2
-    stw r0, 0x8(r30)
-    lwz r3, 0x14(r30)
-    bl fn_80239D6C
-    lwz r31, 0x18(r30)
-    li r4, 0x1
-    lwz r3, 0x38(r31)
-    bl SpriteHandle_SetActiveFlag
-    li r3, 0x0
-    li r0, 0x3
-    stw r3, 0x150(r31)
-    lfs f0, lbl_806DB898(r2)
-    stw r0, 0x154(r31)
-    stfs f0, 0xc(r30)
-    clFlowItem_Update_L_80237E08:
-    li r3, 0x0
-    li r4, 0x1
-    bl fn_801699D8
-    b clFlowItem_Update_L_802380B8
-    clFlowItem_Update_L_80237E18:
-    lfs f1, 0xc(r30)
-    lfs f0, lbl_806DB888(r2)
-    lwz r3, 0x14(r30)
-    fcmpo cr0, f1, f0
-    lwz r4, 0x50(r3)
-    cror eq, lt, eq
-    bne clFlowItem_Update_L_80237E40
-    li r0, 0x1
-    li r4, 0x1
-    stb r0, 0x5d(r3)
-    clFlowItem_Update_L_80237E40:
-    lwz r3, 0x14(r30)
-    lbz r0, 0x5c(r3)
-    cmplwi r0, 0x1
-    bne clFlowItem_Update_L_802380B8
-    cmpwi r4, 0x0
-    bne clFlowItem_Update_L_80237E80
-    li r0, 0x3
-    stw r0, 0x8(r30)
-    lwz r3, 0x18(r30)
-    bl fn_80238980
-    lfs f0, lbl_806DB89C(r2)
-    li r3, 0x1
-    li r4, 0x1
-    stfs f0, 0xc(r30)
-    bl fn_801699D8
-    b clFlowItem_Update_L_80237ECC
-    clFlowItem_Update_L_80237E80:
-    li r3, 0x4
-    li r0, 0x0
-    stw r3, 0x8(r30)
-    li r4, 0x1
-    stw r0, 0x4(r30)
-    lwz r3, 0x30(r30)
-    bl SpriteHandle_SetActiveFlag
-    lwz r4, 0x14(r30)
-    lwz r3, 0x18(r30)
-    lwz r0, 0x60(r4)
-    stw r0, 0x164(r3)
-    lwz r4, 0x14(r30)
-    lwz r3, 0x18(r30)
-    lwz r0, 0x64(r4)
-    stw r0, 0x170(r3)
-    lwz r4, 0x14(r30)
-    lwz r3, 0x18(r30)
-    lwz r0, 0x68(r4)
-    stw r0, 0x17c(r3)
-    clFlowItem_Update_L_80237ECC:
-    lwz r24, 0x14(r30)
-    cmplwi r24, 0x0
-    beq clFlowItem_Update_L_802380B8
-    beq clFlowItem_Update_L_80237F7C
-    li r27, 0x0
-    mr r25, r24
-    mr r31, r27
-    clFlowItem_Update_L_80237EE8:
-    li r28, 0x0
-    mr r26, r25
-    clFlowItem_Update_L_80237EF0:
-    lwz r3, 0x20(r26)
-    cmplwi r3, 0x0
-    beq clFlowItem_Update_L_80237F08
-    beq clFlowItem_Update_L_80237F04
-    bl MemoryManager_TimedFree
-    clFlowItem_Update_L_80237F04:
-    stw r31, 0x20(r26)
-    clFlowItem_Update_L_80237F08:
-    addi r28, r28, 0x1
-    addi r26, r26, 0x4
-    cmpwi r28, 0x4
-    blt clFlowItem_Update_L_80237EF0
-    addi r27, r27, 0x1
-    addi r25, r25, 0x10
-    cmpwi r27, 0x3
-    blt clFlowItem_Update_L_80237EE8
-    li r26, 0x0
-    mr r25, r24
-    mr r31, r26
-    clFlowItem_Update_L_80237F34:
-    lwz r3, 0x0(r25)
-    cmplwi r3, 0x0
-    beq clFlowItem_Update_L_80237F4C
-    li r4, 0x1
-    bl SpriteAnimHandle_Destroy
-    stw r31, 0x0(r25)
-    clFlowItem_Update_L_80237F4C:
-    addi r26, r26, 0x1
-    addi r25, r25, 0x4
-    cmpwi r26, 0x7
-    blt clFlowItem_Update_L_80237F34
-    lwz r3, 0x1c(r24)
-    bl SpriteHandle_Destroy
-    li r3, 0x192a
-    bl fn_80120A08
-    li r3, 0x192c
-    bl fn_80120A08
-    mr r3, r24
-    bl MemoryManager_TimedFree
-    clFlowItem_Update_L_80237F7C:
-    li r0, 0x0
-    stw r0, 0x14(r30)
-    b clFlowItem_Update_L_802380B8
-    clFlowItem_Update_L_80237F88:
-    lfs f1, 0xc(r30)
-    lfs f0, lbl_806DB888(r2)
-    fcmpo cr0, f1, f0
-    cror eq, lt, eq
-    bne clFlowItem_Update_L_80237FA4
-    lwz r3, 0x18(r30)
-    bl fn_802386E0
-    clFlowItem_Update_L_80237FA4:
-    lwz r3, 0x18(r30)
-    lbz r0, 0x158(r3)
-    cmplwi r0, 0x1
-    bne clFlowItem_Update_L_802380B8
-    li r3, 0x4
-    li r0, 0x0
-    stw r3, 0x8(r30)
-    li r4, 0x1
-    stw r0, 0x4(r30)
-    lwz r3, 0x30(r30)
-    bl SpriteHandle_SetActiveFlag
-    b clFlowItem_Update_L_802380B8
-    clFlowItem_Update_L_80237FD4:
-    li r3, 0x0
-    li r4, 0x0
-    bl fn_801699D8
-    li r3, 0x1
-    li r4, 0x0
-    bl fn_801699D8
-    lfs f0, lbl_806DB8A0(r2)
-    li r25, 0x0
-    stfs f0, 0xc(r30)
-    lwz r3, lbl_806D1A88(r13)
-    cmplwi r3, 0x0
-    beq clFlowItem_Update_L_80238008
-    b clFlowItem_Update_L_80238028
-    clFlowItem_Update_L_80238008:
-    li r3, 0x5c
-    bl Alloc
-    mr. r24, r3
-    beq clFlowItem_Update_L_80238020
-    li r25, 0x1
-    bl fn_802325FC
-    clFlowItem_Update_L_80238020:
-    stw r24, lbl_806D1A88(r13)
-    mr r3, r24
-    clFlowItem_Update_L_80238028:
-    lfs f1, lbl_806DB8A0(r2)
-    bl fn_80232284
-    lwz r3, 0x4(r30)
-    lis r0, 0x4330
-    stw r0, 0x10(r1)
-    xoris r0, r3, 0x8000
-    lfd f2, lbl_806DB8B0(r2)
-    stw r0, 0x14(r1)
-    lfs f0, lbl_806DB8A4(r2)
-    lfd f1, 0x10(r1)
-    lfs f3, lbl_806DB894(r2)
-    fsubs f1, f1, f2
-    lwz r3, 0x30(r30)
-    fdivs f0, f1, f0
-    fmuls f0, f3, f0
-    fctiwz f0, f0
-    stfd f0, 0x8(r1)
-    lwz r4, 0xc(r1)
-    bl SpriteHandle_SetCornerAlpha
-    lwz r0, 0x4(r30)
-    cmpwi r0, 0x28
-    blt clFlowItem_Update_L_802380B8
-    lwz r0, g_gameMode(r13)
-    cmpwi r0, 0x2
-    bne clFlowItem_Update_L_80238098
-    li r0, 0x27
-    stw r0, 0x10(r30)
-    b clFlowItem_Update_L_802380A0
-    clFlowItem_Update_L_80238098:
-    li r0, 0x25
-    stw r0, 0x10(r30)
-    clFlowItem_Update_L_802380A0:
-    lwz r3, 0x28(r30)
-    li r4, 0x0
-    bl SpriteHandle_SetActiveFlag
-    lwz r3, 0x24(r30)
-    li r4, 0x0
-    bl SpriteHandle_SetActiveFlag
-    clFlowItem_Update_L_802380B8:
-    lwz r3, 0x4(r30)
-    mr r25, r30
-    li r24, 0x0
-    addi r0, r3, 0x1
-    stw r0, 0x4(r30)
-    clFlowItem_Update_L_802380CC:
-    lwz r3, 0x1c(r25)
-    cmplwi r3, 0x0
-    beq clFlowItem_Update_L_802380E4
-    lwz r3, 0x0(r3)
-    lfs f1, lbl_806DB8A8(r2)
-    bl Sprite_AdvanceAnim
-    clFlowItem_Update_L_802380E4:
-    addi r24, r24, 0x1
-    addi r25, r25, 0x4
-    cmpwi r24, 0x2
-    blt clFlowItem_Update_L_802380CC
-    li r24, 0x0
-    mr r25, r30
-    clFlowItem_Update_L_802380FC:
-    lwz r3, 0x24(r25)
-    bl SpriteHandle_RecomputeCull
-    addi r24, r24, 0x1
-    addi r25, r25, 0x4
-    cmpwi r24, 0x4
-    blt clFlowItem_Update_L_802380FC
-    lwz r3, 0x18(r30)
-    bl fn_80238D9C
-    lwz r3, 0x14(r30)
-    cmplwi r3, 0x0
-    beq clFlowItem_Update_L_8023812C
-    bl fn_8023A148
-    clFlowItem_Update_L_8023812C:
-    lfs f2, 0xc(r30)
-    lfs f1, lbl_806DB888(r2)
-    fcmpo cr0, f2, f1
-    ble clFlowItem_Update_L_80238198
-    lfs f0, lbl_806DB8AC(r2)
-    fsubs f0, f2, f0
-    stfs f0, 0xc(r30)
-    lfs f0, 0xc(r30)
-    fcmpo cr0, f0, f1
-    bge clFlowItem_Update_L_8023815C
-    lfs f0, lbl_806DB8A0(r2)
-    stfs f0, 0xc(r30)
-    clFlowItem_Update_L_8023815C:
-    lwz r3, lbl_806D1A88(r13)
-    li r24, 0x0
-    cmplwi r3, 0x0
-    beq clFlowItem_Update_L_80238170
-    b clFlowItem_Update_L_80238190
-    clFlowItem_Update_L_80238170:
-    li r3, 0x5c
-    bl Alloc
-    mr. r29, r3
-    beq clFlowItem_Update_L_80238188
-    li r24, 0x1
-    bl fn_802325FC
-    clFlowItem_Update_L_80238188:
-    stw r29, lbl_806D1A88(r13)
-    mr r3, r29
-    clFlowItem_Update_L_80238190:
-    lfs f1, 0xc(r30)
-    bl fn_80232284
-    clFlowItem_Update_L_80238198:
-    bl ItemDisplay_GetOrCreate
-    bl ItemDisplay_Update
-    lwz r3, 0x10(r30)
-    lmw r24, 0x20(r1)
-    lwz r0, 0x44(r1)
-    mtlr r0
-    addi r1, r1, 0x40
-    blr
-}
 
 /* deleting destructor: shut the message window and item display down, tear
  * down every sprite resource, run the base dtor, optionally free self. */

@@ -27,20 +27,17 @@ void fn_800A51C4(void*);
 void __construct_array(void*, void (*)(void*), void (*)(void*, short), unsigned long, unsigned long);
 }
 
-/* Whole-array reset, equivalent to RankingTable_Init. */
+/* Whole-array reset like RankingTable_Init; the by-reference clear keeps the
+ * -1/0 constants inside the 8x-unrolled loop. */
+static inline void ClearSlot(RaceContextSlot& s)
+{
+    s.type = -1; s.id = -1; s.word08 = 0; s.word0C = 0; s.driver = 0;
+    s.index84 = 0; s.word88 = 0; s.word8C = 0; s.index90 = -1; s.index94 = -1;
+}
 static inline void InitializeSlots(RaceContextSlot* self)
 {
     for (int index = 0; index < 128; index++) {
-        self[index].type = -1;
-        self[index].id = -1;
-        self[index].word08 = 0;
-        self[index].word0C = 0;
-        self[index].driver = 0;
-        self[index].index84 = 0;
-        self[index].word88 = 0;
-        self[index].word8C = 0;
-        self[index].index90 = -1;
-        self[index].index94 = -1;
+        ClearSlot(self[index]);
     }
 }
 

@@ -3,7 +3,7 @@ typedef struct ClSoundQueue { unsigned int id; int state, delay; } ClSoundQueue;
 extern ClSoundQueue lbl_80677F40[37];
 extern unsigned char lbl_80598A60[];
 extern unsigned char lbl_806CFCA0, lbl_806D16C0;
-extern float lbl_806D94F8;
+extern const float lbl_806D94F8;
 extern const char lbl_8037CFF4[];
 extern void DebugPrintf(const char*, ...);
 extern int OSDisableInterrupts(void);
@@ -120,12 +120,12 @@ void fn_80190D24(void) {
                 if (lbl_80379554[id].mode==0) volume=(unsigned char)Clamp_Int(scaled,0,127);
                 else volume=(unsigned char)Clamp_Int(scaled,0,127);
                 if (voice->id != 1 && voice->id != 2 && (voice->category==0 || voice->category==1)) {
-                    float gain, level, setting;
+                    float gain, level, setting, product;
                     gain = lbl_806D94F8;
                     level = (float)(unsigned char)volume;
                     setting = (float)lbl_80598A60[0x2f];
-                    level = level * setting;
-                    volume = (int)(level * gain);
+                    product = level * setting;
+                    volume = (int)(product * gain);
                 }
                 sndFXCtrl(voice->handle,7,volume);
                 voice->flags &= ~0x10;

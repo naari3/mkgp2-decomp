@@ -10,11 +10,11 @@ typedef struct MJObjClassInfo {
     int (*member_init)(MJObj *self);
 } MJObjClassInfo;
 
-extern MJObjClassInfo lbl_804FC9A8;
+extern MJObjClassInfo hsdJObj;
 
 int MJObj_InitMember_RGBA(MJObj *self)
 {
-    int ret = lbl_804FC9A8.member_init(self);
+    int ret = hsdJObj.member_init(self);
 
     if (ret != 0) {
         return ret;

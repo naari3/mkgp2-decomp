@@ -122,7 +122,9 @@ extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
     if (airborne != 4 && k->v2a4.y <= lbl_806D96D0) fn_8019ADF4(k, &k->v164);
     force = fn_8019EA08(&k->v164);
     float previousSpeed = fn_8019EA08(&k->v188);
-    force += k->field1d8 * (Param(k, 0x18) * previousSpeed);
+    float response = k->field1d8;
+    previousSpeed = Param(k, 0x18) * previousSpeed;
+    force += response * previousSpeed;
     float targetSpeed = fn_8019EA08(&k->v170);
     if (fn_8019EA08(&k->v17c) > targetSpeed) force *= lbl_806D9768;
     float limit = k->field2f8 * (k->field38 + k->field2ec);

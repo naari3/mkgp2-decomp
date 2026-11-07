@@ -37,16 +37,21 @@ static inline float Length(float value) {
     }
     return value;
 }
+/* Matches with common-subexpression elimination off: the driver pointer is
+ * kept in a local while its status pointer is re-read for the store. */
+#pragma opt_common_subs off
 int fn_801E66B4(AICollisionController *self, AICollisionDriver *other) {
     AICollisionStatus *status;
     float *m;
     float dx, dy, dz;
     float distance, strength;
+    AICollisionDriver *drv;
     if (!other) return 0;
     status = other->status;
-    if (HasFlag(self->driver->status->flags, 0x80) == 1) return 0;
+    drv = self->driver;
+    if (HasFlag(drv->status->flags, 0x80) == 1) return 0;
     if (HasFlag(status->flags, 0x80) == 1) return 0;
-    self->driver->status->target = other;
+    drv->status->target = other;
     m = KartDriver_GetKartRootMtx(other);
     dx = m[3] - self->x;
     dy = m[7] - self->y;
@@ -60,3 +65,4 @@ int fn_801E66B4(AICollisionController *self, AICollisionDriver *other) {
     if (((status->flags & 0x20000000) != 0)) fn_801DF24C(self->effect, 2);
     return 1;
 }
+#pragma opt_common_subs reset

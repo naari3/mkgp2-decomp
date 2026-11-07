@@ -202,8 +202,17 @@
     "__dt__12FlowBaseDtorFv": "dtor_801BA14C"
   },
   "src/game/clFlowItemSelect_Init.c": {
-    "extab_clFlowItemSelect_Init": "@etb_80014768",
-    "extabindex_clFlowItemSelect_Init": "@eti_80027EA8"
+    "__ct__14FlowItemSelectFv": "clFlowItemSelect_Init",
+    "__vt__14FlowItemSelect": "lbl_8049B148",
+    "__ct__14FrameSelectionFv": "InitializeFrameSelection",
+    "__dt__14FrameSelectionFv": "dtor_801BA14C",
+    "__ct__9FlowChildFiiiii": "fn_8023D080",
+    "__dt__14FlowChildOwnerFv": "dtor_801CCA30",
+    "__ct__6TexMgrFv": "TexMgr_Init",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "@242": "@etb_80014768",
+    "@243": "@eti_80027EA8"
   },
   "src/game/BananaField_Render.c": {
     "extab_BananaField_Render": "@etb_800124B0",
@@ -571,16 +580,6 @@
   "src/game/SpriteAnimParamBlock.c": {
     "extab_SpriteAnimParamBlock_Reload": "@etb_8001CDA4",
     "extabindex_SpriteAnimParamBlock_Reload": "@eti_8002AF2C"
-  },
-  "src/game/VolumeCalibration.c": {
-    "extab_VolumeCalibration_DrawOverlay": "@etb_80005EA0",
-    "extab_VolumeCalibration_Tick": "@etb_80005EA8",
-    "extab_VolumeCalibration_Dtor": "@etb_80005EB0",
-    "extab_VolumeCalibration_Ctor": "@etb_80005EB8",
-    "extabindex_VolumeCalibration_DrawOverlay": "@eti_8001FB2C",
-    "extabindex_VolumeCalibration_Tick": "@eti_8001FB38",
-    "extabindex_VolumeCalibration_Dtor": "@eti_8001FB44",
-    "extabindex_VolumeCalibration_Ctor": "@eti_8001FB50"
   },
   "src/game/Frame.c": {
     "extab_Frame_UpdatePerFrameState": "@etb_80005740",
@@ -1570,8 +1569,9 @@
     "__ct__6CupSprFiii": "Sprite_InitWithAnim",
     "extab_clFlowCup_Dtor": "@etb_800142DC",
     "extabindex_clFlowCup_Dtor": "@eti_80027E18",
-    "extab_clFlowCup_Init": "@etb_800142E4",
-    "extabindex_clFlowCup_Init": "@eti_80027E24"
+    "__ct__7CupFlowFv": "clFlowCup_Init",
+    "__ct__8FlowBaseFv": "InitializeFrameSelection",
+    "__dt__8FlowBaseFv": "dtor_801BA14C"
   },
   "src/game/clFlowRound.c": {
     "extab_clFlowRound_Draw": "@etb_800145E4",
@@ -2577,7 +2577,16 @@
     "@1016": "jumptable_8049A948",
     "@1219": "jumptable_8049A9B0",
     "@3117": "lbl_8039A498",
-    "@3148": "lbl_8039A50C"
+    "@3148": "lbl_8039A50C",
+    "@328": "jumptable_8049A96C",
+    "@764": "jumptable_8049A98C",
+    "@1054": "jumptable_8049A948",
+    "@1264": "jumptable_8049A9B0",
+    "@3124": "lbl_8039A498",
+    "@3155": "lbl_8039A50C",
+    "quote$463": "lbl_806D1870",
+    "init$464": "lbl_806D1874",
+    "@596": "lbl_806D9AE4"
   },
   "src/game/fn_801DEF94.cpp": {
     "__ct__8SteerMgrFP7KartRefPv": "SteeringMgr_Init",
@@ -2886,7 +2895,10 @@
     "extabindex_fn_8013D800": "@eti_80024EC0",
     "extabindex_fn_8013D940": "@eti_80024ED8",
     "extabindex_fn_8013DA00": "@eti_80024EE4",
-    "extabindex_dtor_8013DCBC": "@eti_80024F20"
+    "extabindex_dtor_8013DCBC": "@eti_80024F20",
+    "__ct__16PreviewModelCtorFPvUc": "fn_8013D800",
+    "__dt__14PreviewBaseOOLFv": "dtor_8013DCBC",
+    "__ct__8Normal3DFPvUc": "clNormal3D_Construct"
   },
   "src/game/SpriteEffects.c": {
     "__dt__7Effect1Fv": "fn_8013DD38",
@@ -4755,7 +4767,9 @@
     "SetAnimParam__6SpriteFis": "Sprite_SetAnimParam",
     "__dt__21KeyVecBase<8KeyGroup>Fv": "dtor_801C1B78",
     "@741": "jumptable_804EDDB0",
-    "@743": "lbl_806DB0C0"
+    "@743": "lbl_806DB0C0",
+    "@749": "jumptable_804EDDB0",
+    "@751": "lbl_806DB0C0"
   },
   "src/game/anon_8021ED88.cpp": {
     "__nw__FUl": "Alloc",
@@ -10785,7 +10799,48 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "@582": "jumptable_803FE388",
-    "@679": "jumptable_803FE3A4"
+    "@679": "jumptable_803FE3A4",
+    "__dt__20TransitionModelOwnerFv": "dtor_80080444",
+    "__dt__21TransitionEmptyMemberFv": "dtor_8008036C",
+    "__dt__18TransitionInitBaseFv": "dtor_8008068C",
+    "__dt__37TransitionOwner<18TransitionQuadInit>Fv": "dtor_800804C0",
+    "__dt__38TransitionOwner<19TransitionFlashInit>Fv": "dtor_8008051C",
+    "__dt__38TransitionOwner<19TransitionShakeInit>Fv": "dtor_80080578",
+    "__dt__37TransitionOwner<18TransitionIrisInit>Fv": "dtor_800805D4",
+    "__dt__37TransitionOwner<18TransitionFadeInit>Fv": "dtor_80080630",
+    "__dt__41TransitionOwner<22TransitionRouletteInit>Fv": "dtor_800803A8",
+    "@607": "@etb_80008848",
+    "@616": "@etb_80008850",
+    "@640": "@etb_80008858",
+    "@655": "@etb_80008880",
+    "@668": "@etb_800088A8",
+    "@681": "@etb_800088B0",
+    "@694": "@etb_800088B8",
+    "@707": "@etb_800088C0",
+    "@720": "@etb_800088C8",
+    "@730": "@etb_800088D0",
+    "@64": "@etb_800088D8",
+    "@140": "@etb_800088F0",
+    "@498": "@etb_800089D4",
+    "@538": "@etb_800089EC",
+    "@570": "@etb_800089F4",
+    "@65": "@eti_80021644",
+    "@141": "@eti_80021650",
+    "@499": "@eti_8002165C",
+    "@539": "@eti_80021668",
+    "@571": "@eti_80021674",
+    "@608": "@eti_80021680",
+    "@617": "@eti_8002168C",
+    "@641": "@eti_80021698",
+    "@656": "@eti_800216A4",
+    "@669": "@eti_800216B0",
+    "@682": "@eti_800216BC",
+    "@695": "@eti_800216C8",
+    "@708": "@eti_800216D4",
+    "@721": "@eti_800216E0",
+    "@731": "@eti_800216EC",
+    "@494": "jumptable_803FE388",
+    "@599": "jumptable_803FE3A4"
   },
   "src/game/Scene_8015BCC4.cpp": {
     "__ct__13ViewerScene3DFUi": "Scene3D_Init",
@@ -11077,14 +11132,8 @@
     "__dt__4NodeFv": "fn_80195A7C",
     "__dt__5ModelFv": "Object_DtorWithGXSync"
   },
-  "src/game/objview/MapWaterEffect_Init.cpp": {
-    "__ct__14MapWaterEffectFv": "MapWaterEffect_Init",
-    "__dt__9WaterBaseFv": "dtor_8016A270",
-    "__vt__9WaterBase": "lbl_80490FE0",
-    "__vt__14MapWaterEffect": "lbl_80495F54",
-    "__ct__5GroupFP11GroupParams": "fn_80195DA8",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
+  "src/game/objview/MapWaterEffect_Init.c": {
+    "@33": "jumptable_80495F6C"
   },
   "src/game/kartmove/KartMovement_CollisionUpdate.cpp": {
     "__dt__12CollisionVecFv": "dtor_80036E40"
@@ -12675,5 +12724,19 @@
     "__ct__9GXChannelFPvPvii": "GXChannel_Init",
     "__dt__9GXChannelFv": "dtor_8007D9C4",
     "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform"
+  },
+  "src/game/VolumeCalibration.cpp": {
+    "Draw__5clCabFv": "VolumeCalibration_DrawOverlay",
+    "Update__5clCabFv": "VolumeCalibration_Tick",
+    "__dt__5clCabFv": "VolumeCalibration_Dtor",
+    "__vt__5clCab": "lbl_803F57CC",
+    "__RTTI__5clCab": "lbl_806CED98",
+    "__RTTI__11clJobRunner": "lbl_806CED90",
+    "__ct__11clJobRunnerFv": "GameMode_BaseInit",
+    "__dt__11clJobRunnerFv": "dtor_8002CDF4",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "extab_clCab_Update": "@etb_80005EA8",
+    "extabindex_clCab_Update": "@eti_8001FB38"
   }
 }

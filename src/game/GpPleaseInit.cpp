@@ -20,17 +20,20 @@ clFlowGpPlease::clFlowGpPlease() {
     panel=new GpPanelBase(sprite,10);
     panel->Fade();
     list.Append(panel);
+    GpInitNode *textEnd;
     unsigned char *ids;
     int x;
+    GpInitList *textList=&list;
     int i;
+    textEnd=textList->End().node;
     i=0; ids=lbl_806D1264; x=118;
     for(;i<3;i++) {
         panel=new GpTextPanel(*ids,x);
         panel->Fade();
         fn_801D8AA0(((GpTextPanel *)panel)->holder.p,5);
         fn_801D8A98(((GpTextPanel *)panel)->holder.p,6);
-        list.Append(panel);
-        x+=202; ids++;
+        textList->InsertAt(textEnd,panel);
+        ids++; x+=202;
     }
     sprite=new CourseSprite(0x195,1,0);
     sprite->x=lbl_806D9E30; sprite->y=lbl_806D9E44;

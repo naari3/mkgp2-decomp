@@ -709,8 +709,8 @@ CardEntry::CardEntry(unsigned char items)
     fn_801F93EC(p->labels.at(1), p->ax + p->labelOfs[1][0], p->ay + p->labelOfs[1][1]);
     fn_801F93EC(p->labels.at(2), p->bx + p->labelOfs[2][0], p->by + p->labelOfs[2][1]);
     fn_801F93EC(p->labels.at(3), p->bx + p->labelOfs[3][0], p->by + p->labelOfs[3][1]);
-    float cx = p->ax + lbl_806D9AD8 * (p->bx - p->ax);
-    float cy = p->ay + lbl_806D9AD8 * (p->by - p->ay);
+    float cx = p->ax + 0.5f * (p->bx - p->ax);
+    float cy = p->ay + 0.5f * (p->by - p->ay);
     Sprite *c = p->cursor;
     c->x = cx;
     c->y = cy;
@@ -723,9 +723,18 @@ CardEntry::CardEntry(unsigned char items)
         fn_80232284(GetFader(), bright);
     }
     SetInput(1);
-    const float *pScale = &lbl_806D9A0C[isJapanese()];
-    const float *pX = &lbl_806D9A14[isJapanese()];
-    const float *pSp = &lbl_806D9A1C[isJapanese()];
+    int xOffset;
+    int scaleOffset;
+    int spacingOffset;
+    const float *pX;
+    const float *pScale;
+    const float *pSp;
+    scaleOffset = isJapanese() * sizeof(float);
+    pScale = (const float *)((const char *)lbl_806D9A0C + scaleOffset);
+    xOffset = isJapanese() * sizeof(float);
+    pX = (const float *)((const char *)lbl_806D9A14 + xOffset);
+    spacingOffset = isJapanese() * sizeof(float);
+    pSp = (const float *)((const char *)lbl_806D9A1C + spacingOffset);
     TextNode *n;
 
     n = new TextNode(*pX, lbl_806D9ADC, GetTextureByIdAndLang(0x87, -1));
@@ -1920,7 +1929,8 @@ template <class T> void KeyVecBase<T>::init(unsigned long n, T v) {
     T *p = data;
     for (; p < end; p++) {
         try {
-            new (p) T(v);
+            T *q = new (p) T;
+            if (q) *q = v;
         } catch (...) {
             throw;
         }
@@ -2050,11 +2060,15 @@ struct KeyBoard {
     }
 };
 
+static inline unsigned short ReadNameCharacter(const void *buffer, int i) {
+    return ((const unsigned short *)buffer)[i + 1];
+}
+
 struct NameBuf {
     unsigned short c[8];
     int pos;
     bool Add(unsigned short ch);
-    unsigned short Get(int i) { return c[i + 1]; }
+    unsigned short Get(int i) { return ReadNameCharacter(this, i); }
     void Back() {
         if (pos > 0) {
             c[pos + 1] = 0x8162;
@@ -2526,7 +2540,7 @@ struct KanaOut {
     unsigned short c;
 };
 
-static inline int ConvertKana(unsigned short prev, unsigned short ch, KanaOut *out) {
+static inline int ConvertKana(unsigned short prev, unsigned short ch, void *out) {
     int type = -1;
     if (ch == 0x814A) {
         type = 0;
@@ -2535,17 +2549,17 @@ static inline int ConvertKana(unsigned short prev, unsigned short ch, KanaOut *o
         type = 1;
     }
     if (prev == 0x8162 && type < 0) {
-        out->c = ch;
+        *(unsigned short *)out = ch;
         return 1;
     }
     if (type < 0) {
-        out->c = ch;
+        *(unsigned short *)out = ch;
         return 1;
     }
     for (int t = 0; t < 4; t++) {
         for (int i = 0; i < 60; i++) {
             if (prev == lbl_8049A8F8[t].chars[i] && lbl_8049A8F8[t].marks[type][i] != 0x8140) {
-                out->c = lbl_8049A8F8[t].marks[type][i];
+                *(unsigned short *)out = lbl_8049A8F8[t].marks[type][i];
                 return 0;
             }
         }
@@ -2683,7 +2697,7 @@ void NameEntry::Draw() {
         } else {
             res = g + 0x190D;
         }
-        int sel = board.group == g;
+        int sel = board.group == g ? 1 : 0;
         KeyGroup &kg = board.groups.at(g);
         int n = (bool)sel == true ? 1 : 0;
         {
@@ -2883,12 +2897,12 @@ void NameEntry::Update() {
             fn_801FE2DC();
         }
     }
-    bright -= lbl_806D9A78;
-    if (bright < lbl_806D9A74) {
-        bright = lbl_806D9A74;
+    bright -= 0.016666668f;
+    if (bright < 0.0f) {
+        bright = 0.0f;
     }
     fn_80232284(GetFader(), bright);
-    if (state != 4 && state != 5 && bright <= lbl_806D9A74) {
+    if (state != 4 && state != 5 && bright <= 0.0f) {
         Commit();
     }
     for (FadeObj **it = nodes.begin(); it != nodes.end(); it++) {

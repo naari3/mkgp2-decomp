@@ -141,7 +141,7 @@ const char *GetTextureByIdAndLang(int id, int lang);
 int isJapanese(void);
 extern unsigned char lbl_806D12E4[4];
 unsigned char fn_801D5C88(PlayerData *pd, int cc);
-int fn_801D59A0(PlayerData *pd, int cc);
+int fn_801D59A0(PlayerData *pd, int cc, int cup);
 void fn_8011FAFC(ResCtrl *ctrl, int layer);
 int SpriteHandle_CreateDefault(ResCtrl *ctrl, int layer);
 void SpriteHandle_Destroy(int h);
@@ -340,6 +340,7 @@ public:
     int handles[60];
     ResCtrl cards[60];
 
+    void PositionSelection();
     void Select(int delta);
     clFlowCCItem();
     virtual ~clFlowCCItem();
@@ -847,7 +848,7 @@ clFlowCCGP::clFlowCCGP(int cc) : cc(cc), first(1) {
     int i;
     for (i = 0; i < 8; i++) {
         if (kGPCupIds[i] != 6 || lbl_806D12E4[this->cc] != 0) {
-            int rank = fn_801D59A0(pd, this->cc) - sub;
+            int rank = fn_801D59A0(pd, this->cc, kGPCupIds[i]) - sub;
             if (rank < -1) {
                 rank = -1;
             }
@@ -890,8 +891,8 @@ clFlowCCGP::clFlowCCGP(int cc) : cc(cc), first(1) {
     text[3]->scale = -1.0f;
     text[1]->scale = -2.0f;
     text[2]->scale = -6.0f;
-    for (i = 0; i < 4; i++) {
-        fn_801F93EC(text[i], kGPTextPos[i].x, kGPTextPos[i].y);
+    for (int positionIndex = 0; positionIndex < 4; positionIndex++) {
+        fn_801F93EC(text[positionIndex], kGPTextPos[positionIndex].x, kGPTextPos[positionIndex].y);
     }
     if (fn_801D5C88(pd, this->cc) == 1) {
         fn_801F93EC(text[1], 79.0f, 99.0f);
@@ -1039,6 +1040,15 @@ clFlowCCCharaItem::~clFlowCCCharaItem() {
     }
 }
 
+inline void clFlowCCItem::PositionSelection() {
+    float x = kItemX[field1C];
+    float y = kItemY[field20];
+    { Sprite *sprite = *grp[4]; sprite->x = x; sprite->y = y; }
+    { Sprite *sprite = *grp[5]; sprite->x = x; sprite->y = y; }
+    { Sprite *sprite = *grp[6]; sprite->x = x; sprite->y = y; }
+    fn_8011F804(handle, lbl_806DB834, y);
+}
+
 void clFlowCCItem::Select(int delta) {
     if (delta != 0) {
         PlayerData *pd = &g_playerData;
@@ -1050,15 +1060,10 @@ void clFlowCCItem::Select(int delta) {
             if (field20 > 4) field20 = 0;
         } while (pd->unlocked[kCards[field20][field1C]] != 1);
         int item = PlayerData_ResolveUnlockedIdByIndex(pd, kCards[field20][field1C]);
-        short res = Item_GetDescriptorField0(item, 0);
+        int res = (short)Item_GetDescriptorField0(item, 0);
         SpriteAnimParamBlock_SetAnimParamCached(grp[4], resId, res);
         fn_8019FF6C(*grp[4], 1);
-        float x = kItemX[field1C];
-        float y = kItemY[field20];
-        { Sprite *sprite = *grp[4]; sprite->x = x; sprite->y = y; }
-        { Sprite *sprite = *grp[5]; sprite->x = x; sprite->y = y; }
-        { Sprite *sprite = *grp[6]; sprite->x = x; sprite->y = y; }
-        fn_8011F804(handle, lbl_806DB834, y);
+        PositionSelection();
         SpriteAnimParamBlock_SetAnimParamCached(grp[1], resId, res);
         TexMgr_SetTexture(text[4], fn_8023DAA8(item));
         TexMgr_SetTexture(text[5], fn_8023D938(item, 0));
@@ -1110,12 +1115,14 @@ void clFlowCCItem::Update() {
             (*grp[6])->prio = 6;
             ResCtrl rc;
             int rowBase = 0;
+            int i;
             for (int row = 0; row < 5; row++) {
-                for (int col = 0, i = rowBase; col < 12; col++, i++) {
+                i = rowBase;
+                for (int col = 0; col < 12; col++, i++) {
                     SpriteHandle_Destroy(handles[i]);
                     handles[i] = SpriteHandle_CreateDefault(&cards[i], 5);
                 }
-                rowBase += 12;
+                rowBase = i;
             }
             fn_80121E10(&rc);
             rc.tail[0] = 1; rc.tail[1] = 1; rc.tail[2] = 1;
@@ -1226,7 +1233,7 @@ clFlowCCItem::clFlowCCItem() : field1C(0), field20(0), resId(0x13B9), paramId(0x
     Select(1);
 }
 
-static inline void SetCharaGroup(Sprite **group, int which, int index) {
+static inline void SetCharaGroup(Sprite **group, const int &which, int index) {
     PlayerData *pd = &g_playerData;
     int id = kCharaGroups[which][index];
     unsigned char special = 0;
@@ -1474,7 +1481,6 @@ void clFlowCCDate::Update() {
 
 clFlowCCDate::clFlowCCDate() : field1C(1), field1D(1), field1E(0), field20(0), indicator(0) {
     int i;
-    int mileage;
     indicator = new clIndicator(0x75, 0x4A, 0x1875, 0x1875, 6);
     fn_8023CD3C(indicator, lbl_806DB85C, lbl_806DB860);
     fn_8023CD24(indicator, lbl_806DB85C, lbl_806DB864);
@@ -1514,8 +1520,7 @@ clFlowCCDate::clFlowCCDate() : field1C(1), field1D(1), field1E(0), field20(0), i
     TexMgr_SetTexture(text[1], GetTextureByIdAndLang(0x76, -1));
     fn_801F9014(text[2], pd);
     TexMgr_SetTexture(text[3], GetTextureByIdAndLang(0x77, -1), pd->cardCount);
-    mileage = GetCoinMilage(pd);
-    TexMgr_SetTexture(text[4], GetTextureByIdAndLang(0x78, -1), mileage);
+    TexMgr_SetTexture(text[4], GetTextureByIdAndLang(0x78, -1), GetCoinMilage(pd));
     TexMgr_SetTexture(text[5], get_title_name_global(SINGLETON_INSTANCE(lbl_806D10A0)));
     TexMgr_SetTexture(text[6], GetTextureByIdAndLang(0x79, -1));
     TexMgr_SetTexture(text[7], GetTextureByIdAndLang(0x7A, -1));
@@ -1526,7 +1531,7 @@ clFlowCCDate::clFlowCCDate() : field1C(1), field1D(1), field1E(0), field20(0), i
     text[0]->scale = -6.0f;
     text[6]->scale = -1.0f;
     text[11]->scale = !isJapanese() ? -1.0f : lbl_806DB880;
-    for (i = 0; i < 12; i++) fn_801F93EC(text[i], kDateTextPos[i].x, kDateTextPos[i].y);
+    for (int i = 0; i < 12; i++) fn_801F93EC(text[i], kDateTextPos[i].x, kDateTextPos[i].y);
     if (isJapanese()) {
         fn_801F93EC(text[0], lbl_806DB780.x, lbl_806DB780.y);
         fn_801F93EC(text[11], lbl_806DB858 + kDateTextPos[11].x, kDateTextPos[11].y);

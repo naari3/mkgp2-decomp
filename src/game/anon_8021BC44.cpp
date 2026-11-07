@@ -175,6 +175,7 @@ struct clCSPartsInerface {
     unsigned char active;
     float x, y;
     float alpha;
+    void SetPos(float px, float py) { x = px; y = py; }
     virtual ~clCSPartsInerface();
     virtual void m0C();
     virtual void m10();
@@ -375,7 +376,7 @@ extern const float lbl_806DB17C;
 extern const float lbl_806DB180;
 extern const float lbl_806DB184;
 extern InputState *g_pInputState;
-extern ResultPool lbl_803C5400;
+extern const ResultPool lbl_803C5400;
 extern char lbl_803C63F8[];
 extern char lbl_806DB088[4];
 extern char lbl_806DB138[8];
@@ -836,7 +837,7 @@ TimeAttackResult::TimeAttackResult()
     : state(0), timer(lbl_806DB074), x18(0), noRecord(0), rank(-1), showBanner(0), time(lbl_806DB074), best(lbl_806DB078), fade(lbl_806DB07C),
       credit(0), record(0), banner(0), title(0), coin(0), entry(0), prompt(new CoinPrompt(0x74, -1, 0x1872, -1, 4)),
       course(new Sprite(0x14F, 0, 0)), blink(new Blink) {
-    ResultPool *P = &lbl_803C5400;
+    const ResultPool *P = &lbl_803C5400;
     rank = TaRecord_GetLastInsertedRank();
     noRecord = fn_80169DF0();
     showBanner = fn_8024F588()->flag;
@@ -938,6 +939,14 @@ void TimeAttackResult::Draw() {
             fn_801A0004(b->spr);
         }
         HSD_StateInvalidate(-1);
+    }
+}
+
+static inline void StripNameSpaces(unsigned short *buf) {
+    for (int i = 0; i < 5; i++) {
+        if (buf[i] == 0x8162) {
+            buf[i] = 0;
+        }
     }
 }
 
@@ -1050,11 +1059,7 @@ void TimeAttackResult::Update() {
         if (entry->Done() == 1) {
             unsigned short buf[5];
             wcsncpy(buf, entry->name, 5);
-            for (int i = 0; i < 5; i++) {
-                if (buf[i] == 0x8162) {
-                    buf[i] = 0;
-                }
-            }
+            StripNameSpaces(buf);
             name.c[0] = buf[0];
             name.c[1] = buf[1];
             name.c[2] = buf[2];
@@ -1166,14 +1171,15 @@ void TimeAttackResult::Update() {
     case 19:
         if (coin == 0) {
             fn_8018CC64();
-            int lng = g_longRoundFlag;
-            int rev = g_reverseRoundFlag;
-            int cup = g_cupId;
-            int cc = g_ccClass;
+            int cc, cup, rev, lng;
+            rev = g_reverseRoundFlag;
+            lng = g_longRoundFlag;
+            cup = g_cupId;
+            cc = g_ccClass;
             int kart = g_kartVariant;
             int chara = g_characterId;
             int earned = GetEarnedCoins();
-            fn_8018B31C(&g_playerData, chara, kart, cc, cup, lng, rev, GetCoinMilage(&g_playerData) + earned,
+            fn_8018B31C(&g_playerData, chara, kart, cc, cup, lng, rev, earned + GetCoinMilage(&g_playerData),
                         g_playerData.b19B, g_playerData.b19C, g_playerData.b1B1, 1, g_totalRaceTime);
             DebugPrintf(lbl_803C63F8, fn_8018B300());
             coin = new CoinContinue;
@@ -1217,12 +1223,8 @@ void TimeAttackResult::Update() {
     Blink *b = blink.p;
     if (b->active) {
         if (b->t <= 8) {
-            float a;
-            if (!b->closing) {
-                a = b->t * lbl_806DB0E8;
-            } else {
-                a = lbl_806DB07C - b->t * lbl_806DB0E8;
-            }
+            float a = b->closing == 0 ? b->t * lbl_806DB0E8
+                                      : lbl_806DB07C - b->t * lbl_806DB0E8;
             b->spr->alpha = a;
             if (b->t++ == 8 && b->closing) {
                 b->active = 0;
@@ -1315,7 +1317,7 @@ void RecordBanner::Update() {
 
 RecordBanner::RecordBanner() : flash(new Sprite(0x49, 1, 0)), glow(0), label(0), state(0), timer(0), done(0) {
 
-    ResultPool *P = &lbl_803C5400;
+    const ResultPool *P = &lbl_803C5400;
     rows[0].SetPos(lbl_806DB128, lbl_806DB12C);
     rows[1].SetPos(lbl_806DB128, lbl_806DB130);
     if (isJapanese() == 1) {
@@ -1357,7 +1359,7 @@ RecordBanner::RecordBanner() : flash(new Sprite(0x49, 1, 0)), glow(0), label(0),
 }
 
 void TimeAttackResult::DrawResult(float alpha) {
-    ResultPool *P = &lbl_803C5400;
+    const ResultPool *P = &lbl_803C5400;
     float k;
     float pulse = lbl_806DB07C - LUT_Sin12Bit(lbl_806DB14C * x14);
     fn_80169334(1, 0x152F, 0, lbl_806DB09C, lbl_806DB150, lbl_806DB154, lbl_806DB07C, alpha);
@@ -1367,8 +1369,7 @@ void TimeAttackResult::DrawResult(float alpha) {
         if (lbl_806DB074 == k) {
             digits[i]->m0C();
         }
-        digits[i]->x = P->partX[i];
-        digits[i]->y = lbl_806DB164;
+        digits[i]->SetPos(P->partX[i], lbl_806DB164);
         digits[i]->alpha = alpha;
         digits[i]->Update();
         digits[i]->Draw();
@@ -1513,7 +1514,8 @@ void CoinContinue::Select() {
 CoinContinue::CoinContinue()
     : state(0), timer(lbl_806DB0FC), detail(new CoinPopupDetail(0, 1, 0xB)), prompt(new CoinPrompt(0x74, 0x4A, 0x1874, 0x1875, 5)) {
     SetInput(1);
-    detail.p->SetRect(lbl_806DB100, lbl_806DB104, lbl_806DB108, lbl_806DB104);
+    CoinPopupDetail *popup = detail.p;
+    popup->SetRect(lbl_806DB100, lbl_806DB104, lbl_806DB108, lbl_806DB104);
     ItemDisplay_Start(ItemDisplay_GetOrCreate(), 0x1AE8);
     fn_8023CD3C(prompt.p, lbl_806DB110, lbl_806DB090);
     fn_8023CCF8(prompt.p, lbl_806DB0CC, lbl_806DB098);

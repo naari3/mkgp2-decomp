@@ -13,3 +13,8 @@ Source: Codex worker c3_n3_scene16_20261105 (gpt-6.1-sol/medium) + coordinator a
 Source: Codex worker c18_u87_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u87: Owner-approved real TU constant pool ownership resolves the c3 pooled-addressing residual for fn_80164614. Adding .rodata 0x80369798..0x80369D78 and real float/entry/string/Vec constants reproduces base+0x44c rematerialization; pool symbols all 100%, .rodata 100%. Text improves 97.09633 to 98.6315 but remains NM: const entry.character cached across calls, DVD size/buffer register swap, constant-one hoisting, late enemy webs. Casting through mutable local/per-access pointers worsens (96.0/97.59939); external table linkage and generic const character inline accessor are invariant (98.48624 before pool split). Full coordinator build req2 SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65, fallback input, native gain zero. No filler objects or source-closed claim.
+
+## c19_u37_20261107
+Source: Codex worker c19_u37_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u37: baseline/final98.6315 invariant after correcting DVD start/length to canonical unsigned32 and ItemSelect_GetSlotItemId return to actual int. Mutable table definition changes cached-character code but moves 96B into data (132B total), text96.489296/2636B, rodata93.50474; discarded. DVD buffer declaration before size is invariant. Three approaches exhausted below99; single-function TU remainsNM, no native gain. Only private-header semantic type corrections retained; complete final objdiff JSON equals baseline.

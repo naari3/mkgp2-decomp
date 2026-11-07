@@ -6,11 +6,12 @@
 extern "C" {
 extern AIPairRecord lbl_806793D8[8];
 extern void *g_courseData;
-extern float lbl_806DA428, lbl_806DA430, lbl_806DA43C, lbl_806DA44C;
-extern float lbl_806DA4D0, lbl_806DA4FC, lbl_806DA500, lbl_806DA504;
-extern float lbl_806DA508, lbl_806DA50C, lbl_806DA510, lbl_806DA514;
-extern float lbl_806DA518, lbl_806DA51C, lbl_806DA520, lbl_806DA524;
-extern float lbl_806DA528, lbl_806DA52C, lbl_806D1930, lbl_806D193C;
+extern const float lbl_806DA428, lbl_806DA430, lbl_806DA43C, lbl_806DA44C;
+extern const float lbl_806DA4D0, lbl_806DA4FC, lbl_806DA500, lbl_806DA504;
+extern const float lbl_806DA508, lbl_806DA50C, lbl_806DA510, lbl_806DA514;
+extern const float lbl_806DA518, lbl_806DA51C, lbl_806DA520, lbl_806DA524;
+extern const float lbl_806DA528, lbl_806DA52C;
+extern float lbl_806D1930, lbl_806D193C;
 float PseudoRandom_Next();
 float LateralOffset_GetMagnitude(void *);
 int fn_801EB708();

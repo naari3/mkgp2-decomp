@@ -1,4 +1,4 @@
-#include "game/SpriteVoiceGoalPrivate.h"
+#include "game/MidRaceVoicePrivate.h"
 extern int g_taMinLapPlayerIndex;
 extern int g_cupId, g_longRoundFlag, g_reverseRoundFlag;
 extern unsigned char fn_801A1BD0(float *, SpriteVoiceRaceEntry *);
@@ -10,7 +10,10 @@ extern unsigned int lbl_806D17E0, lbl_806D17E4, lbl_806D17E8, lbl_806D17EC;
 extern SpriteVoiceRaceEntry *lbl_80679260[8];
 extern unsigned char VoiceQueue_Push(short, short, unsigned char, unsigned char);
 extern void *g_raceRankingPathObject;
-extern int Race_CompareKartProgress(void *, void *, void *);
+extern int Race_CompareKartProgress(void *, int, int);
+static inline int Goal_Participant(SpriteVoiceRaceEntry *entry) {
+    return ((MidRaceKart *)RaceVoice_Kart(entry))->participantIndex;
+}
 
 extern int g_ccClass;
 #define PUSH(id) VoiceQueue_Push((id), -1, 0, 1)
@@ -31,7 +34,7 @@ static inline float *Goal_Line(float *lines) {
     return &lines[g_ccClass * 128 + ((g_cupId - 1) * 16 + (g_longRoundFlag * 8 + g_reverseRoundFlag * 4))];
 }
 int fn_801AECF4(void) {
-    short *tables = lbl_80496C38;
+    short *tables = (short *)&lbl_80496C38;
     int rank;
     if (lbl_806D178D) return 1;
     if (g_lastPlayerCurrentCheckpoint != g_goalTriggerCheckpoint) return 0;
@@ -53,7 +56,7 @@ int fn_801AECF4(void) {
         lbl_806D17EC = (unsigned int)time;
         lbl_806D17E8 = (unsigned long long)time >> 32;
     }
-    for (rank = 0; rank < 8; rank++) lbl_80679260[rank] = VoiceGoal_Find(rank);
+    for (rank = 0; rank < 8; rank++) lbl_80679260[rank] = RaceVoice_FindByRank(rank);
     rank = g_raceEntryArray[g_taMinLapPlayerIndex].player;
     switch (rank) {
         case 0: {
@@ -163,7 +166,7 @@ int fn_801AECF4(void) {
             }
         }
         default: {
-            int diff = Race_CompareKartProgress(g_raceRankingPathObject,             VoiceGoal_Kart(lbl_80679260[0])->progress, VoiceGoal_Kart(&g_raceEntryArray[g_taMinLapPlayerIndex])->progress);
+            int diff = Race_CompareKartProgress(g_raceRankingPathObject,             Goal_Participant(lbl_80679260[0]), Goal_Participant(&g_raceEntryArray[g_taMinLapPlayerIndex]));
             if (diff < 3) {
                 PUSH(0x20D);
                 PUSH(SELECT(&g_raceEntryArray[g_taMinLapPlayerIndex]));

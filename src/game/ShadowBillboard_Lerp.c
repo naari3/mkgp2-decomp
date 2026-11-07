@@ -28,7 +28,8 @@ static inline void LerpRow(ShadowBillboard *sb, const float *target, float t, fl
 {
     int j;
     for (j = 0; j < 3; j++) {
-        sb->mtx[row + j] += t * (scale * (target[row + j] - sb->mtx[row + j]));
+        int k = row + j;
+        sb->mtx[k] += t * (scale * (target[k] - sb->mtx[k]));
     }
 }
 
@@ -40,7 +41,8 @@ void ShadowBillboard_LerpMtx4x4(ShadowBillboard *sb, const float *target, float 
 
     t = Saturate_Double(lbl_806D2B88 * t, lbl_806D2B8C, lbl_806D2B6C);
     for (i = 0; i < 3; i++) {
-        LerpRow(sb, target, t, lbl_802EE4CC[i], i * 4);
+        int row = i * 4;
+        LerpRow(sb, target, t, lbl_802EE4CC[i], row);
     }
     Mtx34_Orthonormalize(sb->mtx);
     CopyPosition((Vec3f *)(sb->mtx + 12), (const Vec3f *)(target + 12));
