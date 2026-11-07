@@ -16,8 +16,8 @@ static inline void UpdateRecord(AIPairRecord *record, AIPairRecord *base, Vec3 *
     if (record && record->driver) {
         float *m = KartDriver_GetKartRootMtx(record->driver);
         float z, y, x;
-        int i;
         AIPairRecord *other;
+        int i;
         Vec3 from;
         x = m[3]; y = m[7]; z = m[11];
         record->waypoint = Waypoint_FindNearest(g_pathSystem, 0, x, y, z, lbl_806DA3E8);
