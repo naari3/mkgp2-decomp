@@ -33,7 +33,7 @@ void VfxSlot_BindResourceEx(void *, unsigned char, int);
 float Rand_RangeFloat(float, float);
 void DrawEffect_Free(FlashEffect *);
 float KartCharacterParam_GetFxSizeFactor(void *);
-void VfxSlot_SetScaleVec3(void *, float, float);
+void VfxSlot_SetScaleVec3(void *, float, float, float);
 const float *KartDriver_GetKartRootMtx(void *);
 void Mtx44_GetTranslation_RowMajor(FlashVec3 *, const float *);
 void Vec3_Subtract_DestFirst(FlashVec3 *, const FlashVec3 *, const FlashVec3 *);
@@ -71,7 +71,8 @@ void KartFx_FlashOrbitTick(FlashEffect *effect) {
     effect->scale = KartCharacterParam_GetFxSizeFactor(effect->kart);
     VfxSlot_SetScaleVec3(effect->slot,
         effect->scale * (lbl_806D51BC * (lbl_806D5244 * effect->phase + lbl_806D52DC)),
-        effect->scale * (lbl_806D5248 * (lbl_806D52FC * effect->phase + lbl_806D52F8)));
+        effect->scale * (lbl_806D5248 * (lbl_806D52FC * effect->phase + lbl_806D52F8)),
+        effect->scale);
     Mtx44_GetTranslation_RowMajor(&effect->position, KartDriver_GetKartRootMtx(effect->kart));
     FlashVec3 displacement;
     FlashVec3 *camera = &lbl_805DF3D0.position;
