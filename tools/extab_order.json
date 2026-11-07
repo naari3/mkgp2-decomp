@@ -2443,5 +2443,19 @@
       "fn_801FD240",
       "fn_801FD2E8"
     ]
+  },
+  "src/game/anon_801D2F0C.cpp": {
+    "extab": [
+      "fn_801D3364",
+      "fn_801D2F0C",
+      "fn_801D3118",
+      "dtor_80082960"
+    ],
+    "extabindex": [
+      "fn_801D2F0C",
+      "fn_801D3118",
+      "fn_801D3364",
+      "dtor_80082960"
+    ]
   }
 }
