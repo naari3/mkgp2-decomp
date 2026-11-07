@@ -30,9 +30,12 @@ extern inline int HSD_CObjGetEyeVector(HSD_CObj* cobj, Vec3* eye)
     Vec3 interest;
 
     int result;
-    if (!cobj || !cobj->eyepos || !cobj->interest || !eye) {
+    if (!cobj || !cobj->eyepos || !cobj->interest) {
         result = 0;
     } else {
+        if (!eye) {
+            return 0;
+        }
         HSD_CObjGetEyePosition(cobj, &eyepos);
         HSD_CObjGetInterest(cobj, &interest);
         VECSubtract(&interest, &eyepos, eye);

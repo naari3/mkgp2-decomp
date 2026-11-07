@@ -104,3 +104,8 @@ c17_u29: HSD_JObjSetCurrent 802D0F50 (400B) requires inline canonical reference/
 Source: Codex worker c17_u47_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 112 B.
 
 c17_u47: jobj_dirty baseline reported 0% because its global inline SetMtxDirty had no emitted symbol, while unrelated reset/walk scaffolding emitted outside its split. Strong native C definition using jobj_rescue_private.h restores canonical shared assertions. if(dirty)return folds target branch pair (96.07143%,108B); switch(dirty){case 0: SetMtxDirtySub(jobj); break;} preserves target112B exactly, the same established CheckDepend zero-case idiom. Only assigned source and Matching flag changed. Final ELF strong global802CD7B8/112, actual source link edge, full DOL SHA-1 OK.
+
+## c18_u4_20261107
+Source: Codex worker c18_u4_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1240 B.
+
+c18_u4: cobj_nm2 upvec2roll802C74F4/496B and roll2upvec802C76E4/744B become exact by retaining camera/eye-object validation as the outer if/else and moving !eye failure into a nested early return in its valid branch. The original combined four-way OR folds the known stack output pointer but leaves beq plus an extra b; the nested form produces target bne into the valid body. Both +4B size errors disappear and standard sdata2 postprocessing resolves all constant relocations without any data/split/tool changes. Fresh objdiff98.870964/99.19355 ->100/100, whole text1240 exact. Promote existing TU; source edge and final ELF addresses/sizes verified; full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. Native gain2fn/1240B.

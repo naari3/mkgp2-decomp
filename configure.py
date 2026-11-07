@@ -522,7 +522,7 @@ config.libs = [
             Object(NonMatching, "sysdolphin/baselib/cobj_nm1.c"),
             Object(Matching, "sysdolphin/baselib/cobj_bottom.c"),
             Object(Matching, "sysdolphin/baselib/cobj_view.c"),
-            Object(NonMatching, "sysdolphin/baselib/cobj_nm2.c"),
+            Object(Matching, "sysdolphin/baselib/cobj_nm2.c"),
             Object(Matching, "sysdolphin/baselib/cobj_up.c"),
             Object(NonMatching, "sysdolphin/baselib/cobj_nm3.c"),
             Object(Matching, "sysdolphin/baselib/cobj_mtx.c"),
