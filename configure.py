@@ -1207,7 +1207,7 @@ config.libs = [
             Object(Matching, "game/EffectSteering.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/EffectSteering_Dtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectSteeringCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/EffectSteering_Actions.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/EffectSteering_Actions.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/EffectActor_BindKartTargetPair.c"),
             Object(NonMatching, "game/KartShellRibbonDraw.c", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/DebrisArray_DrawForward.c", extra_cflags=["-Cpp_exceptions on"]),

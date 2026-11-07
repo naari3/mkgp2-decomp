@@ -3,9 +3,10 @@
  * The holder destructors are the out-of-line copies the constructor's
  * cleanup calls; their extab entries come first (extab_order.json).
  *
- * NonMatching: ActionDelay_Step allocates r4/r5 the other way round in the
- * push half (99.29%). Read-before-write comparison in IsEmpty reproduces
- * the target pop operand order. The target keeps `out` in a stack slot.
+ * ESRing::Next needs its own temp (`n = i + 1`) for ActionDelay_Step's
+ * push half to allocate r4/r5 like the target. Read-before-write comparison
+ * in IsEmpty reproduces the target pop operand order. The target keeps
+ * `out` in a stack slot.
  */
 void operator delete(void *);
 
@@ -94,7 +95,7 @@ struct ESRing {
     float *samples;
     int writeIndex, readIndex, remaining;
 
-    int Next(int i) { i++; if (i >= count) i = 0; return i; }
+    int Next(int i) { int n = i + 1; if (n >= count) n = 0; return n; }
     unsigned char IsFull() { return Next(writeIndex) == readIndex; }
     unsigned char IsEmpty() { return readIndex == writeIndex; }
 
