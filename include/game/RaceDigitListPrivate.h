@@ -22,11 +22,16 @@ struct RaceDigitList {
 extern "C" {
 void *Alloc(unsigned long);
 void MemoryManager_TimedFree(void *);
-RaceDigitIterator fn_80247B8C(RaceDigitList *, RaceDigitIterator &, RaceDigitIterator &);
 }
+/* fn_80247B8C (RaceDigitListErase.cpp) takes both iterators by value. Callers
+ * here pass the address of their own iterator, which is the same ABI (a class
+ * with a copy ctor is passed as a pointer to the caller's copy). */
+#ifndef RACE_DIGIT_LIST_ERASE_DEFINITION
+extern "C" RaceDigitIterator fn_80247B8C(RaceDigitList *, RaceDigitIterator &, RaceDigitIterator &);
 inline RaceDigitIterator RaceDigitEraseRange(RaceDigitList *list,
         const RaceDigitIterator &first, const RaceDigitIterator &last) {
     return fn_80247B8C(list, const_cast<RaceDigitIterator &>(first),
         const_cast<RaceDigitIterator &>(last));
 }
+#endif
 #endif
