@@ -1302,7 +1302,7 @@ void fn_8015E1E8(ResultPartBUpdate *o) {
     if (!o->soundStarted) {
         if (SoundMgr_Play(o->sound)) o->soundStarted = 1;
     }
-    unsigned char pressed = PopupInput_Get()->x18 == 1;
+    bool pressed = PopupInput_Get()->x18 == 1;
     switch (o->stage) {
     case 0: {
         unsigned int c = (unsigned char)(int)(lbl_806D86E8 * (lbl_806D8674 - o->timer / lbl_806D86A4));
