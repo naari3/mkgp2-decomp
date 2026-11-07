@@ -1544,7 +1544,8 @@
     "extab_StarItem_FlightAndLockOnTick": "@etb_8000B7A4",
     "extabindex_StarItem_FlightAndLockOnTick": "@eti_8002408C",
     "extab_StarItem_Tick": "@etb_8000B7AC",
-    "extabindex_StarItem_Tick": "@eti_80024098"
+    "extabindex_StarItem_Tick": "@eti_80024098",
+    "@206": "jumptable_80421840"
   },
   "src/game/MukadeItem.c": {
     "extab_MukadeItem_Tick_HeldAndHoming_3839": "@etb_8000B5F4",

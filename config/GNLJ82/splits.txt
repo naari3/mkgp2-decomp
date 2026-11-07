@@ -5377,6 +5377,7 @@ game/StarItem.c:
 	extab       start:0x8000B794 end:0x8000B7B4
 	extabindex  start:0x80024074 end:0x800240A4
 	.text       start:0x800FD948 end:0x800FEE8C
+	.data       start:0x80421840 end:0x80421868
 
 game/Boomerang_ReturnAndAcquireTargetTick.c:
 	extab       start:0x8000B7B4 end:0x8000B7BC
