@@ -1,6 +1,10 @@
 /*
  * ShadowBillboard update/flash and the play camera, 0x80061954..0x80064CD4.
- * Tick, StepSimple and PlayCamera_Init are still asm bodies.
+ * Tick is still an asm body. PlayCamera_Init is the C++ constructor of the
+ * play camera (clPlayCamera); its mangled name and the member dtors are
+ * bridged to the C symbols via tools/extab_user_renames.json.
+ * The TU owns .rodata 0x802EE320..0x802EE510 (camera table, lerp weights,
+ * zero vectors, "playcamera.cpp"), addressed as one pooled base.
  */
 
 #include "game/MathInline.h"
@@ -10,17 +14,26 @@ extern unsigned char lbl_806D2BCC[7];
 extern unsigned char lbl_806D2BD4[5];
 
 typedef struct ShadowBillboardSrc {
-    unsigned char pad000[0xF8];
-    float axisX;
-    float padFC;
-    float axisZ;
+    unsigned char pad000[0xD8];
+    float mtx[16]; /* 0xD8 */
 } ShadowBillboardSrc;
+
+typedef struct SBShake {
+    int timer;
+    int fieldBC;
+    Vec3f offset;
+} SBShake;
 
 typedef struct ShadowBillboard {
     unsigned char active; /* 0x00 */
-    unsigned char pad01[0x14 - 0x01];
+    unsigned char pad01[0x04 - 0x01];
+    int mode; /* 0x04 */
+    unsigned char pad08[0x0C - 0x08];
+    int level; /* 0x0C */
+    unsigned char pad10[0x14 - 0x10];
     ShadowBillboardSrc *src;
-    unsigned char pad18[0x60 - 0x18];
+    unsigned char pad18[0x5C - 0x18];
+    float *camMtx; /* 0x5C */
     float fade60;
     float fade64;
     int fadeMode; /* 0x68 */
@@ -30,11 +43,14 @@ typedef struct ShadowBillboard {
     Vec3f axis;
     float field94;
     float targetSaturation; /* 0x98 */
-    unsigned char pad9C[0xAC - 0x9C];
+    unsigned char pad9C[0xA4 - 0x9C];
+    float heightA4;
+    unsigned char padA8[0xAC - 0xA8];
     unsigned char spinFlash; /* 0xAC */
     unsigned char padAD[3];
     float spinB0;
     float spinB4;
+    struct SBShake shake; /* 0xB8 */
 } ShadowBillboard;
 
 typedef struct PlayCamera {
@@ -58,15 +74,15 @@ void MemoryManager_TimedFree(void *p);
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void CObj_ApplyViewport();
-extern void CObj_GetViewMatrix_Cached();
-extern void CObj_LinePath_Step();
-extern void CObj_LoadIntoGX();
-extern void CObj_SetWorldMatrix();
+void CObj_ApplyViewport(void *cobj, Vec3f *pos);
+float *CObj_GetViewMatrix_Cached(void *scene);
+void CObj_LinePath_Step(void *cobj, float (*m)[4], float a, float b, float c);
+void CObj_LoadIntoGX(void *cobj, Vec3f *pos);
+void CObj_SetWorldMatrix(void *cobj, float (*m)[4]);
 extern void FAbs_FloatAsDouble();
-extern void MemoryManager_AllocTagged();
-extern void Mtx4x4_TransposeTo4x3();
-extern void PSMTXInverse();
+void *MemoryManager_AllocTagged(unsigned int size, const char *file, int line);
+void Mtx4x4_TransposeTo4x3(const float *src, float (*dst)[4]);
+unsigned int PSMTXInverse(float (*src)[4], float (*dst)[4]);
 extern void PSMTXMultVec();
 extern void ShadowBillboard_LerpMtx4x4();
 extern void ShadowBillboard_SetEffectParams();
@@ -115,9 +131,27 @@ extern unsigned int lbl_806D2C08;
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_802EE320[];
-extern unsigned int lbl_802EE4FC[];
-extern unsigned int lbl_803F9F30[];
+/* .rodata 0x802EE320..0x802EE50B: play camera tables */
+const float lbl_802EE320[13][2][4] = {
+    {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 57.0f, 10.0f}},
+    {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 57.0f, 10.0f}},
+    {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 57.0f, 10.0f}},
+    {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 57.0f, 10.0f}},
+    {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 57.0f, 10.0f}},
+    {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 57.0f, 10.0f}},
+    {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 57.0f, 10.0f}},
+    {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 57.0f, 10.0f}},
+    {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 57.0f, 10.0f}},
+    {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 57.0f, 10.0f}},
+    {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 57.0f, 10.0f}},
+    {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 60.0f, 10.0f}},
+    {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 55.0f, 10.0f}},
+};
+const float lbl_802EE4C0[3] = {1.0f, 0.7f, 0.9f};
+const float lbl_802EE4CC[3] = {0.075f, 0.075f, 0.075f};
+#define sCamTable lbl_802EE320
+
+
 
 /* --- function index (11 fns, .text 0x80061954..0x80064CD4) ---
  * [  0] 0x80061954 size:0x134   global ShadowBillboard_SetField0x6CAndComputeAxis
@@ -133,39 +167,35 @@ extern unsigned int lbl_803F9F30[];
  * [ 10] 0x80064920 size:0x3B4   global Mtx34_Orthonormalize
  */
 
+/* per-course play camera overrides (0x7C-byte entries) */
+typedef struct PCCourseCamEntry {
+    int gameMode;
+    int cupId;
+    int ccClass;
+    int roundType;
+    unsigned char pad10[0x7C - 0x10];
+} PCCourseCamEntry;
+
+extern PCCourseCamEntry lbl_803F9F30[];
+
 /* --- forward decls --- */
 asm void ShadowBillboard_Tick(void);
-asm void ShadowBillboard_StepSimple(void);
+void ShadowBillboard_StepSimple(struct ShadowBillboard *sb, void *lineCam, void *worldObj);
 void Camera_RotateByYaw(PlayCamera *cam, float yaw);
-asm void PlayCamera_Init(void);
 void Mtx34_Orthonormalize(float (*m)[4]);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void dtor_80036E40();
-extern void dtor_8006178C();
-extern void dtor_800617C8();
-extern void dtor_80064CD4();
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
 __declspec(section ".extab_user") static const unsigned char extab_ShadowBillboard_Tick[8] = {
     0x59, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const unsigned char extab_ShadowBillboard_StepSimple[8] = {
-    0x21, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; void *f6; unsigned int f7; unsigned int f8; void *f9; unsigned int f10; unsigned int f11; void *f12; unsigned int f13; unsigned int f14; void *f15; unsigned int f16; unsigned int f17; void *f18; unsigned int f19; unsigned int f20; void *f21; } extab_PlayCamera_Init = { 0x208A0000, 0x000001B4, 0x00030010, 0x00000000, 0x0780001D, 0x000000B8, (void *)&dtor_8006178C, 0x0780001D, 0x000000AC, (void *)&dtor_800617C8, 0x0780001D, 0x00000088, (void *)&dtor_80036E40, 0x0780001D, 0x0000007C, (void *)&dtor_80036E40, 0x0780001D, 0x00000070, (void *)&dtor_80036E40, 0x8780001D, 0x0000005C, (void *)&dtor_80064CD4 };
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ShadowBillboard_Tick = {
     (void *)&ShadowBillboard_Tick, 0x00001E14, (void *)extab_ShadowBillboard_Tick
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ShadowBillboard_StepSimple = {
-    (void *)&ShadowBillboard_StepSimple, 0x000005B4, (void *)extab_ShadowBillboard_StepSimple
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_PlayCamera_Init = {
-    (void *)&PlayCamera_Init, 0x00000614, (void *)&extab_PlayCamera_Init
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
@@ -185,7 +215,7 @@ void ShadowBillboard_SetField0x6CAndComputeAxis(ShadowBillboard *sb, int value) 
     sb->field6C = value;
     CObj_LoadProjMatrix(GetCourseScene3D(), &cam);
     Vec3f_Set(&sb->camPos, cam.x, cam.y, cam.z);
-    Vec3f_Set(&sb->axis, sb->src->axisX, 0.0f, sb->src->axisZ);
+    Vec3f_Set(&sb->axis, sb->src->mtx[8], 0.0f, sb->src->mtx[10]);
     len = MathInline_sqrtf(sb->axis.x * sb->axis.x + sb->axis.y * sb->axis.y + sb->axis.z * sb->axis.z);
     if (len <= 0.0f) {
         sb->axis.z = 0.0f;
@@ -2182,393 +2212,166 @@ asm void ShadowBillboard_Tick(void) { /* 0x80061A88 size:0x1E14 */
     blr
 }
 
-asm void ShadowBillboard_StepSimple(void) { /* 0x8006389C size:0x5B4 */
-    nofralloc
-    stwu r1, -0x140(r1)
-    mflr r0
-    stw r0, 0x144(r1)
-    stfd f31, 0x130(r1)
-    psq_st f31, 0x138(r1), 0, 0
-    stfd f30, 0x120(r1)
-    psq_st f30, 0x128(r1), 0, 0
-    stfd f29, 0x110(r1)
-    psq_st f29, 0x118(r1), 0, 0
-    stfd f28, 0x100(r1)
-    psq_st f28, 0x108(r1), 0, 0
-    stw r31, 0xfc(r1)
-    stw r30, 0xf8(r1)
-    stw r29, 0xf4(r1)
-    stw r28, 0xf0(r1)
-    mr r28, r3
-    lwz r3, 0xb8(r3)
-    lis r6, lbl_802EE320@ha
-    mr r29, r4
-    neg r0, r3
-    mr r30, r5
-    andc r0, r0, r3
-    addi r31, r6, lbl_802EE320@l
-    srwi. r0, r0, 31
-    beq ShadowBillboard_StepSimple_L_800639E4
-    lwz r3, 0xb8(r28)
-    subi r0, r3, 0x1
-    stw r0, 0xb8(r28)
-    lwz r0, 0xb8(r28)
-    clrlwi r0, r0, 30
-    cmpwi r0, 0x1
-    bgt ShadowBillboard_StepSimple_L_80063968
-    bl GetCourseScene3D
-    cmplwi r3, 0x0
-    beq ShadowBillboard_StepSimple_L_800639B0
-    bl CObj_GetViewMatrix_Cached
-    lfs f0, 0x0(r3)
-    lfs f1, lbl_806D2B6C(r2)
-    lfs f2, lbl_806D2B68(r2)
-    fmuls f0, f0, f1
-    fmuls f0, f2, f0
-    stfs f0, 0xc0(r28)
-    lfs f0, 0x10(r3)
-    fmuls f0, f0, f1
-    fmuls f0, f2, f0
-    stfs f0, 0xc4(r28)
-    lfs f0, 0x20(r3)
-    fmuls f0, f0, f1
-    fmuls f0, f2, f0
-    stfs f0, 0xc8(r28)
-    b ShadowBillboard_StepSimple_L_800639B0
-    ShadowBillboard_StepSimple_L_80063968:
-    bl GetCourseScene3D
-    cmplwi r3, 0x0
-    beq ShadowBillboard_StepSimple_L_800639B0
-    bl CObj_GetViewMatrix_Cached
-    lfs f0, 0x0(r3)
-    lfs f1, lbl_806D2B70(r2)
-    lfs f2, lbl_806D2B68(r2)
-    fmuls f0, f0, f1
-    fmuls f0, f2, f0
-    stfs f0, 0xc0(r28)
-    lfs f0, 0x10(r3)
-    fmuls f0, f0, f1
-    fmuls f0, f2, f0
-    stfs f0, 0xc4(r28)
-    lfs f0, 0x20(r3)
-    fmuls f0, f0, f1
-    fmuls f0, f2, f0
-    stfs f0, 0xc8(r28)
-    ShadowBillboard_StepSimple_L_800639B0:
-    lwz r3, 0xb8(r28)
-    neg r0, r3
-    andc r0, r0, r3
-    srwi r0, r0, 31
-    cmplwi r0, 0x1
-    bne ShadowBillboard_StepSimple_L_800639E4
-    li r0, 0x0
-    lfs f0, lbl_806D2B74(r2)
-    stw r0, 0xb8(r28)
-    stw r0, 0xbc(r28)
-    stfs f0, 0xc0(r28)
-    stfs f0, 0xc4(r28)
-    stfs f0, 0xc8(r28)
-    ShadowBillboard_StepSimple_L_800639E4:
-    cmplwi r29, 0x0
-    beq ShadowBillboard_StepSimple_L_80063D50
-    lwz r0, 0x4(r28)
-    addi r5, r31, 0x0
-    lwz r3, 0xc(r28)
-    slwi r6, r0, 5
-    lwz r0, 0x6c(r28)
-    slwi r4, r3, 4
-    lfs f4, lbl_806D2BE0(r2)
-    add r3, r5, r6
-    lfs f2, 0xa4(r28)
-    add r3, r3, r4
-    add r4, r6, r4
-    lfs f0, 0x8(r3)
-    cmpwi r0, 0x0
-    lfsx f3, r5, r4
-    lfs f1, 0x4(r3)
-    fmuls f29, f4, f0
-    lfs f0, 0xc(r3)
-    fmadds f31, f4, f3, f2
-    fmuls f30, f4, f1
-    lwz r5, 0x14(r28)
-    fmadds f28, f4, f0, f29
-    bne ShadowBillboard_StepSimple_L_80063BC8
-    lwz r3, 0xb8(r28)
-    neg r0, r3
-    andc r0, r0, r3
-    srwi r0, r0, 31
-    cmplwi r0, 0x1
-    bne ShadowBillboard_StepSimple_L_80063A7C
-    lwz r4, 0xc0(r28)
-    addi r6, r1, 0x14
-    lwz r3, 0xc4(r28)
-    lwz r0, 0xc8(r28)
-    stw r4, 0x14(r1)
-    stw r3, 0x18(r1)
-    stw r0, 0x1c(r1)
-    b ShadowBillboard_StepSimple_L_80063A98
-    ShadowBillboard_StepSimple_L_80063A7C:
-    lwz r4, 0x1d0(r31)
-    addi r6, r1, 0x14
-    lwz r3, 0x1d4(r31)
-    lwz r0, 0x1d8(r31)
-    stw r4, 0x14(r1)
-    stw r3, 0x18(r1)
-    stw r0, 0x1c(r1)
-    ShadowBillboard_StepSimple_L_80063A98:
-    lwz r0, 0x0(r6)
-    lwz r3, 0x4(r6)
-    stw r0, 0x44(r1)
-    lwz r0, 0x8(r6)
-    stw r3, 0x48(r1)
-    lfs f1, 0x44(r1)
-    lfs f0, 0x108(r5)
-    stw r0, 0x4c(r1)
-    fadds f0, f1, f0
-    lfs f2, 0x48(r1)
-    lfs f1, 0x10c(r5)
-    lfs f3, 0x110(r5)
-    lwz r3, 0x5c(r28)
-    fadds f2, f2, f1
-    lfs f1, 0x4c(r1)
-    stfs f0, 0x30(r3)
-    fadds f0, f1, f3
-    stfs f2, 0x34(r3)
-    stfs f0, 0x38(r3)
-    lwz r0, 0x68(r28)
-    cmpwi r0, 0x0
-    bne ShadowBillboard_StepSimple_L_80063AF8
-    fmr f28, f29
-    b ShadowBillboard_StepSimple_L_80063BA0
-    ShadowBillboard_StepSimple_L_80063AF8:
-    lfs f2, 0x60(r28)
-    lfs f1, 0x64(r28)
-    lfs f0, lbl_806D2B74(r2)
-    fsubs f1, f2, f1
-    stfs f1, 0x60(r28)
-    lfs f1, 0x60(r28)
-    fcmpo cr0, f1, f0
-    bge ShadowBillboard_StepSimple_L_80063B1C
-    stfs f0, 0x60(r28)
-    ShadowBillboard_StepSimple_L_80063B1C:
-    lwz r0, 0x68(r28)
-    cmpwi r0, 0x1
-    bne ShadowBillboard_StepSimple_L_80063B70
-    lfs f1, lbl_806D2BB4(r2)
-    lfs f0, 0x60(r28)
-    lfd f2, lbl_806D2B80(r2)
-    fmuls f0, f1, f0
-    fmul f1, f2, f0
-    frsp f1, f1
-    bl sin
-    frsp f3, f1
-    lfs f1, 0x60(r28)
-    lfs f0, lbl_806D2B74(r2)
-    lfs f2, lbl_806D2B6C(r2)
-    fcmpo cr0, f1, f0
-    fsubs f1, f2, f3
-    cror eq, lt, eq
-    bne ShadowBillboard_StepSimple_L_80063B90
-    li r0, 0x0
-    stw r0, 0x68(r28)
-    b ShadowBillboard_StepSimple_L_80063B90
-    ShadowBillboard_StepSimple_L_80063B70:
-    lfs f1, lbl_806D2BB4(r2)
-    lfs f0, 0x60(r28)
-    lfd f2, lbl_806D2B80(r2)
-    fmuls f0, f1, f0
-    fmul f1, f2, f0
-    frsp f1, f1
-    bl sin
-    frsp f1, f1
-    ShadowBillboard_StepSimple_L_80063B90:
-    lfs f0, lbl_806D2B6C(r2)
-    fsubs f0, f0, f1
-    fmuls f0, f28, f0
-    fmadds f28, f29, f1, f0
-    ShadowBillboard_StepSimple_L_80063BA0:
-    lwz r3, 0x5c(r28)
-    addi r4, r1, 0xc0
-    bl Mtx4x4_TransposeTo4x3
-    fmr f1, f31
-    mr r3, r29
-    fmr f2, f30
-    addi r4, r1, 0xc0
-    fmr f3, f28
-    bl CObj_LinePath_Step
-    b ShadowBillboard_StepSimple_L_80063D50
-    ShadowBillboard_StepSimple_L_80063BC8:
-    lwz r3, 0xb8(r28)
-    neg r0, r3
-    andc r0, r0, r3
-    srwi r0, r0, 31
-    cmplwi r0, 0x1
-    bne ShadowBillboard_StepSimple_L_80063C00
-    lwz r4, 0xc0(r28)
-    addi r6, r1, 0x8
-    lwz r3, 0xc4(r28)
-    lwz r0, 0xc8(r28)
-    stw r4, 0x8(r1)
-    stw r3, 0xc(r1)
-    stw r0, 0x10(r1)
-    b ShadowBillboard_StepSimple_L_80063C1C
-    ShadowBillboard_StepSimple_L_80063C00:
-    lwz r4, 0x1d0(r31)
-    addi r6, r1, 0x8
-    lwz r3, 0x1d4(r31)
-    lwz r0, 0x1d8(r31)
-    stw r4, 0x8(r1)
-    stw r3, 0xc(r1)
-    stw r0, 0x10(r1)
-    ShadowBillboard_StepSimple_L_80063C1C:
-    lwz r7, 0x6c(r28)
-    lwz r4, 0x0(r6)
-    lwz r3, 0x4(r6)
-    cmpwi r7, 0x1
-    lwz r0, 0x8(r6)
-    stw r4, 0x38(r1)
-    stw r3, 0x3c(r1)
-    stw r0, 0x40(r1)
-    bne ShadowBillboard_StepSimple_L_80063C60
-    lfs f0, 0x108(r5)
-    stfs f0, 0x2c(r1)
-    lfs f0, 0x10c(r5)
-    fadds f0, f31, f0
-    stfs f0, 0x30(r1)
-    lfs f0, 0x110(r5)
-    stfs f0, 0x34(r1)
-    b ShadowBillboard_StepSimple_L_80063D14
-    ShadowBillboard_StepSimple_L_80063C60:
-    cmpwi r7, 0x3
-    bne ShadowBillboard_StepSimple_L_80063CD0
-    lfs f1, 0x108(r5)
-    mr r3, r29
-    lfs f0, lbl_806D2C08(r2)
-    addi r4, r1, 0x20
-    stfs f1, 0x2c(r1)
-    lfs f1, 0x10c(r5)
-    fadds f1, f31, f1
-    stfs f1, 0x30(r1)
-    fadds f0, f0, f1
-    lfs f1, 0x110(r5)
-    stfs f1, 0x34(r1)
-    stfs f0, 0x80(r28)
-    lwz r6, 0x1b8(r31)
-    lwz r5, 0x1bc(r31)
-    lwz r0, 0x1c0(r31)
-    stw r6, 0x20(r1)
-    stw r5, 0x24(r1)
-    stw r0, 0x28(r1)
-    lfs f0, 0x7c(r28)
-    stfs f0, 0x20(r1)
-    lfs f0, 0x80(r28)
-    stfs f0, 0x24(r1)
-    lfs f0, 0x84(r28)
-    stfs f0, 0x28(r1)
-    bl CObj_LoadIntoGX
-    b ShadowBillboard_StepSimple_L_80063D14
-    ShadowBillboard_StepSimple_L_80063CD0:
-    cmpwi r7, 0x4
-    bne ShadowBillboard_StepSimple_L_80063CF8
-    lfs f0, 0x70(r28)
-    stfs f0, 0x2c(r1)
-    lfs f0, 0x74(r28)
-    fadds f0, f0, f31
-    stfs f0, 0x30(r1)
-    lfs f0, 0x78(r28)
-    stfs f0, 0x34(r1)
-    b ShadowBillboard_StepSimple_L_80063D14
-    ShadowBillboard_StepSimple_L_80063CF8:
-    lfs f0, 0x70(r28)
-    stfs f0, 0x2c(r1)
-    lfs f0, 0x10c(r5)
-    fadds f0, f31, f0
-    stfs f0, 0x30(r1)
-    lfs f0, 0x78(r28)
-    stfs f0, 0x34(r1)
-    ShadowBillboard_StepSimple_L_80063D14:
-    lfs f1, 0x2c(r1)
-    mr r3, r29
-    lfs f0, 0x38(r1)
-    addi r4, r1, 0x2c
-    lfs f3, 0x30(r1)
-    lfs f2, 0x3c(r1)
-    fadds f4, f1, f0
-    lfs f1, 0x34(r1)
-    lfs f0, 0x40(r1)
-    fadds f2, f3, f2
-    stfs f4, 0x2c(r1)
-    fadds f0, f1, f0
-    stfs f2, 0x30(r1)
-    stfs f0, 0x34(r1)
-    bl CObj_ApplyViewport
-    ShadowBillboard_StepSimple_L_80063D50:
-    cmplwi r30, 0x0
-    beq ShadowBillboard_StepSimple_L_80063E10
-    lwz r5, 0x14(r28)
-    addi r3, r1, 0x80
-    lfs f0, lbl_806D2BF0(r2)
-    addi r4, r1, 0x50
-    lfs f1, 0xd8(r5)
-    stfs f1, 0x80(r1)
-    lfs f1, 0xdc(r5)
-    stfs f1, 0x84(r1)
-    lfs f1, 0xe0(r5)
-    stfs f1, 0x88(r1)
-    lfs f1, 0xe4(r5)
-    stfs f1, 0x8c(r1)
-    lfs f1, 0xe8(r5)
-    stfs f1, 0x90(r1)
-    lfs f1, 0xec(r5)
-    stfs f1, 0x94(r1)
-    lfs f2, 0xf0(r5)
-    stfs f2, 0x98(r1)
-    lfs f1, 0xf4(r5)
-    stfs f1, 0x9c(r1)
-    lfs f1, 0xf8(r5)
-    stfs f1, 0xa0(r1)
-    lfs f1, 0xfc(r5)
-    stfs f1, 0xa4(r1)
-    lfs f1, 0x100(r5)
-    stfs f1, 0xa8(r1)
-    lfs f1, 0x104(r5)
-    stfs f1, 0xac(r1)
-    lfs f1, 0x108(r5)
-    stfs f1, 0xb0(r1)
-    lfs f1, 0x10c(r5)
-    stfs f1, 0xb4(r1)
-    frsp f1, f1
-    lfs f2, 0x110(r5)
-    fadds f0, f1, f0
-    stfs f2, 0xb8(r1)
-    lfs f1, 0x114(r5)
-    stfs f1, 0xbc(r1)
-    stfs f0, 0xb4(r1)
-    bl Mtx4x4_TransposeTo4x3
-    addi r3, r1, 0x50
-    mr r4, r3
-    bl PSMTXInverse
-    mr r3, r30
-    addi r4, r1, 0x50
-    bl CObj_SetWorldMatrix
-    ShadowBillboard_StepSimple_L_80063E10:
-    psq_l f31, 0x138(r1), 0, 0
-    lfd f31, 0x130(r1)
-    psq_l f30, 0x128(r1), 0, 0
-    lfd f30, 0x120(r1)
-    psq_l f29, 0x118(r1), 0, 0
-    lfd f29, 0x110(r1)
-    psq_l f28, 0x108(r1), 0, 0
-    lfd f28, 0x100(r1)
-    lwz r31, 0xfc(r1)
-    lwz r30, 0xf8(r1)
-    lwz r29, 0xf4(r1)
-    lwz r0, 0x144(r1)
-    lwz r28, 0xf0(r1)
-    mtlr r0
-    addi r1, r1, 0x140
-    blr
+static inline float cosf(float x) {
+    return (float)cos(x);
 }
+
+static inline float sinf(float x) {
+    return (float)sin(x);
+}
+
+static inline void Mtx44_SetTrans(float *m, float x, float y, float z) {
+    m[12] = x;
+    m[13] = y;
+    m[14] = z;
+}
+
+static inline unsigned char SBShake_IsActive(const SBShake *sh) {
+    return sh->timer > 0;
+}
+
+static inline void SBShake_SetFromView(SBShake *sh, float dir) {
+    void *scene = GetCourseScene3D();
+    if (scene != 0) {
+        float *m = CObj_GetViewMatrix_Cached(scene);
+        sh->offset.x = 0.5f * (m[0] * dir);
+        sh->offset.y = 0.5f * (m[4] * dir);
+        sh->offset.z = 0.5f * (m[8] * dir);
+    }
+}
+
+static inline void SBShake_Step(SBShake *sh) {
+    sh->timer--;
+    if ((sh->timer & 3) <= 1) {
+        SBShake_SetFromView(sh, 1.0f);
+    } else {
+        SBShake_SetFromView(sh, -1.0f);
+    }
+    if (SBShake_IsActive(sh) == 1) {
+        sh->timer = 0;
+        sh->fieldBC = 0;
+        sh->offset.x = 0.0f;
+        sh->offset.y = 0.0f;
+        sh->offset.z = 0.0f;
+    }
+}
+
+static inline void Vec3f_Zero(Vec3f *v) {
+    Vec3f zero = {0.0f, 0.0f, 0.0f};
+    *v = zero;
+}
+
+static const Vec3f lbl_802EE4E4 = {0.0f, 0.0f, 0.0f}; /* used by ShadowBillboard_Tick */
+static const Vec3f lbl_802EE4F0 = {0.0f, 0.0f, 0.0f};
+
+static inline Vec3f SBShake_GetOffset(SBShake *sh) {
+    if (SBShake_IsActive(sh) == 1) {
+        return sh->offset;
+    }
+    return lbl_802EE4F0;
+}
+
+#pragma exceptions on
+
+void ShadowBillboard_StepSimple(ShadowBillboard *sb, void *lineCam, void *worldObj) {
+    float y;
+    float x;
+    float lo;
+    float hi;
+    float v;
+    ShadowBillboardSrc *src;
+
+    if (SBShake_IsActive(&sb->shake) != 0) {
+        SBShake_Step(&sb->shake);
+    }
+
+    if (lineCam != 0) {
+        y = 0.8333333f * sCamTable[sb->mode][sb->level][0] + sb->heightA4;
+        x = 0.8333333f * sCamTable[sb->mode][sb->level][1];
+        lo = 0.8333333f * sCamTable[sb->mode][sb->level][2];
+        hi = 0.8333333f * sCamTable[sb->mode][sb->level][3] + lo;
+        src = sb->src;
+        if (sb->field6C == 0) {
+            Vec3f sh = SBShake_GetOffset(&sb->shake);
+            Mtx44_SetTrans(sb->camMtx, sh.x + src->mtx[12], sh.y + src->mtx[13], sh.z + src->mtx[14]);
+            if (sb->fadeMode == 0) {
+                hi = lo;
+            } else {
+                sb->fade60 -= sb->fade64;
+                if (sb->fade60 < 0.0f) {
+                    sb->fade60 = 0.0f;
+                }
+                if (sb->fadeMode == 1) {
+                    v = 1.0f - (float)sin((float)(0.017453292519943295 * (90.0f * sb->fade60)));
+                    if (sb->fade60 <= 0.0f) {
+                        sb->fadeMode = 0;
+                    }
+                } else {
+                    v = (float)sin((float)(0.017453292519943295 * (90.0f * sb->fade60)));
+                }
+                hi = lo * v + hi * (1.0f - v);
+            }
+            {
+                float out[3][4];
+                Mtx4x4_TransposeTo4x3(sb->camMtx, out);
+                CObj_LinePath_Step(lineCam, out, y, x, hi);
+            }
+        } else {
+            Vec3f sh = SBShake_GetOffset(&sb->shake);
+            Vec3f pos;
+            int mode = sb->field6C;
+            if (mode == 1) {
+                pos.x = src->mtx[12];
+                pos.y = y + src->mtx[13];
+                pos.z = src->mtx[14];
+            } else if (mode == 3) {
+                pos.x = src->mtx[12];
+                pos.y = y + src->mtx[13];
+                pos.z = src->mtx[14];
+                sb->camPos.y = 20.0f + pos.y;
+                {
+                    Vec3f at;
+                    Vec3f_Zero(&at);
+                    at.x = sb->camPos.x;
+                    at.y = sb->camPos.y;
+                    at.z = sb->camPos.z;
+                    CObj_LoadIntoGX(lineCam, &at);
+                }
+            } else if (mode == 4) {
+                pos.x = sb->vec70.x;
+                pos.y = sb->vec70.y + y;
+                pos.z = sb->vec70.z;
+            } else {
+                pos.x = sb->vec70.x;
+                pos.y = y + src->mtx[13];
+                pos.z = sb->vec70.z;
+            }
+            pos.x += sh.x;
+            pos.y += sh.y;
+            pos.z += sh.z;
+            CObj_ApplyViewport(lineCam, &pos);
+        }
+    }
+
+    if (worldObj != 0) {
+        float m[16];
+        float out[3][4];
+        int i;
+        src = sb->src;
+        for (i = 0; i < 16; i++) {
+            m[i] = src->mtx[i];
+        }
+        m[13] += 8.0f;
+        Mtx4x4_TransposeTo4x3(m, out);
+        PSMTXInverse(out, out);
+        CObj_SetWorldMatrix(worldObj, out);
+    }
+}
+
+#pragma exceptions reset
+
+/* rest of the play camera .rodata: Tick's zero vector, file name */
+const char lbl_802EE4FC[15] = "playcamera.cpp";
 
 void ShadowBillboard_SetTargetSaturation(ShadowBillboard *sb, float value) {
     sb->targetSaturation = value;
@@ -2614,14 +2417,6 @@ void ShadowBillboard_BeginBoostScale(ShadowBillboard *sb) {
 typedef struct Mtx44S {
     float v[16];
 } Mtx44S;
-
-static inline float cosf(float x) {
-    return (float)cos(x);
-}
-
-static inline float sinf(float x) {
-    return (float)sin(x);
-}
 
 /* Alias-safe 4x4 product (out may be a or b), result through a scratch buffer. */
 static inline void Mtx44S_Mul(Mtx44S *out, const Mtx44S *a, const Mtx44S *b) {
@@ -2695,416 +2490,157 @@ PlayCamera *PlayCamera_Dtor(PlayCamera *cam, short flags) {
 
 #pragma exceptions reset
 
-asm void PlayCamera_Init(void) { /* 0x8006430C size:0x614 */
-    nofralloc
-    stwu r1, -0xc0(r1)
-    mflr r0
-    stw r0, 0xc4(r1)
-    stfd f31, 0xb0(r1)
-    psq_st f31, 0xb8(r1), 0, 0
-    stfd f30, 0xa0(r1)
-    psq_st f30, 0xa8(r1), 0, 0
-    stw r31, 0x9c(r1)
-    stw r30, 0x98(r1)
-    stw r29, 0x94(r1)
-    stw r28, 0x90(r1)
-    stb r8, 0x0(r3)
-    mr r29, r3
-    li r11, 0x1
-    lis r3, lbl_802EE4FC@ha
-    stw r4, 0x4(r29)
-    xor r0, r5, r11
-    addi r4, r3, lbl_802EE4FC@l
-    fmr f30, f1
-    srawi r3, r0, 1
-    and r0, r0, r5
-    subf r0, r0, r3
-    stw r5, 0x8(r29)
-    srwi r0, r0, 31
-    stw r0, 0xc(r29)
-    mr r30, r9
-    li r3, 0x40
-    li r5, 0x8e
-    stw r6, 0x10(r29)
-    stw r7, 0x14(r29)
-    stb r10, 0x18(r29)
-    stb r11, 0x19(r29)
-    bl MemoryManager_AllocTagged
-    stw r3, 0x5c(r29)
-    clrlwi r0, r30, 24
-    lfs f0, lbl_806D2B74(r2)
-    li r3, 0x0
-    cmplwi r0, 0x1
-    stfs f0, 0x60(r29)
-    stfs f0, 0x64(r29)
-    stw r3, 0x68(r29)
-    stw r3, 0x6c(r29)
-    stfs f0, 0x98(r29)
-    stfs f0, 0x9c(r29)
-    stfs f0, 0xa0(r29)
-    stfs f0, 0xa4(r29)
-    stfs f0, 0xa8(r29)
-    stb r3, 0xac(r29)
-    stfs f0, 0xb0(r29)
-    stfs f0, 0xb4(r29)
-    stw r3, 0xb8(r29)
-    stw r3, 0xbc(r29)
-    stfs f0, 0xc0(r29)
-    stfs f0, 0xc4(r29)
-    stfs f0, 0xc8(r29)
-    bne PlayCamera_Init_L_800643F4
-    lfs f0, lbl_806D2B6C(r2)
-    stfs f0, 0xa0(r29)
-    PlayCamera_Init_L_800643F4:
-    lfs f3, lbl_806D2B74(r2)
-    addi r28, r1, 0x48
-    lwz r3, 0x5c(r29)
-    lfs f0, lbl_806D2BA0(r2)
-    stfs f3, 0x0(r3)
-    lfs f2, lbl_806D2B6C(r2)
-    fadds f0, f0, f30
-    stfs f3, 0x4(r3)
-    lfd f1, lbl_806D2B80(r2)
-    stfs f3, 0x8(r3)
-    fmul f30, f1, f0
-    stfs f3, 0xc(r3)
-    stfs f3, 0x10(r3)
-    frsp f1, f30
-    stfs f3, 0x14(r3)
-    stfs f3, 0x18(r3)
-    stfs f3, 0x1c(r3)
-    stfs f3, 0x20(r3)
-    stfs f3, 0x24(r3)
-    stfs f3, 0x28(r3)
-    stfs f3, 0x2c(r3)
-    stfs f3, 0x30(r3)
-    stfs f3, 0x34(r3)
-    stfs f3, 0x38(r3)
-    stfs f3, 0x3c(r3)
-    stfs f2, 0x3c(r3)
-    stfs f2, 0x28(r3)
-    stfs f2, 0x14(r3)
-    stfs f2, 0x0(r3)
-    stfs f3, 0x48(r1)
-    lwz r31, 0x5c(r29)
-    stfs f3, 0x5c(r1)
-    stfs f3, 0x70(r1)
-    stfs f3, 0x84(r1)
-    stfs f3, 0x4c(r1)
-    stfs f3, 0x50(r1)
-    stfs f3, 0x54(r1)
-    stfs f3, 0x58(r1)
-    stfs f3, 0x60(r1)
-    stfs f3, 0x64(r1)
-    stfs f3, 0x68(r1)
-    stfs f3, 0x6c(r1)
-    stfs f3, 0x74(r1)
-    stfs f3, 0x78(r1)
-    stfs f3, 0x7c(r1)
-    stfs f3, 0x80(r1)
-    stfs f2, 0x84(r1)
-    stfs f2, 0x70(r1)
-    stfs f2, 0x5c(r1)
-    stfs f2, 0x48(r1)
-    bl cos
-    frsp f31, f1
-    frsp f1, f30
-    bl sin
-    frsp f1, f1
-    li r5, 0x0
-    li r0, 0x2
-    stfs f31, 0x48(r1)
-    mr r4, r5
-    addi r6, r1, 0x8
-    fneg f0, f1
-    stfs f1, 0x68(r1)
-    stfs f31, 0x70(r1)
-    stfs f0, 0x50(r1)
-    mtctr r0
-    PlayCamera_Init_L_800644F8:
-    lfs f7, 0x0(r28)
-    slwi r0, r5, 2
-    lfs f6, 0x0(r31)
-    addi r3, r5, 0x1
-    lfs f5, 0x4(r28)
-    fmuls f8, f7, f6
-    lfs f4, 0x10(r31)
-    lfs f3, 0x8(r28)
-    lfs f2, 0x20(r31)
-    fmadds f8, f5, f4, f8
-    lfs f1, 0xc(r28)
-    lfs f0, 0x30(r31)
-    lfs f6, 0x4(r31)
-    fmadds f8, f3, f2, f8
-    lfs f4, 0x14(r31)
-    lfs f2, 0x24(r31)
-    fmadds f8, f1, f0, f8
-    lfs f0, 0x34(r31)
-    stfsx f8, r6, r0
-    fmuls f8, f7, f6
-    slwi r0, r3, 2
-    lfs f6, 0x8(r31)
-    addi r3, r5, 0x2
-    fmadds f8, f5, f4, f8
-    lfs f4, 0x18(r31)
-    fmadds f8, f3, f2, f8
-    lfs f2, 0x28(r31)
-    fmadds f8, f1, f0, f8
-    lfs f0, 0x38(r31)
-    stfsx f8, r6, r0
-    fmuls f8, f7, f6
-    slwi r0, r3, 2
-    addi r3, r5, 0x3
-    lfs f6, 0xc(r31)
-    addi r5, r5, 0x4
-    fmadds f8, f5, f4, f8
-    lfs f4, 0x1c(r31)
-    fmadds f8, f3, f2, f8
-    lfs f2, 0x2c(r31)
-    fmadds f8, f1, f0, f8
-    lfs f0, 0x3c(r31)
-    stfsx f8, r6, r0
-    fmuls f8, f7, f6
-    slwi r0, r3, 2
-    fmadds f8, f5, f4, f8
-    fmadds f8, f3, f2, f8
-    fmadds f8, f1, f0, f8
-    stfsx f8, r6, r0
-    lfs f7, 0x10(r28)
-    slwi r0, r5, 2
-    lfs f6, 0x0(r31)
-    addi r3, r5, 0x1
-    lfs f5, 0x14(r28)
-    addi r4, r4, 0x1
-    fmuls f8, f7, f6
-    lfs f4, 0x10(r31)
-    lfs f3, 0x18(r28)
-    lfs f1, 0x1c(r28)
-    addi r28, r28, 0x20
-    fmadds f8, f5, f4, f8
-    lfs f2, 0x20(r31)
-    lfs f0, 0x30(r31)
-    fmadds f8, f3, f2, f8
-    lfs f6, 0x4(r31)
-    lfs f4, 0x14(r31)
-    lfs f2, 0x24(r31)
-    fmadds f8, f1, f0, f8
-    lfs f0, 0x34(r31)
-    stfsx f8, r6, r0
-    fmuls f8, f7, f6
-    slwi r0, r3, 2
-    lfs f6, 0x8(r31)
-    addi r3, r5, 0x2
-    fmadds f8, f5, f4, f8
-    lfs f4, 0x18(r31)
-    fmadds f8, f3, f2, f8
-    lfs f2, 0x28(r31)
-    fmadds f8, f1, f0, f8
-    lfs f0, 0x38(r31)
-    stfsx f8, r6, r0
-    fmuls f8, f7, f6
-    slwi r0, r3, 2
-    addi r3, r5, 0x3
-    lfs f6, 0xc(r31)
-    addi r5, r5, 0x4
-    fmadds f8, f5, f4, f8
-    lfs f4, 0x1c(r31)
-    fmadds f8, f3, f2, f8
-    lfs f2, 0x2c(r31)
-    fmadds f8, f1, f0, f8
-    lfs f0, 0x3c(r31)
-    stfsx f8, r6, r0
-    fmuls f8, f7, f6
-    slwi r0, r3, 2
-    fmadds f8, f5, f4, f8
-    fmadds f8, f3, f2, f8
-    fmadds f8, f1, f0, f8
-    stfsx f8, r6, r0
-    bdnz PlayCamera_Init_L_800644F8
-    lfs f1, 0x8(r1)
-    clrlwi r0, r30, 24
-    lfs f0, 0xc(r1)
-    cmplwi r0, 0x1
-    stfs f1, 0x48(r1)
-    li r0, -0x1
-    lfs f1, 0x10(r1)
-    stfs f0, 0x4c(r1)
-    lwz r4, 0x48(r1)
-    stfs f1, 0x50(r1)
-    lfs f0, 0x14(r1)
-    lfs f1, 0x18(r1)
-    stfs f0, 0x54(r1)
-    lfs f0, 0x1c(r1)
-    stfs f1, 0x58(r1)
-    lfs f1, 0x20(r1)
-    stfs f0, 0x5c(r1)
-    lfs f0, 0x24(r1)
-    stfs f1, 0x60(r1)
-    lfs f1, 0x28(r1)
-    stfs f0, 0x64(r1)
-    lfs f0, 0x2c(r1)
-    stfs f1, 0x68(r1)
-    lfs f1, 0x30(r1)
-    stfs f0, 0x6c(r1)
-    lfs f0, 0x34(r1)
-    stfs f1, 0x70(r1)
-    lfs f1, 0x38(r1)
-    stfs f0, 0x74(r1)
-    lfs f0, 0x3c(r1)
-    stfs f1, 0x78(r1)
-    lfs f1, 0x40(r1)
-    stfs f0, 0x7c(r1)
-    lfs f0, 0x44(r1)
-    stfs f1, 0x80(r1)
-    lwz r3, 0x4c(r1)
-    stw r4, 0x0(r31)
-    lwz r4, 0x50(r1)
-    stw r3, 0x4(r31)
-    lwz r3, 0x54(r1)
-    stw r4, 0x8(r31)
-    lwz r4, 0x58(r1)
-    stw r3, 0xc(r31)
-    lwz r3, 0x5c(r1)
-    stw r4, 0x10(r31)
-    lwz r4, 0x60(r1)
-    stw r3, 0x14(r31)
-    lwz r3, 0x64(r1)
-    stw r4, 0x18(r31)
-    lwz r4, 0x68(r1)
-    stw r3, 0x1c(r31)
-    lwz r3, 0x6c(r1)
-    stw r4, 0x20(r31)
-    lwz r4, 0x70(r1)
-    stw r3, 0x24(r31)
-    lwz r3, 0x74(r1)
-    stw r4, 0x28(r31)
-    lwz r4, 0x78(r1)
-    stw r3, 0x2c(r31)
-    lwz r3, 0x7c(r1)
-    stw r4, 0x30(r31)
-    lwz r4, 0x80(r1)
-    stfs f0, 0x84(r1)
-    lfs f1, lbl_806D2B74(r2)
-    stw r3, 0x34(r31)
-    lwz r3, 0x84(r1)
-    stw r4, 0x38(r31)
-    lfs f0, lbl_806D2B6C(r2)
-    stw r3, 0x3c(r31)
-    stfs f1, 0x1c(r29)
-    stfs f1, 0x20(r29)
-    stfs f1, 0x24(r29)
-    stfs f1, 0x28(r29)
-    stfs f1, 0x2c(r29)
-    stfs f1, 0x30(r29)
-    stfs f1, 0x34(r29)
-    stfs f1, 0x38(r29)
-    stfs f1, 0x3c(r29)
-    stfs f1, 0x40(r29)
-    stfs f1, 0x44(r29)
-    stfs f1, 0x48(r29)
-    stfs f1, 0x4c(r29)
-    stfs f1, 0x50(r29)
-    stfs f1, 0x54(r29)
-    stfs f1, 0x58(r29)
-    stfs f0, 0x58(r29)
-    stfs f0, 0x44(r29)
-    stfs f0, 0x30(r29)
-    stfs f0, 0x1c(r29)
-    stfs f1, 0xd0(r29)
-    stw r0, 0xcc(r29)
-    bne PlayCamera_Init_L_800648EC
-    lwz r4, g_gameMode(r13)
-    cmpwi r4, 0x0
-    bne PlayCamera_Init_L_80064808
-    lwz r5, g_roundIndex(r13)
-    b PlayCamera_Init_L_80064848
-    PlayCamera_Init_L_80064808:
-    lwz r0, g_reverseRoundFlag(r13)
-    cmpwi r0, 0x0
-    bne PlayCamera_Init_L_80064830
-    lwz r0, g_longRoundFlag(r13)
-    cmpwi r0, 0x0
-    bne PlayCamera_Init_L_80064828
-    li r5, 0x0
-    b PlayCamera_Init_L_80064848
-    PlayCamera_Init_L_80064828:
-    li r5, 0x1
-    b PlayCamera_Init_L_80064848
-    PlayCamera_Init_L_80064830:
-    lwz r0, g_longRoundFlag(r13)
-    cmpwi r0, 0x0
-    bne PlayCamera_Init_L_80064844
-    li r5, 0x4
-    b PlayCamera_Init_L_80064848
-    PlayCamera_Init_L_80064844:
-    li r5, 0x5
-    PlayCamera_Init_L_80064848:
-    lwz r0, lbl_806CEEF0(r13)
-    lis r3, lbl_803F9F30@ha
-    addi r3, r3, lbl_803F9F30@l
-    lwz r6, g_cupId(r13)
-    lwz r7, g_ccClass(r13)
-    li r8, 0x0
-    mtctr r0
-    cmpwi r0, 0x0
-    ble PlayCamera_Init_L_800648D8
-    PlayCamera_Init_L_8006486C:
-    lwz r0, 0x0(r3)
-    cmpwi r0, -0x1
-    beq PlayCamera_Init_L_80064880
-    cmpw r4, r0
-    bne PlayCamera_Init_L_800648CC
-    PlayCamera_Init_L_80064880:
-    lwz r0, 0x4(r3)
-    cmpwi r0, -0x1
-    beq PlayCamera_Init_L_80064894
-    cmpw r6, r0
-    bne PlayCamera_Init_L_800648CC
-    PlayCamera_Init_L_80064894:
-    lwz r0, 0x8(r3)
-    cmpwi r0, -0x1
-    beq PlayCamera_Init_L_800648A8
-    cmpw r7, r0
-    bne PlayCamera_Init_L_800648CC
-    PlayCamera_Init_L_800648A8:
-    lwz r0, 0xc(r3)
-    cmpwi r0, -0x1
-    beq PlayCamera_Init_L_800648BC
-    cmpw r5, r0
-    bne PlayCamera_Init_L_800648CC
-    PlayCamera_Init_L_800648BC:
-    stw r8, 0xcc(r29)
-    lfs f0, lbl_806D2B6C(r2)
-    stfs f0, 0xd0(r29)
-    b PlayCamera_Init_L_800648D8
-    PlayCamera_Init_L_800648CC:
-    addi r3, r3, 0x7c
-    addi r8, r8, 0x1
-    bdnz PlayCamera_Init_L_8006486C
-    PlayCamera_Init_L_800648D8:
-    lwz r0, 0xcc(r29)
-    cmpwi r0, -0x1
-    bne PlayCamera_Init_L_800648EC
-    lfs f0, lbl_806D2B74(r2)
-    stfs f0, 0xa0(r29)
-    PlayCamera_Init_L_800648EC:
-    mr r3, r29
-    psq_l f31, 0xb8(r1), 0, 0
-    lfd f31, 0xb0(r1)
-    psq_l f30, 0xa8(r1), 0, 0
-    lfd f30, 0xa0(r1)
-    lwz r31, 0x9c(r1)
-    lwz r30, 0x98(r1)
-    lwz r29, 0x94(r1)
-    lwz r0, 0xc4(r1)
-    lwz r28, 0x90(r1)
-    mtlr r0
-    addi r1, r1, 0xc0
-    blr
-}
 
 #pragma exceptions on
 #pragma cplusplus on
+
+static inline void Mtx44_Identity(float *m) {
+    int i;
+
+    for (i = 0; i < 16; i++) {
+        m[i] = 0.0f;
+    }
+    m[0] = m[5] = m[10] = m[15] = 1.0f;
+}
+
+struct PCVec3 {
+    float x, y, z;
+    PCVec3() {}
+    ~PCVec3();
+};
+
+/* heap-owned 4x4 view matrix (dtor_80064CD4 frees it) */
+struct PCMtxBuf {
+    float *m;
+    PCMtxBuf(float *p) : m(p) {}
+    ~PCMtxBuf();
+};
+
+struct PCSpin {
+    unsigned char on;
+    float b0;
+    float b4;
+    PCSpin() : on(0), b0(0.0f), b4(0.0f) {}
+    ~PCSpin();
+};
+
+struct PCShake {
+    int timer;
+    int fieldBC;
+    Vec3f offset;
+    PCShake() : timer(0), fieldBC(0) {
+        offset.x = 0.0f;
+        offset.y = 0.0f;
+        offset.z = 0.0f;
+    }
+    ~PCShake();
+};
+
+struct clPlayCamera {
+    unsigned char active;
+    void *owner;
+    int viewIndex;
+    int multiView;
+    void *scene;
+    void *src;
+    unsigned char flag18;
+    unsigned char flag19;
+    float mtx[16];
+    PCMtxBuf view;
+    float fade60;
+    float fade64;
+    int fadeMode;
+    int field6C;
+    PCVec3 vec70;
+    PCVec3 camPos;
+    PCVec3 axis;
+    float field94;
+    float field98;
+    float targetSaturation;
+    float fieldA0;
+    float heightA4;
+    float fieldA8;
+    PCSpin spin;
+    PCShake shake;
+    int courseCam;
+    float courseCamWeight;
+
+    clPlayCamera(void *owner, int viewIndex, void *scene, void *src, unsigned char active,
+                 unsigned char isPlayer, unsigned char flag18, float yaw);
+    void RotateByYaw(float yaw) {
+        Mtx44S rot;
+        Mtx44S *dst = (Mtx44S *)view.m;
+        float c;
+        float s;
+        int i;
+
+        for (i = 0; i < 16; i++) {
+            rot.v[i] = 0.0f;
+        }
+        rot.v[0] = rot.v[5] = rot.v[10] = rot.v[15] = 1.0f;
+        c = cosf(0.017453292519943295 * yaw);
+        s = sinf(0.017453292519943295 * yaw);
+        rot.v[0] = c;
+        rot.v[8] = s;
+        rot.v[10] = c;
+        rot.v[2] = -s;
+        Mtx44S_Mul(&rot, &rot, dst);
+        *dst = rot;
+    }
+};
+
+clPlayCamera::clPlayCamera(void *owner_, int viewIndex_, void *scene_, void *src_, unsigned char active_,
+                           unsigned char isPlayer, unsigned char flag18_, float yaw)
+    : active(active_), owner(owner_), viewIndex(viewIndex_), multiView(viewIndex_ > 1), scene(scene_),
+      src(src_), flag18(flag18_), flag19(1),
+      view((float *)MemoryManager_AllocTagged(0x40, lbl_802EE4FC, 0x8E)),
+      fade60(0.0f), fade64(0.0f), fadeMode(0), field6C(0),
+      field98(0.0f), targetSaturation(0.0f), fieldA0(0.0f), heightA4(0.0f), fieldA8(0.0f) {
+    if (isPlayer == 1) {
+        fieldA0 = 1.0f;
+    }
+    Mtx44_Identity(view.m);
+    RotateByYaw(180.0f + yaw);
+    Mtx44_Identity(mtx);
+    courseCamWeight = 0.0f;
+    courseCam = -1;
+    if (isPlayer == 1) {
+        int mode = (int)g_gameMode;
+        int round;
+        int cup;
+        int cc;
+        int i;
+        PCCourseCamEntry *e;
+
+        if (mode == 0) {
+            round = (int)g_roundIndex;
+        } else if ((int)g_reverseRoundFlag == 0) {
+            if ((int)g_longRoundFlag == 0) {
+                round = 0;
+            } else {
+                round = 1;
+            }
+        } else if ((int)g_longRoundFlag == 0) {
+            round = 4;
+        } else {
+            round = 5;
+        }
+        cup = (int)g_cupId;
+        cc = (int)g_ccClass;
+        for (i = 0; i < (int)lbl_806CEEF0; i++) {
+            e = &lbl_803F9F30[i];
+            if ((e->gameMode == -1 || mode == e->gameMode) && (e->cupId == -1 || cup == e->cupId) &&
+                (e->ccClass == -1 || cc == e->ccClass) && (e->roundType == -1 || round == e->roundType)) {
+                courseCam = i;
+                courseCamWeight = 1.0f;
+                break;
+            }
+        }
+        if (courseCam == -1) {
+            fieldA0 = 0.0f;
+        }
+    }
+}
 
 struct OrthoVec {
     float x, y, z;

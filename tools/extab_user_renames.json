@@ -506,7 +506,12 @@
     "extabindex_ShadowBillboard_StepSimple": "@eti_80020E28",
     "extabindex_Camera_RotateByYaw": "@eti_80020E40",
     "extabindex_PlayCamera_Init": "@eti_80020E58",
-    "extabindex_Mtx34_Orthonormalize": "@eti_80020E64"
+    "extabindex_Mtx34_Orthonormalize": "@eti_80020E64",
+    "__ct__12clPlayCameraFPviPvPvUcUcUcf": "PlayCamera_Init",
+    "__dt__6PCVec3Fv": "dtor_80036E40",
+    "__dt__8PCMtxBufFv": "dtor_80064CD4",
+    "__dt__6PCSpinFv": "dtor_800617C8",
+    "__dt__7PCShakeFv": "dtor_8006178C"
   },
   "src/game/CreditMgr.c": {
     "extab_CreditMgr_DrawCoinCreditBanner": "@etb_80008A6C",
