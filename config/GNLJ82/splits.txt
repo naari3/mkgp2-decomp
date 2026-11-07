@@ -6817,6 +6817,7 @@ game/ItemBoxConstruct.cpp:
 	extab       start:0x800104B4 end:0x80010530
 	extabindex  start:0x80026270 end:0x8002627C
 	.text       start:0x8016D2D0 end:0x8016D79C
+	.rodata     start:0x8036D588 end:0x8036D620
 
 game/Scene_8016D79C.cpp:
 	extab       start:0x80010530 end:0x80010548

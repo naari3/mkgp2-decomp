@@ -10780,7 +10780,10 @@
     "__vt__12BoxConstruct": "lbl_8049110C",
     "__ct__8BoxModelFPCci": "clNormal3D_Construct",
     "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "lbl_8036D588": "global:lbl_8036D588",
+    "lbl_8036D594": "global:lbl_8036D594",
+    "lbl_8036D5A8": "global:lbl_8036D5A8"
   },
   "src/game/mapeffect/PointListConstruct.cpp": {
     "__ct__9PointListFP10SpawnPoint": "fn_8016C94C"

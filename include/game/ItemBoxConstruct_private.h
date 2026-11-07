@@ -24,7 +24,6 @@ struct BoxConstruct : BoxBase {
     BoxConstruct(BoxJoint *);
 };
 extern "C" {
-extern char lbl_8036D588[];
 extern char lbl_806D8B34[7], lbl_806D8B3C[5];
 extern const float lbl_806D8B30, lbl_806D8B0C;
 void DebugPrintf(const char *, ...);
