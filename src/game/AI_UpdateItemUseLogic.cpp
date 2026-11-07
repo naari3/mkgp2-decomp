@@ -30,9 +30,9 @@ unsigned char AI_RollItemUseProbability(int);
 int GetCourseSectionType(int);
 void AI_UseItem(void *, void *);
 }
-static inline int Decrement(int timer) {
-    if (timer > 0) --timer;
-    return timer;
+static inline void Decrement(int timer, int &result) {
+    result = timer;
+    if (timer > 0) result = timer - 1;
 }
 extern "C" void AI_UpdateItemUseLogic(AIItemOwner *self, int kart) {
     AIItemController *ctrl = Read_U32[kart];
@@ -43,10 +43,12 @@ extern "C" void AI_UpdateItemUseLogic(AIItemOwner *self, int kart) {
     difference = AI_GetLapDifference(ctrl);
     rank = KartController_GetRenderObj(ctrl)->rank;
     if (!AI_CheckItemSuppression(kart, laps, difference)) return;
-    int hitTimer = Decrement(ctrl->hitTimer);
+    int hitTimer;
+    Decrement(ctrl->hitTimer, hitTimer);
     ctrl->hitTimer = hitTimer;
     if (!AI_HasItem(ctrl)) return;
-    int timer = Decrement(ctrl->itemTimer);
+    int timer;
+    Decrement(ctrl->itemTimer, timer);
     ctrl->itemTimer = timer;
     if (hitTimer > 0) return;
     int use = 0;

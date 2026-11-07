@@ -28,3 +28,8 @@ c16_u8: AI_CalcLapSpeedBonus 801DD480 recompiled baseline88.96797 (assignment re
 Source: Codex worker c17_u121_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c17_u121: fn_801E96BC outer indexed spelling for(i=0;i<8;++i){record=&base[i];...} removes prior r0 base materialization plus extra mr, improves 98.81443->99.84536, exact 388-byte text and extab8/index12 100%. Only initial base/walker copy direction differs (target addi r28;mr r29,r28 vs source addi r29;mr r28,r29), all later instructions exact. Full outer inline traversal regresses 82.06186/412B and rematerializes inner base; indexed PairAt helper invariant. Best indexed source kept NonMatching; singleton cannot split, native gain0. Final fallback DOL SHA-1 OK.
+
+## c18_u124_20261107
+Source: Codex worker c18_u124_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u124 AI_UpdateItemUseLogic 801EA2FC: genuine inline void Decrement(int input,int& result){result=input;if(input>0)result=input-1;} with caller-owned load/store restores both missing timer input/result moves and all r27/r29 difference/rank/hitTimer/use homes. Improves95.46512->97.62791, emitted504 vs target516B, EH8 exact/index83.33333. Only target switch cmpwi8/beq/bge trio is missing; the source goes straight to cmpwi5/bge. Calls in each case group with break duplicate blocks (94.06977/544B); shared goto tail is H1-byte-equivalent. Retain helper improvement, leave existing NM. No singleton/pool/B rescue. Coordinator full fallback-linked DOL SHA1 ea30f3b1 OK; no native gain.
