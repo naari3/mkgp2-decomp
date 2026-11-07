@@ -106,11 +106,7 @@ void HSD_LObjSetupSpecularInit(Mtx pmtx)
     num = nb_active_lights;
     for (i = 0; i < num; i++) {
         Vec3 half, ldir;
-        if (0 <= i && i < MAX_GXLIGHT - 1) {
-            lobj = active_lights[i];
-        } else {
-            lobj = NULL;
-        }
+        lobj = LObjGetActiveByIndex(i);
 
         if (lobj->spec_id == GX_LIGHT_NULL) {
             continue;
