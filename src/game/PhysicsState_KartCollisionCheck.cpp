@@ -2,23 +2,39 @@
  * FP scheduling, flag tests and EH PC intervals still differ. */
 #include "game/PhysicsCollisionPrivate.h"
 
-static inline float WrapHitRadians(float yaw)
+static inline void WrapHitRadians(float &yaw)
 {
     while (lbl_806DA488 <= yaw) yaw -= lbl_806DA484;
     while (yaw < lbl_806DA48C) yaw += lbl_806DA484;
-    return yaw;
 }
 
-static inline float WrapHitDegrees(float yaw)
+static inline void WrapHitDegrees(float &yaw)
 {
     while (yaw >= lbl_806DA494) yaw -= lbl_806DA494;
     while (yaw < lbl_806DA42C) yaw += lbl_806DA494;
-    return yaw;
 }
 
 static inline float RelativeHitYaw(float yaw, float heading)
 {
-    return WrapHitDegrees(lbl_806DA490 * WrapHitRadians(yaw - heading));
+    yaw -= heading;
+    WrapHitRadians(yaw);
+    yaw = lbl_806DA490 * yaw;
+    WrapHitDegrees(yaw);
+    return yaw;
+}
+
+static inline void ApplyHitMovement(PhysicsCollisionVec &movement, PhysicsCollisionVec &position, const PhysicsCollisionVec &previous, float scale)
+{
+    movement.set(position.x, position.y, position.z);
+    movement.x -= previous.x;
+    movement.y -= previous.y;
+    movement.z -= previous.z;
+    movement.x *= scale;
+    movement.y *= scale;
+    movement.z *= scale;
+    position.x = previous.x + movement.x;
+    position.y = previous.y + movement.y;
+    position.z = previous.z + movement.z;
 }
 
 /* Native candidate. The flag words are a big-endian 64-bit mask. */
@@ -89,6 +105,7 @@ extern "C" int PhysicsState_KartCollisionCheck(char *self)
     void *otherEffects = PH_P(PH_P(self, 0x128), 0x304);
     if ((*(unsigned long long *)((char *)otherEffects + 0x10) & 0x80ULL) != 0 || (flags & 0x80ULL) != 0) return 0;
     fn_80057960(reaction, PH_F(self, 0x58), PH_F(self, 0x5C), PH_F(self, 0x60), centerX, centerY, centerZ, lbl_806DA450);
+    PhysicsCollisionVec movement;
     if (!PH_B(self, 0x138)) {
         direction.x *= lbl_806DA47C;
         direction.y *= lbl_806DA47C;
@@ -98,16 +115,7 @@ extern "C" int PhysicsState_KartCollisionCheck(char *self)
         PH_F(self, 0xE0) += direction.z;
     }
     {
-        PhysicsCollisionVec movement(PH_V(self, 0x4C));
-        movement.x -= PH_F(self, 0x58);
-        movement.y -= PH_F(self, 0x5C);
-        movement.z -= PH_F(self, 0x60);
-        movement.x *= lbl_806DA450;
-        movement.y *= lbl_806DA450;
-        movement.z *= lbl_806DA450;
-        PH_F(self, 0x4C) = PH_F(self, 0x58) + movement.x;
-        PH_F(self, 0x50) = PH_F(self, 0x5C) + movement.y;
-        PH_F(self, 0x54) = PH_F(self, 0x60) + movement.z;
+        ApplyHitMovement(movement, PH_V(self, 0x4C), PH_V(self, 0x58), lbl_806DA450);
         if (penetration >= lbl_806DA480) {
             float yaw = RelativeHitYaw((float)atan2(PH_F(self, 0x58) - centerX, PH_F(self, 0x60) - centerZ), PH_F(self, 0x84));
             if (yaw > lbl_806DA498 && yaw < lbl_806DA494) KartReaction_Front(render);
