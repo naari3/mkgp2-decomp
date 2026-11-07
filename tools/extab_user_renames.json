@@ -10645,6 +10645,18 @@
     "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/NamCamFlow.cpp": {
+    "@887": "@etb_80016FFC",
+    "@888": "@eti_80028D30",
+    "@943": "@etb_800173B8",
+    "@944": "@eti_80028DB4",
+    "@731": "@etb_80017308",
+    "@732": "@eti_80028E14",
+    "@766": "@etb_800171A4",
+    "@767": "@eti_80028E08",
+    "__dt__14NamCamListImplFv": "fn_801F4BA0",
+    "__dt__10NamCamListFv": "fn_801F4C7C",
+    "__vt__14NamCamListImpl": "lbl_804EC404",
+    "__vt__10NamCamList": "lbl_804E533C",
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960",
     "__dt__15NamCamCountdownFv": "fn_801F4310",
