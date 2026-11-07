@@ -425,12 +425,6 @@
     "extabindex_SeqMenuScene_Init": "@eti_8001F4F0"
   },
   "src/game/SceneRender.c": {
-    "extab_SceneRender_DrawObjectWithLights": "@etb_80005F20",
-    "extabindex_SceneRender_DrawObjectWithLights": "@eti_8001FBD4",
-    "extab_SceneRender_CmdA_8a9e8": "@etb_80005F38",
-    "extabindex_SceneRender_CmdA_8a9e8": "@eti_8001FBE0",
-    "extab_SceneRender_CmdB_8aa20": "@etb_80005F40",
-    "extabindex_SceneRender_CmdB_8aa20": "@eti_8001FBEC",
     "extab_SceneRender_Dtor": "@etb_80005F48",
     "extabindex_SceneRender_Dtor": "@eti_8001FBF8"
   },
@@ -1491,8 +1485,6 @@
   "src/game/TornadoEffect.c": {
     "extab_TornadoEffect_InitDetails": "@etb_800075FC",
     "extabindex_TornadoEffect_InitDetails": "@eti_800207EC",
-    "extab_TornadoEffect_Ctor": "@etb_80007614",
-    "extabindex_TornadoEffect_Ctor": "@eti_800207F8",
     "extab_TornadoEffect_RenderCallback": "@etb_80007648",
     "extabindex_TornadoEffect_RenderCallback": "@eti_80020804",
     "extab_TornadoEffect_SubmitRender": "@etb_80007650",
@@ -1518,7 +1510,9 @@
     "extab_TornadoEffect_ApplyItemVisual_Secondary": "@etb_800076A0",
     "extabindex_TornadoEffect_ApplyItemVisual_Secondary": "@eti_80020888",
     "extab_TornadoEffect_ApplyItemVisual_Compact": "@etb_800076A8",
-    "extabindex_TornadoEffect_ApplyItemVisual_Compact": "@eti_80020894"
+    "extabindex_TornadoEffect_ApplyItemVisual_Compact": "@eti_80020894",
+    "__ct__13TornadoEffectFUciiUc": "TornadoEffect_Ctor",
+    "__dt__6TEVec3Fv": "dtor_80036E40"
   },
   "src/game/TornadoItem.c": {
     "extab_TornadoItem_TickActive": "@etb_8000B70C",
