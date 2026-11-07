@@ -21,3 +21,21 @@ General lessons (also in setup/TIPS.md, thread B):
 - `multiply-defined lbl_<vtable>` on a flip = the TU emits a vtable that lives in unowned .data. Declare an undefined `virtual void _key();` FIRST among the class's virtuals so it becomes the key function.
 - DOL bigger by exactly a weak function's size = an unrenamed weak inline copy. Map it to the existing out-of-TU name in extab_user_renames.json, and the linker drops it.
 - Text shifted by the __sinit size = CW put the static initializer at the TU end. Hand-write it first plus a `.ctors` entry.
+
+## acsocket `addi rX, rBufOff, 0x0` (acBind, acAccept, acModifyMyIPaddr, acInetAddr, acConnect): investigation (2026-11-07, mid-range thread)
+
+All five targets do the same thing: `lwz r5, 0x10(State)` (`State.bufOff`), then `addi r24, r5, 0x0` into a callee-saved reg, then later `add r24, r0(bufAddr), r24`. acAccept also has `addi r29, r4, 0x4`. Status: **not solved**. What is now ruled out:
+
+- **Compiler versions.** We compiled acsocket_nm5 with all 20 GC compilers (1.0 to 3.0a5.2). Up to 1.2.5n, *every* register copy is emitted as `addi rX, rY, 0`, including the argument saves (`addi r27, r3, 0`). The target uses `mr` for those, so it is not ≤1.2.5n. From 1.3 on, copies are always `mr`, and no source form produced an `addi …, 0`.
+- **Source forms, tried under 1.3 / 1.3.2 / 2.6:**
+  - `bufOff + n`, with n coming from: a literal, a local, a `static inline` param, a plain `static` fn under `-inline auto` / `deferred`, a 1-trip loop, a `const` array element, pointer differences (`buf - Buf`), or a ternary.
+  - bufOff retyped as a `u8*`, `u32*` or `BH*` pointer field, with `&p[0]`, `&h->len`, and `&h->len` together with `&h->addr` (+0/+4).
+  - Out-pointer helpers (`GetSocketBuffer(0, &off)`).
+  - A two-definition `off` (`off = …; off = k->bufAddr + off`).
+  - `opt_propagation`, `opt_common_subs` and the other `opt_*` pragmas.
+
+  None of these produced it.
+- **Where 1.3+ does emit it in matched code.** Scanning every Matching game/HSD TU shows that `addi rX, rY, 0x0` only comes from a *section-anchor (pooled) base*: the TU defines the objects, and the object sits at anchor+0. Examples are DisplayBuffersReset, StrPcb_Lifetime and KartItemAudio_PlaySEByItemId. There the immediate is a section offset that is only resolved at emit time, so it is never folded. In acsocket, rY is a *loaded value* (`State.bufOff`), not an address, so that mechanism does not apply directly.
+- **A side effect to avoid.** `*off = k->bufAddr + *off;` in acBind's `ClearBindBuffer` cuts the diff to only this one instruction (41 → 3 lines). But objdiff fuzzy drops from 96.76 to 96.41, so it was not applied.
+
+Untested idea: the `+0` / `+4` immediates may be section offsets of TU-local objects, i.e. the device-side offset is computed from a `.bss` object's position (`(u32)&local_obj - (u32)&anchor`). That would need the TU to own `lbl_806A12A0` / `lbl_806A14A0`, which belong to acsocket.c. Repro harness: `/tmp/claude-0/rp/rp.py` (ephemeral). It compiles a file with the triforce_am flags under a list of compilers and flags each `addi rX, rY, 0`.
