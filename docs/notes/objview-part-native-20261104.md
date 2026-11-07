@@ -121,3 +121,8 @@ c18_u237 fn_80187410 improves fresh89.88039->99.80861%,836B. Native rodata803770
 Source: Codex worker c19_u26_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2468 B.
 
 c19_u26: fn_801972E0 unlocks2468B from99.95138. Existing explicit-stride UpdateParticles helper declares offset,q,j; reverse to j,q,offset to make final count r28/stride r30 exact (99.975685, only initialization differs), then initialize j=0 before offset=0 while retaining offset-first increment expression. All text2468/EH8/index12 reach100, no other semantic/codegen changes. Long offset probe invariant and reverted. Existing EH suffices, no pool/singleton/header/split/bridge edits. Matching source edge and actual linked ranges verified; coordinator full DOL SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65 OK. Native gain1fn/2468B.
+
+## c19_u75_20261107
+Source: Codex worker c19_u75_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 300 B.
+
+c19_u75 fn_801869F8: named HSD_JObj *joint reused for guarded Z setters and render translation captures moves self to r31 and visibility base to r28, improving98.97375->99.51074. Extract only X/Y swing update to static inline SwingPath186 (retain reload p->joint[1] after X) gives99.749405. Declare Path186 *p before int i gives99.8926 with exact1676B/EH8/index12. Nine remaining rows are final-pass path r27 versus targetr26. Bool visible invariant; joint-before-path and assigning every post-call joint reload to joint invariant. No singleton/pool/A/B rescue applies. Retained improved honest NonMatching; full coordinator fallback-linked DOL SHA1 exact; native gain0.
