@@ -1,0 +1,5 @@
+# card-register-session-tick
+
+Source: Codex worker c17_u31_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+CardRegister_Session_Tick (80092460,1208B): baseline 5.4006624% actually compiles a 68B wrapper calling an unintended out-of-line 1172B Register_Tick because the expanded helper exceeds auto-inline budget. Flatten it into the public function. Combine service latch / session flag / negative counter / inactive-register checks in one OR early-return guard to reproduce the target final bne-body;b-exit. This yields 99.80132%, exact text size and 8B extab/12B index. Only 12 mr instructions for the receipt/failure decoder card pointer use r30 vs target r31. Open-coding the poll with a function-scope reused card pointer does not fix it and worsens response slots/result homes (98.9404%); reverted. Single-function TU remains NonMatching; final full fallback DOL SHA-1 OK. No mechanism B cut available.
