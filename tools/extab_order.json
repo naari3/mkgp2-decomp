@@ -15,6 +15,34 @@
       "dtor_8002F978"
     ]
   },
+  "src/game/EffectSpeedAction.cpp": {
+    "extab": [
+      "dtor_800656B8",
+      "EffectSpeedAction_MueScale_Reset",
+      "dtor_80065748",
+      "EffectSpeedAction_SpeedScale_Reset",
+      "dtor_8006528C",
+      "MediaBoard_SendAndCheck",
+      "EffectSpeed_TickTimer",
+      "InterpolationStep",
+      "EffectSpeed_ApplySpeedScale",
+      "ActionMueScale_Process",
+      "ActionSpeedScale_Process"
+    ],
+    "extabindex": [
+      "EffectSpeedAction_MueScale_Reset",
+      "EffectSpeedAction_SpeedScale_Reset",
+      "dtor_8006528C",
+      "MediaBoard_SendAndCheck",
+      "EffectSpeed_TickTimer",
+      "InterpolationStep",
+      "EffectSpeed_ApplySpeedScale",
+      "ActionMueScale_Process",
+      "ActionSpeedScale_Process",
+      "dtor_800656B8",
+      "dtor_80065748"
+    ]
+  },
   "src/game/clFlowCup.c": [
     "clFlowCup_Draw",
     "clFlowCup_Update",
