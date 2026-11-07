@@ -1075,7 +1075,7 @@ config.libs = [
             Object(Matching, "game/SpriteSlot_Render.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Vec3_Magnitude_Wrapper.c"),
             Object(Matching, "game/Mtx_Copy.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/Vec3_ToYaw.c", extab_padding=b""),
+            Object(Matching, "game/Vec3_ToYaw.c", mw_version="GC/2.7", extab_padding=b""),
             Object(Matching, "game/Vec3_Scale.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Vec2.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/JointByName.c"),
