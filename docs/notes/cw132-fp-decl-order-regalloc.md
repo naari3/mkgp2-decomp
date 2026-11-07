@@ -273,3 +273,8 @@ c17_u83: PointList constructor 8016C94C improves99.15873->99.31746 by declaring 
 Source: Codex worker c17_u115_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c17_u115 fn_801046C4: baseline by-value Bus_TestFlag causes -4B boolean island. Pointer-based ItemEffectBus getter with explicit zero/one if/else returns emits exact branch-over-branch and restores 2064B size and shared sdata2 postprocess offsets. Standard LerpF(a,b,t)=a*(1-t)+t*b helper repairs yaw instruction scheduling and raises text to99.92248; remaining six FP constant/product/negative/result register differences. b*t changes only multiply operand order; named complement/weighted locals are invariant. EH8/index12 exact, singleton stays NM, fallback full DOL SHA1 exact. Prior steering-ring-native c3_n7_801046c4 heading actually describes ring insertion 801E4AF4 and supplied no recorded dead ends for this function.
+
+## c18_u18_20261107
+Source: Codex worker c18_u18_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 376 B.
+
+c18_u18 SceneModel_Init 80076494 (376B): inline LoadSceneLights(self,chainLights), including first-null early return and default-light fallback, fixes chain prev/index/base homes. Nested inline LoadSeparateLights(self) fixes count/output/stride callee-saved homes. Pure local-scope changes and explicit byte cursors regress. Combined native helpers match text376/extab8/index12 100%, existing TU promoted Matching, source link and final ELF range verified, full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. No shared pool or EH metadata changes needed.
