@@ -14196,6 +14196,11 @@ sysdolphin/baselib/mobj_update_nm.c:
 	.text       start:0x802C23AC end:0x802C2848
 	.data       start:0x804FC214 end:0x804FC24C
 
+sysdolphin/baselib/mobj_data_nm.c:
+	.data       start:0x804FC24C end:0x804FC330
+	.sdata      start:0x806D0CE8 end:0x806D0D10
+	.sbss       start:0x806D2138 end:0x806D2150
+
 sysdolphin/baselib/mobj_anim.c:
 	.text       start:0x802C2848 end:0x802C2890
 
@@ -14204,9 +14209,6 @@ sysdolphin/baselib/mobj_nm.c:
 
 sysdolphin/baselib/mobj_nm1.c:
 	.text       start:0x802C2A40 end:0x802C340C
-	.data       start:0x804FC24C end:0x804FC330
-	.sdata      start:0x806D0CE8 end:0x806D0D10
-	.sbss       start:0x806D2138 end:0x806D2150
 
 sysdolphin/baselib/mobj_setup.c:
 	.text       start:0x802C340C end:0x802C384C

@@ -19,11 +19,11 @@ extern unsigned char lbl_806D0CF5[3];
 void MObjUpdateFunc(void*, enum_t, HSD_ObjData*);
 extern HSD_ClassInfo* default_class;
 extern HSD_MObj* current_mobj;
-HSD_TObj* tobj_toon;
-HSD_TObj* tobj_shadows;
-HSD_MObj* mobj_override;
-int mobj_override_enable;
-void (*tev_stage_callback)(int);
+static inline u32 MObjAlphaVtx(u32 alpha_src)
+{
+    return alpha_src & RENDER_ALPHA_VTX;
+}
+
 HSD_TExp* MObjMakeTExp(HSD_MObj* mobj, HSD_TObj* tobj_top, HSD_TExp** list)
 {
     HSD_TExp *diff, *spec, *ext, *alpha;
@@ -151,7 +151,7 @@ HSD_TExp* MObjMakeTExp(HSD_MObj* mobj, HSD_TObj* tobj_top, HSD_TExp** list)
 
     if (mobj->rendermode & RENDER_DIFFUSE) {
         HSD_TExp* exp_2;
-        u32 alpha_vtx = alpha_src & RENDER_ALPHA_VTX;
+        u32 alpha_vtx = MObjAlphaVtx(alpha_src);
         if (alpha_vtx) {
             exp_2 = HSD_TExpTev(list);
             HSD_TExpOrder(exp_2, NULL, GX_COLOR1A1);
