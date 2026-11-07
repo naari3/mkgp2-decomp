@@ -10100,7 +10100,9 @@
     "Update__8FadeLogoFv": "fn_8020E590",
     "__ct__8FadeLogoFii": "fn_8020E6C8",
     "EraseRange__15TaskEntriesBaseFRC8TaskIterRC8TaskIter": "DoublyLinkedList_EraseRange",
-    "__dt__13TaskListOwnerFv": "dtor_8020EB04"
+    "__dt__13TaskListOwnerFv": "dtor_8020EB04",
+    "__dt__16TaskListBaseCopyFv": "fn_8020EC70",
+    "__vt__16TaskListBaseCopy": "lbl_804ECAC0"
   },
   "src/game/GameMode_TitleSelect.cpp": {
     "__ct__10SelectBaseFv": "GameMode_BaseInit",
