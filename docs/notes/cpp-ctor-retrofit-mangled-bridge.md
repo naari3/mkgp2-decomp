@@ -1204,3 +1204,8 @@ c17_u125: DrawEffect_TickAndCull 800AF904/344B improves 98.77907 to100% by movin
 Source: Codex worker c17_u128_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1440 B.
 
 c17_u128: ItemWnd::ShowOther 80221FC4 reaches exact 1440-byte text and 24/12-byte EH/index by spelling case-2 fn_8021A4B8 alpha as 1.0f rather than external lbl_806DB194. External memory CSE had kept the scale initializer in f4, added fmr f1,f4 and altered timer-conversion scratch registers. Moving the scale declaration after fade is byte-invariant and was reverted. Canonical SINGLETON_INSTANCE is equivalent. Existing bridges/flags suffice; Matching source-linked at 80221FC4/1440, actual owned bytes exact and full DOL SHA-1 ea30f3b1 OK. No split/header/EH map edits.
+
+## c18_u10_20261107
+Source: Codex worker c18_u10_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 6088 B.
+
+c18_u10: SimplifyByMerge 802E34EC/6088B unlocked from 33.365967% to 100%. Previous draft omitted four-stage color/alpha A/D merge structure, constant-input conflict guards, range checks, scale composition and Ref/Unref replacement paths. Static inline bias/scale/constant/order helpers reproduce all target branches. Declare result/merged/bias/scale in that order for r31/r30/r29/r28. Color-D stage needs a block-local type cached before child pointer and selector acquisition; this restores lwz/cmplwi/lbz scheduling. Target alpha swap guard checks HasAlphaConstant(child) twice (original behavior retained). Existing text-only split suffices; flip Matching, no pools/EH/splits/padding. Full source-linked DOL SHA-1 OK.

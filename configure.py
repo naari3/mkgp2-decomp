@@ -562,7 +562,7 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/texpdag.c"),
             Object(NonMatching, "sysdolphin/baselib/texpdag_nm1.c"),
             Object(Matching, "sysdolphin/baselib/texpdag_unlock.c"),
-            Object(NonMatching, "sysdolphin/baselib/texpdag_merge_nm.c"),
+            Object(Matching, "sysdolphin/baselib/texpdag_merge_nm.c"),
             Object(Matching, "sysdolphin/baselib/texpdag_range.c"),
             Object(NonMatching, "sysdolphin/baselib/texpdag_nm2.c"),
             Object(Matching, "sysdolphin/baselib/texpdag_tail.c"),
