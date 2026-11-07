@@ -1,10 +1,12 @@
-/* Native draft: 99.02597% text, exact 1848-byte primary function.
+/* Native draft: 99.123375% text, exact 1848-byte primary function.
  * Kept NonMatching: rotation/request/animation GPR webs remain. */
 #include "game/ObjectDrivePrivate.h"
 
-static inline void SaveRotations(Normal3D *self, Quat *rotation) {
+static inline void SaveRotations(Normal3D *self) {
+    int i;
+    Quat *rotation=self->savedRotation;
     if (rotation) {
-        for (int i=0;i<self->count;i++,rotation++) GetRotation(self->table[i],rotation);
+        for (i=0;i<self->count;i++,rotation++) GetRotation(self->table[i],rotation);
     }
 }
 static inline void RestoreRotations(Normal3D *self) {
@@ -17,7 +19,7 @@ static inline void PrepareRotations(Normal3D *self) {
     if (!self->savedRotation) {
         self->jointCount=clNormal3D_CountJObjs(self,self->root,0);
         self->savedRotation=(Quat *)FUN_8003b120(self->jointCount * sizeof(Quat));
-        SaveRotations(self,self->savedRotation);
+        SaveRotations(self);
     } else {
         for (int i=0;i<self->count;i++) {
             JObj *j=self->table[i];
@@ -55,6 +57,12 @@ static inline void AnimateDrive(JObj **table, int count) {
         HSD_JObjCheckDepend(*table);
     }
 }
+static inline void RequestDrive(JObj **cursor, int count, float frame) {
+    if (cursor != 0) {
+        for (int i=0;i<count;++cursor,++i)
+            HSD_JObjReqAnimByFlags(*cursor,0x7FF,frame);
+    }
+}
 extern "C" int Object_DriveAnimAndSkin(Normal3D *self, Normal3D *source, float frame, float speed)
 {
     if (!self->root) return 0;
@@ -64,11 +72,11 @@ extern "C" int Object_DriveAnimAndSkin(Normal3D *self, Normal3D *source, float f
     if (!source) {
         if (frame>=lbl_806D2340) self->frame=frame;
         { ScopedTimer timer(8); Attach(self,self->row); }
-        { ScopedTimer timer(11); Request(self,self); }
+        { ScopedTimer timer(11); RequestDrive(self->table,self->count,self->frame); }
     } else {
         if (frame>=lbl_806D2340) source->frame=frame;
         { ScopedTimer timer(8); Attach(self,source->row); }
-        { ScopedTimer timer(11); Request(self,source); }
+        { ScopedTimer timer(11); RequestDrive(self->table,self->count,source->frame); }
     }
     {
         ScopedTimer timer(7);
