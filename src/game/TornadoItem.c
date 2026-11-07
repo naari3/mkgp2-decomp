@@ -15,6 +15,7 @@ extern void SpriteSlot_Container_Free(void *self);
 extern void Vec3_Add_DestFirst(float *dst, float *a, float *b);
 extern void Vec3_Copy(float *dst, float *src);
 extern void Vec3_Subtract_DestFirst(float *dst, float *a, float *b);
+extern void GetSpawnPosition(void *out, float x, float y, float z);
 extern int Item_AdvanceTrackedHomingState(void *target, float *pos, float speed);
 
 #define TI_S8(p, o) (*(signed char *)((char *)(p) + (o)))

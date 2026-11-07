@@ -5,14 +5,14 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void BuildOrientationFromYaw();
+
 extern void DbgScene_CopyMatrix3x4Transpose();
-extern void FinalLapCoinJump_CheckActiveForObject();
+
 extern void GabyouItem_BuildLocalTransformFromHandJoint();
 extern char *ItemObject_AllocFromPool();
 extern void ItemObject_DecrementCategoryBudget();
 extern void Item_InitLaunchFromKart();
-extern void KartDriver_GetJointByIdx();
+
 extern void Matrix4_Identity();
 extern void Matrix4_Multiply();
 extern void Matrix4_PreMultiplyRotY();
