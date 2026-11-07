@@ -507,8 +507,8 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/hash.c"),
             Object(Matching, "sysdolphin/baselib/texp.c"),
             Object(Matching, "sysdolphin/baselib/texp_inputs_nm.c"),
-            Object(NonMatching, "sysdolphin/baselib/texp_inputs_pools_nm.c"),
-            Object(NonMatching, "sysdolphin/baselib/texp_alpha_strings_nm.c"),
+            Object(Matching, "sysdolphin/baselib/texp_inputs_pools_nm.c"),
+            Object(Matching, "sysdolphin/baselib/texp_alpha_strings_nm.c"),
             Object(Matching, "sysdolphin/baselib/texp_alloc.c"),
             Object(Matching, "sysdolphin/baselib/texp_color_nm.c"),
             Object(Matching, "sysdolphin/baselib/texp_color.c"),
@@ -3967,9 +3967,11 @@ def _inject_data_align4_tus() -> None:
         users = []
         for tu in DATA_ALIGN4_TUS:
             obj = ("build/GNLJ82/src/" + tu + ".o").replace("/", sep)
-            target = "build " + obj + ": " + base_rule + " "
-            if target in text:
-                users.append(target)
+            # Long paths make the ninja writer wrap after "obj: $".
+            for target in ("build " + obj + ": " + base_rule + " ",
+                           "build " + obj + ": $\n    " + base_rule + " "):
+                if target in text:
+                    users.append(target)
         if not users:
             continue
         start = text.index("rule " + base_rule + "\n")
@@ -3978,7 +3980,7 @@ def _inject_data_align4_tus() -> None:
         assert hook in rule
         rule = rule.replace(hook, hook + " && $python tools/postprocess_data_alignment.py $out", 1)
         for target in users:
-            text = text.replace(target, target.replace(": " + base_rule + " ", ": " + new_rule + " "), 1)
+            text = text.replace(target, target.replace(base_rule + " ", new_rule + " "), 1)
         text = text[:start] + rule + "\n" + text[start:]
     build_ninja.write_text(text, encoding="utf-8")
 
@@ -4000,6 +4002,7 @@ DATA_ALIGN4_WEAK_TUS = [
     "game/anon_8020BD68",
     "game/anon_8020BD68_nm1",
     "game/ENo3D",
+    "sysdolphin/baselib/texp_alpha_strings_nm",  # keeps .comment (force_active)
 ]
 
 
@@ -4013,9 +4016,11 @@ def _inject_data_align4_weak_tus() -> None:
         users = []
         for tu in DATA_ALIGN4_WEAK_TUS:
             obj = ("build/GNLJ82/src/" + tu + ".o").replace("/", sep)
-            target = "build " + obj + ": " + base_rule + " "
-            if target in text:
-                users.append(target)
+            # Long paths make the ninja writer wrap after "obj: $".
+            for target in ("build " + obj + ": " + base_rule + " ",
+                           "build " + obj + ": $\n    " + base_rule + " "):
+                if target in text:
+                    users.append(target)
         if not users:
             continue
         start = text.index("rule " + base_rule + "\n")
@@ -4024,7 +4029,7 @@ def _inject_data_align4_weak_tus() -> None:
         assert hook in rule
         rule = rule.replace(hook, hook + " && $python tools/postprocess_data_align4_keep_comment.py $out", 1)
         for target in users:
-            text = text.replace(target, target.replace(": " + base_rule + " ", ": " + new_rule + " "), 1)
+            text = text.replace(target, target.replace(base_rule + " ", new_rule + " "), 1)
         text = text[:start] + rule + "\n" + text[start:]
     build_ninja.write_text(text, encoding="utf-8")
 
