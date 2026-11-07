@@ -1501,3 +1501,8 @@ c18_u88 retry fn_801826F8 improves97.08609->97.748344 by replacing static inline
 Source: Codex worker c18_u68_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u68 fn_801DABFC: two ordinary bool if/else mask selections split into repeated compare/conditional branches (608 vs600B). Inline helper is invariant, u8 fields repeat prior negative. switch((unsigned int)out) with default/on first, case0/off second emits exact target branch layout and r0 homes, text97.666664->99.2%, exact600B/extab100/index100. Only two cmpwi0 vs target cmplwi0 remain. Case-true/default-off switch remains608B/97.8%. Kept best honest NonMatching; coordinator build request2 DOL SHA-1 OK, zero native gain.
+
+## c18_u143_20261107
+Source: Codex worker c18_u143_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u143: JointTracks fn_80240810 reaches 100% from 99.82539 by adding TU-local static inline GetTrack(const TrackSet*, int), returning channels[channel], and calling it at all nine SeekTrack sites. This fixes the final channel keys/cursor r7/r8 swap without changing any other function or owned EH/data. Returning last-key pointer from TrackLength regresses to85.92063%. fn_80240378 remains98.42262: shared function-scope bucket invariant; inline TrackMessage(offset)86.54762; native shared pool ownership .rodata803E5D38..803EEE30 with direct static refs98.184525 (base synthesized r31, offset r30, target base r26/offset r31). Pool discarded; no persistent config/range/header/bridge changes. Reversed dtor-first extab group prevents B. Final fallback full DOL SHA-1 OK; native gain0.
