@@ -187,7 +187,7 @@ See "Pooled base registers" and "Over-split TUs" in `docs/matching_rules.md`.
 
 | Function | TU | % | What is left | Tried / WIP |
 | --- | --- | --- | --- | --- |
-| `SetCourseParams` | game/SetCourseParams | ~98 | .bss pool order fixed by compiling as C++ (definition order); left ~50 lines: constant/pointer register order in the lap/rank reset block; `volatile` reload of g_cupId is a marked fakematch | 2x20-min permuter, opt_* pragmas, GC/1.2.5n-2.6 |
+| `SetCourseParams` | game/SetCourseParams | ~98 | .bss pool order fixed by compiling as C++ (definition order); left ~50 lines: constant/pointer register order in the lap/rank reset block; `volatile` reload of g_cupId is a marked fakematch | 2x20-min permuter, opt_* pragmas, GC/1.2.5n-2.6; R5 2026-11-07: first LapExtra store as the global (52 -> 50), pointer decl orders/late extra scope, GC/2.0-2.7 (same 50), psweep pragmas x 1.3.2/2.6, 20 min cperm: no gain |
 | `RaceScene_GetPerspFovyForCup` | game/RaceScene_GetPerspFovyForCup | 80.98 | needs TU-owned `.data` base `0x80401118` (+0x10000) | |
 | `fn_801ECA14` | game/fn_801ECA14 | 74.07 | pool base `lbl_803BD920` owned by another TU | |
 | `Card_VerifyChecksum` | game/Card_VerifyChecksum | 91.97 | pooled data base | |

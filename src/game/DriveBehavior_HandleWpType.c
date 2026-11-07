@@ -4,6 +4,10 @@ extern double sin(double);
 extern const float lbl_806D18E4, lbl_806D18E8;
 extern const float lbl_806DA2D0, lbl_806DA2D4;
 
+static inline float DriveWave(float phase) {
+    return sin(3.1415927410125732f * phase);
+}
+
 void DriveBehavior_HandleWpType(DriveBehavior *self, int waypoint) {
     float speed;
     float acceleration;
@@ -49,7 +53,7 @@ void DriveBehavior_HandleWpType(DriveBehavior *self, int waypoint) {
         float first;
         self->phase += 0.008333333767950535f;
         if (self->phase > 1.0f) self->phase -= 1.0f;
-        wave = sin(3.1415927410125732f * self->phase);
+        wave = DriveWave(self->phase);
         first = 1.1f * wave + 0.1f;
         wave = 1.0f - wave;
         wave = 1.1f * wave + 0.1f;
