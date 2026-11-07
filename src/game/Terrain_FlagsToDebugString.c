@@ -12,6 +12,19 @@ extern char *strcat(char *dst, const char *src);
 
 }
 
+static inline unsigned int Terrain_PatchHi(unsigned int flags)
+{
+    unsigned int keep = 0;
+    unsigned int set = 0;
+    if (flags & 0x00800000) {
+        keep |= 0x00800000;
+        set |= 0x00100000;
+    }
+    flags &= keep;
+    flags |= set;
+    return flags;
+}
+
 extern "C" char *Terrain_FlagsToDebugString(unsigned int flags)
 {
     unsigned int f;
@@ -22,17 +35,9 @@ extern "C" char *Terrain_FlagsToDebugString(unsigned int flags)
     g = flags;
     f = flags & ~0x00F00000;
     if (g_cupId == 2 && (f & 0x80)) {
-        unsigned int set;
-        unsigned int keep;
-        keep = set = 0;
         f &= ~0x80;
         f |= 0x40;
-        if (flags & 0x00800000) {
-            keep |= 0x00800000;
-            set |= 0x00100000;
-        }
-        g &= keep;
-        g |= set;
+        g = Terrain_PatchHi(g);
     }
     f |= g & 0x00F00000;
 
