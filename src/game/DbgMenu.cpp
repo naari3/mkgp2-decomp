@@ -1362,9 +1362,14 @@ static inline void Particle_SetState(int h, char state)
     }
 }
 
-static inline void Particle_UpdatePool(char *state, Particle *e)
+/* fakematch: the local copies fix register/load order. Natural code: walk state/e params directly. */
+static inline void Particle_UpdatePool(char *state_, Particle *e_)
 {
+    Particle *e;
+    char *state;
     int i;
+    state = state_;
+    e = e_;
     for (i = 0; i < 500; i++, state++, e++) {
         if (*state) {
             e->done = AnimState_Step(e->anim);
