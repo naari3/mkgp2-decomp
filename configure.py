@@ -2458,7 +2458,7 @@ config.libs = [
             Object(Matching, "game/GetCourseSelectEntry.c"),
             Object(Matching, "game/fn_801BA318.c"),
             Object(NonMatching, "game/anon_801D286C.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-i include/libc"]),
-            Object(NonMatching, "game/anon_801D2F0C.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i include/libc"]),
+            Object(Matching, "game/anon_801D2F0C.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i include/libc"]),
             Object(Matching, "game/fn_801D3480.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801D35D4.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801D3B7C.cpp", extra_cflags=["-Cpp_exceptions on"]),
