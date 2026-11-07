@@ -1,0 +1,31 @@
+diff --git a/src/triforce/amnet_nm2_rest.c b/src/triforce/amnet_nm2_rest.c
+index 0e8719f..11db742 100644
+--- a/src/triforce/amnet_nm2_rest.c
++++ b/src/triforce/amnet_nm2_rest.c
+@@ -241,6 +241,8 @@ static inline void ResetDevAddress(u32* address, NetDev* dev) {
+     }
+ }
+ 
++#pragma push
++#pragma opt_dead_assignments off
+ s32 fn_8028EAA8(u8 id) {
+     NetDev* dev = FindDev(id);
+ 
+@@ -250,13 +252,15 @@ s32 fn_8028EAA8(u8 id) {
+     ResetDevAddress(&dev->cmdAddr, dev);
+     ProbeDevClear(dev->statAddr, dev);
+     switch (dev->kind) {
+-    default:
+-        break;
+     case 1:
+         break;
+     case 2:
+         DevPoke(0x84000040, 0);
+         break;
++    case 3:
++        break;
+     }
+     return 0;
+ }
++#pragma pop
++
