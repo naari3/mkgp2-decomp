@@ -11189,6 +11189,8 @@ game/anon_80209330_nm2.cpp:
 	extab       start:0x800193A4 end:0x800193B4
 	extabindex  start:0x80029AB0 end:0x80029AC8
 	.text       start:0x80209AC4 end:0x80209FA4
+	.rodata     start:0x803C2820 end:0x803C2840
+	.data       start:0x804EC568 end:0x804EC754
 
 game/anon_80209FA4.cpp:
 	extab       start:0x800193B4 end:0x800193FC
