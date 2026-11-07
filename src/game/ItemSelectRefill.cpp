@@ -19,6 +19,10 @@ static inline void CompleteChoice(RefillChoice *choice, int slot, const RefillLa
         choice->phase = 0;
         choice->done = 0;
 }
+static inline void SetRefillPosition(RefillSprite *sprite, float x, float y) {
+    sprite->x = x;
+    sprite->y = y;
+}
 extern "C" void fn_802386E0(ItemSelectState *self) {
     void *playerData = g_playerData;
     const RefillLayout *layout = &lbl_803DC0C0;
@@ -39,11 +43,8 @@ extern "C" void fn_802386E0(ItemSelectState *self) {
         int item = Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(playerData,
             slots[self->field14c * 3 + 0x59]), 0);
         SpriteAnimParamBlock_SetAnimParamCached(self->groups[self->field14c + 3], 0x13b9, item);
-        RefillSprite *sprite = ((RefillGroup *)self->groups[self->field14c + 3])->sprite;
-        float y = ys[row];
-        float x = xs[column];
-        sprite->x = x;
-        sprite->y = y;
+        SetRefillPosition(((RefillGroup *)self->groups[self->field14c + 3])->sprite,
+            xs[column], ys[row]);
         SpriteHandle_SetActiveFlag(self->itemSprites[row * 11 + column], 0);
         int oldResource = 0x1424;
         if (self->field14c == 1) oldResource = 0x1423;
