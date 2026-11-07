@@ -1466,7 +1466,7 @@ config.libs = [
             Object(NonMatching, "game/TaMode_FrameUpdate.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/TaMode_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/TaMode_Dtor.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(NonMatching, "game/RaceScene_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+            Object(Matching, "game/RaceScene_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(NonMatching, "game/RaceScene_FrameUpdate.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(NonMatching, "game/EffectItemChainIndicator_Tick.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/ItemObject_WriteVectors.c", extra_cflags=["-Cpp_exceptions on"]),

@@ -2,9 +2,7 @@
  * course, camera, player kart, path manager, Lakitu, HUD and the per-race
  * managers, logging the heap use after each step, then preloads the
  * effect and item resources the race can need.
- * NonMatching (99.98%): in the first item preload loop the target masks
- * and tests the slot item id in r3, then copies it to r26; this source
- * masks directly into r26 and copies it back to r3 for the first call. */
+ * The slot getter returns an int; the preload loop narrows it to a byte. */
 
 typedef struct RaceParams {
     signed char laps;
@@ -225,7 +223,7 @@ void ItemSelect_AddSlotItem(ItemSelect *sel, int item, int flag);
 void SetCourseScene3D(Scene3D *scene);
 void CourseBgm_Load(void);
 void PreloadEffectResources(int set);
-unsigned char ItemSelect_GetSlotItemId(ItemSelect *sel, int slot);
+int ItemSelect_GetSlotItemId(ItemSelect *sel, int slot);
 void PreloadItemResources(int item);
 int fn_8023DBEC(int item);
 void PreloadResource(int id);

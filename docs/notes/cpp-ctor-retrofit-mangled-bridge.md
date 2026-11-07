@@ -1319,3 +1319,8 @@ c18_u80: fn_801FDDA4 97.336845 ->100% by replacing hand-built if/goto dispatch w
 Source: Codex worker c18_u70_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 76 B.
 
 c18_u70 fn_802170F0: c13 alpha leaf 97.63158 ->100%/76B. PackColor four unsigned-char parameters instead of int first reaches98.42105 (sprite r7 fixed). Stage sprite/alpha/packed-color once per iteration to fix alpha r6/color r5; block-local sprite swaps iterator/sprite r7/r8 (97.89474). Move only sprite declaration to function scope to obtain iterator r8/sprite r7, all19 instructions exact. Existing one-function text split needs only Matching flag. No EH/data, bridges, pragmas or padding. Full source-linked DOL SHA1 exact; linked fn802170F0/76 bytes equal target.
+
+## c18_u132_20261107
+Source: Codex worker c18_u132_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2900 B.
+
+c18_u132 RaceScene_Init 800A1D80: 99.97931 ->100% by correcting TU-local ItemSelect_GetSlotItemId declaration unsigned char -> int, matching actual definition in ItemSelect.c. Keep unsigned-char loop item: int-return narrowing emits target clrlwi. r3 then mr r26,r3 instead of mask into r26/copy back. Int local alone regresses99.93793, explicit byte-to-int second-call copy invariant99.97931. Text2900/data36/extab556/index12 all100; existing TU promoted Matching without new ranges/EH bridges. main.elf source edge and symbol800A1D80/2900 verified; full DOL SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
