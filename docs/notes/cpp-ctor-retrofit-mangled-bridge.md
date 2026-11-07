@@ -1324,3 +1324,8 @@ c18_u70 fn_802170F0: c13 alpha leaf 97.63158 ->100%/76B. PackColor four unsigned
 Source: Codex worker c18_u132_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2900 B.
 
 c18_u132 RaceScene_Init 800A1D80: 99.97931 ->100% by correcting TU-local ItemSelect_GetSlotItemId declaration unsigned char -> int, matching actual definition in ItemSelect.c. Keep unsigned-char loop item: int-return narrowing emits target clrlwi. r3 then mr r26,r3 instead of mask into r26/copy back. Int local alone regresses99.93793, explicit byte-to-int second-call copy invariant99.97931. Text2900/data36/extab556/index12 all100; existing TU promoted Matching without new ranges/EH bridges. main.elf source edge and symbol800A1D80/2900 verified; full DOL SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.
+
+## c18_u91_20261107
+Source: Codex worker c18_u91_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 464 B.
+
+c18_u91: fn_801D878C c13 retry unlocks96.85345->100%. Secondary white-alpha packing uses accepted presentation-family __rlwimi(0xFFFFFF00U,(int)(lbl_806DA190*self->alpha),0,24,31), matching FlowPanelUpdate/c18_u41 precedent. Explicit loop-local white block restores464B but swaps TextManager stack slots and changes loop GPR/FPR homes (99.034485). TU-local FKDrawWhiteText with original y/x/text/local order restores every instruction and both EH cleanup slots/PC ranges. Full source-linked DOL SHA1 exact; ELF symbol801D878C/464 and text464/extab40/index12 byte-exact. Object EH90.909096/index66.66667 due discarded weak dtor copies. No new bridges/order/splits/data/shared headers; native gain1fn464B.
