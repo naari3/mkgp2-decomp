@@ -12837,6 +12837,8 @@
     "__vt__12ObjViewEntry": "lbl_80495E8C"
   },
   "src/game/DNFlash_nm2.cpp": {
+    "@148": "@etb_8001BB98",
+    "@149": "@eti_8002A734",
     "@168": "@etb_8001BB98",
     "@169": "@eti_8002A734",
     "Min<i>__FRCiRCi": "fn_80228D48",
