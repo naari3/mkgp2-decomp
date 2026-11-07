@@ -83,7 +83,9 @@ struct ESCounter {
 };
 
 struct ESBase {
-    virtual ~ESBase();
+    /* Pure (with a body below) so the first non-pure virtual, Reset, is the
+     * undefined key function: the vtable lives in another TU's data. */
+    virtual ~ESBase() = 0;
     virtual void Reset();
     virtual void Step();
 };
