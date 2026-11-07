@@ -3,12 +3,13 @@
  * 0x99 shared model handles, 0x80088C84..0x80089834.
  * The base is clNodeManager<char *, clNormal3D *> (an std::map at +4).
  *
- * NonMatching only because of layout: every function is 100%, but the
- * target has virtual dtors with RTTI (vtables lbl_803FE464/lbl_803FE470,
- * type names in .rodata 0x80312810) and emits the base dtor
- * (dtor_800897B8) after ModelHandle_SetInstance. Here the vtable pointers
- * are stored by hand, and CW places the weak base dtor right after the
- * ctor; with real virtuals CW puts the RTTI names in .data instead.
+ * Built with -RTTI on and -inline noauto,deferred. Deferred inlining emits
+ * the functions in reverse source order, so they are written here from the
+ * last address to the first. The base dtor (dtor_800897B8) is the last
+ * function in the target. To get it there, it is an explicit specialization
+ * with a non-inline out-of-class dtor, defined before every function and
+ * marked auto_inline so Mgr_Dtor still inlines it. Its extab entry follows
+ * the ctor's (tools/extab_order.json).
  */
 
 extern "C" {
@@ -22,8 +23,6 @@ extern const float lbl_806D3284; /* 0.0f */
 extern const float lbl_806D3288; /* -1.0f */
 extern int lbl_806D11D8; /* active slot count */
 extern int lbl_806D11DC; /* peak active slot count */
-extern void *lbl_803FE464[]; /* clNormal3DNodeManager vtable */
-extern void *lbl_803FE470[]; /* clNodeManager<char *, clNormal3D *> vtable */
 
 typedef struct ModelEntry {
     void *archive;
@@ -186,22 +185,19 @@ struct clNodeAlloc {};
 extern "C" void AssocTree_Init(void *tree, clNodeKeyCmp *cmp, clNodeAlloc *alloc);
 
 template <class K, class V>
-class clNodeManager {
+class clNodeManager;
+
+template <>
+class clNodeManager<char *, clNormal3D *> {
 public:
     clNodeManager()
     {
         clNodeKeyCmp cmp;
         clNodeAlloc alloc;
-        m_vtable = lbl_803FE470;
         AssocTree_Init(m_map, &cmp, &alloc);
     }
-    ~clNodeManager()
-    {
-        m_vtable = lbl_803FE470;
-        ((clNodeMap *)m_map)->~clNodeMap();
-    }
+    virtual ~clNodeManager();
 
-    void **m_vtable;
     /* std::map<char *, clNormal3D *>; raw storage so that the ctor (an
      * out-of-line map ctor call) registers no member cleanup. */
     unsigned char m_map[0x10];
@@ -210,7 +206,7 @@ public:
 class clNormal3DNodeManager : public clNodeManager<char *, clNormal3D *> {
 public:
     clNormal3DNodeManager();
-    ~clNormal3DNodeManager();
+    virtual ~clNormal3DNodeManager();
 
     inline cLNormal3DWrap_Slot *PopFreeSlot()
     {
@@ -227,129 +223,119 @@ public:
     int m_freeCount;
 };
 
-extern "C" void cLNormal3DWrap_Mgr_ReleaseSlot(clNormal3DNodeManager *mgr, cLNormal3DWrap_Slot *slot)
+#pragma auto_inline on
+clNodeManager<char *, clNormal3D *>::~clNodeManager()
 {
-    if (slot != 0) {
-        ModelHandle_GetArchive(slot->model);
-        slot->Deactivate();
-        if (mgr->m_freeCount < 0x200) {
-            mgr->m_freeList[mgr->m_freeCount] = slot;
-            mgr->m_freeCount++;
-        }
+    ((clNodeMap *)m_map)->~clNodeMap();
+}
+#pragma auto_inline off
+
+extern "C" void ModelHandle_SetInstance(ModelHandle *h, void *instance)
+{
+    h->m_instance = instance;
+}
+
+ModelHandle::ModelHandle(void *archive, void *instance)
+{
+    m_archive = archive;
+    m_instance = instance;
+    m_refcount = 1;
+}
+
+extern "C" int ModelHandle_DecRefcountToZero(ModelHandle *h)
+{
+    return --h->m_refcount <= 0 ? 1 : 0;
+}
+
+extern "C" void ModelHandle_IncRefcount(ModelHandle *h)
+{
+    h->m_refcount++;
+}
+
+void *ModelHandle_GetInstance(ModelHandle *h)
+{
+    return h->m_instance;
+}
+
+void *ModelHandle_GetArchive(ModelHandle *h)
+{
+    return h->m_archive;
+}
+
+extern "C" void cLNormal3DWrap_Slot_Render(cLNormal3DWrap_Slot *slot)
+{
+    void *obj = ModelHandle_GetInstance(slot->model);
+
+    if (slot->matrixSource != 0) {
+        Object_BindMatrixSource(obj, slot->matrixSource, 0);
+        Object_DriveAnimMatrix(obj);
+    } else {
+        Object_ClearAnimBinding(obj);
+        Object_SetJObjPositionVec(obj, slot->pos);
+        Object_SetJObjScaleVec(obj, slot->scale);
+        JObj_SetRotationQuat(obj, slot->rot[0], slot->rot[1], slot->rot[2]);
+    }
+    Object_SetColorRGBA(obj, 0, slot->color[0], slot->color[1], slot->color[2], slot->color[3]);
+    Object_JObjUpdate_be4(obj, 0x800);
+    Object_JObjUpdate_870(obj, slot->renderFlags);
+    if (slot->uvMtxValid == 1) {
+        fn_802BD6A4(slot->uvMtx);
+    }
+    clNormal3D_SetScale(obj, 0, slot->animFrame, lbl_806D3280, lbl_806D3284, lbl_806D3284);
+    obj = ModelHandle_GetInstance(slot->model);
+    if (slot->joint == 0) {
+        Object_RenderJObjTree(obj, 7);
+    } else {
+        Object_RenderJObjEx(obj, slot->joint, 7);
+    }
+    fn_802BD6A4(0);
+}
+
+extern "C" void cLNormal3DWrap_Slot_AdvanceAnimFrame(cLNormal3DWrap_Slot *slot)
+{
+    slot->animFrame += slot->animSpeed;
+}
+
+extern "C" void cLNormal3DWrap_Slot_GetOrLoadJointTransform(cLNormal3DWrap_Slot *slot, float *out)
+{
+    if (slot->matrixSource == 0) {
+        out[0] = slot->pos[0];
+        out[1] = slot->pos[1];
+        out[2] = slot->pos[2];
+    } else {
+        HSD_MtxGetTranslate(slot->matrixSource, out);
     }
 }
 
-extern "C" cLNormal3DWrap_Slot *cLNormal3DWrap_Mgr_AcquireSlot(clNormal3DNodeManager *mgr, int index, void *arg)
+extern "C" void cLNormal3DWrap_Slot_SetPositionXYZ(cLNormal3DWrap_Slot *slot, float x, float y, float z)
 {
-    void *archive;
-    cLNormal3DWrap_Slot *slot;
-
-    if (index < 0 || index >= 0x98) {
-        return 0;
-    }
-    archive = lbl_8041BC00[index].archive;
-    if (ModelHandle_GetInstance(mgr->m_handles[index]) != 0) {
-        slot = mgr->PopFreeSlot();
-        if (slot == 0) {
-            return 0;
-        }
-        ModelHandle_IncRefcount(mgr->m_handles[index]);
-        slot->Activate(mgr->m_handles[index], index);
-        return slot;
-    }
-    ModelHandle_SetInstance(mgr->m_handles[index], new clNormal3D(archive, arg));
-    ModelHandle_IncRefcount(mgr->m_handles[index]);
-    slot = mgr->PopFreeSlot();
-    slot->Activate(mgr->m_handles[index], index);
-    return slot;
+    slot->pos[0] = x;
+    slot->pos[1] = y;
+    slot->pos[2] = z;
 }
 
-clNormal3DNodeManager::~clNormal3DNodeManager()
+extern "C" void cLNormal3DWrap_Slot_SetScaleVec3(cLNormal3DWrap_Slot *slot, float x, float y, float z)
 {
-    int i;
-    clNormal3D *obj;
-
-    m_vtable = lbl_803FE464;
-    lbl_806D11D8 = 0;
-    for (i = 0; i < 0x99; i++) {
-        if (m_handles[i] != 0) {
-            obj = (clNormal3D *)ModelHandle_GetInstance(m_handles[i]);
-            if (obj != 0) {
-                delete obj;
-            }
-            ModelHandle_SetInstance(m_handles[i], 0);
-            delete m_handles[i];
-            m_handles[i] = 0;
-        }
-    }
-    delete[] m_freeList;
-    delete[] m_slots;
-    delete[] m_handles;
+    slot->scale[0] = x;
+    slot->scale[1] = y;
+    slot->scale[2] = z;
 }
 
-clNormal3DNodeManager::clNormal3DNodeManager()
+extern "C" void cLNormal3DWrap_Slot_SetRotationXYZ(cLNormal3DWrap_Slot *slot, float x, float y, float z)
 {
-    int i;
-    int j;
-
-    m_vtable = lbl_803FE464;
-    m_handles = new ModelHandle *[0x99];
-    memset(m_handles, 0, 0x99 * sizeof(ModelHandle *));
-    m_slots = new cLNormal3DWrap_Slot[0x200];
-    m_freeList = new cLNormal3DWrap_Slot *[0x200];
-    for (i = 0; i < 0x200; i++) {
-        m_freeList[i] = &m_slots[i];
-    }
-    m_freeCount = 0x200;
-    for (j = 0; j < 0x99; j++) {
-        m_handles[j] = new ModelHandle(lbl_8041BC00[j].archive, 0);
-        if (m_handles[j] != 0) {
-            ModelHandle_DecRefcountToZero(m_handles[j]);
-        }
-    }
+    slot->rot[0] = x;
+    slot->rot[1] = y;
+    slot->rot[2] = z;
 }
 
-cLNormal3DWrap_Slot::~cLNormal3DWrap_Slot()
+extern "C" void cLNormal3DWrap_Slot_SetRotationZ(cLNormal3DWrap_Slot *slot, float z)
 {
-    Deactivate();
+    slot->rot[2] = z;
 }
 
-cLNormal3DWrap_Slot::cLNormal3DWrap_Slot()
+extern "C" void cLNormal3DWrap_Slot_SetRenderFlags(cLNormal3DWrap_Slot *slot, int flags)
 {
-    active = 0;
-}
-
-extern "C" void cLNormal3DWrap_Slot_ResolveJoint(cLNormal3DWrap_Slot *slot, const char *name)
-{
-    slot->joint = ResolveJointByName(ModelHandle_GetInstance(slot->model), name);
-}
-
-extern "C" void cLNormal3DWrap_Slot_SetAnimSpeed(cLNormal3DWrap_Slot *slot, float speed)
-{
-    slot->animSpeed = speed;
-}
-
-extern "C" void cLNormal3DWrap_Slot_SetAnimFrame(cLNormal3DWrap_Slot *slot, float frame)
-{
-    slot->animFrame = frame;
-}
-
-extern "C" void cLNormal3DWrap_Slot_ClearMatrixSource(cLNormal3DWrap_Slot *slot)
-{
-    slot->matrixSource = 0;
-}
-
-extern "C" void cLNormal3DWrap_Slot_SetMatrixSource(cLNormal3DWrap_Slot *slot, void *src)
-{
-    slot->matrixSource = src;
-}
-
-extern "C" void cLNormal3DWrap_Slot_SetRotationQuat(cLNormal3DWrap_Slot *slot, float r, float g, float b, float a)
-{
-    slot->color[0] = r;
-    slot->color[1] = g;
-    slot->color[2] = b;
-    slot->color[3] = a;
+    slot->renderFlags = flags;
 }
 
 extern "C" void cLNormal3DWrap_Slot_AdvanceUVScrollWrapped(cLNormal3DWrap_Slot *slot, float du, float dv)
@@ -385,110 +371,127 @@ extern "C" void cLNormal3DWrap_Slot_AdvanceUVScrollWrapped(cLNormal3DWrap_Slot *
     slot->uvMtx[1][3] = v;
 }
 
-extern "C" void cLNormal3DWrap_Slot_SetRenderFlags(cLNormal3DWrap_Slot *slot, int flags)
+extern "C" void cLNormal3DWrap_Slot_SetRotationQuat(cLNormal3DWrap_Slot *slot, float r, float g, float b, float a)
 {
-    slot->renderFlags = flags;
+    slot->color[0] = r;
+    slot->color[1] = g;
+    slot->color[2] = b;
+    slot->color[3] = a;
 }
 
-extern "C" void cLNormal3DWrap_Slot_SetRotationZ(cLNormal3DWrap_Slot *slot, float z)
+extern "C" void cLNormal3DWrap_Slot_SetMatrixSource(cLNormal3DWrap_Slot *slot, void *src)
 {
-    slot->rot[2] = z;
+    slot->matrixSource = src;
 }
 
-extern "C" void cLNormal3DWrap_Slot_SetRotationXYZ(cLNormal3DWrap_Slot *slot, float x, float y, float z)
+extern "C" void cLNormal3DWrap_Slot_ClearMatrixSource(cLNormal3DWrap_Slot *slot)
 {
-    slot->rot[0] = x;
-    slot->rot[1] = y;
-    slot->rot[2] = z;
+    slot->matrixSource = 0;
 }
 
-extern "C" void cLNormal3DWrap_Slot_SetScaleVec3(cLNormal3DWrap_Slot *slot, float x, float y, float z)
+extern "C" void cLNormal3DWrap_Slot_SetAnimFrame(cLNormal3DWrap_Slot *slot, float frame)
 {
-    slot->scale[0] = x;
-    slot->scale[1] = y;
-    slot->scale[2] = z;
+    slot->animFrame = frame;
 }
 
-extern "C" void cLNormal3DWrap_Slot_SetPositionXYZ(cLNormal3DWrap_Slot *slot, float x, float y, float z)
+extern "C" void cLNormal3DWrap_Slot_SetAnimSpeed(cLNormal3DWrap_Slot *slot, float speed)
 {
-    slot->pos[0] = x;
-    slot->pos[1] = y;
-    slot->pos[2] = z;
+    slot->animSpeed = speed;
 }
 
-extern "C" void cLNormal3DWrap_Slot_GetOrLoadJointTransform(cLNormal3DWrap_Slot *slot, float *out)
+extern "C" void cLNormal3DWrap_Slot_ResolveJoint(cLNormal3DWrap_Slot *slot, const char *name)
 {
-    if (slot->matrixSource == 0) {
-        out[0] = slot->pos[0];
-        out[1] = slot->pos[1];
-        out[2] = slot->pos[2];
-    } else {
-        HSD_MtxGetTranslate(slot->matrixSource, out);
+    slot->joint = ResolveJointByName(ModelHandle_GetInstance(slot->model), name);
+}
+
+cLNormal3DWrap_Slot::cLNormal3DWrap_Slot()
+{
+    active = 0;
+}
+
+cLNormal3DWrap_Slot::~cLNormal3DWrap_Slot()
+{
+    Deactivate();
+}
+
+clNormal3DNodeManager::clNormal3DNodeManager()
+{
+    int i;
+    int j;
+
+    m_handles = new ModelHandle *[0x99];
+    memset(m_handles, 0, 0x99 * sizeof(ModelHandle *));
+    m_slots = new cLNormal3DWrap_Slot[0x200];
+    m_freeList = new cLNormal3DWrap_Slot *[0x200];
+    for (i = 0; i < 0x200; i++) {
+        m_freeList[i] = &m_slots[i];
+    }
+    m_freeCount = 0x200;
+    for (j = 0; j < 0x99; j++) {
+        m_handles[j] = new ModelHandle(lbl_8041BC00[j].archive, 0);
+        if (m_handles[j] != 0) {
+            ModelHandle_DecRefcountToZero(m_handles[j]);
+        }
     }
 }
 
-extern "C" void cLNormal3DWrap_Slot_AdvanceAnimFrame(cLNormal3DWrap_Slot *slot)
+clNormal3DNodeManager::~clNormal3DNodeManager()
 {
-    slot->animFrame += slot->animSpeed;
-}
+    int i;
+    clNormal3D *obj;
 
-extern "C" void cLNormal3DWrap_Slot_Render(cLNormal3DWrap_Slot *slot)
-{
-    void *obj = ModelHandle_GetInstance(slot->model);
-
-    if (slot->matrixSource != 0) {
-        Object_BindMatrixSource(obj, slot->matrixSource, 0);
-        Object_DriveAnimMatrix(obj);
-    } else {
-        Object_ClearAnimBinding(obj);
-        Object_SetJObjPositionVec(obj, slot->pos);
-        Object_SetJObjScaleVec(obj, slot->scale);
-        JObj_SetRotationQuat(obj, slot->rot[0], slot->rot[1], slot->rot[2]);
+    lbl_806D11D8 = 0;
+    for (i = 0; i < 0x99; i++) {
+        if (m_handles[i] != 0) {
+            obj = (clNormal3D *)ModelHandle_GetInstance(m_handles[i]);
+            if (obj != 0) {
+                delete obj;
+            }
+            ModelHandle_SetInstance(m_handles[i], 0);
+            delete m_handles[i];
+            m_handles[i] = 0;
+        }
     }
-    Object_SetColorRGBA(obj, 0, slot->color[0], slot->color[1], slot->color[2], slot->color[3]);
-    Object_JObjUpdate_be4(obj, 0x800);
-    Object_JObjUpdate_870(obj, slot->renderFlags);
-    if (slot->uvMtxValid == 1) {
-        fn_802BD6A4(slot->uvMtx);
+    delete[] m_freeList;
+    delete[] m_slots;
+    delete[] m_handles;
+}
+
+extern "C" cLNormal3DWrap_Slot *cLNormal3DWrap_Mgr_AcquireSlot(clNormal3DNodeManager *mgr, int index, void *arg)
+{
+    void *archive;
+    cLNormal3DWrap_Slot *slot;
+
+    if (index < 0 || index >= 0x98) {
+        return 0;
     }
-    clNormal3D_SetScale(obj, 0, slot->animFrame, lbl_806D3280, lbl_806D3284, lbl_806D3284);
-    obj = ModelHandle_GetInstance(slot->model);
-    if (slot->joint == 0) {
-        Object_RenderJObjTree(obj, 7);
-    } else {
-        Object_RenderJObjEx(obj, slot->joint, 7);
+    archive = lbl_8041BC00[index].archive;
+    if (ModelHandle_GetInstance(mgr->m_handles[index]) != 0) {
+        slot = mgr->PopFreeSlot();
+        if (slot == 0) {
+            return 0;
+        }
+        ModelHandle_IncRefcount(mgr->m_handles[index]);
+        slot->Activate(mgr->m_handles[index], index);
+        return slot;
     }
-    fn_802BD6A4(0);
+    ModelHandle_SetInstance(mgr->m_handles[index], new clNormal3D(archive, arg));
+    ModelHandle_IncRefcount(mgr->m_handles[index]);
+    slot = mgr->PopFreeSlot();
+    slot->Activate(mgr->m_handles[index], index);
+    return slot;
 }
 
-void *ModelHandle_GetArchive(ModelHandle *h)
+extern "C" void cLNormal3DWrap_Mgr_ReleaseSlot(clNormal3DNodeManager *mgr, cLNormal3DWrap_Slot *slot)
 {
-    return h->m_archive;
+    if (slot != 0) {
+        ModelHandle_GetArchive(slot->model);
+        slot->Deactivate();
+        if (mgr->m_freeCount < 0x200) {
+            mgr->m_freeList[mgr->m_freeCount] = slot;
+            mgr->m_freeCount++;
+        }
+    }
 }
 
-void *ModelHandle_GetInstance(ModelHandle *h)
-{
-    return h->m_instance;
-}
-
-extern "C" void ModelHandle_IncRefcount(ModelHandle *h)
-{
-    h->m_refcount++;
-}
-
-extern "C" int ModelHandle_DecRefcountToZero(ModelHandle *h)
-{
-    return --h->m_refcount <= 0 ? 1 : 0;
-}
-
-ModelHandle::ModelHandle(void *archive, void *instance)
-{
-    m_archive = archive;
-    m_instance = instance;
-    m_refcount = 1;
-}
-
-extern "C" void ModelHandle_SetInstance(ModelHandle *h, void *instance)
-{
-    h->m_instance = instance;
-}
+#pragma readonly_strings on
