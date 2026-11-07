@@ -3617,6 +3617,8 @@ config.libs = [
             Object(NonMatching, "triforce/acsocket_nm6.c", mw_version="GC/3.0a5", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/acsocket_m7.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "triforce/acsocket_nm7.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "triforce/acsocket_m8.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(NonMatching, "triforce/acsocket_nm8.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/amuart.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/amuart_state.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/amsys.c", extra_cflags=["-use_lmw_stmw on"]),
