@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 /*
  * 0x8021ED88..0x8021F088: clCSSceneChangeSingle (vtable lbl_804EDE1C, base
  * clSceneInterface lbl_803FE0C8). Shows one FlowPanel message, then drops
@@ -36,7 +37,7 @@ extern const float lbl_806DB188;
 }
 
 static inline InputState *GetInput() {
-    return g_pInputState == 0 ? (InputState *)0 : g_pInputState;
+    return SINGLETON_INSTANCE(g_pInputState);
 }
 
 static inline void SetInput(unsigned char en) {

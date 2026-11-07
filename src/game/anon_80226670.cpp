@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 /*
  * 0x80226670..0x80226954: single-play join message scene (vtable
  * lbl_804EDF64, base clSceneInterface lbl_803FE0C8). Shows one FlowPanel
@@ -38,11 +39,11 @@ void PlayStats_IncSinglePlayJoin(void);
 }
 
 static inline InputState *GetInput() {
-    return g_pInputState == 0 ? (InputState *)0 : g_pInputState;
+    return SINGLETON_INSTANCE(g_pInputState);
 }
 
 static inline RankLog *GetRankLog() {
-    return lbl_806D10A0 == 0 ? (RankLog *)0 : lbl_806D10A0;
+    return SINGLETON_INSTANCE(lbl_806D10A0);
 }
 
 struct SceneBase {

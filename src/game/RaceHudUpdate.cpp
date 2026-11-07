@@ -1,6 +1,7 @@
+#include "game/singleton.h"
 #include "game/RaceHudMethodsPrivate.h"
 extern "C" void fn_80249130(HudMethodScene *self) {
-    if(GetInput()) { InputState *in=g_pInputState; CGameCoin_ProcessInput(in == 0 ? (InputState *)0 : in); }
+    if(GetInput()) { InputState *in=g_pInputState; CGameCoin_ProcessInput(SINGLETON_INSTANCE(in)); }
     if(!self->done) {
         fn_8021A1C4(lbl_806D1A60);
         ItemDisplay_Update(ItemDisplay_GetOrCreate());

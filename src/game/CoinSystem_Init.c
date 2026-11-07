@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 /* === extracted from auto_CoinSystem_Init_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -406,7 +407,7 @@ static inline void CoinCleanup()
 }
 static inline void *CoinRankLog()
 {
-    return lbl_806D10A0 == 0 ? (void *)0 : lbl_806D10A0;
+    return SINGLETON_INSTANCE(lbl_806D10A0);
 }
 static inline void CoinFill(CoinSpawn *table, int mode)
 {

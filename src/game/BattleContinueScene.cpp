@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 /*
  * Network battle continue scene @ 0x8024E344..0x8024F400.
  *
@@ -174,7 +175,7 @@ static inline ItemMsgWnd *ItemMsg_Get() {
 }
 
 static inline RankLog *GetRankLog() {
-    return lbl_806D10A0 == 0 ? (RankLog *)0 : lbl_806D10A0;
+    return SINGLETON_INSTANCE(lbl_806D10A0);
 }
 
 static inline void SetPcbMode(int mode) {

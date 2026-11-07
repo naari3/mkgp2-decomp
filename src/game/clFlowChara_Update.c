@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 
 /* sdata symbols referenced from asm */
 extern unsigned char lbl_806D9BCC[5];
@@ -118,7 +119,7 @@ void HSD_JObjSetupMatrixSub(CharaJoint*);
 }
 static inline CharaInput* CurrentCharaInput()
 {
-    return g_pInputState == 0 ? (CharaInput*)0 : g_pInputState;
+    return SINGLETON_INSTANCE(g_pInputState);
 }
 static inline int ApplyCharaInput(CharaView* self, CharaInput* input)
 {

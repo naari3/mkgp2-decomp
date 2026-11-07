@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 /*
  * clFlowItem - item-award flow scene (vtable lbl_804EE52C).
  *
@@ -268,7 +269,7 @@ static inline void ItemMsg_Destroy(void) {
 static inline InputRec *GetInput(void) {
     /* inverted-cond spelling: false arm (li 0) lays out first, matching the
      * target's bne-to-value branch shape */
-    return g_pInputState == 0 ? (InputRec *)0 : g_pInputState;
+    return SINGLETON_INSTANCE(g_pInputState);
 }
 
 /* ------------------------------------------------------------------ */

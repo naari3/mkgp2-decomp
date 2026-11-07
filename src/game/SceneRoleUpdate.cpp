@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 /* Target-observed owner/result views; no live Ghidra type lookup performed. */
 #include "game/FlowScene.h"
 
@@ -30,7 +31,7 @@ void RankLog_Reset(RankLog *);
 }
 
 static inline RankLog *RoleRankLog() {
-    return lbl_806D10A0 == 0 ? (RankLog *)0 : lbl_806D10A0;
+    return SINGLETON_INSTANCE(lbl_806D10A0);
 }
 
 extern "C" void fn_8024D02C(SceneRoleUpdateView *self) {
