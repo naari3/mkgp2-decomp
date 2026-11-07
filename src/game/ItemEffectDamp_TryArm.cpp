@@ -1,4 +1,4 @@
-/* NonMatching: constant load scheduling differs. */
+/* Built with GC/2.6 (constant load scheduling). */
 #include "game/ItemEffectArmPrivate.h"
 
 extern "C" const float lbl_806D2824;
