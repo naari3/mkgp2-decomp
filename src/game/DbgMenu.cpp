@@ -2158,22 +2158,23 @@ extern "C" unsigned char DbgScene01_SprMng2Test_InputCheck(void)
     return 0;
 }
 
-/* The target keeps two pointer IVs in the id-count loop (the -2 compare
- * reloads the id), so the second read goes through another struct type and
- * mwcc does not CSE it with the first.
- * NonMatching: the target also keeps a dead offset IV there, and each
- * self-inlined level walks the nodes as base + offset (`add`) instead of a
- * pointer IV. */
+/* Resource scripts are arrays of fixed-size tagged records. Keep the current
+ * record separate from its byte offset while following nested scripts.
+ * The alternate ID view preserves the independent -2 sentinel read.
+ * NonMatching: mwcc still strength-reduces the byte offset to a pointer IV,
+ * and omits the target's third induction value in each sentinel loop. */
 struct ResIdAlt { int id; };
 extern "C" void DbgScene_PreloadResourceTree(ResNode *tree)
 {
-    int i;
+    unsigned int offset;
+    ResNode *node;
     signed char count = 1;
 
-    for (i = 0; tree[i].type != 0xD; i++) {
-        switch (tree[i].type) {
+    for (offset = 0, node = tree; node->type != 0xD;
+         offset += sizeof(ResNode), node = (ResNode *)((char *)tree + offset)) {
+        switch (node->type) {
         case 0: {
-            int *ids = (int *)tree[i].data;
+            int *ids = (int *)node->data;
             count = 0;
             while (ids[count] != -1 && ((ResIdAlt *)ids)[count].id != -2) {
                 count++;
@@ -2183,12 +2184,12 @@ extern "C" void DbgScene_PreloadResourceTree(ResNode *tree)
         case 1: {
             int j;
             for (j = 0; j < count; j++) {
-                PreloadResource(((int *)tree[i].data)[j]);
+                PreloadResource(((int *)node->data)[j]);
             }
             break;
         }
         case 0xC:
-            DbgScene_PreloadResourceTree((ResNode *)tree[i].data);
+            DbgScene_PreloadResourceTree((ResNode *)node->data);
             break;
         }
     }
