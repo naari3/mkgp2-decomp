@@ -10415,9 +10415,6 @@
     "__dt__16clMapEffectPartsFv": "dtor_8016A270"
   },
   "src/game/WarpZoneVector_Insert.cpp": {
-    "@267": "global:lbl_803284C0",
-    "@269": "@etb_80009ED0",
-    "@270": "@eti_80022640",
     "__ct__15WarpErrorStringFPv": "SharedPtr_Init",
     "__dt__15WarpErrorStringFv": "dtor_80038E30",
     "__vt__Q23std9exception": "lbl_803F5710",
@@ -10426,10 +10423,7 @@
     "__dt__Q23std9exceptionFv": "dtor_80038DD4",
     "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor",
     "__dt__10WarpCornerFv": "dtor_80036E40",
-    "__dt__21WarpZoneVectorStorageFv": "dtor_800AA69C",
-    "@228": "lbl_803284C0",
-    "@230": "@etb_80009ED0",
-    "@231": "@eti_80022640"
+    "__dt__21WarpZoneVectorStorageFv": "dtor_800AA69C"
   },
   "src/game/SpecialFace_Init.cpp": {
     "@89": "@etb_80008688",
@@ -10693,33 +10687,6 @@
     "@238": "@etb_80008768",
     "@249": "@eti_80021560",
     "@248": "@etb_800086D0"
-  },
-  "src/game/WarpZoneVector_Reserve.cpp": {
-    "__ct__15WarpErrorStringFPv": "SharedPtr_Init",
-    "__dt__15WarpErrorStringFv": "dtor_80038E30",
-    "__vt__Q23std9exception": "lbl_803F5710",
-    "__vt__Q23std11logic_error": "lbl_803F5700",
-    "__vt__Q23std12length_error": "lbl_803F56F0",
-    "__dt__Q23std9exceptionFv": "dtor_80038DD4",
-    "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor",
-    "__dt__10WarpCornerFv": "dtor_80036E40",
-    "__dt__21WarpZoneVectorStorageFv": "dtor_800AA69C",
-    "WarpZoneVector_ClearCall": "WarpZoneVector_Clear",
-    "@113": "@eti_8002264C",
-    "@112": "@etb_80009F30",
-    "@119": "@eti_80022658",
-    "@118": "@etb_80009F70",
-    "@74": "@eti_80022664",
-    "@73": "@etb_80009F78",
-    "@41": "@eti_80022670",
-    "@40": "@etb_80009F10",
-    "@47": "@eti_8002267C",
-    "@46": "@etb_80009F20",
-    "@57": "@eti_80022688",
-    "@56": "@etb_80009F28",
-    "@64": "@eti_80022694",
-    "@63": "@etb_80009F18",
-    "@111": "lbl_803284C0"
   },
   "src/game/PanelCda40.cpp": {
     "__dt__16CdaSpriteDerivedFv": "fn_801CDA8C",
