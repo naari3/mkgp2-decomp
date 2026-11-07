@@ -42,8 +42,11 @@ extern "C" int fn_8017FB5C() {
     } else {
         fn_80181144();
     }
-    if (lbl_806D15F8 == 0) goto normal;
-    if (lbl_806D15F8 == 1) return -4;
-normal:
+    if (lbl_806D15F8 != 0) {
+        switch (lbl_806D15F8) {
+        case 1:
+            return -4;
+        }
+    }
     return -2;
 }

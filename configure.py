@@ -2959,7 +2959,7 @@ config.libs = [
             Object(Matching, "game/coursescene/fn_8017E750.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/coursescene/fn_8017E824.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/miyazakiconsole/fn_8017EB58.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/miyazakiconsole/fn_8017FB5C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/miyazakiconsole/fn_8017FB5C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/miyazakiconsole/fn_801807E0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/miyazakiconsole/fn_8017EFFC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/miyazakiconsole/fn_8017EC90.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
