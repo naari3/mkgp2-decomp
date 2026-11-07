@@ -673,7 +673,9 @@ extern "C" SceneTpl *DbgScene03_TplTest_Ctor(void)
 
 inline void PaletteSet::NextColor(void)
 {
-    color = lbl_8041C7E0[lbl_806D14C0++];
+    int i = lbl_806D14C0;
+    color = lbl_8041C7E0[i];
+    lbl_806D14C0 = i + 1;
     if (lbl_806D14C0 >= 16) {
         lbl_806D14C0 = 0;
     }
@@ -1363,7 +1365,7 @@ static inline void Particle_SetState(int h, char state)
 static inline void Particle_UpdatePool(char *state, Particle *e)
 {
     int i;
-    for (i = 0; i < 500; i++, e++, state++) {
+    for (i = 0; i < 500; i++, state++, e++) {
         if (*state) {
             e->done = AnimState_Step(e->anim);
             if (e->handle == 0 && e->id != -1) {

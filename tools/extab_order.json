@@ -15,6 +15,38 @@
       "dtor_8002F978"
     ]
   },
+  "src/game/ItemEffectTicks.cpp": {
+    "extab": [
+      "dtor_80055F10",
+      "dtor_80055FA0",
+      "dtor_80056030",
+      "dtor_800560C0",
+      "dtor_80054B2C",
+      "ItemEffectSpin_Tick",
+      "ItemEffectSpin_TickWorker",
+      "ItemEffectDamp_Tick",
+      "ExplosionTumble_Update",
+      "ItemEffectQuake_Tick",
+      "TornadoLift_Update",
+      "dtor_80036E40",
+      "ItemEffectImpact_Tick"
+    ],
+    "extabindex": [
+      "dtor_80054B2C",
+      "ItemEffectSpin_Tick",
+      "ItemEffectSpin_TickWorker",
+      "ItemEffectDamp_Tick",
+      "ExplosionTumble_Update",
+      "ItemEffectQuake_Tick",
+      "TornadoLift_Update",
+      "dtor_80036E40",
+      "ItemEffectImpact_Tick",
+      "dtor_80055F10",
+      "dtor_80055FA0",
+      "dtor_80056030",
+      "dtor_800560C0"
+    ]
+  },
   "src/game/EffectSpeedAction.cpp": {
     "extab": [
       "dtor_800656B8",
