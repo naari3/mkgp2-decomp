@@ -74,10 +74,12 @@ static inline void Col_BoxSupport(CollisionObject *o, Vec *ext, Vec *dir, Vec *o
     out->z = Vec3_Dot(&row, dir);
 }
 
+static inline int Col_GetType(const CollisionObject *o) { return o->type; }
+
 static inline void Col_Support(CollisionObject *o, Vec *dir, Vec *out) {
     Vec ext;
     Vec row;
-    if (o->type != 1) {
+    if (Col_GetType(o) != 1) {
         out->x = 0.0f;
         out->y = 0.0f;
         out->z = 0.0f;

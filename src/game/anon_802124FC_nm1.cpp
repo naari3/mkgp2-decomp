@@ -32,6 +32,7 @@ struct KartRender {
     float scale1CC;
     char pad1D0[0x1D8 - 0x1D0];
     float speed;
+    float GetSpeed() const { return speed; }
     char pad1DC[0x320 - 0x1DC];
     float lift;
     char pad324[0x37C - 0x324];
@@ -66,6 +67,10 @@ void KartDriver_TickAction_79244(KartRender *r, float t);
 void Object_SetField14_IfValid(void *jobj, float v);
 }
 
+static inline float MultiplySpeed(float factor, float speed) {
+    return factor * speed;
+}
+
 static inline void AddLift(CarObject *car, float lift) {
     CarObject_GetRenderObj(car)->lift += lift;
 }
@@ -82,9 +87,9 @@ extern "C" void fn_802128F4(JumpGauge *g, CarObject *car) {
                 CarObject_GetRenderObj(car)->scale37C = g->step;
                 CarObject_GetRenderObj(car)->scale1CC = g->step;
                 {
-                    float speed = CarObject_GetRenderObj(car)->speed;
+                    float speed = CarObject_GetRenderObj(car)->GetSpeed();
                     float factor = g->step;
-                    factor *= speed;
+                    factor = MultiplySpeed(factor, speed);
                     CarObject_GetRenderObj(car)->speed = factor;
                 }
                 g->lift = -(lbl_806DAE04 * (lbl_806DAD70 - g->step));
@@ -98,9 +103,9 @@ extern "C" void fn_802128F4(JumpGauge *g, CarObject *car) {
             { KartRender *r = CarObject_GetRenderObj(car); r->scale37C = lbl_806DAD70; }
             { KartRender *r = CarObject_GetRenderObj(car); r->scale1CC = lbl_806DAD70; }
             {
-                float speed = CarObject_GetRenderObj(car)->speed;
+                float speed = CarObject_GetRenderObj(car)->GetSpeed();
                 float factor = g->div;
-                factor *= speed;
+                factor = MultiplySpeed(factor, speed);
                 CarObject_GetRenderObj(car)->speed = factor;
             }
             if (CarObject_GetRenderObj(car)->jobj != 0) {

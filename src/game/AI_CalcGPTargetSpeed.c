@@ -54,14 +54,18 @@ static inline float GPCatchup(AIPairRecord *record, int kart) {
         return 0.0f;
     }
 }
+static inline float GPScaleFollowDelta(int delta, float factor) {
+    float value = delta;
+    return factor * value;
+}
 static inline float FollowBonus(GPOwner *self, AIPairRecord *record, AIPairRecord *other, int mode) {
-    float delta;
+    int delta;
     float bonus;
     if (record->field24) return 0.0f;
     if (mode == 2) { record->field24 = 2; record->field28 = 120; }
     else { record->field24 = 1; record->field28 = 240; }
     delta = abs(record->waypoint - other->waypoint) - self->followDistance;
-    bonus = (mode == 2 ? 2.4f : 4.2000003f) * delta;
+    bonus = GPScaleFollowDelta(delta, mode == 2 ? 2.4f : 4.2000003f);
     if (mode == 2) { if (0.0f < bonus) bonus = -bonus; }
     else { if (bonus < 0.0f) bonus = -bonus; }
     return bonus;
@@ -81,18 +85,25 @@ void AI_CalcGPTargetSpeed(GPOwner *self, int kart) {
         float min = GetBaseSpeedMin(param, cup, round);
         float bonus = GPCatchup(record, kart);
         int rank;
+        GPDriver *driver;
+        int candidateRank;
+        int targetRank;
+        int i;
+        int distance;
+        AIPairRecord *base;
         max += bonus; min += bonus;
         rank = ((GPDriver *)record->driver)->rank;
         if (rank > 0) {
             AIPairRecord *other = 0;
-            int distance = 1;
-            int i = 0;
+            distance = 1;
+            i = 0;
+            base = lbl_806793D8;
             while (i < 8) {
-                other = &lbl_806793D8[i];
-                if (other->driver && rank - distance == ((GPDriver *)other->driver)->rank) {
-                    GPDriver *driver = other->driver;
+                other = &base[i];
+                driver = other->driver;
+                if (driver && (candidateRank = driver->rank, targetRank = rank - distance, targetRank == candidateRank)) {
                     if (driver->state < 0 || driver->state > 3) break;
-                    if (driver->rank == 0) {
+                    if (candidateRank == 0) {
                         bonus = FollowBonus(self, record, other, 1);
                         max += bonus; min += bonus;
                         break;

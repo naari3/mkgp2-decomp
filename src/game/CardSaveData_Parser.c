@@ -11,6 +11,19 @@ extern const char lbl_806D3478[7], lbl_806D3480[4], lbl_806D3484[5], lbl_806D348
 extern const char lbl_806D3494[8];
 extern const char *const lbl_806D349C[2];
 
+static inline void StoreCardRaceResult(u8 *row, u8 *flags,
+    const u32 *rank, const u32 *wins, const u32 *cleared,
+    const u32 *visited, const u32 *award)
+{
+    u32 progress = 2;
+    *(u32 *)row = *rank;
+    flags[0] = *wins;
+    flags[4] = *cleared != 0;
+    flags[8] = *visited != 0;
+    if (*award == 0) progress = 0;
+    *(u32 *)(row + 0x1C) = progress;
+}
+
 u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
 {
     u32 locale = 0, name, value;
@@ -79,15 +92,8 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
         bitpack_read_field_by_name(pack, pool + 0x1F1C, &cleared, i);
         bitpack_read_field_by_name(pack, pool + 0x1F28, &visited, i);
         bitpack_read_field_by_name(pack, pool + 0x2030, &award, i);
-        *(u32 *)(row+0x4C) = rank;
-        dest[0x5C+i] = wins;
-        dest[0x60+i] = cleared != 0;
-        dest[0x64+i] = visited != 0;
-        {
-            u32 progress = 2;
-            if (award == 0) progress = 0;
-            *(u32 *)(row+0x68) = progress;
-        }
+        StoreCardRaceResult(row + 0x4C, dest + 0x5C + i,
+            &rank, &wins, &cleared, &visited, &award);
     }
     }
     bitpack_read_field_by_name(pack, pool + 0x207C, &rank, 0);

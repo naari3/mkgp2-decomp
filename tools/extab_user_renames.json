@@ -1578,10 +1578,16 @@
     "extabindex_clFlowRound_Draw": "@eti_80027E3C",
     "extab_clFlowRound_Update": "@etb_800145EC",
     "extabindex_clFlowRound_Update": "@eti_80027E48",
-    "extab_clFlowRound_Dtor": "@etb_80014604",
-    "extabindex_clFlowRound_Dtor": "@eti_80027E54",
-    "extab_clFlowRound_Init": "@etb_8001460C",
-    "extabindex_clFlowRound_Init": "@eti_80027E60"
+    "__ct__11clFlowRoundFv": "clFlowRound_Init",
+    "__dt__11clFlowRoundFv": "clFlowRound_Dtor",
+    "Update__11clFlowRoundFv": "clFlowRound_Update",
+    "Draw__11clFlowRoundFv": "clFlowRound_Draw",
+    "__ct__13clFlowProcessFv": "InitializeFrameSelection",
+    "__dt__13clFlowProcessFv": "dtor_801BA14C",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__6SpriteFiiffffff": "Sprite_CreateWithParams",
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim"
   },
   "src/game/DVDLoad_AsyncStop.c": {
     "@8": "@etb_800087E0",
@@ -12638,7 +12644,9 @@
     "__sinit_EnmyFaceEffect_nm1_cpp": "fn_8023001C"
   },
   "src/game/anon_802124FC_nm1.cpp": {
-    "__dt__7KartPosFv": "dtor_80036E40"
+    "__dt__7KartPosFv": "dtor_80036E40",
+    "@92": "@etb_80019EFC",
+    "@93": "@eti_80029F78"
   },
   "src/game/anon_80205DCC_m2.cpp": {
     "Update__12YesNoButtonLFv": "fn_80205DCC",
