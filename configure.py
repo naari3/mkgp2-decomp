@@ -1768,7 +1768,7 @@ config.libs = [
             Object(Matching, "game/CourseAuxClass_VtableDtor.c"),
             Object(Matching, "game/dtor_8021617C.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/WarpZoneVector_Insert.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-rostr", "-inline noauto,deferred"]),
-            Object(NonMatching, "game/AI_AdjustThunks.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/AI_AdjustThunks.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PanelCda40.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/WarpDashMgr_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/WarpZone_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),
