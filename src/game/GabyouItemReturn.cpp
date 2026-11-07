@@ -1,8 +1,8 @@
 /* ASM-derived partial ABI views; Ghidra types were unavailable.
  * Only GabyouItem_ReturnToHandTick, .text [800FA3D8,800FA6DC).
  * TransformVec3 takes its third vector by value (caller-owned copy).
- * Complete NonMatching draft: text 99.94819%, automatic EH/index 100%.
- * Residual: radius is held in f30 rather than target f31 (two instructions).
+ * Text and automatic EH/index match exactly. Keep the selected radius in
+ * the scale expression so it remains a temporary across the magnitude call.
  */
 struct GabyouReturnVec { float x, y, z; };
 struct GabyouReturnMatrix { float m[16]; };
@@ -51,7 +51,6 @@ void GabyouItem_ReturnToHandTick(GabyouReturnItem *item, GabyouReturnContext *co
     GabyouReturnTable radius;
     GabyouReturnVec hand;
     float yaw;
-    float length;
     Mtx_TransposeToMtx44(&world, KartDriver_GetJointByIdx(context->kart, 15));
     Mtx44_GetTranslation_ColMajor(&hand, &world);
     switch (item->phase) {
@@ -77,9 +76,9 @@ void GabyouItem_ReturnToHandTick(GabyouReturnItem *item, GabyouReturnContext *co
     case 1: break;
     }
     radius = lbl_8032FF10;
-    length = radius.value[KartCharacterParam_GetIdentityIndex(context->kart)];
-    float reciprocal = lbl_806D62C4 / Vec3_Magnitude_Wrapper(&context->localPosition);
-    Vec3_Scale(&context->localPosition, &context->localPosition, reciprocal * length);
+    Vec3_Scale(&context->localPosition, &context->localPosition,
+        (lbl_806D62C4 / Vec3_Magnitude_Wrapper(&context->localPosition)) *
+        radius.value[KartCharacterParam_GetIdentityIndex(context->kart)]);
     if (context->timer == 0) {
         item->lifetime -= lbl_806D62F0;
         if (item->lifetime < lbl_806D62C0) {
