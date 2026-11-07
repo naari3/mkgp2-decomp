@@ -18,6 +18,20 @@ static inline unsigned char ReadBoundsPosition(unsigned char *p, BoundsVec *out)
     }
     return 0;
 }
+static inline void ExtendBounds(BoundsVec *lo, BoundsVec *hi, BoundsVec *v) {
+    if (0.0f==lo->x && 0.0f==lo->y && 0.0f==lo->z &&
+        0.0f==hi->x && 0.0f==hi->y && 0.0f==hi->z) {
+        lo->x=v->x; lo->y=v->y; lo->z=v->z;
+        hi->x=v->x; hi->y=v->y; hi->z=v->z;
+    } else {
+        if (v->x<lo->x) lo->x=v->x;
+        if (v->y<lo->y) lo->y=v->y;
+        if (v->z<lo->z) lo->z=v->z;
+        if (v->x>hi->x) hi->x=v->x;
+        if (v->y>hi->y) hi->y=v->y;
+        if (v->z>hi->z) hi->z=v->z;
+    }
+}
 int fn_80183CC4(HSD_JObj *j, HSD_DObj *d, BoundsVec *out, float *radius) {
     const char *messages=lbl_80376F60;
     BoundsVec v=*(const BoundsVec *)(messages+0x0c);
@@ -41,7 +55,7 @@ int fn_80183CC4(HSD_JObj *j, HSD_DObj *d, BoundsVec *out, float *radius) {
             n=*(unsigned short *)(p+1);
             p+=3;
             for (i=0;i<n;++i) {
-                if (ReadBoundsPosition(p,&v)) Extend(&lo,&hi,&v);
+                if (ReadBoundsPosition(p,&v)) ExtendBounds(&lo,&hi,&v);
                 p+=lbl_806D1678;
             }
         }
@@ -50,13 +64,15 @@ int fn_80183CC4(HSD_JObj *j, HSD_DObj *d, BoundsVec *out, float *radius) {
     center.y=lbl_806D9264*(hi.y+lo.y);
     center.z=lbl_806D9264*(hi.z+lo.z);
     if (j) {
-        switch (j->flags & 0xe00) {
-        case 0x200: center.x=center.y=center.z=lbl_806D927C; break;
-        case 0x400: center.x=center.z=lbl_806D927C; break;
-        case 0x600: center.y=center.z=lbl_806D927C; break;
-        case 0x800: center.x=center.y=lbl_806D927C; break;
+        if (j->flags & 0xe00) switch (j->flags & 0xe00) {
+        case 0x200: center.x=lbl_806D927C; center.y=lbl_806D927C; center.z=lbl_806D927C; break;
+        case 0x400: center.x=lbl_806D927C; center.z=lbl_806D927C; break;
+        case 0x600: center.y=lbl_806D927C; center.z=lbl_806D927C; break;
+        case 0x800: center.x=lbl_806D927C; center.y=lbl_806D927C; break;
         }
-        Transform(j,&center); Transform(j,&lo); Transform(j,&hi);
+        SetupMatrix(j); PSMTXMultVec(&j->_pad_1c[0x28],&center,&center);
+        SetupMatrix(j); PSMTXMultVec(&j->_pad_1c[0x28],&lo,&lo);
+        SetupMatrix(j); PSMTXMultVec(&j->_pad_1c[0x28],&hi,&hi);
     }
     Vec3_Subtract(&lo,&center,&lo);
     Vec3_Subtract(&hi,&center,&hi);

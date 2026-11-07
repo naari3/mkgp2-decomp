@@ -43,3 +43,8 @@ c18_u76 fn_80184F24: first matrix getter into a block-local MtxPtr before assign
 Source: Codex worker c18_u47_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u47 fn_80184928: TU-local DListGetPosition equivalent using src=desc->array; src+=index*(desc->stride/4) improves text98.08094->98.18538 with exact1532B/extab8/index12. Canonical matrix member getter is byte-identical; independent per-primitive loop state regresses97.663185. Retained source; residual99 instruction rows are GPR homes plus three stack coordinate addressing forms. Single-function TU staysNonMatching, no A/B unlock. Full coordinator fallback DOL SHA1 exact.
+
+## c18_u67_20261107
+Source: Codex worker c18_u67_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1712 B.
+
+c18_u67 fn_80183CC4: canonical member address &j->_pad_1c[0x28] after each SetupMatrix eliminates cross-call matrix CSE (97.693924 ->99.03505). Guard nonzero billboard mask before switch and explicit ordered component stores restore target guard and 1712B size (99.299065). TU-local ExtendBounds using 0.0f comparisons instead of extern const lbl_806D927C prevents loop-hoisted zero/FPR web, reaches text1712/extab8/index12 all100. Existing sdata2 postprocess maps literal back to UND lbl_806D927C. Matching flag only; no split/header/pool/bridge changes. Source-linked full DOL SHA-1 exact, +1 native /1712B.
