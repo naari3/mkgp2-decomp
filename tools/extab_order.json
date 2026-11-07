@@ -2823,5 +2823,11 @@
     "SceneRender_CmdA_8a9e8",
     "SceneRender_CmdB_8aa20",
     "SceneRender_Dtor"
+  ],
+  "src/game/Tachometer.c": [
+    "Tachometer_UpdateDisplaySpeed",
+    "Tachometer_RenderDigits",
+    "Tachometer_Destroy",
+    "Tachometer_Init"
   ]
 }
