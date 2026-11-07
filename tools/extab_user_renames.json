@@ -12061,5 +12061,17 @@
     "__vt__Q23std8bad_cast": "lbl_804F47B4",
     "__vt__Q23std9exception": "lbl_803F5710",
     "__dt__Q23std9exceptionFv": "dtor_80038DD4"
+  },
+  "src/game/CardRewardSnapshot.cpp": {
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/anon_80209330_nm2.cpp": {
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

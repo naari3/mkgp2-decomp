@@ -11103,9 +11103,19 @@ game/anon_80209330.cpp:
 	.text       start:0x80209330 end:0x80209338
 
 game/anon_80209330_nm1.cpp:
-	extab       start:0x8001938C end:0x800193B4
-	extabindex  start:0x80029A8C end:0x80029AC8
-	.text       start:0x80209338 end:0x80209FA4
+	extab       start:0x8001938C end:0x80019394
+	extabindex  start:0x80029A8C end:0x80029A98
+	.text       start:0x80209338 end:0x80209684
+
+game/CardRewardSnapshot.cpp:
+	extab       start:0x80019394 end:0x800193A4
+	extabindex  start:0x80029A98 end:0x80029AB0
+	.text       start:0x80209684 end:0x80209AC4
+
+game/anon_80209330_nm2.cpp:
+	extab       start:0x800193A4 end:0x800193B4
+	extabindex  start:0x80029AB0 end:0x80029AC8
+	.text       start:0x80209AC4 end:0x80209FA4
 
 game/anon_80209FA4.cpp:
 	extab       start:0x800193B4 end:0x800193FC
