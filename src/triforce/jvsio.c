@@ -1,4 +1,5 @@
 #include <triforce/jvsio_private.h>
+#include <triforce/jvsio_packet_private.h>
 
 static JvsCmd cmd;
 static JvsTx tx;
@@ -279,8 +280,8 @@ void fn_80282F3C(void) {
 }
 
 static void fn_80282F54(s32 chan, u32 err, OSContext* ctx) {
-    int i;
     int j;
+    int i;
     int checksumIndex;
     u8 sum;
     u8 res;
@@ -342,7 +343,7 @@ void fn_80283154(void) {
     u8 sum;
     u8* p;
     u8* out;
-    JvsReq* req;
+    JvsPacket* packet;
     for (i = 0; i < 16 && i <= cmd.nodeCount; i++) status[i] = 0;
     tx.packetCount = 0;
     for (i = 2; i < tx.rx[1]; i += tx.rx[i + 1] + 2) {
@@ -394,39 +395,39 @@ void fn_80283154(void) {
         case 0xE0: tx.unk115 = tx.packet[i][2]; break;
         case 0xE1: tx.unk116 = tx.packet[i][2]; break;
         default:
-            p = tx.packet[i];
-            if ((p[0] & 0xE0) != 0x40) break;
-            if (p[1] != 0) { node = p[0] & 0x1F; bank = cmd.cur[node]; }
+            packet = (JvsPacket*)tx.packet[i];
+            if ((packet->command & 0xE0) != 0x40) break;
+            if (packet->length != 0) { node = packet->command & 0x1F; bank = cmd.cur[node]; }
             else status[node] = 1;
-            if (p[1] == 0 || p[3] != 0) break;
+            if (packet->length == 0 || packet->payload[1] != 0) break;
             count = 0;
-            for (j = 2; j < p[1]; j++) {
-                if (p[j + 2] == 0xD0) cmd.req[bank][node].response[count++] = p[++j + 2] + 1;
-                else cmd.req[bank][node].response[count++] = p[j + 2];
+            for (j = 2; j < packet->length; j++) {
+                if (packet->payload[j] == 0xD0) cmd.req[bank][node].response[count++] = packet->payload[++j] + 1;
+                else cmd.req[bank][node].response[count++] = packet->payload[j];
             }
-            sum = p[3];
+            sum = packet->payload[1];
             for (j = 0; j < count - 1; j++) sum += cmd.req[bank][node].response[j];
-            req = &cmd.req[bank][node];
-            status[node] = sum != req->response[j] ? 4 : 5;
+            if (sum != cmd.req[bank][node].response[j]) status[node] = 4;
+            else status[node] = 5;
             if (status[node] != 5) break;
             pos = 2;
-            if (req->response[1] != 1 && req->response[1] != 2) { status[node] = 3; break; }
-            for (j = 0; j < req->n; j++) {
-                req->reply[j] = &req->response[pos];
-                if (req->rlen[j] & 0x80) {
-                    while (pos <= req->response[0] && req->response[pos] != 0) pos -= (s8)req->rlen[j];
+            if (cmd.req[bank][node].response[1] != 1 && cmd.req[bank][node].response[1] != 2) { status[node] = 3; break; }
+            for (j = 0; j < cmd.req[bank][node].n; j++) {
+                cmd.req[bank][node].reply[j] = &cmd.req[bank][node].response[pos];
+                if (cmd.req[bank][node].rlen[j] & 0x80) {
+                    while (pos <= cmd.req[bank][node].response[0] && cmd.req[bank][node].response[pos] != 0) pos -= (s8)cmd.req[bank][node].rlen[j];
                     pos++;
-                } else if (req->rlen[pos] != 0 && req->response[pos] == 2) pos++;
-                else pos += req->rlen[j];
+                } else if (cmd.req[bank][node].rlen[pos] != 0 && cmd.req[bank][node].response[pos] == 2) pos++;
+                else pos += cmd.req[bank][node].rlen[j];
             }
             if (node == 0) {
-                if (req->cmd[0] == 0xF1 && req->reply[0][0] == 1) cmd.nodeCount = cmd.unk108;
+                if (cmd.req[bank][node].cmd[0] == 0xF1 && cmd.req[bank][node].reply[0][0] == 1) cmd.nodeCount = cmd.unk108;
                 break;
             }
-            for (commandIndex = 0; commandIndex < req->n; commandIndex++) {
-                p = req->reply[commandIndex];
+            for (commandIndex = 0; commandIndex < cmd.req[bank][node].n; commandIndex++) {
+                p = cmd.req[bank][node].reply[commandIndex];
                 if (p[0] == 1) {
-                    switch (req->cmd[commandIndex]) {
+                    switch (cmd.req[bank][node].cmd[commandIndex]) {
                     case 0x20: cmd.node[node].unkAC = p + 1; break;
                     case 0x21: cmd.node[node].unkB0 = p + 1; break;
                     case 0x22: cmd.node[node].unkB4 = p + 1; break;
@@ -471,12 +472,21 @@ void fn_80283154(void) {
                         break;
                     }
                 } else {
-                    u8 c = req->cmd[commandIndex];
-                    if (cmd.qwr + 1 != cmd.qrd) {
-                        cmd.queue[cmd.qwr].node = node;
-                        cmd.queue[cmd.qwr].cmd = c;
-                        cmd.queue[cmd.qwr].err = req->response[1] == 1 ? 0x20 : 0x40;
-                        cmd.queue[cmd.qwr++].pad = req->response[1] == 1 ? p[0] : 0;
+                    u8 c = cmd.req[bank][node].cmd[commandIndex];
+                    if (cmd.req[bank][node].response[1] == 1) {
+                        if (cmd.qwr + 1 != cmd.qrd) {
+                            cmd.queue[cmd.qwr].node = node;
+                            cmd.queue[cmd.qwr].cmd = c;
+                            cmd.queue[cmd.qwr].err = 0x20;
+                            cmd.queue[cmd.qwr++].pad = p[0];
+                        }
+                    } else {
+                        if (cmd.qwr + 1 != cmd.qrd) {
+                            cmd.queue[cmd.qwr].node = node;
+                            cmd.queue[cmd.qwr].cmd = c;
+                            cmd.queue[cmd.qwr].err = 0x40;
+                            cmd.queue[cmd.qwr++].pad = 0;
+                        }
                     }
                 }
             }

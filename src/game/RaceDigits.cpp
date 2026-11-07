@@ -1,5 +1,5 @@
 /* Race HUD digit panels, animation and owning containers. */
-#include "game/RaceDigitsPrivate.h"
+#include "game/RaceDigitsMatchPrivate.h"
 #pragma auto_inline off
 
 DigitPanel::DigitPanel(int layer_) : layer(layer_),state(-1),variant(0),
@@ -61,10 +61,10 @@ DigitHud::DigitHud(int mode_, int layer_) : layer(layer_),state(-1),mode(mode_),
     int variant=0;
     if(g_gameMode==1) variant++;
     main.Reset(new DigitPanel(layer));
-    main.p->SetPos(lbl_804EE9E0[variant][0]);
+    SetDigitPanelPosition(main.p,lbl_804EE9E0[variant][0]);
     main.p->variant=1;
     others[0].Reset(new DigitPanel(layer));
-    others[0].p->SetPos(lbl_804EE9E0[variant][1]);
+    SetDigitPanelPosition(others[0].p,lbl_804EE9E0[variant][1]);
     slide.p->Set(220.0f,0.0f,7);
 }
 

@@ -1,9 +1,14 @@
 /* CollisionFile_Load @ 0x801F9954: really the CECollision/DemoCollision
  * ctor (see extab_user_renames.json). C++ (cmplwi pointer tests) at the
  * default compiler; strength reduction off keeps the lwzx table walk.
- * NonMatching: the shared zero register (target reuses count's r6 for the
- * three member stores) and one add operand order. */
+ * Built with GC/1.3 and opt_propagation off: that gives the shared zero
+ * register (count's r6) for the member stores.
+ * NonMatching (4 lines): the table offset starts as `mr r3, r6` in the
+ * target (here `slwi r3, r6, 3`), and the second store goes through r3.
+ * The separate `i` and the `= count` stores are probing artifacts; the
+ * natural code is `self->size = 0; ... for (count = 0; tbl[count].name; count++)`. */
 #pragma opt_strength_reduction off
+#pragma opt_propagation off
 extern "C" {
 #include "game/CollisionFile_Load_private.h"
 
@@ -34,10 +39,13 @@ CollisionFile *CollisionFile_Load(CollisionFile *self, const char *path) {
     int result;
     int count;
     count = 0;
-    self->size = 0;
-    self->data = 0;
-    self->collision = 0;
-    for (; lbl_803BF3D0[count].name != 0; count++) {}
+    self->size = count;
+    self->data = (void *)count;
+    self->collision = (void *)count;
+    {
+        int i = count;
+        for (; lbl_803BF3D0[i].name != 0; i++, count++) {}
+    }
     lbl_806D19A8 = count;
     if (DVDOpen(path, &file)) {
         length = (file.length + 31) & ~31;
@@ -49,8 +57,7 @@ CollisionFile *CollisionFile_Load(CollisionFile *self, const char *path) {
             self->data = OSAllocFromHeap(lbl_806CF010, length);
             self->size = length;
         }
-        last = file.length - 1;
-        last += file.startAddr;
+        last = file.startAddr + file.length - 1;
         DVDLoad_WaitIfSamePage(file.startAddr);
         result = DVDReadPrio(&file, self->data, length, 0, 2);
         DVDLoad_RecordOpStart(last);

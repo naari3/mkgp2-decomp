@@ -11315,7 +11315,20 @@
     "@478": "@etb_8001D9C0",
     "@479": "@eti_8002B2D4",
     "@459": "jumptable_804EEAC4",
-    "__dt__10FlowFaderIFv": "fn_801F26C8"
+    "__dt__10FlowFaderIFv": "fn_801F26C8",
+    "@130": "@etb_8001D9D8",
+    "@131": "@eti_8002B2BC",
+    "@308": "@etb_8001D7CC",
+    "@309": "@eti_8002B2A4",
+    "@344": "@etb_8001D738",
+    "@345": "@eti_8002B2C8",
+    "@363": "@etb_8001D9C8",
+    "@364": "@eti_8002B2E0",
+    "@473": "@etb_8001D9D0",
+    "@474": "@eti_8002B2B0",
+    "@491": "@etb_8001D9C0",
+    "@492": "@eti_8002B2D4",
+    "@472": "jumptable_804EEAC4"
   },
   "src/game/HudFlow.cpp": {
     "__ct__7HudRootFv": "fn_8024932C",
