@@ -622,10 +622,7 @@ FrameSelection::FrameSelection() : vptr(lbl_8049AC7C) {
 
 #endif
 
-/* FrameSelection_Init asm body + manual extab emit */
-extern "C" {
-#include "src/ui/FrameSelection_Init.inc"
-}
+/* FrameSelection_Init (the clFlowChara ctor) lives in src/game/clFlowChara.cpp. */
 
 /* ------------------------------------------------------------------ */
 /* FrameSelection_Confirm (0x801C53A0)                                 */

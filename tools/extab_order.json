@@ -628,7 +628,6 @@
     "__dt__11ScopedTimerFv"
   ],
   "src/ui/FrameSelection_Methods.c": [
-    "FrameSelection_Init",
     "FrameSelection_Confirm",
     "FrameSelection_Draw",
     "FrameSelection_Update"
@@ -2751,5 +2750,14 @@
       "fn_801E435C",
       "fn_801E4504"
     ]
-  }
+  },
+  "src/game/clFlowChara.cpp": [
+    "CharaSelect_SetupCharacterDisplay",
+    "fn_801C37E8",
+    "clFlowChara_HandleConfirm",
+    "fn_801C3AA4",
+    "clFlowChara_Update",
+    "clFlowChara_Destructor",
+    "FrameSelection_Init"
+  ]
 }

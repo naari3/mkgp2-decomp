@@ -9089,44 +9089,17 @@ game/clFlowClass_Init.cpp:
 	extabindex  start:0x80027D40 end:0x80027D4C
 	.text       start:0x801C3244 end:0x801C3470
 
-game/CharaSelect_SetupCharacterDisplay.cpp:
-	extab       start:0x80013E64 end:0x80013E9C
-	extabindex  start:0x80027D4C end:0x80027D58
-	.text       start:0x801C3470 end:0x801C3714
+game/clFlowChara.cpp:
+	extab       start:0x80013E64 end:0x80013FE0
+	extabindex  start:0x80027D4C end:0x80027DA0
+	.text       start:0x801C3470 end:0x801C53A0
 	.rodata     start:0x8039AA40 end:0x8039B1F4
-
-game/GetFrameIdxFromVisualIdx.c:
-	.text       start:0x801C3714 end:0x801C37E8
-
-game/fn_801C37E8.cpp:
-	extab       start:0x80013E9C end:0x80013EB4
-	extabindex  start:0x80027D58 end:0x80027D64
-	.text       start:0x801C37E8 end:0x801C393C
-
-game/clFlowChara_HandleConfirm.c:
-	extab       start:0x80013EB4 end:0x80013EBC
-	extabindex  start:0x80027D64 end:0x80027D70
-	.text       start:0x801C393C end:0x801C3AA4
-
-game/clFlowChara_Draw.cpp:
-	extab       start:0x80013EBC end:0x80013EC4
-	extabindex  start:0x80027D70 end:0x80027D7C
-	.text       start:0x801C3AA4 end:0x801C3D48
-
-game/clFlowChara_Update.c:
-	extab       start:0x80013EC4 end:0x80013F0C
-	extabindex  start:0x80027D7C end:0x80027D88
-	.text       start:0x801C3D48 end:0x801C4CA4
-
-game/clFlowChara_Destructor.cpp:
-	extab       start:0x80013F0C end:0x80013F14
-	extabindex  start:0x80027D88 end:0x80027D94
-	.text       start:0x801C4CA4 end:0x801C4EA8
+	.data       start:0x8049AA58 end:0x8049AC90
 
 ui/FrameSelection_Methods.c:
-	extab       start:0x80013F14 end:0x80014018
-	extabindex  start:0x80027D94 end:0x80027DC4
-	.text       start:0x801C4EA8 end:0x801C5C34
+	extab       start:0x80013FE0 end:0x80014018
+	extabindex  start:0x80027DA0 end:0x80027DC4
+	.text       start:0x801C53A0 end:0x801C5C34
 
 game/fn_801C5C34.cpp:
 	extab       start:0x80014018 end:0x80014020
