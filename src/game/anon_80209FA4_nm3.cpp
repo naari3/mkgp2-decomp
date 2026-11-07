@@ -233,9 +233,18 @@ extern const float lbl_806DABF0;
 extern "C" int fn_8020A788(TweenI *self) {
     short n = self->a;
     short t = self->b;
+    int value;
     if (t <= 0) {
-        return self->from;
+        value = self->from;
+    } else if (t >= n) {
+        value = self->to;
+    } else {
+        value = self->rate * t;
+        value >>= 16;
+        value += self->from;
     }
+    return value;
+}
     if (t >= n) {
         return self->to;
     }
