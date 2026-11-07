@@ -3190,6 +3190,7 @@ game/WarpDashMgr_Init.cpp:
 	extab       start:0x80009E04 end:0x80009E60
 	extabindex  start:0x800225A4 end:0x800225B0
 	.text       start:0x800A8D34 end:0x800A8F4C
+	.rodata     start:0x80326CB0 end:0x803284C0
 
 game/auto_800A8F4C_block.c:
 	extab       start:0x80009E60 end:0x80009ED0
