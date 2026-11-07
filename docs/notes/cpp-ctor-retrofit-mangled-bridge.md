@@ -1084,3 +1084,8 @@ c17_u10: SpecialFace_BuildPlaneAndEdges 8007BB08/872B: plain Vec3f locals scalar
 Source: Codex worker c17_u14_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 352 B.
 
 c17_u14: fn_80202CC0/80202D70 had correct table semantics but an extern aggregate view generated add/add/lwz rather than the original compiler pool addi/lwzx. A checkedLine local separate from the input restores cmpwi r4 prologue scheduling. Reconstructing the real TU-owned pool 803C0390..803C24C8 as native string literals and pointer/int arrays restores all table offsets and two-dimensional index shifts without compiler tricks or padding. Entire text352, rodata8504, extab16, index24 object sections and source-linked ELF ranges are exact; full DOL SHA1 OK.
+
+## c17_u21_20261107
+Source: Codex worker c17_u21_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u21 PhysicsState_WallCollisionCheck 801ED0E8: target matrix product is copied without transpose (SP70->B0, SP68->A8). Correcting baseline transpose to flat16 copy improves fresh52.324768 to56.565422, EH86.53847/index61.11111 unchanged. Native matrix constructor/nested helper/canonical PhysicsGroundMatrix probes reach71.81309/78.794395/79.23364 but regress EH84.61539/index55.555557 and are rejected. Target has two-row unrolled sequential multiply, whole aggregate GPR copy, r22-r31/f30-f31 saves; retained draft has four-row loop, r28-r31/f29-f31 saves and1604B vs1712B. Single function remains NM, no A/B rescue/native gain; full fallback-linked DOL SHA1OK.

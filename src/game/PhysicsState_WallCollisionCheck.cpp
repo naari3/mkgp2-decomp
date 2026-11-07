@@ -1,4 +1,4 @@
-/* Native candidate: 52.324768% text. Volatile matrix storage retains
+/* Native candidate: 56.565422% text. Volatile matrix storage retains
  * per-iteration loads; matrix codegen and stack/register layout remain open. */
 #include "game/PhysicsCollisionPrivate.h"
 
@@ -45,9 +45,8 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
                  rotation[row * 4 + 2] * original[8 + col]) + rotation[row * 4 + 3] * original[12 + col];
         }
     }
-    for (int row = 0; row < 4; ++row) {
-        for (int col = 0; col < 4; ++col) rotation[row * 4 + col] = product[col * 4 + row];
-    }
+    /* The inlined multiply copies its product without transposing it. */
+    for (int n = 0; n < 16; ++n) rotation[n] = product[n];
     for (int n = 0; n < 16; ++n) original[n] = rotation[n];
     original[12] = PH_F(self, 0x4C);
     original[13] = PH_F(self, 0x50);
