@@ -1874,52 +1874,39 @@ extern "C" void *RivalRun_Destroy(RivalRunState *self, short freeMemory)
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void Alloc();
-extern void Camera_Create();
 extern void *CarObject_GetRenderObj(void *car);
-extern void CarObject_GetTransformMatrix();
-extern void CarObject_Init();
-extern void CarObject_SetPosition();
-extern void ChallengeGoalCamera_Init();
-extern void CourseData_GetDefaultPathKey_Safe();
-extern void CourseData_GetOrCreate();
+extern float *CarObject_GetTransformMatrix(void *car);
+extern void CarObject_SetPosition(void *car, void *pos);
+extern int CourseData_GetDefaultPathKey_Safe(void);
+extern void CourseData_GetOrCreate(int a, int b, int c);
 extern void CourseObjectManager_Init();
 extern void DMAChannelManager_Init();
 extern void DrawManager_GetOrCreate();
-extern void GameMode_BaseInit();
 extern void GetCourseDataPtr();
-extern void GetCourseStartYaw();
-extern void GetDisplayBufferIndex();
-extern void GetKartModelNameEntry();
+extern float GetCourseStartYaw(void);
+extern int GetDisplayBufferIndex(void);
+extern int *GetKartModelNameEntry(int chara, int arg);
 extern void GetRaceContextPtr();
-extern void GetStartPosition();
-extern void HUD_Init();
-extern void HUD_RegisterOverlay();
-extern void InputManager_Init();
+extern void GetStartPosition(int idx, float *x, float *y, float *z);
+extern void HUD_RegisterOverlay(void *hud, int id, int arg);
 extern void ItemObjectManager_Init();
-extern void LakituStart_Init();
-extern void MiniGame_GetCourseData();
-extern void MiniGame_GetTimerValue();
-extern void PathManager_Init();
-extern void PreloadEffectResources();
-extern void PreloadItemResources();
-extern void ProcessSystemTick();
+extern void *MiniGame_GetCourseData(void);
+extern int MiniGame_GetTimerValue(void);
+extern void PreloadEffectResources(int id);
+extern void PreloadItemResources(int id);
+extern void ProcessSystemTick(int arg);
 extern void RankingTable_Init();
-extern void HSD_LObjLoadDesc();
-extern void RivalRun_RivalInit();
-extern void Scene3D_GetCameraPos();
-extern void Scene3D_Init();
-extern void Scene3D_SetupProjection();
+extern int HSD_LObjLoadDesc(void);
+extern void Scene3D_GetCameraPos(void *scene, float *a, float *b);
+extern void Scene3D_SetupProjection(void *scene, float a, float b);
 extern void SetActiveCamera();
-extern void SetCourseScene3D();
+extern void SetCourseScene3D(void *scene);
 extern void SetPlayerCarObject();
 extern void SetResourceLoadingFlag();
-extern void SetReverseRoundFlag();
+extern void SetReverseRoundFlag(int flag);
 extern void SoundChannels_ClearAll();
-extern void SoundDriver_GetOrCreate();
+extern void SoundDriver_GetOrCreate(int arg);
 extern void TransitionEffect_GetOrCreate();
-extern void WeatherSystem_Init();
-extern void fn_802090A8();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_ccClass;
@@ -1947,334 +1934,166 @@ extern unsigned int lbl_8035C22C[];
 extern unsigned int lbl_8048E144[];
 extern unsigned int lbl_8048E4A0[];
 
-/* --- function index (1 fns, .text 0x80136EA0..0x8013732C) ---
- * [  0] 0x80136EA0 size:0x48C   global RivalRun_Init
- */
+/* --- native C++ ctor (same shape as ReverseChallenge_Init / JumpDistanceMode_Init) --- */
+#pragma cplusplus on
+void *operator new(unsigned long size);
+void operator delete(void *p);
 
-/* --- forward decls --- */
-asm void RivalRun_Init(void);
+typedef struct RIVec { float x, y, z; } RIVec;
+struct RIInputManager { char data[0x37C]; RIInputManager(); };
+struct RICamera { char data[0x2C]; RICamera(float a, float b, int w, int h, int target); };
+struct RICarObject {
+    char data[0x118];
+    RICarObject(int disp, int chara, int cc, int a, int b, int c, int d, int e, float x, float z, float yaw);
+};
+static inline int RIGetCC() { return (int)g_ccClass; }
+static inline int RIGetChara() { return (int)g_characterId; }
+struct RIPlayerCar : RICarObject {
+    RIPlayerCar(RIVec *pos, int chara, int cc)
+        : RICarObject(GetDisplayBufferIndex(), chara, cc, 0, 1, -1, 0, 0, pos->x, pos->z, GetCourseStartYaw()) {}
+};
+struct RIRenderObj { char pad0[0x238]; int x238; };
+struct RIPathManager {
+    char data[0x4E8];
+    RIPathManager(int key, void *car, void *render, float *x, float *y, float *z);
+};
+struct RICollChecker { char data[0x18]; RICollChecker(); };
+struct RIRival {
+    char pad0[0x50];
+    void *render;
+    RIRival(RIPathManager *path, int arg, void *course);
+};
+struct RILakituStart { char data[0x58]; RILakituStart(const void *data, int arg, float x, float y, float z); };
+struct RIScene3D { char data[0x3084]; RIScene3D(int name); };
+struct RIGoalCamera { char data[8]; RIGoalCamera(); };
+struct RIHUD { char data[0x80]; RIHUD(RIPathManager *path); };
+struct RIWeatherSystem { char data[0x1B4]; RIWeatherSystem(int arg); };
 
-/* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void MemoryManager_TimedFree();
-extern void dtor_80122FD8();
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; unsigned int f45; unsigned int f46; unsigned int f47; unsigned int f48; void *f49; unsigned int f50; unsigned int f51; void *f52; unsigned int f53; void *f54; unsigned int f55; unsigned int f56; void *f57; unsigned int f58; void *f59; unsigned int f60; unsigned int f61; void *f62; unsigned int f63; void *f64; unsigned int f65; unsigned int f66; void *f67; unsigned int f68; void *f69; unsigned int f70; unsigned int f71; void *f72; unsigned int f73; void *f74; unsigned int f75; unsigned int f76; void *f77; unsigned int f78; void *f79; unsigned int f80; unsigned int f81; void *f82; unsigned int f83; void *f84; unsigned int f85; unsigned int f86; void *f87; unsigned int f88; void *f89; unsigned int f90; unsigned int f91; void *f92; unsigned int f93; void *f94; unsigned int f95; unsigned int f96; void *f97; unsigned int f98; void *f99; unsigned int f100; unsigned int f101; void *f102; } extab_RivalRun_Init = { 0x284A0000, 0x00000090, 0x000D00C8, 0x000000D0, 0x000000C0, 0x000000E4, 0x000500C8, 0x00000118, 0x000000D4, 0x00000128, 0x001300C8, 0x00000188, 0x001000E8, 0x000001D8, 0x000E00C8, 0x00000220, 0x000A00FC, 0x00000254, 0x000000C8, 0x00000260, 0x00000110, 0x00000274, 0x000000C8, 0x0000028C, 0x00000124, 0x00000298, 0x000400C8, 0x000002CC, 0x00000138, 0x000002D8, 0x000000C8, 0x000002EC, 0x0004014C, 0x00000308, 0x000000C8, 0x00000314, 0x00000160, 0x00000320, 0x000D00C8, 0x00000364, 0x00000174, 0x00000378, 0x003600C8, 0x00000460, 0x00000188, 0x0000046C, 0x000000C8, 0x00000000, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8 };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_RivalRun_Init = {
-    (void *)&RivalRun_Init, 0x0000048C, (void *)&extab_RivalRun_Init
+struct GameModeBase {
+    virtual void _key();
+    virtual ~GameModeBase();
+    GameModeBase();
 };
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void RivalRun_Init(void) { /* 0x80136EA0 size:0x48C */
-    nofralloc
-    stwu r1, -0x60(r1)
-    mflr r0
-    stw r0, 0x64(r1)
-    stfd f31, 0x50(r1)
-    psq_st f31, 0x58(r1), 0, 0
-    stmw r27, 0x3c(r1)
-    mr r31, r3
-    mr r0, r31
-    mr r28, r0
-    bl GameMode_BaseInit
-    lis r4, lbl_8048E144@ha
-    lis r3, lbl_8048E4A0@ha
-    addi r0, r4, lbl_8048E144@l
-    lfs f0, lbl_806D738C(r2)
-    stw r0, 0x0(r28)
-    addi r3, r3, lbl_8048E4A0@l
-    li r0, 0x0
-    stfs f0, 0x4(r28)
-    stw r3, 0x0(r31)
-    stw r0, 0x8(r31)
-    stw r0, 0xc(r31)
-    stw r0, 0x10(r31)
-    stw r0, 0x14(r31)
-    stw r0, 0x18(r31)
-    stw r0, 0x1c(r31)
-    stw r0, 0x20(r31)
-    stw r0, 0x24(r31)
-    stw r0, 0x28(r31)
-    stw r0, 0x2c(r31)
-    stw r0, 0x30(r31)
-    stb r0, 0x34(r31)
-    stb r0, 0x35(r31)
-    stb r0, 0x36(r31)
-    stb r0, 0x37(r31)
-    stw r0, 0x38(r31)
-    bl MiniGame_GetCourseData
-    mr r30, r3
-    bl DrawManager_GetOrCreate
-    li r3, 0x0
-    bl SetResourceLoadingFlag
-    bl DMAChannelManager_Init
-    bl TransitionEffect_GetOrCreate
-    bl SoundChannels_ClearAll
-    bl ItemObjectManager_Init
-    bl CourseObjectManager_Init
-    li r3, 0x0
-    bl SetReverseRoundFlag
-    li r3, 0x37c
-    bl Alloc
-    mr. r28, r3
-    beq RivalRun_Init_L_80136F70
-    bl InputManager_Init
-    RivalRun_Init_L_80136F70:
-    stw r28, 0x10(r31)
-    li r3, 0x6
-    li r4, 0x0
-    li r5, 0x0
-    bl CourseData_GetOrCreate
-    bl GetCourseDataPtr
-    bl HSD_LObjLoadDesc
-    stw r3, 0x20(r31)
-    li r3, 0x2c
-    bl Alloc
-    mr. r28, r3
-    beq RivalRun_Init_L_80136FB8
-    lfs f1, lbl_806D73CC(r2)
-    li r4, 0x100
-    lfs f2, lbl_806D7388(r2)
-    li r5, 0x100
-    lwz r6, 0x20(r31)
-    bl Camera_Create
-    RivalRun_Init_L_80136FB8:
-    stw r28, 0x1c(r31)
-    li r3, 0x0
-    lwz r4, 0x1c(r31)
-    bl SetActiveCamera
-    lwz r0, 0x1c(r31)
-    li r3, 0x0
-    stw r0, g_raceCamera(r13)
-    bl ProcessSystemTick
-    bl GetRaceContextPtr
-    bl RankingTable_Init
-    li r0, 0x0
-    li r3, 0x0
-    stw r0, lbl_806D12BC(r13)
-    bl SoundDriver_GetOrCreate
-    li r0, 0x0
-    addi r6, r1, 0x20
-    stw r0, g_kartStartSlot(r13)
-    addi r4, r1, 0x18
-    addi r5, r1, 0x1c
-    li r3, 0x0
-    bl GetStartPosition
-    li r3, 0x118
-    bl Alloc
-    mr. r27, r3
-    beq RivalRun_Init_L_80137068
-    lwz r28, g_ccClass(r13)
-    lwz r29, g_characterId(r13)
-    bl GetCourseStartYaw
-    fmr f31, f1
-    bl GetDisplayBufferIndex
-    li r0, 0x0
-    mr r4, r3
-    stw r0, 0x8(r1)
-    fmr f3, f31
-    mr r3, r27
-    mr r5, r29
-    lfs f1, 0x18(r1)
-    mr r6, r28
-    lfs f2, 0x20(r1)
-    li r7, 0x0
-    li r8, 0x1
-    li r9, -0x1
-    li r10, 0x0
-    bl CarObject_Init
-    RivalRun_Init_L_80137068:
-    stw r27, 0x8(r31)
-    addi r4, r1, 0x18
-    lwz r3, 0x8(r31)
-    bl CarObject_SetPosition
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    li r0, 0x1
-    stw r0, 0x238(r3)
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    stw r3, g_playerRenderObj(r13)
-    lwz r3, 0x8(r31)
-    bl SetPlayerCarObject
-    lwz r3, 0x8(r31)
-    bl CarObject_GetTransformMatrix
-    mr r28, r3
-    li r3, 0x4e8
-    bl Alloc
-    mr. r27, r3
-    beq RivalRun_Init_L_801370E8
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    mr r29, r3
-    bl CourseData_GetDefaultPathKey_Safe
-    lwz r5, 0x8(r31)
-    mr r4, r3
-    mr r3, r27
-    mr r6, r29
-    addi r7, r28, 0x30
-    addi r8, r28, 0x34
-    addi r9, r28, 0x38
-    bl PathManager_Init
-    RivalRun_Init_L_801370E8:
-    stw r27, 0x24(r31)
-    li r3, 0x18
-    bl Alloc
-    mr. r27, r3
-    beq RivalRun_Init_L_80137100
-    bl fn_802090A8
-    RivalRun_Init_L_80137100:
-    stw r27, 0x2c(r31)
-    li r3, 0x54
-    lwz r0, 0x2c(r31)
-    stw r0, g_objCollChecker(r13)
-    bl Alloc
-    mr. r27, r3
-    beq RivalRun_Init_L_8013712C
-    lwz r4, 0x24(r31)
-    mr r6, r30
-    li r5, 0x1
-    bl RivalRun_RivalInit
-    RivalRun_Init_L_8013712C:
-    stw r27, 0x30(r31)
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    lwz r4, 0x30(r31)
-    stw r3, 0x50(r4)
-    li r3, 0x58
-    bl Alloc
-    mr. r27, r3
-    beq RivalRun_Init_L_8013716C
-    lfs f1, lbl_806D738C(r2)
-    lis r4, lbl_8035C22C@ha
-    addi r4, r4, lbl_8035C22C@l
-    li r5, 0x0
-    fmr f2, f1
-    fmr f3, f1
-    bl LakituStart_Init
-    RivalRun_Init_L_8013716C:
-    stw r27, 0xc(r31)
-    li r3, 0x3084
-    bl Alloc
-    mr. r27, r3
-    beq RivalRun_Init_L_8013719C
-    lwz r3, g_characterId(r13)
-    li r4, -0x1
-    bl GetKartModelNameEntry
-    mr r4, r3
-    mr r3, r27
-    lwz r4, 0x0(r4)
-    bl Scene3D_Init
-    RivalRun_Init_L_8013719C:
-    stw r27, 0x14(r31)
-    li r3, 0x8
-    bl Alloc
-    mr. r27, r3
-    beq RivalRun_Init_L_801371B4
-    bl ChallengeGoalCamera_Init
-    RivalRun_Init_L_801371B4:
-    stw r27, 0x18(r31)
-    li r3, 0x0
-    bl ProcessSystemTick
-    lwz r3, 0x14(r31)
-    addi r4, r1, 0x14
-    addi r5, r1, 0x10
-    bl Scene3D_GetCameraPos
-    lfs f1, 0x14(r1)
-    lfs f0, lbl_806D73D0(r2)
-    lfs f2, 0x10(r1)
-    fadds f1, f1, f0
-    stfs f1, 0x14(r1)
-    lwz r3, 0x14(r31)
-    bl Scene3D_SetupProjection
-    li r3, 0x80
-    bl Alloc
-    mr. r27, r3
-    beq RivalRun_Init_L_80137204
-    lwz r4, 0x24(r31)
-    bl HUD_Init
-    RivalRun_Init_L_80137204:
-    stw r27, 0x28(r31)
-    li r4, 0x6
-    li r5, 0x0
-    lwz r3, 0x28(r31)
-    bl HUD_RegisterOverlay
-    lwz r3, 0x28(r31)
-    li r4, 0xa
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    lwz r3, 0x28(r31)
-    li r4, 0xc
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    lwz r3, 0x28(r31)
-    li r4, 0x11
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    lwz r3, 0x28(r31)
-    li r4, 0x12
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    lwz r3, 0x28(r31)
-    li r4, 0xe
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    li r0, 0x0
-    stb r0, g_lakituStartAnimDone(r13)
-    lwz r3, 0x14(r31)
-    bl SetCourseScene3D
-    li r0, 0x0
-    stb r0, g_raceEnded(r13)
-    bl MiniGame_GetTimerValue
-    xoris r0, r3, 0x8000
-    lis r4, 0x4330
-    stw r0, 0x2c(r1)
-    li r0, 0x1
-    lfd f1, lbl_806D73D8(r2)
-    li r3, 0x9
-    stw r4, 0x28(r1)
-    lfd f0, 0x28(r1)
-    stw r0, g_totalLaps(r13)
-    fsubs f0, f0, f1
-    stfs f0, g_raceTimeRemaining(r13)
-    bl PreloadEffectResources
-    li r3, 0xa
-    bl PreloadEffectResources
-    li r3, 0x32
-    bl PreloadItemResources
-    li r3, 0x3d
-    bl PreloadItemResources
-    li r3, 0x3e
-    bl PreloadItemResources
-    li r3, 0x6c
-    bl PreloadItemResources
-    lwz r0, g_weatherSystem(r13)
-    cmplwi r0, 0x0
-    bne RivalRun_Init_L_80137304
-    li r3, 0x1b4
-    bl Alloc
-    mr. r27, r3
-    beq RivalRun_Init_L_80137300
-    li r4, 0x1
-    bl WeatherSystem_Init
-    RivalRun_Init_L_80137300:
-    stw r27, g_weatherSystem(r13)
-    RivalRun_Init_L_80137304:
-    li r3, 0x1
-    bl SetResourceLoadingFlag
-    mr r3, r31
-    psq_l f31, 0x58(r1), 0, 0
-    lfd f31, 0x50(r1)
-    lmw r27, 0x3c(r1)
-    lwz r0, 0x64(r1)
-    mtlr r0
-    addi r1, r1, 0x60
-    blr
+struct ModeBase : GameModeBase {
+    float x4;
+    ModeBase() {
+        x4 = 0.0f;
+    }
+    virtual void _key2();
+    virtual ~ModeBase();
+};
+
+struct RivalRun : ModeBase {
+    virtual void _key3();
+    RICarObject *car;
+    RILakituStart *lakitu;
+    RIInputManager *input;
+    RIScene3D *scene;
+    RIGoalCamera *goalCam;
+    RICamera *camera;
+    int renderTarget;
+    RIPathManager *path;
+    RIHUD *hud;
+    RICollChecker *collChecker;
+    RIRival *rival;
+    unsigned char x34, x35, x36, x37;
+    int x38;
+    RivalRun();
+};
+
+#pragma exceptions on
+RivalRun::RivalRun() {
+    RIVec pos;
+    float camA, camB;
+    void *course;
+    float *mtx;
+
+    car = 0;
+    lakitu = 0;
+    input = 0;
+    scene = 0;
+    goalCam = 0;
+    camera = 0;
+    renderTarget = 0;
+    path = 0;
+    hud = 0;
+    collChecker = 0;
+    rival = 0;
+    x34 = 0;
+    x35 = 0;
+    x36 = 0;
+    x37 = 0;
+    x38 = 0;
+    course = MiniGame_GetCourseData();
+    DrawManager_GetOrCreate();
+    SetResourceLoadingFlag(0);
+    DMAChannelManager_Init();
+    TransitionEffect_GetOrCreate();
+    SoundChannels_ClearAll();
+    ItemObjectManager_Init();
+    CourseObjectManager_Init();
+    SetReverseRoundFlag(0);
+    input = new RIInputManager;
+    CourseData_GetOrCreate(6, 0, 0);
+    GetCourseDataPtr();
+    renderTarget = HSD_LObjLoadDesc();
+    camera = new RICamera(1000.0f, 0.1f, 0x100, 0x100, renderTarget);
+    SetActiveCamera(0, camera);
+    *(RICamera **)&g_raceCamera = camera;
+    ProcessSystemTick(0);
+    GetRaceContextPtr();
+    RankingTable_Init();
+    lbl_806D12BC = 0;
+    SoundDriver_GetOrCreate(0);
+    g_kartStartSlot = 0;
+    GetStartPosition(0, &pos.x, &pos.y, &pos.z);
+    car = new RIPlayerCar(&pos, RIGetChara(), RIGetCC());
+    CarObject_SetPosition(car, &pos);
+    {
+        RIRenderObj *r = (RIRenderObj *)CarObject_GetRenderObj(car);
+        r->x238 = 1;
+    }
+    *(void **)&g_playerRenderObj = CarObject_GetRenderObj(car);
+    SetPlayerCarObject(car);
+    mtx = CarObject_GetTransformMatrix(car);
+    path = new RIPathManager(CourseData_GetDefaultPathKey_Safe(), car, CarObject_GetRenderObj(car), &mtx[12], &mtx[13], &mtx[14]);
+    collChecker = new RICollChecker;
+    *(RICollChecker **)&g_objCollChecker = collChecker;
+    rival = new RIRival(path, 1, course);
+    rival->render = CarObject_GetRenderObj(car);
+    lakitu = new RILakituStart(lbl_8035C22C, 0, 0.0f, 0.0f, 0.0f);
+    scene = new RIScene3D(*GetKartModelNameEntry((int)g_characterId, -1));
+    goalCam = new RIGoalCamera;
+    ProcessSystemTick(0);
+    Scene3D_GetCameraPos(scene, &camA, &camB);
+    camA += 10.0f;
+    Scene3D_SetupProjection(scene, camA, camB);
+    hud = new RIHUD(path);
+    HUD_RegisterOverlay(hud, 6, 0);
+    HUD_RegisterOverlay(hud, 0xA, 0);
+    HUD_RegisterOverlay(hud, 0xC, 0);
+    HUD_RegisterOverlay(hud, 0x11, 0);
+    HUD_RegisterOverlay(hud, 0x12, 0);
+    HUD_RegisterOverlay(hud, 0xE, 0);
+    *(unsigned char *)&g_lakituStartAnimDone = 0;
+    SetCourseScene3D(scene);
+    *(unsigned char *)&g_raceEnded = 0;
+    *(float *)&g_raceTimeRemaining = MiniGame_GetTimerValue();
+    g_totalLaps = 1;
+    PreloadEffectResources(9);
+    PreloadEffectResources(0xA);
+    PreloadItemResources(0x32);
+    PreloadItemResources(0x3D);
+    PreloadItemResources(0x3E);
+    PreloadItemResources(0x6C);
+    if (*(void **)&g_weatherSystem == 0) {
+        *(void **)&g_weatherSystem = new RIWeatherSystem(1);
+    }
+    SetResourceLoadingFlag(1);
 }
+#pragma exceptions reset
+#pragma cplusplus reset
 
 /* === extracted from auto_RivalRun_RivalInit_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -2287,7 +2106,7 @@ extern void Alloc();
 extern void *CarObject_GetRenderObj(void *car);
 extern void CarObject_Init();
 extern void CarObject_SetPosition();
-extern void GetCourseStartYaw();
+extern float GetCourseStartYaw(void);
 extern void GetRaceContextPtr();
 extern void GetStartPosition();
 extern void ItemEffectBus_OrMask(void *bus, unsigned long long mask);
