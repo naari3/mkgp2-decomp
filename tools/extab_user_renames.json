@@ -7576,7 +7576,10 @@
     "__vt__13GrandPrixMenu": "lbl_804EC99C",
     "__vt__9SceneBase": "lbl_803FE0C8",
     "__dt__9SceneBaseFv": "dtor_8007D0D4",
-    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724"
+    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
+    "@159": "jumptable_804EC95C",
+    "@160": "@etb_800196B8",
+    "@161": "@eti_80029C6C"
   },
   "src/game/DNFlash_nm1.cpp": {
     "Min<i>__FRCiRCi": "fn_80228D48",

@@ -30,5 +30,48 @@ GrandPrixMenu::GrandPrixMenu() : list(new SceneListImpl), fade(new FlowFaderI), 
     ClSound_PlayBgmStream(1, 0);
     clStream_setVolume(1, fn_801932F8());
     AddInitialTask(list.p);
-    Factory();
+    {
+        /* Keep the initial dispatch in this constructor: its locals share
+         * registers with the earlier mode and cup selections. */
+        int id;
+        int mode;
+        int chara;
+        id = state;
+        if (task == 0) {
+            mode = fn_801FE404()->mode;
+            chara = fn_801FE404()->chara;
+            switch (id) {
+            case 0:
+            case 2:
+            case 3:
+            case 4:
+            case 6:
+            case 12:
+                break;
+            case 1:
+                task = fn_801FA024();
+                break;
+            case 5:
+                fn_80202A5C(0xF);
+                task = fn_8015B6D0();
+                break;
+            case 7:
+                if (fn_8020A788(fade.p) == 0xFF) {
+                    fn_8020A7CC(fade.p, 0, 0, 1);
+                    task = fn_801F3914(chara, 0);
+                }
+                break;
+            case 11:
+                if (fn_801D5C88(&g_playerData, g_ccClass) == 1) {
+                    SetCC(true);
+                } else {
+                    SetCC(false);
+                }
+                break;
+            default:
+                task = 0;
+                break;
+            }
+        }
+    }
 }
