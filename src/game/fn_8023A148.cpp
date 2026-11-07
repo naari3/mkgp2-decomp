@@ -7,7 +7,8 @@ void fn_8023F1C8(void *); void fn_801FE390(); void fn_801FE348();
 void Sprite_AdvanceAnim(RefillSprite *, float); void SpriteHandle_RecomputeCull(int);
 }
 static inline void SetTextAlpha(ItemSelectPresentation *self, int alpha) {
-    unsigned int title = 0xe0202000 | (unsigned char)alpha;
+    unsigned int title = (unsigned char)alpha;
+    title |= 0xe0202000;
     unsigned int color = __rlwimi(0xffffff00, alpha, 0, 24, 31);
     *(unsigned int *)(self->texts[0][0]->data + 0x20) = title;
     *(unsigned int *)(self->texts[0][1]->data + 0x20) = color;
@@ -90,8 +91,8 @@ extern "C" void fn_8023A148(ItemSelectPresentation *self) {
     }
     case 3:
         if (self->timer >= 7 && self->timer <= 15 && self->selected == 1) {
-            unsigned char current = *(unsigned int *)(self->texts[0][0]->data + 0x20);
             int alpha = (int)(255.0f * (1.0f - (self->timer - 7) * lbl_806DB918));
+            unsigned char current = *(unsigned int *)(self->texts[0][0]->data + 0x20);
             if ((unsigned char)alpha > current) alpha = current;
             SetTextAlpha(self, alpha);
         }
