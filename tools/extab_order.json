@@ -1967,26 +1967,6 @@
       "__dt__10WarpStringFv"
     ]
   },
-  "src/game/WarpZoneVector_Reserve.cpp": {
-    "extab": [
-      "WarpZoneArray_UninitFillN",
-      "WarpZone_OperatorAssign_LinkerStub",
-      "WarpZoneArray_CopyBackward",
-      "WarpZoneArray_CopyBackwardImpl",
-      "WarpZoneVector_Reserve",
-      "dtor_800AA69C",
-      "WarpZoneVector_Clear"
-    ],
-    "extabindex": [
-      "WarpZoneVector_Reserve",
-      "dtor_800AA69C",
-      "WarpZoneVector_Clear",
-      "WarpZoneArray_UninitFillN",
-      "WarpZoneArray_CopyBackward",
-      "WarpZoneArray_CopyBackwardImpl",
-      "WarpZone_OperatorAssign_LinkerStub"
-    ]
-  },
   "src/game/PanelCda40.cpp": {
     "extab": [
       "dtor_801CDBB8",
@@ -2809,6 +2789,28 @@
       "cLNormal3DWrap_Slot_GetOrLoadJointTransform",
       "cLNormal3DWrap_Slot_Render",
       "dtor_800897B8"
+    ]
+  },
+  "src/game/WarpZoneVector_Insert.cpp": {
+    "extab": [
+      "WarpZoneVector_Insert",
+      "WarpZoneArray_UninitFillN",
+      "WarpZone_OperatorAssign_LinkerStub",
+      "WarpZoneArray_CopyBackward",
+      "WarpZoneArray_CopyBackwardImpl",
+      "WarpZoneVector_Reserve",
+      "dtor_800AA69C",
+      "WarpZoneVector_Clear"
+    ],
+    "extabindex": [
+      "WarpZoneVector_Insert",
+      "WarpZoneVector_Reserve",
+      "dtor_800AA69C",
+      "WarpZoneVector_Clear",
+      "WarpZoneArray_UninitFillN",
+      "WarpZoneArray_CopyBackward",
+      "WarpZoneArray_CopyBackwardImpl",
+      "WarpZone_OperatorAssign_LinkerStub"
     ]
   }
 }
