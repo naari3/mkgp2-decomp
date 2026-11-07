@@ -68,8 +68,11 @@ class VObjD {
 public:
     virtual void v8();
     virtual ~VObjD();
-    char pad4[0xC];
+    char pad4[8];
+    void *robj;
     void *effect;
+    float mtx[3][4];
+    float pos[3];
 };
 
 class SceneCam {
@@ -100,16 +103,20 @@ struct CoursePanel {
     int state;
     float t;
     float alpha;
-    char pad10[4];
+    int mode;
     void *obj14;
     SceneCam *cam;
     void *lobjs;
     void *obj20;
     unsigned char active;
-    char pad25[0xF];
+    char pad25[3];
+    int phase;
+    float phaseT;
+    float blink;
     VObjD *objs[2];
     void *jobjs[2];
-    char pad44[4];
+    unsigned char hidden[2];
+    char pad46[2];
     void *obj48;
     ObjListSet *obj4C;
 };
@@ -131,6 +138,7 @@ struct CamPanel {
     void *sprB;
 };
 
+struct VfxVec;
 struct GXColorB {
     unsigned char r, g, b, a;
 };
@@ -339,12 +347,12 @@ extern void Object_ReleaseAnimResource();
 extern void PSMTXIdentity();
 extern void PreloadEffectResources();
 extern void PreloadItemResources();
-extern void ResolveJointByName();
+void *ResolveJointByName(void *root, char *name);
 void SetResourceLoadingFlag(int on);
 extern void SoundChannels_ClearAll();
 extern void TexMgr_SetTexture();
 extern void TornadoEffect_Ctor();
-extern void TornadoEffect_SetFlagC0();
+void TornadoEffect_SetFlagC0(void *e);
 extern void __construct_array();
 extern void __construct_new_array();
 extern void clNormal3D_Construct();
@@ -352,9 +360,9 @@ extern void clNormal3D_SetScale();
 void fn_80121210(void);
 extern void fn_8013D800();
 extern void fn_80140874();
-extern void fn_8014DD5C();
-extern void fn_8014E004();
-extern void fn_8014E028();
+void *fn_8014DD5C(void *spr, int phase);
+void *fn_8014E004(void *spr, int phase);
+void *fn_8014E028(void *spr, int phase);
 extern void fn_80157B20();
 extern void fn_80157D18();
 extern unsigned char fn_80169E10(void);
@@ -497,18 +505,18 @@ extern unsigned int lbl_806D8100;
 extern unsigned int lbl_806D8104;
 extern unsigned int lbl_806D8108;
 extern void HSD_CObjAddAnim();
-extern void HSD_CObjAnim();
-extern void HSD_CObjReqAnim();
+void HSD_CObjAnim(void *cobj);
+void HSD_CObjReqAnim(void *cobj, float frame);
 extern void JObj_Hide();
 extern void Scene3D_Init();
 extern void SceneModel_Init();
-extern void clNormal3D_Exec();
+void clNormal3D_Exec(void *o);
 extern unsigned int lbl_806D806C;
 extern unsigned int lbl_80419EF8[];
 void CourseEnvironment_Dtor(void *p, int flag);
 void KartDriver_Dtor(void *p, int flag);
 void SetActiveCamera(void *cam, int a);
-extern void TireEffect_ResetSpin();
+void TireEffect_ResetSpin(void *e, float a, float b);
 void VisualEffectHolder_Dtor(void *p, int flag);
 extern void fn_8013D4B0();
 extern void fn_8013D738();
@@ -561,35 +569,35 @@ extern unsigned int lbl_806D812C;
 extern unsigned int lbl_806D8130;
 extern struct CourseModeInfo lbl_80366EF0[];
 extern void BuildOrientationFromYaw();
-extern void CObj_ApplyScissor();
-extern void CObj_LoadProjMatrix();
+void CObj_ApplyScissor(void *cam, void *out);
+void CObj_LoadProjMatrix(void *cam, void *out);
 extern void ClSound_PlayBgmStream();
 extern void ClStream_IsActive();
 extern void ClStream_PlayMono();
 extern void ClStream_Stop();
 extern void CourseEnvironment_UpdateAndCullZones_Timed();
 extern void DrawEffect_SpawnByType();
-extern void HSD_JObjSetupMatrixSub();
-extern void ItemEffectBus_SnapshotAndFullReset();
-extern void ItemEffectBus_TickTornadoCooldown();
-extern void ItemObjectManager_Update();
+void HSD_JObjSetupMatrixSub(void *jobj);
+void ItemEffectBus_SnapshotAndFullReset(void *bus);
+void ItemEffectBus_TickTornadoCooldown(void *bus);
+void ItemObjectManager_Update(void);
 extern void KartDriver_GetJointByIdx();
 extern void KartDriver_TickAction_79268_AndSetSlot5aEulerZ();
 extern void Mtx44_GetPitchOfPosZ_Padded();
 extern void Mtx44_GetTranslation_RowMajor();
 extern void Mtx44_GetYawOfPosZ_Padded();
-extern void Object_SetField8_AndDirty();
-extern void PSMTXCopy();
+void Object_SetField8_AndDirty(void *o, float v);
+void PSMTXCopy(const void *src, void *dst);
 extern void PcbSyncTable_Ptr();
-extern void RenderObj_ItemStateMachine_Timed();
+void RenderObj_ItemStateMachine_Timed(void *o, int a, float b, float c);
 extern void SceneRender_SetViewportRect();
 extern void TornadoEffect_SetColorPairC8CC();
 extern void TornadoEffect_SetFlagB4();
 extern void TornadoEffect_SetScalePairB0BC();
-extern void TornadoEffect_Tick();
+void TornadoEffect_Tick(void *e, int a);
 extern void Vec3_Copy();
-extern void VfxSlotMgr_Update();
-extern void __assert();
+void VfxSlotMgr_Update(struct VfxVec eye, struct VfxVec target);
+void __assert(char *file, int line, char *expr);
 extern void clStream_setVolume();
 extern void fn_800D3184();
 extern void fn_8013D59C();
@@ -723,13 +731,13 @@ extern void __destroy_arr();
 void fn_80157940(struct LIter *ret, void *list, struct LIter *b, struct LIter *e);
 extern void fn_801579F0();
 void fn_80157B38(struct LIter *ret, void *list, struct LIter *b, struct LIter *e);
-extern void fn_80157BE8();
-extern void fn_801F7CD8();
+void fn_80157BE8(void *ret, void *list, void *pos);
+void fn_801F7CD8(void *res, int flag);
 extern void ItemEffectBus_ApplyItemEventClear();
 extern void ItemEffectBus_ApplyItemEventSet();
 extern void TornadoEffect_ApplyItemVisual_Primary();
 extern void TornadoEffect_ApplyItemVisual_Secondary();
-extern void TornadoEffect_ClearFlagC0AndSetC4();
+void TornadoEffect_ClearFlagC0AndSetC4(void *e, float v);
 extern void fn_80140344();
 extern void fn_80169468();
 extern unsigned int lbl_806D80D0;
@@ -777,13 +785,13 @@ void fn_8013A6F8(void);
 void fn_80173CC4(void *o, int flag);
 extern VObj *lbl_806D10D0;
 extern unsigned int lbl_8048FF3C[];
-extern void PSMTXTrans();
-extern void clItemBoxManager_Update();
-extern void fn_8013A534();
-extern void fn_801737F0();
-extern void fn_80173B68();
-extern void fn_80173BE8();
-extern void fn_80173C34();
+void PSMTXTrans(void *m, float x, float y, float z);
+void clItemBoxManager_Update(void *mgr);
+void fn_8013A534(void);
+void fn_801737F0(void *o);
+void fn_80173B68(void *o, void *robj);
+void fn_80173BE8(void *o);
+void fn_80173C34(void *o);
 extern unsigned int lbl_806D8294;
 extern unsigned int lbl_806D8298;
 extern unsigned int lbl_806D829C;
@@ -1111,7 +1119,7 @@ Base *fn_801556A0(Base *self, short flag);
 int fn_8015571C(char *o, float *a, float *b, float *c);
 void fn_8015573C(VObj *p);
 CoursePanel *fn_80155774(CoursePanel *self, short flag);
-asm void fn_801558CC(void);
+void fn_801558CC(CoursePanel *self);
 unsigned char fn_80156FC0(StateObj *o);
 void fn_80156FD4(CoursePanel *self);
 void fn_80157240(VObj *p);
@@ -1193,9 +1201,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_801558CC[8] = {
-    0x30, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
@@ -1287,9 +1292,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801558CC = {
-    (void *)&fn_801558CC, 0x000016F4, (void *)extab_fn_801558CC
-};
 
 
 
@@ -6930,1532 +6932,344 @@ extern "C" CoursePanel *fn_80155774(CoursePanel *self, short flag) {
     return self;
 }
 
-extern "C" asm void fn_801558CC(void) { /* 0x801558CC size:0x16F4 */
-    nofralloc
-    stwu r1, -0xb0(r1)
-    mflr r0
-    stw r0, 0xb4(r1)
-    stfd f31, 0xa0(r1)
-    psq_st f31, 0xa8(r1), 0, 0
-    stfd f30, 0x90(r1)
-    psq_st f30, 0x98(r1), 0, 0
-    stmw r26, 0x78(r1)
-    mr r28, r3
-    lwz r0, 0x4(r3)
-    cmpwi r0, 0x9
-    beq fn_801558CC_L_80156F9C
-    lbz r0, 0x24(r28)
-    cmplwi r0, 0x0
-    bne fn_801558CC_L_80155910
-    li r0, 0x1
-    stb r0, 0x24(r28)
-    fn_801558CC_L_80155910:
-    lfs f0, 0x8(r28)
-    lfs f2, lbl_806D8220(r2)
-    fcmpo cr0, f0, f2
-    bge fn_801558CC_L_80155934
-    li r0, 0xa
-    stw r0, 0x28(r28)
-    lfs f0, 0x8(r28)
-    stfs f0, 0x2c(r28)
-    b fn_801558CC_L_80155984
-    fn_801558CC_L_80155934:
-    lfs f1, lbl_806D80EC(r2)
-    fcmpo cr0, f0, f1
-    bge fn_801558CC_L_80155958
-    li r0, 0xb
-    stw r0, 0x28(r28)
-    lfs f0, 0x8(r28)
-    fsubs f0, f0, f2
-    stfs f0, 0x2c(r28)
-    b fn_801558CC_L_80155984
-    fn_801558CC_L_80155958:
-    li r0, 0xc
-    stw r0, 0x28(r28)
-    lfs f0, 0x8(r28)
-    fsubs f0, f0, f1
-    stfs f0, 0x2c(r28)
-    lfs f0, 0x2c(r28)
-    fcmpo cr0, f0, f2
-    cror eq, gt, eq
-    bne fn_801558CC_L_80155984
-    lfs f0, lbl_806D8294(r2)
-    stfs f0, 0x2c(r28)
-    fn_801558CC_L_80155984:
-    lwz r3, 0x4c(r28)
-    lwz r4, 0x28(r28)
-    bl fn_8014E028
-    stw r3, 0x18(r28)
-    lwz r3, 0x4c(r28)
-    lwz r4, 0x28(r28)
-    bl fn_8014E004
-    stw r3, 0x1c(r28)
-    lwz r3, 0x4c(r28)
-    lwz r4, 0x28(r28)
-    bl fn_8014DD5C
-    stw r3, 0x20(r28)
-    lwz r3, 0x18(r28)
-    cmplwi r3, 0x0
-    beq fn_801558CC_L_80155A34
-    lfs f1, 0x308c(r3)
-    lfs f0, lbl_806D8064(r2)
-    lfs f2, 0x2c(r28)
-    fcmpo cr0, f1, f0
-    blt fn_801558CC_L_801559E8
-    fcmpo cr0, f2, f0
-    blt fn_801558CC_L_801559E8
-    li r0, 0x1
-    stb r0, 0x3084(r3)
-    stfs f2, 0x308c(r3)
-    fn_801558CC_L_801559E8:
-    lwz r29, 0x18(r28)
-    lfs f0, lbl_806D806C(r2)
-    lfs f1, 0x3088(r29)
-    fcmpu cr0, f0, f1
-    beq fn_801558CC_L_80155A34
-    lbz r0, 0x3084(r29)
-    cmplwi r0, 0x0
-    beq fn_801558CC_L_80155A14
-    li r0, 0x0
-    stb r0, 0x3084(r29)
-    b fn_801558CC_L_80155A20
-    fn_801558CC_L_80155A14:
-    lfs f0, 0x308c(r29)
-    fadds f0, f0, f1
-    stfs f0, 0x308c(r29)
-    fn_801558CC_L_80155A20:
-    lwz r3, 0x4(r29)
-    lfs f1, 0x308c(r29)
-    bl HSD_CObjReqAnim
-    lwz r3, 0x4(r29)
-    bl HSD_CObjAnim
-    fn_801558CC_L_80155A34:
-    lwz r3, 0x20(r28)
-    cmplwi r3, 0x0
-    beq fn_801558CC_L_80155A50
-    lfs f1, 0x2c(r28)
-    bl Object_SetField8_AndDirty
-    lwz r3, 0x20(r28)
-    bl clNormal3D_Exec
-    fn_801558CC_L_80155A50:
-    lwz r3, 0x18(r28)
-    bl SetCourseScene3D
-    mr r31, r28
-    li r29, 0x0
-    la r30, lbl_806CF828(r13)  /* lbl_806CF828 */
-    fn_801558CC_L_80155A64:
-    lwz r3, 0x34(r31)
-    lwz r3, 0xc(r3)
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_SnapshotAndFullReset
-    lwz r3, 0x20(r28)
-    lwz r4, 0x0(r30)
-    bl ResolveJointByName
-    stw r3, 0x3c(r31)
-    lwz r26, 0x3c(r31)
-    cmplwi r26, 0x0
-    beq fn_801558CC_L_80155B54
-    bne fn_801558CC_L_80155AA4
-    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
-    li r4, 0x47c
-    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
-    bl __assert
-    fn_801558CC_L_80155AA4:
-    cmplwi r26, 0x0
-    beq fn_801558CC_L_80155AEC
-    bne fn_801558CC_L_80155AC0
-    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
-    li r4, 0x25d
-    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
-    bl __assert
-    fn_801558CC_L_80155AC0:
-    lwz r4, 0x14(r26)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne fn_801558CC_L_80155ADC
-    rlwinm. r0, r4, 0, 25, 25
-    beq fn_801558CC_L_80155ADC
-    li r3, 0x1
-    fn_801558CC_L_80155ADC:
-    clrlwi. r0, r3, 24
-    beq fn_801558CC_L_80155AEC
-    mr r3, r26
-    bl HSD_JObjSetupMatrixSub
-    fn_801558CC_L_80155AEC:
-    lwz r27, 0x34(r31)
-    addi r3, r26, 0x44
-    addi r4, r27, 0x14
-    bl PSMTXCopy
-    lfs f0, 0x20(r27)
-    addi r26, r29, 0x44
-    stfs f0, 0x44(r27)
-    lfs f0, 0x30(r27)
-    stfs f0, 0x48(r27)
-    lfs f0, 0x40(r27)
-    stfs f0, 0x4c(r27)
-    lbzx r0, r28, r26
-    cmplwi r0, 0x0
-    beq fn_801558CC_L_80155BB4
-    lwz r3, 0x34(r31)
-    lfs f1, lbl_806D8064(r2)
-    lwz r3, 0x10(r3)
-    bl TornadoEffect_ClearFlagC0AndSetC4
-    lwz r3, 0x34(r31)
-    lfs f1, lbl_806D8064(r2)
-    lwz r3, 0x10(r3)
-    lfs f2, lbl_806D8068(r2)
-    bl TireEffect_ResetSpin
-    li r0, 0x0
-    stbx r0, r28, r26
-    b fn_801558CC_L_80155BB4
-    fn_801558CC_L_80155B54:
-    addi r26, r29, 0x44
-    lbzx r0, r28, r26
-    cmplwi r0, 0x0
-    bne fn_801558CC_L_80155BB4
-    lfs f1, lbl_806D8064(r2)
-    addi r3, r1, 0x48
-    lfs f2, lbl_806D8248(r2)
-    fmr f3, f1
-    bl PSMTXTrans
-    lwz r27, 0x34(r31)
-    addi r3, r1, 0x48
-    addi r4, r27, 0x14
-    bl PSMTXCopy
-    lfs f0, 0x20(r27)
-    stfs f0, 0x44(r27)
-    lfs f0, 0x30(r27)
-    stfs f0, 0x48(r27)
-    lfs f0, 0x40(r27)
-    stfs f0, 0x4c(r27)
-    lwz r3, 0x34(r31)
-    lwz r3, 0x10(r3)
-    bl TornadoEffect_SetFlagC0
-    li r0, 0x1
-    stbx r0, r28, r26
-    fn_801558CC_L_80155BB4:
-    lfs f1, lbl_806D8064(r2)
-    li r4, 0x0
-    lwz r3, 0x34(r31)
-    fmr f2, f1
-    lwz r3, 0xc(r3)
-    bl RenderObj_ItemStateMachine_Timed
-    lwz r3, 0x34(r31)
-    li r4, 0x0
-    lwz r3, 0x10(r3)
-    bl TornadoEffect_Tick
-    lwz r3, 0x34(r31)
-    lwz r3, 0xc(r3)
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_TickTornadoCooldown
-    addi r29, r29, 0x1
-    addi r30, r30, 0x4
-    cmpwi r29, 0x2
-    addi r31, r31, 0x4
-    blt fn_801558CC_L_80155A64
-    lfs f2, 0x8(r28)
-    lfs f1, lbl_806D8220(r2)
-    fcmpo cr0, f2, f1
-    cror eq, gt, eq
-    bne fn_801558CC_L_80155C60
-    lfs f0, lbl_806D80EC(r2)
-    fcmpo cr0, f2, f0
-    bge fn_801558CC_L_80155C60
-    fcmpu cr0, f1, f2
-    bne fn_801558CC_L_80155C40
-    lwz r4, 0x38(r28)
-    lwz r3, 0x48(r28)
-    lwz r4, 0xc(r4)
-    bl fn_80173B68
-    lwz r3, 0x48(r28)
-    bl fn_80173C34
-    fn_801558CC_L_80155C40:
-    lfs f1, lbl_806D8298(r2)
-    lfs f0, 0x8(r28)
-    fcmpu cr0, f1, f0
-    bne fn_801558CC_L_80155C58
-    lwz r3, 0x48(r28)
-    bl fn_80173BE8
-    fn_801558CC_L_80155C58:
-    lwz r3, 0x48(r28)
-    bl fn_801737F0
-    fn_801558CC_L_80155C60:
-    lfs f3, 0x8(r28)
-    lfs f1, lbl_806D829C(r2)
-    fcmpo cr0, f3, f1
-    cror eq, gt, eq
-    bne fn_801558CC_L_801561D8
-    lfs f0, lbl_806D82A0(r2)
-    fcmpo cr0, f3, f0
-    bge fn_801558CC_L_801561D8
-    lfs f0, lbl_806D80BC(r2)
-    fcmpo cr0, f3, f0
-    bge fn_801558CC_L_80155C9C
-    fsubs f1, f3, f1
-    lfs f0, lbl_806D818C(r2)
-    fdivs f30, f1, f0
-    b fn_801558CC_L_80155CC8
-    fn_801558CC_L_80155C9C:
-    lfs f0, lbl_806D82A4(r2)
-    fcmpo cr0, f3, f0
-    cror eq, gt, eq
-    bne fn_801558CC_L_80155CC4
-    fsubs f1, f3, f0
-    lfs f0, lbl_806D818C(r2)
-    lfs f2, lbl_806D8068(r2)
-    fdivs f0, f1, f0
-    fsubs f30, f2, f0
-    b fn_801558CC_L_80155CC8
-    fn_801558CC_L_80155CC4:
-    lfs f30, lbl_806D8068(r2)
-    fn_801558CC_L_80155CC8:
-    lfs f0, lbl_806D829C(r2)
-    lfs f1, lbl_806D82A8(r2)
-    fsubs f0, f3, f0
-    fmuls f1, f1, f0
-    bl LUT_Sin12Bit
-    fmr f31, f1
-    lfs f0, lbl_806D8064(r2)
-    fcmpo cr0, f31, f0
-    bge fn_801558CC_L_80155CF0
-    fneg f31, f31
-    fn_801558CC_L_80155CF0:
-    lwz r0, 0x10(r28)
-    cmpwi r0, 0x1
-    bne fn_801558CC_L_80155F34
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x46
-    fmr f4, f3
-    lfs f1, lbl_806D82AC(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B0(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D82B4(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D8070(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D82BC(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D82C0(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D82C4(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x48
-    fmr f4, f3
-    lfs f1, lbl_806D82C8(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x44
-    fmr f4, f3
-    lfs f1, lbl_806D82BC(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82CC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x49
-    fmr f4, f3
-    lfs f1, lbl_806D82D0(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82D4(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    fmuls f0, f30, f31
-    lfs f3, lbl_806D8068(r2)
-    lfs f1, lbl_806D82D8(r2)
-    li r4, 0x0
-    fmr f4, f3
-    lfs f2, lbl_806D82DC(r2)
-    stfs f0, 0x8(r1)
-    fmr f6, f3
-    fmr f7, f3
-    lfs f5, lbl_806D8064(r2)
-    fmr f8, f3
-    lwz r3, 0x4c(r28)
-    li r5, 0x4a
-    li r6, 0x1
-    bl fn_80154FB0
-    b fn_801558CC_L_801561D8
-    fn_801558CC_L_80155F34:
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x1c
-    fmr f4, f3
-    lfs f1, lbl_806D82AC(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B0(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D82B4(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D8070(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D82BC(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D82C0(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D82C4(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D82E0(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D82E4(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x1e
-    fmr f4, f3
-    lfs f1, lbl_806D82E8(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x1a
-    fmr f4, f3
-    lfs f1, lbl_806D82EC(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82CC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f30, 0x8(r1)
-    li r5, 0x1f
-    fmr f4, f3
-    lfs f1, lbl_806D82D0(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82D4(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    fmuls f0, f30, f31
-    lfs f3, lbl_806D8068(r2)
-    lfs f1, lbl_806D82D8(r2)
-    li r4, 0x0
-    fmr f4, f3
-    lfs f2, lbl_806D82DC(r2)
-    stfs f0, 0x8(r1)
-    fmr f6, f3
-    fmr f7, f3
-    lfs f5, lbl_806D8064(r2)
-    fmr f8, f3
-    lwz r3, 0x4c(r28)
-    li r5, 0x20
-    li r6, 0x1
-    bl fn_80154FB0
-    fn_801558CC_L_801561D8:
-    lfs f3, 0x8(r28)
-    lfs f1, lbl_806D82F0(r2)
-    fcmpo cr0, f3, f1
-    cror eq, gt, eq
-    bne fn_801558CC_L_801567C0
-    lfs f0, lbl_806D82F4(r2)
-    fcmpo cr0, f3, f0
-    bge fn_801558CC_L_801567C0
-    lfs f0, lbl_806D82E4(r2)
-    fcmpo cr0, f3, f0
-    bge fn_801558CC_L_80156214
-    fsubs f1, f3, f1
-    lfs f0, lbl_806D818C(r2)
-    fdivs f31, f1, f0
-    b fn_801558CC_L_80156240
-    fn_801558CC_L_80156214:
-    lfs f0, lbl_806D8274(r2)
-    fcmpo cr0, f3, f0
-    cror eq, gt, eq
-    bne fn_801558CC_L_8015623C
-    fsubs f1, f3, f0
-    lfs f0, lbl_806D818C(r2)
-    lfs f2, lbl_806D8068(r2)
-    fdivs f0, f1, f0
-    fsubs f31, f2, f0
-    b fn_801558CC_L_80156240
-    fn_801558CC_L_8015623C:
-    lfs f31, lbl_806D8068(r2)
-    fn_801558CC_L_80156240:
-    lfs f0, lbl_806D82F0(r2)
-    fsubs f1, f3, f0
-    bl __cvt_fp2unsigned
-    lis r4, 0x38e4
-    subi r0, r4, 0x71c7
-    mulhwu r0, r0, r3
-    srwi r0, r0, 1
-    mulli r0, r0, 0x9
-    subf r26, r0, r3
-    cmplwi r26, 0x5
-    blt fn_801558CC_L_80156270
-    subfic r26, r26, 0x9
-    fn_801558CC_L_80156270:
-    lwz r0, 0x10(r28)
-    cmpwi r0, 0x1
-    bne fn_801558CC_L_80156520
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x46
-    fmr f4, f3
-    lfs f1, lbl_806D82AC(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82F8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D82B4(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D8070(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D82BC(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D82C0(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D82C4(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D82E0(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D82E4(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D8300(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x48
-    fmr f4, f3
-    lfs f1, lbl_806D8304(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x45
-    fmr f4, f3
-    lfs f1, lbl_806D8214(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D8308(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    addi r5, r26, 0x3e
-    stfs f31, 0x8(r1)
-    li r4, 0x0
-    fmr f4, f3
-    lfs f1, lbl_806D830C(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D8310(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    b fn_801558CC_L_801567C0
-    fn_801558CC_L_80156520:
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1c
-    fmr f4, f3
-    lfs f1, lbl_806D82AC(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82F8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D82B4(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D8070(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D82BC(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D82C0(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D82C4(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D82E0(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D82E4(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D8300(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1e
-    fmr f4, f3
-    lfs f1, lbl_806D8304(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82FC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1b
-    fmr f4, f3
-    lfs f1, lbl_806D8214(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D8308(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    addi r5, r26, 0x14
-    stfs f31, 0x8(r1)
-    li r4, 0x0
-    fmr f4, f3
-    lfs f1, lbl_806D830C(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D8310(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    fn_801558CC_L_801567C0:
-    lfs f3, 0x8(r28)
-    lfs f1, lbl_806D8314(r2)
-    fcmpo cr0, f3, f1
-    cror eq, gt, eq
-    bne fn_801558CC_L_80156CC8
-    lfs f0, lbl_806D8318(r2)
-    fcmpo cr0, f3, f0
-    bge fn_801558CC_L_80156CC8
-    lfs f0, lbl_806D831C(r2)
-    fcmpo cr0, f3, f0
-    bge fn_801558CC_L_801567FC
-    fsubs f1, f3, f1
-    lfs f0, lbl_806D818C(r2)
-    fdivs f31, f1, f0
-    b fn_801558CC_L_80156828
-    fn_801558CC_L_801567FC:
-    lfs f0, lbl_806D8320(r2)
-    fcmpo cr0, f3, f0
-    cror eq, gt, eq
-    bne fn_801558CC_L_80156824
-    fsubs f1, f3, f0
-    lfs f0, lbl_806D818C(r2)
-    lfs f2, lbl_806D8068(r2)
-    fdivs f0, f1, f0
-    fsubs f31, f2, f0
-    b fn_801558CC_L_80156828
-    fn_801558CC_L_80156824:
-    lfs f31, lbl_806D8068(r2)
-    fn_801558CC_L_80156828:
-    lfs f0, lbl_806D8314(r2)
-    lfs f1, lbl_806D82A8(r2)
-    fsubs f0, f3, f0
-    fmuls f1, f1, f0
-    bl LUT_Sin12Bit
-    fmr f30, f1
-    lfs f0, lbl_806D8064(r2)
-    fcmpo cr0, f30, f0
-    bge fn_801558CC_L_80156850
-    fneg f30, f30
-    fn_801558CC_L_80156850:
-    lwz r0, 0x10(r28)
-    cmpwi r0, 0x1
-    bne fn_801558CC_L_80156A94
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x46
-    fmr f4, f3
-    lfs f1, lbl_806D8324(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B0(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D8328(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D8288(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D832C(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D8330(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x47
-    fmr f4, f3
-    lfs f1, lbl_806D8334(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x48
-    fmr f4, f3
-    lfs f1, lbl_806D8218(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x43
-    fmr f4, f3
-    lfs f1, lbl_806D8338(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82CC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x49
-    fmr f4, f3
-    lfs f1, lbl_806D82D0(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82D4(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    fmuls f0, f31, f30
-    lfs f3, lbl_806D8068(r2)
-    lfs f1, lbl_806D82D8(r2)
-    li r4, 0x0
-    fmr f4, f3
-    lfs f2, lbl_806D82DC(r2)
-    stfs f0, 0x8(r1)
-    fmr f6, f3
-    fmr f7, f3
-    lfs f5, lbl_806D8064(r2)
-    fmr f8, f3
-    lwz r3, 0x4c(r28)
-    li r5, 0x4a
-    li r6, 0x1
-    bl fn_80154FB0
-    b fn_801558CC_L_80156CC8
-    fn_801558CC_L_80156A94:
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1c
-    fmr f4, f3
-    lfs f1, lbl_806D8324(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B0(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D8328(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D8288(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D832C(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D8330(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1d
-    fmr f4, f3
-    lfs f1, lbl_806D8334(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1e
-    fmr f4, f3
-    lfs f1, lbl_806D8218(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82B8(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x19
-    fmr f4, f3
-    lfs f1, lbl_806D82D8(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82CC(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    stfs f31, 0x8(r1)
-    li r5, 0x1f
-    fmr f4, f3
-    lfs f1, lbl_806D82D0(r2)
-    fmr f6, f3
-    lwz r3, 0x4c(r28)
-    fmr f7, f3
-    lfs f2, lbl_806D82D4(r2)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    fmuls f0, f31, f30
-    lfs f3, lbl_806D8068(r2)
-    lfs f1, lbl_806D82D8(r2)
-    li r4, 0x0
-    fmr f4, f3
-    lfs f2, lbl_806D82DC(r2)
-    stfs f0, 0x8(r1)
-    fmr f6, f3
-    fmr f7, f3
-    lfs f5, lbl_806D8064(r2)
-    fmr f8, f3
-    lwz r3, 0x4c(r28)
-    li r5, 0x20
-    li r6, 0x1
-    bl fn_80154FB0
-    fn_801558CC_L_80156CC8:
-    lwz r0, 0x10(r28)
-    cmpwi r0, 0x1
-    bne fn_801558CC_L_80156D5C
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    lfs f1, lbl_806D833C(r2)
-    li r5, 0x4b
-    stfs f3, 0x8(r1)
-    fmr f4, f3
-    fmr f6, f3
-    lfs f2, lbl_806D82E4(r2)
-    fmr f7, f3
-    lwz r3, 0x4c(r28)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    lfs f1, 0x30(r28)
-    lfs f0, lbl_806D818C(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_801558CC_L_80156DE0
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    lfs f1, lbl_806D8340(r2)
-    li r5, 0x4c
-    stfs f3, 0x8(r1)
-    fmr f4, f3
-    fmr f6, f3
-    lfs f2, lbl_806D8344(r2)
-    fmr f7, f3
-    lwz r3, 0x4c(r28)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    b fn_801558CC_L_80156DE0
-    fn_801558CC_L_80156D5C:
-    lfs f1, 0x30(r28)
-    lfs f0, lbl_806D818C(r2)
-    fcmpo cr0, f1, f0
-    bge fn_801558CC_L_80156DA8
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    lfs f1, lbl_806D8348(r2)
-    li r5, 0x21
-    stfs f3, 0x8(r1)
-    fmr f4, f3
-    fmr f6, f3
-    lfs f2, lbl_806D82E4(r2)
-    fmr f7, f3
-    lwz r3, 0x4c(r28)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    b fn_801558CC_L_80156DE0
-    fn_801558CC_L_80156DA8:
-    lfs f3, lbl_806D8068(r2)
-    li r4, 0x0
-    lfs f1, lbl_806D8348(r2)
-    li r5, 0x22
-    stfs f3, 0x8(r1)
-    fmr f4, f3
-    fmr f6, f3
-    lfs f2, lbl_806D82E4(r2)
-    fmr f7, f3
-    lwz r3, 0x4c(r28)
-    fmr f8, f3
-    lfs f5, lbl_806D8064(r2)
-    li r6, 0x0
-    bl fn_80154FB0
-    fn_801558CC_L_80156DE0:
-    lfs f2, 0x30(r28)
-    lfs f1, lbl_806D8068(r2)
-    lfs f0, lbl_806D81B4(r2)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0x30(r28)
-    cror eq, gt, eq
-    bne fn_801558CC_L_80156E08
-    lfs f0, lbl_806D8064(r2)
-    stfs f0, 0x30(r28)
-    fn_801558CC_L_80156E08:
-    lfs f1, 0x8(r28)
-    lfs f0, lbl_806D8220(r2)
-    fcmpo cr0, f1, f0
-    bge fn_801558CC_L_80156E2C
-    lwz r3, lbl_806D10D0(r13)
-    cmplwi r3, 0x0
-    bne fn_801558CC_L_80156E28
-    li r3, 0x0
-    fn_801558CC_L_80156E28:
-    bl clItemBoxManager_Update
-    fn_801558CC_L_80156E2C:
-    lfs f1, 0x8(r28)
-    lfs f0, lbl_806D80EC(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_801558CC_L_80156E44
-    bl fn_8013A534
-    fn_801558CC_L_80156E44:
-    lwz r3, 0x18(r28)
-    addi r4, r1, 0x3c
-    bl CObj_LoadProjMatrix
-    lwz r3, 0x18(r28)
-    addi r4, r1, 0x30
-    bl CObj_ApplyScissor
-    bl ItemObjectManager_Update
-    lwz r9, 0x30(r1)
-    addi r3, r1, 0x24
-    lwz r8, 0x34(r1)
-    addi r4, r1, 0x18
-    lwz r7, 0x38(r1)
-    lwz r6, 0x3c(r1)
-    lwz r5, 0x40(r1)
-    lwz r0, 0x44(r1)
-    stw r9, 0x18(r1)
-    stw r8, 0x1c(r1)
-    stw r7, 0x20(r1)
-    stw r6, 0x24(r1)
-    stw r5, 0x28(r1)
-    stw r0, 0x2c(r1)
-    bl VfxSlotMgr_Update
-    bl GXDrawDone
-    lwz r27, 0x4c(r28)
-    lwz r0, 0xc(r27)
-    cmplwi r0, 0x0
-    beq fn_801558CC_L_80156F10
-    lwz r30, 0x14(r27)
-    addi r26, r27, 0x10
-    li r29, 0x0
-    b fn_801558CC_L_80156F08
-    fn_801558CC_L_80156EC0:
-    lwz r0, 0xc(r30)
-    cmpwi r0, 0x0
-    ble fn_801558CC_L_80156ED4
-    stw r29, 0xc(r30)
-    b fn_801558CC_L_80156F04
-    fn_801558CC_L_80156ED4:
-    lwz r3, 0x10(r30)
-    cmplwi r3, 0x0
-    beq fn_801558CC_L_80156EE8
-    li r4, 0x1
-    bl fn_801F7CD8
-    fn_801558CC_L_80156EE8:
-    stw r30, 0x14(r1)
-    addi r3, r1, 0x10
-    addi r4, r27, 0xc
-    addi r5, r1, 0x14
-    bl fn_80157BE8
-    lwz r30, 0x10(r1)
-    b fn_801558CC_L_80156F08
-    fn_801558CC_L_80156F04:
-    lwz r30, 0x4(r30)
-    fn_801558CC_L_80156F08:
-    cmplw r30, r26
-    bne fn_801558CC_L_80156EC0
-    fn_801558CC_L_80156F10:
-    lfs f1, lbl_806D8060(r2)
-    lfs f2, 0x8(r28)
-    fcmpo cr0, f2, f1
-    bge fn_801558CC_L_80156F3C
-    fdivs f0, f2, f1
-    lfs f3, lbl_806D8068(r2)
-    lfs f2, lbl_806D8064(r2)
-    fsubs f1, f3, f0
-    bl Saturate_Double
-    stfs f1, 0xc(r28)
-    b fn_801558CC_L_80156F70
-    fn_801558CC_L_80156F3C:
-    lfs f0, lbl_806D834C(r2)
-    fsubs f0, f0, f1
-    fcmpo cr0, f2, f0
-    ble fn_801558CC_L_80156F68
-    fsubs f0, f2, f0
-    lfs f2, lbl_806D8064(r2)
-    lfs f3, lbl_806D8068(r2)
-    fdivs f1, f0, f1
-    bl Saturate_Double
-    stfs f1, 0xc(r28)
-    b fn_801558CC_L_80156F70
-    fn_801558CC_L_80156F68:
-    lfs f0, lbl_806D8064(r2)
-    stfs f0, 0xc(r28)
-    fn_801558CC_L_80156F70:
-    lfs f2, 0x8(r28)
-    lfs f1, lbl_806D8068(r2)
-    lfs f0, lbl_806D834C(r2)
-    fadds f1, f2, f1
-    stfs f1, 0x8(r28)
-    lfs f1, 0x8(r28)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_801558CC_L_80156F9C
-    li r0, 0x9
-    stw r0, 0x4(r28)
-    fn_801558CC_L_80156F9C:
-    psq_l f31, 0xa8(r1), 0, 0
-    lfd f31, 0xa0(r1)
-    psq_l f30, 0x98(r1), 0, 0
-    lfd f30, 0x90(r1)
-    lmw r26, 0x78(r1)
-    lwz r0, 0xb4(r1)
-    mtlr r0
-    addi r1, r1, 0xb0
-    blr
+struct CourseCamAnim {
+    void *vt;
+    void *cobj;
+    char pad8[0x3084 - 0x8];
+    unsigned char reset;
+    float speed;
+    float frame;
+};
+
+struct VfxVec {
+    float x, y, z;
+};
+
+static inline unsigned char JObjMtxIsDirty(void *j) {
+    if (j == 0) {
+        __assert((char *)lbl_806D8134, 0x25D, (char *)lbl_806D813C);
+    }
+    unsigned int flags = *(unsigned int *)((char *)j + 0x14);
+    unsigned char dirty = 0;
+    if (!(flags & 0x00800000) && (flags & 0x40)) {
+        dirty = 1;
+    }
+    return dirty;
 }
+
+static inline void JObjSetupMatrix(void *j) {
+    if (j == 0) {
+        __assert((char *)lbl_806D8134, 0x47C, (char *)lbl_806D813C);
+    }
+    if (j != 0) {
+        if (JObjMtxIsDirty(j)) {
+            HSD_JObjSetupMatrixSub(j);
+        }
+    }
+}
+
+static inline void CamAnim_SetFrame(CourseCamAnim *c, float f) {
+    if (c->frame < 0.0f || f < 0.0f) {
+        return;
+    }
+    c->reset = 1;
+    c->frame = f;
+}
+
+static inline void CamAnim_Tick(CourseCamAnim *c) {
+    if (-1.0f != c->speed) {
+        if (c->reset) {
+            c->reset = 0;
+        } else {
+            c->frame += c->speed;
+        }
+        HSD_CObjReqAnim(c->cobj, c->frame);
+        HSD_CObjAnim(c->cobj);
+    }
+}
+
+static inline void VObjD_SetMtx(VObjD *o, void *m) {
+    PSMTXCopy(m, o->mtx);
+    o->pos[0] = o->mtx[0][3];
+    o->pos[1] = o->mtx[1][3];
+    o->pos[2] = o->mtx[2][3];
+}
+
+#define SPR ((SprScene *)self->obj4C)
+
+static inline void CourseDraw(CoursePanel *self, unsigned int id, unsigned int flags, float x, float y, float a) {
+    SPR->Draw(0, id, flags, x, y, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, a);
+}
+
+#pragma use_lmw_stmw on
+extern "C" void fn_801558CC(CoursePanel *self) {
+    int i;
+    unsigned int n;
+    void *jobj;
+    SprNodeBase *e;
+    SprScene *spr;
+    SprNodeBase *n2;
+    float t;
+    float fade;
+    float s;
+
+    if (self->state == 9) {
+        return;
+    }
+    if (!self->active) {
+        self->active = 1;
+    }
+    if (self->t < 300.0f) {
+        self->phase = 10;
+        self->phaseT = self->t;
+    } else if (self->t < 600.0f) {
+        self->phase = 11;
+        self->phaseT = self->t - 300.0f;
+    } else {
+        self->phase = 12;
+        self->phaseT = self->t - 600.0f;
+        if (self->phaseT >= 300.0f) {
+            self->phaseT = 299.0f;
+        }
+    }
+    self->cam = (SceneCam *)fn_8014E028(self->obj4C, self->phase);
+    self->lobjs = fn_8014E004(self->obj4C, self->phase);
+    self->obj20 = fn_8014DD5C(self->obj4C, self->phase);
+
+    if (self->cam != 0) {
+        CamAnim_SetFrame((CourseCamAnim *)self->cam, self->phaseT);
+        CamAnim_Tick((CourseCamAnim *)self->cam);
+    }
+    if (self->obj20 != 0) {
+        Object_SetField8_AndDirty(self->obj20, self->phaseT);
+        clNormal3D_Exec(self->obj20);
+    }
+    SetCourseScene3D(self->cam);
+
+    for (i = 0; i < 2; i++) {
+        ItemEffectBus_SnapshotAndFullReset(*(void **)((char *)self->objs[i]->robj + 0x304));
+        self->jobjs[i] = ResolveJointByName(self->obj20, ((char **)lbl_806CF828)[i]);
+        jobj = self->jobjs[i];
+        if (jobj != 0) {
+            JObjSetupMatrix(jobj);
+            VObjD_SetMtx(self->objs[i], (char *)jobj + 0x44);
+            if (self->hidden[i]) {
+                TornadoEffect_ClearFlagC0AndSetC4(self->objs[i]->effect, 0.0f);
+                TireEffect_ResetSpin(self->objs[i]->effect, 0.0f, 1.0f);
+                self->hidden[i] = 0;
+            }
+        } else if (!self->hidden[i]) {
+            float m[3][4];
+            PSMTXTrans(m, 0.0f, -800.0f, 0.0f);
+            VObjD_SetMtx(self->objs[i], m);
+            TornadoEffect_SetFlagC0(self->objs[i]->effect);
+            self->hidden[i] = 1;
+        }
+        RenderObj_ItemStateMachine_Timed(self->objs[i]->robj, 0, 0.0f, 0.0f);
+        TornadoEffect_Tick(self->objs[i]->effect, 0);
+        ItemEffectBus_TickTornadoCooldown(*(void **)((char *)self->objs[i]->robj + 0x304));
+    }
+
+    t = self->t;
+    if (t >= 300.0f && t < 600.0f) {
+        if (300.0f == t) {
+            fn_80173B68(self->obj48, self->objs[1]->robj);
+            fn_80173C34(self->obj48);
+        }
+        if (550.0f == self->t) {
+            fn_80173BE8(self->obj48);
+        }
+        fn_801737F0(self->obj48);
+    }
+
+    t = self->t;
+    if (t >= 70.0f && t < 230.0f) {
+        if (t < 100.0f) {
+            fade = (t - 70.0f) / 30.0f;
+        } else if (t >= 200.0f) {
+            fade = 1.0f - (t - 200.0f) / 30.0f;
+        } else {
+            fade = 1.0f;
+        }
+        s = LUT_Sin12Bit(4.5f * (t - 70.0f));
+        if (s < 0.0f) {
+            s = -s;
+        }
+        if (self->mode == 1) {
+            CourseDraw(self, 0x46, 0, 169.5f, 121.5f, fade);
+            CourseDraw(self, 0x47, 0, 208.0f, 129.5f, fade);
+            CourseDraw(self, 0x47, 0, 240.0f, 129.5f, fade);
+            CourseDraw(self, 0x47, 0, 272.0f, 129.5f, fade);
+            CourseDraw(self, 0x47, 0, 304.0f, 129.5f, fade);
+            CourseDraw(self, 0x47, 0, 336.0f, 129.5f, fade);
+            CourseDraw(self, 0x48, 0, 372.0f, 129.5f, fade);
+            CourseDraw(self, 0x44, 0, 272.0f, 132.0f, fade);
+            CourseDraw(self, 0x49, 0, 281.5f, 207.5f, fade);
+            CourseDraw(self, 0x4A, 1, 313.0f, 239.0f, fade * s);
+        } else {
+            CourseDraw(self, 0x1C, 0, 169.5f, 121.5f, fade);
+            CourseDraw(self, 0x1D, 0, 208.0f, 129.5f, fade);
+            CourseDraw(self, 0x1D, 0, 240.0f, 129.5f, fade);
+            CourseDraw(self, 0x1D, 0, 272.0f, 129.5f, fade);
+            CourseDraw(self, 0x1D, 0, 304.0f, 129.5f, fade);
+            CourseDraw(self, 0x1D, 0, 336.0f, 129.5f, fade);
+            CourseDraw(self, 0x1D, 0, 368.0f, 129.5f, fade);
+            CourseDraw(self, 0x1D, 0, 400.0f, 129.5f, fade);
+            CourseDraw(self, 0x1E, 0, 436.0f, 129.5f, fade);
+            CourseDraw(self, 0x1A, 0, 310.0f, 132.0f, fade);
+            CourseDraw(self, 0x1F, 0, 281.5f, 207.5f, fade);
+            CourseDraw(self, 0x20, 1, 313.0f, 239.0f, fade * s);
+        }
+    }
+
+    t = self->t;
+    if (t >= 370.0f && t < 530.0f) {
+        if (t < 400.0f) {
+            fade = (t - 370.0f) / 30.0f;
+        } else if (t >= 500.0f) {
+            fade = 1.0f - (t - 500.0f) / 30.0f;
+        } else {
+            fade = 1.0f;
+        }
+        n = (unsigned int)(t - 370.0f) % 9;
+        if (n >= 5) {
+            n = 9 - n;
+        }
+        if (self->mode == 1) {
+            CourseDraw(self, 0x46, 0, 169.5f, 111.5f, fade);
+            CourseDraw(self, 0x47, 0, 208.0f, 119.5f, fade);
+            CourseDraw(self, 0x47, 0, 240.0f, 119.5f, fade);
+            CourseDraw(self, 0x47, 0, 272.0f, 119.5f, fade);
+            CourseDraw(self, 0x47, 0, 304.0f, 119.5f, fade);
+            CourseDraw(self, 0x47, 0, 336.0f, 119.5f, fade);
+            CourseDraw(self, 0x47, 0, 368.0f, 119.5f, fade);
+            CourseDraw(self, 0x47, 0, 400.0f, 119.5f, fade);
+            CourseDraw(self, 0x47, 0, 432.0f, 119.5f, fade);
+            CourseDraw(self, 0x48, 0, 468.0f, 119.5f, fade);
+            CourseDraw(self, 0x45, 0, 364.0f, 122.0f, fade);
+            CourseDraw(self, n + 0x3E, 0, 213.0f, 121.0f, fade);
+        } else {
+            CourseDraw(self, 0x1C, 0, 169.5f, 111.5f, fade);
+            CourseDraw(self, 0x1D, 0, 208.0f, 119.5f, fade);
+            CourseDraw(self, 0x1D, 0, 240.0f, 119.5f, fade);
+            CourseDraw(self, 0x1D, 0, 272.0f, 119.5f, fade);
+            CourseDraw(self, 0x1D, 0, 304.0f, 119.5f, fade);
+            CourseDraw(self, 0x1D, 0, 336.0f, 119.5f, fade);
+            CourseDraw(self, 0x1D, 0, 368.0f, 119.5f, fade);
+            CourseDraw(self, 0x1D, 0, 400.0f, 119.5f, fade);
+            CourseDraw(self, 0x1D, 0, 432.0f, 119.5f, fade);
+            CourseDraw(self, 0x1E, 0, 468.0f, 119.5f, fade);
+            CourseDraw(self, 0x1B, 0, 364.0f, 122.0f, fade);
+            CourseDraw(self, n + 0x14, 0, 213.0f, 121.0f, fade);
+        }
+    }
+
+    t = self->t;
+    if (t >= 670.0f && t < 830.0f) {
+        if (t < 700.0f) {
+            fade = (t - 670.0f) / 30.0f;
+        } else if (t >= 800.0f) {
+            fade = 1.0f - (t - 800.0f) / 30.0f;
+        } else {
+            fade = 1.0f;
+        }
+        s = LUT_Sin12Bit(4.5f * (t - 670.0f));
+        if (s < 0.0f) {
+            s = -s;
+        }
+        if (self->mode == 1) {
+            CourseDraw(self, 0x46, 0, 209.5f, 121.5f, fade);
+            CourseDraw(self, 0x47, 0, 248.0f, 129.5f, fade);
+            CourseDraw(self, 0x47, 0, 280.0f, 129.5f, fade);
+            CourseDraw(self, 0x47, 0, 312.0f, 129.5f, fade);
+            CourseDraw(self, 0x47, 0, 344.0f, 129.5f, fade);
+            CourseDraw(self, 0x47, 0, 376.0f, 129.5f, fade);
+            CourseDraw(self, 0x48, 0, 412.0f, 129.5f, fade);
+            CourseDraw(self, 0x43, 0, 312.5f, 132.0f, fade);
+            CourseDraw(self, 0x49, 0, 281.5f, 207.5f, fade);
+            CourseDraw(self, 0x4A, 1, 313.0f, 239.0f, fade * s);
+        } else {
+            CourseDraw(self, 0x1C, 0, 209.5f, 121.5f, fade);
+            CourseDraw(self, 0x1D, 0, 248.0f, 129.5f, fade);
+            CourseDraw(self, 0x1D, 0, 280.0f, 129.5f, fade);
+            CourseDraw(self, 0x1D, 0, 312.0f, 129.5f, fade);
+            CourseDraw(self, 0x1D, 0, 344.0f, 129.5f, fade);
+            CourseDraw(self, 0x1D, 0, 376.0f, 129.5f, fade);
+            CourseDraw(self, 0x1E, 0, 412.0f, 129.5f, fade);
+            CourseDraw(self, 0x19, 0, 313.0f, 132.0f, fade);
+            CourseDraw(self, 0x1F, 0, 281.5f, 207.5f, fade);
+            CourseDraw(self, 0x20, 1, 313.0f, 239.0f, fade * s);
+        }
+    }
+
+    if (self->mode == 1) {
+        CourseDraw(self, 0x4B, 0, 506.0f, 400.0f, 1.0f);
+        if (self->blink >= 30.0f) {
+            CourseDraw(self, 0x4C, 0, 532.0f, 401.0f, 1.0f);
+        }
+    } else if (self->blink < 30.0f) {
+        CourseDraw(self, 0x21, 0, 533.5f, 400.0f, 1.0f);
+    } else {
+        CourseDraw(self, 0x22, 0, 533.5f, 400.0f, 1.0f);
+    }
+    if ((self->blink += 1.0f) >= 60.0f) {
+        self->blink = 0.0f;
+    }
+
+    if (self->t < 300.0f) {
+        clItemBoxManager_Update(SINGLETON_INSTANCE(lbl_806D10D0));
+    }
+    if (self->t >= 600.0f) {
+        fn_8013A534();
+    }
+    {
+        VfxVec eye;
+        VfxVec target;
+        CObj_LoadProjMatrix(self->cam, &eye);
+        CObj_ApplyScissor(self->cam, &target);
+        ItemObjectManager_Update();
+        VfxSlotMgr_Update(eye, target);
+    }
+    GXDrawDone();
+    {
+        spr = SPR;
+        if (spr->cache.count != 0) {
+            e = &spr->cache.end;
+            n2 = spr->cache.end.next;
+            while (n2 != e) {
+                if (((SprNode *)n2)->ref > 0) {
+                    ((SprNode *)n2)->ref = 0;
+                } else {
+                    SprIter pos;
+                    SprIter ret;
+                    if (((SprNode *)n2)->res != 0) {
+                        fn_801F7CD8(((SprNode *)n2)->res, 1);
+                    }
+                    pos.n = n2;
+                    fn_80157BE8(&ret, &spr->cache, &pos);
+                    n2 = ret.n;
+                    continue;
+                }
+                n2 = n2->next;
+            }
+        }
+    }
+    {
+        const float fadeLen = lbl_806D8060;
+        if (self->t < fadeLen) {
+            self->alpha = Saturate_Double(1.0f - self->t / fadeLen, 0.0f, 1.0f);
+        } else if (self->t > 900.0f - fadeLen) {
+            self->alpha = Saturate_Double((self->t - (900.0f - fadeLen)) / fadeLen, 0.0f, 1.0f);
+        } else {
+            self->alpha = 0.0f;
+        }
+    }
+    self->t += 1.0f;
+    if (self->t >= 900.0f) {
+        self->state = 9;
+    }
+}
+#pragma use_lmw_stmw reset
 
 extern "C" unsigned char fn_80156FC0(StateObj *o) {
     return o->state == 9;
