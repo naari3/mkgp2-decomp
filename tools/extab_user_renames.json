@@ -13064,6 +13064,7 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__ct__11TextManagerFv": "TexMgr_Init",
-    "__ct__7ResCtrlFv": "ResCtrl_Init"
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__11TextManagerFv": "dtor_800869D0"
   }
 }
