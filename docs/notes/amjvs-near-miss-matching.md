@@ -13,3 +13,8 @@ c12_u8: fn_8028BAD0 1248B: NEXT_STATE state++ before timer clear, and case9 flag
 Source: Codex worker c18_u11_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 592 B.
 
 c18_u11_20261107: fn_8028B180 (592 B) promoted from 98.75% to 100%. Pointer-walking initial clear is byte-identical to old indexed source, so does not remove extra mr r31,r3. Factoring the entire semaphore-protected operation into static inline UpdateErrorStats(BOOL), with fn_8028B180 as a passthrough wrapper, removes the initial clear base-register copy. The helper initially gives m=r29, sem=r30, n=r31; swapping only m/n declaration positions produces target m=r31, sem=r30, n=r29. Body otherwise unchanged, no new flags/data/EH. Matching flag, source main.elf input, symbol 0x8028B180 size 592, full DOL SHA-1 verified.
+
+## c18_u116_20261107
+Source: Codex worker c18_u116_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u116: fn_8028B48C BOOL r -> u8 r improves 95.70552 to 96.809814 and source text 1268 to exact target 1304 bytes. Nine target mr r27,r26 positions instead emit clrlwi r26,r26,24; accumulator/manager/node/index saved homes still rotate. Entire-function inline helper exceeds inline budget (32-byte wrapper); explicit reuse of node for result and loop index is invariant at baseline. No native gain; retain NonMatching one-line draft.
