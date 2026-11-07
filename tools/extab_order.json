@@ -1949,7 +1949,8 @@
       "FUN_8007c56c",
       "PtrVec_InsertFill",
       "PtrVec_Reserve",
-      "dtor_80036E40"
+      "dtor_80036E40",
+      "__dt__10WarpStringFv"
     ],
     "extabindex": [
       "SpecialFaceMesh_Raycast",
@@ -1962,7 +1963,8 @@
       "PtrVec_InsertFill",
       "PtrVec_Reserve",
       "dtor_8007CC54",
-      "dtor_80036E40"
+      "dtor_80036E40",
+      "__dt__10WarpStringFv"
     ]
   },
   "src/game/WarpZoneVector_Reserve.cpp": {
@@ -2764,7 +2766,6 @@
     "fn_802055F4",
     "fn_8020579C",
     "dtor_80082960"
-
   ],
   "src/game/anon_8020E3D0_nm2.cpp": [
     "dtor_8020EB04",
