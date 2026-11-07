@@ -42,6 +42,7 @@ all of these.
 | `EffectItemChainIndicator_Tick` | game/EffectItemChainIndicator_Tick | 99.70 | register coloring | |
 | `fn_801C64DC` | game/clFlowFigure_Unlocks | 99.94 | register coloring | |
 | `PlayStats_CopyStatsBlock` | game/PlayStats_CopyStatsBlock | 98.64 | copy scheduling barrier (target interleaves differently) | `__restrict`, temps |
+| `fn_801F6588` | game/OverlayViewSetup | ~98 (44 diff lines) | FPR numbering only (target a=f5,b=f4,d=f6, lfd const f3). Needs a .bss split 0x80679698..0x806796FC owned as separate objects (section anchor in r31) | 720 decl orders, float/double ctor params, compiler x pragma sweep, lit.py, 3 cperm runs (best 21 with junk temps). WIP `notes/r4/OverlayViewSetup_wip.cpp` + `OverlayViewSetup_splits.diff` |
 | `fn_80162D90` | game/Scene_80162D90 | 99.82 | register swap | |
 | `fn_8017CE1C` | game/mapobject/fn_8017CE1C | 99.98 | register swap | |
 | `fn_8017EFFC` | game/miyazakiconsole/fn_8017EFFC | 97.79 | register swap | |
