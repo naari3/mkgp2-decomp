@@ -1,4 +1,10 @@
 #include "game/RaceDigitGapPrivate.h"
+static inline void CopyPosition(DigitPanel *dst, const DigitPosition &src) {
+    float x=src.x;
+    float y=src.y;
+    dst->position.y=y;
+    dst->position.x=x;
+}
 extern "C" void fn_80246988(DigitHud *self,int lap,float input) {
     float value=input;
     LapNode *where;
@@ -16,7 +22,7 @@ extern "C" void fn_80246988(DigitHud *self,int lap,float input) {
             self->others[lap].Reset(new DigitPanel(self->layer));
             int variant=0;
             if(g_gameMode==1) variant++;
-            self->others[lap].p->SetPos(lbl_804EE9E0[variant][lap+1]);
+            CopyPosition(self->others[lap].p, lbl_804EE9E0[variant][lap+1]);
         }
     }
 }
