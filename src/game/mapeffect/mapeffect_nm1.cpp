@@ -1,6 +1,8 @@
 /* 0x80179650..0x8017A52C: reversed EH group; YIState update remains nonmatching. */
 #include "game/mapeffect_private.h"
 
+extern "C" const float lbl_806D8E90;
+
 #pragma exceptions on
 void clMapEffectYI::Draw(int mask) {
     if (parts) {
@@ -213,6 +215,7 @@ void clMapEffectDKC::Draw(int mask) {
 
 template <>
 void YIState::UpdateT<0>() {
+    const char *pool = (const char *)lbl_80370870;
     Vec3f pos;
 
     if (!IsRaceStarted()) {
@@ -231,7 +234,7 @@ void YIState::UpdateT<0>() {
     }
     CObj_LoadProjMatrix(GetCourseScene3D(), &pos);
     if (!g_longRoundFlag) {
-        if (InQuad((const float *)lbl_80370C78, &pos) == 1) {
+        if (InQuad((const float *)(pool + 0x408), &pos) == 1) {
             if (++x20 >= 0x78) {
                 x20 = 0;
             }
@@ -240,12 +243,12 @@ void YIState::UpdateT<0>() {
             }
         }
     } else {
-        if (InQuad((const float *)lbl_80370CB8, &pos) == 1) {
+        if (InQuad((const float *)(pool + 0x448), &pos) == 1) {
             if (!c) {
                 SoundMgr_PlaySE(0x40);
                 c = 1;
             } else if (x14 < 1.0f) {
-                x14 += 0.004999999888241291f;
+                x14 += lbl_806D8E90;
                 if (x14 >= 1.0f) {
                     x14 = 1.0f;
                 }
@@ -259,7 +262,7 @@ void YIState::UpdateT<0>() {
                 fn_8016C394(0x40);
             }
         }
-        if (InQuad((const float *)lbl_80370C98, &pos) == 1) {
+        if (InQuad((const float *)(pool + 0x428), &pos) == 1) {
             x24++;
             if (x24 >= 0x168) {
                 fn_8016C394(0x3F);
@@ -272,7 +275,7 @@ void YIState::UpdateT<0>() {
                     d = 1;
                     x1c = 1.0f;
                 } else if (x1c < 1.0f) {
-                    x1c += 0.004999999888241291f;
+                    x1c += lbl_806D8E90;
                     if (x1c >= 1.0f) {
                         x1c = 1.0f;
                     }
