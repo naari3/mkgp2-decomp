@@ -1,32 +1,97 @@
-/* Copies the two default menu-method tables into their live tables.
- * The original also registers this function in .ctors; this NonMatching
- * reconstruction leaves startup registration in the reference object. */
-struct MenuReceiver801F;
-typedef void (MenuReceiver801F::*MenuMethod801F)();
-struct MenuMethodTable801F {
-    MenuMethod801F method0;
-    MenuMethod801F method1;
-    MenuMethod801F method2;
-    MenuMethod801F method3;
-    MenuMethod801F method4;
-    MenuMethod801F method5;
-    MenuMethod801F method6;
-    MenuMethod801F method7;
-    MenuMethod801F method8;
-    MenuMethod801F method9;
-    MenuMethod801F method10;
-    MenuMethod801F method11;
-    MenuMethod801F method12;
-    MenuMethod801F method13;
+#include "game/fn_801F27B4_private.h"
+
+/* Menu layout coordinates, followed by two dynamically initialized method tables. */
+static float menuGeometryA[66] = {
+    0.0f, 0.0f, 0.0f, 0.0f,
+    256.0f, 0.0f, 0.0f, 0.0f,
+    512.0f, 0.0f, 0.0f, 0.0f,
+    0.0f, 256.0f, 0.0f, 0.0f,
+    256.0f, 256.0f, 0.0f, 0.0f,
+    512.0f, 256.0f, 0.0f, 0.0f,
+    0.0f, 25.0f, 0.0f, 0.0f,
+    320.0f, 97.0f, 320.0f, 25.0f,
+    0.0f, 97.0f, 320.0f, 88.0f,
+    158.0f, 352.0f, 0.0f, 410.0f,
+    324.0f, 28.0f, 96.0f, 380.0f,
+    320.0f, 62.0f, 150.0f, 62.0f,
+    398.0f, 380.0f, 320.0f, 0.0f,
+    150.0f, 62.0f, 115.0f, 122.0f,
+    0.0f, 184.0f, 409.0f, 226.0f,
+    55.0f, 386.0f, 0.0f, 438.0f,
+    232.0f, 40.0f,
 };
-struct MenuMethodTables801F {
-    char preceding[0x380];
-    MenuMethodTable801F defaultsA, liveA, defaultsB, liveB;
+static float menuGeometryB[158] = {
+    55.0f, 386.0f, 0.0f, 0.0f,
+    355.0f, 386.0f, 0.0f, 0.0f,
+    0.0f, 27.0f, 0.0f, 0.0f,
+    640.0f, 90.0f, 160.0f, 239.0f,
+    0.0f, 90.0f, 284.0f, 201.0f,
+    480.0f, 239.0f, 284.0f, 90.0f,
+    284.0f, 201.0f, 57.0f, 340.0f,
+    493.0f, 341.0f, 531.0f, 137.0f,
+    145.0f, 364.0f, 0.0f, 377.0f,
+    351.0f, 50.0f, 110.0f, 419.0f,
+    0.0f, 291.0f, 420.0f, 37.0f,
+    288.0f, 202.0f, 568.0f, 90.0f,
+    64.0f, 75.0f, 632.0f, 90.0f,
+    -64.0f, 75.0f, 568.0f, 90.0f,
+    64.0f, 75.0f, 0.0f, 377.0f,
+    351.0f, 50.0f, 0.0f, 427.0f,
+    351.0f, 50.0f, 0.0f, 327.0f,
+    420.0f, 37.0f, 0.0f, 291.0f,
+    420.0f, 37.0f, 320.0f, 271.0f,
+    0.0f, 0.0f, 159.0f, 157.0f,
+    0.0f, 0.0f, 223.0f, 125.0f,
+    0.0f, 0.0f, 288.0f, 110.0f,
+    0.0f, 0.0f, 355.0f, 110.0f,
+    0.0f, 0.0f, 420.0f, 125.0f,
+    0.0f, 0.0f, 483.0f, 157.0f,
+    0.0f, 0.0f, 320.0f, 392.0f,
+    0.0f, 0.0f, 368.0f, 258.0f,
+    264.0f, 176.0f, 0.0f, 0.0f,
+    296.0f, 236.0f, 592.0f, 0.0f,
+    298.0f, 236.0f, 296.0f, 0.0f,
+    296.0f, 252.0f, 632.0f, 258.0f,
+    300.0f, 234.0f, 0.0f, 258.0f,
+    368.0f, 262.0f, 932.0f, 0.0f,
+    64.0f, 75.0f, 0.0f, 0.0f,
+    256.0f, 41.0f, 0.0f, 41.0f,
+    256.0f, 44.0f, 0.0f, 85.0f,
+    256.0f, 41.0f, 0.0f, 126.0f,
+    256.0f, 42.0f, 0.0f, 168.0f,
+    256.0f, 45.0f, 0.0f, 213.0f,
+    256.0f, 43.0f,
 };
-extern "C" MenuMethodTables801F lbl_804E4C28;
-extern "C" void fn_801F27B4() {
-    MenuMethodTable801F first = lbl_804E4C28.defaultsA;
-    lbl_804E4C28.liveA = first;
-    MenuMethodTable801F second = lbl_804E4C28.defaultsB;
-    lbl_804E4C28.liveB = second;
-}
+/* MWCC emits the default ptmf records and the .ctors initializer. */
+static MenuMethod801F liveA[14] = {
+    &MenuReceiver801F::fn_801F2400,
+    &MenuReceiver801F::fn_801F2370,
+    &MenuReceiver801F::fn_801F21C8,
+    &MenuReceiver801F::fn_801F20A0,
+    &MenuReceiver801F::fn_801F1EE0,
+    &MenuReceiver801F::fn_801F1C58,
+    &MenuReceiver801F::fn_801F1AC8,
+    &MenuReceiver801F::fn_801F19C8,
+    &MenuReceiver801F::fn_801F1664,
+    &MenuReceiver801F::fn_801F140C,
+    &MenuReceiver801F::fn_801F1244,
+    &MenuReceiver801F::fn_801F0ECC,
+    &MenuReceiver801F::fn_801F0D04,
+    &MenuReceiver801F::fn_801F0CC0
+};
+static MenuMethod801F liveB[14] = {
+    &MenuReceiver801F::fn_801F230C,
+    &MenuReceiver801F::fn_801F230C,
+    &MenuReceiver801F::fn_801F1FE4,
+    &MenuReceiver801F::fn_801F1FE4,
+    &MenuReceiver801F::fn_801F1BC8,
+    &MenuReceiver801F::fn_801F1BC8,
+    &MenuReceiver801F::fn_801F190C,
+    &MenuReceiver801F::fn_801F190C,
+    &MenuReceiver801F::fn_801F15D4,
+    &MenuReceiver801F::fn_801F115C,
+    &MenuReceiver801F::fn_801F115C,
+    &MenuReceiver801F::fn_801F0E3C,
+    &MenuReceiver801F::fn_801F0E3C,
+    &MenuReceiver801F::fn_801F0CBC
+};

@@ -2748,7 +2748,7 @@ config.libs = [
             Object(Matching, "game/DisplayBuffersReset.c", extra_cflags=["-lang=c++"]),
             Object(NonMatching, "game/OverlayViewSetup.cpp"),
             Object(Matching, "game/PaletteBufferCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/fn_801F27B4.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_801F27B4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/NamCamFlow.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/SceneListOperations.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/DebugOverlay_RaceConfig.cpp", extra_cflags=["-Cpp_exceptions on"]),
