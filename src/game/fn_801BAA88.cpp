@@ -1937,8 +1937,9 @@ template <class T> KeyVecBase<T>::~KeyVecBase() {
 
 template <class T> void KeyVecBase<T>::clear() {
     T *end = data + count;
-    for (T *p = data; p < end; p++) {
-        p->~T();
+    while (end > data) {
+        --end;
+        end->~T();
     }
     count = 0;
 }
