@@ -22,6 +22,14 @@ static inline int RollRareItem(void) {
     return rand() % 20 == 0;
 }
 
+static inline void GrantMilageItem(int character, const unsigned char *pool) {
+    int item;
+    fn_80209338(character);
+    item = fn_80209330();
+    fn_801D5F74(&g_playerData, item, 1);
+    DebugPrintf((const char *)pool + 0x1DC8, item, 0x22B);
+}
+
 void PlayerData_Construct(PlayerDataReset *self, int character, int a, int b, int c,
     unsigned char freePlay, unsigned char allRare, unsigned char special,
     int value, int coins, unsigned char allItems) {
@@ -89,11 +97,7 @@ void PlayerData_Construct(PlayerDataReset *self, int character, int a, int b, in
                 maximum = index;
                 entry = fn_802169F4(index);
                 if (entry != 0 && entry->kind == 1) {
-                    int item;
-                    fn_80209338(character);
-                    item = fn_80209330();
-                    fn_801D5F74(&g_playerData, item, 1);
-                    DebugPrintf((const char *)pool + 0x1DC8, item, 0x22B);
+                    GrantMilageItem(character, pool);
                 }
             }
         }
