@@ -30,7 +30,7 @@ extern unsigned int lbl_802EDC60[];
  */
 
 /* --- forward decls --- */
-asm void TornadoEffect_InitDetails(void);
+asm void TornadoEffect_InitDetails(void *self, int arg);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
 extern void MemoryManager_TimedFree();
@@ -46,7 +46,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void TornadoEffect_InitDetails(void) { /* 0x80056CB0 size:0x210 */
+asm void TornadoEffect_InitDetails(void *self, int arg) { /* 0x80056CB0 size:0x210 */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0

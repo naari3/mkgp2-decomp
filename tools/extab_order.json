@@ -851,7 +851,8 @@
     "TornadoEffect_ComposeRenderMatrix",
     "TornadoEffect_ApplyItemVisual_Primary",
     "TornadoEffect_ApplyItemVisual_Secondary",
-    "TornadoEffect_ApplyItemVisual_Compact"
+    "TornadoEffect_ApplyItemVisual_Compact",
+    "dtor_80036E40"
   ],
   "src/game/ChallengeDemoTornado.cpp": [
     "fn_80127584",
