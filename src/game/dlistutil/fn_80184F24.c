@@ -22,13 +22,11 @@ int fn_80184F24(HSD_JObj *jobj, DListPObj *pobj, DListQuadInfo *out, int capacit
     if (!jobj || !pobj) return 0;
     if (!out || capacity <= 0) return 0;
     {
-        int offset;
         start = pobj->display;
         p = start;
         end = start + pobj->n_display * 32;
         used = 0;
         count = 0;
-        offset = 0;
         fn_801866DC(pobj->verts);
         if (!lbl_806D1678) return 0;
         while (p < end) {
@@ -46,7 +44,7 @@ int fn_80184F24(HSD_JObj *jobj, DListPObj *pobj, DListQuadInfo *out, int capacit
                 if (used >= 4) {
                     if (primitive == 0x98) {
                         MtxPtr matrix = DListQuadMatrix(jobj);
-                        quad = (DListQuadInfo *)((unsigned char *)out + offset);
+                        quad = &out[count];
                         PSMTXMultVec(matrix, &pos[0], &quad->vertex[0]);
                         PSMTXMultVec(DListQuadMatrix(jobj), &pos[1], &quad->vertex[1]);
                         PSMTXMultVec(DListQuadMatrix(jobj), &pos[2], &quad->vertex[3]);
@@ -56,11 +54,10 @@ int fn_80184F24(HSD_JObj *jobj, DListPObj *pobj, DListQuadInfo *out, int capacit
                         quad->value2 = lbl_806D927C;
                         ++count;
                         used = 0;
-                        offset += sizeof(DListQuadInfo);
                         if (count >= capacity) return count;
                     } else if (primitive == 0x80) {
                         MtxPtr matrix = DListQuadMatrix(jobj);
-                        quad = (DListQuadInfo *)((unsigned char *)out + offset);
+                        quad = &out[count];
                         PSMTXMultVec(matrix, &pos[0], &quad->vertex[0]);
                         PSMTXMultVec(DListQuadMatrix(jobj), &pos[1], &quad->vertex[1]);
                         PSMTXMultVec(DListQuadMatrix(jobj), &pos[2], &quad->vertex[2]);
@@ -70,7 +67,6 @@ int fn_80184F24(HSD_JObj *jobj, DListPObj *pobj, DListQuadInfo *out, int capacit
                         quad->value2 = lbl_806D927C;
                         ++count;
                         used = 0;
-                        offset += sizeof(DListQuadInfo);
                         if (count >= capacity) return count;
                     }
                 }
