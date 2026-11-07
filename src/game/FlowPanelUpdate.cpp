@@ -40,10 +40,9 @@ extern "C" void fn_801D9B70(FlowPanel *self, unsigned char pressed) {
             self->alpha = (int)(lbl_806DA1E0 * (self->timer / lbl_806DA1C8));
         }
         if (self->timer >= 8) {
-            float t = ((float)self->timer - 8.0f) * 0.125f;
+            float t = ((float)self->timer - 8.0f) * lbl_806DA1E8;
             if (t > 1.0f) t = 1.0f;
-            unsigned int c = 0xFFFFFF00;
-            c |= (unsigned char)(int)(lbl_806DA1EC * t);
+            unsigned int c = __rlwimi(0xFFFFFF00, (int)(lbl_806DA1EC * t), 0, 24, 31);
             self->texts[0]->tm()->color = c;
             self->texts[1]->tm()->color = c;
             self->texts[2]->tm()->color = c;
@@ -66,10 +65,9 @@ extern "C" void fn_801D9B70(FlowPanel *self, unsigned char pressed) {
             self->alpha = (int)(lbl_806DA1E0 * (lbl_806DA1C0 - self->timer / lbl_806DA1F0));
         }
         {
-            float t = lbl_806DA1C0 - self->timer / lbl_806DA1F0;
-            if (t < lbl_806DA1C4) t = lbl_806DA1C4;
-            unsigned int c = 0xFFFFFF00;
-            c |= (unsigned char)(int)(lbl_806DA1EC * t);
+            float t = 1.0f - self->timer / lbl_806DA1F0;
+            if (t < 0.0f) t = 0.0f;
+            unsigned int c = __rlwimi(0xFFFFFF00, (int)(lbl_806DA1EC * t), 0, 24, 31);
             self->texts[0]->tm()->color = c;
             self->texts[1]->tm()->color = c;
             self->texts[2]->tm()->color = c;
