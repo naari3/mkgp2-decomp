@@ -9343,6 +9343,11 @@ game/fn_801D4FF4.cpp:
 	extabindex  start:0x800280B8 end:0x800280C4
 	.text       start:0x801D4FF4 end:0x801D5244
 
+game/card_pack.cpp:
+	extab       start:0x800152EC end:0x800152F4
+	extabindex  start:0x800280C4 end:0x800280D0
+	.text       start:0x801D5244 end:0x801D5970
+
 game/fn_801D5970.c:
 	.text       start:0x801D5970 end:0x801D5C88
 
