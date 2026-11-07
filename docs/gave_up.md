@@ -101,7 +101,6 @@ See "Pooled base registers" and "Over-split TUs" in `docs/matching_rules.md`.
 | `RankLog_OnMatchEnd` | game/RankLog | 93.43 | table index shape | |
 | `fn_8015E928` | game/resultscene/resultscene | 61.37 | not tuned much | |
 | `KartMovement_Init` | game/kartmove/carobject | 66.69 | large schedule difference; GC/2.6 no help | |
-| `ShadowBillboard_LerpMtx4x4` | game/ShadowBillboard_Lerp | 98.33 | `unsigned int i` took it from 30 to 12 lines; r5/r6 swap (row IV vs scale pointer) | `wip/ShadowBillboard_Lerp_wip.c` |
 | `fn_8020F080` (TaskListImpl::Draw) | game/anon_8020E3D0_nm1 | 96.61 | WIP is 4 lines off: needs `opt_dead_assignments off`, `operator*` returning node->task, `bool operator!=(TaskNode*)`, Remove by value with a `result` temp; left is one dead Remove-param store | `wip/fn_8020F080_draw_wip.cpp` |
 | `ItemSelectState_Init` | game/ItemSelectState_Init | 91.52 | WIP at 99.3 (MakeCell inline fixed the stack order) | `notes/r4/ItemSelectState_Init_wip.cpp`, `_regs.diff` |
 | `QuadFrame_FromCornerPtrs` | game/QuadFrame_FromCornerPtrs | 52.02 | `Vec ~Vec(){}` gives mem structs + `fmadds`; not finished | `notes/r4/QuadFrame_wip.c` |
