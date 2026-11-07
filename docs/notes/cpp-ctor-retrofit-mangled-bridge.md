@@ -1079,3 +1079,8 @@ c17_u15: fn_80202E78 text176: preserve read-only line parameter and normalize se
 Source: Codex worker c17_u10_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 872 B.
 
 c17_u10: SpecialFace_BuildPlaneAndEdges 8007BB08/872B: plain Vec3f locals scalarize target stack vectors (fresh64.004585). Canonical SpecialFaceVec locals restore frame30 and vector stores/reloads (95.30275). Inline scalar SetVector and x=y=z=0 restore difference argument scheduling, edge FP homes and z/y/x zero stores (99.701836). Alias-safe inline CrossVector with x/y/z temporaries before output writes resolves remaining f5/f6/f7/f8 rotation (100%). Bridge @112/@113 to owned EH800086C0/index800214E8 and weak SpecialFaceVec dtor to dtor_80036E40. Owned text872/EH8/index12 all100; Matching source-linked exact main.elf ranges and full DOL SHA1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. No split/data/header/flag-recipe changes.
+
+## c17_u14_20261107
+Source: Codex worker c17_u14_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 352 B.
+
+c17_u14: fn_80202CC0/80202D70 had correct table semantics but an extern aggregate view generated add/add/lwz rather than the original compiler pool addi/lwzx. A checkedLine local separate from the input restores cmpwi r4 prologue scheduling. Reconstructing the real TU-owned pool 803C0390..803C24C8 as native string literals and pointer/int arrays restores all table offsets and two-dimensional index shifts without compiler tricks or padding. Entire text352, rodata8504, extab16, index24 object sections and source-linked ELF ranges are exact; full DOL SHA1 OK.
