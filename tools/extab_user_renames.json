@@ -10952,6 +10952,14 @@
     "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/mapeffect/CoursePropCtor.cpp": {
+    "normalProps": "global:lbl_80491150",
+    "reverseProps": "lbl_8049116C",
+    "longProps": "lbl_80491188",
+    "longReverseProps": "lbl_80491194",
+    "propTypeInfo": "global:lbl_804911A0",
+    "propVtable": "global:lbl_804911AC",
+    "@146": "@etb_800105E4",
+    "@147": "@eti_80026318",
     "__ct__14CoursePropListFv": "fn_8016E568",
     "__dt__14CoursePropBaseFv": "dtor_8016A270",
     "__vt__14CoursePropNode": "lbl_804911F4",

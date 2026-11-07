@@ -6847,6 +6847,7 @@ game/mapeffect/CoursePropCtor.cpp:
 	extab       start:0x800105E4 end:0x80010618
 	extabindex  start:0x80026318 end:0x80026324
 	.text       start:0x8016E568 end:0x8016E7E4
+	.data       start:0x80491150 end:0x804911C4
 
 game/misc3d/fn_8016E7E4.c:
 	extab       start:0x80010618 end:0x80010620
