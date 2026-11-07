@@ -1,6 +1,7 @@
 /* Native reconstruction of the indivisible 801F2B70 EH group.
  * Several methods remain non-exact; keep NonMatching. */
 #include "game/NamCamFlow_private.h"
+#include "game/NamCamFlow_layout_private.h"
 
 extern "C" void fn_801F2B70(NamCamFlow *self) {
     if (!self->finished) {
@@ -10,6 +11,8 @@ extern "C" void fn_801F2B70(NamCamFlow *self) {
     }
 }
 
+/* Update calls this method out of line in the target. */
+#pragma auto_inline off
 extern "C" void fn_801F3198(NamCamFlow *self) {
     ResCtrl rc;
     if (self->camera == 1) {
@@ -18,7 +21,7 @@ extern "C" void fn_801F3198(NamCamFlow *self) {
         int resource = 0x1A8;
         if (!japanese) resource = 0x50E;
         rc.resId = resource;
-        rc.Show(lbl_803BE434[0], lbl_803BE434[1], lbl_806DA590);
+        rc.Show(kNamCamConfirm[0], kNamCamConfirm[1], lbl_806DA590);
         fn_8011FAFC(&rc, 1);
     }
     if (self->camera == 0) {
@@ -34,6 +37,8 @@ extern "C" void fn_801F3198(NamCamFlow *self) {
         fn_801F8A34(fn_801F8E58(), self->text + 2, 1);
     }
 }
+
+#pragma auto_inline reset
 
 extern "C" void fn_801F38DC(VObject *p) { delete p; }
 
@@ -94,7 +99,7 @@ extern "C" void fn_801F36D0(NamCamFlow *self) {
     if (g_localPcbRole >= 2)
         role = ((signed char *)SyncSlot_GetRecv())[player + 0x11];
     fn_80121E10(&rc);
-    rc.resId = lbl_803BDF20.icons[self->player][role];
+    rc.resId = kNamCamIcons[self->player][role];
     rc.Show(lbl_806DA588, lbl_806DA598, lbl_806DA590);
     rc.SetScale(lbl_806DA5A8);
     fn_8011FAFC(&rc, 1);
@@ -103,16 +108,17 @@ extern "C" void fn_801F36D0(NamCamFlow *self) {
     int resource = 0x1A9;
     if (!japanese) resource = 0x50F;
     rc.resId = resource;
-    rc.Show(lbl_803BDF20.labels[0], lbl_803BDF20.labels[1], lbl_806DA590);
+    rc.Show(kNamCamLabels[0], kNamCamLabels[1], lbl_806DA590);
     fn_8011FAFC(&rc, 1);
     fn_80121E10(&rc);
-    if (!isJapanese()) rc.resId = lbl_803BDF20.playerLabels[player][0];
-    else rc.resId = lbl_803BDF20.playerLabels[player][1];
-    rc.Show(lbl_803BDF20.labels[2], lbl_803BDF20.labels[3], lbl_806DA590);
+    if (!isJapanese()) resource = kNamCamPlayerLabels[player][0];
+    else resource = kNamCamPlayerLabels[player][1];
+    rc.resId = resource;
+    rc.Show(kNamCamLabels[2], kNamCamLabels[3], lbl_806DA590);
     fn_8011FAFC(&rc, 1);
     fn_80121E10(&rc);
-    if (!isJapanese()) rc.resId = lbl_803BDF20.modeLabels[self->player][0];
-    else rc.resId = lbl_803BDF20.modeLabels[self->player][1];
+    if (!isJapanese()) rc.resId = kNamCamModes[self->player][0];
+    else rc.resId = kNamCamModes[self->player][1];
     rc.Show(lbl_806DA578[0], lbl_806DA578[1], lbl_806DA590);
     fn_8011FAFC(&rc, 1);
     fn_801F8A34(fn_801F8E58(), self->text, 1);
@@ -161,12 +167,12 @@ NamCamScene::~NamCamScene() {
     fn_80120A08(0x68C);
     if (!isJapanese()) {
         fn_80120A08(0x50D);
-        fn_80120A08(lbl_803BE4F4[player][0]);
-        fn_80120A08(lbl_803BE444[player][0]);
+        fn_80120A08(kNamCamModes[player][0]);
+        fn_80120A08(kNamCamIcons[player][0]);
     } else {
         fn_80120A08(0x1A7);
-        fn_80120A08(lbl_803BE4F4[player][1]);
-        fn_80120A08(lbl_803BE444[player][1]);
+        fn_80120A08(kNamCamModes[player][1]);
+        fn_80120A08(kNamCamIcons[player][1]);
     }
     fn_801F8E54();
 }
@@ -189,6 +195,9 @@ NamCamBase::NamCamBase(int whichPlayer) : capture(new NamCamCapture),
     else timer = lbl_806DA84C;
     fade.p->Set(255, 0, 22);
 }
+/* The separate FP/GPR argument banks preserve fn_801F93EC's ABI. */
+extern "C" void NamCamText_SetPosition(float x, float y, TextManager *text);
+
 NamCamScene::NamCamScene(int whichPlayer, int mode) : NamCamBase(whichPlayer),
     state(0), list(new SceneListImpl) {
     if (!GetVBlankFlag()) camera = 0;
@@ -201,12 +210,12 @@ NamCamScene::NamCamScene(int whichPlayer, int mode) : NamCamBase(whichPlayer),
     PreloadResource(0x68C);
     if (!isJapanese()) {
         PreloadResource(0x50D);
-        PreloadResource(lbl_803BE4F4[whichPlayer][0]);
-        PreloadResource(lbl_803BE444[whichPlayer][0]);
+        PreloadResource(kNamCamModes[whichPlayer][0]);
+        PreloadResource(kNamCamIcons[whichPlayer][0]);
     } else {
         PreloadResource(0x1A7);
-        PreloadResource(lbl_803BE4F4[whichPlayer][1]);
-        PreloadResource(lbl_803BE444[whichPlayer][1]);
+        PreloadResource(kNamCamModes[whichPlayer][1]);
+        PreloadResource(kNamCamIcons[whichPlayer][1]);
     }
     text = new TextManager[3];
     text->visible = 1;
@@ -218,14 +227,14 @@ NamCamScene::NamCamScene(int whichPlayer, int mode) : NamCamBase(whichPlayer),
     text[2].color = 0xFFFFFFBF;
     fn_801F93D0(text + 2, lbl_806DA5B0, lbl_806DA5B0);
     if (!isJapanese()) {
-        fn_801F93EC(text + 1, lbl_803BE54C[0], lbl_803BE54C[1]);
+        NamCamText_SetPosition(kNamCamEnglish[0], kNamCamEnglish[1], text + 1);
         TexMgr_SetTexture(text + 1, lbl_806DA94C[0]);
-        fn_801F93EC(text + 2, lbl_803BE54C[2], lbl_803BE54C[3]);
+        fn_801F93EC(text + 2, kNamCamEnglish[2], kNamCamEnglish[3]);
         TexMgr_SetTexture(text + 2, lbl_806DA94C[1]);
     } else {
-        fn_801F93EC(text + 1, lbl_803BE55C[0], lbl_803BE55C[1]);
+        NamCamText_SetPosition(kNamCamJapanese[0], kNamCamJapanese[1], text + 1);
         TexMgr_SetTexture(text + 1, lbl_806DA9EC[0]);
-        fn_801F93EC(text + 2, lbl_803BE55C[2], lbl_803BE55C[3]);
+        fn_801F93EC(text + 2, kNamCamJapanese[2], kNamCamJapanese[3]);
         TexMgr_SetTexture(text + 2, lbl_806DA9EC[1]);
     }
 }
@@ -238,6 +247,43 @@ NamCamList::~NamCamList() {
 }
 NamCamListImpl::~NamCamListImpl() {
     fn_801F4D3C((FlowSceneList *)this);
+}
+
+static inline void NamCamDrawBorders() {
+        ResCtrl rc;
+        rc.mode = 2;
+        rc.SetSize(lbl_806DA580, lbl_806DA584);
+        rc.Show(lbl_806DA588, lbl_806DA58C, lbl_806DA590);
+        rc.SetColor(0x1BFFFF);
+        fn_8011FAFC(&rc, 0);
+        for (int i = 0; i < 4; ++i) {
+            fn_80121E10(&rc);
+            rc.resId = 0x50B;
+            rc.Show(lbl_803BE3C4[i][0], lbl_803BE3C4[i][1], lbl_806DA590);
+            fn_8011FAFC(&rc, 0);
+            fn_80121E10(&rc);
+            rc.resId = 0x50C;
+            rc.Show(lbl_803BE3E4[i][0], lbl_803BE3E4[i][1], lbl_806DA590);
+            fn_8011FAFC(&rc, 0);
+        }
+    }
+
+static inline void NamCamCopyCapture(NamCamFlow *self) {
+        if (self->camera == 1) {
+            GX_BeginDraw();
+            GXTexModeSync();
+            int width = lbl_80598A60.width;
+            int height = lbl_80598A60.height;
+            void *context = GetDisplayContext(GetDisplayBufferIndex());
+            DrawNamCamImage(context,
+                self->capture->buffers.p->pixels, 320, 240, 6,
+                (unsigned short)((int)lbl_806DA5B4 - width),
+                (unsigned short)((int)lbl_806DA5B8 - height),
+                (unsigned short)((int)lbl_806DA5BC - width),
+                (unsigned short)((int)lbl_806DA5C0 - height), 128, 128, 4);
+            GX_EndDraw(0);
+            if (self->camera == 1) ResetIOPorts();
+        }
 }
 
 extern "C" void fn_801F2BC8(NamCamFlow *self) {
@@ -277,20 +323,7 @@ extern "C" void fn_801F2BC8(NamCamFlow *self) {
         if (IsSyncReached()) self->state = 5;
         break;
     case 5:
-        if (self->camera == 1) {
-            GX_BeginDraw();
-            GXTexModeSync();
-            int width = lbl_80598A60.width;
-            int height = lbl_80598A60.height;
-            DrawNamCamImage(GetDisplayContext(GetDisplayBufferIndex()),
-                self->capture->buffers.p->pixels, 320, 240, 6,
-                (unsigned short)((int)lbl_806DA5B4 - width),
-                (unsigned short)((int)lbl_806DA5B8 - height),
-                (unsigned short)((int)lbl_806DA5BC - width),
-                (unsigned short)((int)lbl_806DA5C0 - height), 128, 128, 4);
-            GX_EndDraw(0);
-            if (self->camera == 1) ResetIOPorts();
-        }
+        NamCamCopyCapture(self);
         self->fade->Set(0, 255, 22);
         self->state = 6;
         break;
@@ -303,24 +336,7 @@ extern "C" void fn_801F2BC8(NamCamFlow *self) {
         self->state = -1;
         break;
     }
-    {
-        ResCtrl rc;
-        rc.mode = 2;
-        rc.SetSize(lbl_806DA580, lbl_806DA584);
-        rc.Show(lbl_806DA588, lbl_806DA58C, lbl_806DA590);
-        rc.SetColor(0x1BFFFF);
-        fn_8011FAFC(&rc, 0);
-        for (int i = 0; i < 4; ++i) {
-            fn_80121E10(&rc);
-            rc.resId = 0x50B;
-            rc.Show(lbl_803BE3C4[i][0], lbl_803BE3C4[i][1], lbl_806DA590);
-            fn_8011FAFC(&rc, 0);
-            fn_80121E10(&rc);
-            rc.resId = 0x50C;
-            rc.Show(lbl_803BE3E4[i][0], lbl_803BE3E4[i][1], lbl_806DA590);
-            fn_8011FAFC(&rc, 0);
-        }
-    }
+    NamCamDrawBorders();
     fn_801F36D0(self);
     fn_801F3198(self);
     if (self->state >= 0 && self->state <= 2) {
@@ -367,18 +383,18 @@ extern "C" void fn_801F43F8(NamCamImage *self) {
     if (!self->ready) return;
     float width = lbl_80598A60.width;
     float height = lbl_80598A60.height;
-    int left = (int)(lbl_806DA5E0 - width);
-    int right = (int)(lbl_806DA5E0 + width);
-    int top = (int)(lbl_806DA5E4 - height);
-    int bottom = (int)(lbl_806DA5E4 + height);
-    int x0 = (int)(lbl_806DA5E8 + (float)-(160 - left));
-    int x1 = (int)(lbl_806DA5E8 + (float)(160 - right));
-    int y0 = (int)(lbl_806DA5EC + (float)-(120 - top));
-    int y1 = (int)(lbl_806DA5EC + (float)(120 - bottom));
-    int u0 = (int)(lbl_806DA5F0 * (float)left);
-    int u1 = (int)(lbl_806DA5F0 * (lbl_806DA588 - (float)right));
-    int v0 = (int)(lbl_806DA5F4 * (float)top);
-    int v1 = (int)(lbl_806DA5F4 * (lbl_806DA58C - (float)bottom));
+    int left = (int)(16.0f - width);
+    int right = (int)(16.0f + width);
+    int top = (int)(12.0f - height);
+    int bottom = (int)(12.0f + height);
+    int x0 = (int)(305.0f + (float)-(160 - left));
+    int x1 = (int)(305.0f + (float)(160 - right));
+    int y0 = (int)(140.0f + (float)-(120 - top));
+    int y1 = (int)(140.0f + (float)(120 - bottom));
+    int u0 = (int)(0.8f * (float)left);
+    int u1 = (int)(0.8f * (lbl_806DA588 - (float)right));
+    int v0 = (int)(1.0666667f * (float)top);
+    int v1 = (int)(1.0666667f * (lbl_806DA58C - (float)bottom));
     lbl_804E52E0[0] = x0; lbl_804E52E0[1] = y0;
     lbl_804E52E0[2] = x1; lbl_804E52E0[3] = y0;
     lbl_804E52E0[4] = x1; lbl_804E52E0[5] = y1;
@@ -405,13 +421,14 @@ extern "C" void fn_801F43F8(NamCamImage *self) {
     GXSetVtxDesc(13, 2);
     GXSetArray(13, lbl_804E52C0, 4);
     GXBegin(128, 0, 4);
-    short halfWidth = (short)(lbl_806DA594 * lbl_806D0014);
-    short halfHeight = (short)(lbl_806DA5F8 * lbl_806D0014);
+    short halfHeight, halfWidth;
+    halfWidth = (short)(lbl_806DA594 * lbl_806D0014);
+    halfHeight = (short)(lbl_806DA5F8 * lbl_806D0014);
     short x = lbl_806D0010, y = lbl_806D0012;
     NamCamPosition(x - halfWidth, y - halfHeight); NamCamTexCoord(0);
-    NamCamPosition(x + halfWidth, y - halfHeight); NamCamTexCoord(1);
-    NamCamPosition(x + halfWidth, y + halfHeight); NamCamTexCoord(2);
-    NamCamPosition(x - halfWidth, y + halfHeight); NamCamTexCoord(3);
+    NamCamPosition(halfWidth + x, y - halfHeight); NamCamTexCoord(1);
+    NamCamPosition(halfWidth + x, halfHeight + y); NamCamTexCoord(2);
+    NamCamPosition(x - halfWidth, halfHeight + y); NamCamTexCoord(3);
     GXSetZCompLoc(1);
     GXSetZMode(1, 3, 1);
     fn_801F6790(self->display.p);

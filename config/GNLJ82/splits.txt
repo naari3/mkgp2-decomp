@@ -10429,6 +10429,7 @@ game/NamCamFlow.cpp:
 	extab       start:0x80016FB4 end:0x800173C0
 	extabindex  start:0x80028D24 end:0x80028E20
 	.text       start:0x801F2B70 end:0x801F4D3C
+	.rodata     start:0x803BDF20 end:0x803BE56C
 
 game/SceneListOperations.cpp:
 	extab       start:0x800173C0 end:0x800173D8
