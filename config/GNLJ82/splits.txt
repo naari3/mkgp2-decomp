@@ -3078,6 +3078,7 @@ game/TaMode_FrameUpdate.cpp:
 	extab       start:0x80009A68 end:0x80009A70
 	extabindex  start:0x8002231C end:0x80022328
 	.text       start:0x800A2B90 end:0x800A38F8
+	.data       start:0x8040EA58 end:0x8040F0A4
 
 game/TaMode_Dtor.cpp:
 	extab       start:0x80009A70 end:0x80009A78
