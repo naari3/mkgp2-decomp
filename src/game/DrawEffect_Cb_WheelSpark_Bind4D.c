@@ -1,10 +1,13 @@
 /* DrawEffect_Cb_WheelSpark_Bind4D (0x800B75B8): wheel spark (resource 0x4D)
  * shot out behind a rear wheel joint (2 or 3 by variant) in kart space,
- * with a little random drift; it sinks and fades out after 10 frames. */
+ * with a little random drift; it sinks and fades out after 10 frames.
+ *
+ * Text matches 100%. The Object stays NonMatching only because the local
+ * `joints` initializer is an 8-aligned @N sdata2 object here, while the target
+ * owns it at 0x806D51B4 (4 mod 8), and the 0.0f literal leaves 4 stray bytes
+ * in this TU's .sdata2; linking it would shift the small-data pool. */
 #include "game/DrawEffectAccess.h"
 
-extern const int lbl_806D51B4; /* 2 */
-extern const int lbl_806D51B8; /* 3 */
 extern const float lbl_806D51BC; /* 2.0 */
 extern const float lbl_806D51C0; /* 0.0 */
 extern const float lbl_806D51C4; /* 1.0 */
@@ -25,6 +28,8 @@ extern const float lbl_806D5254; /* -2.0 */
 extern const float lbl_806D5258; /* 0.07 */
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec v);
 extern void Mtx44_GetTranslation_ColMajor(Vec *out, float m[4][4]);
+
+static inline void SetPosV(void *slot, Vec v) { VfxSlot_SetPositionFromVec(slot, &v); }
 
 void DrawEffect_Cb_WheelSpark_Bind4D(unsigned char *self)
 {
@@ -67,17 +72,12 @@ void DrawEffect_Cb_WheelSpark_Bind4D(unsigned char *self)
     F(0xA8) -= lbl_806D5258;
     Vec3_Add_DestFirst(V(0x120), V(0x120), V(0xA4));
     {
-        int joints[2];
-        joints[0] = lbl_806D51B4;
-        joints[1] = lbl_806D51B8;
+        int joints[2] = {2, 3};
         Mtx44_GetTranslation_RowMajor(&wheel, KartDriver_GetJointByIdx(P(0x11C), joints[I(0x10)]));
         Vec3_Add_DestFirst(V(0x8C), &wheel, V(0x120));
     }
     F(0xB0) = F(0x150) * F(0x154);
-    {
-        Vec pos = *V(0x8C);
-        VfxSlot_SetPositionFromVec(SLOT(self), &pos);
-    }
+    SetPosV(SLOT(self), *V(0x8C));
     VfxSlot_SetScaleUniform(SLOT(self), F(0xB0));
     TICK_TIMERS();
 }
