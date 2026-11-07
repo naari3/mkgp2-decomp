@@ -12855,5 +12855,9 @@
     "DrawCredits__12YesNoButtonLFv": "fn_8020615C",
     "@116": "@etb_80019024",
     "@117": "@eti_80029930"
+  },
+  "src/sysdolphin/baselib/lobj_vector_nm.c": {
+    "@294": "global:HSD_LObj_803B94A0_803F2BB8",
+    "@295": "global:HSD_LObj_803B94AC_803F2BC4"
   }
 }

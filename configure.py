@@ -468,7 +468,7 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/tev.c"),
             Object(Matching, "sysdolphin/baselib/mobj.c"),
             Object(Matching, "sysdolphin/baselib/lobj.c"),
-            Object(NonMatching, "sysdolphin/baselib/lobj_vector_nm.c"),
+            Object(Matching, "sysdolphin/baselib/lobj_vector_nm.c"),
             Object(Matching, "sysdolphin/baselib/lobj_setup.c"),
             Object(NonMatching, "sysdolphin/baselib/lobj_init_nm.c"),
             Object(Matching, "sysdolphin/baselib/lobj_current.c"),
@@ -3843,6 +3843,14 @@ def _inject_jvs_metrics_ctor_bridge() -> None:
             target = f"build build/GNLJ82/src/game/{tu}.o: mwcc_sjis_extab"
         assert target in text
         text = text.replace(target, target.replace("mwcc_sjis_extab", "mwcc_sjis_ctor_bridge"), 1)
+    # Plain (no extab_padding) TUs that only need the symbol renames, e.g. to
+    # give an anonymous initializer literal the global name another TU uses.
+    for tu in ("sysdolphin/baselib/lobj_vector_nm",):
+        target = f"build build\\GNLJ82\\src\\{tu.replace('/', chr(92))}.o: mwcc_sjis "
+        if sys.platform != "win32":
+            target = f"build build/GNLJ82/src/{tu}.o: mwcc_sjis "
+        assert target in text
+        text = text.replace(target, target.replace("mwcc_sjis ", "mwcc_sjis_ctor_bridge "), 1)
     text = text[:start] + rule + "\n" + text[start:]
     build_ninja.write_text(text, encoding="utf-8")
 
