@@ -1569,8 +1569,9 @@
     "__ct__6CupSprFiii": "Sprite_InitWithAnim",
     "extab_clFlowCup_Dtor": "@etb_800142DC",
     "extabindex_clFlowCup_Dtor": "@eti_80027E18",
-    "extab_clFlowCup_Init": "@etb_800142E4",
-    "extabindex_clFlowCup_Init": "@eti_80027E24"
+    "__ct__7CupFlowFv": "clFlowCup_Init",
+    "__ct__8FlowBaseFv": "InitializeFrameSelection",
+    "__dt__8FlowBaseFv": "dtor_801BA14C"
   },
   "src/game/clFlowRound.c": {
     "extab_clFlowRound_Draw": "@etb_800145E4",
@@ -2894,7 +2895,10 @@
     "extabindex_fn_8013D800": "@eti_80024EC0",
     "extabindex_fn_8013D940": "@eti_80024ED8",
     "extabindex_fn_8013DA00": "@eti_80024EE4",
-    "extabindex_dtor_8013DCBC": "@eti_80024F20"
+    "extabindex_dtor_8013DCBC": "@eti_80024F20",
+    "__ct__16PreviewModelCtorFPvUc": "fn_8013D800",
+    "__dt__14PreviewBaseOOLFv": "dtor_8013DCBC",
+    "__ct__8Normal3DFPvUc": "clNormal3D_Construct"
   },
   "src/game/SpriteEffects.c": {
     "__dt__7Effect1Fv": "fn_8013DD38",

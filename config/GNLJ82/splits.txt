@@ -7677,15 +7677,11 @@ game/bbox/fn_8018A418.c:
 	extabindex  start:0x80026E4C end:0x80026E58
 	.text       start:0x8018A418 end:0x8018A66C
 
-game/objview/fn_8018A66C.c:
-	extab       start:0x80011E14 end:0x80011E1C
-	extabindex  start:0x80026E58 end:0x80026E64
-	.text       start:0x8018A66C end:0x8018A70C
-
 game/objview/fn_8018A70C.cpp:
-	extab       start:0x80011E1C end:0x80011E50
-	extabindex  start:0x80026E64 end:0x80026E70
-	.text       start:0x8018A70C end:0x8018A8D4
+	extab       start:0x80011E14 end:0x80011E50
+	extabindex  start:0x80026E58 end:0x80026E70
+	.text       start:0x8018A66C end:0x8018A8D4
+	.rodata     start:0x803776C8 end:0x80377BC0
 
 game/bitread/fn_8018A8D4.c:
 	extab       start:0x80011E50 end:0x80011E58
@@ -9197,6 +9193,7 @@ game/clFlowCup.c:
 	extab       start:0x8001428C end:0x8001457C
 	extabindex  start:0x80027E00 end:0x80027E30
 	.text       start:0x801C7360 end:0x801C9288
+	.data       start:0x8049AD58 end:0x8049AE70
 
 game/fn_801C9288.cpp:
 	extab       start:0x8001457C end:0x800145E4
