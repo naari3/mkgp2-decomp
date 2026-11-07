@@ -1121,7 +1121,8 @@
     "fn_80125948",
     "fn_80125B04",
     "fn_80126728",
-    "fn_80126878"
+    "fn_80126878",
+    "clCGameDemo_Dtor"
   ],
   "src/game/CountdownOwner.cpp": [
     "fn_8023FB4C",
