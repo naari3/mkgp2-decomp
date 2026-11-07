@@ -96,7 +96,7 @@ void *ResolveJointByName(void*, const char*);
 void Sprite_Destroy(void*, int);
 void Sprite_SetAnimParam(void*, int, int);
 void *GetTextureByIdAndLang(int, int);
-void TexMgr_SetTexture(DisplayTexture*, void*, ...);
+void TexMgr_SetTexture(void*, void*, ...);
 void fn_801F93EC(DisplayTexture*, float, float);
 int isJapanese();
 }
@@ -1654,7 +1654,7 @@ DtorView *clFlowChara_Destructor(DtorView *self, short del) {
 }
 
 /* ------------------------------------------------------------------ */
-/* FrameSelection_Init (0x801C4EA8) = clFlowChara ctor - asm for now. */
+/* FrameSelection_Init (0x801C4EA8) = clFlowChara ctor. */
 extern "C" {
 extern const float FLOAT_ARROW_LEFT_SCALE_X, FLOAT_ARROW_LEFT_X, FLOAT_ARROW_RIGHT_X, FLOAT_ARROW_Y;
 extern const float FLOAT_INIT_Z_DEPTH, FLOAT_TEX_POS_X, FLOAT_TEX_POS_Y, FLOAT_TEX_SCALE;
@@ -1668,13 +1668,229 @@ extern void TexMgr_Apply(void *self);
 extern void InitBGM(void);
 extern void SetupBgSprites(int);
 extern void InitRumbleController(int);
-extern void InitializeFrameSelection(void *self);
-extern void ResCtrl_Init(void *self);
-extern void Sprite_CreateWithParams(void *self, int id, int flag, float x, float y, float sx, float sy, float t, float a);
-extern void TexMgr_Init(void *self);
-extern void Scene3D_Init(void *self, const char *path);
-extern void SceneModel_Init(void *self, const char *path, int);
-extern void dtor_80082960(void *self);
-extern void dtor_800869D0(void *self);
-#include "src/ui/FrameSelection_Init.inc"
 }
+
+struct InitSprite {
+    int field_0x00;
+    int field_0x04;
+    char _pad8[4];
+    float posX;
+    float posY;
+    float scaleX;
+    float scaleY;
+    char _pad1C[4];
+    float alpha;
+    char _pad24[0x30 - 0x24];
+    InitSprite(int id, int flag, float x, float y, float sx, float sy, float t, float a);
+};
+
+struct InputState {
+    char _pad0[4];
+    unsigned char field_0x04;
+    char _pad5[0x14 - 0x5];
+    int field_0x14;
+    int field_0x18;
+    int field_0x1c;
+};
+
+static inline InputState *GetInput(void) {
+    return SINGLETON_INSTANCE((InputState *)g_pInputState);
+}
+
+#pragma use_lmw_stmw on
+struct clFlowBase {
+    clFlowBase();
+    ~clFlowBase();
+};
+
+struct ResCtrl {
+    int resId;      /* 0x00 */
+    char _pad4[4];
+    int mode;       /* 0x08 */
+    char _padC[4];
+    unsigned char flag;        /* 0x10 */
+    char _pad11[3];
+    float posY;       /* 0x14 */
+    float posX;       /* 0x18 */
+    float alpha;      /* 0x1C */
+    float fD;         /* 0x20 */
+    float fE;         /* 0x24 */
+    float fF;         /* 0x28 */
+    float scaleX;     /* 0x2C */
+    float scaleY;     /* 0x30 */
+    ResCtrl();
+    ~ResCtrl();
+}; /* size 0x34 */
+
+struct TexMgr {
+    char _opaque[0x230];
+    TexMgr();
+    ~TexMgr() {}
+};
+
+struct Scene3D {
+    char _opaque[0x3084];
+    Scene3D(const char *path);
+};
+
+struct SceneModel {
+    char _opaque[0x28];
+    SceneModel(const char *path, int);
+};
+
+struct FrameSelection : clFlowBase {
+    void *vptr;                    /* 0x000 */
+    int visualIdx;                 /* 0x004 */
+    int field_0x08;                /* 0x008 */
+    unsigned char flag_0x0c;                  /* 0x00C */
+    char _pad0D[3];
+    int field_0x10;                /* 0x010 */
+    int unk_0x14[13];              /* 0x014..0x048 */
+    InitSprite *cursorL;               /* 0x048 */
+    InitSprite *cursorR;               /* 0x04C */
+    InitSprite *spr_0x50;              /* 0x050 */
+    InitSprite *spr_0x54;              /* 0x054 */
+    InitSprite *spr_0x58;              /* 0x058 */
+    int field_0x5c;                /* 0x05C */
+    int field_0x60;                /* 0x060 */
+    unsigned char flag_0x64;                  /* 0x064 */
+    unsigned char flag_0x65;                  /* 0x065 */
+    char _pad66[0x6C - 0x66];
+    float field_0x6c;                /* 0x06C */
+    Scene3D *scene3D;              /* 0x070 */
+    SceneModel *sceneModel;        /* 0x074 */
+    char _pad78[0xA8 - 0x78];
+    int states_0xa8[13];           /* 0x0A8 */
+    int arr_0xdc[13];              /* 0x0DC */
+    int arr_0x110[13];             /* 0x110 */
+    int arr_0x144[13];             /* 0x144 */
+    TexMgr *texMgr;                /* 0x178 */
+    ResCtrl resCtrl;               /* 0x17C */
+
+    FrameSelection();
+}; /* size 0x1B0 */
+
+FrameSelection::FrameSelection() : vptr(lbl_8049AC7C) {
+    int i;
+    int j;
+    int mileage;
+
+    SpriteSystem_EnsureInit();
+    SetSyncTarget(0xd);
+    SetCourseParams(7, 0, 0, 0);
+    PreloadResource(0x167f);
+    PreloadResource(0x169b);
+    PreloadResource(0x16ac);
+    PreloadResource(0x16ae);
+    PreloadResource(0x16ad);
+    PreloadResource(0x16af);
+    for (i = 0; i < 0xd; i++) {
+        PreloadResource((int)FrameParam_ARRAY_8049aad0[i].animA);
+        PreloadResource((int)FrameParam_ARRAY_8049aad0[i].animB);
+    }
+    PreloadResource(0x16af);
+    PreloadResource(0x16a8);
+    PreloadResource(0x1d55);
+    PreloadResource(0x1d3e);
+    PreloadResource(0x186c);
+    PreloadResource(0x16b0);
+    PreloadResource(0x16cc);
+    PreloadResource(0x1d5c);
+    for (i = 0; i < 0xd; i++) {
+        unk_0x14[i] = 0;
+        FrameParam_ARRAY_8049aad0[i].index = 0;
+    }
+    visualIdx = 0;
+    field_0x60 = -1;
+    field_0x08 = 0;
+    flag_0x0c = 0;
+    field_0x10 = 0;
+    field_0x5c = 0;
+    scene3D = 0;
+    sceneModel = 0;
+    field_0x6c = FLOAT_INIT_Z_DEPTH;
+    flag_0x64 = 0;
+    flag_0x65 = 0;
+    cursorL = new InitSprite(0x9c, 1, FLOAT_ARROW_LEFT_X, FLOAT_ARROW_Y,
+                         FLOAT_ARROW_LEFT_SCALE_X, FLOAT_ARROW_SCALE,
+                         FLOAT_SPRITE_INIT_TIME, FLOAT_FULL_ALPHA);
+    cursorR = new InitSprite(0x9c, 1, FLOAT_ARROW_RIGHT_X, FLOAT_ARROW_Y,
+                         FLOAT_ARROW_SCALE, FLOAT_ARROW_SCALE,
+                         FLOAT_SPRITE_INIT_TIME, FLOAT_FULL_ALPHA);
+    spr_0x50 = 0;
+    spr_0x54 = 0;
+    spr_0x58 = 0;
+    texMgr = new TexMgr;
+    for (i = 0; i < 0xd; i++) {
+        int f = GetFrameIdxFromVisualIdx(this, i);
+        if (f == (signed char)g_playerData[0x1b8]) {
+            visualIdx = i;
+            break;
+        }
+    }
+    if (cursorL != 0) {
+        InitSprite *spr = cursorL;
+        float x = g_tierCursorPosTable[visualIdx][0];
+        float y = g_tierCursorPosTable[visualIdx][1];
+
+        spr->posX = x;
+        spr->posY = y;
+        cursorL->field_0x04 = 5;
+    }
+    if (cursorR != 0) {
+        InitSprite *spr = cursorR;
+        float x = FLOAT_ARROW_RIGHT_OFFSET + g_tierCursorPosTable[visualIdx][0];
+        float y = g_tierCursorPosTable[visualIdx][1];
+
+        spr->posX = x;
+        spr->posY = y;
+        cursorR->field_0x04 = 5;
+    }
+    mileage = GetCoinMilage(g_playerData);
+    for (int k = 0; k < 0xd; k++) {
+        arr_0xdc[k] = 0;
+        arr_0x110[k] = 0;
+        arr_0x144[k] = 0;
+        j = GetFrameIdxFromVisualIdx(this, k);
+        if (mileage >= fullThresholds[j]) {
+            states_0xa8[j] = 2;
+        } else if (mileage >= partialThresholds[j]) {
+            states_0xa8[j] = 1;
+        } else {
+            states_0xa8[j] = 0;
+        }
+        if (IsCardValid() == 0) {
+            states_0xa8[j] = 1;
+        }
+    }
+    scene3D = new Scene3D(modelName13);
+    sceneModel = new SceneModel(modelName13, 1);
+    TexMgr tm;
+
+    TexMgr_SetTexture(&tm, GetTextureByIdAndLang(
+                               textureIds[GetFrameIdxFromVisualIdx(this, visualIdx)] + 0x95, -1));
+    TexMgr_Apply(&tm);
+    resCtrl.resId = 0x1d5c;
+    resCtrl.scaleX = FLOAT_TEX_SCALE;
+    resCtrl.scaleY = FLOAT_TEX_SCALE;
+    resCtrl.flag = 1;
+    resCtrl.posY = FLOAT_TEX_POS_Y;
+    resCtrl.posX = FLOAT_TEX_POS_X;
+    resCtrl.alpha = FLOAT_FULL_ALPHA;
+    {
+        InputState *in = GetInput();
+
+        if (in != 0) {
+            in = GetInput();
+            in->field_0x04 = 1;
+            in->field_0x18 = 0;
+            in->field_0x1c = 0;
+        }
+    }
+    SetScreenBrightness(FLOAT_BRIGHTNESS_DARK);
+    InitBGM();
+    SetupBgSprites(1);
+    InitRumbleController(1);
+}
+
+#pragma use_lmw_stmw reset

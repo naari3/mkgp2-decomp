@@ -2758,6 +2758,7 @@
     "fn_801C3AA4",
     "clFlowChara_Update",
     "clFlowChara_Destructor",
-    "FrameSelection_Init"
+    "FrameSelection_Init",
+    "dtor_800869D0"
   ]
 }

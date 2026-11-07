@@ -12788,8 +12788,6 @@
   "src/game/clFlowChara.cpp": {
     "extab_clFlowChara_Update": "@etb_80013EC4",
     "extabindex_clFlowChara_Update": "@eti_80027D7C",
-    "extab_FrameSelection_Init": "@etb_80013F14",
-    "extabindex_FrameSelection_Init": "@eti_80027D94",
     "partialThresholds": "global:g_frameUnlockThresholds_Partial",
     "fullThresholds": "global:g_frameUnlockThresholds_Full",
     "textureIds": "global:g_tierTextureIdTable",
@@ -12832,6 +12830,16 @@
     "__ct__13DisplaySpriteFiUcff": "fn_801A08B8",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__ct__6SpriteFiii": "Sprite_InitWithAnim"
+    "__ct__6SpriteFiii": "Sprite_InitWithAnim",
+    "__ct__14FrameSelectionFv": "FrameSelection_Init",
+    "__ct__10clFlowBaseFv": "InitializeFrameSelection",
+    "__dt__10clFlowBaseFv": "dtor_801BA14C",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__6TexMgrFv": "TexMgr_Init",
+    "__dt__6TexMgrFv": "dtor_800869D0",
+    "__ct__7Scene3DFPCc": "Scene3D_Init",
+    "__ct__10SceneModelFPCci": "SceneModel_Init",
+    "__ct__10InitSpriteFiiffffff": "Sprite_CreateWithParams"
   }
 }
