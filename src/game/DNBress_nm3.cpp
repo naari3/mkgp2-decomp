@@ -67,12 +67,16 @@ struct Particle {
     int delay;
 };
 
+extern "C" const char lbl_80490FE0[];
+
 struct clMapEffectParts {
-    virtual ~clMapEffectParts() {}
-    virtual void Update();
-    virtual void Draw();
-    virtual void Enable(int on);
-    clMapEffectParts() {}
+    // Explicit ABI view keeps derived dispatch data in the shared table pool.
+    const void *vtable;
+    ~clMapEffectParts() {}
+    void Update();
+    void Draw();
+    void Enable(int on);
+    clMapEffectParts() : vtable(lbl_80490FE0) {}
 };
 
 struct clDNBress;
@@ -112,10 +116,10 @@ struct clDNBress : clMapEffectParts {
     UpdFn upd;
 
     clDNBress();
-    virtual void Enable(int on);
-    virtual ~clDNBress();
-    virtual void Update();
-    virtual void Draw();
+    void Enable(int on);
+    ~clDNBress();
+    void Update();
+    void Draw();
     void Tick();
     void UpdFire1(Particle *p);
     void SpawnFire1();
@@ -263,10 +267,12 @@ static inline bool InRect(float x, float z, const float *r) {
 }
 
 clDNBress::clDNBress() {
+    // One data base supplies both the vtable and the member-function tables.
+    const char *data = (const char *)lbl_804EDF80;
+    const FireFuncs *fireFuncs = (const FireFuncs *)(data + 0x18);
     // The original unit addresses its shared strings from one retained base.
     const char *strings = lbl_803C6ED0 + 0x10000;
-    // The spawn/update member tables follow the two spawn-range vectors.
-    const FireFuncs *fireFuncs = (const FireFuncs *)((const char *)lbl_804EDF80 + 0x18);
+    vtable = data + 0x54;
     type = 0;
     xc = 0;
     anim = 0;
