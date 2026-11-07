@@ -9,7 +9,7 @@ static inline void LayoutPopupTexts(MsgPopup *popup, float s) {
     int dy = 0;
     float ox = lbl_806DAAC4 * s;
     float base = -40.0f;
-    for (i = 0; i < 4; i++, dy += 30) {
+    for (i = 0; i < 4; dy += 30, i++) {
         float yy = s * (base + (float)dy);
         fn_801F93EC(&popup->texts[i], popup->x + ox, popup->y + yy);
         fn_801F93D0(&popup->texts[i], ts, ts);
