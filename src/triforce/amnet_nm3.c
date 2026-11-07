@@ -103,8 +103,11 @@ s32 fn_8028C1B8(u8 channel) {
         TracePacket('T', 'R', pkt, dev->statAddr, 0x20);
     }
     SendPacket(pkt, dev);
-    if (dev->kind <= 3 && lbl_804F5814[dev->kind] != NULL) {
-        lbl_804F5814[dev->kind]();
+    {
+        u32 kind = dev->kind;
+        if (kind <= 3 && lbl_804F5814[kind] != NULL) {
+            lbl_804F5814[kind]();
+        }
     }
     lbl_80699140.txCount++;
     LOG((pkt->id << 16) | 0x30000000 | BSWAP16(pkt->flags));
@@ -331,10 +334,20 @@ static inline NetChan* FindChanFrom(NetChan* c, u8 id) {
     return NULL;
 }
 
+static inline u8 NextChannelId(NetState* state, NetChan* channels) {
+    u8 id = state->lastId;
+    do {
+        id++;
+        if (id == 0) id++;
+    } while (FindChanFrom(channels, id) != NULL);
+    return id;
+}
+
 u8 fn_8028D234(void) {
     OSSemaphore* sem = &lbl_80699140.sem;
     u8 ret = 0;
     NetChan* c;
+    NetState* state;
     NetChan* channels;
     s32 n;
     u8 id;
@@ -344,17 +357,12 @@ u8 fn_8028D234(void) {
     c = channels;
     for (n = 64; n != 0; n--) {
         if (c->rx.flags == 0 && c->tx.flags == 0) {
-            id = lbl_80699140.lastId;
-            do {
-                id++;
-                if (id == 0) {
-                    id++;
-                }
-            } while (FindChanFrom(channels, id) != NULL);
+            state = &lbl_80699140;
+            id = NextChannelId(state, channels);
             c->tx.id = id;
             c->tx.sub = 0;
             ret = id;
-            lbl_80699140.lastId = id;
+            state->lastId = id;
             c->tx.flags = 0xFF00;
             LOG((c - lbl_80697940) | 0xA0000000);
             break;

@@ -17,12 +17,15 @@ COMMENT_ENTRY = 8
 
 
 def main() -> None:
-    if len(sys.argv) not in (2, 3):
-        sys.exit("usage: postprocess_data_align4_keep_comment.py <object> [section]")
+    if len(sys.argv) not in (2, 3, 4):
+        sys.exit("usage: postprocess_data_align4_keep_comment.py <object> [section] [syms]")
     path = sys.argv[1]
     # Optional section name (default .data); .sdata2 is used by TUs whose
     # small-data string pool starts on a 4-byte (not 8-byte) boundary.
-    section = sys.argv[2] if len(sys.argv) == 3 else ".data"
+    section = sys.argv[2] if len(sys.argv) >= 3 else ".data"
+    # "syms" also pins the object symbols inside the section (MWCC gives an
+    # extab table symbol 8-byte alignment even when the section is 4).
+    with_syms = len(sys.argv) == 4 and sys.argv[3] == "syms"
     d = bytearray(open(path, "rb").read())
     shoff = struct.unpack_from(">I", d, 0x20)[0]
     shnum = struct.unpack_from(">H", d, 0x30)[0]
@@ -45,7 +48,8 @@ def main() -> None:
         off = symtab[4] + k * 16
         info = d[off + 12]
         shndx = struct.unpack_from(">H", d, off + 14)[0]
-        if info & 0xF == 3 and shndx == data_idx:  # STT_SECTION
+        kind = info & 0xF
+        if shndx == data_idx and (kind == 3 or (with_syms and kind == 1)):  # STT_SECTION / STT_OBJECT
             entry = comment[4] + COMMENT_HEADER + k * COMMENT_ENTRY
             struct.pack_into(">I", d, entry, 4)
 

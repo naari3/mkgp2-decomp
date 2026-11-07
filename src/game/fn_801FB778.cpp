@@ -15,7 +15,7 @@ void fn_801D919C(void *); int fn_80203E30();
 void fn_8023CFC8(void *); void fn_80232284(RefillSingleton *, float);
 void *fn_801F8E58(); void fn_801F8A34(void *, void *, int);
 void fn_80160588(void *, int, int); void fn_8024E094(void *);
-void fn_801D9B70(void *, int); void fn_8023CDA8(void *);
+void fn_801D9B70(void *, unsigned char); void fn_8023CDA8(void *);
 }
 static inline void SetPanelTextPosition(TextManager *tm, float x, float y) {
     *(float *)((char *)tm + 0xC) = x;
@@ -41,6 +41,10 @@ static inline void StepSaveFade(BuyCardStep *self, InputState *input) {
         fn_801D919C(self->kart);
         self->result = 3;
     }
+}
+static inline void UpdateKart(void *kart) {
+    InputState *input = SINGLETON_INSTANCE(g_pInputState);
+    fn_801D9B70(kart, input->dir != 0);
 }
 extern "C" void fn_801FB778(BuyCardStep *self) {
     InputState *input = SINGLETON_INSTANCE(g_pInputState);
@@ -118,7 +122,6 @@ extern "C" void fn_801FB778(BuyCardStep *self) {
         else fn_80160588(self->panel, SINGLETON_INSTANCE(g_pInputState)->dir, 0);
     }
     fn_8024E094(self->indicator);
-    input = SINGLETON_INSTANCE(g_pInputState);
-    fn_801D9B70(self->kart, input->dir != 0);
+    UpdateKart(self->kart);
     fn_8023CDA8(self->choice);
 }

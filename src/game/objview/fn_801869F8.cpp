@@ -6,10 +6,18 @@
 extern "C" {
 float LUT_Sin12Bit(float);
 unsigned char fn_801379F0(Vec3f *, float);
+static inline void SwingPath186(Path186 *p, float swing, float turn) {
+    HSD_JObj *joint = p->joint[1];
+    if (joint) {
+        HSD_JObjSetRotationX(joint, swing);
+        HSD_JObjSetRotationY((HSD_JObj *)p->joint[1], turn);
+    }
+}
 void fn_801869F8(View186 *self) {
     unsigned char visible[2];
-    int i;
     Path186 *p;
+    int i;
+    HSD_JObj *joint;
     Vec3f probe;
     float swing, turn;
     if (self->object == 0 || self->paths == 0) return;
@@ -21,20 +29,20 @@ void fn_801869F8(View186 *self) {
         probe.y = 150.0f + p->position.y;
         probe.z = p->position.z;
         if (fn_801379F0(&probe, 400.0f)) {
-            if (p->joint[1]) {
-                HSD_JObjSetRotationX((HSD_JObj *)p->joint[1], swing);
-                HSD_JObjSetRotationY((HSD_JObj *)p->joint[1], turn);
-            }
-            if (p->joint[2]) HSD_JObjSetRotationZ((HSD_JObj *)p->joint[2], self->rotation);
-            if (p->joint[3]) HSD_JObjSetRotationZ((HSD_JObj *)p->joint[3], self->rotation);
+            SwingPath186(p, swing, turn);
+            joint = p->joint[2];
+            if (joint) HSD_JObjSetRotationZ(joint, self->rotation);
+            joint = p->joint[3];
+            if (joint) HSD_JObjSetRotationZ(joint, self->rotation);
             visible[i] = 1;
         } else visible[i] = 0;
     }
     for (i = 0; i < 2; i++) {
         if (visible[i]) {
             p = &self->paths[i];
-            if (p->joint[0]) {
-                HSD_JObjSetTranslate((HSD_JObj *)p->joint[0], &p->position);
+            joint = p->joint[0];
+            if (joint) {
+                HSD_JObjSetTranslate(joint, &p->position);
                 HSD_JObjSetRotationY((HSD_JObj *)p->joint[0], p->yaw);
                 HSD_JObjDispAll((HSD_JObj *)p->joint[0], 0, 1, 0);
             }
@@ -43,8 +51,9 @@ void fn_801869F8(View186 *self) {
     for (i = 0; i < 2; i++) {
         if (visible[i]) {
             p = &self->paths[i];
-            if (p->joint[0]) {
-                HSD_JObjSetTranslate((HSD_JObj *)p->joint[0], &p->position);
+            joint = p->joint[0];
+            if (joint) {
+                HSD_JObjSetTranslate(joint, &p->position);
                 HSD_JObjSetRotationY((HSD_JObj *)p->joint[0], p->yaw);
                 HSD_JObjDispAll((HSD_JObj *)p->joint[0], 0, 6, 0);
             }

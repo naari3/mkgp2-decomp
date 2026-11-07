@@ -11,7 +11,6 @@ struct WarpDashManager {
     WarpDashManager(int, unsigned char, unsigned char, unsigned char);
 };
 extern "C" {
-extern const char lbl_80326CB0[];
 void DebugPrintf(const char *, ...);
 void WarpZoneVector_Reserve(WarpZoneVectorStorage *, unsigned long);
 void WarpZoneVector_Insert(WarpZoneVectorStorage *, WarpZoneValue *, unsigned long, const WarpZoneValue *);
