@@ -1,7 +1,9 @@
 #include <triforce/amnet_priv.h>
 
+/* Wanted flag bits: bit 0 always, the sign bit selects reverse search. */
+#define NET_WANT(m) (((m) | 1) & 0x7FFFFFFF)
+
 s32 fn_8028D750(s32 mask, u8 kind, u8* out) {
-    u32 want = (mask | 1) & 0x7FFFFFFF;
     s32 rev = mask & 0x80000000;
     NetDev* dev;
     u32 i;
@@ -12,7 +14,7 @@ s32 fn_8028D750(s32 mask, u8 kind, u8* out) {
         } else {
             dev = &lbl_80699140.dev[i];
         }
-        if (dev->kind == kind && want == (want & dev->flags)) {
+        if (dev->kind == kind && NET_WANT(mask) == (NET_WANT(mask) & dev->flags)) {
             if (out != NULL) {
                 *out = dev->id;
             }
