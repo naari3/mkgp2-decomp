@@ -58,8 +58,8 @@ struct Vec3 {
 #pragma auto_inline off
 extern "C" void clItemBoxManager_Update_Inner(clItemBoxManager *self)
 {
-    ListNode<void *> *it;
-    ListNode<void *> *rt;
+    ListIter<void *> it;
+    ListIter<void *> rt;
     ListNode<void *> *boxEnd;
     ListNode<void *> *responderEnd;
 
@@ -71,13 +71,13 @@ extern "C" void clItemBoxManager_Update_Inner(clItemBoxManager *self)
     }
     boxEnd = (ListNode<void *> *)&self->boxes.head;
     responderEnd = (ListNode<void *> *)&self->responders.head;
-    for (it = (ListNode<void *> *)self->boxes.head.next; it != boxEnd; it = it->next) {
-        void *box = it->value;
+    for (it.node = (ListNode<void *> *)self->boxes.head.next; it.node != boxEnd; ++it) {
+        void *box = *it;
         if (clItemBox_Tick(box) != 1) {
             continue;
         }
-        for (rt = (ListNode<void *> *)self->responders.head.next; rt != responderEnd; rt = rt->next) {
-            void *responder = rt->value;
+        for (rt.node = (ListNode<void *> *)self->responders.head.next; rt.node != responderEnd; ++rt) {
+            void *responder = *rt;
             float *p = clItemBoxResponder_GetBoundPosVec3(responder);
             Vec3 d(p[0], p[1], p[2]);
             d.x -= ((float *)box)[2];
@@ -95,8 +95,8 @@ extern "C" void clItemBoxManager_Update_Inner(clItemBoxManager *self)
             }
         }
     }
-    for (rt = responderEnd->next; rt != responderEnd; rt = rt->next) {
-        clItemBoxResponder_CmdSlotCountdown(rt->value);
+    for (rt.node = responderEnd->next; rt.node != responderEnd; ++rt) {
+        clItemBoxResponder_CmdSlotCountdown(*rt);
     }
 }
 #pragma auto_inline reset
