@@ -2090,7 +2090,7 @@ config.libs = [
             Object(Matching, "game/anon_80216568_row_add.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_80216568_row_draw.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_80216568_misc.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/anon_80216568_fader.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(Matching, "game/anon_80216568_fader.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_80218B80.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/anon_80218D98.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_80218F40.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
@@ -2198,7 +2198,7 @@ config.libs = [
             Object(Matching, "game/SpeedHud.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(Matching, "game/TitleNameHudUpdate.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(Matching, "game/TitleNameHud.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/TitleNameHud_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
+            Object(Matching, "game/TitleNameHud_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(Matching, "game/HudManager.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(Matching, "game/HudManagerHide.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(Matching, "game/HudManagerModes.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
@@ -2673,7 +2673,7 @@ config.libs = [
             Object(NonMatching, "game/fn_801E96BC.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/RankingMgr_UpdatePositions.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/AI_UpdatePerFrameState.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/AI_SystemInit.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/AI_SystemInit.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/AI_SystemDtor.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/fn_801E9CBC.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/AI_CalcVSTargetSpeed.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
@@ -2751,7 +2751,7 @@ config.libs = [
             Object(Matching, "game/fn_801F9628.c"),
             Object(Matching, "game/ThinkBoxCreate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801F8D58.c"),
-            Object(NonMatching, "game/CardCharLookup.c"),
+            Object(Matching, "game/CardCharLookup.c", mw_version="GC/2.6"),
             Object(Matching, "game/CardCharLookup_tail.c"),
             Object(Matching, "game/HudSelectionStep.c"),
             Object(Matching, "game/fn_80245420.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
@@ -2786,7 +2786,7 @@ config.libs = [
             Object(Matching, "game/RaceHudUpdate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/RaceHudDestroy.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/RaceHudSceneCtor.cpp", extab_padding=b"\xC6\x02", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/DisplayBuffersReset.c"),
+            Object(Matching, "game/DisplayBuffersReset.c", extra_cflags=["-lang=c++"]),
             Object(NonMatching, "game/OverlayViewSetup.cpp"),
             Object(NonMatching, "game/PaletteBufferCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/fn_801F27B4.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
@@ -3869,11 +3869,13 @@ def _inject_jvs_metrics_ctor_bridge() -> None:
     hook = " && $python tools/postprocess_sdata2.py $out $out"
     assert hook in rule
     rule = rule.replace(hook, " && $python tools/postprocess_extab_user.py $out" + hook, 1)
-    target = "build build\\GNLJ82\\src\\game\\JvsInputMetrics.o: mwcc_sjis_extab"
-    if sys.platform != "win32":
-        target = "build build/GNLJ82/src/game/JvsInputMetrics.o: mwcc_sjis_extab"
-    assert target in text
-    text = text.replace(target, target.replace("mwcc_sjis_extab", "mwcc_sjis_ctor_bridge"), 1)
+    # EH-free TUs that only need the symbol renames (no `dtk extab clean`).
+    for tu in ("JvsInputMetrics", "anon_80216568_fader"):
+        target = f"build build\\GNLJ82\\src\\game\\{tu}.o: mwcc_sjis_extab"
+        if sys.platform != "win32":
+            target = f"build build/GNLJ82/src/game/{tu}.o: mwcc_sjis_extab"
+        assert target in text
+        text = text.replace(target, target.replace("mwcc_sjis_extab", "mwcc_sjis_ctor_bridge"), 1)
     text = text[:start] + rule + "\n" + text[start:]
     build_ninja.write_text(text, encoding="utf-8")
 

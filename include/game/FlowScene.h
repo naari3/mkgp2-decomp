@@ -190,7 +190,11 @@ struct FlowFaderI : FlowFader {
     int x;
     int y;
     int z;
+#ifdef GAME_FLOWFADERI_CTOR_OUT_OF_LINE
+    FlowFaderI();                        /* fn_80218B28 */
+#else
     FlowFaderI() : x(0), y(0), z(0) {}
+#endif
     virtual void _key2();
     int Value();                         /* fn_8020A788 */
     void Set(int from, int to, short dur); /* fn_8020A7CC */
