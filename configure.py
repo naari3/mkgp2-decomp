@@ -2759,7 +2759,7 @@ config.libs = [
             Object(Matching, "game/RaceHudSceneCtor.cpp", extab_padding=b"\xC6\x02", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/DisplayBuffersReset.c", extra_cflags=["-lang=c++"]),
             Object(NonMatching, "game/OverlayViewSetup.cpp"),
-            Object(NonMatching, "game/PaletteBufferCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/PaletteBufferCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/fn_801F27B4.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/NamCamFlow.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/SceneListOperations.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
@@ -4066,6 +4066,40 @@ def _inject_sdata2_align4_tus() -> None:
     build_ninja.write_text(text, encoding="utf-8")
 
 
+# TUs whose extab table starts on a 4-mod-8 address in the target: MWCC gives
+# the table symbol 8-byte alignment in .comment, which makes MWLD pad 4 bytes
+# before it and shifts every later extab entry. Pin the extab section and its
+# symbols to 4 (keeping .comment).
+EXTAB_ALIGN4_TUS = [
+    "game/PaletteBufferCtor",
+]
+
+
+def _inject_extab_align4_tus() -> None:
+    build_ninja = Path("build.ninja")
+    text = build_ninja.read_text(encoding="utf-8")
+    sep = "\\" if sys.platform == "win32" else "/"
+    hook = " && $python tools/postprocess_sdata2.py $out $out"
+    for base_rule in ("mwcc_sjis_extab",):
+        new_rule = base_rule + "_etbalign4"
+        users = []
+        for tu in EXTAB_ALIGN4_TUS:
+            obj = ("build/GNLJ82/src/" + tu + ".o").replace("/", sep)
+            target = "build " + obj + ": " + base_rule + " "
+            if target in text:
+                users.append(target)
+        if not users:
+            continue
+        start = text.index("rule " + base_rule + "\n")
+        end = text.index("\nrule ", start + 1)
+        rule = text[start:end].replace("rule " + base_rule + "\n", "rule " + new_rule + "\n", 1)
+        assert hook in rule
+        rule = rule.replace(hook, hook + " && $python tools/postprocess_data_align4_keep_comment.py $out extab syms", 1)
+        for target in users:
+            text = text.replace(target, target.replace(": " + base_rule + " ", ": " + new_rule + " "), 1)
+        text = text[:start] + rule + "\n" + text[start:]
+    build_ninja.write_text(text, encoding="utf-8")
+
 if args.mode == "configure":
     # Write build.ninja and objdiff.json
     generate_build(config)
@@ -4076,6 +4110,7 @@ if args.mode == "configure":
     _inject_data_align4_tus()
     _inject_data_align4_weak_tus()
     _inject_sdata2_align4_tus()
+    _inject_extab_align4_tus()
 elif args.mode == "progress":
     # Print progress information
     calculate_progress(config)
