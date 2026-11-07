@@ -1268,7 +1268,7 @@ config.libs = [
             Object(Matching, "game/fn_800D3184.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/Mtx44_TransformVec3.c"),  #g2
             Object(Matching, "game/fn_800D4174.c", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/1.3"),
-            Object(NonMatching, "game/Mtx44_FromEulerXYZTrans.c", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.0"),
+            Object(Matching, "game/Mtx44_FromEulerXYZTrans.c", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.0"),
             Object(Matching, "game/BuildOrientationFromYaw.c"),  #g2
             Object(Matching, "game/Mtx44_GetTranslation_RowMajor.c"),  #g2
             Object(Matching, "game/Mtx44_GetYawOfPosZ.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
