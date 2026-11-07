@@ -862,7 +862,7 @@ config.libs = [
             Object(Matching, "game/CardPrintFlowRender.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/CardPrintFlowErrors.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/CardPrintFlowLifetime.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
-            Object(NonMatching, "game/CardPrintConfig.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/CardPrintConfig.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SceneRoleVariantAFactory.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SceneRoleVariantADtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SceneRoleVariantATransitions.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
