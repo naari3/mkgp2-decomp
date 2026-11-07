@@ -19,12 +19,6 @@ extern const float lbl_806D23E0;
 extern const float lbl_806D23E4;
 extern const float lbl_806D2400;
 extern const float lbl_806D2410;
-struct StrPcbBufs {
-    u8 rx[0x200];
-    u8 tx[0x200];
-    u8 ctl[0x10];
-};
-extern StrPcbBufs lbl_80598100;
 extern u8 lbl_806D1000[3];
 extern int lbl_806D1004;
 }
@@ -34,7 +28,8 @@ void operator delete(void *ptr);
 
 class Stopwatch {
 public:
-    Stopwatch() { m_start = OSGetTick(); }
+    Stopwatch() {}
+    void Start() { m_start = OSGetTick(); }
     ~Stopwatch() {}
     float ElapsedMs()
     {

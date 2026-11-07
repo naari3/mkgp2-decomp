@@ -1,4 +1,19 @@
 #include "game/StrPcbLifetimePrivate.h"
+/* The rx/tx/control buffers are owned here (.bss 0x80598100..0x80598530):
+ * StrPcb_Init addresses them all from one base register, which MWCC only
+ * does for data defined in the same TU. */
+extern "C" {
+u8 lbl_80598100[0x200];
+u8 lbl_80598300[0x200];
+u8 lbl_80598500[0xC];
+u8 lbl_8059850C[0x24];
+}
+
+static inline void StrPcb_SetPositionTargetInline(StrPcb *pcb, int target)
+{
+    pcb->dirty18 = 1;
+    pcb->positionTarget = target & 0x3FF;
+}
 
 StrPcb::StrPcb(int target) : buffer(new int)
 {
@@ -11,10 +26,10 @@ StrPcb::StrPcb(int target) : buffer(new int)
     position28 = 0x1FF;
     counter14 = 0;
     receivedPosData = 0x1FF;
-    memset(&lbl_80598100.ctl[0], 0, 4);
-    memset(&lbl_80598100.ctl[0xC], 0, 4);
-    memset(lbl_80598100.tx, 0, 4);
-    memset(lbl_80598100.rx, 0, 4);
+    memset(&lbl_80598500[0], 0, 4);
+    memset(&lbl_8059850C[0], 0, 4);
+    memset(lbl_80598300, 0, 4);
+    memset(lbl_80598100, 0, 4);
     memset(lbl_806D1000, 0, 3);
     memset(this, 0, 3);
     flags.bit40 = 0;
@@ -25,13 +40,12 @@ StrPcb::StrPcb(int target) : buffer(new int)
     flags.id = 0x35;
     flags.bit01 = 0;
     lbl_806D1004 = 0;
-    lbl_80598100.ctl[0] = 0xFF;
-    lbl_80598100.ctl[1] = 0xFF;
-    lbl_80598100.ctl[5] = 0;
-    lbl_80598100.ctl[7] = 0;
-    lbl_80598100.ctl[9] = 0;
-    dirty18 = 1;
-    positionTarget &= 0x3FF;
+    lbl_80598500[0] = 0xFF;
+    lbl_80598500[1] = 0xFF;
+    lbl_80598500[5] = 0;
+    lbl_80598500[7] = 0;
+    lbl_80598500[9] = 0;
+    StrPcb_SetPositionTargetInline(this, positionTarget);
     dirty18 = 1; command2D = 0;
     dirty18 = 1; command2E = 0;
     dirty18 = 1; command2F = 0;
@@ -53,10 +67,11 @@ StrPcb::StrPcb(int target) : buffer(new int)
     errorCode[1] = 0;
     errorCode[2] = 0;
     stickyError5C = 0;
-    fn_802939F0(lbl_80598100.tx, 0x200, lbl_80598100.rx, 0x200, this);
+    fn_802939F0(lbl_80598300, 0x200, lbl_80598100, 0x200, this);
     {
         Stopwatch sw;
-        while (!(sw.ElapsedMs() >= lbl_806D2400)) {
+        sw.Start();
+        while ((sw.ElapsedMs() >= lbl_806D2400) == 0) {
         }
     }
     for (int i = 0; i < 20; i++) {
