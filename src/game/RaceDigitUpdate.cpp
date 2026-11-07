@@ -1,4 +1,8 @@
 #include "game/RaceDigitGapPrivate.h"
+static inline DigitIter LapBegin(DigitList *list) { return DigitIter(list->first); }
+static inline DigitIter LapEnd(DigitList *list) { return DigitIter((DigitNode *)&list->last); }
+static inline void LapNext(DigitIter &it) { it.node=it.node->next; }
+static inline float LapValue(const DigitIter &it) { return ((LapNode *)it.node)->value; }
 extern "C" void fn_80246484(DigitHud *self) {
     switch(self->state) {
     case -1: if(g_countdownPhase<4) self->state=0; return;
@@ -51,20 +55,20 @@ extern "C" void fn_80246484(DigitHud *self) {
         }
     }
     for(int i=0;i<4;i++) SpriteHandle_RecomputeCull(self->sprites[i]);
-    LapNode *end=(LapNode *)&self->list.last;
-    LapNode *node=(LapNode *)self->list.first;
+    DigitIter end=LapEnd(&self->list);
+    DigitIter node=LapBegin(&self->list);
     if(self->main.p) {
         float total=0.0f;
-        for(;node!=end;node=node->next) total+=node->value;
+        for(;node.node!=end.node;LapNext(node)) total+=LapValue(node);
         if(total<0.0f) total=0.0f;
         if(total>599.999f) total=599.999f;
         self->main.p->number=total;
         fn_80247258(self->main.p);
     }
-    node=(LapNode *)self->list.first;
-    for(int i=0;i<5;i++,node=node->next) {
+    node=LapBegin(&self->list);
+    for(int i=0;i<5;i++,LapNext(node)) {
         if(self->others[i].p) {
-            float value=node->value;
+            float value=LapValue(node);
             if(value<0.0f) value=0.0f;
             if(value>599.999f) value=599.999f;
             self->others[i].p->number=value;
