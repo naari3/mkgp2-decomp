@@ -7,5 +7,9 @@ clCSSceneBanner::~clCSSceneBanner() {
         delete obj;
         obj = 0;
     }
-    DeleteSprite(spr);
+    /* fakematch (permuter): a one-trip loop hoists the 0 store into r31 ahead
+     * of the null test, as in the target. Natural code: DeleteSprite(spr); */
+    for (int i = 0; i < 1; i++) {
+        DeleteSprite(spr);
+    }
 }

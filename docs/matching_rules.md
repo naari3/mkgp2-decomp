@@ -41,6 +41,10 @@ A change can land on `main` (directly or by PR) when all of these hold:
    The clean step matters: ninja does not track
    `tools/extab_user_renames.json`, so a stale object can hide a broken rename.
    Check ninja's exit code, not only the last line.
+   Changes under `tools/*.py` (the postprocess scripts) are not tracked by
+   ninja either: after pulling one, delete `build/GNLJ82/src` before an
+   incremental build, or stale objects can fail the link (seen with the
+   `.sdata2` export change, `undefined lbl_806D47F4`).
 3. The report's function % is not the final word. The report normalizes some
    symbol names, so a TU can show 100% and still break the DOL. Always trust
    the SHA-1 (and `doldiff` for the first differing byte) over the report.
@@ -62,6 +66,11 @@ A change can land on `main` (directly or by PR) when all of these hold:
   This covers per-function `#pragma opt_*` / `#pragma scheduling` tricks,
   permuter output, odd casts that exist only to steer register allocation, and
   `__rlwimi`-style intrinsics where plain C would also be correct.
+- **onmokoworks's side does not write fakematches.** Its Codex workers are
+  told not to, and its progress numbers count only natural C/C++. A marked
+  fakematch from either side is still fine on `main`; it just is not counted
+  as finished there, and those functions stay candidates for a natural
+  rewrite. ASM bodies, manual EH and opcode-embedding are counted the same way.
 - **No manual EH or hand-written extab in new work** unless the TU already
   uses it and there is no C/C++ form that emits the same table. Prefer letting
   `-Cpp_exceptions on` / C++ objects with destructors generate extab.
@@ -96,6 +105,20 @@ Most game TUs at `0x801FC1E0..` already build with `GC/2.6`. Switching a
 whole TU's version is a cheap first probe, but check every function in the TU
 still matches, not just the one you are working on. `GC/3.0a*` does not compile
 the game's C++.
+
+**Whole-TU version and flag sweeps (onmokoworks, 2026-11-07).** Recompiling
+each `NonMatching` TU with every version above (and `GC/2.0`, `GC/2.5`,
+`GC/1.3.2r`, `GC/3.0a5`) and scoring the object with
+`objdiff-cli diff -1 <target.o> -2 <base.o> --format json` found three TUs
+that went straight to 100% (`fn_800D4174` 1.3, `fn_801D680C` 2.5,
+`fn_801D5C88` 1.2.5n) and eleven that moved closer. A second pass over flags
+found `-O4,s` (instead of `-O4,p`) better for `PCBCommSendPeers`,
+`EnemyFace`, `anon_8021A7C8_nm1` and `fn_801B9928`. Setting `mw_version` or
+`extra_cflags` on a `NonMatching` TU is SHA-safe (the object is not linked),
+so these are cheap to land even before the TU matches. Get the exact compile
+command with `ninja -t commands <obj>` and write sweep objects outside
+`build/GNLJ82/src`. Run the sweep in its own worktree: `ninja -t` holds
+`build.ninja` open, which made a concurrent `configure.py` fail on Windows.
 
 Always run configure as
 `python3 configure.py --binutils build/binutils --compilers build/compilers --wrapper build/tools/wibo`;
@@ -149,9 +172,19 @@ without those flags ninja tries to download tools and fails.
   `tools/extab_user_renames.json`.
 - A C++ TU with renames needs `extab_padding=b""` on its `Object` so the rename
   postprocess runs.
+- **Singleton instance reads** that the target compiles as
+  `cmplwi r3, 0; bne; li r3, 0` (a defensive null check on the global) use
+  `SINGLETON_INSTANCE(g)` from `include/game/singleton.h` (it expands to
+  `((g) == 0 ? 0 : (g))`). See `docs/notes/singleton-getter.md`. Prefer the
+  macro over open-coding the ternary.
 - When the compiler emits functions with extab in a different order than the
   target, add the TU to `tools/extab_order.json`. `reorder_extab.py` silently
   skips an entry whose function set does not equal the real extabindex rows.
+- A weak inline destructor that the compiler emits into a TU may be appended
+  to that TU's own `tools/extab_order.json` key; new rename pairs may be
+  added inside a TU's own `tools/extab_user_renames.json` key. Do not edit
+  other TUs' keys, even to "clean up" (one of our workers did; it was
+  reverted).
 - Mangled names: map them to the project's names through
   `tools/extab_user_renames.json`, never by editing symbols to mangled names.
 

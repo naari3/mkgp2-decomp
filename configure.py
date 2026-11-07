@@ -461,7 +461,7 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/tobj_anim.c"),
             Object(Matching, "sysdolphin/baselib/tobj_nm.c"),
             Object(NonMatching, "sysdolphin/baselib/tobj_mtx_pool_nm.c"),
-            Object(NonMatching, "sysdolphin/baselib/state.c"),
+            Object(Matching, "sysdolphin/baselib/state.c"),
             Object(Matching, "sysdolphin/baselib/state_render.c"),
             Object(Matching, "sysdolphin/baselib/state_color.c", mw_version="GC/2.7"),
             Object(Matching, "sysdolphin/baselib/state_cache.c"),
