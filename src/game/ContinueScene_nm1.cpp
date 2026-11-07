@@ -7,7 +7,7 @@ void CoinCounter::Draw() {
     int credits = CreditMgr_GetCreditCount(slot);
     fn_801D9B70(window, GetInput()->held == 1);
     if (done != 1) {
-        idx = lbl_80598A60[0x27] != 0;
+        idx = lbl_80598A60[0x27] ? 1 : 0;
         if (isJapanese() == 0) {
             sprintf(buf, lbl_806D0970[idx], credits);
             fn_801D8DF8(window, buf, 1);
