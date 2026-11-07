@@ -43,3 +43,8 @@ c17_u16: canonical extern assertion strings make HSD_MObjSetDefaultClass802C2930
 Source: Codex worker c17_u25_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1484 B.
 
 c17_u25: TObjUpdateFunc802BD8A0 improves38.63612->100 in one semantic correction. Target needs [0,1] clamp (same static-inline shape as MObjClamp) for BLEND/TS_BLEND and all twelve TEV color channels; 255.0F multiplication; lod/tev null guards; signed int conversion before tlut_no byte store. Canonical filename lbl_806D0C94[7] plus mutable assertion char[0xF] gives exact native data192 including compiler switch table; normal alignment supplies the one byte after the string. Existing ranges unchanged, flag promoted, text1484/data192 all100. Final source-linked ELF address802BD8A0 size1484 and full DOL SHA-1 exact; gain1fn/1484B.
+
+## c17_u30_20261107
+Source: Codex worker c17_u30_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 20 fn / 6968 B.
+
+c17_u30: JObjReleaseChild @802D2444, 1236B, baseline16.203884 ->100. Native inline release/previous-sibling/remove-all/detach/transparency helper bodies reconstruct the target expansion exactly using canonical HSD types and the original shared assertion pool. First reconstruction99.93527 with exact size; only two cmplw operands differed. PreviousJoint must compare jobj == prev for the head case. Removed unrelated callback/class/static/debug definitions from the single-function TU. Matching source linked at802D2444/1236; full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. No split/data/EH/header/build-rule changes.

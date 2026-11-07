@@ -1,54 +1,132 @@
 #include "mkgp2_names.h"
 #include "jobj.h"
-
-#include <math.h>
-#include <string.h>
-
-#include "aobj.h"
-#include "class.h"
-#include "cobj.h"
-#include "displayfunc.h"
 #include "dobj.h"
-#include "fobj.h"
-#include "id.h"
-#include "mobj.h"
-#include "mtx.h"
-#include "pobj.h"
 #include "robj.h"
-#include "spline.h"
-#include <dolphin/mtx.h>
 
-double acos(double);
+/* The original joint class shares its assertion strings with these helpers. */
+extern char lbl_804FC9A8[0x3D8];
+extern char lbl_806D0DB0[7];
+extern char lbl_806D0DBC[5];
 
-void JObjInfoInit(void);
-HSD_JObjInfo hsdJObj = { JObjInfoInit };
-
-static HSD_ClassInfo* default_class;
-static HSD_SList* ufc_callbacks;
-static void (*dptcl_callback)(int, int lo, int hi, HSD_JObj* jobj);
-static void (*jsound_callback)(s32);
-static void (*ptcltgt_callback)(HSD_JObj*, s32);
-static HSD_JObj* current_jobj;
-
-void HSD_JObjSetDPtclCallback(DPCtlCallback cb)
+static inline void ReleaseJoint(HSD_JObj* jobj, char* pool)
 {
-    dptcl_callback = cb;
+    if (jobj != NULL && ref_DEC(jobj)) {
+        if (iref_CNT(jobj) - 1 < 0) {
+            hsdDelete(jobj);
+        } else {
+            jobj->object.ref_count_individual++;
+            if (jobj->object.ref_count_individual == 0) {
+                __assert(pool + 0x1E0, 158, pool + 0x214);
+            }
+            HSD_JOBJ_METHOD(jobj)->release_child(jobj);
+            if (iref_DEC(jobj)) {
+                hsdDelete(jobj);
+            }
+        }
+    }
+}
+
+static inline HSD_JObj* PreviousJoint(HSD_JObj* jobj, char* pool)
+{
+    HSD_JObj* prev;
+    if (jobj == NULL || jobj->parent == NULL) {
+        return NULL;
+    }
+    prev = jobj->parent->child;
+    if (jobj == prev) {
+        return NULL;
+    }
+    while (prev != NULL) {
+        if (prev->next == jobj) {
+            return prev;
+        }
+        prev = prev->next;
+    }
+    HSD_Panic(lbl_806D0DB0, 1519, pool + 0x2D4);
+    return NULL;
+}
+
+static inline void RemoveJoints(HSD_JObj* jobj, char* pool)
+{
+    HSD_JObj* next;
+    HSD_JObj* prev;
+    if (jobj == NULL) {
+        return;
+    }
+    if (jobj->parent != NULL) {
+        prev = PreviousJoint(jobj, pool);
+        if (prev != NULL) {
+            prev->next = NULL;
+        } else {
+            jobj->parent->child = NULL;
+        }
+    }
+    while (jobj != NULL) {
+        next = jobj->next;
+        jobj->parent = NULL;
+        jobj->next = NULL;
+        ReleaseJoint(jobj, pool);
+        jobj = next;
+    }
+}
+
+static inline void RecalcTransparency(HSD_JObj* jobj)
+{
+    HSD_JObj* child;
+    u32 flags;
+    while (jobj != NULL) {
+        flags = ~JOBJ_ROOT_MASK;
+        for (child = jobj->child; child != NULL; child = child->next) {
+            flags |= (child->flags | (child->flags << 10)) & JOBJ_ROOT_MASK;
+        }
+        if (!(jobj->flags & ~flags)) {
+            break;
+        }
+        jobj->flags &= flags;
+        jobj = jobj->next;
+    }
+}
+
+static inline HSD_JObj* DetachJoint(HSD_JObj* jobj, char* pool)
+{
+    HSD_JObj* next;
+    HSD_JObj* prev;
+    if (jobj == NULL) {
+        return NULL;
+    }
+    next = jobj->next;
+    if (jobj->parent != NULL) {
+        if (jobj->parent->child == jobj) {
+            jobj->parent->child = next;
+        } else {
+            prev = PreviousJoint(jobj, pool);
+            if (prev == NULL) {
+                __assert(lbl_806D0DB0, 1394, lbl_806D0DBC);
+            }
+            prev->next = next;
+        }
+        RecalcTransparency(jobj->parent);
+        jobj->parent = NULL;
+    }
+    jobj->next = NULL;
+    return next;
 }
 
 void JObjReleaseChild(HSD_JObj* jobj)
 {
     HSD_JObj* child;
+    char* pool = lbl_804FC9A8;
     if ((child = jobj->child) != NULL) {
         if (jobj->flags & JOBJ_INSTANCE) {
-            HSD_JObjUnref(child);
+            ReleaseJoint(child, pool);
         } else {
             child->parent = NULL;
-            HSD_JObjRemoveAll(jobj->child);
+            RemoveJoints(jobj->child, pool);
         }
         jobj->child = NULL;
     }
     if (jobj->parent != NULL) {
-        HSD_JObjReparent(jobj, NULL);
+        DetachJoint(jobj, pool);
     }
     if (union_type_dobj(jobj)) {
         if (jobj->u.dobj != NULL) {
@@ -65,27 +143,3 @@ void JObjReleaseChild(HSD_JObj* jobj)
         jobj->aobj = NULL;
     }
 }
-
-#ifdef MUST_MATCH
-#pragma push
-#pragma force_active on
-static char unused3[] = "jobj[%d,%d]";
-static char unused4[] = "SKELETON_ROOT ";
-static char unused5[] = "SKELETON ";
-static char unused6[] = "ENVELOPE_MODEL ";
-static char unused7[] = "EFFECTOR ";
-static char unused8[] = "  rot(L): ";
-static char unused9[] = "  sca(L): ";
-static char unused10[] = "  tra(L): ";
-static char unused11[] = "  rot(G): ";
-static char unused12[] = "  sca(G): ";
-static char unused13[] = "  tra(G): ";
-#pragma pop
-#endif
-
-#ifdef MUST_MATCH
-#pragma push
-#pragma force_active on
-static u32 unused14[6] = { 0 };
-#pragma pop
-#endif

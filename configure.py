@@ -470,7 +470,7 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/jobj_current.c"),
             Object(Matching, "sysdolphin/baselib/jobj_ik.c"),
             Object(Matching, "sysdolphin/baselib/jobj_init.c"),
-            Object(NonMatching, "sysdolphin/baselib/jobj_class.c"),
+            Object(Matching, "sysdolphin/baselib/jobj_class.c"),
             Object(Matching, "sysdolphin/baselib/jobj_release.c"),
             Object(NonMatching, "sysdolphin/baselib/jobj_info.c"),
             Object(Matching, "sysdolphin/baselib/displayfunc.c"),
