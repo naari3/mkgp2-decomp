@@ -1218,6 +1218,12 @@ game/KartItemSubObject_Ctor.cpp:
 	extabindex  start:0x80020648 end:0x80020654
 	.text       start:0x800549A4 end:0x80054B2C
 
+game/ItemEffectTicks.cpp:
+	extab       start:0x8000745C end:0x8000754C
+	extabindex  start:0x80020654 end:0x800206E4
+	.text       start:0x80054B2C end:0x80056150
+	.rodata     start:0x802EDB20 end:0x802EDB68
+
 game/KartEffectFadeTransit_Tick.c:
 	extab       start:0x8000754C end:0x80007554
 	extabindex  start:0x800206E4 end:0x800206F0
