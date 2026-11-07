@@ -27,7 +27,7 @@ struct DemoRodata163 {
 };
 struct RaceLimits163 { signed char laps; char pad1[3]; float time, bonus; };
 extern "C" {
-extern char lbl_80369798[];
+extern const float lbl_80369798[255];
 extern unsigned int *HSD_RandSeedPtr;
 extern int g_gameMode, g_ccClass, g_cupId, g_longRoundFlag, g_courseVariantIdx, g_roundIndex, g_reverseRoundFlag;
 extern unsigned char lbl_806D1264[3], g_isCommHost;

@@ -1,7 +1,53 @@
 #include "game/Scene_80164614Private.h"
 
+// Course demo speed curves, followed by the replay configuration pool.
+extern "C" const float lbl_80369798[255] = {
+    1.0f, 0.699999988f, 0.899999976f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 83.3333359f, 1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f, 1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f, 1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f, 1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f, 1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f, 1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f,
+};
+
+extern "C" const char lbl_80369B94[0x13] = "playlog7_short.bin";
+extern "C" const char lbl_80369BA8[0x13] = "playlog8_short.bin";
+extern "C" const char lbl_80369BBC[0x12] = "playlog7_long.bin";
+extern "C" const char lbl_80369BD0[0x12] = "playlog8_long.bin";
+static const DemoEntry163 demoEntries[4] = {
+    {12, 7, 0, 0, 0, lbl_80369B94},
+    {11, 8, 0, 0, 0, lbl_80369BA8},
+    {12, 7, 1, 0, 0, lbl_80369BBC},
+    {11, 8, 1, 0, 0, lbl_80369BD0},
+};
+extern "C" const Vec demoZero1 = {0.0f, 0.0f, 0.0f};
+extern "C" const Vec demoZero2 = {0.0f, 0.0f, 0.0f};
+extern "C" const char lbl_80369C5C[0x12] = "clCSPartsPlayDemo";
+extern "C" const char lbl_80369C70[0x22] = "clCSSceneAttract::clTaskInterface";
+extern "C" const char lbl_80369C94[0x38] = "//====================================================\n";
+extern "C" const char lbl_80369CCC[0x1a] = "  { %ff, %ff, %ff, %d },\n";
+static const char demoSizeFormat[0x18] = "PLAYDEMO    logsize:%d\n";
+static const char demoFileSizeFormat[0x1c] = "PLAYDEMO    logfilesize:%d\n";
+static const char demoReadFormat[0x19] = "PLAYDEMO    readsize:%d\n";
+static const char demoLakituName[0x12] = "jyugemu_start.dat";
+
+extern "C" const char lbl_80369D4C[0x11] = "clSceneInterface";
+extern "C" const char lbl_80369D60[0x12] = "clCSScenePlayDemo";
+
 extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
-    DemoRodata163 *data = (DemoRodata163 *)lbl_80369798;
     fn_80121210();
     DrawManager_GetOrCreate();
     fn_801E93A0();
@@ -17,24 +63,24 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
     SetTimerModeEnabled(1);
     g_gameMode = 0;
     g_ccClass = 0;
-    g_cupId = data->entries[index].cup;
-    g_longRoundFlag = data->entries[index].round;
-    SetReverseRoundFlag(data->entries[index].reverse);
-    g_courseVariantIdx = data->entries[index].variant;
+    g_cupId = demoEntries[index].cup;
+    g_longRoundFlag = demoEntries[index].round;
+    SetReverseRoundFlag(demoEntries[index].reverse);
+    g_courseVariantIdx = demoEntries[index].variant;
     g_roundIndex = 0;
     lbl_806D1264[0] = 0x3d;
     lbl_806D1264[1] = 0x2b;
     lbl_806D1264[2] = 0x32;
     s->recording = record;
     ProcessSystemTick(0);
-    DebugPrintf(data->sizeFormat, 43200);
+    DebugPrintf(demoSizeFormat, 43200);
     s->inputs = (TraceInput163 *)FUN_8003b120(43200);
     memset(s->inputs, 0, 43200);
     if (!s->recording) {
         DVDFile163 file;
-        if (DVDOpen(data->entries[index].file, &file)) {
+        if (DVDOpen(demoEntries[index].file, &file)) {
             int size = file.length;
-            DebugPrintf(data->fileSizeFormat, size);
+            DebugPrintf(demoFileSizeFormat, size);
             if (size > 0) {
                 size = (size + 31) & ~31;
                 void *buffer = OSAllocFromHeap(lbl_806CF010, size);
@@ -43,7 +89,7 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
                     DVDLoad_WaitIfSamePage();
                     int count = DVDReadPrio(&file, buffer, size, 0, 2);
                     DVDLoad_RecordOpStart(end);
-                    DebugPrintf(data->readFormat, count);
+                    DebugPrintf(demoReadFormat, count);
                     if (count > 43200) count = 43200;
                     count -= (unsigned int)count % 16;
                     if (count > 0) memcpy(s->inputs, buffer, count);
@@ -56,8 +102,8 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
     s->inputIndex = 0;
     ProcessSystemTick(0);
     RaceSlot_ResetAll();
-    RaceSlot_InitSlot(VSMode_SeedRandomItemSequence(0, data->entries[index].character, 5), 0, data->entries[index].character, 1, 0);
-    g_characterId = data->entries[index].character;
+    RaceSlot_InitSlot(VSMode_SeedRandomItemSequence(0, demoEntries[index].character, 5), 0, demoEntries[index].character, 1, 0);
+    g_characterId = demoEntries[index].character;
     HSD_FObjForceLinearInterp(1);
     lbl_806CF110 = 1;
     SetLocalPcbRole(0);
@@ -113,7 +159,7 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
     CObj_UpdatePerspParam(s->scene, RaceScene_GetPerspFovyForCup());
     SetCourseScene3D(s->scene);
     ProcessSystemTick(0);
-    s->object = new Lakitu163(data->lakituName, s->slot, lbl_806D88F0, lbl_806D88F0, lbl_806D88F0);
+    s->object = new Lakitu163(demoLakituName, s->slot, lbl_806D88F0, lbl_806D88F0, lbl_806D88F0);
     LakituStart_SetCountdownHoldFrames(s->object, 320);
     s->flag = new Flag163(s->scene);
     s->reverseFlag = new Reverse163(CarObject_GetRenderObj(g_carObjects[0]));

@@ -6764,6 +6764,8 @@
     "__dt__19PhysicsCollisionVecFv": "dtor_80036E40"
   },
   "src/game/Scene_80164614.cpp": {
+    "demoZero1": "lbl_80369C44",
+    "demoZero2": "lbl_80369C50",
     "__ct__6Env163Fv": "InputManager_Init",
     "__ct__9Camera163FiiffPv": "Camera_Create",
     "__ct__6Car163Fiifffiiiiii": "CarObject_Init",
