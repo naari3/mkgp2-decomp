@@ -1,15 +1,21 @@
 /*
- * StrPcb_WaitForState1 @ 0x80037CC0 (0x148), NonMatching.
+ * StrPcb_WaitForState1 @ 0x80037CC0 (0x148).
  *
- * Logic and instruction stream match; only the callee-saved register
- * assignment is swapped (target: pcb in r30, timeout in r31; CW gives
- * pcb r31, timeout r30). The sibling StrPcb_RunAndWaitIdle, with the same
- * loop, matches with pcb in r31. Tried: initialised declaration, for-loop,
- * moving the timeout init, routing the loop through a static inline
- * wait helper, and a local alias of the parameter. None move the swap.
+ * Built with GC/1.3: under 1.3.2 the pcb/timeout callee-saved registers
+ * come out swapped. The error check compares the code bytes as int
+ * (target cmpwi), so the TU keeps its own copy of the header inline.
  */
 #include "game/StrPcb.h"
 
+static inline u8 HasErr(StrPcbCmd *pcb)
+{
+    if ((int)pcb->errorCode[0] == 'E') {
+        if ((int)pcb->errorCode[1] != '0' || (int)pcb->errorCode[2] != '0') {
+            return 1;
+        }
+    }
+    return pcb->stickyError5C;
+}
 #pragma exceptions on
 int StrPcb_WaitForState1(StrPcbCmd *pcb)
 {
@@ -29,7 +35,7 @@ int StrPcb_WaitForState1(StrPcbCmd *pcb)
     while (pcb->state20 != 1) {
         Frame_PostDrawOverlay();
         Frame_UpdatePerFrameState();
-        if (pcb->commError26 == 1 || StrPcb_HasErrorInline(pcb) == 1) {
+        if (pcb->commError26 == 1 || HasErr(pcb) == 1) {
             return 0;
         }
         if (timeout-- < 0) {
