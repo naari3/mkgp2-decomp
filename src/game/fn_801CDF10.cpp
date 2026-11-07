@@ -34,8 +34,8 @@ static inline void EnterRace(int seed) {
     g_lakituStartAnimDone = 0;
     lbl_806D1290 = 0;
     InitPlayerSlot(seed, g_characterId);
-    GetPlayerCharacter()->SetCharacter(g_characterId);
     g_rendererGateFlag = 1;
+    GetPlayerCharacter()->SetCharacter(g_characterId);
     fn_801B7CD0(-1);
 }
 static inline void UpdateFade(GpPleaseUpdate *self) {
