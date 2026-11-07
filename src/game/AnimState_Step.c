@@ -1,8 +1,9 @@
 /* AnimState (0x800AE854..0x800AF088): keyframed parameter tracks.
- * NonMatching: Step 98.84%, Init 94.18% (objdiff, 2026-11-05).
- * Chained time/interpolation reset preserves the target's f0-to-f31 move.
- * Remaining: register partition, repeated signed type extension, and Init's
- * retained entries base/offset versus the compiler's moving pointer.
+ * NonMatching: Step 99.264%, Init 94.177% (objdiff, 2026-11-07).
+ * The unsigned track-type parameter of the sampling helper preserves the
+ * repeated signed extension at dispatch; Step now has the exact text size.
+ * Remaining: saved/scratch register partition, Init's retained entries base
+ * versus a moving pointer, and zero-template section ownership/order.
  */
 typedef struct Vec { float x, y, z; } Vec;
 
@@ -29,6 +30,50 @@ typedef struct AnimState {
 
 extern float BuildOrientationFromYaw(float yaw);
 
+static inline void AnimState_Apply(AnimState *s, AnimEntry *e, char type,
+                                   signed char key, float t, signed char *a,
+                                   signed char *b, signed char *c, signed char *j)
+{
+    float v;
+    if (t == 0.0f) {
+        v = ((float *)e->data)[key];
+    } else {
+        v = ((float *)e->data)[key] + t * (((float *)e->data)[key + 1] - ((float *)e->data)[key]);
+    }
+    switch ((signed char)type) {
+    case 2:
+        s->a[a[0]++].x = v;
+        break;
+    case 3:
+        s->a[a[1]++].y = v;
+        break;
+    case 4:
+        s->a[a[2]++].z = v;
+        break;
+    case 5:
+        s->b[b[0]++].x = BuildOrientationFromYaw(v);
+        break;
+    case 6:
+        s->b[b[1]++].y = BuildOrientationFromYaw(v);
+        break;
+    case 7:
+        s->b[b[2]++].z = BuildOrientationFromYaw(v);
+        break;
+    case 8:
+        s->c[c[0]++].x = v;
+        break;
+    case 9:
+        s->c[c[1]++].y = v;
+        break;
+    case 10:
+        s->c[c[2]++].z = v;
+        break;
+    case 11:
+        s->d[(*j)++] = v;
+        break;
+    }
+}
+
 int AnimState_Step(AnimState *s)
 {
     signed char res;
@@ -40,7 +85,6 @@ int AnimState_Step(AnimState *s)
     signed char n;
     int m;
     float t;
-    float v;
     int *data;
 
     if (s->entries == 0) {
@@ -139,43 +183,7 @@ int AnimState_Step(AnimState *s)
             if ((signed char)e->type == 1) {
                 s->value44 = ((int *)e->data)[key];
             } else {
-                if (t == 0.0f) {
-                    v = ((float *)e->data)[key];
-                } else {
-                    v = ((float *)e->data)[key] + t * (((float *)e->data)[key + 1] - ((float *)e->data)[key]);
-                }
-                switch ((signed char)e->type) {
-                case 2:
-                    s->a[a[0]++].x = v;
-                    break;
-                case 3:
-                    s->a[a[1]++].y = v;
-                    break;
-                case 4:
-                    s->a[a[2]++].z = v;
-                    break;
-                case 5:
-                    s->b[b[0]++].x = BuildOrientationFromYaw(v);
-                    break;
-                case 6:
-                    s->b[b[1]++].y = BuildOrientationFromYaw(v);
-                    break;
-                case 7:
-                    s->b[b[2]++].z = BuildOrientationFromYaw(v);
-                    break;
-                case 8:
-                    s->c[c[0]++].x = v;
-                    break;
-                case 9:
-                    s->c[c[1]++].y = v;
-                    break;
-                case 10:
-                    s->c[c[2]++].z = v;
-                    break;
-                case 11:
-                    s->d[j++] = v;
-                    break;
-                }
+                AnimState_Apply(s, e, e->type, key, t, a, b, c, &j);
             }
         }
         k++;
