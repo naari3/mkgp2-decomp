@@ -460,7 +460,7 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/tobj_reset_consts.c"),
             Object(Matching, "sysdolphin/baselib/tobj_anim.c"),
             Object(Matching, "sysdolphin/baselib/tobj_nm.c"),
-            Object(NonMatching, "sysdolphin/baselib/tobj_mtx_pool_nm.c"),
+            Object(Matching, "sysdolphin/baselib/tobj_mtx_pool_nm.c"),
             Object(Matching, "sysdolphin/baselib/state.c"),
             Object(Matching, "sysdolphin/baselib/state_render.c"),
             Object(Matching, "sysdolphin/baselib/state_color.c", mw_version="GC/2.7"),
@@ -507,8 +507,8 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/hash.c"),
             Object(Matching, "sysdolphin/baselib/texp.c"),
             Object(Matching, "sysdolphin/baselib/texp_inputs_nm.c"),
-            Object(NonMatching, "sysdolphin/baselib/texp_inputs_pools_nm.c"),
-            Object(NonMatching, "sysdolphin/baselib/texp_alpha_strings_nm.c"),
+            Object(Matching, "sysdolphin/baselib/texp_inputs_pools_nm.c"),
+            Object(Matching, "sysdolphin/baselib/texp_alpha_strings_nm.c"),
             Object(Matching, "sysdolphin/baselib/texp_alloc.c"),
             Object(Matching, "sysdolphin/baselib/texp_color_nm.c"),
             Object(Matching, "sysdolphin/baselib/texp_color.c"),
@@ -866,7 +866,7 @@ config.libs = [
             Object(NonMatching, "game/fn_801E4AF4.cpp", mw_version="GC/2.7", extab_padding=b"\x02\x55", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801E5A00.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/fn_801E5454.cpp", mw_version="GC/2.7", extab_padding=b"\x02\x55", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/fn_801E5724.cpp", mw_version="GC/2.7", extab_padding=b"\x02\x55", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_801E5724.cpp", mw_version="GC/2.7", extab_padding=b"\x02\x55", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801DAA84.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80169DF0.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80241C04.c"),
@@ -3573,7 +3573,7 @@ config.libs = [
             Object(Matching, "triforce/amcoin_tail.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "triforce/amcoin_nm2.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/amcoin_state.c", extra_cflags=["-use_lmw_stmw on"]),
-            Object(NonMatching, "triforce/amcoin_tables.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "triforce/amcoin_tables.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/amjvs.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/amjvs_nm1.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/amjvs_m2.c", extra_cflags=["-use_lmw_stmw on"]),
@@ -3616,7 +3616,7 @@ config.libs = [
             Object(Matching, "triforce/acsocket_m7.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "triforce/acsocket_nm7.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/amuart.c", extra_cflags=["-use_lmw_stmw on"]),
-            Object(NonMatching, "triforce/amuart_state.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "triforce/amuart_state.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/amsys.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/jvsboot.c", extra_cflags=["-str reuse,readonly"]),
         ],
@@ -3967,9 +3967,11 @@ def _inject_data_align4_tus() -> None:
         users = []
         for tu in DATA_ALIGN4_TUS:
             obj = ("build/GNLJ82/src/" + tu + ".o").replace("/", sep)
-            target = "build " + obj + ": " + base_rule + " "
-            if target in text:
-                users.append(target)
+            # Long paths make the ninja writer wrap after "obj: $".
+            for target in ("build " + obj + ": " + base_rule + " ",
+                           "build " + obj + ": $\n    " + base_rule + " "):
+                if target in text:
+                    users.append(target)
         if not users:
             continue
         start = text.index("rule " + base_rule + "\n")
@@ -3978,7 +3980,7 @@ def _inject_data_align4_tus() -> None:
         assert hook in rule
         rule = rule.replace(hook, hook + " && $python tools/postprocess_data_alignment.py $out", 1)
         for target in users:
-            text = text.replace(target, target.replace(": " + base_rule + " ", ": " + new_rule + " "), 1)
+            text = text.replace(target, target.replace(base_rule + " ", new_rule + " "), 1)
         text = text[:start] + rule + "\n" + text[start:]
     build_ninja.write_text(text, encoding="utf-8")
 
@@ -4000,6 +4002,7 @@ DATA_ALIGN4_WEAK_TUS = [
     "game/anon_8020BD68",
     "game/anon_8020BD68_nm1",
     "game/ENo3D",
+    "sysdolphin/baselib/texp_alpha_strings_nm",  # keeps .comment (force_active)
 ]
 
 
@@ -4013,9 +4016,11 @@ def _inject_data_align4_weak_tus() -> None:
         users = []
         for tu in DATA_ALIGN4_WEAK_TUS:
             obj = ("build/GNLJ82/src/" + tu + ".o").replace("/", sep)
-            target = "build " + obj + ": " + base_rule + " "
-            if target in text:
-                users.append(target)
+            # Long paths make the ninja writer wrap after "obj: $".
+            for target in ("build " + obj + ": " + base_rule + " ",
+                           "build " + obj + ": $\n    " + base_rule + " "):
+                if target in text:
+                    users.append(target)
         if not users:
             continue
         start = text.index("rule " + base_rule + "\n")
@@ -4024,7 +4029,7 @@ def _inject_data_align4_weak_tus() -> None:
         assert hook in rule
         rule = rule.replace(hook, hook + " && $python tools/postprocess_data_align4_keep_comment.py $out", 1)
         for target in users:
-            text = text.replace(target, target.replace(": " + base_rule + " ", ": " + new_rule + " "), 1)
+            text = text.replace(target, target.replace(base_rule + " ", new_rule + " "), 1)
         text = text[:start] + rule + "\n" + text[start:]
     build_ninja.write_text(text, encoding="utf-8")
 
@@ -4036,6 +4041,7 @@ SDATA2_ALIGN4_TUS = [
     "game/Terrain_FlagsToDebugString",
     "game/ENo3D",
     "game/DrawEffect_Cb_WheelSpark_Bind4D",
+    "sysdolphin/baselib/tobj_mtx_pool_nm",
 ]
 
 

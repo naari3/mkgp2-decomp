@@ -2855,7 +2855,7 @@ void fn_8015CD74(ResultPartYU *o) {
         } else {
             fn_801695E0(5, 0x17a1, 0, lbl_806D866C, lbl_806D873C + a, lbl_806D8674);
             fn_801695E0(5, 0x17a2, 0, lbl_806D866C, lbl_806D8740 + a, lbl_806D8674);
-            fn_80169334(5, 0x2afc, 0, lbl_806D874C, lbl_806D8750 + a, lbl_806D8754, lbl_806D8674, lbl_806D8674);
+            fn_80169334(5, 0x2afc, 0, lbl_806D874C, lbl_806D8750 + a, lbl_806D8754, 1.0f, 1.0f);
         }
     }
     if ((InputMgr_GetPlayer(GetInputManager(), 0)->Held(0x2000) || InputMgr_GetPlayer(GetInputManager(), 0)->Held(0x100)) &&
@@ -2866,7 +2866,7 @@ void fn_8015CD74(ResultPartYU *o) {
     float fd = o->fade;
     if (fd >= lbl_806D8678) {
         unsigned int c;
-        if (lbl_806D86A4 < (o->fade = fd + lbl_806D8674)) o->fade = lbl_806D86A4;
+        if ((o->fade = fd + lbl_806D8674) > 15.0f) o->fade = 15.0f;
         fn_801678FC(0, lbl_806D8678, lbl_806D8678, lbl_806D8678, o->fade / lbl_806D86A4);
         c = (unsigned char)(int)(lbl_806D86E8 * (o->fade / lbl_806D86A4));
         o->colB[0] = c;

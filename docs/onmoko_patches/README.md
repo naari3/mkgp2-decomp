@@ -18,7 +18,9 @@ on its own with a fresh link; main.dol stayed OK.
 | fn_801F8A34.patch | fn_801F8A34 | game/fn_801F8A34.cpp | 98.16% | opt_common_subs off | 100% | yes, included |
 | fn_8021E0FC.patch | fn_8021E0FC | game/anon_8021BC44.cpp | 92.99% | opt_propagation off | 100% | no: TU still has fn_8021C070/C778/D780/DAB8 < 100% |
 | clItemBoxManager_Update_Inner.patch | clItemBoxManager_Update_Inner | game/clItemBoxManager_nm1.cpp | 99.74% | opt_lifetimes off | 100% | no: SoundDriver_GetOrCreate and 3 DoublyLinkedList fns < 100% |
-| fn_80246DE4.patch | fn_80246DE4 | game/RaceDigits.cpp | 99.96% | `#pragma push` / `optimization_level 3` / `pop` around the fn (GC/2.6) | 100% (all 7 fns of the TU at 100%) | no: the .o emits weak copies of other TUs' fns (TweenInterp_Dtor, dtor_80082960, fn_801F26C8, dtor_801F2724, dtor_801F4A80, __dt__12DigitListMidFv) and puts fn_802476FC first, so main.dol grows by 0x20 and the SHA fails |
+| fn_80246DE4.patch | fn_80246DE4 | game/RaceDigits.cpp | 99.96% | optimization_level 3 around DigitHud's ctor, plus flip work: functions reordered to the target order (DigitHud ctor, Update, DigitPanel ctor), DigitOwner/DigitListBase members made out-of-line in this TU via `RACE_DIGITS_OUTLINE` in include/game/RaceDigitsPrivate.h (other TUs keep the inline versions), `main(0)` through a new inline pointer ctor so DigitHud's ctor doesn't need DigitOwner(), `#pragma defer_codegen on` before the last two dtors so ~DigitList still inlines ~DigitListBase, and the TU added to DATA_ALIGN4_WEAK_TUS (its .data was 8-aligned) | all 7 fns 100% | yes, included (updated 2026-11-07 18:50; clean build main.dol OK) |
+| fn_8028EAA8.patch | fn_8028EAA8 | triforce/amnet_nm2_rest.c | 99.28% | opt_dead_assignments off + `case 3: break;` in the dev->kind switch (gives the target's second `b`) | 100% | no: fn_8028D8CC (98.42%) is in the same TU |
+| FrameUpdate.patch | FrameUpdate | game/FrameUpdate.c | 93.66% | GC/1.3.2 (was 3.0a5) + opt_common_subs off; the FrameBackup field at 0x18 is one `unsigned long long qw18` (0x14 is padding before it), so the copy loads 0x18/0x1C into a register pair the way the target does. include/game/FrameUpdate_private.h changes; TaMode_FrameUpdate (the other includer) is unchanged at 99.48% | 100% | yes, included (clean build main.dol OK) |
 
 Not needed any more: STLContainer_DisposeRecursive and fn_801987C4 are already
 100% on current main (fixed after the sweep table was generated).
@@ -56,4 +58,12 @@ main 295cfd3) was swept:
   fn_8021E0FC again (optimization_level 2 works too).
 - Near misses left by the sweep: fn_8028EAA8 (amnet_nm2_rest) 49 -> 1 with
   GC/1.3.2 + optimization_level 3; FrameUpdate 107 -> 2 with GC/1.3.2 +
-  opt_common_subs off (own cc is 3.0a5).
+  opt_common_subs off (own cc is 3.0a5). Solved later: see FrameUpdate.patch.
+
+## Hand fixes (R2, 2026-11-07)
+
+Verified on main with the patch applied: clean build (`rm -rf build/GNLJ82/src build/GNLJ82/ok`), main.dol OK.
+
+| Patch | Function | TU | Issue | Before | Fix | After | TU flip |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| VfxSlotMgr.patch | VfxSlotMgr_Update | game/VfxSlotMgr.cpp | #2369 | 99.94% | copy `*position` then `*target` into locals in the caller and call BuildCamera directly (SetCamera's by-value params took their stack slots in the opposite order) | 100% | yes, included |

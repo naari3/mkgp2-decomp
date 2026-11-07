@@ -4177,8 +4177,7 @@
     "__ct__10Scene3DObjFv": "fn_8014C53C",
     "extab_fn_8014D038": "@etb_8000E5D8",
     "extabindex_fn_8014D038": "@eti_80025508",
-    "extab_fn_8014D344": "@etb_8000E618",
-    "extabindex_fn_8014D344": "@eti_80025538"
+    "__ct__11PreviewPartFPvUc": "fn_8013D800"
   },
   "src/game/SpriteHandlePool.c": {
     "__dt__11ScopedAccumFv": "dtor_80122068",
@@ -12386,7 +12385,7 @@
     "__vt__Q23std9exception": "lbl_803F5710",
     "__vt__Q23std11logic_error": "lbl_803F5700",
     "__vt__Q23std12length_error": "lbl_803F56F0",
-    "@129": "lbl_803BD228",
+    "@129": "extern:lbl_803BD228",
     "@131": "@etb_80016414",
     "@132": "@eti_800287C0"
   },
