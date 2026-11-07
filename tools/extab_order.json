@@ -97,6 +97,13 @@
       "dtor_80065748"
     ]
   },
+  "src/game/clFlowRound.c": [
+    "clFlowRound_Draw",
+    "clFlowRound_Update",
+    "clFlowRound_Dtor",
+    "clFlowRound_Init",
+    "dtor_80082960"
+  ],
   "src/game/clFlowCup.c": [
     "clFlowCup_Draw",
     "clFlowCup_Update",
