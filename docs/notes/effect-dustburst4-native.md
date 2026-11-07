@@ -15,3 +15,8 @@ c15_u49: fresh baseline96.985985/860B. Whole active-child loop in static inline 
 Source: Codex worker c18_u72_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u72 fresh baseline97.13551/856B (assignment says97.59). Staged ratio assignment then *= reciprocal restores ratio f3/alpha-base f2:97.415886. Caller-owned delta passed by reference restores deltaSP+14/by-valueSP+8:97.45327. Passing caller cursor by reference instead of helper-local cursor restores active-loop r28:97.71028. All retained cumulatively;856B,8B EH/12B index100. self/group, init/free/active-loop saved GPR partition, first time/phase FP homes, global base registers and curve/cursor increment scheduling remain. Three new hypotheses exhausted; single function staysNonMatching, no A/B rescue. Final coordinator fallback build SHA1 exact; native gain0.
+
+## c19_u156_20261107
+Source: Codex worker c19_u156_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u156 fresh CLI97.71028/856B. Parent-owned group type at+CC is byte-invariant. Whole member Update behind C wrapper does not auto-inline (32B wrapper plus856B member), reverted. Passing curve/globalPosition as inline UpdateChildren parameters improves97.96729 and restores active indexr31/global-base materializationr3/r4. Text856B/EH8/index12 remain exact sizes, EH100. Residual self/group, init cursor/callback/index, active curve/global GPR partition; first start/phasef3/f1; curve/cursor increment order. Three hypotheses exhausted; single function remainsNonMatching, gain0; final full fallback SHA1 exact.

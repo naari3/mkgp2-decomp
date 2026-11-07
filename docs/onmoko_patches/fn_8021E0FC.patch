@@ -1,0 +1,19 @@
+diff --git a/src/game/anon_8021BC44.cpp b/src/game/anon_8021BC44.cpp
+index 06fd264..725bce3 100644
+--- a/src/game/anon_8021BC44.cpp
++++ b/src/game/anon_8021BC44.cpp
+@@ -1439,10 +1439,14 @@ extern "C" TimeAttackResult *fn_8021E0C0(void) {
+     return new TimeAttackResult;
+ }
+ 
++#pragma push
++#pragma opt_propagation off
+ CoinContinue::~CoinContinue() {
+     SetInput(0);
+     objs.DeleteAll();
+ }
++#pragma pop
++
+ 
+ void CoinContinue::Draw() {
+     for (FadeObj **it = objs.begin(); it != objs.end(); it++) {
