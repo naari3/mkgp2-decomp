@@ -4171,6 +4171,7 @@ game/DrawEffect_Cb_RalySmokeVariant_Tick.c:
 	extab       start:0x8000AA70 end:0x8000AA78
 	extabindex  start:0x80023114 end:0x80023120
 	.text       start:0x800C80C0 end:0x800C83FC
+	.rodata     start:0x8032A7E0 end:0x8032A890
 
 game/DrawEffect_Cb_RalySmokeSpawner_4Wheel.c:
 	extab       start:0x8000AA78 end:0x8000AA80

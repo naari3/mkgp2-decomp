@@ -7,8 +7,6 @@
 typedef struct { Vec v[4]; } DirTable;
 typedef struct { const char *name[4]; } JointTable;
 
-extern const DirTable lbl_8032A7E0;
-extern const char *const lbl_8032A880[4];
 extern unsigned char lbl_805DF3D0[];
 extern void VfxSlot_ResolveJoint(void *slot, const char *name);
 extern void Mtx44_Inverse_GaussJordan(float dst[4][4], void *src);
@@ -17,9 +15,20 @@ extern void Mtx44_TransformVec3(Vec *out, void *m, Vec *in);
 void DrawEffect_Cb_RalySmokeVariant_Tick(unsigned char *self)
 {
     float inv[4][4];
-    DirTable dirs = lbl_8032A7E0;
+    /* Local aggregate initializers supply the copied direction and joint tables. */
+    DirTable dirs = {{
+        {0.126f, 0.20099998f, 0.0f},
+        {-0.182f, 0.20099998f, 0.0f},
+        {-0.168f, -0.20100003f, 0.0f},
+        {0.196f, -0.20100003f, 0.0f},
+    }};
     Vec v;
-    JointTable joints = *(const JointTable *)lbl_8032A880;
+    static const char lbl_8032A810[0x1C] = "raly_x_smoke__T_T_2_1_joint";
+    static const char lbl_8032A82C[0x1C] = "raly_x_smoke__T_T_1_1_joint";
+    static const char lbl_8032A848[0x1A] = "raly_x_smoke__T_T_4_joint";
+    static const char lbl_8032A864[0x1A] = "raly_x_smoke__T_T_3_joint";
+
+    JointTable joints = {{lbl_8032A810, lbl_8032A82C, lbl_8032A848, lbl_8032A864}};
     Vec cur;
     Vec delta;
     Vec local;
