@@ -20,8 +20,8 @@ unsigned char clDNFlash::Check() {
         t++;
     }
     unsigned char prev = inside;
-    float mnx = lbl_804EE008[t].x;
     inside = 0;
+    float mnx = lbl_804EE008[t].x;
     if (x < mnx) {
         return 0;
     }
@@ -34,8 +34,10 @@ unsigned char clDNFlash::Check() {
     if (z > lbl_804EE038[t].z) {
         return 0;
     }
-    float nx = -(lbl_803D07BC[t].b.x - lbl_803D07BC[t].a.x);
-    float nz = lbl_803D07BC[t].b.z - lbl_803D07BC[t].a.z;
+    float nx, nz;
+    float dx = lbl_803D07BC[t].b.x - lbl_803D07BC[t].a.x;
+    nz = lbl_803D07BC[t].b.z - lbl_803D07BC[t].a.z;
+    nx = -dx;
     nx *= KartMovement_GetVelocityPtr(k)[2];
     if (nz * KartMovement_GetVelocityPtr(k)[0] + nx < lbl_806DB490) {
         return 0;
