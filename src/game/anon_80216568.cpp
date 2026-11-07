@@ -200,7 +200,7 @@ typedef struct RankSlot {
 
 typedef struct PlayerData {
     char pad00[0x48];
-    unsigned char cleared[8][2][2];
+    unsigned char cleared[32];
 } PlayerData;
 
 extern "C" {
@@ -249,8 +249,12 @@ static inline int TimeRank(float d) {
     return 3;
 }
 
-static inline unsigned char IsCourseCleared(int course, int reverse, int isLong) {
-    return g_playerData.cleared[course][reverse][isLong];
+static inline int CourseClearIndex(int course, int reverse, int isLong) {
+    return isLong + (course * 4 + reverse * 2);
+}
+
+static inline unsigned char IsCourseCleared(int index) {
+    return g_playerData.cleared[index];
 }
 
 void CalcEarnedCoins(void) {
@@ -315,7 +319,7 @@ void CalcEarnedCoins(void) {
         }
         battleBonus = kTimeBonusB[k];
         if (!fn_8024F588()->retired) {
-            if (IsCourseCleared(g_cupId - 1, g_reverseRoundFlag, g_longRoundFlag) == 1) {
+            if (IsCourseCleared(CourseClearIndex(g_cupId - 1, g_reverseRoundFlag, g_longRoundFlag)) == 1) {
                 extraBattleBonus = RankSlot_GetByIndex(0)->active ? kPerfectBonus[cc] : 0;
             }
         }
