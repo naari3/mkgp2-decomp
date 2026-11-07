@@ -10,7 +10,8 @@
 
 #include "texp_inline.h"
 #undef __FILE__
-#define __FILE__ "texp.c"
+#define __FILE__ lbl_806D0F38
+extern char lbl_806D0F38[7];
 extern int AssignColorReg(HSD_TETev*, int, HSD_TExpRes*);
 extern int AssignColorKonst(HSD_TETev*, int, HSD_TExpRes*);
 extern int AssignAlphaKonst(HSD_TETev*, int, HSD_TExpRes*);

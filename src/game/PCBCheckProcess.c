@@ -32,7 +32,6 @@ extern void* memset(void*, int, unsigned long);
 
 static inline void PCBCheck_ClearSlotData(PcbLinkSlot* slot, int index)
 {
-    unsigned char* sample;
     int j;
     if (index >= 0 && index < 4) {
         if (slot->flags.byte.local == 1) {
@@ -43,8 +42,8 @@ static inline void PCBCheck_ClearSlotData(PcbLinkSlot* slot, int index)
             slot->writeIndex = 1;
         }
         memset(slot, 0, 0x2C);
-        for (j = 0, sample = (unsigned char*)slot; j < 64; ++j, sample += 0x28) {
-            memset(sample + 0x2C, 0, 0x28);
+        for (j = 0; j < 64; ++j) {
+            memset(slot->samples[j], 0, 0x28);
         }
     }
 }
@@ -72,11 +71,11 @@ static inline void PCBCheck_ResetAll(PcbLinkSlot* base)
 static inline void PCBCheck_ResetLinks(int requested)
 {
     PcbLinkSlot* reset;
-    int index = 0;
+    unsigned int index = 0;
     int count = 4;
     if (requested != -1) { index = requested; count = 1; }
-    reset = &lbl_805A6154[index];
     while (count != 0) {
+        reset = &lbl_805A6154[index];
         if (requested != -1) {
             TCPConn_Reset(reset->primary);
             if (reset->secondary != 0) TCPConn_Close(reset->secondary);
@@ -92,7 +91,6 @@ static inline void PCBCheck_ResetLinks(int requested)
         reset->timeout = 0;
         reset->flags.byte.dirty = 1;
         PCBCheck_ClearSlotData(reset, index);
-        ++reset;
         ++index;
         --count;
     }
@@ -101,15 +99,16 @@ static inline void PCBCheck_ResetLinks(int requested)
 
 int PCBCheck_ProcessLinks(void)
 {
-    int candidate = -1;
-    PcbLinkSlot* base;
     PcbLinkSlot* slot;
+    PcbLinkSlot* base;
+    int candidate = -1;
     int i;
     if (g_pcbCommEnabled == 0) return 0;
     base = lbl_805A6154;
-    slot = base;
-    for (i = 0; i < 4; ++i, ++slot) {
-        unsigned char recover = 0;
+    for (i = 0; i < 4; ++i) {
+        unsigned char recover;
+        slot = &base[i];
+        recover = 0;
         if (slot->primary != 0) {
             if (TCPConn_Poll(slot->primary, 1) == 1) slot->flags.byte.polled = 1;
             else slot->flags.byte.polled = 0;

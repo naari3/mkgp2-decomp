@@ -82,8 +82,9 @@ extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
         SetY(Archive_GetRootJObj(self->model), result.y);
         result.z = dir.z * offset.z + (dx * offset.x + eye.z);
         SetZ(Archive_GetRootJObj(self->model), result.z);
-        float yaw = lbl_806CEDCC + (float)atan2(dir.x, dir.z);
-        SetYaw(Archive_GetRootJObj(self->model), yaw);
+        Vec3f rotation;
+        rotation.y = lbl_806CEDCC + (float)atan2(dir.x, dir.z);
+        SetYaw(Archive_GetRootJObj(self->model), rotation.y);
     }
     self->frame = Object_GetField8(self->model);
     if (lbl_806D2510 == self->released && self->frame >= lbl_806CEDB8) {

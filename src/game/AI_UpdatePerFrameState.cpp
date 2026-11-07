@@ -7,10 +7,13 @@ static inline float FrameVecSquare(const Vec *v) {
     return (x+y)+z;
 }
 static inline void FrameUpdatePairs(AISpeedRender *player, float px, float py, float pz) {
-    for (int i=0;i<8;++i) {
-        AIPairRecord *p=&lbl_806793D8[i];
+    AISpeedRender *driver;
+    AIPairRecord *p;
+    int i;
+    for (i=0;i<8;++i) {
+        p=&lbl_806793D8[i];
     if (p && p->driver) {
-        AISpeedRender *driver = (AISpeedRender *)p->driver;
+        driver = (AISpeedRender *)p->driver;
         float *mtx = KartDriver_GetKartRootMtx(driver);
         float z, y, x;
         x=mtx[3]; y=mtx[7]; z=mtx[11];
@@ -44,12 +47,15 @@ static inline void FrameUpdatePairs(AISpeedRender *player, float px, float py, f
     }
 }
 static inline void UpdateFlags(AIFrameOwner *self, AISpeedRender *player, int waypoint, AIPairRecord *pairs) {
+    AISpeedRender *driver;
+    AIPairRecord *p;
+    AIPairRecord *cursor;
+    int i;
     self->flag18 = 0;
     if (player->rank == 0) {
-        AISpeedRender *driver=0;
-        AIPairRecord *p;
-        AIPairRecord *cursor=pairs;
-        for (int i=0; i<8; ++i,++cursor) {
+        driver=0;
+        cursor=pairs;
+        for (i=0; i<8; ++i,++cursor) {
             p=cursor;
             if (cursor && cursor->driver && ((AISpeedRender *)cursor->driver)->rank == 1) {
                 driver=(AISpeedRender *)cursor->driver;
@@ -74,10 +80,9 @@ static inline void UpdateFlags(AIFrameOwner *self, AISpeedRender *player, int wa
     }
     self->flag19 = 0;
     if (player->rank == 5) {
-        AISpeedRender *driver=0;
-        AIPairRecord *p;
-        AIPairRecord *cursor=pairs;
-        for (int i=0; i<8; ++i,++cursor) {
+        driver=0;
+        cursor=pairs;
+        for (i=0; i<8; ++i,++cursor) {
             p=cursor;
             if (cursor && cursor->driver && ((AISpeedRender *)cursor->driver)->rank == 4) {
                 driver=(AISpeedRender *)cursor->driver;
@@ -102,6 +107,7 @@ static inline void UpdateFlags(AIFrameOwner *self, AISpeedRender *player, int wa
     }
 }
 extern "C" void AI_UpdatePerFrameState(AIFrameOwner *self) {
+    float distance;
     int maxFrames = lbl_806D1920;
     ++self->frame;
     if (maxFrames < self->frame) self->frame=maxFrames;
@@ -115,7 +121,7 @@ extern "C" void AI_UpdatePerFrameState(AIFrameOwner *self) {
     {
         int nearest=-1;
         AIFramePosition pos(mtx[3],mtx[7],mtx[11]);
-        float distance=lbl_806DA414;
+        distance=lbl_806DA414;
         for (int i=0;i<8;++i) {
             AIPairRecord *p=&lbl_806793D8[i];
             if (p && p->driver && p->driver != player && p->field1C >= 0) {
