@@ -10375,6 +10375,7 @@ game/fn_801ECA14.c:
 	extab       start:0x80016C4C end:0x80016C54
 	extabindex  start:0x80028B20 end:0x80028B2C
 	.text       start:0x801ECA14 end:0x801ECAFC
+	.rodata     start:0x803BD920 end:0x803BDED4
 
 game/fn_801ECAFC.c:
 	.text       start:0x801ECAFC end:0x801ECB04

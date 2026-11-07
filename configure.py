@@ -910,7 +910,7 @@ config.libs = [
             Object(Matching, "game/fn_80218D90.c"),
             Object(Matching, "game/PhysicsState_AccelInterpolate.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801EC9AC.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/fn_801ECA14.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_801ECA14.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/PhysicsState_KartCollisionCheck.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/PhysicsState_WallCollisionCheck.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/fn_801EE36C.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
