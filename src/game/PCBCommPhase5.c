@@ -18,32 +18,6 @@ extern const float lbl_806D3158, lbl_806D315C, lbl_806D3160;
 extern const float lbl_806D3164, lbl_806D3168;
 
 #pragma exceptions on
-static inline void PublishValue(float timer, char *phases, unsigned char *idle)
-{
-    char *cursor = phases;
-    unsigned char *out = g_pcbSyncTable;
-    int i;
-    for (i = 0; i < 4; ++i, ++cursor, out += 4) {
-        if (*cursor == 5) {
-            *(float *)(out + 8) = timer;
-            *idle = 0;
-        }
-    }
-}
-static inline void PublishTimers(int roleCount, unsigned char truncate,
-                                 unsigned char reset, char *phases)
-{
-    unsigned char idle = 1;
-    if (roleCount > 0) {
-        float timer;
-        lbl_806D11C0[1] -= lbl_806D3164;
-        if (truncate) lbl_806D11C0[1] = (int)lbl_806D11C0[1];
-        if (reset) lbl_806D11C0[1] = lbl_806D3168;
-        timer = lbl_806D11C0[1];
-        PublishValue(timer, phases, &idle);
-    }
-    if (idle) lbl_806D11C0[1] = lbl_806D3168;
-}
 int PCBComm_UpdateSyncPhase5(void)
 {
     char *phases;
@@ -106,7 +80,27 @@ int PCBComm_UpdateSyncPhase5(void)
         }
         lbl_806D11C8 = OSGetTime();
     }
-    PublishTimers(roleCount, truncate, reset, phases);
+    {
+        unsigned char idle = 1;
+        if (roleCount > 0) {
+            float timer;
+            lbl_806D11C0[1] -= lbl_806D3164;
+            if (truncate) lbl_806D11C0[1] = (int)lbl_806D11C0[1];
+            if (reset) lbl_806D11C0[1] = lbl_806D3168;
+            timer = lbl_806D11C0[1];
+            {
+                char *cursor = phases;
+                unsigned char *out = g_pcbSyncTable;
+                for (i = 0; i < 4; ++i, ++cursor, out += 4) {
+                    if (*cursor == 5) {
+                        *(float *)(out + 8) = timer;
+                        idle = 0;
+                    }
+                }
+            }
+        }
+        if (idle) lbl_806D11C0[1] = lbl_806D3168;
+    }
     return 1;
 }
 #pragma exceptions reset
