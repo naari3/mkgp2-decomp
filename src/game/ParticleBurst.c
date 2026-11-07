@@ -91,7 +91,6 @@ extern const float lbl_806D515C;
 extern const unsigned char lbl_803292B4[6][3];
 
 void ParticleBurst_Draw(char *self);
-asm void ParticleBurst_DrawCb(void);
 
 #pragma exceptions on
 #pragma use_lmw_stmw on
@@ -146,71 +145,28 @@ void ParticleBurst_Draw(char *self) {
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 
-/*
- * ParticleBurst_DrawCb stays an exact asm body: the draw-manager load is
- * followed by a redundant `p ? p : 0` select, which has no genuine C form in
- * this C TU (same as TwinSpriteOverlay_AddDraw). Its extab entry is emitted
- * manually and ordered by tools/extab_order.json.
- */
-extern void Mtx44_TransformVec3();
-extern void clDrawMan_AddSorted_NoDepthBias();
+typedef struct PBVec3 {
+    float x, y, z;
+} PBVec3;
+
+extern PBVec3 Mtx44_TransformVec3(const float *m, PBVec3 v);
+extern void clDrawMan_AddSorted_NoDepthBias(void *mgr, void (*fn)(char *), char *obj,
+                                            float x, float y, float z, float bias);
 extern void *lbl_806D10AC;
-extern float lbl_803292C8[];
+extern PBVec3 lbl_803292C8;
 extern float lbl_805DF3D0[];
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ParticleBurst_DrawCb[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+#pragma exceptions on
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ParticleBurst_DrawCb = {
-    (void *)&ParticleBurst_DrawCb, 0x00000094, (void *)extab_ParticleBurst_DrawCb
-};
-
-asm void ParticleBurst_DrawCb(void) { /* 0x800B4388 size:0x94 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    lis r4, lbl_805DF3D0@ha
-    lis r5, lbl_803292C8@ha
-    stw r0, 0x34(r1)
-    addi r4, r4, lbl_805DF3D0@l
-    stw r31, 0x2c(r1)
-    mr r31, r3
-    addi r3, r1, 0x14
-    lwzu r7, lbl_803292C8@l(r5)
-    lwz r6, 0x4(r5)
-    lwz r0, 0x8(r5)
-    addi r5, r1, 0x8
-    stw r7, 0x14(r1)
-    stw r6, 0x18(r1)
-    stw r0, 0x1c(r1)
-    stw r7, 0x8(r1)
-    stw r6, 0xc(r1)
-    stw r0, 0x10(r1)
-    bl Mtx44_TransformVec3
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne ParticleBurst_DrawCb_L_800B43E8
-    li r3, 0x0
-    ParticleBurst_DrawCb_L_800B43E8:
-    lis r4, ParticleBurst_Draw@ha
-    lfs f1, 0x14(r1)
-    lfs f2, 0x18(r1)
-    addi r4, r4, ParticleBurst_Draw@l
-    lfs f3, 0x1c(r1)
-    mr r5, r31
-    lfs f4, lbl_806D5034(r2)
-    bl clDrawMan_AddSorted_NoDepthBias
-    lwz r0, 0x34(r1)
-    lwz r31, 0x2c(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+void ParticleBurst_DrawCb(char *self) {
+    PBVec3 p = lbl_803292C8;
+    p = Mtx44_TransformVec3(lbl_805DF3D0, p);
+    clDrawMan_AddSorted_NoDepthBias(lbl_806D10AC == 0 ? 0 : lbl_806D10AC,
+                                    ParticleBurst_Draw, self, p.x, p.y, p.z,
+                                    lbl_806D5034);
 }
+
+#pragma exceptions reset
 
 static inline float sinf(float x)
 {

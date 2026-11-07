@@ -128,70 +128,13 @@ void TwinSpriteOverlay_Render(char *self) {
     }
 }
 
-#pragma exceptions reset
-
-/*
- * TwinSpriteOverlay_AddDraw stays an exact asm body (no genuine C form found for
- * the null-checked draw-manager load); its extab entry is emitted manually and
- * ordered by tools/extab_order.json.
- */
-asm void TwinSpriteOverlay_AddDraw(char *self);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_TwinSpriteOverlay_AddDraw[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_TwinSpriteOverlay_AddDraw = {
-    (void *)&TwinSpriteOverlay_AddDraw, 0x00000094, (void *)extab_TwinSpriteOverlay_AddDraw
-};
-
-asm void TwinSpriteOverlay_AddDraw(char *self) { /* 0x800B1964 size:0x94 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    lis r4, lbl_805DF3D0@ha
-    lis r5, lbl_8032948C@ha
-    stw r0, 0x34(r1)
-    addi r4, r4, lbl_805DF3D0@l
-    stw r31, 0x2c(r1)
-    mr r31, r3
-    addi r3, r1, 0x14
-    lwzu r7, lbl_8032948C@l(r5)
-    lwz r6, 0x4(r5)
-    lwz r0, 0x8(r5)
-    addi r5, r1, 0x8
-    stw r7, 0x14(r1)
-    stw r6, 0x18(r1)
-    stw r0, 0x1c(r1)
-    stw r7, 0x8(r1)
-    stw r6, 0xc(r1)
-    stw r0, 0x10(r1)
-    bl Mtx44_TransformVec3
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne TwinSpriteOverlay_AddDraw_L_800B19C4
-    li r3, 0x0
-    TwinSpriteOverlay_AddDraw_L_800B19C4:
-    lis r4, TwinSpriteOverlay_Render@ha
-    lfs f1, 0x14(r1)
-    lfs f2, 0x18(r1)
-    addi r4, r4, TwinSpriteOverlay_Render@l
-    lfs f3, 0x1c(r1)
-    mr r5, r31
-    lfs f4, lbl_806D5034(r2)
-    bl clDrawMan_AddSorted_NoDepthBias
-    lwz r0, 0x34(r1)
-    lwz r31, 0x2c(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+void TwinSpriteOverlay_AddDraw(char *self) {
+    Vec3 p = lbl_8032948C;
+    p = Mtx44_TransformVec3(lbl_805DF3D0, p);
+    clDrawMan_AddSorted_NoDepthBias(lbl_806D10AC == 0 ? 0 : lbl_806D10AC,
+                                    TwinSpriteOverlay_Render, self, p.x, p.y, p.z,
+                                    lbl_806D5034);
 }
-
-#pragma exceptions on
 
 void TwinSpriteOverlay_Update(char *self) {
     void *anim;
