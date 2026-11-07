@@ -2198,7 +2198,10 @@
   },
   "src/game/KartDriver_Init.c": {
     "extab_KartDriver_Init": "@etb_80006448",
-    "extabindex_KartDriver_Init": "@eti_8001FF70"
+    "extabindex_KartDriver_Init": "@eti_8001FF70",
+    "__ct__8Normal3DFPCci": "clNormal3D_Construct",
+    "__ct__9EffectBusFP6Driver": "ItemEffectBus_Init",
+    "__ct__6TireFXFiiPvPvPvPv": "KartTireFX_Ctor"
   },
   "src/game/KartDriver_Dtor.c": {
     "extab_KartDriver_Dtor": "@etb_80006668",

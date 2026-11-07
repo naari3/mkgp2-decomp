@@ -1,4 +1,5 @@
 
+#include "game/singleton.h"
 /* sdata symbols referenced from asm */
 extern unsigned char lbl_806D7084[7];
 extern unsigned char lbl_806D708C[5];
@@ -43,6 +44,8 @@ struct ModelPair {
 
 struct VObj {
     virtual ~VObj();
+    virtual unsigned char IsReady();
+    virtual void Draw();
 };
 
 struct VObjSub {
@@ -75,38 +78,39 @@ struct TimeTrialMode {
     void *hud;
     void *icons;
     VObj *x30;
-    char pad34[0x44 - 0x34];
+    unsigned char x34;
+    char pad35[0x44 - 0x35];
     VObj *x44;
 };
 
 /* TOP-END */
 
 extern "C" {
-extern void CObj_DebugVizPathFlush();
-extern void CourseEnvironment_RenderObjects_Timed();
-extern void DrawEffect_TickAndCull();
-extern void HSD_StateInvalidate();
-extern void ItemObjectManager_Render();
-extern void KartItem_RenderPipelinedWithEffects();
-extern void NokoNoko_Render();
-extern void Object_RenderJObjIfWithinRange();
-extern void Subsystem36c_DispatchPass2_Timed();
-extern void Subsystem36c_DispatchPass4_Timed();
-extern void TransitionEffect_RenderPass();
-extern void TransparentDraw_SortAndDispatch();
-extern void clDrawMan_Buckets_Dispatch();
-extern void clDrawMan_Buckets_Reset();
-extern void clDrawMan_EndFrame_NoOp();
-extern void clDrawMan_SetMaxClipZ();
-extern void clItemBoxManager_Draw();
-extern void fn_8011F994();
-extern void fn_8016B0C4();
-extern void fn_80253448();
-extern void fn_802535D4();
+void CObj_DebugVizPathFlush(void *scene);
+void CourseEnvironment_RenderObjects_Timed(void *env);
+void DrawEffect_TickAndCull(void);
+void HSD_StateInvalidate(int mask);
+void ItemObjectManager_Render(void);
+void KartItem_RenderPipelinedWithEffects(void *car, int arg);
+void NokoNoko_Render(void);
+void Object_RenderJObjIfWithinRange(void *o);
+void Subsystem36c_DispatchPass2_Timed(void *env);
+void Subsystem36c_DispatchPass4_Timed(void *env);
+void TransitionEffect_RenderPass(void *te, int pass);
+void TransparentDraw_SortAndDispatch(void);
+void clDrawMan_Buckets_Dispatch(void *dm);
+void clDrawMan_Buckets_Reset(void *dm);
+void clDrawMan_EndFrame_NoOp(void *dm);
+void clDrawMan_SetMaxClipZ(void *dm, float z);
+void clItemBoxManager_Draw(void *m);
+void fn_8011F994(int arg);
+void fn_8016B0C4(void);
+void fn_80253448(void *hud, unsigned int mask);
+void fn_802535D4(void *hud);
 extern VObj *lbl_806D109C;
 extern VObj *lbl_806D10AC;
 extern VObj *lbl_806D10D0;
-extern unsigned int lbl_806D7048;
+extern const float lbl_806D7048;
 extern unsigned int lbl_806DC190;
 extern unsigned int lbl_806DC1B0;
 extern unsigned int lbl_806DC1B8;
@@ -287,7 +291,7 @@ extern const float lbl_806D70B8;
 extern float lbl_80495994[];
 extern float lbl_80495A94[];
 void Object_DtorWithGXSync(void *o, int flag);
-asm void TimeTrial_Render(void);
+void TimeTrial_Render(TimeTrialMode *self);
 asm void NokoNokoChallenge_Update(void);
 TimeTrialMode *TimeTrial_Destroy(TimeTrialMode *self, short flag);
 asm void NokoNokoChallenge_Init(void);
@@ -296,9 +300,6 @@ void fn_8012A22C(ShotOwner *self);
 ModelPair *fn_8012A52C(ModelPair *self, short flag);
 
 #pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_TimeTrial_Render[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_NokoNokoChallenge_Update = { 0x308A0000, 0x00000258, 0x028F0010, 0x00000000, 0x8200002C, (void *)&dtor_80036E40 };
 
@@ -309,9 +310,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 #pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_TimeTrial_Render = {
-    (void *)&TimeTrial_Render, 0x000001C0, (void *)extab_TimeTrial_Render
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_NokoNokoChallenge_Update = {
     (void *)&NokoNokoChallenge_Update, 0x00000CBC, (void *)&extab_NokoNokoChallenge_Update
@@ -331,130 +329,40 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-extern "C" asm void TimeTrial_Render(void) { /* 0x801287F8 size:0x1C0 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    lbz r0, 0x34(r3)
-    cmplwi r0, 0x0
-    beq TimeTrial_Render_L_801289A4
-    lwz r3, 0x14(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne TimeTrial_Render_L_80128970
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne TimeTrial_Render_L_80128848
-    li r3, 0x0
-    TimeTrial_Render_L_80128848:
-    bl clDrawMan_Buckets_Reset
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne TimeTrial_Render_L_8012885C
-    li r3, 0x0
-    TimeTrial_Render_L_8012885C:
-    lfs f1, lbl_806D7048(r2)
-    bl clDrawMan_SetMaxClipZ
-    bl TransparentDraw_SortAndDispatch
-    lwz r3, 0x14(r31)
-    bl CObj_DebugVizPathFlush
-    bl fn_8016B0C4
-    lwz r3, 0x8(r31)
-    li r4, 0x0
-    bl KartItem_RenderPipelinedWithEffects
-    lwz r3, 0xc(r31)
-    bl Object_RenderJObjIfWithinRange
-    lwz r3, 0x10(r31)
-    bl CourseEnvironment_RenderObjects_Timed
-    bl NokoNoko_Render
-    lwz r3, 0x44(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    lwz r3, lbl_806D10D0(r13)
-    cmplwi r3, 0x0
-    bne TimeTrial_Render_L_801288B8
-    li r3, 0x0
-    TimeTrial_Render_L_801288B8:
-    bl clItemBoxManager_Draw
-    lwz r3, 0x10(r31)
-    bl Subsystem36c_DispatchPass2_Timed
-    bl ItemObjectManager_Render
-    lwz r3, 0x30(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    bl DrawEffect_TickAndCull
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne TimeTrial_Render_L_801288F0
-    li r3, 0x0
-    TimeTrial_Render_L_801288F0:
-    bl clDrawMan_EndFrame_NoOp
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne TimeTrial_Render_L_80128904
-    li r3, 0x0
-    TimeTrial_Render_L_80128904:
-    bl clDrawMan_Buckets_Dispatch
-    lwz r3, 0x10(r31)
-    bl Subsystem36c_DispatchPass4_Timed
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne TimeTrial_Render_L_80128920
-    li r3, 0x0
-    TimeTrial_Render_L_80128920:
-    li r4, 0x2
-    bl TransitionEffect_RenderPass
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne TimeTrial_Render_L_80128938
-    li r3, 0x0
-    TimeTrial_Render_L_80128938:
-    li r4, 0x4
-    bl TransitionEffect_RenderPass
-    lwz r4, lbl_806DC1B0(r2)
-    lwz r0, lbl_806DC190(r2)
-    lwz r3, 0x28(r31)
-    or r4, r4, r0
-    bl fn_80253448
-    li r3, 0x1
-    bl fn_8011F994
-    lwz r3, 0x14(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    TimeTrial_Render_L_80128970:
-    lwz r3, 0x28(r31)
-    lwz r4, lbl_806DC1B8(r2)
-    bl fn_80253448
-    lwz r3, 0x28(r31)
-    bl fn_802535D4
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne TimeTrial_Render_L_80128994
-    li r3, 0x0
-    TimeTrial_Render_L_80128994:
-    li r4, 0x1
-    bl TransitionEffect_RenderPass
-    li r3, 0x7f
-    bl HSD_StateInvalidate
-    TimeTrial_Render_L_801289A4:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+extern "C" void TimeTrial_Render(TimeTrialMode *self)
+{
+    if (self->x34 == 0) {
+        return;
+    }
+    if (self->scene->IsReady() == 1) {
+        clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
+        clDrawMan_SetMaxClipZ(SINGLETON_INSTANCE(lbl_806D10AC), lbl_806D7048);
+        TransparentDraw_SortAndDispatch();
+        CObj_DebugVizPathFlush(self->scene);
+        fn_8016B0C4();
+        KartItem_RenderPipelinedWithEffects(self->car, 0);
+        Object_RenderJObjIfWithinRange(self->lakitu);
+        CourseEnvironment_RenderObjects_Timed(self->env);
+        NokoNoko_Render();
+        self->x44->Draw();
+        clItemBoxManager_Draw(SINGLETON_INSTANCE(lbl_806D10D0));
+        Subsystem36c_DispatchPass2_Timed(self->env);
+        ItemObjectManager_Render();
+        self->x30->Draw();
+        DrawEffect_TickAndCull();
+        clDrawMan_EndFrame_NoOp(SINGLETON_INSTANCE(lbl_806D10AC));
+        clDrawMan_Buckets_Dispatch(SINGLETON_INSTANCE(lbl_806D10AC));
+        Subsystem36c_DispatchPass4_Timed(self->env);
+        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 2);
+        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 4);
+        fn_80253448(self->hud, lbl_806DC1B0 | lbl_806DC190);
+        fn_8011F994(1);
+        self->scene->Draw();
+    }
+    fn_80253448(self->hud, lbl_806DC1B8);
+    fn_802535D4(self->hud);
+    TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 1);
+    HSD_StateInvalidate(0x7f);
 }
 
 extern "C" asm void NokoNokoChallenge_Update(void) { /* 0x801289B8 size:0xCBC */

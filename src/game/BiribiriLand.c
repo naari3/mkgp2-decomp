@@ -1,1019 +1,507 @@
 #include "game/BiribiriLand_private.h"
 
-/* BiribiriLand: native teardown; remaining bodies retain their original asm. */
+/* BiribiriLand: Render/Update/UpdateObstacles/Destroy native; Init retains its original asm. */
 
 /* === extracted from auto_BiribiriLand_Render_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void CObj_DebugVizPathFlush();
-extern void CourseEnvironment_RenderObjects_Timed();
-extern void DrawEffect_TickAndCull();
-extern void ItemObjectManager_Render();
-extern void KartItem_RenderPipelinedWithEffects();
-extern void Object_RenderJObjIfWithinRange();
-extern void Object_RenderJObjTree();
-extern void Object_SetJObjField40();
-extern void Object_SetJObjPositionVec();
-extern void Object_SetJObjPositionX();
-extern void Object_SetJObjPositionY();
-extern void Object_SetJObjRotationY();
-extern void Subsystem36c_DispatchPass2_Timed();
-extern void Subsystem36c_DispatchPass4_Timed();
-extern void TransitionEffect_RenderPass();
-extern void TransparentDraw_SortAndDispatch();
-extern void clDrawMan_Buckets_Dispatch();
-extern void clDrawMan_Buckets_Reset();
-extern void clDrawMan_EndFrame_NoOp();
-extern void fn_8016B0C4();
-extern void fn_80253448();
-extern void fn_802535D4();
-extern void HSD_StateInvalidate();
+#include "game/singleton.h"
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806CF5F0;
-extern unsigned int lbl_806D109C;
-extern unsigned int lbl_806D10AC;
-extern unsigned int lbl_806D7320;
+void CObj_DebugVizPathFlush(void *scene);
+void CourseEnvironment_RenderObjects_Timed(void *env);
+void DrawEffect_TickAndCull(void);
+void ItemObjectManager_Render(void);
+void KartItem_RenderPipelinedWithEffects(void *car, int arg);
+void Object_RenderJObjIfWithinRange(void *o);
+void Object_RenderJObjTree(void *o, int mask);
+void Object_SetJObjField40(void *o, float v);
+void Object_SetJObjPositionVec(void *o, Vec *v);
+void Object_SetJObjPositionX(void *o, float v);
+void Object_SetJObjPositionY(void *o, float v);
+void Object_SetJObjRotationY(void *o, float r);
+void Subsystem36c_DispatchPass2_Timed(void *env);
+void Subsystem36c_DispatchPass4_Timed(void *env);
+void TransitionEffect_RenderPass(void *te, int pass);
+void TransparentDraw_SortAndDispatch(void);
+void clDrawMan_Buckets_Dispatch(void *dm);
+void clDrawMan_Buckets_Reset(void *dm);
+void clDrawMan_EndFrame_NoOp(void *dm);
+void fn_8016B0C4(void);
+void fn_80253448(void *hud, unsigned int mask);
+void fn_802535D4(void *hud);
+void HSD_StateInvalidate(int mask);
+
+extern float lbl_806CF5F0;
+extern void *lbl_806D109C;
+extern void *lbl_806D10AC;
+extern const float lbl_806D7320;
 extern unsigned int lbl_806DC1B8;
 
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_80357F6C[];
+typedef struct BiribiriObstacleDesc {
+    Vec a;
+    Vec b;
+    float yaw;
+    int model;
+    unsigned char glow;
+} BiribiriObstacleDesc;
 
-/* --- function index (1 fns, .text 0x801341E4..0x8013449C) ---
- * [  0] 0x801341E4 size:0x2B8   global BiribiriLand_Render
- */
-
-/* --- forward decls --- */
-asm void BiribiriLand_Render(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_BiribiriLand_Render[8] = {
-    0x30, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+/* --- .rodata of this scene (0x80357B00..0x803580F8) --- */
+/* Table at the start of this scene's .rodata (0x80357B00); no code reference. */
+const float lbl_80357B00[255] = {
+    1.0f, 0.7f, 0.9f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
+    0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f,
+    0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f,
+    0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f,
+    0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f,
+    0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f,
+    0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f,
 };
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_BiribiriLand_Render = {
-    (void *)&BiribiriLand_Render, 0x000002B8, (void *)extab_BiribiriLand_Render
+/* Model archives (referenced from the scene's .data table). */
+const char lbl_80357EFC[] = "obj_red.dat";
+const char lbl_80357F08[] = "obj_blue.dat";
+const char lbl_80357F18[] = "obj_yellow.dat";
+const char lbl_80357F28[] = "obj_pink.dat";
+const char lbl_80357F38[] = "obj_purple.dat";
+const char lbl_80357F48[] = "obj_UFO.dat";
+const char lbl_80357F54[] = "packland_biribiri.dat";
+
+/* Obstacle gates: two posts, gate yaw, post model, electric pole flag. */
+const BiribiriObstacleDesc lbl_80357F6C[9] = {
+    {{113.0f, 0.0f, -1700.0f}, {-113.0f, 0.0f, -1700.0f}, 0.0f, 0, 0},
+    {{113.0f, 0.0f, -3900.0f}, {-113.0f, 0.0f, -3900.0f}, 0.0f, 1, 0},
+    {{113.0f, 0.0f, -5800.0f}, {-113.0f, 0.0f, -5800.0f}, 0.0f, 2, 0},
+    {{113.0f, 0.0f, -7400.0f}, {-113.0f, 0.0f, -7400.0f}, 0.0f, 3, 0},
+    {{1450.0f, 0.0f, -8724.0f}, {1450.0f, 0.0f, -8950.0f}, -1.5707964f, 2, 0},
+    {{2735.0f, 0.0f, -8724.0f}, {2735.0f, 0.0f, -8950.0f}, -1.5707964f, 0, 1},
+    {{4035.0f, 0.0f, -8724.0f}, {4035.0f, 0.0f, -8950.0f}, -1.5707964f, 1, 0},
+    {{5100.0f, 0.0f, -8724.0f}, {5100.0f, 0.0f, -8950.0f}, -1.5707964f, 3, 1},
+    {{6000.0f, 0.0f, -8724.0f}, {6000.0f, 0.0f, -8950.0f}, -1.5707964f, 0, 1},
 };
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void BiribiriLand_Render(void) { /* 0x801341E4 size:0x2B8 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stfd f31, 0x20(r1)
-    psq_st f31, 0x28(r1), 0, 0
-    stmw r26, 0x8(r1)
-    mr r31, r3
-    lbz r0, 0x28(r3)
-    cmplwi r0, 0x0
-    beq BiribiriLand_Render_L_80134480
-    lwz r3, 0x14(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne BiribiriLand_Render_L_8013444C
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne BiribiriLand_Render_L_8013423C
-    li r3, 0x0
-    BiribiriLand_Render_L_8013423C:
-    bl clDrawMan_Buckets_Reset
-    bl TransparentDraw_SortAndDispatch
-    lwz r3, 0x14(r31)
-    bl CObj_DebugVizPathFlush
-    bl fn_8016B0C4
-    lwz r3, 0x8(r31)
-    li r4, 0x0
-    bl KartItem_RenderPipelinedWithEffects
-    lwz r3, 0xc(r31)
-    bl Object_RenderJObjIfWithinRange
-    lwz r3, 0x10(r31)
-    bl CourseEnvironment_RenderObjects_Timed
-    lwz r3, 0x10(r31)
-    bl Subsystem36c_DispatchPass2_Timed
-    lwz r28, 0x30(r31)
-    lis r3, lbl_80357F6C@ha
-    addi r27, r3, lbl_80357F6C@l
-    li r29, 0x0
-    mr r26, r28
-    BiribiriLand_Render_L_80134288:
-    lwz r0, 0x1c(r27)
-    lfs f31, 0x18(r27)
-    cmpwi r0, 0x0
-    beq BiribiriLand_Render_L_801342A0
-    lfs f0, lbl_806D7320(r2)
-    fadds f31, f31, f0
-    BiribiriLand_Render_L_801342A0:
-    slwi r30, r0, 2
-    addi r4, r26, 0x1c
-    lwzx r3, r28, r30
-    bl Object_SetJObjPositionVec
-    fmr f1, f31
-    lwzx r3, r28, r30
-    bl Object_SetJObjRotationY
-    lwzx r3, r28, r30
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    lbz r0, 0x20(r27)
-    cmplwi r0, 0x0
-    beq BiribiriLand_Render_L_80134318
-    lwz r3, 0x14(r28)
-    lfs f1, 0x1c(r26)
-    bl Object_SetJObjPositionX
-    lfs f1, 0x20(r26)
-    lfs f0, lbl_806CF5F0(r13)
-    lwz r3, 0x14(r28)
-    fadds f1, f1, f0
-    bl Object_SetJObjPositionY
-    lwz r3, 0x14(r28)
-    lfs f1, 0x24(r26)
-    bl Object_SetJObjField40
-    fmr f1, f31
-    lwz r3, 0x14(r28)
-    bl Object_SetJObjRotationY
-    lwz r3, 0x14(r28)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    BiribiriLand_Render_L_80134318:
-    lwzx r3, r28, r30
-    addi r4, r26, 0x28
-    bl Object_SetJObjPositionVec
-    fmr f1, f31
-    lwzx r3, r28, r30
-    bl Object_SetJObjRotationY
-    lwzx r3, r28, r30
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    lbz r0, 0x20(r27)
-    cmplwi r0, 0x0
-    beq BiribiriLand_Render_L_8013438C
-    lwz r3, 0x14(r28)
-    lfs f1, 0x28(r26)
-    bl Object_SetJObjPositionX
-    lfs f1, 0x2c(r26)
-    lfs f0, lbl_806CF5F0(r13)
-    lwz r3, 0x14(r28)
-    fadds f1, f1, f0
-    bl Object_SetJObjPositionY
-    lwz r3, 0x14(r28)
-    lfs f1, 0x30(r26)
-    bl Object_SetJObjField40
-    fmr f1, f31
-    lwz r3, 0x14(r28)
-    bl Object_SetJObjRotationY
-    lwz r3, 0x14(r28)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    BiribiriLand_Render_L_8013438C:
-    lbz r0, 0x50(r26)
-    cmplwi r0, 0x0
-    bne BiribiriLand_Render_L_801343BC
-    lwz r3, 0x18(r28)
-    addi r4, r26, 0x34
-    bl Object_SetJObjPositionVec
-    fmr f1, f31
-    lwz r3, 0x18(r28)
-    bl Object_SetJObjRotationY
-    lwz r3, 0x18(r28)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    BiribiriLand_Render_L_801343BC:
-    addi r29, r29, 0x1
-    addi r26, r26, 0x38
-    cmplwi r29, 0x9
-    addi r27, r27, 0x24
-    blt BiribiriLand_Render_L_80134288
-    bl ItemObjectManager_Render
-    bl DrawEffect_TickAndCull
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne BiribiriLand_Render_L_801343E8
-    li r3, 0x0
-    BiribiriLand_Render_L_801343E8:
-    bl clDrawMan_EndFrame_NoOp
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne BiribiriLand_Render_L_801343FC
-    li r3, 0x0
-    BiribiriLand_Render_L_801343FC:
-    bl clDrawMan_Buckets_Dispatch
-    lwz r3, 0x10(r31)
-    bl Subsystem36c_DispatchPass4_Timed
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne BiribiriLand_Render_L_80134418
-    li r3, 0x0
-    BiribiriLand_Render_L_80134418:
-    li r4, 0x2
-    bl TransitionEffect_RenderPass
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne BiribiriLand_Render_L_80134430
-    li r3, 0x0
-    BiribiriLand_Render_L_80134430:
-    li r4, 0x4
-    bl TransitionEffect_RenderPass
-    lwz r3, 0x14(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    BiribiriLand_Render_L_8013444C:
-    lwz r3, 0x24(r31)
-    lwz r4, lbl_806DC1B8(r2)
-    bl fn_80253448
-    lwz r3, 0x24(r31)
-    bl fn_802535D4
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne BiribiriLand_Render_L_80134470
-    li r3, 0x0
-    BiribiriLand_Render_L_80134470:
-    li r4, 0x1
-    bl TransitionEffect_RenderPass
-    li r3, 0x7f
-    bl HSD_StateInvalidate
-    BiribiriLand_Render_L_80134480:
-    psq_l f31, 0x28(r1), 0, 0
-    lfd f31, 0x20(r1)
-    lmw r26, 0x8(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+#pragma cplusplus on
+struct BiribiriScene {
+    virtual ~BiribiriScene();
+    virtual unsigned char IsReady();
+    virtual void Draw();
+};
+#pragma cplusplus reset
+
+static inline void BiribiriDrawObstacles(BiribiriObstacles *obs)
+{
+    unsigned int i;
+
+    for (i = 0; i < 9; i++) {
+        int model = lbl_80357F6C[i].model;
+        float yaw = lbl_80357F6C[i].yaw;
+        if (model != 0) {
+            yaw += lbl_806D7320;
+        }
+        Object_SetJObjPositionVec(obs->model[model], &obs->obstacles[i].a);
+        Object_SetJObjRotationY(obs->model[model], yaw);
+        Object_RenderJObjTree(obs->model[model], 7);
+        if (lbl_80357F6C[i].glow) {
+            Object_SetJObjPositionX(obs->model[5], obs->obstacles[i].a.x);
+            Object_SetJObjPositionY(obs->model[5], obs->obstacles[i].a.y + lbl_806CF5F0);
+            Object_SetJObjField40(obs->model[5], obs->obstacles[i].a.z);
+            Object_SetJObjRotationY(obs->model[5], yaw);
+            Object_RenderJObjTree(obs->model[5], 7);
+        }
+        Object_SetJObjPositionVec(obs->model[model], &obs->obstacles[i].b);
+        Object_SetJObjRotationY(obs->model[model], yaw);
+        Object_RenderJObjTree(obs->model[model], 7);
+        if (lbl_80357F6C[i].glow) {
+            Object_SetJObjPositionX(obs->model[5], obs->obstacles[i].b.x);
+            Object_SetJObjPositionY(obs->model[5], obs->obstacles[i].b.y + lbl_806CF5F0);
+            Object_SetJObjField40(obs->model[5], obs->obstacles[i].b.z);
+            Object_SetJObjRotationY(obs->model[5], yaw);
+            Object_RenderJObjTree(obs->model[5], 7);
+        }
+        if (obs->obstacles[i].hit == 0) {
+            Object_SetJObjPositionVec(obs->model[6], &obs->obstacles[i].center);
+            Object_SetJObjRotationY(obs->model[6], yaw);
+            Object_RenderJObjTree(obs->model[6], 7);
+        }
+    }
 }
 
+#pragma exceptions on
+#pragma use_lmw_stmw on
+void BiribiriLand_Render(BiribiriState *self)
+{
+    if (self->visible == 0) {
+        return;
+    }
+    if (((struct BiribiriScene *)self->scene)->IsReady() == 1) {
+        clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
+        TransparentDraw_SortAndDispatch();
+        CObj_DebugVizPathFlush(self->scene);
+        fn_8016B0C4();
+        KartItem_RenderPipelinedWithEffects(self->car, 0);
+        Object_RenderJObjIfWithinRange(self->lakitu);
+        CourseEnvironment_RenderObjects_Timed(self->environment);
+        Subsystem36c_DispatchPass2_Timed(self->environment);
+        BiribiriDrawObstacles(self->obstacles);
+        ItemObjectManager_Render();
+        DrawEffect_TickAndCull();
+        clDrawMan_EndFrame_NoOp(SINGLETON_INSTANCE(lbl_806D10AC));
+        clDrawMan_Buckets_Dispatch(SINGLETON_INSTANCE(lbl_806D10AC));
+        Subsystem36c_DispatchPass4_Timed(self->environment);
+        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 2);
+        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 4);
+        ((struct BiribiriScene *)self->scene)->Draw();
+    }
+    fn_80253448(self->hud, lbl_806DC1B8);
+    fn_802535D4(self->hud);
+    TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 1);
+    HSD_StateInvalidate(0x7f);
+}
+#pragma use_lmw_stmw reset
+#pragma exceptions reset
 
-/* === extracted from auto_BiribiriLand_Update_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
+/* === BiribiriLand_Update === */
 extern void BiribiriLand_UpdateObstacles();
-extern void CObj_ApplyScissor();
-extern void CObj_LoadProjMatrix();
-extern void CarObject_ApplyInput();
-extern void CarObject_CalcSpeedRatio();
-extern void CarObject_FrameUpdate();
-extern void CarObject_GetRenderObj();
-extern void CarObject_HandleObstacleHit();
-extern void ChallengeGoalCamera_Update();
-extern void CourseEnvironment_UpdateAndCullZones_Timed();
-extern void Fog_UpdateFromCourseScene3D();
-extern void GetInputManager();
-extern void GetRaceContextPtr();
-extern void HUD_FrameUpdate();
-extern void InputMgr_GetPlayer();
-extern void IsRaceStarted();
-extern void ItemObjectManager_PerFrameUpdate();
-extern void ItemObjectManager_Update();
-extern void KartDriver_GetKartRootMtx();
-extern void KartItem_CancelActiveEffect();
-extern void KartItem_GetCurrentSpeedWithBonus();
-extern void KartItem_UpdateShadowBillboardAndViewport();
-extern void KartMovement_ResetOnGoal();
-extern void KartMovement_ResetOnTimeout();
-extern void KartMovement_SetSpeedScale();
-extern void KartReaction_Rear();
-extern void LakituStart_UpdateCountdown();
-extern void MiniGame_GetTimerValue();
-extern void NokoNokoChallenge_CalcResultText();
-extern void NokoNokoChallenge_GetCoinDivisor();
-extern void NokoNokoChallenge_HandleBrakeInput();
-extern void NokoNokoChallenge_SaveResult();
-extern void NokoNokoChallenge_TransitionToResult();
-extern void Object_SetByte10_Return1();
-extern void SetCoinCount();
-extern void SoundMgr_PlaySE();
-extern void TransitionEffect_Tick();
-extern void Vec3_Dot();
-extern void Vec3_Subtract();
-extern void VfxSlotMgr_Update();
-extern void fn_8016B32C();
-extern void fn_80253C40();
-extern void fn_80253C74();
-extern void fn_80253EBC();
-extern void fn_80253EC0();
-extern void fn_80253FD8();
-extern void memset();
+#pragma cplusplus on
+struct BiribiriInput {
+    virtual void slot08();
+    virtual void slot0c();
+    virtual float steering();
+    virtual void slot14();
+    virtual float accelerator();
+    virtual float brake();
+};
 
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int g_lakituStartAnimDone;
-extern unsigned int g_raceEnded;
-extern unsigned int g_raceTimeRemaining;
+typedef struct BiribiriGoal {
+    Vec pos;
+    char padC[0x18];
+    Vec normal;
+} BiribiriGoal;
+
+typedef struct BiribiriHitInfo {
+    char pad0[8];
+    int type;
+    char padC[0x94];
+    Vec pos;
+    char padAC[0x140];
+} BiribiriHitInfo;
+
+typedef struct BiribiriCoinRank {
+    int time;
+    int coins;
+} BiribiriCoinRank;
+
+typedef float BiribiriMtx[3][4];
+
+extern "C" {
+void CObj_ApplyScissor(void *scene, Vec *v);
+void CObj_LoadProjMatrix(void *scene, Vec *v);
+void CarObject_ApplyInput(void *car, float steering, float accelerator, float brake, unsigned char started);
+float CarObject_CalcSpeedRatio(void *car);
+void CarObject_FrameUpdate(void *car, int arg);
+void *CarObject_GetRenderObj(void *car);
+void CarObject_HandleObstacleHit(void *car, BiribiriHitInfo *info);
+void ChallengeGoalCamera_Update(void *cam, void *scene, void *mtx);
+void CourseEnvironment_UpdateAndCullZones_Timed(void *env);
+void Fog_UpdateFromCourseScene3D(void);
+void *GetInputManager(void);
+void GetRaceContextPtr();
+void HUD_FrameUpdate(void *hud);
+BiribiriInput *InputMgr_GetPlayer(void *mgr, int idx);
+unsigned char IsRaceStarted(void);
+void ItemObjectManager_PerFrameUpdate();
+void ItemObjectManager_Update(void);
+BiribiriMtx *KartDriver_GetKartRootMtx(void *obj);
+void KartItem_CancelActiveEffect(void *car);
+float KartItem_GetCurrentSpeedWithBonus(void *car);
+void KartItem_UpdateShadowBillboardAndViewport(void *car, void *scene, int arg);
+void KartMovement_ResetOnGoal(void *obj);
+void KartMovement_ResetOnTimeout(void *obj);
+void KartMovement_SetSpeedScale(void *car, float scale);
+void KartReaction_Rear(void *obj);
+void LakituStart_UpdateCountdown(void *lakitu);
+int MiniGame_GetTimerValue(void);
+int NokoNokoChallenge_CalcResultText(void *self, int success, int arg);
+BiribiriCoinRank **NokoNokoChallenge_GetCoinDivisor(void);
+unsigned char NokoNokoChallenge_HandleBrakeInput(void *self, bool brake);
+void NokoNokoChallenge_SaveResult(void *self, int coins, unsigned char success);
+int NokoNokoChallenge_TransitionToResult(void *self);
+int Object_SetByte10_Return1(void *o, int v);
+void SetCoinCount(int coins);
+void SoundMgr_PlaySE(int id);
+void TransitionEffect_Tick(void *te);
+float Vec3_Dot(Vec *a, Vec *b);
+void Vec3_Subtract(Vec *a, Vec *b, Vec *out);
+void VfxSlotMgr_Update(Vec a, Vec b);
+void fn_8016B32C(void *w);
+unsigned char fn_80253C40(void *hud);
+void fn_80253C74(void *hud, int success, int text, int time);
+void fn_80253EBC(void *hud, float v);
+void fn_80253EC0(void *hud, float v);
+void fn_80253FD8(void *hud, float v);
+void *memset(void *p, int c, unsigned long n);
+
 extern unsigned int g_weatherSystem;
-extern unsigned int lbl_806D109C;
-extern unsigned int lbl_806D1290;
-extern unsigned int lbl_806D7324;
-extern unsigned int lbl_806D7328;
-extern unsigned int lbl_806D732C;
-extern unsigned int lbl_806D7330;
-extern unsigned int lbl_806D7334;
-extern unsigned int lbl_806D7338;
-extern unsigned int lbl_806D733C;
-extern unsigned int lbl_806D7340;
-extern unsigned int lbl_806D7344;
-extern unsigned int lbl_806D7348;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_80677C88[];
-extern unsigned int lbl_80677C94[];
-
-/* --- function index (1 fns, .text 0x8013449C..0x80134A8C) ---
- * [  0] 0x8013449C size:0x5F0   global BiribiriLand_Update
- */
-
-/* --- forward decls --- */
-asm void BiribiriLand_Update(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_BiribiriLand_Update[8] = {
-    0x20, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_BiribiriLand_Update = {
-    (void *)&BiribiriLand_Update, 0x000005F0, (void *)extab_BiribiriLand_Update
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void BiribiriLand_Update(void) { /* 0x8013449C size:0x5F0 */
-    nofralloc
-    stwu r1, -0x270(r1)
-    mflr r0
-    stw r0, 0x274(r1)
-    stfd f31, 0x260(r1)
-    psq_st f31, 0x268(r1), 0, 0
-    stfd f30, 0x250(r1)
-    psq_st f30, 0x258(r1), 0, 0
-    stw r31, 0x24c(r1)
-    stw r30, 0x248(r1)
-    stw r29, 0x244(r1)
-    stw r28, 0x240(r1)
-    mr r31, r3
-    lbz r0, 0x28(r3)
-    cmplwi r0, 0x0
-    bne BiribiriLand_Update_L_801344E0
-    li r0, 0x1
-    stb r0, 0x28(r31)
-    BiribiriLand_Update_L_801344E0:
-    bl GetRaceContextPtr
-    bl ItemObjectManager_PerFrameUpdate
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lbz r0, g_raceEnded(r13)
-    mr r28, r3
-    cmplwi r0, 0x1
-    beq BiribiriLand_Update_L_801345D8
-    lbz r0, lbl_806D1290(r13)
-    cmplwi r0, 0x0
-    bne BiribiriLand_Update_L_80134528
-    lwz r12, 0x0(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    fmr f30, f1
-    b BiribiriLand_Update_L_8013452C
-    BiribiriLand_Update_L_80134528:
-    lfs f30, lbl_806D7324(r2)
-    BiribiriLand_Update_L_8013452C:
-    lwz r12, 0x0(r28)
-    mr r3, r28
-    lwz r12, 0x1c(r12)
-    mtctr r12
-    bctrl
-    lfs f0, lbl_806D732C(r2)
-    fmr f31, f1
-    li r30, 0x0
-    fcmpo cr0, f30, f0
-    bge BiribiriLand_Update_L_8013456C
-    fcmpo cr0, f31, f0
-    bge BiribiriLand_Update_L_8013456C
-    bl IsRaceStarted
-    clrlwi. r0, r3, 24
-    beq BiribiriLand_Update_L_8013456C
-    li r30, 0x1
-    BiribiriLand_Update_L_8013456C:
-    mr r3, r31
-    mr r4, r30
-    bl NokoNokoChallenge_HandleBrakeInput
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne BiribiriLand_Update_L_80134588
-    lfs f30, lbl_806D7328(r2)
-    BiribiriLand_Update_L_80134588:
-    bl IsRaceStarted
-    mr r30, r3
-    mr r3, r28
-    lwz r12, 0x0(r28)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    fmr f2, f30
-    lwz r3, 0x8(r31)
-    fmr f3, f31
-    mr r4, r30
-    bl CarObject_ApplyInput
-    lwz r3, 0x8(r31)
-    li r4, 0x0
-    bl CarObject_FrameUpdate
-    lwz r3, 0x8(r31)
-    li r5, 0x0
-    lwz r4, 0x14(r31)
-    bl KartItem_UpdateShadowBillboardAndViewport
-    b BiribiriLand_Update_L_80134624
-    BiribiriLand_Update_L_801345D8:
-    lfs f1, lbl_806D7330(r2)
-    li r4, 0x1
-    lwz r3, 0x8(r31)
-    fmr f2, f1
-    fmr f3, f1
-    bl CarObject_ApplyInput
-    lwz r3, 0x8(r31)
-    lfs f1, lbl_806D7334(r2)
-    bl KartMovement_SetSpeedScale
-    lwz r3, 0x8(r31)
-    li r4, 0x0
-    bl CarObject_FrameUpdate
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    bl KartDriver_GetKartRootMtx
-    mr r5, r3
-    lwz r3, 0x18(r31)
-    lwz r4, 0x14(r31)
-    bl ChallengeGoalCamera_Update
-    BiribiriLand_Update_L_80134624:
-    bl Fog_UpdateFromCourseScene3D
-    lwz r3, 0xc(r31)
-    bl LakituStart_UpdateCountdown
-    lwz r3, 0x10(r31)
-    bl CourseEnvironment_UpdateAndCullZones_Timed
-    lwz r3, 0x30(r31)
-    bl BiribiriLand_UpdateObstacles
-    lbz r0, 0x2a(r31)
-    cmplwi r0, 0x0
-    bne BiribiriLand_Update_L_8013479C
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    bl KartDriver_GetKartRootMtx
-    lfs f0, 0xc(r3)
-    li r30, 0x0
-    lfs f30, lbl_806D7338(r2)
-    stfs f0, 0x38(r1)
-    lfs f31, lbl_806D733C(r2)
-    lfs f0, 0x1c(r3)
-    stfs f0, 0x3c(r1)
-    lfs f0, 0x2c(r3)
-    stfs f0, 0x40(r1)
-    lwz r29, 0x30(r31)
-    mr r28, r29
-    BiribiriLand_Update_L_80134684:
-    lbz r0, 0x50(r28)
-    cmplwi r0, 0x0
-    bne BiribiriLand_Update_L_801346EC
-    addi r3, r1, 0x38
-    addi r4, r28, 0x1c
-    addi r5, r1, 0x14
-    bl Vec3_Subtract
-    addi r3, r1, 0x14
-    addi r4, r28, 0x40
-    bl Vec3_Dot
-    fcmpo cr0, f1, f30
-    bge BiribiriLand_Update_L_801346EC
-    fcmpo cr0, f1, f31
-    ble BiribiriLand_Update_L_801346EC
-    lfs f1, 0x3c(r1)
-    lfs f0, 0x38(r28)
-    fcmpo cr0, f1, f0
-    bge BiribiriLand_Update_L_801346EC
-    mulli r0, r30, 0x38
-    li r5, 0x1
-    li r3, 0x90
-    add r4, r29, r0
-    stb r5, 0x50(r4)
-    bl SoundMgr_PlaySE
-    li r0, 0x1
-    b BiribiriLand_Update_L_80134700
-    BiribiriLand_Update_L_801346EC:
-    addi r30, r30, 0x1
-    addi r28, r28, 0x38
-    cmplwi r30, 0x9
-    blt BiribiriLand_Update_L_80134684
-    li r0, 0x0
-    BiribiriLand_Update_L_80134700:
-    clrlwi. r0, r0, 24
-    beq BiribiriLand_Update_L_80134750
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    bl KartReaction_Rear
-    addi r3, r1, 0x44
-    li r4, 0x0
-    li r5, 0x1ec
-    bl memset
-    lfs f2, 0x38(r1)
-    li r0, 0x8
-    lfs f1, 0x3c(r1)
-    addi r4, r1, 0x44
-    lfs f0, 0x40(r1)
-    stfs f2, 0xe4(r1)
-    stfs f1, 0xe8(r1)
-    stfs f0, 0xec(r1)
-    stw r0, 0x4c(r1)
-    lwz r3, 0x8(r31)
-    bl CarObject_HandleObstacleHit
-    BiribiriLand_Update_L_80134750:
-    lwz r29, 0x34(r31)
-    addi r3, r1, 0x38
-    addi r5, r1, 0x8
-    mr r4, r29
-    bl Vec3_Subtract
-    addi r3, r1, 0x8
-    addi r4, r29, 0x24
-    bl Vec3_Dot
-    lfs f0, lbl_806D7330(r2)
-    fcmpo cr0, f1, f0
-    ble BiribiriLand_Update_L_8013479C
-    li r0, 0x1
-    stb r0, 0x2b(r31)
-    stb r0, 0x2a(r31)
-    lwz r3, 0x8(r31)
-    bl KartItem_CancelActiveEffect
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    bl KartMovement_ResetOnGoal
-    BiribiriLand_Update_L_8013479C:
-    lis r4, lbl_80677C88@ha
-    lwz r3, 0x14(r31)
-    addi r4, r4, lbl_80677C88@l
-    bl CObj_LoadProjMatrix
-    lis r4, lbl_80677C94@ha
-    lwz r3, 0x14(r31)
-    addi r4, r4, lbl_80677C94@l
-    bl CObj_ApplyScissor
-    bl ItemObjectManager_Update
-    lis r3, lbl_80677C94@ha
-    lis r4, lbl_80677C88@ha
-    addi r5, r3, lbl_80677C94@l
-    addi r3, r1, 0x2c
-    addi r7, r4, lbl_80677C88@l
-    lwz r10, 0x0(r5)
-    lwz r9, 0x4(r5)
-    addi r4, r1, 0x20
-    lwz r8, 0x8(r5)
-    lwz r6, 0x0(r7)
-    lwz r5, 0x4(r7)
-    lwz r0, 0x8(r7)
-    stw r10, 0x20(r1)
-    stw r9, 0x24(r1)
-    stw r8, 0x28(r1)
-    stw r6, 0x2c(r1)
-    stw r5, 0x30(r1)
-    stw r0, 0x34(r1)
-    bl VfxSlotMgr_Update
-    bl IsRaceStarted
-    clrlwi. r0, r3, 24
-    beq BiribiriLand_Update_L_8013486C
-    lbz r0, 0x2a(r31)
-    cmplwi r0, 0x0
-    bne BiribiriLand_Update_L_8013486C
-    lfs f2, g_raceTimeRemaining(r13)
-    lfs f1, lbl_806D7330(r2)
-    fcmpo cr0, f2, f1
-    cror eq, gt, eq
-    bne BiribiriLand_Update_L_8013486C
-    lfs f0, lbl_806D7340(r2)
-    fsubs f0, f2, f0
-    fcmpo cr0, f0, f1
-    stfs f0, g_raceTimeRemaining(r13)
-    bge BiribiriLand_Update_L_8013486C
-    stfs f1, g_raceTimeRemaining(r13)
-    li r0, 0x1
-    stb r0, 0x2a(r31)
-    lwz r3, 0x8(r31)
-    bl KartItem_CancelActiveEffect
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    bl KartMovement_ResetOnTimeout
-    BiribiriLand_Update_L_8013486C:
-    lwz r3, 0x24(r31)
-    lfs f1, g_raceTimeRemaining(r13)
-    bl fn_80253FD8
-    lwz r3, 0x8(r31)
-    bl CarObject_CalcSpeedRatio
-    lfs f0, lbl_806D7344(r2)
-    lwz r3, 0x24(r31)
-    fmuls f1, f0, f1
-    bl fn_80253EBC
-    lwz r3, 0x8(r31)
-    bl KartItem_GetCurrentSpeedWithBonus
-    lwz r3, 0x24(r31)
-    bl fn_80253EC0
-    lwz r3, 0x24(r31)
-    bl HUD_FrameUpdate
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne BiribiriLand_Update_L_801348B8
-    li r3, 0x0
-    BiribiriLand_Update_L_801348B8:
-    bl TransitionEffect_Tick
-    lbz r0, 0x2a(r31)
-    cmplwi r0, 0x0
-    beq BiribiriLand_Update_L_80134A48
-    lwz r0, 0x2c(r31)
-    cmpwi r0, 0x0
-    bne BiribiriLand_Update_L_80134A20
-    bl MiniGame_GetTimerValue
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x234(r1)
-    li r29, 0x0
-    lfd f2, lbl_806D7348(r2)
-    stw r0, 0x230(r1)
-    lfs f0, g_raceTimeRemaining(r13)
-    lfd f1, 0x230(r1)
-    fsubs f1, f1, f2
-    fsubs f0, f1, f0
-    fctiwz f0, f0
-    stfd f0, 0x238(r1)
-    lwz r28, 0x23c(r1)
-    bl NokoNokoChallenge_GetCoinDivisor
-    cmplwi r3, 0x0
-    beq BiribiriLand_Update_L_8013496C
-    lbz r0, 0x2b(r31)
-    cmplwi r0, 0x1
-    bne BiribiriLand_Update_L_8013496C
-    lwz r5, 0x0(r3)
-    li r6, 0x0
-    mr r4, r5
-    mr r3, r5
-    b BiribiriLand_Update_L_80134960
-    BiribiriLand_Update_L_80134938:
-    lwz r0, 0x0(r3)
-    cmpw r28, r0
-    bgt BiribiriLand_Update_L_80134954
-    slwi r0, r6, 3
-    add r3, r5, r0
-    lwz r29, 0x4(r3)
-    b BiribiriLand_Update_L_8013496C
-    BiribiriLand_Update_L_80134954:
-    addi r3, r3, 0x8
-    addi r4, r4, 0x8
-    addi r6, r6, 0x1
-    BiribiriLand_Update_L_80134960:
-    lwz r0, 0x4(r4)
-    cmpwi r0, 0x0
-    bgt BiribiriLand_Update_L_80134938
-    BiribiriLand_Update_L_8013496C:
-    mr r3, r29
-    bl SetCoinCount
-    lbz r0, 0x2b(r31)
-    cmplwi r0, 0x0
-    beq BiribiriLand_Update_L_801349C0
-    mr r3, r31
-    li r4, 0x1
-    li r5, 0x0
-    bl NokoNokoChallenge_CalcResultText
-    lfs f0, g_raceTimeRemaining(r13)
-    mr r5, r3
-    lwz r3, 0x24(r31)
-    li r4, 0x1
-    fctiwz f0, f0
-    stfd f0, 0x238(r1)
-    lwz r6, 0x23c(r1)
-    bl fn_80253C74
-    lwz r3, 0x14(r31)
-    li r4, 0x1
-    bl Object_SetByte10_Return1
-    b BiribiriLand_Update_L_801349FC
-    BiribiriLand_Update_L_801349C0:
-    mr r3, r31
-    li r4, 0x0
-    li r5, 0x0
-    bl NokoNokoChallenge_CalcResultText
-    lfs f0, g_raceTimeRemaining(r13)
-    mr r5, r3
-    lwz r3, 0x24(r31)
-    li r4, 0x0
-    fctiwz f0, f0
-    stfd f0, 0x238(r1)
-    lwz r6, 0x23c(r1)
-    bl fn_80253C74
-    lwz r3, 0x14(r31)
-    li r4, 0x1
-    bl Object_SetByte10_Return1
-    BiribiriLand_Update_L_801349FC:
-    lbz r5, 0x2b(r31)
-    mr r3, r31
-    mr r4, r29
-    bl NokoNokoChallenge_SaveResult
-    li r3, 0x1
-    li r0, 0x0
-    stb r3, g_raceEnded(r13)
-    stb r0, g_lakituStartAnimDone(r13)
-    b BiribiriLand_Update_L_80134A3C
-    BiribiriLand_Update_L_80134A20:
-    lwz r3, 0x24(r31)
-    bl fn_80253C40
-    clrlwi. r0, r3, 24
-    beq BiribiriLand_Update_L_80134A3C
-    mr r3, r31
-    bl NokoNokoChallenge_TransitionToResult
-    b BiribiriLand_Update_L_80134A5C
-    BiribiriLand_Update_L_80134A3C:
-    lwz r3, 0x2c(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x2c(r31)
-    BiribiriLand_Update_L_80134A48:
-    lwz r3, g_weatherSystem(r13)
-    cmplwi r3, 0x0
-    beq BiribiriLand_Update_L_80134A58
-    bl fn_8016B32C
-    BiribiriLand_Update_L_80134A58:
-    li r3, -0x2
-    BiribiriLand_Update_L_80134A5C:
-    psq_l f31, 0x268(r1), 0, 0
-    lfd f31, 0x260(r1)
-    psq_l f30, 0x258(r1), 0, 0
-    lfd f30, 0x250(r1)
-    lwz r31, 0x24c(r1)
-    lwz r30, 0x248(r1)
-    lwz r29, 0x244(r1)
-    lwz r0, 0x274(r1)
-    lwz r28, 0x240(r1)
-    mtlr r0
-    addi r1, r1, 0x270
-    blr
+extern unsigned char g_lakituStartAnimDone;
+extern unsigned char g_raceEnded;
+extern float g_raceTimeRemaining;
+extern unsigned char lbl_806D1290;
+extern const float lbl_806D7324;
+extern const float lbl_806D7328;
+extern const float lbl_806D732C;
+extern const float lbl_806D7330;
+extern const float lbl_806D7334;
+extern const float lbl_806D7338;
+extern const float lbl_806D733C;
+extern const float lbl_806D7340;
+extern const float lbl_806D7344;
+extern Vec lbl_80677C88;
+extern Vec lbl_80677C94;
 }
 
+static inline unsigned char BiribiriCheckObstacleHit(BiribiriObstacles *obs, Vec *pos)
+{
+    unsigned int i;
+    Vec d;
 
-/* === extracted from auto_BiribiriLand_UpdateO_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void CObj_LoadProjMatrix();
-extern void GetCourseScene3D();
-extern void LUT_Sin12Bit();
-extern void SoundMgr_PlaySE();
-extern void Vec3_Subtract();
-extern void clNormal3D_Exec();
-extern void fn_8016C288();
-extern void fn_8016C360();
-extern void fn_8016C394();
-extern void PSVECSquareMag();
-
-/* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D7328;
-extern unsigned int lbl_806D7330;
-extern unsigned int lbl_806D7334;
-extern unsigned int lbl_806D7350;
-extern unsigned int lbl_806D7354;
-extern unsigned int lbl_806D7358;
-extern unsigned int lbl_806D735C;
-extern unsigned int lbl_806D7360;
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_80357B00[];
-
-/* --- function index (1 fns, .text 0x80134A8C..0x80134D68) ---
- * [  0] 0x80134A8C size:0x2DC   global BiribiriLand_UpdateObstacles
- */
-
-/* --- forward decls --- */
-asm void BiribiriLand_UpdateObstacles(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_BiribiriLand_UpdateObstacles[8] = {
-    0x21, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_BiribiriLand_UpdateObstacles = {
-    (void *)&BiribiriLand_UpdateObstacles, 0x000002DC, (void *)extab_BiribiriLand_UpdateObstacles
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void BiribiriLand_UpdateObstacles(void) { /* 0x80134A8C size:0x2DC */
-    nofralloc
-    stwu r1, -0xa0(r1)
-    mflr r0
-    stw r0, 0xa4(r1)
-    stfd f31, 0x90(r1)
-    psq_st f31, 0x98(r1), 0, 0
-    stfd f30, 0x80(r1)
-    psq_st f30, 0x88(r1), 0, 0
-    stfd f29, 0x70(r1)
-    psq_st f29, 0x78(r1), 0, 0
-    stfd f28, 0x60(r1)
-    psq_st f28, 0x68(r1), 0, 0
-    stfd f27, 0x50(r1)
-    psq_st f27, 0x58(r1), 0, 0
-    stfd f26, 0x40(r1)
-    psq_st f26, 0x48(r1), 0, 0
-    stw r31, 0x3c(r1)
-    stw r30, 0x38(r1)
-    stw r29, 0x34(r1)
-    stw r28, 0x30(r1)
-    lis r4, lbl_80357B00@ha
-    lfs f27, lbl_806D7350(r2)
-    addi r31, r4, lbl_80357B00@l
-    mr r28, r3
-    lwz r7, 0x5b0(r31)
-    lwz r6, 0x5b4(r31)
-    lwz r5, 0x5b8(r31)
-    lwz r4, 0x5bc(r31)
-    lwz r3, 0x5c0(r31)
-    lwz r0, 0x5c4(r31)
-    stw r7, 0x20(r1)
-    stw r6, 0x24(r1)
-    stw r5, 0x28(r1)
-    stw r4, 0x14(r1)
-    stw r3, 0x18(r1)
-    stw r0, 0x1c(r1)
-    bl GetCourseScene3D
-    cmplwi r3, 0x0
-    beq BiribiriLand_UpdateObstacles_L_80134B30
-    bl GetCourseScene3D
-    addi r4, r1, 0x14
-    bl CObj_LoadProjMatrix
-    BiribiriLand_UpdateObstacles_L_80134B30:
-    lfs f28, lbl_806D7328(r2)
-    mr r30, r28
-    lfs f29, lbl_806D7354(r2)
-    addi r31, r31, 0x46c
-    lfs f30, lbl_806D7334(r2)
-    li r29, 0x0
-    lfs f31, lbl_806D7360(r2)
-    BiribiriLand_UpdateObstacles_L_80134B4C:
-    lfs f0, 0x4c(r30)
-    fadds f0, f0, f28
-    stfs f0, 0x4c(r30)
-    lfs f0, 0x4c(r30)
-    fcmpo cr0, f0, f29
-    cror eq, gt, eq
-    bne BiribiriLand_UpdateObstacles_L_80134B70
-    lfs f0, lbl_806D7330(r2)
-    stfs f0, 0x4c(r30)
-    BiribiriLand_UpdateObstacles_L_80134B70:
-    lbz r0, 0x20(r31)
-    lfs f2, lbl_806D7330(r2)
-    cmplwi r0, 0x0
-    beq BiribiriLand_UpdateObstacles_L_80134B98
-    lfs f1, lbl_806D735C(r2)
-    lfs f0, 0x4c(r30)
-    fmuls f1, f1, f0
-    bl LUT_Sin12Bit
-    lfs f0, lbl_806D7358(r2)
-    fmadds f2, f0, f1, f0
-    BiribiriLand_UpdateObstacles_L_80134B98:
-    lfs f1, 0x0(r31)
-    lfs f0, 0x4(r31)
-    stfs f1, 0x1c(r30)
-    lfs f1, 0x8(r31)
-    stfs f0, 0x20(r30)
-    lfs f0, 0xc(r31)
-    stfs f1, 0x24(r30)
-    lfs f1, 0x10(r31)
-    stfs f0, 0x28(r30)
-    lfs f0, 0x14(r31)
-    stfs f1, 0x2c(r30)
-    stfs f0, 0x30(r30)
-    lfs f0, 0x20(r30)
-    fadds f0, f0, f2
-    stfs f0, 0x20(r30)
-    lfs f0, 0x2c(r30)
-    fadds f0, f0, f2
-    stfs f0, 0x2c(r30)
-    lfs f1, 0x1c(r30)
-    lfs f0, 0x28(r30)
-    fadds f0, f1, f0
-    fmuls f0, f30, f0
-    stfs f0, 0x34(r30)
-    lfs f1, 0x20(r30)
-    lfs f0, 0x2c(r30)
-    fadds f0, f1, f0
-    fmadds f0, f30, f0, f31
-    stfs f0, 0x38(r30)
-    lfs f1, 0x24(r30)
-    lfs f0, 0x30(r30)
-    fadds f0, f1, f0
-    fmuls f0, f30, f0
-    stfs f0, 0x3c(r30)
-    lbz r0, 0x50(r30)
-    cmplwi r0, 0x0
-    bne BiribiriLand_UpdateObstacles_L_80134CAC
-    lfs f0, lbl_806D7330(r2)
-    fcmpo cr0, f27, f0
-    bge BiribiriLand_UpdateObstacles_L_80134C6C
-    lfs f0, 0x34(r30)
-    addi r3, r1, 0x20
-    addi r4, r1, 0x14
-    addi r5, r1, 0x8
-    stfs f0, 0x20(r1)
-    lfs f0, 0x38(r30)
-    stfs f0, 0x24(r1)
-    lfs f0, 0x3c(r30)
-    stfs f0, 0x28(r1)
-    bl Vec3_Subtract
-    addi r3, r1, 0x8
-    bl PSVECSquareMag
-    fmr f27, f1
-    b BiribiriLand_UpdateObstacles_L_80134CAC
-    BiribiriLand_UpdateObstacles_L_80134C6C:
-    addi r3, r30, 0x34
-    addi r4, r1, 0x14
-    addi r5, r1, 0x8
-    bl Vec3_Subtract
-    addi r3, r1, 0x8
-    bl PSVECSquareMag
-    fmr f26, f1
-    fcmpo cr0, f26, f27
-    bge BiribiriLand_UpdateObstacles_L_80134CAC
-    lfs f0, 0x34(r30)
-    fmr f27, f26
-    stfs f0, 0x20(r1)
-    lfs f0, 0x38(r30)
-    stfs f0, 0x24(r1)
-    lfs f0, 0x3c(r30)
-    stfs f0, 0x28(r1)
-    BiribiriLand_UpdateObstacles_L_80134CAC:
-    addi r29, r29, 0x1
-    addi r31, r31, 0x24
-    cmplwi r29, 0x9
-    addi r30, r30, 0x38
-    blt BiribiriLand_UpdateObstacles_L_80134B4C
-    lwz r3, 0x18(r28)
-    bl clNormal3D_Exec
-    lfs f0, lbl_806D7330(r2)
-    fcmpo cr0, f26, f0
-    cror eq, gt, eq
-    bne BiribiriLand_UpdateObstacles_L_80134D00
-    li r3, 0x91
-    bl fn_8016C360
-    clrlwi. r0, r3, 24
-    bne BiribiriLand_UpdateObstacles_L_80134CF0
-    li r3, 0x91
-    bl SoundMgr_PlaySE
-    BiribiriLand_UpdateObstacles_L_80134CF0:
-    addi r4, r1, 0x20
-    li r3, 0x91
-    bl fn_8016C288
-    b BiribiriLand_UpdateObstacles_L_80134D18
-    BiribiriLand_UpdateObstacles_L_80134D00:
-    li r3, 0x91
-    bl fn_8016C360
-    clrlwi. r0, r3, 24
-    beq BiribiriLand_UpdateObstacles_L_80134D18
-    li r3, 0x91
-    bl fn_8016C394
-    BiribiriLand_UpdateObstacles_L_80134D18:
-    psq_l f31, 0x98(r1), 0, 0
-    lfd f31, 0x90(r1)
-    psq_l f30, 0x88(r1), 0, 0
-    lfd f30, 0x80(r1)
-    psq_l f29, 0x78(r1), 0, 0
-    lfd f29, 0x70(r1)
-    psq_l f28, 0x68(r1), 0, 0
-    lfd f28, 0x60(r1)
-    psq_l f27, 0x58(r1), 0, 0
-    lfd f27, 0x50(r1)
-    psq_l f26, 0x48(r1), 0, 0
-    lfd f26, 0x40(r1)
-    lwz r31, 0x3c(r1)
-    lwz r30, 0x38(r1)
-    lwz r29, 0x34(r1)
-    lwz r0, 0xa4(r1)
-    lwz r28, 0x30(r1)
-    mtlr r0
-    addi r1, r1, 0xa0
-    blr
+    for (i = 0; i < 9; i++) {
+        if (obs->obstacles[i].hit == 0) {
+            float dot;
+            Vec3_Subtract(pos, &obs->obstacles[i].a, &d);
+            dot = Vec3_Dot(&d, &obs->obstacles[i].direction);
+            if (dot < lbl_806D7338 && dot > lbl_806D733C && pos->y < obs->obstacles[i].center.y) {
+                obs->obstacles[i].hit = 1;
+                SoundMgr_PlaySE(0x90);
+                return 1;
+            }
+        }
+    }
+    return 0;
 }
+
+static inline unsigned char BiribiriCheckGoal(BiribiriGoal *goal, Vec *pos)
+{
+    Vec d;
+
+    Vec3_Subtract(pos, &goal->pos, &d);
+    return Vec3_Dot(&d, &goal->normal) > lbl_806D7330;
+}
+
+#pragma exceptions on
+extern "C" int BiribiriLand_Update(BiribiriState *self)
+{
+    BiribiriInput *input;
+
+    if (self->visible == 0) {
+        self->visible = 1;
+    }
+    GetRaceContextPtr();
+    ItemObjectManager_PerFrameUpdate();
+    input = InputMgr_GetPlayer(GetInputManager(), 0);
+    if (g_raceEnded != 1) {
+        float accelerator;
+        float brake;
+        if (lbl_806D1290 == 0) {
+            accelerator = input->accelerator();
+        } else {
+            accelerator = lbl_806D7324;
+        }
+        brake = input->brake();
+        if (NokoNokoChallenge_HandleBrakeInput(self, accelerator < lbl_806D732C && brake < lbl_806D732C && IsRaceStarted()) == 1) {
+            accelerator = lbl_806D7328;
+        }
+        CarObject_ApplyInput(self->car, input->steering(), accelerator, brake, IsRaceStarted());
+        CarObject_FrameUpdate(self->car, 0);
+        KartItem_UpdateShadowBillboardAndViewport(self->car, self->scene, 0);
+    } else {
+        CarObject_ApplyInput(self->car, lbl_806D7330, lbl_806D7330, lbl_806D7330, 1);
+        KartMovement_SetSpeedScale(self->car, lbl_806D7334);
+        CarObject_FrameUpdate(self->car, 0);
+        ChallengeGoalCamera_Update(self->goalCamera, self->scene, KartDriver_GetKartRootMtx(CarObject_GetRenderObj(self->car)));
+    }
+    Fog_UpdateFromCourseScene3D();
+    LakituStart_UpdateCountdown(self->lakitu);
+    CourseEnvironment_UpdateAndCullZones_Timed(self->environment);
+    BiribiriLand_UpdateObstacles(self->obstacles);
+    if (self->finished == 0) {
+        Vec pos;
+        BiribiriMtx *mtx = KartDriver_GetKartRootMtx(CarObject_GetRenderObj(self->car));
+        pos.x = (*mtx)[0][3];
+        pos.y = (*mtx)[1][3];
+        pos.z = (*mtx)[2][3];
+        if (BiribiriCheckObstacleHit(self->obstacles, &pos)) {
+            BiribiriHitInfo info;
+            KartReaction_Rear(CarObject_GetRenderObj(self->car));
+            memset(&info, 0, sizeof(info));
+            info.pos.x = pos.x;
+            info.pos.y = pos.y;
+            info.pos.z = pos.z;
+            info.type = 8;
+            CarObject_HandleObstacleHit(self->car, &info);
+        }
+        if (BiribiriCheckGoal((BiribiriGoal *)self->goal, &pos)) {
+            self->success = 1;
+            self->finished = 1;
+            KartItem_CancelActiveEffect(self->car);
+            KartMovement_ResetOnGoal(CarObject_GetRenderObj(self->car));
+        }
+    }
+    CObj_LoadProjMatrix(self->scene, &lbl_80677C88);
+    CObj_ApplyScissor(self->scene, &lbl_80677C94);
+    ItemObjectManager_Update();
+    VfxSlotMgr_Update(lbl_80677C88, lbl_80677C94);
+    if (IsRaceStarted() && self->finished == 0 && g_raceTimeRemaining >= 0.0f) {
+        g_raceTimeRemaining -= 0.016666668f;
+        if (g_raceTimeRemaining < 0.0f) {
+            g_raceTimeRemaining = 0.0f;
+            self->finished = 1;
+            KartItem_CancelActiveEffect(self->car);
+            KartMovement_ResetOnTimeout(CarObject_GetRenderObj(self->car));
+        }
+    }
+    fn_80253FD8(self->hud, g_raceTimeRemaining);
+    fn_80253EBC(self->hud, lbl_806D7344 * CarObject_CalcSpeedRatio(self->car));
+    fn_80253EC0(self->hud, KartItem_GetCurrentSpeedWithBonus(self->car));
+    HUD_FrameUpdate(self->hud);
+    TransitionEffect_Tick(SINGLETON_INSTANCE(lbl_806D109C));
+    if (self->finished) {
+        if (self->resultTimer == 0) {
+            int time;
+            int coins;
+            time = (int)(MiniGame_GetTimerValue() - g_raceTimeRemaining);
+            coins = 0;
+            BiribiriCoinRank **ranks = NokoNokoChallenge_GetCoinDivisor();
+            if (ranks != 0 && self->success == 1) {
+                int i;
+                for (i = 0; (*ranks)[i].coins > 0; i++) {
+                    if (time <= (*ranks)[i].time) {
+                        coins = (*ranks)[i].coins;
+                        break;
+                    }
+                }
+            }
+            SetCoinCount(coins);
+            if (self->success) {
+                fn_80253C74(self->hud, 1, NokoNokoChallenge_CalcResultText(self, 1, 0), (int)g_raceTimeRemaining);
+                Object_SetByte10_Return1(self->scene, 1);
+            } else {
+                fn_80253C74(self->hud, 0, NokoNokoChallenge_CalcResultText(self, 0, 0), (int)g_raceTimeRemaining);
+                Object_SetByte10_Return1(self->scene, 1);
+            }
+            NokoNokoChallenge_SaveResult(self, coins, self->success);
+            g_raceEnded = 1;
+            g_lakituStartAnimDone = 0;
+        } else if (fn_80253C40(self->hud)) {
+            return NokoNokoChallenge_TransitionToResult(self);
+        }
+        self->resultTimer++;
+    }
+    if (g_weatherSystem) {
+        fn_8016B32C((void *)g_weatherSystem);
+    }
+    return -2;
+}
+#pragma exceptions reset
+#pragma cplusplus reset
+
+
+/* === BiribiriLand_UpdateObstacles === */
+void *GetCourseScene3D(void);
+float LUT_Sin12Bit(float x);
+void clNormal3D_Exec(void *o);
+void fn_8016C288(int id, Vec *pos);
+unsigned char fn_8016C360(int id);
+void fn_8016C394(int id);
+float PSVECSquareMag(Vec *v);
+extern const float lbl_806D7350;
+extern const float lbl_806D7354;
+extern const float lbl_806D7358;
+extern const float lbl_806D735C;
+extern const float lbl_806D7360;
+
+#pragma exceptions on
+void BiribiriLand_UpdateObstacles(BiribiriObstacles *obs)
+{
+    Vec nearest = {0.0f, 0.0f, 0.0f};
+    Vec camera = {0.0f, 0.0f, 0.0f};
+    Vec d;
+    float best = lbl_806D7350;
+    float dist;
+    unsigned int i;
+
+    if (GetCourseScene3D() != 0) {
+        CObj_LoadProjMatrix(GetCourseScene3D(), &camera);
+    }
+    for (i = 0; i < 9; i++) {
+        float lift;
+        obs->obstacles[i].phase += lbl_806D7328;
+        if (obs->obstacles[i].phase >= lbl_806D7354) {
+            obs->obstacles[i].phase = lbl_806D7330;
+        }
+        lift = lbl_806D7330;
+        if (lbl_80357F6C[i].glow) {
+            lift = 5.0f * LUT_Sin12Bit(lbl_806D735C * obs->obstacles[i].phase) + 5.0f;
+        }
+        obs->obstacles[i].a.x = lbl_80357F6C[i].a.x;
+        obs->obstacles[i].a.y = lbl_80357F6C[i].a.y;
+        obs->obstacles[i].a.z = lbl_80357F6C[i].a.z;
+        obs->obstacles[i].b.x = lbl_80357F6C[i].b.x;
+        obs->obstacles[i].b.y = lbl_80357F6C[i].b.y;
+        obs->obstacles[i].b.z = lbl_80357F6C[i].b.z;
+        obs->obstacles[i].a.y += lift;
+        obs->obstacles[i].b.y += lift;
+        obs->obstacles[i].center.x = lbl_806D7334 * (obs->obstacles[i].a.x + obs->obstacles[i].b.x);
+        obs->obstacles[i].center.y = lbl_806D7334 * (obs->obstacles[i].a.y + obs->obstacles[i].b.y) + lbl_806D7360;
+        obs->obstacles[i].center.z = lbl_806D7334 * (obs->obstacles[i].a.z + obs->obstacles[i].b.z);
+        if (obs->obstacles[i].hit == 0) {
+            if (best < lbl_806D7330) {
+                nearest.x = obs->obstacles[i].center.x;
+                nearest.y = obs->obstacles[i].center.y;
+                nearest.z = obs->obstacles[i].center.z;
+                Vec3_Subtract(&nearest, &camera, &d);
+                best = PSVECSquareMag(&d);
+            } else {
+                Vec3_Subtract(&obs->obstacles[i].center, &camera, &d);
+                dist = PSVECSquareMag(&d);
+                if (dist < best) {
+                    best = dist;
+                    nearest.x = obs->obstacles[i].center.x;
+                    nearest.y = obs->obstacles[i].center.y;
+                    nearest.z = obs->obstacles[i].center.z;
+                }
+            }
+        }
+    }
+    clNormal3D_Exec(obs->model[6]);
+    if (dist >= lbl_806D7330) {
+        if (!fn_8016C360(0x91)) {
+            SoundMgr_PlaySE(0x91);
+        }
+        fn_8016C288(0x91, &nearest);
+    } else if (fn_8016C360(0x91)) {
+        fn_8016C394(0x91);
+    }
+}
+#pragma exceptions reset
+
+/* --- class-name strings and Lakitu archive (tail of the scene's .rodata) --- */
+const char lbl_803580C8[] = "clCGamePC";
+const char lbl_803580D4[] = "clJobRunner";
+const char lbl_803580E0[] = "jyugemu_start.dat";
+
 
 
 /* === extracted from auto_BiribiriLand_Destroy_text === */
@@ -1045,8 +533,6 @@ extern void fn_80254134();
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_raceCamera;
 extern unsigned int g_weatherSystem;
-extern unsigned int lbl_806D109C;
-extern unsigned int lbl_806D10AC;
 extern unsigned int lbl_806D10D0;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
@@ -1166,7 +652,6 @@ extern "C" void *BiribiriLand_Destroy(BiribiriState *self, short freeMemory)
 /* refine if the real prototype matters for header consumers. */
 extern void Alloc();
 extern void Camera_Create();
-extern void CarObject_GetRenderObj();
 extern void CarObject_Init();
 extern void CarObject_SetPosition();
 extern void ChallengeGoalCamera_Init();
@@ -1185,7 +670,6 @@ extern void HUD_RegisterOverlay();
 extern void InputManager_Init();
 extern void ItemObjectManager_Init();
 extern void LakituStart_Init();
-extern void MiniGame_GetTimerValue();
 extern void Object_SetJObjScaleXYZ();
 extern void PreloadEffectResources();
 extern void ProcessSystemTick();
@@ -1209,19 +693,10 @@ extern void clNormal3D_SetScale();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_characterId;
-extern unsigned int g_lakituStartAnimDone;
 extern unsigned int g_raceCamera;
-extern unsigned int g_raceEnded;
-extern unsigned int g_raceTimeRemaining;
 extern unsigned int g_weatherSystem;
 extern unsigned int lbl_806D12BC;
-extern unsigned int lbl_806D7328;
-extern unsigned int lbl_806D732C;
-extern unsigned int lbl_806D7330;
-extern unsigned int lbl_806D7334;
-extern unsigned int lbl_806D7338;
 extern unsigned int lbl_806D7348;
-extern unsigned int lbl_806D7360;
 extern unsigned int lbl_806D7364;
 extern unsigned int lbl_806D7368;
 extern unsigned int lbl_806D736C;
@@ -1231,8 +706,6 @@ extern unsigned int lbl_806D7374;
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_80357F6C[];
-extern unsigned int lbl_803580E0[];
 extern unsigned int lbl_8048E144[];
 extern unsigned int lbl_8048E430[];
 extern unsigned int lbl_8048E46C[];

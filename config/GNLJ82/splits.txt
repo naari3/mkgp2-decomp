@@ -6090,6 +6090,7 @@ game/BiribiriLand.c:
 	extab       start:0x8000CE64 end:0x8000D014
 	extabindex  start:0x80024B6C end:0x80024BA8
 	.text       start:0x801341E4 end:0x8013558C
+	.rodata     start:0x80357B00 end:0x803580F8
 
 game/RivalRun.c:
 	extab       start:0x8000D014 end:0x8000D220
