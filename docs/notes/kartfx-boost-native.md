@@ -4,3 +4,8 @@
 Source: Codex worker c15_u39_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c15_u39: FreeBoostChildren(BoostPayload*) static inline separates cleanup walker lifetime and improves TripleStreak 98.545815 ->98.74502, unchanged1000 vs1004B. Correct cleanup counter r27/walker r26/zero r25 now emitted; target extra mr r26,r25 still absent. Payload r26/callback+main-loop index r25 remain swapped against target. Whole-tick helper too large to inline; smaller spawn callback/fade minimum parameter helpers regress98.565735. Fade current/decrement/minimum FP homes still differ. Singleton staysNonMatching; fallback-linked full DOL SHA1OK; no native gain.
+
+## c17_u129_20261107
+Source: Codex worker c17_u129_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u129: TripleStreak98.74502 ->99.780876, exact1004B and EH8/index12 both100. Declare main-loop childIndex before payload, and cleanup ordinal before walker: target payloadr25/callbackr26/main-indexr26/cleanup-counterr27/walkerr26/zeror25 all exact, including missing mr r26,r25. Child-loop helper alone restores missing copy but changes stack slots and GPRs99.051796; reverted. Literal fade0/0.05 changes FP provenance but wrong load order/unresolved zero; reverted. Only eight fade FP identity rows remain800B9DF4/9DF8/9DFC/9E00/9E04/9E08/9E0C/9E14: current f1/decrement-result f0/min f2 instead of target f2/f1/f0. Explicit scalar declarations do not move these scratch webs. Honest NonMatching; no singleton split possible; fallback DOL SHA1OK and included Flame remains all100.
