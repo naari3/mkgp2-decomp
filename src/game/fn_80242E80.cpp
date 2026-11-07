@@ -1,5 +1,27 @@
 #include "game/RivalMarkerPrivate.h"
 
+static inline void LoadRivalResources() {
+    fn_80120A08(0xc2e);
+    fn_80120A08(0xc2d);
+    fn_80120A08(0x1cd3);
+    fn_80120A08(0x1cd4);
+    fn_80120A08(0x1cd6);
+    if (g_gameMode != 1) {
+        int *p;
+        int mode, cup, round, i;
+        for (i = 0; i < 5; ++i) {
+            round = g_roundIndex;
+            cup = g_cupId;
+            mode = g_gameMode;
+            p = AI_GetItemList(GetEnemyParam(), mode, cup, round, i);
+            while (*p != -1) {
+                fn_80120A08(fn_8023DBEC(*p));
+                ++p;
+            }
+        }
+    }
+}
+
 extern "C" void fn_80242E80(RivalMarkerHud *self) {
     switch (self->state) {
     case -1:
@@ -17,23 +39,7 @@ extern "C" void fn_80242E80(RivalMarkerHud *self) {
         self->state = 3;
         break;
     case 3:
-        fn_80120A08(0xc2e);
-        fn_80120A08(0xc2d);
-        fn_80120A08(0x1cd3);
-        fn_80120A08(0x1cd4);
-        fn_80120A08(0x1cd6);
-        if (g_gameMode != 1) {
-            for (int i = 0; i < 5; ++i) {
-                int round = g_roundIndex;
-                int cup = g_cupId;
-                int mode = g_gameMode;
-                int *p = AI_GetItemList(GetEnemyParam(), mode, cup, round, i);
-                while (*p != -1) {
-                    fn_80120A08(fn_8023DBEC(*p));
-                    ++p;
-                }
-            }
-        }
+        LoadRivalResources();
         return;
     default:
         return;

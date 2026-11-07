@@ -885,7 +885,7 @@ config.libs = [
             Object(Matching, "game/fn_80242DE0.c"),
             Object(NonMatching, "game/fn_80243074.cpp", mw_version="GC/1.3.2", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/fn_80243464.cpp", mw_version="GC/1.3.2", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/fn_80242E80.cpp", mw_version="GC/1.3.2", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_80242E80.cpp", mw_version="GC/1.3.2", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_802437AC.cpp", mw_version="GC/1.3.2", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/ItemPanelDraw.cpp", mw_version="GC/1.3.2", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_80243958.c", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
