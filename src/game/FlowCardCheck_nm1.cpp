@@ -26,7 +26,9 @@ struct TextMgr {
     float x, y;
     char pad08[0x10];
     int visible;
-    char pad1C[0x22C - 0x1C];
+    int field1C;
+    unsigned int color;
+    char pad24[0x22C - 0x24];
     float scale;
     TextMgr();
     ~TextMgr() {}
@@ -36,6 +38,12 @@ struct PlayerData {
     char pad00[0xE];
     unsigned short stamps;
     unsigned short stamps2;
+    char pad12[0xA8-0x12];
+    unsigned char unlocked[61];
+    char padE5[0x198-0xE5];
+    signed char cardCount;
+    char pad199[4];
+    unsigned char datePage, dateMode;
 };
 
 struct InputPlayer {
@@ -44,7 +52,7 @@ struct InputPlayer {
     virtual void v2();
     virtual void v3();
     virtual float Stick();
-    virtual void v5();
+    virtual float v5();
     virtual void v6();
     virtual void v7();
     virtual unsigned int Held(int mask);
@@ -53,7 +61,8 @@ struct InputPlayer {
 struct InputState {
     char pad00[4];
     unsigned char enabled;
-    char pad05[0x13];
+    char pad05[0xF];
+    int pageInput;
     int cardState;
     int i1C;
 };
@@ -90,6 +99,10 @@ extern PlayerData g_playerData;
 extern InputState *g_pInputState;
 void *GetInputManager(void);
 InputPlayer *InputMgr_GetPlayer(void *mgr, int idx);
+int fn_8023D844(int group, int slot);
+void fn_8019FF6C(Sprite *s, int flag);
+const char *fn_8023DAA8(int item);
+const char *fn_8023D938(int item, int kind);
 void fn_801699D8(int a, int b);
 void SetRumbleMode(int a, int b, int c);
 void fn_801FE390(void);
@@ -145,7 +158,7 @@ void SpriteAnimParamBlock_SetAnimParamCached(Sprite **h, int oldParam, int newPa
 }
 
 
-#include "game/FlowCardCheckScene.h"
+#include "game/FlowCardCheckUnlock_private.h"
 
 clFlowCCInterface::~clFlowCCInterface() {}
 
@@ -196,10 +209,18 @@ static const char *kCCNames[3] = {"50cc", "100cc", "150cc"};
 
 static const unsigned int kPageTables[300] = {0x00000000, 0x00000000, 0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x000000C8, 0x00000040, 0x00000000, 0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF, 0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB};
 static const int kCards[5][12] = {{0x00000006, 0x00000002, 0x00000001, 0x00000000, 0x00000007, 0x00000003, 0x0000000B, 0x00000008, 0x0000000A, 0x00000009, 0x0000000D, 0x0000000C}, {0x00000004, 0x00000005, 0x0000002A, 0x0000000F, 0x0000001E, 0x0000000E, 0x00000016, 0x00000017, 0x0000002C, 0x0000001B, 0x0000002B, 0x0000003B}, {0x00000026, 0x00000028, 0x00000027, 0x0000003A, 0x00000025, 0x00000010, 0x00000029, 0x0000002D, 0x00000013, 0x00000019, 0x0000001D, 0x00000014}, {0x00000018, 0x0000001F, 0x00000023, 0x00000022, 0x00000021, 0x00000012, 0x0000001C, 0x00000020, 0x00000015, 0x00000024, 0x0000001A, 0x00000011}, {0x0000002E, 0x00000036, 0x00000030, 0x00000032, 0x00000035, 0x00000039, 0x00000037, 0x00000038, 0x00000031, 0x00000034, 0x0000002F, 0x00000033}};
-static const unsigned int kDateTabA[12] = {0x43A00000, 0x437A0000, 0x43A00000, 0x437A0000, 0x43A98000, 0x438F0000, 0x43E20000, 0x438E8000, 0x43A98000, 0x43BD0000, 0x43E20000, 0x43BD0000};
-static const unsigned int kDateTabB[109] = {0x43C70000, 0x42C80000, 0x42080000, 0x42C80000, 0x42A40000, 0x43320000, 0x42A40000, 0x43890000, 0x42A40000, 0x43B88000, 0x43930000, 0x43320000, 0x43E38000, 0x42D00000, 0x429C0000, 0x43120000, 0x429C0000, 0x43720000, 0x429C0000, 0x43A88000, 0x43910000, 0x43120000, 0x43E00000, 0x43A78000, 0x43A00000, 0x437A0000, 0x43A00000, 0x437A0000, 0x42080000, 0x43240000, 0x44160000, 0x43240000, 0x42AC0000, 0x431A0000, 0x42AC0000, 0x431A0000, 0x42AC0000, 0x431A0000, 0x43C70000, 0x42C80000, 0x42040000, 0x42C60000, 0x43E38000, 0x42D00000, 0x434B0000, 0x42CE0000, 0x42FA0000, 0x43A40000, 0x43A28000, 0x43A60000, 0x43A28000, 0x43B10000, 0x43A28000, 0x43BC0000, 0x42AC0000, 0x43000000, 0x432A0000, 0x43540000, 0x437E0000, 0x43940000, 0x43A90000, 0x43BE0000, 0x43D30000, 0x43E80000, 0x43FD0000, 0x44090000, 0x431A0000, 0x43390000, 0x43580000, 0x43770000, 0x438B0000, 0x43A00000, 0x437A0000, 0x43A00000, 0x437A0000, 0x432D0000, 0x43120000, 0x43EB8000, 0x43120000, 0x432D0000, 0x43500000, 0x43EB8000, 0x43500000, 0x432D0000, 0x43878000, 0x43EB8000, 0x43878000, 0xC4200000, 0xC3F00000, 0xC4200000, 0xC3F00000, 0xC4200000, 0xC3F00000, 0x43C70000, 0x42C80000, 0x42040000, 0x42C60000, 0x43E38000, 0x42D00000, 0x43940000, 0x42CE0000, 0x42FA0000, 0x43A40000, 0x43A28000, 0x43A60000, 0x43A28000, 0x43B10000, 0x43A28000, 0x43BC0000};
-static const unsigned int kCharaTabA[24] = {0x00001D23, 0x00001D24, 0x00001D27, 0x00001ECD, 0x00001D2F, 0x00001ECD, 0x00001D2C, 0x00001ECD, 0x00001D2D, 0x00001ECD, 0x00001D26, 0x00001ECD, 0x00001D2E, 0x00001ECD, 0x00001D28, 0x00001ECD, 0x00001D25, 0x00001D2B, 0x00001D29, 0x00001ECD, 0x00001D2A, 0x00001ECD, 0x00001ECD, 0x00001ECD};
-static const unsigned int kCharaTabB[20] = {0x00000000, 0x00000003, 0x00000004, 0x00000005, 0x00000002, 0x0000000B, 0x00000006, 0x00000007, 0x00000008, 0x0000000A, 0x0000000C, 0xFFFFFFFF, 0x43120000, 0x43500000, 0x43878000, 0x000013B9, 0x000013BA, 0x000013BB, 0x000013BC, 0x000013BD};
+static const Vec2 kDateTabA[6] = {{320.0f, 250.0f}, {320.0f, 250.0f}, {339.0f, 286.0f}, {452.0f, 285.0f}, {339.0f, 378.0f}, {452.0f, 378.0f}};
+static const Vec2 kDateTextPos[12] = {{398.0f, 100.0f}, {34.0f, 100.0f}, {82.0f, 178.0f}, {82.0f, 274.0f}, {82.0f, 369.0f}, {294.0f, 178.0f}, {455.0f, 104.0f}, {78.0f, 146.0f}, {78.0f, 242.0f}, {78.0f, 337.0f}, {290.0f, 146.0f}, {448.0f, 335.0f}};
+static const Vec2 kItemGrpPos[7] = {{320.0f, 250.0f}, {320.0f, 250.0f}, {34.0f, 164.0f}, {600.0f, 164.0f}, {86.0f, 154.0f}, {86.0f, 154.0f}, {86.0f, 154.0f}};
+static const Vec2 kItemTextPos[8] = {{398.0f, 100.0f}, {33.0f, 99.0f}, {455.0f, 104.0f}, {203.0f, 103.0f}, {125.0f, 328.0f}, {325.0f, 332.0f}, {325.0f, 354.0f}, {325.0f, 376.0f}};
+static const float kItemX[12] = {86.0f, 128.0f, 170.0f, 212.0f, 254.0f, 296.0f, 338.0f, 380.0f, 422.0f, 464.0f, 506.0f, 548.0f};
+static const float kItemY[5] = {154.0f, 185.0f, 216.0f, 247.0f, 278.0f};
+static const Vec2 kCharaGrpPos[11] = {{320.0f, 250.0f}, {320.0f, 250.0f}, {173.0f, 146.0f}, {471.0f, 146.0f}, {173.0f, 208.0f}, {471.0f, 208.0f}, {173.0f, 271.0f}, {471.0f, 271.0f}, {-640.0f, -480.0f}, {-640.0f, -480.0f}, {-640.0f, -480.0f}};
+static const Vec2 kCharaTextPos[8] = {{398.0f, 100.0f}, {33.0f, 99.0f}, {455.0f, 104.0f}, {296.0f, 103.0f}, {125.0f, 328.0f}, {325.0f, 332.0f}, {325.0f, 354.0f}, {325.0f, 376.0f}};
+static const int kCharaTabA[2][6][2] = {{{0x00001D23, 0x00001D24}, {0x00001D27, 0x00001ECD}, {0x00001D2F, 0x00001ECD}, {0x00001D2C, 0x00001ECD}, {0x00001D2D, 0x00001ECD}, {0x00001D26, 0x00001ECD}}, {{0x00001D2E, 0x00001ECD}, {0x00001D28, 0x00001ECD}, {0x00001D25, 0x00001D2B}, {0x00001D29, 0x00001ECD}, {0x00001D2A, 0x00001ECD}, {0x00001ECD, 0x00001ECD}}};
+static const int kCharaGroups[2][6] = {{0x00000000, 0x00000003, 0x00000004, 0x00000005, 0x00000002, 0x0000000B}, {0x00000006, 0x00000007, 0x00000008, 0x0000000A, 0x0000000C, 0xFFFFFFFF}};
+static const float kCharaY[3] = {146.0f, 208.0f, 271.0f};
+static const int kCharaParams[5] = {0x000013B9, 0x000013BA, 0x000013BB, 0x000013BC, 0x000013BD};
 static const Vec2 kGPGrpPos[9] = {{320.0f, 250.0f}, {176.0f, 160.0f}, {465.0f, 160.0f}, {176.0f, 228.0f}, {465.0f, 228.0f}, {176.0f, 296.0f}, {465.0f, 296.0f}, {176.0f, 364.0f}, {465.0f, 364.0f}};
 static const Vec2 kGPTextPos[4] = {{398.0f, 100.0f}, {32.0f, 99.0f}, {230.0f, 99.0f}, {455.0f, 104.0f}};
 static const Vec2 kGPHandlePos[2] = {{320.0f, 250.0f}, {40.0f, 102.0f}};
@@ -208,6 +229,46 @@ static const int kGPCupAnim[8] = {0x15DB, 0x15DD, 0x15DF, 0x15E1, 0x15E3, 0x15E5
 static const int kGPCupIds[8] = {7, 1, 8, 2, 3, 4, 5, 6};
 static const Vec2 kBattleGrpPos[3] = {{320.0f, 250.0f}, {320.0f, 250.0f}, {-640.0f, -240.0f}};
 static const Vec2 kBattleTextPos[7] = {{398.0f, 100.0f}, {33.0f, 99.0f}, {54.0f, 380.0f}, {213.0f, 380.0f}, {366.0f, 380.0f}, {512.0f, 380.0f}, {455.0f, 104.0f}};
+
+#define kDateGrpPos kDateTabA
+#define kCharaFrames kCharaTabA
+extern "C" {
+void fn_80121E10(ResCtrl *ctrl);
+void SpriteAnimParamBlock_Reload(Sprite **group, int id);
+void fn_8023CEB4(clIndicator *ind);
+void fn_8023CFD4(clIndicator *ind);
+void fn_801F9014(TextMgr *text, const void *data, ...);
+void fn_801F93D0(TextMgr *text, float sx, float sy);
+int GetCoinMilage(void *pd);
+const char *get_title_name_global(void *mgr);
+extern void *lbl_806D10A0;
+extern const char lbl_806DB824[1];
+extern const char lbl_806DB82C[1];
+extern const char lbl_806DB850[4];
+extern const char lbl_806DB87C[4];
+extern const float lbl_806DB828;
+extern const float lbl_806DB830;
+extern const float lbl_806DB834;
+extern const float lbl_806DB838;
+extern const float lbl_806DB83C;
+extern const float lbl_806DB840;
+extern const float lbl_806DB844;
+extern const float lbl_806DB848;
+extern const float lbl_806DB84C;
+extern const float lbl_806DB854;
+extern const float lbl_806DB858;
+extern const float lbl_806DB85C;
+extern const float lbl_806DB860;
+extern const float lbl_806DB864;
+extern const float lbl_806DB868;
+extern const float lbl_806DB86C;
+extern const float lbl_806DB870;
+extern const float lbl_806DB874;
+extern const float lbl_806DB878;
+extern const float lbl_806DB880;
+extern const float lbl_806DB884;
+}
+
 class clFlowCCBattle;
 class clFlowCCGP;
 class clFlowCCCharaItem;
@@ -227,7 +288,7 @@ public:
     virtual void Update();
     virtual void Draw();
     virtual void Unk14();
-    virtual void SlideIn(int t);
+    virtual void SlideIn();
     virtual void OnHidden();
 };
 
@@ -244,25 +305,26 @@ public:
     virtual void Update();
     virtual void Draw();
     virtual void Unk14();
-    virtual void SlideIn(int t);
+    virtual void SlideIn();
     virtual void OnHidden();
 };
 
 class clFlowCCCharaItem : public clFlowCCInterface {
 public:
     int which, field20, field24, field28;
-    int slots[10];
+    float slots[2][5];
     unsigned char first;
     Sprite **grp[11];
     TextMgr *text[8];
     int resId, paramId;
 
+    void Select(int delta);
     clFlowCCCharaItem(int which);
     virtual ~clFlowCCCharaItem();
     virtual void Update();
     virtual void Draw();
     virtual void Unk14();
-    virtual void SlideIn(int t);
+    virtual void SlideIn();
     virtual void OnHidden();
 };
 
@@ -278,13 +340,14 @@ public:
     int handles[60];
     ResCtrl cards[60];
 
+    void Select(int delta);
     clFlowCCItem();
     virtual ~clFlowCCItem();
     virtual void Update();
     virtual void Draw();
     virtual void Unk14();
-    virtual void SlideIn(int t);
-    virtual void SlideOut(int t);
+    virtual void SlideIn();
+    virtual void SlideOut();
     virtual void OnHidden();
 };
 
@@ -301,15 +364,14 @@ public:
     virtual void Update();
     virtual void Draw();
     virtual void Unk14();
-    virtual void SlideIn(int t);
+    virtual void SlideIn();
     virtual void OnHidden();
 };
 
+#include "game/singleton.h"
+
 static inline InputState *input_state() {
-    if (g_pInputState == 0) {
-        return 0;
-    }
-    return g_pInputState;
+    return SINGLETON_INSTANCE(g_pInputState);
 }
 
 static inline PlayerData *GetPlayerData() {
@@ -492,7 +554,7 @@ clFlowCardCheck::clFlowCardCheck()
 
 void clFlowCCBattle::Unk14() {}
 void clFlowCCBattle::OnHidden() {}
-void clFlowCCBattle::SlideIn(int t) {}
+void clFlowCCBattle::SlideIn() {}
 
 void clFlowCCBattle::Draw() {
     for (int i = 0; i < 2; i++) {
@@ -660,7 +722,7 @@ clFlowCCBattle::clFlowCCBattle() : blink(0) {
 
 void clFlowCCGP::Unk14() {}
 void clFlowCCGP::OnHidden() {}
-void clFlowCCGP::SlideIn(int t) {}
+void clFlowCCGP::SlideIn() {}
 
 void clFlowCCGP::Draw() {
     for (int i = 0; i < 9; i++) {
@@ -847,19 +909,19 @@ clFlowCCGP::clFlowCCGP(int cc) : cc(cc), first(1) {
 
 void clFlowCCCharaItem::Unk14() {}
 void clFlowCCCharaItem::OnHidden() {}
-void clFlowCCCharaItem::SlideIn(int t) {}
+void clFlowCCCharaItem::SlideIn() {}
 void clFlowCCItem::Unk14() {}
 void clFlowCCItem::OnHidden() {}
 void clFlowCCDate::Unk14() {}
-void clFlowCCDate::SlideIn(int t) {}
+void clFlowCCDate::SlideIn() {}
 
-void clFlowCCItem::SlideOut(int t) {
+void clFlowCCItem::SlideOut() {
     for (int id = 0x1ECD; id < 0x23CD; id += 2) {
         fn_80120A08(id);
     }
 }
 
-void clFlowCCItem::SlideIn(int t) {
+void clFlowCCItem::SlideIn() {
     for (int i = 0; i < 60; i++) {
         SpriteHandle_SetActiveFlag(handles[i], 1);
     }
@@ -900,4 +962,575 @@ void clFlowCCDate::Draw() {
     if (indicator != 0) {
         fn_8023CD54(indicator);
     }
+}
+
+#include "game/SpriteAnimTraversal_private.h"
+
+extern "C" unsigned char fn_8019FF8C(Sprite *s, int key, SpriteAnimSample *out);
+
+void clFlowCCItem::Draw() {
+    for (int i = 0; i < 7; i++) {
+        if (grp[i] != 0) fn_801A0004(*grp[i]);
+    }
+    void *list = fn_801F8E58();
+    for (int i = 0; i < 8; i++) fn_801F8A34(list, text[i], 4);
+}
+
+clFlowCCItem::~clFlowCCItem() {
+    for (int i = 0; i < 8; i++) {
+        if (i < 2) fn_801F9518(text[i]);
+        else fn_801F95A0(text[i]);
+    }
+    for (int i = 0; i < 7; i++) {
+        if (grp[i] != 0) { SpriteAnimHandle_Destroy(grp[i], 1); grp[i] = 0; }
+    }
+    for (int i = 0; i < 8; i++) {
+        if (text[i] != 0) { delete text[i]; text[i] = 0; }
+    }
+    SpriteHandle_Destroy(handle);
+    for (int i = 0; i < 60; i++) SpriteHandle_Destroy(handles[i]);
+    fn_80120A08(0x1E3D);
+    if (indicator != 0) { delete indicator; indicator = 0; }
+}
+
+clFlowCCDate::~clFlowCCDate() {
+    PlayerData *pd = &g_playerData;
+    pd->datePage = field1C;
+    pd->dateMode = field1D;
+    for (int i = 0; i < 12; i++) {
+        if (i < 6) fn_801F9518(text[i]);
+        else fn_801F95A0(text[i]);
+    }
+    for (int i = 0; i < 6; i++) {
+        if (grp[i] != 0) { SpriteAnimHandle_Destroy(grp[i], 1); grp[i] = 0; }
+    }
+    for (int i = 0; i < 12; i++) {
+        if (text[i] != 0) { delete text[i]; text[i] = 0; }
+    }
+    if (indicator != 0) { delete indicator; indicator = 0; }
+    fn_80120A08(0x15F7);
+    fn_80120A08(0x15F6);
+    fn_80120A08(0x1ECD);
+}
+
+clFlowCCCharaItem::~clFlowCCCharaItem() {
+    PlayerData *pd = &g_playerData;
+    if (which == 1) {
+        for (int id = 0x1ECD; id <= 0x23CD; id += 2) fn_80120A08(id);
+    }
+    for (int i = 0; i < 6; i++) {
+        if ((int)kCharaGroups[which][i] == -1) {
+            fn_80120A08((short)Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(pd, fn_8023D844(0, 0)), 0));
+        } else {
+            for (int j = 0; j < 5; j++) {
+                fn_80120A08((short)Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(pd, fn_8023D844(kCharaGroups[which][i], j + 1)), 0));
+            }
+        }
+    }
+    for (int i = 0; i < 6; i++) {
+        fn_80120A08(kCharaFrames[which][i][0]);
+        fn_80120A08(kCharaFrames[which][i][1]);
+    }
+    for (int i = 0; i < 11; i++) {
+        if (grp[i] != 0) { SpriteAnimHandle_Destroy(grp[i], 1); grp[i] = 0; }
+    }
+    for (int i = 0; i < 8; i++) {
+        if (text[i] != 0) { delete text[i]; text[i] = 0; }
+    }
+}
+
+void clFlowCCItem::Select(int delta) {
+    if (delta != 0) {
+        PlayerData *pd = &g_playerData;
+        do {
+            field1C += delta;
+            if (field1C < 0) { field1C = 11; --field20; }
+            if (field1C > 11) { field1C = 0; ++field20; }
+            if (field20 < 0) field20 = 4;
+            if (field20 > 4) field20 = 0;
+        } while (pd->unlocked[kCards[field20][field1C]] != 1);
+        int item = PlayerData_ResolveUnlockedIdByIndex(pd, kCards[field20][field1C]);
+        short res = Item_GetDescriptorField0(item, 0);
+        SpriteAnimParamBlock_SetAnimParamCached(grp[4], resId, res);
+        fn_8019FF6C(*grp[4], 1);
+        float x = kItemX[field1C];
+        float y = kItemY[field20];
+        { Sprite *sprite = *grp[4]; sprite->x = x; sprite->y = y; }
+        { Sprite *sprite = *grp[5]; sprite->x = x; sprite->y = y; }
+        { Sprite *sprite = *grp[6]; sprite->x = x; sprite->y = y; }
+        fn_8011F804(handle, lbl_806DB834, y);
+        SpriteAnimParamBlock_SetAnimParamCached(grp[1], resId, res);
+        TexMgr_SetTexture(text[4], fn_8023DAA8(item));
+        TexMgr_SetTexture(text[5], fn_8023D938(item, 0));
+        TexMgr_SetTexture(text[6], fn_8023D938(item, 1));
+        TexMgr_SetTexture(text[7], fn_8023D938(item, 2));
+        int param = Item_GetDescriptorFieldC(item);
+        int anim = -1;
+        if (param >= 0) anim = param + 0x1E1D;
+        SpriteAnimParamBlock_SetAnimParamCached(grp[1], paramId, anim);
+        resId = res;
+        paramId = anim;
+    }
+}
+
+void clFlowCCCharaItem::Update() {
+    InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
+    UpdateSlide();
+    if (IsIdle() == 1) {
+        if (first == 1) { first = 0; field28 = -1; Select(1); }
+        int old = field24;
+        Select(input_state()->pageInput);
+        if (old != field24) fn_801FE36C();
+    } else {
+        for (int i = 0; i < 11; i++) {
+            if (grp[i] != 0) (*grp[i])->x = kCharaGrpPos[i].x + slide;
+        }
+        for (int i = 0; i < 8; i++) {
+            const Vec2 &p = kCharaTextPos[i];
+            fn_801F93EC(text[i], p.x + slide, p.y);
+        }
+        if (isJapanese()) {
+            fn_801F93EC(text[0], lbl_806DB780.x + slide, lbl_806DB780.y);
+            fn_801F93EC(text[3], lbl_806DB828 + slide, kItemTextPos[3].y);
+        }
+    }
+    for (int i = 0; i < 11; i++) {
+        if (grp[i] != 0) Sprite_AdvanceAnim(*grp[i], 0.0165f);
+    }
+}
+
+void clFlowCCItem::Update() {
+    InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
+    UpdateSlide();
+    if (IsIdle() == 1) {
+        if (first == 0) {
+            first = 1;
+            (*grp[4])->prio = 6;
+            (*grp[5])->prio = 6;
+            (*grp[6])->prio = 6;
+            ResCtrl rc;
+            int rowBase = 0;
+            for (int row = 0; row < 5; row++) {
+                for (int col = 0, i = rowBase; col < 12; col++, i++) {
+                    SpriteHandle_Destroy(handles[i]);
+                    handles[i] = SpriteHandle_CreateDefault(&cards[i], 5);
+                }
+                rowBase += 12;
+            }
+            fn_80121E10(&rc);
+            rc.tail[0] = 1; rc.tail[1] = 1; rc.tail[2] = 1;
+            rc.resId = 0x1E3D;
+            rc.Show(lbl_806DB834, lbl_806DB838, 1.0f);
+            rc.scaleX = lbl_806DB83C; rc.scaleY = 1.0f;
+            SpriteHandle_Destroy(handle);
+            handle = SpriteHandle_CreateDefault(&rc, 6);
+        }
+        int delta = input_state()->pageInput;
+        Select(delta);
+        if (delta != 0) fn_801FE36C();
+    } else {
+        for (int i = 0; i < 7; i++) {
+            const Vec2 &p = kItemGrpPos[i];
+            if (grp[i] != 0) (*grp[i])->x = p.x + slide;
+        }
+        for (int i = 0; i < 8; i++) {
+            const Vec2 &p = kItemTextPos[i];
+            fn_801F93EC(text[i], p.x + slide, p.y);
+        }
+        if (isJapanese()) {
+            fn_801F93EC(text[0], lbl_806DB780.x + slide, lbl_806DB780.y);
+            fn_801F93EC(text[3], lbl_806DB828 + slide, kItemTextPos[3].y);
+        }
+        int i = 0;
+        for (int row = 0; row < 5; row++) {
+            float y = kItemY[row];
+            for (int col = 0; col < 12; col++, i++) fn_8011F804(handles[i], kItemX[col] + slide, y);
+        }
+        fn_8011F804(handle, lbl_806DB834 + slide, lbl_806DB838);
+        fn_8023CD24(indicator, lbl_806DB840 + slide, lbl_806DB844);
+        fn_8023CCCC(indicator, lbl_806DB840 + slide, lbl_806DB848);
+    }
+    for (int i = 0; i < 7; i++) {
+        if (grp[i] != 0) Sprite_AdvanceAnim(*grp[i], 0.0165f);
+    }
+    SpriteHandle_RecomputeCull(handle);
+    for (int i = 0; i < 60; i++) SpriteHandle_RecomputeCull(handles[i]);
+    fn_8023CDA8(indicator);
+}
+
+clFlowCCItem::clFlowCCItem() : field1C(0), field20(0), resId(0x13B9), paramId(0x1E1D), first(0), indicator(0) {
+    PlayerData *pd = &g_playerData;
+    grp[0] = 0; grp[1] = 0; grp[2] = 0; grp[3] = 0;
+    grp[4] = 0; grp[5] = 0; grp[6] = 0;
+    indicator = new clIndicator(-1, 0x4A, -1, 0x1875, 4);
+    fn_8023CD24(indicator, lbl_806DB840 + slide, lbl_806DB844);
+    fn_8023CCCC(indicator, lbl_806DB840 + slide, lbl_806DB848);
+    SpriteGroup_CreateOrInit(&grp[0], kItemGrp0, 0, kItemGrpPos[0].x, kItemGrpPos[0].y);
+    SpriteGroup_CreateOrInit(&grp[1], kItemGrp1, 0, kItemGrpPos[1].x, kItemGrpPos[1].y);
+    SpriteGroup_CreateOrInit(&grp[4], kItemGrp2, 1, kItemGrpPos[4].x, kItemGrpPos[4].y);
+    SpriteGroup_CreateOrInit(&grp[5], kItemGrp3, 1, kItemGrpPos[5].x, kItemGrpPos[5].y);
+    SpriteGroup_CreateOrInit(&grp[6], kItemGrp4, 1, kItemGrpPos[6].x, kItemGrpPos[6].y);
+    int i = 0;
+    for (int row = 0; row < 5; row++) {
+        for (int col = 0; col < 12; col++, i++) {
+            int res = 0x1422;
+            if (pd->unlocked[kCards[row][col]] == 1) res = Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(pd, kCards[row][col]), 0);
+            fn_80121E10(&cards[i]);
+            cards[i].resId = res;
+            cards[i].Show(kItemX[col], kItemY[row], 1.0f);
+            cards[i].colors[0] = 0xC3CDF0FF; cards[i].colors[1] = 0xC3CDF0FF;
+            cards[i].colors[2] = 0xC3CDF0FF; cards[i].colors[3] = 0xC3CDF0FF;
+            cards[i].scaleX = lbl_806DB84C; cards[i].scaleY = lbl_806DB84C;
+            handles[i] = SpriteHandle_CreateDefault(&cards[i], 4);
+        }
+    }
+    ResCtrl rc;
+    rc.tail[0] = 1; rc.tail[1] = 1; rc.tail[2] = 1;
+    rc.resId = 0x1E3D;
+    rc.Show(lbl_806DB834, lbl_806DB838, 1.0f);
+    rc.scaleX = lbl_806DB83C; rc.scaleY = 1.0f;
+    handle = SpriteHandle_CreateDefault(&rc, 4);
+    for (i = 0; i < 8; i++) text[i] = new TextMgr();
+    text[0]->visible = 1; text[1]->visible = 1;
+    text[2]->visible = 0; text[3]->visible = 0; text[4]->visible = 0;
+    text[5]->visible = 0; text[6]->visible = 0; text[7]->visible = 0;
+    TexMgr_SetTexture(text[0], lbl_806DB850);
+    TexMgr_SetTexture(text[1], GetTextureByIdAndLang(0x7E, -1));
+    TexMgr_SetTexture(text[2], GetTextureByIdAndLang(0x79, -1));
+    int count = 0;
+    for (int row = 0; row < 5; row++) {
+        for (int col = 0; col < 12; col++) if (pd->unlocked[kCards[row][col]] == 1) ++count;
+    }
+    TexMgr_SetTexture(text[3], GetTextureByIdAndLang(0x7F, -1), count, 60);
+    TexMgr_SetTexture(text[4], lbl_806DB82C);
+    TexMgr_SetTexture(text[5], lbl_806DB82C);
+    TexMgr_SetTexture(text[6], lbl_806DB82C);
+    TexMgr_SetTexture(text[7], lbl_806DB82C);
+    text[0]->scale = -6.0f; text[2]->scale = -1.0f; text[1]->scale = -2.0f;
+    text[3]->scale = -1.0f; text[4]->scale = -1.0f;
+    fn_801F93EC(text[0], kItemTextPos[0].x, kItemTextPos[0].y);
+    fn_801F93EC(text[1], kItemTextPos[1].x, kItemTextPos[1].y);
+    fn_801F93EC(text[2], kItemTextPos[2].x, kItemTextPos[2].y);
+    fn_801F93EC(text[3], kItemTextPos[3].x, kItemTextPos[3].y);
+    fn_801F93EC(text[4], kItemTextPos[4].x, kItemTextPos[4].y);
+    fn_801F93EC(text[5], kItemTextPos[5].x, kItemTextPos[5].y);
+    fn_801F93EC(text[6], kItemTextPos[6].x, kItemTextPos[6].y);
+    fn_801F93EC(text[7], kItemTextPos[7].x, kItemTextPos[7].y);
+    if (isJapanese()) {
+        fn_801F93EC(text[0], lbl_806DB780.x, lbl_806DB780.y);
+        fn_801F93EC(text[3], lbl_806DB828, kItemTextPos[3].y);
+        text[1]->scale = lbl_806DB830;
+    }
+    for (i = 0; i < 8; i++) fn_801F8E90(text[i]);
+    field1C = -1;
+    Select(1);
+}
+
+static inline void SetCharaGroup(Sprite **group, int which, int index) {
+    PlayerData *pd = &g_playerData;
+    int id = kCharaGroups[which][index];
+    unsigned char special = 0;
+    if ((which == 1 && index == 5) || id < 0) special = 1;
+    if (!special) {
+        for (int j = 0; j < 5; j++) {
+            int res = 0x1422;
+            int unlocked = fn_8023D844(id, j + 1);
+            if (pd->unlocked[unlocked] == 1) res = (short)Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(pd, unlocked), 0);
+            SpriteAnimParamBlock_SetAnimParamCached(group, kCharaParams[j], res);
+        }
+    } else {
+        int res = 0x1422;
+        if (pd->unlocked[fn_8023D844(0, 0)] == 1) res = 0x140A;
+        SpriteAnimParamBlock_SetAnimParamCached(group, 0x13B9, res);
+        SpriteAnimParamBlock_SetAnimParamCached(group, 0x13BA, 0x1ECD);
+        SpriteAnimParamBlock_SetAnimParamCached(group, 0x13BB, 0x1ECD);
+        SpriteAnimParamBlock_SetAnimParamCached(group, 0x13BC, 0x1ECD);
+        SpriteAnimParamBlock_SetAnimParamCached(group, 0x13BD, 0x1ECD);
+    }
+    SpriteAnimParamBlock_SetAnimParamCached(group, 0x1D23, kCharaFrames[which][index][0]);
+    SpriteAnimParamBlock_SetAnimParamCached(group, 0x1D24, kCharaFrames[which][index][1]);
+}
+
+void clFlowCCCharaItem::Select(int delta) {
+    if (delta != 0 && field20 != 0) {
+        int oldGroup = field24;
+        unsigned char special = 0;
+        int max = 30;
+        if (kCharaGroups[which][5] == -1) max = 26;
+        PlayerData *pd = &g_playerData;
+        int oldSlot = field28;
+        int n;
+        for (n = 0; n < max; n++) {
+            field28 += delta;
+            if (field28 < 0) { field28 = 4; --field24; }
+            if (field28 > 4) { field28 = 0; ++field24; }
+            if (field24 > 5) field24 = 0;
+            if (field24 < 0) field24 = 5;
+            int id = kCharaGroups[which][field24];
+            if (id == -1) {
+                if (field28 == 0 && pd->unlocked[60] == 1) { special = 1; break; }
+            } else {
+                if (pd->unlocked[fn_8023D844(id, field28 + 1)] == 1) break;
+            }
+        }
+        if (oldGroup == field24 && oldSlot == field28) return;
+        if (n >= max) {
+            if (oldSlot < 0) {
+                TexMgr_SetTexture(text[4], lbl_806DB824);
+                TexMgr_SetTexture(text[5], lbl_806DB824);
+                TexMgr_SetTexture(text[6], lbl_806DB824);
+                TexMgr_SetTexture(text[7], lbl_806DB824);
+                SpriteAnimParamBlock_SetAnimParamCached(grp[1], resId, 0x1ECD);
+                SpriteAnimParamBlock_SetAnimParamCached(grp[1], paramId, 0x1ECD);
+            }
+            return;
+        }
+        int item;
+        if (!special) item = PlayerData_ResolveUnlockedIdByIndex(pd, fn_8023D844(kCharaGroups[which][field24], field28 + 1));
+        else item = PlayerData_ResolveUnlockedIdByIndex(pd, 60);
+        short res = Item_GetDescriptorField0(item, 0);
+        SpriteAnimParamBlock_SetAnimParamCached(grp[8], resId, res);
+        SpriteAnimParamBlock_SetAnimParamCached(grp[1], resId, res);
+        TexMgr_SetTexture(text[4], fn_8023DAA8(item));
+        TexMgr_SetTexture(text[5], fn_8023D938(item, 0));
+        TexMgr_SetTexture(text[6], fn_8023D938(item, 1));
+        TexMgr_SetTexture(text[7], fn_8023D938(item, 2));
+        int anim = Item_GetDescriptorFieldC(item);
+        int newParam = -1;
+        if (anim >= 0) newParam = anim + 0x1E1D;
+        SpriteAnimParamBlock_SetAnimParamCached(grp[1], paramId, newParam);
+        resId = res;
+        paramId = newParam;
+        float x = slots[field24 % 2][field28];
+        float y = kCharaY[field24 / 2];
+        { Sprite *sprite = *grp[8]; sprite->x = x; sprite->y = y; }
+        { Sprite *sprite = *grp[9]; sprite->x = x; sprite->y = y; }
+        { Sprite *sprite = *grp[10]; sprite->x = x; sprite->y = y; }
+        if (oldGroup != field24) {
+            SpriteAnimParamBlock_Reload(grp[oldGroup + 2], 0x15E);
+            SpriteAnimParamBlock_Reload(grp[field24 + 2], 0x15F);
+            SetCharaGroup(grp[oldGroup + 2], which, oldGroup);
+            SetCharaGroup(grp[field24 + 2], which, field24);
+        }
+    }
+}
+
+clFlowCCCharaItem::clFlowCCCharaItem(int which) : which(which), field20(0), field24(0), field28(0), first(1), resId(0x13B9), paramId(0x1E1D) {
+    PlayerData *pd = &g_playerData;
+    for (int i = 0; i < 11; i++) grp[i] = 0;
+    SpriteGroup_CreateOrInit(&grp[0], kCharaGrp0, 0, kCharaGrpPos[0].x, kCharaGrpPos[0].y);
+    SpriteGroup_CreateOrInit(&grp[1], kCharaGrp1, 0, kCharaGrpPos[1].x, kCharaGrpPos[1].y);
+    SpriteGroup_CreateOrInit(&grp[8], kCharaGrp2, 1, kCharaGrpPos[8].x, kCharaGrpPos[8].y);
+    SpriteGroup_CreateOrInit(&grp[9], kCharaGrp3, 1, kCharaGrpPos[9].x, kCharaGrpPos[9].y);
+    SpriteGroup_CreateOrInit(&grp[10], kCharaGrp4, 1, kCharaGrpPos[10].x, kCharaGrpPos[10].y);
+    SpriteGroup_CreateOrInit(&grp[2], kCharaGrp5, 0, kCharaGrpPos[2].x, kCharaGrpPos[2].y);
+    SpriteGroup_CreateOrInit(&grp[3], kCharaGrp6, 0, kCharaGrpPos[3].x, kCharaGrpPos[3].y);
+    SpriteGroup_CreateOrInit(&grp[4], kCharaGrp7, 0, kCharaGrpPos[4].x, kCharaGrpPos[4].y);
+    SpriteGroup_CreateOrInit(&grp[5], kCharaGrp8, 0, kCharaGrpPos[5].x, kCharaGrpPos[5].y);
+    SpriteGroup_CreateOrInit(&grp[6], kCharaGrp9, 0, kCharaGrpPos[6].x, kCharaGrpPos[6].y);
+    SpriteGroup_CreateOrInit(&grp[7], kCharaGrp10, 0, kCharaGrpPos[7].x, kCharaGrpPos[7].y);
+    SpriteAnimSample out;
+    fn_8019FF8C(*grp[2], 0x13B9, &out);
+    slots[0][0] = out.x;
+    fn_8019FF8C(*grp[2], 0x13BA, &out);
+    slots[0][1] = out.x;
+    fn_8019FF8C(*grp[2], 0x13BB, &out);
+    slots[0][2] = out.x;
+    fn_8019FF8C(*grp[2], 0x13BC, &out);
+    slots[0][3] = out.x;
+    fn_8019FF8C(*grp[2], 0x13BD, &out);
+    slots[0][4] = out.x;
+    fn_8019FF8C(*grp[3], 0x13B9, &out);
+    slots[1][0] = out.x;
+    fn_8019FF8C(*grp[3], 0x13BA, &out);
+    slots[1][1] = out.x;
+    fn_8019FF8C(*grp[3], 0x13BB, &out);
+    slots[1][2] = out.x;
+    fn_8019FF8C(*grp[3], 0x13BC, &out);
+    slots[1][3] = out.x;
+    fn_8019FF8C(*grp[3], 0x13BD, &out);
+    slots[1][4] = out.x;
+    for (int i = 0; i < 6; i++) SetCharaGroup(grp[i + 2], this->which, i);
+    for (int i = 0; i < 8; i++) text[i] = new TextMgr();
+    text[0]->visible = 1; text[1]->visible = 1;
+    text[2]->visible = 0; text[3]->visible = 0; text[4]->visible = 0;
+    text[5]->visible = 0; text[6]->visible = 0; text[7]->visible = 0;
+    TexMgr_SetTexture(text[0], lbl_806DB818, this->which == 0 ? 3 : 4);
+    TexMgr_SetTexture(text[1], GetTextureByIdAndLang(0x80, -1));
+    TexMgr_SetTexture(text[2], GetTextureByIdAndLang(0x79, -1));
+    for (int group = 0; group < 13; group++) {
+        if (group != 1 && group != 9) {
+            for (int j = 0; j < 5; j++) if (pd->unlocked[fn_8023D844(group, j + 1)] == 1) ++field20;
+        }
+    }
+    if (pd->unlocked[fn_8023D844(0, 0)] == 1) ++field20;
+    TexMgr_SetTexture(text[3], GetTextureByIdAndLang(0x7F, -1), field20, 56);
+    TexMgr_SetTexture(text[4], lbl_806DB82C);
+    TexMgr_SetTexture(text[5], lbl_806DB82C);
+    TexMgr_SetTexture(text[6], lbl_806DB82C);
+    TexMgr_SetTexture(text[7], lbl_806DB82C);
+    text[0]->scale = -6.0f; text[2]->scale = -1.0f; text[1]->scale = -2.0f;
+    text[3]->scale = -1.0f; text[4]->scale = -1.0f;
+    fn_801F93EC(text[0], kCharaTextPos[0].x, kCharaTextPos[0].y);
+    fn_801F93EC(text[1], kCharaTextPos[1].x, kCharaTextPos[1].y);
+    fn_801F93EC(text[2], kCharaTextPos[2].x, kCharaTextPos[2].y);
+    fn_801F93EC(text[3], kCharaTextPos[3].x, kCharaTextPos[3].y);
+    fn_801F93EC(text[4], kCharaTextPos[4].x, kCharaTextPos[4].y);
+    fn_801F93EC(text[5], kCharaTextPos[5].x, kCharaTextPos[5].y);
+    fn_801F93EC(text[6], kCharaTextPos[6].x, kCharaTextPos[6].y);
+    fn_801F93EC(text[7], kCharaTextPos[7].x, kCharaTextPos[7].y);
+    if (field20 == 0) {
+        TexMgr_SetTexture(text[4], lbl_806DB824);
+        TexMgr_SetTexture(text[5], lbl_806DB824);
+        TexMgr_SetTexture(text[6], lbl_806DB824);
+        TexMgr_SetTexture(text[7], lbl_806DB824);
+        SpriteAnimParamBlock_SetAnimParamCached(grp[1], resId, 0x1ECD);
+        SpriteAnimParamBlock_SetAnimParamCached(grp[1], paramId, 0x1ECD);
+    }
+    if (isJapanese()) {
+        fn_801F93EC(text[3], lbl_806DB828, kItemTextPos[3].y);
+        fn_801F93EC(text[0], lbl_806DB780.x, lbl_806DB780.y);
+        text[1]->scale = lbl_806DB830;
+    }
+    for (int i = 0; i < 8; i++) fn_801F8E90(text[i]);
+    field28 = -1;
+    Select(1);
+}
+
+void clFlowCCDate::Update() {
+    InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
+    UpdateSlide();
+    if (IsIdle() == 1) {
+        unsigned char changed = 0;
+        if (pl->v5() >= lbl_806DB7A0 && field1E == 0) {
+            field1E = 1;
+            if (field1C == 0) {
+                field1C = 1;
+                changed = 1;
+                SpriteAnimParamBlock_Reload(grp[2], 0x166);
+                SpriteAnimParamBlock_Reload(grp[3], 0x163);
+            } else {
+                field1C = 0;
+                changed = 1;
+                SpriteAnimParamBlock_Reload(grp[2], 0x165);
+                SpriteAnimParamBlock_Reload(grp[3], 0x164);
+            }
+        }
+        if (changed) fn_801FE390();
+        if (pl->v5() <= lbl_806DB854) field1E = 0;
+        int delta = input_state()->pageInput;
+        changed = 0;
+        if (delta < 0 && field1D == 0) {
+            field1D = 1;
+            changed = 1;
+            SpriteAnimParamBlock_SetAnimParamCached(grp[4], 0x15F6, 0x15F8);
+            SpriteAnimParamBlock_SetAnimParamCached(grp[5], 0x15F9, 0x15F7);
+            SpriteAnimParamBlock_SetAnimParamCached(grp[4], 0x1ECD, 0x15D2);
+            SpriteAnimParamBlock_SetAnimParamCached(grp[5], 0x15D2, 0x1ECD);
+        } else if (delta > 0 && field1D == 1) {
+            field1D = 0;
+            changed = 1;
+            SpriteAnimParamBlock_SetAnimParamCached(grp[4], 0x15F8, 0x15F6);
+            SpriteAnimParamBlock_SetAnimParamCached(grp[5], 0x15F7, 0x15F9);
+            SpriteAnimParamBlock_SetAnimParamCached(grp[4], 0x15D2, 0x1ECD);
+            SpriteAnimParamBlock_SetAnimParamCached(grp[5], 0x1ECD, 0x15D2);
+        }
+        if (changed) { fn_801FE390(); field20 = 120; }
+    } else {
+        const Vec2 *position = kDateGrpPos;
+        for (int i = 0; i < 6; i++, position++) {
+            if (grp[i] != 0) (*grp[i])->x = position->x + slide;
+        }
+        for (int i = 0; i < 12; i++) {
+            const Vec2 &p = kDateTextPos[i];
+            fn_801F93EC(text[i], p.x + slide, p.y);
+        }
+        if (isJapanese()) {
+            fn_801F93EC(text[0], lbl_806DB780.x + slide, lbl_806DB780.y);
+            fn_801F93EC(text[11], (lbl_806DB858 + kDateTextPos[11].x) + slide, kDateTextPos[11].y);
+        }
+        fn_8023CD3C(indicator, lbl_806DB85C + slide, lbl_806DB860);
+        fn_8023CD24(indicator, lbl_806DB85C + slide, lbl_806DB864);
+        fn_8023CCF8(indicator, lbl_806DB868 + slide, lbl_806DB86C);
+        fn_8023CCCC(indicator, lbl_806DB868 + slide, lbl_806DB870);
+    }
+    if (field20 > 105) {
+        unsigned char alpha = lbl_806DB874 - lbl_806DB874 * ((field20 - lbl_806DB878) / lbl_806DB858);
+        text[11]->color = 0xFFFFFF00 | alpha;
+    } else if (field20 > 15) {
+        text[11]->color = 0xFFFFFFFF;
+    } else if (field20 > 0) {
+        unsigned char alpha = lbl_806DB874 * (field20 / lbl_806DB858);
+        text[11]->color = 0xFFFFFF00 | alpha;
+    } else {
+        text[11]->color = 0xFFFFFF00;
+    }
+    if (field20 > 0) --field20;
+    for (int i = 0; i < 6; i++) {
+        if (grp[i] != 0) Sprite_AdvanceAnim(*grp[i], 0.0165f);
+    }
+    if (indicator != 0) fn_8023CDA8(indicator);
+}
+
+clFlowCCDate::clFlowCCDate() : field1C(1), field1D(1), field1E(0), field20(0), indicator(0) {
+    int i;
+    int mileage;
+    indicator = new clIndicator(0x75, 0x4A, 0x1875, 0x1875, 6);
+    fn_8023CD3C(indicator, lbl_806DB85C, lbl_806DB860);
+    fn_8023CD24(indicator, lbl_806DB85C, lbl_806DB864);
+    fn_8023CCF8(indicator, lbl_806DB868, lbl_806DB86C);
+    fn_8023CCCC(indicator, lbl_806DB868, lbl_806DB870);
+    fn_8023CEB4(indicator);
+    fn_8023CFD4(indicator);
+    grp[0] = 0; grp[1] = 0; grp[2] = 0;
+    grp[3] = 0; grp[4] = 0; grp[5] = 0;
+    PlayerData *pd = &g_playerData;
+    field1C = pd->datePage;
+    field1D = pd->dateMode;
+    SpriteGroup_CreateOrInit(&grp[0], kDateGrp0, 0, kDateGrpPos[0].x, kDateGrpPos[0].y);
+    SpriteGroup_CreateOrInit(&grp[1], kDateGrp1, 0, kDateGrpPos[1].x, kDateGrpPos[1].y);
+    if (field1C == 1) {
+        SpriteGroup_CreateOrInit(&grp[2], kDateGrp2a, 0, kDateGrpPos[2].x, kDateGrpPos[2].y);
+        SpriteGroup_CreateOrInit(&grp[3], kDateGrp3a, 0, kDateGrpPos[3].x, kDateGrpPos[3].y);
+    } else {
+        SpriteGroup_CreateOrInit(&grp[2], kDateGrp2b, 0, kDateGrpPos[2].x, kDateGrpPos[2].y);
+        SpriteGroup_CreateOrInit(&grp[3], kDateGrp3b, 0, kDateGrpPos[3].x, kDateGrpPos[3].y);
+    }
+    SpriteGroup_CreateOrInit(&grp[4], kDateGrp4, 0, kDateGrpPos[4].x, kDateGrpPos[4].y);
+    SpriteGroup_CreateOrInit(&grp[5], kDateGrp5, 0, kDateGrpPos[5].x, kDateGrpPos[5].y);
+    if (field1D == 1) {
+        SpriteAnimParamBlock_SetAnimParamCached(grp[5], 0x15F9, 0x15F7);
+        SpriteAnimParamBlock_SetAnimParamCached(grp[5], 0x15D2, 0x1ECD);
+    } else {
+        SpriteAnimParamBlock_SetAnimParamCached(grp[4], 0x15F8, 0x15F6);
+        SpriteAnimParamBlock_SetAnimParamCached(grp[4], 0x15D2, 0x1ECD);
+    }
+    for (i = 0; i < 12; i++) text[i] = new TextMgr();
+    text[0]->visible = 1; text[1]->visible = 1; text[2]->visible = 1;
+    text[3]->visible = 1; text[4]->visible = 1; text[5]->visible = 1;
+    text[6]->visible = 0; text[7]->visible = 0; text[8]->visible = 0;
+    text[9]->visible = 0; text[10]->visible = 0; text[11]->visible = 0;
+    TexMgr_SetTexture(text[0], lbl_806DB87C);
+    TexMgr_SetTexture(text[1], GetTextureByIdAndLang(0x76, -1));
+    fn_801F9014(text[2], pd);
+    TexMgr_SetTexture(text[3], GetTextureByIdAndLang(0x77, -1), pd->cardCount);
+    mileage = GetCoinMilage(pd);
+    TexMgr_SetTexture(text[4], GetTextureByIdAndLang(0x78, -1), mileage);
+    TexMgr_SetTexture(text[5], get_title_name_global(SINGLETON_INSTANCE(lbl_806D10A0)));
+    TexMgr_SetTexture(text[6], GetTextureByIdAndLang(0x79, -1));
+    TexMgr_SetTexture(text[7], GetTextureByIdAndLang(0x7A, -1));
+    TexMgr_SetTexture(text[8], GetTextureByIdAndLang(0x7B, -1));
+    TexMgr_SetTexture(text[9], GetTextureByIdAndLang(0x7C, -1));
+    TexMgr_SetTexture(text[10], GetTextureByIdAndLang(0x7D, -1));
+    TexMgr_SetTexture(text[11], GetTextureByIdAndLang(0x4B, -1));
+    text[0]->scale = -6.0f;
+    text[6]->scale = -1.0f;
+    text[11]->scale = !isJapanese() ? -1.0f : lbl_806DB880;
+    for (i = 0; i < 12; i++) fn_801F93EC(text[i], kDateTextPos[i].x, kDateTextPos[i].y);
+    if (isJapanese()) {
+        fn_801F93EC(text[0], lbl_806DB780.x, lbl_806DB780.y);
+        fn_801F93EC(text[11], lbl_806DB858 + kDateTextPos[11].x, kDateTextPos[11].y);
+        fn_801F93D0(text[5], lbl_806DB884, lbl_806DB884);
+    }
+    for (i = 0; i < 12; i++) fn_801F8E90(text[i]);
 }
