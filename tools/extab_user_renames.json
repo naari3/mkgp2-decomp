@@ -12189,5 +12189,15 @@
     "@193": "@eti_80021908",
     "@200": "@etb_80008DDC",
     "@201": "@eti_80021914"
+  },
+  "src/game/objview/fn_80197D20.cpp": {
+    "__ct__13P_fn_80197D20Fv": "fn_80197D20",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__vt__13P_fn_80197D20": "lbl_8049637C",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
+    "__ct__9PartTableFPCvi": "fn_80123BB4",
+    "@102": "@etb_80012508",
+    "@103": "@eti_80027368"
   }
 }
