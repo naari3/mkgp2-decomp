@@ -2550,7 +2550,7 @@ config.libs = [
             Object(NonMatching, "game/fn_801DABFC.c"),
             Object(Matching, "game/fn_801DAE54.c"),
             Object(Matching, "game/fn_801DAEC0.cpp", extab_padding=b""),
-            Object(NonMatching, "game/DisplayContext_Flush.c"),
+            Object(Matching, "game/DisplayContext_Flush.c"),
             Object(NonMatching, "game/TextRenderer_DrawEntry.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/PathFollower_Init.cpp", extab_padding=b""),
             Object(Matching, "game/PathFollower_Update.cpp", extab_padding=b""),

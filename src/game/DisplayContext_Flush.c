@@ -16,6 +16,7 @@ void DisplayContext_Flush(DebugDisplayContext *self)
     Mtx position;
     Mtx44 projection;
     DebugFontHeader *font;
+    int offset;
     int count;
     int i;
 
@@ -53,8 +54,8 @@ void DisplayContext_Flush(DebugDisplayContext *self)
         GXSetVtxAttrFmtv(0, sDebugVtxFmt);
         GXSetArray(11, (void *)sDebugColors, 2);
         count = self->count;
-        for (i = 0; i < count; i++) {
-            TextRenderer_DrawEntry(self, &self->entries[i]);
+        for (i = 0, offset = 0; i < count; offset += sizeof(DebugTextEntry), i++) {
+            TextRenderer_DrawEntry(self, (DebugTextEntry *)((char *)self->entries + offset));
         }
         GXSetChanCtrl(4, 1, 1, 1, 1, 2, 2);
         GXSetScissor(self->scissor[0], self->scissor[1], self->scissor[2], self->scissor[3]);
