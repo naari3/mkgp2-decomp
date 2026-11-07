@@ -560,10 +560,14 @@ game/MetricsTable.c:
 	.text       start:0x80039D38 end:0x80039E10
 	.ctors      start:0x802E88F0 end:0x802E88F4
 
-game/VolumeCalibration.c:
+game/VolumeCalibration.cpp:
 	extab       start:0x80005EA0 end:0x80005ED0
 	extabindex  start:0x8001FB2C end:0x8001FB5C
 	.text       start:0x80039E10 end:0x8003A154
+	.rodata     start:0x802E9C50 end:0x802E9CC8
+	.data       start:0x803F57C0 end:0x803F57E0
+	.sdata      start:0x806CED90 end:0x806CEDA0
+	.sdata2     start:0x806D2480 end:0x806D2490
 
 game/MJObj_ColorFloat.c:
 	extab       start:0x80005ED0 end:0x80005ED8

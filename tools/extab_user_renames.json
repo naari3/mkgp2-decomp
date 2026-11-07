@@ -572,16 +572,6 @@
     "extab_SpriteAnimParamBlock_Reload": "@etb_8001CDA4",
     "extabindex_SpriteAnimParamBlock_Reload": "@eti_8002AF2C"
   },
-  "src/game/VolumeCalibration.c": {
-    "extab_VolumeCalibration_DrawOverlay": "@etb_80005EA0",
-    "extab_VolumeCalibration_Tick": "@etb_80005EA8",
-    "extab_VolumeCalibration_Dtor": "@etb_80005EB0",
-    "extab_VolumeCalibration_Ctor": "@etb_80005EB8",
-    "extabindex_VolumeCalibration_DrawOverlay": "@eti_8001FB2C",
-    "extabindex_VolumeCalibration_Tick": "@eti_8001FB38",
-    "extabindex_VolumeCalibration_Dtor": "@eti_8001FB44",
-    "extabindex_VolumeCalibration_Ctor": "@eti_8001FB50"
-  },
   "src/game/Frame.c": {
     "extab_Frame_UpdatePerFrameState": "@etb_80005740",
     "extab_Frame_PostDrawOverlay": "@etb_80005748",
@@ -12684,5 +12674,19 @@
     "__ct__9GXChannelFPvPvii": "GXChannel_Init",
     "__dt__9GXChannelFv": "dtor_8007D9C4",
     "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform"
+  },
+  "src/game/VolumeCalibration.cpp": {
+    "Draw__5clCabFv": "VolumeCalibration_DrawOverlay",
+    "Update__5clCabFv": "VolumeCalibration_Tick",
+    "__dt__5clCabFv": "VolumeCalibration_Dtor",
+    "__vt__5clCab": "lbl_803F57CC",
+    "__RTTI__5clCab": "lbl_806CED98",
+    "__RTTI__11clJobRunner": "lbl_806CED90",
+    "__ct__11clJobRunnerFv": "GameMode_BaseInit",
+    "__dt__11clJobRunnerFv": "dtor_8002CDF4",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "extab_clCab_Update": "@etb_80005EA8",
+    "extabindex_clCab_Update": "@eti_8001FB38"
   }
 }

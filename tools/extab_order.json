@@ -2584,5 +2584,11 @@
       "dtor_801F4B10",
       "dtor_80080444"
     ]
-  }
+  },
+  "src/game/VolumeCalibration.cpp": [
+    "VolumeCalibration_DrawOverlay",
+    "VolumeCalibration_Tick",
+    "VolumeCalibration_Dtor",
+    "VolumeCalibration_Ctor"
+  ]
 }
