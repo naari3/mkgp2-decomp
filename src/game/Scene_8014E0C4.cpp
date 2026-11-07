@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 
 /* sdata symbols referenced from asm */
 extern unsigned char lbl_806CF828[8];
@@ -67,6 +68,15 @@ class VObjD {
 public:
     virtual void v8();
     virtual ~VObjD();
+    char pad4[0xC];
+    void *effect;
+};
+
+class SceneCam {
+public:
+    virtual void _keySceneCam();
+    virtual unsigned char Begin();
+    virtual void End();
 };
 
 struct CreditPanel {
@@ -83,15 +93,25 @@ struct CreditPanel {
     void *sprite;
 };
 
+struct ObjListSet;
+
 struct CoursePanel {
     void *vt;
-    char pad4[0x10];
+    int state;
+    float t;
+    float alpha;
+    char pad10[4];
     void *obj14;
-    char pad18[0x1C];
+    SceneCam *cam;
+    void *lobjs;
+    void *obj20;
+    unsigned char active;
+    char pad25[0xF];
     VObjD *objs[2];
-    char pad3C[0xC];
+    void *jobjs[2];
+    char pad44[4];
     void *obj48;
-    void *obj4C;
+    ObjListSet *obj4C;
 };
 
 
@@ -387,9 +407,9 @@ extern void RumbleUpdate();
 extern void SetCourseParams();
 extern void SetSyncTarget(int target);
 extern void Sprite_InitWithAnim();
-extern void StrPcb_GetInstance();
-extern void StrPcb_ResetCommands_NeutralDefault();
-extern void StrPcb_ResetCommands_Zero();
+void *StrPcb_GetInstance(void);
+void StrPcb_ResetCommands_NeutralDefault(void *pcb);
+void StrPcb_ResetCommands_Zero(void *pcb, int arg);
 extern void TEXBindPaletteEntry_RGB();
 extern void TEXLoadPalette_Retry();
 extern void TitleTracker_OnAttract_Stub();
@@ -403,7 +423,7 @@ void fn_801B7CD0(int a);
 extern void fn_801F6804(void *p);
 extern unsigned int g_cupId;
 extern unsigned int g_currentSceneState;
-extern unsigned int lbl_806D10A0;
+extern struct TitleDB *lbl_806D10A0;
 extern unsigned int lbl_806D12E1;
 extern unsigned int jumptable_8048FDCC[];
 extern unsigned int lbl_8048FE14[];
@@ -424,13 +444,13 @@ void fn_801933D0(int a);
 extern struct StatusInfo *lbl_806D1580;
 extern unsigned int lbl_803FE0C8[];
 extern unsigned int lbl_8048FD98[];
-extern void InitRumbleController();
-extern void PreloadResource();
-extern void SetLocalPcbRole();
-extern unsigned int g_pInputState;
-extern unsigned int lbl_806D117C;
-extern unsigned int lbl_806D12B0;
-extern unsigned int lbl_806D12E2;
+void InitRumbleController(int on);
+unsigned char PreloadResource(int id);
+void SetLocalPcbRole(int role);
+extern VObj *g_pInputState;
+extern bool lbl_806D117C;
+extern unsigned char lbl_806D12B0;
+extern unsigned char lbl_806D12E2;
 extern int lbl_80598A60[];
 extern void dtor_8007D0D4();
 void OverlayText(int a, int b, int line, const char *fmt, ...);
@@ -506,28 +526,28 @@ unsigned char fn_8019083C(int slot);
 void fn_801909A4(int slot);
 extern struct VObj *lbl_806D10AC;
 extern unsigned int lbl_80490010[];
-extern void CObj_DebugVizPathFlush();
-extern void CourseEnvironment_RenderObjects_Timed();
-extern void DrawEffect_TickAndCull();
-extern void HSD_LObjDeleteCurrentAll();
-extern void ItemObjectManager_Render();
-extern void KartDriver_RenderTimed();
-extern void KartItem_DispatchEffectRenderByState();
-extern void KartItem_FlushPendingRender();
-extern void KartItem_FlushPendingRender_v2();
-extern void KartItem_FlushRenderIfReady();
-extern void LObjList_ApplyForCObj();
-extern void Object_RenderJObjTree();
-extern void Subsystem36c_DispatchPass2_Timed();
-extern void TornadoEffect_SubmitRender();
-extern void TransparentDraw_SortAndDispatch();
-extern void clDrawMan_Buckets_Dispatch();
-extern void clDrawMan_Buckets_Reset();
-extern void clDrawMan_EndFrame_NoOp();
-extern void fn_8013D940();
+void CObj_DebugVizPathFlush(void *c);
+void CourseEnvironment_RenderObjects_Timed(void *env);
+void DrawEffect_TickAndCull(void);
+void HSD_LObjDeleteCurrentAll(int a);
+void ItemObjectManager_Render(void);
+void KartDriver_RenderTimed(void *d, int pass, int a);
+void KartItem_DispatchEffectRenderByState(void *e);
+void KartItem_FlushPendingRender(void *e);
+void KartItem_FlushPendingRender_v2(void *e);
+void KartItem_FlushRenderIfReady(void *e);
+void LObjList_ApplyForCObj(void *l);
+void Object_RenderJObjTree(void *j, int mask);
+void Subsystem36c_DispatchPass2_Timed(void *env);
+void TornadoEffect_SubmitRender(void *e);
+void TransparentDraw_SortAndDispatch(void);
+void clDrawMan_Buckets_Dispatch(VObj *dm);
+void clDrawMan_Buckets_Reset(VObj *dm);
+void clDrawMan_EndFrame_NoOp(VObj *dm);
+void fn_8013D940(int layer);
 void fn_801695E0(int layer, int id, int c, float x, float y, float s);
-extern void fn_802BD6AC();
-extern void fn_802BD6C0();
+void fn_802BD6AC(float u, float v);
+void fn_802BD6C0(void);
 extern const float lbl_806D7F58[2];
 extern unsigned int lbl_806D810C;
 extern unsigned int lbl_806D8110;
@@ -539,7 +559,7 @@ extern unsigned int lbl_806D8124;
 extern unsigned int lbl_806D8128;
 extern unsigned int lbl_806D812C;
 extern unsigned int lbl_806D8130;
-extern unsigned int lbl_80366EF0[];
+extern struct CourseModeInfo lbl_80366EF0[];
 extern void BuildOrientationFromYaw();
 extern void CObj_ApplyScissor();
 extern void CObj_LoadProjMatrix();
@@ -573,9 +593,9 @@ extern void __assert();
 extern void clStream_setVolume();
 extern void fn_800D3184();
 extern void fn_8013D59C();
-extern void fn_8013D608();
+void fn_8013D608(void *p, float x, float y, float z);
 extern void fn_8013D634();
-extern void fn_8013D660();
+void fn_8013D660(void *p, float x, float y);
 extern void fn_8013D704();
 extern void fn_8013DAC8();
 extern void fn_80194AE0();
@@ -637,14 +657,14 @@ extern void GXSetZCompLoc(unsigned char before);
 extern void GXSetZMode(unsigned char enable, int func, unsigned char update);
 extern const GXColorB lbl_806DCF38;
 extern unsigned int lbl_806D8188;
-extern void TaRecord_GetEntry_Indexed();
-extern void TaRecord_GetTime_Indexed();
-extern void fn_8013BFCC();
-extern void fn_80167744();
-extern void fn_80167DDC();
-extern void fn_80168910();
-extern void fn_80168A4C();
-extern void get_title_name();
+struct TaEntry *TaRecord_GetEntry_Indexed(int a, int b, int course, int c, int d);
+float TaRecord_GetTime_Indexed(int a, int b, int course, int c, int d);
+int fn_8013BFCC(int chr);
+int fn_80167744(int n, float t);
+void fn_80167DDC(void *dst, const unsigned short *fmt, float x, float y, ...);
+void fn_80168910(void *dst, const char *fmt, float x, float y, float sx, float sy, ...);
+void fn_80168A4C(void *dst, const char *fmt, float x, float y, ...);
+const char *get_title_name(void *db, int title, int variant, int chr, int a);
 extern unsigned int lbl_806D818C;
 extern unsigned int lbl_806D8190;
 extern unsigned int lbl_806D8194;
@@ -704,7 +724,6 @@ void fn_80157940(struct LIter *ret, void *list, struct LIter *b, struct LIter *e
 extern void fn_801579F0();
 void fn_80157B38(struct LIter *ret, void *list, struct LIter *b, struct LIter *e);
 extern void fn_80157BE8();
-extern void fn_80157D30();
 extern void fn_801F7CD8();
 extern void ItemEffectBus_ApplyItemEventClear();
 extern void ItemEffectBus_ApplyItemEventSet();
@@ -748,13 +767,10 @@ void fn_801F7198(void *res, void *d, int a);
 void fn_801F7344(void *res, void *d);
 extern void fn_801F7D50();
 void fn_801F7E98(void *d);
-extern void GX_BeginDraw();
-extern void GX_EndDraw();
-extern void HSD_JObjClearFlagsAll();
-extern void HSD_JObjDispAll();
-extern void HSD_JObjSetFlagsAll();
-extern void fn_8014017C();
-extern void fn_801F7B74();
+void HSD_JObjClearFlagsAll(void *j, int flags);
+void HSD_JObjDispAll(void *j, int a, int b, int c);
+void HSD_JObjSetFlagsAll(void *j, int flags);
+void fn_8014017C(void *p);
 void dtor_80060024(void *p, int flag);
 extern unsigned int lbl_8048FF20[];
 void fn_8013A6F8(void);
@@ -815,9 +831,9 @@ extern unsigned int lbl_806D8340;
 extern unsigned int lbl_806D8344;
 extern unsigned int lbl_806D8348;
 extern unsigned int lbl_806D834C;
-extern void clItemBoxManager_Draw();
-extern void fn_80139810();
-extern void fn_801737CC();
+void clItemBoxManager_Draw(VObj *m);
+void fn_80139810(void);
+void fn_801737CC(void *p);
 extern void fn_801696E4(int layer, int id, int flag, float x, float y, float rot);
 extern void fn_801697C0(int layer, int id, int flag, float x, float y, float sx, float sy);
 extern unsigned int lbl_806D8350;
@@ -836,9 +852,49 @@ extern unsigned int lbl_806D8380;
 extern unsigned int lbl_806D8384;
 extern unsigned int lbl_806D8388;
 void fn_80157EA8(void *l);
+class PairObj : public VObj {
+public:
+    virtual ~PairObj();
+    virtual void Update();
+};
+
+struct PairPos {
+    float x;
+    float y;
+};
+
 struct VObjPair {
-    VObj *a;
-    VObj *b;
+    PairObj *a;
+    PairObj *b;
+    char pad8[4];
+    int mode;
+    char pad10[4];
+    unsigned char on[5];
+    char pad19[3];
+    PairPos pos[5];
+    PairPos scale[5];
+    char pad6C[0x14];
+    unsigned char aOn;
+    char pad81[3];
+    PairPos aPos;
+    PairPos aScale;
+    void Draw() {
+        if (mode == 1) {
+            int k;
+            for (k = 0; k < 5; k++) {
+                if (on[k] && pos[k].x > 0.0f) {
+                    fn_8013D660(b, pos[k].x, pos[k].y);
+                    fn_8013D608(b, scale[k].x, scale[k].y, scale[k].x);
+                    b->Update();
+                }
+            }
+            if (aOn) {
+                fn_8013D660(a, aPos.x, aPos.y);
+                fn_8013D608(a, aScale.x, aScale.y, aScale.x);
+                a->Update();
+            }
+        }
+    }
     ~VObjPair() {
         delete a;
         delete b;
@@ -848,20 +904,92 @@ struct VObjPair {
     }
 };
 
+class CourseFx : public VObj {
+public:
+    virtual ~CourseFx();
+    virtual void vC();
+    virtual void Draw();
+};
+
 struct CourseScene {
     void *vt;
-    char pad4[0x10];
+    char pad4[0xC];
+    float alpha;
     void *obj14;
-    char pad18[0x1C];
+    SceneCam *cam;
+    void *lobjs;
+    void *obj20;
+    char pad24[5];
+    unsigned char active;
+    char pad2A[0xA];
     void *drivers[6];
     void *effects[6];
-    char pad64[0x1A8 - 0x64];
-    VObj *obj1A8;
+    char pad64[0x184 - 0x64];
+    void *jobjs[6];
+    char pad19C[0x1A8 - 0x19C];
+    CourseFx *obj1A8;
     void *obj1AC;
-    char pad1B0[4];
+    unsigned char on1B0;
+    char pad1B1[3];
     VObjPair *pair;
-    void *list;
+    ObjListSet *list;
     void *arr;
+};
+
+struct SetLLink {
+    struct SetLNode *prev;
+    struct SetLNode *next;
+};
+
+struct SetLNode : SetLLink {
+    void *obj;
+    char data[4];
+};
+
+class SetLIter {
+public:
+    SetLNode *n;
+    SetLIter(SetLNode *p) : n(p) {}
+    SetLIter(const SetLIter &o) : n(o.n) {}
+};
+
+struct SetSubList;
+extern "C" SetLIter fn_80157D30(SetSubList *l, SetLIter b, SetLIter e);
+
+struct SetSubList {
+    unsigned int size;
+    SetLLink anchor;
+    SetLNode *begin() { return anchor.next; }
+    SetLNode *end() { return (SetLNode *)&anchor; }
+    void clear() { fn_80157D30(this, begin(), end()); }
+};
+
+extern "C" void GX_EndDraw(int a);
+extern "C" void GX_BeginDraw(void);
+extern "C" void fn_801F7B74(void *obj, void *data, float a);
+
+struct ObjListSet {
+    char pad0[0x18];
+    SetSubList sub[2];
+    void FlushLayer(unsigned int layer) {
+        if (layer < 2 && sub[layer].size != 0) {
+            SetLNode *e;
+            SetLNode *n;
+            GX_EndDraw(0);
+            e = sub[layer].end();
+            for (n = sub[layer].begin(); n != e; n = n->next) {
+                fn_801F7B74(n->obj, n->data, -1.0f);
+            }
+            GX_BeginDraw();
+            sub[layer].clear();
+        }
+    }
+    void FlushAll() {
+        unsigned int i;
+        for (i = 0; i < 2; i++) {
+            FlushLayer(i);
+        }
+    }
 };
 
 struct HsdClassInfo {
@@ -875,9 +1003,31 @@ struct HsdObj {
     unsigned short ref;
 };
 
+class RaceCam : public VObj {
+public:
+    virtual ~RaceCam();
+    virtual unsigned char Begin();
+    virtual void End();
+};
+
+struct RaceUV {
+    float u;
+    float v;
+};
+
+struct CourseModeInfo {
+    char pad0[8];
+    unsigned char env;
+    unsigned char transparent;
+    char padA[0xE];
+};
+
 struct RaceScene {
     void *vt;
-    char pad4[0xD];
+    char pad4[4];
+    int mode;
+    int timer;
+    char pad10;
     unsigned char cardOn;
     char pad12[2];
     int cardSlot;
@@ -885,14 +1035,18 @@ struct RaceScene {
     void *env;
     VObj *camera;
     HsdObj *lights;
-    VObj *objs[21];
+    RaceCam *objs[21];
     void *lists[21];
     void *models[21];
     void *drivers[11];
     void *effects[11];
-    char pad17C[0x3F0 - 0x17C];
+    float mtx[11][3][4];
+    unsigned char active[11];
+    char pad397;
+    RaceUV uv[11];
     void *sprites[48];
-    char pad4B0[0x574 - 0x4B0];
+    int spriteOn[48];
+    char pad570[4];
     VObj *obj574;
 };
 
@@ -902,7 +1056,7 @@ void fn_8014E618(AttractPanel *self);
 asm void fn_8014E804(void);
 void fn_8014F164(CreditPanel *self);
 DemoPanel *fn_8014F2DC(DemoPanel *self, short flag);
-asm void fn_8014F3D8(void *self);
+void fn_8014F3D8(void *self);
 void fn_8014F5A8(VObj *p);
 void fn_8014F5E0(void);
 void *fn_8014F6A4(void);
@@ -923,7 +1077,7 @@ asm void fn_8015061C(void);
 unsigned char fn_80150924(unsigned char *o);
 RaceScene *fn_8015092C(RaceScene *self, short flag);
 void fn_80150BE4(VObj *p);
-asm void fn_80150C1C(void);
+void fn_80150C1C(RaceScene *self);
 asm void fn_80151234(void);
 asm void fn_80151F08(void);
 void DrawColoredQuad(int r, int g, int b, int a, float x, float y, float w, float h);
@@ -933,7 +1087,7 @@ unsigned char fn_801529EC(StateObj *o);
 void fn_80152A00(CreditPanel *self);
 void fn_80152B2C(VObj *p);
 Base *fn_80152B64(Base *self, short flag);
-asm void fn_80152C00(void);
+void fn_80152C00(struct TaPanel *self);
 unsigned char fn_80153504(StateObj *o);
 void fn_80153518(QuadFade *self);
 void fn_80153594(VObj *p);
@@ -952,14 +1106,14 @@ asm void fn_801540E0(void *o, int flag);
 asm void fn_80154304(void);
 void fn_80154FB0(struct SprScene *self, unsigned int layer, unsigned int id, unsigned int flags, float x, float y, float sx, float sy, float rot, float r, float g, float b, float a);
 unsigned char fn_80155398(StateObj *o);
-asm void fn_801553AC(void);
+void fn_801553AC(CourseScene *self);
 Base *fn_801556A0(Base *self, short flag);
 int fn_8015571C(char *o, float *a, float *b, float *c);
 void fn_8015573C(VObj *p);
 CoursePanel *fn_80155774(CoursePanel *self, short flag);
 asm void fn_801558CC(void);
 unsigned char fn_80156FC0(StateObj *o);
-asm void fn_80156FD4(void);
+void fn_80156FD4(CoursePanel *self);
 void fn_80157240(VObj *p);
 CamPanel *fn_80157278(CamPanel *self, short flag);
 void fn_80157378(NamCamPanel *self);
@@ -983,7 +1137,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; void *f6; } extab_fn_8014F3D8 = { 0x080A0000, 0x00000060, 0x00560010, 0x00000000, 0x8680001F, 0x00000000, (void *)&dtor_8007D0D4 };
 
 
 
@@ -1005,7 +1158,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; void *f7; unsigned int f8; void *f9; } extab_fn_80150C1C = { 0x304A0000, 0x00000428, 0x00000018, 0x00000540, 0x00000020, 0x00000000, 0x82000060, (void *)&dtor_80082960, 0x82000008, (void *)&dtor_80082960 };
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_80151234 = { 0x408A0000, 0x000004B4, 0x00000010, 0x00000000, 0x8A800018, (void *)&MemoryManager_TimedFree };
 
@@ -1017,9 +1169,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80152C00[8] = {
-    0x29, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
@@ -1040,9 +1189,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_801553AC[8] = {
-    0x28, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
@@ -1051,9 +1197,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_801558CC[8
     0x30, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80156FD4[8] = {
-    0x28, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
@@ -1076,9 +1219,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014F3D8 = {
-    (void *)&fn_8014F3D8, 0x000001D0, (void *)&extab_fn_8014F3D8
-};
 
 
 
@@ -1106,9 +1246,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80150C1C = {
-    (void *)&fn_80150C1C, 0x00000618, (void *)&extab_fn_80150C1C
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80151234 = {
     (void *)&fn_80151234, 0x00000CD4, (void *)&extab_fn_80151234
@@ -1124,9 +1261,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80152C00 = {
-    (void *)&fn_80152C00, 0x00000904, (void *)extab_fn_80152C00
-};
 
 
 
@@ -1149,9 +1283,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801553AC = {
-    (void *)&fn_801553AC, 0x000002F4, (void *)extab_fn_801553AC
-};
 
 
 
@@ -1160,9 +1291,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_801558CC, 0x000016F4, (void *)extab_fn_801558CC
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80156FD4 = {
-    (void *)&fn_80156FD4, 0x0000026C, (void *)extab_fn_80156FD4
-};
 
 
 
@@ -2287,133 +2415,85 @@ extern "C" DemoPanel *fn_8014F2DC(DemoPanel *self, short flag) {
     return self;
 }
 
-extern "C" asm void fn_8014F3D8(void *self) { /* 0x8014F3D8 size:0x1D0 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lis r4, lbl_803FE0C8@ha
-    li r5, 0x0
-    stw r0, 0x14(r1)
-    addi r0, r4, lbl_803FE0C8@l
-    lfs f0, lbl_806D8064(r2)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    lis r3, lbl_8048FD98@ha
-    stw r0, 0x0(r31)
-    addi r4, r3, lbl_8048FD98@l
-    li r0, 0x1
-    li r3, 0x0
-    stb r5, 0x4(r31)
-    stw r4, 0x0(r31)
-    stw r5, 0x14(r31)
-    stw r5, 0x8(r31)
-    stw r5, 0xc(r31)
-    stw r5, 0x10(r31)
-    stb r0, 0x18(r31)
-    stfs f0, 0x28(r31)
-    stw r5, 0x2c(r31)
-    bl CreditMgr_GetCreditCount
-    stw r3, 0x30(r31)
-    li r4, 0x0
-    lis r3, lbl_80598A60@ha
-    stb r4, 0x34(r31)
-    addi r3, r3, lbl_80598A60@l
-    stw r4, 0x38(r31)
-    lbz r0, 0x20(r3)
-    cmpwi r0, 0x2
-    bne fn_8014F3D8_L_8014F464
-    stb r4, 0x3c(r31)
-    b fn_8014F3D8_L_8014F46C
-    fn_8014F3D8_L_8014F464:
-    li r0, 0x1
-    stb r0, 0x3c(r31)
-    fn_8014F3D8_L_8014F46C:
-    li r0, 0x0
-    stb r0, 0x3c(r31)
-    stw r0, 0x1c(r31)
-    stw r0, 0x20(r31)
-    stw r0, 0x40(r31)
-    lbz r0, lbl_806D12E2(r13)
-    cmplwi r0, 0x0
-    bne fn_8014F3D8_L_8014F498
-    li r0, 0x1
-    stw r0, 0x40(r31)
-    stw r0, 0xc(r31)
-    fn_8014F3D8_L_8014F498:
-    li r0, 0x0
-    stb r0, lbl_806D12E2(r13)
-    bl fn_80121210
-    bl clRom_PurgeAll
-    bl StrPcb_GetInstance
-    cmplwi r3, 0x0
-    beq fn_8014F3D8_L_8014F4C8
-    bl StrPcb_GetInstance
-    li r4, 0x1
-    bl StrPcb_ResetCommands_Zero
-    bl StrPcb_GetInstance
-    bl StrPcb_ResetCommands_NeutralDefault
-    fn_8014F3D8_L_8014F4C8:
-    lwz r3, g_pInputState(r13)
-    cmplwi r3, 0x0
-    bne fn_8014F3D8_L_8014F4DC
-    li r0, 0x0
-    b fn_8014F3D8_L_8014F4E0
-    fn_8014F3D8_L_8014F4DC:
-    mr r0, r3
-    fn_8014F3D8_L_8014F4E0:
-    cmplwi r0, 0x0
-    beq fn_8014F3D8_L_8014F50C
-    cmplwi r3, 0x0
-    beq fn_8014F3D8_L_8014F504
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8014F3D8_L_8014F504:
-    li r0, 0x0
-    stw r0, g_pInputState(r13)
-    fn_8014F3D8_L_8014F50C:
-    li r3, 0x1
-    bl InitRumbleController
-    lbz r4, 0x3c(r31)
-    li r3, 0x0
-    bl fn_801699D8
-    lwz r0, g_currentSceneState(r13)
-    cmpwi r0, 0x5
-    beq fn_8014F3D8_L_8014F534
-    li r3, 0x4
-    bl SetSyncTarget
-    fn_8014F3D8_L_8014F534:
-    li r3, 0x0
-    bl SetLocalPcbRole
-    li r0, 0x0
-    li r3, 0x0
-    stb r0, lbl_806D12B0(r13)
-    bl SetResourceLoadingFlag
-    li r3, 0x0
-    bl CreditMgr_GetCreditCount
-    cntlzw r0, r3
-    li r3, 0x1
-    rlwnm r0, r3, r0, 31, 31
-    li r3, 0x0
-    stb r0, lbl_806D117C(r13)
-    bl CreditMgr_SetActiveSlot
-    stw r31, lbl_806D1580(r13)
-    li r3, 0x1
-    bl fn_801933D0
-    li r3, 0x0
-    bl fn_801B7CD0
-    li r3, 0x1553
-    bl PreloadResource
-    li r3, 0x1554
-    bl PreloadResource
-    lwz r0, 0x14(r1)
-    mr r3, r31
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+class ModeScene {
+public:
+    virtual void _keyModeScene();
+    ModeScene() { done = 0; }
+    virtual ~ModeScene();
+    unsigned char done;
+};
+
+class StatusScene : public ModeScene {
+public:
+    virtual void _keyStatusScene();
+    StatusScene();
+    int f8;
+    int fC;
+    int f10;
+    int f14;
+    unsigned char f18;
+    int f1C;
+    int f20;
+    char pad24[4];
+    float f28;
+    int f2C;
+    int credits;
+    unsigned char f34;
+    int f38;
+    unsigned char rumble;
+    int f40;
+};
+
+StatusScene::StatusScene() {
+    f14 = 0;
+    f8 = 0;
+    fC = 0;
+    f10 = 0;
+    f18 = 1;
+    f28 = 0.0f;
+    f2C = 0;
+    credits = CreditMgr_GetCreditCount(0);
+    f34 = 0;
+    f38 = 0;
+    if ((int)((unsigned char *)lbl_80598A60)[0x20] == 2) {
+        rumble = 0;
+    } else {
+        rumble = 1;
+    }
+    rumble = 0;
+    f1C = 0;
+    f20 = 0;
+    f40 = 0;
+    if (lbl_806D12E2 == 0) {
+        f40 = 1;
+        fC = 1;
+    }
+    lbl_806D12E2 = 0;
+    fn_80121210();
+    clRom_PurgeAll();
+    if (StrPcb_GetInstance() != 0) {
+        StrPcb_ResetCommands_Zero(StrPcb_GetInstance(), 1);
+        StrPcb_ResetCommands_NeutralDefault(StrPcb_GetInstance());
+    }
+    if (SINGLETON_INSTANCE(g_pInputState) != 0) {
+        delete g_pInputState;
+        g_pInputState = 0;
+    }
+    InitRumbleController(1);
+    fn_801699D8(0, rumble);
+    if ((int)g_currentSceneState != 5) {
+        SetSyncTarget(4);
+    }
+    SetLocalPcbRole(0);
+    lbl_806D12B0 = 0;
+    SetResourceLoadingFlag(0);
+    lbl_806D117C = CreditMgr_GetCreditCount(0) <= 0;
+    CreditMgr_SetActiveSlot(0);
+    lbl_806D1580 = (StatusInfo *)this;
+    fn_801933D0(1);
+    fn_801B7CD0(0);
+    PreloadResource(0x1553);
+    PreloadResource(0x1554);
 }
 
 extern "C" void fn_8014F5A8(VObj *p) {
@@ -3433,432 +3513,143 @@ extern "C" void fn_80150BE4(VObj *p) {
     delete p;
 }
 
-extern "C" asm void fn_80150C1C(void) { /* 0x80150C1C size:0x618 */
-    nofralloc
-    stwu r1, -0xf0(r1)
-    mflr r0
-    stw r0, 0xf4(r1)
-    stfd f31, 0xe0(r1)
-    psq_st f31, 0xe8(r1), 0, 0
-    stmw r26, 0xc8(r1)
-    mr r31, r3
-    lwz r0, 0x8(r3)
-    slwi r0, r0, 2
-    add r3, r31, r0
-    lwz r3, 0x28(r3)
-    cmplwi r3, 0x0
-    beq fn_80150C1C_L_80150EEC
-    bl SetCourseScene3D
-    lwz r0, 0x8(r31)
-    slwi r0, r0, 2
-    add r3, r31, r0
-    lwz r3, 0x28(r3)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    clrlwi. r0, r3, 24
-    beq fn_80150C1C_L_80150EEC
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne fn_80150C1C_L_80150C8C
-    li r3, 0x0
-    fn_80150C1C_L_80150C8C:
-    bl clDrawMan_Buckets_Reset
-    lwz r0, 0x8(r31)
-    slwi r0, r0, 2
-    add r3, r31, r0
-    lwz r3, 0x7c(r3)
-    bl LObjList_ApplyForCObj
-    lwz r0, 0x8(r31)
-    lis r3, lbl_80366EF0@ha
-    addi r3, r3, lbl_80366EF0@l
-    mulli r0, r0, 0x18
-    add r3, r3, r0
-    lbz r0, 0x9(r3)
-    cmplwi r0, 0x0
-    beq fn_80150C1C_L_80150CC8
-    bl TransparentDraw_SortAndDispatch
-    fn_80150C1C_L_80150CC8:
-    lwz r0, 0x8(r31)
-    slwi r0, r0, 2
-    add r3, r31, r0
-    lwz r3, 0x28(r3)
-    bl CObj_DebugVizPathFlush
-    lwz r3, 0x1c(r31)
-    cmplwi r3, 0x0
-    beq fn_80150C1C_L_80150D14
-    lwz r0, 0x8(r31)
-    lis r4, lbl_80366EF0@ha
-    addi r4, r4, lbl_80366EF0@l
-    mulli r0, r0, 0x18
-    add r4, r4, r0
-    lbz r0, 0x8(r4)
-    cmplwi r0, 0x0
-    beq fn_80150C1C_L_80150D14
-    bl CourseEnvironment_RenderObjects_Timed
-    lwz r3, 0x1c(r31)
-    bl Subsystem36c_DispatchPass2_Timed
-    fn_80150C1C_L_80150D14:
-    lwz r0, 0x8(r31)
-    li r26, 0x0
-    cmpwi r0, 0x11
-    bne fn_80150C1C_L_80150D28
-    li r26, 0x1
-    fn_80150C1C_L_80150D28:
-    cmpwi r0, 0x13
-    bne fn_80150C1C_L_80150D34
-    li r26, 0x1
-    fn_80150C1C_L_80150D34:
-    mr r29, r31
-    mr r28, r31
-    clrlwi r30, r26, 24
-    li r27, 0x0
-    fn_80150C1C_L_80150D44:
-    cmplwi r30, 0x1
-    bne fn_80150C1C_L_80150DA8
-    lfs f0, 0x398(r29)
-    lfs f2, lbl_806D807C(r2)
-    lfs f1, lbl_806D8068(r2)
-    fadds f0, f0, f2
-    stfs f0, 0x398(r29)
-    lfs f0, 0x39c(r29)
-    fadds f0, f0, f2
-    stfs f0, 0x39c(r29)
-    b fn_80150C1C_L_80150D7C
-    fn_80150C1C_L_80150D70:
-    lfs f0, 0x398(r29)
-    fsubs f0, f0, f1
-    stfs f0, 0x398(r29)
-    fn_80150C1C_L_80150D7C:
-    lfs f0, 0x398(r29)
-    fcmpo cr0, f1, f0
-    blt fn_80150C1C_L_80150D70
-    lfs f1, lbl_806D8068(r2)
-    b fn_80150C1C_L_80150D9C
-    fn_80150C1C_L_80150D90:
-    lfs f0, 0x39c(r29)
-    fsubs f0, f0, f1
-    stfs f0, 0x39c(r29)
-    fn_80150C1C_L_80150D9C:
-    lfs f0, 0x39c(r29)
-    fcmpo cr0, f1, f0
-    blt fn_80150C1C_L_80150D90
-    fn_80150C1C_L_80150DA8:
-    lwz r0, 0x124(r28)
-    cmplwi r0, 0x0
-    beq fn_80150C1C_L_80150E54
-    addi r0, r27, 0x38c
-    lbzx r0, r31, r0
-    cmplwi r0, 0x0
-    beq fn_80150C1C_L_80150E54
-    lwz r3, 0x150(r28)
-    bl KartItem_FlushRenderIfReady
-    lwz r3, 0x124(r28)
-    li r4, 0x2
-    li r5, 0x1
-    bl KartDriver_RenderTimed
-    lwz r3, 0x150(r28)
-    bl KartItem_FlushPendingRender
-    lwz r3, 0x150(r28)
-    bl KartItem_DispatchEffectRenderByState
-    lwz r3, 0x124(r28)
-    li r4, 0x3
-    li r5, 0x1
-    bl KartDriver_RenderTimed
-    lwz r3, 0x150(r28)
-    bl KartItem_FlushPendingRender_v2
-    clrlwi r0, r26, 24
-    cmplwi r0, 0x1
-    bne fn_80150C1C_L_80150E1C
-    lfs f1, 0x398(r29)
-    lfs f2, 0x39c(r29)
-    bl fn_802BD6AC
-    fn_80150C1C_L_80150E1C:
-    lwz r3, 0x150(r28)
-    bl KartItem_DispatchEffectRenderByState
-    lwz r3, 0x124(r28)
-    li r4, 0x4
-    li r5, 0x1
-    bl KartDriver_RenderTimed
-    lwz r3, 0x150(r28)
-    bl KartItem_FlushPendingRender_v2
-    clrlwi r0, r26, 24
-    cmplwi r0, 0x1
-    bne fn_80150C1C_L_80150E4C
-    bl fn_802BD6C0
-    fn_80150C1C_L_80150E4C:
-    lwz r3, 0x150(r28)
-    bl TornadoEffect_SubmitRender
-    fn_80150C1C_L_80150E54:
-    addi r27, r27, 0x1
-    addi r28, r28, 0x4
-    cmpwi r27, 0xb
-    addi r29, r29, 0x8
-    blt fn_80150C1C_L_80150D44
-    lwz r3, 0x8(r31)
-    cmpwi r3, 0x14
-    blt fn_80150C1C_L_80150E80
-    lwz r0, 0xc(r31)
-    cmpwi r0, 0xb4
-    bge fn_80150C1C_L_80150E94
-    fn_80150C1C_L_80150E80:
-    slwi r0, r3, 2
-    li r4, 0x7
-    add r3, r31, r0
-    lwz r3, 0xd0(r3)
-    bl Object_RenderJObjTree
-    fn_80150C1C_L_80150E94:
-    bl ItemObjectManager_Render
-    bl DrawEffect_TickAndCull
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne fn_80150C1C_L_80150EAC
-    li r3, 0x0
-    fn_80150C1C_L_80150EAC:
-    bl clDrawMan_EndFrame_NoOp
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne fn_80150C1C_L_80150EC0
-    li r3, 0x0
-    fn_80150C1C_L_80150EC0:
-    bl clDrawMan_Buckets_Dispatch
-    lwz r0, 0x8(r31)
-    slwi r0, r0, 2
-    add r3, r31, r0
-    lwz r3, 0x28(r3)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    li r3, 0x0
-    bl HSD_LObjDeleteCurrentAll
-    fn_80150C1C_L_80150EEC:
-    li r29, 0x0
-    mr r28, r31
-    fn_80150C1C_L_80150EF4:
-    lwz r3, 0x3f0(r28)
-    cmplwi r3, 0x0
-    beq fn_80150C1C_L_80150F10
-    lwz r0, 0x4b0(r28)
-    cmpwi r0, 0x2
-    bne fn_80150C1C_L_80150F10
-    bl fn_801A0004
-    fn_80150C1C_L_80150F10:
-    addi r29, r29, 0x1
-    addi r28, r28, 0x4
-    cmpwi r29, 0x30
-    blt fn_80150C1C_L_80150EF4
-    bl isJapanese
-    cmpwi r3, 0x1
-    bne fn_80150C1C_L_8015115C
-    lwz r0, 0x8(r31)
-    cmpwi r0, 0x4
-    bne fn_80150C1C_L_80151048
-    lwz r0, 0xc(r31)
-    cmpwi r0, 0xd2
-    blt fn_80150C1C_L_8015115C
-    xoris r3, r0, 0x8000
-    lis r0, 0x4330
-    stw r3, 0xbc(r1)
-    lfd f2, lbl_806D80A0(r2)
-    stw r0, 0xb8(r1)
-    lfs f0, lbl_806D810C(r2)
-    lfd f1, 0xb8(r1)
-    lfs f3, lbl_806D8114(r2)
-    fsubs f1, f1, f2
-    fsubs f0, f1, f0
-    fcmpo cr0, f0, f3
-    cror eq, lt, eq
-    bne fn_80150C1C_L_80150F88
-    fdivs f0, f0, f3
-    lfs f1, lbl_806D8110(r2)
-    fmuls f31, f1, f0
-    b fn_80150C1C_L_80150F9C
-    fn_80150C1C_L_80150F88:
-    fsubs f1, f0, f3
-    lfs f2, lbl_806D8118(r2)
-    lfs f0, lbl_806D8110(r2)
-    fdivs f1, f1, f3
-    fmadds f31, f2, f1, f0
-    fn_80150C1C_L_80150F9C:
-    lfs f0, lbl_806D8068(r2)
-    fcmpo cr0, f31, f0
-    ble fn_80150C1C_L_80150FAC
-    fmr f31, f0
-    fn_80150C1C_L_80150FAC:
-    lfs f0, lbl_806D8064(r2)
-    fcmpo cr0, f31, f0
-    cror eq, lt, eq
-    beq fn_80150C1C_L_8015115C
-    addi r3, r1, 0x60
-    bl ResCtrl_Init
-    lfs f0, lbl_806D8090(r2)
-    la r3, lbl_806D7F58(r2)  /* lbl_806D7F58 */
-    lfs f6, 0x4(r3)
-    li r4, 0x2
-    fmuls f1, f0, f31
-    lfs f5, lbl_806D7F58(r2)
-    lfs f0, lbl_806D8068(r2)
-    li r0, 0x1
-    stw r4, 0x68(r1)
-    li r6, -0x100
-    fctiwz f4, f1
-    lfs f3, lbl_806D811C(r2)
-    lfs f2, lbl_806D80A8(r2)
-    addi r3, r1, 0x60
-    lfs f1, lbl_806D8120(r2)
-    li r4, 0x6
-    stfd f4, 0xb8(r1)
-    fmadds f2, f3, f5, f2
-    fmadds f1, f3, f6, f1
-    lwz r5, 0xbc(r1)
-    stfs f5, 0x80(r1)
-    rlwimi r6, r5, 0, 24, 31
-    stfs f6, 0x84(r1)
-    stw r6, 0x94(r1)
-    stw r6, 0x98(r1)
-    stw r6, 0x9c(r1)
-    stw r6, 0xa0(r1)
-    stb r0, 0x70(r1)
-    stfs f2, 0x74(r1)
-    stfs f1, 0x78(r1)
-    stfs f0, 0x7c(r1)
-    bl fn_8011FAFC
-    b fn_80150C1C_L_8015115C
-    fn_80150C1C_L_80151048:
-    cmpwi r0, 0x14
-    bne fn_80150C1C_L_8015115C
-    lwz r0, 0xc(r31)
-    cmpwi r0, 0x78
-    blt fn_80150C1C_L_8015115C
-    xoris r3, r0, 0x8000
-    lis r0, 0x4330
-    stw r3, 0xbc(r1)
-    lfd f2, lbl_806D80A0(r2)
-    stw r0, 0xb8(r1)
-    lfs f0, lbl_806D8094(r2)
-    lfd f1, 0xb8(r1)
-    lfs f3, lbl_806D8124(r2)
-    fsubs f1, f1, f2
-    fsubs f0, f1, f0
-    fcmpo cr0, f0, f3
-    cror eq, lt, eq
-    bne fn_80150C1C_L_801510A0
-    fdivs f0, f0, f3
-    lfs f1, lbl_806D8110(r2)
-    fmuls f31, f1, f0
-    b fn_80150C1C_L_801510B4
-    fn_80150C1C_L_801510A0:
-    fsubs f1, f0, f3
-    lfs f2, lbl_806D8118(r2)
-    lfs f0, lbl_806D8110(r2)
-    fdivs f1, f1, f3
-    fmadds f31, f2, f1, f0
-    fn_80150C1C_L_801510B4:
-    lfs f0, lbl_806D8068(r2)
-    fcmpo cr0, f31, f0
-    ble fn_80150C1C_L_801510C4
-    fmr f31, f0
-    fn_80150C1C_L_801510C4:
-    lfs f0, lbl_806D8064(r2)
-    fcmpo cr0, f31, f0
-    cror eq, lt, eq
-    beq fn_80150C1C_L_8015115C
-    addi r3, r1, 0x8
-    bl ResCtrl_Init
-    lfs f0, lbl_806D8090(r2)
-    la r3, lbl_806D7F58(r2)  /* lbl_806D7F58 */
-    lfs f6, 0x4(r3)
-    li r4, 0x2
-    fmuls f1, f0, f31
-    lfs f5, lbl_806D7F58(r2)
-    lfs f0, lbl_806D8068(r2)
-    li r0, 0x1
-    stw r4, 0x10(r1)
-    li r6, -0x100
-    fctiwz f4, f1
-    lfs f3, lbl_806D811C(r2)
-    lfs f2, lbl_806D80A8(r2)
-    addi r3, r1, 0x8
-    lfs f1, lbl_806D8120(r2)
-    li r4, 0x6
-    stfd f4, 0xb8(r1)
-    fmadds f2, f3, f5, f2
-    fmadds f1, f3, f6, f1
-    lwz r5, 0xbc(r1)
-    stfs f5, 0x28(r1)
-    rlwimi r6, r5, 0, 24, 31
-    stfs f6, 0x2c(r1)
-    stw r6, 0x3c(r1)
-    stw r6, 0x40(r1)
-    stw r6, 0x44(r1)
-    stw r6, 0x48(r1)
-    stb r0, 0x18(r1)
-    stfs f2, 0x1c(r1)
-    stfs f1, 0x20(r1)
-    stfs f0, 0x24(r1)
-    bl fn_8011FAFC
-    fn_80150C1C_L_8015115C:
-    lwz r0, 0x8(r31)
-    cmpwi r0, 0x14
-    bne fn_80150C1C_L_801511F8
-    lwz r0, 0xc(r31)
-    cmpwi r0, 0xaa
-    blt fn_80150C1C_L_801511F8
-    xoris r3, r0, 0x8000
-    lis r0, 0x4330
-    stw r3, 0xbc(r1)
-    lfd f2, lbl_806D80A0(r2)
-    stw r0, 0xb8(r1)
-    lfs f0, lbl_806D8128(r2)
-    lfd f1, 0xb8(r1)
-    lfs f3, lbl_806D80AC(r2)
-    fsubs f1, f1, f2
-    fsubs f0, f1, f0
-    fcmpo cr0, f0, f3
-    cror eq, lt, eq
-    bne fn_80150C1C_L_801511B8
-    fdivs f0, f0, f3
-    lfs f1, lbl_806D8110(r2)
-    fmuls f3, f1, f0
-    b fn_80150C1C_L_801511CC
-    fn_80150C1C_L_801511B8:
-    fsubs f1, f0, f3
-    lfs f2, lbl_806D8118(r2)
-    lfs f0, lbl_806D8110(r2)
-    fdivs f1, f1, f3
-    fmadds f3, f2, f1, f0
-    fn_80150C1C_L_801511CC:
-    lfs f0, lbl_806D8068(r2)
-    fcmpo cr0, f3, f0
-    cror eq, gt, eq
-    bne fn_80150C1C_L_801511E0
-    fmr f3, f0
-    fn_80150C1C_L_801511E0:
-    lfs f1, lbl_806D812C(r2)
-    li r3, 0x6
-    lfs f2, lbl_806D8130(r2)
-    li r4, 0x2afd
-    li r5, 0x0
-    bl fn_801695E0
-    fn_80150C1C_L_801511F8:
-    li r3, 0x0
-    bl fn_8011F994
-    li r3, 0x4
-    bl fn_8011F994
-    li r3, 0x7
-    bl fn_8013D940
-    li r3, 0x6
-    bl fn_8011F994
-    psq_l f31, 0xe8(r1), 0, 0
-    lfd f31, 0xe0(r1)
-    lmw r26, 0xc8(r1)
-    lwz r0, 0xf4(r1)
-    mtlr r0
-    addi r1, r1, 0xf0
-    blr
+static inline void RaceDrawLogo(float alpha) {
+    if (alpha <= 0.0f) {
+        return;
+    }
+    {
+        ResCtrl c;
+        float h, w;
+        w = lbl_806D7F58[0];
+        h = lbl_806D7F58[1];
+        c.mode = 2;
+        c.SetSize(w, h);
+        c.SetColor(0xFFFFFF00 | (unsigned char)(int)(255.0f * alpha));
+        c.Show(0.5f * w + 99.0f, 0.5f * h + 309.0f, 1.0f);
+        fn_8011FAFC(&c, 6);
+    }
 }
+
+#pragma use_lmw_stmw on
+extern "C" void fn_80150C1C(RaceScene *self) {
+    int i;
+    if (self->objs[self->mode] != 0) {
+        SetCourseScene3D(self->objs[self->mode]);
+        if (self->objs[self->mode]->Begin()) {
+            unsigned char wave;
+            clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
+            LObjList_ApplyForCObj(self->lists[self->mode]);
+            if (lbl_80366EF0[self->mode].transparent) {
+                TransparentDraw_SortAndDispatch();
+            }
+            CObj_DebugVizPathFlush(self->objs[self->mode]);
+            if (self->env != 0 && lbl_80366EF0[self->mode].env) {
+                CourseEnvironment_RenderObjects_Timed(self->env);
+                Subsystem36c_DispatchPass2_Timed(self->env);
+            }
+            wave = 0;
+            if (self->mode == 0x11) {
+                wave = 1;
+            }
+            if (self->mode == 0x13) {
+                wave = 1;
+            }
+            for (i = 0; i < 11; i++) {
+                if (wave == 1) {
+                    self->uv[i].u += 0.05f;
+                    self->uv[i].v += 0.05f;
+                    while (1.0f < self->uv[i].u) {
+                        self->uv[i].u -= 1.0f;
+                    }
+                    while (1.0f < self->uv[i].v) {
+                        self->uv[i].v -= 1.0f;
+                    }
+                }
+                if (self->drivers[i] != 0 && self->active[i]) {
+                    KartItem_FlushRenderIfReady(self->effects[i]);
+                    KartDriver_RenderTimed(self->drivers[i], 2, 1);
+                    KartItem_FlushPendingRender(self->effects[i]);
+                    KartItem_DispatchEffectRenderByState(self->effects[i]);
+                    KartDriver_RenderTimed(self->drivers[i], 3, 1);
+                    KartItem_FlushPendingRender_v2(self->effects[i]);
+                    if (wave == 1) {
+                        fn_802BD6AC(self->uv[i].u, self->uv[i].v);
+                    }
+                    KartItem_DispatchEffectRenderByState(self->effects[i]);
+                    KartDriver_RenderTimed(self->drivers[i], 4, 1);
+                    KartItem_FlushPendingRender_v2(self->effects[i]);
+                    if (wave == 1) {
+                        fn_802BD6C0();
+                    }
+                    TornadoEffect_SubmitRender(self->effects[i]);
+                }
+            }
+            if (self->mode < 0x14 || self->timer < 0xB4) {
+                Object_RenderJObjTree(self->models[self->mode], 7);
+            }
+            ItemObjectManager_Render();
+            DrawEffect_TickAndCull();
+            clDrawMan_EndFrame_NoOp(SINGLETON_INSTANCE(lbl_806D10AC));
+            clDrawMan_Buckets_Dispatch(SINGLETON_INSTANCE(lbl_806D10AC));
+            self->objs[self->mode]->End();
+            HSD_LObjDeleteCurrentAll(0);
+        }
+    }
+    for (i = 0; i < 48; i++) {
+        if (self->sprites[i] != 0 && self->spriteOn[i] == 2) {
+            fn_801A0004(self->sprites[i]);
+        }
+    }
+    if (isJapanese() == 1) {
+        if (self->mode == 4) {
+            if (self->timer >= 0xD2) {
+                float a;
+                float t = (float)self->timer - 210.0f;
+                if (t <= 7.0f) {
+                    a = 0.7f * (t / 7.0f);
+                } else {
+                    a = 0.3f * ((t - 7.0f) / 7.0f) + 0.7f;
+                }
+                if (a > 1.0f) {
+                    a = 1.0f;
+                }
+                RaceDrawLogo(a);
+            }
+        } else if (self->mode == 0x14) {
+            if (self->timer >= 0x78) {
+                float a;
+                float t = (float)self->timer - 120.0f;
+                if (t <= 5.0f) {
+                    a = 0.7f * (t / 5.0f);
+                } else {
+                    a = 0.3f * ((t - 5.0f) / 5.0f) + 0.7f;
+                }
+                if (a > 1.0f) {
+                    a = 1.0f;
+                }
+                RaceDrawLogo(a);
+            }
+        }
+    }
+    if (self->mode == 0x14 && self->timer >= 0xAA) {
+        float a;
+        float t = (float)self->timer - 170.0f;
+        if (t <= 3.0f) {
+            a = 0.7f * (t / 3.0f);
+        } else {
+            a = 0.3f * ((t - 3.0f) / 3.0f) + 0.7f;
+        }
+        if (a >= 1.0f) {
+            a = 1.0f;
+        }
+        fn_801695E0(6, 0x2AFD, 0, 49.0f, 445.5f, a);
+    }
+    fn_8011F994(0);
+    fn_8011F994(4);
+    fn_8013D940(7);
+    fn_8011F994(6);
+}
+#pragma use_lmw_stmw reset
 
 extern "C" asm void fn_80151234(void) { /* 0x80151234 size:0xCD4 */
     nofralloc
@@ -5406,615 +5197,176 @@ extern "C" Base *fn_80152B64(Base *self, short flag) {
     return self;
 }
 
-extern "C" asm void fn_80152C00(void) { /* 0x80152C00 size:0x904 */
-    nofralloc
-    stwu r1, -0xa0(r1)
-    mflr r0
-    stw r0, 0xa4(r1)
-    stfd f31, 0x90(r1)
-    psq_st f31, 0x98(r1), 0, 0
-    stfd f30, 0x80(r1)
-    psq_st f30, 0x88(r1), 0, 0
-    stfd f29, 0x70(r1)
-    psq_st f29, 0x78(r1), 0, 0
-    stfd f28, 0x60(r1)
-    psq_st f28, 0x68(r1), 0, 0
-    stfd f27, 0x50(r1)
-    psq_st f27, 0x58(r1), 0, 0
-    stfd f26, 0x40(r1)
-    psq_st f26, 0x48(r1), 0, 0
-    stfd f25, 0x30(r1)
-    psq_st f25, 0x38(r1), 0, 0
-    stmw r27, 0x1c(r1)
-    mr r31, r3
-    lwz r0, 0x4(r3)
-    cmpwi r0, 0x9
-    beq fn_80152C00_L_801534B8
-    lwz r0, lbl_806D10A0(r13)
-    lwz r3, 0x14(r31)
-    cmplwi r0, 0x0
-    subi r27, r3, 0x1
-    bne fn_80152C00_L_80152C70
-    li r0, 0x0
-    fn_80152C00_L_80152C70:
-    lfs f25, lbl_806D8064(r2)
-    mr r30, r0
-    lfs f1, 0x8(r31)
-    lfs f0, lbl_806D818C(r2)
-    fmr f28, f25
-    fcmpo cr0, f1, f0
-    bge fn_80152C00_L_80152CA4
-    fdivs f0, f1, f0
-    lfs f1, lbl_806D80C4(r2)
-    lfs f2, lbl_806D8190(r2)
-    fmuls f0, f1, f0
-    fadds f25, f2, f0
-    fsubs f28, f1, f0
-    fn_80152C00_L_80152CA4:
-    cmpwi r3, 0x4
-    li r4, -0x1
-    li r28, -0x1
-    beq fn_80152C00_L_80152D10
-    bge fn_80152C00_L_80152CD0
-    cmpwi r3, 0x2
-    beq fn_80152C00_L_80152CF0
-    bge fn_80152C00_L_80152D00
-    cmpwi r3, 0x1
-    bge fn_80152C00_L_80152CE0
-    b fn_80152C00_L_80152D3C
-    fn_80152C00_L_80152CD0:
-    cmpwi r3, 0x6
-    beq fn_80152C00_L_80152D30
-    bge fn_80152C00_L_80152D3C
-    b fn_80152C00_L_80152D20
-    fn_80152C00_L_80152CE0:
-    lfs f26, lbl_806D8194(r2)
-    li r4, 0x1d62
-    li r28, 0x1d62
-    b fn_80152C00_L_80152D3C
-    fn_80152C00_L_80152CF0:
-    lfs f26, lbl_806D8194(r2)
-    li r4, 0x1d62
-    li r28, 0x1d62
-    b fn_80152C00_L_80152D3C
-    fn_80152C00_L_80152D00:
-    lfs f26, lbl_806D8198(r2)
-    li r4, 0x1d62
-    li r28, 0x1d62
-    b fn_80152C00_L_80152D3C
-    fn_80152C00_L_80152D10:
-    lfs f26, lbl_806D819C(r2)
-    li r4, 0x1d62
-    li r28, 0x1d62
-    b fn_80152C00_L_80152D3C
-    fn_80152C00_L_80152D20:
-    lfs f26, lbl_806D81A0(r2)
-    li r4, 0x1d62
-    li r28, 0x1d62
-    b fn_80152C00_L_80152D3C
-    fn_80152C00_L_80152D30:
-    lfs f26, lbl_806D81A4(r2)
-    li r4, 0x1d62
-    li r28, 0x1d62
-    fn_80152C00_L_80152D3C:
-    lfs f1, lbl_806D819C(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D8070(r2)
-    li r5, 0x0
-    bl fn_801698B4
-    lfs f1, lbl_806D81A8(r2)
-    mr r4, r28
-    lfs f2, lbl_806D8070(r2)
-    li r3, 0x0
-    li r5, 0x0
-    bl fn_801698B4
-    lfs f1, lbl_806D80B8(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D81AC(r2)
-    li r4, 0x865
-    li r5, 0x0
-    bl fn_801698B4
-    lfs f0, lbl_806D81B0(r2)
-    addi r4, r27, 0x76c
-    lfs f2, lbl_806D81B4(r2)
-    li r3, 0x0
-    fadds f1, f0, f25
-    li r5, 0x0
-    bl fn_801698B4
-    bl isJapanese
-    cmpwi r3, 0x1
-    bne fn_80152C00_L_80152DCC
-    lfs f0, lbl_806D81B8(r2)
-    lis r3, lbl_803677B0@ha
-    addi r4, r3, lbl_803677B0@l
-    lfs f2, lbl_806D81BC(r2)
-    fadds f1, f0, f28
-    li r3, 0x0
-    creqv 6, 6, 6
-    bl fn_80168A4C
-    b fn_80152C00_L_80152DEC
-    fn_80152C00_L_80152DCC:
-    lfs f0, lbl_806D81B8(r2)
-    lis r3, lbl_803677C8@ha
-    addi r4, r3, lbl_803677C8@l
-    lfs f2, lbl_806D81BC(r2)
-    fadds f1, f0, f28
-    li r3, 0x0
-    creqv 6, 6, 6
-    bl fn_80168A4C
-    fn_80152C00_L_80152DEC:
-    lfs f0, lbl_806D80B8(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D80F0(r2)
-    li r4, 0x76a
-    fadds f27, f0, f25
-    li r5, 0x0
-    fmr f1, f27
-    bl fn_801698B4
-    lfs f0, lbl_806D81C0(r2)
-    slwi r29, r27, 1
-    lfs f2, lbl_806D81C4(r2)
-    addi r4, r29, 0x750
-    fadds f29, f0, f25
-    li r3, 0x0
-    li r5, 0x0
-    fmr f1, f29
-    bl fn_801698B4
-    fadds f30, f25, f26
-    lfs f2, lbl_806D81C4(r2)
-    li r3, 0x0
-    li r4, 0x769
-    li r5, 0x0
-    fmr f1, f30
-    bl fn_801698B4
-    lfs f0, lbl_806D81C8(r2)
-    li r3, 0x0
-    lfs f2, lbl_806D81CC(r2)
-    li r4, 0x75c
-    fadds f26, f0, f28
-    li r5, 0x0
-    fmr f1, f26
-    bl fn_801698B4
-    fmr f1, f26
-    lfs f2, lbl_806D81D0(r2)
-    li r3, 0x0
-    li r4, 0x75d
-    li r5, 0x0
-    bl fn_801698B4
-    fmr f1, f27
-    lfs f2, lbl_806D81D4(r2)
-    li r3, 0x0
-    li r4, 0x76a
-    li r5, 0x0
-    bl fn_801698B4
-    fmr f1, f29
-    lfs f2, lbl_806D81D8(r2)
-    addi r4, r29, 0x751
-    li r3, 0x0
-    li r5, 0x0
-    bl fn_801698B4
-    fmr f1, f30
-    lfs f2, lbl_806D81D8(r2)
-    li r3, 0x0
-    li r4, 0x769
-    li r5, 0x0
-    bl fn_801698B4
-    fmr f1, f26
-    lfs f2, lbl_806D81DC(r2)
-    li r3, 0x0
-    li r4, 0x75c
-    li r5, 0x0
-    bl fn_801698B4
-    fmr f1, f26
-    lfs f2, lbl_806D81E0(r2)
-    li r3, 0x0
-    li r4, 0x75d
-    li r5, 0x0
-    bl fn_801698B4
-    lwz r5, 0x14(r31)
-    li r3, 0x0
-    li r4, 0x1
-    li r6, 0x0
-    li r7, 0x0
-    bl TaRecord_GetTime_Indexed
-    fmr f25, f1
-    lwz r5, 0x14(r31)
-    li r3, 0x0
-    li r4, 0x1
-    li r6, 0x0
-    li r7, 0x0
-    bl TaRecord_GetEntry_Indexed
-    lfs f0, lbl_806D81E4(r2)
-    mr r28, r3
-    lfs f2, lbl_806D808C(r2)
-    mr r4, r28
-    fadds f31, f0, f28
-    li r3, 0x0
-    fmr f1, f31
-    creqv 6, 6, 6
-    bl fn_80167DDC
-    lbz r3, 0xc(r28)
-    extsb r3, r3
-    bl fn_8013BFCC
-    lfs f0, lbl_806D81E8(r2)
-    mr r4, r3
-    lfs f2, lbl_806D81EC(r2)
-    li r3, 0x0
-    fadds f30, f0, f28
-    li r5, 0x0
-    fmr f1, f30
-    bl fn_801698B4
-    lfs f0, lbl_806D8090(r2)
-    li r27, 0x0
-    lfs f27, lbl_806D81F0(r2)
-    lis r29, 0x4330
-    fadds f29, f0, f28
-    lfd f26, lbl_806D80A0(r2)
-    fn_80152C00_L_80152F98:
-    fmr f1, f25
-    mr r3, r27
-    bl fn_80167744
-    subfic r0, r27, 0x7
-    addi r4, r3, 0x778
-    xoris r0, r0, 0x8000
-    stw r29, 0x8(r1)
-    lfs f2, lbl_806D808C(r2)
-    li r3, 0x0
-    stw r0, 0xc(r1)
-    li r5, 0x0
-    lfd f0, 0x8(r1)
-    fsubs f0, f0, f26
-    fmadds f1, f27, f0, f29
-    bl fn_801698B4
-    addi r27, r27, 0x1
-    cmpwi r27, 0x8
-    blt fn_80152C00_L_80152F98
-    cmplwi r30, 0x0
-    beq fn_80152C00_L_80153064
-    lbz r6, 0xc(r28)
-    mr r3, r30
-    lbz r4, 0xd(r28)
-    li r7, 0x0
-    lbz r5, 0xe(r28)
-    extsb r6, r6
-    bl get_title_name
-    mr. r27, r3
-    beq fn_80152C00_L_80153064
-    bl isJapanese
-    cmpwi r3, 0x1
-    bne fn_80152C00_L_80153040
-    lfs f0, lbl_806D81F4(r2)
-    mr r4, r27
-    lfs f2, lbl_806D81F8(r2)
-    li r3, 0x0
-    fadds f1, f0, f28
-    lfs f3, lbl_806D81FC(r2)
-    lfs f4, lbl_806D8068(r2)
-    creqv 6, 6, 6
-    bl fn_80168910
-    b fn_80152C00_L_80153064
-    fn_80152C00_L_80153040:
-    lfs f0, lbl_806D81F4(r2)
-    mr r4, r27
-    lfs f2, lbl_806D81F8(r2)
-    li r3, 0x0
-    fadds f1, f0, f28
-    lfs f3, lbl_806D8200(r2)
-    lfs f4, lbl_806D8068(r2)
-    creqv 6, 6, 6
-    bl fn_80168910
-    fn_80152C00_L_80153064:
-    fmr f1, f31
-    lfs f2, lbl_806D8204(r2)
-    mr r4, r28
-    li r3, 0x0
-    creqv 6, 6, 6
-    bl fn_80167DDC
-    lbz r3, 0xc(r28)
-    extsb r3, r3
-    bl fn_8013BFCC
-    fmr f1, f30
-    mr r4, r3
-    lfs f2, lbl_806D8208(r2)
-    li r3, 0x0
-    li r5, 0x0
-    bl fn_801698B4
-    lfs f27, lbl_806D81F0(r2)
-    li r27, 0x0
-    lfd f26, lbl_806D80A0(r2)
-    lis r29, 0x4330
-    fn_80152C00_L_801530B0:
-    fmr f1, f25
-    mr r3, r27
-    bl fn_80167744
-    subfic r0, r27, 0x7
-    addi r4, r3, 0x778
-    xoris r0, r0, 0x8000
-    stw r29, 0x8(r1)
-    lfs f2, lbl_806D8204(r2)
-    li r3, 0x0
-    stw r0, 0xc(r1)
-    li r5, 0x0
-    lfd f0, 0x8(r1)
-    fsubs f0, f0, f26
-    fmadds f1, f27, f0, f29
-    bl fn_801698B4
-    addi r27, r27, 0x1
-    cmpwi r27, 0x8
-    blt fn_80152C00_L_801530B0
-    cmplwi r30, 0x0
-    beq fn_80152C00_L_8015317C
-    lbz r6, 0xc(r28)
-    mr r3, r30
-    lbz r4, 0xd(r28)
-    li r7, 0x0
-    lbz r5, 0xe(r28)
-    extsb r6, r6
-    bl get_title_name
-    mr. r29, r3
-    beq fn_80152C00_L_8015317C
-    bl isJapanese
-    cmpwi r3, 0x1
-    bne fn_80152C00_L_80153158
-    lfs f0, lbl_806D81F4(r2)
-    mr r4, r29
-    lfs f2, lbl_806D8070(r2)
-    li r3, 0x0
-    fadds f1, f0, f28
-    lfs f3, lbl_806D81FC(r2)
-    lfs f4, lbl_806D8068(r2)
-    creqv 6, 6, 6
-    bl fn_80168910
-    b fn_80152C00_L_8015317C
-    fn_80152C00_L_80153158:
-    lfs f0, lbl_806D81F4(r2)
-    mr r4, r29
-    lfs f2, lbl_806D8070(r2)
-    li r3, 0x0
-    fadds f1, f0, f28
-    lfs f3, lbl_806D8200(r2)
-    lfs f4, lbl_806D8068(r2)
-    creqv 6, 6, 6
-    bl fn_80168910
-    fn_80152C00_L_8015317C:
-    lwz r5, 0x14(r31)
-    li r3, 0x0
-    li r4, 0x1
-    li r6, 0x1
-    li r7, 0x0
-    bl TaRecord_GetTime_Indexed
-    fmr f25, f1
-    lwz r5, 0x14(r31)
-    li r3, 0x0
-    li r4, 0x1
-    li r6, 0x1
-    li r7, 0x0
-    bl TaRecord_GetEntry_Indexed
-    fmr f1, f31
-    mr r28, r3
-    lfs f2, lbl_806D820C(r2)
-    mr r4, r28
-    li r3, 0x0
-    creqv 6, 6, 6
-    bl fn_80167DDC
-    lbz r3, 0xc(r28)
-    extsb r3, r3
-    bl fn_8013BFCC
-    fmr f1, f30
-    mr r4, r3
-    lfs f2, lbl_806D8210(r2)
-    li r3, 0x0
-    li r5, 0x0
-    bl fn_801698B4
-    lfs f26, lbl_806D81F0(r2)
-    li r27, 0x0
-    lfd f27, lbl_806D80A0(r2)
-    lis r29, 0x4330
-    fn_80152C00_L_80153200:
-    fmr f1, f25
-    mr r3, r27
-    bl fn_80167744
-    subfic r0, r27, 0x7
-    addi r4, r3, 0x778
-    xoris r0, r0, 0x8000
-    stw r29, 0x8(r1)
-    lfs f2, lbl_806D820C(r2)
-    li r3, 0x0
-    stw r0, 0xc(r1)
-    li r5, 0x0
-    lfd f0, 0x8(r1)
-    fsubs f0, f0, f27
-    fmadds f1, f26, f0, f29
-    bl fn_801698B4
-    addi r27, r27, 0x1
-    cmpwi r27, 0x8
-    blt fn_80152C00_L_80153200
-    cmplwi r30, 0x0
-    beq fn_80152C00_L_801532CC
-    lbz r6, 0xc(r28)
-    mr r3, r30
-    lbz r4, 0xd(r28)
-    li r7, 0x0
-    lbz r5, 0xe(r28)
-    extsb r6, r6
-    bl get_title_name
-    mr. r29, r3
-    beq fn_80152C00_L_801532CC
-    bl isJapanese
-    cmpwi r3, 0x1
-    bne fn_80152C00_L_801532A8
-    lfs f0, lbl_806D81F4(r2)
-    mr r4, r29
-    lfs f2, lbl_806D8214(r2)
-    li r3, 0x0
-    fadds f1, f0, f28
-    lfs f3, lbl_806D81FC(r2)
-    lfs f4, lbl_806D8068(r2)
-    creqv 6, 6, 6
-    bl fn_80168910
-    b fn_80152C00_L_801532CC
-    fn_80152C00_L_801532A8:
-    lfs f0, lbl_806D81F4(r2)
-    mr r4, r29
-    lfs f2, lbl_806D8214(r2)
-    li r3, 0x0
-    fadds f1, f0, f28
-    lfs f3, lbl_806D8200(r2)
-    lfs f4, lbl_806D8068(r2)
-    creqv 6, 6, 6
-    bl fn_80168910
-    fn_80152C00_L_801532CC:
-    lwz r5, 0x14(r31)
-    li r3, 0x0
-    li r4, 0x1
-    li r6, 0x1
-    li r7, 0x1
-    bl TaRecord_GetTime_Indexed
-    fmr f26, f1
-    lwz r5, 0x14(r31)
-    li r3, 0x0
-    li r4, 0x1
-    li r6, 0x1
-    li r7, 0x1
-    bl TaRecord_GetEntry_Indexed
-    fmr f1, f31
-    mr r28, r3
-    lfs f2, lbl_806D8100(r2)
-    mr r4, r28
-    li r3, 0x0
-    creqv 6, 6, 6
-    bl fn_80167DDC
-    lbz r3, 0xc(r28)
-    extsb r3, r3
-    bl fn_8013BFCC
-    fmr f1, f30
-    mr r4, r3
-    lfs f2, lbl_806D8218(r2)
-    li r3, 0x0
-    li r5, 0x0
-    bl fn_801698B4
-    lfs f31, lbl_806D81F0(r2)
-    li r27, 0x0
-    lfd f30, lbl_806D80A0(r2)
-    lis r29, 0x4330
-    fn_80152C00_L_80153350:
-    fmr f1, f26
-    mr r3, r27
-    bl fn_80167744
-    subfic r0, r27, 0x7
-    addi r4, r3, 0x778
-    xoris r0, r0, 0x8000
-    stw r29, 0x8(r1)
-    lfs f2, lbl_806D8100(r2)
-    li r3, 0x0
-    stw r0, 0xc(r1)
-    li r5, 0x0
-    lfd f0, 0x8(r1)
-    fsubs f0, f0, f30
-    fmadds f1, f31, f0, f29
-    bl fn_801698B4
-    addi r27, r27, 0x1
-    cmpwi r27, 0x8
-    blt fn_80152C00_L_80153350
-    cmplwi r30, 0x0
-    beq fn_80152C00_L_8015341C
-    lbz r6, 0xc(r28)
-    mr r3, r30
-    lbz r4, 0xd(r28)
-    li r7, 0x0
-    lbz r5, 0xe(r28)
-    extsb r6, r6
-    bl get_title_name
-    mr. r29, r3
-    beq fn_80152C00_L_8015341C
-    bl isJapanese
-    cmpwi r3, 0x1
-    bne fn_80152C00_L_801533F8
-    lfs f0, lbl_806D81F4(r2)
-    mr r4, r29
-    lfs f2, lbl_806D821C(r2)
-    li r3, 0x0
-    fadds f1, f0, f28
-    lfs f3, lbl_806D81FC(r2)
-    lfs f4, lbl_806D8068(r2)
-    creqv 6, 6, 6
-    bl fn_80168910
-    b fn_80152C00_L_8015341C
-    fn_80152C00_L_801533F8:
-    lfs f0, lbl_806D81F4(r2)
-    mr r4, r29
-    lfs f2, lbl_806D821C(r2)
-    li r3, 0x0
-    fadds f1, f0, f28
-    lfs f3, lbl_806D8200(r2)
-    lfs f4, lbl_806D8068(r2)
-    creqv 6, 6, 6
-    bl fn_80168910
-    fn_80152C00_L_8015341C:
-    lbz r0, 0x10(r31)
-    cmplwi r0, 0x0
-    bne fn_80152C00_L_80153430
-    li r0, 0x1
-    stb r0, 0x10(r31)
-    fn_80152C00_L_80153430:
-    lfs f1, lbl_806D8060(r2)
-    lfs f2, 0x8(r31)
-    fcmpo cr0, f2, f1
-    bge fn_80152C00_L_8015345C
-    fdivs f0, f2, f1
-    lfs f3, lbl_806D8068(r2)
-    lfs f2, lbl_806D8064(r2)
-    fsubs f1, f3, f0
-    bl Saturate_Double
-    stfs f1, 0xc(r31)
-    b fn_80152C00_L_80153490
-    fn_80152C00_L_8015345C:
-    lfs f0, lbl_806D8220(r2)
-    fsubs f0, f0, f1
-    fcmpo cr0, f2, f0
-    ble fn_80152C00_L_80153488
-    fsubs f0, f2, f0
-    lfs f2, lbl_806D8064(r2)
-    lfs f3, lbl_806D8068(r2)
-    fdivs f1, f0, f1
-    bl Saturate_Double
-    stfs f1, 0xc(r31)
-    b fn_80152C00_L_80153490
-    fn_80152C00_L_80153488:
-    lfs f0, lbl_806D8064(r2)
-    stfs f0, 0xc(r31)
-    fn_80152C00_L_80153490:
-    lfs f2, 0x8(r31)
-    lfs f1, lbl_806D8068(r2)
-    lfs f0, lbl_806D8220(r2)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0x8(r31)
-    cror eq, gt, eq
-    bne fn_80152C00_L_801534B8
-    li r0, 0x9
-    stw r0, 0x4(r31)
-    fn_80152C00_L_801534B8:
-    psq_l f31, 0x98(r1), 0, 0
-    lfd f31, 0x90(r1)
-    psq_l f30, 0x88(r1), 0, 0
-    lfd f30, 0x80(r1)
-    psq_l f29, 0x78(r1), 0, 0
-    lfd f29, 0x70(r1)
-    psq_l f28, 0x68(r1), 0, 0
-    lfd f28, 0x60(r1)
-    psq_l f27, 0x58(r1), 0, 0
-    lfd f27, 0x50(r1)
-    psq_l f26, 0x48(r1), 0, 0
-    lfd f26, 0x40(r1)
-    psq_l f25, 0x38(r1), 0, 0
-    lfd f25, 0x30(r1)
-    lmw r27, 0x1c(r1)
-    lwz r0, 0xa4(r1)
-    mtlr r0
-    addi r1, r1, 0xa0
-    blr
+struct TaPanel {
+    void *vt;
+    int state;
+    float t;
+    float alpha;
+    unsigned char started;
+    char pad11[3];
+    int course;
+};
+
+struct TaEntry {
+    unsigned short name[6];
+    signed char chr;
+    unsigned char title;
+    unsigned char variant;
+};
+
+static inline void TaDrawTitle(void *db, TaEntry *e, float x, float y) {
+    if (db != 0) {
+        const char *name = get_title_name(db, e->title, e->variant, e->chr, 0);
+        if (name != 0) {
+            if (isJapanese() == 1) {
+                fn_80168910(0, name, x, y, 0.9f, 1.0f);
+            } else {
+                fn_80168910(0, name, x, y, 0.8f, 1.0f);
+            }
+        }
+    }
 }
+
+#pragma use_lmw_stmw on
+extern "C" void fn_80152C00(TaPanel *self) {
+    float fade;
+    float t;
+    int i;
+    const char *name;
+    void *db;
+    int course;
+    float x0;
+    float x1;
+    float sx;
+    int idL;
+    int idR;
+    float time;
+    TaEntry *e;
+    if (self->state == 9) {
+        return;
+    }
+    course = self->course - 1;
+    db = SINGLETON_INSTANCE(lbl_806D10A0);
+    x0 = 0.0f;
+    x1 = x0;
+    if (self->t < 30.0f) {
+        x0 = -640.0f + 640.0f * (self->t / 30.0f);
+        x1 = 640.0f - 640.0f * (self->t / 30.0f);
+    }
+    idL = -1;
+    idR = -1;
+    switch (self->course) {
+    case 1:
+        sx = 244.0f;
+        idL = 0x1D62;
+        idR = 0x1D62;
+        break;
+    case 2:
+        sx = 244.0f;
+        idL = 0x1D62;
+        idR = 0x1D62;
+        break;
+    case 3:
+        sx = 276.0f;
+        idL = 0x1D62;
+        idR = 0x1D62;
+        break;
+    case 4:
+        sx = 256.0f;
+        idL = 0x1D62;
+        idR = 0x1D62;
+        break;
+    case 5:
+        sx = 260.0f;
+        idL = 0x1D62;
+        idR = 0x1D62;
+        break;
+    case 6:
+        sx = 296.0f;
+        idL = 0x1D62;
+        idR = 0x1D62;
+        break;
+    }
+    fn_801698B4(0, idL, 0, 256.0f, 240.0f);
+    fn_801698B4(0, idR, 0, 576.0f, 240.0f);
+    fn_801698B4(0, 0x865, 0, 320.0f, 45.0f);
+    fn_801698B4(0, course + 0x76C, 0, 110.0f + x0, 60.0f);
+    if (isJapanese() == 1) {
+        fn_80168A4C(0, (const char *)lbl_803677B0, 318.0f + x1, 43.0f);
+    } else {
+        fn_80168A4C(0, (const char *)lbl_803677C8, 318.0f + x1, 43.0f);
+    }
+    fn_801698B4(0, 0x76A, 0, 320.0f + x0, 137.0f);
+    fn_801698B4(0, course * 2 + 0x750, 0, 144.0f + x0, 127.0f);
+    fn_801698B4(0, 0x769, 0, x0 + sx, 127.0f);
+    fn_801698B4(0, 0x75C, 0, 101.0f + x1, 157.0f);
+    fn_801698B4(0, 0x75D, 0, 101.0f + x1, 214.0f);
+    fn_801698B4(0, 0x76A, 0, 320.0f + x0, 317.0f);
+    fn_801698B4(0, course * 2 + 0x751, 0, 144.0f + x0, 307.0f);
+    fn_801698B4(0, 0x769, 0, x0 + sx, 307.0f);
+    fn_801698B4(0, 0x75C, 0, 101.0f + x1, 337.0f);
+    fn_801698B4(0, 0x75D, 0, 101.0f + x1, 394.0f);
+
+    time = TaRecord_GetTime_Indexed(0, 1, self->course, 0, 0);
+    e = TaRecord_GetEntry_Indexed(0, 1, self->course, 0, 0);
+    fn_80167DDC(0, e->name, 68.0f + x1, 180.0f);
+    fn_801698B4(0, fn_8013BFCC(e->chr), 0, 209.0f + x1, 177.0f);
+    for (i = 0; i < 8; i++) {
+        fn_801698B4(0, fn_80167744(i, time) + 0x778, 0, 18.0f * (7 - i) + (255.0f + x1), 180.0f);
+    }
+    if (db != 0) {
+        name = get_title_name(db, e->title, e->variant, e->chr, 0);
+        if (name != 0) {
+            if (isJapanese() == 1) {
+                fn_80168910(0, name, 422.0f + x1, 184.0f, 0.9f, 1.0f);
+            } else {
+                fn_80168910(0, name, 422.0f + x1, 184.0f, 0.8f, 1.0f);
+            }
+        }
+    }
+
+    fn_80167DDC(0, e->name, 68.0f + x1, 236.0f);
+    fn_801698B4(0, fn_8013BFCC(e->chr), 0, 209.0f + x1, 233.0f);
+    for (i = 0; i < 8; i++) {
+        fn_801698B4(0, fn_80167744(i, time) + 0x778, 0, 18.0f * (7 - i) + (255.0f + x1), 236.0f);
+    }
+    TaDrawTitle(db, e, 422.0f + x1, 240.0f);
+
+    time = TaRecord_GetTime_Indexed(0, 1, self->course, 1, 0);
+    e = TaRecord_GetEntry_Indexed(0, 1, self->course, 1, 0);
+    fn_80167DDC(0, e->name, 68.0f + x1, 360.0f);
+    fn_801698B4(0, fn_8013BFCC(e->chr), 0, 209.0f + x1, 357.0f);
+    for (i = 0; i < 8; i++) {
+        fn_801698B4(0, fn_80167744(i, time) + 0x778, 0, 18.0f * (7 - i) + (255.0f + x1), 360.0f);
+    }
+    TaDrawTitle(db, e, 422.0f + x1, 364.0f);
+
+    time = TaRecord_GetTime_Indexed(0, 1, self->course, 1, 1);
+    e = TaRecord_GetEntry_Indexed(0, 1, self->course, 1, 1);
+    fn_80167DDC(0, e->name, 68.0f + x1, 416.0f);
+    fn_801698B4(0, fn_8013BFCC(e->chr), 0, 209.0f + x1, 412.0f);
+    for (i = 0; i < 8; i++) {
+        fn_801698B4(0, fn_80167744(i, time) + 0x778, 0, 18.0f * (7 - i) + (255.0f + x1), 416.0f);
+    }
+    TaDrawTitle(db, e, 422.0f + x1, 420.0f);
+
+    if (!self->started) {
+        self->started = 1;
+    }
+    fade = lbl_806D8060;
+    t = self->t;
+    if (t < fade) {
+        self->alpha = Saturate_Double(1.0f - t / fade, 0.0f, 1.0f);
+    } else if (t > 300.0f - fade) {
+        self->alpha = Saturate_Double((t - (300.0f - fade)) / fade, 0.0f, 1.0f);
+    } else {
+        self->alpha = 0.0f;
+    }
+    if ((self->t += 1.0f) >= 300.0f) {
+        self->state = 9;
+    }
+}
+#pragma use_lmw_stmw reset
 
 extern "C" unsigned char fn_80153504(StateObj *o) {
     return o->state == 9;
@@ -7478,214 +6830,47 @@ extern "C" unsigned char fn_80155398(StateObj *o) {
     return o->state8 == 9;
 }
 
-extern "C" asm void fn_801553AC(void) { /* 0x801553AC size:0x2F4 */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    stw r0, 0x44(r1)
-    stmw r27, 0x2c(r1)
-    mr r31, r3
-    lbz r0, 0x29(r3)
-    cmplwi r0, 0x0
-    beq fn_801553AC_L_801554E8
-    lwz r3, 0x18(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    clrlwi. r0, r3, 24
-    beq fn_801553AC_L_801554E8
-    lwz r3, 0x1c(r31)
-    bl LObjList_ApplyForCObj
-    lwz r3, 0x18(r31)
-    bl CObj_DebugVizPathFlush
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne fn_801553AC_L_80155408
-    li r3, 0x0
-    fn_801553AC_L_80155408:
-    bl clDrawMan_Buckets_Reset
-    lwz r3, 0x14(r31)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    li r27, 0x0
-    mr r29, r31
-    fn_801553AC_L_80155420:
-    lwz r3, 0x184(r29)
-    cmplwi r3, 0x0
-    beq fn_801553AC_L_8015546C
-    li r4, 0x10
-    bl HSD_JObjClearFlagsAll
-    lwz r3, 0x4c(r29)
-    bl KartItem_DispatchEffectRenderByState
-    lwz r3, 0x184(r29)
-    li r4, 0x0
-    li r5, 0x7
-    li r6, 0x0
-    bl HSD_JObjDispAll
-    lwz r3, 0x4c(r29)
-    bl KartItem_FlushPendingRender_v2
-    lwz r3, 0x4c(r29)
-    bl TornadoEffect_SubmitRender
-    lwz r3, 0x184(r29)
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    fn_801553AC_L_8015546C:
-    addi r27, r27, 0x1
-    addi r29, r29, 0x4
-    cmpwi r27, 0x6
-    blt fn_801553AC_L_80155420
-    lwz r3, 0x20(r31)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    bl ItemObjectManager_Render
-    bl DrawEffect_TickAndCull
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne fn_801553AC_L_801554A0
-    li r3, 0x0
-    fn_801553AC_L_801554A0:
-    bl clDrawMan_EndFrame_NoOp
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne fn_801553AC_L_801554B4
-    li r3, 0x0
-    fn_801553AC_L_801554B4:
-    bl clDrawMan_Buckets_Dispatch
-    lwz r3, 0x1a8(r31)
-    cmplwi r3, 0x0
-    beq fn_801553AC_L_801554D4
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    fn_801553AC_L_801554D4:
-    lwz r3, 0x18(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    fn_801553AC_L_801554E8:
-    lbz r0, 0x1b0(r31)
-    cmplwi r0, 0x0
-    beq fn_801553AC_L_801554FC
-    lwz r3, 0x1ac(r31)
-    bl fn_8014017C
-    fn_801553AC_L_801554FC:
-    li r3, 0x0
-    bl fn_8011F994
-    li r30, 0x0
-    lwz r28, 0x1b8(r31)
-    fn_801553AC_L_8015550C:
-    cmplwi r30, 0x2
-    bge fn_801553AC_L_80155574
-    lwz r0, 0x18(r28)
-    cmplwi r0, 0x0
-    beq fn_801553AC_L_80155574
-    li r3, 0x0
-    bl GX_EndDraw
-    lwz r29, 0x20(r28)
-    addi r27, r28, 0x1c
-    b fn_801553AC_L_80155548
-    fn_801553AC_L_80155534:
-    lwz r3, 0x8(r29)
-    addi r4, r29, 0xc
-    lfs f1, lbl_806D806C(r2)
-    bl fn_801F7B74
-    lwz r29, 0x4(r29)
-    fn_801553AC_L_80155548:
-    cmplw r29, r27
-    bne fn_801553AC_L_80155534
-    bl GX_BeginDraw
-    stw r27, 0x10(r1)
-    addi r3, r1, 0x8
-    addi r4, r28, 0x18
-    addi r5, r1, 0xc
-    lwz r0, 0x20(r28)
-    addi r6, r1, 0x10
-    stw r0, 0xc(r1)
-    bl fn_80157D30
-    fn_801553AC_L_80155574:
-    addi r30, r30, 0x1
-    addi r28, r28, 0xc
-    cmplwi r30, 0x2
-    blt fn_801553AC_L_8015550C
-    lwz r27, 0x1b4(r31)
-    cmplwi r27, 0x0
-    beq fn_801553AC_L_8015564C
-    lwz r0, 0xc(r27)
-    cmpwi r0, 0x1
-    bne fn_801553AC_L_8015564C
-    li r30, 0x0
-    mr r28, r27
-    fn_801553AC_L_801555A4:
-    addi r0, r30, 0x14
-    lbzx r0, r27, r0
-    cmplwi r0, 0x0
-    beq fn_801553AC_L_801555F8
-    lfs f1, 0x1c(r28)
-    lfs f0, lbl_806D8064(r2)
-    fcmpo cr0, f1, f0
-    ble fn_801553AC_L_801555F8
-    lwz r3, 0x4(r27)
-    lfs f2, 0x20(r28)
-    bl fn_8013D660
-    lfs f1, 0x44(r28)
-    lwz r3, 0x4(r27)
-    fmr f3, f1
-    lfs f2, 0x48(r28)
-    bl fn_8013D608
-    lwz r3, 0x4(r27)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    fn_801553AC_L_801555F8:
-    addi r30, r30, 0x1
-    addi r28, r28, 0x8
-    cmpwi r30, 0x5
-    blt fn_801553AC_L_801555A4
-    lbz r0, 0x80(r27)
-    cmplwi r0, 0x0
-    beq fn_801553AC_L_8015564C
-    lwz r3, 0x0(r27)
-    lfs f1, 0x84(r27)
-    lfs f2, 0x88(r27)
-    bl fn_8013D660
-    lfs f1, 0x8c(r27)
-    lwz r3, 0x0(r27)
-    fmr f3, f1
-    lfs f2, 0x90(r27)
-    bl fn_8013D608
-    lwz r3, 0x0(r27)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    fn_801553AC_L_8015564C:
-    lfs f4, 0x10(r31)
-    lfs f1, lbl_806D8064(r2)
-    fcmpo cr0, f4, f1
-    ble fn_801553AC_L_8015568C
-    lfs f0, lbl_806D8090(r2)
-    fmr f2, f1
-    lfs f3, lbl_806D80C4(r2)
-    li r3, 0x0
-    fmuls f0, f0, f4
-    lfs f4, lbl_806D80C8(r2)
-    li r4, 0x0
-    li r5, 0x0
-    fctiwz f0, f0
-    stfd f0, 0x18(r1)
-    lwz r6, 0x1c(r1)
-    bl DrawColoredQuad
-    fn_801553AC_L_8015568C:
-    lmw r27, 0x2c(r1)
-    lwz r0, 0x44(r1)
-    mtlr r0
-    addi r1, r1, 0x40
-    blr
+#pragma use_lmw_stmw on
+extern "C" void fn_801553AC(CourseScene *self) {
+    if (self->active && self->cam->Begin()) {
+        int j;
+        LObjList_ApplyForCObj(self->lobjs);
+        CObj_DebugVizPathFlush(self->cam);
+        clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
+        Object_RenderJObjTree(self->obj14, 7);
+        for (j = 0; j < 6; j++) {
+            if (self->jobjs[j] != 0) {
+                HSD_JObjClearFlagsAll(self->jobjs[j], 0x10);
+                KartItem_DispatchEffectRenderByState(self->effects[j]);
+                HSD_JObjDispAll(self->jobjs[j], 0, 7, 0);
+                KartItem_FlushPendingRender_v2(self->effects[j]);
+                TornadoEffect_SubmitRender(self->effects[j]);
+                HSD_JObjSetFlagsAll(self->jobjs[j], 0x10);
+            }
+        }
+        Object_RenderJObjTree(self->obj20, 7);
+        ItemObjectManager_Render();
+        DrawEffect_TickAndCull();
+        clDrawMan_EndFrame_NoOp(SINGLETON_INSTANCE(lbl_806D10AC));
+        clDrawMan_Buckets_Dispatch(SINGLETON_INSTANCE(lbl_806D10AC));
+        if (self->obj1A8 != 0) {
+            self->obj1A8->Draw();
+        }
+        self->cam->End();
+    }
+    if (self->on1B0) {
+        fn_8014017C(self->obj1AC);
+    }
+    fn_8011F994(0);
+    self->list->FlushAll();
+    if (self->pair != 0) {
+        self->pair->Draw();
+    }
+    if (self->alpha > 0.0f) {
+        DrawColoredQuad(0, 0, 0, (int)(255.0f * self->alpha), 0.0f, 0.0f, 640.0f, 480.0f);
+    }
 }
+#pragma use_lmw_stmw reset
 
 extern "C" Base *fn_801556A0(Base *self, short flag) {
     if (self != 0) {
@@ -9276,179 +8461,48 @@ extern "C" unsigned char fn_80156FC0(StateObj *o) {
     return o->state == 9;
 }
 
-extern "C" asm void fn_80156FD4(void) { /* 0x80156FD4 size:0x26C */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    stw r0, 0x44(r1)
-    stmw r27, 0x2c(r1)
-    mr r31, r3
-    lbz r0, 0x24(r3)
-    cmplwi r0, 0x0
-    beq fn_80156FD4_L_8015722C
-    lwz r3, 0x18(r31)
-    cmplwi r3, 0x0
-    beq fn_80156FD4_L_8015722C
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    clrlwi. r0, r3, 24
-    beq fn_80156FD4_L_8015716C
-    lwz r3, 0x1c(r31)
-    bl LObjList_ApplyForCObj
-    lwz r3, 0x18(r31)
-    bl CObj_DebugVizPathFlush
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne fn_80156FD4_L_80157038
-    li r3, 0x0
-    fn_80156FD4_L_80157038:
-    bl clDrawMan_Buckets_Reset
-    lwz r3, 0x14(r31)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    li r27, 0x0
-    mr r29, r31
-    fn_80156FD4_L_80157050:
-    lwz r3, 0x3c(r29)
-    cmplwi r3, 0x0
-    beq fn_80156FD4_L_801570A8
-    li r4, 0x10
-    bl HSD_JObjClearFlagsAll
-    lwz r3, 0x34(r29)
-    lwz r3, 0x10(r3)
-    bl KartItem_DispatchEffectRenderByState
-    lwz r3, 0x3c(r29)
-    li r4, 0x0
-    li r5, 0x7
-    li r6, 0x0
-    bl HSD_JObjDispAll
-    lwz r3, 0x34(r29)
-    lwz r3, 0x10(r3)
-    bl KartItem_FlushPendingRender_v2
-    lwz r3, 0x34(r29)
-    lwz r3, 0x10(r3)
-    bl TornadoEffect_SubmitRender
-    lwz r3, 0x3c(r29)
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    fn_80156FD4_L_801570A8:
-    addi r27, r27, 0x1
-    addi r29, r29, 0x4
-    cmpwi r27, 0x2
-    blt fn_80156FD4_L_80157050
-    lwz r3, 0x20(r31)
-    li r4, 0x7
-    bl Object_RenderJObjTree
-    bl ItemObjectManager_Render
-    bl DrawEffect_TickAndCull
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne fn_80156FD4_L_801570DC
-    li r3, 0x0
-    fn_80156FD4_L_801570DC:
-    bl clDrawMan_EndFrame_NoOp
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne fn_80156FD4_L_801570F0
-    li r3, 0x0
-    fn_80156FD4_L_801570F0:
-    bl clDrawMan_Buckets_Dispatch
-    lfs f1, 0x8(r31)
-    lfs f0, lbl_806D8220(r2)
-    fcmpo cr0, f1, f0
-    bge fn_80156FD4_L_80157118
-    lwz r3, lbl_806D10D0(r13)
-    cmplwi r3, 0x0
-    bne fn_80156FD4_L_80157114
-    li r3, 0x0
-    fn_80156FD4_L_80157114:
-    bl clItemBoxManager_Draw
-    fn_80156FD4_L_80157118:
-    lfs f1, 0x8(r31)
-    lfs f0, lbl_806D80EC(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_80156FD4_L_80157130
-    bl fn_80139810
-    fn_80156FD4_L_80157130:
-    lfs f1, 0x8(r31)
-    lfs f0, lbl_806D8220(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_80156FD4_L_80157158
-    lfs f0, lbl_806D80EC(r2)
-    fcmpo cr0, f1, f0
-    bge fn_80156FD4_L_80157158
-    lwz r3, 0x48(r31)
-    bl fn_801737CC
-    fn_80156FD4_L_80157158:
-    lwz r3, 0x18(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    fn_80156FD4_L_8015716C:
-    li r30, 0x0
-    lwz r28, 0x4c(r31)
-    fn_80156FD4_L_80157174:
-    cmplwi r30, 0x2
-    bge fn_80156FD4_L_801571DC
-    lwz r0, 0x18(r28)
-    cmplwi r0, 0x0
-    beq fn_80156FD4_L_801571DC
-    li r3, 0x0
-    bl GX_EndDraw
-    lwz r29, 0x20(r28)
-    addi r27, r28, 0x1c
-    b fn_80156FD4_L_801571B0
-    fn_80156FD4_L_8015719C:
-    lwz r3, 0x8(r29)
-    addi r4, r29, 0xc
-    lfs f1, lbl_806D806C(r2)
-    bl fn_801F7B74
-    lwz r29, 0x4(r29)
-    fn_80156FD4_L_801571B0:
-    cmplw r29, r27
-    bne fn_80156FD4_L_8015719C
-    bl GX_BeginDraw
-    stw r27, 0x10(r1)
-    addi r3, r1, 0x8
-    addi r4, r28, 0x18
-    addi r5, r1, 0xc
-    lwz r0, 0x20(r28)
-    addi r6, r1, 0x10
-    stw r0, 0xc(r1)
-    bl fn_80157D30
-    fn_80156FD4_L_801571DC:
-    addi r30, r30, 0x1
-    addi r28, r28, 0xc
-    cmplwi r30, 0x2
-    blt fn_80156FD4_L_80157174
-    lfs f4, 0xc(r31)
-    lfs f1, lbl_806D8064(r2)
-    fcmpo cr0, f4, f1
-    ble fn_80156FD4_L_8015722C
-    lfs f0, lbl_806D8090(r2)
-    fmr f2, f1
-    lfs f3, lbl_806D80C4(r2)
-    li r3, 0x0
-    fmuls f0, f0, f4
-    lfs f4, lbl_806D80C8(r2)
-    li r4, 0x0
-    li r5, 0x0
-    fctiwz f0, f0
-    stfd f0, 0x18(r1)
-    lwz r6, 0x1c(r1)
-    bl DrawColoredQuad
-    fn_80156FD4_L_8015722C:
-    lmw r27, 0x2c(r1)
-    lwz r0, 0x44(r1)
-    mtlr r0
-    addi r1, r1, 0x40
-    blr
+#pragma use_lmw_stmw on
+extern "C" void fn_80156FD4(CoursePanel *self) {
+    if (self->active && self->cam != 0) {
+    if (self->cam->Begin()) {
+        int j;
+        LObjList_ApplyForCObj(self->lobjs);
+        CObj_DebugVizPathFlush(self->cam);
+        clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
+        Object_RenderJObjTree(self->obj14, 7);
+        for (j = 0; j < 2; j++) {
+            if (self->jobjs[j] != 0) {
+                HSD_JObjClearFlagsAll(self->jobjs[j], 0x10);
+                KartItem_DispatchEffectRenderByState(self->objs[j]->effect);
+                HSD_JObjDispAll(self->jobjs[j], 0, 7, 0);
+                KartItem_FlushPendingRender_v2(self->objs[j]->effect);
+                TornadoEffect_SubmitRender(self->objs[j]->effect);
+                HSD_JObjSetFlagsAll(self->jobjs[j], 0x10);
+            }
+        }
+        Object_RenderJObjTree(self->obj20, 7);
+        ItemObjectManager_Render();
+        DrawEffect_TickAndCull();
+        clDrawMan_EndFrame_NoOp(SINGLETON_INSTANCE(lbl_806D10AC));
+        clDrawMan_Buckets_Dispatch(SINGLETON_INSTANCE(lbl_806D10AC));
+        if (self->t < 300.0f) {
+            clItemBoxManager_Draw(SINGLETON_INSTANCE(lbl_806D10D0));
+        }
+        if (self->t >= 600.0f) {
+            fn_80139810();
+        }
+        if (self->t >= 300.0f && self->t < 600.0f) {
+            fn_801737CC(self->obj48);
+        }
+        self->cam->End();
+    }
+    self->obj4C->FlushAll();
+    if (self->alpha > 0.0f) {
+        DrawColoredQuad(0, 0, 0, (int)(255.0f * self->alpha), 0.0f, 0.0f, 640.0f, 480.0f);
+    }
+    }
 }
+#pragma use_lmw_stmw reset
 
 extern "C" void fn_80157240(VObj *p) {
     delete p;

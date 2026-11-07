@@ -5140,7 +5140,11 @@
     "__ct__11SceneSpriteFiii": "Sprite_InitWithAnim",
     "__ct__6SprResFPc": "fn_801F7D50",
     "__dt__7SprInstFv": "dtor_8015535C",
-    "Draw__8SprSceneFUiUiUifffffffff": "fn_80154FB0"
+    "Draw__8SprSceneFUiUiUifffffffff": "fn_80154FB0",
+    "__ct__11StatusSceneFv": "fn_8014F3D8",
+    "__vt__9ModeScene": "lbl_803FE0C8",
+    "__vt__11StatusScene": "lbl_8048FD98",
+    "__dt__9ModeSceneFv": "dtor_8007D0D4"
   },
   "src/game/RaceHud_80147470.cpp": {
     "extab_fn_80147470": "@etb_8000DF44",
