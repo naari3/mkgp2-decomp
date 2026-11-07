@@ -14,8 +14,8 @@ static inline void SnapshotBootBackup() {
     lbl_8059F480.tail = lbl_80598A60.tail;
 }
 static inline void ConfigureBootIP(BootBackup *backup, const char *messages) {
-    BootIP *ip = g_pcbIpTable;
     int cabinet = ((signed char *)backup)[0x21];
+    BootIP *ip = g_pcbIpTable;
     ip += cabinet;
     DebugPrintf(messages + 0x4d0, (--ip)->address);
     int result = acModifyMyIPaddr(ip->address, 0xffffff00);
