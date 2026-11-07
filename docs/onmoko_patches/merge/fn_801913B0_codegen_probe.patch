@@ -1,0 +1,35 @@
+diff --git a/src/game/clsound/fn_801913B0.c b/src/game/clsound/fn_801913B0.c
+index c3d63b0..d19c16d 100644
+--- a/src/game/clsound/fn_801913B0.c
++++ b/src/game/clsound/fn_801913B0.c
+@@ -1,22 +1,26 @@
++#define lbl_80495F20 lbl_80495F20_hdr
+ #include "game/clsound_spatial_private.h"
++#undef lbl_80495F20
++ClSoundVec lbl_80495F20 = {0.0f, 0.0f, 0.0f};
++ClSoundVec lbl_80495F2C = {0.0f, 0.0f, 0.0f};
++struct { ClSoundVec pos; float w; } lbl_80495F38 = {{0.0f, 0.0f, 0.0f}, 0.0f};
+ int fn_801913B0(int index, const ClSoundVec* position) {
+-    ClSoundListener* listener = &lbl_80495F20;
+     ClSoundVec delta;
+     float near_distance, far_distance, distance;
+     int volume, pan, surround;
+     near_distance = lbl_80379554[lbl_80678378[index].id & ~0x78000000].near_distance;
+     far_distance = lbl_80379554[lbl_80678378[index].id & ~0x78000000].far_distance;
+-    Vec3_Subtract(position, &listener->position, &delta);
++    Vec3_Subtract(position, &lbl_80495F38.pos, &delta);
+     distance = Vec3_Magnitude(&delta);
+     if (distance >= far_distance) { volume=0; pan=64; surround=64; }
+     else {
+         if (distance <= near_distance) volume=127;
+         else volume=(int)(lbl_806D9514-lbl_806D9514*((distance-near_distance)/(far_distance-near_distance)));
+-        distance=Vec3_Dot(&delta, &listener->right);
++        distance=Vec3_Dot(&delta, &lbl_80495F20);
+         if (distance >= near_distance) pan=0;
+         else if (distance <= -near_distance) pan=127;
+         else pan=(int)(lbl_806D9518-lbl_806D951C*(distance/near_distance));
+-        distance=Vec3_Dot(&delta, &listener->forward);
++        distance=Vec3_Dot(&delta, &lbl_80495F2C);
+         if (distance >= near_distance) surround=127;
+         else if (distance <= -near_distance) surround=0;
+         else surround=(int)(lbl_806D9518+lbl_806D951C*(distance/near_distance));

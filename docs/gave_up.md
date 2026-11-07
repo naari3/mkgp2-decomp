@@ -48,7 +48,6 @@ all of these.
 | `fn_8017EFFC` | game/miyazakiconsole/fn_8017EFFC | 97.79 | register swap | |
 | `fn_8017BCF8` | game/mapobject/fn_8017BCF8 | 99.28 | f0/f1 swap | |
 | `fn_8016C94C` (PointList ctor) | game/mapeffect/PointListConstruct | 99.84 | one load order | |
-| `fn_8020615C` | game/anon_80205DCC | 99.78 | f29/f30 swap | |
 | `fn_801BDEB4` | game/fn_801BAA88 | 99.71 | ResCtrl t0/t1/t2 store order vs `li` registers | |
 | `fn_8028A3EC` | triforce/amcoin_nm2 | 99.49 | r0/r3 swap | |
 | `fn_8028A934` | triforce/amjvs_nm2 | 99.6 | target reuses r3 (`nodes`) for `n = &nodes[node]`; we copy to r5 | `nodes += node`, direct `nodes[node].x`, u32/u8 idx casts, split early return |
@@ -187,7 +186,7 @@ See "Pooled base registers" and "Over-split TUs" in `docs/matching_rules.md`.
 
 | Function | TU | % | What is left | Tried / WIP |
 | --- | --- | --- | --- | --- |
-| `SetCourseParams` | game/SetCourseParams | ~98 | .bss pool order fixed by compiling as C++ (definition order); left ~50 lines: constant/pointer register order in the lap/rank reset block; `volatile` reload of g_cupId is a marked fakematch | 2x20-min permuter, opt_* pragmas, GC/1.2.5n-2.6; R5 2026-11-07: first LapExtra store as the global (52 -> 50), pointer decl orders/late extra scope, GC/2.0-2.7 (same 50), psweep pragmas x 1.3.2/2.6, 20 min cperm: no gain |
+| `SetCourseParams` | game/SetCourseParams | ~98 | .bss pool order fixed by compiling as C++ (definition order); left ~50 lines: constant/pointer register order in the lap/rank reset block; `volatile` reload of g_cupId is a marked fakematch | 2x20-min permuter, opt_* pragmas, GC/1.2.5n-2.6; R5 2026-11-07: first LapExtra store as the global (52 -> 50), pointer decl orders/late extra scope, GC/2.0-2.7 (same 50), psweep pragmas x 1.3.2/2.6, 20 min cperm: no gain; R6 later: target materializes constants as -1, 0.0, 1, extra, 1000, 4 (ours 0.0, 1000, 1, extra, 4, -1); exhaustive sweeps of block statement order (7!), ResetRankSlot statement order (4000 random), lap/rank/extra pointer forms x literals x decl order (768), loop shapes (single loop, i+5, manual unroll, rank loop), scheduling/peephole pragmas, another 20 min cperm: none beat 50 |
 | `RaceScene_GetPerspFovyForCup` | game/RaceScene_GetPerspFovyForCup | 80.98 | needs TU-owned `.data` base `0x80401118` (+0x10000) | |
 | `fn_801ECA14` | game/fn_801ECA14 | 74.07 | pool base `lbl_803BD920` owned by another TU | |
 | `Card_VerifyChecksum` | game/Card_VerifyChecksum | 91.97 | pooled data base | |

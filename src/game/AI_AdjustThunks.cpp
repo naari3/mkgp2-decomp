@@ -3,18 +3,19 @@
  * thunks next to the class vtable. The key function below forces the vtable
  * (and so the thunks) into this TU; the mangled names are mapped to the
  * target symbols in tools/extab_user_renames.json.
- * NonMatching TU: the vtable and key function are extra objects here. */
+ * CW emits the thunks in reverse base-vtable order, so AIBase1's virtuals
+ * are declared last-to-first to lay them out 0x801E8C90..0x801E8CB0. */
 struct AIBase0 {
     int a, b;
     virtual void key();
 };
 
 struct AIBase1 {
-    virtual ~AIBase1();
-    virtual unsigned int GrantItem(int item, unsigned char force);
-    virtual int f6670();
-    virtual int f66B4(void *other);
     virtual int f68B4(void *other);
+    virtual int f66B4(void *other);
+    virtual int f6670();
+    virtual unsigned int GrantItem(int item, unsigned char force);
+    virtual ~AIBase1();
 };
 
 struct AIController : AIBase0, AIBase1 {

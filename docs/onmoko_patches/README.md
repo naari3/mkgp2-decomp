@@ -18,6 +18,7 @@ on its own with a fresh link; main.dol stayed OK.
 | fn_801F8A34.patch | fn_801F8A34 | game/fn_801F8A34.cpp | 98.16% | opt_common_subs off | 100% | yes, included |
 | fn_8021E0FC.patch | fn_8021E0FC | game/anon_8021BC44.cpp | 92.99% | opt_propagation off | 100% | no: TU still has fn_8021C070/C778/D780/DAB8 < 100% |
 | clItemBoxManager_Update_Inner.patch | clItemBoxManager_Update_Inner | game/clItemBoxManager_nm1.cpp | 99.74% | opt_lifetimes off | 100% | no: SoundDriver_GetOrCreate and 3 DoublyLinkedList fns < 100% |
+| fn_80246DE4.patch | fn_80246DE4 | game/RaceDigits.cpp | 99.96% | `#pragma push` / `optimization_level 3` / `pop` around the fn (GC/2.6) | 100% (all 7 fns of the TU at 100%) | no: the .o emits weak copies of other TUs' fns (TweenInterp_Dtor, dtor_80082960, fn_801F26C8, dtor_801F2724, dtor_801F4A80, __dt__12DigitListMidFv) and puts fn_802476FC first, so main.dol grows by 0x20 and the SHA fails |
 
 Not needed any more: STLContainer_DisposeRecursive and fn_801987C4 are already
 100% on current main (fixed after the sweep table was generated).
@@ -32,3 +33,27 @@ From docs/flip_hints.md. Verified on a throwaway branch off main: all four appli
 | anon_80214B3C.patch | game/anon_80214B3C.cpp | #495 | the TU emits vtable lbl_804EDA98 (multiply-defined) | `virtual void _key();` key stub in CoinChallengeMode, then flip |
 | anon_80226670.patch | game/anon_80226670.cpp | #493 | emits vtable lbl_804EDF64 + unrenamed weak `__dt__9SceneBaseFv` | key stub + rename to dtor_8007D0D4, then flip |
 | STLContainer.patch | game/STLContainer.cpp | #2281 | CW puts __sinit last, the target has it first (text shifted 0x4C) | hand-written static init first + `.ctors` entry (fakematch), then flip |
+
+## Pool / TU-merge patches (thread B, 2026-11-07)
+
+See docs/merge_plans.md for the full list of plans. Files are in `merge/`.
+
+| Patch | Function | Kind | Result |
+| --- | --- | --- | --- |
+| merge/anon_8020AF08_nm1_pool.patch | fn_8020B234 (#2361) | link-ready: TU owns .rodata 0x803C2E50..0x803C3508, three static arrays | 97.54% -> 99.86%, clean build main.dol OK |
+| merge/fn_80192F04_codegen_probe.patch | fn_80192F04 (#2394) | probe only (the data is owned by the Fog TU; merge needed) | all instructions match |
+| merge/fn_801913B0_codegen_probe.patch | fn_801913B0 (#2439) | probe only | pool fixed, about 10 lines left |
+
+## Full sweep over onmokoworks-claimed TUs (2026-11-07 18:00)
+
+Every below-100% function in an onmokoworks-claimed TU (323 of them, report at
+main 295cfd3) was swept:
+- 62 functions missing from docs/pragmasweep_results.md (large or < 80%): 6
+  compilers x 0-2 of the 8 opt_* pragmas + 30 declaration orders. No new 0.
+- The other 261: own cc / 1.3.2 / 2.6 / 1.3 x 0-2 of a second pragma set
+  (optimization_level 3/2, optimize_for_size, fp_contract off, unroll/vectorize
+  off, opt_lifetimes, opt_common_subs). New 0: fn_80246DE4 (above). Also
+  fn_8021E0FC again (optimization_level 2 works too).
+- Near misses left by the sweep: fn_8028EAA8 (amnet_nm2_rest) 49 -> 1 with
+  GC/1.3.2 + optimization_level 3; FrameUpdate 107 -> 2 with GC/1.3.2 +
+  opt_common_subs off (own cc is 3.0a5).
