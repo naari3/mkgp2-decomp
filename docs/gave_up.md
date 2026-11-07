@@ -61,6 +61,9 @@ all of these.
 | `fn_80245E6C` | game/HudFlow20Update | 98.92 | one `lwz` scheduled differently | |
 | `fn_80246988`, `fn_80246DE4` | game/RaceDigitLap, game/RaceDigits | 99.90 / 99.92 | `DigitPanel::SetPos` `lfs` order | |
 | `fn_80243C70` | game/ItemPanelDraw | 99.97 | f28/f30 swap | |
+| `fn_8021995C` (MinimapHud dtor) | game/anon_80218F40_nm2 | 99.08 | this/flag/cursor coloring (target this r30, cursor r29, i r28, delete flag r27; ours gives the flag r30) | 8 loop/decl variants, 15 min permuter |
+| `fn_8021B68C` (TeamIconRow::Update) | game/anon_8021B568_nm1 | 98.84 | cursor/t swap (target t r31, `this+i*4` r30) and one `cmpw` operand order in inline `SlotTeam` | 8 variants incl. hand-inlined SlotTeam, 15 min permuter |
+| `PCBCheck_ProcessLinks` | game/PCBCheckProcess | 99.90 | 10 lines: base/slot registers swapped, one ClearSlotData loop counter (r24 vs r29) | 178 -> 10 lines in d36e695; 20 min permuter |
 | `fn_8024AD8C` | game/CardSetupFlowInitial | 95.88 | `lwz lbl_806D1AB0` scheduling | |
 | `fn_8022BBC8` | game/EnemyFace_nm3 | 98.72 | scheduling | |
 | `clFlowCourse_Dtor` | game/clFlowCourse | 99.62 | `selected % 2` register swap | |
@@ -92,6 +95,7 @@ See "Pooled base registers" and "Over-split TUs" in `docs/matching_rules.md`.
 
 | Function | TU | % | What is left | Tried / WIP |
 | --- | --- | --- | --- | --- |
+| `fn_80204218` (SceneListImpl::Draw) | game/anon_80203EA0_nm2 | 98.42 | target keeps one more ListIter stack copy after `Erase` (result at 0x10 then `it` at 0x14); every inline/temp/ctor/operator= variant gets copy-propagated | ~20 variants |
 | `fn_8020A788`, `fn_8020A6CC` (Tween Value) | game/anon_80209FA4_nm3 / _nm2 | 93.82 / 92.88 | final `add r0; mr r3, r0` tail | onmokoworks also tried |
 | `fn_80288BCC` | triforce/ambackup_nm3 | 92.94 | `opt_propagation off` gets it to 1 line; target keeps a dead `b` after `li r3,1; b ret` | |
 | `fn_801934F4` | game/clsound/fn_801934F4 | 90.86 | `opt_dead_assignments off` + `peephole off` gets 5 lines; target `mr r30, r29` (i = row copy) | |
