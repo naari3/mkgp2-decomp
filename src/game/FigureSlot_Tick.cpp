@@ -1,4 +1,9 @@
 #include "game/FigureSlotPrivate.h"
+
+static inline float InterpolateFigurePosition(float start, float delta, int ticks) {
+    return start + delta * (float)ticks / 12.0f;
+}
+
 extern "C" unsigned char fn_801C6744(FigureSlotView* self,int index) {
     FigureSlot* slot=&self->slots[index];
     if(!slot->sprite) return 0;
@@ -38,8 +43,8 @@ extern "C" unsigned char fn_801C6744(FigureSlotView* self,int index) {
             float dx=lbl_806D9C74-lbl_8049AD58[index].x;
             float dy=lbl_806D9C8C-lbl_8049AD58[index].y;
             slot->ticks++;
-            float x=lbl_8049AD58[index].x+dx*(float)slot->ticks/lbl_806D9C90;
-            float y=lbl_8049AD58[index].y+dy*(float)slot->ticks/lbl_806D9C90;
+            float x=InterpolateFigurePosition(lbl_8049AD58[index].x,dx,slot->ticks);
+            float y=InterpolateFigurePosition(lbl_8049AD58[index].y,dy,slot->ticks);
             slot->sprite->SetPos(x,y);
             if(slot->ticks>=12) slot->phase++;
         }

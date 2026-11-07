@@ -1794,7 +1794,7 @@ config.libs = [
             Object(Matching, "game/NokoNoko_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowChara_HandleConfirm.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowChara_Draw.cpp", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/FigureSlot_Tick.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/FigureSlot_Tick.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/MileageFlow_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/clFlowFigure_Unlocks.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/clFlowChara_Update.c", extab_padding=b"\x00\x00"),
