@@ -1,7 +1,6 @@
-/* Complete bounded draft (approach 2: 99.27327% text).
- * Disabled: original object remains authoritative; no genuine match claimed.
- * Only the offsets observed in this unit are modeled. */
-#if 0
+/* Native C++ draft: 99.8048% text, exact 1332-byte primary size.
+ * Kept NonMatching: request count/cursor and animation count/cursor
+ * register allocation remain different from the target. */
 #pragma cplusplus on
 struct JObj;
 typedef void (*AnimCallback)(void);
@@ -72,15 +71,15 @@ static inline void Request(Normal3D *self, Normal3D *source) {
             HSD_JObjReqAnimByFlags(*cursor, 0x7FF, frame);
     }
 }
-static inline unsigned char HasDObj(JObj *node) { return !(node->flags & 0x4020); }
+static inline int HasDObj(JObj *node) { if (node->flags & 0x4020) return 0; return 1; }
 static inline void Animate(JObj **table, int count) {
     if (table != 0) {
         JObj **cursor = table;
-        for (int i = 0; i < count; ++i, ++cursor) {
+        for (int i = 0; i < count; ++cursor, ++i) {
             JObj *node = *cursor;
             if (node != 0) {
                 HSD_AObjInterpretAnim(node->aobj, node, node->klass->animate);
-                if (HasDObj(node) == 1) HSD_DObjAnimAll(node->dobj);
+                if (HasDObj(node)) HSD_DObjAnimAll(node->dobj);
             }
         }
         HSD_JObjCheckDepend(*table);
@@ -137,4 +136,3 @@ extern "C" int clNormal3D_SetScale(Normal3D *self, Normal3D *source,
     return 1;
 }
 #pragma cplusplus off
-#endif
