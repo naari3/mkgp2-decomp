@@ -24,18 +24,23 @@ static inline void CopyPosition(Vec3f *dst, const Vec3f *src)
     dst->z = src->z;
 }
 
+static inline void LerpRow(ShadowBillboard *sb, const float *target, float t, float scale, int row)
+{
+    int j;
+    for (j = 0; j < 3; j++) {
+        sb->mtx[row + j] += t * (scale * (target[row + j] - sb->mtx[row + j]));
+    }
+}
+
 #pragma exceptions on
 
 void ShadowBillboard_LerpMtx4x4(ShadowBillboard *sb, const float *target, float t)
 {
     int i;
-    int j;
 
     t = Saturate_Double(lbl_806D2B88 * t, lbl_806D2B8C, lbl_806D2B6C);
     for (i = 0; i < 3; i++) {
-        for (j = 0; j < 3; j++) {
-            sb->mtx[i * 4 + j] += t * (lbl_802EE4CC[i] * (target[i * 4 + j] - sb->mtx[i * 4 + j]));
-        }
+        LerpRow(sb, target, t, lbl_802EE4CC[i], i * 4);
     }
     Mtx34_Orthonormalize(sb->mtx);
     CopyPosition((Vec3f *)(sb->mtx + 12), (const Vec3f *)(target + 12));
