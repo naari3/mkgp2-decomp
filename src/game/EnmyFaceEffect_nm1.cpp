@@ -36,6 +36,7 @@ struct Vec3c : Vec3 {
     Vec3c(const Vec3 &v) : Vec3(v) {}
     Vec3c(const Vec3c &v) : Vec3(v) {}
     ~Vec3c() {}
+    void RotationMatrix(Mtx rot) const;
 };
 
 static inline Vec3 MakeVec3(float x, float y, float z) {
@@ -127,10 +128,10 @@ static inline void RotMtx(Mtx rot, float rx, float ry, float rz) {
     rot[0][1] = cz;
 }
 
-static inline void RotMtxVec(Mtx rot, const Vec3c &r) {
-    float rz = r.z;
-    float rx = r.x;
-    float ry = r.y;
+inline void Vec3c::RotationMatrix(Mtx rot) const {
+    float rz = z;
+    float rx = x;
+    float ry = y;
     float sx = Sinf_LUT_Wrap(rx);
     float cx = Cosf_LUT_Wrap(rx);
     float sy = Sinf_LUT_Wrap(ry);
@@ -166,7 +167,7 @@ static inline void MakeMtxVec(Mtx out, float s, const Vec3c &p, const Vec3c &r) 
     PSMTXIdentity(rot);
     PSMTXScale(sc, s, s, s);
     PSMTXTrans(tr, p.x, p.y, p.z);
-    RotMtxVec(rot, r);
+    r.RotationMatrix(rot);
     PSMTXConcat(rot, sc, out);
     PSMTXConcat(tr, out, out);
 }
@@ -286,6 +287,36 @@ public:
     void Update();
 };
 
+static inline void ReleaseFacePalettes() {
+    int i;
+    if (sLoaded) {
+        sLoaded = 0;
+        for (i = 0; i < 12; i++) {
+            if (sPalettes[i]) {
+                TEXReleasePalette(&sPalettes[i]);
+                sPalettes[i] = 0;
+            }
+            if (sBuffers[i]) {
+                MemoryManager_Free(sBuffers[i]);
+                sBuffers[i] = 0;
+            }
+        }
+        for (i = 0; i < 10; i++) {
+            if (sPalSlots[i].free) {
+                if (sPalSlots[i].pal) {
+                    TEXReleasePalette(&sPalSlots[i].pal);
+                    sPalSlots[i].pal = 0;
+                }
+                if (sPalSlots[i].data) {
+                    MemoryManager_Free(sPalSlots[i].data);
+                    sPalSlots[i].data = 0;
+                }
+                sPalSlots[i].free = 1;
+            }
+        }
+    }
+}
+
 clEFacePoly::~clEFacePoly() {
     int i;
     for (i = 0; i < 2; i++) {
@@ -318,32 +349,7 @@ clEFacePoly::~clEFacePoly() {
             }
         }
     }
-    if (sLoaded) {
-        sLoaded = 0;
-        for (i = 0; i < 12; i++) {
-            if (sPalettes[i]) {
-                TEXReleasePalette(&sPalettes[i]);
-                sPalettes[i] = 0;
-            }
-            if (sBuffers[i]) {
-                MemoryManager_Free(sBuffers[i]);
-                sBuffers[i] = 0;
-            }
-        }
-        for (i = 0; i < 10; i++) {
-            if (sPalSlots[i].free) {
-                if (sPalSlots[i].pal) {
-                    TEXReleasePalette(&sPalSlots[i].pal);
-                    sPalSlots[i].pal = 0;
-                }
-                if (sPalSlots[i].data) {
-                    MemoryManager_Free(sPalSlots[i].data);
-                    sPalSlots[i].data = 0;
-                }
-                sPalSlots[i].free = 1;
-            }
-        }
-    }
+    ReleaseFacePalettes();
 }
 
 clEFacePoly::clEFacePoly(KartRender *o, int a, int b, int c) {
