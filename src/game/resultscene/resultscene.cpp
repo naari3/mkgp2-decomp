@@ -979,6 +979,7 @@ struct ResultPartYD {
 
 extern "C" {
 extern void fn_8013D660(VObj *p, float x, float y);
+extern const float lbl_806D8760, lbl_806D86B8, lbl_806D86B4;
 extern void fn_8013D4B0(VObj *p, float a);
 extern void fn_8013D608(VObj *p, float x, float y, float z);
 extern void fn_8013D59C(VObj *p, float x, float y, float z);
@@ -1570,20 +1571,24 @@ static inline void RYEntry_AdvanceSubs(RYEntry *entry) {
     }
 }
 
+static inline void RYPair_Spawn(RYPair *p) {
+    for (int i = 0; i < 3; ++i) {
+        if (p->e[i].on < 0) {
+            p->e[i].on = 0;
+            p->e[i].vx = lbl_806D86EC * (float)-(rand() % 20 + 40);
+            p->e[i].vy = lbl_806D8678;
+            p->e[i].vz = lbl_806D8678;
+            p->e[i].x = lbl_806D8770 + (float)(rand() % 600);
+            p->e[i].y = lbl_806D8774;
+            break;
+        }
+    }
+}
+
 void fn_8015D9F0(RYPair *p) {
     if (!p->stopped) {
         if (++p->timer >= p->interval) {
-            for (int i = 0; i < 3; ++i) {
-                if (p->e[i].on < 0) {
-                    p->e[i].on = 0;
-                    p->e[i].vx = lbl_806D86EC * (float)-(rand() % 20 + 40);
-                    p->e[i].vy = lbl_806D8678;
-                    p->e[i].vz = lbl_806D8678;
-                    p->e[i].x = lbl_806D8770 + (float)(rand() % 600);
-                    p->e[i].y = lbl_806D8774;
-                    break;
-                }
-            }
+            RYPair_Spawn(p);
             p->timer = 0;
             p->interval = rand() % 100 + 60;
         }
@@ -1739,10 +1744,12 @@ void fn_8015D4F8(void *unused, int color, const char *text, float x, float y) {
     if (!text) return;
     unsigned long length = strlen(text);
     float alpha = lbl_806D8674;
-    if (y >= lbl_806D8758) alpha -= (y - lbl_806D8758) * lbl_806D875C;
-    const float *r = &lbl_80368704[color][0];
-    const float *g = &lbl_80368704[color][1];
-    const float *b = &lbl_80368704[color][2];
+    if (y >= lbl_806D8758) { float d = y - lbl_806D8758; alpha -= d * lbl_806D875C; }
+    const float *b;
+    const float *g;
+    const float *r = lbl_80368704[color];
+    b = r + 2;
+    g = r + 1;
     for (unsigned int i = 0; i < length; ++i, ++text) {
         if (!*text) return;
         if (*text == 'i') {
