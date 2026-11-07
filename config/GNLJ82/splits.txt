@@ -13792,7 +13792,10 @@ triforce/ambackup_access.c:
 	.text       start:0x80288574 end:0x80288710
 
 triforce/ambackup_nm2.c:
-	.text       start:0x80288710 end:0x80288B80
+	.text       start:0x80288710 end:0x802889AC
+
+triforce/ambackup_load_header.c:
+	.text       start:0x802889AC end:0x80288B80
 
 triforce/ambackup_shutdown.c:
 	.text       start:0x80288B80 end:0x80288BCC

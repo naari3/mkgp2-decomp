@@ -23,3 +23,8 @@ c14_u31: BackupWriteRecord 80288364 rises 93.44697 -> 94.621216 with mirror leng
 Source: Codex worker c16_u73_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u73 fn_80288BCC fresh baseline73.01588 (assignment74.05), 236B vs252B. Inline cfg/entry/info helper unchanged; memcpy emits call73.92063. Volatile BackupEntry pointer preserves post-copy size/flags and post-store mirror reloads; const volatile BackupInfo plus one cached alignment load yields92.93651,248B. Retained NonMatching. Residual extra target branch at80288C44 plus info-base materialization/scratch register differences. Volatile provenance remains a hypothesis from target repeated loads. Single function prevents mechanismB; zero native gain; no config/split/EH/data changes.
+
+## c19_u251_20261107
+Source: Codex worker c19_u251_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 468 B.
+
+c19_u251: fn_802889AC unlocks95.04273->100 using the newer matched BackupWriteRecord running-sum ChecksumFrom(p,sum,n) idiom, GC/1.3 (default CSE), and mirror->addr <<=1. Helper alone96.49573 fixes pointer/sum homes; GC/1.3 fixes post-size-store alignment load98.589745; explicit shift removes li2/mullw and finishes. opt_common_subs off harms this function96.15385. Split Matching ambackup_load_header.c .text802889AC..80288B80; full source-linked SHA1 exact and actual ELF468B range equals target. BackupReadRecord improves88.92216->89.88024 with matched-family opt_common_subs off only, retains GC/1.3.2/NonMatching. GetInfo inline accessor and running-sum/compare reversal are invariant for read; no data/EH/symbol changes.

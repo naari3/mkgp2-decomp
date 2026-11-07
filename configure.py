@@ -3566,6 +3566,7 @@ config.libs = [
             Object(Matching, "triforce/ambackup_nm1.c", extra_cflags=["-use_lmw_stmw on"], mw_version="GC/1.3"),
             Object(Matching, "triforce/ambackup_access.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "triforce/ambackup_nm2.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "triforce/ambackup_load_header.c", extra_cflags=["-use_lmw_stmw on"], mw_version="GC/1.3"),
             Object(Matching, "triforce/ambackup_shutdown.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/ambackup_nm3.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "triforce/amcoin.c", extra_cflags=["-use_lmw_stmw on"]),
