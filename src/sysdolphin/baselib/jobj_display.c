@@ -102,7 +102,6 @@ static inline void JObjDispLevel2(HSD_JObj* jobj, Mtx vmtx, u32 flags, u32 rende
 }
 void HSD_JObjDispAll(HSD_JObj* jobj, Mtx vmtx, u32 flags, u32 rendermode)
 {
-    HSD_JObj* child;
     if (jobj == NULL) {
         return;
     }
@@ -129,8 +128,8 @@ void HSD_JObjDispAll(HSD_JObj* jobj, Mtx vmtx, u32 flags, u32 rendermode)
             HSD_JObjDisp(jobj, vmtx, flags, rendermode);
         }
         if (jobj->flags & (flags << 28)) {
-            for (child = jobj->child; child != NULL; child = child->next) {
-                JObjDispLevel2(child, vmtx, flags, rendermode);
+            for (jobj = jobj->child; jobj != NULL; jobj = jobj->next) {
+                JObjDispLevel2(jobj, vmtx, flags, rendermode);
             }
         }
     }
