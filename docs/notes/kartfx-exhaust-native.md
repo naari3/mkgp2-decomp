@@ -18,3 +18,8 @@ Worker's actual source-linked DOL hash differs. Main independently validates
 the direct source metrics, actual original-object fallback and foreground full
 target SHA1 before acceptance. Fallback safety is not a genuine C promotion;
 genuine gain0. Observed local types only; runtime/CI/Ghidra remain unverified.
+
+## c18_u146_20261107
+Source: Codex worker c18_u146_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u146: direct opacity expression factor*(maximum-growth), with direct constant clamp, improves98.907524->98.95054 under unchanged flags. Growth load/subtraction become target f0; max/factor remain swapped f2/f1 vs target f1/f2. Placement copy-construction adds null branch and paired loads/stores (96.47957%,1864B); explicit memcpy remains call (96.935486%,1824B); opacity-first named declarations reproduce original98.907524%. Retain direct expression NM1856B, EH8B100/index12B91.66667. Shared pool already belongs to neighboring KartTrail TU; no transfer. Single function prevents B rescue. Coordinator fallback build SHA1 exact, native gain0.

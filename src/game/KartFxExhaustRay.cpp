@@ -1,7 +1,7 @@
 /* Boost exhaust ray. Local views describe target-observed fields only.
  * Aggregate arguments preserve caller-owned copies and native C++ EH.
  * Ground and pitch-probe ABIs were checked against their actual callees.
- * Complete NonMatching candidate: text 98.907524%, native extab 100%.
+ * Complete NonMatching candidate: text 98.95054%, native extab 100%.
  * Residuals: scale-table addressing, one multiplication operand order,
  * opacity FP allocation, and source-base folding in the static color copy.
  */
@@ -141,11 +141,8 @@ void KartFx_BoostExhaustRayTick(RayEffect *effect) {
     }
     Vec3_Copy(&effect->position, &effect->anchor);
     effect->scale = effect->size;
-    float maximum = lbl_806D51C4;
-    float factor = lbl_806D51BC;
-    float opacity = maximum - effect->growth;
-    opacity = factor * opacity;
-    if (maximum < opacity) opacity = maximum;
+    float opacity = lbl_806D51BC * (lbl_806D51C4 - effect->growth);
+    if (lbl_806D51C4 < opacity) opacity = lbl_806D51C4;
     if (effect->index == 0) effect->opacity = opacity;
     else effect->opacity = opacity;
     effect->opacity *= effect->intensity;
