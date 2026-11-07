@@ -15,14 +15,19 @@ extern void fn_801DC6B4(int, int);
 extern void fn_801DC6E4(int, int);
 extern int GetCourseSectionType(int);
 extern void AI_UseItem(void *, void *);
-static inline int Decrement(int timer) { return timer > 0 ? timer - 1 : timer; }
+static inline void Decrement(int timer, int &result) {
+    result = timer;
+    if (timer > 0) result = timer - 1;
+}
 void AI_DecideAndUseItem_PairTracking(AISpeedOwner *self, int kart) {
     PairItemController *ctrl = (PairItemController *)Read_U32[kart];
     AIPairRecord *record = &lbl_806793D8[kart];
-    int hitTimer = Decrement(ctrl->hitTimer);
+    int hitTimer;
+    Decrement(ctrl->hitTimer, hitTimer);
     ctrl->hitTimer = hitTimer;
     if (AI_HasItem(ctrl)) {
-        int timer = Decrement(ctrl->itemTimer);
+        int timer;
+        Decrement(ctrl->itemTimer, timer);
         ctrl->itemTimer = timer;
         if (hitTimer <= 0) {
             int laps = g_totalLaps - KartController_GetRenderObj(ctrl)->lap;
