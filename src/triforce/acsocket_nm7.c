@@ -6,6 +6,15 @@ u8 lbl_8069D2A0[0x4000] ATTRIBUTE_ALIGN(32);
 u8 lbl_806A12A0[0x200] ATTRIBUTE_ALIGN(32);
 AcState lbl_806A14A0;
 
+static inline u8* ReceiveBuffer(u8* dst, u32 off, s32 mis, u32* al) {
+    u8* p = dst;
+    *al = off & ~0x1F;
+    if (mis) {
+        p = RxBounce;
+    }
+    return p;
+}
+
 s32 fn_80292D18(u32 off, u8* dst, s32 len, s32 tx, s32 rx) {
     s32 mis;
     u8* p;
@@ -18,11 +27,7 @@ s32 fn_80292D18(u32 off, u8* dst, s32 len, s32 tx, s32 rx) {
         if ((u32)dst & 0x1F || off & 0x1F) {
             mis = 1;
         }
-        p = dst;
-        al = off & ~0x1F;
-        if (mis) {
-            p = RxBounce;
-        }
+        p = ReceiveBuffer(dst, off, mis, &al);
         dev = State.rxOff + al;
         size = ((off + (len + 0x1F)) & ~0x1F) - al;
         if ((mis && size > 0x4000) || CheckRange(off, len, State.rxSize)) {
@@ -111,9 +116,14 @@ s32 acReadResponse(s32 s) {
     return k->result;
 }
 
+static inline void InitSocket(s32 i) {
+    AcSock* k = SOCK(i);
+    k->ready = 1;
+    k->bufAddr = State.sockBase + i * State.sockStride;
+}
+
 s32 fn_80293070(u32* cfg) {
     s32 i;
-    AcSock* k;
 
     memset(&State, 0, sizeof(AcState));
     OSInitSemaphore(&State.sem, 1);
@@ -131,22 +141,10 @@ s32 fn_80293070(u32* cfg) {
     State.alignRx = 1;
     i = 0;
     do {
-        k = SOCK(i);
-        k->ready = 1;
-        k->bufAddr = State.sockBase + i * State.sockStride;
-        i++;
-        k = SOCK(i);
-        k->ready = 1;
-        k->bufAddr = State.sockBase + i * State.sockStride;
-        i++;
-        k = SOCK(i);
-        k->ready = 1;
-        k->bufAddr = State.sockBase + i * State.sockStride;
-        i++;
-        k = SOCK(i);
-        k->ready = 1;
-        k->bufAddr = State.sockBase + i * State.sockStride;
-        i++;
+        InitSocket(i++);
+        InitSocket(i++);
+        InitSocket(i++);
+        InitSocket(i++);
     } while (i < 64);
     return 0;
 }
