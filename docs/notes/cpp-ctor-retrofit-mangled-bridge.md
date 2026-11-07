@@ -1189,3 +1189,8 @@ c17_u119: fn_80203C24 remains98.854965 (520B vs524B). Explicit fn_80271340(t,0,l
 Source: Codex worker c17_u117_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2604 B.
 
 c17_u117: StateLines 8021FC4C/2604B closes 98.88633 -> 100 by indexing lbl_803C6A24 with hasBonus2==1 ? 3 : 4 (instead of (-1:0)+4), then declaring final-loop line pointer before counter. The first fixes both addi/slwi/lfsx table lookups; the second fixes volatile r6/r7 homes. Approved singleton macro reads preserve text but shift generated EH labels from @381/@382 to @379/@380. Add owned EH/index bridges for latter, retain flags/splits unchanged, flip Matching. Text2604/EH220/index12 all100; final source-linked DOL SHA1 exact. Native gain1fn2604B.
+
+## c17_u124_20261107
+Source: Codex worker c17_u124_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u124 ShowItem 80222968: inline ratio helper is instruction-identical at 98.78723%. Packed RGBA object copied to a by-value label helper produces target xoris r3 and mr r5,r4, distinguishing object-copy color formation from scalar PackColor, but introduces stack object copies (+24 text bytes; 94.06383%) and swaps text/label registers. Whole-fade helper returning alpha remains 1880B and exact EH but scores 98.53191% with additional color r0/r3 and FP scratch differences. All experiments reverted; existing best draft retained with approved SINGLETON_INSTANCE read. Single-function TU cannot rescue an exact subset.
