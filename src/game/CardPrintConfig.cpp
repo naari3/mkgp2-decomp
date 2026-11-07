@@ -1,6 +1,6 @@
 /* Dynamic initialization of the print message/configuration pointers.
- * The generated __sinit text and .ctors entry are exact, but this TU stays
- * NonMatching: the current build cannot retain/alias an EH-free local sinit.
+ * The generated __sinit and .ctors entry match the original initializer.
+ * Its symbol is local, as expected for compiler-generated initialization.
  * Configuration storage remains externally owned to avoid a reversed data
  * versus text link-order cycle with CardPrintFlowUpdate's switch table.
  */
@@ -37,3 +37,5 @@ struct CardPrintConfigInit {
     }
 };
 static CardPrintConfigInit printConfigInit;
+/* MWCC emits __sinit after the source; retain its startup side effects. */
+#pragma force_active on

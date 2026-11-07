@@ -133,121 +133,23 @@ void *SeqMenuScene_Dtor(SeqMenuScene *self, short flag) {
     return self;
 }
 
-/*
- * SeqMenuScene_Init: asm_fn retreat (99.22% best C attempt).
- *
- * Pseudo-C (verified against the asm below; everything except the second
- * loop's temp register identities was reproduced from this source):
- *
- *   void *SeqMenuScene_Init(SeqMenuScene *self, MenuEntry *entries) {
- *       GameMode_BaseInit(self);
- *       self->vtable = lbl_803F56A4;
- *       self->entries = entries;
- *       self->blink = 0;
- *       self->count = 0;
- *       while (self->entries[self->count].field0 != 0) {
- *           self->count++;
- *       }
- *       self->cursor = 0;
- *       while (self->entries[self->cursor].hidden != 0) {  // top-tested
- *           self->cursor = self->cursor + 1;
- *           self->cursor = self->cursor % self->count;
- *           self->blink = 0;
- *       }
- *       return self;
- *   }
- *
- * Residue: second loop's three volatile temp webs come out rotated one
- * register (mine zero=r5/cursor=r6/entries=r4 vs target r6/r4/r5).
- * Source-closed under while(1)+break / goto / do-while(1) / commuted
- * addressing / named-local home / one-home-per-variable / Init-only-TU
- * (7 probe builds, diff stagnant at the same 7 register-field bytes).
- * An inline asm island pin (Game_Shutdown.c precedent) also fails: the
- * island's hardcoded r0/r3-r6 get reserved function-wide, which shifts
- * loop1 temps to r7/r8 and swaps the self/entries callee-saved homes.
- * Register-identity-only residue -> park as asm_fn per strategy 14.2.
- */
-asm void SeqMenuScene_Init(void) {
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    stw r30, 0x8(r1)
-    mr r30, r4
-    bl GameMode_BaseInit
-    lis r3, lbl_803F56A4@ha
-    li r0, 0x0
-    addi r3, r3, lbl_803F56A4@l
-    stw r3, 0x0(r31)
-    stw r30, 0x4(r31)
-    stw r0, 0x10(r31)
-    stw r0, 0x8(r31)
-    b Init_L_8002FCCC
-Init_L_8002FCC0:
-    lwz r3, 0x8(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x8(r31)
-Init_L_8002FCCC:
-    lwz r0, 0x8(r31)
-    lwz r3, 0x4(r31)
-    mulli r0, r0, 0xc
-    lwzx r0, r3, r0
-    cmplwi r0, 0x0
-    bne Init_L_8002FCC0
-    li r6, 0x0
-    stw r6, 0xc(r31)
-Init_L_8002FCEC:
-    lwz r4, 0xc(r31)
-    lwz r5, 0x4(r31)
-    mulli r3, r4, 0xc
-    addi r0, r3, 0x9
-    lbzx r0, r5, r0
-    cmplwi r0, 0x0
-    beq Init_L_8002FD30
-    addi r0, r4, 0x1
-    stw r0, 0xc(r31)
-    lwz r4, 0xc(r31)
-    lwz r3, 0x8(r31)
-    divw r0, r4, r3
-    mullw r0, r0, r3
-    subf r0, r0, r4
-    stw r0, 0xc(r31)
-    stw r6, 0x10(r31)
-    b Init_L_8002FCEC
-Init_L_8002FD30:
-    lwz r0, 0x14(r1)
-    mr r3, r31
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+void *SeqMenuScene_Init(SeqMenuScene *self, MenuEntry *entries) {
+    GameMode_BaseInit(self);
+    self->vtable = lbl_803F56A4;
+    self->entries = entries;
+    self->blink = 0;
+    self->count = 0;
+    while (self->entries[self->count].field0 != 0) {
+        self->count++;
+    }
+    self->cursor = 0;
+    for (;;) {
+        if (self->entries[self->cursor].hidden == 0) break;
+        self->cursor++;
+        self->cursor %= self->count;
+        self->blink = 0;
+    }
+    return self;
 }
-
-/*
- * Manual extab/extabindex emit for the asm_fn (asm void fns never
- * auto-emit exception tables; CW links auto-emitted `extab` first, then
- * the renamed `.extab_user` sections, so the asm_fn being last in
- * address order keeps target layout). tools/postprocess_extab_user.py
- * renames the section + symbols to @etb_80005898 / @eti_8001F4F0 per
- * tools/extab_user_renames.json.
- */
-#pragma section R ".extab_user"
-
-__declspec(section ".extab_user") static const unsigned int extab_SeqMenuScene_Init[2] = {
-    0x10080000, 0x00000000
-};
-
-#pragma section R ".extabindex_user"
-
-__declspec(section ".extabindex_user") static const struct {
-    void *fn;
-    unsigned int fn_size;
-    const void *extab;
-} extabindex_SeqMenuScene_Init = {
-    (void *)&SeqMenuScene_Init, 0x000000CC, (const void *)&extab_SeqMenuScene_Init
-};
 
 } /* extern "C" */

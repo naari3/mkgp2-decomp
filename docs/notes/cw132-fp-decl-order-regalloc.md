@@ -248,3 +248,8 @@ c16_u108: DrawEffect_KartWheel_TripleChildUpdate 800C2AAC (900B) improves99.8444
 Source: Codex worker c17_u13_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c17_u13 fn_8019A9BC: sequential accumulator shared across matrix inner iterations plus out[index+col], index+=4 restores target two-row unroll/slwi/stfsx. A nine-scalar inline SetRotation groups quaternion calculations before matrix stores; with lifted-Y arithmetic before multiplication recovers exact1080B/frame110 and primary24B EH bytes, fresh61.533333 ->94.155556. Caching source matrix rows enables scalar propagation and regresses45.055557; reverted. Numeric constants probe94.47037 but emits1084B and retained sdata2 (sin/cos double-folded0.5 becomes lfd), rejected. Remaining axis load order/FP homes and matrix operand/GPR allocation. Singleton remains NonMatching; zero native gain.
+
+## c17_u50_20261107
+Source: Codex worker c17_u50_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u50 fn_8023A148: fresh 99.1687 -> 99.43765 with literal 0/1/255/0.1 constants; keep external 0.125 lbl_806DB918 to preserve fade FP homes. Approved SINGLETON_INSTANCE replaces both handwritten getter selects byte-neutrally. Native mask/add color form shrinks text12B (98.42298); flattening SetTextAlpha preserves size but changes fade alpha r5->r4 (99.376526). Retain helper and __rlwimi. All remaining 41 differences are GPR scratch identities in packed colors and fade conversion; text1636/EH8/index12 sizes unchanged, EH/index100. No safe rescue cut; remains NM. Coordinator fallback DOL SHA-1 exact.

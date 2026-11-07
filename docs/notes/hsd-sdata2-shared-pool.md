@@ -99,3 +99,8 @@ c17_u12: baselib/cobj unlock yields 47 native functions / 6152 B. setupBottomHal
 Source: Codex worker c17_u29_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 400 B.
 
 c17_u29: HSD_JObjSetCurrent 802D0F50 (400B) requires inline canonical reference/destruction logic and shared current global lbl_806D21C4. Inline helpers with explicit caller-local pool argument lbl_804FC9A8 preserve target r31 assertion base across both Ref/Unref; direct global-offset expressions rematerialize base at both assertions (87.70%). Explicit pool helper argument reaches 100% text. Restore existing owned sdata strings jobj.c[7], jp[3], prev[5] before eff[4]/robj[5], remove unowned duplicate class/private BSS scaffold, then Matching. No new split, filler or EH. Source-linked final ELF 802D0F50/400 and all five data labels exact; full DOL SHA-1 OK.
+
+## c17_u47_20261107
+Source: Codex worker c17_u47_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 112 B.
+
+c17_u47: jobj_dirty baseline reported 0% because its global inline SetMtxDirty had no emitted symbol, while unrelated reset/walk scaffolding emitted outside its split. Strong native C definition using jobj_rescue_private.h restores canonical shared assertions. if(dirty)return folds target branch pair (96.07143%,108B); switch(dirty){case 0: SetMtxDirtySub(jobj); break;} preserves target112B exactly, the same established CheckDepend zero-case idiom. Only assigned source and Matching flag changed. Final ELF strong global802CD7B8/112, actual source link edge, full DOL SHA-1 OK.
