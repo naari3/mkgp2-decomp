@@ -1085,6 +1085,7 @@ config.libs = [
             Object(Matching, "game/ObjectTree_BlendQuatLerp.c", extab_padding=b""),
             Object(Matching, "game/clNormal3D.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Object_SetField8_10_14.c"),
+            Object(NonMatching, "game/clNormal3D_Exec.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/Object_DriveAnimAndSkin.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/Normal3DScale.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Object_AnimBinding.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),

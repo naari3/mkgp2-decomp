@@ -259,6 +259,11 @@ game/clNormal3D.c:
 game/Object_SetField8_10_14.c:
 	.text       start:0x80032A70 end:0x80032AAC
 
+game/clNormal3D_Exec.cpp:
+	extab       start:0x80005A48 end:0x80005AA0
+	extabindex  start:0x8001F760 end:0x8001F76C
+	.text       start:0x80032AAC end:0x800331E0
+
 game/Object_DriveAnimAndSkin.cpp:
 	extab       start:0x80005AA0 end:0x80005AF8
 	extabindex  start:0x8001F76C end:0x8001F778
