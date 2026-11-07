@@ -21,3 +21,14 @@ on its own with a fresh link; main.dol stayed OK.
 
 Not needed any more: STLContainer_DisposeRecursive and fn_801987C4 are already
 100% on current main (fixed after the sweep table was generated).
+
+## Matching-flip patches for TUs already at 100% (thread B, 2026-11-07)
+
+From docs/flip_hints.md. Verified on a throwaway branch off main: all four applied together, clean build, main.dol OK (+13 functions).
+
+| Patch | TU | Issue | Blocker | Fix |
+| --- | --- | --- | --- | --- |
+| DNLensflare.patch | game/DNLensflare.cpp | #492 | unrenamed weak `__dt__16clMapEffectPartsFv` grows the DOL by 0x60 | rename it to dtor_8016A270, then flip |
+| anon_80214B3C.patch | game/anon_80214B3C.cpp | #495 | the TU emits vtable lbl_804EDA98 (multiply-defined) | `virtual void _key();` key stub in CoinChallengeMode, then flip |
+| anon_80226670.patch | game/anon_80226670.cpp | #493 | emits vtable lbl_804EDF64 + unrenamed weak `__dt__9SceneBaseFv` | key stub + rename to dtor_8007D0D4, then flip |
+| STLContainer.patch | game/STLContainer.cpp | #2281 | CW puts __sinit last, the target has it first (text shifted 0x4C) | hand-written static init first + `.ctors` entry (fakematch), then flip |

@@ -1,0 +1,25 @@
+diff --git a/configure.py b/configure.py
+index 7f0fe6a..d10c7a5 100644
+--- a/configure.py
++++ b/configure.py
+@@ -2038,7 +2038,7 @@ config.libs = [
+             Object(Matching, "game/anon_802124FC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+             Object(Matching, "game/anon_802124FC_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+             Object(Matching, "game/anon_802124FC_m1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+-            Object(NonMatching, "game/anon_80214B3C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
++            Object(Matching, "game/anon_80214B3C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+             Object(Matching, "game/anon_802151C8.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
+             Object(Matching, "game/anon_8021550C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+             Object(NonMatching, "game/anon_80216568.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+diff --git a/src/game/anon_80214B3C.cpp b/src/game/anon_80214B3C.cpp
+index 9fb5d53..4ceb18e 100644
+--- a/src/game/anon_80214B3C.cpp
++++ b/src/game/anon_80214B3C.cpp
+@@ -101,6 +101,7 @@ struct CoinChallengeMode : ModeBase {
+     int x24;
+     HUD *hud;
+     CoinIcons *icons;
++    virtual void _key(); /* undefined key stub: vtable lbl_804EDA98 is not owned */
+     virtual ~CoinChallengeMode();
+ };
+ 

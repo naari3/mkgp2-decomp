@@ -1,0 +1,27 @@
+diff --git a/configure.py b/configure.py
+index 7f0fe6a..1ce0f09 100644
+--- a/configure.py
++++ b/configure.py
+@@ -2120,7 +2120,7 @@ config.libs = [
+             Object(Matching, "game/DNFlash_tail.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+             Object(Matching, "game/DNFlashInit.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+             Object(Matching, "game/DNFlashBounds.c", mw_version="GC/2.6"),
+-            Object(NonMatching, "game/DNLensflare.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
++            Object(Matching, "game/DNLensflare.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+             Object(Matching, "game/DNStartCamera.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+             Object(Matching, "game/DNStartCamera_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+             Object(Matching, "game/DNStartCamera_m2.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
+index 1bcf5b9..7743794 100644
+--- a/tools/extab_user_renames.json
++++ b/tools/extab_user_renames.json
+@@ -5728,7 +5728,8 @@
+     "__ct__13clDNLensflareFv": "fn_80229180",
+     "__vt__13clDNLensflare": "lbl_804EE09C",
+     "__vt__16clMapEffectParts": "lbl_80490FE0",
+-    "__ct__11clLensFlareFPCcfffff": "fn_80171F34"
++    "__ct__11clLensFlareFPCcfffff": "fn_80171F34",
++    "__dt__16clMapEffectPartsFv": "dtor_8016A270"
+   },
+   "src/game/DNStartCamera.cpp": {
+     "__nw__FUl": "Alloc",
