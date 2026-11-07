@@ -1601,7 +1601,7 @@ config.libs = [
             Object(NonMatching, "game/PathManager_UpdateAll.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Race_CompareKartProgress.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Path_ResetCursorForKart.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/PathManager_RegisterCarObject.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/PathManager_RegisterCarObject.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/PathParticipantArray_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PathManager_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/dtor_8006178C.c"),
