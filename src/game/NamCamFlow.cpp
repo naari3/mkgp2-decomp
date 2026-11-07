@@ -128,7 +128,7 @@ extern "C" void fn_801F4190(NamCamCountdown *self) {
     ResCtrl rc;
     rc.resId = self->resource + 0x68C;
     rc.Show(self->x, self->y, lbl_806DA590);
-    rc.SetColor(0xFFFFFF00 | (unsigned char)self->fade.p->Value());
+    rc.SetColor(__rlwimi(0xFFFFFF00, self->fade.p->Value(), 0, 24, 31));
     rc.SetScale(self->scale.p->Value());
     fn_8011FAFC(&rc, self->layer);
     if (self->timer == 15)
