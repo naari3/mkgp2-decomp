@@ -1496,3 +1496,8 @@ c17_u80: SpecialFaceMesh_Dtor 8007B798/224B explicit unsigned byte-offset walk, 
 Source: Codex worker c18_u88_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u88 retry fn_801826F8 improves97.08609->97.748344 by replacing static inline DObj *Next(DObj *d){return d?d->next:0;} with static inline void Advance(DObj **cursor){*cursor=*cursor?(*cursor)->next:0;} and using Advance(&d) in first two loops. First-loop return had forced lwz/li r0 then mr cursor,r0; update emits directly into cursor. Text608->604 and extab8/index12 both100. Saved-register homes remain wrong (root27 vs29, src31 vs30, cursor29 vs28, material30 vs27, outer child28 vs31). Depth-limited helper hierarchy exceeded auto-inline budget70.49007/776B; first ApplyInline-only helper97.45033/604B; SetBuffer parameter-order reversal invariant97.748344. Retained H1, NonMatching. Full fallback DOL SHA1 exact; zero native gain.
+
+## c18_u68_20261107
+Source: Codex worker c18_u68_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u68 fn_801DABFC: two ordinary bool if/else mask selections split into repeated compare/conditional branches (608 vs600B). Inline helper is invariant, u8 fields repeat prior negative. switch((unsigned int)out) with default/on first, case0/off second emits exact target branch layout and r0 homes, text97.666664->99.2%, exact600B/extab100/index100. Only two cmpwi0 vs target cmplwi0 remain. Case-true/default-off switch remains608B/97.8%. Kept best honest NonMatching; coordinator build request2 DOL SHA-1 OK, zero native gain.
