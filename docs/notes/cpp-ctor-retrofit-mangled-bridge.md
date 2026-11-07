@@ -1314,3 +1314,8 @@ c18_u82: TireSprite_Load 8022B278 (292B) indexed inline helper had every instruc
 Source: Codex worker c18_u80_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 6 fn / 1724 B.
 
 c18_u80: fn_801FDDA4 97.336845 ->100% by replacing hand-built if/goto dispatch with native switch and explicitly grouping protocol result6 with case2/default (same known result6 handling pattern as neighboring fn_801FE030). Cases1,2,3,4,5,103 alone choose pivot4 and376B; adding case6 restores target pivot5, cmp103/beq/bge/b sequence and380B. Duplicate case2/default error bodies regress87.28421%. Existing text380/extab8/index12/data28 all100; Matching source-linked actual ELF ranges exact; full DOL SHA1 ea30f3b1 OK. No bridge/pool/range changes.
+
+## c18_u70_20261107
+Source: Codex worker c18_u70_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 76 B.
+
+c18_u70 fn_802170F0: c13 alpha leaf 97.63158 ->100%/76B. PackColor four unsigned-char parameters instead of int first reaches98.42105 (sprite r7 fixed). Stage sprite/alpha/packed-color once per iteration to fix alpha r6/color r5; block-local sprite swaps iterator/sprite r7/r8 (97.89474). Move only sprite declaration to function scope to obtain iterator r8/sprite r7, all19 instructions exact. Existing one-function text split needs only Matching flag. No EH/data, bridges, pragmas or padding. Full source-linked DOL SHA1 exact; linked fn802170F0/76 bytes equal target.
