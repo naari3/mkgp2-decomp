@@ -161,9 +161,11 @@
     "__ct__14GroundParticleFv": "fn_8005E788",
     "__dt__14GroundParticleFv": "clItemBoxResponder_DebrisParticle_Dtor"
   },
-  "src/game/clItemBox_FactoryCreate.c": {
-    "extab_clItemBox_FactoryCreate": "@etb_80007C9C",
-    "extabindex_clItemBox_FactoryCreate": "@eti_80020C84"
+  "src/game/clItemBox_FactoryCreate.cpp": {
+    "__ct__9clItemBoxFff": "clItemBox_Ctor_GroundSnap",
+    "__ct__9clItemBoxFfff": "clItemBox_Ctor_XYZ",
+    "@11": "@etb_80007C9C",
+    "@12": "@eti_80020C84"
   },
   "src/game/NamCam_TickShutdownCountdown.c": {
     "@18": "@etb_80006870",

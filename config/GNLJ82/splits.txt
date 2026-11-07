@@ -1536,7 +1536,7 @@ game/clItemBoxManager_StepTable.cpp:
 game/SpawnTable.c:
 	.text       start:0x8005F5CC end:0x8005F5D8
 
-game/clItemBox_FactoryCreate.c:
+game/clItemBox_FactoryCreate.cpp:
 	extab       start:0x80007C9C end:0x80007CC4
 	extabindex  start:0x80020C84 end:0x80020C90
 	.text       start:0x8005F5D8 end:0x8005F65C

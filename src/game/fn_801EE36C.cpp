@@ -1,15 +1,11 @@
 /* Native candidate: 99.9135% text. Remaining differences are five
  * FP register operands in the transit interpolation.
  * The primary EH payload is exact; the extra weak Vec destructor is unowned. */
-#include "game/kartmove/collision_private.h"
+#include "game/PhysicsGroundPrivate.h"
 
 extern "C" {
 void KartBody_SetWarpTransitFlag(void *, int);
 }
-
-#define STEP_F(p, o) (*(float *)((char *)(p) + (o)))
-#define STEP_I(p, o) (*(int *)((char *)(p) + (o)))
-#define STEP_P(p, o) (*(void **)((char *)(p) + (o)))
 
 template <class V> static inline float MovementLength(const V &v)
 {
@@ -37,61 +33,61 @@ static inline void ScaleTransit(CollisionVec &v, float scale)
     v.z *= scale;
 }
 
-extern "C" void fn_801EE36C(char *self)
+extern "C" void fn_801EE36C(PhysicsGroundState *self)
 {
-    if (STEP_I(self, 0x158) > 0) {
-        CollisionVec delta(STEP_F(self, 0x4C), STEP_F(self, 0x50), STEP_F(self, 0x54));
-        delta.x -= STEP_F(self, 0x58);
-        delta.y -= STEP_F(self, 0x5C);
-        delta.z -= STEP_F(self, 0x60);
+    if (self->forceTimer > 0) {
+        CollisionVec delta(self->position.x, self->position.y, self->position.z);
+        delta.x -= self->previous.x;
+        delta.y -= self->previous.y;
+        delta.z -= self->previous.z;
         float length = MovementLength(delta);
         if (length) {
-            float scale = STEP_F(self, 0x154) * MovementInverseLength(delta);
+            float scale = self->movementForce * MovementInverseLength(delta);
             delta.x *= scale;
             delta.y *= scale;
             delta.z *= scale;
-            STEP_F(self, 0x4C) = delta.x + STEP_F(self, 0x4C);
-            STEP_F(self, 0x50) = delta.y + STEP_F(self, 0x50);
-            STEP_F(self, 0x54) = delta.z + STEP_F(self, 0x54);
-            --STEP_I(self, 0x158);
-            KartBody_SetWarpTransitFlag(STEP_P(self, 0xC), 1);
+            self->position.x = delta.x + self->position.x;
+            self->position.y = delta.y + self->position.y;
+            self->position.z = delta.z + self->position.z;
+            --self->forceTimer;
+            KartBody_SetWarpTransitFlag(self->body, 1);
             return;
         }
-    } else if (0.0f < STEP_F(self, 0x154)) {
-        CollisionVec delta(STEP_F(self, 0x4C), STEP_F(self, 0x50), STEP_F(self, 0x54));
-        delta.x -= STEP_F(self, 0x58);
-        delta.y -= STEP_F(self, 0x5C);
-        delta.z -= STEP_F(self, 0x60);
+    } else if (0.0f < self->movementForce) {
+        CollisionVec delta(self->position.x, self->position.y, self->position.z);
+        delta.x -= self->previous.x;
+        delta.y -= self->previous.y;
+        delta.z -= self->previous.z;
         float length = MovementLength(delta);
         if (length) {
-            float scale = STEP_F(self, 0x154) * MovementInverseLength(delta);
+            float scale = self->movementForce * MovementInverseLength(delta);
             delta.x *= scale;
             delta.y *= scale;
             delta.z *= scale;
-            STEP_F(self, 0x4C) = delta.x + STEP_F(self, 0x4C);
-            STEP_F(self, 0x50) = delta.y + STEP_F(self, 0x50);
-            STEP_F(self, 0x54) = delta.z + STEP_F(self, 0x54);
-            STEP_F(self, 0x154) *= 0.8f;
-            if (STEP_F(self, 0x154) < 0.1f) STEP_F(self, 0x154) = 0.0f;
+            self->position.x = delta.x + self->position.x;
+            self->position.y = delta.y + self->position.y;
+            self->position.z = delta.z + self->position.z;
+            self->movementForce *= 0.8f;
+            if (self->movementForce < 0.1f) self->movementForce = 0.0f;
         }
     }
-    if (STEP_I(self, 0xC8) > 0) {
-        CollisionVec delta(STEP_F(self, 0x4C), STEP_F(self, 0x50), STEP_F(self, 0x54));
-        delta.x -= STEP_F(self, 0x58);
-        delta.y -= STEP_F(self, 0x5C);
-        delta.z -= STEP_F(self, 0x60);
-        ScaleTransit(delta, 0.0125f * (float)STEP_I(self, 0xC8) + 1.0f);
-        STEP_F(self, 0x4C) = delta.x + STEP_F(self, 0x58);
-        STEP_F(self, 0x50) = delta.y + STEP_F(self, 0x5C);
-        STEP_F(self, 0x54) = delta.z + STEP_F(self, 0x60);
-        --STEP_I(self, 0xC8);
-        if (STEP_I(self, 0xC8) <= 0) {
-            STEP_I(self, 0xC4) = 0;
-            STEP_I(self, 0xC8) = 0;
+    if (self->transitTimer > 0) {
+        CollisionVec delta(self->position.x, self->position.y, self->position.z);
+        delta.x -= self->previous.x;
+        delta.y -= self->previous.y;
+        delta.z -= self->previous.z;
+        ScaleTransit(delta, 0.0125f * (float)self->transitTimer + 1.0f);
+        self->position.x = delta.x + self->previous.x;
+        self->position.y = delta.y + self->previous.y;
+        self->position.z = delta.z + self->previous.z;
+        --self->transitTimer;
+        if (self->transitTimer <= 0) {
+            self->transitMode = 0;
+            self->transitTimer = 0;
         }
-    } else if (STEP_I(self, 0xC4) != 0) {
-        STEP_I(self, 0xC8) = 120;
+    } else if (self->transitMode != 0) {
+        self->transitTimer = 120;
     }
-    if (STEP_I(self, 0xC4) == 2) KartBody_SetWarpTransitFlag(STEP_P(self, 0xC), 1);
-    else KartBody_SetWarpTransitFlag(STEP_P(self, 0xC), 0);
+    if (self->transitMode == 2) KartBody_SetWarpTransitFlag(self->body, 1);
+    else KartBody_SetWarpTransitFlag(self->body, 0);
 }
