@@ -39,6 +39,61 @@ typedef struct RRRivalAI {
     void *rivalRender;         /* 0x50 */
 } RRRivalAI;
 
+#pragma cplusplus on
+/* scene camera object (self->scene) */
+struct RRScene {
+    virtual void v08();
+    virtual unsigned char BeginDraw(); /* vtable +0x0C */
+    virtual void EndDraw();            /* vtable +0x10 */
+};
+
+#pragma cplusplus reset
+
+typedef struct RRLight {
+    struct RRLightInfo *info; /* 0x00 */
+    unsigned short references; /* 0x04 */
+} RRLight;
+
+typedef struct RRLightInfo {
+    unsigned char pad0[0x30];
+    void (*release)(RRLight *); /* 0x30 */
+    void (*destroy)(RRLight *); /* 0x34 */
+} RRLightInfo;
+
+/* per-rival AI block (self->rival) */
+typedef struct RRRival {
+    unsigned char pad0[4];
+    void *car;            /* 0x04 */
+    unsigned char pad8[0xC];
+    void *path;           /* 0x14 */
+    int pathSlot;         /* 0x18 */
+    unsigned char pad1C[4];
+    void *buffer;         /* 0x20 */
+} RRRival;
+
+typedef struct RivalRunState {
+    void *vtable;         /* 0x00 */
+    unsigned char pad4[4];
+    void *car;            /* 0x08 */
+    void *lakitu;         /* 0x0C */
+    void *environment;    /* 0x10 */
+    struct RRScene *scene; /* 0x14 */
+    void *goalCamera;     /* 0x18 */
+    void *camera;         /* 0x1C */
+    RRLight *lights;      /* 0x20 */
+    void *participants;   /* 0x24 */
+    void *hud;            /* 0x28 */
+    void *collision;      /* 0x2C */
+    RRRival *rival;       /* 0x30 */
+    unsigned char active;  /* 0x34 */
+    unsigned char pad35;
+    unsigned char finished; /* 0x36 */
+    unsigned char won;     /* 0x37 */
+    int resultFrames;      /* 0x38 */
+} RivalRunState;
+
+#include "game/singleton.h"
+
 /* === extracted from auto_RivalRun_Draw_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -66,9 +121,9 @@ extern void fn_802535D4();
 extern void HSD_StateInvalidate();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D109C;
-extern unsigned int lbl_806D10AC;
-extern unsigned int lbl_806D10D0;
+extern void *lbl_806D109C;
+extern void *lbl_806D10AC;
+extern void *lbl_806D10D0;
 extern unsigned int lbl_806DC190;
 extern unsigned int lbl_806DC1B0;
 extern unsigned int lbl_806DC1B8;
@@ -77,141 +132,44 @@ extern unsigned int lbl_806DC1B8;
  * [  0] 0x8013558C size:0x1A8   global RivalRun_Draw
  */
 
-/* --- forward decls --- */
-asm void RivalRun_Draw(void);
+#pragma cplusplus on
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_RivalRun_Draw[8] = {
-    0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+#pragma exceptions on
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_RivalRun_Draw = {
-    (void *)&RivalRun_Draw, 0x000001A8, (void *)extab_RivalRun_Draw
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void RivalRun_Draw(void) { /* 0x8013558C size:0x1A8 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r3
-    lbz r0, 0x34(r3)
-    cmplwi r0, 0x0
-    beq RivalRun_Draw_L_80135720
-    lwz r3, 0x14(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne RivalRun_Draw_L_801356EC
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne RivalRun_Draw_L_801355DC
-    li r3, 0x0
-    RivalRun_Draw_L_801355DC:
-    bl clDrawMan_Buckets_Reset
-    bl TransparentDraw_SortAndDispatch
-    lwz r3, 0x14(r31)
-    bl CObj_DebugVizPathFlush
-    bl fn_8016B0C4
-    lwz r3, 0x8(r31)
-    li r4, 0x0
-    bl KartItem_RenderPipelinedWithEffects
-    lwz r3, 0xc(r31)
-    bl Object_RenderJObjIfWithinRange
-    lwz r3, 0x10(r31)
-    bl CourseEnvironment_RenderObjects_Timed
-    lwz r3, 0x10(r31)
-    bl Subsystem36c_DispatchPass2_Timed
-    lwz r3, 0x30(r31)
-    li r4, 0x0
-    lwz r3, 0x4(r3)
-    bl KartItem_RenderPipelinedWithEffects
-    bl ItemObjectManager_Render
-    lwz r3, lbl_806D10D0(r13)
-    cmplwi r3, 0x0
-    bne RivalRun_Draw_L_80135638
-    li r3, 0x0
-    RivalRun_Draw_L_80135638:
-    bl clItemBoxManager_Draw
-    lwz r3, 0x28(r31)
-    lwz r4, lbl_806DC190(r2)
-    bl fn_80253448
-    bl DrawEffect_TickAndCull
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne RivalRun_Draw_L_8013565C
-    li r3, 0x0
-    RivalRun_Draw_L_8013565C:
-    bl clDrawMan_EndFrame_NoOp
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    bne RivalRun_Draw_L_80135670
-    li r3, 0x0
-    RivalRun_Draw_L_80135670:
-    bl clDrawMan_Buckets_Dispatch
-    lwz r3, 0x10(r31)
-    bl Subsystem36c_DispatchPass4_Timed
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne RivalRun_Draw_L_8013568C
-    li r3, 0x0
-    RivalRun_Draw_L_8013568C:
-    li r4, 0x2
-    bl TransitionEffect_RenderPass
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne RivalRun_Draw_L_801356A4
-    li r3, 0x0
-    RivalRun_Draw_L_801356A4:
-    li r4, 0x4
-    bl TransitionEffect_RenderPass
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne RivalRun_Draw_L_801356BC
-    li r3, 0x0
-    RivalRun_Draw_L_801356BC:
-    li r4, 0x6
-    bl TransitionEffect_RenderPass
-    lwz r4, lbl_806DC1B0(r2)
-    lwz r0, lbl_806DC190(r2)
-    lwz r3, 0x28(r31)
-    or r4, r4, r0
-    bl fn_80253448
-    lwz r3, 0x14(r31)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    RivalRun_Draw_L_801356EC:
-    lwz r3, 0x28(r31)
-    lwz r4, lbl_806DC1B8(r2)
-    bl fn_80253448
-    lwz r3, 0x28(r31)
-    bl fn_802535D4
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne RivalRun_Draw_L_80135710
-    li r3, 0x0
-    RivalRun_Draw_L_80135710:
-    li r4, 0x1
-    bl TransitionEffect_RenderPass
-    li r3, 0x7f
-    bl HSD_StateInvalidate
-    RivalRun_Draw_L_80135720:
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+extern "C" void RivalRun_Draw(RivalRunState *self) {
+    if (self->active) {
+        if (self->scene->BeginDraw() == 1) {
+            clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
+            TransparentDraw_SortAndDispatch();
+            CObj_DebugVizPathFlush(self->scene);
+            fn_8016B0C4();
+            KartItem_RenderPipelinedWithEffects(self->car, 0);
+            Object_RenderJObjIfWithinRange(self->lakitu);
+            CourseEnvironment_RenderObjects_Timed(self->environment);
+            Subsystem36c_DispatchPass2_Timed(self->environment);
+            KartItem_RenderPipelinedWithEffects(self->rival->car, 0);
+            ItemObjectManager_Render();
+            clItemBoxManager_Draw(SINGLETON_INSTANCE(lbl_806D10D0));
+            fn_80253448(self->hud, lbl_806DC190);
+            DrawEffect_TickAndCull();
+            clDrawMan_EndFrame_NoOp(SINGLETON_INSTANCE(lbl_806D10AC));
+            clDrawMan_Buckets_Dispatch(SINGLETON_INSTANCE(lbl_806D10AC));
+            Subsystem36c_DispatchPass4_Timed(self->environment);
+            TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 2);
+            TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 4);
+            TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 6);
+            fn_80253448(self->hud, lbl_806DC1B0 | lbl_806DC190);
+            self->scene->EndDraw();
+        }
+        fn_80253448(self->hud, lbl_806DC1B8);
+        fn_802535D4(self->hud);
+        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 1);
+        HSD_StateInvalidate(0x7F);
+    }
 }
+
+#pragma exceptions reset
+#pragma cplusplus reset
 
 /* === extracted from auto_RivalRun_Update_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -264,8 +222,8 @@ extern unsigned int g_lakituStartAnimDone;
 extern unsigned int g_raceEnded;
 extern unsigned int g_raceTimeRemaining;
 extern unsigned int g_weatherSystem;
-extern unsigned int lbl_806D109C;
-extern unsigned int lbl_806D10D0;
+extern void *lbl_806D109C;
+extern void *lbl_806D10D0;
 extern unsigned int lbl_806D1290;
 extern unsigned int lbl_806D7380;
 extern const float lbl_806D7384;
@@ -1795,9 +1753,9 @@ extern unsigned int g_courseData;
 extern unsigned int g_objCollChecker;
 extern unsigned int g_raceCamera;
 extern unsigned int g_weatherSystem;
-extern unsigned int lbl_806D109C;
-extern unsigned int lbl_806D10AC;
-extern unsigned int lbl_806D10D0;
+extern void *lbl_806D109C;
+extern void *lbl_806D10AC;
+extern void *lbl_806D10D0;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -1809,43 +1767,6 @@ extern unsigned int lbl_8048E4A0[];
  */
 
 /* --- native C++ island (deleting-destructor shape, see BiribiriLand.c) --- */
-typedef struct RRLight {
-    struct RRLightInfo *info; /* 0x00 */
-    unsigned short references; /* 0x04 */
-} RRLight;
-
-typedef struct RRLightInfo {
-    unsigned char pad0[0x30];
-    void (*release)(RRLight *); /* 0x30 */
-    void (*destroy)(RRLight *); /* 0x34 */
-} RRLightInfo;
-
-/* per-rival AI block (self->rival) */
-typedef struct RRRival {
-    unsigned char pad0[4];
-    void *car;            /* 0x04 */
-    unsigned char pad8[0xC];
-    void *path;           /* 0x14 */
-    int pathSlot;         /* 0x18 */
-    unsigned char pad1C[4];
-    void *buffer;         /* 0x20 */
-} RRRival;
-
-typedef struct RivalRunState {
-    void *vtable;         /* 0x00 */
-    unsigned char pad4[4];
-    void *car;            /* 0x08 */
-    void *lakitu;         /* 0x0C */
-    void *environment;    /* 0x10 */
-    void *scene;          /* 0x14 */
-    void *goalCamera;     /* 0x18 */
-    void *camera;         /* 0x1C */
-    RRLight *lights;      /* 0x20 */
-    void *participants;   /* 0x24 */
-    void *hud;            /* 0x28 */
-    void *collision;      /* 0x2C */
-    RRRival *rival;       /* 0x30 */
-} RivalRunState;
 
 void *RivalRun_Destroy(RivalRunState *, short);
 

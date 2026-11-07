@@ -5403,7 +5403,10 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__ct__7ResCtrlFv": "ResCtrl_Init",
-    "__dt__7ResCtrlFv": "dtor_80082960"
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__5TweenFv": "fn_801458A4",
+    "__vt__9PanelItem": "lbl_8048EF34",
+    "__vt__9PanelIcon": "lbl_8048EF20"
   },
   "src/game/RankPanelBase_801461B0.cpp": {
     "extab_fn_801461B0": "@etb_8000DE6C",

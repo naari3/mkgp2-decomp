@@ -1,3 +1,4 @@
+#include "game/singleton.h"
 
 /* sdata symbols referenced from asm */
 extern unsigned char lbl_806D7B0C[1];
@@ -10,13 +11,16 @@ extern "C" void MemoryManager_TimedFree(void *p);
 extern "C" void Sprite_Destroy(void *s, int flag);
 
 struct SpriteObj {
-    char pad0[0xc];
+    char pad0[4];
+    int mode;
+    char pad8[4];
     float fC, f10, f14, f18, f1C, f20;
 };
 struct Tween {
     unsigned char on;
     char pad1[3];
     float from, to, speed, t, value;
+    Tween();
     float Get() { return value; }
     void Start(float a, float b, float s) {
         from = a;
@@ -38,6 +42,12 @@ struct Tween {
 };
 class PanelItem {
 public:
+    PanelItem(SpriteObj *s, int d) : sprite(s), delay(d) {
+        active = 0;
+        flag85 = 0;
+        for (int i = 0; i < 5; i++)
+            tw[i].on = 0;
+    }
     virtual ~PanelItem();
     virtual void Update();
     virtual void Draw();
@@ -46,6 +56,21 @@ public:
     Tween tw[5];
     unsigned char active;
     unsigned char flag85;
+};
+
+/* resource label (vtable lbl_8048EF20) */
+class PanelIcon : public PanelItem {
+public:
+    PanelIcon(float x, float y, short id, int layer_, int delay = 0, unsigned char flip_ = 0)
+        : PanelItem(0, delay), resId(id), layer(layer_), flip(flip_) {
+        tw[3].Start(x, x, 1.0f);
+        tw[4].Start(y, y, 1.0f);
+    }
+    virtual ~PanelIcon();
+    short resId;
+    char pad8A[2];
+    int layer;
+    unsigned char flip;
 };
 struct PanelEntry {
     char pad0[0xc];
@@ -66,6 +91,7 @@ struct EntryVec : PtrVecBase {
     ~EntryVec() {}
     PanelItem **begin() { return data; }
     PanelItem **end() { return data + size; }
+    void push_back(PanelItem *const &x);
 };
 struct Cursor {
     SpriteObj *sprite;
@@ -111,7 +137,7 @@ extern unsigned char IsCardValid(void);
 extern void Sprite_AdvanceAnim(SpriteObj *s, float dt);
 extern void fn_801699D8(int a, int b);
 extern int g_reverseRoundFlag;
-extern unsigned int lbl_806D7AE0;
+extern const float lbl_806D7AE0;
 extern const float lbl_806D7AE4;
 extern unsigned int lbl_806D7AE8;
 extern unsigned int lbl_806D7AEC;
@@ -127,37 +153,24 @@ extern void __unexpected();
 extern unsigned int lbl_8048EB44[];
 extern unsigned int lbl_8048EEF4[];
 extern void Alloc();
-extern void PreloadResource();
-extern void PtrVec_InsertFill();
 extern void Sprite_InitWithAnim();
-extern void TaRecord_GetEntry_Current();
-extern void TaRecord_GetLastInsertedRank();
-extern void TaRecord_GetTime_Current();
 extern void __construct_array();
-extern void fn_8013BFCC();
-extern void fn_80167744();
-extern void fn_8019FF6C();
-extern void fn_801D8D3C();
-extern void fn_801F9628();
-extern void fn_801F96D0();
-extern void get_title_name();
-extern void memcpy();
-extern unsigned int g_cupId;
-extern unsigned int g_longRoundFlag;
-extern unsigned int lbl_806D10A0;
-extern unsigned int lbl_806D7B10;
-extern unsigned int lbl_806D7B14;
-extern unsigned int lbl_806D7B18;
-extern unsigned int lbl_806D7B1C;
-extern unsigned int lbl_806D7B20;
-extern unsigned int lbl_806D7B24;
-extern unsigned int lbl_806D7B28;
-extern unsigned int lbl_806D7B2C;
-extern unsigned int lbl_806D7B30;
-extern unsigned int lbl_806D7B34;
-extern unsigned int lbl_806D7B38;
-extern unsigned int lbl_806D7B3C;
-extern unsigned int lbl_80361D60[];
+extern int g_cupId;
+extern int g_longRoundFlag;
+extern void *lbl_806D10A0;
+extern const float lbl_806D7B10;
+extern const float lbl_806D7B14;
+extern const float lbl_806D7B18;
+extern const float lbl_806D7B1C;
+extern const float lbl_806D7B20;
+extern const float lbl_806D7B24;
+extern const float lbl_806D7B28;
+extern const float lbl_806D7B2C;
+extern const float lbl_806D7B30;
+extern const float lbl_806D7B34;
+extern const float lbl_806D7B38;
+extern const float lbl_806D7B3C;
+extern const short lbl_80361D60[][2];
 extern void *lbl_8048EF20[];
 extern void *lbl_8048EF34[];
 extern void ResCtrl_Init();
@@ -181,7 +194,7 @@ asm void fn_80144500(void);
 void fn_801449D4(RankPanel *self);
 void fn_80144ADC(RankPanel *self);
 RankPanel *fn_80144AF0(RankPanel *self, short flag);
-asm void fn_80144C1C(void);
+void fn_80144C1C(RankPanel *self);
 void fn_801458A4(Pair *p);
 SpriteHolder *fn_80145D34(SpriteHolder *self, short flag);
 void fn_80145DA8(void);
@@ -201,7 +214,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80144500[8
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; void *f25; unsigned int f26; void *f27; unsigned int f28; void *f29; unsigned int f30; void *f31; unsigned int f32; void *f33; unsigned int f34; void *f35; unsigned int f36; void *f37; unsigned int f38; void *f39; unsigned int f40; void *f41; unsigned int f42; void *f43; unsigned int f44; void *f45; } extab_fn_80144C1C = { 0x590A0000, 0x000000E8, 0x00000060, 0x000001A4, 0x00110068, 0x000002F0, 0x00000070, 0x00000490, 0x00000078, 0x000005A0, 0x00000080, 0x000006B8, 0x00000088, 0x000007E0, 0x00000090, 0x000008F4, 0x00000098, 0x00000A2C, 0x000000A0, 0x00000A8C, 0x000000A8, 0x00000B40, 0x000000B0, 0x00000000, 0x8A800016, (void *)&MemoryManager_TimedFree, 0x8A800016, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree, 0x8A800016, (void *)&MemoryManager_TimedFree, 0x8A800015, (void *)&MemoryManager_TimedFree };
 
 
 
@@ -221,9 +233,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80144C1C = {
-    (void *)&fn_80144C1C, 0x00000C88, (void *)&extab_fn_80144C1C
-};
 
 
 
@@ -244,7 +253,9 @@ void *operator new(unsigned long size);
 void operator delete(void *p);
 
 struct Sprite {
-    char body[0x30];
+    char pad0[0xc];
+    float x, y;
+    char pad14[0x1c];
     Sprite(int id, int a, int b);
     Sprite(int id, int a, float x, float y, float sx, float sy, float r, float rot);
     ~Sprite();
@@ -740,835 +751,122 @@ extern "C" RankPanel *fn_80144AF0(RankPanel *self, short flag)
     return self;
 }
 
-extern "C" asm void fn_80144C1C(void) { /* 0x80144C1C size:0xC88 */
-    nofralloc
-    stwu r1, -0xa0(r1)
-    mflr r0
-    stw r0, 0xa4(r1)
-    stfd f31, 0x90(r1)
-    psq_st f31, 0x98(r1), 0, 0
-    stfd f30, 0x80(r1)
-    psq_st f30, 0x88(r1), 0, 0
-    stfd f29, 0x70(r1)
-    psq_st f29, 0x78(r1), 0, 0
-    stfd f28, 0x60(r1)
-    psq_st f28, 0x68(r1), 0, 0
-    stmw r21, 0x34(r1)
-    mr r31, r3
-    lbz r0, 0x18(r3)
-    cmplwi r0, 0x1
-    beq fn_80144C1C_L_80145870
-    li r0, 0x1
-    li r28, 0x0
-    stb r0, 0x18(r31)
-    la r30, lbl_806D7B0C(r2)  /* lbl_806D7B0C */
-    lwz r0, lbl_806D10A0(r13)
-    stw r28, 0x24(r1)
-    cmplwi r0, 0x0
-    bne fn_80144C1C_L_80144C80
-    b fn_80144C1C_L_80144C84
-    fn_80144C1C_L_80144C80:
-    mr r28, r0
-    fn_80144C1C_L_80144C84:
-    bl TaRecord_GetLastInsertedRank
-    lfs f30, lbl_806D7B10(r2)
-    mr r27, r3
-    lfs f29, lbl_806D7B18(r2)
-    li r29, 0x0
-    fn_80144C1C_L_80144C98:
-    mr r3, r29
-    bl TaRecord_GetTime_Current
-    fmr f31, f1
-    mr r3, r29
-    bl TaRecord_GetEntry_Current
-    mr r0, r3
-    li r3, 0x94
-    mr r24, r0
-    bl Alloc
-    mr. r22, r3
-    beq fn_80144C1C_L_80144D80
-    lis r3, lbl_8048EF34@ha
-    lfs f0, 0x28(r31)
-    addi r0, r3, lbl_8048EF34@l
-    lfs f1, lbl_806D7B14(r2)
-    stw r0, 0x0(r22)
-    li r0, 0x0
-    lis r3, fn_801458A4@ha
-    fadds f28, f1, f0
-    stw r0, 0x4(r22)
-    addi r4, r3, fn_801458A4@l
-    addi r3, r22, 0xc
-    li r5, 0x0
-    stw r0, 0x8(r22)
-    li r6, 0x18
-    li r7, 0x5
-    bl __construct_array
-    li r6, 0x0
-    lis r3, lbl_8048EF20@ha
-    stb r6, 0x84(r22)
-    addi r5, r3, lbl_8048EF20@l
-    addi r4, r29, 0x1cde
-    li r3, 0x7
-    stb r6, 0x85(r22)
-    li r0, 0x1
-    lfs f1, lbl_806D7AF0(r2)
-    stb r6, 0xc(r22)
-    lfs f0, lbl_806D7AE4(r2)
-    stb r6, 0x24(r22)
-    stb r6, 0x3c(r22)
-    stb r6, 0x54(r22)
-    stb r6, 0x6c(r22)
-    stw r5, 0x0(r22)
-    sth r4, 0x88(r22)
-    stw r3, 0x8c(r22)
-    stb r6, 0x90(r22)
-    stfs f28, 0x58(r22)
-    stfs f28, 0x5c(r22)
-    stfs f1, 0x60(r22)
-    stfs f0, 0x64(r22)
-    stfs f28, 0x68(r22)
-    stb r0, 0x54(r22)
-    stfs f30, 0x70(r22)
-    stfs f30, 0x74(r22)
-    stfs f1, 0x78(r22)
-    stfs f0, 0x7c(r22)
-    stfs f30, 0x80(r22)
-    stb r0, 0x6c(r22)
-    fn_80144C1C_L_80144D80:
-    stw r22, 0x20(r1)
-    addi r3, r31, 0xc0
-    addi r6, r1, 0x20
-    li r5, 0x1
-    lwz r0, 0xc4(r31)
-    lwz r4, 0xc8(r31)
-    slwi r0, r0, 2
-    add r4, r4, r0
-    bl PtrVec_InsertFill
-    li r3, 0x94
-    bl Alloc
-    mr. r22, r3
-    beq fn_80144C1C_L_80144E7C
-    lbz r3, 0xc(r24)
-    extsb r3, r3
-    bl fn_8013BFCC
-    lis r4, lbl_8048EF34@ha
-    lfs f0, 0x2c(r31)
-    addi r0, r4, lbl_8048EF34@l
-    lfs f1, lbl_806D7B14(r2)
-    stw r0, 0x0(r22)
-    li r0, 0x0
-    lis r4, fn_801458A4@ha
-    extsh r21, r3
-    stw r0, 0x4(r22)
-    fadds f28, f1, f0
-    addi r4, r4, fn_801458A4@l
-    addi r3, r22, 0xc
-    stw r0, 0x8(r22)
-    li r5, 0x0
-    li r6, 0x18
-    li r7, 0x5
-    bl __construct_array
-    li r5, 0x0
-    lis r3, lbl_8048EF20@ha
-    stb r5, 0x84(r22)
-    addi r4, r3, lbl_8048EF20@l
-    li r3, 0x7
-    lfs f1, lbl_806D7AF0(r2)
-    stb r5, 0x85(r22)
-    li r0, 0x1
-    lfs f0, lbl_806D7AE4(r2)
-    stb r5, 0xc(r22)
-    stb r5, 0x24(r22)
-    stb r5, 0x3c(r22)
-    stb r5, 0x54(r22)
-    stb r5, 0x6c(r22)
-    stw r4, 0x0(r22)
-    sth r21, 0x88(r22)
-    stw r3, 0x8c(r22)
-    stb r5, 0x90(r22)
-    stfs f28, 0x58(r22)
-    stfs f28, 0x5c(r22)
-    stfs f1, 0x60(r22)
-    stfs f0, 0x64(r22)
-    stfs f28, 0x68(r22)
-    stb r0, 0x54(r22)
-    stfs f30, 0x70(r22)
-    stfs f30, 0x74(r22)
-    stfs f1, 0x78(r22)
-    stfs f0, 0x7c(r22)
-    stfs f30, 0x80(r22)
-    stb r0, 0x6c(r22)
-    fn_80144C1C_L_80144E7C:
-    stw r22, 0x1c(r1)
-    addi r3, r31, 0xc0
-    addi r6, r1, 0x1c
-    li r5, 0x1
-    lwz r0, 0xc4(r31)
-    lwz r4, 0xc8(r31)
-    slwi r0, r0, 2
-    add r4, r4, r0
-    bl PtrVec_InsertFill
-    mr r26, r24
-    mr r25, r31
-    li r22, 0x0
-    fn_80144C1C_L_80144EAC:
-    lhz r3, 0x0(r26)
-    bl fn_801F96D0
-    mr r0, r3
-    li r3, 0x94
-    mr r23, r0
-    bl Alloc
-    mr. r21, r3
-    beq fn_80144C1C_L_80144F84
-    lis r3, lbl_8048EF34@ha
-    lfs f0, 0x30(r25)
-    addi r0, r3, lbl_8048EF34@l
-    lfs f1, lbl_806D7B14(r2)
-    stw r0, 0x0(r21)
-    li r0, 0x0
-    lis r3, fn_801458A4@ha
-    fadds f28, f1, f0
-    stw r0, 0x4(r21)
-    addi r4, r3, fn_801458A4@l
-    addi r3, r21, 0xc
-    li r5, 0x0
-    stw r0, 0x8(r21)
-    li r6, 0x18
-    li r7, 0x5
-    bl __construct_array
-    li r5, 0x0
-    lis r3, lbl_8048EF20@ha
-    stb r5, 0x84(r21)
-    addi r4, r3, lbl_8048EF20@l
-    li r3, 0x7
-    lfs f1, lbl_806D7AF0(r2)
-    stb r5, 0x85(r21)
-    li r0, 0x1
-    lfs f0, lbl_806D7AE4(r2)
-    stb r5, 0xc(r21)
-    stb r5, 0x24(r21)
-    stb r5, 0x3c(r21)
-    stb r5, 0x54(r21)
-    stb r5, 0x6c(r21)
-    stw r4, 0x0(r21)
-    sth r23, 0x88(r21)
-    stw r3, 0x8c(r21)
-    stb r5, 0x90(r21)
-    stfs f28, 0x58(r21)
-    stfs f28, 0x5c(r21)
-    stfs f1, 0x60(r21)
-    stfs f0, 0x64(r21)
-    stfs f28, 0x68(r21)
-    stb r0, 0x54(r21)
-    stfs f30, 0x70(r21)
-    stfs f30, 0x74(r21)
-    stfs f1, 0x78(r21)
-    stfs f0, 0x7c(r21)
-    stfs f30, 0x80(r21)
-    stb r0, 0x6c(r21)
-    fn_80144C1C_L_80144F84:
-    stw r21, 0x18(r1)
-    addi r3, r31, 0xc0
-    addi r6, r1, 0x18
-    li r5, 0x1
-    lwz r0, 0xc4(r31)
-    lwz r4, 0xc8(r31)
-    slwi r0, r0, 2
-    add r4, r4, r0
-    bl PtrVec_InsertFill
-    mr r3, r23
-    bl PreloadResource
-    addi r22, r22, 0x1
-    addi r25, r25, 0x4
-    cmpwi r22, 0x5
-    addi r26, r26, 0x2
-    blt fn_80144C1C_L_80144EAC
-    cmplwi r28, 0x0
-    beq fn_80144C1C_L_80144FEC
-    lbz r6, 0xc(r24)
-    mr r3, r28
-    lbz r4, 0xd(r24)
-    lbz r5, 0xe(r24)
-    extsb r6, r6
-    lbz r7, 0xf(r24)
-    bl get_title_name
-    mr r30, r3
-    fn_80144C1C_L_80144FEC:
-    bl IsCardValid
-    clrlwi. r0, r3, 24
-    bne fn_80144C1C_L_80144FFC
-    la r30, lbl_806D7B0C(r2)  /* lbl_806D7B0C */
-    fn_80144C1C_L_80144FFC:
-    mr r25, r31
-    li r22, 0x0
-    li r23, 0x0
-    fn_80144C1C_L_80145008:
-    add r21, r30, r22
-    lbz r0, 0x0(r21)
-    extsb. r0, r0
-    beq fn_80144C1C_L_80145160
-    mr r4, r21
-    addi r3, r1, 0x8
-    li r5, 0x2
-    bl memcpy
-    lhz r0, 0x8(r1)
-    rlwinm. r0, r0, 0, 16, 16
-    beq fn_80144C1C_L_80145038
-    addi r22, r22, 0x1
-    fn_80144C1C_L_80145038:
-    cmpwi r0, 0x0
-    bne fn_80144C1C_L_8014504C
-    lbz r0, 0x0(r21)
-    extsb r0, r0
-    sth r0, 0x8(r1)
-    fn_80144C1C_L_8014504C:
-    lhz r3, 0x8(r1)
-    addi r22, r22, 0x1
-    bl fn_801F9628
-    mr r26, r3
-    li r3, 0x94
-    bl Alloc
-    mr. r21, r3
-    beq fn_80144C1C_L_80145124
-    lis r3, lbl_8048EF34@ha
-    lfs f0, 0x44(r25)
-    addi r0, r3, lbl_8048EF34@l
-    lfs f1, lbl_806D7B14(r2)
-    stw r0, 0x0(r21)
-    li r0, 0x0
-    lis r3, fn_801458A4@ha
-    fadds f28, f1, f0
-    stw r0, 0x4(r21)
-    addi r4, r3, fn_801458A4@l
-    addi r3, r21, 0xc
-    li r5, 0x0
-    stw r0, 0x8(r21)
-    li r6, 0x18
-    li r7, 0x5
-    bl __construct_array
-    li r5, 0x0
-    lis r3, lbl_8048EF20@ha
-    stb r5, 0x84(r21)
-    addi r4, r3, lbl_8048EF20@l
-    li r3, 0x7
-    lfs f1, lbl_806D7AF0(r2)
-    stb r5, 0x85(r21)
-    li r0, 0x1
-    lfs f0, lbl_806D7AE4(r2)
-    stb r5, 0xc(r21)
-    stb r5, 0x24(r21)
-    stb r5, 0x3c(r21)
-    stb r5, 0x54(r21)
-    stb r5, 0x6c(r21)
-    stw r4, 0x0(r21)
-    sth r26, 0x88(r21)
-    stw r3, 0x8c(r21)
-    stb r5, 0x90(r21)
-    stfs f28, 0x58(r21)
-    stfs f28, 0x5c(r21)
-    stfs f1, 0x60(r21)
-    stfs f0, 0x64(r21)
-    stfs f28, 0x68(r21)
-    stb r0, 0x54(r21)
-    stfs f30, 0x70(r21)
-    stfs f30, 0x74(r21)
-    stfs f1, 0x78(r21)
-    stfs f0, 0x7c(r21)
-    stfs f30, 0x80(r21)
-    stb r0, 0x6c(r21)
-    fn_80144C1C_L_80145124:
-    stw r21, 0x14(r1)
-    addi r3, r31, 0xc0
-    addi r6, r1, 0x14
-    li r5, 0x1
-    lwz r0, 0xc4(r31)
-    lwz r4, 0xc8(r31)
-    slwi r0, r0, 2
-    add r4, r4, r0
-    bl PtrVec_InsertFill
-    mr r3, r26
-    bl PreloadResource
-    addi r23, r23, 0x1
-    addi r25, r25, 0x4
-    cmpwi r23, 0x16
-    blt fn_80144C1C_L_80145008
-    fn_80144C1C_L_80145160:
-    slwi r0, r23, 2
-    add r25, r31, r0
-    b fn_80144C1C_L_80145264
-    fn_80144C1C_L_8014516C:
-    li r3, 0x94
-    bl Alloc
-    mr. r21, r3
-    beq fn_80144C1C_L_80145238
-    lis r3, lbl_8048EF34@ha
-    lfs f0, 0x44(r25)
-    addi r0, r3, lbl_8048EF34@l
-    lfs f1, lbl_806D7B14(r2)
-    stw r0, 0x0(r21)
-    li r0, 0x0
-    lis r3, fn_801458A4@ha
-    fadds f28, f1, f0
-    stw r0, 0x4(r21)
-    addi r4, r3, fn_801458A4@l
-    addi r3, r21, 0xc
-    li r5, 0x0
-    stw r0, 0x8(r21)
-    li r6, 0x18
-    li r7, 0x5
-    bl __construct_array
-    li r6, 0x0
-    lis r3, lbl_8048EF20@ha
-    stb r6, 0x84(r21)
-    addi r5, r3, lbl_8048EF20@l
-    li r4, 0x1ecd
-    li r3, 0x7
-    stb r6, 0x85(r21)
-    li r0, 0x1
-    lfs f1, lbl_806D7AF0(r2)
-    stb r6, 0xc(r21)
-    lfs f0, lbl_806D7AE4(r2)
-    stb r6, 0x24(r21)
-    stb r6, 0x3c(r21)
-    stb r6, 0x54(r21)
-    stb r6, 0x6c(r21)
-    stw r5, 0x0(r21)
-    sth r4, 0x88(r21)
-    stw r3, 0x8c(r21)
-    stb r6, 0x90(r21)
-    stfs f28, 0x58(r21)
-    stfs f28, 0x5c(r21)
-    stfs f1, 0x60(r21)
-    stfs f0, 0x64(r21)
-    stfs f28, 0x68(r21)
-    stb r0, 0x54(r21)
-    stfs f30, 0x70(r21)
-    stfs f30, 0x74(r21)
-    stfs f1, 0x78(r21)
-    stfs f0, 0x7c(r21)
-    stfs f30, 0x80(r21)
-    stb r0, 0x6c(r21)
-    fn_80144C1C_L_80145238:
-    stw r21, 0x10(r1)
-    addi r3, r31, 0xc0
-    addi r6, r1, 0x10
-    li r5, 0x1
-    lwz r0, 0xc4(r31)
-    lwz r4, 0xc8(r31)
-    slwi r0, r0, 2
-    add r4, r4, r0
-    bl PtrVec_InsertFill
-    addi r25, r25, 0x4
-    addi r23, r23, 0x1
-    fn_80144C1C_L_80145264:
-    cmpwi r23, 0x16
-    blt fn_80144C1C_L_8014516C
-    li r22, 0x0
-    mr r25, r31
-    fn_80144C1C_L_80145274:
-    fmr f1, f31
-    mr r3, r22
-    bl fn_80167744
-    mr r23, r3
-    li r3, 0x94
-    bl Alloc
-    mr. r21, r3
-    beq fn_80144C1C_L_80145350
-    lis r3, lbl_8048EF34@ha
-    lfs f0, 0x9c(r25)
-    addi r0, r3, lbl_8048EF34@l
-    lfs f1, lbl_806D7B14(r2)
-    stw r0, 0x0(r21)
-    li r0, 0x0
-    lis r3, fn_801458A4@ha
-    fadds f28, f1, f0
-    stw r0, 0x4(r21)
-    addi r4, r3, fn_801458A4@l
-    addi r3, r21, 0xc
-    li r5, 0x0
-    stw r0, 0x8(r21)
-    li r6, 0x18
-    li r7, 0x5
-    bl __construct_array
-    li r6, 0x0
-    lis r3, lbl_8048EF20@ha
-    stb r6, 0x84(r21)
-    addi r5, r3, lbl_8048EF20@l
-    addi r4, r23, 0x1ce8
-    li r3, 0x7
-    stb r6, 0x85(r21)
-    li r0, 0x1
-    lfs f1, lbl_806D7AF0(r2)
-    stb r6, 0xc(r21)
-    lfs f0, lbl_806D7AE4(r2)
-    stb r6, 0x24(r21)
-    stb r6, 0x3c(r21)
-    stb r6, 0x54(r21)
-    stb r6, 0x6c(r21)
-    stw r5, 0x0(r21)
-    sth r4, 0x88(r21)
-    stw r3, 0x8c(r21)
-    stb r6, 0x90(r21)
-    stfs f28, 0x58(r21)
-    stfs f28, 0x5c(r21)
-    stfs f1, 0x60(r21)
-    stfs f0, 0x64(r21)
-    stfs f28, 0x68(r21)
-    stb r0, 0x54(r21)
-    stfs f30, 0x70(r21)
-    stfs f30, 0x74(r21)
-    stfs f1, 0x78(r21)
-    stfs f0, 0x7c(r21)
-    stfs f30, 0x80(r21)
-    stb r0, 0x6c(r21)
-    fn_80144C1C_L_80145350:
-    stw r21, 0xc(r1)
-    addi r3, r31, 0xc0
-    addi r6, r1, 0xc
-    li r5, 0x1
-    lwz r0, 0xc4(r31)
-    lwz r4, 0xc8(r31)
-    slwi r0, r0, 2
-    add r4, r4, r0
-    bl PtrVec_InsertFill
-    addi r22, r22, 0x1
-    addi r25, r25, 0x4
-    cmpwi r22, 0x9
-    blt fn_80144C1C_L_80145274
-    addi r29, r29, 0x1
-    fadds f30, f30, f29
-    cmpwi r29, 0xa
-    blt fn_80144C1C_L_80144C98
-    li r3, 0x94
-    bl Alloc
-    mr. r21, r3
-    beq fn_80144C1C_L_8014547C
-    lwz r5, g_cupId(r13)
-    lis r3, lbl_8048EF34@ha
-    addi r0, r3, lbl_8048EF34@l
-    lwz r4, g_longRoundFlag(r13)
-    lis r6, lbl_80361D60@ha
-    slwi r5, r5, 2
-    stw r0, 0x0(r21)
-    li r0, 0x0
-    addi r6, r6, lbl_80361D60@l
-    lis r3, fn_801458A4@ha
-    stw r0, 0x4(r21)
-    add r6, r6, r5
-    slwi r5, r4, 1
-    addi r4, r3, fn_801458A4@l
-    add r3, r6, r5
-    stw r0, 0x8(r21)
-    lha r22, -0x4(r3)
-    addi r3, r21, 0xc
-    li r5, 0x0
-    li r6, 0x18
-    li r7, 0x5
-    bl __construct_array
-    li r5, 0x0
-    lis r3, lbl_8048EF20@ha
-    stb r5, 0x84(r21)
-    addi r4, r3, lbl_8048EF20@l
-    li r3, 0x5
-    lfs f3, lbl_806D7B1C(r2)
-    stb r5, 0x85(r21)
-    li r0, 0x1
-    lfs f2, lbl_806D7AF0(r2)
-    stb r5, 0xc(r21)
-    lfs f1, lbl_806D7AE4(r2)
-    stb r5, 0x24(r21)
-    lfs f0, lbl_806D7B20(r2)
-    stb r5, 0x3c(r21)
-    stb r5, 0x54(r21)
-    stb r5, 0x6c(r21)
-    stw r4, 0x0(r21)
-    sth r22, 0x88(r21)
-    stw r3, 0x8c(r21)
-    stb r5, 0x90(r21)
-    stfs f3, 0x58(r21)
-    stfs f3, 0x5c(r21)
-    stfs f2, 0x60(r21)
-    stfs f1, 0x64(r21)
-    stfs f3, 0x68(r21)
-    stb r0, 0x54(r21)
-    stfs f0, 0x70(r21)
-    stfs f0, 0x74(r21)
-    stfs f2, 0x78(r21)
-    stfs f1, 0x7c(r21)
-    stfs f0, 0x80(r21)
-    stb r0, 0x6c(r21)
-    fn_80144C1C_L_8014547C:
-    stw r21, 0x24(r1)
-    li r0, 0x1
-    lfs f2, lbl_806D7AE4(r2)
-    addi r3, r31, 0xc0
-    lfs f1, lbl_806D7AF0(r2)
-    addi r6, r1, 0x24
-    stfs f2, 0x10(r21)
-    li r5, 0x1
-    lfs f0, lbl_806D7AE0(r2)
-    stfs f1, 0x14(r21)
-    stfs f0, 0x18(r21)
-    stfs f2, 0x1c(r21)
-    stfs f2, 0x20(r21)
-    stb r0, 0xc(r21)
-    lwz r0, 0xc4(r31)
-    lwz r4, 0xc8(r31)
-    slwi r0, r0, 2
-    add r4, r4, r0
-    bl PtrVec_InsertFill
-    li r3, 0x94
-    bl Alloc
-    mr. r21, r3
-    beq fn_80144C1C_L_801455B8
-    lis r4, lbl_8048EF34@ha
-    li r5, 0x0
-    addi r0, r4, lbl_8048EF34@l
-    lis r3, fn_801458A4@ha
-    stw r0, 0x0(r21)
-    addi r4, r3, fn_801458A4@l
-    li r0, 0x23
-    addi r3, r21, 0xc
-    stw r5, 0x4(r21)
-    li r5, 0x0
-    li r6, 0x18
-    li r7, 0x5
-    stw r0, 0x8(r21)
-    bl __construct_array
-    li r8, 0x0
-    lis r4, lbl_8048EF20@ha
-    stb r8, 0x84(r21)
-    xoris r3, r27, 0x8000
-    lis r0, 0x4330
-    addi r7, r4, lbl_8048EF20@l
-    stb r8, 0x85(r21)
-    li r6, 0x1cf4
-    li r5, 0x3
-    li r4, 0x1
-    stb r8, 0xc(r21)
-    lfs f1, lbl_806D7B24(r2)
-    stb r8, 0x24(r21)
-    lfs f5, lbl_806D7AF0(r2)
-    stb r8, 0x3c(r21)
-    lfs f4, lbl_806D7AE4(r2)
-    stb r8, 0x54(r21)
-    lfd f2, lbl_806D7B00(r2)
-    stb r8, 0x6c(r21)
-    lfs f3, lbl_806D7B18(r2)
-    stw r7, 0x0(r21)
-    lfs f0, lbl_806D7B10(r2)
-    sth r6, 0x88(r21)
-    stw r5, 0x8c(r21)
-    stb r4, 0x90(r21)
-    stfs f1, 0x58(r21)
-    stfs f1, 0x5c(r21)
-    stfs f5, 0x60(r21)
-    stfs f4, 0x64(r21)
-    stfs f1, 0x68(r21)
-    stw r3, 0x2c(r1)
-    stw r0, 0x28(r1)
-    lfd f1, 0x28(r1)
-    stb r4, 0x54(r21)
-    fsubs f1, f1, f2
-    fmadds f0, f3, f1, f0
-    stfs f0, 0x70(r21)
-    stfs f0, 0x74(r21)
-    stfs f5, 0x78(r21)
-    stfs f4, 0x7c(r21)
-    stfs f0, 0x80(r21)
-    stb r4, 0x6c(r21)
-    fn_80144C1C_L_801455B8:
-    stw r21, 0x24(r1)
-    li r0, 0x1
-    lfs f2, lbl_806D7AE4(r2)
-    addi r3, r31, 0xc0
-    lfs f1, lbl_806D7AF0(r2)
-    addi r6, r1, 0x24
-    stfs f2, 0x10(r21)
-    li r5, 0x1
-    lfs f0, lbl_806D7AF8(r2)
-    stfs f1, 0x14(r21)
-    lfs f1, lbl_806D7B28(r2)
-    stfs f0, 0x18(r21)
-    lfs f0, lbl_806D7B2C(r2)
-    stfs f2, 0x1c(r21)
-    stfs f2, 0x20(r21)
-    stb r0, 0xc(r21)
-    lwz r4, 0x24(r1)
-    stfs f1, 0x28(r4)
-    stfs f1, 0x2c(r4)
-    stfs f0, 0x30(r4)
-    stfs f2, 0x34(r4)
-    stfs f1, 0x38(r4)
-    stb r0, 0x24(r4)
-    lwz r0, 0xc4(r31)
-    lwz r4, 0xc8(r31)
-    slwi r0, r0, 2
-    add r4, r4, r0
-    bl PtrVec_InsertFill
-    li r3, 0x30
-    bl Alloc
-    mr. r21, r3
-    beq fn_80144C1C_L_80145648
-    li r4, 0x74
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_InitWithAnim
-    fn_80144C1C_L_80145648:
-    lfs f1, lbl_806D7B30(r2)
-    mr r3, r21
-    lfs f0, lbl_806D7B34(r2)
-    li r4, 0x1
-    stfs f1, 0xc(r21)
-    stfs f0, 0x10(r21)
-    bl fn_8019FF6C
-    li r3, 0x88
-    bl Alloc
-    mr. r22, r3
-    beq fn_80144C1C_L_801456C8
-    lis r4, lbl_8048EF34@ha
-    li r0, 0x2d
-    addi r4, r4, lbl_8048EF34@l
-    lis r3, fn_801458A4@ha
-    stw r4, 0x0(r22)
-    addi r4, r3, fn_801458A4@l
-    addi r3, r22, 0xc
-    li r5, 0x0
-    stw r21, 0x4(r22)
-    li r6, 0x18
-    li r7, 0x5
-    stw r0, 0x8(r22)
-    bl __construct_array
-    li r0, 0x0
-    stb r0, 0x84(r22)
-    stb r0, 0x85(r22)
-    stb r0, 0xc(r22)
-    stb r0, 0x24(r22)
-    stb r0, 0x3c(r22)
-    stb r0, 0x54(r22)
-    stb r0, 0x6c(r22)
-    fn_80144C1C_L_801456C8:
-    stw r22, 0x24(r1)
-    li r0, 0x1
-    lfs f2, lbl_806D7AE4(r2)
-    addi r3, r31, 0xc0
-    lfs f1, lbl_806D7AF0(r2)
-    addi r6, r1, 0x24
-    stfs f2, 0x10(r22)
-    li r5, 0x1
-    lfs f0, lbl_806D7B08(r2)
-    stfs f1, 0x14(r22)
-    stfs f0, 0x18(r22)
-    stfs f2, 0x1c(r22)
-    stfs f2, 0x20(r22)
-    stb r0, 0xc(r22)
-    lwz r0, 0xc4(r31)
-    lwz r4, 0xc8(r31)
-    slwi r0, r0, 2
-    add r4, r4, r0
-    bl PtrVec_InsertFill
-    li r3, 0x94
-    bl Alloc
-    mr. r21, r3
-    beq fn_80144C1C_L_801457E0
-    lis r4, lbl_8048EF34@ha
-    li r5, 0x0
-    addi r0, r4, lbl_8048EF34@l
-    lis r3, fn_801458A4@ha
-    stw r0, 0x0(r21)
-    addi r4, r3, fn_801458A4@l
-    li r0, 0x2d
-    addi r3, r21, 0xc
-    stw r5, 0x4(r21)
-    li r5, 0x0
-    li r6, 0x18
-    li r7, 0x5
-    stw r0, 0x8(r21)
-    bl __construct_array
-    li r6, 0x0
-    lis r3, lbl_8048EF20@ha
-    stb r6, 0x84(r21)
-    addi r5, r3, lbl_8048EF20@l
-    li r4, 0x1872
-    li r3, 0x7
-    stb r6, 0x85(r21)
-    li r0, 0x1
-    lfs f3, lbl_806D7B38(r2)
-    stb r6, 0xc(r21)
-    lfs f2, lbl_806D7AF0(r2)
-    stb r6, 0x24(r21)
-    lfs f1, lbl_806D7AE4(r2)
-    stb r6, 0x3c(r21)
-    lfs f0, lbl_806D7B3C(r2)
-    stb r6, 0x54(r21)
-    stb r6, 0x6c(r21)
-    stw r5, 0x0(r21)
-    sth r4, 0x88(r21)
-    stw r3, 0x8c(r21)
-    stb r6, 0x90(r21)
-    stfs f3, 0x58(r21)
-    stfs f3, 0x5c(r21)
-    stfs f2, 0x60(r21)
-    stfs f1, 0x64(r21)
-    stfs f3, 0x68(r21)
-    stb r0, 0x54(r21)
-    stfs f0, 0x70(r21)
-    stfs f0, 0x74(r21)
-    stfs f2, 0x78(r21)
-    stfs f1, 0x7c(r21)
-    stfs f0, 0x80(r21)
-    stb r0, 0x6c(r21)
-    fn_80144C1C_L_801457E0:
-    stw r21, 0x24(r1)
-    li r0, 0x1
-    lfs f2, lbl_806D7AE4(r2)
-    addi r3, r31, 0xc0
-    lfs f1, lbl_806D7AF0(r2)
-    addi r6, r1, 0x24
-    stfs f2, 0x10(r21)
-    li r5, 0x1
-    lfs f0, lbl_806D7B08(r2)
-    stfs f1, 0x14(r21)
-    stfs f0, 0x18(r21)
-    stfs f2, 0x1c(r21)
-    stfs f2, 0x20(r21)
-    stb r0, 0xc(r21)
-    lwz r0, 0xc4(r31)
-    lwz r4, 0xc8(r31)
-    slwi r0, r0, 2
-    add r4, r4, r0
-    bl PtrVec_InsertFill
-    lwz r3, 0xcc(r31)
-    li r0, 0x6
-    lwz r3, 0x0(r3)
-    stw r0, 0x4(r3)
-    lwz r3, g_cupId(r13)
-    lwz r4, g_longRoundFlag(r13)
-    bl fn_801D8D3C
-    lwz r5, 0xcc(r31)
-    li r3, 0x0
-    lfs f0, lbl_806D7B20(r2)
-    li r4, 0x1
-    lwz r5, 0x0(r5)
-    stfs f1, 0xc(r5)
-    lwz r5, 0xcc(r31)
-    lwz r5, 0x0(r5)
-    stfs f0, 0x10(r5)
-    bl fn_801699D8
-    fn_80144C1C_L_80145870:
-    psq_l f31, 0x98(r1), 0, 0
-    lfd f31, 0x90(r1)
-    psq_l f30, 0x88(r1), 0, 0
-    lfd f30, 0x80(r1)
-    psq_l f29, 0x78(r1), 0, 0
-    lfd f29, 0x70(r1)
-    psq_l f28, 0x68(r1), 0, 0
-    lfd f28, 0x60(r1)
-    lmw r21, 0x34(r1)
-    lwz r0, 0xa4(r1)
-    mtlr r0
-    addi r1, r1, 0xa0
-    blr
+extern "C" void PtrVec_InsertFill(EntryVec *v, PanelItem **pos, int n, PanelItem *const *val);
+inline void EntryVec::push_back(PanelItem *const &x) { PtrVec_InsertFill(this, end(), 1, &x); }
+
+/* time attack record row (TaRecord_GetEntry_Current) */
+struct TaEntry {
+    unsigned short parts[5]; /* 0x00 */
+    char padA[2];
+    signed char chara;       /* 0x0C */
+    unsigned char titleA;    /* 0x0D */
+    unsigned char titleB;    /* 0x0E */
+    unsigned char titleC;    /* 0x0F */
+};
+
+extern "C" {
+int TaRecord_GetLastInsertedRank(void);
+float TaRecord_GetTime_Current(int row);
+TaEntry *TaRecord_GetEntry_Current(int row);
+int fn_8013BFCC(int chara);
+int fn_801F96D0(unsigned short part);
+int fn_801F9628(unsigned short ch);
+int fn_80167744(int digit, float time);
+void PreloadResource(int res);
+const char *get_title_name(void *mgr, int a, int b, int chara, int c);
+void *memcpy(void *dst, const void *src, unsigned long n);
+float fn_801D8D3C(int cup, int longRound);
+void fn_8019FF6C(Sprite *s, int a);
+}
+
+extern "C" void fn_80144C1C(RankPanel *self)
+{
+    float time;
+    TaEntry *entry;
+    int res;
+    const char *title;
+    int row;
+    float y;
+    int rank;
+    void *mgr;
+
+    if (self->visible == 1)
+        return;
+    self->visible = 1;
+    title = (const char *)lbl_806D7B0C;
+    PanelItem *item = 0;
+    mgr = SINGLETON_INSTANCE(lbl_806D10A0);
+    rank = TaRecord_GetLastInsertedRank();
+    y = lbl_806D7B10;
+    for (row = 0; row < 10; row++) {
+        time = TaRecord_GetTime_Current(row);
+        entry = TaRecord_GetEntry_Current(row);
+        self->vec.push_back(new PanelIcon(lbl_806D7B14 + self->xs[0], y, 0x1cde + row, 7));
+        self->vec.push_back(new PanelIcon(lbl_806D7B14 + self->xs[1], y, fn_8013BFCC(entry->chara), 7));
+        for (int part = 0; part < 5; part++) {
+            res = fn_801F96D0(entry->parts[part]);
+            self->vec.push_back(new PanelIcon(lbl_806D7B14 + self->xs[2 + part], y, res, 7));
+            PreloadResource(res);
+        }
+        if (mgr)
+            title = get_title_name(mgr, entry->titleA, entry->titleB, entry->chara, entry->titleC);
+        if (!IsCardValid())
+            title = (const char *)lbl_806D7B0C;
+        /* title: one label per character (2-byte SJIS or 1-byte ASCII), padded with blanks */
+        int pos = 0;
+        int n;
+        for (n = 0; n < 0x16; n++) {
+            const char *c = title + pos;
+            unsigned short ch;
+            int wide;
+            if (*c == 0)
+                break;
+            memcpy(&ch, c, 2);
+            wide = ch & 0x8000;
+            if (wide)
+                pos++;
+            if (!wide)
+                ch = *c;
+            pos++;
+            res = fn_801F9628(ch);
+            self->vec.push_back(new PanelIcon(lbl_806D7B14 + self->xs[7 + n], y, res, 7));
+            PreloadResource(res);
+        }
+        for (; n < 0x16; n++)
+            self->vec.push_back(new PanelIcon(lbl_806D7B14 + self->xs[7 + n], y, 0x1ecd, 7));
+        for (int d = 0; d < 9; d++) {
+            int digit = fn_80167744(d, time);
+            self->vec.push_back(new PanelIcon(lbl_806D7B14 + self->xs[0x1d + d], y, 0x1ce8 + digit, 7));
+        }
+        y += lbl_806D7B18;
+    }
+
+    item = new PanelIcon(lbl_806D7B1C, lbl_806D7B20, lbl_80361D60[g_cupId - 1][g_longRoundFlag], 5);
+    item->tw[0].Start(0.0f, 1.0f, lbl_806D7AE0);
+    self->vec.push_back(item);
+
+    item = new PanelIcon(lbl_806D7B24, 36.0f * rank + 90.0f, 0x1cf4, 3, 0x23, 1);
+    item->tw[0].Start(0.0f, 1.0f, lbl_806D7AF8);
+    item->tw[1].Start(lbl_806D7B28, lbl_806D7B28, lbl_806D7B2C);
+    self->vec.push_back(item);
+
+    Sprite *sprite = new Sprite(0x74, 1, 0);
+    sprite->x = lbl_806D7B30;
+    sprite->y = lbl_806D7B34;
+    fn_8019FF6C(sprite, 1);
+    item = new PanelItem((SpriteObj *)sprite, 0x2d);
+    item->tw[0].Start(0.0f, 1.0f, lbl_806D7B08);
+    self->vec.push_back(item);
+
+    item = new PanelIcon(lbl_806D7B38, lbl_806D7B3C, 0x1872, 7, 0x2d);
+    item->tw[0].Start(0.0f, 1.0f, lbl_806D7B08);
+    self->vec.push_back(item);
+
+    self->cursor->sprite->mode = 6;
+    float cursorX = fn_801D8D3C(g_cupId, g_longRoundFlag);
+    self->cursor->sprite->fC = cursorX;
+    self->cursor->sprite->f10 = lbl_806D7B20;
+    fn_801699D8(0, 1);
 }
 
 extern "C" void fn_801458A4(Pair *p)
@@ -1663,14 +961,6 @@ struct ResCtrl {
         colors[2] = c;
         colors[3] = c;
     }
-};
-
-class PanelIcon : public PanelItem {
-public:
-    short resId;
-    char pad8A[2];
-    int layer;
-    unsigned char flip;
 };
 
 extern "C" void fn_80145E14(PanelIcon *self)
