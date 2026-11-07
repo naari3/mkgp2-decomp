@@ -21,6 +21,14 @@ extern f32 tobj_unk_f0;
 extern f32 tobj_unk_f1;
 extern int tobj_unk_flag;
 void fn_802D47F4(int);
+extern char lbl_806D0C94[7];
+extern char lbl_806D0CA4[5];
+
+char lbl_804FBA58[33] = "tobj->repeat_s && tobj->repeat_t";
+
+extern GXTexCoordID lbl_806D0C90;
+extern Mtx lbl_806CCF80;
+
 void MakeTextureMtx(HSD_TObj* tobj)
 {
     Vec3 scale;
@@ -29,12 +37,14 @@ void MakeTextureMtx(HSD_TObj* tobj)
     Quaternion rot;
 
     PAD_STACK(8);
-    HSD_ASSERT(722, tobj->repeat_s && tobj->repeat_t);
+    (tobj->repeat_s && tobj->repeat_t)
+        ? (void) 0
+        : __assert(lbl_806D0C94, 722, lbl_804FBA58);
 
-    scale.x = fabsf(tobj->scale.x) < FLT_EPSILON
+    scale.x = (f32) __fabs(tobj->scale.x) < FLT_EPSILON
                   ? 0.0F
                   : (f32) tobj->repeat_s / tobj->scale.x;
-    scale.y = fabsf(tobj->scale.y) < FLT_EPSILON
+    scale.y = (f32) __fabs(tobj->scale.y) < FLT_EPSILON
                   ? 0.0F
                   : (f32) tobj->repeat_t / tobj->scale.y;
     scale.z = tobj->scale.z;
@@ -55,7 +65,7 @@ void MakeTextureMtx(HSD_TObj* tobj)
     MTXConcat(m, tobj->mtx, tobj->mtx);
 }
 
-static void TObjSetupMtx(HSD_TObj* tobj)
+void TObjSetupMtx_802BE3C4(HSD_TObj* tobj)
 {
     int i;
 
@@ -76,8 +86,14 @@ static void TObjSetupMtx(HSD_TObj* tobj)
             mtx[i][0] = 0.5F * tobj->mtx[i][0];
             mtx[i][1] = -0.5F * tobj->mtx[i][1];
             mtx[i][2] = 0.0F;
-            mtx[i][3] = 0.5F * tobj->mtx[i][0] + 0.5F * tobj->mtx[i][1] +
-                        tobj->mtx[i][2] + tobj->mtx[i][3];
+            mtx[i][3] =
+                tobj->mtx[i][3] +
+                (tobj->mtx[i][2] +
+                 (0.5F * tobj->mtx[i][0] + 0.5F * tobj->mtx[i][1]));
+        }
+        if (tobj_unk_flag) {
+            mtx[0][3] += tobj_unk_f0;
+            mtx[1][3] += tobj_unk_f1;
         }
         GXLoadTexMtxImm(mtx, tobj->mtxid, GX_MTX3x4);
     } break;
@@ -92,7 +108,9 @@ static void TObjSetupMtx(HSD_TObj* tobj)
             MtxPtr vmtx;
 
             cobj = HSD_CObjGetCurrent();
-            HSD_ASSERT(0x2A8, cobj);
+            if (!cobj) {
+                __assert(lbl_806D0C94, 815, lbl_806D0CA4);
+            }
             vmtx = HSD_CObjGetViewingMtxPtrDirect(cobj);
             HSD_LObjGetLightVector(lobj, &ldir);
             MTXMultVecSR(vmtx, &ldir, &ldir);
@@ -117,9 +135,11 @@ static void TObjSetupMtx(HSD_TObj* tobj)
 
             GXLoadTexMtxImm(mtx, tobj->mtxid, GX_MTX3x4);
         } else {
-            static Mtx zero = { 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F,
-                                0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F };
-            GXLoadTexMtxImm(zero, tobj->mtxid, GX_MTX3x4);
+            static Mtx lbl_804FBA7C = {
+                0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F,
+                0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F
+            };
+            GXLoadTexMtxImm(lbl_804FBA7C, tobj->mtxid, GX_MTX3x4);
         }
     } break;
 
@@ -132,10 +152,20 @@ static void TObjSetupMtx(HSD_TObj* tobj)
     } break;
 
     default:
-        if (tobj_bump(tobj)) {
-            GXLoadTexMtxImm(tobj->mtx, tobj->mtxid, GX_MTX2x4);
+        if (!tobj_unk_ptr || tobj_coord(tobj) != TEX_COORD_UV) {
+            if (tobj_bump(tobj)) {
+                GXLoadTexMtxImm(tobj->mtx, tobj->mtxid, GX_MTX2x4);
+            } else {
+                GXLoadTexMtxImm(tobj->mtx, tobj->mtxid, GX_MTX3x4);
+            }
         } else {
-            GXLoadTexMtxImm(tobj->mtx, tobj->mtxid, GX_MTX3x4);
+            Mtx mtx;
+            MTXConcat(tobj_unk_ptr, tobj->mtx, mtx);
+            if (tobj_bump(tobj)) {
+                GXLoadTexMtxImm(mtx, tobj->mtxid, GX_MTX2x4);
+            } else {
+                GXLoadTexMtxImm(mtx, tobj->mtxid, GX_MTX3x4);
+            }
         }
         break;
     }
@@ -160,9 +190,13 @@ static void setupTextureCoordGen(HSD_TObj* tobj)
         if (tobj_bump(tobj)) {
             GXSetTexCoordGen(tobj->coord, GX_TG_MTX2x4, tobj->src,
                              tobj->mtxid);
-        } else {
+        } else if (tobj->coord != lbl_806D0C90) {
             GXSetTexCoordGen2(tobj->coord, GX_TG_MTX2x4, tobj->src,
                               GX_IDENTITY, GX_DISABLE, tobj->mtxid);
+        } else {
+            GXLoadTexMtxImm(lbl_806CCF80, GX_TEXMTX1, GX_MTX3x4);
+            GXSetTexCoordGen2(tobj->coord, GX_TG_MTX3x4, GX_TG_POS,
+                              GX_TEXMTX1, GX_DISABLE, GX_PTIDENTITY);
         }
     }
 }
@@ -171,7 +205,7 @@ static void setupTextureCoordGenBump(HSD_TObj* bump)
 {
     u32 mask;
     int i;
-    static GXTexGenType func[] = {
+    static GXTexGenType lbl_804FBAAC[] = {
         GX_TG_BUMP0, GX_TG_BUMP1, GX_TG_BUMP2, GX_TG_BUMP3,
         GX_TG_BUMP4, GX_TG_BUMP5, GX_TG_BUMP6, GX_TG_BUMP7,
     };
@@ -187,7 +221,7 @@ static void setupTextureCoordGenBump(HSD_TObj* bump)
         i = 0;
     }
 
-    GXSetTexCoordGen((GXTexCoordID) (bump->coord + 1), func[i],
+    GXSetTexCoordGen((GXTexCoordID) (bump->coord + 1), lbl_804FBAAC[i],
                      HSD_TexCoordID2TexGenSrc(bump->coord), GX_IDENTITY);
 }
 
