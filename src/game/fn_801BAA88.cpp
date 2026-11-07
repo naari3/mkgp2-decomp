@@ -1037,19 +1037,19 @@ extern "C" void fn_801BD744(CardBuy *self) {
     }
     if (self->credit->ready == 1) {
         fn_80160588(self->panel.p, dir, press);
-        self->bright -= lbl_806D9A78;
-        if (self->bright < lbl_806D9A74) {
-            self->bright = lbl_806D9A74;
+        self->bright -= 0.016666668f;
+        if (self->bright < 0.0f) {
+            self->bright = 0.0f;
         }
     } else {
         fn_80160588(self->panel.p, 0, 0);
     }
     int coins = CreditMgr_GetCoinCount(0, -1);
     if (self->coins != coins) {
-        self->bright = lbl_806D9AB8;
+        self->bright = 20.0f;
     }
     self->coins = coins;
-    if (self->panel->Choice() == 1 || self->bright <= lbl_806D9A74) {
+    if (self->panel->Choice() == 1 || self->bright <= 0.0f) {
         fn_801618CC(self->panel.p, 1, 1);
         fn_801699D8(0, 0);
         self->msg->shown = 0;
@@ -1071,7 +1071,7 @@ extern "C" void fn_801BD744(CardBuy *self) {
             }
         } else {
             self->state = 2;
-            self->bright = lbl_806D9AB0;
+            self->bright = -1.0f;
             card_save_trigger(1);
             clFlowKart_SetupTextLayout(self->msg.p, 10);
             self->msg->shown = 0;
@@ -2613,16 +2613,16 @@ void NameEntry::DrawKeys() {
                 continue;
             }
             if (k->blink != 1) {
-                k->t += lbl_806D9A58;
-                if (k->t > lbl_806D9A34) {
-                    k->t -= lbl_806D9A34;
+                k->t += 0.05f;
+                if (k->t > 1.0f) {
+                    k->t -= 1.0f;
                     if (k->sel == 0) {
                         k->blink = 1;
                     }
                 }
-                k->t2 += lbl_806D9A5C;
-                if (k->t2 >= lbl_806D9A34) {
-                    k->t2 -= lbl_806D9A34;
+                k->t2 += 0.025f;
+                if (k->t2 >= 1.0f) {
+                    k->t2 -= 1.0f;
                     if (k->sel == 0) {
                         k->blink = 1;
                     }
@@ -2631,20 +2631,20 @@ void NameEntry::DrawKeys() {
             ResCtrl rc;
             if (k->lit == 1) {
                 rc.resId = 0x1913;
-                rc.Show(k->x, k->y, lbl_806D9A34);
-                float a = k->blink == 1 ? lbl_806D9A34 : sinf(lbl_806D9A60 * k->t2);
+                rc.Show(k->x, k->y, 1.0f);
+                float a = k->blink == 1 ? 1.0f : sinf(3.141592653589793 * k->t2);
                 rc.t1 = 4;
                 rc.t0 = 1;
                 rc.t2 = 1;
-                unsigned int c = PackColor(0xFF, 0xFF, 0xFF, (int)(lbl_806D9A68 * a));
+                unsigned int c = __rlwimi(0xFFFFFF00, (int)(255.0f * a), 0, 24, 31);
                 rc.SetColor(c);
                 fn_8011FAFC(&rc, 7);
             }
             fn_80121E10(&rc);
             rc.resId = k->res;
-            rc.Show(k->x, k->y, lbl_806D9A34);
-            float sy = k->blink == 1 ? lbl_806D9A34 : lbl_806D9A6C * sinf(lbl_806D9A60 * k->t) + lbl_806D9A34;
-            float sx = k->blink == 1 ? lbl_806D9A34 : lbl_806D9A6C * sinf(lbl_806D9A60 * k->t) + lbl_806D9A34;
+            rc.Show(k->x, k->y, 1.0f);
+            float sy = k->blink == 1 ? 1.0f : 0.25f * sinf(3.141592653589793 * k->t) + 1.0f;
+            float sx = k->blink == 1 ? 1.0f : 0.25f * sinf(3.141592653589793 * k->t) + 1.0f;
             rc.scaleX = sx;
             rc.scaleY = sy;
             fn_8011FAFC(&rc, 7);
