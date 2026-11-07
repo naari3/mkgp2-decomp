@@ -1,16 +1,25 @@
-/* Overlay projection and camera setup. NonMatching native draft. */
-struct OverlayRotation {
-    float a,b,c,d;
-    OverlayRotation(double a_,double b_,double c_,double d_) : a(a_),b(b_),c(c_),d(d_) {}
-    OverlayRotation &operator=(const OverlayRotation &r) { a=r.a; b=r.b; c=r.c; d=r.d; return *this; }
+/* Overlay projection and camera setup (fn_801F6588).
+ *
+ * This TU owns .bss 0x80679698..0x806796F0 (view rect, rotation, view
+ * matrix); the target addresses all three from one pooled base in r31.
+ * The rotation temporary has a dtor, which keeps it in memory at sp+0x2C.
+ * NonMatching (99.46%): only the FPR homes of c/d (target f7/f6) versus
+ * the converted rotation.c/d (target f10/f9) are swapped. */
+struct RotData { float a,b,c,d;
+    RotData &operator=(const RotData &r) { a=r.a; b=r.b; c=r.c; d=r.d; return *this; } };
+struct OverlayRotation : RotData {
+    OverlayRotation(float a_,float b_,double c_,double d_) { a=a_; b=b_; c=c_; d=d_; }
+    ~OverlayRotation() {}
 };
 typedef struct OverlayView {
     unsigned short x,y,width,height;
     float left,right,bottom,top;
-    OverlayRotation rotation;
-    float view[3][4];
 } OverlayView;
-extern "C" OverlayView lbl_80679698;
+extern "C" {
+OverlayView lbl_80679698;
+RotData lbl_806796B0;
+float lbl_806796C0[3][4];
+}
 extern "C" const float lbl_806DA6B0, lbl_806DA6B4, lbl_806DA6B8, lbl_806DA6BC;
 extern "C" const float lbl_806DA6C0, lbl_806DA6C4, lbl_806DA6C8, lbl_806DA6CC, lbl_806DA6D0;
 extern "C" const float lbl_806DA6D4, lbl_806DA6D8, lbl_806DA6DC, lbl_806DA6E0, lbl_806DA6E4, lbl_806DA6E8;
@@ -26,13 +35,9 @@ extern "C" void GXSetCurrentMtx(int);
 #pragma exceptions on
 extern "C" void fn_801F6588(unsigned int mode) {
     float projection[4][4];
-    float target[3];
-    float up[3];
-    float eye[3];
-    OverlayView *v = &lbl_80679698;
     GXSetCullMode(2);
     GXSetViewport(lbl_806DA6C0,lbl_806DA6C0,lbl_806DA6B0,lbl_806DA6B4,lbl_806DA6C0,lbl_806DA6C4);
-    v->left=lbl_806DA6B8; v->right=lbl_806DA6BC; v->bottom=lbl_806DA6BC; v->top=lbl_806DA6C8;
+    lbl_80679698.left=lbl_806DA6B8; lbl_80679698.right=lbl_806DA6BC; lbl_80679698.bottom=lbl_80679698.right; lbl_80679698.top=lbl_806DA6C8;
     if (!(mode & 255)) {
         C_MTXOrtho(projection,lbl_806DA6CC,lbl_806DA6D0,lbl_806DA6D4,lbl_806DA6D8,lbl_806DA6DC,lbl_806DA6E0);
         GXSetProjection(projection,1);
@@ -40,25 +45,24 @@ extern "C" void fn_801F6588(unsigned int mode) {
         C_MTXOrtho(projection,lbl_806DA6CC,lbl_806DA6D0,lbl_806DA6D4,lbl_806DA6D8,lbl_806DA6E4,lbl_806DA6E8);
         GXSetProjection(projection,1);
     }
-    v->x=0; v->y=0; v->width=640; v->height=480;
+    lbl_80679698.x=0; lbl_80679698.y=0; lbl_80679698.width=640; lbl_80679698.height=480;
     GXSetScissor(0,0,640,480);
     {
-        float dx=((640-v->width)>>1)-v->x;
-        float dy=((480-v->height)>>1)-v->y;
-        float a=lbl_806DA6C0;
-        float b=lbl_806DA6EC;
-        float c=lbl_806DA6D8;
-        float d=lbl_806DA6CC;
+        float dy; float dx; float d; float c; float a; float b;
+        dx=((640-lbl_80679698.width)>>1)-lbl_80679698.x;
+        dy=((480-lbl_80679698.height)>>1)-lbl_80679698.y;
+        a=lbl_806DA6C0; b=lbl_806DA6EC; c=lbl_806DA6D8; d=lbl_806DA6CC;
         OverlayRotation rotation(c,d,a,b);
-        v->rotation=rotation;
-        up[0]=a; up[1]=b; up[2]=a;
-        eye[0]=rotation.a-rotation.c*dy-rotation.d*dx;
-        eye[1]=rotation.b+rotation.c*dx-rotation.d*dy;
+        float target[3]; float up[3]; float eye[3];
+        lbl_806796B0.a=c; lbl_806796B0.b=d; lbl_806796B0.c=a; lbl_806796B0.d=b;
+        up[0]=a; up[1]=lbl_806DA6EC; up[2]=lbl_806DA6C0;
+        eye[0]=c-rotation.c*dy-rotation.d*dx;
+        eye[1]=d+rotation.c*dx-rotation.d*dy;
         eye[2]=lbl_806DA6F0;
         target[0]=eye[0]; target[1]=eye[1]; target[2]=a;
-        C_MTXLookAt(v->view,eye,up,target);
+        C_MTXLookAt(lbl_806796C0,eye,up,target);
     }
-    GXLoadPosMtxImm(v->view,0);
+    GXLoadPosMtxImm(lbl_806796C0,0);
     GXSetCurrentMtx(0);
 }
 #pragma exceptions reset

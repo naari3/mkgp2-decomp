@@ -42,7 +42,7 @@ all of these.
 | `EffectItemChainIndicator_Tick` | game/EffectItemChainIndicator_Tick | 99.70 | register coloring | |
 | `fn_801C64DC` | game/clFlowFigure_Unlocks | 99.94 | register coloring | |
 | `PlayStats_CopyStatsBlock` | game/PlayStats_CopyStatsBlock | 98.64 | copy scheduling barrier (target interleaves differently) | `__restrict`, temps |
-| `fn_801F6588` | game/OverlayViewSetup | ~98 (44 diff lines) | FPR numbering only (target a=f5,b=f4,d=f6, lfd const f3). Needs a .bss split 0x80679698..0x806796FC owned as separate objects (section anchor in r31) | 720 decl orders, float/double ctor params, compiler x pragma sweep, lit.py, 3 cperm runs (best 21 with junk temps). WIP `notes/r4/OverlayViewSetup_wip.cpp` + `OverlayViewSetup_splits.diff` |
+| `fn_801F6588` | game/OverlayViewSetup | 99.46 | R6 landed the .bss split (TU owns 0x80679698..0x806796F0 as view rect / rotation / view mtx, pooled base r31), rotation temp with a dtor (sp+0x2C, matches stack), ctor (float,float,double,double) for the two frsp, `bottom=right` read-back. Left: c/d homes f10/f9 vs target f7/f6 swapped with the frsp results | R6: ~3000 variants (ctor/local types, eye sources, copy forms, statement and decl orders); earlier R4 WIP `notes/r4/OverlayViewSetup_wip.cpp` |
 | `fn_80162D90` | game/Scene_80162D90 | 99.82 | register swap | |
 | `fn_8017CE1C` | game/mapobject/fn_8017CE1C | 99.98 | register swap | |
 | `fn_8017EFFC` | game/miyazakiconsole/fn_8017EFFC | 97.79 | register swap | |
