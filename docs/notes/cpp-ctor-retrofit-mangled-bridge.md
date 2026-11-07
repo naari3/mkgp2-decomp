@@ -1309,3 +1309,8 @@ c18_u111: CardEjectTask fn_801FD5FC 516B resolves95.93023->100 by owning .rodata
 Source: Codex worker c18_u82_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 292 B.
 
 c18_u82: TireSprite_Load 8022B278 (292B) indexed inline helper had every instruction/control edge correct but generated array induction webs occupied r25..r28, while k/n occupied r31/r30. Native explicit typed cursors declared textures, palettes, resources, tluts, i, n, k restore target GPR homes. Initialize i and then cursors after DebugPrintf; use separate real early-return guards for textures/palettes and natural cursor increment order. Text/extab/extabindex all 100%; Matching source input, final main.elf address/size and full DOL SHA-1 verified. No section ownership, bridge, flag recipe or shared-header changes needed.
+
+## c18_u80_20261107
+Source: Codex worker c18_u80_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 6 fn / 1724 B.
+
+c18_u80: fn_801FDDA4 97.336845 ->100% by replacing hand-built if/goto dispatch with native switch and explicitly grouping protocol result6 with case2/default (same known result6 handling pattern as neighboring fn_801FE030). Cases1,2,3,4,5,103 alone choose pivot4 and376B; adding case6 restores target pivot5, cmp103/beq/bge/b sequence and380B. Duplicate case2/default error bodies regress87.28421%. Existing text380/extab8/index12/data28 all100; Matching source-linked actual ELF ranges exact; full DOL SHA1 ea30f3b1 OK. No bridge/pool/range changes.
