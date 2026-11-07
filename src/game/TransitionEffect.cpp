@@ -24,6 +24,9 @@ public:
     }
 };
 
+/* Matches with opt_common_subs off for this function (the target keeps the
+ * flash flag store and its local in one register only this way). */
+#pragma opt_common_subs off
 extern "C" void TransitionEffect_Tick(TransitionEffectView *self)
 {
     ScopedTimer timer(0x2B);
@@ -62,18 +65,16 @@ extern "C" void TransitionEffect_Tick(TransitionEffectView *self)
     unsigned int flashActive;
     flash->remaining -= lbl_806D2FD4;
     if (flash->remaining <= lbl_806D2FD0) {
-        flashActive = 0;
-        flash->active = flashActive;
+        flash->active = flashActive = 0;
         flash->remaining = lbl_806D2FD0;
     } else {
         float alpha = lbl_806D2FE4 * flash->remaining;
         if (alpha > lbl_806D2FE4) alpha = lbl_806D2FE4;
-        flashActive = 1;
         flash->r = lbl_806D2FDC;
         flash->g = lbl_806D2FDC;
         flash->b = lbl_806D2FDC;
         flash->alpha = alpha;
-        flash->active = flashActive;
+        flash->active = flashActive = 1;
     }
     float *shake = self->shake;
     unsigned char shakeActive;
@@ -115,6 +116,7 @@ extern "C" void TransitionEffect_Tick(TransitionEffectView *self)
     if (!fadeActive && !irisActive && !shakeActive && !(unsigned char)flashActive && !quadActive && !rouletteActive)
         self->mode = 0;
 }
+#pragma opt_common_subs reset
 
 extern "C" {
 void *Alloc(unsigned long);
