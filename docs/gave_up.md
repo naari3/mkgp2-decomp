@@ -265,3 +265,10 @@ Rows above also carry a HINT note where one applied.
 | --- | --- | --- | --- |
 | `fn_8015B790` | game/Scene_8015B790 | `opt_propagation off` | length fixed, 34 diff lines |
 | `TaMode_Init` | game/TaMode_Init | `opt_propagation off` | length fixed, 158 diff lines |
+
+## Parked 2026-11-07 22:10 (mid-range thread)
+
+| Function | TU | % | What is left | Tried |
+| --- | --- | --- | --- | --- |
+| fn_80292AD8 | triforce/acsocket_nm6.c (GC/3.0a5) | 93.42 | In the target `len` lives only in r31 (`mr r31, r5` in the prologue, `mr r5, r31` hoisted early for memcpy) and every use reads r31. Ours keeps using the incoming r5, so `off + (len + 0x1F)` is reassociated and r7/r28 are colored differently. | statement orders for al/dev/size, pragmasweep over every 3.0a*/2.x compiler × pragma pairs × 120 decl orders (2.x is worse: 44), 22-min cperm (no gain). Changing the parameter types conflicts with the prototype in acsocket_private.h. |
+| fn_801F27B4 | game/fn_801F27B4.cpp | 79.95 | It is the `__sinit` of the Menu801F0CC0 TU: it copies the PTMF tables defaultsA→liveA and defaultsB→liveB, addressed off the section anchor lbl_804E4C28 (r16) plus a second base `addi r26, r16, 0x428`. To match, the tables (.data 0x804E4FA8..0x804E5248) must be real objects in the TU that owns .data from 0x804E4C28, i.e. merge into Menu801F0CC0.cpp (onmokoworks claim) and write them as `static` table globals initialized by copy. | field-by-field PTMF assignment gets the per-word stack-temp copy shape (404 → still about 200 lines off) but not the anchor bases. |
