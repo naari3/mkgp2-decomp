@@ -1,12 +1,12 @@
 #include <triforce/amjvs_internal.h>
 
-void fn_8028B180(BOOL filter) {
-    JvsMgr* m;
+static inline void UpdateErrorStats(BOOL filter) {
+    s32 n;
     OSSemaphore* sem = &Mgr.sem;
     JvsStats* st;
     JvsEvent ev;
     u32 i;
-    s32 n;
+    JvsMgr* m;
 
     OSWaitSemaphore(sem);
     m = &Mgr;
@@ -35,4 +35,8 @@ void fn_8028B180(BOOL filter) {
         }
     }
     OSSignalSemaphore(sem);
+}
+
+void fn_8028B180(BOOL filter) {
+    UpdateErrorStats(filter);
 }
