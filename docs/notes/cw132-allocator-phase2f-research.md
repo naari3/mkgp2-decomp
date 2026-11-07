@@ -1486,3 +1486,8 @@ c16_u31: Sci2Card_BuildRetryReceiptLine 80094D80 single-fn1544B. Explicit isJapa
 Source: Codex worker c17_u48_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c17_u48 RaceScene_FrameUpdate 800A0EF4 (2856B): actual residual is only zero scratch r3 versus target r0 at +0x2CC/+0x2D4, 99.98599%. Extracting reset stores alone or the entire cc-class/timing/throttle-assist decision into semantic inline helpers both leave byte-identical output and same residual; both reverted. Approved SINGLETON_INSTANCE conversions for lbl_806D10A0/109C/10D0 are also byte-invariant and retained. No missing functions or structural instruction mismatch; no rescue split possible for a single-function TU.
+
+## c17_u80_20261107
+Source: Codex worker c17_u80_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u80: SpecialFaceMesh_Dtor 8007B798/224B explicit unsigned byte-offset walk, initialized after logical i and incremented after i, improves 99.25 -> 99.46429 by fixing loop increment order. Remaining five instructions swap offset r30 vs target r31 and hoisted SpecialFaceVec dtor pointer r31 vs target r30. Small DeleteFace inline helper and family GC/2.6 are invariant; remove helper, retain GC/1.3.2 and honest NonMatching. Owned EH unchanged; extra weak dtor_80036E40 copy. Singleton cannot use mechanism B. Coordinator full fallback-linked DOL SHA-1 OK, zero native gain.
