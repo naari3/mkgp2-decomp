@@ -1,4 +1,11 @@
-/* Secondary interface entry points adjust this to the complete controller. */
+/* Secondary interface entry points adjust this to the complete controller.
+ * NonMatching: CW 1.3.2 compiles these C wrappers as 36-byte call/return
+ * sequences, while the target has 8-byte secondary-base adjustment thunks.
+ * Native multiple inheritance emits the required thunk instructions together
+ * with its class vtable; an undefined key function suppresses both. A native
+ * class/vtable retrofit and its ABI symbol bindings are needed to replace
+ * these wrappers, rather than a register-allocation change.
+ */
 extern void *fn_801E81D8(void *, int);
 extern unsigned int AI_GrantItem(void *, int, unsigned char);
 extern int fn_801E6670(void *);
