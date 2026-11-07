@@ -6,15 +6,6 @@ static inline float FrameVecSquare(const Vec *v) {
     float x=v->x*v->x, y=v->y*v->y, z=v->z*v->z;
     return (x+y)+z;
 }
-static inline AISpeedRender *FrameFindRank(int rank, AIPairRecord *&record) {
-    AIPairRecord *p=lbl_806793D8;
-    for (int i=0; i<8; ++i,++p) {
-        record=p;
-        if (p && p->driver && ((AISpeedRender *)p->driver)->rank == rank)
-            return (AISpeedRender *)p->driver;
-    }
-    return 0;
-}
 static inline void FrameUpdatePairs(AISpeedRender *player, float px, float py, float pz) {
     for (int i=0;i<8;++i) {
         AIPairRecord *p=&lbl_806793D8[i];
@@ -52,27 +43,59 @@ static inline void FrameUpdatePairs(AISpeedRender *player, float px, float py, f
     }
     }
 }
-static inline void UpdateFlags(AIFrameOwner *self, AISpeedRender *player, int waypoint) {
+static inline void UpdateFlags(AIFrameOwner *self, AISpeedRender *player, int waypoint, AIPairRecord *pairs) {
     self->flag18 = 0;
     if (player->rank == 0) {
+        AISpeedRender *driver=0;
         AIPairRecord *p;
-        AISpeedRender *driver=FrameFindRank(1,p);
+        AIPairRecord *cursor=pairs;
+        for (int i=0; i<8; ++i,++cursor) {
+            p=cursor;
+            if (cursor && cursor->driver && ((AISpeedRender *)cursor->driver)->rank == 1) {
+                driver=(AISpeedRender *)cursor->driver;
+                break;
+            }
+        }
         if (driver) {
             int count=Path_GetTotalCount(g_pathSystem);
-            int a=waypoint+(g_totalLaps-player->lap)*count;
-            int b=p->waypoint+(g_totalLaps-driver->lap)*count;
+            int playerLap=player->lap;
+            int total=g_totalLaps;
+            int driverLap=driver->lap;
+            int a=total-playerLap;
+            int b=p->waypoint;
+            int laps=total-driverLap;
+            a=a*count;
+            laps=laps*count;
+            a=waypoint+a;
+            b=b+laps;
             fn_801DE1B0();
             if (fn_801DE074() <= lbl_806DA3E0*(float)a-lbl_806DA3E0*(float)b) self->flag18=1;
         }
     }
     self->flag19 = 0;
     if (player->rank == 5) {
+        AISpeedRender *driver=0;
         AIPairRecord *p;
-        AISpeedRender *driver=FrameFindRank(4,p);
+        AIPairRecord *cursor=pairs;
+        for (int i=0; i<8; ++i,++cursor) {
+            p=cursor;
+            if (cursor && cursor->driver && ((AISpeedRender *)cursor->driver)->rank == 4) {
+                driver=(AISpeedRender *)cursor->driver;
+                break;
+            }
+        }
         if (driver) {
             int count=Path_GetTotalCount(g_pathSystem);
-            int a=waypoint+(g_totalLaps-player->lap)*count;
-            int b=p->waypoint+(g_totalLaps-driver->lap)*count;
+            int playerLap=player->lap;
+            int total=g_totalLaps;
+            int driverLap=driver->lap;
+            int a=total-playerLap;
+            int b=p->waypoint;
+            int laps=total-driverLap;
+            a=a*count;
+            laps=laps*count;
+            a=waypoint+a;
+            b=b+laps;
             fn_801DE1B0();
             if (fn_801DDF8C() <= lbl_806DA3E0*(float)b-lbl_806DA3E0*(float)a) self->flag19=1;
         }
@@ -119,7 +142,7 @@ extern "C" void AI_UpdatePerFrameState(AIFrameOwner *self) {
             }
         }
     }
-    UpdateFlags(self,player,waypoint);
+    UpdateFlags(self,player,waypoint,lbl_806793D8);
     int mode=fn_801DCCE4();
     if (mode >= 0) {
         int count=0;
