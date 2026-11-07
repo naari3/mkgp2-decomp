@@ -1596,8 +1596,10 @@
     "extabindex_CoinSystem_UpdateAll": "@eti_80024C80"
   },
   "src/game/CoinSystem_Init.c": {
-    "extab_CoinSystem_Init": "@etb_8000D2F0",
-    "extabindex_CoinSystem_Init": "@eti_80024CA4"
+    "__ct__10CoinNormalFPCci": "clNormal3D_Construct",
+    "__dt__10CoinNormalFv": "Object_DtorWithGXSync",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/CardTaskManager_RenderOverlay.c": {
     "extab_CardTaskManager_RenderOverlay": "@etb_80008FF4",
