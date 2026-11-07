@@ -142,7 +142,7 @@ bool TaskListBase::Add(PopupTask *task, int delay) {
         return false;
     }
     TaskNode *n = entries.first;
-    TaskNode *end = entries.End();
+    TaskNode *end = (TaskNode *)&entries.last;
     while (n != end) {
         PopupTask *t = n->task;
         if (t != 0 && task->id < t->id) {
@@ -151,7 +151,8 @@ bool TaskListBase::Add(PopupTask *task, int delay) {
         n = n->next;
     }
     task->field08 = delay;
-    entries.Insert(TaskIter(n), task);
+    TaskIter it(n);
+    entries.Insert(it, task);
     return true;
 }
 

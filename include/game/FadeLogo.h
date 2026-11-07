@@ -70,6 +70,7 @@ struct TaskEntriesBase {
     TaskNode *End() { return (TaskNode *)&last; }
     TaskIter EraseRange(const TaskIter &a, const TaskIter &b);
     ~TaskEntriesBase() { EraseRange(TaskIter(End()->next), TaskIter(End())); }
+    void Clear() { EraseRange(TaskIter(first), TaskIter(End())); }
 };
 
 struct TaskEntriesMid : TaskEntriesBase {
@@ -79,14 +80,14 @@ struct TaskEntriesMid : TaskEntriesBase {
 struct TaskEntries : TaskEntriesMid {
     TaskEntries();
     ~TaskEntries() {}
-    TaskIter Insert(TaskIter pos, PopupTask *const &task);
+    TaskIter Insert(const TaskIter &pos, PopupTask *const &task);
     TaskIter Erase(TaskIter it);
 };
 
 struct TaskListBase {
     virtual ~TaskListBase() {
         KillAll();
-        entries.EraseRange(TaskIter(entries.first), TaskIter(entries.End()));
+        entries.Clear();
     }
     virtual void Update() = 0;
     virtual void Draw() = 0;
