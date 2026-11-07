@@ -6,3 +6,8 @@ Shutdown 0x800AFA5C/140B matches via typed global-index512-slot array (stride0x1
 Source: Codex worker c15_u26_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c15_u26: nested inline BuildCamera(Vec origin,const Vec& target), called by SetCamera(Vec target,Vec position), reproduces origin SP+40 and matrix argument copies SP+28/SP+34 naturally, improving Update 99.01613 -> 99.145164 (496 B). Residual outer argument copies SP+4C/SP+58 reversed, ToYawPitch setup r5/r3/r4 vs target r3/r4/r5, and loop r30/r31 swap. Value-parameter Update plus trivial Vec worsens to90.21774; retained integer-copy Vec with position-first SetCamera worsens98.66936. No native gain; TU remains NM.
+
+## c17_u84_20261107
+Source: Codex worker c17_u84_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u84: Update improves99.145164->99.79032/496B by static inline UpdateSlots(Slot *slot) { int i=0; do { original active/tick/render body; ++i; ++slot; } while(i<512); }. Parameter walker=r30/local counter=r31 gives exact full loop without extra mr. Remaining outer SP+4C/SP+58 copy swap8rows and ToYawPitch setup r5/r3/r4 vs target r3/r4/r5 3rows. Reference-taking outer helper with named snapshots regresses99.3871; pointer-boundary DirectionToRotation is byte-invariant. Best H1 retained, NM stays, singleton cannot split. EH/index unchanged85.71429/66.66667 including appended weak dtor entries; owned payload unchanged. Coordinator fallback-linked DOL SHA1 exact; zero native gain.
