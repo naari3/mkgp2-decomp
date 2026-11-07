@@ -67,3 +67,9 @@ Verified on main with the patch applied: clean build (`rm -rf build/GNLJ82/src b
 | Patch | Function | TU | Issue | Before | Fix | After | TU flip |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | VfxSlotMgr.patch | VfxSlotMgr_Update | game/VfxSlotMgr.cpp | #2369 | 99.94% | copy `*position` then `*target` into locals in the caller and call BuildCamera directly (SetCamera's by-value params took their stack slots in the opposite order) | 100% | yes, included |
+
+## Data-only TU flip (R4, 2026-11-07)
+
+| Patch | TU | Fix | Verified |
+| --- | --- | --- | --- |
+| cobj_data_nm2.patch | sysdolphin/baselib/cobj_data_nm2.c | The TU defines its `.data` 0x804FC560..0x804FC620 itself (strings, three Vec3s, and CObjInfoInit's `"sysdolphin_base_library"` / `"hsd_cobj"` as `lbl_804FC5FC`), each object sized up to the next one, under `force_active`, then flips to Matching. It doesn't include cobj_private.h (that header declares the strings at their string lengths). Left for the cobj owner because CObjInfoInit / the cobj merge would move these strings. | clean build off main 835bac3: main.dol OK |
