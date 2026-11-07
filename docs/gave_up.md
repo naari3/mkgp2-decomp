@@ -64,6 +64,7 @@ all of these.
 | `fn_8021995C` (MinimapHud dtor) | game/anon_80218F40_nm2 | 99.08 | this/flag/cursor coloring (target this r30, cursor r29, i r28, delete flag r27; ours gives the flag r30) | 8 loop/decl variants, 15 min permuter |
 | `fn_8021B68C` (TeamIconRow::Update) | game/anon_8021B568_nm1 | 98.84 | cursor/t swap (target t r31, `this+i*4` r30) and one `cmpw` operand order in inline `SlotTeam` | 8 variants incl. hand-inlined SlotTeam, 15 min permuter |
 | `PCBCheck_ProcessLinks` | game/PCBCheckProcess | 99.90 | 10 lines: base/slot registers swapped, one ClearSlotData loop counter (r24 vs r29) | 178 -> 10 lines in d36e695; 20 min permuter |
+| `fn_80219538` (MinimapHud::UpdateMarkers) | game/anon_80218F40_nm1_tail | 85.31 | target keeps px/pz in stack slots (0xc/0x8, stored at entry, reloaded after sin/cos) while every ref/pointer/array/struct/non-inline variant gets promoted to f28/f29; only `volatile` reproduces the frame (174 -> 109 lines with locals declared at the top), rest is GPR coloring | pragma sweep, CW 1.3.2-2.7 same |
 | `fn_8024AD8C` | game/CardSetupFlowInitial | 95.88 | `lwz lbl_806D1AB0` scheduling | |
 | `fn_8022BBC8` | game/EnemyFace_nm3 | 98.72 | scheduling | |
 | `clFlowCourse_Dtor` | game/clFlowCourse | 99.62 | `selected % 2` register swap | |

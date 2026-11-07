@@ -9,8 +9,10 @@
 
 void CalcRange(HSD_TETev* tev);
 
-int HSD_TExpSimplify(HSD_TExp* texp)
+int HSD_TExpSimplify(HSD_TExp* texp_)
 {
+    /* Redundant cast and copy (as in melee's MUST_MATCH): gives texp r31. */
+    HSD_TExp* texp = (HSD_TExp*) texp_;
     int res = false;
 
     if (HSD_TExpGetType(texp) != HSD_TE_TEV) {
