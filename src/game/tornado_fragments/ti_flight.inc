@@ -5,8 +5,7 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void BuildOrientationFromYaw();
-extern void GetSpawnPosition();
+
 extern char *ItemObject_AllocFromPool();
 extern int Item_AdvanceFallingDrop();
 extern void Item_AdvanceTetherToJoint13();

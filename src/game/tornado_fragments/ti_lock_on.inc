@@ -7,7 +7,6 @@
 /* refine if the real prototype matters for header consumers. */
 extern void DrawEffect_ItemHitFx_Spawn();
 extern void DrawEffect_ItemHitOriented_Spawn();
-extern void GetSpawnPosition();
 extern short ItemAlias_HitRemapLookup();
 extern int ItemCollision_Check();
 extern void ItemHit_Dispatch();
