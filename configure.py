@@ -777,7 +777,7 @@ config.libs = [
             Object(Matching, "game/KartDriver_SetJointPosY_Slot3c.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/KartDriver_SetJointPosY_Slot3b.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
                     Object(Matching, "game/auto_800A8F4C_block.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/auto_ONKARTHIT_block.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
+            Object(Matching, "game/auto_ONKARTHIT_block.c", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/InputCmdDetect.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/InputCmdLeaf.c"),
             Object(Matching, "game/CObjLineBuffer.c"),
