@@ -5,13 +5,12 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void Saturate_Double();
 extern void cos();
 extern void sin();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D28C8;
-extern unsigned int lbl_806D28CC;
+extern const float lbl_806D28C8;
+extern const float lbl_806D28CC;
 extern unsigned int lbl_806D2908;
 extern unsigned int lbl_806D290C;
 extern unsigned int lbl_806D2918;

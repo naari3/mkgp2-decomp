@@ -1,0 +1,37 @@
+diff --git a/configure.py b/configure.py
+index 1d380a4..3a10ed8 100644
+--- a/configure.py
++++ b/configure.py
+@@ -489,7 +489,7 @@ config.libs = [
+             Object(Matching, "sysdolphin/baselib/cobj_tail.c"),
+             Object(NonMatching, "sysdolphin/baselib/cobj_info_nm.c"),
+             Object(NonMatching, "sysdolphin/baselib/cobj_data_nm1.c"),
+-            Object(NonMatching, "sysdolphin/baselib/cobj_data_nm2.c"),
++            Object(Matching, "sysdolphin/baselib/cobj_data_nm2.c"),
+             Object(Matching, "sysdolphin/baselib/cobj_constants.c"),
+             Object(Matching, "sysdolphin/baselib/aobj.c"),
+             Object(Matching, "sysdolphin/baselib/fobj.c"),
+diff --git a/src/sysdolphin/baselib/cobj_data_nm2.c b/src/sysdolphin/baselib/cobj_data_nm2.c
+index de43b9c..47fa281 100644
+--- a/src/sysdolphin/baselib/cobj_data_nm2.c
++++ b/src/sysdolphin/baselib/cobj_data_nm2.c
+@@ -1,2 +1,17 @@
+-#include "cobj_private.h"
+-/* Shared camera diagnostic strings and unit vectors remain target-backed. */
++/* Shared camera diagnostic strings and unit vectors (.data 0x804FC560..0x804FC620).
++ * Sizes include the padding to the next object. The tail of lbl_804FC5F0's
++ * block holds CObjInfoInit's class-name strings, which the target pools here.
++ * Not including cobj_private.h: it declares the strings with their string
++ * lengths. */
++typedef struct { float x, y, z; } CObjDataVec;
++
++#pragma force_active on
++char lbl_804FC560[0x20] = "unkown type of render pass.\n";
++char lbl_804FC580[0x10] = "cobj->eyepos";
++char lbl_804FC590[0x10] = "cobj->interest";
++CObjDataVec lbl_804FC5A0 = { 0.0F, 0.0F, 0.0F };
++CObjDataVec lbl_804FC5AC = { 0.0F, 1.0F, 0.0F };
++char lbl_804FC5B8[0x38] = "illegal up vector.\0\0hsdIsDescendantOf(info, &hsdCObj)";
++CObjDataVec lbl_804FC5F0 = { 0.0F, 1.0F, 0.0F };
++char lbl_804FC5FC[0x24] = "sysdolphin_base_library\0hsd_cobj";
++#pragma force_active reset

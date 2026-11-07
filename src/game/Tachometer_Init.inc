@@ -10,7 +10,6 @@ extern void ResCtrl_Init();
 extern void SpriteHandle_CreateDefault();
 extern void SpriteHandle_RecomputeCull();
 extern void SpriteHandle_SetActiveFlag();
-extern void Tachometer_UpdateDisplaySpeed();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int FLOAT_806cf25c;

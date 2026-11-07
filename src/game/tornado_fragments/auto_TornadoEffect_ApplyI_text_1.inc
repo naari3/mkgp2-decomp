@@ -10,7 +10,7 @@ extern void Object_SetJObjPositionXYZ();
 extern void TornadoEffect_ApplyItemVisual_Primary();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D28D0;
+extern const float lbl_806D28D0;
 extern unsigned int lbl_806D28D4;
 extern unsigned int lbl_806D28D8;
 extern unsigned int lbl_806D28F4;

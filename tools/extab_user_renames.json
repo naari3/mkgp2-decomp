@@ -1415,10 +1415,6 @@
     "extabindex_TaruItem_Dispatch_25": "@eti_80023DD4"
   },
   "src/game/ReverseChallenge.c": {
-    "extab_ReverseChallenge_Dtor": "@etb_8000A1EC",
-    "extabindex_ReverseChallenge_Dtor": "@eti_80022868",
-    "extab_ReverseChallenge_Render": "@etb_8000A1F4",
-    "extabindex_ReverseChallenge_Render": "@eti_80022874",
     "extab_ReverseChallenge_Update": "@etb_8000A1FC",
     "extabindex_ReverseChallenge_Update": "@eti_80022880",
     "extab_ReverseChallenge_Init": "@etb_8000A204",
@@ -5372,8 +5368,8 @@
     "extabindex_fn_80157D30": "@eti_800258F8"
   },
   "src/game/fn_80157DE0.cpp": {
-    "extab_fn_80157DE0": "@etb_8000F114",
-    "extabindex_fn_80157DE0": "@eti_80025904"
+    "__ct__4LBufFRC4LBuf": "fn_801F7DAC",
+    "__dt__6LGuardFv": "dtor_80157EC0"
   },
   "src/game/SceneList_80157EA8.cpp": {
     "extab_dtor_80157EC0": "@etb_8000F150",

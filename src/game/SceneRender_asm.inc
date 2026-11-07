@@ -327,65 +327,40 @@ asm void SceneRender_CmdB_8aa20(void) { /* 0x8003AA20 size:0x38 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void HSD_ShadowRemove();
+extern void HSD_ShadowRemove(void *);
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_803F58FC[];
+extern char lbl_803F58FC[];
 
 /* --- function index (1 fns, .text 0x8003AA58..0x8003AACC) ---
  * [  0] 0x8003AA58 size:0x74    global SceneRender_Dtor
  */
 
 /* --- forward decls --- */
-asm void SceneRender_Dtor(void);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_SceneRender_Dtor[8] = {
-    0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_SceneRender_Dtor = {
-    (void *)&SceneRender_Dtor, 0x00000074, (void *)extab_SceneRender_Dtor
-};
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void SceneRender_Dtor(void) { /* 0x8003AA58 size:0x74 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr r31, r4
-    stw r30, 0x8(r1)
-    mr. r30, r3
-    beq SceneRender_Dtor_L_8003AAB0
-    lis r3, lbl_803F58FC@ha
-    addi r0, r3, lbl_803F58FC@l
-    stw r0, 0x0(r30)
-    lwz r3, 0x4(r30)
-    bl HSD_ShadowRemove
-    li r0, 0x0
-    mr r3, r30
-    stw r0, 0x4(r30)
-    li r4, 0x0
-    bl dtor_8003A71C
-    extsh. r0, r31
-    ble SceneRender_Dtor_L_8003AAB0
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    SceneRender_Dtor_L_8003AAB0:
-    lwz r0, 0x14(r1)
-    mr r3, r30
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+/* 0x8003AA58 size:0x74 */
+#pragma exceptions on
+#pragma dont_inline on
+void *SceneRender_Dtor(void *this, short flag) {
+    if (this != 0) {
+        *(void **)this = lbl_803F58FC;
+        HSD_ShadowRemove(*(void **)((char *)this + 4));
+        *(void **)((char *)this + 4) = 0;
+        dtor_8003A71C(this, 0);
+        if (flag > 0) {
+            MemoryManager_TimedFree(this);
+        }
+    }
+    return this;
 }
+#pragma dont_inline reset
+#pragma exceptions reset
 
 

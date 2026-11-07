@@ -7,13 +7,10 @@
  */
 
 /* --- forward decls --- */
-asm void TornadoEffect_TriggerField140(void);
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void TornadoEffect_TriggerField140(void) { /* 0x80058DDC size:0xC */
-    nofralloc
-    li r0, 0x2
-    stw r0, 0x140(r3)
-    blr
+/* 0x80058DDC size:0xC */
+void TornadoEffect_TriggerField140(void *e) {
+    TE_S32(e, 0x140) = 2;
 }
 
