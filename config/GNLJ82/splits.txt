@@ -6325,6 +6325,7 @@ game/OptionMenuDraw.cpp:
 	extab       start:0x8000F190 end:0x8000F198
 	extabindex  start:0x80025970 end:0x8002597C
 	.text       start:0x8015A6E4 end:0x8015AE3C
+	.rodata     start:0x803678D8 end:0x80367F68
 
 game/Scene_8015AE3C.cpp:
 	extab       start:0x8000F198 end:0x8000F1A0
