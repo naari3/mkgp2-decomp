@@ -230,7 +230,6 @@ void fn_80157BE8(ListIter *ret, List *l, ListIter *it);
 void fn_80157C60(void);
 void fn_80157D18(List *l);
 void fn_80157D30(void);
-asm void fn_80157DE0(void);
 void fn_80157EA8(List *l);
 DataBuf *dtor_80157EC0(DataBuf *self, short flag);
 void fn_80157F1C(DrawScene *self);
@@ -244,7 +243,6 @@ asm void fn_80159BD0(void);
 #pragma section R ".extab_user"
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; void *f11; unsigned int f12; unsigned int f13; void *f14; } extab_fn_80157DE0 = { 0x28180000, 0x00000058, 0x00000018, 0x0000006C, 0x00000030, 0x00000000, 0x10000255, 0x00000000, 0x0000005C, 0x00000010, 0x82000008, (void *)&dtor_80157EC0, 0x0D000010, 0x82000008, (void *)&dtor_80157EC0 };
 
 
 
@@ -252,9 +250,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 #pragma section R ".extabindex_user"
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80157DE0 = {
-    (void *)&fn_80157DE0, 0x000000C8, (void *)&extab_fn_80157DE0
-};
 
 
 
@@ -271,58 +266,44 @@ static inline InputView *input_state(void)
 
 
 
-extern "C" asm void fn_80157DE0(void) { /* 0x80157DE0 size:0xC8 */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    stw r0, 0x44(r1)
-    stmw r27, 0x2c(r1)
-    mr r29, r3
-    mr r31, r1
-    mr r30, r4
-    mr r27, r5
-    mr r28, r6
-    li r3, 0xa0
-    bl Alloc
-    addi r0, r30, 0x4
-    addic. r5, r3, 0x8
-    stw r0, 0x8(r31)
-    stw r3, 0xc(r31)
-    beq fn_80157DE0_L_80157E4C
-    lwz r0, 0x0(r28)
-    addi r3, r5, 0x4
-    stw r1, 0x24(r31)
-    addi r4, r28, 0x4
-    stw r0, 0x0(r5)
-    bl fn_801F7DAC
-    b fn_80157DE0_L_80157E4C
-    li r3, 0x0
-    li r4, 0x0
-    li r5, 0x0
-    bl __throw
-    fn_80157DE0_L_80157E4C:
-    lwz r5, 0x0(r27)
-    li r3, 0x0
-    lwz r6, 0xc(r31)
-    lwz r4, 0x0(r5)
-    stw r3, 0xc(r31)
-    stw r6, 0x4(r4)
-    lwz r0, 0x0(r5)
-    stw r0, 0x0(r6)
-    stw r6, 0x0(r5)
-    stw r5, 0x4(r6)
-    lwz r4, 0x0(r30)
-    addi r0, r4, 0x1
-    stw r0, 0x0(r30)
-    stw r6, 0x0(r29)
-    b fn_80157DE0_L_80157E8C
-    bl MemoryManager_TimedFree
-    fn_80157DE0_L_80157E8C:
-    mr r10, r31
-    lmw r27, 0x2c(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+struct LNode { LNode *prev; LNode *next; };
+struct LList { int size; LNode head; };
+struct LPos { LNode *n; LPos(LNode *p) : n(p) {} LPos(const LPos &p) : n(p.n) {} };
+struct LBuf {
+    int pad0;
+    void *data;
+    char rest[0x94 - 8];
+    LBuf(const LBuf &o); /* fn_801F7DAC */
+};
+struct LValue {
+    int a;
+    LBuf b;
+    LValue(const LValue &v) : a(v.a), b(v.b) {}
+};
+struct LValueNode { LNode link; LValue value; };
+struct LGuard {
+    LNode **allocator;
+    LValueNode *node;
+    LGuard(LNode **a, LValueNode *n) : allocator(a), node(n) {}
+    ~LGuard() { if (node) MemoryManager_TimedFree(node); } /* weak copy = dtor_80157EC0 */
+    LValueNode *Release() { LValueNode *p = node; node = 0; return p; }
+};
+inline void *operator new(unsigned long, void *p) { return p; }
+inline void operator delete(void *, void *) {}
+
+static inline LPos LInsert(LList *l, LNode *at, LValueNode *node)
+{
+    at->prev->next = &node->link;
+    node->link.prev = at->prev;
+    at->prev = &node->link;
+    node->link.next = at;
+    ++l->size;
+    return LPos(&node->link);
+}
+
+extern "C" LPos fn_80157DE0(LList *l, const LPos &pos, const LValue &value)
+{
+    LGuard guard(&l->head.prev, (LValueNode *)((void *(*)(unsigned long))Alloc)(sizeof(LValueNode)));
+    new (&guard.node->value) LValue(value);
+    return LInsert(l, pos.n, guard.Release());
 }
