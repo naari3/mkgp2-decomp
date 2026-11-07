@@ -67,11 +67,9 @@ ListIter DoublyLinkedList_EraseRange(void *, const ListIter &, const ListIter &)
 struct NamCamListStorage {
     int count;
     ListNode *last, *first;
-    ListIter EraseAll() {
+    void EraseAll() {
         ListNode *end = (ListNode *)&last;
-        ListIter finish(end);
-        ListIter begin(end->next);
-        return DoublyLinkedList_EraseRange(this, begin, finish);
+        DoublyLinkedList_EraseRange(this, ListIter(end->next), ListIter(end));
     }
     ~NamCamListStorage() { EraseAll(); }
 };
