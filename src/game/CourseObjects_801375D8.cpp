@@ -69,18 +69,6 @@ void fn_801385CC(JObj *jobj);
 void fn_8013879C(float *frustum, float fovy, float aspect, float zfar, float znear);
 Occluder *fn_80138A50(Occluder *o, const Vec3f *a, const Vec3f *b, const Vec3f *c, const Vec3f *d);
 
-#pragma section R ".extab_user"
-
-__declspec(section ".extab_user") static const unsigned char extab_fn_80138A50[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-#pragma section R ".extabindex_user"
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80138A50 = {
-    (void *)&fn_80138A50, 0x00000294, (void *)extab_fn_80138A50
-};
-
 }
 
 static inline unsigned char SphereInViewFrustum(const Vec3f *p, Vec3f *v, float r)
@@ -425,189 +413,74 @@ extern "C" void fn_8013879C(float *frustum, float fovy, float aspect, float zfar
     }
 }
 
-extern "C" asm Occluder *fn_80138A50(Occluder *o, const Vec3f *a, const Vec3f *b, const Vec3f *c, const Vec3f *d) { /* 0x80138A50 size:0x294 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    lfs f0, lbl_806D73E0(r2)
-    stw r0, 0x34(r1)
-    li r0, 0x0
-    stw r31, 0x2c(r1)
-    mr r31, r3
-    stw r0, 0x0(r3)
-    stw r0, 0x4(r3)
-    stfs f0, 0x8c(r3)
-    stfs f0, 0x90(r3)
-    stfs f0, 0x94(r3)
-    stfs f0, 0x98(r3)
-    lfs f0, 0x0(r4)
-    stfs f0, 0x8(r3)
-    lfs f0, 0x4(r4)
-    stfs f0, 0xc(r3)
-    lfs f0, 0x8(r4)
-    stfs f0, 0x10(r3)
-    lfs f0, 0x0(r5)
-    stfs f0, 0x14(r3)
-    lfs f0, 0x4(r5)
-    stfs f0, 0x18(r3)
-    lfs f0, 0x8(r5)
-    stfs f0, 0x1c(r3)
-    lfs f0, 0x0(r6)
-    stfs f0, 0x20(r3)
-    lfs f0, 0x4(r6)
-    stfs f0, 0x24(r3)
-    lfs f0, 0x8(r6)
-    stfs f0, 0x28(r3)
-    lfs f0, 0x0(r7)
-    stfs f0, 0x2c(r3)
-    lfs f0, 0x4(r7)
-    stfs f0, 0x30(r3)
-    lfs f0, 0x8(r7)
-    stfs f0, 0x34(r3)
-    lwz r0, 0x0(r4)
-    lwz r3, 0x4(r4)
-    stw r0, 0x8(r1)
-    stw r0, 0x14(r1)
-    stw r3, 0x18(r1)
-    lfs f0, 0x14(r1)
-    lwz r0, 0x8(r4)
-    stw r3, 0xc(r1)
-    stw r0, 0x1c(r1)
-    lfs f1, 0x0(r5)
-    stw r0, 0x10(r1)
-    fcmpo cr0, f1, f0
-    ble fn_80138A50_L_80138B1C
-    stfs f1, 0x14(r1)
-    fn_80138A50_L_80138B1C:
-    lfs f1, 0x4(r5)
-    lfs f0, 0x18(r1)
-    fcmpo cr0, f1, f0
-    ble fn_80138A50_L_80138B30
-    stfs f1, 0x18(r1)
-    fn_80138A50_L_80138B30:
-    lfs f1, 0x8(r5)
-    lfs f0, 0x1c(r1)
-    fcmpo cr0, f1, f0
-    ble fn_80138A50_L_80138B44
-    stfs f1, 0x1c(r1)
-    fn_80138A50_L_80138B44:
-    lfs f1, 0x0(r5)
-    lfs f0, 0x8(r1)
-    fcmpo cr0, f1, f0
-    bge fn_80138A50_L_80138B58
-    stfs f1, 0x8(r1)
-    fn_80138A50_L_80138B58:
-    lfs f1, 0x4(r5)
-    lfs f0, 0xc(r1)
-    fcmpo cr0, f1, f0
-    bge fn_80138A50_L_80138B6C
-    stfs f1, 0xc(r1)
-    fn_80138A50_L_80138B6C:
-    lfs f1, 0x8(r5)
-    lfs f0, 0x10(r1)
-    fcmpo cr0, f1, f0
-    bge fn_80138A50_L_80138B80
-    stfs f1, 0x10(r1)
-    fn_80138A50_L_80138B80:
-    lfs f1, 0x0(r6)
-    lfs f0, 0x14(r1)
-    fcmpo cr0, f1, f0
-    ble fn_80138A50_L_80138B94
-    stfs f1, 0x14(r1)
-    fn_80138A50_L_80138B94:
-    lfs f1, 0x4(r6)
-    lfs f0, 0x18(r1)
-    fcmpo cr0, f1, f0
-    ble fn_80138A50_L_80138BA8
-    stfs f1, 0x18(r1)
-    fn_80138A50_L_80138BA8:
-    lfs f1, 0x8(r6)
-    lfs f0, 0x1c(r1)
-    fcmpo cr0, f1, f0
-    ble fn_80138A50_L_80138BBC
-    stfs f1, 0x1c(r1)
-    fn_80138A50_L_80138BBC:
-    lfs f1, 0x0(r6)
-    lfs f0, 0x8(r1)
-    fcmpo cr0, f1, f0
-    bge fn_80138A50_L_80138BD0
-    stfs f1, 0x8(r1)
-    fn_80138A50_L_80138BD0:
-    lfs f1, 0x4(r6)
-    lfs f0, 0xc(r1)
-    fcmpo cr0, f1, f0
-    bge fn_80138A50_L_80138BE4
-    stfs f1, 0xc(r1)
-    fn_80138A50_L_80138BE4:
-    lfs f1, 0x8(r6)
-    lfs f0, 0x10(r1)
-    fcmpo cr0, f1, f0
-    bge fn_80138A50_L_80138BF8
-    stfs f1, 0x10(r1)
-    fn_80138A50_L_80138BF8:
-    lfs f1, 0x0(r7)
-    lfs f0, 0x14(r1)
-    fcmpo cr0, f1, f0
-    ble fn_80138A50_L_80138C0C
-    stfs f1, 0x14(r1)
-    fn_80138A50_L_80138C0C:
-    lfs f1, 0x4(r7)
-    lfs f0, 0x18(r1)
-    fcmpo cr0, f1, f0
-    ble fn_80138A50_L_80138C20
-    stfs f1, 0x18(r1)
-    fn_80138A50_L_80138C20:
-    lfs f1, 0x8(r7)
-    lfs f0, 0x1c(r1)
-    fcmpo cr0, f1, f0
-    ble fn_80138A50_L_80138C34
-    stfs f1, 0x1c(r1)
-    fn_80138A50_L_80138C34:
-    lfs f1, 0x0(r7)
-    lfs f0, 0x8(r1)
-    fcmpo cr0, f1, f0
-    bge fn_80138A50_L_80138C48
-    stfs f1, 0x8(r1)
-    fn_80138A50_L_80138C48:
-    lfs f1, 0x4(r7)
-    lfs f0, 0xc(r1)
-    fcmpo cr0, f1, f0
-    bge fn_80138A50_L_80138C5C
-    stfs f1, 0xc(r1)
-    fn_80138A50_L_80138C5C:
-    lfs f1, 0x8(r7)
-    lfs f0, 0x10(r1)
-    fcmpo cr0, f1, f0
-    bge fn_80138A50_L_80138C70
-    stfs f1, 0x10(r1)
-    fn_80138A50_L_80138C70:
-    lfs f1, 0x14(r1)
-    addi r3, r1, 0x14
-    lfs f0, 0x8(r1)
-    mr r5, r3
-    lfs f3, lbl_806D73E4(r2)
-    addi r4, r31, 0x8c
-    fadds f2, f1, f0
-    lfs f1, 0xc(r1)
-    lfs f0, 0x10(r1)
-    fmuls f2, f3, f2
-    stfs f2, 0x8c(r31)
-    lfs f2, 0x18(r1)
-    fadds f1, f2, f1
-    fmuls f1, f3, f1
-    stfs f1, 0x90(r31)
-    lfs f1, 0x1c(r1)
-    fadds f0, f1, f0
-    fmuls f0, f3, f0
-    stfs f0, 0x94(r31)
-    bl Vec3_Subtract
-    addi r3, r1, 0x14
-    bl Vec3_Magnitude
-    stfs f1, 0x98(r31)
-    mr r3, r31
-    lwz r0, 0x34(r1)
-    lwz r31, 0x2c(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+/* Bounds vector of the occluder setup: an array-backed vec, so whole-vector
+ * copies are word copies (lwz/stw) like the target. */
+struct OccVec {
+    float v[3];
+};
+
+static inline void OccVecMax(OccVec *m, const Vec3f *p)
+{
+    if (p->x > m->v[0]) {
+        m->v[0] = p->x;
+    }
+    if (p->y > m->v[1]) {
+        m->v[1] = p->y;
+    }
+    if (p->z > m->v[2]) {
+        m->v[2] = p->z;
+    }
+}
+
+static inline void OccVecMin(OccVec *m, const Vec3f *p)
+{
+    if (p->x < m->v[0]) {
+        m->v[0] = p->x;
+    }
+    if (p->y < m->v[1]) {
+        m->v[1] = p->y;
+    }
+    if (p->z < m->v[2]) {
+        m->v[2] = p->z;
+    }
+}
+
+static inline void OccVecSet(Vec3f *dst, const Vec3f *src)
+{
+    dst->x = src->x;
+    dst->y = src->y;
+    dst->z = src->z;
+}
+
+/* Occluder from four corner points: stores the quad and a bounding sphere
+ * (center of the AABB, radius to its max corner). */
+extern "C" Occluder *fn_80138A50(Occluder *o, const Vec3f *a, const Vec3f *b, const Vec3f *c, const Vec3f *d)
+{
+    OccVec mx;
+    OccVec mn;
+
+    o->next = 0;
+    o->activeNext = 0;
+    o->center.x = 0.0f;
+    o->center.y = 0.0f;
+    o->center.z = 0.0f;
+    o->radius = 0.0f;
+    OccVecSet(&o->shape.pts[0], a);
+    OccVecSet(&o->shape.pts[1], b);
+    OccVecSet(&o->shape.pts[2], c);
+    OccVecSet(&o->shape.pts[3], d);
+    mx = *(const OccVec *)a;
+    mn = mx;
+    OccVecMax(&mx, b);
+    OccVecMin(&mn, b);
+    OccVecMax(&mx, c);
+    OccVecMin(&mn, c);
+    OccVecMax(&mx, d);
+    OccVecMin(&mn, d);
+    o->center.x = 0.5f * (mx.v[0] + mn.v[0]);
+    o->center.y = 0.5f * (mx.v[1] + mn.v[1]);
+    o->center.z = 0.5f * (mx.v[2] + mn.v[2]);
+    Vec3_Subtract((Vec3f *)&mx, &o->center, (Vec3f *)&mx);
+    o->radius = Vec3_Magnitude((Vec3f *)&mx);
+    return o;
 }

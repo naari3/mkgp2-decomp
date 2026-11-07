@@ -5,14 +5,14 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void Object_SetColorAlphaOnly();
+extern void Object_SetColorAlphaOnly(void *obj, int idx, float a);
 extern void Object_SetJObjPositionXYZ();
 extern void TornadoEffect_ApplyItemVisual_Primary();
 
 /* --- extern decls: sda21-referenced data --- */
 extern const float lbl_806D28D0;
-extern unsigned int lbl_806D28D4;
-extern unsigned int lbl_806D28D8;
+extern const float lbl_806D28D4;
+extern const float lbl_806D28D8;
 extern unsigned int lbl_806D28F4;
 extern unsigned int lbl_806D2900;
 extern unsigned int lbl_806D2938;

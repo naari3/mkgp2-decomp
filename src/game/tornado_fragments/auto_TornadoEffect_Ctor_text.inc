@@ -26,11 +26,11 @@ struct TornadoEffect {
     char padAC[0xE0 - 0xAC];
     TEVec3 vE0;
     TEVec3 vEC;
-    TornadoEffect(unsigned char a, int b, int c, unsigned char d);
+    TornadoEffect(unsigned char a, int b, int c, unsigned char d, float x, float y, float z);
 };
 
 #pragma exceptions on
-TornadoEffect::TornadoEffect(unsigned char a, int b, int c, unsigned char d)
+TornadoEffect::TornadoEffect(unsigned char a, int b, int c, unsigned char d, float x, float y, float z)
 {
     x0 = a;
     x4 = c;
@@ -40,7 +40,7 @@ TornadoEffect::TornadoEffect(unsigned char a, int b, int c, unsigned char d)
     x14 = 0;
     x18 = lbl_806D28E0;
     xA8 = 0;
-    TornadoEffect_InitDetails(this, b);
+    TornadoEffect_InitDetails(this, b, x, y, z);
 }
 #pragma exceptions reset
 #pragma cplusplus reset
