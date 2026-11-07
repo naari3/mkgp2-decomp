@@ -1,5 +1,14 @@
 #include "game/ItemGridInitPrivate.h"
 #pragma use_lmw_stmw on
+static inline void CreateGridTexts(GridInitState *self) {
+    for (int row=0;row<3;++row) {
+        for (int col=0;col<4;++col) {
+            self->texts[row][col]=new TextManager;
+            TexMgr_SetTexture(self->texts[row][col],lbl_806DB8F8);
+            self->texts[row][col]->scale=lbl_806DB8A0;
+        }
+    }
+}
 extern "C" GridInitState *ItemGridState_Init(GridInitState *self) {
     self->selected=0;
     self->phase=0;
@@ -15,13 +24,7 @@ extern "C" GridInitState *ItemGridState_Init(GridInitState *self) {
     self->handle=SpriteHandle_CreateDefault(&resource,6);
     SpriteHandle_SetActiveFlag(self->handle,0);
     SpriteHandle_RecomputeCull(self->handle);
-    for (int row=0;row<3;++row) {
-        for (int col=0;col<4;++col) {
-            self->texts[row][col]=new TextManager;
-            TexMgr_SetTexture(self->texts[row][col],lbl_806DB8F8);
-            self->texts[row][col]->scale=lbl_806DB8A0;
-        }
-    }
+    CreateGridTexts(self);
     int ids[3];
     int i;
     unsigned char *player=g_playerData;
