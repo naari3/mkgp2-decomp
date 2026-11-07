@@ -10,9 +10,9 @@ extern char lbl_806CF6B8[4];
  * text. The base declares a virtual that is not defined here first, so no
  * vtable is emitted.
  *
- * Still asm: the scene ctor. It reaches the cup tables through one pooled
- * .rodata base (lbl_80360538 + 0x2C/0x18C/0x1AC), i.e. the tables were
- * file-static data of this unit; that rodata is not owned here.
+ * The cup tables are file-static data of this unit: the scene ctor reaches
+ * them through one pooled .rodata base (+0x2C/0x18C/0x1AC). The two zero
+ * tables are not referenced by any code that survives in this unit.
  */
 #pragma cplusplus on
 
@@ -43,8 +43,6 @@ extern char lbl_8048EC9C[];
 extern int lbl_803604D8[];
 extern int lbl_80360498[][2];
 extern unsigned int lbl_80360520[];
-extern int lbl_803606C4[];
-extern int lbl_803606E4[][3];
 extern char lbl_806CF688[4];
 extern char lbl_806CF68C[4];
 extern int g_cupId;
@@ -96,36 +94,40 @@ extern void fn_8013D660(void *h, float x, float y);
 extern void fn_80192688(int id, int on);
 extern unsigned char fn_8019FE78(void *spr);
 extern void fn_8019FF8C(void *spr, short id, struct SpritePos *out);
-extern float lbl_80360544[];
-extern const float lbl_806D78B8, lbl_806D78CC, lbl_806D78D0, lbl_806D78D4;
 extern void dtor_80082960();
-extern void Alloc();
-extern void fn_8013D50C();
-extern void fn_8013D800();
-extern void fn_801D5C88();
-extern unsigned int g_ccClass;
-extern unsigned int g_roundIndex;
-extern unsigned int lbl_806D78E8;
-extern unsigned int lbl_806D78EC;
-extern unsigned int lbl_806D78F0;
-extern unsigned int lbl_806D78F4;
-extern unsigned int lbl_806D78F8;
-extern unsigned int g_playerData[];
-extern unsigned int lbl_80360538[];
-extern unsigned int lbl_8048EC50[];
-extern void dtor_800869D0();
-extern void dtor_8013EB50();
-asm void fn_80140FEC(void);
 
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; void *f11; unsigned int f12; unsigned int f13; void *f14; unsigned int f15; unsigned int f16; void *f17; } extab_fn_80140FEC = { 0x280A0000, 0x0000005C, 0x0000003C, 0x0000008C, 0x006C0030, 0x00000268, 0x00000028, 0x0000027C, 0x00720030, 0x00000000, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0780001B, 0x00000040, (void *)&dtor_800869D0, 0x8680001B, 0x00000000, (void *)&dtor_8013EB50 };
 
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80140FEC = {
-    (void *)&fn_80140FEC, 0x00000464, (void *)&extab_fn_80140FEC
-};
-
+extern unsigned char fn_801D5C88(void *data, int cc);
+extern void fn_8013D50C(void *h, float sx, float sy, float sz, float a);
+extern int g_ccClass;
+extern int g_roundIndex;
+extern struct PlayerDataView {
+    unsigned char pad[0x1BA];
+    unsigned char cupRank[4][8];
+} g_playerData;
 }
+
+static const int s_unk_80360538[3] = {0, 0, 0};
+static const float s_cupScale[8] = {0.03f, 0.03f, 0.026f, 0.03f, 0.03f, 0.03f, 0.03f, 0.03f};
+static const int s_cupOrder[8] = {7, 1, 8, 2, 3, 4, 5, 6};
+static const int s_unk_80360584[16] = {0};
+#pragma readonly_strings on
+static const char *s_trophyFiles[8][2] = {
+    {"trpy_YI_A.dat", "trpy_YI_B.dat"},
+    {"trpy_MR_A.dat", "trpy_MR_B.dat"},
+    {"trpy_WS_A.dat", "trpy_WS_B.dat"},
+    {"trpy_DK_A.dat", "trpy_DK_B.dat"},
+    {"trpy_WA_A.dat", "trpy_WA_B.dat"},
+    {"trpy_PA_A.dat", "trpy_PA_B.dat"},
+    {"trpy_KP_A.dat", "trpy_KP_B.dat"},
+    {"trpy_SP_A.dat", "trpy_SP_B.dat"},
+};
+#pragma readonly_strings reset
+static const int s_cupAnim[8] = {0x1529, 0x1521, 0x1527, 0x151B, 0x1519, 0x1523, 0x151F, 0x1525};
+static const int s_cupParam[8][3] = {
+    {0x1EA2, 0x1EAA, 0x1EB2}, {0x1EA3, 0x1EAB, 0x1EB3}, {0x1EA4, 0x1EAC, 0x1EB4}, {0x1EA5, 0x1EAD, 0x1EB5},
+    {0x1EA6, 0x1EAE, 0x1EB6}, {0x1EA7, 0x1EAF, 0x1EB7}, {0x1EA8, 0x1EB0, 0x1EB8}, {0x1EA9, 0x1EB1, 0x1EB9},
+};
 
 
 struct InputPlayer {
@@ -215,9 +217,9 @@ struct FxBase : FxData {
     FxBase() {
         obj = 0;
         active = 0;
-        x = lbl_806D77B0;
-        y = lbl_806D77B0;
-        alpha = lbl_806D77AC;
+        x = 0.0f;
+        y = 0.0f;
+        alpha = 1.0f;
     }
     virtual ~FxBase() {}
     virtual void m0C();
@@ -273,6 +275,12 @@ struct ResultFx : FxBase {
     virtual void Update();
     unsigned char IsDone();
     virtual ~ResultFx();
+    ResultFx();
+};
+
+struct PreviewModel : Handle {
+    unsigned char body[0x1C];
+    PreviewModel(const char *name, int flag);
 };
 
 void ResultFx::Stop() {
@@ -307,9 +315,9 @@ void ResultFx::Update() {
     switch (state) {
     case 0:
         if (t <= 18.0f) {
-            s = (t / 18.0f) * (1.1f * lbl_80360544[f24]);
+            s = (t / 18.0f) * (1.1f * s_cupScale[f24]);
         } else {
-            s = (t - 18.0f) * (0.1f * lbl_80360544[f24]) / 4.0f + lbl_80360544[f24];
+            s = (t - 18.0f) * (0.1f * s_cupScale[f24]) / 4.0f + s_cupScale[f24];
         }
         fn_8013D608(handle, s, s, s);
         u = t / 22.0f;
@@ -329,21 +337,21 @@ void ResultFx::Update() {
         }
         break;
     case 2:
-        fn_8019FF8C(*(void **)anims[1], lbl_803606E4[f24][f3C], &pos);
-        sc = (1.0f - t / 30.0f) * lbl_80360544[f24];
+        fn_8019FF8C(*(void **)anims[1], s_cupParam[f24][f3C], &pos);
+        sc = (1.0f - t / 30.0f) * s_cupScale[f24];
         fn_8013D660(handle, Lerp(320.0f, pos.x, t, 30.0f), Lerp(300.0f, pos.y, t, 30.0f));
         fn_8013D608(handle, sc, sc, sc);
         if (t >= 30.0f) {
             state = 3;
             t = 0.0f;
             SpriteGroup_CreateOrInit(&anims[2], lbl_806CF6B8, 0, pos.x, pos.y);
-            SpriteAnimParamBlock_SetAnimParamCached(anims[2], 0x1EA2, lbl_803606E4[f24][f3C]);
-            SpriteAnimParamBlock_SetAnimParamCached(anims[2], 0x1EAA, lbl_803606E4[f24][f38]);
+            SpriteAnimParamBlock_SetAnimParamCached(anims[2], 0x1EA2, s_cupParam[f24][f3C]);
+            SpriteAnimParamBlock_SetAnimParamCached(anims[2], 0x1EAA, s_cupParam[f24][f38]);
         }
         break;
     case 3:
         if (!fn_8019FE78(*(void **)anims[2])) {
-            SpriteAnimParamBlock_SetAnimParamCached(anims[1], lbl_803606E4[f24][f3C], lbl_803606E4[f24][f38]);
+            SpriteAnimParamBlock_SetAnimParamCached(anims[1], s_cupParam[f24][f3C], s_cupParam[f24][f38]);
             t = 0.0f;
             state = 4;
             fn_8023F1C8(anims[2]);
@@ -398,9 +406,9 @@ ResultFx::~ResultFx() {
         delete handle;
     }
     for (i = 0; i < 8; i++) {
-        fn_80120A08(lbl_803606C4[i]);
-        fn_80120A08(lbl_803606E4[i][0]);
-        fn_80120A08(lbl_803606E4[i][1]);
+        fn_80120A08(s_cupAnim[i]);
+        fn_80120A08(s_cupParam[i][0]);
+        fn_80120A08(s_cupParam[i][1]);
     }
     for (int j = 0; j < 5; j++) {
         if (anims[j]) {
@@ -410,303 +418,79 @@ ResultFx::~ResultFx() {
     }
 }
 
-extern "C" asm void fn_80140FEC(void) { /* 0x80140FEC size:0x464 */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    lis r4, lbl_8048EB44@ha
-    lfs f1, lbl_806D78B8(r2)
-    stw r0, 0x54(r1)
-    addi r0, r4, lbl_8048EB44@l
-    li r4, 0x0
-    lfs f0, lbl_806D78CC(r2)
-    stmw r27, 0x3c(r1)
-    mr r27, r3
-    lis r5, lbl_80360538@ha
-    lis r3, lbl_8048EC9C@ha
-    addi r31, r5, lbl_80360538@l
-    stw r0, 0x14(r27)
-    addi r0, r3, lbl_8048EC9C@l
-    addi r3, r27, 0x40
-    stw r4, 0x0(r27)
-    stb r4, 0x4(r27)
-    stfs f1, 0x8(r27)
-    stfs f1, 0xc(r27)
-    stfs f0, 0x10(r27)
-    stw r0, 0x14(r27)
-    bl TexMgr_Init
-    li r0, -0x1
-    lis r3, g_playerData@ha
-    stw r0, 0x18(r27)
-    addi r3, r3, g_playerData@l
-    lfs f0, lbl_806D78B8(r2)
-    stfs f0, 0x1c(r27)
-    stw r0, 0x20(r27)
-    stw r0, 0x24(r27)
-    lwz r30, g_ccClass(r13)
-    lwz r29, g_cupId(r13)
-    mr r4, r30
-    bl fn_801D5C88
-    clrlwi r3, r3, 24
-    lwz r0, g_roundIndex(r13)
-    subfic r3, r3, 0x1
-    cntlzw r3, r3
-    cmpwi r0, 0x3
-    srwi r0, r3, 5
-    mr r28, r0
-    bgt fn_80140FEC_L_8014109C
-    li r28, 0x0
-    fn_80140FEC_L_8014109C:
-    cmpwi r28, 0x1
-    bne fn_80140FEC_L_801410B8
-    li r3, 0x0
-    li r0, 0x2
-    stw r3, 0x3c(r27)
-    stw r0, 0x38(r27)
-    b fn_80140FEC_L_801410C8
-    fn_80140FEC_L_801410B8:
-    li r3, 0x0
-    li r0, 0x1
-    stw r3, 0x3c(r27)
-    stw r0, 0x38(r27)
-    fn_80140FEC_L_801410C8:
-    subic. r0, r29, 0x1
-    blt fn_80140FEC_L_801410DC
-    subi r0, r29, 0x1
-    cmpwi r0, 0x8
-    blt fn_80140FEC_L_801410E4
-    fn_80140FEC_L_801410DC:
-    mr r3, r27
-    b fn_80140FEC_L_8014143C
-    fn_80140FEC_L_801410E4:
-    addi r0, r29, 0x9a4
-    cmpwi r28, 0x1
-    stw r0, 0x20(r27)
-    li r7, 0x4
-    bne fn_80140FEC_L_801410FC
-    li r7, 0x9
-    fn_80140FEC_L_801410FC:
-    lis r3, g_playerData@ha
-    slwi r4, r30, 3
-    addi r3, r3, g_playerData@l
-    li r0, 0x2
-    addi r8, r31, 0x2c
-    srwi r5, r7, 31
-    add r9, r3, r4
-    subi r3, r29, 0x1
-    li r10, 0x0
-    mtctr r0
-    fn_80140FEC_L_80141124:
-    lwz r4, 0x0(r8)
-    addi r0, r10, 0x30
-    subi r6, r4, 0x1
-    addi r4, r6, 0x1ba
-    lbzx r4, r9, r4
-    cmpw r6, r3
-    srawi r6, r4, 31
-    subfc r4, r7, r4
-    adde r4, r6, r5
-    stbx r4, r27, r0
-    bne fn_80140FEC_L_80141154
-    stw r10, 0x24(r27)
-    fn_80140FEC_L_80141154:
-    lwzu r4, 0x4(r8)
-    addi r0, r10, 0x31
-    addi r10, r10, 0x1
-    subi r6, r4, 0x1
-    addi r4, r6, 0x1ba
-    lbzx r4, r9, r4
-    cmpw r6, r3
-    srawi r6, r4, 31
-    subfc r4, r7, r4
-    adde r4, r6, r5
-    stbx r4, r27, r0
-    bne fn_80140FEC_L_80141188
-    stw r10, 0x24(r27)
-    fn_80140FEC_L_80141188:
-    lwzu r4, 0x4(r8)
-    addi r0, r10, 0x31
-    addi r10, r10, 0x1
-    subi r6, r4, 0x1
-    addi r4, r6, 0x1ba
-    lbzx r4, r9, r4
-    cmpw r6, r3
-    srawi r6, r4, 31
-    subfc r4, r7, r4
-    adde r4, r6, r5
-    stbx r4, r27, r0
-    bne fn_80140FEC_L_801411BC
-    stw r10, 0x24(r27)
-    fn_80140FEC_L_801411BC:
-    lwzu r4, 0x4(r8)
-    addi r0, r10, 0x31
-    addi r10, r10, 0x1
-    subi r6, r4, 0x1
-    addi r4, r6, 0x1ba
-    lbzx r4, r9, r4
-    cmpw r6, r3
-    srawi r6, r4, 31
-    subfc r4, r7, r4
-    adde r4, r6, r5
-    stbx r4, r27, r0
-    bne fn_80140FEC_L_801411F0
-    stw r10, 0x24(r27)
-    fn_80140FEC_L_801411F0:
-    addi r8, r8, 0x4
-    addi r10, r10, 0x1
-    bdnz fn_80140FEC_L_80141124
-    lwz r0, 0x24(r27)
-    li r4, 0x0
-    add r3, r27, r0
-    stb r4, 0x30(r3)
-    lwz r0, 0x24(r27)
-    cmpwi r0, 0x0
-    bge fn_80140FEC_L_80141220
-    mr r3, r27
-    b fn_80140FEC_L_8014143C
-    fn_80140FEC_L_80141220:
-    li r3, 0x20
-    bl Alloc
-    mr. r29, r3
-    beq fn_80140FEC_L_80141254
-    lwz r5, 0x24(r27)
-    lis r4, lbl_8048EC50@ha
-    addi r4, r4, lbl_8048EC50@l
-    slwi r0, r28, 2
-    slwi r6, r5, 3
-    li r5, 0x1
-    add r4, r4, r6
-    lwzx r4, r4, r0
-    bl fn_8013D800
-    fn_80140FEC_L_80141254:
-    stw r29, 0x2c(r27)
-    lfs f1, lbl_806D78D4(r2)
-    lwz r3, 0x2c(r27)
-    lfs f2, lbl_806D78D0(r2)
-    bl fn_8013D660
-    lfs f1, lbl_806D78B8(r2)
-    lwz r3, 0x2c(r27)
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_8013D608
-    lfs f1, lbl_806D78E8(r2)
-    lwz r3, 0x2c(r27)
-    fmr f2, f1
-    lfs f4, lbl_806D78CC(r2)
-    fmr f3, f1
-    bl fn_8013D50C
-    li r0, 0x0
-    lfs f0, lbl_806D78B8(r2)
-    stw r0, 0x18(r27)
-    addi r3, r27, 0x270
-    lfs f1, lbl_806D78D4(r2)
-    la r4, lbl_806CF6A8(r13)  /* lbl_806CF6A8 */
-    stfs f0, 0x1c(r27)
-    li r5, 0x0
-    lfs f2, lbl_806D78EC(r2)
-    stw r0, 0x270(r27)
-    stw r0, 0x274(r27)
-    stw r0, 0x278(r27)
-    stw r0, 0x27c(r27)
-    stw r0, 0x280(r27)
-    bl SpriteGroup_CreateOrInit
-    lfs f1, lbl_806D78D4(r2)
-    addi r3, r27, 0x274
-    lfs f2, lbl_806D78F0(r2)
-    la r4, lbl_806CF6AC(r13)  /* lbl_806CF6AC */
-    li r5, 0x0
-    bl SpriteGroup_CreateOrInit
-    lfs f1, lbl_806D78D4(r2)
-    addi r3, r27, 0x27c
-    lfs f2, lbl_806D78EC(r2)
-    la r4, lbl_806CF6B0(r13)  /* lbl_806CF6B0 */
-    li r5, 0x1
-    bl SpriteGroup_CreateOrInit
-    lfs f1, lbl_806D78D4(r2)
-    addi r3, r27, 0x280
-    lfs f2, lbl_806D78F0(r2)
-    la r4, lbl_806CF6B4(r13)  /* lbl_806CF6B4 */
-    li r5, 0x1
-    bl SpriteGroup_CreateOrInit
-    lwz r0, 0x24(r27)
-    addi r5, r31, 0x18c
-    lwz r3, 0x270(r27)
-    li r4, 0x1529
-    slwi r0, r0, 2
-    lwzx r5, r5, r0
-    bl SpriteAnimParamBlock_SetAnimParamCached
-    lwz r3, 0x27c(r27)
-    addi r4, r31, 0x1ac
-    lfs f0, lbl_806D78B8(r2)
-    addi r5, r1, 0x8
-    lwz r3, 0x0(r3)
-    stfs f0, 0x20(r3)
-    lwz r3, 0x280(r27)
-    lwz r3, 0x0(r3)
-    stfs f0, 0x20(r3)
-    lwz r3, 0x24(r27)
-    lwz r0, 0x3c(r27)
-    mulli r6, r3, 0xc
-    lwz r3, 0x274(r27)
-    slwi r0, r0, 2
-    lwz r3, 0x0(r3)
-    add r0, r6, r0
-    lwzx r0, r4, r0
-    extsh r4, r0
-    bl fn_8019FF8C
-    li r29, 0x0
-    addi r28, r31, 0x1ac
-    fn_80140FEC_L_80141388:
-    addi r0, r29, 0x30
-    lbzx r0, r27, r0
-    cmplwi r0, 0x1
-    bne fn_80140FEC_L_801413B0
-    lwz r0, 0x38(r27)
-    lwz r3, 0x274(r27)
-    slwi r0, r0, 2
-    lwz r4, 0x0(r28)
-    lwzx r5, r28, r0
-    bl SpriteAnimParamBlock_SetAnimParamCached
-    fn_80140FEC_L_801413B0:
-    addi r29, r29, 0x1
-    addi r28, r28, 0xc
-    cmpwi r29, 0x8
-    blt fn_80140FEC_L_80141388
-    li r0, 0x1
-    addi r3, r27, 0x40
-    stw r0, 0x58(r27)
-    li r4, 0x1
-    bl fn_801F8FCC
-    lfs f0, lbl_806D78F4(r2)
-    lis r3, 0xe0e0
-    addi r0, r3, 0x2000
-    lfs f1, lbl_806D78D4(r2)
-    stfs f0, 0x26c(r27)
-    addi r3, r27, 0x40
-    lfs f2, lbl_806D78F8(r2)
-    stw r0, 0x60(r27)
-    bl fn_801F93EC
-    lwz r3, g_cupId(r13)
-    li r4, -0x1
-    bl fn_8013C198
-    mr r28, r3
-    li r3, 0x5c
-    li r4, -0x1
-    bl GetTextureByIdAndLang
-    mr r4, r3
-    mr r5, r28
-    addi r3, r27, 0x40
-    crxor 6, 6, 6
-    bl TexMgr_SetTexture
-    addi r3, r27, 0x40
-    bl fn_801F8E90
-    li r0, 0x0
-    mr r3, r27
-    stb r0, 0x28(r27)
-    fn_80140FEC_L_8014143C:
-    lmw r27, 0x3c(r1)
-    lwz r0, 0x54(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
+ResultFx::ResultFx() {
+    int cc;
+    int cup;
+    int special;
+    int need;
+    int i;
+
+    state = -1;
+    t = 0.0f;
+    f20 = -1;
+    f24 = -1;
+    cc = g_ccClass;
+    cup = g_cupId;
+    special = fn_801D5C88(&g_playerData, cc) == 1 ? 1 : 0;
+    if (g_roundIndex <= 3) {
+        special = 0;
+    }
+    if (special == 1) {
+        f3C = 0;
+        f38 = 2;
+    } else {
+        f3C = 0;
+        f38 = 1;
+    }
+    if (cup - 1 < 0 || cup - 1 >= 8) {
+        return;
+    }
+    f20 = cup + 0x9A4;
+    need = special == 1 ? 9 : 4;
+    for (i = 0; i < 8; i++) {
+        int c = s_cupOrder[i] - 1;
+        flags[i] = g_playerData.cupRank[cc][c] >= need;
+        if (c == cup - 1) {
+            f24 = i;
+        }
+    }
+    flags[f24] = 0;
+    if (f24 < 0) {
+        return;
+    }
+    handle = new PreviewModel(s_trophyFiles[f24][special], 1);
+    fn_8013D660(handle, 320.0f, 300.0f);
+    fn_8013D608(handle, 0.0f, 0.0f, 0.0f);
+    fn_8013D50C(handle, 1.17f, 1.17f, 1.17f, 1.0f);
+    state = 0;
+    t = 0.0f;
+    anims[0] = 0;
+    anims[1] = 0;
+    anims[2] = 0;
+    anims[3] = 0;
+    anims[4] = 0;
+    SpriteGroup_CreateOrInit(&anims[0], (const char *)lbl_806CF6A8, 0, 320.0f, 85.0f);
+    SpriteGroup_CreateOrInit(&anims[1], (const char *)lbl_806CF6AC, 0, 320.0f, 384.0f);
+    SpriteGroup_CreateOrInit(&anims[3], (const char *)lbl_806CF6B0, 1, 320.0f, 85.0f);
+    SpriteGroup_CreateOrInit(&anims[4], (const char *)lbl_806CF6B4, 1, 320.0f, 384.0f);
+    SpriteAnimParamBlock_SetAnimParamCached(anims[0], 0x1529, s_cupAnim[f24]);
+    ((SpriteRef *)anims[3])->spr->t = 0.0f;
+    ((SpriteRef *)anims[4])->spr->t = 0.0f;
+    {
+        SpritePos pos;
+        fn_8019FF8C(*(void **)anims[1], s_cupParam[f24][f3C], &pos);
+    }
+    for (i = 0; i < 8; i++) {
+        if (flags[i] == 1) {
+            SpriteAnimParamBlock_SetAnimParamCached(anims[1], s_cupParam[i][0], s_cupParam[i][f38]);
+        }
+    }
+    tm.mode = 1;
+    fn_801F8FCC(&tm, 1);
+    tm.fade = -3.0f;
+    tm.color = 0xE0E02000;
+    fn_801F93EC(&tm, 320.0f, 326.0f);
+    TexMgr_SetTexture(&tm, GetTextureByIdAndLang(0x5C, -1), fn_8013C198(g_cupId, -1));
+    fn_801F8E90(&tm);
+    bgmStarted = 0;
 }

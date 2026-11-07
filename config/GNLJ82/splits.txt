@@ -6188,6 +6188,8 @@ game/ResultFxScene.c:
 	extab       start:0x8000D734 end:0x8000D7AC
 	extabindex  start:0x80025010 end:0x8002504C
 	.text       start:0x8014095C end:0x80141450
+	.rodata     start:0x80360538 end:0x80360744
+	.data       start:0x8048EC50 end:0x8048EC90
 
 game/LogoAnim.c:
 	extab       start:0x8000D7AC end:0x8000D7DC

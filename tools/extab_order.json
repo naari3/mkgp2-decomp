@@ -2313,7 +2313,9 @@
     "fn_80140A38",
     "fn_80140EF0",
     "fn_80140FEC",
-    "dtor_80082960"
+    "dtor_80082960",
+    "dtor_800869D0",
+    "dtor_8013EB50"
   ],
   "src/game/ISESlot_Lifecycle.c": [
     "ISESlot_Init",

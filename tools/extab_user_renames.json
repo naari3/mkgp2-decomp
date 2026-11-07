@@ -12119,7 +12119,11 @@
     "__ct__6TexMgrFv": "TexMgr_Init",
     "__dt__7ResCtrlFv": "dtor_80082960",
     "__ct__7ResCtrlFv": "ResCtrl_Init",
-    "Update__8ResultFxFv": "fn_80140A38"
+    "Update__8ResultFxFv": "fn_80140A38",
+    "__ct__8ResultFxFv": "fn_80140FEC",
+    "__ct__12PreviewModelFPCci": "fn_8013D800",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/anon_8020C974_nm2.cpp": {
     "__ct__12CardModeRootFv": "fn_8020D00C",
