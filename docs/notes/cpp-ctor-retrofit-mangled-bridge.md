@@ -1049,3 +1049,8 @@ c16_u112 fn_801EE36C: native99.83045 ->99.9135, remains singleton NonMatching. M
 Source: Codex worker c16_u127_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u127 TitleNameHud ctor: redundant final k/n counter pair is unnecessary; a fresh block-local single k emits identical primary instruction JSON and exact owned EH (99.745766 text). Reusing function i or static inline final-loop helper generates mr for byte-offset initialization but final count web becomes r24 rather than target r22; anonymous constant/EH IDs also shift. Function-scoped fresh k leaves original li residual. No flag flip or native gain.
+
+## c17_u3_20261107
+Source: Codex worker c17_u3_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u3: fn_8020A788 accumulator spelling (int value=rate*t; value >>=16; value +=from; return value) improves 92.05882 to93.82353 under unchanged GC/2.6 flags. All target instructions through srawi match; target final add r0,r3,r0 + mr r3,r0 remains versus source add r3,r3,r0. Static inline fixed-multiply helper is baseline-identical; separate origin accumulator reverts to baseline. Keep NM; one-function TU offers no rescue split.
