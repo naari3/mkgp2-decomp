@@ -1169,7 +1169,7 @@ config.libs = [
             Object(Matching, "game/Vec3_ScaleXZ.c"),
             Object(Matching, "game/TornadoEffect.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/ItemStateGuard_IsActive.c"),
-            Object(NonMatching, "game/ItemEffect_BossGrab.cpp", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.0"),
+            Object(Matching, "game/ItemEffect_BossGrab.cpp", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.0"),
             Object(Matching, "game/ItemState_InitKeyframeBufferAndArm.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemStateSlotC_TryArm.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemEffectJump_Init.c", extra_cflags=["-Cpp_exceptions on"]),

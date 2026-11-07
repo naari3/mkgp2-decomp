@@ -1,4 +1,4 @@
-/* NonMatching: matrix copy alias analysis and scheduling differ. */
+/* Boss grab item effect: copies the pose into the grab state. */
 #include "game/ItemEffectArmPrivate.h"
 
 extern "C" {
@@ -19,7 +19,10 @@ extern "C" int ItemEffect_BossGrab(BossGrabSlot *__restrict slot, const ArmMtx *
     for (int i=0;i<16;i++) ((float *)&state->start)[i]=((float *)pose)[i];
     for (int i=0;i<16;i++) ((float *)&state->current)[i]=((float *)pose)[i];
     state->duration = duration;
-    float z=state->start.m[14], y=state->start.m[13], x=state->start.m[12];
+    float x, y, z;
+    z=state->start.m[14];
+    y=state->start.m[13];
+    x=state->start.m[12];
     state->position.x=x; state->position.y=y; state->position.z=z;
     state->owner->car->held = 0;
     state->flags = flags;
