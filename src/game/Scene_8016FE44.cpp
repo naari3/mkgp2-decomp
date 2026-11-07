@@ -15,7 +15,7 @@ void Object_SetJObjRotationX(clNormal3D *, float);
 void Object_SetJObjRotationY(clNormal3D *, float);
 void Object_SetJObjRotationZ(clNormal3D *, float);
 void Object_RenderJObjTree(clNormal3D *, int);
-void Object_SetColorAlphaOnly(clNormal3D *, int, float);
+void Object_SetColorAlphaOnly(clNormal3D *, float, int);
 }
 static inline RenderJoint *Child(RenderJoint *j) {
     if (j == 0) {
@@ -66,7 +66,7 @@ static inline void ApplyTransform(SparkRender *s, RenderJoint *j) {
     Object_SetJObjRotationZ(s->modelA, j->rz);
 }
 static inline void SetAlpha(clNormal3D *m, unsigned char alpha) {
-    Object_SetColorAlphaOnly(m, 0, (float)alpha / 255.0f);
+    Object_SetColorAlphaOnly(m, (float)alpha / 255.0f, 0);
 }
 void SparkRender::Draw() {
     if (this->modelB == 0 || this->modelA == 0) return;
@@ -80,6 +80,7 @@ void SparkRender::Draw() {
             pos[0]=j->x; pos[1]=j->y; pos[2]=j->z;
             if (fn_801379F0(pos, 2200.0f)) {
                 for (int k=0; k<4; k++) HSD_JObjSetFlags(this->joints[k], 0x10);
+                int alphaA, alphaB;
                 RenderJoint *a, *b;
                 switch (spark->index & 3) {
                 case 0: a=this->joints[0]; b=this->joints[1]; break;
@@ -88,8 +89,8 @@ void SparkRender::Draw() {
                 case 3: a=this->joints[3]; b=this->joints[1]; break;
                 default: a=0; b=0; break;
                 }
-                int alphaA=(int)(255.0f - 255.0f * Clamp01((float)(spark->timer-5)/60.0f));
-                int alphaB=(int)(255.0f - 255.0f * Clamp01((float)(spark->timer-10)/60.0f));
+                alphaA=(int)(255.0f - 255.0f * Clamp01((float)(spark->timer-5)/60.0f));
+                alphaB=(int)(255.0f - 255.0f * Clamp01((float)(spark->timer-10)/60.0f));
                 if ((unsigned char)alphaA) {
                     fn_801824D8(a, alphaA);
                     HSD_JObjClearFlags(a, 0x10);
@@ -100,7 +101,9 @@ void SparkRender::Draw() {
                 }
                 if (j) ApplyTransform(this,j);
                 Object_RenderJObjTree(this->modelB,7);
-                SetAlpha(this->modelA,(unsigned char)alphaA>(unsigned char)alphaB?alphaA:alphaB);
+                int alpha = (unsigned char)alphaA > (unsigned char)alphaB ? alphaA : alphaB;
+                float opacity = (float)(unsigned char)alpha / 255.0f;
+                Object_SetColorAlphaOnly(this->modelA, opacity, 0);
                 Object_RenderJObjTree(this->modelA,7);
             }
         }
