@@ -6265,11 +6265,17 @@ game/fn_80147468.c:
 	.text       start:0x80147468 end:0x80147470
 
 game/RaceHud_80147470.cpp:
-	extab       start:0x8000DF44 end:0x8000E5A0
-	extabindex  start:0x800252F8 end:0x800254CC
-	.text       start:0x80147470 end:0x8014CE74
+	extab       start:0x8000DF44 end:0x8000E380
+	extabindex  start:0x800252F8 end:0x80025484
+	.text       start:0x80147470 end:0x8014ADB4
 	.ctors      start:0x802E890C end:0x802E8910
 	.rodata     start:0x80362778 end:0x80362858
+
+game/CSSceneGetTitle_8014ADB4.cpp:
+	extab       start:0x8000E380 end:0x8000E5A0
+	extabindex  start:0x80025484 end:0x800254CC
+	.text       start:0x8014ADB4 end:0x8014CE74
+	.rodata     start:0x80362D90 end:0x80363D30
 	.data       start:0x8048F130 end:0x8048F178
 
 game/CSPartsHolders.c:

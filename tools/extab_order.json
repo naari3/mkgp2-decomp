@@ -1003,12 +1003,6 @@
     "fn_8014A8FC",
     "fn_8014AA38",
     "fn_8014AC48",
-    "fn_8014ADB4",
-    "fn_8014B118",
-    "fn_8014BBE4",
-    "fn_8014BF80",
-    "fn_8014C308",
-    "fn_8014C53C",
     "dtor_800869D0",
     "dtor_80082960"
   ],
@@ -2836,5 +2830,13 @@
     "ReverseChallenge_Render",
     "ReverseChallenge_Update",
     "ReverseChallenge_Init"
+  ],
+  "src/game/CSSceneGetTitle_8014ADB4.cpp": [
+    "fn_8014ADB4",
+    "fn_8014B118",
+    "fn_8014BBE4",
+    "fn_8014BF80",
+    "fn_8014C308",
+    "fn_8014C53C"
   ]
 }

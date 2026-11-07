@@ -5324,18 +5324,6 @@
     "extabindex_fn_8014AC48": "@eti_8002546C",
     "extab_fn_8014AD7C": "@etb_8000E2A0",
     "extabindex_fn_8014AD7C": "@eti_80025478",
-    "extab_fn_8014ADB4": "@etb_8000E380",
-    "extabindex_fn_8014ADB4": "@eti_80025484",
-    "extab_fn_8014B118": "@etb_8000E388",
-    "extabindex_fn_8014B118": "@eti_80025490",
-    "extab_fn_8014BBE4": "@etb_8000E390",
-    "extabindex_fn_8014BBE4": "@eti_8002549C",
-    "extab_fn_8014BF80": "@etb_8000E3A8",
-    "extabindex_fn_8014BF80": "@eti_800254A8",
-    "extab_fn_8014C308": "@etb_8000E3B0",
-    "extabindex_fn_8014C308": "@eti_800254B4",
-    "extab_fn_8014C53C": "@etb_8000E3B8",
-    "extabindex_fn_8014C53C": "@eti_800254C0",
     "__ct__6LapHudFi": "fn_80147638",
     "__dt__10LapHudBaseFv": "dtor_8013EB50",
     "__vt__10LapHudBase": "lbl_8048EB44",
@@ -13002,5 +12990,23 @@
   "src/sysdolphin/baselib/lobj_vector_nm.c": {
     "@294": "global:HSD_LObj_803B94A0_803F2BB8",
     "@295": "global:HSD_LObj_803B94AC_803F2BC4"
+  },
+  "src/game/CSSceneGetTitle_8014ADB4.cpp": {
+    "extab_fn_8014ADB4": "@etb_8000E380",
+    "extabindex_fn_8014ADB4": "@eti_80025484",
+    "extab_fn_8014B118": "@etb_8000E388",
+    "extabindex_fn_8014B118": "@eti_80025490",
+    "extab_fn_8014BBE4": "@etb_8000E390",
+    "extabindex_fn_8014BBE4": "@eti_8002549C",
+    "extab_fn_8014BF80": "@etb_8000E3A8",
+    "extabindex_fn_8014BF80": "@eti_800254A8",
+    "extab_fn_8014C308": "@etb_8000E3B0",
+    "extabindex_fn_8014C308": "@eti_800254B4",
+    "extab_fn_8014C53C": "@etb_8000E3B8",
+    "extabindex_fn_8014C53C": "@eti_800254C0",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__ct__7ResCtrlFv": "ResCtrl_Init"
   }
 }
