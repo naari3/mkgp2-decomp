@@ -8,7 +8,7 @@ static inline u32 EncodeCommand(u32 command) {
 }
 
 void fn_8028625C(u32 cmd, u32 offset, u32 length) {
-    u32 v[11];
+    u32 v[9]; /* size fixes the 0x50 frame */
     u16 key = fn_802867B8(0, 0x7FFF);
     key = key * 2 + 1;
     v[0] = EncodeCommand((key << 16) | cmd);
