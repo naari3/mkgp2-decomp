@@ -10400,6 +10400,8 @@ game/DebugOverlay_RaceConfig.cpp:
 	extab       start:0x800173D8 end:0x800173E0
 	extabindex  start:0x80028E44 end:0x80028E50
 	.text       start:0x801F4EB0 end:0x801F52A8
+	.rodata     start:0x803BE6C0 end:0x803BED88
+	.data       start:0x804E53B0 end:0x804E5430
 
 game/fn_801F52A8.cpp:
 	extab       start:0x800173E0 end:0x800173E8
