@@ -5928,6 +5928,7 @@ game/SpriteHandle.cpp:
 	extabindex  start:0x800245CC end:0x8002474C
 	.text       start:0x8011EB1C end:0x801223E8
 	.ctors      start:0x802E8904 end:0x802E8908
+	.bss        start:0x80657228 end:0x80677C38
 
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C

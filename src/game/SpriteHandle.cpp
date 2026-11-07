@@ -284,6 +284,16 @@ void __construct_array(void *, void *, void *, unsigned long, unsigned long);
 void *__register_global_object(void *, void *, void *);
 extern unsigned int fn_8011DF70[];
 extern unsigned int lbl_80657228[];
+/* .bss 0x80657228..0x80677C38 is owned by this unit (definition order). */
+unsigned int lbl_80657228[3];
+unsigned int lbl_80657234[0x18];
+unsigned int lbl_80657294[3];
+unsigned int lbl_806572A0[0x30];
+unsigned int lbl_80657360[0x10];
+SavedGXState lbl_806573A0;
+ResEntry lbl_806573E8[600];
+int lbl_8065B588[600];
+SpriteHandle g_SpriteHandlePool[500];
 void fn_8011EB1C(void);
 void fn_8011EC18(unsigned char a);
 void SpriteHandle_RecomputeCull(int h);
@@ -313,7 +323,7 @@ void fn_80122204(void);
 LList *fn_8012223C(LList *l, short flag);
 LListImp *fn_801222F0(LListImp *l);
 void fn_80122320(LListImp *l);
-asm void fn_80122338(void);
+void fn_80122338(void);
 
 #pragma section R ".extab_user"
 
@@ -358,9 +368,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_801217E8[8
 
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80122338[8] = {
-    0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 #pragma section R ".extabindex_user"
 
@@ -406,9 +413,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80122338 = {
-    (void *)&fn_80122338, 0x000000B0, (void *)extab_fn_80122338
-};
 
 }
 
@@ -2867,52 +2871,16 @@ extern "C" void fn_80122320(LListImp *l) {
     e->prev = e;
 }
 
-extern "C" asm void fn_80122338(void) { /* 0x80122338 size:0xB0 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lis r4, fn_801222F0@ha
-    lis r5, lbl_80657228@ha
-    stw r0, 0x14(r1)
-    lis r3, fn_8012223C@ha
-    li r6, 0xc
-    addi r4, r4, fn_801222F0@l
-    stw r31, 0xc(r1)
-    addi r31, r5, lbl_80657228@l
-    addi r5, r3, fn_8012223C@l
-    li r7, 0x8
-    addi r3, r31, 0xc
-    bl __construct_array
-    lis r3, fn_80122204@ha
-    addi r5, r31, 0x0
-    addi r4, r3, fn_80122204@l
-    li r3, 0x0
-    bl __register_global_object
-    lis r3, fn_801221D4@ha
-    lis r5, fn_80121FB4@ha
-    addi r4, r3, fn_801221D4@l
-    li r6, 0xc
-    addi r3, r31, 0x78
-    addi r5, r5, fn_80121FB4@l
-    li r7, 0x10
-    bl __construct_array
-    lis r4, fn_80121F54@ha
-    addi r3, r31, 0x78
-    addi r4, r4, fn_80121F54@l
-    addi r5, r31, 0x6c
-    bl __register_global_object
-    lis r4, fn_8011DF70@ha
-    addi r3, r31, 0x1c0
-    addi r4, r4, fn_8011DF70@l
-    li r5, 0x0
-    li r6, 0x1c
-    li r7, 0x258
-    bl __construct_array
-    lwz r0, 0x14(r1)
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+/* __sinit for this unit's static lists: LList[8] (lbl_80657234), the 16-list
+ * holder (lbl_806572A0) and the 600 resource slots (lbl_806573E8), with their
+ * destructor-chain records. Written out by hand like the other generated
+ * helpers here (fn_80122204, fn_80121F54). */
+extern "C" void fn_80122338(void) {
+    __construct_array(lbl_80657234, (void *)fn_801222F0, (void *)fn_8012223C, 0xC, 8);
+    __register_global_object(0, (void *)fn_80122204, lbl_80657228);
+    __construct_array(lbl_806572A0, (void *)fn_801221D4, (void *)fn_80121FB4, 0xC, 0x10);
+    __register_global_object(lbl_806572A0, (void *)fn_80121F54, lbl_80657294);
+    __construct_array(lbl_806573E8, (void *)fn_8011DF70, 0, 0x1C, 0x258);
 }
 
 __declspec(section ".ctors") static void *const fn_80122338_ctor_ref = (void *)fn_80122338;

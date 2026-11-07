@@ -5123,9 +5123,7 @@
     "extab_fn_8012223C": "@etb_8000BCCC",
     "extabindex_fn_8012223C": "@eti_80024728",
     "extab_fn_801222F0": "@etb_8000BCD4",
-    "extabindex_fn_801222F0": "@eti_80024734",
-    "extab_fn_80122338": "@etb_8000BCA4",
-    "extabindex_fn_80122338": "@eti_80024740"
+    "extabindex_fn_801222F0": "@eti_80024734"
   },
   "src/game/Scene_8014E0C4.cpp": {
     "extab_fn_8014E0C4": "@etb_8000E8F4",
