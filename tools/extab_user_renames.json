@@ -1703,8 +1703,9 @@
     "extabindex_JumpDistanceMode_PredictLanding": "@eti_80029F30"
   },
   "src/game/JumpDistanceMode_InitTimerDisplay.c": {
-    "extab_JumpDistanceMode_InitTimerDisplay": "@etb_8001A17C",
-    "extabindex_JumpDistanceMode_InitTimerDisplay": "@eti_80029F9C"
+    "__ct__9JumpTimerFi": "JumpDistanceMode_InitTimerDisplay",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960"
   },
   "src/game/JumpDistanceMode_HandlePhysics.c": {
     "extab_JumpDistanceMode_HandlePhysics": "@etb_80019EDC",
