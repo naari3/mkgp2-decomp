@@ -8878,7 +8878,18 @@
     "__dt__19VHolder<9FlowFader>Fv": "dtor_801F2724",
     "__dt__13CardEjectTaskFv": "fn_801FD588",
     "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
-    "__dt__10FlowFaderIFv": "fn_801F26C8"
+    "__dt__10FlowFaderIFv": "fn_801F26C8",
+    "cardEjectName": "global:lbl_803BFE48",
+    "cardEjectTaskName": "global:lbl_803BFE54",
+    "cardEjectBaseName": "global:lbl_803BFE68",
+    "callAttendantJ": "global:lbl_803BFE7C",
+    "callAttendantE": "global:lbl_803BFE94",
+    "cardEmptyJ": "global:lbl_803BFEB0",
+    "cardEmptyE": "global:lbl_803BFEC4",
+    "cardErrorJ": "global:lbl_803BFED0",
+    "cardErrorE": "global:lbl_803BFEE4",
+    "@34": "@etb_80017C00",
+    "@35": "@eti_8002930C"
   },
   "src/game/anon_801FD320_m2.cpp": {
     "__vt__13CardEjectTask": "lbl_804EC0D0",

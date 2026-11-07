@@ -10922,6 +10922,7 @@ game/anon_801FD320_nm1.cpp:
 	extab       start:0x80017C00 end:0x80017C2C
 	extabindex  start:0x8002930C end:0x80029318
 	.text       start:0x801FD5FC end:0x801FD800
+	.rodata     start:0x803BFE48 end:0x803BFEF8
 
 game/anon_801FD320_m2.cpp:
 	extab       start:0x80017C2C end:0x80017C5C
