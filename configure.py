@@ -1408,7 +1408,7 @@ config.libs = [
             Object(Matching, "game/fn_80105EB4.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/fn_8010670C.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/fn_80107040.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(NonMatching, "game/SetCourseParams.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(NonMatching, "game/SetCourseParams.c", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),  #g2
             Object(NonMatching, "game/AnimState_Step.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/ItemCollision_Check.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/ItemHit_Dispatch.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2

@@ -187,6 +187,7 @@ See "Pooled base registers" and "Over-split TUs" in `docs/matching_rules.md`.
 
 | Function | TU | % | What is left | Tried / WIP |
 | --- | --- | --- | --- | --- |
+| `SetCourseParams` | game/SetCourseParams | ~98 | .bss pool order fixed by compiling as C++ (definition order); left ~50 lines: constant/pointer register order in the lap/rank reset block; `volatile` reload of g_cupId is a marked fakematch | 2x20-min permuter, opt_* pragmas, GC/1.2.5n-2.6 |
 | `RaceScene_GetPerspFovyForCup` | game/RaceScene_GetPerspFovyForCup | 80.98 | needs TU-owned `.data` base `0x80401118` (+0x10000) | |
 | `fn_801ECA14` | game/fn_801ECA14 | 74.07 | pool base `lbl_803BD920` owned by another TU | |
 | `Card_VerifyChecksum` | game/Card_VerifyChecksum | 91.97 | pooled data base | |
@@ -213,7 +214,7 @@ See "Pooled base registers" and "Over-split TUs" in `docs/matching_rules.md`.
 | `fn_8015E928` | game/resultscene/resultscene | 61.37 | not tuned much | |
 | `KartMovement_Init` | game/kartmove/carobject | 66.69 | large schedule difference; GC/2.6 no help | |
 | `fn_8020F080` (TaskListImpl::Draw) | game/anon_8020E3D0_nm1 | 96.61 | WIP is 4 lines off: needs `opt_dead_assignments off`, `operator*` returning node->task, `bool operator!=(TaskNode*)`, Remove by value with a `result` temp; left is one dead Remove-param store | `wip/fn_8020F080_draw_wip.cpp` |
-| `ItemSelectState_Init` | game/ItemSelectState_Init | 91.52 | WIP at 99.3 (MakeCell inline fixed the stack order) | `notes/r4/ItemSelectState_Init_wip.cpp`, `_regs.diff` |
+| `ItemSelectState_Init` | game/ItemSelectState_Init | ~99.5 | now on main (R6): `long character` declared before `resource` fixed the clamp; left is only nonvolatile reg numbering of the 7 loop vars (see file header) | 4! decl-order sweep, 2x20-min permuter, GC/2.6 |
 | `QuadFrame_FromCornerPtrs` | game/QuadFrame_FromCornerPtrs | 52.02 | `Vec ~Vec(){}` gives mem structs + `fmadds`; not finished | `notes/r4/QuadFrame_wip.c` |
 
 ## Still inline asm (the report counts these as 100%)
