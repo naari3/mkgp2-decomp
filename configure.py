@@ -1294,7 +1294,7 @@ config.libs = [
             Object(Matching, "game/DrawEffect_ItemHitFx_Spawn.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/Item_ComputeBiasedTargetPos.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ItemRes_LookupDatPathByKey.c"),  #g2
-            Object(NonMatching, "game/DrawEffect_TickAndCull.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DrawEffect_TickAndCull.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_HitFlash_Update.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/Mtx44_GetPitchOfNegX_Lean.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/Mtx44_GetPitchOfPosZ.c", extra_cflags=["-Cpp_exceptions on"]),  #g2

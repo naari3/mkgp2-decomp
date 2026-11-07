@@ -1839,7 +1839,9 @@
   },
   "src/game/DrawEffect_TickAndCull.c": {
     "@36": "@etb_8000A4D8",
-    "@37": "@eti_80022970"
+    "@37": "@eti_80022970",
+    "@51": "@etb_8000A4D8",
+    "@52": "@eti_80022970"
   },
   "src/game/ShadowAreaMgr_Ctor.c": {
     "__ct__13ShadowAreaMgrFPv": "ShadowAreaMgr_Ctor",

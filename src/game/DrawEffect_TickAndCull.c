@@ -49,9 +49,8 @@ private:
     volatile int m_slot;
 };
 
-extern "C" void DrawEffect_TickAndCull(void)
+static inline void TickDrawEffectPool(void)
 {
-    ScopedTimer timer(26);
     float view[3];
     int i;
 
@@ -75,5 +74,11 @@ extern "C" void DrawEffect_TickAndCull(void)
             }
         }
     }
+}
+
+extern "C" void DrawEffect_TickAndCull(void)
+{
+    ScopedTimer timer(26);
+    TickDrawEffectPool();
 }
 #pragma cplusplus off
