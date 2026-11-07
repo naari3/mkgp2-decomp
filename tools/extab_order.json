@@ -1949,7 +1949,8 @@
       "FUN_8007c56c",
       "PtrVec_InsertFill",
       "PtrVec_Reserve",
-      "dtor_80036E40"
+      "dtor_80036E40",
+      "__dt__10WarpStringFv"
     ],
     "extabindex": [
       "SpecialFaceMesh_Raycast",
@@ -1962,7 +1963,8 @@
       "PtrVec_InsertFill",
       "PtrVec_Reserve",
       "dtor_8007CC54",
-      "dtor_80036E40"
+      "dtor_80036E40",
+      "__dt__10WarpStringFv"
     ]
   },
   "src/game/PanelCda40.cpp": {

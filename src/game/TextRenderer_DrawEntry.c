@@ -59,14 +59,18 @@ void TextRenderer_DrawEntry(DebugDisplayContext *self, DebugTextEntry *entry)
                 loaded = image;
             }
             {
+                unsigned int cellHeight;
+                unsigned int cellWidth;
                 x0 = entry->x + dx;
                 y0 = entry->y + dy;
-                x1 = self->font->cellWidth * entry->scale + x0;
-                y1 = self->font->cellHeight * entry->scale + y0;
+                cellWidth = self->font->cellWidth;
+                cellHeight = self->font->cellHeight;
+                x1 = cellWidth * entry->scale + x0;
+                y1 = cellHeight * entry->scale + y0;
                 s0 = s;
-                s1 = s + self->font->cellWidth;
+                s1 = s + cellWidth;
                 t0 = t;
-                t1 = t + self->font->cellHeight;
+                t1 = t + cellHeight;
                 color = entry->color;
                 GXBegin(0x80, 0, 4);
                 EmitTextVertex(x0, y0, color, s0, t0);

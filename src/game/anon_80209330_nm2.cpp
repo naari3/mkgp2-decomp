@@ -79,12 +79,18 @@ int fn_80209AC4(int a, int b) {
 }
 
 static inline void FillSpecialItems(int *list) {
-    PlayerData *pd = &g_playerData;
-    int k = 0;
-    const int *items = specialItems;
-    const int *rows = specialRows;
-    const int *cols = specialCols;
-    for (int i = 0; i < 4; i++) {
+    int i;
+    const int *cols;
+    int k;
+    const int *rows;
+    const int *items;
+    PlayerData *pd;
+    pd = &g_playerData;
+    items = specialItems;
+    cols = specialCols;
+    rows = specialRows;
+    k = 0;
+    for (i = 0; i < 4; i++) {
         if (!fn_801D6F30(pd, items[i], 0) &&
             fn_801D5B8C(pd, 0, rows[i], cols[i]) &&
             fn_801D5B8C(pd, 1, rows[i], cols[i])) {

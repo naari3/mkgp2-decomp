@@ -2098,6 +2098,7 @@ game/SpecialFaceMesh_Raycast.cpp:
 	extab       start:0x800086C8 end:0x80008798
 	extabindex  start:0x800214F4 end:0x8002156C
 	.text       start:0x8007BE70 end:0x8007CC9C
+	.rodata     start:0x80311BF8 end:0x80311C30
 
 game/DrawNamCamImage.c:
 	extab       start:0x80008798 end:0x800087A0
