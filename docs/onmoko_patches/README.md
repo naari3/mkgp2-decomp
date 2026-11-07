@@ -68,6 +68,7 @@ Verified on main with the patch applied: clean build (`rm -rf build/GNLJ82/src b
 | Patch | Function | TU | Issue | Before | Fix | After | TU flip |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | VfxSlotMgr.patch | VfxSlotMgr_Update | game/VfxSlotMgr.cpp | #2369 | 99.94% | copy `*position` then `*target` into locals in the caller and call BuildCamera directly (SetCamera's by-value params took their stack slots in the opposite order) | 100% | yes, included |
+| PCBComm_UpdateSyncPhase5.patch | PCBComm_UpdateSyncPhase5 | game/PCBCommPhase5.c | #2327 | 98.59% | chained `slot = slots = lbl_805A6154; phase = phases = g_pcbSyncPhasePerPcb;` keeps the `mr r5,r31` copy; inline `first + 2` at the store (no `hostRole` local) fixes the out/value r5/r6 swap. `lbl_806D11C8+0x4` vs `lbl_806D11CC` reloc is cosmetic (objdiff 100%) | 100% | yes, included |
 
 ## Data-only TU flip (R4, 2026-11-07)
 
