@@ -1244,3 +1244,8 @@ c18_u35: SwitchList ctor 8017A68C remains 98.39921% (1012B) after three structur
 Source: Codex worker c18_u39_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u39 EnemyRun_BaseInit 801F0644: explicit LHS row cursor plus named invariant RHS base and indexed output improves 98.23385 to99.08, same1300B and owned176B EH/12B index100. Unlike c8 full-pointer-loop trial, inner loop remains counted and all FP arithmetic now follows target. Remaining n/index/row/column GPR colors and outer increment scheduling differ. Output-argument helper is instruction-invariant; returning a matrix adds128B aggregate copy. Add own @144/@145 bridges; existing @148 now names an extra weak8B EH record too, so future promotion must inspect discard/linked ranges. Single function stays NonMatching; no mechanism-B cut. Final fallback DOL SHA-1 OK; native gain0.
+
+## c18_u103_20261107
+Source: Codex worker c18_u103_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u103: fn_801B4548 fresh96.06223->96.06577 by extracting whole nearest-kart search into static inline FindNearestVoiceKart801B. Text5616 vs5656, EH87.5/index83.33333/data0 unchanged. Identity record-pointer helper regresses94.734795/5552B; explicit id/character address lifetimes restore both category-5 pre-loop addi instructions but worsen register pressure and tail reloads,95.901695/5620B. Both reverted. Residual includes folded map/clip subobject bases, saved GPR range, identity reloads and timestamp/return scheduling. Singleton TU cannot B split. NonMatching, fallback full DOL SHA1 exact; native gain0.

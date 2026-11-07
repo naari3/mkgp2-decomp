@@ -14,6 +14,26 @@ static inline float ItemVoiceLength801B(VoiceClip *clips, short voice) {
     return 2.0f + (clips[0x1C5].length + clips[voice].length);
 }
 
+static inline int FindNearestVoiceKart801B(void) {
+    int i;
+    int nearest;
+    float distance;
+    float best;
+    best = 10000.0f;
+    nearest = -1;
+    for (i = 0; i < 8; i++) {
+        if (g_raceEntryArray[i].id != -1) {
+            distance = fn_801A19FC(ItemVoice_Kart(&g_raceEntryArray[g_taMinLapPlayerIndex]),
+                                  ItemVoice_Kart(&g_raceEntryArray[i]));
+            if (0.0f <= distance && distance <= best) {
+                nearest = i;
+                best = distance;
+            }
+        }
+    }
+    return nearest;
+}
+
 #pragma use_lmw_stmw on
 
 int fn_801B4548(int kart, int item) {
@@ -22,8 +42,6 @@ int fn_801B4548(int kart, int item) {
     int category;
     int i;
     int nearest;
-    float distance;
-    float best;
     short voice;
     unsigned int variant;
 
@@ -58,18 +76,7 @@ int fn_801B4548(int kart, int item) {
     if (!RaceVoice_CanQueue(11)) return 1;
 
     if (kart == g_taMinLapPlayerIndex && (signed char)ItemClass_GetFlagByte1(item) == 7) {
-        best = 10000.0f;
-        nearest = -1;
-        for (i = 0; i < 8; i++) {
-            if (g_raceEntryArray[i].id != -1) {
-                distance = fn_801A19FC(ItemVoice_Kart(&g_raceEntryArray[g_taMinLapPlayerIndex]),
-                                      ItemVoice_Kart(&g_raceEntryArray[i]));
-                if (0.0f <= distance && distance <= best) {
-                    nearest = i;
-                    best = distance;
-                }
-            }
-        }
+        nearest = FindNearestVoiceKart801B();
         if (nearest != -1 && LookupItemVoice801B((ItemUseVoiceMap *)data->pad118C, item) != -1) {
             if (VoiceQueue_Push(ENTRY_VOICE(&g_raceEntryArray[g_taMinLapPlayerIndex]), 7, 1, 1)) {
                 VoiceQueue_Push(LookupItemVoice801B((ItemUseVoiceMap *)data->pad118C, item), 7, 1, 1);
