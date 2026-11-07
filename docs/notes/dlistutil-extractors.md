@@ -38,3 +38,8 @@ c18_u30 fn_80185630: separate read-only incoming faces from mutable output curso
 Source: Codex worker c18_u76_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u76 fn_80184F24: first matrix getter into a block-local MtxPtr before assigning quad fixes premature output-base add in both primitive branches (97.52772 -> 98.59202). Target-derived plain-local declaration order plus scan-scoped offset reaches 99.37916, exact text1804/extab8/index12. Remaining 52 rows are only four-register rotation: target jobj23/out24/capacity25/offset22 vs source22/23/24/25; all loops, table and vertex pointers exact, no inserted/deleted rows. Inline stride helper and unsigned offset invariant; combined matrix/quad helper regresses98.7694. Keep best NonMatching; singleton no safe subset, no bridge/pool rescue needed. Coordinator fallback-linked full DOL SHA-1 exact. Six hypotheses exhausted.
+
+## c18_u47_20261107
+Source: Codex worker c18_u47_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u47 fn_80184928: TU-local DListGetPosition equivalent using src=desc->array; src+=index*(desc->stride/4) improves text98.08094->98.18538 with exact1532B/extab8/index12. Canonical matrix member getter is byte-identical; independent per-primitive loop state regresses97.663185. Retained source; residual99 instruction rows are GPR homes plus three stack coordinate addressing forms. Single-function TU staysNonMatching, no A/B unlock. Full coordinator fallback DOL SHA1 exact.
