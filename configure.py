@@ -466,7 +466,7 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/jobj_load_refs.c"),
             Object(Matching, "sysdolphin/baselib/jobj_flags.c"),
             Object(Matching, "sysdolphin/baselib/jobj_alloc.c"),
-            Object(NonMatching, "sysdolphin/baselib/jobj_end.c"),
+            Object(Matching, "sysdolphin/baselib/jobj_end.c"),
             Object(Matching, "sysdolphin/baselib/jobj_current.c"),
             Object(Matching, "sysdolphin/baselib/jobj_ik.c"),
             Object(Matching, "sysdolphin/baselib/jobj_init.c"),
