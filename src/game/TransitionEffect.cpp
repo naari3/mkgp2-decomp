@@ -507,6 +507,8 @@ extern "C" void TransitionEffect_DrawCarRouletteOverlay(TransitionRoulette *self
     RestoreScreenChannel();
 }
 
+/* The target keeps copies that copy propagation would fold here. */
+#pragma opt_propagation off
 extern "C" void TransitionEffect_DrawCarRouletteAndQuad(TransitionRoulette *self, float fade, float angle)
 {
     const Vec *camera = lbl_80311CA0;
@@ -527,9 +529,9 @@ extern "C" void TransitionEffect_DrawCarRouletteAndQuad(TransitionRoulette *self
     GXSetZCompLoc(GX_FALSE);
     GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
     GXSetCullMode(GX_CULL_BACK);
+    Mtx view;
     Mtx44 projection;
     ScreenProjection(projection);
-    Mtx view;
     ScreenCamera(view, camera, 12, lbl_806D3030);
     GXSetNumTevStages(1);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR0A0);
@@ -553,6 +555,7 @@ extern "C" void TransitionEffect_DrawCarRouletteAndQuad(TransitionRoulette *self
     ScreenPosition(lbl_806D3008, lbl_806D3000); ScreenColor(r,g,b,a);
     RestoreScreenChannel();
 }
+#pragma opt_propagation reset
 
 extern "C" int ShadowBillboard_SetEffectParams(TransitionEffectView *self, int mode,
                                                float x, float y, float w, float h)
