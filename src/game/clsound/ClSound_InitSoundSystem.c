@@ -30,9 +30,20 @@ extern void fn_80195214(unsigned char);
 extern void fn_801951FC(unsigned char);
 extern void fn_801951B4(unsigned char);
 
+/* Keep the DVD operation bounds together with the instrumented read. */
+static inline int ReadSoundFile(DVDFileInfo *file, void *data, unsigned int size,
+                               unsigned int start, unsigned int length) {
+    unsigned int end = start + (length - 1);
+    int result;
+    DVDLoad_WaitIfSamePage(start);
+    result = DVDReadPrio(file, data, size, 0, 2);
+    DVDLoad_RecordOpStart(end);
+    return result;
+}
+
 static inline void *LoadSoundFile(const char *strings, unsigned int offset) {
     DVDFileInfo file;
-    unsigned int size, end;
+    unsigned int size;
     int result;
     void *data = 0;
     if (!DVDOpen(strings + offset, &file)) {
@@ -46,10 +57,7 @@ static inline void *LoadSoundFile(const char *strings, unsigned int offset) {
             DebugPrintf(strings + 0x3ff8);
         } else {
             memset(data, 0xe0, size);
-            end = file.startAddr + (file.length - 1);
-            DVDLoad_WaitIfSamePage(file.startAddr);
-            result = DVDReadPrio(&file, data, size, 0, 2);
-            DVDLoad_RecordOpStart(end);
+            result = ReadSoundFile(&file, data, size, file.startAddr, file.length);
             if (result <= 0) {
                 DebugPrintf(strings + 0x401c, strings + offset);
                 OSFreeToHeap(lbl_806CF010, data);
