@@ -11,16 +11,16 @@ extern void DrawEffect_SetFloat110();
 extern void KartDriver_SetUniformScale_4Wheels();
 extern void KartItem_BroadcastParamToCarAndISE();
 extern void Object_GetJObjRotationY();
-extern void Object_SetColorAlphaOnly();
+extern void Object_SetColorAlphaOnly(void *obj, int idx, float a);
 extern void Object_SetJObjRotationY();
 
 /* --- extern decls: sda21-referenced data --- */
 extern const float lbl_806D28C8;
 extern const float lbl_806D28CC;
 extern const float lbl_806D28D0;
-extern unsigned int lbl_806D28D4;
-extern unsigned int lbl_806D28D8;
-extern unsigned int lbl_806D28DC;
+extern const float lbl_806D28D4;
+extern const float lbl_806D28D8;
+extern const float lbl_806D28DC;
 extern unsigned int lbl_806D28E8;
 extern unsigned int lbl_806D28EC;
 extern unsigned int lbl_806D28F0;
