@@ -72,6 +72,10 @@ unsigned char fn_801E6594(void *);
 void *KartController_GetRenderObj(void *);
 unsigned char KartMovement_CanReceiveItem(void *, int);
 }
+static inline int ItemAt(const int *items, unsigned int index) {
+    return items[index];
+}
+
 extern "C" void fn_801E9CBC(KartAI *self, int kart) {
     void *ctrl = Read_U32[kart];
     if (!ctrl) return;
@@ -95,7 +99,7 @@ extern "C" void fn_801E9CBC(KartAI *self, int kart) {
                 int *p = items;
                 int count = 0;
                 while (*p > -1) { ++p; ++count; }
-                item = items[ReplayRandCursor_Advance(items, count, 0)];
+                item = ItemAt(items, ReplayRandCursor_Advance(items, count, 0));
                 fn_801E6C10(ctrl, item);
             }
         }
