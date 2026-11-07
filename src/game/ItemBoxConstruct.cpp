@@ -1,17 +1,25 @@
 #include "game/ItemBoxConstruct_private.h"
+// Original file-static string pool; direct references preserve the pooled base.
+static const char lbl_8036D588[] = "clKPBubble";
+static const char lbl_8036D594[] = "clMapEffectParts";
+static const char lbl_8036D5A8[] = " DeleteMapEffect : clKPBubble\n";
+static const char lbl_8036D5C8[] = " CreateMapEffect : clKPBubble\n";
+static const char lbl_8036D5E8[] = "red_sphere.dat";
+static const char lbl_8036D5F8[] = "bubble_fire.dat";
+static const char lbl_8036D608[] = "bubble_fire_drop.dat";
+
 BoxConstruct::BoxConstruct(BoxJoint *root) {
-    const char *resources = lbl_8036D588;
     BoxJoint *j;
     int i;
     BoxJoint *p;
     int k;
     BoxDObj *d;
-    DebugPrintf(resources + 0x40);
+    DebugPrintf(lbl_8036D5C8);
     sound = 0; modelA = 0; modelB = 0; archive = 0;
     nodes = 0; selected = 0; slots = 0; count = 0;
-    modelA = new BoxModel(resources + 0x60, 0);
-    modelB = new BoxModel(resources + 0x70, 0);
-    archive = new BoxModel(resources + 0x80, 0);
+    modelA = new BoxModel(lbl_8036D5E8, 0);
+    modelB = new BoxModel(lbl_8036D5F8, 0);
+    archive = new BoxModel(lbl_8036D608, 0);
     if (!modelA || !modelB || !archive) return;
     Object_SetJObjScaleXYZ(modelA,lbl_806D8B30,lbl_806D8B30,lbl_806D8B30);
     Object_SetJObjScaleXYZ(modelB,lbl_806D8B30,lbl_806D8B30,lbl_806D8B30);

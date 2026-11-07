@@ -6817,6 +6817,7 @@ game/ItemBoxConstruct.cpp:
 	extab       start:0x800104B4 end:0x80010530
 	extabindex  start:0x80026270 end:0x8002627C
 	.text       start:0x8016D2D0 end:0x8016D79C
+	.rodata     start:0x8036D588 end:0x8036D620
 
 game/Scene_8016D79C.cpp:
 	extab       start:0x80010530 end:0x80010548
@@ -11790,19 +11791,12 @@ game/fn_80224EBC.c:
 	.text       start:0x80224EBC end:0x80224ECC
 
 game/anon_80224ECC.cpp:
-	extab       start:0x8001B7B8 end:0x8001B7C8
-	extabindex  start:0x8002A5C0 end:0x8002A5D8
-	.text       start:0x80224ECC end:0x80225124
-
-game/anon_80224ECC_nm1.cpp:
-	extab       start:0x8001B7C8 end:0x8001B7D0
-	extabindex  start:0x8002A5D8 end:0x8002A5E4
-	.text       start:0x80225124 end:0x802251DC
-
-game/anon_80224ECC_exact2.cpp:
-	extab       start:0x8001B7D0 end:0x8001B840
-	extabindex  start:0x8002A5E4 end:0x8002A608
-	.text       start:0x802251DC end:0x802253EC
+	extab       start:0x8001B7B8 end:0x8001B840
+	extabindex  start:0x8002A5C0 end:0x8002A608
+	.text       start:0x80224ECC end:0x802253EC
+	.rodata     start:0x803C6E58 end:0x803C6E80
+	.data       start:0x804EDF08 end:0x804EDF30
+	.sdata      start:0x806D0508 end:0x806D0520
 
 game/anon_802253EC.cpp:
 	extab       start:0x8001B840 end:0x8001B87C

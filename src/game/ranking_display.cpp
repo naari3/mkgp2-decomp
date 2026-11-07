@@ -143,7 +143,7 @@ inline RankingPanel::RankingPanel(RankingFlow *owner, int i, unsigned char *slot
                                   int number, const char *title) {
     int label = !fn_802315F8(i) ? -1 : ((*(unsigned short *)(slot + 6) >> 5) & 15);
     unsigned int flag = (slot[6] >> 1) & 3;
-    int variant = flag < 2;
+    int variant = flag >= 2;
     int position = owner->count;
     int y = position / 2 == 0 ? 206 : 346;
     int target = (position & 1) == 0 ? 174 : 466;

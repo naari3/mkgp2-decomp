@@ -1509,3 +1509,18 @@ c19_u62 fn_801FB778 unlocks99.387184->100%. Actual fn801D9B70 second arg is unsi
 Source: Codex worker c19_u72_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c19_u72 EnemyRun_BaseInit: declaration order row,column,output,right,n with column assignment inside outer loop fixes all matrix-loop colors (n=r5,i=r4,row=r9,column=r8). Move row+=4 into body before n+=4 to restore target outer scheduling. Text99.08->99.36616,1300B; owned EH176B/index12B100. Only target mr r9,r29 vs source addi r9,r31,0x70 remains. This-pointer cast and pointer-to-float[4] row type are invariant; reusing mutable row for copyback loses long-lived r29; rotateY helper swaps saved FP homes without fixing base. Retained simpler declaration/scope change, no metadata edits, NonMatching. Single function precludes B; final fallback DOL SHA1 exact.
+
+## c19_u77_20261107
+Source: Codex worker c19_u77_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 18 fn / 16760 B.
+
+c19_u77 ranking_display: target panel variant arithmetic at 801D2734..2754 computes flag>=2, not previous flag<2. For flag0/1/2/3, ((flag|~2)-((flag-2 unsigned)>>1))>>31 gives0/0/1/1. Correcting comparison improves fresh91.104164->91.464745, restores2496B and extabindex100; data100/EH91.581635. Genuine weak compiler-vtable emission using inline undefined virtual declarations does not restore persistent name-table/vptr pool (text invariant, extra data); reverted. Inline unsigned comparison helper invariant. No new pools/bridges/flags; singleton function stays NonMatching, fallback DOL SHA1 exact.
+
+## c19_u78_20261107
+Source: Codex worker c19_u78_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 2244 B.
+
+c19_u78 Menu801F0CC0: native __rlwimi alpha insertion has matched FlowPanelUpdate.cpp precedent. Replacing WithAlpha bitwise OR and routing 1244/140C through it improves 1244 93.10526->95.04386, 140C93.08772->96.27193,19C891->95.3125,1AC890.96875->97.34375,20A093->95.89189,21C889.40741->92.950615; all six now target-sized. No other score/EH regression. Indexed strength-reduction-off loops, C++ member conversion, Gray getter/packer and TintSprites helper fail remaining register homes. Global/static float array ownership 804E4C28..4FA8 improves two input handlers but regresses1664; revert. Extern typed aggregate regresses. Entire25-function reversed EH group remainsNM; full fallback DOL SHA1exact/nativegain0.
+
+## c19_u79_20261107
+Source: Codex worker c19_u79_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1228 B.
+
+c19_u79 ItemBoxConstruct8016D2D0/1228B unlocks99.93485->100 by seven independent file-static const char strings and direct references, replacing external base+offset pointer. Native section pooling fixes pool-highr7/base-vtable-lowr3 scratch residual; previous typed aggregate was not equivalent. Own rodata8036D588..8036D620 and split original D5A8 size78 into deletion/create/model/fire/drop strings at20/40/60/70/80; all seven exact-length arrays. Export D588/D594 for RTTI and D5A8 for external destructor via add-only existing TU key. Source rodata149B naturally links to exact152B including trailing3B alignment; no filler. Text1228/EH124/index12/rodata152 report100 and linked ranges byte-exact, source edge true/full DOL SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. Matching,+1nativefn1228B; no B split.
