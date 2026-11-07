@@ -56,10 +56,6 @@ struct Vec3 {
 };
 
 #pragma auto_inline off
-/* fakematch (pragma): opt_lifetimes off gives the final countdown walker the
- * inner responder walker's register (r30) like the target. */
-#pragma push
-#pragma opt_lifetimes off
 extern "C" void clItemBoxManager_Update_Inner(clItemBoxManager *self)
 {
     ListNode<void *> *it;
@@ -103,7 +99,6 @@ extern "C" void clItemBoxManager_Update_Inner(clItemBoxManager *self)
         clItemBoxResponder_CmdSlotCountdown(rt->value);
     }
 }
-#pragma pop
 #pragma auto_inline reset
 
 extern "C" void clItemBoxManager_Update(clItemBoxManager *self)
