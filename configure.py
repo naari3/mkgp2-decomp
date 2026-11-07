@@ -3028,7 +3028,7 @@ config.libs = [
             Object(Matching, "game/dlistutil/fn_80183A5C.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/miyazakishare/fn_80186960.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/objview/fn_801869F8.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/objview/fn_80187084.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/objview/fn_80187084.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/objview/fn_80187410.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/objview/fn_80187370.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/objview/fn_80187754.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
