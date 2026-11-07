@@ -6237,6 +6237,7 @@ game/RankPanel_80144430.cpp:
 	extab       start:0x8000DBE4 end:0x8000DE5C
 	extabindex  start:0x800251D8 end:0x80025280
 	.text       start:0x80144430 end:0x80146160
+	.rodata     start:0x80361D60 end:0x80361ED0
 
 game/fn_80146160.c:
 	extab       start:0x8000DE5C end:0x8000DE64

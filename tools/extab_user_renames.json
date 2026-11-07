@@ -5485,8 +5485,6 @@
     "extabindex_dtor_80145F04": "@eti_80025250",
     "extab_dtor_80145F9C": "@etb_8000DD84",
     "extabindex_dtor_80145F9C": "@eti_8002525C",
-    "extab_fn_80146000": "@etb_8000DE24",
-    "extabindex_fn_80146000": "@eti_80025268",
     "extab_fn_801460D0": "@etb_8000DE54",
     "extabindex_fn_801460D0": "@eti_80025274",
     "__ct__21clCSPartsResultRecordFv": "fn_801458B4",
@@ -5505,7 +5503,14 @@
     "__dt__7ResCtrlFv": "dtor_80082960",
     "__ct__5TweenFv": "fn_801458A4",
     "__vt__9PanelItem": "lbl_8048EF34",
-    "__vt__9PanelIcon": "lbl_8048EF20"
+    "__vt__9PanelIcon": "lbl_8048EF20",
+    "__vt__Q23std9exception": "lbl_803F5710",
+    "__vt__Q23std11logic_error": "lbl_803F5700",
+    "__vt__Q23std12out_of_range": "lbl_8048EF68",
+    "__dt__Q23std12out_of_rangeFv": "fn_801460D0",
+    "__dt__9ExcStrRefFv": "dtor_80038E30",
+    "__dt__Q23std9exceptionFv": "dtor_80038DD4",
+    "@625": "lbl_80361E60"
   },
   "src/game/RankPanelBase_801461B0.cpp": {
     "extab_fn_801461B0": "@etb_8000DE6C",
