@@ -6613,6 +6613,7 @@
     "__vt__10CourseFlow": "lbl_8049B3B4"
   },
   "src/game/clFlowCourse_Update.cpp": {
+    "motionCurves": "global:lbl_8039B990",
     "__ct__12CourseSpriteFiii": "Sprite_InitWithAnim",
     "__ct__12CourseSpriteFiiffffff": "Sprite_CreateWithParams",
     "__dt__12CourseSpriteFv": "Sprite_Destroy"
