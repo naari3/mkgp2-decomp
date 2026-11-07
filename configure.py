@@ -978,7 +978,7 @@ config.libs = [
             Object(NonMatching, "game/HudFlow20Update.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/HudFlow24Ctor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/FlowAdvance10.c"),
-            Object(NonMatching, "game/FlowAdvance1C.c"),
+            Object(Matching, "game/FlowAdvance1C.c"),
             Object(Matching, "game/fn_8023D2B4.c"),
             Object(Matching, "game/fn_80230400.c"),
             Object(Matching, "game/fn_802300C8.c"),
