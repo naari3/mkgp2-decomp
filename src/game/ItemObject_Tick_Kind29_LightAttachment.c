@@ -40,6 +40,13 @@ static inline float LerpScalar(float a, float b, float t)
     return a * t + b * (1.0f - t);
 }
 
+static inline void Vec_SetUniform(Vec *out, float value)
+{
+    out->x = value;
+    out->y = value;
+    out->z = value;
+}
+
 void ItemObject_Tick_Kind29_LightAttachment(unsigned char *self, unsigned char *sub)
 {
     float root[4][4];
@@ -114,9 +121,7 @@ void ItemObject_Tick_Kind29_LightAttachment(unsigned char *self, unsigned char *
         SpriteSlot_SetRotationQuatFromVec(self + 0x14, &rot);
         t = 80.0f + F(0x20);
         sp = &scale;
-        sp->x = F(0xC4);
-        sp->y = F(0xC4);
-        sp->z = F(0xC4);
+        Vec_SetUniform(sp, F(0xC4));
         c = &lbl_80420ED8;
         for (i = 0; i < 4; i++) {
             if (c->t[i] <= t && t <= c->t[i + 1]) {

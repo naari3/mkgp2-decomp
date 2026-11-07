@@ -1,9 +1,10 @@
 #include <triforce/ambackup_private.h>
 
 s32 fn_80288BCC(BackupConfig* cfg) {
-    volatile BackupEntry* e;
-    const volatile BackupInfo* info;
+    BackupEntry* e;
+    const BackupInfo* info;
     u32 alignment;
+    u32 chan;
 
     memset(&lbl_80690DE0, 0, 0x3C);
     OSInitSemaphore(&lbl_80690DE0.sem, 1);
@@ -11,18 +12,22 @@ s32 fn_80288BCC(BackupConfig* cfg) {
         return 1;
     }
     if (cfg == NULL) {
-        if (fn_802889AC(0)) {
-            return 1;
+        for (chan = 0; chan < 1; chan++) {
+            if (fn_802889AC(chan)) {
+                return 1;
+            }
         }
     } else {
-        e = &lbl_80690DE0.entry[0][0];
-        info = &lbl_806DC918[0];
-        e->addr = 0;
-        e->cfg = *cfg;
-        alignment = info->align;
-        e[1].addr = (e->cfg.size + 0xC + alignment - 1) & -alignment;
-        if (e->cfg.flags & 2) {
-            e[1].addr *= 2;
+        for (chan = 0; chan < 1; chan++) {
+            e = &lbl_80690DE0.entry[chan][0];
+            info = &lbl_806DC918[chan];
+            e->addr = 0;
+            e->cfg = *cfg;
+            alignment = info->align;
+            e[1].addr = (e->cfg.size + 0xC + alignment - 1) & -alignment;
+            if (e->cfg.flags & 2) {
+                e[1].addr *= 2;
+            }
         }
     }
     return 0;

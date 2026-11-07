@@ -259,6 +259,11 @@ game/clNormal3D.c:
 game/Object_SetField8_10_14.c:
 	.text       start:0x80032A70 end:0x80032AAC
 
+game/clNormal3D_Exec.cpp:
+	extab       start:0x80005A48 end:0x80005AA0
+	extabindex  start:0x8001F760 end:0x8001F76C
+	.text       start:0x80032AAC end:0x800331E0
+
 game/Object_DriveAnimAndSkin.cpp:
 	extab       start:0x80005AA0 end:0x80005AF8
 	extabindex  start:0x8001F76C end:0x8001F778
@@ -429,6 +434,7 @@ game/StrPcb_Lifetime.cpp:
 	extab       start:0x80005D18 end:0x80005D4C
 	extabindex  start:0x8001F9A0 end:0x8001F9AC
 	.text       start:0x80038288 end:0x80038574
+	.bss        start:0x80598100 end:0x80598530
 
 game/StrPcb_Lifetime_get.cpp:
 	.text       start:0x80038574 end:0x8003857C
@@ -1497,45 +1503,10 @@ game/clItemBox_StepFn_PopOut.c:
 game/clItemBox_ResetTimer_IsPickedUp.c:
 	.text       start:0x8005EA74 end:0x8005EA94
 
-game/clItemBox_TransitionToDebris.c:
-	extab       start:0x80007BAC end:0x80007BB4
-	extabindex  start:0x80020C00 end:0x80020C0C
-	.text       start:0x8005EA94 end:0x8005ED18
-
-game/clItemBox_Draw.c:
-	extab       start:0x80007BB4 end:0x80007BBC
-	extabindex  start:0x80020C0C end:0x80020C18
-	.text       start:0x8005ED18 end:0x8005EE24
-
-game/clItemBox_Tick.c:
-	extab       start:0x80007BBC end:0x80007BC4
-	extabindex  start:0x80020C18 end:0x80020C24
-	.text       start:0x8005EE24 end:0x8005EEB0
-
-game/clItemBox_Dtor.c:
-	extab       start:0x80007BC4 end:0x80007BCC
-	extabindex  start:0x80020C24 end:0x80020C30
-	.text       start:0x8005EEB0 end:0x8005EF38
-
-game/clItemBox_Ctor_XYZ.c:
-	extab       start:0x80007BCC end:0x80007BF8
-	extabindex  start:0x80020C30 end:0x80020C3C
-	.text       start:0x8005EF38 end:0x8005F050
-
-game/clItemBox_Ctor_GroundSnap.c:
-	extab       start:0x80007BF8 end:0x80007C24
-	extabindex  start:0x80020C3C end:0x80020C48
-	.text       start:0x8005F050 end:0x8005F194
-
-game/clItemBoxManager_Assets.cpp:
-	extab       start:0x80007C24 end:0x80007C94
-	extabindex  start:0x80020C48 end:0x80020C78
-	.text       start:0x8005F194 end:0x8005F53C
-
-game/clItemBoxManager_StepTable.cpp:
-	extab       start:0x80007C94 end:0x80007C9C
-	extabindex  start:0x80020C78 end:0x80020C84
-	.text       start:0x8005F53C end:0x8005F5CC
+game/clItemBox.cpp:
+	extab       start:0x80007BAC end:0x80007C9C
+	extabindex  start:0x80020C00 end:0x80020C84
+	.text       start:0x8005EA94 end:0x8005F5CC
 	.ctors      start:0x802E88F4 end:0x802E88F8
 	.data       start:0x803F9C60 end:0x803F9CD8
 
@@ -3185,6 +3156,7 @@ game/RankLog.c:
 	extab       start:0x80009CD4 end:0x80009E04
 	extabindex  start:0x800223DC end:0x800225A4
 	.text       start:0x800A5CEC end:0x800A8D34
+	.data       start:0x80411458 end:0x80411B18
 
 game/WarpDashMgr_Init.cpp:
 	extab       start:0x80009E04 end:0x80009E60
@@ -6846,6 +6818,7 @@ game/ItemBoxConstruct.cpp:
 	extab       start:0x800104B4 end:0x80010530
 	extabindex  start:0x80026270 end:0x8002627C
 	.text       start:0x8016D2D0 end:0x8016D79C
+	.rodata     start:0x8036D588 end:0x8036D620
 
 game/Scene_8016D79C.cpp:
 	extab       start:0x80010530 end:0x80010548
@@ -7755,6 +7728,7 @@ game/objview/fn_8018CFC4.cpp:
 	extab       start:0x80011EA8 end:0x80011EDC
 	extabindex  start:0x80026EF4 end:0x80026F00
 	.text       start:0x8018CFC4 end:0x8018D068
+	.rodata     start:0x80377E60 end:0x80377EF0
 
 game/objview/fn_8018D068.c:
 	extab       start:0x80011EDC end:0x80011EE4
@@ -9123,44 +9097,17 @@ game/clFlowClass_Init.cpp:
 	extabindex  start:0x80027D40 end:0x80027D4C
 	.text       start:0x801C3244 end:0x801C3470
 
-game/CharaSelect_SetupCharacterDisplay.cpp:
-	extab       start:0x80013E64 end:0x80013E9C
-	extabindex  start:0x80027D4C end:0x80027D58
-	.text       start:0x801C3470 end:0x801C3714
+game/clFlowChara.cpp:
+	extab       start:0x80013E64 end:0x80013FE0
+	extabindex  start:0x80027D4C end:0x80027DA0
+	.text       start:0x801C3470 end:0x801C53A0
 	.rodata     start:0x8039AA40 end:0x8039B1F4
-
-game/GetFrameIdxFromVisualIdx.c:
-	.text       start:0x801C3714 end:0x801C37E8
-
-game/fn_801C37E8.cpp:
-	extab       start:0x80013E9C end:0x80013EB4
-	extabindex  start:0x80027D58 end:0x80027D64
-	.text       start:0x801C37E8 end:0x801C393C
-
-game/clFlowChara_HandleConfirm.c:
-	extab       start:0x80013EB4 end:0x80013EBC
-	extabindex  start:0x80027D64 end:0x80027D70
-	.text       start:0x801C393C end:0x801C3AA4
-
-game/clFlowChara_Draw.cpp:
-	extab       start:0x80013EBC end:0x80013EC4
-	extabindex  start:0x80027D70 end:0x80027D7C
-	.text       start:0x801C3AA4 end:0x801C3D48
-
-game/clFlowChara_Update.c:
-	extab       start:0x80013EC4 end:0x80013F0C
-	extabindex  start:0x80027D7C end:0x80027D88
-	.text       start:0x801C3D48 end:0x801C4CA4
-
-game/clFlowChara_Destructor.cpp:
-	extab       start:0x80013F0C end:0x80013F14
-	extabindex  start:0x80027D88 end:0x80027D94
-	.text       start:0x801C4CA4 end:0x801C4EA8
+	.data       start:0x8049AA58 end:0x8049ACB0
 
 ui/FrameSelection_Methods.c:
-	extab       start:0x80013F14 end:0x80014018
-	extabindex  start:0x80027D94 end:0x80027DC4
-	.text       start:0x801C4EA8 end:0x801C5C34
+	extab       start:0x80013FE0 end:0x80014018
+	extabindex  start:0x80027DA0 end:0x80027DC4
+	.text       start:0x801C53A0 end:0x801C5C34
 
 game/fn_801C5C34.cpp:
 	extab       start:0x80014018 end:0x80014020
@@ -10482,6 +10429,7 @@ game/NamCamFlow.cpp:
 	extab       start:0x80016FB4 end:0x800173C0
 	extabindex  start:0x80028D24 end:0x80028E20
 	.text       start:0x801F2B70 end:0x801F4D3C
+	.rodata     start:0x803BDF20 end:0x803BE56C
 
 game/SceneListOperations.cpp:
 	extab       start:0x800173C0 end:0x800173D8
@@ -10777,7 +10725,7 @@ game/fn_801F98E8.c:
 	extabindex  start:0x800290E4 end:0x800290F0
 	.text       start:0x801F98E8 end:0x801F9954
 
-game/CollisionFile_Load.c:
+game/CollisionFile_Load.cpp:
 	extab       start:0x800176F0 end:0x800176F8
 	extabindex  start:0x800290F0 end:0x800290FC
 	.text       start:0x801F9954 end:0x801F9AAC
@@ -11845,19 +11793,12 @@ game/fn_80224EBC.c:
 	.text       start:0x80224EBC end:0x80224ECC
 
 game/anon_80224ECC.cpp:
-	extab       start:0x8001B7B8 end:0x8001B7C8
-	extabindex  start:0x8002A5C0 end:0x8002A5D8
-	.text       start:0x80224ECC end:0x80225124
-
-game/anon_80224ECC_nm1.cpp:
-	extab       start:0x8001B7C8 end:0x8001B7D0
-	extabindex  start:0x8002A5D8 end:0x8002A5E4
-	.text       start:0x80225124 end:0x802251DC
-
-game/anon_80224ECC_exact2.cpp:
-	extab       start:0x8001B7D0 end:0x8001B840
-	extabindex  start:0x8002A5E4 end:0x8002A608
-	.text       start:0x802251DC end:0x802253EC
+	extab       start:0x8001B7B8 end:0x8001B840
+	extabindex  start:0x8002A5C0 end:0x8002A608
+	.text       start:0x80224ECC end:0x802253EC
+	.rodata     start:0x803C6E58 end:0x803C6E80
+	.data       start:0x804EDF08 end:0x804EDF30
+	.sdata      start:0x806D0508 end:0x806D0520
 
 game/anon_802253EC.cpp:
 	extab       start:0x8001B840 end:0x8001B87C
@@ -12107,6 +12048,7 @@ game/ENo3D.cpp:
 	.text       start:0x80230404 end:0x80230644
 	.data       start:0x804EE23C end:0x804EE248
 	.sdata      start:0x806D0638 end:0x806D0640
+	.sdata2     start:0x806DB6D4 end:0x806DB6DC
 
 game/FaceEffect.cpp:
 	extab       start:0x8001C1DC end:0x8001C27C
@@ -14619,6 +14561,9 @@ init/memset_returning_dst.c:
 
 init/memcpy_bytewise.c:
 	.init       start:0x80003488 end:0x800034AC
+
+init/__exception.s:
+	.init       start:0x800034AC end:0x800053E0
 
 init/OSResetSystem_NoArgs.c:
 	.init       start:0x800053E0 end:0x8000540C

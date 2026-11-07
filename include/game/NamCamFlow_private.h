@@ -186,7 +186,7 @@ extern const char g_playerData[];
 extern const char lbl_806DA5AC[1];
 extern const float lbl_806DA570[2], lbl_806DA5B0;
 extern const int lbl_806DA850, lbl_806DA84C;
-extern const char *lbl_806DA94C[2], *lbl_806DA9EC[2];
+extern const char *lbl_806DA94C[], *lbl_806DA9EC[];
 extern const float lbl_803BE54C[4], lbl_803BE55C[4];
 }
 #endif

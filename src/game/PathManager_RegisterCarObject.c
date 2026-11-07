@@ -1,12 +1,6 @@
 /* PathManager_RegisterCarObject @ 0x8003CF44: claim a path participant slot
  * (first free one when slot == -1) for a car and reset its progress.
- *
- * NonMatching: register numbering only. The target gives the entry pointer
- * r31 and the parameters r24..r30; here the entry lands in r24.
- * c5: later entry scope and an inline registration tail were invariant.
- * c18: a whole-function helper was not auto-inlined; an inline entry
- * accessor was invariant; a C++ entry reference retained the same homes.
- * Native exception metadata is exact with exceptions enabled below. */
+ * The free-slot search is a plain loop; mwcc fully unrolls it. */
 
 typedef struct PathEntry {
     int field0;
@@ -64,22 +58,12 @@ int PathManager_RegisterCarObject(PathMgr *self, float *px, float *py, float *pz
         return -1;
     }
     if (slot == -1) {
-        if (self->entries[0].node < 0) {
-            slot = 0;
-        } else if (self->entries[1].node < 0) {
-            slot = 1;
-        } else if (self->entries[2].node < 0) {
-            slot = 2;
-        } else if (self->entries[3].node < 0) {
-            slot = 3;
-        } else if (self->entries[4].node < 0) {
-            slot = 4;
-        } else if (self->entries[5].node < 0) {
-            slot = 5;
-        } else if (self->entries[6].node < 0) {
-            slot = 6;
-        } else if (self->entries[7].node < 0) {
-            slot = 7;
+        int i;
+        for (i = 0; i < 8; i++) {
+            if (self->entries[i].node < 0) {
+                slot = i;
+                break;
+            }
         }
     }
     if (slot == -1) {

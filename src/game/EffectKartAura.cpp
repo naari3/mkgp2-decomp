@@ -94,10 +94,10 @@ void Effect_KartAuraChild_Update(AuraEffect* effect) {
 #else
 void Effect_KartAuraCompound_Update(AuraEffect* effect) {
     AuraGroup* group = &effect->payload.group;
-    int freeIndex;
+    int i;
     switch (effect->state) {
     case 0:
-        for (int i = 0; i < 6; ++i) {
+        for (i = 0; i < 6; ++i) {
             group->children[i] = DrawEffect_SpawnDirect(Effect_KartAuraChild_Update);
             if (group->children[i])
                 Vec3_Copy(&group->children[i]->position, &effect->position);
@@ -108,23 +108,19 @@ void Effect_KartAuraCompound_Update(AuraEffect* effect) {
     case 1:
         switch (effect->cleanup) {
         case 1:
-        {
-            AuraEffect* empty = 0;
-            signed char detach = 1;
-            for (int i = 0; i < 6; ++i) {
+            for (i = 0; i < 6; ++i) {
                 if (group->children[i]) {
                     group->children[i]->payload.child.kart = group->kart;
-                    group->children[i]->cleanup = detach;
-                    group->children[i] = empty;
+                    group->children[i]->cleanup = 1;
+                    group->children[i] = 0;
                 }
             }
             DrawEffect_Free(effect);
             break;
-        }
         case 2:
-            for (freeIndex = 0; freeIndex < 6; ++freeIndex) {
-                DrawEffect_Free(group->children[freeIndex]);
-                group->children[freeIndex] = 0;
+            for (i = 0; i < 6; ++i) {
+                DrawEffect_Free(group->children[i]);
+                group->children[i] = 0;
             }
             DrawEffect_Free(effect);
             break;

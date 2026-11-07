@@ -23,11 +23,14 @@ void fn_80204130(int layer);
 }
 
 static inline ListIter RemoveTask(DoublyLinkedList *entries, ListIter it) {
-    ListIter result;
-    result = entries->Erase(it);
+    ListIter result = entries->Erase(it);
     return result;
 }
 
+/* GC/1.3 + opt_propagation off: 13 -> 4 lines. Left: the target copies the
+ * Erase result through a memory temp (0x8 -> 0x10 -> it at 0x14) after the
+ * call; here RemoveTask's by-value parameter takes slot 0x10 before it. */
+#pragma opt_propagation off
 void SceneListImpl::Draw() {
     ListNode *end = entries.End();
     ListIter it;

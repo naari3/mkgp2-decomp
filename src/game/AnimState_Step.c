@@ -1,9 +1,9 @@
 /* AnimState (0x800AE854..0x800AF088): keyframed parameter tracks.
- * NonMatching: Step 99.264%, Init 94.177% (objdiff, 2026-11-07).
- * The unsigned track-type parameter of the sampling helper preserves the
- * repeated signed extension at dispatch; Step now has the exact text size.
- * Remaining: saved/scratch register partition, Init's retained entries base
- * versus a moving pointer, and zero-template section ownership/order.
+ * NonMatching: Step 99.907%, Init 98.719% (objdiff, 2026-11-08).
+ * Integer-address entry indexing preserves the original base/offset webs.
+ * Step's instruction operands match; its remaining differences are zero-
+ * template relocations. Init retains an extra zero load before clearing.
+ * The reversed template order prevents a separate Step/Init TU split.
  */
 typedef struct Vec { float x, y, z; } Vec;
 
@@ -76,10 +76,10 @@ static inline void AnimState_Apply(AnimState *s, AnimEntry *e, char type,
 
 int AnimState_Step(AnimState *s)
 {
-    signed char res;
-    signed char key;
-    signed char j;
     signed char i;
+    signed char j;
+    signed char key;
+    signed char res;
     int k;
     AnimEntry *e;
     signed char n;
@@ -127,8 +127,10 @@ int AnimState_Step(AnimState *s)
                         s->state[i] = 2;
                     }
                 } else {
+                    int first;
                     data = (int *)e->data;
-                    t = (s->time[i] - (float)data[key]) * (1.0f / (float)(data[key + 1] - data[key]));
+                    first = data[key];
+                    t = (s->time[i] - (float)first) * (1.0f / (float)(data[key + 1] - first));
                 }
                 break;
             case 3:
@@ -187,7 +189,8 @@ int AnimState_Step(AnimState *s)
             }
         }
         k++;
-        e = &s->entries[k];
+        /* Keep address arithmetic in the stream's 32-bit address domain. */
+        e = (AnimEntry *)((unsigned int)s->entries + k * sizeof(AnimEntry));
     }
     }
     return res != 0;
@@ -267,7 +270,7 @@ void AnimState_Init(AnimState *s, AnimEntry *entries)
                 break;
             }
             k += sizeof(AnimEntry);
-            e = (AnimEntry *)((char *)entries + k);
+            e = (AnimEntry *)((unsigned int)entries + k);
         }
     }
 }

@@ -628,7 +628,6 @@
     "__dt__11ScopedTimerFv"
   ],
   "src/ui/FrameSelection_Methods.c": [
-    "FrameSelection_Init",
     "FrameSelection_Confirm",
     "FrameSelection_Draw",
     "FrameSelection_Update"
@@ -1777,9 +1776,8 @@
   ],
   "src/game/anon_80224ECC.cpp": [
     "fn_80224ECC",
-    "fn_80224F0C"
-  ],
-  "src/game/anon_80224ECC_exact2.cpp": [
+    "fn_80224F0C",
+    "fn_80225124",
     "fn_802251DC",
     "fn_80225378",
     "fn_802253B0",
@@ -2751,5 +2749,20 @@
       "fn_801E435C",
       "fn_801E4504"
     ]
-  }
+  },
+  "src/game/clFlowChara.cpp": [
+    "CharaSelect_SetupCharacterDisplay",
+    "fn_801C37E8",
+    "clFlowChara_HandleConfirm",
+    "fn_801C3AA4",
+    "clFlowChara_Update",
+    "clFlowChara_Destructor",
+    "FrameSelection_Init",
+    "dtor_800869D0"
+  ],
+  "src/game/anon_802052E0_nm1.cpp": [
+    "fn_802055F4",
+    "fn_8020579C",
+    "dtor_80082960"
+  ]
 }

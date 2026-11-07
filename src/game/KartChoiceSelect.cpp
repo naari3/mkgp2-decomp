@@ -1,10 +1,15 @@
 #include "game/KartChoiceOwnerPrivate.h"
-/* Full native draft. The changed-flag web remains NonMatching (98.517914%). */
+/* Keep the event test and choice validation in the same inline operation. */
 static inline unsigned char TestChoiceFlag(ChoiceStatus *status, unsigned long long mask) {
     unsigned char hit;
     if ((status->bits & mask) == 0) hit = 0;
     else hit = 1;
     return hit;
+}
+static inline unsigned char ChoiceChanged(ChoiceStatus *status, int choice) {
+    unsigned char changed = TestChoiceFlag(status, 0x10000ULL);
+    if (changed) changed = choice != -1;
+    return changed;
 }
 extern "C" void fn_8023B318(KartChoiceOwner *self) {
     ChoiceStatus *status = self->render->status;
@@ -22,8 +27,7 @@ extern "C" void fn_8023B318(KartChoiceOwner *self) {
     } else if (status->bits & 0x100000ULL) choice = -2;
     else if (status->bits & 0x200000ULL) choice = -2;
     else if (status->bits & 0x400000ULL) choice = -2;
-    unsigned char changed = TestChoiceFlag(status, 0x10000ULL);
-    if (changed) changed = choice != -1;
+    unsigned char changed = ChoiceChanged(status, choice);
     if (changed) self->selected = choice;
     if (choice == -2) {
         self->state = 4;
