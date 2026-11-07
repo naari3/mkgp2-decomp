@@ -1,3 +1,7 @@
+/* ItemSelectState ctor. NonMatching: only the nonvolatile register numbering
+ * of the row/col loop variables differs (target: k r31, entry r30, total r29,
+ * table r28, ys r27, player r26, row r25). Declaration-order sweep and two
+ * 20-min permuter runs plateau here. */
 #include "game/ItemSelectState.h"
 struct ResCtrl {
  int resId; int field4,mode,fieldc; unsigned char flag,pad11[3];
@@ -9,7 +13,7 @@ extern "C" {
 void PreloadResource(int);void fn_80121E10(ResCtrl *);
 unsigned int SpriteHandle_CreateDefault(ResCtrl *,int);
 void SpriteHandle_SetActiveFlag(unsigned int,int);void SpriteHandle_RecomputeCull(unsigned int);
-int isJapanese();void TexMgr_SetTexture(TextManager *,const char *);
+int isJapanese();void TexMgr_SetTexture(TextManager *,const char *,...);
 void fn_801F93EC(float,float,TextManager *);void fn_801F8E90(TextManager *);
 int fn_8023D844(int,int);int PlayerData_ResolveUnlockedIdByIndex(void *,int);
 int Item_GetDescriptorField0(int,void *);
@@ -39,6 +43,13 @@ static inline int portraitIndex() {
  else if(g_characterId==4)return 12;
  else return 0;
 }
+static inline unsigned int MakeCell(unsigned int resource,const float *y) {
+ ResCtrl cell;
+ cell.resId=resource;cell.flag=1;cell.x=lbl_806DB8F0;cell.y=*y;cell.z=lbl_806DB8CC;
+ cell.colors[0]=0xc3cdf0ff;cell.colors[1]=0xc3cdf0ff;cell.colors[2]=0xc3cdf0ff;cell.colors[3]=0xc3cdf0ff;
+ cell.scaleX=lbl_806DB910;cell.scaleY=lbl_806DB910;
+ return SpriteHandle_CreateDefault(&cell,6);
+}
 ItemSelectState::ItemSelectState() {
  char *data=lbl_803DC0C0;
  iconArray=0;auxBuffer=0;field148=0;field14c=0;resultCode=0;phase=0;doneFlag=0;shownFlag=0;
@@ -51,8 +62,7 @@ ItemSelectState::ItemSelectState() {
  res.resId=0x17bb;res.flag=1;res.x=lbl_806DB88C;res.y=lbl_806DB890;res.z=lbl_806DB8CC;
  sprites[0]=SpriteHandle_CreateDefault(&res,5);
  fn_80121E10(&res);
- res.resId=portraitIndex();
- res.resId+=0x1d23;res.flag=1;res.x=lbl_806DB900;res.y=lbl_806DB924;res.z=lbl_806DB8CC;
+ res.resId=portraitIndex()+0x1d23;res.flag=1;res.x=lbl_806DB900;res.y=lbl_806DB924;res.z=lbl_806DB8CC;
  sprites[1]=SpriteHandle_CreateDefault(&res,6);
  for(int i=0;i<5;i++){SpriteHandle_SetActiveFlag(sprites[i],0);SpriteHandle_RecomputeCull(sprites[i]);}
  auxBuffer=new TextManager;
@@ -64,37 +74,34 @@ ItemSelectState::ItemSelectState() {
  unsigned int *table=(unsigned int *)(data+0xc0);
  float *ys=(float *)(data+0x1dc);
  int total=0;
+ unsigned char *player=g_playerData;
  for(int row=0;row<6;row++,table+=10,ys++,total+=11) {
  unsigned int *entry=table;
- unsigned int *out=&itemSprites[total];
- for(int col=0;col<11;col++,entry++,out++){
+ int k=total;
+ for(int col=0;col<11;col++,entry++){
+   long character=g_characterId;
    unsigned int resource=0x1422;
-   int character=g_characterId;
    if(character<0)character=0;if(character>=13)character=0;
    int index;
-   if(col<10)index=*entry;else index=fn_8023D844(character,row);
-   if(g_playerData[0xa8+index]==1)resource=Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(g_playerData,index),0);
-   ResCtrl cell;
-   cell.y=*ys;cell.flag=1;cell.x=lbl_806DB8F0;cell.z=lbl_806DB8CC;
-   cell.colors[0]=cell.colors[1]=cell.colors[2]=cell.colors[3]=0xc3cdf0ff;
-   cell.scaleX=cell.scaleY=lbl_806DB910;cell.resId=resource;
-   *out=SpriteHandle_CreateDefault(&cell,6);
+   if(col>=10)index=fn_8023D844(character,row);else index=*entry;
+   if(player[index+0xa8]==1)resource=Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(player,index),0);
+   itemSprites[k++]=MakeCell(resource,ys);
  }
  }
  fn_80121E10(&res);
- res.tail[1]=res.tail[2]=res.tail[3]=1;
- res.resId=0x1e3d;res.flag=1;res.x=lbl_806DB8DC;res.y=lbl_806DB934;res.z=lbl_806DB8CC;
- res.scaleX=lbl_806DB938;res.scaleY=lbl_806DB8CC;
+ res.tail[1]=1;res.tail[2]=1;res.tail[3]=1;
+ res.resId=0x1e3d;res.flag=1;res.x=lbl_806DB8DC;res.y=lbl_806DB934;res.scaleY=res.z=lbl_806DB8CC;
+ res.scaleX=lbl_806DB938;
  sprites[3]=SpriteHandle_CreateDefault(&res,6);
  fn_80121E10(&res);
  res.resId=0x17ed;res.flag=1;res.x=lbl_806DB900;res.y=lbl_806DB93C;res.z=lbl_806DB8CC;
  sprites[2]=SpriteHandle_CreateDefault(&res,6);
- ResCtrl last;
+ {ResCtrl last;
  last.mode=2;last.width=lbl_806DB8D4;last.height=lbl_806DB8D8;last.flag=1;
  last.x=lbl_806DB8DC;last.y=lbl_806DB8E0;last.z=lbl_806DB8CC;
- last.colors[0]=last.colors[1]=last.colors[2]=last.colors[3]=0;
+ last.colors[0]=0;last.colors[1]=0;last.colors[2]=0;last.colors[3]=0;
  sprites[4]=SpriteHandle_CreateDefault(&last,6);
- SpriteHandle_SetActiveFlag(sprites[4],0);SpriteHandle_RecomputeCull(sprites[4]);
+ SpriteHandle_SetActiveFlag(sprites[4],0);SpriteHandle_RecomputeCull(sprites[4]);}
  iconArray=new IconPack;
 }
 

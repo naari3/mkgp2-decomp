@@ -1,12 +1,13 @@
 /* SetCourseParams (0x8009CBFC): select cup/round/variant and reset the
  * per-race kart, lap and rank slots.
  *
- * NonMatching: the target addresses these .bss objects pooled off one base
- * (they were defined in the original TU, which spans RaceSys_8009B98C ..
- * SetCourseParams). Defining them here gets the pooling, but MWCC lays the
- * pooled objects out in first-use order, which only matches when the whole
- * original TU (with its earlier references) is compiled together. */
+ * The target addresses these .bss objects pooled off one base. Compiled as
+ * C++ (-lang=c++, extern "C" names) MWCC lays uninitialized globals out in
+ * definition order, which matches; as C it uses first-use order.
+ * NonMatching: ~50 lines of constant/pointer register order left in the
+ * lap/rank reset block. */
 
+extern "C" {
 typedef struct KartSlot {
     int driverId;
     int charId;
@@ -108,49 +109,56 @@ int SetCourseParams(int cup, int longRound, int variant, int reverse)
     g_longRoundFlag = longRound;
     g_courseVariantIdx = variant;
     g_reverseRoundFlag = reverse;
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i < 8; ++i) {
         lbl_805AC600[i].driverId = -1;
         lbl_805AC600[i].charId = -1;
         lbl_805AC600[i].field8 = 1;
         lbl_805AC600[i].items[0] = 0x24;
         lbl_805AC600[i].items[1] = 0x25;
-        lbl_805AC600[i].items[2] = 0x26;
-        lbl_805AC600[i].kartVariant = 0;
+        { lbl_805AC600[i].items[2] = 0x26;
+        lbl_805AC600[i].kartVariant = 0; }
         lbl_805D2938[i] = 0;
     }
-    if (g_cupId >= 0 && g_longRoundFlag >= 0) {
+    /* fakematch: the target reloads both globals after the slot loop;
+     * natural code: if (g_cupId >= 0 && g_longRoundFlag >= 0) */
+    if (*(volatile int *)&g_cupId >= 0 && *(volatile int *)&g_longRoundFlag >= 0) {
         g_raceStarted = 0;
     }
     lbl_806CF10C = 0;
-    if (lbl_806D1258 == 0) {
-        for (i = 0; i < 5; i++) {
-            lbl_805B24CC[i].a = 0;
-            lbl_805B24CC[i].b = 0;
-            lbl_805B24CC[i].c = lbl_806D4790;
-            lbl_805B24CC[i].d = lbl_806D4798;
+    if (0 == lbl_806D1258) {
+        struct LapExtra *extra = &lbl_805B256C;
+        RankSlot *rank = lbl_805D2948;
+        LapEntry *lap = lbl_805B24CC;
+        for (i = 0; 5 > i; ++i) {
+            lap[i].a = 0;
+            lap[i].b = 0;
+            lap[i].c = lbl_806D4790;
+            lap[i].d = lbl_806D4798;
         }
         for (i = 5; i < 10; i++) {
-            lbl_805B24CC[i].a = 0;
-            lbl_805B24CC[i].b = 1;
-            lbl_805B24CC[i].c = lbl_806D4790;
-            lbl_805B24CC[i].d = lbl_806D4798;
+            lap[i].a = 0;
+            lap[i].b = 1;
+            lap[i].c = lbl_806D4790;
+            lap[i].d = lbl_806D4798;
         }
-        lbl_805B256C.e.a = 0;
-        lbl_805B256C.e.b = 0;
-        lbl_805B256C.e.c = lbl_806D4790;
-        lbl_805B256C.e.d = lbl_806D4798;
+        extra->e.a = 0;
+        extra->e.b = 0;
+        extra->e.c = lbl_806D4790;
+        extra->e.d = lbl_806D4798;
         lbl_806D1280 = 4;
         lbl_806D1258 = 1;
         /* The original resets each rank explicitly rather than retaining a loop. */
-        ResetRankSlot(&lbl_805D2948[0]);
-        ResetRankSlot(&lbl_805D2948[1]);
-        ResetRankSlot(&lbl_805D2948[2]);
-        ResetRankSlot(&lbl_805D2948[3]);
-        ResetRankSlot(&lbl_805D2948[4]);
-        ResetRankSlot(&lbl_805D2948[5]);
-        ResetRankSlot(&lbl_805D2948[6]);
-        ResetRankSlot(&lbl_805D2948[7]);
+        ResetRankSlot(&rank[0]);
+        ResetRankSlot(&rank[1]);
+        ResetRankSlot(&rank[2]);
+        ResetRankSlot(&rank[3]);
+        ResetRankSlot(&rank[4]);
+        ResetRankSlot(&rank[5]);
+        ResetRankSlot(&rank[6]);
+        ResetRankSlot(&rank[7]);
         lbl_806D12D8 = 0;
     }
     return 1;
+}
+
 }
