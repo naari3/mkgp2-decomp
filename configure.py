@@ -2568,7 +2568,7 @@ config.libs = [
             Object(Matching, "game/fn_801F7D50.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801F9888.c"),
             Object(Matching, "game/fn_801F98E8.c"),
-            Object(NonMatching, "game/CollisionFile_Load.c", mw_version="GC/3.0a5"),
+            Object(NonMatching, "game/CollisionFile_Load.cpp"),
             Object(Matching, "game/fn_8021ED1C.cpp"),
             Object(Matching, "game/fn_80239D6C.cpp", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "game/fn_8023A148.cpp"),

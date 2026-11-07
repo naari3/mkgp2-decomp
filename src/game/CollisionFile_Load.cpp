@@ -1,3 +1,10 @@
+/* CollisionFile_Load @ : really the CECollision/DemoCollision
+ * ctor (see extab_user_renames.json). C++ (cmplwi pointer tests) at the
+ * default compiler; strength reduction off keeps the lwzx table walk.
+ * NonMatching: the shared zero register (target reuses count's r6 for the
+ * three member stores) and one add operand order. */
+#pragma opt_strength_reduction off
+extern "C" {
 #include "game/CollisionFile_Load_private.h"
 
 typedef struct CollisionFile {
@@ -11,7 +18,7 @@ typedef struct CollisionTypeEntry {
     u32 type;
 } CollisionTypeEntry;
 
-extern const char *lbl_803BF3D0[];
+extern CollisionTypeEntry lbl_803BF3D0[];
 extern int lbl_806D19A8;
 extern void *lbl_806CF010;
 extern void OSFreeToHeap(void *, void *);
@@ -26,10 +33,11 @@ CollisionFile *CollisionFile_Load(CollisionFile *self, const char *path) {
     u32 last;
     int result;
     int count;
+    count = 0;
     self->size = 0;
     self->data = 0;
     self->collision = 0;
-    for (count = 0; lbl_803BF3D0[count * 2] != 0; count++) {}
+    for (; lbl_803BF3D0[count].name != 0; count++) {}
     lbl_806D19A8 = count;
     if (DVDOpen(path, &file)) {
         length = (file.length + 31) & ~31;
@@ -62,3 +70,4 @@ close:
     return self;
 }
 
+}

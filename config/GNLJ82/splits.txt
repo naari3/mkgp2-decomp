@@ -10777,7 +10777,7 @@ game/fn_801F98E8.c:
 	extabindex  start:0x800290E4 end:0x800290F0
 	.text       start:0x801F98E8 end:0x801F9954
 
-game/CollisionFile_Load.c:
+game/CollisionFile_Load.cpp:
 	extab       start:0x800176F0 end:0x800176F8
 	extabindex  start:0x800290F0 end:0x800290FC
 	.text       start:0x801F9954 end:0x801F9AAC
