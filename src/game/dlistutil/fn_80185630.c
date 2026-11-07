@@ -7,20 +7,23 @@ static inline float (*FaceMatrix(HSD_JObj *jobj))[4] {
 }
 
 /* Extract world-space faces, reversing winding and alternating strip parity. */
-int fn_80185630(HSD_JObj *jobj, DListPObj *pobj, DListFace *out, int capacity) {
-    DListVec v[4];
-    unsigned char *p, *end;
+int fn_80185630(HSD_JObj *jobj, DListPObj *pobj, DListFace *faces, int capacity) {
+    unsigned char *p;
     int count;
+    DListFace *face, *out;
+    DListVec v[4];
+    int primitive, n, needed, parity, i, collected;
     unsigned int size;
-    int n, primitive, needed, collected, i, parity;
-    DListFace *face;
+    unsigned char *end, *display;
     if (!jobj || !pobj) return 0;
-    if (!out || capacity <= 0) return 0;
+    if (!faces || capacity <= 0) return 0;
     count = 0;
-    p = pobj->display;
-    end = p + pobj->n_display * 32;
+    display = pobj->display;
+    p = display;
+    end = display + pobj->n_display * 32;
     fn_801866DC(pobj->verts);
     if (lbl_806D1678 == 0) return 0;
+    out = faces;
     while (p < end) {
         size = CmdSize(p);
         if (size) { p += size; continue; }
