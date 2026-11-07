@@ -4292,6 +4292,7 @@ game/DrawEffect_KartDustRing_Update.c:
 	extab       start:0x8000AB40 end:0x8000AB48
 	extabindex  start:0x8002324C end:0x80023258
 	.text       start:0x800CAE78 end:0x800CB0C8
+	.data       start:0x8041A4D0 end:0x8041A4F4
 
 game/DrawEffect_SmokeRingTimed_Update.c:
 	extab       start:0x8000AB48 end:0x8000AB50

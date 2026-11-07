@@ -13,15 +13,15 @@ extern const float lbl_806D571C; /* 0.0 */
 extern const float lbl_806D5720; /* 0.8 */
 extern const float lbl_806D5724; /* 1.2 */
 extern const float lbl_806D5728; /* 0.1 */
-typedef struct DustColors { Vec tier1; Vec tier2; Vec tier3; } DustColors;
-extern DustColors lbl_8041A4D0;
+/* The three tiers share the TU's data-section base register. */
+Vec lbl_8041A4D0 = { 1.0f, 1.0f, 1.0f };
+Vec lbl_8041A4DC = { 1.0f, 1.0f, 0.9f };
+Vec lbl_8041A4E8 = { 0.65f, 0.55f, 0.25f };
 extern int Rand_RangeInt(int lo, int hi);
 extern int Item_AdvanceTrackedHomingState(void *item, Vec *offset, float k);
 
 void DrawEffect_KartDustRing_Update(unsigned char *self)
 {
-    DustColors *colors = &lbl_8041A4D0;
-
     switch (STATE) {
     case 0:
         if (P(0xCC) == 0) {
@@ -31,13 +31,13 @@ void DrawEffect_KartDustRing_Update(unsigned char *self)
         VfxSlot_BindResourceEx(SLOT(self), 0x6D, 0);
         switch (S8(0x190)) {
         case 1:
-            Vec3_Copy(V(0x30), &colors->tier1);
+            Vec3_Copy(V(0x30), &lbl_8041A4D0);
             break;
         case 2:
-            Vec3_Copy(V(0x30), &colors->tier2);
+            Vec3_Copy(V(0x30), &lbl_8041A4DC);
             break;
         case 3:
-            Vec3_Copy(V(0x30), &colors->tier3);
+            Vec3_Copy(V(0x30), &lbl_8041A4E8);
             break;
         }
         S8(0x28) = 1;
