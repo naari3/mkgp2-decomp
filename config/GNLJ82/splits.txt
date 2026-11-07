@@ -1497,45 +1497,10 @@ game/clItemBox_StepFn_PopOut.c:
 game/clItemBox_ResetTimer_IsPickedUp.c:
 	.text       start:0x8005EA74 end:0x8005EA94
 
-game/clItemBox_TransitionToDebris.c:
-	extab       start:0x80007BAC end:0x80007BB4
-	extabindex  start:0x80020C00 end:0x80020C0C
-	.text       start:0x8005EA94 end:0x8005ED18
-
-game/clItemBox_Draw.c:
-	extab       start:0x80007BB4 end:0x80007BBC
-	extabindex  start:0x80020C0C end:0x80020C18
-	.text       start:0x8005ED18 end:0x8005EE24
-
-game/clItemBox_Tick.c:
-	extab       start:0x80007BBC end:0x80007BC4
-	extabindex  start:0x80020C18 end:0x80020C24
-	.text       start:0x8005EE24 end:0x8005EEB0
-
-game/clItemBox_Dtor.c:
-	extab       start:0x80007BC4 end:0x80007BCC
-	extabindex  start:0x80020C24 end:0x80020C30
-	.text       start:0x8005EEB0 end:0x8005EF38
-
-game/clItemBox_Ctor_XYZ.c:
-	extab       start:0x80007BCC end:0x80007BF8
-	extabindex  start:0x80020C30 end:0x80020C3C
-	.text       start:0x8005EF38 end:0x8005F050
-
-game/clItemBox_Ctor_GroundSnap.c:
-	extab       start:0x80007BF8 end:0x80007C24
-	extabindex  start:0x80020C3C end:0x80020C48
-	.text       start:0x8005F050 end:0x8005F194
-
-game/clItemBoxManager_Assets.cpp:
-	extab       start:0x80007C24 end:0x80007C94
-	extabindex  start:0x80020C48 end:0x80020C78
-	.text       start:0x8005F194 end:0x8005F53C
-
-game/clItemBoxManager_StepTable.cpp:
-	extab       start:0x80007C94 end:0x80007C9C
-	extabindex  start:0x80020C78 end:0x80020C84
-	.text       start:0x8005F53C end:0x8005F5CC
+game/clItemBox.cpp:
+	extab       start:0x80007BAC end:0x80007C9C
+	extabindex  start:0x80020C00 end:0x80020C84
+	.text       start:0x8005EA94 end:0x8005F5CC
 	.ctors      start:0x802E88F4 end:0x802E88F8
 	.data       start:0x803F9C60 end:0x803F9CD8
 
