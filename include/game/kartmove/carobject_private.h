@@ -16,6 +16,7 @@ struct CarObject {
 };
 
 struct CarTrivial {
+    CarTrivial();
     float x, y, z;
     ~CarTrivial();
 };
@@ -25,7 +26,16 @@ struct Matrix44 { float m[4][4]; };
 struct InitVec : Vec3 {
     InitVec() {}
     InitVec(float a, float b, float c) { x = a; y = b; z = c; }
+    void Set(float a, float b, float c) { x = a; y = b; z = c; }
     ~InitVec() {}
+};
+
+/* The ground query local occupies one float; its empty cleanup is shared
+ * with the vector destructor in the target EH table. */
+struct GroundHeight {
+    float value;
+    GroundHeight() {}
+    ~GroundHeight() {}
 };
 
 struct MovementInit {
@@ -33,7 +43,9 @@ struct MovementInit {
     unsigned char *config;
     int field08;
     float field0c, field10, field14, field18, field1c;
-    unsigned char field20, field21, field22, field23;
+    unsigned char field20, field21;
+    bool field22;
+    unsigned char field23;
     int field24, field28;
     float field2c;
     unsigned char field30, pad31[7];

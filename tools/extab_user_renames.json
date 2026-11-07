@@ -1259,7 +1259,8 @@
     "__dt__10CarTrivialFv": "dtor_8019EB60",
     "__ct__12MovementInitFPvPUcPvfff": "KartMovement_Init",
     "__ct__7CarElemFv": "fn_8007C5DC",
-    "__dt__7InitVecFv": "dtor_80036E40"
+    "__dt__7InitVecFv": "dtor_80036E40",
+    "__dt__12GroundHeightFv": "dtor_80036E40"
   },
   "src/game/kartmove/fn_8019BF80.cpp": {
     "__dt__3VecFv": "dtor_80036E40"
@@ -3507,7 +3508,9 @@
     "__ct__11TextManagerFv": "fn_80149214",
     "__dt__11TextManagerFv": "dtor_800869D0",
     "__vt__9FlowFader": "lbl_80419DC8",
-    "__vt__10FlowFaderF": "lbl_80419DE0"
+    "__vt__10FlowFaderF": "lbl_80419DE0",
+    "@151": "@etb_8001900C",
+    "@152": "@eti_80029924"
   },
   "src/game/anon_80207324.cpp": {
     "__RTTI__9YesNoTask": "lbl_806D02A8",
@@ -10104,7 +10107,9 @@
     "Update__8FadeLogoFv": "fn_8020E590",
     "__ct__8FadeLogoFii": "fn_8020E6C8",
     "EraseRange__15TaskEntriesBaseFRC8TaskIterRC8TaskIter": "DoublyLinkedList_EraseRange",
-    "__dt__13TaskListOwnerFv": "dtor_8020EB04"
+    "__dt__13TaskListOwnerFv": "dtor_8020EB04",
+    "__dt__16TaskListBaseCopyFv": "fn_8020EC70",
+    "__vt__16TaskListBaseCopy": "lbl_804ECAC0"
   },
   "src/game/GameMode_TitleSelect.cpp": {
     "__ct__10SelectBaseFv": "GameMode_BaseInit",
@@ -11274,6 +11279,8 @@
   },
   "src/game/Scene_8016FE44.cpp": {
     "Draw__11SparkRenderFv": "fn_8016FE44",
+    "@134": "@etb_800106EC",
+    "@135": "@eti_800263C0",
     "@136": "@etb_800106EC",
     "@137": "@eti_800263C0"
   },
@@ -12509,7 +12516,34 @@
     "__dt__17RankingSpriteSlotFv": "dtor_8015E8AC",
     "__dt__17RankingDriverSlotFv": "dtor_80052C48",
     "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "...rodata.0": "global:lbl_8039BF88",
+    "rankingName8039C384": "global:lbl_8039C384",
+    "rankingName8039C390": "global:lbl_8039C390",
+    "rankingName8039C39C": "global:lbl_8039C39C",
+    "rankingName8039C3A8": "global:lbl_8039C3A8",
+    "rankingName8039C3B4": "global:lbl_8039C3B4",
+    "rankingName8039C3C0": "global:lbl_8039C3C0",
+    "rankingName8039C3CC": "global:lbl_8039C3CC",
+    "rankingName8039C3D8": "global:lbl_8039C3D8",
+    "rankingName8039C3E4": "global:lbl_8039C3E4",
+    "rankingName8039C3F0": "global:lbl_8039C3F0",
+    "rankingName8039C3FC": "global:lbl_8039C3FC",
+    "rankingName8039C408": "global:lbl_8039C408",
+    "rankingName8039C414": "global:lbl_8039C414",
+    "rankingName8039C420": "global:lbl_8039C420",
+    "rankingName8039C42C": "global:lbl_8039C42C",
+    "rankingName8039C438": "global:lbl_8039C438",
+    "rankingName8039C444": "global:lbl_8039C444",
+    "rankingName8039C450": "global:lbl_8039C450",
+    "rankingNameMame": "global:lbl_8039C45C",
+    "rankingPlacements": "global:lbl_8039C474",
+    "rankingScreenParams": "global:lbl_8039C4F4",
+    "rankingLabels": "global:lbl_8039C50C",
+    "rankingResources": "global:lbl_8039C53C",
+    "@109": "@etb_80015074",
+    "@110": "@eti_80028004",
+    "@108": "lbl_806D9FB8"
   },
   "src/game/PCBCommLifecycle.cpp": {
     "__dt__7PCBCommFv": "dtor_800869D0",
@@ -12848,5 +12882,14 @@
     "__dt__16clSceneInterfaceFv": "dtor_8007D0D4",
     "__RTTI__16clSceneInterface": "lbl_806D050C",
     "__RTTI__16clCSSceneGetRace": "lbl_806D0514"
+  },
+  "src/game/anon_80205DCC_nm2.cpp": {
+    "DrawCredits__12YesNoButtonLFv": "fn_8020615C",
+    "@116": "@etb_80019024",
+    "@117": "@eti_80029930"
+  },
+  "src/sysdolphin/baselib/lobj_vector_nm.c": {
+    "@294": "global:HSD_LObj_803B94A0_803F2BB8",
+    "@295": "global:HSD_LObj_803B94AC_803F2BC4"
   }
 }

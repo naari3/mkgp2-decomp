@@ -1,4 +1,4 @@
-/* Native reconstruction of 0x8022BFA8; retained NonMatching (84.24808%). */
+/* Native reconstruction of 0x8022BFA8; retained NonMatching (84.29528%). */
 #include "game/EnemyFaceDraw.h"
 union FaceDrawPipe { float f32; unsigned int u32; };
 #define FIFO (*(volatile FaceDrawPipe *)0xCC008000)
@@ -55,6 +55,28 @@ static inline void DrawFaceQuad(FaceDrawVec *p, float *uv, FaceDrawVec *offset, 
     FIFO.f32 = offset->x + p[3].x;
     FIFO.f32 = p[3].y;
     FIFO.f32 = offset->z + p[3].z;
+    FIFO.u32 = color; FIFO.f32 = uv[6]; FIFO.f32 = uv[7];
+}
+
+/* Snapshot the billboard displacement once for the overlay quad. */
+static inline void DrawFaceQuadCached(FaceDrawVec *p, float *uv, FaceDrawVec *offset, unsigned int color) {
+    GXBegin(0x80,0,4);
+    float x=offset->x, z=offset->z;
+    FIFO.f32 = x + p[0].x;
+    FIFO.f32 = p[0].y;
+    FIFO.f32 = z + p[0].z;
+    FIFO.u32 = color; FIFO.f32 = uv[0]; FIFO.f32 = uv[1];
+    FIFO.f32 = x + p[1].x;
+    FIFO.f32 = p[1].y;
+    FIFO.f32 = z + p[1].z;
+    FIFO.u32 = color; FIFO.f32 = uv[2]; FIFO.f32 = uv[3];
+    FIFO.f32 = x + p[2].x;
+    FIFO.f32 = p[2].y;
+    FIFO.f32 = z + p[2].z;
+    FIFO.u32 = color; FIFO.f32 = uv[4]; FIFO.f32 = uv[5];
+    FIFO.f32 = x + p[3].x;
+    FIFO.f32 = p[3].y;
+    FIFO.f32 = z + p[3].z;
     FIFO.u32 = color; FIFO.f32 = uv[6]; FIFO.f32 = uv[7];
 }
 
@@ -212,7 +234,7 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
         color=(color&~0xff)|((int)(lbl_806DB5F0*self->sub->alpha)&0xff);
         FaceDrawVec *draw=vertices;
         float *tex=uv;
-        for (int i=0;i<2;++i) { DrawFaceQuad(draw,tex,&offset,color); tex+=8; draw+=4; }
+        for (int i=0;i<2;++i) { DrawFaceQuadCached(draw,tex,&offset,color); tex+=8; draw+=4; }
     }
     HSD_StateInvalidate(0x7e); GXSetCullMode(2);
     int anim=self->sub->anim;

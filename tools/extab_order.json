@@ -2765,6 +2765,24 @@
     "fn_8020579C",
     "dtor_80082960"
   ],
+  "src/game/anon_8020E3D0_nm2.cpp": [
+    "dtor_8020EB04",
+    "fn_8020EB94",
+    "fn_8020EC70",
+    "fn_8020E4C4",
+    "fn_8020E590",
+    "fn_8020E690",
+    "fn_8020EE3C",
+    "fn_8020E6C8",
+    "dtor_8020EA98",
+    "fn_8020ED30",
+    "fn_8020EDB4",
+    "dtor_80082960",
+    "dtor_801FEAB8",
+    "dtor_801FEB48",
+    "dtor_801419C8",
+    "fn_80141A24"
+  ],
   "src/game/cLNormal3DWrap.cpp": {
     "extab": [
       "cLNormal3DWrap_Mgr_ReleaseSlot",

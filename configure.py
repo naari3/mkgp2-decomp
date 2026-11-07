@@ -468,7 +468,7 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/tev.c"),
             Object(Matching, "sysdolphin/baselib/mobj.c"),
             Object(Matching, "sysdolphin/baselib/lobj.c"),
-            Object(NonMatching, "sysdolphin/baselib/lobj_vector_nm.c"),
+            Object(Matching, "sysdolphin/baselib/lobj_vector_nm.c"),
             Object(Matching, "sysdolphin/baselib/lobj_setup.c"),
             Object(NonMatching, "sysdolphin/baselib/lobj_init_nm.c"),
             Object(Matching, "sysdolphin/baselib/lobj_current.c"),
@@ -1408,7 +1408,7 @@ config.libs = [
             Object(Matching, "game/fn_80105EB4.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/fn_8010670C.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/fn_80107040.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(NonMatching, "game/SetCourseParams.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(NonMatching, "game/SetCourseParams.c", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),  #g2
             Object(NonMatching, "game/AnimState_Step.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/ItemCollision_Check.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/ItemHit_Dispatch.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
@@ -1979,7 +1979,8 @@ config.libs = [
             Object(Matching, "game/anon_802052E0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_802052E0_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_802052E0_tail.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/anon_80205DCC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(Matching, "game/anon_80205DCC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(NonMatching, "game/anon_80205DCC_nm2.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_80205DCC_m2.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_80205DCC_m1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_80205DCC_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
@@ -2025,7 +2026,7 @@ config.libs = [
             Object(Matching, "game/anon_8020C974_thunk.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/anon_8020E2D8.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
             Object(Matching, "game/anon_8020E3D0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
-            Object(NonMatching, "game/anon_8020E3D0_nm2.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
+            Object(Matching, "game/anon_8020E3D0_nm2.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
             Object(Matching, "game/anon_8020E3D0_sort.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
             Object(NonMatching, "game/anon_8020E3D0_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
             Object(Matching, "game/anon_8020E3D0_update.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
@@ -3077,7 +3078,7 @@ config.libs = [
             Object(NonMatching, "game/objview/fn_801980C8.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/objview/fn_80198ABC.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/objview/fn_80197C84.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/objview/fn_801987C4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/objview/fn_801987C4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/objview/fn_801986D8.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/kartmove/fn_801999D0.c"),
             Object(Matching, "game/kartmove/KartMovement_CalcMaxSpeed.c"),
@@ -3842,6 +3843,14 @@ def _inject_jvs_metrics_ctor_bridge() -> None:
             target = f"build build/GNLJ82/src/game/{tu}.o: mwcc_sjis_extab"
         assert target in text
         text = text.replace(target, target.replace("mwcc_sjis_extab", "mwcc_sjis_ctor_bridge"), 1)
+    # Plain (no extab_padding) TUs that only need the symbol renames, e.g. to
+    # give an anonymous initializer literal the global name another TU uses.
+    for tu in ("sysdolphin/baselib/lobj_vector_nm",):
+        target = f"build build\\GNLJ82\\src\\{tu.replace('/', chr(92))}.o: mwcc_sjis "
+        if sys.platform != "win32":
+            target = f"build build/GNLJ82/src/{tu}.o: mwcc_sjis "
+        assert target in text
+        text = text.replace(target, target.replace("mwcc_sjis ", "mwcc_sjis_ctor_bridge "), 1)
     text = text[:start] + rule + "\n" + text[start:]
     build_ninja.write_text(text, encoding="utf-8")
 

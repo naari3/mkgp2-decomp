@@ -44,9 +44,11 @@ struct FadeTaskBase : PopupTask {
     int layer;
     FadeTaskBase(int layer_, int id_) : PopupTask(id_), layer(layer_) {}
     virtual ~FadeTaskBase() {}
+    virtual void _keyFB();
 };
 
 struct FadeLogo : FadeTaskBase {
+    virtual void _keyF();
     VHolder<FadeKey> key1;
     VHolder<FadeSeq> seq1;
     VHolder<FadeKey> key2;
@@ -121,6 +123,24 @@ TaskListOwner::~TaskListOwner() throw() {
 
 TaskListImpl::~TaskListImpl() {
     KillAll();
+}
+
+/* fakematch (out-of-line base dtor): the original emitted the weak copy of
+ * the inline ~TaskListBase() (fn_8020EC70) here, right after
+ * ~TaskListImpl(), because this TU owned the TaskListBase vtable. That
+ * vtable lives in unowned .data, so the natural code
+ *     virtual ~TaskListBase() { KillAll(); entries.Clear(); }
+ * has no out-of-line copy here. This twin class has the same layout and
+ * body, and its vtable reference is renamed to lbl_804ECAC0. */
+struct TaskListBaseCopy {
+    virtual void _key();
+    virtual ~TaskListBaseCopy();
+    TaskEntries entries;
+};
+
+TaskListBaseCopy::~TaskListBaseCopy() {
+    ((TaskListBase *)this)->KillAll();
+    entries.Clear();
 }
 
 static inline void MarkTasksFinished(TaskNode *n, TaskNode *end) {

@@ -57,7 +57,7 @@ static inline void DisposeMiddle(STLTree *tree, STLNode *node)
     STLContainer_GetAllocatorSlot(tree);
     MemoryManager_TimedFree(node);
 }
-static inline void DisposeBranch(STLTree *tree, STLNode *node)
+static inline void DisposeBranch(STLTree *tree, STLNode *__restrict node)
 {
     if (node->left) DisposeMiddle(tree, node->left);
     if (node->right) DisposeMiddle(tree, node->right);

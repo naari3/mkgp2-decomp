@@ -1,8 +1,7 @@
 #include "game/YesNoButtonDrawPrivate.h"
 
 /*
- * Left-hand selector button and the shared button animation
- * (0x80205DCC..0x80207324).
+ * Left-hand selector button background and update (0x80205DCC..0x8020615C).
  */
 
 extern "C" {
@@ -37,13 +36,43 @@ extern const float lbl_803C2688[3];
 extern const float lbl_803C2694[3];
 }
 
-void YesNoButtonL::Update() {
+static inline float LocalX(const YesNoButton *button, float offset) {
+    return offset * button->scaleX + (button->x + button->field34);
+}
+
+static inline float LocalY(const YesNoButton *button, float offset) {
+    return offset * button->scaleY + (button->y + button->field38);
+}
+
+static inline float SlidingX(const YesNoButton *button, float offset, float slide) {
+    return button->scaleX * (offset + slide) + (button->x + button->field34);
+}
+
+static inline void DrawBackground(YesNoButtonL *button) {
     ResCtrl c;
-    int lay = layer;
-    unsigned int col = Color();
-    float f = -fn_8020A6CC(fade.p);
-    YN_PUT(c, 0x72F, col, lbl_806DAB00[0], lbl_806DAB08[0], lay);
-    YN_PUT(c, 0x72E, col, lbl_806DAB00[1] + f, lbl_806DAB08[1], lay);
+    int lay = button->layer;
+    unsigned int col = button->Color();
+    float f = -fn_8020A6CC(button->fade.p);
+    fn_80121E10(&c);
+    c.resId = 0x72F;
+    c.SetColor(col);
+    c.SetScaleXY(button->scaleX, button->scaleY);
+    float px = LocalX(button, lbl_806DAB00[0]);
+    float py = LocalY(button, lbl_806DAB08[0]);
+    c.Show(px, py, lbl_806DAB20);
+    fn_8011FAFC(&c, lay);
+    fn_80121E10(&c);
+    c.resId = 0x72E;
+    c.SetColor(col);
+    c.SetScaleXY(button->scaleX, button->scaleY);
+    float px2 = SlidingX(button, lbl_806DAB00[1], f);
+    float py2 = LocalY(button, lbl_806DAB08[1]);
+    c.Show(px2, py2, lbl_806DAB20);
+    fn_8011FAFC(&c, lay);
+}
+
+void YesNoButtonL::Update() {
+    DrawBackground(this);
     DrawLabel();
     if (field6D) {
         DrawCredits();
@@ -81,83 +110,5 @@ void YesNoButtonL::Update() {
             fn_8020A734(fader74.p, 0xF, lbl_806DAB34, lbl_806DAB38);
             fn_8020A734(fader78.p, 0xF, lbl_806DAB34, lbl_806DAB3C);
         }
-    }
-}
-
-void YesNoButtonL::DrawCredits() {
-    const char *pool = lbl_803C25A8;
-    int lay = layer;
-    float oy;
-    float f = -fn_8020A6CC(fade.p);
-    oy = lbl_806DAB10;
-    unsigned int col = Color();
-    if (kind == 1) {
-        oy = lbl_806DAB60;
-    }
-    bool show = 0;
-    int credits = 0;
-    if (kind == 1) {
-        if (CreditMgr_GetPlayState(2) == 3) {
-            show = 0;
-        } else {
-            show = 1;
-            credits = CreditMgr_GetCreditCount(2);
-        }
-    } else if (kind == 2 || kind == 10) {
-        if (CreditMgr_GetPlayState(3) == 3) {
-            show = 0;
-        } else {
-            show = 1;
-            credits = CreditMgr_GetCreditCount(3);
-        }
-    } else if (kind == 11 || kind == 12) {
-        if (CreditMgr_GetPlayState(4) == 3) {
-            show = 0;
-        } else {
-            show = 1;
-            credits = CreditMgr_GetCreditCount(4);
-        }
-    } else if (kind == 3 || kind == 4) {
-        if (CreditMgr_GetPlayState(1) == 3) {
-            show = 0;
-        } else {
-            show = 1;
-            credits = CreditMgr_GetCreditCount(1);
-        }
-    }
-    if (credits <= 0) {
-        field80 = 1;
-    }
-    if (show) {
-        if (!field80) {
-            if (!isJapanese()) {
-                if (lbl_80598A60[0x27] == 0) {
-                    if (CreditMgr_GetCoinCount(0, -1) == 0) {
-                        TexMgr_SetTexture(&texts[0], pool + 0x148, credits);
-                    } else {
-                        TexMgr_SetTexture(&texts[0], pool + 0x158, credits);
-                    }
-                } else if (CreditMgr_GetCoinCount(0, -1) == 0) {
-                    TexMgr_SetTexture(&texts[0], pool + 0x16C, credits);
-                } else {
-                    TexMgr_SetTexture(&texts[0], pool + 0x178, credits);
-                }
-                TexMgr_SetTexture(&texts[1], pool + 0x188);
-            } else {
-                TexMgr_SetTexture(&texts[0], pool + 0x19C);
-                TexMgr_SetTexture(&texts[1], pool + 0x1AC, credits);
-            }
-        } else {
-            TexMgr_SetTexture(&texts[0], text0);
-            TexMgr_SetTexture(&texts[1], text1);
-        }
-    }
-    oy = lbl_806DAB84 + oy;
-    f = lbl_806DAB88 + f;
-    for (int i = 0; i < 2; i++) {
-        texts[i].color = col;
-        fn_801F93EC(&texts[i], scaleX * f + (x + field34), scaleY * (oy + (float)(i * 0x1C)) + (y + field38));
-        fn_801F93D0(&texts[i], scaleX, scaleY);
-        fn_801F8A34(fn_801F8E58(), &texts[i], lay);
     }
 }
