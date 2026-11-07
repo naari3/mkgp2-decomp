@@ -1,0 +1,5 @@
+# card-force-backup-unlock
+
+Source: Codex worker c17_u18_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u18: card_force_backup_now 80098E50/904B remains singleton NonMatching. Canonical CardLoadShadowPrivate.h plus synthesized C++ player assignment and inline_max_size(1000) emits byte-identical original 824B text/8B EH/12B index, replacing the long scalar draft. Direct objdiff baseline/end57.123894 (assignment report57.76); extab100/index91.66667. Target retains backup r31 across __copy79/69, spills full head+58..A4, frameB0; source rematerializes backup and splits at+78, frame80. CapturePlayer inline owner helper is invariant. Nested four-byte unlockIdx type from CardSetupFlowResult slightly regresses57.079647 and was reverted. Three approaches exhausted; no split possible, no flag flip, no native gain, no full-link request. Original-vs-compact all owned sections100; fallback main.elf edge verified.
