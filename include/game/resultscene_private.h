@@ -54,11 +54,16 @@ struct ResultPartBUpdate {
     unsigned int fadeCol[4];
 };
 
-/* Length field in the existing 24-byte result-message records. */
+/* 24-byte staff-roll records: text, cached length, scroll y, colour and
+ * a "large font" flag. The table ends with a null text. */
 struct ResultMessageRecord {
     const char *text;
     unsigned int length;
-    unsigned int fields[4];
+    float y;
+    int padc;
+    int color;
+    unsigned char big;
+    char pad15[3];
 };
 
 #endif
