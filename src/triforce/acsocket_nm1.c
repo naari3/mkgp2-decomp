@@ -12,21 +12,21 @@ void fn_80291C7C(AcSock* k, void* rd, u32* rdOff, void* wr, u32* wrOff, void* ex
         *rdOff = 0;
     }
     if (wr != NULL) {
-        *wrOff = k->bufAddr + (State.bufOff + n);
+        *wrOff = k->bufAddr + State.bufOff + n;
         memcpy(Buf + n, wr, 0x20);
         n += 0x20;
     } else {
         *wrOff = 0;
     }
     if (ex != NULL) {
-        *exOff = k->bufAddr + (State.bufOff + n);
+        *exOff = k->bufAddr + State.bufOff + n;
         memcpy(Buf + n, ex, 0x20);
         n += 0x20;
     } else {
         *exOff = 0;
     }
     if (tv != NULL) {
-        *tvOff = k->bufAddr + (State.bufOff + n);
+        *tvOff = k->bufAddr + State.bufOff + n;
         memcpy(Buf + n, tv, 8);
         n += 8;
     } else {
