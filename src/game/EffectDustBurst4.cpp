@@ -1,13 +1,15 @@
 /* Dust burst's four independent resource slots share an external curve table.
  * These local views name only fields observed in the target function. */
 struct DustVec { float x, y, z; };
+struct DustEffect;
+struct DustGroup { unsigned char pad00[0x10]; DustEffect *children[4];
+    unsigned char pad20[0x64]; float phase; };
 struct DustEffect {
     unsigned char pad00[0x14]; unsigned char slot[0x18]; float alpha;
     unsigned char pad30[0x5C]; DustVec position;
     unsigned char pad98[0x18]; float scale; signed char state;
+    unsigned char padB5[0xCC - 0xB5]; DustGroup group;
 };
-struct DustGroup { unsigned char pad00[0x10]; DustEffect *children[4];
-    unsigned char pad20[0x64]; float phase; };
 struct DustCurve { float time[3], scale[3], alpha[3]; };
 extern "C" {
 extern DustCurve lbl_8041A398[4];
@@ -25,13 +27,9 @@ void Vec3_Add_DestFirst(DustVec *, const DustVec *, const DustVec *);
 void VfxSlot_SetPositionFromVec(void *, DustVec);
 void VfxSlot_SetScaleUniform(void *, float);
 
-static inline void UpdateChildren(DustEffect *self, DustGroup *group, DustVec &delta, DustGroup *&cursor) {
+static inline void UpdateChildren(DustEffect *self, DustGroup *group, DustVec &delta, DustGroup *&cursor, DustCurve *curve, const DustVec *globalPosition) {
     int i;
-    DustCurve *curve;
-    const DustVec *globalPosition;
-    globalPosition=(const DustVec *)(lbl_805DF3D0+0x80);
     cursor=group;
-    curve=lbl_8041A398;
     for (i=0; i<4; ++i, ++curve, cursor=(DustGroup *)((unsigned char *)cursor+4)) {
         if (cursor->children[0]) {
             if (curve->time[0] <= group->phase && group->phase < curve->time[2]) {
@@ -72,7 +70,7 @@ void Effect_DustBurst4_Update(DustEffect *self) {
     DustVec delta;
     int i;
     DustGroup *cursor;
-    DustGroup *group = (DustGroup *)((unsigned char *)self + 0xCC);
+    DustGroup *group = &self->group;
     switch (self->state) {
     case 0: {
         cursor = group;
@@ -105,6 +103,7 @@ void Effect_DustBurst4_Update(DustEffect *self) {
         DrawEffect_Free(self);
         return;
     }
-    UpdateChildren(self, group, delta, cursor);
+    UpdateChildren(self, group, delta, cursor, lbl_8041A398,
+        (const DustVec *)(lbl_805DF3D0+0x80));
 }
 }
