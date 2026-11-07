@@ -3,9 +3,7 @@ extern "C" {
 extern const float lbl_806DA1B0, lbl_806DA1B4, lbl_806DA1B8, lbl_806DA1BC;
 }
 static inline void InitIcons(FlowPanel *panel) {
-    // Keep the first allocation loop cursor separate from its element count.
     FlowPanel *cursor = panel;
-    int i = 0;
     panel->state = 0;
     panel->layout = 0;
     panel->timer = 0;
@@ -15,7 +13,7 @@ static inline void InitIcons(FlowPanel *panel) {
     panel->autoClose = 1;
     panel->labelB = 0;
     panel->labelA = 0;
-    for (; i < 3; i++) {
+    for (int i = 0; i < 3; i++) {
         cursor->icons[0] = new ResCtrl;
         cursor = (FlowPanel *)((char *)cursor + sizeof(ResCtrl *));
     }
