@@ -46,6 +46,17 @@ struct SteeringQueueIter {
           end(o.end), index(o.index) {}
 };
 
+struct SteeringQueueConstIter {
+    SteeringRing *map;
+    unsigned long blockIndex;
+    int *block;
+    SteeringQueueValue *ptr, *end;
+    unsigned long index;
+    SteeringQueueConstIter(const SteeringQueueIter &o)
+        : map(o.map), blockIndex(o.blockIndex), block(o.block), ptr(o.ptr),
+          end(o.end), index(o.index) {}
+};
+
 struct QueueRingConstIter {
     SteeringRing *ring;
     unsigned long index;
@@ -67,7 +78,7 @@ void fn_801E4AF4(SteeringRing *, const QueueRingConstIter &, unsigned long, cons
 SteeringRingIter fn_801E4824(SteeringRing *, const QueueRingConstIter &, const QueueRingConstIter &);
 void fn_801E3848(SteeringQueue *, unsigned long, const SteeringQueueValue &);
 SteeringQueueIter fn_801E35FC(SteeringQueue *, unsigned long);
-void fn_801E36A8(SteeringQueue *, const SteeringQueueIter &, const SteeringQueueIter &);
+void fn_801E36A8(SteeringQueue *, const SteeringQueueConstIter &, const SteeringQueueConstIter &);
 void fn_801E2C40(SteeringQueue *);
 }
 

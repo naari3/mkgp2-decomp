@@ -1054,11 +1054,19 @@ extern "C" void *dtor_801E2BD0(SteeringQueue *s, short flag) {
     return s;
 }
 
+static inline SteeringRingIter RingEndB(SteeringRing *r) {
+    unsigned long n;
+    unsigned long i = r->head + (n = r->count);
+    SteeringRingIter it(0, 0, 0);
+    if (i < r->capacity) it = SteeringRingIter(r, n, r->data + i);
+    else it = SteeringRingIter(r, n, r->data + (i - r->capacity));
+    return it;
+}
+
 extern "C" void fn_801E2C40(SteeringQueue *s) {
     if (s->blocks.count) {
         fn_801E36A8(s, fn_801E35FC(s, s->first), fn_801E35FC(s, s->first + s->count));
-        SteeringRingIter last = s->blocks.end();
-        --last;
+        SteeringRingIter last = --RingEndB(&s->blocks);
         for (SteeringRingIter p = s->blocks.begin(); p.index != last.index; ++p) {
             MemoryManager_TimedFree((void *)*p);
         }
@@ -1181,32 +1189,34 @@ extern "C" SteeringQueueIter fn_801E35FC(SteeringQueue *s, unsigned long i) {
     return SteeringQueueIter(map, blockIndex, block, ptr, base + size, i);
 }
 
-extern "C" void fn_801E36A8(SteeringQueue *s, const SteeringQueueIter &first,
-        const SteeringQueueIter &last) {
+static inline const unsigned long &QueueMinRef(const unsigned long &a, const unsigned long &b) {
+    return a < b ? a : b;
+}
+
+extern "C" void fn_801E36A8(SteeringQueue *s, const SteeringQueueConstIter &first,
+        const SteeringQueueConstIter &last) {
     if (first.ptr != last.ptr) {
         unsigned long blockIndex = first.index / s->blockSize;
         unsigned long offset = first.index % s->blockSize;
         unsigned long n = last.index - first.index;
         unsigned long end = offset + n;
-        unsigned long take = end < s->blockSize ? end : s->blockSize;
-        unsigned long j = s->blocks.head + blockIndex;
-        if (j >= s->blocks.capacity) j -= s->blocks.capacity;
-        int *block = s->blocks.data + j;
-        SteeringQueueValue *p = (SteeringQueueValue *)*block + offset;
-        SteeringQueueValue *stop = (SteeringQueueValue *)*block + take;
+        unsigned long take = QueueMinRef(end, s->blockSize);
+        SteeringRingIter it = RingAdvance(s->blocks.begin(), blockIndex);
+        SteeringQueueValue *p = (SteeringQueueValue *)*it + offset;
+        SteeringQueueValue *stop = (SteeringQueueValue *)*it + take;
         for (; p < stop; ++p) p->~SteeringQueueValue();
         n -= take - offset;
         if (n) {
-            if (++block == s->blocks.data + s->blocks.capacity) block = s->blocks.data;
+            ++it;
             while (n >= s->blockSize) {
-                p = (SteeringQueueValue *)*block;
+                p = (SteeringQueueValue *)*it;
                 stop = p + s->blockSize;
                 for (; p < stop; ++p) p->~SteeringQueueValue();
-                if (++block == s->blocks.data + s->blocks.capacity) block = s->blocks.data;
+                ++it;
                 n -= s->blockSize;
             }
             if (n) {
-                p = (SteeringQueueValue *)*block;
+                p = (SteeringQueueValue *)*it;
                 stop = p + n;
                 for (; p < stop; ++p) p->~SteeringQueueValue();
             }
