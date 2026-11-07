@@ -1,5 +1,36 @@
 # Pragma fixes for onmokoworks-claimed TUs (verified, not applied)
 
+## Status on main 610292b (re-verified 2026-11-07 21:00, mid-range thread)
+
+Each patch was applied **alone** to a throwaway checkout of main, then built from clean (`rm -rf build/GNLJ82/src build/GNLJ82/ok`, ninja). Baseline on that main: main.dol OK, 7251 matched functions (report.json `matched_functions`). "+fns" is the change against the baseline.
+
+| Patch | Applies | main.dol | Flip to Matching | +fns | Depends on / conflicts with |
+| --- | --- | --- | --- | --- | --- |
+| AI_UpdateItemUseLogic.patch | yes | OK | yes | +1 | - |
+| DNLensflare.patch | yes | OK | yes (already 100%) | 0 | touches tools/extab_user_renames.json, as does anon_80226670 (different TU blocks, both apply) |
+| FrameUpdate.patch | yes | OK | yes | +1 | - |
+| ItemHitPropagation.patch | yes | OK | yes | +2 | - |
+| PCBComm_UpdateSyncPhase1.patch | yes | OK | yes | +1 | regenerated with 1-line configure.py context; the old version conflicted with Phase5 (adjacent lines). Both now apply in either order |
+| PCBComm_UpdateSyncPhase5.patch | yes | OK | yes | +1 | same as Phase1 |
+| STLContainer.patch | yes | OK | yes (already 100%) | 0 | - |
+| VfxSlotMgr.patch | yes | OK | yes | +1 | - |
+| amnet_nm2_rest.patch | yes | OK | no (fn_8028D8CC 99.83%) | +1 | **supersedes fn_8028EAA8.patch** (same file, contains its change); apply only one |
+| fn_8028EAA8.patch | yes | OK | no | +1 | conflicts with amnet_nm2_rest.patch, so use that one instead |
+| anon_80214B3C.patch | yes | OK | yes (already 100%) | 0 | - |
+| anon_80226670.patch | yes | OK | yes (already 100%) | 0 | see DNLensflare |
+| card_unpack_v1.patch | yes | OK | yes | +1 | - |
+| cobj_data_nm2.patch | yes | OK | yes (data-only) | 0 | the cobj owner may move these strings in a CObjInfoInit / cobj merge |
+| fn_8021E0FC.patch | yes | OK | no (4 other fns < 100%) | +1 | - |
+| fn_80243C70.patch | yes | OK | yes | +1 | - |
+| fn_80246DE4.patch | yes | OK | yes | +1 | - |
+| merge/anon_8020AF08_nm1_pool.patch | yes | OK | no (99.86%) | 0 | edits config/GNLJ82/splits.txt |
+| merge/fn_801913B0_codegen_probe.patch | yes | OK | no (probe) | 0 | probe only; the real fix needs the Fog-TU data merge |
+| merge/fn_80192F04_codegen_probe.patch | yes | OK | no (probe) | +1 | probe only, same as above |
+| fn_801F8A34.patch | **obsolete** | - | - | - | already on main (Codex batch ecd8bf9/5034e3f, fn 100%, TU Matching) |
+| clItemBoxManager_Update_Inner.patch | **obsolete** | - | - | - | onmokoworks fixed it differently on main (ListIter rewrite); Update_Inner is 100% on main |
+
+**All together:** every patch except the two obsolete ones and fn_8028EAA8.patch, applied in alphabetical order (top dir, then merge/), clean build gives main.dol OK and 7264 matched functions (**+13**). That equals the sum of the single-patch gains, so no two patches interfere. The patches with "new blank line at EOF" warnings (card_unpack_v1, fn_80243C70, fn_8028EAA8, amnet_nm2_rest) still apply cleanly.
+
 These patches come from the zero-diff hits in docs/pragmasweep_results.md
 (tools/pragmasweep.py). They were verified by R5 on a throwaway branch off main
 ce0e1c8, 2026-11-07. The TU sources on main are untouched: the
