@@ -43,3 +43,8 @@ Group A complete2492B matches with native EH8B/index12B. Natural u64 masks plus 
 Source: Codex worker c15_u67_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 812 B.
 
 Group D RingBurst unlocked: previous i<2 lowering residual was actually a reversed predicate. Target subfc/adde computes i>=2 (zero for first two sparks, one thereafter). Changing that expression reduces 816B to exact 812B and makes EH/index exact, leaving only stack offsets. For the independent locals, declaration order position, color, angles, order, base produces target color08/position14/order20/angles40/base60. Ordinary native C++ text/EH/index all100%; Matching source-linked full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. No new bridge, split, data or compiler flags required.
+
+## c17_u67_20261107
+Source: Codex worker c17_u67_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u67 KartTrail 800BD900/1140B: byte-offset external blob loses object identity (missing color addi, scale index folds byte offset). Owning original pool 80329E20..8032A430 with four distinct 15-float character tables at A21C/A258/A294/A2D0 and five distinct Vec at A3F4/A400/A40C/A418/A424 restores full target instruction shape and all constants; text99.82456, extab/index/rodata100. Remaining ten rows are only pool/item r30/r31 swap. Inline item accessor and targeted earlier item declaration both byte-invariant; reverted. Retain NonMatching. Full fallback-linked DOL SHA-1 OK; native gain0. Do not repeat restrict color-copy/typed external index/accessor probes.

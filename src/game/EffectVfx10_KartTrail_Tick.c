@@ -1,15 +1,77 @@
 /* EffectVfx10_KartTrail_Tick (0x800BD900): kart trail ribbon (resource 0xA)
  * behind the kart. It fades with the linked item's speed, scrolls its UVs
  * with the lateral slide, and is sized by a per-character table.
- * NonMatching (99%): the target addresses the 0x80329E20 table through
- * separate pooled objects (addi+lfsx / addi+lfs) and swaps tbl/item regs. */
+ * The owned parameter pool reproduces the target's section-relative table
+ * addressing. NonMatching: pool/item remain in r31/r30 rather than r30/r31. */
 #include "game/DrawEffectAccess.h"
 
 extern int g_kartVariant;
 extern int g_gameMode;
 extern int g_cupId;
 extern const float lbl_806D5348; /* pi */
-extern const unsigned char lbl_80329E20[];
+/* Shared effect parameter pool, addressed from one section base. */
+const float lbl_80329E20[255] = {
+    1.0f, 0.699999988f, 0.899999976f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+    1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+    1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+    1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+    1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+    1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+    1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f,
+};
+const float lbl_8032A21C[15] = { 1.79999995f, 1.5f, 1.0f, 1.10000002f, 1.0f, 1.10000002f, 1.29999995f, 1.0f, 1.79999995f, 1.0f, 1.0f, 1.79999995f, 1.79999995f, 0.0f, 0.0f };
+const float lbl_8032A258[15] = { 1.5f, 1.10000002f, 1.0f, 1.0f, 1.04999995f, 1.0f, 1.12f, 0.949999988f, 1.0f, 1.10000002f, 1.0f, 2.79999995f, 1.20000005f, 0.0f, 0.0f };
+const float lbl_8032A294[15] = { 1.39999998f, 1.10000002f, 1.10000002f, 1.10000002f, 1.10000002f, 1.0f, 1.5f, 1.0f, 1.20000005f, 1.39999998f, 0.200000003f, 1.39999998f, 0.800000012f, 0.0f, 0.0f };
+const float lbl_8032A2D0[15] = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.29999995f, 1.0f, 0.0f, 0.0f };
+const float lbl_8032A30C[15] = {
+    1.05999994f, 1.10000002f, 1.0f, 1.01999998f, 1.0f, 1.04999995f, 1.0f, 1.0f, 1.01999998f, 1.0f, 1.0f, 1.08000004f, 1.0f, 0.0f, 0.0f,
+};
+const Vec lbl_8032A348[3] = {
+    { 1.0f, 0.200000003f, 0.200000003f },
+    { 1.20000005f, 0.400000006f, 0.400000006f },
+    { 0.800000012f, 0.600000024f, 0.0f },
+};
+const struct { float scales[26]; unsigned int flags[2]; float values[6]; } lbl_8032A36C = {
+    { 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, 1.0f, 1.60000002f },
+    { 1, 1 },
+    { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }
+};
+const Vec lbl_8032A3F4 = { 0.0f, 0.0f, -10.0f };
+const Vec lbl_8032A400 = { -2.0f, 0.0f, 0.0f };
+const Vec lbl_8032A40C = { 2.0f, 0.0f, 0.0f };
+const Vec lbl_8032A418 = { 0.0f, 0.0f, 0.0f };
+const Vec lbl_8032A424 = { 0.0f, 0.0f, -7.0f };
+
 extern const Vec lbl_8041A274;
 extern unsigned char *PcbSlot_GetByIndex(int pcbIdx);
 extern float Mtx44_GetYawOfPosZ(float m[4][4]);
@@ -57,10 +119,8 @@ void EffectVfx10_KartTrail_Tick(unsigned char *self)
     float t[4][4];
     Vec slide;
     Vec off;
-    const unsigned char *tbl;
     unsigned char *item;
 
-    tbl = lbl_80329E20;
     item = P(0xDC);
 
     Mtx_TransposeToMtx44(root, KartDriver_GetKartRootMtx(P(0x11C)));
@@ -74,7 +134,7 @@ void EffectVfx10_KartTrail_Tick(unsigned char *self)
         F(0x150) = 0.0f;
         F(0x154) = 0.0f;
         if (KartTrail_GetCharacter(P(0x11C)) >= 0) {
-            Vec *color = (Vec *)(tbl + 0x528);
+            const Vec *color = &lbl_8032A348[0];
             F(0x30) = color->x;
             F(0x34) = color->y;
             F(0x38) = color->z;
@@ -82,7 +142,7 @@ void EffectVfx10_KartTrail_Tick(unsigned char *self)
         STATE++;
         S8(0x190) = 0;
         character = KartTrail_GetCharacter(P(0x11C));
-        F(0x158) = character < 0 ? 1.0f : *(float *)(tbl + 0x474 + character * 4);
+        F(0x158) = character < 0 ? 1.0f : lbl_8032A294[character];
     }
     case 1:
         break;
@@ -130,7 +190,7 @@ void EffectVfx10_KartTrail_Tick(unsigned char *self)
 
     F(0xB0) = 1.5f * F(0x158);
     if (S8(0x28)) {
-        off = *(Vec *)(tbl + 0x5F8);
+        off = lbl_8032A418;
         off.z = -8.0f * F(0x158);
         Matrix4_Copy(m, root);
         Matrix4_Identity(t);
