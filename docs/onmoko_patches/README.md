@@ -57,4 +57,9 @@ main 295cfd3) was swept:
   fn_8021E0FC again (optimization_level 2 works too).
 - Near misses left by the sweep: fn_8028EAA8 (amnet_nm2_rest) 49 -> 1 with
   GC/1.3.2 + optimization_level 3; FrameUpdate 107 -> 2 with GC/1.3.2 +
-  opt_common_subs off (own cc is 3.0a5).
+  opt_common_subs off (own cc is 3.0a5). R5 follow-up: the last 2 lines are the
+  word18/word1C pair in the inlined FrameBackup_Copy. The target loads 0x18 into
+  r24 and then 0x1C into r23, and stores 0x1C first. Swapping the source load or
+  store order, a u64 copy and 12 min of cperm (best 4) did not fix it. The
+  pattern looks like a compiler memberwise struct copy, so try
+  `lbl_8059F480 = lbl_80598A60` on the struct type (no patch yet).
