@@ -1,0 +1,19 @@
+diff --git a/src/sysdolphin/baselib/cobj_nm3.c b/src/sysdolphin/baselib/cobj_nm3.c
+index 86ba6f5..073a053 100644
+--- a/src/sysdolphin/baselib/cobj_nm3.c
++++ b/src/sysdolphin/baselib/cobj_nm3.c
+@@ -97,6 +97,8 @@ extern inline f32 cobj_get_up_x(Vec3* up)
+     return up->x;
+ }
+ 
++#pragma push
++#pragma optimization_level 3
+ void HSD_CObjSetUpVector(HSD_CObj* cobj, Vec3* up)
+ {
+     Vec3 v;
+@@ -121,3 +123,5 @@ void HSD_CObjSetUpVector(HSD_CObj* cobj, Vec3* up)
+         HSD_CObjSetRoll(cobj, upvec2roll_pool(cobj, up, pool));
+     }
+ }
++#pragma pop
++
