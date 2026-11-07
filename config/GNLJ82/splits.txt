@@ -3575,6 +3575,11 @@ game/KartPair3ArmUpdate.c:
 game/EffectActor_BindKartTargetPair.c:
 	.text       start:0x800B3244 end:0x800B3250
 
+game/KartShellRibbonDraw.c:
+	extab       start:0x8000A688 end:0x8000A690
+	extabindex  start:0x80022B50 end:0x80022B5C
+	.text       start:0x800B3250 end:0x800B3A0C
+
 game/KartShellRibbon_DrawCb.c:
 	extab       start:0x8000A690 end:0x8000A698
 	extabindex  start:0x80022B5C end:0x80022B68
