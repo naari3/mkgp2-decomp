@@ -14587,6 +14587,9 @@ init/memset_returning_dst.c:
 init/memcpy_bytewise.c:
 	.init       start:0x80003488 end:0x800034AC
 
+init/__exception.s:
+	.init       start:0x800034AC end:0x800053E0
+
 init/OSResetSystem_NoArgs.c:
 	.init       start:0x800053E0 end:0x8000540C
 

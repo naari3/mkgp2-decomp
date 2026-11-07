@@ -426,6 +426,7 @@ config.libs = [
             Object(Matching, "init/__flush_cache.c"),
             Object(Matching, "init/memset_returning_dst.c"),
             Object(Matching, "init/memcpy_bytewise.c"),
+            Object(Matching, "init/__exception.s"),
             Object(Matching, "init/OSResetSystem_NoArgs.c"),
             Object(Matching, "init/memset.c"),
             Object(Matching, "init/__fill_mem.c"),
