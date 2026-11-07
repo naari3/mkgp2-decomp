@@ -1,5 +1,6 @@
-/* Native C++ candidate: 93.85714% text, exact owned EH.
+/* Native C++ candidate: 95.62054% text, exact owned EH.
  * Vector-length inline boundaries reproduce the target square-root FP homes.
+ * Separate scaled-set and vector-subtraction helpers retain native snapshots.
  * Remaining differences: angle/offset and push FP allocation/scheduling.
  * The empty canonical vector destructor supplies compiler-generated cleanup.
  */
@@ -68,6 +69,21 @@ static inline float vector_length(const Vec3 &v) {
     }
 
     return value;
+}
+
+static inline void subtract_vector(Vec3 &dest, volatile const Vec3 &src) {
+    float ax = src.x;
+    float ay = src.y;
+    float az = src.z;
+    dest.x -= ax;
+    dest.y -= ay;
+    dest.z -= az;
+}
+
+static inline void set_scaled(volatile Vec3 &dest, float ax, float ay, float az, float factor) {
+    dest.x = ax * factor;
+    dest.y = ay * factor;
+    dest.z = az * factor;
 }
 
 #pragma exceptions on
@@ -141,25 +157,16 @@ extern "C" void KartPhysics_ApplyCollisionForce(void *self) {
             dx *= scale;
             dy *= scale;
             dz *= scale;
-            push.x = dx;
-            push.y = dy;
-            push.z = dz;
+            push.set(dx, dy, dz);
 
             timer = S32(self, 0xc0);
             if (timer > 0) {
                 scale = (float)(20 - timer) / lbl_806DA4BC;
-                dx *= scale;
-                dy *= scale;
-                dz *= scale;
-                push.x = dx;
-                push.y = dy;
-                push.z = dz;
+                set_scaled(push, dx, dy, dz, scale);
             }
         }
 
-        F32(self, 0x4c) -= push.x;
-        F32(self, 0x50) -= push.y;
-        F32(self, 0x54) -= push.z;
+        subtract_vector(*(Vec3 *)((char *)self + 0x4c), push);
     }
 
     scale = lbl_806DA4C0;
