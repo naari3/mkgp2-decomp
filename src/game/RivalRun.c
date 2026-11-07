@@ -180,16 +180,16 @@ extern "C" void RivalRun_Draw(RivalRunState *self) {
 /* refine if the real prototype matters for header consumers. */
 extern void CObj_ApplyScissor();
 extern void CObj_LoadProjMatrix();
-extern void CarObject_ApplyInput(void *car, unsigned char started, float steer, float accel, float brake);
+extern void CarObject_ApplyInput(void *car, float steer, float accel, float brake, unsigned char started);
 extern void CarObject_FrameUpdate(void *car, int flag);
 extern void *CarObject_GetRenderObj(void *car);
 extern void ChallengeGoalCamera_Update();
 extern void CourseEnvironment_UpdateAndCullZones_Timed();
 extern void Fog_UpdateFromCourseScene3D();
-extern void GetInputManager();
+extern void *GetInputManager(void);
 extern void GetRaceContextPtr();
 extern void HUD_FrameUpdate();
-extern void InputMgr_GetPlayer();
+extern void *InputMgr_GetPlayer(void *mgr, int idx);
 extern unsigned char IsRaceStarted(void);
 extern void ItemObjectManager_PerFrameUpdate();
 extern void ItemObjectManager_Update();
@@ -197,25 +197,25 @@ extern float *KartDriver_GetKartRootMtx(void *render);
 extern void KartItem_UpdateShadowBillboardAndViewport();
 extern void KartMovement_ResetOnGoal();
 extern void KartMovement_ResetOnTimeout();
-extern void KartMovement_SetSpeedScale();
+extern void KartMovement_SetSpeedScale(void *car, float scale);
 extern void LakituStart_UpdateCountdown();
-extern void NokoNokoChallenge_CalcResultText();
-extern void NokoNokoChallenge_GetCoinDivisor();
-extern void NokoNokoChallenge_HandleBrakeInput();
+extern int NokoNokoChallenge_CalcResultText(void *self, int success, int arg);
+extern int *NokoNokoChallenge_GetCoinDivisor(void);
+extern unsigned char NokoNokoChallenge_HandleBrakeInput(void *self, unsigned char brake);
 extern void NokoNokoChallenge_SaveResult();
-extern void NokoNokoChallenge_TransitionToResult();
+extern int NokoNokoChallenge_TransitionToResult(void *self);
 extern void PathManager_UpdateAll();
 extern void RivalRun_RivalAIUpdate();
 extern void SetCoinCount();
 extern void TransitionEffect_Tick();
-extern void VfxSlotMgr_Update();
+extern void VfxSlotMgr_Update(RRVec3 a, RRVec3 b);
 extern void clItemBoxManager_Update();
 extern void fn_8016B32C();
 extern void fn_8016C554();
 extern void fn_801A1280();
-extern void fn_80253C40();
+extern unsigned char fn_80253C40(void *hud);
 extern void fn_80253C74();
-extern void fn_80253FD8();
+extern void fn_80253FD8(void *hud, float v);
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_lakituStartAnimDone;
@@ -243,317 +243,116 @@ extern unsigned int lbl_80677CAC[];
  */
 
 /* --- forward decls --- */
-asm void RivalRun_Update(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_RivalRun_Update[8] = {
-    0x18, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+#pragma cplusplus on
+struct RRInput {
+    virtual void slot08();
+    virtual void slot0c();
+    virtual float steering();
+    virtual void slot14();
+    virtual float accelerator();
+    virtual float brake();
 };
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_RivalRun_Update = {
-    (void *)&RivalRun_Update, 0x00000448, (void *)extab_RivalRun_Update
-};
+#pragma exceptions on
+extern "C" int RivalRun_Update(RivalRunState *self)
+{
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void RivalRun_Update(void) { /* 0x80135734 size:0x448 */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    stw r0, 0x54(r1)
-    stfd f31, 0x40(r1)
-    psq_st f31, 0x48(r1), 0, 0
-    stfd f30, 0x30(r1)
-    psq_st f30, 0x38(r1), 0, 0
-    stw r31, 0x2c(r1)
-    stw r30, 0x28(r1)
-    stw r29, 0x24(r1)
-    mr r31, r3
-    lbz r0, 0x34(r3)
-    cmplwi r0, 0x0
-    bne RivalRun_Update_L_80135774
-    li r0, 0x1
-    stb r0, 0x34(r31)
-    RivalRun_Update_L_80135774:
-    bl GetRaceContextPtr
-    bl ItemObjectManager_PerFrameUpdate
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lbz r0, g_raceEnded(r13)
-    mr r29, r3
-    cmplwi r0, 0x1
-    beq RivalRun_Update_L_8013586C
-    lbz r0, lbl_806D1290(r13)
-    cmplwi r0, 0x0
-    bne RivalRun_Update_L_801357BC
-    lwz r12, 0x0(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    fmr f31, f1
-    b RivalRun_Update_L_801357C0
-    RivalRun_Update_L_801357BC:
-    lfs f31, lbl_806D7380(r2)
-    RivalRun_Update_L_801357C0:
-    lwz r12, 0x0(r29)
-    mr r3, r29
-    lwz r12, 0x1c(r12)
-    mtctr r12
-    bctrl
-    lfs f0, lbl_806D7388(r2)
-    fmr f30, f1
-    li r30, 0x0
-    fcmpo cr0, f31, f0
-    bge RivalRun_Update_L_80135800
-    fcmpo cr0, f30, f0
-    bge RivalRun_Update_L_80135800
-    bl IsRaceStarted
-    clrlwi. r0, r3, 24
-    beq RivalRun_Update_L_80135800
-    li r30, 0x1
-    RivalRun_Update_L_80135800:
-    mr r3, r31
-    mr r4, r30
-    bl NokoNokoChallenge_HandleBrakeInput
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne RivalRun_Update_L_8013581C
-    lfs f31, lbl_806D7384(r2)
-    RivalRun_Update_L_8013581C:
-    bl IsRaceStarted
-    mr r30, r3
-    mr r3, r29
-    lwz r12, 0x0(r29)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    fmr f2, f31
-    lwz r3, 0x8(r31)
-    fmr f3, f30
-    mr r4, r30
-    bl CarObject_ApplyInput
-    lwz r3, 0x8(r31)
-    li r4, 0x0
-    bl CarObject_FrameUpdate
-    lwz r3, 0x8(r31)
-    li r5, 0x0
-    lwz r4, 0x14(r31)
-    bl KartItem_UpdateShadowBillboardAndViewport
-    b RivalRun_Update_L_801358B8
-    RivalRun_Update_L_8013586C:
-    lfs f1, lbl_806D738C(r2)
-    li r4, 0x1
-    lwz r3, 0x8(r31)
-    fmr f2, f1
-    fmr f3, f1
-    bl CarObject_ApplyInput
-    lwz r3, 0x8(r31)
-    lfs f1, lbl_806D7390(r2)
-    bl KartMovement_SetSpeedScale
-    lwz r3, 0x8(r31)
-    li r4, 0x0
-    bl CarObject_FrameUpdate
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    bl KartDriver_GetKartRootMtx
-    mr r5, r3
-    lwz r3, 0x18(r31)
-    lwz r4, 0x14(r31)
-    bl ChallengeGoalCamera_Update
-    RivalRun_Update_L_801358B8:
-    lwz r3, 0x30(r31)
-    bl RivalRun_RivalAIUpdate
-    bl Fog_UpdateFromCourseScene3D
-    lwz r3, 0x24(r31)
-    bl PathManager_UpdateAll
-    lwz r3, 0xc(r31)
-    bl LakituStart_UpdateCountdown
-    lwz r3, 0x10(r31)
-    bl CourseEnvironment_UpdateAndCullZones_Timed
-    lis r4, lbl_80677CA0@ha
-    lwz r3, 0x14(r31)
-    addi r4, r4, lbl_80677CA0@l
-    bl CObj_LoadProjMatrix
-    lis r4, lbl_80677CAC@ha
-    lwz r3, 0x14(r31)
-    addi r4, r4, lbl_80677CAC@l
-    bl CObj_ApplyScissor
-    bl ItemObjectManager_Update
-    lis r3, lbl_80677CAC@ha
-    lis r4, lbl_80677CA0@ha
-    addi r5, r3, lbl_80677CAC@l
-    addi r3, r1, 0x14
-    addi r7, r4, lbl_80677CA0@l
-    lwz r10, 0x0(r5)
-    lwz r9, 0x4(r5)
-    addi r4, r1, 0x8
-    lwz r8, 0x8(r5)
-    lwz r6, 0x0(r7)
-    lwz r5, 0x4(r7)
-    lwz r0, 0x8(r7)
-    stw r10, 0x8(r1)
-    stw r9, 0xc(r1)
-    stw r8, 0x10(r1)
-    stw r6, 0x14(r1)
-    stw r5, 0x18(r1)
-    stw r0, 0x1c(r1)
-    bl VfxSlotMgr_Update
-    bl IsRaceStarted
-    clrlwi. r0, r3, 24
-    beq RivalRun_Update_L_80135A0C
-    lbz r0, 0x36(r31)
-    cmplwi r0, 0x0
-    bne RivalRun_Update_L_80135A0C
-    lfs f1, g_raceTimeRemaining(r13)
-    lfs f0, lbl_806D738C(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne RivalRun_Update_L_80135A0C
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    lwz r4, 0x30(r31)
-    lwz r30, 0x240(r3)
-    lwz r3, 0x4(r4)
-    bl CarObject_GetRenderObj
-    cmpwi r30, 0x0
-    lwz r0, 0x240(r3)
-    bgt RivalRun_Update_L_801359B8
-    li r0, 0x1
-    stb r0, 0x36(r31)
-    stb r0, 0x37(r31)
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    bl KartMovement_ResetOnGoal
-    b RivalRun_Update_L_80135A0C
-    RivalRun_Update_L_801359B8:
-    cmpwi r0, 0x0
-    bgt RivalRun_Update_L_801359D8
-    li r0, 0x1
-    stb r0, 0x36(r31)
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    bl KartMovement_ResetOnTimeout
-    b RivalRun_Update_L_80135A0C
-    RivalRun_Update_L_801359D8:
-    lfs f2, g_raceTimeRemaining(r13)
-    lfs f1, lbl_806D7394(r2)
-    lfs f0, lbl_806D738C(r2)
-    fsubs f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, g_raceTimeRemaining(r13)
-    bge RivalRun_Update_L_80135A0C
-    stfs f0, g_raceTimeRemaining(r13)
-    li r0, 0x1
-    stb r0, 0x36(r31)
-    lwz r3, 0x8(r31)
-    bl CarObject_GetRenderObj
-    bl KartMovement_ResetOnTimeout
-    RivalRun_Update_L_80135A0C:
-    bl fn_801A1280
-    lwz r3, 0x28(r31)
-    lfs f1, g_raceTimeRemaining(r13)
-    bl fn_80253FD8
-    lwz r3, 0x28(r31)
-    bl HUD_FrameUpdate
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne RivalRun_Update_L_80135A34
-    li r3, 0x0
-    RivalRun_Update_L_80135A34:
-    bl TransitionEffect_Tick
-    lbz r0, 0x36(r31)
-    cmplwi r0, 0x0
-    beq RivalRun_Update_L_80135B28
-    lwz r0, 0x38(r31)
-    cmpwi r0, 0x0
-    bne RivalRun_Update_L_80135B00
-    lbz r0, 0x37(r31)
-    cmplwi r0, 0x0
-    beq RivalRun_Update_L_80135A98
-    bl NokoNokoChallenge_GetCoinDivisor
-    lwz r3, 0x0(r3)
-    bl SetCoinCount
-    mr r3, r31
-    li r4, 0x1
-    li r5, 0x0
-    bl NokoNokoChallenge_CalcResultText
-    mr r5, r3
-    lwz r3, 0x28(r31)
-    li r4, 0x1
-    li r6, 0xf
-    bl fn_80253C74
-    li r3, 0x1
-    bl fn_8016C554
-    b RivalRun_Update_L_80135ACC
-    RivalRun_Update_L_80135A98:
-    li r3, 0x0
-    bl SetCoinCount
-    mr r3, r31
-    li r4, 0x0
-    li r5, 0x0
-    bl NokoNokoChallenge_CalcResultText
-    mr r5, r3
-    lwz r3, 0x28(r31)
-    li r4, 0x0
-    li r6, 0x0
-    bl fn_80253C74
-    li r3, 0x0
-    bl fn_8016C554
-    RivalRun_Update_L_80135ACC:
-    lbz r5, 0x37(r31)
-    li r0, 0xf
-    mr r3, r31
-    neg r4, r5
-    or r4, r4, r5
-    srawi r4, r4, 31
-    and r4, r0, r4
-    bl NokoNokoChallenge_SaveResult
-    li r3, 0x1
-    li r0, 0x0
-    stb r3, g_raceEnded(r13)
-    stb r0, g_lakituStartAnimDone(r13)
-    b RivalRun_Update_L_80135B1C
-    RivalRun_Update_L_80135B00:
-    lwz r3, 0x28(r31)
-    bl fn_80253C40
-    clrlwi. r0, r3, 24
-    beq RivalRun_Update_L_80135B1C
-    mr r3, r31
-    bl NokoNokoChallenge_TransitionToResult
-    b RivalRun_Update_L_80135B50
-    RivalRun_Update_L_80135B1C:
-    lwz r3, 0x38(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x38(r31)
-    RivalRun_Update_L_80135B28:
-    lwz r3, lbl_806D10D0(r13)
-    cmplwi r3, 0x0
-    bne RivalRun_Update_L_80135B38
-    li r3, 0x0
-    RivalRun_Update_L_80135B38:
-    bl clItemBoxManager_Update
-    lwz r3, g_weatherSystem(r13)
-    cmplwi r3, 0x0
-    beq RivalRun_Update_L_80135B4C
-    bl fn_8016B32C
-    RivalRun_Update_L_80135B4C:
-    li r3, -0x2
-    RivalRun_Update_L_80135B50:
-    psq_l f31, 0x48(r1), 0, 0
-    lfd f31, 0x40(r1)
-    psq_l f30, 0x38(r1), 0, 0
-    lfd f30, 0x30(r1)
-    lwz r31, 0x2c(r1)
-    lwz r30, 0x28(r1)
-    lwz r0, 0x54(r1)
-    lwz r29, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
+    int mine;
+    int rival;
+
+    if (self->active == 0) {
+        self->active = 1;
+    }
+    GetRaceContextPtr();
+    ItemObjectManager_PerFrameUpdate();
+    {
+    unsigned char flag;
+    RRInput *input = (RRInput *)InputMgr_GetPlayer(GetInputManager(), 0);
+    if (*(unsigned char *)&g_raceEnded != 1) {
+        float accelerator;
+        float brake;
+        if (*(unsigned char *)&lbl_806D1290 == 0) {
+            accelerator = input->accelerator();
+        } else {
+            accelerator = *(const float *)&lbl_806D7380;
+        }
+        brake = input->brake();
+        flag = 0;
+        if (accelerator < 0.1f && brake < 0.1f && IsRaceStarted()) {
+            flag = 1;
+        }
+        if (NokoNokoChallenge_HandleBrakeInput(self, flag) == 1) {
+            accelerator = lbl_806D7384;
+        }
+        CarObject_ApplyInput(self->car, input->steering(), accelerator, brake, IsRaceStarted());
+        CarObject_FrameUpdate(self->car, 0);
+        KartItem_UpdateShadowBillboardAndViewport(self->car, self->scene, 0);
+    } else {
+        CarObject_ApplyInput(self->car, 0.0f, 0.0f, 0.0f, 1);
+        KartMovement_SetSpeedScale(self->car, 0.5f);
+        CarObject_FrameUpdate(self->car, 0);
+        ChallengeGoalCamera_Update(self->goalCamera, self->scene, KartDriver_GetKartRootMtx(CarObject_GetRenderObj(self->car)));
+    }
+    }
+    RivalRun_RivalAIUpdate(self->rival);
+    Fog_UpdateFromCourseScene3D();
+    PathManager_UpdateAll(self->participants);
+    LakituStart_UpdateCountdown(self->lakitu);
+    CourseEnvironment_UpdateAndCullZones_Timed(self->environment);
+    CObj_LoadProjMatrix(self->scene, lbl_80677CA0);
+    CObj_ApplyScissor(self->scene, lbl_80677CAC);
+    ItemObjectManager_Update();
+    VfxSlotMgr_Update(*(RRVec3 *)lbl_80677CA0, *(RRVec3 *)lbl_80677CAC);
+    if (IsRaceStarted() && self->finished == 0 && *(float *)&g_raceTimeRemaining >= 0.0f) {
+        mine = *(int *)((char *)CarObject_GetRenderObj(self->car) + 0x240);
+        rival = *(int *)((char *)CarObject_GetRenderObj(self->rival->car) + 0x240);
+        if (mine <= 0) {
+            self->finished = 1;
+            self->won = 1;
+            KartMovement_ResetOnGoal(CarObject_GetRenderObj(self->car));
+        } else if (rival <= 0) {
+            self->finished = 1;
+            KartMovement_ResetOnTimeout(CarObject_GetRenderObj(self->car));
+        } else {
+            *(float *)&g_raceTimeRemaining -= 0.016666668f;
+            if (*(float *)&g_raceTimeRemaining < 0.0f) {
+                *(float *)&g_raceTimeRemaining = 0.0f;
+                self->finished = 1;
+                KartMovement_ResetOnTimeout(CarObject_GetRenderObj(self->car));
+            }
+        }
+    }
+    fn_801A1280();
+    fn_80253FD8(self->hud, *(float *)&g_raceTimeRemaining);
+    HUD_FrameUpdate(self->hud);
+    TransitionEffect_Tick(SINGLETON_INSTANCE(lbl_806D109C));
+    if (self->finished) {
+        if (self->resultFrames == 0) {
+            if (self->won) {
+                SetCoinCount(*NokoNokoChallenge_GetCoinDivisor());
+                fn_80253C74(self->hud, 1, NokoNokoChallenge_CalcResultText(self, 1, 0), 15);
+                fn_8016C554(1);
+            } else {
+                SetCoinCount(0);
+                fn_80253C74(self->hud, 0, NokoNokoChallenge_CalcResultText(self, 0, 0), 0);
+                fn_8016C554(0);
+            }
+            NokoNokoChallenge_SaveResult(self, self->won ? 15 : 0, self->won);
+            *(unsigned char *)&g_raceEnded = 1;
+            *(unsigned char *)&g_lakituStartAnimDone = 0;
+        } else if (fn_80253C40(self->hud)) {
+            return NokoNokoChallenge_TransitionToResult(self);
+        }
+        self->resultFrames++;
+    }
+    clItemBoxManager_Update(SINGLETON_INSTANCE(lbl_806D10D0));
+    if (g_weatherSystem) {
+        fn_8016B32C((void *)g_weatherSystem);
+    }
+    return -2;
 }
+#pragma exceptions reset
+#pragma cplusplus reset
 
 /* === extracted from auto_RivalRun_RivalAIUpda_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -562,7 +361,7 @@ asm void RivalRun_Update(void) { /* 0x80135734 size:0x448 */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void CarObject_ApplyInput(void *car, unsigned char started, float steer, float accel, float brake);
+extern void CarObject_ApplyInput(void *car, float steer, float accel, float brake, unsigned char started);
 extern void CarObject_FrameUpdate(void *car, int flag);
 extern void *CarObject_GetRenderObj(void *car);
 extern unsigned char CarObject_IsAirborne(void *car);
@@ -670,9 +469,9 @@ void RivalRun_RivalAIUpdate(RRRivalAI *self) {
 
     if (self->holdFrames != 0) {
         unsigned char started = IsRaceStarted();
-        CarObject_ApplyInput(self->car, started, lbl_806D738C, lbl_806D738C, lbl_806D738C);
+        CarObject_ApplyInput(self->car, lbl_806D738C, lbl_806D738C, lbl_806D738C, started);
     } else {
-        CarObject_ApplyInput(self->car, IsRaceStarted(), steer, accel, lbl_806D738C);
+        CarObject_ApplyInput(self->car, steer, accel, lbl_806D738C, IsRaceStarted());
     }
     CarObject_FrameUpdate(self->car, 0);
     ItemEffectBus_OrMask(*(void **)((char *)CarObject_GetRenderObj(self->car) + 0x304), 0x0080000000000000ULL);

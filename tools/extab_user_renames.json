@@ -1373,8 +1373,6 @@
   "src/game/RivalRun.c": {
     "extab_RivalRun_Draw": "@etb_8000D014",
     "extabindex_RivalRun_Draw": "@eti_80024BA8",
-    "extab_RivalRun_Update": "@etb_8000D01C",
-    "extabindex_RivalRun_Update": "@eti_80024BB4",
     "extab_RivalRun_RivalAIUpdate": "@etb_8000D024",
     "extabindex_RivalRun_RivalAIUpdate": "@eti_80024BC0",
     "extab_RivalRun_UpdatePathFollower": "@etb_8000D02C",
