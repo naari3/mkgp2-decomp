@@ -6,8 +6,6 @@
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void DrawEffect_SetByte104();
-extern void DrawEffect_SetByte10C();
-extern void DrawEffect_SetBytePairD4D5();
 extern void DrawEffect_SetFloat108Avg();
 extern void DrawEffect_SetFloat110();
 extern void KartDriver_SetUniformScale_4Wheels();
@@ -15,12 +13,11 @@ extern void KartItem_BroadcastParamToCarAndISE();
 extern void Object_GetJObjRotationY();
 extern void Object_SetColorAlphaOnly();
 extern void Object_SetJObjRotationY();
-extern void Saturate_Double();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D28C8;
-extern unsigned int lbl_806D28CC;
-extern unsigned int lbl_806D28D0;
+extern const float lbl_806D28C8;
+extern const float lbl_806D28CC;
+extern const float lbl_806D28D0;
 extern unsigned int lbl_806D28D4;
 extern unsigned int lbl_806D28D8;
 extern unsigned int lbl_806D28DC;
@@ -28,7 +25,7 @@ extern unsigned int lbl_806D28E8;
 extern unsigned int lbl_806D28EC;
 extern unsigned int lbl_806D28F0;
 extern unsigned int lbl_806D28F4;
-extern unsigned int lbl_806D28F8;
+extern const float lbl_806D28F8;
 extern unsigned int lbl_806D28FC;
 extern unsigned int lbl_806D2900;
 extern unsigned int lbl_806D2904;

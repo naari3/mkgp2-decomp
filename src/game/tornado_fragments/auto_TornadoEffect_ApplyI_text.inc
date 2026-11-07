@@ -9,9 +9,9 @@ extern void TornadoEffect_ApplyItemVisual_Secondary();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D10A8;
-extern unsigned int lbl_806D28CC;
-extern unsigned int lbl_806D28D0;
-extern unsigned int lbl_806D28F8;
+extern const float lbl_806D28CC;
+extern const float lbl_806D28D0;
+extern const float lbl_806D28F8;
 extern unsigned int lbl_806D2914;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */

@@ -9,23 +9,19 @@
  */
 
 /* --- forward decls --- */
-asm void TornadoEffect_SetMatrixRow0_5c(void);
-asm void TornadoEffect_SetFieldAc(void);
 asm void TornadoEffect_SetMatrix1c(void);
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void TornadoEffect_SetMatrixRow0_5c(void) { /* 0x800578C4 size:0x10 */
-    nofralloc
-    stfs f1, 0x5c(r3)
-    stfs f2, 0x60(r3)
-    stfs f3, 0x64(r3)
-    blr
+/* 0x800578C4 size:0x10 */
+void TornadoEffect_SetMatrixRow0_5c(void *e, float x, float y, float z) {
+    TE_F(e, 0x5C) = x;
+    TE_F(e, 0x60) = y;
+    TE_F(e, 0x64) = z;
 }
 
-asm void TornadoEffect_SetFieldAc(void) { /* 0x800578D4 size:0x8 */
-    nofralloc
-    stfs f1, 0xac(r3)
-    blr
+/* 0x800578D4 size:0x8 */
+void TornadoEffect_SetFieldAc(void *e, float v) {
+    TE_F(e, 0xAC) = v;
 }
 
 asm void TornadoEffect_SetMatrix1c(void) { /* 0x800578DC size:0x84 */

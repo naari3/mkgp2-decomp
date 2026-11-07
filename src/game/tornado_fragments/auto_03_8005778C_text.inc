@@ -3,7 +3,7 @@
 /* keep emit order = target section layout (do not sort). */
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D28C8;
+extern const float lbl_806D28C8;
 
 /* --- function index (3 fns, .text 0x8005778C..0x800577C8) ---
  * [  0] 0x8005778C size:0x1C    global TornadoEffect_ClearFlagC0AndSetC4
@@ -12,36 +12,26 @@ extern unsigned int lbl_806D28C8;
  */
 
 /* --- forward decls --- */
-asm void TornadoEffect_ClearFlagC0AndSetC4(void);
-asm void TornadoEffect_SetField11c(void);
-asm void TornadoEffect_SetFlagB4(void);
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void TornadoEffect_ClearFlagC0AndSetC4(void) { /* 0x8005778C size:0x1C */
-    nofralloc
-    lbz r0, 0xc0(r3)
-    cmplwi r0, 0x1
-    bne TornadoEffect_ClearFlagC0AndSetC4_L_8005779C
-    stfs f1, 0xc4(r3)
-    TornadoEffect_ClearFlagC0AndSetC4_L_8005779C:
-    li r0, 0x0
-    stb r0, 0xc0(r3)
-    blr
+/* 0x8005778C size:0x1C */
+void TornadoEffect_ClearFlagC0AndSetC4(void *e, float v) {
+    if (TE_U8(e, 0xC0) == 1) {
+        TE_F(e, 0xC4) = v;
+    }
+    TE_U8(e, 0xC0) = 0;
 }
 
-asm void TornadoEffect_SetField11c(void) { /* 0x800577A8 size:0x8 */
-    nofralloc
-    stfs f1, 0x11c(r3)
-    blr
+/* 0x800577A8 size:0x8 */
+void TornadoEffect_SetField11c(void *e, float v) {
+    TE_F(e, 0x11C) = v;
 }
 
-asm void TornadoEffect_SetFlagB4(void) { /* 0x800577B0 size:0x18 */
-    nofralloc
-    clrlwi. r0, r4, 24
-    stb r4, 0xb4(r3)
-    bnelr
-    lfs f0, lbl_806D28C8(r2)
-    stfs f0, 0x11c(r3)
-    blr
+/* 0x800577B0 size:0x18 */
+void TornadoEffect_SetFlagB4(void *e, unsigned char on) {
+    TE_U8(e, 0xB4) = on;
+    if (!on) {
+        TE_F(e, 0x11C) = lbl_806D28C8;
+    }
 }
 

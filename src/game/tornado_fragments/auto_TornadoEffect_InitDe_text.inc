@@ -7,15 +7,14 @@
 /* refine if the real prototype matters for header consumers. */
 extern void Alloc();
 extern void DrawEffect_SetU32CC();
-extern void DrawEffect_SpawnWithDescriptor();
 extern void Object_SetColorAlphaOnly();
 extern void Object_SetJObjScaleXYZ();
 extern void clNormal3D_Construct();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D28C8;
-extern unsigned int lbl_806D28CC;
-extern unsigned int lbl_806D28D0;
+extern const float lbl_806D28C8;
+extern const float lbl_806D28CC;
+extern const float lbl_806D28D0;
 extern unsigned int lbl_806D28D4;
 extern unsigned int lbl_806D28D8;
 extern unsigned int lbl_806D28DC;

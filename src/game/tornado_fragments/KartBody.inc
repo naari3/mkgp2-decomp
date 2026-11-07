@@ -7,17 +7,13 @@
  */
 
 /* --- forward decls --- */
-asm void KartBody_SetWarpTransitFlag(void);
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void KartBody_SetWarpTransitFlag(void) { /* 0x8005771C size:0x1C */
-    nofralloc
-    stb r4, 0xd2(r3)
-    lbz r0, 0xd2(r3)
-    cmplwi r0, 0x1
-    bnelr
-    li r0, -0x1
-    stw r0, 0x13c(r3)
-    blr
+/* 0x8005771C size:0x1C */
+void KartBody_SetWarpTransitFlag(void *e, unsigned char on) {
+    TE_U8(e, 0xD2) = on;
+    if (TE_U8(e, 0xD2) == 1) {
+        TE_S32(e, 0x13C) = -1;
+    }
 }
 
