@@ -5256,7 +5256,16 @@
     "__ct__11TextManagerFv": "TexMgr_Init",
     "__dt__11TextManagerFv": "dtor_800869D0",
     "__ct__7ResCtrlFv": "ResCtrl_Init",
-    "__dt__7ResCtrlFv": "dtor_80082960"
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__9RecordHudFiUcii": "fn_80148810",
+    "__vt__9RecordHud": "lbl_8048F020",
+    "__ct__9RecSpriteFPCci": "fn_8013D800",
+    "__ct__5RecFxFv": "fn_80140874",
+    "__ct__9HudResSetFiii": "fn_80148A44",
+    "__ct__14RecCounterCardFii": "fn_80217F78",
+    "__ct__14RecCounterFreeFii": "fn_802182BC",
+    "__dt__9PtrHolderFv": "dtor_80149320",
+    "__dt__12HudResHolderFv": "dtor_80149244"
   },
   "src/game/SceneList_80157940.cpp": {
     "extab_fn_80157940": "@etb_8000F0DC",
@@ -12100,7 +12109,10 @@
   },
   "src/game/auto_800A8F4C_block.c": {
     "__dt__12WarpZoneListFv": "dtor_800AA69C",
-    "__ct__14WarpDashMgrObjFiUcUcUc": "WarpDashMgr_Init"
+    "__ct__14WarpDashMgrObjFiUcUcUc": "WarpDashMgr_Init",
+    "__ct__11WarpZoneObjFP8WarpNode": "WarpZone_CalcEdgeVectors",
+    "__ct__11WarpEdgeVecFv": "fn_8007C5DC",
+    "__dt__11WarpEdgeVecFv": "dtor_80036E40"
   },
   "src/Runtime.PPCEABI.H/MWRTTI_bad_cast.cpp": {
     "@15": "@etb_8001F2B0",
