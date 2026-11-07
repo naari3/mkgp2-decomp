@@ -1,0 +1,75 @@
+diff --git a/src/triforce/amnet_nm2_rest.c b/src/triforce/amnet_nm2_rest.c
+index 0e8719f..e8a67ec 100644
+--- a/src/triforce/amnet_nm2_rest.c
++++ b/src/triforce/amnet_nm2_rest.c
+@@ -61,8 +61,7 @@ static inline u32 ReadDeviceWordImpl(u32 addr) {
+     void* buf = ALIGN32(raw);
+     u32 v;
+     DevRead(addr, buf, 0x20);
+-    v = *(u32*)buf;
+-    return BSWAP32(v);
++    return BSWAP32(*(u32*)buf);
+ }
+ 
+ static inline void ReadDeviceInfo(u32 addr, void* info) {
+@@ -109,6 +108,9 @@ static inline void InitializeDevClear(u32 addr, NetDev* dev) {
+     InitializeDevSend(buf, addr, id);
+ }
+ 
++#pragma push
++#pragma opt_propagation off
++#pragma opt_loop_invariants off
+ s32 fn_8028D8CC(u8 id, NetBlob* blob) {
+     NetDev* dev;
+     const u32* configs = lbl_803F2798;
+@@ -136,11 +138,9 @@ s32 fn_8028D8CC(u8 id, NetBlob* blob) {
+             WriteDeviceCommand(0x80000040, cmd);
+             return 5;
+         }
+-        {
+-            u16 high = BSWAP16(hdr[1]);
+-            u16 low = BSWAP16(hdr[0]);
+-            base = ((u32)high << 16) | low;
+-        }
++        base = BSWAP16(hdr[1]);
++        base <<= 16;
++        base |= BSWAP16(hdr[0]);
+         lbl_80699140.hwFlags = ReadDeviceHalf(0x80000000);
+         if (lbl_80699140.hwFlags & 0x100) {
+             lbl_80699140.prio = 0;
+@@ -218,6 +218,8 @@ s32 fn_8028D8CC(u8 id, NetBlob* blob) {
+         return 1;
+     }
+ }
++#pragma pop
++
+ 
+ static inline void ResetDevAddress(u32* address, NetDev* dev) {
+     u8 raw[0x40];
+@@ -241,6 +243,8 @@ static inline void ResetDevAddress(u32* address, NetDev* dev) {
+     }
+ }
+ 
++#pragma push
++#pragma opt_dead_assignments off
+ s32 fn_8028EAA8(u8 id) {
+     NetDev* dev = FindDev(id);
+ 
+@@ -250,13 +254,15 @@ s32 fn_8028EAA8(u8 id) {
+     ResetDevAddress(&dev->cmdAddr, dev);
+     ProbeDevClear(dev->statAddr, dev);
+     switch (dev->kind) {
+-    default:
+-        break;
+     case 1:
+         break;
+     case 2:
+         DevPoke(0x84000040, 0);
+         break;
++    case 3:
++        break;
+     }
+     return 0;
+ }
++#pragma pop
++
