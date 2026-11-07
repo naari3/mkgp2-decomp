@@ -38,7 +38,7 @@ all of these.
 | `SpecialFaceMesh_Dtor` | game/SpecialFaceMesh_Dtor | 99.46 | base / iterator register swap (same pattern as fn_801E96BC) | 40 min permuter |
 | `AI_PerKartUpdate`, `fn_801E9CBC` | game/AI_PerKartUpdate, game/fn_801E9CBC | 99.80 / 99.73 | ItemList items register | all 6 decl orders of mode/round/cup in ItemList, for/while count loops; 5 min permuter |
 | `SwitchTest_Page` | game/SwitchTest_Page | 99.91 | `steer` / `st` not coalesced | |
-| `fn_801DABFC` | game/fn_801DABFC | 99.20 | bool compare emitted as `cmplwi` | int/u8/bool |
+| `fn_801DABFC` | game/fn_801DABFC | 99.20 | 4 lines: the two `switch (out[k])` tests are `cmplwi` in the target | int/u8/bool; a `u8 out[2]` field fixes the `cmplwi` but then `out = !out` becomes `extrwi` instead of `srwi` (16 lines); casts, unions, `*(u8 *)&`, inline u8 helpers all keep `cmpwi` |
 | `EffectItemChainIndicator_Tick` | game/EffectItemChainIndicator_Tick | 99.70 | register coloring | |
 | `fn_801C64DC` | game/clFlowFigure_Unlocks | 99.94 | register coloring | |
 | `PlayStats_CopyStatsBlock` | game/PlayStats_CopyStatsBlock | 98.64 | copy scheduling barrier (target interleaves differently) | `__restrict`, temps |
