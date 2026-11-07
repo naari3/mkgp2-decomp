@@ -1349,3 +1349,8 @@ c18_u147: Object_DriveAnimAndSkin improves 99.123375 -> 99.43723, same 1848B. Ex
 Source: Codex worker c18_u149_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 20 fn / 4964 B.
 
 c18_u149 Scene_8015AFCC retry: fresh baseline99.93104, five first-preload-loop r28 vs targetr29 differences. Full resource-phase inline helper regresses99.45977; reuse i in earlier unrolled member init is byte-invariant. Declare i before itemId (int i; int itemId; int extra;) with all code otherwise unchanged: text1740/EH196/index12 all100. Existing name bridges/flags suffice; flip Matching. Full source-linked DOL SHA1 exact, ELF fn8015AFCC/1740 verified; +1 native fn/1740B.
+
+## c18_u148_20261107
+Source: Codex worker c18_u148_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 948 B.
+
+c18_u148: YesNoButtonL DrawLabel802064D8 reaches100%/948B via explicit px/py values for highlight, English px-before-py and Japanese py-before-px declarations, and final placement via separate static inline ButtonX/ButtonY(const YesNoButton*,float) transforms with scale-first multiply. The axis helper boundary restores target scale reloads after ResCtrl SetScaleXY; direct field-expression Place cached them and lost8B. Split extab902C..9044/index2993C..29948/text2064D8..20688C into Matching _m2. Owned EH24/index12 exact, weak ResCtrl dtor entries discarded; full native DOL SHA1 exact. Update95.56579 and DrawCredits99.77579 remain baseline NM after bounded invariant/regressing probes.
