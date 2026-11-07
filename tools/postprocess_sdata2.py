@@ -94,8 +94,11 @@ def func_relative(funcs: List[Tuple[int, int, str]], r_off: int) -> Optional[Tup
     return None
 
 
-def find_text_reloc_names(target_path: Path) -> Dict[int, str]:
-    """Return offset_in_text -> reloc_target_name for R_PPC_EMB_SDA21 entries."""
+def find_text_reloc_names(target_path: Path, owned: Optional[Dict] = None) -> Dict[int, str]:
+    """Return offset_in_text -> reloc_target_name for R_PPC_EMB_SDA21 entries.
+
+    External (undefined) targets go in the result; named globals the target
+    defines itself go in `owned` when it is given."""
     data = target_path.read_bytes()
     en, e_shstrndx, shdrs = read_elf_meta(data)
 
@@ -135,11 +138,19 @@ def find_text_reloc_names(target_path: Path) -> Dict[int, str]:
             continue
         sym_off = symtab_sh[4] + r_sym * sym_entsize
         st_name, _, _, _, _, st_shndx = struct.unpack_from(en + "IIIBBH", data, sym_off)
-        # Only externals: if the target object defines the symbol itself (the
-        # TU's split owns that .sdata2 range), the local must stay local.
-        if st_shndx != SHN_UNDEF:
-            continue
         name = read_str(data, strtab_base, strtab_size, st_name)
+        # If the target object defines the symbol itself (the TU's split owns
+        # that .sdata2 range), the local stays defined. When the target
+        # defines it as a named global (another TU reads it), remember the
+        # name so the literal can be exported under it.
+        if st_shndx != SHN_UNDEF:
+            st_bind = struct.unpack_from(en + "IIIBBH", data, sym_off)[3] >> 4
+            if owned is not None and st_bind == STB_GLOBAL and name and not ANON_RE.match(name):
+                owned[r_off] = name
+                rel = func_relative(funcs, r_off)
+                if rel is not None:
+                    owned[rel] = name  # type: ignore[index]
+            continue
         if name:
             result[r_off] = name
             # Function-relative key: lets a TU whose .text carries extra
@@ -152,8 +163,9 @@ def find_text_reloc_names(target_path: Path) -> Dict[int, str]:
 
 
 def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
-    target_relocs = find_text_reloc_names(target_path)
-    if not target_relocs:
+    owned_relocs: Dict = {}
+    target_relocs = find_text_reloc_names(target_path, owned_relocs)
+    if not target_relocs and not owned_relocs:
         if in_path != out_path:
             out_path.write_bytes(in_path.read_bytes())
         return False
@@ -194,6 +206,8 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
     seen_sym_idxs: set[int] = set()
     sym_names: Dict[int, str] = {}
     retarget: List[Tuple[int, str]] = []  # (rela entry file offset, new name)
+    exports: List[Tuple[int, str, str]] = []  # owned literals to export by name
+    exported_names: set[str] = set()  # one definition per exported name
     n_rela = rela_sh[5] // 12
     for i in range(n_rela):
         off = rela_sh[4] + i * 12
@@ -220,6 +234,15 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
             # prefer the function-relative match when both exist
             expected = target_relocs[rel]  # type: ignore[index]
         if expected is None:
+            own = owned_relocs.get(r_off)
+            if rel is not None and rel in owned_relocs:
+                own = owned_relocs[rel]
+            if (own is not None and r_sym not in seen_sym_idxs
+                    and own not in exported_names):
+                exported_names.add(own)
+                seen_sym_idxs.add(r_sym)
+                sym_names[r_sym] = own
+                exports.append((r_sym, name, own))
             continue
         if r_sym in seen_sym_idxs:
             # The same literal is pooled under another name in the target
@@ -232,7 +255,7 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
         sym_names[r_sym] = expected
         targets.append((r_sym, name, expected))
 
-    if not targets:
+    if not targets and not exports:
         if in_path != out_path:
             out_path.write_bytes(data)
         return False
@@ -240,7 +263,7 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
     # Append new names to a fresh strtab at file end
     new_strtab = bytearray(data[strtab_base:strtab_base + strtab_size])
     new_name_offsets: Dict[str, int] = {}
-    for new_name in [t[2] for t in targets] + [r[1] for r in retarget]:
+    for new_name in [t[2] for t in targets] + [r[1] for r in retarget] + [e[2] for e in exports]:
         if new_name not in new_name_offsets:
             new_name_offsets[new_name] = len(new_strtab)
             new_strtab += new_name.encode("ascii") + b"\x00"
@@ -265,6 +288,25 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
             SHN_UNDEF,
         )
         print(f"  {in_path.name}: {old_name!r} -> {new_name!r}")
+
+    for sym_idx, old_name, new_name in exports:
+        # Keep the definition (section, value, size); only rename and bind
+        # globally so other TUs can link against it.
+        off = symtab_sh[4] + sym_idx * sym_entsize
+        _, st_value, st_size, st_info, st_other, st_shndx = struct.unpack_from(
+            en + "IIIBBH", data, off
+        )
+        struct.pack_into(
+            en + "IIIBBH",
+            data, off,
+            new_name_offsets[new_name],
+            st_value,
+            st_size,
+            (STB_GLOBAL << 4) | (st_info & 0xF),
+            st_other,
+            st_shndx,
+        )
+        print(f"  {in_path.name}: {old_name!r} -> {new_name!r} (exported)")
 
     if retarget:
         # Append one undefined global per extra name to a relocated symtab.
