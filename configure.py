@@ -1434,7 +1434,7 @@ config.libs = [
             Object(Matching, "game/FinalLapBanner_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SeqMenuScene.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
             Object(Matching, "game/FinalLapCoinJump_SetEnable.c"),
-            Object(NonMatching, "game/ShadowBillboard_Lerp.c", mw_version="GC/2.6"),
+            Object(Matching, "game/ShadowBillboard_Lerp.c", mw_version="GC/2.6"),
             Object(Matching, "game/ShadowBillboard_Setters.c", mw_version="GC/2.6"),
             Object(Matching, "game/ShadowBillboard.c", mw_version="GC/2.6", extab_padding=b""),
             Object(Matching, "game/FinalLapCoinJump_CheckActiveForObject.c"),
