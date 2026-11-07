@@ -1658,6 +1658,11 @@ game/EffectSpeed_Init.cpp:
 	extabindex  start:0x80020EC4 end:0x80020ED0
 	.text       start:0x800650E0 end:0x8006520C
 
+game/EffectSpeedAction.cpp:
+	extab       start:0x80007FF8 end:0x80008090
+	extabindex  start:0x80020ED0 end:0x80020F54
+	.text       start:0x8006520C end:0x800657D8
+
 game/Cosf_LUT_Wrap.c:
 	extab       start:0x80008090 end:0x80008098
 	extabindex  start:0x80020F54 end:0x80020F60

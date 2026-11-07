@@ -10,31 +10,35 @@ inline void *operator new(unsigned long n, const char *file, int line) { return 
 struct SpeedInitOwner;
 struct SpeedInitAction {
     SpeedInitAction() {}
-    virtual ~SpeedInitAction();
+    /* Process is declared first (and never defined) so this TU set does not
+     * emit the base vtable; it lives at lbl_803FBF48. */
+    virtual bool Process();
     virtual void Reset();
-    virtual void Tick();
+    virtual ~SpeedInitAction();
     SpeedInitOwner *owner;
     float value;
 };
 struct SpeedInitScale : SpeedInitAction {
     virtual ~SpeedInitScale();
     virtual void Reset();
+    virtual bool Process();
     SpeedInitScale(SpeedInitOwner *p) { owner=p; Reset(); }
 };
 struct SpeedInitMue : SpeedInitAction {
     virtual ~SpeedInitMue();
     virtual void Reset();
+    virtual bool Process();
     SpeedInitMue(SpeedInitOwner *p) { owner=p; Reset(); }
 };
 struct SpeedScaleHolder {
     SpeedInitScale *p;
     SpeedScaleHolder(SpeedInitScale *v):p(v) {}
-    ~SpeedScaleHolder();
+    ~SpeedScaleHolder() throw();
 };
 struct SpeedMueHolder {
     SpeedInitMue *p;
     SpeedMueHolder(SpeedInitMue *v):p(v) {}
-    ~SpeedMueHolder();
+    ~SpeedMueHolder() throw();
 };
 struct SpeedInitOwner {
     void *kart;
