@@ -13,10 +13,13 @@ static inline u16 ChecksumFrom(u8* p, u16 sum, u32 n) {
     }
     return sum;
 }
+/* Needs GC/1.3 with common-subexpression elimination off, and hdr declared
+ * before size, for the target register order. */
+#pragma opt_common_subs off
 s32 BackupWriteRecord(u32 chan, void* data, BackupEntry* e) {
     const BackupInfo* info;
-    u32 size;
     BackupHeader* hdr;
+    u32 size;
     u32 recSize;
     u32 total;
 
@@ -52,3 +55,4 @@ s32 BackupWriteRecord(u32 chan, void* data, BackupEntry* e) {
     }
     return 0;
 }
+#pragma opt_common_subs reset
