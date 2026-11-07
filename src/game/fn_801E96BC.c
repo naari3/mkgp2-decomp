@@ -56,7 +56,8 @@ void fn_801E96BC(AISystemState *self) {
     self->frame++;
     if (cap < self->frame) self->frame = cap;
     base = lbl_806793D8;
-    for (record = base, i = 0; i < 8; ++i, ++record) {
+    for (i = 0; i < 8; ++i) {
+        record = &base[i];
         if (record && record->driver) {
             float *m = KartDriver_GetKartRootMtx(record->driver);
             float x = m[3];
