@@ -12535,5 +12535,33 @@
     "__vt__10FlowFaderF": "lbl_80419DE0",
     "@107": "@etb_8001902C",
     "@108": "@eti_8002993C"
+  },
+  "src/game/AI_AdjustThunks.cpp": {
+    "@12@__dt__12AIControllerFv": "fn_801E8C90",
+    "@12@GrantItem__12AIControllerFiUc": "fn_801E8C98",
+    "@12@f6670__12AIControllerFv": "fn_801E8CA0",
+    "@12@f66B4__12AIControllerFPv": "fn_801E8CA8",
+    "@12@f68B4__12AIControllerFPv": "fn_801E8CB0",
+    "__dt__12AIControllerFv": "fn_801E81D8",
+    "GrantItem__12AIControllerFiUc": "AI_GrantItem",
+    "f6670__12AIControllerFv": "fn_801E6670",
+    "f66B4__12AIControllerFPv": "fn_801E66B4",
+    "f68B4__12AIControllerFPv": "fn_801E68B4"
+  },
+  "src/game/HudThunk802488FC.cpp": {
+    "@8@__dt__9HudThunkAFv": "fn_802488FC",
+    "__dt__9HudThunkAFv": "fn_80248778"
+  },
+  "src/game/HudThunk80248CE4.cpp": {
+    "@8@__dt__9HudThunkBFv": "fn_80248CE4",
+    "__dt__9HudThunkBFv": "fn_80248BA8"
+  },
+  "src/game/RaceHudAdjust.cpp": {
+    "@8@__dt__11RaceHudRootFv": "fn_8024904C",
+    "__dt__11RaceHudRootFv": "fn_80248F48"
+  },
+  "src/game/RankDispControls.cpp": {
+    "@8@__dt__8RankDispFv": "fn_802494B4",
+    "__dt__8RankDispFv": "dtor_80249274"
   }
 }
