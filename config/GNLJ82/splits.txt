@@ -8230,7 +8230,7 @@ game/objview/fn_80195A7C.cpp:
 	extabindex  start:0x800272A8 end:0x800272B4
 	.text       start:0x80195A7C end:0x80195B94
 
-game/objview/MapWaterEffect_Init.cpp:
+game/objview/MapWaterEffect_Init.c:
 	extab       start:0x8001237C end:0x800123B0
 	extabindex  start:0x800272B4 end:0x800272C0
 	.text       start:0x80195B94 end:0x80195CD4
