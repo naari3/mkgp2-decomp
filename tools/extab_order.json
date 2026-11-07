@@ -15,6 +15,18 @@
       "dtor_8002F978"
     ]
   },
+  "src/game/StrPcb_Lifetime_nm1.cpp": {
+    "extab": [
+      "dtor_8003871C",
+      "StrPcb_Shutdown",
+      "StrPcb_EnsureInstance"
+    ],
+    "extabindex": [
+      "StrPcb_Shutdown",
+      "StrPcb_EnsureInstance",
+      "dtor_8003871C"
+    ]
+  },
   "src/game/ItemEffectTicks.cpp": {
     "extab": [
       "dtor_80055F10",
