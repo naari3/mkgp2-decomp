@@ -1415,10 +1415,6 @@
     "extabindex_TaruItem_Dispatch_25": "@eti_80023DD4"
   },
   "src/game/ReverseChallenge.c": {
-    "extab_ReverseChallenge_Dtor": "@etb_8000A1EC",
-    "extabindex_ReverseChallenge_Dtor": "@eti_80022868",
-    "extab_ReverseChallenge_Render": "@etb_8000A1F4",
-    "extabindex_ReverseChallenge_Render": "@eti_80022874",
     "extab_ReverseChallenge_Update": "@etb_8000A1FC",
     "extabindex_ReverseChallenge_Update": "@eti_80022880",
     "extab_ReverseChallenge_Init": "@etb_8000A204",

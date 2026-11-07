@@ -39,187 +39,106 @@ extern unsigned int lbl_80419E70[];
  * [  0] 0x800ACD60 size:0x260   global ReverseChallenge_Dtor
  */
 
-/* --- forward decls --- */
-asm void ReverseChallenge_Dtor(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_ReverseChallenge_Dtor[8] = {
-    0x18, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+/* --- native C++ island (deleting-destructor shape, see RivalRun.c) --- */
+#pragma cplusplus on
+struct RCVirtual {
+    virtual ~RCVirtual();
+};
+struct RCCarVirtual {
+    virtual void key();
+    virtual ~RCCarVirtual();
+};
+struct RCLight;
+struct RCLightInfo {
+    unsigned char pad0[0x30];
+    void (*release)(RCLight *);
+    void (*destroy)(RCLight *);
+};
+struct RCLight {
+    RCLightInfo *info;
+    unsigned short references;
+};
+struct ReverseChallengeState {
+    void *vtable;
+    char pad4[4];
+    void *environment;
+    RCVirtual *camera;
+    RCLight *lights;
+    RCCarVirtual *car;
+    void *lakitu;
+    RCVirtual *scene;
+    void *goalCamera;
+    void *hud;
+    void *buffer;
 };
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ReverseChallenge_Dtor = {
-    (void *)&ReverseChallenge_Dtor, 0x00000260, (void *)extab_ReverseChallenge_Dtor
-};
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void ReverseChallenge_Dtor(void) { /* 0x800ACD60 size:0x260 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r4
-    stw r30, 0x18(r1)
-    mr. r30, r3
-    stw r29, 0x14(r1)
-    beq ReverseChallenge_Dtor_L_800ACFA0
-    lis r3, lbl_80419E70@ha
-    addi r0, r3, lbl_80419E70@l
-    stw r0, 0x0(r30)
-    lwz r3, g_weatherSystem(r13)
-    cmplwi r3, 0x0
-    beq ReverseChallenge_Dtor_L_800ACDAC
-    li r4, 0x1
-    bl fn_8016C634
-    li r0, 0x0
-    stw r0, g_weatherSystem(r13)
-    ReverseChallenge_Dtor_L_800ACDAC:
-    li r3, 0x0
-    li r4, 0x0
-    bl SetActiveCamera
-    lwz r3, 0x1c(r30)
-    cmplwi r3, 0x0
-    beq ReverseChallenge_Dtor_L_800ACDD8
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    ReverseChallenge_Dtor_L_800ACDD8:
-    lwz r3, 0x18(r30)
-    li r4, 0x1
-    bl LakituStart_Dtor
-    lwz r3, 0x20(r30)
-    li r4, 0x1
-    bl fn_80124C84
-    li r3, 0x0
-    bl SetPlayerCarObject
-    lwz r3, 0x14(r30)
-    cmplwi r3, 0x0
-    beq ReverseChallenge_Dtor_L_800ACE18
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    ReverseChallenge_Dtor_L_800ACE18:
-    li r0, 0x0
-    stw r0, g_raceCamera(r13)
-    lwz r3, 0xc(r30)
-    cmplwi r3, 0x0
-    beq ReverseChallenge_Dtor_L_800ACE44
-    beq ReverseChallenge_Dtor_L_800ACE44
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    ReverseChallenge_Dtor_L_800ACE44:
-    lwz r29, 0x10(r30)
-    cmplwi r29, 0x0
-    beq ReverseChallenge_Dtor_L_800ACEC0
-    beq ReverseChallenge_Dtor_L_800ACEC0
-    lis r3, 0x1
-    lhz r4, 0x4(r29)
-    subi r0, r3, 0x1
-    clrlwi r0, r0, 16
-    subf r0, r4, r0
-    cntlzw r0, r0
-    extrwi. r0, r0, 8, 19
-    beq ReverseChallenge_Dtor_L_800ACE78
-    b ReverseChallenge_Dtor_L_800ACE88
-    ReverseChallenge_Dtor_L_800ACE78:
-    subi r3, r4, 0x1
-    cntlzw r0, r4
-    sth r3, 0x4(r29)
-    extrwi r0, r0, 8, 19
-    ReverseChallenge_Dtor_L_800ACE88:
-    cmpwi r0, 0x0
-    beq ReverseChallenge_Dtor_L_800ACEC0
-    cmplwi r29, 0x0
-    beq ReverseChallenge_Dtor_L_800ACEC0
-    lwz r4, 0x0(r29)
-    mr r3, r29
-    lwz r12, 0x30(r4)
-    mtctr r12
-    bctrl
-    lwz r4, 0x0(r29)
-    mr r3, r29
-    lwz r12, 0x34(r4)
-    mtctr r12
-    bctrl
-    ReverseChallenge_Dtor_L_800ACEC0:
-    lwz r3, 0x8(r30)
-    li r4, 0x1
-    bl CourseEnvironment_Dtor
-    lwz r3, 0x24(r30)
-    li r4, 0x1
-    bl fn_80254134
-    lwz r3, 0x28(r30)
-    cmplwi r3, 0x0
-    beq ReverseChallenge_Dtor_L_800ACEE8
-    bl MemoryManager_TimedFree
-    ReverseChallenge_Dtor_L_800ACEE8:
-    bl ItemObjectManager_Reset
-    bl VfxSlotMgr_Shutdown
-    bl ClRomTable_PurgeAll
-    bl GetRaceContextPtr
-    bl RankingTable_Init
-    lwz r3, lbl_806D10D0(r13)
-    cmplwi r3, 0x0
-    beq ReverseChallenge_Dtor_L_800ACF1C
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    ReverseChallenge_Dtor_L_800ACF1C:
-    li r0, 0x0
-    stw r0, lbl_806D10D0(r13)
-    bl SceneDrawList_Reset
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    beq ReverseChallenge_Dtor_L_800ACF48
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    ReverseChallenge_Dtor_L_800ACF48:
-    li r0, 0x0
-    li r3, 0x0
-    stw r0, lbl_806D109C(r13)
-    bl SetResourceLoadingFlag
-    bl clRom_PurgeAll
-    lwz r3, lbl_806D10AC(r13)
-    cmplwi r3, 0x0
-    beq ReverseChallenge_Dtor_L_800ACF7C
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    ReverseChallenge_Dtor_L_800ACF7C:
-    li r0, 0x0
-    mr r3, r30
-    stw r0, lbl_806D10AC(r13)
-    li r4, 0x0
-    bl dtor_80122FD8
-    extsh. r0, r31
-    ble ReverseChallenge_Dtor_L_800ACFA0
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    ReverseChallenge_Dtor_L_800ACFA0:
-    lwz r0, 0x24(r1)
-    mr r3, r30
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+static inline int RCLightRefDec(RCLight *obj)
+{
+    unsigned char unreferenced;
+    if ((unreferenced = (obj->references == (unsigned short)0xFFFF)))
+        return unreferenced;
+    return obj->references-- == 0;
+}
+static inline void RCLightDelete(RCLight *obj)
+{
+    if (obj) {
+        obj->info->release(obj);
+        obj->info->destroy(obj);
+    }
+}
+static inline void RCLightUnref(RCLight *obj)
+{
+    if (obj && RCLightRefDec(obj))
+        RCLightDelete(obj);
+}
+static inline void RCCameraRelease(RCVirtual *camera)
+{
+    if (camera)
+        delete camera;
 }
 
+#pragma exceptions on
+extern "C" void *ReverseChallenge_Dtor(ReverseChallengeState *self, short freeMemory)
+{
+    if (self) {
+        self->vtable = lbl_80419E70;
+        if (g_weatherSystem) {
+            fn_8016C634((void *)g_weatherSystem, 1);
+            g_weatherSystem = 0;
+        }
+        SetActiveCamera(0, 0);
+        delete self->scene;
+        LakituStart_Dtor(self->lakitu, 1);
+        fn_80124C84(self->goalCamera, 1);
+        SetPlayerCarObject(0);
+        delete self->car;
+        g_raceCamera = 0;
+        RCCameraRelease(self->camera);
+        if (self->lights)
+            RCLightUnref(self->lights);
+        CourseEnvironment_Dtor(self->environment, 1);
+        fn_80254134(self->hud, 1);
+        if (self->buffer)
+            MemoryManager_TimedFree(self->buffer);
+        ItemObjectManager_Reset();
+        VfxSlotMgr_Shutdown();
+        ClRomTable_PurgeAll();
+        GetRaceContextPtr();
+        RankingTable_Init();
+        delete (RCVirtual *)lbl_806D10D0;
+        lbl_806D10D0 = 0;
+        SceneDrawList_Reset();
+        delete (RCVirtual *)lbl_806D109C;
+        lbl_806D109C = 0;
+        SetResourceLoadingFlag(0);
+        clRom_PurgeAll();
+        delete (RCVirtual *)lbl_806D10AC;
+        lbl_806D10AC = 0;
+        dtor_80122FD8(self, 0);
+        if (freeMemory > 0)
+            MemoryManager_TimedFree(self);
+    }
+    return self;
+}
+#pragma exceptions reset
+#pragma cplusplus reset
