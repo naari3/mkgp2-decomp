@@ -291,7 +291,7 @@ typedef struct Particle {
 
 extern "C" {
 extern void fn_8014D4B8(DbgModel *p);
-extern unsigned char fn_8014D4F0(void);
+extern unsigned char fn_8014D4F0(DbgModel *view);
 extern void fn_8014D540(void *p, int a, int b);
 extern JointTable lbl_8032CC64;
 extern void GXSetZCompLoc(int a);
@@ -1166,7 +1166,7 @@ extern "C" unsigned char TestMenuJointBrowser_Update(SceneJoint *self)
             }
             self->view = (DbgModel *)m;
         }
-    } else if (fn_8014D4F0()) {
+    } else if (fn_8014D4F0(self->view)) {
         delete self->view;
         self->view = 0;
     }
