@@ -99,6 +99,11 @@ Plan:
    file `static const`, in address order.
 3. Then convert fn_8014ADB4, fn_8015061C and fn_801540E0 against the pooled tables.
 
+Quick check: rebuilding SceneFactory_8014D540.cpp with GC/1.2.5n changes ~500 asm lines,
+and RaceHud/Scene_8014E0C4 do not even compile with it, so a plain compiler switch is out.
+The original probably used another way to pool (or a 1.2.5n-era build with other flags);
+find it before merging.
+
 Status: not started. The TUs are not claimed by onmokoworks (checked 2026-11-07), but the
 1.2.5n switch touches ~9 TUs, so do it as one dedicated job.
 
