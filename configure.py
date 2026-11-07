@@ -595,6 +595,7 @@ config.libs = [
         "objects": [
             Object(Matching, "game/KartItem_FindRearTarget_v1.cpp"),
             Object(Matching, "game/KartItem_FindRearTarget_v2.cpp"),
+            Object(Matching, "game/KartItem_FindRearTarget_v3.cpp"),
             Object(Matching, "game/EffectSpeed_Init.cpp", extab_padding=b""),
             Object(Matching, "game/EffectSpeedAction.cpp", extab_padding=b""),
             Object(NonMatching, "game/ItemGridState_Init.cpp", extab_padding=b""),
