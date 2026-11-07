@@ -8,3 +8,8 @@ AlarmHandlerForTimeout requires volatile OSTime LastCommandIssued to reproduce h
 Source: Codex worker c13_u41_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c13_u41: fn_8028625C improves 95.652176 -> 98.91304 by combining snapshot load/XOR into v[0]=((key<<16)|cmd)^__DIKey->cmd; v[1]=offset^__DIKey->offset; v[2]=length^__DIKey->length. This eliminates the redundant command load and restores 184-byte target size. Residual is loaded command/result r8 vs target r7, multiplier r7 vs target r8, and command XOR operand order. Staging command into v[0] before key XOR regresses to 95.434784 (r9 result, lis/xor schedule). Remains NonMatching; full coordinator build SHA-1 OK.
+
+## c17_u114_20261107
+Source: Codex worker c17_u114_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u114: local static inline EncodeCommand(u32 command) { return command ^ __DIKey->cmd; } fixes the c13 command/result r7 versus multiplier r8 swap and XOR operand order. Every computational instruction now matches target, 184 B; objdiff 99.804344. Inline creates one extra 8-byte stack slot: frame 0x58 vs target 0x50, all saved registers/LR +8. Two-parameter encoder also matches body but frame is 0x60. Reversing direct XOR operands is byte-invariant to c13 source. Retained single-argument helper, NonMatching; no array resize, padding or flag changes. Future work must explain original stack/local structure rather than chase registers.
