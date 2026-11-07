@@ -1,7 +1,7 @@
 /* Native draft for 0x800426C8..0x80044498 (7632 bytes).
- * Primary text: 99.155136%; kept NonMatching after three structural approaches.
- * Remaining differences are FP temporary registers, load scheduling, and EH PCs.
- * No native matching gain is claimed; the target object remains linked.
+ * Primary text: 99.971176%; retained as NonMatching.
+ * Nine FP scratch-register operands remain in the overlay projection.
+ * Owned EH bytes are exact; compiler weak-dtor entries are additional.
  */
 #include "game/RenderObj_ItemStateMachinePrivate.h"
 
@@ -12,7 +12,7 @@ void C_MTXTrans(Mtx, float, float, float);
 void C_MTXConcat(const Mtx, const Mtx, Mtx);
 void PSMTXCopy(const Mtx, Mtx);
 void Object_DriveAnimMatrix(void *);
-void Object_DriveAnimAndSkin(void *, void *, float, float);
+void Object_DriveAnimAndSkin(void *, float, float, void *);
 HSD_JObj *Archive_GetRootJObj(void *);
 void ObjectTree_BlendOrCopy_Timed(void *, HSD_JObj *, HSD_JObj *, HSD_JObj *, float);
 void *GetCharacterDataEntry(int);
@@ -117,7 +117,7 @@ static inline void SetJointY(HSD_JObj *joint, float value) {
 }
 #define BLEND_OR_COPY(index, weight) \
     if (obj->hasSecondary) { \
-        Object_DriveAnimAndSkin(obj->secondary, obj->animations[index], lbl_806D256C, lbl_806D2540); \
+        Object_DriveAnimAndSkin(obj->secondary, lbl_806D256C, lbl_806D2540, obj->animations[index]); \
         BLEND_SECONDARY(weight); \
     } else { COPY_PRIMARY(obj->primary); }
 
@@ -154,22 +154,22 @@ extern "C" int RenderObj_ItemStateMachine(RenderItemState *obj, int arg, float s
             if ((obj->turnBlend -= lbl_806D25F8) < lbl_806D2540) obj->turnBlend = lbl_806D2540;
         }
     } else if (obj->smoothSteering < lbl_806D2540) {
-        float limit = lbl_806D256C;
+        float limit = -1.0f;
         float value = obj->turnBlend - lbl_806D25F8;
         obj->turnBlend = value;
-        if (value < limit) obj->turnBlend = lbl_806D256C;
+        if (value < limit) obj->turnBlend = -1.0f;
     } else {
-        float limit = lbl_806D2570;
+        float limit = 1.0f;
         float value = obj->turnBlend + lbl_806D25F8;
         obj->turnBlend = value;
-        if (value > limit) obj->turnBlend = lbl_806D2570;
+        if (value > limit) obj->turnBlend = 1.0f;
     }
     neutralFrame = lbl_806D2574 * (lbl_806D257C - (lbl_806D2570 + obj->turnBlend));
     if (!obj->freezeAnim) {
         if (obj->state == 42 || obj->state == 43) {
             void *anim = obj->animations[obj->state];
             ScopedTimer timer(24);
-            Object_DriveAnimAndSkin(obj->primary, anim, obj->frame, lbl_806D2540);
+            Object_DriveAnimAndSkin(obj->primary, obj->frame, lbl_806D2540, anim);
             COPY_PRIMARY(obj->primary);
             float end;
             if (obj->state == 42) end = *(float *)((char *)GetCharacterDataEntry(obj->character) + 0x1C);
@@ -177,13 +177,13 @@ extern "C" int RenderObj_ItemStateMachine(RenderItemState *obj, int arg, float s
             if ((obj->frame += obj->frameStep) >= end) obj->frame = lbl_806D2540;
         } else if (obj->state == 1) {
             ScopedTimer timer(24);
-            Object_DriveAnimAndSkin(obj->primary, obj->animations[obj->animIndex], neutralFrame, lbl_806D2540);
+            Object_DriveAnimAndSkin(obj->primary, neutralFrame, lbl_806D2540, obj->animations[obj->animIndex]);
             BLEND_OR_COPY(0, obj->returnBlend);
             if ((obj->returnBlend += obj->returnBlendStep) >= lbl_806D2570) { obj->state = 0; obj->stateDone = 1; }
         } else if (obj->state != 0) {
             if (obj->state != -1 && obj->frame < obj->frameEnd) {
                 ScopedTimer timer(24);
-                Object_DriveAnimAndSkin(obj->primary, obj->animations[obj->state], obj->frame, lbl_806D2540);
+                Object_DriveAnimAndSkin(obj->primary, obj->frame, lbl_806D2540, obj->animations[obj->state]);
                 obj->frame += obj->frameStep;
                 if (obj->stateBlend < lbl_806D2570) {
                     ScopedTimer blendTimer(24);
@@ -192,30 +192,30 @@ extern "C" int RenderObj_ItemStateMachine(RenderItemState *obj, int arg, float s
                 } else {
                     ScopedTimer copyTimer(24);
                     clNormal3D_Exec(obj->animations[obj->state]);
-                    Object_DriveAnimAndSkin(obj->secondary, obj->animations[obj->state], obj->frame, lbl_806D2540);
+                    Object_DriveAnimAndSkin(obj->secondary, obj->frame, lbl_806D2540, obj->animations[obj->state]);
                     COPY_PRIMARY(obj->secondary);
                 }
             } else {
                 ScopedTimer timer(24);
-                Object_DriveAnimAndSkin(obj->primary, obj->animations[obj->turnBank + obj->animIndex], neutralFrame, lbl_806D2540);
+                Object_DriveAnimAndSkin(obj->primary, neutralFrame, lbl_806D2540, obj->animations[obj->turnBank + obj->animIndex]);
                 BLEND_OR_COPY(obj->state, obj->returnBlend);
                 obj->returnBlend += obj->returnBlendStep;
                 if (obj->returnBlend >= lbl_806D2570) { obj->state = 0; obj->stateDone = 1; }
             }
         } else {
             /* Separate lexical scopes preserve each bank's automatic timers. */
-            if (lbl_806D25F0 < obj->turnBlend && obj->turnBlend < lbl_806D25F4 && lbl_806D25F0 < steering && steering < lbl_806D25F4) {
+            if (-0.26f < obj->turnBlend && obj->turnBlend < 0.26f && -0.26f < steering && steering < 0.26f) {
                 obj->turnBank = 5;
                 if ((obj->frame += obj->idleFrameStep) > lbl_806D25CC) obj->frame = lbl_806D2540;
                 ScopedTimer timer(24);
-                Object_DriveAnimAndSkin(obj->primary, obj->animations[5 + obj->animIndex], obj->frame, lbl_806D2540);
+                Object_DriveAnimAndSkin(obj->primary, obj->frame, lbl_806D2540, obj->animations[5 + obj->animIndex]);
                 if (obj->turnTransition < lbl_806D2570) {
                     ScopedTimer blendTimer(24);
                     BLEND_OR_COPY(obj->animIndex, obj->turnTransition);
-                    float limit = lbl_806D2570;
+                    float limit = 1.0f;
                     float value = obj->turnTransition + lbl_806D25B8;
                     obj->turnTransition = value;
-                    if (value >= limit) obj->turnTransition = lbl_806D2570;
+                    if (value >= limit) obj->turnTransition = 1.0f;
                 } else {
                     ScopedTimer copyTimer(24);
                     COPY_PRIMARY(obj->primary);
@@ -225,14 +225,14 @@ extern "C" int RenderObj_ItemStateMachine(RenderItemState *obj, int arg, float s
                 obj->turnBank = 10;
                 if ((obj->frame += obj->idleFrameStep) > lbl_806D25CC) obj->frame = lbl_806D2540;
                 ScopedTimer timer(24);
-                Object_DriveAnimAndSkin(obj->primary, obj->animations[10 + obj->animIndex], obj->frame, lbl_806D2540);
+                Object_DriveAnimAndSkin(obj->primary, obj->frame, lbl_806D2540, obj->animations[10 + obj->animIndex]);
                 if (obj->turnTransition < lbl_806D2570) {
                     ScopedTimer blendTimer(24);
                     BLEND_OR_COPY(obj->animIndex, obj->turnTransition);
-                    float limit = lbl_806D2570;
+                    float limit = 1.0f;
                     float value = obj->turnTransition + lbl_806D25B8;
                     obj->turnTransition = value;
-                    if (value >= limit) obj->turnTransition = lbl_806D2570;
+                    if (value >= limit) obj->turnTransition = 1.0f;
                 } else {
                     ScopedTimer copyTimer(24);
                     COPY_PRIMARY(obj->primary);
@@ -242,14 +242,14 @@ extern "C" int RenderObj_ItemStateMachine(RenderItemState *obj, int arg, float s
                 obj->turnBank = 15;
                 if ((obj->frame += obj->idleFrameStep) > lbl_806D25CC) obj->frame = lbl_806D2540;
                 ScopedTimer timer(24);
-                Object_DriveAnimAndSkin(obj->primary, obj->animations[15 + obj->animIndex], obj->frame, lbl_806D2540);
+                Object_DriveAnimAndSkin(obj->primary, obj->frame, lbl_806D2540, obj->animations[15 + obj->animIndex]);
                 if (obj->turnTransition < lbl_806D2570) {
                     ScopedTimer blendTimer(24);
                     BLEND_OR_COPY(obj->animIndex, obj->turnTransition);
-                    float limit = lbl_806D2570;
+                    float limit = 1.0f;
                     float value = obj->turnTransition + lbl_806D25B8;
                     obj->turnTransition = value;
-                    if (value >= limit) obj->turnTransition = lbl_806D2570;
+                    if (value >= limit) obj->turnTransition = 1.0f;
                 } else {
                     ScopedTimer copyTimer(24);
                     COPY_PRIMARY(obj->primary);
@@ -257,15 +257,15 @@ extern "C" int RenderObj_ItemStateMachine(RenderItemState *obj, int arg, float s
             }
             else {
                 ScopedTimer timer(24);
-                Object_DriveAnimAndSkin(obj->primary, obj->animations[obj->animIndex], neutralFrame, lbl_806D2540);
+                Object_DriveAnimAndSkin(obj->primary, neutralFrame, lbl_806D2540, obj->animations[obj->animIndex]);
                 if (obj->turnTransition > lbl_806D2540) {
                     ScopedTimer blendTimer(24);
                     BLEND_OR_COPY(obj->turnBank + obj->animIndex, lbl_806D2570 - obj->turnTransition);
-                    float limit = lbl_806D2540;
+                    float limit = 0.0f;
                     float value = obj->turnTransition - lbl_806D25B8;
                     obj->turnTransition = value;
                     if (value <= limit) {
-                        obj->turnTransition = lbl_806D2540;
+                        obj->turnTransition = 0.0f;
                         obj->turnBank = 0;
                     }
                 } else {
@@ -303,12 +303,12 @@ extern "C" int RenderObj_ItemStateMachine(RenderItemState *obj, int arg, float s
     if (obj->state != 42 && obj->state != 43 && obj->animIndex == 0) obj->face = 0;
     obj->swayPhase += lbl_806D2604;
     float swayY = obj->sway * LUT_Sin12Bit(obj->swayPhase);
-    steering = lbl_806D2608 * swayY;
-    steering += obj->leftY;
+    swayY = lbl_806D2608 * swayY;
+    steering = swayY + obj->leftY;
     SetJointY(obj->leftJoint, steering);
     swayY = obj->sway * LUT_Sin12Bit(obj->swayPhase);
-    steering = lbl_806D260C * swayY;
-    steering += obj->rightY;
+    swayY = lbl_806D260C * swayY;
+    steering = swayY + obj->rightY;
     SetJointY(obj->rightJoint, steering);
     if (obj->root && obj->output && obj->tireFx) KartTireFX_AddSpinBoth(obj->tireFx, spin);
     KartDriver_SetEulerY_4Joints_LastMirrored(obj, lbl_806D2610 * obj->steering);
@@ -370,7 +370,8 @@ extern "C" int RenderObj_ItemStateMachine(RenderItemState *obj, int arg, float s
     }
     if (obj->bounceJoint) {
         obj->bouncePhase += lbl_806D2590;
-        steering = (float)__fabs(lbl_806D2618 * LUT_Sin12Bit(obj->bouncePhase));
+        double bounce = __fabs(lbl_806D2618 * LUT_Sin12Bit(obj->bouncePhase));
+        steering = (float)bounce;
         HSD_JObj *joint = obj->bounceJoint;
         if (!joint) __assert(lbl_806D2548, 0x2A4, lbl_806D2550);
         if (joint->flags & 0x20000) __assert(lbl_806D2548, 0x2A5, lbl_802EADBC);
@@ -413,9 +414,14 @@ extern "C" int RenderObj_ItemStateMachine(RenderItemState *obj, int arg, float s
             float dot = Vec3_Dot(&camera, &forward);
             if (dot > lbl_806D262C) dot = lbl_806D262C;
             if (dot < lbl_806D2630) dot = lbl_806D2630;
-            float magnitude = (float)__fabs(dot);
-            int x = (int)(lbl_806D2634 * dot);
-            int y = (int)(lbl_806D2638 * magnitude);
+            double absolute = __fabs(dot);
+            float magnitude = (float)absolute;
+            dot = lbl_806D2634 * dot;
+            magnitude = lbl_806D2638 * magnitude;
+            int y;
+            int x;
+            x = (int)dot;
+            y = (int)magnitude;
             RenderOverlay *overlay = obj->overlay;
             overlay->x = (float)(x + 310);
             overlay->y = (float)(y + 180);
