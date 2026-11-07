@@ -122,7 +122,7 @@ extern const float lbl_806D47E0;
 extern const float lbl_806D47EC;
 extern const float lbl_806D47F4;
 extern const float lbl_806D4824;
-extern char BATTLE[];
+
 extern const char lbl_80321980[];
 extern const float lbl_806D4830, lbl_806D4834, lbl_806D4838, lbl_806D483C, lbl_806D484C, lbl_806D4860;
 

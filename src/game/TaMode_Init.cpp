@@ -1,5 +1,6 @@
 /* Time-attack scene constructor; native C++ draft, retained NonMatching. */
 #include "game/TaModeInitPrivate.h"
+#include "game/TaModeInitTablesPrivate.h"
 
 static inline int CcClass_Get() { return g_ccClass; }
 static inline int KartVariant_Get() { return g_kartVariant; }
@@ -11,7 +12,7 @@ static inline int RegisterGhost(float *matrix, void *render) {
 
 TaMode::TaMode() {
     const char *log = lbl_80321980;
-    const char *data = BATTLE;
+    const char *data = (const char *)&BATTLE;
     float startX, startY;
     HSD_RandSeedPtr = &lbl_806D13CC;
     *HSD_RandSeedPtr = lbl_806D1110;
@@ -122,7 +123,7 @@ TaMode::TaMode() {
     ai = 0;
     flag38 = 0;
     /* Cups are one-based; one cup contains six (class, round) records. */
-    const RaceParams *params = &((const RaceParams (*)[3][2])data)[g_cupId][g_ccClass][g_longRoundFlag];
+    const RaceParams *params = &BATTLE.cups[g_cupId][g_ccClass][g_longRoundFlag];
     g_bestLapTime = lbl_806D4830;
     g_currentLapTime = lbl_806D4830;
     g_totalRaceTime = lbl_806D4830;
