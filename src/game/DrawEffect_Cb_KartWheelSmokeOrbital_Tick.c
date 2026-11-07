@@ -23,6 +23,10 @@ void DrawEffect_Cb_KartWheelSmokeOrbital_Tick(unsigned char *self)
     float yaw;
 
     switch (STATE) {
+    case 2:
+        break;
+    default:
+        break;
     case 0:
         switch (Rand_RangeIntMax(0xF) % 3) {
         case 0:
@@ -53,8 +57,6 @@ void DrawEffect_Cb_KartWheelSmokeOrbital_Tick(unsigned char *self)
         F(0x150) = 0.0f;
         F(0x154) = Rand_RangeFloat(0.8f, 1.2f);
         STATE++;
-        break;
-    case 1:
         break;
     }
 
