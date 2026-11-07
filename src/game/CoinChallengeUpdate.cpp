@@ -40,9 +40,9 @@ void *GetRaceContextPtr();
 void ItemObjectManager_PerFrameUpdate(void *);
 void *GetInputManager();
 CoinInput *InputMgr_GetPlayer(void *, int);
-bool IsRaceStarted();
+unsigned char IsRaceStarted();
 unsigned char NokoNokoChallenge_HandleBrakeInput(void *, int);
-void CarObject_ApplyInput(void *, bool, float, float, float);
+void CarObject_ApplyInput(void *, float, float, float, unsigned char);
 void CarObject_FrameUpdate(void *, int);
 void KartItem_UpdateShadowBillboardAndViewport(void *, void *, int);
 void KartMovement_SetSpeedScale(void *, float);
@@ -84,6 +84,15 @@ static inline void *getTransition() {
     return SINGLETON_INSTANCE(lbl_806D109C);
 }
 
+static inline void SetCoinSprites(CoinSprites *sprites, int shown) {
+    if (shown > 99) shown = 99;
+    int tens = shown / 10;
+    SpriteLayer_SetResource(sprites->sprite[5], shown % 10 + 0x14ba);
+    short tensResource = 0x1ecd;
+    if (tens > 0) tensResource = tens + 0x14ba;
+    SpriteLayer_SetResource(sprites->sprite[4], tensResource);
+}
+
 static inline void UpdateCoinSprites(CoinSprites *sprites) {
     int i;
     if (sprites->exiting != 0) {
@@ -120,13 +129,11 @@ int MiniGame_CoinChallenge_Update(CoinChallengeView *self) {
         int holding = 0;
         if (accelerator < lbl_806DAE2C && brake < lbl_806DAE2C && IsRaceStarted()) holding = 1;
         if (NokoNokoChallenge_HandleBrakeInput(self, holding) == 1) accelerator = lbl_806DAE28;
-        bool started = IsRaceStarted();
-        float steering = input->steering();
-        CarObject_ApplyInput(self->car, started, steering, accelerator, brake);
+        CarObject_ApplyInput(self->car, input->steering(), accelerator, brake, IsRaceStarted());
         CarObject_FrameUpdate(self->car, 0);
         KartItem_UpdateShadowBillboardAndViewport(self->car, self->camera, 0);
     } else {
-        CarObject_ApplyInput(self->car, 1, lbl_806DAE30, lbl_806DAE30, lbl_806DAE30);
+        CarObject_ApplyInput(self->car, lbl_806DAE30, lbl_806DAE30, lbl_806DAE30, 1);
         KartMovement_SetSpeedScale(self->car, lbl_806DAE34);
         CarObject_FrameUpdate(self->car, 0);
         if (self->endDelay > 0) KartItem_UpdateShadowBillboardAndViewport(self->car, self->camera, 0);
@@ -141,12 +148,7 @@ int MiniGame_CoinChallenge_Update(CoinChallengeView *self) {
         after = CarObject_GetRenderObj(self->car)->coins;
         int shown = Clamp_Int(after, 0, self->targetCoins);
         sprites = self->sprites;
-        if (shown > 99) shown = 99;
-        int tens = shown / 10;
-        SpriteLayer_SetResource(sprites->sprite[5], shown % 10 + 0x14ba);
-        short tensResource = 0x1ecd;
-        if (tens > 0) tensResource = tens + 0x14ba;
-        SpriteLayer_SetResource(sprites->sprite[4], tensResource);
+        SetCoinSprites(sprites, shown);
         if (after != before && IsCardValid() == 1) {
             if (self->divisor - 1 == after % self->divisor) lbl_806D1548[0] = 1;
             if (before / self->divisor != after / self->divisor) ++self->awards;
