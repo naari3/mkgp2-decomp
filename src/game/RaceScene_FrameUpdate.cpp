@@ -7,6 +7,8 @@
  * NonMatching (99.99%): the hold-reset branch materialises its 0 in r3
  * instead of r0. */
 
+#include "game/singleton.h"
+
 typedef struct Vec {
     float x, y, z;
 } Vec;
@@ -173,26 +175,17 @@ void fn_8016B32C(void *weather);
 
 static inline void *TitleStats(void)
 {
-    if (lbl_806D10A0 == 0) {
-        return 0;
-    }
-    return lbl_806D10A0;
+    return SINGLETON_INSTANCE(lbl_806D10A0);
 }
 
 static inline void *Transition(void)
 {
-    if (lbl_806D109C == 0) {
-        return 0;
-    }
-    return lbl_806D109C;
+    return SINGLETON_INSTANCE(lbl_806D109C);
 }
 
 static inline void *ItemBoxMgr(void)
 {
-    if (lbl_806D10D0 == 0) {
-        return 0;
-    }
-    return lbl_806D10D0;
+    return SINGLETON_INSTANCE(lbl_806D10D0);
 }
 
 static inline float QuantizeInput(float v)
