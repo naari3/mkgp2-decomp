@@ -2492,7 +2492,7 @@ config.libs = [
             Object(Matching, "game/fn_801DAAA4.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801DAB20.c"),
             Object(Matching, "game/fn_801DAB7C.c"),
-            Object(NonMatching, "game/fn_801DABFC.c"),
+            Object(Matching, "game/fn_801DABFC.c"),
             Object(Matching, "game/fn_801DAE54.c"),
             Object(Matching, "game/fn_801DAEC0.cpp", extab_padding=b""),
             Object(Matching, "game/DisplayContext_Flush.c"),
