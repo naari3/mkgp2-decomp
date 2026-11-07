@@ -194,8 +194,8 @@ struct TransitionEffectInit : TransitionInitBase {
 };
 extern "C" TransitionEffectView *TransitionEffect_GetOrCreate()
 {
-    if ((lbl_806D109C ? lbl_806D109C : 0) == 0) new TransitionEffectInit;
-    return lbl_806D109C ? lbl_806D109C : 0;
+    if ((!lbl_806D109C ? 0 : lbl_806D109C) == 0) new TransitionEffectInit;
+    return (!lbl_806D109C ? 0 : lbl_806D109C);
 }
 
 /* GX setup shared by the screen-space effects. */

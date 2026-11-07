@@ -98,7 +98,7 @@ static inline float Car_sqrtf(float x) {
     return x;
 }
 
-float fn_8019EA08(Vec3 *v) {
+float fn_8019EA08(const Vec3 *v) {
     volatile float y;
     float len = v->x * v->x + v->y * v->y + v->z * v->z;
     if (len > 0.0f) {
