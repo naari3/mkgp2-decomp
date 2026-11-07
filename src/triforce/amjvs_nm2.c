@@ -3,7 +3,6 @@
 s32 fn_8028A934(s32 node, u8 idx, s16 v) {
     u8* count = fn_80285778();
     JvsNode* nodes = fn_802857B8();
-    JvsNode* n;
     JvsMgrNode* m;
     u32 used;
     s16* p;
@@ -11,8 +10,7 @@ s32 fn_8028A934(s32 node, u8 idx, s16 v) {
     if (node < 1 || node > *count) {
         return 1;
     }
-    n = &nodes[node];
-    if (n->analogCh == 0 || idx < 1 || idx > (u32)(n->analogCh + n->extAnalog)) {
+    if (nodes[node].analogCh == 0 || (u8)idx < 1 || (u8)idx > (u32)(nodes[node].analogCh + nodes[node].extAnalog)) {
         return 1;
     }
     m = &Mgr.node[node];
