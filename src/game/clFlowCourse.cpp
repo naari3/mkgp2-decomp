@@ -193,12 +193,18 @@ CourseFlow::CourseFlow() {
 
 extern "C" int fn_801D161C(int i) { return CourseCup(i); }
 
+static inline int FadeAlpha(int timer) {
+    return (int)(lbl_806D9EE4 * ((float)timer / lbl_806D9F14));
+}
+static inline int FadeOutAlpha(int timer) {
+    return (int)(lbl_806D9EE4 * (lbl_806D9EDC - (float)timer / lbl_806D9F14));
+}
 extern "C" void fn_801D1684(CourseBanner *self) {
     if (self->state == 3) return;
     switch (self->state) {
     case 0: {
         unsigned int color = 0xFFFFFF00;
-        int alpha = (int)(lbl_806D9EE4 * ((float)self->timer / lbl_806D9F14));
+        int alpha = FadeAlpha(self->timer);
         self->main.SetColor((alpha >> 1) & 0x7F);
         color = __rlwimi(color, alpha, 0, 24, 31);
         self->labels[0].SetColor(color);
@@ -208,7 +214,7 @@ extern "C" void fn_801D1684(CourseBanner *self) {
     }
     case 2: {
         unsigned int color = 0xFFFFFF00;
-        int alpha = (int)(lbl_806D9EE4 * (lbl_806D9EDC - (float)self->timer / lbl_806D9F14));
+        int alpha = FadeOutAlpha(self->timer);
         self->main.SetColor((alpha >> 1) & 0x7F);
         color = __rlwimi(color, alpha, 0, 24, 31);
         self->labels[0].SetColor(color);
