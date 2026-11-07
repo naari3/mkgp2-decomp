@@ -1259,7 +1259,8 @@
     "__dt__10CarTrivialFv": "dtor_8019EB60",
     "__ct__12MovementInitFPvPUcPvfff": "KartMovement_Init",
     "__ct__7CarElemFv": "fn_8007C5DC",
-    "__dt__7InitVecFv": "dtor_80036E40"
+    "__dt__7InitVecFv": "dtor_80036E40",
+    "__dt__12GroundHeightFv": "dtor_80036E40"
   },
   "src/game/kartmove/fn_8019BF80.cpp": {
     "__dt__3VecFv": "dtor_80036E40"
