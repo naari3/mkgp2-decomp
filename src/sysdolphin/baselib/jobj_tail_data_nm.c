@@ -1,1 +1,0 @@
-/* Shared assertion pools retained as target fallback after the native jump table. */
