@@ -3403,6 +3403,10 @@
     "@159": "@eti_800298E8"
   },
   "src/game/anon_80205DCC.cpp": {
+    "@129": "@etb_8001900C",
+    "@130": "@eti_80029924",
+    "@202": "@etb_80019024",
+    "@203": "@eti_80029930",
     "Update__12YesNoButtonLFv": "fn_80205DCC",
     "DrawCredits__12YesNoButtonLFv": "fn_8020615C",
     "@208": "lbl_806DAB70",
@@ -12505,5 +12509,29 @@
   },
   "src/game/anon_802124FC_nm1.cpp": {
     "__dt__7KartPosFv": "dtor_80036E40"
+  },
+  "src/game/anon_80205DCC_m2.cpp": {
+    "Update__12YesNoButtonLFv": "fn_80205DCC",
+    "DrawCredits__12YesNoButtonLFv": "fn_8020615C",
+    "@208": "lbl_806DAB70",
+    "DrawLabel__12YesNoButtonLFv": "fn_802064D8",
+    "__dt__12YesNoButtonLFv": "fn_802068C4",
+    "__vt__12YesNoButtonL": "lbl_804EC534",
+    "__vt__11YesNoButton": "lbl_804EC54C",
+    "__dt__8FlowTaskFv": "dtor_802043EC",
+    "Animate__11YesNoButtonFv": "fn_80206BC8",
+    "__dt__20VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__11TextManagerFv": "fn_80149214",
+    "__dt__11TextManagerFv": "dtor_800869D0",
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "__vt__10FlowFaderF": "lbl_80419DE0",
+    "@107": "@etb_8001902C",
+    "@108": "@eti_8002993C"
   }
 }

@@ -160,16 +160,20 @@ static inline void SeekTrack(const TrackKey *keys, TrackState *state, int frame)
     }
 }
 
+static inline const TrackKey *GetTrack(const TrackSet *tracks, int channel) {
+    return tracks->channels[channel];
+}
+
 extern "C" void fn_80240810(TrackTask *self, int frame) {
-    SeekTrack(self->tracks->channels[0], &self->state[0], frame);
-    SeekTrack(self->tracks->channels[1], &self->state[1], frame);
-    SeekTrack(self->tracks->channels[2], &self->state[2], frame);
-    SeekTrack(self->tracks->channels[3], &self->state[3], frame);
-    SeekTrack(self->tracks->channels[4], &self->state[4], frame);
-    SeekTrack(self->tracks->channels[5], &self->state[5], frame);
-    SeekTrack(self->tracks->channels[6], &self->state[6], frame);
-    SeekTrack(self->tracks->channels[7], &self->state[7], frame);
-    SeekTrack(self->tracks->channels[8], &self->state[8], frame);
+    SeekTrack(GetTrack(self->tracks, 0), &self->state[0], frame);
+    SeekTrack(GetTrack(self->tracks, 1), &self->state[1], frame);
+    SeekTrack(GetTrack(self->tracks, 2), &self->state[2], frame);
+    SeekTrack(GetTrack(self->tracks, 3), &self->state[3], frame);
+    SeekTrack(GetTrack(self->tracks, 4), &self->state[4], frame);
+    SeekTrack(GetTrack(self->tracks, 5), &self->state[5], frame);
+    SeekTrack(GetTrack(self->tracks, 6), &self->state[6], frame);
+    SeekTrack(GetTrack(self->tracks, 7), &self->state[7], frame);
+    SeekTrack(GetTrack(self->tracks, 8), &self->state[8], frame);
 }
 
 extern "C" void fn_80240CFC(TrackTask *self) {

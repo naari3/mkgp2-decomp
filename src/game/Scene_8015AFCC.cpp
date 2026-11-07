@@ -14,7 +14,7 @@ void clStream_setVolume(int,int);
 }
 #pragma exceptions on
 Scene8015AFCC::Scene8015AFCC() {
-    int itemId; int i; int extra;
+    int i; int itemId; int extra;
     fn_80121210(); fn_8013DBF8();
     active = 0; state = 0; timer = lbl_806D8394; mode = 0;
     driver = 0; player = &g_playerData; flag1c = 0; flag1d = 0; resource = 0x708;

@@ -11154,9 +11154,14 @@ game/anon_802052E0_tail.cpp:
 	.text       start:0x80205B34 end:0x80205DCC
 
 game/anon_80205DCC.cpp:
-	extab       start:0x8001900C end:0x80019044
-	extabindex  start:0x80029924 end:0x80029948
-	.text       start:0x80205DCC end:0x8020688C
+	extab       start:0x8001900C end:0x8001902C
+	extabindex  start:0x80029924 end:0x8002993C
+	.text       start:0x80205DCC end:0x802064D8
+
+game/anon_80205DCC_m2.cpp:
+	extab       start:0x8001902C end:0x80019044
+	extabindex  start:0x8002993C end:0x80029948
+	.text       start:0x802064D8 end:0x8020688C
 
 game/anon_80205DCC_m1.cpp:
 	extab       start:0x80019044 end:0x80019148

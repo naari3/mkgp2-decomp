@@ -2489,5 +2489,14 @@
     "fn_80138DB8",
     "fn_80139810",
     "__dt__11ScopedTimerFv"
+  ],
+  "src/game/anon_80205DCC.cpp": [
+    "fn_80205DCC",
+    "fn_8020615C",
+    "dtor_80082960"
+  ],
+  "src/game/anon_80205DCC_m2.cpp": [
+    "fn_802064D8",
+    "dtor_80082960"
   ]
 }
