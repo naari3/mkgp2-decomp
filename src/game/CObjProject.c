@@ -30,10 +30,7 @@ extern const Vec3 lbl_802E96B8;
 
 static inline Matrix3x4 *CObjProject_GetView(CObjProjectView *self)
 {
-    if (!self->ready) {
-        return 0;
-    }
-    return HSD_CObjGetViewingMtxPtr(self->camera);
+    return !self->ready ? 0 : HSD_CObjGetViewingMtxPtr(self->camera);
 }
 
 #ifndef COBJ_PROJECT_POINT_ONLY

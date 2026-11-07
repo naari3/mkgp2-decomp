@@ -1,6 +1,5 @@
 /* The adjacent callers share only this TU-local observed camera layout.
- * Keep this bounded NonMatching body separate from the exact 200-byte caller.
- * CW 1.3.2 canonicalizes both null-view branches to the opposite block order.
+ * Kept in its own TU next to the exact 200-byte caller in CObjProject.c.
  */
 #define COBJ_PROJECT_POINT_ONLY
 #include "src/game/CObjProject.c"

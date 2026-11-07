@@ -2,10 +2,8 @@
  * registration, 0x80034EC0..0x80035220. The FileLoader layout matches
  * clRomLifecycle.c and FileLoader_LoadBin.c.
  *
- * NonMatching: Object_ReleaseAnimResource_Impl. The target tests rawBlock
- * with `bne; b` (a jump over an extra branch to the exit) where every form
- * tried (early return, else, &&, goto, do/while, one-case switch, inline
- * bool helper) gives a single `beq`. The rest of the TU matches. */
+ * Object_ReleaseAnimResource_Impl: the target `bne; b exit` after the
+ * archive test is the last term of `if (a == 0 || b == 1) return;`. */
 void *operator new(unsigned long size);
 void operator delete(void *ptr);
 
@@ -119,15 +117,13 @@ extern "C" FileLoader *FileLoader_Open(const char *name)
 
 extern "C" void Object_ReleaseAnimResource_Impl(FileLoader *p)
 {
-    if (p->archive != 0) {
-        if (p->rawBlock == 1) {
-            return;
-        }
-        p->rawBlock = 1;
-        void *data = HSD_ArchiveTakeData(p->archive);
-        HSD_ArchiveFree(p->archive);
-        p->archive = data;
+    if (p->archive == 0 || p->rawBlock == 1) {
+        return;
     }
+    p->rawBlock = 1;
+    void *data = HSD_ArchiveTakeData(p->archive);
+    HSD_ArchiveFree(p->archive);
+    p->archive = data;
 }
 
 struct SpecialFace {
