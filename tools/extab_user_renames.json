@@ -1845,7 +1845,9 @@
     "__dt__14ShadowAreaBaseFv": "dtor_800AB134"
   },
   "src/game/ShadowAreaMgr.cpp": {
-    "__ct__13ShadowAreaMgrFPv": "ShadowAreaMgr_Ctor"
+    "__ct__13ShadowAreaMgrFPv": "ShadowAreaMgr_Ctor",
+    "__ct__14SAArchiveModelFPvi": "clNormal3D_Construct",
+    "__dt__14SAArchiveOwnerFv": "dtor_80080444"
   },
   "src/game/SpriteSlot_TickAnim.c": {
     "extab_SpriteSlot_TickAnim": "@etb_8000B284",
