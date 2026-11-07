@@ -6080,6 +6080,7 @@ game/SuikaBall_801313D0.cpp:
 	extab       start:0x8000CBA0 end:0x8000CE64
 	extabindex  start:0x80024B18 end:0x80024B6C
 	.text       start:0x801313D0 end:0x801341E4
+	.rodata     start:0x80357008 end:0x80357B00
 
 game/BiribiriLand.c:
 	extab       start:0x8000CE64 end:0x8000D014
