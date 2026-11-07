@@ -1,5 +1,7 @@
 #include "game/Scene_8016219CPrivate.h"
 
+static const char lbl_80369238[0x14] = "vector length error";
+
 extern "C" void fn_8016219C(PointerTable162 *s, unsigned long n, void *const &value) {
     if (n != 0) {
         if (n > 0x3fffffff) throw std::length_error(lbl_80369238);

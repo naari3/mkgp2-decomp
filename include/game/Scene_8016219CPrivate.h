@@ -7,7 +7,6 @@ char *strcpy(char *, const char *);
 void *FUN_8003b120(unsigned long);
 void SharedPtr_Init(void *, void *);
 void *Alloc(unsigned long);
-extern const char lbl_80369238[];
 }
 
 namespace std {

@@ -6415,6 +6415,7 @@ game/Scene_8016219C.cpp:
 	extab       start:0x8000F9D8 end:0x8000FA08
 	extabindex  start:0x80025C10 end:0x80025C1C
 	.text       start:0x8016219C end:0x801622C8
+	.rodata     start:0x80369238 end:0x80369284
 
 game/Scene_801622C8.cpp:
 	extab       start:0x8000FA08 end:0x8000FA10
@@ -7877,6 +7878,7 @@ game/objview/fn_8018F614.cpp:
 	extab       start:0x8001206C end:0x800120C4
 	extabindex  start:0x80027020 end:0x8002702C
 	.text       start:0x8018F614 end:0x8018F7D4
+	.rodata     start:0x80378210 end:0x80378524
 
 game/zprobe/fn_8018F7D4.c:
 	extab       start:0x800120C4 end:0x800120CC

@@ -6568,6 +6568,12 @@
     "__ct__5EntryFPCvi": "fn_80123BB4"
   },
   "src/game/objview/fn_8018F614.cpp": {
+    "lbl_80378210": "global:lbl_80378210",
+    "lbl_803782F4": "global:lbl_803782F4",
+    "lbl_803783DC": "global:lbl_803783DC",
+    "lbl_803784C4": "global:lbl_803784C4",
+    "lbl_803784D0": "global:lbl_803784D0",
+    "lbl_803784E4": "global:lbl_803784E4",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__ct__9MorphViewFv": "fn_8018F614",
@@ -6710,7 +6716,9 @@
     "__vt__Q23std12length_error": "lbl_803F56F0",
     "__dt__Q23std9exceptionFv": "dtor_80038DD4",
     "__dt__5ClStrFv": "dtor_80038E30",
-    "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor"
+    "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor",
+    "@23": "global:lbl_8036924C",
+    "lbl_80369238": "global:lbl_80369238"
   },
   "src/game/Scene_80162D90.cpp": {
     "Tick__14CreditPanel162Fv": "fn_80162D90"
