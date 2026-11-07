@@ -1,4 +1,4 @@
-/* Read-only view of the original AI rule pool. No data is emitted here. */
+/* Lap speed bonus rules and their shared AI parameter pool. */
 typedef struct AILapRule {
     signed char cc, round, kart, remainingLaps;
     int minDifference;
@@ -7,11 +7,11 @@ typedef struct AILapRule {
     char reserved[3];
     float bonus;
 } AILapRule;
-extern const unsigned char lbl_8039FD90[];
+#include "game/AI_CalcLapSpeedBonus_pool.h"
 extern int lbl_806D12C0;
 extern int g_roundIndex, g_tableVariant, g_cupId, g_gameMode, g_ccClass;
 extern const float FLOAT_defaultBonus;
-static inline unsigned char FindBonus(const AILapRule *table, signed char cc, signed char round,
+static inline unsigned char FindBonus(signed char cc, const AILapRule *table, signed char round,
                                      int kart, signed char laps, int difference, signed char rank, float *bonus) {
     int i = 0;
     const AILapRule *p = table;
@@ -29,7 +29,6 @@ static inline unsigned char FindBonus(const AILapRule *table, signed char cc, si
     return 0;
 }
 float AI_CalcLapSpeedBonus(int kart, int lapsArg, int difference, int rankArg) {
-    const char *window = (const char *)&lbl_8039FD90 + 0x20000;
     signed char rank = rankArg;
     signed char laps = lapsArg;
     int variant;
@@ -44,14 +43,14 @@ float AI_CalcLapSpeedBonus(int kart, int lapsArg, int difference, int rankArg) {
     bonus = FLOAT_defaultBonus;
     /* Pointer-table row strides are 32, 256, and 128 bytes respectively. */
     if (g_gameMode == 0) {
-        if (!FindBonus(*(const AILapRule *const *)((window - 0x31E4) + (variant * 32 + (cup - 1) * 4)), g_ccClass, round, kart, laps, difference, rank, &bonus)) {
-            FindBonus(*(const AILapRule *const *)((window - 0x3184) + (variant * 256 + (cup - 1) * 32 + round * 4)), g_ccClass, round, kart, laps, difference, rank, &bonus);
+        if (!FindBonus(g_ccClass, *(const AILapRule *const *)((const char *)kAILapBonusRuleTable_RaceCourse + variant * 32 + (cup - 1) * 4), round, kart, laps, difference, rank, &bonus)) {
+            FindBonus(g_ccClass, *(const AILapRule *const *)((const char *)kAILapBonusRuleTable_RaceFallback + variant * 256 + (cup - 1) * 32 + round * 4), round, kart, laps, difference, rank, &bonus);
         }
     } else {
-        if (!FindBonus((const AILapRule *)(window - 0x3248), g_ccClass, round, kart, laps, difference, rank, &bonus)) {
+        if (!FindBonus(g_ccClass, kAILapBonusRules_NonRaceCommon, round, kart, laps, difference, rank, &bonus)) {
             int section = round;
             if (section >= 4) section -= 4;
-            FindBonus(*(const AILapRule *const *)((window - 0x2E84) + (g_ccClass * 128 + (cup - 1) * 16 + section * 4)), g_ccClass, round, kart, laps, difference, rank, &bonus);
+            FindBonus(g_ccClass, *(const AILapRule *const *)((const char *)kAILapBonusRuleTable_NonRace + g_ccClass * 128 + (cup - 1) * 16 + section * 4), round, kart, laps, difference, rank, &bonus);
         }
     }
     return bonus;

@@ -9846,6 +9846,7 @@ game/AI_CalcLapSpeedBonus.c:
 	extab       start:0x80015980 end:0x80015988
 	extabindex  start:0x80028430 end:0x8002843C
 	.text       start:0x801DD480 end:0x801DD8E4
+	.rodata     start:0x8039FD90 end:0x803BD08C
 
 game/fn_801DD8E4.c:
 	.text       start:0x801DD8E4 end:0x801DD934
