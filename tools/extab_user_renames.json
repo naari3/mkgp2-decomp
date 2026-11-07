@@ -8994,6 +8994,9 @@
     "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/anon_8020AF08_nm1.cpp": {
+    "...rodata.0": "global:lbl_803C2E50",
+    "sparkleB": "lbl_803C2FDC",
+    "sparkleC": "lbl_803C3320",
     "@110": "lbl_806DAC34",
     "@111": "lbl_806DAC38",
     "@112": "lbl_806DAC3C",
