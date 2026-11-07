@@ -4,10 +4,10 @@
  * three flags, a rank, a coin count and one more flag), then builds the
  * player data and writes it to a card. Owns its jump table in .data.
  *
- * NonMatching: the option name lookups. The target addresses each table as
- * its own pooled object (addi rT, base, off; lwzx), which suggests the
- * tables were static data of this TU; through the extern pool they come
- * out as add + lwz off. The rest matches.
+ * NonMatching: static option arrays reproduce the target instructions,
+ * but their original data pool and this page's jump table are separated
+ * by data owned by other pages. Keep the extern pool until that larger
+ * pool can be reconstructed without violating TU boundaries.
  */
 #include "game/TestMenuPage.h"
 
@@ -36,11 +36,12 @@ struct CardCreateNames {
     const char *cc1[3];
     const char *cc2[3];
     const char *character[13];
-    const char *rank[16];
+    int rank[16]; /* PlayerData rank values, not string pointers. */
 };
 
 extern "C" {
 extern CardCreateNames lbl_803FBF80;
+extern const float lbl_806D2D44;
 extern const char *lbl_806CEF28[2];
 extern const char *lbl_806CEF30[2];
 extern const char *lbl_806CEF38[2];
@@ -52,7 +53,7 @@ void *Alloc(unsigned long size);
 void MemoryManager_TimedFree(void *p);
 int WrapInRange(int v, int lo, int hi);
 void PlayerData_Construct(void *, int, int, int, int, unsigned char, unsigned char, unsigned char,
-                          const char *, int, unsigned char);
+                          int, int, unsigned char);
 void card_save_trigger(int);
 unsigned char CardSave_Tick(void);
 void card_rw_kick_state_machine(void);
@@ -174,23 +175,23 @@ extern "C" int CardCreate_Page(CardCreatePage *self, int phase)
         text = self->base.text;
         if (text != 0) {
             st = self->state;
-            DrawText(text, 0xE, 0x18, 7, 1.0f, pool + 0x1F50);
-            DrawText(text, 0x1C, 0x48, 7, 1.0f, pool + 0x1F5C, names->character[st->character]);
-            DrawText(text, 0x1C, 0x60, 7, 1.0f, pool + 0x1F70, names->cc0[st->cc[0]]);
-            DrawText(text, 0x1C, 0x78, 7, 1.0f, pool + 0x1F84, names->cc1[st->cc[1]]);
-            DrawText(text, 0x1C, 0x90, 7, 1.0f, pool + 0x1F98, names->cc2[st->cc[2]]);
-            DrawText(text, 0x1C, 0xA8, 7, 1.0f, pool + 0x1FAC, lbl_806CEF28[st->flag[0] != 0]);
-            DrawText(text, 0x1C, 0xC0, 7, 1.0f, pool + 0x1FC0, lbl_806CEF30[st->flag[1] != 0]);
-            DrawText(text, 0x1C, 0xD8, 7, 1.0f, pool + 0x1FD4, lbl_806CEF38[st->flag[2] != 0]);
-            DrawText(text, 0x1C, 0xF0, 7, 1.0f, pool + 0x1FE8, names->rank[st->rank]);
+            DrawText(text, 0xE, 0x18, 7, lbl_806D2D44, pool + 0x1F50);
+            DrawText(text, 0x1C, 0x48, 7, lbl_806D2D44, pool + 0x1F5C, names->character[st->character]);
+            DrawText(text, 0x1C, 0x60, 7, lbl_806D2D44, pool + 0x1F70, names->cc0[st->cc[0]]);
+            DrawText(text, 0x1C, 0x78, 7, lbl_806D2D44, pool + 0x1F84, names->cc1[st->cc[1]]);
+            DrawText(text, 0x1C, 0x90, 7, lbl_806D2D44, pool + 0x1F98, names->cc2[st->cc[2]]);
+            DrawText(text, 0x1C, 0xA8, 7, lbl_806D2D44, pool + 0x1FAC, lbl_806CEF28[st->flag[0] != 0]);
+            DrawText(text, 0x1C, 0xC0, 7, lbl_806D2D44, pool + 0x1FC0, lbl_806CEF30[st->flag[1] != 0]);
+            DrawText(text, 0x1C, 0xD8, 7, lbl_806D2D44, pool + 0x1FD4, lbl_806CEF38[st->flag[2] != 0]);
+            DrawText(text, 0x1C, 0xF0, 7, lbl_806D2D44, pool + 0x1FE8, names->rank[st->rank]);
             if (st->coins <= 0) {
                 coins = 0;
             } else {
                 coins = st->coins * 100 - 1;
             }
-            DrawText(text, 0x1C, 0x108, 7, 1.0f, pool + 0x1FFC, coins);
-            DrawText(text, 0x1C, 0x120, 7, 1.0f, pool + 0x2010, lbl_806CEF40[st->extra != 0]);
-            DrawText(text, 0x1C, 0x138, 7, 1.0f, lbl_806D2D68);
+            DrawText(text, 0x1C, 0x108, 7, lbl_806D2D44, pool + 0x1FFC, coins);
+            DrawText(text, 0x1C, 0x120, 7, lbl_806D2D44, pool + 0x2010, lbl_806CEF40[st->extra != 0]);
+            DrawText(text, 0x1C, 0x138, 7, lbl_806D2D44, lbl_806D2D68);
             if (st->cursor == 10) {
                 y = 0x138;
             } else {
@@ -198,7 +199,7 @@ extern "C" int CardCreate_Page(CardCreatePage *self, int phase)
             }
             st->timer &= 0x1F;
             if (st->timer < 0x18) {
-                DrawText(text, 0xE, y, 7, 1.0f, lbl_806D2DB0);
+                DrawText(text, 0xE, y, 7, lbl_806D2D44, lbl_806D2DB0);
             }
         }
     }
