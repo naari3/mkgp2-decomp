@@ -1360,10 +1360,6 @@
     "extabindex_KartItemAudio_PlayHitConfirmSE": "@eti_8002093C",
     "extabindex_KartItemAudio_PlayThrowConfirmSE": "@eti_80020948"
   },
-  "src/game/PowItem.c": {
-    "extab_PowItem_TickActive": "@etb_8000B6EC",
-    "extabindex_PowItem_TickActive": "@eti_80023F78"
-  },
   "src/game/RivalRun.c": {
     "extab_RivalRun_Draw": "@etb_8000D014",
     "extabindex_RivalRun_Draw": "@eti_80024BA8",
