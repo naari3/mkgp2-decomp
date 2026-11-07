@@ -10579,6 +10579,7 @@ game/fn_801F7604.cpp:
 	extab       start:0x80017580 end:0x800175B8
 	extabindex  start:0x80028F88 end:0x80028F94
 	.text       start:0x801F7604 end:0x801F7A74
+	.rodata     start:0x803BEDC0 end:0x803BF020
 
 game/dtor_801F7A74.c:
 	extab       start:0x800175B8 end:0x800175C0

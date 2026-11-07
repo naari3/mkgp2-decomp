@@ -4,13 +4,35 @@ extern void *lbl_804E5538[],*lbl_804E5578[],*lbl_804E5558[],*lbl_804E5524[];
 extern unsigned char lbl_806D1968;
 struct CachedDraw801F { int mode; TextureEntry801F *texture; };
 extern CachedDraw801F lbl_806D196C;
-struct DrawFormatsS56 {
-    char colorDesc[0x20],colorFlat[0x40],colorDepth[0x40];
-    char texDesc[0x20],texFlat[0x40],texDepth[0x40];
-    char mixDesc[0x20];
-    struct Format {char bytes[16];} mixFlat[8],mixDepth[8];
-};
-extern DrawFormatsS56 lbl_803BEDC0;
+// GX descriptor pairs and four-word vertex attribute formats share this pool.
+struct DrawFormatS56 { unsigned int words[4]; };
+extern const unsigned int lbl_803BEDC0[8] = {9, 1, 11, 1, 255, 1, 0, 0};
+static const unsigned int colorFlatS56[16] = {9, 0, 4, 0, 11, 1, 5, 0, 255, 1, 4, 0, 0, 0, 0, 0};
+static const unsigned int colorDepthS56[16] = {9, 1, 4, 0, 11, 1, 5, 0, 255, 1, 4, 0, 0, 0, 0, 0};
+static const unsigned int texDescS56[8] = {9, 1, 13, 1, 255, 1, 0, 0};
+static const unsigned int texFlatS56[16] = {9, 0, 4, 0, 13, 1, 4, 0, 255, 1, 5, 0, 0, 0, 0, 0};
+static const unsigned int texDepthS56[16] = {9, 1, 4, 0, 13, 1, 4, 0, 255, 1, 5, 0, 0, 0, 0, 0};
+static const unsigned int mixDescS56[8] = {9, 1, 11, 1, 13, 1, 255, 1};
+static const DrawFormatS56 mixFlatS56[8] = {
+        {{9, 0, 4, 0}},
+        {{11, 1, 5, 0}},
+        {{13, 1, 4, 0}},
+        {{255, 1, 4, 0}},
+        {{9, 0, 4, 0}},
+        {{11, 1, 5, 0}},
+        {{13, 1, 4, 0}},
+        {{255, 1, 4, 0}}
+    };
+static const DrawFormatS56 mixDepthS56[8] = {
+        {{9, 1, 4, 0}},
+        {{11, 1, 5, 0}},
+        {{13, 1, 4, 0}},
+        {{255, 1, 4, 0}},
+        {{9, 1, 4, 0}},
+        {{11, 1, 5, 0}},
+        {{13, 1, 4, 0}},
+        {{255, 1, 4, 0}}
+    };
 void GXSetBlendMode(int,int,int,int);
 void GXSetNumTexGens(int); void GXSetNumChans(int); void GXSetNumTevStages(int);
 void GXSetTevOrder(int,int,int,int); void GXSetTevOp(int,int);
@@ -41,12 +63,12 @@ struct MixDrawS56:DrawBaseS56 {
     MixDrawS56(SpriteTex801F *d,unsigned char z):DrawBaseS56(d,z){vt=lbl_804E5524;mode=d->i2C;}
     ~MixDrawS56(){vt=lbl_804E5524;}
 };
-static inline void SetMixFormatS56(MixDrawS56 *node,DrawFormatsS56 *formats) {
+static inline void SetMixFormatS56(MixDrawS56 *node) {
     int offset=0;
     if(node->mode==1 || node->mode==2) offset=4;
-    GXSetVtxDescv(formats->mixDesc);
-    if(node->depth) { DrawFormatsS56::Format *table=formats->mixDepth; GXSetVtxAttrFmtv(0,&table[offset]); }
-    else { DrawFormatsS56::Format *table=formats->mixFlat; GXSetVtxAttrFmtv(0,&table[offset]); }
+    GXSetVtxDescv(mixDescS56);
+    if(node->depth) { const DrawFormatS56 *table=mixDepthS56; GXSetVtxAttrFmtv(0,&table[offset]); }
+    else { const DrawFormatS56 *table=mixFlatS56; GXSetVtxAttrFmtv(0,&table[offset]); }
 }
 static inline void LoadTextureS56(TextureOwner801F *owner,SpriteTex801F *s) {
     TextureBank801F *bank=owner->bank;
@@ -59,7 +81,6 @@ static inline void LoadTextureS56(TextureOwner801F *owner,SpriteTex801F *s) {
     }
 }
 extern "C" void fn_801F7604(TextureOwner801F *owner,SpriteTex801F *s) {
-    DrawFormatsS56 *formats=&lbl_803BEDC0;
     unsigned char changed=0;
     if(lbl_806D196C.mode!=s->i2C){lbl_806D196C.mode=s->i2C;changed=1;}
     GXSetBlendMode(s->blend,s->src,s->dst,s->logic);
@@ -68,8 +89,8 @@ extern "C" void fn_801F7604(TextureOwner801F *owner,SpriteTex801F *s) {
         if(changed){
             GXSetNumTexGens(0);GXSetNumChans(1);GXSetNumTevStages(1);
             GXSetTevOrder(0,255,255,4);GXSetTevOp(0,4);
-            GXClearVtxDesc();GXSetVtxDescv(formats->colorDesc);
-            if(node.depth) GXSetVtxAttrFmtv(0,formats->colorDepth);else GXSetVtxAttrFmtv(0,formats->colorFlat);
+            GXClearVtxDesc();GXSetVtxDescv(lbl_803BEDC0);
+            if(node.depth) GXSetVtxAttrFmtv(0,colorDepthS56);else GXSetVtxAttrFmtv(0,colorFlatS56);
         }
         fn_801F8728(&node);
     } else {
@@ -79,8 +100,8 @@ extern "C" void fn_801F7604(TextureOwner801F *owner,SpriteTex801F *s) {
             if(changed){
                 GXSetNumTexGens(1);GXSetTexCoordGen2(0,1,4,60,0,125);
                 GXSetNumChans(0);GXSetNumTevStages(1);GXSetTevOrder(0,0,7,255);GXSetTevOp(0,3);
-                GXClearVtxDesc();GXSetVtxDescv(formats->texDesc);
-                if(node.depth) GXSetVtxAttrFmtv(0,formats->texDepth);else GXSetVtxAttrFmtv(0,formats->texFlat);
+                GXClearVtxDesc();GXSetVtxDescv(texDescS56);
+                if(node.depth) GXSetVtxAttrFmtv(0,texDepthS56);else GXSetVtxAttrFmtv(0,texFlatS56);
             }
             fn_801F8404(&node);
         } else {
@@ -95,7 +116,7 @@ extern "C" void fn_801F7604(TextureOwner801F *owner,SpriteTex801F *s) {
                 default: GXSetTevOp(0,0);break;
                 }
                 GXSetTevOrder(0,0,7,4);GXClearVtxDesc();
-                SetMixFormatS56(&node,formats);
+                SetMixFormatS56(&node);
             }
             fn_801F7F50(&node);
         }
