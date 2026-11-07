@@ -2,10 +2,10 @@
  * shot out behind a rear wheel joint (2 or 3 by variant) in kart space,
  * with a little random drift; it sinks and fades out after 10 frames.
  *
- * Text matches 100%. The Object stays NonMatching only because the local
- * `joints` initializer is an 8-aligned @N sdata2 object here, while the target
- * owns it at 0x806D51B4 (4 mod 8), and the 0.0f literal leaves 4 stray bytes
- * in this TU's .sdata2; linking it would shift the small-data pool. */
+ * The local `joints` initializer is the TU's own .sdata2 at 0x806D51B4
+ * (4 mod 8: SDATA2_ALIGN4_TUS), and the 0.0f literal is redirected to the
+ * shared pool's lbl_806D51C0 by postprocess_sdata2.py, with its stray 4 bytes
+ * trimmed by postprocess_sdata2_trim.py. */
 #include "game/DrawEffectAccess.h"
 
 extern const float lbl_806D51BC; /* 2.0 */

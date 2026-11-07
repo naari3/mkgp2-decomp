@@ -1325,7 +1325,7 @@ config.libs = [
             Object(Matching, "game/RankLog_UpdatePerFrame.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/VfxBannerSequence_Tick.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/FinalLapCoinJump_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(NonMatching, "game/DrawEffect_Cb_WheelSpark_Bind4D.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/DrawEffect_Cb_WheelSpark_Bind4D.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/fn_80104ED4.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartFire_WithSE99.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/KartFx_DispatchByStateBits.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
@@ -4035,6 +4035,7 @@ def _inject_data_align4_weak_tus() -> None:
 SDATA2_ALIGN4_TUS = [
     "game/Terrain_FlagsToDebugString",
     "game/ENo3D",
+    "game/DrawEffect_Cb_WheelSpark_Bind4D",
 ]
 
 
@@ -4057,7 +4058,7 @@ def _inject_sdata2_align4_tus() -> None:
         end = text.index("\nrule ", start + 1)
         rule = text[start:end].replace("rule " + base_rule + "\n", "rule " + new_rule + "\n", 1)
         assert hook in rule
-        rule = rule.replace(hook, hook + " && $python tools/postprocess_data_align4_keep_comment.py $out .sdata2", 1)
+        rule = rule.replace(hook, hook + " && $python tools/postprocess_sdata2_trim.py $out && $python tools/postprocess_data_align4_keep_comment.py $out .sdata2", 1)
         for target in users:
             text = text.replace(target, target.replace(": " + base_rule + " ", ": " + new_rule + " "), 1)
         text = text[:start] + rule + "\n" + text[start:]
