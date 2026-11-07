@@ -17,6 +17,13 @@ static inline u32 GetCoinMul(s32 i) {
     return mul;
 }
 
+static inline u32 GetCoinStatsIndex(u32 chute, u32 index) {
+    if (chute == 2) {
+        index += 2;
+    }
+    return index;
+}
+
 static inline void AddCoinStats(u32 buttons, u32 idx, s32 coins, s32 credits) {
     CoinStats* stats = &Coin.stats;
     OSSemaphore* sem = &Coin.sem;
@@ -56,10 +63,7 @@ s32 fn_802895E4(u32 chute, s32 n, u16* counters, u32 buttons) {
                 d = (counters[i] - c->count[i]) & 0xFFF;
                 if (d > 0) {
                     slot = fn_802894EC(chute, i);
-                    idx = i;
-                    if (chute == 2) {
-                        idx = i + 2;
-                    }
+                    idx = GetCoinStatsIndex(chute, i);
                     added = fn_80289324(slot, d * GetCoinMul(i));
                     AddCoinStats(buttons, idx, d, added);
                     if (!(counters[i] & 0xFFF)) {
@@ -92,7 +96,7 @@ s32 fn_802895E4(u32 chute, s32 n, u16* counters, u32 buttons) {
                 }
             }
             if (bits != 0) {
-                fn_80288DEC(2, 0, bits, 0);
+                fn_80288DEC(2, bits, 0, 0);
                 c->timer = 13;
             }
         } else {

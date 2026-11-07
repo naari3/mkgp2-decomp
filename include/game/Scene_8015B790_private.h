@@ -6,8 +6,7 @@ struct ViewerInput {
     virtual float right(); virtual float left();
     virtual unsigned char pressed(int); virtual unsigned char held(int);
 };
-struct ModelEntry { unsigned int res; float scale; int icon; float iconScale; char pad[16]; float iconY; };
-struct ViewerPool { char strings[0x10c]; ModelEntry models[14]; float steps[3]; char rest[256]; };
+struct ModelEntry { const char *res; float scale; int icon; float iconScale; float field10, field14, field18, field1C; float iconY; };
 struct CameraOwner { void *vtable; void *camera; };
 struct ViewerVec { float x,y,z; };
 #endif

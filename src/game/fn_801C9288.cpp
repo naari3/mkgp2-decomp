@@ -16,8 +16,8 @@ extern "C" int fn_801C9288(RoundTileOwner *self, int index, int state) {
         CupTileInfo *pos = &positions[index];
         RoundTileParams *param = &params[cups[g_cupId]][index];
         int anim = animations[0][slot->variant];
-        float offset = 0.0f;
-        if (index == 2 || index == 4) offset = -0.0f;
+        float offset = lbl_806D9D38;
+        if (index == 2 || index == 4) offset = -lbl_806D9D38;
         if (!slot->sprite) slot->sprite = new TileSprite(anim, 0, 0);
         else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
         switch (slot->variant) {
@@ -44,8 +44,8 @@ extern "C" int fn_801C9288(RoundTileOwner *self, int index, int state) {
         CupTileInfo *pos = &positions[index];
         RoundTileParams *param = &params[cups[g_cupId]][index];
         int anim = animations[5][slot->variant];
-        float offset = 0.0f;
-        if (index == 2 || index == 4) offset = -0.0f;
+        float offset = lbl_806D9D38;
+        if (index == 2 || index == 4) offset = -lbl_806D9D38;
         if (!slot->sprite) slot->sprite = new TileSprite(anim, 0, 0);
         else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
         switch (slot->variant) {
@@ -73,8 +73,8 @@ extern "C" int fn_801C9288(RoundTileOwner *self, int index, int state) {
         CupTileInfo *pos = &positions[index];
         RoundTileParams *param = &params[cups[g_cupId]][index];
         int anim = animations[4][slot->variant];
-        float offset = 0.0f;
-        if (index == 2 || index == 4) offset = -0.0f;
+        float offset = lbl_806D9D38;
+        if (index == 2 || index == 4) offset = -lbl_806D9D38;
         if (!slot->sprite) slot->sprite = new TileSprite(anim, 0, 0);
         else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
         switch (slot->variant) {
@@ -101,8 +101,8 @@ extern "C" int fn_801C9288(RoundTileOwner *self, int index, int state) {
         CupTileInfo *pos = &positions[index];
         RoundTileParams *param = &params[cups[g_cupId]][index];
         int anim = animations[3][slot->variant];
-        float offset = 10.0f;
-        if (index == 2 || index == 4) offset = -10.0f;
+        float offset = lbl_806D9D40;
+        if (index == 2 || index == 4) offset = -lbl_806D9D40;
         if (!slot->sprite) slot->sprite = new TileSprite(anim, 0, 0);
         else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
         switch (slot->variant) {
@@ -130,8 +130,8 @@ extern "C" int fn_801C9288(RoundTileOwner *self, int index, int state) {
         CupTileInfo *pos = &positions[index];
         RoundTileParams *param = &params[cups[g_cupId]][index];
         int anim = animations[2][slot->variant];
-        float offset = 10.0f;
-        if (index == 2 || index == 4) offset = -10.0f;
+        float offset = lbl_806D9D40;
+        if (index == 2 || index == 4) offset = -lbl_806D9D40;
         if (!slot->sprite) slot->sprite = new TileSprite(anim, 0, 0);
         else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
         switch (slot->variant) {
@@ -158,8 +158,8 @@ extern "C" int fn_801C9288(RoundTileOwner *self, int index, int state) {
         CupTileInfo *pos = &positions[index];
         RoundTileParams *param = &params[cups[g_cupId]][index];
         int anim = animations[1][slot->variant];
-        float offset = 0.0f;
-        if (index == 2 || index == 4) offset = -0.0f;
+        float offset = lbl_806D9D38;
+        if (index == 2 || index == 4) offset = -lbl_806D9D38;
         if (!slot->sprite) slot->sprite = new TileSprite(anim, 0, 0);
         else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
         switch (slot->variant) {

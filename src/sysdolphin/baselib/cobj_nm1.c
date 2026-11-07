@@ -26,8 +26,8 @@ bool setupTopHalfCamera(HSD_CObj* cobj)
     left = cobj->viewport.xmin;
     right = cobj->viewport.xmax;
     top = cobj->viewport.ymin;
-    bottom = cobj->viewport.ymax;
-    bottom = bottom < rmode->efbHeight ? bottom : rmode->efbHeight;
+    bottom = cobj->viewport.ymax < rmode->efbHeight
+                 ? cobj->viewport.ymax : rmode->efbHeight;
     width = right - left;
     height = bottom - top;
     GXSetScissor(left, top, width, height);
