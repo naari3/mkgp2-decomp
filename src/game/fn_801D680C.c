@@ -28,7 +28,7 @@ static inline unsigned char RankReached(PlayerDataRecord *p, int cc, int cup) {
     if (cc < 0 || cc > 2) return 0;
     if (cup < 1 || cup >= 17) return 0;
     if (cup >= 9) cup -= 9; else cup -= 1;
-    rank = p->cupRank[cc][cup];
+    rank = p->cupRank[(unsigned int)cc][cup];
     if (rank >= 4) return 1;
     return 0;
 }
@@ -52,7 +52,8 @@ void fn_801D680C(PlayerDataRecord *self, int cup, int round, unsigned char updat
             if (self->cupRank[cc][cup] < round + 2) self->cupRank[cc][cup] = round + 2;
         }
         if (old.cupRank[cc][cup] != self->cupRank[cc][cup]) {
-            *fn_8024F588() = 1;
+            unsigned char *status = fn_8024F588();
+            *status = 1;
             if (cc == 1) award = 2;
             else if (cc == 2) award = 4;
             else award = 0;
