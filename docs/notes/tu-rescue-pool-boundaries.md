@@ -48,3 +48,8 @@ c16_u75: LObjInfoInit 802C63B0 uses persistent hsdLObj data base, class-name str
 Source: Codex worker c16_u125_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 972 B.
 
 c16_u125: DNBress Update 80226B20 baseline99.75309 has one instruction residual: zero initialization li r30,0 vs target mr r30,r29. Extract unchanged kart search into static inline KartRender *FindActiveKart(), return selected/null kart and retain player fallback in caller. This restores target shared zero initialization; native text972/EH8/index12 all100. Signed long loop index alone is invariant. Existing bridges and compiler flags suffice; Matching full source-linked DOL SHA1 exact.
+
+## c17_u23_20261107
+Source: Codex worker c17_u23_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u23: lobj_init_nm SpecularInit97.701866->99.347824 by fabs (not fabsf); explicit cursor leaves extra initial mr and was reverted. SetupInit49.189655->98.93236 by alpha-inclusive flags (0x1c/0x14), active-array second pass, epsilon clamps, external position/interest getters, inline vector and light upload bodies, and separate upload index. Target3016/source3024: extra active base lis/addi plus GPR partitions. Actual assertion pools restored (.data100) and real double-half/255 constants retained; all owned section percentages nonregressing. No exact function, so no A/B promotion; no native gain. Avoid repeating the three recorded structure probes without new evidence.
