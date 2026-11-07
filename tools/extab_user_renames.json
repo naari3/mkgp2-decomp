@@ -12563,5 +12563,9 @@
   "src/game/RankDispControls.cpp": {
     "@8@__dt__8RankDispFv": "fn_802494B4",
     "__dt__8RankDispFv": "dtor_80249274"
+  },
+  "src/game/anon_8020C974_thunk.cpp": {
+    "@92@__dt__11RaceSetupMIFv": "fn_8020D1B8",
+    "__dt__11RaceSetupMIFv": "fn_8020CEE8"
   }
 }
