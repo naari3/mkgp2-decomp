@@ -1289,3 +1289,8 @@ c18_u90: ItemBoxConstruct8016D2D0/1228B improves96.87296->99.93485. Direct(root=
 Source: Codex worker c18_u62_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u62 fn_801F7604: own .rodata 803BEDC0..803BF020 and define separate native GX descriptor/format arrays, not an aggregate accessed through a formats pointer. This removes the extra pool-base mr and restores constant-offset address arithmetic, text1140->1136 B, fresh97.693665->99.753525 default /99.92958 without inferred pool relocations. All608 rodata bytes and primary56B extab/12B index plus relocations exact. Remaining real differences are offset r28 vs targetr29 at801F79DC/79F0/7A08/7A20. Direct format block and function-scope offset are invariant; ternary adds24B; whole-body inline helper does not inline. Keep honest NM; singleton prevents B; full fallback-linked DOL SHA1 exact, native gain0.
+
+## c18_u61_20261107
+Source: Codex worker c18_u61_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u61: fn_80221104 Draw remains single-function NM584B. New TU-local inline DrawNodes(PtrVec<FadeObj*>&), owning full traversal and existing Render calls, improves97.73972->97.77397; node-object home becomes targetr29 but iteratorr28 vs targetr27. Whole-window-states and whole-coin-loop helper boundaries are baseline byte-invariant. ItemWnd/NextWnd and coin cursor/index color differences remain; all owned EH8/index12 exact. Keep slight genuine draft improvement, no flag/split/data/shared-header changes, zero native gain. Coordinator final fallback-linked DOL SHA1 exact.
