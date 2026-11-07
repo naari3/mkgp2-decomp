@@ -1,3 +1,5 @@
+/* Built with GC/1.3 (as StrPcb_WaitForState1): the error-code bytes are
+ * compared as int (target cmpwi), so the TU keeps its own inline. */
 #include "game/StrPcbLifetimePrivate.h"
 
 StrPcbBuffer::~StrPcbBuffer()
@@ -15,6 +17,16 @@ extern "C" void StrPcb_EnsureInstance(void)
 }
 
 
+static inline u8 StrPcb_HasErrorInt(StrPcb *pcb)
+{
+    if ((int)pcb->errorCode[0] == 'E') {
+        if ((int)pcb->errorCode[1] != '0' || (int)pcb->errorCode[2] != '0') {
+            return 1;
+        }
+    }
+    return pcb->stickyError5C;
+}
+
 inline StrPcb::~StrPcb()
 {
     int timeout;
@@ -25,7 +37,7 @@ inline StrPcb::~StrPcb()
         while (state20 != 1) {
             Frame_PostDrawOverlay();
             Frame_UpdatePerFrameState();
-            if (commError26 == 1 || StrPcb_HasErrorInline(this) == 1) {
+            if (commError26 == 1 || StrPcb_HasErrorInt(this) == 1) {
                 break;
             }
             if (timeout-- < 0) {
