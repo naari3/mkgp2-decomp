@@ -525,7 +525,7 @@ extern "C" {
 extern void MemoryManager_TimedFree(void *p);
 extern void fn_8011FAFC(void *p, int n);
 extern void fn_801A0004(void *p);
-extern void fn_80160588(void *self, int n, int confirm);
+extern void fn_80160588(void *self, int n, unsigned char confirm);
 extern void fn_80161720(CoinPopupDetail *self);
 extern char lbl_80490A58[];
 extern const float lbl_806D86A4;
@@ -588,7 +588,7 @@ typedef struct {
     int next;
 } Obj80161888;
 
-int fn_801618CC(Obj80161888 *o, int v, int unused);
+int fn_801618CC(Obj80161888 *o, int v, unsigned char unused);
 
 void fn_80161888(Obj80161888 *o) {
     o->active = 1;
@@ -596,7 +596,7 @@ void fn_80161888(Obj80161888 *o) {
     fn_80161720((CoinPopupDetail *)o);
 }
 
-int fn_801618CC(Obj80161888 *o, int v, int unused) {
+int fn_801618CC(Obj80161888 *o, int v, unsigned char unused) {
     if (o->ready == 0) return 0;
     o->next = v;
     o->cur = -1;
@@ -1150,12 +1150,16 @@ static inline PopupInputState *PopupInput_Get() {
     return p;
 }
 
+static inline PopupInputState *PopupInput_Peek() {
+    PopupInputState *p = g_pInputState;
+    return !p ? 0 : p;
+}
+
 void fn_80160E04(CoinPopupDetail *o) {
     if (o->state < 2 && o->creditOn == 1) {
-        unsigned char unavailable;
+        bool unavailable;
         int credits = CreditMgr_GetCreditCount(o->creditMgr);
-        unavailable = 0;
-        if (credits <= 0 || CreditMgr_GetCoinsPerCredit(o->creditMgr) == -1) unavailable = 1;
+        unavailable = credits <= 0 || CreditMgr_GetCoinsPerCredit(o->creditMgr) == -1;
         if (!unavailable && o->credits != credits) {
             o->credits = credits;
             if (!isJapanese()) {
@@ -1192,7 +1196,7 @@ void fn_80160E04(CoinPopupDetail *o) {
                 Sprite_SetupAnim(*fn_80146000(&o->sprites, 0), lbl_80368D80[info->a].pad4, 1, 0);
                 fn_8019FF6C(*fn_80146000(&o->sprites, 0), 1);
             }
-            if (PopupInput_Get()) {
+            if (PopupInput_Peek()) {
                 PopupInputState *input = PopupInput_Get();
                 input->active = 1;
                 input->x18 = 0;
@@ -1215,7 +1219,16 @@ extern const float lbl_806D8830;
 extern int Clamp_Int(int v, int lo, int hi);
 extern void fn_801FE390(void);
 
-void fn_80160588(void *self, int step, int inputConfirm) {
+static inline int Popup_CountIdle(CoinPopupDetail *o) {
+    int cnt = 0;
+    void **it;
+    for (it = o->sprites.data; it != o->sprites.data + o->sprites.b; ++it) {
+        if (!fn_801A024C(*it)) cnt++;
+    }
+    return cnt;
+}
+
+void fn_80160588(void *self, int step, unsigned char inputConfirm) {
     CoinPopupDetail *o = (CoinPopupDetail *)self;
     unsigned char confirm = inputConfirm;
     if (o->state == 0) {
@@ -1223,16 +1236,12 @@ void fn_80160588(void *self, int step, int inputConfirm) {
             o->x40 = (int)(lbl_806D8834 * ((float)o->x44 / lbl_806D880C));
             o->x44++;
         }
-        int cnt = 0;
-        void **it;
-        for (it = o->sprites.data; it != o->sprites.data + o->sprites.b; ++it) {
-            if (!fn_801A024C(*it)) cnt++;
-        }
+        int cnt = Popup_CountIdle(o);
         if (cnt == 2 && fn_801A024C(o->h60.s) != 1) {
             Sprite_SetupAnim(o->h60.s, 0x9c, 1, 0);
             fn_8019FF6C(o->h60.s, 1);
             o->state = 1;
-            if (PopupInput_Get()) {
+            if (PopupInput_Peek()) {
                 PopupInputState *input = PopupInput_Get();
                 input->active = 1;
                 input->x18 = 0;
@@ -1245,7 +1254,7 @@ void fn_80160588(void *self, int step, int inputConfirm) {
         if (!confirm) o->changed = 0;
         if (confirm == 1 && !o->changed) {
             o->state = 2;
-            if (PopupInput_Get()) {
+            if (PopupInput_Peek()) {
                 PopupInputState *input = PopupInput_Get();
                 input->active = 0;
                 input->x18 = 0;
@@ -1267,11 +1276,7 @@ void fn_80160588(void *self, int step, int inputConfirm) {
             o->x40 = (int)(lbl_806D8834 * (lbl_806D87DC - (float)o->x44 / lbl_806D87F0));
             o->x44++;
         }
-        int cnt = 0;
-        void **it;
-        for (it = o->sprites.data; it != o->sprites.data + o->sprites.b; ++it) {
-            if (!fn_801A024C(*it)) cnt++;
-        }
+        int cnt = Popup_CountIdle(o);
         if (cnt == 2) o->state = 6;
     }
     if (o->pad14 != o->mode && o->state < 3 && o->state > 0) {
