@@ -1,7 +1,11 @@
 #include "game/ItemBoxConstruct_private.h"
-static inline BoxJoint *FirstChild(BoxJoint *j) { if (!j) return 0; return j->child; }
 BoxConstruct::BoxConstruct(BoxJoint *root) {
     const char *resources = lbl_8036D588;
+    BoxJoint *j;
+    int i;
+    BoxJoint *p;
+    int k;
+    BoxDObj *d;
     DebugPrintf(resources + 0x40);
     sound = 0; modelA = 0; modelB = 0; archive = 0;
     nodes = 0; selected = 0; slots = 0; count = 0;
@@ -13,17 +17,17 @@ BoxConstruct::BoxConstruct(BoxJoint *root) {
     Object_SetJObjScaleXYZ(modelB,lbl_806D8B30,lbl_806D8B30,lbl_806D8B30);
     HSD_JObjSetFlags(Archive_GetRootJObj(archive),0x200);
     nodes = HSD_JObjGetDObj(Archive_GetRootJObj(modelB));
-    for (BoxDObj *d = nodes; d; d = d->next) HSD_DObjSetFlags(d,1);
-    for (BoxJoint *j = FirstChild(root); j; j = j->next) ++count;
+    for (d = nodes; d; d = d->next) HSD_DObjSetFlags(d,1);
+    for (BoxJoint *j = (root == 0 ? 0 : root->child); j; j = j->next) ++count;
     if (count == 0) return;
     slots = (BoxSlot *)FUN_8003b120(count * sizeof(BoxSlot));
     if (!slots) { count = 0; return; }
-    int i = 0;
-    BoxJoint *j = FirstChild(root);
+    i = 0;
+    j = (root == 0 ? 0 : root->child);
     for (; j; j = j->next, ++i) {
         if (i > count) break;
-        BoxJoint *p = j->child;
-        int k = 0;
+        p = j->child;
+        k = 0;
         for (; p; p = p->next, ++k) {
             if (k > 3) break;
             if (!p) __assert(lbl_806D8B34,0x3f1,lbl_806D8B3C);
