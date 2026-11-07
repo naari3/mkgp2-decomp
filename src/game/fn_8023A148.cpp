@@ -1,4 +1,5 @@
 #include "game/ItemSelectPresentationPrivate.h"
+#include "game/singleton.h"
 struct PresentationInput { unsigned char pad[0x14]; int direction, confirm; };
 extern "C" {
 extern PresentationInput *g_pInputState;
@@ -22,7 +23,7 @@ static inline void SetTextAlpha(ItemSelectPresentation *self, int alpha) {
     *(unsigned int *)(self->texts[2][3]->data + 0x20) = color;
 }
 extern "C" void fn_8023A148(ItemSelectPresentation *self) {
-    PresentationInput *input = g_pInputState == 0 ? (PresentationInput *)0 : g_pInputState;
+    PresentationInput *input = SINGLETON_INSTANCE(g_pInputState);
     switch (self->phase) {
     case 0: break;
     case 1:
@@ -32,21 +33,21 @@ extern "C" void fn_8023A148(ItemSelectPresentation *self) {
         }
         if (self->timer < 6) {
             float alpha = (float)((self->timer - 2) / 3);
-            if (alpha < lbl_806DB888) alpha = lbl_806DB888;
+            if (alpha < 0.0f) alpha = 0.0f;
             self->groups[1]->sprite->alpha = alpha;
             self->groups[2]->sprite->alpha = alpha;
         }
         if (self->timer >= 15) {
-            self->groups[6]->sprite->alpha = lbl_806DB8CC;
+            self->groups[6]->sprite->alpha = 1.0f;
             self->phase = 2;
         }
         break;
     case 2: {
         float alpha = self->groups[3]->sprite->alpha;
-        int textAlpha = (int)(lbl_806DB894 * alpha);
-        int direction = (g_pInputState == 0 ? (PresentationInput *)0 : g_pInputState)->direction;
+        int textAlpha = (int)(255.0f * alpha);
+        int direction = SINGLETON_INSTANCE(g_pInputState)->direction;
         if (self->automatic) {
-            alpha = lbl_806DB888;
+            alpha = 0.0f;
             direction = 1;
             textAlpha = 0;
         }
@@ -59,18 +60,18 @@ extern "C" void fn_8023A148(ItemSelectPresentation *self) {
             int other = (~self->selected) & 1;
             SpriteAnimParamBlock_Reload(self->groups[self->selected + 1], 0x1a8);
             SpriteAnimParamBlock_Reload(self->groups[other + 1], 0x1a7);
-            PresentationScale(self->groups[self->selected + 1]->sprite, lbl_806DB8CC);
+            PresentationScale(self->groups[self->selected + 1]->sprite, 1.0f);
             PresentationScale(self->groups[other + 1]->sprite, lbl_806DB964);
             PresentationParams(self);
-            if (self->selected == 0) self->groups[6]->sprite->field1c = lbl_806DB888;
+            if (self->selected == 0) self->groups[6]->sprite->field1c = 0.0f;
             else self->groups[6]->sprite->field1c = lbl_806DB968 * lbl_806D0738;
         }
         if (self->selected == 0) {
-            alpha -= lbl_806DB96C;
-            if (alpha < lbl_806DB888) alpha = lbl_806DB888;
+            alpha -= 0.1f;
+            if (alpha < 0.0f) alpha = 0.0f;
         } else {
-            alpha += lbl_806DB96C;
-            if (alpha > lbl_806DB8CC) alpha = lbl_806DB8CC;
+            alpha += 0.1f;
+            if (alpha > 1.0f) alpha = 1.0f;
         }
         if (!self->automatic) {
             self->groups[3]->sprite->alpha = alpha;
@@ -90,7 +91,7 @@ extern "C" void fn_8023A148(ItemSelectPresentation *self) {
     case 3:
         if (self->timer >= 7 && self->timer <= 15 && self->selected == 1) {
             unsigned char current = *(unsigned int *)(self->texts[0][0]->data + 0x20);
-            int alpha = (int)(lbl_806DB894 * (lbl_806DB8CC - (self->timer - 7) * lbl_806DB918));
+            int alpha = (int)(255.0f * (1.0f - (self->timer - 7) * lbl_806DB918));
             if ((unsigned char)alpha > current) alpha = current;
             SetTextAlpha(self, alpha);
         }
@@ -100,13 +101,13 @@ extern "C" void fn_8023A148(ItemSelectPresentation *self) {
             SpriteHandle_SetActiveFlag(self->handle, 0);
         }
         if (self->timer == 22) {
-            self->groups[0]->sprite->alpha = lbl_806DB888;
-            self->groups[1]->sprite->alpha = lbl_806DB888;
-            self->groups[2]->sprite->alpha = lbl_806DB888;
-            self->groups[3]->sprite->alpha = lbl_806DB888;
-            self->groups[4]->sprite->alpha = lbl_806DB888;
-            self->groups[5]->sprite->alpha = lbl_806DB888;
-            self->groups[6]->sprite->alpha = lbl_806DB888;
+            self->groups[0]->sprite->alpha = 0.0f;
+            self->groups[1]->sprite->alpha = 0.0f;
+            self->groups[2]->sprite->alpha = 0.0f;
+            self->groups[3]->sprite->alpha = 0.0f;
+            self->groups[4]->sprite->alpha = 0.0f;
+            self->groups[5]->sprite->alpha = 0.0f;
+            self->groups[6]->sprite->alpha = 0.0f;
             SpriteHandle_SetActiveFlag(self->handle, 0);
             self->done = 1;
             self->phase = -1;
