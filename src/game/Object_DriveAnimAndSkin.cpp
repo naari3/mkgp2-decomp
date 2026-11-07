@@ -1,19 +1,27 @@
-/* Native draft: 99.123375% text, exact 1848-byte primary function.
- * Kept NonMatching: rotation/request/animation GPR webs remain. */
+/* Native draft: 99.43723% text, 1848-byte primary function.
+ * Kept NonMatching: save/request/animation GPR webs remain; restore and conversion match. */
 #include "game/ObjectDrivePrivate.h"
 
 static inline void SaveRotations(Normal3D *self) {
     int i;
+    JObj *joint;
     Quat *rotation=self->savedRotation;
     if (rotation) {
-        for (i=0;i<self->count;i++,rotation++) GetRotation(self->table[i],rotation);
+        for (i=0;i<self->count;i++,rotation++) {
+            joint=self->table[i];
+            GetRotation(joint,rotation);
+        }
     }
 }
 static inline void RestoreRotations(Normal3D *self) {
     int i=0;
+    JObj *joint;
     self->pad00[1]=i;
     Quat *rotation=self->savedRotation;
-    for (;i<self->count;rotation++,i++) SetRotation(self->table[i],rotation);
+    for (;i<self->count;rotation++,i++) {
+        joint=self->table[i];
+        SetRotation(joint,rotation);
+    }
 }
 static inline void PrepareRotations(Normal3D *self) {
     if (!self->savedRotation) {
@@ -63,6 +71,15 @@ static inline void RequestDrive(JObj **cursor, int count, float frame) {
             HSD_JObjReqAnimByFlags(*cursor,0x7FF,frame);
     }
 }
+static inline void AnimateAllDrive(Normal3D *self) {
+        JObj **table=self->table;
+        int count=self->count;
+        if (table) {
+            HSD_AObjInitEndCallBack();
+            AnimateDrive(table,count);
+            HSD_AObjInvokeCallBacks();
+        }
+}
 extern "C" int Object_DriveAnimAndSkin(Normal3D *self, Normal3D *source, float frame, float speed)
 {
     if (!self->root) return 0;
@@ -80,13 +97,7 @@ extern "C" int Object_DriveAnimAndSkin(Normal3D *self, Normal3D *source, float f
     }
     {
         ScopedTimer timer(7);
-        JObj **table=self->table;
-        int count=self->count;
-        if (table) {
-            HSD_AObjInitEndCallBack();
-            AnimateDrive(table,count);
-            HSD_AObjInvokeCallBacks();
-        }
+        AnimateAllDrive(self);
     }
     ConvertRotations(self);
     self->pad00[1]=1;

@@ -1339,3 +1339,8 @@ c18_u133 fn_8018B31C: raw baseline90.64771 ->91.12670 (report91.25835), text6456
 Source: Codex worker c18_u136_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1016 B.
 
 c18_u136: fn_802124FC resolves99.76378->100 with literal1.0f/360.0f in final spin block. Safe split at802128F4 yields1016 native bytes, owned8B EH/12B index100 and full SHA1 exact. fn_802128F4 target cleanup begins0x64, source ctor-after-matrix lookup begins0xC0. Default KartPos before lookup plus inline Set(px,py,pz) restores target RTL coordinate loads and exact24B owned EH while retaining99.86264 text. Remaining two speed scaling FP scratch/coalescing residues persist through direct RHS, separate product, setter helper and factor-before-speed declarations. Keep nm1 NonMatching; no blind further permutations.
+
+## c18_u147_20261107
+Source: Codex worker c18_u147_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u147: Object_DriveAnimAndSkin improves 99.123375 -> 99.43723, same 1848B. Extract entire callback-init/AnimateDrive/callback-invoke block into AnimateAllDrive(self) with timer in caller, then declare explicit JObj *joint before rotation in SaveRotations/RestoreRotations. Restore and conversion match exactly; residual40 GPR-only rows: save19, clear3, request14, animate4. Whole-function inline exceeds budget; shared open-coded request locals98.93939, DriveTable getter97.943726, count-before-table decl99.166664. Owned88B EH and12B index payload bytes exact; weak timer adds8/12B. No flag/splits/maps changed; final fallback full DOL SHA-1 exact. Single function cannot mechanism-B split.
