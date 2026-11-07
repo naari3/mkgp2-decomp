@@ -13832,8 +13832,11 @@ triforce/amjvs_m3.c:
 	.text       start:0x8028AA40 end:0x8028AAC0
 
 triforce/amjvs_nm3.c:
-	.text       start:0x8028AAC0 end:0x8028ACEC
+	.text       start:0x8028AAC0 end:0x8028AC1C
 	.sbss       start:0x806D1E30 end:0x806D1E38
+
+triforce/amjvs_analog_read.c:
+	.text       start:0x8028AC1C end:0x8028ACEC
 
 triforce/amjvs_m4.c:
 	.text       start:0x8028ACEC end:0x8028AE64
