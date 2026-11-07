@@ -10,11 +10,8 @@ unsigned char card_rw_state_machine(void);
 
 unsigned char CardSavedata_LoadShadow_TriggerUnused(void)
 {
-    /* Restore the saved fields, including both unlock flag arrays.
-     * NonMatching (98.4%): only the g_playerData base and the first loaded
-     * word swap registers (r27/r28, r16/r17). */
-    struct CardPlayerSnapshot *s = &lbl_80598A60.player;
-    g_playerData = *s;
+    /* Restore the saved fields, including both unlock flag arrays. */
+    g_playerData = lbl_80598A60.player;
     if (lbl_806D1228 != 1) {
         lbl_806D122C = OSGetTick();
         lbl_806D1210 = 0;
