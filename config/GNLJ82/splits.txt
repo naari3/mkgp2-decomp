@@ -8249,6 +8249,7 @@ game/objview/fn_801967F0.cpp:
 	extab       start:0x80012410 end:0x800124B0
 	extabindex  start:0x80027308 end:0x80027314
 	.text       start:0x801967F0 end:0x80196AA0
+	.rodata     start:0x8037D888 end:0x8037D9E0
 
 game/BananaField_Render.c:
 	extab       start:0x800124B0 end:0x800124B8

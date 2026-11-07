@@ -11241,6 +11241,14 @@
     "__dt__12CollisionVecFv": "dtor_80036E40"
   },
   "src/game/objview/fn_801967F0.cpp": {
+    "kEmitters": "global:lbl_8037D888",
+    "lbl_8037D930": "global:lbl_8037D930",
+    "lbl_8037D93C": "global:lbl_8037D93C",
+    "lbl_8037D950": "global:lbl_8037D950",
+    "lbl_8037D970": "global:lbl_8037D970",
+    "lbl_8037D990": "global:lbl_8037D990",
+    "lbl_8037D9A8": "global:lbl_8037D9A8",
+    "lbl_8037D9C4": "global:lbl_8037D9C4",
     "__ct__12ParticleViewFv": "fn_801967F0",
     "__dt__16ParticleViewBaseFv": "dtor_8016A270",
     "__vt__16ParticleViewBase": "lbl_80490FE0",
