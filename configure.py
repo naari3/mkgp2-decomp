@@ -1338,7 +1338,7 @@ config.libs = [
             Object(Matching, "game/DrawEffect_Cb_KartRotatingSparkle_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartFlatBurst_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/fn_80105CC4.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
-            Object(NonMatching, "game/Terrain_FlagsToDebugString.c", extra_cflags=["-Cpp_exceptions on", "-str reuse,readonly"]),  #g2
+            Object(Matching, "game/Terrain_FlagsToDebugString.c", extra_cflags=["-Cpp_exceptions on", "-str reuse,readonly"]),  #g2
             Object(Matching, "game/Effect_KartGlow_Update.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/Mtx44_Translate.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/EffectVfx15_StarItemAura_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -4079,6 +4079,40 @@ def _inject_data_align4_weak_tus() -> None:
     build_ninja.write_text(text, encoding="utf-8")
 
 
+# TUs whose .sdata2 (short string literals) starts on a 4-byte boundary in
+# the target: MWCC emits the section 8-aligned, so pin it to 4 (keeping
+# .comment, whose section-symbol entry carries the alignment for MWLD).
+SDATA2_ALIGN4_TUS = [
+    "game/Terrain_FlagsToDebugString",
+]
+
+
+def _inject_sdata2_align4_tus() -> None:
+    build_ninja = Path("build.ninja")
+    text = build_ninja.read_text(encoding="utf-8")
+    sep = "\\" if sys.platform == "win32" else "/"
+    hook = " && $python tools/postprocess_sdata2.py $out $out"
+    for base_rule in ("mwcc_sjis", "mwcc_sjis_extab"):
+        new_rule = base_rule + "_s2align4"
+        users = []
+        for tu in SDATA2_ALIGN4_TUS:
+            obj = ("build/GNLJ82/src/" + tu + ".o").replace("/", sep)
+            target = "build " + obj + ": " + base_rule + " "
+            if target in text:
+                users.append(target)
+        if not users:
+            continue
+        start = text.index("rule " + base_rule + "\n")
+        end = text.index("\nrule ", start + 1)
+        rule = text[start:end].replace("rule " + base_rule + "\n", "rule " + new_rule + "\n", 1)
+        assert hook in rule
+        rule = rule.replace(hook, hook + " && $python tools/postprocess_data_align4_keep_comment.py $out .sdata2", 1)
+        for target in users:
+            text = text.replace(target, target.replace(": " + base_rule + " ", ": " + new_rule + " "), 1)
+        text = text[:start] + rule + "\n" + text[start:]
+    build_ninja.write_text(text, encoding="utf-8")
+
+
 if args.mode == "configure":
     # Write build.ninja and objdiff.json
     generate_build(config)
@@ -4088,6 +4122,7 @@ if args.mode == "configure":
     _inject_kartfx_chargeicon_data_alignment()
     _inject_data_align4_tus()
     _inject_data_align4_weak_tus()
+    _inject_sdata2_align4_tus()
 elif args.mode == "progress":
     # Print progress information
     calculate_progress(config)

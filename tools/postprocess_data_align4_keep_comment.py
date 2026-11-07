@@ -17,9 +17,12 @@ COMMENT_ENTRY = 8
 
 
 def main() -> None:
-    if len(sys.argv) != 2:
-        sys.exit("usage: postprocess_data_align4_keep_comment.py <object>")
+    if len(sys.argv) not in (2, 3):
+        sys.exit("usage: postprocess_data_align4_keep_comment.py <object> [section]")
     path = sys.argv[1]
+    # Optional section name (default .data); .sdata2 is used by TUs whose
+    # small-data string pool starts on a 4-byte (not 8-byte) boundary.
+    section = sys.argv[2] if len(sys.argv) == 3 else ".data"
     d = bytearray(open(path, "rb").read())
     shoff = struct.unpack_from(">I", d, 0x20)[0]
     shnum = struct.unpack_from(">H", d, 0x30)[0]
@@ -31,7 +34,7 @@ def main() -> None:
         return d[strbase + off:d.index(b"\0", strbase + off)].decode()
 
     names = [name(s[0]) for s in secs]
-    data_idx = names.index(".data")
+    data_idx = names.index(section)
     comment = secs[names.index(".comment")]
     symtab = next(s for s in secs if s[1] == 2)
 
