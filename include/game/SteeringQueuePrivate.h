@@ -85,7 +85,8 @@ static inline void QueueTrim(SteeringQueue *s) {
     unsigned long n = s->blocks.count - 2;
     while (n) {
         --s->blocks.count;
-        unsigned long j = s->blocks.head + s->blocks.count - 1;
+        unsigned long j = s->blocks.count - 1;
+        j += s->blocks.head;
         if (j >= s->blocks.capacity) j -= s->blocks.capacity;
         int &p = s->blocks.data[j];
         MemoryManager_TimedFree((void *)p);
