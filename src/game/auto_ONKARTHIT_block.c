@@ -1236,7 +1236,7 @@ int ItemTable_FindEntryByIdStride24(ItemCatEntry24 *tbl, int count, int itemId);
 int ItemTable_FindEntryByIdStride20(ItemCatEntry20 *tbl, int count, int itemId);
 void CarObject_GetField304Vec3(Vec3 *out, CarObjAux304View *car);
 asm void CarObjectManager_RunKartKartCollisionSweep(void);
-asm void CarObjectManager_Dtor(void);
+CarObjectManager *CarObjectManager_Dtor(CarObjectManager *self, short flag);
 Bitset *dtor_80052200(Bitset *self, short flag);
 unsigned char Bitset_TestBit(Bitset *self, unsigned long idx);
 void Bitset_SetBit(Bitset *self, unsigned long idx, unsigned char val);
@@ -1249,8 +1249,15 @@ asm void fn_800524B4(void);
 asm void KartItem_PlayHitSE_DifferentVictim_AdjThunk(void);
 asm void KartItem_ApplyEffectToVictim_AdjThunk(void);
 void *dtor_800524CC(void *self, short flag);
-asm void StlList_RemoveByValueField(void);
-asm void StlList_EraseRange(void *ret, StlList *l, StlListNode **beg, StlListNode **end);
+void StlList_RemoveByValueField(StlList *l, StlListValRef *key);
+#pragma cplusplus on
+struct StlEraseIter {
+    StlListNode *node;
+    StlEraseIter(StlListNode *n) : node(n) {}
+    StlEraseIter(const StlEraseIter &o) : node(o.node) {}
+};
+extern "C" StlEraseIter StlList_EraseRange(StlList *l, StlEraseIter first, StlEraseIter last);
+#pragma cplusplus off
 #pragma cplusplus on
 /* list<T>::insert node/value/iterator types (0x80052684) */
 struct StlInsValue {
@@ -9212,57 +9219,43 @@ asm void CarObjectManager_RunKartKartCollisionSweep(void) { /* 0x80051DEC size:0
     blr
 }
 
-/* parked at 99.76% (4 probes): single scratch-reg tie-break, end-value web target r7 vs CW r0.
- * Triple addic. guard chain + EraseRange shape fully reproduced by nested static inline
- * StlList dtor->clear->erase helpers each re-guarding `if (l)`; see HANDOFF appendix C. */
-asm void CarObjectManager_Dtor(void) { /* 0x80052158 size:0xA8 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r4
-    stw r30, 0x18(r1)
-    mr. r30, r3
-    beq CarObjectManager_Dtor_L_800521E4
-    lis r3, lbl_803F76A8@ha
-    addic. r0, r30, 0x4
-    addi r0, r3, lbl_803F76A8@l
-    stw r0, 0x0(r30)
-    beq CarObjectManager_Dtor_L_800521C0
-    addic. r0, r30, 0x4
-    beq CarObjectManager_Dtor_L_800521C0
-    addic. r0, r30, 0x4
-    beq CarObjectManager_Dtor_L_800521C0
-    addi r7, r30, 0x8
-    addi r3, r1, 0x8
-    stw r7, 0x10(r1)
-    addi r4, r30, 0x4
-    addi r5, r1, 0xc
-    addi r6, r1, 0x10
-    lwz r0, 0xc(r30)
-    stw r0, 0xc(r1)
-    bl StlList_EraseRange
-    CarObjectManager_Dtor_L_800521C0:
-    cmplwi r30, 0x0
-    beq CarObjectManager_Dtor_L_800521D4
-    lis r3, lbl_803F7690@ha
-    addi r0, r3, lbl_803F7690@l
-    stw r0, 0x0(r30)
-    CarObjectManager_Dtor_L_800521D4:
-    extsh. r0, r31
-    ble CarObjectManager_Dtor_L_800521E4
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    CarObjectManager_Dtor_L_800521E4:
-    lwz r0, 0x24(r1)
-    mr r3, r30
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma cplusplus on
+/* inlined std-list dtor chain: each inline level re-guards its `this` */
+static inline void StlList_EraseAllInner(StlList *l) {
+    if (l) {
+        StlListNode *e = (StlListNode *)&l->head;
+        StlList_EraseRange(l, StlEraseIter(e->next), StlEraseIter(e));
+    }
 }
+
+static inline void StlList_ClearInline(StlList *l) {
+    if (l) {
+        StlList_EraseAllInner(l);
+    }
+}
+
+static inline void StlList_DtorInline(StlList *l) {
+    if (l) {
+        StlList_ClearInline(l);
+    }
+}
+
+#pragma exceptions off
+extern "C" CarObjectManager *CarObjectManager_Dtor(CarObjectManager *self, short flag) { /* 0x80052158 */
+    if (self) {
+        self->vtable = lbl_803F76A8;
+        StlList_DtorInline(&self->list);
+        if (self) {
+            self->vtable = lbl_803F7690;
+        }
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
+}
+#pragma exceptions reset
+#pragma cplusplus off
 
 #pragma exceptions off
 /* Bitset deleting dtor: free word buffer, then free self when flag > 0 */
@@ -9467,6 +9460,53 @@ asm void KartItem_ApplyEffectToVictim_AdjThunk(void) { /* 0x800524C4 size:0x8 */
     b CarObject_OnItemHit
 }
 
+/* std::list<T> written as C++ with a by-value iterator class: erase(first,last)
+ * inlined into remove(); begin is end()->next of the head/tail sentinel.
+ * Defined ahead of dtor_800524CC on purpose: the erase() return temporary makes
+ * CW emit this function one slot late, so this source position yields the
+ * target .text order (dtor_800524CC, remove, StlList_EraseRange); here it also
+ * gets no auto extab, so the manual entry above stays. */
+#pragma cplusplus on
+#pragma exceptions off
+static inline StlEraseIter StlList_EraseInl(StlList *l, StlEraseIter first, StlEraseIter last) {
+    if (first.node == last.node) {
+        return last;
+    }
+    StlListNode *lastNode = last.node->prev;
+    first.node->prev->next = lastNode->next;
+    lastNode->next->prev = first.node->prev;
+    while (first.node != last.node) {
+        StlListNode *n = first.node;
+        first.node = n->next;
+        MemoryManager_TimedFree(n);
+        l->count -= 1;
+    }
+    return last;
+}
+/* std::list::remove(value): erase every run of nodes whose obj equals key->val */
+extern "C" void StlList_RemoveByValueField(StlList *l, StlListValRef *key) { /* 0x80052508 size:0xCC */
+    StlEraseIter last((StlListNode *)&l->head);
+    StlEraseIter first(last.node->next);
+    while (first.node != last.node) {
+        if (first.node->obj == key->val) {
+            StlEraseIter next(first);
+            next.node = next.node->next;
+            while (next.node != last.node) {
+                if (next.node->obj != key->val) {
+                    break;
+                }
+                next.node = next.node->next;
+            }
+            first = StlList_EraseInl(l, first, next);
+            if (first.node == last.node) {
+                break;
+            }
+        }
+        first.node = first.node->next;
+    }
+}
+#pragma exceptions reset
+#pragma cplusplus off
 #pragma exceptions off
 void *dtor_800524CC(void *self, short flag) { /* 0x800524CC size:0x3C */
     if (self) {
@@ -9478,137 +9518,29 @@ void *dtor_800524CC(void *self, short flag) { /* 0x800524CC size:0x3C */
 }
 #pragma exceptions reset
 
-/* parked at 94.51% (4 probes): (1) class-1 branch-over-branch at the erase-range
- * guard (target `cmplw r28,r27; bne unlink; b merge` - CW folds every C form to
- * `beq merge`, KartItem_OnKartHit family; a res-merge local materializes as a
- * real r0 web instead of coalescing), and (2) callee-saved group partition:
- * target ranks params on top (key=r31, l=r30) above locals (end=r29, cur=r28,
- * run=r27); CW puts locals on top in every probed decl shape (flat,
- * block-scoped, param-to-local copies). Body otherwise instruction-identical.
- * Paste-ready C in HANDOFF appendix A (uses StlListValRef view). */
-asm void StlList_RemoveByValueField(void) { /* 0x80052508 size:0xCC */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stmw r27, 0xc(r1)
-    mr r30, r3
-    mr r31, r4
-    addi r29, r30, 0x4
-    lwz r28, 0x8(r3)
-    b StlList_RemoveByValueField_L_800525B8
-    StlList_RemoveByValueField_L_8005252C:
-    lwz r0, 0x8(r28)
-    lwz r3, 0x4(r31)
-    cmplw r0, r3
-    bne StlList_RemoveByValueField_L_800525B4
-    lwz r27, 0x4(r28)
-    b StlList_RemoveByValueField_L_80052554
-    StlList_RemoveByValueField_L_80052544:
-    lwz r0, 0x8(r27)
-    cmplw r0, r3
-    bne StlList_RemoveByValueField_L_8005255C
-    lwz r27, 0x4(r27)
-    StlList_RemoveByValueField_L_80052554:
-    cmplw r27, r29
-    bne StlList_RemoveByValueField_L_80052544
-    StlList_RemoveByValueField_L_8005255C:
-    cmplw r28, r27
-    bne StlList_RemoveByValueField_L_80052568
-    b StlList_RemoveByValueField_L_800525A8
-    StlList_RemoveByValueField_L_80052568:
-    lwz r4, 0x0(r27)
-    lwz r3, 0x0(r28)
-    lwz r0, 0x4(r4)
-    stw r0, 0x4(r3)
-    lwz r0, 0x0(r28)
-    lwz r3, 0x4(r4)
-    stw r0, 0x0(r3)
-    b StlList_RemoveByValueField_L_800525A0
-    StlList_RemoveByValueField_L_80052588:
-    mr r3, r28
-    lwz r28, 0x4(r28)
-    bl MemoryManager_TimedFree
-    lwz r3, 0x0(r30)
-    subi r0, r3, 0x1
-    stw r0, 0x0(r30)
-    StlList_RemoveByValueField_L_800525A0:
-    cmplw r28, r27
-    bne StlList_RemoveByValueField_L_80052588
-    StlList_RemoveByValueField_L_800525A8:
-    cmplw r27, r29
-    mr r28, r27
-    beq StlList_RemoveByValueField_L_800525C0
-    StlList_RemoveByValueField_L_800525B4:
-    lwz r28, 0x4(r28)
-    StlList_RemoveByValueField_L_800525B8:
-    cmplw r28, r29
-    bne StlList_RemoveByValueField_L_8005252C
-    StlList_RemoveByValueField_L_800525C0:
-    lmw r27, 0xc(r1)
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
-}
 
-/* parked at 95.23% (2 probes): prologue load interleave - target slots
- * `lwz r5,0x0(r5)` (first = *beg) between the r30 and r29 save pairs; CW 1.3.2
- * never schedules a load above the remaining callee-save stores (smallrun
- * prologue-load-hoist family). exceptions on/off identical -> not approach-B
- * class. All 36 body instructions + registers match. Paste-ready C in HANDOFF
- * appendix B. */
-asm void StlList_EraseRange(void *ret, StlList *l, StlListNode **beg, StlListNode **end) { /* 0x800525D4 size:0xB0 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r6
-    stw r30, 0x18(r1)
-    mr r30, r5
-    lwz r5, 0x0(r5)
-    stw r29, 0x14(r1)
-    mr r29, r4
-    stw r28, 0x10(r1)
-    mr r28, r3
-    lwz r3, 0x0(r6)
-    cmplw r5, r3
-    bne StlList_EraseRange_L_80052618
-    stw r3, 0x0(r28)
-    b StlList_EraseRange_L_80052664
-    StlList_EraseRange_L_80052618:
-    lwz r4, 0x0(r3)
-    lwz r3, 0x0(r5)
-    lwz r0, 0x4(r4)
-    stw r0, 0x4(r3)
-    lwz r0, 0x0(r5)
-    lwz r3, 0x4(r4)
-    stw r0, 0x0(r3)
-    b StlList_EraseRange_L_80052650
-    StlList_EraseRange_L_80052638:
-    lwz r0, 0x4(r3)
-    stw r0, 0x0(r30)
-    bl MemoryManager_TimedFree
-    lwz r3, 0x0(r29)
-    subi r0, r3, 0x1
-    stw r0, 0x0(r29)
-    StlList_EraseRange_L_80052650:
-    lwz r3, 0x0(r30)
-    lwz r0, 0x0(r31)
-    cmplw r3, r0
-    bne StlList_EraseRange_L_80052638
-    stw r0, 0x0(r28)
-    StlList_EraseRange_L_80052664:
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+#pragma cplusplus on
+#pragma exceptions off
+/* std::list::erase(first, last): unlink the whole range, then free node by node.
+ * The iterators are by-value class params (hidden pointers), which lets the
+ * first->node load schedule into the prologue as in the target. */
+extern "C" StlEraseIter StlList_EraseRange(StlList *l, StlEraseIter first, StlEraseIter last) { /* 0x800525D4 size:0xB0 */
+    if (first.node == last.node) {
+        return last;
+    }
+    StlListNode *lastNode = last.node->prev;
+    first.node->prev->next = lastNode->next;
+    lastNode->next->prev = first.node->prev;
+    while (first.node != last.node) {
+        StlListNode *n = first.node;
+        first.node = n->next;
+        MemoryManager_TimedFree(n);
+        l->count -= 1;
+    }
+    return last;
 }
+#pragma exceptions reset
+#pragma cplusplus off
 
 /* skipped (0 probes): -Cpp_exceptions on EH scaffolding class - FP prologue
  * `mr r31,r1`, back-chain epilogue, EH state store `stw r1,0x24(r31)` and dead
