@@ -12284,7 +12284,15 @@
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960",
     "@132": "@etb_8001CBC4",
-    "@133": "@eti_8002AEB4"
+    "@133": "@eti_8002AEB4",
+    "childScales": "global:lbl_803E5878",
+    "childCurves": "global:lbl_803E5884",
+    "childOrigins": "global:lbl_803E5C74",
+    "childEffectPositions": "global:lbl_803E5C94",
+    "childOffsets": "global:lbl_803E5CA4",
+    "childIntCounterName": "global:lbl_803E5CB4",
+    "childCounterInterfaceName": "global:lbl_803E5CC4",
+    "childFloatCounterName": "global:lbl_803E5CD8"
   },
   "src/game/StrPcb_Lifetime_nm1.cpp": {
     "__ct__6StrPcbFi": "StrPcb_Init",

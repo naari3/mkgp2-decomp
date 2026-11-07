@@ -12352,6 +12352,7 @@ game/ItemSelectChildSpriteDraw.cpp:
 	extab       start:0x8001CBC4 end:0x8001CBDC
 	extabindex  start:0x8002AEB4 end:0x8002AEC0
 	.text       start:0x8023DCEC end:0x8023E154
+	.rodata     start:0x803E5878 end:0x803E5CE8
 
 game/ItemSelectChildSpriteMethods.cpp:
 	extab       start:0x8001CBDC end:0x8001CBFC

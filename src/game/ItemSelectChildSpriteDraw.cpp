@@ -1,20 +1,42 @@
 #include "game/ItemSelectChildSprite.h"
-struct ItemSelectChildLayout {
-    char pad000[0x3fc];
-    float origin[4][2];
-    float pair[2][2];
-    float offsets[4];
-    char tail[0x34];
+/* Original shared animation curves and child layout pool at 0x803E5878. */
+#pragma force_active on
+static const float childScales[3] = {1.0f, 0.7f, 0.9f};
+static const float childCurves[18][7][2] = {
+    {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
+    {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
+    {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
+    {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
+    {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
+    {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
+    {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
+    {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
+    {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
+    {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
+    {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
+    {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
+    {{0.0f, 0.0f}, {500.0f, 83.33333587646484f}, {1000.0f, 83.33333587646484f}, {2000.0f, 83.33333587646484f}, {3000.0f, 83.33333587646484f}, {4000.0f, 83.33333587646484f}, {5000.0f, 83.33333587646484f}},
+    {{0.0f, 0.0f}, {500.0f, 83.33333587646484f}, {1000.0f, 83.33333587646484f}, {2000.0f, 83.33333587646484f}, {3000.0f, 83.33333587646484f}, {4000.0f, 83.33333587646484f}, {5000.0f, 83.33333587646484f}},
+    {{0.0f, 0.0f}, {500.0f, 83.33333587646484f}, {1000.0f, 83.33333587646484f}, {2000.0f, 83.33333587646484f}, {3000.0f, 83.33333587646484f}, {4000.0f, 83.33333587646484f}, {5000.0f, 83.33333587646484f}},
+    {{0.0f, 0.0f}, {500.0f, 83.33333587646484f}, {1000.0f, 83.33333587646484f}, {2000.0f, 83.33333587646484f}, {3000.0f, 83.33333587646484f}, {4000.0f, 83.33333587646484f}, {5000.0f, 83.33333587646484f}},
+    {{0.0f, 0.0f}, {500.0f, 83.33333587646484f}, {1000.0f, 83.33333587646484f}, {2000.0f, 83.33333587646484f}, {3000.0f, 83.33333587646484f}, {4000.0f, 83.33333587646484f}, {5000.0f, 83.33333587646484f}},
+    {{0.0f, 0.0f}, {500.0f, 83.33333587646484f}, {1000.0f, 83.33333587646484f}, {2000.0f, 83.33333587646484f}, {3000.0f, 83.33333587646484f}, {4000.0f, 83.33333587646484f}, {5000.0f, 83.33333587646484f}}
 };
+static const float childOrigins[4][2] = {{162.0f, 40.0f}, {260.0f, 40.0f}, {162.0f, 40.0f}, {147.0f, 40.0f}};
+static const float childEffectPositions[2][2] = {{0.0f, -8.5f}, {0.0f, 11.5f}};
+static const float childOffsets[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+static const char childIntCounterName[] = "clIntCounter";
+static const char childCounterInterfaceName[] = "clCounterInterface";
+static const char childFloatCounterName[] = "clFloatCounter";
+#pragma force_active reset
 extern "C" {
-extern const ItemSelectChildLayout lbl_803E5878;
 void fn_8023D2B8(ItemAliasSprite *);
 int fn_8020A788(FlowFader *);
 }
 static inline void DrawEffect(ItemSelectChildEffect *effect, int active, const float pair[2][2]) {
     float sx = effect->scale;
     float sy = effect->scale * fn_8020A6CC(effect->fade.p);
-    float shift = effect->scale * (1.0f - fn_8020A6CC(effect->fade.p));
+    float shift = effect->scale * (lbl_806DBDA8 - fn_8020A6CC(effect->fade.p));
     const float (*position)[2] = pair;
     for (int i = 0; i < 2; ++i) {
         fn_8011F804(effect->handles[i],
@@ -27,7 +49,7 @@ static inline void DrawEffect(ItemSelectChildEffect *effect, int active, const f
         ++position;
     }
     effect->fade.p->Step();
-    if (1.0f == fn_8020A6CC(effect->fade.p)) effect->active = 0;
+    if (lbl_806DBDA8 == fn_8020A6CC(effect->fade.p)) effect->active = 0;
     else effect->active = 1;
 }
 static inline void DrawOverlay(ItemSelectChildOverlay *overlay, int active) {
@@ -38,7 +60,7 @@ static inline void DrawOverlay(ItemSelectChildOverlay *overlay, int active) {
     SpriteHandle_SetActiveFlag(overlay->handles[0], active);
     SpriteHandle_RecomputeCull(overlay->handles[0]);
     int pulse = 0;
-    if (1.0f == fn_8020A6CC(overlay->fade.p)) pulse = active;
+    if (lbl_806DBDA8 == fn_8020A6CC(overlay->fade.p)) pulse = active;
     fn_8011F804(overlay->handles[1], overlay->x, overlay->y);
     fn_8011F744(overlay->handles[1], scale, scale);
     SpriteHandle_SetCornerAlpha(overlay->handles[1], (unsigned char)fn_8020A788(overlay->pulse.p));
@@ -52,14 +74,10 @@ static inline void DrawOverlay(ItemSelectChildOverlay *overlay, int active) {
         else fn_8020A7CC(overlay->pulse.p, 0, 255, 5);
     }
 }
-static inline void SetItemPos(ItemAliasSprite *item, float x, float y) { item->x=x; item->y=y; }
+static inline void SetItemPos(ItemAliasSprite *item, float y, float x) { item->x=x; item->y=y; }
 static inline void SetItemScale(ItemAliasSprite *item, float scale) { item->scaleX=scale; item->scaleY=scale; }
-template <class T> static inline void SetPartPos(T *part, float x, float y) { part->x=x; part->y=y; }
+template <class T> static inline void SetPartPos(T *part, float y, float x) { part->x=x; part->y=y; }
 extern "C" void fn_8023DCEC(ItemSelectChildSprite *self, int active) {
-    const ItemSelectChildLayout *layout = &lbl_803E5878;
-    const float *originX = &layout->origin[0][0];
-    const float *originY = &layout->origin[0][1];
-    const float *offsets = layout->offsets;
     ResCtrl rc;
     float scale;
     float x;
@@ -68,24 +86,25 @@ extern "C" void fn_8023DCEC(ItemSelectChildSprite *self, int active) {
     scale = self->scale;
     x = self->x;
     scale += fn_8020A6CC(self->fade);
-    SetItemPos(self->item, x + (offsets[2] + originX[self->variant * 2]),
-        y + (offsets[3] + originY[self->variant * 2]));
+    const float *originY = &childOrigins[0][1];
+    SetItemPos(self->item, y + (childOffsets[3] + originY[self->variant * 2]),
+        x + (childOffsets[2] + childOrigins[self->variant][0]));
     SetItemScale(self->item, scale);
     self->item->color = self->color;
     self->item->active = active;
     if ((unsigned char)active) fn_8023D2B8(self->item);
-    SetPartPos(self->effect, x + (offsets[0] + originX[self->variant * 2]),
-        y + (offsets[1] + originY[self->variant * 2]));
+    SetPartPos(self->effect, y + (childOffsets[1] + originY[self->variant * 2]),
+        x + (childOffsets[0] + childOrigins[self->variant][0]));
     self->effect->scale = scale;
-    DrawEffect(self->effect, active, layout->pair);
+    DrawEffect(self->effect, active, childEffectPositions);
     fn_8011F804(self->handle,
-        x + (offsets[0] + originX[self->variant * 2]),
-        y + (offsets[1] + originY[self->variant * 2]));
+        x + (childOffsets[0] + childOrigins[self->variant][0]),
+        y + (childOffsets[1] + originY[self->variant * 2]));
     fn_8011F744(self->handle, scale, scale);
     SpriteHandle_SetActiveFlag(self->handle, active);
     SpriteHandle_RecomputeCull(self->handle);
-    SetPartPos(self->overlay, x + (offsets[0] + originX[self->variant * 2]),
-        y + (offsets[1] + originY[self->variant * 2]));
+    SetPartPos(self->overlay, y + (childOffsets[1] + originY[self->variant * 2]),
+        x + (childOffsets[0] + childOrigins[self->variant][0]));
     self->overlay->scale = scale;
     DrawOverlay(self->overlay, active);
 }
