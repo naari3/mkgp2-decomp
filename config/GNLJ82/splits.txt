@@ -7803,6 +7803,7 @@ game/objview/fn_8018DAD0.c:
 	extab       start:0x80011F68 end:0x80011F70
 	extabindex  start:0x80026F6C end:0x80026F78
 	.text       start:0x8018DAD0 end:0x8018DFC4
+	.rodata     start:0x80377F70 end:0x80378018
 
 game/misc3d/fn_8018DFC4.c:
 	extab       start:0x80011F70 end:0x80011F78
