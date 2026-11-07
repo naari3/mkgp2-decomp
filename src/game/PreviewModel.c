@@ -5,10 +5,15 @@
  * The vtables (lbl_8048EAE8 base, lbl_8048EB04 model) stay in data, so the
  * vptr stores and the virtual Render call are spelled out by hand.
  *
- * Still asm: the model ctor (the out-of-line base dtor it names in its
- * cleanup actions would be emitted right after it instead of at the end of
- * the unit), the base dtor itself, and the two render-and-clear loops, which
- * keep their list iterator in a stack slot that no C++ form tried here does.
+ * The base dtor (dtor_8013DCBC) is written as a plain deleting-dtor
+ * function: as a real inline ~PreviewBase, CW would emit its weak copy right
+ * after the model ctor instead of at the end of the unit.
+ *
+ * Still asm: the model ctor (a real C++ ctor matches except that weak-copy
+ * placement; an extern "C" version with `new` matches the code but gets an
+ * auto extab without the DESTROYBASE action), and the two render-and-clear
+ * loops, which keep their list iterator in a stack slot that no C++ form
+ * tried here does.
  */
 #pragma cplusplus on
 
@@ -72,7 +77,8 @@ extern float lbl_806D76E4;
 asm void fn_8013D800(void);
 asm void fn_8013D940(void);
 asm void fn_8013DA00(void);
-asm void dtor_8013DCBC(void);
+struct PreviewBase;
+PreviewBase *dtor_8013DCBC(PreviewBase *self, short flag);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -464,28 +470,17 @@ extern "C" int fn_8013DBF8(void) {
     return 1;
 }
 
-extern "C" asm void dtor_8013DCBC(void) { /* 0x8013DCBC size:0x48 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    stw r0, 0x14(r1)
-    stw r31, 0xc(r1)
-    mr. r31, r3
-    beq dtor_8013DCBC_L_8013DCEC
-    lis r5, lbl_8048EAE8@ha
-    extsh. r0, r4
-    addi r0, r5, lbl_8048EAE8@l
-    stw r0, 0x0(r31)
-    ble dtor_8013DCBC_L_8013DCEC
-    bl MemoryManager_TimedFree
-    dtor_8013DCBC_L_8013DCEC:
-    lwz r0, 0x14(r1)
-    mr r3, r31
-    lwz r31, 0xc(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+#pragma exceptions off
+extern "C" PreviewBase *dtor_8013DCBC(PreviewBase *self, short flag) {
+    if (self != 0) {
+        self->vptr = lbl_8048EAE8;
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
+#pragma exceptions reset
 
 extern "C" void fn_8013DD04(void) {
 }
