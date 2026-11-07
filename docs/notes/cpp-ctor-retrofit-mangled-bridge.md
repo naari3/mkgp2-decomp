@@ -1239,3 +1239,8 @@ c18_u36: SceneListImpl::Draw 80204218 baseline98.35821/264B vs268B target. TU-lo
 Source: Codex worker c18_u35_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u35: SwitchList ctor 8017A68C remains 98.39921% (1012B) after three structural hypotheses. Owning .rodata 80371E98..80371F28 as typed static SwitchConstantPool array reproduces all 144B and base-register relocations, but leaves bge-versus-blt dispatch and both first-lwz-before-hidden-stw scheduling differences unchanged. case0 return adds compare and 12B, drops97.19367%; memcpy bounds copies emit calls, drops85.46245%; both reverted. Keep exact pool acquisition, existing NonMatching flag, text/EH unchanged. Only one function in TU, no B split. Final fallback-linked coordinator full build SHA-1 exact; native gain0.
+
+## c18_u39_20261107
+Source: Codex worker c18_u39_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u39 EnemyRun_BaseInit 801F0644: explicit LHS row cursor plus named invariant RHS base and indexed output improves 98.23385 to99.08, same1300B and owned176B EH/12B index100. Unlike c8 full-pointer-loop trial, inner loop remains counted and all FP arithmetic now follows target. Remaining n/index/row/column GPR colors and outer increment scheduling differ. Output-argument helper is instruction-invariant; returning a matrix adds128B aggregate copy. Add own @144/@145 bridges; existing @148 now names an extra weak8B EH record too, so future promotion must inspect discard/linked ranges. Single function stays NonMatching; no mechanism-B cut. Final fallback DOL SHA-1 OK; native gain0.
