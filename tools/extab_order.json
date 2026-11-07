@@ -2816,5 +2816,12 @@
       "WarpZoneArray_CopyBackwardImpl",
       "WarpZone_OperatorAssign_LinkerStub"
     ]
-  }
+  },
+  "src/game/SceneRender.c": [
+    "dtor_8003A71C",
+    "SceneRender_DrawObjectWithLights",
+    "SceneRender_CmdA_8a9e8",
+    "SceneRender_CmdB_8aa20",
+    "SceneRender_Dtor"
+  ]
 }
