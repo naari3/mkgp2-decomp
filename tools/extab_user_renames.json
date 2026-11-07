@@ -12159,5 +12159,20 @@
     "__dt__17RankingDriverSlotFv": "dtor_80052C48",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/PCBCommLifecycle.cpp": {
+    "__dt__7PCBCommFv": "dtor_800869D0",
+    "__ct__17LifecycleListenerFv": "PcbListener_Init",
+    "__ct__13LifecycleConnFv": "PcbConn_MarkDisabled",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@126": "@etb_80008DE4",
+    "@127": "@eti_800218F0",
+    "@145": "@etb_80008DFC",
+    "@146": "@eti_800218FC",
+    "@192": "@etb_80008E04",
+    "@193": "@eti_80021908",
+    "@200": "@etb_80008DDC",
+    "@201": "@eti_80021914"
   }
 }

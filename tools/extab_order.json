@@ -2373,5 +2373,21 @@
     "RivalRun_Destroy",
     "RivalRun_Init",
     "RivalRun_RivalInit"
-  ]
+  ],
+  "src/game/PCBCommLifecycle.cpp": {
+    "extab": [
+      "dtor_800869D0",
+      "PCBComm_Process",
+      "PcbComm_Shutdown",
+      "PCBComm_Init",
+      "__dt__11ScopedTimerFv"
+    ],
+    "extabindex": [
+      "PCBComm_Process",
+      "PcbComm_Shutdown",
+      "PCBComm_Init",
+      "dtor_800869D0",
+      "__dt__11ScopedTimerFv"
+    ]
+  }
 }

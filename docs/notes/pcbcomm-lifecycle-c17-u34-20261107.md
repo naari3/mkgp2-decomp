@@ -1,0 +1,5 @@
+# pcbcomm-lifecycle-c17-u34-20261107
+
+Source: Codex worker c17_u34_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 5 fn / 1996 B.
+
+PCBCommLifecycle FIRST CHECK found real C++ destructor present under unmapped __dt__7PCBCommFv, plus ctor/new/delete references lacking bridges. Per-TU bridges and extab_padding route yield dtor text100. Native u16 id bitfield restores target addi-before-lhz; parameter-cursor do/while clear helpers improve Init to95.53846 CLI (95.67583 report). Phase/scene/timer pointer traversal plus ready-slot cursor improves Process to90.4054 CLI (91.060814 report). Final owned extab99.10714/index97.5 after declared dtor-first EH order and symbol bridges. Process1156 vs1184 B and Init724 vs728 B retain folded bases/register/scheduling residuals; anonymous unsigned-conversion cookie remains. Shutdown232/dtor60 text/EH exact, but dtor EH80008DDC is before Process EH80008DE4 and spans all four functions: no legal mechanism-B cut. No native gain; honest NonMatching; full fallback DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65.

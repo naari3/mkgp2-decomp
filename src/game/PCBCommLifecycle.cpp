@@ -24,6 +24,7 @@ union PacketHead {
 };
 union SlotFlags {
     u16 half;
+    struct { u16 local:1; u16 reserved:5; u16 id:3; u16 blocks:7; } ids;
     struct {
         u8 local:1; u8 idHigh:1; u8 tx:1; u8 rx:1;
         u8 card:1; u8 ack:1; u8 low:2;
@@ -108,16 +109,30 @@ public:
 static inline int SlotId(Slot *slot) { return (slot->flags.half >> 7) & 7; }
 static inline LifecycleConn **Outgoing(Storage *storage) { return storage->outgoing; }
 static inline void SetSlotId(Slot *slot, int id) {
-    slot->flags.half = (slot->flags.half & ~0x380) | ((id << 7) & 0x380);
+    slot->flags.ids.id = id;
+}
+static inline void ClearPackets(u8 *cursor) {
+    int count = 0;
+    do {
+        memset(cursor + 0x2C, 0, 0x28);
+        ++count;
+        cursor += 0x28;
+    } while (count < 64);
+}
+static inline void ClearRing(u8 *cursor) {
+    int count = 0;
+    do {
+        memset(cursor, 0, 0xDC);
+        ++count;
+        cursor += 0xDC;
+    } while (count < 64);
 }
 static inline void ResetScratch(Slot *slot, int index) {
     if (index >= 0 && index < 4) {
         if (slot->flags.bits.local == 1) { slot->read = 0; slot->write = 2; }
         else { slot->read = 0; slot->write = 1; }
         memset(slot, 0, 0x2C);
-        int i;
-        u8 *cursor = (u8 *)slot;
-        for (i = 0; i < 64; ++i, cursor += 0x28) memset(cursor + 0x2C, 0, 0x28);
+        ClearPackets((u8 *)slot);
     }
 }
 
@@ -173,16 +188,20 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
             }
             PCBComm_UpdateSyncPhase1();
             PCBComm_UpdateSyncPhase5();
-            for (i = 0; i < 4; ++i) {
-                if (phases[i] == 0) {
-                    if (sync->scenes[i] < 45) sync->timers[i] = lbl_806D316C;
-                    else sync->timers[i] = lbl_806D3168;
+            signed char *phase = phases;
+            u8 *scenePtr = sync->scenes;
+            float *timerPtr = sync->timers;
+            for (i = 0; i < 4; ++i, ++phase, ++scenePtr, ++timerPtr) {
+                if (*phase == 0) {
+                    if (*scenePtr < 45) *timerPtr = lbl_806D316C;
+                    else *timerPtr = lbl_806D3168;
                 }
             }
             sync->ready = 1;
-            for (i = 0; i < 4; ++i) {
-                u32 scene = (slots[i].header.word >> 15) & 255;
-                if (scene != 0 && scene < 7 && slots[i].header.bytes.role.role == 0 && scene == 3) {
+            Slot *cursor = slots;
+            for (i = 0; i < 4; ++i, ++cursor) {
+                u32 scene = (cursor->header.word >> 15) & 255;
+                if (scene != 0 && scene < 7 && cursor->header.bytes.role.role == 0 && scene == 3) {
                     sync->ready = 0;
                     break;
                 }
@@ -281,8 +300,7 @@ extern "C" int PCBComm_Init(void)
     }
     lbl_806D11A0 = 1;
     g_ringReadIdx = 0;
-    u8 *cursor = storage->ring[0];
-    for (i = 0; i < 64; ++i, cursor += 0xDC) memset(cursor, 0, 0xDC);
+    ClearRing(storage->ring[0]);
     memset(&storage->sync, 0, 0x1C);
     return 1;
 }
