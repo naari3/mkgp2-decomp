@@ -48,7 +48,6 @@ all of these.
 | `fn_8017EFFC` | game/miyazakiconsole/fn_8017EFFC | 97.79 | register swap | |
 | `fn_8017BCF8` | game/mapobject/fn_8017BCF8 | 99.28 | f0/f1 swap | |
 | `fn_8016C94C` (PointList ctor) | game/mapeffect/PointListConstruct | 99.84 | one load order | |
-| `fn_8020615C` | game/anon_80205DCC | 99.78 | f29/f30 swap | |
 | `fn_801BDEB4` | game/fn_801BAA88 | 99.71 | ResCtrl t0/t1/t2 store order vs `li` registers | |
 | `fn_8028A3EC` | triforce/amcoin_nm2 | 99.49 | r0/r3 swap | |
 | `fn_8028A934` | triforce/amjvs_nm2 | 99.6 | target reuses r3 (`nodes`) for `n = &nodes[node]`; we copy to r5 | `nodes += node`, direct `nodes[node].x`, u32/u8 idx casts, split early return |

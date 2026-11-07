@@ -36,6 +36,8 @@ extern const float lbl_803C2688[3];
 extern const float lbl_803C2694[3];
 }
 
+#pragma push
+#pragma opt_lifetimes off
 void YesNoButtonL::DrawCredits() {
     const char *pool = lbl_803C25A8;
     int lay = layer;
@@ -107,9 +109,12 @@ void YesNoButtonL::DrawCredits() {
     oy = lbl_806DAB84 + oy;
     f = lbl_806DAB88 + f;
     for (int i = 0; i < 2; i++) {
+        float dy = (float)(i * 0x1C);
         texts[i].color = col;
-        fn_801F93EC(&texts[i], scaleX * f + (x + field34), scaleY * (oy + (float)(i * 0x1C)) + (y + field38));
+        fn_801F93EC(&texts[i], scaleX * f + (x + field34), scaleY * (dy + oy) + (y + field38));
         fn_801F93D0(&texts[i], scaleX, scaleY);
         fn_801F8A34(fn_801F8E58(), &texts[i], lay);
     }
 }
+#pragma pop
+
