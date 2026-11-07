@@ -1,4 +1,4 @@
-#include "game/YesNoButtonRDrawPrivate.h"
+#include "game/YesNoButtonRMatchPrivate.h"
 
 /*
  * Selector sparkle and right-hand button drawing (0x802052E0..0x80205DCC).
@@ -45,15 +45,51 @@ static inline void PlaceButton(YesNoButton *button, ResCtrl &c, unsigned int col
     PlaceButton(this, c, col, ox, oy); \
     fn_8011FAFC(&c, lay)
 
-void YesNoButtonR::Update() {
+static inline float SpriteX(const YesNoButton *button, float offset) {
+    return offset * button->scaleX + (button->x + button->field34);
+}
+
+static inline float SpriteY(const YesNoButton *button, float offset) {
+    return offset * button->scaleY + (button->y + button->field38);
+}
+
+static inline void PlaceButtonSprite(YesNoButton *button, ResCtrl &c, unsigned int col, float ox, float oy) {
+    c.SetColor(col);
+    c.SetScaleXY(button->scaleX, button->scaleY);
+    float py;
+    float px;
+    px = SpriteX(button, ox);
+    py = SpriteY(button, oy);
+    c.Show(px, py, lbl_806DAB20);
+}
+
+static inline void DrawButtonSprites(YesNoButtonR *button) {
     ResCtrl c;
-    int lay = layer;
-    unsigned int col = Color();
-    float f = fn_8020A6CC(fade.p);
-    PUT_BUTTON(c, 0x72F, col, lbl_806DAB00[0], lbl_806DAB08[0], lay);
-    PUT_BUTTON(c, 0x72E, col, lbl_806DAB00[1] + f, lbl_806DAB08[1], lay);
+    int lay = button->layer;
+    unsigned int col = button->Color();
+    float f = fn_8020A6CC(button->fade.p);
+    fn_80121E10(&c);
+    c.resId = 0x72F;
+    PlaceButtonSprite(button, c, col, lbl_806DAB00[0], lbl_806DAB08[0]);
+    fn_8011FAFC(&c, lay);
+    fn_80121E10(&c);
+    c.resId = 0x72E;
+    c.SetColor(col);
+    c.SetScaleXY(button->scaleX, button->scaleY);
+    float px = ButtonX(button, lbl_806DAB00[1] + f);
+    float py = SpriteY(button, lbl_806DAB08[1]);
+    c.Show(px, py, lbl_806DAB20);
+    fn_8011FAFC(&c, lay);
+}
+
+void YesNoButtonR::Update() {
+    DrawButtonSprites(this);
     DrawLabel();
     Animate();
+}
+
+static inline float TextRow(float row, float origin) {
+    return row + origin;
 }
 
 void YesNoButtonR::DrawLabel() {
@@ -92,7 +128,7 @@ void YesNoButtonR::DrawLabel() {
         oy = lbl_803C26AC[2] + oy;
         for (int i = 0; i < 2; i++) {
             texts[i].color = col;
-            fn_801F93EC(&texts[i], scaleX * tx + (x + field34), scaleY * (oy + (float)(i * 0x1C)) + (y + field38));
+            fn_801F93EC(&texts[i], scaleX * tx + (x + field34), scaleY * TextRow((float)(i * 0x1C), oy) + (y + field38));
             fn_801F93D0(&texts[i], scaleX, scaleY);
             fn_801F8A34(fn_801F8E58(), &texts[i], lay);
         }
