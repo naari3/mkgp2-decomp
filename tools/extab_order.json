@@ -1,7 +1,13 @@
 {
   "src/game/FlowDispatcher_ScopedTimer.c": {
-    "extab": ["__dt__11ScopedTimerFv", "FlowDispatcher_Create"],
-    "extabindex": ["FlowDispatcher_Create", "__dt__11ScopedTimerFv"]
+    "extab": [
+      "__dt__11ScopedTimerFv",
+      "FlowDispatcher_Create"
+    ],
+    "extabindex": [
+      "FlowDispatcher_Create",
+      "__dt__11ScopedTimerFv"
+    ]
   },
   "src/game/HeapStats.c": {
     "extab": [
@@ -2508,5 +2514,75 @@
     "__dt__10FlowFaderIFv",
     "dtor_801F4B10",
     "dtor_8007D0D4"
-  ]
+  ],
+  "src/game/anon_8020007C_nm1.cpp": {
+    "extab": [
+      "fn_80200240",
+      "dtor_80201E8C",
+      "dtor_80201F1C",
+      "fn_80200654",
+      "fn_8020096C",
+      "fn_80200A48",
+      "fn_80200EAC",
+      "fn_80200F88",
+      "fn_80200FB8",
+      "fn_80201148",
+      "fn_80201198",
+      "fn_802011D0",
+      "fn_8020122C",
+      "fn_8020134C",
+      "dtor_80201FAC",
+      "fn_8020157C",
+      "fn_802017C8",
+      "dtor_8020203C",
+      "dtor_802020B8",
+      "fn_802018A4",
+      "fn_8020192C",
+      "fn_80201A10",
+      "fn_80201A48",
+      "fn_80201A94",
+      "fn_80201BE8",
+      "dtor_801F2724",
+      "fn_801F26C8",
+      "dtor_801F4A80",
+      "TweenInterp_Dtor",
+      "dtor_80082960",
+      "dtor_801F4B10",
+      "dtor_80080444"
+    ],
+    "extabindex": [
+      "fn_80200240",
+      "fn_80200654",
+      "fn_8020096C",
+      "fn_80200A48",
+      "fn_80200EAC",
+      "fn_80200F88",
+      "fn_80200FB8",
+      "fn_80201148",
+      "fn_80201198",
+      "fn_802011D0",
+      "fn_8020122C",
+      "fn_8020134C",
+      "fn_8020157C",
+      "fn_802017C8",
+      "fn_802018A4",
+      "fn_8020192C",
+      "fn_80201A10",
+      "fn_80201A48",
+      "fn_80201A94",
+      "fn_80201BE8",
+      "dtor_80201E8C",
+      "dtor_80201F1C",
+      "dtor_80201FAC",
+      "dtor_8020203C",
+      "dtor_802020B8",
+      "dtor_801F2724",
+      "fn_801F26C8",
+      "dtor_801F4A80",
+      "TweenInterp_Dtor",
+      "dtor_80082960",
+      "dtor_801F4B10",
+      "dtor_80080444"
+    ]
+  }
 }
