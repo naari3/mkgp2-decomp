@@ -9242,6 +9242,7 @@ game/clFlowTaPlease_Init.cpp:
 	extab       start:0x80014B70 end:0x80014C44
 	extabindex  start:0x80027F68 end:0x80027F74
 	.text       start:0x801CE324 end:0x801CE800
+	.rodata     start:0x8039B470 end:0x8039B96C
 
 game/fn_801CE800.c:
 	extab       start:0x80014C44 end:0x80014C4C
