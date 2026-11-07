@@ -6362,6 +6362,7 @@ game/Scene_8015B790.cpp:
 	extab       start:0x8000F28C end:0x8000F294
 	extabindex  start:0x800259B8 end:0x800259C4
 	.text       start:0x8015B790 end:0x8015BC08
+	.rodata     start:0x80367F68 end:0x803682AC
 
 game/Scene_8015BC08.cpp:
 	extab       start:0x8000F294 end:0x8000F29C
