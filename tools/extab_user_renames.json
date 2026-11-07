@@ -5978,7 +5978,8 @@
     "__dt__7clENo3DFv": "fn_80230534",
     "__ct__7clENo3DFP10KartRenderi": "fn_8023057C",
     "__vt__7clENo3D": "lbl_804EE23C",
-    "fn_8011FAFC__FP7ResCtrli": "fn_8011FAFC"
+    "fn_8011FAFC__FP7ResCtrli": "fn_8011FAFC",
+    "__dt__8ENo3DPosFv": "dtor_80036E40"
   },
   "src/game/FaceEffect.cpp": {
     "IsIdle__12clFaceEffectFv": "fn_80230644",

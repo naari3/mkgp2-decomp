@@ -2152,7 +2152,7 @@ config.libs = [
             Object(Matching, "game/EnmyFaceEffect.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/EnmyFaceEffect_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/EName3D.cpp", extab_padding=b"\x00\x00", extra_cflags=["-rostr", "-inline deferred", "-Cpp_exceptions on", "-RTTI on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/ENo3D.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(Matching, "game/ENo3D.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-use_lmw_stmw on", "-rostr"], mw_version="GC/2.6"),
             Object(Matching, "game/FaceEffect.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-use_lmw_stmw on", "-rostr", "-inline deferred"], mw_version="GC/2.6"),
             Object(NonMatching, "game/FAllDisp.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/TimerDisp.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
@@ -4003,6 +4003,7 @@ DATA_ALIGN4_WEAK_TUS = [
     "game/anon_8020B4F8_nm1",
     "game/anon_8020BD68",
     "game/anon_8020BD68_nm1",
+    "game/ENo3D",
 ]
 
 
@@ -4037,6 +4038,7 @@ def _inject_data_align4_weak_tus() -> None:
 # .comment, whose section-symbol entry carries the alignment for MWLD).
 SDATA2_ALIGN4_TUS = [
     "game/Terrain_FlagsToDebugString",
+    "game/ENo3D",
 ]
 
 
@@ -4045,7 +4047,7 @@ def _inject_sdata2_align4_tus() -> None:
     text = build_ninja.read_text(encoding="utf-8")
     sep = "\\" if sys.platform == "win32" else "/"
     hook = " && $python tools/postprocess_sdata2.py $out $out"
-    for base_rule in ("mwcc_sjis", "mwcc_sjis_extab"):
+    for base_rule in ("mwcc_sjis", "mwcc_sjis_extab", "mwcc_sjis_extab_align4w"):
         new_rule = base_rule + "_s2align4"
         users = []
         for tu in SDATA2_ALIGN4_TUS:

@@ -1,6 +1,9 @@
 /*
  * 0x80230404..0x80230644: clENo3D, the player-number badge drawn next to a
  * rival's face icon in network battle mode.
+ *
+ * The RTTI name "clENo3D" sits in .sdata2 (-rostr) right after this TU's
+ * float pool, which stays in the unsplit pool and is referenced by name.
  */
 
 void operator delete(void *p) throw();
@@ -9,6 +12,11 @@ extern "C" {
 void *PcbSlot_GetByIndex(int slot);
 extern int g_gameMode;
 extern int g_localPcbRole;
+extern const float lbl_806DB6B8; /* -35.0 */
+extern const float lbl_806DB6C0; /* 1.53 */
+extern const float lbl_806DB6C4; /* 0.5 */
+extern const float lbl_806DB6CC; /* 0.0 */
+extern const float lbl_806DB6D0; /* 1.0 */
 }
 
 struct ResCtrl {
@@ -55,11 +63,17 @@ struct KartRender {
     KartStatus *status;
 };
 
+/* Badge position; its empty inline dtor is the shared dtor_80036E40. */
+struct ENo3DPos {
+    float x, y, z;
+    ~ENo3DPos() {}
+};
+
 class clENo3D {
 public:
-    virtual ~clENo3D() {}
+    virtual ~clENo3D();
     KartRender *kart;
-    float x, y, z;
+    ENo3DPos pos;
     float scale;
     int prio;
     unsigned char enabled;
@@ -78,33 +92,38 @@ void clENo3D::Draw() {
         } else {
             hidden = 1;
         }
-        if (hidden != 1 && !(scale < 0.5f)) {
-            float s = 1.5300002f * scale;
-            float px = -35.0f * s + x;
-            float py = y;
-            s *= 0.5f;
-            ResCtrl r;
-            r.fieldc = 1;
-            r.resId = resId;
-            r.Show(px, py, z);
-            r.SetScale(s);
-            fn_8011FAFC(&r, prio);
+        if (hidden != 1) {
+            float sc = scale;
+            if (!(sc < lbl_806DB6C4)) {
+                float s = lbl_806DB6C0 * sc;
+                float px = lbl_806DB6B8 * s + pos.x;
+                float py = pos.y;
+                s *= lbl_806DB6C4;
+                ResCtrl r;
+                r.fieldc = 1;
+                r.resId = resId;
+                r.Show(px, py, pos.z);
+                r.SetScale(s);
+                fn_8011FAFC(&r, prio);
+            }
         }
     }
 }
 
-void clENo3D::SetPos(const float *pos) {
-    x = pos[0];
-    y = pos[1];
-    z = pos[2];
+void clENo3D::SetPos(const float *p) {
+    pos.x = p[0];
+    pos.y = p[1];
+    pos.z = p[2];
 }
+
+clENo3D::~clENo3D() {}
 
 clENo3D::clENo3D(KartRender *k, int p) {
     kart = k;
-    x = 0.0f;
-    y = 0.0f;
-    z = 0.0f;
-    scale = 1.0f;
+    pos.x = lbl_806DB6CC;
+    pos.y = lbl_806DB6CC;
+    pos.z = lbl_806DB6CC;
+    scale = lbl_806DB6D0;
     prio = p;
     enabled = 1;
     resId = -1;
