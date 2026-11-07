@@ -7524,6 +7524,7 @@ game/objview/fn_80187410.cpp:
 	extab       start:0x80011C50 end:0x80011C84
 	extabindex  start:0x80026D08 end:0x80026D14
 	.text       start:0x80187410 end:0x80187754
+	.rodata     start:0x80377030 end:0x803772DC
 
 game/objview/fn_80187754.c:
 	extab       start:0x80011C84 end:0x80011C8C
