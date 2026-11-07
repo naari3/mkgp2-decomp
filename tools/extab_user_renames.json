@@ -3507,7 +3507,9 @@
     "__ct__11TextManagerFv": "fn_80149214",
     "__dt__11TextManagerFv": "dtor_800869D0",
     "__vt__9FlowFader": "lbl_80419DC8",
-    "__vt__10FlowFaderF": "lbl_80419DE0"
+    "__vt__10FlowFaderF": "lbl_80419DE0",
+    "@151": "@etb_8001900C",
+    "@152": "@eti_80029924"
   },
   "src/game/anon_80207324.cpp": {
     "__RTTI__9YesNoTask": "lbl_806D02A8",
@@ -12848,5 +12850,10 @@
     "__dt__16clSceneInterfaceFv": "dtor_8007D0D4",
     "__RTTI__16clSceneInterface": "lbl_806D050C",
     "__RTTI__16clCSSceneGetRace": "lbl_806D0514"
+  },
+  "src/game/anon_80205DCC_nm2.cpp": {
+    "DrawCredits__12YesNoButtonLFv": "fn_8020615C",
+    "@116": "@etb_80019024",
+    "@117": "@eti_80029930"
   }
 }
