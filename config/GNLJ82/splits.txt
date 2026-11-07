@@ -13771,6 +13771,9 @@ triforce/amboot.c:
 	.rodata     start:0x803F25F0 end:0x803F2668
 	.sdata      start:0x806D0C20 end:0x806D0C28
 
+triforce/amcoin_tables.c:
+	.rodata     start:0x803F2668 end:0x803F2768
+
 triforce/ambackup.c:
 	.text       start:0x80288048 end:0x80288364
 
@@ -13778,6 +13781,10 @@ triforce/ambackup_nm1.c:
 	.text       start:0x80288364 end:0x80288574
 	.bss        start:0x806835E0 end:0x80690E20
 	.sdata2     start:0x806DC918 end:0x806DC920
+
+triforce/amcoin_state.c:
+	.bss        start:0x80690E20 end:0x806910B8
+	.sdata2     start:0x806DC920 end:0x806DC930
 
 triforce/ambackup_access.c:
 	.text       start:0x80288574 end:0x80288710
@@ -13792,10 +13799,16 @@ triforce/ambackup_nm3.c:
 	.text       start:0x80288BCC end:0x80288CC8
 
 triforce/amcoin.c:
-	.text       start:0x80288CC8 end:0x8028A598
-	.rodata     start:0x803F2668 end:0x803F2768
-	.bss        start:0x80690E20 end:0x806910B8
-	.sdata2     start:0x806DC920 end:0x806DC930
+	.text       start:0x80288CC8 end:0x802895E4
+
+triforce/amcoin_nm1.c:
+	.text       start:0x802895E4 end:0x80289A90
+
+triforce/amcoin_tail.c:
+	.text       start:0x80289A90 end:0x8028A3EC
+
+triforce/amcoin_nm2.c:
+	.text       start:0x8028A3EC end:0x8028A598
 
 triforce/amjvs.c:
 	.text       start:0x8028A598 end:0x8028A740
