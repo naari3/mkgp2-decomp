@@ -9,7 +9,7 @@ extern void BuildOrientationFromYaw();
 extern void DbgScene_CopyMatrix3x4Transpose();
 extern void FinalLapCoinJump_CheckActiveForObject();
 extern void GabyouItem_BuildLocalTransformFromHandJoint();
-extern void ItemObject_AllocFromPool();
+extern char *ItemObject_AllocFromPool();
 extern void ItemObject_DecrementCategoryBudget();
 extern void Item_InitLaunchFromKart();
 extern void KartDriver_GetJointByIdx();
@@ -17,22 +17,19 @@ extern void Matrix4_Identity();
 extern void Matrix4_Multiply();
 extern void Matrix4_PreMultiplyRotY();
 extern void Mtx44_GetTranslation_ColMajor();
-extern void Mtx44_GetTranslation_RowMajor();
 extern void Mtx_TransposeToMtx44();
-extern void SpriteSlot_Container_Free();
 extern void SpriteSlot_InitNonLoop();
 extern void SpriteSlot_SetJointVisibilityByName();
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed();
 extern void SpriteSlot_TickAnim();
-extern void Vec3_Copy();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D6260;
-extern unsigned int lbl_806D6264;
-extern unsigned int lbl_806D62AC;
-extern unsigned int lbl_806D62B0;
-extern unsigned int lbl_806D62B4;
-extern unsigned int lbl_806D62B8;
+extern const float lbl_806D6260;
+extern const float lbl_806D6264;
+extern const float lbl_806D62AC;
+extern const float lbl_806D62B0;
+extern const float lbl_806D62B4;
+extern const float lbl_806D62B8;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
