@@ -12214,7 +12214,14 @@
     "__dt__11HudFlowRootFv": "dtor_8021617C",
     "__ct__9HudFlow24Fi": "fn_80245C1C",
     "__vt__9HudFlow24": "lbl_804EE83C",
-    "__ct__11TextManagerFv": "TexMgr_Init"
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "internationalLabels": "global:lbl_804EE7C8",
+    "japaneseLabels": "lbl_804EE7FC",
+    "hudTypeInfo": "global:lbl_804EE830",
+    "hudVtable": "global:lbl_804EE83C",
+    "__dt__13HudFlow24RootFv": "dtor_8021617C",
+    "@77": "@etb_8001D4B4",
+    "@78": "@eti_8002B238"
   },
   "src/game/RaceDigitHudDtor.cpp": {
     "__dt__10DigitOwnerFv": "dtor_80247980",
