@@ -1134,3 +1134,8 @@ c17_u49: fresh clFlowClass_Update object is 99.81191%, EH88 exact. Approved SING
 Source: Codex worker c17_u51_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c17_u51 CoinChallengeUpdate: replacing handwritten transition getter with SINGLETON_INSTANCE is instruction-identical. Return/local/argument byte-vs-int type variants do not remove r3->r0->r27 started-result copy. Nesting IsRaceStarted and virtual steering as ApplyInput arguments reverses call order and regresses to94.939224/EH87.5. Inline whole input phase removes one copy and restores target1448B/index100 but changes FP homes and hoists virtual vptr load, text97.776245; rejected. Retain original98.24586/1452B draft. Broad self/before/after/sprites/tens GPR rotation remains. No singleton/data unlock here; single fn prevents rescue split.
+
+## c17_u55_20261107
+Source: Codex worker c17_u55_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u55_20261107: fn_801B9928 baseline 92.59424%. All defensive g_pInputState sequences already emitted via GetInput; canonical SINGLETON_INSTANCE replacement is byte-equivalent. Residual is array-subobject base materialization, not singleton reads or a shared constant pool. Target top[1]/top[2] maintain r29/r28 = base+0; bottom[1]/bottom[2] maintain r27/r26 = base+0xC. New-result registers then need r26/r25, source uses r29. Simple wrapper operator[] (member-array and cast-based forms) both fold to unchanged output. Both reverted. A pointer-returning accessor shape was not tested because two-no-information stopping rule triggered.
