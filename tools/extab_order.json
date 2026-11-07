@@ -2759,5 +2759,10 @@
     "clFlowChara_Destructor",
     "FrameSelection_Init",
     "dtor_800869D0"
+  ],
+  "src/game/anon_802052E0_nm1.cpp": [
+    "fn_802055F4",
+    "fn_8020579C",
+    "dtor_80082960"
   ]
 }

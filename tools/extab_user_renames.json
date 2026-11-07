@@ -9134,6 +9134,10 @@
     "@99": "@eti_8002A7D0"
   },
   "src/game/anon_802052E0_nm1.cpp": {
+    "@126": "@etb_80018F14",
+    "@127": "@eti_800298F4",
+    "@196": "@etb_80018F2C",
+    "@197": "@eti_80029900",
     "Draw__10YesNoSparkFv": "fn_802052E0",
     "Update__10YesNoSparkFv": "fn_802052E4",
     "__dt__10YesNoSparkFv": "fn_802054D0",
