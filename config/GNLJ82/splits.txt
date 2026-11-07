@@ -6277,6 +6277,7 @@ game/SceneFactory_8014D540.cpp:
 	extab       start:0x8000E640 end:0x8000E86C
 	extabindex  start:0x8002555C end:0x80025580
 	.text       start:0x8014D540 end:0x8014DD5C
+	.data       start:0x8048FDB0 end:0x8048FDCC
 
 game/fn_8014DD5C.c:
 	extab       start:0x8000E86C end:0x8000E874

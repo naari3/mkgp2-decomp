@@ -5445,7 +5445,17 @@
     "extab_fn_8014D88C": "@etb_8000E71C",
     "extabindex_fn_8014D88C": "@eti_80025574",
     "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__12SceneFactoryFiPv": "fn_8014D540",
+    "__vt__16clSceneInterface": "lbl_803FE0C8",
+    "__dt__16clSceneInterfaceFv": "dtor_8007D0D4",
+    "__vt__12SceneFactory": "lbl_8048FD98",
+    "__vt__10LoaderBase": "lbl_8048FF80",
+    "__dt__10LoaderBaseFv": "dtor_801577D4",
+    "__vt__12AttractScene": "lbl_8048FF64",
+    "__ct__10TitleSceneFiPv": "fn_80151F08",
+    "__ct__11SelectSceneFPvi": "fn_801500F4",
+    "__ct__12RankingSceneFv": "fn_8014FC40"
   },
   "src/game/fn_8014DD80.cpp": {
     "extab_fn_8014DD80": "@etb_8000E874",

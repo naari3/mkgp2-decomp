@@ -1,916 +1,329 @@
-
-/* sdata symbols referenced from asm */
-extern unsigned char lbl_806D70C8[7];
-extern unsigned char lbl_806D70D0[5];
 /*
  * 0x8012A71C..0x8012B394: challenge scene update.
+ * Steers the preview driver toward the target lean, blends the driver /
+ * lean / reaction animations, toggles the parts per mode, bobs two joints
+ * and drives the attachment bound to a driver joint.
  */
 #pragma cplusplus on
 
+typedef struct HSD_JObj {
+    unsigned char pad00[0x14];
+    unsigned int flags; /* 0x14 */
+    unsigned char pad18[0x24];
+    float translateY;   /* 0x3C */
+    unsigned char pad40[0x4];
+    float mtx[3][4];    /* 0x44 */
+} HSD_JObj;
+
+typedef struct CharacterData {
+    unsigned char pad00[0x1c];
+    float leanEnd;      /* 0x1C */
+    unsigned char pad20[0x4];
+    float leanEnd2;     /* 0x24 */
+} CharacterData;
+
+typedef struct ChallengeDriver {
+    void *kart;         /* 0x000 */
+    void *pad04;
+    void *driver;       /* 0x008 */
+    void *base;         /* 0x00C */
+    void *over;         /* 0x010 */
+    void *anim[50];     /* 0x014 */
+    float vel[3];       /* 0x0DC */
+    int charId;         /* 0x0E8 */
+    int overAnim;       /* 0x0EC */
+    int action;         /* 0x0F0 */
+    int dir;            /* 0x0F4 */
+    float steer;        /* 0x0F8 */
+    float lean;         /* 0x0FC */
+    float leanBlend;    /* 0x100 */
+    int leanSet;        /* 0x104 */
+    float frame;        /* 0x108 */
+    float speed;        /* 0x10C */
+    float frameEnd;     /* 0x110 */
+    float inBlend;      /* 0x114 */
+    float inBlendStep;  /* 0x118 */
+    float outBlend;     /* 0x11C */
+    float outBlendStep; /* 0x120 */
+    void *attach;       /* 0x124 */
+    HSD_JObj *attachJoint; /* 0x128 */
+    HSD_JObj *bob0;     /* 0x12C */
+    HSD_JObj *bob1;     /* 0x130 */
+    float bobAmp;       /* 0x134 */
+    float bobPhase;     /* 0x138 */
+    float bobBase0;     /* 0x13C */
+    float bobBase1;     /* 0x140 */
+    unsigned char pad144[0x10];
+    int partMode;       /* 0x154 */
+    void *part0;        /* 0x158 */
+    void *part1;        /* 0x15C */
+    void *part2;        /* 0x160 */
+} ChallengeDriver;
+
 extern "C" {
-extern void Archive_GetRootJObj();
-extern void GetCharacterDataEntry();
-extern void HSD_JObjSetMtxDirtySub();
-extern void HSD_JObjSetupMatrixSub();
-extern void JObj_Hide();
-extern void JObj_Show();
-extern void LUT_Sin12Bit();
-extern void ObjectTree_BlendOrCopy_Timed();
-extern void Object_DriveAnimAndSkin();
-extern void Object_DriveAnimMatrix();
-extern void Object_GetField8();
-extern void Object_SetAnimBinding();
-extern void Object_SetField8_10_14();
-extern void Vec3_Magnitude();
-extern void __assert();
-extern void clNormal3D_Exec();
-extern unsigned int lbl_806CF018;
-extern unsigned int lbl_806D70D8;
-extern unsigned int lbl_806D70DC;
-extern unsigned int lbl_806D70E0;
-extern unsigned int lbl_806D70E4;
-extern unsigned int lbl_806D70E8;
-extern unsigned int lbl_806D70EC;
-extern unsigned int lbl_806D70F0;
-extern unsigned int lbl_806D70F4;
-extern unsigned int lbl_806D70F8;
-extern unsigned int lbl_806D70FC;
-extern unsigned int lbl_806D7100;
-extern unsigned int lbl_806D7104;
-extern unsigned int lbl_806D7108;
-extern unsigned int lbl_806D710C;
-extern unsigned int lbl_806D7110;
-extern unsigned int lbl_806D7114;
-extern unsigned int lbl_806D7118;
-extern unsigned int lbl_806D7120;
-asm void fn_8012A71C(void);
-
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_fn_8012A71C[8] = {
-    0x18, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8012A71C = {
-    (void *)&fn_8012A71C, 0x00000C78, (void *)extab_fn_8012A71C
-};
-
+void *Archive_GetRootJObj(void *obj);
+CharacterData *GetCharacterDataEntry(int id);
+void HSD_JObjSetMtxDirtySub(HSD_JObj *jobj);
+void HSD_JObjSetupMatrixSub(HSD_JObj *jobj);
+void JObj_Hide(void *obj, void *part, int flag);
+void JObj_Show(void *obj, void *part, int flag);
+float LUT_Sin12Bit(float deg);
+void ObjectTree_BlendOrCopy_Timed(void *obj, void *a, void *b, void *c, float t);
+void Object_DriveAnimAndSkin(void *obj, float frame, float rate, void *anim);
+void Object_DriveAnimMatrix(void *obj);
+float Object_GetField8(void *obj);
+void Object_SetAnimBinding(void *obj, float (*mtx)[4], int flag);
+void Object_SetField8_10_14(void *obj, float a, float b, float c);
+float Vec3_Magnitude(float *v);
+void __assert(char *file, int line, char *expr);
+void clNormal3D_Exec(void *obj);
+extern float lbl_806CF018;
+extern char lbl_806D70C8[7];
+extern char lbl_806D70D0[5];
 }
 
-
-extern "C" asm void fn_8012A71C(void) { /* 0x8012A71C size:0xC78 */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    stw r0, 0x44(r1)
-    stfd f31, 0x30(r1)
-    psq_st f31, 0x38(r1), 0, 0
-    stw r31, 0x2c(r1)
-    stw r30, 0x28(r1)
-    stw r29, 0x24(r1)
-    mr r31, r3
-    fmr f31, f1
-    lwz r3, 0x0(r3)
-    cmplwi r3, 0x0
-    beq fn_8012A71C_L_8012A75C
-    lwz r0, 0x8(r31)
-    cmplwi r0, 0x0
-    bne fn_8012A71C_L_8012A764
-    fn_8012A71C_L_8012A75C:
-    li r3, 0x0
-    b fn_8012A71C_L_8012B370
-    fn_8012A71C_L_8012A764:
-    bl Object_DriveAnimMatrix
-    lfs f1, 0xf8(r31)
-    fcmpo cr0, f1, f31
-    ble fn_8012A71C_L_8012A790
-    lfs f0, lbl_806CF018(r13)
-    fsubs f0, f1, f0
-    fcmpo cr0, f0, f31
-    stfs f0, 0xf8(r31)
-    bge fn_8012A71C_L_8012A7A8
-    stfs f31, 0xf8(r31)
-    b fn_8012A71C_L_8012A7A8
-    fn_8012A71C_L_8012A790:
-    lfs f0, lbl_806CF018(r13)
-    fadds f0, f1, f0
-    fcmpo cr0, f0, f31
-    stfs f0, 0xf8(r31)
-    ble fn_8012A71C_L_8012A7A8
-    stfs f31, 0xf8(r31)
-    fn_8012A71C_L_8012A7A8:
-    lfs f0, lbl_806D70D8(r2)
-    lfs f1, 0xf8(r31)
-    fcmpo cr0, f0, f1
-    bge fn_8012A71C_L_8012A810
-    lfs f0, lbl_806D70DC(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8012A71C_L_8012A810
-    lfs f2, 0xfc(r31)
-    lfs f1, lbl_806D70E0(r2)
-    fcmpo cr0, f2, f1
-    bge fn_8012A71C_L_8012A7F0
-    lfs f0, lbl_806D70E4(r2)
-    fadds f0, f2, f0
-    fcmpo cr0, f0, f1
-    stfs f0, 0xfc(r31)
-    ble fn_8012A71C_L_8012A860
-    stfs f1, 0xfc(r31)
-    b fn_8012A71C_L_8012A860
-    fn_8012A71C_L_8012A7F0:
-    ble fn_8012A71C_L_8012A860
-    lfs f0, lbl_806D70E4(r2)
-    fsubs f0, f2, f0
-    fcmpo cr0, f0, f1
-    stfs f0, 0xfc(r31)
-    bge fn_8012A71C_L_8012A860
-    stfs f1, 0xfc(r31)
-    b fn_8012A71C_L_8012A860
-    fn_8012A71C_L_8012A810:
-    lfs f0, lbl_806D70E0(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8012A71C_L_8012A840
-    lfs f2, 0xfc(r31)
-    lfs f1, lbl_806D70E4(r2)
-    lfs f0, lbl_806D70E8(r2)
-    fsubs f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0xfc(r31)
-    bge fn_8012A71C_L_8012A860
-    stfs f0, 0xfc(r31)
-    b fn_8012A71C_L_8012A860
-    fn_8012A71C_L_8012A840:
-    lfs f2, 0xfc(r31)
-    lfs f1, lbl_806D70E4(r2)
-    lfs f0, lbl_806D70EC(r2)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0xfc(r31)
-    ble fn_8012A71C_L_8012A860
-    stfs f0, 0xfc(r31)
-    fn_8012A71C_L_8012A860:
-    lfs f2, lbl_806D70EC(r2)
-    lfs f4, 0xfc(r31)
-    lwz r0, 0xf0(r31)
-    fadds f0, f2, f4
-    lfs f1, lbl_806D70F4(r2)
-    lfs f3, lbl_806D70F0(r2)
-    cmpwi r0, 0x2a
-    fsubs f0, f1, f0
-    fmuls f1, f3, f0
-    beq fn_8012A71C_L_8012A890
-    cmpwi r0, 0x2b
-    bne fn_8012A71C_L_8012A928
-    fn_8012A71C_L_8012A890:
-    slwi r0, r0, 2
-    lwz r3, 0xc(r31)
-    add r4, r31, r0
-    lfs f1, 0x108(r31)
-    lfs f2, lbl_806D70E0(r2)
-    lwz r4, 0x14(r4)
-    bl Object_DriveAnimAndSkin
-    lwz r3, 0x8(r31)
-    bl Archive_GetRootJObj
-    mr r29, r3
-    lwz r3, 0xc(r31)
-    bl Archive_GetRootJObj
-    mr r4, r3
-    lwz r3, 0x8(r31)
-    lfs f1, lbl_806D70E0(r2)
-    mr r5, r29
-    li r6, 0x0
-    bl ObjectTree_BlendOrCopy_Timed
-    lwz r0, 0xf0(r31)
-    cmpwi r0, 0x2a
-    bne fn_8012A71C_L_8012A8F4
-    lwz r3, 0xe8(r31)
-    bl GetCharacterDataEntry
-    lfs f2, 0x1c(r3)
-    b fn_8012A71C_L_8012A900
-    fn_8012A71C_L_8012A8F4:
-    lwz r3, 0xe8(r31)
-    bl GetCharacterDataEntry
-    lfs f2, 0x24(r3)
-    fn_8012A71C_L_8012A900:
-    lfs f1, 0x108(r31)
-    lfs f0, 0x10c(r31)
-    fadds f0, f1, f0
-    fcmpo cr0, f0, f2
-    stfs f0, 0x108(r31)
-    cror eq, gt, eq
-    bne fn_8012A71C_L_8012AFD8
-    lfs f0, lbl_806D70E0(r2)
-    stfs f0, 0x108(r31)
-    b fn_8012A71C_L_8012AFD8
-    fn_8012A71C_L_8012A928:
-    cmpwi r0, 0x1
-    bne fn_8012A71C_L_8012A9C4
-    lwz r0, 0xf4(r31)
-    lwz r3, 0xc(r31)
-    slwi r0, r0, 2
-    lfs f2, lbl_806D70E0(r2)
-    add r4, r31, r0
-    lwz r4, 0x14(r4)
-    bl Object_DriveAnimAndSkin
-    lwz r3, 0x10(r31)
-    lfs f1, lbl_806D70E8(r2)
-    lfs f2, lbl_806D70E0(r2)
-    lwz r4, 0x14(r31)
-    bl Object_DriveAnimAndSkin
-    lwz r3, 0x8(r31)
-    bl Archive_GetRootJObj
-    mr r30, r3
-    lwz r3, 0xc(r31)
-    bl Archive_GetRootJObj
-    mr r29, r3
-    lwz r3, 0x10(r31)
-    bl Archive_GetRootJObj
-    mr r4, r3
-    lwz r3, 0x8(r31)
-    lfs f1, 0x11c(r31)
-    mr r5, r29
-    mr r6, r30
-    bl ObjectTree_BlendOrCopy_Timed
-    lfs f2, 0x11c(r31)
-    lfs f1, 0x120(r31)
-    lfs f0, lbl_806D70EC(r2)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0x11c(r31)
-    cror eq, gt, eq
-    bne fn_8012A71C_L_8012AFD8
-    li r0, 0x0
-    stw r0, 0xf0(r31)
-    b fn_8012A71C_L_8012AFD8
-    fn_8012A71C_L_8012A9C4:
-    cmpwi r0, 0x0
-    beq fn_8012A71C_L_8012AB9C
-    cmpwi r0, -0x1
-    beq fn_8012A71C_L_8012AAF0
-    lfs f2, 0x108(r31)
-    lfs f0, 0x110(r31)
-    fcmpo cr0, f2, f0
-    bge fn_8012A71C_L_8012AAF0
-    slwi r0, r0, 2
-    fmr f1, f2
-    add r4, r31, r0
-    lwz r3, 0xc(r31)
-    lfs f2, lbl_806D70E0(r2)
-    lwz r4, 0x14(r4)
-    bl Object_DriveAnimAndSkin
-    lfs f2, 0x108(r31)
-    lfs f1, 0x10c(r31)
-    lfs f0, lbl_806D70EC(r2)
-    fadds f1, f2, f1
-    stfs f1, 0x108(r31)
-    lfs f1, 0x114(r31)
-    fcmpo cr0, f1, f0
-    bge fn_8012A71C_L_8012AA8C
-    lwz r0, 0xec(r31)
-    lwz r3, 0x10(r31)
-    slwi r0, r0, 2
-    lfs f1, lbl_806D70E8(r2)
-    add r4, r31, r0
-    lfs f2, lbl_806D70E0(r2)
-    lwz r4, 0x14(r4)
-    bl Object_DriveAnimAndSkin
-    lwz r3, 0x8(r31)
-    bl Archive_GetRootJObj
-    mr r30, r3
-    lwz r3, 0xc(r31)
-    bl Archive_GetRootJObj
-    mr r29, r3
-    lwz r3, 0x10(r31)
-    bl Archive_GetRootJObj
-    mr r4, r3
-    lwz r3, 0x8(r31)
-    lfs f1, 0x114(r31)
-    mr r5, r29
-    mr r6, r30
-    bl ObjectTree_BlendOrCopy_Timed
-    lfs f1, 0x114(r31)
-    lfs f0, 0x118(r31)
-    fadds f0, f1, f0
-    stfs f0, 0x114(r31)
-    b fn_8012A71C_L_8012AFD8
-    fn_8012A71C_L_8012AA8C:
-    lwz r0, 0xf0(r31)
-    slwi r0, r0, 2
-    add r3, r31, r0
-    lwz r3, 0x14(r3)
-    bl clNormal3D_Exec
-    lwz r0, 0xf0(r31)
-    lwz r3, 0x10(r31)
-    slwi r0, r0, 2
-    lfs f1, 0x108(r31)
-    add r4, r31, r0
-    lfs f2, lbl_806D70E0(r2)
-    lwz r4, 0x14(r4)
-    bl Object_DriveAnimAndSkin
-    lwz r3, 0x8(r31)
-    bl Archive_GetRootJObj
-    mr r29, r3
-    lwz r3, 0x10(r31)
-    bl Archive_GetRootJObj
-    mr r4, r3
-    lwz r3, 0x8(r31)
-    lfs f1, lbl_806D70E0(r2)
-    mr r5, r29
-    li r6, 0x0
-    bl ObjectTree_BlendOrCopy_Timed
-    b fn_8012A71C_L_8012AFD8
-    fn_8012A71C_L_8012AAF0:
-    lwz r4, 0x104(r31)
-    lwz r0, 0xf4(r31)
-    lwz r3, 0xc(r31)
-    add r0, r4, r0
-    lfs f2, lbl_806D70E0(r2)
-    slwi r0, r0, 2
-    add r4, r31, r0
-    lwz r4, 0x14(r4)
-    bl Object_DriveAnimAndSkin
-    lwz r0, 0xf0(r31)
-    lwz r3, 0x10(r31)
-    slwi r0, r0, 2
-    lfs f1, lbl_806D70E8(r2)
-    add r4, r31, r0
-    lfs f2, lbl_806D70E0(r2)
-    lwz r4, 0x14(r4)
-    bl Object_DriveAnimAndSkin
-    lwz r3, 0x8(r31)
-    bl Archive_GetRootJObj
-    mr r30, r3
-    lwz r3, 0xc(r31)
-    bl Archive_GetRootJObj
-    mr r29, r3
-    lwz r3, 0x10(r31)
-    bl Archive_GetRootJObj
-    mr r4, r3
-    lwz r3, 0x8(r31)
-    lfs f1, 0x11c(r31)
-    mr r5, r29
-    mr r6, r30
-    bl ObjectTree_BlendOrCopy_Timed
-    lfs f2, 0x11c(r31)
-    lfs f1, 0x120(r31)
-    lfs f0, lbl_806D70EC(r2)
-    fadds f1, f2, f1
-    stfs f1, 0x11c(r31)
-    lfs f1, 0x11c(r31)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_8012A71C_L_8012AFD8
-    li r0, 0x0
-    stw r0, 0xf0(r31)
-    b fn_8012A71C_L_8012AFD8
-    fn_8012A71C_L_8012AB9C:
-    lfs f0, lbl_806D70D8(r2)
-    fcmpo cr0, f0, f4
-    bge fn_8012A71C_L_8012ACBC
-    lfs f0, lbl_806D70DC(r2)
-    fcmpo cr0, f4, f0
-    bge fn_8012A71C_L_8012ACBC
-    li r0, 0x5
-    lfs f0, lbl_806D70F8(r2)
-    stw r0, 0x104(r31)
-    lfs f1, 0x108(r31)
-    fadds f1, f1, f2
-    fcmpo cr0, f1, f0
-    stfs f1, 0x108(r31)
-    ble fn_8012A71C_L_8012ABDC
-    lfs f0, lbl_806D70E0(r2)
-    stfs f0, 0x108(r31)
-    fn_8012A71C_L_8012ABDC:
-    lwz r0, 0xf4(r31)
-    lwz r3, 0xc(r31)
-    slwi r0, r0, 2
-    lfs f1, 0x108(r31)
-    add r4, r31, r0
-    lfs f2, lbl_806D70E0(r2)
-    lwz r4, 0x28(r4)
-    bl Object_DriveAnimAndSkin
-    lfs f1, 0x100(r31)
-    lfs f0, lbl_806D70EC(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8012A71C_L_8012AC8C
-    lwz r0, 0xf4(r31)
-    lwz r3, 0x10(r31)
-    slwi r0, r0, 2
-    lfs f1, lbl_806D70E8(r2)
-    add r4, r31, r0
-    lfs f2, lbl_806D70E0(r2)
-    lwz r4, 0x14(r4)
-    bl Object_DriveAnimAndSkin
-    lwz r3, 0x8(r31)
-    bl Archive_GetRootJObj
-    mr r30, r3
-    lwz r3, 0xc(r31)
-    bl Archive_GetRootJObj
-    mr r29, r3
-    lwz r3, 0x10(r31)
-    bl Archive_GetRootJObj
-    mr r4, r3
-    lwz r3, 0x8(r31)
-    lfs f1, 0x100(r31)
-    mr r5, r29
-    mr r6, r30
-    bl ObjectTree_BlendOrCopy_Timed
-    lfs f2, 0x100(r31)
-    lfs f1, lbl_806D70FC(r2)
-    lfs f0, lbl_806D70EC(r2)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0x100(r31)
-    cror eq, gt, eq
-    bne fn_8012A71C_L_8012AFD8
-    stfs f0, 0x100(r31)
-    b fn_8012A71C_L_8012AFD8
-    fn_8012A71C_L_8012AC8C:
-    lwz r3, 0x8(r31)
-    bl Archive_GetRootJObj
-    mr r29, r3
-    lwz r3, 0xc(r31)
-    bl Archive_GetRootJObj
-    mr r4, r3
-    lwz r3, 0x8(r31)
-    lfs f1, lbl_806D70E0(r2)
-    mr r5, r29
-    li r6, 0x0
-    bl ObjectTree_BlendOrCopy_Timed
-    b fn_8012A71C_L_8012AFD8
-    fn_8012A71C_L_8012ACBC:
-    lfs f0, lbl_806D7100(r2)
-    fcmpo cr0, f0, f4
-    bge fn_8012A71C_L_8012ADD4
-    li r0, 0xa
-    lfs f1, lbl_806D70EC(r2)
-    stw r0, 0x104(r31)
-    lfs f0, lbl_806D70F8(r2)
-    lfs f2, 0x108(r31)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0x108(r31)
-    ble fn_8012A71C_L_8012ACF4
-    lfs f0, lbl_806D70E0(r2)
-    stfs f0, 0x108(r31)
-    fn_8012A71C_L_8012ACF4:
-    lwz r0, 0xf4(r31)
-    lwz r3, 0xc(r31)
-    slwi r0, r0, 2
-    lfs f1, 0x108(r31)
-    add r4, r31, r0
-    lfs f2, lbl_806D70E0(r2)
-    lwz r4, 0x3c(r4)
-    bl Object_DriveAnimAndSkin
-    lfs f1, 0x100(r31)
-    lfs f0, lbl_806D70EC(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8012A71C_L_8012ADA4
-    lwz r0, 0xf4(r31)
-    lwz r3, 0x10(r31)
-    slwi r0, r0, 2
-    lfs f1, lbl_806D70E8(r2)
-    add r4, r31, r0
-    lfs f2, lbl_806D70E0(r2)
-    lwz r4, 0x14(r4)
-    bl Object_DriveAnimAndSkin
-    lwz r3, 0x8(r31)
-    bl Archive_GetRootJObj
-    mr r30, r3
-    lwz r3, 0xc(r31)
-    bl Archive_GetRootJObj
-    mr r29, r3
-    lwz r3, 0x10(r31)
-    bl Archive_GetRootJObj
-    mr r4, r3
-    lwz r3, 0x8(r31)
-    lfs f1, 0x100(r31)
-    mr r5, r29
-    mr r6, r30
-    bl ObjectTree_BlendOrCopy_Timed
-    lfs f2, 0x100(r31)
-    lfs f1, lbl_806D70FC(r2)
-    lfs f0, lbl_806D70EC(r2)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0x100(r31)
-    cror eq, gt, eq
-    bne fn_8012A71C_L_8012AFD8
-    stfs f0, 0x100(r31)
-    b fn_8012A71C_L_8012AFD8
-    fn_8012A71C_L_8012ADA4:
-    lwz r3, 0x8(r31)
-    bl Archive_GetRootJObj
-    mr r29, r3
-    lwz r3, 0xc(r31)
-    bl Archive_GetRootJObj
-    mr r4, r3
-    lwz r3, 0x8(r31)
-    lfs f1, lbl_806D70E0(r2)
-    mr r5, r29
-    li r6, 0x0
-    bl ObjectTree_BlendOrCopy_Timed
-    b fn_8012A71C_L_8012AFD8
-    fn_8012A71C_L_8012ADD4:
-    lfs f0, lbl_806D7104(r2)
-    fcmpo cr0, f4, f0
-    bge fn_8012A71C_L_8012AEEC
-    li r0, 0xf
-    lfs f1, lbl_806D70EC(r2)
-    stw r0, 0x104(r31)
-    lfs f0, lbl_806D70F8(r2)
-    lfs f2, 0x108(r31)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0x108(r31)
-    ble fn_8012A71C_L_8012AE0C
-    lfs f0, lbl_806D70E0(r2)
-    stfs f0, 0x108(r31)
-    fn_8012A71C_L_8012AE0C:
-    lwz r0, 0xf4(r31)
-    lwz r3, 0xc(r31)
-    slwi r0, r0, 2
-    lfs f1, 0x108(r31)
-    add r4, r31, r0
-    lfs f2, lbl_806D70E0(r2)
-    lwz r4, 0x50(r4)
-    bl Object_DriveAnimAndSkin
-    lfs f1, 0x100(r31)
-    lfs f0, lbl_806D70EC(r2)
-    fcmpo cr0, f1, f0
-    bge fn_8012A71C_L_8012AEBC
-    lwz r0, 0xf4(r31)
-    lwz r3, 0x10(r31)
-    slwi r0, r0, 2
-    lfs f1, lbl_806D70E8(r2)
-    add r4, r31, r0
-    lfs f2, lbl_806D70E0(r2)
-    lwz r4, 0x14(r4)
-    bl Object_DriveAnimAndSkin
-    lwz r3, 0x8(r31)
-    bl Archive_GetRootJObj
-    mr r30, r3
-    lwz r3, 0xc(r31)
-    bl Archive_GetRootJObj
-    mr r29, r3
-    lwz r3, 0x10(r31)
-    bl Archive_GetRootJObj
-    mr r4, r3
-    lwz r3, 0x8(r31)
-    lfs f1, 0x100(r31)
-    mr r5, r29
-    mr r6, r30
-    bl ObjectTree_BlendOrCopy_Timed
-    lfs f2, 0x100(r31)
-    lfs f1, lbl_806D70FC(r2)
-    lfs f0, lbl_806D70EC(r2)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0x100(r31)
-    cror eq, gt, eq
-    bne fn_8012A71C_L_8012AFD8
-    stfs f0, 0x100(r31)
-    b fn_8012A71C_L_8012AFD8
-    fn_8012A71C_L_8012AEBC:
-    lwz r3, 0x8(r31)
-    bl Archive_GetRootJObj
-    mr r29, r3
-    lwz r3, 0xc(r31)
-    bl Archive_GetRootJObj
-    mr r4, r3
-    lwz r3, 0x8(r31)
-    lfs f1, lbl_806D70E0(r2)
-    mr r5, r29
-    li r6, 0x0
-    bl ObjectTree_BlendOrCopy_Timed
-    b fn_8012A71C_L_8012AFD8
-    fn_8012A71C_L_8012AEEC:
-    lwz r0, 0xf4(r31)
-    lwz r3, 0xc(r31)
-    slwi r0, r0, 2
-    lfs f2, lbl_806D70E0(r2)
-    add r4, r31, r0
-    lwz r4, 0x14(r4)
-    bl Object_DriveAnimAndSkin
-    lfs f0, 0x100(r31)
-    lfs f2, lbl_806D70E0(r2)
-    fcmpo cr0, f0, f2
-    ble fn_8012A71C_L_8012AFAC
-    lwz r4, 0x104(r31)
-    lwz r0, 0xf4(r31)
-    lwz r3, 0x10(r31)
-    add r0, r4, r0
-    lfs f1, lbl_806D70E8(r2)
-    slwi r0, r0, 2
-    add r4, r31, r0
-    lwz r4, 0x14(r4)
-    bl Object_DriveAnimAndSkin
-    lwz r3, 0x8(r31)
-    bl Archive_GetRootJObj
-    mr r29, r3
-    lwz r3, 0xc(r31)
-    bl Archive_GetRootJObj
-    mr r30, r3
-    lwz r3, 0x10(r31)
-    bl Archive_GetRootJObj
-    lfs f1, lbl_806D70EC(r2)
-    mr r4, r3
-    lfs f0, 0x100(r31)
-    mr r5, r30
-    lwz r3, 0x8(r31)
-    mr r6, r29
-    fsubs f1, f1, f0
-    bl ObjectTree_BlendOrCopy_Timed
-    lfs f2, 0x100(r31)
-    lfs f1, lbl_806D70FC(r2)
-    lfs f0, lbl_806D70E0(r2)
-    fsubs f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0x100(r31)
-    cror eq, lt, eq
-    bne fn_8012A71C_L_8012AFD8
-    stfs f0, 0x100(r31)
-    li r0, 0x0
-    stw r0, 0x104(r31)
-    b fn_8012A71C_L_8012AFD8
-    fn_8012A71C_L_8012AFAC:
-    lwz r3, 0x8(r31)
-    bl Archive_GetRootJObj
-    mr r30, r3
-    lwz r3, 0xc(r31)
-    bl Archive_GetRootJObj
-    mr r4, r3
-    lwz r3, 0x8(r31)
-    lfs f1, lbl_806D70E0(r2)
-    mr r5, r30
-    li r6, 0x0
-    bl ObjectTree_BlendOrCopy_Timed
-    fn_8012A71C_L_8012AFD8:
-    lwz r3, 0x8(r31)
-    bl Object_DriveAnimMatrix
-    lwz r0, 0x154(r31)
-    cmpwi r0, 0x2
-    bne fn_8012A71C_L_8012B038
-    lwz r4, 0x158(r31)
-    cmplwi r4, 0x0
-    beq fn_8012A71C_L_8012B004
-    lwz r3, 0x8(r31)
-    li r5, 0x10
-    bl JObj_Hide
-    fn_8012A71C_L_8012B004:
-    lwz r4, 0x15c(r31)
-    cmplwi r4, 0x0
-    beq fn_8012A71C_L_8012B01C
-    lwz r3, 0x8(r31)
-    li r5, 0x10
-    bl JObj_Hide
-    fn_8012A71C_L_8012B01C:
-    lwz r4, 0x160(r31)
-    cmplwi r4, 0x0
-    beq fn_8012A71C_L_8012B0D4
-    lwz r3, 0x8(r31)
-    li r5, 0x10
-    bl JObj_Show
-    b fn_8012A71C_L_8012B0D4
-    fn_8012A71C_L_8012B038:
-    cmpwi r0, 0x1
-    bne fn_8012A71C_L_8012B08C
-    lwz r4, 0x158(r31)
-    cmplwi r4, 0x0
-    beq fn_8012A71C_L_8012B058
-    lwz r3, 0x8(r31)
-    li r5, 0x10
-    bl JObj_Hide
-    fn_8012A71C_L_8012B058:
-    lwz r4, 0x15c(r31)
-    cmplwi r4, 0x0
-    beq fn_8012A71C_L_8012B070
-    lwz r3, 0x8(r31)
-    li r5, 0x10
-    bl JObj_Show
-    fn_8012A71C_L_8012B070:
-    lwz r4, 0x160(r31)
-    cmplwi r4, 0x0
-    beq fn_8012A71C_L_8012B0D4
-    lwz r3, 0x8(r31)
-    li r5, 0x10
-    bl JObj_Hide
-    b fn_8012A71C_L_8012B0D4
-    fn_8012A71C_L_8012B08C:
-    lwz r4, 0x158(r31)
-    cmplwi r4, 0x0
-    beq fn_8012A71C_L_8012B0A4
-    lwz r3, 0x8(r31)
-    li r5, 0x10
-    bl JObj_Show
-    fn_8012A71C_L_8012B0A4:
-    lwz r4, 0x15c(r31)
-    cmplwi r4, 0x0
-    beq fn_8012A71C_L_8012B0BC
-    lwz r3, 0x8(r31)
-    li r5, 0x10
-    bl JObj_Hide
-    fn_8012A71C_L_8012B0BC:
-    lwz r4, 0x160(r31)
-    cmplwi r4, 0x0
-    beq fn_8012A71C_L_8012B0D4
-    lwz r3, 0x8(r31)
-    li r5, 0x10
-    bl JObj_Hide
-    fn_8012A71C_L_8012B0D4:
-    lfs f1, 0x138(r31)
-    lfs f0, lbl_806D7108(r2)
-    fadds f0, f1, f0
-    stfs f0, 0x138(r31)
-    lfs f1, 0x138(r31)
-    bl LUT_Sin12Bit
-    lfs f0, 0x134(r31)
-    lwz r29, 0x12c(r31)
-    fmuls f2, f0, f1
-    lfs f1, lbl_806D710C(r2)
-    lfs f0, 0x13c(r31)
-    cmplwi r29, 0x0
-    fmuls f1, f1, f2
-    fadds f31, f1, f0
-    bne fn_8012A71C_L_8012B120
-    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
-    li r4, 0x3c6
-    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
-    bl __assert
-    fn_8012A71C_L_8012B120:
-    stfs f31, 0x3c(r29)
-    lwz r0, 0x14(r29)
-    rlwinm. r0, r0, 0, 6, 6
-    bne fn_8012A71C_L_8012B178
-    cmplwi r29, 0x0
-    beq fn_8012A71C_L_8012B178
-    bne fn_8012A71C_L_8012B14C
-    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
-    li r4, 0x25d
-    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
-    bl __assert
-    fn_8012A71C_L_8012B14C:
-    lwz r4, 0x14(r29)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne fn_8012A71C_L_8012B168
-    rlwinm. r0, r4, 0, 25, 25
-    beq fn_8012A71C_L_8012B168
-    li r3, 0x1
-    fn_8012A71C_L_8012B168:
-    clrlwi. r0, r3, 24
-    bne fn_8012A71C_L_8012B178
-    mr r3, r29
-    bl HSD_JObjSetMtxDirtySub
-    fn_8012A71C_L_8012B178:
-    lfs f1, 0x138(r31)
-    bl LUT_Sin12Bit
-    lfs f0, 0x134(r31)
-    lwz r29, 0x130(r31)
-    fmuls f2, f0, f1
-    lfs f1, lbl_806D7110(r2)
-    lfs f0, 0x140(r31)
-    cmplwi r29, 0x0
-    fmuls f1, f1, f2
-    fadds f31, f1, f0
-    bne fn_8012A71C_L_8012B1B4
-    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
-    li r4, 0x3c6
-    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
-    bl __assert
-    fn_8012A71C_L_8012B1B4:
-    stfs f31, 0x3c(r29)
-    lwz r0, 0x14(r29)
-    rlwinm. r0, r0, 0, 6, 6
-    bne fn_8012A71C_L_8012B20C
-    cmplwi r29, 0x0
-    beq fn_8012A71C_L_8012B20C
-    bne fn_8012A71C_L_8012B1E0
-    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
-    li r4, 0x25d
-    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
-    bl __assert
-    fn_8012A71C_L_8012B1E0:
-    lwz r4, 0x14(r29)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne fn_8012A71C_L_8012B1FC
-    rlwinm. r0, r4, 0, 25, 25
-    beq fn_8012A71C_L_8012B1FC
-    li r3, 0x1
-    fn_8012A71C_L_8012B1FC:
-    clrlwi. r0, r3, 24
-    bne fn_8012A71C_L_8012B20C
-    mr r3, r29
-    bl HSD_JObjSetMtxDirtySub
-    fn_8012A71C_L_8012B20C:
-    lwz r3, 0x124(r31)
-    cmplwi r3, 0x0
-    beq fn_8012A71C_L_8012B36C
-    lwz r0, 0x128(r31)
-    cmplwi r0, 0x0
-    beq fn_8012A71C_L_8012B36C
-    bl clNormal3D_Exec
-    lwz r3, 0x124(r31)
-    bl Object_GetField8
-    fctiwz f0, f1
-    lis r3, 0x8889
-    subi r0, r3, 0x7777
-    stfd f0, 0x8(r1)
-    lwz r4, 0xc(r1)
-    mulhw r0, r0, r4
-    add r0, r0, r4
-    srawi r0, r0, 4
-    srwi r3, r0, 31
-    add r0, r0, r3
-    mulli r0, r0, 0x1e
-    subf. r0, r0, r4
-    bne fn_8012A71C_L_8012B2E8
-    addi r3, r31, 0xdc
-    li r29, 0x0
-    bl Vec3_Magnitude
-    lfs f0, lbl_806D7114(r2)
-    fcmpo cr0, f1, f0
-    ble fn_8012A71C_L_8012B284
-    li r29, 0x5a
-    b fn_8012A71C_L_8012B2A8
-    fn_8012A71C_L_8012B284:
-    lfs f0, lbl_806D7118(r2)
-    fcmpo cr0, f1, f0
-    ble fn_8012A71C_L_8012B298
-    li r29, 0x3c
-    b fn_8012A71C_L_8012B2A8
-    fn_8012A71C_L_8012B298:
-    lfs f0, lbl_806D710C(r2)
-    fcmpo cr0, f1, f0
-    ble fn_8012A71C_L_8012B2A8
-    li r29, 0x1e
-    fn_8012A71C_L_8012B2A8:
-    addi r0, r29, 0x1e
-    lis r4, 0x4330
-    xoris r3, r29, 0x8000
-    stw r4, 0x8(r1)
-    xoris r0, r0, 0x8000
-    lfd f3, lbl_806D7120(r2)
-    stw r3, 0xc(r1)
-    lwz r3, 0x124(r31)
-    lfd f0, 0x8(r1)
-    stw r0, 0x14(r1)
-    fsubs f1, f0, f3
-    lfs f2, lbl_806D70EC(r2)
-    stw r4, 0x10(r1)
-    lfd f0, 0x10(r1)
-    fsubs f3, f0, f3
-    bl Object_SetField8_10_14
-    fn_8012A71C_L_8012B2E8:
-    lwz r29, 0x128(r31)
-    cmplwi r29, 0x0
-    bne fn_8012A71C_L_8012B304
-    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
-    li r4, 0x47c
-    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
-    bl __assert
-    fn_8012A71C_L_8012B304:
-    cmplwi r29, 0x0
-    beq fn_8012A71C_L_8012B34C
-    bne fn_8012A71C_L_8012B320
-    la r3, lbl_806D70C8(r2)  /* lbl_806D70C8 */
-    li r4, 0x25d
-    la r5, lbl_806D70D0(r2)  /* lbl_806D70D0 */
-    bl __assert
-    fn_8012A71C_L_8012B320:
-    lwz r4, 0x14(r29)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne fn_8012A71C_L_8012B33C
-    rlwinm. r0, r4, 0, 25, 25
-    beq fn_8012A71C_L_8012B33C
-    li r3, 0x1
-    fn_8012A71C_L_8012B33C:
-    clrlwi. r0, r3, 24
-    beq fn_8012A71C_L_8012B34C
-    mr r3, r29
-    bl HSD_JObjSetupMatrixSub
-    fn_8012A71C_L_8012B34C:
-    lwz r3, 0x124(r31)
-    addi r4, r29, 0x44
-    li r5, 0x0
-    bl Object_SetAnimBinding
-    lwz r3, 0x124(r31)
-    bl clNormal3D_Exec
-    lwz r3, 0x124(r31)
-    bl Object_DriveAnimMatrix
-    fn_8012A71C_L_8012B36C:
-    li r3, 0x1
-    fn_8012A71C_L_8012B370:
-    psq_l f31, 0x38(r1), 0, 0
-    lwz r0, 0x44(r1)
-    lfd f31, 0x30(r1)
-    lwz r31, 0x2c(r1)
-    lwz r30, 0x28(r1)
-    lwz r29, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x40
-    blr
+static inline int HSD_JObjMtxIsDirty(HSD_JObj *jobj)
+{
+    unsigned char result;
+    if (!jobj) {
+        __assert(lbl_806D70C8, 0x25d, lbl_806D70D0);
+    }
+    result = 0;
+    if (!(jobj->flags & 0x00800000) && (jobj->flags & 0x40)) {
+        result = 1;
+    }
+    return result;
 }
 
+static inline void HSD_JObjSetTranslateY(HSD_JObj *jobj, float y)
+{
+    if (!jobj) {
+        __assert(lbl_806D70C8, 0x3c6, lbl_806D70D0);
+    }
+    jobj->translateY = y;
+    if (!(jobj->flags & 0x02000000)) {
+        if (jobj != 0 && !HSD_JObjMtxIsDirty(jobj)) {
+            HSD_JObjSetMtxDirtySub(jobj);
+        }
+    }
+}
+
+static inline void HSD_JObjSetupMatrix(HSD_JObj *jobj)
+{
+    if (jobj == 0) {
+        __assert(lbl_806D70C8, 0x47C, lbl_806D70D0);
+    }
+    if (jobj != 0 && HSD_JObjMtxIsDirty(jobj)) {
+        HSD_JObjSetupMatrixSub(jobj);
+    }
+}
+
+extern "C" int fn_8012A71C(ChallengeDriver *s, float target)
+{
+    float leanFrame;
+    float end;
+    float bob;
+    int action;
+    int t;
+
+    if (s->kart == 0 || s->driver == 0) {
+        return 0;
+    }
+    Object_DriveAnimMatrix(s->kart);
+
+    if (s->steer > target) {
+        if ((s->steer -= lbl_806CF018) < target) {
+            s->steer = target;
+        }
+    } else {
+        if ((s->steer += lbl_806CF018) > target) {
+            s->steer = target;
+        }
+    }
+
+    if (-0.26f < s->steer && s->steer < 0.26f) {
+        if (s->lean < 0.0f) {
+            if ((s->lean += 0.045f) > 0.0f) {
+                s->lean = 0.0f;
+            }
+        } else if (s->lean > 0.0f) {
+            if ((s->lean -= 0.045f) < 0.0f) {
+                s->lean = 0.0f;
+            }
+        }
+    } else if (s->steer < 0.0f) {
+        if ((s->lean -= 0.045f) < -1.0f) {
+            s->lean = -1.0f;
+        }
+    } else {
+        if ((s->lean += 0.045f) > 1.0f) {
+            s->lean = 1.0f;
+        }
+    }
+
+    leanFrame = 30.0f * (2.0f - (1.0f + s->lean));
+    action = s->action;
+    if (action == 0x2a || action == 0x2b) {
+        Object_DriveAnimAndSkin(s->base, s->frame, 0.0f, s->anim[action]);
+        ObjectTree_BlendOrCopy_Timed(s->driver, Archive_GetRootJObj(s->base), Archive_GetRootJObj(s->driver), 0, 0.0f);
+        if (s->action == 0x2a) {
+            end = GetCharacterDataEntry(s->charId)->leanEnd;
+        } else {
+            end = GetCharacterDataEntry(s->charId)->leanEnd2;
+        }
+        if ((s->frame += s->speed) >= end) {
+            s->frame = 0.0f;
+        }
+    } else if (action == 1) {
+        Object_DriveAnimAndSkin(s->base, leanFrame, 0.0f, s->anim[s->dir]);
+        Object_DriveAnimAndSkin(s->over, -1.0f, 0.0f, s->anim[0]);
+        ObjectTree_BlendOrCopy_Timed(s->driver, Archive_GetRootJObj(s->over), Archive_GetRootJObj(s->base), Archive_GetRootJObj(s->driver), s->outBlend);
+        if ((s->outBlend += s->outBlendStep) >= 1.0f) {
+            s->action = 0;
+        }
+    } else if (action != 0) {
+        if (action != -1 && s->frame < s->frameEnd) {
+            Object_DriveAnimAndSkin(s->base, s->frame, 0.0f, s->anim[action]);
+            s->frame += s->speed;
+            if (s->inBlend < 1.0f) {
+                Object_DriveAnimAndSkin(s->over, -1.0f, 0.0f, s->anim[s->overAnim]);
+                ObjectTree_BlendOrCopy_Timed(s->driver, Archive_GetRootJObj(s->over), Archive_GetRootJObj(s->base), Archive_GetRootJObj(s->driver), s->inBlend);
+                s->inBlend += s->inBlendStep;
+            } else {
+                clNormal3D_Exec(s->anim[s->action]);
+                Object_DriveAnimAndSkin(s->over, s->frame, 0.0f, s->anim[s->action]);
+                ObjectTree_BlendOrCopy_Timed(s->driver, Archive_GetRootJObj(s->over), Archive_GetRootJObj(s->driver), 0, 0.0f);
+            }
+        } else {
+            Object_DriveAnimAndSkin(s->base, leanFrame, 0.0f, s->anim[s->leanSet + s->dir]);
+            Object_DriveAnimAndSkin(s->over, -1.0f, 0.0f, s->anim[s->action]);
+            ObjectTree_BlendOrCopy_Timed(s->driver, Archive_GetRootJObj(s->over), Archive_GetRootJObj(s->base), Archive_GetRootJObj(s->driver), s->outBlend);
+            s->outBlend += s->outBlendStep;
+            if (s->outBlend >= 1.0f) {
+                s->action = 0;
+            }
+        }
+    } else if (-0.26f < s->lean && s->lean < 0.26f) {
+        s->leanSet = 5;
+        if ((s->frame += 1.0f) > 60.0f) {
+            s->frame = 0.0f;
+        }
+        Object_DriveAnimAndSkin(s->base, s->frame, 0.0f, s->anim[s->dir + 5]);
+        if (s->leanBlend < 1.0f) {
+            Object_DriveAnimAndSkin(s->over, -1.0f, 0.0f, s->anim[s->dir]);
+            ObjectTree_BlendOrCopy_Timed(s->driver, Archive_GetRootJObj(s->over), Archive_GetRootJObj(s->base), Archive_GetRootJObj(s->driver), s->leanBlend);
+            if ((s->leanBlend += 0.1f) >= 1.0f) {
+                s->leanBlend = 1.0f;
+            }
+        } else {
+            ObjectTree_BlendOrCopy_Timed(s->driver, Archive_GetRootJObj(s->base), Archive_GetRootJObj(s->driver), 0, 0.0f);
+        }
+    } else if (0.9f < s->lean) {
+        s->leanSet = 10;
+        if ((s->frame += 1.0f) > 60.0f) {
+            s->frame = 0.0f;
+        }
+        Object_DriveAnimAndSkin(s->base, s->frame, 0.0f, s->anim[s->dir + 10]);
+        if (s->leanBlend < 1.0f) {
+            Object_DriveAnimAndSkin(s->over, -1.0f, 0.0f, s->anim[s->dir]);
+            ObjectTree_BlendOrCopy_Timed(s->driver, Archive_GetRootJObj(s->over), Archive_GetRootJObj(s->base), Archive_GetRootJObj(s->driver), s->leanBlend);
+            if ((s->leanBlend += 0.1f) >= 1.0f) {
+                s->leanBlend = 1.0f;
+            }
+        } else {
+            ObjectTree_BlendOrCopy_Timed(s->driver, Archive_GetRootJObj(s->base), Archive_GetRootJObj(s->driver), 0, 0.0f);
+        }
+    } else if (s->lean < -0.9f) {
+        s->leanSet = 15;
+        if ((s->frame += 1.0f) > 60.0f) {
+            s->frame = 0.0f;
+        }
+        Object_DriveAnimAndSkin(s->base, s->frame, 0.0f, s->anim[s->dir + 15]);
+        if (s->leanBlend < 1.0f) {
+            Object_DriveAnimAndSkin(s->over, -1.0f, 0.0f, s->anim[s->dir]);
+            ObjectTree_BlendOrCopy_Timed(s->driver, Archive_GetRootJObj(s->over), Archive_GetRootJObj(s->base), Archive_GetRootJObj(s->driver), s->leanBlend);
+            if ((s->leanBlend += 0.1f) >= 1.0f) {
+                s->leanBlend = 1.0f;
+            }
+        } else {
+            ObjectTree_BlendOrCopy_Timed(s->driver, Archive_GetRootJObj(s->base), Archive_GetRootJObj(s->driver), 0, 0.0f);
+        }
+    } else {
+        Object_DriveAnimAndSkin(s->base, leanFrame, 0.0f, s->anim[s->dir]);
+        if (s->leanBlend > 0.0f) {
+            Object_DriveAnimAndSkin(s->over, -1.0f, 0.0f, s->anim[s->leanSet + s->dir]);
+            ObjectTree_BlendOrCopy_Timed(s->driver, Archive_GetRootJObj(s->over), Archive_GetRootJObj(s->base), Archive_GetRootJObj(s->driver), 1.0f - s->leanBlend);
+            if ((s->leanBlend -= 0.1f) <= 0.0f) {
+                s->leanBlend = 0.0f;
+                s->leanSet = 0;
+            }
+        } else {
+            ObjectTree_BlendOrCopy_Timed(s->driver, Archive_GetRootJObj(s->base), Archive_GetRootJObj(s->driver), 0, 0.0f);
+        }
+    }
+
+    Object_DriveAnimMatrix(s->driver);
+    if (s->partMode == 2) {
+        if (s->part0 != 0) {
+            JObj_Hide(s->driver, s->part0, 0x10);
+        }
+        if (s->part1 != 0) {
+            JObj_Hide(s->driver, s->part1, 0x10);
+        }
+        if (s->part2 != 0) {
+            JObj_Show(s->driver, s->part2, 0x10);
+        }
+    } else if (s->partMode == 1) {
+        if (s->part0 != 0) {
+            JObj_Hide(s->driver, s->part0, 0x10);
+        }
+        if (s->part1 != 0) {
+            JObj_Show(s->driver, s->part1, 0x10);
+        }
+        if (s->part2 != 0) {
+            JObj_Hide(s->driver, s->part2, 0x10);
+        }
+    } else {
+        if (s->part0 != 0) {
+            JObj_Show(s->driver, s->part0, 0x10);
+        }
+        if (s->part1 != 0) {
+            JObj_Hide(s->driver, s->part1, 0x10);
+        }
+        if (s->part2 != 0) {
+            JObj_Hide(s->driver, s->part2, 0x10);
+        }
+    }
+
+    s->bobPhase += 98.67f;
+    bob = 0.2f * (s->bobAmp * LUT_Sin12Bit(s->bobPhase));
+    HSD_JObjSetTranslateY(s->bob0, bob + s->bobBase0);
+    bob = 0.08f * (s->bobAmp * LUT_Sin12Bit(s->bobPhase));
+    HSD_JObjSetTranslateY(s->bob1, bob + s->bobBase1);
+
+    if (s->attach != 0 && s->attachJoint != 0) {
+        HSD_JObj *joint;
+
+        clNormal3D_Exec(s->attach);
+        if ((int)Object_GetField8(s->attach) % 30 == 0) {
+            float mag;
+
+            t = 0;
+            mag = Vec3_Magnitude(s->vel);
+            if (mag > 0.6f) {
+                t = 90;
+            } else if (mag > 0.4f) {
+                t = 60;
+            } else if (mag > 0.2f) {
+                t = 30;
+            }
+            Object_SetField8_10_14(s->attach, t, 1.0f, t + 30);
+        }
+        joint = s->attachJoint;
+        HSD_JObjSetupMatrix(joint);
+        Object_SetAnimBinding(s->attach, joint->mtx, 0);
+        clNormal3D_Exec(s->attach);
+        Object_DriveAnimMatrix(s->attach);
+    }
+    return 1;
+}
