@@ -4,6 +4,8 @@
  * pair and a frame timer, plus a ring buffer used by the steering queue.
  */
 
+struct SteeringRing;
+
 extern "C" double sin(double);
 extern "C" double cos(double);
 
@@ -175,7 +177,7 @@ void TornadoEffect_ApplyItemVisual_Secondary(void *effect, int item, int on);
 void *fn_801DB8F0(void);
 int fn_801DB8A4(void *tbl, int item);
 void MemoryManager_TimedFree(void *p);
-void fn_801E411C(void *self, int n);
+void fn_801E411C(SteeringRing *self, unsigned long n);
 void fn_801E4524(void *self, int a, int b);
 void fn_801E4504(void *self, int n);
 
@@ -856,14 +858,7 @@ void fn_801E40E8(Ring *r) {
     }
 }
 
-void fn_801E3A4C(char *self) {
-    fn_801E4504(self + 4, 2);
-    fn_801E4524(self + 4, 1, 0);
-}
-
-void fn_801E4504(void *self, int n) {
-    fn_801E411C(self, n);
-}
+void fn_801E3A4C(char *self);
 
 } /* extern "C" */
 
@@ -1039,7 +1034,7 @@ SteerMgr::~SteerMgr() {
 
 /* The queue stores eight-byte values in separately allocated blocks. Its
  * block map uses the same circular storage as the neighbouring ring TUs. */
-#include "game/SteeringQueuePrivate.h"
+#include "game/SteeringQueueMatchPrivate.h"
 
 extern "C" void *dtor_801E2BD0(SteeringQueue *s, short flag) {
     if (s) {
@@ -1095,6 +1090,15 @@ static inline void RingSwap(SteeringRing &a, SteeringRing &b) {
     }
 }
 
+static inline void QueueAssignDispatch(SteeringRing *s, SteeringRingIter first,
+        SteeringRingIter last, QueueAssignTag tag) {
+    fn_801E4544(s, QueueAssignIter(first), QueueAssignIter(last), tag);
+}
+
+static inline void QueueAssignRange(SteeringRing *s, SteeringRingIter first, SteeringRingIter last) {
+    QueueAssignDispatch(s, first, last, QueueAssignTag());
+}
+
 extern "C" unsigned char fn_801E32C8(SteeringQueue *s, unsigned long oldFirst,
         SteeringRing *saved, unsigned long *added, unsigned long n) {
     unsigned char swapped = 0;
@@ -1106,11 +1110,7 @@ extern "C" unsigned char fn_801E32C8(SteeringQueue *s, unsigned long oldFirst,
                 RingSwap(s->blocks, *saved);
                 fn_801E4504(&s->blocks, saved->capacity * 2);
                 swapped = 1;
-                SteeringRingConstIter first = {saved, 0, saved->data + saved->head};
-                unsigned long end = saved->head + saved->count;
-                if (end >= saved->capacity) end -= saved->capacity;
-                SteeringRingConstIter last = {saved, saved->count, saved->data + end};
-                fn_801E4544(&s->blocks, first, last);
+                QueueAssignRange(&s->blocks, saved->begin(), saved->end());
             }
             fn_801E5724(&s->blocks, block);
             ++*added;
@@ -1169,9 +1169,9 @@ extern "C" SteeringQueue *fn_801E3260(SteeringQueue *s, unsigned long n) {
     return s;
 }
 
-extern "C" SteeringQueueIter fn_801E35FC(SteeringQueue *s, unsigned long i) {
+static inline SteeringQueueIter QueueIterAt(const SteeringQueue *s, unsigned long i) {
     unsigned long size = s->blockSize;
-    SteeringRing *map = &s->blocks;
+    SteeringRing *map = (SteeringRing *)&s->blocks;
     unsigned long blockIndex = 0;
     int *block = map->data + map->head;
     SteeringQueueValue *base, *ptr;
@@ -1187,6 +1187,10 @@ extern "C" SteeringQueueIter fn_801E35FC(SteeringQueue *s, unsigned long i) {
         ptr = base + i % size;
     }
     return SteeringQueueIter(map, blockIndex, block, ptr, base + size, i);
+}
+
+extern "C" SteeringQueueIter fn_801E35FC(SteeringQueue *s, unsigned long i) {
+    return QueueIterAt(s, i);
 }
 
 static inline const unsigned long &QueueMinRef(const unsigned long &a, const unsigned long &b) {
@@ -1248,9 +1252,30 @@ extern "C" void fn_801E3848(SteeringQueue *s, unsigned long n,
     }
 }
 
-extern "C" void fn_801E411C(void *self, int requested) {
+extern "C" void fn_801E3A4C(char *self) {
+    fn_801E4504(self + 4, 2);
+    fn_801E4524(self + 4, 1, 0);
+}
+
+static inline SteeringRingIter ResizeEnd(SteeringRing *s) {
+    const SteeringRingIter &it = s->end();
+    return it;
+}
+
+extern "C" void fn_801E435C(void *self, unsigned long n, int value) {
     SteeringRing *s = (SteeringRing *)self;
-    unsigned long n = requested;
+    if (n > s->count) fn_801E4AF4(s, ResizeEnd(s), n - s->count, value);
+    else if (n < s->count) {
+        SteeringRingIter first = RingAdvance(s->begin(), n);
+        fn_801E4824(s, first, ResizeEnd(s));
+    }
+}
+
+extern "C" void fn_801E4504(void *self, int n) {
+    fn_801E411C((SteeringRing *)self, n);
+}
+
+extern "C" void fn_801E411C(SteeringRing *s, unsigned long n) {
     if (n > fn_801E5A00(s)) throw std::length_error(lbl_803BD260);
     if (n > s->capacity) {
         int *data = (int *)Alloc(n * sizeof(int));
@@ -1261,14 +1286,5 @@ extern "C" void fn_801E411C(void *self, int requested) {
         s->capacity = n;
         s->data = data;
         s->head = 0;
-    }
-}
-
-extern "C" void fn_801E435C(void *self, unsigned long n, int value) {
-    SteeringRing *s = (SteeringRing *)self;
-    if (n > s->count) fn_801E4AF4(s, s->end(), n - s->count, value);
-    else if (n < s->count) {
-        SteeringRingIter first = RingAdvance(s->begin(), n);
-        fn_801E4824(s, first, s->end());
     }
 }
