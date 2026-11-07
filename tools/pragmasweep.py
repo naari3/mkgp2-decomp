@@ -49,6 +49,7 @@ PRAGMAS_EXT = ['optimization_level 3', 'optimization_level 2', 'optimization_lev
 PRAGMA_SETS = {'default': PRAGMAS, 'extended': PRAGMAS_EXT, 'all': list(dict.fromkeys(PRAGMAS + PRAGMAS_EXT))}
 CCS = ['1.2.5n', '1.3', '1.3.2', '2.0', '2.6', '2.7']
 TMP = '/tmp/pragmasweep'
+OBJDIFF = False  # --objdiff: score = (100 - objdiff match %) * 100 instead of diff lines
 
 import threading
 _tl = threading.local(); _ids = iter(range(10**6)); _idlock = threading.Lock()
@@ -103,6 +104,11 @@ class Unit:
             if v == fn: return k
         return fn
 
+    def objdiff_score(self, base_o, fn):
+        """Raw (not post-processed) .o vs the target object, as objdiff's fuzzy %."""
+        pct = _objdiff_pct(f'build/GNLJ82/obj/{self.obj}.o', base_o, fn, {fn, self.compiled_name(fn)})
+        return 10**6 if pct is None else int(round((100.0 - pct) * 100))
+
     def compile_score(self, text, fn, cc, wk):
         d = f'{TMP}/w{wk}'; os.makedirs(d, exist_ok=True)
         for f in glob.glob(d + '/*.o') + glob.glob(d + '/.*.o'): os.remove(f)
@@ -114,12 +120,27 @@ class Unit:
         os.remove(sp)
         o = glob.glob(d + '/*.o') + glob.glob(d + '/.*.o')
         if not o: return 10**6
+        if OBJDIFF:
+            return self.objdiff_score(o[0], fn)
         subprocess.run(['build/tools/dtk', 'elf', 'disasm', o[0], d + '/m.s'], capture_output=True)
         T = target_body(fn)
         B = norm_body(d + '/m.s', fn) or norm_body(d + '/m.s', self.compiled_name(fn))
         if not B or T is None: return 10**6
         return sum(1 for l in difflib.unified_diff(T, B, lineterm='', n=0)
                    if l[:1] in '+-' and not l.startswith(('+++', '---')))
+
+
+def _objdiff_pct(target_o, base_o, fn, names):
+    r = subprocess.run(['build/tools/objdiff-cli', 'diff', '-1', target_o, '-2', base_o, '-o', '-', fn],
+                       capture_output=True, text=True)
+    try:
+        d = json.loads(r.stdout)
+    except ValueError:
+        return None
+    for sym in d.get('right', {}).get('symbols', []):
+        if sym.get('name') in names and sym.get('match_percent') is not None:
+            return sym['match_percent']
+    return None
 
 
 def mangled_qual(m):
@@ -318,8 +339,12 @@ def main():
     p.add_argument('-j', '--jobs', type=int, default=os.cpu_count() or 4)
     p.add_argument('--md', default='docs/pragmasweep_results.md')
     p.add_argument('--set', choices=sorted(PRAGMA_SETS), default='default', help='pragma set to sweep')
+    for q in sp.choices.values():
+        q.add_argument('--objdiff', action='store_true',
+                       help='score by objdiff fuzzy %% (printed as (100-%%)*100) instead of diff lines')
     a = ap.parse_args()
-    global PRAGMAS
+    global PRAGMAS, OBJDIFF
+    OBJDIFF = a.objdiff
     PRAGMAS = PRAGMA_SETS[a.set]
     if a.cmd == 'fn':
         r = sweep(a.obj, a.fn, a.cc, a.k, a.decl, a.jobs, a.demangled)
