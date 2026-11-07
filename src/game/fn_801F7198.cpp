@@ -1,7 +1,7 @@
 #include "game/SpriteTex801F_private.h"
 static inline void SelectTexture(TextureOwner801F *owner, SpriteTex801F *s, unsigned int index) {
     unsigned int count=owner->bank->count;
-    if ((unsigned char)(index >= count) == 1) __assert(lbl_803BF050,0x476,lbl_803BF05C);
+    if ((unsigned char)(index >= count) > 0) __assert(lbl_803BF050,0x476,lbl_803BF05C);
     unsigned int last=count-1;
     while(index>=count) index=last;
     s->i14=index;
