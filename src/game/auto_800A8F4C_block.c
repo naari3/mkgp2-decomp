@@ -123,7 +123,7 @@ void WarpDashMgr_Cleanup(void);
 WarpDashMgr *WarpDashMgr_GetInstance(unsigned char id);
 WarpDashMgr *WarpDashMgr_GetOrCreate(int cup, unsigned char course, unsigned char reverse, unsigned char id);
 void *Free_IfOwnedShort(void *p, short flag);
-asm void WarpAutoRun_Init(void);
+void WarpAutoRun_Init(WarpAutoRun *self, unsigned char mgrId);
 int DashZone_ProcessAutoRun(WarpAutoRun *self, float x, float y, float z, float yaw);
 int WarpAutoRun_GetParam(WarpAutoRun *self, float *vx, float *vy, float *vz, float *yaw);
 void WarpAutoRun_OnEnter(void *self, float f1, float f2, float f3, float f4, float vx, float vy, float vz);
@@ -305,20 +305,21 @@ void *Free_IfOwnedShort(void *p, short flag) {
     return p;
 }
 
-asm void WarpAutoRun_Init(void) {
-    nofralloc
-    li r0, 0x0
-    lfs f0, lbl_806D4DE8(r2)
-    stw r0, 0x0(r3)
-    li r0, -0x1
-    stw r0, 0x4(r3)
-    stfs f0, 0x8(r3)
-    stb r4, 0x20(r3)
-    stfs f0, 0x14(r3)
-    stfs f0, 0x18(r3)
-    stfs f0, 0x1c(r3)
-    blr
+/* fakematch (scheduling 601): the target keeps the zero-float load between
+ * the two r0 constants, which only the 601 scheduling model reproduces.
+ * Natural code: the same body without the pragma. */
+#pragma push
+#pragma scheduling 601
+void WarpAutoRun_Init(WarpAutoRun *self, unsigned char mgrId) {
+    self->state = 0;
+    self->zone = -1;
+    self->timer = 0.0f;
+    self->mgrId = mgrId;
+    self->vel.x = 0.0f;
+    self->vel.y = 0.0f;
+    self->vel.z = 0.0f;
 }
+#pragma pop
 
 int DashZone_ProcessAutoRun(WarpAutoRun *self, float x, float y, float z, float yaw) {
     WarpDashMgr *mgr;
