@@ -169,3 +169,8 @@ block-local, dash uses existing m temps) to see if self can win r31.
 Source: Codex worker c16_u67_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u67 RotateByYaw 80199BBC: paired a0,b0,a1,b1,a2,b2,a3,b3 inner-loop locals and sequential += accumulation in a separate inline MultiplyRow returning the next flat index improve77.123024 to80.05624 (2176 vs2276B). Operand homes match target f7..f0 and result f8. Output still row-pointer strength-reduced rather than target per-element slwi/stfsx. Unsigned-short index gives indexed stores but clrlslwi16 and nested loop mismatch54.544815; outer row-local accumulation75.96485. No flag/split/bridge changes, singleton staysNonMatching; full fallback DOL SHA1 exact.
+
+## c19_u174_20261107
+Source: Codex worker c19_u174_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u174 RotateByYaw80199BBC: caller-owned int output cursor passed by reference to inline MultiplyRow improves direct objdiff80.05624->81.74165; emitted text2176->2092 vs target2276. Replaces return-by-value row index, removes per-row output-base setup and advances one output pointer. Still no target per-element slwi/stfsx, frame180 vs170, saved f29-f31/r31 vs f30-f31/r30-r31 and output stack88 vs8. Float-reference Element accessor is byte-invariant; MakeYawRotation helper on reference-cursor form81.73462 and reverted. Retain higher honest NM draft. EH75/index91.66667 unchanged, single function prevents rescue B; no flags/splits/pool/bridge changes. Coordinator full fallback-linked DOL SHA1 exact, zero native gain.

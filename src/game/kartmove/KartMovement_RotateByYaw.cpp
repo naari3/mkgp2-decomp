@@ -14,7 +14,7 @@ static inline void Identity(Matrix44 *a) {
     a->m[0][0] = a->m[1][1] = a->m[2][2] = a->m[3][3] = lbl_806D96D4;
 }
 
-static inline int MultiplyRow(const float *a, const Matrix44 *b, float *out, int index) {
+static inline void MultiplyRow(const float *a, const Matrix44 *b, float *out, int &index) {
     for (int j = 0; j < 4; j++, index++) {
         float a0 = a[0];
         float b0 = b->m[0][j];
@@ -30,14 +30,13 @@ static inline int MultiplyRow(const float *a, const Matrix44 *b, float *out, int
         sum += a3*b3;
         out[index] = sum;
     }
-    return index;
 }
 
 static inline void Multiply(Matrix44 *a, const Matrix44 *b) {
     float out[16];
     int index = 0;
     for (int i = 0; i < 4; i++) {
-        index = MultiplyRow(a->m[i], b, out, index);
+        MultiplyRow(a->m[i], b, out, index);
     }
     for (int i = 0; i < 16; i++) ((float *)a)[i] = out[i];
 }
