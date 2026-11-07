@@ -1,12 +1,18 @@
 #include "game/anon_8020314C_private.h"
 
+extern "C" {
+void *fn_80271340(void *, int, void *, void *, int);
+extern unsigned char lbl_806D0268[8];
+extern unsigned char lbl_806D0260[8];
+}
+
 static inline int CloseMsgPopup() {
     if (lbl_806D19E8 == 0) {
         return 0;
     }
     FlowTask *t = fn_801F4DC0(lbl_806D19E8, 0);
     if (t) {
-        MsgPopup *p = dynamic_cast<MsgPopup *>(t);
+        MsgPopup *p = (MsgPopup *)fn_80271340(t, 0, lbl_806D0268, lbl_806D0260, 0);
         if (p->state < 4) {
             fn_8020A734(p->scaleX.p, 5, lbl_806DAA9C, lbl_806DAA98);
             fn_8020A734(p->scaleY.p, 5, lbl_806DAAA4, lbl_806DAAA0);
@@ -42,7 +48,7 @@ static inline int OpenMsgPopup(int msg) {
         }
         FlowTask *t = fn_801F4DC0(lbl_806D19E8, 0);
         if (t) {
-            MsgPopup *p = dynamic_cast<MsgPopup *>(t);
+            MsgPopup *p = (MsgPopup *)fn_80271340(t, 0, lbl_806D0268, lbl_806D0260, 0);
             p->x = lbl_806DAAE8;
             p->y = lbl_806DAAF0;
         }
