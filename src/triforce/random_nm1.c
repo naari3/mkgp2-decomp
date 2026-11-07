@@ -17,7 +17,9 @@ static inline u32 Next(void) {
 
 static inline u32 RandRange(u32 min, u32 max) {
     u64 range = (u64)max - min + 1;
-    return min + (u32)((range * Next()) >> 32);
+    u64 product = range * Next();
+    product >>= 32;
+    return (u32)product + min;
 }
 
 u32 fn_802867B8(u32 min, u32 max) {
