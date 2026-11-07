@@ -5,21 +5,21 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void DebugPrintf();
+extern void DebugPrintf(const char *fmt, ...);
 extern void ItemUse_ResetAllKartUseSlots();
-extern void ProcessSystemTick();
+extern void ProcessSystemTick(const char *name);
 extern void RaceScene_ClearPlayerSlotPointers();
 extern void RaceSlot_ResetAll();
 extern void SetSyncTarget();
 extern void VoiceSystem_Init();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int g_finalLapCoinJumpEnabled;
+extern unsigned char g_finalLapCoinJumpEnabled;
 extern unsigned int g_gameMode;
 extern unsigned int g_spawnedKartCount;
-extern unsigned int lbl_806CF14C;
+extern int lbl_806CF14C;
 extern unsigned int lbl_806D1050;
-extern unsigned int lbl_806D130C;
+extern unsigned char lbl_806D130C;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -33,7 +33,7 @@ extern unsigned int lbl_8040E76C[];
  */
 
 /* --- forward decls --- */
-asm void BtMode_Init(void);
+void *BtMode_Init(void **self);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
 extern void dtor_800A0688();
@@ -48,55 +48,32 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&BtMode_Init, 0x000000B8, (void *)&extab_BtMode_Init
 };
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void BtMode_Init(void) { /* 0x800A05D0 size:0xB8 */
-    nofralloc
-    stwu r1, -0x10(r1)
-    mflr r0
-    lis r4, lbl_8040E76C@ha
-    stw r0, 0x14(r1)
-    addi r0, r4, lbl_8040E76C@l
-    lis r4, lbl_80320960@ha
-    stw r31, 0xc(r1)
-    addi r31, r4, lbl_80320960@l
-    stw r30, 0x8(r1)
-    mr r30, r3
-    lis r3, lbl_8040E734@ha
-    stw r0, 0x0(r30)
-    addi r3, r3, lbl_8040E734@l
-    li r0, 0x2
-    stw r3, 0x0(r30)
-    li r3, 0x2a
-    stw r0, g_gameMode(r13)
-    bl SetSyncTarget
-    bl RaceSlot_ResetAll
-    li r0, 0x4
-    stw r0, g_spawnedKartCount(r13)
-    bl ItemUse_ResetAllKartUseSlots
-    li r0, 0x0
-    stb r0, g_finalLapCoinJumpEnabled(r13)
-    bl RaceScene_ClearPlayerSlotPointers
-    li r0, 0x0
-    addi r3, r31, 0x7b4
-    stw r0, lbl_806D1050(r13)
-    bl ProcessSystemTick
-    bl VoiceSystem_Init
-    addi r3, r31, 0x7cc
-    bl ProcessSystemTick
-    addi r3, r31, 0x7e0
-    crxor 6, 6, 6
-    bl DebugPrintf
-    li r3, -0x1
-    li r0, 0x0
-    stw r3, lbl_806CF14C(r13)
-    mr r3, r30
-    stb r0, lbl_806D130C(r13)
-    lwz r31, 0xc(r1)
-    lwz r30, 0x8(r1)
-    lwz r0, 0x14(r1)
-    mtlr r0
-    addi r1, r1, 0x10
-    blr
+/* BtMode_Init @ 0x800A05D0: battle-mode scene constructor. Sets game mode 2
+ * (battle), resets the race slots for four karts and starts the voice
+ * system, logging each step. Written in C with explicit vtable stores
+ * (base lbl_8040E76C, then derived lbl_8040E734): the C++ ctor form loads
+ * the string-pool base after the derived vtable store instead of between
+ * the two. The extab (base dtor cleanup) stays a manual emit above. */
+void *BtMode_Init(void **self)
+{
+    const char *log;
+
+    *self = lbl_8040E76C;
+    log = (const char *)lbl_80320960;
+    *self = lbl_8040E734;
+    g_gameMode = 2;
+    SetSyncTarget(0x2a);
+    RaceSlot_ResetAll();
+    g_spawnedKartCount = 4;
+    ItemUse_ResetAllKartUseSlots();
+    g_finalLapCoinJumpEnabled = 0;
+    RaceScene_ClearPlayerSlotPointers();
+    lbl_806D1050 = 0;
+    ProcessSystemTick(log + 0x7b4);
+    VoiceSystem_Init();
+    ProcessSystemTick(log + 0x7cc);
+    DebugPrintf(log + 0x7e0);
+    lbl_806CF14C = -1;
+    lbl_806D130C = 0;
+    return self;
 }
-
-
