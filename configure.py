@@ -3598,7 +3598,7 @@ config.libs = [
             Object(NonMatching, "triforce/jvsio.c"),
             Object(Matching, "triforce/dvdlow_data.c", extra_cflags=["-O4,p", "-inline noauto"]),
             Object(Matching, "triforce/dvdlow.c", extra_cflags=["-O4,p", "-inline noauto"]),
-            Object(NonMatching, "triforce/dvdlow_nm1.c", extra_cflags=["-O4,p", "-inline noauto"]),
+            Object(Matching, "triforce/dvdlow_nm1.c", extra_cflags=["-O4,p", "-inline noauto"]),
             Object(Matching, "triforce/jvsio_access.c"),
             Object(Matching, "triforce/dikey.c", extra_cflags=["-O4,p", "-inline noauto"]),
             Object(Matching, "triforce/random.c", extra_cflags=["-O4,p", "-inline noauto"]),
