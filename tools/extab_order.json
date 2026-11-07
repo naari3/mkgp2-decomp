@@ -1,4 +1,8 @@
 {
+  "src/game/FlowDispatcher_ScopedTimer.c": {
+    "extab": ["__dt__11ScopedTimerFv", "FlowDispatcher_Create"],
+    "extabindex": ["FlowDispatcher_Create", "__dt__11ScopedTimerFv"]
+  },
   "src/game/HeapStats.c": {
     "extab": [
       "dtor_8002F910",

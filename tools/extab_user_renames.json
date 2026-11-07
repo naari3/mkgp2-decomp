@@ -353,8 +353,9 @@
   },
   "src/game/FlowDispatcher_ScopedTimer.c": {
     "extab___dt__11ScopedTimerFv": "@etb_800056B8",
-    "extab_FlowDispatcher_Create": "@etb_800056C0",
-    "extabindex_FlowDispatcher_Create": "@eti_8001F3D0",
+    "__ct__12SeqMenuSceneFP9FlowEntry": "SeqMenuScene_Init",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
     "extabindex___dt__11ScopedTimerFv": "@eti_8001F3DC"
   },
   "src/game/LookupSin.c": {
