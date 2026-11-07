@@ -1,6 +1,7 @@
 
 /* sdata symbols referenced from asm */
 extern unsigned char lbl_806D27DC[8];
+#include "game/singleton.h"
 /*
  * dtk reversed-extab group `auto_KartItem_OnKartHit_text` bundle (1 TU, indivisible).
  * Held as asm_fn with manually emitted extab/extabindex via __declspec(section ".extab_user"/".extabindex_user"). tools/postprocess_extab_user.py renames sections + symbols to the
@@ -25,12 +26,12 @@ extern unsigned char lbl_806D27DC[8];
 extern void *Alloc(unsigned long);
 extern void AudioChannel_DtorWithSeStop();
 extern float *CObj_GetViewMatrix_Cached(void *scene);
-extern void CameraEffect_Apply();
-extern void Camera_RotateByYaw();
+extern void CameraEffect_Apply(void *cam, int kind, float v);
+extern void Camera_RotateByYaw(void *cam, float yaw);
 extern void CarObject_Dtor();
 extern void CoinSystem_RemoveCoins();
 extern float CollisionTest_CalcPenetration(void *checker, void *a, void *b);
-extern void DashZone_ProcessAutoRun();
+extern int DashZone_ProcessAutoRun(void *ctx, float x, float y, float z, float yaw);
 extern void DebugPrintf();
 extern void EffectSpeed_ApplySpeedScale(void *req, float a, float b);
 extern void EffectSpeed_Init();
@@ -45,11 +46,11 @@ extern void EffectSteering_InitForLock();
 extern void EffectSteering_InitForScale();
 extern void EffectSteering_InitForShake();
 extern void EffectSteering_InitForSplit();
-extern void EffectSteering_InitForVibrate();
+extern void EffectSteering_InitForVibrate(void *steer, float a, float b, float c);
 extern void EffectSteering_InitForVibrate_Sub();
 extern void EffectSteering_InitForViscosity();
 extern void EffectSteering_InitForViscosity_Uniform();
-extern void EffectSteering_InputViscosity_SetFieldC();
+extern void EffectSteering_InputViscosity_SetFieldC(void *steer, float v);
 extern void *FUN_8003b120(unsigned long);
 extern unsigned char Field4NotMinusOne(void *ctx);
 extern void Free_IfOwnedShort();
@@ -95,7 +96,7 @@ extern void KartAudioChannel_PlayColorMatchSE(void *snd, int a, int b, float spd
 extern void KartAudioChannel_PlayJumpSE(void *snd, int mode);
 extern void KartAudioChannel_Set24WithSeStop();
 extern void KartAudioChannel_StopSE8a(void *snd, int a);
-extern void KartBody_SetWarpTransitFlag();
+extern void KartBody_SetWarpTransitFlag(void *body, int flag);
 extern void KartDriver_Dtor();
 extern void *KartDriver_GetKartRootMtx(void *driver);
 extern void KartDriver_New_Full();
@@ -129,8 +130,8 @@ extern float KartMovement_CalcSpeedWithCoinBonus(void *mv, int flag);
 extern int KartMovement_GetCurrentItemId(void *driver);
 extern void KartMovement_Init();
 extern void KartMovement_PhysicsStep();
-extern void KartMovement_RotateByYaw();
-extern void KartMovement_SetPosition();
+extern void KartMovement_RotateByYaw(void *mv, float yaw);
+extern void KartMovement_SetPosition(void *mv, void *pos, int flag);
 extern void KartMovement_SetTravelProgress(void *mov, float v);
 extern void KartReaction_Front();
 extern void KartReaction_Side();
@@ -147,14 +148,14 @@ extern void RankLog_OnHit();
 extern void RankLog_OnMatchEnd();
 extern void RankLog_OnPlayerDefeated();
 extern void RenderObj_ItemStateMachine_Timed();
-extern void RenderObj_ToggleLapSegment();
+extern void RenderObj_ToggleLapSegment(void *obj, int seg);
 extern float Saturate_Double(float v, float lo, float hi);
 extern void SceneRender_SetViewportRect();
 extern void SetAnimSpin();
 extern unsigned char ShadowAreaMgr_QueryPoint(void *mgr, float x, float y, float z);
 extern unsigned char ShadowBillboard_IsRenderReady(void *billboard);
 extern void ShadowBillboard_SetField0x6CAndComputeAxis(void *bb, int mode);
-extern void ShadowBillboard_SetField0xA4();
+extern void ShadowBillboard_SetField0xA4(void *bb, float v);
 extern void ShadowBillboard_SetTargetSaturation();
 extern void ShadowBillboard_SetVec3At0x70(void *bb, void *vec);
 extern void ShadowBillboard_StepSimple();
@@ -186,13 +187,13 @@ extern void TitleStats_SetEventFlag_806d1420();
 extern void TitleTracker_Empty_PreFinalizeHook(unsigned int tracker, int kartSlot);
 extern void TornadoEffect_ApplyItemVisual_Compact();
 extern void TornadoEffect_ApplyItemVisual_Primary();
-extern void TornadoEffect_ApplyItemVisual_Secondary();
+extern void TornadoEffect_ApplyItemVisual_Secondary(void *fx, int itemId, int flag);
 extern void TornadoEffect_ClearFlagC0AndSetC4(void *obj, float v);
 extern void TornadoEffect_ComposeRenderMatrix();
 extern void TornadoEffect_Ctor();
 extern void TornadoEffect_GetField114();
 extern void TornadoEffect_SetColorPairC8CC(void *obj, int a, int b);
-extern void TornadoEffect_SetColorRGBLerp();
+extern void TornadoEffect_SetColorRGBLerp(void *fx, int mode, float r, float g, float b);
 extern void TornadoEffect_SetColorY(); /* K&R on purpose: matched C calls it with 1 arg (StopCarObjectSE) and 2 args (OnApply_Freeze) */
 extern void TornadoEffect_SetField114();
 extern void TornadoEffect_SetField11c();
@@ -207,16 +208,16 @@ extern void TornadoEffect_SubmitRender();
 extern void TornadoEffect_Tick(void *obj, int score);
 extern void TornadoEffect_TriggerField140(void *obj);
 extern void TornadoEffect_TriggerFlagD2WithTimer();
-extern void TornadoEffect_TriggerWheelScaleAnim();
+extern void TornadoEffect_TriggerWheelScaleAnim(void *fx, float scale);
 extern void TwoSubDtor_Pending_80064f58();
 extern void VisualEffectHolder_Dtor();
-extern void WarpAutoRun_GetParam();
+extern int WarpAutoRun_GetParam(void *ctx, float *vx, float *vy, float *vz, float *yaw);
 extern void WarpAutoRun_Init();
-extern void WarpAutoRun_OnEnter();
-extern void WarpDashMgr_GetInstance();
-extern void WarpZone_CalcExitPosition();
-extern void WarpZone_CheckEntry();
-extern void WarpZone_FindContaining();
+extern void WarpAutoRun_OnEnter(void *ctx, float x, float y, float z, float yaw, float vx, float vy, float vz);
+extern void *WarpDashMgr_GetInstance(unsigned char id);
+extern void WarpZone_CalcExitPosition(void *mgr, int zone, float x, float y, float z, float *ox, float *oy, float *oz, float *yaw);
+extern unsigned char WarpZone_CheckEntry(void *ctx, float x, float y, float z);
+extern int WarpZone_FindContaining(void *mgr, float x, float y, float z);
 extern void WarpZone_VtableTrim();
 extern void __unexpected();
 extern void clItemBoxResponder_Ctor();
@@ -237,12 +238,12 @@ extern void fn_802091BC();
 extern void __throw();
 extern void strcpy();
 extern void cos();
-extern void sin();
+extern double sin(double x);
 extern void fn_802BD6AC(float x, float y);
 extern void fn_802BD6C0();
 extern void HSD_FObjForceLinearInterp();
 extern void HSD_MtxGetRotation();
-extern void HSD_Randf();
+extern float HSD_Randf(void);
 extern int HSD_Randi(int range);
 extern void memset();
 extern unsigned long strlen(const char *);
@@ -259,7 +260,7 @@ extern unsigned int lbl_806D0051;
 extern void *lbl_806D1060;
 extern float lbl_806D1080;
 extern float lbl_806D1084;
-extern unsigned int lbl_806D109C;
+extern void *lbl_806D109C;
 extern void *lbl_806D10A0;
 extern const int lbl_806D26E0[1];
 extern const float lbl_806D26E4;
@@ -1121,6 +1122,44 @@ typedef struct CarObjFrameView {
 } CarObjFrameView;
 
 
+/* CarObject warp/dash-zone view (0x8004D1A8) */
+typedef struct CarObjWarpView {
+    char pad_0x0[0x20];
+    unsigned char strPcbGate20;        /* 0x20 */
+    char pad_0x21[0x3];
+    void *soundCtrl;                   /* 0x24 */
+    KartMovementSpeedView *movement;   /* 0x28 */
+    void *renderObj;                   /* 0x2c */
+    char pad_0x30[0x4];
+    void *body;                        /* 0x34 */
+    void *camera;                      /* 0x38 */
+    char pad_0x3c[0x18];
+    void *warpCtx;                     /* 0x54 */
+    char pad_0x58[0x44];
+    float upX;                         /* 0x9c */
+    float upY;                         /* 0xa0 */
+    float upZ;                         /* 0xa4 */
+    char pad_0xa8[0x4c];
+    unsigned char inWarpF4;            /* 0xf4 */
+    char pad_0xf5[0x13];
+    unsigned char courseId108;         /* 0x108 */
+} CarObjWarpView;
+
+static inline unsigned char Flags_Test(unsigned long long flags, unsigned long long mask) {
+    unsigned char result;
+
+    if ((flags & mask) == 0) {
+        result = 0;
+    } else {
+        result = 1;
+    }
+    return result;
+}
+
+static inline unsigned char ItemBus_TestFlags(ItemBusFlagsView *bus, unsigned long long mask) {
+    return Flags_Test(bus->flags, mask);
+}
+
 /* --- forward decls --- */
 asm void KartItem_OnKartHit(void);
 void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, int channel);
@@ -1135,7 +1174,7 @@ void KartItem_RenderPipelinedWithEffects(KartItemRenderView *self);
 asm void KartItem_Tick(void);
 asm void KartItem_PerFrameStep(void);
 void CarObject_UpdateCoinSpeedBonus(KartItemOpsView *self);
-asm void CarObject_ProcessWarpAndDash(void);
+void CarObject_ProcessWarpAndDash(CarObjWarpView *self);
 asm void CarObject_MainUpdate(void *self, void *arg);
 void CarObject_FrameUpdate(CarObjFrameView *self, void *arg);
 void CarObject_ApplyInput_AI(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3, float in4);
@@ -1212,7 +1251,27 @@ asm void KartItem_ApplyEffectToVictim_AdjThunk(void);
 void *dtor_800524CC(void *self, short flag);
 asm void StlList_RemoveByValueField(void);
 asm void StlList_EraseRange(void *ret, StlList *l, StlListNode **beg, StlListNode **end);
-asm void StlList_InsertBefore(void);
+#pragma cplusplus on
+/* list<T>::insert node/value/iterator types (0x80052684) */
+struct StlInsValue {
+    void *obj;
+    StlInsValue(const StlInsValue &v) : obj(v.obj) {}
+};
+
+struct StlInsNode {
+    StlInsNode *prev;
+    StlInsNode *next;
+    StlInsValue value;
+};
+
+struct StlInsIter {
+    StlInsNode *node;
+    StlInsIter(StlInsNode *p) : node(p) {}
+    StlInsIter(const StlInsIter &p) : node(p.node) {}
+};
+
+extern "C" StlInsIter StlList_InsertBefore(StlList *l, StlInsIter &pos, const StlInsValue &value);
+#pragma cplusplus off
 void StlList_InitEmpty(StlList *l);
 void *dtor_80052744(void *self, short flag);
 void dtor_8005278C(void);
@@ -1294,7 +1353,7 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 __declspec(section ".extab_user") static const unsigned char extab_CarObject_UpdateCoinSpeedBonus[8] = {
     0x10, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; void *f7; unsigned int f8; void *f9; } extab_CarObject_ProcessWarpAndDash = { 0x180A0000, 0x000001A8, 0x00000018, 0x0000020C, 0x000D0020, 0x00000000, 0x82000028, (void *)&dtor_80036E40, 0x8200001C, (void *)&dtor_80036E40 };
+/* extab_CarObject_ProcessWarpAndDash: auto-emitted */
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; unsigned int f6; void *f7; unsigned int f8; void *f9; unsigned int f10; void *f11; } extab_CarObject_MainUpdate = { 0x314A0000, 0x00000504, 0x00D50010, 0x00000000, 0x0200000C, (void *)&dtor_800524CC, 0x0200001C, (void *)&dtor_80036E40, 0x02000028, (void *)&dtor_80036E40, 0x82000034, (void *)&dtor_80036E40 };
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; void *f13; unsigned int f14; void *f15; unsigned int f16; void *f17; } extab_CarObjectManager_RunKartKartCollisionSweep = { 0x480A0000, 0x00000080, 0x00170040, 0x000000F4, 0x00340038, 0x000001DC, 0x00490030, 0x0000030C, 0x00040038, 0x00000338, 0x00000040, 0x00000000, 0x020000F0, (void *)&dtor_80209180, 0x02000148, (void *)&dtor_80209180, 0x82000084, (void *)&dtor_80052200 };
 __declspec(section ".extab_user") static const unsigned char extab_dtor_80052200[8] = {
@@ -1303,9 +1362,7 @@ __declspec(section ".extab_user") static const unsigned char extab_dtor_80052200
 __declspec(section ".extab_user") static const unsigned char extab_KartItem_TickActiveEffectsTwoLane[8] = {
     0x48, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const unsigned char extab_KartItem_TickStatusEffectsByFlag[8] = {
-    0x20, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+/* extab_KartItem_TickStatusEffectsByFlag: auto-emitted */
 __declspec(section ".extab_user") static const unsigned char extab_dtor_800524CC[8] = {
     0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -1460,9 +1517,7 @@ __declspec(section ".extab_user") static const unsigned char extab_StlList_Remov
 __declspec(section ".extab_user") static const unsigned char extab_StlList_EraseRange[8] = {
     0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const unsigned char extab_StlList_InsertBefore[8] = {
-    0x28, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+/* extab_StlList_InsertBefore: auto-emitted */
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; void *f8; unsigned int f9; unsigned int f10; void *f11; } extab_Bitset_Init = { 0x28080000, 0x00000054, 0x00050024, 0x00000078, 0x00000018, 0x00000000, 0x0780001B, 0x00000000, (void *)&dtor_80038E30, 0x8680001C, 0x00000000, (void *)&dtor_80038DD4 };
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
@@ -1504,9 +1559,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CarObject_UpdateCoinSpeedBonus = {
     (void *)&CarObject_UpdateCoinSpeedBonus, 0x00000244, (void *)extab_CarObject_UpdateCoinSpeedBonus
 };
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CarObject_ProcessWarpAndDash = {
-    (void *)&CarObject_ProcessWarpAndDash, 0x0000025C, (void *)&extab_CarObject_ProcessWarpAndDash
-};
+/* extabindex_CarObject_ProcessWarpAndDash: auto-emitted */
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CarObject_MainUpdate = {
     (void *)&CarObject_MainUpdate, 0x00000AC8, (void *)&extab_CarObject_MainUpdate
 };
@@ -1597,9 +1650,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_KartItem_TickActiveEffectsTwoLane = {
     (void *)&KartItem_TickActiveEffectsTwoLane, 0x000003A4, (void *)extab_KartItem_TickActiveEffectsTwoLane
 };
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_KartItem_TickStatusEffectsByFlag = {
-    (void *)&KartItem_TickStatusEffectsByFlag, 0x00000410, (void *)extab_KartItem_TickStatusEffectsByFlag
-};
+/* extabindex_KartItem_TickStatusEffectsByFlag: auto-emitted */
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffectDesc_OnApply_BoostLandingSE = {
     (void *)&ItemEffectDesc_OnApply_BoostLandingSE, 0x00000084, (void *)extab_ItemEffectDesc_OnApply_BoostLandingSE
 };
@@ -1645,9 +1696,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_StlList_EraseRange = {
     (void *)&StlList_EraseRange, 0x000000B0, (void *)extab_StlList_EraseRange
 };
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_StlList_InsertBefore = {
-    (void *)&StlList_InsertBefore, 0x000000A8, (void *)extab_StlList_InsertBefore
-};
+/* extabindex_StlList_InsertBefore: auto-emitted */
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_80052744 = {
     (void *)&dtor_80052744, 0x00000048, (void *)extab_dtor_80052744
 };
@@ -4505,168 +4554,82 @@ void CarObject_UpdateCoinSpeedBonus(KartItemOpsView *self) { /* 0x8004CF64 size:
 }
 #pragma exceptions reset
 
-asm void CarObject_ProcessWarpAndDash(void) { /* 0x8004D1A8 size:0x25C */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    stw r0, 0x54(r1)
-    stw r31, 0x4c(r1)
-    mr r31, r3
-    stw r30, 0x48(r1)
-    stw r29, 0x44(r1)
-    lwz r30, 0x28(r3)
-    lwz r3, 0x54(r3)
-    lfs f1, 0x88(r30)
-    lfs f2, 0x8c(r30)
-    lfs f3, 0x90(r30)
-    bl WarpZone_CheckEntry
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne CarObject_ProcessWarpAndDash_L_8004D28C
-    lwz r4, 0x28(r31)
-    lwz r3, 0x54(r31)
-    lfs f1, 0x88(r30)
-    lfs f2, 0x8c(r30)
-    lfs f3, 0x90(r30)
-    lfs f4, 0x1c8(r4)
-    lfs f5, 0x17c(r4)
-    lfs f6, 0x180(r4)
-    lfs f7, 0x184(r4)
-    bl WarpAutoRun_OnEnter
-    lbz r0, 0x20(r31)
-    cmplwi r0, 0x1
-    bne CarObject_ProcessWarpAndDash_L_8004D238
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne CarObject_ProcessWarpAndDash_L_8004D22C
-    li r3, 0x0
-    CarObject_ProcessWarpAndDash_L_8004D22C:
-    lfs f1, lbl_806D2798(r2)
-    li r4, 0x6
-    bl CameraEffect_Apply
-    CarObject_ProcessWarpAndDash_L_8004D238:
-    lbz r0, 0xf4(r31)
-    cmplwi r0, 0x0
-    bne CarObject_ProcessWarpAndDash_L_8004D274
-    lbz r0, 0x20(r31)
-    cmplwi r0, 0x1
-    bne CarObject_ProcessWarpAndDash_L_8004D274
-    lwz r3, 0x24(r31)
-    li r4, 0x12
-    bl SoundObj_PlaySE
-    lwz r3, 0x24(r31)
-    li r4, 0x55
-    bl SoundObj_PlaySE_Direct
-    lwz r3, 0x24(r31)
-    li r4, 0x30
-    bl SoundObj_PlaySE_Direct
-    CarObject_ProcessWarpAndDash_L_8004D274:
-    lwz r3, 0x24(r31)
-    lfs f1, lbl_806D26FC(r2)
-    bl SoundCtrl_SetVolume
-    li r0, 0x1
-    stb r0, 0xf4(r31)
-    b CarObject_ProcessWarpAndDash_L_8004D294
-    CarObject_ProcessWarpAndDash_L_8004D28C:
-    li r0, 0x0
-    stb r0, 0xf4(r31)
-    CarObject_ProcessWarpAndDash_L_8004D294:
-    lwz r4, 0x28(r31)
-    lwz r3, 0x54(r31)
-    lfs f1, 0x88(r30)
-    lfs f2, 0x8c(r30)
-    lfs f3, 0x90(r30)
-    lfs f4, 0x1c8(r4)
-    bl DashZone_ProcessAutoRun
-    cmpwi r3, 0x1
-    bne CarObject_ProcessWarpAndDash_L_8004D354
-    lwz r3, 0x28(r31)
-    addi r4, r1, 0x18
-    lfs f0, lbl_806D26EC(r2)
-    addi r5, r1, 0x14
-    addi r6, r1, 0x10
-    addi r7, r1, 0xc
-    stfs f0, 0x17c(r3)
-    stfs f0, 0x180(r3)
-    stfs f0, 0x184(r3)
-    stfs f0, 0x194(r3)
-    stfs f0, 0x198(r3)
-    stfs f0, 0x19c(r3)
-    stfs f0, 0x1ac(r3)
-    stfs f0, 0x1b0(r3)
-    stfs f0, 0x1b4(r3)
-    lwz r3, 0x54(r31)
-    bl WarpAutoRun_GetParam
-    lfs f5, 0x18(r1)
-    li r4, 0x1
-    lfs f4, 0x14(r1)
-    lfs f3, 0x10(r1)
-    lwz r3, 0x28(r31)
-    lfs f1, lbl_806D26EC(r2)
-    stfs f5, 0x17c(r3)
-    lfs f0, lbl_806D26FC(r2)
-    stfs f4, 0x180(r3)
-    stfs f3, 0x184(r3)
-    lfs f2, 0xc(r1)
-    lwz r3, 0x28(r31)
-    stfs f5, 0x28(r1)
-    stfs f2, 0x1c8(r3)
-    stfs f1, 0x9c(r31)
-    stfs f0, 0xa0(r31)
-    stfs f1, 0xa4(r31)
-    stfs f4, 0x2c(r1)
-    lwz r3, 0x34(r31)
-    stfs f3, 0x30(r1)
-    bl KartBody_SetWarpTransitFlag
-    b CarObject_ProcessWarpAndDash_L_8004D368
-    CarObject_ProcessWarpAndDash_L_8004D354:
-    cmpwi r3, 0x2
-    bne CarObject_ProcessWarpAndDash_L_8004D368
-    lwz r3, 0x34(r31)
-    li r4, 0x0
-    bl KartBody_SetWarpTransitFlag
-    CarObject_ProcessWarpAndDash_L_8004D368:
-    lbz r3, 0x108(r31)
-    bl WarpDashMgr_GetInstance
-    lfs f1, 0x88(r30)
-    mr r29, r3
-    lfs f2, 0x8c(r30)
-    lfs f3, 0x90(r30)
-    bl WarpZone_FindContaining
-    mr r4, r3
-    cmpwi r4, -0x1
-    beq CarObject_ProcessWarpAndDash_L_8004D3E8
-    lfs f1, 0x88(r30)
-    mr r3, r29
-    lfs f2, 0x8c(r30)
-    addi r5, r1, 0x1c
-    lfs f3, 0x90(r30)
-    addi r6, r1, 0x20
-    addi r7, r1, 0x24
-    addi r8, r1, 0x8
-    bl WarpZone_CalcExitPosition
-    lwz r3, 0x28(r31)
-    addi r4, r1, 0x1c
-    li r5, 0x1
-    bl KartMovement_SetPosition
-    lwz r3, 0x28(r31)
-    lfs f1, 0x8(r1)
-    bl KartMovement_RotateByYaw
-    lwz r3, 0x38(r31)
-    lfs f1, 0x8(r1)
-    bl Camera_RotateByYaw
-    lwz r3, 0x2c(r31)
-    li r4, -0x1
-    bl RenderObj_ToggleLapSegment
-    CarObject_ProcessWarpAndDash_L_8004D3E8:
-    lwz r0, 0x54(r1)
-    lwz r31, 0x4c(r1)
-    lwz r30, 0x48(r1)
-    lwz r29, 0x44(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
+#pragma cplusplus on
+struct Vec3c {
+    float x, y, z;
+    Vec3c() {}
+    Vec3c(float px, float py, float pz) : x(px), y(py), z(pz) {}
+    ~Vec3c() {}
+};
+
+static inline void CarObject_SetWarpVelocity(KartMovementSpeedView *m, const Vec3c &v) {
+    m->velX = v.x;
+    m->velY = v.y;
+    m->velZ = v.z;
 }
+
+extern "C" void CarObject_ProcessWarpAndDash(CarObjWarpView *self) { /* 0x8004D1A8 size:0x25C */
+    KartMovementSpeedView *mv = self->movement;
+    void *mgr;
+    int zone;
+    int dash;
+
+    if (WarpZone_CheckEntry(self->warpCtx, mv->transform[12], mv->transform[13], mv->transform[14]) == 1) {
+        WarpAutoRun_OnEnter(self->warpCtx, mv->transform[12], mv->transform[13], mv->transform[14],
+                            self->movement->accel1c8, self->movement->velX, self->movement->velY,
+                            self->movement->velZ);
+        if (self->strPcbGate20 == 1) {
+            CameraEffect_Apply(SINGLETON_INSTANCE(lbl_806D109C), 6, 1.2f);
+        }
+        if (self->inWarpF4 == 0 && self->strPcbGate20 == 1) {
+            SoundObj_PlaySE(self->soundCtrl, 0x12);
+            SoundObj_PlaySE_Direct(self->soundCtrl, 0x55);
+            SoundObj_PlaySE_Direct(self->soundCtrl, 0x30);
+        }
+        SoundCtrl_SetVolume(self->soundCtrl, 1.0f);
+        self->inWarpF4 = 1;
+    } else {
+        self->inWarpF4 = 0;
+    }
+    dash = DashZone_ProcessAutoRun(self->warpCtx, mv->transform[12], mv->transform[13], mv->transform[14],
+                                   self->movement->accel1c8);
+    if (dash == 1) {
+        float vx, vy, vz, yaw;
+        KartMovementSpeedView *m = self->movement;
+        m->velX = 0.0f;
+        m->velY = 0.0f;
+        m->velZ = 0.0f;
+        m->impact194 = 0.0f;
+        m->impact198 = 0.0f;
+        m->impact19c = 0.0f;
+        m->impact1ac = 0.0f;
+        m->impact1b0 = 0.0f;
+        m->impact1b4 = 0.0f;
+        WarpAutoRun_GetParam(self->warpCtx, &vx, &vy, &vz, &yaw);
+        Vec3c vel(vx, vy, vz);
+        CarObject_SetWarpVelocity(self->movement, vel);
+        self->movement->accel1c8 = yaw;
+        self->upX = 0.0f;
+        self->upY = 1.0f;
+        self->upZ = 0.0f;
+        KartBody_SetWarpTransitFlag(self->body, 1);
+    } else if (dash == 2) {
+        KartBody_SetWarpTransitFlag(self->body, 0);
+    }
+    mgr = WarpDashMgr_GetInstance(self->courseId108);
+    zone = WarpZone_FindContaining(mgr, mv->transform[12], mv->transform[13], mv->transform[14]);
+    if (zone != -1) {
+        Vec3c pos;
+        float yaw;
+        WarpZone_CalcExitPosition(mgr, zone, mv->transform[12], mv->transform[13], mv->transform[14],
+                                  &pos.x, &pos.y, &pos.z, &yaw);
+        KartMovement_SetPosition(self->movement, &pos, 1);
+        KartMovement_RotateByYaw(self->movement, yaw);
+        Camera_RotateByYaw(self->camera, yaw);
+        RenderObj_ToggleLapSegment(self->renderObj, -1);
+    }
+}
+#pragma cplusplus off
 
 asm void CarObject_MainUpdate(void *self, void *arg) { /* 0x8004D404 size:0xAC8 */
     nofralloc
@@ -7314,11 +7277,13 @@ asm void CarObject_HandleItemEffect(void) { /* 0x8004F858 size:0x7B8 */
     blr
 }
 
+#pragma auto_inline off
 #pragma exceptions off
 int ItemEffect_SelectAndDispatch_Wrap(ItemEffectTable *self, int itemId, void *itemObj, int arg4) { /* 0x80050010 size:0x20 */
     return ItemEffect_SelectAndDispatch(self, itemId, itemObj, arg4);
 }
 #pragma exceptions reset
+#pragma auto_inline reset
 
 /* C probe history (2026-06-10): best form reaches ~96%% with 4 independent
  * residues: (a) table-base init split (addi r0,r7,@l hoisted above stmw +
@@ -8091,296 +8056,85 @@ void KartItem_TickActiveEffectsTwoLane(ItemEffectTable *self) { /* 0x8005094C si
 }
 #pragma exceptions reset
 
-asm void KartItem_TickStatusEffectsByFlag(ItemEffectTable *self) { /* 0x80050CF0 size:0x410 */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    stw r0, 0x44(r1)
-    stfd f31, 0x30(r1)
-    psq_st f31, 0x38(r1), 0, 0
-    stfd f30, 0x20(r1)
-    psq_st f30, 0x28(r1), 0, 0
-    stw r31, 0x1c(r1)
-    stw r30, 0x18(r1)
-    stw r29, 0x14(r1)
-    stw r28, 0x10(r1)
-    mr r29, r3
-    lis r3, 0x20
-    lwz r6, 0x0(r29)
-    li r4, 0x0
-    lwz r5, 0x2c(r6)
-    lwz r30, 0x34(r6)
-    lwz r31, 0x304(r5)
-    lwz r5, 0x10(r31)
-    lwz r6, 0x14(r31)
-    and r0, r5, r4
-    and r3, r6, r3
-    xor r3, r3, r4
-    xor r0, r0, r4
-    or. r0, r3, r0
-    bne KartItem_TickStatusEffectsByFlag_L_80050D5C
-    b KartItem_TickStatusEffectsByFlag_L_80050D60
-    KartItem_TickStatusEffectsByFlag_L_80050D5C:
-    li r4, 0x1
-    KartItem_TickStatusEffectsByFlag_L_80050D60:
-    clrlwi r0, r4, 24
-    cmplwi r0, 0x1
-    bne KartItem_TickStatusEffectsByFlag_L_80050DCC
-    li r4, 0x0
-    lis r0, 0x4000
-    and r3, r6, r4
-    and r0, r5, r0
-    xor r3, r3, r4
-    xor r0, r0, r4
-    or. r0, r3, r0
-    bne KartItem_TickStatusEffectsByFlag_L_80050D90
-    b KartItem_TickStatusEffectsByFlag_L_80050D94
-    KartItem_TickStatusEffectsByFlag_L_80050D90:
-    li r4, 0x1
-    KartItem_TickStatusEffectsByFlag_L_80050D94:
-    clrlwi r0, r4, 24
-    cmplwi r0, 0x1
-    bne KartItem_TickStatusEffectsByFlag_L_80050DCC
-    mr r3, r29
-    li r4, 0x118
-    li r5, 0x0
-    li r6, -0x1
-    bl ItemEffect_SelectAndDispatch_Wrap
-    cmpwi r3, 0x0
-    bne KartItem_TickStatusEffectsByFlag_L_80050DCC
-    mr r3, r30
-    li r4, 0x118
-    li r5, 0x1
-    bl TornadoEffect_ApplyItemVisual_Secondary
-    KartItem_TickStatusEffectsByFlag_L_80050DCC:
-    lwz r0, 0x10(r31)
-    li r4, 0x0
-    lwz r5, 0x14(r31)
-    li r3, 0x8
-    and r0, r0, r4
-    and r3, r5, r3
-    xor r3, r3, r4
-    xor r0, r0, r4
-    or. r0, r3, r0
-    bne KartItem_TickStatusEffectsByFlag_L_80050DF8
-    b KartItem_TickStatusEffectsByFlag_L_80050DFC
-    KartItem_TickStatusEffectsByFlag_L_80050DF8:
-    li r4, 0x1
-    KartItem_TickStatusEffectsByFlag_L_80050DFC:
-    clrlwi r0, r4, 24
-    cmplwi r0, 0x1
-    bne KartItem_TickStatusEffectsByFlag_L_80050E80
-    lwz r3, 0x1c(r29)
-    li r28, 0x1
-    addi r0, r3, 0x1
-    stw r0, 0x1c(r29)
-    lwz r0, 0x1c(r29)
-    cmpwi r0, 0x14
-    ble KartItem_TickStatusEffectsByFlag_L_80050E80
-    li r0, 0x0
-    stw r0, 0x1c(r29)
-    bl HSD_Randf
-    lfs f0, lbl_806D2700(r2)
-    fcmpo cr0, f1, f0
-    bge KartItem_TickStatusEffectsByFlag_L_80050E40
-    li r28, 0x0
-    KartItem_TickStatusEffectsByFlag_L_80050E40:
-    clrlwi r0, r28, 24
-    cmplwi r0, 0x1
-    bne KartItem_TickStatusEffectsByFlag_L_80050E68
-    lfs f1, lbl_806D2708(r2)
-    mr r3, r30
-    bl TornadoEffect_TriggerWheelScaleAnim
-    lwz r3, 0x4(r29)
-    lfs f1, lbl_806D26FC(r2)
-    bl EffectSteering_InputViscosity_SetFieldC
-    b KartItem_TickStatusEffectsByFlag_L_80050E80
-    KartItem_TickStatusEffectsByFlag_L_80050E68:
-    lfs f1, lbl_806D2700(r2)
-    mr r3, r30
-    bl TornadoEffect_TriggerWheelScaleAnim
-    lwz r3, 0x4(r29)
-    lfs f1, lbl_806D26EC(r2)
-    bl EffectSteering_InputViscosity_SetFieldC
-    KartItem_TickStatusEffectsByFlag_L_80050E80:
-    lwz r3, 0x10(r31)
-    li r0, 0x1000
-    lwz r5, 0x14(r31)
-    li r4, 0x0
-    and r0, r3, r0
-    and r3, r5, r4
-    xor r3, r3, r4
-    xor r0, r0, r4
-    or. r0, r3, r0
-    bne KartItem_TickStatusEffectsByFlag_L_80050EAC
-    b KartItem_TickStatusEffectsByFlag_L_80050EB0
-    KartItem_TickStatusEffectsByFlag_L_80050EAC:
-    li r4, 0x1
-    KartItem_TickStatusEffectsByFlag_L_80050EB0:
-    clrlwi r0, r4, 24
-    cmplwi r0, 0x1
-    bne KartItem_TickStatusEffectsByFlag_L_80050F34
-    lfs f2, 0x20(r29)
-    lfs f1, lbl_806D27B4(r2)
-    lfs f0, lbl_806D26FC(r2)
-    fadds f1, f2, f1
-    stfs f1, 0x20(r29)
-    lfs f1, 0x20(r29)
-    fcmpo cr0, f1, f0
-    ble KartItem_TickStatusEffectsByFlag_L_80050EE4
-    fsubs f0, f1, f0
-    stfs f0, 0x20(r29)
-    KartItem_TickStatusEffectsByFlag_L_80050EE4:
-    lfs f1, lbl_806D27B8(r2)
-    lfs f0, 0x20(r29)
-    fmuls f1, f1, f0
-    bl sin
-    frsp f31, f1
-    lfs f1, lbl_806D26FC(r2)
-    lwz r3, 0x0(r29)
-    lfs f0, lbl_806D27BC(r2)
-    fsubs f30, f1, f31
-    lwz r3, 0x38(r3)
-    fnmsubs f1, f0, f30, f0
-    bl ShadowBillboard_SetField0xA4
-    lfs f1, lbl_806D2768(r2)
-    mr r3, r30
-    lfs f0, lbl_806D26E8(r2)
-    li r4, 0x1
-    lfs f3, lbl_806D26FC(r2)
-    fmadds f2, f1, f30, f0
-    fmadds f1, f1, f31, f0
-    bl TornadoEffect_SetColorRGBLerp
-    KartItem_TickStatusEffectsByFlag_L_80050F34:
-    lwz r3, 0x10(r31)
-    lis r0, 0x2
-    lwz r5, 0x14(r31)
-    li r4, 0x0
-    and r0, r3, r0
-    and r3, r5, r4
-    xor r3, r3, r4
-    xor r0, r0, r4
-    or. r0, r3, r0
-    bne KartItem_TickStatusEffectsByFlag_L_80050F60
-    b KartItem_TickStatusEffectsByFlag_L_80050F64
-    KartItem_TickStatusEffectsByFlag_L_80050F60:
-    li r4, 0x1
-    KartItem_TickStatusEffectsByFlag_L_80050F64:
-    clrlwi r0, r4, 24
-    cmplwi r0, 0x1
-    bne KartItem_TickStatusEffectsByFlag_L_80050FF4
-    lfs f2, 0x24(r29)
-    lfs f1, lbl_806D2730(r2)
-    lfs f0, lbl_806D2700(r2)
-    fadds f1, f2, f1
-    stfs f1, 0x24(r29)
-    lfs f1, 0x24(r29)
-    fcmpo cr0, f1, f0
-    ble KartItem_TickStatusEffectsByFlag_L_80050FF4
-    lwz r30, 0x0(r29)
-    lfs f1, lbl_806D26FC(r2)
-    lwz r3, 0x28(r30)
-    bl fn_8019A8A4
-    clrlwi. r0, r3, 24
-    bne KartItem_TickStatusEffectsByFlag_L_80050FB0
-    li r0, 0x0
-    b KartItem_TickStatusEffectsByFlag_L_80050FE0
-    KartItem_TickStatusEffectsByFlag_L_80050FB0:
-    lwz r3, lbl_806D10A0(r13)
-    cmplwi r3, 0x0
-    bne KartItem_TickStatusEffectsByFlag_L_80050FC0
-    li r3, 0x0
-    KartItem_TickStatusEffectsByFlag_L_80050FC0:
-    cmplwi r3, 0x0
-    beq KartItem_TickStatusEffectsByFlag_L_80050FD0
-    lwz r4, 0x10(r30)
-    bl TitleStats_IncTotalRaces
-    KartItem_TickStatusEffectsByFlag_L_80050FD0:
-    lwz r3, 0x24(r30)
-    li r4, 0x56
-    bl SoundObj_PlaySE_Direct
-    li r0, 0x1
-    KartItem_TickStatusEffectsByFlag_L_80050FE0:
-    clrlwi r0, r0, 24
-    cmplwi r0, 0x1
-    bne KartItem_TickStatusEffectsByFlag_L_80050FF4
-    lfs f0, lbl_806D26EC(r2)
-    stfs f0, 0x24(r29)
-    KartItem_TickStatusEffectsByFlag_L_80050FF4:
-    lwz r3, 0x10(r31)
-    lis r0, 0x2000
-    lwz r5, 0x14(r31)
-    li r4, 0x0
-    and r0, r3, r0
-    and r3, r5, r4
-    xor r3, r3, r4
-    xor r0, r0, r4
-    or. r0, r3, r0
-    bne KartItem_TickStatusEffectsByFlag_L_80051020
-    b KartItem_TickStatusEffectsByFlag_L_80051024
-    KartItem_TickStatusEffectsByFlag_L_80051020:
-    li r4, 0x1
-    KartItem_TickStatusEffectsByFlag_L_80051024:
-    clrlwi r0, r4, 24
-    cmplwi r0, 0x1
-    bne KartItem_TickStatusEffectsByFlag_L_8005106C
-    lwz r3, 0x4(r29)
-    bl EffectState_HasContent
-    clrlwi. r0, r3, 24
-    bne KartItem_TickStatusEffectsByFlag_L_8005106C
-    lfs f1, 0x10(r29)
-    lfs f0, lbl_806D26E4(r2)
-    lfs f2, lbl_806D27C0(r2)
-    fmuls f0, f1, f0
-    lfs f1, lbl_806D26FC(r2)
-    lfs f3, lbl_806D27C4(r2)
-    stfs f0, 0x10(r29)
-    lfs f0, 0x10(r29)
-    lwz r3, 0x4(r29)
-    fmuls f2, f2, f0
-    bl EffectSteering_InitForVibrate
-    KartItem_TickStatusEffectsByFlag_L_8005106C:
-    lwz r3, 0x10(r31)
-    lis r0, 0x1000
-    lwz r5, 0x14(r31)
-    li r4, 0x0
-    and r0, r3, r0
-    and r3, r5, r4
-    xor r3, r3, r4
-    xor r0, r0, r4
-    or. r0, r3, r0
-    bne KartItem_TickStatusEffectsByFlag_L_80051098
-    b KartItem_TickStatusEffectsByFlag_L_8005109C
-    KartItem_TickStatusEffectsByFlag_L_80051098:
-    li r4, 0x1
-    KartItem_TickStatusEffectsByFlag_L_8005109C:
-    clrlwi r0, r4, 24
-    cmplwi r0, 0x1
-    bne KartItem_TickStatusEffectsByFlag_L_800510D0
-    lbz r0, 0xc(r29)
-    cmplwi r0, 0x1
-    bne KartItem_TickStatusEffectsByFlag_L_800510D0
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne KartItem_TickStatusEffectsByFlag_L_800510C4
-    li r3, 0x0
-    KartItem_TickStatusEffectsByFlag_L_800510C4:
-    lfs f1, lbl_806D26FC(r2)
-    li r4, 0x1
-    bl CameraEffect_Apply
-    KartItem_TickStatusEffectsByFlag_L_800510D0:
-    psq_l f31, 0x38(r1), 0, 0
-    lfd f31, 0x30(r1)
-    psq_l f30, 0x28(r1), 0, 0
-    lfd f30, 0x20(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r0, 0x44(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x40
-    blr
+static inline unsigned char KartItem_PlayLandingBoostSE(KartItemOpsView *owner) {
+    void *stats;
+
+    if (!fn_8019A8A4(owner->movement, 1.0f)) {
+        return 0;
+    }
+    stats = SINGLETON_INSTANCE(lbl_806D10A0);
+    if (stats) {
+        TitleStats_IncTotalRaces(stats, owner->raceScore10);
+    }
+    SoundObj_PlaySE_Direct(owner->soundCtrl, 0x56);
+    return 1;
+}
+
+void KartItem_TickStatusEffectsByFlag(ItemEffectTable *self) { /* 0x80050CF0 size:0x410 */
+    ItemBusFlagsView *bus;
+    void *fx;
+    unsigned char hit;
+    float s;
+    float c;
+
+    bus = self->owner->ownerDriver->itemBus;
+    fx = self->owner->effectObj;
+    {
+        unsigned long long fl = bus->flags;
+        if (Flags_Test(fl, 0x200000ULL) == 1 && Flags_Test(fl, 0x4000000000000000ULL) == 1) {
+            if (ItemEffect_SelectAndDispatch_Wrap(self, 0x118, 0, -1) == 0) {
+                TornadoEffect_ApplyItemVisual_Secondary(fx, 0x118, 1);
+            }
+        }
+    }
+    if (ItemBus_TestFlags(bus, 0x8ULL) == 1) {
+        hit = 1;
+        self->run1c++;
+        if (self->run1c > 20) {
+            self->run1c = 0;
+            if (HSD_Randf() < 0.5f) {
+                hit = 0;
+            }
+            if (hit == 1) {
+                TornadoEffect_TriggerWheelScaleAnim(fx, 1.5f);
+                EffectSteering_InputViscosity_SetFieldC(self->effectState, 1.0f);
+            } else {
+                TornadoEffect_TriggerWheelScaleAnim(fx, 0.5f);
+                EffectSteering_InputViscosity_SetFieldC(self->effectState, 0.0f);
+            }
+        }
+    }
+    if (ItemBus_TestFlags(bus, 0x100000000000ULL) == 1) {
+        self->runBlend20 += 0.008333334f;
+        if (self->runBlend20 > 1.0f) {
+            self->runBlend20 -= 1.0f;
+        }
+        s = sin(3.1415927f * self->runBlend20);
+        c = 1.0f - s;
+        ShadowBillboard_SetField0xA4(self->owner->billboard, 4.0f - 4.0f * c);
+        c = 1.1f * c + 0.1f;
+        s = 1.1f * s + 0.1f;
+        TornadoEffect_SetColorRGBLerp(fx, 1, s, c, 1.0f);
+    }
+    if (ItemBus_TestFlags(bus, 0x2000000000000ULL) == 1) {
+        self->runBlend24 += 0.016666668f;
+        if (self->runBlend24 > 0.5f) {
+            if (KartItem_PlayLandingBoostSE(self->owner) == 1) {
+                self->runBlend24 = 0.0f;
+            }
+        }
+    }
+    if (ItemBus_TestFlags(bus, 0x2000000000000000ULL) == 1) {
+        if (!EffectState_HasContent(self->effectState)) {
+            self->intensity10 *= -1.0f;
+            EffectSteering_InitForVibrate(self->effectState, 1.0f, 0.8f * self->intensity10, 0.05f);
+        }
+    }
+    if (ItemBus_TestFlags(bus, 0x1000000000000000ULL) == 1) {
+        if (self->laneKindC == 1) {
+            CameraEffect_Apply(SINGLETON_INSTANCE(lbl_806D109C), 1, 1.0f);
+        }
+    }
 }
 
 #pragma exceptions off
@@ -9888,53 +9642,37 @@ asm void StlList_EraseRange(void *ret, StlList *l, StlListNode **beg, StlListNod
  * node if the obj copy throws). Approach B cannot emit any of this; approach A
  * excluded by the 14.1 mix rule (manual-extab asm fns precede). Same class as
  * dtor_8005278C/800528B0 (exceptions-on-eh-scaffolding-unpromotable). */
-asm void StlList_InsertBefore(void) { /* 0x80052684 size:0xA8 */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    stw r0, 0x44(r1)
-    stmw r27, 0x2c(r1)
-    mr r29, r3
-    mr r31, r1
-    mr r30, r4
-    mr r27, r5
-    mr r28, r6
-    li r3, 0xc
-    bl Alloc
-    addi r0, r30, 0x4
-    addic. r4, r3, 0x8
-    stw r0, 0x8(r31)
-    stw r3, 0xc(r31)
-    beq StlList_InsertBefore_L_800526D0
-    lwz r0, 0x0(r28)
-    stw r1, 0x24(r31)
-    stw r0, 0x0(r4)
-    StlList_InsertBefore_L_800526D0:
-    lwz r5, 0x0(r27)
-    li r3, 0x0
-    lwz r6, 0xc(r31)
-    lwz r4, 0x0(r5)
-    stw r3, 0xc(r31)
-    stw r6, 0x4(r4)
-    lwz r0, 0x0(r5)
-    stw r0, 0x0(r6)
-    stw r6, 0x0(r5)
-    stw r5, 0x4(r6)
-    lwz r4, 0x0(r30)
-    addi r0, r4, 0x1
-    stw r0, 0x0(r30)
-    stw r6, 0x0(r29)
-    b StlList_InsertBefore_L_80052710
-    bl MemoryManager_TimedFree
-    StlList_InsertBefore_L_80052710:
-    mr r10, r31
-    lmw r27, 0x2c(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+#pragma cplusplus on
+inline void *operator new(unsigned long, void *p) { return p; }
+inline void operator delete(void *, void *) {}
+
+struct StlInsNodeGuard {
+    StlInsNode **allocator;
+    StlInsNode *node;
+    StlInsNodeGuard(StlInsNode **a, StlInsNode *n) : allocator(a), node(n) {}
+    ~StlInsNodeGuard() { if (node) MemoryManager_TimedFree(node); }
+    StlInsNode *Release() {
+        StlInsNode *p = node;
+        node = 0;
+        return p;
+    }
+};
+
+static inline StlInsIter StlList_LinkNode(StlList *l, StlInsNode *at, StlInsNode *node) {
+    at->prev->next = node;
+    node->prev = at->prev;
+    at->prev = node;
+    node->next = at;
+    ++l->count;
+    return StlInsIter(node);
 }
+
+extern "C" StlInsIter StlList_InsertBefore(StlList *l, StlInsIter &pos, const StlInsValue &value) { /* 0x80052684 size:0xA8 */
+    StlInsNodeGuard guard((StlInsNode **)&l->head, (StlInsNode *)Alloc(sizeof(StlInsNode)));
+    new (&guard.node->value) StlInsValue(value);
+    return StlList_LinkNode(l, pos.node, guard.Release());
+}
+#pragma cplusplus off
 
 #pragma exceptions off
 void StlList_InitEmpty(StlList *l) { /* 0x8005272C size:0x18 */

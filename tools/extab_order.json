@@ -393,7 +393,8 @@
       "StlList_RemoveByValueField",
       "StlList_EraseRange",
       "StlList_InsertBefore",
-      "Bitset_Init"
+      "Bitset_Init",
+      "dtor_80036E40"
     ],
     "extabindex": [
       "KartItem_OnKartHit",
@@ -471,7 +472,8 @@
       "dtor_80052C48",
       "dtor_80052CC4",
       "dtor_80052D40",
-      "KartMovement_UpdateBoostVisualBlend"
+      "KartMovement_UpdateBoostVisualBlend",
+      "dtor_80036E40"
     ]
   },
   "src/game/RaceContext_EnsureSingleton.c": {
