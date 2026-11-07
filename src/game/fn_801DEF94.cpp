@@ -253,9 +253,6 @@ void fn_801DF010(SteeringMgr *self, int item, char *other) {
 static inline void ForceAction(SteeringMgr *self, int state) {
     ItemBus *bus;
     int t;
-    if (state == 7) {
-        return;
-    }
     if (self->item == 0) {
             bus = self->kart->bus;
             fn_801DB8F0();
@@ -271,9 +268,10 @@ static inline void ForceAction(SteeringMgr *self, int state) {
 }
 
 void fn_801DF24C(SteeringMgr *self, int state) {
-    if (state > 0 && state < 11) {
-        ForceAction(self, state);
+    if (state <= 0 || state >= 11 || state == 7) {
+        return;
     }
+    ForceAction(self, state);
 }
 
 float *fn_801DF308(SteeringMgr *self) {

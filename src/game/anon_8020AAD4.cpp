@@ -34,9 +34,10 @@ static inline void Sprite_SetPos(Sprite *sprite, float x, float y) {
 }
 
 extern "C" void fn_8020AAD4(ItemDisplay *self) {
-    if (self->state != 3 && self->state != 0) {
-        self->state = 3;
-        Sprite_SetupAnim(self->sprite, 0xC7, 1, 0);
-        Sprite_SetAnimParam(self->sprite, 0x1AD4, self->currentItemId);
+    if (self->state == 3 || self->state == 0) {
+        return;
     }
+    self->state = 3;
+    Sprite_SetupAnim(self->sprite, 0xC7, 1, 0);
+    Sprite_SetAnimParam(self->sprite, 0x1AD4, self->currentItemId);
 }

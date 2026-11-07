@@ -10865,9 +10865,15 @@ game/fn_801FC1A8.cpp:
 	.text       start:0x801FC1A8 end:0x801FC1E0
 
 game/anon_801FC1E0.cpp:
-	extab       start:0x800179D8 end:0x80017B40
-	extabindex  start:0x8002924C end:0x800292D0
-	.text       start:0x801FC1E0 end:0x801FD320
+	extab       start:0x800179D8 end:0x80017AEC
+	extabindex  start:0x8002924C end:0x80029270
+	.text       start:0x801FC1E0 end:0x801FC614
+
+game/anon_801FC1E0_nm1.cpp:
+	extab       start:0x80017AEC end:0x80017B40
+	extabindex  start:0x80029270 end:0x800292D0
+	.text       start:0x801FC614 end:0x801FD320
+	.data       start:0x804EC044 end:0x804EC074
 
 game/anon_801FD320.cpp:
 	extab       start:0x80017B40 end:0x80017C00

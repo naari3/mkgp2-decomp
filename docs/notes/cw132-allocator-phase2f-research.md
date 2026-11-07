@@ -1481,3 +1481,8 @@ c15_u47: ItemAliasSprite::Draw 8023D2B8 is 416B with pure GPR rotation self/colo
 Source: Codex worker c16_u31_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c16_u31: Sci2Card_BuildRetryReceiptLine 80094D80 single-fn1544B. Explicit isJapanese()==0 and ternary label/suffix plus inline digit conversion using direct lbl_803FFDF0 access improves objdiff85.79015 to87.03886 (report87.84197). Inline format accessors and typed pool struct do not prevent pool+0x468/index folding. Remaining source1576B includes eight extra mr r0,r3 return copies in case7/8 plus global home rotation and format address shape. No promotion; full fallback-linked DOL SHA-1 OK.
+
+## c17_u48_20261107
+Source: Codex worker c17_u48_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c17_u48 RaceScene_FrameUpdate 800A0EF4 (2856B): actual residual is only zero scratch r3 versus target r0 at +0x2CC/+0x2D4, 99.98599%. Extracting reset stores alone or the entire cc-class/timing/throttle-assist decision into semantic inline helpers both leave byte-identical output and same residual; both reverted. Approved SINGLETON_INSTANCE conversions for lbl_806D10A0/109C/10D0 are also byte-invariant and retained. No missing functions or structural instruction mismatch; no rescue split possible for a single-function TU.
