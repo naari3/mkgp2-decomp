@@ -1184,3 +1184,8 @@ c17_u116: MinimapHud dtor 8021995C improves 98.90351 -> 99.07895 with explicit M
 Source: Codex worker c17_u119_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c17_u119: fn_80203C24 remains98.854965 (520B vs524B). Explicit fn_80271340(t,0,lbl_806D0268,lbl_806D0260,0) removes duplicate68B data+24B sdata with unchanged primary instruction rows and95/91.66667 EH/index. Dispatch helper taking pending by value changes pending/layer rank to r31/r30 but retains early callee-saved load (98.54962); inline queue-take return and OpenMsgPopup const-int-reference snapshot are invariant negatives. Original by-value source retained. Residual is absent target +E0 mr r30,r4 caused by early coalescing; owned EH PCs are -4 and function size is -4. Single function cannot split. No flag/split/bridge edits, fallback full DOL SHA1 OK, native gain0.
+
+## c17_u117_20261107
+Source: Codex worker c17_u117_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2604 B.
+
+c17_u117: StateLines 8021FC4C/2604B closes 98.88633 -> 100 by indexing lbl_803C6A24 with hasBonus2==1 ? 3 : 4 (instead of (-1:0)+4), then declaring final-loop line pointer before counter. The first fixes both addi/slwi/lfsx table lookups; the second fixes volatile r6/r7 homes. Approved singleton macro reads preserve text but shift generated EH labels from @381/@382 to @379/@380. Add owned EH/index bridges for latter, retain flags/splits unchanged, flip Matching. Text2604/EH220/index12 all100; final source-linked DOL SHA1 exact. Native gain1fn2604B.

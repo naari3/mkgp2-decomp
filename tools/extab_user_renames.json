@@ -7934,6 +7934,8 @@
     "__dt__12Own<6Sprite>Fv": "dtor_8015E8AC"
   },
   "src/game/anon_8021F088_nm_8021FC4C.cpp": {
+    "@379": "@etb_8001B2A0",
+    "@380": "@eti_8002A434",
     "__dt__7ResCtrlFv": "dtor_80082960",
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__nw__FUl": "Alloc",
