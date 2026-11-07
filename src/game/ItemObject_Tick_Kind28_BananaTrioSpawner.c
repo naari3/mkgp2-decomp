@@ -43,6 +43,8 @@ void ItemObject_Tick_Kind28_BananaTrioSpawner(unsigned char *self, BananaTrioWor
     switch (S8(0xC9)) {
     default:
         break;
+    case 2: /* Children have been spawned; continue the orbit below. */
+        break;
     case 0:
         w->angle = lbl_806D5BF4 - Vec3_ToYaw(&w->offset);
         w->angleStart = w->angle;
@@ -79,8 +81,8 @@ void ItemObject_Tick_Kind28_BananaTrioSpawner(unsigned char *self, BananaTrioWor
         float span = w->angleStart - lbl_806D5BC8;
         t = (span - (w->angle - lbl_806D5BC8)) / span;
     }
-    if (lbl_806D5BB8 < t) {
-        t = lbl_806D5BB8;
+    if (1.0f < t) {
+        t = 1.0f;
     }
     {
         radius = lbl_806D5BE4 * KartFxParam_GetConst1p5(w->kart);
