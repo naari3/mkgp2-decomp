@@ -13139,5 +13139,8 @@
     "@26": "lbl_804E517C",
     "@27": "lbl_804E5188",
     "@28": "lbl_804E5194"
+  },
+  "src/game/CollisionFile_Load.cpp": {
+    "__ct__11CECollisionFPCc": "CollisionFile_Load"
   }
 }

@@ -1,0 +1,5 @@
+# collision-file-load-near-match
+
+Source: Codex worker c19_u291_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u291: base was already GC/1.3 .cpp/97.61628. Real CECollision ctor with size(0),data(0),collision(0) and static inline CountCollisionTypes(const CollisionTypeEntry*) reaches 99.74419, replacing old count-as-zero/int-to-pointer and dual-index probing artifacts. Remove opt_propagation off; retain preexisting strength-reduction pragma. Bridge __ct__11CECollisionFPCc to CollisionFile_Load under own TU key via extab_padding=b"". EH8/index12 remain100; source344B. Residual only order of two loop IV increments (target offset r3 then count r6; source reversed). While/preincrement, unsigned count and extra indexed-name inline accessor are invariant; explicit byte-offset iterator folds into lwz and regresses79.976746. Six approaches exhausted under >=99 exception. Single fn cannot B-split. Keep NonMatching; coordinator full fallback DOL SHA1 exact, zero native gain. No data ranges taken.
