@@ -14134,7 +14134,10 @@ sysdolphin/baselib/mobj_anim.c:
 	.text       start:0x802C2848 end:0x802C2890
 
 sysdolphin/baselib/mobj_nm.c:
-	.text       start:0x802C2890 end:0x802C340C
+	.text       start:0x802C2890 end:0x802C2A40
+
+sysdolphin/baselib/mobj_nm1.c:
+	.text       start:0x802C2A40 end:0x802C340C
 	.data       start:0x804FC24C end:0x804FC330
 	.sdata      start:0x806D0CE8 end:0x806D0D10
 	.sbss       start:0x806D2138 end:0x806D2150
