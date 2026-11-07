@@ -1596,8 +1596,10 @@
     "extabindex_CoinSystem_UpdateAll": "@eti_80024C80"
   },
   "src/game/CoinSystem_Init.c": {
-    "extab_CoinSystem_Init": "@etb_8000D2F0",
-    "extabindex_CoinSystem_Init": "@eti_80024CA4"
+    "__ct__10CoinNormalFPCci": "clNormal3D_Construct",
+    "__dt__10CoinNormalFv": "Object_DtorWithGXSync",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/CardTaskManager_RenderOverlay.c": {
     "extab_CardTaskManager_RenderOverlay": "@etb_80008FF4",
@@ -4864,29 +4866,6 @@
     "Start__7NextWndFi": "fn_8021F19C",
     "StateItems__19clCSSceneCoinMilageFv": "fn_8021F400",
     "Setup__7ItemWndFiP10MilageItem": "fn_8021F508"
-  },
-  "src/game/anon_80224ECC.cpp": {
-    "__dt__7ResCtrlFv": "dtor_80082960",
-    "__ct__7ResCtrlFv": "ResCtrl_Init",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "Draw__15clCSSceneBannerFv": "fn_80224ECC",
-    "Update__15clCSSceneBannerFv": "fn_80224F0C",
-    "__dt__15clCSSceneBannerFv": "fn_80225124",
-    "__ct__15clCSSceneBannerFv": "fn_802251DC",
-    "Destroy__15clCSSceneBannerFv": "fn_80225378",
-    "__vt__15clCSSceneBanner": "lbl_804EDF14",
-    "__vt__9SceneBase": "lbl_803FE0C8",
-    "__ct__8SceneObjFiiiii": "fn_8023D080",
-    "__dt__8SceneObjFv": "fn_8023CFE0",
-    "Update__8SceneObjFv": "fn_8023CDA8",
-    "Draw__8SceneObjFv": "fn_8023CD54",
-    "__dt__6SpriteFv": "Sprite_Destroy",
-    "__dt__9SceneBaseFv": "dtor_8007D0D4",
-    "@20": "@etb_8001B7B8",
-    "@21": "@eti_8002A5C0",
-    "@58": "@etb_8001B7C0",
-    "@59": "@eti_8002A5CC"
   },
   "src/game/anon_802253EC.cpp": {
     "__dt__20VHolder<10FlowFaderI>Fv": "dtor_801F2724",
@@ -9483,50 +9462,6 @@
     "@33": "@etb_80019384",
     "@34": "@eti_80029A80"
   },
-  "src/game/anon_80224ECC_nm1.cpp": {
-    "__dt__7ResCtrlFv": "dtor_80082960",
-    "__ct__7ResCtrlFv": "ResCtrl_Init",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "Draw__15clCSSceneBannerFv": "fn_80224ECC",
-    "Update__15clCSSceneBannerFv": "fn_80224F0C",
-    "__dt__15clCSSceneBannerFv": "fn_80225124",
-    "__ct__15clCSSceneBannerFv": "fn_802251DC",
-    "Destroy__15clCSSceneBannerFv": "fn_80225378",
-    "__vt__15clCSSceneBanner": "lbl_804EDF14",
-    "__vt__9SceneBase": "lbl_803FE0C8",
-    "__ct__8SceneObjFiiiii": "fn_8023D080",
-    "__dt__8SceneObjFv": "fn_8023CFE0",
-    "Update__8SceneObjFv": "fn_8023CDA8",
-    "Draw__8SceneObjFv": "fn_8023CD54",
-    "__dt__6SpriteFv": "Sprite_Destroy",
-    "__dt__9SceneBaseFv": "dtor_8007D0D4"
-  },
-  "src/game/anon_80224ECC_exact2.cpp": {
-    "__dt__7ResCtrlFv": "dtor_80082960",
-    "__ct__7ResCtrlFv": "ResCtrl_Init",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "Draw__15clCSSceneBannerFv": "fn_80224ECC",
-    "Update__15clCSSceneBannerFv": "fn_80224F0C",
-    "__dt__15clCSSceneBannerFv": "fn_80225124",
-    "__ct__15clCSSceneBannerFv": "fn_802251DC",
-    "Destroy__15clCSSceneBannerFv": "fn_80225378",
-    "__vt__15clCSSceneBanner": "lbl_804EDF14",
-    "__vt__9SceneBase": "lbl_803FE0C8",
-    "__ct__8SceneObjFiiiii": "fn_8023D080",
-    "__dt__8SceneObjFv": "fn_8023CFE0",
-    "Update__8SceneObjFv": "fn_8023CDA8",
-    "Draw__8SceneObjFv": "fn_8023CD54",
-    "__dt__6SpriteFv": "Sprite_Destroy",
-    "__dt__9SceneBaseFv": "dtor_8007D0D4",
-    "@35": "@etb_8001B7D0",
-    "@36": "@eti_8002A5E4",
-    "@53": "@etb_8001B820",
-    "@54": "@eti_8002A5F0",
-    "@61": "@etb_8001B828",
-    "@62": "@eti_8002A5FC"
-  },
   "src/game/anon_8021B568_nm1.cpp": {
     "__nwa__FUl": "FUN_8003b120",
     "__dla__FPv": "MemoryManager_Free",
@@ -12842,5 +12777,26 @@
     "__ct__11CharaNormalFPCci": "clNormal3D_Construct",
     "__ct__10CharaModelFiiUcUc": "fn_8021ABFC",
     "__ct__11CharaSpriteFiUci": "Sprite_InitWithAnim"
+  },
+  "src/game/anon_80224ECC.cpp": {
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "Draw__16clCSSceneGetRaceFv": "fn_80224ECC",
+    "Update__16clCSSceneGetRaceFv": "fn_80224F0C",
+    "__dt__16clCSSceneGetRaceFv": "fn_80225124",
+    "__ct__16clCSSceneGetRaceFv": "fn_802251DC",
+    "Destroy__16clCSSceneGetRaceFv": "fn_80225378",
+    "__vt__16clCSSceneGetRace": "lbl_804EDF14",
+    "__vt__16clSceneInterface": "lbl_803FE0C8",
+    "__ct__8SceneObjFiiiii": "fn_8023D080",
+    "__dt__8SceneObjFv": "fn_8023CFE0",
+    "Update__8SceneObjFv": "fn_8023CDA8",
+    "Draw__8SceneObjFv": "fn_8023CD54",
+    "__dt__6SpriteFv": "Sprite_Destroy",
+    "__dt__16clSceneInterfaceFv": "dtor_8007D0D4",
+    "__RTTI__16clSceneInterface": "lbl_806D050C",
+    "__RTTI__16clCSSceneGetRace": "lbl_806D0514"
   }
 }

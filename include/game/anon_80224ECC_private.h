@@ -65,7 +65,6 @@ extern "C" {
 extern InputState *g_pInputState;
 extern int g_gameMode;
 extern int g_roundIndex;
-extern const char lbl_806D0508[4];
 extern const float lbl_806DB320;
 extern const float lbl_806DB324;
 extern const float lbl_806DB328;
@@ -81,7 +80,8 @@ RoundInfo *fn_8024F588(void);
 void fn_80169C44(void);
 void CreditMgr_SetActiveSlot(int slot);
 int InitRumbleController(int deviceId);
-void fn_8023F5B4(Sprite **out, float x, float y, const char *name, int flag);
+struct SpriteResourceId { int id; };
+void fn_8023F5B4(Sprite **out, const SpriteResourceId *resource, int enabled, float x, float y);
 void fn_801A0004(Sprite *spr);
 unsigned char Sprite_AdvanceAnim(Sprite *spr, float dt);
 int SpriteHandle_CreateDefault(ResCtrl *ctrl, int layer);
@@ -101,24 +101,24 @@ static inline InputState *GetInput() {
     return g_pInputState == 0 ? (InputState *)0 : g_pInputState;
 }
 
-struct SceneBase {
-    virtual ~SceneBase() {}
+struct clSceneInterface {
+    virtual ~clSceneInterface() {}
     virtual void Destroy();
     virtual void Update();
     virtual void Draw();
     unsigned char done;
-    SceneBase() : done(false) {}
+    clSceneInterface() : done(false) {}
 };
 
-struct clCSSceneBanner : SceneBase {
+struct clCSSceneGetRace : clSceneInterface {
     SceneObj *obj;
     int xc;
     int timer;
     int state;
     Sprite *spr;
     int fade;
-    clCSSceneBanner();
-    ~clCSSceneBanner();
+    clCSSceneGetRace();
+    ~clCSSceneGetRace();
     void Destroy();
     void Update();
     void Draw();

@@ -19,24 +19,18 @@ struct matstate_t matstate;
 
 void HSD_DisableChannel(GXChannelID chan);
 
-static HSD_Chan chan_table[6] = {
-    { NULL, GX_COLOR0, 1, { 0 }, { 0xFF, 0xFF, 0xFF, 0xFF }, GX_ENABLE,
-      GX_SRC_REG, GX_SRC_REG, 0, GX_DF_NONE, GX_AF_SPEC },
-    { NULL, GX_COLOR0, 0, { 0 }, { 0xFF, 0xFF, 0xFF, 0xFF }, GX_ENABLE,
-      GX_SRC_REG, GX_SRC_REG, 0, GX_DF_CLAMP, GX_AF_SPOT },
-    { NULL, GX_ALPHA0, 0, { 0 }, { 0 }, GX_ENABLE, GX_SRC_REG, GX_SRC_REG, 0,
-      GX_DF_CLAMP, GX_AF_SPOT },
-    { NULL, GX_ALPHA0, 0, { 0 }, { 0 }, GX_DISABLE, GX_SRC_REG, GX_SRC_VTX,
-      0, GX_DF_CLAMP, GX_AF_SPOT },
-    { NULL, GX_COLOR0, 0, { 0 }, { 0xFF, 0xFF, 0xFF, 0xFF }, GX_DISABLE,
-      GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_NONE, GX_AF_NONE },
-    { NULL, GX_ALPHA0, 0, { 0 }, { 0x00, 0x00, 0x00, 0xFF }, GX_DISABLE,
-      GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_NONE, GX_AF_NONE },
-};
+/* The six channel descriptors are separate objects (the target addresses
+ * them off the pooled .data base, which needs 3+ objects). */
+static HSD_Chan chan_table = { NULL, GX_COLOR1, 0, { 0 }, { 0xFF, 0xFF, 0xFF, 0xFF }, GX_ENABLE, GX_SRC_REG, GX_SRC_REG, 0, GX_DF_NONE, GX_AF_SPEC };
+static HSD_Chan chan_table_30 = { NULL, GX_COLOR0, 0, { 0 }, { 0xFF, 0xFF, 0xFF, 0xFF }, GX_ENABLE, GX_SRC_REG, GX_SRC_REG, 0, GX_DF_CLAMP, GX_AF_SPOT };
+static HSD_Chan chan_table_60 = { NULL, GX_ALPHA0, 0, { 0 }, { 0 }, GX_ENABLE, GX_SRC_REG, GX_SRC_REG, 0, GX_DF_CLAMP, GX_AF_SPOT };
+static HSD_Chan chan_table_90 = { NULL, GX_ALPHA0, 0, { 0 }, { 0 }, GX_DISABLE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_CLAMP, GX_AF_SPOT };
+static HSD_Chan chan_table_C0 = { NULL, GX_COLOR0, 0, { 0 }, { 0xFF, 0xFF, 0xFF, 0xFF }, GX_DISABLE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_NONE, GX_AF_NONE };
+static HSD_Chan chan_table_F0 = { NULL, GX_ALPHA0, 0, { 0 }, { 0x00, 0x00, 0x00, 0xFF }, GX_DISABLE, GX_SRC_REG, GX_SRC_VTX, 0, GX_DF_NONE, GX_AF_NONE };
+
 
 void HSD_SetupChannelMode(u32 rendermode)
 {
-    HSD_Chan* chans = chan_table;
     HSD_LObj* lobj;
     u32 diffuse_mode;
     u32 alpha_mode;
@@ -56,8 +50,8 @@ void HSD_SetupChannelMode(u32 rendermode)
     }
 
     if (rendermode & RENDER_SPECULAR) {
-        chans[0].light_mask = HSD_LObjGetLightMaskSpecular();
-        HSD_SetupChannel(&chans[0]);
+        chan_table.light_mask = HSD_LObjGetLightMaskSpecular();
+        HSD_SetupChannel(&chan_table);
         specular = 1;
         max = HSD_LObjGetNbActive();
         for (i = 0; i < max; i++) {
@@ -72,40 +66,40 @@ void HSD_SetupChannelMode(u32 rendermode)
         lobj = HSD_LObjGetActiveByID(0x100);
         if (lobj != NULL && (lobj->flags & 4)) {
             HSD_MulColor(&matstate.ambient, &lobj->color,
-                         &chans[1].amb_color);
+                         &chan_table_30.amb_color);
         } else {
-            chans[1].amb_color = dark_matter;
+            chan_table_30.amb_color = dark_matter;
         }
-        chans[1].mat_src = (diffuse_mode >> 1) & 1;
-        chans[1].light_mask = HSD_LObjGetLightMaskDiffuse();
-        HSD_SetupChannel(&chans[1]);
+        chan_table_30.mat_src = (diffuse_mode >> 1) & 1;
+        chan_table_30.light_mask = HSD_LObjGetLightMaskDiffuse();
+        HSD_SetupChannel(&chan_table_30);
         if (alpha_mode & RENDER_ALPHA_VTX) {
-            chans[2].chan = GX_ALPHA1;
+            chan_table_60.chan = GX_ALPHA1;
             alpha_chan = 1;
-            HSD_SetupChannel(&chans[3]);
+            HSD_SetupChannel(&chan_table_90);
         } else {
-            chans[2].chan = GX_ALPHA0;
+            chan_table_60.chan = GX_ALPHA0;
         }
-        chans[2].light_mask = HSD_LObjGetLightMaskAlpha();
+        chan_table_60.light_mask = HSD_LObjGetLightMaskAlpha();
         if (lobj != NULL && (lobj->flags & 0x10)) {
             alpha = lobj->color.a;
         } else {
             alpha = 0;
         }
-        if (chans[2].light_mask != 0) {
-            chans[2].enable = GX_ENABLE;
-            chans[2].mat_color.a = 0xFF;
-            chans[2].amb_color.a = alpha;
+        if (chan_table_60.light_mask != 0) {
+            chan_table_60.enable = GX_ENABLE;
+            chan_table_60.mat_color.a = 0xFF;
+            chan_table_60.amb_color.a = alpha;
         } else {
-            chans[2].enable = GX_DISABLE;
-            chans[2].mat_color.a = alpha;
+            chan_table_60.enable = GX_DISABLE;
+            chan_table_60.mat_color.a = alpha;
         }
-        HSD_SetupChannel(&chans[2]);
+        HSD_SetupChannel(&chan_table_60);
     } else {
-        chans[4].mat_src = (diffuse_mode >> 1) & 1;
-        HSD_SetupChannel(&chans[4]);
-        chans[5].mat_src = (alpha_mode >> 14) & 1;
-        HSD_SetupChannel(&chans[5]);
+        chan_table_C0.mat_src = (diffuse_mode >> 1) & 1;
+        HSD_SetupChannel(&chan_table_C0);
+        chan_table_F0.mat_src = (alpha_mode >> 14) & 1;
+        HSD_SetupChannel(&chan_table_F0);
     }
 
     if (specular) {

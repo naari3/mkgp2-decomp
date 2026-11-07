@@ -1776,9 +1776,8 @@
   ],
   "src/game/anon_80224ECC.cpp": [
     "fn_80224ECC",
-    "fn_80224F0C"
-  ],
-  "src/game/anon_80224ECC_exact2.cpp": [
+    "fn_80224F0C",
+    "fn_80225124",
     "fn_802251DC",
     "fn_80225378",
     "fn_802253B0",
