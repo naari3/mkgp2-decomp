@@ -141,7 +141,7 @@ int SetCourseParams(int cup, int longRound, int variant, int reverse)
             lap[i].c = lbl_806D4790;
             lap[i].d = lbl_806D4798;
         }
-        extra->e.a = 0;
+        lbl_805B256C.e.a = 0;
         extra->e.b = 0;
         extra->e.c = lbl_806D4790;
         extra->e.d = lbl_806D4798;
