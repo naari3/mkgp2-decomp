@@ -51,7 +51,7 @@ all of these.
 | `fn_801BDEB4` | game/fn_801BAA88 | 99.71 | ResCtrl t0/t1/t2 store order vs `li` registers | |
 | `fn_8028A3EC` | triforce/amcoin_nm2 | 99.49 | r0/r3 swap | |
 | `fn_8028A934` | triforce/amjvs_nm2 | 99.6 | target reuses r3 (`nodes`) for `n = &nodes[node]`; we copy to r5 | `nodes += node`, direct `nodes[node].x`, u32/u8 idx casts, split early return |
-| `BackupWriteRecord` | triforce/ambackup_nm1 | 94.6 | with GC/1.3 the permuter got 64 -> 31: recSize/hdr r29/r31 swap plus Checksum p/sum r3/r4 | 5+20 min permuter at GC/1.3; open-coded checksum loops |
+| `BackupWriteRecord` | triforce/ambackup_nm1 | 94.6 | 2026-11-07 R5: a running-sum ChecksumFrom(p, 0, n) inline fixes the p/sum r3/r4 order (84 -> 30 diff lines, 26 at GC/1.3). Left: hdr/recSize r31/r29 swap only | 5+20+30 min permuter at GC/1.3; decl/statement order sweeps (all 120 decl orders); open-coded loops |
 | `fn_80286864` | triforce/random_nm1 | 84.8 | target shares `ret`'s `li r31, 0` with the zero high word of the inlined u64 range; we emit a separate `li r8, 0` | ret/range variants; 10+20 min permuter |
 | `clItemBoxManager_InitStateTable` | game/clItemBoxManager_StepTable | 91.8 | target __sinit addresses both tables from one pool base (`lbl_803F9C60`); CW pools only static objects and only when a function touches 3+, and the sinit touches 2. Other clItemBox_* TUs use the tables by name | statics (still per-symbol), hand-written sinit through a base pointer (becomes a leaf, extab lost), GC/1.2.5n..2.7 |
 | `fn_80291134` | triforce/amsrv_nm1 | 93.71 | target keeps `mr r3, ch` late so temps use r3; `p` not coalesced into r3 | |

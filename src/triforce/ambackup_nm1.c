@@ -4,11 +4,20 @@ u8 lbl_806835E0[0xD800];
 BackupState lbl_80690DE0;
 const BackupInfo lbl_806DC918[1] = {{0x2000, 0x20}};
 
+/* Running-sum checksum: the sum is a parameter so it takes r4 between the
+ * pointer (r3) and the count (r5), as in the target. */
+static inline u16 ChecksumFrom(u8* p, u16 sum, u32 n) {
+    while (n != 0) {
+        sum += *p++;
+        n--;
+    }
+    return sum;
+}
 s32 BackupWriteRecord(u32 chan, void* data, BackupEntry* e) {
     const BackupInfo* info;
     u32 size;
-    u32 recSize;
     BackupHeader* hdr;
+    u32 recSize;
     u32 total;
 
     if (chan > 1 || data == NULL || e == NULL) {
@@ -19,8 +28,8 @@ s32 BackupWriteRecord(u32 chan, void* data, BackupEntry* e) {
     }
     info = &lbl_806DC918[chan];
     size = (e->cfg.size + 3) & ~3;
-    recSize = (size + 0xC + info->align - 1) & -info->align;
     hdr = (BackupHeader*)lbl_806835E0;
+    recSize = (size + 0xC + info->align - 1) & -info->align;
     total = (e->cfg.flags & 2) ? recSize * 2 : recSize;
     if (e->reset && e->addr != 0) {
         total = info->words * 4 - e->addr;
@@ -31,7 +40,7 @@ s32 BackupWriteRecord(u32 chan, void* data, BackupEntry* e) {
     memcpy(hdr->id, e->cfg.id, 8);
     hdr->words = size >> 2;
     if (e->cfg.flags & 1) {
-        hdr->sum = Checksum(hdr->data, e->cfg.size);
+        hdr->sum = ChecksumFrom(hdr->data, 0, e->cfg.size);
     } else {
         hdr->sum = 0;
     }
