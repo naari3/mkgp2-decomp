@@ -767,7 +767,7 @@ config.libs = [
             Object(Matching, "game/EffectSmokeRing3.cpp", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(NonMatching, "game/EffectCompoundRing.cpp", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/EffectKartAura.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/EffectKartAuraCompound.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-i src/game"]),
+            Object(Matching, "game/EffectKartAuraCompound.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-i src/game"]),
             Object(Matching, "game/CommBroadcast.c"),
             Object(Matching, "game/BootPCBCheck.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/TitleTracker_Stubs.c"),
