@@ -1234,3 +1234,8 @@ c18_u21 CopyStatsBlock 8008DE60 retry: baseline is 98.63666%, not source comment
 Source: Codex worker c18_u36_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u36: SceneListImpl::Draw 80204218 baseline98.35821/264B vs268B target. TU-local inline RemoveTask(DoublyLinkedList*,ListIter) with named result assigned from entries->Erase fixes Erase result/argument stack order (SP+8/+C), improving98.41791. Still lacks target store at802042E8: intermediateSP+10 then loopSP+14 versus source loopSP+10. Return-assignment spelling is byte-identical; explicit private iterator copy ctor regresses80.029854/244B and is reverted. Task logic/registers otherwise agree. Single-function TU staysNonMatching; no singleton/pool mechanism or B cut, no native gain.
+
+## c18_u35_20261107
+Source: Codex worker c18_u35_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c18_u35: SwitchList ctor 8017A68C remains 98.39921% (1012B) after three structural hypotheses. Owning .rodata 80371E98..80371F28 as typed static SwitchConstantPool array reproduces all 144B and base-register relocations, but leaves bge-versus-blt dispatch and both first-lwz-before-hidden-stw scheduling differences unchanged. case0 return adds compare and 12B, drops97.19367%; memcpy bounds copies emit calls, drops85.46245%; both reverted. Keep exact pool acquisition, existing NonMatching flag, text/EH unchanged. Only one function in TU, no B split. Final fallback-linked coordinator full build SHA-1 exact; native gain0.

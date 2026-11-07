@@ -7053,6 +7053,7 @@ game/mapobject/fn_8017A68C.cpp:
 	extab       start:0x80011888 end:0x800118B0
 	extabindex  start:0x800268D0 end:0x800268DC
 	.text       start:0x8017A68C end:0x8017AA80
+	.rodata     start:0x80371E98 end:0x80371F28
 
 game/mapobject/fn_8017AA80.cpp:
 	extab       start:0x800118B0 end:0x800118B8
