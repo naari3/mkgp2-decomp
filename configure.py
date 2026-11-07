@@ -2697,7 +2697,7 @@ config.libs = [
             Object(Matching, "game/fn_801F70F0.c"),
             Object(Matching, "game/fn_801F6D58.cpp"),
             Object(Matching, "game/fn_801F7198.cpp"),
-            Object(NonMatching, "game/fn_801F7344.cpp"),
+            Object(Matching, "game/fn_801F7344.cpp"),
             Object(NonMatching, "game/fn_801F7604.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
             Object(Matching, "game/fn_801B7B64.c"),
             Object(Matching, "game/fn_801CE800.c"),
