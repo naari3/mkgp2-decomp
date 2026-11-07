@@ -43,7 +43,8 @@ extern "C" void ItemEffectImpact_TryArmInit(ImpactArmState* __restrict self, C7V
     else { float z=self->start.m[0][2], y=self->start.m[0][1], x=self->start.m[0][0]; self->axis.x=x; self->axis.y=y; self->axis.z=z; }
     ImpactArmQuat q;
     q.w=lbl_806D27F8; q.z=lbl_806D27F8; q.y=lbl_806D27F8; q.x=lbl_806D27F8;
-    float ax=self->axis.x, ay=self->axis.y, az=self->axis.z;
+    float ax,ay,az;
+    az=self->axis.z; ay=self->axis.y; ax=self->axis.x;
     float sine=(float)sin(lbl_806D2828);
     q.x=ax*sine; q.y=ay*sine; q.z=az*sine;
     q.w=(float)cos(lbl_806D2828);
