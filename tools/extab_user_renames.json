@@ -12638,7 +12638,9 @@
     "__sinit_EnmyFaceEffect_nm1_cpp": "fn_8023001C"
   },
   "src/game/anon_802124FC_nm1.cpp": {
-    "__dt__7KartPosFv": "dtor_80036E40"
+    "__dt__7KartPosFv": "dtor_80036E40",
+    "@92": "@etb_80019EFC",
+    "@93": "@eti_80029F78"
   },
   "src/game/anon_80205DCC_m2.cpp": {
     "Update__12YesNoButtonLFv": "fn_80205DCC",

@@ -1494,3 +1494,8 @@ c19_u43: EnmyFaceEffect destructor improves98.40741->99.111115 (540B) by extract
 Source: Codex worker c19_u47_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c19_u47 AI_UpdatePerFrameState: baseline97.34122 ->97.40878. Whole-body static-inline wrapper does not inline at production limit (32-byte public thunk), discarded. Enclosing pair declaration scope leaves pair GPR cycle invariant, but moving nearest distance declaration before main coordinate locals gives target f31 (97.375). Sharing driver/record/cursor/index across both disjoint rank scans yields97.40878, same2376B strong text and exact24B owned EH. Existing conversion-cookie wrong relocation lbl_806DA3E0 vs lbl_806DA400 persists; no singleton/pool pattern applies. One-function TU has no B cut. NonMatching retained; coordinator build service SHA-1 OK, 0 native gain.
+
+## c19_u58_20261107
+Source: Codex worker c19_u58_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 4 fn / 3112 B.
+
+c19_u58: fn_802128F4 resolves99.86264->100 with inline const KartRender::GetSpeed() plus static inline MultiplySpeed(float factor,float speed){return factor*speed;} at both scaling sites. Getter alone99.94505 fixes speed/conversion scratch ordering but leaves factor/result coalescing; product helper resolves remaining4rows. Native text1456/ownedEH24/index12 all100 after add-only @92/@93 metadata bridges. Existing KartPos weak empty dtor copy discarded; final source-linked ELF ranges and full DOL SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65 exact. Matching promotion; no pool/split/flags/shared-header changes. Gain1nativefn1456B.
