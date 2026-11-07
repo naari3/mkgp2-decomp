@@ -97,6 +97,30 @@ static inline void PCBCheck_ResetLinks(int requested)
     PCBCheck_StateSet(g_pcbListener);
 }
 
+static inline void PCBCheck_InitSlot(PcbLinkSlot* slot, int i)
+{
+    int id = i + 1;
+    slot->flags.half.id = id;
+    slot->flags.byte.polled = 0;
+    slot->flags.byte.receiving = 0;
+    slot->timeout = 0;
+    slot->flags.byte.low = 0;
+    slot->flags.byte.reserved3 = 0;
+    slot->flags.byte.dirty = 1;
+    if (slot->flags.half.id == g_myPcbId) {
+        slot->flags.byte.local = 1;
+        slot->primary = 0;
+        slot->secondary = 0;
+    } else {
+        slot->flags.byte.local = 0;
+        slot->primary = lbl_805A6134[id - 1];
+        slot->secondary = 0;
+        TCPConn_Close(slot->primary);
+        TCPConn_Init(slot->primary, i + 1, -1, 0);
+    }
+    PCBCheck_ClearSlotData(slot, i);
+}
+
 int PCBCheck_ProcessLinks(void)
 {
     PcbLinkSlot* slot;
@@ -134,26 +158,7 @@ int PCBCheck_ProcessLinks(void)
             } else {
                 PCBCheck_ResetLinks(i);
                 if (lbl_806D1193 != 0 && i >= 0 && i < 4) {
-                    int id = i + 1;
-                    slot->flags.half.id = id;
-                    slot->flags.byte.polled = 0;
-                    slot->flags.byte.receiving = 0;
-                    slot->timeout = 0;
-                    slot->flags.byte.low = 0;
-                    slot->flags.byte.reserved3 = 0;
-                    slot->flags.byte.dirty = 1;
-                    if (slot->flags.half.id == g_myPcbId) {
-                        slot->flags.byte.local = 1;
-                        slot->primary = 0;
-                        slot->secondary = 0;
-                    } else {
-                        slot->flags.byte.local = 0;
-                        slot->primary = lbl_805A6134[id - 1];
-                        slot->secondary = 0;
-                        TCPConn_Close(slot->primary);
-                        TCPConn_Init(slot->primary, i + 1, -1, 0);
-                    }
-                    PCBCheck_ClearSlotData(slot, i);
+                    PCBCheck_InitSlot(slot, i);
                 }
             }
         }
