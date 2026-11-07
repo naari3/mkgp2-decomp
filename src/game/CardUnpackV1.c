@@ -32,8 +32,9 @@ u8 card_unpack_v1(u8 *dest, void *pack, u8 publish_character)
     u8 flag0 = 0;
     u8 flag1 = 0;
     u8 flag2 = 0;
-    int i;
     u16 *cursor;
+    int i;
+    int unlock_index;
 
     bitpack_read_field_by_name(pack, lbl_806D3448, &locale, 0);
     if (locale != isJapanese()) {
@@ -66,12 +67,12 @@ u8 card_unpack_v1(u8 *dest, void *pack, u8 publish_character)
     bitpack_read_field_by_name(pack, lbl_806D3458, &value, 0);
     dest[0x16D] = value != 0;
     flag_value = 0;
-    for (i = 0; i < 100; i++) {
-        bitpack_read_field_by_name(pack, lbl_80317130, &flag_value, i);
+    for (unlock_index = 0; unlock_index < 100; unlock_index++) {
+        bitpack_read_field_by_name(pack, lbl_80317130, &flag_value, unlock_index);
         if (flag_value == 1) {
-            if (i == 0) flag0 = 1;
-            if (i == 1) flag1 = 1;
-            if (i == 2) flag2 = 1;
+            if (unlock_index == 0) flag0 = 1;
+            if (unlock_index == 1) flag1 = 1;
+            if (unlock_index == 2) flag2 = 1;
         }
     }
     if (publish_character == 1) {

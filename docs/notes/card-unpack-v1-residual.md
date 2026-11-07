@@ -1,0 +1,5 @@
+# card-unpack-v1-residual
+
+Source: Codex worker c19_u199_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 612 B.
+
+c19_u199 solved card_unpack_v1 80090174 without pragmas: use a distinct int unlock_index for the 100-item unlock loop instead of reusing name-loop int i. This alone restores target independent li r0,0 / stw r0,SP+8 and boolean value r5 / neg r4 / or+srwi r3, source length612B, text99.70588%, EH/index100; only name cursor/index r24/r25 remain swapped. Declare u16* cursor BEFORE int i (then int unlock_index) to resolve that pair and reach text612/extab8/index12 all100. Original int i was a merged two-loop web, so splitting variable lifetimes was the semantic source-shape lever. Volatile scratch is byte-invariant and was reverted. No singleton/pool ownership issue. Matching promotion full source-linked DOL SHA1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65; actual main.elf symbol80090174 size612.
