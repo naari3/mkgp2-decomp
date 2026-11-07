@@ -13949,9 +13949,11 @@ triforce/acsocket_nm7.c:
 	.text       start:0x80292D18 end:0x8029321C
 	.bss        start:0x806992A0 end:0x806A1CE0
 
+triforce/amuart_state.c:
+	.bss        start:0x806A1CE0 end:0x806A1DB8
+
 triforce/amuart.c:
 	.text       start:0x8029321C end:0x80293BBC
-	.bss        start:0x806A1CE0 end:0x806A1DB8
 
 triforce/amsys.c:
 	.text       start:0x80293BBC end:0x80294E6C
