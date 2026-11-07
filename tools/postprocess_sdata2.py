@@ -192,6 +192,8 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
     # Walk our text relocs; find anonymous local sdata2 targets, map to target name
     targets: List[Tuple[int, str, str]] = []  # (sym_idx, old_name, new_name)
     seen_sym_idxs: set[int] = set()
+    sym_names: Dict[int, str] = {}
+    retarget: List[Tuple[int, str]] = []  # (rela entry file offset, new name)
     n_rela = rela_sh[5] // 12
     for i in range(n_rela):
         off = rela_sh[4] + i * 12
@@ -220,8 +222,14 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
         if expected is None:
             continue
         if r_sym in seen_sym_idxs:
+            # The same literal is pooled under another name in the target
+            # (e.g. a duplicate s32->float magic constant from another
+            # original TU): point just this reloc at that name.
+            if sym_names[r_sym] != expected:
+                retarget.append((off, expected))
             continue
         seen_sym_idxs.add(r_sym)
+        sym_names[r_sym] = expected
         targets.append((r_sym, name, expected))
 
     if not targets:
@@ -232,7 +240,7 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
     # Append new names to a fresh strtab at file end
     new_strtab = bytearray(data[strtab_base:strtab_base + strtab_size])
     new_name_offsets: Dict[str, int] = {}
-    for _, _, new_name in targets:
+    for new_name in [t[2] for t in targets] + [r[1] for r in retarget]:
         if new_name not in new_name_offsets:
             new_name_offsets[new_name] = len(new_strtab)
             new_strtab += new_name.encode("ascii") + b"\x00"
@@ -257,6 +265,34 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
             SHN_UNDEF,
         )
         print(f"  {in_path.name}: {old_name!r} -> {new_name!r}")
+
+    if retarget:
+        # Append one undefined global per extra name to a relocated symtab.
+        n_syms = symtab_sh[5] // sym_entsize
+        new_symtab = bytearray(data[symtab_sh[4]:symtab_sh[4] + symtab_sh[5]])
+        extra_idx: Dict[str, int] = {}
+        for _, new_name in retarget:
+            if new_name in extra_idx:
+                continue
+            extra_idx[new_name] = n_syms + len(extra_idx)
+            ent = bytearray(sym_entsize)
+            struct.pack_into(
+                en + "IIIBBH", ent, 0,
+                new_name_offsets[new_name], 0, 0,
+                (STB_GLOBAL << 4) | STT_NOTYPE, 0, SHN_UNDEF,
+            )
+            new_symtab += ent
+        while len(data) % 4:
+            data += b"\x00"
+        new_symtab_off = len(data)
+        data += new_symtab
+        struct.pack_into(en + "I", data, symtab_sh[10] + 0x10, new_symtab_off)
+        struct.pack_into(en + "I", data, symtab_sh[10] + 0x14, len(new_symtab))
+        for rel_off, new_name in retarget:
+            r_off, r_info, r_add = struct.unpack_from(en + "III", data, rel_off)
+            r_info = (extra_idx[new_name] << 8) | (r_info & 0xFF)
+            struct.pack_into(en + "III", data, rel_off, r_off, r_info, r_add)
+        print(f"  {in_path.name}: retargeted {len(retarget)} reloc(s) to {sorted(extra_idx)}")
 
     out_path.write_bytes(data)
     return True
