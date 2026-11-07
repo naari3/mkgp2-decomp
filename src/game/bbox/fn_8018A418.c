@@ -11,6 +11,11 @@ extern unsigned char fn_8016C0A4(int, Vec *, unsigned char *, unsigned char *, u
 extern void fn_8016C1B0(int, unsigned char);
 extern void fn_8016C168(int, unsigned char);
 extern void fn_8016C120(int, unsigned char);
+static inline float AdvanceFrameTime(Frame *frame, float step) {
+    step = frame->time + step;
+    frame->time = step;
+    return step;
+}
 void fn_8018A418(ObjView *o) {
     unsigned int triggered;
     int i;
@@ -23,14 +28,10 @@ void fn_8018A418(ObjView *o) {
         void *kart;
         int j;
         if (f->active == 0) {
-            float time = f->time;
-            time += 1.0f;
-            f->time = time;
+            float time = AdvanceFrameTime(f, 1.0f);
             if (time > 44.0f) f->time = 0.0f;
         } else {
-            float time = f->time;
-            time += 1.0f;
-            f->time = time;
+            float time = AdvanceFrameTime(f, 1.0f);
             if (time > 90.0f) { f->time = 0.0f; f->active = 0; }
         }
         for (j=0; j<8; j++) {
