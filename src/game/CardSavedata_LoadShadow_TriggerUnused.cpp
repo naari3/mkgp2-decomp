@@ -1,5 +1,5 @@
 #pragma inline_max_size(10000)
-#include "game/CardLoadShadowPrivate.h"
+#include "game/CardLoadShadowMatchPrivate.h"
 extern "C" {
 extern unsigned char lbl_806D1228, lbl_806D122A, lbl_806D121C, lbl_806D1227;
 extern unsigned int lbl_806D122C;
@@ -11,7 +11,8 @@ unsigned char card_rw_state_machine(void);
 unsigned char CardSavedata_LoadShadow_TriggerUnused(void)
 {
     /* Restore the saved fields, including both unlock flag arrays. */
-    g_playerData = lbl_80598A60.player;
+    struct ShadowPlayerSnapshot *source = &lbl_80598A60.player;
+    g_playerData = *source;
     if (lbl_806D1228 != 1) {
         lbl_806D122C = OSGetTick();
         lbl_806D1210 = 0;
