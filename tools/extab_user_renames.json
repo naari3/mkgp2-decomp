@@ -7277,7 +7277,8 @@
   "src/game/anon_80216568_fader.cpp": {
     "__dl__FPv": "MemoryManager_TimedFree",
     "__vt__9FlowFader": "lbl_80419DC8",
-    "__vt__10FlowFaderI": "lbl_804E5284"
+    "__vt__10FlowFaderI": "lbl_804E5284",
+    "__ct__10FlowFaderIFv": "fn_80218B28"
   },
   "src/game/anon_80216568_row_add.cpp": {
     "__dt__20VHolder<10FlowFaderI>Fv": "dtor_801F2724",
@@ -10103,8 +10104,8 @@
     "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
     "__dt__7HudPartFv": "dtor_8021617C",
     "__dt__9GlyphTextFv": "dtor_800869D0",
-    "@140": "@etb_8001EFF8",
-    "@141": "@eti_8002B97C"
+    "@141": "@etb_8001EFF8",
+    "@142": "@eti_8002B97C"
   },
   "src/game/anon_80218F40_nm1_tail.cpp": {
     "__dt__20VHolder<10FlowFaderI>Fv": "dtor_801F2724",
