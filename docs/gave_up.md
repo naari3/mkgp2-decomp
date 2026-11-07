@@ -54,7 +54,7 @@ all of these.
 | `fn_8028A934` | triforce/amjvs_nm2 | 99.6 | target reuses r3 (`nodes`) for `n = &nodes[node]`; we copy to r5 | `nodes += node`, direct `nodes[node].x`, u32/u8 idx casts, split early return |
 | `fn_80286864` | triforce/random_nm1 | 84.8 | target shares `ret`'s `li r31, 0` with the zero high word of the inlined u64 range; we emit a separate `li r8, 0` | ret/range variants; 10+20 min permuter |
 | `clItemBoxManager_InitStateTable` | game/clItemBoxManager_StepTable | 91.8 | target __sinit addresses both tables from one pool base (`lbl_803F9C60`); CW pools only static objects and only when a function touches 3+, and the sinit touches 2. Other clItemBox_* TUs use the tables by name | statics (still per-symbol), hand-written sinit through a base pointer (becomes a leaf, extab lost), GC/1.2.5n..2.7 |
-| `fn_80291134` | triforce/amsrv_nm1 | 93.71 | target keeps `mr r3, ch` late so temps use r3; `p` not coalesced into r3 | |
+| `fn_80291134` | triforce/amsrv_nm1 | 93.71 | e9b8ded: opt_common_subs off + spelled-out reply header gets 62 -> 16 diff lines; left: req->result / req->arg[0] loads get r6/r4 instead of r5/r6 | 20 min cperm; compiler x pragma sweep (psweep); addr/p/arg0 local forms |
 | `KartShellRibbonDraw` | game/KartShellRibbonDraw | 99.91 | f30/f31 swap only (GC/2.6) | |
 | `fn_8023A148` | game/fn_8023A148 | 99.44 | title / color r0/r4 swap | |
 | `fn_8023AC14` | game/ItemSelectChoiceUpdate | 97.91 | register coloring | `notes/r4/fn_8023AC14_9889.diff` |

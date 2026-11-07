@@ -1,5 +1,8 @@
 #include <triforce/amsrv_private.h>
 
+/* opt_common_subs off and the spelled-out reply header take this from 62 to
+ * 16 diff lines; the result/arg[0] loads still swap r5/r6. */
+#pragma opt_common_subs off
 s32 fn_80291134(u8 ch) {
     NetPacket* req = fn_8028CF1C(ch);
     NetPacket* rsp = fn_8028CE34(ch);
@@ -13,14 +16,19 @@ s32 fn_80291134(u8 ch) {
     p[3] = BSWAP32(req->arg[3]);
     p[4] = BSWAP32(req->arg[4]);
     p[5] = BSWAP32(req->arg[5]);
-    REPLY(rsp, req);
+    {
+        u32 fl;
+        rsp->id = req->id;
+        rsp->sub = req->sub;
+        fl = BSWAP16(req->flags) | 0x8000;
+        rsp->flags = BSWAP16(fl);
+    }
     fn_8028D3E4(ch);
     return 1;
 }
 
 /* Matches with opt_common_subs off; the reply header is spelled out so the
  * flag word still goes through one byte-reversed store. */
-#pragma opt_common_subs off
 s32 fn_8029121C(u8 ch) {
     NetPacket* req = fn_8028CF1C(ch);
     NetPacket* rsp = fn_8028CE34(ch);
