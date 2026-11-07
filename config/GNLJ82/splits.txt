@@ -14194,43 +14194,9 @@ sysdolphin/baselib/tobj_anim.c:
 	.text       start:0x802BD6D8 end:0x802BD8A0
 
 sysdolphin/baselib/tobj_nm.c:
-	.text       start:0x802BD8A0 end:0x802BDE6C
-	.data       start:0x804FB960 end:0x804FBA20
-
-sysdolphin/baselib/tobj_load.c:
-	.text       start:0x802BDE6C end:0x802BE15C
-
-sysdolphin/baselib/tobj_texmap_nm.c:
-	.text       start:0x802BE15C end:0x802BE1F0
-	.data       start:0x804FBA20 end:0x804FBA58
-
-sysdolphin/baselib/tobj_mtx_nm.c:
-	.text       start:0x802BE1F0 end:0x802BEA3C
-	.data       start:0x804FBA58 end:0x804FBACC
-
-sysdolphin/baselib/tobj_color.c:
-	.text       start:0x802BEA3C end:0x802BF424
-	.data       start:0x804FBACC end:0x804FBBD8
-
-sysdolphin/baselib/tobj_setup_nm.c:
-	.text       start:0x802BF424 end:0x802BFD08
-	.data       start:0x804FBBD8 end:0x804FBBF8
-
-sysdolphin/baselib/tobj_setup_nm1.c:
-	.text       start:0x802BFD08 end:0x802BFFE4
-	.data       start:0x804FBBF8 end:0x804FBC2C
-
-sysdolphin/baselib/tobj_index.c:
-	.text       start:0x802BFFE4 end:0x802C0720
-	.data       start:0x804FBC2C end:0x804FBDE4
-
-sysdolphin/baselib/tobj_class.c:
-	.text       start:0x802C0720 end:0x802C0894
+	.text       start:0x802BD8A0 end:0x802C0938
+	.data       start:0x804FB960 end:0x804FBE30
 	.sbss       start:0x806D20C8 end:0x806D20D0
-
-sysdolphin/baselib/tobj_info_nm.c:
-	.text       start:0x802C0894 end:0x802C0938
-	.data       start:0x804FBDE4 end:0x804FBE30
 
 sysdolphin/baselib/state.c:
 	.text       start:0x802C0938 end:0x802C0B74
