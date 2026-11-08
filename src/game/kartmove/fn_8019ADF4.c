@@ -4,12 +4,39 @@
 
 extern const float lbl_806D9710, lbl_806D9714;
 
+static inline void ForceScale(volatile Vec3 *v, float scale) {
+    float x = v->x;
+    float y = v->y;
+    float z = v->z;
+    x *= scale; y *= scale; z *= scale;
+    v->x = x; v->y = y; v->z = z;
+}
+
+static inline void ApplyHorizontalForce(KartForceState *k, volatile Vec3 *v, const volatile Vec3 *n) {
+    float dot;
+    float vx, vy, vz;
+    float nx, ny, nz;
+    nx = n->x; vx = v->x; ny = n->y; vy = v->y; nz = n->z; vz = v->z;
+    {
+        float xx = nx*vx;
+        float yy = ny*vy;
+        float zz = nz*vz;
+        dot = zz + (xx + yy);
+    }
+    vx = v->x; vz = v->z;
+    vx += lbl_806D9710 * (nx * dot);
+    vz += lbl_806D9710 * (nz * dot);
+    v->x = vx; v->z = vz;
+    k->impulse.x += vx;
+    k->impulse.y += vy;
+    k->impulse.z += vz;
+}
+
 #pragma exceptions on
 void fn_8019ADF4(KartForceState *__restrict k, Vec3 *__restrict input) {
     volatile Vec3 v;
     volatile Vec3 n;
     float len;
-    float dot;
     float vx, vy, vz;
     float nx, ny, nz;
     vx = input->x; vy = input->y; vz = input->z;
@@ -40,24 +67,9 @@ void fn_8019ADF4(KartForceState *__restrict k, Vec3 *__restrict input) {
         n.x = lbl_806D96D0;
     } else {
         float scale = lbl_806D96D4 / len;
-        nx = n.x; ny = n.y; nz = n.z;
-        nx *= scale; ny *= scale; nz *= scale;
-        n.x = nx; n.y = ny; n.z = nz;
+        ForceScale(&n, scale);
     }
-    nx = n.x; vx = v.x; ny = n.y; vy = v.y; nz = n.z; vz = v.z;
-    {
-        float xx = nx*vx;
-        float yy = ny*vy;
-        float zz = nz*vz;
-        dot = zz + (xx + yy);
-    }
-    vx = v.x; vz = v.z;
-    vx += lbl_806D9710 * (nx * dot);
-    vz += lbl_806D9710 * (nz * dot);
-    v.x = vx; v.z = vz;
-    k->impulse.x += vx;
-    k->impulse.y += vy;
-    k->impulse.z += vz;
+    ApplyHorizontalForce(k, &v, &n);
     len = k->impulse.z*k->impulse.z + (k->impulse.x*k->impulse.x + k->impulse.y*k->impulse.y);
     KART_SPEED_ROOT(len);
     if (len > lbl_806D9714) {
