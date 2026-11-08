@@ -172,6 +172,9 @@ struct clCSOrgKartModel : clCSModelInterface {
 extern "C" KartModelResources lbl_803C4E60;
 
 
+#pragma push
+#pragma opt_loop_invariants off
+#pragma opt_strength_reduction off
 clCSOrgKartModel::clCSOrgKartModel(int character_, int variant, unsigned char withDriver, unsigned char flag) {
     KartModelNames *names = &lbl_804EDC88;
     KartModelResources *resources = &lbl_803C4E60;
@@ -283,3 +286,5 @@ clCSOrgKartModel::clCSOrgKartModel(int character_, int variant, unsigned char wi
         }
     }
 }
+#pragma pop
+
