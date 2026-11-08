@@ -117,30 +117,32 @@ extern "C" void fn_80238D9C(ItemSelectState *self) {
         SpriteHandle_SetCornerAlpha(self->sprites[4], (unsigned char)self->field148);
         break;
     case 5: {
-        RefillChoice *choice = (RefillChoice *)self->iconArray;
-        if (input->held == 1 && choice->selected == 0 && choice->done == 1) {
-            int column = choice->column;
-            int row = choice->row;
-            struct SlotsView { char padding[0x15c]; int slots[3][3]; };
-            SlotsView *view = (SlotsView *)self;
-            view->slots[self->field14c][0] = column;
-            view->slots[self->field14c][1] = row;
-            view->slots[self->field14c][2] = GridItem(layout->items, column, row);
-            SelectChoice((RefillChoice *)self->iconArray, self->field14c, layout, layout->resources);
-            int item = Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(playerData,
-                view->slots[self->field14c][2]), 0);
-            SpriteAnimParamBlock_SetAnimParamCached(self->groups[self->field14c + 3], 0x13b9, item);
-            RefillSprite *sprite = GroupSprite(self->groups[self->field14c + 3]);
-            sprite->x = layout->x[column];
-            sprite->y = layout->y[row];
-            SpriteHandle_SetActiveFlag(self->itemSprites[row * 11 + column], 0);
-            int resource = 0x1424;
-            if (self->field14c == 1) resource = 0x1423;
-            if (self->field14c == 2) resource = 0x1425;
-            SpriteAnimParamBlock_SetAnimParamCached(self->groups[6], resource, item);
-            ++self->field14c;
-            if (self->field14c > 2) fn_801FE300();
-            fn_801FE324();
+        if (input->held == 1) {
+            RefillChoice *choice = (RefillChoice *)self->iconArray;
+            if (choice->selected == 0 && choice->done == 1) {
+                i = choice->column;
+                row = choice->row;
+                struct SlotsView { char padding[0x15c]; int slots[3][3]; };
+                SlotsView *view = (SlotsView *)self;
+                view->slots[self->field14c][0] = i;
+                view->slots[self->field14c][1] = row;
+                view->slots[self->field14c][2] = GridItem(layout->items, i, row);
+                SelectChoice((RefillChoice *)self->iconArray, self->field14c, layout, layout->resources);
+                int item = Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(playerData,
+                    view->slots[self->field14c][2]), 0);
+                SpriteAnimParamBlock_SetAnimParamCached(self->groups[self->field14c + 3], 0x13b9, item);
+                RefillSprite *sprite = GroupSprite(self->groups[self->field14c + 3]);
+                sprite->x = layout->x[i];
+                sprite->y = layout->y[row];
+                SpriteHandle_SetActiveFlag(self->itemSprites[row * 11 + i], 0);
+                int resource = 0x1424;
+                if (self->field14c == 1) resource = 0x1423;
+                if (self->field14c == 2) resource = 0x1425;
+                SpriteAnimParamBlock_SetAnimParamCached(self->groups[6], resource, item);
+                ++self->field14c;
+                if (self->field14c > 2) fn_801FE300();
+                fn_801FE324();
+            }
         }
         if (self->field14c > 2) {
             self->phase = 6;
