@@ -244,6 +244,22 @@ The same diagnosis covers PCBCheck_RecvLinkData, Item4SubFlame and
 KartFx_BoostExhaustRayTick (KartFx's struct copy from `resources->colors` is a
 copy from a static object), all onmokoworks-claimed.
 
+## 14. Target keeps `&local` in a saved GPR across a loop (4d79eae, 11-08)
+
+Target shape (PhysicsState_WallCollisionCheck, GC/2.6): `addi r31, r1, 0x3c`
+in the loop preheader, then `mr r4, r31` for each `Terrain_RaycastWall` call.
+Ours rematerialised `addi r4, r1, 0x3c` in the loop body. Moving the
+declaration out of the loop alone does nothing. What works is declaring the
+object before the loop and passing it through a pointer variable:
+
+    PhysicsCollisionVec endpoint;
+    PhysicsCollisionVec *ep = &endpoint;
+    for (...) { ...; Terrain_RaycastWall(self + 0x4C, ep, &hit, &n); }
+
+The same shape probably explains KartMovement_CollisionUpdate (`&contact` in
+r31, an onmokoworks claim). It did not help for `&rotation` inside the
+inlined `applyYaw`: a pointer local in an inline function gets propagated.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
