@@ -1,4 +1,4 @@
-/* Native C++ candidate: 98.33036% text, exact owned EH.
+/* Native C++ candidate: 98.44% text, exact owned EH.
  * Vector-length inline boundaries reproduce the target square-root FP homes.
  * Typed state and literal constants recover the damping/zero-load schedule.
  * The push helper preserves a separate by-value input snapshot.
@@ -122,10 +122,10 @@ extern "C" void KartPhysics_ApplyCollisionForce(CollisionForceState *self) {
     self->impact.y *= scale;
     self->impact.z *= scale;
 
-    angleDelta = (float)__fabs(self->yaw - self->collisionYaw);
     dx = self->position.x - self->previous.x;
     dy = self->position.y - self->previous.y;
     dz = self->position.z - self->previous.z;
+    angleDelta = (float)__fabs(self->yaw - self->collisionYaw);
     offset.set(dx, dy, dz);
 
     if (0.0f < angleDelta) {

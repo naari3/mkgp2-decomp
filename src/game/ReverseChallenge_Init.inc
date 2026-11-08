@@ -16,7 +16,7 @@ extern void GetCourseDataPtr();
 extern float GetCourseStartYaw(void);
 extern int GetDisplayBufferIndex(void);
 extern int *GetKartModelNameEntry(int chara, int arg);
-extern void GetRaceContextPtr();
+extern void *GetRaceContextPtr();
 extern void GetSpawnPosition(void *out, float x, float y, float z);
 extern void HUD_RegisterOverlay(void *hud, int id, int arg);
 extern int IsUraCourseFromSubMode(void);

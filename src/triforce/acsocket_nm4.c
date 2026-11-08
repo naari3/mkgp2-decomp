@@ -15,6 +15,8 @@ static inline u8* ClearConnectBuffer(AcSock* k, u32& off) {
     return buf;
 }
 
+#pragma push
+#pragma opt_lifetimes off
 extern "C" s32 acConnect(s32 s, const void* addr, s32 len) {
     OSSemaphore* sem;
     AcSock* k = SOCK(s);
@@ -48,3 +50,5 @@ extern "C" s32 acConnect(s32 s, const void* addr, s32 len) {
     }
     return 0;
 }
+#pragma pop
+

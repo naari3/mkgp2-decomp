@@ -9,12 +9,16 @@ extern OSTime g_voiceStreamStartTime, g_voiceStreamLastPollTime;
 extern unsigned char IsRaceStarted(void);
 extern const float lbl_806D9818;
 
+static inline int TickWriteQueue(int index, short id) {
+    g_voiceQueue[index].id = id;
+    g_voiceQueue[index].priority = 4;
+    g_voiceQueue[index].flag = 0;
+    return index + 1;
+}
+
 static inline void TickPush(short id) {
     if (g_voiceQueueHead < 64 && !g_voiceQueueMuted) {
-        int index = g_voiceQueueHead++;
-        g_voiceQueue[index].id = id;
-        g_voiceQueue[index].priority = 4;
-        g_voiceQueue[index].flag = 0;
+        g_voiceQueueHead = TickWriteQueue(g_voiceQueueHead, id);
     }
 }
 

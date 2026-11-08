@@ -59,6 +59,9 @@ static inline NetChan* ChannelFor(u32 index) {
     return c;
 }
 
+#pragma push
+#pragma opt_propagation off
+#pragma opt_lifetimes off
 s32 fn_8028C1B8(u8 channel) {
     u32 ch = channel;
     u8 devId;
@@ -106,6 +109,8 @@ s32 fn_8028C1B8(u8 channel) {
     }
     return 0;
 }
+#pragma pop
+
 
 s32 fn_8028C5E4(u8 kind) {
     OSSemaphore* sem = &lbl_80699140.sem;

@@ -4,6 +4,55 @@
 #define NORMAL() do { if (e->lap >= 0) node = FIND(e->node, -2, 4); else node = FIND(e->node, 0, 4); } while (0)
 #define RANGE(lo, hi) (e->node >= (lo) && e->node <= (hi))
 
+static inline float ParticipantDistance(UpdateManager *a, UpdateManager *b)
+{
+    float dx, dy, dz;
+    dy = *a->entries[0].py-*b->entries[0].py;
+    dx = *a->entries[0].px-*b->entries[0].px;
+    dz = *a->entries[0].pz-*b->entries[0].pz;
+    /* Square Y before the fused X term, as in the original. */
+    dy = (dx*dx + dy*dy) + dz*dz;
+    if (dy > lbl_806D24E8) {
+        double guess = __frsqrte(dy);
+        guess = lbl_806D24F0*guess*(lbl_806D24F8-dy*(guess*guess));
+        guess = lbl_806D24F0*guess*(lbl_806D24F8-dy*(guess*guess));
+        guess = lbl_806D24F0*guess*(lbl_806D24F8-dy*(guess*guess));
+        {
+            volatile float rounded = (float)(dy*guess);
+            dy = rounded;
+        }
+    }
+    return dy;
+}
+
+static inline void UpdateRankFeedback(UpdateManager *self, UpdateEntry *own)
+{
+    UpdateEntry *feedbackEntry;
+    int feedbackIndex;
+    UpdateManager *slot = self;
+    int otherIndex;
+    for (feedbackIndex = 0; feedbackIndex < 8; feedbackIndex++, slot = (UpdateManager *)((char *)slot + 0x98)) {
+        feedbackEntry = &slot->entries[0];
+        if (feedbackEntry == own && feedbackEntry->item && feedbackEntry->rankImproved == 1) {
+            for (otherIndex = 0; otherIndex < 8; otherIndex++) {
+                /* Original compares with this slot's rank before measuring otherIndex. */
+                if (slot->entries[0].rank == feedbackEntry->rank-1) {
+                    float distance;
+                    if (!PathManager_HasPathLoaded(self)) distance = lbl_806D2508;
+                    else {
+                        distance = ParticipantDistance(slot, (UpdateManager *)((char *)self + otherIndex*0x98));
+                    }
+                    if (distance > lbl_806D250C) {
+                        CoinEvent_PlayAlternatingSE(feedbackEntry->item);
+                        feedbackEntry->rankImproved = 0;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+}
+
 #pragma exceptions on
 int PathManager_UpdateAll(UpdateManager *self)
 {
@@ -249,49 +298,7 @@ int PathManager_UpdateAll(UpdateManager *self)
     g_bestLapTime = own->bestLap;
     g_totalRaceTime = own->totalTime;
     lbl_806CF128 = node+1;
-    {
-        UpdateEntry *feedbackEntry;
-        int feedbackIndex;
-        UpdateManager *slot = self;
-        int otherIndex;
-        for (feedbackIndex = 0; feedbackIndex < 8; feedbackIndex++, slot = (UpdateManager *)((char *)slot + 0x98)) {
-            feedbackEntry = &slot->entries[0];
-            if (feedbackEntry == own && feedbackEntry->item && feedbackEntry->rankImproved == 1) {
-                for (otherIndex = 0; otherIndex < 8; otherIndex++) {
-                    /* Original compares with this slot's rank before measuring otherIndex. */
-                    if (slot->entries[0].rank == feedbackEntry->rank-1) {
-                        float distance;
-                        if (!PathManager_HasPathLoaded(self)) distance = lbl_806D2508;
-                        else {
-                            UpdateManager *a = slot;
-                            UpdateManager *b = (UpdateManager *)((char *)self + otherIndex*0x98);
-                            float dy, dx, dz;
-                            dy = *a->entries[0].py-*b->entries[0].py;
-                            dx = *a->entries[0].px-*b->entries[0].px;
-                            dz = *a->entries[0].pz-*b->entries[0].pz;
-                            /* Square Y before the fused X term, as in the original. */
-                            distance = (dx*dx + dy*dy) + dz*dz;
-                            if (distance > lbl_806D24E8) {
-                                double guess = __frsqrte(distance);
-                                guess = lbl_806D24F0*guess*(lbl_806D24F8-distance*(guess*guess));
-                                guess = lbl_806D24F0*guess*(lbl_806D24F8-distance*(guess*guess));
-                                guess = lbl_806D24F0*guess*(lbl_806D24F8-distance*(guess*guess));
-                                {
-                                    volatile float rounded = (float)(distance*guess);
-                                    distance = rounded;
-                                }
-                            }
-                        }
-                        if (distance > lbl_806D250C) {
-                            CoinEvent_PlayAlternatingSE(feedbackEntry->item);
-                            feedbackEntry->rankImproved = 0;
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-    }
+    UpdateRankFeedback(self, own);
     return count;
 }
 #pragma exceptions reset
