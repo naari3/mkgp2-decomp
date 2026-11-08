@@ -1,10 +1,10 @@
 #include "game/anon_8021BC44Types.h"
+#include "src/game/anon_8021BC44_nm1_rodata.inc"
 
 TimeAttackResult::TimeAttackResult()
     : state(0), timer(lbl_806DB074), x18(0), noRecord(0), rank(-1), showBanner(0), time(lbl_806DB074), best(lbl_806DB078), fade(lbl_806DB07C),
       credit(0), record(0), banner(0), title(0), coin(0), entry(0), prompt(new CoinPrompt(0x74, -1, 0x1872, -1, 4)),
       course(new Sprite(0x14F, 0, 0)), blink(new Blink) {
-    const ResultPool *P = &lbl_803C5400;
     rank = TaRecord_GetLastInsertedRank();
     noRecord = fn_80169DF0();
     showBanner = fn_8024F588()->flag;
@@ -29,20 +29,21 @@ TimeAttackResult::TimeAttackResult()
         unsigned short buf[5];
         fn_8018B14C(buf);
         for (int i = 0; i < 5; i++) {
-            DebugPrintf(P->fmtName, i, buf[i]);
+            DebugPrintf(s_fmtName, i, buf[i]);
         }
-        DebugPrintf(P->fmt1, fn_8018B088());
-        DebugPrintf(P->fmt2, fn_8018AFC0());
-        DebugPrintf(P->fmt3, fn_8018AEF8());
-        DebugPrintf(P->fmt4, fn_8018AE34());
-        DebugPrintf(P->fmt5, fn_8018AD70());
-        DebugPrintf(P->fmt6, fn_8018A8D4());
+        DebugPrintf(s_fmt1, fn_8018B088());
+        DebugPrintf(s_fmt2, fn_8018AFC0());
+        DebugPrintf(s_fmt3, fn_8018AEF8());
+        DebugPrintf(s_fmt4, fn_8018AE34());
+        DebugPrintf(s_fmt5, fn_8018AD70());
+        DebugPrintf(s_fmt6, fn_8018A8D4());
     }
     if (noRecord == 0) {
         g_playerData.last = lbl_80679C88;
     }
+    int res;
     for (int i = 0; i < 9; i++) {
-        int res = fn_80167744(8 - i, time) + 0x1531;
+        res = fn_80167744(8 - i, time) + 0x1531;
         digits[i] = new clCSPartsResultTimeNum(res);
         digits[i]->obj = 1;
         digits[i]->m0C();
@@ -484,16 +485,15 @@ void RecordBanner::Update() {
 
 RecordBanner::RecordBanner() : flash(new Sprite(0x49, 1, 0)), glow(0), label(0), state(0), timer(0), done(0) {
 
-    const ResultPool *P = &lbl_803C5400;
     rows[0].SetPos(lbl_806DB128, lbl_806DB12C);
     rows[1].SetPos(lbl_806DB128, lbl_806DB130);
     if (isJapanese() == 1) {
-        fn_80217298(&rows[0], P->recJa1, 0xE0, 0x20, 0x20, lbl_806DB134);
-        fn_80217298(&rows[1], P->recJa2, 0xFF, 0xFF, 0xFF, lbl_806DB134);
+        fn_80217298(&rows[0], s_recJa1, 0xE0, 0x20, 0x20, lbl_806DB134);
+        fn_80217298(&rows[1], s_recJa2, 0xFF, 0xFF, 0xFF, lbl_806DB134);
     } else {
-        fn_80217298(&rows[0], P->recEn1, 0xE0, 0x20, 0x20, lbl_806DB134);
+        fn_80217298(&rows[0], s_recEn1, 0xE0, 0x20, 0x20, lbl_806DB134);
         fn_80217298(&rows[0], lbl_806DB138, 0xFF, 0xFF, 0xFF, lbl_806DB134);
-        fn_80217298(&rows[1], P->recEn2, 0xFF, 0xFF, 0xFF, lbl_806DB134);
+        fn_80217298(&rows[1], s_recEn2, 0xFF, 0xFF, 0xFF, lbl_806DB134);
     }
     for (int i = 0; i < 2; i++) {
         rows[i].SetVisible(1);
@@ -526,17 +526,16 @@ RecordBanner::RecordBanner() : flash(new Sprite(0x49, 1, 0)), glow(0), label(0),
 }
 
 void TimeAttackResult::DrawResult(float alpha) {
-    const ResultPool *P = &lbl_803C5400;
     float k;
     float pulse = 1.0f - LUT_Sin12Bit(3.0f * x14);
     fn_80169334(1, 0x152F, 0, 320.0f, 154.0f, 1.25f, 1.0f, alpha);
-    fn_801695E0(1, P->courseRes[g_cupId - 1][g_longRoundFlag], 0, 254.0f, 32.0f, alpha);
+    fn_801695E0(1, s_courseRes[g_cupId - 1][g_longRoundFlag], 0, lbl_806DB158, lbl_806DB0A4, alpha);
     fn_801695E0(1, 0x1530, 0, 173.0f, 132.0f, alpha);
     for (int i = 0; i < 9; i++) {
         if (0.0f == k) {
             digits[i]->m0C();
         }
-        digits[i]->SetPos(P->partX[i], 177.0f);
+        digits[i]->SetPos(s_partX[i], 177.0f);
         digits[i]->alpha = alpha;
         digits[i]->Update();
         digits[i]->Draw();
@@ -547,47 +546,47 @@ void TimeAttackResult::DrawResult(float alpha) {
     const float *vx = &lbl_806DB06C[isJapanese()];
     if (rank >= 0) {
         if (rank < 10) {
-            fn_801685A4(1, GetTextureByIdAndLang(0x3A, -1), *lx, P->rowY[0], 1.0f, pulse, pulse,
+            fn_801685A4(1, GetTextureByIdAndLang(0x3A, -1), *lx, s_rowY[0], 1.0f, pulse, pulse,
                         alpha);
-            fn_801685A4(1, GetTextureByIdAndLang(0x3B, -1), *vx, P->rowY[0], 1.0f, pulse, pulse,
+            fn_801685A4(1, GetTextureByIdAndLang(0x3B, -1), *vx, s_rowY[0], 1.0f, pulse, pulse,
                         alpha, rank + 1);
         } else {
-            fn_801685A4(1, GetTextureByIdAndLang(0x3A, -1), *lx, P->rowY[0], 1.0f, 1.0f, 1.0f,
+            fn_801685A4(1, GetTextureByIdAndLang(0x3A, -1), *lx, s_rowY[0], 1.0f, 1.0f, 1.0f,
                         alpha);
-            fn_801685A4(1, GetTextureByIdAndLang(0x3B, -1), *vx, P->rowY[0], 1.0f, 1.0f, 1.0f,
+            fn_801685A4(1, GetTextureByIdAndLang(0x3B, -1), *vx, s_rowY[0], 1.0f, 1.0f, 1.0f,
                         alpha, rank + 1);
         }
     }
     if (time < best || best < 0.0f) {
-        fn_801685A4(1, GetTextureByIdAndLang(0x40, -1), *lx, P->rowY[1], 1.0f, pulse, pulse,
+        fn_801685A4(1, GetTextureByIdAndLang(0x40, -1), *lx, s_rowY[1], 1.0f, pulse, pulse,
                     alpha);
-        fn_80167A24(1, 0, *vx, P->rowY[1], 1.0f, pulse, pulse, alpha, time);
+        fn_80167A24(1, 0, *vx, s_rowY[1], 1.0f, pulse, pulse, alpha, time);
     } else {
-        fn_801685A4(1, GetTextureByIdAndLang(0x40, -1), *lx, P->rowY[1], 1.0f, 1.0f, 1.0f,
+        fn_801685A4(1, GetTextureByIdAndLang(0x40, -1), *lx, s_rowY[1], 1.0f, 1.0f, 1.0f,
                     alpha);
-        fn_80167A24(1, 0, *vx, P->rowY[1], 1.0f, 1.0f, 1.0f, alpha, best);
+        fn_80167A24(1, 0, *vx, s_rowY[1], 1.0f, 1.0f, 1.0f, alpha, best);
     }
     if (g_ccClass != 0) {
         Saturate_Double((x10 - 125.0f) / 25.0f, 0.0f, 1.0f);
         if (rank == 0) {
             if (isJapanese() == 1) {
-                fn_801685A4(1, GetTextureByIdAndLang(0x3C, -1), *lx, P->rowY[2], 1.0f, pulse,
+                fn_801685A4(1, GetTextureByIdAndLang(0x3C, -1), *lx, s_rowY[2], 1.0f, pulse,
                             pulse, alpha);
             } else {
-                fn_801685A4(1, GetTextureByIdAndLang(0x3C, -1), *lx, P->rowY[2], 1.0f, pulse,
+                fn_801685A4(1, GetTextureByIdAndLang(0x3C, -1), *lx, s_rowY[2], 1.0f, pulse,
                             pulse, alpha);
             }
-            fn_80167A24(1, 0, *vx, P->rowY[2], 1.0f, pulse, pulse, alpha,
+            fn_80167A24(1, 0, *vx, s_rowY[2], 1.0f, pulse, pulse, alpha,
                         TaRecord_GetTime_Current(0));
         } else {
             if (isJapanese() == 1) {
-                fn_801685A4(1, GetTextureByIdAndLang(0x3C, -1), *lx, P->rowY[2], 1.0f, 1.0f,
+                fn_801685A4(1, GetTextureByIdAndLang(0x3C, -1), *lx, s_rowY[2], 1.0f, 1.0f,
                             1.0f, alpha);
             } else {
-                fn_801685A4(1, GetTextureByIdAndLang(0x3C, -1), *lx, P->rowY[2], 1.0f, 1.0f,
+                fn_801685A4(1, GetTextureByIdAndLang(0x3C, -1), *lx, s_rowY[2], 1.0f, 1.0f,
                             1.0f, alpha);
             }
-            fn_80167A24(1, 0, *vx, P->rowY[2], 1.0f, 1.0f, 1.0f, alpha,
+            fn_80167A24(1, 0, *vx, s_rowY[2], 1.0f, 1.0f, 1.0f, alpha,
                         TaRecord_GetTime_Current(0));
         }
     }

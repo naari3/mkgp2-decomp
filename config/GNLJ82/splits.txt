@@ -11623,6 +11623,7 @@ game/anon_8021BC44_nm1.cpp:
 	extab       start:0x8001AD78 end:0x8001B130
 	extabindex  start:0x8002A314 end:0x8002A3B0
 	.text       start:0x8021C070 end:0x8021ED0C
+	.rodata     start:0x803C5400 end:0x803C65E0
 
 game/fn_8021ED0C.c:
 	.text       start:0x8021ED0C end:0x8021ED1C

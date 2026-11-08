@@ -8,8 +8,8 @@
  * base lbl_803FE0C8). Shows the lap time and rank, lets a new record enter
  * its name, then offers the coin continue panel.
  *
- * The draw helpers address their position tables and debug strings off the
- * TU rodata pool (lbl_803C5400), which this TU does not own.
+ * anon_8021BC44_nm1 owns the rodata pool 0x803C5400..0x803C65E0
+ * (src/game/anon_8021BC44_nm1_rodata.inc); its statics give the section anchor.
  */
 
 void *operator new(unsigned long size);
@@ -292,27 +292,6 @@ struct ModeInfo {
 
 struct ItemDisplay;
 
-/* Rodata pool of this TU. */
-struct ResultPool {
-    char pad000[0xF14];
-    float partX[9];
-    short courseRes[8][2];
-    float rowY[3];
-    char padF64[0xFA0 - 0xF64];
-    char fmtName[0x10];
-    char fmt1[0xC];
-    char fmt2[0xC];
-    char fmt3[0xC];
-    char fmt4[0xC];
-    char fmt5[0xC];
-    char fmt6[0xC];
-    char padFF8[0x1028 - 0xFF8];
-    char recJa1[0x10];
-    char recJa2[0x10];
-    char recEn1[0x14];
-    char recEn2[0x10];
-};
-
 extern "C" {
 extern const float lbl_806DB064[2];
 extern const float lbl_806DB06C[2];
@@ -380,8 +359,6 @@ extern const float lbl_806DB17C;
 extern const float lbl_806DB180;
 extern const float lbl_806DB184;
 extern InputState *g_pInputState;
-extern const ResultPool lbl_803C5400;
-extern char lbl_803C63F8[];
 extern char lbl_806DB088[4];
 extern char lbl_806DB138[8];
 extern char lbl_806D04A8[8];
