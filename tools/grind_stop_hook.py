@@ -99,11 +99,11 @@ def main():
     if items:
         reason = (
             common
-            + f"Take the next open line of {QUEUE} that fits your range ({len(items)} open). "
-            "Mark it claimed first by editing its `- [ ]` to `- [<your thread name> <UTC time>]` "
-            "(re-read the file right before editing; others write it too). When done, change the "
-            "marker to `- [done <commit>]`, or `- [parked <one-line reason>]` if you give up, and "
-            "take the next one. Next open line: " + items[0][:300]
+            + f"Take the next open item in your range ({len(items)} open) ONLY via the helper "
+            "(never edit queue.md by hand; it is a generated view and hand edits are lost): "
+            "`python3 /mnt/project-files/setup/tools/queue.py take [ID] [--grep RE] --who <your thread name>`, "
+            "then `queue.py done ID --note <commit>` or `queue.py park ID --note \"<reason>\"`, "
+            "and take the next one. Next open item: " + items[0][:300]
         )
     else:
         reason = (
@@ -112,7 +112,7 @@ def main():
             "`python3 tools/pragmasweep.py fn <TU> <FN> --set all` (or `batch --min 90`) on the "
             "near misses and docs/gave_up.md rows in your range that nobody claims, try "
             "TU merges/splits for pooled-base rows, and add any new candidates you find to the "
-            "queue as `- [ ]` lines."
+            "queue with `queue.py add \"fn | TU | % | note\" --who <name>`."
         )
     json.dump({"decision": "block", "reason": reason}, sys.stdout)
     return 0
