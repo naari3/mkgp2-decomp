@@ -12303,6 +12303,14 @@
     "Update__15RankingFlowViewFv": "fn_801D1890"
   },
   "src/game/ranking_display.cpp": {
+    "rankingEnglish": "global:lbl_8049B4A8",
+    "rankingJapanese": "global:lbl_8049B4DC",
+    "rankingBase": "global:lbl_8049B510",
+    "rankingDispatch": "global:lbl_8049B51C",
+    "@218": "extern:lbl_806D9FB8",
+    "@221": "@etb_80014EEC",
+    "@222": "@eti_80027FF8",
+    "__dt__18RankingDisplayBaseFv": "dtor_801BA14C",
     "__ct__11RankingFlowFv": "ranking_display",
     "__ct__10CourseBaseFv": "InitializeFrameSelection",
     "__dt__10CourseBaseFv": "dtor_801BA14C",

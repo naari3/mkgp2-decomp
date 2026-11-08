@@ -47,6 +47,18 @@ static const char *rankingJapanese[13] = {
     lbl_8039C45C
 };
 
+#include "game/RankingDisplayDispatch_private.h"
+extern const char lbl_806CFE78[], lbl_806CFE80[];
+void *fn_801D1D9C(void *, short);
+int fn_801D1890(void *);
+void fn_801D1800(void *);
+#pragma force_active on
+static RankingBaseRecord rankingBase = {lbl_806CFE78, 0, 0};
+static RankingDispatch rankingDispatch = {
+    lbl_806CFE80, 0, fn_801D1D9C, fn_801D1890, fn_801D1800
+};
+#pragma force_active reset
+
 extern void *lbl_806D10A0;
 void CObj_LoadIntoGX(void *, const float *);
 void CObj_ApplyViewport(void *, const float *);
@@ -62,6 +74,12 @@ unsigned char fn_802315F8(int);
 const char *get_title_name(void *, int, int, int, int);
 unsigned char *PcbSlot_GetByIndex(int);
 }
+#pragma cplusplus off
+static inline const char *RankingCharacterName(int character) {
+    if (isJapanese() == 0) return rankingEnglish[character];
+    return rankingJapanese[character];
+}
+#pragma cplusplus reset
 struct RankingWorld {
     char data[0x3084];
     RankingWorld(const char *);
@@ -128,8 +146,8 @@ struct RankingPanel {
     void Init(int, int, int, int, unsigned char, int, const char *, int, const char *, int,
               RankingWorld *, RankingLights *, float, float, float);
 };
-struct RankingFlow : CourseBase {
-    virtual void _keyRanking();
+#include "game/RankingDisplayBase_private.h"
+struct RankingFlow : RankingDisplayBase {
     int state;
     RankingFlowList list;
     RankingPanel *players[4];
@@ -164,7 +182,7 @@ static inline void *RankingTitleSource() {
     return SINGLETON_INSTANCE(lbl_806D10A0);
 }
 #pragma inline_max_size(10000)
-RankingFlow::RankingFlow() : CourseBase(), list() {
+RankingFlow::RankingFlow() : RankingDisplayBase(), list() {
     world = new RankingWorld(lbl_8039C5BC);
     lights = new RankingLights(lbl_8039C5BC, 0);
     count = 0;
@@ -216,9 +234,7 @@ RankingFlow::RankingFlow() : CourseBase(), list() {
         unsigned char *slot = PcbSlot_GetByIndex(i);
         if ((int)((slot[0] >> 4) & 7) == g_localPcbRole) {
             int character = (slot[4] >> 4) & 15;
-            const char *name;
-            if (isJapanese() == 0) name = rankingEnglish[character];
-            else name = rankingJapanese[character];
+            const char *name = RankingCharacterName(character);
             if ((slot[3] >> 7) & 1) name = (const char *)(slot + 0x16);
             int number = *(unsigned short *)(slot + 0x22);
             void *titleSource = RankingTitleSource();
