@@ -9149,6 +9149,8 @@
     "@227": "@eti_8002996C"
   },
   "src/game/anon_8021A7C8_nm1.cpp": {
+    "@170": "@etb_8001AB80",
+    "@171": "@eti_8002A2CC",
     "__dt__18clCSModelInterfaceFv": "dtor_8013DCBC",
     "@172": "@etb_8001AB80",
     "@173": "@eti_8002A2CC",
