@@ -9,7 +9,7 @@
  * NonMatching: InitStartRace uses a native fieldwise snapshot with the
  * packed 0x1BA words kept at their target offsets. Residual scheduling and
  * register allocation remain in it, the title-name lookups, DetermineTitle,
- * OnMatchEnd and NewClearedRecord_Race. The score predicates now use their
+ * NewClearedRecord_Race. The score predicates now use their
  * own pooled target tables and match exactly. Reversed EH ordering prevents
  * isolating the exact methods into independently linked TUs.
  */
@@ -849,7 +849,7 @@ static inline int CurrentNameScore(void)
     int k;
     int j;
     int score;
-    int i;
+    long i;
     score = 0;
     for (i = 0; i < 2; i++) {
         for (j = 1; j < 9; j++) {
