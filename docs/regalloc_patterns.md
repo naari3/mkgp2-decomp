@@ -8,6 +8,9 @@ below, most frequent first. Commit ids let you read the before/after source
 
 The checks assume the usual loop: `ninja build/GNLJ82/src/<tu>.o`, then diff
 the function against `build/GNLJ82/asm/<tu>.s` (objdiff or a dtk disasm diff).
+`tools/regswap_classify.py` (output docs/regswap_census.md) groups the
+current near misses by the shape of their register diff; start there to find
+functions that share a shape with one already fixed.
 `tools/pragmasweep.py` already automates patterns 1 and 4 (compiler x pragma x
 decl order); try it first, then go down this list by hand.
 
@@ -289,6 +292,48 @@ things put it on the stack:
 
 The `DoublyLinkedList_EraseRange` arg order (ret 0x8, first 0xc, last 0x10)
 then needed the erase in its own inline helper too (`EraseFrom(l, e)`).
+
+## 16. A call result takes the wrong dying saved register: name it in the inline (a6d0090, 11-08)
+
+Census shape (docs/regswap_census.md): `saved / reg_only / chain`, where
+`after_call`, value `call_result`. One saved register differs, right after
+a `bl`, and only for the value that `mr rN, r3` copies out. Several
+variables died at that call (their saved registers are free), and the
+result took a different one of them than the target.
+
+AI_PerKartUpdate and fn_801E9CBC (same `ItemList` inline): the inline loads
+cup/round/mode into r31/r30/r29, calls `AI_GetItemList`, and the target puts
+the result in r30 (round's register). Ours used r29 with
+
+    static inline int *ItemList(int kart) {
+        int mode; int round; int cup;
+        cup = g_cupId; round = g_roundIndex; mode = g_gameMode;
+        return AI_GetItemList(GetEnemyParam(), mode, cup, round, kart);
+    }
+
+`return call(...)` makes the result an anonymous temporary, created after
+all of the inline's locals, and no caller-side declaration moves it (24
+declaration orders of the caller's `items` changed nothing). Naming the
+result inside the inline and sweeping its declaration position fixed both:
+
+    int mode; int *items; int round; int cup;
+    ...
+    items = AI_GetItemList(GetEnemyParam(), mode, cup, round, kart);
+    return items;
+
+Which of the dying registers the result takes depends on its position in
+the declaration order relative to the variables that die at the call
+(inline locals are colored in reverse declaration order, caller locals in
+declaration order). It is not a simple "next to" rule, so sweep all
+positions (n+1 compiles).
+
+**Check:** when the first diff is the `mr rN, r3` after a call and the
+value comes from an inline's `return f(...)`, or from a call whose result
+goes straight into an expression, give the result a named local and sweep
+where it is declared. When the result comes from a load instead (`lwz rN,
+global` taking another dead register, fn_8017DF00), the local's name is
+propagated away and its declaration position does nothing (120 orders
+tried).
 
 ## Still open (same shape, no fix found yet)
 
