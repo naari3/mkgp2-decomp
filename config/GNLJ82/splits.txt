@@ -2119,6 +2119,7 @@ game/GXChannel_PushChannelColors.c:
 	extab       start:0x800087B0 end:0x800087B8
 	extabindex  start:0x80021590 end:0x8002159C
 	.text       start:0x8007D2AC end:0x8007D7BC
+	.rodata     start:0x80311C68 end:0x80311CA0
 
 game/GXChannel_Unbind.c:
 	extab       start:0x800087B8 end:0x800087C0
