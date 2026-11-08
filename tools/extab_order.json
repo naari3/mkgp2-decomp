@@ -795,20 +795,6 @@
     "dtor_80143F0C",
     "dtor_8013EB50"
   ],
-  "src/game/CSPartsHolders.c": [
-    "fn_8014CE74",
-    "fn_8014CEAC",
-    "fn_8014CEE8",
-    "fn_8014CF44",
-    "fn_8014CFA4",
-    "fn_8014D038",
-    "fn_8014D1E0",
-    "fn_8014D250",
-    "fn_8014D2B0",
-    "fn_8014D344",
-    "fn_8014D4B8",
-    "fn_8014D4F0"
-  ],
   "src/game/ResourceSlot.c": [
     "fn_8011DC20",
     "ResourceSlot_Load",
@@ -2912,7 +2898,19 @@
     "fn_8014BF80",
     "fn_8014C308",
     "fn_8014C53C",
-    "dtor_800869D0"
+    "dtor_800869D0",
+    "fn_8014CE74",
+    "fn_8014CEAC",
+    "fn_8014CEE8",
+    "fn_8014CF44",
+    "fn_8014CFA4",
+    "fn_8014D038",
+    "fn_8014D1E0",
+    "fn_8014D250",
+    "fn_8014D2B0",
+    "fn_8014D344",
+    "fn_8014D4B8",
+    "fn_8014D4F0"
   ],
   "src/game/ShadowAreaMgr.cpp": {
     "extab": [

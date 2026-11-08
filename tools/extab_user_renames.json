@@ -4564,16 +4564,6 @@
     "Update__9clCSPartsFv": "fn_80143EA8",
     "Draw__9clCSPartsFv": "fn_80143EDC"
   },
-  "src/game/CSPartsHolders.c": {
-    "__dt__10PairHolderFv": "fn_8014CFA4",
-    "__dt__12TripleHolderFv": "fn_8014D2B0",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "__ct__10Scene3DObjFv": "fn_8014C53C",
-    "extab_fn_8014D038": "@etb_8000E5D8",
-    "extabindex_fn_8014D038": "@eti_80025508",
-    "__ct__11PreviewPartFPvUc": "fn_8013D800"
-  },
   "src/game/SpriteHandlePool.c": {
     "__dt__11ScopedAccumFv": "dtor_80122068",
     "extab_fn_8011E31C": "@etb_8000BB14",
@@ -13598,7 +13588,10 @@
     "__vt__15CSSceneGetTitle": "lbl_8048F118",
     "__dt__11GtSceneBaseFv": "dtor_8007D0D4",
     "__ct__15CSSceneGetTitleFv": "fn_8014C53C",
-    "__ct__7GtModelFPCci": "fn_8013D800"
+    "__ct__7GtModelFPCci": "fn_8013D800",
+    "__dt__10PairHolderFv": "fn_8014CFA4",
+    "__dt__12TripleHolderFv": "fn_8014D2B0",
+    "__ct__11PreviewPartFPvUc": "fn_8013D800"
   },
   "src/game/fn_801F27B4.cpp": {
     "__sinit_fn_801F27B4_cpp": "global:fn_801F27B4",
