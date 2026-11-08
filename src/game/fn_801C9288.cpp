@@ -40,7 +40,7 @@ extern "C" int fn_801C9288(RoundTileOwner *self, int index, int state) {
         Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->id);
         fn_801A0550(slot->sprite);
         slot->sprite->Position(pos->x, pos->y + offset);
-        slot->sprite->Scale(0.7f);
+        slot->sprite->Scale(lbl_806D9D3C);
         break;
     }
     case 2: {
@@ -68,7 +68,7 @@ extern "C" int fn_801C9288(RoundTileOwner *self, int index, int state) {
         Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->id);
         fn_801A0550(slot->sprite);
         slot->sprite->Position(pos->x, pos->y + offset);
-        slot->sprite->Scale(0.7f);
+        slot->sprite->Scale(lbl_806D9D3C);
         fn_8019FF6C(slot->sprite, 1);
         break;
     }
@@ -97,7 +97,7 @@ extern "C" int fn_801C9288(RoundTileOwner *self, int index, int state) {
         Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->id);
         fn_801A0550(slot->sprite);
         slot->sprite->Position(pos->x, pos->y + offset);
-        slot->sprite->Scale(0.7f);
+        slot->sprite->Scale(lbl_806D9D3C);
         break;
     }
     case 4: {
@@ -125,7 +125,7 @@ extern "C" int fn_801C9288(RoundTileOwner *self, int index, int state) {
         Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->id);
         fn_801A0550(slot->sprite);
         slot->sprite->Position(pos->x, pos->y + offset);
-        slot->sprite->Scale(1.0f);
+        slot->sprite->Scale(lbl_806D9D28);
         fn_8019FF6C(slot->sprite, 1);
         break;
     }
@@ -154,7 +154,7 @@ extern "C" int fn_801C9288(RoundTileOwner *self, int index, int state) {
         Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->id);
         fn_801A0550(slot->sprite);
         slot->sprite->Position(pos->x, pos->y + offset);
-        slot->sprite->Scale(1.0f);
+        slot->sprite->Scale(lbl_806D9D28);
         break;
     }
     case 6: {
@@ -182,7 +182,7 @@ extern "C" int fn_801C9288(RoundTileOwner *self, int index, int state) {
         Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->id);
         fn_801A0550(slot->sprite);
         slot->sprite->Position(pos->x, pos->y + offset);
-        slot->sprite->Scale(0.7f);
+        slot->sprite->Scale(lbl_806D9D3C);
         break;
     }
     }
