@@ -6983,6 +6983,7 @@ game/Scene_80170B5C.cpp:
 	extab       start:0x80010774 end:0x800107E8
 	extabindex  start:0x80026414 end:0x80026420
 	.text       start:0x80170B5C end:0x80170EE0
+	.rodata     start:0x8036E220 end:0x8036E728
 
 game/LavaSplash.cpp:
 	extab       start:0x800107E8 end:0x800108A4
