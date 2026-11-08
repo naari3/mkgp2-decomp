@@ -1379,7 +1379,6 @@ config.libs = [
             Object(Matching, "game/DrawEffect_ItemHitOriented_Spawn.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(NonMatching, "game/EffectVfx29_30_Item4SubFlame_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/EffectVfx55_HornBlastTrio_Tick.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
-            Object(NonMatching, "game/EffectVfx10_KartTrail_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/HitMessageOverlay_FrameUpdate.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),  #g2
             Object(Matching, "game/KartPair3ArmUpdate.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(NonMatching, "game/RaceFlow_ResetState_FullColdInit.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -1655,7 +1654,7 @@ config.libs = [
             Object(Matching, "game/KartFxDispatchE.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/KartFxDispatchD.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/KartFxRingRay.cpp", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/KartFxExhaustRay.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/KartFxExhaustRay.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFxBurnout.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFxRing.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFxDispatchB.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),

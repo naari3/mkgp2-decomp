@@ -3849,15 +3849,10 @@ game/KartFxBurnout.cpp:
 	extabindex  start:0x80022DFC end:0x80022E08
 	.text       start:0x800BC26C end:0x800BD1BC
 
-game/KartFxExhaustRay.cpp:
-	extab       start:0x8000A868 end:0x8000A870
-	extabindex  start:0x80022E08 end:0x80022E14
-	.text       start:0x800BD1BC end:0x800BD900
-
-game/EffectVfx10_KartTrail_Tick.c:
-	extab       start:0x8000A870 end:0x8000A878
-	extabindex  start:0x80022E14 end:0x80022E20
-	.text       start:0x800BD900 end:0x800BDD74
+game/KartFxExhaustRay.c:
+	extab       start:0x8000A868 end:0x8000A878
+	extabindex  start:0x80022E08 end:0x80022E20
+	.text       start:0x800BD1BC end:0x800BDD74
 	.rodata     start:0x80329E20 end:0x8032A430
 
 game/EffectVfx9_DriftSpark_Tick.c:

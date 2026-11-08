@@ -244,6 +244,18 @@ The same diagnosis covers PCBCheck_RecvLinkData, Item4SubFlame and
 KartFx_BoostExhaustRayTick (KartFx's struct copy from `resources->colors` is a
 copy from a static object), all onmokoworks-claimed.
 
+Solved for KartFx_BoostExhaustRayTick (11-08): the pool owner
+EffectVfx10_KartTrail_Tick sits right after it, so merging just those two
+TUs into game/KartFxExhaustRay.c was enough. Other TUs that use the pool as
+an extern base still link because the named objects keep their addresses.
+Lessons: (1) to get `addi rX, anchor, off` + folded first access for a struct
+copy, the copied object must start at that offset, so split the table
+(`lbl_8032A348` became `lbl_8032A348` + `lbl_8032A354[2]`) and copy member by
+member (`dst.entries[0] = src.entries[0]; ...`), because a whole-struct copy
+folds every load into the anchor; (2) a .cpp merged into a .c owner must lose
+its mid-block declarations, and the hoisted locals' order then decides the
+stack layout, so sweep where each block-local goes (here `Vec offset` third).
+
 ## 14. Target keeps `&local` in a saved GPR across a loop (4d79eae, 11-08)
 
 Target shape (PhysicsState_WallCollisionCheck, GC/2.6): `addi r31, r1, 0x3c`
