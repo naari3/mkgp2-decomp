@@ -5864,7 +5864,9 @@
     "extab_fn_801596D4": "@etb_8000F180",
     "extabindex_fn_801596D4": "@eti_80025958",
     "extab_fn_80159BD0": "@etb_8000F188",
-    "extabindex_fn_80159BD0": "@eti_80025964"
+    "extabindex_fn_80159BD0": "@eti_80025964",
+    "extab_fn_8015A6E4": "@etb_8000F190",
+    "extabindex_fn_8015A6E4": "@eti_80025970"
   },
   "src/game/DNBress.cpp": {
     "__nwa__FUl": "FUN_8003b120",
