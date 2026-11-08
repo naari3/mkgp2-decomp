@@ -134,9 +134,6 @@ static inline void InitializeDevClear(u32 addr, NetDev* dev) {
     InitializeDevSend(buf, addr, id);
 }
 
-#pragma push
-#pragma opt_propagation off
-#pragma opt_loop_invariants off
 s32 fn_8028D8CC(u8 id, NetBlob* blob) {
     NetDev* dev;
     u32 base;
@@ -243,6 +240,5 @@ s32 fn_8028D8CC(u8 id, NetBlob* blob) {
         return 1;
     }
 }
-#pragma pop
 
 
