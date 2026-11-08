@@ -197,11 +197,10 @@ template <class T> ListIter<T> ListImpl<T>::insert(const iterator &pos, const T 
     try {
         new (&h.p->value) T(v);
         Node *n = h.release();
-        Node *p = pos.node;
-        p->prev->next = n;
-        n->prev = p->prev;
-        p->prev = n;
-        n->next = p;
+        pos.node->prev->next = n;
+        n->prev = pos.node->prev;
+        pos.node->prev = n;
+        n->next = pos.node;
         size++;
         return iterator(n);
     } catch (...) {
