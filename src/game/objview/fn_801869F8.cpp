@@ -16,6 +16,7 @@ static inline void SwingPath186(Path186 *p, float swing, float turn) {
 void fn_801869F8(View186 *self) {
     unsigned char visible[2];
     Path186 *p;
+    const Path186 *renderPath;
     int i;
     HSD_JObj *joint;
     Vec3f probe;
@@ -50,12 +51,12 @@ void fn_801869F8(View186 *self) {
     }
     for (i = 0; i < 2; i++) {
         if (visible[i]) {
-            p = &self->paths[i];
-            joint = p->joint[0];
+            renderPath = &self->paths[i];
+            joint = renderPath->joint[0];
             if (joint) {
-                HSD_JObjSetTranslate(joint, &p->position);
-                HSD_JObjSetRotationY((HSD_JObj *)p->joint[0], p->yaw);
-                HSD_JObjDispAll((HSD_JObj *)p->joint[0], 0, 6, 0);
+                HSD_JObjSetTranslate(joint, &renderPath->position);
+                HSD_JObjSetRotationY((HSD_JObj *)renderPath->joint[0], renderPath->yaw);
+                HSD_JObjDispAll((HSD_JObj *)renderPath->joint[0], 0, 6, 0);
             }
         }
     }
