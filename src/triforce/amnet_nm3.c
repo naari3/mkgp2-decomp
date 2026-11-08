@@ -59,9 +59,15 @@ static inline NetChan* ChannelFor(u32 index) {
     return c;
 }
 
-#pragma push
-#pragma opt_propagation off
-#pragma opt_lifetimes off
+static inline NetDev* ChannelDevice(u32 ch, u8* devId) {
+    if (ch <= 0x3F) {
+        *devId = lbl_80697940[ch].dev;
+    } else {
+        *devId = 0;
+    }
+    return FindDev(*devId);
+}
+
 s32 fn_8028C1B8(u8 channel) {
     u32 ch = channel;
     u8 devId;
@@ -75,12 +81,7 @@ s32 fn_8028C1B8(u8 channel) {
     if (ch == 0xFF) {
         return 3;
     }
-    if (ch <= 0x3F) {
-        devId = lbl_80697940[ch].dev;
-    } else {
-        devId = 0;
-    }
-    dev = FindDev(devId);
+    dev = ChannelDevice(ch, &devId);
     addr = dev->statAddr;
     pkt = ALIGN32(raw);
     DevWaitIdle(addr, pkt);
@@ -109,7 +110,6 @@ s32 fn_8028C1B8(u8 channel) {
     }
     return 0;
 }
-#pragma pop
 
 
 s32 fn_8028C5E4(u8 kind) {
