@@ -28,3 +28,8 @@ c19_u154: fn_8028B48C promoted 96.809814% to 100%, 1304 B. Reorder function loca
 Source: Codex worker c19_u258_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 208 B.
 
 c19_u258: nm3 baseline AC1C is already100% after upstream u32-channel fix, contrary to stale assignment93.71. Mechanism B moves exact208B reader verbatim into Matching triforce/amjvs_analog_read.c; full source-linked DOL SHA1 OK. AAC0 retains96.14942% /352B vs348: signed count95.574715 (wrong cmpwi), postdecrement-test invariant96.14942, inline CopyAnalog95.804596 (extra pointer move). All rejected. Residual unsigned ble vsbeq, extra count mr, count/src/dst register rotation. No EH/shared pool.
+
+## c21_u169_20261108
+Source: Codex worker c21_u169_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c21_u169: AAC0 improved 96.14942%/352B to99.94253%/348B with the entire operation in static inline ReadAnalog and a passthrough public wrapper; p declared before n fixes r5/r6. Exactly one remaining instruction: target 8028AB6C ble versus source+AC beq, following identical cmplwi r5,0. sbss100, no EH/pool issue. Indexed copy60.770115/464B; guarded do71.54023/252B, guarded for98.793106/352B; u8 count55.402298/252B; GC2.6 invariant99.94253; n>=1 gives99.93104 with cmplwi1/blt. Retained best natural C in NonMatching TU; no config/split changes or native gain.

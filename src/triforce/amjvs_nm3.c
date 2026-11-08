@@ -2,11 +2,11 @@
 
 s16 lbl_806D1E30[4];
 
-s32 fn_8028AAC0(s32 node, s16** out, u8* chans) {
+static inline s32 ReadAnalog(s32 node, s16** out, u8* chans) {
     u8* count = fn_80285778();
     JvsNode* nodes = fn_802857B8();
-    u32 n;
     u8* p;
+    u32 n;
     s16* dst;
 
     if (node < 1 || node > *count || out == NULL) {
@@ -30,4 +30,8 @@ s32 fn_8028AAC0(s32 node, s16** out, u8* chans) {
     }
     *out = AnalogBuf;
     return 0;
+}
+
+s32 fn_8028AAC0(s32 node, s16** out, u8* chans) {
+    return ReadAnalog(node, out, chans);
 }
