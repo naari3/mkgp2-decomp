@@ -6,7 +6,7 @@ Each patch was applied **alone** to a throwaway checkout of main, then built fro
 
 | Patch | Applies | main.dol | Flip to Matching | +fns | Depends on / conflicts with |
 | --- | --- | --- | --- | --- | --- |
-| AI_UpdateItemUseLogic.patch | yes | OK | yes | +1 | - |
+| AI_UpdateItemUseLogic.patch | **applied on main (52fc734)** | OK | yes | +1 | - |
 | DNLensflare.patch | yes | OK | yes (already 100%) | 0 | touches tools/extab_user_renames.json, as does anon_80226670 (different TU blocks, both apply) |
 | FrameUpdate.patch | yes | OK | yes | +1 | - |
 | ItemHitPropagation.patch | yes | OK | yes | +2 | - |
@@ -20,7 +20,7 @@ Each patch was applied **alone** to a throwaway checkout of main, then built fro
 | anon_80226670.patch | yes | OK | yes (already 100%) | 0 | see DNLensflare |
 | card_unpack_v1.patch | yes | OK | yes | +1 | - |
 | cobj_data_nm2.patch | yes | OK | yes (data-only) | 0 | the cobj owner may move these strings in a CObjInfoInit / cobj merge |
-| fn_8021E0FC.patch | yes | OK | no (4 other fns < 100%) | +1 | - |
+| fn_8021E0FC.patch | **applied on main (52fc734)** | OK | no (4 other fns < 100%) | +1 | - |
 | fn_80243C70.patch | yes | OK | yes | +1 | - |
 | fn_80246DE4.patch | yes | OK | yes | +1 | - |
 | merge/anon_8020AF08_nm1_pool.patch | yes | OK | no (99.86%) | 0 | edits config/GNLJ82/splits.txt |
@@ -133,7 +133,7 @@ Verified on main with the patch applied: clean build (`rm -rf build/GNLJ82/src b
 
 | Patch | Function | TU | Issue | Before | Fix | After | TU flip |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| ClSound_InitSoundSystem.patch | ClSound_InitSoundSystem | game/clsound/ClSound_InitSoundSystem.c | #2234 | 97.35% | `#pragma opt_common_subs off` around the fn (from pragmasweep, 161 → 57 diff lines); in the ReadSoundFile inline write `end = length - 1; end = end + start;` (gets the target's `subi; add` into the same register) | 99.53% (build main.dol OK; the TU stays NonMatching, so it is not linked) | no: about 20 lines of r26/r27 coloring left, plus `mr r0, r3; …; mr r4, r0` around ARInit's result. Casts/locals don't help; 25-min cperm found only the `end + start` order |
+| ClSound_InitSoundSystem.patch (**applied on main, 52fc734**) | ClSound_InitSoundSystem | game/clsound/ClSound_InitSoundSystem.c | #2234 | 97.35% | `#pragma opt_common_subs off` around the fn (from pragmasweep, 161 → 57 diff lines); in the ReadSoundFile inline write `end = length - 1; end = end + start;` (gets the target's `subi; add` into the same register) | 99.53% (build main.dol OK; the TU stays NonMatching, so it is not linked) | no: about 20 lines of r26/r27 coloring left, plus `mr r0, r3; …; mr r4, r0` around ARInit's result. Casts/locals don't help; 25-min cperm found only the `end + start` order |
 | THPDec_GetBit.patch | __THPGetBit | thp/THPDec.c (GC/1.2.5) | #2295 | 55.24% | `#pragma opt_propagation off` + `opt_lifetimes off` around the fn (pragmasweep, 43 → 17 diff lines); other THPDec fns unchanged | 64.16% | no: the loop is laid out differently (target enters past a shared `subi p,1` at the loop head and puts the `p[1]==0` exit last); loop rewrites and a 15-min cperm didn't fix it |
 | TExp2TevDesc.patch | TExp2TevDesc + HSD_TExpSetReg | sysdolphin/baselib/texp_nm1.c | #2225 | 98.01% / 97.89% | `opt_propagation off` around TExp2TevDesc; `optimization_level 3` around HSD_TExpSetReg (found with `pragmasweep --objdiff --set all`) | 99.98% / 99.61% (build main.dol OK) | no: the rest is string/table offsets off the texp data pool (base lbl_804FD988), so texp_nm1 needs merging into the TU that owns .data from 0x804FD988 |
 | BackupReadRecord.patch | BackupReadRecord | triforce/ambackup_nm2.c | | 89.88% | `#pragma opt_propagation off` around the fn | 90.98% | no (small gain only) |
