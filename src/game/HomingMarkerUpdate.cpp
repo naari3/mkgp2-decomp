@@ -28,9 +28,13 @@ struct MarkerPart {
         color[2] = Interpolate(color[2], rgb[2], t);
         color[3] += -color[3] * t;
     }
+    void SetColor(float red, float green, float blue, float alpha) {
+        color[0] = red; color[1] = green; color[2] = blue; color[3] = alpha;
+    }
     void SetInterpolated(float scale, float rotation, const float *a, const float *b, float t, float alpha) {
-        SetScalar(scale, rotation, Interpolate(a[0], b[0], t),
-                  Interpolate(a[1], b[1], t), Interpolate(a[2], b[2], t), alpha);
+        visible = 1; sy = scale; sx = scale; angle = rotation;
+        SetColor(Interpolate(a[0], b[0], t), Interpolate(a[1], b[1], t),
+                 Interpolate(a[2], b[2], t), alpha);
     }
     void Blend(float scale, float rotation, const float *rgb, float alpha, float t) {
         sx = Approach(sx, scale, t); sy = Approach(sy, scale, t); angle = rotation;
