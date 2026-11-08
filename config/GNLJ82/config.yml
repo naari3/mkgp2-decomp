@@ -8,6 +8,11 @@ object_base: orig/GNLJ82
 
 symbols: config/GNLJ82/symbols.txt
 splits: config/GNLJ82/splits.txt
+# Tornado / boss-grab category tables (auto_ONKARTHIT_block) are only reached
+# through the section anchor in the still-asm ItemEffect_TryStartByCategory.
+force_active:
+- lbl_802ED930
+- lbl_802ED93C
 
 # CodeWarrior version is not directly identifiable from the stripped main.dol
 # (only "MetroTRK for GAMECUBE v2.0" / "Dolphin SDK" strings survive).
