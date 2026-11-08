@@ -703,8 +703,11 @@ CardEntry::CardEntry(unsigned char items)
     p->ay = lbl_806D9AD4;
     p->bx = lbl_806D9AC8;
     p->by = lbl_806D9AD4;
-    p->SetButton(0, p->ax, p->ay);
-    p->SetButton(1, p->bx, p->by);
+    float by, ay, bx;
+    ay = p->ay;
+    p->SetButton(0, p->ax, ay);
+    by = p->by; bx = p->bx;
+    p->SetButton(1, bx, by);
     fn_801F93EC(p->labels.at(0), p->ax + p->labelOfs[0][0], p->ay + p->labelOfs[0][1]);
     fn_801F93EC(p->labels.at(1), p->ax + p->labelOfs[1][0], p->ay + p->labelOfs[1][1]);
     fn_801F93EC(p->labels.at(2), p->bx + p->labelOfs[2][0], p->by + p->labelOfs[2][1]);
