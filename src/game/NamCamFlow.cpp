@@ -42,6 +42,8 @@ extern "C" void fn_801F3198(NamCamFlow *self) {
 
 extern "C" void fn_801F38DC(VObject *p) { delete p; }
 
+#pragma push
+#pragma opt_propagation off
 extern "C" void fn_801F32BC(NamCamFlow *self) {
     NamCamPlayerInput *input = InputMgr_GetPlayer(GetInputManager(), 0);
     if (!self->camera) {
@@ -91,6 +93,8 @@ extern "C" void fn_801F32BC(NamCamFlow *self) {
         fn_801F4D3C(self->list);
     }
 }
+#pragma pop
+
 
 extern "C" void fn_801F36D0(NamCamFlow *self) {
     ResCtrl rc;
