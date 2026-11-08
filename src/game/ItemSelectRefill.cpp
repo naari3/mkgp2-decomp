@@ -23,6 +23,8 @@ static inline void SetRefillPosition(RefillSprite *sprite, float x, float y) {
     sprite->x = x;
     sprite->y = y;
 }
+#pragma push
+#pragma opt_propagation off
 extern "C" void fn_802386E0(ItemSelectState *self) {
     void *playerData = g_playerData;
     const RefillLayout *layout = &lbl_803DC0C0;
@@ -53,3 +55,5 @@ extern "C" void fn_802386E0(ItemSelectState *self) {
         ++self->field14c;
     }
 }
+#pragma pop
+
