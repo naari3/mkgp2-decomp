@@ -1,17 +1,14 @@
-typedef struct MObj {
+#include "sysdolphin/baselib/jobj.h"
+#include "sysdolphin/baselib/dobj.h"
+
+typedef HSD_JObj JObj;
+typedef HSD_DObj DObj;
+struct HSD_MObj {
     unsigned char pad[0x10];
     void *buf;
-} MObj;
-typedef struct DObj {
-    void *parent;
-    struct DObj *next;
-    MObj *mobj;
-} DObj;
-typedef struct JObj {
-    unsigned char pad[8];
-    struct JObj *next, *parent, *child;
-    unsigned int flags;
-} JObj;
+};
+typedef HSD_MObj MObj;
+
 extern DObj *HSD_JObjGetDObj(JObj *);
 extern void *hsdAllocMemPiece(unsigned int);
 extern void *memcpy(void *, const void *, unsigned long);
@@ -33,8 +30,8 @@ static inline void SetBuffer(MObj *m, void *src) {
     }
 }
 void fn_801826F8(JObj *root, void *src) {
+    JObj *a;
     DObj *d;
-    JObj *a, *b, *c, *e;
     if (root && src) {
         if (root && src) {
             for (d=HSD_JObjGetDObj(root);d;Advance(&d)) SetBuffer(Material(d),src);
@@ -46,16 +43,19 @@ void fn_801826F8(JObj *root, void *src) {
                         for (d=HSD_JObjGetDObj(a);d;Advance(&d)) SetBuffer(fn_801869E0(d),src);
                     }
                     if (!(a->flags & 0x1000)) {
+                        JObj *b;
                         for (b=a->child;b;b=b->next) {
                             if (b && src) {
                                 if (b && src) {
                                     for (d=HSD_JObjGetDObj(b);d;d=fn_801869C8(d)) fn_80182684(fn_801869E0(d),src);
                                 }
                                 if (!(b->flags & 0x1000)) {
+                                    JObj *c;
                                     for (c=b->child;c;c=c->next) {
                                         if (c && src) {
                                             fn_80182990(c,src);
                                             if (!(c->flags & 0x1000)) {
+                                                JObj *e;
                                                 for (e=c->child;e;e=e->next) fn_801826F8(e,src);
                                             }
                                         }
