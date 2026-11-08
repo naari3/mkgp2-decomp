@@ -60,6 +60,38 @@ static const char sMiyWins[] = "WINS          %d";
 static const char sMiyMilage[] = "MILAGE        %d";
 static const char sMiyItem[] = "NORMAL ITEM   %s";
 #pragma force_active reset
+/* .data 0x803F9E18..0x803F9F2C is this file's too: Draw indexes the name
+ * tables from one data base (addi rX, base, 0x24 / 0x0 / 0xC / 0x18 / 0x58). */
+extern const char lbl_806D2A28[], lbl_806D2A2C[], lbl_806D2A34[], lbl_806D2A3C[], lbl_806D2A54[], lbl_806D2A5C[], lbl_806D2A64[], lbl_806D2A6C[], lbl_806D2A74[], lbl_806D2A7C[], lbl_806D2A84[], lbl_806D2A8C[], lbl_806D2A94[], lbl_806D2A9C[], lbl_806D2AA4[], lbl_806D2B38[], lbl_806D2B40[], lbl_806D2B48[], lbl_806D2B50[];
+extern const char lbl_806CEEE0[], lbl_806CEEE8[];
+asm void clMiyoshiCardCreate_Tick(void);
+extern void card_eject_init(), card_eject_state_machine(), card_send_cleaning_cmd_init(),
+    card_cleaning_state_machine(), card_send_read_cmd_init_dup_unused(), card_read_state_machine(),
+    Sci2Card_WriteTrackData_StartFlow(), Sci2Card_WriteTrackData_PollState();
+extern void __dt__11MiyoshiModeFv();
+asm void clMiyoshiCardCreate_Draw(void);
+#pragma force_active on
+const char *lbl_803F9E18[3] = { lbl_806D2A28, lbl_806D2A2C, lbl_802EE028 };
+static const char *sMiyCC1[3] = { lbl_806D2A28, lbl_806D2A34, lbl_802EE034 };
+static const char *sMiyCC2[3] = { lbl_806D2A28, lbl_806D2A3C, lbl_802EE040 };
+static const char *sMiyChara[13] = {
+    lbl_806D2A54, lbl_806D2A5C, lbl_806D2A64, lbl_806D2A6C, lbl_806D2A74, lbl_806D2A7C, lbl_802EE074, lbl_806D2A84, lbl_806D2A8C, lbl_802EE080, lbl_806D2A94, lbl_806D2A9C, lbl_806D2AA4
+};
+int lbl_803F9E70[16] = { 0, 4, 9, 14, 19, 24, 29, 34, 39, 44, 49, 59, 69, 79, 89, 99 };
+struct MiyoshiCardCmd { void (*init)(); void (*poll)(); const char *name; };
+struct MiyoshiCardCmd lbl_803F9EB0[4] = {
+    { card_eject_init, card_eject_state_machine, lbl_806D2B38 },
+    { card_send_cleaning_cmd_init, card_cleaning_state_machine, lbl_806D2B40 },
+    { card_send_read_cmd_init_dup_unused, card_read_state_machine, lbl_806D2B48 },
+    { Sci2Card_WriteTrackData_StartFlow, Sci2Card_WriteTrackData_PollState, lbl_806D2B50 },
+};
+const void *lbl_803F9EE0[3] = { lbl_806CEEE0, 0, 0 };
+const void *__vt__11MiyoshiMode[5] = { lbl_806CEEE8, 0, (void *)clMiyoshiCardCreate_Tick,
+    (void *)clMiyoshiCardCreate_Draw, (void *)__dt__11MiyoshiModeFv };
+static void *jumptable_803F9F00[11] = {
+    (char *)clMiyoshiCardCreate_Tick + 0xBC, (char *)clMiyoshiCardCreate_Tick + 0xD8, (char *)clMiyoshiCardCreate_Tick + 0xF4, (char *)clMiyoshiCardCreate_Tick + 0x110, (char *)clMiyoshiCardCreate_Tick + 0x12C, (char *)clMiyoshiCardCreate_Tick + 0x148, (char *)clMiyoshiCardCreate_Tick + 0x164, (char *)clMiyoshiCardCreate_Tick + 0x180, (char *)clMiyoshiCardCreate_Tick + 0x19C, (char *)clMiyoshiCardCreate_Tick + 0x1B8, (char *)clMiyoshiCardCreate_Tick + 0x1D4
+};
+#pragma force_active reset
 /* Only observed lifetime/layout: 4B mode, 44B state, 216B display context. */
 #pragma cplusplus on
 void *operator new(unsigned long);
@@ -115,27 +147,25 @@ struct MiyoshiDisplay {
 struct MiyoshiTables {
     const char *cc0[3], *cc1[3], *cc2[3], *characters[13], *karts[17];
 };
-extern "C" const MiyoshiTables lbl_803F9E18[];
 static inline MiyoshiDisplay *Miyoshi_GetContext() {
     if (lbl_806D1880 == 0) lbl_806D1880 = new MiyoshiDisplay;
     return lbl_806D1880;
 }
 extern "C" void clMiyoshiCardCreate_Draw(void *) {
-    const MiyoshiTables *table = lbl_803F9E18;
     const char *strings = lbl_802EE028;
     MiyoshiState *state;
     MiyoshiDisplay *context;
     context = Miyoshi_GetContext();
     state = lbl_806D10D8;
     DrawText(context,14,24,7,lbl_806D2B58,strings+0x220);
-    DrawText(context,28,72,7,lbl_806D2B58,strings+0x22c,((const char *const *)((const char *)table+0x24))[state->character]);
-    DrawText(context,28,96,7,lbl_806D2B58,strings+0x240,((const char *const *)((const char *)table+0x0))[state->cc0]);
-    DrawText(context,28,120,7,lbl_806D2B58,strings+0x254,((const char *const *)((const char *)table+0xc))[state->cc1]);
-    DrawText(context,28,144,7,lbl_806D2B58,strings+0x268,((const char *const *)((const char *)table+0x18))[state->cc2]);
+    DrawText(context,28,72,7,lbl_806D2B58,strings+0x22c,sMiyChara[state->character]);
+    DrawText(context,28,96,7,lbl_806D2B58,strings+0x240,sMiyCC0[state->cc0]);
+    DrawText(context,28,120,7,lbl_806D2B58,strings+0x254,sMiyCC1[state->cc1]);
+    DrawText(context,28,144,7,lbl_806D2B58,strings+0x268,sMiyCC2[state->cc2]);
     DrawText(context,28,168,7,lbl_806D2B58,strings+0x27c,lbl_806CEEC0[state->flag0!=0]);
     DrawText(context,28,192,7,lbl_806D2B58,strings+0x290,lbl_806CEEC8[state->flag1!=0]);
     DrawText(context,28,216,7,lbl_806D2B58,strings+0x2a4,lbl_806CEED0[state->flag2!=0]);
-    DrawText(context,28,240,7,lbl_806D2B58,strings+0x2b8,((const char *const *)((const char *)table+0x58))[state->kart]);
+    DrawText(context,28,240,7,lbl_806D2B58,strings+0x2b8,lbl_803F9E70[state->kart]);
     int points;
     if (state->points<=0) points=0; else points=state->points*100-1;
     DrawText(context,28,264,7,lbl_806D2B58,strings+0x2cc,points);
@@ -169,7 +199,6 @@ extern unsigned int lbl_806D2B58;
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_803F9E18[];
 
 /* --- function index (1 fns, .text 0x80061054..0x80061394) ---
  * [  0] 0x80061054 size:0x340   global clMiyoshiCardCreate_Draw
@@ -438,7 +467,6 @@ unsigned char card_rw_state_machine();
 unsigned char CardSave_Tick();
 void card_rw_kick_state_machine();
 extern unsigned int g_playerData[];
-extern int lbl_803F9E70[];
 }
 extern "C" int clMiyoshiCardCreate_Tick(void *) {
     MiyoshiInput *input=InputMgr_GetPlayer(GetInputManager(),0);
@@ -501,8 +529,6 @@ extern void card_save_trigger();
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 extern unsigned int g_playerData[];
-extern unsigned int jumptable_803F9F00[];
-extern unsigned int lbl_803F9E70[];
 
 /* --- function index (1 fns, .text 0x80061394..0x80061668) ---
  * [  0] 0x80061394 size:0x2D4   global clMiyoshiCardCreate_Tick
