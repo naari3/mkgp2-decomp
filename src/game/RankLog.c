@@ -6,11 +6,11 @@
  * tracker singleton (unused) and a display slot that must be the local
  * player's.
  *
- * NonMatching: InitStartRace uses a native fieldwise snapshot with the
- * packed 0x1BA words kept at their target offsets. Residual scheduling and
- * register allocation remain in it, the title-name lookups, DetermineTitle,
- * NewClearedRecord_Race. The score predicates now use their
- * own pooled target tables and match exactly. Reversed EH ordering prevents
+ * InitStartRace matches with separately scoped, non-aliasing snapshot
+ * regions and packed 0x1BA words at their target offsets. NonMatching:
+ * residual scheduling and register allocation remain in the title-name
+ * lookups, DetermineTitle and NewClearedRecord_Race. The score predicates
+ * use their own pooled target tables and match exactly. Reversed EH ordering prevents
  * isolating the exact methods into independently linked TUs.
  */
 
@@ -628,86 +628,99 @@ void RankLog_InitStartRace(void *self)
     g_scoreThreshold = -1;
     lbl_806D144A = 0;
     g_hitCount = 0;
-    /* Copy scalar fields and the two byte arrays independently, as in the
-     * target memberwise snapshot. PackedWords preserves the unaligned words. */
-    lbl_805D2F40.word000 = g_playerData.word000;
-    lbl_805D2F40.word004 = g_playerData.word004;
-    lbl_805D2F40.word008 = g_playerData.word008;
-    lbl_805D2F40.byte00C = g_playerData.byte00C;
-    lbl_805D2F40.byte00D = g_playerData.byte00D;
-    lbl_805D2F40.wins = g_playerData.wins;
-    lbl_805D2F40.losses = g_playerData.losses;
-    lbl_805D2F40.word014 = g_playerData.word014;
-    lbl_805D2F40.byte018 = g_playerData.byte018;
-    lbl_805D2F40.byte019 = g_playerData.byte019;
-    lbl_805D2F40.byte01A = g_playerData.byte01A;
-    lbl_805D2F40.w01C = g_playerData.w01C;
-    lbl_805D2F40.w020 = g_playerData.w020;
-    lbl_805D2F40.w024 = g_playerData.w024;
-    lbl_805D2F40.w028 = g_playerData.w028;
-    lbl_805D2F40.w02C = g_playerData.w02C;
-    lbl_805D2F40.w030 = g_playerData.w030;
-    lbl_805D2F40.w034 = g_playerData.w034;
-    lbl_805D2F40.w038 = g_playerData.w038;
-    lbl_805D2F40.w03C = g_playerData.w03C;
-    lbl_805D2F40.w040 = g_playerData.w040;
-    lbl_805D2F40.w044 = g_playerData.w044;
-    lbl_805D2F40.w048 = g_playerData.w048;
-    lbl_805D2F40.w04C = g_playerData.w04C;
-    lbl_805D2F40.w050 = g_playerData.w050;
-    lbl_805D2F40.w054 = g_playerData.w054;
-    lbl_805D2F40.w058 = g_playerData.w058;
-    lbl_805D2F40.w05C = g_playerData.w05C;
-    lbl_805D2F40.w060 = g_playerData.w060;
-    lbl_805D2F40.w064 = g_playerData.w064;
-    lbl_805D2F40.w068 = g_playerData.w068;
-    lbl_805D2F40.w06C = g_playerData.w06C;
-    lbl_805D2F40.w070 = g_playerData.w070;
-    lbl_805D2F40.w074 = g_playerData.w074;
-    lbl_805D2F40.w078 = g_playerData.w078;
-    lbl_805D2F40.w07C = g_playerData.w07C;
-    lbl_805D2F40.w080 = g_playerData.w080;
-    lbl_805D2F40.w084 = g_playerData.w084;
-    lbl_805D2F40.w088 = g_playerData.w088;
-    lbl_805D2F40.w08C = g_playerData.w08C;
-    lbl_805D2F40.w090 = g_playerData.w090;
-    lbl_805D2F40.w094 = g_playerData.w094;
-    lbl_805D2F40.w098 = g_playerData.w098;
-    lbl_805D2F40.w09C = g_playerData.w09C;
-    lbl_805D2F40.w0A0 = g_playerData.w0A0;
-    lbl_805D2F40.w0A4 = g_playerData.w0A4;
-    __copy(lbl_805D2F40.bytes0A8, g_playerData.bytes0A8, sizeof(g_playerData.bytes0A8));
+    {
+        PlayerData *__restrict dst = &lbl_805D2F40;
+        const PlayerData *__restrict src = &g_playerData;
+        /* Copy the header independently of the remaining snapshot fields. */
+        dst->word000 = src->word000;
+        dst->word004 = src->word004;
+        dst->word008 = src->word008;
+        dst->byte00C = src->byte00C;
+        dst->byte00D = src->byte00D;
+        dst->wins = src->wins;
+    }
+    {
+        /* End these pointer lifetimes at the first byte-array copy. */
+        PlayerData *__restrict dst = &lbl_805D2F40;
+        const PlayerData *__restrict src = &g_playerData;
+        dst->losses = src->losses;
+        dst->word014 = src->word014;
+        dst->byte018 = src->byte018;
+        dst->byte019 = src->byte019;
+        dst->byte01A = src->byte01A;
+        dst->w01C = src->w01C;
+        dst->w020 = src->w020;
+        dst->w024 = src->w024;
+        dst->w028 = src->w028;
+        dst->w02C = src->w02C;
+        dst->w030 = src->w030;
+        dst->w034 = src->w034;
+        dst->w038 = src->w038;
+        dst->w03C = src->w03C;
+        dst->w040 = src->w040;
+        dst->w044 = src->w044;
+        dst->w048 = src->w048;
+        dst->w04C = src->w04C;
+        dst->w050 = src->w050;
+        dst->w054 = src->w054;
+        dst->w058 = src->w058;
+        dst->w05C = src->w05C;
+        dst->w060 = src->w060;
+        dst->w064 = src->w064;
+        dst->w068 = src->w068;
+        dst->w06C = src->w06C;
+        dst->w070 = src->w070;
+        dst->w074 = src->w074;
+        dst->w078 = src->w078;
+        dst->w07C = src->w07C;
+        dst->w080 = src->w080;
+        dst->w084 = src->w084;
+        dst->w088 = src->w088;
+        dst->w08C = src->w08C;
+        dst->w090 = src->w090;
+        dst->w094 = src->w094;
+        dst->w098 = src->w098;
+        dst->w09C = src->w09C;
+        dst->w0A0 = src->w0A0;
+        dst->w0A4 = src->w0A4;
+        __copy(dst->bytes0A8, src->bytes0A8, sizeof(src->bytes0A8));
+    }
     __copy(lbl_805D2F40.bytes121, g_playerData.bytes121, sizeof(g_playerData.bytes121));
-    lbl_805D2F40.word18C = g_playerData.word18C;
-    lbl_805D2F40.word190 = g_playerData.word190;
-    lbl_805D2F40.word194 = g_playerData.word194;
-    lbl_805D2F40.b198 = g_playerData.b198;
-    lbl_805D2F40.b199 = g_playerData.b199;
-    lbl_805D2F40.b19A = g_playerData.b19A;
-    lbl_805D2F40.b19B = g_playerData.b19B;
-    lbl_805D2F40.b19C = g_playerData.b19C;
-    lbl_805D2F40.b19D = g_playerData.b19D;
-    lbl_805D2F40.b19E = g_playerData.b19E;
-    lbl_805D2F40.b19F = g_playerData.b19F;
-    lbl_805D2F40.b1A0 = g_playerData.b1A0;
-    lbl_805D2F40.word1A4 = g_playerData.word1A4;
-    lbl_805D2F40.byte1A8 = g_playerData.byte1A8;
-    lbl_805D2F40.word1AC = g_playerData.word1AC;
-    lbl_805D2F40.byte1B0 = g_playerData.byte1B0;
-    lbl_805D2F40.byte1B1 = g_playerData.byte1B1;
-    lbl_805D2F40.word1B4 = g_playerData.word1B4;
-    lbl_805D2F40.byte1B8 = g_playerData.byte1B8;
-    lbl_805D2F40.byte1B9 = g_playerData.byte1B9;
-    lbl_805D2F40.words1BA.w1BA = g_playerData.words1BA.w1BA;
-    lbl_805D2F40.words1BA.w1BE = g_playerData.words1BA.w1BE;
-    lbl_805D2F40.words1BA.w1C2 = g_playerData.words1BA.w1C2;
-    lbl_805D2F40.words1BA.w1C6 = g_playerData.words1BA.w1C6;
-    lbl_805D2F40.words1BA.w1CA = g_playerData.words1BA.w1CA;
-    lbl_805D2F40.words1BA.w1CE = g_playerData.words1BA.w1CE;
-    lbl_805D2F40.word1D4 = g_playerData.word1D4;
-    lbl_805D2F40.byte1D8 = g_playerData.byte1D8;
-    lbl_805D2F40.byte1D9 = g_playerData.byte1D9;
-    lbl_805D2F40.byte1DA = g_playerData.byte1DA;
+    {
+        /* The tail has its own non-aliasing copy region after both arrays. */
+        const PlayerData *__restrict src = &g_playerData;
+        PlayerData *__restrict dst = &lbl_805D2F40;
+        dst->word18C = src->word18C;
+        dst->word190 = src->word190;
+        dst->word194 = src->word194;
+        dst->b198 = src->b198;
+        dst->b199 = src->b199;
+        dst->b19A = src->b19A;
+        dst->b19B = src->b19B;
+        dst->b19C = src->b19C;
+        dst->b19D = src->b19D;
+        dst->b19E = src->b19E;
+        dst->b19F = src->b19F;
+        dst->b1A0 = src->b1A0;
+        dst->word1A4 = src->word1A4;
+        dst->byte1A8 = src->byte1A8;
+        dst->word1AC = src->word1AC;
+        dst->byte1B0 = src->byte1B0;
+        dst->byte1B1 = src->byte1B1;
+        dst->word1B4 = src->word1B4;
+        dst->byte1B8 = src->byte1B8;
+        dst->byte1B9 = src->byte1B9;
+        dst->words1BA.w1BA = src->words1BA.w1BA;
+        dst->words1BA.w1BE = src->words1BA.w1BE;
+        dst->words1BA.w1C2 = src->words1BA.w1C2;
+        dst->words1BA.w1C6 = src->words1BA.w1C6;
+        dst->words1BA.w1CA = src->words1BA.w1CA;
+        dst->words1BA.w1CE = src->words1BA.w1CE;
+        dst->word1D4 = src->word1D4;
+        dst->byte1D8 = src->byte1D8;
+        dst->byte1D9 = src->byte1D9;
+        dst->byte1DA = src->byte1DA;
+    }
 }
 
 
