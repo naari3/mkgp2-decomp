@@ -7217,6 +7217,8 @@
     "__dt__10MapPart16AFv": "dtor_8016A270"
   },
   "src/game/clFlowCourse.cpp": {
+    "@228": "extern:lbl_806D9EE0",
+    "@229": "extern:lbl_806D9EDC",
     "__ct__10CourseFlowFv": "clFlowCourse_Init",
     "__dt__10CourseFlowFv": "clFlowCourse_Dtor",
     "__ct__10CourseBaseFv": "InitializeFrameSelection",

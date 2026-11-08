@@ -4,7 +4,7 @@
 /* 801D0C30..801D1800: indivisible reversed-extab group.
  * Native C++ draft; retain Object(NonMatching) until all four functions and
  * their EH records match. The constructor's original pooled-data base and
- * the destructor/fader register identities still differ. */
+ * the destructor register identities still differ. */
 
 struct CourseResource { short id; char pad02[18]; };
 struct CourseData {
@@ -104,7 +104,7 @@ CourseFlow::~CourseFlow() {
 inline CoursePulse::CoursePulse() {
     active = 0; flag = 0; timer = 0;
     sprite = new CourseSprite(0x9E, 1, lbl_806D9F54, lbl_806D9F54,
-        lbl_806D9EDC, lbl_806D9EDC, lbl_806D9EE0, lbl_806D9EE0);
+        1.0f, 1.0f, 0.0f, 0.0f);
 }
 inline CourseIcon::CourseIcon(int n) {
     layer = 5;
@@ -155,7 +155,7 @@ CourseFlow::CourseFlow() {
     SetSpritePosition(left, lbl_806D9EFC, lbl_806D9F2C);
     SetSpritePosition(right, lbl_806D9F24, lbl_806D9F2C);
     map = new CourseSprite(0x17F, 1, lbl_806D9F44, lbl_806D9F48,
-        lbl_806D9F4C, lbl_806D9F4C, lbl_806D9EE0, lbl_806D9EE0);
+        lbl_806D9F4C, lbl_806D9F4C, 0.0f, 0.0f);
     mapIdA = fn_801A0310(map, 0x1777);
     mapIdB = fn_801A0310(map, 0x1780);
     int sel = selection;
@@ -168,7 +168,7 @@ CourseFlow::CourseFlow() {
     preview.Show(lbl_806D9EE8, lbl_806D9EEC, lbl_806D9EDC);
     preview.SetColor(0xFFFFFF00);
     field12C = new CourseSprite(0x16E, 1, lbl_806D9F20, lbl_806D9F50,
-        lbl_806D9EDC, lbl_806D9EDC, lbl_806D9EE0, lbl_806D9EE0);
+        lbl_806D9EDC, lbl_806D9EDC, 0.0f, 0.0f);
     field130 = new CourseSprite(0x170, 1, lbl_806D9F24, lbl_806D9F50,
         lbl_806D9EDC, lbl_806D9EDC, lbl_806D9EE0, lbl_806D9EDC);
     pulse = new CoursePulse;
@@ -199,14 +199,12 @@ static inline int FadeAlpha(int timer) {
 static inline int FadeOutAlpha(int timer) {
     return (int)(lbl_806D9EE4 * (lbl_806D9EDC - (float)timer / lbl_806D9F14));
 }
-#pragma push
-#pragma opt_common_subs off
 extern "C" void fn_801D1684(CourseBanner *self) {
     if (self->state == 3) return;
     switch (self->state) {
     case 0: {
         unsigned int color = 0xFFFFFF00;
-        int alpha = FadeAlpha(self->timer);
+        unsigned int alpha = FadeAlpha(self->timer);
         self->main.SetColor((alpha >> 1) & 0x7F);
         color = ((color) & 0xFFFFFF00 | (unsigned char)(alpha));
         self->labels[0].SetColor(color);
@@ -216,7 +214,7 @@ extern "C" void fn_801D1684(CourseBanner *self) {
     }
     case 2: {
         unsigned int color = 0xFFFFFF00;
-        int alpha = FadeOutAlpha(self->timer);
+        unsigned int alpha = FadeOutAlpha(self->timer);
         self->main.SetColor((alpha >> 1) & 0x7F);
         color = ((color) & 0xFFFFFF00 | (unsigned char)(alpha));
         self->labels[0].SetColor(color);
@@ -229,5 +227,4 @@ extern "C" void fn_801D1684(CourseBanner *self) {
 tick:
     self->timer++;
 }
-#pragma pop
 
