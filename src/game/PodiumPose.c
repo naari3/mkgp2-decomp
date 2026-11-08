@@ -45,27 +45,14 @@ struct SceneModel {
     SceneModel(const char *res, int flags);
 };
 
-struct PoseTbl {
-    char names[0x164];
-    float scale[13];
-    char pad198[0x2B4 - 0x198];
-    const char *fmt[12];
-    char pad2E4[0x384 - 0x2E4];
-    char propA[0x10];
-    char propB[0x10];
-};
 
 void *operator new(unsigned long);
 void operator delete(void *);
 
 extern "C" {
-extern PoseTbl lbl_803608D0;
 extern const char *lbl_8048ED58[6];
 extern const char *lbl_8048ED70[13];
 extern const char *lbl_8048EDA4[13];
-extern int lbl_80360C08[5];
-extern Vec3 lbl_80360BC0[5];
-extern char lbl_80360C44[];
 extern clNormal3D *lbl_806D1568;
 extern clNormal3D *lbl_806D156C;
 extern JObj *lbl_806D1570;
@@ -256,6 +243,73 @@ struct FxBase : FxData {
     virtual void Draw();
     virtual void m1C();
 };
+
+/* .rodata 0x803608D0..0x80360C70 (TU-owned). The PoseChar ctor addresses the
+ * scale table (+0x164), the joint-name format table (+0x2B4) and the two
+ * prop file names (+0x384/+0x394) from the section start, so they are statics.
+ * A C ctor draft that is 13 FPR instructions off is in the gave_up notes. */
+extern "C" {
+extern const char lbl_803608D0[0x17] = "ceremony_take2_1_joint";
+extern const char lbl_803608E8[0x17] = "ceremony_take2_2_joint";
+extern const char lbl_80360900[0x17] = "ceremony_take2_3_joint";
+extern const char lbl_80360918[0x17] = "ceremony_take2_4_joint";
+extern const char lbl_80360930[0x17] = "ceremony_take2_5_joint";
+extern const char lbl_80360948[0x17] = "ceremony_take2_6_joint";
+extern const char lbl_80360960[0xE] = "mario_set.dat";
+extern const char lbl_80360970[0xE] = "luigi_set.dat";
+extern const char lbl_80360980[0xE] = "wario_set.dat";
+extern const char lbl_80360990[0xE] = "peach_set.dat";
+extern const char lbl_803609A0[0xE] = "koopa_set.dat";
+extern const char lbl_803609B0[0x10] = "kinopio_set.dat";
+extern const char lbl_803609C0[0xF] = "donkey_set.dat";
+extern const char lbl_803609D0[0xE] = "yoshi_set.dat";
+extern const char lbl_803609E0[0xF] = "pacman_set.dat";
+extern const char lbl_803609F0[0x11] = "mspacman_set.dat";
+extern const char lbl_80360A04[0x10] = "monster_set.dat";
+extern const char lbl_80360A14[0x10] = "waluigi_set.dat";
+extern const char lbl_80360A24[0x10] = "mametch_set.dat";
+}
+#pragma force_active on
+static const float sPoseScale[13] = {
+    0.9f, 0.9f, 0.9f, 0.9f, 1.0f, 1.0f, 1.0f, 0.9f, 0.9f, 0.9f, 1.0f, 0.87f, 1.0f,
+};
+extern "C" {
+extern const char lbl_80360A68[0x13] = "chara_%s_1st_joint";
+extern const char lbl_80360A7C[0x13] = "chara_%s_2st_joint";
+extern const char lbl_80360A90[0x13] = "chara_%s_3st_joint";
+extern const char lbl_80360AA4[0x15] = "chara_%s_other_joint";
+extern const char lbl_80360ABC[0x17] = "chara_1st_l_hand_joint";
+extern const char lbl_80360AD4[0x17] = "chara_1st_r_hand_joint";
+extern const char lbl_80360AEC[0x17] = "chara_2st_l_hand_joint";
+extern const char lbl_80360B04[0x17] = "chara_2st_r_hand_joint";
+extern const char lbl_80360B1C[0x17] = "chara_3st_l_hand_joint";
+extern const char lbl_80360B34[0x17] = "chara_3st_r_hand_joint";
+extern const char lbl_80360B4C[0x19] = "chara_other_l_hand_joint";
+extern const char lbl_80360B68[0x19] = "chara_other_r_hand_joint";
+}
+static const char *const sPoseJointFmt[12] = {
+    lbl_80360A68, lbl_80360A7C, lbl_80360A90, lbl_80360AA4,
+    lbl_80360ABC, lbl_80360AD4, lbl_80360AEC, lbl_80360B04,
+    lbl_80360B1C, lbl_80360B34, lbl_80360B4C, lbl_80360B68,
+};
+extern "C" {
+extern const char lbl_80360BB4[0x9] = "mspacman";
+extern const Vec3 lbl_80360BC0[6] = {
+    {0.0f, 20.0f, 36.5f},
+    {0.0f, 13.0f, -28.0f},
+    {-0.0f, 4.197254f, 43.202705f},
+    {0.0f, 13.0f, -28.0f},
+    {0.0f, 3.0f, 64.57f},
+    {0.0f, 13.0f, -28.0f},
+};
+extern const int lbl_80360C08[5] = {40, 140, 0, 40, 10};
+extern const char lbl_80360C1C[0x12] = "clCSPartsPlatform";
+extern const char lbl_80360C30[0x12] = "clCSPartsInerface";
+}
+static const char sCeremonyFile[0x10] = "ceremony.dat";
+static const char sTrophyFile[0x10] = "trpy_hanyou.dat";
+static const char sFlowerFile[0xC] = "flower.dat";
+#pragma force_active reset
 
 struct PoseChar {
     int kind;
@@ -499,12 +553,12 @@ WinPose::WinPose(unsigned char setCam) {
     chars[3] = 0;
     chars[4] = 0;
     chars[5] = 0;
-    stage = new clNormal3D(lbl_80360C44, 0);
+    stage = new clNormal3D(sCeremonyFile, 0);
     Object_JObjUpdate_be4(stage, 0x10);
     clNormal3D_SetFlags(stage, 0x40000000, 0);
     clNormal3D_SetScale(stage, 0, 0.0f, 1.0f, 0.0f, 0.0f);
-    cam = new Scene3D(lbl_80360C44);
-    lights = new SceneModel(lbl_80360C44, 1);
+    cam = new Scene3D(sCeremonyFile);
+    lights = new SceneModel(sCeremonyFile, 1);
     if (setCam == 1) {
         Vec3 v;
         v.x = lbl_80360BC0[0].x;

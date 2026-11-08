@@ -6210,6 +6210,7 @@ game/PodiumPose.c:
 	extab       start:0x8000D838 end:0x8000D92C
 	extabindex  start:0x800250E8 end:0x80025148
 	.text       start:0x8014219C end:0x8014388C
+	.rodata     start:0x803608D0 end:0x80360C70
 
 game/CSPartsResultRank.c:
 	extab       start:0x8000D92C end:0x8000DB00
