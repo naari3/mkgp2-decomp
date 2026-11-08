@@ -7,9 +7,13 @@ static inline float Clamp(float f) {
     return f<0.0f ? 0.0f : (f>1.0f ? 1.0f : f);
 }
 static inline void BlendVector(MorphVec *dst, const MorphVec *b, const MorphVec *a, float blend) {
-    dst->x=blend*(a->x-b->x)+b->x;
-    dst->y=blend*(a->y-b->y)+b->y;
-    dst->z=blend*(a->z-b->z)+b->z;
+    int component;
+    float *out=(float *)dst;
+    const float *to=(const float *)a;
+    const float *from=(const float *)b;
+    for (component=0;component<3;component++) {
+        out[component]=blend*(to[component]-from[component])+from[component];
+    }
 }
 static inline void MorphBlend(MorphNode *n, int side, float blend) {
     int i;
