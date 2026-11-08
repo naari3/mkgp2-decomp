@@ -135,9 +135,9 @@ extern "C" int MenuScene_Dispatch(MenuOwnerView *self) {
                 float scale;
                 float y;
                 y = lbl_806D98EC + lbl_806D9930 * (float)frame;
-                scale = lbl_806D98E0 + lbl_806D992C * (float)frame;
+                scale = lbl_806D992C * (float)frame;
                 lbl_806D180C->y = y;
-                *(float *)((char *)lbl_806D180C + 0x18) = scale;
+                *(float *)((char *)lbl_806D180C + 0x18) = lbl_806D98E0 + scale;
                 if (lbl_806D1810 >= 10) ++lbl_806D1818;
             }
             if (lbl_806D1814 == 27) {

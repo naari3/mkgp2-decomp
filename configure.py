@@ -2557,7 +2557,7 @@ config.libs = [
             Object(Matching, "game/fn_801B5B60.c"),
             Object(Matching, "game/fn_801B7624.cpp", extab_padding=b""),
             Object(Matching, "game/clFlowEntry_Init.cpp", extab_padding=b""),
-            Object(NonMatching, "game/MenuScene_Dispatch.cpp", extab_padding=b""),
+            Object(Matching, "game/MenuScene_Dispatch.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801B8BD8.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SetupBgSprites.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801BA6A4.c"),
@@ -3881,6 +3881,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/MenuScene_Dispatch",
     "game/RaceDigitUpdate",
     "game/objview/MapWaterEffect_Init",
     "game/VoiceIntro_PushForRaceMode",
