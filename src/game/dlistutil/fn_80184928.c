@@ -22,6 +22,8 @@ static inline unsigned char ReadQuadPosition(unsigned char *p, Vec *out) {
     return 0;
 }
 
+#pragma push
+#pragma opt_lifetimes off
 int fn_80184928(HSD_JObj *jobj, DListPObj *pobj, DListQuad *out) {
     Vec pos[4];
     int n;
@@ -112,3 +114,5 @@ int fn_80184928(HSD_JObj *jobj, DListPObj *pobj, DListQuad *out) {
     }
     return 0;
 }
+#pragma pop
+

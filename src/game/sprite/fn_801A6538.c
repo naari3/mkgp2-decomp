@@ -67,6 +67,8 @@ static inline unsigned char RaceVoice_PushSpinning(RaceVoiceData *data) {
  * constants; with an extern struct MWCC folds those offsets into the index,
  * with residual register allocation differences.  The time divisor is a
  * literal so each check reloads it without preserving f31 across calls. */
+#pragma push
+#pragma optimization_level 3
 void fn_801A6538(void) {
     const RaceVoiceRodata *ro = &lbl_803810A8;
     RaceVoiceData *data = &lbl_80496C38;
@@ -378,3 +380,5 @@ void fn_801A6538(void) {
         }
     }
 }
+#pragma pop
+

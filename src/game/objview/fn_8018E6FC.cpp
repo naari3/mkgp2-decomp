@@ -80,6 +80,8 @@ static inline void updateBillboards(ViewEmitter *o) {
         updateParticle(q);
     }
 }
+#pragma push
+#pragma opt_dead_assignments off
 extern "C" void fn_8018E6FC(ViewEmitter *o) {
     int index;
     void *scene;
@@ -97,3 +99,5 @@ extern "C" void fn_8018E6FC(ViewEmitter *o) {
     updateMatrices(o);
     updateBillboards(o);
 }
+#pragma pop
+
