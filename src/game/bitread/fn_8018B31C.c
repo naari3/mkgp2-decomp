@@ -75,6 +75,13 @@ static inline void ClearPacked(void) {
     for (i = 0; i < 25; i++) lbl_80677EE8[i] = 0;
 }
 
+static inline void EncodeName(const unsigned short *name) {
+    int i;
+    for (i = 0; i < 5 && i < 5; i++) {
+        WriteField(i, (unsigned char)wchar_to_card_char(name + i));
+    }
+}
+
 #pragma exceptions on
 #pragma use_lmw_stmw on
 void fn_8018B31C(const unsigned short *name, int item, int ccClass,
@@ -94,9 +101,7 @@ void fn_8018B31C(const unsigned short *name, int item, int ccClass,
     }
     seed = (unsigned int)(1000.0f * (float)OSTicksToMilliseconds(OSGetTime()));
     ClearPacked();
-    for (i = 0; i < 5 && i < 5; i++) {
-        WriteField(i, (unsigned char)wchar_to_card_char(name + i));
-    }
+    EncodeName(name);
     WriteField(5, (unsigned char)item);
     WriteField(6, (unsigned char)(character - 1));
     WriteField(7, (unsigned char)encodedClass);

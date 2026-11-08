@@ -13871,12 +13871,21 @@ triforce/amnet.c:
 	.text       start:0x8028C158 end:0x8028C1B8
 
 triforce/amnet_nm3.c:
-	.text       start:0x8028C1B8 end:0x8028EF74
-	.rodata     start:0x803F2798 end:0x803F2880
+	.text       start:0x8028C1B8 end:0x8028D3E4
 	.data       start:0x804F5800 end:0x804F5828
 	.bss        start:0x806937C0 end:0x80699220
 	.sbss       start:0x806D1E40 end:0x806D1E48
+
+triforce/amnet_io_exact.c:
+	.text       start:0x8028D3E4 end:0x8028D8CC
+
+triforce/amnet_setup_nm.c:
+	.text       start:0x8028D8CC end:0x8028EAA8
+	.rodata     start:0x803F2798 end:0x803F2880
 	.sdata2     start:0x806DC930 end:0x806DC940
+
+triforce/amnet_reset.c:
+	.text       start:0x8028EAA8 end:0x8028EF74
 
 triforce/amnet_init.c:
 	.text       start:0x8028EF74 end:0x8028F45C

@@ -9,7 +9,6 @@
  */
 
 /* --- forward decls --- */
-asm void TornadoEffect_SetMatrix1c(void);
 
 /* --- asm function bodies (.text order = fn address order) --- */
 /* 0x800578C4 size:0x10 */
@@ -24,40 +23,24 @@ void TornadoEffect_SetFieldAc(void *e, float v) {
     TE_F(e, 0xAC) = v;
 }
 
-asm void TornadoEffect_SetMatrix1c(void) { /* 0x800578DC size:0x84 */
-    nofralloc
-    lfs f1, 0x0(r4)
-    lfs f0, 0x4(r4)
-    stfs f1, 0x1c(r3)
-    lfs f1, 0x8(r4)
-    stfs f0, 0x20(r3)
-    lfs f0, 0xc(r4)
-    stfs f1, 0x24(r3)
-    lfs f1, 0x10(r4)
-    stfs f0, 0x28(r3)
-    lfs f0, 0x14(r4)
-    stfs f1, 0x2c(r3)
-    lfs f1, 0x18(r4)
-    stfs f0, 0x30(r3)
-    lfs f0, 0x1c(r4)
-    stfs f1, 0x34(r3)
-    lfs f1, 0x20(r4)
-    stfs f0, 0x38(r3)
-    lfs f0, 0x24(r4)
-    stfs f1, 0x3c(r3)
-    lfs f1, 0x28(r4)
-    stfs f0, 0x40(r3)
-    lfs f0, 0x2c(r4)
-    stfs f1, 0x44(r3)
-    lfs f1, 0x30(r4)
-    stfs f0, 0x48(r3)
-    lfs f0, 0x34(r4)
-    stfs f1, 0x4c(r3)
-    lfs f1, 0x38(r4)
-    stfs f0, 0x50(r3)
-    lfs f0, 0x3c(r4)
-    stfs f1, 0x54(r3)
-    stfs f0, 0x58(r3)
-    blr
+/* 0x800578DC size:0x84: copies a 4x4 matrix to e+0x1C. __restrict on both
+ * pointers gives the target's load-ahead (f1/f0 pipelined) schedule. */
+void TornadoEffect_SetMatrix1c(float *__restrict e, const float *__restrict m) {
+    e[7] = m[0];
+    e[8] = m[1];
+    e[9] = m[2];
+    e[10] = m[3];
+    e[11] = m[4];
+    e[12] = m[5];
+    e[13] = m[6];
+    e[14] = m[7];
+    e[15] = m[8];
+    e[16] = m[9];
+    e[17] = m[10];
+    e[18] = m[11];
+    e[19] = m[12];
+    e[20] = m[13];
+    e[21] = m[14];
+    e[22] = m[15];
 }
 

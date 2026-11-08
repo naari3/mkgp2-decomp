@@ -1,4 +1,4 @@
-/* Native candidate: 97.94372% text. Literal identity constants retain the
+/* Native candidate: 98.43152% text. Literal identity constants retain the
  * target FP save range and stack frame. Matrix operand scheduling and
  * register allocation remain unresolved; this TU stays NonMatching. */
 #include "game/PhysicsGroundPrivate.h"
@@ -50,6 +50,13 @@ static inline void ApplyYaw(PhysicsGroundMatrix &original, float yaw)
     original = rotation;
 }
 
+static inline void ScaleGroundCorner(CollisionVec &corner, float scale)
+{
+    corner.x *= scale;
+    corner.y *= scale;
+    corner.z *= scale;
+}
+
 extern "C" void fn_801ED798(PhysicsGroundState *self, Vec3 *position,
                            PhysicsGroundMatrix *orientation, float yaw)
 {
@@ -72,12 +79,10 @@ extern "C" void fn_801ED798(PhysicsGroundState *self, Vec3 *position,
     for (int corner = 0; corner < 4; ++corner) {
         float height = 0.0f;
         CollisionVec scaled(lbl_803BDD28[corner].x, lbl_803BDD28[corner].y, lbl_803BDD28[corner].z);
-        scaled.x *= self->scale;
-        scaled.y *= self->scale;
-        scaled.z *= self->scale;
+        ScaleGroundCorner(scaled, self->scale);
         self->corners[corner].x = original.m[3][0] + (original.m[0][0] * scaled.x + scaled.y * original.m[1][0] + scaled.z * original.m[2][0]);
         self->corners[corner].y = original.m[3][1] + (original.m[0][1] * scaled.x + scaled.y * original.m[1][1] + scaled.z * original.m[2][1]);
-        self->corners[corner].z = original.m[3][2] + (original.m[0][2] * scaled.x + scaled.y * original.m[1][2] + scaled.z * original.m[2][2]);
+        self->corners[corner].z = original.m[3][2] + (scaled.x * original.m[0][2] + scaled.y * original.m[1][2] + scaled.z * original.m[2][2]);
         Vec3 query = lbl_803BDE24;
         query.x = self->corners[corner].x;
         query.y = self->corners[corner].y;
@@ -121,10 +126,11 @@ extern "C" void fn_801ED798(PhysicsGroundState *self, Vec3 *position,
         }
         self->fallingVelocity = 0.0f;
     } else {
+        float clearance = lbl_806DA43C;
         self->fallingVelocity += lbl_806DA4AC;
         position->y += self->fallingVelocity;
-        if (position->y - lbl_806DA43C < groundHeight) {
-            self->fallingVelocity = (groundHeight - self->previous.y) - lbl_806DA43C;
+        if (position->y - clearance < groundHeight) {
+            self->fallingVelocity = (groundHeight - self->previous.y) - clearance;
             if (0.0f < self->fallingVelocity) self->fallingVelocity = 0.0f;
             position->y = groundHeight;
         } else {
