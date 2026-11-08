@@ -28,7 +28,8 @@ all of these.
 | Function | TU | % | What is left | Tried / WIP |
 | --- | --- | --- | --- | --- |
 | `fn_8024D3D4` (ContinueSceneTick) | game/ContinueSceneTick | 99.87 | r28/r29 swapped between credits and alternate | ~20 variants |
-| `fn_8029B54C` | thp/THPDec | 99.97 | mask register choice | |
+| `fn_8029B54C` | thp/THPDec | 99.97 | vs (`0x41b - 0x6f2`) computed into r23 then masked into r26; target subf straight into r26 | R5 11-08: hs/vs types (u8/u16/u32/s32 x2), swap order, `(u8)` casts, decl-order sweep 400 + single pragmas: all stay at 4 lines |
+| `__THPGetBit` | thp/THPDec | 80.9 | -O2 drops the dead loop-entry `b`; li/lbz order and fast-path store order remain | R5 11-08: `#pragma optimization_level 2` (put it before the opt_* offs, it resets them) = 6 lines, + scheduling/peephole off = 4; loop shapes, statement perms, every cc: no match |
 | `ClRomTable_PurgeAll` | game/ClRomTable_PurgeAll | 99.70 | r27/r29 swap | 8 loop shapes; 40 min permuter |
 | `fn_801F1EE0`, `fn_801F2400`, `fn_801F230C` | game/Menu801F0CC0 | 99.54 / 99.48 / 97.60 | target does `mr rX, r_i` copy of the induction var at loop start; not reproducible so far | decl orders, scoped `i` |
 | `fn_8018E538` | game/objview/fn_8018E538 | 99.42 | same `mr rX, r_i` IV init copy as above | |
