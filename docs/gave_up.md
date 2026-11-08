@@ -203,6 +203,25 @@ it marks a TU rodata start.
 | `fn_801661FC` (onmokoworks #2796) | game/Scene_801661FC | 98.71 | Owning .rodata 0x80369D78..0x8036A308 (strings split out of lbl_8036A24C / lbl_8036A1BC) gives `...rodata.0` addressing identical to target but the remaining diff is the self/base register pair (target self r29, base r31; ours r31/r30). Pure regalloc. | |
 | `card_rw_state_machine*`, `card_read_state_machine`, `card_save_trigger`, `CardSave_Tick_CaptureAndStart` | game/card_* | asm | Base lbl_80598A60 is one big backup-data object in .bss (0x6A20) that dtk split; not a pool, fix the symbol sizes instead. | |
 
+## R2 wind-down 2026-11-08 11:45
+
+- **fn_801661FC** (game/Scene_801661FC, 98.71): the TU now owns .rodata
+  0x80369D78..0x8036A390 (own_data.py), and its debug strings are
+  `#pragma readonly_strings on` literals, so MWCC makes its own `...rodata.0`
+  anchor like the target does. The register order is still wrong: the target
+  has anchor r31, p r30, this r29, and we get this r31, anchor r30, p r29.
+  Changing the compiler (1.3..2.7) and every declaration order did not help.
+  A short cperm run reached 99.25 with a temp for `this->repeat`, `next`
+  declared later and `float step;` declared before it is assigned. That WIP
+  is /mnt/project-files/wip/r2/Scene_801661FC_cperm_9925.cpp (not
+  naturalized). The rodata layout is: float table, class-name strings
+  (sdata-referenced), Scene_801660EC strings, these strings, "clCSPartsTitleTest",
+  Scene_80166BE8 strings, "clCSPartsSpriteTest", Scene_801670FC string. So the
+  original TU most likely spans Scene_801660EC..Scene_801670FC.
+- Parked with notes in the queue (cperm/declsweep/pragmasweep gave 0):
+  fn_801BAA88 leftovers (Nb80425), fn_80222968 (N139eab),
+  VoiceEvent_PushRace (N6e2d04), fn_801E9E74 (N5f265a).
+
 ## Control-flow / branch shape
 
 | Function | TU | % | What is left | Tried / WIP |
