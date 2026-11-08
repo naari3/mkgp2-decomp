@@ -225,10 +225,10 @@ BOOL fn_80282CDC(u32 v) {
     if (tx.len < 0x7A) {
         PUT(0x1F);
         PUT(0);
-        PUT(v >> 24);
-        PUT(v >> 16);
-        PUT(v >> 8);
-        PUT(v);
+        PUT((v >> 24) & 0xFF);
+        PUT((v >> 16) & 0xFF);
+        PUT((v >> 8) & 0xFF);
+        PUT(v & 0xFF);
         return TRUE;
     }
     return FALSE;
