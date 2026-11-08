@@ -2,25 +2,24 @@
 
 #pragma cplusplus on
 
-static inline u8* GetConnectBuffer(s32 n, u32& off) {
-    off = State.bufOff + n;
+/* The board offset and CPU staging pointer advance in bytes together. */
+static inline u8* GetConnectBuffer(s32 n, u8*& off) {
+    off = (u8*)State.bufOff + n;
     return BufPtr(n);
 }
 
-static inline u8* ClearConnectBuffer(AcSock* k, u32& off) {
+static inline u8* ClearConnectBuffer(AcSock* k, u8*& off) {
     u32 base = k->bufAddr;
     u8* buf = GetConnectBuffer(0, off);
-    off = base + off;
+    off += base;
     memset(buf, 0, 0x40);
     return buf;
 }
 
-#pragma push
-#pragma opt_lifetimes off
 extern "C" s32 acConnect(s32 s, const void* addr, s32 len) {
     OSSemaphore* sem;
     AcSock* k = SOCK(s);
-    u32 off;
+    u8* off;
     u8* buf;
 
     if (addr == NULL || len > 0x40) {
@@ -40,7 +39,7 @@ extern "C" s32 acConnect(s32 s, const void* addr, s32 len) {
     memcpy(buf, addr, len);
     fn_8028D530(Buf, k->bufAddr + State.bufOff, 0x40);
     k->cmd = 4;
-    k->id = fn_80290400(8, s, State.devBase + off, len);
+    k->id = fn_80290400(8, s, State.devBase + (u32)off, len);
     if (k->id == 0) {
         k->result = -2;
         OSWaitSemaphore(sem);
@@ -50,5 +49,4 @@ extern "C" s32 acConnect(s32 s, const void* addr, s32 len) {
     }
     return 0;
 }
-#pragma pop
 
