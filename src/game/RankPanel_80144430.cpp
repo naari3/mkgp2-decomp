@@ -185,7 +185,7 @@ extern unsigned int lbl_8048EF68[];
 extern void dtor_80038DD4();
 extern void dtor_80038E30(struct ExcString *s, int flag);
 void fn_80144430(RankPanel *self);
-asm void fn_80144500(void);
+void fn_80144500(RankPanel *self);
 void fn_801449D4(RankPanel *self);
 void fn_80144ADC(RankPanel *self);
 RankPanel *fn_80144AF0(RankPanel *self, short flag);
@@ -201,29 +201,6 @@ VecHolder *dtor_80145F9C(VecHolder *self, short flag);
 struct PanelEntry **fn_80146000(struct EntryVec *v, unsigned long id);
 struct ExcObj *fn_801460D0(struct ExcObj *self, short flag);
 
-#pragma section R ".extab_user"
-
-__declspec(section ".extab_user") static const unsigned char extab_fn_80144500[8] = {
-    0x39, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-#pragma section R ".extabindex_user"
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80144500 = {
-    (void *)&fn_80144500, 0x000004D4, (void *)extab_fn_80144500
-};
 
 
 
@@ -383,346 +360,98 @@ extern "C" void fn_80144430(RankPanel *self)
     }
 }
 
-extern "C" asm void fn_80144500(void) { /* 0x80144500 size:0x4D4 */
-    nofralloc
-    stwu r1, -0x80(r1)
-    mflr r0
-    stw r0, 0x84(r1)
-    stfd f31, 0x70(r1)
-    psq_st f31, 0x78(r1), 0, 0
-    stfd f30, 0x60(r1)
-    psq_st f30, 0x68(r1), 0, 0
-    stfd f29, 0x50(r1)
-    psq_st f29, 0x58(r1), 0, 0
-    stfd f28, 0x40(r1)
-    psq_st f28, 0x48(r1), 0, 0
-    stmw r25, 0x24(r1)
-    mr r30, r3
-    lwz r0, 0x20(r3)
-    cmpwi r0, 0x0
-    beq fn_80144500_L_801449A0
-    lbz r0, 0x18(r30)
-    cmplwi r0, 0x0
-    beq fn_80144500_L_801449A0
-    bl IsCardValid
-    lwz r0, 0x20(r30)
-    clrlwi r3, r3, 24
-    subfic r4, r3, 0x1
-    subi r3, r3, 0x1
-    cmpwi r0, 0x2
-    or r3, r4, r3
-    srwi r29, r3, 31
-    beq fn_80144500_L_8014478C
-    bge fn_80144500_L_80144580
-    cmpwi r0, 0x1
-    bge fn_80144500_L_8014458C
-    b fn_80144500_L_8014478C
-    fn_80144500_L_80144580:
-    cmpwi r0, 0x4
-    bge fn_80144500_L_8014478C
-    b fn_80144500_L_801446A0
-    fn_80144500_L_8014458C:
-    li r0, 0xa
-    li r5, 0x0
-    li r3, 0x0
-    mtctr r0
-    fn_80144500_L_8014459C:
-    lfs f0, 0x1c(r30)
-    fctiwz f0, f0
-    stfd f0, 0x8(r1)
-    lwz r0, 0xc(r1)
-    cmpw r0, r3
-    bne fn_80144500_L_80144630
-    mulli r4, r29, 0xc
-    lis r3, lbl_80361DCC@ha
-    lfs f31, lbl_806D7AE0(r2)
-    mr r29, r30
-    addi r0, r3, lbl_80361DCC@l
-    lfs f30, lbl_806D7AE4(r2)
-    add r27, r0, r4
-    li r25, 0x0
-    mulli r26, r5, 0x26
-    li r31, 0x1
-    addi r28, r27, 0x4
-    fn_80144500_L_801445E0:
-    lfs f2, 0x28(r29)
-    addi r3, r30, 0xc0
-    lfs f1, 0x0(r28)
-    add r4, r26, r25
-    lfs f0, 0x0(r27)
-    fadds f28, f2, f1
-    fadds f29, f2, f0
-    bl fn_80146000
-    lwz r3, 0x0(r3)
-    addi r25, r25, 0x1
-    cmpwi r25, 0x26
-    addi r29, r29, 0x4
-    stfs f29, 0x58(r3)
-    stfs f28, 0x5c(r3)
-    stfs f31, 0x60(r3)
-    stfs f30, 0x64(r3)
-    stfs f29, 0x68(r3)
-    stb r31, 0x54(r3)
-    blt fn_80144500_L_801445E0
-    b fn_80144500_L_8014463C
-    fn_80144500_L_80144630:
-    addi r3, r3, 0x2
-    addi r5, r5, 0x1
-    bdnz fn_80144500_L_8014459C
-    fn_80144500_L_8014463C:
-    lfs f1, 0x1c(r30)
-    lfs f0, lbl_806D7AE8(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_80144500_L_8014478C
-    lfs f0, lbl_806D7AE4(r2)
-    li r0, 0x2
-    stfs f0, 0x1c(r30)
-    stw r0, 0x20(r30)
-    lwz r0, g_reverseRoundFlag(r13)
-    cmpwi r0, 0x1
-    bne fn_80144500_L_8014478C
-    lwz r4, 0xcc(r30)
-    lbz r0, 0x4(r4)
-    cmplwi r0, 0x1
-    bne fn_80144500_L_80144688
-    lbz r0, 0x5(r4)
-    cmplwi r0, 0x0
-    beq fn_80144500_L_8014478C
-    fn_80144500_L_80144688:
-    li r3, 0x1
-    li r0, 0x0
-    stb r3, 0x4(r4)
-    stb r0, 0x5(r4)
-    stw r0, 0x8(r4)
-    b fn_80144500_L_8014478C
-    fn_80144500_L_801446A0:
-    li r3, 0x0
-    li r4, 0x0
-    bl fn_801699D8
-    li r0, 0xa
-    li r5, 0x0
-    li r3, 0x0
-    mtctr r0
-    fn_80144500_L_801446BC:
-    lfs f0, 0x1c(r30)
-    fctiwz f0, f0
-    stfd f0, 0x8(r1)
-    lwz r0, 0xc(r1)
-    cmpw r0, r3
-    bne fn_80144500_L_80144754
-    mulli r4, r29, 0xc
-    lis r3, lbl_80361DCC@ha
-    lfs f30, lbl_806D7AE0(r2)
-    mr r28, r30
-    addi r0, r3, lbl_80361DCC@l
-    lfs f31, lbl_806D7AE4(r2)
-    add r3, r0, r4
-    li r26, 0x0
-    mulli r25, r5, 0x26
-    li r31, 0x1
-    addi r29, r3, 0x8
-    addi r27, r3, 0x4
-    fn_80144500_L_80144704:
-    lfs f2, 0x28(r28)
-    addi r3, r30, 0xc0
-    lfs f1, 0x0(r29)
-    add r4, r25, r26
-    lfs f0, 0x0(r27)
-    fadds f29, f2, f1
-    fadds f28, f2, f0
-    bl fn_80146000
-    lwz r3, 0x0(r3)
-    addi r26, r26, 0x1
-    cmpwi r26, 0x26
-    addi r28, r28, 0x4
-    stfs f28, 0x58(r3)
-    stfs f29, 0x5c(r3)
-    stfs f30, 0x60(r3)
-    stfs f31, 0x64(r3)
-    stfs f28, 0x68(r3)
-    stb r31, 0x54(r3)
-    blt fn_80144500_L_80144704
-    b fn_80144500_L_80144760
-    fn_80144500_L_80144754:
-    addi r3, r3, 0x2
-    addi r5, r5, 0x1
-    bdnz fn_80144500_L_801446BC
-    fn_80144500_L_80144760:
-    lfs f1, 0x1c(r30)
-    lfs f0, lbl_806D7AEC(r2)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_80144500_L_8014478C
-    lfs f0, lbl_806D7AE4(r2)
-    li r3, 0x0
-    li r0, 0x1
-    stfs f0, 0x1c(r30)
-    stw r3, 0x20(r30)
-    stb r0, 0x24(r30)
-    fn_80144500_L_8014478C:
-    lfs f1, 0x1c(r30)
-    lfs f0, lbl_806D7AF0(r2)
-    fadds f0, f1, f0
-    stfs f0, 0x1c(r30)
-    lwz r31, 0xc8(r30)
-    b fn_80144500_L_801448D0
-    fn_80144500_L_801447A4:
-    lwz r29, 0x0(r31)
-    lwz r3, 0x8(r29)
-    cmpwi r3, 0x0
-    ble fn_80144500_L_801447C0
-    subi r0, r3, 0x1
-    stw r0, 0x8(r29)
-    b fn_80144500_L_801448CC
-    fn_80144500_L_801447C0:
-    bgt fn_80144500_L_801447CC
-    li r0, 0x1
-    stb r0, 0x84(r29)
-    fn_80144500_L_801447CC:
-    li r0, 0x5
-    mr r3, r29
-    lfs f2, lbl_806D7AF0(r2)
-    mtctr r0
-    fn_80144500_L_801447DC:
-    lbz r0, 0xc(r3)
-    cmplwi r0, 0x1
-    bne fn_80144500_L_80144824
-    lfs f4, 0x1c(r3)
-    lfs f0, 0x14(r3)
-    fsubs f1, f2, f4
-    lfs f3, 0x10(r3)
-    fmuls f0, f0, f4
-    fmadds f0, f3, f1, f0
-    stfs f0, 0x20(r3)
-    lfs f1, 0x1c(r3)
-    lfs f0, 0x18(r3)
-    fadds f0, f1, f0
-    stfs f0, 0x1c(r3)
-    lfs f0, 0x1c(r3)
-    fcmpo cr0, f0, f2
-    ble fn_80144500_L_80144824
-    stfs f2, 0x1c(r3)
-    fn_80144500_L_80144824:
-    addi r3, r3, 0x18
-    bdnz fn_80144500_L_801447DC
-    mr r3, r29
-    lwz r12, 0x0(r29)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x4(r29)
-    cmplwi r3, 0x0
-    beq fn_80144500_L_801448CC
-    lbz r0, 0xc(r29)
-    cmplwi r0, 0x1
-    bne fn_80144500_L_80144860
-    lfs f0, 0x20(r29)
-    stfs f0, 0x20(r3)
-    fn_80144500_L_80144860:
-    lbz r0, 0x24(r29)
-    cmplwi r0, 0x1
-    bne fn_80144500_L_80144878
-    lfs f0, 0x38(r29)
-    lwz r3, 0x4(r29)
-    stfs f0, 0x14(r3)
-    fn_80144500_L_80144878:
-    lbz r0, 0x3c(r29)
-    cmplwi r0, 0x1
-    bne fn_80144500_L_80144890
-    lfs f0, 0x50(r29)
-    lwz r3, 0x4(r29)
-    stfs f0, 0x18(r3)
-    fn_80144500_L_80144890:
-    lbz r0, 0x54(r29)
-    cmplwi r0, 0x1
-    bne fn_80144500_L_801448A8
-    lfs f0, 0x68(r29)
-    lwz r3, 0x4(r29)
-    stfs f0, 0xc(r3)
-    fn_80144500_L_801448A8:
-    lbz r0, 0x6c(r29)
-    cmplwi r0, 0x1
-    bne fn_80144500_L_801448C0
-    lfs f0, 0x80(r29)
-    lwz r3, 0x4(r29)
-    stfs f0, 0x10(r3)
-    fn_80144500_L_801448C0:
-    lwz r3, 0x4(r29)
-    lfs f1, lbl_806D7AF4(r2)
-    bl Sprite_AdvanceAnim
-    fn_80144500_L_801448CC:
-    addi r31, r31, 0x4
-    fn_80144500_L_801448D0:
-    lwz r0, 0xc4(r30)
-    lwz r3, 0xc8(r30)
-    slwi r0, r0, 2
-    add r0, r3, r0
-    cmplw r31, r0
-    bne fn_80144500_L_801447A4
-    lwz r4, 0xcc(r30)
-    lbz r0, 0x4(r4)
-    cmplwi r0, 0x0
-    beq fn_80144500_L_801449A0
-    lwz r3, 0x8(r4)
-    cmpwi r3, 0x8
-    bgt fn_80144500_L_80144994
-    lbz r0, 0x5(r4)
-    cmplwi r0, 0x0
-    bne fn_80144500_L_80144938
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0xc(r1)
-    lfd f2, lbl_806D7B00(r2)
-    stw r0, 0x8(r1)
-    lfs f0, lbl_806D7AF8(r2)
-    lfd f1, 0x8(r1)
-    fsubs f1, f1, f2
-    fmuls f0, f1, f0
-    b fn_80144500_L_80144960
-    fn_80144500_L_80144938:
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x14(r1)
-    lfd f3, lbl_806D7B00(r2)
-    stw r0, 0x10(r1)
-    lfs f1, lbl_806D7AF8(r2)
-    lfd f2, 0x10(r1)
-    lfs f0, lbl_806D7AF0(r2)
-    fsubs f2, f2, f3
-    fnmsubs f0, f2, f1, f0
-    fn_80144500_L_80144960:
-    lwz r3, 0x0(r4)
-    stfs f0, 0x20(r3)
-    lwz r3, 0x8(r4)
-    addi r0, r3, 0x1
-    cmpwi r3, 0x8
-    stw r0, 0x8(r4)
-    bne fn_80144500_L_80144994
-    lbz r0, 0x5(r4)
-    cmplwi r0, 0x0
-    beq fn_80144500_L_80144994
-    li r0, 0x0
-    stb r0, 0x4(r4)
-    stb r0, 0x5(r4)
-    fn_80144500_L_80144994:
-    lwz r3, 0x0(r4)
-    lfs f1, lbl_806D7AF4(r2)
-    bl Sprite_AdvanceAnim
-    fn_80144500_L_801449A0:
-    psq_l f31, 0x78(r1), 0, 0
-    lfd f31, 0x70(r1)
-    psq_l f30, 0x68(r1), 0, 0
-    lfd f30, 0x60(r1)
-    psq_l f29, 0x58(r1), 0, 0
-    lfd f29, 0x50(r1)
-    psq_l f28, 0x48(r1), 0, 0
-    lfd f28, 0x40(r1)
-    lmw r25, 0x24(r1)
-    lwz r0, 0x84(r1)
-    mtlr r0
-    addi r1, r1, 0x80
-    blr
+#define RP_F(x) (*(float *)&(x))
+static inline void PanelItem_Tick(PanelItem *p)
+{
+    if (p->delay > 0) {
+        p->delay--;
+        return;
+    }
+    if (p->delay <= 0) {
+        p->active = 1;
+    }
+    for (int i = 0; i < 5; i++) {
+        p->tw[i].Update();
+    }
+    p->Update();
+    if (p->sprite) {
+        if (p->tw[0].on == 1) p->sprite->f20 = p->tw[0].Get();
+        if (p->tw[1].on == 1) p->sprite->f14 = p->tw[1].Get();
+        if (p->tw[2].on == 1) p->sprite->f18 = p->tw[2].Get();
+        if (p->tw[3].on == 1) p->sprite->fC = p->tw[3].Get();
+        if (p->tw[4].on == 1) p->sprite->f10 = p->tw[4].Get();
+        Sprite_AdvanceAnim(p->sprite, RP_F(lbl_806D7AF4));
+    }
+}
+
+extern "C" void fn_80144500(RankPanel *self)
+{
+    if (self->state != 0 && self->visible) {
+        int row = IsCardValid() == 1 ? 0 : 1;
+        switch (self->state) {
+        case 1:
+            for (int i = 0; i < 10; i++) {
+                if ((int)self->f1c == i * 2) {
+                    int off = i * 0x26;
+                    for (int k = 0; k < 0x26; k++) {
+                        ((PanelItem *)*fn_80146000(&self->vec, off + k))->tw[3].Start(self->xs[k] + lbl_80361DCC[row][0], self->xs[k] + lbl_80361DCC[row][1], lbl_806D7AE0);
+                    }
+                    break;
+                }
+            }
+            if (self->f1c >= RP_F(lbl_806D7AE8)) {
+                self->f1c = 0.0f;
+                self->state = 2;
+                if (g_reverseRoundFlag == 1) {
+                    Cursor *c = self->cursor.p;
+                    if (c->on != 1 || c->state != 0) {
+                        c->on = 1;
+                        c->state = 0;
+                        c->timer = 0;
+                    }
+                }
+            }
+            break;
+        case 3:
+            fn_801699D8(0, 0);
+            for (int i = 0; i < 10; i++) {
+                if ((int)self->f1c == i * 2) {
+                    int off = i * 0x26;
+                    for (int k = 0; k < 0x26; k++) {
+                        ((PanelItem *)*fn_80146000(&self->vec, off + k))->tw[3].Start(self->xs[k] + lbl_80361DCC[row][1], self->xs[k] + lbl_80361DCC[row][2], lbl_806D7AE0);
+                    }
+                    break;
+                }
+            }
+            if (self->f1c >= RP_F(lbl_806D7AEC)) {
+                self->f1c = 0.0f;
+                self->state = 0;
+                self->b24 = 1;
+            }
+            break;
+        }
+        self->f1c += 1.0f;
+        for (PanelItem **it = self->vec.data; it != self->vec.data + self->vec.size; it++) {
+            PanelItem_Tick(*it);
+        }
+        Cursor *c = self->cursor.p;
+        if (c->on) {
+            if (c->timer <= 8) {
+                float a;
+                if (c->state == 0) {
+                    a = (float)c->timer * lbl_806D7AF8;
+                } else {
+                    a = 1.0f - (float)c->timer * lbl_806D7AF8;
+                }
+                c->sprite->f20 = a;
+                if (c->timer++ == 8 && c->state != 0) {
+                    c->on = 0;
+                    c->state = 0;
+                }
+            }
+            Sprite_AdvanceAnim(c->sprite, RP_F(lbl_806D7AF4));
+        }
+    }
 }
 
 extern "C" void fn_801449D4(RankPanel *self)
