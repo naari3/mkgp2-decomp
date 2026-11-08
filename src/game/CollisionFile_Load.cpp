@@ -34,8 +34,9 @@ extern void *CollisionFile_FixupPointers(void *);
 }
 
 static inline int CountCollisionTypes(const CollisionTypeEntry *types) {
-    int count;
-    for (count = 0; types[count].name != 0; count++) {}
+    int count = 0;
+    int i = 0;
+    while (types[i].name != 0) { i++; count++; }
     return count;
 }
 
