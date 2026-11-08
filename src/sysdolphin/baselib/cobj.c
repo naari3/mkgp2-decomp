@@ -559,8 +559,7 @@ float upvec2roll(HSD_CObj* cobj, Vec3* up)
     if (!HSD_CObjGetEyeVector(cobj, &eye)) {
         dot = 0.0f;
     } else {
-        dot = cobj_absf(VECDotProduct(up, &eye));
-        dot = 1.0f - dot;
+        dot = 1.0f - (float)fabs(VECDotProduct(up, &eye));
         if (dot < FLT_MIN) {
             dot = 0.0f;
         } else {
@@ -656,6 +655,8 @@ extern inline f32 cobj_get_up_x(Vec3* up)
     return up->x;
 }
 
+#pragma push
+#pragma optimization_level 3
 void HSD_CObjSetUpVector(HSD_CObj* cobj, Vec3* up)
 {
     Vec3 v;
@@ -679,6 +680,8 @@ void HSD_CObjSetUpVector(HSD_CObj* cobj, Vec3* up)
         HSD_CObjSetRoll(cobj, upvec2roll(cobj, up));
     }
 }
+#pragma pop
+
 
 /* ---- cobj_mtx.c ---- */
 
