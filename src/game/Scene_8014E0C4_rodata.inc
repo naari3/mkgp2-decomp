@@ -1,10 +1,307 @@
-/* .rodata 0x80363D30..0x803678D8 definitions, in link order. */
+/* .rodata 0x80363D30..0x803678D8, owned by game/Scene_8014E0C4.cpp.
+ * Generated from the DOL; objects are in link order. Pointer slots are
+ * struct fields so the relocations survive. */
+/* generated from pool_split3.s */
+struct R_80364368 {
+    const void *p0;
+    const void *p1;
+    const void *p2;
+    const void *p3;
+    const void *p4;
+    const void *p5;
+    const void *p6;
+    const void *p7;
+    const void *p8;
+    const void *p9;
+    const void *p10;
+    const void *p11;
+    const void *p12;
+    const void *p13;
+    const void *p14;
+    const void *p15;
+    const void *p16;
+    const void *p17;
+    const void *p18;
+    const void *p19;
+    const void *p20;
+    const void *p21;
+    const void *p22;
+    const void *p23;
+    const void *p24;
+    const void *p25;
+    const void *p26;
+    const void *p27;
+    const void *p28;
+};
+struct R_803667A8 {
+    unsigned int w0[40];
+    const void *p1;
+    unsigned int w2[2];
+    const void *p3;
+    unsigned int w4[2];
+    const void *p5;
+    unsigned int w6[2];
+    const void *p7;
+    unsigned int w8[2];
+    const void *p9;
+    unsigned int w10[2];
+    const void *p11;
+    unsigned int w12[2];
+    const void *p13;
+    unsigned int w14[2];
+    const void *p15;
+    unsigned int w16[2];
+    const void *p17;
+    unsigned int w18[2];
+    const void *p19;
+    unsigned int w20[2];
+    const void *p21;
+    unsigned int w22[2];
+    const void *p23;
+    unsigned int w24[2];
+    const void *p25;
+    unsigned int w26[2];
+    const void *p27;
+    unsigned int w28[2];
+    const void *p29;
+    unsigned int w30[2];
+    const void *p31;
+    unsigned int w32[2];
+    const void *p33;
+    unsigned int w34[2];
+    const void *p35;
+    unsigned int w36[2];
+    const void *p37;
+    unsigned int w38[2];
+    const void *p39;
+    unsigned int w40[2];
+    const void *p41;
+    unsigned int w42[2];
+    const void *p43;
+    unsigned int w44[2];
+    const void *p45;
+    unsigned int w46[2];
+    const void *p47;
+    unsigned int w48[2];
+    const void *p49;
+    unsigned int w50[2];
+    const void *p51;
+    unsigned int w52[5];
+    const void *p53;
+    unsigned int w54[2];
+    const void *p55;
+    unsigned int w56[2];
+    const void *p57;
+    unsigned int w58[2];
+    const void *p59;
+    unsigned int w60[2];
+    const void *p61;
+    unsigned int w62[2];
+    const void *p63;
+    unsigned int w64[2];
+    const void *p65;
+    unsigned int w66[2];
+    const void *p67;
+    unsigned int w68[2];
+    const void *p69;
+    unsigned int w70[2];
+    const void *p71;
+    unsigned int w72[2];
+    const void *p73;
+    unsigned int w74[2];
+    const void *p75;
+    unsigned int w76[2];
+    const void *p77;
+    unsigned int w78[2];
+    const void *p79;
+    unsigned int w80[2];
+    const void *p81;
+    unsigned int w82[2];
+    const void *p83;
+    unsigned int w84[2];
+    const void *p85;
+    unsigned int w86[5];
+    const void *p87;
+    unsigned int w88[2];
+    const void *p89;
+    unsigned int w90[2];
+    const void *p91;
+    unsigned int w92[2];
+    const void *p93;
+    unsigned int w94[2];
+    const void *p95;
+    unsigned int w96[2];
+    const void *p97;
+    unsigned int w98[2];
+    const void *p99;
+    unsigned int w100[2];
+    const void *p101;
+    unsigned int w102[2];
+    const void *p103;
+    unsigned int w104[2];
+    const void *p105;
+    unsigned int w106[2];
+    const void *p107;
+    unsigned int w108[2];
+    const void *p109;
+    unsigned int w110[2];
+    const void *p111;
+    unsigned int w112[2];
+    const void *p113;
+    unsigned int w114[2];
+    const void *p115;
+    unsigned int w116[2];
+    const void *p117;
+    unsigned int w118[2];
+    const void *p119;
+    unsigned int w120[2];
+    const void *p121;
+    unsigned int w122[2];
+    const void *p123;
+    unsigned int w124[2];
+    const void *p125;
+    unsigned int w126[2];
+    const void *p127;
+    unsigned int w128[2];
+    const void *p129;
+    unsigned int w130[2];
+    const void *p131;
+    unsigned int w132[2];
+    const void *p133;
+    unsigned int w134[2];
+    const void *p135;
+    unsigned int w136[2];
+    const void *p137;
+    unsigned int w138[2];
+    const void *p139;
+    unsigned int w140[2];
+    const void *p141;
+    unsigned int w142[2];
+    const void *p143;
+    unsigned int w144[2];
+    const void *p145;
+    unsigned int w146[5];
+    const void *p147;
+    unsigned int w148[2];
+    const void *p149;
+    unsigned int w150[2];
+    const void *p151;
+    unsigned int w152[2];
+    const void *p153;
+    unsigned int w154[2];
+    const void *p155;
+    unsigned int w156[2];
+    const void *p157;
+    unsigned int w158[2];
+    const void *p159;
+    unsigned int w160[2];
+    const void *p161;
+    unsigned int w162[2];
+    const void *p163;
+    unsigned int w164[2];
+    const void *p165;
+    unsigned int w166[2];
+    const void *p167;
+    unsigned int w168[2];
+    const void *p169;
+    unsigned int w170[2];
+    const void *p171;
+    unsigned int w172[2];
+    const void *p173;
+    unsigned int w174[2];
+    const void *p175;
+    unsigned int w176[2];
+    const void *p177;
+    unsigned int w178[2];
+    const void *p179;
+    unsigned int w180[2];
+    const void *p181;
+    unsigned int w182[2];
+    const void *p183;
+    unsigned int w184[2];
+    const void *p185;
+    unsigned int w186[2];
+    const void *p187;
+    unsigned int w188[2];
+    const void *p189;
+    unsigned int w190[2];
+    const void *p191;
+    unsigned int w192[2];
+    const void *p193;
+    unsigned int w194[2];
+    const void *p195;
+    unsigned int w196[2];
+    const void *p197;
+    unsigned int w198[2];
+    const void *p199;
+    unsigned int w200[2];
+    const void *p201;
+    unsigned int w202[2];
+    const void *p203;
+    unsigned int w204[45];
+};
+struct R_80367200 {
+    unsigned int w0[1];
+    const void *p1;
+    unsigned int w2[2];
+    const void *p3;
+    unsigned int w4[2];
+    const void *p5;
+    unsigned int w6[2];
+    const void *p7;
+    unsigned int w8[2];
+    const void *p9;
+    unsigned int w10[2];
+    const void *p11;
+    unsigned int w12[2];
+    const void *p13;
+    unsigned int w14[2];
+    const void *p15;
+    unsigned int w16[2];
+    const void *p17;
+    unsigned int w18[2];
+    const void *p19;
+    unsigned int w20[2];
+    const void *p21;
+    unsigned int w22[58];
+};
 /* Most of these are reached only through pool offsets in the asm
  * functions, so keep the linker from stripping them. */
 #pragma push
 #pragma force_active on
 extern "C" {
-extern unsigned int lbl_80363D30[309] __attribute__((section(".rodata"))) = {
+extern char lbl_806D7F00[];
+extern char lbl_806D7F08[];
+extern char lbl_806D7F10[];
+extern char lbl_806D7F18[];
+extern char lbl_806D7F20[];
+extern char lbl_806D7F28[];
+extern char lbl_806D7F30[];
+extern char lbl_806D7F38[];
+extern char lbl_806D7F40[];
+extern char lbl_806D7F48[];
+extern char lbl_806D7F78[];
+extern char lbl_806D7F80[];
+extern char lbl_806D7F88[];
+extern char lbl_806D7F90[];
+extern char lbl_806D7F98[];
+extern char lbl_806D7FA0[];
+extern char lbl_806D7FA8[];
+extern char lbl_806D7FB0[];
+extern char lbl_806D7FB8[];
+extern char lbl_806D7FC0[];
+extern char lbl_806D7FC8[];
+extern char lbl_806D7FD0[];
+extern char lbl_806D7FD8[];
+extern char lbl_806D7FE0[];
+extern char lbl_806D7FE8[];
+extern char lbl_806D7FF0[];
+extern char lbl_806D7FF8[];
+extern char lbl_806D8000[];
+extern char lbl_806D8008[];
+extern char lbl_806D8010[];
+extern char lbl_806D8018[];
+extern const unsigned int lbl_80363D30[309] = {
     0x00000000, 0x00000000, 0xC3960000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x3F333333, 0x3F666666,
     0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556,
@@ -58,26 +355,26 @@ extern unsigned int lbl_80363D30[309] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF,
     0x00000000, 0x00000000, 0x00000000,
 };
-extern char lbl_80364204[] __attribute__((section(".rodata"))) = "dk_01.dat";
-extern char lbl_80364210[] __attribute__((section(".rodata"))) = "dk_02.dat";
-extern char lbl_8036421C[] __attribute__((section(".rodata"))) = "dk_03.dat";
-extern char lbl_80364228[] __attribute__((section(".rodata"))) = "AT_demo_cut1.dat";
-extern char lbl_8036423C[] __attribute__((section(".rodata"))) = "AT_demo_cut2.dat";
-extern char lbl_80364250[] __attribute__((section(".rodata"))) = "AT_demo_cut3.dat";
-extern char lbl_80364264[] __attribute__((section(".rodata"))) = "AT_demo_cut4.dat";
-extern char lbl_80364278[] __attribute__((section(".rodata"))) = "AT_demo_cut5.dat";
-extern char lbl_8036428C[] __attribute__((section(".rodata"))) = "AT_demo_cut6.dat";
-extern char lbl_803642A0[] __attribute__((section(".rodata"))) = "AT_demo_cut7.dat";
-extern char lbl_803642B4[] __attribute__((section(".rodata"))) = "AT_demo_cut8.dat";
-extern char lbl_803642C8[] __attribute__((section(".rodata"))) = "AT_demo_cut10.dat";
-extern char lbl_803642DC[] __attribute__((section(".rodata"))) = "AT_demo_cut11.dat";
-extern char lbl_803642F0[] __attribute__((section(".rodata"))) = "AT_demo_cut13.dat";
-extern char lbl_80364304[] __attribute__((section(".rodata"))) = "AT_demo_cut14.dat";
-extern char lbl_80364318[] __attribute__((section(".rodata"))) = "AT_demo_cut15_1.dat";
-extern char lbl_8036432C[] __attribute__((section(".rodata"))) = "AT_demo_cut15_2.dat";
-extern char lbl_80364340[] __attribute__((section(".rodata"))) = "AT_demo_cut16.dat";
-extern char lbl_80364354[] __attribute__((section(".rodata"))) = "AT_demo_cut17.dat";
-extern R_80364368 lbl_80364368 __attribute__((section(".rodata"))) = {
+static const char lbl_80364204[] = "dk_01.dat";
+static const char lbl_80364210[] = "dk_02.dat";
+static const char lbl_8036421C[] = "dk_03.dat";
+static const char lbl_80364228[] = "AT_demo_cut1.dat";
+static const char lbl_8036423C[] = "AT_demo_cut2.dat";
+static const char lbl_80364250[] = "AT_demo_cut3.dat";
+static const char lbl_80364264[] = "AT_demo_cut4.dat";
+static const char lbl_80364278[] = "AT_demo_cut5.dat";
+static const char lbl_8036428C[] = "AT_demo_cut6.dat";
+static const char lbl_803642A0[] = "AT_demo_cut7.dat";
+static const char lbl_803642B4[] = "AT_demo_cut8.dat";
+static const char lbl_803642C8[] = "AT_demo_cut10.dat";
+static const char lbl_803642DC[] = "AT_demo_cut11.dat";
+static const char lbl_803642F0[] = "AT_demo_cut13.dat";
+static const char lbl_80364304[] = "AT_demo_cut14.dat";
+static const char lbl_80364318[] = "AT_demo_cut15_1.dat";
+static const char lbl_8036432C[] = "AT_demo_cut15_2.dat";
+static const char lbl_80364340[] = "AT_demo_cut16.dat";
+static const char lbl_80364354[] = "AT_demo_cut17.dat";
+extern const R_80364368 lbl_80364368 = {
     lbl_806D7F00,
     lbl_806D7F08,
     lbl_806D7F10,
@@ -108,19 +405,19 @@ extern R_80364368 lbl_80364368 __attribute__((section(".rodata"))) = {
     lbl_80364340,
     lbl_80364354,
 };
-extern char lbl_803643DC[] __attribute__((section(".rodata"))) = "at_sp_sales01.tpl";
-extern char lbl_803643F0[] __attribute__((section(".rodata"))) = "at_sp_sales05.tpl";
-extern char lbl_80364404[] __attribute__((section(".rodata"))) = "at_sp_sales06.tpl";
-extern char lbl_80364418[] __attribute__((section(".rodata"))) = "at_sp_tech01.tpl";
-extern char lbl_8036442C[] __attribute__((section(".rodata"))) = "at_sp_namcam.tpl";
-extern char lbl_80364440[] __attribute__((section(".rodata"))) = "e_at_sp_sales01.tpl";
-extern char lbl_80364454[] __attribute__((section(".rodata"))) = "e_at_sp_sales02.tpl";
-extern char lbl_80364468[] __attribute__((section(".rodata"))) = "e_at_sp_item.tpl";
-extern char lbl_8036447C[] __attribute__((section(".rodata"))) = "e_at_sp_comment.tpl";
-extern char lbl_80364490[] __attribute__((section(".rodata"))) = "e_at_sp_comment2.tpl";
-extern char lbl_803644A8[] __attribute__((section(".rodata"))) = "e_at_sp_tech01.tpl";
-extern char lbl_803644BC[] __attribute__((section(".rodata"))) = "e_at_sp_namcam.tpl";
-extern SprEntry lbl_803644D0[80] __attribute__((section(".rodata"))) = {
+extern const char lbl_803643DC[] = "at_sp_sales01.tpl";
+extern const char lbl_803643F0[] = "at_sp_sales05.tpl";
+extern const char lbl_80364404[] = "at_sp_sales06.tpl";
+extern const char lbl_80364418[] = "at_sp_tech01.tpl";
+extern const char lbl_8036442C[] = "at_sp_namcam.tpl";
+extern const char lbl_80364440[] = "e_at_sp_sales01.tpl";
+extern const char lbl_80364454[] = "e_at_sp_sales02.tpl";
+extern const char lbl_80364468[] = "e_at_sp_item.tpl";
+extern const char lbl_8036447C[] = "e_at_sp_comment.tpl";
+extern const char lbl_80364490[] = "e_at_sp_comment2.tpl";
+extern const char lbl_803644A8[] = "e_at_sp_tech01.tpl";
+extern const char lbl_803644BC[] = "e_at_sp_namcam.tpl";
+extern const SprEntry lbl_803644D0[80] = {
     {0x0, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 512.0f, 96.0f},
     {0x0, {0x00, 0x00, 0x00, 0x00, 0x42, 0xC0, 0x00, 0x00}, 512.0f, 96.0f},
     {0x0, {0x00, 0x00, 0x00, 0x00, 0x43, 0x90, 0x00, 0x00}, 512.0f, 96.0f},
@@ -202,17 +499,17 @@ extern SprEntry lbl_803644D0[80] __attribute__((section(".rodata"))) = {
     {0xB, {0x44, 0x22, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00}, 2.4e+02f, 32.0f},
     {0xB, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 6.4e+02f, 4.8e+02f},
 };
-extern unsigned int lbl_80364B10[6] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80364B10[6] = {
     0x00000000, 0x00000003, 0x00000004, 0x00000002, 0x0000000A, 0x00000008,
 };
-extern char lbl_80364B28[] __attribute__((section(".rodata"))) = "op_demo_mario_joint";
-extern char lbl_80364B3C[] __attribute__((section(".rodata"))) = "op_demo_peach_joint";
-extern char lbl_80364B50[] __attribute__((section(".rodata"))) = "op_demo_koopa_joint";
-extern char lbl_80364B64[] __attribute__((section(".rodata"))) = "op_demo_wario_joint";
-extern char lbl_80364B78[] __attribute__((section(".rodata"))) = "op_demo_monster_joint";
-extern char lbl_80364B90[] __attribute__((section(".rodata"))) = "op_demo_pacman_joint";
-extern char lbl_80364BA8[] __attribute__((section(".rodata"))) = "DK_demo_donkey_null_joint";
-extern unsigned int lbl_80364BC4[35] __attribute__((section(".rodata"))) = {
+extern const char lbl_80364B28[] = "op_demo_mario_joint";
+extern const char lbl_80364B3C[] = "op_demo_peach_joint";
+extern const char lbl_80364B50[] = "op_demo_koopa_joint";
+extern const char lbl_80364B64[] = "op_demo_wario_joint";
+extern const char lbl_80364B78[] = "op_demo_monster_joint";
+extern const char lbl_80364B90[] = "op_demo_pacman_joint";
+extern const char lbl_80364BA8[] = "DK_demo_donkey_null_joint";
+extern const unsigned int lbl_80364BC4[35] = {
     0x444B5F64, 0x656D6F5F, 0x6D617269, 0x6F5F6E75, 0x6C6C5F6A, 0x6F696E74,
     0x00000000, 0x442DC000, 0x00000002, 0x00000032, 0x01000000, 0x4433C000,
     0x00000002, 0x00000032, 0x00000000, 0x443B8000, 0x00000003, 0x00000039,
@@ -220,21 +517,21 @@ extern unsigned int lbl_80364BC4[35] __attribute__((section(".rodata"))) = {
     0x00000004, 0x00000008, 0x01000000, 0x4451C000, 0x00000004, 0x00000008,
     0x00000000, 0xBF800000, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000,
 };
-extern unsigned int lbl_80364C50[30] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80364C50[30] = {
     0x43700000, 0x44900000, 0x43700000, 0x40000000, 0x40000000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x43DB0000, 0xC487C000,
     0x43700000, 0x40000000, 0x40000000, 0x00000000, 0x3F800000, 0x3F800000,
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80364CC8[30] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80364CC8[30] = {
     0x43700000, 0x45080000, 0x43700000, 0x40000000, 0x40000000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x43DB0000, 0xC2780000,
     0x43700000, 0x40000000, 0x40000000, 0x00000000, 0x3F800000, 0x3F800000,
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80364D40[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80364D40[50] = {
     0x43DC0000, 0x42EC0000, 0x43700000, 0x400CCCCD, 0x400CCCCD, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x43DE0000, 0x42FA6666,
     0x43700000, 0x40200000, 0x40200000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -245,7 +542,7 @@ extern unsigned int lbl_80364D40[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80364E08[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80364E08[50] = {
     0x43DC0000, 0x44070000, 0x43700000, 0x400CCCCD, 0x400CCCCD, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x43DE0000, 0x44050666,
     0x43700000, 0x40200000, 0x40200000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -256,7 +553,7 @@ extern unsigned int lbl_80364E08[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80364ED0[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80364ED0[50] = {
     0x43DC0000, 0x430E0000, 0x43700000, 0x40000000, 0x40000000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x43E60000, 0x430E0000,
     0x43700000, 0x3F666666, 0x3F666666, 0x00000000, 0x3F800000, 0x3F800000,
@@ -267,7 +564,7 @@ extern unsigned int lbl_80364ED0[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80364F98[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80364F98[50] = {
     0x43E10000, 0x43930000, 0x43700000, 0x40000000, 0x40000000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x43EB0000, 0x43930000,
     0x43700000, 0x3F666666, 0x3F666666, 0x00000000, 0x3F800000, 0x3F800000,
@@ -278,7 +575,7 @@ extern unsigned int lbl_80364F98[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365060[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365060[50] = {
     0x43E60000, 0x43EE0000, 0x43700000, 0x40000000, 0x40000000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x43F00000, 0x43EE0000,
     0x43700000, 0x3F666666, 0x3F666666, 0x00000000, 0x3F800000, 0x3F800000,
@@ -289,7 +586,7 @@ extern unsigned int lbl_80365060[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365128[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365128[50] = {
     0x44070000, 0x43A00000, 0x42FC0000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x440E4000, 0x43A00000,
     0x42FC0000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -300,7 +597,7 @@ extern unsigned int lbl_80365128[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_803651F0[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_803651F0[50] = {
     0x44070000, 0x43A00000, 0x42F00000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x440E4000, 0x43A00000,
     0x42F00000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -311,7 +608,7 @@ extern unsigned int lbl_803651F0[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_803652B8[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_803652B8[50] = {
     0x44250000, 0xC3120000, 0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44270000, 0x42B60000,
     0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -322,7 +619,7 @@ extern unsigned int lbl_803652B8[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365380[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365380[50] = {
     0x44250000, 0xC3120000, 0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x44270000, 0x42B60000,
     0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -333,7 +630,7 @@ extern unsigned int lbl_80365380[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365448[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365448[50] = {
     0x44340000, 0xC3120000, 0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44360000, 0x42B60000,
     0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -344,7 +641,7 @@ extern unsigned int lbl_80365448[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365510[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365510[50] = {
     0x44340000, 0xC3120000, 0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x44360000, 0x42B60000,
     0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -355,7 +652,7 @@ extern unsigned int lbl_80365510[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_803655D8[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_803655D8[50] = {
     0x44430000, 0xC3340000, 0x42A60000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44450000, 0x42D80000,
     0x42A60000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -366,7 +663,7 @@ extern unsigned int lbl_803655D8[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_803656A0[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_803656A0[50] = {
     0x44430000, 0xC3340000, 0x42A60000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x44450000, 0x42D80000,
     0x42A60000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -377,7 +674,7 @@ extern unsigned int lbl_803656A0[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365768[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365768[50] = {
     0x44520000, 0xC3340000, 0x42A60000, 0x3F800000, 0x3F800000, 0xBFC90FDB,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44540000, 0x42D80000,
     0x42A60000, 0x3F800000, 0x3F800000, 0xBFC90FDB, 0x3F800000, 0x3F800000,
@@ -388,7 +685,7 @@ extern unsigned int lbl_80365768[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365830[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365830[50] = {
     0x44520000, 0xC3340000, 0x42A60000, 0x3F800000, 0x3F800000, 0xBFC90FDB,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x44540000, 0x42D80000,
     0x42A60000, 0x3F800000, 0x3F800000, 0xBFC90FDB, 0x3F800000, 0x3F800000,
@@ -399,7 +696,7 @@ extern unsigned int lbl_80365830[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_803658F8[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_803658F8[50] = {
     0x44610000, 0x43A00000, 0x42FC0000, 0x3FA66666, 0x3FA66666, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x4464C000, 0x43A00000,
     0x42FC0000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -410,7 +707,7 @@ extern unsigned int lbl_803658F8[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_803659C0[60] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_803659C0[60] = {
     0x44734000, 0x43170000, 0xC2080000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x4475C000, 0x43170000,
     0x43200000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -422,7 +719,7 @@ extern unsigned int lbl_803659C0[60] __attribute__((section(".rodata"))) = {
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365AB0[60] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365AB0[60] = {
     0x44748000, 0x43948000, 0xC2080000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44770000, 0x43948000,
     0x43200000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -434,7 +731,7 @@ extern unsigned int lbl_80365AB0[60] __attribute__((section(".rodata"))) = {
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365BA0[60] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365BA0[60] = {
     0x4475C000, 0x43CC8000, 0xC2080000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44784000, 0x43CC8000,
     0x43200000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -446,7 +743,7 @@ extern unsigned int lbl_80365BA0[60] __attribute__((section(".rodata"))) = {
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365C90[60] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365C90[60] = {
     0x44770000, 0x44004000, 0xC2080000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44798000, 0x44004000,
     0x43200000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -458,7 +755,7 @@ extern unsigned int lbl_80365C90[60] __attribute__((section(".rodata"))) = {
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365D80[40] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365D80[40] = {
     0x44870000, 0x439E8000, 0x43740000, 0x00000000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x448AC000, 0x439E8000,
     0x43740000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -467,7 +764,7 @@ extern unsigned int lbl_80365D80[40] __attribute__((section(".rodata"))) = {
     0xBF800000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365E20[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365E20[50] = {
     0x448AA000, 0x439E8000, 0x43740000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x448AC000, 0x439E8000,
     0x43740000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -478,21 +775,21 @@ extern unsigned int lbl_80365E20[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365EE8[30] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365EE8[30] = {
     0x44870000, 0x439E8000, 0x43740000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44AC6000, 0x439E8000,
     0x43740000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365F60[30] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365F60[30] = {
     0x44870000, 0x43A00000, 0x42980000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44AC6000, 0x43A00000,
     0x42980000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80365FD8[120] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80365FD8[120] = {
     0x4490C000, 0x44378000, 0x43700000, 0x40200000, 0x40200000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44916000, 0x43FC0000,
     0x438F0000, 0x40200000, 0x40200000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -514,7 +811,7 @@ extern unsigned int lbl_80365FD8[120] __attribute__((section(".rodata"))) = {
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern unsigned int lbl_803661B8[120] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_803661B8[120] = {
     0x44936000, 0x44588000, 0x43700000, 0x40200000, 0x40200000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44940000, 0x441D8000,
     0x438F0000, 0x40200000, 0x40200000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -536,7 +833,7 @@ extern unsigned int lbl_803661B8[120] __attribute__((section(".rodata"))) = {
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80366398[120] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80366398[120] = {
     0x4495E000, 0x44650000, 0x43700000, 0x40200000, 0x40200000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44968000, 0x44370000,
     0x438F0000, 0x40200000, 0x40200000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -558,7 +855,7 @@ extern unsigned int lbl_80366398[120] __attribute__((section(".rodata"))) = {
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80366578[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80366578[50] = {
     0x44AC8000, 0xC3920000, 0x43540000, 0x3FE66666, 0x3FE66666, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44ADC000, 0x436E0000,
     0x43A90000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -569,7 +866,7 @@ extern unsigned int lbl_80366578[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern unsigned int lbl_80366640[40] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80366640[40] = {
     0x44AF0000, 0x436E0000, 0x43A90000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x44AF8000, 0x436E0000,
     0x43A90000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -578,7 +875,7 @@ extern unsigned int lbl_80366640[40] __attribute__((section(".rodata"))) = {
     0xBF800000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern unsigned int lbl_803666E0[50] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_803666E0[50] = {
     0x44ADA000, 0x44718000, 0x438E0000, 0x3FE66666, 0x3FE66666, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44AEE000, 0x43C70000,
     0x43C60000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -589,7 +886,7 @@ extern unsigned int lbl_803666E0[50] __attribute__((section(".rodata"))) = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern R_803667A8 lbl_803667A8 __attribute__((section(".rodata"))) = {
+static const R_803667A8 lbl_803667A8 = {
     {0x44AF0000, 0x43C70000, 0x43C60000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x44AF8000, 0x43C70000, 0x43C60000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44B0E000, 0x43C70000, 0x43C60000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000},
     lbl_80364C50,
     {0x00000000, 0x00000000},
@@ -794,9 +1091,45 @@ extern R_803667A8 lbl_803667A8 __attribute__((section(".rodata"))) = {
     lbl_803666E0,
     {0x0000003D, 0x00000000},
     &lbl_803667A8,
-    {0x0000003D, 0x00000003, 0x00000000, 0x00000000, 0x00000000, 0xC2807454, 0x00000000, 0xBFC2233A, 0x00000000, 0xC241E666, 0x00000000, 0xC186F41F, 0x00000000, 0xC200FAE1, 0x00000000, 0xBFC2233A, 0x00000000, 0xC178999A, 0x00000000, 0xC186F41F, 0x00000000, 0x3E5BF488, 0x00000000, 0xBFC2233A, 0x00000000, 0x41838EBF, 0x00000000, 0xC186F41F, 0x00000000, 0x420A629C, 0x00000000, 0xBFC2233A, 0x00000000, 0x424964F7, 0x00000000, 0xC186F41F, 0x00000000, 0x42852831, 0x00000000, 0xBFC2233A, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000002, 0x00000000, 0x00000000, 0x3F800000, 0x00000000, 0x3F800000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x00000000, 0x3F800000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x00000000, 0x3F800000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x41A00000, 0x41F00000, 0x43A00000, 0x42200000, 0x440C0000, 0x41A00000, 0x41200000, 0x43DC0000, 0x44110000, 0x43E10000, 0x40C00000, 0x41000000, 0x41200000, 0x40A00000, 0x40E00000, 0x43480000, 0x00000000, 0x42C80000, 0x00000001, 0x42F00000, 0x00000002, 0x42700000, 0x00000003, 0x42700000, 0x00000004, 0x42700000, 0x00000005, 0x43700000, 0x00000006, 0x43960000, 0x00000007, 0x43340000, 0x00000008, 0x43700000, 0x00000009, 0x444E5F73, 0x74616469, 0x756D5F73, 0x686F7274, 0x5F612E64, 0x61740000},
+    {0x0000003D, 0x00000003, 0x00000000, 0x00000000, 0x00000000, 0xC2807454, 0x00000000, 0xBFC2233A, 0x00000000, 0xC241E666, 0x00000000, 0xC186F41F, 0x00000000, 0xC200FAE1, 0x00000000, 0xBFC2233A, 0x00000000, 0xC178999A, 0x00000000, 0xC186F41F, 0x00000000, 0x3E5BF488, 0x00000000, 0xBFC2233A, 0x00000000, 0x41838EBF, 0x00000000, 0xC186F41F, 0x00000000, 0x420A629C, 0x00000000, 0xBFC2233A, 0x00000000, 0x424964F7, 0x00000000, 0xC186F41F, 0x00000000, 0x42852831, 0x00000000, 0xBFC2233A, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000002},
 };
-extern CourseModeInfo lbl_80366EF0[21] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80366DE0[3] = {
+    0x00000000, 0x00000000, 0x3F800000,
+};
+static const unsigned int lbl_80366DEC[3] = {
+    0x00000000, 0x3F800000, 0x00000000,
+};
+static const unsigned int lbl_80366DF8[3] = {
+    0x00000000, 0x00000000, 0x00000000,
+};
+static const unsigned int lbl_80366E04[3] = {
+    0x00000000, 0x00000000, 0x3F800000,
+};
+static const unsigned int lbl_80366E10[3] = {
+    0x00000000, 0x3F800000, 0x00000000,
+};
+static const unsigned int lbl_80366E1C[3] = {
+    0x00000000, 0x00000000, 0x00000000,
+};
+static const unsigned int lbl_80366E28[3] = {
+    0x00000000, 0x00000000, 0x3F800000,
+};
+static const unsigned int lbl_80366E34[3] = {
+    0x00000000, 0x3F800000, 0x00000000,
+};
+static const unsigned int lbl_80366E40[3] = {
+    0x00000000, 0x00000000, 0x00000000,
+};
+static const unsigned int lbl_80366E4C[41] = {
+    0x41A00000, 0x41F00000, 0x43A00000, 0x42200000, 0x440C0000, 0x41A00000,
+    0x41200000, 0x43DC0000, 0x44110000, 0x43E10000, 0x40C00000, 0x41000000,
+    0x41200000, 0x40A00000, 0x40E00000, 0x43480000, 0x00000000, 0x42C80000,
+    0x00000001, 0x42F00000, 0x00000002, 0x42700000, 0x00000003, 0x42700000,
+    0x00000004, 0x42700000, 0x00000005, 0x43700000, 0x00000006, 0x43960000,
+    0x00000007, 0x43340000, 0x00000008, 0x43700000, 0x00000009, 0x444E5F73,
+    0x74616469, 0x756D5F73, 0x686F7274, 0x5F612E64, 0x61740000,
+};
+extern const CourseModeInfo lbl_80366EF0[21] = {
     {0x1, -1, 0, 0, {0, 0}, 0x0, 0x0, lbl_806D7F78},
     {0x78, 0xD, 1, 0, {0, 0}, 0x0, 0x0, lbl_806D7F80},
     {0x78, 0xE, 1, 0, {0, 0}, 0x0, 0x0, lbl_806D7F88},
@@ -819,18 +1152,18 @@ extern CourseModeInfo lbl_80366EF0[21] __attribute__((section(".rodata"))) = {
     {0xF0, 0x1B, 1, 1, {0, 0}, 0xF0, 0x0, lbl_806D8010},
     {0xBE, 0x1C, 0, 0, {0, 0}, 0x0, 0x0, lbl_806D8018},
 };
-extern char lbl_803670E8[] __attribute__((section(".rodata"))) = "chara_mario_null_joint";
-extern char lbl_80367100[] __attribute__((section(".rodata"))) = "chara_peach_null_joint";
-extern char lbl_80367118[] __attribute__((section(".rodata"))) = "chara_donkey_null_joint";
-extern char lbl_80367130[] __attribute__((section(".rodata"))) = "chara_pacman_null_joint";
-extern char lbl_80367148[] __attribute__((section(".rodata"))) = "chara_monster_null_joint";
-extern char lbl_80367164[] __attribute__((section(".rodata"))) = "chara_yoshi_null_joint";
-extern char lbl_8036717C[] __attribute__((section(".rodata"))) = "chara_wario_null_joint";
-extern char lbl_80367194[] __attribute__((section(".rodata"))) = "chara_luigi_null_joint";
-extern char lbl_803671AC[] __attribute__((section(".rodata"))) = "chara_kinopio_null_joint";
-extern char lbl_803671C8[] __attribute__((section(".rodata"))) = "chara_mamechi_null_joint";
-extern char lbl_803671E4[] __attribute__((section(".rodata"))) = "chara_waluigi_null_joint";
-extern R_80367200 lbl_80367200 __attribute__((section(".rodata"))) = {
+static const char lbl_803670E8[] = "chara_mario_null_joint";
+static const char lbl_80367100[] = "chara_peach_null_joint";
+static const char lbl_80367118[] = "chara_donkey_null_joint";
+static const char lbl_80367130[] = "chara_pacman_null_joint";
+static const char lbl_80367148[] = "chara_monster_null_joint";
+static const char lbl_80367164[] = "chara_yoshi_null_joint";
+static const char lbl_8036717C[] = "chara_wario_null_joint";
+static const char lbl_80367194[] = "chara_luigi_null_joint";
+static const char lbl_803671AC[] = "chara_kinopio_null_joint";
+static const char lbl_803671C8[] = "chara_mamechi_null_joint";
+static const char lbl_803671E4[] = "chara_waluigi_null_joint";
+static const R_80367200 lbl_80367200 = {
     {0x00000000},
     lbl_803670E8,
     {0x01010000, 0x00000003},
@@ -853,15 +1186,28 @@ extern R_80367200 lbl_80367200 __attribute__((section(".rodata"))) = {
     lbl_803671C8,
     {0x00010000, 0x0000000B},
     lbl_803671E4,
-    {0x00010000, 0x000000D3, 0x00000139, 0x000000D4, 0x000000D7, 0x000000D8, 0x000000D6, 0x000000D1, 0x000000CF, 0x000000CE, 0x0000012D, 0x000000D0, 0x0000012C, 0x0000012E, 0x0000012F, 0x00000130, 0x000000D2, 0x00000131, 0x00000132, 0x00000133, 0x00000134, 0x00000135, 0x00000136, 0x00000137, 0x00000138, 0x000000D3, 0x00000139, 0x000000D4, 0x000000D7, 0x000000D8, 0x000000D6, 0x000000D1, 0x000000CF, 0x000000CE, 0x0000012D, 0x000000D0, 0x0000012C, 0x0000012E, 0x0000012F, 0x00000130, 0x000000D2, 0x00000131, 0x00000132, 0x00000133, 0x00000134, 0x00000135, 0x00000136, 0x00000137, 0x00000138, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000, 0x0000013C, 0x0000013A, 0x000000DA, 0x000000D9, 0x43D90000, 0x42180000, 0x44028000, 0x42340000, 0x43DF0000, 0x42180000, 0x43F70000, 0x42240000, 0x43D90000, 0x42180000, 0x44028000, 0x42340000, 0x43D98000, 0x42140000, 0x44098000, 0x424C0000, 0x43D90000, 0x42180000, 0x44028000, 0x42340000, 0x43DD8000, 0x42140000, 0x4409C000, 0x42300000, 0x43DB0000, 0x42280000, 0x440D4000, 0x42400000, 0x43D98000, 0x42200000, 0x43F08000, 0x42300000, 0x43DB0000, 0x42300000, 0x440C0000, 0x423C0000, 0x43DA0000, 0x42240000, 0x4408C000, 0x42380000, 0x43DA8000, 0x42200000, 0x440F0000, 0x42380000, 0x43DA0000, 0x42240000, 0x440CC000, 0x42380000},
+    {0x00010000, 0x000000D3, 0x00000139, 0x000000D4, 0x000000D7, 0x000000D8, 0x000000D6, 0x000000D1, 0x000000CF, 0x000000CE, 0x0000012D, 0x000000D0, 0x0000012C, 0x0000012E, 0x0000012F, 0x00000130, 0x000000D2, 0x00000131, 0x00000132, 0x00000133, 0x00000134, 0x00000135, 0x00000136, 0x00000137, 0x00000138, 0x000000D3, 0x00000139, 0x000000D4, 0x000000D7, 0x000000D8, 0x000000D6, 0x000000D1, 0x000000CF, 0x000000CE, 0x0000012D, 0x000000D0, 0x0000012C, 0x0000012E, 0x0000012F, 0x00000130, 0x000000D2, 0x00000131, 0x00000132, 0x00000133, 0x00000134, 0x00000135, 0x00000136, 0x00000137, 0x00000138, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000},
 };
-extern char lbl_80367438[] __attribute__((section(".rodata"))) = "NINTENDO";
-extern char lbl_80367444[] __attribute__((section(".rodata"))) = "PLAYDEMOSALES2";
-extern char lbl_80367454[] __attribute__((section(".rodata"))) = "NINTENDO_LOGO";
-extern char lbl_80367464[] __attribute__((section(".rodata"))) = "BNG_NAME";
-extern char lbl_80367470[] __attribute__((section(".rodata"))) = "NAMCO_LOGO";
-extern char lbl_8036747C[] __attribute__((section(".rodata"))) = "BNG_LOGO";
-extern AttractEntry lbl_80367488[12] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80367368[4] = {
+    0x0000013C, 0x0000013A, 0x000000DA, 0x000000D9,
+};
+static const unsigned int lbl_80367378[48] = {
+    0x43D90000, 0x42180000, 0x44028000, 0x42340000, 0x43DF0000, 0x42180000,
+    0x43F70000, 0x42240000, 0x43D90000, 0x42180000, 0x44028000, 0x42340000,
+    0x43D98000, 0x42140000, 0x44098000, 0x424C0000, 0x43D90000, 0x42180000,
+    0x44028000, 0x42340000, 0x43DD8000, 0x42140000, 0x4409C000, 0x42300000,
+    0x43DB0000, 0x42280000, 0x440D4000, 0x42400000, 0x43D98000, 0x42200000,
+    0x43F08000, 0x42300000, 0x43DB0000, 0x42300000, 0x440C0000, 0x423C0000,
+    0x43DA0000, 0x42240000, 0x4408C000, 0x42380000, 0x43DA8000, 0x42200000,
+    0x440F0000, 0x42380000, 0x43DA0000, 0x42240000, 0x440CC000, 0x42380000,
+};
+extern const char lbl_80367438[] = "NINTENDO";
+extern const char lbl_80367444[] = "PLAYDEMOSALES2";
+extern const char lbl_80367454[] = "NINTENDO_LOGO";
+extern const char lbl_80367464[] = "BNG_NAME";
+extern const char lbl_80367470[] = "NAMCO_LOGO";
+extern const char lbl_8036747C[] = "BNG_LOGO";
+extern const AttractEntry lbl_80367488[12] = {
     {11, 0, 0},
     {10, 0, 0},
     {13, 0, 0},
@@ -875,60 +1221,79 @@ extern AttractEntry lbl_80367488[12] __attribute__((section(".rodata"))) = {
     {6, 600, 1},
     {16, 0, 0},
 };
-extern char lbl_80367518[] __attribute__((section(".rodata"))) = "clCSSceneAttract";
-extern unsigned int lbl_8036752C[143] __attribute__((section(".rodata"))) = {
+extern const char lbl_80367518[] = "clCSSceneAttract";
+extern const unsigned int lbl_8036752C[34] = {
     0x636C5363, 0x656E6549, 0x6E746572, 0x66616365, 0x00000000, 0x646B5F64,
     0x656D6F5F, 0x6D61702E, 0x64617400, 0x4D525F68, 0x69676877, 0x61795F44,
     0x454D4F5F, 0x412E6461, 0x74000000, 0x68616C61, 0x74696F6E, 0x2E646174,
     0x00000000, 0x4D525F68, 0x69676877, 0x61795F73, 0x756E5F6A, 0x6F696E74,
     0x00000000, 0x63726561, 0x6D5F6C2E, 0x64617400, 0x6566665F, 0x706C6174,
-    0x655F6372, 0x65616D5F, 0x732E6461, 0x74000000, 0x4D41494E, 0x20204244,
-    0x20494420, 0x25730000, 0x4D454449, 0x41204244, 0x20494420, 0x25730000,
+    0x655F6372, 0x65616D5F, 0x732E6461, 0x74000000,
+};
+static const unsigned int lbl_803675B4[4] = {
+    0x4D41494E, 0x20204244, 0x20494420, 0x25730000,
+};
+static const unsigned int lbl_803675C4[4] = {
+    0x4D454449, 0x41204244, 0x20494420, 0x25730000,
+};
+static const unsigned int lbl_803675D4[21] = {
     0x655F6174, 0x5F73705F, 0x6E696E74, 0x656E646F, 0x2E74706C, 0x00000000,
     0x61745F73, 0x705F6E69, 0x6E74656E, 0x646F5F6A, 0x2E74706C, 0x00000000,
     0x655F6174, 0x5F73705F, 0x6E616D63, 0x6F2E7470, 0x6C000000, 0x61745F73,
-    0x705F6E61, 0x6D636F2E, 0x74706C00, 0x4C6F6F70, 0x436F756E, 0x74203A20,
-    0x25640000, 0x5461736B, 0x496E6465, 0x78203A20, 0x25640000, 0x20202054,
-    0x61736B49, 0x44203A20, 0x25640000, 0x20546173, 0x6B4E616D, 0x65203A20,
-    0x25730000, 0x63686172, 0x615F706F, 0x705F3031, 0x5F6A6F69, 0x6E740000,
-    0x63686172, 0x615F706F, 0x705F3032, 0x5F6A6F69, 0x6E740000, 0x63686172,
-    0x615F706F, 0x705F3033, 0x5F6A6F69, 0x6E740000, 0x63686172, 0x615F706F,
-    0x705F3034, 0x5F6A6F69, 0x6E740000, 0x63686172, 0x615F706F, 0x705F3035,
-    0x5F6A6F69, 0x6E740000, 0x63686172, 0x615F706F, 0x705F3036, 0x5F6A6F69,
-    0x6E740000, 0x63686172, 0x615F706F, 0x705F3037, 0x5F6A6F69, 0x6E740000,
-    0x63686172, 0x615F706F, 0x705F3038, 0x5F6A6F69, 0x6E740000, 0x63686172,
-    0x615F706F, 0x705F3039, 0x5F6A6F69, 0x6E740000, 0x63686172, 0x615F706F,
-    0x705F3130, 0x5F6A6F69, 0x6E740000, 0x63686172, 0x615F706F, 0x705F3131,
-    0x5F6A6F69, 0x6E740000, 0x63686172, 0x615F706F, 0x705F3132, 0x5F6A6F69,
-    0x6E740000, 0x6D617269, 0x6F5F636F, 0x696E2E64, 0x61740000,
+    0x705F6E61, 0x6D636F2E, 0x74706C00,
 };
-extern char lbl_80367768[] __attribute__((section(".rodata"))) = "clCSPartsTitle";
-extern char lbl_80367778[] __attribute__((section(".rodata"))) = "clCSSceneAttract::clTaskInterface";
-extern char lbl_8036779C[] __attribute__((section(".rodata"))) = "clCSPartsRanking";
-extern unsigned int lbl_803677B0[6] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_80367628[4] = {
+    0x4C6F6F70, 0x436F756E, 0x74203A20, 0x25640000,
+};
+static const unsigned int lbl_80367638[4] = {
+    0x5461736B, 0x496E6465, 0x78203A20, 0x25640000,
+};
+static const unsigned int lbl_80367648[4] = {
+    0x20202054, 0x61736B49, 0x44203A20, 0x25640000,
+};
+static const unsigned int lbl_80367658[4] = {
+    0x20546173, 0x6B4E616D, 0x65203A20, 0x25730000,
+};
+static const unsigned int lbl_80367668[64] = {
+    0x63686172, 0x615F706F, 0x705F3031, 0x5F6A6F69, 0x6E740000, 0x63686172,
+    0x615F706F, 0x705F3032, 0x5F6A6F69, 0x6E740000, 0x63686172, 0x615F706F,
+    0x705F3033, 0x5F6A6F69, 0x6E740000, 0x63686172, 0x615F706F, 0x705F3034,
+    0x5F6A6F69, 0x6E740000, 0x63686172, 0x615F706F, 0x705F3035, 0x5F6A6F69,
+    0x6E740000, 0x63686172, 0x615F706F, 0x705F3036, 0x5F6A6F69, 0x6E740000,
+    0x63686172, 0x615F706F, 0x705F3037, 0x5F6A6F69, 0x6E740000, 0x63686172,
+    0x615F706F, 0x705F3038, 0x5F6A6F69, 0x6E740000, 0x63686172, 0x615F706F,
+    0x705F3039, 0x5F6A6F69, 0x6E740000, 0x63686172, 0x615F706F, 0x705F3130,
+    0x5F6A6F69, 0x6E740000, 0x63686172, 0x615F706F, 0x705F3131, 0x5F6A6F69,
+    0x6E740000, 0x63686172, 0x615F706F, 0x705F3132, 0x5F6A6F69, 0x6E740000,
+    0x6D617269, 0x6F5F636F, 0x696E2E64, 0x61740000,
+};
+extern const char lbl_80367768[] = "clCSPartsTitle";
+extern const char lbl_80367778[] = "clCSSceneAttract::clTaskInterface";
+extern const char lbl_8036779C[] = "clCSPartsRanking";
+static const unsigned int lbl_803677B0[6] = {
     0x54494D45, 0x20415454, 0x41434B81, 0x4052414E, 0x4B494E47, 0x00000000,
 };
-extern unsigned int lbl_803677C8[7] __attribute__((section(".rodata"))) = {
+static const unsigned int lbl_803677C8[7] = {
     0x835E8343, 0x83808341, 0x835E8362, 0x834E8140, 0x83898393, 0x834C8393,
     0x834F0000,
 };
-extern char lbl_803677E4[] __attribute__((section(".rodata"))) = "clCSPartsNamco";
-extern char lbl_803677F4[] __attribute__((section(".rodata"))) = "clCSPartsNintendo";
-extern unsigned int lbl_80367808[10] __attribute__((section(".rodata"))) = {
+extern const char lbl_803677E4[] = "clCSPartsNamco";
+extern const char lbl_803677F4[] = "clCSPartsNintendo";
+extern const unsigned int lbl_80367808[10] = {
     0x74655369, 0x6E676C65, 0x746F6E3C, 0x636C4D65, 0x6E75496E, 0x7075743E,
     0x00000000, 0x636C4D65, 0x6E75496E, 0x70757400,
 };
-extern unsigned int lbl_80367830[7] __attribute__((section(".rodata"))) = {
+extern const unsigned int lbl_80367830[7] = {
     0x636C4353, 0x50617274, 0x7353616C, 0x65730000, 0x636C4143, 0x616D6572,
     0x61000000,
 };
-extern char lbl_8036784C[] __attribute__((section(".rodata"))) = "clCamera";
-extern char lbl_80367858[] __attribute__((section(".rodata"))) = "clCSPartsKart";
-extern char lbl_80367868[] __attribute__((section(".rodata"))) = "clItemBoxResponder";
-extern char lbl_8036787C[] __attribute__((section(".rodata"))) = "clCSPartsExplain";
-extern char lbl_80367890[] __attribute__((section(".rodata"))) = "clCSPartsNamcam";
-extern char lbl_803678A0[] __attribute__((section(".rodata"))) = "clCSPartsNamcam2";
-extern char lbl_803678B4[] __attribute__((section(".rodata"))) = "clCSPartsRogo2";
-extern char lbl_803678C4[] __attribute__((section(".rodata"))) = "clCSPartsSales2";
+extern const char lbl_8036784C[] = "clCamera";
+extern const char lbl_80367858[] = "clCSPartsKart";
+extern const char lbl_80367868[] = "clItemBoxResponder";
+extern const char lbl_8036787C[] = "clCSPartsExplain";
+extern const char lbl_80367890[] = "clCSPartsNamcam";
+extern const char lbl_803678A0[] = "clCSPartsNamcam2";
+extern const char lbl_803678B4[] = "clCSPartsRogo2";
+extern const char lbl_803678C4[] = "clCSPartsSales2";
 }
 #pragma pop

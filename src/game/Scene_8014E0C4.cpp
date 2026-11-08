@@ -1,5 +1,4 @@
 #include "game/singleton.h"
-#include "src/game/Scene_8014E0C4_rodata.h"
 
 /* sdata symbols referenced from asm */
 extern unsigned char lbl_806CF828[8];
@@ -174,7 +173,6 @@ struct AttractEntry {
     int f4;
     unsigned char on;
 };
-extern "C" AttractEntry lbl_80367488[];
 
 struct AttractPanel {
     void *vt;
@@ -1026,7 +1024,16 @@ struct CourseModeInfo {
     int f10;
     const char *name;
 };
-extern "C" CourseModeInfo lbl_80366EF0[];
+
+struct SprEntry {
+    unsigned int key;
+    char name[8];
+    float w;
+    float h;
+};
+
+extern "C" const SprEntry lbl_803644D0[];
+
 
 struct RaceScene {
     void *vt;
@@ -1307,6 +1314,8 @@ struct Panel44 {
     char pad[0x44];
 };
 
+
+#include "src/game/Scene_8014E0C4_rodata.inc"
 
 extern "C" void *fn_8014E0C4(int a) {
     Frame_PostDrawOverlay();
@@ -5079,7 +5088,6 @@ static inline void GXTexCoord2f32(float s, float t) {
 
 #pragma use_lmw_stmw on
 extern "C" void DrawColoredQuad(int r, int g, int b, int a, float x, float y, float w, float h) {
-    CamVecs *cam = (CamVecs *)((char *)lbl_80363D30 + 0x30B0);
     float proj[4][4];
     float view[3][4];
 
@@ -5090,9 +5098,9 @@ extern "C" void DrawColoredQuad(int r, int g, int b, int a, float x, float y, fl
     GXSetScissor(0, 0, 640, 480);
     C_MTXOrtho(proj, 0.0f, 480.0f, 0.0f, 640.0f, 0.0f, 100.0f);
     GXSetProjection(proj, 1);
-    Vec3f eye = cam->eye;
-    Vec3f up = cam->up;
-    Vec3f target = cam->target;
+    Vec3f eye = *(const Vec3f *)lbl_80366DE0;
+    Vec3f up = *(const Vec3f *)lbl_80366DEC;
+    Vec3f target = *(const Vec3f *)lbl_80366DF8;
     C_MTXLookAt(view, &eye, &up, &target);
     GXLoadPosMtxImm(view, 0);
     GXSetCurrentMtx(0);
@@ -5420,7 +5428,6 @@ extern "C" unsigned char fn_80153758(StateObj *o) {
 }
 
 extern "C" void fn_8015376C(TexFadePanel *self) {
-    CamVecs *cam = (CamVecs *)((char *)lbl_80363D30 + 0x30F8);
     float proj[4][4];
     float view[3][4];
 
@@ -5433,9 +5440,9 @@ extern "C" void fn_8015376C(TexFadePanel *self) {
     GXSetScissor(0, 0, 640, 480);
     C_MTXOrtho(proj, -23.0f, 448.0f, 0.0f, 608.0f, -100.0f, 100.0f);
     GXSetProjection(proj, 1);
-    Vec3f eye = cam->eye;
-    Vec3f up = cam->up;
-    Vec3f target = cam->target;
+    Vec3f eye = *(const Vec3f *)lbl_80366E28;
+    Vec3f up = *(const Vec3f *)lbl_80366E34;
+    Vec3f target = *(const Vec3f *)lbl_80366E40;
     C_MTXLookAt(view, &eye, &up, &target);
     GXLoadPosMtxImm(view, 0);
     GXSetCurrentMtx(0);
@@ -5517,7 +5524,6 @@ extern "C" unsigned char fn_80153BEC(StateObj *o) {
 }
 
 extern "C" void fn_80153C00(TexFadePanel *self) {
-    CamVecs *cam = (CamVecs *)((char *)lbl_80363D30 + 0x30D4);
     float proj[4][4];
     float view[3][4];
 
@@ -5530,9 +5536,9 @@ extern "C" void fn_80153C00(TexFadePanel *self) {
     GXSetScissor(0, 0, 640, 480);
     C_MTXOrtho(proj, -23.0f, 448.0f, 0.0f, 608.0f, -100.0f, 100.0f);
     GXSetProjection(proj, 1);
-    Vec3f eye = cam->eye;
-    Vec3f up = cam->up;
-    Vec3f target = cam->target;
+    Vec3f eye = *(const Vec3f *)lbl_80366E04;
+    Vec3f up = *(const Vec3f *)lbl_80366E10;
+    Vec3f target = *(const Vec3f *)lbl_80366E1C;
     C_MTXLookAt(view, &eye, &up, &target);
     GXLoadPosMtxImm(view, 0);
     GXSetCurrentMtx(0);
@@ -6607,14 +6613,6 @@ extern "C" asm void fn_80154304(void) { /* 0x80154304 size:0xCAC */
     blr
 }
 
-struct SprEntry {
-    unsigned int key;
-    char name[8];
-    float w;
-    float h;
-};
-
-extern "C" SprEntry lbl_803644D0[];
 
 struct SprNodeBase {
     SprNodeBase *prev;
@@ -6743,7 +6741,7 @@ void SprScene::Draw(unsigned int layer, unsigned int id, unsigned int flags, flo
     if (x - hw > 640.0f || x + hw < 0.0f || y - hh > 480.0f || x + hw < 0.0f) {
         return;
     }
-    e = &lbl_803644D0[id];
+    e = (SprEntry *)&lbl_803644D0[id];
     res = SprCache_Get(&cache, e->key);
     if (res == 0) {
         return;
@@ -7456,4 +7454,3 @@ extern "C" ListHead *dtor_801578C8(ListHead *self, short flag) {
     return self;
 }
 
-#include "src/game/Scene_8014E0C4_rodata.inc"

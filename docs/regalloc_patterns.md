@@ -196,6 +196,20 @@ right instructions but colors the constant r0.
 with the natural `|` form before anything else. Check that every matched
 function in the TU stays 100 (tustat).
 
+## 12. FPR colours off around a float constant: use the literal (1 commit)
+
+TornadoEffect_Tick (6d98b73): in `x += step; if (x > 1) { x = 1; ... }`, the
+max constant took f2 instead of the target's f0 while loaded through
+`extern const float lbl_806D28CC`. Writing `0.016666668f` and `1.0f` as literals
+fixed it. CW can CSE and hoist literal loads freely, but treats an extern const
+as a memory load. tools/postprocess_sdata2.py renames the `@N` literals,
+including the int->float magic double, to the target's shared `lbl_` symbols.
+So literals are fine even when the TU doesn't own .sdata2. mcmp still shows
+`"@N"` vs `lbl_` name diffs, so check with a full build and report.json.
+Same function: `double d = __fabs(x); a = d;` gave the target's separate
+fabs/frsp registers, and `T t; ...; t = tmpl;` (assigned after the decls, not
+an initializer) fixed the register order of a struct template copy.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
