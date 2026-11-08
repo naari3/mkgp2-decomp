@@ -532,7 +532,7 @@ config.libs = [
             Object(Matching, "game/DrawNamCamImage.c", extra_cflags=["-use_lmw_stmw on", "-i include/libc"]),
             Object(Matching, "game/GameBoot_Init.cpp", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/ItemSelectChoiceStep.cpp"),
-            Object(NonMatching, "game/ItemSelectChoiceUpdate.cpp", extra_cflags=["-use_lmw_stmw on"]),
+            Object(NonMatching, "game/ItemSelectChoiceUpdate.cpp", mw_version="GC/2.6", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/ItemSelectChoiceInit.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/KartChoiceSelect.cpp", extab_padding=b""),
             Object(Matching, "game/KartChoiceRequest.cpp"),

@@ -55,6 +55,26 @@ static inline unsigned char ChoiceOccupied(RefillChoice *self) {
     }
     return occupied;
 }
+static inline unsigned char *ChoicePlayerData() {
+    unsigned char *player = g_playerData;
+    return player;
+}
+static inline int ChoiceAdvanceRow(RefillChoice *self) {
+    int resource;
+    do {
+        ++self->row;
+        if (self->row >= 6) self->row = 0;
+    } while (ChoiceOccupied(self) == 1);
+    unsigned char *player = ChoicePlayerData();
+    self->done = player[ChoiceItem(self) + 0xa8];
+    resource = (short)Item_GetDescriptorField0(
+        PlayerData_ResolveUnlockedIdByIndex(player, ChoiceItem(self)), 0);
+    if (!self->done) resource = 0x1422;
+    SpriteAnimParamBlock_SetAnimParamCached(self->groups[1], self->resource, resource);
+    fn_8019FF6C(self->groups[1]->sprite, 1);
+    self->resource = resource;
+    return 1;
+}
 extern "C" void fn_8023AC14(RefillChoice *self) {
     if (!self->active) return;
     if (self->count >= 3) return;
@@ -74,19 +94,7 @@ extern "C" void fn_8023AC14(RefillChoice *self) {
         ChoiceInput *input = SINGLETON_INSTANCE(g_pInputState);
         horizontal = input->dir;
         if (input->held == 3) {
-            do {
-                ++self->row;
-                if (self->row >= 6) self->row = 0;
-            } while (ChoiceOccupied(self) == 1);
-            unsigned char *player = g_playerData;
-            self->done = player[ChoiceItem(self) + 0xa8];
-            int resource = (short)Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(player,
-                ChoiceItem(self)), 0);
-            if (!self->done) resource = 0x1422;
-            SpriteAnimParamBlock_SetAnimParamCached(self->groups[1], self->resource, resource);
-            fn_8019FF6C(self->groups[1]->sprite, 1);
-            self->resource = resource;
-            vertical = 1;
+            vertical = ChoiceAdvanceRow(self);
         }
         if (horizontal + vertical) fn_801FE36C();
     }
@@ -94,7 +102,7 @@ extern "C" void fn_8023AC14(RefillChoice *self) {
     if (self->done == 1) {
         if (++self->phase >= 40) {
             if (self->phase == 40) {
-                unsigned char *player = g_playerData;
+                unsigned char *player = ChoicePlayerData();
                 ChoicePoint pos;
                 fn_8019FF8C(self->groups[0]->sprite, 0x1ecd, &pos);
                 fn_801F93EC(self->text[0], pos.x, pos.y);
@@ -118,8 +126,7 @@ extern "C" void fn_8023AC14(RefillChoice *self) {
             float fade = (self->phase - lbl_806DB8A4) / lbl_806DB920;
             self->groups[0]->sprite->alpha = fade;
             int alpha = lbl_806DB894 * fade;
-            unsigned int color = 0xffffff00;
-            color = (color & ~0xffU) + (alpha & 0xff);
+            unsigned int color = 0xffffff00 | (alpha & 0xff);
             *(unsigned int *)(self->text[0]->data + 0x20) = color;
             *(unsigned int *)(self->text[1]->data + 0x20) = color;
             *(unsigned int *)(self->text[2]->data + 0x20) = color;
