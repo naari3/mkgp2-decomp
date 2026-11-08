@@ -7,6 +7,13 @@ are kept here only for reference: fn_80246DE4.patch (RaceDigits linked as
 Matching, eb5bf52), amnet_nm2_rest.patch and merge/cobj_lobj_merge.patch
 (b40edd9). Do not apply them again.
 
+## Landed 2026-11-08 (asm->C (A) thread)
+
+FrameUpdate, PCBCommPhase5, STLContainer applied as-is (b2d2c8c). PCBCommPhase1 and
+ItemHitPropagation no longer applied after onmokoworks' rewrites; the same fixes were
+ported by hand (98e933a). All five TUs are Matching. CoursePropCtor, VfxSlotMgr and
+card_unpack_v1 were already Matching on main.
+
 ## Status on main 610292b (re-verified 2026-11-07 21:00, mid-range thread)
 
 Each patch was applied **alone** to a throwaway checkout of main, then built from clean (`rm -rf build/GNLJ82/src build/GNLJ82/ok`, ninja). Baseline on that main: main.dol OK, 7251 matched functions (report.json `matched_functions`). "+fns" is the change against the baseline.
