@@ -1,8 +1,8 @@
 /*
  * Terrain_WallEdgeTest, 0x80036710..0x80036988.
- * NonMatching (98%): the prologue schedules the segment copy against
- * different volatile registers and the loop index add lands in r0
- * instead of r3; FPR/GPR coloring otherwise exact.
+ * NonMatching (99.4%): the prologue schedules the segment copy against
+ * different volatile registers; the loop index is written 1 + k + index
+ * for the target's add order.
  */
 
 typedef struct TerrainVertex {
@@ -84,7 +84,7 @@ unsigned char Terrain_WallEdgeTest(TerrainStepper *stepper)
     seg.bx = to->x;
     seg.bz = to->z;
     for (k = 0; k < 2; k++) {
-        sample = &stepper->samples[(k + stepper->index + 1) & 1];
+        sample = &stepper->samples[(1 + k + stepper->index) & 1];
         tri = sample->triangle;
         if (tri == 0) {
             hit = 0;
