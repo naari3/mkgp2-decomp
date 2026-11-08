@@ -14,7 +14,9 @@ SwitchList::SwitchList(void *root) {
         head=0;
         if (!root) return;
         switch (g_cupId) {
-        case 0: break;
+        case 2:
+        case 3:
+            break;
         case 1:
             if (g_longRoundFlag==1) {
                 AppendSwitchPair(this, ResolveJointByName(root,jungleLow),
