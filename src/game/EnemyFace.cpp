@@ -56,6 +56,8 @@ static inline void TireTexCoord(float u, float v) {
     GXFIFO.f32 = v;
 }
 
+#pragma push
+#pragma opt_lifetimes off
 void TireSprite_Draw(TireSprite *s) {
     Mtx m;
 
@@ -130,4 +132,6 @@ void TireSprite_Draw(TireSprite *s) {
     }
     HSD_StateInvalidate(-1);
 }
+#pragma pop
+
 

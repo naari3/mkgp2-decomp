@@ -1423,6 +1423,8 @@ clFlowCCCharaItem::clFlowCCCharaItem(int which) : which(which), field20(0), fiel
     Select(1);
 }
 
+#pragma push
+#pragma opt_lifetimes off
 void clFlowCCDate::Update() {
     InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
@@ -1499,6 +1501,8 @@ void clFlowCCDate::Update() {
     }
     if (indicator != 0) fn_8023CDA8(indicator);
 }
+#pragma pop
+
 
 clFlowCCDate::clFlowCCDate() : field1C(1), field1D(1), field1E(0), field20(0), indicator(0) {
     int i;

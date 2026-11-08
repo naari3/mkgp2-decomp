@@ -35,6 +35,9 @@ int lbl_804EC71C[14] = {
 };
 }
 
+#pragma push
+#pragma opt_common_subs off
+#pragma opt_propagation off
 int fn_80209AC4(int a, int b) {
     if (!CardOK()) {
         return 0;
@@ -77,6 +80,8 @@ int fn_80209AC4(int a, int b) {
     lbl_806D02E0 = result;
     return result;
 }
+#pragma pop
+
 
 static inline void FillSpecialItems(int *list) {
     int i;
