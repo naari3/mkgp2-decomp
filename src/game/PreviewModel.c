@@ -11,9 +11,13 @@
  *
  * Still asm: the model ctor (a real C++ ctor matches except that weak-copy
  * placement; an extern "C" version with `new` matches the code but gets an
- * auto extab without the DESTROYBASE action), and the two render-and-clear
- * loops, which keep their list iterator in a stack slot that no C++ form
- * tried here does.
+ * auto extab without the DESTROYBASE action), and fn_8013DA00.
+ *
+ * fn_8013D940 keeps its iterator in a stack slot: that happens when the
+ * iterator is a derived class (CIter : CBase) passed by value to an inline
+ * helper. fn_8013DA00 has the same body looped over all eight lists; the
+ * same C++ form reaches 98.4% there (only the counter, list pointer and end
+ * registers are rotated), so it stays asm for now.
  */
 #pragma cplusplus on
 
@@ -75,17 +79,13 @@ extern void clNormal3D_Construct();
 extern const float lbl_806D76E0;
 extern const float lbl_806D76E4;
 
-asm void fn_8013D940(void);
+void fn_8013D940(int layer);
 asm void fn_8013DA00(void);
 struct PreviewBase;
 PreviewBase *dtor_8013DCBC(PreviewBase *self, short flag);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
-
-__declspec(section ".extab_user") static const unsigned char extab_fn_8013D940[8] = {
-    0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const unsigned char extab_fn_8013DA00[8] = {
     0x18, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -97,10 +97,6 @@ __declspec(section ".extab_user") static const unsigned char extab_dtor_8013DCBC
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013D940 = {
-    (void *)&fn_8013D940, 0x000000C0, (void *)extab_fn_8013D940
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013DA00 = {
     (void *)&fn_8013DA00, 0x000000C8, (void *)extab_fn_8013DA00
@@ -273,9 +269,25 @@ struct PreviewList : ListMid {
     ~PreviewList();
 };
 
-static inline void RenderModel(PreviewModel *m) {
-    ((void (**)(PreviewModel *))m->vptr)[3](m);
-}
+struct CBase {
+    ListNodeBase *node;
+    CBase(ListNodeBase *n) : node(n) {}
+    CBase &operator++() {
+        node = node->next;
+        return *this;
+    }
+};
+
+struct CIter : CBase {
+    CIter(const ListBase::iterator &o) : CBase(o.node) {}
+    PreviewModel *operator*() const { return ((ListNode *)node)->data; }
+    bool operator!=(const ListBase::iterator &o) const { return node != o.node; }
+};
+
+struct PreviewRenderable {
+    virtual void v08();
+    virtual void Render();
+};
 
 PreviewList::~PreviewList() {
 }
@@ -297,59 +309,26 @@ struct PreviewLists {
 
 extern "C" PreviewLists *lbl_806D1560;
 
-extern "C" asm void fn_8013D940(void) { /* 0x8013D940 size:0xC0 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stw r31, 0x2c(r1)
-    stw r30, 0x28(r1)
-    lwz r4, lbl_806D1560(r13)
-    cmplwi r4, 0x0
-    beq fn_8013D940_L_8013D9E8
-    cmpwi r3, 0x0
-    blt fn_8013D940_L_8013D9E8
-    cmpwi r3, 0x8
-    bge fn_8013D940_L_8013D9E8
-    mulli r0, r3, 0xc
-    add r31, r4, r0
-    lwz r0, 0x0(r31)
-    cmplwi r0, 0x0
-    beq fn_8013D940_L_8013D9E8
-    addi r30, r31, 0x4
-    lwz r0, 0x8(r31)
-    stw r0, 0x18(r1)
-    stw r0, 0x14(r1)
-    b fn_8013D940_L_8013D9BC
-    fn_8013D940_L_8013D998:
-    lwz r3, 0x14(r1)
-    lwz r3, 0x8(r3)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x14(r1)
-    lwz r0, 0x4(r3)
-    stw r0, 0x14(r1)
-    fn_8013D940_L_8013D9BC:
-    lwz r0, 0x14(r1)
-    cmplw r0, r30
-    bne fn_8013D940_L_8013D998
-    stw r30, 0x10(r1)
-    mr r4, r31
-    addi r3, r1, 0x8
-    addi r5, r1, 0xc
-    lwz r0, 0x4(r30)
-    addi r6, r1, 0x10
-    stw r0, 0xc(r1)
-    bl DoublyLinkedList_EraseRange
-    fn_8013D940_L_8013D9E8:
-    lwz r0, 0x34(r1)
-    lwz r31, 0x2c(r1)
-    lwz r30, 0x28(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+static inline void RenderRange(CIter first, const ListBase::iterator &last) {
+    for (; first != last; ++first) {
+        ((PreviewRenderable *)*first)->Render();
+    }
+}
+
+static inline void EraseFrom(ListBase &l, ListNodeBase *e) {
+    l.erase(ListBase::iterator(e->next), ListBase::iterator(e));
+}
+
+extern "C" void fn_8013D940(int layer) {
+    if (lbl_806D1560 && layer >= 0 && layer < 8) {
+        PreviewList &l = lbl_806D1560->lists[layer];
+        if (!l.empty()) {
+            ListNodeBase *e = &l.end_;
+            CIter b = ListBase::iterator(e->next);
+            RenderRange(b, ListBase::iterator(e));
+            EraseFrom(l, e);
+        }
+    }
 }
 
 extern "C" asm void fn_8013DA00(void) { /* 0x8013DA00 size:0xC8 */
