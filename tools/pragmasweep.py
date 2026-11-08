@@ -213,6 +213,8 @@ def find_def(text, fn, demangled=None, mangled=None):
     """Return (line_start, body_open_index_after_brace, body_end_index) of fn's definition."""
     pats = [r'\b' + re.escape(fn) + r'\s*\([^;{]*\)[^;{]*\{']
     if mangled and mangled != fn:
+        if re.fullmatch(r'\w+', mangled) and not re.search(r'__\d|__F', mangled):
+            pats.append(r'\b' + re.escape(mangled) + r'\s*\([^;{]*\)[^;{]*\{')  # extern "C" rename
         mf = re.match(r'(\w+?)__F', mangled)
         if mf and mf.group(1) != fn:
             pats.append(r'\b' + re.escape(mf.group(1)) + r'\s*\([^;{]*\)[^;{]*\{')
