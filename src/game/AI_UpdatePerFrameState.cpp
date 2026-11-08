@@ -138,7 +138,8 @@ extern "C" void AI_UpdatePerFrameState(AIFrameOwner *self) {
         }
         if (nearest >= 0) {
             FramePairRecord *p=&FramePairs()[nearest];
-            int round=g_roundIndex,cup=g_cupId;
+            int cup, round;
+            round=g_roundIndex; cup=g_cupId;
             struct Tuning { char pad[0x18];float duration; };
             Tuning *t=(Tuning *)GetKartTuningGPSpeedParams(GetEnemyParam(),cup,round,nearest);
             if (p->field1C == 0) p->field1C=(int)(lbl_806DA40C*t->duration);
