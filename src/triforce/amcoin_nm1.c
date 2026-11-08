@@ -25,10 +25,12 @@ static inline u32 GetCoinStatsIndex(u32 chute, u32 index) {
 }
 
 static inline void AddCoinStats(u32 buttons, u32 idx, s32 coins, s32 credits) {
-    CoinStats* stats = &Coin.stats;
-    OSSemaphore* sem = &Coin.sem;
-
-    if (!(buttons & 0x80000000) && idx <= 3) {
+    if ((buttons & 0x80000000) || idx > 3) {
+        return;
+    }
+    {
+        CoinStats* stats = &Coin.stats;
+        OSSemaphore* sem = &Coin.sem;
         OSWaitSemaphore(sem);
         stats->coins[idx] += coins;
         stats->totalCoins += coins;
@@ -46,7 +48,6 @@ s32 fn_802895E4(u32 chute, s32 n, u16* counters, u32 buttons) {
     CoinState* st = &Coin;
     s32 d;
     CoinChute* c;
-    u32 slot;
     u32 bits;
 
     if (chute > st->numChutes || (chute != 0 && counters == NULL)) {
@@ -61,6 +62,7 @@ s32 fn_802895E4(u32 chute, s32 n, u16* counters, u32 buttons) {
             if (!((counters[i] | c->count[i]) & ~0x3FFF)) {
                 d = (counters[i] - c->count[i]) & 0xFFF;
                 if (d > 0) {
+                    u32 slot;
                     slot = fn_802894EC(chute, i);
                     idx = GetCoinStatsIndex(chute, i);
                     added = fn_80289324(slot, d * GetCoinMul(i));
@@ -76,6 +78,7 @@ s32 fn_802895E4(u32 chute, s32 n, u16* counters, u32 buttons) {
     if (chute == 0 && Coin.chuteMode[chute] != 0) {
         for (i = 0; i < 4; i++) {
             if ((1 << i) & (c->prev & ~buttons)) {
+                u32 slot;
                 slot = fn_802894EC(chute, i);
                 added = fn_80289324(slot, GetCoinMul(i));
                 AddCoinStats(buttons, i, 1, added);

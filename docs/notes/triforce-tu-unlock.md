@@ -13,3 +13,8 @@ c18_u77 amuart: restores c3 archived local-port and sem-before-ret text fixes, o
 Source: Codex worker c19_u170_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 884 B.
 
 c19_u170: amcoin_nm1 fn_802895E4 target pulse-event call is fn_80288DEC(2, bits, 0, 0), not (2, 0, bits, 0). Correcting it raises 96.772575% to 97.27425%. GetCoinStatsIndex(chute,index) inline helper with index+=2 for chute==2 raises to 97.608696% (1196 B). Moving idx declaration after added is invariant. Retained improved draft NonMatching; register partition and setup scheduling residual remains. Coordinator build service SHA-1 exact; zero native gain.
+
+## c21_u73_20261108
+Source: Codex worker c21_u73_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c21_u73: on direct-&Coin.sem baseline 98.41137%, natural AddCoinStats early validation return followed by scoped stats/sem declarations yields 99.431435%: fixes stats/mask home swaps and setup scheduling. Separate u32 slot locals inside d>0 and button-edge blocks yield 99.64883%, restoring second-loop slot16/mul18/stride17. Retained 1196B NonMatching draft. Residual20 register rows: initial state24/source25, first config25/source26, stats index26/source24, second-loop i25/source24. Separate GetCoinStatsIndex return local invariant; direct caller index branch98.311035; scoped idx invariant; chute0-only i97.943146. No pragma/fakematch. Single-function TU cannot use mechanism B; state owner outside claim.
