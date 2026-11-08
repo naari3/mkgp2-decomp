@@ -67,7 +67,7 @@ int Race_PerFrameTickAndAudio(void) {
                 TickEntry *other = entries;
                 for (j = 0; j < 8; other++, j++) {
                     if (other->id != -1 && (signed char)other->player == (signed char)entry->player - 1) {
-                        entry->distance = Race_CompareKartProgress(g_raceRankingPathObject, block->entries[j].kart->progress, entry->kart->progress);
+                        entry->distance = Race_CompareKartProgress(g_raceRankingPathObject, block->entries[j].kart->participantIndex, entry->kart->participantIndex);
                         if ((signed char)entry->player != entry->previousRank) {
                             entry->overtakeState = 0;
                             entry->previousRank = entry->player;

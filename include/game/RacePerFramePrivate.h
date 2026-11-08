@@ -7,7 +7,7 @@ typedef struct TickKart {
     unsigned char pad000[0x23C];
     int rank, lap;
     unsigned char pad244[0x68];
-    void *progress;
+    int participantIndex;
     unsigned char pad2B0[8];
     unsigned char finished;
 } TickKart;
@@ -55,7 +55,7 @@ extern float lbl_806D1788;
 extern float lbl_80496DC4[];
 extern VoiceClip g_voicePlayCountTable[];
 extern unsigned char IsRaceStarted(void), RaceAnnouncer_TickAndEnqueue(void), VoiceEvent_PushRace(void), fn_801AECF4(void);
-extern int Race_CompareKartProgress(void *, void *, void *);
+extern int Race_CompareKartProgress(void *, int, int);
 extern float *KartDriver_GetKartRootMtx(TickKart *);
 extern TickSyncSlot *SyncSlot_GetHostSend(void);
 extern unsigned char ClStream_IsActive(int);
