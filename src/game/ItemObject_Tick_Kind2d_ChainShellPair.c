@@ -1,3 +1,5 @@
+#include "game/ChainShellPairState.h"
+
 /* ItemObject_Tick_Kind2d_ChainShellPair (0x800E5FC0): chain shell (Wanwan)
  * with its two chain children. State 1 runs the hold/throw logic
  * (ItemObject_ChainShell_GrabAndArc_Sub); state 2 plays the ending picked
@@ -45,7 +47,6 @@ extern void DbgScene_CopyMatrix3x4Transpose(void *dst, float src[4][4]);
 #define P(o) (*(unsigned char **)(self + (o)))
 #define SF(o) (*(float *)(sub + (o)))
 #define SU32(o) (*(unsigned int *)(sub + (o)))
-#define CP(o) (*(unsigned char **)(c + (o)))
 
 static inline void Timer_Tick(unsigned int *t)
 {
@@ -106,8 +107,7 @@ void ItemObject_Tick_Kind2d_ChainShellPair(unsigned char *self)
 {
     float m[4][4];
     float s44[4][4];
-    unsigned char *sub = self + 0xEC;
-    unsigned char *c;
+    ChainShellPairState *sub = (ChainShellPairState *)(self + 0xEC);
     ChainScaleKey *k;
     float s;
     int i;
@@ -117,35 +117,30 @@ void ItemObject_Tick_Kind2d_ChainShellPair(unsigned char *self)
     case 0:
         SpriteSlot_InitNonLoop(self + 0x14, 0x2D);
         self[0x14] = 4;
-        {
-        unsigned char *c;
-        c = sub;
         for (i = 0; i < 2; i++) {
-            CP(0x5C) = ItemObject_AllocFromPool(fn_800D748C);
-            if (CP(0x5C) != 0) {
+            sub->children[i] = ItemObject_AllocFromPool(fn_800D748C);
+            if (sub->children[i] != 0) {
                 if (i == 0) {
-                    SpriteSlot_InitNonLoop(CP(0x5C) + 0x14, 0x2E);
+                    SpriteSlot_InitNonLoop(sub->children[i] + 0x14, 0x2E);
                 } else {
-                    SpriteSlot_InitNonLoop(CP(0x5C) + 0x14, 0x2F);
+                    SpriteSlot_InitNonLoop(sub->children[i] + 0x14, 0x2F);
                 }
-                CP(0x5C)[0x14] = 4;
-                SpriteSlot_SetMatrixSourceEnabled_WithReseed(CP(0x5C) + 0x14, 1);
-                CP(0x5C)[0x28] = 0;
+                sub->children[i][0x14] = 4;
+                SpriteSlot_SetMatrixSourceEnabled_WithReseed(sub->children[i] + 0x14, 1);
+                sub->children[i][0x28] = 0;
             }
-            c += 4;
-        }
         }
         self[0x8C] = 3;
         self[0x8D] = 0;
         S8(0xC8) = 1;
         S8(0xC9) = 0;
     case 1:
-        ItemObject_ChainShell_GrabAndArc_Sub(self, sub);
+        ItemObject_ChainShell_GrabAndArc_Sub(self, (unsigned char *)sub);
         break;
     case 2:
         switch (S8(0xCB)) {
         case 0:
-            ItemObject_ChainShell_BoundOrbit_Sub(self, sub);
+            ItemObject_ChainShell_BoundOrbit_Sub(self, (unsigned char *)sub);
             break;
         case 3:
             switch (S8(0xC9)) {
@@ -154,20 +149,20 @@ void ItemObject_Tick_Kind2d_ChainShellPair(unsigned char *self)
                 self[0x3C] = 0;
                 SpriteSlot_SetAnimFrameAndApplyScale(self + 0x14, 3, 0.0f);
                 SpriteSlot_SetScale(self + 0x14, 1.0f);
-                SF(0x14) = 0.0f;
-                SF(0x18) = F(0xC4);
+                sub->groundY = 0.0f;
+                sub->tetherScale = F(0xC4);
                 S8(0xC9)++;
             case 1:
                 break;
             }
-            if (Item_AdvanceTetherToJoint13(self, (float *)(sub + 0x14), SF(0x18), 0.08726645f, 0.08726645f) != 0) {
+            if (Item_AdvanceTetherToJoint13(self, &sub->groundY, sub->tetherScale, 0.08726645f, 0.08726645f) != 0) {
                 self[0x28] = 0;
                 S8(0xC8) = 3;
                 S8(0xC9) = 0;
             }
             break;
         case 4:
-            ChainShell_FallAndFade(self, sub);
+            ChainShell_FallAndFade(self, (unsigned char *)sub);
             break;
         case 6:
             switch (S8(0xC9)) {
@@ -176,33 +171,31 @@ void ItemObject_Tick_Kind2d_ChainShellPair(unsigned char *self)
                 self[0x3C] = 0;
                 SpriteSlot_SetAnimFrameAndApplyScale(self + 0x14, 3, 0.0f);
                 SpriteSlot_SetScale(self + 0x14, 1.0f);
-                Vec3_Subtract_DestFirst((Vec *)(sub + 0x34), (Vec *)(self + 0xA0), (Vec *)(P(0x9C) + 0xA0));
-                SU32(0x4) = 30;
+                Vec3_Subtract_DestFirst((Vec *)sub->anchorOffset, (Vec *)(self + 0xA0), (Vec *)(P(0x9C) + 0xA0));
+                sub->timers[0] = 30;
                 S8(0xC9)++;
             case 1:
                 break;
             }
             Item_DecayVelocityScalar(self, 1.0f);
-            if (Item_OrbitAnchorKart(self, sub + 0x34, SU32(0x4), 0.52359867f, 0.2617993f) != 0) {
+            if (Item_OrbitAnchorKart(self, sub->anchorOffset, sub->timers[0], 0.52359867f, 0.2617993f) != 0) {
                 self[0x28] = 0;
                 S8(0xC8) = 3;
                 S8(0xC9) = 0;
             }
             break;
         case 9:
-            ChainShell_FallAndFade(self, sub);
+            ChainShell_FallAndFade(self, (unsigned char *)sub);
             break;
         case 5:
-            ChainShell_FallAndFade(self, sub);
+            ChainShell_FallAndFade(self, (unsigned char *)sub);
             break;
         }
         break;
     case 3:
-        c = sub;
         for (i = 0; i < 2; i++) {
-            SpriteSlot_Container_Free(CP(0x5C));
-            CP(0x5C) = 0;
-            c += 4;
+            SpriteSlot_Container_Free(sub->children[i]);
+            sub->children[i] = 0;
         }
         ItemObject_DecrementCategoryBudget(self);
         SpriteSlot_Container_Free(self);
@@ -213,11 +206,10 @@ void ItemObject_Tick_Kind2d_ChainShellPair(unsigned char *self)
     SpriteSlot_SetTransform(self + 0x14, *(Vec *)(self + 0xA0), *(Vec *)(self + 0xAC), F(0xC4));
     SpriteSlot_TickAnim(self + 0x14);
     JointByName_GetMatrix4x4Transposed(m, self + 0x14, lbl_8032EA98);
-    c = sub;
     for (i = 0; i < 2; i++) {
-        if (CP(0x5C) != 0) {
-            CP(0x5C)[0x28] = self[0x28];
-            if (*(signed char *)(CP(0x5C) + 0x28)) {
+        if (sub->children[i] != 0) {
+            sub->children[i][0x28] = self[0x28];
+            if (*(signed char *)(sub->children[i] + 0x28)) {
                 k = &lbl_80421120[i];
                 s = 1.0f;
                 switch (S8(0x1D)) {
@@ -246,17 +238,16 @@ void ItemObject_Tick_Kind2d_ChainShellPair(unsigned char *self)
                 Matrix4_Identity(s44);
                 Mtx44_Scale_Uniform(s44, s44, s);
                 Matrix4_Multiply(s44, s44, m);
-                DbgScene_CopyMatrix3x4Transpose(CP(0x5C) + 0x48, s44);
-                Vec3_Copy((Vec *)(CP(0x5C) + 0xA0), (Vec *)(self + 0xA0));
-                *(float *)(CP(0x5C) + 0xC4) = F(0xC4);
-                *(float *)(CP(0x5C) + 0x2C) = F(0x2C);
-                SpriteSlot_TickAnim(CP(0x5C) + 0x14);
+                DbgScene_CopyMatrix3x4Transpose(sub->children[i] + 0x48, s44);
+                Vec3_Copy((Vec *)(sub->children[i] + 0xA0), (Vec *)(self + 0xA0));
+                *(float *)(sub->children[i] + 0xC4) = F(0xC4);
+                *(float *)(sub->children[i] + 0x2C) = F(0x2C);
+                SpriteSlot_TickAnim(sub->children[i] + 0x14);
             }
         }
-        c += 4;
     }
-    Timer_Tick((unsigned int *)(sub + 0x4));
-    Timer_Tick((unsigned int *)(sub + 0x8));
-    Timer_Tick((unsigned int *)(sub + 0xC));
-    Timer_Tick((unsigned int *)(sub + 0x10));
+    Timer_Tick(&sub->timers[0]);
+    Timer_Tick(&sub->timers[1]);
+    Timer_Tick(&sub->timers[2]);
+    Timer_Tick(&sub->timers[3]);
 }
