@@ -33,8 +33,10 @@ extern void fn_801951B4(unsigned char);
 /* Keep the DVD operation bounds together with the instrumented read. */
 static inline int ReadSoundFile(DVDFileInfo *file, void *data, unsigned int size,
                                unsigned int start, unsigned int length) {
-    unsigned int end = start + (length - 1);
+    unsigned int end;
     int result;
+    end = length - 1;
+    end = end + start;
     DVDLoad_WaitIfSamePage(start);
     result = DVDReadPrio(file, data, size, 0, 2);
     DVDLoad_RecordOpStart(end);
@@ -89,6 +91,8 @@ static inline void ResetStreams(ActiveStream *streams) {
     int i;
     for (i = 0; i < 4; i++) streams[i].id = -1;
 }
+#pragma push
+#pragma opt_common_subs off
 void ClSound_InitSoundSystem(void) {
     const char *strings = lbl_80379100;
     void *samples;
@@ -145,3 +149,5 @@ fail:
         ClSound_Initialized = 0;
     }
 }
+#pragma pop
+
