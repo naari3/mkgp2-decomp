@@ -37,6 +37,21 @@ extern unsigned char TCPConn_ConsumeRxMessage(void*);
 extern int TCPConn_PollRecv(void*);
 extern unsigned char* GetDisplayContext(int);
 
+static inline void PCBCheck_NextPeer(PcbRecvSlot** slot,
+                                     unsigned char** output,
+                                     unsigned char** status)
+{
+    ++*slot;
+    *output += 0x28;
+    *status += 0x45;
+}
+
+static inline int PCBCheck_NewestSample(int distance, int start)
+{
+    distance += start;
+    return (distance - 1) % 64;
+}
+
 int PCBCheck_RecvLinkData(unsigned char advanceRead)
 {
     PcbRecvSlot* slot;
@@ -53,7 +68,7 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
     output = g_ringBufferBase[0];
     status = lbl_805A8A44[0];
     localSample = lbl_805A60C4 + 0x2C;
-    for (i = 0; i < 4; ++i, output += 0x28, status += 0x45, ++slot) {
+    for (i = 0; i < 4; ++i, PCBCheck_NextPeer(&slot, &output, &status)) {
         if (slot->flags.local == 1) {
             memcpy(slot, lbl_805A60C4, 0x2C);
             memcpy(slot->samples[slot->writeIndex], localSample, 0x28);
@@ -112,8 +127,7 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
                     end = slot->writeIndex;
                     for (; end != cursor % 64; ++cursor, ++distance) {}
                     if (distance > 3) {
-                        distance += start;
-                        slot->readIndex = (distance - 1) % 64;
+                        slot->readIndex = PCBCheck_NewestSample(distance, start);
                     }
                     memcpy(output, slot->samples[slot->readIndex], 0x28);
                 }

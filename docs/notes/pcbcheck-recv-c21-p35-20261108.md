@@ -1,0 +1,5 @@
+# pcbcheck-recv-c21-p35-20261108
+
+Source: Codex worker c21_p35_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1016 B.
+
+At base 2c5d640 PCBCheckRecv already owns BSS805A5EC0..805AC290 with all eight definitions. Fresh99.77165/1016 B and EH/BSS100. H1 output/status/slot declaration rotation99.12205 changes saved homes, reject. H2 static inline NextPeer(slot**,output**,status**) advancing slot/output/status makes target tail scheduling exact:99.96063. H3 reused distance decrement invariant. H4 static inline NewestSample(distance,start) { distance += start; return (distance - 1) %64; } supplies target r3 sum/subi without hoisting start-1:100% text/EH/index/BSS. Flip existing TU Matching. No split/symbol/pragma/bridge/header edits. Actual ELF PCBCheck_RecvLinkData80083348 size1016, native src object on main.elf link edge and target fallback absent; eight BSS symbol addresses/sizes verified. Coordinator req1 exit0 final DOL SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65. +1 native fn/1016 B.
