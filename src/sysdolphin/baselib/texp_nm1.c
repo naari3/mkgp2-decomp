@@ -21,16 +21,34 @@ typedef struct TExpPool {
     char setreg_assert[0x1B];
 } TExpPool;
 extern TExpPool lbl_804FD988;
-#define id1 lbl_804FD988.id1
-#define id2 lbl_804FD988.id2
 #undef HSD_ASSERT
-#define HSD_ASSERT(line, cond) ((cond) ? ((void) 0) : __assert(__FILE__, line, lbl_804FD988.setreg_assert))
+#define HSD_ASSERT(line, cond) ((cond) ? ((void) 0) : __assert(__FILE__, line, pool->setreg_assert))
+
+static inline void TExpUploadTevColors(const GXTevRegID ids[3], GXColor reg[8], u32 changed)
+{
+    int i;
+    for (i = 4; i < 7; i++) {
+        if (changed & (1 << i)) {
+            GXSetTevColor(ids[i - 4], reg[i]);
+        }
+    }
+}
+
+static inline void TExpUploadKColors(const GXTevKColorID ids[4], GXColor reg[8], u32 changed)
+{
+    int i;
+    for (i = 0; i < 4; i++) {
+        if (changed & (1 << i)) {
+            GXSetTevKColor(ids[i], reg[i]);
+        }
+    }
+}
 
 #pragma push
 #pragma optimization_level 3
 void HSD_TExpSetReg(HSD_TExp* texp)
 {
-    int i;
+    const TExpPool* pool = &lbl_804FD988;
     GXColor reg[8];
     u32 changed;
     HSD_TECnst* clist;
@@ -144,16 +162,8 @@ void HSD_TExpSetReg(HSD_TExp* texp)
     }
     if (changed != 0) {
         GXPixModeSync();
-        for (i = 0; i < 4; i++) {
-            if (changed & (1 << i)) {
-                GXSetTevKColor(id1[i], reg[i]);
-            }
-        }
-        for (i = 4; i < 7; i++) {
-            if (changed & (1 << i)) {
-                GXSetTevColor(id2[i - 4], reg[i]);
-            }
-        }
+        TExpUploadKColors(pool->id1, reg, changed);
+        TExpUploadTevColors(pool->id2, reg, changed);
         HSD_StateInvalidate(0x10);
         GXPixModeSync();
     }
