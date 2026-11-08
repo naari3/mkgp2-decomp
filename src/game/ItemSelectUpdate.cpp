@@ -28,7 +28,8 @@ static inline int GridItem(const int (*items)[10], int column, int row) {
     int offset = row * sizeof(items[0]) + column * sizeof(items[0][0]);
     return *(const int *)((const char *)items + offset);
 }
-static inline void SelectChoice(RefillChoice *choice, int slot, const RefillLayout *layout, const int *resources, void *playerData) {
+static inline void SelectChoice(RefillChoice *choice, int slot, const RefillLayout *layout, const int *resources) {
+    unsigned char *playerData = g_playerData;
     choice->selected = 1;
     choice->timer = 0;
     SpriteAnimParamBlock_Reload(choice->groups[1], slot + 0x4e);
@@ -51,7 +52,17 @@ static inline RefillSingleton *GetRefillSingleton() {
     return lbl_806D1A88 ? lbl_806D1A88 : (lbl_806D1A88 = new RefillSingleton);
 }
 static inline RefillSprite *GroupSprite(void *group) { return ((RefillGroup *)group)->sprite; }
-static inline void AnimateIntro(ItemSelectState *self, const RefillLayout *layout) {
+extern "C" void fn_80238D9C(ItemSelectState *self) {
+    int row;
+    int i;
+    const RefillLayout *layout = &lbl_803DC0C0;
+    if (self->doneFlag == 1) return;
+    RefillInput *input = SINGLETON_INSTANCE(g_pInputState);
+    void *playerData = g_playerData;
+    switch (self->phase) {
+    case 0: break;
+    case 2: break;
+    case 1: {
         if (self->resultCode >= 8 && self->resultCode <= 15) {
             float fade = (self->resultCode - 8) / lbl_806DB914;
             if (fade < lbl_806DB888) fade = lbl_806DB888;
@@ -66,15 +77,15 @@ static inline void AnimateIntro(ItemSelectState *self, const RefillLayout *layou
         }
         if (self->resultCode < 25) {
             const float *ys = layout->y;
-            for (int row = 0; row < 6; ++row) {
+            for (row = 0; row < 6; ++row) {
                 float y = ys[row];
                 const float *xs = layout->x;
-                for (int column = 0; column < 11; ++column) {
-                    int offset = 8 - (self->resultCode - (row + column));
+                for (i = 0; i < 11; ++i) {
+                    int offset = 8 - (self->resultCode - (row + i));
                     if (offset > 8) offset = 8;
                     if (offset < 0) offset = 0;
-                    fn_8011F804(self->itemSprites[row * 11 + column],
-                        SlideX(offset, xs[column]), y);
+                    fn_8011F804(self->itemSprites[row * 11 + i],
+                        SlideX(offset, xs[i]), y);
                 }
             }
         }
@@ -89,18 +100,8 @@ static inline void AnimateIntro(ItemSelectState *self, const RefillLayout *layou
             self->shownFlag = 1;
             self->phase = 2;
         }
-}
-extern "C" void fn_80238D9C(ItemSelectState *self) {
-    const RefillLayout *layout = &lbl_803DC0C0;
-    if (self->doneFlag == 1) return;
-    RefillInput *input = SINGLETON_INSTANCE(g_pInputState);
-    void *playerData = g_playerData;
-    switch (self->phase) {
-    case 0: break;
-    case 2: break;
-    case 1:
-        AnimateIntro(self, layout);
         break;
+    }
     case 3:
         self->field148 = lbl_806DB91C * (self->resultCode / lbl_806DB920);
         if (self->resultCode >= 5) self->phase = 2;
@@ -125,7 +126,7 @@ extern "C" void fn_80238D9C(ItemSelectState *self) {
             view->slots[self->field14c][0] = column;
             view->slots[self->field14c][1] = row;
             view->slots[self->field14c][2] = GridItem(layout->items, column, row);
-            SelectChoice((RefillChoice *)self->iconArray, self->field14c, layout, layout->resources, g_playerData);
+            SelectChoice((RefillChoice *)self->iconArray, self->field14c, layout, layout->resources);
             int item = Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(playerData,
                 view->slots[self->field14c][2]), 0);
             SpriteAnimParamBlock_SetAnimParamCached(self->groups[self->field14c + 3], 0x13b9, item);
@@ -159,7 +160,6 @@ extern "C" void fn_80238D9C(ItemSelectState *self) {
         GroupSprite(self->groups[7])->y = lbl_806DB89C * ((RefillChoice *)self->iconArray)->row + lbl_806DB8E8;
     }
     fn_8011F804(self->sprites[3], lbl_806DB8DC, layout->y[((RefillChoice *)self->iconArray)->row]);
-    int i;
     ItemSelectState *cursor;
     for (i = 0, cursor = self; i < 9; ++i, cursor = (ItemSelectState *)((char *)cursor + 4)) {
         if (cursor->groups[0]) Sprite_AdvanceAnim(GroupSprite(cursor->groups[0]), lbl_806DB8A8);
