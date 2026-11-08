@@ -27,11 +27,6 @@ extern unsigned char TCPConn_ConsumeRxMessage(void*);
 extern int TCPConn_PollRecv(void*);
 extern unsigned char* GetDisplayContext(int);
 
-static inline unsigned char* PCBCheck_LocalSample(unsigned char* packet)
-{
-    return packet + 0x2C;
-}
-
 int PCBCheck_RecvLinkData(unsigned char advanceRead)
 {
     unsigned char* base = lbl_805A5EC0;
@@ -49,7 +44,7 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
     slot = (PcbRecvSlot*)(base + 0x294);
     output = base + 0x2C98;
     status = base + 0x2B84;
-    localSample = PCBCheck_LocalSample(localSample);
+    localSample = ((PcbRecvSlot *)localSample)->samples[0];
     for (i = 0; i < 4; ++i, output += 0x28, status += 0x45, ++slot) {
         if (slot->flags.local == 1) {
             memcpy(slot, base + 0x204, 0x2C);
