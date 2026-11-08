@@ -1217,7 +1217,8 @@ int ItemEffectDesc_OnApply_MushroomBoost(const ItemEffectDesc *desc, KartItemOps
 
 /* .rodata 0x802EBA18..0x802EDB20 is owned by this TU: the tables are
  * file-local, so functions that touch two or more of them address them off
- * one section anchor (lis/addi rBase, then addi rX, rBase, off). */
+ * one section anchor (lis/addi rBase, then addi rX, rBase, off), as
+ * ItemEffect_TryStartByCategory does. */
 static const unsigned int lbl_802EBA18[255] = {
     0x3F800000, 0x3F333333, 0x3F666666, 0x00000000,
     0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
@@ -1408,10 +1409,10 @@ static const ItemCatEntry12 lbl_802ED8C4[9] = {
     {62, -1, -1},
     {77, -1, -1},
 };
-const ItemCatEntry12 lbl_802ED930[1] = {
+static const ItemCatEntry12 lbl_802ED930[1] = {
     {79, -1, -1},
 };
-const ItemCatEntry16 lbl_802ED93C[1] = {
+static const ItemCatEntry16 lbl_802ED93C[1] = {
     {107, 60, -1, -1},
 };
 static const unsigned int lbl_802ED94C[38] = {
@@ -8176,251 +8177,136 @@ int ItemEffect_TryStartByCategory_Wrap(ItemStateBlock *self, int itemId, void *a
 }
 #pragma exceptions reset
 
-/* C probe history (2026-06-10, batch_promote_80051100_onapplyrun): best form
- * reaches ~95%% (203/214 instr regions; whole front half + tornado/boss-grab
- * call bodies + vec3 fills all exact). Sole hard residue: category-table
- * entry addressing. Target groups (base+0x1f18/0x1f24) into a SCRATCH addi
- * (addi r0,r31,K; add rE,r0,prod; lwz 0x4/0x8(rE)) and keeps only idx<<4 in
- * a callee-saved (r29) across the BossGrab calls. CW 1.3.2 -lang=c
- * reassociates every probed form: (a) cast-index ((T*)(base+K))[idx] sinks
- * K+memberoff into the load displacement (lwz K+4(base+prod)); (b) byte-arith
- * (T*)(base+K+idx*S) joins K with the product (addi prod,K); (c) fn-scope
- * named table ptr materializes a callee-saved (stmw shifts to r26); (d)
- * block-scope tb/e locals get copy-propagated then form (a)/(b); (e) named
- * int off=idx<<4 keeps off but folds K+4 into off or displacement (lwzx);
- * (f) blob struct member ->t12[idx] identical to (a); (g) static inline
- * accessor At(tbl,idx) inlines transparently to (a). The grouped scratch-addi
- * shape was never produced -> likely C++ accessor this-temp / reference
- * semantics in the original (same family as itemeffect idiom 3 table-base
- * init split). Salvage C in batch HANDOFF appendix. Kept as asm. */
-asm int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg) { /* 0x80051304 size:0x344 */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    lis r6, lbl_802EBA18@ha
-    stw r0, 0x44(r1)
-    stmw r27, 0x2c(r1)
-    mr r29, r4
-    mr r30, r5
-    addi r31, r6, lbl_802EBA18@l
-    mr r28, r3
-    mr r5, r29
-    addi r3, r31, 0x1b9c
-    li r4, 0x1a
-    bl ItemTable_FindEntryByIdStride20
-    mr. r4, r3
-    blt ItemEffect_TryStartByCategory_L_800513A0
-    lwz r0, 0x8(r28)
-    cmpwi r0, 0x0
-    blt ItemEffect_TryStartByCategory_L_80051354
-    li r3, 0x2
-    b ItemEffect_TryStartByCategory_L_80051634
-    ItemEffect_TryStartByCategory_L_80051354:
-    cmpwi r29, 0x44
-    beq ItemEffect_TryStartByCategory_L_80051364
-    cmpwi r29, 0x43
-    bne ItemEffect_TryStartByCategory_L_80051388
-    ItemEffect_TryStartByCategory_L_80051364:
-    lwz r3, 0x0(r28)
-    lwz r3, 0x2c(r3)
-    lwz r0, 0x1f8(r3)
-    cmpwi r0, 0x0
-    beq ItemEffect_TryStartByCategory_L_80051380
-    cmpwi r0, 0x1
-    bne ItemEffect_TryStartByCategory_L_80051388
-    ItemEffect_TryStartByCategory_L_80051380:
-    li r3, 0x2
-    b ItemEffect_TryStartByCategory_L_80051634
-    ItemEffect_TryStartByCategory_L_80051388:
-    stw r29, 0x8(r28)
-    mr r3, r28
-    mr r5, r30
-    bl ItemEffect_Projectile
-    li r3, 0x0
-    b ItemEffect_TryStartByCategory_L_80051634
-    ItemEffect_TryStartByCategory_L_800513A0:
-    mr r5, r29
-    addi r3, r31, 0x1da4
-    li r4, 0xb
-    bl ItemTable_FindEntryByIdStride24
-    mr. r4, r3
-    blt ItemEffect_TryStartByCategory_L_800513E4
-    lwz r0, 0x8(r28)
-    cmpwi r0, 0x0
-    blt ItemEffect_TryStartByCategory_L_800513CC
-    li r3, 0x2
-    b ItemEffect_TryStartByCategory_L_80051634
-    ItemEffect_TryStartByCategory_L_800513CC:
-    stw r29, 0x8(r28)
-    mr r3, r28
-    mr r5, r30
-    bl ItemEffect_Trap
-    li r3, 0x0
-    b ItemEffect_TryStartByCategory_L_80051634
-    ItemEffect_TryStartByCategory_L_800513E4:
-    mr r5, r29
-    addi r3, r31, 0x1eac
-    li r4, 0x9
-    bl ItemTable_FindEntryByIdStride12_v2
-    mr. r4, r3
-    blt ItemEffect_TryStartByCategory_L_80051428
-    lwz r0, 0x8(r28)
-    cmpwi r0, 0x0
-    blt ItemEffect_TryStartByCategory_L_80051410
-    li r3, 0x2
-    b ItemEffect_TryStartByCategory_L_80051634
-    ItemEffect_TryStartByCategory_L_80051410:
-    stw r29, 0x8(r28)
-    mr r3, r28
-    mr r5, r30
-    bl ItemEffect_Explosion
-    li r3, 0x0
-    b ItemEffect_TryStartByCategory_L_80051634
-    ItemEffect_TryStartByCategory_L_80051428:
-    mr r5, r29
-    addi r3, r31, 0x1f18
-    li r4, 0x1
-    bl ItemTable_FindEntryByIdStride12_v1
-    mr. r27, r3
-    blt ItemEffect_TryStartByCategory_L_80051524
-    lwz r0, 0x8(r28)
-    cmpwi r0, 0x0
-    blt ItemEffect_TryStartByCategory_L_80051454
-    li r3, 0x2
-    b ItemEffect_TryStartByCategory_L_80051634
-    ItemEffect_TryStartByCategory_L_80051454:
-    stw r29, 0x8(r28)
-    lwz r4, 0x0(r28)
-    lwz r3, 0x4(r28)
-    lwz r4, 0x28(r4)
-    addi r4, r4, 0x58
-    bl ItemEffect_TornadoLift
-    lwz r3, 0x0(r28)
-    lbz r0, 0x20(r3)
-    cmplwi r0, 0x0
-    beq ItemEffect_TryStartByCategory_L_80051490
-    bl StrPcb_GetInstance
-    lfs f1, lbl_806D26E4(r2)
-    li r4, 0xc
-    li r5, 0x2
-    bl StrPcb_SetTimer3034_38
-    ItemEffect_TryStartByCategory_L_80051490:
-    lwz r3, 0x0(r28)
-    li r4, 0x2
-    lfs f0, lbl_806D26EC(r2)
-    lwz r3, 0x28(r3)
-    stfs f0, 0x17c(r3)
-    stfs f0, 0x180(r3)
-    stfs f0, 0x184(r3)
-    stfs f0, 0x194(r3)
-    stfs f0, 0x198(r3)
-    stfs f0, 0x19c(r3)
-    stfs f0, 0x1ac(r3)
-    stfs f0, 0x1b0(r3)
-    stfs f0, 0x1b4(r3)
-    lwz r3, 0x0(r28)
-    lwz r29, 0x38(r3)
-    mr r3, r29
-    bl ShadowBillboard_SetField0x6CAndComputeAxis
-    lwz r5, 0x0(r28)
-    mr r3, r29
-    addi r4, r1, 0x14
-    lwz r5, 0x28(r5)
-    lfs f2, 0x90(r5)
-    lfs f1, 0x8c(r5)
-    lfs f0, 0x88(r5)
-    stfs f0, 0x14(r1)
-    stfs f1, 0x18(r1)
-    stfs f2, 0x1c(r1)
-    bl ShadowBillboard_SetVec3At0x70
-    mulli r4, r27, 0xc
-    addi r0, r31, 0x1f18
-    li r3, 0x0
-    add r5, r0, r4
-    lwz r4, 0x4(r5)
-    lwz r0, 0x8(r5)
-    stw r4, 0xc(r28)
-    stw r0, 0x10(r28)
-    b ItemEffect_TryStartByCategory_L_80051634
-    ItemEffect_TryStartByCategory_L_80051524:
-    mr r5, r29
-    addi r3, r31, 0x1f24
-    li r4, 0x1
-    bl ItemTable_FindEntryByIdStride16
-    cmpwi r3, 0x0
-    blt ItemEffect_TryStartByCategory_L_80051630
-    lwz r0, 0x8(r28)
-    cmpwi r0, 0x0
-    blt ItemEffect_TryStartByCategory_L_80051550
-    li r3, 0x2
-    b ItemEffect_TryStartByCategory_L_80051634
-    ItemEffect_TryStartByCategory_L_80051550:
-    stw r29, 0x8(r28)
-    addi r0, r31, 0x1f24
-    slwi r29, r3, 4
-    mr r5, r30
-    lwz r6, 0x0(r28)
-    add r4, r0, r29
-    lwz r3, 0x4(r28)
-    lwz r7, 0x28(r6)
-    lwz r6, 0x4(r4)
-    addi r4, r7, 0x58
-    bl ItemEffect_BossGrab
-    lwz r3, 0x0(r28)
-    li r4, 0x4
-    lwz r27, 0x38(r3)
-    mr r3, r27
-    bl ShadowBillboard_SetField0x6CAndComputeAxis
-    lwz r5, 0x0(r28)
-    mr r3, r27
-    addi r4, r1, 0x8
-    lwz r5, 0x28(r5)
-    lfs f2, 0x90(r5)
-    lfs f1, 0x8c(r5)
-    lfs f0, 0x88(r5)
-    stfs f0, 0x8(r1)
-    stfs f1, 0xc(r1)
-    stfs f2, 0x10(r1)
-    bl ShadowBillboard_SetVec3At0x70
-    lwz r3, 0x0(r28)
-    lbz r0, 0x20(r3)
-    cmplwi r0, 0x0
-    beq ItemEffect_TryStartByCategory_L_800515E0
-    bl StrPcb_GetInstance
-    lfs f1, lbl_806D26E4(r2)
-    li r4, 0xc
-    li r5, 0x2
-    bl StrPcb_SetTimer3034_38
-    ItemEffect_TryStartByCategory_L_800515E0:
-    lwz r3, 0x0(r28)
-    addi r0, r31, 0x1f24
-    add r5, r0, r29
-    lfs f0, lbl_806D26EC(r2)
-    lwz r6, 0x28(r3)
-    li r3, 0x0
-    lwz r4, 0x8(r5)
-    stfs f0, 0x17c(r6)
-    lwz r0, 0xc(r5)
-    stfs f0, 0x180(r6)
-    stfs f0, 0x184(r6)
-    stfs f0, 0x194(r6)
-    stfs f0, 0x198(r6)
-    stfs f0, 0x19c(r6)
-    stfs f0, 0x1ac(r6)
-    stfs f0, 0x1b0(r6)
-    stfs f0, 0x1b4(r6)
-    stw r4, 0xc(r28)
-    stw r0, 0x10(r28)
-    b ItemEffect_TryStartByCategory_L_80051634
-    ItemEffect_TryStartByCategory_L_80051630:
-    li r3, 0x1
-    ItemEffect_TryStartByCategory_L_80051634:
-    lmw r27, 0x2c(r1)
-    lwz r0, 0x44(r1)
-    mtlr r0
-    addi r1, r1, 0x40
-    blr
+/* The category tables are file-local .rodata (see the definitions near the
+ * top), so the table walk is addressed off the section anchor
+ * (addi r0,r31,K; add; lwz 4/8). The boss-grab branch is an inline: inlining
+ * it makes MWCC give the idx<<4 offset r29 and the billboard r27. */
+#pragma exceptions off
+static inline void TryStartBossGrab(ItemStateBlock *self, void *arg, int idx) {
+    void *bb2;
+    Vec3 vg;
+    ItemEffect_BossGrab(self->guard, self->owner->movement->transform, arg, lbl_802ED93C[idx].valA);
+    bb2 = self->owner->billboard;
+    ShadowBillboard_SetField0x6CAndComputeAxis(bb2, 4);
+    {
+        KartMovementSpeedView *m3 = self->owner->movement;
+        float gz, gy, gx;
+        gz = m3->transform[14];
+        gy = m3->transform[13];
+        gx = m3->transform[12];
+        vg.x = gx;
+        vg.y = gy;
+        vg.z = gz;
+    }
+    ShadowBillboard_SetVec3At0x70(bb2, &vg);
+    if (self->owner->strPcbGate20 != 0) {
+        StrPcb_SetTimer3034_38(StrPcb_GetInstance(), 0xc, 2, lbl_806D26E4);
+    }
+    {
+        KartMovementSpeedView *m4 = self->owner->movement;
+        m4->velX = lbl_806D26EC;
+        m4->velY = lbl_806D26EC;
+        m4->velZ = lbl_806D26EC;
+        m4->impact194 = lbl_806D26EC;
+        m4->impact198 = lbl_806D26EC;
+        m4->impact19c = lbl_806D26EC;
+        m4->impact1ac = lbl_806D26EC;
+        m4->impact1b0 = lbl_806D26EC;
+        m4->impact1b4 = lbl_806D26EC;
+    }
+    self->activeId = lbl_802ED93C[idx].valB;
+    self->activeFlag = lbl_802ED93C[idx].valC;
 }
+int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg) { /* 0x80051304 size:0x344 */
+    int idx;
+    Vec3 vt; /* sp+0x14, tornado branch */
+
+    idx = ItemTable_FindEntryByIdStride20((ItemCatEntry20 *)lbl_802ED5B4, 0x1a, itemId);
+    if (idx >= 0) {
+        if (self->curItemId >= 0) {
+            return 2;
+        }
+        if (itemId == 0x44 || itemId == 0x43) {
+            int st = ((DriverStateView *)self->owner->ownerDriver)->state1f8;
+            if (st == 0 || st == 1) {
+                return 2;
+            }
+        }
+        self->curItemId = itemId;
+        ItemEffect_Projectile(self, idx, arg);
+        return 0;
+    }
+    idx = ItemTable_FindEntryByIdStride24((ItemCatEntry24 *)lbl_802ED7BC, 0xb, itemId);
+    if (idx >= 0) {
+        if (self->curItemId >= 0) {
+            return 2;
+        }
+        self->curItemId = itemId;
+        ItemEffect_Trap(self, idx, arg);
+        return 0;
+    }
+    idx = ItemTable_FindEntryByIdStride12_v2((ItemCatEntry12 *)lbl_802ED8C4, 0x9, itemId);
+    if (idx >= 0) {
+        if (self->curItemId >= 0) {
+            return 2;
+        }
+        self->curItemId = itemId;
+        ItemEffect_Explosion(self, idx, arg);
+        return 0;
+    }
+    idx = ItemTable_FindEntryByIdStride12_v1((ItemCatEntry12 *)lbl_802ED930, 0x1, itemId);
+    if (idx >= 0) {
+        void *bb;
+
+        if (self->curItemId >= 0) {
+            return 2;
+        }
+        self->curItemId = itemId;
+        ItemEffect_TornadoLift(self->guard, self->owner->movement->transform);
+        if (self->owner->strPcbGate20 != 0) {
+            StrPcb_SetTimer3034_38(StrPcb_GetInstance(), 0xc, 2, lbl_806D26E4);
+        }
+        {
+            KartMovementSpeedView *m = self->owner->movement;
+            m->velX = lbl_806D26EC;
+            m->velY = lbl_806D26EC;
+            m->velZ = lbl_806D26EC;
+            m->impact194 = lbl_806D26EC;
+            m->impact198 = lbl_806D26EC;
+            m->impact19c = lbl_806D26EC;
+            m->impact1ac = lbl_806D26EC;
+            m->impact1b0 = lbl_806D26EC;
+            m->impact1b4 = lbl_806D26EC;
+        }
+        bb = self->owner->billboard;
+        ShadowBillboard_SetField0x6CAndComputeAxis(bb, 2);
+        {
+            KartMovementSpeedView *m2 = self->owner->movement;
+            float fx, fy, fz;
+            fz = m2->transform[14];
+            fy = m2->transform[13];
+            fx = m2->transform[12];
+            vt.x = fx;
+            vt.y = fy;
+            vt.z = fz;
+        }
+        ShadowBillboard_SetVec3At0x70(bb, &vt);
+        self->activeId = lbl_802ED930[idx].valA;
+        self->activeFlag = lbl_802ED930[idx].valB;
+        return 0;
+    }
+    idx = ItemTable_FindEntryByIdStride16((ItemCatEntry16 *)lbl_802ED93C, 0x1, itemId);
+    if (idx >= 0) {
+        if (self->curItemId >= 0) {
+            return 2;
+        }
+        self->curItemId = itemId;
+        TryStartBossGrab(self, arg, idx);
+        return 0;
+    }
+    return 1;
+}
+#pragma exceptions reset
 
 /* MSL-style inline sqrtf (frsqrte + 3 NR steps, volatile store-reload);
  * consts referenced via lbl externs so no local rodata is emitted. */
