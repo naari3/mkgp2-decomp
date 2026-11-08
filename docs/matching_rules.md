@@ -241,6 +241,15 @@ roughly in the order worth trying:
    - An inline member that returns a class by value (`list->end()`) can make
      MWCC emit the function after the ones that follow it. Build the
      iterator directly instead (`Iter pos(&list->anchor)`, Scene_8014E0C4).
+   - A load scheduled across a store in the target (`li r0,N; lwz rX,g;
+     stw r0,field`, ours keeps the load after the store) means MWCC knew the
+     two could not alias. Write the natural order (store, then the load) and
+     give the compiler that knowledge: `__restrict` on the pointer params
+     (RankLog_OnMatchEnd), or a `const` view of a global that the TU only
+     reads (fn_801FCBCC/fn_801FCD9C; mark the const as fakematch if the
+     global is written elsewhere).
+   - Byte stores of a shifted word that put `clrlwi`/`extrwi` in a different
+     slot: write the mask, `PUT((v >> 8) & 0xFF)` (jvsio fn_80282CDC).
 
 When you stop, record the function in `docs/gave_up.md` with the current %,
 the remaining diff in one line, and where the WIP lives, so the next person
