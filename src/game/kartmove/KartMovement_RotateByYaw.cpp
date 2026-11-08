@@ -51,6 +51,9 @@ static inline void TransformVector(InitVec *v, const Matrix44 *m) {
     v->x = rx; v->y = ry; v->z = rz;
 }
 
+#pragma push
+#pragma opt_loop_invariants off
+#pragma opt_strength_reduction off
 extern "C" void KartMovement_RotateByYaw(MovementInit *k, float angle) {
     Matrix44 transform;
     Matrix44 rotation;
@@ -69,3 +72,5 @@ extern "C" void KartMovement_RotateByYaw(MovementInit *k, float angle) {
     Multiply(&k->orientation, &transform);
     Multiply(&k->matrixD8, &transform);
 }
+#pragma pop
+
