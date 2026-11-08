@@ -1,11 +1,11 @@
-/* Native reconstruction. The upper and lower angle ranges use separate
- * inline reductions; candidate-position lifetime and FP allocation remain NM. */
+/* Native reconstruction. Segment yaw is rounded within its inline helper;
+ * candidate-position lifetime and FP allocation remain NonMatching. */
 #include "game/RivalAvoidanceUnlockPrivate.h"
 extern "C" {
 extern void *g_pathSystem;
 extern AIPairRecord lbl_806793D8[8];
 extern const float lbl_806DA4E0,lbl_806DA4E8,lbl_806DA4EC,lbl_806DA4F0;
-extern float lbl_806DA4E4;
+extern const float lbl_806DA4E4;
 extern float lbl_806DA4F4,lbl_806DA4F8,lbl_806DA448;
 extern float lbl_806D1934,lbl_806D1938,lbl_806D194C,lbl_806D1954;
 extern signed char lbl_806D1950,lbl_806D1958;
@@ -18,6 +18,10 @@ float GetCourseStartYaw();
 float LUT_Cosine(float);
 float LUT_Sine(float);
 float PSVECSquareDistance(const void *,const void *);
+}
+static inline float rivalSegmentYaw(const RivalWaypoint *a, const RivalWaypoint *b) {
+    float angle=(float)atan2(b->x-a->x,b->z-a->z);
+    return angle;
 }
 static inline float reduceRivalAngle(float angle, float turn, float bound) {
     while(bound<=angle) angle-=turn;
@@ -52,9 +56,6 @@ static inline unsigned char findRival(RivalAvoidanceState *self,RivalAvoidanceCa
     }
     return 0;
 }
-#pragma push
-#pragma opt_common_subs off
-#pragma optimize_for_size on
 extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
     const char *constants=lbl_803BD920;
     RivalPathEntry *entry=PathManager_GetEntrySubStruct(g_pathSystem,self->pathId);
@@ -77,7 +78,7 @@ extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
         RivalWaypoint *a=Path_GetWaypointPtr(path,nearest);
         RivalWaypoint *b=Path_GetWaypointPtr(path,(nearest+1)%Path_GetTotalCount(path));
         if(b->valid<0) b=Path_GetWaypointPtr(path,0);
-        yaw=(float)atan2(b->x-a->x,b->z-a->z);
+        yaw=rivalSegmentYaw(a,b);
     } else yaw=GetCourseStartYaw();
     yaw=lbl_806DA4F8+yaw;
     float c=LUT_Cosine(yaw);
@@ -107,5 +108,4 @@ extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
     if(distance>lbl_806DA448) return amount;
     return -amount;
 }
-#pragma pop
 
