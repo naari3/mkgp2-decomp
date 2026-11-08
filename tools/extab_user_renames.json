@@ -2578,7 +2578,7 @@
     "@3155": "lbl_8039A50C",
     "quote$463": "lbl_806D1870",
     "init$464": "lbl_806D1874",
-    "@596": "lbl_806D9AE4"
+    "@593": "lbl_806D9AE4"
   },
   "src/game/fn_801DEF94.cpp": {
     "__ct__8SteerMgrFP7KartRefPv": "SteeringMgr_Init",

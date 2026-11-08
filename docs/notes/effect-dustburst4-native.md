@@ -20,3 +20,8 @@ c18_u72 fresh baseline97.13551/856B (assignment says97.59). Staged ratio assignm
 Source: Codex worker c19_u156_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c19_u156 fresh CLI97.71028/856B. Parent-owned group type at+CC is byte-invariant. Whole member Update behind C wrapper does not auto-inline (32B wrapper plus856B member), reverted. Passing curve/globalPosition as inline UpdateChildren parameters improves97.96729 and restores active indexr31/global-base materializationr3/r4. Text856B/EH8/index12 remain exact sizes, EH100. Residual self/group, init cursor/callback/index, active curve/global GPR partition; first start/phasef3/f1; curve/cursor increment order. Three hypotheses exhausted; single function remainsNonMatching, gain0; final full fallback SHA1 exact.
+
+## c20_u112_20261108
+Source: Codex worker c20_u112_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c20_u112 fresh direct CLI97.96729/856B; assignment report98.43 uses different metric. Contiguous9-float curve array fixes second-interval pointer indexing across time/scale/alpha subarray boundaries, byte-invariant; retained. Explicit first-start/phase snapshots also entirely invariant; reverted. Stopped after2 consecutive invariant probes per budget. EH8/index12 both100, all scores unchanged. Residual self/group and init/active GPR homes, first-start/phasef3/f1, curve/cursor increment order. No singleton/pool-offset residual; single function preventsB. RemainsNM, no native gain; coordinator full fallback DOL SHA1ea30f3b1 exact.

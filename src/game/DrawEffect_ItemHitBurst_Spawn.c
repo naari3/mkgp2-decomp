@@ -9,8 +9,8 @@ extern unsigned char lbl_805DF3D0[];
 extern Vec lbl_8041A4D0[3];
 extern float fn_800D3184(const Vec *a, const Vec *b);
 extern signed char ItemObject_GetGroundTypeAt(Vec *pos, float *outGroundY, int mode);
-extern float Item_ProbeForwardGroundPitch(Vec *pos, float a, float b, float c);
-extern float Item_ProbeLateralGroundPitch(Vec *pos, float a, float b, float c);
+extern float Item_ProbeForwardGroundPitch(const Vec *pos, float a, float b, float c);
+extern float Item_ProbeLateralGroundPitch(const Vec *pos, float a, float b, float c);
 extern void Matrix4_PreMultiplyRotX(float dst[4][4], float src[4][4], float angle);
 extern void Matrix4_PreMultiplyRotZ(float dst[4][4], float src[4][4], float angle);
 extern float FAbs_FloatAsDouble(float x);
@@ -18,6 +18,17 @@ extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec *in);
 extern void Effect_ExplosionPiece_Update(unsigned char *self);
 extern void DrawEffect_KartSparkTier_Update(unsigned char *self);
 extern void DrawEffect_SmokeRingTimed_Update(unsigned char *self);
+
+extern const float lbl_806D5740; /* 500.0 */
+extern const float lbl_806D5710; /* 10.0 */
+extern const float lbl_806D5708; /* 1.5 */
+extern const float lbl_806D56F8; /* 1.0 */
+extern const float lbl_806D5750; /* -180.0 */
+extern const float lbl_806D5754; /* 180.0 */
+extern const float lbl_806D5720; /* 0.8 */
+extern const float lbl_806D5724; /* 1.2 */
+extern const float lbl_806D5758; /* -15.0 */
+extern const float lbl_806D575C; /* 15.0 */
 
 static inline void SpawnGroundBurst(Vec *pos, float m[4][4], signed char strength,
                                     signed char ground, float speed, Vec *tints)
@@ -39,17 +50,17 @@ static inline void SpawnGroundBurst(Vec *pos, float m[4][4], signed char strengt
         count = 8;
         break;
     }
-    yaw = 0.017453289f * Rand_RangeFloat(-1.8e+02f, 1.8e+02f);
+    yaw = 0.017453289f * Rand_RangeFloat(lbl_806D5750, lbl_806D5754);
     spread = 0.5f * speed;
     for (i = 0; i < count; i++) {
         self = DrawEffect_SpawnDirect(Effect_ExplosionPiece_Update);
         if (self != 0) {
             Vec3_Copy(V(0x8C), pos);
-            F(0x90) += 1.5f;
+            F(0x90) += lbl_806D5708;
             GetSpawnPosition(V(0xA4), 0.0f, 0.0f,
-                             spread * Rand_RangeFloat(0.8f, 1.2f));
+                             spread * Rand_RangeFloat(lbl_806D5720, lbl_806D5724));
             Vec2_RotateY(V(0xA4), V(0xA4),
-                         BuildOrientationFromYaw(0.017453289f * Rand_RangeFloat(-15.0f, 15.0f) + yaw));
+                         BuildOrientationFromYaw(0.017453289f * Rand_RangeFloat(lbl_806D5758, lbl_806D575C) + yaw));
             local = *V(0xA4);
             Mtx44_TransformVec3(V(0xA4), m, &local);
             switch (strength) {
@@ -110,17 +121,17 @@ static inline void SpawnGroundSparks(Vec *pos, float m[4][4], signed char streng
         count = 8;
         break;
     }
-    yaw = 0.017453289f * Rand_RangeFloat(-1.8e+02f, 1.8e+02f);
+    yaw = 0.017453289f * Rand_RangeFloat(lbl_806D5750, lbl_806D5754);
     spread = 0.5f * speed;
     for (i = 0; i < count; i++) {
         self = DrawEffect_SpawnDirect(DrawEffect_KartSparkTier_Update);
         if (self != 0) {
             Vec3_Copy(V(0x8C), pos);
             GetSpawnPosition(V(0xA4), 0.0f, 0.0f,
-                             spread * Rand_RangeFloat(0.8f, 1.2f));
+                             spread * Rand_RangeFloat(lbl_806D5720, lbl_806D5724));
             Vec2_RotateX(V(0xA4), V(0xA4), -0.785398f);
             Vec2_RotateY(V(0xA4), V(0xA4),
-                         BuildOrientationFromYaw(0.017453289f * Rand_RangeFloat(-15.0f, 15.0f) + yaw));
+                         BuildOrientationFromYaw(0.017453289f * Rand_RangeFloat(lbl_806D5758, lbl_806D575C) + yaw));
             local2 = *V(0xA4);
             Mtx44_TransformVec3(V(0xA4), m, &local2);
             S8(0x190) = strength;
@@ -142,10 +153,24 @@ static inline void SpawnGroundSparks(Vec *pos, float m[4][4], signed char streng
         self = DrawEffect_SpawnDirect(DrawEffect_SmokeRingTimed_Update);
         if (self != 0) {
             Vec3_Copy(V(0x8C), pos);
-            F(0x90) += 1.0f;
+            F(0x90) += lbl_806D56F8;
             S8(0x190) = strength;
         }
     }
+}
+
+extern const float lbl_806D5734; /* 3.0 */
+extern const float lbl_806D574C; /* 5.0 */
+
+static inline float ClampGroundBurstSpeed(float speed)
+{
+    if (speed < lbl_806D5734) {
+        speed = lbl_806D5734;
+    }
+    if (lbl_806D574C < speed) {
+        speed = lbl_806D574C;
+    }
+    return speed;
 }
 
 void DrawEffect_ItemHitBurst_Spawn(Vec *pos, Vec *vel, signed char strength)
@@ -161,7 +186,7 @@ void DrawEffect_ItemHitBurst_Spawn(Vec *pos, Vec *vel, signed char strength)
     float pitch;
     float speed;
 
-    if (5e+02f < fn_800D3184((Vec *)(lbl_805DF3D0 + 0x80), pos)) {
+    if (lbl_806D5740 < fn_800D3184((Vec *)(lbl_805DF3D0 + 0x80), pos)) {
         return;
     }
     Vec3_Copy(&p, pos);
@@ -171,19 +196,13 @@ void DrawEffect_ItemHitBurst_Spawn(Vec *pos, Vec *vel, signed char strength)
         return;
     }
     a = p;
-    pitch = Item_ProbeForwardGroundPitch(&a, 0.0f, 1e+01f, 0.0f);
+    pitch = Item_ProbeForwardGroundPitch(&a, 0.0f, lbl_806D5710, 0.0f);
     b = p;
-    roll = Item_ProbeLateralGroundPitch(&b, 0.0f, 1e+01f, 0.0f);
+    roll = Item_ProbeLateralGroundPitch(&b, 0.0f, lbl_806D5710, 0.0f);
     Matrix4_Identity(m);
     Matrix4_PreMultiplyRotX(m, m, pitch);
     Matrix4_PreMultiplyRotZ(m, m, roll);
-    speed = FAbs_FloatAsDouble(vel->y);
-    if (speed < 3.0f) {
-        speed = 3.0f;
-    }
-    if (5.0f < speed) {
-        speed = 5.0f;
-    }
+    speed = ClampGroundBurstSpeed(FAbs_FloatAsDouble(vel->y));
     switch (ground) {
     case 1:
     case 2:
