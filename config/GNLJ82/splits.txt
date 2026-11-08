@@ -12533,25 +12533,10 @@ game/HudSelectionStep.c:
 	.text       start:0x80245834 end:0x80245850
 
 game/HudSelectionUpdate.cpp:
-	extab       start:0x8001D458 end:0x8001D460
-	extabindex  start:0x8002B214 end:0x8002B220
-	.text       start:0x80245850 end:0x80245AC4
-	.data       start:0x804EE854 end:0x804EE870
-
-game/HudSelectionCreate.cpp:
-	extab       start:0x8001D460 end:0x8001D478
-	extabindex  start:0x8002B220 end:0x8002B22C
-	.text       start:0x80245AC4 end:0x80245B10
-
-game/HudSelectionDestroy.cpp:
-	extab       start:0x8001D478 end:0x8001D4B4
-	extabindex  start:0x8002B22C end:0x8002B238
-	.text       start:0x80245B10 end:0x80245C1C
-
-game/HudFlow24Ctor.cpp:
-	extab       start:0x8001D4B4 end:0x8001D510
-	extabindex  start:0x8002B238 end:0x8002B244
-	.text       start:0x80245C1C end:0x80245E50
+	extab       start:0x8001D458 end:0x8001D510
+	extabindex  start:0x8002B214 end:0x8002B244
+	.text       start:0x80245850 end:0x80245E50
+	.data       start:0x804EE7C8 end:0x804EE870
 
 game/FlowAdvance10.c:
 	.text       start:0x80245E50 end:0x80245E6C

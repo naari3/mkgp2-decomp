@@ -12256,24 +12256,6 @@
     "__ct__10RivalOtherFP11RivalRenderi": "fn_8023147C",
     "__vt__11RivalMarker": "lbl_804EE784"
   },
-  "src/game/HudSelectionCreate.cpp": {
-    "__ct__12HudSelectionFi": "fn_80245C1C",
-    "@22": "@etb_8001D460",
-    "@23": "@eti_8002B220"
-  },
-  "src/game/HudSelectionDestroy.cpp": {
-    "@61": "@etb_8001D478",
-    "@62": "@eti_8002B22C",
-    "__dt__10FlowFaderFFv": "TweenInterp_Dtor",
-    "__vt__10FlowFaderF": "lbl_80419DE0"
-  },
-  "src/game/HudSelectionUpdate.cpp": {
-    "Value__10FlowFaderFFv": "fn_8020A6CC",
-    "Set__10FlowFaderFFffs": "fn_8020A734",
-    "@73": "jumptable_804EE854",
-    "@74": "@etb_8001D458",
-    "@75": "@eti_8002B214"
-  },
   "src/game/RaceDigitFactory.cpp": {
     "__ct__8DigitHudFii": "fn_80246DE4",
     "__nw__FUl": "Alloc",
@@ -12733,29 +12715,6 @@
     "__dt__20VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
     "__vt__11HudFlowRoot": "lbl_804EDB28",
     "__dt__11HudFlowRootFv": "dtor_8021617C"
-  },
-  "src/game/HudFlow24Ctor.cpp": {
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "__vt__9FlowFader": "lbl_80419DC8",
-    "__vt__10FlowFaderF": "lbl_80419DE0",
-    "Value__10FlowFaderFFv": "fn_8020A6CC",
-    "Set__10FlowFaderFFffs": "fn_8020A734",
-    "__dt__10FlowFaderFFv": "TweenInterp_Dtor",
-    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
-    "__dt__20VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
-    "__vt__11HudFlowRoot": "lbl_804EDB28",
-    "__dt__11HudFlowRootFv": "dtor_8021617C",
-    "__ct__9HudFlow24Fi": "fn_80245C1C",
-    "__vt__9HudFlow24": "lbl_804EE83C",
-    "__ct__11TextManagerFv": "TexMgr_Init",
-    "internationalLabels": "global:lbl_804EE7C8",
-    "japaneseLabels": "lbl_804EE7FC",
-    "hudTypeInfo": "global:lbl_804EE830",
-    "hudVtable": "global:lbl_804EE83C",
-    "__dt__13HudFlow24RootFv": "dtor_8021617C",
-    "@77": "@etb_8001D4B4",
-    "@78": "@eti_8002B238"
   },
   "src/game/RaceDigitHudDtor.cpp": {
     "__dt__10DigitOwnerFv": "dtor_80247980",
@@ -13801,5 +13760,36 @@
     "@1064": "extern:lbl_806DB0F8",
     "@1065": "extern:lbl_806DB078",
     "@1137": "extern:lbl_806DB10C"
+  },
+  "src/game/HudSelectionUpdate.cpp": {
+    "Value__10FlowFaderFFv": "fn_8020A6CC",
+    "Set__10FlowFaderFFffs": "fn_8020A734",
+    "__ct__12HudSelectionFi": "fn_80245C1C",
+    "__dt__10FlowFaderFFv": "TweenInterp_Dtor",
+    "__vt__10FlowFaderF": "lbl_80419DE0",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__9FlowFader": "lbl_80419DC8",
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "__dt__20VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "__vt__11HudFlowRoot": "lbl_804EDB28",
+    "__dt__11HudFlowRootFv": "dtor_8021617C",
+    "__ct__9HudFlow24Fi": "fn_80245C1C",
+    "__vt__9HudFlow24": "lbl_804EE83C",
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "internationalLabels": "global:lbl_804EE7C8",
+    "japaneseLabels": "lbl_804EE7FC",
+    "hudTypeInfo": "global:lbl_804EE830",
+    "hudVtable": "global:lbl_804EE83C",
+    "__dt__13HudFlow24RootFv": "dtor_8021617C",
+    "@76": "@etb_8001D458",
+    "@77": "@eti_8002B214",
+    "@84": "@etb_8001D460",
+    "@85": "@eti_8002B220",
+    "@134": "@etb_8001D478",
+    "@135": "@eti_8002B22C",
+    "@189": "@etb_8001D4B4",
+    "@190": "@eti_8002B238",
+    "@75": "jumptable_804EE854"
   }
 }
