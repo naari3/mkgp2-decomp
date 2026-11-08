@@ -74,8 +74,8 @@ void FlashFadeOverlay_Draw(struct FlashOverlay *self, float x0, float y0, float 
         vm = lbl_806D2E4C - v;
         uscale = lbl_806D2E40;
         vscale = lbl_806D2E48;
-        u1 = uscale * u1;
-        v1 = vscale * v1;
+        u1 *= uscale;
+        v1 *= vscale;
         xc = lbl_806D2E24;
         yc = lbl_806D2E18;
         one = lbl_806D2D44;

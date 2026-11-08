@@ -279,9 +279,30 @@ void fn_80282F3C(void) {
     tx.len = 2;
 }
 
-static void fn_80282F54(s32 chan, u32 err, OSContext* ctx) {
+static inline void jvsFailReplies(u8 res) {
     int j;
     int i;
+    for (i = 0; i <= cmd.nodeCount && i < 16; i++) {
+        if (cmd.req[cmd.cur[i]][i].n != 0) {
+            for (j = 0; j < cmd.req[cmd.cur[i]][i].n; j++) {
+                u8 c = cmd.req[cmd.cur[i]][i].cmd[j];
+                if (cmd.qwr + 1 != cmd.qrd) {
+                    cmd.queue[cmd.qwr].node = i;
+                    cmd.queue[cmd.qwr].cmd = c;
+                    cmd.queue[cmd.qwr].err = res;
+                    cmd.queue[cmd.qwr++].pad = 0;
+                }
+            }
+            cmd.req[cmd.cur[i]][i].n = 0;
+        }
+        if (cmd.req[cmd.next[i]][i].n != 0) {
+            cmd.cur[i] = cmd.next[i];
+        }
+    }
+}
+
+
+static void fn_80282F54(s32 chan, u32 err, OSContext* ctx) {
     int checksumIndex;
     u8 sum;
     u8 res;
@@ -313,23 +334,7 @@ static void fn_80282F54(s32 chan, u32 err, OSContext* ctx) {
     }
     res = tx.result;
     if (res != 0) {
-        for (i = 0; i <= cmd.nodeCount && i < 16; i++) {
-            if (cmd.req[cmd.cur[i]][i].n != 0) {
-                for (j = 0; j < cmd.req[cmd.cur[i]][i].n; j++) {
-                    u8 c = cmd.req[cmd.cur[i]][i].cmd[j];
-                    if (cmd.qwr + 1 != cmd.qrd) {
-                        cmd.queue[cmd.qwr].node = i;
-                        cmd.queue[cmd.qwr].cmd = c;
-                        cmd.queue[cmd.qwr].err = res;
-                        cmd.queue[cmd.qwr++].pad = 0;
-                    }
-                }
-                cmd.req[cmd.cur[i]][i].n = 0;
-            }
-            if (cmd.req[cmd.next[i]][i].n != 0) {
-                cmd.cur[i] = cmd.next[i];
-            }
-        }
+        jvsFailReplies(res);
     }
 }
 
@@ -344,13 +349,17 @@ void fn_80283154(void) {
     u8* p;
     u8* out;
     JvsPacket* packet;
+    u8* packetLength;
+    u8* packetStatus;
+    u8* payload;
     for (i = 0; i < 16 && i <= cmd.nodeCount; i++) status[i] = 0;
     tx.packetCount = 0;
     for (i = 2; i < tx.rx[1]; i += tx.rx[i + 1] + 2) {
         tx.packet[tx.packetCount++] = &tx.rx[i];
     }
     for (i = 0; i < tx.packetCount; i++) {
-        switch (tx.packet[i][0]) {
+        packet = (JvsPacket*)tx.packet[i];
+        switch (packet->command) {
         case 0x10:
             tx.unk12A = tx.packet[i][2]; tx.unk12B = tx.packet[i][3]; break;
         case 0x11:
@@ -395,17 +404,19 @@ void fn_80283154(void) {
         case 0xE0: tx.unk115 = tx.packet[i][2]; break;
         case 0xE1: tx.unk116 = tx.packet[i][2]; break;
         default:
-            packet = (JvsPacket*)tx.packet[i];
+            packetLength = &packet->length;
+            packetStatus = &packet->payload[1];
+            payload = packet->payload;
             if ((packet->command & 0xE0) != 0x40) break;
-            if (packet->length != 0) { node = packet->command & 0x1F; bank = cmd.cur[node]; }
+            if (*packetLength != 0) { node = packet->command & 0x1F; bank = cmd.cur[node]; }
             else status[node] = 1;
-            if (packet->length == 0 || packet->payload[1] != 0) break;
+            if (*packetLength == 0 || *packetStatus != 0) break;
             count = 0;
-            for (j = 2; j < packet->length; j++) {
-                if (packet->payload[j] == 0xD0) cmd.req[bank][node].response[count++] = packet->payload[++j] + 1;
-                else cmd.req[bank][node].response[count++] = packet->payload[j];
+            for (j = 2; j < *packetLength; j++) {
+                if (payload[j] == 0xD0) cmd.req[bank][node].response[count++] = payload[++j] + 1;
+                else cmd.req[bank][node].response[count++] = payload[j];
             }
-            sum = packet->payload[1];
+            sum = *packetStatus;
             for (j = 0; j < count - 1; j++) sum += cmd.req[bank][node].response[j];
             if (sum != cmd.req[bank][node].response[j]) status[node] = 4;
             else status[node] = 5;

@@ -32,7 +32,7 @@ extern unsigned int lbl_806D2904;
 extern unsigned int lbl_806D2908;
 extern unsigned int lbl_806D290C;
 extern unsigned int lbl_806D2910;
-extern unsigned int lbl_806D2914;
+extern const float lbl_806D2914;
 extern unsigned int lbl_806D2918;
 extern unsigned int lbl_806D2920;
 extern unsigned int lbl_806D2924;

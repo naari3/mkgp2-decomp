@@ -428,3 +428,18 @@ c20_u16 PhysicsStep fresh96.4229 (assignment96.42672) ->96.47633, unchanged5212v
 Source: Codex worker c20_u48_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 3364 B.
 
 c20_u48 AI_CalcGPTargetSpeed99.89011->99.91758: static inline GPDistanceBonus(self,ctrl,kart) owns final rank snapshot and distance call, restoring r26 at801EAC1C/AC34. Four cup/round load/copy-direction rows remain. Typed tuning context and input-only output getter invariant. Caller renderRank reuse fixes final rank but swaps lap rank/lap homes99.86264; caller lap snapshot invariant. Aggregate base-speed return97.10165/1480B materializes result. Native C++ query ctor/Max/Min restores saved-load direction but swaps cup/round homes99.91758; reversed member declarations invariant. Keep only distance helper. Text1456/EH8/index12 sizes retained, EH100. No singleton/pool issue, singleton cannot B-split; honest NM and zero native gain. No configuration edits or new full-link request; baseline fallback DOL SHA1 rechecked exact.
+
+## c20_u73_20261108
+Source: Codex worker c20_u73_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c20_u73 FlashFadeOverlay_Draw80070EA8 improves99.60821->99.64552 at1072B/EH8/index12 exact sizes, EH/index100: replace u1=uscale*u1 and v1=vscale*v1 with compound *=. One scratch home becomes exact;12 FP rows remain8007119C..711F8. Inline scaled-sum accumulator99.38433 (offset accumulation invariant); upper endpoint aggregate99.55224; C range-return factory87.02612/1104B with stack returns; selective16/12 literals99.55224; center-to-minus um/vm reuse99.08582. No pragmas/flags/data/split edits retained. Singleton NonMatching, zero native gain; no A/B rescue. Prior c12/c17/c19 archive handoffs and patches read.
+
+## c20_u93_20261108
+Source: Codex worker c20_u93_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c20_u93 fn_80243464: explicit normalization-range parameter reused for offset/range quotient fixes denominator-home f6, 99.45238->99.5. Factor and bias parameters then fix scale final add/store, 99.59524 retained at 840B/EH8/index12, EH100. In-place reference helper baseline-invariant; shared affine helper99.28571 (x-only99.166664); DistanceRatio range reuse invariant99.5; isolated x width accumulator99.28571. Twelve FPR rows remain, x f4 vs targetf2 and ratio f0 vsf1 plus constants/complement. No singleton or base-register pool site; singleton NM, no rescue cut. Full coordinator fallback-linked SHA1 exact. Avoid repeating these six hypotheses; snapshots/JSON under build/w.
+
+## c20_u103_20261108
+Source: Codex worker c20_u103_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c20_u103 HomingMarkerUpdate direct90.60959->94.09315/report94.10685 at2920B; EH8/index12 both100. SetInterpolated now forwards computed RGB to complete SetScalar (93.46027). Complete BlendScalar regresses92.78082, reverted. Delta-first Approach(from,to,t) for scale/alpha plus constant-first timer expression raises94.09315; restores case4 RGB f31/f13/f12 and first old-channel f30, case3 saved time f31. Pulse/result, remaining setter FPRs/scheduling, case4 constant f10/f11 and second old-channel f11/f10 plus multiply/add ordering remain. Three hypotheses exhausted. Color tables owned by matched Scene80172844 outside claim; no A/B. Full fallback DOL SHA1ea30f3b1 exact; native gain0.

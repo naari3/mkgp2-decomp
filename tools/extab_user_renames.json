@@ -1493,13 +1493,13 @@
     "extabindex_fn_80057960": "@eti_80020864",
     "extab_TornadoEffect_ComposeRenderMatrix": "@etb_80007690",
     "extabindex_TornadoEffect_ComposeRenderMatrix": "@eti_80020870",
-    "extab_TornadoEffect_ApplyItemVisual_Primary": "@etb_80007698",
-    "extabindex_TornadoEffect_ApplyItemVisual_Primary": "@eti_8002087C",
     "extab_TornadoEffect_ApplyItemVisual_Compact": "@etb_800076A8",
     "extabindex_TornadoEffect_ApplyItemVisual_Compact": "@eti_80020894",
     "__dt__6TEVec3Fv": "dtor_80036E40",
     "__ct__10TENormal3DFPvi": "clNormal3D_Construct",
-    "__ct__13TornadoEffectFUciiUcfff": "TornadoEffect_Ctor"
+    "__ct__13TornadoEffectFUciiUcfff": "TornadoEffect_Ctor",
+    "@416": "jumptable_803F9880",
+    "@531": "jumptable_803F98F4"
   },
   "src/game/TornadoItem.c": {
     "extab_TornadoItem_TickActive": "@etb_8000B70C",
@@ -9149,6 +9149,8 @@
     "@227": "@eti_8002996C"
   },
   "src/game/anon_8021A7C8_nm1.cpp": {
+    "@170": "@etb_8001AB80",
+    "@171": "@eti_8002A2CC",
     "__dt__18clCSModelInterfaceFv": "dtor_8013DCBC",
     "@172": "@etb_8001AB80",
     "@173": "@eti_8002A2CC",
@@ -11823,7 +11825,9 @@
     "__dt__10MixDrawS56Fv": "dtor_801F6BD0",
     "@130": "@etb_80017580",
     "@131": "@eti_80028F88",
-    "...rodata.0": "lbl_803BEDC0"
+    "...rodata.0": "lbl_803BEDC0",
+    "@136": "@etb_80017580",
+    "@137": "@eti_80028F88"
   },
   "src/game/SpriteAnimHandleCtor.cpp": {
     "__nw__FUl": "Alloc",
@@ -12812,7 +12816,10 @@
     "rankingResources": "global:lbl_8039C53C",
     "@109": "@etb_80015074",
     "@110": "@eti_80028004",
-    "@108": "lbl_806D9FB8"
+    "@108": "lbl_806D9FB8",
+    "@122": "@etb_80015074",
+    "@123": "@eti_80028004",
+    "@121": "lbl_806D9FB8"
   },
   "src/game/PCBCommLifecycle.cpp": {
     "__dt__7PCBCommFv": "dtor_800869D0",

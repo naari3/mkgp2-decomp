@@ -117,9 +117,9 @@ void KartFx_Slot5C_TripleStreakTick(BoostEffect *effect) {
     else {
         float current = effect->opacity;
         float decrement = lbl_806D51D8;
-        float minimum = lbl_806D51C0;
-        current -= decrement;
-        effect->opacity = current;
+        float minimum = 0.0f;
+        float faded = current - decrement;
+        effect->opacity = faded;
         if (effect->opacity < minimum) effect->opacity = minimum;
     }
     if (effect->opacity != lbl_806D51C0) {

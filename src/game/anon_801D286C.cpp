@@ -145,9 +145,13 @@ static inline int RankingDriverMode(unsigned char variant) {
     return variant == 1 ? 2 : 0;
 }
 static inline int RankingNameOffset(void) {
-    return isJapanese() ? -6 : 12;
+    if (isJapanese() == 0) return 12;
+    return -6;
 }
 #pragma cplusplus reset
+
+static inline float RankingPlacementY(const RankingPlacement *p) { return p->y; }
+static inline float RankingPlacementZ(const RankingPlacement *p) { return p->z; }
 
 #pragma inline_max_size(10000)
 RankingSpriteOwnerCtor::RankingSpriteOwnerCtor(int frames, int position, int screen, int character,
@@ -245,7 +249,7 @@ RankingSpriteOwnerCtor::RankingSpriteOwnerCtor(int frames, int position, int scr
     if (time > lbl_806D9FAC) time = lbl_806D9FAC;
     Mtx translate, rotate, scale;
     PSMTXScale(scale, lbl_806DA004, lbl_806DA004, lbl_806DA004);
-    PSMTXTrans(translate, value, placement->y, placement->z);
+    PSMTXTrans(translate, value, RankingPlacementY(placement), RankingPlacementZ(placement));
     PSMTXIdentity(matrix);
     PSMTXConcat(scale, matrix, matrix);
     PSMTXRotRad(rotate, 'x', lbl_806DA008 * placement->rx);

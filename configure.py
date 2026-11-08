@@ -882,7 +882,7 @@ config.libs = [
             Object(Matching, "game/fn_801EC9AC.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801ECA14.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/PhysicsState_KartCollisionCheck.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/PhysicsState_WallCollisionCheck.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/PhysicsState_WallCollisionCheck.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/fn_801EE36C.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
             Object(NonMatching, "game/fn_801ED798.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801ECAFC.c"),
@@ -1329,7 +1329,7 @@ config.libs = [
             Object(Matching, "game/DrawEffect_Cb_MutekiStar_VfxB.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartItemStatus_Bind0C.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartItem_Bind6E_3Phase.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(NonMatching, "game/DrawEffect_Cb_KartWheel_DualSpawn.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+            Object(Matching, "game/DrawEffect_Cb_KartWheel_DualSpawn.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/DrawEffect_KartWheel_TripleChildUpdate.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_RalySmokeVariant_Tick.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/DrawEffect_Cb_KartWheelSmokeOrbital_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -1646,7 +1646,7 @@ config.libs = [
             Object(Matching, "game/KartFx.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartFxDustPiece.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFxDust.cpp", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/KartFxBoost.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/KartFxBoost.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/KartFxBoostFlame.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-i src/game"]),
             Object(Matching, "game/KartFxJump.cpp", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/KartFxJumpSpawner.cpp", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),

@@ -152,6 +152,18 @@ without those flags ninja tries to download tools and fails.
   `splits.txt` blocks, delete stale `build/GNLJ82/asm/*.s`). Keep the original
   file name (it matters for `__FILE__` strings). Only do this when no part of
   the merge is claimed by someone else, and announce it (rule 1).
+- **Identical instruction, still `DIFF_ARG_MISMATCH` (pooled offsets).**
+  objdiff resolves `addi/lfs rX, rBase, OFF` inside an owned pool to the data
+  symbol at that address. If `symbols.txt` has one big target object
+  (e.g. `lbl_X size:0x44`) where the source defines two (`lbl_X` + `lbl_Y`),
+  the same instruction reads `lbl_X+0x20` vs `lbl_Y` and counts as a miss.
+  Fix: split the object in `symbols.txt` to match the source objects
+  (e263a5ca, Jungle16ACtor fn_8016AB58 99.79 -> 100). Find them with
+  `objdiff-cli diff -p . -u main/<unit> -o out.json <fn>`: same `formatted`
+  text on both sides, `R_PPC_NONE` relocation, left addend != 0.
+  Found 2026-11-08 in: fn_8017EFFC (16 of 18 diff lines), fn_801F7604 (10/14),
+  fn_801F3BD8 (8/12), TaMode_FrameUpdate (6/21), fn_8023AC14 (4/22),
+  Race_PerFrameTickAndAudio, fn_801F36D0, fn_80209C88, fn_80283154.
 - **Jump tables** need the TU to own the table (`.data start:end:` in
   `splits.txt`). If the owned range starts at 4 mod 8, add the TU to
   `DATA_ALIGN4_TUS` (`.sdata2` equivalent: `SDATA2_ALIGN4_TUS`).

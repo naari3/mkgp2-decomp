@@ -1319,9 +1319,6 @@ __declspec(section ".extab_user") static const unsigned char extab_CarObject_OnI
 __declspec(section ".extab_user") static const unsigned char extab_ItemEffect_SelectAndDispatch_Wrap[8] = {
     0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const unsigned char extab_ItemEffect_SelectAndDispatch[8] = {
-    0x30, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 __declspec(section ".extab_user") static const unsigned char extab_ItemEffect_GenericHandler[8] = {
     0x28, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -1641,9 +1638,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffect_SelectAndDispatch_Wrap = {
     (void *)&ItemEffect_SelectAndDispatch_Wrap, 0x00000020, (void *)extab_ItemEffect_SelectAndDispatch_Wrap
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffect_SelectAndDispatch = {
-    (void *)&ItemEffect_SelectAndDispatch, 0x00000180, (void *)extab_ItemEffect_SelectAndDispatch
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_ItemEffect_GenericHandler = {
     (void *)&ItemEffect_GenericHandler, 0x00000140, (void *)extab_ItemEffect_GenericHandler
@@ -7266,129 +7260,68 @@ int ItemEffect_SelectAndDispatch_Wrap(ItemEffectTable *self, int itemId, void *i
 #pragma exceptions reset
 #pragma auto_inline reset
 
-/* C probe history (2026-06-10): best form reaches ~96%% with 4 independent
- * residues: (a) table-base init split (addi r0,r7,@l hoisted above stmw +
- * mr r27,r0; target addi r27,r7,@l direct; register kw / typed extern /
- * init order / decl order all no effect; SR-indexed form fixes (a) but
- * flips count direction and registers), (b) sel<0 goto-pair collapsed to
- * single bge (class-1 invert family, sec 14.2 OnKartHit row), (c) p/n2
- * volatile pair swap r3/r5, (d) vtable load temp r6 vs r12 reuse.
- * Kept as asm. */
-asm int ItemEffect_SelectAndDispatch(ItemEffectTable *self, int itemId, void *itemObj, int arg4) { /* 0x80050030 size:0x180 */
-    nofralloc
-    stwu r1, -0x210(r1)
-    mflr r0
-    lis r7, lbl_802EBE64@ha
-    stw r0, 0x214(r1)
-    stmw r26, 0x1f8(r1)
-    mr r29, r3
-    addi r27, r7, lbl_802EBE64@l
-    mr r26, r4
-    mr r30, r5
-    mr r31, r6
-    li r28, 0x7
-    ItemEffect_SelectAndDispatch_L_8005005C:
-    lwz r0, 0x4(r27)
-    cmpw r26, r0
-    beq ItemEffect_SelectAndDispatch_L_80050070
-    li r4, -0x1
-    b ItemEffect_SelectAndDispatch_L_800500EC
-    ItemEffect_SelectAndDispatch_L_80050070:
-    lwz r0, 0x0(r27)
-    cmpwi r0, 0x1
-    beq ItemEffect_SelectAndDispatch_L_800500A4
-    bge ItemEffect_SelectAndDispatch_L_800500E8
-    cmpwi r0, 0x0
-    bge ItemEffect_SelectAndDispatch_L_8005008C
-    b ItemEffect_SelectAndDispatch_L_800500E8
-    ItemEffect_SelectAndDispatch_L_8005008C:
-    lwz r3, 0x8(r27)
-    bl HSD_Randi
-    slwi r3, r3, 2
-    addi r0, r3, 0xc
-    lwzx r4, r27, r0
-    b ItemEffect_SelectAndDispatch_L_800500EC
-    ItemEffect_SelectAndDispatch_L_800500A4:
-    cmplwi r30, 0x0
-    bne ItemEffect_SelectAndDispatch_L_800500B4
-    lwz r4, 0xc(r27)
-    b ItemEffect_SelectAndDispatch_L_800500EC
-    ItemEffect_SelectAndDispatch_L_800500B4:
-    mr r3, r30
-    li r4, 0x0
-    bl ItemObject_GetByteAt0xEC
-    clrlwi. r3, r3, 24
-    blt ItemEffect_SelectAndDispatch_L_800500D4
-    lwz r0, 0x8(r27)
-    cmpw r3, r0
-    blt ItemEffect_SelectAndDispatch_L_800500D8
-    ItemEffect_SelectAndDispatch_L_800500D4:
-    li r3, 0x0
-    ItemEffect_SelectAndDispatch_L_800500D8:
-    slwi r3, r3, 2
-    addi r0, r3, 0xc
-    lwzx r4, r27, r0
-    b ItemEffect_SelectAndDispatch_L_800500EC
-    ItemEffect_SelectAndDispatch_L_800500E8:
-    lwz r4, 0xc(r27)
-    ItemEffect_SelectAndDispatch_L_800500EC:
-    cmpwi r4, 0x0
-    blt ItemEffect_SelectAndDispatch_L_800500F8
-    b ItemEffect_SelectAndDispatch_L_80050108
-    ItemEffect_SelectAndDispatch_L_800500F8:
-    subic. r28, r28, 0x1
-    addi r27, r27, 0x18
-    bgt ItemEffect_SelectAndDispatch_L_8005005C
-    mr r4, r26
-    ItemEffect_SelectAndDispatch_L_80050108:
-    la r5, lbl_806D26E0(r2)  /* lbl_806D26E0 */
-    li r3, 0x1
-    addi r5, r5, 0x4
-    b ItemEffect_SelectAndDispatch_L_8005012C
-    ItemEffect_SelectAndDispatch_L_80050118:
-    lwz r0, 0x0(r5)
-    cmpw r4, r0
-    bne ItemEffect_SelectAndDispatch_L_8005012C
-    mr r0, r4
-    b ItemEffect_SelectAndDispatch_L_80050140
-    ItemEffect_SelectAndDispatch_L_8005012C:
-    cmpwi r3, 0x0
-    subi r3, r3, 0x1
-    subi r5, r5, 0x4
-    bgt ItemEffect_SelectAndDispatch_L_80050118
-    li r0, -0x1
-    ItemEffect_SelectAndDispatch_L_80050140:
-    cmpwi r0, -0x1
-    beq ItemEffect_SelectAndDispatch_L_8005018C
-    lwz r3, 0x0(r29)
-    addi r4, r1, 0x8
-    li r5, -0x1
-    lwz r6, 0x28(r3)
-    stw r0, 0x10(r1)
-    lfs f0, 0x88(r6)
-    stfs f0, 0xa8(r1)
-    lfs f0, 0x8c(r6)
-    stfs f0, 0xac(r1)
-    lfs f0, 0x90(r6)
-    stfs f0, 0xb0(r1)
-    lwz r12, 0x0(r3)
-    lwz r12, 0x34(r12)
-    mtctr r12
-    bctrl
-    li r3, 0x1
-    b ItemEffect_SelectAndDispatch_L_8005019C
-    ItemEffect_SelectAndDispatch_L_8005018C:
-    mr r3, r29
-    mr r5, r30
-    mr r6, r31
-    bl ItemEffect_GenericHandler
-    ItemEffect_SelectAndDispatch_L_8005019C:
-    lmw r26, 0x1f8(r1)
-    lwz r0, 0x214(r1)
-    mtlr r0
-    addi r1, r1, 0x210
-    blr
+/* Matched (GC/2.6, compiler-emitted extab): the remap scan is an inline
+ * returning the pick (keeps the sel<0 branch pair), the ignore-list scan is
+ * `while (p--, n-- > 0)` over a 1-entry table, and the owner message send
+ * is a real virtual call (slot 0x34) so the vtable temp is r12/r12. */
+#pragma cplusplus on
+struct ItemMsgTarget {
+    virtual void v08(); virtual void v0C(); virtual void v10(); virtual void v14();
+    virtual void v18(); virtual void v1C(); virtual void v20(); virtual void v24();
+    virtual void v28(); virtual void v2C(); virtual void v30();
+    virtual int Dispatch(void *msg, int mode);
+};
+static inline int RemapPick(const ItemRemapEntry *e, int itemId, void *itemObj) {
+    if (itemId != e->itemId) return -1;
+    switch (e->type) {
+    case 0:
+        return e->values[HSD_Randi(e->count)];
+    case 1:
+        if (itemObj == 0) return e->values[0];
+        {
+            int b = (unsigned char)ItemObject_GetByteAt0xEC(itemObj, 0);
+            if (b < 0 || b >= e->count) b = 0;
+            return e->values[b];
+        }
+    default:
+        return e->values[0];
+    }
 }
+static inline int RemapItem(int itemId, void *itemObj) {
+    const ItemRemapEntry *e = lbl_802EBE64;
+    int n = 7;
+    do {
+        int s = RemapPick(e, itemId, itemObj);
+        if (s >= 0) return s;
+        e++;
+    } while (--n > 0);
+    return itemId;
+}
+static inline int FindIgnored(int id) {
+    const int *p = &lbl_806D26E0[1];
+    int n = 1;
+    while (p--, n-- > 0) {
+        if (id == *p) return id;
+    }
+    return -1;
+}
+extern "C" int ItemEffect_SelectAndDispatch(ItemEffectTable *self, int itemId, void *itemObj, int arg4) { /* 0x80050030 size:0x180 */
+    int sel = RemapItem(itemId, itemObj);
+    int id = FindIgnored(sel);
+    if (id != -1) {
+        struct { char pad0[8]; int id; char pad_c[0x94]; Vec3 pos; char rest[0x1f0 - 0xac]; } msg;
+        KartItemOpsView *o = self->owner;
+        float *pos = (float *)((char *)o->movement + 0x88);
+        msg.id = id;
+        msg.pos.x = pos[0];
+        msg.pos.y = pos[1];
+        msg.pos.z = pos[2];
+        ((ItemMsgTarget *)o)->Dispatch(&msg, -1);
+        return 1;
+    }
+    return ItemEffect_GenericHandler(self, sel, itemObj, arg4);
+}
+#pragma cplusplus off
 
 #pragma exceptions off
 int ItemEffect_GenericHandler(ItemEffectTable *self, int itemId, void *itemObj, int arg4) { /* 0x800501B0 size:0x140 */
