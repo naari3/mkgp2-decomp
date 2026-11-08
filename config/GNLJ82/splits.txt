@@ -6393,11 +6393,21 @@ game/Scene_8015BF18.cpp:
 	.text       start:0x8015BF18 end:0x8015C41C
 
 game/resultscene/resultscene.cpp:
-	extab       start:0x8000F45C end:0x8000F9D8
-	extabindex  start:0x80025A0C end:0x80025C10
-	.text       start:0x8015C41C end:0x8016219C
-	.ctors      start:0x802E8910 end:0x802E8914
+	extab       start:0x8000F45C end:0x8000F67C
+	extabindex  start:0x80025A0C end:0x80025AD8
+	.text       start:0x8015C41C end:0x8015E928
 	.rodata     start:0x803682B0 end:0x80369238
+
+game/resultscene/resultscene_init.cpp:
+	extab       start:0x8000F67C end:0x8000F684
+	extabindex  start:0x80025AD8 end:0x80025AE4
+	.text       start:0x8015E928 end:0x8015F0FC
+	.ctors      start:0x802E8910 end:0x802E8914
+
+game/resultscene/resultscene_nm1.cpp:
+	extab       start:0x8000F684 end:0x8000F9D8
+	extabindex  start:0x80025AE4 end:0x80025C10
+	.text       start:0x8015F0FC end:0x8016219C
 
 game/Scene_8016219C.cpp:
 	extab       start:0x8000F9D8 end:0x8000FA08
