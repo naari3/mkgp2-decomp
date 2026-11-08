@@ -614,8 +614,11 @@ SteerAction *fn_801E1814(SteerAction *self, short flag) {
 
 void fn_801E1870(SteerAction *self) {
     Mtx44f m;
-    float f = (1.0f / 60.0f) * (float)(60 - self->timer);
-    m.RotX(lbl_806D18D4 * f);
+    float angle;
+    float f;
+    angle = lbl_806D18D4;
+    f = (1.0f / 60.0f) * (float)(60 - self->timer);
+    m.RotX(angle * f);
     m.Mul(self->rot);
     self->rot = m;
     {
