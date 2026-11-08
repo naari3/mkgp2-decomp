@@ -239,13 +239,17 @@ void *CourseEnvironment_ResolveJointInSlot0(CourseEnvironmentView *self, const c
     return 0;
 }
 
+static inline void PrintRendererStatistics(const char *format, CourseEnvironmentView *self, int (*count)(void *), int elementSize) {
+    DebugPrintf(format, count(self->renderers[0]), count(self->renderers[0]) * elementSize);
+}
+
 #pragma push
 #pragma opt_dead_assignments off
 int CourseScene_Load(CourseEnvironmentView *self, int course) {
     const char *strings = lbl_802EAF10;
-    CourseEnvironmentView *slotOwner;
-    char *tables = lbl_803F5CE8;
     ZoneObject *o;
+    char *tables = lbl_803F5CE8;
+    CourseEnvironmentView *slotOwner;
     const char **names;
     int j;
     CourseEnvironmentView *nextSlot;
@@ -298,10 +302,12 @@ int CourseScene_Load(CourseEnvironmentView *self, int course) {
         if (g_cupId == 15) self->zones = (CourseZone *)(tables + 0x738);
         used = 0;
         nextSlot = self;
-        for (j = 0; self->zones[j].kind != -1; ++j) {
-            if (!self->zones[j].objects) continue;
+        CourseZone *zone;
+        for (j = 0; (zone = (CourseZone *)((char *)self->zones + j))->kind != -1; j += sizeof(CourseZone)) {
+            if (!zone->objects) continue;
+            o = zone->objects;
             slotOwner = nextSlot;
-            for (o = self->zones[j].objects; o->kind != -1; ++o) {
+            for (; o->kind != -1; ++o) {
                 for (k = 0; k < used; ++k) {
                     if (o->kind == 0) {
                         if (self->slots[k].filename && !strcmp(o->filename, self->slots[k].filename) &&
@@ -438,10 +444,8 @@ int CourseScene_Load(CourseEnvironmentView *self, int course) {
     DebugPrintf(strings + 0x540, lbl_806D1694, lbl_806D1694 * 64);
     DebugPrintf(strings + 0x55C, lbl_806D1690, lbl_806D1690 * 28);
     DebugPrintf(strings + 0x578);
-    int bytes = fn_801746A0(self->renderers[0]) * 0x88;
-    DebugPrintf(strings + 0x588, fn_801746A0(self->renderers[0]), bytes);
-    bytes = fn_80174698(self->renderers[0]) * 0x18;
-    DebugPrintf(strings + 0x5A4, fn_80174698(self->renderers[0]), bytes);
+    PrintRendererStatistics(strings + 0x588, self, fn_801746A0, 0x88);
+    PrintRendererStatistics(strings + 0x5A4, self, fn_80174698, 0x18);
     WarpDashMgr_GetOrCreate(g_cupId, (unsigned char)!g_longRoundFlag, (unsigned char)IsReverseRound() > 0, 0);
     if (g_gameMode == 1) WarpDashMgr_GetOrCreate(g_cupId, (unsigned char)!g_longRoundFlag, (unsigned char)IsReverseRound() > 0, 1);
     ProcessSystemTick(0);
