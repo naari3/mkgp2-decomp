@@ -11825,7 +11825,9 @@
     "__dt__10MixDrawS56Fv": "dtor_801F6BD0",
     "@130": "@etb_80017580",
     "@131": "@eti_80028F88",
-    "...rodata.0": "lbl_803BEDC0"
+    "...rodata.0": "lbl_803BEDC0",
+    "@136": "@etb_80017580",
+    "@137": "@eti_80028F88"
   },
   "src/game/SpriteAnimHandleCtor.cpp": {
     "__nw__FUl": "Alloc",
