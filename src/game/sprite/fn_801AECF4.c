@@ -31,7 +31,8 @@ static inline short Goal_Select(short *tables, int character, int id) {
     return voice;
 }
 static inline void Goal_AdvanceLine(float **line) {
-    *line += g_ccClass * 128 + ((g_cupId - 1) * 16 + (g_longRoundFlag * 8 + g_reverseRoundFlag * 4));
+    *line += (g_cupId - 1) * 16 + (g_longRoundFlag * 8 + g_reverseRoundFlag * 4);
+    *line = (float *)((char *)*line + g_ccClass * 512);
 }
 static inline float *Goal_Line(float *lines) {
     float *line = lines;
