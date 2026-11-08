@@ -21,7 +21,7 @@ MorphNode *fn_8018F8A8(MorphNode *n,void *a,void *b) {
         n->count=fn_8018387C(handles[0]);
         if (n->count<=0) goto fail;
         if (n->count!=fn_8018387C(handles[1])) goto fail;
-        h=handles; sz=sizes;
+        h=handles; sz=sizes; cur=n;
         for (i=0;i<2;i++,h++,cur=(MorphNode *)((char *)cur+4),sz++) {
             cur->original[0]=(*h)->attrs;
             for (j=0;(attr=cur->original[0][j].attr)!=255;j++) {

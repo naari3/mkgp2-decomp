@@ -181,15 +181,16 @@ RankingFlow::RankingFlow() : CourseBase(), list() {
     sprite->y = lbl_806D9FCC;
     sprite->layer = 0;
     list.Add(new RankingAnim((RankingSprite *)sprite, 0));
+    RankingAnim *entry;
     if (g_reverseRoundFlag == 1) {
         CourseSprite *mirror = new CourseSprite(0x9E, 1, lbl_8039C55C[(g_cupId-1)*2+g_longRoundFlag],
             lbl_806D9FD0, lbl_806D9FAC, lbl_806D9FAC, lbl_806D9FA8, lbl_806D9FAC);
         mirror->layer = 6;
-        RankingAnim *entry = new RankingAnim((RankingSprite *)mirror, 20);
+        entry = new RankingAnim((RankingSprite *)mirror, 20);
         SetTrack(&entry->tracks[0], lbl_806D9FA8, lbl_806D9FAC, lbl_806D9FD4);
         list.Add(entry);
     }
-    RankingAnim *entry = new RankingLabel(fn_801D8DA0(g_cupId), lbl_806D9FD8);
+    entry = new RankingLabel(fn_801D8DA0(g_cupId), lbl_806D9FD8);
     SetTrack(&entry->tracks[0], lbl_806D9FA8, lbl_806D9FAC, lbl_806D9FD4);
     list.Add(entry);
     entry = new RankingLabel(0x17AE, lbl_806D9FDC);
@@ -201,9 +202,9 @@ RankingFlow::RankingFlow() : CourseBase(), list() {
     text->layer = 5;
     list.Add(text);
     /* The entry color and delay are supplied by this constructor variant. */
-    RankingFade *fade = new RankingFade(10, 60, 40, 10, 1);
-    SetTrack(&fade->tracks[0], lbl_806D9FA8, lbl_806D9FE8, lbl_806D9FD4);
-    list.Add(fade);
+    entry = new RankingFade(10, 60, 40, 10, 1);
+    SetTrack(&entry->tracks[0], lbl_806D9FA8, lbl_806D9FE8, lbl_806D9FD4);
+    list.Add(entry);
     for (int i = 0; i < 4; ++i) {
         players[i] = 0;
         unsigned char *slot = PcbSlot_GetByIndex(i);
