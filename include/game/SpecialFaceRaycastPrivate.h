@@ -1,7 +1,7 @@
 #ifndef GAME_SPECIAL_FACE_RAYCAST_PRIVATE_H
 #define GAME_SPECIAL_FACE_RAYCAST_PRIVATE_H
 #include "game/SpecialFaceMeshPrivate.h"
-#include "game/WarpZoneVectorPrivate.h"
+#include "game/WarpZoneInsertPrivate.h"
 
 struct FaceRaySegment {
     SpecialFaceVec endpoints[2];

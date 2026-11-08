@@ -114,6 +114,11 @@ static inline void FaceCopyBackward(SpecialFaceNative **first,
     while (last > first) *--result = *--last;
 }
 
+template <class T> static inline T *FaceCopyForward(T *first, T *last, T *result) {
+    while (first < last) *result++ = *first++;
+    return result;
+}
+
 extern "C" void PtrVec_InsertFill(void *storage, SpecialFaceNative **position,
         unsigned int n, SpecialFaceNative **value) {
     FacePtrStorage *s = (FacePtrStorage *)storage;
@@ -124,7 +129,7 @@ extern "C" void PtrVec_InsertFill(void *storage, SpecialFaceNative **position,
         if (size <= s->capacity) {
             SpecialFaceNative **source = value;
             SpecialFaceNative **end = s->data + s->count;
-            int tail = end - position;
+            unsigned int tail = end - position;
             if (end - (tail - n) <= value && value < end) source += n;
             if (tail != 0) {
                 FaceCopyBackward(position, end, end + n);
@@ -144,13 +149,8 @@ extern "C" void PtrVec_InsertFill(void *storage, SpecialFaceNative **position,
             SpecialFaceNative **out = s->data + offset;
             for (unsigned int i = n; i; --i) *out++ = *value;
             if (old) {
-                SpecialFaceNative **end = old+offset;
-                out = s->data;
-                SpecialFaceNative **p = old;
-                while (p < end) *out++ = *p++;
-                out = s->data + offset + n;
-                end = old + s->count;
-                while (p < end) *out++ = *p++;
+                FaceCopyForward(old, old + offset, s->data);
+                FaceCopyForward(old + offset, old + s->count, s->data + offset + n);
                 operator delete(old);
             }
             s->count = size;
