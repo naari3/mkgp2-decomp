@@ -1330,6 +1330,7 @@ game/TornadoEffect.c:
 	extab       start:0x800075FC end:0x800076B0
 	extabindex  start:0x800207EC end:0x800208A0
 	.text       start:0x80056CB0 end:0x80058DE8
+	.data       start:0x803F9880 end:0x803F9968
 
 game/AudioChannel_DtorWithSeStop.c:
 	extab       start:0x800076B0 end:0x800076B8

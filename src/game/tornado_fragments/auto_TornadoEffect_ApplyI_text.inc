@@ -12,12 +12,11 @@ extern unsigned int lbl_806D10A8;
 extern const float lbl_806D28CC;
 extern const float lbl_806D28D0;
 extern const float lbl_806D28F8;
-extern unsigned int lbl_806D2914;
+extern const float lbl_806D2914;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int jumptable_803F9880[];
 
 /* --- function index (1 fns, .text 0x80058534..0x80058994) ---
  * [  0] 0x80058534 size:0x460   global TornadoEffect_ApplyItemVisual_Primary
@@ -25,6 +24,42 @@ extern unsigned int jumptable_803F9880[];
 
 /* --- forward decls --- */
 asm void TornadoEffect_ApplyItemVisual_Primary(void);
+
+/* Primary's switch table (Primary is still asm, so the table is spelled out). */
+#define TE_PRIMARY_CASE(o) ((void *)((char *)&TornadoEffect_ApplyItemVisual_Primary + (o)))
+#pragma force_active on
+static void *jumptable_803F9880[29] = {
+    TE_PRIMARY_CASE(0x3B8),
+    TE_PRIMARY_CASE(0x3B8),
+    TE_PRIMARY_CASE(0x3B0),
+    TE_PRIMARY_CASE(0x3B8),
+    TE_PRIMARY_CASE(0x3B0),
+    TE_PRIMARY_CASE(0x3B8),
+    TE_PRIMARY_CASE(0x3E4),
+    TE_PRIMARY_CASE(0x3B8),
+    TE_PRIMARY_CASE(0x3B8),
+    TE_PRIMARY_CASE(0x3B0),
+    TE_PRIMARY_CASE(0x3B0),
+    TE_PRIMARY_CASE(0x3E4),
+    TE_PRIMARY_CASE(0x3B8),
+    TE_PRIMARY_CASE(0x384),
+    TE_PRIMARY_CASE(0x3E4),
+    TE_PRIMARY_CASE(0x3A8),
+    TE_PRIMARY_CASE(0x3D4),
+    TE_PRIMARY_CASE(0x3C0),
+    TE_PRIMARY_CASE(0x3B0),
+    TE_PRIMARY_CASE(0x3B0),
+    TE_PRIMARY_CASE(0x3B0),
+    TE_PRIMARY_CASE(0x3D4),
+    TE_PRIMARY_CASE(0x3E4),
+    TE_PRIMARY_CASE(0x3E4),
+    TE_PRIMARY_CASE(0x3B0),
+    TE_PRIMARY_CASE(0x3B8),
+    TE_PRIMARY_CASE(0x3B8),
+    TE_PRIMARY_CASE(0x3B8),
+    TE_PRIMARY_CASE(0x3B0)
+};
+#pragma force_active reset
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
