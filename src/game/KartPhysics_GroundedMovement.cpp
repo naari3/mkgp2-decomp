@@ -216,17 +216,19 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
     if (lbl_806DA450<self->pathBlend) self->pathBlend=lbl_806DA450;
 
     PhysicsPlainVec current=*(const PhysicsPlainVec *)(constants+0x480);
-    if (self->currentPath==-1) {
+    int currentPath=self->currentPath;
+    if (currentPath==-1) {
         void *follower=self->follower;
         GroundedWaypoint *p=fn_801DB9C4(follower,fn_801DBA34(follower));
         GetSpawnPosition(&current,p->x,p->y,p->z);
     } else {
-        GroundedWaypoint *p=CourseData_GetPath(courseData(),self->currentPath);
+        GroundedWaypoint *p=CourseData_GetPath(courseData(),currentPath);
         int count=CourseData_ResolveByKey(courseData(),p);
         int index=fn_801DBA34(self->follower)%count;
         GetSpawnPosition(&current,p[index].x,p[index].y,p[index].z);
-        if (self->previousPath!=-1 && lbl_806DA450!=self->pathBlend) {
-            p=CourseData_GetPath(courseData(),self->previousPath);
+        int previousPath=self->previousPath;
+        if (previousPath!=-1 && lbl_806DA450!=self->pathBlend) {
+            p=CourseData_GetPath(courseData(),previousPath);
             count=CourseData_ResolveByKey(courseData(),p);
             index=fn_801DBA34(self->follower)%count;
             PhysicsPlainVec previous=*(const PhysicsPlainVec *)(constants+0x48c);
@@ -237,17 +239,19 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
         }
     }
     PhysicsPlainVec next=*(const PhysicsPlainVec *)(constants+0x498);
-    if (self->currentPath==-1) {
+    currentPath=self->currentPath;
+    if (currentPath==-1) {
         void *follower=self->follower;
         GroundedWaypoint *p=fn_801DB9C4(follower,fn_801DBA34(follower)+1);
         GetSpawnPosition(&next,p->x,p->y,p->z);
     } else {
-        GroundedWaypoint *p=CourseData_GetPath(courseData(),self->currentPath);
+        GroundedWaypoint *p=CourseData_GetPath(courseData(),currentPath);
         int count=CourseData_ResolveByKey(courseData(),p);
         int index=(fn_801DBA34(self->follower)+1)%count;
         GetSpawnPosition(&next,p[index].x,p[index].y,p[index].z);
-        if (self->previousPath!=-1 && lbl_806DA450!=self->pathBlend) {
-            p=CourseData_GetPath(courseData(),self->previousPath);
+        int previousPath=self->previousPath;
+        if (previousPath!=-1 && lbl_806DA450!=self->pathBlend) {
+            p=CourseData_GetPath(courseData(),previousPath);
             count=CourseData_ResolveByKey(courseData(),p);
             index=fn_801DBA34(self->follower)%count;
             PhysicsPlainVec previous=*(const PhysicsPlainVec *)(constants+0x4a4);
@@ -328,15 +332,17 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
     if (self->turnStep!=lbl_806DA42C) {
         float old=self->turnVelocity;
         float step=self->turnStep;
-        turn=(turn-lbl_806DA470*old)/step;
+        float retainedTurn=lbl_806DA470*old;
+        turn=(turn-retainedTurn)/step;
         float fraction=turn;
         while (lbl_806DA450<=fraction) fraction-=lbl_806DA450;
         while (fraction<=lbl_806DA514) fraction+=lbl_806DA450;
         turn-=fraction;
         if (lbl_806DA4A0<=fraction) turn+=lbl_806DA450;
         else if (fraction<=lbl_806DA518) turn-=lbl_806DA450;
+        retainedTurn=lbl_806DA470*old;
         turn=turn*step;
-        turn+=lbl_806DA470*old;
+        turn+=retainedTurn;
     }
     self->turnVelocity=lbl_806DA490*turn;
     if (self->steeringEnabled) self->yaw+=turn;
