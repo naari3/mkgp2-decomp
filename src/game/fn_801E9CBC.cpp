@@ -54,12 +54,14 @@ int ReplayRandCursor_Advance(void *, int, int);
 }
 static inline int *ItemList(int kart) {
     int mode;
+    int *items;
     int round;
     int cup;
     cup = g_cupId;
     round = g_roundIndex;
     mode = g_gameMode;
-    return AI_GetItemList(GetEnemyParam(), mode, cup, round, kart);
+    items = AI_GetItemList(GetEnemyParam(), mode, cup, round, kart);
+    return items;
 }
 extern "C" {
 void fn_801DC6B4(int, int);
