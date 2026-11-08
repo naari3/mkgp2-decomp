@@ -143,11 +143,10 @@ static TaRecord taReverseRecords[8][2] = {
 
 static unsigned int taMemberFunction[3] = { 0, 16, 0 };
 
-static inline TaRecord *SelectTaRecord(int round, int reversed, int cup)
+static inline void SelectTaRecord(TaRecord *&record, int round, int reversed, int cup)
 {
-    TaRecord *record = &taReverseRecords[cup - 1][round];
+    record = &taReverseRecords[cup - 1][round];
     if (!reversed) record = &taNormalRecords[cup - 1][round];
-    return record;
 }
 
 #pragma push
@@ -348,7 +347,8 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
                     if (g_finalRacePosition == 0) fn_801D670C(g_playerData);
                 } else {
                     float time = g_totalRaceTime;
-                    TaRecord *record = SelectTaRecord(g_longRoundFlag, g_reverseRoundFlag, g_cupId);
+                    TaRecord *record;
+                    SelectTaRecord(record, g_longRoundFlag, g_reverseRoundFlag, g_cupId);
                     if (time < record->time) {
                         fn_801D676C(g_playerData);
                         PlayStats_IncTaBestRecord();
