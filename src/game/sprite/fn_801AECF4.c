@@ -30,8 +30,13 @@ static inline short Goal_Select(short *tables, int character, int id) {
     }
     return voice;
 }
+static inline void Goal_AdvanceLine(float **line) {
+    *line += g_ccClass * 128 + ((g_cupId - 1) * 16 + (g_longRoundFlag * 8 + g_reverseRoundFlag * 4));
+}
 static inline float *Goal_Line(float *lines) {
-    return &lines[g_ccClass * 128 + ((g_cupId - 1) * 16 + (g_longRoundFlag * 8 + g_reverseRoundFlag * 4))];
+    float *line = lines;
+    Goal_AdvanceLine(&line);
+    return line;
 }
 int fn_801AECF4(void) {
     short *tables = (short *)&lbl_80496C38;
@@ -83,8 +88,7 @@ int fn_801AECF4(void) {
                 }
             }
             else {
-                int sum = d1 + lbl_80679260[2]->distance;
-                if (sum + lbl_80679260[3]->distance <= 2) {
+                if (d1 + lbl_80679260[2]->distance + lbl_80679260[3]->distance <= 2) {
                     if ((g_voiceTickCounter & 1) == 0) {
                         PUSH(0x212);
                         PUSH(0x213);
@@ -94,7 +98,7 @@ int fn_801AECF4(void) {
                         PUSH(0x217);
                     }
                 }
-                else if (d1 <= 0 || sum <= 0) {
+                else if (d1 <= 0 || d1 + lbl_80679260[2]->distance <= 0) {
                     PUSH(0x214);
                     {
                         unsigned int variant = g_voiceTickCounter % 3;
@@ -134,9 +138,7 @@ int fn_801AECF4(void) {
             break;
         }
         case 1: case 2: case 3: {
-            int d1 = lbl_80679260[1]->distance;
-            int sum = d1 + lbl_80679260[2]->distance;
-            if (sum + lbl_80679260[3]->distance <= 2) {
+            if (lbl_80679260[1]->distance + lbl_80679260[2]->distance + lbl_80679260[3]->distance <= 2) {
                 if ((g_voiceTickCounter & 1) == 0) {
                     PUSH(0x212);
                     PUSH(0x213);
@@ -147,7 +149,7 @@ int fn_801AECF4(void) {
                 }
                 break;
             }
-            if (rank != 3 && (d1 <= 0 || sum <= 0)) {
+            if (rank != 3 && (lbl_80679260[1]->distance <= 0 || lbl_80679260[1]->distance + lbl_80679260[2]->distance <= 0)) {
                 PUSH(0x214);
                 {
                     unsigned int variant = g_voiceTickCounter % 3;
