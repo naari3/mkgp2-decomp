@@ -12576,6 +12576,8 @@
     "@171": "@eti_80028B74"
   },
   "src/game/EnemyRun_BaseInit.cpp": {
+    "@152": "@etb_80016D94",
+    "@153": "@eti_80028BB0",
     "@144": "@etb_80016D94",
     "@145": "@eti_80028BB0",
     "__ct__13EnemyRunStateFiiiii": "EnemyRun_BaseInit",

@@ -9,27 +9,34 @@ struct EnemyRunPath {
 };
 struct EnemyRunMatrix {
     float m[16];
-    void identity() {
+    void clear() {
         for(int i=0;i<16;i++) m[i]=0.0f;
+    }
+    void identity() {
+        clear();
         m[0]=m[5]=m[10]=m[15]=1.0f;
+    }
+    static float dotProduct(const float *row, const float *column) {
+        float value=row[0]*column[0];
+        value+=row[1]*column[4];
+        value+=row[2]*column[8];
+        value+=row[3]*column[12];
+        return value;
     }
     EnemyRunMatrix &operator*=(const EnemyRunMatrix &b) {
         EnemyRunMatrix result;
-        const float *row=m;
+        const float *row;
         const float *column;
         float *output=result.m;
         const float *right=b.m;
         int n=0;
         for(int i=0;i<4;i++) {
+            row=&m[n];
             column=right;
             for(int j=0;j<4;j++,column++) {
-                float value=row[0]*column[0];
-                value+=row[1]*column[4];
-                value+=row[2]*column[8];
-                value+=row[3]*column[12];
+                float value=dotProduct(row,column);
                 output[n+j]=value;
             }
-            row+=4;
             n+=4;
         }
         for(int i=0;i<16;i++) m[i]=result.m[i];

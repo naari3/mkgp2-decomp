@@ -2608,7 +2608,7 @@ config.libs = [
             Object(NonMatching, "game/KartPhysics_GroundedMovement.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/KartPhysics_UpdateSmoothing.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/AI_CalcRivalAvoidance.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/EnemyRun_BaseInit.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/EnemyRun_BaseInit.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801EC404.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801F0BD4.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801F6860.cpp", extab_padding=b""),

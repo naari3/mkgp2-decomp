@@ -1,5 +1,4 @@
-/* Native constructor reconstruction. Owned EH is exact; matrix-loop register
- * allocation remains NonMatching. See HANDOFF.md for object evidence. */
+/* Native constructor reconstruction with compiler-generated exception cleanup. */
 #include "game/EnemyRunInitPrivate.h"
 extern "C" {
 extern void *lbl_804E4C18[];
