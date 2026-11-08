@@ -202,7 +202,7 @@ int PathManager_UpdateAll(UpdateManager *self)
                 UpdateEntry *candidate;
                 slot = (UpdateManager *)((char *)slot + i*0x98);
                 candidate = &slot->entries[0];
-                if (slot->entries[0].node < 0 || candidate->rank != -1) continue;
+                if (candidate->node < 0 || candidate->rank != -1) continue;
                 for (j = 0; j < limit; j++) {
                     scan = (UpdateManager *)((char *)self + j*0x98);
                     if (scan->entries[0].node < 0 || scan->entries[0].rank != -1) continue;
