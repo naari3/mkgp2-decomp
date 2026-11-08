@@ -3,6 +3,10 @@ static inline float Interpolate(float from, float to, float t) {
     return t * (to - from) + from;
 }
 
+static inline float Approach(float from, float to, float t) {
+    return (to - from) * t + from;
+}
+
 struct MarkerPart {
     unsigned char visible;
     float sx, sy, angle;
@@ -18,25 +22,22 @@ struct MarkerPart {
         SetScalar(scale, rotation, rgba[0], rgba[1], rgba[2], rgba[3]);
     }
     void Fade(float scale, float rotation, const float *rgb, float t) {
-        sx += (scale - sx) * t; sy += (scale - sy) * t; angle = rotation;
+        sx = Approach(sx, scale, t); sy = Approach(sy, scale, t); angle = rotation;
         color[0] = Interpolate(color[0], rgb[0], t);
         color[1] = Interpolate(color[1], rgb[1], t);
         color[2] = Interpolate(color[2], rgb[2], t);
         color[3] += -color[3] * t;
     }
     void SetInterpolated(float scale, float rotation, const float *a, const float *b, float t, float alpha) {
-        visible = 1; sy = scale; sx = scale; angle = rotation;
-        color[0] = Interpolate(a[0], b[0], t);
-        color[1] = Interpolate(a[1], b[1], t);
-        color[2] = Interpolate(a[2], b[2], t);
-        color[3] = alpha;
+        SetScalar(scale, rotation, Interpolate(a[0], b[0], t),
+                  Interpolate(a[1], b[1], t), Interpolate(a[2], b[2], t), alpha);
     }
     void Blend(float scale, float rotation, const float *rgb, float alpha, float t) {
-        sx += (scale - sx) * t; sy += (scale - sy) * t; angle = rotation;
+        sx = Approach(sx, scale, t); sy = Approach(sy, scale, t); angle = rotation;
         color[0] = Interpolate(color[0], rgb[0], t);
         color[1] = Interpolate(color[1], rgb[1], t);
         color[2] = Interpolate(color[2], rgb[2], t);
-        color[3] = Interpolate(color[3], alpha, t);
+        color[3] = Approach(color[3], alpha, t);
     }
 };
 struct Marker {
@@ -140,7 +141,7 @@ extern "C" void fn_80172948(Marker *self) {
             self->part[2].Set(C8DBC * t + C8DB8, C8D90, lbl_8036E934, C8D94 - t);
         }
         self->part[3].visible = 0; self->part[4].visible = 0;
-        float next_time = self->time + C8D94;
+        float next_time = C8D94 + self->time;
         self->time = next_time;
         if (next_time >= C8DC0) { self->time = C8D90; self->state = 1; }
         break;
@@ -150,7 +151,7 @@ extern "C" void fn_80172948(Marker *self) {
         self->part[0].Set(C8DA8, C8D90, lbl_8036E924, t);
         self->part[1].Set(C8DB8, C8D90, lbl_8036E924, C8D94);
         self->part[2].visible = 0; self->part[3].visible = 0; self->part[4].visible = 0;
-        float next_time = self->time + C8D94;
+        float next_time = C8D94 + self->time;
         self->time = next_time;
         if (next_time >= C8DC4) { if (self->active) self->state = 2; self->time = C8D90; }
         break;
@@ -180,7 +181,7 @@ extern "C" void fn_80172948(Marker *self) {
             if (t > C8D90) self->part[4].Set(C8DF4 * t, C8DE8 * t, lbl_8036E944, t);
             else self->part[4].visible = 0;
         }
-        float next_time = self->time + C8D94;
+        float next_time = C8D94 + self->time;
         self->time = next_time;
         if (next_time >= C8DC4) { self->state = 3; self->time = C8D90; }
         break;
@@ -209,7 +210,7 @@ extern "C" void fn_80172948(Marker *self) {
         if (t < C8DC0) self->part[3].color[3] = C8D94 - Clamp(t / C8DC0);
         else self->part[3].color[3] = Clamp((t - C8DC0) / C8DC0);
         self->part[4].visible = 0;
-        float next_time = self->time + C8D94;
+        float next_time = C8D94 + self->time;
         self->time = next_time;
         if (next_time >= C8E0C) self->time = C8D90;
         break;
@@ -227,7 +228,7 @@ extern "C" void fn_80172948(Marker *self) {
         t = Clamp(self->time / C8DB4);
         self->part[2].Fade(C8DFC, C8D90, lbl_8036E934, t);
         self->part[4].visible = 0;
-        float next_time = self->time + C8D94;
+        float next_time = C8D94 + self->time;
         self->time = next_time;
         if (next_time >= C8DA4) { self->state = 1; self->time = C8D90; }
         break;
