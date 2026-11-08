@@ -162,6 +162,33 @@ See "Pooled base registers" and "Over-split TUs" in `docs/matching_rules.md`.
 | `fn_801E35FC` | game/fn_801DEF94 | 86.79 | 2-line `cmplw` scheduling once the pool is owned | `notes/r4/fn_801E35FC_sched2.diff` |
 | `AI_AdjustThunks` (and the AI TU ending at __sinit `fn_801E8C7C`) | game/AI_AdjustThunks + the AI TUs before it | 100 (TU NonMatching) | the thunks are weak multiple-inheritance `@12@` thunks that only come out of the original class layout in the big AI TU, so it needs a merge; mid-range thread 2026-11-07: merge blocked, the range holds onmokoworks claims #2261 (KartController_Update.cpp, 0x801E6ED4), #2219 (fn_801E4AF4.cpp), #2358 (fn_801E5454.cpp) | see `docs/notes/cw132-sweepbitset-batch-idioms.md` item 6 / c17_u36 |
 
+### Pool-ownership audit leftovers (2026-11-08, `tools/pool_audit.py`)
+
+Full list: `docs/pool_audit.md` (regenerate after a split change). Rows in
+onmokoworks-claimed TUs are not repeated here. Landed: Scene_80170B5C owns
+.rodata 0x8036E220..0x8036E728 (514b9cf); clMiyoshiCardCreate owns .rodata
+0x802EE028..0x802EE320 (818ff71) and .data 0x803F9E18..0x803F9F2C (6d11ef9).
+Fix recipe (R1's anchor rule): define the pool objects in file order BEFORE
+the functions (static for TU-private, global `lbl_` for names other TUs or
+asm use), wrap unreferenced ones in `#pragma force_active on/reset`, add the
+split, and when the new range starts after pad bytes add a
+`lbl_<pad> ... scope:local` symbol (otherwise dtk gives the previous TU a gap
+symbol that crosses into the range and REPORT fails). A common
+`{1.0, 0.7, 0.9, 0, 500, 66.67, ...}` float table (header static) sits at the
+start of several TUs' .rodata (clKPTrap 0x8036E220, KartDriver 0x802E9F80):
+it marks a TU rodata start.
+
+| Function | TU | % | What is left | Tried / WIP |
+| --- | --- | --- | --- | --- |
+| `clMiyoshiCardCreate_Draw` | game/clMiyoshiCardCreate | asm | With the TU owning .rodata and .data, a C++ Draw is 99.83%: 2 instructions, target loads the display context straight into r28 (`lwz r28, lbl_806D1880` then `mr r3, r28`), ours `lwz r3` + `mr r28, r3`. 15 declaration/statement forms and single/pair pragmas tried. Tick (C draft 97.87%, `#if 0` in the file) now has its jump table inside the TU. | `notes/pool/clMiyoshiCardCreate_Draw_c_9983.c` (whole TU) |
+| `KartDriver_InitFull` | game/KartDriver_InitFull (+ KartDriver_Init) | asm | Pool lbl_802E9F80 (.rodata 0x802E9F80..0x802EAF00) is shared with the adjacent KartDriver_Init (0x80044578, matched with the `const char *pool` trick), plus .data 0x803F5928..0x803F5BF4. Merge the two TUs into one that owns both ranges, then try InitFull as C. | |
+| `fn_8014D038` | game/CSPartsHolders | asm | Uses CSSceneGetTitle_8014ADB4's .rodata base lbl_80362D90; CSPartsHolders (0x8014CE74) directly follows that TU, so it is the same original file: merge it into CSSceneGetTitle_8014ADB4.cpp. | |
+| `RaceContext_InitDefaults` | game/RaceContext_InitDefaults | asm | Not really a pool: two vtables at .data 0x8040E4D0/0x8040E4DC used by RaceContext_Dtor, InitDefaults and RaceContext_EnsureSingleton (0x8009D638..0x8009DD..): one class file split in three. Merge, then own the vtables. | |
+| `fn_801232E0` | game/ZoneList | asm | .data 0x8048DAA8..0x8048DFB8 (25 objects) also used by NokoNokoChallenge_GetCoinDivisor (0x80122E80, two TUs earlier). Needs the 0x80122E80..0x801240B4 TUs merged. | |
+| `VSMode_Init`, `VSMode_FrameUpdate` | game/VSMode_Init, game/VSMode_FrameUpdate | asm | .rodata 0x80320960..0x80321178 shared with BtMode_Dtor/BtMode_Init (already noted in TIPS: one bt/vs-mode file). | |
+| `KartDriver_InitFull` .data, `CarObject_Init`, `ItemEffect_TryStartByCategory`, `CarObjectManager_RunKartKartCollisionSweep` | game/auto_ONKARTHIT_block (claimed by a naari3 thread) | asm | .rodata 0x802EBA18.. and .data 0x803F76A8.. unowned. | |
+| `card_rw_state_machine*`, `card_read_state_machine`, `card_save_trigger`, `CardSave_Tick_CaptureAndStart` | game/card_* | asm | Base lbl_80598A60 is one big backup-data object in .bss (0x6A20) that dtk split; not a pool, fix the symbol sizes instead. | |
+
 ## Control-flow / branch shape
 
 | Function | TU | % | What is left | Tried / WIP |
