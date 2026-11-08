@@ -556,7 +556,10 @@ def load_history_file(path: Path) -> List[Dict[str, Any]]:
         line = line.strip()
         if line:
             rows.append(json.loads(line))
-    rows.sort(key=lambda r: (r["ts"], r["sha"]))
+    # Sort by actual instant, not the ts string: commits carry mixed offsets
+    # (+09:00 vs Z), and string order interleaves them, making the timeline
+    # line jump back and forth in time.
+    rows.sort(key=lambda r: (_parse_ts(r["ts"]), r["sha"]))
     return rows
 
 

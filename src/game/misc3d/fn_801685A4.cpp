@@ -36,6 +36,10 @@ extern const float lbl_806D8A10;
 extern const char lbl_8036AC90[0x100];
 }
 
+static inline unsigned int PackColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
+    return ((r & 0xFF) << 24) | ((g & 0xFF) << 16) | ((b & 0xFF) << 8) | (a & 0xFF);
+}
+
 extern "C" void fn_801685A4(void *dst, const char *fmt, float x, float y, float red, float green, float blue, float alpha, ...) {
     TextManager tex;
     va_list args;
@@ -48,10 +52,6 @@ extern "C" void fn_801685A4(void *dst, const char *fmt, float x, float y, float 
     tex.x18 = 1;
     fn_801F93EC(&tex, x, y);
     fn_801F93D0(&tex, lbl_806D8A0C, lbl_806D8A0C);
-    unsigned char cr = (int)(lbl_806D8A10 * red);
-    unsigned char cg = (int)(lbl_806D8A10 * green);
-    unsigned char cb = (int)(lbl_806D8A10 * blue);
-    unsigned char ca = (int)(lbl_806D8A10 * alpha);
-    tex.color = (((cr << 8) | cg) << 16) | ((cb << 8) | ca);
+    tex.color = PackColor(lbl_806D8A10 * red, lbl_806D8A10 * green, lbl_806D8A10 * blue, lbl_806D8A10 * alpha);
     fn_801F8A34(fn_801F8E58(), &tex, dst);
 }

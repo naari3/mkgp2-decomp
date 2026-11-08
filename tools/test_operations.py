@@ -39,6 +39,22 @@ class ProgressTests(unittest.TestCase):
         self.assertIsNone(points[0]["c"])
         self.assertEqual(points[1]["c"], 2)
 
+    def test_history_sorts_mixed_offsets_by_instant(self):
+        import json, tempfile
+        from pathlib import Path
+        from gen_progress_page import load_history_file
+        from progress_history import write_history
+        rows = [{"sha": "a", "ts": "2026-11-07T11:20:57Z"},
+                {"sha": "b", "ts": "2026-11-07T11:21:13+09:00"},
+                {"sha": "c", "ts": "2026-11-07T11:22:03Z"}]
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "h.jsonl"
+            write_history(p, rows)
+            order = [json.loads(l)["sha"] for l in p.read_text().splitlines()]
+            self.assertEqual(order, ["b", "a", "c"])
+            self.assertEqual([r["sha"] for r in load_history_file(p)],
+                             ["b", "a", "c"])
+
     def test_empty_report_is_zero(self):
         self.assertEqual(source_metrics({}, {"asm_fns": {},
             "nonmatching_units": []})["true_matched_code"], 0)
