@@ -40,11 +40,11 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
     if (locale != isJapanese()) return 0;
     memset(dest, 0, 12);
     {
-        int i = 0;
-        u16 *nameCursor = (u16 *)dest;
-        for (; i < 5; i++, nameCursor++) {
+        int i;
+        u16 *cardName = (u16 *)dest;
+        for (i = 0; i < 5; i++) {
             bitpack_read_field_by_name(pack, lbl_806D3460, &name, i);
-            *nameCursor = fn_801F8D58((u8)name);
+            cardName[i] = fn_801F8D58((u8)name);
         }
     }
     if (NameCheck_CardName((u16 *)dest) == 1) {
@@ -71,7 +71,7 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
         int i, j;
     row = dest;
     fields = (const char *const *)(pool + 0x20DC);
-    for (group = 0; group < 6; group++, fields++, row += 4) {
+    for (group = 0; group < 6; row += 4, group++, fields++) {
         cursor = row;
         for (i = 0; i < 4; i++, cursor++) {
             bitpack_read_field_by_name(pack, *fields, &cupRank, i);
@@ -117,7 +117,7 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
         const char *const *fields;
     row = dest;
     fields = (const char *const *)(pool + 0x210C);
-    for (group = 0; group < 6; group++, fields++, row += 4) {
+    for (group = 0; group < 6; row += 4, group++, fields++) {
         cursor = row;
         for (i = 0; i < 4; i++, cursor++) {
             bitpack_read_field_by_name(pack, *fields, &grid, i);
@@ -132,7 +132,7 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
         const char *const *fields;
     row = dest;
     fields = (const char *const *)(pool + 0x20F4);
-    for (group = 0; group < 6; group++, fields++, row += 4) {
+    for (group = 0; group < 6; row += 4, group++, fields++) {
         extra = 0;
         cursor = row;
         for (i = 0; i < 4; i++, cursor++) {
@@ -161,7 +161,7 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
         int j;
     row = dest;
     fields = lbl_806D349C;
-    for (group = 0; group < 2; group++, fields++, row += 12) {
+    for (group = 0; group < 2; row += 12, group++, fields++) {
         counter = 0;
         cursor = row;
         for (j = 0; j < 3; j++, cursor += 4) {
