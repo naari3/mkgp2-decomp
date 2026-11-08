@@ -104,21 +104,31 @@ extern "C" void fn_801F115C(Menu801F *self) {
 }
 
 extern "C" void fn_801F1244(Menu801F *self) {
+    int i;
+    int offset;
     unsigned char v = fn_8020A788(self->fade.p);
     unsigned int c = 0xFFFFFF00;
     c = WithAlpha(c, v);
-    SetColorRange(self, 6, 12, c);
-    SetColorRange(self, 19, 26, c);
+    i = 6; offset = 0x378;
+    for (; i < 12; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
+    i = 19; offset = 0xafc;
+    for (; i < 26; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
     unsigned int d = 0xFFFFFF00;
     d = WithAlpha(d, (unsigned char)(255 - v));
-    SetColorRange(self, 26, 32, d);
-    SetColorRange(self, 32, 35, d);
+    i = 26; offset = 0xf08;
+    for (; i < 32; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), d);
+    i = 32; offset = 0x1280;
+    for (; i < 35; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), d);
     self->fade.p->Step();
     if (self->fade.p->Done()) {
-        SetColorRange(self, 6, 12, 0xFFFFFFFF);
-        SetColorRange(self, 19, 26, 0xFFFFFFFF);
-        SetColorRange(self, 26, 32, 0xFFFFFF00);
-        SetColorRange(self, 32, 35, 0xFFFFFF00);
+        i = 6; offset = 0x378;
+        for (; i < 12; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFFFF);
+        i = 19; offset = 0xafc;
+        for (; i < 26; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFFFF);
+        i = 26; offset = 0xf08;
+        for (; i < 32; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
+        i = 32; offset = 0x1280;
+        for (; i < 35; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
         self->state = 8;
     }
 }
@@ -130,7 +140,7 @@ extern "C" void fn_801F140C(Menu801F *self) {
     SetColorRange(self, 6, 12, c);
     SetColorRange(self, 19, 26, c);
     unsigned int d = 0xFFFFFF00;
-    d = WithAlpha(d, v);
+    d = d | v;
     SetColorRange(self, 26, 32, d);
     SetColorRange(self, 32, 35, d);
     self->fade.p->Step();
@@ -269,8 +279,8 @@ extern "C" void fn_801F20A0(Menu801F *self) {
     SetColorRange(self, 12, 19, d);
     self->fade.p->Step();
     if (self->fade.p->Done()) {
-        SetColorRange(self, 0, 6, 0xFFFFFF00);
-        SetColorRange(self, 12, 19, 0xFFFFFFFF);
+        SetColorRange(self, 0, 6, 0xFFFFFFFF);
+        SetColorRange(self, 12, 19, 0xFFFFFF00);
         self->state = 1;
     }
 }
