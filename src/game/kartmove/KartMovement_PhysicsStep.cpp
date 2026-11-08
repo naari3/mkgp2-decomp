@@ -48,6 +48,10 @@ static inline float Dot(const Vec3 &a, const Vec3 &b) {
 static inline float Abs(float v) { return __fabs(v); }
 static inline void Clear(Vec3 &v) { v.x = lbl_806D96D0; v.y = lbl_806D96D0; v.z = lbl_806D96D0; }
 
+static inline float QuantizeSteering(float value) {
+    return (float)(int)(lbl_806D9750 * value) * lbl_806D9754;
+}
+
 extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
                                          float steering, float throttle, float brake) {
     float force;
@@ -68,7 +72,7 @@ extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
         else k->field2be = 0;
         k->field2bd = 0;
     }
-    float quantized = (float)(int)(lbl_806D9750 * steering) * lbl_806D9754;
+    float quantized = QuantizeSteering(steering);
     float absolute = Abs(quantized);
     if (absolute < lbl_806D9740) turn = lbl_806D96D0;
     else {
@@ -192,11 +196,11 @@ extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
             Add(k->v17c, velocity);
         }
     }
-    targetResponse = Saturate_Double(k->field2f4 * LUT_Cosine(lbl_806D974C*(k->field1e0/lbl_806D9770)+lbl_806D976C)+lbl_806D96D4, lbl_806D9768, lbl_806D96D4);
-    if (k->field2fc == 1 || k->field2fd == 1) targetResponse *= lbl_806D9774*Param(k, 0x18);
+    brake = Saturate_Double(k->field2f4 * LUT_Cosine(lbl_806D974C*(k->field1e0/lbl_806D9770)+lbl_806D976C)+lbl_806D96D4, lbl_806D9768, lbl_806D96D4);
+    if (k->field2fc == 1 || k->field2fd == 1) brake *= lbl_806D9774*Param(k, 0x18);
     else {
         Saturate_Double(lbl_806D9768+k->field1d8, lbl_806D96D0, lbl_806D96D4);
-        targetResponse *= lbl_806D977C*(Param(k, 0x18)*k->field1d8) + lbl_806D9778*(lbl_806D96D4-k->field1d8);
+        brake *= lbl_806D977C*(Param(k, 0x18)*k->field1d8) + lbl_806D9778*(lbl_806D96D4-k->field1d8);
     }
     {
         InitVec velocity(k->v17c.x, k->v17c.y, k->v17c.z);
@@ -204,7 +208,7 @@ extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
         float angle = Abs(lbl_806D9760*k->pad1c4);
         float speed = fn_8019EA08(&velocity);
         if (angle > lbl_806D96D0 && speed > lbl_806D96D0) {
-            float delta = (float)(lbl_806D96F8*(float)asin(speed/(targetResponse/LUT_Cosine((float)(lbl_806D96F0*angle)))));
+            float delta = (float)(lbl_806D96F8*(float)asin(speed/(brake/LUT_Cosine((float)(lbl_806D96F0*angle)))));
             if (k->field2bd == 1 || k->v2a4.y > lbl_806D96D0) delta = lbl_806D96D0;
             if (k->v2a4.y > lbl_806D96D0) delta += Abs(lbl_806D9784*yawTurn);
             k->field1d0 = k->yaw;
