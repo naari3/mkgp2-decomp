@@ -52,6 +52,9 @@ static inline unsigned char findRival(RivalAvoidanceState *self,RivalAvoidanceCa
     }
     return 0;
 }
+#pragma push
+#pragma opt_common_subs off
+#pragma optimize_for_size on
 extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
     const char *constants=lbl_803BD920;
     RivalPathEntry *entry=PathManager_GetEntrySubStruct(g_pathSystem,self->pathId);
@@ -104,3 +107,5 @@ extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
     if(distance>lbl_806DA448) return amount;
     return -amount;
 }
+#pragma pop
+

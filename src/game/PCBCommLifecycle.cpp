@@ -249,6 +249,8 @@ extern "C" int PcbComm_Shutdown(void)
     return 1;
 }
 
+#pragma push
+#pragma opt_dead_assignments off
 extern "C" int PCBComm_Init(void)
 {
     Storage *storage = &lbl_805A5EC0;
@@ -306,5 +308,7 @@ extern "C" int PCBComm_Init(void)
     memset(&storage->sync, 0, 0x1C);
     return 1;
 }
+#pragma pop
+
 
 PCBComm::~PCBComm() {}

@@ -14,6 +14,8 @@ const int lbl_803DC378[8][4][3] = {
 };
 const struct ItemSelectionDefaults lbl_803DC4F8 = {{0x3D, 0x2B, 0x39}};
 
+#pragma push
+#pragma opt_propagation off
 unsigned char IsItemSelectAllowed(void) {
     struct ItemSelectionDefaults selected = lbl_803DC4F8;
     int cup, round;
@@ -33,3 +35,5 @@ unsigned char IsItemSelectAllowed(void) {
     lbl_806D1264[2] = selected.values[2];
     return 0;
 }
+#pragma pop
+
