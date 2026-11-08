@@ -191,6 +191,18 @@ without those flags ninja tries to download tools and fails.
 - When the compiler emits functions with extab in a different order than the
   target, add the TU to `tools/extab_order.json`. `reorder_extab.py` silently
   skips an entry whose function set does not equal the real extabindex rows.
+- **Merging TUs that mix manual and automatic extab** (asm functions or C
+  functions with `.extab_user` entries next to non-leaf C/C++ functions that
+  get automatic extab) is not blocked: the object then has two
+  extab/extabindex pairs, and `reorder_extab.py` interleaves them once the
+  merged TU's key in `tools/extab_order.json` lists every function that has an
+  extabindex row, in target order. Also: rename the automatic `@N` extab and
+  extabindex symbols to the target `@etb_`/`@eti_` names in the TU's
+  `tools/extab_user_renames.json` key; wrap a C++ part in
+  `#pragma cplusplus on` / `#pragma cplusplus off` (not `reset`); and put
+  `#pragma exceptions off` / `reset` around a C function that keeps a manual
+  entry, or it gets an automatic one too. Worked example: the
+  VSMode/BtMode merge (`src/game/VSMode_FrameUpdate.c`, 122d9dbc).
 - A weak inline destructor that the compiler emits into a TU may be appended
   to that TU's own `tools/extab_order.json` key; new rename pairs may be
   added inside a TU's own `tools/extab_user_renames.json` key. Do not edit
