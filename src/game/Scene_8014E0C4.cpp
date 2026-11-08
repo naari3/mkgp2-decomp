@@ -351,7 +351,7 @@ void *ResolveJointByName(void *root, char *name);
 void SetResourceLoadingFlag(int on);
 extern void SoundChannels_ClearAll();
 extern void TexMgr_SetTexture();
-extern void TornadoEffect_Ctor();
+void TornadoEffect_Ctor(void *e, int a, void *kart, int id, int b, float x, float y, float z);
 void TornadoEffect_SetFlagC0(void *e);
 extern void __construct_array();
 extern void __construct_new_array();
@@ -512,7 +512,7 @@ void SetActiveCamera(void *cam, int a);
 void TireEffect_ResetSpin(void *e, float a, float b);
 void VisualEffectHolder_Dtor(void *p, int flag);
 void fn_8013D4B0(void *p, float a);
-extern void fn_8013D738();
+void fn_8013D738(void *o, float a, float b);
 extern unsigned int g_playerRenderObj;
 extern void *g_raceCamera;
 void ClRomTable_PurgeAll(void);
@@ -1089,7 +1089,6 @@ void fn_8014FEFC(TextPanelB *self);
 void fn_80150004(TextPanel *self);
 asm void fn_801500F4(void);
 asm void fn_801502AC(void);
-asm void fn_8015061C(void);
 unsigned char fn_80150924(unsigned char *o);
 RaceScene *fn_8015092C(RaceScene *self, short flag);
 void fn_80150BE4(VObj *p);
@@ -1171,7 +1170,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; void *f13; unsigned int f14; unsigned int f15; void *f16; unsigned int f17; void *f18; unsigned int f19; unsigned int f20; void *f21; } extab_fn_801500F4 = { 0x300A0000, 0x00000060, 0x00050038, 0x00000094, 0x00000030, 0x000000D4, 0x00000038, 0x000000DC, 0x00090044, 0x00000120, 0x000C0038, 0x00000000, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001D, 0x00000000, (void *)&dtor_801577D4, 0x0A80001C, (void *)&MemoryManager_Free, 0x8680001D, 0x00000000, (void *)&dtor_801577D4 };
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; void *f9; unsigned int f10; void *f11; unsigned int f12; void *f13; } extab_fn_801502AC = { 0x380A0000, 0x0000006C, 0x00000020, 0x00000198, 0x00000028, 0x000001C8, 0x00000030, 0x00000000, 0x8A800019, (void *)&MemoryManager_TimedFree, 0x8A80001A, (void *)&MemoryManager_TimedFree, 0x8A800019, (void *)&MemoryManager_TimedFree };
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; void *f11; unsigned int f12; void *f13; unsigned int f14; void *f15; unsigned int f16; void *f17; } extab_fn_8015061C = { 0x300A0000, 0x000000E8, 0x00000028, 0x00000144, 0x00000030, 0x0000027C, 0x00000038, 0x000002E4, 0x00000040, 0x00000000, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x8A80001A, (void *)&MemoryManager_TimedFree, 0x8A80001A, (void *)&MemoryManager_TimedFree };
 
 
 
@@ -1249,9 +1247,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_801502AC, 0x00000370, (void *)&extab_fn_801502AC
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8015061C = {
-    (void *)&fn_8015061C, 0x00000308, (void *)&extab_fn_8015061C
-};
 
 
 
@@ -1563,7 +1558,6 @@ extern void KartDriver_New_Empty();
 extern void PreloadEffectResources();
 extern void SoundChannels_ClearAll();
 extern void SoundDriver_GetOrCreate();
-extern void TornadoEffect_Ctor();
 extern void __construct_array();
 extern void clItemBoxResponder_Ctor();
 extern void clNormal3D_Construct();
@@ -4226,225 +4220,118 @@ extern "C" asm void fn_801502AC(void) { /* 0x801502AC size:0x370 */
     blr
 }
 
-extern "C" asm void fn_8015061C(void) { /* 0x8015061C size:0x308 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    cmpwi r4, 0x6
-    lis r6, lbl_80363D30@ha
-    stw r0, 0x24(r1)
-    stmw r26, 0x8(r1)
-    mr r31, r3
-    mr r26, r5
-    addi r30, r6, lbl_80363D30@l
-    beq fn_8015061C_L_801507A0
-    bge fn_8015061C_L_80150658
-    cmpwi r4, 0x4
-    beq fn_8015061C_L_80150668
-    bge fn_8015061C_L_801506D8
-    b fn_8015061C_L_80150910
-    fn_8015061C_L_80150658:
-    cmpwi r4, 0x8
-    beq fn_8015061C_L_801508BC
-    bge fn_8015061C_L_80150910
-    b fn_8015061C_L_8015087C
-    fn_8015061C_L_80150668:
-    mr r30, r31
-    mr r29, r31
-    li r27, 0x0
-    fn_8015061C_L_80150674:
-    lwz r3, 0x124(r30)
-    cmplwi r3, 0x0
-    beq fn_8015061C_L_80150688
-    li r4, 0x1
-    bl KartDriver_Dtor
-    fn_8015061C_L_80150688:
-    lwz r3, 0x150(r30)
-    cmplwi r3, 0x0
-    beq fn_8015061C_L_8015069C
-    li r4, 0x1
-    bl VisualEffectHolder_Dtor
-    fn_8015061C_L_8015069C:
-    li r4, 0x0
-    addi r0, r27, 0x38c
-    stw r4, 0x124(r30)
-    addi r3, r29, 0x17c
-    stw r4, 0x150(r30)
-    stbx r4, r31, r0
-    bl PSMTXIdentity
-    addi r27, r27, 0x1
-    li r0, 0x0
-    cmpwi r27, 0xb
-    stw r0, g_playerRenderObj(r13)
-    addi r30, r30, 0x4
-    addi r29, r29, 0x30
-    blt fn_8015061C_L_80150674
-    b fn_8015061C_L_80150910
-    fn_8015061C_L_801506D8:
-    mr r28, r31
-    addi r29, r30, 0x34d0
-    li r27, 0x0
-    fn_8015061C_L_801506E4:
-    lwz r0, 0x0(r29)
-    cmpw r26, r0
-    bne fn_8015061C_L_80150784
-    li r3, 0x384
-    bl Alloc
-    mr. r30, r3
-    beq fn_8015061C_L_80150704
-    bl KartDriver_New_Empty
-    fn_8015061C_L_80150704:
-    stw r30, 0x124(r31)
-    lwz r3, 0x124(r31)
-    cmplwi r3, 0x0
-    beq fn_8015061C_L_80150730
-    lwz r5, 0x0(r29)
-    mr r7, r27
-    addi r6, r28, 0x17c
-    li r4, 0x0
-    li r8, 0x0
-    li r9, 0x2
-    bl KartDriver_Init
-    fn_8015061C_L_80150730:
-    li r3, 0x154
-    bl Alloc
-    mr. r30, r3
-    beq fn_8015061C_L_80150760
-    lfs f1, lbl_806D8064(r2)
-    li r4, 0x0
-    lwz r5, 0x124(r31)
-    li r7, 0x1
-    fmr f2, f1
-    lwz r6, 0x0(r29)
-    fmr f3, f1
-    bl TornadoEffect_Ctor
-    fn_8015061C_L_80150760:
-    stw r30, 0x150(r31)
-    lfs f1, lbl_806D8064(r2)
-    lwz r3, 0x150(r31)
-    lfs f2, lbl_806D8068(r2)
-    bl TireEffect_ResetSpin
-    cmpwi r27, 0x0
-    bne fn_8015061C_L_80150784
-    lwz r0, 0x124(r31)
-    stw r0, g_playerRenderObj(r13)
-    fn_8015061C_L_80150784:
-    addi r27, r27, 0x1
-    addi r31, r31, 0x4
-    cmpwi r27, 0xb
-    addi r28, r28, 0x30
-    addi r29, r29, 0xc
-    blt fn_8015061C_L_801506E4
-    b fn_8015061C_L_80150910
-    fn_8015061C_L_801507A0:
-    lwz r3, 0x1c(r31)
-    cmplwi r3, 0x0
-    beq fn_8015061C_L_801507B4
-    li r4, 0x1
-    bl CourseEnvironment_Dtor
-    fn_8015061C_L_801507B4:
-    li r0, 0x0
-    li r3, 0x0
-    stw r0, 0x1c(r31)
-    li r4, 0x0
-    stw r0, g_raceCamera(r13)
-    bl SetActiveCamera
-    lwz r3, 0x20(r31)
-    cmplwi r3, 0x0
-    beq fn_8015061C_L_801507F0
-    beq fn_8015061C_L_801507F0
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_8015061C_L_801507F0:
-    lwz r28, 0x24(r31)
-    cmplwi r28, 0x0
-    beq fn_8015061C_L_8015086C
-    beq fn_8015061C_L_8015086C
-    lis r3, 0x1
-    lhz r4, 0x4(r28)
-    subi r0, r3, 0x1
-    clrlwi r0, r0, 16
-    subf r0, r4, r0
-    cntlzw r0, r0
-    extrwi. r0, r0, 8, 19
-    beq fn_8015061C_L_80150824
-    b fn_8015061C_L_80150834
-    fn_8015061C_L_80150824:
-    subi r3, r4, 0x1
-    cntlzw r0, r4
-    sth r3, 0x4(r28)
-    extrwi r0, r0, 8, 19
-    fn_8015061C_L_80150834:
-    cmpwi r0, 0x0
-    beq fn_8015061C_L_8015086C
-    cmplwi r28, 0x0
-    beq fn_8015061C_L_8015086C
-    lwz r4, 0x0(r28)
-    mr r3, r28
-    lwz r12, 0x30(r4)
-    mtctr r12
-    bctrl
-    lwz r4, 0x0(r28)
-    mr r3, r28
-    lwz r12, 0x34(r4)
-    mtctr r12
-    bctrl
-    fn_8015061C_L_8015086C:
-    li r0, 0x0
-    stw r0, 0x20(r31)
-    stw r0, 0x24(r31)
-    b fn_8015061C_L_80150910
-    fn_8015061C_L_8015087C:
-    li r3, 0x20
-    bl Alloc
-    mr. r26, r3
-    beq fn_8015061C_L_80150898
-    addi r4, r30, 0x3a28
-    li r5, 0x0
-    bl fn_8013D800
-    fn_8015061C_L_80150898:
-    stw r26, 0x574(r31)
-    lfs f1, lbl_806D8064(r2)
-    lwz r3, 0x574(r31)
-    lfs f2, lbl_806D8068(r2)
-    bl fn_8013D738
-    lwz r3, 0x574(r31)
-    lfs f1, lbl_806D8064(r2)
-    bl fn_8013D4B0
-    b fn_8015061C_L_80150910
-    fn_8015061C_L_801508BC:
-    slwi r28, r26, 2
-    add r27, r31, r28
-    lwz r0, 0x3f0(r27)
-    cmplwi r0, 0x0
-    bne fn_8015061C_L_80150910
-    addi r29, r30, 0x3554
-    lwzx r0, r29, r28
-    cmpwi r0, -0x1
-    beq fn_8015061C_L_80150910
-    li r3, 0x30
-    bl Alloc
-    mr. r26, r3
-    beq fn_8015061C_L_80150900
-    lwzx r4, r29, r28
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_InitWithAnim
-    fn_8015061C_L_80150900:
-    stw r26, 0x3f0(r27)
-    add r3, r31, r28
-    li r0, 0x1
-    stw r0, 0x4b0(r3)
-    fn_8015061C_L_80150910:
-    lmw r26, 0x8(r1)
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+class KartDrv {
+public:
+    char data[0x384];
+    KartDrv();
+};
+
+class TornadoFx {
+public:
+    char data[0x154];
+    TornadoFx(int a, void *kart, int id, int b, float x, float y, float z);
+};
+
+class VObjModel : public VObj {
+public:
+    char pad4[0x1C];
+    VObjModel(const char *name, int a);
+};
+
+struct RacePartKart {
+    int id;
+    int pad[2];
+};
+
+static inline int RaceRefDec(HsdObj *o) {
+    int ret = o->ref == (unsigned short)-1;
+    if (ret) {
+        return ret;
+    }
+    return o->ref-- == 0;
 }
+
+static inline void RaceObjUnref(HsdObj *o) {
+    if (o == 0) {
+        return;
+    }
+    if (RaceRefDec(o)) {
+        if (o != 0) {
+            o->info->release(o);
+            o->info->destroy(o);
+        }
+    }
+}
+
+#pragma use_lmw_stmw on
+extern "C" void fn_8015061C(RaceScene *self, int part, int arg) {
+    int i;
+
+    switch (part) {
+    case 4:
+        for (i = 0; i < 11; i++) {
+            if (self->drivers[i] != 0) {
+                KartDriver_Dtor(self->drivers[i], 1);
+            }
+            if (self->effects[i] != 0) {
+                VisualEffectHolder_Dtor(self->effects[i], 1);
+            }
+            self->drivers[i] = 0;
+            self->effects[i] = 0;
+            self->active[i] = 0;
+            PSMTXIdentity(self->mtx[i]);
+            g_playerRenderObj = 0;
+        }
+        break;
+    case 5: {
+        const RaceKartDescR *k = lbl_80367200;
+        for (i = 0; i < 11; i++) {
+            if (arg == (int)k[i].character) {
+                self->drivers[i] = new KartDrv;
+                if (self->drivers[i] != 0) {
+                    KartDriver_Init(self->drivers[i], 0, k[i].character, self->mtx[i], i, 0, 2);
+                }
+                self->effects[i] = new TornadoFx(0, self->drivers[i], k[i].character, 1, 0.0f, 0.0f, 0.0f);
+                TireEffect_ResetSpin(self->effects[i], 0.0f, 1.0f);
+                if (i == 0) {
+                    g_playerRenderObj = (unsigned int)self->drivers[i];
+                }
+            }
+        }
+        break;
+    }
+    case 6:
+        if (self->env != 0) {
+            CourseEnvironment_Dtor(self->env, 1);
+        }
+        self->env = 0;
+        g_raceCamera = 0;
+        SetActiveCamera(0, 0);
+        if (self->camera != 0) {
+            delete self->camera;
+        }
+        if (self->lights != 0) {
+            RaceObjUnref(self->lights);
+        }
+        self->camera = 0;
+        self->lights = 0;
+        break;
+    case 7:
+        self->obj574 = new VObjModel((const char *)lbl_80367758, 0);
+        fn_8013D738(self->obj574, 0.0f, 1.0f);
+        fn_8013D4B0(self->obj574, 0.0f);
+        break;
+    case 8:
+        if (self->sprites[arg] == 0) {
+            if (lbl_80367284[arg] != -1) {
+                self->sprites[arg] = new SceneSprite(lbl_80367284[arg], 1, 0);
+                self->spriteOn[arg] = 1;
+            }
+        }
+        break;
+    }
+}
+#pragma use_lmw_stmw reset
 
 extern "C" unsigned char fn_80150924(unsigned char *o) {
     return o[0x10];
