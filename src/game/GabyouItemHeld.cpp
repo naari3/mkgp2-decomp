@@ -316,8 +316,8 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
                 float yaw = Vec3_HorizontalYawTo(&item->position, &targetPosition);
                 yaw = progress * yaw;
                 progress = 1.0f - progress;
-                yaw = progress * item->rotation.y + yaw;
-                item->rotation.y = BuildOrientationFromYaw(yaw);
+                progress = progress * item->rotation.y + yaw;
+                item->rotation.y = BuildOrientationFromYaw(progress);
             }
             if (1.0f == context->progress) {
                 if (FinalLapCoinJump_CheckActiveForObject(context->target)) item->active = 0;
