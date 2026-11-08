@@ -27,21 +27,25 @@ struct PhysicsWallMatrix {
         m[0] = m[5] = m[10] = m[15] = lbl_806DA450;
     }
     PhysicsWallMatrix &operator*=(const PhysicsWallMatrix &b) {
-        PhysicsWallMatrix product;
-        const float *row = m;
-        int n = 0;
-        for (int i = 0; i < 4; ++i) {
-            for (int j = 0; j < 4; ++j) {
-                float value = row[0] * b.m[j];
-                value += row[1] * b.m[4+j];
-                value += row[2] * b.m[8+j];
-                value += row[3] * b.m[12+j];
-                product.m[n+j] = value;
+        PhysicsWallMatrix result;
+        const float *row=m;
+        const float *column;
+        float *output=result.m;
+        const float *right=b.m;
+        int n=0;
+        for(int i=0;i<4;i++) {
+            column=right;
+            for(int j=0;j<4;j++,column++) {
+                float value=row[0]*column[0];
+                value+=row[1]*column[4];
+                value+=row[2]*column[8];
+                value+=row[3]*column[12];
+                output[n+j]=value;
             }
-            row += 4;
-            n += 4;
+            row+=4;
+            n+=4;
         }
-        for (int k = 0; k < 16; ++k) m[k] = product.m[k];
+        for(int i=0;i<16;i++) m[i]=result.m[i];
         return *this;
     }
     void applyYaw(float yaw) {

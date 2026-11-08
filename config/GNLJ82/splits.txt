@@ -1330,6 +1330,7 @@ game/TornadoEffect.c:
 	extab       start:0x800075FC end:0x800076B0
 	extabindex  start:0x800207EC end:0x800208A0
 	.text       start:0x80056CB0 end:0x80058DE8
+	.data       start:0x803F9880 end:0x803F9968
 
 game/AudioChannel_DtorWithSeStop.c:
 	extab       start:0x800076B0 end:0x800076B8
@@ -1576,6 +1577,7 @@ game/clMiyoshiCardCreate.c:
 	extab       start:0x80007E10 end:0x80007E74
 	extabindex  start:0x80020DBC end:0x80020DEC
 	.text       start:0x80061054 end:0x8006178C
+	.rodata     start:0x802EE028 end:0x802EE320
 
 game/dtor_8006178C.c:
 	extab       start:0x80007E74 end:0x80007E84
@@ -2119,6 +2121,7 @@ game/GXChannel_PushChannelColors.c:
 	extab       start:0x800087B0 end:0x800087B8
 	extabindex  start:0x80021590 end:0x8002159C
 	.text       start:0x8007D2AC end:0x8007D7BC
+	.rodata     start:0x80311C68 end:0x80311CA0
 
 game/GXChannel_Unbind.c:
 	extab       start:0x800087B8 end:0x800087C0
@@ -6187,6 +6190,7 @@ game/KartPreview.c:
 	extab       start:0x8000D400 end:0x8000D538
 	extabindex  start:0x80024DC4 end:0x80024E48
 	.text       start:0x8013C4A4 end:0x8013D4B0
+	.rodata     start:0x803600E0 end:0x80360440
 
 game/PreviewModel.c:
 	extab       start:0x8000D538 end:0x8000D630
@@ -6344,6 +6348,7 @@ game/Scene_8014E0C4.cpp:
 	extab       start:0x8000E8D4 end:0x8000F0DC
 	extabindex  start:0x800255BC end:0x800258B0
 	.text       start:0x8014E0C4 end:0x80157940
+	.rodata     start:0x80363D30 end:0x803678D8
 
 game/SceneList_80157940.cpp:
 	extab       start:0x8000F0DC end:0x8000F114
@@ -6774,6 +6779,7 @@ game/mapeffect/Jungle16ACtor.cpp:
 	extab       start:0x80010278 end:0x800102D0
 	extabindex  start:0x8002606C end:0x80026078
 	.text       start:0x8016AB58 end:0x8016ACD4
+	.rodata     start:0x8036CA00 end:0x8036CF68
 
 game/mapeffect/Cave16ACtor.cpp:
 	extab       start:0x800102D0 end:0x80010364
@@ -6978,6 +6984,7 @@ game/Scene_80170B5C.cpp:
 	extab       start:0x80010774 end:0x800107E8
 	extabindex  start:0x80026414 end:0x80026420
 	.text       start:0x80170B5C end:0x80170EE0
+	.rodata     start:0x8036E220 end:0x8036E728
 
 game/LavaSplash.cpp:
 	extab       start:0x800107E8 end:0x800108A4
@@ -13867,12 +13874,21 @@ triforce/amnet.c:
 	.text       start:0x8028C158 end:0x8028C1B8
 
 triforce/amnet_nm3.c:
-	.text       start:0x8028C1B8 end:0x8028EF74
-	.rodata     start:0x803F2798 end:0x803F2880
+	.text       start:0x8028C1B8 end:0x8028D3E4
 	.data       start:0x804F5800 end:0x804F5828
 	.bss        start:0x806937C0 end:0x80699220
 	.sbss       start:0x806D1E40 end:0x806D1E48
+
+triforce/amnet_io_exact.c:
+	.text       start:0x8028D3E4 end:0x8028D8CC
+
+triforce/amnet_setup_nm.c:
+	.text       start:0x8028D8CC end:0x8028EAA8
+	.rodata     start:0x803F2798 end:0x803F2880
 	.sdata2     start:0x806DC930 end:0x806DC940
+
+triforce/amnet_reset.c:
+	.text       start:0x8028EAA8 end:0x8028EF74
 
 triforce/amnet_init.c:
 	.text       start:0x8028EF74 end:0x8028F45C
@@ -14197,7 +14213,10 @@ sysdolphin/baselib/aobj.c:
 	.sdata2     start:0x806DCBD8 end:0x806DCBE0
 
 sysdolphin/baselib/lobj.c:
-	.text       start:0x802C4010 end:0x802C6430
+	.text       start:0x802C4010 end:0x802C40A4
+
+sysdolphin/baselib/lobj_nm1.c:
+	.text       start:0x802C40A4 end:0x802C6430
 	.rodata     start:0x803F2BB8 end:0x803F2BD0
 	.data       start:0x804FC368 end:0x804FC4C8
 	.bss        start:0x806CD080 end:0x806CD0A8

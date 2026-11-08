@@ -5,7 +5,6 @@
 #include "game/Scene_80170B5C_private.h"
 
 extern "C" {
-extern char lbl_8036E220[];
 extern int g_longRoundFlag, g_reverseRoundFlag;
 extern char lbl_806D8CD8[7], lbl_806D8CE0[5];
 void DebugPrintf(const char *, ...);
@@ -20,6 +19,76 @@ int fn_80185630(GrowJoint *, void *, void *, int);
 void __assert(char *, int, char *);
 }
 
+/* .rodata 0x8036E220..0x8036E728 is this file's (clKPTrap). The ctor
+ * addresses its strings from the section start (`addi r31, ...rodata.0`), so
+ * they are separate objects defined here. Names other files use stay global:
+ * lbl_8036E654/lbl_8036E660 (class names in .sdata), lbl_8036E674 (the
+ * DeleteMapEffect message in Scene_801709FC). */
+#pragma force_active on
+extern "C" {
+extern const unsigned int lbl_8036E220[0xFF];
+const unsigned int lbl_8036E220[0xFF] = {
+    0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000,
+    0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000,
+    0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000,
+    0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000,
+    0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
+    0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000,
+    0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000,
+    0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000,
+    0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000,
+    0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
+    0x42A6AAAB, 0x459C4000, 0x42A6AAAB,
+};
+}
+static const char sKPJointA[] = "_jkabe_A_joint";
+static const char sKPAtariA[] = "_kabe_atari_A_joint";
+static const char sKPHaniA[] = "_kabe_hani_A_joint";
+extern "C" {
+extern const char lbl_8036E654[9], lbl_8036E660[0x11], lbl_8036E674[0x1D];
+const char lbl_8036E654[9] = "clKPTrap";
+const char lbl_8036E660[0x11] = "clMapEffectParts";
+const char lbl_8036E674[0x1D] = " DeleteMapEffect : clKPTrap\n";
+}
+static const char sKPCreate[] = " CreateMapEffect : clKPTrap\n";
+static const char sKPModel[] = "KP_jkabe.dat";
+static const char sKPFmtAtari[] = "KP_castle_jkabe_%02d_atari_joint";
+static const char sKPFmtHani[] = "KP_castle_jkabe_%02d_hani_joint";
+static const char sKPFmtJoint[] = "KP_castle_jkabe_%02d_joint";
+#pragma force_active reset
+
 static inline void *GetPObj(GrowDObj *d) {
     if (d) return d->pobj;
     return 0;
@@ -32,13 +101,12 @@ static inline Vec3Grow *GetPosition(GrowJoint *j) {
     return &j->pos;
 }
 GrowSet::GrowSet() {
-    char *names = lbl_8036E220;
     int bit;
     unsigned int mask;
     int used;
-    DebugPrintf(names+0x474);
+    DebugPrintf(sKPCreate);
     model=0; entries=0; count=0;
-    model=new clNormal3D(names+0x494,0);
+    model=new clNormal3D((char *)sKPModel,0);
     if (!model) return;
     if (g_longRoundFlag==0) {
         if (g_reverseRoundFlag==0) mask=0x16;
@@ -65,11 +133,11 @@ GrowSet::GrowSet() {
         if (mask & (1<<bit)) {
             GrowEntry *e=&entries[used];
             char name[32];
-            sprintf(name,names+0x4A4,bit);
+            sprintf(name,sKPFmtAtari,bit);
             GrowJoint *a=ResolveJointByName(model,name);
-            sprintf(name,names+0x4C8,bit);
+            sprintf(name,sKPFmtHani,bit);
             GrowJoint *b=ResolveJointByName(model,name);
-            sprintf(name,names+0x4E8,bit);
+            sprintf(name,sKPFmtJoint,bit);
             e->jobj=ResolveJointByName(model,name);
             if (!e->jobj || !a || !b) continue;
             GrowFace face;

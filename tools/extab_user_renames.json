@@ -1493,13 +1493,13 @@
     "extabindex_fn_80057960": "@eti_80020864",
     "extab_TornadoEffect_ComposeRenderMatrix": "@etb_80007690",
     "extabindex_TornadoEffect_ComposeRenderMatrix": "@eti_80020870",
-    "extab_TornadoEffect_ApplyItemVisual_Primary": "@etb_80007698",
-    "extabindex_TornadoEffect_ApplyItemVisual_Primary": "@eti_8002087C",
     "extab_TornadoEffect_ApplyItemVisual_Compact": "@etb_800076A8",
     "extabindex_TornadoEffect_ApplyItemVisual_Compact": "@eti_80020894",
     "__dt__6TEVec3Fv": "dtor_80036E40",
     "__ct__10TENormal3DFPvi": "clNormal3D_Construct",
-    "__ct__13TornadoEffectFUciiUcfff": "TornadoEffect_Ctor"
+    "__ct__13TornadoEffectFUciiUcfff": "TornadoEffect_Ctor",
+    "@416": "jumptable_803F9880",
+    "@531": "jumptable_803F98F4"
   },
   "src/game/TornadoItem.c": {
     "extab_TornadoItem_TickActive": "@etb_8000B70C",
@@ -5212,8 +5212,6 @@
     "extabindex_fn_80153ED0": "@eti_800257C0",
     "extab_fn_80153F08": "@etb_8000F004",
     "extabindex_fn_80153F08": "@eti_800257CC",
-    "extab_fn_801540E0": "@etb_8000F00C",
-    "extabindex_fn_801540E0": "@eti_800257D8",
     "extab_fn_80154304": "@etb_8000F014",
     "extabindex_fn_80154304": "@eti_800257E4",
     "extab_fn_80154FB0": "@etb_8000F05C",
@@ -5502,7 +5500,35 @@
     "__dt__Q23std12out_of_rangeFv": "fn_801460D0",
     "__dt__9ExcStrRefFv": "dtor_80038E30",
     "__dt__Q23std9exceptionFv": "dtor_80038DD4",
-    "@625": "lbl_80361E60"
+    "@625": "lbl_80361E60",
+    "@67": "@etb_8000DBE4",
+    "@68": "@eti_800251D8",
+    "@206": "@etb_8000DBEC",
+    "@207": "@eti_800251E4",
+    "@217": "@etb_8000DBF4",
+    "@218": "@eti_800251F0",
+    "@261": "@etb_8000DBFC",
+    "@262": "@eti_800251FC",
+    "@529": "@etb_8000DC2C",
+    "@530": "@eti_80025208",
+    "@574": "@etb_8000DCE4",
+    "@575": "@eti_80025214",
+    "@614": "@etb_8000DD8C",
+    "@615": "@eti_80025220",
+    "@626": "@etb_8000DE04",
+    "@627": "@eti_8002522C",
+    "@644": "@etb_8000DC24",
+    "@645": "@eti_80025238",
+    "@674": "@etb_8000DE0C",
+    "@675": "@eti_80025244",
+    "@695": "@etb_8000DD5C",
+    "@696": "@eti_80025250",
+    "@712": "@etb_8000DD84",
+    "@713": "@eti_8002525C",
+    "@732": "@etb_8000DE24",
+    "@733": "@eti_80025268",
+    "@748": "@etb_8000DE54",
+    "@749": "@eti_80025274"
   },
   "src/game/RankPanelBase_801461B0.cpp": {
     "extab_fn_801461B0": "@etb_8000DE6C",
@@ -6946,7 +6972,9 @@
   "src/game/PhysicsState_KartCollisionCheck.cpp": {
     "__dt__19PhysicsCollisionVecFv": "dtor_80036E40",
     "__ct__21PhysicsCollisionShapeFii": "fn_802091BC",
-    "__dt__21PhysicsCollisionShapeFv": "dtor_80209180"
+    "__dt__21PhysicsCollisionShapeFv": "dtor_80209180",
+    "@155": "@etb_80016C5C",
+    "@156": "@eti_80028B38"
   },
   "src/game/PhysicsState_WallCollisionCheck.cpp": {
     "__dt__19PhysicsCollisionVecFv": "dtor_80036E40"
@@ -9149,6 +9177,8 @@
     "@227": "@eti_8002996C"
   },
   "src/game/anon_8021A7C8_nm1.cpp": {
+    "@170": "@etb_8001AB80",
+    "@171": "@eti_8002A2CC",
     "__dt__18clCSModelInterfaceFv": "dtor_8013DCBC",
     "@172": "@etb_8001AB80",
     "@173": "@eti_8002A2CC",
@@ -10849,7 +10879,14 @@
     "@376": "@eti_80021554",
     "@385": "@etb_800086D0",
     "@386": "@eti_80021560",
-    "@349": "global:lbl_80311BF8"
+    "@349": "global:lbl_80311BF8",
+    "@342": "global:lbl_80311BF8",
+    "@343": "@etb_80008768",
+    "@344": "@eti_80021554",
+    "@353": "@etb_800086D0",
+    "@354": "@eti_80021560",
+    "@431": "@etb_80008738",
+    "@432": "@eti_80021548"
   },
   "src/game/PanelCda40.cpp": {
     "__dt__16CdaSpriteDerivedFv": "fn_801CDA8C",
@@ -11794,7 +11831,9 @@
   "src/game/fn_801ED798.cpp": {
     "__dt__12CollisionVecFv": "dtor_80036E40",
     "@244": "@etb_80016CD4",
-    "@245": "@eti_80028B50"
+    "@245": "@eti_80028B50",
+    "@248": "@etb_80016CD4",
+    "@249": "@eti_80028B50"
   },
   "src/game/fn_801F7F50.cpp": {
     "__dt__12DrawQuad7F50Fv": "dtor_801F8214",
@@ -11821,7 +11860,9 @@
     "__dt__10MixDrawS56Fv": "dtor_801F6BD0",
     "@130": "@etb_80017580",
     "@131": "@eti_80028F88",
-    "...rodata.0": "lbl_803BEDC0"
+    "...rodata.0": "lbl_803BEDC0",
+    "@136": "@etb_80017580",
+    "@137": "@eti_80028F88"
   },
   "src/game/SpriteAnimHandleCtor.cpp": {
     "__nw__FUl": "Alloc",
@@ -12810,7 +12851,10 @@
     "rankingResources": "global:lbl_8039C53C",
     "@109": "@etb_80015074",
     "@110": "@eti_80028004",
-    "@108": "lbl_806D9FB8"
+    "@108": "lbl_806D9FB8",
+    "@122": "@etb_80015074",
+    "@123": "@eti_80028004",
+    "@121": "lbl_806D9FB8"
   },
   "src/game/PCBCommLifecycle.cpp": {
     "__dt__7PCBCommFv": "dtor_800869D0",
@@ -12950,7 +12994,37 @@
     "fn_8023D1B4__FP10KartRender": "fn_8023D1B4",
     "fn_80231B74__Fi": "fn_80231B74",
     "fn_80231A50__Fi": "fn_80231A50",
-    "__sinit_EnmyFaceEffect_nm1_cpp": "fn_8023001C"
+    "__sinit_EnmyFaceEffect_nm1_cpp": "fn_8023001C",
+    "@707": "jumptable_804EE14C",
+    "@747": "jumptable_804EE18C",
+    "@104": "@etb_8001BFF0",
+    "@105": "@eti_8002A8E4",
+    "@128": "@etb_8001BFF8",
+    "@129": "@eti_8002A8F0",
+    "@174": "@etb_8001C0A4",
+    "@175": "@eti_8002A8FC",
+    "@237": "@etb_8001C0AC",
+    "@238": "@eti_8002A908",
+    "@355": "@etb_8001C0B4",
+    "@356": "@eti_8002A914",
+    "@423": "@etb_8001C0D4",
+    "@424": "@eti_8002A920",
+    "@443": "@etb_8001C0DC",
+    "@444": "@eti_8002A92C",
+    "@492": "@etb_8001C0F4",
+    "@493": "@eti_8002A938",
+    "@558": "@etb_8001C0FC",
+    "@559": "@eti_8002A944",
+    "@622": "@etb_8001C104",
+    "@623": "@eti_8002A950",
+    "@708": "@etb_8001C10C",
+    "@709": "@eti_8002A95C",
+    "@748": "@etb_8001C114",
+    "@749": "@eti_8002A968",
+    "@764": "@etb_8001C12C",
+    "@765": "@eti_8002A974",
+    "@779": "@etb_8001C134",
+    "@780": "@eti_8002A980"
   },
   "src/game/anon_802124FC_nm1.cpp": {
     "__dt__7KartPosFv": "dtor_80036E40",

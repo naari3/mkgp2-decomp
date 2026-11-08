@@ -27,6 +27,7 @@ extern "C" void fn_801E4AF4(SteeringRing *s, SteeringRingIter position, unsigned
     if(n) {
         unsigned long max=InsertMaxSize();
         if(n>max || s->count>max-n) throw std::length_error(lbl_803BD2C0);
+        int *p;
         unsigned long newCount=s->count+n;
         if(newCount<=s->capacity) {
             unsigned long before=position.index;
@@ -53,7 +54,7 @@ extern "C" void fn_801E4AF4(SteeringRing *s, SteeringRingIter position, unsigned
             unsigned long cap=RingMaxRef(s->capacity,lbl_806CFF88);
             while(newCount>cap) cap*=2;
             unsigned long before=position.index;
-            int *p=(int *)Alloc(cap*4);
+            p=(int *)Alloc(cap*4);
             if(before) RingCopy(s->begin(),position,p);
             InsertFillN(p+before,n,value);
             if(before<s->count) RingCopy(position,s->end(),p+before+n);

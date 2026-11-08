@@ -1,6 +1,6 @@
-/* Native candidate: 63.242992% text. Flat matrix copy construction and
- * in-place multiplication recover aggregate assignment. Remaining input-load
- * hoisting and FP save allocation differ from the target. */
+/* Native candidate. Matrix multiply uses row/column/output pointers like
+ * EnemyRun. Remaining: the corner loop keeps original.m[] in saved FPRs,
+ * the target reloads it from the stack every iteration. */
 #include "game/PhysicsCollisionPrivate.h"
 #include "game/PhysicsWallMatrixPrivate.h"
 

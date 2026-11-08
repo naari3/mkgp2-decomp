@@ -1,18 +1,32 @@
 #include "game/anon_8020314C_private.h"
 
+struct PopupTextCursor {
+    int dy;
+    int byteOffset;
+    int line;
+    PopupTextCursor() : dy(0), byteOffset(0), line(0) {}
+    TextManager *Get(TextManager *texts) const {
+        return (TextManager *)((char *)texts + byteOffset);
+    }
+    void Next() {
+        dy += 30;
+        ++line;
+        byteOffset += sizeof(TextManager);
+    }
+};
+
 static inline void LayoutPopupTexts(MsgPopup *popup, float s) {
-    int i;
     float ts = s;
     if (popup->msgId == 4) {
         ts = s * lbl_806DAAC0;
     }
-    int dy = 0;
+    PopupTextCursor cursor;
     float ox = lbl_806DAAC4 * s;
     float base = -40.0f;
-    for (i = 0; i < 4; dy += 30, i++) {
-        float yy = s * (base + (float)dy);
-        fn_801F93EC(&popup->texts[i], popup->x + ox, popup->y + yy);
-        fn_801F93D0(&popup->texts[i], ts, ts);
+    for (; cursor.line < 4; cursor.Next()) {
+        float yy = s * (base + (float)cursor.dy);
+        fn_801F93EC(cursor.Get(popup->texts), popup->x + ox, popup->y + yy);
+        fn_801F93D0(cursor.Get(popup->texts), ts, ts);
     }
 }
 

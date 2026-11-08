@@ -58,3 +58,8 @@ c18_u94 fn_80185FE8: c13 retry unlocks 96.66292 ->100% with three structural cha
 Source: Codex worker c19_u45_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1804 B.
 
 c19_u45 fn_80184F24: replacing independent int offset, casted out+offset, and offset+=sizeof(DListQuadInfo) with quad=&out[count] in both primitive branches resolves all 52 GPR-only residual rows (99.37916 ->100%). MWCC generates the same 60-byte induction but colors it r22, with jobj/out/capacity r23/r24/r25 as target. Text1804/extab8/index12 all100. Sole TU promoted Matching; source object in main.elf edge, ELF symbol80184F24/1804, report complete, coordinator full DOL SHA-1 exact. One semantics-first hypothesis; no rescue data/EH/split/header changes.
+
+## c20_u66_20261108
+Source: Codex worker c20_u66_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c20_u66 fn_80184928: target-derived declaration ordering (size/primitive/half after persistent locals) improves98.18538->98.28982, exact1532B/extab8/index12. dst/table base becomes target r21, quad cursor r21->r20; 99->92 formatted differing rows. Float-component reader is instruction-identical; reuse command-size/vertex-count n regresses98.133156. Retain H2 NonMatching. Residual GPR partition, three stack-versus-pointer coordinate accesses, quad-reader scratch registers and quad induction scheduling. No singleton/pool rescue or B subset. Full fallback DOL SHA1 exact.

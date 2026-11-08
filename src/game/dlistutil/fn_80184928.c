@@ -29,14 +29,14 @@ int fn_80184928(HSD_JObj *jobj, DListPObj *pobj, DListQuad *out) {
     int count;
     int offset;
     MtxPtr matrix;
-    unsigned int size;
-    int primitive;
     int j;
-    int half;
     DListQuad *quad;
     Vec *dst;
     unsigned char *end;
     unsigned char *start;
+    unsigned int size;
+    int primitive;
+    int half;
 
     if (!jobj || !pobj) return 0;
     if (!out) return 0;

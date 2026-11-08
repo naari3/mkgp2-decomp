@@ -2649,11 +2649,11 @@ void NameEntry::DrawKeys() {
                 rc.resId = 0x1913;
                 rc.Show(k->x, k->y, 1.0f);
                 float a = k->blink == 1 ? 1.0f : sinf(3.141592653589793 * k->t2);
-                rc.t1 = 4;
                 rc.t0 = 1;
+                rc.t1 = 4;
                 rc.t2 = 1;
-                unsigned int c = __rlwimi(0xFFFFFF00, (int)(255.0f * a), 0, 24, 31);
-                rc.SetColor(c);
+                unsigned char al = (int)(255.0f * a);
+                rc.SetColor(0xFFFFFF00 | al);
                 fn_8011FAFC(&rc, 7);
             }
             fn_80121E10(&rc);

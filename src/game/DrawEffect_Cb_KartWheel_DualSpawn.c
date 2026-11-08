@@ -3,6 +3,7 @@
  * It fades in while the driver has status flag 8 or 0x10 set, spins at a
  * random rate and drives both children each frame. */
 #include "game/DrawEffectAccess.h"
+#include "game/DrawEffectWheelPairState.h"
 
 typedef struct { float v[4]; } PhaseTable;
 
@@ -16,11 +17,6 @@ static inline float sinf(float x)
 {
     return sin(x);
 }
-
-#define D(o) (*(float *)(d + (o)))
-#define DI(o) (*(unsigned int *)(d + (o)))
-#define CP(o) (*(unsigned char **)(c + (o)))
-#define DP(o) (*(unsigned char **)(d + (o)))
 
 typedef struct KartStatus {
     unsigned char pad[0x10];
@@ -41,37 +37,36 @@ static inline unsigned char has_flag(KartStatus *st, unsigned long long mask)
 
 void DrawEffect_Cb_KartWheel_DualSpawn(unsigned char *self)
 {
-    unsigned char *c;
-    unsigned char *d = self + 0xCC;
+    WheelPairState *d = (WheelPairState *)(self + 0xCC);
     int i;
 
     switch (STATE) {
     case 0:
-        DP(0x10) = DrawEffect_SpawnDirect(DrawEffect_KartWheel_TripleChildSpawn);
-        DP(0x14) = DrawEffect_SpawnDirect(DrawEffect_KartWheel_TripleChildSpawn);
+        d->children[0] = DrawEffect_SpawnDirect(DrawEffect_KartWheel_TripleChildSpawn);
+        d->children[1] = DrawEffect_SpawnDirect(DrawEffect_KartWheel_TripleChildSpawn);
         F(0x2C) = 0.0f;
-        D(0x84) = 0.0f;
-        D(0x88) = 0.0f;
-        DI(0xB4) = 0;
+        d->angle = 0.0f;
+        d->speed = 0.0f;
+        d->timers[0] = 0;
         STATE++;
     case 1:
         break;
     }
 
     if (FINISHED) {
-        if (DP(0x10) != 0) {
-            *(signed char *)(DP(0x10) + 0xC9) = 1;
+        if (d->children[0] != 0) {
+            *(signed char *)(d->children[0] + 0xC9) = 1;
         }
-        if (DP(0x14) != 0) {
-            *(signed char *)(DP(0x14) + 0xC9) = 1;
+        if (d->children[1] != 0) {
+            *(signed char *)(d->children[1] + 0xC9) = 1;
         }
-        DP(0x10) = 0;
-        DP(0x14) = 0;
+        d->children[0] = 0;
+        d->children[1] = 0;
         DrawEffect_Free(self);
         return;
     }
     {
-        KartStatus *st = *(KartStatus **)(DP(0x50) + 0x304);
+        KartStatus *st = *(KartStatus **)(d->driver + 0x304);
         int active = 0;
         if (has_flag(st, 8ULL)) {
             active = 1;
@@ -91,46 +86,45 @@ void DrawEffect_Cb_KartWheel_DualSpawn(unsigned char *self)
             }
         }
     }
-    if (DI(0xB4) == 0) {
-        D(0x88) = 0.017453292f * Rand_RangeFloat(1.0f, 6.0f);
-        DI(0xB4) = Rand_RangeInt(30, 60);
+    if (d->timers[0] == 0) {
+        d->speed = 0.017453292f * Rand_RangeFloat(1.0f, 6.0f);
+        d->timers[0] = Rand_RangeInt(30, 60);
     }
-    D(0x84) = BuildOrientationFromYaw(D(0x84) + D(0x88));
-    if (FinalLapCoinJump_CheckActiveForObject(DP(0x50))) {
+    d->angle = BuildOrientationFromYaw(d->angle + d->speed);
+    if (FinalLapCoinJump_CheckActiveForObject(d->driver)) {
         U8(0x28) = 0;
     } else {
         U8(0x28) = 1;
     }
-    c = d;
-    for (i = 0; i < 2; i++, c += 4) {
-        if (CP(0x10) != 0) {
+    for (i = 0; i < 2; i++) {
+        if (d->children[i] != 0) {
             Vec wheel;
             PhaseTable offs;
             Vec local;
             Vec local2;
             float k;
             if (i == 0) {
-                Mtx44_GetTranslation_RowMajor(&wheel, KartDriver_GetJointByIdx(DP(0x50), 2));
+                Mtx44_GetTranslation_RowMajor(&wheel, KartDriver_GetJointByIdx(d->driver, 2));
             } else {
-                Mtx44_GetTranslation_RowMajor(&wheel, KartDriver_GetJointByIdx(DP(0x50), 3));
+                Mtx44_GetTranslation_RowMajor(&wheel, KartDriver_GetJointByIdx(d->driver, 3));
             }
             offs = lbl_8032A6D4;
-            k = 0.8f * ((1.0f + sinf(BuildOrientationFromYaw(D(0x84) + offs.v[i]))) / 2.0f) + 0.2f;
+            k = 0.8f * ((1.0f + sinf(BuildOrientationFromYaw(d->angle + offs.v[i]))) / 2.0f) + 0.2f;
             if (S8(0x28)) {
                 local = wheel;
-                DrawEffect_KartWheel_TripleChildUpdate(CP(0x10), &local, 0.9f, F(0x2C) * k);
+                DrawEffect_KartWheel_TripleChildUpdate(d->children[i], &local, 0.9f, F(0x2C) * k);
             } else {
                 local2 = wheel;
-                DrawEffect_KartWheel_TripleChildUpdate(CP(0x10), &local2, 0.9f, 0.0f);
+                DrawEffect_KartWheel_TripleChildUpdate(d->children[i], &local2, 0.9f, 0.0f);
             }
-            *(float *)(CP(0x10) + 0x150) += 0.007142857f;
-            if (1.0f < *(float *)(CP(0x10) + 0x150)) {
-                *(float *)(CP(0x10) + 0x150) -= 1.0f;
+            *(float *)(d->children[i] + 0x150) += 0.007142857f;
+            if (1.0f < *(float *)(d->children[i] + 0x150)) {
+                *(float *)(d->children[i] + 0x150) -= 1.0f;
             }
         }
     }
-    DrawEffect_TickTimer((unsigned int *)(d + 0xB4));
-    DrawEffect_TickTimer((unsigned int *)(d + 0xB8));
-    DrawEffect_TickTimer((unsigned int *)(d + 0xBC));
-    DrawEffect_TickTimer((unsigned int *)(d + 0xC0));
+    DrawEffect_TickTimer(&d->timers[0]);
+    DrawEffect_TickTimer(&d->timers[1]);
+    DrawEffect_TickTimer(&d->timers[2]);
+    DrawEffect_TickTimer(&d->timers[3]);
 }

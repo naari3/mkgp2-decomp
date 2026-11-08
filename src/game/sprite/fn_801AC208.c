@@ -3,10 +3,16 @@
 extern unsigned char lbl_806D175F;
 extern int lbl_806D1764;
 
-#define GOAL_LINE() GetGoalLine(tables->goalLines)
+#define GOAL_LINE() GetGoalLine(tables)
 
-static inline float *GetGoalLine(float *lines) {
-    return &lines[(g_cupId - 1) * 16 + g_longRoundFlag * 8 + g_reverseRoundFlag * 4];
+static inline void AdvanceGoalLine(float **line) {
+    *line += (g_cupId - 1) * 16 + g_longRoundFlag * 8 + g_reverseRoundFlag * 4;
+}
+
+static inline float *GetGoalLine(RaceVoiceTables *tables) {
+    float *line = tables->goalLines;
+    AdvanceGoalLine(&line);
+    return line;
 }
 
 static inline short SelectCharacter(RaceVoiceTables *tables, int character) {

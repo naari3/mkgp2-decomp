@@ -70,9 +70,10 @@ static inline void SetMixFormatS56(MixDrawS56 *node) {
     if(node->depth) { const DrawFormatS56 *table=mixDepthS56; GXSetVtxAttrFmtv(0,&table[offset]); }
     else { const DrawFormatS56 *table=mixFlatS56; GXSetVtxAttrFmtv(0,&table[offset]); }
 }
+static inline TextureEntry801F *GetTextureEntriesS56(const TextureBank801F *bank) { return bank->textures; }
 static inline void LoadTextureS56(TextureOwner801F *owner,SpriteTex801F *s) {
     TextureBank801F *bank=owner->bank;
-    TextureEntry801F *entries=bank->textures;
+    TextureEntry801F *entries=GetTextureEntriesS56(bank);
     if(lbl_806D196C.texture!=&entries[s->i14]) {
         lbl_806D196C.texture=&entries[s->i14];
         PaletteEntry801F *entry=TEXGetPaletteEntry(bank->palette,s->i14);

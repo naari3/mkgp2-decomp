@@ -35,7 +35,8 @@ static inline float *Goal_Line(float *lines) {
 }
 int fn_801AECF4(void) {
     short *tables = (short *)&lbl_80496C38;
-    int rank;
+    int rankIndex;
+    signed char rank;
     if (lbl_806D178D) return 1;
     if (g_lastPlayerCurrentCheckpoint != g_goalTriggerCheckpoint) return 0;
     if (!fn_801A1BD0(Goal_Line((float *)(tables + 0x4C6)),         &g_raceEntryArray[g_lastPlayerIndexCrossingCheckpoint])) return 0;
@@ -56,7 +57,7 @@ int fn_801AECF4(void) {
         lbl_806D17EC = (unsigned int)time;
         lbl_806D17E8 = (unsigned long long)time >> 32;
     }
-    for (rank = 0; rank < 8; rank++) lbl_80679260[rank] = RaceVoice_FindByRank(rank);
+    for (rankIndex = 0; rankIndex < 8; rankIndex++) lbl_80679260[rankIndex] = RaceVoice_FindByRank(rankIndex);
     rank = g_raceEntryArray[g_taMinLapPlayerIndex].player;
     switch (rank) {
         case 0: {

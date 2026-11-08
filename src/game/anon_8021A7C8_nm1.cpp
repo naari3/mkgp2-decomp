@@ -276,8 +276,7 @@ clCSOrgKartModel::clCSOrgKartModel(int character_, int variant, unsigned char wi
             anims[i] = new clNormal3D(cd->anims[resources->animIds[i]], 0);
         }
         clNormal3D_SetScale(driverAnim, anims[0], lbl_806DAFF4, lbl_806DAFE8, lbl_806DAFE8, lbl_806DAFE8);
-        HSD_JObj *dst = Archive_GetRootJObj(driver);
-        ObjectTree_BlendOrCopy_Timed(driver, Archive_GetRootJObj(driverAnim), dst, lbl_806DAFE8, 0);
+        ObjectTree_BlendOrCopy_Timed(driver, Archive_GetRootJObj(driverAnim), Archive_GetRootJObj(driver), lbl_806DAFE8, 0);
         if (flag) {
             clNormal3D_SetFlags(kart, 0x40000000, 0);
             clNormal3D_SetFlags(driver, 0x40000000, 0);

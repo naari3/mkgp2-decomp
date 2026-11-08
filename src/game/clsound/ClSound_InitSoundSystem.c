@@ -98,13 +98,15 @@ void ClSound_InitSoundSystem(void) {
     void *samples;
     unsigned int hooks[2];
     int i;
+    unsigned int aramSize;
     if (!ClSound_Initialized) {
         DebugPrintf(strings + 0x3f64);
         ResetEvents(lbl_80677F40);
         samples = 0;
         hooks[0] = lbl_806D94F0;
         hooks[1] = lbl_806D94F4;
-        DebugPrintf(strings + 0x3f90, ARInit(lbl_806D16C4, 2));
+        aramSize = ARInit(lbl_806D16C4, 2);
+        DebugPrintf(strings + 0x3f90, aramSize);
         ARQInit();
         AIInit(0);
         sndSetHooks((SND_HOOKS *)hooks);

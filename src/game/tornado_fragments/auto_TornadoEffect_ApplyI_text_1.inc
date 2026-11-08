@@ -7,7 +7,6 @@
 /* refine if the real prototype matters for header consumers. */
 extern void Object_SetColorAlphaOnly(void *obj, int idx, float a);
 extern void Object_SetJObjPositionXYZ(void *obj, float x, float y, float z);
-extern void TornadoEffect_ApplyItemVisual_Primary();
 
 /* --- extern decls: sda21-referenced data --- */
 extern const float lbl_806D28D0;
@@ -23,19 +22,6 @@ extern const float lbl_806D2938;
 
 /* --- forward decls --- */
 
-static inline void TE_SetVisualState(void *e, int r, int flag)
-{
-    if (r == 0) {
-        return;
-    }
-    if ((unsigned char)flag == 1) {
-        TE_S32(e, 0x130) = 0;
-    }
-    TE_S32(e, 0x124) = r;
-    if (TE_S32(e, 0x124) == 6) {
-        TE_U8(e, 0x12C) = 1;
-    }
-}
 
 #pragma use_lmw_stmw on
 void TornadoEffect_ApplyItemVisual_Secondary(void *e, int item, int flag)

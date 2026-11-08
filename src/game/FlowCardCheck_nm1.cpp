@@ -129,7 +129,7 @@ void fn_801B8874(int id);
 void InitRumbleController(int on);
 void fn_801A0004(Sprite *s);
 void Sprite_SetAnimTime(Sprite *s, float t);
-unsigned char Sprite_AdvanceAnim(Sprite *s, float dt);
+int Sprite_AdvanceAnim(Sprite *s, float dt);
 void *fn_801F8E58(void);
 void fn_801F8A34(void *list, TextMgr *tm, int prio);
 void fn_801F93EC(TextMgr *tm, float x, float y);
@@ -1024,7 +1024,8 @@ clFlowCCCharaItem::~clFlowCCCharaItem() {
             fn_80120A08((short)Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(pd, fn_8023D844(0, 0)), 0));
         } else {
             for (int j = 0; j < 5; j++) {
-                fn_80120A08((short)Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(pd, fn_8023D844(kCharaGroups[which][i], j + 1)), 0));
+                int index = fn_8023D844(kCharaGroups[which][i], j + 1);
+                fn_80120A08((short)Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(pd, index), 0));
             }
         }
     }
@@ -1083,12 +1084,14 @@ void clFlowCCCharaItem::Update() {
     UpdateSlide();
     if (IsIdle() == 1) {
         if (first == 1) { first = 0; field28 = -1; Select(1); }
+        InputState *in = SINGLETON_INSTANCE(g_pInputState);
         int old = field24;
-        Select(input_state()->pageInput);
+        Select(in->pageInput);
         if (old != field24) fn_801FE36C();
     } else {
         for (int i = 0; i < 11; i++) {
-            if (grp[i] != 0) (*grp[i])->x = kCharaGrpPos[i].x + slide;
+            Sprite **group = grp[i];
+            if (group != 0) { float x = kCharaGrpPos[i].x; (*group)->x = x + slide; }
         }
         for (int i = 0; i < 8; i++) {
             const Vec2 &p = kCharaTextPos[i];
@@ -1104,6 +1107,12 @@ void clFlowCCCharaItem::Update() {
     }
 }
 
+static inline void ProcessItemInput(clFlowCCItem *page) {
+    int delta = input_state()->pageInput;
+    page->Select(delta);
+    if (delta != 0) fn_801FE36C();
+}
+
 void clFlowCCItem::Update() {
     InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
@@ -1114,15 +1123,12 @@ void clFlowCCItem::Update() {
             (*grp[5])->prio = 6;
             (*grp[6])->prio = 6;
             ResCtrl rc;
-            int rowBase = 0;
-            int i;
             for (int row = 0; row < 5; row++) {
-                i = rowBase;
-                for (int col = 0; col < 12; col++, i++) {
+                for (int col = 0; col < 12; col++) {
+                    int i = row * 12 + col;
                     SpriteHandle_Destroy(handles[i]);
                     handles[i] = SpriteHandle_CreateDefault(&cards[i], 5);
                 }
-                rowBase = i;
             }
             fn_80121E10(&rc);
             rc.tail[0] = 1; rc.tail[1] = 1; rc.tail[2] = 1;
@@ -1132,13 +1138,11 @@ void clFlowCCItem::Update() {
             SpriteHandle_Destroy(handle);
             handle = SpriteHandle_CreateDefault(&rc, 6);
         }
-        int delta = input_state()->pageInput;
-        Select(delta);
-        if (delta != 0) fn_801FE36C();
+        ProcessItemInput(this);
     } else {
         for (int i = 0; i < 7; i++) {
-            const Vec2 &p = kItemGrpPos[i];
-            if (grp[i] != 0) (*grp[i])->x = p.x + slide;
+            Sprite **group = grp[i];
+            if (group != 0) { float x = kItemGrpPos[i].x; (*group)->x = x + slide; }
         }
         for (int i = 0; i < 8; i++) {
             const Vec2 &p = kItemTextPos[i];
@@ -1148,10 +1152,12 @@ void clFlowCCItem::Update() {
             fn_801F93EC(text[0], lbl_806DB780.x + slide, lbl_806DB780.y);
             fn_801F93EC(text[3], lbl_806DB828 + slide, kItemTextPos[3].y);
         }
-        int i = 0;
         for (int row = 0; row < 5; row++) {
             float y = kItemY[row];
-            for (int col = 0; col < 12; col++, i++) fn_8011F804(handles[i], kItemX[col] + slide, y);
+            for (int col = 0; col < 12; col++) {
+                float x = kItemX[col];
+                fn_8011F804(handles[row * 12 + col], x + slide, y);
+            }
         }
         fn_8011F804(handle, lbl_806DB834 + slide, lbl_806DB838);
         fn_8023CD24(indicator, lbl_806DB840 + slide, lbl_806DB844);
@@ -1179,12 +1185,17 @@ clFlowCCItem::clFlowCCItem() : field1C(0), field20(0), resId(0x13B9), paramId(0x
     SpriteGroup_CreateOrInit(&grp[6], kItemGrp4, 1, kItemGrpPos[6].x, kItemGrpPos[6].y);
     int i = 0;
     for (int row = 0; row < 5; row++) {
-        for (int col = 0; col < 12; col++, i++) {
+        for (int col = 0; col < 12; col++) {
+            int i = row * 12 + col;
             int res = 0x1422;
             if (pd->unlocked[kCards[row][col]] == 1) res = Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(pd, kCards[row][col]), 0);
             fn_80121E10(&cards[i]);
             cards[i].resId = res;
-            cards[i].Show(kItemX[col], kItemY[row], 1.0f);
+            float y;
+            float x;
+            x = kItemX[col];
+            y = kItemY[row];
+            cards[i].Show(x, y, 1.0f);
             cards[i].colors[0] = 0xC3CDF0FF; cards[i].colors[1] = 0xC3CDF0FF;
             cards[i].colors[2] = 0xC3CDF0FF; cards[i].colors[3] = 0xC3CDF0FF;
             cards[i].scaleX = lbl_806DB84C; cards[i].scaleY = lbl_806DB84C;
@@ -1233,8 +1244,7 @@ clFlowCCItem::clFlowCCItem() : field1C(0), field20(0), resId(0x13B9), paramId(0x
     Select(1);
 }
 
-static inline void SetCharaGroup(Sprite **group, const int &which, int index) {
-    PlayerData *pd = &g_playerData;
+static inline void SetCharaGroupForPlayer(Sprite **group, const int &which, int index, PlayerData *pd) {
     int id = kCharaGroups[which][index];
     unsigned char special = 0;
     if ((which == 1 && index == 5) || id < 0) special = 1;
@@ -1258,14 +1268,19 @@ static inline void SetCharaGroup(Sprite **group, const int &which, int index) {
     SpriteAnimParamBlock_SetAnimParamCached(group, 0x1D24, kCharaFrames[which][index][1]);
 }
 
+static inline void SetCharaGroup(Sprite **group, const int &which, int index) {
+    PlayerData *pd = &g_playerData;
+    SetCharaGroupForPlayer(group, which, index, pd);
+}
+
 void clFlowCCCharaItem::Select(int delta) {
     if (delta != 0 && field20 != 0) {
         int oldGroup = field24;
         unsigned char special = 0;
         int max = 30;
         if (kCharaGroups[which][5] == -1) max = 26;
-        PlayerData *pd = &g_playerData;
         int oldSlot = field28;
+        PlayerData *pd = &g_playerData;
         int n;
         for (n = 0; n < max; n++) {
             field28 += delta;
@@ -1316,8 +1331,8 @@ void clFlowCCCharaItem::Select(int delta) {
         if (oldGroup != field24) {
             SpriteAnimParamBlock_Reload(grp[oldGroup + 2], 0x15E);
             SpriteAnimParamBlock_Reload(grp[field24 + 2], 0x15F);
-            SetCharaGroup(grp[oldGroup + 2], which, oldGroup);
-            SetCharaGroup(grp[field24 + 2], which, field24);
+            SetCharaGroupForPlayer(grp[oldGroup + 2], which, oldGroup, pd);
+            SetCharaGroupForPlayer(grp[field24 + 2], which, field24, pd);
         }
     }
 }
@@ -1357,7 +1372,11 @@ clFlowCCCharaItem::clFlowCCCharaItem(int which) : which(which), field20(0), fiel
     slots[1][3] = out.x;
     fn_8019FF8C(*grp[3], 0x13BD, &out);
     slots[1][4] = out.x;
-    for (int i = 0; i < 6; i++) SetCharaGroup(grp[i + 2], this->which, i);
+    for (int i = 0; i < 6; i++) {
+        int group = i + 2;
+        Sprite **sprites = grp[group];
+        SetCharaGroup(sprites, this->which, i);
+    }
     for (int i = 0; i < 8; i++) text[i] = new TextMgr();
     text[0]->visible = 1; text[1]->visible = 1;
     text[2]->visible = 0; text[3]->visible = 0; text[4]->visible = 0;
@@ -1454,7 +1473,9 @@ void clFlowCCDate::Update() {
         }
         if (isJapanese()) {
             fn_801F93EC(text[0], lbl_806DB780.x + slide, lbl_806DB780.y);
-            fn_801F93EC(text[11], (lbl_806DB858 + kDateTextPos[11].x) + slide, kDateTextPos[11].y);
+            float x = kDateTextPos[11].x;
+            x = lbl_806DB858 + x;
+            fn_801F93EC(text[11], x + slide, kDateTextPos[11].y);
         }
         fn_8023CD3C(indicator, lbl_806DB85C + slide, lbl_806DB860);
         fn_8023CD24(indicator, lbl_806DB85C + slide, lbl_806DB864);

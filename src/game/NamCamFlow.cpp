@@ -101,7 +101,7 @@ extern "C" void fn_801F36D0(NamCamFlow *self) {
     fn_80121E10(&rc);
     rc.resId = kNamCamIcons[self->player][role];
     rc.Show(lbl_806DA588, lbl_806DA598, lbl_806DA590);
-    rc.SetScale(lbl_806DA5A8);
+    rc.SetScale(0.75f);
     fn_8011FAFC(&rc, 1);
     fn_80121E10(&rc);
     int japanese = isJapanese();
@@ -111,13 +111,13 @@ extern "C" void fn_801F36D0(NamCamFlow *self) {
     rc.Show(kNamCamLabels[0], kNamCamLabels[1], lbl_806DA590);
     fn_8011FAFC(&rc, 1);
     fn_80121E10(&rc);
-    if (!isJapanese()) resource = kNamCamPlayerLabels[player][0];
+    if (isJapanese() == 0) resource = kNamCamPlayerLabels[player][0];
     else resource = kNamCamPlayerLabels[player][1];
     rc.resId = resource;
     rc.Show(kNamCamLabels[2], kNamCamLabels[3], lbl_806DA590);
     fn_8011FAFC(&rc, 1);
     fn_80121E10(&rc);
-    if (!isJapanese()) rc.resId = kNamCamModes[self->player][0];
+    if (isJapanese() == 0) rc.resId = kNamCamModes[self->player][0];
     else rc.resId = kNamCamModes[self->player][1];
     rc.Show(lbl_806DA578[0], lbl_806DA578[1], lbl_806DA590);
     fn_8011FAFC(&rc, 1);

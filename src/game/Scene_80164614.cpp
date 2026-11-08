@@ -86,7 +86,7 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
                 void *buffer = OSAllocFromHeap(lbl_806CF010, size);
                 if (buffer) {
                     int end = file.start + file.length - 1;
-                    DVDLoad_WaitIfSamePage();
+                    DVDLoad_WaitIfSamePage(file.start);
                     int count = DVDReadPrio(&file, buffer, size, 0, 2);
                     DVDLoad_RecordOpStart(end);
                     DebugPrintf(demoReadFormat, count);

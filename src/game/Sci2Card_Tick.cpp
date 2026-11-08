@@ -1,8 +1,9 @@
 /* Sci2Card link state machine, 0x80076BBC..0x8007723C.
- * NonMatching: 98.94% text, exact extab (objdiff, 2026-11-05).
+ * NonMatching: 99.38% text, exact extab (objdiff, 2026-11-08).
  * Pass the shared string-pool base through the inlined send helpers so CW
- * retains one base in r31. Remaining differences are the state-3 ENQ pointer
- * copy/initialization schedule and the checksum loop-count copy.
+ * retains one base in r31. The raw sender consumes its caller-owned cursor.
+ * Remaining differences are the first send loop pointer/count homes, the
+ * state-3 ENQ pointer copy, and the checksum loop-count copy.
  */
 
 extern "C" {
@@ -186,7 +187,7 @@ public:
         SendRaw(len, data, pool);
     }
 
-    inline void SendRaw(int n, unsigned char *p, const char *pool)
+    inline void SendRaw(int n, unsigned char *&p, const char *pool)
     {
         while (n > 0) {
             if (SendByte(*p, pool) == 0) {

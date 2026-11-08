@@ -1,9 +1,9 @@
 /* Boost exhaust ray. Local views describe target-observed fields only.
  * Aggregate arguments preserve caller-owned copies and native C++ EH.
  * Ground and pitch-probe ABIs were checked against their actual callees.
- * Complete NonMatching candidate: text 98.95054%, native extab 100%.
+ * Complete NonMatching candidate: text 99.01505%, native extab 100%.
  * Residuals: scale-table addressing, one multiplication operand order,
- * opacity FP allocation, and source-base folding in the static color copy.
+ * and source-base folding in the static color copy.
  */
 struct RayVec3 { float x, y, z; };
 struct RayMtx { float m[16]; };
@@ -89,8 +89,8 @@ void KartFx_BoostExhaustRayTick(RayEffect *effect) {
         Mtx44_GetTranslation_RowMajor(&first, KartDriver_GetJointByIdx(effect->kart, 2));
         Mtx44_GetTranslation_RowMajor(&second, KartDriver_GetJointByIdx(effect->kart, 3));
     }
-    Vec3_Lerp(&center, first, second, lbl_806D51E8);
-    center.y -= lbl_806D51BC;
+    Vec3_Lerp(&center, first, second, 0.5f);
+    center.y -= 2.0f;
     if (effect->index != 0) {
         Mtx_TransposeToMtx44(&offsetMatrix, KartDriver_GetKartRootMtx(effect->kart));
         Mtx44_GetTranslation_ColMajor(&translation, &offsetMatrix);
@@ -110,9 +110,9 @@ void KartFx_BoostExhaustRayTick(RayEffect *effect) {
         VfxSlot_BindResource(effect->slot, 11);
         VfxSlot_SetMatrixSourceEnabled(effect->slot, 1);
         Vec3_Copy(&effect->position, &center);
-        effect->growth = lbl_806D51C0;
+        effect->growth = 0.0f;
         int character = CharacterIndex(effect->kart);
-        effect->size = character < 0 ? lbl_806D51C4 : *(float *)((unsigned char *)resources->scales + character * sizeof(float));
+        effect->size = character < 0 ? 1.0f : *(float *)((unsigned char *)resources->scales + character * sizeof(float));
         Vec3_Copy(&effect->anchor, &center);
         if (CharacterIndex(effect->kart) >= 0) effect->special = 1;
         else effect->special = 0;
@@ -122,27 +122,27 @@ void KartFx_BoostExhaustRayTick(RayEffect *effect) {
     case 1: break;
     }
     float speed;
-    if (effect->index != 0) speed = lbl_806D51CC * (lbl_806D5214 * effect->growth);
-    else speed = lbl_806D51CC * (lbl_806D5214 * effect->growth);
+    if (effect->index != 0) speed = 5.0f * (4.0f * effect->growth);
+    else speed = 5.0f * (4.0f * effect->growth);
     RayVec3 delta;
     Vec3_Subtract_DestFirst(&delta, &effect->anchor, &center);
     float distance = Vec3_Magnitude_Wrapper(&delta);
     if (speed < distance) {
-        Vec3_Scale(&delta, &delta, speed * (lbl_806D51C4 / distance));
+        Vec3_Scale(&delta, &delta, speed * (1.0f / distance));
         Vec3_Add_DestFirst(&effect->anchor, &center, &delta);
     }
     if (ItemObject_GetGroundTypeAt(effect->anchor, &ground, 0) != 0) {
-        ground += lbl_806D51C4;
+        ground += 1.0f;
         if (effect->anchor.y < ground) {
             effect->anchor.y = ground;
-            effect->rotation.x = Item_ProbeForwardGroundPitch(effect->anchor, effect->rotation.y, lbl_806D51CC, lbl_806D51C4);
-            effect->rotation.z = Item_ProbeLateralGroundPitch(effect->anchor, effect->rotation.y, lbl_806D51CC, lbl_806D51C4);
+            effect->rotation.x = Item_ProbeForwardGroundPitch(effect->anchor, effect->rotation.y, 5.0f, 1.0f);
+            effect->rotation.z = Item_ProbeLateralGroundPitch(effect->anchor, effect->rotation.y, 5.0f, 1.0f);
         }
     }
     Vec3_Copy(&effect->position, &effect->anchor);
     effect->scale = effect->size;
-    float opacity = lbl_806D51BC * (lbl_806D51C4 - effect->growth);
-    if (lbl_806D51C4 < opacity) opacity = lbl_806D51C4;
+    float opacity = 2.0f * (1.0f - effect->growth);
+    if (1.0f < opacity) opacity = 1.0f;
     if (effect->index == 0) effect->opacity = opacity;
     else effect->opacity = opacity;
     effect->opacity *= effect->intensity;
@@ -156,9 +156,9 @@ void KartFx_BoostExhaustRayTick(RayEffect *effect) {
     else effect->visible = 1;
     if (effect->index == 0) effect->growth += lbl_806D51D4;
     else effect->growth += lbl_806D51D4;
-    if (lbl_806D51C4 < effect->growth) { DrawEffect_Free(effect); return; }
+    if (1.0f < effect->growth) { DrawEffect_Free(effect); return; }
     Matrix4_Identity(&matrix);
-    Mtx44_Scale_PerAxis(&matrix, &matrix, lbl_806D51BC * effect->scale, lbl_806D51BC * effect->scale, effect->scale);
+    Mtx44_Scale_PerAxis(&matrix, &matrix, 2.0f * effect->scale, 2.0f * effect->scale, effect->scale);
     Matrix4_PreMultiplyRotY(&matrix, &matrix, lbl_806D5348);
     Matrix4_PreMultiplyRotX(&matrix, &matrix, lbl_806D52B8);
     Matrix4_PreMultiplyRotX(&matrix, &matrix, effect->rotation.x);

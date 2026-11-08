@@ -2,577 +2,306 @@
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
 
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-extern void DrawEffect_SetByte104();
-extern void DrawEffect_SetFloat108Avg();
-extern void DrawEffect_SetFloat110();
-extern void KartDriver_SetUniformScale_4Wheels();
-extern void KartItem_BroadcastParamToCarAndISE();
-extern void Object_GetJObjRotationY();
+extern void DrawEffect_SetByte104(void *fx, int on);
+extern void DrawEffect_SetFloat108Avg(void *fx, float l, float r);
+extern void DrawEffect_SetFloat110(void *fx, float v);
+extern void KartDriver_SetUniformScale_4Wheels(void *kart, float s);
+extern void KartItem_BroadcastParamToCarAndISE(void *kart, int param);
+extern float Object_GetJObjRotationY(void *obj);
 extern void Object_SetColorAlphaOnly(void *obj, int idx, float a);
-extern void Object_SetJObjRotationY();
+extern void Object_SetJObjRotationY(void *obj, float ry);
 
-/* --- extern decls: sda21-referenced data --- */
 extern const float lbl_806D28C8;
 extern const float lbl_806D28CC;
 extern const float lbl_806D28D0;
 extern const float lbl_806D28D4;
 extern const float lbl_806D28D8;
 extern const float lbl_806D28DC;
-extern unsigned int lbl_806D28E8;
-extern unsigned int lbl_806D28EC;
-extern unsigned int lbl_806D28F0;
+extern const float lbl_806D28E8;
+extern const float lbl_806D28EC;
+extern const float lbl_806D28F0;
 extern const float lbl_806D28F4;
 extern const float lbl_806D28F8;
-extern unsigned int lbl_806D28FC;
+extern const float lbl_806D28FC;
 extern const float lbl_806D2900;
-extern unsigned int lbl_806D2904;
-extern unsigned int lbl_806D2908;
-extern unsigned int lbl_806D290C;
-extern unsigned int lbl_806D2910;
-extern unsigned int lbl_806D2914;
-extern unsigned int lbl_806D2918;
-extern unsigned int lbl_806D2920;
-extern unsigned int lbl_806D2924;
-extern unsigned int lbl_806D2928;
-extern unsigned int lbl_806D2930;
+extern const float lbl_806D2904;
+extern const float lbl_806D2908;
+extern const float lbl_806D290C;
+extern const float lbl_806D2910;
+extern const float lbl_806D2914;
+extern const double lbl_806D2918;
+extern const float lbl_806D2920;
+extern const float lbl_806D2924;
+extern const float lbl_806D2928;
 
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_802EDC3C[];
-extern unsigned int lbl_802EDC48[];
+typedef struct { float *p[3]; } TEPtr3;
+extern const TEPtr3 lbl_802EDC3C; /* zero templates for the two pointer triples */
+extern const TEPtr3 lbl_802EDC48;
 
-/* --- function index (1 fns, .text 0x80056FC0..0x800576D8) ---
- * [  0] 0x80056FC0 size:0x718   global TornadoEffect_Tick
- */
+#define TE_U64(p, o) (*(unsigned long long *)((char *)(p) + (o)))
 
-/* --- forward decls --- */
-asm void TornadoEffect_Tick(void);
+static inline unsigned char TE_StateHasFlag(void *st, unsigned long long mask)
+{
+    unsigned long long f = TE_U64(st, 0x10);
+    f |= TE_U64(st, 0x18);
+    if ((f & mask) == 0) {
+        return 0;
+    }
+    return 1;
+}
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_TornadoEffect_Tick[8] = {
-    0x20, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
+static inline unsigned char TE_StateHasFlagLo(void *st, unsigned long long mask)
+{
+    if ((TE_U64(st, 0x10) & mask) == 0) {
+        return 0;
+    }
+    return 1;
+}
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_TornadoEffect_Tick = {
-    (void *)&TornadoEffect_Tick, 0x00000718, (void *)extab_TornadoEffect_Tick
-};
+void TornadoEffect_Tick(void *e)
+{
+    float old;
+    void *st;
+    float l;
+    float r;
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void TornadoEffect_Tick(void) { /* 0x80056FC0 size:0x718 */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    stw r0, 0x54(r1)
-    stfd f31, 0x40(r1)
-    psq_st f31, 0x48(r1), 0, 0
-    stw r31, 0x3c(r1)
-    stw r30, 0x38(r1)
-    stw r29, 0x34(r1)
-    stw r28, 0x30(r1)
-    mr r31, r3
-    lwz r3, 0x140(r3)
-    lwz r4, 0xc(r31)
-    cmpwi r3, 0x0
-    lwz r8, 0x304(r4)
-    ble TornadoEffect_Tick_L_80057004
-    subi r0, r3, 0x1
-    stw r0, 0x140(r31)
-    TornadoEffect_Tick_L_80057004:
-    lwz r6, 0x10(r8)
-    li r4, 0x0
-    lwz r3, 0x18(r8)
-    lis r0, 0x800
-    lwz r7, 0x14(r8)
-    lwz r5, 0x1c(r8)
-    or r6, r6, r3
-    and r0, r6, r0
-    or r7, r7, r5
-    and r3, r7, r4
-    xor r0, r0, r4
-    xor r3, r3, r4
-    or. r0, r3, r0
-    bne TornadoEffect_Tick_L_80057040
-    b TornadoEffect_Tick_L_80057044
-    TornadoEffect_Tick_L_80057040:
-    li r4, 0x1
-    TornadoEffect_Tick_L_80057044:
-    clrlwi r0, r4, 24
-    cmplwi r0, 0x1
-    bne TornadoEffect_Tick_L_80057060
-    lwz r3, 0xc(r31)
-    lwz r4, 0x4c(r8)
-    bl KartItem_BroadcastParamToCarAndISE
-    b TornadoEffect_Tick_L_8005706C
-    TornadoEffect_Tick_L_80057060:
-    lwz r3, 0xc(r31)
-    li r4, -0x1
-    bl KartItem_BroadcastParamToCarAndISE
-    TornadoEffect_Tick_L_8005706C:
-    lwz r3, 0x138(r31)
-    cmpwi r3, 0x0
-    ble TornadoEffect_Tick_L_80057080
-    subi r0, r3, 0x1
-    stw r0, 0x138(r31)
-    TornadoEffect_Tick_L_80057080:
-    lwz r0, 0x124(r31)
-    cmpwi r0, 0x0
-    beq TornadoEffect_Tick_L_80057098
-    lwz r3, 0x130(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x130(r31)
-    TornadoEffect_Tick_L_80057098:
-    lwz r0, 0x128(r31)
-    cmpwi r0, 0x0
-    beq TornadoEffect_Tick_L_800570B0
-    lwz r3, 0x134(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x134(r31)
-    TornadoEffect_Tick_L_800570B0:
-    lwz r3, 0x100(r31)
-    cmpwi r3, 0x0
-    ble TornadoEffect_Tick_L_80057138
-    subi r0, r3, 0x1
-    stw r0, 0x100(r31)
-    lwz r3, 0xa8(r31)
-    bl Object_GetJObjRotationY
-    lfs f0, lbl_806D28DC(r2)
-    lwz r3, 0xa8(r31)
-    fsubs f1, f1, f0
-    bl Object_SetJObjRotationY
-    lwz r4, 0x100(r31)
-    lis r3, 0x4330
-    lbz r0, 0x8(r31)
-    xoris r4, r4, 0x8000
-    stw r3, 0x20(r1)
-    lfd f2, lbl_806D2930(r2)
-    cmplwi r0, 0x1
-    stw r4, 0x24(r1)
-    lfs f0, lbl_806D28EC(r2)
-    lfd f1, 0x20(r1)
-    lfs f3, lbl_806D28E8(r2)
-    fsubs f1, f1, f2
-    lfs f2, lbl_806D28C8(r2)
-    fdivs f0, f1, f0
-    fmuls f1, f3, f0
-    bne TornadoEffect_Tick_L_80057124
-    lfs f3, lbl_806D28D4(r2)
-    b TornadoEffect_Tick_L_80057128
-    TornadoEffect_Tick_L_80057124:
-    lfs f3, lbl_806D28D8(r2)
-    TornadoEffect_Tick_L_80057128:
-    bl Saturate_Double
-    lwz r3, 0xa8(r31)
-    li r4, 0x0
-    bl Object_SetColorAlphaOnly
-    TornadoEffect_Tick_L_80057138:
-    lwz r0, 0x104(r31)
-    lfs f31, 0x10c(r31)
-    cmpwi r0, 0x1
-    beq TornadoEffect_Tick_L_800571B0
-    bge TornadoEffect_Tick_L_80057158
-    cmpwi r0, 0x0
-    bge TornadoEffect_Tick_L_80057164
-    b TornadoEffect_Tick_L_8005723C
-    TornadoEffect_Tick_L_80057158:
-    cmpwi r0, 0x3
-    bge TornadoEffect_Tick_L_8005723C
-    b TornadoEffect_Tick_L_80057204
-    TornadoEffect_Tick_L_80057164:
-    lfs f1, lbl_806D28CC(r2)
-    fcmpo cr0, f31, f1
-    ble TornadoEffect_Tick_L_80057190
-    lfs f0, lbl_806D28D0(r2)
-    fsubs f0, f31, f0
-    stfs f0, 0x10c(r31)
-    lfs f0, 0x10c(r31)
-    fcmpo cr0, f0, f1
-    bge TornadoEffect_Tick_L_8005723C
-    stfs f1, 0x10c(r31)
-    b TornadoEffect_Tick_L_8005723C
-    TornadoEffect_Tick_L_80057190:
-    lfs f0, lbl_806D28D0(r2)
-    fadds f0, f31, f0
-    stfs f0, 0x10c(r31)
-    lfs f0, 0x10c(r31)
-    fcmpo cr0, f0, f1
-    ble TornadoEffect_Tick_L_8005723C
-    stfs f1, 0x10c(r31)
-    b TornadoEffect_Tick_L_8005723C
-    TornadoEffect_Tick_L_800571B0:
-    lfs f0, 0x108(r31)
-    fcmpo cr0, f31, f0
-    ble TornadoEffect_Tick_L_800571E0
-    lfs f0, lbl_806D28D0(r2)
-    fsubs f0, f31, f0
-    stfs f0, 0x10c(r31)
-    lfs f0, 0x10c(r31)
-    lfs f1, 0x108(r31)
-    fcmpo cr0, f0, f1
-    bge TornadoEffect_Tick_L_8005723C
-    stfs f1, 0x10c(r31)
-    b TornadoEffect_Tick_L_8005723C
-    TornadoEffect_Tick_L_800571E0:
-    lfs f0, lbl_806D28D0(r2)
-    fadds f0, f31, f0
-    stfs f0, 0x10c(r31)
-    lfs f0, 0x10c(r31)
-    lfs f1, 0x108(r31)
-    fcmpo cr0, f0, f1
-    ble TornadoEffect_Tick_L_8005723C
-    stfs f1, 0x10c(r31)
-    b TornadoEffect_Tick_L_8005723C
-    TornadoEffect_Tick_L_80057204:
-    lfs f2, 0x110(r31)
-    lfs f0, lbl_806D28F0(r2)
-    fadds f1, f31, f2
-    fcmpo cr0, f1, f0
-    bgt TornadoEffect_Tick_L_80057224
-    lfs f0, lbl_806D28F4(r2)
-    fcmpo cr0, f1, f0
-    bge TornadoEffect_Tick_L_8005722C
-    TornadoEffect_Tick_L_80057224:
-    fneg f0, f2
-    stfs f0, 0x110(r31)
-    TornadoEffect_Tick_L_8005722C:
-    lfs f2, lbl_806D28F4(r2)
-    lfs f3, lbl_806D28F0(r2)
-    bl Saturate_Double
-    stfs f1, 0x10c(r31)
-    TornadoEffect_Tick_L_8005723C:
-    lfs f0, 0x10c(r31)
-    fcmpo cr0, f0, f31
-    ble TornadoEffect_Tick_L_80057264
-    lwz r0, 0x144(r31)
-    cmpwi r0, 0x0
-    bgt TornadoEffect_Tick_L_80057290
-    li r0, 0x1
-    stw r0, 0x144(r31)
-    stw r0, 0x148(r31)
-    b TornadoEffect_Tick_L_80057290
-    TornadoEffect_Tick_L_80057264:
-    bge TornadoEffect_Tick_L_80057284
-    lwz r0, 0x144(r31)
-    cmpwi r0, 0x0
-    blt TornadoEffect_Tick_L_80057290
-    li r0, -0x1
-    stw r0, 0x144(r31)
-    stw r0, 0x148(r31)
-    b TornadoEffect_Tick_L_80057290
-    TornadoEffect_Tick_L_80057284:
-    li r0, 0x0
-    stw r0, 0x144(r31)
-    stw r0, 0x148(r31)
-    TornadoEffect_Tick_L_80057290:
-    lwz r3, 0xc(r31)
-    lfs f1, 0x10c(r31)
-    bl KartDriver_SetUniformScale_4Wheels
-    lfs f1, 0xbc(r31)
-    lfs f0, lbl_806D28D8(r2)
-    fcmpo cr0, f1, f0
-    bge TornadoEffect_Tick_L_800572B4
-    lfs f1, lbl_806D28D0(r2)
-    b TornadoEffect_Tick_L_800572B8
-    TornadoEffect_Tick_L_800572B4:
-    lfs f1, lbl_806D28F8(r2)
-    TornadoEffect_Tick_L_800572B8:
-    lbz r0, 0xb4(r31)
-    lfs f3, lbl_806D28FC(r2)
-    cmplwi r0, 0x1
-    bne TornadoEffect_Tick_L_800572CC
-    lfs f3, lbl_806D28CC(r2)
-    TornadoEffect_Tick_L_800572CC:
-    lfs f0, 0xb8(r31)
-    lfs f2, lbl_806D28C8(r2)
-    fadds f1, f0, f1
-    bl Saturate_Double
-    stfs f1, 0xb8(r31)
-    lfs f0, lbl_806D2900(r2)
-    lfs f5, 0xac(r31)
-    lfs f1, 0xb8(r31)
-    fabs f3, f5
-    fmr f2, f1
-    frsp f4, f3
-    fcmpo cr0, f4, f0
-    ble TornadoEffect_Tick_L_80057328
-    lfs f3, lbl_806D28CC(r2)
-    lfs f0, lbl_806D28C8(r2)
-    fsubs f3, f3, f4
-    lfs f4, lbl_806D2904(r2)
-    fcmpo cr0, f5, f0
-    fmadds f0, f4, f3, f4
-    bge TornadoEffect_Tick_L_80057324
-    fmuls f1, f1, f0
-    b TornadoEffect_Tick_L_80057328
-    TornadoEffect_Tick_L_80057324:
-    fmuls f2, f1, f0
-    TornadoEffect_Tick_L_80057328:
-    lbz r0, 0x8(r31)
-    cmplwi r0, 0x0
-    beq TornadoEffect_Tick_L_8005734C
-    lbz r0, 0xc0(r31)
-    cmplwi r0, 0x1
-    beq TornadoEffect_Tick_L_8005734C
-    lbz r0, 0xd2(r31)
-    cmplwi r0, 0x1
-    bne TornadoEffect_Tick_L_80057354
-    TornadoEffect_Tick_L_8005734C:
-    lfs f1, lbl_806D28C8(r2)
-    fmr f2, f1
-    TornadoEffect_Tick_L_80057354:
-    lwz r3, 0x10(r31)
-    bl DrawEffect_SetFloat108Avg
-    lbz r0, 0xd2(r31)
-    cmplwi r0, 0x1
-    bne TornadoEffect_Tick_L_800573AC
-    lwz r3, 0x10(r31)
-    li r4, 0x1
-    bl DrawEffect_SetByte10C
-    lwz r3, 0x13c(r31)
-    cmpwi r3, 0x0
-    ble TornadoEffect_Tick_L_800573C0
-    subi r0, r3, 0x1
-    stw r0, 0x13c(r31)
-    lwz r0, 0x13c(r31)
-    cmpwi r0, 0x0
-    bne TornadoEffect_Tick_L_800573C0
-    lwz r3, 0x10(r31)
-    li r4, 0x0
-    bl DrawEffect_SetByte10C
-    li r0, 0x0
-    stb r0, 0xd2(r31)
-    b TornadoEffect_Tick_L_800573C0
-    TornadoEffect_Tick_L_800573AC:
-    lwz r3, 0x10(r31)
-    li r4, 0x0
-    bl DrawEffect_SetByte10C
-    li r0, 0x0
-    stw r0, 0x13c(r31)
-    TornadoEffect_Tick_L_800573C0:
-    lbz r0, 0xc0(r31)
-    cmplwi r0, 0x1
-    bne TornadoEffect_Tick_L_800573E0
-    lwz r3, 0x10(r31)
-    li r4, 0x0
-    li r5, 0x0
-    bl DrawEffect_SetBytePairD4D5
-    b TornadoEffect_Tick_L_80057444
-    TornadoEffect_Tick_L_800573E0:
-    lbz r0, 0x8(r31)
-    cmplwi r0, 0x1
-    bne TornadoEffect_Tick_L_80057408
-    lwz r4, 0xc8(r31)
-    lwz r0, 0xcc(r31)
-    lwz r3, 0x10(r31)
-    extsb r4, r4
-    extsb r5, r0
-    bl DrawEffect_SetBytePairD4D5
-    b TornadoEffect_Tick_L_80057418
-    TornadoEffect_Tick_L_80057408:
-    lwz r3, 0x10(r31)
-    li r4, 0x0
-    li r5, 0x0
-    bl DrawEffect_SetBytePairD4D5
-    TornadoEffect_Tick_L_80057418:
-    lfs f1, 0xc4(r31)
-    lfs f0, lbl_806D28C8(r2)
-    fcmpo cr0, f1, f0
-    ble TornadoEffect_Tick_L_8005743C
-    lbz r0, 0x8(r31)
-    cmplwi r0, 0x1
-    bne TornadoEffect_Tick_L_8005743C
-    lwz r3, 0x10(r31)
-    bl DrawEffect_SetFloat110
-    TornadoEffect_Tick_L_8005743C:
-    lfs f0, lbl_806D28C8(r2)
-    stfs f0, 0xc4(r31)
-    TornadoEffect_Tick_L_80057444:
-    lwz r5, 0xc(r31)
-    li r3, 0x20
-    li r4, 0x0
-    lfs f2, lbl_806D28C8(r2)
-    lwz r30, 0x304(r5)
-    lwz r0, 0x10(r30)
-    lwz r5, 0x14(r30)
-    and r0, r0, r4
-    and r3, r5, r3
-    xor r3, r3, r4
-    xor r0, r0, r4
-    or. r0, r3, r0
-    bne TornadoEffect_Tick_L_8005747C
-    b TornadoEffect_Tick_L_80057480
-    TornadoEffect_Tick_L_8005747C:
-    li r4, 0x1
-    TornadoEffect_Tick_L_80057480:
-    clrlwi r0, r4, 24
-    cmplwi r0, 0x1
-    bne TornadoEffect_Tick_L_800574A4
-    lwz r0, 0x2c(r30)
-    cmpwi r0, 0x1
-    bne TornadoEffect_Tick_L_800574A0
-    lfs f2, lbl_806D2908(r2)
-    b TornadoEffect_Tick_L_800574A4
-    TornadoEffect_Tick_L_800574A0:
-    lfs f2, lbl_806D290C(r2)
-    TornadoEffect_Tick_L_800574A4:
-    lfs f1, 0x11c(r31)
-    lfs f0, 0x120(r31)
-    fadds f1, f1, f2
-    lfs f2, lbl_806D2910(r2)
-    lfs f3, lbl_806D2914(r2)
-    fsubs f1, f1, f0
-    bl Saturate_Double
-    lfs f0, 0x120(r31)
-    lfd f2, lbl_806D2918(r2)
-    fadds f0, f0, f1
-    stfs f0, 0x120(r31)
-    lfs f0, 0x120(r31)
-    fmul f0, f2, f0
-    frsp f0, f0
-    stfs f0, 0x48(r30)
-    lbz r0, 0x12c(r31)
-    cmplwi r0, 0x1
-    bne TornadoEffect_Tick_L_800574FC
-    lwz r3, 0x10(r31)
-    li r4, 0x1
-    bl DrawEffect_SetByte104
-    b TornadoEffect_Tick_L_80057508
-    TornadoEffect_Tick_L_800574FC:
-    lwz r3, 0x10(r31)
-    li r4, 0x0
-    bl DrawEffect_SetByte104
-    TornadoEffect_Tick_L_80057508:
-    lwz r0, 0xd4(r31)
-    cmpwi r0, 0x0
-    beq TornadoEffect_Tick_L_800576B0
-    cmpwi r0, 0x2
-    beq TornadoEffect_Tick_L_80057568
-    bge TornadoEffect_Tick_L_8005752C
-    cmpwi r0, 0x1
-    bge TornadoEffect_Tick_L_80057538
-    b TornadoEffect_Tick_L_800576B0
-    TornadoEffect_Tick_L_8005752C:
-    cmpwi r0, 0x4
-    bge TornadoEffect_Tick_L_800576B0
-    b TornadoEffect_Tick_L_800575C8
-    TornadoEffect_Tick_L_80057538:
-    lfs f2, 0xf0(r31)
-    lfs f1, lbl_806D2920(r2)
-    lfs f0, lbl_806D28CC(r2)
-    fadds f1, f2, f1
-    stfs f1, 0xf0(r31)
-    lfs f1, 0xf0(r31)
-    fcmpo cr0, f1, f0
-    ble TornadoEffect_Tick_L_800576B0
-    stfs f0, 0xf0(r31)
-    li r0, 0x0
-    stw r0, 0xd4(r31)
-    b TornadoEffect_Tick_L_800576B0
-    TornadoEffect_Tick_L_80057568:
-    lfs f1, 0xe4(r31)
-    lfs f2, 0xf0(r31)
-    fcmpo cr0, f2, f1
-    bge TornadoEffect_Tick_L_80057598
-    lfs f0, lbl_806D2924(r2)
-    fadds f2, f2, f0
-    fcmpo cr0, f2, f1
-    ble TornadoEffect_Tick_L_800575B8
-    li r0, 0x0
-    fmr f2, f1
-    stw r0, 0xd4(r31)
-    b TornadoEffect_Tick_L_800575B8
-    TornadoEffect_Tick_L_80057598:
-    ble TornadoEffect_Tick_L_800575B8
-    lfs f0, lbl_806D2928(r2)
-    fsubs f2, f2, f0
-    fcmpo cr0, f2, f1
-    bge TornadoEffect_Tick_L_800575B8
-    li r0, 0x0
-    fmr f2, f1
-    stw r0, 0xd4(r31)
-    TornadoEffect_Tick_L_800575B8:
-    stfs f2, 0xec(r31)
-    stfs f2, 0xf0(r31)
-    stfs f2, 0xf4(r31)
-    b TornadoEffect_Tick_L_800576B0
-    TornadoEffect_Tick_L_800575C8:
-    lis r4, lbl_802EDC3C@ha
-    lwzu r0, lbl_802EDC3C@l(r4)
-    lis r3, lbl_802EDC48@ha
-    lwzu r8, lbl_802EDC48@l(r3)
-    lwz r30, 0x4(r4)
-    addi r11, r31, 0xe0
-    lwz r12, 0x8(r4)
-    addi r10, r31, 0xe4
-    stw r0, 0x14(r1)
-    addi r9, r31, 0xe8
-    lwz r7, 0x4(r3)
-    addi r5, r31, 0xec
-    lwz r6, 0x8(r3)
-    addi r4, r31, 0xf0
-    stw r30, 0x18(r1)
-    addi r3, r31, 0xf4
-    li r0, 0x3
-    addi r29, r1, 0x14
-    stw r12, 0x1c(r1)
-    addi r28, r1, 0x8
-    li r30, 0x0
-    stw r8, 0x8(r1)
-    stw r7, 0xc(r1)
-    stw r6, 0x10(r1)
-    stw r11, 0x14(r1)
-    stw r10, 0x18(r1)
-    stw r9, 0x1c(r1)
-    stw r5, 0x8(r1)
-    stw r4, 0xc(r1)
-    stw r3, 0x10(r1)
-    mtctr r0
-    lfs f0, lbl_806D28D0(r2)
-    TornadoEffect_Tick_L_80057648:
-    lwz r3, 0x0(r29)
-    lwz r4, 0x0(r28)
-    lfs f1, 0x0(r3)
-    lfs f2, 0x0(r4)
-    fcmpo cr0, f2, f1
-    bge TornadoEffect_Tick_L_80057678
-    fadds f2, f2, f0
-    fcmpo cr0, f2, f1
-    ble TornadoEffect_Tick_L_80057690
-    fmr f2, f1
-    addi r30, r30, 0x1
-    b TornadoEffect_Tick_L_80057690
-    TornadoEffect_Tick_L_80057678:
-    ble TornadoEffect_Tick_L_80057690
-    fsubs f2, f2, f0
-    fcmpo cr0, f2, f1
-    bge TornadoEffect_Tick_L_80057690
-    fmr f2, f1
-    addi r30, r30, 0x1
-    TornadoEffect_Tick_L_80057690:
-    stfs f2, 0x0(r4)
-    addi r29, r29, 0x4
-    addi r28, r28, 0x4
-    bdnz TornadoEffect_Tick_L_80057648
-    cmpwi r30, 0x3
-    blt TornadoEffect_Tick_L_800576B0
-    li r0, 0x0
-    stw r0, 0xd4(r31)
-    TornadoEffect_Tick_L_800576B0:
-    psq_l f31, 0x48(r1), 0, 0
-    lwz r0, 0x54(r1)
-    lfd f31, 0x40(r1)
-    lwz r31, 0x3c(r1)
-    lwz r30, 0x38(r1)
-    lwz r29, 0x34(r1)
-    lwz r28, 0x30(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
+    st = TE_PTR(TE_PTR(e, 0xC), 0x304);
+    if (TE_S32(e, 0x140) > 0) {
+        TE_S32(e, 0x140)--;
+    }
+    if (TE_StateHasFlag(st, 0x0800000000000000ULL) == 1) {
+        KartItem_BroadcastParamToCarAndISE(TE_PTR(e, 0xC), TE_S32(st, 0x4C));
+    } else {
+        KartItem_BroadcastParamToCarAndISE(TE_PTR(e, 0xC), -1);
+    }
+    if (TE_S32(e, 0x138) > 0) {
+        TE_S32(e, 0x138)--;
+    }
+    if (TE_S32(e, 0x124) != 0) {
+        TE_S32(e, 0x130)++;
+    }
+    if (TE_S32(e, 0x128) != 0) {
+        TE_S32(e, 0x134)++;
+    }
+    if (TE_S32(e, 0x100) > 0) {
+        TE_S32(e, 0x100)--;
+        Object_SetJObjRotationY(TE_PTR(e, 0xA8), Object_GetJObjRotationY(TE_PTR(e, 0xA8)) - lbl_806D28DC);
+        Object_SetColorAlphaOnly(TE_PTR(e, 0xA8), 0,
+                                 Saturate_Double(lbl_806D28E8 * ((float)TE_S32(e, 0x100) / lbl_806D28EC), lbl_806D28C8,
+                                                 TE_U8(e, 0x8) == 1 ? lbl_806D28D4 : lbl_806D28D8));
+    }
+
+    old = TE_F(e, 0x10C);
+    switch (TE_S32(e, 0x104)) {
+    case 0:
+        if (old > lbl_806D28CC) {
+            TE_F(e, 0x10C) = old - lbl_806D28D0;
+            if (TE_F(e, 0x10C) < lbl_806D28CC) {
+                TE_F(e, 0x10C) = lbl_806D28CC;
+            }
+        } else {
+            TE_F(e, 0x10C) = old + lbl_806D28D0;
+            if (TE_F(e, 0x10C) > lbl_806D28CC) {
+                TE_F(e, 0x10C) = lbl_806D28CC;
+            }
+        }
+        break;
+    case 1:
+        if (old > TE_F(e, 0x108)) {
+            TE_F(e, 0x10C) = old - lbl_806D28D0;
+            if (TE_F(e, 0x10C) < TE_F(e, 0x108)) {
+                TE_F(e, 0x10C) = TE_F(e, 0x108);
+            }
+        } else {
+            TE_F(e, 0x10C) = old + lbl_806D28D0;
+            if (TE_F(e, 0x10C) > TE_F(e, 0x108)) {
+                TE_F(e, 0x10C) = TE_F(e, 0x108);
+            }
+        }
+        break;
+    case 2: {
+        float d = TE_F(e, 0x110);
+        float v = old + d;
+        if (v > lbl_806D28F0 || v < lbl_806D28F4) {
+            TE_F(e, 0x110) = -d;
+        }
+        TE_F(e, 0x10C) = Saturate_Double(v, lbl_806D28F4, lbl_806D28F0);
+        break;
+    }
+    }
+    if (TE_F(e, 0x10C) > old) {
+        if (TE_S32(e, 0x144) <= 0) {
+            TE_S32(e, 0x144) = 1;
+            TE_S32(e, 0x148) = 1;
+        }
+    } else if (TE_F(e, 0x10C) < old) {
+        if (TE_S32(e, 0x144) >= 0) {
+            TE_S32(e, 0x144) = -1;
+            TE_S32(e, 0x148) = -1;
+        }
+    } else {
+        TE_S32(e, 0x144) = 0;
+        TE_S32(e, 0x148) = 0;
+    }
+    KartDriver_SetUniformScale_4Wheels(TE_PTR(e, 0xC), TE_F(e, 0x10C));
+
+    {
+        float inc;
+        float max;
+        if (TE_F(e, 0xBC) < lbl_806D28D8) {
+            inc = lbl_806D28D0;
+        } else {
+            inc = lbl_806D28F8;
+        }
+        max = lbl_806D28FC;
+        if (TE_U8(e, 0xB4) == 1) {
+            max = lbl_806D28CC;
+        }
+        TE_F(e, 0xB8) = Saturate_Double(TE_F(e, 0xB8) + inc, lbl_806D28C8, max);
+    }
+    {
+        float steer = TE_F(e, 0xAC);
+        float a;
+        l = TE_F(e, 0xB8);
+        r = l;
+        { double d = __fabs(steer); a = d; }
+        if (a > lbl_806D2900) {
+            float k = lbl_806D2904 * (lbl_806D28CC - a) + lbl_806D2904;
+            if (steer < lbl_806D28C8) {
+                l = l * k;
+            } else {
+                r = l * k;
+            }
+        }
+    }
+    if (TE_U8(e, 0x8) == 0 || TE_U8(e, 0xC0) == 1 || TE_U8(e, 0xD2) == 1) {
+        l = lbl_806D28C8;
+        r = l;
+    }
+    DrawEffect_SetFloat108Avg(TE_PTR(e, 0x10), l, r);
+
+    if (TE_U8(e, 0xD2) == 1) {
+        DrawEffect_SetByte10C(TE_PTR(e, 0x10), 1);
+        if (TE_S32(e, 0x13C) > 0) {
+            TE_S32(e, 0x13C)--;
+            if (TE_S32(e, 0x13C) == 0) {
+                DrawEffect_SetByte10C(TE_PTR(e, 0x10), 0);
+                TE_U8(e, 0xD2) = 0;
+            }
+        }
+    } else {
+        DrawEffect_SetByte10C(TE_PTR(e, 0x10), 0);
+        TE_S32(e, 0x13C) = 0;
+    }
+
+    if (TE_U8(e, 0xC0) == 1) {
+        DrawEffect_SetBytePairD4D5(TE_PTR(e, 0x10), 0, 0);
+    } else {
+        if (TE_U8(e, 0x8) == 1) {
+            DrawEffect_SetBytePairD4D5(TE_PTR(e, 0x10), TE_S32(e, 0xC8), TE_S32(e, 0xCC));
+        } else {
+            DrawEffect_SetBytePairD4D5(TE_PTR(e, 0x10), 0, 0);
+        }
+        if (TE_F(e, 0xC4) > lbl_806D28C8 && TE_U8(e, 0x8) == 1) {
+            DrawEffect_SetFloat110(TE_PTR(e, 0x10), TE_F(e, 0xC4));
+        }
+        TE_F(e, 0xC4) = lbl_806D28C8;
+    }
+
+    {
+        float add = lbl_806D28C8;
+        st = TE_PTR(TE_PTR(e, 0xC), 0x304);
+        if (TE_StateHasFlagLo(st, 0x20) == 1) {
+            if (TE_S32(st, 0x2C) == 1) {
+                add = lbl_806D2908;
+            } else {
+                add = lbl_806D290C;
+            }
+        }
+        TE_F(e, 0x120) = TE_F(e, 0x120) + Saturate_Double(TE_F(e, 0x11C) + add - TE_F(e, 0x120), lbl_806D2910, lbl_806D2914);
+        TE_F(st, 0x48) = lbl_806D2918 * TE_F(e, 0x120);
+    }
+    if (TE_U8(e, 0x12C) == 1) {
+        DrawEffect_SetByte104(TE_PTR(e, 0x10), 1);
+    } else {
+        DrawEffect_SetByte104(TE_PTR(e, 0x10), 0);
+    }
+
+    if (TE_S32(e, 0xD4) == 0) {
+        return;
+    }
+    switch (TE_S32(e, 0xD4)) {
+    case 1:
+        TE_F(e, 0xF0) += 0.016666668f;
+        if (TE_F(e, 0xF0) > 1.0f) {
+            TE_F(e, 0xF0) = 1.0f;
+            TE_S32(e, 0xD4) = 0;
+        }
+        break;
+    case 2: {
+        float t = TE_F(e, 0xE4);
+        float c = TE_F(e, 0xF0);
+        if (c < t) {
+            c += lbl_806D2924;
+            if (c > t) {
+                TE_S32(e, 0xD4) = 0;
+                c = t;
+            }
+        } else if (c > t) {
+            c -= lbl_806D2928;
+            if (c < t) {
+                TE_S32(e, 0xD4) = 0;
+                c = t;
+            }
+        }
+        TE_F(e, 0xEC) = c;
+        TE_F(e, 0xF0) = c;
+        TE_F(e, 0xF4) = c;
+        break;
+    }
+    case 3: {
+        TEPtr3 tgt;
+        TEPtr3 cur;
+        int done;
+        int i;
+        float **tp;
+        float **cp;
+        tgt = lbl_802EDC3C;
+        tgt.p[0] = &TE_F(e, 0xE0);
+        tgt.p[1] = &TE_F(e, 0xE4);
+        tgt.p[2] = &TE_F(e, 0xE8);
+        cur = lbl_802EDC48;
+        cur.p[0] = &TE_F(e, 0xEC);
+        cur.p[1] = &TE_F(e, 0xF0);
+        cur.p[2] = &TE_F(e, 0xF4);
+        done = 0;
+        tp = tgt.p;
+        cp = cur.p;
+        for (i = 0; i < 3; i++) {
+            float t = **tp;
+            float c = **cp;
+            if (c < t) {
+                c += lbl_806D28D0;
+                if (c > t) {
+                    c = t;
+                    done++;
+                }
+            } else if (c > t) {
+                c -= lbl_806D28D0;
+                if (c < t) {
+                    c = t;
+                    done++;
+                }
+            }
+            **cp = c;
+            tp++;
+            cp++;
+        }
+        if (done >= 3) {
+            TE_S32(e, 0xD4) = 0;
+        }
+        break;
+    }
+    }
 }
 
