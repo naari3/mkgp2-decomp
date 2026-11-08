@@ -1255,7 +1255,7 @@ static s32 __THPHuffDecode(THPFileInfo* info, u8 tabIndex)
         code |= __THPGetBit(info);
         l++;
     }
-    return (h->Vij + h->valPtr[l])[code];
+    return h->Vij[(s32)(code + h->valPtr[l])];
 }
 
 static s32 __THPHuffDecodeTab(THPFileInfo* info, THPHuffmanTab* h)
