@@ -1,0 +1,5 @@
+# item4-subflame-near-miss
+
+Source: Codex worker c20_u111_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 684 B.
+
+c20_u111: read actual prior handoffs c15_u46/c18_u66/c19_u155. Explicit Segment calls with float (*k)[5] row-window input and k[0][1]/k[1][0..1] restore target f0 endpoint compare and final endpoint reload: 97.671295/848B -> 98.19907/852B. Explicit extern lbl_806D5344 for 100.0 fixes remaining literal relocation -> 98.22222. Separate key/value pointers in explicit calls regress to original 97.671295/848B. File-static two-curve ownership experiment on unclaimed .data8041A224..8041A274 is text-invariant and completely reverted. Retain row-window and canonical constant only. Residual: four curve-selection GPR rows, three folded addi r4 segment bases and nine corresponding loads, source852 vs target864. EH100/index91.66667, sole function NM, no native gain; final coordinator build exit0 DOL SHA1ea30f3b1 exact.
