@@ -48,15 +48,17 @@ struct PhysicsWallMatrix {
         for(int i=0;i<16;i++) m[i]=result.m[i];
         return *this;
     }
-    void applyYaw(float yaw) {
-        PhysicsWallMatrix rotation;
-        rotation.identity();
+    PhysicsWallMatrix(float yaw) {
+        identity();
         float cosine = (float)cos(yaw);
         float sine = (float)sin(yaw);
-        rotation.m[0] = cosine;
-        rotation.m[8] = sine;
-        rotation.m[10] = cosine;
-        rotation.m[2] = -sine;
+        m[0] = cosine;
+        m[8] = sine;
+        m[10] = cosine;
+        m[2] = -sine;
+    }
+    void applyYaw(float yaw) {
+        PhysicsWallMatrix rotation(yaw);
         rotation *= *this;
         *this = rotation;
     }

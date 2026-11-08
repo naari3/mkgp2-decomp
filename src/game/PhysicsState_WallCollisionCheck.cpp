@@ -1,6 +1,6 @@
-/* Native candidate. Matrix multiply uses row/column/output pointers like
- * EnemyRun. Remaining: the corner loop keeps original.m[] in saved FPRs,
- * the target reloads it from the stack every iteration. */
+/* Native candidate. The yaw constructor preserves the saved FP homes, and
+ * separate squared components preserve the length calculation's rounding.
+ * Rotation-pointer lifetime and vector-operation registers remain non-exact. */
 #include "game/PhysicsCollisionPrivate.h"
 #include "game/PhysicsWallMatrixPrivate.h"
 
@@ -59,7 +59,10 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
             original.m[13] = PH_F(self, 0x50);
             original.m[14] = PH_F(self, 0x54);
             if (!applied) {
-                float length = CollisionLength((correction.x * correction.x + correction.y * correction.y) + correction.z * correction.z);
+                float xx = correction.x * correction.x;
+                float yy = correction.y * correction.y;
+                float zz = correction.z * correction.z;
+                float length = CollisionLength(zz + (xx + yy));
                 float force = length;
                 if (lbl_806DA49C < length) force = lbl_806DA49C;
                 if (corner < 2) force *= lbl_806DA4A0;
