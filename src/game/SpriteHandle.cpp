@@ -171,7 +171,9 @@ struct SpriteHandle {
     char pad1D[3];
     int baseResId;
     signed char tevMode;
-    char pad25[3];
+    char pad25;
+    unsigned char posMode;
+    char pad27;
     float sizeX;
     float sizeY;
     char pad30[4];
@@ -180,7 +182,7 @@ struct SpriteHandle {
     float texH;
     float posX;
     float posY;
-    char pad48;
+    unsigned char clipFlags;
     unsigned char hasUV;
     char pad4A[2];
     float uv[6];
@@ -226,7 +228,7 @@ void GXSetCurrentMtx(unsigned int);
 void GXSetProjection(float (*)[4], int);
 extern float g_glyphClipMaxX;
 extern float g_glyphClipMaxY;
-extern float g_glyphClipMinXY;
+extern const float g_glyphClipMinXY;
 extern unsigned char lbl_806D14F1;
 extern unsigned int lbl_806D14F4;
 extern unsigned int lbl_806D14F8;
@@ -251,7 +253,7 @@ void ResourceTable_GetOffsetXY(int id, float *x, float *y);
 void ResourceTable_GetSizeXY(int id, float *x, float *y);
 int ResourceTable_GetSlotIndex(int id);
 TEXDescriptor *TEXGetPaletteEntry(void *pal, unsigned int idx);
-extern unsigned int lbl_806D6D88;
+extern const float lbl_806D6D88;
 extern unsigned int lbl_806D6D90;
 extern ResEntry lbl_806573E8[600];
 unsigned int OSGetTick(void);
@@ -273,8 +275,8 @@ void fn_801F6494(void);
 extern unsigned char lbl_806D14FD;
 float LUT_Cosine(float);
 float LUT_Sine(float);
-extern void ResourceTable_GetFlagsByte();
-extern void ResourceTable_GetScaleXY();
+signed char ResourceTable_GetFlagsByte(int id);
+void ResourceTable_GetScaleXY(int id, float *x, float *y);
 extern unsigned int lbl_80332528[];
 void *memset(void *p, int c, unsigned long n);
 void __destroy_arr(void *, void *, unsigned long, unsigned long);
@@ -307,7 +309,7 @@ unsigned char PreloadResource(int id);
 void SpriteHandlePool_GC(void);
 void fn_80121210(void);
 void fn_801213EC(void);
-asm void fn_801217E8(SpriteHandle *s);
+void fn_801217E8(SpriteHandle *s);
 int Stub_NoOp_80121c34(int x);
 unsigned char fn_80121C38(ResCtrl *r);
 void fn_80121E10(ResCtrl *r);
@@ -352,9 +354,6 @@ __declspec(section ".extab_user") static const unsigned char extab_PreloadResour
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_80121210 = { 0x180A0000, 0x0000005C, 0x00060010, 0x00000000, 0x82000008, (void *)&__dt__11ScopedTimerFv };
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_801217E8[8] = {
-    0x18, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
@@ -397,9 +396,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801217E8 = {
-    (void *)&fn_801217E8, 0x0000044C, (void *)extab_fn_801217E8
-};
 
 
 
@@ -1981,294 +1977,63 @@ extern "C" void fn_801213EC(void) {
 }
 #pragma use_lmw_stmw reset
 
-extern "C" asm void fn_801217E8(SpriteHandle *s) { /* 0x801217E8 size:0x44C */
-    nofralloc
-    stwu r1, -0x100(r1)
-    mflr r0
-    stw r0, 0x104(r1)
-    stfd f31, 0xf0(r1)
-    psq_st f31, 0xf8(r1), 0, 0
-    stfd f30, 0xe0(r1)
-    psq_st f30, 0xe8(r1), 0, 0
-    stfd f29, 0xd0(r1)
-    psq_st f29, 0xd8(r1), 0, 0
-    stw r31, 0xcc(r1)
-    stw r30, 0xc8(r1)
-    stw r29, 0xc4(r1)
-    mr r29, r3
-    lis r4, lbl_80332528@ha
-    lwz r3, 0x10(r3)
-    addi r30, r4, lbl_80332528@l
-    addi r4, r1, 0xc
-    addi r5, r1, 0x8
-    bl ResourceTable_GetScaleXY
-    lwz r3, 0x10(r29)
-    bl ResourceTable_GetFlagsByte
-    li r0, 0x0
-    lfs f0, g_glyphClipMinXY(r2)
-    stb r0, 0x48(r29)
-    mr r31, r3
-    lfs f1, 0x40(r29)
-    fcmpo cr0, f1, f0
-    bge fn_801217E8_L_80121864
-    lbz r0, 0x48(r29)
-    ori r0, r0, 0x1
-    stb r0, 0x48(r29)
-    fn_801217E8_L_80121864:
-    lfs f1, 0x44(r29)
-    lfs f0, g_glyphClipMinXY(r2)
-    fcmpo cr0, f1, f0
-    bge fn_801217E8_L_80121880
-    lbz r0, 0x48(r29)
-    ori r0, r0, 0x2
-    stb r0, 0x48(r29)
-    fn_801217E8_L_80121880:
-    lfs f1, 0x40(r29)
-    lfs f0, 0x44(r29)
-    fabs f1, f1
-    lfs f5, 0x38(r29)
-    fabs f0, f0
-    lfs f2, 0x3c(r29)
-    lfs f6, 0xc(r1)
-    frsp f4, f1
-    frsp f0, f0
-    lfs f3, 0x8(r1)
-    lfs f1, 0x34(r29)
-    fmuls f4, f5, f4
-    fmuls f0, f2, f0
-    fmuls f30, f6, f4
-    fmuls f29, f3, f0
-    bl LUT_Cosine
-    fmr f31, f1
-    lfs f1, 0x34(r29)
-    bl LUT_Sine
-    extsb r0, r31
-    cmpwi r0, 0x9
-    bne fn_801217E8_L_801219C4
-    lwz r10, 0x0(r30)
-    li r0, 0x4
-    lwz r9, 0x4(r30)
-    mr r12, r29
-    lwz r8, 0x8(r30)
-    addi r11, r1, 0x50
-    lwz r7, 0xc(r30)
-    lwz r6, 0x10(r30)
-    lwz r5, 0x14(r30)
-    lwz r4, 0x18(r30)
-    lwz r3, 0x1c(r30)
-    stw r10, 0x50(r1)
-    stw r9, 0x54(r1)
-    stw r8, 0x58(r1)
-    stw r7, 0x5c(r1)
-    stw r6, 0x60(r1)
-    stw r5, 0x64(r1)
-    stw r4, 0x68(r1)
-    stw r3, 0x6c(r1)
-    mtctr r0
-    fn_801217E8_L_80121928:
-    lfs f0, 0x4(r11)
-    lfs f2, 0x0(r11)
-    fmuls f0, f29, f0
-    fmuls f3, f30, f2
-    fmuls f2, f31, f0
-    fmuls f0, f1, f0
-    fmsubs f2, f1, f3, f2
-    fmadds f0, f31, f3, f0
-    stfs f2, 0x88(r12)
-    stfs f0, 0x8c(r12)
-    lbz r0, 0x26(r29)
-    cmplwi r0, 0x1
-    bne fn_801217E8_L_80121980
-    lfs f2, 0x88(r12)
-    lfs f0, 0x28(r29)
-    fadds f0, f2, f0
-    stfs f0, 0x88(r12)
-    lfs f2, 0x8c(r12)
-    lfs f0, 0x2c(r29)
-    fadds f0, f2, f0
-    stfs f0, 0x8c(r12)
-    b fn_801217E8_L_801219B4
-    fn_801217E8_L_80121980:
-    lfs f2, 0x38(r29)
-    lfs f4, lbl_806D6D88(r2)
-    lfs f0, 0x28(r29)
-    lfs f3, 0x88(r12)
-    fmadds f0, f2, f4, f0
-    fadds f0, f3, f0
-    stfs f0, 0x88(r12)
-    lfs f2, 0x3c(r29)
-    lfs f0, 0x2c(r29)
-    lfs f3, 0x8c(r12)
-    fmadds f0, f2, f4, f0
-    fadds f0, f3, f0
-    stfs f0, 0x8c(r12)
-    fn_801217E8_L_801219B4:
-    addi r11, r11, 0x8
-    addi r12, r12, 0x8
-    bdnz fn_801217E8_L_80121928
-    b fn_801217E8_L_80121C00
-    fn_801217E8_L_801219C4:
-    lbz r0, 0x49(r29)
-    cmplwi r0, 0x0
-    beq fn_801217E8_L_80121AC0
-    lwz r10, 0x20(r30)
-    li r0, 0x2
-    lwz r9, 0x24(r30)
-    mr r12, r29
-    lwz r8, 0x28(r30)
-    addi r11, r1, 0x30
-    lwz r7, 0x2c(r30)
-    lwz r6, 0x30(r30)
-    lwz r5, 0x34(r30)
-    lwz r4, 0x38(r30)
-    lwz r3, 0x3c(r30)
-    stw r10, 0x30(r1)
-    stw r9, 0x34(r1)
-    stw r8, 0x38(r1)
-    stw r7, 0x3c(r1)
-    stw r6, 0x40(r1)
-    stw r5, 0x44(r1)
-    stw r4, 0x48(r1)
-    stw r3, 0x4c(r1)
-    mtctr r0
-    fn_801217E8_L_80121A20:
-    lfs f3, 0x4(r11)
-    lfs f4, 0x0(r11)
-    fmuls f6, f29, f3
-    lfs f0, 0x50(r29)
-    fmuls f5, f30, f4
-    lfs f1, 0x4c(r29)
-    lfs f2, 0x54(r29)
-    fmuls f0, f6, f0
-    lfs f3, 0xc(r11)
-    lfs f4, 0x8(r11)
-    addi r11, r11, 0x10
-    fmadds f0, f5, f1, f0
-    fadds f0, f2, f0
-    stfs f0, 0x88(r12)
-    lfs f0, 0x5c(r29)
-    lfs f1, 0x58(r29)
-    fmuls f0, f6, f0
-    lfs f2, 0x60(r29)
-    fmuls f6, f29, f3
-    fmadds f0, f5, f1, f0
-    fmuls f5, f30, f4
-    fadds f0, f2, f0
-    stfs f0, 0x8c(r12)
-    lfs f0, 0x50(r29)
-    lfs f1, 0x4c(r29)
-    fmuls f0, f6, f0
-    lfs f2, 0x54(r29)
-    fmadds f0, f5, f1, f0
-    fadds f0, f2, f0
-    stfs f0, 0x90(r12)
-    lfs f0, 0x5c(r29)
-    lfs f1, 0x58(r29)
-    fmuls f0, f6, f0
-    lfs f2, 0x60(r29)
-    fmadds f0, f5, f1, f0
-    fadds f0, f2, f0
-    stfs f0, 0x94(r12)
-    addi r12, r12, 0x10
-    bdnz fn_801217E8_L_80121A20
-    b fn_801217E8_L_80121C00
-    fn_801217E8_L_80121AC0:
-    lwz r12, 0x40(r30)
-    li r0, 0x9
-    lwz r11, 0x44(r30)
-    addi r5, r1, 0x6c
-    lwz r10, 0x48(r30)
-    addi r4, r30, 0x5c
-    lwz r9, 0x4c(r30)
-    lwz r8, 0x50(r30)
-    lwz r7, 0x54(r30)
-    lwz r6, 0x58(r30)
-    lwz r3, 0x5c(r30)
-    stw r12, 0x10(r1)
-    stw r11, 0x14(r1)
-    stw r10, 0x18(r1)
-    stw r9, 0x1c(r1)
-    stw r8, 0x20(r1)
-    stw r7, 0x24(r1)
-    stw r6, 0x28(r1)
-    stw r3, 0x2c(r1)
-    mtctr r0
-    fn_801217E8_L_80121B10:
-    lwz r3, 0x4(r4)
-    lwzu r0, 0x8(r4)
-    stw r3, 0x4(r5)
-    stwu r0, 0x8(r5)
-    bdnz fn_801217E8_L_80121B10
-    extsb r0, r31
-    addi r6, r1, 0x70
-    slwi r3, r0, 3
-    mr r5, r29
-    li r0, 0x2
-    addi r4, r1, 0x10
-    add r6, r6, r3
-    mtctr r0
-    fn_801217E8_L_80121B44:
-    lfs f3, 0x4(r4)
-    lfs f4, 0x0(r4)
-    fmuls f6, f29, f3
-    lfs f0, 0x4(r6)
-    fmuls f5, f30, f4
-    lfs f2, 0x0(r6)
-    lfs f3, 0xc(r4)
-    fmadds f6, f29, f0, f6
-    fmadds f5, f30, f2, f5
-    lfs f4, 0x8(r4)
-    addi r4, r4, 0x10
-    fmuls f2, f6, f31
-    fmuls f0, f6, f1
-    fmuls f6, f29, f3
-    fmsubs f2, f5, f1, f2
-    fmadds f0, f5, f31, f0
-    fmuls f5, f30, f4
-    stfs f2, 0x88(r5)
-    stfs f0, 0x8c(r5)
-    lfs f2, 0x88(r5)
-    lfs f0, 0x28(r29)
-    fadds f0, f2, f0
-    stfs f0, 0x88(r5)
-    lfs f2, 0x8c(r5)
-    lfs f0, 0x2c(r29)
-    fadds f0, f2, f0
-    stfs f0, 0x8c(r5)
-    lfs f0, 0x4(r6)
-    lfs f2, 0x0(r6)
-    fmadds f6, f29, f0, f6
-    fmadds f5, f30, f2, f5
-    fmuls f2, f6, f31
-    fmuls f0, f6, f1
-    fmsubs f2, f5, f1, f2
-    fmadds f0, f5, f31, f0
-    stfs f2, 0x90(r5)
-    stfs f0, 0x94(r5)
-    lfs f2, 0x90(r5)
-    lfs f0, 0x28(r29)
-    fadds f0, f2, f0
-    stfs f0, 0x90(r5)
-    lfs f2, 0x94(r5)
-    lfs f0, 0x2c(r29)
-    fadds f0, f2, f0
-    stfs f0, 0x94(r5)
-    addi r5, r5, 0x10
-    bdnz fn_801217E8_L_80121B44
-    fn_801217E8_L_80121C00:
-    psq_l f31, 0xf8(r1), 0, 0
-    lfd f31, 0xf0(r1)
-    psq_l f30, 0xe8(r1), 0, 0
-    lfd f30, 0xe0(r1)
-    psq_l f29, 0xd8(r1), 0, 0
-    lfd f29, 0xd0(r1)
-    lwz r31, 0xcc(r1)
-    lwz r30, 0xc8(r1)
-    lwz r0, 0x104(r1)
-    lwz r29, 0xc4(r1)
-    mtlr r0
-    addi r1, r1, 0x100
-    blr
+extern "C" void fn_801217E8(SpriteHandle *s) {
+    float sx;
+    float sy;
+    int i;
+    ResourceTable_GetScaleXY(s->resId, &sx, &sy);
+    signed char kind = ResourceTable_GetFlagsByte(s->resId);
+    s->clipFlags = 0;
+    if (s->posX < g_glyphClipMinXY) {
+        s->clipFlags |= 1;
+    }
+    if (s->posY < g_glyphClipMinXY) {
+        s->clipFlags |= 2;
+    }
+    float w = sx * (s->texW * (float)__fabs(s->posX));
+    float h = sy * (s->texH * (float)__fabs(s->posY));
+    float cs = LUT_Cosine(s->rot);
+    float sn = LUT_Sine(s->rot);
+    if (kind == 9) {
+        float c9[4][2] = { { -0.5f, 0.5f }, { -0.5f, -0.5f }, { 0.5f, -0.5f }, { 0.5f, 0.5f } };
+        for (i = 0; i < 4; i++) {
+            s->corner[i][0] = sn * (w * c9[i][0]) - cs * (h * c9[i][1]);
+            s->corner[i][1] = cs * (w * c9[i][0]) + sn * (h * c9[i][1]);
+            if (s->posMode == 1) {
+                s->corner[i][0] += s->sizeX;
+                s->corner[i][1] += s->sizeY;
+            } else {
+                s->corner[i][0] += s->texW * lbl_806D6D88 + s->sizeX;
+                s->corner[i][1] += s->texH * lbl_806D6D88 + s->sizeY;
+            }
+        }
+    } else if (s->hasUV) {
+        float cm[4][2] = { { -0.5f, 0.5f }, { -0.5f, -0.5f }, { 0.5f, -0.5f }, { 0.5f, 0.5f } };
+        for (i = 0; i < 4; i++) {
+            float xx = w * cm[i][0];
+            float yy = h * cm[i][1];
+            s->corner[i][0] = xx * s->uv[0] + yy * s->uv[1] + s->uv[2];
+            s->corner[i][1] = xx * s->uv[3] + yy * s->uv[4] + s->uv[5];
+        }
+    } else {
+        float cb[4][2] = { { 0.0f, 1.0f }, { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f } };
+        float off[9][2] = {
+            { 0.0f, 0.0f }, { -0.5f, 0.0f }, { -1.0f, 0.0f },
+            { 0.0f, -0.5f }, { -0.5f, -0.5f }, { -1.0f, -0.5f },
+            { 0.0f, -1.0f }, { -0.5f, -1.0f }, { -1.0f, -1.0f },
+        };
+        float *o = off[kind];
+        for (i = 0; i < 4; i++) {
+            float xx = w * cb[i][0];
+            float yy = h * cb[i][1];
+            xx += w * o[0];
+            yy += h * o[1];
+            s->corner[i][0] = xx * sn - yy * cs;
+            s->corner[i][1] = xx * cs + yy * sn;
+            s->corner[i][0] += s->sizeX;
+            s->corner[i][1] += s->sizeY;
+        }
+    }
 }
 
 

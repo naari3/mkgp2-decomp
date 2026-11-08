@@ -199,6 +199,8 @@ static inline int FadeAlpha(int timer) {
 static inline int FadeOutAlpha(int timer) {
     return (int)(lbl_806D9EE4 * (lbl_806D9EDC - (float)timer / lbl_806D9F14));
 }
+#pragma push
+#pragma opt_common_subs off
 extern "C" void fn_801D1684(CourseBanner *self) {
     if (self->state == 3) return;
     switch (self->state) {
@@ -227,3 +229,5 @@ extern "C" void fn_801D1684(CourseBanner *self) {
 tick:
     self->timer++;
 }
+#pragma pop
+

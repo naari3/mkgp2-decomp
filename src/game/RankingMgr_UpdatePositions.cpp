@@ -35,6 +35,9 @@ static inline void UpdateKart(RankingManager *self, int i) {
         Notify(ctrl);
     }
 }
+static inline void UpdateAll(RankingManager *self) {
+    for (int i = 0; i < 8; ++i) UpdateKart(self, i);
+}
 void RankingMgr_UpdatePositions(RankingManager *self) {
     if (g_gameMode == 1) return;
     if (IsRaceStarted()) {
@@ -44,6 +47,6 @@ void RankingMgr_UpdatePositions(RankingManager *self) {
         self->box->Update();
         fn_801DC774();
     }
-    for (int i = 0; i < 8; ++i) UpdateKart(self, i);
+    UpdateAll(self);
 }
 }

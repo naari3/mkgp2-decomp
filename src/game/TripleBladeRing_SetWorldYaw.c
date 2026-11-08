@@ -1,5 +1,5 @@
 /*
- * TripleBladeRing_SetWorldYaw (0x800B3ED4 size:0x1C0) - NonMatching, 98.71%
+ * TripleBladeRing_SetWorldYaw (0x800B3ED4 size:0x1C0) - NonMatching, 99.33%
  *
  * Per-frame pose setter: copies the kart world matrix into self->mtx,
  * stores the yaw, derives the world position, and advances the master
@@ -10,10 +10,10 @@
  * A counted three-arm loop is fully unrolled by CW 1.3.2 and places the
  * working value in f0, improving 97.72321% to 98.70536% (c19_u238).
  * Instruction order, count, stack layout, and EH remain exact.
- * Remaining differences:
+ * A separate master wrap local and the decl order amp, limit, one (best of
+ * a full 720-order sweep) give 99.33%. Remaining differences:
  *   master: target phase=f2, wrap limit=f1; source phase=f1, limit=f2
- *   arms: target one=f1, amp=f2, limit=f3, stagger=f4;
- *         source stagger=f1, one=f2, amp=f3, limit=f4
+ *   arms: target one=f1, stagger=f4; source stagger=f1, one=f4
  * Compound master assignments and a cached-argument inline arm helper
  * were allocation-invariant. Prior probes and compiler observations:
  * docs/notes/cw132-fp-scratch-web-order-levers.md and
@@ -37,11 +37,12 @@ extern const float lbl_806D513C;
 
 void TripleBladeRing_SetWorldYaw(TripleBladeRing *self, float yaw, void *worldMtx)
 {
-    float one; /* also used as the master-phase wrap limit */
     float amp;
     float limit;
+    float one;
     float stag[3];
     int i;
+    float wrap;
 
     if (self != 0) {
         Mtx_TransposeToMtx44(self->mtx, worldMtx);
@@ -49,8 +50,8 @@ void TripleBladeRing_SetWorldYaw(TripleBladeRing *self, float yaw, void *worldMt
         Mtx44_GetTranslation_ColMajor(&self->pos, self->mtx);
 
         self->phase0 = self->phase0 + lbl_806D5028;
-        if ((one = lbl_806D5134) < self->phase0) {
-            self->phase0 = self->phase0 - one;
+        if ((wrap = lbl_806D5134) < self->phase0) {
+            self->phase0 = self->phase0 - wrap;
         }
 
         self->phaseSin = self->phase0;
