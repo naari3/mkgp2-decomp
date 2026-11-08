@@ -30,6 +30,7 @@ import json
 import subprocess
 import sys
 import zipfile
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -91,8 +92,13 @@ def load_history(path: Path) -> List[Dict[str, Any]]:
     return rows
 
 
+def _ts_key(ts: str) -> datetime:
+    """Commit timestamps mix offsets (+09:00 and Z); compare as instants."""
+    return datetime.fromisoformat(ts.replace("Z", "+00:00"))
+
+
 def write_history(path: Path, rows: List[Dict[str, Any]]) -> None:
-    rows = sorted(rows, key=lambda r: (r["ts"], r["sha"]))
+    rows = sorted(rows, key=lambda r: (_ts_key(r["ts"]), r["sha"]))
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="\n") as f:
         for r in rows:

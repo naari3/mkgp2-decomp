@@ -906,7 +906,7 @@ void fn_8015E608(ResultPartE608 *o) {
         float t = (float)o->timer / lbl_806D86A4;
         unsigned int c;
         o->spr->alpha = t;
-        c = __rlwimi(0xFFFFFF00, (int)(lbl_806D86E8 * t), 0, 24, 31);
+        c = (0xFFFFFF00 | (unsigned char)((int)(lbl_806D86E8 * t)));
         o->col[0] = c;
         o->col[1] = c;
         o->col[2] = c;
@@ -927,7 +927,7 @@ void fn_8015E608(ResultPartE608 *o) {
         float t = lbl_806D8674 - (float)o->timer / lbl_806D86A4;
         unsigned int c;
         o->spr->alpha = t;
-        c = __rlwimi(0xFFFFFF00, (int)(lbl_806D86E8 * t), 0, 24, 31);
+        c = (0xFFFFFF00 | (unsigned char)((int)(lbl_806D86E8 * t)));
         o->col[0] = c;
         o->col[1] = c;
         o->col[2] = c;
@@ -2051,7 +2051,7 @@ void result_screen_update(ResultSub *s) {
         {
             float a = s->timer / lbl_806D87F0;
             ((ResultPopupSprite *)*(void **)s->anims[1])->alpha = a;
-            s->texts[0]->color = __rlwimi(0xFFFFFF00, (int)(lbl_806D87F4 * a), 0, 24, 31);
+            s->texts[0]->color = (0xFFFFFF00 | (unsigned char)((int)(lbl_806D87F4 * a)));
         }
         if (s->timer >= lbl_806D87F0) {
             SpriteAnimParamBlock_Reload(s->anims[2], 0x1dd);
@@ -2113,7 +2113,7 @@ void result_screen_update(ResultSub *s) {
         }
         if (s->timer >= lbl_806D8808) {
             int v = (int)(lbl_806D87F4 * ((s->timer - lbl_806D8808) / lbl_806D880C));
-            s->texts[1]->color = __rlwimi(0xFFFFFF00, v, 0, 24, 31);
+            s->texts[1]->color = (0xFFFFFF00 | (unsigned char)(v));
             SpriteHandle_SetCornerAlpha(s->sprite, v);
         }
         if (s->timer >= lbl_806D8814) {
@@ -2777,7 +2777,7 @@ static inline void Fade_Next(ResultFadeV *f) {
 }
 
 static inline void Col_SetAlpha(unsigned int *col, int a) {
-    unsigned int c = __rlwimi(-0x100, a, 0, 24, 31);
+    unsigned int c = (0xFFFFFF00 | (unsigned char)(a));
     col[0] = c;
     col[1] = c;
     col[2] = c;

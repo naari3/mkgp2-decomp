@@ -42,7 +42,6 @@ static inline void AddCoinStats(u32 buttons, u32 idx, s32 coins, s32 credits) {
 s32 fn_802895E4(u32 chute, s32 n, u16* counters, u32 buttons) {
     u32 idx;
     s32 added;
-    OSSemaphore* sem;
     s32 i;
     CoinState* st = &Coin;
     s32 d;
@@ -104,17 +103,16 @@ s32 fn_802895E4(u32 chute, s32 n, u16* counters, u32 buttons) {
         }
     }
     if (Coin.chuteMode[chute] != 0) {
-        sem = &Coin.sem;
         for (i = 0; i < 4; i++) {
             if (buttons & (1 << (i + 4))) {
                 if (++c->hold[i] == 7) {
                     added = fn_8028911C(fn_802894EC(chute, i), 1);
                     if (!(buttons & 0x80000000)) {
-                        OSWaitSemaphore(sem);
+                        OSWaitSemaphore(&Coin.sem);
                         Coin.stats.serviceCredits += added;
                         Coin.stats.allCredits += added;
                         Coin.dirty[2] = 1;
-                        OSSignalSemaphore(sem);
+                        OSSignalSemaphore(&Coin.sem);
                     }
                 }
             } else {

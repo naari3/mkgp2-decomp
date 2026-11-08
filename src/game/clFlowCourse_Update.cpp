@@ -130,7 +130,7 @@ static inline void SetSpritePosition(CourseSprite *sprite, float x, float y) {
 }
 
 static inline void SetAlpha(ResCtrl *ctrl, unsigned int color, float a) {
-    color = __rlwimi(color, (int)(lbl_806D9EE4 * a), 0, 24, 31);
+    color = ((color) & 0xFFFFFF00 | (unsigned char)((int)(lbl_806D9EE4 * a)));
     ctrl->SetColor(color);
 }
 
