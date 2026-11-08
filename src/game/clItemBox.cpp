@@ -1,4 +1,8 @@
-/*
+/* --- owned .rodata 0x802EDF20..0x802EDFD8 (tools/own_data.py) --- */
+#pragma force_active on
+extern "C" const char lbl_802EDF20[184] = { 99, 108, 73, 116, 101, 109, 66, 111, 120, 58, 58, 115, 101, 116, 117, 112, 58, 58, 99, 108, 71, 114, 111, 117, 110, 100, 67, 111, 108, 108, 58, 58, 99, 104, 107, 80, 111, 105, 110, 116, 32, 110, 111, 32, 103, 114, 111, 117, 110, 100, 32, 115, 101, 97, 114, 99, 104, 10, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 46, 100, 97, 116, 0, 0, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 104, 97, 104, 101, 110, 95, 110, 117, 108, 108, 49, 95, 106, 111, 105, 110, 116, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 98, 95, 98, 111, 120, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 97, 95, 98, 111, 120, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 105, 116, 101, 109, 95, 98, 111, 120, 95, 110, 117, 108, 108, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0 };
+#pragma force_active reset
+extern "C" /*
  * clItemBox: item box objects and the manager's assets, 0x8005EA94..0x8005F5CC.
  * The parts below were separate split TUs. The .data at 0x803F9C60 holds the
  * compiler's member-function-pointer constants (&clItemBox::PopOut, ...): two
@@ -166,7 +170,6 @@ void clItemBoxManager_UnbindCurrent(void)
  * this TU's extab_user_renames entry. All EH is compiler-generated.
  */
 extern "C" {
-extern const char lbl_802EDF20[0xB8];
 }
 
 struct GroundPosition {

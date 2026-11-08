@@ -1,3 +1,8 @@
+/* --- owned .rodata 0x80360498..0x803604F8 (tools/own_data.py) --- */
+#pragma force_active on
+const int lbl_80360498[8][2] = { 2720, 2721, 2692, 2693, 2678, 2679, 2734, 2735, 2706, 2707, 2752, 2753, 2772, 2773, 2762, 2763 };
+const int lbl_803604D8[8] = { 5286, 5284, 5283, 5287, 5285, 5288, 5290, 5289 };
+#pragma force_active reset
 /*
  * Result-screen cup trophy effect on the shared sprite-effect base
  * (vtable lbl_8048EBCC; ctor, dtor). The base declares a virtual that is
@@ -28,8 +33,6 @@ extern "C" {
 extern char lbl_8048EB44[];
 extern char lbl_8048EBCC[];
 extern char lbl_8048EC9C[];
-extern int lbl_803604D8[];
-extern int lbl_80360498[][2];
 extern unsigned int lbl_80360520[];
 extern int lbl_803606C4[];
 extern int lbl_803606E4[][3];

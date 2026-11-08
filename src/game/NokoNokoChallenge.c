@@ -12,7 +12,6 @@ extern int g_roundIndex;
 extern int g_ccClass;
 extern char g_playerData[0x1DC];
 extern void *lbl_806D10A0[2];
-extern int lbl_80355840[13][2];
 
 extern unsigned char IsCardValid(void);
 extern void SoundMgr_PlaySE(int);
@@ -25,6 +24,10 @@ extern void Empty_NokoNokoHook(int, int, int);
 extern unsigned char *fn_8024F588(void);
 
 #include "game/singleton.h"
+/* --- owned .rodata 0x80355840..0x803558A8 (tools/own_data.py) --- */
+#pragma force_active on
+const int lbl_80355840[13][2] = { 234, 219, 255, 249, 268, 270, 297, 293, 318, 303, 340, 338, 361, 345, 382, 367, 403, 397, 424, 420, 445, 441, 467, 452, 488, 473 };
+#pragma force_active reset
 
 #pragma exceptions on
 void NokoNokoChallenge_SaveResult(void *param_1, int param_2, unsigned int param_3) {

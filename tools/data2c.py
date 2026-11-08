@@ -12,7 +12,7 @@ own alignment recreates them; check main.dol OK). Strings become `const char x[]
 A pointer to an object defined later in the range gets a forward `extern` declaration
 (globals only). Symbols outside the range are listed as needed externs on stderr.
 """
-import argparse, glob, os, re, struct, sys
+import argparse, glob, json, math, os, re, struct, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HDR = re.compile(r'^# (\.\w+):0x[0-9A-Fa-f]+ \| 0x([0-9A-Fa-f]+) \| size: 0x([0-9A-Fa-f]+)')
@@ -88,11 +88,109 @@ def isnum(v):
     except ValueError: return False
 
 
+SCALARS = {
+    1: ('char', 'signed char', 'unsigned char', 'u8', 's8', 'uchar', 'Uint8', 'Sint8', 'BOOL8', 'bool'),
+    2: ('short', 'signed short', 'unsigned short', 'u16', 's16', 'ushort', 'short int', 'unsigned short int', 'Uint16', 'Sint16', 'wchar_t'),
+    4: ('int', 'signed int', 'unsigned int', 'unsigned', 'long', 'unsigned long', 'u32', 's32', 'uint', 'BOOL', 'Uint32', 'Sint32', 'size_t', 'float', 'f32'),
+    8: ('double', 'f64', 'long long', 'unsigned long long', 'u64', 's64'),
+}
+SIGNED = ('char', 'signed char', 's8', 'Sint8', 'short', 'signed short', 's16', 'short int', 'Sint16', 'int', 'signed int',
+          'long', 's32', 'BOOL', 'Sint32', 'long long', 's64')
+
+
+def obj_bytes(o):
+    bs = bytearray()
+    for k, v in o['items']:
+        if k == 's': bs += v; continue
+        if not isnum(v): return None
+        w = {'1': 1, '2': 2, '4': 4, '8': 8}[k]
+        bs += (int(v, 0) & ((1 << (8 * w)) - 1)).to_bytes(w, 'big')
+    return bytes(bs)
+
+
+def typed(o, decl, const, st, defined, seen, fwd, ext):
+    """Definition spelled with the TU's own declared type (scalar or pointer element), or None."""
+    base, dims = decl
+    base = ' '.join(base.split())
+    core = re.sub(r'\b(const|volatile)\b', '', base).strip()
+    core = ' '.join(core.split())
+    if const and not re.search(r'\bconst\b', base.split('*')[0]):
+        base = 'const ' + base
+    if const and '*' in core and not base.rstrip().endswith('const'):
+        base += ' const'  # the array itself must be const to stay in .rodata (decl must match)
+    n, sz = o['name'], o['size']
+    if '*' in core:
+        it = o['items']
+        if {k for k, _ in it} != {'4'} or sz != 4 * len(it): return None
+        cast = re.sub(r'\s*\bconst\s*$', '', base).strip()
+        el = []
+        for _, v in it:
+            if isnum(v):
+                el.append('0' if int(v, 0) == 0 else '(%s)0x%X' % (cast, int(v, 0) & 0xFFFFFFFF)); continue
+            m = re.match(r'^"?([^"+\-]+)"?(?:([+\-])(0x[0-9a-fA-F]+|\d+))?$', v)
+            sym, sign, off = m.group(1), m.group(2), m.group(3)
+            if sym in defined and sym not in seen and sym != n:
+                if defined[sym]['bind'] == 'local': return None
+                fwd.append(sym)
+            elif sym not in defined: ext.add(sym)
+            el.append(f'({cast})&{sym}' if not off else f'({cast})((char *)&{sym} {sign} {off})')
+        cnt, w = len(it), 4
+        vals = el
+    else:
+        w = next((k for k, v in SCALARS.items() if core in v), None)
+        if not w or sz % w: return None
+        bs = obj_bytes(o)
+        if bs is None or len(bs) != sz: return None
+        cnt = sz // w
+        if core in ('float', 'f32', 'double', 'f64'):
+            vals = []
+            for i in range(cnt):
+                f = struct.unpack('>f' if w == 4 else '>d', bs[i * w:(i + 1) * w])[0]
+                if not math.isfinite(f): return None
+                t = '%.9g' % f if w == 4 else '%.17g' % f
+                if struct.pack('>f' if w == 4 else '>d', float(t)) != bs[i * w:(i + 1) * w]: return None
+                if '.' not in t and 'e' not in t and 'n' not in t: t += '.0'
+                vals.append(t + ('f' if w == 4 else ''))
+        else:
+            sg = core in SIGNED
+            vals = [str(int.from_bytes(bs[i * w:(i + 1) * w], 'big', signed=sg)) if sg else
+                    '0x%X' % int.from_bytes(bs[i * w:(i + 1) * w], 'big') for i in range(cnt)]
+            if w == 1 and 'char' in core and o['items'] and o['items'][0][0] == 's' and len(o['items']) == 1:
+                return f'{st}{base} {n}{dims_of(dims, cnt) or "[]"} = {c_string(bs[:-1])};' if dims_of(dims, cnt) is not None else None
+    dd = dims_of(dims, cnt)
+    if dd is None: return None
+    if dd == '':
+        if cnt != 1: return None
+        return f'{st}{base} {n} = {vals[0]};'
+    return f'{st}{base} {n}{dd} = {{ {", ".join(vals)} }};'
+
+
+def dims_of(dims, cnt):
+    """Declared dims text with empty/missing extents filled for cnt elements; None if incompatible."""
+    if not dims: return '' if cnt == 1 else '[%d]' % cnt
+    ds = re.findall(r'\[([^\]]*)\]', dims)
+    try:
+        vals = [int(eval(d, {})) if d.strip() else None for d in ds]
+    except Exception:
+        return None
+    rest = 1
+    for v in vals[1:]:
+        if v is None: return None
+        rest *= v
+    if vals[0] is None:
+        if cnt % rest: return None
+        vals[0] = cnt // rest
+    if vals[0] * rest != cnt: return None
+    return ''.join('[%d]' % v for v in vals)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('sec'); ap.add_argument('lo'); ap.add_argument('hi')
     ap.add_argument('--force-active', action='store_true')
+    ap.add_argument('--types', help='JSON {name: [base type, dims]} from the TU declarations')
     a = ap.parse_args()
+    types = json.load(open(a.types)) if a.types else {}
     lo, hi = int(a.lo, 16), int(a.hi, 16)
     objs = [o for o in load(a.sec, lo, hi) if not o['name'].startswith('gap_')]
     const = 'const ' if a.sec in ('.rodata', '.sdata2') else ''
@@ -103,6 +201,10 @@ def main():
         st = 'static ' if o['bind'] == 'local' else ''
         n, sz, it = o['name'], o['size'], o['items']
         kinds = {k for k, _ in it}
+        if n in types:
+            d = typed(o, types[n], const, st, defined, seen, fwd, ext)
+            if d:
+                out.append(d); seen.add(n); continue
         if kinds == {'s'} and len(it) == 1 and len(it[0][1]) == sz:
             out.append(f'{st}{const}char {n}[] = {c_string(it[0][1][:-1])};')
         elif kinds == {'4'} and sz == 4 * len(it):

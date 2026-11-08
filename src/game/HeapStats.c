@@ -1,3 +1,7 @@
+/* --- owned .rodata 0x802E9650..0x802E96A8 (tools/own_data.py) --- */
+#pragma force_active on
+const char lbl_802E9650[88] = { 108, 118, 32, 37, 100, 32, 105, 100, 32, 37, 100, 32, 109, 115, 103, 58, 37, 115, 10, 0, 97, 108, 108, 32, 97, 108, 108, 111, 99, 32, 109, 101, 109, 111, 114, 121, 32, 37, 100, 91, 107, 98, 93, 0, 109, 97, 120, 32, 97, 108, 108, 111, 99, 32, 109, 101, 109, 111, 114, 121, 32, 37, 100, 91, 107, 98, 93, 0, 109, 101, 109, 111, 114, 121, 32, 98, 108, 111, 99, 107, 32, 32, 32, 32, 32, 37, 100, 0 };
+#pragma force_active reset
 /* Boot-state refresh, heap stat dump and a couple of small destructors.
  * The format strings live in a shared .rodata pool that starts at
  * lbl_802E8F48; the compiler keeps the pool base in a register. */
@@ -79,7 +83,6 @@ extern void *lbl_806D1880;
 extern const float lbl_806D2294;
 extern const float lbl_806D22B4;
 extern const char lbl_802E8F48[];
-extern char lbl_802E9650[];
 extern BootState lbl_80594080;
 }
 

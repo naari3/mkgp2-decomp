@@ -1,3 +1,7 @@
+/* --- owned .data 0x804220C8..0x80422188 (tools/own_data.py) --- */
+#pragma force_active on
+char lbl_804220C8[3][64] = { 105, 116, 101, 109, 95, 98, 97, 110, 97, 110, 97, 95, 121, 117, 114, 97, 51, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 105, 116, 101, 109, 95, 98, 97, 110, 97, 110, 97, 95, 121, 117, 114, 97, 50, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 105, 116, 101, 109, 95, 98, 97, 110, 97, 110, 97, 95, 121, 117, 114, 97, 49, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+#pragma force_active reset
 typedef struct Vec3 { float x, y, z; } Vec3;
 extern float lbl_806D6C0C; /* 25.0f, shared .sdata2 pool constant */
 typedef float Mtx44[4][4];
@@ -41,7 +45,6 @@ extern void SpriteSlot_TickAnim(void *slot);
 extern float Vec3_ToYaw(void *v);
 extern float fn_800D4174(Mtx44 m);
 extern unsigned int lbl_803324F0[];
-extern char lbl_804220C8[][0x40];
 extern unsigned char *ItemObject_SpawnWithAlias(int kind, int alias);
 extern void SpriteSlot_Container_Free(void *self);
 extern void SpriteSlot_InitNonLoop(void *slot, int id);
