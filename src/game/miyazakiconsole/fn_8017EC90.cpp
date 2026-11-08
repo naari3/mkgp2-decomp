@@ -181,7 +181,7 @@ static inline void SoundMenuDraw() {
         int line=lbl_806D160C;
         int y=lbl_806D1670;
         int x=lbl_806D166C;
-        fn_8017FF10(x+16,(y+line)+3,lbl_806D91D4);
+        fn_8017FF10(x+16,line+(y+3),lbl_806D91D4);
     }
     {
         Menu *m=lbl_806D165C;
@@ -195,7 +195,7 @@ static inline void SoundMenuDraw() {
         int x=lbl_806D166C;
         int y=lbl_806D1670;
         int bottom=MenuBottom(m);
-        fn_8017FF10(x,y+(bottom+1),consoleData_9D0);
+        fn_8017FF10(x,y+bottom+1,consoleData_9D0);
     }
 }
 
@@ -240,6 +240,100 @@ extern "C" int fn_8017EC90(int msg, void *, int arg, int, unsigned int sub) {
                 lbl_806CFB70=-1;
             }
             lbl_806CFB78=(fn_801915DC(arg+consoleData_57C[lbl_806D1610])>>1)&0x7f;
+            lbl_806CFB7A=0x2000;
+            break;
+        }
+        return 0;
+    case 1: return 0;
+    case 3: return 0;
+    case 4:
+        SoundMenuDraw();
+        return 0;
+    case 2:
+        fn_801920D4();
+        lbl_806CFB70=-1;
+        return 0;
+    }
+    return 0;
+}
+
+/* ---- fn_8017EFFC: voice player menu (was miyazakiconsole/fn_8017EFFC.cpp) ---- */
+extern "C" {
+extern const char *lbl_8049178C[21];
+int sprintf(char *, const char *, ...);
+Menu *fn_801816AC(const char *);
+void fn_801805AC(Menu *, void *);
+void fn_801804CC(Menu *, const char *);
+}
+
+extern "C" void fn_8017EFFC(unsigned int kind) {
+    char title[64];
+    lbl_806D1610 = kind;
+    switch(kind) {
+    case 0: sprintf(title, consoleData_9EC); break;
+    case 1: sprintf(title, consoleData_A04); break;
+    case 2: sprintf(title, consoleData_A1C); break;
+    case 3: sprintf(title, consoleData_A34); break;
+    case 4: sprintf(title, consoleData_A4C); break;
+    case 5: sprintf(title, consoleData_A64); break;
+    case 6: sprintf(title, consoleData_A7C); break;
+    case 7: sprintf(title, consoleData_A94); break;
+    case 8: sprintf(title, consoleData_AAC); break;
+    case 9: sprintf(title, consoleData_AC4); break;
+    case 10: sprintf(title, consoleData_ADC); break;
+    case 11: sprintf(title, consoleData_AF4); break;
+    case 12: sprintf(title, consoleData_B0C); break;
+    }
+    Menu *menu = fn_801816AC(title);
+    fn_801805AC(menu, (void *)fn_8017EC90);
+    for (unsigned int i=0; i<21; i++) fn_801804CC(menu, lbl_8049178C[i]);
+    if (lbl_806D1610==4) fn_801804CC(menu, consoleData_B24);
+    lbl_806CFB78 = (fn_801915DC(consoleData_57C[lbl_806D1610]) >> 1) & 0x7f;
+    lbl_806CFB7A = 0x2000;
+    lbl_806D160C = 0;
+}
+
+/* ---- fn_8017F1E8: FX player menu (was miyazakiconsole/fn_8017F1E8.cpp) ---- */
+extern "C" int fn_8017F1E8(int msg, void *, int arg, int, unsigned int sub) {
+    arg += consoleData_4C8[lbl_806D1608*2];
+    switch (msg) {
+    case 0:
+        switch (sub) {
+        case 9:
+            if (lbl_806CFB70 != 0xffffffff) {
+                fn_80192348(lbl_806CFB70);
+                lbl_806CFB70=-1;
+            }
+            SoundMgr_Play(arg);
+            fn_8019190C(arg,lbl_806CFB78);
+            fn_801915F4(arg,lbl_806CFB7A);
+            lbl_806CFB70=arg;
+            break;
+        case 1:
+            if (++lbl_806D160C > 1) lbl_806D160C=0;
+            break;
+        case 11:
+            fn_801814C8();
+            break;
+        case 5:
+            switch(lbl_806D160C) {
+            case 0: lbl_806CFB78=(lbl_806CFB78-1)&0x7f; break;
+            case 1: lbl_806CFB7A=(lbl_806CFB7A-0x40)&0xff; break;
+            }
+            break;
+        case 6:
+            switch(lbl_806D160C) {
+            case 0: lbl_806CFB78=(lbl_806CFB78+1)&0x7f; break;
+            case 1: lbl_806CFB7A=(lbl_806CFB7A+0x40)&0xff; break;
+            }
+            break;
+        case 7:
+        case 8:
+            if (lbl_806CFB70 != 0xffffffff) {
+                fn_80192348(lbl_806CFB70);
+                lbl_806CFB70=-1;
+            }
+            lbl_806CFB78=0x7f;
             lbl_806CFB7A=0x2000;
             break;
         }

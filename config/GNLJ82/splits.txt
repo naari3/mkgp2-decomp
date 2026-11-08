@@ -7173,23 +7173,11 @@ game/miyazakiconsole/fn_8017EB58.c:
 	.text       start:0x8017EB58 end:0x8017EC90
 
 game/miyazakiconsole/fn_8017EC90.cpp:
-	extab       start:0x800119F4 end:0x800119FC
-	extabindex  start:0x800269E4 end:0x800269F0
-	.text       start:0x8017EC90 end:0x8017EFFC
+	extab       start:0x800119F4 end:0x80011A0C
+	extabindex  start:0x800269E4 end:0x80026A08
+	.text       start:0x8017EC90 end:0x8017F538
 	.rodata     start:0x80376220 end:0x80376E10
-	.data       start:0x804918C4 end:0x804918F4
-
-game/miyazakiconsole/fn_8017EFFC.cpp:
-	extab       start:0x800119FC end:0x80011A04
-	extabindex  start:0x800269F0 end:0x800269FC
-	.text       start:0x8017EFFC end:0x8017F1E8
-	.data       start:0x804918F4 end:0x80491928
-
-game/miyazakiconsole/fn_8017F1E8.cpp:
-	extab       start:0x80011A04 end:0x80011A0C
-	extabindex  start:0x800269FC end:0x80026A08
-	.text       start:0x8017F1E8 end:0x8017F538
-	.data       start:0x80491928 end:0x80491958
+	.data       start:0x804918C4 end:0x80491958
 
 game/miyazakiconsole/fn_8017F538.cpp:
 	extab       start:0x80011A0C end:0x80011A14
