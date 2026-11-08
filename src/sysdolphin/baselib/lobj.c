@@ -292,7 +292,7 @@ void HSD_LObjSetupSpecularInit(Mtx pmtx)
         cdir.z = -1.0F;
     }
 
-    num = nb_active_lights;
+    num = HSD_LObjGetNbActive();
     for (i = 0; i < num; i++) {
         Vec3 half, ldir;
         lobj = LObjGetActiveByIndex(i);
