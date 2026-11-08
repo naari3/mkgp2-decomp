@@ -6944,7 +6944,9 @@
   "src/game/PhysicsState_KartCollisionCheck.cpp": {
     "__dt__19PhysicsCollisionVecFv": "dtor_80036E40",
     "__ct__21PhysicsCollisionShapeFii": "fn_802091BC",
-    "__dt__21PhysicsCollisionShapeFv": "dtor_80209180"
+    "__dt__21PhysicsCollisionShapeFv": "dtor_80209180",
+    "@155": "@etb_80016C5C",
+    "@156": "@eti_80028B38"
   },
   "src/game/PhysicsState_WallCollisionCheck.cpp": {
     "__dt__19PhysicsCollisionVecFv": "dtor_80036E40"

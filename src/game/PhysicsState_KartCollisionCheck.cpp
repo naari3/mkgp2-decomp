@@ -1,5 +1,5 @@
 /* Native candidate. Cleanup targets and local object offsets agree;
- * Only the immunity test and EH PC intervals still differ. */
+ * Only the immunity test still differs; owned EH intervals are exact. */
 #include "game/PhysicsCollisionPrivate.h"
 
 static inline void WrapHitRadians(float &yaw)
@@ -101,13 +101,13 @@ extern "C" int PhysicsState_KartCollisionCheck(char *self)
     void *effects = PH_P(render, 0x304);
     void *reaction = PH_P(self, 0xC);
     unsigned long long flags = *(unsigned long long *)((char *)effects + 0x10);
-    unsigned char immune = 0;
-    if ((flags & 0x10000000ULL) != 0) immune = 1;
+    unsigned char immune = 1;
+    if ((flags & 0x10000000ULL) == 0) immune = 0;
     if (immune) return 1;
     void *otherEffects = PH_P(PH_P(self, 0x128), 0x304);
     if ((*(unsigned long long *)((char *)otherEffects + 0x10) & 0x80ULL) != 0 || (flags & 0x80ULL) != 0) return 0;
-    fn_80057960(reaction, PH_F(self, 0x58), PH_F(self, 0x5C), PH_F(self, 0x60), centerX, centerY, centerZ, 1.0f);
     PhysicsCollisionVec movement;
+    fn_80057960(reaction, PH_F(self, 0x58), PH_F(self, 0x5C), PH_F(self, 0x60), centerX, centerY, centerZ, 1.0f);
     if (!PH_B(self, 0x138)) {
         direction.x *= lbl_806DA47C;
         direction.y *= lbl_806DA47C;
