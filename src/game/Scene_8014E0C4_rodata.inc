@@ -240,30 +240,13 @@ struct R_803667A8 {
     const void *p203;
     unsigned int w204[45];
 };
-struct R_80367200 {
-    unsigned int w0[1];
-    const void *p1;
-    unsigned int w2[2];
-    const void *p3;
-    unsigned int w4[2];
-    const void *p5;
-    unsigned int w6[2];
-    const void *p7;
-    unsigned int w8[2];
-    const void *p9;
-    unsigned int w10[2];
-    const void *p11;
-    unsigned int w12[2];
-    const void *p13;
-    unsigned int w14[2];
-    const void *p15;
-    unsigned int w16[2];
-    const void *p17;
-    unsigned int w18[2];
-    const void *p19;
-    unsigned int w20[2];
-    const void *p21;
-    unsigned int w22[58];
+struct Vec3R {
+    float x, y, z;
+};
+struct RaceKartDescR {
+    unsigned int character;
+    const void *joint;
+    unsigned int enabled;
 };
 /* Most of these are reached only through pool offsets in the asm
  * functions, so keep the linker from stripping them. */
@@ -1129,7 +1112,7 @@ static const unsigned int lbl_80366E4C[41] = {
     0x00000007, 0x43340000, 0x00000008, 0x43700000, 0x00000009, 0x444E5F73,
     0x74616469, 0x756D5F73, 0x686F7274, 0x5F612E64, 0x61740000,
 };
-extern const CourseModeInfo lbl_80366EF0[21] = {
+static const CourseModeInfo lbl_80366EF0[21] = {
     {0x1, -1, 0, 0, {0, 0}, 0x0, 0x0, lbl_806D7F78},
     {0x78, 0xD, 1, 0, {0, 0}, 0x0, 0x0, lbl_806D7F80},
     {0x78, 0xE, 1, 0, {0, 0}, 0x0, 0x0, lbl_806D7F88},
@@ -1163,31 +1146,25 @@ static const char lbl_80367194[] = "chara_luigi_null_joint";
 static const char lbl_803671AC[] = "chara_kinopio_null_joint";
 static const char lbl_803671C8[] = "chara_mamechi_null_joint";
 static const char lbl_803671E4[] = "chara_waluigi_null_joint";
-static const R_80367200 lbl_80367200 = {
-    {0x00000000},
-    lbl_803670E8,
-    {0x01010000, 0x00000003},
-    lbl_80367100,
-    {0x01010000, 0x00000006},
-    lbl_80367118,
-    {0x01010000, 0x00000008},
-    lbl_80367130,
-    {0x01010000, 0x0000000A},
-    lbl_80367148,
-    {0x01010000, 0x00000007},
-    lbl_80367164,
-    {0x01000000, 0x00000002},
-    lbl_8036717C,
-    {0x00010000, 0x00000001},
-    lbl_80367194,
-    {0x00010000, 0x00000005},
-    lbl_803671AC,
-    {0x00010000, 0x0000000C},
-    lbl_803671C8,
-    {0x00010000, 0x0000000B},
-    lbl_803671E4,
-    {0x00010000, 0x000000D3, 0x00000139, 0x000000D4, 0x000000D7, 0x000000D8, 0x000000D6, 0x000000D1, 0x000000CF, 0x000000CE, 0x0000012D, 0x000000D0, 0x0000012C, 0x0000012E, 0x0000012F, 0x00000130, 0x000000D2, 0x00000131, 0x00000132, 0x00000133, 0x00000134, 0x00000135, 0x00000136, 0x00000137, 0x00000138, 0x000000D3, 0x00000139, 0x000000D4, 0x000000D7, 0x000000D8, 0x000000D6, 0x000000D1, 0x000000CF, 0x000000CE, 0x0000012D, 0x000000D0, 0x0000012C, 0x0000012E, 0x0000012F, 0x00000130, 0x000000D2, 0x00000131, 0x00000132, 0x00000133, 0x00000134, 0x00000135, 0x00000136, 0x00000137, 0x00000138, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000},
+static const RaceKartDescR lbl_80367200[11] = {
+    {0x00000000, lbl_803670E8, 0x01010000},
+    {0x00000003, lbl_80367100, 0x01010000},
+    {0x00000006, lbl_80367118, 0x01010000},
+    {0x00000008, lbl_80367130, 0x01010000},
+    {0x0000000A, lbl_80367148, 0x01010000},
+    {0x00000007, lbl_80367164, 0x01000000},
+    {0x00000002, lbl_8036717C, 0x00010000},
+    {0x00000001, lbl_80367194, 0x00010000},
+    {0x00000005, lbl_803671AC, 0x00010000},
+    {0x0000000C, lbl_803671C8, 0x00010000},
+    {0x0000000B, lbl_803671E4, 0x00010000},
 };
+static const int lbl_80367284[48] = {
+    0x000000D3, 0x00000139, 0x000000D4, 0x000000D7, 0x000000D8, 0x000000D6, 0x000000D1, 0x000000CF, 0x000000CE, 0x0000012D, 0x000000D0, 0x0000012C, 0x0000012E, 0x0000012F, 0x00000130, 0x000000D2, 0x00000131, 0x00000132, 0x00000133, 0x00000134, 0x00000135, 0x00000136, 0x00000137, 0x00000138, 0x000000D3, 0x00000139, 0x000000D4, 0x000000D7, 0x000000D8, 0x000000D6, 0x000000D1, 0x000000CF, 0x000000CE, 0x0000012D, 0x000000D0, 0x0000012C, 0x0000012E, 0x0000012F, 0x00000130, 0x000000D2, 0x00000131, 0x00000132, 0x00000133, 0x00000134, 0x00000135, 0x00000136, 0x00000137, 0x00000138,
+};
+static const Vec3R lbl_80367344 = {0.0f, 0.0f, 0.0f};
+static const Vec3R lbl_80367350 = {0.0f, 0.0f, -1.0f};
+static const Vec3R lbl_8036735C = {0.0f, 0.0f, 0.0f};
 static const unsigned int lbl_80367368[4] = {
     0x0000013C, 0x0000013A, 0x000000DA, 0x000000D9,
 };

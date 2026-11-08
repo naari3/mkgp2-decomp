@@ -516,7 +516,7 @@ void KartDriver_Dtor(void *p, int flag);
 void SetActiveCamera(void *cam, int a);
 void TireEffect_ResetSpin(void *e, float a, float b);
 void VisualEffectHolder_Dtor(void *p, int flag);
-extern void fn_8013D4B0();
+void fn_8013D4B0(void *p, float a);
 extern void fn_8013D738();
 extern unsigned int g_playerRenderObj;
 extern void *g_raceCamera;
@@ -565,46 +565,46 @@ extern unsigned int lbl_806D8124;
 extern unsigned int lbl_806D8128;
 extern unsigned int lbl_806D812C;
 extern unsigned int lbl_806D8130;
-extern void BuildOrientationFromYaw();
+float BuildOrientationFromYaw(float yaw);
 void CObj_ApplyScissor(void *cam, void *out);
 void CObj_LoadProjMatrix(void *cam, void *out);
-extern void ClSound_PlayBgmStream();
-extern void ClStream_IsActive();
-extern void ClStream_PlayMono();
-extern void ClStream_Stop();
-extern void CourseEnvironment_UpdateAndCullZones_Timed();
-extern void DrawEffect_SpawnByType();
+unsigned char ClSound_PlayBgmStream(int id, int a);
+unsigned char ClStream_IsActive(int h);
+int ClStream_PlayMono(int id, int a, int b);
+void ClStream_Stop(int h);
+void CourseEnvironment_UpdateAndCullZones_Timed(void *env);
+void *DrawEffect_SpawnByType(unsigned char type);
 void HSD_JObjSetupMatrixSub(void *jobj);
 void ItemEffectBus_SnapshotAndFullReset(void *bus);
 void ItemEffectBus_TickTornadoCooldown(void *bus);
 void ItemObjectManager_Update(void);
-extern void KartDriver_GetJointByIdx();
-extern void KartDriver_TickAction_79268_AndSetSlot5aEulerZ();
-extern void Mtx44_GetPitchOfPosZ_Padded();
-extern void Mtx44_GetTranslation_RowMajor();
-extern void Mtx44_GetYawOfPosZ_Padded();
+void *KartDriver_GetJointByIdx(void *drv, int idx);
+void KartDriver_TickAction_79268_AndSetSlot5aEulerZ(void *drv, float z);
+float Mtx44_GetPitchOfPosZ_Padded(void *m);
+void Mtx44_GetTranslation_RowMajor(void *out, void *m);
+float Mtx44_GetYawOfPosZ_Padded(void *m);
 void Object_SetField8_AndDirty(void *o, float v);
 void PSMTXCopy(const void *src, void *dst);
-extern void PcbSyncTable_Ptr();
+unsigned char *PcbSyncTable_Ptr(void);
 void RenderObj_ItemStateMachine_Timed(void *o, int a, float b, float c);
-extern void SceneRender_SetViewportRect();
-extern void TornadoEffect_SetColorPairC8CC();
-extern void TornadoEffect_SetFlagB4();
-extern void TornadoEffect_SetScalePairB0BC();
+void SceneRender_SetViewportRect(void *cam, float a, float b, float c, float d, float e, float f);
+void TornadoEffect_SetColorPairC8CC(void *e, int a, int b);
+void TornadoEffect_SetFlagB4(void *e, int f);
+void TornadoEffect_SetScalePairB0BC(void *e, float a, float b);
 void TornadoEffect_Tick(void *e, int a);
-extern void Vec3_Copy();
+void Vec3_Copy(void *dst, void *src);
 void VfxSlotMgr_Update(struct VfxVec eye, struct VfxVec target);
 void __assert(char *file, int line, char *expr);
-extern void clStream_setVolume();
-extern void fn_800D3184();
-extern void fn_8013D59C();
+void clStream_setVolume(int id, int vol);
+float fn_800D3184(void *a, void *b);
+void fn_8013D59C(void *p, float x, float y, float z);
 void fn_8013D608(void *p, float x, float y, float z);
-extern void fn_8013D634();
+void fn_8013D634(void *p, float x, float y, float z);
 void fn_8013D660(void *p, float x, float y);
-extern void fn_8013D704();
-extern void fn_8013DAC8();
-extern void fn_80194AE0();
-extern void fn_801B3A50();
+void fn_8013D704(void *p);
+void fn_8013DAC8(void *p, int layer);
+void fn_80194AE0(int h, int vol);
+void *fn_801B3A50(int id);
 extern unsigned int g_pcbSyncReady;
 extern unsigned int lbl_806D80BC;
 extern unsigned int lbl_806D80CC;
@@ -623,7 +623,7 @@ extern unsigned int lbl_806D8170;
 extern unsigned int lbl_806D8174;
 extern unsigned int lbl_806D8178;
 extern unsigned int lbl_806D817C;
-extern unsigned int lbl_806D8180;
+extern const float lbl_806D8180;
 extern unsigned int lbl_80419FB8[];
 extern void Camera_Create();
 extern void DMAChannelManager_Init();
@@ -1035,16 +1035,24 @@ struct SprEntry {
 extern "C" const SprEntry lbl_803644D0[];
 
 
+struct RaceScriptEntry {
+    int start;
+    int f4;
+    int type;
+    int arg;
+    const char *joint;
+};
+
 struct RaceScene {
     void *vt;
-    char pad4[4];
+    int started;
     int mode;
     int timer;
-    char pad10;
+    unsigned char done;
     unsigned char cardOn;
     char pad12[2];
     int cardSlot;
-    char pad18[4];
+    int scriptIdx;
     void *env;
     VObj *camera;
     HsdObj *lights;
@@ -1059,8 +1067,10 @@ struct RaceScene {
     RaceUV uv[11];
     void *sprites[48];
     int spriteOn[48];
-    char pad570[4];
+    unsigned int stream;
     VObj *obj574;
+    RaceScriptEntry *script;
+    int scriptCount;
 };
 
 void *fn_8014E0C4(int a);
@@ -1091,7 +1101,7 @@ unsigned char fn_80150924(unsigned char *o);
 RaceScene *fn_8015092C(RaceScene *self, short flag);
 void fn_80150BE4(VObj *p);
 void fn_80150C1C(RaceScene *self);
-asm void fn_80151234(void);
+void fn_80151234(RaceScene *self);
 asm void fn_80151F08(void);
 void DrawColoredQuad(int r, int g, int b, int a, float x, float y, float w, float h);
 void fn_80152930(VObj *p);
@@ -1173,7 +1183,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_80151234 = { 0x408A0000, 0x000004B4, 0x00000010, 0x00000000, 0x8A800018, (void *)&MemoryManager_TimedFree };
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; void *f21; unsigned int f22; unsigned int f23; void *f24; unsigned int f25; void *f26; unsigned int f27; unsigned int f28; void *f29; unsigned int f30; void *f31; unsigned int f32; unsigned int f33; void *f34; unsigned int f35; void *f36; unsigned int f37; unsigned int f38; void *f39; } extab_fn_80151F08 = { 0x384A0000, 0x00000048, 0x00F70058, 0x00000430, 0x00000050, 0x00000438, 0x00040058, 0x00000468, 0x00000064, 0x00000478, 0x001C0058, 0x000004F4, 0x00000078, 0x00000528, 0x00020058, 0x0000055C, 0x0000008C, 0x00000574, 0x008A0058, 0x00000000, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001A, 0x00000000, (void *)&dtor_801577D4, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001A, 0x00000000, (void *)&dtor_801577D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x8680001A, 0x00000000, (void *)&dtor_801577D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x8680001A, 0x00000000, (void *)&dtor_801577D4 };
 
@@ -1255,9 +1264,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80151234 = {
-    (void *)&fn_80151234, 0x00000CD4, (void *)&extab_fn_80151234
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80151F08 = {
     (void *)&fn_80151F08, 0x000007BC, (void *)&extab_fn_80151F08
@@ -3655,898 +3661,348 @@ extern "C" void fn_80150C1C(RaceScene *self) {
 }
 #pragma use_lmw_stmw reset
 
-extern "C" asm void fn_80151234(void) { /* 0x80151234 size:0xCD4 */
-    nofralloc
-    stwu r1, -0xc0(r1)
-    mflr r0
-    stw r0, 0xc4(r1)
-    stfd f31, 0xb0(r1)
-    psq_st f31, 0xb8(r1), 0, 0
-    stfd f30, 0xa0(r1)
-    psq_st f30, 0xa8(r1), 0, 0
-    stmw r24, 0x80(r1)
-    mr r31, r3
-    lis r3, lbl_80363D30@ha
-    lbz r0, 0x10(r31)
-    addi r30, r3, lbl_80363D30@l
-    cmplwi r0, 0x0
-    bne fn_80151234_L_80151278
-    lwz r3, 0xc(r31)
-    addi r0, r3, 0x1
-    stw r0, 0xc(r31)
-    fn_80151234_L_80151278:
-    lwz r5, 0x8(r31)
-    addi r3, r30, 0x31c0
-    lwz r0, 0xc(r31)
-    mulli r4, r5, 0x18
-    lwzx r3, r3, r4
-    cmpw r3, r0
-    bgt fn_80151234_L_80151384
-    lwz r0, 0x4(r31)
-    cmpwi r0, 0x0
-    bne fn_80151234_L_8015137C
-    addi r0, r5, 0x1
-    cmpwi r0, 0x15
-    bge fn_80151234_L_80151370
-    stw r0, 0x8(r31)
-    lwz r0, 0x8(r31)
-    cmpwi r0, 0x1
-    bne fn_80151234_L_801512C4
-    li r3, 0x3
-    bl SetSyncTarget
-    fn_80151234_L_801512C4:
-    li r0, 0x0
-    stw r0, 0xc(r31)
-    lwz r3, 0x574(r31)
-    cmplwi r3, 0x0
-    beq fn_80151234_L_801512F0
-    beq fn_80151234_L_801512F0
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_80151234_L_801512F0:
-    li r0, 0x0
-    stw r0, 0x574(r31)
-    lwz r3, 0x8(r31)
-    subi r0, r3, 0x1
-    slwi r26, r0, 2
-    add r27, r31, r26
-    lwz r3, 0x28(r27)
-    cmplwi r3, 0x0
-    beq fn_80151234_L_8015132C
-    beq fn_80151234_L_8015132C
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_80151234_L_8015132C:
-    add r28, r31, r26
-    lwz r3, 0x7c(r28)
-    cmplwi r3, 0x0
-    beq fn_80151234_L_80151344
-    li r4, 0x1
-    bl LObjList_Destroy
-    fn_80151234_L_80151344:
-    add r26, r31, r26
-    lwz r3, 0xd0(r26)
-    cmplwi r3, 0x0
-    beq fn_80151234_L_8015135C
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    fn_80151234_L_8015135C:
-    li r0, 0x0
-    stw r0, 0x28(r27)
-    stw r0, 0x7c(r28)
-    stw r0, 0xd0(r26)
-    b fn_80151234_L_80151384
-    fn_80151234_L_80151370:
-    li r0, 0x1
-    stb r0, 0x10(r31)
-    b fn_80151234_L_80151384
-    fn_80151234_L_8015137C:
-    li r0, 0x1
-    stb r0, 0x10(r31)
-    fn_80151234_L_80151384:
-    bl PcbSyncTable_Ptr
-    lwz r0, 0x8(r31)
-    lbz r3, 0x18(r3)
-    cmpwi r0, 0x1
-    bne fn_80151234_L_801513DC
-    lwz r0, g_currentSceneState(r13)
-    cmpwi r0, 0x3
-    bne fn_80151234_L_801513DC
-    lbz r0, g_pcbSyncReady(r13)
-    cmplwi r0, 0x0
-    beq fn_80151234_L_801513C4
-    cmpwi r3, 0x2
-    bne fn_80151234_L_801513C4
-    li r3, 0x4
-    bl SetSyncTarget
-    b fn_80151234_L_801513DC
-    fn_80151234_L_801513C4:
-    cmpwi r3, 0x1
-    bne fn_80151234_L_80151EE4
-    li r3, 0x4
-    bl SetSyncTarget
-    b fn_80151234_L_801513DC
-    b fn_80151234_L_80151EE4
-    fn_80151234_L_801513DC:
-    lwz r0, 0x8(r31)
-    addi r4, r30, 0x31c0
-    la r3, lbl_806D7F70(r2)  /* lbl_806D7F70 */
-    li r6, 0x0
-    mulli r0, r0, 0x18
-    add r4, r4, r0
-    lwz r0, 0x10(r4)
-    mulli r0, r0, 0x3
-    add r5, r3, r0
-    lbzx r3, r3, r0
-    lbz r4, 0x1(r5)
-    lbz r5, 0x2(r5)
-    bl fn_8002CFB8
-    lwz r3, 0x8(r31)
-    addi r4, r3, 0x1
-    cmpwi r4, 0x15
-    bge fn_80151234_L_80151444
-    mulli r5, r3, 0x18
-    addi r3, r30, 0x31c0
-    lwz r0, 0xc(r31)
-    lwzx r3, r3, r5
-    subi r3, r3, 0xf
-    cmpw r3, r0
-    bgt fn_80151234_L_80151444
-    mr r3, r31
-    bl fn_801502AC
-    fn_80151234_L_80151444:
-    lwz r4, 0x8(r31)
-    addi r3, r30, 0x31c0
-    mulli r0, r4, 0x18
-    add r3, r3, r0
-    lwz r0, 0x4(r3)
-    cmpwi r0, -0x1
-    beq fn_80151234_L_801515C0
-    slwi r0, r4, 2
-    add r3, r31, r0
-    lwz r4, 0x28(r3)
-    cmplwi r4, 0x0
-    beq fn_80151234_L_80151510
-    lwz r3, 0xc(r31)
-    lis r0, 0x4330
-    stw r0, 0x68(r1)
-    xoris r0, r3, 0x8000
-    lfd f3, lbl_806D80A0(r2)
-    stw r0, 0x6c(r1)
-    lfs f1, 0x308c(r4)
-    lfd f2, 0x68(r1)
-    lfs f0, lbl_806D8064(r2)
-    fsubs f2, f2, f3
-    fcmpo cr0, f1, f0
-    blt fn_80151234_L_801514B8
-    fcmpo cr0, f2, f0
-    blt fn_80151234_L_801514B8
-    li r0, 0x1
-    stb r0, 0x3084(r4)
-    stfs f2, 0x308c(r4)
-    fn_80151234_L_801514B8:
-    lwz r0, 0x8(r31)
-    lfs f0, lbl_806D806C(r2)
-    slwi r0, r0, 2
-    add r3, r31, r0
-    lwz r26, 0x28(r3)
-    lfs f1, 0x3088(r26)
-    fcmpu cr0, f0, f1
-    beq fn_80151234_L_80151510
-    lbz r0, 0x3084(r26)
-    cmplwi r0, 0x0
-    beq fn_80151234_L_801514F0
-    li r0, 0x0
-    stb r0, 0x3084(r26)
-    b fn_80151234_L_801514FC
-    fn_80151234_L_801514F0:
-    lfs f0, 0x308c(r26)
-    fadds f0, f0, f1
-    stfs f0, 0x308c(r26)
-    fn_80151234_L_801514FC:
-    lwz r3, 0x4(r26)
-    lfs f1, 0x308c(r26)
-    bl HSD_CObjReqAnim
-    lwz r3, 0x4(r26)
-    bl HSD_CObjAnim
-    fn_80151234_L_80151510:
-    lwz r0, 0x8(r31)
-    slwi r0, r0, 2
-    add r3, r31, r0
-    lwz r3, 0xd0(r3)
-    cmplwi r3, 0x0
-    beq fn_80151234_L_80151560
-    lwz r4, 0xc(r31)
-    lis r0, 0x4330
-    stw r0, 0x68(r1)
-    xoris r0, r4, 0x8000
-    lfd f1, lbl_806D80A0(r2)
-    stw r0, 0x6c(r1)
-    lfd f0, 0x68(r1)
-    fsubs f1, f0, f1
-    bl Object_SetField8_AndDirty
-    lwz r0, 0x8(r31)
-    slwi r0, r0, 2
-    add r3, r31, r0
-    lwz r3, 0xd0(r3)
-    bl clNormal3D_Exec
-    fn_80151234_L_80151560:
-    lwz r0, 0x8(r31)
-    slwi r0, r0, 2
-    add r3, r31, r0
-    lwz r3, 0x28(r3)
-    bl SetCourseScene3D
-    lwz r0, 0x8(r31)
-    slwi r0, r0, 2
-    add r3, r31, r0
-    lwz r3, 0x28(r3)
-    cmplwi r3, 0x0
-    beq fn_80151234_L_801515C0
-    lwz r0, 0x20(r31)
-    cmplwi r0, 0x0
-    beq fn_80151234_L_801515C0
-    addi r4, r1, 0x5c
-    bl CObj_ApplyScissor
-    lfs f4, lbl_806D8064(r2)
-    lwz r3, 0x20(r31)
-    fmr f6, f4
-    lfs f1, 0x5c(r1)
-    lfs f2, 0x60(r1)
-    lfs f3, 0x64(r1)
-    lfs f5, lbl_806D8068(r2)
-    bl SceneRender_SetViewportRect
-    fn_80151234_L_801515C0:
-    lis r3, lbl_80598A60@ha
-    addi r29, r3, lbl_80598A60@l
-    b fn_80151234_L_8015193C
-    fn_80151234_L_801515CC:
-    mulli r0, r3, 0x14
-    lwz r3, 0x578(r31)
-    lwz r4, 0x8(r31)
-    add r3, r3, r0
-    lwz r0, 0x0(r3)
-    cmpw r0, r4
-    bge fn_80151234_L_801515F8
-    lwz r3, 0x18(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x18(r31)
-    b fn_80151234_L_8015193C
-    fn_80151234_L_801515F8:
-    cmpw r4, r0
-    blt fn_80151234_L_8015194C
-    lwz r0, 0x4(r3)
-    lwz r4, 0xc(r31)
-    cmpw r0, r4
-    bge fn_80151234_L_80151620
-    lwz r3, 0x18(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x18(r31)
-    b fn_80151234_L_8015193C
-    fn_80151234_L_80151620:
-    cmpw r4, r0
-    blt fn_80151234_L_8015194C
-    lwz r4, 0x8(r3)
-    cmpwi r4, 0x2
-    beq fn_80151234_L_80151820
-    bge fn_80151234_L_80151648
-    cmpwi r4, 0x0
-    beq fn_80151234_L_8015165C
-    bge fn_80151234_L_8015170C
-    b fn_80151234_L_80151930
-    fn_80151234_L_80151648:
-    cmpwi r4, 0x9
-    bge fn_80151234_L_80151930
-    cmpwi r4, 0x4
-    bge fn_80151234_L_80151924
-    b fn_80151234_L_801518B0
-    fn_80151234_L_8015165C:
-    lwz r24, 0xc(r3)
-    mr r28, r31
-    li r25, 0x0
-    li r27, 0x0
-    li r26, 0x3
-    fn_80151234_L_80151670:
-    lwz r3, 0x3f0(r28)
-    cmplwi r3, 0x0
-    beq fn_80151234_L_80151694
-    cmpw r25, r24
-    beq fn_80151234_L_80151694
-    li r4, 0x1
-    bl Sprite_Destroy
-    stw r27, 0x3f0(r28)
-    stw r26, 0x4b0(r28)
-    fn_80151234_L_80151694:
-    addi r25, r25, 0x1
-    addi r28, r28, 0x4
-    cmpwi r25, 0x30
-    blt fn_80151234_L_80151670
-    slwi r26, r24, 2
-    add r28, r31, r26
-    lwz r0, 0x3f0(r28)
-    cmplwi r0, 0x0
-    bne fn_80151234_L_801516F4
-    addi r27, r30, 0x3554
-    lwzx r0, r27, r26
-    cmpwi r0, -0x1
-    beq fn_80151234_L_801516F4
-    li r3, 0x30
-    bl Alloc
-    mr. r24, r3
-    beq fn_80151234_L_801516E8
-    lwzx r4, r27, r26
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_InitWithAnim
-    fn_80151234_L_801516E8:
-    stw r24, 0x3f0(r28)
-    li r0, 0x1
-    stw r0, 0x4b0(r28)
-    fn_80151234_L_801516F4:
-    lwz r0, 0x4b0(r28)
-    cmpwi r0, 0x1
-    bne fn_80151234_L_80151930
-    li r0, 0x2
-    stw r0, 0x4b0(r28)
-    b fn_80151234_L_80151930
-    fn_80151234_L_8015170C:
-    lwz r0, 0xc(r3)
-    clrlwi r3, r0, 24
-    bl DrawEffect_SpawnByType
-    mr. r26, r3
-    beq fn_80151234_L_80151930
-    lwz r4, 0x3614(r30)
-    lwz r3, 0x3618(r30)
-    lwz r0, 0x361c(r30)
-    stw r4, 0x50(r1)
-    stw r3, 0x54(r1)
-    stw r0, 0x58(r1)
-    lwz r0, 0x18(r31)
-    lwz r4, 0x578(r31)
-    mulli r3, r0, 0x14
-    addi r0, r3, 0x10
-    lwzx r4, r4, r0
-    cmplwi r4, 0x0
-    beq fn_80151234_L_801517EC
-    lwz r0, 0x8(r31)
-    slwi r3, r0, 2
-    addi r0, r3, 0xd0
-    lwzx r3, r31, r0
-    cmplwi r3, 0x0
-    beq fn_80151234_L_801517EC
-    bl ResolveJointByName
-    mr. r24, r3
-    beq fn_80151234_L_801517EC
-    bne fn_80151234_L_8015178C
-    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
-    li r4, 0x47c
-    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
-    bl __assert
-    fn_80151234_L_8015178C:
-    cmplwi r24, 0x0
-    beq fn_80151234_L_801517D4
-    bne fn_80151234_L_801517A8
-    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
-    li r4, 0x25d
-    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
-    bl __assert
-    fn_80151234_L_801517A8:
-    lwz r4, 0x14(r24)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne fn_80151234_L_801517C4
-    rlwinm. r0, r4, 0, 25, 25
-    beq fn_80151234_L_801517C4
-    li r3, 0x1
-    fn_80151234_L_801517C4:
-    clrlwi. r0, r3, 24
-    beq fn_80151234_L_801517D4
-    mr r3, r24
-    bl HSD_JObjSetupMatrixSub
-    fn_80151234_L_801517D4:
-    addi r3, r1, 0x50
-    addi r4, r24, 0x44
-    bl Mtx44_GetTranslation_RowMajor
-    addi r3, r26, 0x8c
-    addi r4, r1, 0x50
-    bl Vec3_Copy
-    fn_80151234_L_801517EC:
-    lwz r0, 0x18(r31)
-    lis r3, lbl_80419FB8@ha
-    lwz r6, 0x578(r31)
-    addi r4, r3, lbl_80419FB8@l
-    mulli r5, r0, 0x14
-    mr r3, r26
-    addi r0, r5, 0xc
-    lwzx r0, r6, r0
-    slwi r0, r0, 2
-    lwzx r12, r4, r0
-    mtctr r12
-    bctrl
-    b fn_80151234_L_80151930
-    fn_80151234_L_80151820:
-    lbz r0, 0x11(r31)
-    cmplwi r0, 0x0
-    beq fn_80151234_L_80151930
-    lwz r3, 0x14(r31)
-    cmpwi r3, -0x1
-    beq fn_80151234_L_80151854
-    bl fn_8019083C
-    clrlwi. r0, r3, 24
-    beq fn_80151234_L_8015184C
-    lwz r3, 0x14(r31)
-    bl fn_801909A4
-    fn_80151234_L_8015184C:
-    li r0, -0x1
-    stw r0, 0x14(r31)
-    fn_80151234_L_80151854:
-    lwz r0, 0x18(r31)
-    li r4, 0x0
-    lwz r5, 0x578(r31)
-    mulli r3, r0, 0x14
-    addi r0, r3, 0xc
-    lwzx r3, r5, r0
-    bl ClSound_PlayBgmStream
-    clrlwi. r0, r3, 24
-    beq fn_80151234_L_80151930
-    lwz r0, 0x18(r31)
-    li r4, 0x64
-    lwz r5, 0x578(r31)
-    mulli r3, r0, 0x14
-    addi r0, r3, 0xc
-    lwzx r3, r5, r0
-    bl clStream_setVolume
-    lwz r0, 0x18(r31)
-    lwz r4, 0x578(r31)
-    mulli r3, r0, 0x14
-    addi r0, r3, 0xc
-    lwzx r0, r4, r0
-    stw r0, 0x14(r31)
-    b fn_80151234_L_80151930
-    fn_80151234_L_801518B0:
-    lbz r0, 0x11(r31)
-    cmplwi r0, 0x0
-    beq fn_80151234_L_80151930
-    lwz r3, 0x570(r31)
-    addis r0, r3, 0x1
-    cmplwi r0, 0xffff
-    beq fn_80151234_L_801518D8
-    bl ClStream_Stop
-    li r0, -0x1
-    stw r0, 0x570(r31)
-    fn_80151234_L_801518D8:
-    lwz r0, 0x18(r31)
-    lwz r4, 0x578(r31)
-    mulli r3, r0, 0x14
-    addi r0, r3, 0xc
-    lwzx r3, r4, r0
-    bl fn_801B3A50
-    lwz r3, 0x8(r3)
-    li r4, 0x0
-    li r5, 0x0
-    bl ClStream_PlayMono
-    stw r3, 0x570(r31)
-    lwz r3, 0x570(r31)
-    addis r0, r3, 0x1
-    cmplwi r0, 0xffff
-    beq fn_80151234_L_80151930
-    lbz r0, 0x31(r29)
-    clrlslwi r4, r0, 25, 1
-    bl fn_80194AE0
-    b fn_80151234_L_80151930
-    fn_80151234_L_80151924:
-    lwz r5, 0xc(r3)
-    mr r3, r31
-    bl fn_8015061C
-    fn_80151234_L_80151930:
-    lwz r3, 0x18(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x18(r31)
-    fn_80151234_L_8015193C:
-    lwz r3, 0x18(r31)
-    lwz r0, 0x57c(r31)
-    cmpw r3, r0
-    blt fn_80151234_L_801515CC
-    fn_80151234_L_8015194C:
-    lwz r3, 0x570(r31)
-    addis r0, r3, 0x1
-    cmplwi r0, 0xffff
-    beq fn_80151234_L_80151978
-    bl ClStream_IsActive
-    clrlwi. r0, r3, 24
-    bne fn_80151234_L_80151978
-    lwz r3, 0x570(r31)
-    bl ClStream_Stop
-    li r0, -0x1
-    stw r0, 0x570(r31)
-    fn_80151234_L_80151978:
-    li r27, 0x0
-    mr r26, r31
-    fn_80151234_L_80151980:
-    lwz r3, 0x124(r26)
-    cmplwi r3, 0x0
-    beq fn_80151234_L_80151994
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_SnapshotAndFullReset
-    fn_80151234_L_80151994:
-    addi r27, r27, 0x1
-    addi r26, r26, 0x4
-    cmpwi r27, 0xb
-    blt fn_80151234_L_80151980
-    mr r29, r31
-    mr r27, r31
-    addi r28, r30, 0x34d0
-    li r26, 0x0
-    fn_80151234_L_801519B4:
-    lwz r0, 0x124(r29)
-    cmplwi r0, 0x0
-    beq fn_80151234_L_80151B7C
-    lwz r0, 0x8(r31)
-    li r24, 0x0
-    slwi r3, r0, 2
-    addi r0, r3, 0xd0
-    lwzx r3, r31, r0
-    cmplwi r3, 0x0
-    beq fn_80151234_L_801519E8
-    lwz r4, 0x4(r28)
-    bl ResolveJointByName
-    mr r24, r3
-    fn_80151234_L_801519E8:
-    cmplwi r24, 0x0
-    beq fn_80151234_L_80151B60
-    addi r3, r1, 0x44
-    addi r4, r27, 0x17c
-    bl Mtx44_GetTranslation_RowMajor
-    addi r3, r27, 0x17c
-    bl Mtx44_GetYawOfPosZ_Padded
-    fmr f31, f1
-    cmplwi r24, 0x0
-    bne fn_80151234_L_80151A20
-    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
-    li r4, 0x47c
-    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
-    bl __assert
-    fn_80151234_L_80151A20:
-    cmplwi r24, 0x0
-    beq fn_80151234_L_80151A68
-    bne fn_80151234_L_80151A3C
-    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
-    li r4, 0x25d
-    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
-    bl __assert
-    fn_80151234_L_80151A3C:
-    lwz r4, 0x14(r24)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne fn_80151234_L_80151A58
-    rlwinm. r0, r4, 0, 25, 25
-    beq fn_80151234_L_80151A58
-    li r3, 0x1
-    fn_80151234_L_80151A58:
-    clrlwi. r0, r3, 24
-    beq fn_80151234_L_80151A68
-    mr r3, r24
-    bl HSD_JObjSetupMatrixSub
-    fn_80151234_L_80151A68:
-    addi r3, r24, 0x44
-    addi r4, r27, 0x17c
-    bl PSMTXCopy
-    addi r3, r1, 0x38
-    addi r4, r27, 0x17c
-    bl Mtx44_GetTranslation_RowMajor
-    addi r3, r27, 0x17c
-    bl Mtx44_GetYawOfPosZ_Padded
-    fmr f30, f1
-    addi r3, r1, 0x44
-    addi r4, r1, 0x38
-    bl fn_800D3184
-    fmr f0, f1
-    fsubs f1, f30, f31
-    fmr f30, f0
-    bl BuildOrientationFromYaw
-    lfs f3, lbl_806D8144(r2)
-    fmr f2, f30
-    lfs f0, lbl_806D80CC(r2)
-    li r4, 0x0
-    fdivs f1, f1, f3
-    lwz r3, 0x124(r29)
-    fdivs f1, f1, f0
-    bl RenderObj_ItemStateMachine_Timed
-    lwz r0, 0x8(r31)
-    addi r3, r30, 0x31c0
-    lwz r5, 0xc(r31)
-    li r24, 0x0
-    mulli r4, r0, 0x18
-    addi r0, r4, 0xc
-    lwzx r0, r3, r0
-    cmpw r5, r0
-    bge fn_80151234_L_80151AF0
-    li r24, 0x20
-    fn_80151234_L_80151AF0:
-    lwz r3, 0x150(r29)
-    lfs f1, lbl_806D8064(r2)
-    lfs f2, lbl_806D8068(r2)
-    bl TornadoEffect_SetScalePairB0BC
-    lwz r3, 0x150(r29)
-    li r4, 0x0
-    bl TornadoEffect_SetFlagB4
-    lwz r3, 0x150(r29)
-    mr r4, r24
-    mr r5, r24
-    bl TornadoEffect_SetColorPairC8CC
-    lwz r3, 0x150(r29)
-    li r4, 0x0
-    bl TornadoEffect_Tick
-    lwz r3, 0x124(r29)
-    lwz r0, 0x1f8(r3)
-    cmpwi r0, 0xa
-    bne fn_80151234_L_80151B50
-    li r4, 0x0
-    bl KartDriver_GetJointByIdx
-    bl Mtx44_GetPitchOfPosZ_Padded
-    fneg f1, f1
-    lwz r3, 0x124(r29)
-    bl KartDriver_TickAction_79268_AndSetSlot5aEulerZ
-    fn_80151234_L_80151B50:
-    addi r0, r26, 0x38c
-    li r3, 0x1
-    stbx r3, r31, r0
-    b fn_80151234_L_80151B7C
-    fn_80151234_L_80151B60:
-    addi r0, r26, 0x38c
-    li r3, 0x0
-    stbx r3, r31, r0
-    li r4, 0x0
-    li r5, 0x0
-    lwz r3, 0x150(r29)
-    bl TornadoEffect_SetColorPairC8CC
-    fn_80151234_L_80151B7C:
-    addi r26, r26, 0x1
-    addi r28, r28, 0xc
-    cmpwi r26, 0xb
-    addi r27, r27, 0x30
-    addi r29, r29, 0x4
-    blt fn_80151234_L_801519B4
-    li r27, 0x0
-    mr r26, r31
-    fn_80151234_L_80151B9C:
-    lwz r3, 0x124(r26)
-    cmplwi r3, 0x0
-    beq fn_80151234_L_80151BB0
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_TickTornadoCooldown
-    fn_80151234_L_80151BB0:
-    addi r27, r27, 0x1
-    addi r26, r26, 0x4
-    cmpwi r27, 0xb
-    blt fn_80151234_L_80151B9C
-    lwz r0, 0x8(r31)
-    slwi r0, r0, 2
-    add r3, r31, r0
-    lwz r0, 0x28(r3)
-    cmplwi r0, 0x0
-    beq fn_80151234_L_80151BE8
-    lwz r3, 0x1c(r31)
-    cmplwi r3, 0x0
-    beq fn_80151234_L_80151BE8
-    bl CourseEnvironment_UpdateAndCullZones_Timed
-    fn_80151234_L_80151BE8:
-    lwz r7, 0x3620(r30)
-    lwz r6, 0x3624(r30)
-    lwz r5, 0x3628(r30)
-    lwz r4, 0x362c(r30)
-    lwz r3, 0x3630(r30)
-    lwz r0, 0x3634(r30)
-    stw r7, 0x2c(r1)
-    stw r6, 0x30(r1)
-    stw r5, 0x34(r1)
-    stw r4, 0x20(r1)
-    stw r3, 0x24(r1)
-    stw r0, 0x28(r1)
-    lwz r0, 0x8(r31)
-    slwi r0, r0, 2
-    add r3, r31, r0
-    lwz r3, 0x28(r3)
-    cmplwi r3, 0x0
-    beq fn_80151234_L_80151C50
-    addi r4, r1, 0x2c
-    bl CObj_LoadProjMatrix
-    lwz r0, 0x8(r31)
-    addi r4, r1, 0x20
-    slwi r0, r0, 2
-    add r3, r31, r0
-    lwz r3, 0x28(r3)
-    bl CObj_ApplyScissor
-    fn_80151234_L_80151C50:
-    bl ItemObjectManager_Update
-    lwz r9, 0x20(r1)
-    addi r3, r1, 0x14
-    lwz r8, 0x24(r1)
-    addi r4, r1, 0x8
-    lwz r7, 0x28(r1)
-    lwz r6, 0x2c(r1)
-    lwz r5, 0x30(r1)
-    lwz r0, 0x34(r1)
-    stw r9, 0x8(r1)
-    stw r8, 0xc(r1)
-    stw r7, 0x10(r1)
-    stw r6, 0x14(r1)
-    stw r5, 0x18(r1)
-    stw r0, 0x1c(r1)
-    bl VfxSlotMgr_Update
-    bl fn_801A1280
-    li r27, 0x0
-    mr r26, r31
-    fn_80151234_L_80151C9C:
-    lwz r3, 0x3f0(r26)
-    cmplwi r3, 0x0
-    beq fn_80151234_L_80151CEC
-    lwz r0, 0x4b0(r26)
-    cmpwi r0, 0x2
-    bne fn_80151234_L_80151CEC
-    lfs f1, lbl_806D8098(r2)
-    bl Sprite_AdvanceAnim
-    clrlwi. r0, r3, 24
-    bne fn_80151234_L_80151CEC
-    lwz r0, 0x8(r31)
-    cmpwi r0, 0x14
-    beq fn_80151234_L_80151CEC
-    lwz r3, 0x3f0(r26)
-    li r4, 0x1
-    bl Sprite_Destroy
-    li r3, 0x0
-    li r0, 0x3
-    stw r3, 0x3f0(r26)
-    stw r0, 0x4b0(r26)
-    fn_80151234_L_80151CEC:
-    addi r27, r27, 0x1
-    addi r26, r26, 0x4
-    cmpwi r27, 0x30
-    blt fn_80151234_L_80151C9C
-    lwz r3, 0x574(r31)
-    cmplwi r3, 0x0
-    beq fn_80151234_L_80151EE4
-    lwz r0, 0x8(r31)
-    lfs f1, lbl_806D80B8(r2)
-    cmpwi r0, 0x10
-    lfs f2, lbl_806D8070(r2)
-    lfs f31, lbl_806D80BC(r2)
-    lfs f30, lbl_806D8064(r2)
-    bne fn_80151234_L_80151DEC
-    lwz r5, 0xc(r31)
-    cmpwi r5, 0x0
-    blt fn_80151234_L_80151D60
-    cmpwi r5, 0x28
-    bgt fn_80151234_L_80151D60
-    xoris r4, r5, 0x8000
-    lis r0, 0x4330
-    stw r4, 0x6c(r1)
-    lfd f1, lbl_806D80A0(r2)
-    stw r0, 0x68(r1)
-    lfs f3, lbl_806D8148(r2)
-    lfd f0, 0x68(r1)
-    fsubs f0, f0, f1
-    fmuls f30, f3, f0
-    b fn_80151234_L_80151D9C
-    fn_80151234_L_80151D60:
-    cmpwi r5, 0x28
-    blt fn_80151234_L_80151D9C
-    cmpwi r5, 0x3a
-    bgt fn_80151234_L_80151D9C
-    xoris r4, r5, 0x8000
-    lis r0, 0x4330
-    stw r4, 0x6c(r1)
-    lfd f3, lbl_806D80A0(r2)
-    stw r0, 0x68(r1)
-    lfs f0, lbl_806D8150(r2)
-    lfd f1, 0x68(r1)
-    lfs f4, lbl_806D814C(r2)
-    fsubs f1, f1, f3
-    fsubs f0, f1, f0
-    fmuls f30, f4, f0
-    fn_80151234_L_80151D9C:
-    cmpwi r5, 0x0
-    lfs f1, lbl_806D80B8(r2)
-    blt fn_80151234_L_80151DDC
-    cmpwi r5, 0x14
-    bgt fn_80151234_L_80151DDC
-    xoris r4, r5, 0x8000
-    lis r0, 0x4330
-    stw r4, 0x6c(r1)
-    lfd f3, lbl_806D80A0(r2)
-    stw r0, 0x68(r1)
-    lfs f4, lbl_806D8158(r2)
-    lfd f2, 0x68(r1)
-    lfs f0, lbl_806D8154(r2)
-    fsubs f2, f2, f3
-    fmadds f2, f4, f2, f0
-    b fn_80151234_L_80151E78
-    fn_80151234_L_80151DDC:
-    cmpwi r5, 0x14
-    blt fn_80151234_L_80151E78
-    lfs f2, lbl_806D815C(r2)
-    b fn_80151234_L_80151E78
-    fn_80151234_L_80151DEC:
-    cmpwi r0, 0x11
-    bne fn_80151234_L_80151E78
-    lwz r0, 0xc(r31)
-    cmpwi r0, 0x0
-    blt fn_80151234_L_80151E64
-    cmpwi r0, 0x14
-    bgt fn_80151234_L_80151E64
-    xoris r4, r0, 0x8000
-    lis r0, 0x4330
-    stw r4, 0x6c(r1)
-    lfd f6, lbl_806D80A0(r2)
-    stw r0, 0x68(r1)
-    lfs f4, lbl_806D8160(r2)
-    lfd f0, 0x68(r1)
-    stw r4, 0x74(r1)
-    fsubs f3, f0, f6
-    lfs f5, lbl_806D8164(r2)
-    stw r0, 0x70(r1)
-    lfs f2, lbl_806D815C(r2)
-    lfd f0, 0x70(r1)
-    fmadds f1, f4, f3, f1
-    stw r4, 0x7c(r1)
-    fsubs f4, f0, f6
-    lfs f3, lbl_806D8168(r2)
-    stw r0, 0x78(r1)
-    lfd f0, 0x78(r1)
-    fmadds f2, f5, f4, f2
-    fsubs f0, f0, f6
-    fmadds f31, f3, f0, f31
-    b fn_80151234_L_80151E78
-    fn_80151234_L_80151E64:
-    cmpwi r0, 0x14
-    blt fn_80151234_L_80151E78
-    lfs f1, lbl_806D816C(r2)
-    lfs f2, lbl_806D8170(r2)
-    lfs f31, lbl_806D8174(r2)
-    fn_80151234_L_80151E78:
-    lfs f0, lbl_806D8178(r2)
-    fmuls f31, f31, f0
-    bl fn_8013D660
-    lfs f1, lbl_806D8064(r2)
-    lwz r3, 0x574(r31)
-    fmr f3, f1
-    lfs f2, lbl_806D817C(r2)
-    bl fn_8013D634
-    lfs f1, lbl_806D8064(r2)
-    fmr f2, f30
-    lwz r3, 0x574(r31)
-    fmr f3, f1
-    bl fn_8013D59C
-    lfs f0, lbl_806D8180(r2)
-    lwz r3, 0x574(r31)
-    fmuls f1, f31, f0
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_8013D608
-    lwz r3, 0x574(r31)
-    lfs f1, lbl_806D8068(r2)
-    bl fn_8013D4B0
-    lwz r3, 0x574(r31)
-    bl fn_8013D704
-    lwz r3, 0x574(r31)
-    li r4, 0x7
-    bl fn_8013DAC8
-    fn_80151234_L_80151EE4:
-    psq_l f31, 0xb8(r1), 0, 0
-    lfd f31, 0xb0(r1)
-    psq_l f30, 0xa8(r1), 0, 0
-    lfd f30, 0xa0(r1)
-    lmw r24, 0x80(r1)
-    lwz r0, 0xc4(r1)
-    mtlr r0
-    addi r1, r1, 0xc0
-    blr
+struct CourseCamAnim {
+    void *vt;
+    void *cobj;
+    char pad8[0x3084 - 0x8];
+    unsigned char reset;
+    float speed;
+    float frame;
+};
+
+struct VfxVec {
+    float x, y, z;
+};
+
+static inline unsigned char JObjMtxIsDirty(void *j) {
+    if (j == 0) {
+        __assert((char *)lbl_806D8134, 0x25D, (char *)lbl_806D813C);
+    }
+    unsigned int flags = *(unsigned int *)((char *)j + 0x14);
+    unsigned char dirty = 0;
+    if (!(flags & 0x00800000) && (flags & 0x40)) {
+        dirty = 1;
+    }
+    return dirty;
 }
+
+static inline void JObjSetupMatrix(void *j) {
+    if (j == 0) {
+        __assert((char *)lbl_806D8134, 0x47C, (char *)lbl_806D813C);
+    }
+    if (j != 0) {
+        if (JObjMtxIsDirty(j)) {
+            HSD_JObjSetupMatrixSub(j);
+        }
+    }
+}
+
+static inline void CamAnim_SetFrame(CourseCamAnim *c, float f) {
+    if (c->frame < 0.0f || f < 0.0f) {
+        return;
+    }
+    c->reset = 1;
+    c->frame = f;
+}
+
+static inline void CamAnim_Tick(CourseCamAnim *c) {
+    if (-1.0f != c->speed) {
+        if (c->reset) {
+            c->reset = 0;
+        } else {
+            c->frame += c->speed;
+        }
+        HSD_CObjReqAnim(c->cobj, c->frame);
+        HSD_CObjAnim(c->cobj);
+    }
+}
+
+#pragma use_lmw_stmw on
+extern "C" void fn_80151234(RaceScene *self) {
+    int i;
+    VfxVec scissor;
+
+    if (!self->done) {
+        self->timer++;
+    }
+    if (lbl_80366EF0[self->mode].time <= self->timer) {
+        if (self->started == 0) {
+            int next = self->mode + 1;
+            if (next < 21) {
+                self->mode = next;
+                if (self->mode == 1) {
+                    SetSyncTarget(3);
+                }
+                self->timer = 0;
+                if (self->obj574 != 0) {
+                    delete self->obj574;
+                }
+                self->obj574 = 0;
+                {
+                    int k = self->mode - 1;
+                    if (self->objs[k] != 0) {
+                        delete self->objs[k];
+                    }
+                    if (self->lists[k] != 0) {
+                        LObjList_Destroy(self->lists[k], 1);
+                    }
+                    if (self->models[k] != 0) {
+                        Object_DtorWithGXSync(self->models[k], 1);
+                    }
+                    self->objs[k] = 0;
+                    self->lists[k] = 0;
+                    self->models[k] = 0;
+                }
+            } else {
+                self->done = 1;
+            }
+        } else {
+            self->done = 1;
+        }
+    }
+    {
+        int st = PcbSyncTable_Ptr()[0x18];
+        if (self->mode == 1 && (int)g_currentSceneState == 3) {
+            if (*(unsigned char *)&g_pcbSyncReady && st == 2) {
+                SetSyncTarget(4);
+            } else if (st == 1) {
+                SetSyncTarget(4);
+            } else {
+                return;
+            }
+        }
+    }
+    {
+        int k = lbl_80366EF0[self->mode].f10 * 3;
+        fn_8002CFB8(lbl_806D7F70[k], lbl_806D7F70[k + 1], lbl_806D7F70[k + 2], 0);
+    }
+    {
+        int next = self->mode + 1;
+        if (next < 21 && lbl_80366EF0[self->mode].time - 15 <= self->timer) {
+            ((void (*)(RaceScene *, int))fn_801502AC)(self, next);
+        }
+    }
+    if (lbl_80366EF0[self->mode].id != -1) {
+        if (self->objs[self->mode] != 0) {
+            CamAnim_SetFrame((CourseCamAnim *)self->objs[self->mode], (float)self->timer);
+            CamAnim_Tick((CourseCamAnim *)self->objs[self->mode]);
+        }
+        if (self->models[self->mode] != 0) {
+            Object_SetField8_AndDirty(self->models[self->mode], (float)self->timer);
+            clNormal3D_Exec(self->models[self->mode]);
+        }
+        SetCourseScene3D(self->objs[self->mode]);
+        if (self->objs[self->mode] != 0 && self->camera != 0) {
+            CObj_ApplyScissor(self->objs[self->mode], &scissor);
+            SceneRender_SetViewportRect(self->camera, scissor.x, scissor.y, scissor.z, 0.0f, 1.0f, 0.0f);
+        }
+    }
+    while (self->scriptIdx < self->scriptCount) {
+        if (self->script[self->scriptIdx].start < self->mode) {
+            self->scriptIdx++;
+            continue;
+        }
+        if (self->mode < self->script[self->scriptIdx].start) {
+            break;
+        }
+        if (self->script[self->scriptIdx].f4 < self->timer) {
+            self->scriptIdx++;
+            continue;
+        }
+        if (self->timer < self->script[self->scriptIdx].f4) {
+            break;
+        }
+        switch (self->script[self->scriptIdx].type) {
+        case 0: {
+            int j;
+            int idx = self->script[self->scriptIdx].arg;
+            for (j = 0; j < 48; j++) {
+                if (self->sprites[j] != 0 && j != idx) {
+                    Sprite_Destroy(self->sprites[j], 1);
+                    self->sprites[j] = 0;
+                    self->spriteOn[j] = 3;
+                }
+            }
+            if (self->sprites[idx] == 0) {
+                if (lbl_80367284[idx] != -1) {
+                    self->sprites[idx] = new SceneSprite(lbl_80367284[idx], 1, 0);
+                    self->spriteOn[idx] = 1;
+                }
+            }
+            if (self->spriteOn[idx] == 1) {
+                self->spriteOn[idx] = 2;
+            }
+            break;
+        }
+        case 1: {
+            void *eff = DrawEffect_SpawnByType((unsigned char)self->script[self->scriptIdx].arg);
+            if (eff != 0) {
+                VfxVec pos = *(const VfxVec *)&lbl_80367344;
+                if (self->script[self->scriptIdx].joint != 0 && self->models[self->mode] != 0) {
+                    void *jobj = ResolveJointByName(self->models[self->mode], (char *)self->script[self->scriptIdx].joint);
+                    if (jobj != 0) {
+                        JObjSetupMatrix(jobj);
+                        Mtx44_GetTranslation_RowMajor(&pos, (char *)jobj + 0x44);
+                        Vec3_Copy((char *)eff + 0x8C, &pos);
+                    }
+                }
+                ((void (**)(void *))lbl_80419FB8)[self->script[self->scriptIdx].arg](eff);
+            }
+            break;
+        }
+        case 2:
+            if (self->cardOn) {
+                if (self->cardSlot != -1) {
+                    if (fn_8019083C(self->cardSlot)) {
+                        fn_801909A4(self->cardSlot);
+                    }
+                    self->cardSlot = -1;
+                }
+                if (ClSound_PlayBgmStream(self->script[self->scriptIdx].arg, 0)) {
+                    clStream_setVolume(self->script[self->scriptIdx].arg, 100);
+                    self->cardSlot = self->script[self->scriptIdx].arg;
+                }
+            }
+            break;
+        case 3:
+            if (self->cardOn) {
+                if (self->stream != -1) {
+                    ClStream_Stop(self->stream);
+                    self->stream = -1;
+                }
+                self->stream = ClStream_PlayMono(*(int *)((char *)fn_801B3A50(self->script[self->scriptIdx].arg) + 8), 0, 0);
+                if (self->stream != -1) {
+                    fn_80194AE0(self->stream, (((unsigned char *)lbl_80598A60)[0x31] & 0x7F) * 2);
+                }
+            }
+            break;
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+            ((void (*)(RaceScene *, int, int))fn_8015061C)(self, self->script[self->scriptIdx].type, self->script[self->scriptIdx].arg);
+            break;
+        }
+        self->scriptIdx++;
+    }
+    if (self->stream != -1 && !ClStream_IsActive(self->stream)) {
+        ClStream_Stop(self->stream);
+        self->stream = -1;
+    }
+    for (i = 0; i < 11; i++) {
+        if (self->drivers[i] != 0) {
+            ItemEffectBus_SnapshotAndFullReset(*(void **)((char *)self->drivers[i] + 0x304));
+        }
+    }
+    {
+        VfxVec from;
+        VfxVec to;
+        for (i = 0; i < 11; i++) {
+            if (self->drivers[i] != 0) {
+                void *jobj = 0;
+                if (self->models[self->mode] != 0) {
+                    jobj = ResolveJointByName(self->models[self->mode], (char *)lbl_80367200[i].joint);
+                }
+                if (jobj != 0) {
+                    float yaw0;
+                    float yaw1;
+                    float dist;
+                    int col;
+                    Mtx44_GetTranslation_RowMajor(&from, self->mtx[i]);
+                    yaw0 = Mtx44_GetYawOfPosZ_Padded(self->mtx[i]);
+                    JObjSetupMatrix(jobj);
+                    PSMTXCopy((char *)jobj + 0x44, self->mtx[i]);
+                    Mtx44_GetTranslation_RowMajor(&to, self->mtx[i]);
+                    yaw1 = Mtx44_GetYawOfPosZ_Padded(self->mtx[i]);
+                    dist = fn_800D3184(&from, &to);
+                    RenderObj_ItemStateMachine_Timed(self->drivers[i], 0, BuildOrientationFromYaw(yaw1 - yaw0) / 0.017453289f / 90.0f, dist);
+                    col = 0;
+                    if (self->timer < lbl_80366EF0[self->mode].fC) {
+                        col = 0x20;
+                    }
+                    TornadoEffect_SetScalePairB0BC(self->effects[i], 0.0f, 1.0f);
+                    TornadoEffect_SetFlagB4(self->effects[i], 0);
+                    TornadoEffect_SetColorPairC8CC(self->effects[i], col, col);
+                    TornadoEffect_Tick(self->effects[i], 0);
+                    if (*(int *)((char *)self->drivers[i] + 0x1F8) == 10) {
+                        KartDriver_TickAction_79268_AndSetSlot5aEulerZ(self->drivers[i], -Mtx44_GetPitchOfPosZ_Padded(KartDriver_GetJointByIdx(self->drivers[i], 0)));
+                    }
+                    self->active[i] = 1;
+                } else {
+                    self->active[i] = 0;
+                    TornadoEffect_SetColorPairC8CC(self->effects[i], 0, 0);
+                }
+            }
+        }
+    }
+    for (i = 0; i < 11; i++) {
+        if (self->drivers[i] != 0) {
+            ItemEffectBus_TickTornadoCooldown(*(void **)((char *)self->drivers[i] + 0x304));
+        }
+    }
+    if (self->objs[self->mode] != 0 && self->env != 0) {
+        CourseEnvironment_UpdateAndCullZones_Timed(self->env);
+    }
+    {
+        VfxVec eye = *(const VfxVec *)&lbl_80367350;
+        VfxVec target = *(const VfxVec *)&lbl_8036735C;
+        if (self->objs[self->mode] != 0) {
+            CObj_LoadProjMatrix(self->objs[self->mode], &eye);
+            CObj_ApplyScissor(self->objs[self->mode], &target);
+        }
+        ItemObjectManager_Update();
+        VfxSlotMgr_Update(eye, target);
+        fn_801A1280();
+    }
+    for (i = 0; i < 48; i++) {
+        if (self->sprites[i] != 0 && self->spriteOn[i] == 2 && !Sprite_AdvanceAnim(self->sprites[i], 0.0165f) && self->mode != 20) {
+            Sprite_Destroy(self->sprites[i], 1);
+            self->sprites[i] = 0;
+            self->spriteOn[i] = 3;
+        }
+    }
+    if (self->obj574 != 0) {
+        float x = 320.0f;
+        float y = 240.0f;
+        float s = 100.0f;
+        float rot = 0.0f;
+        if (self->mode == 16) {
+            int t = self->timer;
+            if (t >= 0 && t <= 40) {
+                rot = 0.6283184f * (float)t;
+            } else if (t >= 40 && t <= 58) {
+                rot = 0.34906578f * ((float)t - 40.0f);
+            }
+            x = 320.0f;
+            if (t >= 0 && t <= 20) {
+                y = -19.9f * (float)t + 586.0f;
+            } else if (t >= 20) {
+                y = 188.0f;
+            }
+        } else if (self->mode == 17) {
+            int t = self->timer;
+            if (t >= 0 && t <= 20) {
+                x = -13.3f * (float)t + x;
+                y = 6.4f * (float)t + 188.0f;
+                s = -3.25f * (float)t + s;
+            } else if (t >= 20) {
+                x = 54.0f;
+                y = 316.0f;
+                s = 35.0f;
+            }
+        }
+        s *= 0.01f;
+        fn_8013D660(self->obj574, x, y);
+        fn_8013D634(self->obj574, 0.0f, -0.16f, 0.0f);
+        fn_8013D59C(self->obj574, 0.0f, rot, 0.0f);
+        fn_8013D608(self->obj574, s * lbl_806D8180, s * lbl_806D8180, s * lbl_806D8180);
+        fn_8013D4B0(self->obj574, 1.0f);
+        fn_8013D704(self->obj574);
+        fn_8013DAC8(self->obj574, 7);
+    }
+}
+#pragma use_lmw_stmw reset
 
 extern "C" asm void fn_80151F08(void) { /* 0x80151F08 size:0x7BC */
     nofralloc
@@ -6867,62 +6323,6 @@ extern "C" CoursePanel *fn_80155774(CoursePanel *self, short flag) {
         }
     }
     return self;
-}
-
-struct CourseCamAnim {
-    void *vt;
-    void *cobj;
-    char pad8[0x3084 - 0x8];
-    unsigned char reset;
-    float speed;
-    float frame;
-};
-
-struct VfxVec {
-    float x, y, z;
-};
-
-static inline unsigned char JObjMtxIsDirty(void *j) {
-    if (j == 0) {
-        __assert((char *)lbl_806D8134, 0x25D, (char *)lbl_806D813C);
-    }
-    unsigned int flags = *(unsigned int *)((char *)j + 0x14);
-    unsigned char dirty = 0;
-    if (!(flags & 0x00800000) && (flags & 0x40)) {
-        dirty = 1;
-    }
-    return dirty;
-}
-
-static inline void JObjSetupMatrix(void *j) {
-    if (j == 0) {
-        __assert((char *)lbl_806D8134, 0x47C, (char *)lbl_806D813C);
-    }
-    if (j != 0) {
-        if (JObjMtxIsDirty(j)) {
-            HSD_JObjSetupMatrixSub(j);
-        }
-    }
-}
-
-static inline void CamAnim_SetFrame(CourseCamAnim *c, float f) {
-    if (c->frame < 0.0f || f < 0.0f) {
-        return;
-    }
-    c->reset = 1;
-    c->frame = f;
-}
-
-static inline void CamAnim_Tick(CourseCamAnim *c) {
-    if (-1.0f != c->speed) {
-        if (c->reset) {
-            c->reset = 0;
-        } else {
-            c->frame += c->speed;
-        }
-        HSD_CObjReqAnim(c->cobj, c->frame);
-        HSD_CObjAnim(c->cobj);
-    }
 }
 
 static inline void VObjD_SetMtx(VObjD *o, void *m) {
