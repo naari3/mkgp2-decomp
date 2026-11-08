@@ -50,8 +50,9 @@ unsigned char Sprite_AdvanceAnim(RefillSprite *, float);
 }
 static inline unsigned char ChoiceOccupied(RefillChoice *self) {
     unsigned char occupied = 0;
-    if (self->slots[0][0] == self->column && self->slots[0][1] == self->row) occupied = 1;
-    else if (self->slots[1][0] == self->column && self->slots[1][1] == self->row) occupied = 1;
+    for (int i = 0; i < 2; i++) {
+        if (self->slots[i][0] == self->column && self->slots[i][1] == self->row) { occupied = 1; break; }
+    }
     return occupied;
 }
 extern "C" void fn_8023AC14(RefillChoice *self) {
