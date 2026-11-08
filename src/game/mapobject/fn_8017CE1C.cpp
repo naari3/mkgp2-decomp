@@ -106,9 +106,122 @@ static inline void SetScene(VObject *scene) {
     if (lbl_806CFBA1 != 0) lbl_806CFBA1 = 0;
 }
 
+static inline void SelectCharacterMenu(const char *base) {
+    void *menu = fn_80180670(base + 0x6C8, 1);
+    if (menu) {
+        fn_801804CC(menu, lbl_806D9124);
+        fn_801804CC(menu, lbl_806D912C);
+        fn_801804CC(menu, lbl_806D9134);
+        fn_801804CC(menu, lbl_806D913C);
+        fn_801804CC(menu, lbl_806D9144);
+        fn_801804CC(menu, lbl_806D914C);
+        lbl_806D1644 = 1;
+    }
+}
+
+static inline int SelectSubmenu(int item, int selection, const char *base) {
+    int mode;
+    switch (item) {
+    case 3: SetScene(fn_8015CB5C(selection)); return 0;
+    case 4:
+        switch (lbl_806D1644) {
+        case 0: {
+            lbl_806D1648 = selection;
+            void *menu = fn_80180670(base + 0x688, 1);
+            if (menu) {
+                fn_801804CC(menu, lbl_806D90DC);
+                fn_801804CC(menu, lbl_806D90E4);
+                lbl_806D1644 = 1;
+            }
+            break;
+        }
+        case 1: {
+            mode = selection == 1 ? 1 : 0;
+            OperationClock_Commit();
+            RaceFlow_ResetState_FullColdInit();
+            SetScene(fn_80163804(lbl_806D1648, mode));
+            break;
+        }
+        }
+        return 0;
+    case 9:
+    case 10:
+        switch (lbl_806D1644) {
+        case 0: {
+            g_cupId = selection + 1;
+            void *menu = fn_80180670(base + 0x5D8, 1);
+            if (menu) {
+                fn_801804CC(menu, lbl_806D90EC);
+                fn_801804CC(menu, lbl_806D90F4);
+                lbl_806D1644 = 1;
+            }
+            break;
+        }
+        case 1: {
+            g_longRoundFlag = selection;
+            void *menu = fn_80180670(base + 0x694, 1);
+            if (menu) {
+                fn_801804CC(menu, lbl_806D90FC);
+                fn_801804CC(menu, lbl_806D9104);
+                fn_801804CC(menu, lbl_806D910C);
+                fn_801804CC(menu, base + 0x6A4);
+                lbl_806D1644 = 2;
+            }
+            break;
+        }
+        case 2: {
+            g_courseVariantIdx = selection;
+            void *menu = fn_80180670(base + 0x6B0, 1);
+            if (menu) {
+                fn_801804CC(menu, base + 0x6BC);
+                fn_801804CC(menu, lbl_806D9114);
+                lbl_806D1644 = 3;
+            }
+            break;
+        }
+        case 3: SetReverseRoundFlag(selection); break;
+        }
+        return 0;
+    case 11:
+        switch (lbl_806D1644) {
+        case 0:
+            lbl_806D1648 = selection;
+            switch (selection) {
+            case 2: {
+                void *menu = fn_80180670(base + 0x6C8, 1);
+                if (menu) {
+                    fn_801804CC(menu, lbl_806D911C);
+                    fn_801804CC(menu, base + 0x6D8);
+                    fn_801804CC(menu, base + 0x6E8);
+                    fn_801804CC(menu, base + 0x6F8);
+                    fn_801804CC(menu, base + 0x708);
+                    fn_801804CC(menu, base + 0x718);
+                    fn_801804CC(menu, base + 0x728);
+                    lbl_806D1644 = 1;
+                }
+                break;
+            }
+            case 7: {
+                SelectCharacterMenu(base);
+                break;
+            }
+            default: SetScene(fn_80165C04(selection, selection)); break;
+            }
+            break;
+        case 1:
+            switch (lbl_806D1648) {
+            case 2:
+            case 7: SetScene(fn_80165C04(lbl_806D1648, selection)); break;
+            }
+            break;
+        }
+        return 0;
+    }
+    return 0;
+}
+
 extern "C" int fn_8017CE1C(int event, int unused, int item, int unused2, int selection) {
     const char *base = lbl_80376220;
-    int mode;
     switch (event) {
     case 0:
         switch (selection) {
@@ -200,113 +313,7 @@ extern "C" int fn_8017CE1C(int event, int unused, int item, int unused2, int sel
         case 11: fn_801814C8(); break;
         }
         return 0;
-    case 1:
-        switch (item) {
-        case 3: SetScene(fn_8015CB5C(selection)); return 0;
-        case 4:
-            switch (lbl_806D1644) {
-            case 0: {
-                lbl_806D1648 = selection;
-                void *menu = fn_80180670(base + 0x688, 1);
-                if (menu) {
-                    fn_801804CC(menu, lbl_806D90DC);
-                    fn_801804CC(menu, lbl_806D90E4);
-                    lbl_806D1644 = 1;
-                }
-                break;
-            }
-            case 1: {
-                mode = selection == 1 ? 1 : 0;
-                OperationClock_Commit();
-                RaceFlow_ResetState_FullColdInit();
-                SetScene(fn_80163804(lbl_806D1648, mode));
-                break;
-            }
-            }
-            return 0;
-        case 9:
-        case 10:
-            switch (lbl_806D1644) {
-            case 0: {
-                g_cupId = selection + 1;
-                void *menu = fn_80180670(base + 0x5D8, 1);
-                if (menu) {
-                    fn_801804CC(menu, lbl_806D90EC);
-                    fn_801804CC(menu, lbl_806D90F4);
-                    lbl_806D1644 = 1;
-                }
-                break;
-            }
-            case 1: {
-                g_longRoundFlag = selection;
-                void *menu = fn_80180670(base + 0x694, 1);
-                if (menu) {
-                    fn_801804CC(menu, lbl_806D90FC);
-                    fn_801804CC(menu, lbl_806D9104);
-                    fn_801804CC(menu, lbl_806D910C);
-                    fn_801804CC(menu, base + 0x6A4);
-                    lbl_806D1644 = 2;
-                }
-                break;
-            }
-            case 2: {
-                g_courseVariantIdx = selection;
-                void *menu = fn_80180670(base + 0x6B0, 1);
-                if (menu) {
-                    fn_801804CC(menu, base + 0x6BC);
-                    fn_801804CC(menu, lbl_806D9114);
-                    lbl_806D1644 = 3;
-                }
-                break;
-            }
-            case 3: SetReverseRoundFlag(selection); break;
-            }
-            return 0;
-        case 11:
-            switch (lbl_806D1644) {
-            case 0:
-                lbl_806D1648 = selection;
-                switch (selection) {
-                case 2: {
-                void *menu = fn_80180670(base + 0x6C8, 1);
-                if (menu) {
-                    fn_801804CC(menu, lbl_806D911C);
-                    fn_801804CC(menu, base + 0x6D8);
-                    fn_801804CC(menu, base + 0x6E8);
-                    fn_801804CC(menu, base + 0x6F8);
-                    fn_801804CC(menu, base + 0x708);
-                    fn_801804CC(menu, base + 0x718);
-                    fn_801804CC(menu, base + 0x728);
-                    lbl_806D1644 = 1;
-                }
-                    break;
-                }
-                case 7: {
-                void *menu = fn_80180670(base + 0x6C8, 1);
-                if (menu) {
-                    fn_801804CC(menu, lbl_806D9124);
-                    fn_801804CC(menu, lbl_806D912C);
-                    fn_801804CC(menu, lbl_806D9134);
-                    fn_801804CC(menu, lbl_806D913C);
-                    fn_801804CC(menu, lbl_806D9144);
-                    fn_801804CC(menu, lbl_806D914C);
-                    lbl_806D1644 = 1;
-                }
-                    break;
-                }
-                default: SetScene(fn_80165C04(selection, selection)); break;
-                }
-                break;
-            case 1:
-                switch (lbl_806D1648) {
-                case 2:
-                case 7: SetScene(fn_80165C04(lbl_806D1648, selection)); break;
-                }
-                break;
-            }
-            return 0;
-        }
-        return 0;
+    case 1: return SelectSubmenu(item, selection, base);
     case 3: return 0;
     case 4: return 0;
     case 2: ClearScene(); return 0;
