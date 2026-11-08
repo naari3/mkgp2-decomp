@@ -1,4 +1,5 @@
 #include "game/AISpeedPrivate.h"
+#pragma opt_propagation off
 extern int fn_801DC69C(int);
 extern int fn_801DC6CC(int);
 extern void *GetKartSlotKartVariant(int);
@@ -31,19 +32,17 @@ static inline float DistanceBonus(AISpeedOwner *self, void *ctrl, int kart) {
     return AI_CalcDistanceSpeedBonus(kart, CarObject_GetRenderObj(self->car)->rank, rank);
 }
 static inline void NormalSpeed(AISpeedOwner *self, int kart) {
+        float min;
+        void *param;
         AIPairRecord *record;
         void *ctrl = Read_U32[kart];
-        void *param;
-        int cup;
         int round;
-        float min;
-        float max;
+        int cup;
         float bonus;
+        float max;
         record = &lbl_806793D8[kart];
         param = GetEnemyParam();
-        cup = g_cupId;
-        round = g_roundIndex;
-        max = GetBaseSpeedMax(param, cup, round);
+        max = GetBaseSpeedMax(param, cup = g_cupId, round = g_roundIndex);
         min = GetBaseSpeedMin(param, cup, round);
         bonus = DistanceBonus(self, ctrl, kart);
         max += bonus; min += bonus;
