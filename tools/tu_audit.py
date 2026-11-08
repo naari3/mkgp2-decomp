@@ -272,6 +272,84 @@ def load_claims(path, fetch):
     return claims
 
 
+DIFF_DIR = os.path.join(ROOT, "build", VER, "tu_audit_disasm")
+
+
+def _bodies(path):
+    out, cur = {}, None
+    for line in open(path, encoding="utf-8", errors="replace"):
+        if line.startswith(".fn "):
+            cur = line[4:].split(",")[0].strip().strip('"')
+            out[cur] = []
+            continue
+        if line.startswith(".endfn"):
+            cur = None
+            continue
+        if cur is None:
+            continue
+        mm = re.match(r"/\* [0-9A-F]+ [0-9A-F]+  .. .. .. .. \*/\t(.*)", line)
+        if mm:
+            out[cur].append(re.sub(r"\.L_[0-9A-F]+", ".L", mm.group(1)))
+    return out
+
+
+_SYMREF = re.compile(r'("[^"]+"|[A-Za-z_$?.@][^\s,()"+]*)(\+0x[0-9A-Fa-f]+)?@(ha|h|l|sda21)')
+
+
+def _symrefs(lines):
+    # names are normalised away: an owned object shows up as `...rodata.0` or `@123` in our
+    # object, which is fine; what matters is whether a reference exists at all
+    return collections.Counter(mm.group(3) for l in lines for mm in _SYMREF.finditer(l))
+
+
+def classify_diffs(m):
+    """For every not-yet-matching function of a built TU: 'reg' (only register numbers
+    differ), 'sched' (same instructions, other order), 'reloc' (the set of symbol
+    references differs: section anchor / data ownership / literal pooling), 'other'. -> {fn_addr: (class, n_diff_lines)}"""
+    import difflib
+    os.makedirs(DIFF_DIR, exist_ok=True)
+    dtk = os.path.join(ROOT, "build", "tools", "dtk")
+    tgt_cache = {}
+    out = {}
+    for u in m.units:
+        if u["auto"]:
+            continue
+        nm = [(f, p) for f, p in m.nonmatch_fns(u["id"]) if p is not None]
+        if not nm:
+            continue
+        obj = os.path.join(ROOT, "build", VER, "src", u["stem"] + ".o")
+        tobj = os.path.join(ASM_DIR, u["stem"] + ".s")
+        if not os.path.exists(obj) or not os.path.exists(tobj):
+            continue
+        mine_s = os.path.join(DIFF_DIR, u["stem"].replace("/", "__") + ".s")
+        if not os.path.exists(mine_s) or os.path.getmtime(mine_s) < os.path.getmtime(obj):
+            subprocess.run([dtk, "elf", "disasm", obj, mine_s], capture_output=True)
+        if not os.path.exists(mine_s):
+            continue
+        mine = _bodies(mine_s)
+        tgt = tgt_cache.setdefault(tobj, _bodies(tobj))
+        for f, _ in nm:
+            name = m.objs[f]["name"]
+            a, b = tgt.get(name), mine.get(name)
+            if a is None or b is None:
+                continue
+            dl = [l[1:] for l in difflib.unified_diff(a, b, lineterm="", n=0)
+                  if l[:1] in "+-" and not l.startswith(("+++", "---"))]
+            if not dl:
+                continue
+            regn = lambda x: re.sub(r"\b[rf]\d+\b", "R", x)
+            if len(a) == len(b) and all(regn(x) == regn(y) for x, y in zip(a, b)):
+                cls = "reg"
+            elif _symrefs(a) != _symrefs(b):
+                cls = "reloc"
+            elif sorted(map(regn, a)) == sorted(map(regn, b)):
+                cls = "sched"
+            else:
+                cls = "other"
+            out[f] = (cls, len(dl))
+    return out
+
+
 # ---------------------------------------------------------------- model
 
 class Model:
@@ -664,6 +742,7 @@ def annotate(m, p):
         for a in ev:
             srcs |= m.users.get(a, set()) | m.iusers.get(a, set()) | m.calls.get(a, set())
         p["hot"] = [x for x in nm if x[1] in srcs]
+    p["hot_reloc"] = [x for x in p["hot"] if getattr(m, "diffcls", {}).get(x[1], ("",))[0] == "reloc"]
     if p["kind"] == "merge":
         # smallest sub-span per hot function: the TUs that share evidence with it
         p["minimal"] = []
@@ -686,7 +765,8 @@ def annotate(m, p):
 def score(p):
     base = p.get("weight", 1.0)
     unlock = len(p["nonmatch"])
-    s = base * (1 + 2 * len(p["hot"]) + 0.25 * (unlock - len(p["hot"])))
+    reloc = len(p.get("hot_reloc", ()))
+    s = base * (1 + 2 * len(p["hot"]) + 8 * reloc + 0.25 * (unlock - len(p["hot"])))
     if p["kind"] == "merge" and p["matching_units"] and unlock:
         s *= 0.7  # risk of demoting Matching TUs
     if p["claimed"]:
@@ -696,6 +776,9 @@ def score(p):
 
 def fn_label(m, f, pct=None):
     n = m.objs[f]["name"]
+    c = getattr(m, "diffcls", {}).get(f)
+    if c:
+        n += " [%s]" % c[0]
     return n + " (asm)" if pct is None else "%s %.2f%%" % (n, pct)
 
 
@@ -750,6 +833,27 @@ def render(m, merges, owns, splits, sinits, ccs, style_of_cc, learn, validation=
         xs = [fn_label(m, f, s) for _, f, s in nm[:k]]
         return "%d: %s%s" % (len(nm), ", ".join(xs), " ..." if len(nm) > k else "")
 
+    if getattr(m, "diffcls", None):
+        cnt = collections.Counter(c for c, _ in m.diffcls.values())
+        L.append("## Near-miss diff classes")
+        L.append("")
+        L.append("Every not-yet-matching function of a built TU, diffed against the target: "
+                 "`reg` = only register numbers differ, `sched` = same instructions in another "
+                 "order, `reloc` = the symbol references themselves differ (section anchor, data "
+                 "ownership, literal pooling: the kind a TU boundary fix can solve), `other`. "
+                 "Counts: %s. `reloc` functions get a large score bonus below." % dict(cnt))
+        L.append("")
+        L.append("| fn | TU | diff lines | proposals touching it |")
+        L.append("|---|---|---|---|")
+        allp = [(k, i, p) for k, ps in (("M", sorted(merges, key=score, reverse=True)),
+                                       ("S", sorted(splits, key=score, reverse=True)),
+                                       ("O", sorted(owns, key=score, reverse=True))) for i, p in enumerate(ps, 1)]
+        for f, (c, n) in sorted(m.diffcls.items(), key=lambda x: x[1][1]):
+            if c != "reloc":
+                continue
+            refs = ["%s%d" % (k, i) for k, i, p in allp if any(x[1] == f for x in p["hot"])][:6]
+            L.append("| `%s` | `%s` | %d | %s |" % (m.objs[f]["name"], m.units[m.fn_unit(f)]["name"], n, ", ".join(refs) or "-"))
+        L.append("")
     L.append("## MERGE proposals")
     L.append("")
     L.append("Every TU between the first and last user of a shared private object was one TU. "
@@ -841,8 +945,9 @@ def render(m, merges, owns, splits, sinits, ccs, style_of_cc, learn, validation=
     return "\n".join(L)
 
 
-def run_audit(splits_text, claims=()):
+def run_audit(splits_text, claims=(), diffs=False):
     m = Model(splits_text, claims)
+    m.diffcls = classify_diffs(m) if diffs else {}
     merges = [annotate(m, p) for p in find_merges(m)]
     owns = [annotate(m, p) for p in find_owns(m)]
     splits = [annotate(m, p) for p in find_splits(m)]
@@ -912,7 +1017,7 @@ def main():
     else:
         text = open(a.splits or os.path.join(ROOT, "config", VER, "splits.txt"), encoding="utf-8").read()
     claims = load_claims(a.claims, a.fetch_claims)
-    res = run_audit(text, claims)
+    res = run_audit(text, claims, diffs=True)
     val = None if a.no_validate else validate()
     md = render(*res, validation=val, top=a.top)
     with open(a.out, "w", encoding="utf-8") as f:
