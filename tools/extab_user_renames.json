@@ -1493,14 +1493,13 @@
     "extabindex_fn_80057960": "@eti_80020864",
     "extab_TornadoEffect_ComposeRenderMatrix": "@etb_80007690",
     "extabindex_TornadoEffect_ComposeRenderMatrix": "@eti_80020870",
-    "extab_TornadoEffect_ApplyItemVisual_Primary": "@etb_80007698",
-    "extabindex_TornadoEffect_ApplyItemVisual_Primary": "@eti_8002087C",
     "extab_TornadoEffect_ApplyItemVisual_Compact": "@etb_800076A8",
     "extabindex_TornadoEffect_ApplyItemVisual_Compact": "@eti_80020894",
     "__dt__6TEVec3Fv": "dtor_80036E40",
     "__ct__10TENormal3DFPvi": "clNormal3D_Construct",
     "__ct__13TornadoEffectFUciiUcfff": "TornadoEffect_Ctor",
-    "@409": "jumptable_803F98F4"
+    "@416": "jumptable_803F9880",
+    "@531": "jumptable_803F98F4"
   },
   "src/game/TornadoItem.c": {
     "extab_TornadoItem_TickActive": "@etb_8000B70C",
