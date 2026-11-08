@@ -12,27 +12,26 @@ const int lbl_803DC378[8][4][3] = {
     {{0x5D, 0x39, 0x2D}, {0x2B, 0x5C, 0x94}, {0x5B, 0x94, 0x93}, {0x94, 0x95, 0x93}},
     {{0x5C, 0x2D, 0x39}, {0x5D, 0x2B, 0x98}, {0x5D, 0x98, 0x9D}, {0x98, 0x9D, 0x97}}
 };
-const struct ItemSelectionDefaults lbl_803DC4F8 = {{0x3D, 0x2B, 0x39}};
 
 #pragma push
 #pragma opt_propagation off
 unsigned char IsItemSelectAllowed(void) {
-    struct ItemSelectionDefaults selected = lbl_803DC4F8;
+    int selected[3] = {0x3D, 0x2B, 0x39};
     int cup, round;
-    lbl_806D1264[0] = selected.values[0];
-    lbl_806D1264[1] = selected.values[1];
-    lbl_806D1264[2] = selected.values[2];
+    lbl_806D1264[0] = selected[0];
+    lbl_806D1264[1] = selected[1];
+    lbl_806D1264[2] = selected[2];
     DebugPrintf("IsItemSelect : %d\n", IsSpecialItemRound() == 1);
     DebugPrintf("getCardUse   : %d\n", lbl_806D12AD == 1);
     if (IsSpecialItemRound() == 1 && lbl_806D12AD == 1) return 1;
     cup = g_cupId;
     round = g_roundIndex;
-    selected.values[0] = SelectRoundItem(lbl_803DC378, cup, round, 0);
-    selected.values[1] = SelectRoundItem(lbl_803DC378, cup, round, 1);
-    selected.values[2] = SelectRoundItem(lbl_803DC378, cup, round, 2);
-    lbl_806D1264[0] = selected.values[0];
-    lbl_806D1264[1] = selected.values[1];
-    lbl_806D1264[2] = selected.values[2];
+    selected[0] = SelectRoundItem(lbl_803DC378, cup, round, 0);
+    selected[1] = SelectRoundItem(lbl_803DC378, cup, round, 1);
+    selected[2] = SelectRoundItem(lbl_803DC378, cup, round, 2);
+    lbl_806D1264[0] = selected[0];
+    lbl_806D1264[1] = selected[1];
+    lbl_806D1264[2] = selected[2];
     return 0;
 }
 #pragma pop
