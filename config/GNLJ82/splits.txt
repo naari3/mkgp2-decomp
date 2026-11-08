@@ -2534,6 +2534,7 @@ game/CardTaskManager_RenderOverlay.c:
 	extab       start:0x80008FF4 end:0x80008FFC
 	extabindex  start:0x80021AF4 end:0x80021B00
 	.text       start:0x80089C58 end:0x80089E6C
+	.rodata     start:0x80312850 end:0x80312DEC
 
 game/fn_80089E6C.c:
 	.text       start:0x80089E6C end:0x80089E78
