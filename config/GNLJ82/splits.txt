@@ -1265,6 +1265,7 @@ game/KartItem_FlushRender.c:
 	extab       start:0x80007564 end:0x80007584
 	extabindex  start:0x80020708 end:0x80020738
 	.text       start:0x80056388 end:0x800566D4
+	.data       start:0x803F7798 end:0x803F984C
 
 game/KartItem_RenderCb_Mode7_Pre.c:
 	extab       start:0x80007584 end:0x8000758C
@@ -2534,6 +2535,7 @@ game/CardTaskManager_RenderOverlay.c:
 	extab       start:0x80008FF4 end:0x80008FFC
 	extabindex  start:0x80021AF4 end:0x80021B00
 	.text       start:0x80089C58 end:0x80089E6C
+	.rodata     start:0x80312850 end:0x80312DEC
 
 game/fn_80089E6C.c:
 	.text       start:0x80089E6C end:0x80089E78
@@ -2928,6 +2930,7 @@ game/VSMode_SeedRandomItemSequence.c:
 
 game/RaceData_8009BEF4.c:
 	.text       start:0x8009BEF4 end:0x8009CBFC
+	.rodata     start:0x8031B7C0 end:0x8032061C
 
 game/SetCourseParams.c:
 	extab       start:0x800095A8 end:0x800095B0
@@ -2987,24 +2990,10 @@ game/RaceScene_RenderFrame.cpp:
 	.text       start:0x8009DD64 end:0x8009E0D4
 
 game/VSMode_FrameUpdate.c:
-	extab       start:0x8000962C end:0x80009634
-	extabindex  start:0x80022238 end:0x80022244
-	.text       start:0x8009E0D4 end:0x8009F47C
-
-game/BtMode_Dtor.c:
-	extab       start:0x80009634 end:0x8000963C
-	extabindex  start:0x80022244 end:0x80022250
-	.text       start:0x8009F47C end:0x8009F814
-
-game/VSMode_Init.c:
-	extab       start:0x8000963C end:0x80009744
-	extabindex  start:0x80022250 end:0x8002225C
-	.text       start:0x8009F814 end:0x800A05D0
-
-game/BtMode_Init.c:
-	extab       start:0x80009744 end:0x80009760
-	extabindex  start:0x8002225C end:0x80022268
-	.text       start:0x800A05D0 end:0x800A0688
+	extab       start:0x8000962C end:0x80009760
+	extabindex  start:0x80022238 end:0x80022268
+	.text       start:0x8009E0D4 end:0x800A0688
+	.rodata     start:0x80320960 end:0x80321178
 
 game/BtMode_BaseDtor.c:
 	extab       start:0x80009760 end:0x80009768
@@ -6121,6 +6110,7 @@ game/RivalRun.c:
 	extab       start:0x8000D014 end:0x8000D220
 	extabindex  start:0x80024BA8 end:0x80024C14
 	.text       start:0x8013558C end:0x80137588
+	.rodata     start:0x803580F8 end:0x8035C240
 
 game/RivalRun_PathFollowerInit.c:
 	extab       start:0x8000D220 end:0x8000D228
@@ -6320,7 +6310,7 @@ game/Scene_8014E0C4.cpp:
 	extabindex  start:0x8002555C end:0x800258B0
 	.text       start:0x8014D540 end:0x80157940
 	.rodata     start:0x80363D30 end:0x803678D8
-	.data       start:0x8048FDB0 end:0x8048FDCC
+	.data       start:0x8048F178 end:0x8048FDCC
 
 game/SceneList_80157940.cpp:
 	extab       start:0x8000F0DC end:0x8000F114
@@ -11610,9 +11600,14 @@ game/anon_8021B568_exact2.cpp:
 	.text       start:0x8021B92C end:0x8021BC44
 
 game/anon_8021BC44.cpp:
-	extab       start:0x8001ACE8 end:0x8001B130
-	extabindex  start:0x8002A308 end:0x8002A3B0
-	.text       start:0x8021BC44 end:0x8021ED0C
+	extab       start:0x8001ACE8 end:0x8001AD78
+	extabindex  start:0x8002A308 end:0x8002A314
+	.text       start:0x8021BC44 end:0x8021C070
+
+game/anon_8021BC44_nm1.cpp:
+	extab       start:0x8001AD78 end:0x8001B130
+	extabindex  start:0x8002A314 end:0x8002A3B0
+	.text       start:0x8021C070 end:0x8021ED0C
 
 game/fn_8021ED0C.c:
 	.text       start:0x8021ED0C end:0x8021ED1C

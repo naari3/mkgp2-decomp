@@ -46,16 +46,22 @@ struct CollisionMatrix {
     }
     void Multiply(const CollisionMatrix& b) {
         float out[16];
-        int index = 0;
-        for (int i = 0; i < 4; ++i) {
-            float a0 = m[i*4], a1 = m[i*4+1], a2 = m[i*4+2], a3 = m[i*4+3];
-            for (int j = 0; j < 4; ++j, ++index) {
-                float value = a0*b.m[j];
-                value += a1*b.m[4+j];
-                value += a2*b.m[8+j];
-                value += a3*b.m[12+j];
-                out[index] = value;
+        const float *row = m;
+        const float *column;
+        float *output = out;
+        const float *right = b.m;
+        int n = 0;
+        for (int i = 0; i < 4; i++) {
+            column = right;
+            for (int j = 0; j < 4; j++, column++) {
+                float value = row[0] * column[0];
+                value += row[1] * column[4];
+                value += row[2] * column[8];
+                value += row[3] * column[12];
+                output[n + j] = value;
             }
+            row += 4;
+            n += 4;
         }
         for (int i = 0; i < 16; ++i) m[i] = out[i];
     }

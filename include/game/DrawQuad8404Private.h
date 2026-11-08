@@ -5,7 +5,7 @@
 struct DrawQuad8404 {
     float x0,y0,x1,y1,x2,y2,x3,y3;
     DrawQuad8404(DrawDesc801F *d) {
-        float dy, cosPart, dx, w, h, sinPart, left, top, wx, right, bottom;
+        float w, h, top, left, sinPart, wx, dx, right, bottom, cosPart, dy;
         w = d->width * d->scaleX;
         h = d->height * d->scaleY;
         double width = __fabs(w);

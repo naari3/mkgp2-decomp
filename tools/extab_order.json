@@ -2954,5 +2954,11 @@
     "fn_8022FFD4",
     "fn_8023001C",
     "dtor_80036E40"
+  ],
+  "src/game/VSMode_FrameUpdate.c": [
+    "VSMode_FrameUpdate",
+    "BtMode_Dtor",
+    "VSMode_Init",
+    "BtMode_Init"
   ]
 }
