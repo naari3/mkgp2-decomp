@@ -1,436 +1,647 @@
-/* === extracted from auto_03_80213D58_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
+/* Field-by-field copy of the kart movement block (JumpDistanceMode).
+ * Each field goes through one of two alternating temporaries (a/b, fa/fb),
+ * which gives the target its load-ahead pairing. */
+typedef struct JdmKartMovement {
+    int f0;
+    int f4;
+    int f8;
+    float fC;
+    float f10;
+    float f14;
+    float f18;
+    float f1C;
+    unsigned char f20;
+    unsigned char f21;
+    unsigned char f22;
+    unsigned char pad23[0x1];
+    int f24;
+    int f28;
+    float f2C;
+    unsigned char f30;
+    unsigned char pad31[0x3];
+    float f34;
+    float f38;
+    float f3C;
+    int f40;
+    int f44;
+    int f48;
+    int f4C;
+    int f50;
+    int f54;
+    int f58;
+    int f5C;
+    int f60;
+    int f64;
+    int f68;
+    int f6C;
+    int f70;
+    int f74;
+    int f78;
+    int f7C;
+    int f80;
+    int f84;
+    int f88;
+    int f8C;
+    int f90;
+    int f94;
+    int f98;
+    int f9C;
+    int fA0;
+    int fA4;
+    int fA8;
+    int fAC;
+    int fB0;
+    int fB4;
+    int fB8;
+    int fBC;
+    int fC0;
+    int fC4;
+    int fC8;
+    int fCC;
+    int fD0;
+    int fD4;
+    int fD8;
+    int fDC;
+    int fE0;
+    int fE4;
+    int fE8;
+    int fEC;
+    int fF0;
+    int fF4;
+    int fF8;
+    int fFC;
+    int f100;
+    int f104;
+    int f108;
+    int f10C;
+    int f110;
+    int f114;
+    int f118;
+    int f11C;
+    int f120;
+    int f124;
+    int f128;
+    int f12C;
+    int f130;
+    int f134;
+    int f138;
+    int f13C;
+    int f140;
+    int f144;
+    int f148;
+    int f14C;
+    int f150;
+    int f154;
+    int f158;
+    int f15C;
+    int f160;
+    int f164;
+    int f168;
+    int f16C;
+    int f170;
+    int f174;
+    int f178;
+    int f17C;
+    int f180;
+    int f184;
+    int f188;
+    int f18C;
+    int f190;
+    int f194;
+    int f198;
+    int f19C;
+    int f1A0;
+    int f1A4;
+    int f1A8;
+    int f1AC;
+    int f1B0;
+    int f1B4;
+    float f1B8;
+    float f1BC;
+    float f1C0;
+    float f1C4;
+    float f1C8;
+    float f1CC;
+    float f1D0;
+    float f1D4;
+    float f1D8;
+    float f1DC;
+    float f1E0;
+    float f1E4;
+    float f1E8;
+    int f1EC;
+    int f1F0;
+    int f1F4;
+    int f1F8;
+    int f1FC;
+    int f200;
+    int f204;
+    int f208;
+    int f20C;
+    int f210;
+    int f214;
+    int f218;
+    int f21C;
+    int f220;
+    int f224;
+    int f228;
+    int f22C;
+    int f230;
+    int f234;
+    int f238;
+    int f23C;
+    int f240;
+    unsigned char f244;
+    unsigned char f245;
+    unsigned char f246;
+    unsigned char pad247[0x1];
+    int f248;
+    float f24C;
+    float f250;
+    int f254;
+    int f258;
+    int f25C;
+    int f260;
+    int f264;
+    int f268;
+    int f26C;
+    int f270;
+    int f274;
+    int f278;
+    int f27C;
+    int f280;
+    int f284;
+    int f288;
+    int f28C;
+    int f290;
+    int f294;
+    int f298;
+    int f29C;
+    int f2A0;
+    int f2A4;
+    int f2A8;
+    int f2AC;
+    int f2B0;
+    int f2B4;
+    int f2B8;
+    unsigned char f2BC;
+    unsigned char f2BD;
+    unsigned char f2BE;
+    unsigned char pad2BF[0x1];
+    int f2C0;
+    int f2C4;
+    int f2C8;
+    float f2CC;
+    unsigned char f2D0;
+    unsigned char pad2D1[0x3];
+    float f2D4;
+    float f2D8;
+    unsigned char f2DC;
+    unsigned char pad2DD[0x3];
+    float f2E0;
+    float f2E4;
+    float f2E8;
+    float f2EC;
+    float f2F0;
+    float f2F4;
+    float f2F8;
+    unsigned char f2FC;
+    unsigned char f2FD;
+    unsigned char f2FE;
+    unsigned char pad2FF[0x1];
+    float f300;
+    int f304;
+    int f308;
+    int f30C;
+    int f310;
+    int f314;
+    int f318;
+    unsigned char f31C;
+    unsigned char pad31D[0x3];
+    int f320;
+} JdmKartMovement;
 
-/* --- function index (1 fns, .text 0x80213D58..0x802143E4) ---
- * [  0] 0x80213D58 size:0x68C   global JumpDistanceMode_CopyKartMovement
- */
-
-/* --- forward decls --- */
-asm void JumpDistanceMode_CopyKartMovement(void);
-
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void JumpDistanceMode_CopyKartMovement(void) { /* 0x80213D58 size:0x68C */
-    nofralloc
-    lwz r0, 0x0(r4)
-    lwz r5, 0x4(r4)
-    stw r0, 0x0(r3)
-    lwz r0, 0x8(r4)
-    stw r5, 0x4(r3)
-    lfs f0, 0xc(r4)
-    stw r0, 0x8(r3)
-    lfs f1, 0x10(r4)
-    stfs f0, 0xc(r3)
-    lfs f0, 0x14(r4)
-    stfs f1, 0x10(r3)
-    lfs f1, 0x18(r4)
-    stfs f0, 0x14(r3)
-    lfs f0, 0x1c(r4)
-    stfs f1, 0x18(r3)
-    lbz r0, 0x20(r4)
-    stfs f0, 0x1c(r3)
-    lbz r5, 0x21(r4)
-    stb r0, 0x20(r3)
-    lbz r0, 0x22(r4)
-    stb r5, 0x21(r3)
-    lwz r5, 0x24(r4)
-    stb r0, 0x22(r3)
-    lwz r0, 0x28(r4)
-    stw r5, 0x24(r3)
-    lfs f0, 0x2c(r4)
-    stw r0, 0x28(r3)
-    lbz r0, 0x30(r4)
-    stfs f0, 0x2c(r3)
-    lfs f0, 0x34(r4)
-    stb r0, 0x30(r3)
-    lfs f1, 0x38(r4)
-    stfs f0, 0x34(r3)
-    lfs f0, 0x3c(r4)
-    stfs f1, 0x38(r3)
-    lwz r5, 0x40(r4)
-    stfs f0, 0x3c(r3)
-    lwz r0, 0x44(r4)
-    stw r5, 0x40(r3)
-    lwz r5, 0x48(r4)
-    stw r0, 0x44(r3)
-    lwz r0, 0x4c(r4)
-    stw r5, 0x48(r3)
-    lwz r5, 0x50(r4)
-    stw r0, 0x4c(r3)
-    lwz r0, 0x54(r4)
-    stw r5, 0x50(r3)
-    lwz r5, 0x58(r4)
-    stw r0, 0x54(r3)
-    lwz r0, 0x5c(r4)
-    stw r5, 0x58(r3)
-    lwz r5, 0x60(r4)
-    stw r0, 0x5c(r3)
-    lwz r0, 0x64(r4)
-    stw r5, 0x60(r3)
-    lwz r5, 0x68(r4)
-    stw r0, 0x64(r3)
-    lwz r0, 0x6c(r4)
-    stw r5, 0x68(r3)
-    lwz r5, 0x70(r4)
-    stw r0, 0x6c(r3)
-    lwz r0, 0x74(r4)
-    stw r5, 0x70(r3)
-    lwz r5, 0x78(r4)
-    stw r0, 0x74(r3)
-    lwz r0, 0x7c(r4)
-    stw r5, 0x78(r3)
-    lwz r5, 0x80(r4)
-    stw r0, 0x7c(r3)
-    lwz r0, 0x84(r4)
-    stw r5, 0x80(r3)
-    lwz r5, 0x88(r4)
-    stw r0, 0x84(r3)
-    lwz r0, 0x8c(r4)
-    stw r5, 0x88(r3)
-    lwz r5, 0x90(r4)
-    stw r0, 0x8c(r3)
-    lwz r0, 0x94(r4)
-    stw r5, 0x90(r3)
-    lwz r5, 0x98(r4)
-    stw r0, 0x94(r3)
-    lwz r0, 0x9c(r4)
-    stw r5, 0x98(r3)
-    lwz r5, 0xa0(r4)
-    stw r0, 0x9c(r3)
-    lwz r0, 0xa4(r4)
-    stw r5, 0xa0(r3)
-    lwz r5, 0xa8(r4)
-    stw r0, 0xa4(r3)
-    lwz r0, 0xac(r4)
-    stw r5, 0xa8(r3)
-    lwz r5, 0xb0(r4)
-    stw r0, 0xac(r3)
-    lwz r0, 0xb4(r4)
-    stw r5, 0xb0(r3)
-    lwz r5, 0xb8(r4)
-    stw r0, 0xb4(r3)
-    lwz r0, 0xbc(r4)
-    stw r5, 0xb8(r3)
-    lwz r5, 0xc0(r4)
-    stw r0, 0xbc(r3)
-    lwz r0, 0xc4(r4)
-    stw r5, 0xc0(r3)
-    lwz r5, 0xc8(r4)
-    stw r0, 0xc4(r3)
-    lwz r0, 0xcc(r4)
-    stw r5, 0xc8(r3)
-    lwz r5, 0xd0(r4)
-    stw r0, 0xcc(r3)
-    lwz r0, 0xd4(r4)
-    stw r5, 0xd0(r3)
-    stw r0, 0xd4(r3)
-    lwz r0, 0xd8(r4)
-    lwz r5, 0xdc(r4)
-    stw r0, 0xd8(r3)
-    lwz r0, 0xe0(r4)
-    stw r5, 0xdc(r3)
-    lwz r5, 0xe4(r4)
-    stw r0, 0xe0(r3)
-    lwz r0, 0xe8(r4)
-    stw r5, 0xe4(r3)
-    lwz r5, 0xec(r4)
-    stw r0, 0xe8(r3)
-    lwz r0, 0xf0(r4)
-    stw r5, 0xec(r3)
-    lwz r5, 0xf4(r4)
-    stw r0, 0xf0(r3)
-    lwz r0, 0xf8(r4)
-    stw r5, 0xf4(r3)
-    lwz r5, 0xfc(r4)
-    stw r0, 0xf8(r3)
-    lwz r0, 0x100(r4)
-    stw r5, 0xfc(r3)
-    lwz r5, 0x104(r4)
-    stw r0, 0x100(r3)
-    lwz r0, 0x108(r4)
-    stw r5, 0x104(r3)
-    lwz r5, 0x10c(r4)
-    stw r0, 0x108(r3)
-    lwz r0, 0x110(r4)
-    stw r5, 0x10c(r3)
-    lwz r5, 0x114(r4)
-    stw r0, 0x110(r3)
-    lwz r0, 0x118(r4)
-    stw r5, 0x114(r3)
-    lwz r5, 0x11c(r4)
-    stw r0, 0x118(r3)
-    lwz r0, 0x120(r4)
-    stw r5, 0x11c(r3)
-    lwz r5, 0x124(r4)
-    stw r0, 0x120(r3)
-    lwz r0, 0x128(r4)
-    stw r5, 0x124(r3)
-    lwz r5, 0x12c(r4)
-    stw r0, 0x128(r3)
-    lwz r0, 0x130(r4)
-    stw r5, 0x12c(r3)
-    lwz r5, 0x134(r4)
-    stw r0, 0x130(r3)
-    lwz r0, 0x138(r4)
-    stw r5, 0x134(r3)
-    lwz r5, 0x13c(r4)
-    stw r0, 0x138(r3)
-    lwz r0, 0x140(r4)
-    stw r5, 0x13c(r3)
-    lwz r5, 0x144(r4)
-    stw r0, 0x140(r3)
-    lwz r0, 0x148(r4)
-    stw r5, 0x144(r3)
-    lwz r5, 0x14c(r4)
-    stw r0, 0x148(r3)
-    lwz r0, 0x150(r4)
-    stw r5, 0x14c(r3)
-    lwz r5, 0x154(r4)
-    stw r0, 0x150(r3)
-    lwz r0, 0x158(r4)
-    stw r5, 0x154(r3)
-    lwz r5, 0x15c(r4)
-    stw r0, 0x158(r3)
-    lwz r0, 0x160(r4)
-    stw r5, 0x15c(r3)
-    lwz r5, 0x164(r4)
-    stw r0, 0x160(r3)
-    lwz r0, 0x168(r4)
-    stw r5, 0x164(r3)
-    lwz r5, 0x16c(r4)
-    stw r0, 0x168(r3)
-    lwz r0, 0x170(r4)
-    stw r5, 0x16c(r3)
-    lwz r5, 0x174(r4)
-    stw r0, 0x170(r3)
-    lwz r0, 0x178(r4)
-    stw r5, 0x174(r3)
-    lwz r5, 0x17c(r4)
-    stw r0, 0x178(r3)
-    lwz r0, 0x180(r4)
-    stw r5, 0x17c(r3)
-    lwz r5, 0x184(r4)
-    stw r0, 0x180(r3)
-    lwz r0, 0x188(r4)
-    stw r5, 0x184(r3)
-    lwz r5, 0x18c(r4)
-    stw r0, 0x188(r3)
-    lwz r0, 0x190(r4)
-    stw r5, 0x18c(r3)
-    lwz r5, 0x194(r4)
-    stw r0, 0x190(r3)
-    lwz r0, 0x198(r4)
-    stw r5, 0x194(r3)
-    lwz r5, 0x19c(r4)
-    stw r0, 0x198(r3)
-    lwz r0, 0x1a0(r4)
-    stw r5, 0x19c(r3)
-    lwz r5, 0x1a4(r4)
-    stw r0, 0x1a0(r3)
-    lwz r0, 0x1a8(r4)
-    stw r5, 0x1a4(r3)
-    stw r0, 0x1a8(r3)
-    lwz r0, 0x1ac(r4)
-    lwz r5, 0x1b0(r4)
-    stw r0, 0x1ac(r3)
-    lwz r0, 0x1b4(r4)
-    stw r5, 0x1b0(r3)
-    lfs f0, 0x1b8(r4)
-    stw r0, 0x1b4(r3)
-    lfs f1, 0x1bc(r4)
-    stfs f0, 0x1b8(r3)
-    lfs f0, 0x1c0(r4)
-    stfs f1, 0x1bc(r3)
-    lfs f1, 0x1c4(r4)
-    stfs f0, 0x1c0(r3)
-    lfs f0, 0x1c8(r4)
-    stfs f1, 0x1c4(r3)
-    lfs f1, 0x1cc(r4)
-    stfs f0, 0x1c8(r3)
-    lfs f0, 0x1d0(r4)
-    stfs f1, 0x1cc(r3)
-    lfs f1, 0x1d4(r4)
-    stfs f0, 0x1d0(r3)
-    lfs f0, 0x1d8(r4)
-    stfs f1, 0x1d4(r3)
-    lfs f1, 0x1dc(r4)
-    stfs f0, 0x1d8(r3)
-    lfs f0, 0x1e0(r4)
-    stfs f1, 0x1dc(r3)
-    lfs f1, 0x1e4(r4)
-    stfs f0, 0x1e0(r3)
-    lfs f0, 0x1e8(r4)
-    stfs f1, 0x1e4(r3)
-    lwz r5, 0x1ec(r4)
-    stfs f0, 0x1e8(r3)
-    lwz r0, 0x1f0(r4)
-    stw r5, 0x1ec(r3)
-    lwz r5, 0x1f4(r4)
-    stw r0, 0x1f0(r3)
-    lwz r0, 0x1f8(r4)
-    stw r5, 0x1f4(r3)
-    lwz r5, 0x1fc(r4)
-    stw r0, 0x1f8(r3)
-    lwz r0, 0x200(r4)
-    stw r5, 0x1fc(r3)
-    lwz r5, 0x204(r4)
-    stw r0, 0x200(r3)
-    lwz r0, 0x208(r4)
-    stw r5, 0x204(r3)
-    lwz r5, 0x20c(r4)
-    stw r0, 0x208(r3)
-    lwz r0, 0x210(r4)
-    stw r5, 0x20c(r3)
-    lwz r5, 0x214(r4)
-    stw r0, 0x210(r3)
-    lwz r0, 0x218(r4)
-    stw r5, 0x214(r3)
-    lwz r5, 0x21c(r4)
-    stw r0, 0x218(r3)
-    lwz r0, 0x220(r4)
-    stw r5, 0x21c(r3)
-    lwz r5, 0x224(r4)
-    stw r0, 0x220(r3)
-    lwz r0, 0x228(r4)
-    stw r5, 0x224(r3)
-    lwz r5, 0x22c(r4)
-    stw r0, 0x228(r3)
-    lwz r0, 0x230(r4)
-    stw r5, 0x22c(r3)
-    lwz r5, 0x234(r4)
-    stw r0, 0x230(r3)
-    lwz r0, 0x238(r4)
-    stw r5, 0x234(r3)
-    lwz r5, 0x23c(r4)
-    stw r0, 0x238(r3)
-    lwz r0, 0x240(r4)
-    stw r5, 0x23c(r3)
-    lbz r5, 0x244(r4)
-    stw r0, 0x240(r3)
-    lbz r0, 0x245(r4)
-    stb r5, 0x244(r3)
-    lbz r5, 0x246(r4)
-    stb r0, 0x245(r3)
-    lwz r0, 0x248(r4)
-    stb r5, 0x246(r3)
-    lfs f1, 0x24c(r4)
-    stw r0, 0x248(r3)
-    lfs f0, 0x250(r4)
-    stfs f1, 0x24c(r3)
-    lwz r0, 0x254(r4)
-    stfs f0, 0x250(r3)
-    lwz r5, 0x258(r4)
-    stw r0, 0x254(r3)
-    lwz r0, 0x25c(r4)
-    stw r5, 0x258(r3)
-    lwz r5, 0x260(r4)
-    stw r0, 0x25c(r3)
-    lwz r0, 0x264(r4)
-    stw r5, 0x260(r3)
-    lwz r5, 0x268(r4)
-    stw r0, 0x264(r3)
-    lwz r0, 0x26c(r4)
-    stw r5, 0x268(r3)
-    stw r0, 0x26c(r3)
-    lwz r0, 0x270(r4)
-    lwz r5, 0x274(r4)
-    stw r0, 0x270(r3)
-    lwz r0, 0x278(r4)
-    stw r5, 0x274(r3)
-    lwz r5, 0x27c(r4)
-    stw r0, 0x278(r3)
-    lwz r0, 0x280(r4)
-    stw r5, 0x27c(r3)
-    lwz r5, 0x284(r4)
-    stw r0, 0x280(r3)
-    lwz r0, 0x288(r4)
-    stw r5, 0x284(r3)
-    lwz r5, 0x28c(r4)
-    stw r0, 0x288(r3)
-    lwz r0, 0x290(r4)
-    stw r5, 0x28c(r3)
-    lwz r5, 0x294(r4)
-    stw r0, 0x290(r3)
-    lwz r0, 0x298(r4)
-    stw r5, 0x294(r3)
-    lwz r5, 0x29c(r4)
-    stw r0, 0x298(r3)
-    lwz r0, 0x2a0(r4)
-    stw r5, 0x29c(r3)
-    lwz r5, 0x2a4(r4)
-    stw r0, 0x2a0(r3)
-    lwz r0, 0x2a8(r4)
-    stw r5, 0x2a4(r3)
-    lwz r5, 0x2ac(r4)
-    stw r0, 0x2a8(r3)
-    lwz r0, 0x2b0(r4)
-    stw r5, 0x2ac(r3)
-    lwz r5, 0x2b4(r4)
-    stw r0, 0x2b0(r3)
-    lwz r0, 0x2b8(r4)
-    stw r5, 0x2b4(r3)
-    lbz r5, 0x2bc(r4)
-    stw r0, 0x2b8(r3)
-    lbz r0, 0x2bd(r4)
-    stb r5, 0x2bc(r3)
-    lbz r5, 0x2be(r4)
-    stb r0, 0x2bd(r3)
-    lwz r0, 0x2c0(r4)
-    stb r5, 0x2be(r3)
-    lwz r5, 0x2c4(r4)
-    stw r0, 0x2c0(r3)
-    lwz r0, 0x2c8(r4)
-    stw r5, 0x2c4(r3)
-    lfs f0, 0x2cc(r4)
-    stw r0, 0x2c8(r3)
-    lbz r0, 0x2d0(r4)
-    stfs f0, 0x2cc(r3)
-    lfs f1, 0x2d4(r4)
-    stb r0, 0x2d0(r3)
-    lfs f0, 0x2d8(r4)
-    stfs f1, 0x2d4(r3)
-    lbz r0, 0x2dc(r4)
-    stfs f0, 0x2d8(r3)
-    lfs f0, 0x2e0(r4)
-    stb r0, 0x2dc(r3)
-    lfs f1, 0x2e4(r4)
-    stfs f0, 0x2e0(r3)
-    lfs f0, 0x2e8(r4)
-    stfs f1, 0x2e4(r3)
-    lfs f1, 0x2ec(r4)
-    stfs f0, 0x2e8(r3)
-    lfs f0, 0x2f0(r4)
-    stfs f1, 0x2ec(r3)
-    lfs f1, 0x2f4(r4)
-    stfs f0, 0x2f0(r3)
-    lfs f0, 0x2f8(r4)
-    stfs f1, 0x2f4(r3)
-    lbz r0, 0x2fc(r4)
-    stfs f0, 0x2f8(r3)
-    lbz r5, 0x2fd(r4)
-    stb r0, 0x2fc(r3)
-    lbz r0, 0x2fe(r4)
-    stb r5, 0x2fd(r3)
-    lfs f0, 0x300(r4)
-    stb r0, 0x2fe(r3)
-    lwz r5, 0x304(r4)
-    stfs f0, 0x300(r3)
-    lwz r0, 0x308(r4)
-    stw r5, 0x304(r3)
-    lwz r5, 0x30c(r4)
-    stw r0, 0x308(r3)
-    lwz r0, 0x310(r4)
-    stw r5, 0x30c(r3)
-    lwz r5, 0x314(r4)
-    stw r0, 0x310(r3)
-    lwz r0, 0x318(r4)
-    stw r5, 0x314(r3)
-    lbz r5, 0x31c(r4)
-    stw r0, 0x318(r3)
-    lwz r0, 0x320(r4)
-    stb r5, 0x31c(r3)
-    stw r0, 0x320(r3)
-    blr
+void JumpDistanceMode_CopyKartMovement(JdmKartMovement *dst, const JdmKartMovement *src) {
+    int a;
+    int b;
+    float fa;
+    float fb;
+    a = src->f0;
+    b = src->f4;
+    dst->f0 = a;
+    a = src->f8;
+    dst->f4 = b;
+    fa = src->fC;
+    dst->f8 = a;
+    fb = src->f10;
+    dst->fC = fa;
+    fa = src->f14;
+    dst->f10 = fb;
+    fb = src->f18;
+    dst->f14 = fa;
+    fa = src->f1C;
+    dst->f18 = fb;
+    a = src->f20;
+    dst->f1C = fa;
+    b = src->f21;
+    dst->f20 = a;
+    a = src->f22;
+    dst->f21 = b;
+    b = src->f24;
+    dst->f22 = a;
+    a = src->f28;
+    dst->f24 = b;
+    fa = src->f2C;
+    dst->f28 = a;
+    a = src->f30;
+    dst->f2C = fa;
+    fa = src->f34;
+    dst->f30 = a;
+    fb = src->f38;
+    dst->f34 = fa;
+    fa = src->f3C;
+    dst->f38 = fb;
+    b = src->f40;
+    dst->f3C = fa;
+    a = src->f44;
+    dst->f40 = b;
+    b = src->f48;
+    dst->f44 = a;
+    a = src->f4C;
+    dst->f48 = b;
+    b = src->f50;
+    dst->f4C = a;
+    a = src->f54;
+    dst->f50 = b;
+    b = src->f58;
+    dst->f54 = a;
+    a = src->f5C;
+    dst->f58 = b;
+    b = src->f60;
+    dst->f5C = a;
+    a = src->f64;
+    dst->f60 = b;
+    b = src->f68;
+    dst->f64 = a;
+    a = src->f6C;
+    dst->f68 = b;
+    b = src->f70;
+    dst->f6C = a;
+    a = src->f74;
+    dst->f70 = b;
+    b = src->f78;
+    dst->f74 = a;
+    a = src->f7C;
+    dst->f78 = b;
+    b = src->f80;
+    dst->f7C = a;
+    a = src->f84;
+    dst->f80 = b;
+    b = src->f88;
+    dst->f84 = a;
+    a = src->f8C;
+    dst->f88 = b;
+    b = src->f90;
+    dst->f8C = a;
+    a = src->f94;
+    dst->f90 = b;
+    b = src->f98;
+    dst->f94 = a;
+    a = src->f9C;
+    dst->f98 = b;
+    b = src->fA0;
+    dst->f9C = a;
+    a = src->fA4;
+    dst->fA0 = b;
+    b = src->fA8;
+    dst->fA4 = a;
+    a = src->fAC;
+    dst->fA8 = b;
+    b = src->fB0;
+    dst->fAC = a;
+    a = src->fB4;
+    dst->fB0 = b;
+    b = src->fB8;
+    dst->fB4 = a;
+    a = src->fBC;
+    dst->fB8 = b;
+    b = src->fC0;
+    dst->fBC = a;
+    a = src->fC4;
+    dst->fC0 = b;
+    b = src->fC8;
+    dst->fC4 = a;
+    a = src->fCC;
+    dst->fC8 = b;
+    b = src->fD0;
+    dst->fCC = a;
+    a = src->fD4;
+    dst->fD0 = b;
+    dst->fD4 = a;
+    a = src->fD8;
+    b = src->fDC;
+    dst->fD8 = a;
+    a = src->fE0;
+    dst->fDC = b;
+    b = src->fE4;
+    dst->fE0 = a;
+    a = src->fE8;
+    dst->fE4 = b;
+    b = src->fEC;
+    dst->fE8 = a;
+    a = src->fF0;
+    dst->fEC = b;
+    b = src->fF4;
+    dst->fF0 = a;
+    a = src->fF8;
+    dst->fF4 = b;
+    b = src->fFC;
+    dst->fF8 = a;
+    a = src->f100;
+    dst->fFC = b;
+    b = src->f104;
+    dst->f100 = a;
+    a = src->f108;
+    dst->f104 = b;
+    b = src->f10C;
+    dst->f108 = a;
+    a = src->f110;
+    dst->f10C = b;
+    b = src->f114;
+    dst->f110 = a;
+    a = src->f118;
+    dst->f114 = b;
+    b = src->f11C;
+    dst->f118 = a;
+    a = src->f120;
+    dst->f11C = b;
+    b = src->f124;
+    dst->f120 = a;
+    a = src->f128;
+    dst->f124 = b;
+    b = src->f12C;
+    dst->f128 = a;
+    a = src->f130;
+    dst->f12C = b;
+    b = src->f134;
+    dst->f130 = a;
+    a = src->f138;
+    dst->f134 = b;
+    b = src->f13C;
+    dst->f138 = a;
+    a = src->f140;
+    dst->f13C = b;
+    b = src->f144;
+    dst->f140 = a;
+    a = src->f148;
+    dst->f144 = b;
+    b = src->f14C;
+    dst->f148 = a;
+    a = src->f150;
+    dst->f14C = b;
+    b = src->f154;
+    dst->f150 = a;
+    a = src->f158;
+    dst->f154 = b;
+    b = src->f15C;
+    dst->f158 = a;
+    a = src->f160;
+    dst->f15C = b;
+    b = src->f164;
+    dst->f160 = a;
+    a = src->f168;
+    dst->f164 = b;
+    b = src->f16C;
+    dst->f168 = a;
+    a = src->f170;
+    dst->f16C = b;
+    b = src->f174;
+    dst->f170 = a;
+    a = src->f178;
+    dst->f174 = b;
+    b = src->f17C;
+    dst->f178 = a;
+    a = src->f180;
+    dst->f17C = b;
+    b = src->f184;
+    dst->f180 = a;
+    a = src->f188;
+    dst->f184 = b;
+    b = src->f18C;
+    dst->f188 = a;
+    a = src->f190;
+    dst->f18C = b;
+    b = src->f194;
+    dst->f190 = a;
+    a = src->f198;
+    dst->f194 = b;
+    b = src->f19C;
+    dst->f198 = a;
+    a = src->f1A0;
+    dst->f19C = b;
+    b = src->f1A4;
+    dst->f1A0 = a;
+    a = src->f1A8;
+    dst->f1A4 = b;
+    dst->f1A8 = a;
+    a = src->f1AC;
+    b = src->f1B0;
+    dst->f1AC = a;
+    a = src->f1B4;
+    dst->f1B0 = b;
+    fa = src->f1B8;
+    dst->f1B4 = a;
+    fb = src->f1BC;
+    dst->f1B8 = fa;
+    fa = src->f1C0;
+    dst->f1BC = fb;
+    fb = src->f1C4;
+    dst->f1C0 = fa;
+    fa = src->f1C8;
+    dst->f1C4 = fb;
+    fb = src->f1CC;
+    dst->f1C8 = fa;
+    fa = src->f1D0;
+    dst->f1CC = fb;
+    fb = src->f1D4;
+    dst->f1D0 = fa;
+    fa = src->f1D8;
+    dst->f1D4 = fb;
+    fb = src->f1DC;
+    dst->f1D8 = fa;
+    fa = src->f1E0;
+    dst->f1DC = fb;
+    fb = src->f1E4;
+    dst->f1E0 = fa;
+    fa = src->f1E8;
+    dst->f1E4 = fb;
+    b = src->f1EC;
+    dst->f1E8 = fa;
+    a = src->f1F0;
+    dst->f1EC = b;
+    b = src->f1F4;
+    dst->f1F0 = a;
+    a = src->f1F8;
+    dst->f1F4 = b;
+    b = src->f1FC;
+    dst->f1F8 = a;
+    a = src->f200;
+    dst->f1FC = b;
+    b = src->f204;
+    dst->f200 = a;
+    a = src->f208;
+    dst->f204 = b;
+    b = src->f20C;
+    dst->f208 = a;
+    a = src->f210;
+    dst->f20C = b;
+    b = src->f214;
+    dst->f210 = a;
+    a = src->f218;
+    dst->f214 = b;
+    b = src->f21C;
+    dst->f218 = a;
+    a = src->f220;
+    dst->f21C = b;
+    b = src->f224;
+    dst->f220 = a;
+    a = src->f228;
+    dst->f224 = b;
+    b = src->f22C;
+    dst->f228 = a;
+    a = src->f230;
+    dst->f22C = b;
+    b = src->f234;
+    dst->f230 = a;
+    a = src->f238;
+    dst->f234 = b;
+    b = src->f23C;
+    dst->f238 = a;
+    a = src->f240;
+    dst->f23C = b;
+    b = src->f244;
+    dst->f240 = a;
+    a = src->f245;
+    dst->f244 = b;
+    b = src->f246;
+    dst->f245 = a;
+    a = src->f248;
+    dst->f246 = b;
+    fb = src->f24C;
+    dst->f248 = a;
+    fa = src->f250;
+    dst->f24C = fb;
+    a = src->f254;
+    dst->f250 = fa;
+    b = src->f258;
+    dst->f254 = a;
+    a = src->f25C;
+    dst->f258 = b;
+    b = src->f260;
+    dst->f25C = a;
+    a = src->f264;
+    dst->f260 = b;
+    b = src->f268;
+    dst->f264 = a;
+    a = src->f26C;
+    dst->f268 = b;
+    dst->f26C = a;
+    a = src->f270;
+    b = src->f274;
+    dst->f270 = a;
+    a = src->f278;
+    dst->f274 = b;
+    b = src->f27C;
+    dst->f278 = a;
+    a = src->f280;
+    dst->f27C = b;
+    b = src->f284;
+    dst->f280 = a;
+    a = src->f288;
+    dst->f284 = b;
+    b = src->f28C;
+    dst->f288 = a;
+    a = src->f290;
+    dst->f28C = b;
+    b = src->f294;
+    dst->f290 = a;
+    a = src->f298;
+    dst->f294 = b;
+    b = src->f29C;
+    dst->f298 = a;
+    a = src->f2A0;
+    dst->f29C = b;
+    b = src->f2A4;
+    dst->f2A0 = a;
+    a = src->f2A8;
+    dst->f2A4 = b;
+    b = src->f2AC;
+    dst->f2A8 = a;
+    a = src->f2B0;
+    dst->f2AC = b;
+    b = src->f2B4;
+    dst->f2B0 = a;
+    a = src->f2B8;
+    dst->f2B4 = b;
+    b = src->f2BC;
+    dst->f2B8 = a;
+    a = src->f2BD;
+    dst->f2BC = b;
+    b = src->f2BE;
+    dst->f2BD = a;
+    a = src->f2C0;
+    dst->f2BE = b;
+    b = src->f2C4;
+    dst->f2C0 = a;
+    a = src->f2C8;
+    dst->f2C4 = b;
+    fa = src->f2CC;
+    dst->f2C8 = a;
+    a = src->f2D0;
+    dst->f2CC = fa;
+    fb = src->f2D4;
+    dst->f2D0 = a;
+    fa = src->f2D8;
+    dst->f2D4 = fb;
+    a = src->f2DC;
+    dst->f2D8 = fa;
+    fa = src->f2E0;
+    dst->f2DC = a;
+    fb = src->f2E4;
+    dst->f2E0 = fa;
+    fa = src->f2E8;
+    dst->f2E4 = fb;
+    fb = src->f2EC;
+    dst->f2E8 = fa;
+    fa = src->f2F0;
+    dst->f2EC = fb;
+    fb = src->f2F4;
+    dst->f2F0 = fa;
+    fa = src->f2F8;
+    dst->f2F4 = fb;
+    a = src->f2FC;
+    dst->f2F8 = fa;
+    b = src->f2FD;
+    dst->f2FC = a;
+    a = src->f2FE;
+    dst->f2FD = b;
+    fa = src->f300;
+    dst->f2FE = a;
+    b = src->f304;
+    dst->f300 = fa;
+    a = src->f308;
+    dst->f304 = b;
+    b = src->f30C;
+    dst->f308 = a;
+    a = src->f310;
+    dst->f30C = b;
+    b = src->f314;
+    dst->f310 = a;
+    a = src->f318;
+    dst->f314 = b;
+    b = src->f31C;
+    dst->f318 = a;
+    a = src->f320;
+    dst->f31C = b;
+    dst->f320 = a;
 }
-
-
