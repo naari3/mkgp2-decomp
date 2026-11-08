@@ -10,8 +10,25 @@ static inline int RegisterGhost(float *matrix, void *render) {
     return PathManager_RegisterCarObject(lbl_806D13A4, matrix + 12, matrix + 13, matrix + 14, lbl_806D1398, render, 1);
 }
 
+struct TaModeLoadingMessages {
+    char prefix[0x68c];
+    char slotsReady[0x18];
+    char managersReady[0x24];
+    char cameraReady[0xc];
+    char playerReady[0x10];
+    char ghostReady[0xc];
+    char lakituModel[0x14];
+    char sceneReady[0x14];
+    char hudReady[0x14];
+    char lapsReady[0x14];
+    char soundReady[0x1c];
+    char effectsReady[0x10];
+    char complete[1];
+};
+
 TaMode::TaMode() {
     const char *log = lbl_80321980;
+    const TaModeLoadingMessages *messages = (const TaModeLoadingMessages *)log;
     const char *data = (const char *)&BATTLE;
     float startX, startY;
     HSD_RandSeedPtr = &lbl_806D13CC;
@@ -27,14 +44,14 @@ TaMode::TaMode() {
     lbl_806D1050 = 0;
     RaceSlot_InitSlot(0, GetDisplayBufferIndex(), character, 1, 0);
     g_finalLapCoinJumpEnabled = 0;
-    ProcessSystemTick(log + 0x68c);
+    ProcessSystemTick(messages->slotsReady);
     SetResourceLoadingFlag(0);
     DMAChannelManager_Init();
     TransitionEffect_GetOrCreate();
     SoundChannels_ClearAll();
     ItemObjectManager_Init();
     CourseObjectManager_Init();
-    ProcessSystemTick(log + 0x6a4);
+    ProcessSystemTick(messages->managersReady);
     environment = new EnvironmentMgr;
     CourseData_GetOrCreate(g_cupId, g_longRoundFlag, g_reverseRoundFlag);
     lbl_806D13C8 = HSD_LObjLoadDesc(GetCourseDataPtr());
@@ -63,7 +80,7 @@ TaMode::TaMode() {
     int reverse = g_reverseRoundFlag;
     int cc = g_ccClass;
     int round = g_longRoundFlag;
-    int index = round + (cup * 4 + reverse * 2);
+    int index = (cup * 2 + reverse) * 2 + round;
     if (cc == 2) {
         if (g_playerData[0x48 + index] == 1) lbl_806D13A0 = 1;
         else lbl_806D13A0 = 0;
