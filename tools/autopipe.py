@@ -20,7 +20,7 @@ Everything else is parked in the shared queue (setup/tools/queue.py) with the
 best score, and appended to OUT/results.jsonl so restarts skip it.
 
 usage (repo root, after a normal build):
-  python3 tools/autopipe.py run [--min 80] [--max-size 4000] [--perm-minutes 8]
+  MKGP2_THREAD=autopipeK python3 tools/autopipe.py run --shard K/N [--min 80] [--max-size 4000] [--perm-minutes 8]
                                 [--limit N] [--only FN] [--no-push] [--no-perm]
   python3 tools/autopipe.py status
 
@@ -106,7 +106,9 @@ def done_keys():
 
 def record(r):
     r['t'] = datetime.now(timezone.utc).isoformat(timespec='seconds')
-    with open(f'{OUT}/results.jsonl', 'a') as f:
+    # one file per thread: appends from several containers to one file on the
+    # rclone mount lose lines (last write wins)
+    with open(f'{OUT}/results_{WHO}.jsonl', 'a') as f:
         f.write(json.dumps(r) + '\n')
 
 
@@ -210,8 +212,13 @@ def stage_perm(u, d, fn, best, a):
     open(src, 'w').write(text)
     od = f'/tmp/autopipe/perm/{fn}'
     shutil.rmtree(od, ignore_errors=True); os.makedirs(od)
+    # explicit region: cperm's own lookup keys extab renames by the src path,
+    # which is the scratch copy here (C++ methods were not found)
+    ls = d[0]; line = u.text[ls:u.text.find('\n', ls)]
+    pre = line[:line.find('(') + 1] if '(' in line else line
+    if u.text.count(pre) != 1: pre = line
     cmd = ['python3', '-I', CPERM, src, u.obj, fn, '--minutes', str(a.perm_minutes),
-           '--workers', str(a.jobs), '--out', od, '--cc', cc]
+           '--workers', str(a.jobs), '--out', od, '--cc', cc, '--region', pre]
     env = dict(os.environ, CPERM_SKIP_SDATA2='1')
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=a.perm_minutes * 60 + 180, cwd=ROOT, env=env)
@@ -362,7 +369,7 @@ def land(u, d, fn, best, how, before, a):
         git('reset', '-q', '--hard', 'origin/main'); build_report()
         return False, 'push failed'
     sha = git('rev-parse', '--short', 'HEAD').stdout.strip()
-    with open(f'{OUT}/landed.log', 'a') as f:
+    with open(f'{OUT}/landed_{WHO}.log', 'a') as f:
         f.write(f'{datetime.now(timezone.utc).isoformat(timespec="seconds")} {sha} {fn} {u.obj} {setting}'
                 f'{" [TU Matching]" if flipped else ""}\n')
     return True, f'{sha} {setting}{" [TU Matching]" if flipped else ""}'
@@ -418,6 +425,9 @@ def cmd_run(a):
         todo = [c for c in candidates(a) if c[1] not in cl and (c[1], c[2]) not in seen or
                 (c[1] not in cl and seen.get((c[1], c[2])) is not None and abs(seen[(c[1], c[2])] - c[0]) > 0.01)]
         if a.only: todo = [c for c in todo if c[2] in a.only.split(',')]
+        if a.shard:  # stable partition by fn name, so parallel threads never pick the same fn
+            k, nsh = map(int, a.shard.split('/'))
+            todo = [c for c in todo if int(Q.hashlib.sha1(c[2].encode()).hexdigest(), 16) % nsh == k]
         if not todo:
             log('nothing left to try'); return
         p, obj, fn, size, dm = todo[0]
@@ -455,7 +465,7 @@ def cmd_status(a):
     print(collections.Counter(r['outcome'] for r in rows))
     for r in rows[-20:]:
         print(r['t'], r['outcome'], r['fn'], f"{r['pct']:.2f}", r.get('stage12_best'), r.get('perm_best'), r.get('info', ''))
-    if os.path.exists(f'{OUT}/landed.log'): print(open(f'{OUT}/landed.log').read())
+    for p in sorted(glob.glob(f'{OUT}/landed*.log')): print(open(p).read())
 
 
 def main():
@@ -469,6 +479,7 @@ def main():
     p.add_argument('-j', '--jobs', type=int, default=os.cpu_count() or 4)
     p.add_argument('--only'); p.add_argument('--no-push', action='store_true'); p.add_argument('--no-perm', action='store_true')
     p.add_argument('--claims', default=f'{OUT}/claims.txt')
+    p.add_argument('--shard', help='K/N (0-based): only fns with sha1(name) %% N == K; one shard per thread')
     p.add_argument('--branch', default=sh(['git', 'branch', '--show-current']).stdout.strip())
     p.add_argument('--session', default=os.environ.get('AUTOPIPE_SESSION', ''))
     sp.add_parser('status')
