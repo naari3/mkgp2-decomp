@@ -4,7 +4,8 @@
  * 0x8021A7C8..0x8021B568: clCSOrgKartModel, the kart + driver model shown
  * on the result / course select screens (vtable lbl_804EDCFC, base
  * lbl_8048EAE8). The ctor addresses its joint-name literals off the TU
- * rodata pool (lbl_803C4E60), which this TU does not own.
+ * rodata pool (lbl_803C4E60). This ctor TU owns the resource strings,
+ * animation IDs, driver/tire name tables, and model type/vtable records.
  */
 
 struct HSD_JObj {
@@ -44,8 +45,7 @@ extern "C" {
 extern char lbl_806DAFD8[7];
 extern char lbl_806DAFE0[5];
 
-extern KartModelNames lbl_804EDC88;
-extern const char *lbl_804EDCBC[13];
+
 extern const float lbl_806DAFE8;
 extern const float lbl_806DAFEC;
 extern const float lbl_806DAFF0;
@@ -169,12 +169,97 @@ struct clCSOrgKartModel : clCSModelInterface {
 };
 
 
-extern "C" KartModelResources lbl_803C4E60;
+static const int animIds[4] = {0, 5, 42, 43};
+static const char pool_803C4E70[9] = "mspacman";
+static const char pool_803C4E7C[22] = "sp_tire_set_mario.dat";
+static const char pool_803C4E94[22] = "sp_tire_set_luigi.dat";
+static const char pool_803C4EAC[22] = "sp_tire_set_wario.dat";
+static const char pool_803C4EC4[22] = "sp_tire_set_peach.dat";
+static const char pool_803C4EDC[22] = "sp_tire_set_koopa.dat";
+static const char pool_803C4EF4[24] = "sp_tire_set_kinopio.dat";
+static const char pool_803C4F0C[23] = "sp_tire_set_donkey.dat";
+static const char pool_803C4F24[22] = "sp_tire_set_yoshi.dat";
+static const char pool_803C4F3C[23] = "sp_tire_set_pacman.dat";
+static const char pool_803C4F54[25] = "sp_tire_set_mspacman.dat";
+static const char pool_803C4F70[24] = "sp_tire_set_monster.dat";
+static const char pool_803C4F88[24] = "sp_tire_set_waluigi.dat";
+static const char pool_803C4FA0[24] = "sp_tire_set_mametch.dat";
+static const char pool_803C4FB8[17] = "clCSOrgKartModel";
+static const char pool_803C4FCC[19] = "clCSModelInterface";
+static const char pool_803C4FE0[28] = "chara_peach_pony_null_joint";
+static const char pool_803C4FFC[9] = "pony.dat";
+static const char pool_803C5008[24] = "chara_%s_hand_goo_joint";
+static const char pool_803C5020[23] = "chara_%s_hand_pa_joint";
+static const char pool_803C5038[24] = "chara_%s_hand_fin_joint";
+static const char pool_803C5050[14] = "cart_tire.dat";
+static const char pool_803C5060[22] = "cart_tireset_fl_joint";
+static const char pool_803C5078[22] = "cart_tireset_fr_joint";
+static const char pool_803C5090[22] = "cart_tireset_rl_joint";
+static const char pool_803C50A8[22] = "cart_tireset_rr_joint";
+static const char pool_803C50C0[22] = "%s_cart_tire_fl_joint";
+static const char pool_803C50D8[22] = "%s_cart_tire_fr_joint";
+static const char pool_803C50F0[22] = "%s_cart_tire_rl_joint";
+static const char pool_803C5108[22] = "%s_cart_tire_rr_joint";
+static const char pool_803C5120[23] = "cart_big_tire_fl_joint";
+static const char pool_803C5138[23] = "cart_big_tire_fr_joint";
+static const char pool_803C5150[23] = "cart_big_tire_rl_joint";
+static const char pool_803C5168[23] = "cart_big_tire_rr_joint";
+static const char pool_803C5180[24] = "cart_kaku_tire_fl_joint";
+static const char pool_803C5198[24] = "cart_kaku_tire_fr_joint";
+static const char pool_803C51B0[24] = "cart_kaku_tire_rl_joint";
+static const char pool_803C51C8[24] = "cart_kaku_tire_rr_joint";
+static const char pool_803C51E0[23] = "cart_oil_tire_fl_joint";
+static const char pool_803C51F8[23] = "cart_oil_tire_fr_joint";
+static const char pool_803C5210[23] = "cart_oil_tire_rl_joint";
+static const char pool_803C5228[23] = "cart_oil_tire_rr_joint";
+static const char pool_803C5240[23] = "cart_oil_grid_fl_joint";
+static const char pool_803C5258[23] = "cart_oil_grid_fr_joint";
+static const char pool_803C5270[23] = "cart_oil_grid_rl_joint";
+static const char pool_803C5288[23] = "cart_oil_grid_rr_joint";
+static const char pool_803C52A0[24] = "cart_punk_grid_fl_joint";
+static const char pool_803C52B8[24] = "cart_punk_grid_fr_joint";
+static const char pool_803C52D0[24] = "cart_punk_grid_rl_joint";
+static const char pool_803C52E8[24] = "cart_punk_grid_rr_joint";
+static const char pool_803C5300[24] = "cart_punk_tire_fl_joint";
+static const char pool_803C5318[24] = "cart_punk_tire_fr_joint";
+static const char pool_803C5330[24] = "cart_punk_tire_rl_joint";
+static const char pool_803C5348[24] = "cart_punk_tire_rr_joint";
+static const char pool_803C5360[24] = "cart_snow_tire_fl_joint";
+static const char pool_803C5378[24] = "cart_snow_tire_fr_joint";
+static const char pool_803C5390[24] = "cart_snow_tire_rl_joint";
+static const char pool_803C53A8[24] = "cart_snow_tire_rr_joint";
+
+extern "C" {
+extern const char lbl_806DAF78[];
+extern const char lbl_806DAF80[];
+extern const char lbl_806DAF88[];
+extern const char lbl_806DAF90[];
+extern const char lbl_806DAF98[];
+extern const char lbl_806DAFA0[];
+extern const char lbl_806DAFA8[];
+extern const char lbl_806DAFB0[];
+extern const char lbl_806DAFB8[];
+extern const char lbl_806DAFC0[];
+extern const char lbl_806DAFC8[];
+extern const char lbl_806DAFD0[];
+extern void *lbl_806D0488[2];
+extern void *lbl_806D0490[2];
+void fn_8021AAE8();
+void fn_8021A7C8();
+}
+static const char *drivers[13] = {lbl_806DAF78, lbl_806DAF80, lbl_806DAF88, lbl_806DAF90, lbl_806DAF98, lbl_806DAFA0, lbl_806DAFA8, lbl_806DAFB0, lbl_806DAFB8, pool_803C4E70, lbl_806DAFC0, lbl_806DAFC8, lbl_806DAFD0};
+static const char *tireFiles[13] = {pool_803C4E7C, pool_803C4E94, pool_803C4EAC, pool_803C4EC4, pool_803C4EDC, pool_803C4EF4, pool_803C4F0C, pool_803C4F24, pool_803C4F3C, pool_803C4F54, pool_803C4F70, pool_803C4F88, pool_803C4FA0};
+/* Existing type records refer to the shared small-data RTTI descriptors. */
+struct KartTypeInfo { void *name; void *bases; void *reserved; };
+static KartTypeInfo modelType = { lbl_806D0488, 0, 0 };
+/* The five remaining abstract model-interface slots have no implementation. */
+extern "C" void *__vt__16clCSOrgKartModel[9] = {
+    lbl_806D0490, 0, (void *)fn_8021AAE8, (void *)fn_8021A7C8,
+    0, 0, 0, 0, 0
+};
 
 
 clCSOrgKartModel::clCSOrgKartModel(int character_, int variant, unsigned char withDriver, unsigned char flag) {
-    KartModelNames *names = &lbl_804EDC88;
-    KartModelResources *resources = &lbl_803C4E60;
     fn_8013BD7C();
     fn_8013C428();
     camA = lbl_806DAFE8;
@@ -207,73 +292,73 @@ clCSOrgKartModel::clCSOrgKartModel(int character_, int variant, unsigned char wi
         clNormal3D_SetScale(driver, 0, lbl_806DAFE8, lbl_806DAFEC, lbl_806DAFE8, lbl_806DAFE8);
         switch (character) {
         case 3:
-            ponyJoint = ResolveJointByName(driver, resources->name_180);
-            pony = new clNormal3D(resources->name_19C, flag);
+            ponyJoint = ResolveJointByName(driver, pool_803C4FE0);
+            pony = new clNormal3D(pool_803C4FFC, flag);
             clNormal3D_SetScale(pony, 0, lbl_806DAFE8, lbl_806DAFEC, lbl_806DAFE8, lbl_806DAFF4);
             break;
         }
-        sprintf(buf, resources->name_1A8, names->drivers[character]);
+        sprintf(buf, pool_803C5008, drivers[character]);
         handJoints[0] = ResolveJointByName(driver, buf);
-        sprintf(buf, resources->name_1C0, names->drivers[character]);
+        sprintf(buf, pool_803C5020, drivers[character]);
         handJoints[1] = ResolveJointByName(driver, buf);
-        sprintf(buf, resources->name_1D8, names->drivers[character]);
+        sprintf(buf, pool_803C5038, drivers[character]);
         handJoints[2] = ResolveJointByName(driver, buf);
         HSD_JObjSetFlags(handJoints[1], 0x10);
         HSD_JObjSetFlags(handJoints[2], 0x10);
     }
     if (variant >= 2) {
-        tires = new clNormal3D(names->tires[character_], flag);
+        tires = new clNormal3D(tireFiles[character_], flag);
     } else {
-        tires = new clNormal3D(resources->name_1F0, flag);
+        tires = new clNormal3D(pool_803C5050, flag);
     }
-    tireJoints[0] = ResolveJointByName(tires, resources->name_200);
-    tireJoints[1] = ResolveJointByName(tires, resources->name_218);
-    tireJoints[2] = ResolveJointByName(tires, resources->name_230);
-    tireJoints[3] = ResolveJointByName(tires, resources->name_248);
+    tireJoints[0] = ResolveJointByName(tires, pool_803C5060);
+    tireJoints[1] = ResolveJointByName(tires, pool_803C5078);
+    tireJoints[2] = ResolveJointByName(tires, pool_803C5090);
+    tireJoints[3] = ResolveJointByName(tires, pool_803C50A8);
     Vec3 t;
-    sprintf(buf, resources->name_260, names->drivers[character]);
+    sprintf(buf, pool_803C50C0, drivers[character]);
     JObjGetTranslation(ResolveJointByName(kart, buf), &t);
     JObjSetTranslate(tireJoints[0], &t);
-    sprintf(buf, resources->name_278, names->drivers[character]);
+    sprintf(buf, pool_803C50D8, drivers[character]);
     JObjGetTranslation(ResolveJointByName(kart, buf), &t);
     JObjSetTranslate(tireJoints[1], &t);
-    sprintf(buf, resources->name_290, names->drivers[character]);
+    sprintf(buf, pool_803C50F0, drivers[character]);
     JObjGetTranslation(ResolveJointByName(kart, buf), &t);
     JObjSetTranslate(tireJoints[2], &t);
-    sprintf(buf, resources->name_2A8, names->drivers[character]);
+    sprintf(buf, pool_803C5108, drivers[character]);
     JObjGetTranslation(ResolveJointByName(kart, buf), &t);
     JObjSetTranslate(tireJoints[3], &t);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_2C0), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_2D8), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_2F0), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_308), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_320), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_338), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_350), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_368), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_380), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_398), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_3B0), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_3C8), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_3E0), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_3F8), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_410), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_428), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_440), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_458), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_470), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_488), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_4A0), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_4B8), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_4D0), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_4E8), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_500), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_518), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_530), 0x10);
-    HSD_JObjSetFlagsAll(ResolveJointByName(tires, resources->name_548), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5120), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5138), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5150), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5168), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5180), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5198), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C51B0), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C51C8), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C51E0), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C51F8), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5210), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5228), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5240), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5258), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5270), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5288), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C52A0), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C52B8), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C52D0), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C52E8), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5300), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5318), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5330), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5348), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5360), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5378), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5390), 0x10);
+    HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C53A8), 0x10);
     if (withDriver == 1) {
         for (int i = 0; i < 4; i++) {
-            anims[i] = new clNormal3D(cd->anims[resources->animIds[i]], 0);
+            anims[i] = new clNormal3D(cd->anims[animIds[i]], 0);
         }
         clNormal3D_SetScale(driverAnim, anims[0], lbl_806DAFF4, lbl_806DAFE8, lbl_806DAFE8, lbl_806DAFE8);
         ObjectTree_BlendOrCopy_Timed(driver, Archive_GetRootJObj(driverAnim), Archive_GetRootJObj(driver), lbl_806DAFE8, 0);
