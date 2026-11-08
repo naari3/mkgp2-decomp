@@ -17,7 +17,18 @@ are source-shape problems, not compiler problems.
 | game/PhysicsState_WallCollisionCheck | GC/1.3.2 -> GC/2.6 | 80.1 -> 96.0 (f3bd68e) |
 | game/clItemBoxManager_nm1 | default -> GC/2.0 (11/08 takeover window) | DoublyLinkedList_EraseRange 95.2 -> 100 |
 
-## Suggestions for onmokoworks-claimed TUs (not touched)
+## Applied during the 2026-11-08 takeover window (user-approved)
+
+- clItemBoxManager_nm1 GC/2.0 (57a92b8 / a9286a9): EraseRange matched.
+- ranking_display GC/1.3 (a9286a9): 91.65 -> 93.88.
+- resultscene, clFlowCourse, clFlowCourse_Update GC/2.6 + natural colour
+  (f0c51ac): fn_8015E608 matched. Keep `c = __rlwimi(c, e, 0, 24, 31)` when
+  the base is a variable: `(c & 0xFFFFFF00) | (u8)e` swaps the rlwimi
+  operands on GC/2.6.
+- No gain on GC/2.6: fn_8023A148 (99.79 -> 99.72), ItemSelectChoiceUpdate,
+  GpPleaseInit, Menu801F0CC0, NamCamFlow.
+
+## Suggestions for onmokoworks-claimed TUs (original list)
 
 These are TUs under an onmokoworks unit-claim. Nothing was pushed for
 them; the user relays.
