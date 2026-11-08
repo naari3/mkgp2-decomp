@@ -66,14 +66,44 @@ def patch_splits(tu, sec, lo, hi):
     open(SPLITS, 'w').write('\n'.join(lines))
 
 
+def preprocess(tu):
+    """The TU preprocessed by its own compile command (mwcc -E), or ''."""
+    o = os.path.join('build', 'GNLJ82', 'src', os.path.splitext(tu)[0] + '.o')
+    cmds = subprocess.run(['ninja', '-t', 'commands', o], cwd=ROOT, capture_output=True, text=True).stdout.strip().splitlines()
+    if not cmds: return ''
+    cmd = cmds[-1].split(' && ')[0]
+    cmd = re.sub(r' -MMD', '', cmd)
+    cmd = re.sub(r' -c (\S+) -o \S+$', r' -E \1', cmd)
+    r = subprocess.run(cmd, shell=True, cwd=ROOT, capture_output=True, text=True, errors='replace')
+    return r.stdout if r.returncode == 0 else ''
+
+
+def decl_types(tu, names):
+    """{name: [base type, dims]} from `extern TYPE NAME[...];` declarations the TU sees."""
+    text = preprocess(tu)
+    out = {}
+    for n in names:
+        for m in re.finditer(r'(?:^|[;{}\n])\s*extern\s+(?:"C"\s+)?([^;{}()=#"]*?)\b%s\s*((?:\[[^\]]*\])*)\s*;' % re.escape(n), text):
+            base = m.group(1).strip()
+            if base and ',' not in base:
+                out[n] = [base, m.group(2)]
+    return out
+
+
 def apply(tu, sec, lo, hi):
+    pre = subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'data2c.py'), sec, '0x%X' % lo, '0x%X' % hi],
+                         capture_output=True, text=True)
+    allnames = re.findall(r'^(?:static )?(?:const )?[\w ]*?\**\s*(?:const )?(\w+)\[\d*\] =', pre.stdout, re.M)
+    types = decl_types(tu, allnames)
+    tf = os.path.join('/tmp', 'own_data_types.json')
+    json.dump(types, open(tf, 'w'))
     gen = subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'data2c.py'), sec, '0x%X' % lo, '0x%X' % hi,
-                          '--force-active'], capture_output=True, text=True)
+                          '--force-active', '--types', tf], capture_output=True, text=True)
     if gen.returncode:
         raise SystemExit(gen.stderr)
     body = gen.stdout
     need = re.findall(r'needs externs: (.*)', gen.stderr)
-    names = re.findall(r'^(?:static )?(?:const )?[\w ]*?\**\s*(?:const )?(\w+)\[\d*\] =', body, re.M)
+    names = re.findall(r'^(?:static )?[^=\n]*?(\w+)\s*(?:\[\d*\])*\s*=', body, re.M)
     p = src_of(tu)
     s = open(p).read()
     cpp = p.endswith('.cpp') or p.endswith('.cp')
@@ -85,7 +115,7 @@ def apply(tu, sec, lo, hi):
         body = re.sub(r'^(?!static|#|extern|\s|})', 'extern "C" ', body, flags=re.M)
         ext = re.sub(r'^extern ', 'extern "C" ', ext, flags=re.M)
     for n in names:
-        s = re.sub(r'^[ \t]*extern\s+[^;\n(]*\b%s\s*(\[[^\]]*\])?\s*;[ \t]*\n' % re.escape(n), '', s, flags=re.M)
+        s = re.sub(r'^[ \t]*extern\s+[^;\n(]*\b%s\s*(\[[^\]]*\])*\s*;[ \t]*\n' % re.escape(n), '', s, flags=re.M)
     # insertion point: after the last top-level #include (or the top of the file)
     incs = [m.end() for m in re.finditer(r'^#include[^\n]*\n', s, re.M)]
     at = incs[-1] if incs else 0

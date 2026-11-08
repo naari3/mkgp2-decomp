@@ -361,3 +361,23 @@ OptionMenuDraw.cpp was merged into SceneList_80157EA8.cpp (dbc2a11) so the optio
 | --- | --- | --- | --- | --- |
 | `CoinSystem_UpdateAll` | game/CoinSystem_UpdateAll | asm (C draft 99.91%) | /mnt/project-files/wip/coin_updateall/CoinSystem_UpdateAll_34lines.diff (applies on main 11-08) owns the switch jumptable .data 0x8048E4B8..0x8048E4E4. extab, extabindex and .data are 100%. Left: one saved FPR (target f28, ours f30) and one saved GPR (r28/r29) for the per-coin sparkle pointer. | all 24 decl orders of the float locals s/range/k/t: no change |
 | `fn_8013AE20` (clCSAnim::update) | game/csAnim | asm (C draft 92.5%) | The TU owns its panic strings since fac53ae2 (.rodata 0x8035C678..0x8035C6B8). That changed nothing for the C draft, because the strings are only on the OSPanic path. Drafts: /mnt/project-files/wip/csanim/ (92.5 and cperm188). | rodata ownership, global vs static strings |
+
+## Data-ownership wind-down 2026-11-08 12:30 (pool audit thread)
+
+Tooling: `tools/own_data.py apply` now reads the TU's own declared types (mwcc -E)
+and `tools/data2c.py --types` emits typed definitions (scalars, exact floats,
+pointer arrays, multi-dim). `python3 tools/own_data.py list --claims FILE` gives
+the remaining candidates (~175 KB in Matching TUs). What blocked the rest:
+
+| Unit(s) | Range | Blocker / next step |
+|---|---|---|
+| ItemLocalizedAsset.c + ItemAliasLocalizedVariant.c + ItemLocalizedName.c | .rodata 0x803DD9A0..0x803E56B0 | interleaved ranges -> link-order cycle; merge into one TU |
+| TitleNameHud_nm1.cpp, zlib/crc32.c, misc3d fn_8016xxxx family, test-menu *_Page.cpp | various | link-order cycles vs neighbours (merge needed) |
+| ZoneList.c | .rodata 0x80355078 (0xC0) | same MiniGame merge as the fn_801232E0 row above |
+| OperationTime_Page.cpp, clsound/fn_80190A70.c, mobjclass/fn_8018219C.c, Backup_ClearHiScores, TwinSpriteOverlay, TaskBucketsCast, Frame, StrPcb_Tick | small | new section gets sh_addralign 8 at a 4-aligned address (main.dol shifts); needs the data split so the first object is 4-aligned-only (e.g. no double/8-aligned object first) |
+| main.c | .rodata 0x80328C08 | scene table must be `const void *const`, but a declaration elsewhere is non-const; fix the decl then re-apply |
+| game/sprite/fn_801A1174.c | .data 0x80496BD8 | owning makes the C fn use the section anchor (100 -> 99.1) |
+| CourseTables.c, ShadowBillboard.c, fn_801DB800.c, StarItem.c, KartAlertPanel.cpp, EffectFA_* | struct-typed tables | data2c can't spell struct initializers; write them by hand (layout known in source) |
+| Sci2Card_ReceiptTables.c, anon_80209FA4.cpp, clFlowClass_Update.cpp, CardPrintConfig.cpp, BananaPositionData_Init.cpp, Scene_8016303C.cpp | | own_data's insertion point lands inside an `extern "C" {` block or after `@etb` externs; insert by hand |
+| fn_8010376C, BananaTriple_Tick_HeldAndHoming, FinalLapBanner_Init, fn_80105800, GabyouItem_BuildOrUpdateAttachTransform, fn_801109A0 | byte tables | code passes the table to a non-const `unsigned char *`/`char *` param; needs a cast at the call or a non-const decl (then it's .data, wrong) |
+| GetKartParamBlock.c | .rodata 0x80383F28 (18 KB) | relocation inside a non-word object; hand-write |

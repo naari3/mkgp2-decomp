@@ -101,6 +101,7 @@ game/HeapStats.c:
 	extab       start:0x80005858 end:0x80005880
 	extabindex  start:0x8001F490 end:0x8001F4CC
 	.text       start:0x8002F640 end:0x8002F9B4
+	.rodata     start:0x802E9650 end:0x802E96A8
 
 game/SeqMenuScene.c:
 	extab       start:0x80005880 end:0x800058A0
@@ -1513,6 +1514,7 @@ game/clItemBox.cpp:
 	extabindex  start:0x80020C00 end:0x80020C84
 	.text       start:0x8005EA94 end:0x8005F5CC
 	.ctors      start:0x802E88F4 end:0x802E88F8
+	.rodata     start:0x802EDF20 end:0x802EDFD8
 	.data       start:0x803F9C60 end:0x803F9CD8
 
 game/SpawnTable.c:
@@ -2629,6 +2631,7 @@ game/OSAlloc_Game.c:
 	extab       start:0x800092E8 end:0x800092F0
 	extabindex  start:0x80021DE8 end:0x80021DF4
 	.text       start:0x8008E9A0 end:0x8008F07C
+	.rodata     start:0x80313048 end:0x803133E0
 
 game/CardPrinterChecker_States.c:
 	extab       start:0x800092F0 end:0x80009310
@@ -2656,6 +2659,7 @@ game/CardPrinterChecker_Draw.c:
 	extab       start:0x80009328 end:0x80009370
 	extabindex  start:0x80021E48 end:0x80021E84
 	.text       start:0x8008F5D4 end:0x8008FA2C
+	.rodata     start:0x803134C0 end:0x80313648
 
 game/CardSaveData_Parser.c:
 	extab       start:0x80009370 end:0x80009378
@@ -4134,6 +4138,7 @@ game/EffectKartJoint12.cpp:
 	extab       start:0x8000AA38 end:0x8000AA40
 	extabindex  start:0x800230C0 end:0x800230CC
 	.text       start:0x800C7918 end:0x800C7C0C
+	.data       start:0x8041A428 end:0x8041A494
 
 game/VfxEffect_UpdateChildPosScaleAlpha_Helper.c:
 	extab       start:0x8000AA40 end:0x8000AA48
@@ -5109,6 +5114,7 @@ game/ItemObject_Tick_Kind2c_Horn.c:
 	extab       start:0x8000B564 end:0x8000B56C
 	extabindex  start:0x80023D2C end:0x80023D38
 	.text       start:0x800E4F18 end:0x800E5380
+	.rodata     start:0x8032E648 end:0x8032EA98
 
 game/ItemObject_ChainShell_BoundOrbit_Sub.c:
 	extab       start:0x8000B56C end:0x8000B574
@@ -5145,6 +5151,7 @@ game/GabyouItemDispatch.cpp:
 	extab       start:0x8000B59C end:0x8000B5A4
 	extabindex  start:0x80023D80 end:0x80023D8C
 	.text       start:0x800E7EC4 end:0x800E8818
+	.rodata     start:0x8032EAB0 end:0x8032EEAC
 	.data       start:0x80421188 end:0x804211B0
 
 game/BananaTriple_StuckOnDriverTick.c:
@@ -5403,6 +5410,7 @@ game/BoomerangItem_Tick.c:
 	extab       start:0x8000B7C4 end:0x8000B7CC
 	extabindex  start:0x800240BC end:0x800240C8
 	.text       start:0x800FFBB8 end:0x80100284
+	.rodata     start:0x80330398 end:0x80330794
 
 game/fn_80100284.c:
 	extab       start:0x8000B7CC end:0x8000B7D4
@@ -5648,6 +5656,7 @@ game/fn_8010FA60.c:
 	extab       start:0x8000B934 end:0x8000B93C
 	extabindex  start:0x800242E4 end:0x800242F0
 	.text       start:0x8010FA60 end:0x8011040C
+	.rodata     start:0x80331BD8 end:0x80332038
 	.data       start:0x80421CC8 end:0x80421CF0
 
 game/fn_8011040C.c:
@@ -5852,6 +5861,7 @@ game/fn_801193F4.c:
 	extab       start:0x8000BA6C end:0x8000BA84
 	extabindex  start:0x800244B8 end:0x800244DC
 	.text       start:0x801193F4 end:0x80119F80
+	.data       start:0x804220C8 end:0x80422188
 
 game/fn_80119F80.c:
 	extab       start:0x8000BA84 end:0x8000BA8C
@@ -5958,6 +5968,7 @@ game/NokoNokoChallenge.c:
 	extab       start:0x8000BCDC end:0x8000BCEC
 	extabindex  start:0x8002474C end:0x80024764
 	.text       start:0x80122C0C end:0x80122E58
+	.rodata     start:0x80355840 end:0x803558A8
 
 game/NokoNokoChallenge_TransitionToResult.c:
 	extab       start:0x8000BCEC end:0x8000BCF4
@@ -6156,6 +6167,7 @@ game/CoinSystem_Init.c:
 	extab       start:0x8000D2F0 end:0x8000D328
 	extabindex  start:0x80024CA4 end:0x80024CB0
 	.text       start:0x8013A778 end:0x8013AB74
+	.rodata     start:0x8035C240 end:0x8035C678
 
 game/csAnim.c:
 	extab       start:0x8000D328 end:0x8000D360
@@ -6207,6 +6219,7 @@ game/ResultFx.c:
 	extab       start:0x8000D670 end:0x8000D714
 	extabindex  start:0x80024F98 end:0x80024FE0
 	.text       start:0x8013ECB0 end:0x8014017C
+	.rodata     start:0x80360498 end:0x803604F8
 	.data       start:0x8048EBEC end:0x8048EC4C
 
 game/ConfettiField.c:
@@ -8068,6 +8081,7 @@ game/clsound/fn_801934F4.c:
 	extab       start:0x800122E4 end:0x800122EC
 	extabindex  start:0x800271D0 end:0x800271DC
 	.text       start:0x801934F4 end:0x80193624
+	.rodata     start:0x8037D058 end:0x8037D178
 
 game/clsound/fn_80193624.c:
 	extab       start:0x800122EC end:0x800122F4
@@ -8192,6 +8206,7 @@ game/objview/MapWaterEffect_Init.c:
 	extab       start:0x8001237C end:0x800123B0
 	extabindex  start:0x800272B4 end:0x800272C0
 	.text       start:0x80195B94 end:0x80195CD4
+	.rodata     start:0x8037D220 end:0x8037D61C
 	.data       start:0x80495F6C end:0x80495F98
 
 game/objview/fn_80195CD4.c:
@@ -9479,6 +9494,7 @@ game/fn_801D8AB4.cpp:
 
 game/fn_801D8D3C.c:
 	.text       start:0x801D8D3C end:0x801D8DF8
+	.rodata     start:0x8039EA10 end:0x8039ECC8
 
 game/fn_801D8DF8.c:
 	extab       start:0x800154D0 end:0x800154D8
@@ -10738,6 +10754,7 @@ game/fn_801F9CA8.cpp:
 	extab       start:0x80017738 end:0x80017740
 	extabindex  start:0x80029114 end:0x80029120
 	.text       start:0x801F9CA8 end:0x801F9DA4
+	.rodata     start:0x803BFB30 end:0x803BFB90
 
 game/fn_801F9DA4.cpp:
 	extab       start:0x80017740 end:0x80017790
@@ -11485,6 +11502,7 @@ game/anon_80216568_lookup.cpp:
 	extabindex  start:0x8002A098 end:0x8002A0B0
 	.text       start:0x80216908 end:0x802170F0
 	.ctors      start:0x802E893C end:0x802E8940
+	.data       start:0x804EDB40 end:0x804EDB90
 
 game/anon_80216568_row_nm.cpp:
 	.text       start:0x802170F0 end:0x8021713C
@@ -11875,6 +11893,7 @@ game/DNBress_breath.cpp:
 	extab       start:0x8001BAC0 end:0x8001BAD0
 	extabindex  start:0x8002A6EC end:0x8002A704
 	.text       start:0x802277A0 end:0x80227B98
+	.rodata     start:0x803D0300 end:0x803D0390
 
 game/DNBress_nm3.cpp:
 	extab       start:0x8001BAD0 end:0x8001BB70
@@ -12888,6 +12907,7 @@ game/ContinueScene.cpp:
 	extab       start:0x8001E638 end:0x8001E75C
 	extabindex  start:0x8002B670 end:0x8002B6D0
 	.text       start:0x8024D764 end:0x8024E094
+	.rodata     start:0x803F0860 end:0x803F08B4
 
 game/ContinueScene_nm1.cpp:
 	extab       start:0x8001E75C end:0x8001E764
@@ -14120,6 +14140,7 @@ musyx/runtime/reverb.c:
 
 musyx/runtime/chorus_fx.c:
 	.text       start:0x802BC754 end:0x802BCF94
+	.data       start:0x804FB040 end:0x804FB840
 
 sysdolphin/baselib/dobj.c:
 	.text       start:0x802BCF94 end:0x802BD6A4
