@@ -12,8 +12,11 @@ void fn_801B7CD0(int);
 void SetTimerModeEnabled(int);
 void SyncSlot_ApplyCourseChoice();
 }
-static inline void RankingInsertFade(RankingFlowList *list, const RankingFlowIter &last, RankingAnim *const &fade) {
-    DoublyLinkedList_PushBefore(list, &last, &fade);
+static inline RankingFlowIter RankingInsertAt(RankingFlowList *list, const RankingFlowIter &last, RankingAnim *const &fade) {
+    return DoublyLinkedList_PushBefore(list, &last, &fade);
+}
+static inline void RankingInsertFade(RankingFlowList *list, RankingFlowNode *end, RankingAnim *const &fade) {
+    RankingInsertAt(list, RankingFlowIter(end), fade);
 }
 static inline bool operator!=(const RankingFlowIter &a, const RankingFlowIter &b) {
     return a.node != b.node;
@@ -71,7 +74,7 @@ int RankingFlowView::Update() {
             self->timer = 0;
             RankingAnim *fade = new RankingFade;
             RankingStartFade(fade);
-            RankingInsertFade(&self->list, RankingFlowIter(end), fade);
+            RankingInsertFade(&self->list, end.node, fade);
         }
         if (self->phase == 1) {
             if ((float)self->timer > lbl_806D9FB4) {
@@ -94,7 +97,7 @@ int RankingFlowView::Update() {
             self->timer = 0;
             RankingAnim *fade = new RankingFade;
             RankingStartFade(fade);
-            RankingInsertFade(&self->list, RankingFlowIter(end), fade);
+            RankingInsertFade(&self->list, end.node, fade);
         }
         if (self->phase == 1) {
             if ((float)self->timer > lbl_806D9FB4) {
