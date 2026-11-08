@@ -3161,6 +3161,7 @@ game/VSModeIntro.cpp:
 
 game/ItemRes_LookupDatPathByKey.c:
 	.text       start:0x800A58A0 end:0x800A59F0
+	.rodata     start:0x80322200 end:0x80324B10
 
 game/RankLog_UpdatePerFrame.c:
 	extab       start:0x80009CC4 end:0x80009CCC
@@ -10644,6 +10645,7 @@ game/fn_801F8A34.cpp:
 
 game/fn_801F8D58.c:
 	.text       start:0x801F8D58 end:0x801F8E08
+	.data       start:0x804E83C0 end:0x804EB6B0
 
 game/CardCharLookup.c:
 	.text       start:0x801F8E08 end:0x801F8E54
@@ -14101,6 +14103,7 @@ musyx/runtime/hw_aramdma.c:
 
 musyx/runtime/hw_dolphin.c:
 	.text       start:0x802BB460 end:0x802BB9B0
+	.data       start:0x804F9160 end:0x804FB020
 
 musyx/runtime/hw_memory.c:
 	.text       start:0x802BB9B0 end:0x802BBA3C
