@@ -11,7 +11,7 @@ int fn_8019F1C4(CurveKeyKV *keys, int n, float t, float *out);
 int fn_8019F3C0(CurveKey *keys, int n, float t, float *out);
 }
 
-#include "game/kartmove/carobject_private.h"
+#include "game/kartmove/carobject_init_private.h"
 
 CarObject::~CarObject() {}
 CarTrivial::~CarTrivial() {}
@@ -140,10 +140,14 @@ float fn_8019EA8C(Vec3 *v) {
 float SpeedCurve_LookupFromProgress(SpeedCurve *s, float t);
 float SpeedCurve_LookupFromSpeed(SpeedCurve *s, float t);
 
+static inline float TransformComponent(const float *column, const Vec3 *v) {
+    return column[12] + (v->z * column[8] + (column[0] * v->x + v->y * column[4]));
+}
+
 void fn_8019EB9C(Matrix44 *a, Vec3 *out, const Vec3 *v) {
-    float x = a->m[3][0] + (v->z * a->m[2][0] + (a->m[0][0] * v->x + v->y * a->m[1][0]));
-    float y = a->m[3][1] + (v->z * a->m[2][1] + (a->m[0][1] * v->x + v->y * a->m[1][1]));
-    float z = a->m[3][2] + (v->z * a->m[2][2] + (v->x * a->m[0][2] + v->y * a->m[1][2]));
+    float x = TransformComponent(&a->m[0][0], v);
+    float y = TransformComponent(&a->m[0][1], v);
+    float z = TransformComponent(&a->m[0][2], v);
     out->x = x; out->y = y; out->z = z;
 }
 
@@ -350,10 +354,22 @@ static inline int IsSpecialMovementMode() { return g_gameMode == 2; }
 
 inline CarTrivial::CarTrivial() : x(lbl_806D96D0), y(lbl_806D96D0), z(lbl_806D96D0) {}
 
-MovementInit::MovementInit(void *o, unsigned char *cfg, void *context, float x, float z, float angle)
-    : owner(o), config(cfg), field08(0), field0c(lbl_806D96D0), field10(lbl_806D96D0), field14(lbl_806D96D0), field18(lbl_806D96D0), field1c(lbl_806D96D4),
-      field20(1), field21(0), field22(IsSpecialMovementMode()),
-      field24(*(int *)(config + 0xf0)), field28(*(int *)(config + 0xf4)),
+inline MovementSettings::MovementSettings(int a, int b, int special) {
+    field22 = special;
+    field24 = a;
+    field28 = b;
+    field0c = lbl_806D96D0;
+    field14 = lbl_806D96D0;
+    field10 = lbl_806D96D0;
+    field08 = 0;
+    field18 = lbl_806D96D0;
+    field1c = lbl_806D96D4;
+    field20 = 1;
+    field21 = 0;
+}
+
+CarMovementInit::CarMovementInit(void *o, unsigned char *cfg, void *context, float x, float z, float angle)
+    : owner(o), config(cfg), settings(*(int *)(config + 0xf0), *(int *)(config + 0xf4), IsSpecialMovementMode()),
       field1b8(lbl_806D971C), field1bc(lbl_806D97CC)
 {
     field320 = context;
