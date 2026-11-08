@@ -81,6 +81,33 @@ static inline int RoleCount(u8* sync, int role)
     return count;
 }
 
+static inline void CountModeVotes(PeerSlot* peer, int* votes, int role)
+{
+    int i;
+    for (i = 0; i < 3; ++i) votes[i] = 0;
+    for (i = 0; i < 4; ++i, ++peer)
+        if (peer->first.bytes.header.role == role)
+            ++votes[(peer->mode >> 4) & 3];
+}
+
+static inline void CountTrackVotes(PeerSlot* peer, int* votes, int role)
+{
+    int i;
+    for (i = 0; i < 16; ++i) votes[i] = 0;
+    for (i = 0; i < 4; ++i, ++peer)
+        if (peer->first.bytes.header.role == role)
+            ++votes[peer->vote.track];
+}
+
+static inline void CountOptionVotes(PeerSlot* peer, int* votes, int role)
+{
+    int i;
+    for (i = 0; i < 2; ++i) votes[i] = 0;
+    for (i = 0; i < 4; ++i, ++peer)
+        if (peer->first.bytes.header.role == role)
+            ++votes[peer->vote.option];
+}
+
 static inline SyncOutput* HostOutput(CommStorage* storage)
 {
     if (g_isCommHost == 0) return 0;
@@ -111,12 +138,7 @@ int PCBComm_ComputeSyncState(void)
     if (ready == 1) out->scene = g_currentSceneState;
 
     if ((int)out->scene == 12) {
-        for (i = 0; i < 3; ++i) modeVotes[i] = 0;
-        role = g_localPcbRole;
-        peer = storage->peer;
-        for (i = 0; i < 4; ++i, ++peer)
-            if (peer->first.bytes.header.role == role)
-                ++modeVotes[(peer->mode >> 4) & 3];
+        CountModeVotes(storage->peer, modeVotes, g_localPcbRole);
         winner = 0;
         for (i = 1; i < 3; ++i)
             if (modeVotes[i] > modeVotes[winner]) winner = i;
@@ -128,24 +150,14 @@ int PCBComm_ComputeSyncState(void)
         out->commonItem = -1;
     }
     if ((int)out->scene == 26) {
-        for (i = 0; i < 16; ++i) trackVotes[i] = 0;
-        role = g_localPcbRole;
-        peer = storage->peer;
-        for (i = 0; i < 4; ++i, ++peer)
-            if (peer->first.bytes.header.role == role)
-                ++trackVotes[peer->vote.track];
+        CountTrackVotes(storage->peer, trackVotes, g_localPcbRole);
         winner = 0;
         for (i = 0; i < 16; ++i)
             if (trackVotes[i] > trackVotes[winner]) winner = i;
         out->choice.half.track = winner;
     }
     if ((int)out->scene == 26) {
-        for (i = 0; i < 2; ++i) optionVotes[i] = 0;
-        role = g_localPcbRole;
-        peer = storage->peer;
-        for (i = 0; i < 4; ++i, ++peer)
-            if (peer->first.bytes.header.role == role)
-                ++optionVotes[peer->vote.option];
+        CountOptionVotes(storage->peer, optionVotes, g_localPcbRole);
         winner = 0;
         for (i = 0; i < 2; ++i)
             if (optionVotes[i] > optionVotes[winner]) winner = i;
