@@ -23,3 +23,8 @@ c19_u260 VoiceSystem_Init: integer-derived entry base (RaceVoiceEntry*)((unsigne
 Source: Codex worker c21_p33_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c21_p33: Assigned .rodata 803810A8..80383CF8 to fn_801A6538.c, emitted 649 real tables/strings without explicit padding, and split oversized kVoiceMidRaceCheckpointByTotalLaps at 80383CC0 into four commentary lists. .rodata 100%; dtk split and full DOL SHA-1 pass without cycle. Text remains 97.960655% (6096 vs6100B), extab100/index91.66667. Queue-head snapshot helper and final entry block-local lifetime both code-invariant. Remaining folding/scheduling residual is in shared .data 80496C38..8049A060, requiring coordinator-owned multi-TU merge. TU stays NonMatching, native gain0.
+
+## c21_p39_20261108
+Source: Codex worker c21_p39_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c21_p39 fn_801B4548: direct96.57497->96.57850 (service96.82249), exact target extern lbl_806D9838 replaces unmapped literal2.0f; source text5616vs5656, EH87.5/index83.33333/data0 unchanged. Character snapshot helper96.016266 reverted; nearest explicit cursor invariant reverted. Pool80496C38..8049A060 remains unowned, but contiguous extension through this TU table8049A168..A204 would cross Matching fn801A1798 dataA060..A094 and VoiceIntro_PushForRaceMode A094..A134 plus fn801B1D5C A134..A168; prior c18_u84 cycle applies. Requires coordinated wider TU/pool boundaries, no in-claim A/B unlock. Full fallback DOL SHA1 exact; zero native gain.

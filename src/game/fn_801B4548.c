@@ -1,7 +1,9 @@
 #include "game/ItemUseVoice801B4548Private.h"
 
+extern const float lbl_806D9838;
+
 static inline float ItemVoiceLength801B(VoiceItemData *data, short voice) {
-    return 2.0f + (data->clips[0x1C5].length + data->clips[voice].length);
+    return lbl_806D9838 + (data->clips[0x1C5].length + data->clips[voice].length);
 }
 
 #define ITEM_ENTRY_VOICE801B(e) RaceVoice_Character((RaceVoiceData *)data, (e)->character, (e)->id)
