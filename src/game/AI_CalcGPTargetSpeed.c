@@ -28,6 +28,10 @@ static inline float GPLapBonus(void *ctrl, int kart) {
         return AI_CalcLapSpeedBonus(kart, g_totalLaps - lap, difference, rank);
     }
 }
+static inline float GPDistanceBonus(GPOwner *self, void *ctrl, int kart) {
+    int rank = KartController_GetRenderObj(ctrl)->rank;
+    return AI_CalcDistanceSpeedBonus(kart, CarObject_GetRenderObj(self->common.car)->rank, rank);
+}
 static inline int HasFlags(GPStatus *status, unsigned long long mask) {
     unsigned long long flags = status->flagsA;
     flags |= status->flagsB;
@@ -136,10 +140,7 @@ void AI_CalcGPTargetSpeed(GPOwner *self, int kart) {
         min += bonus; max += bonus;
         bonus = AI_CalcItemSpeedBonus(self, kart, max, min);
         max += bonus; min += bonus;
-        {
-            int rank = KartController_GetRenderObj(ctrl)->rank;
-            bonus = AI_CalcDistanceSpeedBonus(kart, CarObject_GetRenderObj(self->common.car)->rank, rank);
-        }
+        bonus = GPDistanceBonus(self, ctrl, kart);
         max += bonus; min += bonus;
         bonus = record->speedBonus;
         max += bonus; min += bonus;
