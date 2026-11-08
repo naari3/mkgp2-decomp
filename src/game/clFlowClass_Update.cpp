@@ -103,8 +103,8 @@ extern "C" int clFlowClass_Update(ClassUpdate *self) {
         }
         if (input()) {
             int old = self->selection;
-            int delta = input()->delta;
-            self->selection = selection(self) + delta;
+            ClassInputState *in = input();
+            self->selection += in->delta;
             if (self->mode) {
                 if (self->selection>2) self->selection=2;
                 if (self->selection<1) self->selection=1;

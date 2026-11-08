@@ -2562,7 +2562,7 @@ config.libs = [
             Object(Matching, "game/SetupBgSprites.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801BA6A4.c"),
             Object(Matching, "game/clFlowTitle_Init.cpp", extab_padding=b""),
-            Object(NonMatching, "game/clFlowClass_Update.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/clFlowClass_Update.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/clFlowChara.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowClass_Init.cpp", extab_padding=b""),
             Object(NonMatching, "game/clFlowCourse.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
