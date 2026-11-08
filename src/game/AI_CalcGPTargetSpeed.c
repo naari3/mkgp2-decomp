@@ -83,9 +83,9 @@ void AI_CalcGPTargetSpeed(GPOwner *self, int kart) {
     } else {
         void *ctrl = Read_U32[kart];
         void *param = GetEnemyParam();
-        int cup = g_cupId;
-        int round = g_roundIndex;
-        float max = GetBaseSpeedMax(param, cup, round);
+        int cup;
+        int round;
+        float max = GetBaseSpeedMax(param, cup = g_cupId, round = g_roundIndex);
         float min = GetBaseSpeedMin(param, cup, round);
         float bonus = GPCatchup(record, kart);
         int rank;
