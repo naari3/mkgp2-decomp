@@ -40,16 +40,24 @@ static inline void QuatMatrix(Matrix44 *m, MovementQuat *q) {
                 lbl_806D9708*(yz+wx), lbl_806D96D4 - lbl_806D9708*(xx+yy));
 }
 
+static inline void AccumulateProduct(float &value, float right, float left) {
+    value += left * right;
+}
+
 static inline void Multiply(Matrix44 *a, const Matrix44 *b) {
-    float out[16];
+    Matrix44 product;
+    float *out = (float *)product.m;
+    int j;
+    int index;
+    int i;
     float value;
-    int index = 0;
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    index = 0;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
             value = a->m[i][0]*b->m[0][j];
-            value += a->m[i][1]*b->m[1][j];
-            value += a->m[i][2]*b->m[2][j];
-            value += a->m[i][3]*b->m[3][j];
+            AccumulateProduct(value, b->m[1][j], a->m[i][1]);
+            AccumulateProduct(value, b->m[2][j], a->m[i][2]);
+            AccumulateProduct(value, b->m[3][j], a->m[i][3]);
             out[index+j] = value;
         }
         index += 4;
@@ -69,15 +77,16 @@ extern "C" void fn_8019A9BC(MovementInit *k) {
     Identity(&rotation);
     SetAxisAngle(&q, k->orientation.m[0][0],
                  k->orientation.m[0][1], k->orientation.m[0][2]);
-    float px = k->orientation.m[3][0];
-    float py = lbl_806D970C + k->orientation.m[3][1];
-    float pz = k->orientation.m[3][2];
+    Vec3 position;
+    position.x = k->orientation.m[3][0];
+    position.y = lbl_806D970C + k->orientation.m[3][1];
+    position.z = k->orientation.m[3][2];
     k->orientation.m[3][0] = lbl_806D96D0;
     k->orientation.m[3][1] = lbl_806D96D0;
     k->orientation.m[3][2] = lbl_806D96D0;
     QuatMatrix(&rotation, &q);
     Multiply(&k->orientation, &rotation);
-    k->orientation.m[3][0] = px;
-    k->orientation.m[3][1] = py;
-    k->orientation.m[3][2] = pz;
+    k->orientation.m[3][0] = position.x;
+    k->orientation.m[3][1] = position.y;
+    k->orientation.m[3][2] = position.z;
 }
