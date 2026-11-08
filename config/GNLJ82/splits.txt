@@ -8660,6 +8660,7 @@ game/sprite/fn_801A6538.c:
 	extab       start:0x80012AA8 end:0x80012AB0
 	extabindex  start:0x800276A4 end:0x800276B0
 	.text       start:0x801A6538 end:0x801A7D0C
+	.rodata     start:0x803810A8 end:0x80383CF8
 
 game/sprite/fn_801A7D0C.c:
 	extab       start:0x80012AB0 end:0x80012AB8
