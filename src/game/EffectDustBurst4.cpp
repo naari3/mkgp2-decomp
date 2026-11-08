@@ -10,7 +10,9 @@ struct DustEffect {
     unsigned char pad98[0x18]; float scale; signed char state;
     unsigned char padB5[0xCC - 0xB5]; DustGroup group;
 };
-struct DustCurve { float time[3], scale[3], alpha[3]; };
+/* Time, scale and alpha triples share one array so the shifted interval
+ * view can index all three without crossing a subarray boundary. */
+struct DustCurve { float values[9]; };
 extern "C" {
 extern DustCurve lbl_8041A398[4];
 extern unsigned char lbl_805DF3D0[0x98];
@@ -32,15 +34,15 @@ static inline void UpdateChildren(DustEffect *self, DustGroup *group, DustVec &d
     cursor=group;
     for (i=0; i<4; ++i, ++curve, cursor=(DustGroup *)((unsigned char *)cursor+4)) {
         if (cursor->children[0]) {
-            if (curve->time[0] <= group->phase && group->phase < curve->time[2]) {
-                if (curve->time[0] <= group->phase && group->phase < curve->time[1]) {
-                    float ratio=group->phase-curve->time[0];
-                    ratio *= lbl_806D5424/(curve->time[1]-curve->time[0]);
-                    cursor->children[0]->scale=ratio*(curve->scale[1]-curve->scale[0])+curve->scale[0];
-                    cursor->children[0]->alpha=ratio*(curve->alpha[1]-curve->alpha[0])+curve->alpha[0];
+            if (curve->values[0] <= group->phase && group->phase < curve->values[2]) {
+                if (curve->values[0] <= group->phase && group->phase < curve->values[1]) {
+                    float ratio=group->phase-curve->values[0];
+                    ratio *= lbl_806D5424/(curve->values[1]-curve->values[0]);
+                    cursor->children[0]->scale=ratio*(curve->values[4]-curve->values[3])+curve->values[3];
+                    cursor->children[0]->alpha=ratio*(curve->values[7]-curve->values[6])+curve->values[6];
                     cursor->children[0]->scale *= lbl_806D54A0;
                 }
-                float *next=&curve->time[1];
+                float *next=&curve->values[1];
                 if (next[0] <= group->phase && group->phase < next[1]) {
                     float ratio=group->phase-next[0];
                     ratio *= lbl_806D5424/(next[1]-next[0]);
