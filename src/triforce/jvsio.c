@@ -422,84 +422,87 @@ void fn_80283154(void) {
             else status[node] = 5;
             if (status[node] != 5) break;
             pos = 2;
-            if (cmd.req[bank][node].response[1] != 1 && cmd.req[bank][node].response[1] != 2) { status[node] = 3; break; }
-            for (j = 0; j < cmd.req[bank][node].n; j++) {
-                cmd.req[bank][node].reply[j] = &cmd.req[bank][node].response[pos];
-                if (cmd.req[bank][node].rlen[j] & 0x80) {
-                    while (pos <= cmd.req[bank][node].response[0] && cmd.req[bank][node].response[pos] != 0) pos -= (s8)cmd.req[bank][node].rlen[j];
-                    pos++;
-                } else if (cmd.req[bank][node].rlen[pos] != 0 && cmd.req[bank][node].response[pos] == 2) pos++;
-                else pos += cmd.req[bank][node].rlen[j];
-            }
-            if (node == 0) {
-                if (cmd.req[bank][node].cmd[0] == 0xF1 && cmd.req[bank][node].reply[0][0] == 1) cmd.nodeCount = cmd.unk108;
-                break;
-            }
-            for (commandIndex = 0; commandIndex < cmd.req[bank][node].n; commandIndex++) {
-                p = cmd.req[bank][node].reply[commandIndex];
-                if (p[0] == 1) {
-                    switch (cmd.req[bank][node].cmd[commandIndex]) {
-                    case 0x20: cmd.node[node].unkAC = p + 1; break;
-                    case 0x21: cmd.node[node].unkB0 = p + 1; break;
-                    case 0x22: cmd.node[node].unkB4 = p + 1; break;
-                    case 0x23: cmd.node[node].unkB8 = p + 1; break;
-                    case 0x24: cmd.node[node].unkC0 = p + 1; break;
-                    case 0x25: cmd.node[node].unkBC = p[1]; break;
-                    case 0x26: cmd.node[node].unkC4 = p + 1; break;
-                    case 0x10:
-                        out = &cmd.node[node].unk0;
-                        for (j = 1; j < 0x65 && p[j] != 0; j++) *out++ = p[j];
-                        *out = 0; break;
-                    case 0x11: cmd.node[node].unkA6 = p[1]; break;
-                    case 0x12: cmd.node[node].unkA7 = p[1]; break;
-                    case 0x13: cmd.node[node].unkA8 = p[1]; break;
-                    case 0x14:
-                        out = cmd.node[node].unk65;
-                        for (j = 1; j <= 0x40 && p[j] != 0;) {
-                            *out++ = p[j++]; *out++ = p[j++]; *out++ = p[j++]; *out++ = p[j++];
-                        }
-                        *out = 0;
-                        for (k = 0; k < j - 1; k += 4) {
+            if (cmd.req[bank][node].response[1] == 1 || cmd.req[bank][node].response[1] == 2) {
+                for (j = 0; j < cmd.req[bank][node].n; j++) {
+                    cmd.req[bank][node].reply[j] = &cmd.req[bank][node].response[pos];
+                    if (cmd.req[bank][node].rlen[j] & 0x80) {
+                        while (pos <= cmd.req[bank][node].response[0] && cmd.req[bank][node].response[pos] != 0) pos -= (s8)cmd.req[bank][node].rlen[j];
+                        pos++;
+                    } else if (cmd.req[bank][node].rlen[pos] != 0 && cmd.req[bank][node].response[pos] == 2) pos++;
+                    else pos += cmd.req[bank][node].rlen[j];
+                }
+                if (node == 0) {
+                    if (cmd.req[bank][node].cmd[0] == 0xF1 && cmd.req[bank][node].reply[0][0] == 1) cmd.nodeCount = cmd.unk108;
+                    break;
+                }
+                for (commandIndex = 0; commandIndex < cmd.req[bank][node].n; commandIndex++) {
+                    p = cmd.req[bank][node].reply[commandIndex];
+                    if (p[0] == 1) {
+                        switch (cmd.req[bank][node].cmd[commandIndex]) {
+                        case 0x20: cmd.node[node].unkAC = p + 1; break;
+                        case 0x21: cmd.node[node].unkB0 = p + 1; break;
+                        case 0x22: cmd.node[node].unkB4 = p + 1; break;
+                        case 0x23: cmd.node[node].unkB8 = p + 1; break;
+                        case 0x24: cmd.node[node].unkC0 = p + 1; break;
+                        case 0x25: cmd.node[node].unkBC = p[1]; break;
+                        case 0x26: cmd.node[node].unkC4 = p + 1; break;
+                        case 0x10:
+                            out = &cmd.node[node].unk0;
+                            for (j = 1; j < 0x65 && p[j] != 0; j++) *out++ = p[j];
+                            *out = 0; break;
+                        case 0x11: cmd.node[node].unkA6 = p[1]; break;
+                        case 0x12: cmd.node[node].unkA7 = p[1]; break;
+                        case 0x13: cmd.node[node].unkA8 = p[1]; break;
+                        case 0x14:
                             out = cmd.node[node].unk65;
-                            switch (out[k]) {
-                            case 1: cmd.node[node].unkCC = out[k+1]; cmd.node[node].unkCD = out[k+2]; break;
-                            case 2: cmd.node[node].unkCE = out[k+1]; break;
-                            case 3: cmd.node[node].unkCF = out[k+1]; cmd.node[node].unkD0 = out[k+2]; break;
-                            case 4: cmd.node[node].unkD1 = out[k+1]; break;
-                            case 5: cmd.node[node].unkD2 = out[k+1]; break;
-                            case 6: cmd.node[node].unkD3 = out[k+1]; cmd.node[node].unkD4 = out[k+2]; cmd.node[node].unkD5 = out[k+3]; break;
-                            case 7: cmd.node[node].unkD6 = (out[k+1] << 8) | out[k+2]; break;
-                            case 0x10: cmd.node[node].unkD8 = out[k+1]; break;
-                            case 0x11: cmd.node[node].unkD9 = out[k+1]; break;
-                            case 0x12: cmd.node[node].unkDA = out[k+1]; break;
-                            case 0x13: cmd.node[node].unkDB = out[k+1]; break;
-                            case 0x14: cmd.node[node].unkDC = out[k+1]; cmd.node[node].unkDD = out[k+2]; cmd.node[node].unkDE = out[k+3]; break;
-                            case 0x15: cmd.node[node].unkDF = 1; break;
+                            for (j = 1; j <= 0x40 && p[j] != 0;) {
+                                *out++ = p[j++]; *out++ = p[j++]; *out++ = p[j++]; *out++ = p[j++];
                             }
-                        }
-                        break;
-                    default:
-                        if (cmd.unk104 != 0 && ((u8 (*)(u8, u8))cmd.unk104)(node, commandIndex)) status[node] = 7;
-                        break;
-                    }
-                } else {
-                    u8 c = cmd.req[bank][node].cmd[commandIndex];
-                    if (cmd.req[bank][node].response[1] == 1) {
-                        if (cmd.qwr + 1 != cmd.qrd) {
-                            cmd.queue[cmd.qwr].node = node;
-                            cmd.queue[cmd.qwr].cmd = c;
-                            cmd.queue[cmd.qwr].err = 0x20;
-                            cmd.queue[cmd.qwr++].pad = p[0];
+                            *out = 0;
+                            for (k = 0; k < j - 1; k += 4) {
+                                out = cmd.node[node].unk65;
+                                switch (out[k]) {
+                                case 1: cmd.node[node].unkCC = out[k+1]; cmd.node[node].unkCD = out[k+2]; break;
+                                case 2: cmd.node[node].unkCE = out[k+1]; break;
+                                case 3: cmd.node[node].unkCF = out[k+1]; cmd.node[node].unkD0 = out[k+2]; break;
+                                case 4: cmd.node[node].unkD1 = out[k+1]; break;
+                                case 5: cmd.node[node].unkD2 = out[k+1]; break;
+                                case 6: cmd.node[node].unkD3 = out[k+1]; cmd.node[node].unkD4 = out[k+2]; cmd.node[node].unkD5 = out[k+3]; break;
+                                case 7: cmd.node[node].unkD6 = (out[k+1] << 8) | out[k+2]; break;
+                                case 0x10: cmd.node[node].unkD8 = out[k+1]; break;
+                                case 0x11: cmd.node[node].unkD9 = out[k+1]; break;
+                                case 0x12: cmd.node[node].unkDA = out[k+1]; break;
+                                case 0x13: cmd.node[node].unkDB = out[k+1]; break;
+                                case 0x14: cmd.node[node].unkDC = out[k+1]; cmd.node[node].unkDD = out[k+2]; cmd.node[node].unkDE = out[k+3]; break;
+                                case 0x15: cmd.node[node].unkDF = 1; break;
+                                }
+                            }
+                            break;
+                        default:
+                            if (cmd.unk104 != 0 && ((u8 (*)(u8, u8))cmd.unk104)(node, commandIndex)) status[node] = 7;
+                            break;
                         }
                     } else {
-                        if (cmd.qwr + 1 != cmd.qrd) {
-                            cmd.queue[cmd.qwr].node = node;
-                            cmd.queue[cmd.qwr].cmd = c;
-                            cmd.queue[cmd.qwr].err = 0x40;
-                            cmd.queue[cmd.qwr++].pad = 0;
+                        u8 c = cmd.req[bank][node].cmd[commandIndex];
+                        if (cmd.req[bank][node].response[1] == 1) {
+                            if (cmd.qwr + 1 != cmd.qrd) {
+                                cmd.queue[cmd.qwr].node = node;
+                                cmd.queue[cmd.qwr].cmd = c;
+                                cmd.queue[cmd.qwr].err = 0x20;
+                                cmd.queue[cmd.qwr++].pad = p[0];
+                            }
+                        } else {
+                            if (cmd.qwr + 1 != cmd.qrd) {
+                                cmd.queue[cmd.qwr].node = node;
+                                cmd.queue[cmd.qwr].cmd = c;
+                                cmd.queue[cmd.qwr].err = 0x40;
+                                cmd.queue[cmd.qwr++].pad = 0;
+                            }
                         }
                     }
                 }
+            } else {
+                status[node] = 3;
             }
             break;
         }
