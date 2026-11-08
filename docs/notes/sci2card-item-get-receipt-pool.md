@@ -1,0 +1,5 @@
+# sci2card-item-get-receipt-pool
+
+Source: Codex worker c21_u144_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c21_u144 retained natural draft90.95744->98.37386, text1316/EH8/index12 exact. Recreated real adjacent digit10/English8/Japanese8 arrays as prerequisite(c18 had97.78116), independently.data104B+relocations100% against auto_07_803FFDF0_data.o. Combining real pool with hundreds/tens/ones declarations and player capture before first count call improves98.37386. Remaining saved registers: table26/29,count27/30,extra28/31,player29/26,hundreds31/28,tens30/27,ones29/26(target/source). GC1.2.5n60.148937/1260B;2.6 invariant90.95744/1248B. No split reapplied: c18 proved cross-TU DTK cycle with earlier receipt TUs owning later data; needs coordinator claim consolidation. Unlike prior retries, best natural source+private header retained NonMatching with unlinked real data definitions; full fallback DOL SHA1OK. Zero native gain. c20_u144 archive actually belongs to Terrain, no receipt draft located.

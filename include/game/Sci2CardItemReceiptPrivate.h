@@ -7,13 +7,8 @@ typedef struct ReceiptPlayer {
     unsigned char padE[0x198 - 0xE];
     signed char cardVersion;
 } ReceiptPlayer;
-typedef struct ItemReceiptTables {
-    const char *digits[10];
-    const char *english[8];
-    const char *japanese[8];
-} ItemReceiptTables;
 extern ReceiptPlayer g_playerData;
-extern ItemReceiptTables lbl_803FFDF0;
+extern const char *lbl_803FFDF0[10];
 extern const int lbl_80317E00[67];
 extern const int lbl_80317F0C[12];
 extern char lbl_805AC5A4[64];
