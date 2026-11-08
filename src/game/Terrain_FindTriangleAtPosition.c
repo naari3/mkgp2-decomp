@@ -1,8 +1,8 @@
 /*
  * Course collision grid lookup, 0x80035ED4..0x80036154.
- * NonMatching: triangle count uses r0 instead of the target r4 in the
- * loop setup. The three-edge countdown loop preserves the target zero
- * reload and floating-point temporaries; the plane solve is exact.
+ * Indexed triangle traversal preserves the array base and the target count
+ * register. The three-edge countdown loop preserves the target zero reload
+ * and floating-point temporaries.
  */
 
 typedef struct TerrainTri {
@@ -81,6 +81,7 @@ unsigned char Terrain_FindTriangleAtPosition(TerrainStepper *stepper, float x, f
     int col = (x + lbl_806CED58->offsetX) / lbl_806CED58->cellWidth;
     int row = (z + lbl_806CED58->offsetZ) / lbl_806CED58->cellDepth;
     TerrainTri *tri;
+    TerrainTri *triangles;
     int count;
     int i;
 
@@ -90,9 +91,10 @@ unsigned char Terrain_FindTriangleAtPosition(TerrainStepper *stepper, float x, f
         return 0;
     }
     stepper->samples[stepper->index].cell = &lbl_806CED58->cells[row * lbl_806CED58->width + col];
-    tri = lbl_806CED58->cells[row * lbl_806CED58->width + col].tris;
+    triangles = lbl_806CED58->cells[row * lbl_806CED58->width + col].tris;
     count = lbl_806CED58->cells[row * lbl_806CED58->width + col].triCount;
-    for (i = 0; i < count; i++, tri++) {
+    for (i = 0; i < count; i++) {
+        tri = &triangles[i];
         if (tri->minX <= x && tri->maxX >= x && tri->minZ <= z && tri->maxZ >= z) {
             if (Terrain_OutsideEdges(tri, x, z) == 0) {
                 float b = tri->plane[1];
