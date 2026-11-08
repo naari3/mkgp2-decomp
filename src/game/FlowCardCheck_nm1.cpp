@@ -1465,9 +1465,9 @@ void clFlowCCDate::Update() {
         }
         if (changed) { fn_801FE390(); field20 = 120; }
     } else {
-        const Vec2 *position = kDateGrpPos;
-        for (int i = 0; i < 6; i++, position++) {
-            if (grp[i] != 0) (*grp[i])->x = position->x + slide;
+        for (int i = 0; i < 6; i++) {
+            Sprite **group = grp[i];
+            if (group != 0) { float x = kDateGrpPos[i].x; (*group)->x = x + slide; }
         }
         for (int i = 0; i < 12; i++) {
             const Vec2 &p = kDateTextPos[i];

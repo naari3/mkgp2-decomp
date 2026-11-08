@@ -20,15 +20,15 @@ void TextRenderer_DrawEntry(DebugDisplayContext *self, DebugTextEntry *entry)
 {
     DebugTexObj texture;
     void *image;
+    short y1, y0, x1, x0;
+    short t1, t0, s1, s0;
+    unsigned char color;
     int s, t, width;
+    char *text;
     int dx;
     int dy;
     int height;
     void *loaded;
-    short y1, y0, x1, x0;
-    short t1, t0, s1, s0;
-    unsigned char color;
-    char *text;
 
     DebugFontHeader *font = self->font;
     if (entry->color > 8) entry->color = 8;
@@ -61,17 +61,17 @@ void TextRenderer_DrawEntry(DebugDisplayContext *self, DebugTextEntry *entry)
             {
                 unsigned int cellHeight;
                 unsigned int cellWidth;
+                cellWidth = self->font->cellWidth;
+                s0 = s;
+                cellHeight = self->font->cellHeight;
                 x0 = entry->x + dx;
                 y0 = entry->y + dy;
-                cellWidth = self->font->cellWidth;
-                cellHeight = self->font->cellHeight;
-                x1 = cellWidth * entry->scale + x0;
-                y1 = cellHeight * entry->scale + y0;
-                s0 = s;
                 s1 = s + cellWidth;
                 t0 = t;
-                t1 = t + cellHeight;
                 color = entry->color;
+                x1 = cellWidth * entry->scale + x0;
+                t1 = t + cellHeight;
+                y1 = cellHeight * entry->scale + y0;
                 GXBegin(0x80, 0, 4);
                 EmitTextVertex(x0, y0, color, s0, t0);
                 EmitTextVertex(x1, y0, color, s1, t0);
