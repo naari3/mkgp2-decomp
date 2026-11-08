@@ -1499,7 +1499,8 @@
     "extabindex_TornadoEffect_ApplyItemVisual_Compact": "@eti_80020894",
     "__dt__6TEVec3Fv": "dtor_80036E40",
     "__ct__10TENormal3DFPvi": "clNormal3D_Construct",
-    "__ct__13TornadoEffectFUciiUcfff": "TornadoEffect_Ctor"
+    "__ct__13TornadoEffectFUciiUcfff": "TornadoEffect_Ctor",
+    "@409": "jumptable_803F98F4"
   },
   "src/game/TornadoItem.c": {
     "extab_TornadoItem_TickActive": "@etb_8000B70C",
