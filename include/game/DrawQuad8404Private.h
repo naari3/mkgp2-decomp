@@ -5,11 +5,11 @@
 struct DrawQuad8404 {
     float x0,y0,x1,y1,x2,y2,x3,y3;
     DrawQuad8404(DrawDesc801F *d) {
-        float w, h, top, left, sinPart, wx, dx, right, bottom, cosPart, dy;
+        float w, h, top, left, sinPart, wx, dx, right, bottom, cosPart, dy, centerX, centerY;
         w = d->width * d->scaleX;
         h = d->height * d->scaleY;
-        double width = __fabs(w);
         double height = __fabs(h);
+        double width = __fabs(w);
         w = width;
         h = height;
         if (lbl_806DA718 == d->angle) {
@@ -24,10 +24,12 @@ struct DrawQuad8404 {
         }
         dy = h * cosPart;
         wx = w * cosPart;
-        left = d->x - dx;
-        top = d->y - dy;
-        right = d->x + dx;
-        bottom = d->y + dy;
+        centerX = d->x;
+        centerY = d->y;
+        left = centerX - dx;
+        top = centerY - dy;
+        right = centerX + dx;
+        bottom = centerY + dy;
         x0 = wx + left;
         y0 = top - sinPart;
         x1 = wx + right;
