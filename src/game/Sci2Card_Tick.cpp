@@ -2,8 +2,10 @@
  * NonMatching: 99.38% text, exact extab (objdiff, 2026-11-08).
  * Pass the shared string-pool base through the inlined send helpers so CW
  * retains one base in r31. The raw sender consumes its caller-owned cursor.
- * Remaining differences are the first send loop pointer/count homes, the
- * state-3 ENQ pointer copy, and the checksum loop-count copy.
+ * State 1 sends through a local cursor copy of m_txBuf (asm-A 11-08).
+ * Remaining differences: the state-3 ENQ pointer copy (target builds the
+ * data pointer in r3 on both paths, then mr r30) and the checksum
+ * loop-count copy (target subic. r0 then mr r3,r0).
  */
 
 extern "C" {
@@ -340,7 +342,10 @@ extern "C" void Sci2Card_Tick(Sci2Card *card)
             return;
         }
         card->ClearRx();
-        card->SendBuffer(0, 0, pool);
+        {
+            unsigned char *p = card->m_txBuf;
+            card->SendRaw(card->m_txLen, p, pool);
+        }
         card->SetState(2);
         break;
     case 2:
