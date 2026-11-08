@@ -82,6 +82,7 @@ all of these.
 | `fn_8024AD8C` | game/CardSetupFlowInitial | 95.88 | `lwz lbl_806D1AB0` scheduling | |
 | `fn_8022BBC8` | game/EnemyFace_nm3 | 98.72 | scheduling | |
 | `clFlowCourse_Dtor` | game/clFlowCourse | 99.62 | `selected % 2` register swap | |
+| `fn_801D1684` + `clFlowCourse_Update`/`Dtor` (TU merge) | game/clFlowCourse | 98.21 / 99.70 / 99.62 | R2's merge patch (/mnt/project-files/wip/r2/clFlowCourse_merge.patch) gives 6/9 at 100% incl. Init. The rest share one swap: the `0xFFFFFF00` color constant for the `rlwimi` alpha insert gets r0 here but r4/r5 in the target (same as `fn_8015E608`). The merge is not landed because NonMatching would unlink 4 matched TUs | R6: ~20 expr/decl/inline variants (u8 alpha, mask-or form, pointer, loop), pragmasweep --set all (68 to 65) |
 | `fn_8015E608` | game/resultscene/resultscene | 99.21 | `li -0x100` register in the `rlwimi` alpha insert | |
 | `fn_8015DEBC` | game/resultscene/resultscene | 99.62 | `fdivs` temporaries | |
 | `result_screen_update` | game/resultscene/resultscene | 99.93 | input pointer r29 vs `ItemMsg` new-temp r30 swapped | third params of fn_80160588/fn_801618CC are `bool` |
