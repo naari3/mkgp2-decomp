@@ -1,5 +1,63 @@
 #include "game/KartControllerUpdatePrivate.h"
 #pragma use_lmw_stmw on
+#pragma force_active on
+extern "C" {
+// Shared AI tuning curves, followed by kart bounds and attachment offsets.
+static const float lbl_803BD320[255] = {
+    1.0f, 0.7f, 0.9f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,
+    1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+    1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+    1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+    1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+    1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+    1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f,
+    1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f,
+};
+static const KCVec lbl_803BD71C = {9.6f, 9.6f, 12.0f};
+static const KCVec lbl_803BD728[4] = {
+    {7.20000029f, 0.0f, 9.6f},
+    {-7.20000029f, 0.0f, 9.6f},
+    {7.20000029f, 0.0f, -9.6f},
+    {-7.20000029f, 0.0f, -9.6f},
+};
+static const KCVec lbl_803BD758 = {0.0f, 4.8f, 2.4f};
+static const KCVec lbl_803BD764 = {0.0f, 12.0f, 0.0f};
+static const int lbl_803BD770[3] = {73,43,62};
+static const char lbl_803BD77C[13] = "clEnemyThink";
+static const char lbl_803BD78C[19] = "clItemBoxResponder";
+static const char lbl_803BD7A0[38] = "GRID %d: speed %6.2f(km/h) line %d-%d";
+}
+#pragma force_active reset
+
 #pragma inline_max_size(10000)
 #pragma inline_max_total_size(100000)
 static inline void TransformOffset(const KCMatrix *matrix, KCVec *offset) {
@@ -7,8 +65,21 @@ static inline void TransformOffset(const KCMatrix *matrix, KCVec *offset) {
     Mtx4x4_TransposeTo4x3(matrix,mtx);
     PSMTXMultVec(mtx,offset,offset);
 }
+static inline void TransformPoint(const KCMatrix &matrix, const KCVec &point, KCVec &result) {
+    float x=point.y*matrix.m[1][0];
+    float y=point.y*matrix.m[1][1];
+    float z=point.y*matrix.m[1][2];
+    x+=matrix.m[0][0]*point.x;
+    y+=matrix.m[0][1]*point.x;
+    z+=point.x*matrix.m[0][2];
+    x+=point.z*matrix.m[2][0];
+    y+=point.z*matrix.m[2][1];
+    z+=point.z*matrix.m[2][2];
+    result.x=matrix.m[3][0]+x;
+    result.y=matrix.m[3][1]+y;
+    result.z=matrix.m[3][2]+z;
+}
 extern "C" void KartController_Update(AIKart *self) {
-    const char *data=lbl_803BD320;
     if (!self->path) return;
     self->previous.x=self->position.x;
     self->previous.y=self->position.y;
@@ -69,9 +140,9 @@ extern "C" void KartController_Update(AIKart *self) {
     velocity.x=(self->position.x-self->previous.x)*lbl_806DA38C;
     velocity.y=(self->position.y-self->previous.y)*lbl_806DA38C;
     velocity.z=(self->position.z-self->previous.z)*lbl_806DA38C;
-    PSMTXMultVec(KartDriver_GetKartRootMtx(self->driver.p),data+0x438,&center);
+    PSMTXMultVec(KartDriver_GetKartRootMtx(self->driver.p),&lbl_803BD758,&center);
     PSVECAdd(&center,&velocity,&center);
-    bounds=*(KCVec *)(data+0x3fc);
+    bounds=lbl_803BD71C;
     PSVECScale(&bounds,&bounds,self->fa4);
     float z=Object_GetJObjRotationZ(KartDriver_GetJObjRootIfReady(self->driver.p));
     float heading=PhysicsState_GetHeading(self->run.p);
@@ -88,17 +159,13 @@ extern "C" void KartController_Update(AIKart *self) {
     KCVec offset,normal,right,left;
     float ground;
     int color,c0=0,c1=0;
-    const float *coords=(const float *)(data+0x408);
-    left.x=mat.m[3][0]+(coords[11]*mat.m[2][0]+(mat.m[0][0]*coords[9]+coords[10]*mat.m[1][0]));
-    left.y=mat.m[3][1]+(coords[11]*mat.m[2][1]+(mat.m[0][1]*coords[9]+coords[10]*mat.m[1][1]));
-    left.z=mat.m[3][2]+(coords[11]*mat.m[2][2]+(coords[9]*mat.m[0][2]+coords[10]*mat.m[1][2]));
-    right.x=mat.m[3][0]+(coords[8]*mat.m[2][0]+(mat.m[0][0]*coords[6]+coords[7]*mat.m[1][0]));
-    right.y=mat.m[3][1]+(coords[8]*mat.m[2][1]+(mat.m[0][1]*coords[6]+coords[7]*mat.m[1][1]));
-    right.z=mat.m[3][2]+(coords[8]*mat.m[2][2]+(coords[6]*mat.m[0][2]+coords[7]*mat.m[1][2]));
+    const KCVec *coords=lbl_803BD728;
+    TransformPoint(mat,coords[3],left);
+    TransformPoint(mat,coords[2],right);
     if(Terrain_GetGroundHeightWithPenetration(&left,&ground,&normal,&color,lbl_806DA394)) c0=color;
     if(Terrain_GetGroundHeightWithPenetration(&right,&ground,&normal,&color,lbl_806DA394)) c1=color;
     TornadoEffect_SetColorPairC8CC(tornado,c0,c1);
-    const KCVec *offsetData=(const KCVec *)(data+0x444);
+    const KCVec *offsetData=&lbl_803BD764;
     offset.x=offsetData->x; offset.y=offsetData->y; offset.z=offsetData->z;
     TransformOffset(&mat,&offset);
     TornadoEffect_SetMatrixRow0_5c(tornado,offset.x,offset.y,offset.z);
@@ -112,7 +179,7 @@ extern "C" void KartController_Update(AIKart *self) {
         float s=PhysicsState_GetSpeed(self->run.p)/lbl_806DA3BC/lbl_806DA394;
         int a=fn_801EC700(self->run.p);
         int b=fn_801EC698(self->run.p);
-        OverlayText(1,1,pathpos,data+0x480,self->kartId,a,b,s);
+        OverlayText(1,1,pathpos,lbl_803BD7A0,self->kartId,a,b,s);
     }
 }
 #pragma use_lmw_stmw reset

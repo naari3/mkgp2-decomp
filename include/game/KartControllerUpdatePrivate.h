@@ -44,7 +44,6 @@ struct KCDispatch {
     virtual void collision(int);
 };
 extern "C" {
-extern char lbl_803BD320[];
 extern int g_cupId;
 extern void *lbl_806D1060;
 unsigned char fn_801DF358(void *),fn_801DF318(void *),fn_801DEC5C(void *),fn_801DEC3C(void *);
