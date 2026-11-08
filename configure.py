@@ -882,7 +882,7 @@ config.libs = [
             Object(Matching, "game/fn_801EC9AC.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801ECA14.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/PhysicsState_KartCollisionCheck.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/PhysicsState_WallCollisionCheck.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/PhysicsState_WallCollisionCheck.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/fn_801EE36C.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
             Object(NonMatching, "game/fn_801ED798.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801ECAFC.c"),
