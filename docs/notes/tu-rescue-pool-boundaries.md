@@ -68,3 +68,8 @@ c19_u13: SpecularInit802C457C fresh99.347824->99.62733 by reusing existing inlin
 Source: Codex worker c19_u51_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c19_u51: texp_nm1 canonical __FILE__ reference lbl_806D0F38[7] slightly improves direct TExp2TevDesc97.69531->97.79297 and SetReg97.73354->97.749214; sections unchanged. TEUndef macro70.21484 confirms cached u8 input matters. Canonical external type-assert string adds8B and regresses96.58594 despite data99.64158. HSD_TETev parameter/union local does not change allocation; removed. SetReg RGB inline helper97.61755 changes pointer ranks and color-copy stack slot; shared post-switch scalar clamp92.18495 shrinks1276->1192, so preserve separate per-case clamps. Prior c5/c18 pool-view/index probes not repeated. Both functions remain NM, zero native gain.
+
+## c20_u22_20261108
+Source: Codex worker c20_u22_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 6 fn / 148 B.
+
+c20_u22: Preserve whole-file lobj pool context when applying B. A broad split gives prefix736/setup+spec1000/tail4072 object-exact, but class registration loses pooled hsdLObj+13C/+154 addressing; final no-regression cut is six getters802C4010..40A4 (148B) native, rest lobj_nm1. Mirror the original count getter with a static inline local accessor to keep SpecularInit100. SetupInit98.262596/3048 unchanged: fabs helper and checked/unchecked factoring invariant; a dedicated unchecked light-vector initializer worsens95.17639/2996 and duplicates aggregate templates. All non-text section percentages unchanged. Full source-linked DOL SHA1 exact.
