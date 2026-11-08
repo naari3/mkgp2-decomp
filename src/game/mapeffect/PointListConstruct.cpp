@@ -1,4 +1,9 @@
-struct Vec { float x, y, z;
+/* --- owned .rodata 0x8036D540..0x8036D588 (tools/own_data.py) --- */
+#pragma force_active on
+extern "C" const char lbl_8036D540[] = " ****** clItemboxCheck : area %d\n";
+extern "C" const char lbl_8036D564[] = " ****** clItemboxCheck : %f %f %f \n";
+#pragma force_active reset
+extern "C" struct Vec { float x, y, z;
     Vec &operator=(const Vec &v) { x=v.x; y=v.y; z=v.z; return *this; }
     void Set(float a, float b, float c) { x=a; y=b; z=c; }
 };
@@ -6,7 +11,6 @@ typedef struct SpawnPoint { float x, y, z; int tag; } SpawnPoint;
 struct PointList { int count; Vec *pts; PointList(SpawnPoint *); };
 extern "C" {
 extern const float lbl_806D8B00, lbl_806D8B04;
-extern char lbl_8036D540[], lbl_8036D564[];
 extern float PSVECSquareMag(const Vec *);
 extern unsigned char IsSpawnTableTerminator(const SpawnPoint *);
 extern void DebugPrintf(const char *, ...);

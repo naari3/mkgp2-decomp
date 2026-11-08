@@ -67,7 +67,7 @@ def load(sec, lo, hi):
             if cur is None: continue
             m = OBJ.match(line)
             if m: cur['name'] = m.group(1).strip('"'); cur['bind'] = m.group(2); continue
-            t = line.strip()
+            t = line.split(' # ')[0].strip()
             if t.startswith('.endobj'): objs.append(cur); cur = None; continue
             if t.startswith('.string '): cur['items'].append(('s', parse_string(t[8:].strip()[1:-1]) + b'\0'))
             elif t.startswith('.4byte '): cur['items'] += [('4', v.strip()) for v in t[7:].split(',')]

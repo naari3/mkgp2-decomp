@@ -1,4 +1,13 @@
-struct HSD_JObj;
+/* --- owned .rodata 0x80378528..0x803785AB (tools/own_data.py) --- */
+#pragma force_active on
+extern "C" const char lbl_80378528[] = "sea_day.dat";
+extern "C" const char lbl_80378534[] = "MR_highway_kaimen_joint";
+extern "C" const char lbl_8037854C[] = "sea_twilight.dat";
+extern "C" const char lbl_80378560[] = "kaimen_tw_dp_kaimen_tw_joint";
+extern "C" const char lbl_80378580[] = "sea_night.dat";
+extern "C" const char lbl_80378590[] = "MR_highway_kaimen_ni_joint";
+#pragma force_active reset
+extern "C" struct HSD_JObj;
 
 extern "C" {
 extern const char lbl_803785DC[];

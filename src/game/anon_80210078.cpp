@@ -4,7 +4,17 @@
  */
 
 #include "game/DemoKartScene.h"
-
+/* --- owned .rodata 0x803C37D8..0x803C3858 (tools/own_data.py) --- */
+#pragma force_active on
+extern "C" const char lbl_803C37D8[] = "challenge_demo_YI.dat";
+extern "C" const char lbl_803C37F0[] = "YI_challengete_player_set_joint";
+extern "C" const char lbl_803C3810[] = "YI_challengete_coin";
+extern "C" const char lbl_803C3824[] = "clCGameDemoYI";
+extern "C" const char lbl_803C3834[] = "clJobRunner";
+extern "C" const char lbl_803C3840[] = "clCGameDemo";
+extern "C" const char lbl_803C384C[] = "%s_%d_joint";
+#pragma force_active reset
+extern "C" 
 struct LineBuffer {
     unsigned int words[12];
     float rect[4];
@@ -34,7 +44,6 @@ extern "C" {
 extern const char *lbl_806D03B8;
 extern const char *lbl_806D03BC;
 extern const char *lbl_806D03C0;
-extern const char lbl_803C384C[];
 extern char lbl_806DAD54[7];
 extern char lbl_806DAD5C[5];
 int sprintf(char *s, const char *format, ...);

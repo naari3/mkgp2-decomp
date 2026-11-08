@@ -1,6 +1,64 @@
 #include "game/CoinMilestone.h"
 #include "game/FadeLogo.h"
-
+/* --- owned .data 0x804EDBB0..0x804EDC20 (tools/own_data.py) --- */
+extern "C" char fn_802174F4[];
+extern "C" char fn_802174F8[];
+extern "C" char fn_80217EDC[];
+extern "C" char fn_80218130[];
+extern "C" char fn_80218134[];
+extern "C" char fn_802181F4[];
+extern "C" char fn_802183A4[];
+extern "C" char fn_802183A8[];
+extern "C" char fn_802184DC[];
+extern "C" char fn_80218514[];
+extern "C" char fn_80218AB8[];
+extern "C" char fn_80218AF0[];
+extern "C" char lbl_806D0450[];
+extern "C" char lbl_806D0458[];
+extern "C" char lbl_806D0460[];
+extern "C" char lbl_806D0468[];
+extern "C" char lbl_806D0470[];
+#pragma force_active on
+extern "C" void *lbl_804EDBB0[6] = {
+    (void *)&lbl_806D0460,
+    (void *)0x0,
+    (void *)&fn_80217EDC,
+    (void *)&fn_80218AB8,
+    (void *)&fn_802174F8,
+    (void *)&fn_802174F4
+};
+extern "C" void *lbl_804EDBC8[5] = {
+    (void *)&lbl_806D0450,
+    (void *)0x0,
+    (void *)&lbl_806D0458,
+    (void *)0x0,
+    (void *)0x0
+};
+extern "C" void *lbl_804EDBDC[6] = {
+    (void *)&lbl_806D0468,
+    (void *)0x0,
+    (void *)&fn_802181F4,
+    (void *)&fn_80218AF0,
+    (void *)&fn_80218134,
+    (void *)&fn_80218130
+};
+extern "C" void *lbl_804EDBF4[5] = {
+    (void *)&lbl_806D0450,
+    (void *)0x0,
+    (void *)&lbl_806D0458,
+    (void *)0x0,
+    (void *)0x0
+};
+extern "C" void *lbl_804EDC08[6] = {
+    (void *)&lbl_806D0470,
+    (void *)0x0,
+    (void *)&fn_80218514,
+    (void *)&fn_802184DC,
+    (void *)&fn_802183A8,
+    (void *)&fn_802183A4
+};
+#pragma force_active reset
+extern "C" 
 
 
 /* ---- text sprite row ---- */
