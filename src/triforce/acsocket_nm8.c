@@ -6,7 +6,7 @@ static inline void InitSocket(s32 i) {
     k->bufAddr = State.sockBase + i * State.sockStride;
 }
 
-s32 fn_80293070(u32* cfg) {
+static inline s32 InitSockets(u32* cfg) {
     s32 i;
     u32 batches;
 
@@ -32,4 +32,8 @@ s32 fn_80293070(u32* cfg) {
         InitSocket(i++);
     }
     return 0;
+}
+
+s32 fn_80293070(u32* cfg) {
+    return InitSockets(cfg);
 }
