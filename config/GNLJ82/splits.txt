@@ -2988,24 +2988,10 @@ game/RaceScene_RenderFrame.cpp:
 	.text       start:0x8009DD64 end:0x8009E0D4
 
 game/VSMode_FrameUpdate.c:
-	extab       start:0x8000962C end:0x80009634
-	extabindex  start:0x80022238 end:0x80022244
-	.text       start:0x8009E0D4 end:0x8009F47C
-
-game/BtMode_Dtor.c:
-	extab       start:0x80009634 end:0x8000963C
-	extabindex  start:0x80022244 end:0x80022250
-	.text       start:0x8009F47C end:0x8009F814
-
-game/VSMode_Init.c:
-	extab       start:0x8000963C end:0x80009744
-	extabindex  start:0x80022250 end:0x8002225C
-	.text       start:0x8009F814 end:0x800A05D0
-
-game/BtMode_Init.c:
-	extab       start:0x80009744 end:0x80009760
-	extabindex  start:0x8002225C end:0x80022268
-	.text       start:0x800A05D0 end:0x800A0688
+	extab       start:0x8000962C end:0x80009760
+	extabindex  start:0x80022238 end:0x80022268
+	.text       start:0x8009E0D4 end:0x800A0688
+	.rodata     start:0x80320960 end:0x80321178
 
 game/BtMode_BaseDtor.c:
 	extab       start:0x80009760 end:0x80009768
