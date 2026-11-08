@@ -14222,19 +14222,9 @@ sysdolphin/baselib/aobj.c:
 	.sdata2     start:0x806DCBD8 end:0x806DCBE0
 
 sysdolphin/baselib/lobj.c:
-	.text       start:0x802C4010 end:0x802C42F0
-	.data       start:0x804FC368 end:0x804FC3E4
-
-sysdolphin/baselib/lobj_vector_nm.c:
-	.text       start:0x802C42F0 end:0x802C4418
+	.text       start:0x802C4010 end:0x802C6430
 	.rodata     start:0x803F2BB8 end:0x803F2BD0
-
-sysdolphin/baselib/lobj_setup.c:
-	.text       start:0x802C4418 end:0x802C457C
-
-sysdolphin/baselib/lobj_init_nm.c:
-	.text       start:0x802C457C end:0x802C53C8
-	.data       start:0x804FC3E4 end:0x804FC418
+	.data       start:0x804FC368 end:0x804FC4C8
 	.bss        start:0x806CD080 end:0x806CD0A8
 	.sdata      start:0x806D0D20 end:0x806D0D48
 	.sbss       start:0x806D2160 end:0x806D2180
@@ -14243,67 +14233,11 @@ sysdolphin/baselib/lobj_init_nm.c:
 sysdolphin/baselib/cobj_constants.c:
 	.sdata2     start:0x806DCC08 end:0x806DCC58
 
-sysdolphin/baselib/lobj_current.c:
-	.text       start:0x802C53C8 end:0x802C5900
-
-sysdolphin/baselib/lobj_id.c:
-	.text       start:0x802C5900 end:0x802C59EC
-
-sysdolphin/baselib/lobj_index.c:
-	.text       start:0x802C59EC end:0x802C5A5C
-	.data       start:0x804FC418 end:0x804FC43C
-
-sysdolphin/baselib/lobj_position.c:
-	.text       start:0x802C5A5C end:0x802C5CE8
-
-sysdolphin/baselib/lobj_load.c:
-	.text       start:0x802C5CE8 end:0x802C63B0
-
-sysdolphin/baselib/lobj_load_nm.c:
-	.text       start:0x802C63B0 end:0x802C6430
-	.data       start:0x804FC43C end:0x804FC4C8
-
-sysdolphin/baselib/cobj_data_nm1.c:
-	.data       start:0x804FC4C8 end:0x804FC52C
-	.sdata      start:0x806D0D48 end:0x806D0D68
-
 sysdolphin/baselib/cobj.c:
-	.text       start:0x802C6430 end:0x802C669C
-	.data       start:0x804FC52C end:0x804FC560
-
-sysdolphin/baselib/cobj_data_nm2.c:
-	.data       start:0x804FC560 end:0x804FC620
-
-sysdolphin/baselib/cobj_nm1.c:
-	.text       start:0x802C669C end:0x802C6900
-
-sysdolphin/baselib/cobj_bottom.c:
-	.text       start:0x802C6900 end:0x802C6BCC
-
-sysdolphin/baselib/cobj_view.c:
-	.text       start:0x802C6BCC end:0x802C74F4
-
-sysdolphin/baselib/cobj_nm2.c:
-	.text       start:0x802C74F4 end:0x802C79CC
-
-sysdolphin/baselib/cobj_up.c:
-	.text       start:0x802C79CC end:0x802C7A34
-
-sysdolphin/baselib/cobj_nm3.c:
-	.text       start:0x802C7A34 end:0x802C7D3C
-
-sysdolphin/baselib/cobj_mtx.c:
-	.text       start:0x802C7D3C end:0x802C7EC8
-
-sysdolphin/baselib/cobj_nm4.c:
-	.text       start:0x802C7EC8 end:0x802C8308
-
-sysdolphin/baselib/cobj_tail.c:
-	.text       start:0x802C8308 end:0x802C8ABC
+	.text       start:0x802C6430 end:0x802C8B48
+	.data       start:0x804FC4C8 end:0x804FC620
+	.sdata      start:0x806D0D48 end:0x806D0D68
 	.sbss       start:0x806D2180 end:0x806D2188
-
-sysdolphin/baselib/cobj_info_nm.c:
-	.text       start:0x802C8ABC end:0x802C8B48
 
 sysdolphin/baselib/fobj.c:
 	.text       start:0x802C8B48 end:0x802CA77C

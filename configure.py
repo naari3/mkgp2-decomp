@@ -467,29 +467,8 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/state_cache.c"),
             Object(Matching, "sysdolphin/baselib/tev.c"),
             Object(Matching, "sysdolphin/baselib/mobj.c"),
-            Object(Matching, "sysdolphin/baselib/lobj.c"),
-            Object(Matching, "sysdolphin/baselib/lobj_vector_nm.c"),
-            Object(Matching, "sysdolphin/baselib/lobj_setup.c"),
-            Object(NonMatching, "sysdolphin/baselib/lobj_init_nm.c"),
-            Object(Matching, "sysdolphin/baselib/lobj_current.c"),
-            Object(Matching, "sysdolphin/baselib/lobj_id.c"),
-            Object(Matching, "sysdolphin/baselib/lobj_index.c"),
-            Object(Matching, "sysdolphin/baselib/lobj_position.c"),
-            Object(Matching, "sysdolphin/baselib/lobj_load.c"),
-            Object(NonMatching, "sysdolphin/baselib/lobj_load_nm.c"),
-            Object(Matching, "sysdolphin/baselib/cobj.c"),
-            Object(Matching, "sysdolphin/baselib/cobj_nm1.c"),
-            Object(Matching, "sysdolphin/baselib/cobj_bottom.c"),
-            Object(Matching, "sysdolphin/baselib/cobj_view.c"),
-            Object(Matching, "sysdolphin/baselib/cobj_nm2.c"),
-            Object(Matching, "sysdolphin/baselib/cobj_up.c"),
-            Object(NonMatching, "sysdolphin/baselib/cobj_nm3.c"),
-            Object(Matching, "sysdolphin/baselib/cobj_mtx.c"),
-            Object(NonMatching, "sysdolphin/baselib/cobj_nm4.c"),
-            Object(Matching, "sysdolphin/baselib/cobj_tail.c"),
-            Object(NonMatching, "sysdolphin/baselib/cobj_info_nm.c"),
-            Object(NonMatching, "sysdolphin/baselib/cobj_data_nm1.c"),
-            Object(NonMatching, "sysdolphin/baselib/cobj_data_nm2.c"),
+            Object(NonMatching, "sysdolphin/baselib/lobj.c"),
+            Object(NonMatching, "sysdolphin/baselib/cobj.c"),
             Object(Matching, "sysdolphin/baselib/cobj_constants.c"),
             Object(Matching, "sysdolphin/baselib/aobj.c"),
             Object(Matching, "sysdolphin/baselib/fobj.c"),
@@ -3849,7 +3828,7 @@ def _inject_jvs_metrics_ctor_bridge() -> None:
         text = text.replace(target, target.replace("mwcc_sjis_extab", "mwcc_sjis_ctor_bridge"), 1)
     # Plain (no extab_padding) TUs that only need the symbol renames, e.g. to
     # give an anonymous initializer literal the global name another TU uses.
-    for tu in ("sysdolphin/baselib/lobj_vector_nm",):
+    for tu in ():
         target = f"build build\\GNLJ82\\src\\{tu.replace('/', chr(92))}.o: mwcc_sjis "
         if sys.platform != "win32":
             target = f"build build/GNLJ82/src/{tu}.o: mwcc_sjis "
@@ -3916,7 +3895,6 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 DATA_ALIGN4_TUS = [
     "game/RaceDigitUpdate",
     "game/objview/MapWaterEffect_Init",
-    "sysdolphin/baselib/cobj",
     "game/VoiceIntro_PushForRaceMode",
     "game/fn_801B1D5C",
     "game/ItemBox_ProcessPickup",
