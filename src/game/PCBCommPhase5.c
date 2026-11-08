@@ -37,10 +37,8 @@ int PCBComm_UpdateSyncPhase5(void)
         lbl_806D11C0[1] = lbl_806D3160;
         return 1;
     }
-    slots = lbl_805A6154;
-    phases = g_pcbSyncPhasePerPcb;
-    slot = slots;
-    phase = phases;
+    slot = slots = lbl_805A6154;
+    phase = phases = g_pcbSyncPhasePerPcb;
     for (i = 0; i < 4;) {
         unsigned int role;
         if (((slot->header.word >> 15) & 0xFF) == 50) ++sceneCount;
@@ -70,10 +68,9 @@ int PCBComm_UpdateSyncPhase5(void)
     }
     if (sceneCount > 0 && roleCount == sceneCount) {
         unsigned char *out = g_pcbSyncTable;
-        int hostRole = first + 2;
         for (i = 0; i < 4; ++i, ++slots, ++out) {
             if (roleCount >= 2) {
-                if (slots->header.bytes.role.role == 5) out[4] = hostRole;
+                if (slots->header.bytes.role.role == 5) out[4] = first + 2;
             } else {
                 if (slots->header.bytes.role.role == 5) out[4] = 0;
             }

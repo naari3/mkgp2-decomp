@@ -105,6 +105,7 @@ struct SAArchiveModel {
 };
 struct SAArchiveOwner {
     SAArchiveModel *object;
+    SAArchiveOwner(SAArchiveModel *p) : object(p) {}
     ~SAArchiveOwner() throw() { Object_DtorWithGXSync(object, 1); }
 };
 extern "C" HSD_DObj *HSD_JObjGetDObj(HSD_JObj *);

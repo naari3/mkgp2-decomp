@@ -1,20 +1,33 @@
 #include "game/ItemSelectAllowedPrivate.h"
 
+/* .rodata 0x803DC378..0x803DC530: per cup/round item slots, the default
+ * slots and the two debug strings, pooled off one base. */
+const int lbl_803DC378[8][4][3] = {
+    {{0x5D, 0x2B, 0x39}, {0x2D, 0x5C, 0x73}, {0x5D, 0x5B, 0x71}, {0x73, 0x71, 0x3C}},
+    {{0x39, 0x5B, 0x4E}, {0x3D, 0x4E, 0x3E}, {0x8, 0x3E, 0x22}, {0x3E, 0x22, 0x9B}},
+    {{0x2B, 0x2D, 0x4A}, {0x39, 0x32, 0x69}, {0x5B, 0x50, 0x40}, {0x2D, 0x40, 0x6C}},
+    {{0x39, 0x2D, 0x2E}, {0x31, 0x2E, 0x46}, {0x2B, 0x4E, 0x96}, {0x2B, 0x96, 0x19}},
+    {{0x2B, 0x39, 0x32}, {0x72, 0x4E, 0x46}, {0x72, 0x6D, 0x8}, {0x72, 0x6D, 0x1C}},
+    {{0x2E, 0x2D, 0x39}, {0x17, 0x17, 0x17}, {0x8, 0x8, 0x8}, {0x4E, 0x74, 0x23}},
+    {{0x5D, 0x39, 0x2D}, {0x2B, 0x5C, 0x94}, {0x5B, 0x94, 0x93}, {0x94, 0x95, 0x93}},
+    {{0x5C, 0x2D, 0x39}, {0x5D, 0x2B, 0x98}, {0x5D, 0x98, 0x9D}, {0x98, 0x9D, 0x97}}
+};
+const struct ItemSelectionDefaults lbl_803DC4F8 = {{0x3D, 0x2B, 0x39}};
+
 unsigned char IsItemSelectAllowed(void) {
-    const struct ItemSelectionTable *table = &lbl_803DC378;
-    struct ItemSelectionDefaults selected = table->defaults;
+    struct ItemSelectionDefaults selected = lbl_803DC4F8;
     int cup, round;
     lbl_806D1264[0] = selected.values[0];
     lbl_806D1264[1] = selected.values[1];
     lbl_806D1264[2] = selected.values[2];
-    DebugPrintf(table->roundFormat, IsSpecialItemRound() == 1);
-    DebugPrintf(table->modeFormat, lbl_806D12AD == 1);
+    DebugPrintf("IsItemSelect : %d\n", IsSpecialItemRound() == 1);
+    DebugPrintf("getCardUse   : %d\n", lbl_806D12AD == 1);
     if (IsSpecialItemRound() == 1 && lbl_806D12AD == 1) return 1;
     cup = g_cupId;
     round = g_roundIndex;
-    selected.values[0] = SelectRoundItem(table, cup, round, 0);
-    selected.values[1] = SelectRoundItem(table, cup, round, 1);
-    selected.values[2] = SelectRoundItem(table, cup, round, 2);
+    selected.values[0] = SelectRoundItem(lbl_803DC378, cup, round, 0);
+    selected.values[1] = SelectRoundItem(lbl_803DC378, cup, round, 1);
+    selected.values[2] = SelectRoundItem(lbl_803DC378, cup, round, 2);
     lbl_806D1264[0] = selected.values[0];
     lbl_806D1264[1] = selected.values[1];
     lbl_806D1264[2] = selected.values[2];

@@ -974,6 +974,14 @@ def generate_build_ninja(
         used_compiler_versions: Set[str] = set()
         source_inputs: List[Path] = []
         source_added: Set[Path] = set()
+        # Per-source slices of tools/extab_user_renames.json + extab_order.json
+        # (see tools/extab_slices.py): each object depends on its own slice so
+        # a json edit rebuilds exactly the affected objects.
+        extab_slice_dir = build_path / "extab_deps"
+        extab_slice_srcs: List[str] = []
+        postprocess_scripts = sorted(config.tools_dir.glob("postprocess_*.py")) + [
+            config.tools_dir / "reorder_extab.py"
+        ]
 
         if config.precompiled_headers:
             for pch in config.precompiled_headers:
@@ -1060,13 +1068,19 @@ def generate_build_ninja(
                 variables["extab_padding"] = "".join(
                     f"{i:02x}" for i in obj.options["extab_padding"]
                 )
+            src_key = Path(src_path).as_posix()
+            extab_slice_srcs.append(src_key)
             n.comment(f"{obj.name}: {lib_name} (linked {obj.completed})")
             n.build(
                 outputs=obj.src_obj_path,
                 rule=build_rule,
                 inputs=src_path,
                 variables=variables,
-                implicit=build_implcit,
+                implicit=[
+                    *build_implcit,
+                    extab_slice_dir / (src_key + ".json"),
+                    *postprocess_scripts,
+                ],
                 order_only="pre-compile",
             )
 
@@ -1204,6 +1218,31 @@ def generate_build_ninja(
                         module_link_step,
                     )
                 link_steps.append(module_link_step)
+        n.newline()
+
+        # extab json slices (restat: unchanged slices don't trigger rebuilds)
+        extab_slice_list = build_path / "extab_deps.list"
+        list_text = "\n".join(extab_slice_srcs) + "\n"
+        extab_slice_list.parent.mkdir(parents=True, exist_ok=True)
+        if not extab_slice_list.exists() or extab_slice_list.read_text(encoding="utf-8") != list_text:
+            extab_slice_list.write_text(list_text, encoding="utf-8")
+        extab_slices_script = config.tools_dir / "extab_slices.py"
+        n.rule(
+            name="extab_slices",
+            command=f"$python {extab_slices_script} $in {extab_slice_dir}",
+            description="EXTAB-SLICES",
+            restat=True,
+        )
+        n.build(
+            outputs=[extab_slice_dir / (s + ".json") for s in extab_slice_srcs],
+            rule="extab_slices",
+            inputs=extab_slice_list,
+            implicit=[
+                config.tools_dir / "extab_user_renames.json",
+                config.tools_dir / "extab_order.json",
+                extab_slices_script,
+            ],
+        )
         n.newline()
 
         # Check if all compiler versions exist

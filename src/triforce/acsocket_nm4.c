@@ -1,14 +1,21 @@
 #include "triforce/acsocket_private.h"
 
-static inline u8* ClearConnectBuffer(AcSock* k, u32* off) {
+#pragma cplusplus on
+
+static inline u8* GetConnectBuffer(s32 n, u32& off) {
+    off = State.bufOff + n;
+    return BufPtr(n);
+}
+
+static inline u8* ClearConnectBuffer(AcSock* k, u32& off) {
     u32 base = k->bufAddr;
-    u8* buf = BufPtr(0);
-    *off = base + State.bufOff;
+    u8* buf = GetConnectBuffer(0, off);
+    off = base + off;
     memset(buf, 0, 0x40);
     return buf;
 }
 
-s32 acConnect(s32 s, const void* addr, s32 len) {
+extern "C" s32 acConnect(s32 s, const void* addr, s32 len) {
     OSSemaphore* sem;
     AcSock* k = SOCK(s);
     u32 off;
@@ -27,7 +34,7 @@ s32 acConnect(s32 s, const void* addr, s32 len) {
     k->result = 0;
     memset(&k->addrOff, 0, 0x10);
     OSSignalSemaphore(sem);
-    buf = ClearConnectBuffer(k, &off);
+    buf = ClearConnectBuffer(k, off);
     memcpy(buf, addr, len);
     fn_8028D530(Buf, k->bufAddr + State.bufOff, 0x40);
     k->cmd = 4;

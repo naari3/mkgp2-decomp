@@ -1,0 +1,34 @@
+diff --git a/src/sysdolphin/baselib/texp_nm1.c b/src/sysdolphin/baselib/texp_nm1.c
+index 0356965..afe70ad 100644
+--- a/src/sysdolphin/baselib/texp_nm1.c
++++ b/src/sysdolphin/baselib/texp_nm1.c
+@@ -27,6 +27,8 @@ static inline u32 TEUndef(u8 v, u32 def)
+     return r;
+ }
+ 
++#pragma push
++#pragma opt_propagation off
+ void TExp2TevDesc(HSD_TExp* texp, HSD_TExpTevDesc* desc,
+                          int* init_cprev, int* init_aprev)
+ {
+@@ -137,11 +139,15 @@ void TExp2TevDesc(HSD_TExp* texp, HSD_TExpTevDesc* desc,
+     }
+     desc->desc.u.tevconf.mode = GX_TC_LINEAR;
+ }
++#pragma pop
++
+ 
+ static GXTevKColorID id1[4] = { GX_KCOLOR0, GX_KCOLOR1, GX_KCOLOR2,
+                                 GX_KCOLOR3 };
+ static GXTevRegID id2[3] = { GX_TEVREG0, GX_TEVREG1, GX_TEVREG2 };
+ 
++#pragma push
++#pragma optimization_level 3
+ void HSD_TExpSetReg(HSD_TExp* texp)
+ {
+     int i;
+@@ -272,3 +278,4 @@ void HSD_TExpSetReg(HSD_TExp* texp)
+         GXPixModeSync();
+     }
+ }
++#pragma pop

@@ -38,10 +38,11 @@ void CoinJumpFx_UpdateParticleGrid(CoinJumpEffect *effect,const CoinJumpVec *pos
     if(effect) {
         float particleScale=1.8f*scale;
         CoinJumpGroup *group=&effect->group;
+        CoinJumpEffect *child;
         for(int i=0;i<2;++i) {
             for(int j=0;j<2;++j) {
                 int index=i*2+j;
-                CoinJumpEffect *child=CoinJumpGroup_GetChild(group,index);
+                child=CoinJumpGroup_GetChild(group,index);
                 if(child) {
                     Vec3_Copy(&child->position,position);
                     child->scale=particleScale;
@@ -78,7 +79,7 @@ void CoinJumpFx_UpdateParticleGrid(CoinJumpEffect *effect,const CoinJumpVec *pos
             }
         }
         if(effect->extra) {
-            CoinJumpEffect *child=group->children[4];
+            child=group->children[4];
             if(child) {
                 Vec3_Copy(&child->position,position);
                 child->scale=1.2f*scale;

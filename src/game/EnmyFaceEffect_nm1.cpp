@@ -317,6 +317,8 @@ static inline void ReleaseFacePalettes() {
     }
 }
 
+#pragma push
+#pragma opt_lifetimes off
 clEFacePoly::~clEFacePoly() {
     int i;
     for (i = 0; i < 2; i++) {
@@ -338,7 +340,7 @@ clEFacePoly::~clEFacePoly() {
             PalSlot *s = &sPalSlots[idx];
             if (s->free) {
                 if (sPalSlots[idx].pal) {
-                    TEXReleasePalette(&s->pal);
+                    TEXReleasePalette(&sPalSlots[idx].pal);
                     sPalSlots[idx].pal = 0;
                 }
                 if (sPalSlots[idx].data) {
@@ -351,6 +353,8 @@ clEFacePoly::~clEFacePoly() {
     }
     ReleaseFacePalettes();
 }
+#pragma pop
+
 
 clEFacePoly::clEFacePoly(KartRender *o, int a, int b, int c) {
     hasPal = 0;

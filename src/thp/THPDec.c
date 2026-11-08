@@ -1177,18 +1177,20 @@ static void __THPDecodeBlock(THPFileInfo* info, u8 c, THPCoeff* block)
     s32 r;
     s32 v;
     s16 diff;
+    u8 dcTab;
 
     __dcbz(block, 0);
+    dcTab = info->components[c].DCTableSelector << 1;
     __dcbz(block, 32);
-    s = __THPHuffDecode(info, info->components[c].DCTableSelector << 1);
+    k = __THPHuffDecode(info, dcTab);
     __dcbz(block, 64);
     diff = 0;
     __dcbz(block, 96);
     ac = &info->huffmanTabs[(u8) ((info->components[c].ACTableSelector << 1) + 1)];
-    if (s != 0) {
-        diff = __THPReceive(info, s);
-        if (__cntlzw(diff) > 32 - s) {
-            diff += (-1 << s) + 1;
+    if (k != 0) {
+        diff = __THPReceive(info, k);
+        if (__cntlzw(diff) > 32 - k) {
+            diff += (-1 << k) + 1;
         }
     }
     block[0] = info->components[c].predDC += diff;
@@ -1255,22 +1257,22 @@ static s32 __THPHuffDecode(THPFileInfo* info, u8 tabIndex)
         code |= __THPGetBit(info);
         l++;
     }
-    return (h->Vij + h->valPtr[l])[code];
+    return h->Vij[(s32)(code + h->valPtr[l])];
 }
 
 static s32 __THPHuffDecodeTab(THPFileInfo* info, THPHuffmanTab* h)
 {
     s32 code;
-    s32 l;
+    s32 cnt;
 
-    l = 1;
+    cnt = 1;
     code = __THPGetBit(info);
-    while (code > h->maxCode[l]) {
+    while (code > h->maxCode[cnt]) {
         code <<= 1;
         code |= __THPGetBit(info);
-        l++;
+        cnt++;
     }
-    return (h->Vij + h->valPtr[l])[code];
+    return h->Vij[(s32)(code + h->valPtr[cnt])];
 }
 
 void fn_8029A6F4(register u8* dst, register u8* y, register u8* u, register u8* v, u32 n)
@@ -1936,6 +1938,11 @@ void fn_8029BCF0(THPDecHandle* handle, u8* dst, u8 alpha)
     __THPGQRRestore(info);
 }
 
+#pragma push
+#pragma opt_propagation off
+#pragma opt_lifetimes off
+/* The goto shape puts the p-- latch before the marker test like the target;
+ * left: a dead `b` loop-entry jump and two scheduling swaps (80.9%). */
 static s32 __THPGetBit(THPFileInfo* info)
 {
     u8* p;
@@ -1945,37 +1952,37 @@ static s32 __THPGetBit(THPFileInfo* info)
     cnt = info->cnt;
     if (cnt == 33) {
         p = info->file;
-        info->cnt = 26;
         b = *p;
-        if (b != 0xFF) {
+        info->cnt = 26;
+        if (b == 0xFF) goto check;
+        info->file = p + 1;
+        info->currByte = b;
+        b = (b >> 7) & 1;
+        goto done;
+    again:
+        p--;
+    check:
+        if (p[1] != 0) {
+            b = p[2];
+            p += 3;
+            if (b == 0xFF) goto again;
             info->currByte = b;
             b = (b >> 7) & 1;
-            info->file = p + 1;
+            info->file = p;
         } else {
-            for (;;) {
-                if (p[1] == 0) {
-                    p += 2;
-                    info->currByte = b;
-                    b = (b >> 7) & 1;
-                    info->file = p;
-                    break;
-                }
-                b = p[2];
-                p += 3;
-                if (b != 0xFF) {
-                    info->currByte = b;
-                    b = (b >> 7) & 1;
-                    info->file = p;
-                    break;
-                }
-                p--;
-            }
+            p += 2;
+            info->currByte = b;
+            b = (b >> 7) & 1;
+            info->file = p;
         }
     } else {
         b = info->currByte;
         info->cnt = cnt + 1;
         b = __rlwnm(b, cnt, 31, 31);
     }
+done:
     return b;
 }
+#pragma pop
+
 

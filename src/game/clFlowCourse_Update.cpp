@@ -195,8 +195,30 @@ static inline void SetupExitSprites(CourseFlow *self) {
     }
 }
 
+static inline void UpdateRemoteIcons(CourseFlow *self) {
+    for (int i = 0; i < 4; i++) {
+        if (i != GetDisplayBufferIndex()) {
+            int role = g_localPcbRole;
+            if (((PcbSlot_GetByIndex(i)[0] >> 4) & 7) == role) {
+                CourseLayout *layout;
+                int selected = (PcbSlot_GetByIndex(i)[5] >> 1) & 0x7F;
+                layout = &lbl_8049B1E0[selected];
+                float x = layout->x;
+                float a;
+                if (self->selection >= 8) x -= lbl_806D9ED8;
+                CourseIcon *icon = self->icons[i];
+                a = lbl_806D9EDC;
+                icon->ctrl.Show(x + iconOffsets[icon->index][0],
+                    layout->y + iconOffsets[icon->index][1], a);
+                if (self->state >= 3) a = lbl_806D9EE0;
+                if (self->selection / 8 != selected / 8) a = lbl_806D9EE0;
+                SetAlpha(&self->icons[i]->ctrl, 0xFFFFFF00, a);
+            }
+        }
+    }
+}
+
 extern "C" int clFlowCourse_Update(CourseFlow *self) {
-    int remoteIndex;
     RumbleUpdate();
     if (self->advance) { self->state++; self->advance = 0; }
     self->timer++;
@@ -452,26 +474,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
         SetSpritePosition(self->slots[self->selected].sprite, lbl_806D9EFC, lbl_806D9F18);
     }
     if (g_gameMode == 2) {
-        for (remoteIndex = 0; remoteIndex < 4; remoteIndex++) {
-            if (remoteIndex != GetDisplayBufferIndex()) {
-                int role = g_localPcbRole;
-                if (((PcbSlot_GetByIndex(remoteIndex)[0] >> 4) & 7) == role) {
-                    float a;
-                    CourseLayout *layout;
-                    int selected = (PcbSlot_GetByIndex(remoteIndex)[5] >> 1) & 0x7F;
-                    layout = &lbl_8049B1E0[selected];
-                    float x = layout->x;
-                    if (self->selection >= 8) x -= lbl_806D9ED8;
-                    CourseIcon *icon = self->icons[remoteIndex];
-                    a = lbl_806D9EDC;
-                    icon->ctrl.Show(x + iconOffsets[icon->index][0],
-                        layout->y + iconOffsets[icon->index][1], a);
-                    if (self->state >= 3) a = lbl_806D9EE0;
-                    if (self->selection / 8 != selected / 8) a = lbl_806D9EE0;
-                    SetAlpha(&self->icons[remoteIndex]->ctrl, 0xFFFFFF00, a);
-                }
-            }
-        }
+        UpdateRemoteIcons(self);
         if (self->banner) fn_801D1684(self->banner);
     }
     return -1;

@@ -21,7 +21,20 @@ inline STLTree::STLTree()
     STLCompare compare;
     STLContainer_HeaderInit(this, &policy, &compare);
 }
-STLTree lbl_80598554;
+extern "C" void __register_global_object(void *obj, void *dtor, void *chain);
+extern "C" void STLContainer_Dtor(void *, int);
+static char sDtorChain[12];
+extern "C" { int lbl_80598554[sizeof(STLTree) / 4]; }
+#pragma push
+extern "C" void STLContainer_GlobalInit_854()
+{
+    STLCompare compare;
+    STLPolicy policy;
+    STLContainer_HeaderInit((STLTree *)lbl_80598554, &policy, &compare);
+    __register_global_object(lbl_80598554, (void *)STLContainer_Dtor, sDtorChain);
+}
+#pragma pop
+__declspec(section ".ctors") static void (*const sInitEntry)(void) = STLContainer_GlobalInit_854;
 
 
 #pragma dont_inline on

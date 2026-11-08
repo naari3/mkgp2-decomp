@@ -492,13 +492,20 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
     }
 }
 
+static inline void ScreenTablePosition(float x, float y)
+{
+    y -= lbl_806D3000;
+    y += lbl_806D2FD0;
+    x -= lbl_806D300C;
+    x += lbl_806D2FD0;
+    ScreenPosition(x, y);
+}
 static inline void ScreenRouletteTableQuad()
 {
     GXBegin(GX_QUADS, GX_VTXFMT0, 16);
     TransitionTextureVertex *v = lbl_803FE230;
     for (int i = 0; i < 16; ++i) {
-        ScreenPosition((v[0].x - lbl_806D300C) + lbl_806D2FD0,
-                       (v[0].y - lbl_806D3000) + lbl_806D2FD0);
+        ScreenTablePosition(v[0].x, v[0].y);
         *(volatile unsigned int *)0xCC008000 = v[0].color;
         ScreenPosition(lbl_806D303C * v[0].u, lbl_806D3038 * v[0].v);
         ++v;

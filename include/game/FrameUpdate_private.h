@@ -11,7 +11,8 @@ struct BackupWords3840 { unsigned int words[0xE10]; };
 struct FrameBackup {
     unsigned char byte00;
     unsigned int word04, word08, word0C, word10, word14;
-    unsigned int word18, word1C, word20, word24;
+    unsigned long long qw18;
+    unsigned int word20, word24;
     unsigned short half28;
     struct BackupPacked8 packed2A;
     unsigned int word34, word38, word3C, word40, word44, word48, word4C;
@@ -27,5 +28,5 @@ extern struct FrameBackup lbl_80598A60, lbl_8059F480;
 extern unsigned char g_jvsOperatorBits[];
 extern unsigned char lbl_806D1120;
 extern int lbl_806D1124, lbl_806D1128, lbl_806D1114, lbl_806D1110;
-extern void fn_80288210(int);
+extern void fn_80288210(int, struct FrameBackup *);
 #endif

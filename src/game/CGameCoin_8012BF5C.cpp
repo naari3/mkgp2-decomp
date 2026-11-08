@@ -61,8 +61,8 @@ extern float lbl_806CF598;
 extern CoinVObj *lbl_806D109C;
 extern CoinVObj *lbl_806D10AC;
 extern unsigned int lbl_806D7138;
-extern unsigned int lbl_806D7140;
-extern unsigned int lbl_806D7150;
+extern const float lbl_806D7140;
+extern const float lbl_806D7150;
 extern unsigned int lbl_806D7154;
 extern unsigned int lbl_806D7158;
 extern void HSD_StateInvalidate(int);
@@ -78,7 +78,7 @@ extern void Cosf_LUT_Wrap();
 extern void CourseEnvironment_UpdateAndCullZones_Timed();
 extern void DebugPrintf();
 extern void Fog_UpdateFromCourseScene3D();
-extern void GetDisplayBufferIndex();
+int GetDisplayBufferIndex(void);
 extern void *GetInputManager(void);
 extern void *GetRaceContextPtr(void);
 extern void HSD_JObjSetMtxDirtySub(struct CoinJObj *);
@@ -154,10 +154,10 @@ extern void fn_80192688();
 extern void fn_80253C40();
 extern void fn_80253C74();
 extern void fn_80253FD8();
-extern unsigned int g_lakituStartAnimDone;
-extern unsigned int g_pInputState;
-extern unsigned int g_raceEnded;
-extern unsigned int g_raceTimeRemaining;
+extern unsigned char g_lakituStartAnimDone;
+extern struct CoinInputView *g_pInputState;
+extern unsigned char g_raceEnded;
+extern float g_raceTimeRemaining;
 extern void *g_weatherSystem;
 extern unsigned int lbl_806D7148;
 extern unsigned int lbl_806D715C;
@@ -200,7 +200,8 @@ extern unsigned int lbl_806D71FC;
 extern unsigned int lbl_806D7200;
 extern unsigned int lbl_806D7204;
 extern unsigned int lbl_806D7208;
-extern char lbl_80356730[];
+
+extern const char lbl_80356730[];
 extern void HSD_CObjAnim(void *);
 extern void HSD_CObjReqAnim(void *, float);
 extern void HSD_JObjClearFlagsAll(struct CoinJObj *, int);
@@ -218,7 +219,7 @@ extern unsigned int lbl_806D7220;
 extern unsigned int lbl_806D7224;
 extern unsigned int lbl_806D7228;
 extern unsigned int lbl_806D722C;
-extern char lbl_80356C58[];
+extern const char lbl_80356C58[];
 extern unsigned int lbl_806D7134;
 extern unsigned int lbl_806D7234;
 extern unsigned int lbl_806D7238;
@@ -275,51 +276,51 @@ extern void fn_80254134(void *, int);
 extern void *g_raceCamera;
 extern CoinVObj *lbl_806D10D0;
 extern unsigned int vtable[];
-extern void Alloc();
+void *Alloc(unsigned long size);
 extern void ChallengeGoalCamera_Init();
-extern void CourseEnvironment_ResolveJointInSlot0();
-extern void CourseObjectManager_Init();
-extern void DMAChannelManager_Init();
-extern void DrawManager_GetOrCreate();
+void *CourseEnvironment_ResolveJointInSlot0(void *env, const char *name);
+void CourseObjectManager_Init(void);
+void DMAChannelManager_Init(void);
+void DrawManager_GetOrCreate(void);
 extern void GameMode_BaseInit();
-extern void GetKartModelNameEntry();
-extern void GetStartPosition();
-extern void HSD_JObjSetFlags();
+int *GetKartModelNameEntry(int chara, int arg);
+void GetStartPosition(int idx, float *x, float *y, float *z);
+void HSD_JObjSetFlags(void *jobj, unsigned int flags);
 extern void HUD_Init();
-extern void HUD_RegisterOverlay();
-extern void InitRumbleController();
+void HUD_RegisterOverlay(void *hud, int id, int arg);
+void InitRumbleController(int arg);
 extern void InputCmd_Init();
 extern void InputManager_Init();
-extern void ItemObjectManager_Init();
+void ItemObjectManager_Init(void);
 extern void KartAudioChannel_Init();
-extern void KartAudioChannel_ResetSEsAndSetFlag();
+void KartAudioChannel_ResetSEsAndSetFlag(void *o, int flag);
 extern void KartDriver_New_Full();
 extern void LakituStart_Init();
-extern void MiniGame_GetCourseData();
-extern void MiniGame_GetTimerValue();
-extern void PreloadEffectResources();
-extern void ProcessSystemTick();
+float *MiniGame_GetCourseData(void);
+int MiniGame_GetTimerValue(void);
+void PreloadEffectResources(int id);
+void ProcessSystemTick(int arg);
 extern void Scene3D_Init();
-extern void SoundChannels_ClearAll();
-extern void SoundDriver_GetOrCreate();
-extern void StrPcb_ForceRun_Neutral();
+void SoundChannels_ClearAll(void);
+void SoundDriver_GetOrCreate(int arg);
+void StrPcb_ForceRun_Neutral(void *pcb);
 extern struct CoinStrPcb *StrPcb_GetInstance(void);
 extern void StrPcb_ResetCommands_Neutral(struct CoinStrPcb *, int);
-extern void TireEffect_ResetSpin();
+void TireEffect_ResetSpin(void *o, float a, float b);
 extern void TornadoEffect_Ctor();
-extern void TornadoEffect_SetColorPairC8CC();
-extern void TransitionEffect_GetOrCreate();
+void TornadoEffect_SetColorPairC8CC(void *o, int a, int b);
+void TransitionEffect_GetOrCreate(void);
 extern void WeatherSystem_Init();
 extern void clNormal3D_Construct();
-extern void clNormal3D_SetFlags();
+void clNormal3D_SetFlags(void *o, unsigned int flags, int arg);
 extern void fn_80123BB4();
 extern void fn_8012B48C();
 extern void fn_8016E064();
 extern void fn_8016F010();
 extern void fn_8017363C();
-extern unsigned int lbl_806D12BC;
-extern unsigned int lbl_803FDF28[];
-extern unsigned int lbl_803FDF40[];
+extern int lbl_806D12BC;
+extern void *lbl_803FDF28[];
+extern void *lbl_803FDF40[];
 extern unsigned int lbl_8048E144[];
 extern unsigned int lbl_8048E34C[];
 extern unsigned int lbl_8048E3C0[];
@@ -361,7 +362,6 @@ struct CoinShell;
 void Shell_UpdateState(CoinShell *self);
 struct CGameCoin;
 CGameCoin *CGameCoin_Destroy(CGameCoin *self, short flag);
-asm void CGameCoin_Init(void);
 void CGameCoin_InitDefeatDemo(void);
 void BossKoopa_Init(void);
 struct CGameCoinFields;
@@ -378,16 +378,12 @@ __declspec(section ".extab_user") static const unsigned char extab_CGameCoin_Upd
     0x38, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; unsigned int f45; unsigned int f46; unsigned int f47; unsigned int f48; unsigned int f49; unsigned int f50; unsigned int f51; unsigned int f52; unsigned int f53; unsigned int f54; unsigned int f55; unsigned int f56; unsigned int f57; unsigned int f58; unsigned int f59; unsigned int f60; unsigned int f61; unsigned int f62; unsigned int f63; unsigned int f64; unsigned int f65; unsigned int f66; unsigned int f67; unsigned int f68; unsigned int f69; unsigned int f70; unsigned int f71; unsigned int f72; unsigned int f73; unsigned int f74; unsigned int f75; unsigned int f76; unsigned int f77; unsigned int f78; unsigned int f79; unsigned int f80; unsigned int f81; unsigned int f82; unsigned int f83; unsigned int f84; unsigned int f85; unsigned int f86; unsigned int f87; unsigned int f88; unsigned int f89; unsigned int f90; void *f91; unsigned int f92; unsigned int f93; void *f94; unsigned int f95; void *f96; unsigned int f97; unsigned int f98; void *f99; unsigned int f100; void *f101; unsigned int f102; unsigned int f103; void *f104; unsigned int f105; void *f106; unsigned int f107; unsigned int f108; void *f109; unsigned int f110; void *f111; unsigned int f112; unsigned int f113; void *f114; unsigned int f115; void *f116; unsigned int f117; unsigned int f118; void *f119; unsigned int f120; void *f121; unsigned int f122; unsigned int f123; void *f124; unsigned int f125; void *f126; unsigned int f127; unsigned int f128; void *f129; unsigned int f130; void *f131; unsigned int f132; unsigned int f133; void *f134; unsigned int f135; void *f136; unsigned int f137; unsigned int f138; void *f139; unsigned int f140; void *f141; unsigned int f142; void *f143; unsigned int f144; unsigned int f145; void *f146; unsigned int f147; void *f148; unsigned int f149; unsigned int f150; void *f151; unsigned int f152; unsigned int f153; void *f154; unsigned int f155; unsigned int f156; void *f157; unsigned int f158; void *f159; unsigned int f160; unsigned int f161; void *f162; unsigned int f163; void *f164; unsigned int f165; unsigned int f166; void *f167; unsigned int f168; void *f169; unsigned int f170; unsigned int f171; void *f172; unsigned int f173; void *f174; unsigned int f175; void *f176; unsigned int f177; unsigned int f178; void *f179; unsigned int f180; void *f181; unsigned int f182; unsigned int f183; void *f184; unsigned int f185; unsigned int f186; void *f187; } extab_CGameCoin_Init = { 0x284A0000, 0x00000058, 0x000A0170, 0x0000008C, 0x00000168, 0x000000A8, 0x00020170, 0x000000C0, 0x0000017C, 0x000000C8, 0x000C0170, 0x00000108, 0x00080190, 0x00000140, 0x00000170, 0x00000168, 0x000001A4, 0x0000017C, 0x00060170, 0x000001B4, 0x000001B8, 0x000001C4, 0x00020170, 0x000001E0, 0x000001CC, 0x000001EC, 0x00000170, 0x0000020C, 0x000001E0, 0x00000218, 0x00000170, 0x0000022C, 0x000401F4, 0x00000248, 0x00000170, 0x00000254, 0x00000208, 0x00000260, 0x00020170, 0x00000278, 0x0000021C, 0x0000028C, 0x002A0170, 0x00000388, 0x00000238, 0x00000394, 0x00000230, 0x000003A0, 0x00000238, 0x000003B4, 0x0000024C, 0x000003C8, 0x00040238, 0x000003EC, 0x00000258, 0x000003FC, 0x00000170, 0x00000414, 0x00000264, 0x00000420, 0x00000170, 0x0000042C, 0x00000278, 0x00000438, 0x00000170, 0x00000444, 0x0000028C, 0x00000450, 0x00000170, 0x0000045C, 0x000002A0, 0x0000046C, 0x00130170, 0x000004E8, 0x000002BC, 0x000004FC, 0x000002B4, 0x00000510, 0x000202BC, 0x0000052C, 0x000002D0, 0x00000538, 0x000202BC, 0x00000698, 0x00000170, 0x000006A8, 0x000002DC, 0x000006B4, 0x00250170, 0x00000000, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x01000238, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x01000238, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8, 0x0A80001C, (void *)&MemoryManager_TimedFree, 0x010002BC, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001F, 0x00000000, (void *)&dtor_80122FD8 };
 
 #pragma section R ".extabindex_user"
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CGameCoin_Update = {
     (void *)&CGameCoin_Update, 0x00002164, (void *)extab_CGameCoin_Update
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CGameCoin_Init = {
-    (void *)&CGameCoin_Init, 0x0000078C, (void *)&extab_CGameCoin_Init
-};
 
 }
 
@@ -743,6 +739,138 @@ extern "C" void CGameCoin_Draw(CGameCoin *self) { /* 0x8012C2CC size:0x26C */
     TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 1);
     HSD_StateInvalidate(0x7F);
 }
+
+/* .rodata pool 0x80356730..0x80357008: defined before the Update asm references it */
+extern "C" const char lbl_80356730[0x418] = {
+    0x3F, 0x80, 0x00, 0x00, 0x3F, 0x33, 0x33, 0x33, 0x3F, 0x66, 0x66, 0x66, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x7A, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x9C, 0x40, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x7A, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x9C, 0x40, 0x00, 0x42, 0x85, 0x55, 0x56, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x7A, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x9C, 0x40, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x7A, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x9C, 0x40, 0x00, 0x42, 0x85, 0x55, 0x56, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x7A, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x9C, 0x40, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x7A, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x9C, 0x40, 0x00, 0x42, 0x85, 0x55, 0x56, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x7A, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x9C, 0x40, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x7A, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x9C, 0x40, 0x00, 0x42, 0x85, 0x55, 0x56, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x7A, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x9C, 0x40, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x7A, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x9C, 0x40, 0x00, 0x42, 0x85, 0x55, 0x56, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x7A, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x9C, 0x40, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x7A, 0x00, 0x00,
+    0x42, 0x85, 0x55, 0x56, 0x45, 0x9C, 0x40, 0x00, 0x42, 0x85, 0x55, 0x56, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x44, 0x7A, 0x00, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x44, 0xFA, 0x00, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x3B, 0x80, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x7A, 0x00, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x9C, 0x40, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x44, 0x7A, 0x00, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x44, 0xFA, 0x00, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x3B, 0x80, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x7A, 0x00, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x9C, 0x40, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x44, 0x7A, 0x00, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x44, 0xFA, 0x00, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x3B, 0x80, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x7A, 0x00, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x9C, 0x40, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x44, 0x7A, 0x00, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x44, 0xFA, 0x00, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x3B, 0x80, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x7A, 0x00, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x9C, 0x40, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x44, 0x7A, 0x00, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x44, 0xFA, 0x00, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x3B, 0x80, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x7A, 0x00, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x9C, 0x40, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x44, 0x7A, 0x00, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x44, 0xFA, 0x00, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x3B, 0x80, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x7A, 0x00, 0x00,
+    0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x9C, 0x40, 0x00, 0x42, 0xA6, 0xAA, 0xAB, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, 0x70, 0x00, 0x00, 0x43, 0x48, 0x00, 0x00,
+    0x42, 0x8C, 0x00, 0x00, 0x42, 0x8C, 0x00, 0x00,
+};
+static const unsigned int s_shellPathData[0x26] = {
+    0xC29C0000, 0x00000000, 0xC3460000, 0x42580000, 0x00000000, 0xC3460000,
+    0x43988000, 0x00000000, 0x43A28000, 0xC3858000, 0x00000000, 0x439F0000,
+    0x00000004, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x43B68000,
+    0xC28D0000, 0xC25C0000, 0x428D0000, 0xC22E0000, 0xC25C0000, 0xC0800000,
+    0x00000000, 0xC25C0000, 0xC0800000, 0x42200000, 0xC25C0000, 0xC0B00000,
+    0x42890000, 0xC25C0000, 0x42900000, 0x41400000, 0x40C00000, 0x00000000,
+    0xC1000000, 0xC1800000,
+};
+static const unsigned int s_defaultCourse[5] = {
+    0x00000078, 0x40A00000, 0x00000014, 0x00000078, 0x01000000,
+};
+extern "C" const char lbl_80356BF4[12] = "clCGameKP";
+extern "C" const unsigned int lbl_80356C00[0x16] = {
+    0x636C4A6F, 0x6252756E, 0x6E657200, 0x48697420, 0x4E6F203D, 0x2025640A,
+    0x00000000, 0x53746172, 0x7420746F, 0x204B5043, 0x6F696E2E, 0x20436F69,
+    0x6E206B69, 0x6E642069, 0x73202564, 0x2E202025, 0x73202D20, 0x25640A00,
+    0x4347616D, 0x65436F69, 0x6E2E6870, 0x70000000,
+};
+extern "C" const char lbl_80356C58[40] = "!(jobj->flags & JOBJ_USE_QUATERNION)";
+static const char s_lakituFile[20] = "jyugemu_start.dat";
+static const char s_shellFile[24] = "it_a_03_black_shell.dat";
+static const char s_lavaJoint1[28] = "KP_castle_zyougan01_joint";
+static const char s_lavaJoint2[28] = "KP_castle_zyougan02_joint";
+static const char s_lavaJoint3[28] = "KP_castle_zyougan03_joint";
+static const char s_skydomeJoint[32] = "KP_castle_kp01_skydome_joint";
+static const char s_skycloudJoint[32] = "KP_castle_kp03_skycloud_joint";
+static const char s_coinFile[16] = "mario_coin.dat";
+static const char s_kiraFile[16] = "k_kira13.dat";
+extern "C" const unsigned int lbl_80356D60[0x9C] = {
+    0x6368616C, 0x6C656E67, 0x655F6465, 0x6D6F5F4B, 0x505F656E, 0x642E6461,
+    0x74000000, 0x626F7373, 0x5F6D656B, 0x615F6B6F, 0x6F70615F, 0x656E642E,
+    0x64617400, 0x626F7373, 0x5F6B6F6F, 0x70615F65, 0x6E642E64, 0x61740000,
+    0x6B6F6F70, 0x61646561, 0x642E6461, 0x74000000, 0x4B505F63, 0x616C6C65,
+    0x6E67655F, 0x7A796F75, 0x67616E30, 0x315F6A6F, 0x696E7400, 0x4B505F63,
+    0x616C6C65, 0x6E67655F, 0x7A796F75, 0x67616E30, 0x325F6A6F, 0x696E7400,
+    0x4B505F63, 0x616C6C65, 0x6E67655F, 0x7A796F75, 0x67616E30, 0x335F6A6F,
+    0x696E7400, 0x4B505F63, 0x616C6C65, 0x6E67655F, 0x6B703031, 0x5F736B79,
+    0x646F6D65, 0x5F6A6F69, 0x6E740000, 0x4B505F63, 0x616C6C65, 0x6E67655F,
+    0x6B703033, 0x5F736B79, 0x636C6F75, 0x645F6A6F, 0x696E7400, 0x6B706368,
+    0x5F6D6167, 0x756D615F, 0x666C7569, 0x645F7061, 0x7274735F, 0x63686D66,
+    0x5F696E5F, 0x6A6F696E, 0x74000000, 0x6B6F6F70, 0x615F6669, 0x72652E64,
+    0x61740000, 0x626F7373, 0x5F6D656B, 0x615F6B6F, 0x6F70615F, 0x74616D62,
+    0x2E646174, 0x00000000, 0x626F7373, 0x5F6D656B, 0x615F6B6F, 0x6F70615F,
+    0x6672616D, 0x652E6461, 0x74000000, 0x626F7373, 0x5F6D656B, 0x615F6B6F,
+    0x6F70615F, 0x64616D61, 0x67655F6C, 0x2E646174, 0x00000000, 0x626F7373,
+    0x5F6D656B, 0x615F6B6F, 0x6F70615F, 0x64616D61, 0x67655F72, 0x2E646174,
+    0x00000000, 0x5F326368, 0x616C6C65, 0x6E67655F, 0x6D656B61, 0x5F6B6F6F,
+    0x70615F66, 0x6C616D65, 0x5F6E756C, 0x6C5F6A6F, 0x696E7400, 0x626F7373,
+    0x5F6B6F6F, 0x70615F74, 0x616D622E, 0x64617400, 0x626F7373, 0x5F6B6F6F,
+    0x70615F66, 0x72616D65, 0x2E646174, 0x00000000, 0x626F7373, 0x5F6B6F6F,
+    0x70615F64, 0x616D6167, 0x655F6C2E, 0x64617400, 0x626F7373, 0x5F6B6F6F,
+    0x70615F64, 0x616D6167, 0x655F722E, 0x64617400, 0x5F326368, 0x616C6C65,
+    0x6E67655F, 0x6B6F6F70, 0x615F666C, 0x616D655F, 0x6E756C6C, 0x5F315F6A,
+    0x6F696E74, 0x00000000, 0x636C4D65, 0x6E75496E, 0x70757400, 0x74655369,
+    0x6E676C65, 0x746F6E3C, 0x636C4D65, 0x6E75496E, 0x7075743E, 0x00000000,
+};
+extern "C" const char lbl_80356FD0[16] = "clCGameCoinBase";
+extern "C" const unsigned int lbl_80356FE0[0xA] = {
+    0x636C4347, 0x616D654B, 0x50436F69, 0x6E000000, 0x636C4143, 0x616D6572,
+    0x61000000, 0x636C4361, 0x6D657261, 0x00000000,
+};
 
 extern "C" asm void CGameCoin_Update(void) { /* 0x8012C538 size:0x2164 */
     nofralloc
@@ -3678,520 +3806,294 @@ extern "C" CGameCoin *CGameCoin_Destroy(CGameCoin *self, short flag) { /* 0x8012
     return self;
 }
 
-extern "C" asm void CGameCoin_Init(void) { /* 0x8012FC58 size:0x78C */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    stw r0, 0x54(r1)
-    stfd f31, 0x40(r1)
-    psq_st f31, 0x48(r1), 0, 0
-    stmw r27, 0x2c(r1)
-    mr r31, r3
-    lis r4, lbl_80356730@ha
-    mr r0, r31
-    mr r29, r0
-    addi r30, r4, lbl_80356730@l
-    bl GameMode_BaseInit
-    lis r4, lbl_8048E144@ha
-    lis r3, vtable@ha
-    addi r0, r4, lbl_8048E144@l
-    lfs f0, lbl_806D7150(r2)
-    stw r0, 0x0(r29)
-    addi r0, r3, vtable@l
-    mr r3, r31
-    stfs f0, 0x4(r29)
-    stw r0, 0x0(r31)
-    bl CGameCoin_InitFields
-    bl DrawManager_GetOrCreate
-    li r3, 0x0
-    bl SetResourceLoadingFlag
-    bl DMAChannelManager_Init
-    bl TransitionEffect_GetOrCreate
-    bl SoundChannels_ClearAll
-    bl ItemObjectManager_Init
-    bl CourseObjectManager_Init
-    li r3, 0x37c
-    bl Alloc
-    mr. r29, r3
-    beq CGameCoin_Init_L_8012FCE4
-    bl InputManager_Init
-    CGameCoin_Init_L_8012FCE4:
-    stw r29, 0x54(r31)
-    li r0, 0x0
-    li r3, 0x0
-    stw r0, 0x60(r31)
-    stw r0, 0x64(r31)
-    stw r0, g_raceCamera(r13)
-    bl ProcessSystemTick
-    li r3, 0x30
-    bl Alloc
-    mr. r29, r3
-    beq CGameCoin_Init_L_8012FD18
-    li r4, 0x3c
-    bl InputCmd_Init
-    CGameCoin_Init_L_8012FD18:
-    stw r29, 0x8(r31)
-    bl GetRaceContextPtr
-    bl RankingTable_Init
-    li r0, 0x0
-    li r3, 0x0
-    stw r0, lbl_806D12BC(r13)
-    bl SoundDriver_GetOrCreate
-    addi r4, r1, 0x10
-    addi r5, r1, 0xc
-    addi r6, r1, 0x8
-    li r3, 0x0
-    bl GetStartPosition
-    li r3, 0x384
-    bl Alloc
-    mr. r28, r3
-    beq CGameCoin_Init_L_8012FD80
-    lwz r29, g_characterId(r13)
-    bl GetDisplayBufferIndex
-    mr r4, r3
-    mr r3, r28
-    mr r5, r29
-    addi r6, r31, 0x18
-    li r7, 0x0
-    li r8, 0x0
-    li r9, 0x0
-    bl KartDriver_New_Full
-    CGameCoin_Init_L_8012FD80:
-    stw r28, 0xc(r31)
-    li r0, 0x1
-    li r3, 0x154
-    lwz r4, 0xc(r31)
-    stw r0, 0x238(r4)
-    bl Alloc
-    mr. r28, r3
-    beq CGameCoin_Init_L_8012FDC0
-    lfs f1, lbl_806D7150(r2)
-    li r4, 0x1
-    lwz r5, 0xc(r31)
-    li r7, 0x1
-    fmr f2, f1
-    lwz r6, g_characterId(r13)
-    fmr f3, f1
-    bl TornadoEffect_Ctor
-    CGameCoin_Init_L_8012FDC0:
-    stw r28, 0x10(r31)
-    lfs f1, lbl_806D7150(r2)
-    lwz r3, 0x10(r31)
-    lfs f2, lbl_806D7140(r2)
-    bl TireEffect_ResetSpin
-    lwz r3, 0x10(r31)
-    li r4, 0x1
-    li r5, 0x1
-    bl TornadoEffect_SetColorPairC8CC
-    li r3, 0x38
-    bl Alloc
-    mr. r28, r3
-    beq CGameCoin_Init_L_8012FE0C
-    lwz r4, g_characterId(r13)
-    li r5, 0x1
-    li r6, 0x1
-    li r7, 0x0
-    li r8, 0x0
-    bl KartAudioChannel_Init
-    CGameCoin_Init_L_8012FE0C:
-    stw r28, 0x14(r31)
-    li r4, 0x1
-    lwz r3, 0x14(r31)
-    bl KartAudioChannel_ResetSEsAndSetFlag
-    li r3, 0x168
-    bl Alloc
-    mr. r28, r3
-    beq CGameCoin_Init_L_8012FE38
-    lwz r4, g_characterId(r13)
-    addi r5, r31, 0x18
-    bl fn_8012B48C
-    CGameCoin_Init_L_8012FE38:
-    stw r28, 0x48(r31)
-    li r3, 0x58
-    bl Alloc
-    mr. r28, r3
-    beq CGameCoin_Init_L_8012FE64
-    lfs f1, lbl_806D7150(r2)
-    addi r4, r30, 0x550
-    li r5, 0x0
-    fmr f2, f1
-    fmr f3, f1
-    bl LakituStart_Init
-    CGameCoin_Init_L_8012FE64:
-    stw r28, 0x50(r31)
-    li r3, 0x3084
-    bl Alloc
-    mr. r28, r3
-    beq CGameCoin_Init_L_8012FE94
-    lwz r3, g_characterId(r13)
-    li r4, -0x1
-    bl GetKartModelNameEntry
-    mr r4, r3
-    mr r3, r28
-    lwz r4, 0x0(r4)
-    bl Scene3D_Init
-    CGameCoin_Init_L_8012FE94:
-    stw r28, 0x58(r31)
-    li r3, 0x8
-    bl Alloc
-    mr. r28, r3
-    beq CGameCoin_Init_L_8012FEAC
-    bl ChallengeGoalCamera_Init
-    CGameCoin_Init_L_8012FEAC:
-    stw r28, 0x5c(r31)
-    li r3, 0x0
-    bl ProcessSystemTick
-    li r3, 0x80
-    bl Alloc
-    mr. r28, r3
-    beq CGameCoin_Init_L_8012FED0
-    li r4, 0x0
-    bl HUD_Init
-    CGameCoin_Init_L_8012FED0:
-    stw r28, 0x68(r31)
-    li r4, 0x6
-    li r5, 0x0
-    lwz r3, 0x68(r31)
-    bl HUD_RegisterOverlay
-    lwz r3, 0x68(r31)
-    li r4, 0x11
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    lwz r3, 0x68(r31)
-    li r4, 0x12
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    lwz r3, 0x68(r31)
-    li r4, 0xe
-    li r5, 0x0
-    bl HUD_RegisterOverlay
-    li r0, 0x0
-    stb r0, g_lakituStartAnimDone(r13)
-    lwz r3, 0x58(r31)
-    bl SetCourseScene3D
-    li r0, 0x0
-    stb r0, g_raceEnded(r13)
-    bl MiniGame_GetTimerValue
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x1c(r1)
-    li r3, 0x5
-    lfd f1, lbl_806D7148(r2)
-    stw r0, 0x18(r1)
-    lfd f0, 0x18(r1)
-    fsubs f0, f0, f1
-    stfs f0, g_raceTimeRemaining(r13)
-    bl PreloadEffectResources
-    li r3, 0x9
-    bl PreloadEffectResources
-    li r3, 0xa
-    bl PreloadEffectResources
-    bl MiniGame_GetCourseData
-    stw r3, 0x84(r31)
-    lwz r0, 0x84(r31)
-    cmplwi r0, 0x0
-    bne CGameCoin_Init_L_8012FF84
-    addi r0, r30, 0x4b0
-    stw r0, 0x84(r31)
-    CGameCoin_Init_L_8012FF84:
-    li r3, 0x6c
-    bl Alloc
-    mr. r28, r3
-    beq CGameCoin_Init_L_80130048
-    lwz r5, 0x84(r31)
-    li r0, 0x0
-    lwz r4, 0x48(r31)
-    li r3, 0x20
-    lfs f31, 0x4(r5)
-    lwz r29, 0x164(r4)
-    lfs f0, lbl_806D7150(r2)
-    stw r0, 0x0(r28)
-    stw r0, 0x4(r28)
-    stw r0, 0x8(r28)
-    stfs f0, 0xc(r28)
-    stfs f0, 0x40(r28)
-    stw r0, 0x44(r28)
-    stw r0, 0x48(r28)
-    stb r0, 0x4c(r28)
-    stfs f0, 0x50(r28)
-    stfs f0, 0x54(r28)
-    stfs f0, 0x58(r28)
-    bl Alloc
-    mr. r27, r3
-    beq CGameCoin_Init_L_8012FFEC
-    bl fn_8017363C
-    CGameCoin_Init_L_8012FFEC:
-    stw r27, 0x0(r28)
-    li r3, 0x5c
-    bl Alloc
-    mr. r27, r3
-    beq CGameCoin_Init_L_8013000C
-    addi r4, r30, 0x564
-    li r5, 0x1
-    bl clNormal3D_Construct
-    CGameCoin_Init_L_8013000C:
-    stw r27, 0x4(r28)
-    lis r4, 0x4000
-    li r5, 0x0
-    lwz r3, 0x4(r28)
-    bl clNormal3D_SetFlags
-    stw r29, 0x44(r28)
-    li r3, 0x4
-    stfs f31, 0x68(r28)
-    bl Alloc
-    mr. r27, r3
-    beq CGameCoin_Init_L_80130044
-    addi r4, r30, 0x418
-    li r5, 0x1
-    bl fn_80123BB4
-    CGameCoin_Init_L_80130044:
-    stw r27, 0x48(r28)
-    CGameCoin_Init_L_80130048:
-    stw r28, 0x4c(r31)
-    li r3, 0x40
-    bl Alloc
-    mr. r27, r3
-    beq CGameCoin_Init_L_8013006C
-    lwz r5, 0x84(r31)
-    lwz r4, 0x8(r5)
-    lwz r5, 0xc(r5)
-    bl BossKoopa_Init
-    CGameCoin_Init_L_8013006C:
-    stw r27, 0x6c(r31)
-    li r3, 0x10
-    bl Alloc
-    mr. r27, r3
-    beq CGameCoin_Init_L_80130084
-    bl fn_8016E064
-    CGameCoin_Init_L_80130084:
-    stw r27, 0x70(r31)
-    li r3, 0x898
-    bl Alloc
-    mr. r27, r3
-    beq CGameCoin_Init_L_8013009C
-    bl fn_8016F010
-    CGameCoin_Init_L_8013009C:
-    stw r27, 0x74(r31)
-    li r3, 0x38
-    bl Alloc
-    mr. r27, r3
-    beq CGameCoin_Init_L_801300B4
-    bl CGameCoin_InitDefeatDemo
-    CGameCoin_Init_L_801300B4:
-    stw r27, 0x78(r31)
-    addi r4, r30, 0x57c
-    lwz r3, 0x54(r31)
-    bl CourseEnvironment_ResolveJointInSlot0
-    stw r3, 0xa4(r31)
-    addi r4, r30, 0x598
-    lwz r3, 0x54(r31)
-    bl CourseEnvironment_ResolveJointInSlot0
-    stw r3, 0xa8(r31)
-    addi r4, r30, 0x5b4
-    lwz r3, 0x54(r31)
-    bl CourseEnvironment_ResolveJointInSlot0
-    stw r3, 0xac(r31)
-    addi r4, r30, 0x5d0
-    lwz r3, 0x54(r31)
-    bl CourseEnvironment_ResolveJointInSlot0
-    stw r3, 0xb0(r31)
-    addi r4, r30, 0x5f0
-    lwz r3, 0x54(r31)
-    bl CourseEnvironment_ResolveJointInSlot0
-    stw r3, 0xb4(r31)
-    li r3, 0x8a0
-    bl Alloc
-    mr. r27, r3
-    beq CGameCoin_Init_L_801302D8
-    lis r3, lbl_8048E34C@ha
-    li r4, 0x0
-    addi r3, r3, lbl_8048E34C@l
-    li r0, 0x7
-    stw r3, 0x0(r27)
-    li r3, 0x5c
-    stw r4, 0xc(r27)
-    stw r4, 0x10(r27)
-    stw r0, 0x89c(r27)
-    bl Alloc
-    mr. r28, r3
-    beq CGameCoin_Init_L_80130154
-    addi r4, r30, 0x610
-    li r5, 0x1
-    bl clNormal3D_Construct
-    CGameCoin_Init_L_80130154:
-    stw r28, 0x4(r27)
-    lis r4, 0x4000
-    li r5, 0x0
-    lwz r3, 0x4(r27)
-    bl clNormal3D_SetFlags
-    li r3, 0x5c
-    bl Alloc
-    mr. r28, r3
-    beq CGameCoin_Init_L_80130184
-    addi r4, r30, 0x620
-    li r5, 0x1
-    bl clNormal3D_Construct
-    CGameCoin_Init_L_80130184:
-    stw r28, 0x8(r27)
-    lwz r3, 0x8(r27)
-    bl Archive_GetRootJObj
-    li r4, 0x200
-    bl HSD_JObjSetFlags
-    li r0, 0x3
-    mr r5, r27
-    lfs f0, lbl_806D7150(r2)
-    li r4, 0x0
-    mtctr r0
-    CGameCoin_Init_L_801301AC:
-    li r3, 0x0
-    li r0, -0x1
-    stw r3, 0x14(r5)
-    stw r3, 0x1c(r5)
-    stfs f0, 0x38(r5)
-    stfs f0, 0x3c(r5)
-    stw r3, 0x18(r5)
-    stfs f0, 0x28(r5)
-    stfs f0, 0x24(r5)
-    stfs f0, 0x20(r5)
-    stfs f0, 0x34(r5)
-    stfs f0, 0x30(r5)
-    stfs f0, 0x2c(r5)
-    stw r0, 0x40(r5)
-    stw r0, 0x50(r5)
-    stw r0, 0x60(r5)
-    stw r0, 0x70(r5)
-    stw r0, 0x80(r5)
-    stw r0, 0x90(r5)
-    stw r0, 0xa0(r5)
-    stw r0, 0xb0(r5)
-    stw r0, 0xc0(r5)
-    stw r0, 0xd0(r5)
-    stw r0, 0xe0(r5)
-    stw r0, 0xf0(r5)
-    stw r0, 0x100(r5)
-    stw r0, 0x110(r5)
-    stw r0, 0x120(r5)
-    stw r0, 0x130(r5)
-    stw r0, 0x140(r5)
-    stw r0, 0x150(r5)
-    stw r0, 0x160(r5)
-    stw r0, 0x170(r5)
-    stw r3, 0x180(r5)
-    stw r3, 0x188(r5)
-    stfs f0, 0x1a4(r5)
-    stfs f0, 0x1a8(r5)
-    stw r3, 0x184(r5)
-    stfs f0, 0x194(r5)
-    stfs f0, 0x190(r5)
-    stfs f0, 0x18c(r5)
-    stfs f0, 0x1a0(r5)
-    stfs f0, 0x19c(r5)
-    stfs f0, 0x198(r5)
-    stw r0, 0x1ac(r5)
-    addi r4, r4, 0x1
-    stw r0, 0x1bc(r5)
-    stw r0, 0x1cc(r5)
-    stw r0, 0x1dc(r5)
-    stw r0, 0x1ec(r5)
-    stw r0, 0x1fc(r5)
-    stw r0, 0x20c(r5)
-    stw r0, 0x21c(r5)
-    stw r0, 0x22c(r5)
-    stw r0, 0x23c(r5)
-    stw r0, 0x24c(r5)
-    stw r0, 0x25c(r5)
-    stw r0, 0x26c(r5)
-    stw r0, 0x27c(r5)
-    stw r0, 0x28c(r5)
-    stw r0, 0x29c(r5)
-    stw r0, 0x2ac(r5)
-    stw r0, 0x2bc(r5)
-    stw r0, 0x2cc(r5)
-    stw r0, 0x2dc(r5)
-    addi r5, r5, 0x2d8
-    bdnz CGameCoin_Init_L_801301AC
-    lwz r0, 0x89c(r27)
-    cmpwi r0, 0x14
-    blt CGameCoin_Init_L_801302CC
-    li r0, 0x13
-    stw r0, 0x89c(r27)
-    CGameCoin_Init_L_801302CC:
-    lis r3, lbl_8048E3C0@ha
-    addi r0, r3, lbl_8048E3C0@l
-    stw r0, 0x0(r27)
-    CGameCoin_Init_L_801302D8:
-    stw r27, 0xc0(r31)
-    lwz r0, g_weatherSystem(r13)
-    cmplwi r0, 0x0
-    bne CGameCoin_Init_L_80130304
-    li r3, 0x1b4
-    bl Alloc
-    mr. r27, r3
-    beq CGameCoin_Init_L_80130300
-    li r4, 0x1
-    bl WeatherSystem_Init
-    CGameCoin_Init_L_80130300:
-    stw r27, g_weatherSystem(r13)
-    CGameCoin_Init_L_80130304:
-    li r3, 0x0
-    bl InitRumbleController
-    li r3, 0x1
-    bl SetResourceLoadingFlag
-    lwz r0, g_pInputState(r13)
-    cmplwi r0, 0x0
-    bne CGameCoin_Init_L_80130324
-    li r0, 0x0
-    CGameCoin_Init_L_80130324:
-    cmplwi r0, 0x0
-    bne CGameCoin_Init_L_8013038C
-    li r3, 0x28
-    bl Alloc
-    cmplwi r3, 0x0
-    beq CGameCoin_Init_L_8013038C
-    lis r4, lbl_803FDF28@ha
-    lis r5, lbl_803FDF40@ha
-    addi r0, r4, lbl_803FDF28@l
-    li r4, 0x0
-    stw r0, 0x0(r3)
-    addi r5, r5, lbl_803FDF40@l
-    li r0, 0x1
-    stw r3, g_pInputState(r13)
-    stw r5, 0x0(r3)
-    stb r4, 0x4(r3)
-    stb r0, 0x5(r3)
-    stb r0, 0x6(r3)
-    stw r4, 0x8(r3)
-    stw r4, 0xc(r3)
-    stw r4, 0x10(r3)
-    stw r4, 0x14(r3)
-    stw r4, 0x18(r3)
-    stw r4, 0x1c(r3)
-    stw r4, 0x20(r3)
-    stw r4, 0x24(r3)
-    CGameCoin_Init_L_8013038C:
-    bl StrPcb_GetInstance
-    bl StrPcb_ForceRun_Neutral
-    bl StrPcb_GetInstance
-    li r4, 0x1
-    bl StrPcb_ResetCommands_Neutral
-    lwz r4, g_pInputState(r13)
-    cmplwi r4, 0x0
-    bne CGameCoin_Init_L_801303B0
-    li r4, 0x0
-    CGameCoin_Init_L_801303B0:
-    li r3, 0x1
-    li r0, 0x0
-    stb r3, 0x4(r4)
-    mr r3, r31
-    stw r0, 0x18(r4)
-    stw r0, 0x1c(r4)
-    psq_l f31, 0x48(r1), 0, 0
-    lfd f31, 0x40(r1)
-    lmw r27, 0x2c(r1)
-    lwz r0, 0x54(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
+struct CoinInputView {
+    void **vt;
+    unsigned char enabled;
+    unsigned char flag5;
+    unsigned char flag6;
+    int fields[8];
+};
+static inline CoinInputView *input_state(void)
+{
+    if (g_pInputState == 0) {
+        return 0;
+    }
+    return g_pInputState;
+}
+static inline void CreateInputState(void)
+{
+    CoinInputView *p = (CoinInputView *)Alloc(0x28);
+    if (p != 0) {
+        p->vt = lbl_803FDF28;
+        g_pInputState = p;
+        p->vt = lbl_803FDF40;
+        p->enabled = 0;
+        p->flag5 = 1;
+        p->flag6 = 1;
+        p->fields[0] = 0;
+        p->fields[1] = 0;
+        p->fields[2] = 0;
+        p->fields[3] = 0;
+        p->fields[4] = 0;
+        p->fields[5] = 0;
+        p->fields[6] = 0;
+        p->fields[7] = 0;
+    }
+}
+
+struct InputManager { char data[0x37C]; InputManager(); };
+struct InputCmd { char data[0x30]; InputCmd(int frames); };
+struct KartDriver {
+    char pad0[0x238];
+    int x238;
+    char pad23C[0x384 - 0x23C];
+    KartDriver(int disp, int chara, void *start, int a, int b, int c);
+};
+struct PlayerDriver : KartDriver {
+    PlayerDriver(int chara, void *start) : KartDriver(GetDisplayBufferIndex(), chara, start, 0, 0, 0) {}
+};
+struct TornadoEffect {
+    char data[0x154];
+    TornadoEffect(int a, KartDriver *drv, int chara, int b, float x, float y, float z);
+};
+struct KartAudioChannel { char data[0x38]; KartAudioChannel(int chara, int a, int b, int c, int d); };
+struct KPRival {
+    char pad0[0x164];
+    int x164;
+    KPRival(int chara, void *start);
+};
+struct LakituStart { char data[0x58]; LakituStart(const void *data, int arg, float x, float y, float z); };
+struct Scene3D { char data[0x3084]; Scene3D(int name); };
+struct ChallengeGoalCamera { char data[8]; ChallengeGoalCamera(); };
+struct HUD { char data[0x80]; HUD(int arg); };
+struct WeatherSystem { char data[0x1B4]; WeatherSystem(int arg); };
+struct KPShellPath { char data[0x20]; KPShellPath(); };
+struct KPShellTrack { int data; KPShellTrack(const void *path, int arg); };
+struct KPUnk70 { char data[0x10]; KPUnk70(); };
+struct KPUnk74 { char data[0x898]; KPUnk74(); };
+
+struct ShotVec {
+    float x, y, z;
+    void Zero() { x = y = z = lbl_806D7150; }
+};
+struct CoinShotTrail { int age; ShotVec pos; };
+struct CoinShot {
+    int active;
+    int x4;
+    int timer;
+    ShotVec pos;
+    ShotVec vel;
+    float rot;
+    float alpha;
+    CoinShotTrail trail[20];
+};
+
+struct CoinShotBase {
+    virtual ~CoinShotBase();
+    CoinNormal3D *model;
+    CoinNormal3D *trailModel;
+    int xC;
+    int x10;
+    CoinShot shots[6];
+    int trailCount;
+    CoinShotBase(const char *modelFile, const char *trailFile, int trails);
+};
+
+inline CoinShotBase::CoinShotBase(const char *modelFile, const char *trailFile, int trails) {
+    xC = 0;
+    x10 = 0;
+    trailCount = trails;
+    model = new CoinNormal3D(modelFile, 1);
+    clNormal3D_SetFlags(model, 0x40000000, 0);
+    trailModel = new CoinNormal3D(trailFile, 1);
+    HSD_JObjSetFlags(Archive_GetRootJObj(trailModel), 0x200);
+    for (int i = 0; i < 6; i++) {
+        shots[i].active = 0;
+        shots[i].timer = 0;
+        shots[i].rot = lbl_806D7150;
+        shots[i].alpha = lbl_806D7150;
+        shots[i].x4 = 0;
+        shots[i].pos.Zero();
+        shots[i].vel.Zero();
+        for (int j = 0; j < 20; j++) {
+            shots[i].trail[j].age = -1;
+        }
+    }
+    if (trailCount >= 20) {
+        trailCount = 19;
+    }
+}
+
+struct KPCoinShots : CoinShotBase {
+    KPCoinShots(const char *modelFile, const char *trailFile) : CoinShotBase(modelFile, trailFile, 7) {}
+    virtual ~KPCoinShots();
+};
+
+
+struct KPShell {
+    KPShellPath *path;
+    CoinNormal3D *model;
+    int x8;
+    float xC;
+    char pad10[0x30];
+    float x40;
+    int x44;
+    KPShellTrack *track;
+    unsigned char x4C;
+    float x50, x54, x58;
+    char pad5C[0xC];
+    float speed;
+    KPShell(int target, float spd) {
+        path = 0;
+        model = 0;
+        x8 = 0;
+        xC = lbl_806D7150;
+        x40 = lbl_806D7150;
+        x44 = 0;
+        track = 0;
+        x4C = 0;
+        x50 = lbl_806D7150;
+        x54 = lbl_806D7150;
+        x58 = lbl_806D7150;
+        path = new KPShellPath;
+        model = new CoinNormal3D(s_shellFile, 1);
+        clNormal3D_SetFlags(model, 0x40000000, 0);
+        x44 = target;
+        speed = spd;
+        track = new KPShellTrack(s_shellPathData, 1);
+    }
+};
+
+struct GameModeBase {
+    virtual void _key();
+    virtual ~GameModeBase();
+    GameModeBase();
+};
+
+struct ModeBase : GameModeBase {
+    float x4;
+    ModeBase() {
+        x4 = lbl_806D7150;
+    }
+    virtual void _key2();
+    virtual ~ModeBase();
+};
+
+
+struct KPCourseData {
+    int x0;
+    float speed;
+    int x8;
+    int xC;
+};
+
+struct KPCoinMode : ModeBase {
+    virtual void _key3();
+    InputCmd *cmd;
+    KartDriver *driver;
+    TornadoEffect *tornado;
+    KartAudioChannel *audio;
+    char start[0x30];
+    KPRival *rival;
+    KPShell *shell;
+    LakituStart *lakitu;
+    InputManager *env;
+    Scene3D *scene;
+    ChallengeGoalCamera *goalCam;
+    int x60;
+    int x64;
+    HUD *hud;
+    BossKoopa *koopa;
+    KPUnk70 *x70;
+    KPUnk74 *x74;
+    DefeatDemo *demo;
+    char pad7C[8];
+    KPCourseData *course;
+    char pad88[0x1C];
+    void *lavaJoint[3];
+    void *skydome;
+    void *skycloud;
+    char padB8[8];
+    KPCoinShots *shots;
+    KPCoinMode();
+};
+
+KPCoinMode::KPCoinMode() {
+    float x, y, z;
+
+    CGameCoin_InitFields((CGameCoinFields *)this);
+    DrawManager_GetOrCreate();
+    SetResourceLoadingFlag(0);
+    DMAChannelManager_Init();
+    TransitionEffect_GetOrCreate();
+    SoundChannels_ClearAll();
+    ItemObjectManager_Init();
+    CourseObjectManager_Init();
+    env = new InputManager;
+    x60 = 0;
+    x64 = 0;
+    g_raceCamera = 0;
+    ProcessSystemTick(0);
+    cmd = new InputCmd(0x3C);
+    RankingTable_Init(GetRaceContextPtr());
+    lbl_806D12BC = 0;
+    SoundDriver_GetOrCreate(0);
+    GetStartPosition(0, &x, &y, &z);
+    driver = new PlayerDriver(g_characterId, start);
+    driver->x238 = 1;
+    tornado = new TornadoEffect(1, driver, g_characterId, 1, lbl_806D7150, lbl_806D7150, lbl_806D7150);
+    TireEffect_ResetSpin(tornado, lbl_806D7150, lbl_806D7140);
+    TornadoEffect_SetColorPairC8CC(tornado, 1, 1);
+    audio = new KartAudioChannel(g_characterId, 1, 1, 0, 0);
+    KartAudioChannel_ResetSEsAndSetFlag(audio, 1);
+    rival = new KPRival(g_characterId, start);
+    lakitu = new LakituStart(s_lakituFile, 0, lbl_806D7150, lbl_806D7150, lbl_806D7150);
+    scene = new Scene3D(*GetKartModelNameEntry(g_characterId, -1));
+    goalCam = new ChallengeGoalCamera;
+    ProcessSystemTick(0);
+    hud = new HUD(0);
+    HUD_RegisterOverlay(hud, 6, 0);
+    HUD_RegisterOverlay(hud, 0x11, 0);
+    HUD_RegisterOverlay(hud, 0x12, 0);
+    HUD_RegisterOverlay(hud, 0xE, 0);
+    g_lakituStartAnimDone = 0;
+    SetCourseScene3D(scene);
+    g_raceEnded = 0;
+    g_raceTimeRemaining = MiniGame_GetTimerValue();
+    PreloadEffectResources(5);
+    PreloadEffectResources(9);
+    PreloadEffectResources(0xA);
+    course = (KPCourseData *)MiniGame_GetCourseData();
+    if (course == 0) {
+        course = (KPCourseData *)s_defaultCourse;
+    }
+    shell = new KPShell(rival->x164, course->speed);
+    koopa = new BossKoopa(course->x8, course->xC);
+    x70 = new KPUnk70;
+    x74 = new KPUnk74;
+    demo = new DefeatDemo;
+    lavaJoint[0] = CourseEnvironment_ResolveJointInSlot0(env, s_lavaJoint1);
+    lavaJoint[1] = CourseEnvironment_ResolveJointInSlot0(env, s_lavaJoint2);
+    lavaJoint[2] = CourseEnvironment_ResolveJointInSlot0(env, s_lavaJoint3);
+    skydome = CourseEnvironment_ResolveJointInSlot0(env, s_skydomeJoint);
+    skycloud = CourseEnvironment_ResolveJointInSlot0(env, s_skycloudJoint);
+    shots = new KPCoinShots(s_coinFile, s_kiraFile);
+    if (g_weatherSystem == 0) {
+        g_weatherSystem = new WeatherSystem(1);
+    }
+    InitRumbleController(0);
+    SetResourceLoadingFlag(1);
+    if (input_state() == 0) {
+        CreateInputState();
+    }
+    StrPcb_ForceRun_Neutral(StrPcb_GetInstance());
+    StrPcb_ResetCommands_Neutral(StrPcb_GetInstance(), 1);
+    {
+        CoinInputView *in = input_state();
+        in->enabled = 1;
+        in->fields[4] = 0;
+        in->fields[5] = 0;
+    }
 }
 
 DefeatDemo::DefeatDemo() { /* 0x801303E4 size:0x2A8 */

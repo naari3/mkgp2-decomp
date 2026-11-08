@@ -198,9 +198,9 @@ void CourseEnvironment_UpdateAndCullZones(CourseEnvironmentView *self) {
             s->references = 0;
         }
         ZoneObject *objects;
-        int zoneIndex;
-        for (zoneIndex = 0; self->zones[zoneIndex].kind != -1; ++zoneIndex) {
-            CourseZone *z = &self->zones[zoneIndex];
+        int zoneOffset;
+        CourseZone *z;
+        for (zoneOffset = 0; (z = (CourseZone *)((char *)self->zones + zoneOffset))->kind != -1; zoneOffset += sizeof(CourseZone)) {
             int kind = z->kind;
             objects = z->objects;
             if (kind) {

@@ -49,6 +49,7 @@ PRAGMAS_EXT = ['optimization_level 3', 'optimization_level 2', 'optimization_lev
 PRAGMA_SETS = {'default': PRAGMAS, 'extended': PRAGMAS_EXT, 'all': list(dict.fromkeys(PRAGMAS + PRAGMAS_EXT))}
 CCS = ['1.2.5n', '1.3', '1.3.2', '2.0', '2.6', '2.7']
 TMP = '/tmp/pragmasweep'
+OBJDIFF = False  # --objdiff: score = (100 - objdiff match %) * 100 instead of diff lines
 
 import threading
 _tl = threading.local(); _ids = iter(range(10**6)); _idlock = threading.Lock()
@@ -91,7 +92,10 @@ class Unit:
         r = subprocess.run(['ninja', '-t', 'commands', f'build/GNLJ82/src/{obj}.o'], capture_output=True, text=True)
         lines = [l for l in r.stdout.strip().splitlines() if 'mwcceppc' in l]
         if not lines: raise SystemExit(f'no compile command for {obj}')
-        self.cmd = lines[-1].split(' && ')[0].replace(' -MMD', '')
+        parts = lines[-1].split(' && ')
+        self.cmd = parts[0].replace(' -MMD', '')
+        # postprocess steps (extab renames etc.) so objdiff can pair symbols
+        self.post = [x for x in parts[1:] if f'build/GNLJ82/src/{obj}.o' in x]
         m = re.search(r'GC/([^/]+)/mwcceppc', self.cmd)
         self.cc = m.group(1) if m else None
         self.text = open(self.src).read()
@@ -101,12 +105,56 @@ class Unit:
     def compiled_name(self, fn):
         for k, v in self.renames.items():
             if v == fn: return k
+        # renames are sometimes filed under another TU's key (moved code)
+        for tu in _all_renames().values():
+            if not isinstance(tu, dict): continue
+            for k, v in tu.items():
+                if v == fn and not k.startswith('extab'): return k
         return fn
 
+    def guess_compiled_name(self, fn):
+        """Compile the TU as-is and return the emitted function whose body is
+        closest to the target's (for methods/ctors with no rename entry)."""
+        T = target_body(fn)
+        if not T: return None
+        d = f'{TMP}/guess{os.getpid()}'; os.makedirs(d, exist_ok=True)
+        for f in glob.glob(d + '/*'): os.remove(f)
+        c = re.sub(r'-c \S+ -o \S+', f'-c {self.src} -o {d}', self.cmd)
+        subprocess.run(c, shell=True, capture_output=True, text=True)
+        o = glob.glob(d + '/*.o')
+        if not o: return None
+        subprocess.run(['build/tools/dtk', 'elf', 'disasm', o[0], d + '/m.s'], capture_output=True)
+        names = re.findall(r'^\.fn (\S+?),', open(d + '/m.s', errors='replace').read(), re.M)
+        best = (0.0, None)
+        for n in names:
+            B = norm_body(d + '/m.s', n)
+            if not B or abs(len(B) - len(T)) > max(8, len(T) // 4): continue
+            r = difflib.SequenceMatcher(None, T, B, autojunk=False).ratio()
+            if r > best[0]: best = (r, n)
+        return best[1] if best[0] >= 0.6 else None
+
+    def resolve(self, fn, demangled=None):
+        """(definition span, compiled symbol name) for fn, or (None, None)."""
+        m = self.compiled_name(fn)
+        d = find_def(self.text, fn, demangled, m)
+        if d: return d, m
+        g = self.guess_compiled_name(fn)
+        if g and g != fn:
+            d = find_def(self.text, fn, demangled, g)
+            if d:
+                self.renames = dict(self.renames); self.renames[g] = fn
+                return d, g
+        return None, None
+
+    def objdiff_score(self, base_o, fn):
+        """Raw (not post-processed) .o vs the target object, as objdiff's fuzzy %."""
+        pct = _objdiff_pct(f'build/GNLJ82/obj/{self.obj}.o', base_o, fn, {fn, self.compiled_name(fn)})
+        return 10**6 if pct is None else int(round((100.0 - pct) * 100))
+
     def compile_score(self, text, fn, cc, wk):
-        d = f'{TMP}/w{wk}'; os.makedirs(d, exist_ok=True)
+        d = f'{TMP}/w{os.getpid()}_{wk}'; os.makedirs(d, exist_ok=True)
         for f in glob.glob(d + '/*.o') + glob.glob(d + '/.*.o'): os.remove(f)
-        sp = os.path.join(os.path.dirname(os.path.abspath(self.src)), f'.psweep_w{wk}{self.ext}')
+        sp = os.path.join(os.path.dirname(os.path.abspath(self.src)), f'.psweep_{os.getpid()}_w{wk}{self.ext}')
         open(sp, 'w').write(text)
         c = re.sub(r'GC/[^/]+/mwcceppc', f'GC/{cc}/mwcceppc', self.cmd)
         c = re.sub(r'-c \S+ -o \S+', f'-c {sp} -o {d}', c)
@@ -114,12 +162,42 @@ class Unit:
         os.remove(sp)
         o = glob.glob(d + '/*.o') + glob.glob(d + '/.*.o')
         if not o: return 10**6
+        for x in self.post:
+            subprocess.run(x.replace(f'build/GNLJ82/src/{self.obj}.o', o[0]), shell=True, capture_output=True)
+        if self.renames:  # the temp .file name defeats the TU lookup; rename directly
+            subprocess.run(['llvm-objcopy'] + [f'--redefine-sym={k}={v}' for k, v in self.renames.items()] + [o[0]],
+                           capture_output=True)
+        if OBJDIFF:
+            return self.objdiff_score(o[0], fn)
         subprocess.run(['build/tools/dtk', 'elf', 'disasm', o[0], d + '/m.s'], capture_output=True)
         T = target_body(fn)
         B = norm_body(d + '/m.s', fn) or norm_body(d + '/m.s', self.compiled_name(fn))
         if not B or T is None: return 10**6
         return sum(1 for l in difflib.unified_diff(T, B, lineterm='', n=0)
                    if l[:1] in '+-' and not l.startswith(('+++', '---')))
+
+
+def _objdiff_pct(target_o, base_o, fn, names):
+    r = subprocess.run(['build/tools/objdiff-cli', 'diff', '-1', target_o, '-2', base_o, '-o', '-', fn],
+                       capture_output=True, text=True)
+    try:
+        d = json.loads(r.stdout)
+    except ValueError:
+        return None
+    for sym in d.get('right', {}).get('symbols', []):
+        nm = sym.get('name') or ''
+        if (nm in names or any(nm.startswith(n + '__') for n in names)) and sym.get('match_percent') is not None:
+            return sym['match_percent']
+    return None
+
+
+_rcache = None
+def _all_renames():
+    global _rcache
+    if _rcache is None:
+        p = 'tools/extab_user_renames.json'
+        _rcache = json.load(open(p)) if os.path.exists(p) else {}
+    return _rcache
 
 
 def mangled_qual(m):
@@ -135,6 +213,11 @@ def find_def(text, fn, demangled=None, mangled=None):
     """Return (line_start, body_open_index_after_brace, body_end_index) of fn's definition."""
     pats = [r'\b' + re.escape(fn) + r'\s*\([^;{]*\)[^;{]*\{']
     if mangled and mangled != fn:
+        if re.fullmatch(r'\w+', mangled) and not re.search(r'__\d|__F', mangled):
+            pats.append(r'\b' + re.escape(mangled) + r'\s*\([^;{]*\)[^;{]*\{')  # extern "C" rename
+        mf = re.match(r'(\w+?)__F', mangled)
+        if mf and mf.group(1) != fn:
+            pats.append(r'\b' + re.escape(mf.group(1)) + r'\s*\([^;{]*\)[^;{]*\{')
         q = mangled_qual(mangled)
         if q: demangled = demangled or q + '('
     if demangled and '::' in demangled:
@@ -188,7 +271,7 @@ def variant(text, d, prags, order=None):
 
 def sweep(obj, fn, ccs=None, k=2, decl=0, jobs=4, demangled=None, quiet=False):
     u = Unit(obj)
-    d = find_def(u.text, fn, demangled, u.compiled_name(fn))
+    d, _ = u.resolve(fn, demangled)
     if not d: return {'error': 'definition not found'}
     ccs = ccs or CCS
     if u.cc in ccs: ccs = [u.cc] + [c for c in ccs if c != u.cc]
@@ -318,8 +401,12 @@ def main():
     p.add_argument('-j', '--jobs', type=int, default=os.cpu_count() or 4)
     p.add_argument('--md', default='docs/pragmasweep_results.md')
     p.add_argument('--set', choices=sorted(PRAGMA_SETS), default='default', help='pragma set to sweep')
+    for q in sp.choices.values():
+        q.add_argument('--objdiff', action='store_true',
+                       help='score by objdiff fuzzy %% (printed as (100-%%)*100) instead of diff lines')
     a = ap.parse_args()
-    global PRAGMAS
+    global PRAGMAS, OBJDIFF
+    OBJDIFF = a.objdiff
     PRAGMAS = PRAGMA_SETS[a.set]
     if a.cmd == 'fn':
         r = sweep(a.obj, a.fn, a.cc, a.k, a.decl, a.jobs, a.demangled)

@@ -74,33 +74,39 @@ Already known before this pass:
   0x801F7604..0x801F89F0 (claims #2434, #2320, #2376, #2395).
 * fn_801ECA14 uses the pool `lbl_803BD920`.
 
-## Plan: RaceHud..Scene .rodata pool (0x80362858..0x803678D8)
+## RaceHud..Scene .rodata pool (0x80362858..0x803678D8)
 
-Unsplit pool in `auto_06_80362858_rodata.s`, referenced through the bases `lbl_80362D90`
-and `lbl_80363D30` from RaceHud_80147470.cpp, CSPartsHolders.c, SceneFactory_8014D540.cpp and
-Scene_8014E0C4.cpp (`.text 0x80147470..0x80157940`). Blocked functions:
-fn_8014ADB4 (RankBoard draw, tables at +0x4B0/+0x720/+0xC00), fn_8015061C case 8 and
-the table reads in fn_801540E0 (docs/gave_up.md). The target forms
-`addi rB, base, OFF; lwzx/add rX, rB, idx`; any `pool+OFF` we write is reassociated to
-`add; lwz OFF(r)`.
+The unsplit range is several original TUs' pools. Two of them have section anchors:
 
-Finding (2026-11-07, asm→C (A) thread, corrected): GC/2.6 (and 1.3.x) DO anchor
-separate statics on `...rodata.0` (`addi r30, ...rodata.0@l; addi r29, r30, 0x190`), but
-only when the function uses the objects often enough (a loop with three tables did; one
-or two reads in a tiny function give one `lis/addi` per object). GC/1.2.5n anchors even
-tiny cases, but switching these TUs to it breaks them, so stay on 2.6. This matches the
-section-anchor recipe in setup/TIPS.md (CoursePropCtor fn_8016E568).
-
-Plan:
-1. Merge the referencing TUs into one TU that owns `.rodata 0x80362778..0x803678D8`
-   (RaceHud's own 0x80362778..0x80362858 included) and define every pool object in it,
-   in address order with exact bytes. Objects other TUs use keep their `lbl_` names.
-2. Check that the already matched functions still match after the merge (they now
-   reference the objects by name, and CW may anchor them too).
-3. Then convert fn_8014ADB4, fn_8015061C and fn_801540E0 against the pooled tables.
-
-Status: not started. The TUs are not claimed by onmokoworks (checked 2026-11-07), but the
-1.2.5n switch touches ~9 TUs, so do it as one dedicated job.
+* **0x80362D90..0x80363D30, anchor lbl_80362D90: DONE.** The original TU is
+  0x8014ADB4..0x8014D540 (clCSSceneGetTitle plus CSPartsHolders). 924f64a split RaceHud at
+  0x8014ADB4 into game/CSSceneGetTitle_8014ADB4.cpp. That TU owns this .rodata and the
+  fn_8014B118 jumptable .data, and has typed tables. fn_8014BBE4 is matched (bf4e838).
+  fn_8014ADB4 is ~93% (anchor addressing now right; only scheduling is left, see gave_up).
+  Lessons:
+  - GC/2.6 anchors the TU's own objects (`...rodata.0`) when a function uses them
+    enough.
+  - The linker deadstrips pool objects that nothing references, so wrap them in
+    `#pragma force_active on` while their users are still asm.
+  - The weak inline-dtor copy (dtor_800869D0) needs its own entry at the end of the
+    TU's tools/extab_order.json list.
+* **0x80363D30..0x803678D8, anchor lbl_80363D30 (Scene_8014E0C4): parked.** Defining the
+  pool inside Scene_8014E0C4.cpp (WIP:
+  /mnt/project-files/wip/asm-a/Scene_8014E0C4_pool_wip.cpp + Scene_pool_splits.patch)
+  builds the layout correctly.
+  - Typed objects (`AttractEntry lbl_80367488[12]`, `CourseModeInfo lbl_80366EF0[21]`,
+    `SprEntry lbl_803644D0[81]`) keep fn_8014E618, fn_80150C1C and fn_80154FB0 matching.
+  - Still broken: DrawColoredQuad, fn_8015376C and fn_80153C00, which read the CamVecs at
+    `(char *)lbl_80363D30 + 0x30B0/0x30D4/0x30F8`. Once lbl_80363D30 is a 0x4D4-byte
+    object defined in the TU, CW interleaves the 9-word copy loads and stores, and the
+    frame is 0x10 smaller.
+  - Separate named CamVecs objects get direct `lis/addi` instead of the anchor, even as
+    file statics.
+  - Next idea: the original probably had all of 0x80363D30..0x80366E4C as file statics
+    that every function reached through `...rodata.0`. Try the CamVecs as statics used by
+    a function that also touches another pool object, or check which pool objects these
+    three functions really read.
+  - Blocked by this: fn_801500F4, fn_8015061C and fn_801540E0 (docs/gave_up.md).
 
 ## Not pool, naming only
 

@@ -94,14 +94,15 @@ static inline void SetCoinSprites(CoinSprites *sprites, int shown) {
 }
 
 static inline void UpdateCoinSprites(CoinSprites *sprites) {
+    void **cursor;
     int i;
     if (sprites->exiting != 0) {
         if (sprites->slide >= lbl_806DAE28) goto sprites_done;
         float accelerator = lbl_806DAE40;
         float *positions = lbl_803C3DD8;
-        void **cursor = sprites->sprite;
+        cursor = sprites->sprite;
         sprites->slide += lbl_806DAE2C;
-        for (i = 0; i < 9; ++i, positions += 2, ++cursor)
+        for (int j = 0; j < 9; ++j, positions += 2, ++cursor)
             fn_8011F804(*cursor, accelerator * sprites->slide + positions[0], positions[1]);
     }
     {
@@ -113,7 +114,6 @@ sprites_done:
 }
 
 int MiniGame_CoinChallenge_Update(CoinChallengeView *self) {
-    CoinSprites *sprites;
     int before;
     int after;
     CoinInput *input;
@@ -146,9 +146,7 @@ int MiniGame_CoinChallenge_Update(CoinChallengeView *self) {
     fn_8013A534();
     if (g_raceEnded != 1) {
         after = CarObject_GetRenderObj(self->car)->coins;
-        int shown = Clamp_Int(after, 0, self->targetCoins);
-        sprites = self->sprites;
-        SetCoinSprites(sprites, shown);
+        SetCoinSprites(self->sprites, Clamp_Int(after, 0, self->targetCoins));
         if (after != before && IsCardValid() == 1) {
             if (self->divisor - 1 == after % self->divisor) lbl_806D1548[0] = 1;
             if (before / self->divisor != after / self->divisor) ++self->awards;

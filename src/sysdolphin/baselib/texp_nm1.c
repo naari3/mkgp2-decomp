@@ -12,136 +12,22 @@
 #undef __FILE__
 #define __FILE__ lbl_806D0F38
 extern char lbl_806D0F38[7];
-extern int AssignColorReg(HSD_TETev*, int, HSD_TExpRes*);
-extern int AssignColorKonst(HSD_TETev*, int, HSD_TExpRes*);
-extern int AssignAlphaKonst(HSD_TETev*, int, HSD_TExpRes*);
+/* HSD_TExpSetReg addresses the KColor/TevReg tables and its assert text off
+ * the texp .data pool base (lbl_804FD988), which lives in texp.c. */
+typedef struct TExpPool {
+    char pad[0x330];
+    GXTevKColorID id1[4];
+    GXTevRegID id2[3];
+    char setreg_assert[0x1B];
+} TExpPool;
+extern TExpPool lbl_804FD988;
+#define id1 lbl_804FD988.id1
+#define id2 lbl_804FD988.id2
+#undef HSD_ASSERT
+#define HSD_ASSERT(line, cond) ((cond) ? ((void) 0) : __assert(__FILE__, line, lbl_804FD988.setreg_assert))
 
-char lbl_804FDC64[] = "val >= 0";
-
-static inline u32 TEUndef(u8 v, u32 def)
-{
-    u32 r = v;
-    if (r == HSD_TE_UNDEF) {
-        r = def;
-    }
-    return r;
-}
-
-void TExp2TevDesc(HSD_TExp* texp, HSD_TExpTevDesc* desc,
-                         int* init_cprev, int* init_aprev)
-{
-    static GXTevRegID dst[4] = { GX_TEVREG0, GX_TEVREG1, GX_TEVREG2,
-                                 GX_TEVPREV };
-
-    HSD_TETev* tev;
-
-    HSD_ASSERT(0x509, texp);
-    HSD_ASSERT(0x50A, desc);
-    HSD_ASSERT(0x50B, HSD_TExpGetType(texp) == HSD_TE_TEV);
-
-    tev = &texp->tev;
-    desc->desc.next = NULL;
-    desc->desc.flags = 1;
-    desc->tobj = tev->tex;
-    if (tev->tex == NULL) {
-        desc->desc.coord = HSD_TE_UNDEF;
-        desc->desc.map = HSD_TE_UNDEF;
-    }
-    desc->desc.color = TEUndef(tev->chan, HSD_TE_UNDEF);
-    desc->desc.u.tevconf.ras_swap =
-        TEUndef(tev->ras_swap, 0);
-    desc->desc.u.tevconf.tex_swap =
-        TEUndef(tev->tex_swap, 0);
-    desc->desc.u.tevconf.kcsel = TEUndef(tev->kcsel, 0);
-    desc->desc.u.tevconf.kasel = TEUndef(tev->kasel, 0);
-
-    if ((tev->c_op == HSD_TE_UNDEF) ||
-        (tev->c_ref == 0 && tev->a_op != 8 && tev->a_op != 9 &&
-         tev->a_op != 0xA && tev->a_op != 0xB && tev->a_op != 0xC &&
-         tev->a_op != 0xD))
-    {
-        desc->desc.u.tevconf.clr_op = GX_TEV_ADD;
-        desc->desc.u.tevconf.clr_a = GX_CC_ZERO;
-        desc->desc.u.tevconf.clr_b = GX_CC_ZERO;
-        desc->desc.u.tevconf.clr_c = GX_CC_ZERO;
-        if (*init_cprev != 0) {
-            *init_cprev = 0;
-            desc->desc.u.tevconf.clr_d = GX_CC_ZERO;
-        } else {
-            desc->desc.u.tevconf.clr_d = GX_CC_CPREV;
-        }
-        desc->desc.u.tevconf.clr_scale = 0;
-        desc->desc.u.tevconf.clr_bias = 0;
-        desc->desc.u.tevconf.clr_clamp = 0;
-        desc->desc.u.tevconf.clr_out_reg = 0;
-    } else {
-        desc->desc.u.tevconf.clr_op = tev->c_op;
-        desc->desc.u.tevconf.clr_a =
-            TEUndef(tev->c_in[0].arg, GX_CC_ZERO);
-        desc->desc.u.tevconf.clr_b =
-            TEUndef(tev->c_in[1].arg, GX_CC_ZERO);
-        desc->desc.u.tevconf.clr_c =
-            TEUndef(tev->c_in[2].arg, GX_CC_ZERO);
-        desc->desc.u.tevconf.clr_d =
-            TEUndef(tev->c_in[3].arg, GX_CC_ZERO);
-        desc->desc.u.tevconf.clr_scale =
-            TEUndef(tev->c_scale, 0);
-        desc->desc.u.tevconf.clr_bias =
-            TEUndef(tev->c_bias, 0);
-        desc->desc.u.tevconf.clr_clamp = tev->c_clamp != 0 ? GX_TRUE : GX_FALSE;
-
-        HSD_ASSERT(0x54A, tev->c_dst != HSD_TE_UNDEF);
-        desc->desc.u.tevconf.clr_out_reg = dst[tev->c_dst];
-        if (desc->desc.u.tevconf.clr_out_reg == 0) {
-            *init_cprev = 0;
-        }
-    }
-
-    if (tev->a_op == HSD_TE_UNDEF || tev->a_ref == 0) {
-        desc->desc.u.tevconf.alpha_op = GX_TEV_ADD;
-        desc->desc.u.tevconf.alpha_a = GX_CA_ZERO;
-        desc->desc.u.tevconf.alpha_b = GX_CA_ZERO;
-        desc->desc.u.tevconf.alpha_c = GX_CA_ZERO;
-        if (*init_aprev != 0) {
-            *init_aprev = 0;
-            desc->desc.u.tevconf.alpha_d = GX_CA_ZERO;
-        } else {
-            desc->desc.u.tevconf.alpha_d = GX_CA_APREV;
-        }
-        desc->desc.u.tevconf.alpha_scale = 0;
-        desc->desc.u.tevconf.alpha_bias = 0;
-        desc->desc.u.tevconf.alpha_clamp = 0;
-        desc->desc.u.tevconf.alpha_out_reg = 0;
-    } else {
-        desc->desc.u.tevconf.alpha_op = tev->a_op;
-        desc->desc.u.tevconf.alpha_a =
-            TEUndef(tev->a_in[0].arg, GX_CA_ZERO);
-        desc->desc.u.tevconf.alpha_b =
-            TEUndef(tev->a_in[1].arg, GX_CA_ZERO);
-        desc->desc.u.tevconf.alpha_c =
-            TEUndef(tev->a_in[2].arg, GX_CA_ZERO);
-        desc->desc.u.tevconf.alpha_d =
-            TEUndef(tev->a_in[3].arg, GX_CA_ZERO);
-        desc->desc.u.tevconf.alpha_scale =
-            TEUndef(tev->a_scale, 0);
-        desc->desc.u.tevconf.alpha_bias =
-            TEUndef(tev->a_bias, 0);
-        desc->desc.u.tevconf.alpha_clamp =
-            tev->a_clamp != 0 ? GX_TRUE : GX_FALSE;
-
-        HSD_ASSERT(0x56E, tev->a_dst != HSD_TE_UNDEF);
-        desc->desc.u.tevconf.alpha_out_reg = dst[tev->a_dst];
-        if (desc->desc.u.tevconf.alpha_out_reg == 0) {
-            *init_aprev = 0;
-        }
-    }
-    desc->desc.u.tevconf.mode = GX_TC_LINEAR;
-}
-
-static GXTevKColorID id1[4] = { GX_KCOLOR0, GX_KCOLOR1, GX_KCOLOR2,
-                                GX_KCOLOR3 };
-static GXTevRegID id2[3] = { GX_TEVREG0, GX_TEVREG1, GX_TEVREG2 };
-
+#pragma push
+#pragma optimization_level 3
 void HSD_TExpSetReg(HSD_TExp* texp)
 {
     int i;
@@ -272,3 +158,4 @@ void HSD_TExpSetReg(HSD_TExp* texp)
         GXPixModeSync();
     }
 }
+#pragma pop

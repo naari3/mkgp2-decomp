@@ -23,3 +23,8 @@ c18_u116: fn_8028B48C BOOL r -> u8 r improves 95.70552 to 96.809814 and source t
 Source: Codex worker c19_u154_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1304 B.
 
 c19_u154: fn_8028B48C promoted 96.809814% to 100%, 1304 B. Reorder function locals to nodes, m, sem, ok, i, r: 98.34356%, every saved-register home matches, only nine clrlwi r27,r26,24 vs mr r27,r26 remain. THEN restore u8 r to BOOL r: exact 100%; with the old declaration order a full-width temporary coalesces away the nine copies. No helper/pragma/flags/data/EH changes; Matching flip, actual main.elf source input and symbol range verified; coordinator full DOL SHA-1 ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65 OK. C++ bool r (94.00307%), u32 r with original declarations (95.70552%), C++ bool ok + BOOL r (91.93252%) were rejected.
+
+## c19_u258_20261107
+Source: Codex worker c19_u258_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 208 B.
+
+c19_u258: nm3 baseline AC1C is already100% after upstream u32-channel fix, contrary to stale assignment93.71. Mechanism B moves exact208B reader verbatim into Matching triforce/amjvs_analog_read.c; full source-linked DOL SHA1 OK. AAC0 retains96.14942% /352B vs348: signed count95.574715 (wrong cmpwi), postdecrement-test invariant96.14942, inline CopyAnalog95.804596 (extra pointer move). All rejected. Residual unsigned ble vsbeq, extra count mr, count/src/dst register rotation. No EH/shared pool.

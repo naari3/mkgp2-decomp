@@ -1,5 +1,8 @@
 #include <triforce/ambackup_private.h>
 
+#pragma opt_common_subs off
+#pragma push
+#pragma opt_propagation off
 s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
     u8* buffer;
     BOOL* valid;
@@ -69,38 +72,6 @@ s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
     }
     return !ok[0];
 }
+#pragma pop
 
-s32 fn_802889AC(u32 chan) {
-    const BackupInfo* info;
-    BackupHeader* hdr;
-    BackupEntry* e;
-    BackupEntry* mirror;
-    u32 recSize;
-    u16 sum;
-
-    if (chan > 1) {
-        return 1;
-    }
-    info = &lbl_806DC918[chan];
-    if (fn_8028812C(chan, 0, 0, lbl_806835E0, info->words * 4)) {
-        return 1;
-    }
-    hdr = (BackupHeader*)lbl_806835E0;
-    recSize = (hdr->words + 0xC + info->align - 1) & -info->align;
-    sum = Checksum((u8*)hdr + 0xC, hdr->words - 0xC);
-    if ((recSize > info->words >> 1 || hdr->sum != sum) &&
-        hdr == NULL) {
-        return 1;
-    }
-    e = &lbl_80690DE0.entry[chan][0];
-    e->addr = 0;
-    e->cfg.flags = 0x83;
-    mirror = e + 1;
-    memcpy(e->cfg.id, hdr->id, 8);
-    e->cfg.size = hdr->words * 4;
-    mirror->addr = (e->cfg.size + info->align - 1) & -info->align;
-    if (e->cfg.flags & 2) {
-        mirror->addr *= 2;
-    }
-    return 0;
-}
+#pragma opt_common_subs reset

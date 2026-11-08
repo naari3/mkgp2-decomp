@@ -1,6 +1,8 @@
 #include "game/anon_80218F40_private.h"
 
-static inline void WorldToMap(MinimapHud *h, float &px, float &pz) {
+static inline void WorldToMap(MinimapHud *h, float *ppx, float *ppz) {
+    float &px = *ppx;
+    float &pz = *ppz;
     const MapInfo *mi = &lbl_803C4C10[CupIndex()][h->variant];
     float ang = lbl_806DAF54 * mi->rot;
     ang += h->scale;
@@ -17,21 +19,21 @@ static inline void WorldToMap(MinimapHud *h, float &px, float &pz) {
     }
     rx *= mi->sx;
     rz *= mi->sy;
-    if (rx < lbl_806DAF58) {
-        rx = lbl_806DAF58;
-    } else if (rx > lbl_806DAF5C) {
-        rx = lbl_806DAF5C;
+    if (rx < -500.0f) {
+        rx = -500.0f;
+    } else if (rx > 500.0f) {
+        rx = 500.0f;
     }
-    if (rz < lbl_806DAF58) {
-        rz = lbl_806DAF58;
-    } else if (rz > lbl_806DAF5C) {
-        rz = lbl_806DAF5C;
+    if (rz < -500.0f) {
+        rz = -500.0f;
+    } else if (rz > 500.0f) {
+        rz = 500.0f;
     }
     rx += mi->ox;
     rz += mi->oy;
     rx -= h->slideX;
-    pz = h->y + rz;
     px = h->x + rx;
+    pz = h->y + rz;
 }
 
 void MinimapHud::UpdateMarkers() {
@@ -70,9 +72,9 @@ void MinimapHud::UpdateMarkers() {
         float *m = KartDriver_GetKartRootMtx(e->kart);
         px = m[3];
         pz = m[11];
-        WorldToMap(this, px, pz);
+        WorldToMap(this, &px, &pz);
         fn_8011F804(sprites[slot], px, pz);
-        bool sameTeam = e->kart->team == myTeam;
+        bool sameTeam = myTeam == e->kart->team;
         int vis = 0;
         if (cup7 || sameTeam) {
             vis = 1;

@@ -2661,6 +2661,7 @@ game/Card_VerifyChecksum.c:
 	extab       start:0x80009380 end:0x80009388
 	extabindex  start:0x80021E9C end:0x80021EA8
 	.text       start:0x800903D8 end:0x8009060C
+	.rodata     start:0x80315378 end:0x803175A0
 
 game/CardUnpackLegacy.cpp:
 	extab       start:0x80009388 end:0x800093B0
@@ -2764,6 +2765,11 @@ game/CardSave_Tick_CaptureAndStart.c:
 	extabindex  start:0x80022010 end:0x8002201C
 	.text       start:0x800937D4 end:0x80093C28
 
+game/card_save_trigger.c:
+	extab       start:0x800094A0 end:0x800094A8
+	extabindex  start:0x8002201C end:0x80022028
+	.text       start:0x80093C28 end:0x8009450C
+
 game/CardPrintJob_TickFontTransfer.c:
 	extab       start:0x800094A8 end:0x800094B0
 	extabindex  start:0x80022028 end:0x80022034
@@ -2796,10 +2802,25 @@ game/Sci2Card_WriteTrackData.c:
 	extabindex  start:0x80022070 end:0x80022094
 	.text       start:0x80095C5C end:0x80096034
 
+game/card_rw_state_machine_short.c:
+	extab       start:0x800094F0 end:0x800094F8
+	extabindex  start:0x80022094 end:0x800220A0
+	.text       start:0x80096034 end:0x80096A5C
+
+game/card_rw_state_machine.c:
+	extab       start:0x800094F8 end:0x80009500
+	extabindex  start:0x800220A0 end:0x800220AC
+	.text       start:0x80096A5C end:0x8009755C
+
 game/CardReadCommand.c:
 	extab       start:0x80009500 end:0x80009518
 	extabindex  start:0x800220AC end:0x800220D0
 	.text       start:0x8009755C end:0x800976C0
+
+game/card_read_state_machine.c:
+	extab       start:0x80009518 end:0x80009520
+	extabindex  start:0x800220D0 end:0x800220DC
+	.text       start:0x800976C0 end:0x80098320
 
 game/CardReadCommandUnused.c:
 	extab       start:0x80009520 end:0x80009528
@@ -3226,6 +3247,7 @@ game/CourseData_LoadPathTable.cpp:
 	extab       start:0x8000A0CC end:0x8000A0E8
 	extabindex  start:0x8002276C end:0x80022778
 	.text       start:0x800ABAE8 end:0x800ABD80
+	.rodata     start:0x803285C0 end:0x80328B7C
 
 game/CourseData_Lookup.c:
 	extab       start:0x8000A0E8 end:0x8000A110
@@ -5926,6 +5948,7 @@ game/SpriteHandle.cpp:
 	extabindex  start:0x800245CC end:0x8002474C
 	.text       start:0x8011EB1C end:0x801223E8
 	.ctors      start:0x802E8904 end:0x802E8908
+	.bss        start:0x80657228 end:0x80677C38
 
 game/auto_801223E8_block.c:
 	.text       start:0x801223E8 end:0x80122C0C
@@ -6075,6 +6098,7 @@ game/CGameCoin_8012BF5C.cpp:
 	extab       start:0x8000C728 end:0x8000CBA0
 	extabindex  start:0x80024A58 end:0x80024B18
 	.text       start:0x8012BF5C end:0x801313D0
+	.rodata     start:0x80356730 end:0x80357008
 
 game/SuikaBall_801313D0.cpp:
 	extab       start:0x8000CBA0 end:0x8000CE64
@@ -6206,6 +6230,7 @@ game/PodiumPose.c:
 	extab       start:0x8000D838 end:0x8000D92C
 	extabindex  start:0x800250E8 end:0x80025148
 	.text       start:0x8014219C end:0x8014388C
+	.rodata     start:0x803608D0 end:0x80360C70
 
 game/CSPartsResultRank.c:
 	extab       start:0x8000D92C end:0x8000DB00
@@ -6235,6 +6260,7 @@ game/RankPanel_80144430.cpp:
 	extab       start:0x8000DBE4 end:0x8000DE5C
 	extabindex  start:0x800251D8 end:0x80025280
 	.text       start:0x80144430 end:0x80146160
+	.rodata     start:0x80361D60 end:0x80361ED0
 
 game/fn_80146160.c:
 	extab       start:0x8000DE5C end:0x8000DE64
@@ -7169,23 +7195,11 @@ game/miyazakiconsole/fn_8017EB58.c:
 	.text       start:0x8017EB58 end:0x8017EC90
 
 game/miyazakiconsole/fn_8017EC90.cpp:
-	extab       start:0x800119F4 end:0x800119FC
-	extabindex  start:0x800269E4 end:0x800269F0
-	.text       start:0x8017EC90 end:0x8017EFFC
+	extab       start:0x800119F4 end:0x80011A0C
+	extabindex  start:0x800269E4 end:0x80026A08
+	.text       start:0x8017EC90 end:0x8017F538
 	.rodata     start:0x80376220 end:0x80376E10
-	.data       start:0x804918C4 end:0x804918F4
-
-game/miyazakiconsole/fn_8017EFFC.cpp:
-	extab       start:0x800119FC end:0x80011A04
-	extabindex  start:0x800269F0 end:0x800269FC
-	.text       start:0x8017EFFC end:0x8017F1E8
-	.data       start:0x804918F4 end:0x80491928
-
-game/miyazakiconsole/fn_8017F1E8.cpp:
-	extab       start:0x80011A04 end:0x80011A0C
-	extabindex  start:0x800269FC end:0x80026A08
-	.text       start:0x8017F1E8 end:0x8017F538
-	.data       start:0x80491928 end:0x80491958
+	.data       start:0x804918C4 end:0x80491958
 
 game/miyazakiconsole/fn_8017F538.cpp:
 	extab       start:0x80011A0C end:0x80011A14
@@ -8044,25 +8058,9 @@ game/SoundMgr_Play.c:
 	.text       start:0x80192884 end:0x80192F04
 
 game/clsound/fn_80192F04.c:
-	extab       start:0x800122AC end:0x800122B4
-	extabindex  start:0x8002717C end:0x80027188
-	.text       start:0x80192F04 end:0x80193134
-
-game/clsound/fn_80193134.c:
-	.text       start:0x80193134 end:0x80193264
-
-game/WeatherSystem_PickVariant.c:
-	extab       start:0x800122B4 end:0x800122BC
-	extabindex  start:0x80027188 end:0x80027194
-	.text       start:0x80193264 end:0x801932F8
-
-game/fn_801932F8.c:
-	.text       start:0x801932F8 end:0x80193300
-
-game/fog/Fog_UpdateFromCourseScene3D.c:
-	extab       start:0x800122BC end:0x800122C4
-	extabindex  start:0x80027194 end:0x800271A0
-	.text       start:0x80193300 end:0x801933D0
+	extab       start:0x800122AC end:0x800122C4
+	extabindex  start:0x8002717C end:0x800271A0
+	.text       start:0x80192F04 end:0x801933D0
 	.data       start:0x80495F20 end:0x80495F48
 
 game/clsound/fn_801933D0.c:
@@ -10436,6 +10434,7 @@ game/fn_801F27B4.cpp:
 	extabindex  start:0x80028D18 end:0x80028D24
 	.text       start:0x801F27B4 end:0x801F2B70
 	.ctors      start:0x802E8930 end:0x802E8934
+	.data       start:0x804E4C28 end:0x804E5248
 
 game/NamCamFlow.cpp:
 	extab       start:0x80016FB4 end:0x800173C0
@@ -10747,6 +10746,7 @@ game/fn_801F9B64.cpp:
 	extab       start:0x80017700 end:0x80017738
 	extabindex  start:0x80029108 end:0x80029114
 	.text       start:0x801F9B64 end:0x801F9CA8
+	.rodata     start:0x803BF440 end:0x803BFB30
 
 game/fn_801F9CA8.cpp:
 	extab       start:0x80017738 end:0x80017740
@@ -11902,15 +11902,10 @@ game/DNFlash_nm1.cpp:
 	extabindex  start:0x8002A728 end:0x8002A734
 	.text       start:0x802281F0 end:0x80228394
 
-game/DNFlash_nm2.cpp:
-	extab       start:0x8001BB98 end:0x8001BBA0
-	extabindex  start:0x8002A734 end:0x8002A740
-	.text       start:0x80228394 end:0x802286B4
-
 game/DNFlash_tail.cpp:
-	extab       start:0x8001BBA0 end:0x8001BC10
-	extabindex  start:0x8002A740 end:0x8002A770
-	.text       start:0x802286B4 end:0x80228D64
+	extab       start:0x8001BB98 end:0x8001BC10
+	extabindex  start:0x8002A734 end:0x8002A770
+	.text       start:0x80228394 end:0x80228D64
 	.rodata     start:0x803D0390 end:0x803D08A8
 
 game/DNFlashInit.c:
@@ -12223,6 +12218,7 @@ game/ItemSelectAllowed.c:
 	extab       start:0x8001CAAC end:0x8001CAB4
 	extabindex  start:0x8002AD70 end:0x8002AD7C
 	.text       start:0x8023C8B0 end:0x8023CC74
+	.rodata     start:0x803DC378 end:0x803DC530
 
 game/SpritePairOwner.cpp:
 	extab       start:0x8001CAB4 end:0x8001CADC
@@ -13791,7 +13787,10 @@ triforce/ambackup_access.c:
 	.text       start:0x80288574 end:0x80288710
 
 triforce/ambackup_nm2.c:
-	.text       start:0x80288710 end:0x80288B80
+	.text       start:0x80288710 end:0x802889AC
+
+triforce/ambackup_load_header.c:
+	.text       start:0x802889AC end:0x80288B80
 
 triforce/ambackup_shutdown.c:
 	.text       start:0x80288B80 end:0x80288BCC
@@ -13828,8 +13827,11 @@ triforce/amjvs_m3.c:
 	.text       start:0x8028AA40 end:0x8028AAC0
 
 triforce/amjvs_nm3.c:
-	.text       start:0x8028AAC0 end:0x8028ACEC
+	.text       start:0x8028AAC0 end:0x8028AC1C
 	.sbss       start:0x806D1E30 end:0x806D1E38
+
+triforce/amjvs_analog_read.c:
+	.text       start:0x8028AC1C end:0x8028ACEC
 
 triforce/amjvs_m4.c:
 	.text       start:0x8028ACEC end:0x8028AE64
@@ -13865,27 +13867,12 @@ triforce/amnet.c:
 	.text       start:0x8028C158 end:0x8028C1B8
 
 triforce/amnet_nm3.c:
-	.text       start:0x8028C1B8 end:0x8028D3E4
+	.text       start:0x8028C1B8 end:0x8028EF74
 	.rodata     start:0x803F2798 end:0x803F2880
 	.data       start:0x804F5800 end:0x804F5828
 	.bss        start:0x806937C0 end:0x80699220
 	.sbss       start:0x806D1E40 end:0x806D1E48
 	.sdata2     start:0x806DC930 end:0x806DC940
-
-triforce/amnet_io.c:
-	.text       start:0x8028D3E4 end:0x8028D750
-
-triforce/amnet_nm1.c:
-	.text       start:0x8028D750 end:0x8028D7E8
-
-triforce/amnet_probe.c:
-	.text       start:0x8028D7E8 end:0x8028D870
-
-triforce/amnet_nm2.c:
-	.text       start:0x8028D870 end:0x8028D8CC
-
-triforce/amnet_nm2_rest.c:
-	.text       start:0x8028D8CC end:0x8028EF74
 
 triforce/amnet_init.c:
 	.text       start:0x8028EF74 end:0x8028F45C
@@ -13898,7 +13885,10 @@ triforce/amsrv.c:
 	.bss        start:0x80699220 end:0x806992A0
 
 triforce/amsrv_nm1.c:
-	.text       start:0x80291134 end:0x80291314
+	.text       start:0x80291134 end:0x8029121C
+
+triforce/amsrv_m1.c:
+	.text       start:0x8029121C end:0x80291314
 
 triforce/amsrv_tail.c:
 	.text       start:0x80291314 end:0x8029179C
@@ -13944,11 +13934,17 @@ triforce/acsocket_m7.c:
 	.text       start:0x80292BFC end:0x80292D18
 
 triforce/acsocket_nm7.c:
-	.text       start:0x80292D18 end:0x8029321C
+	.text       start:0x80292D18 end:0x80292E24
 	.bss        start:0x806992A0 end:0x806A1CE0
 
 triforce/amuart_state.c:
 	.bss        start:0x806A1CE0 end:0x806A1DB8
+
+triforce/acsocket_m8.c:
+	.text       start:0x80292E24 end:0x80293070
+
+triforce/acsocket_nm8.c:
+	.text       start:0x80293070 end:0x8029321C
 
 triforce/amuart.c:
 	.text       start:0x8029321C end:0x80293BBC
@@ -14201,19 +14197,9 @@ sysdolphin/baselib/aobj.c:
 	.sdata2     start:0x806DCBD8 end:0x806DCBE0
 
 sysdolphin/baselib/lobj.c:
-	.text       start:0x802C4010 end:0x802C42F0
-	.data       start:0x804FC368 end:0x804FC3E4
-
-sysdolphin/baselib/lobj_vector_nm.c:
-	.text       start:0x802C42F0 end:0x802C4418
+	.text       start:0x802C4010 end:0x802C6430
 	.rodata     start:0x803F2BB8 end:0x803F2BD0
-
-sysdolphin/baselib/lobj_setup.c:
-	.text       start:0x802C4418 end:0x802C457C
-
-sysdolphin/baselib/lobj_init_nm.c:
-	.text       start:0x802C457C end:0x802C53C8
-	.data       start:0x804FC3E4 end:0x804FC418
+	.data       start:0x804FC368 end:0x804FC4C8
 	.bss        start:0x806CD080 end:0x806CD0A8
 	.sdata      start:0x806D0D20 end:0x806D0D48
 	.sbss       start:0x806D2160 end:0x806D2180
@@ -14222,67 +14208,11 @@ sysdolphin/baselib/lobj_init_nm.c:
 sysdolphin/baselib/cobj_constants.c:
 	.sdata2     start:0x806DCC08 end:0x806DCC58
 
-sysdolphin/baselib/lobj_current.c:
-	.text       start:0x802C53C8 end:0x802C5900
-
-sysdolphin/baselib/lobj_id.c:
-	.text       start:0x802C5900 end:0x802C59EC
-
-sysdolphin/baselib/lobj_index.c:
-	.text       start:0x802C59EC end:0x802C5A5C
-	.data       start:0x804FC418 end:0x804FC43C
-
-sysdolphin/baselib/lobj_position.c:
-	.text       start:0x802C5A5C end:0x802C5CE8
-
-sysdolphin/baselib/lobj_load.c:
-	.text       start:0x802C5CE8 end:0x802C63B0
-
-sysdolphin/baselib/lobj_load_nm.c:
-	.text       start:0x802C63B0 end:0x802C6430
-	.data       start:0x804FC43C end:0x804FC4C8
-
-sysdolphin/baselib/cobj_data_nm1.c:
-	.data       start:0x804FC4C8 end:0x804FC52C
-	.sdata      start:0x806D0D48 end:0x806D0D68
-
 sysdolphin/baselib/cobj.c:
-	.text       start:0x802C6430 end:0x802C669C
-	.data       start:0x804FC52C end:0x804FC560
-
-sysdolphin/baselib/cobj_data_nm2.c:
-	.data       start:0x804FC560 end:0x804FC620
-
-sysdolphin/baselib/cobj_nm1.c:
-	.text       start:0x802C669C end:0x802C6900
-
-sysdolphin/baselib/cobj_bottom.c:
-	.text       start:0x802C6900 end:0x802C6BCC
-
-sysdolphin/baselib/cobj_view.c:
-	.text       start:0x802C6BCC end:0x802C74F4
-
-sysdolphin/baselib/cobj_nm2.c:
-	.text       start:0x802C74F4 end:0x802C79CC
-
-sysdolphin/baselib/cobj_up.c:
-	.text       start:0x802C79CC end:0x802C7A34
-
-sysdolphin/baselib/cobj_nm3.c:
-	.text       start:0x802C7A34 end:0x802C7D3C
-
-sysdolphin/baselib/cobj_mtx.c:
-	.text       start:0x802C7D3C end:0x802C7EC8
-
-sysdolphin/baselib/cobj_nm4.c:
-	.text       start:0x802C7EC8 end:0x802C8308
-
-sysdolphin/baselib/cobj_tail.c:
-	.text       start:0x802C8308 end:0x802C8ABC
+	.text       start:0x802C6430 end:0x802C8B48
+	.data       start:0x804FC4C8 end:0x804FC620
+	.sdata      start:0x806D0D48 end:0x806D0D68
 	.sbss       start:0x806D2180 end:0x806D2188
-
-sysdolphin/baselib/cobj_info_nm.c:
-	.text       start:0x802C8ABC end:0x802C8B48
 
 sysdolphin/baselib/fobj.c:
 	.text       start:0x802C8B48 end:0x802CA77C
@@ -14438,46 +14368,13 @@ sysdolphin/baselib/hash.c:
 	.data       start:0x804FD970 end:0x804FD988
 	.sdata      start:0x806D0F30 end:0x806D0F38
 
-sysdolphin/baselib/texp_inputs_pools_nm.c:
-	.data       start:0x804FD988 end:0x804FDAE8
+sysdolphin/baselib/texp.c:
+	.text       start:0x802DE624 end:0x802E0F8C
+	.data       start:0x804FD988 end:0x804FDCF0
 	.sdata      start:0x806D0F38 end:0x806D0F60
 
-sysdolphin/baselib/texp.c:
-	.text       start:0x802DE624 end:0x802DEC64
-
-sysdolphin/baselib/texp_inputs_nm.c:
-	.text       start:0x802DEC64 end:0x802DEF84
-
-sysdolphin/baselib/texp_alloc.c:
-	.text       start:0x802DEF84 end:0x802DF334
-
-sysdolphin/baselib/texp_color_nm.c:
-	.text       start:0x802DF334 end:0x802DF8EC
-	.data       start:0x804FDAE8 end:0x804FDB04
-
-sysdolphin/baselib/texp_alpha_strings_nm.c:
-	.data       start:0x804FDB04 end:0x804FDB88
-
-sysdolphin/baselib/texp_color.c:
-	.text       start:0x802DF8EC end:0x802DF9F4
-
-sysdolphin/baselib/texp_alpha_nm.c:
-	.text       start:0x802DF9F4 end:0x802DFDEC
-	.data       start:0x804FDB88 end:0x804FDBA4
-
-sysdolphin/baselib/texp_alpha.c:
-	.text       start:0x802DFDEC end:0x802DFFB8
-
-sysdolphin/baselib/texp_assign.c:
-	.text       start:0x802DFFB8 end:0x802E04C0
-	.data       start:0x804FDBA4 end:0x804FDC64
-
-sysdolphin/baselib/texp_nm.c:
-	.text       start:0x802E04C0 end:0x802E0B8C
-
 sysdolphin/baselib/texp_nm1.c:
-	.text       start:0x802E0B8C end:0x802E1488
-	.data       start:0x804FDC64 end:0x804FDCF0
+	.text       start:0x802E0F8C end:0x802E1488
 	.sdata2     start:0x806DCED0 end:0x806DCEE0
 
 sysdolphin/baselib/texp_compile.c:
@@ -14488,13 +14385,9 @@ sysdolphin/baselib/texpdag.c:
 	.sbss2      start:0x806DCF88 end:0x806DCF90
 
 sysdolphin/baselib/texpdag_nm1.c:
-	.text       start:0x802E1BC4 end:0x802E24AC
-	.sdata      start:0x806D0F60 end:0x806D0F68
-
-sysdolphin/baselib/texpdag_unlock.c:
-	.text       start:0x802E24AC end:0x802E34EC
+	.text       start:0x802E1BC4 end:0x802E34EC
 	.data       start:0x804FDCF0 end:0x804FDDA8
-	.sdata      start:0x806D0F68 end:0x806D0F70
+	.sdata      start:0x806D0F60 end:0x806D0F70
 
 sysdolphin/baselib/texpdag_merge_nm.c:
 	.text       start:0x802E34EC end:0x802E4CB4

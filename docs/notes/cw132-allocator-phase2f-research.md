@@ -1516,3 +1516,8 @@ c19_u122 fn_801E9E74 improves98.41035->98.61724: declare UpdateRecord other befo
 Source: Codex worker c19_u169_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 1260 B.
 
 c19_u169 fn_801DABFC 801DABFC/600B unlocks99.2->100 by retaining bool output fields and replacing the two default/zero switches with explicit branch-and-join C++: if(!out) goto off; on|=mask; goto done; off: off|=mask; done:. Ordinary bool if/else lowering repeats comparisons; switch fixes branch layout but emits signed cmpwi. Explicit joins yield target cmplwi and exact150 instructions/text600/extab8/index12. Unsigned-byte fields with bool-return toggle helper still narrow srwi to extrwi (96.8); bool>0U if/else reloads/recompares (93.86667/616B). No data/EH bridge/split/pragma changes required. Matching promotion; final full-link verification recorded in handoff. Coordinator full build exit0/DOL SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65; actual main.elf address801DABFC/600 and source edge verified, native gain1/600.
+
+## c19_u272_20261107
+Source: Codex worker c19_u272_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 248 B.
+
+c19_u272: fresh amsrv_nm1 baseline differs from assignment report: fn_80291134=98.965515%, fn_8029121C=100%. Focused RequestAddress helper and six pointer-based CopyRequestWord helpers each leave fn_80291134 byte-identical (raw offset r6 vs r5, swapped address r5 vs r4, first payload r4 vs r6). Restore first function; isolate second verbatim into Matching triforce/amsrv_m1.c, text8029121C..80291314. No EH/data. Full source-linked DOL SHA-1 exact, +1 function /248 B via B.

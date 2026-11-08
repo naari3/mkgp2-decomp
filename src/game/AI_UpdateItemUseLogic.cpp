@@ -83,7 +83,7 @@ extern "C" void AI_UpdateItemUseLogic(AIItemOwner *self, int kart) {
         case 6:
         case 7:
             break;
-        case 8:
+        case 9:
             break;
         default:
             break;

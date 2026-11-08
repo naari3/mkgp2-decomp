@@ -42,7 +42,7 @@ s32 acBind(s32 s, const void* addr, s32 len) {
     return k->result;
 }
 
-s32 acAccept(s32 s, void* addr, u32* len) {
+static inline s32 Accept(s32 s, void* addr, u32* len) {
     OSSemaphore* sem;
     AcSock* k = SOCK(s);
     u32 addrOff;
@@ -89,4 +89,8 @@ s32 acAccept(s32 s, void* addr, u32* len) {
         return k->result;
     }
     return 0;
+}
+
+s32 acAccept(s32 s, void* addr, u32* len) {
+    return Accept(s, addr, len);
 }

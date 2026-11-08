@@ -1,37 +1,18 @@
 /* Race HUD digit panels, animation and owning containers. */
+/* RaceDigits.cpp owns the out-of-line DigitOwner and DigitListBase members.
+ * The target emits them after DigitPanel's ctor, in this order:
+ * ~DigitOwner, DigitOwner(), ~DigitList, ~DigitListBase. DigitHud's ctor
+ * builds `main` with the inline pointer ctor, so DigitOwner() is not needed
+ * (and not emitted) before then. defer_codegen at the tail lets ~DigitList
+ * inline the later-defined ~DigitListBase while its copy still lands last. */
+#define RACE_DIGITS_OUTLINE
 #include "game/RaceDigitsMatchPrivate.h"
 #pragma auto_inline off
 
-DigitPanel::DigitPanel(int layer_) : layer(layer_),state(-1),variant(0),
-    slide(new FlowFaderF(0.0f)),reveal(new FlowFaderI) {
-    offset=220.0f; scale=1.0f;
-    number=0.0f; position.x=0.0f; position.y=0.0f;
-    PreloadResource(0xB3B);
-    tweens=new FlowFaderF[10];
-    if(!IsRaceStarted()) {
-        slide.p->Set(220.0f,0.0f,7);
-        for(int i=0;i<10;i++) tweens[i].Set(220.0f,1.0f,7);
-        reveal.p->Set(0,10,20);
-    } else {
-        state=4; offset=0.0f;
-        slide.p->Set(0.0f,0.0f,1);
-        for(int i=0;i<10;i++) tweens[i].Set(0.0f,0.0f,1);
-        reveal.p->Set(0,10,20);
-    }
-    ResCtrl ctrl;
-    fn_80121E10(&ctrl);
-    ctrl.flag=0; ctrl.x=0.0f; ctrl.y=0.0f; ctrl.z=1.0f;
-    ctrl.resId=0xB53;
-    for(int i=0;i<10;i++) {
-        sprites[i]=SpriteHandle_CreateDefault(&ctrl,layer);
-        SpriteHandle_SetActiveFlag(sprites[i],0);
-        SpriteHandle_RecomputeCull(sprites[i]);
-    }
-    SpriteHandle_SetActiveFlag(sprites[0],0);
-}
-
+#pragma push
+#pragma optimization_level 3
 DigitHud::DigitHud(int mode_, int layer_) : layer(layer_),state(-1),mode(mode_),
-    offset(220.0f),scale(1.0f),slide(new FlowFaderF(0.0f)),field30(0) {
+    offset(220.0f),scale(1.0f),slide(new FlowFaderF(0.0f)),field30(0),main(0) {
     PreloadResource(0xB53); PreloadResource(0xBD3);
     if(g_gameMode==1) { PreloadResource(0xBE5); PreloadResource(0xBF1); }
     {
@@ -67,6 +48,7 @@ DigitHud::DigitHud(int mode_, int layer_) : layer(layer_),state(-1),mode(mode_),
     SetDigitPanelPosition(others[0].p,lbl_804EE9E0[variant][1]);
     slide.p->Set(220.0f,0.0f,7);
 }
+#pragma pop
 
 void DigitPanel::Update() {
     switch(state) {
@@ -133,4 +115,37 @@ void DigitPanel::Update() {
         SpriteHandle_RecomputeCull(sprites[i]);
     }
 }
+
+DigitPanel::DigitPanel(int layer_) : layer(layer_),state(-1),variant(0),
+    slide(new FlowFaderF(0.0f)),reveal(new FlowFaderI) {
+    offset=220.0f; scale=1.0f;
+    number=0.0f; position.x=0.0f; position.y=0.0f;
+    PreloadResource(0xB3B);
+    tweens=new FlowFaderF[10];
+    if(!IsRaceStarted()) {
+        slide.p->Set(220.0f,0.0f,7);
+        for(int i=0;i<10;i++) tweens[i].Set(220.0f,1.0f,7);
+        reveal.p->Set(0,10,20);
+    } else {
+        state=4; offset=0.0f;
+        slide.p->Set(0.0f,0.0f,1);
+        for(int i=0;i<10;i++) tweens[i].Set(0.0f,0.0f,1);
+        reveal.p->Set(0,10,20);
+    }
+    ResCtrl ctrl;
+    fn_80121E10(&ctrl);
+    ctrl.flag=0; ctrl.x=0.0f; ctrl.y=0.0f; ctrl.z=1.0f;
+    ctrl.resId=0xB53;
+    for(int i=0;i<10;i++) {
+        sprites[i]=SpriteHandle_CreateDefault(&ctrl,layer);
+        SpriteHandle_SetActiveFlag(sprites[i],0);
+        SpriteHandle_RecomputeCull(sprites[i]);
+    }
+    SpriteHandle_SetActiveFlag(sprites[0],0);
+}
+
+DigitOwner::~DigitOwner() throw() { delete p; }
+DigitOwner::DigitOwner() : p(0) {}
+#pragma defer_codegen on
+inline DigitListBase::~DigitListBase() { Erase(DigitIter(first),DigitIter((DigitNode *)&last)); }
 DigitList::~DigitList() {}

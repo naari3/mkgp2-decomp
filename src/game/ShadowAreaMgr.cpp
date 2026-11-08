@@ -12,8 +12,7 @@ extern "C" int ShadowAreaMgr_BuildFromArchive(ShadowAreaMgr *self, void *archive
     if (archive == 0) {
         return 0;
     }
-    SAArchiveOwner model;
-    model.object = new SAArchiveModel(archive, 0);
+    SAArchiveOwner model(new SAArchiveModel(archive, 0));
     root = (HSD_JObj *)Archive_GetRootJObj(model.object);
     count = 0;
     while (root != 0) {

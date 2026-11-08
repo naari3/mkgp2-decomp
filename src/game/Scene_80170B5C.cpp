@@ -1,4 +1,7 @@
-/* Native reconstruction of fn_80170B5C; retained as NonMatching. */
+/* Native reconstruction of fn_80170B5C; retained as NonMatching.
+ * Left: the frame is 0x10 bigger (0xb0 vs 0xa0, linked to the
+ * `if (++used>=count) break;` exit), plus the prologue order and
+ * `mr r30, r29` vs `li r30, 0`. */
 #include "game/Scene_80170B5C_private.h"
 
 extern "C" {
@@ -80,9 +83,15 @@ GrowSet::GrowSet() {
                 int n=fn_80185630(a,pobj,e->faces,e->faceCount);
                 if (n<e->faceCount) e->faceCount=n;
             }
-            Vec3Grow pos=*GetPosition(e->jobj);
+            /* The target copies the joint position into a stack Vec3 member by
+             * member (lfs/stfs) and keeps it in memory across the GrowSub
+             * allocation; a plain struct copy uses lwz/stw instead. */
+            Vec3Grow *pp=GetPosition(e->jobj);
+            Vec3Grow pos;
+            Vec3Grow *ppos=&pos;
+            ppos->x=pp->x; ppos->y=pp->y; ppos->z=pp->z;
             e->sub=new GrowSub;
-            e->sub->pos=pos;
+            e->sub->pos=*ppos;
             e->sub->scale=1.0f;
             if (++used>=count) break;
         }

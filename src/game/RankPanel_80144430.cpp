@@ -177,13 +177,8 @@ extern void ResCtrl_Init();
 void fn_8011FAFC(struct ResCtrl *ctrl, int layer);
 extern const float lbl_806D7B4C;
 extern void dtor_80082960();
-extern void FUN_8003b120();
-extern void SharedPtr_Init();
-extern void __throw();
-extern void strcpy();
-extern void strlen();
-extern unsigned int lbl_80361E40[];
-extern unsigned int lbl_80361E60[];
+void *FUN_8003b120(unsigned long n);
+void SharedPtr_Init(void *sp, void *p);
 extern unsigned int lbl_803F5700[];
 extern unsigned int lbl_803F5710[];
 extern unsigned int lbl_8048EF68[];
@@ -203,7 +198,7 @@ SpriteHolder *dtor_80145DB0(SpriteHolder *self, short flag);
 void fn_80145E14(struct PanelIcon *self);
 struct SpriteBoxPtr *dtor_80145F04(struct SpriteBoxPtr *self, short flag) throw();
 VecHolder *dtor_80145F9C(VecHolder *self, short flag);
-asm struct PanelEntry **fn_80146000(struct EntryVec *v, int id);
+struct PanelEntry **fn_80146000(struct EntryVec *v, unsigned long id);
 struct ExcObj *fn_801460D0(struct ExcObj *self, short flag);
 
 #pragma section R ".extab_user"
@@ -222,7 +217,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80144500[8
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; void *f8; unsigned int f9; unsigned int f10; void *f11; } extab_fn_80146000 = { 0x20080000, 0x0000005C, 0x00050024, 0x00000080, 0x00000018, 0x00000000, 0x0780001C, 0x00000000, (void *)&dtor_80038E30, 0x8680001D, 0x00000000, (void *)&dtor_80038DD4 };
 
 
 #pragma section R ".extabindex_user"
@@ -241,9 +235,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80146000 = {
-    (void *)&fn_80146000, 0x000000D0, (void *)&extab_fn_80146000
-};
 
 
 }
@@ -263,9 +254,31 @@ struct Sprite {
 extern "C" {
 extern const float lbl_806D7B40;
 extern const float lbl_806D7B44;
-extern short lbl_80361D80[];
+extern const short lbl_80361D80[];
 void fn_8019FF8C(Sprite *s, int id, struct SpriteNodeInfo *out);
 int isJapanese(void);
+}
+
+/* .rodata 0x80361D60..0x80361ED0 is owned by this TU. */
+extern "C" {
+extern const short lbl_80361D60[8][2] = {
+    {0x1AB6, 0x1AB7}, {0x1ABA, 0x1ABB}, {0x1AC4, 0x1AC5}, {0x1AC6, 0x1AC7},
+    {0x1AC8, 0x1AC9}, {0x1ACA, 0x1ACB}, {0x1AB4, 0x1AB5}, {0x1AB8, 0x1AB9},
+};
+extern const short lbl_80361D80[0x26] = {
+    0x1CDE, 0x1D23, 0x2467, 0x2469, 0x246B, 0x246D, 0x246F,
+    0x1F4D, 0x1F4F, 0x1F51, 0x1F53, 0x1F55, 0x1F57, 0x1F59, 0x1F5B, 0x1F5D, 0x1F5F, 0x1F61,
+    0x1F4D, 0x1F4F, 0x1F51, 0x1F53, 0x1F55, 0x1F57, 0x1F59, 0x1F5B, 0x1F5D, 0x1F5F, 0x1F61,
+    0x1CE8, 0x1CE9, 0x1CEA, 0x1CF3, 0x1CEB, 0x1CEC, 0x1CF2, 0x1CED, 0x1CEE,
+};
+extern const float lbl_80361DCC[2][3] = {
+    {960.0f, 320.0f, -320.0f},
+    {1180.0f, 410.0f, -360.0f},
+};
+extern const char lbl_80361DE4[0x14] = "clCSPartsTARanking";
+extern const char lbl_80361DF8[0x14] = "clCSPartsInerface";
+extern const char lbl_80361E0C[0x1C] = "nsMenuUtil::clSpriteNode";
+extern const char lbl_80361E28[0x18] = "nsMenuUtil::clMenuNode";
 }
 struct SpriteNodeInfo {
     float x, y;
@@ -1019,61 +1032,57 @@ extern "C" VecHolder *dtor_80145F9C(VecHolder *self, short flag)
     return self;
 }
 
-extern "C" asm struct PanelEntry **fn_80146000(struct EntryVec *v, int id) { /* 0x80146000 size:0xD0 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stw r31, 0x2c(r1)
-    mr r31, r4
-    stw r30, 0x28(r1)
-    mr r30, r3
-    stw r29, 0x24(r1)
-    stw r28, 0x20(r1)
-    lwz r0, 0x4(r3)
-    cmplw r31, r0
-    blt fn_80146000_L_801460A4
-    lis r3, lbl_803F5710@ha
-    addi r29, r1, 0x8
-    addi r0, r3, lbl_803F5710@l
-    lis r4, lbl_803F5700@ha
-    stw r0, 0x8(r1)
-    addi r0, r4, lbl_803F5700@l
-    lis r3, lbl_80361E40@ha
-    addi r28, r29, 0x4
-    stw r0, 0x8(r1)
-    addi r3, r3, lbl_80361E40@l
-    bl strlen
-    addi r3, r3, 0x1
-    bl FUN_8003b120
-    mr r4, r3
-    mr r3, r28
-    bl SharedPtr_Init
-    lis r4, lbl_80361E40@ha
-    lwz r3, 0x0(r28)
-    addi r4, r4, lbl_80361E40@l
-    bl strcpy
-    lis r4, lbl_8048EF68@ha
-    lis r3, lbl_80361E60@ha
-    addi r0, r4, lbl_8048EF68@l
-    lis r4, fn_801460D0@ha
-    stw r0, 0x8(r1)
-    addi r5, r4, fn_801460D0@l
-    addi r3, r3, lbl_80361E60@l
-    mr r4, r29
-    bl __throw
-    fn_80146000_L_801460A4:
-    lwz r3, 0x8(r30)
-    slwi r0, r31, 2
-    add r3, r3, r0
-    lwz r31, 0x2c(r1)
-    lwz r30, 0x28(r1)
-    lwz r29, 0x24(r1)
-    lwz r28, 0x20(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+extern "C" {
+unsigned long strlen(const char *s);
+char *strcpy(char *d, const char *s);
+extern const char lbl_80361E40[0x20] = "vector::at index out of range";
+}
+
+struct ExcStrRef {
+    char *ptr;
+    unsigned long *refs;
+    ExcStrRef(void *p) { SharedPtr_Init(this, p); }
+    ~ExcStrRef();
+};
+struct ExcStr {
+    ExcStrRef value;
+    ExcStr(const char *s) : value(FUN_8003b120(strlen(s) + 1)) {
+        strcpy(value.ptr, s);
+    }
+    ~ExcStr();
+};
+namespace std {
+struct exception {
+    exception() {}
+    virtual ~exception();
+};
+struct logic_error : exception {
+    ExcStr msg;
+    logic_error(const char *s) : msg(s) {}
+    virtual ~logic_error();
+};
+struct out_of_range : logic_error {
+    out_of_range(const char *s) : logic_error(s) {}
+    virtual ~out_of_range();
+};
+
+}
+using namespace std;
+
+#pragma push
+#pragma readonly_strings on
+extern "C" struct PanelEntry **fn_80146000(struct EntryVec *v, unsigned long id) {
+    if (id >= v->size) {
+        throw out_of_range(lbl_80361E40);
+    }
+    return (struct PanelEntry **)&v->data[id];
+}
+#pragma pop
+
+extern "C" {
+extern const char lbl_80361E98[0x14] = "std::out_of_range";
+extern const char lbl_80361EAC[0x10] = "std::exception";
+extern const char lbl_80361EBC[0x14] = "std::logic_error";
 }
 
 struct ExcString { char *p; };

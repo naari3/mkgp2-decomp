@@ -47,6 +47,10 @@ per_fn.json
 .claude/*
 !.claude/skills/
 !.claude/commands/
+!.claude/settings.json
 
 # Private compiler-probe scratch (frida hooks, private mwcc copy, logs)
 tmp_probe/
+
+# Grind-mode marker for tools/grind_stop_hook.py (created by setup.sh in cloud threads)
+/.grind

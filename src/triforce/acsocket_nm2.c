@@ -5,6 +5,8 @@ static inline u8* GetIPBuffer(s32 n, u32* off) {
     return Buf + n;
 }
 
+#pragma push
+#pragma opt_lifetimes off /* leaves only the bufOff "addi rX, r5, 0x0" copy */
 s32 acModifyMyIPaddr(const char* ip, s32 mask) {
     OSSemaphore* sem;
     AcSock* k = &State.sock[0];
@@ -36,3 +38,5 @@ s32 acModifyMyIPaddr(const char* ip, s32 mask) {
     OSSignalSemaphore(sem);
     return k->result;
 }
+#pragma pop
+

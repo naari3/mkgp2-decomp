@@ -1,0 +1,5 @@
+# pcbcomm-sendpeers-c19-u297-20261107
+
+Source: Codex worker c19_u297_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+At a5f54a17 current -O4,s production baseline is 88.14286%/576B (assignment 79.65% predates current flags). Generic inline Payload(unsigned char *packet,unsigned long headerSize){return packet+headerSize;} used for snapshot and block payload initialization preserves both pointer webs: 92.29932%/584B, six GPR saves, extab100/index91.66667. Independent native BSS pool restores ...bss.0 and gives92.006805%; connection-table/peer object plus used accessors gives92.61224%, but first-use BSS order differs from target, so neither retained and no BSS ranges acquired. Native single aggregate+Payload gives91.244896; external original aggregate+Payload is best valid draft. Remaining storage/snapshot/block/peer/i GPR assignment, two-stage payload addis and card base/index association. Three hypotheses exhausted. Remains NM singleton; final coordinator all_source/full DOL SHA1 exact, fallback input verified, no native gain.

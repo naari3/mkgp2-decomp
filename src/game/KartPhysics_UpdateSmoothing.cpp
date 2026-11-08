@@ -1,5 +1,4 @@
-/* Native reconstruction. The airborne division and scale initialization retain
- * FP register/scheduling differences; matrix multiply and simple EH are exact. */
+/* Native reconstruction. */
 #include "game/PhysicsCollisionPrivate.h"
 
 #include "game/SmoothingPrivate.h"
@@ -65,8 +64,7 @@ extern "C" void KartPhysics_UpdateSmoothing(SmoothingState *self) {
         KartPhysics_GroundedMovement(self);
         fn_801EE36C(self);
     } else {
-        float divided=self->speed;
-        divided/=lbl_806DA44C;
+        float divided=self->speed/lbl_806DA44C;
         divided/=lbl_806DA44C;
         float speed=divided/lbl_806DA44C;
         if(speed<1.0f) speed=1.0f;
@@ -84,13 +82,11 @@ extern "C" void KartPhysics_UpdateSmoothing(SmoothingState *self) {
     PhysicsState_WallCollisionCheck(self);
     if(PhysicsState_KartCollisionCheck(self)==1) PhysicsState_WallCollisionCheck(self);
     fn_801ED798(self,&self->positionX,&self->world,self->matrixYaw);
-    float factor;
     SmoothingMatrix scale;
     smoothingIdentity(scale);
-    factor=self->scale;
-    scale.m[0]=factor;
-    scale.m[5]=factor;
-    scale.m[10]=factor;
+    scale.m[0]=self->scale;
+    scale.m[5]=self->scale;
+    scale.m[10]=self->scale;
     smoothingMultiply(scale,self->world);
     self->world=scale;
     float yaw;

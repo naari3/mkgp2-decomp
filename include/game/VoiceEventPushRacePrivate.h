@@ -13,9 +13,9 @@ extern int g_currentRaceEventPlayer;
 extern unsigned int g_voiceTickCounter;
 extern const float lbl_806D9828, lbl_806D982C;
 extern OSTime g_voiceStreamStartTime, g_voiceStreamLastPollTime;
-extern unsigned int lbl_806D17C8, lbl_806D17CC;
-extern unsigned int lbl_806D17D0, lbl_806D17D4;
-extern unsigned int lbl_806D17D8, lbl_806D17DC;
+extern OSTime lbl_806D17C8;
+extern OSTime lbl_806D17D0;
+extern OSTime lbl_806D17D8;
 
 static inline int RaceEvent_Push(short id, short priority, unsigned char flag, unsigned char flush) {
     if (id == -1) {
@@ -44,9 +44,6 @@ static inline int RaceEvent_Push(short id, short priority, unsigned char flag, u
     return 1;
 }
 
-static inline OSTime RaceEvent_Time(unsigned int lo, unsigned int hi) {
-    return (OSTime)(((unsigned long long)hi << 32) | lo);
-}
 static inline float RaceEvent_QueueTime(short *tables) {
     float time = 0.0f;
     int i;

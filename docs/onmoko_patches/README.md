@@ -1,12 +1,27 @@
 # Pragma fixes for onmokoworks-claimed TUs (verified, not applied)
 
+## Landed on main (2026-11-08)
+
+onmokoworks released most claims, so these patches were applied on main and
+are kept here only for reference: fn_80246DE4.patch (RaceDigits linked as
+Matching, eb5bf52), amnet_nm2_rest.patch and merge/cobj_lobj_merge.patch
+(b40edd9), THPDec_GetBit.patch, TExp2TevDesc.patch, BackupReadRecord.patch,
+JointTracks_fn_80240378.patch (partial gains, 2026-11-08). Do not apply them again.
+
+## Landed 2026-11-08 (asm->C (A) thread)
+
+FrameUpdate, PCBCommPhase5, STLContainer applied as-is (b2d2c8c). PCBCommPhase1 and
+ItemHitPropagation no longer applied after onmokoworks' rewrites; the same fixes were
+ported by hand (98e933a). All five TUs are Matching. CoursePropCtor, VfxSlotMgr and
+card_unpack_v1 were already Matching on main.
+
 ## Status on main 610292b (re-verified 2026-11-07 21:00, mid-range thread)
 
 Each patch was applied **alone** to a throwaway checkout of main, then built from clean (`rm -rf build/GNLJ82/src build/GNLJ82/ok`, ninja). Baseline on that main: main.dol OK, 7251 matched functions (report.json `matched_functions`). "+fns" is the change against the baseline.
 
 | Patch | Applies | main.dol | Flip to Matching | +fns | Depends on / conflicts with |
 | --- | --- | --- | --- | --- | --- |
-| AI_UpdateItemUseLogic.patch | yes | OK | yes | +1 | - |
+| AI_UpdateItemUseLogic.patch | **applied on main (52fc734)** | OK | yes | +1 | - |
 | DNLensflare.patch | yes | OK | yes (already 100%) | 0 | touches tools/extab_user_renames.json, as does anon_80226670 (different TU blocks, both apply) |
 | FrameUpdate.patch | yes | OK | yes | +1 | - |
 | ItemHitPropagation.patch | yes | OK | yes | +2 | - |
@@ -20,7 +35,7 @@ Each patch was applied **alone** to a throwaway checkout of main, then built fro
 | anon_80226670.patch | yes | OK | yes (already 100%) | 0 | see DNLensflare |
 | card_unpack_v1.patch | yes | OK | yes | +1 | - |
 | cobj_data_nm2.patch | yes | OK | yes (data-only) | 0 | the cobj owner may move these strings in a CObjInfoInit / cobj merge |
-| fn_8021E0FC.patch | yes | OK | no (4 other fns < 100%) | +1 | - |
+| fn_8021E0FC.patch | **applied on main (52fc734)** | OK | no (4 other fns < 100%) | +1 | - |
 | fn_80243C70.patch | yes | OK | yes | +1 | - |
 | fn_80246DE4.patch | yes | OK | yes | +1 | - |
 | merge/anon_8020AF08_nm1_pool.patch | yes | OK | no (99.86%) | 0 | edits config/GNLJ82/splits.txt |
@@ -44,12 +59,12 @@ on its own with a fresh link; main.dol stayed OK.
 
 | Patch | Function | TU | Before | Fix | After | TU flip |
 | --- | --- | --- | --- | --- | --- | --- |
-| fn_80243C70.patch | fn_80243C70 | game/ItemPanelDraw.cpp | 99.97% | `#pragma push` / `opt_lifetimes off` / `pop` around the fn | 100% | yes, included (whole TU 100%, SHA OK) |
+| fn_80243C70.patch | fn_80243C70 | game/ItemPanelDraw.cpp | 99.97% | `#pragma push` / `opt_lifetimes off` / `pop` around the fn | 100% | yes, included (whole TU 100%, SHA OK). APPLIED on main 2026-11-08 by R5 |
 | card_unpack_v1.patch | card_unpack_v1 | game/CardUnpackV1.c | 98.99% | opt_lifetimes off | 100% | yes, included |
 | fn_801F8A34.patch | fn_801F8A34 | game/fn_801F8A34.cpp | 98.16% | opt_common_subs off | 100% | yes, included |
 | fn_8021E0FC.patch | fn_8021E0FC | game/anon_8021BC44.cpp | 92.99% | opt_propagation off | 100% | no: TU still has fn_8021C070/C778/D780/DAB8 < 100% |
 | clItemBoxManager_Update_Inner.patch | clItemBoxManager_Update_Inner | game/clItemBoxManager_nm1.cpp | 99.74% | opt_lifetimes off | 100% | no: SoundDriver_GetOrCreate and 3 DoublyLinkedList fns < 100% |
-| fn_80246DE4.patch | fn_80246DE4 | game/RaceDigits.cpp | 99.96% | optimization_level 3 around DigitHud's ctor, plus flip work: functions reordered to the target order (DigitHud ctor, Update, DigitPanel ctor), DigitOwner/DigitListBase members made out-of-line in this TU via `RACE_DIGITS_OUTLINE` in include/game/RaceDigitsPrivate.h (other TUs keep the inline versions), `main(0)` through a new inline pointer ctor so DigitHud's ctor doesn't need DigitOwner(), `#pragma defer_codegen on` before the last two dtors so ~DigitList still inlines ~DigitListBase, and the TU added to DATA_ALIGN4_WEAK_TUS (its .data was 8-aligned) | all 7 fns 100% | yes, included (updated 2026-11-07 18:50; clean build main.dol OK) |
+| fn_80246DE4.patch | fn_80246DE4 | game/RaceDigits.cpp | 99.96% | optimization_level 3 around DigitHud's ctor, plus flip work: functions reordered to the target order (DigitHud ctor, Update, DigitPanel ctor), DigitOwner/DigitListBase members made out-of-line in this TU via `RACE_DIGITS_OUTLINE` in include/game/RaceDigitsPrivate.h (other TUs keep the inline versions), `main(0)` through a new inline pointer ctor so DigitHud's ctor doesn't need DigitOwner(), `#pragma defer_codegen on` before the last two dtors so ~DigitList still inlines ~DigitListBase, and the TU added to DATA_ALIGN4_WEAK_TUS (its .data was 8-aligned) | all 7 fns 100% | LANDED on main 2026-11-08 (TU unclaimed, claim #2675) |
 | fn_8028EAA8.patch | fn_8028EAA8 | triforce/amnet_nm2_rest.c | 99.28% | opt_dead_assignments off + `case 3: break;` in the dev->kind switch (gives the target's second `b`) | 100% | no: fn_8028D8CC is in the same TU (see amnet_nm2_rest.patch) |
 | amnet_nm2_rest.patch | fn_8028D8CC + fn_8028EAA8 | triforce/amnet_nm2_rest.c | 98.42% / 99.28% | fn_8028EAA8.patch plus, for fn_8028D8CC: opt_propagation off + opt_loop_invariants off; `base = BSWAP16(hdr[1]); base <<= 16; base |= BSWAP16(hdr[0]);`; ReadDeviceWordImpl returns `BSWAP32(*(u32*)buf)` with no local (fixes the lwz/rlwinm register pair) | 99.83% / 100% (clean build main.dol OK, 2026-11-07) | no: 17 diff lines left. The target puts `configs` straight into r30 and copies it with `addi r4, r30, 0x0` (ours: `addi r4,...; mr r30, r4` and `mr r4, r30`); case 0x29 swaps r4/r5 between `li 2` (dev->kind) and the &lbl_80699140 base. Tried: decl orders, struct/array/char*/int views of the table, inline helpers, index vars, all compilers 1.3..2.7, 14 extra pragmas, 30-min cperm |
 | FrameUpdate.patch | FrameUpdate | game/FrameUpdate.c | 93.66% | GC/1.3.2 (was 3.0a5) + opt_common_subs off; the FrameBackup field at 0x18 is one `unsigned long long qw18` (0x14 is padding before it), so the copy loads 0x18/0x1C into a register pair the way the target does. include/game/FrameUpdate_private.h changes; TaMode_FrameUpdate (the other includer) is unchanged at 99.48% | 100% | yes, included (clean build main.dol OK) |
@@ -116,6 +131,7 @@ Verified on main with the patch applied: clean build (`rm -rf build/GNLJ82/src b
 
 ### Diagnoses without a patch (R2)
 
+- **DONE (asm->C (A), 2026-11-08):** fn_8017EFFC + fn_8017F1E8 merged into fn_8017EC90.cpp (the pool owner); the tables are its static arrays, so the anchor+offset `lwzx` comes out right. fn_8017EC90 and fn_8017F1E8 are 100% (also fixed SoundMenuDraw: `line+(y+3)`, `y+bottom+1`). fn_8017EFFC is 99.90%: only the epilogue has `lwz r28` after `lwz r0` in the target (pragmasweep all, 12-min cperm: no). The mapobject TUs (CE1C/DF00) do not need the pool: their diffs are register allocation. Original note:
 - **miyazakiconsole / mapobject `lwzx` tables (fn_8017EFFC 97.8%, fn_8017F1E8 94.1%, and likely fn_8017EC90, fn_8017F538, fn_8017CE1C, fn_8017D660, fn_8017DF00).** The target indexes its tables as `addi rT, r31, 0x57c` (or `0x4c8`), then `lwzx rD, rT, idx`. The tables are separate .rodata objects (lbl_80376790 + 0xC, lbl_803766DC + 0xC), not part of lbl_80376220 (size 0x4A4). That is how mwcc addresses a static array that lives in the TU's own section: anchor plus object offset, then an indexed load. Source written as `(strings + 0x57c)[i]` always folds the offset into the displacement (`add; lwz 0x57c(r)`). Casts, member-array structs, references, locals and every psweep pragma failed to stop that. A fix needs all of 0x80376220..0x80376E10 owned by one TU (today fn_8017EC90.cpp owns it), with these tables as real static arrays, i.e. a merge of the TUs that share the pool. A struct with `char pad[0x57c]; unsigned int ids[13];` gets fn_8017EFFC from 97.79 to 98.15% but not to 100%.
 - **Same section-anchor family:** CoursePropCtor fixed this way (see CoursePropCtor.patch above). The section was unowned (auto), so the TU could just take it over. mapeffect_nm1 fn_80179F60 (97.7%) has `addi r3, r31, 0x408`, then reads the quad from r3, off the .rodata pool lbl_80370870, which mapeffect_nm1.cpp doesn't own. Both need the pool defined as real static objects in the TU that owns the section.
 - **DetermineTitle (RankLog.c) 98.47 -> 99.71%, WIP `/mnt/project-files/wip/RankLog_DetermineTitle_99.71.patch`.** Make the outer decls plain and order them as skip, checks, i, tbl, count, pool, pre. Inside the DetermineCurrentNameId inline, declare score, chara, k, j, i. What's left is a single chara/i r23/r20 swap; 20 minutes of cperm found nothing.
@@ -133,9 +149,16 @@ Verified on main with the patch applied: clean build (`rm -rf build/GNLJ82/src b
 
 | Patch | Function | TU | Issue | Before | Fix | After | TU flip |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| ClSound_InitSoundSystem.patch | ClSound_InitSoundSystem | game/clsound/ClSound_InitSoundSystem.c | #2234 | 97.35% | `#pragma opt_common_subs off` around the fn (from pragmasweep, 161 → 57 diff lines); in the ReadSoundFile inline write `end = length - 1; end = end + start;` (gets the target's `subi; add` into the same register) | 99.53% (build main.dol OK; the TU stays NonMatching, so it is not linked) | no: about 20 lines of r26/r27 coloring left, plus `mr r0, r3; …; mr r4, r0` around ARInit's result. Casts/locals don't help; 25-min cperm found only the `end + start` order |
+| ClSound_InitSoundSystem.patch (**applied on main, 52fc734**) | ClSound_InitSoundSystem | game/clsound/ClSound_InitSoundSystem.c | #2234 | 97.35% | `#pragma opt_common_subs off` around the fn (from pragmasweep, 161 → 57 diff lines); in the ReadSoundFile inline write `end = length - 1; end = end + start;` (gets the target's `subi; add` into the same register) | 99.53% (build main.dol OK; the TU stays NonMatching, so it is not linked) | no: about 20 lines of r26/r27 coloring left, plus `mr r0, r3; …; mr r4, r0` around ARInit's result. Casts/locals don't help; 25-min cperm found only the `end + start` order |
+| THPDec_GetBit.patch | __THPGetBit | thp/THPDec.c (GC/1.2.5) | #2295 | 55.24% | `#pragma opt_propagation off` + `opt_lifetimes off` around the fn (pragmasweep, 43 → 17 diff lines); other THPDec fns unchanged | 64.16% | no: the loop is laid out differently (target enters past a shared `subi p,1` at the loop head and puts the `p[1]==0` exit last); loop rewrites and a 15-min cperm didn't fix it |
+| TExp2TevDesc.patch | TExp2TevDesc + HSD_TExpSetReg | sysdolphin/baselib/texp_nm1.c | #2225 | 98.01% / 97.89% | `opt_propagation off` around TExp2TevDesc; `optimization_level 3` around HSD_TExpSetReg (found with `pragmasweep --objdiff --set all`) | 99.98% / 99.61% (build main.dol OK) | no: the rest is string/table offsets off the texp data pool (base lbl_804FD988), so texp_nm1 needs merging into the TU that owns .data from 0x804FD988 |
+| BackupReadRecord.patch | BackupReadRecord | triforce/ambackup_nm2.c | | 89.88% | `#pragma opt_propagation off` around the fn | 90.98% | no (small gain only) |
+| HSD_CObjSetUpVector.patch | HSD_CObjSetUpVector | sysdolphin/baselib/cobj_nm3.c | | 97.08% | `#pragma optimization_level 3` around the fn | 99.85% (build main.dol OK) | no |
+| JointTracks_fn_80240378.patch | fn_80240378 | game/JointTracks.cpp | | 98.42% | `#pragma opt_propagation off` around the fn | 98.75% | no (small gain) |
 
 Checked without a patch:
 - **sprite fn_801A4F38 (98.13%).** It needs the voice tables (`addi rX, r31, 0x0/0x1C/0x54/0xBC` off lbl_80496C38) as TU-owned `.data` objects. Giving the TU `.data 0x80496C38..0x80496D5C` with the real arrays breaks `dtk split` with a link-order cycle: fn_801A1798.c (text before) owns the switch jumptable at .data 0x8049A060 (after). So the original was one voice TU spanning about fn_801A1798..fn_801A4F38 (text) and 0x80496C38..0x8049A094 (data), and it needs that merge.
 - **sprite fn_801A7D0C (99.63%).** The TU already owns its .bss pool. What's left is `addi r4, r31, 0x190; addi r4, r4, 0x40; lwzx` for the item column, against ours `add; lwz 0x40`. Pointer/array/cast forms and pragmas didn't help.
 - **THPDec.** Its `addi rX, rY, 0x0` are GC ≤1.2.5n register copies, not anchors.
+- **0x80240000+ lane (2026-11-07 23:30).** 20-min cperm runs (base = current source) gave nothing on HSD_CObjSetRoll, HSD_LObjSetupSpecularInit, HSD_TExpMakeDag, amnet_nm3 fn_8028C644, amcoin_nm2 fn_8028A3EC and fn_80243464. All of them are FPR/GPR coloring. CardSetupFlowInitial fn_8024AD8C: the `lwz self->list` gets hoisted above the `stw lbl_806D19B8` because `self` is `__restrict`. Passing `self->list` straight to the call fixes the order but then loads it after the call (4 → 3 lines).
+- **pragmasweep caveat.** Its score is unified-diff lines, which can disagree with objdiff. In this lane fn_80282F54 went 102 → 59 lines but 96.52 → 84.78%, and JointTracks fn_80240378 / HSD_CObjSetUpVector / HSD_TExpSetReg also lost %, while amjvs_nm3 fn_8028AAC0 didn't move. Always check report.json before keeping a pragma.

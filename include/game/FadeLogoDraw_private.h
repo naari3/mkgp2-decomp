@@ -56,7 +56,7 @@ struct TaskIter {
     TaskNode *node;
     TaskIter() {}
     TaskIter(TaskNode *n) : node(n) {}
-    TaskIter &operator=(const TaskIter &o) {
+    TaskIter &operator=(TaskIter o) {
         node = o.node;
         return *this;
     }
@@ -102,7 +102,7 @@ struct TaskListImpl : TaskListBase {
     virtual void Update();
     virtual void Draw();
     void Sort();
-    TaskIter Remove(TaskIter it) { TaskIter result; result = entries.Erase(it); return result; }
+    TaskIter Remove(TaskIter it) { return entries.Erase(it); }
 };
 
 struct FadeLogoScene : PopupTask {

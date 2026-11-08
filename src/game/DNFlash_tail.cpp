@@ -67,6 +67,88 @@ extern const char lbl_803D088C[0x16] = "DNA_cameraF_trans.dat";
  * is found. Pending the repo owner's decision on rodata gap fillers. */
 __declspec(section ".rodata") extern const unsigned int gap_06_803D08A4_rodata = 0;
 
+static inline int SpawnArea(const float *xLimits, const float *zLimits, float x, float z) {
+    int ix = -1;
+    int iz = ix;
+    for (int i = 0; i < 3; i++) {
+        if (x < lbl_803D07A4[i]) { ix = i; break; }
+    }
+    for (int i = 0; i < 3; i++) {
+        if (z > lbl_803D07B0[i]) { iz = i; break; }
+    }
+    if (ix < 0 || iz < 0) return -1;
+    return ix + iz * 3;
+}
+
+static inline void StartPart(FlashPart *p, FlashPoint *pt) {
+    pt->used = 1;
+    p->owner = pt;
+    p->active = 1;
+    p->life = 8;
+    p->scale = lbl_803D0798[rand() % 3];
+    p->dscale = lbl_806DB498;
+    p->alpha = lbl_806DB49C;
+}
+
+void clDNFlash::Spawn() {
+    int list[5];
+
+    if (g_playerRenderObj == 0) {
+        return;
+    }
+    const float *m = KartDriver_GetKartRootMtx(g_playerRenderObj);
+    int area = SpawnArea(lbl_803D07A4, lbl_803D07B0, m[3], m[11]);
+    if (area < 0) {
+        return;
+    }
+    int n = 0;
+    int col = area % 3;
+    list[n++] = area - col;
+    list[n++] = list[0] + 1;
+    list[n++] = list[1] + 1;
+    if (area != col) {
+        list[n++] = col;
+    }
+    if (area != col + 3) {
+        list[n++] = col + 3;
+    }
+    if (area != col + 6) {
+        list[n++] = col + 6;
+    }
+    FlashPoint *pt = 0;
+    int start = rand() % 5;
+    for (int tries = 0; tries < 5; tries++) {
+        int k = rand() % counts[list[start]];
+        int count = Min(counts[list[start]], lbl_806DB494);
+        for (int j = 0; j < count; j++) {
+            if (k >= counts[list[start]]) {
+                k = 0;
+            }
+            if (points[list[start]][k].used != 1) {
+                pt = &points[list[start]][k];
+                break;
+            }
+            k++;
+        }
+        if (pt) {
+            break;
+        }
+        if (++start >= 5) {
+            start = 0;
+        }
+    }
+    if (pt == 0) {
+        return;
+    }
+    for (int i = 0; i < 2; i++) {
+        if (free[i]) {
+            StartPart(free[i], pt);
+            free[i] = 0;
+            return;
+        }
+    }
+}
+
 void clDNFlash::Update() {
     if (Check() == 1) {
         burst = 180;
@@ -168,13 +250,7 @@ void FlashPart::Tick() {
 }
 
 void FlashPart::Start(FlashPoint *pt) {
-    pt->used = 1;
-    owner = pt;
-    active = 1;
-    life = 8;
-    scale = lbl_803D0798[rand() % 3];
-    dscale = lbl_806DB498;
-    alpha = lbl_806DB49C;
+    StartPart(this, pt);
 }
 
 FlashPartObj::FlashPartObj() {

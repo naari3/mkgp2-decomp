@@ -33,3 +33,23 @@ c18_u121: acConnect 95.62366 -> 96.344086 by inline ClearConnectBuffer(k,&off): 
 Source: Codex worker c18_u120_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c18_u120: acInetAddr paired CPU/board getter plus ClearInetBuf(k,&off) improves 95.61644 to95.821915, still288 vs292B. Writing *off=k->bufAddr+*off restores target operand/load order. Target +0x80 addi r26,r5,0 remains folded; target mr-before-add is source add-before-mr. Cursor reserve variant95.753426; optional-null output retains branch/stack home71.49315; native by-value CPU/board descriptor spills66.21918. Three structural approaches exhausted; no flags/data/splits changed, no split rescue or native gain.
+
+## c19_u261_20261107
+Source: Codex worker c19_u261_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 588 B.
+
+c19_u261: acReadResponse 98.82653 ->100 via complete-body static inline ReadResponse wrapper and case-local declarations ordered addr,len,base,lenOff,n in both branches. Wrapper alone99.38776; mixed case declaration order makes case22 exact but leaves two swapped pairs in case1; same target order in case1 closes both. Mechanism B isolates acPollResponse+acReadResponse (0x80292E24..0x80293070) as Matching acsocket_m8.c; source-linked +2 fn/+588B, full DOL SHA1 exact. Initializer explicit 16-batch outer counter generates target CTR16, improves measured73.76636 ->81.46729 before split,81.98131 after split; ready/limit hoisting and scratch scheduling remain. Receive PrepareReceive out-parameter helper, whole-body helper, signed-offset probe all invariant96.268654; original kept. Combined BSS remains fallback94.11732. No data/header/tool changes.
+
+## c19_u283_20261107
+Source: Codex worker c19_u283_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u283: whole-body static inline Accept wrapper improves acAccept 89.4955 -> 89.90991%, source remains436 vs444B. It restores byte-swap input r6 and socket buffer base r5, but shifts callee-saved homes (sem r29 vsr31, lenOff r31 vsr28, addrOff r24 vsr29). Typed length/address member projections and pointer-typed board address locals are invariant. acBind pointer-offset+base-first, whole-body helper, typed projection probes fail to improve96.76471%; original retained336 vs340B. Missing addi0/separate base adds persist; no exact subset, no flag/split changes, no native gain. Final source compile/postprocess and objdiff verified. No new full build requested; existing fallback baseline SHA1 exact.
+
+## c19_u287_20261107
+Source: Codex worker c19_u287_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u287: acConnect 96.344086 ->96.72043 via C++ reference-output GetConnectBuffer(n,off) nested in ClearConnectBuffer(k,off), capture base first; #pragma cplusplus on after existing C header, extern C exported acConnect. Fixes State/Buf scratches and bufAddr/bufOff load homes; missing addi r24,r5,0 plus add/mr ordering remain (368 vs372B). Complete-body Connect wrapper95.69892 swaps sem/socket saved homes; void helper with CPU+board reference outputs96.50538 swaps high-address scratches. Three structural hypotheses exhausted. No flag/range/header/data changes. Singleton TU remains NonMatching, no B cut/native gain; coordinator full fallback DOL SHA1 exact.
+
+## c19_u298_20261107
+Source: Codex worker c19_u298_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c19_u298: acInetAddr 95.821915 ->97.26028 via board-side u8* address carried through paired getter/clear helper, plus whole-body static inline InetAddr/public wrapper. Pointer draft alone96.78082; pointer projection converted back to u32 in getter95.821915; C++ integer reference-output variant baseline-identical95.821915. Wrapper restores State r28/string r29; board offset r27 vs targetr26 and CPU buffer r26 vs targetr27 remain. Zero addi still missing; source288 vs target292B, li r5,0x40 scheduled early and add operands differ. Three structural approaches exhausted, best C retained, no flag/range/data/header changes or native gain. Archived c14/c18 drafts are under archive/<batch>/worker.patch and HANDOFF.raw.md, not archive/drafts.

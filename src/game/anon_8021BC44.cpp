@@ -1439,10 +1439,14 @@ extern "C" TimeAttackResult *fn_8021E0C0(void) {
     return new TimeAttackResult;
 }
 
+#pragma push
+#pragma opt_propagation off
 CoinContinue::~CoinContinue() {
     SetInput(0);
     objs.DeleteAll();
 }
+#pragma pop
+
 
 void CoinContinue::Draw() {
     for (FadeObj **it = objs.begin(); it != objs.end(); it++) {
