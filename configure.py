@@ -2762,7 +2762,6 @@ config.libs = [
         "objects": [
             Object(Matching, "game/Scene_80163554.cpp"),
             Object(Matching, "game/Scene_8015AE3C.cpp"),
-            Object(NonMatching, "game/OptionMenuDraw.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Scene_8015AFCC.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_8015B698.cpp"),
             Object(Matching, "game/Scene_8015B70C.cpp"),

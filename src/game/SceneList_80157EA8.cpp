@@ -218,8 +218,6 @@ extern const float lbl_806D8430;
 extern const float lbl_806D8434;
 extern const float lbl_806D843C;
 extern unsigned int lbl_806D8448;
-extern unsigned int lbl_80367E24[];
-extern unsigned int lbl_80367E38[];
 void fn_80168404(int layer, const void *s, float x, float y, float sx, float sy, float a, ...);
 extern const float lbl_806D8454;
 extern const float lbl_806D8458;
@@ -233,7 +231,6 @@ extern const float lbl_806D848C;
 extern const float lbl_806D8490;
 extern const float lbl_806D8494;
 extern const float lbl_806D84A0;
-extern unsigned int lbl_803678D8[];
 extern const float lbl_806D84B0;
 extern const float lbl_806D84B4;
 extern const float lbl_806D84B8;
@@ -311,6 +308,39 @@ asm void fn_8015915C(OptionMenu *self, int layer, float x, float y, float alpha)
 asm void fn_801596D4(OptionMenu *self, int layer, float x, float y, float alpha);
 asm void fn_80159BD0(OptionMenu *self, int layer, float x, float y, float alpha);
 
+extern void fn_8013C26C();
+extern void fn_8013C4A4();
+extern void fn_8013C5FC();
+extern void fn_8013C674();
+extern void fn_8013C6EC();
+extern void fn_8013C7B0();
+extern void fn_8013C91C();
+extern void fn_8013DAC8();
+extern void fn_80167C60();
+extern void get_title_name_global();
+extern unsigned int lbl_806D10A0;
+extern unsigned int lbl_806D8578;
+extern unsigned int lbl_806D857C;
+extern unsigned int lbl_806D8580;
+extern unsigned int lbl_806D8584;
+extern unsigned int lbl_806D8588;
+extern unsigned int lbl_806D858C;
+extern unsigned int lbl_806D8590;
+extern unsigned int lbl_806D8594;
+extern unsigned int lbl_806D8598;
+extern unsigned int lbl_806D85A0;
+extern unsigned int lbl_806D85A4;
+extern unsigned int lbl_806D85A8;
+extern unsigned int lbl_806D85AC;
+extern unsigned int lbl_806D85B0;
+extern unsigned int lbl_806D85B4;
+extern unsigned int lbl_806D85B8;
+extern unsigned int lbl_806D85BC;
+extern unsigned int lbl_806D85C0;
+extern unsigned int lbl_806D85C4;
+extern unsigned int lbl_806D85C8;
+extern unsigned int lbl_806D85CC;
+
 #pragma section R ".extab_user"
 
 
@@ -332,6 +362,10 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_801596D4[8
 
 __declspec(section ".extab_user") static const unsigned char extab_fn_80159BD0[8] = {
     0x4A, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+__declspec(section ".extab_user") static const unsigned char extab_fn_8015A6E4[8] = {
+    0x2A, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
 #pragma section R ".extabindex_user"
@@ -357,7 +391,111 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_80159BD0, 0x00000B14, (void *)extab_fn_80159BD0
 };
 
+__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8015A6E4 = {
+    (void *)&fn_8015A6E4, 0x00000758, (void *)extab_fn_8015A6E4
+};
+
 }
+
+#pragma push
+#pragma force_active on
+/* ---- formerly OptionMenuDraw.cpp: the TU .rodata 0x803678D8..0x80367F68 ---- */
+// Shared curve, color and layout tables, followed by the scene text pool.
+extern "C" const float lbl_803678D8[255] = {
+    1.0f, 0.699999988f, 0.899999976f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f,
+    66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f, 66.6666718f, 5000.0f,
+    66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f,
+    66.6666718f, 3000.0f, 66.6666718f, 4000.0f, 66.6666718f, 5000.0f, 66.6666718f, 0.0f,
+    0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f,
+    66.6666718f, 4000.0f, 66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f,
+    66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f,
+    66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f, 66.6666718f, 5000.0f,
+    66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f,
+    66.6666718f, 3000.0f, 66.6666718f, 4000.0f, 66.6666718f, 5000.0f, 66.6666718f, 0.0f,
+    0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f,
+    66.6666718f, 4000.0f, 66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f,
+    66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f,
+    66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f, 66.6666718f, 5000.0f,
+    66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f,
+    66.6666718f, 3000.0f, 66.6666718f, 4000.0f, 66.6666718f, 5000.0f, 66.6666718f, 0.0f,
+    0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f,
+    66.6666718f, 4000.0f, 66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f,
+    66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 83.3333359f, 1000.0f,
+    83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f, 83.3333359f, 5000.0f,
+    83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f, 1000.0f, 83.3333359f, 2000.0f,
+    83.3333359f, 3000.0f, 83.3333359f, 4000.0f, 83.3333359f, 5000.0f, 83.3333359f, 0.0f,
+    0.0f, 500.0f, 83.3333359f, 1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f,
+    83.3333359f, 4000.0f, 83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f,
+    83.3333359f, 1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f, 1000.0f,
+    83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f, 83.3333359f, 5000.0f,
+    83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f, 1000.0f, 83.3333359f, 2000.0f,
+    83.3333359f, 3000.0f, 83.3333359f, 4000.0f, 83.3333359f, 5000.0f, 83.3333359f,
+};
+
+static const unsigned int optionColors[42] = {
+    96, 255, 0, 200, 64, 0, 0, 96,
+    255, 0, 96, 255, 0, 96, 255, 0,
+    96, 255, 0, 96, 255, 0, 96, 255,
+    0, 96, 255, 0, 96, 255, 0, 96,
+    255, 0, 96, 255, 0, 96, 255, 0,
+    96, 255,
+};
+
+static const float optionPositions[5] = {
+    -153.0f, -105.0f, -59.0f, -15.0f, 32.0f,
+};
+
+static const float optionLayoutPositions[10] = {
+    -17.0f, 69.0f, 155.0f, 241.0f, 337.0f, -17.0f, 49.0f, 135.0f,
+    221.0f, 307.0f,
+};
+
+static const int optionThresholds[17] = {
+    3, 5, 7, 10, 15, 20, 25, 30,
+    35, 40, 45, 50, 60, 70, 80, 90,
+    100,
+};
+
+extern "C" const char lbl_80367DFC[] = "clCSSceneCardBrowse";
+
+extern "C" const char lbl_80367E10[] = "clSceneInterface";
+
+extern "C" const char lbl_80367E24[] = "Time attack record";
+
+extern "C" const char lbl_80367E38[] = "\203^\203C\203\200\203A\203^\203b\203N\201@\203f\201[\203^";
+
+static const char optionText578[] = "Versus race result";
+
+static const char optionText58C[] = "\221\316\220\355\220\254\220\321\201@\203f\201[\203^";
+
+static const char optionText5A0[] = "Versus Race count %03d";
+
+static const char optionText5B8[] = "Number of Wins %03d";
+
+static const char optionText5CC[] = "\221\316\220\355\203\214\201[\203X\220\224";
+
+static const char optionText5DC[] = "\227D\217\237\211\361\220\224";
+
+static const char optionText5E8[] = "Grand Prix mode";
+
+static const char optionText5F8[] = "\203O\203\211\203\223\203v\203\212\203\202\201[\203h\201@\203f\201[\203^";
+
+static const char optionText614[] = "Number of item(s) received %02d/%d";
+
+static const char optionText638[] = "\203A\203C\203e\203\200\212l\223\276\220\224%02d";
+
+static const char optionText64C[] = "\201^%d\214\302\222\206";
+
+static const char optionText658[] = "\212\356\226{\203f\201[\203^";
+
+static const char optionText664[] = "\211\271\227\312\202\360\225\317\215X\202\305\202\253\202\334\202\267\201B";
+
+static const char optionText67C[] = "clCSPartsInerface";
+#pragma pop
 
 static inline InputView *input_state(void)
 {
@@ -2376,6 +2514,501 @@ extern "C" asm void fn_80159BD0(OptionMenu *self, int layer, float x, float y, f
     lwz r0, 0xf4(r1)
     mtlr r0
     addi r1, r1, 0xf0
+    blr
+}
+
+/* ---- formerly OptionMenuDraw.cpp ---- */
+extern "C" asm void fn_8015A6E4(OptionMenu *, int, float, float, float) { /* 0x8015A6E4 size:0x758 */
+    nofralloc
+    stwu r1, -0xa0(r1)
+    mflr r0
+    stw r0, 0xa4(r1)
+    stfd f31, 0x90(r1)
+    psq_st f31, 0x98(r1), 0, 0
+    stfd f30, 0x80(r1)
+    psq_st f30, 0x88(r1), 0, 0
+    stfd f29, 0x70(r1)
+    psq_st f29, 0x78(r1), 0, 0
+    stfd f28, 0x60(r1)
+    psq_st f28, 0x68(r1), 0, 0
+    stfd f27, 0x50(r1)
+    psq_st f27, 0x58(r1), 0, 0
+    stfd f26, 0x40(r1)
+    psq_st f26, 0x48(r1), 0, 0
+    stfd f25, 0x30(r1)
+    psq_st f25, 0x38(r1), 0, 0
+    stfd f24, 0x20(r1)
+    psq_st f24, 0x28(r1), 0, 0
+    stmw r27, 0xc(r1)
+    fmr f25, f1
+    lis r5, lbl_803678D8@ha
+    fmr f26, f2
+    mr r29, r3
+    fmr f27, f3
+    mr r30, r4
+    addi r31, r5, lbl_803678D8@l
+    bl isJapanese
+    cmpwi r3, 0x1
+    bne fn_8015A6E4_L_8015A7A8
+    lfs f1, lbl_806D83D4(r2)
+    fmr f3, f27
+    lfs f0, lbl_806D83D0(r2)
+    mr r3, r30
+    fadds f1, f1, f25
+    addi r4, r2, -0x1CEC  /* lbl_806D8574 */
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f1, lbl_806D83DC(r2)
+    fmr f3, f27
+    lfs f0, lbl_806D83E0(r2)
+    mr r3, r30
+    fadds f1, f1, f25
+    addi r4, r2, -0x1E7C  /* lbl_806D83E4 */
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168D84
+    b fn_8015A6E4_L_8015A814
+    fn_8015A6E4_L_8015A7A8:
+    lfs f0, lbl_806D83D0(r2)
+    fmr f3, f27
+    lfs f1, lbl_806D83CC(r2)
+    mr r3, r30
+    fadds f30, f0, f26
+    addi r4, r31, 0x658
+    fadds f1, f1, f25
+    fmr f2, f30
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f0, lbl_806D83EC(r2)
+    fmr f2, f30
+    fmr f3, f27
+    mr r3, r30
+    fadds f1, f0, f25
+    addi r4, r2, -0x1CEC  /* lbl_806D8574 */
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f1, lbl_806D83DC(r2)
+    fmr f3, f27
+    lfs f0, lbl_806D83E0(r2)
+    mr r3, r30
+    fadds f1, f1, f25
+    addi r4, r2, -0x1E70  /* lbl_806D83F0 */
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168D84
+    fn_8015A6E4_L_8015A814:
+    li r3, 0x46
+    li r4, -0x1
+    bl GetTextureByIdAndLang
+    lfs f0, lbl_806D8578(r2)
+    mr r4, r3
+    lfs f1, lbl_806D83B4(r2)
+    fmr f3, f27
+    fadds f30, f0, f26
+    mr r3, r30
+    fadds f1, f1, f25
+    fmr f2, f30
+    creqv 6, 6, 6
+    bl fn_80168D84
+    lwz r3, 0x48(r29)
+    li r4, -0x1
+    bl fn_8013C26C
+    lfs f0, lbl_806D8454(r2)
+    mr r4, r3
+    lfs f1, lbl_806D84E8(r2)
+    fmr f3, f27
+    fadds f31, f0, f26
+    mr r3, r30
+    fadds f1, f1, f25
+    fmr f2, f31
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f1, lbl_806D857C(r2)
+    lfs f0, lbl_806D8580(r2)
+    fadds f1, f1, f25
+    lwz r3, 0x24(r29)
+    fadds f2, f0, f26
+    bl fn_8013C7B0
+    lwz r3, 0x24(r29)
+    lfs f1, lbl_806D8584(r2)
+    bl fn_8013C5FC
+    lwz r3, 0x24(r29)
+    lfs f1, lbl_806D8588(r2)
+    bl fn_8013C674
+    lfs f1, lbl_806D858C(r2)
+    lwz r3, 0x24(r29)
+    fmr f2, f1
+    fmr f3, f1
+    bl fn_8013C6EC
+    fmr f1, f27
+    lwz r3, 0x24(r29)
+    bl fn_8013C4A4
+    lwz r3, 0x24(r29)
+    bl fn_8013C91C
+    lwz r3, 0x24(r29)
+    mr r4, r30
+    bl fn_8013DAC8
+    li r3, 0x44
+    li r4, -0x1
+    bl GetTextureByIdAndLang
+    lfs f0, lbl_806D8590(r2)
+    fmr f2, f30
+    mr r4, r3
+    fmr f3, f27
+    fadds f30, f0, f25
+    mr r3, r30
+    fmr f1, f30
+    creqv 6, 6, 6
+    bl fn_80168D84
+    lfs f1, lbl_806D83D4(r2)
+    fmr f3, f27
+    lfs f0, lbl_806D8594(r2)
+    mr r3, r30
+    fadds f24, f1, f25
+    lwz r4, 0x20(r29)
+    fadds f2, f0, f26
+    fmr f1, f24
+    creqv 6, 6, 6
+    bl fn_80167C60
+    li r3, 0x45
+    li r4, -0x1
+    bl GetTextureByIdAndLang
+    lfs f0, lbl_806D8598(r2)
+    mr r4, r3
+    fmr f1, f30
+    mr r3, r30
+    fmr f3, f27
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168D84
+    lwz r3, lbl_806D10A0(r13)
+    cmplwi r3, 0x0
+    bne fn_8015A6E4_L_8015A974
+    li r3, 0x0
+    fn_8015A6E4_L_8015A974:
+    cmplwi r3, 0x0
+    addi r27, r2, -0x1CC4  /* lbl_806D859C */
+    beq fn_8015A6E4_L_8015A988
+    bl get_title_name_global
+    mr r27, r3
+    fn_8015A6E4_L_8015A988:
+    bl isJapanese
+    cmpwi r3, 0x1
+    bne fn_8015A6E4_L_8015A9BC
+    lfs f3, lbl_806D83B0(r2)
+    fmr f1, f24
+    fmr f2, f31
+    mr r3, r30
+    fmr f4, f3
+    mr r4, r27
+    fmr f5, f27
+    creqv 6, 6, 6
+    bl fn_80168404
+    b fn_8015A6E4_L_8015A9E0
+    fn_8015A6E4_L_8015A9BC:
+    fmr f1, f24
+    lfs f3, lbl_806D85A0(r2)
+    fmr f2, f31
+    lfs f4, lbl_806D83B0(r2)
+    fmr f5, f27
+    mr r3, r30
+    mr r4, r27
+    creqv 6, 6, 6
+    bl fn_80168404
+    fn_8015A6E4_L_8015A9E0:
+    li r3, 0x48
+    li r4, -0x1
+    bl GetTextureByIdAndLang
+    lfs f0, lbl_806D85A4(r2)
+    mr r4, r3
+    fmr f1, f30
+    mr r3, r30
+    fmr f3, f27
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168D84
+    lwz r5, 0x20(r29)
+    li r3, 0x49
+    li r4, -0x1
+    lbz r0, 0x198(r5)
+    extsb r5, r0
+    subi r6, r5, 0x1
+    srwi r5, r6, 31
+    subi r0, r5, 0x1
+    and r28, r6, r0
+    bl GetTextureByIdAndLang
+    lfs f0, lbl_806D85A8(r2)
+    mr r4, r3
+    fmr f1, f24
+    mr r3, r30
+    fmr f3, f27
+    mr r5, r28
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f1, lbl_806D85AC(r2)
+    fmr f3, f27
+    lfs f0, lbl_806D85B0(r2)
+    mr r3, r30
+    fadds f31, f1, f25
+    li r4, 0x643
+    fadds f2, f0, f26
+    li r5, 0x0
+    fmr f1, f31
+    bl fn_801695E0
+    lbz r0, 0x4c(r29)
+    cmplwi r0, 0x0
+    beq fn_8015A6E4_L_8015AAD8
+    lfs f0, lbl_806D85B8(r2)
+    fmr f3, f27
+    lfs f1, lbl_806D85B4(r2)
+    mr r3, r30
+    fadds f24, f0, f26
+    li r4, 0x67d
+    fadds f1, f1, f25
+    li r5, 0x0
+    fmr f2, f24
+    bl fn_801695E0
+    lfs f0, lbl_806D85BC(r2)
+    fmr f2, f24
+    fmr f3, f27
+    mr r3, r30
+    fadds f1, f0, f25
+    li r4, 0x67c
+    li r5, 0x0
+    bl fn_801695E0
+    b fn_8015A6E4_L_8015AB20
+    fn_8015A6E4_L_8015AAD8:
+    lfs f0, lbl_806D85B8(r2)
+    fmr f3, f27
+    lfs f1, lbl_806D85B4(r2)
+    mr r3, r30
+    fadds f24, f0, f26
+    li r4, 0x67b
+    fadds f1, f1, f25
+    li r5, 0x0
+    fmr f2, f24
+    bl fn_801695E0
+    lfs f0, lbl_806D85BC(r2)
+    fmr f2, f24
+    fmr f3, f27
+    mr r3, r30
+    fadds f1, f0, f25
+    li r4, 0x67e
+    li r5, 0x0
+    bl fn_801695E0
+    fn_8015A6E4_L_8015AB20:
+    cmpwi r30, 0x0
+    lwz r3, 0x38(r29)
+    blt fn_8015A6E4_L_8015AB38
+    cmpwi r30, 0x8
+    bge fn_8015A6E4_L_8015AB38
+    stw r30, 0x0(r3)
+    fn_8015A6E4_L_8015AB38:
+    lfs f1, lbl_806D85C0(r2)
+    lfs f0, lbl_806D85C4(r2)
+    fadds f1, f1, f25
+    lwz r3, 0x38(r29)
+    fadds f0, f0, f26
+    stfs f1, 0x8(r3)
+    stfs f0, 0xc(r3)
+    lwz r3, 0x38(r29)
+    stfs f27, 0x10(r3)
+    lwz r3, 0x38(r29)
+    lwz r12, 0x14(r3)
+    lwz r12, 0x18(r12)
+    mtctr r12
+    bctrl
+    lfs f0, lbl_806D8504(r2)
+    fmr f1, f31
+    fmr f3, f27
+    mr r3, r30
+    fadds f24, f0, f26
+    li r4, 0x642
+    li r5, 0x0
+    fmr f2, f24
+    bl fn_801695E0
+    lfs f0, lbl_806D8410(r2)
+    addi r28, r31, 0x4a4
+    li r27, 0x0
+    fadds f30, f0, f24
+    fn_8015A6E4_L_8015ABA4:
+    lbz r0, 0x58(r29)
+    cmpw r0, r27
+    bne fn_8015A6E4_L_8015ABD4
+    lfs f0, 0x0(r28)
+    fmr f2, f30
+    fmr f3, f27
+    mr r3, r30
+    fadds f1, f31, f0
+    addi r4, r27, 0x676
+    li r5, 0x0
+    bl fn_801695E0
+    b fn_8015A6E4_L_8015ABF4
+    fn_8015A6E4_L_8015ABD4:
+    lfs f0, 0x0(r28)
+    fmr f2, f30
+    fmr f3, f27
+    mr r3, r30
+    fadds f1, f31, f0
+    addi r4, r27, 0x671
+    li r5, 0x0
+    bl fn_801695E0
+    fn_8015A6E4_L_8015ABF4:
+    addi r27, r27, 0x1
+    addi r28, r28, 0x4
+    cmpwi r27, 0x5
+    blt fn_8015A6E4_L_8015ABA4
+    lfs f1, 0x50(r29)
+    lfs f0, lbl_806D8398(r2)
+    fcmpo cr0, f1, f0
+    bge fn_8015A6E4_L_8015AC50
+    li r3, 0x4b
+    li r4, -0x1
+    bl GetTextureByIdAndLang
+    lfs f0, lbl_806D85C8(r2)
+    mr r4, r3
+    lfs f4, lbl_806D8394(r2)
+    fmr f2, f24
+    fmr f6, f27
+    lfs f3, lbl_806D83B0(r2)
+    fmr f5, f4
+    mr r3, r30
+    fadds f1, f0, f25
+    creqv 6, 6, 6
+    bl fn_80168B90
+    b fn_8015A6E4_L_8015AC7C
+    fn_8015A6E4_L_8015AC50:
+    bl isJapanese
+    cmpwi r3, 0x0
+    bne fn_8015A6E4_L_8015AC7C
+    lfs f0, lbl_806D85C8(r2)
+    fmr f2, f24
+    fmr f3, f27
+    mr r3, r30
+    fadds f1, f0, f25
+    addi r4, r31, 0x664
+    creqv 6, 6, 6
+    bl fn_80168D84
+    fn_8015A6E4_L_8015AC7C:
+    cmpwi r30, 0x0
+    lwz r3, 0x3c(r29)
+    blt fn_8015A6E4_L_8015AC94
+    cmpwi r30, 0x8
+    bge fn_8015A6E4_L_8015AC94
+    stw r30, 0x0(r3)
+    fn_8015A6E4_L_8015AC94:
+    lfs f1, lbl_806D85CC(r2)
+    lfs f0, lbl_806D83D4(r2)
+    fadds f1, f1, f25
+    lwz r3, 0x3c(r29)
+    fadds f0, f0, f26
+    stfs f1, 0x8(r3)
+    stfs f0, 0xc(r3)
+    lwz r3, 0x3c(r29)
+    stfs f27, 0x10(r3)
+    lwz r3, 0x3c(r29)
+    lwz r12, 0x14(r3)
+    lwz r12, 0x18(r12)
+    mtctr r12
+    bctrl
+    lfs f3, 0x54(r29)
+    lfs f0, lbl_806D839C(r2)
+    fcmpo cr0, f3, f0
+    bge fn_8015A6E4_L_8015ADE8
+    lfs f2, lbl_806D8428(r2)
+    fcmpo cr0, f3, f2
+    bge fn_8015A6E4_L_8015AD00
+    lfs f1, lbl_806D8414(r2)
+    fdivs f28, f3, f2
+    fmuls f0, f1, f3
+    fdivs f0, f0, f2
+    fadds f29, f1, f0
+    b fn_8015A6E4_L_8015AD20
+    fn_8015A6E4_L_8015AD00:
+    lfs f0, lbl_806D855C(r2)
+    fcmpo cr0, f3, f0
+    bge fn_8015A6E4_L_8015AD20
+    fsubs f0, f3, f2
+    lfs f1, lbl_806D83B0(r2)
+    fdivs f0, f0, f2
+    fadds f29, f1, f0
+    fsubs f28, f1, f0
+    fn_8015A6E4_L_8015AD20:
+    lbz r0, 0x58(r29)
+    addi r4, r31, 0x4a4
+    fmr f2, f30
+    mr r3, r30
+    slwi r0, r0, 2
+    fmr f3, f29
+    lfsx f0, r4, r0
+    fmr f4, f29
+    fadds f1, f31, f0
+    li r4, 0x67f
+    fmuls f5, f28, f27
+    li r5, 0x0
+    bl fn_80169334
+    lfs f2, 0x54(r29)
+    lfs f0, lbl_806D8418(r2)
+    fcmpo cr0, f2, f0
+    ble fn_8015A6E4_L_8015ADE8
+    lfs f1, lbl_806D83B8(r2)
+    fcmpo cr0, f2, f1
+    bge fn_8015A6E4_L_8015AD90
+    fsubs f3, f2, f0
+    lfs f2, lbl_806D8414(r2)
+    lfs f0, lbl_806D8428(r2)
+    fmuls f1, f2, f3
+    fdivs f28, f3, f0
+    fdivs f0, f1, f0
+    fadds f29, f2, f0
+    b fn_8015A6E4_L_8015ADB4
+    fn_8015A6E4_L_8015AD90:
+    lfs f0, lbl_806D839C(r2)
+    fcmpo cr0, f2, f0
+    bge fn_8015A6E4_L_8015ADB4
+    fsubs f1, f2, f1
+    lfs f0, lbl_806D8428(r2)
+    lfs f2, lbl_806D83B0(r2)
+    fdivs f0, f1, f0
+    fadds f29, f2, f0
+    fsubs f28, f2, f0
+    fn_8015A6E4_L_8015ADB4:
+    lbz r0, 0x58(r29)
+    addi r4, r31, 0x4a4
+    fmr f2, f30
+    mr r3, r30
+    slwi r0, r0, 2
+    fmr f3, f29
+    lfsx f0, r4, r0
+    fmr f4, f29
+    fadds f1, f31, f0
+    li r4, 0x67f
+    fmuls f5, f28, f27
+    li r5, 0x0
+    bl fn_80169334
+    fn_8015A6E4_L_8015ADE8:
+    psq_l f31, 0x98(r1), 0, 0
+    lfd f31, 0x90(r1)
+    psq_l f30, 0x88(r1), 0, 0
+    lfd f30, 0x80(r1)
+    psq_l f29, 0x78(r1), 0, 0
+    lfd f29, 0x70(r1)
+    psq_l f28, 0x68(r1), 0, 0
+    lfd f28, 0x60(r1)
+    psq_l f27, 0x58(r1), 0, 0
+    lfd f27, 0x50(r1)
+    psq_l f26, 0x48(r1), 0, 0
+    lfd f26, 0x40(r1)
+    psq_l f25, 0x38(r1), 0, 0
+    lfd f25, 0x30(r1)
+    psq_l f24, 0x28(r1), 0, 0
+    lfd f24, 0x20(r1)
+    lmw r27, 0xc(r1)
+    lwz r0, 0xa4(r1)
+    mtlr r0
+    addi r1, r1, 0xa0
     blr
 }
 
