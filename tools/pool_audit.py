@@ -159,6 +159,10 @@ def main():
                              claim=', '.join(dict.fromkeys(c for c in (m.claim_of(uid), m.claim_of(own) if own is not None else None) if c)),
                              users=sorted(m.units[x]['name'] for x in users if x is not None)))
     rows.sort(key=lambda r: (r['cls'].startswith('OWN-SELF'), r['cls'], r['span'][0]))
+    try:
+        dcls = T.classify_diffs(m)
+    except Exception as e:  # noqa
+        print('diff classify failed:', e); dcls = {}
     # concrete fix per row: which TU should own which range, merge or not
     groups = collections.defaultdict(set)
     for r in rows:
@@ -172,6 +176,10 @@ def main():
                         else f"{r['tu']} owns {rng} (no merge)")
         else:
             r['fix'] = f"merge {r['tu']} into {r['owner']} (owner already has {rng})"
+        d = dcls.get(r['fa'])
+        r['diff'] = f"{d[0]} ({d[1]})" if d else ('asm' if r['asm'] else '')
+        if r['fix'] and d and d[0] in ('reg', 'sched'):
+            r['fix'] += '; NOTE diff is only ' + ('register allocation' if d[0] == 'reg' else 'scheduling') + ', ownership alone will not match it'
     def cl(who):
         return who or ''
     cnt = collections.Counter(r['cls'] for r in rows)
@@ -188,15 +196,17 @@ def main():
           'unreferenced ones in `#pragma force_active on/reset`). RANGE is the part the function',
           'reaches; extend it to the TU\'s real rodata start (often the common float table',
           '{1.0, 0.7, 0.9, 0, 500, ...}) and add a pad symbol if the split starts after padding.',
-          'claim: open unit-claim issue (login #number) on the function TU or the owner TU.', '',
-          '| class | function | TU | % | sec | base | span | objs | owner | other users | claim | fix |',
-          '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |']
+          'claim: open unit-claim issue (login #number) on the function TU or the owner TU.',
+          'diff: tu_audit classify_diffs of the current build: reloc = symbol references differ (ownership/merge can help),',
+          'reg = only register numbers differ, sched = order only, other = mixed; (n) = diff lines.', '',
+          '| class | function | TU | % | sec | base | span | objs | owner | other users | claim | diff | fix |',
+          '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |']
     for r in rows:
         pct = 'asm' if r['asm'] and (r['pct'] is None or r['pct'] >= 100) else ('%.2f' % r['pct'] if r['pct'] is not None else '?')
         others = [x for x in r['users'] if x != r['tu']]
         md.append(f"| {r['cls']} | `{r['fn']}` | {r['tu']} | {pct} | {r['sec']} | `{r['base']}` | "
                   f"{r['span'][0]:08X}..{r['span'][1]:08X} | {r['nobj']} | {r['owner']} | "
-                  f"{', '.join(others[:4])}{' …' if len(others) > 4 else ''} | {cl(r['claim'])} | {r['fix']} |")
+                  f"{', '.join(others[:4])}{' …' if len(others) > 4 else ''} | {cl(r['claim'])} | {r.get('diff','')} | {r['fix']} |")
     open(os.path.join(T.ROOT, a.md), 'w').write('\n'.join(md) + '\n')
     print(cnt); print('wrote', a.md)
 
