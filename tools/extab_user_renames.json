@@ -11618,6 +11618,11 @@
     "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/NamCamFlow.cpp": {
+    "@891": "@etb_80016FFC",
+    "@892": "@eti_80028D30",
+    "@947": "@etb_800173B8",
+    "@948": "@eti_80028DB4",
+    "@886": "jumptable_804E531C",
     "@887": "@etb_80016FFC",
     "@888": "@eti_80028D30",
     "@943": "@etb_800173B8",

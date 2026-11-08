@@ -267,7 +267,10 @@ static inline void NamCamDrawBorders() {
             fn_8011FAFC(&rc, 0);
             fn_80121E10(&rc);
             rc.resId = 0x50C;
-            rc.Show(lbl_803BE3E4[i][0], lbl_803BE3E4[i][1], lbl_806DA590);
+            float y, x;
+            x = lbl_803BE3E4[i][0];
+            y = lbl_803BE3E4[i][1];
+            rc.Show(x, y, lbl_806DA590);
             fn_8011FAFC(&rc, 0);
         }
     }

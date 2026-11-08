@@ -1939,3 +1939,8 @@ c21_u138 TryArmInit: C7Vec v=self->pos; Normalize(&v) replaces default construct
 Source: Codex worker c21_p19_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c21_p19: fn_80170B5C stack-frame residual was a semantic type-size error: GrowFace was opaque 0x48 but fn_80184F24 emits DListQuadInfo (four Vec vertices, flags, two floats = 0x3C), and fn_801234F8 advances input by 0x3C. Reusing canonical DListQuadInfo fixes frame 0xB0 -> target0xA0 and all six frame operands. Include extractor declarations with C linkage and add own GrowAnim(DListQuadInfo*, int) bridge. Text99.05778 ->99.08444; only offset initializer mr r30,r29 vs li r30,0 remains. Owned EH/rodata100. Singleton NM, no safe B cut. Coordinator full build target SHA-1 OK; zero native gain.
+
+## c21_p6_20261108
+Source: Codex worker c21_p6_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c21_p6 NamCamFlow: naming second border coordinates (float y,x; assign x then y) fixes its FPR homes and raises update 99.6371 -> 99.69086. Add-only @886 jump table, @891/@892 update EH and @947/@948 draw EH aliases preserve every other score. .data 80419DE0..80419DFC ownership probe unchanged text and explicit re-split causes a link-order cycle through earlier TUs; reverted. Pre-new list snapshots lift fn32BC to99.36015 and restore frame but shift literal into existing @193 EH alias, regressing exact36D0/EH; draft in build/w/snapshot_best.cpp, not retained source. Confirmed21 EH-bearing functions have no safe internal cut. TU remainsNonMatching, zero native gain, full coordinator fallback DOL SHA-1 exact.
