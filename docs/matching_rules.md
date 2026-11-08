@@ -230,6 +230,17 @@ roughly in the order worth trying:
    permuter for C++ (`cperm.py`, kept outside the repo, ask if you want it).
    In practice it rarely moved the last register swaps here; new source ideas
    did.
+8. Two shapes that closed 2-line diffs on 2026-11-08:
+   - Loop step order (target bumps the pointer before the count): walk with
+     a separate index, `int count = 0, i = 0; while (t[i].name) { i++; count++; }`
+     (CollisionFile_Load).
+   - Globals used as call arguments but kept in saved registers (target
+     `lwz r29,g; mr r4,r29`, ours `lwz r4,g; mr r29,r4`): declare the locals
+     without initializers and assign them inside the first call,
+     `f(p, cup = g_cupId, round = g_roundIndex)` (AI_CalcGPTargetSpeed).
+   - An inline member that returns a class by value (`list->end()`) can make
+     MWCC emit the function after the ones that follow it. Build the
+     iterator directly instead (`Iter pos(&list->anchor)`, Scene_8014E0C4).
 
 When you stop, record the function in `docs/gave_up.md` with the current %,
 the remaining diff in one line, and where the WIP lives, so the next person
