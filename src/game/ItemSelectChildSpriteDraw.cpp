@@ -33,11 +33,13 @@ extern "C" {
 void fn_8023D2B8(ItemAliasSprite *);
 int fn_8020A788(FlowFader *);
 }
-static inline void DrawEffect(ItemSelectChildEffect *effect, int active, const float pair[2][2]) {
+static inline void DrawEffect(ItemSelectChildSprite *self, int active) {
+    const float (*position)[2];
+    ItemSelectChildEffect *effect = self->effect;
     float sx = effect->scale;
     float sy = effect->scale * fn_8020A6CC(effect->fade.p);
     float shift = effect->scale * (lbl_806DBDA8 - fn_8020A6CC(effect->fade.p));
-    const float (*position)[2] = pair;
+    position = childEffectPositions;
     for (int i = 0; i < 2; ++i) {
         fn_8011F804(effect->handles[i],
             effect->scale * (*position)[0] + effect->x,
@@ -52,14 +54,16 @@ static inline void DrawEffect(ItemSelectChildEffect *effect, int active, const f
     if (lbl_806DBDA8 == fn_8020A6CC(effect->fade.p)) effect->active = 0;
     else effect->active = 1;
 }
-static inline void DrawOverlay(ItemSelectChildOverlay *overlay, int active) {
+static inline void DrawOverlay(ItemSelectChildSprite *self, int active) {
+    int pulse;
+    ItemSelectChildOverlay *overlay = self->overlay;
     float scale = overlay->scale * fn_8020A6CC(overlay->fade.p);
     fn_8011F804(overlay->handles[0], overlay->x, overlay->y);
     fn_8011F744(overlay->handles[0], scale, scale);
     SpriteHandle_SetCornerAlpha(overlay->handles[0], (unsigned char)fn_8020A788(overlay->alpha.p));
     SpriteHandle_SetActiveFlag(overlay->handles[0], active);
     SpriteHandle_RecomputeCull(overlay->handles[0]);
-    int pulse = 0;
+    pulse = 0;
     if (lbl_806DBDA8 == fn_8020A6CC(overlay->fade.p)) pulse = active;
     fn_8011F804(overlay->handles[1], overlay->x, overlay->y);
     fn_8011F744(overlay->handles[1], scale, scale);
@@ -88,27 +92,26 @@ extern "C" void fn_8023DCEC(ItemSelectChildSprite *self, int active) {
     scale = self->scale;
     x = self->x;
     scale += fn_8020A6CC(self->fade);
-    const float *originY = &childOrigins[0][1];
-    SetItemPos(self->item, y + (childOffsets[3] + originY[self->variant * 2]),
+    SetItemPos(self->item, y + (childOffsets[3] + childOrigins[self->variant][1]),
         x + (childOffsets[2] + childOrigins[self->variant][0]));
     SetItemScale(self->item, scale);
     self->item->color = self->color;
     self->item->active = active;
     if ((unsigned char)active) fn_8023D2B8(self->item);
-    SetPartPos(self->effect, y + (childOffsets[1] + originY[self->variant * 2]),
+    SetPartPos(self->effect, y + (childOffsets[1] + childOrigins[self->variant][1]),
         x + (childOffsets[0] + childOrigins[self->variant][0]));
     self->effect->scale = scale;
-    DrawEffect(self->effect, active, childEffectPositions);
+    DrawEffect(self, active);
     fn_8011F804(self->handle,
         x + (childOffsets[0] + childOrigins[self->variant][0]),
-        y + (childOffsets[1] + originY[self->variant * 2]));
+        y + (childOffsets[1] + childOrigins[self->variant][1]));
     fn_8011F744(self->handle, scale, scale);
     SpriteHandle_SetActiveFlag(self->handle, active);
     SpriteHandle_RecomputeCull(self->handle);
-    SetPartPos(self->overlay, y + (childOffsets[1] + originY[self->variant * 2]),
+    SetPartPos(self->overlay, y + (childOffsets[1] + childOrigins[self->variant][1]),
         x + (childOffsets[0] + childOrigins[self->variant][0]));
     self->overlay->scale = scale;
-    DrawOverlay(self->overlay, active);
+    DrawOverlay(self, active);
 }
 #pragma pop
 

@@ -13257,7 +13257,9 @@
     "childOffsets": "global:lbl_803E5CA4",
     "childIntCounterName": "global:lbl_803E5CB4",
     "childCounterInterfaceName": "global:lbl_803E5CC4",
-    "childFloatCounterName": "global:lbl_803E5CD8"
+    "childFloatCounterName": "global:lbl_803E5CD8",
+    "@136": "@etb_8001CBC4",
+    "@137": "@eti_8002AEB4"
   },
   "src/game/StrPcb_Lifetime_nm1.cpp": {
     "__ct__6StrPcbFi": "StrPcb_Init",
