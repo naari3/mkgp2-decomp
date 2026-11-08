@@ -329,7 +329,7 @@ extern void HSD_JObjSetFlagsAll();
 extern void HSD_JObjSetMtxDirtySub();
 extern unsigned int lbl_806D76E8;
 extern unsigned int lbl_806D76EC;
-extern unsigned int lbl_803600E0[];
+extern const int lbl_803600E0[];
 extern unsigned int lbl_8048EA98[];
 extern void dtor_8013DCBC();
 asm void fn_8013CC24(void);
@@ -928,3 +928,48 @@ asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
     blr
 }
 
+/* .rodata 0x803600E0..0x80360440 (TU-owned). The ctor addresses everything
+ * from the section start, so the tables it reads are statics. The ctor is
+ * still asm; a C draft is listed in docs/gave_up.md. The explicit section is
+ * needed because the .extabindex_user section pragma above is still active
+ * (it would put the int table in .data). */
+#pragma force_active on
+__declspec(section ".rodata") const int lbl_803600E0[4] = {0, 5, 42, 43};
+const char lbl_803600F0[9] = "mspacman";
+const char lbl_803600FC[0xE] = "clCSKartModel";
+const char lbl_8036010C[0x13] = "clCSModelInterface";
+static const char sKPWingJoint[] = "chara_peach_pony_null_joint";
+static const char sKPWingModel[] = "pony.dat";
+static const char sKPFmtHead[] = "chara_%s_hand_goo_joint";
+static const char sKPFmtHandL[] = "chara_%s_hand_pa_joint";
+static const char sKPFmtHandR[] = "chara_%s_hand_fin_joint";
+static const char sKPKartModel[] = "cart_tire.dat";
+static const char sKPKartJoint0[] = "cart_tireset_fl_joint";
+static const char sKPKartJoint1[] = "cart_tireset_fr_joint";
+static const char sKPKartJoint2[] = "cart_tireset_rl_joint";
+static const char sKPKartJoint3[] = "cart_tireset_rr_joint";
+static const char sKPFmtDriver0[] = "%s_cart_tire_fl_joint";
+static const char sKPFmtDriver1[] = "%s_cart_tire_fr_joint";
+static const char sKPFmtDriver2[] = "%s_cart_tire_rl_joint";
+static const char sKPFmtDriver3[] = "%s_cart_tire_rr_joint";
+static const char sKPHidden0[] = "cart_big_tire_fl_joint";
+static const char sKPHidden1[] = "cart_big_tire_fr_joint";
+static const char sKPHidden2[] = "cart_big_tire_rl_joint";
+static const char sKPHidden3[] = "cart_big_tire_rr_joint";
+static const char sKPHidden4[] = "cart_kaku_tire_fl_joint";
+static const char sKPHidden5[] = "cart_kaku_tire_fr_joint";
+static const char sKPHidden6[] = "cart_kaku_tire_rl_joint";
+static const char sKPHidden7[] = "cart_kaku_tire_rr_joint";
+static const char sKPHidden8[] = "cart_oil_tire_fl_joint";
+static const char sKPHidden9[] = "cart_oil_tire_fr_joint";
+static const char sKPHidden10[] = "cart_oil_tire_rl_joint";
+static const char sKPHidden11[] = "cart_oil_tire_rr_joint";
+static const char sKPHidden12[] = "cart_punk_grid_fl_joint";
+static const char sKPHidden13[] = "cart_punk_grid_fr_joint";
+static const char sKPHidden14[] = "cart_punk_grid_rl_joint";
+static const char sKPHidden15[] = "cart_punk_grid_rr_joint";
+static const char sKPHidden16[] = "cart_punk_tire_fl_joint";
+static const char sKPHidden17[] = "cart_punk_tire_fr_joint";
+static const char sKPHidden18[] = "cart_punk_tire_rl_joint";
+static const char sKPHidden19[] = "cart_punk_tire_rr_joint";
+#pragma force_active reset
