@@ -1,4 +1,5 @@
 #include "game/resultscene_private.h"
+#include "game/singleton.h"
 
 typedef struct {
     int pad0;
@@ -1492,9 +1493,7 @@ extern unsigned char g_playerData[];
 extern unsigned char get_title_result(void *t, int *a, int *b, int *c);
 
 static inline void *TitleTracker_Get(void) {
-    void *t = lbl_806D10A0;
-    if (!t) t = 0;
-    return t;
+    return SINGLETON_INSTANCE(lbl_806D10A0);
 }
 
 int has_title_changed(void) {
@@ -1573,14 +1572,11 @@ extern void fn_8019FF6C(void *sprite, int enabled);
 extern PopupInputState *g_pInputState;
 
 static inline PopupInputState *PopupInput_Get() {
-    PopupInputState *p = g_pInputState;
-    if (!p) p = 0;
-    return p;
+    return SINGLETON_INSTANCE(g_pInputState);
 }
 
 static inline PopupInputState *PopupInput_Peek() {
-    PopupInputState *p = g_pInputState;
-    return !p ? 0 : p;
+    return SINGLETON_INSTANCE(g_pInputState);
 }
 
 void fn_80160E04(CoinPopupDetail *o) {
@@ -2866,7 +2862,7 @@ void fn_8015CD74(ResultPartYU *o) {
     float fd = o->fade;
     if (fd >= lbl_806D8678) {
         unsigned int c;
-        if ((o->fade = fd + lbl_806D8674) > 15.0f) o->fade = 15.0f;
+        if ((o->fade = fd + lbl_806D8674) > 30.0f) o->fade = 30.0f;
         fn_801678FC(0, lbl_806D8678, lbl_806D8678, lbl_806D8678, o->fade / lbl_806D86A4);
         c = (unsigned char)(int)(lbl_806D86E8 * (o->fade / lbl_806D86A4));
         o->colB[0] = c;
