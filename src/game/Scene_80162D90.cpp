@@ -1,5 +1,9 @@
 #include "game/Scene_80162D90Private.h"
 
+static inline unsigned char HasNoCredits(const CreditPanel162 *panel) {
+    return panel->credits <= 0;
+}
+
 int CreditPanel162::Tick() {
     CreditPanel162 *s = this;
     int oldCredits = s->credits;
@@ -8,7 +12,7 @@ int CreditPanel162::Tick() {
         s->changed = 1;
         fn_80147574(s, 1200);
     }
-    unsigned char noCredits = s->credits <= 0;
+    unsigned char noCredits = HasNoCredits(s);
     int state = 0;
     unsigned char pressed = 0;
     if (InputState()) state = InputState()->state;

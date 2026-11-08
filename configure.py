@@ -2786,7 +2786,7 @@ config.libs = [
             Object(Matching, "game/Scene_80162B00.cpp"),
             Object(Matching, "game/Scene_801634C4.cpp"),
             Object(Matching, "game/Scene_8016303C.cpp", mw_version="GC/2.7", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/Scene_80162D90.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/Scene_80162D90.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/Scene_80164614.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Scene_80163EF4.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_80163C68.cpp", extra_cflags=["-Cpp_exceptions on"]),
