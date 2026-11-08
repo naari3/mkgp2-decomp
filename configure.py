@@ -3625,7 +3625,7 @@ config.libs = [
             Object(Matching, "Runtime.PPCEABI.H/__va_arg.c", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
             Object(Matching, "Runtime.PPCEABI.H/CPlusLibPPC.cp", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
             Object(Matching, "Runtime.PPCEABI.H/ptmf.c", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
-            Object(NonMatching, "Runtime.PPCEABI.H/MWRTTI.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on", "-inline deferred", "-RTTI on"], extab_padding=b"\x00\x00"),
+            Object(Matching, "Runtime.PPCEABI.H/MWRTTI.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on", "-inline deferred", "-RTTI on"], extab_padding=b"\x00\x00"),
             Object(Matching, "Runtime.PPCEABI.H/MWRTTI_bad_cast.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on", "-inline deferred", "-RTTI on"], extab_padding=b"\x00\x00"),
             Object(Matching, "Runtime.PPCEABI.H/runtime.c", mw_version="GC/2.6", extra_cflags=["-inline deferred"]),
             Object(Matching, "Runtime.PPCEABI.H/NMWException.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on", "-inline deferred"], extab_padding=b""),

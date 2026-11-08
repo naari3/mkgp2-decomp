@@ -1,7 +1,5 @@
 #include "PowerPC_EABI_Support/Runtime/MWCPlusLib.h"
 
-extern "C" const char lbl_803F1CBC[9];
-
 #define AMBIGUOUS_BASE 0x80000000
 
 namespace std {
@@ -21,8 +19,9 @@ public:
 class bad_cast : public exception {
 public:
 	bad_cast() { }
-	virtual ~bad_cast() { }
-	virtual const char* what() const { return lbl_803F1CBC; }
+	// These virtual methods are defined in MWRTTI_bad_cast.cpp.
+	virtual ~bad_cast();
+	virtual const char* what() const;
 };
 } // namespace std
 

@@ -4553,6 +4553,10 @@
     "@181": "jumptable_804F2134"
   },
   "src/Runtime.PPCEABI.H/MWRTTI.cpp": {
+    "@126": "@etb_8001F2A8",
+    "@127": "@eti_8002BB5C",
+    "@stringBase0": "global:lbl_803F1C78",
+    "__dt__Q23std9exceptionFv": "dtor_80038DD4",
     "__dynamic_cast": "fn_80271340",
     "__dt__Q23std8bad_castFv": "fn_802715A4",
     "what__Q23std8bad_castCFv": "fn_80271600",

@@ -13466,6 +13466,7 @@ Runtime.PPCEABI.H/MWRTTI.cpp:
 	extab       start:0x8001F2A8 end:0x8001F2B0
 	extabindex  start:0x8002BB5C end:0x8002BB68
 	.text       start:0x80271340 end:0x802715A4
+	.rodata     start:0x803F1C78 end:0x803F1C9C
 
 Runtime.PPCEABI.H/MWRTTI_bad_cast.cpp:
 	extab       start:0x8001F2B0 end:0x8001F2B8
