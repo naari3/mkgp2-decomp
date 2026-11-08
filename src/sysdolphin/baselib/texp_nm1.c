@@ -27,9 +27,9 @@ extern TExpPool lbl_804FD988;
 static inline void TExpUploadTevColors(const GXTevRegID ids[3], GXColor reg[8], u32 changed)
 {
     int i;
-    for (i = 4; i < 7; i++) {
+    for (i = 4, reg += 4; i < 7; i++, ids++, reg++) {
         if (changed & (1 << i)) {
-            GXSetTevColor(ids[i - 4], reg[i]);
+            GXSetTevColor(*ids, *reg);
         }
     }
 }
@@ -37,9 +37,9 @@ static inline void TExpUploadTevColors(const GXTevRegID ids[3], GXColor reg[8], 
 static inline void TExpUploadKColors(const GXTevKColorID ids[4], GXColor reg[8], u32 changed)
 {
     int i;
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < 4; i++, ids++, reg++) {
         if (changed & (1 << i)) {
-            GXSetTevKColor(ids[i], reg[i]);
+            GXSetTevKColor(*ids, *reg);
         }
     }
 }
