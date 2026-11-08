@@ -25,3 +25,8 @@ c19_u156 fresh CLI97.71028/856B. Parent-owned group type at+CC is byte-invariant
 Source: Codex worker c20_u112_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c20_u112 fresh direct CLI97.96729/856B; assignment report98.43 uses different metric. Contiguous9-float curve array fixes second-interval pointer indexing across time/scale/alpha subarray boundaries, byte-invariant; retained. Explicit first-start/phase snapshots also entirely invariant; reverted. Stopped after2 consecutive invariant probes per budget. EH8/index12 both100, all scores unchanged. Residual self/group and init/active GPR homes, first-start/phasef3/f1, curve/cursor increment order. No singleton/pool-offset residual; single function preventsB. RemainsNM, no native gain; coordinator full fallback DOL SHA1ea30f3b1 exact.
+
+## c21_u97_20261108
+Source: Codex worker c21_u97_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c21_u97: baseline/final direct CLI97.96729/856B,extab/index100. Classified mixed/reg+sched/multi/prologue/param,54 rows. H1 indexed children+curves97.71028; caller-only indexing97.96729 retained (natural in-bounds array access, removes shifted DustGroup walks in init/free; score-invariant, initialization r29/r30 homes differ). H2 literal floats0/.5/1/11/12 gives97.92056; H3 direct indexed active loop without helper97.42991. All856B/EH100. Three approaches exhausted, no new matching gain. No singleton/shared-neighbour-pool mismatch; B impossible for singleton. Coordinator full fallback DOL SHA1ea30f3b1 exact.

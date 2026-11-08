@@ -75,17 +75,16 @@ void Effect_DustBurst4_Update(DustEffect *self) {
     DustGroup *group = &self->group;
     switch (self->state) {
     case 0: {
-        cursor = group;
-        for (i=0; i<4; ++i, cursor=(DustGroup *)((unsigned char *)cursor+4)) {
-            cursor->children[0] = DrawEffect_SpawnDirect(fn_800AF4F8);
-            if (cursor->children[0]) {
+        for (i=0; i<4; ++i) {
+            group->children[i] = DrawEffect_SpawnDirect(fn_800AF4F8);
+            if (group->children[i]) {
                 switch (i) {
-                case 0: VfxSlot_BindResourceEx(cursor->children[0]->slot,0x69,0); break;
-                case 1: VfxSlot_BindResourceEx(cursor->children[0]->slot,0x6B,0); break;
-                case 2: VfxSlot_BindResourceEx(cursor->children[0]->slot,0x6A,0); break;
-                case 3: VfxSlot_BindResourceEx(cursor->children[0]->slot,0x6C,0); break;
+                case 0: VfxSlot_BindResourceEx(group->children[i]->slot,0x69,0); break;
+                case 1: VfxSlot_BindResourceEx(group->children[i]->slot,0x6B,0); break;
+                case 2: VfxSlot_BindResourceEx(group->children[i]->slot,0x6A,0); break;
+                case 3: VfxSlot_BindResourceEx(group->children[i]->slot,0x6C,0); break;
                 }
-                Vec3_Copy(&cursor->children[0]->position, &self->position);
+                Vec3_Copy(&group->children[i]->position, &self->position);
             }
         }
         group->phase=lbl_806D5400;
@@ -97,10 +96,9 @@ void Effect_DustBurst4_Update(DustEffect *self) {
     group->phase += lbl_806D540C;
     if (lbl_806D549C <= group->phase) {
         i=0;
-        cursor=group;
-        for (; i<4; ++i, cursor=(DustGroup *)((unsigned char *)cursor+4)) {
-            DrawEffect_Free(cursor->children[0]);
-            cursor->children[0]=0;
+        for (; i<4; ++i) {
+            DrawEffect_Free(group->children[i]);
+            group->children[i]=0;
         }
         DrawEffect_Free(self);
         return;
