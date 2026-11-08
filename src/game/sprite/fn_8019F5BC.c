@@ -12,6 +12,11 @@ static inline float SpriteAnim_RotateY(float x, float y, float angle) {
     return x * sn + y * c;
 }
 
+static inline float SpriteAnim_ScaleTranslate(float value, float scale, float translation) {
+    double magnitude = __fabs(scale);
+    return value * (float)magnitude + translation;
+}
+
 unsigned char fn_8019F5BC(SpriteAnim *s, SpriteAnimFrame *frames,
                              int r, int g, int b, int a, int wanted, SpriteAnimSample *out,
                              float x, float y, float sx, float sy, float angle, float alpha) {
@@ -50,8 +55,8 @@ unsigned char fn_8019F5BC(SpriteAnim *s, SpriteAnimFrame *frames,
         }
         if (resource == -1 && child == -1) continue;
         f = &frames[last];
-        px = SpriteAnim_RotateX(f->x, f->y, angle) * (float)__fabs(sx) + x;
-        py = SpriteAnim_RotateY(f->x, f->y, angle) * (float)__fabs(sy) + y;
+        px = SpriteAnim_ScaleTranslate(SpriteAnim_RotateX(f->x, f->y, angle), sx, x);
+        py = SpriteAnim_ScaleTranslate(SpriteAnim_RotateY(f->x, f->y, angle), sy, y);
         scaleX = sx * f->scaleX; scaleY = sy * f->scaleY;
         rotation = angle + f->rotation;
         newAlpha = alpha * f->alpha;
