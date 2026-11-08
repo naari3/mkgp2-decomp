@@ -26,6 +26,23 @@ extern "C" unsigned char SpecialFaceMesh_Raycast(SpecialFaceMeshNative *self,
     return 0;
 }
 
+extern "C" {
+extern const double lbl_806D2F68, lbl_806D2F70;
+extern const float lbl_806D2F78;
+}
+static inline float FaceRaySqrt(float x) {
+    volatile float y;
+    if (x > 0.0f) {
+        double guess = __frsqrte(x);
+        guess = lbl_806D2F68 * guess * (lbl_806D2F70 - x * (guess * guess));
+        guess = lbl_806D2F68 * guess * (lbl_806D2F70 - x * (guess * guess));
+        guess = lbl_806D2F68 * guess * (lbl_806D2F70 - x * (guess * guess));
+        y = (float)(x * guess);
+        return y;
+    }
+    return x;
+}
+
 extern "C" unsigned char SpecialFace_RaycastSegment(SpecialFaceNative *self,
         const FaceRayBounds *bounds, const FaceRaySegment *ray, Vec3f *out, Vec3f *normal) {
     if (bounds->minZ > self->maxZ) return 0;
@@ -43,8 +60,9 @@ extern "C" unsigned char SpecialFace_RaycastSegment(SpecialFaceNative *self,
     float da = az + (ax + ay), db = bz + (bx + by);
     if (da > 0.0f && db > 0.0f) return 0;
     if (da < 0.0f && db < 0.0f) return 0;
+    const Vec3f *vertex;
     int count = self->source.count;
-    const Vec3f *vertex = self->source.vertices + count;
+    vertex = self->source.vertices + count;
     while (--vertex, count-- > 0) {
         const SpecialFaceVec *edge = (const SpecialFaceVec *)((const char *)vertex + sizeof(SpecialFaceSource) + sizeof(SpecialFaceVec) + sizeof(float));
         SpecialFaceVec cross; cross.x = edge->x; cross.y = edge->y; cross.z = edge->z;
@@ -63,16 +81,19 @@ extern "C" unsigned char SpecialFace_RaycastSegment(SpecialFaceNative *self,
     float dz = self->normal.z*ray->delta.z;
     denom = dz + (denom + dy);
     float reciprocal = denom;
-    if (denom != 0.0f) reciprocal = 1.0f / denom;
+    if (denom != 0.0f) reciprocal = lbl_806D2F78 / denom;
     Vec3f origin; origin.x = ray->endpoints[0].x; origin.y = ray->endpoints[0].y; origin.z = ray->endpoints[0].z;
-    float t = reciprocal * -(FaceDot(origin, self->normal) - self->distance);
+    float planeX = self->normal.x * origin.x;
+    float planeY = self->normal.y * origin.y;
+    float planeZ = self->normal.z * origin.z;
+    reciprocal *= -(planeZ + (planeX + planeY) - self->distance);
     SpecialFaceVec offset; offset.x = ray->delta.x; offset.y = ray->delta.y; offset.z = ray->delta.z;
-    offset.x *= t; offset.y *= t; offset.z *= t;
+    offset.x *= reciprocal; offset.y *= reciprocal; offset.z *= reciprocal;
     out->x = origin.x + offset.x; out->y = origin.y + offset.y; out->z = origin.z + offset.z;
     float xx = offset.x*offset.x, yy = offset.y*offset.y, zz = offset.z*offset.z;
-    float length = MathInline_sqrtf(zz + (xx + yy));
+    float length = FaceRaySqrt(zz + (xx + yy));
     if (length <= 0.0f) offset.x = offset.y = offset.z = 0.0f;
-    else { float inv = 1.0f / length; offset.x *= inv; offset.y *= inv; offset.z *= inv; }
+    else { float inv = lbl_806D2F78 / length; offset.x *= inv; offset.y *= inv; offset.z *= inv; }
     offset.x *= lbl_806D2F7C; offset.y *= lbl_806D2F7C; offset.z *= lbl_806D2F7C;
     out->x += offset.x; out->y += offset.y; out->z += offset.z;
     normal->x = -self->normal.x; normal->y = -self->normal.y; normal->z = -self->normal.z;
@@ -150,7 +171,9 @@ extern "C" void PtrVec_InsertFill(void *storage, SpecialFaceNative **position,
             for (unsigned int i = n; i; --i) *out++ = *value;
             if (old) {
                 FaceCopyForward(old, old + offset, s->data);
-                FaceCopyForward(old + offset, old + s->count, s->data + offset + n);
+                SpecialFaceNative **end = old + s->count;
+                SpecialFaceNative **result = s->data + offset + n;
+                FaceCopyForward(old + offset, end, result);
                 operator delete(old);
             }
             s->count = size;
