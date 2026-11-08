@@ -36,15 +36,14 @@ commit message, so the other side sees it.
 A change can land on `main` (directly or by PR) when all of these hold:
 
 1. Rebased on the latest `origin/main`.
-2. **Clean build** gives `main.dol: OK`:
-   `rm -rf build/GNLJ82/src && rm -f build/GNLJ82/main.dol && ninja`.
-   The clean step matters: ninja does not track
-   `tools/extab_user_renames.json`, so a stale object can hide a broken rename.
-   Check ninja's exit code, not only the last line.
-   Changes under `tools/*.py` (the postprocess scripts) are not tracked by
-   ninja either: after pulling one, delete `build/GNLJ82/src` before an
-   incremental build, or stale objects can fail the link (seen with the
-   `.sdata2` export change, `undefined lbl_806D47F4`).
+2. **A full build** gives `main.dol: OK`:
+   `rm -f build/GNLJ82/main.dol && ninja`. Check ninja's exit code, not only
+   the last line. Since `tools/extab_slices.py`, ninja tracks
+   `tools/extab_user_renames.json`, `tools/extab_order.json` (per TU: an edit
+   rebuilds only the TUs whose entries changed) and the `tools/postprocess_*.py`
+   / `reorder_extab.py` scripts, so the old clean step
+   (`rm -rf build/GNLJ82/src`) is no longer needed. It is still harmless, and
+   still needed on a checkout older than that change.
 3. The report's function % is not the final word. The report normalizes some
    symbol names, so a TU can show 100% and still break the DOL. Always trust
    the SHA-1 (and `doldiff` for the first differing byte) over the report.
