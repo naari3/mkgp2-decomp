@@ -1,8 +1,8 @@
 /*
  * Course ground-height queries, 0x80035268..0x80035AE4.
- * NonMatching (both functions). Literal geometric zeros preserve the separate
- * edge/plane comparisons and improve the native draft; saved parameter homes,
- * cell traversal loads and floating-point temporary allocation still differ.
+ * NonMatching (both functions). The edge loop preserves the original unrolled
+ * edge-test temporaries; the penetration query computes plane height locally.
+ * Saved parameter homes, cell traversal loads and some FP temporaries differ.
  * The emitted zero constant is not yet mapped to the target shared pool.
  */
 #pragma cplusplus on
@@ -81,15 +81,11 @@ static inline int Terrain_EdgeSide(TerrainTri *tri, int e, float x, float z)
 static inline int Terrain_OutsideEdges(TerrainTri *tri, float x, float z)
 {
     int outside;
+    int edge;
 
-    outside = 3;
-    if (!Terrain_EdgeSide(tri, 0, x, z)) {
-        outside = 2;
-        if (!Terrain_EdgeSide(tri, 1, x, z)) {
-            outside = 1;
-            if (!Terrain_EdgeSide(tri, 2, x, z)) {
-                outside = 0;
-            }
+    for (outside = 3, edge = 0; outside > 0; --outside, ++edge) {
+        if (Terrain_EdgeSide(tri, edge, x, z)) {
+            break;
         }
     }
     return outside;
@@ -153,7 +149,14 @@ extern "C" unsigned char Terrain_GetGroundHeightWithPenetration(float *pos, floa
             if (Terrain_OutsideEdges(tri, x, z) == 0) {
                 float y = pos[1] + penetration;
                 float d = Terrain_PlaneSide(tri, x, y, z);
-                float h = Terrain_PlaneHeight(tri, x, y, z);
+                float b = tri->plane[1];
+                float inv = b;
+                float h;
+
+                if (0.0f != b) {
+                    inv = lbl_806D2388 / b;
+                }
+                h = inv * (tri->plane[3] + (tri->plane[2] * z + (tri->plane[0] * x + b * y)));
 
                 y = y - h;
                 if (d >= 0.0f && *outHeight <= y) {
