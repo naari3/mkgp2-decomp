@@ -1,0 +1,5 @@
+# pcbcheck-recv-c21-u87-20261108
+
+Source: Codex worker c21_u87_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+Base188b9cc already has c20 BSS split805A5EC0..805AC290 and consolidated sync symbol, but PCBCheckRecv.c had lost BSS definitions/direct references. Fresh raw97.35433 (assignment normalized98.3); restoring original eight objects in C++ declaration island recovers99.77165 raw/99.83071 report,1016B, all nontext100. No split/symbol edits. New probes: signed long distance invariant; output indexed from i99.01575 rotates saved homes; BufferedSamples(start,end)99.437004 fixes sum destination r3 but rotates volatile homes (caller declaration refinement invariant); slot-taking accessor98.43307/1020B reloads readIndex and loses start snapshot; typed packet cursor invariant. Retain restored pool source, NonMatching, same5 residual rows as c20. Full coordinator DOL SHA1 exact; source excluded from link, native gain0.
