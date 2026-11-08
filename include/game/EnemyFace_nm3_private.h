@@ -51,11 +51,8 @@ struct KartRender {
     int course;
     char pad1FC[0x304 - 0x1FC];
     KartFlags *flags;
+    int GetSlot() const { return slot; }
 };
-
-static inline bool KartHidden(KartRender *k) {
-    return (k->flags->bits & 0x8000000000ULL) != 0;
-}
 
 struct PathEntry {
     char pad0[4];
@@ -142,7 +139,7 @@ struct clEFace3D {
     clEFaceModel *model;
 
     clEFace3D(KartRender *k, int p) : kart(k), scale(1.0f), param(p), c(-1) {
-        slot = kart->slot;
+        slot = kart->GetSlot();
         c = -1;
         a = -1;
         b = -1;
