@@ -10954,7 +10954,8 @@
     "__ct__13MenuRaceStartFi": "fn_8020B234",
     "__ct__13MenuItemModelFPvi": "fn_8013D800",
     "__ct__17ParticleTestSceneFv": "DbgScene05_TplTest2_Reset",
-    "__vt__17ParticleTestScene": "lbl_8041CB14"
+    "__vt__17ParticleTestScene": "lbl_8041CB14",
+    "@1128": "jumptable_8041C9B0"
   },
   "src/game/TitleNameHud_nm1.cpp": {
     "__ct__12TitleNameHudFi": "fn_80252EE4",
