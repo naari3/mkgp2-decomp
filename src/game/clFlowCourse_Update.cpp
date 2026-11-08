@@ -264,7 +264,8 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
     case 1: {
         int previous = self->selection;
         if (CourseInput()) {
-            self->selection += CourseInput()->dir;
+            InputState *input = CourseInput();
+            self->selection += input->dir;
             if (self->selection > 15) self->selection = 15;
             if (self->selection < 0) self->selection = 0;
             if (self->field15D && self->selection > 7) self->selection = 7;
