@@ -1,8 +1,8 @@
 /*
  * Course collision grid lookup, 0x80035ED4..0x80036154.
- * NonMatching: CW hoists the edge-test zero (lbl_806D2384) out of the
- * triangle loop, while the target reloads it every iteration; the rest
- * (including the plane height solve) is instruction-exact.
+ * NonMatching: triangle count uses r0 instead of the target r4 in the
+ * loop setup. The three-edge countdown loop preserves the target zero
+ * reload and floating-point temporaries; the plane solve is exact.
  */
 
 typedef struct TerrainTri {
@@ -52,7 +52,6 @@ typedef struct TerrainStepper {
 } TerrainStepper;
 
 extern TerrainGrid *lbl_806CED58;
-extern const float lbl_806D2384;
 extern const float lbl_806D2388;
 
 static inline int Terrain_EdgeSide(TerrainTri *tri, int e, float x, float z)
@@ -60,21 +59,17 @@ static inline int Terrain_EdgeSide(TerrainTri *tri, int e, float x, float z)
     float a = -tri->edgeNormal[e][2] * (x - tri->v[e][0]);
     float b = tri->edgeNormal[e][0] * (z - tri->v[e][2]);
 
-    return a + b > lbl_806D2384;
+    return a + b > 0.0f;
 }
 
 static inline int Terrain_OutsideEdges(TerrainTri *tri, float x, float z)
 {
     int outside;
+    int edge;
 
-    outside = 3;
-    if (!Terrain_EdgeSide(tri, 0, x, z)) {
-        outside = 2;
-        if (!Terrain_EdgeSide(tri, 1, x, z)) {
-            outside = 1;
-            if (!Terrain_EdgeSide(tri, 2, x, z)) {
-                outside = 0;
-            }
+    for (outside = 3, edge = 0; outside > 0; --outside, ++edge) {
+        if (Terrain_EdgeSide(tri, edge, x, z)) {
+            break;
         }
     }
     return outside;
