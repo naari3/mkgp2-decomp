@@ -265,7 +265,9 @@ def build_report():
 
 
 def clean_build_ok():
-    shutil.rmtree('build/GNLJ82/src', ignore_errors=True)
+    # ninja tracks extab_user_renames.json / extab_order.json / postprocess_*.py
+    # since 7858633, so a fresh main.dol link is enough (no rm -rf build/GNLJ82/src)
+    if os.path.exists('build/GNLJ82/main.dol'): os.remove('build/GNLJ82/main.dol')
     configure()
     r = sh(['ninja', 'all_source', 'progress', REPORT, 'build/GNLJ82/ok'])
     return r.returncode == 0 and 'main.dol: OK' in r.stdout, r.stdout[-3000:]
