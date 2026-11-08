@@ -1,11 +1,12 @@
 #pragma cplusplus on
-/* QuadFrame_FromCornerPtrs (0x80036A10): build a frame from four corner
+/* QuadFrame_FromCornerPtrs (0x800369F8): build a frame from four corner
  * points. fwd = mid(a,b) - mid(c,d), right = mid(b,d) - mid(a,c), both
  * normalised into out[6..8] / out[0..2]; then right x fwd is normalised
  * into fwd's storage but never written out; height = mean corner y.
  *
- * NonMatching (94.0%): the instruction stream is identical, only the FPR
- * colouring differs (two extra saved FPRs -> 0x20 bigger frame).
+ * NonMatching (93.967155%): midpoint stack-slot order, load/store scheduling
+ * and FPR colouring differ. Source text is 0x43C versus target 0x448; both
+ * save f24..f31 and use a 0xE0-byte frame.
  * The midpoints/normalised vectors must be reference-bound temporaries so
  * they live on the stack in creation order and get reloaded after the
  * volatile sqrt result; the products in mid() fuse because each inline
