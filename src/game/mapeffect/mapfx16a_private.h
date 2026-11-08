@@ -27,6 +27,10 @@ struct Desc16A {
     Vec3f end;
     float unused;
 };
+struct Desc16ARaw {
+    const char *name;
+    unsigned int w[8];
+};
 struct Jungle16A : MapPart16A {
     clNormal3D *model;
     Zone16A *zone;
@@ -52,10 +56,11 @@ struct Cave16A : MapPart16A {
 };
 extern "C" {
 extern const char lbl_8036CA00[];
-extern const char lbl_8036CE88[];
+extern const Desc16ARaw lbl_8036CE88[];
 extern const float lbl_806D8A40, lbl_806D8A54, lbl_806D8A58, lbl_806D8A5C;
 extern const float lbl_806D8A60, lbl_806D8A64, lbl_806D8A68, lbl_806D8A70;
-extern char lbl_806D8A44[7], lbl_806D8A4C[5], lbl_8036CEF0[], lbl_8036CEFC[];
+extern char lbl_806D8A44[7], lbl_806D8A4C[5];
+extern const char lbl_8036CEF0[], lbl_8036CEFC[];
 extern void *lbl_806CFA00;
 extern int g_longRoundFlag;
 void *FUN_8003b120(unsigned long);
@@ -82,13 +87,13 @@ static inline void SetDirty16A(HSD_JObj *j) {
 }
 static inline void Translate16A(HSD_JObj *j, const Vec3f *p) {
     if (!j) __assert(lbl_806D8A44, 0x3a9, lbl_806D8A4C);
-    if (!p) __assert(lbl_806D8A44, 0x3aa, lbl_8036CEF0);
+    if (!p) __assert(lbl_806D8A44, 0x3aa, (char *)lbl_8036CEF0);
     j->translate.x = p->x; j->translate.y = p->y; j->translate.z = p->z;
     if (!(j->flags & 0x2000000)) SetDirty16A(j);
 }
 static inline void Rotate16A(HSD_JObj *j, float y) {
     if (!j) __assert(lbl_806D8A44, 0x2b8, lbl_806D8A4C);
-    if (j->flags & 0x20000) __assert(lbl_806D8A44, 0x2b9, lbl_8036CEFC);
+    if (j->flags & 0x20000) __assert(lbl_806D8A44, 0x2b9, (char *)lbl_8036CEFC);
     j->rotY = y;
     if (!(j->flags & 0x2000000)) SetDirty16A(j);
 }
