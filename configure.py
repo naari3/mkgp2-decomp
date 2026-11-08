@@ -1859,7 +1859,7 @@ config.libs = [
             Object(Matching, "game/DVDLoad_Stats.c"),
             Object(Matching, "game/DVDLoad_ReadFileTimed.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/GXChannel_PushTransform.c", extab_padding=b""),
-            Object(Matching, "game/GXChannel_PushChannelColors.c", extab_padding=b""),
+            Object(Matching, "game/GXChannel_PushChannelColors.c", extab_padding=b"", extra_cflags=["-rostr"]),
             Object(Matching, "game/GXChannel_Unbind.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/GXChannel_Bind.c", extab_padding=b""),
             Object(Matching, "game/GXChannel_Init.c", extab_padding=b""),

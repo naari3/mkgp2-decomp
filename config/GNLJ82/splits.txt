@@ -2119,6 +2119,7 @@ game/GXChannel_PushChannelColors.c:
 	extab       start:0x800087B0 end:0x800087B8
 	extabindex  start:0x80021590 end:0x8002159C
 	.text       start:0x8007D2AC end:0x8007D7BC
+	.rodata     start:0x80311C68 end:0x80311CA0
 
 game/GXChannel_Unbind.c:
 	extab       start:0x800087B8 end:0x800087C0
@@ -6187,6 +6188,7 @@ game/KartPreview.c:
 	extab       start:0x8000D400 end:0x8000D538
 	extabindex  start:0x80024DC4 end:0x80024E48
 	.text       start:0x8013C4A4 end:0x8013D4B0
+	.rodata     start:0x803600E0 end:0x80360440
 
 game/PreviewModel.c:
 	extab       start:0x8000D538 end:0x8000D630
