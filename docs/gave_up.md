@@ -381,3 +381,14 @@ the remaining candidates (~175 KB in Matching TUs). What blocked the rest:
 | Sci2Card_ReceiptTables.c, anon_80209FA4.cpp, clFlowClass_Update.cpp, CardPrintConfig.cpp, BananaPositionData_Init.cpp, Scene_8016303C.cpp | | own_data's insertion point lands inside an `extern "C" {` block or after `@etb` externs; insert by hand |
 | fn_8010376C, BananaTriple_Tick_HeldAndHoming, FinalLapBanner_Init, fn_80105800, GabyouItem_BuildOrUpdateAttachTransform, fn_801109A0 | byte tables | code passes the table to a non-const `unsigned char *`/`char *` param; needs a cast at the call or a non-const decl (then it's .data, wrong) |
 | GetKartParamBlock.c | .rodata 0x80383F28 (18 KB) | relocation inside a non-word object; hand-write |
+
+## stmtsweep trial 2026-11-08 12:40
+
+`tools/stmtsweep.py` rediscovers TextRenderer_DrawEntry (statement order reverted: 99.54 -> 100 in 73 builds, hill-climb over single-statement moves). On the near-misses below it found nothing; the residuals are not statement order.
+
+| Function | TU | % | Finding |
+| --- | --- | --- | --- |
+| `AI_SystemDtor` | game/AI_SystemDtor | 99.14 (objdiff) | ResetRecord's stores are emitted in source order, so the target source has `kartId = -1` before `driver = 0`. But the hoisted constants get registers by first appearance in source: -1 first gives -1 r4 / 0 r3, where the target has 0 r4 / -1 r3. Every single-statement move of the 11 stores (`--body ResetRecord`) and `~0`, `0xFFFFFFFF`, `(void *)0`, a `void *z = 0` local, a pointer loop: no gain. Needs something that makes 0 appear first without storing it first. |
+| `fn_801AC208` | game/sprite/fn_801AC208 | 99.67 | Not tried: the residual is operand order inside one expression; no statement runs to sweep. |
+| `fn_801D1890` | game/fn_801D1890 | 99.99 | All runs in Update / RankingAdvanceFlow / RankingInsertFade: no gain (the slots come from C++ temporaries, not statement order). |
+| `fn_80184928` | game/dlistutil/fn_80184928 | 98.72 (decl160 WIP) | Sweep on the decl160 WIP: 98.72 -> 98.75 (last 7-statement run only). |
