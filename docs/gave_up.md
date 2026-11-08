@@ -186,7 +186,7 @@ it marks a TU rodata start.
 | `RaceContext_InitDefaults` | game/RaceContext_InitDefaults | asm | Not really a pool: two vtables at .data 0x8040E4D0/0x8040E4DC used by RaceContext_Dtor, InitDefaults and RaceContext_EnsureSingleton (0x8009D638..0x8009DD..): one class file split in three. Merge, then own the vtables. | |
 | `fn_801232E0` | game/ZoneList | asm | .data 0x8048DAA8..0x8048DFB8 (25 objects) also used by NokoNokoChallenge_GetCoinDivisor (0x80122E80, two TUs earlier). Needs the 0x80122E80..0x801240B4 TUs merged. | |
 | `VSMode_Init`, `VSMode_FrameUpdate` | game/VSMode_Init, game/VSMode_FrameUpdate | asm | .rodata 0x80320960..0x80321178 shared with BtMode_Dtor/BtMode_Init (already noted in TIPS: one bt/vs-mode file). | |
-| `KartDriver_InitFull` .data, `CarObject_Init`, `ItemEffect_TryStartByCategory`, `CarObjectManager_RunKartKartCollisionSweep` | game/auto_ONKARTHIT_block (claimed by a naari3 thread) | asm | .rodata 0x802EBA18.. and .data 0x803F76A8.. unowned. | |
+| `CarObject_Init`, `ItemEffect_TryStartByCategory`, `CarObjectManager_RunKartKartCollisionSweep` | game/auto_ONKARTHIT_block (claimed by a naari3 thread) | asm | .rodata 0x802EBA18.. and .data 0x803F76A8.. unowned. | |
 | `card_rw_state_machine*`, `card_read_state_machine`, `card_save_trigger`, `CardSave_Tick_CaptureAndStart` | game/card_* | asm | Base lbl_80598A60 is one big backup-data object in .bss (0x6A20) that dtk split; not a pool, fix the symbol sizes instead. | |
 
 ## Control-flow / branch shape
