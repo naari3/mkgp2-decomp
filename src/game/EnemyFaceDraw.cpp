@@ -1,4 +1,4 @@
-/* Native reconstruction of 0x8022BFA8; retained NonMatching (86.026344%). */
+/* Native reconstruction of 0x8022BFA8; retained NonMatching (86.15038%). */
 #include "game/EnemyFaceDraw_private.h"
 union FaceDrawPipe { float f32; unsigned int u32; };
 #define FIFO (*(volatile FaceDrawPipe *)0xCC008000)
@@ -38,66 +38,32 @@ static inline void FillFaceUV(float *uv, const float *rect) {
     uv[12]=rect[2]; uv[13]=mid; uv[14]=rect[0]; uv[15]=mid;
 }
 
+/* Keep each vertex attribute write together; snapshot displacement after GXBegin. */
+static inline void WriteFaceVertex(FaceDrawVec *p, float *uv, float x, float z, unsigned int color) {
+    FIFO.f32=x+p->x; FIFO.f32=p->y; FIFO.f32=z+p->z;
+    FIFO.u32=color; FIFO.f32=uv[0]; FIFO.f32=uv[1];
+}
+static inline void WriteFaceVertexPlain(FaceDrawVec *p, float *uv, unsigned int color) {
+    FIFO.f32=p->x; FIFO.f32=p->y; FIFO.f32=p->z;
+    FIFO.u32=color; FIFO.f32=uv[0]; FIFO.f32=uv[1];
+}
 static inline void DrawFaceQuad(FaceDrawVec *p, float *uv, FaceDrawVec *offset, unsigned int color) {
     GXBegin(0x80,0,4);
-    FIFO.f32 = offset->x + p[0].x;
-    FIFO.f32 = p[0].y;
-    FIFO.f32 = offset->z + p[0].z;
-    FIFO.u32 = color; FIFO.f32 = uv[0]; FIFO.f32 = uv[1];
-    FIFO.f32 = offset->x + p[1].x;
-    FIFO.f32 = p[1].y;
-    FIFO.f32 = offset->z + p[1].z;
-    FIFO.u32 = color; FIFO.f32 = uv[2]; FIFO.f32 = uv[3];
-    FIFO.f32 = offset->x + p[2].x;
-    FIFO.f32 = p[2].y;
-    FIFO.f32 = offset->z + p[2].z;
-    FIFO.u32 = color; FIFO.f32 = uv[4]; FIFO.f32 = uv[5];
-    FIFO.f32 = offset->x + p[3].x;
-    FIFO.f32 = p[3].y;
-    FIFO.f32 = offset->z + p[3].z;
-    FIFO.u32 = color; FIFO.f32 = uv[6]; FIFO.f32 = uv[7];
-}
-
-/* Snapshot the billboard displacement once for the overlay quad. */
-static inline void DrawFaceQuadCached(FaceDrawVec *p, float *uv, FaceDrawVec *offset, unsigned int color) {
-    GXBegin(0x80,0,4);
     float x=offset->x, z=offset->z;
-    FIFO.f32 = x + p[0].x;
-    FIFO.f32 = p[0].y;
-    FIFO.f32 = z + p[0].z;
-    FIFO.u32 = color; FIFO.f32 = uv[0]; FIFO.f32 = uv[1];
-    FIFO.f32 = x + p[1].x;
-    FIFO.f32 = p[1].y;
-    FIFO.f32 = z + p[1].z;
-    FIFO.u32 = color; FIFO.f32 = uv[2]; FIFO.f32 = uv[3];
-    FIFO.f32 = x + p[2].x;
-    FIFO.f32 = p[2].y;
-    FIFO.f32 = z + p[2].z;
-    FIFO.u32 = color; FIFO.f32 = uv[4]; FIFO.f32 = uv[5];
-    FIFO.f32 = x + p[3].x;
-    FIFO.f32 = p[3].y;
-    FIFO.f32 = z + p[3].z;
-    FIFO.u32 = color; FIFO.f32 = uv[6]; FIFO.f32 = uv[7];
+    WriteFaceVertex(p,uv,x,z,color);
+    WriteFaceVertex(p+1,uv+2,x,z,color);
+    WriteFaceVertex(p+2,uv+4,x,z,color);
+    WriteFaceVertex(p+3,uv+6,x,z,color);
 }
-
+static inline void DrawFaceQuadCached(FaceDrawVec *p, float *uv, FaceDrawVec *offset, unsigned int color) {
+    DrawFaceQuad(p,uv,offset,color);
+}
 static inline void DrawFaceQuadPlain(FaceDrawVec *p, float *uv, FaceDrawVec *offset, unsigned int color) {
     GXBegin(0x80,0,4);
-    FIFO.f32 = p[0].x;
-    FIFO.f32 = p[0].y;
-    FIFO.f32 = p[0].z;
-    FIFO.u32 = color; FIFO.f32 = uv[0]; FIFO.f32 = uv[1];
-    FIFO.f32 = p[1].x;
-    FIFO.f32 = p[1].y;
-    FIFO.f32 = p[1].z;
-    FIFO.u32 = color; FIFO.f32 = uv[2]; FIFO.f32 = uv[3];
-    FIFO.f32 = p[2].x;
-    FIFO.f32 = p[2].y;
-    FIFO.f32 = p[2].z;
-    FIFO.u32 = color; FIFO.f32 = uv[4]; FIFO.f32 = uv[5];
-    FIFO.f32 = p[3].x;
-    FIFO.f32 = p[3].y;
-    FIFO.f32 = p[3].z;
-    FIFO.u32 = color; FIFO.f32 = uv[6]; FIFO.f32 = uv[7];
+    WriteFaceVertexPlain(p,uv,color);
+    WriteFaceVertexPlain(p+1,uv+2,color);
+    WriteFaceVertexPlain(p+2,uv+4,color);
+    WriteFaceVertexPlain(p+3,uv+6,color);
 }
 
 extern "C" void fn_8022BFA8(FaceDrawModel *self) {
