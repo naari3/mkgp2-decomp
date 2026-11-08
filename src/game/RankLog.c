@@ -844,15 +844,13 @@ TitleTracker *TitleTracker_GetOrCreateSingleton(void)
 }
 
 
-static inline int DetermineCurrentNameId(void)
+static inline int CurrentNameScore(void)
 {
     int k;
-    int chara;
     int j;
     int score;
     int i;
     score = 0;
-    chara = g_characterId;
     for (i = 0; i < 2; i++) {
         for (j = 1; j < 9; j++) {
             for (k = 0; k < 8; k++) {
@@ -870,11 +868,12 @@ static inline int DetermineCurrentNameId(void)
         }
     }
     score += g_playerData.wins;
-    return DetermineNameId(score, chara);
+    return score;
 }
 
 void DetermineTitle(unsigned char mode)
 {
+    int chara;
     unsigned char skip;
     TitleCheckFn *checks = 0;
     int count = 0;
@@ -889,7 +888,8 @@ void DetermineTitle(unsigned char mode)
         g_nameId = 0;
         return;
     }
-    g_nameId = DetermineCurrentNameId();
+    chara = g_characterId;
+    g_nameId = DetermineNameId(CurrentNameScore(), chara);
     if (mode == 1) {
         return;
     }
@@ -1029,56 +1029,57 @@ unsigned char TitleCheck_NewClearedRecord_Race(void)
 {
     PlayerData *pd = &g_playerData;
     int base = pd->b19A == 0 ? 0 : 6;
+    int mode;
     int i;
     int j;
     int cur;
     int prev;
 
-    for (i = 0; i < 2; i++) {
+    for (mode = 0; mode < 2; mode++) {
         cur = 0;
         prev = 0;
         for (j = 1; j < 9; j++) {
-            if (fn_801D5B8C(pd, i, j, 3) == 1) {
+            if (fn_801D5B8C(pd, mode, j, 3) == 1) {
                 cur++;
             }
-            if (fn_801D5B8C(&lbl_805D2F40, i, j, 3) == 1) {
+            if (fn_801D5B8C(&lbl_805D2F40, mode, j, 3) == 1) {
                 prev++;
             }
         }
         if (cur != prev && cur >= 8) {
-            g_stagingTitleId = 1 + base + i;
+            g_stagingTitleId = 1 + base + mode;
             return 1;
         }
     }
-    for (i = 0; i < 2; i++) {
+    for (mode = 0; mode < 2; mode++) {
         cur = 0;
         prev = 0;
         for (j = 1; j < 9; j++) {
-            if (fn_801D5B8C(pd, i, j, 7) == 1) {
+            if (fn_801D5B8C(pd, mode, j, 7) == 1) {
                 cur++;
             }
-            if (fn_801D5B8C(&lbl_805D2F40, i, j, 7) == 1) {
+            if (fn_801D5B8C(&lbl_805D2F40, mode, j, 7) == 1) {
                 prev++;
             }
         }
         if (cur != prev && cur >= 8) {
-            g_stagingTitleId = 3 + base + i;
+            g_stagingTitleId = 3 + base + mode;
             return 1;
         }
     }
-    for (i = 0; i < 2; i++) {
+    for (mode = 0; mode < 2; mode++) {
         cur = 0;
         prev = 0;
         for (j = 1; j < 9; j++) {
-            if (fn_801D59F8(pd, j, i) == 1) {
+            if (fn_801D59F8(pd, j, mode) == 1) {
                 cur++;
             }
-            if (fn_801D59F8(&lbl_805D2F40, j, i) == 1) {
+            if (fn_801D59F8(&lbl_805D2F40, j, mode) == 1) {
                 prev++;
             }
         }
         if (cur != prev && cur >= 8) {
-            g_stagingTitleId = 5 + base + i;
+            g_stagingTitleId = 5 + base + mode;
             return 1;
         }
     }
