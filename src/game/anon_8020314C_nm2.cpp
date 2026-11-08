@@ -58,6 +58,8 @@ static inline int OpenMsgPopup(int msg) {
 }
 
 
+#pragma push
+#pragma opt_common_subs off
 extern "C" void fn_80203C24(void) {
     FlowTask *t = fn_801F4DC0(lbl_806D19E8, 0);
     if (t == 0) {
@@ -76,3 +78,5 @@ extern "C" void fn_80203C24(void) {
         lbl_806D19E8->Update();
     }
 }
+#pragma pop
+
