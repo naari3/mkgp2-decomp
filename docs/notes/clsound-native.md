@@ -48,3 +48,8 @@ c19_u257 fn_801913B0 improves95.03597->98.115105%,560->556B exact,extab8/index12
 Source: Codex worker c19_u296_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c19_u296 fn_801934F4 fresh baseline97.039474/308B (existing two pragmas). Whole static inline DrawSoundEvents removes event addi-r0/mr and restores i=row copy,304B/EH/index100; helper declaration order event,row,i restores target eventr28,rowr29,ir30. Final97.36842, only mr r30,r29 / lis format order at +34/+38 swapped. Explicit format pointer hoists both lis early93.75; separate inline FormatSoundEvent regresses94.3421/308B. Retain whole-loop helper and decl order, unchanged pragmas, NonMatching. Single function no rescueB. Final coordinator fallback DOL SHA1 exact; no native gain.
+
+## c20_u28_20261108
+Source: Codex worker c20_u28_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c20_u28: InitSoundSystem99.534164->99.75156 by naming unsigned int aramSize before DebugPrintf, restoring target r3->r0->r4 and1932B/extabindex100. Existing opt_common_subs off unchanged. Remaining18rows: first loader buffer/endr27/r26 vs targetr26/r27; four end-add operand orders; group counterr28 vsr27 and samples readr27 vsr29 although mr r29,r27 already matches. Reversed end expression99.503105; length-param reuse97.041405/frame+16; caller-owned bound99.39959. Group helper and independent loop scopes invariant. Kept only aramSize; NonMatching, single function no rescueB. No current pool-base residual, singleton or data ownership change. All attempts saved build/w. Full coordinator fallback DOL SHA1 exact; native gain0.
