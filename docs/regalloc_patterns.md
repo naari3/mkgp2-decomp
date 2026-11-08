@@ -166,6 +166,18 @@ jobj merge 69cde578, tobj merge 0195f28c.
 
 **Check:** `tools/tu_audit.py` marks these functions `[reloc]`.
 
+## 10. A value lands in r0 but the target uses r4..r7 (1 commit)
+
+r0 can't be a load base. If the value is used as a base before peephole folds
+that load back to an offset from another register, it skips r0.
+- fn_801540E0 d7c4990: a list dtor's end iterator (`addi r7, r30, 0x10;
+  stw r7, ...`) got r0. Reading begin() through the anchor pointer fixed it:
+  `LNode **a = &l->f4; e.n = (LNode *)a; b.n = a[1];`, not
+  `e.n = &l->f4; b.n = l->head;`.
+
+**Check:** a short-lived value in r0 where the target has r4..r7, with a nearby
+load from the same struct. Rewrite that load to go through the value.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
