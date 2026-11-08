@@ -9008,6 +9008,7 @@ game/fn_801B9928.cpp:
 	extab       start:0x80012ED0 end:0x800130FC
 	extabindex  start:0x800279A4 end:0x800279B0
 	.text       start:0x801B9928 end:0x801BA034
+	.bss        start:0x80679280 end:0x806792B0
 
 game/GetCourseSelectEntry.c:
 	.text       start:0x801BA034 end:0x801BA110

@@ -9,11 +9,6 @@ struct CourseSprite {
     CourseSprite(int, int, float, float);
     void SetPosition(float px, float py) { x=px; y=py; }
 };
-struct CourseSharedUI {
-    CourseSprite *top[3];
-    CourseSprite *bottom[4];
-    int handles[5];
-};
 struct CourseClassTask { char data[0x58]; CourseClassTask(); };
 struct CourseCupTask { char data[0x158]; CourseCupTask(); };
 struct CourseRoundTask { char data[0x16C]; CourseRoundTask(); };
@@ -24,7 +19,9 @@ struct CourseModeInit : GameModeBase {
     CourseModeInit();
 };
 extern "C" {
-extern CourseSharedUI lbl_80679280;
+extern CourseSprite *lbl_80679280[3];
+extern CourseSprite *lbl_8067928C[4];
+extern short *lbl_8067929C[5];
 extern void *lbl_8049A734[];
 extern unsigned char lbl_806D17F0, lbl_806D17F1, lbl_806D17F2, lbl_806D17F3, lbl_806D17F4;
 extern int lbl_806CFD60, lbl_806D17F8, lbl_806D17FC, lbl_806D1800, lbl_806D1804, lbl_806D1808, lbl_806D180C, lbl_806D1810;
@@ -40,7 +37,7 @@ void fn_8002CFB8(int,int,int,int);
 void fn_801DAE54(); void fn_80121210(); void clRom_PurgeAll();
 void ProcessSystemTick(int); void PcbSlot_ResetScratchAreas(); void CommBroadcast_ClearTable(); void SyncSlot_Reset();
 void PreloadResource(int); void SetScreenBrightness(float);
-int fn_801A0310(CourseSprite *, int);
+short *fn_801A0310(CourseSprite *, short);
 void *StrPcb_GetInstance(); void StrPcb_ForceRun_Neutral(void *); void StrPcb_ResetCommands_Neutral(void *, int);
 int CountPeersWithRole(int); void SetLocalPcbRole(int); void SetTimerModeEnabled(int);
 unsigned char fn_801D5A68(void *);

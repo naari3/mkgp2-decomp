@@ -1,6 +1,11 @@
 #include "game/CourseModeInit_private.h"
+
+// Separate arrays share the original BSS pool.
+CourseSprite *lbl_80679280[3];
+CourseSprite *lbl_8067928C[4];
+short *lbl_8067929C[5];
+
 CourseModeInit::CourseModeInit() {
-    CourseSharedUI *ui = &lbl_80679280;
     vt=lbl_8049A734;
     fn_8002CFB8(0,0,0,0);
     delete (VObject *)g_pInputState;
@@ -16,24 +21,24 @@ CourseModeInit::CourseModeInit() {
     lbl_806D1818=0; lbl_806D1819=0; lbl_806D1820=0;
     lbl_806D184F=0; lbl_806D1850=0; lbl_806D1854=lbl_806D9890; lbl_806D1858=0;
     SetScreenBrightness(lbl_806D98B8);
-    ui->top[0]=new CourseSprite(0xA2,1,0);
-    ui->top[1]=new CourseSprite(0xA1,1,0);
-    ui->top[2]=new CourseSprite(0xA0,1,0);
-    ui->handles[0]=fn_801A0310(ui->top[0],0x1842);
-    ui->handles[1]=fn_801A0310(ui->top[0],0x1843);
-    ui->handles[2]=fn_801A0310(ui->top[1],0x1842);
-    ui->handles[4]=fn_801A0310(ui->top[2],0x184C);
-    ui->bottom[0]=new CourseSprite(0xA6,1,0);
-    ui->bottom[1]=new CourseSprite(0xA5,1,0);
-    ui->bottom[2]=new CourseSprite(0xA4,1,0);
-    ui->bottom[3]=new CourseSprite(0xA3,1,0);
-    ui->top[0]->SetPosition(lbl_806D9948,lbl_806D994C);
-    ui->top[1]->SetPosition(lbl_806D9948,lbl_806D994C);
-    ui->top[2]->SetPosition(lbl_806D9948,lbl_806D994C);
-    ui->bottom[0]->SetPosition(lbl_806D9948,lbl_806D9950);
-    ui->bottom[1]->SetPosition(lbl_806D9948,lbl_806D9950);
-    ui->bottom[2]->SetPosition(lbl_806D9948,lbl_806D9950);
-    ui->bottom[3]->SetPosition(lbl_806D9948,lbl_806D9950);
+    lbl_80679280[0]=new CourseSprite(0xA2,1,0);
+    lbl_80679280[1]=new CourseSprite(0xA1,1,0);
+    lbl_80679280[2]=new CourseSprite(0xA0,1,0);
+    lbl_8067929C[0]=fn_801A0310(lbl_80679280[0],0x1842);
+    lbl_8067929C[1]=fn_801A0310(lbl_80679280[0],0x1843);
+    lbl_8067929C[2]=fn_801A0310(lbl_80679280[1],0x1842);
+    lbl_8067929C[4]=fn_801A0310(lbl_80679280[2],0x184C);
+    lbl_8067928C[0]=new CourseSprite(0xA6,1,0);
+    lbl_8067928C[1]=new CourseSprite(0xA5,1,0);
+    lbl_8067928C[2]=new CourseSprite(0xA4,1,0);
+    lbl_8067928C[3]=new CourseSprite(0xA3,1,0);
+    lbl_80679280[0]->SetPosition(lbl_806D9948,lbl_806D994C);
+    lbl_80679280[1]->SetPosition(lbl_806D9948,lbl_806D994C);
+    lbl_80679280[2]->SetPosition(lbl_806D9948,lbl_806D994C);
+    lbl_8067928C[0]->SetPosition(lbl_806D9948,lbl_806D9950);
+    lbl_8067928C[1]->SetPosition(lbl_806D9948,lbl_806D9950);
+    lbl_8067928C[2]->SetPosition(lbl_806D9948,lbl_806D9950);
+    lbl_8067928C[3]->SetPosition(lbl_806D9948,lbl_806D9950);
     lbl_806D1840=new CourseSprite(0x74,1,lbl_806D9954,lbl_806D9958);
     lbl_806D1844=new CourseSprite(0x4A,1,lbl_806D995C,lbl_806D991C);
     lbl_806D1848=lbl_806D9890; lbl_806D184C=0; lbl_806D184D=9;
