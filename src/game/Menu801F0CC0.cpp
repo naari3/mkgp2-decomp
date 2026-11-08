@@ -490,14 +490,17 @@ extern "C" void fn_801F21C8(Menu801F *self) {
     }
 }
 
+static inline void DrawSprites6(Menu801F *self) {
+    for (int i = 0; i < 6; i++) fn_801F7B74(self->context, &self->sprites[i], lbl_806DA550);
+}
+/* The loop sits in an inline helper: only an inlined loop gets the target's
+ * `mr rOff, rI` strength-reduction init (see docs/per_fn_matching_strategy.md). */
+static inline void DrawFirstSprites(Menu801F *self) {
+    for (int i = 0; i < 6; i++) fn_801F7B74(self->context, &self->sprites[i], lbl_806DA550);
+}
+
 extern "C" void fn_801F230C(Menu801F *self) {
-    int i;
-    int offset;
-    {
-        i = 0;
-        offset = 0x0;
-        for (; i < 6; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
+    DrawFirstSprites(self);
 }
 
 extern "C" void fn_801F2370(Menu801F *self) {
