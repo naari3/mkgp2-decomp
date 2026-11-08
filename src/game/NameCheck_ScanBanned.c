@@ -79,7 +79,7 @@ static inline int extract_two(const NameCode *buf, NameCode *out, int position,
 /* A scan may consume several characters while it walks the table. */
 #define COLLECT_RUN(SET, COUNT) \
     for (k = position; k < 5; k++) { \
-        NameBool found = 0; \
+        found = 0; \
         for (j = 0; j < (COUNT); j++) { \
             if (buf[position] == (SET)[j]) { \
                 parts[part][length++] = buf[position++]; \
