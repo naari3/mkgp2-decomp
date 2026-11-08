@@ -959,6 +959,7 @@ game/KartDriver_InitFull.c:
 	extab       start:0x800064E0 end:0x80006668
 	extabindex  start:0x8001FF7C end:0x8001FF88
 	.text       start:0x80044D50 end:0x80045950
+	.rodata     start:0x802E9F80 end:0x802EAF00
 
 game/KartDriver_Dtor.c:
 	extab       start:0x80006668 end:0x80006670
@@ -6314,42 +6315,12 @@ game/CSPartsHolders.c:
 	extabindex  start:0x800254CC end:0x8002555C
 	.text       start:0x8014CE74 end:0x8014D540
 
-game/SceneFactory_8014D540.cpp:
-	extab       start:0x8000E640 end:0x8000E86C
-	extabindex  start:0x8002555C end:0x80025580
-	.text       start:0x8014D540 end:0x8014DD5C
-	.data       start:0x8048FDB0 end:0x8048FDCC
-
-game/fn_8014DD5C.c:
-	extab       start:0x8000E86C end:0x8000E874
-	extabindex  start:0x80025580 end:0x8002558C
-	.text       start:0x8014DD5C end:0x8014DD80
-
-game/fn_8014DD80.cpp:
-	extab       start:0x8000E874 end:0x8000E8BC
-	extabindex  start:0x8002558C end:0x80025598
-	.text       start:0x8014DD80 end:0x8014E004
-
-game/fn_8014E004.c:
-	extab       start:0x8000E8BC end:0x8000E8C4
-	extabindex  start:0x80025598 end:0x800255A4
-	.text       start:0x8014E004 end:0x8014E028
-
-game/fn_8014E028.c:
-	extab       start:0x8000E8C4 end:0x8000E8CC
-	extabindex  start:0x800255A4 end:0x800255B0
-	.text       start:0x8014E028 end:0x8014E04C
-
-game/fn_8014E04C.cpp:
-	extab       start:0x8000E8CC end:0x8000E8D4
-	extabindex  start:0x800255B0 end:0x800255BC
-	.text       start:0x8014E04C end:0x8014E0C4
-
 game/Scene_8014E0C4.cpp:
-	extab       start:0x8000E8D4 end:0x8000F0DC
-	extabindex  start:0x800255BC end:0x800258B0
-	.text       start:0x8014E0C4 end:0x80157940
+	extab       start:0x8000E640 end:0x8000F0DC
+	extabindex  start:0x8002555C end:0x800258B0
+	.text       start:0x8014D540 end:0x80157940
 	.rodata     start:0x80363D30 end:0x803678D8
+	.data       start:0x8048FDB0 end:0x8048FDCC
 
 game/SceneList_80157940.cpp:
 	extab       start:0x8000F0DC end:0x8000F114
