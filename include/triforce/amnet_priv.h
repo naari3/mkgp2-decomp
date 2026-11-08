@@ -121,7 +121,7 @@ extern u32 lbl_806D1E40;
 extern u32 lbl_806D1E44;
 extern void (*lbl_804F5800[5])(void);
 extern void (*lbl_804F5814[5])(void);
-extern const u32 lbl_803F2798[36];
+extern const u32 lbl_803F2798[10];
 extern const NetHandler lbl_803F2828[12];
 extern const NetHandler lbl_803F2858[4];
 extern const NetDispatch lbl_803F2868[3];

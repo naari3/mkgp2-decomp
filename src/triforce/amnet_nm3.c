@@ -19,12 +19,13 @@ u32 lbl_806D1E40;
 void (*lbl_804F5800[5])(void) = {NULL, fn_8028F430, fn_8028F3D8, fn_8028F31C, fn_8028F25C};
 void (*lbl_804F5814[5])(void) = {NULL, fn_8028F404, fn_8028F348, fn_8028F298, NULL};
 
-const u32 lbl_803F2798[36] = {
-    0x00800000, 0x00001000, 0x00000020, 0x00000000, 0x00000200, 0x00000200, 0x00A00000, 0x00100000, 0x00B00000,
-    0x00100000, 0x00D00000, 0x00100000, 0x000FF000, 0x00000000, 0x00D00000, 0x00100000, 0x00C00000, 0x00001000,
-    0x00000020, 0x00000000, 0x00040000, 0x00001000, 0x00000020, 0x00000000, 0x00000200, 0x00000200, 0x00100000,
-    0x00080000, 0x00180000, 0x00080000, 0x00080000, 0x00080000, 0x0007F000, 0x00000000, 0x00080000, 0x00080000,
-};
+/* Five board-config tables; separate objects so fn_8028D8CC addresses them off
+ * one pooled .rodata base (addi rX, base, 0x0/0x28/0x40/0x50/0x78). */
+const u32 lbl_803F2798[10] = {0x00800000, 0x00001000, 0x00000020, 0x00000000, 0x00000200, 0x00000200, 0x00A00000, 0x00100000, 0x00B00000, 0x00100000};
+const u32 lbl_803F27C0[6] = {0x00D00000, 0x00100000, 0x000FF000, 0x00000000, 0x00D00000, 0x00100000};
+const u32 lbl_803F27D8[4] = {0x00C00000, 0x00001000, 0x00000020, 0x00000000};
+const u32 lbl_803F27E8[10] = {0x00040000, 0x00001000, 0x00000020, 0x00000000, 0x00000200, 0x00000200, 0x00100000, 0x00080000, 0x00180000, 0x00080000};
+const u32 lbl_803F2810[6] = {0x00080000, 0x00080000, 0x0007F000, 0x00000000, 0x00080000, 0x00080000};
 
 const NetHandler lbl_803F2828[12] = {
     fn_80291738, fn_80291738, fn_802916E4, fn_80291690, fn_802915F4, fn_80291524,
@@ -624,7 +625,6 @@ static inline void InitializeDevClear(u32 addr, NetDev* dev) {
 #pragma opt_loop_invariants off
 s32 fn_8028D8CC(u8 id, NetBlob* blob) {
     NetDev* dev;
-    const u32* configs = lbl_803F2798;
     u32 base;
     u32 off;
     u32 v;
@@ -668,16 +668,16 @@ s32 fn_8028D8CC(u8 id, NetBlob* blob) {
             dev->statAddr = off + 0x900020;
             InitializeDevClear(dev->cmdAddr, dev);
             InitializeDevClear(dev->statAddr, dev);
-            memcpy(lbl_80699140.cfgA, &configs[0], sizeof(lbl_80699140.cfgA));
+            memcpy(lbl_80699140.cfgA, lbl_803F2798, sizeof(lbl_80699140.cfgA));
             lbl_80699140.cfgA[0] += off;
             lbl_80699140.cfgA[6] += off;
             lbl_80699140.cfgA[8] += off;
             fn_80293070(lbl_80699140.cfgA);
-            memcpy(lbl_80699140.cfgB, &configs[10], sizeof(lbl_80699140.cfgB));
+            memcpy(lbl_80699140.cfgB, lbl_803F27C0, sizeof(lbl_80699140.cfgB));
             lbl_80699140.cfgB[0] += off;
             lbl_80699140.cfgB[4] += off;
             fn_80290F70(lbl_80699140.cfgB);
-            memcpy(lbl_80699140.cfgC, &configs[16], sizeof(lbl_80699140.cfgC));
+            memcpy(lbl_80699140.cfgC, lbl_803F27D8, sizeof(lbl_80699140.cfgC));
             lbl_80699140.cfgC[0] += off;
             fn_80291010(lbl_80699140.cfgC);
         }
@@ -714,12 +714,12 @@ s32 fn_8028D8CC(u8 id, NetBlob* blob) {
         dev->statAddr = 0x89000200;
         InitializeDevClear(dev->cmdAddr, dev);
         InitializeDevClear(dev->statAddr, dev);
-        memcpy(lbl_80699140.cfgA, &configs[20], sizeof(lbl_80699140.cfgA));
+        memcpy(lbl_80699140.cfgA, lbl_803F27E8, sizeof(lbl_80699140.cfgA));
         lbl_80699140.cfgA[0] += 0x89000000;
         lbl_80699140.cfgA[6] += 0x89000000;
         lbl_80699140.cfgA[8] += 0x89000000;
         fn_80293070(lbl_80699140.cfgA);
-        memcpy(lbl_80699140.cfgB, &configs[30], sizeof(lbl_80699140.cfgB));
+        memcpy(lbl_80699140.cfgB, lbl_803F2810, sizeof(lbl_80699140.cfgB));
         lbl_80699140.cfgB[0] += 0x89000000;
         lbl_80699140.cfgB[4] += 0x89000000;
         fn_80290F70(lbl_80699140.cfgB);
