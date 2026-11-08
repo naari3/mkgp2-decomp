@@ -1,4 +1,4 @@
-/* Native reconstruction of 0x8022BFA8; retained NonMatching (84.29528%). */
+/* Native reconstruction of 0x8022BFA8; retained NonMatching (84.42810%). */
 #include "game/EnemyFaceDraw.h"
 union FaceDrawPipe { float f32; unsigned int u32; };
 #define FIFO (*(volatile FaceDrawPipe *)0xCC008000)
@@ -108,6 +108,11 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
     FaceMtx copy;
     float rect[4];
     FaceDrawVec offset, eye;
+    FaceDrawVec *out, *q, *draw;
+    const FaceDrawVec *src, *p;
+    FaceMtx *matrix;
+    float *tex;
+    int i, j;
     if (!self->kart) return;
     if (self->scale <= lbl_806DB5E0) {
         if (self->sub->anim == 0) {
@@ -146,13 +151,13 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
         offset.x*=lbl_806DB5E8; offset.z*=lbl_806DB5E8;
     }
     if (self->left>0) {
-        FaceDrawVec *out=vertices;
-        const FaceDrawVec *src=(const FaceDrawVec *)(data+0x4a4);
-        FaceMtx *matrix=world;
-        for (int i=0;i<2;++i) {
-            FaceDrawVec *q=out;
-            const FaceDrawVec *p=src;
-            for (int j=0;j<4;++j) { PSMTXMultVec(*matrix,p,q); ++p; ++q; }
+        out=vertices;
+        src=(const FaceDrawVec *)(data+0x4a4);
+        matrix=world;
+        for (i=0;i<2;++i) {
+            q=out;
+            p=src;
+            for (j=0;j<4;++j) { PSMTXMultVec(*matrix,p,q); ++p; ++q; }
             src+=4; ++matrix; out+=4;
         }
         if (!fn_8011D890(self->left,rect,0)) {
@@ -160,35 +165,35 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
             HSD_StateInvalidate(0x7e); return;
         }
         FillFaceUV(uv,rect);
-        FaceDrawVec *draw=vertices;
-        float *tex=uv;
-        for (int i=0;i<2;++i) { DrawFaceQuadPlain(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
+        draw=vertices;
+        tex=uv;
+        for (i=0;i<2;++i) { DrawFaceQuadPlain(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
     }
     if (self->right>0) {
-        FaceDrawVec *out=vertices;
-        const FaceDrawVec *src=(const FaceDrawVec *)(data+0x5c4);
-        FaceMtx *matrix=world;
-        for (int i=0;i<2;++i) {
-            FaceDrawVec *q=out;
-            const FaceDrawVec *p=src;
-            for (int j=0;j<4;++j) { PSMTXMultVec(*matrix,p,q); ++p; ++q; }
+        out=vertices;
+        src=(const FaceDrawVec *)(data+0x5c4);
+        matrix=world;
+        for (i=0;i<2;++i) {
+            q=out;
+            p=src;
+            for (j=0;j<4;++j) { PSMTXMultVec(*matrix,p,q); ++p; ++q; }
             src+=4; ++matrix; out+=4;
         }
         fn_8011D890(self->right,rect,0);
         FillFaceUV(uv,rect);
-        FaceDrawVec *draw=vertices;
-        float *tex=uv;
-        for (int i=0;i<2;++i) { DrawFaceQuad(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
+        draw=vertices;
+        tex=uv;
+        for (i=0;i<2;++i) { DrawFaceQuad(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
     }
     const FaceDrawVec *normal=(const FaceDrawVec *)(data+0x4a4);
     const FaceDrawVec *alternate=(const FaceDrawVec *)(data+0x624);
     const FaceDrawVec *standard=(const FaceDrawVec *)(data+0x564);
-    FaceDrawVec *out=vertices;
-    FaceMtx *matrix=world;
-    for (int i=0;i<2;++i) {
-        FaceDrawVec *q=out;
+    out=vertices;
+    matrix=world;
+    for (i=0;i<2;++i) {
+        q=out;
         const FaceDrawVec *n=normal, *a=alternate, *s=standard;
-        for (int j=0;j<4;++j) {
+        for (j=0;j<4;++j) {
             if (self->left<0) PSMTXMultVec(*matrix,n,q);
             else if (self->variant==1) PSMTXMultVec(*matrix,a,q);
             else PSMTXMultVec(*matrix,s,q);
@@ -198,13 +203,13 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
     }
     fn_8011D890(self->face,rect,0);
     FillFaceUV(uv,rect); offset.x+=offset.x; offset.z+=offset.z;
-    FaceDrawVec *draw=vertices;
-    float *tex=uv;
-    for (int i=0;i<2;++i) { DrawFaceQuad(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
+    draw=vertices;
+    tex=uv;
+    for (i=0;i<2;++i) { DrawFaceQuad(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
     if (self->kart->state==0) {
-        const FaceDrawVec *p=(const FaceDrawVec *)(data+0x684);
-        FaceDrawVec *q=vertices;
-        for (int i=0;i<4;++i) { PSMTXMultVec(world[0],p,q); ++p; ++q; }
+        p=(const FaceDrawVec *)(data+0x684);
+        q=vertices;
+        for (i=0;i<4;++i) { PSMTXMultVec(world[0],p,q); ++p; ++q; }
         fn_8011D890(((const int *)(data+0x444))[9],rect,0);
         uv[0]=rect[0]; uv[1]=rect[3]; uv[2]=rect[2]; uv[3]=rect[3];
         uv[4]=rect[2]; uv[5]=rect[1]; uv[6]=rect[0]; uv[7]=rect[1];
@@ -215,16 +220,16 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
     if (overlay!=-1) {
         FaceDrawVec *dstRow=vertices;
         const FaceDrawVec *srcRow=(const FaceDrawVec *)(data+0x624);
-        for (int i=0;i<2;++i) {
+        for (i=0;i<2;++i) {
             PSMTXCopy(self->sub->m[i],copy);
             Vec3c localOffset;
             localOffset=self->sub->offset;
             copy[0][3]+=localOffset.x; copy[1][3]+=localOffset.y; copy[2][3]+=localOffset.z;
             PSMTXConcat(scale,copy,temporary);
             PSMTXConcat(translation,temporary,temporary);
-            FaceDrawVec *q=dstRow;
-            const FaceDrawVec *p=srcRow;
-            for (int j=0;j<4;++j) { PSMTXMultVec(temporary,p,q); ++p; ++q; }
+            q=dstRow;
+            p=srcRow;
+            for (j=0;j<4;++j) { PSMTXMultVec(temporary,p,q); ++p; ++q; }
             dstRow+=4; srcRow+=4;
         }
         fn_8011D890(((const int *)(data+0x444))[overlay],rect,0);
@@ -232,9 +237,9 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
         FillFaceUV(uv,rect);
         unsigned int color=0xffffff00;
         color=(color&~0xff)|((int)(lbl_806DB5F0*self->sub->alpha)&0xff);
-        FaceDrawVec *draw=vertices;
-        float *tex=uv;
-        for (int i=0;i<2;++i) { DrawFaceQuadCached(draw,tex,&offset,color); tex+=8; draw+=4; }
+        draw=vertices;
+        tex=uv;
+        for (i=0;i<2;++i) { DrawFaceQuadCached(draw,tex,&offset,color); tex+=8; draw+=4; }
     }
     HSD_StateInvalidate(0x7e); GXSetCullMode(2);
     int anim=self->sub->anim;
