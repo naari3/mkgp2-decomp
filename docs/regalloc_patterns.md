@@ -178,10 +178,28 @@ that load back to an offset from another register, it skips r0.
 **Check:** a short-lived value in r0 where the target has r4..r7, with a nearby
 load from the same struct. Rewrite that load to go through the value.
 
+## 11. `li rN, -0x100` colour lands in r0: the TU is GC/2.x (1 commit)
+
+Every matched function with `li rN, -0x100; ... rlwimi rN, rA, 0, 24, 31` and
+rN != r0 is in a GC/2.x TU, written as `0xFFFFFF00 | (unsigned char)alpha`
+(fn_801CB818, misc3d fn_80169334, KartAlertPanel, ResultFx). A GC/1.3.2 TU
+that fakes the rlwimi with `__rlwimi(0xFFFFFF00, a, 0, 24, 31)` gets the
+right instructions but colors the constant r0.
+- fn_801BDEB4 ae58acb: TU fn_801BAA88 -> GC/2.6 (all its matched functions
+  compile the same), `unsigned char al = (int)(255.0f * a);
+  SetColor(0xFFFFFF00 | al)`, and the neighbouring int stores reordered.
+- fn_8023A148 (onmokoworks claim, not landed): GC/2.6 plus
+  `unsigned char alpha = value;` with the color local declared before the
+  title local fixes the color/title registers at the first call site.
+
+**Check:** grep the TU for `__rlwimi`. If it is there, try the TU on GC/2.6
+with the natural `|` form before anything else. Check that every matched
+function in the TU stays 100 (tustat).
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
-  fn_801BDEB4, clFlowGpPlease_Init.
+  clFlowGpPlease_Init (try pattern 11 first; both are onmokoworks claims).
 - Value and table pointer swapped r4/r5 in two lookup loops:
   NameCheck_CardName. Tried 120 decl orders, temps, cmp swap, pragmasweep and
   20 minutes of cperm.
