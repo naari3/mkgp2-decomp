@@ -2729,7 +2729,7 @@ config.libs = [
             Object(Matching, "game/RaceDigitListInsert.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/RaceDigitListInit.cpp"),
             Object(Matching, "game/RaceDigitListErase.cpp", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/RaceDigits.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(Matching, "game/RaceDigits.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/HudModeDestroy.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/HudModeCreate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/HudThunk802488FC.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
@@ -3994,6 +3994,7 @@ def _inject_data_align4_tus() -> None:
 # (e.g. shared dtors). Dropping .comment would lose MWLD's weak flags, so
 # only the .data alignment inside .comment and the section header is pinned.
 DATA_ALIGN4_WEAK_TUS = [
+    "game/RaceDigits",
     "game/TransitionEffect",
     "game/SpeedHud",
     "game/ItemViewer",

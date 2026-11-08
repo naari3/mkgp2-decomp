@@ -43,8 +43,14 @@ struct DigitPanel {
 };
 struct DigitOwner {
     DigitPanel *p;
+#ifdef RACE_DIGITS_OUTLINE
+    DigitOwner();
+    DigitOwner(DigitPanel *q) : p(q) {}
+    ~DigitOwner() throw();
+#else
     DigitOwner() : p(0) {}
     ~DigitOwner() throw() { delete p; }
+#endif
     void Reset(DigitPanel *q) throw() { if(p!=q) { delete p; p=q; } }
 };
 struct DigitNode { DigitNode *prev,*next; int value; };
@@ -54,7 +60,11 @@ struct DigitListBase {
     DigitNode *last,*first;
     DigitListBase();
     DigitIter Erase(const DigitIter &, const DigitIter &);
+#ifdef RACE_DIGITS_OUTLINE
+    ~DigitListBase();
+#else
     ~DigitListBase() { Erase(DigitIter(first),DigitIter((DigitNode *)&last)); }
+#endif
 };
 struct DigitListMid : DigitListBase {
     DigitListMid() { Init(5,lbl_806D0860); }

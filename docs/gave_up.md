@@ -66,7 +66,7 @@ all of these.
 | `fn_80228394` | game/DNFlash_nm2 | 94.60 | sibling `fn_802281F0` matched with `extern const` tables + `dx` then `nx = -dx`; this one did not follow | |
 | `SpriteGroup_CreateOrInit` | game/SpriteGroupCreate | 95.65 | `lwz`/`stw` (and `li`) order | |
 | `fn_80245E6C` | game/HudFlow20Update | 98.92 | one `lwz` scheduled differently | |
-| `fn_80246988`, `fn_80246DE4` | game/RaceDigitLap, game/RaceDigits | 99.90 / 99.92 | `DigitPanel::SetPos` `lfs` order | |
+| `fn_80246988` | game/RaceDigitLap | 99.90 | `DigitPanel::SetPos` `lfs` order | |
 | `fn_80243C70` | game/ItemPanelDraw | 99.97 | f28/f30 swap | |
 | `fn_8021995C` (MinimapHud dtor) | game/anon_80218F40_nm2 | 99.08 | this/flag/cursor coloring (target this r30, cursor r29, i r28, delete flag r27; ours gives the flag r30) | 8 loop/decl variants, 15 min permuter |
 | `fn_8021B68C` (TeamIconRow::Update) | game/anon_8021B568_nm1 | 98.84 | cursor/t swap (target t r31, `this+i*4` r30) and one `cmpw` operand order in inline `SlotTeam` | 8 variants incl. hand-inlined SlotTeam, 15 min permuter |
