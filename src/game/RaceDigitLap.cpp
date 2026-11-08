@@ -1,9 +1,11 @@
 #include "game/RaceDigitGapPrivate.h"
+static inline float PositionX(const DigitPosition &src) { return src.x; }
+static inline float PositionY(const DigitPosition &src) { return src.y; }
 static inline void CopyPosition(DigitPanel *dst, const DigitPosition &src) {
-    float x=src.x;
-    float y=src.y;
-    dst->position.y=y;
+    float x=PositionX(src);
+    float y=PositionY(src);
     dst->position.x=x;
+    dst->position.y=y;
 }
 extern "C" void fn_80246988(DigitHud *self,int lap,float input) {
     float value=input;
