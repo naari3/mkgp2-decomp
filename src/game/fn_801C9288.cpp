@@ -13,9 +13,12 @@ extern "C" int fn_801C9288(RoundTileOwner *self, int index, int state) {
     slot->frame = 0;
     switch (state) {
     case 1: {
-        CupTileInfo *pos = &positions[index];
-        RoundTileParams *param = &params[cups[g_cupId]][index];
-        int anim = animations[0][slot->variant];
+        int anim;
+        RoundTileParams *param;
+        CupTileInfo *pos;
+        pos = &positions[index];
+        param = &params[cups[g_cupId]][index];
+        anim = animations[0][slot->variant];
         float offset = lbl_806D9D38;
         if (index == 2 || index == 4) offset = -lbl_806D9D38;
         if (!slot->sprite) slot->sprite = new TileSprite(anim, 0, 0);
