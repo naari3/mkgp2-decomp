@@ -11,7 +11,7 @@ struct PhysicsWallMatrix {
         for (int i = 0; i < 16; ++i) m[i] = other.m[i];
     }
     void identity() {
-        m[0] = m[5] = m[10] = m[15] = lbl_806DA42C;
+        m[15] = m[10] = m[5] = m[0] = lbl_806DA42C;
         m[1] = lbl_806DA42C;
         m[2] = lbl_806DA42C;
         m[3] = lbl_806DA42C;
