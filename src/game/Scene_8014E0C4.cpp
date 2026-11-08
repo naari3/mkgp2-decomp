@@ -446,7 +446,6 @@ void fn_80169C44(void);
 void fn_801933D0(int a);
 extern struct StatusInfo *lbl_806D1580;
 extern unsigned int lbl_803FE0C8[];
-extern unsigned int lbl_8048FD98[];
 void InitRumbleController(int on);
 unsigned char PreloadResource(int id);
 void SetLocalPcbRole(int role);
@@ -633,7 +632,6 @@ extern unsigned int g_longRoundFlag;
 extern unsigned int lbl_806D80C0;
 extern unsigned int lbl_806D8184;
 extern unsigned int lbl_8041BC00[];
-extern char *lbl_8048F178[];
 extern void C_MTXLookAt(float m[3][4], const struct Vec3f *eye, const struct Vec3f *up, const struct Vec3f *target);
 extern void C_MTXOrtho(float m[4][4], float t, float b, float l, float r, float n, float f);
 extern void GXBegin(int prim, int fmt, unsigned short n);
@@ -747,7 +745,6 @@ extern unsigned int lbl_806D8284;
 extern unsigned int lbl_806D8288;
 extern unsigned int lbl_806D828C;
 extern unsigned int lbl_806D8290;
-extern unsigned int lbl_8048F1A8[];
 float LookupCos(float a);
 float LookupSin(float a);
 void fn_80157C60(void *ret, void *list, void *pos, const void *val);
@@ -1318,6 +1315,194 @@ struct Panel44 {
 
 
 #include "src/game/Scene_8014E0C4_rodata.inc"
+
+/* .data 0x8048F178..0x8048FDB0 */
+extern const char lbl_806D8020[];
+extern const char lbl_806D8028[];
+extern const char lbl_806D8030[];
+extern const char lbl_806D8038[];
+extern const char lbl_806D8040[];
+extern const char lbl_806D8048[];
+extern const char lbl_806D8050[];
+extern const char lbl_806D8058[];
+extern char lbl_806CF830[];
+extern char lbl_806CF838[];
+
+#pragma push
+#pragma force_active on
+static const char *lbl_8048F178[12] = {
+    lbl_803643DC, lbl_803643F0, lbl_80364404, lbl_80364418, lbl_8036442C, lbl_80364440, lbl_80364454, lbl_80364468, lbl_8036447C, lbl_80364490, lbl_803644A8, lbl_803644BC,
+};
+
+static const char *lbl_8048F1A8[6] = {
+    lbl_80364B28, lbl_80364B3C, lbl_80364B50, lbl_80364B64, lbl_80364B78, lbl_80364B90,
+};
+
+static RaceScriptEntry lbl_8048F1C0[51] = {
+    {1, 0, 2, 0, 0},
+    {4, 0, 8, 0, 0},
+    {4, 0x78, 0, 0, 0},
+    {6, 0, 0, 1, 0},
+    {7, 0, 0, 2, 0},
+    {7, 0x3C, 0, 3, 0},
+    {7, 0x78, 0, 4, 0},
+    {7, 0xB4, 0, 5, 0},
+    {8, 0, 0, 6, 0},
+    {8, 0x1E, 0, 7, 0},
+    {8, 0x3C, 0, 8, 0},
+    {8, 0x5A, 0, 9, 0},
+    {8, 0x78, 0, 0xA, 0},
+    {8, 0x96, 0, 0xB, 0},
+    {8, 0xB4, 0, 0xC, 0},
+    {9, 0, 0, 0xD, 0},
+    {0xA, 0, 1, 0xC, 0},
+    {0xB, 0, 0, 0xE, 0},
+    {0xC, 0x5A, 0, 0xF, 0},
+    {0xD, 0, 0, 0x10, 0},
+    {0xF, 0, 0, 0x11, 0},
+    {0x10, 0, 0, 0x12, 0},
+    {0x10, 0, 7, 0, 0},
+    {0x10, 0, 4, 0, 0},
+    {0x10, 0, 5, 0, 0},
+    {0x10, 0x1E, 5, 3, 0},
+    {0x10, 0x3C, 5, 6, 0},
+    {0x11, 0, 0, 0x13, 0},
+    {0x11, 0, 7, 0, 0},
+    {0x11, 0, 5, 8, 0},
+    {0x11, 0x1E, 5, 0xA, 0},
+    {0x11, 0x3C, 5, 2, 0},
+    {0x11, 0x5A, 5, 1, 0},
+    {0x11, 0x78, 5, 5, 0},
+    {0x12, 0, 3, 0x279, 0},
+    {0x12, 0, 0, 0x14, 0},
+    {0x12, 0, 5, 0xC, 0},
+    {0x12, 0x1E, 5, 0xB, 0},
+    {0x12, 0x3C, 3, 0x27A, 0},
+    {0x12, 0x3C, 0, 0x15, 0},
+    {0x12, 0x78, 3, 0x27B, 0},
+    {0x12, 0x78, 0, 0x16, 0},
+    {0x13, 0, 3, 0x27C, 0},
+    {0x13, 0x64, 3, 0x27D, 0},
+    {0x13, 0xDC, 1, 0xF, 0},
+    {0x14, 0, 6, 0, 0},
+    {0x14, 0, 4, 0, 0},
+    {0x14, 0, 8, 0x17, 0},
+    {0x14, 0, 1, 0xE, 0},
+    {0x14, 0x1E, 3, 0x27E, 0},
+    {0x14, 0x78, 0, 0x17, 0},
+};
+
+static RaceScriptEntry lbl_8048F5BC[51] = {
+    {1, 0, 2, 0, 0},
+    {4, 0, 8, 0x18, 0},
+    {4, 0x78, 0, 0x18, 0},
+    {6, 0, 0, 0x19, 0},
+    {7, 0, 0, 0x1A, 0},
+    {7, 0x3C, 0, 0x1B, 0},
+    {7, 0x78, 0, 0x1C, 0},
+    {7, 0xB4, 0, 0x1D, 0},
+    {8, 0, 0, 0x1E, 0},
+    {8, 0x1E, 0, 0x1F, 0},
+    {8, 0x3C, 0, 0x20, 0},
+    {8, 0x5A, 0, 0x21, 0},
+    {8, 0x78, 0, 0x22, 0},
+    {8, 0x96, 0, 0x23, 0},
+    {8, 0xB4, 0, 0x24, 0},
+    {9, 0, 0, 0x25, 0},
+    {0xA, 0, 1, 0xC, 0},
+    {0xB, 0, 0, 0x26, 0},
+    {0xC, 0x5A, 0, 0x27, 0},
+    {0xD, 0, 0, 0x28, 0},
+    {0xF, 0, 0, 0x29, 0},
+    {0x10, 0, 0, 0x2A, 0},
+    {0x10, 0, 7, 0, 0},
+    {0x10, 0, 4, 0, 0},
+    {0x10, 0, 5, 0, 0},
+    {0x10, 0x1E, 5, 3, 0},
+    {0x10, 0x3C, 5, 6, 0},
+    {0x11, 0, 0, 0x2B, 0},
+    {0x11, 0, 7, 0, 0},
+    {0x11, 0, 5, 8, 0},
+    {0x11, 0x1E, 5, 0xA, 0},
+    {0x11, 0x3C, 5, 2, 0},
+    {0x11, 0x5A, 5, 1, 0},
+    {0x11, 0x78, 5, 5, 0},
+    {0x12, 0, 3, 0x279, 0},
+    {0x12, 0, 0, 0x2C, 0},
+    {0x12, 0, 5, 0xC, 0},
+    {0x12, 0x1E, 5, 0xB, 0},
+    {0x12, 0x3C, 3, 0x27A, 0},
+    {0x12, 0x3C, 0, 0x2D, 0},
+    {0x12, 0x78, 3, 0x27B, 0},
+    {0x12, 0x78, 0, 0x2E, 0},
+    {0x13, 0, 3, 0x27C, 0},
+    {0x13, 0x64, 3, 0x27D, 0},
+    {0x13, 0xDC, 1, 0xF, 0},
+    {0x14, 0, 6, 0, 0},
+    {0x14, 0, 4, 0, 0},
+    {0x14, 0, 8, 0x2F, 0},
+    {0x14, 0, 1, 0xE, 0},
+    {0x14, 0x1E, 3, 0x27E, 0},
+    {0x14, 0x78, 0, 0x2F, 0},
+};
+
+static RaceScriptEntry lbl_8048F9B8[46] = {
+    {1, 0, 2, 0, 0},
+    {4, 0, 8, 0x18, 0},
+    {4, 0x78, 0, 0x18, 0},
+    {6, 0, 0, 0x19, 0},
+    {7, 0, 0, 0x1A, 0},
+    {7, 0x3C, 0, 0x1B, 0},
+    {7, 0x78, 0, 0x1C, 0},
+    {7, 0xB4, 0, 0x1D, 0},
+    {8, 0, 0, 0x1E, 0},
+    {8, 0x1E, 0, 0x1F, 0},
+    {8, 0x3C, 0, 0x20, 0},
+    {8, 0x5A, 0, 0x21, 0},
+    {8, 0x78, 0, 0x22, 0},
+    {8, 0x96, 0, 0x23, 0},
+    {8, 0xB4, 0, 0x24, 0},
+    {9, 0, 0, 0x25, 0},
+    {0xA, 0, 1, 0xC, 0},
+    {0xB, 0, 0, 0x26, 0},
+    {0xC, 0x5A, 0, 0x27, 0},
+    {0xD, 0, 0, 0x28, 0},
+    {0x10, 0, 4, 0, 0},
+    {0x10, 0, 5, 0, 0},
+    {0x10, 0x1E, 5, 3, 0},
+    {0x10, 0x3C, 5, 6, 0},
+    {0x11, 0, 5, 8, 0},
+    {0x11, 0x1E, 5, 0xA, 0},
+    {0x11, 0x3C, 5, 2, 0},
+    {0x11, 0x5A, 5, 1, 0},
+    {0x11, 0x78, 5, 5, 0},
+    {0x12, 0, 3, 0x279, 0},
+    {0x12, 0, 0, 0x2C, 0},
+    {0x12, 0, 5, 0xC, 0},
+    {0x12, 0x1E, 5, 0xB, 0},
+    {0x12, 0x3C, 3, 0x27A, 0},
+    {0x12, 0x3C, 0, 0x2D, 0},
+    {0x12, 0x78, 3, 0x27B, 0},
+    {0x12, 0x78, 0, 0x2E, 0},
+    {0x13, 0, 3, 0x27C, 0},
+    {0x13, 0x64, 3, 0x27D, 0},
+    {0x13, 0xDC, 1, 0xF, 0},
+    {0x14, 0, 6, 0, 0},
+    {0x14, 0, 4, 0, 0},
+    {0x14, 0, 8, 0x2F, 0},
+    {0x14, 0, 1, 0xE, 0},
+    {0x14, 0x1E, 3, 0x27E, 0},
+    {0x14, 0x78, 0, 0x2F, 0},
+};
+
+const char *lbl_8048FD50[15] = {
+    lbl_80367438, lbl_806D8020, lbl_806D8028, lbl_806D8030, lbl_806D8038, lbl_806D8040, lbl_806D8048, lbl_806D8050, lbl_80367444, lbl_80367454, lbl_80367464, lbl_80367470, lbl_8036747C, lbl_806D8058, 0,
+};
+
+unsigned int lbl_8048FD8C[3] = { (unsigned int)lbl_806CF830, 0, 0 };
+
+void *lbl_8048FD98[6] = { (void *)lbl_806CF838, 0, (void *)&fn_8014F2DC, (void *)&fn_8014F5A8, (void *)&fn_8014E804, (void *)&fn_8014E618 };
+#pragma pop
 
 /* ---- formerly SceneFactory_8014D540.cpp ---- */
 #pragma use_lmw_stmw on
@@ -6986,7 +7171,7 @@ static inline void *SprCache_Get(SprList *cache, unsigned int key) {
         SprCacheVal v;
         v.key = key;
         v.ref = 1;
-        v.res = new SprRes(lbl_8048F178[key]);
+        v.res = new SprRes((char *)lbl_8048F178[key]);
         SprCache_Insert(cache, &v);
         return v.res;
     }
