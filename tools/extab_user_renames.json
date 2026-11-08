@@ -13179,5 +13179,9 @@
   },
   "src/game/CollisionFile_Load.cpp": {
     "__ct__11CECollisionFPCc": "CollisionFile_Load"
+  },
+  "src/game/ItemSelectAllowed.c": {
+    "@124": "lbl_803DC504",
+    "@125": "lbl_803DC518"
   }
 }

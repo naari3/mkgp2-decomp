@@ -12201,6 +12201,7 @@ game/ItemSelectAllowed.c:
 	extab       start:0x8001CAAC end:0x8001CAB4
 	extabindex  start:0x8002AD70 end:0x8002AD7C
 	.text       start:0x8023C8B0 end:0x8023CC74
+	.rodata     start:0x803DC378 end:0x803DC530
 
 game/SpritePairOwner.cpp:
 	extab       start:0x8001CAB4 end:0x8001CADC
