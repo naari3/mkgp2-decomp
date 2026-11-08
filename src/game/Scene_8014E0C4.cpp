@@ -1,4 +1,5 @@
 #include "game/singleton.h"
+#include "src/game/Scene_8014E0C4_rodata.h"
 
 /* sdata symbols referenced from asm */
 extern unsigned char lbl_806CF828[8];
@@ -173,6 +174,7 @@ struct AttractEntry {
     int f4;
     unsigned char on;
 };
+extern "C" AttractEntry lbl_80367488[];
 
 struct AttractPanel {
     void *vt;
@@ -382,7 +384,6 @@ extern unsigned int lbl_806D8080;
 extern unsigned int dtor_800869D0[];
 extern unsigned int fn_80149214[];
 extern unsigned int fn_8014E04C[];
-extern char lbl_80363D30[];
 extern unsigned int lbl_8048FED8[];
 extern unsigned int lbl_8048FF80[];
 extern void CreditMgr_DrawCoinCreditBanner(int slot, unsigned int color, int count);
@@ -403,7 +404,6 @@ extern unsigned int lbl_806D8088;
 extern unsigned int lbl_806D808C;
 extern unsigned int lbl_806D8090;
 extern unsigned int lbl_806D8094;
-extern struct AttractEntry lbl_80367488[];
 int CreditMgr_GetCreditCount(int slot);
 void GXDrawDone(void);
 unsigned char GetVBlankFlag(void);
@@ -567,7 +567,6 @@ extern unsigned int lbl_806D8124;
 extern unsigned int lbl_806D8128;
 extern unsigned int lbl_806D812C;
 extern unsigned int lbl_806D8130;
-extern struct CourseModeInfo lbl_80366EF0[];
 extern void BuildOrientationFromYaw();
 void CObj_ApplyScissor(void *cam, void *out);
 void CObj_LoadProjMatrix(void *cam, void *out);
@@ -639,7 +638,6 @@ extern unsigned int g_courseVariantIdx;
 extern unsigned int g_longRoundFlag;
 extern unsigned int lbl_806D80C0;
 extern unsigned int lbl_806D8184;
-extern unsigned int lbl_80367200[];
 extern unsigned int lbl_8041BC00[];
 extern char *lbl_8048F178[];
 extern void C_MTXLookAt(float m[3][4], const struct Vec3f *eye, const struct Vec3f *up, const struct Vec3f *target);
@@ -711,8 +709,6 @@ extern unsigned int lbl_806D8214;
 extern unsigned int lbl_806D8218;
 extern unsigned int lbl_806D821C;
 extern unsigned int lbl_806D8220;
-extern unsigned int lbl_803677B0[];
-extern unsigned int lbl_803677C8[];
 void TEXReleasePalette(void **pal);
 extern unsigned int lbl_806D8224;
 extern void GXLoadTexObj(void *obj, int id);
@@ -1021,11 +1017,16 @@ struct RaceUV {
 };
 
 struct CourseModeInfo {
-    char pad0[8];
+    int time;
+    int id;
     unsigned char env;
     unsigned char transparent;
-    char padA[0xE];
+    char padA[2];
+    int fC;
+    int f10;
+    const char *name;
 };
+extern "C" CourseModeInfo lbl_80366EF0[];
 
 struct RaceScene {
     void *vt;
@@ -2495,7 +2496,7 @@ extern "C" void fn_8014F5A8(VObj *p) {
 }
 
 extern "C" void fn_8014F5E0(void) {
-    char *s = lbl_80363D30;
+    char *s = (char *)lbl_80363D30;
     if (lbl_806D1580 != 0) {
         OverlayText(1, 1, 2, s + 0x38F8, lbl_806D1580->f14);
         OverlayText(1, 1, 3, s + 0x3908, lbl_806D1580->fC);
@@ -5078,7 +5079,7 @@ static inline void GXTexCoord2f32(float s, float t) {
 
 #pragma use_lmw_stmw on
 extern "C" void DrawColoredQuad(int r, int g, int b, int a, float x, float y, float w, float h) {
-    CamVecs *cam = (CamVecs *)(lbl_80363D30 + 0x30B0);
+    CamVecs *cam = (CamVecs *)((char *)lbl_80363D30 + 0x30B0);
     float proj[4][4];
     float view[3][4];
 
@@ -5419,7 +5420,7 @@ extern "C" unsigned char fn_80153758(StateObj *o) {
 }
 
 extern "C" void fn_8015376C(TexFadePanel *self) {
-    CamVecs *cam = (CamVecs *)(lbl_80363D30 + 0x30F8);
+    CamVecs *cam = (CamVecs *)((char *)lbl_80363D30 + 0x30F8);
     float proj[4][4];
     float view[3][4];
 
@@ -5516,7 +5517,7 @@ extern "C" unsigned char fn_80153BEC(StateObj *o) {
 }
 
 extern "C" void fn_80153C00(TexFadePanel *self) {
-    CamVecs *cam = (CamVecs *)(lbl_80363D30 + 0x30D4);
+    CamVecs *cam = (CamVecs *)((char *)lbl_80363D30 + 0x30D4);
     float proj[4][4];
     float view[3][4];
 
@@ -7454,3 +7455,5 @@ extern "C" ListHead *dtor_801578C8(ListHead *self, short flag) {
     }
     return self;
 }
+
+#include "src/game/Scene_8014E0C4_rodata.inc"
