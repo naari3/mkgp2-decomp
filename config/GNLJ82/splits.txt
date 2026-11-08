@@ -8048,25 +8048,9 @@ game/SoundMgr_Play.c:
 	.text       start:0x80192884 end:0x80192F04
 
 game/clsound/fn_80192F04.c:
-	extab       start:0x800122AC end:0x800122B4
-	extabindex  start:0x8002717C end:0x80027188
-	.text       start:0x80192F04 end:0x80193134
-
-game/clsound/fn_80193134.c:
-	.text       start:0x80193134 end:0x80193264
-
-game/WeatherSystem_PickVariant.c:
-	extab       start:0x800122B4 end:0x800122BC
-	extabindex  start:0x80027188 end:0x80027194
-	.text       start:0x80193264 end:0x801932F8
-
-game/fn_801932F8.c:
-	.text       start:0x801932F8 end:0x80193300
-
-game/fog/Fog_UpdateFromCourseScene3D.c:
-	extab       start:0x800122BC end:0x800122C4
-	extabindex  start:0x80027194 end:0x800271A0
-	.text       start:0x80193300 end:0x801933D0
+	extab       start:0x800122AC end:0x800122C4
+	extabindex  start:0x8002717C end:0x800271A0
+	.text       start:0x80192F04 end:0x801933D0
 	.data       start:0x80495F20 end:0x80495F48
 
 game/clsound/fn_801933D0.c:
