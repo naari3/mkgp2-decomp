@@ -485,16 +485,6 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/archive.c"),
             Object(Matching, "sysdolphin/baselib/hash.c"),
             Object(Matching, "sysdolphin/baselib/texp.c"),
-            Object(Matching, "sysdolphin/baselib/texp_inputs_nm.c"),
-            Object(Matching, "sysdolphin/baselib/texp_inputs_pools_nm.c"),
-            Object(Matching, "sysdolphin/baselib/texp_alpha_strings_nm.c"),
-            Object(Matching, "sysdolphin/baselib/texp_alloc.c"),
-            Object(Matching, "sysdolphin/baselib/texp_color_nm.c"),
-            Object(Matching, "sysdolphin/baselib/texp_color.c"),
-            Object(Matching, "sysdolphin/baselib/texp_alpha_nm.c"),
-            Object(Matching, "sysdolphin/baselib/texp_alpha.c"),
-            Object(Matching, "sysdolphin/baselib/texp_assign.c"),
-            Object(Matching, "sysdolphin/baselib/texp_nm.c"),
             Object(NonMatching, "sysdolphin/baselib/texp_nm1.c"),
             Object(Matching, "sysdolphin/baselib/texp_compile.c"),
             Object(Matching, "sysdolphin/baselib/texpdag.c"),
@@ -3904,7 +3894,6 @@ DATA_ALIGN4_TUS = [
     "game/anon_80209FA4",
     "game/anon_801FD924_nm1",
     "game/anon_801FD924_tail",
-    "sysdolphin/baselib/texp_assign",
     "sysdolphin/baselib/mobj",
     "game/KartChoiceUpdate",
     "game/CardSetupFlowUpdate",
@@ -3975,7 +3964,6 @@ DATA_ALIGN4_WEAK_TUS = [
     "game/anon_8020BD68",
     "game/anon_8020BD68_nm1",
     "game/ENo3D",
-    "sysdolphin/baselib/texp_alpha_strings_nm",  # keeps .comment (force_active)
 ]
 
 
