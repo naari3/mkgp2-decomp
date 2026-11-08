@@ -1,3 +1,28 @@
+/* --- owned .data 0x80421FE0..0x8042209C (tools/own_data.py) --- */
+#pragma force_active on
+unsigned int lbl_80421FE0[6] = { 0x00000000, 0x00000001, 0x0000000C, 0x0000002A, 0x0000003C, 0xFFFFFFFE };
+unsigned int lbl_80421FF8[5] = { 0x3F19999A, 0x3F0CCCCD, 0x3EA8F5C3, 0x3F933333, 0x3F19999A };
+unsigned int lbl_8042200C[6] = { 0x00000000, 0x00000001, 0x0000000F, 0x00000028, 0x0000003C, 0xFFFFFFFE };
+unsigned int lbl_80422024[5] = { 0x3F4CCCCD, 0x3F5C28F6, 0x3F947AE1, 0x3ECCCCCD, 0x3F4CCCCD };
+unsigned int lbl_80422038[6] = { 0x00000000, 0x00000001, 0x00000015, 0x0000002F, 0x0000003C, 0xFFFFFFFE };
+unsigned int lbl_80422050[5] = { 0x3F0F5C29, 0x3F0F5C29, 0x3F6147AE, 0x3EB851EC, 0x3F0F5C29 };
+void *lbl_80422064[14] = {
+    (void *)0x0,
+    (void *)&lbl_80421FE0,
+    (void *)0x8000000,
+    (void *)&lbl_80421FF8,
+    (void *)0x0,
+    (void *)&lbl_8042200C,
+    (void *)0x9000000,
+    (void *)&lbl_80422024,
+    (void *)0x0,
+    (void *)&lbl_80422038,
+    (void *)0xA000000,
+    (void *)&lbl_80422050,
+    (void *)0xD000000,
+    (void *)0x0
+};
+#pragma force_active reset
 /* fn_80116DD0 (0x80116DD0): item held in the driver's hand: spawn its
  * scaling anim state, follow the hand joint while held, and either launch
  * it (phase 1) or drop it (phase 2). */
@@ -46,7 +71,6 @@ extern void Mtx44_Scale_PerAxis(Mtx44 dst, Mtx44 src, float x, float y, float z)
 extern void Mtx_TransposeToMtx44(Mtx44 dst, void *src);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *sprite, int anim, float frame);
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *sprite, int enable);
-extern unsigned char lbl_80422064[];
 
 void fn_80116DD0(HeldItem *item, HeldItemCtx *ctx)
 {

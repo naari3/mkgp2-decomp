@@ -1,3 +1,50 @@
+/* --- owned .data 0x80421DC8..0x80421F20 (tools/own_data.py) --- */
+#pragma force_active on
+unsigned int lbl_80421DC8[4] = { 0x00000000, 0x00000009, 0x0000000F, 0xFFFFFFFE };
+unsigned int lbl_80421DD8[3] = { 0x3F800000, 0x3FA66666, 0x3F800000 };
+unsigned int lbl_80421DE4[5] = { 0x00000000, 0x00000004, 0x0000000A, 0x0000000F, 0xFFFFFFFE };
+unsigned int lbl_80421DF8[4] = { 0x3F800000, 0x40000000, 0x3F800000, 0x3F800000 };
+unsigned int lbl_80421E08[6] = { 0x00000000, 0x00000006, 0x0000000A, 0x0000000D, 0x0000000F, 0xFFFFFFFE };
+unsigned int lbl_80421E20[5] = { 0x3F800000, 0x40000000, 0x3F99999A, 0x3F800000, 0x3F800000 };
+void *lbl_80421E34[14] = {
+    (void *)0x0,
+    (void *)&lbl_80421DC8,
+    (void *)0x8000000,
+    (void *)&lbl_80421DD8,
+    (void *)0x0,
+    (void *)&lbl_80421DE4,
+    (void *)0x9000000,
+    (void *)&lbl_80421DF8,
+    (void *)0x0,
+    (void *)&lbl_80421E08,
+    (void *)0xA000000,
+    (void *)&lbl_80421E20,
+    (void *)0xD000000,
+    (void *)0x0
+};
+unsigned int lbl_80421E6C[5] = { 0x00000000, 0x00000004, 0x00000009, 0x0000000F, 0xFFFFFFFE };
+unsigned int lbl_80421E80[4] = { 0x3F800000, 0x3F8CCCCD, 0x3FC66666, 0x3F800000 };
+unsigned int lbl_80421E90[6] = { 0x00000000, 0x00000005, 0x0000000A, 0x0000000C, 0x0000000F, 0xFFFFFFFE };
+unsigned int lbl_80421EA8[5] = { 0x3F800000, 0x3E800000, 0x3FD00000, 0x3F570A3D, 0x3F800000 };
+unsigned int lbl_80421EBC[6] = { 0x00000000, 0x00000005, 0x0000000A, 0x0000000C, 0x0000000F, 0xFFFFFFFE };
+unsigned int lbl_80421ED4[5] = { 0x3F800000, 0x3EB851EC, 0x3FAA3D71, 0x3F800000, 0x3F800000 };
+void *lbl_80421EE8[14] = {
+    (void *)0x0,
+    (void *)&lbl_80421E6C,
+    (void *)0x8000000,
+    (void *)&lbl_80421E80,
+    (void *)0x0,
+    (void *)&lbl_80421E90,
+    (void *)0x9000000,
+    (void *)&lbl_80421EA8,
+    (void *)0x0,
+    (void *)&lbl_80421EBC,
+    (void *)0xA000000,
+    (void *)&lbl_80421ED4,
+    (void *)0xD000000,
+    (void *)0x0
+};
+#pragma force_active reset
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int en);
 extern void fn_800D748C(void);
@@ -9,8 +56,6 @@ extern void fn_80115118(unsigned char *self, unsigned char *ctx);
 extern void fn_80114990(unsigned char *self, unsigned char *ctx);
 extern int lbl_806CF400;
 extern int lbl_806CF420;
-extern unsigned char lbl_80421E34[];
-extern unsigned char lbl_80421EE8[];
 
 static inline void ItemObject_TickTimer(unsigned int *t)
 {

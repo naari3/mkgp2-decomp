@@ -329,15 +329,7 @@ extern const float lbl_806D27F4;
 extern unsigned int ClStrPcb_Dtor[];
 extern unsigned int jumptable_803F7640[];
 extern unsigned int jumptable_803F7668[];
-extern unsigned int lbl_802EBA18[];
-extern const float lbl_802EBE14[]; /* 8-float boost blend color table */
 
-extern unsigned int lbl_802ED94C[];
-extern unsigned int lbl_802ED9E4[];
-extern unsigned int lbl_802ED9F4[];
-extern unsigned int lbl_802EDA20[];
-extern unsigned int lbl_802EDA80[];
-extern unsigned int lbl_802EDAA4[];
 extern unsigned int lbl_803F56F0[];
 extern unsigned int lbl_803F5700[];
 extern unsigned int lbl_803F5710[];
@@ -646,7 +638,6 @@ typedef struct ItemCatEntry24 {
 } ItemCatEntry24;
 
 /* item category sub-tables with their own labels (inside lbl_802EBA18 blob) */
-extern ItemCatEntry12 lbl_802ED8C4[];  /* explosion table (base+0x1eac) */
 
 /* 8-byte pair copied out of category tables into ItemStateBlock +0xc/+0x10 */
 typedef struct IdFlagPair {
@@ -859,8 +850,6 @@ typedef struct ItemObjectPosView {
     float velZ;                        /* 0xc0 */
 } ItemObjectPosView;
 
-extern ItemRemapEntry lbl_802EBE64[7];
-extern ItemEffectDesc lbl_802EBF0C[0x3A];
 
 /* dynamic bitset (vector<bool>-like): cap = bits rounded to word, size = requested bits */
 typedef struct Bitset {
@@ -953,7 +942,6 @@ typedef struct TrapFxEntry {
     int valD;           /* 0x14 */
 } TrapFxEntry;
 
-extern TrapFxEntry lbl_802ED7BC[];
 
 /* projectile effect table entry (stride 0x14, lbl_802ED5B4) */
 typedef struct ProjFxEntry {
@@ -964,7 +952,6 @@ typedef struct ProjFxEntry {
     int valD;           /* 0x10 */
 } ProjFxEntry;
 
-extern ProjFxEntry lbl_802ED5B4[];
 
 /* item bus view exposing the trap scale slot at +0x28 */
 typedef struct ItemBusTrapView {
@@ -1179,7 +1166,10 @@ asm void CarObject_MainUpdate(void *self, void *arg);
 void CarObject_FrameUpdate(CarObjFrameView *self, void *arg);
 void CarObject_ApplyInput_AI(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3, float in4);
 void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3);
-asm void *KartItem_Dtor(void *self, short flag);
+#pragma cplusplus on
+struct KartItemObj;
+extern "C" void *KartItem_Dtor(KartItemObj *self, short flag);
+#pragma cplusplus off
 asm void CarObject_Init(void);
 void KartItem_UpdateShadowBillboardAndViewport(KartItemOpsView *self, int arg2, int arg3);
 float KartItem_AdvanceAnim3c(const KartItemOpsView *self);
@@ -1224,6 +1214,241 @@ void KartItem_TickStatusEffectsByFlag(ItemEffectTable *self);
 int ItemEffectDesc_OnApply_BoostLandingSE(const ItemEffectDesc *desc, KartItemOpsView *owner, void *effectState, void *mediaReq, void *itemObj, unsigned char kind, unsigned char isPrimary);
 int ItemEffectDesc_OnApply_FreezeKartOrSlowdown(const ItemEffectDesc *desc, KartItemOpsView *owner, void *effectState, void *mediaReq, void *itemObj, unsigned char kind, unsigned char isPrimary);
 int ItemEffectDesc_OnApply_MushroomBoost(const ItemEffectDesc *desc, KartItemOpsView *owner, void *effectState, void *mediaReq, void *itemObj, unsigned char kind, unsigned char isPrimary);
+
+/* .rodata 0x802EBA18..0x802EDB20 is owned by this TU: the tables are
+ * file-local, so functions that touch two or more of them address them off
+ * one section anchor (lis/addi rBase, then addi rX, rBase, off). */
+static const unsigned int lbl_802EBA18[255] = {
+    0x3F800000, 0x3F333333, 0x3F666666, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
+    0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
+    0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
+    0x42855556, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
+    0x42855556, 0x453B8000, 0x42855556, 0x457A0000,
+    0x42855556, 0x459C4000, 0x42855556, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000,
+    0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000,
+    0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000,
+    0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000,
+    0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
+    0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000,
+    0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000,
+    0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000,
+    0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000,
+    0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
+    0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000,
+    0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000,
+    0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000,
+    0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000,
+    0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000,
+    0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000,
+    0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
+    0x42A6AAAB, 0x459C4000, 0x42A6AAAB,
+};
+static const float lbl_802EBE14[20] = {
+    0.625f, 0.5555556f, 0.1f, 0.0325f, 1.25f, 0.5555556f, 0.2f, 0.065f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f
+};
+static const ItemRemapEntry lbl_802EBE64[7] = {
+    {1, 119, 3, {23, 43, 62}},
+    {0, 71, 2, {279, 23, -1}},
+    {0, 3, 3, {285, 281, 282}},
+    {0, 7, 3, {285, 281, 282}},
+    {0, 102, 3, {285, 281, 23}},
+    {0, 3, 3, {285, 281, 23}},
+    {0, 88, 3, {285, 281, 23}},
+};
+static const ItemEffectDesc lbl_802EBF0C[58] = {
+    {0, 43, 1, {0, 0, 0}, 30, 480, 0, {0, 0, 0}, 4, 8.0f, 0.8f, 0.8f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 48, 1, {0, 0, 0}, 30, 60, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 49, 1, {0, 0, 0}, 30, 60, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 70, 1, {0, 0, 0}, 30, 180, 1, {0, 0, 0}, 1, 3.0f, 0.33333334f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 45, 1, {0, 0, 0}, 30, 180, 1, {0, 0, 0}, 1, 3.0f, 0.33333334f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 57, 1, {0, 0, 0}, 10, 12, 0, {0, 0, 0}, 2, 1.0f, 1.0f, 0.05f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 3, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 58, 1, {0, 0, 0}, 10, 12, 0, {0, 0, 0}, 2, 1.0f, 1.0f, 0.05f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 3, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 72, 1, {0, 0, 0}, 30, 300, 0, {0, 0, 0}, 7, 5.0f, 1.0f, 0.05f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 1, 5.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 91, 1, {0, 0, 0}, 30, 480, 0, {0, 0, 0}, 6, 8.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 92, 1, {0, 0, 0}, 30, 480, 0, {0, 0, 0}, 5, 8.0f, 1.0f, 0.0f, 1.0f, 0.01f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 93, 1, {0, 0, 0}, 30, 480, 0, {0, 0, 0}, 2, 8.0f, 0.8f, 0.05f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 80, 1, {0, 0, 0}, 30, 21, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 89, 1, {0, 0, 0}, 30, 300, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 104, 1, {0, 0, 0}, 30, 180, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 2, 3.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 116, 1, {0, 0, 0}, 30, 300, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 101, 1, {0, 0, 0}, 30, 21, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 64, 1, {0, 0, 0}, 30, 21, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 105, 1, {0, 0, 0}, 30, 60, 1, {0, 0, 0}, 2, 1.0f, 1.0f, 0.05f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 74, 1, {0, 0, 0}, 30, 480, 0, {0, 0, 0}, 4, 8.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 75, 1, {0, 0, 0}, 30, 480, 0, {0, 0, 0}, 4, 8.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 90, 1, {0, 0, 0}, 30, 600, 0, {0, 0, 0}, 2, 10.0f, 1.0f, 0.05f, 0.0f, 0.0f, 0.0f, 1, 10.0f, 0.5f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 114, 1, {0, 0, 0}, 30, 300, 0, {0, 0, 0}, 9, 5.0f, 16.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2, 5.0f, 0.5f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 115, 1, {0, 0, 0}, 30, 300, 0, {0, 0, 0}, 8, 5.0f, 0.75f, 0.0f, 0.0f, 0.0f, 0.0f, 2, 5.0f, 0.5f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 85, 1, {0, 0, 0}, 30, 1800, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 81, 1, {0, 0, 0}, 30, 600, 0, {0, 0, 0}, 2, 10.0f, 1.0f, 0.05f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 103, 1, {0, 0, 0}, 30, 600, 0, {0, 0, 0}, 2, 10.0f, 1.0f, 0.05f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 113, 1, {0, 0, 0}, 30, 480, 0, {0, 0, 0}, 2, 0.0f, 1.0f, 0.05f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 60, 1, {0, 0, 0}, 30, 480, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 117, 1, {0, 0, 0}, 30, 600, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 86, 1, {0, 0, 0}, 30, 300, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1, 5.0f, 0.8f, 0, 0.0f, 1, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 87, 1, {0, 0, 0}, 30, 300, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1, 5.0f, 0.8f, 0, 0.0f, 1, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 158, 1, {0, 0, 0}, 30, 300, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1, 5.0f, 0.8f, 0, 0.0f, 1, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 144, 1, {0, 0, 0}, 30, 300, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1, 5.0f, 0.8f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 146, 1, {0, 0, 0}, 30, 480, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1, 8.0f, 0.5f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 152, 1, {0, 0, 0}, 30, 480, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1, 5.0f, 0.8f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 142, 1, {0, 0, 0}, 10, 12, 0, {0, 0, 0}, 2, 1.0f, 1.0f, 0.05f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 3, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 151, 1, {0, 0, 0}, 30, 600, 0, {0, 0, 0}, 2, 10.0f, 1.0f, 0.05f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 141, 1, {0, 0, 0}, 30, 180, 1, {0, 0, 0}, 1, 3.0f, 0.33333334f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 136, 1, {0, 0, 0}, 30, 1800, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 143, 1, {0, 0, 0}, 30, 1800, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 147, 1, {0, 0, 0}, 30, 1800, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 148, 1, {0, 0, 0}, 30, 1800, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 149, 1, {0, 0, 0}, 30, 600, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 73, 0, {0, 0, 0}, 30, 0, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, (ItemEffectApplyFn)ItemEffectDesc_OnApply_MushroomBoost, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 59, 0, {0, 0, 0}, 30, 0, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, (ItemEffectApplyFn)ItemEffectDesc_OnApply_FreezeKartOrSlowdown, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {1, 44, 1, {0, 0, 0}, 30, 60, 0, {0, 0, 0}, 2, 1.0f, 1.0f, 0.05f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, (ItemEffectApplyFn)ItemEffectDesc_OnApply_BoostLandingSE, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {1, 42, 1, {0, 0, 0}, 30, 60, 1, {0, 0, 0}, 3, 0.2f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {1, 83, 0, {0, 0, 0}, 1, 120, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 2, 2.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {1, 280, 0, {0, 0, 0}, 24, 6, 1, {0, 0, 0}, 3, 0.1f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 278, 0, {0, 0, 0}, 30, 480, 0, {0, 0, 0}, 2, 8.0f, 1.0f, 0.01f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 281, 0, {0, 0, 0}, 30, 480, 0, {0, 0, 0}, 4, 8.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 279, 0, {0, 0, 0}, 30, 480, 0, {0, 0, 0}, 2, 8.0f, 1.0f, 0.02f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 289, 0, {0, 0, 0}, 30, 840, 0, {0, 0, 0}, 2, 14.0f, 1.0f, 0.02f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 285, 1, {0, 0, 0}, 30, 600, 0, {0, 0, 0}, 2, 10.0f, 1.0f, 0.05f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 286, 1, {0, 0, 0}, 30, 780, 0, {0, 0, 0}, 2, 13.0f, 1.0f, 0.05f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 287, 0, {0, 0, 0}, 30, 660, 0, {0, 0, 0}, 4, 11.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 282, 0, {0, 0, 0}, 30, 300, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 1, 5.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+    {0, 288, 0, {0, 0, 0}, 30, 600, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 1, 10.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
+};
+static const ProjFxEntry lbl_802ED5B4[26] = {
+    {95, 0.3f, 1, -1, -1},
+    {96, 0.3f, 1, -1, -1},
+    {69, 0.5f, 1, -1, -1},
+    {270, 0.5f, 2, -1, -1},
+    {55, 0.3f, 1, -1, -1},
+    {61, 0.5f, 1, -1, -1},
+    {118, 0.3f, 1, -1, -1},
+    {56, 0.3f, 1, -1, -1},
+    {106, 0.3f, 1, -1, -1},
+    {65, 0.3f, 2, -1, -1},
+    {68, 0.7f, 2, -1, -1},
+    {67, 0.7f, 2, -1, -1},
+    {120, 0.3f, 2, -1, -1},
+    {2, 0.7f, 3, -1, -1},
+    {137, 0.7f, 3, -1, -1},
+    {1, 0.7f, 3, -1, -1},
+    {9, 0.7f, 3, -1, -1},
+    {11, 0.7f, 3, -1, -1},
+    {6, 0.7f, 3, -1, -1},
+    {4, 0.7f, 3, -1, -1},
+    {5, 0.7f, 3, -1, -1},
+    {10, 0.7f, 3, -1, -1},
+    {121, 0.7f, 3, -1, -1},
+    {63, 0.7f, 2, 91, -1},
+    {290, 0.9f, 2, -1, -1},
+    {291, 0.9f, 1, -1, -1},
+};
+static const TrapFxEntry lbl_802ED7BC[11] = {
+    {50, 0.5f, 24.0f, 30, -1, -1},
+    {156, 0.5f, 24.0f, 30, -1, -1},
+    {98, 0.5f, 24.0f, 45, -1, -1},
+    {53, 0.5f, 24.0f, 30, -1, -1},
+    {108, 0.5f, 24.0f, 30, 74, 300},
+    {52, 0.5f, 24.0f, 60, -1, -1},
+    {54, 0.5f, 24.0f, 30, 93, 480},
+    {8, 0.5f, 24.0f, 60, 278, 360},
+    {51, 0.5f, 24.0f, 30, 74, -1},
+    {284, 0.5f, 24.0f, 60, -1, -1},
+    {97, 0.5f, 24.0f, 30, -1, -1},
+};
+static const ItemCatEntry12 lbl_802ED8C4[9] = {
+    {112, -1, -1},
+    {76, -1, -1},
+    {99, -1, -1},
+    {46, -1, -1},
+    {150, -1, -1},
+    {138, -1, -1},
+    {47, -1, -1},
+    {62, -1, -1},
+    {77, -1, -1},
+};
+const ItemCatEntry12 lbl_802ED930[1] = {
+    {79, -1, -1},
+};
+const ItemCatEntry16 lbl_802ED93C[1] = {
+    {107, 60, -1, -1},
+};
+static const unsigned int lbl_802ED94C[38] = {
+    0x00000017, 0x00000024, 0x00000015, 0x0000001F,
+    0x0000001E, 0x00000020, 0x00000016, 0x00000010,
+    0x0000000E, 0x00000028, 0x00000026, 0x00000025,
+    0x0000000C, 0x00000014, 0x0000000D, 0x00000011,
+    0x00000018, 0x00000013, 0x00000021, 0x00000027,
+    0x0000000F, 0x00000019, 0x00000141, 0x0000001B,
+    0x0000001A, 0x00000142, 0x0000001C, 0x0000001D,
+    0x00000023, 0x00000022, 0x00000052, 0x0000009B,
+    0x0000008B, 0x00000091, 0x00000099, 0x0000008C,
+    0x0000009D, 0x0000009A,
+};
+static const unsigned int lbl_802ED9E4[4] = {
+    0x0000009B, 0x0000008C, 0x0000009D, 0x0000009A,
+};
+static const unsigned int lbl_802ED9F4[3] = {
+    0x00000000, 0x00000000, 0x00000000,
+};
+const char lbl_802EDA00[12] = "clCarObject";
+const char lbl_802EDA0C[19] = "clItemBoxResponder";
+static const char lbl_802EDA20[51] = "clCarObject::clBodyDamageEffector result is error\n";
+const char lbl_802EDA54[26] = "teSingleton<clCollPlayer>";
+const char lbl_802EDA70[13] = "clCollPlayer";
+static const char lbl_802EDA80[34] = "vector::construction length error";
+static const unsigned int lbl_802EDAA4[31] = {
+    0x21737464, 0x3A3A6578, 0x63657074, 0x696F6E21,
+    0x21737464, 0x3A3A6C6F, 0x6769635F, 0x6572726F,
+    0x72212173, 0x74643A3A, 0x6C656E67, 0x74685F65,
+    0x72726F72, 0x21210000, 0x7374643A, 0x3A6C656E,
+    0x6774685F, 0x6572726F, 0x72000000, 0x7374643A,
+    0x3A657863, 0x65707469, 0x6F6E0000, 0x7374643A,
+    0x3A6C6F67, 0x69635F65, 0x72726F72, 0x00000000,
+    0x65786365, 0x7074696F, 0x6E000000,
+};
+
 int ItemEffect_TryStartByCategory_Wrap(ItemStateBlock *self, int itemId, void *arg);
 int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg);
 void ItemEffect_Explosion(ItemStateBlock *self, int idx, const void *arg);
@@ -1377,59 +1602,6 @@ __declspec(section ".extab_user") static const unsigned char extab_CarObject_App
 __declspec(section ".extab_user") static const unsigned char extab_CarObject_ApplyInput[8] = {
     0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const unsigned char extab_KartItem_Dtor[404] = {
-    0x20, 0x18, 0x00, 0x00, 0x00, 0x00, 0x01, 0x50,
-    0x00, 0x00, 0x00, 0xC8, 0x00, 0x00, 0x01, 0x5C,
-    0x00, 0x00, 0x00, 0xD4, 0x00, 0x00, 0x01, 0x94,
-    0x00, 0x00, 0x00, 0xD8, 0x00, 0x00, 0x01, 0xA0,
-    0x00, 0x00, 0x00, 0xE4, 0x00, 0x00, 0x01, 0xB8,
-    0x00, 0x00, 0x00, 0xE8, 0x00, 0x00, 0x01, 0xC4,
-    0x00, 0x00, 0x00, 0xF4, 0x00, 0x00, 0x01, 0xF0,
-    0x00, 0x00, 0x00, 0xF8, 0x00, 0x00, 0x01, 0xFC,
-    0x00, 0x00, 0x01, 0x10, 0x00, 0x00, 0x02, 0x08,
-    0x00, 0x00, 0x01, 0x04, 0x00, 0x00, 0x02, 0x14,
-    0x00, 0x00, 0x01, 0x20, 0x00, 0x00, 0x02, 0x2C,
-    0x00, 0x00, 0x01, 0x24, 0x00, 0x00, 0x02, 0x38,
-    0x00, 0x00, 0x01, 0x30, 0x00, 0x00, 0x02, 0x50,
-    0x00, 0x00, 0x01, 0x34, 0x00, 0x00, 0x02, 0x5C,
-    0x00, 0x00, 0x01, 0x40, 0x00, 0x00, 0x02, 0x74,
-    0x00, 0x00, 0x01, 0x44, 0x00, 0x00, 0x02, 0x80,
-    0x00, 0x00, 0x01, 0x50, 0x00, 0x00, 0x02, 0x98,
-    0x00, 0x00, 0x01, 0x54, 0x00, 0x00, 0x02, 0xA4,
-    0x00, 0x00, 0x01, 0x60, 0x00, 0x00, 0x02, 0xBC,
-    0x00, 0x00, 0x01, 0x64, 0x00, 0x00, 0x02, 0xC8,
-    0x00, 0x00, 0x01, 0x70, 0x00, 0x00, 0x02, 0xE0,
-    0x00, 0x00, 0x01, 0x74, 0x00, 0x00, 0x02, 0xEC,
-    0x00, 0x00, 0x01, 0x80, 0x00, 0x00, 0x03, 0x04,
-    0x00, 0x00, 0x01, 0x84, 0x00, 0x00, 0x03, 0x10,
-    0x00, 0x00, 0x01, 0x90, 0x00, 0x00, 0x00, 0x00,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x54,
-    0x00, 0x00, 0x01, 0x24, 0x8D, 0x00, 0x01, 0x24,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x98,
-    0x00, 0x00, 0x01, 0x0C, 0x8D, 0x00, 0x01, 0x0C,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xBC,
-    0x00, 0x00, 0x00, 0xF4, 0x8D, 0x00, 0x00, 0xF4,
-    0x0F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xF4,
-    0x00, 0x00, 0x00, 0x1C, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0x0C, 0x00, 0x00, 0x00, 0xDC,
-    0x0D, 0x00, 0x00, 0x1C, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0x0C, 0x00, 0x00, 0x00, 0xDC,
-    0x8D, 0x00, 0x00, 0xDC, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0x30, 0x00, 0x00, 0x00, 0xC4,
-    0x8D, 0x00, 0x00, 0xC4, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0x54, 0x00, 0x00, 0x00, 0xAC,
-    0x8D, 0x00, 0x00, 0xAC, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0x78, 0x00, 0x00, 0x00, 0x94,
-    0x8D, 0x00, 0x00, 0x94, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0x9C, 0x00, 0x00, 0x00, 0x7C,
-    0x8D, 0x00, 0x00, 0x7C, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0xC0, 0x00, 0x00, 0x00, 0x64,
-    0x8D, 0x00, 0x00, 0x64, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0xE4, 0x00, 0x00, 0x00, 0x4C,
-    0x8D, 0x00, 0x00, 0x4C, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x03, 0x08, 0x00, 0x00, 0x00, 0x34,
-    0x8D, 0x00, 0x00, 0x34
-};
 __declspec(section ".extab_user") static const unsigned char extab_CarObjectManager_Dtor[8] = {
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -1575,9 +1747,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CarObject_ApplyInput = {
     (void *)&CarObject_ApplyInput, 0x0000015C, (void *)extab_CarObject_ApplyInput
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_KartItem_Dtor = {
-    (void *)&KartItem_Dtor, 0x00000368, (void *)extab_KartItem_Dtor
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CarObject_Init = {
     (void *)&CarObject_Init, 0x000007BC, (void *)&extab_CarObject_Init
@@ -5473,260 +5642,197 @@ void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float i
 }
 #pragma exceptions reset
 
-asm void *KartItem_Dtor(void *self, short flag) { /* 0x8004E2B0 size:0x368 */
-    nofralloc
-    stwu r1, -0x150(r1)
-    mflr r0
-    stw r0, 0x154(r1)
-    stw r31, 0x14c(r1)
-    mr r31, r1
-    stw r30, 0x148(r1)
-    mr r30, r4
-    stw r29, 0x144(r1)
-    mr. r29, r3
-    stw r28, 0x140(r1)
-    beq KartItem_Dtor_L_8004E5EC
-    lis r3, lbl_803F75F8@ha
-    li r0, 0x0
-    addi r3, r3, lbl_803F75F8@l
-    stw r3, 0x0(r29)
-    addi r3, r3, 0x10
-    stw r3, 0xc(r29)
-    stw r0, g_playerCarObject(r13)
-    lbz r3, 0x20(r29)
-    cmplwi r3, 0x1
-    bne KartItem_Dtor_L_8004E348
-    lbz r0, 0x21(r29)
-    cmplwi r0, 0x0
-    bne KartItem_Dtor_L_8004E348
-    cmplwi r3, 0x0
-    beq KartItem_Dtor_L_8004E348
-    bl StrPcb_GetInstance
-    li r4, 0x28
-    bl StrPcb_SetCmdByte2d
-    bl StrPcb_GetInstance
-    li r4, 0x1e
-    bl StrPcb_SetCmdByte2e
-    bl StrPcb_GetInstance
-    li r4, 0x0
-    bl StrPcb_SetCounterField14
-    bl StrPcb_GetInstance
-    li r4, 0x0
-    bl StrPcb_SetCmdByte2f
-    KartItem_Dtor_L_8004E348:
-    lwz r3, g_carObjectList(r13)
-    mr r5, r29
-    cmplwi r3, 0x0
-    bne KartItem_Dtor_L_8004E35C
-    li r3, 0x0
-    KartItem_Dtor_L_8004E35C:
-    lbz r0, 0x8(r31)
-    addi r3, r3, 0x4
-    stw r5, 0x18(r31)
-    addi r4, r31, 0xc
-    stb r0, 0x14(r31)
-    lwz r0, 0x14(r31)
-    stw r5, 0x10(r31)
-    stw r0, 0xc(r31)
-    bl StlList_RemoveByValueField
-    lwz r3, g_carObjectList(r13)
-    cmplwi r3, 0x0
-    bne KartItem_Dtor_L_8004E394
-    li r0, 0x0
-    b KartItem_Dtor_L_8004E398
-    KartItem_Dtor_L_8004E394:
-    mr r0, r3
-    KartItem_Dtor_L_8004E398:
-    cmplwi r0, 0x0
-    beq KartItem_Dtor_L_8004E3D4
-    lwz r4, g_carObjectCount(r13)
-    subic. r0, r4, 0x1
-    stw r0, g_carObjectCount(r13)
-    bgt KartItem_Dtor_L_8004E3D4
-    cmplwi r3, 0x0
-    beq KartItem_Dtor_L_8004E3CC
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    KartItem_Dtor_L_8004E3CC:
-    li r0, 0x0
-    stw r0, g_carObjectList(r13)
-    KartItem_Dtor_L_8004E3D4:
-    lwz r3, 0x58(r29)
-    li r4, 0x1
-    bl dtor_80209180
-    lwz r3, 0x5c(r29)
-    li r4, 0x1
-    bl dtor_80209180
-    addic. r0, r29, 0x54
-    beq KartItem_Dtor_L_8004E410
-    lwz r3, 0x54(r29)
-    li r4, 0x1
-    bl Free_IfOwnedShort
-    b KartItem_Dtor_L_8004E410
-    addi r3, r31, 0x124
-    bl __unexpected
-    KartItem_Dtor_L_8004E40C:
-    b KartItem_Dtor_L_8004E40C
-    KartItem_Dtor_L_8004E410:
-    addic. r0, r29, 0x50
-    beq KartItem_Dtor_L_8004E420
-    lwz r3, 0x50(r29)
-    bl MemoryManager_TimedFree
-    KartItem_Dtor_L_8004E420:
-    addic. r0, r29, 0x4c
-    beq KartItem_Dtor_L_8004E430
-    lwz r3, 0x4c(r29)
-    bl MemoryManager_TimedFree
-    KartItem_Dtor_L_8004E430:
-    addic. r0, r29, 0x48
-    beq KartItem_Dtor_L_8004E454
-    lwz r3, 0x48(r29)
-    li r4, 0x1
-    bl TwoSubDtor_Pending_80064f58
-    b KartItem_Dtor_L_8004E454
-    addi r3, r31, 0x10c
-    bl __unexpected
-    KartItem_Dtor_L_8004E450:
-    b KartItem_Dtor_L_8004E450
-    KartItem_Dtor_L_8004E454:
-    addic. r0, r29, 0x44
-    beq KartItem_Dtor_L_8004E478
-    lwz r3, 0x44(r29)
-    li r4, 0x1
-    bl EffectSteering_Dtor
-    b KartItem_Dtor_L_8004E478
-    addi r3, r31, 0xf4
-    bl __unexpected
-    KartItem_Dtor_L_8004E474:
-    b KartItem_Dtor_L_8004E474
-    KartItem_Dtor_L_8004E478:
-    addic. r0, r29, 0x40
-    beq KartItem_Dtor_L_8004E4C8
-    lwz r28, 0x40(r29)
-    cmplwi r28, 0x0
-    beq KartItem_Dtor_L_8004E4C8
-    addic. r0, r28, 0x4
-    beq KartItem_Dtor_L_8004E4B0
-    lwz r3, 0x4(r28)
-    li r4, 0x1
-    bl KartItemSubObject_Dtor
-    b KartItem_Dtor_L_8004E4B0
-    addi r3, r31, 0x1c
-    bl __unexpected
-    KartItem_Dtor_L_8004E4AC:
-    b KartItem_Dtor_L_8004E4AC
-    KartItem_Dtor_L_8004E4B0:
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    b KartItem_Dtor_L_8004E4C8
-    addi r3, r31, 0xdc
-    bl __unexpected
-    KartItem_Dtor_L_8004E4C4:
-    b KartItem_Dtor_L_8004E4C4
-    KartItem_Dtor_L_8004E4C8:
-    addic. r0, r29, 0x3c
-    beq KartItem_Dtor_L_8004E4EC
-    lwz r3, 0x3c(r29)
-    li r4, 0x1
-    bl KartEffectFadeTransit_Dtor
-    b KartItem_Dtor_L_8004E4EC
-    addi r3, r31, 0xc4
-    bl __unexpected
-    KartItem_Dtor_L_8004E4E8:
-    b KartItem_Dtor_L_8004E4E8
-    KartItem_Dtor_L_8004E4EC:
-    addic. r0, r29, 0x38
-    beq KartItem_Dtor_L_8004E510
-    lwz r3, 0x38(r29)
-    li r4, 0x1
-    bl PlayCamera_Dtor
-    b KartItem_Dtor_L_8004E510
-    addi r3, r31, 0xac
-    bl __unexpected
-    KartItem_Dtor_L_8004E50C:
-    b KartItem_Dtor_L_8004E50C
-    KartItem_Dtor_L_8004E510:
-    addic. r0, r29, 0x34
-    beq KartItem_Dtor_L_8004E534
-    lwz r3, 0x34(r29)
-    li r4, 0x1
-    bl VisualEffectHolder_Dtor
-    b KartItem_Dtor_L_8004E534
-    addi r3, r31, 0x94
-    bl __unexpected
-    KartItem_Dtor_L_8004E530:
-    b KartItem_Dtor_L_8004E530
-    KartItem_Dtor_L_8004E534:
-    addic. r0, r29, 0x30
-    beq KartItem_Dtor_L_8004E558
-    lwz r3, 0x30(r29)
-    li r4, 0x1
-    bl InputCmd_Dtor
-    b KartItem_Dtor_L_8004E558
-    addi r3, r31, 0x7c
-    bl __unexpected
-    KartItem_Dtor_L_8004E554:
-    b KartItem_Dtor_L_8004E554
-    KartItem_Dtor_L_8004E558:
-    addic. r0, r29, 0x2c
-    beq KartItem_Dtor_L_8004E57C
-    lwz r3, 0x2c(r29)
-    li r4, 0x1
-    bl KartDriver_Dtor
-    b KartItem_Dtor_L_8004E57C
-    addi r3, r31, 0x64
-    bl __unexpected
-    KartItem_Dtor_L_8004E578:
-    b KartItem_Dtor_L_8004E578
-    KartItem_Dtor_L_8004E57C:
-    addic. r0, r29, 0x28
-    beq KartItem_Dtor_L_8004E5A0
-    lwz r3, 0x28(r29)
-    li r4, 0x1
-    bl CarObject_Dtor
-    b KartItem_Dtor_L_8004E5A0
-    addi r3, r31, 0x4c
-    bl __unexpected
-    KartItem_Dtor_L_8004E59C:
-    b KartItem_Dtor_L_8004E59C
-    KartItem_Dtor_L_8004E5A0:
-    addic. r0, r29, 0x24
-    beq KartItem_Dtor_L_8004E5C4
-    lwz r3, 0x24(r29)
-    li r4, 0x1
-    bl AudioChannel_DtorWithSeStop
-    b KartItem_Dtor_L_8004E5C4
-    addi r3, r31, 0x34
-    bl __unexpected
-    KartItem_Dtor_L_8004E5C0:
-    b KartItem_Dtor_L_8004E5C0
-    KartItem_Dtor_L_8004E5C4:
-    addi r3, r29, 0xc
-    li r4, 0x0
-    bl dtor_800AA888
-    mr r3, r29
-    li r4, 0x0
-    bl dtor_80060024
-    extsh. r0, r30
-    ble KartItem_Dtor_L_8004E5EC
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    KartItem_Dtor_L_8004E5EC:
-    mr r10, r31
-    lwz r31, 0x14c(r31)
-    mr r3, r29
-    lwz r30, 0x148(r10)
-    lwz r29, 0x144(r10)
-    lwz r28, 0x140(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+/* KartItem_Dtor: native C++ (exceptions on). Owned pointees whose deleting
+ * dtors are renamed in tools/extab_user_renames.json (__dt__13OwnedXXXXFv).
+ * The owned-pointer member holders are plain (non-template) structs on
+ * purpose: a template instantiation makes MWCC defer KartItem_Dtor past the
+ * following asm CarObject_Init, which breaks the link order. */
+#pragma cplusplus on
+#pragma exceptions on
+struct Owned8005278C {
+    ~Owned8005278C();
+};
+struct Owned800528B0 {
+    ~Owned800528B0();
+};
+struct Owned8005292C {
+    ~Owned8005292C();
+};
+struct Owned80052A58 {
+    ~Owned80052A58();
+};
+struct Owned80052AD4 {
+    ~Owned80052AD4();
+};
+struct Owned80052B50 {
+    ~Owned80052B50();
+};
+struct Owned80052BCC {
+    ~Owned80052BCC();
+};
+struct Owned80052C48 {
+    ~Owned80052C48();
+};
+struct Owned80052CC4 {
+    ~Owned80052CC4();
+};
+struct Owned80052D40 {
+    ~Owned80052D40();
+};
+struct KartItemSubHolder {
+    void *sub; /* 0x0: KartItemSubObject */
+    ~KartItemSubHolder() throw() {
+        KartItemSubObject_Dtor(sub, 1);
+    }
+};
+struct KartItemSubOwned {
+    char pad_0x0[0x4];
+    KartItemSubHolder subHolder; /* 0x4 */
+};
+
+struct KartItemPlain {
+    char opaque;
+};
+/* owned-pointer members (auto_ptr-like, inline throw() dtor) */
+struct KartItemOwn_Owned80052D40 {
+    Owned80052D40 *p;
+    ~KartItemOwn_Owned80052D40() throw() { delete p; }
+};
+struct KartItemOwn_Owned80052CC4 {
+    Owned80052CC4 *p;
+    ~KartItemOwn_Owned80052CC4() throw() { delete p; }
+};
+struct KartItemOwn_Owned80052C48 {
+    Owned80052C48 *p;
+    ~KartItemOwn_Owned80052C48() throw() { delete p; }
+};
+struct KartItemOwn_Owned80052BCC {
+    Owned80052BCC *p;
+    ~KartItemOwn_Owned80052BCC() throw() { delete p; }
+};
+struct KartItemOwn_Owned80052B50 {
+    Owned80052B50 *p;
+    ~KartItemOwn_Owned80052B50() throw() { delete p; }
+};
+struct KartItemOwn_Owned80052AD4 {
+    Owned80052AD4 *p;
+    ~KartItemOwn_Owned80052AD4() throw() { delete p; }
+};
+struct KartItemOwn_Owned80052A58 {
+    Owned80052A58 *p;
+    ~KartItemOwn_Owned80052A58() throw() { delete p; }
+};
+struct KartItemOwn_KartItemSubOwned {
+    KartItemSubOwned *p;
+    ~KartItemOwn_KartItemSubOwned() throw() { delete p; }
+};
+struct KartItemOwn_Owned8005292C {
+    Owned8005292C *p;
+    ~KartItemOwn_Owned8005292C() throw() { delete p; }
+};
+struct KartItemOwn_Owned800528B0 {
+    Owned800528B0 *p;
+    ~KartItemOwn_Owned800528B0() throw() { delete p; }
+};
+struct KartItemOwn_KartItemPlain {
+    KartItemPlain *p;
+    ~KartItemOwn_KartItemPlain() throw() { delete p; }
+};
+struct KartItemOwn_Owned8005278C {
+    Owned8005278C *p;
+    ~KartItemOwn_Owned8005278C() throw() { delete p; }
+};
+struct KartItemListEq {
+};
+struct KartItemListKey {
+    KartItemListEq op;
+    void *val;
+    KartItemListKey(const KartItemListEq &o, void *v) : op(o), val(v) {}
+};
+struct KartItemObj {
+    void *vptr;                                 /* 0x0 */
+    char responderState[8];                     /* 0x4 */
+    void *warpVptr;                             /* 0xc */
+    char pad_0x10[0x10];                        /* 0x10 */
+    unsigned char f20;                          /* 0x20 */
+    unsigned char f21;                          /* 0x21 */
+    KartItemOwn_Owned80052D40 audio;           /* 0x24 */
+    KartItemOwn_Owned80052CC4 car;             /* 0x28 */
+    KartItemOwn_Owned80052C48 driver;          /* 0x2c */
+    KartItemOwn_Owned80052BCC input;           /* 0x30 */
+    KartItemOwn_Owned80052B50 visual;          /* 0x34 */
+    KartItemOwn_Owned80052AD4 camera;          /* 0x38 */
+    KartItemOwn_Owned80052A58 fade;            /* 0x3c */
+    KartItemOwn_KartItemSubOwned sub;             /* 0x40 */
+    KartItemOwn_Owned8005292C steering;        /* 0x44 */
+    KartItemOwn_Owned800528B0 pending;         /* 0x48 */
+    KartItemOwn_KartItemPlain plain4c;         /* 0x4c */
+    KartItemOwn_KartItemPlain plain50;         /* 0x50 */
+    KartItemOwn_Owned8005278C owned54;         /* 0x54 */
+    void *probe58;                              /* 0x58 */
+    void *probe5c;                              /* 0x5c */
+};
+struct KartItemCarList {
+    virtual void Release(int);
+    char list[0xc];
+};
+typedef void (*KartItemRemoveFn)(void *, KartItemListKey);
+#define gCarList (*(KartItemCarList **)&g_carObjectList)
+extern "C" void *KartItem_Dtor(KartItemObj *self, short flag) { /* 0x8004E2B0 size:0x368 */
+    if (self) {
+        self->vptr = (void *)lbl_803F75F8;
+        self->warpVptr = (char *)lbl_803F75F8 + 0x10;
+        g_playerCarObject = 0;
+        if (self->f20 == 1 && self->f21 == 0 && self->f20 != 0) {
+            StrPcb_SetCmdByte2d(StrPcb_GetInstance(), 0x28);
+            StrPcb_SetCmdByte2e(StrPcb_GetInstance(), 0x1e);
+            StrPcb_SetCounterField14(StrPcb_GetInstance(), 0);
+            StrPcb_SetCmdByte2f(StrPcb_GetInstance(), 0);
+        }
+        {
+            void *me = self;
+            char *l = (gCarList == 0 ? (KartItemCarList *)0 : gCarList)->list;
+            KartItemListEq eq;
+            KartItemListKey key(eq, me);
+            ((KartItemRemoveFn)StlList_RemoveByValueField)(l, key);
+        }
+        {
+            KartItemCarList *l = gCarList;
+            if ((l == 0 ? (KartItemCarList *)0 : l) != 0) {
+                if (--g_carObjectCount <= 0) {
+                    if (l) {
+                        l->Release(1);
+                    }
+                    gCarList = 0;
+                }
+            }
+        }
+        ((void (*)(void *, int))dtor_80209180)(self->probe58, 1);
+        ((void (*)(void *, int))dtor_80209180)(self->probe5c, 1);
+        self->owned54.~KartItemOwn_Owned8005278C();
+        self->plain50.~KartItemOwn_KartItemPlain();
+        self->plain4c.~KartItemOwn_KartItemPlain();
+        self->pending.~KartItemOwn_Owned800528B0();
+        self->steering.~KartItemOwn_Owned8005292C();
+        self->sub.~KartItemOwn_KartItemSubOwned();
+        self->fade.~KartItemOwn_Owned80052A58();
+        self->camera.~KartItemOwn_Owned80052AD4();
+        self->visual.~KartItemOwn_Owned80052B50();
+        self->input.~KartItemOwn_Owned80052BCC();
+        self->driver.~KartItemOwn_Owned80052C48();
+        self->car.~KartItemOwn_Owned80052CC4();
+        self->audio.~KartItemOwn_Owned80052D40();
+        ((void (*)(void *, int))dtor_800AA888)(&self->warpVptr, 0);
+        ((void (*)(void *, int))dtor_80060024)(self, 0);
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
+#undef gCarList
+#pragma exceptions reset
+#pragma cplusplus off
 
 asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     nofralloc
@@ -7340,7 +7446,7 @@ int ItemEffect_GenericHandler(ItemEffectTable *self, int itemId, void *itemObj, 
         }
         return 2;
     }
-    desc = lbl_802EBF0C;
+    desc = (ItemEffectDesc *)lbl_802EBF0C;
     for (n = 0; n < 0x3a; n++) {
         if ((unsigned char)(desc->itemId == itemId) == 1) {
             if (ItemStateGuard_IsActive(self->owner->stateBlock->guard) == 1 ||
@@ -9423,9 +9529,6 @@ void *dtor_80052744(void *self, short flag) { /* 0x80052744 size:0x48 */
  */
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned8005278C {
-    ~Owned8005278C();
-};
 struct Holder8005278C {
     Owned8005278C *p; /* 0x0 */
     ~Holder8005278C() throw();
@@ -9464,9 +9567,6 @@ void *dtor_8005285C(void *self, short flag) { /* 0x8005285C size:0x54 */
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned800528B0 {
-    ~Owned800528B0();
-};
 struct Holder800528B0 {
     Owned800528B0 *p; /* 0x0 */
     ~Holder800528B0() throw();
@@ -9480,9 +9580,6 @@ Holder800528B0::~Holder800528B0() throw() {
 /* dtor_8005292C: EffectSteering owned-pointer holder deleting dtor. */
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned8005292C {
-    ~Owned8005292C();
-};
 struct Holder8005292C {
     Owned8005292C *p; /* 0x0 */
     ~Holder8005292C() throw();
@@ -9522,9 +9619,6 @@ extern "C" void *dtor_800529A8(void *self, short flag) throw() { /* 0x800529A8 s
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned80052A58 {
-    ~Owned80052A58();
-};
 struct Holder80052A58 {
     Owned80052A58 *p; /* 0x0 */
     ~Holder80052A58() throw();
@@ -9538,9 +9632,6 @@ Holder80052A58::~Holder80052A58() throw() {
 /* dtor_80052AD4: PlayCamera owned-pointer holder deleting dtor. */
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned80052AD4 {
-    ~Owned80052AD4();
-};
 struct Holder80052AD4 {
     Owned80052AD4 *p; /* 0x0 */
     ~Holder80052AD4() throw();
@@ -9553,9 +9644,6 @@ Holder80052AD4::~Holder80052AD4() throw() {
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned80052B50 {
-    ~Owned80052B50();
-};
 struct Holder80052B50 {
     Owned80052B50 *p; /* 0x0 */
     ~Holder80052B50() throw();
@@ -9568,9 +9656,6 @@ Holder80052B50::~Holder80052B50() throw() {
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned80052BCC {
-    ~Owned80052BCC();
-};
 struct Holder80052BCC {
     Owned80052BCC *p; /* 0x0 */
     ~Holder80052BCC() throw();
@@ -9584,9 +9669,6 @@ Holder80052BCC::~Holder80052BCC() throw() {
 /* dtor_80052C48: KartDriver owned-pointer holder deleting dtor. */
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned80052C48 {
-    ~Owned80052C48();
-};
 struct Holder80052C48 {
     Owned80052C48 *p; /* 0x0 */
     ~Holder80052C48() throw();
@@ -9599,9 +9681,6 @@ Holder80052C48::~Holder80052C48() throw() {
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned80052CC4 {
-    ~Owned80052CC4();
-};
 struct Holder80052CC4 {
     Owned80052CC4 *p; /* 0x0 */
     ~Holder80052CC4() throw();
@@ -9614,9 +9693,6 @@ Holder80052CC4::~Holder80052CC4() throw() {
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned80052D40 {
-    ~Owned80052D40();
-};
 struct Holder80052D40 {
     Owned80052D40 *p; /* 0x0 */
     ~Holder80052D40() throw();

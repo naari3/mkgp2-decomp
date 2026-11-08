@@ -1,9 +1,5 @@
 
 /* sdata symbols referenced from asm */
-extern unsigned char lbl_806D32CC[5];
-extern unsigned char lbl_806D32DC[3];
-extern unsigned char lbl_806D32E0[6];
-extern unsigned char lbl_806D32EC[3];
 /* === extracted from auto_CardTaskManager_Rend_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -11,16 +7,8 @@ extern unsigned char lbl_806D32EC[3];
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void TexMgr_DrawText_Format_Variant2();
-extern void fn_8011F994();
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D32D4;
-extern unsigned int lbl_806D32D8;
-extern unsigned int lbl_806D32E8;
-extern unsigned int lbl_806D32F0;
-extern unsigned int lbl_806D32F4;
-extern unsigned int lbl_806D32F8;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -28,16 +16,10 @@ extern unsigned int lbl_806D32F8;
 extern unsigned char lbl_806D3290[], lbl_806D3294[], lbl_806D3298[], lbl_806D32A0[], lbl_806D32A4[];
 /* owned pool .rodata 0x80312850..0x80312DEC (tools/data2c.py) */
 #pragma force_active on
-const void *const lbl_80312850[9] = {
-    (void *)0x43484543,
-    (void *)0x4B494E47,
-    (void *)0x2E2E2E00,
-    (void *)&lbl_806D3290,
-    (void *)&lbl_80312850,
-    (void *)&lbl_806D3294,
-    (void *)&lbl_806D3298,
-    (void *)&lbl_806D3290,
-    (void *)&lbl_806D3290
+const char lbl_80312850[12] = "CHECKING...";
+static const char *const lbl_8031285C[6] = {
+    (const char *)lbl_806D3290, lbl_80312850, (const char *)lbl_806D3294,
+    (const char *)lbl_806D3298, (const char *)lbl_806D3290, (const char *)lbl_806D3290
 };
 const unsigned int lbl_80312874[4] = { 0x975C917A, 0x82B582C8, 0x82A297E1, 0x8A4F0000 };
 const char lbl_80312884[] = "Program error";
@@ -105,7 +87,7 @@ const unsigned int lbl_80312C38[6] = { 0x834A8381, 0x838982CD, 0x8E679770, 0x82C
 const char lbl_80312C50[] = "CAMERA DISABLED";
 const unsigned int lbl_80312C60[14] = { 0x83418343, 0x83658380, 0x837B835E, 0x839382DC, 0x82BD82CD, 0x91CE90ED, 0x834C8383, 0x8393835A, 0x838B837B, 0x835E8393, 0x82F0899F, 0x82B582C4, 0x89BA82B3, 0x82A20000 };
 const char lbl_80312C98[] = "Press Item button or Versus Cancel Button";
-const void *const lbl_80312CC4[74] = {
+const void *const lbl_80312CC4[64] = {
     (void *)0x43540000,
     (void *)0x43800000,
     (void *)&lbl_803128CC,
@@ -169,183 +151,95 @@ const void *const lbl_80312CC4[74] = {
     (void *)0xFF,
     (void *)0xFF,
     (void *)0xFF,
-    (void *)0xFF,
-    (void *)0x44657669,
-    (void *)0x63652043,
-    (void *)0x6865636B,
-    (void *)0x0,
-    (void *)0x4D4B3231,
-    (void *)0x30302D31,
-    (void *)0x2D4E412D,
-    (void *)0x4D505230,
-    (void *)0x2D413336,
-    (void *)0x0
+    (void *)0xFF
 };
+static const char lbl_80312DC4[] = "Device Check";
+static const char lbl_80312DD4[] = "MK2100-1-NA-MPR0-A36";
 #pragma force_active reset
-extern unsigned int lbl_803FE7E8[];
 
-/* --- function index (1 fns, .text 0x80089C58..0x80089E6C) ---
- * [  0] 0x80089C58 size:0x214   global CardTaskManager_RenderOverlay
- */
-
-/* --- forward decls --- */
-asm void CardTaskManager_RenderOverlay(void);
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const unsigned char extab_CardTaskManager_RenderOverlay[8] = {
-    0x50, 0x4A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+#pragma cplusplus on
+class CardTask {
+public:
+    virtual unsigned char IsDone(void);
+    virtual void v0C(void);
+    virtual void v10(void);
+    virtual void Render(void);
+    int kind;
 };
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CardTaskManager_RenderOverlay = {
-    (void *)&CardTaskManager_RenderOverlay, 0x00000214, (void *)extab_CardTaskManager_RenderOverlay
+struct CardTaskEntry {
+    CardTask *task;
+    int desc;
 };
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void CardTaskManager_RenderOverlay(void) { /* 0x80089C58 size:0x214 */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    stw r0, 0x54(r1)
-    stfd f31, 0x40(r1)
-    psq_st f31, 0x48(r1), 0, 0
-    stmw r22, 0x18(r1)
-    mr r25, r3
-    lis r3, lbl_80312850@ha
-    lwz r4, 0x8(r25)
-    addi r30, r3, lbl_80312850@l
-    lwz r0, 0x4(r25)
-    cmpw r4, r0
-    bge CardTaskManager_RenderOverlay_L_80089D20
-    lwz r3, 0x0(r25)
-    slwi r0, r4, 3
-    lwzx r23, r3, r0
-    cmplwi r23, 0x0
-    beq CardTaskManager_RenderOverlay_L_80089D20
-    lwz r0, 0xc(r25)
-    la r5, lbl_806D32CC(r2)  /* lbl_806D32CC */
-    lfs f1, lbl_806D32D4(r2)
-    li r3, 0x1
-    srawi r0, r0, 4
-    lfs f2, lbl_806D32D8(r2)
-    clrlwi r0, r0, 30
-    la r4, lbl_806D32DC(r2)  /* lbl_806D32DC */
-    lbzx r5, r5, r0
-    extsb r5, r5
-    creqv 6, 6, 6
-    bl TexMgr_DrawText_Format_Variant2
-    mr r3, r23
-    lwz r12, 0x0(r23)
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne CardTaskManager_RenderOverlay_L_80089D20
-    mr r3, r23
-    lwz r12, 0x0(r23)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    li r23, 0x0
-    CardTaskManager_RenderOverlay_L_80089D08:
-    subfic r3, r23, 0x7
-    bl fn_8011F994
-    addi r23, r23, 0x1
-    cmpwi r23, 0x8
-    blt CardTaskManager_RenderOverlay_L_80089D08
-    b CardTaskManager_RenderOverlay_L_80089E50
-    CardTaskManager_RenderOverlay_L_80089D20:
-    lis r3, lbl_803FE7E8@ha
-    lfd f31, lbl_806D32F8(r2)
-    addi r31, r3, lbl_803FE7E8@l
-    addi r23, r30, 0xc
-    li r27, 0x0
-    li r29, 0x0
-    li r28, 0x3c
-    lis r24, 0x4330
-    b CardTaskManager_RenderOverlay_L_80089E44
-    CardTaskManager_RenderOverlay_L_80089D44:
-    lwz r3, 0x0(r25)
-    lwz r0, 0x8(r25)
-    add r3, r3, r29
-    lwz r26, 0x0(r3)
-    cmpw r27, r0
-    lwz r3, 0x4(r3)
-    lwz r0, 0x4(r26)
-    slwi r3, r3, 3
-    add r3, r31, r3
-    slwi r0, r0, 2
-    lwz r5, 0x4(r3)
-    lwzx r22, r23, r0
-    ble CardTaskManager_RenderOverlay_L_80089D7C
-    la r22, lbl_806D32E0(r2)  /* lbl_806D32E0 */
-    CardTaskManager_RenderOverlay_L_80089D7C:
-    xoris r0, r28, 0x8000
-    stw r24, 0x8(r1)
-    lfs f1, lbl_806D32E8(r2)
-    li r3, 0x1
-    stw r0, 0xc(r1)
-    la r4, lbl_806D32EC(r2)  /* lbl_806D32EC */
-    lfd f0, 0x8(r1)
-    fsubs f2, f0, f31
-    creqv 6, 6, 6
-    bl TexMgr_DrawText_Format_Variant2
-    xoris r0, r28, 0x8000
-    stw r24, 0x10(r1)
-    lfs f1, lbl_806D32F0(r2)
-    mr r5, r22
-    stw r0, 0x14(r1)
-    li r3, 0x1
-    la r4, lbl_806D32EC(r2)  /* lbl_806D32EC */
-    lfd f0, 0x10(r1)
-    fsubs f2, f0, f31
-    creqv 6, 6, 6
-    bl TexMgr_DrawText_Format_Variant2
-    lfs f1, lbl_806D32F4(r2)
-    addi r4, r30, 0x574
-    li r3, 0x1
-    fmr f2, f1
-    creqv 6, 6, 6
-    bl TexMgr_DrawText_Format_Variant2
-    lfs f1, lbl_806D32F4(r2)
-    addi r4, r30, 0x584
-    lfs f2, lbl_806D32D8(r2)
-    li r3, 0x1
-    creqv 6, 6, 6
-    bl TexMgr_DrawText_Format_Variant2
-    lwz r0, 0x8(r25)
-    cmpw r27, r0
-    bne CardTaskManager_RenderOverlay_L_80089E20
-    mr r3, r26
-    lwz r12, 0x0(r26)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    CardTaskManager_RenderOverlay_L_80089E20:
-    li r22, 0x0
-    CardTaskManager_RenderOverlay_L_80089E24:
-    mr r3, r22
-    bl fn_8011F994
-    addi r22, r22, 0x1
-    cmpwi r22, 0x8
-    blt CardTaskManager_RenderOverlay_L_80089E24
-    addi r29, r29, 0x8
-    addi r28, r28, 0x26
-    addi r27, r27, 0x1
-    CardTaskManager_RenderOverlay_L_80089E44:
-    lwz r0, 0x4(r25)
-    cmpw r27, r0
-    blt CardTaskManager_RenderOverlay_L_80089D44
-    CardTaskManager_RenderOverlay_L_80089E50:
-    psq_l f31, 0x48(r1), 0, 0
-    lfd f31, 0x40(r1)
-    lmw r22, 0x18(r1)
-    lwz r0, 0x54(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
+struct CardTaskManager {
+    CardTaskEntry *entries;
+    int count;
+    int current;
+    int frame;
+};
+
+struct CardTaskDesc {
+    int id;
+    const char *text;
+};
+
+extern "C" {
+extern void TexMgr_DrawText_Format_Variant2(int layer, float x, float y, const char *fmt, ...);
+extern void fn_8011F994(int layer);
+
+extern const char lbl_806D32CC[5]; /* spinner chars */
+extern const char lbl_806D32DC[3]; /* "%c" */
+extern const char lbl_806D32E0[6];
+extern const char lbl_806D32EC[3]; /* "%s" */
+extern const float lbl_806D32D4;
+extern const float lbl_806D32D8;
+extern const float lbl_806D32E8;
+extern const float lbl_806D32F0;
+extern float lbl_806D32F4;
+extern CardTaskDesc lbl_803FE7E8[];
+
+void CardTaskManager_RenderOverlay(CardTaskManager *m);
 }
 
+#pragma exceptions on
+#pragma use_lmw_stmw on
+void CardTaskManager_RenderOverlay(CardTaskManager *m) {
+    if (m->current < m->count) {
+        CardTask *t = m->entries[m->current].task;
+        if (t != 0) {
+            TexMgr_DrawText_Format_Variant2(1, lbl_806D32D4, lbl_806D32D8, lbl_806D32DC,
+                                            lbl_806D32CC[(m->frame >> 4) % 4U]);
+            if (t->IsDone() == 1) {
+                t->Render();
+                for (int i = 0; i < 8; i++) {
+                    fn_8011F994(7 - i);
+                }
+                return;
+            }
+        }
+    }
+
+    for (int i = 0; i < m->count; i++) {
+        CardTaskEntry *e = &m->entries[i];
+        CardTask *t = e->task;
+        const char *desc = lbl_803FE7E8[e->desc].text;
+        const char *name = lbl_8031285C[t->kind];
+        if (i > m->current) {
+            name = lbl_806D32E0;
+        }
+        TexMgr_DrawText_Format_Variant2(1, lbl_806D32E8, 0x3C + i * 0x26, lbl_806D32EC, desc);
+        TexMgr_DrawText_Format_Variant2(1, lbl_806D32F0, 0x3C + i * 0x26, lbl_806D32EC, name);
+        TexMgr_DrawText_Format_Variant2(1, lbl_806D32F4, lbl_806D32F4, lbl_80312DC4);
+        TexMgr_DrawText_Format_Variant2(1, lbl_806D32F4, lbl_806D32D8, lbl_80312DD4);
+        if (i == m->current) {
+            t->Render();
+        }
+        for (int j = 0; j < 8; j++) {
+            fn_8011F994(j);
+        }
+    }
+}
+#pragma use_lmw_stmw reset
+#pragma exceptions reset
+#pragma cplusplus reset

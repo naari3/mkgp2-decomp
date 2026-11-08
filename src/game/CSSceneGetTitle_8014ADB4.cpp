@@ -511,7 +511,7 @@ extern unsigned int lbl_806D7ED4;
 extern unsigned int lbl_806D7ED8;
 extern unsigned int lbl_806D7EDC;
 extern unsigned int lbl_806D7EE0;
-extern unsigned int lbl_806D7EE4;
+extern float lbl_806D7EE4;
 void Sprite_Destroy(void *p, int flag);
 extern void clRom_PurgeAll();
 extern void fn_8012094C();
@@ -550,7 +550,7 @@ extern unsigned char lbl_806D17F2;
 extern unsigned int lbl_806D7EE8;
 extern unsigned int lbl_806D7EEC;
 extern unsigned int lbl_806D7EF0;
-extern unsigned int lbl_806D7EF4;
+extern const float lbl_806D7EF4;
 extern unsigned int lbl_806D7EF8;
 extern unsigned int g_playerData[];
 extern void dtor_8007D0D4();
@@ -2016,3 +2016,188 @@ CSSceneGetTitle::CSSceneGetTitle() { /* 0x8014C53C size:0x938 */
 }
 #pragma use_lmw_stmw reset
 #pragma opt_dead_assignments reset
+
+/* ---- 0x8014CE74..0x8014D540: result-screen 3D part holders (was
+ * game/CSPartsHolders.c, merged so fn_8014D038 reaches sPumpPair* /
+ * sPumpFile through the section anchor, docs/regalloc_patterns.md §13). */
+#pragma use_lmw_stmw on
+
+void *operator new(unsigned long);
+void operator delete(void *);
+
+struct CSPVObj {
+    virtual ~CSPVObj();
+};
+
+struct Part3D;
+
+extern "C" {
+extern void Frame_PostDrawOverlay(void);
+extern void Frame_UpdatePerFrameState(void);
+}
+
+
+struct PairHolder {
+    int arg;
+    Part3D *parts[2];
+    ~PairHolder();
+};
+
+struct TripleHolder {
+    int arg;
+    Part3D *parts[3];
+    ~TripleHolder();
+};
+
+struct Runner {
+    virtual void m08();
+    virtual void m0C();
+    virtual void m10();
+    virtual void m14();
+    virtual void m18();
+};
+
+struct RunnerOwner {
+    int m0;
+    int m4;
+    Runner *runner;
+};
+
+struct ResultScene {
+    char pad[0x50];
+    ResultScene();
+};
+
+extern "C" {
+TripleHolder *fn_8014D344(TripleHolder *h, int arg, float x, float y, float s);
+
+
+
+}
+
+
+extern "C" void fn_8014CE74(CSPVObj *p) {
+    delete p;
+}
+
+extern "C" CSSceneGetTitle *fn_8014CEAC(void) {
+    return new CSSceneGetTitle();
+}
+
+extern "C" void fn_8014CEE8(PairHolder *h, float t) {
+    int i;
+
+    for (i = 0; i < 2; i++) {
+        fn_8013D4B0(h->parts[i], t);
+    }
+}
+
+extern "C" void fn_8014CF44(PairHolder *h) {
+    int i;
+
+    for (i = 0; i < 2; i++) {
+        fn_8013DAC8(h->parts[i], h->arg);
+    }
+}
+
+extern "C" void fn_8014CFA0(void) {
+}
+
+PairHolder::~PairHolder() {
+    int i;
+
+    for (i = 0; i < 2; i++) {
+        delete (CSPVObj *)parts[i];
+    }
+}
+
+extern "C" ObjPair *fn_8014D038(ObjPair *h, int arg, float x, float y, float s) {
+    int i;
+    h->f0 = arg;
+    h->objs[0] = new GtModel(sPumpFile, 1);
+    h->objs[1] = new GtModel(sPumpStandFile, 1);
+    for (i = 0; i < 2; i++) {
+        const GtVec &p = sPumpPairPos[i];
+        fn_8013D738(h->objs[i], 0.0f, 1.0f);
+        fn_8013D660(h->objs[i], x, y);
+        GtSetPos(h->objs[i], p, s);
+        fn_8013D608(h->objs[i], s, s, s);
+        fn_8013D59C(h->objs[i], 0.017453292f * sPumpPairRot.x, 0.017453292f * sPumpPairRot.y, 0.017453292f * sPumpPairRot.z);
+    }
+    return h;
+}
+
+extern "C" void fn_8014D1E0(TripleHolder *h, float a) {
+    int i;
+
+    for (i = 0; i < 3; i++) {
+        fn_8013D50C(h->parts[i], 2.0f, 2.0f, 2.0f, a);
+    }
+}
+
+extern "C" void fn_8014D250(TripleHolder *h) {
+    int i;
+
+    for (i = 0; i < 3; i++) {
+        fn_8013DAC8(h->parts[i], h->arg);
+    }
+}
+
+extern "C" void fn_8014D2AC(void) {
+}
+
+TripleHolder::~TripleHolder() {
+    int i;
+
+    for (i = 0; i < 3; i++) {
+        delete (CSPVObj *)parts[i];
+    }
+}
+
+struct PreviewPart {
+    char pad[0x20];
+    PreviewPart(void *resource, unsigned char flag);
+};
+struct PartVec { float x, y, z; };
+
+/* Three-model holder ctor body: one preview model per slot, placed from
+ * this area's pooled layout tables (positions, rotations in degrees, scales).
+ * fakematch (permuter): the slot cursor `c` walks the holder 4 bytes at a
+ * time so that the parts pointer gets the target's register; the natural code
+ * is `h->parts[i]` with i as the loop index. */
+extern "C" TripleHolder *fn_8014D344(TripleHolder *h, int arg, float x, float y, float s) {
+    float *scale = (float *)((char *)lbl_80362D90 + 0xEB8);
+    PartVec *pos = (PartVec *)((char *)lbl_80362D90 + 0xE70);
+    PartVec *rot = (PartVec *)((char *)lbl_80362D90 + 0xE94);
+    TripleHolder *c = h;
+    float k;
+    int i;
+
+    h->arg = arg;
+    k = lbl_806D7EF4;
+    for (i = 0; i < 3; i++) {
+        c->parts[0] = (Part3D *)new PreviewPart((void *)ItemRes_LookupByKey_Thunk(0x32), 1);
+        fn_8013D738(c->parts[0], lbl_806D7E30, lbl_806D7E2C);
+        fn_8013D660(c->parts[0], x, y);
+        fn_8013D634(c->parts[0], pos->x * s, pos->y * s, pos->z * s);
+        fn_8013D608(c->parts[0], *scale * s, *scale * s, *scale * s);
+        fn_8013D59C(c->parts[0], k * rot->x, k * rot->y, k * rot->z);
+        fn_8013D50C(c->parts[0], lbl_806D7EE4, lbl_806D7EE4, lbl_806D7EE4, lbl_806D7E30);
+        scale++;
+        pos++;
+        rot++;
+        c = (TripleHolder *)&c->parts[0];
+    }
+    return h;
+}
+
+extern "C" void fn_8014D4B8(RunnerOwner *o) {
+    o->runner->m14();
+    HSD_StateInvalidate(-1);
+}
+
+extern "C" void fn_8014D4F0(RunnerOwner *o) {
+    o->runner->m10();
+    o->runner->m18();
+}
+#pragma use_lmw_stmw reset

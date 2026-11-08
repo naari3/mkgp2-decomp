@@ -1,3 +1,24 @@
+/* --- owned .data 0x8048E4E8..0x8048E548 (tools/own_data.py) --- */
+#pragma force_active on
+unsigned int lbl_8048E4E8[5] = { 0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x00000000 };
+unsigned int lbl_8048E4FC[5] = { 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
+void *lbl_8048E510[14] = {
+    (void *)0x0,
+    (void *)0x1,
+    (void *)0x280,
+    (void *)0x1E0,
+    (void *)0x280,
+    (void *)0x1E0,
+    (void *)&lbl_8048E4E8,
+    (void *)&lbl_8048E4FC,
+    (void *)0x0,
+    (void *)0x0,
+    (void *)0x3DCCCCCD,
+    (void *)0x47000000,
+    (void *)0x42262863,
+    (void *)0x3F970A3D
+};
+#pragma force_active reset
 /*
  * Orthographic HSD camera wrapper and its ref-counted singleton
  * (0x8013BA90..0x8013BE98). HSD_CObjSetFrustum takes (cobj, top, bottom, left,
@@ -39,7 +60,6 @@ extern float lbl_806D74B8;
 extern float lbl_806D74BC;
 extern unsigned int lbl_806D1550;
 extern CamView *lbl_806D1554;
-extern char lbl_8048E510[];
 
 extern float HSD_CObjGetNear(void *cobj);
 extern double atan(float x);

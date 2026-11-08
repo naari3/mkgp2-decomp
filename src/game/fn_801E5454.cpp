@@ -7,6 +7,8 @@ static inline unsigned long RingMaxSize() {
     unsigned long max = 0xFFFFFFFFUL;
     return RingMinRef(limit, max);
 }
+#pragma push
+#pragma opt_dead_assignments off
 extern "C" void fn_801E5454(SteeringRing *s, const int &value) {
     if(s->count==RingMaxSize()) throw std::length_error(lbl_803BD2DC);
     if(s->count<s->capacity) {
@@ -28,3 +30,5 @@ extern "C" void fn_801E5454(SteeringRing *s, const int &value) {
         s->head=0;
     }
 }
+#pragma pop
+

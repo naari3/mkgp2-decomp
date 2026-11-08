@@ -244,6 +244,40 @@ The same diagnosis covers PCBCheck_RecvLinkData, Item4SubFlame and
 KartFx_BoostExhaustRayTick (KartFx's struct copy from `resources->colors` is a
 copy from a static object), all onmokoworks-claimed.
 
+## 14. Target keeps `&local` in a saved GPR across a loop (4d79eae, 11-08)
+
+Target shape (PhysicsState_WallCollisionCheck, GC/2.6): `addi r31, r1, 0x3c`
+in the loop preheader, then `mr r4, r31` for each `Terrain_RaycastWall` call.
+Ours rematerialised `addi r4, r1, 0x3c` in the loop body. Moving the
+declaration out of the loop alone does nothing. What works is declaring the
+object before the loop and passing it through a pointer variable:
+
+    PhysicsCollisionVec endpoint;
+    PhysicsCollisionVec *ep = &endpoint;
+    for (...) { ...; Terrain_RaycastWall(self + 0x4C, ep, &hit, &n); }
+
+The same shape probably explains KartMovement_CollisionUpdate (`&contact` in
+r31, an onmokoworks claim). It did not help for `&rotation` inside the
+inlined `applyYaw`: a pointer local in an inline function gets propagated.
+
+## 15. Target keeps a list iterator in a stack slot (07fd50d, 11-08)
+
+Target shape (PreviewModel fn_8013D940, GC/1.3.2): `stw r0, 0x18(r1)` and
+`stw r0, 0x14(r1)` for begin, then every loop pass reloads and stores
+`0x14(r1)` around the virtual call. Plain iterator classes (with or without
+a user copy ctor, base class, or postfix ++) are always registerized. Two
+things put it on the stack:
+
+- A trivial `~iterator() {}` does it, but it also adds extab actions and
+  stops begin()/end() from inlining. Do not use it.
+- An iterator that is a derived class (`struct CIter : CBase`, ++ in the
+  base) passed BY VALUE to a static inline helper does it with no extab
+  change. Name the source object in the caller (`CIter b = ...;
+  RenderRange(b, end);`) to get the begin slot above the parameter slot.
+
+The `DoublyLinkedList_EraseRange` arg order (ret 0x8, first 0xc, last 0x10)
+then needed the erase in its own inline helper too (`EraseFrom(l, e)`).
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
