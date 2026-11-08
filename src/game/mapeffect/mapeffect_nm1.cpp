@@ -193,17 +193,21 @@ void clMapEffectDKC::Update() {
 }
 
 
+static inline float QuadCross(float edgeX, float posZ, float edgeZ, float posX) {
+    return edgeX * posZ - edgeZ * posX;
+}
+
 static unsigned char InQuad(const float *q, const Vec3f *p) {
-    if (((q[2] - q[0]) * (p->z - q[1]) - (q[3] - q[1]) * (p->x - q[0]) <= 0.0f) == 0) {
+    if ((QuadCross(q[2] - q[0], p->z - q[1], q[3] - q[1], p->x - q[0]) <= 0.0f) == 0) {
         return 0;
     }
-    if (((q[4] - q[2]) * (p->z - q[3]) - (q[5] - q[3]) * (p->x - q[2]) <= 0.0f) == 0) {
+    if ((QuadCross(q[4] - q[2], p->z - q[3], q[5] - q[3], p->x - q[2]) <= 0.0f) == 0) {
         return 0;
     }
-    if (((q[6] - q[4]) * (p->z - q[5]) - (q[7] - q[5]) * (p->x - q[4]) <= 0.0f) == 0) {
+    if ((QuadCross(q[6] - q[4], p->z - q[5], q[7] - q[5], p->x - q[4]) <= 0.0f) == 0) {
         return 0;
     }
-    if (((q[0] - q[6]) * (p->z - q[7]) - (q[1] - q[7]) * (p->x - q[6]) <= 0.0f) == 0) {
+    if ((QuadCross(q[0] - q[6], p->z - q[7], q[1] - q[7], p->x - q[6]) <= 0.0f) == 0) {
         return 0;
     }
     return 1;
