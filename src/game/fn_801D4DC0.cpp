@@ -10,7 +10,7 @@ extern signed char lbl_806DA110[4];
 extern char lbl_806DA114[4], lbl_806DA118[4], lbl_806DA0C0[8];
 }
 extern "C" int fn_801D4DC0(void *self, u8 *raw) {
-    const char *messages = lbl_8039C718;
+    const char *const messages = lbl_8039C718;
     u8 pack[0x18];
     unsigned int checksum;
     unsigned int value;
