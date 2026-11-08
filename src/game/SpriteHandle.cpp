@@ -264,7 +264,7 @@ extern void __dt__11ScopedTimerFv();
 void MemoryManager_Free(void *p);
 void TEXReleasePalette(void **pal);
 extern int lbl_8065B588[600];
-extern void fn_8011DC20();
+void fn_8011DC20(ResEntry *e);
 extern void ResourceSlot_Load();
 extern void Alloc();
 extern void FUN_8003b120();
@@ -302,13 +302,13 @@ void fn_8011F870(unsigned int mask);
 void fn_8011F994(int type);
 asm int SpriteHandle_CreateEx(int a, int b, int c);
 void fn_8012094C(void);
-asm void fn_80120A08(void);
+int fn_80120A08(int id);
 asm unsigned char PreloadResource(int id);
 void SpriteHandlePool_GC(void);
 void fn_80121210(void);
 void fn_801213EC(void);
 asm void fn_801217E8(SpriteHandle *s);
-void Stub_NoOp_80121c34(void);
+int Stub_NoOp_80121c34(int x);
 unsigned char fn_80121C38(ResCtrl *r);
 void fn_80121E10(ResCtrl *r);
 ResCtrl *ResCtrl_Init(ResCtrl *r);
@@ -1855,248 +1855,49 @@ extern "C" void fn_8012094C(void) {
     }
 }
 
-extern "C" asm void fn_80120A08(void) { /* 0x80120A08 size:0x378 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stmw r27, 0xc(r1)
-    mr r30, r3
-    bl ResourceTable_GetChainNextId
-    mr r31, r3
-    cmpwi r31, -0x1
-    beq fn_80120A08_L_80120C68
-    bl ResourceTable_GetChainNextId
-    mr r29, r3
-    cmpwi r29, -0x1
-    beq fn_80120A08_L_80120BA0
-    bl ResourceTable_GetChainNextId
-    cmpwi r3, -0x1
-    beq fn_80120A08_L_80120AD4
-    bl Stub_NoOp_80121c34
-    mr r28, r3
-    bl ResourceTable_GetChainNextId
-    cmpwi r3, -0x1
-    beq fn_80120A08_L_80120A60
-    bl fn_80120A08
-    fn_80120A08_L_80120A60:
-    mr r3, r28
-    bl Stub_NoOp_80121c34
-    bl ResourceTable_GetGroupKey
-    lis r4, lbl_806573E8@ha
-    li r0, 0x258
-    addi r4, r4, lbl_806573E8@l
-    li r6, 0x0
-    mtctr r0
-    fn_80120A08_L_80120A80:
-    lwz r0, 0x4(r4)
-    cmpw r3, r0
-    bne fn_80120A08_L_80120AC8
-    lis r3, lbl_8065B588@ha
-    slwi r5, r6, 2
-    addi r4, r3, lbl_8065B588@l
-    lwzx r3, r4, r5
-    subi r0, r3, 0x1
-    stwx r0, r4, r5
-    lwzx r0, r4, r5
-    cmpwi r0, 0x0
-    bne fn_80120A08_L_80120AD4
-    mulli r4, r6, 0x1c
-    lis r3, lbl_806573E8@ha
-    addi r0, r3, lbl_806573E8@l
-    add r3, r0, r4
-    bl fn_8011DC20
-    b fn_80120A08_L_80120AD4
-    fn_80120A08_L_80120AC8:
-    addi r4, r4, 0x1c
-    addi r6, r6, 0x1
-    bdnz fn_80120A08_L_80120A80
-    fn_80120A08_L_80120AD4:
-    mr r3, r29
-    bl ResourceTable_GetGroupKey
-    lis r4, lbl_806573E8@ha
-    li r0, 0x258
-    addi r4, r4, lbl_806573E8@l
-    li r6, 0x0
-    mtctr r0
-    fn_80120A08_L_80120AF0:
-    lwz r0, 0x4(r4)
-    cmpw r3, r0
-    bne fn_80120A08_L_80120B94
-    lis r3, lbl_8065B588@ha
-    slwi r5, r6, 2
-    addi r4, r3, lbl_8065B588@l
-    lwzx r3, r4, r5
-    subi r0, r3, 0x1
-    stwx r0, r4, r5
-    lwzx r0, r4, r5
-    cmpwi r0, 0x0
-    bne fn_80120A08_L_80120BA0
-    mulli r4, r6, 0x1c
-    lis r3, lbl_806573E8@ha
-    addi r0, r3, lbl_806573E8@l
-    add r28, r0, r4
-    lwz r0, 0x8(r28)
-    cmplwi r0, 0x0
-    beq fn_80120A08_L_80120B54
-    lwz r3, 0x0(r28)
-    bl Stub_NoOp_80121c34
-    cmpwi r3, 0x2b00
-    bge fn_80120A08_L_80120B54
-    addi r3, r28, 0x8
-    bl TEXReleasePalette
-    fn_80120A08_L_80120B54:
-    lwz r3, 0x10(r28)
-    bl MemoryManager_Free
-    lwz r3, 0x14(r28)
-    bl MemoryManager_Free
-    lwz r3, 0x18(r28)
-    bl MemoryManager_Free
-    li r3, 0x0
-    li r0, -0x1
-    stw r3, 0x0(r28)
-    stw r0, 0x4(r28)
-    stw r3, 0x8(r28)
-    stw r3, 0xc(r28)
-    stw r3, 0x10(r28)
-    stw r3, 0x14(r28)
-    stw r3, 0x18(r28)
-    b fn_80120A08_L_80120BA0
-    fn_80120A08_L_80120B94:
-    addi r4, r4, 0x1c
-    addi r6, r6, 0x1
-    bdnz fn_80120A08_L_80120AF0
-    fn_80120A08_L_80120BA0:
-    mr r3, r31
-    bl ResourceTable_GetGroupKey
-    lis r4, lbl_806573E8@ha
-    li r0, 0x258
-    addi r4, r4, lbl_806573E8@l
-    li r6, 0x0
-    mtctr r0
-    fn_80120A08_L_80120BBC:
-    lwz r0, 0x4(r4)
-    cmpw r3, r0
-    bne fn_80120A08_L_80120C5C
-    lis r3, lbl_8065B588@ha
-    slwi r5, r6, 2
-    addi r4, r3, lbl_8065B588@l
-    lwzx r3, r4, r5
-    subi r0, r3, 0x1
-    stwx r0, r4, r5
-    lwzx r0, r4, r5
-    cmpwi r0, 0x0
-    bne fn_80120A08_L_80120C68
-    mulli r4, r6, 0x1c
-    lis r3, lbl_806573E8@ha
-    addi r0, r3, lbl_806573E8@l
-    add r29, r0, r4
-    lwz r0, 0x8(r29)
-    cmplwi r0, 0x0
-    beq fn_80120A08_L_80120C1C
-    lwz r0, 0x0(r29)
-    cmpwi r0, 0x2b00
-    bge fn_80120A08_L_80120C1C
-    addi r3, r29, 0x8
-    bl TEXReleasePalette
-    fn_80120A08_L_80120C1C:
-    lwz r3, 0x10(r29)
-    bl MemoryManager_Free
-    lwz r3, 0x14(r29)
-    bl MemoryManager_Free
-    lwz r3, 0x18(r29)
-    bl MemoryManager_Free
-    li r3, 0x0
-    li r0, -0x1
-    stw r3, 0x0(r29)
-    stw r0, 0x4(r29)
-    stw r3, 0x8(r29)
-    stw r3, 0xc(r29)
-    stw r3, 0x10(r29)
-    stw r3, 0x14(r29)
-    stw r3, 0x18(r29)
-    b fn_80120A08_L_80120C68
-    fn_80120A08_L_80120C5C:
-    addi r4, r4, 0x1c
-    addi r6, r6, 0x1
-    bdnz fn_80120A08_L_80120BBC
-    fn_80120A08_L_80120C68:
-    mr r3, r30
-    bl ResourceTable_GetGroupKey
-    lis r4, lbl_806573E8@ha
-    li r0, 0x258
-    addi r4, r4, lbl_806573E8@l
-    li r6, 0x0
-    mtctr r0
-    fn_80120A08_L_80120C84:
-    lwz r0, 0x4(r4)
-    cmpw r3, r0
-    bne fn_80120A08_L_80120D5C
-    lis r3, lbl_8065B588@ha
-    slwi r5, r6, 2
-    addi r4, r3, lbl_8065B588@l
-    lwzx r3, r4, r5
-    subi r0, r3, 0x1
-    stwx r0, r4, r5
-    lwzx r0, r4, r5
-    cmpwi r0, 0x0
-    bne fn_80120A08_L_80120D54
-    mulli r28, r6, 0x1c
-    lis r3, lbl_806573E8@ha
-    addi r3, r3, lbl_806573E8@l
-    add r29, r3, r28
-    lwzu r0, 0x8(r29)
-    cmplwi r0, 0x0
-    beq fn_80120A08_L_80120CE8
-    add r3, r3, r28
-    lwz r0, 0x0(r3)
-    cmpwi r0, 0x2b00
-    bge fn_80120A08_L_80120CE8
-    addi r3, r3, 0x8
-    bl TEXReleasePalette
-    fn_80120A08_L_80120CE8:
-    lis r3, lbl_806573E8@ha
-    addi r0, r3, lbl_806573E8@l
-    add r30, r0, r28
-    lwzu r3, 0x10(r30)
-    bl MemoryManager_Free
-    lis r3, lbl_806573E8@ha
-    addi r0, r3, lbl_806573E8@l
-    add r31, r0, r28
-    lwzu r3, 0x14(r31)
-    bl MemoryManager_Free
-    lis r3, lbl_806573E8@ha
-    addi r0, r3, lbl_806573E8@l
-    add r27, r0, r28
-    lwzu r3, 0x18(r27)
-    bl MemoryManager_Free
-    lis r3, lbl_806573E8@ha
-    li r4, 0x0
-    addi r3, r3, lbl_806573E8@l
-    li r0, -0x1
-    stwx r4, r3, r28
-    add r3, r3, r28
-    stw r0, 0x4(r3)
-    stw r4, 0x0(r29)
-    stw r4, 0xc(r3)
-    stw r4, 0x0(r30)
-    stw r4, 0x0(r31)
-    stw r4, 0x0(r27)
-    fn_80120A08_L_80120D54:
-    li r3, 0x1
-    b fn_80120A08_L_80120D6C
-    fn_80120A08_L_80120D5C:
-    addi r4, r4, 0x1c
-    addi r6, r6, 0x1
-    bdnz fn_80120A08_L_80120C84
-    li r3, 0x0
-    fn_80120A08_L_80120D6C:
-    lmw r27, 0xc(r1)
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+/*
+ * fn_80120A08 is a self-recursive inline: MWCC expands it into itself three
+ * levels deep and only calls itself at the fourth. Stub_NoOp_80121c34 (an
+ * identity) and fn_8011DC20 (the slot release, strong copy in ResourceSlot.c)
+ * are inlines that hit the depth limit in the inner levels, so their weak
+ * out-of-line copies are emitted here and folded by the linker.
+ * exceptions off: fn_80120A08 keeps its manual extab entry above, whose
+ * address reference is also what makes MWCC emit the weak function at all.
+ */
+#pragma exceptions off
+#pragma use_lmw_stmw on
+extern "C" inline int Stub_NoOp_80121c34(int x) { return x; }
+extern "C" inline void fn_8011DC20(ResEntry *r) {
+    if (r->palette != 0 && Stub_NoOp_80121c34(r->id) < 0x2B00) {
+        TEXReleasePalette(&r->palette);
+    }
+    MemoryManager_Free(r->data0);
+    MemoryManager_Free(r->data1);
+    MemoryManager_Free(r->data2);
+    r->id = 0; r->prev = -1; r->palette = 0; r->fC = 0;
+    r->data0 = 0; r->data1 = 0; r->data2 = 0;
 }
+extern "C" inline int fn_80120A08(int id) {
+    int a = Stub_NoOp_80121c34(id);
+    int n = ResourceTable_GetChainNextId(a);
+    if (n != -1) {
+        fn_80120A08(n);
+    }
+    int key = ResourceTable_GetGroupKey(Stub_NoOp_80121c34(a));
+    ResEntry *e = lbl_806573E8;
+    for (int i = 0; i < 600; e++, i++) {
+        if (key == e->prev) {
+            lbl_8065B588[i]--;
+            if (lbl_8065B588[i] == 0) {
+                fn_8011DC20(&lbl_806573E8[i]);
+            }
+            return 1;
+        }
+    }
+    return 0;
+}
+#pragma use_lmw_stmw reset
+#pragma exceptions reset
 
 extern "C" asm unsigned char PreloadResource(int id) { /* 0x80120D80 size:0x3A0 */
     nofralloc
@@ -2698,8 +2499,6 @@ extern "C" asm void fn_801217E8(SpriteHandle *s) { /* 0x801217E8 size:0x44C */
     blr
 }
 
-extern "C" void Stub_NoOp_80121c34(void) {
-}
 
 static inline void SortPair(float &a, float &b) {
     if (a > b) {
