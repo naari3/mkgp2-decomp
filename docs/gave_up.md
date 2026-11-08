@@ -63,7 +63,6 @@ all of these.
 | `fn_8023AC14` | game/ItemSelectChoiceUpdate | 97.91 | register coloring | `notes/r4/fn_8023AC14_9889.diff` |
 | `fn_801D2F0C` | game/anon_801D2F0C | 99.91 | `PSMTXTrans` y/z argument registers | locals for y/z/x in both orders, `const &` placement, non-const placement member, Vec temp, GC/1.3..2.7: all identical |
 | `fn_80242E80` | game/fn_80242E80 | 99.40 | scheduling | |
-| `fn_80228394` | game/DNFlash_nm2 | 94.60 | sibling `fn_802281F0` matched with `extern const` tables + `dx` then `nx = -dx`; this one did not follow | |
 | `SpriteGroup_CreateOrInit` | game/SpriteGroupCreate | 95.65 | `lwz`/`stw` (and `li`) order | |
 | `fn_80245E6C` | game/HudFlow20Update | 98.92 | one `lwz` scheduled differently | |
 | `fn_80246988` | game/RaceDigitLap | 99.90 | `DigitPanel::SetPos` `lfs` order | |
