@@ -1,22 +1,26 @@
 #include "game/anon_80218F40_private.h"
 
+static inline void RotateMapPoint(float angle, float *px, float *pz, float *rx, float *rz) {
+    if (lbl_806DAF44 != angle) {
+        float s = sin(angle);
+        float c = cos(angle);
+        *rx = *px * c - *pz * s;
+        *rz = *px * s + *pz * c;
+    } else {
+        *rx = *px;
+        *rz = *pz;
+    }
+}
+
 static inline void WorldToMap(MinimapHud *h, float *ppx, float *ppz) {
     float &px = *ppx;
     float &pz = *ppz;
     const MapInfo *mi = &lbl_803C4C10[CupIndex()][h->variant];
-    float ang = lbl_806DAF54 * mi->rot;
+    float ang = mi->rot * lbl_806DAF54;
     ang += h->scale;
     float rx;
     float rz;
-    if (lbl_806DAF44 != ang) {
-        float s = sin(ang);
-        float c = cos(ang);
-        rx = px * c - pz * s;
-        rz = px * s + pz * c;
-    } else {
-        rx = px;
-        rz = pz;
-    }
+    RotateMapPoint(ang, ppx, ppz, &rx, &rz);
     rx *= mi->sx;
     rz *= mi->sy;
     if (rx < -500.0f) {
@@ -36,19 +40,42 @@ static inline void WorldToMap(MinimapHud *h, float *ppx, float *ppz) {
     pz = h->y + rz;
 }
 
+static inline int IsBattleCup() {
+    if (g_cupId == 7) {
+        return 1;
+    }
+    return 0;
+}
+
+static inline void SetMarkerVisible(int sprite, int battleCup, bool sameTeam) {
+    int visible = 0;
+    if (battleCup || sameTeam) {
+        visible = 1;
+    }
+    SpriteHandle_SetActiveFlag(sprite, visible);
+}
+
 void MinimapHud::UpdateMarkers() {
     float px = lbl_806DAF44;
     float pz = lbl_806DAF44;
-    int me = GetDisplayBufferIndex();
-    int cup7 = g_cupId == 7;
-    int myTeam = self->team;
-    for (int i = 7; i >= 0; i--) {
-        if (order[i] == -1) {
+    PathEntry *e;
+    int me;
+    int myTeam;
+    int cup7;
+    int pid;
+    int orderOffset;
+    int i;
+    int slot;
+    me = GetDisplayBufferIndex();
+    cup7 = IsBattleCup();
+    myTeam = self->team;
+    for (i = 7, orderOffset = 7 * sizeof(int); i >= 0; i--, orderOffset -= sizeof(int)) {
+        if (*(int *)((char *)order + orderOffset) == -1) {
             continue;
         }
-        PathEntry *e = PathManager_GetEntrySubStruct(path, i);
-        int slot = i + 3;
-        int pid = e->kart->playerId;
+        e = PathManager_GetEntrySubStruct(path, i);
+        slot = i + 3;
+        pid = e->kart->playerId;
         if (pid >= 0 && pid <= 3) {
             if (pid == me) {
                 slot = 2;
@@ -74,12 +101,7 @@ void MinimapHud::UpdateMarkers() {
         pz = m[11];
         WorldToMap(this, &px, &pz);
         fn_8011F804(sprites[slot], px, pz);
-        bool sameTeam = myTeam == e->kart->team;
-        int vis = 0;
-        if (cup7 || sameTeam) {
-            vis = 1;
-        }
-        SpriteHandle_SetActiveFlag(sprites[slot], vis);
+        SetMarkerVisible(sprites[slot], cup7, myTeam == e->kart->team);
         if (pid == me) {
             SpriteHandle_SetCornerAlpha(sprites[1], blink.p->Value());
             fn_8011F804(sprites[1], px, pz);
