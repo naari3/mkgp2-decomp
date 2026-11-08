@@ -140,6 +140,8 @@ static inline void CopyHostSnapshot(u8 *snapshots, int next) {
     memcpy(snapshots, snapshots + next * 0x1C, 0x1C);
 }
 
+#pragma push
+#pragma opt_lifetimes off
 extern "C" int PCBComm_Process(u8 receive, u8 send)
 {
     Storage *storage = &lbl_805A5EC0;
@@ -224,6 +226,8 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
     }
     return 1;
 }
+#pragma pop
+
 
 extern "C" int PcbComm_Shutdown(void)
 {
