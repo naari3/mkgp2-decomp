@@ -31,6 +31,10 @@ static inline int UpdateSpatialVoice(int index, const ClSoundVec* position) {
     return 1;
 }
 
+#pragma push
+#pragma optimization_level 2
 int fn_801913B0(int index, const ClSoundVec* position) {
     return UpdateSpatialVoice(index, position);
 }
+#pragma pop
+
