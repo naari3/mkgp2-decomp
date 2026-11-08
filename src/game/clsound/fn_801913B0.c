@@ -12,7 +12,7 @@ static inline int UpdateSpatialVoice(int index, const ClSoundVec* position) {
     far_distance = definition->far_distance;
     Vec3_Subtract(position, &listener->position, &delta);
     distance = Vec3_Magnitude(&delta);
-    if (distance >= far_distance) { volume=0; pan=64; surround=64; }
+    if (distance >= far_distance) { volume=0; surround=pan=64; }
     else {
         if (distance <= near_distance) volume=127;
         else volume=(int)(lbl_806D9514-lbl_806D9514*((distance-near_distance)/(far_distance-near_distance)));
@@ -31,10 +31,7 @@ static inline int UpdateSpatialVoice(int index, const ClSoundVec* position) {
     return 1;
 }
 
-#pragma push
-#pragma optimization_level 2
 int fn_801913B0(int index, const ClSoundVec* position) {
     return UpdateSpatialVoice(index, position);
 }
-#pragma pop
 
