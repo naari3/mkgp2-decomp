@@ -115,6 +115,16 @@ static inline SyncOutput* HostOutput(CommStorage* storage)
     return &storage->output[1];
 }
 
+static inline void SelectRoleCards(PeerSlot* peer, CardRow* card,
+                                   CardPointers* cards, int role)
+{
+    int i;
+    for (i = 0; i < 4; ++i, ++peer, ++card) {
+        if (peer->first.bytes.header.role == role) cards->row[i] = card;
+        else cards->row[i] = 0;
+    }
+}
+
 int PCBComm_ComputeSyncState(void)
 {
     int trackVotes[16];
@@ -170,10 +180,7 @@ int PCBComm_ComputeSyncState(void)
         peer = firstPeer;
         cards = lbl_80312234[0];
         role = g_localPcbRole;
-        for (i = 0; i < 4; ++i, ++peer, ++card) {
-            if (peer->first.bytes.header.role == role) cards.row[i] = card;
-            else cards.row[i] = 0;
-        }
+        SelectRoleCards(peer, card, &cards, role);
         out->commonItem = CardSnapshot_ResolveCommonItems(cards.row);
         for (i = 0; i < 4; ++i) usedPositions[i] = 0;
         role = g_localPcbRole;
