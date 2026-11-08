@@ -12816,7 +12816,10 @@
     "rankingResources": "global:lbl_8039C53C",
     "@109": "@etb_80015074",
     "@110": "@eti_80028004",
-    "@108": "lbl_806D9FB8"
+    "@108": "lbl_806D9FB8",
+    "@122": "@etb_80015074",
+    "@123": "@eti_80028004",
+    "@121": "lbl_806D9FB8"
   },
   "src/game/PCBCommLifecycle.cpp": {
     "__dt__7PCBCommFv": "dtor_800869D0",
