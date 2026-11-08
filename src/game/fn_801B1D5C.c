@@ -1,5 +1,25 @@
 #include "game/VoiceItemEventPrivate.h"
 
+/* The scan cursor is independent of the indexed attack/response reads. */
+static inline VoiceItemMap *ItemMaps(VoiceItemData *data) {
+    return (VoiceItemMap *)((unsigned int)data + 0x118C);
+}
+
+static inline short EventItemVoice(VoiceItemData *data, int item, int response) {
+    VoiceItemMap *map = ItemMaps(data);
+    int i = 0;
+    while (map->item != -1) {
+        if (item == map->item) {
+            VoiceItemMap *base = data->maps;
+            if (response) return base[i].response;
+            return base[i].attack;
+        }
+        map++;
+        i++;
+    }
+    return -1;
+}
+
 static inline short RemapItemVoice(short item) {
     short voice;
     voice=item;
@@ -23,9 +43,6 @@ static inline short RemapItemVoice(short item) {
 
 #pragma use_lmw_stmw on
 #pragma exceptions on
-#pragma push
-#pragma opt_propagation off
-#pragma opt_lifetimes off
 int fn_801B1D5C(RaceVoiceRival *kart, RaceVoiceRival *target, short item, unsigned char mode) {
     short voice;
     void *held;
@@ -49,7 +66,7 @@ int fn_801B1D5C(RaceVoiceRival *kart, RaceVoiceRival *target, short item, unsign
     if ((signed char)g_bgmStateId==0x6E) {
         if (lbl_806D1776==-1) {
             if (lbl_806D1775==kart->playerIndex && voice==lbl_806CFD34) {
-                voice=ItemVoice(data,voice,1);
+                voice=EventItemVoice(data,voice,1);
                 lbl_806D1776=target->playerIndex;
                 if (voice!=-1 && data->clips[voice].playCount==0) {
                     PUSH(CHARACTER(lbl_806D1776),11);
@@ -113,13 +130,13 @@ int fn_801B1D5C(RaceVoiceRival *kart, RaceVoiceRival *target, short item, unsign
         if (g_raceEntryArray[target->playerIndex].id>=0 && g_raceEntryArray[target->playerIndex].id!=0) {
             if (voice==0x30 || voice==0x31) {
                 VoiceQueue_Push(CHARACTER(target->playerIndex),9,0,1);
-                VoiceQueue_Push(ItemVoice(data,voice,0),9,0,0);
+                VoiceQueue_Push(EventItemVoice(data,voice,0),9,0,0);
                 VoiceQueue_Push(0x1D4,9,0,0);
                 VoiceQueue_Push(0x1DE,9,0,0);
                 return 1;
             } else if (voice==0x2E || voice==0x2F) {
                 VoiceQueue_Push(CHARACTER(target->playerIndex),9,0,1);
-                VoiceQueue_Push(ItemVoice(data,voice,0),9,0,0);
+                VoiceQueue_Push(EventItemVoice(data,voice,0),9,0,0);
                 VoiceQueue_Push(0x1D4,9,0,0);
                 VoiceQueue_Push(0x1DF,9,0,0);
                 return 1;
@@ -127,17 +144,17 @@ int fn_801B1D5C(RaceVoiceRival *kart, RaceVoiceRival *target, short item, unsign
         }
         if (!RaceVoice_CanQueue(13)) return 1;
     }
-    if (g_raceEntryArray[target->playerIndex].participant && ItemVoice(data,voice,1)!=-1) {
+    if (g_raceEntryArray[target->playerIndex].participant && EventItemVoice(data,voice,1)!=-1) {
         PUSH(CHARACTER(target->playerIndex),13);
-        PUSH(ItemVoice(data,voice,1),13);
+        PUSH(EventItemVoice(data,voice,1),13);
         return 1;
     }
     if (!mode) {
         lbl_806D1775=kart->playerIndex;
         lbl_806D1776=target->playerIndex;
-        if ((g_raceEntryArray[lbl_806D1775].participant || g_raceEntryArray[lbl_806D1776].participant) && ItemVoice(data,voice,0)!=-1) {
+        if ((g_raceEntryArray[lbl_806D1775].participant || g_raceEntryArray[lbl_806D1776].participant) && EventItemVoice(data,voice,0)!=-1) {
             if (PUSH(CHARACTER(lbl_806D1776),14)) {
-                PUSH(ItemVoice(data,voice,0),14);
+                PUSH(EventItemVoice(data,voice,0),14);
                 PAIR(0x1D4,0x1D5,14);
                 g_bgmStateId=14;
                 lbl_806D1777=g_raceEntryArray[lbl_806D1775].player;
@@ -149,9 +166,9 @@ int fn_801B1D5C(RaceVoiceRival *kart, RaceVoiceRival *target, short item, unsign
     if (mode) {
         lbl_806D1775=kart->playerIndex;
         lbl_806D1776=target->playerIndex;
-        if ((g_raceEntryArray[lbl_806D1775].participant || g_raceEntryArray[lbl_806D1776].participant) && ItemVoice(data,voice,0)!=-1) {
+        if ((g_raceEntryArray[lbl_806D1775].participant || g_raceEntryArray[lbl_806D1776].participant) && EventItemVoice(data,voice,0)!=-1) {
             if (PUSH(CHARACTER(lbl_806D1776),15)) {
-                PUSH(ItemVoice(data,voice,0),15);
+                PUSH(EventItemVoice(data,voice,0),15);
                 PAIR(0x1ED,0x1EE,15);
                 g_bgmStateId=15;
                 lbl_806D1777=g_raceEntryArray[lbl_806D1775].player;
@@ -162,7 +179,6 @@ int fn_801B1D5C(RaceVoiceRival *kart, RaceVoiceRival *target, short item, unsign
     }
     return 1;
 }
-#pragma pop
 
 #pragma exceptions reset
 #pragma use_lmw_stmw reset
