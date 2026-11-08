@@ -1949,3 +1949,8 @@ c21_p6 NamCamFlow: naming second border coordinates (float y,x; assign x then y)
 Source: Codex worker c21_p20_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c21_p20: BootDispatcher pool experiment owns .rodata802E8F48..802E9650 with exact 1800-byte typed constants/strings; replacing text+offset with named objects leaves text98.88708/6412B, extab62.15278/index27.777779/data100 unchanged. Thus rodata ownership alone is not the remaining lever. Isolated BSS80598A60..8059F480 ownership with typed calibration object regresses text97.09912 and dtk reports a long cyclic link-order dependency via HeapStats and auto_08_80598568_bss; reverted. Mode-local reuse in boot-error setup is byte-invariant; reverted. Remains singleton NonMatching, zero native gain. Coordinator full fallback DOL SHA1 exact.
+
+## c21_p26_20261108
+Source: Codex worker c21_p26_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c21_p26 Scene_8015B790: pool ownership already complete (rodata836B100%); no missing functions. Baseline98.79371 is 1148B, not target1144B: existing fp_contract off breaks target font-position fmadds into fmuls+fadds, causing extabindex91.66667. Removing it restores size/EH and exact font math but score98.496506; only icon index/base r4/r0 and lwz/fneg/f6 scheduling remain. Named index/negative-angle locals and a pool+index inline drawing helper both instruction-invariant. Retained baseline with canonical fn_80169040 pointer/unsigned-flags declaration only; no native gain or split rescue.

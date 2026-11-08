@@ -9,7 +9,7 @@ extern void *lbl_806D158C;
 extern ViewerVec lbl_80677CD8;
 void fn_8015BCC4(const char *, float);
 void fn_80168EFC(int, float, float, const char *, ...);
-void fn_80169040(int, int, float,float,float,float,float,float,int);
+void fn_80169040(void *, int, float,float,float,float,float,float,unsigned int);
 void Object_SetJObjPositionX(void *, float);
 void Object_SetJObjField40(void *, float);
 void HSD_CObjSetEyePosition(void *, const ViewerVec *);
