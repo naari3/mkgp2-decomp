@@ -29,8 +29,6 @@ static inline void SetBuffer(MObj *m, void *src) {
         memcpy(m->buf,src,12);
     }
 }
-#pragma push
-#pragma opt_lifetimes off
 void fn_801826F8(JObj *root, void *src) {
     JObj *a;
     DObj *d;
@@ -71,5 +69,4 @@ void fn_801826F8(JObj *root, void *src) {
         }
     }
 }
-#pragma pop
 

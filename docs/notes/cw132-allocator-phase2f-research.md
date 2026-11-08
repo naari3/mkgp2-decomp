@@ -1531,3 +1531,8 @@ c20_u80: DualSpawn 800B7C9C promoted99.83193->100%,952B text/8B extab/12B index,
 Source: Codex worker c20_u148_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 5 fn / 3648 B.
 
 c20_u148 fn_801826F8 improves97.748344->98.013245 at604B/EH8/index12 exact. Declare outer JObj cursor a before shared DObj d and scope b/c/e to nested child blocks: first DObj cursor nowr28 exact; register-only differing rows62->56. Canonical jobj.h/dobj.h reuse invariant. Narrow descendant-tail helper exceeds inline budget65.986755/main796B plus emitted1008B helper; material member SetBuffer in C++ island invariant98.013245. Retained scoped C draft, NonMatching. Full fallback DOL SHA1ea30f3b1 exact; zero native gain. Remaining root targetr29/source27, src30/31, material27/30, outer child31/28 and later webs.
+
+## c21_u131_20261108
+Source: Codex worker c21_u131_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c21_u131: fn801826F8 inherited opt_lifetimes-off source scores98.1457; removing forbidden per-function optimization gives advertised clean98.013245/604B with EH8/index12 both100. Classifier saved/reg_only/multi,56 rows, mappingr27->r29 r28->r30 r29->r27 r30->r31 r31->r28. Tiny Drawables accessor with named HSD_JObjGetDObj result is byte-invariant; const void* source contract is also byte-invariant. Both reverted and stop after two no-information experiments. Only retained edit removes inherited pragma; no new native gain. No global/pool site, no possible B partition. Full fallback DOL SHA-1 exact.
