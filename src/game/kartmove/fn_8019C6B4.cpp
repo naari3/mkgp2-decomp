@@ -16,16 +16,26 @@ static inline void Identity(Matrix44 *a) {
     a->m[0][0] = a->m[1][1] = a->m[2][2] = a->m[3][3] = lbl_806D96D4;
 }
 
+static inline double QuatX(const MovementQuat *q) { return q->x; }
+static inline double QuatY(const MovementQuat *q) { return q->y; }
+static inline double QuatZ(const MovementQuat *q) { return q->z; }
+static inline double QuatW(const MovementQuat *q) { return q->w; }
+
 static inline void QuatMatrix(Matrix44 *m, MovementQuat *q) {
-    float xx = q->x*q->x;
-    float yy = q->y*q->y;
-    float zz = q->z*q->z;
-    float xy = q->x*q->y;
-    float wz = q->w*q->z;
-    float xz = q->x*q->z;
-    float wy = q->w*q->y;
-    float yz = q->y*q->z;
-    float wx = q->w*q->x;
+    float w, z, y, x;
+    x = QuatX(q);
+    y = QuatY(q);
+    z = QuatZ(q);
+    w = QuatW(q);
+    float xx = x*x;
+    float yy = y*y;
+    float zz = z*z;
+    float xy = x*y;
+    float wz = w*z;
+    float xz = x*z;
+    float wy = w*y;
+    float yz = y*z;
+    float wx = w*x;
     m->m[0][0] = lbl_806D96D4 - lbl_806D9708*(yy+zz);
     m->m[1][0] = lbl_806D9708*(xy-wz);
     m->m[2][0] = lbl_806D9708*(xz+wy);
@@ -43,10 +53,14 @@ static inline void Multiply(Matrix44 *a, const Matrix44 *b) {
     int index = 0;
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            sum = a->m[i][0]*b->m[0][j];
-            sum = a->m[i][1]*b->m[1][j] + sum;
-            sum = a->m[i][2]*b->m[2][j] + sum;
-            sum = a->m[i][3]*b->m[3][j] + sum;
+            float a0 = a->m[i][0], b0 = b->m[0][j];
+            float a1 = a->m[i][1], b1 = b->m[1][j];
+            float a2 = a->m[i][2], b2 = b->m[2][j];
+            float a3 = a->m[i][3], b3 = b->m[3][j];
+            sum = a0*b0;
+            sum = a1*b1 + sum;
+            sum = a2*b2 + sum;
+            sum = a3*b3 + sum;
             out[index+j] = sum;
         }
         index += 4;
