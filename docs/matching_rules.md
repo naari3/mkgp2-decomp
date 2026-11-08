@@ -254,3 +254,9 @@ roughly in the order worth trying:
 When you stop, record the function in `docs/gave_up.md` with the current %,
 the remaining diff in one line, and where the WIP lives, so the next person
 starts from there instead of from zero.
+9. Stack slot order (GC/2.6, ItemEffect_Projectile draft, 2026-11-08): local
+   aggregates get frame slots in ASCENDING SIZE order, and declaration order
+   only breaks ties. So if the target has a 12-byte vector above two 12-byte
+   scratch arrays, no declaration order will reproduce it. The vector has to be
+   bigger, e.g. 16 bytes with a pad member. Two adjacent int fields copied with
+   `lwz,lwz,stw,stw` are one 8-byte struct copy.
