@@ -25,16 +25,16 @@ s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
     size = (e->cfg.size + 3) & ~3;
     info = &lbl_806DC918[chan];
     alignment = info->align;
-    recSize = -alignment & (size + alignment + 0xB);
+    recSize = -alignment & (size + 0xC + alignment - 1);
     if (fn_8028812C(chan, (e->cfg.flags >> 4) & 1, e->addr, lbl_806835E0,
                       (e->cfg.flags & 2) ? recSize * 2 : recSize)) {
         return 1;
     }
     ok[0] = TRUE;
     ok[1] = e->cfg.flags & 2;
-    buffer = lbl_806835E0;
     valid = ok;
     words = size >> 2;
+    buffer = lbl_806835E0;
     for (i = 0, off = 0; i < 2; i++, off += recSize, valid++) {
         if (!*valid) {
             break;
