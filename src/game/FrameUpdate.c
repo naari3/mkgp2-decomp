@@ -8,8 +8,7 @@ static inline void FrameBackup_Copy(void)
         unsigned int word08 = lbl_80598A60.word08;
         unsigned int word0C = lbl_80598A60.word0C;
         unsigned int word10 = lbl_80598A60.word10;
-        unsigned int word1C = lbl_80598A60.word1C;
-        unsigned int word18 = lbl_80598A60.word18;
+        unsigned long long qw18 = lbl_80598A60.qw18;
         unsigned int word20 = lbl_80598A60.word20;
         unsigned int word24 = lbl_80598A60.word24;
         unsigned short half28 = lbl_80598A60.half28;
@@ -35,8 +34,7 @@ static inline void FrameBackup_Copy(void)
         lbl_8059F480.word08 = word08;
         lbl_8059F480.word0C = word0C;
         lbl_8059F480.word10 = word10;
-        lbl_8059F480.word1C = word1C;
-        lbl_8059F480.word18 = word18;
+        lbl_8059F480.qw18 = qw18;
         lbl_8059F480.word20 = word20;
         lbl_8059F480.word24 = word24;
         lbl_8059F480.half28 = half28;
@@ -72,6 +70,8 @@ static inline void FrameBackup_CaptureCalibration(struct FrameBackup *backup,
 }
 
 #pragma exceptions on
+#pragma push
+#pragma opt_common_subs off
 void FrameUpdate(void)
 {
     if (lbl_806D1124 != 0 && --lbl_806D1124 <= 0) {
@@ -84,4 +84,6 @@ void FrameUpdate(void)
     if (lbl_806D1114 > 0) --lbl_806D1114;
     ++lbl_806D1110;
 }
+#pragma pop
+
 #pragma exceptions reset

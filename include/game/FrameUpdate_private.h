@@ -11,7 +11,8 @@ struct BackupWords3840 { unsigned int words[0xE10]; };
 struct FrameBackup {
     unsigned char byte00;
     unsigned int word04, word08, word0C, word10, word14;
-    unsigned int word18, word1C, word20, word24;
+    unsigned long long qw18;
+    unsigned int word20, word24;
     unsigned short half28;
     struct BackupPacked8 packed2A;
     unsigned int word34, word38, word3C, word40, word44, word48, word4C;
