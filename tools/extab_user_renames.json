@@ -2914,6 +2914,7 @@
     "clear__21KeyVecBase<8KeyGroup>Fv": "fn_801C1BD8",
     "at__21KeyVecBase<8KeyGroup>FUl": "fn_801C1AA8",
     "__ct__9NameEntryFb": "fn_801BF644",
+    "__ct__9NameEntryFi": "fn_801BF644",
     "__vt__7ResNode": "lbl_8048EF20",
     "init__21KeyVecBase<8KeyGroup>FUl8KeyGroup": "fn_801C1964",
     "__dt__8KeyBoardFv": "dtor_801C1C80",
@@ -2948,7 +2949,12 @@
     "@3155": "lbl_8039A50C",
     "quote$463": "lbl_806D1870",
     "init$464": "lbl_806D1874",
-    "@593": "lbl_806D9AE4"
+    "@593": "lbl_806D9AE4",
+    "@761": "jumptable_8049A98C",
+    "@1051": "jumptable_8049A948",
+    "@1261": "jumptable_8049A9B0",
+    "@3152": "lbl_8039A498",
+    "@3183": "lbl_8039A50C"
   },
   "src/game/fn_801DEF94.cpp": {
     "__ct__8SteerMgrFP7KartRefPv": "SteeringMgr_Init",

@@ -2118,7 +2118,7 @@ struct NameEntry {
     int row;
     float bright;
     PtrVec<FadeObj *> nodes;
-    NameEntry(bool ascii);
+    NameEntry(int ascii);
     void BuildKeys();
     void Draw();
     void DrawKeys();
@@ -2193,6 +2193,10 @@ struct clFlowCard : clFlowBase {
     ~clFlowCard();
     virtual int Update();
 };
+
+static inline int IsAsciiKeyboard() {
+    return isJapanese() == 0 ? 1 : 0;
+}
 
 int clFlowCard::Update() {
     sprites->Advance();
@@ -2269,7 +2273,7 @@ int clFlowCard::Update() {
             fn_80121210();
             clRom_PurgeAll();
             if (Sci2Card_GetUnpackStatusCode() == 1) {
-                name = new NameEntry(isJapanese() == 0);
+                name = new NameEntry(IsAsciiKeyboard());
                 sprites->show = 0;
                 state = 2;
             } else {
@@ -2364,7 +2368,7 @@ extern const float lbl_806D9AAC;
 void fn_801BEDF0(NameEntry *self);
 }
 
-NameEntry::NameEntry(bool ascii) : board(ascii), started(ascii), frame(new Sprite(0x150, 1, 0)), state(0), mode(ascii == 1 ? 0 : 2),
+NameEntry::NameEntry(int ascii) : board(ascii), started(ascii), frame(new Sprite(0x150, 1, 0)), state(0), mode((unsigned char)ascii == 1 ? 0 : 2),
       col(0), row(0), bright(lbl_806D9A7C) {
     Sprite *f = frame.p;
     f->x = lbl_806D9A2C;
@@ -2668,6 +2672,40 @@ void NameEntry::DrawKeys() {
     }
 }
 
+static inline void DrawKeyGroup(KeyBoard &board, int g) {
+    int res;
+    if (g < 3) {
+        res = lbl_80399E5C[lbl_80399E6C[board.page][g]];
+    } else {
+        res = g + 0x190D;
+    }
+    int sel = board.group == g ? 1 : 0;
+    KeyGroup &kg = board.groups.at(g);
+    int n = (bool)sel == true ? 1 : 0;
+    {
+        ResCtrl rc;
+        rc.resId = kg.img[n].res;
+        rc.Show(kg.img[n].x, kg.img[n].y, lbl_806D9A34);
+        fn_8011FAFC(&rc, 7);
+    }
+    {
+        ResCtrl lc;
+        lc.resId = res;
+        lc.Show(kg.label.x, kg.label.y, lbl_806D9A34);
+        fn_8011FAFC(&lc, 7);
+    }
+}
+
+static inline void DrawKeyGroups(KeyBoard &board) {
+    int g = 0;
+    if (board.ascii == 0) {
+        g = 2;
+    }
+    for (; (unsigned long)g < (unsigned long)board.groups.count; g++) {
+        DrawKeyGroup(board, g);
+    }
+}
+
 void NameEntry::Draw() {
     fn_801A0004(frame.p);
     DrawKeys();
@@ -2687,33 +2725,7 @@ void NameEntry::Draw() {
         }
         fn_8011FAFC(&rc, 7);
     }
-    int g = 0;
-    if (board.ascii == 0) {
-        g = 2;
-    }
-    for (; (unsigned long)g < (unsigned long)board.groups.count; g++) {
-        int res;
-        if (g < 3) {
-            res = lbl_80399E5C[lbl_80399E6C[board.page][g]];
-        } else {
-            res = g + 0x190D;
-        }
-        int sel = board.group == g ? 1 : 0;
-        KeyGroup &kg = board.groups.at(g);
-        int n = (bool)sel == true ? 1 : 0;
-        {
-            ResCtrl rc;
-            rc.resId = kg.img[n].res;
-            rc.Show(kg.img[n].x, kg.img[n].y, lbl_806D9A34);
-            fn_8011FAFC(&rc, 7);
-        }
-        {
-            ResCtrl lc;
-            lc.resId = res;
-            lc.Show(kg.label.x, kg.label.y, lbl_806D9A34);
-            fn_8011FAFC(&lc, 7);
-        }
-    }
+    DrawKeyGroups(board);
     fn_802321F8(GetFader());
     for (FadeObj **it = nodes.begin(); it != nodes.end(); it++) {
         (*it)->Render();
