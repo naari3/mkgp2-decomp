@@ -1713,7 +1713,7 @@ config.libs = [
             Object(Matching, "game/NokoNoko_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/FigureSlot_Tick.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/MileageFlow_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/clFlowFigure_Unlocks.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/clFlowFigure_Unlocks.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/NokoNoko.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GameModeBase.cpp"),
             Object(Matching, "game/KartMovement_SetPosition.c"),

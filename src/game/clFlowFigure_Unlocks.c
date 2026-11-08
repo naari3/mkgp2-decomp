@@ -10,10 +10,15 @@ extern unsigned char g_playerData[];
 extern short lbl_8039B218[];
 extern void SetCourseParams(int,int,int,int);
 extern unsigned char RoundIsUnlocked(void*,int);
-static inline int FigureLabel(FigureUnlocks* self) {
+/* Cup labels and their page/completion variants form blocks of eight IDs. */
+typedef enum {
+    FIGURE_LABEL_CUP_FIRST = 0x1EA2,
+    FIGURE_LABEL_VARIANT_LAST = 0x1EB9
+} FigureLabelId;
+static inline FigureLabelId FigureLabel(FigureUnlocks* self) {
     int label = lbl_8039B218[self->cup];
-    label += self->second == 1 ? 8 : 0;
-    return label;
+    int page = self->second == 1 ? 8 : 0;
+    return (FigureLabelId)(label + page);
 }
 #pragma exceptions on
 void fn_801C64DC(FigureUnlocks* self) {
