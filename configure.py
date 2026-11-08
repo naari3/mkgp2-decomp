@@ -2497,7 +2497,7 @@ config.libs = [
             Object(Matching, "game/fn_801F6804.c"),
             Object(Matching, "game/fn_801F8E58.c"),
             Object(Matching, "game/fn_801F8FCC.c"),
-            Object(NonMatching, "game/fn_801F7F50.cpp", extab_padding=b"", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/fn_801F7F50.cpp", extab_padding=b"", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801F9014.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/TexMgr_SetTexture.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801F9518.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on"]),

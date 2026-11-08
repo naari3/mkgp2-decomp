@@ -1,4 +1,4 @@
-#include "game/DrawQuadScaled801FPrivate.h"
+#include "game/DrawQuad7F50MatchPrivate.h"
 static inline void DrawPositionDepth7F50(float x, float y, const DrawDesc801F *description) {
     float z = description->z;
     DrawPositionDepth801F(x, y, z);
