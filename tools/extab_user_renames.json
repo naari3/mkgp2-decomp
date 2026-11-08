@@ -14051,5 +14051,11 @@
     "SlideIn__12clFlowCCItemFv": "fn_80235C6C",
     "SlideIn__17clFlowCCInterfaceFv": "SlideIn__17clFlowCCInterfaceFi",
     "SlideOut__17clFlowCCInterfaceFv": "SlideOut__17clFlowCCInterfaceFi"
+  },
+  "src/game/anon_80209330_nm2_tail.cpp": {
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
