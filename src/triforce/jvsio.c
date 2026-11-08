@@ -341,6 +341,8 @@ static void fn_80282F54(s32 chan, u32 err, OSContext* ctx) {
 
 /* Decode the SI response and dispatch each JVS reply. */
 void fn_80283154(void) {
+    JvsPacket* packet;
+    int command;
     u8 status[16];
     int i, j, k, pos, count;
     u8 node, commandIndex;
@@ -348,7 +350,6 @@ void fn_80283154(void) {
     u8 sum;
     u8* p;
     u8* out;
-    JvsPacket* packet;
     u8* packetLength;
     u8* packetStatus;
     u8* payload;
@@ -359,7 +360,7 @@ void fn_80283154(void) {
     }
     for (i = 0; i < tx.packetCount; i++) {
         packet = (JvsPacket*)tx.packet[i];
-        switch (packet->command) {
+        switch (command = packet->command) {
         case 0x10:
             tx.unk12A = tx.packet[i][2]; tx.unk12B = tx.packet[i][3]; break;
         case 0x11:
@@ -407,8 +408,8 @@ void fn_80283154(void) {
             packetLength = &packet->length;
             packetStatus = &packet->payload[1];
             payload = packet->payload;
-            if ((packet->command & 0xE0) != 0x40) break;
-            if (*packetLength != 0) { node = packet->command & 0x1F; bank = cmd.cur[node]; }
+            if ((command & 0xE0) != 0x40) break;
+            if (*packetLength != 0) { node = command & 0x1F; bank = cmd.cur[node]; }
             else status[node] = 1;
             if (*packetLength == 0 || *packetStatus != 0) break;
             count = 0;
@@ -840,12 +841,16 @@ BOOL fn_80285418(void) {
     return FALSE;
 }
 
+static inline BOOL jvsTxHasSpace(u16 length) {
+    return tx.len < 0x7F - length;
+}
+
 BOOL fn_802854B0(void) {
     int i;
     int len;
     int start;
     u8 c;
-    if (tx.len < 0x7F - cmd.len) {
+    if (jvsTxHasSpace(cmd.len)) {
         cmd.buf[1] = cmd.len - 1;
         PUT((cmd.buf[0] & 0x1F) | 0x40);
         if (cmd.buf[0] == 0) {
