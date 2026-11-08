@@ -1,6 +1,6 @@
-/* Native candidate: 98.43152% text. Literal identity constants retain the
- * target FP save range and stack frame. Matrix operand scheduling and
- * register allocation remain unresolved; this TU stays NonMatching. */
+/* Native candidate: 99.90619% text. Matrix multiplication and clearance
+ * handling match; corner scaling retains eight FP register differences.
+ * This TU stays NonMatching. */
 #include "game/PhysicsGroundPrivate.h"
 
 static inline void CopyGroundMatrix(PhysicsGroundMatrix &to, const PhysicsGroundMatrix &from)
@@ -15,19 +15,28 @@ static inline void SetGroundTranslation(PhysicsGroundMatrix &matrix, float x, fl
     matrix.m[3][2] = z;
 }
 
+static inline void AccumulateGroundProduct(float &value, float right, float left)
+{
+    value += left * right;
+}
+
 static inline void MultiplyGroundMatrix(PhysicsGroundMatrix &rotation,
                                         const PhysicsGroundMatrix &original)
 {
     PhysicsGroundMatrix product;
+    float *output = (float *)product.m;
+    int col;
+    int index;
+    int row;
     float value;
-    int index = 0;
-    for (int row = 0; row < 4; ++row) {
-        for (int col = 0; col < 4; ++col) {
+    index = 0;
+    for (row = 0; row < 4; ++row) {
+        for (col = 0; col < 4; ++col) {
             value = rotation.m[row][0] * original.m[0][col];
-            value += rotation.m[row][1] * original.m[1][col];
-            value += rotation.m[row][2] * original.m[2][col];
-            value += rotation.m[row][3] * original.m[3][col];
-            ((float *)product.m)[index + col] = value;
+            AccumulateGroundProduct(value, original.m[1][col], rotation.m[row][1]);
+            AccumulateGroundProduct(value, original.m[2][col], rotation.m[row][2]);
+            AccumulateGroundProduct(value, original.m[3][col], rotation.m[row][3]);
+            output[index + col] = value;
         }
         index += 4;
     }
@@ -126,7 +135,7 @@ extern "C" void fn_801ED798(PhysicsGroundState *self, Vec3 *position,
         }
         self->fallingVelocity = 0.0f;
     } else {
-        float clearance = lbl_806DA43C;
+        float clearance = 0.1f;
         self->fallingVelocity += lbl_806DA4AC;
         position->y += self->fallingVelocity;
         if (position->y - clearance < groundHeight) {
