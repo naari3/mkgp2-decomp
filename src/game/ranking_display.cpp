@@ -151,6 +151,12 @@ inline RankingPanel::RankingPanel(RankingFlow *owner, int i, unsigned char *slot
         name, number, title, label, owner->world, owner->lights,
         (float)((position & 1) == 0 ? -146 : 768), (float)target, (float)y);
 }
+static inline RankingFlowIter RankingInsertAt(RankingFlowList *list, const RankingFlowIter &last, RankingAnim *const &entry) {
+    return DoublyLinkedList_PushBefore(list, &last, &entry);
+}
+static inline void RankingAdd(RankingFlowList *list, RankingAnim *const &entry) {
+    RankingInsertAt(list, RankingFlowIter(list->End()), entry);
+}
 static inline void SetTrack(RankingFlowTrack *t, float from, float to, float speed) {
     t->from = from; t->to = to; t->speed = speed; t->time = lbl_806D9FA8; t->value = from; t->active = 1;
 }
@@ -180,7 +186,7 @@ RankingFlow::RankingFlow() : CourseBase(), list() {
     sprite->x = lbl_806D9FC8;
     sprite->y = lbl_806D9FCC;
     sprite->layer = 0;
-    list.Add(new RankingAnim((RankingSprite *)sprite, 0));
+    RankingAdd(&list, new RankingAnim((RankingSprite *)sprite, 0));
     RankingAnim *entry;
     if (g_reverseRoundFlag == 1) {
         CourseSprite *mirror = new CourseSprite(0x9E, 1, lbl_8039C55C[(g_cupId-1)*2+g_longRoundFlag],
@@ -188,23 +194,23 @@ RankingFlow::RankingFlow() : CourseBase(), list() {
         mirror->layer = 6;
         entry = new RankingAnim((RankingSprite *)mirror, 20);
         SetTrack(&entry->tracks[0], lbl_806D9FA8, lbl_806D9FAC, lbl_806D9FD4);
-        list.Add(entry);
+        RankingAdd(&list, entry);
     }
     entry = new RankingLabel(fn_801D8DA0(g_cupId), lbl_806D9FD8);
     SetTrack(&entry->tracks[0], lbl_806D9FA8, lbl_806D9FAC, lbl_806D9FD4);
-    list.Add(entry);
+    RankingAdd(&list, entry);
     entry = new RankingLabel(0x17AE, lbl_806D9FDC);
     SetTrack(&entry->tracks[1], lbl_806D9FA8, lbl_806D9FE0, lbl_806D9FE4);
     SetTrack(&entry->tracks[2], lbl_806D9FAC, lbl_806D9FAC, lbl_806D9FAC);
     SetTrack(&entry->tracks[0], lbl_806D9FA8, lbl_806D9FAC, lbl_806D9FD4);
-    list.Add(entry);
+    RankingAdd(&list, entry);
     RankingText *text = new RankingText(fn_8013C100(g_cupId, g_longRoundFlag, -1));
     text->layer = 5;
-    list.Add(text);
+    RankingAdd(&list, text);
     /* The entry color and delay are supplied by this constructor variant. */
     entry = new RankingFade(10, 60, 40, 10, 1);
     SetTrack(&entry->tracks[0], lbl_806D9FA8, lbl_806D9FE8, lbl_806D9FD4);
-    list.Add(entry);
+    RankingAdd(&list, entry);
     for (int i = 0; i < 4; ++i) {
         players[i] = 0;
         unsigned char *slot = PcbSlot_GetByIndex(i);
@@ -220,7 +226,7 @@ RankingFlow::RankingFlow() : CourseBase(), list() {
             if (!IsCardValid()) title = lbl_806D9FEC;
             RankingPanel *panel = new RankingPanel(this, i, slot, name, number, title);
             players[i] = panel;
-            list.Add((RankingAnim *)panel);
+            RankingAdd(&list, (RankingAnim *)panel);
             ++count;
         }
     }
