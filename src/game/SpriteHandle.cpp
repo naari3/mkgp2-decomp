@@ -265,7 +265,7 @@ void MemoryManager_Free(void *p);
 void TEXReleasePalette(void **pal);
 extern int lbl_8065B588[600];
 void fn_8011DC20(ResEntry *e);
-extern void ResourceSlot_Load();
+unsigned char ResourceSlot_Load(ResEntry *e, int id);
 extern void Alloc();
 extern void FUN_8003b120();
 void MemoryManager_TimedFree(void *p);
@@ -303,7 +303,7 @@ void fn_8011F994(int type);
 asm int SpriteHandle_CreateEx(int a, int b, int c);
 void fn_8012094C(void);
 int fn_80120A08(int id);
-asm unsigned char PreloadResource(int id);
+unsigned char PreloadResource(int id);
 void SpriteHandlePool_GC(void);
 void fn_80121210(void);
 void fn_801213EC(void);
@@ -1861,8 +1861,9 @@ extern "C" void fn_8012094C(void) {
  * identity) and fn_8011DC20 (the slot release, strong copy in ResourceSlot.c)
  * are inlines that hit the depth limit in the inner levels, so their weak
  * out-of-line copies are emitted here and folded by the linker.
- * exceptions off: fn_80120A08 keeps its manual extab entry above, whose
- * address reference is also what makes MWCC emit the weak function at all.
+ * PreloadResource (0x80120D80) is the same pattern.
+ * exceptions off: both keep their manual extab entries above, whose address
+ * references are also what make MWCC emit the weak functions at all.
  */
 #pragma exceptions off
 #pragma use_lmw_stmw on
@@ -1896,266 +1897,37 @@ extern "C" inline int fn_80120A08(int id) {
     }
     return 0;
 }
+
+extern "C" inline unsigned char PreloadResource(int id) {
+    int a = Stub_NoOp_80121c34(id);
+    if (!IsValidResourceId(a)) {
+        return 0;
+    }
+    int n = ResourceTable_GetChainNextId(a);
+    if (n != -1) {
+        PreloadResource(n);
+    }
+    int key = ResourceTable_GetGroupKey(a);
+    int i;
+    for (i = 0; i < 600; i++) {
+        if (key == lbl_806573E8[i].prev) {
+            lbl_8065B588[i]++;
+            return 1;
+        }
+    }
+    for (i = 0; i < 600; i++) {
+        if (lbl_806573E8[i].prev == -1) {
+            unsigned char ok = ResourceSlot_Load(&lbl_806573E8[i], id);
+            if (ok == 1) {
+                lbl_8065B588[i]++;
+            }
+            return ok;
+        }
+    }
+    return 0;
+}
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
-
-extern "C" asm unsigned char PreloadResource(int id) { /* 0x80120D80 size:0x3A0 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stmw r27, 0xc(r1)
-    mr r29, r3
-    bl IsValidResourceId
-    clrlwi. r0, r3, 24
-    bne PreloadResource_L_80120DA8
-    li r3, 0x0
-    b PreloadResource_L_8012110C
-    PreloadResource_L_80120DA8:
-    mr r3, r29
-    bl ResourceTable_GetChainNextId
-    mr r30, r3
-    cmpwi r30, -0x1
-    beq PreloadResource_L_8012104C
-    bl IsValidResourceId
-    clrlwi. r0, r3, 24
-    beq PreloadResource_L_8012104C
-    mr r3, r30
-    bl ResourceTable_GetChainNextId
-    mr r31, r3
-    cmpwi r31, -0x1
-    beq PreloadResource_L_80120F94
-    bl IsValidResourceId
-    clrlwi. r0, r3, 24
-    beq PreloadResource_L_80120F94
-    mr r3, r31
-    bl ResourceTable_GetChainNextId
-    mr r28, r3
-    cmpwi r28, -0x1
-    beq PreloadResource_L_80120EDC
-    bl Stub_NoOp_80121c34
-    mr r27, r3
-    bl IsValidResourceId
-    clrlwi. r0, r3, 24
-    beq PreloadResource_L_80120EDC
-    mr r3, r27
-    bl ResourceTable_GetChainNextId
-    cmpwi r3, -0x1
-    beq PreloadResource_L_80120E24
-    bl PreloadResource
-    PreloadResource_L_80120E24:
-    mr r3, r27
-    bl ResourceTable_GetGroupKey
-    lis r4, lbl_806573E8@ha
-    li r0, 0x258
-    addi r6, r4, lbl_806573E8@l
-    li r4, 0x0
-    mr r5, r6
-    mtctr r0
-    PreloadResource_L_80120E44:
-    lwz r0, 0x4(r5)
-    cmpw r3, r0
-    bne PreloadResource_L_80120E6C
-    lis r3, lbl_8065B588@ha
-    slwi r5, r4, 2
-    addi r4, r3, lbl_8065B588@l
-    lwzx r3, r4, r5
-    addi r0, r3, 0x1
-    stwx r0, r4, r5
-    b PreloadResource_L_80120EDC
-    PreloadResource_L_80120E6C:
-    addi r5, r5, 0x1c
-    addi r4, r4, 0x1
-    bdnz PreloadResource_L_80120E44
-    li r0, 0x258
-    li r27, 0x0
-    mtctr r0
-    PreloadResource_L_80120E84:
-    lwz r0, 0x4(r6)
-    cmpwi r0, -0x1
-    bne PreloadResource_L_80120ED0
-    mulli r5, r27, 0x1c
-    lis r3, lbl_806573E8@ha
-    mr r4, r28
-    addi r0, r3, lbl_806573E8@l
-    add r3, r0, r5
-    bl ResourceSlot_Load
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne PreloadResource_L_80120EDC
-    lis r3, lbl_8065B588@ha
-    slwi r5, r27, 2
-    addi r4, r3, lbl_8065B588@l
-    lwzx r3, r4, r5
-    addi r0, r3, 0x1
-    stwx r0, r4, r5
-    b PreloadResource_L_80120EDC
-    PreloadResource_L_80120ED0:
-    addi r6, r6, 0x1c
-    addi r27, r27, 0x1
-    bdnz PreloadResource_L_80120E84
-    PreloadResource_L_80120EDC:
-    mr r3, r31
-    bl ResourceTable_GetGroupKey
-    lis r4, lbl_806573E8@ha
-    li r0, 0x258
-    addi r6, r4, lbl_806573E8@l
-    li r4, 0x0
-    mr r5, r6
-    mtctr r0
-    PreloadResource_L_80120EFC:
-    lwz r0, 0x4(r5)
-    cmpw r3, r0
-    bne PreloadResource_L_80120F24
-    lis r3, lbl_8065B588@ha
-    slwi r5, r4, 2
-    addi r4, r3, lbl_8065B588@l
-    lwzx r3, r4, r5
-    addi r0, r3, 0x1
-    stwx r0, r4, r5
-    b PreloadResource_L_80120F94
-    PreloadResource_L_80120F24:
-    addi r5, r5, 0x1c
-    addi r4, r4, 0x1
-    bdnz PreloadResource_L_80120EFC
-    li r0, 0x258
-    li r27, 0x0
-    mtctr r0
-    PreloadResource_L_80120F3C:
-    lwz r0, 0x4(r6)
-    cmpwi r0, -0x1
-    bne PreloadResource_L_80120F88
-    mulli r5, r27, 0x1c
-    lis r3, lbl_806573E8@ha
-    mr r4, r31
-    addi r0, r3, lbl_806573E8@l
-    add r3, r0, r5
-    bl ResourceSlot_Load
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne PreloadResource_L_80120F94
-    lis r3, lbl_8065B588@ha
-    slwi r5, r27, 2
-    addi r4, r3, lbl_8065B588@l
-    lwzx r3, r4, r5
-    addi r0, r3, 0x1
-    stwx r0, r4, r5
-    b PreloadResource_L_80120F94
-    PreloadResource_L_80120F88:
-    addi r6, r6, 0x1c
-    addi r27, r27, 0x1
-    bdnz PreloadResource_L_80120F3C
-    PreloadResource_L_80120F94:
-    mr r3, r30
-    bl ResourceTable_GetGroupKey
-    lis r4, lbl_806573E8@ha
-    li r0, 0x258
-    addi r6, r4, lbl_806573E8@l
-    li r4, 0x0
-    mr r5, r6
-    mtctr r0
-    PreloadResource_L_80120FB4:
-    lwz r0, 0x4(r5)
-    cmpw r3, r0
-    bne PreloadResource_L_80120FDC
-    lis r3, lbl_8065B588@ha
-    slwi r5, r4, 2
-    addi r4, r3, lbl_8065B588@l
-    lwzx r3, r4, r5
-    addi r0, r3, 0x1
-    stwx r0, r4, r5
-    b PreloadResource_L_8012104C
-    PreloadResource_L_80120FDC:
-    addi r5, r5, 0x1c
-    addi r4, r4, 0x1
-    bdnz PreloadResource_L_80120FB4
-    li r0, 0x258
-    li r27, 0x0
-    mtctr r0
-    PreloadResource_L_80120FF4:
-    lwz r0, 0x4(r6)
-    cmpwi r0, -0x1
-    bne PreloadResource_L_80121040
-    mulli r5, r27, 0x1c
-    lis r3, lbl_806573E8@ha
-    mr r4, r30
-    addi r0, r3, lbl_806573E8@l
-    add r3, r0, r5
-    bl ResourceSlot_Load
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne PreloadResource_L_8012104C
-    lis r3, lbl_8065B588@ha
-    slwi r5, r27, 2
-    addi r4, r3, lbl_8065B588@l
-    lwzx r3, r4, r5
-    addi r0, r3, 0x1
-    stwx r0, r4, r5
-    b PreloadResource_L_8012104C
-    PreloadResource_L_80121040:
-    addi r6, r6, 0x1c
-    addi r27, r27, 0x1
-    bdnz PreloadResource_L_80120FF4
-    PreloadResource_L_8012104C:
-    mr r3, r29
-    bl ResourceTable_GetGroupKey
-    lis r4, lbl_806573E8@ha
-    li r0, 0x258
-    addi r5, r4, lbl_806573E8@l
-    li r6, 0x0
-    mr r4, r5
-    mtctr r0
-    PreloadResource_L_8012106C:
-    lwz r0, 0x4(r4)
-    cmpw r3, r0
-    bne PreloadResource_L_80121098
-    lis r3, lbl_8065B588@ha
-    slwi r6, r6, 2
-    addi r5, r3, lbl_8065B588@l
-    li r3, 0x1
-    lwzx r4, r5, r6
-    addi r0, r4, 0x1
-    stwx r0, r5, r6
-    b PreloadResource_L_8012110C
-    PreloadResource_L_80121098:
-    addi r4, r4, 0x1c
-    addi r6, r6, 0x1
-    bdnz PreloadResource_L_8012106C
-    li r0, 0x258
-    li r27, 0x0
-    mtctr r0
-    PreloadResource_L_801210B0:
-    lwz r0, 0x4(r5)
-    cmpwi r0, -0x1
-    bne PreloadResource_L_801210FC
-    mulli r5, r27, 0x1c
-    lis r3, lbl_806573E8@ha
-    mr r4, r29
-    addi r0, r3, lbl_806573E8@l
-    add r3, r0, r5
-    bl ResourceSlot_Load
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne PreloadResource_L_8012110C
-    lis r4, lbl_8065B588@ha
-    slwi r6, r27, 2
-    addi r5, r4, lbl_8065B588@l
-    lwzx r4, r5, r6
-    addi r0, r4, 0x1
-    stwx r0, r5, r6
-    b PreloadResource_L_8012110C
-    PreloadResource_L_801210FC:
-    addi r5, r5, 0x1c
-    addi r27, r27, 0x1
-    bdnz PreloadResource_L_801210B0
-    li r3, 0x0
-    PreloadResource_L_8012110C:
-    lmw r27, 0xc(r1)
-    lwz r0, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
-}
 
 extern "C" void SpriteHandlePool_GC(void) {
     SpriteNode *n = lbl_806D1500->head;
