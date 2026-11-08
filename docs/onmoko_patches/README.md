@@ -1,5 +1,12 @@
 # Pragma fixes for onmokoworks-claimed TUs (verified, not applied)
 
+## Landed on main (2026-11-08)
+
+onmokoworks released most claims, so these patches were applied on main and
+are kept here only for reference: fn_80246DE4.patch (RaceDigits linked as
+Matching, eb5bf52), amnet_nm2_rest.patch and merge/cobj_lobj_merge.patch
+(b40edd9). Do not apply them again.
+
 ## Status on main 610292b (re-verified 2026-11-07 21:00, mid-range thread)
 
 Each patch was applied **alone** to a throwaway checkout of main, then built from clean (`rm -rf build/GNLJ82/src build/GNLJ82/ok`, ninja). Baseline on that main: main.dol OK, 7251 matched functions (report.json `matched_functions`). "+fns" is the change against the baseline.
