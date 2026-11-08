@@ -10,7 +10,26 @@ void clCSSceneCoinMilage::Draw() {
     fn_8011FAB8();
     fn_801A1280();
     if (state == 4) {
-        wnd->Draw();
+        void *mgr;
+        ItemWnd *window;
+        int digitIndex;
+        int textIndex;
+        int spriteIndex;
+        window = wnd;
+        for (spriteIndex = 0; spriteIndex < 3; ++spriteIndex) {
+            if (window->spr[spriteIndex]) {
+                fn_801A0004(window->spr[spriteIndex]);
+            }
+        }
+        mgr = fn_801F8E58();
+        for (textIndex = 0; textIndex < 7; ++textIndex) {
+            fn_801F8A34(mgr, &window->texts[textIndex], 5);
+        }
+        for (digitIndex = 0; digitIndex < 4; ++digitIndex) {
+            fn_8011FAFC(&window->digits[digitIndex], 5);
+        }
+        fn_8011FAFC(&window->label, window->labelLayer);
+        fn_8011FAFC(&window->fade, 3);
     }
     if (state == 5) {
         next->Draw();
