@@ -2309,7 +2309,7 @@ config.libs = [
             Object(Matching, "game/KartPreviewAnim.c"),
             Object(Matching, "game/fn_8012BDA4.c"),
             Object(Matching, "game/fn_8012BDF4.c"),
-            Object(Matching, "game/SpriteHandle.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/SpriteHandle.cpp", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_8014E0C4.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
             Object(Matching, "game/RaceHud_80147470.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CSSceneGetTitle_8014ADB4.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
