@@ -285,6 +285,10 @@ static inline void Shutdown() {
     fn_80287EE4(0,tail);
 }
 
+static inline int IsServiceBoot(unsigned int mode) {
+    return (unsigned char)(mode == 1);
+}
+
 extern "C" void BootDispatcher(unsigned char *serviceMode)
 {
     const char *text=lbl_802E8F48;
@@ -295,7 +299,7 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
     void *component=0;
     unsigned int bootInfo[64];
     fn_80287FDC(bootInfo);
-    int isService=(unsigned char)(bootInfo[0]==1);
+    int isService=IsServiceBoot(bootInfo[0]);
     if (isService==1) { DebugPrintf(text+0x640); service=1; }
     BootError error;
     memset(&error,0,24);
