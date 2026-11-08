@@ -59,12 +59,13 @@ static inline NetChan* ChannelFor(u32 index) {
     return c;
 }
 
+static inline u8 ChannelDeviceId(u32 ch) {
+    if (ch <= 0x3F) return lbl_80697940[ch].dev;
+    return 0;
+}
+
 static inline NetDev* ChannelDevice(u32 ch, u8* devId) {
-    if (ch <= 0x3F) {
-        *devId = lbl_80697940[ch].dev;
-    } else {
-        *devId = 0;
-    }
+    *devId = ChannelDeviceId(ch);
     return FindDev(*devId);
 }
 
