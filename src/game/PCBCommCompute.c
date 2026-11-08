@@ -123,6 +123,7 @@ int PCBComm_ComputeSyncState(void)
     u8 usedCharacters[13];
     int optionVotes[2];
     u8 usedPositions[4];
+    int characterCount;
     CommStorage* storage = lbl_805A5EC0;
     PeerSlot* firstPeer;
     SyncOutput* out = HostOutput(storage);
@@ -150,15 +151,15 @@ int PCBComm_ComputeSyncState(void)
         out->commonItem = -1;
     }
     if ((int)out->scene == 26) {
-        CountTrackVotes(storage->peer, trackVotes, g_localPcbRole);
         winner = 0;
+        CountTrackVotes(storage->peer, trackVotes, g_localPcbRole);
         for (i = 0; i < 16; ++i)
             if (trackVotes[i] > trackVotes[winner]) winner = i;
         out->choice.half.track = winner;
     }
     if ((int)out->scene == 26) {
-        CountOptionVotes(storage->peer, optionVotes, g_localPcbRole);
         winner = 0;
+        CountOptionVotes(storage->peer, optionVotes, g_localPcbRole);
         for (i = 0; i < 2; ++i)
             if (optionVotes[i] > optionVotes[winner]) winner = i;
         out->choice.bytes.option = winner;
@@ -188,20 +189,20 @@ int PCBComm_ComputeSyncState(void)
                 out->position[i] = position;
             }
         }
+        characterCount = 0;
         for (i = 0; i < 13; ++i) usedCharacters[i] = 0;
         role = g_localPcbRole;
         peer = firstPeer;
         for (i = 0; i < 4; ++i, ++peer)
             if (peer->first.bytes.header.role == role)
                 usedCharacters[(peer->character >> 4) & 15] = 1;
-        i = 0;
         do {
             int character = rand() % 13;
             if (usedCharacters[character] == 0) {
                 usedCharacters[character] = 1;
-                out->randomCharacter[i++] = character;
+                out->randomCharacter[characterCount++] = character;
             }
-        } while (i < 2);
+        } while (characterCount < 2);
     }
     if (lbl_806CEFC8 != 0) ++out->sequence;
     else lbl_806CEFC8 = 1;
