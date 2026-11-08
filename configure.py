@@ -1379,7 +1379,6 @@ config.libs = [
             Object(Matching, "game/DrawEffect_ItemHitOriented_Spawn.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(NonMatching, "game/EffectVfx29_30_Item4SubFlame_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/EffectVfx55_HornBlastTrio_Tick.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
-            Object(NonMatching, "game/EffectVfx10_KartTrail_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/HitMessageOverlay_FrameUpdate.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),  #g2
             Object(Matching, "game/KartPair3ArmUpdate.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(NonMatching, "game/RaceFlow_ResetState_FullColdInit.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -1655,7 +1654,7 @@ config.libs = [
             Object(Matching, "game/KartFxDispatchE.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/KartFxDispatchD.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/KartFxRingRay.cpp", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/KartFxExhaustRay.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(NonMatching, "game/KartFxExhaustRay.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFxBurnout.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFxRing.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartFxDispatchB.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
@@ -2555,7 +2554,7 @@ config.libs = [
             Object(Matching, "game/fn_801DC774.c"),
             Object(Matching, "game/fn_801DDD6C.c"),
             Object(Matching, "game/fn_801E8F5C.c"),
-            Object(NonMatching, "game/Menu801F0CC0.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(NonMatching, "game/Menu801F0CC0.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/fn_801F26C8.c"),
             Object(Matching, "game/dtor_801F6BD0.c"),
             Object(Matching, "game/fn_801F6C2C.cpp", extra_cflags=["-Cpp_exceptions on"]),
@@ -2584,13 +2583,13 @@ config.libs = [
             Object(NonMatching, "game/AI_DecideAndUseItem_PairTracking.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-proc 750"]),
             Object(NonMatching, "game/fn_801E9E74.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/AI_CalcGPTargetSpeed.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/AI_PerKartUpdate.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/AI_PerKartUpdate.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/fn_801E96BC.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/RankingMgr_UpdatePositions.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/AI_UpdatePerFrameState.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/AI_SystemInit.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/AI_SystemDtor.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/fn_801E9CBC.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_801E9CBC.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/AI_CalcVSTargetSpeed.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801E66B4.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/AI_CalcTargetSpeed_PairTracking.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
@@ -2780,7 +2779,7 @@ config.libs = [
             Object(Matching, "game/Scene_801634C4.cpp"),
             Object(Matching, "game/Scene_8016303C.cpp", mw_version="GC/2.7", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_80162D90.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/Scene_80164614.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/Scene_80164614.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/Scene_80163EF4.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_80163C68.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_801636B4.cpp"),

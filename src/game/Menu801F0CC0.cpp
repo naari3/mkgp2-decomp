@@ -4,8 +4,10 @@ static inline unsigned int MenuRGBA(unsigned int r, unsigned int g, unsigned int
     return (r << 24) | ((g & 255) << 16) | ((b & 255) << 8) | (a & 255);
 }
 
+/* GC/2.6: `0xFFFFFF00 | alpha` gives the target's li -0x100 + rlwimi / or
+ * (regalloc_patterns §11); 1.3.2 needs __rlwimi and colors it differently. */
 static inline unsigned int WithAlpha(unsigned int color, unsigned char alpha) {
-    return __rlwimi(color, alpha, 0, 24, 31);
+    return color | alpha;
 }
 
 /* Loops in a static inline: only an inlined loop gets the target's
@@ -103,6 +105,8 @@ extern "C" void fn_801F115C(Menu801F *self) {
     DrawRange(self, 32, 35, lbl_806DA550);
 }
 
+#pragma push
+#pragma opt_propagation off
 extern "C" void fn_801F1244(Menu801F *self) {
     int i;
     int offset;
@@ -132,6 +136,8 @@ extern "C" void fn_801F1244(Menu801F *self) {
         self->state = 8;
     }
 }
+#pragma pop
+
 
 extern "C" void fn_801F140C(Menu801F *self) {
     unsigned char v = fn_8020A788(self->fade.p);

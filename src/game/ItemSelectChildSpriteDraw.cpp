@@ -77,6 +77,8 @@ static inline void DrawOverlay(ItemSelectChildOverlay *overlay, int active) {
 static inline void SetItemPos(ItemAliasSprite *item, float y, float x) { item->x=x; item->y=y; }
 static inline void SetItemScale(ItemAliasSprite *item, float scale) { item->scaleX=scale; item->scaleY=scale; }
 template <class T> static inline void SetPartPos(T *part, float y, float x) { part->x=x; part->y=y; }
+#pragma push
+#pragma opt_dead_assignments off
 extern "C" void fn_8023DCEC(ItemSelectChildSprite *self, int active) {
     ResCtrl rc;
     float scale;
@@ -108,3 +110,5 @@ extern "C" void fn_8023DCEC(ItemSelectChildSprite *self, int active) {
     self->overlay->scale = scale;
     DrawOverlay(self->overlay, active);
 }
+#pragma pop
+

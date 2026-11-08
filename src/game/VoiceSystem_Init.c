@@ -1,4 +1,6 @@
 #include "game/VoiceSystem_Init_private.h"
+#pragma push
+#pragma opt_lifetimes off
 int VoiceSystem_Init(void) {
     VoiceInitBss *state = (VoiceInitBss *)g_voiceQueue;
     RaceVoiceData *data = &lbl_80496C38;
@@ -124,4 +126,6 @@ int VoiceSystem_Init(void) {
     for (i = 0; i < 0x282; i++) ((VoiceClip *)((unsigned int)data + 0x1534))[i].playCount = 0;
     return 1;
 }
+#pragma pop
+
 

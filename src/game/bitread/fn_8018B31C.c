@@ -84,6 +84,9 @@ static inline void EncodeName(const unsigned short *name) {
 
 #pragma exceptions on
 #pragma use_lmw_stmw on
+#pragma push
+#pragma opt_lifetimes off
+#pragma opt_dead_assignments off
 void fn_8018B31C(const unsigned short *name, int item, int ccClass,
                  int character, int kart, int cup, int longRound, int flags,
                  unsigned char a, unsigned char b, unsigned char c,
@@ -152,5 +155,7 @@ void fn_8018B31C(const unsigned short *name, int item, int ccClass,
         EncodeText(lbl_80677F20);
     }
 }
+#pragma pop
+
 #pragma use_lmw_stmw reset
 #pragma exceptions reset

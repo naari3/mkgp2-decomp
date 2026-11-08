@@ -887,7 +887,8 @@
     "fn_80122204",
     "fn_8012223C",
     "fn_801222F0",
-    "__dt__11ScopedTimerFv"
+    "__dt__11ScopedTimerFv",
+    "fn_8011DC20"
   ],
   "src/game/Scene_8014E0C4.cpp": {
     "extab": [

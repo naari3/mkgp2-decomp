@@ -47,6 +47,21 @@ static const char demoLakituName[0x12] = "jyugemu_start.dat";
 extern "C" const char lbl_80369D4C[0x11] = "clSceneInterface";
 extern "C" const char lbl_80369D60[0x12] = "clCSScenePlayDemo";
 
+static inline void FillDemoItemList() {
+    int mode, cup, round;
+    round = g_roundIndex;
+    cup = g_cupId;
+    mode = g_gameMode;
+    clEnemyParam_FillItemListIds(GetEnemyParam(), mode, cup, round);
+}
+static inline int *GetDemoItemList() {
+    int mode, cup, round;
+    round = g_roundIndex;
+    cup = g_cupId;
+    mode = g_gameMode;
+    return AI_GetItemList(GetEnemyParam(), mode, cup, round, 0);
+}
+
 extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
     fn_80121210();
     DrawManager_GetOrCreate();
@@ -102,8 +117,10 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
     s->inputIndex = 0;
     ProcessSystemTick(0);
     RaceSlot_ResetAll();
-    RaceSlot_InitSlot(VSMode_SeedRandomItemSequence(0, demoEntries[index].character, 5), 0, demoEntries[index].character, 1, 0);
-    g_characterId = demoEntries[index].character;
+    /* fakematch: the volatile reads reproduce the target reloading demoEntries[index].character
+     * three times (natural code: plain demoEntries[index].character). */
+    RaceSlot_InitSlot(VSMode_SeedRandomItemSequence(0, ((volatile const DemoEntry163 *)demoEntries)[index].character, 5), 0, ((volatile const DemoEntry163 *)demoEntries)[index].character, 1, 0);
+    g_characterId = ((volatile const DemoEntry163 *)demoEntries)[index].character;
     HSD_FObjForceLinearInterp(1);
     lbl_806CF110 = 1;
     SetLocalPcbRole(0);
@@ -144,7 +161,8 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
         g_carObjects[0] = new Car163(0, GetKartSlotCharId(s->slot), x, z, GetCourseStartYaw(), 0, 0, 1, -1, 0, 0);
     else
         g_carObjects[0] = new Car163(0, GetKartSlotCharId(s->slot), x, z, GetCourseStartYaw(), 0, 0, 0, -1, 0, 1);
-    *(int *)((char *)CarObject_GetRenderObj(g_carObjects[0]) + 0x238) = 1;
+    char *render = (char *)CarObject_GetRenderObj(g_carObjects[0]);
+    *(int *)(render + 0x238) = 1;
     KartItem_SetShortArray34a(CarObject_GetRenderObj(g_carObjects[0]), g_playerData);
     g_playerRenderObj = CarObject_GetRenderObj(g_carObjects[0]);
     SetPlayerCarObject(g_carObjects[0]);
@@ -171,12 +189,13 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
     ProcessSystemTick(0);
     s->ai = new AI163(s->paths, s->system, 0);
     ProcessSystemTick(0);
-    g_itemSelects[0] = 0;
     g_sceneTransitionTimer = -1;
+    g_itemSelects[0] = 0;
     g_itemSelects[1] = 0;
     g_itemSelects[2] = 0;
     g_itemSelects[3] = 0;
-    *((char *)GetKartSlotKartVariant(s->slot) + 0x2d0) = 1;
+    char *variant = (char *)GetKartSlotKartVariant(s->slot);
+    variant[0x2d0] = 1;
     void *select = new Select163(s->slot, 0);
     g_itemSelects[0] = select;
     *(void **)((char *)g_carObjects[0] + 0x104) = select;
@@ -224,15 +243,9 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
         if (id) PreloadItemResources(id);
     }
     ProcessSystemTick(0);
-    int round = g_roundIndex;
-    int cup = g_cupId;
-    int mode = g_gameMode;
-    clEnemyParam_FillItemListIds(GetEnemyParam(), mode, cup, round);
-    round = g_roundIndex;
-    cup = g_cupId;
-    mode = g_gameMode;
-    int *items = AI_GetItemList(GetEnemyParam(), mode, cup, round, 0);
-    for (; *items != -1; items++) PreloadItemResources(*items);
+    FillDemoItemList();
+    int *items = GetDemoItemList();
+    for (int i = 0; items[i] != -1; i++) PreloadItemResources(items[i]);
     ProcessSystemTick(0);
     s->done = 0;
     s->ready = 0;

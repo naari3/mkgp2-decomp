@@ -1,8 +1,6 @@
-/* EffectVfx10_KartTrail_Tick (0x800BD900): kart trail ribbon (resource 0xA)
- * behind the kart. It fades with the linked item's speed, scrolls its UVs
- * with the lateral slide, and is sized by a per-character table.
- * The owned parameter pool reproduces the target's section-relative table
- * addressing. NonMatching: pool/item remain in r31/r30 rather than r30/r31. */
+/* KartFxExhaustRay + EffectVfx10_KartTrail_Tick (0x800BD1BC..0x800BDD74).
+ * One TU: both functions address the shared parameter pool (.rodata
+ * 0x80329E20..) through one section anchor (regalloc_patterns 13). */
 #include "game/DrawEffectAccess.h"
 
 extern int g_kartVariant;
@@ -56,11 +54,12 @@ const float lbl_8032A2D0[15] = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
 const float lbl_8032A30C[15] = {
     1.05999994f, 1.10000002f, 1.0f, 1.01999998f, 1.0f, 1.04999995f, 1.0f, 1.0f, 1.01999998f, 1.0f, 1.0f, 1.08000004f, 1.0f, 0.0f, 0.0f,
 };
-const Vec lbl_8032A348[3] = {
-    { 1.0f, 0.200000003f, 0.200000003f },
+const Vec lbl_8032A348 = { 1.0f, 0.200000003f, 0.200000003f };
+typedef struct RayColors { Vec entries[2]; } RayColors;
+const RayColors lbl_8032A354 = { {
     { 1.20000005f, 0.400000006f, 0.400000006f },
     { 0.800000012f, 0.600000024f, 0.0f },
-};
+} };
 const struct { float scales[26]; unsigned int flags[2]; float values[6]; } lbl_8032A36C = {
     { 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, 1.0f, 1.60000002f },
     { 1, 1 },
@@ -81,6 +80,150 @@ extern void Matrix4_PreMultiplyRotY(float dst[4][4], float src[4][4], float angl
 extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec v);
 extern void Mtx44_Scale_PerAxis(float dst[4][4], float src[4][4], float sx, float sy, float sz);
 
+
+/* ---- KartFx_BoostExhaustRayTick (0x800BD1BC): boost exhaust ray ---- */
+struct RayKart { unsigned char pad00[0x1F4]; int player, character; };
+typedef struct RayEffect {
+    unsigned char pad00[0x10]; int index;
+    unsigned char slot[0x14], visible, pad29[3]; float opacity;
+    Vec color; unsigned char pad3C[0xC]; float matrix[12];
+    unsigned char pad78[0x14]; Vec position, rotation;
+    unsigned char padA4[0xC]; float scale; signed char state;
+    unsigned char padB5[0x67]; struct RayKart *kart; Vec anchor;
+    unsigned char pad12C[0x24]; float intensity, growth, size;
+    unsigned char pad15C[0x24]; unsigned int timer0, timer1, timer2, timer3;
+    signed char special;
+} RayEffect;
+extern RayColors lbl_8041A280[2];
+extern signed char lbl_806D14B8;
+extern const float lbl_806D51D4, lbl_806D52B8;
+extern void Mtx44_GetTranslation_ColMajor(Vec *, float m[4][4]);
+extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec);
+extern float Mtx44_GetPitchOfPosZ(float m[4][4]);
+extern float Mtx44_GetPitchOfNegX_Lean(float m[4][4]);
+extern void Vec3_Lerp(Vec *, Vec, Vec, float);
+extern signed char ItemObject_GetGroundTypeAt(Vec, float *, int);
+extern float Item_ProbeForwardGroundPitch(Vec, float, float, float);
+extern float Item_ProbeLateralGroundPitch(Vec, float, float, float);
+extern void Matrix4_PreMultiplyRotX(float dst[4][4], float src[4][4], float angle);
+extern void Matrix4_PreMultiplyRotZ(float dst[4][4], float src[4][4], float angle);
+
+static inline int CharacterIndex(struct RayKart *kart) {
+    int index;
+    if (!kart) return -1;
+    if (kart->player < 0 || kart->player > 3) return -1;
+    if (g_gameMode == 2) {
+        if ((((unsigned int)PcbSlot_GetByIndex(kart->player)[6] >> 1) & 3U) < 2U) return -1;
+    } else {
+        if (g_kartVariant < 2) return -1;
+        if (g_cupId >= 9) return -1;
+    }
+    index = kart->character;
+    if (index < 0 || index >= 15) return -1;
+    return index;
+}
+
+void KartFx_BoostExhaustRayTick(RayEffect *effect) {
+    float offsetMatrix[4][4], root[4][4], matrix[4][4];
+    Vec second, first, center, translation;
+    Vec offset;
+    float ground;
+    float speed;
+    Vec delta;
+    float distance;
+    float opacity;
+    RayColors *colors;
+    if (effect->index == 0) {
+        Mtx44_GetTranslation_RowMajor(&first, KartDriver_GetJointByIdx(effect->kart, 0));
+        Mtx44_GetTranslation_RowMajor(&second, KartDriver_GetJointByIdx(effect->kart, 1));
+    } else {
+        Mtx44_GetTranslation_RowMajor(&first, KartDriver_GetJointByIdx(effect->kart, 2));
+        Mtx44_GetTranslation_RowMajor(&second, KartDriver_GetJointByIdx(effect->kart, 3));
+    }
+    Vec3_Lerp(&center, first, second, 0.5f);
+    center.y -= 2.0f;
+    if (effect->index != 0) {
+        Mtx_TransposeToMtx44(offsetMatrix, KartDriver_GetKartRootMtx(effect->kart));
+        Mtx44_GetTranslation_ColMajor(&translation, offsetMatrix);
+        offset = lbl_8032A424;
+        Mtx44_TransformVec3(&offset, offsetMatrix, offset);
+        Vec3_Subtract_DestFirst(&offset, &offset, &translation);
+        Vec3_Add_DestFirst(&center, &center, &offset);
+    }
+    if (effect->state == 0) {
+        Mtx_TransposeToMtx44(root, KartDriver_GetKartRootMtx(effect->kart));
+        effect->rotation.x = Mtx44_GetPitchOfPosZ(root);
+        effect->rotation.y = Mtx44_GetYawOfPosZ(root);
+        effect->rotation.z = Mtx44_GetPitchOfNegX_Lean(root);
+    }
+    switch (effect->state) {
+    case 0: {
+        int character;
+        VfxSlot_BindResource(effect->slot, 11);
+        VfxSlot_SetMatrixSourceEnabled(effect->slot, 1);
+        Vec3_Copy(&effect->position, &center);
+        effect->growth = 0.0f;
+        character = CharacterIndex(effect->kart);
+        effect->size = character < 0 ? 1.0f : lbl_8032A2D0[character];
+        Vec3_Copy(&effect->anchor, &center);
+        if (CharacterIndex(effect->kart) >= 0) effect->special = 1;
+        else effect->special = 0;
+        ++effect->state;
+        break;
+    }
+    case 1: break;
+    }
+    if (effect->index != 0) speed = 5.0f * (4.0f * effect->growth);
+    else speed = 5.0f * (4.0f * effect->growth);
+    Vec3_Subtract_DestFirst(&delta, &effect->anchor, &center);
+    distance = Vec3_Magnitude_Wrapper(&delta);
+    if (speed < distance) {
+        Vec3_Scale(&delta, &delta, (1.0f / distance) * speed);
+        Vec3_Add_DestFirst(&effect->anchor, &center, &delta);
+    }
+    if (ItemObject_GetGroundTypeAt(effect->anchor, &ground, 0) != 0) {
+        ground += 1.0f;
+        if (effect->anchor.y < ground) {
+            effect->anchor.y = ground;
+            effect->rotation.x = Item_ProbeForwardGroundPitch(effect->anchor, effect->rotation.y, 5.0f, 1.0f);
+            effect->rotation.z = Item_ProbeLateralGroundPitch(effect->anchor, effect->rotation.y, 5.0f, 1.0f);
+        }
+    }
+    Vec3_Copy(&effect->position, &effect->anchor);
+    effect->scale = effect->size;
+    opacity = 2.0f * (1.0f - effect->growth);
+    if (1.0f < opacity) opacity = 1.0f;
+    if (effect->index == 0) effect->opacity = opacity;
+    else effect->opacity = opacity;
+    effect->opacity *= effect->intensity;
+    if (!lbl_806D14B8) {
+        lbl_8041A280[1].entries[0] = lbl_8032A354.entries[0];
+        lbl_8041A280[1].entries[1] = lbl_8032A354.entries[1];
+        lbl_806D14B8 = 1;
+    }
+    colors = &lbl_8041A280[effect->special];
+    Vec3_Lerp(&effect->color, colors->entries[1], colors->entries[0], effect->growth);
+    if (FinalLapCoinJump_CheckActiveForObject(effect->kart)) effect->visible = 0;
+    else effect->visible = 1;
+    if (effect->index == 0) effect->growth += lbl_806D51D4;
+    else effect->growth += lbl_806D51D4;
+    if (1.0f < effect->growth) { DrawEffect_Free(effect); return; }
+    Matrix4_Identity(matrix);
+    Mtx44_Scale_PerAxis(matrix, matrix, 2.0f * effect->scale, 2.0f * effect->scale, effect->scale);
+    Matrix4_PreMultiplyRotY(matrix, matrix, lbl_806D5348);
+    Matrix4_PreMultiplyRotX(matrix, matrix, lbl_806D52B8);
+    Matrix4_PreMultiplyRotX(matrix, matrix, effect->rotation.x);
+    Matrix4_PreMultiplyRotZ(matrix, matrix, effect->rotation.z);
+    Matrix4_PreMultiplyRotY(matrix, matrix, effect->rotation.y);
+    Mtx44_Translate(matrix, matrix, effect->position);
+    DbgScene_CopyMatrix3x4Transpose(effect->matrix, matrix);
+    if (effect->timer0) --effect->timer0;
+    if (effect->timer1) --effect->timer1;
+    if (effect->timer2) --effect->timer2;
+    if (effect->timer3) --effect->timer3;
+}
+
+/* ---- EffectVfx10_KartTrail_Tick (0x800BD900) ---- */
 static inline int KartTrail_GetCharacter(unsigned char *driver)
 {
     int slot;
@@ -134,7 +277,7 @@ void EffectVfx10_KartTrail_Tick(unsigned char *self)
         F(0x150) = 0.0f;
         F(0x154) = 0.0f;
         if (KartTrail_GetCharacter(P(0x11C)) >= 0) {
-            const Vec *color = &lbl_8032A348[0];
+            const Vec *color = &lbl_8032A348;
             F(0x30) = color->x;
             F(0x34) = color->y;
             F(0x38) = color->z;

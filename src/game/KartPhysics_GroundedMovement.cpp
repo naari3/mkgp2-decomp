@@ -66,6 +66,8 @@ static inline void *courseData() {
 }
 
 #pragma use_lmw_stmw on
+#pragma push
+#pragma opt_common_subs off
 extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
     const char *constants=lbl_803BD920;
     if (self->steeringLock>0) --self->steeringLock;
@@ -369,4 +371,6 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
     self->position.x+=speed*LUT_Cosine(self->yaw);
     self->position.z+=speed*LUT_Sine(self->yaw);
 }
+#pragma pop
+
 #pragma use_lmw_stmw reset

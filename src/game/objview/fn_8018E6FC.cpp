@@ -9,8 +9,7 @@ void HSD_JObjSetupMatrixSub(ViewJoint *);
 }
 static inline float variation(ViewEmitter *o) {
     if (o->variationIndex >= 48) o->variationIndex = 0;
-    int index = o->variationIndex++;
-    return lbl_80495A94[index];
+    return lbl_80495A94[o->variationIndex++];
 }
 static inline void setup(ViewJoint *j) {
     if (!j) __assert(lbl_806D9450, 0x47c, lbl_806D9458);
@@ -80,6 +79,8 @@ static inline void updateBillboards(ViewEmitter *o) {
         updateParticle(q);
     }
 }
+#pragma push
+#pragma opt_dead_assignments off
 extern "C" void fn_8018E6FC(ViewEmitter *o) {
     int index;
     void *scene;
@@ -97,3 +98,5 @@ extern "C" void fn_8018E6FC(ViewEmitter *o) {
     updateMatrices(o);
     updateBillboards(o);
 }
+#pragma pop
+

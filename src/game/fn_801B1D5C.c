@@ -23,6 +23,9 @@ static inline short RemapItemVoice(short item) {
 
 #pragma use_lmw_stmw on
 #pragma exceptions on
+#pragma push
+#pragma opt_propagation off
+#pragma opt_lifetimes off
 int fn_801B1D5C(RaceVoiceRival *kart, RaceVoiceRival *target, short item, unsigned char mode) {
     short voice;
     void *held;
@@ -159,5 +162,7 @@ int fn_801B1D5C(RaceVoiceRival *kart, RaceVoiceRival *target, short item, unsign
     }
     return 1;
 }
+#pragma pop
+
 #pragma exceptions reset
 #pragma use_lmw_stmw reset

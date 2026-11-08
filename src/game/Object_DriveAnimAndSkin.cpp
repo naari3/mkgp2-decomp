@@ -1,11 +1,12 @@
-/* Native draft: 99.43723% text, 1848-byte primary function.
+/* Native draft: 99.56% text (asm-A 11-08: rotation declared first in SaveRotations), 1848-byte primary function.
  * Kept NonMatching: save/request/animation GPR webs remain; restore and conversion match. */
 #include "game/ObjectDrivePrivate.h"
 
 static inline void SaveRotations(Normal3D *self) {
+    Quat *rotation;
     int i;
     JObj *joint;
-    Quat *rotation=self->savedRotation;
+    rotation=self->savedRotation;
     if (rotation) {
         for (i=0;i<self->count;i++,rotation++) {
             joint=self->table[i];
