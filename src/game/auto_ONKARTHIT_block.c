@@ -1179,7 +1179,10 @@ asm void CarObject_MainUpdate(void *self, void *arg);
 void CarObject_FrameUpdate(CarObjFrameView *self, void *arg);
 void CarObject_ApplyInput_AI(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3, float in4);
 void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3);
-asm void *KartItem_Dtor(void *self, short flag);
+#pragma cplusplus on
+struct KartItemObj;
+extern "C" void *KartItem_Dtor(KartItemObj *self, short flag);
+#pragma cplusplus off
 asm void CarObject_Init(void);
 void KartItem_UpdateShadowBillboardAndViewport(KartItemOpsView *self, int arg2, int arg3);
 float KartItem_AdvanceAnim3c(const KartItemOpsView *self);
@@ -1377,59 +1380,6 @@ __declspec(section ".extab_user") static const unsigned char extab_CarObject_App
 __declspec(section ".extab_user") static const unsigned char extab_CarObject_ApplyInput[8] = {
     0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const unsigned char extab_KartItem_Dtor[404] = {
-    0x20, 0x18, 0x00, 0x00, 0x00, 0x00, 0x01, 0x50,
-    0x00, 0x00, 0x00, 0xC8, 0x00, 0x00, 0x01, 0x5C,
-    0x00, 0x00, 0x00, 0xD4, 0x00, 0x00, 0x01, 0x94,
-    0x00, 0x00, 0x00, 0xD8, 0x00, 0x00, 0x01, 0xA0,
-    0x00, 0x00, 0x00, 0xE4, 0x00, 0x00, 0x01, 0xB8,
-    0x00, 0x00, 0x00, 0xE8, 0x00, 0x00, 0x01, 0xC4,
-    0x00, 0x00, 0x00, 0xF4, 0x00, 0x00, 0x01, 0xF0,
-    0x00, 0x00, 0x00, 0xF8, 0x00, 0x00, 0x01, 0xFC,
-    0x00, 0x00, 0x01, 0x10, 0x00, 0x00, 0x02, 0x08,
-    0x00, 0x00, 0x01, 0x04, 0x00, 0x00, 0x02, 0x14,
-    0x00, 0x00, 0x01, 0x20, 0x00, 0x00, 0x02, 0x2C,
-    0x00, 0x00, 0x01, 0x24, 0x00, 0x00, 0x02, 0x38,
-    0x00, 0x00, 0x01, 0x30, 0x00, 0x00, 0x02, 0x50,
-    0x00, 0x00, 0x01, 0x34, 0x00, 0x00, 0x02, 0x5C,
-    0x00, 0x00, 0x01, 0x40, 0x00, 0x00, 0x02, 0x74,
-    0x00, 0x00, 0x01, 0x44, 0x00, 0x00, 0x02, 0x80,
-    0x00, 0x00, 0x01, 0x50, 0x00, 0x00, 0x02, 0x98,
-    0x00, 0x00, 0x01, 0x54, 0x00, 0x00, 0x02, 0xA4,
-    0x00, 0x00, 0x01, 0x60, 0x00, 0x00, 0x02, 0xBC,
-    0x00, 0x00, 0x01, 0x64, 0x00, 0x00, 0x02, 0xC8,
-    0x00, 0x00, 0x01, 0x70, 0x00, 0x00, 0x02, 0xE0,
-    0x00, 0x00, 0x01, 0x74, 0x00, 0x00, 0x02, 0xEC,
-    0x00, 0x00, 0x01, 0x80, 0x00, 0x00, 0x03, 0x04,
-    0x00, 0x00, 0x01, 0x84, 0x00, 0x00, 0x03, 0x10,
-    0x00, 0x00, 0x01, 0x90, 0x00, 0x00, 0x00, 0x00,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x54,
-    0x00, 0x00, 0x01, 0x24, 0x8D, 0x00, 0x01, 0x24,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x98,
-    0x00, 0x00, 0x01, 0x0C, 0x8D, 0x00, 0x01, 0x0C,
-    0x8F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xBC,
-    0x00, 0x00, 0x00, 0xF4, 0x8D, 0x00, 0x00, 0xF4,
-    0x0F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xF4,
-    0x00, 0x00, 0x00, 0x1C, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0x0C, 0x00, 0x00, 0x00, 0xDC,
-    0x0D, 0x00, 0x00, 0x1C, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0x0C, 0x00, 0x00, 0x00, 0xDC,
-    0x8D, 0x00, 0x00, 0xDC, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0x30, 0x00, 0x00, 0x00, 0xC4,
-    0x8D, 0x00, 0x00, 0xC4, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0x54, 0x00, 0x00, 0x00, 0xAC,
-    0x8D, 0x00, 0x00, 0xAC, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0x78, 0x00, 0x00, 0x00, 0x94,
-    0x8D, 0x00, 0x00, 0x94, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0x9C, 0x00, 0x00, 0x00, 0x7C,
-    0x8D, 0x00, 0x00, 0x7C, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0xC0, 0x00, 0x00, 0x00, 0x64,
-    0x8D, 0x00, 0x00, 0x64, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x02, 0xE4, 0x00, 0x00, 0x00, 0x4C,
-    0x8D, 0x00, 0x00, 0x4C, 0x8F, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x03, 0x08, 0x00, 0x00, 0x00, 0x34,
-    0x8D, 0x00, 0x00, 0x34
-};
 __declspec(section ".extab_user") static const unsigned char extab_CarObjectManager_Dtor[8] = {
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -1575,9 +1525,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CarObject_ApplyInput = {
     (void *)&CarObject_ApplyInput, 0x0000015C, (void *)extab_CarObject_ApplyInput
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_KartItem_Dtor = {
-    (void *)&KartItem_Dtor, 0x00000368, (void *)extab_KartItem_Dtor
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CarObject_Init = {
     (void *)&CarObject_Init, 0x000007BC, (void *)&extab_CarObject_Init
@@ -5473,260 +5420,197 @@ void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float i
 }
 #pragma exceptions reset
 
-asm void *KartItem_Dtor(void *self, short flag) { /* 0x8004E2B0 size:0x368 */
-    nofralloc
-    stwu r1, -0x150(r1)
-    mflr r0
-    stw r0, 0x154(r1)
-    stw r31, 0x14c(r1)
-    mr r31, r1
-    stw r30, 0x148(r1)
-    mr r30, r4
-    stw r29, 0x144(r1)
-    mr. r29, r3
-    stw r28, 0x140(r1)
-    beq KartItem_Dtor_L_8004E5EC
-    lis r3, lbl_803F75F8@ha
-    li r0, 0x0
-    addi r3, r3, lbl_803F75F8@l
-    stw r3, 0x0(r29)
-    addi r3, r3, 0x10
-    stw r3, 0xc(r29)
-    stw r0, g_playerCarObject(r13)
-    lbz r3, 0x20(r29)
-    cmplwi r3, 0x1
-    bne KartItem_Dtor_L_8004E348
-    lbz r0, 0x21(r29)
-    cmplwi r0, 0x0
-    bne KartItem_Dtor_L_8004E348
-    cmplwi r3, 0x0
-    beq KartItem_Dtor_L_8004E348
-    bl StrPcb_GetInstance
-    li r4, 0x28
-    bl StrPcb_SetCmdByte2d
-    bl StrPcb_GetInstance
-    li r4, 0x1e
-    bl StrPcb_SetCmdByte2e
-    bl StrPcb_GetInstance
-    li r4, 0x0
-    bl StrPcb_SetCounterField14
-    bl StrPcb_GetInstance
-    li r4, 0x0
-    bl StrPcb_SetCmdByte2f
-    KartItem_Dtor_L_8004E348:
-    lwz r3, g_carObjectList(r13)
-    mr r5, r29
-    cmplwi r3, 0x0
-    bne KartItem_Dtor_L_8004E35C
-    li r3, 0x0
-    KartItem_Dtor_L_8004E35C:
-    lbz r0, 0x8(r31)
-    addi r3, r3, 0x4
-    stw r5, 0x18(r31)
-    addi r4, r31, 0xc
-    stb r0, 0x14(r31)
-    lwz r0, 0x14(r31)
-    stw r5, 0x10(r31)
-    stw r0, 0xc(r31)
-    bl StlList_RemoveByValueField
-    lwz r3, g_carObjectList(r13)
-    cmplwi r3, 0x0
-    bne KartItem_Dtor_L_8004E394
-    li r0, 0x0
-    b KartItem_Dtor_L_8004E398
-    KartItem_Dtor_L_8004E394:
-    mr r0, r3
-    KartItem_Dtor_L_8004E398:
-    cmplwi r0, 0x0
-    beq KartItem_Dtor_L_8004E3D4
-    lwz r4, g_carObjectCount(r13)
-    subic. r0, r4, 0x1
-    stw r0, g_carObjectCount(r13)
-    bgt KartItem_Dtor_L_8004E3D4
-    cmplwi r3, 0x0
-    beq KartItem_Dtor_L_8004E3CC
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    KartItem_Dtor_L_8004E3CC:
-    li r0, 0x0
-    stw r0, g_carObjectList(r13)
-    KartItem_Dtor_L_8004E3D4:
-    lwz r3, 0x58(r29)
-    li r4, 0x1
-    bl dtor_80209180
-    lwz r3, 0x5c(r29)
-    li r4, 0x1
-    bl dtor_80209180
-    addic. r0, r29, 0x54
-    beq KartItem_Dtor_L_8004E410
-    lwz r3, 0x54(r29)
-    li r4, 0x1
-    bl Free_IfOwnedShort
-    b KartItem_Dtor_L_8004E410
-    addi r3, r31, 0x124
-    bl __unexpected
-    KartItem_Dtor_L_8004E40C:
-    b KartItem_Dtor_L_8004E40C
-    KartItem_Dtor_L_8004E410:
-    addic. r0, r29, 0x50
-    beq KartItem_Dtor_L_8004E420
-    lwz r3, 0x50(r29)
-    bl MemoryManager_TimedFree
-    KartItem_Dtor_L_8004E420:
-    addic. r0, r29, 0x4c
-    beq KartItem_Dtor_L_8004E430
-    lwz r3, 0x4c(r29)
-    bl MemoryManager_TimedFree
-    KartItem_Dtor_L_8004E430:
-    addic. r0, r29, 0x48
-    beq KartItem_Dtor_L_8004E454
-    lwz r3, 0x48(r29)
-    li r4, 0x1
-    bl TwoSubDtor_Pending_80064f58
-    b KartItem_Dtor_L_8004E454
-    addi r3, r31, 0x10c
-    bl __unexpected
-    KartItem_Dtor_L_8004E450:
-    b KartItem_Dtor_L_8004E450
-    KartItem_Dtor_L_8004E454:
-    addic. r0, r29, 0x44
-    beq KartItem_Dtor_L_8004E478
-    lwz r3, 0x44(r29)
-    li r4, 0x1
-    bl EffectSteering_Dtor
-    b KartItem_Dtor_L_8004E478
-    addi r3, r31, 0xf4
-    bl __unexpected
-    KartItem_Dtor_L_8004E474:
-    b KartItem_Dtor_L_8004E474
-    KartItem_Dtor_L_8004E478:
-    addic. r0, r29, 0x40
-    beq KartItem_Dtor_L_8004E4C8
-    lwz r28, 0x40(r29)
-    cmplwi r28, 0x0
-    beq KartItem_Dtor_L_8004E4C8
-    addic. r0, r28, 0x4
-    beq KartItem_Dtor_L_8004E4B0
-    lwz r3, 0x4(r28)
-    li r4, 0x1
-    bl KartItemSubObject_Dtor
-    b KartItem_Dtor_L_8004E4B0
-    addi r3, r31, 0x1c
-    bl __unexpected
-    KartItem_Dtor_L_8004E4AC:
-    b KartItem_Dtor_L_8004E4AC
-    KartItem_Dtor_L_8004E4B0:
-    mr r3, r28
-    bl MemoryManager_TimedFree
-    b KartItem_Dtor_L_8004E4C8
-    addi r3, r31, 0xdc
-    bl __unexpected
-    KartItem_Dtor_L_8004E4C4:
-    b KartItem_Dtor_L_8004E4C4
-    KartItem_Dtor_L_8004E4C8:
-    addic. r0, r29, 0x3c
-    beq KartItem_Dtor_L_8004E4EC
-    lwz r3, 0x3c(r29)
-    li r4, 0x1
-    bl KartEffectFadeTransit_Dtor
-    b KartItem_Dtor_L_8004E4EC
-    addi r3, r31, 0xc4
-    bl __unexpected
-    KartItem_Dtor_L_8004E4E8:
-    b KartItem_Dtor_L_8004E4E8
-    KartItem_Dtor_L_8004E4EC:
-    addic. r0, r29, 0x38
-    beq KartItem_Dtor_L_8004E510
-    lwz r3, 0x38(r29)
-    li r4, 0x1
-    bl PlayCamera_Dtor
-    b KartItem_Dtor_L_8004E510
-    addi r3, r31, 0xac
-    bl __unexpected
-    KartItem_Dtor_L_8004E50C:
-    b KartItem_Dtor_L_8004E50C
-    KartItem_Dtor_L_8004E510:
-    addic. r0, r29, 0x34
-    beq KartItem_Dtor_L_8004E534
-    lwz r3, 0x34(r29)
-    li r4, 0x1
-    bl VisualEffectHolder_Dtor
-    b KartItem_Dtor_L_8004E534
-    addi r3, r31, 0x94
-    bl __unexpected
-    KartItem_Dtor_L_8004E530:
-    b KartItem_Dtor_L_8004E530
-    KartItem_Dtor_L_8004E534:
-    addic. r0, r29, 0x30
-    beq KartItem_Dtor_L_8004E558
-    lwz r3, 0x30(r29)
-    li r4, 0x1
-    bl InputCmd_Dtor
-    b KartItem_Dtor_L_8004E558
-    addi r3, r31, 0x7c
-    bl __unexpected
-    KartItem_Dtor_L_8004E554:
-    b KartItem_Dtor_L_8004E554
-    KartItem_Dtor_L_8004E558:
-    addic. r0, r29, 0x2c
-    beq KartItem_Dtor_L_8004E57C
-    lwz r3, 0x2c(r29)
-    li r4, 0x1
-    bl KartDriver_Dtor
-    b KartItem_Dtor_L_8004E57C
-    addi r3, r31, 0x64
-    bl __unexpected
-    KartItem_Dtor_L_8004E578:
-    b KartItem_Dtor_L_8004E578
-    KartItem_Dtor_L_8004E57C:
-    addic. r0, r29, 0x28
-    beq KartItem_Dtor_L_8004E5A0
-    lwz r3, 0x28(r29)
-    li r4, 0x1
-    bl CarObject_Dtor
-    b KartItem_Dtor_L_8004E5A0
-    addi r3, r31, 0x4c
-    bl __unexpected
-    KartItem_Dtor_L_8004E59C:
-    b KartItem_Dtor_L_8004E59C
-    KartItem_Dtor_L_8004E5A0:
-    addic. r0, r29, 0x24
-    beq KartItem_Dtor_L_8004E5C4
-    lwz r3, 0x24(r29)
-    li r4, 0x1
-    bl AudioChannel_DtorWithSeStop
-    b KartItem_Dtor_L_8004E5C4
-    addi r3, r31, 0x34
-    bl __unexpected
-    KartItem_Dtor_L_8004E5C0:
-    b KartItem_Dtor_L_8004E5C0
-    KartItem_Dtor_L_8004E5C4:
-    addi r3, r29, 0xc
-    li r4, 0x0
-    bl dtor_800AA888
-    mr r3, r29
-    li r4, 0x0
-    bl dtor_80060024
-    extsh. r0, r30
-    ble KartItem_Dtor_L_8004E5EC
-    mr r3, r29
-    bl MemoryManager_TimedFree
-    KartItem_Dtor_L_8004E5EC:
-    mr r10, r31
-    lwz r31, 0x14c(r31)
-    mr r3, r29
-    lwz r30, 0x148(r10)
-    lwz r29, 0x144(r10)
-    lwz r28, 0x140(r10)
-    lwz r10, 0x0(r1)
-    lwz r0, 0x4(r10)
-    mr r1, r10
-    mtlr r0
-    blr
+/* KartItem_Dtor: native C++ (exceptions on). Owned pointees whose deleting
+ * dtors are renamed in tools/extab_user_renames.json (__dt__13OwnedXXXXFv).
+ * The owned-pointer member holders are plain (non-template) structs on
+ * purpose: a template instantiation makes MWCC defer KartItem_Dtor past the
+ * following asm CarObject_Init, which breaks the link order. */
+#pragma cplusplus on
+#pragma exceptions on
+struct Owned8005278C {
+    ~Owned8005278C();
+};
+struct Owned800528B0 {
+    ~Owned800528B0();
+};
+struct Owned8005292C {
+    ~Owned8005292C();
+};
+struct Owned80052A58 {
+    ~Owned80052A58();
+};
+struct Owned80052AD4 {
+    ~Owned80052AD4();
+};
+struct Owned80052B50 {
+    ~Owned80052B50();
+};
+struct Owned80052BCC {
+    ~Owned80052BCC();
+};
+struct Owned80052C48 {
+    ~Owned80052C48();
+};
+struct Owned80052CC4 {
+    ~Owned80052CC4();
+};
+struct Owned80052D40 {
+    ~Owned80052D40();
+};
+struct KartItemSubHolder {
+    void *sub; /* 0x0: KartItemSubObject */
+    ~KartItemSubHolder() throw() {
+        KartItemSubObject_Dtor(sub, 1);
+    }
+};
+struct KartItemSubOwned {
+    char pad_0x0[0x4];
+    KartItemSubHolder subHolder; /* 0x4 */
+};
+
+struct KartItemPlain {
+    char opaque;
+};
+/* owned-pointer members (auto_ptr-like, inline throw() dtor) */
+struct KartItemOwn_Owned80052D40 {
+    Owned80052D40 *p;
+    ~KartItemOwn_Owned80052D40() throw() { delete p; }
+};
+struct KartItemOwn_Owned80052CC4 {
+    Owned80052CC4 *p;
+    ~KartItemOwn_Owned80052CC4() throw() { delete p; }
+};
+struct KartItemOwn_Owned80052C48 {
+    Owned80052C48 *p;
+    ~KartItemOwn_Owned80052C48() throw() { delete p; }
+};
+struct KartItemOwn_Owned80052BCC {
+    Owned80052BCC *p;
+    ~KartItemOwn_Owned80052BCC() throw() { delete p; }
+};
+struct KartItemOwn_Owned80052B50 {
+    Owned80052B50 *p;
+    ~KartItemOwn_Owned80052B50() throw() { delete p; }
+};
+struct KartItemOwn_Owned80052AD4 {
+    Owned80052AD4 *p;
+    ~KartItemOwn_Owned80052AD4() throw() { delete p; }
+};
+struct KartItemOwn_Owned80052A58 {
+    Owned80052A58 *p;
+    ~KartItemOwn_Owned80052A58() throw() { delete p; }
+};
+struct KartItemOwn_KartItemSubOwned {
+    KartItemSubOwned *p;
+    ~KartItemOwn_KartItemSubOwned() throw() { delete p; }
+};
+struct KartItemOwn_Owned8005292C {
+    Owned8005292C *p;
+    ~KartItemOwn_Owned8005292C() throw() { delete p; }
+};
+struct KartItemOwn_Owned800528B0 {
+    Owned800528B0 *p;
+    ~KartItemOwn_Owned800528B0() throw() { delete p; }
+};
+struct KartItemOwn_KartItemPlain {
+    KartItemPlain *p;
+    ~KartItemOwn_KartItemPlain() throw() { delete p; }
+};
+struct KartItemOwn_Owned8005278C {
+    Owned8005278C *p;
+    ~KartItemOwn_Owned8005278C() throw() { delete p; }
+};
+struct KartItemListEq {
+};
+struct KartItemListKey {
+    KartItemListEq op;
+    void *val;
+    KartItemListKey(const KartItemListEq &o, void *v) : op(o), val(v) {}
+};
+struct KartItemObj {
+    void *vptr;                                 /* 0x0 */
+    char responderState[8];                     /* 0x4 */
+    void *warpVptr;                             /* 0xc */
+    char pad_0x10[0x10];                        /* 0x10 */
+    unsigned char f20;                          /* 0x20 */
+    unsigned char f21;                          /* 0x21 */
+    KartItemOwn_Owned80052D40 audio;           /* 0x24 */
+    KartItemOwn_Owned80052CC4 car;             /* 0x28 */
+    KartItemOwn_Owned80052C48 driver;          /* 0x2c */
+    KartItemOwn_Owned80052BCC input;           /* 0x30 */
+    KartItemOwn_Owned80052B50 visual;          /* 0x34 */
+    KartItemOwn_Owned80052AD4 camera;          /* 0x38 */
+    KartItemOwn_Owned80052A58 fade;            /* 0x3c */
+    KartItemOwn_KartItemSubOwned sub;             /* 0x40 */
+    KartItemOwn_Owned8005292C steering;        /* 0x44 */
+    KartItemOwn_Owned800528B0 pending;         /* 0x48 */
+    KartItemOwn_KartItemPlain plain4c;         /* 0x4c */
+    KartItemOwn_KartItemPlain plain50;         /* 0x50 */
+    KartItemOwn_Owned8005278C owned54;         /* 0x54 */
+    void *probe58;                              /* 0x58 */
+    void *probe5c;                              /* 0x5c */
+};
+struct KartItemCarList {
+    virtual void Release(int);
+    char list[0xc];
+};
+typedef void (*KartItemRemoveFn)(void *, KartItemListKey);
+#define gCarList (*(KartItemCarList **)&g_carObjectList)
+extern "C" void *KartItem_Dtor(KartItemObj *self, short flag) { /* 0x8004E2B0 size:0x368 */
+    if (self) {
+        self->vptr = (void *)lbl_803F75F8;
+        self->warpVptr = (char *)lbl_803F75F8 + 0x10;
+        g_playerCarObject = 0;
+        if (self->f20 == 1 && self->f21 == 0 && self->f20 != 0) {
+            StrPcb_SetCmdByte2d(StrPcb_GetInstance(), 0x28);
+            StrPcb_SetCmdByte2e(StrPcb_GetInstance(), 0x1e);
+            StrPcb_SetCounterField14(StrPcb_GetInstance(), 0);
+            StrPcb_SetCmdByte2f(StrPcb_GetInstance(), 0);
+        }
+        {
+            void *me = self;
+            char *l = (gCarList == 0 ? (KartItemCarList *)0 : gCarList)->list;
+            KartItemListEq eq;
+            KartItemListKey key(eq, me);
+            ((KartItemRemoveFn)StlList_RemoveByValueField)(l, key);
+        }
+        {
+            KartItemCarList *l = gCarList;
+            if ((l == 0 ? (KartItemCarList *)0 : l) != 0) {
+                if (--g_carObjectCount <= 0) {
+                    if (l) {
+                        l->Release(1);
+                    }
+                    gCarList = 0;
+                }
+            }
+        }
+        ((void (*)(void *, int))dtor_80209180)(self->probe58, 1);
+        ((void (*)(void *, int))dtor_80209180)(self->probe5c, 1);
+        self->owned54.~KartItemOwn_Owned8005278C();
+        self->plain50.~KartItemOwn_KartItemPlain();
+        self->plain4c.~KartItemOwn_KartItemPlain();
+        self->pending.~KartItemOwn_Owned800528B0();
+        self->steering.~KartItemOwn_Owned8005292C();
+        self->sub.~KartItemOwn_KartItemSubOwned();
+        self->fade.~KartItemOwn_Owned80052A58();
+        self->camera.~KartItemOwn_Owned80052AD4();
+        self->visual.~KartItemOwn_Owned80052B50();
+        self->input.~KartItemOwn_Owned80052BCC();
+        self->driver.~KartItemOwn_Owned80052C48();
+        self->car.~KartItemOwn_Owned80052CC4();
+        self->audio.~KartItemOwn_Owned80052D40();
+        ((void (*)(void *, int))dtor_800AA888)(&self->warpVptr, 0);
+        ((void (*)(void *, int))dtor_80060024)(self, 0);
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
 }
+#undef gCarList
+#pragma exceptions reset
+#pragma cplusplus off
 
 asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
     nofralloc
@@ -9423,9 +9307,6 @@ void *dtor_80052744(void *self, short flag) { /* 0x80052744 size:0x48 */
  */
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned8005278C {
-    ~Owned8005278C();
-};
 struct Holder8005278C {
     Owned8005278C *p; /* 0x0 */
     ~Holder8005278C() throw();
@@ -9464,9 +9345,6 @@ void *dtor_8005285C(void *self, short flag) { /* 0x8005285C size:0x54 */
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned800528B0 {
-    ~Owned800528B0();
-};
 struct Holder800528B0 {
     Owned800528B0 *p; /* 0x0 */
     ~Holder800528B0() throw();
@@ -9480,9 +9358,6 @@ Holder800528B0::~Holder800528B0() throw() {
 /* dtor_8005292C: EffectSteering owned-pointer holder deleting dtor. */
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned8005292C {
-    ~Owned8005292C();
-};
 struct Holder8005292C {
     Owned8005292C *p; /* 0x0 */
     ~Holder8005292C() throw();
@@ -9522,9 +9397,6 @@ extern "C" void *dtor_800529A8(void *self, short flag) throw() { /* 0x800529A8 s
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned80052A58 {
-    ~Owned80052A58();
-};
 struct Holder80052A58 {
     Owned80052A58 *p; /* 0x0 */
     ~Holder80052A58() throw();
@@ -9538,9 +9410,6 @@ Holder80052A58::~Holder80052A58() throw() {
 /* dtor_80052AD4: PlayCamera owned-pointer holder deleting dtor. */
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned80052AD4 {
-    ~Owned80052AD4();
-};
 struct Holder80052AD4 {
     Owned80052AD4 *p; /* 0x0 */
     ~Holder80052AD4() throw();
@@ -9553,9 +9422,6 @@ Holder80052AD4::~Holder80052AD4() throw() {
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned80052B50 {
-    ~Owned80052B50();
-};
 struct Holder80052B50 {
     Owned80052B50 *p; /* 0x0 */
     ~Holder80052B50() throw();
@@ -9568,9 +9434,6 @@ Holder80052B50::~Holder80052B50() throw() {
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned80052BCC {
-    ~Owned80052BCC();
-};
 struct Holder80052BCC {
     Owned80052BCC *p; /* 0x0 */
     ~Holder80052BCC() throw();
@@ -9584,9 +9447,6 @@ Holder80052BCC::~Holder80052BCC() throw() {
 /* dtor_80052C48: KartDriver owned-pointer holder deleting dtor. */
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned80052C48 {
-    ~Owned80052C48();
-};
 struct Holder80052C48 {
     Owned80052C48 *p; /* 0x0 */
     ~Holder80052C48() throw();
@@ -9599,9 +9459,6 @@ Holder80052C48::~Holder80052C48() throw() {
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned80052CC4 {
-    ~Owned80052CC4();
-};
 struct Holder80052CC4 {
     Owned80052CC4 *p; /* 0x0 */
     ~Holder80052CC4() throw();
@@ -9614,9 +9471,6 @@ Holder80052CC4::~Holder80052CC4() throw() {
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Owned80052D40 {
-    ~Owned80052D40();
-};
 struct Holder80052D40 {
     Owned80052D40 *p; /* 0x0 */
     ~Holder80052D40() throw();
