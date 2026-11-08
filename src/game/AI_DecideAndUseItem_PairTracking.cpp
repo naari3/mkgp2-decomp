@@ -22,19 +22,21 @@ static inline void Decrement(int timer, int &result) {
 void AI_DecideAndUseItem_PairTracking(AISpeedOwner *self, int kart) {
     PairItemController *ctrl = (PairItemController *)Read_U32[kart];
     AIPairRecord *record = &lbl_806793D8[kart];
-    int hitTimer;
-    Decrement(ctrl->hitTimer, hitTimer);
-    ctrl->hitTimer = hitTimer;
+    int use;
+    void *target;
+    int decisionValue;
+    Decrement(ctrl->hitTimer, decisionValue);
+    ctrl->hitTimer = decisionValue;
     if (AI_HasItem(ctrl)) {
         int timer;
         Decrement(ctrl->itemTimer, timer);
         ctrl->itemTimer = timer;
-        if (hitTimer <= 0) {
+        if (decisionValue <= 0) {
             int laps = g_totalLaps - KartController_GetRenderObj(ctrl)->lap;
             int difference = AI_GetLapDifference(ctrl);
-            int rank = KartController_GetRenderObj(ctrl)->rank;
-            int use = 0;
-            void *target = KartController_GetRenderObj(ctrl);
+            decisionValue = KartController_GetRenderObj(ctrl)->rank;
+            use = 0;
+            target = KartController_GetRenderObj(ctrl);
             if (AI_CheckItemSuppression(kart, laps, difference)) {
                 if (timer <= 0) use = 1;
                 else if (record->nearestDriver) {
@@ -44,7 +46,7 @@ void AI_DecideAndUseItem_PairTracking(AISpeedOwner *self, int kart) {
                     yaw = AI_GetYaw(ctrl);
                     Object_GetJObjPositionVec(KartDriver_GetJObjRootIfReady(record->nearestDriver), &to);
                     if (AI_CheckTargetInRange(AI_GetItemType(ctrl), from, to, yaw)) {
-                        if (AI_RollItemUseProbability(rank)) { use = 1; target = record->nearestDriver; }
+                        if (AI_RollItemUseProbability(decisionValue)) { use = 1; target = record->nearestDriver; }
                         else { ctrl->hitTimer = 120; return; }
                     }
                 }
@@ -57,7 +59,7 @@ void AI_DecideAndUseItem_PairTracking(AISpeedOwner *self, int kart) {
                     fn_801DC6E4(kart, ((PairItemRender *)KartController_GetRenderObj(ctrl))->kartId);
                     return;
                 case 5: case 6: case 7: break;
-                case 8: break;
+                case 9: break;
                 default: break;
                 }
                 AI_UseItem(ctrl, target);
