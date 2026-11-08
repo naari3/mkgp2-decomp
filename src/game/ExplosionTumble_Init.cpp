@@ -1,6 +1,6 @@
-/* NonMatching: 89.99078% text, exact 1736-byte primary size.
- * Vector operation and scalar quaternion helpers preserve native rounding
- * and recover the target size; FPR allocation and scheduling still differ. */
+/* NonMatching: 92.81567% text, exact 1736-byte primary size.
+ * Rounded quaternion products preserve the target arithmetic.
+ * Vector loads, projection reloads and FPR allocation still differ. */
 #include "game/C7ItemCtorPrivate.h"
 
 extern "C" {
@@ -63,17 +63,22 @@ static inline void AxisAngle(C7Quat* q, float x, float y, float z) {
     q->x=x*sine; q->y=y*sine; q->z=z*sine;
     q->w=(float)cos(lbl_806D2818);
 }
-static inline void QuaternionMatrix(C7Matrix* m, float x, float y, float z, float w) {
+static inline void QuaternionMatrix(C7Matrix* m, const C7Quat* q) {
+    // Round the component products before combining matrix entries.
+    float yy=q->y*q->y, zz=q->z*q->z;
+    float xy=q->x*q->y, wz=q->w*q->z;
+    float xz=q->x*q->z, wy=q->w*q->y;
+    float xx=q->x*q->x, yz=q->y*q->z, wx=q->w*q->x;
     float two=lbl_806D281C, one=lbl_806D27FC;
-    m->m[0][0]=one-two*(y*y+z*z);
-    m->m[1][0]=two*(x*y-w*z);
-    m->m[2][0]=two*(x*z+w*y);
-    m->m[0][1]=two*(x*y+w*z);
-    m->m[1][1]=one-two*(x*x+z*z);
-    m->m[2][1]=two*(y*z-w*x);
-    m->m[0][2]=two*(x*z-w*y);
-    m->m[1][2]=two*(y*z+w*x);
-    m->m[2][2]=one-two*(x*x+y*y);
+    m->m[0][0]=one-two*(yy+zz);
+    m->m[1][0]=two*(xy-wz);
+    m->m[2][0]=two*(xz+wy);
+    m->m[0][1]=two*(xy+wz);
+    m->m[1][1]=one-two*(xx+zz);
+    m->m[2][1]=two*(yz-wx);
+    m->m[0][2]=two*(xz-wy);
+    m->m[1][2]=two*(yz+wx);
+    m->m[2][2]=one-two*(xx+yy);
 }
 extern "C" void ExplosionTumble_Init(C7Tumble* __restrict self, C7Vec* __restrict position, C7Vec* __restrict velocity, C7Matrix* __restrict pose) {
     self->Reset();
@@ -99,5 +104,5 @@ extern "C" void ExplosionTumble_Init(C7Tumble* __restrict self, C7Vec* __restric
     C7Quat q;
     q.w=lbl_806D27F8; q.z=lbl_806D27F8; q.y=lbl_806D27F8; q.x=lbl_806D27F8;
     AxisAngle(&q,self->axis.x,self->axis.y,self->axis.z);
-    QuaternionMatrix(&self->rotation,q.x,q.y,q.z,q.w);
+    QuaternionMatrix(&self->rotation,&q);
 }
