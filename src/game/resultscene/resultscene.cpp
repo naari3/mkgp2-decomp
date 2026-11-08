@@ -2798,6 +2798,8 @@ static inline void Fade_Update(ResultFadeV *f) {
     }
 }
 
+#pragma push
+#pragma opt_common_subs off
 void fn_8015CD74(ResultPartYU *o) {
     int i;
     float a;
@@ -2872,4 +2874,5 @@ void fn_8015CD74(ResultPartYU *o) {
     }
     if (!o->started) o->started = 1;
 }
+#pragma pop
 }
